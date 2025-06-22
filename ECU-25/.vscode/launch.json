@@ -1,0 +1,32 @@
+{
+    "version": "0.2.0",
+    "configurations": [{
+        "cwd": "${workspaceFolder}",
+        "executable": "./build/Debug/ECU-25.elf",
+        "name": "Debug with OpenOCD",
+        "request": "launch",
+        "type": "cortex-debug",
+        "servertype": "openocd",
+        "configFiles": ["interface/stlink.cfg", "target/stm32g4x.cfg"],
+        "searchDir": [],
+        "preLaunchTask": "CMake: build",
+        "showDevDebugOutput": "raw",
+        "svdPath": "${workspaceFolder}/.vscode/STM32G474.svd",
+        "swoConfig": {
+            "enabled": true,
+            "cpuFrequency": 160000000,
+            "swoFrequency":  115200,
+            "source": "probe",
+            "decoders": [
+                { 
+                    "type": "console",
+                    "label": "ITM",
+                    "showOnStartup": true,
+                    "port": 0,
+                    "encoding": "ascii"
+                }
+            ]
+        }
+    }],
+    "compounds": []
+}

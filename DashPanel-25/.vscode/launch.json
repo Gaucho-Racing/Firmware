@@ -1,0 +1,114 @@
+{
+    "version": "0.2.0",
+    "configurations": [{
+        "cwd": "${workspaceFolder}",
+        "executable": "./build/Debug/dashPanel25.elf",
+        "name": "ST-Util Launch",
+        "request": "launch",
+        "type": "cortex-debug",
+        "servertype": "stutil",
+        "configFiles": ["interface/stlink.cfg", "target/stm32u5x.cfg"],
+        "searchDir": [],
+        "preLaunchTask": "CMake: build",
+        "showDevDebugOutput": "raw",
+        "svdPath": "${workspaceFolder}/.vscode/STM32U5A9.svd",
+        "swoConfig": {
+            "enabled": true,
+            "cpuFrequency": 160000000,
+            "swoFrequency":  115200,
+            "source": "probe",
+            "decoders": [
+                { 
+                    "type": "console",
+                    "label": "ITM",
+                    "showOnStartup": true,
+                    "port": 0,
+                    "encoding": "ascii"
+                }
+            ]
+        }
+    },{
+        "cwd": "${workspaceFolder}",
+        "executable": "./build/Debug/dashPanel25.elf",
+        "name": "ST-Link Launch",
+        "request": "launch",
+        "type": "cortex-debug",
+        "servertype": "stlink",
+        "configFiles": ["interface/stlink.cfg", "target/stm32u5x.cfg"],
+        "searchDir": [],
+        "preLaunchTask": "CMake: build",
+        "showDevDebugOutput": "raw",
+        "svdPath": "${workspaceFolder}/.vscode/STM32U5A9.svd",
+        "swoConfig": {
+            "enabled": true,
+            "cpuFrequency": 160000000,
+            "swoFrequency":  115200,
+            "source": "probe",
+            "decoders": [
+                { 
+                    "type": "console",
+                    "label": "ITM",
+                    "showOnStartup": true,
+                    "port": 0,
+                    "encoding": "ascii"
+                }
+            ]
+        }
+    },{
+        "cwd": "${workspaceFolder}",
+        "executable": "./build/Debug/dashPanel25.elf",
+        "name": "ST-Util Attach",
+        "request": "attach",
+        "type": "cortex-debug",
+        "servertype": "stutil",
+        "runToEntryPoint": "main",
+        "configFiles": ["interface/stlink.cfg", "target/stm32u5x.cfg"],
+        "searchDir": [],
+        "preLaunchTask": "CMake: build",
+        "showDevDebugOutput": "raw",
+        "svdPath": "${workspaceFolder}/.vscode/STM32U5A9.svd",
+        "swoConfig": {
+            "enabled": true,
+            "cpuFrequency": 160000000,
+            "swoFrequency":  115200,
+            "source": "probe",
+            "decoders": [
+                { 
+                    "type": "console",
+                    "label": "ITM",
+                    "showOnStartup": true,
+                    "port": 0,
+                    "encoding": "ascii"
+                }
+            ]
+        }
+    },{
+        "cwd": "${workspaceFolder}",
+        "executable": "./build/Debug/dashPanel25.elf",
+        "name": "ST-Link Attach",
+        "request": "attach",
+        "type": "cortex-debug",
+        "servertype": "stlink",
+        "runToEntryPoint": "main",
+        "configFiles": ["interface/stlink.cfg", "target/stm32u5x.cfg"],
+        "searchDir": [],
+        "preLaunchTask": "CMake: build",
+        "showDevDebugOutput": "raw",
+        "svdPath": "${workspaceFolder}/.vscode/STM32U5A9.svd",
+        "swoConfig": {
+            "enabled": true,
+            "cpuFrequency": 160000000,
+            "swoFrequency":  115200,
+            "source": "probe",
+            "decoders": [
+                { 
+                    "type": "console",
+                    "label": "ITM",
+                    "showOnStartup": true,
+                    "port": 0,
+                    "encoding": "ascii"
+                }
+            ]
+        }
+    }]
+}

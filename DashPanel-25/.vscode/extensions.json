@@ -1,0 +1,13 @@
+{
+    "recommendations": [
+        "ms-vscode.cpptools-extension-pack",
+        "ms-vscode.cmake-tools",
+        "marus25.cortex-debug",
+        "ms-vsliveshare.vsliveshare",
+        "Gruntfuggly.todo-tree",
+        "ms-python.python"
+    ],
+    "unwantedRecommendations": [
+        "mechatroner.rainbow-csv"
+    ]
+}
