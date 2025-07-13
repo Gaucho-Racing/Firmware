@@ -1,15 +1,72 @@
+# CMake build artifacts
 CMakeLists.txt.user
 CMakeCache.txt
-CMakeFiles
-CMakeScripts
-Testing
+CMakeFiles/
+CMakeScripts/
+Testing/
 Makefile
 cmake_install.cmake
 install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
-_deps
+_deps/
 CMakeUserPresets.json
-bazel-*
-*.bazel.lock
-build
+build.ninja
+rules.ninja
+.ninja_deps
+.ninja_log
+
+# Build directories
+build/
+*/build/
+*-prefix/
+
+# Compiled object files and binaries
+*.o
+*.out
+*.bin
+*.elf
+*.hex
+*.map
+*.bak
+*.lib
+*.dll
+*.so
+*.dylib
+*.a
+
+# IDE and editor files
+.vscode/
+.ccls-cache/
+.ccls
+.DS_Store
+*.swp
+*.swo
+*~
+.idea/
+*.iml
+*.ipr
+*.iws
+.project
+.cproject
+.settings/
+*.code-workspace
+
+# Platform specific
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.Spotlight-V100
+.Trashes
+._*
+
+# Temporary files
+*.tmp
+*.temp
+*~
+.#*
+#*#
+
+# Generated files
+lib/include/*.h

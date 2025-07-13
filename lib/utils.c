@@ -1,6 +1,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#include "utils.h"
+
 // 0 indexed LSB first
 bool getBit(uint8_t number, uint8_t index)
 {

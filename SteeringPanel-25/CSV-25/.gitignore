@@ -1,5 +1,0 @@
-*.h
-*.csv
-!GR-ID.csv
-!MSG-ID.csv
-!CUSTOM-ID.csv
