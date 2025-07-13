@@ -1,17 +1,19 @@
 cmake_minimum_required(VERSION 3.30)
 project(GRLib)
 
-# add_library(ECUlib
-
-# )
-
 include(CMakePrintHelpers)
+include(CTest)
+enable_testing()
+
 enable_language(C ASM)
 
-# GR474RE
+# build unit tests here
 cmake_print_variables(TOOLCHAIN_PREFIX)
+# add_executable, add_executable(...)
+# link to test, add_test(NAME ... COMMAND $<TARGET_FILE:...>)
+# repeat
 
-
+# GR474RE
 include(../ECU-25/cmake/gcc-arm-none-eabi.cmake)
 add_library(
     ECULib
@@ -26,7 +28,7 @@ target_include_directories(ECULib PUBLIC
     ECU-lib/Inc
 )
 
-
+# Whatever platform the Dash Panel uses
 include(../DashPanel-25/cmake/gcc-arm-none-eabi.cmake)
 cmake_print_variables(TARGET_FLAGS)
 
