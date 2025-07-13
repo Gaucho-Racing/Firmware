@@ -1,5 +1,8 @@
 # Firmware Suite - GR26
 
+## Branch Usage
+Please use feature branches and avoid pushing directly to `main` until implementations are stable and tested.
+
 ## Quick Start
 
 1. **Prerequisites**: Install CMake 3.25+, Ninja, ARM GCC toolchain, and VS Code (recommended)
@@ -33,6 +36,22 @@ For detailed instructions, see [BUILD.md](BUILD.md).
 - **SWO Debug**: Real-time debug output from all boards
 - **USB**: Programming and debug interface
 
-## Branch Usage
+## Shared vs Board-Specific Code
 
-Please use feature branches and avoid pushing directly to `main` until implementations are stable and tested.
+### Shared Components (`lib/`)
+- **LVGL**: Graphics library used by both panels
+- **CMSIS**: ARM Cortex-M and STM32 device drivers shared across all boards
+- **utils.c/h**: Common data structures, math, utilities
+- **CSV Generator**: CAN message ID definitions
+- **CMake configs**: ARM toolchain setups
+- **STM32CubeMX Library**: Shared STM32 HAL and middleware code
+  - `lib/stm32cubemx.cmake`: Functions for creating STM32U5 and STM32G4 targets
+  - `lib/cmake/cmsis-config.cmake`: Shared CMSIS configuration functions
+  - Reduces code duplication across boards
+  - Provides consistent HAL driver integration
+
+### Board-Specific Code
+- **Application/**: Business logic unique to each board
+- **Core/**: STM32 HAL configuration files, system initialization
+- **Build configs**: CMakeLists.txt, linker scripts
+- **Board-specific STM32 sources**: Additional peripherals not in the shared set
