@@ -1,0 +1,102 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug ECU",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "openocd",
+            "cwd": "${workspaceFolder}/ECU",
+            "executable": "${workspaceFolder}/ECU/build/ECU.elf",
+            "device": "STM32G474RE",
+            "interface": "swd",
+            "configFiles": ["interface/stlink.cfg", "target/stm32g4x.cfg"],
+            "svdFile": "${workspaceFolder}/lib/svd/STM32G474.svd",
+            "preLaunchTask": "Build ECU",
+            "swoConfig": {
+                "enabled": true,
+                "cpuFrequency": 160000000,
+                "swoFrequency": 115200,
+                "source": "probe",
+                "decoders": [
+                    {
+                        "type": "console",
+                        "label": "ITM",
+                        "showOnStartup": true,
+                        "port": 0,
+                        "encoding": "ascii"
+                    }
+                ]
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "embedded",
+                "order": 1
+            }
+        },
+        {
+            "name": "Debug DashPanel (ST-Link)",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "stlink",
+            "cwd": "${workspaceFolder}/DashPanel",
+            "executable": "${workspaceFolder}/DashPanel/build/DashPanel.elf",
+            "device": "STM32U599NJ",
+            "interface": "swd",
+            "svdFile": "${workspaceFolder}/lib/svd/STM32U5A9.svd",
+            "preLaunchTask": "Build DashPanel",
+            "swoConfig": {
+                "enabled": true,
+                "cpuFrequency": 160000000,
+                "swoFrequency": 115200,
+                "source": "probe",
+                "decoders": [
+                    {
+                        "type": "console",
+                        "label": "ITM",
+                        "showOnStartup": true,
+                        "port": 0,
+                        "encoding": "ascii"
+                    }
+                ]
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "embedded",
+                "order": 2
+            }
+        },
+        {
+            "name": "Debug DashPanel (ST-Util)",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "stutil",
+            "cwd": "${workspaceFolder}/DashPanel",
+            "executable": "${workspaceFolder}/DashPanel/build/DashPanel.elf",
+            "device": "STM32U599NJ",
+            "interface": "swd",
+            "svdFile": "${workspaceFolder}/lib/svd/STM32U5A9.svd",
+            "preLaunchTask": "Build DashPanel",
+            "swoConfig": {
+                "enabled": true,
+                "cpuFrequency": 160000000,
+                "swoFrequency": 115200,
+                "source": "probe",
+                "decoders": [
+                    {
+                        "type": "console",
+                        "label": "ITM",
+                        "showOnStartup": true,
+                        "port": 0,
+                        "encoding": "ascii"
+                    }
+                ]
+            },
+            "presentation": {
+                "hidden": false,
+                "group": "embedded",
+                "order": 3
+            }
+        },
+    ]
+}

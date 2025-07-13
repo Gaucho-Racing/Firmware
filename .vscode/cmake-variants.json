@@ -1,0 +1,74 @@
+{
+    "buildType": {
+        "default": "debug",
+        "description": "The build type for CMake",
+        "choices": {
+            "debug": {
+                "short": "Debug",
+                "long": "Debug build with full debugging info and no optimization",
+                "buildType": "Debug",
+                "settings": {
+                    "CMAKE_BUILD_TYPE": "Debug",
+                    "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+                }
+            },
+            "release": {
+                "short": "Release",
+                "long": "Release build with full optimization",
+                "buildType": "Release",
+                "settings": {
+                    "CMAKE_BUILD_TYPE": "Release",
+                    "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+                }
+            },
+            "relwithdebinfo": {
+                "short": "RelWithDebInfo",
+                "long": "Release build with debugging information",
+                "buildType": "RelWithDebInfo",
+                "settings": {
+                    "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+                    "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+                }
+            },
+            "minsizerel": {
+                "short": "MinSizeRel",
+                "long": "Release build optimized for size",
+                "buildType": "MinSizeRel",
+                "settings": {
+                    "CMAKE_BUILD_TYPE": "MinSizeRel",
+                    "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+                }
+            }
+        }
+    },
+    "target": {
+        "default": "all-boards",
+        "description": "Build target selection",
+        "choices": {
+            "all-boards": {
+                "short": "All Boards",
+                "long": "Build all firmware boards (DashPanel, SteeringPanel, ECU)"
+            },
+            "DashPanel": {
+                "short": "DashPanel",
+                "long": "Build Dashboard Panel firmware (STM32U5)"
+            },
+            "SteeringPanel": {
+                "short": "SteeringPanel", 
+                "long": "Build Steering Panel firmware (STM32U5)"
+            },
+            "ECU": {
+                "short": "ECU",
+                "long": "Build ECU firmware (STM32G4)"
+            },
+            "gaucho_utils": {
+                "short": "Utils",
+                "long": "Build shared utilities library"
+            },
+            "generateCSVHeaders": {
+                "short": "CSV Headers",
+                "long": "Generate CSV header files"
+            }
+        }
+    }
+}

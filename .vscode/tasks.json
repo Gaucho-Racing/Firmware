@@ -1,0 +1,424 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Configure Debug",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--preset=Debug"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Configure Release",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--preset=Release"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Generate CSV Headers",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "--preset=Debug",
+                "--target",
+                "generateCSVHeaders"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": [],
+            "dependsOn": "Configure Debug"
+        },
+        {
+            "label": "Build All Boards",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "--preset=Debug",
+                "--parallel"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": ["$gcc"],
+            "dependsOn": "Configure Debug"
+        },
+        {
+            "label": "Build DashPanel",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "--preset=Debug",
+                "--target",
+                "DashPanel",
+                "--parallel"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": ["$gcc"],
+            "dependsOn": "Configure Debug"
+        },
+        {
+            "label": "Build SteeringPanel",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "--preset=Debug",
+                "--target",
+                "SteeringPanel",
+                "--parallel"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": ["$gcc"],
+            "dependsOn": "Configure Debug"
+        },
+        {
+            "label": "Build ECU",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "--preset=Debug",
+                "--target",
+                "ECU",
+                "--parallel"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": ["$gcc"],
+            "dependsOn": "Configure Debug"
+        },
+        {
+            "label": "Clean All",
+            "type": "shell",
+            "command": "rm",
+            "args": [
+                "-rf",
+                "build",
+                "DashPanel/build",
+                "SteeringPanel/build",
+                "ECU/build"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Flash DashPanel (st-flash)",
+            "type": "shell",
+            "command": "st-flash",
+            "args": [
+                "write",
+                "${workspaceFolder}/build/Debug/DashPanel-prefix/src/DashPanel-build/DashPanel.bin",
+                "0x08000000"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": [],
+            "dependsOn": "Build DashPanel"
+        },
+        {
+            "label": "Flash SteeringPanel (st-flash)",
+            "type": "shell",
+            "command": "st-flash",
+            "args": [
+                "write",
+                "${workspaceFolder}/build/Debug/SteeringPanel-prefix/src/SteeringPanel-build/SteeringPanel.bin",
+                "0x08000000"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": [],
+            "dependsOn": "Build SteeringPanel"
+        },
+        {
+            "label": "Flash ECU (st-flash)",
+            "type": "shell",
+            "command": "st-flash",
+            "args": [
+                "write",
+                "${workspaceFolder}/build/Debug/ECU-prefix/src/ECU-build/ECU.bin",
+                "0x08000000"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": [],
+            "dependsOn": "Build ECU"
+        },
+        {
+            "label": "Flash DashPanel (OpenOCD)",
+            "type": "shell",
+            "command": "openocd",
+            "args": [
+                "-f",
+                "interface/stlink-v2-1.cfg",
+                "-f",
+                "target/stm32u5x.cfg",
+                "-c",
+                "program ${workspaceFolder}/build/Debug/DashPanel-prefix/src/DashPanel-build/DashPanel.elf verify reset exit"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": [],
+            "dependsOn": "Build DashPanel"
+        },
+        {
+            "label": "Flash SteeringPanel (OpenOCD)",
+            "type": "shell",
+            "command": "openocd",
+            "args": [
+                "-f",
+                "interface/stlink-v2-1.cfg",
+                "-f",
+                "target/stm32u5x.cfg",
+                "-c",
+                "program ${workspaceFolder}/build/Debug/SteeringPanel-prefix/src/SteeringPanel-build/SteeringPanel.elf verify reset exit"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": [],
+            "dependsOn": "Build SteeringPanel"
+        },
+        {
+            "label": "Flash ECU (OpenOCD)",
+            "type": "shell",
+            "command": "openocd",
+            "args": [
+                "-f",
+                "interface/stlink-v2-1.cfg",
+                "-f",
+                "target/stm32g4x.cfg",
+                "-c",
+                "program ${workspaceFolder}/build/Debug/ECU-prefix/src/ECU-build/ECU.elf verify reset exit"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": [],
+            "dependsOn": "Build ECU"
+        },
+        {
+            "label": "Flash DashPanel (STM32CubeProgrammer)",
+            "type": "shell",
+            "command": "STM32_Programmer_CLI",
+            "args": [
+                "-c",
+                "port=SWD",
+                "-w",
+                "${workspaceFolder}/build/Debug/DashPanel-prefix/src/DashPanel-build/DashPanel.elf",
+                "-v",
+                "-rst"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": [],
+            "dependsOn": "Build DashPanel"
+        },
+        {
+            "label": "Flash SteeringPanel (STM32CubeProgrammer)",
+            "type": "shell",
+            "command": "STM32_Programmer_CLI",
+            "args": [
+                "-c",
+                "port=SWD",
+                "-w",
+                "${workspaceFolder}/build/Debug/SteeringPanel-prefix/src/SteeringPanel-build/SteeringPanel.elf",
+                "-v",
+                "-rst"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": [],
+            "dependsOn": "Build SteeringPanel"
+        },
+        {
+            "label": "Flash ECU (STM32CubeProgrammer)",
+            "type": "shell",
+            "command": "STM32_Programmer_CLI",
+            "args": [
+                "-c",
+                "port=SWD",
+                "-w",
+                "${workspaceFolder}/build/Debug/ECU-prefix/src/ECU-build/ECU.elf",
+                "-v",
+                "-rst"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": [],
+            "dependsOn": "Build ECU"
+        },
+        {
+            "label": "Clean All (Windows)",
+            "type": "shell", 
+            "command": "powershell",
+            "args": [
+                "-Command",
+                "Remove-Item -Recurse -Force build, DashPanel/build, SteeringPanel/build, ECU/build -ErrorAction SilentlyContinue"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": [],
+            "options": {
+                "shell": {
+                    "executable": "powershell.exe"
+                }
+            }
+        },
+        {
+            "label": "Flash DashPanel (Windows - STM32CubeProgrammer)",
+            "type": "shell",
+            "command": "STM32_Programmer_CLI.exe",
+            "args": [
+                "-c",
+                "port=SWD",
+                "-w",
+                "${workspaceFolder}\\build\\Debug\\DashPanel-prefix\\src\\DashPanel-build\\DashPanel.elf",
+                "-v",
+                "-rst"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": [],
+            "dependsOn": "Build DashPanel"
+        },
+        {
+            "label": "Flash SteeringPanel (Windows - STM32CubeProgrammer)",
+            "type": "shell",
+            "command": "STM32_Programmer_CLI.exe",
+            "args": [
+                "-c",
+                "port=SWD",
+                "-w",
+                "${workspaceFolder}\\build\\Debug\\SteeringPanel-prefix\\src\\SteeringPanel-build\\SteeringPanel.elf",
+                "-v",
+                "-rst"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": [],
+            "dependsOn": "Build SteeringPanel"
+        },
+        {
+            "label": "Flash ECU (Windows - STM32CubeProgrammer)",
+            "type": "shell",
+            "command": "STM32_Programmer_CLI.exe",
+            "args": [
+                "-c",
+                "port=SWD",
+                "-w",
+                "${workspaceFolder}\\build\\Debug\\ECU-prefix\\src\\ECU-build\\ECU.elf",
+                "-v",
+                "-rst"
+            ],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": [],
+            "dependsOn": "Build ECU"
+        },
+        {
+            "label": "Setup IntelliSense",
+            "type": "shell",
+            "command": "./setup_intellisense.sh",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": [],
+            "detail": "Generate compile commands for all boards to enable IntelliSense"
+        },
+        {
+            "label": "Generate Compile Commands Only",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--preset=Debug"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "detail": "Configure CMake to generate compile_commands.json for IntelliSense"
+        }
+    ]
+}

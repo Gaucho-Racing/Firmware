@@ -40,11 +40,11 @@ target_include_directories(gaucho_utils PUBLIC
 # Both CMSIS and HAL drivers are now shared across all boards in lib/
 # - lib/CMSIS/ contains shared ARM Cortex-M and STM32 device drivers
 # - lib/STM32G4xx_HAL_Driver/ contains shared STM32G4 HAL drivers for ECU
-# - lib/STM32U5xx_HAL_Driver/ contains shared STM32U5 HAL drivers for DashPanel and SteeringPanel
+# - lib/STM32U5xx_HAL_Driver/ contains shared STM32U5 HAL drivers for DashPanel
 # Each board's Core/ and Application/ directories contain board-specific code
 
 # Add shared CSVGenerator header generation
-# This runs once and generates headers for all boards in lib/include
+# This runs once and generates headers for all boards in lib/CAN
 add_custom_target(
     generateCSVHeaders
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
@@ -86,22 +86,6 @@ ExternalProject_Add(DashPanel
     DEPENDS generateCSVHeaders
 )
 
-# Steering Panel firmware (STM32U5)  
-ExternalProject_Add(SteeringPanel
-    SOURCE_DIR ${CMAKE_SOURCE_DIR}/SteeringPanel
-    BINARY_DIR ${CMAKE_SOURCE_DIR}/SteeringPanel/build
-    CMAKE_ARGS 
-        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-        -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
-        -G Ninja
-    BUILD_ALWAYS FALSE  # Enable incremental builds
-    INSTALL_COMMAND ""  # No install step needed
-    TEST_COMMAND ""     # No test step needed
-    USES_TERMINAL_BUILD TRUE
-    COMMENT "Building Steering Panel firmware (STM32U5)"
-    DEPENDS generateCSVHeaders
-)
-
 # ECU firmware (STM32G4)
 ExternalProject_Add(ECU
     SOURCE_DIR ${CMAKE_SOURCE_DIR}/ECU
@@ -118,8 +102,24 @@ ExternalProject_Add(ECU
     DEPENDS generateCSVHeaders
 )
 
+# CCU firmware (STM32G4)
+ExternalProject_Add(CCU
+    SOURCE_DIR ${CMAKE_SOURCE_DIR}/CCU
+    BINARY_DIR ${CMAKE_SOURCE_DIR}/CCU/build
+    CMAKE_ARGS 
+        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+        -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+        -G Ninja
+    BUILD_ALWAYS FALSE  # Enable incremental builds
+    INSTALL_COMMAND ""  # No install step needed
+    TEST_COMMAND ""     # No test step needed
+    USES_TERMINAL_BUILD TRUE
+    COMMENT "Building CCU firmware (STM32G4)"
+    DEPENDS generateCSVHeaders
+)
+
 # Convenience target to build all firmware boards
 add_custom_target(all-boards
-    DEPENDS DashPanel SteeringPanel ECU
+    DEPENDS DashPanel ECU CCU
     COMMENT "Building all firmware boards"
 )

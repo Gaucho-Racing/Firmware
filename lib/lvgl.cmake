@@ -1,5 +1,5 @@
 # Add shared LVGL library to the root CMakeLists.txt
-# LVGL is used by both DashPanel and SteeringPanel
+# LVGL is used by DashPanel
 option(BUILD_SHARED_LVGL "Build shared LVGL library" ON)
 
 if(BUILD_SHARED_LVGL)

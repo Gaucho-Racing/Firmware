@@ -1,0 +1,100 @@
+{
+    "configurations": [
+        {
+            "name": "ECU (STM32G4)",
+            "includePath": [
+                "${workspaceFolder}/ECU/**",
+                "${workspaceFolder}/lib/**",
+                "${workspaceFolder}/lib/CMSIS/Device/ST/STM32G4xx/Include",
+                "${workspaceFolder}/lib/CMSIS/Include",
+                "${workspaceFolder}/lib/CMSIS/Core/Include",
+                "${workspaceFolder}/ECU/Core/Inc",
+                "${workspaceFolder}/ECU/Application/Inc",
+                "${workspaceFolder}/lib/STM32G4xx_HAL_Driver/Inc",
+                "${workspaceFolder}/lib/STM32G4xx_HAL_Driver/Inc/Legacy"
+            ],
+            "defines": [
+                "USE_HAL_DRIVER",
+                "STM32G474xx"
+            ],
+            "compilerPath": "/usr/bin/arm-none-eabi-gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "compileCommands": "${workspaceFolder}/ECU/build/compile_commands.json",
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "intelliSenseMode": "gcc-arm"
+        },
+        {
+            "name": "DashPanel (STM32U5)",
+            "includePath": [
+                "${workspaceFolder}/DashPanel/**",
+                "${workspaceFolder}/lib/**",
+                "${workspaceFolder}/lib/CMSIS/Device/ST/STM32U5xx/Include",
+                "${workspaceFolder}/lib/CMSIS/Include",
+                "${workspaceFolder}/lib/CMSIS/Core/Include",
+                "${workspaceFolder}/DashPanel/Core/Inc",
+                "${workspaceFolder}/DashPanel/Application/Inc",
+                "${workspaceFolder}/lib/STM32U5xx_HAL_Driver/Inc",
+                "${workspaceFolder}/lib/STM32U5xx_HAL_Driver/Inc/Legacy",
+                "${workspaceFolder}/lib/FreeRTOS/Source/include",
+                "${workspaceFolder}/lib/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure",
+                "${workspaceFolder}/lib/FreeRTOS/Source/CMSIS_RTOS_V2",
+                "${workspaceFolder}/lib/FreeRTOS/CMSIS_RTOS2/Include",
+                "${workspaceFolder}/lib/LVGL/lvgl"
+            ],
+            "defines": [
+                "USE_HAL_DRIVER",
+                "STM32U599xx",
+                "LV_CONF_INCLUDE_SIMPLE",
+                "LV_LVGL_H_INCLUDE_SIMPLE"
+            ],
+            "compilerPath": "/usr/bin/arm-none-eabi-gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "compileCommands": "${workspaceFolder}/DashPanel/build/compile_commands.json",
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "intelliSenseMode": "gcc-arm"
+        },
+        {
+            "name": "CCU (STM32G4)",
+            "compileCommands": "${workspaceFolder}/CCU/build/compile_commands.json",
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "intelliSenseMode": "gcc-arm",
+            "defines": [
+                "USE_HAL_DRIVER",
+                "STM32G474xx"
+            ],
+            "compilerPath": "/usr/bin/arm-none-eabi-gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17"
+        },
+        {
+            "name": "All Projects (Root CMake)",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/lib/**",
+                "${workspaceFolder}/lib/CMSIS/Device/ST/STM32G4xx/Include",
+                "${workspaceFolder}/lib/CMSIS/Device/ST/STM32U5xx/Include",
+                "${workspaceFolder}/lib/CMSIS/Include",
+                "${workspaceFolder}/lib/CMSIS/Core/Include",
+                "${workspaceFolder}/lib/STM32G4xx_HAL_Driver/Inc",
+                "${workspaceFolder}/lib/STM32U5xx_HAL_Driver/Inc",
+                "${workspaceFolder}/lib/FreeRTOS/Source/include",
+                "${workspaceFolder}/lib/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure",
+                "${workspaceFolder}/lib/FreeRTOS/Source/CMSIS_RTOS_V2",
+                "${workspaceFolder}/lib/FreeRTOS/CMSIS_RTOS2/Include",
+                "${workspaceFolder}/lib/LVGL/lvgl"
+            ],
+            "defines": [
+                "USE_HAL_DRIVER"
+            ],
+            "compilerPath": "/usr/bin/arm-none-eabi-gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "compileCommands": "${workspaceFolder}/build/Debug/compile_commands.json",
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "intelliSenseMode": "gcc-arm"
+        }
+    ],
+    "version": 4
+}

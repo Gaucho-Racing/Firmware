@@ -1,0 +1,125 @@
+{
+    "files.associations": {
+        "*.h": "c",
+        "*.c": "c",
+        "*.py": "python",
+        "*.md": "markdown",
+        "*.ioc": "restructuredtext",
+        "*.s": "code-text-binary",
+        "*.svd": "restructuredtext"
+    },
+    "todo-tree.filtering.excludeGlobs": [
+        "**/lib/LVGL/**",
+        "**/Middlewares/**",
+        "**/Drivers/**"
+    ],
+    "cSpell.diagnosticLevel": "Hint",
+    
+    // CMake Extension Configuration
+    "cmake.configureOnOpen": true,
+    "cmake.configureOnEdit": false,
+    "cmake.sourceDirectory": "${workspaceFolder}",
+    "cmake.generator": "Ninja",
+    "cmake.preferredGenerators": [
+        "Ninja",
+        "Unix Makefiles"
+    ],
+    "cmake.buildArgs": [
+        "-j"
+    ],
+    "cmake.parallelJobs": 0,
+    "cmake.useCMakePresets": "always",
+    "cmake.defaultConfigurePreset": "Debug",
+    "cmake.defaultBuildPreset": "Debug",
+    "cmake.showOptionsMovedNotification": false,
+    "cmake.saveBeforeBuild": true,
+    "cmake.clearOutputBeforeBuild": true,
+    "cmake.allowCommentsInPresetsFile": true,
+    "cmake.options.statusBarVisibility": "visible",
+    "cmake.options.advanced": {
+        "build": {
+            "statusBarVisibility": "visible"
+        },
+        "launch": {
+            "statusBarVisibility": "hidden"
+        }
+    },
+    "cmake.defaultVariants": {
+        "buildType": {
+            "default": "Debug",
+            "description": "The build type",
+            "choices": {
+                "Debug": {
+                    "short": "Debug",
+                    "long": "Debug build with full debugging info",
+                    "buildType": "Debug"
+                },
+                "Release": {
+                    "short": "Release", 
+                    "long": "Release build with optimizations",
+                    "buildType": "Release"
+                },
+                "RelWithDebInfo": {
+                    "short": "RelWithDebInfo",
+                    "long": "Release build with debugging info",
+                    "buildType": "RelWithDebInfo"
+                },
+                "MinSizeRel": {
+                    "short": "MinSizeRel",
+                    "long": "Release build optimized for size",
+                    "buildType": "MinSizeRel"
+                }
+            }
+        }
+    },
+    
+    // C/C++ Extension Configuration
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "C_Cpp.default.intelliSenseMode": "gcc-arm",
+    "C_Cpp.intelliSenseEngine": "default",
+    "C_Cpp.intelliSenseEngineFallback": "enabled",
+    "C_Cpp.workspaceParsingPriority": "highest",
+    "C_Cpp.enhanced.colorization": true,
+    "C_Cpp.default.browse.limitSymbolsToIncludedHeaders": false,
+    
+    // File watchers and exclusions
+    "files.watcherExclude": {
+        "**/build/**": true,
+        "**/DashPanel/build/**": true,
+        "**/SteeringPanel/build/**": true,
+        "**/ECU/build/**": true,
+        "**/lib/LVGL/**": true,
+        "**/Middlewares/**": true,
+        "**/Drivers/STM32*/**": true
+    },
+    "search.exclude": {
+        "**/build": true,
+        "**/lib/LVGL": true,
+        "**/Middlewares": true,
+        "**/Drivers/STM32*": true
+    },
+    
+    // Platform-specific configurations
+    "[windows]": {
+        "cmake.configureEnvironment": {
+            "PATH": "${env:PATH};C:\\Program Files\\CMake\\bin;C:\\ninja;C:\\arm-gcc\\bin"
+        }
+    },
+    "[linux]": {
+        "cmake.configureEnvironment": {
+            "PATH": "${env:PATH}:/usr/bin:/usr/local/bin"
+        }
+    },
+    "[osx]": {
+        "cmake.configureEnvironment": {
+            "PATH": "${env:PATH}:/opt/homebrew/bin:/usr/local/bin"
+        }
+    },
+    
+    // Cross-platform flash tool configurations
+    "cmake.ctestArgs": [],
+    "cmake.environment": {
+        "NINJA_STATUS": "[%f/%t] ",
+        "CMAKE_GENERATOR": "Ninja"
+    }
+}

@@ -6,7 +6,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 # Get the lib directory (parent of CSVGenerator)
 LIB_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 # Set output directory for headers
-OUTPUT_DIR="$LIB_DIR/include"
+OUTPUT_DIR="$LIB_DIR/CAN"
 
 # Create output directory if it doesn't exist
 mkdir -p "$OUTPUT_DIR"

@@ -14,7 +14,7 @@ jobs:
     strategy:
       matrix:
         preset: [Debug, MinSizeRel, Release, RelWithDebInfo]
-        board: [ECU, DashPanel, SteeringPanel]
+        board: [ECU, DashPanel, CCU]
       fail-fast: false
       
     name: Build ${{ matrix.board }} (${{ matrix.preset }})
