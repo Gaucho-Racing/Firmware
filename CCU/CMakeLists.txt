@@ -73,6 +73,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
     ../lib/CAN
     Application/Inc
+    ../lib
 )
 
 # Add project symbols (macros)

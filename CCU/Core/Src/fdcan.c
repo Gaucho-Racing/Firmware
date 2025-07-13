@@ -24,7 +24,7 @@
 #include <stdint.h>
 
 #include "stm32g4xx_hal_fdcan.h"
-#include "utils.h"
+#include "Utility.h"
 #include "CANdler.h"
 
 FDCAN_TxHeaderTypeDef TxHeader = {
@@ -36,6 +36,8 @@ FDCAN_TxHeaderTypeDef TxHeader = {
     .TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
     .MessageMarker = 0 // also change this to a real address if you change fifo control
 };
+
+// https://github.com/Gaucho-Racing/Charger24/blob/main/src/main.cpp
 
 void writeMessage(BusCAN bus, uint16_t msgID, uint8_t destID, uint8_t data[], uint32_t length)
 {
@@ -97,22 +99,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
             Error_Handler();
         }
 
-        if ((RxHeader.Identifier & ~0xF00) == 0x2016)
-        {
-            uint8_t temp;
-            for(uint16_t i = 0; i < RxHeader.DataLength / 2; ++i) // Because DTI
-            {
-                temp = RxData[i];
-                RxData[i] = RxData[RxHeader.DataLength - i - 1];
-                RxData[RxHeader.DataLength - i - 1] = temp;
-            }
-
-            handleDtiCANMessage(RxHeader.Identifier, RxData, RxHeader.DataLength);
-        }
-        else
-        {
-            handleCANMessage((RxHeader.Identifier & 0x00FFF00) >> 8, (RxHeader.Identifier & 0xFF00000) >> 20, RxData, RxHeader.DataLength);
-        }
+        handleCANMessage((RxHeader.Identifier & 0x00FFF00) >> 8, (RxHeader.Identifier & 0xFF00000) >> 20, RxData, RxHeader.DataLength);
 
         // if (HAL_FDCAN_ActivateNotification(hfdcan, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0) != HAL_OK)
         // {

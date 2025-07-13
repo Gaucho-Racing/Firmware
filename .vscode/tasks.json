@@ -87,14 +87,14 @@
             "dependsOn": "Configure Debug"
         },
         {
-            "label": "Build SteeringPanel",
+            "label": "Build CCU",
             "type": "shell",
             "command": "cmake",
             "args": [
                 "--build",
                 "--preset=Debug",
                 "--target",
-                "SteeringPanel",
+                "CCU",
                 "--parallel"
             ],
             "group": "build",

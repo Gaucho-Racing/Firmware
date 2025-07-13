@@ -29,7 +29,7 @@ message(STATUS "Link Time Optimization (LTO): ENABLED for ARM cross-compilation"
 
 # Create a shared utilities library from lib/ (for host system)
 add_library(gaucho_utils STATIC
-    lib/utils.c
+    lib/Utility.c
 )
 
 target_include_directories(gaucho_utils PUBLIC

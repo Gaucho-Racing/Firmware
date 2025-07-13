@@ -26,11 +26,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "stateMachine.h"
-#include "pinging.h"
+#include "StateMachine.h"
+#include "CANdler.h"
 #include "msgIDs.h"
-#include "utils.h"
-#include "driving.h"
+#include "Utility.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -111,14 +110,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   // 10us ticks
-  HAL_SetTickFreq(TICK_FREQ);
-  LOGOMATIC("--Boot Finished at Tick %lu--\n", HAL_GetTick());
-
-  #ifdef ENABLE_THREE_MOTORS
-  LOGOMATIC("Setup for 3 motors\n");
-  #else
-  LOGOMATIC("Setup for 1 motor\n");
-  #endif
+  HAL_SetTickFreq(1000);
 
   /* USER CODE END 2 */
 
@@ -130,8 +122,6 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     stateMachineTick();
-    updateAnalogInputs();
-    pingSchedule();
   }
   /* USER CODE END 3 */
 }
@@ -198,23 +188,11 @@ void Error_Handler(void)
   /* USER CODE BEGIN Error_Handler_Debug */
   __disable_irq();
 
-  if (globalStatus.TractiveSystemVoltage >= TS_VOLTAGE_OFF_LIMIT)
-  {
-    globalStatus.ECUState = TS_DISCHARGE_OFF;
-  }
-  else
-  {
-    globalStatus.ECUState = ERRORSTATE;
-  }
-
   HAL_FDCAN_DeInit(&hfdcan1);
-  HAL_FDCAN_DeInit(&hfdcan2);
-  LOGOMATIC("\n--Error Handler Called--\nEverything Is Broken\n");
 
   HAL_Delay(3);
 
   HAL_FDCAN_Init(&hfdcan1);
-  HAL_FDCAN_Init(&hfdcan2);
 
   __enable_irq();
 
@@ -224,10 +202,7 @@ void Error_Handler(void)
 
   while(true)
   {
-    LOGOMATIC("So Cooked\n");
-    writeMessage(PrimaryBusCAN, MSG_DEBUG_2_0, GR_ALL, (uint8_t*)"ECU Fail", 8);
-    HAL_Delay(250);
-    writeMessage(DataBusCAN, MSG_DEBUG_FD, GR_ALL, (uint8_t*)"ECU Internal Failure", 20);
+    LOGOMATIC("So cooked");
     HAL_Delay(250);
   }
   /* USER CODE END Error_Handler_Debug */

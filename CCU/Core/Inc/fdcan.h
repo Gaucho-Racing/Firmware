@@ -33,6 +33,7 @@ extern "C" {
 
 #include "grIDs.h"
 #include "CANdler.h"
+#include "Utility.h"
 /* USER CODE END Includes */
 
 extern FDCAN_HandleTypeDef hfdcan1;
@@ -60,7 +61,7 @@ Write Message
 
 Adds a message to the HAL internal FIFO transmission queue to send when hardware allows.
 */
-void writeMessage(uint16_t msgID, uint8_t destID, uint8_t data[], uint32_t len);
+void writeMessage(BusCAN bus, uint16_t msgID, uint8_t destID, uint8_t data[], uint32_t length);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
