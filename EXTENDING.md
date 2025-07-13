@@ -66,11 +66,13 @@ Firmware-26/
 
 #### Shared Components (`lib/`)
 - **LVGL**: Graphics library used by both panels
+- **CMSIS**: ARM Cortex-M and STM32 device drivers shared across all boards
 - **utils.c/h**: Common data structures, math, utilities
 - **CSV Generator**: CAN message ID definitions
 - **CMake configs**: ARM toolchain setups
 - **STM32CubeMX Library**: Shared STM32 HAL and middleware code
   - `lib/stm32cubemx.cmake`: Functions for creating STM32U5 and STM32G4 targets
+  - `lib/cmake/cmsis-config.cmake`: Shared CMSIS configuration functions
   - Reduces code duplication across boards
   - Provides consistent HAL driver integration
 
@@ -96,7 +98,7 @@ NEW_SENSOR_DATA,0x123,8,100,ECU,New sensor readings
 
 **Command line alternative**:
 ```bash
-cmake --build --preset=debug --target generateCSVHeaders
+cmake --build --preset=Debug --target generateCSVHeaders
 ```
 
 #### Step 3: Use in Code
@@ -299,7 +301,92 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 )
 ```
 
-### 3. Add to Root CMake
+### 3. Configure CMSIS and MCU Support
+
+#### For Existing MCU Families (STM32G4, STM32U5)
+If your new board uses STM32G4 or STM32U5, the shared CMSIS will work automatically:
+
+```cmake
+# In your board's CMakeLists.txt
+
+# Include shared MCU configuration
+include("../lib/cmake/stm32g4-config.cmake")  # For STM32G4
+# OR
+include("../lib/cmake/stm32u5-config.cmake")  # For STM32U5
+
+# Include shared STM32CubeMX functions
+include("../lib/stm32cubemx.cmake")
+
+# Create target with shared CMSIS
+create_stm32g4_cubemx_target(stm32cubemx)  # For STM32G4
+# OR 
+create_stm32u5_cubemx_target(stm32cubemx)  # For STM32U5
+```
+
+#### For New MCU Families
+If adding a board with a new STM32 family (e.g., STM32H7):
+
+1. **Add CMSIS Device Drivers** to `lib/CMSIS/Device/ST/`:
+```bash
+lib/CMSIS/Device/ST/
+├── STM32G4xx/          # Existing
+├── STM32U5xx/          # Existing  
+└── STM32H7xx/          # New family
+    ├── Include/
+    │   ├── stm32h7xx.h
+    │   └── system_stm32h7xx.h
+    └── Source/
+        └── Templates/
+```
+
+2. **Create MCU Configuration** `lib/cmake/stm32h7-config.cmake`:
+```cmake
+# STM32H7 (Cortex-M7) configuration
+set(TARGET_FLAGS "-mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard")
+set(DEBUG_FLAGS "-O0 -g3")
+```
+
+3. **Add CubeMX Function** in `lib/stm32cubemx.cmake`:
+```cmake
+function(create_stm32h7_cubemx_target TARGET_NAME)
+    add_library(${TARGET_NAME} INTERFACE)
+    
+    target_compile_definitions(${TARGET_NAME} INTERFACE 
+        USE_HAL_DRIVER 
+        STM32H743xx
+        $<$<CONFIG:Debug>:DEBUG>
+    )
+    
+    target_include_directories(${TARGET_NAME} INTERFACE
+        Core/Inc
+        Drivers/STM32H7xx_HAL_Driver/Inc
+        Drivers/STM32H7xx_HAL_Driver/Inc/Legacy
+        ../lib/CMSIS/Device/ST/STM32H7xx/Include
+        ../lib/CMSIS/Include
+    )
+    
+    # Link shared CMSIS
+    link_shared_cmsis(${TARGET_NAME} "STM32H7")
+    
+    # Add HAL sources...
+endfunction()
+```
+
+4. **Update CMSIS Config** in `lib/cmake/cmsis-config.cmake`:
+```cmake
+function(create_shared_cmsis_stm32h7 TARGET_NAME)
+    add_library(${TARGET_NAME} INTERFACE)
+    target_include_directories(${TARGET_NAME} INTERFACE
+        ../lib/CMSIS/Device/ST/STM32H7xx/Include
+        ../lib/CMSIS/Include
+        ../lib/CMSIS/Core/Include
+    )
+endfunction()
+
+# Update link_shared_cmsis function to handle STM32H7...
+```
+
+### 4. Add to Root CMake
 Edit main `CMakeLists.txt`:
 ```cmake
 # Add new board to ExternalProject
@@ -317,7 +404,7 @@ add_custom_target(all-boards
 )
 ```
 
-### 4. Create VS Code Debug Configuration
+### 5. Create VS Code Debug Configuration
 Add to `.vscode/launch.json`:
 ```json
 {
@@ -613,13 +700,13 @@ xcode-select --install
 The build system works identically across platforms:
 ```bash
 # Configure (generates Ninja files)
-cmake --preset=debug
+cmake --preset=Debug
 
 # Build all boards with parallel processing
-cmake --build --preset=debug --parallel
+cmake --build --preset=Debug --parallel
 
 # Build individual board
-cmake --build --preset=debug --target ECU --parallel
+cmake --build --preset=Debug --target ECU --parallel
 
 # Clean build
 rm -rf build      # Linux/macOS

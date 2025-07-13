@@ -48,7 +48,7 @@ void writeMessage(uint16_t msgID, uint8_t destID, uint8_t data[], uint32_t lengt
   FDCAN_HandleTypeDef *handle;
   handle = &hfdcan1;
 
-  FDCAN_ProtocolStatusTypeDef protocolStatus = {};
+  FDCAN_ProtocolStatusTypeDef protocolStatus = {0};
   HAL_FDCAN_GetProtocolStatus(handle, &protocolStatus);
   if (protocolStatus.BusOff)
   {

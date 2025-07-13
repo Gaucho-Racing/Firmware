@@ -36,12 +36,12 @@ arm-none-eabi-gdb --version  # Should show ARM GDB
 ### 1. Build Firmware with Debug Info
 ```bash
 # Configure for debug (includes debug symbols)
-cmake --preset=debug
+cmake --preset=Debug
 
 # Build the board you want to debug
-cmake --build --preset=debug --target ECU
-cmake --build --preset=debug --target DashPanel  
-cmake --build --preset=debug --target SteeringPanel
+cmake --build --preset=Debug --target ECU
+cmake --build --preset=Debug --target DashPanel  
+cmake --build --preset=Debug --target SteeringPanel
 ```
 
 ### 2. Start Debugging in VS Code
@@ -339,6 +339,28 @@ Connect ST-Link V2/V3 to target board SWD pins:
 - Check SWD connection (SWDIO, SWCLK, GND)
 - Ensure target MCU is powered and not in reset
 
+### Build and Configuration Issues
+
+#### "CMSIS headers not found" or "undefined reference to CMSIS"
+**Solutions**:
+- Verify shared CMSIS structure: `lib/CMSIS/Device/ST/STM32xxx/Include/`
+- Check CMake configuration is using shared CMSIS paths
+- Ensure correct MCU family configured in `lib/cmake/stm32xx-config.cmake`
+- Regenerate build files: `cmake --preset=Debug`
+- Verify board-specific HAL drivers exist in `BoardName/Drivers/STM32xxx_HAL_Driver/`
+
+#### "Multiple definitions of CMSIS symbols"
+**Solutions**:
+- Ensure only shared CMSIS is included (not board-specific copies)
+- Check that include paths point to `lib/CMSIS/` not `BoardName/Drivers/CMSIS/`
+- Clean and rebuild: VS Code → "Tasks: Run Task" → "Clean All"
+
+#### "Wrong MCU device definitions"
+**Causes and Solutions**:
+- **Wrong MCU family**: Verify `create_stm32g4_cubemx_target()` vs `create_stm32u5_cubemx_target()`
+- **Wrong device model**: Check compile definitions (STM32U599xx vs STM32G474xx)
+- **Missing device support**: Add new device to `lib/CMSIS/Device/ST/` if needed
+
 ### Debug Performance Issues
 
 #### Slow debugging
@@ -362,6 +384,27 @@ Connect ST-Link V2/V3 to target board SWD pins:
 - Verify CPU frequency in configuration
 - Enable ITM in code: `CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk`
 - Check SWO frequency compatibility
+
+#### IntelliSense Configuration Issues
+**Problem**: VS Code cannot find header files (red squiggles under `#include` statements)
+
+**Solutions**:
+1. **Select correct C++ configuration**: 
+   - Press `Ctrl+Shift+P` → "C/C++: Select a Configuration"
+   - Choose the configuration matching your current board:
+     - "SteeringPanel (STM32U5)" for SteeringPanel files
+     - "DashPanel (STM32U5)" for DashPanel files  
+     - "ECU (STM32G4)" for ECU files
+
+2. **Force IntelliSense reload**:
+   - Press `Ctrl+Shift+P` → "C/C++: Reset IntelliSense Database"
+   - Or restart VS Code
+
+3. **Verify compile commands**:
+   - Ensure the board is built: `Tasks: Run Task` → "Build [BoardName]"
+   - Check that `BoardName/build/compile_commands.json` exists
+
+**Root Cause**: Each board has its own compile commands and include paths. VS Code needs to use the correct configuration for the files you're editing.
 
 ## Debug Best Practices
 
@@ -396,3 +439,14 @@ Connect ST-Link V2/V3 to target board SWD pins:
 - **STM32CubeMonitor**: Real-time variable monitoring
 - **STM32CubeProgrammer**: Flash programming and option bytes
 - **ARM Development Studio**: Advanced profiling and optimization
+
+## Project Architecture
+
+### Shared Driver Architecture
+All STM32 drivers (CMSIS and HAL) are shared across boards in the `lib/` directory:
+- `lib/CMSIS/` - Shared ARM Cortex-M and STM32 device drivers
+- `lib/STM32G4xx_HAL_Driver/` - Shared STM32G4 HAL drivers for ECU
+- `lib/STM32U5xx_HAL_Driver/` - Shared STM32U5 HAL drivers for DashPanel and SteeringPanel
+
+This eliminates code duplication and ensures all boards use consistent driver versions.
+See [lib/SHARED_DRIVERS.md](lib/SHARED_DRIVERS.md) for detailed information.

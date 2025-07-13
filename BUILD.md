@@ -116,6 +116,42 @@ Ninja automatically uses all available CPU cores for optimal build performance.
 - Shared library changes trigger appropriate rebuilds
 - Proper dependency tracking across all components
 
+## Shared Driver Architecture
+
+### CMSIS Driver Sharing
+The build system uses a centralized CMSIS (Cortex Microcontroller Software Interface Standard) configuration to eliminate duplication and ensure consistency across boards:
+
+**Structure**:
+```
+lib/CMSIS/                          # Shared CMSIS for all boards
+├── Core/                           # ARM Cortex-M core definitions
+├── Device/ST/
+│   ├── STM32G4xx/                 # STM32G4 device drivers (ECU)
+│   └── STM32U5xx/                 # STM32U5 device drivers (Panels)
+└── Include/                        # Common CMSIS headers
+```
+
+**Board Mapping**:
+- **ECU (STM32G4)** → `lib/CMSIS/Device/ST/STM32G4xx/`
+- **DashPanel & SteeringPanel (STM32U5)** → `lib/CMSIS/Device/ST/STM32U5xx/`
+
+**Benefits**:
+- Eliminates CMSIS driver duplication across boards
+- Ensures all boards use consistent CMSIS versions
+- Simplifies updates (single location for CMSIS changes)
+- Maintains board-specific HAL drivers where needed
+
+**Preserved Board-Specific Components**:
+```
+BoardName/Drivers/
+├── CMSIS/                          # Not used for includes (preserved for compatibility)
+├── STM32xxxxx_HAL_Driver/         # Board-specific HAL drivers
+└── ...
+BoardName/Middlewares/              # Board-specific middleware (unchanged)
+```
+
+The build system automatically selects the correct CMSIS variant based on the target MCU family while preserving board-specific HAL drivers and middlewares.
+
 ## Performance Benefits
 
 ### Ninja vs Make Comparison
@@ -219,8 +255,8 @@ Typical memory usage per board (debug builds):
 **For debugging build issues or CI/CD:**
 ```bash
 # Configure and build via command line
-cmake --preset=debug
-cmake --build --preset=debug --target all-boards --parallel
+cmake --preset=Debug
+cmake --build --preset=Debug --target all-boards --parallel
 
 # Or build boards individually
 cd DashPanel && cmake -S . -B build -G Ninja && cmake --build build
@@ -262,7 +298,7 @@ cmake --version
 # Ubuntu/Debian: Use kitware repository for latest cmake
 ```
 
-#### "No such file or directory: build/debug"
+#### "No such file or directory: build/Debug"
 **Solution**: Configure project first in VS Code
 - `Ctrl+Shift+P` → "CMake: Configure"
 - Or run "Build All Boards" task which auto-configures
@@ -285,7 +321,7 @@ cmake --version
 
 #### Fast Builds with Ninja
 - **Ninja generator**: Faster than Make, enabled by default
-- **Parallel builds**: Use `--parallel` flag: `cmake --build --preset=debug --parallel`
+- **Parallel builds**: Use `--parallel` flag: `cmake --build --preset=Debug --parallel`
 - **Incremental builds**: Ninja tracks dependencies precisely, minimal rebuilds
 - **ccache support**: Use ccache if available: `export CC="ccache arm-none-eabi-gcc"`
 
@@ -340,37 +376,37 @@ You'll need one of these flashing tools installed:
 #### Using st-flash (Linux/macOS)
 ```bash
 # Flash DashPanel
-st-flash write build/debug/DashPanel-prefix/src/DashPanel-build/DashPanel.bin 0x08000000
+st-flash write build/Debug/DashPanel-prefix/src/DashPanel-build/DashPanel.bin 0x08000000
 
 # Flash SteeringPanel  
-st-flash write build/debug/SteeringPanel-prefix/src/SteeringPanel-build/SteeringPanel.bin 0x08000000
+st-flash write build/Debug/SteeringPanel-prefix/src/SteeringPanel-build/SteeringPanel.bin 0x08000000
 
 # Flash ECU
-st-flash write build/debug/ECU-prefix/src/ECU-build/ECU.bin 0x08000000
+st-flash write build/Debug/ECU-prefix/src/ECU-build/ECU.bin 0x08000000
 ```
 
 #### Using OpenOCD (All platforms)
 ```bash
 # Flash DashPanel (STM32U5)
-openocd -f interface/stlink-v2-1.cfg -f target/stm32u5x.cfg -c "program build/debug/DashPanel-prefix/src/DashPanel-build/DashPanel.elf verify reset exit"
+openocd -f interface/stlink-v2-1.cfg -f target/stm32u5x.cfg -c "program build/Debug/DashPanel-prefix/src/DashPanel-build/DashPanel.elf verify reset exit"
 
 # Flash SteeringPanel (STM32U5)
-openocd -f interface/stlink-v2-1.cfg -f target/stm32u5x.cfg -c "program build/debug/SteeringPanel-prefix/src/SteeringPanel-build/SteeringPanel.elf verify reset exit"
+openocd -f interface/stlink-v2-1.cfg -f target/stm32u5x.cfg -c "program build/Debug/SteeringPanel-prefix/src/SteeringPanel-build/SteeringPanel.elf verify reset exit"
 
 # Flash ECU (STM32G4)
-openocd -f interface/stlink-v2-1.cfg -f target/stm32g4x.cfg -c "program build/debug/ECU-prefix/src/ECU-build/ECU.elf verify reset exit"
+openocd -f interface/stlink-v2-1.cfg -f target/stm32g4x.cfg -c "program build/Debug/ECU-prefix/src/ECU-build/ECU.elf verify reset exit"
 ```
 
 #### Using STM32CubeProgrammer (All platforms)
 ```bash
 # Flash DashPanel
-STM32_Programmer_CLI -c port=SWD -w build/debug/DashPanel-prefix/src/DashPanel-build/DashPanel.elf -v -rst
+STM32_Programmer_CLI -c port=SWD -w build/Debug/DashPanel-prefix/src/DashPanel-build/DashPanel.elf -v -rst
 
 # Flash SteeringPanel
-STM32_Programmer_CLI -c port=SWD -w build/debug/SteeringPanel-prefix/src/SteeringPanel-build/SteeringPanel.elf -v -rst
+STM32_Programmer_CLI -c port=SWD -w build/Debug/SteeringPanel-prefix/src/SteeringPanel-build/SteeringPanel.elf -v -rst
 
 # Flash ECU
-STM32_Programmer_CLI -c port=SWD -w build/debug/ECU-prefix/src/ECU-build/ECU.elf -v -rst
+STM32_Programmer_CLI -c port=SWD -w build/Debug/ECU-prefix/src/ECU-build/ECU.elf -v -rst
 ```
 
 ### VS Code Integration (Recommended)
@@ -461,10 +497,10 @@ Flash firmware directly from VS Code using the configured tasks:
 **Alternative command line** (for CI/CD or troubleshooting):
 ```bash
 # 1. Build firmware
-cmake --build --preset=debug --target ECU --parallel
+cmake --build --preset=Debug --target ECU --parallel
 
 # 2. Flash immediately (using st-flash)
-st-flash write build/debug/ECU-prefix/src/ECU-build/ECU.bin 0x08000000
+st-flash write build/Debug/ECU-prefix/src/ECU-build/ECU.bin 0x08000000
 
 # 3. Monitor serial output (optional)
 # See DEBUGGING.md for serial monitor setup
@@ -479,15 +515,15 @@ st-flash write build/debug/ECU-prefix/src/ECU-build/ECU.bin 0x08000000
 ### Basic Commands
 ```bash
 # Configure project
-cmake --preset=debug
+cmake --preset=Debug
 
 # Build all boards
-cmake --build --preset=debug --target all-boards --parallel
+cmake --build --preset=Debug --target all-boards --parallel
 
 # Build individual boards  
-cmake --build --preset=debug --target DashPanel --parallel
-cmake --build --preset=debug --target SteeringPanel --parallel
-cmake --build --preset=debug --target ECU --parallel
+cmake --build --preset=Debug --target DashPanel --parallel
+cmake --build --preset=Debug --target SteeringPanel --parallel
+cmake --build --preset=Debug --target ECU --parallel
 
 # Clean all builds
 rm -rf build DashPanel/build SteeringPanel/build ECU/build
@@ -496,10 +532,10 @@ rm -rf build DashPanel/build SteeringPanel/build ECU/build
 ### Quick Flash Commands
 ```bash
 # Flash using st-flash (Linux/macOS)
-st-flash write build/debug/DashPanel-prefix/src/DashPanel-build/DashPanel.bin 0x08000000
-st-flash write build/debug/SteeringPanel-prefix/src/SteeringPanel-build/SteeringPanel.bin 0x08000000
-st-flash write build/debug/ECU-prefix/src/ECU-build/ECU.bin 0x08000000
+st-flash write build/Debug/DashPanel-prefix/src/DashPanel-build/DashPanel.bin 0x08000000
+st-flash write build/Debug/SteeringPanel-prefix/src/SteeringPanel-build/SteeringPanel.bin 0x08000000
+st-flash write build/Debug/ECU-prefix/src/ECU-build/ECU.bin 0x08000000
 
 # Flash using STM32CubeProgrammer (All platforms)
-STM32_Programmer_CLI -c port=SWD -w build/debug/DashPanel-prefix/src/DashPanel-build/DashPanel.elf -v -rst
+STM32_Programmer_CLI -c port=SWD -w build/Debug/DashPanel-prefix/src/DashPanel-build/DashPanel.elf -v -rst
 ```

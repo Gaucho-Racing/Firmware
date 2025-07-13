@@ -99,5 +99,9 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     # Add user defined libraries
 )
 
+# Enable Link Time Optimization for smaller binaries and better performance
+set_property(TARGET ${CMAKE_PROJECT_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+set_property(TARGET ${CMAKE_PROJECT_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION_DEBUG TRUE)
+
 # Note: CSV header generation is now handled by the root CMakeLists.txt
 # Headers are generated once for all boards before building

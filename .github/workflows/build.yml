@@ -1,15 +1,47 @@
-name: Build
+name: Build Firmware Suite
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
+  workflow_dispatch:
+  workflow_call:
+  
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        preset: [Debug, MinSizeRel, Release, RelWithDebInfo]
+        board: [ECU, DashPanel, SteeringPanel]
+      fail-fast: false
+      
+    name: Build ${{ matrix.board }} (${{ matrix.preset }})
+    
     steps:
-    - uses: actions/checkout@v4
-    - name: Compile Check
-      run: echo "Implement a compile check here when ready!"
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake ninja-build gcc-arm-none-eabi --no-install-recommends --no-install-suggests
+        
+    - name: Verify Toolchain
+      run: |
+        arm-none-eabi-gcc --version
+        cmake --version
+        ninja --version
+        
+    - name: Build ${{ matrix.board }}
+      working-directory: ${{ matrix.board }}
+      run: |
+        cmake --preset=${{ matrix.preset }}
+        ninja -C build/${{ matrix.preset }}
+      
+    - name: Check File
+      working-directory: ${{ matrix.board }}/build/${{ matrix.preset }}
+      run: |
+        arm-none-eabi-size ${{ matrix.board }}.elf
+        arm-none-eabi-objdump -h ${{ matrix.board }}.elf | grep -E "(\.text|\.data|\.bss|\.rodata)"

@@ -69,16 +69,18 @@ add_board_specific_sources(stm32cubemx
 
 # The ordering is bad sorry
 target_include_directories(lvgl PUBLIC
-    Drivers/CMSIS/Device/ST/STM32U5xx/Include
-    Drivers/CMSIS/Include
+    # Use shared CMSIS from lib directory
+    ../lib/CMSIS/Device/ST/STM32U5xx/Include
+    ../lib/CMSIS/Include
     ../lib/LVGL
-    Middlewares/Third_Party/FreeRTOS/Source/include
-    Middlewares/Third_Party/CMSIS/RTOS2/Include
+    ../lib/FreeRTOS/Source/include
+    ../lib/FreeRTOS/CMSIS_RTOS2/Include
     Core/Inc
-    Drivers/STM32U5xx_HAL_Driver/Inc
-    Drivers/STM32U5xx_HAL_Driver/Inc/Legacy
-    Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/
-    Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/
+    # Use shared HAL driver from lib directory
+    ../lib/STM32U5xx_HAL_Driver/Inc
+    ../lib/STM32U5xx_HAL_Driver/Inc/Legacy
+    ../lib/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/
+    ../lib/FreeRTOS/Source/CMSIS_RTOS_V2/
     Application/Inc/
 )
 
@@ -131,6 +133,10 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     # Add user defined libraries
     lvgl
 )
+
+# Enable Link Time Optimization for smaller binaries and better performance
+set_property(TARGET ${CMAKE_PROJECT_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+set_property(TARGET ${CMAKE_PROJECT_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION_DEBUG TRUE)
 
 # Note: CSV header generation is now handled by the root CMakeLists.txt
 # Headers are generated once for all boards before building

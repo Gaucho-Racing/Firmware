@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.25)
 
+# Enable CMake policies for Link Time Optimization
+cmake_policy(SET CMP0069 NEW)  # Enable INTERPROCEDURAL_OPTIMIZATION property
+
 # Set project name and description
 project(Firmware-26
     VERSION 26.0.0
@@ -22,6 +25,7 @@ endif()
 
 message(STATUS "Building Gaucho Racing Firmware Suite")
 message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+message(STATUS "Link Time Optimization (LTO): ENABLED for ARM cross-compilation")
 
 # Create a shared utilities library from lib/ (for host system)
 add_library(gaucho_utils STATIC
@@ -31,6 +35,13 @@ add_library(gaucho_utils STATIC
 target_include_directories(gaucho_utils PUBLIC
     lib
 )
+
+# Configure shared libraries
+# Both CMSIS and HAL drivers are now shared across all boards in lib/
+# - lib/CMSIS/ contains shared ARM Cortex-M and STM32 device drivers
+# - lib/STM32G4xx_HAL_Driver/ contains shared STM32G4 HAL drivers for ECU
+# - lib/STM32U5xx_HAL_Driver/ contains shared STM32U5 HAL drivers for DashPanel and SteeringPanel
+# Each board's Core/ and Application/ directories contain board-specific code
 
 # Add shared CSVGenerator header generation
 # This runs once and generates headers for all boards in lib/include

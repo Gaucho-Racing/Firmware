@@ -7,44 +7,44 @@
     },
     "configurePresets": [
         {
-            "name": "debug",
+            "name": "Debug",
             "displayName": "Debug",
             "description": "Debug build with full debugging information and no optimization",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/debug",
+            "binaryDir": "${sourceDir}/build/Debug",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
             }
         },
         {
-            "name": "release",
+            "name": "Release",
             "displayName": "Release",
             "description": "Release build with full optimization and no debugging information",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/release",
+            "binaryDir": "${sourceDir}/build/Release",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
             }
         },
         {
-            "name": "minsizerel",
+            "name": "MinSizeRel",
             "displayName": "MinSizeRel",
             "description": "Minimum size release build optimized for binary size",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/minsizerel",
+            "binaryDir": "${sourceDir}/build/MinSizeRel",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "MinSizeRel",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
             }
         },
         {
-            "name": "relwithdebinfo",
-            "displayName": "RelWithDebInfo", 
+            "name": "RelWithDebInfo",
+            "displayName": "RelWithDebInfo",
             "description": "Release build with debugging information",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/relwithdebinfo",
+            "binaryDir": "${sourceDir}/build/RelWithDebInfo",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "RelWithDebInfo",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
@@ -53,78 +53,30 @@
     ],
     "buildPresets": [
         {
-            "name": "debug",
+            "name": "Debug",
             "displayName": "Debug Build",
-            "configurePreset": "debug",
+            "configurePreset": "Debug",
             "description": "Build all targets in debug mode",
             "jobs": 0
         },
         {
-            "name": "debug-panels",
-            "displayName": "Debug - Panels Only",
-            "configurePreset": "debug",
-            "description": "Build only panel firmware in debug mode",
-            "targets": ["DashPanel", "SteeringPanel"],
-            "jobs": 0
-        },
-        {
-            "name": "debug-ecu",
-            "displayName": "Debug - ECU Only",
-            "configurePreset": "debug", 
-            "description": "Build only ECU firmware in debug mode",
-            "targets": ["ECU"],
-            "jobs": 0
-        },
-        {
-            "name": "release",
+            "name": "Release",
             "displayName": "Release Build",
-            "configurePreset": "release",
+            "configurePreset": "Release",
             "description": "Build all targets in release mode",
             "jobs": 0
         },
         {
-            "name": "release-panels",
-            "displayName": "Release - Panels Only",
-            "configurePreset": "release",
-            "description": "Build only panel firmware in release mode",
-            "targets": ["DashPanel", "SteeringPanel"],
-            "jobs": 0
-        },
-        {
-            "name": "release-ecu",
-            "displayName": "Release - ECU Only",
-            "configurePreset": "release",
-            "description": "Build only ECU firmware in release mode", 
-            "targets": ["ECU"],
-            "jobs": 0
-        },
-        {
-            "name": "minsizerel",
+            "name": "MinSizeRel",
             "displayName": "MinSizeRel Build",
-            "configurePreset": "minsizerel",
+            "configurePreset": "MinSizeRel",
             "description": "Build all targets optimized for minimum size",
             "jobs": 0
         },
         {
-            "name": "minsizerel-panels",
-            "displayName": "MinSizeRel - Panels Only",
-            "configurePreset": "minsizerel",
-            "description": "Build only panel firmware optimized for minimum size",
-            "targets": ["DashPanel", "SteeringPanel"],
-            "jobs": 0
-        },
-        {
-            "name": "minsizerel-ecu",
-            "displayName": "MinSizeRel - ECU Only", 
-            "configurePreset": "minsizerel",
-            "description": "Build only ECU firmware optimized for minimum size",
-            "targets": ["ECU"],
-            "jobs": 0
-        },
-        {
-            "name": "relwithdebinfo",
+            "name": "RelWithDebInfo",
             "displayName": "RelWithDebInfo Build",
-            "configurePreset": "relwithdebinfo",
+            "configurePreset": "RelWithDebInfo",
             "description": "Build all targets in release mode with debug info",
             "jobs": 0
         }

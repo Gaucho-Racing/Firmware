@@ -11,28 +11,28 @@
             }
         },
         {
-            "name": "debug",
+            "name": "Debug",
             "inherits": "default",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
             }
         },
         {
-            "name": "relwithdebinfo",
+            "name": "RelWithDebInfo",
             "inherits": "default",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "RelWithDebInfo"
             }
         },
         {
-            "name": "release",
+            "name": "Release",
             "inherits": "default",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
             }
         },
         {
-            "name": "minsizerel",
+            "name": "MinSizeRel",
             "inherits": "default",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "MinSizeRel"
@@ -41,20 +41,20 @@
     ],
     "buildPresets": [
         {
-            "name": "debug",
-            "configurePreset": "debug"
+            "name": "Debug",
+            "configurePreset": "Debug"
         },
         {
-            "name": "relwithdebinfo",
-            "configurePreset": "relwithdebinfo"
+            "name": "RelWithDebInfo",
+            "configurePreset": "RelWithDebInfo"
         },
         {
-            "name": "release",
-            "configurePreset": "release"
+            "name": "Release",
+            "configurePreset": "Release"
         },
         {
-            "name": "minsizerel",
-            "configurePreset": "minsizerel"
+            "name": "MinSizeRel",
+            "configurePreset": "MinSizeRel"
         }
     ]
 }

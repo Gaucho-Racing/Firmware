@@ -1,6 +1,9 @@
 # STM32CubeMX Shared Library Functions
 # Provides common functionality for STM32CubeMX-generated targets
 
+# Include shared CMSIS configuration
+include("${CMAKE_CURRENT_LIST_DIR}/cmake/cmsis-config.cmake")
+
 # Helper function to add source files only if they exist
 function(add_sources_if_exist TARGET_NAME)
     foreach(SOURCE_FILE ${ARGN})
@@ -25,15 +28,20 @@ function(create_stm32u5_cubemx_target TARGET_NAME)
     # STM32U5 include directories (relative to board root)
     target_include_directories(${TARGET_NAME} INTERFACE
         Core/Inc
-        Drivers/STM32U5xx_HAL_Driver/Inc
-        Drivers/STM32U5xx_HAL_Driver/Inc/Legacy
-        Drivers/CMSIS/Device/ST/STM32U5xx/Include
-        Drivers/CMSIS/Include
-        Middlewares/Third_Party/FreeRTOS/Source/include/
-        Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/
-        Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/
-        Middlewares/Third_Party/CMSIS/RTOS2/Include/
+        # Use shared HAL driver from lib directory
+        ../lib/STM32U5xx_HAL_Driver/Inc
+        ../lib/STM32U5xx_HAL_Driver/Inc/Legacy
+        # Use shared CMSIS from lib directory
+        ../lib/CMSIS/Device/ST/STM32U5xx/Include
+        ../lib/CMSIS/Include
+        ../lib/FreeRTOS/Source/include/
+        ../lib/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/
+        ../lib/FreeRTOS/Source/CMSIS_RTOS_V2/
+        ../lib/FreeRTOS/CMSIS_RTOS2/Include/
     )
+    
+    # Link shared CMSIS library for STM32U5
+    link_shared_cmsis(${TARGET_NAME} "STM32U5")
     
     # Core STM32U5 sources - only add if they exist
     add_sources_if_exist(${TARGET_NAME}
@@ -70,70 +78,70 @@ function(create_stm32u5_cubemx_target TARGET_NAME)
     # STM32U5 HAL/LL Driver sources - only add if they exist
     add_sources_if_exist(${TARGET_NAME}
         Core/Src/system_stm32u5xx.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_rcc.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_rcc_ex.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_flash.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_flash_ex.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_gpio.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_exti.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_dma.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_dma_ex.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_cortex.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_pwr.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_pwr_ex.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_tim.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_tim_ex.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_uart.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_uart_ex.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_usart.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_usart_ex.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_cordic.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_crc.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_crc_ex.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_dcache.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_dma2d.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_fdcan.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_gpu2d.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_gtzc.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_hash.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_hash_ex.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_icache.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_ltdc.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_ltdc_ex.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_mdf.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_ospi.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_rng.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_rng_ex.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_rtc.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_rtc_ex.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_sd.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_sd_ex.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_ll_sdmmc.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_ll_dlyb.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_spi.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_spi_ex.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_adc.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_adc_ex.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_ll_adc.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_i2c.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_i2c_ex.c
-        Drivers/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_dsi.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_rcc.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_rcc_ex.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_flash.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_flash_ex.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_gpio.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_exti.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_dma.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_dma_ex.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_cortex.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_pwr.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_pwr_ex.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_tim.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_tim_ex.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_uart.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_uart_ex.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_usart.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_usart_ex.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_cordic.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_crc.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_crc_ex.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_dcache.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_dma2d.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_fdcan.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_gpu2d.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_gtzc.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_hash.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_hash_ex.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_icache.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_ltdc.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_ltdc_ex.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_mdf.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_ospi.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_rng.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_rng_ex.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_rtc.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_rtc_ex.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_sd.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_sd_ex.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_ll_sdmmc.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_ll_dlyb.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_spi.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_spi_ex.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_adc.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_adc_ex.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_ll_adc.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_i2c.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_i2c_ex.c
+        ../lib/STM32U5xx_HAL_Driver/Src/stm32u5xx_hal_dsi.c
     )
     
     # FreeRTOS sources - only add if they exist
     add_sources_if_exist(${TARGET_NAME}
-        Middlewares/Third_Party/FreeRTOS/Source/croutine.c
-        Middlewares/Third_Party/FreeRTOS/Source/event_groups.c
-        Middlewares/Third_Party/FreeRTOS/Source/list.c
-        Middlewares/Third_Party/FreeRTOS/Source/queue.c
-        Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c
-        Middlewares/Third_Party/FreeRTOS/Source/tasks.c
-        Middlewares/Third_Party/FreeRTOS/Source/timers.c
-        Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c
-        Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/port.c
-        Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c
-        Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c
+        ../lib/FreeRTOS/Source/croutine.c
+        ../lib/FreeRTOS/Source/event_groups.c
+        ../lib/FreeRTOS/Source/list.c
+        ../lib/FreeRTOS/Source/queue.c
+        ../lib/FreeRTOS/Source/stream_buffer.c
+        ../lib/FreeRTOS/Source/tasks.c
+        ../lib/FreeRTOS/Source/timers.c
+        ../lib/FreeRTOS/Source/portable/MemMang/heap_4.c
+        ../lib/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/port.c
+        ../lib/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c
+        ../lib/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c
     )
 endfunction()
 
@@ -152,11 +160,16 @@ function(create_stm32g4_cubemx_target TARGET_NAME)
     # STM32G4 include directories (relative to board root)
     target_include_directories(${TARGET_NAME} INTERFACE
         Core/Inc
-        Drivers/STM32G4xx_HAL_Driver/Inc
-        Drivers/STM32G4xx_HAL_Driver/Inc/Legacy
-        Drivers/CMSIS/Device/ST/STM32G4xx/Include
-        Drivers/CMSIS/Include
+        # Use shared HAL driver from lib directory
+        ../lib/STM32G4xx_HAL_Driver/Inc
+        ../lib/STM32G4xx_HAL_Driver/Inc/Legacy
+        # Use shared CMSIS from lib directory
+        ../lib/CMSIS/Device/ST/STM32G4xx/Include
+        ../lib/CMSIS/Include
     )
+    
+    # Link shared CMSIS library for STM32G4
+    link_shared_cmsis(${TARGET_NAME} "STM32G4")
     
     # Core STM32G4 sources - only add if they exist
     add_sources_if_exist(${TARGET_NAME}
@@ -176,29 +189,29 @@ function(create_stm32g4_cubemx_target TARGET_NAME)
     # STM32G4 HAL/LL Driver sources - only add if they exist
     add_sources_if_exist(${TARGET_NAME}
         Core/Src/system_stm32g4xx.c
-        Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c
-        Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.c
-        Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_adc.c
-        Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c
-        Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c
-        Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c
-        Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.c
-        Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.c
-        Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.c
-        Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c
-        Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.c
-        Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c
-        Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.c
-        Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c
-        Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.c
-        Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c
-        Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c
-        Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c
-        Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c
-        Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c
-        Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_usart.c
-        Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_usart_ex.c
-        Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_fdcan.c
+        ../lib/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c
+        ../lib/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.c
+        ../lib/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_adc.c
+        ../lib/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c
+        ../lib/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c
+        ../lib/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c
+        ../lib/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.c
+        ../lib/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.c
+        ../lib/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.c
+        ../lib/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c
+        ../lib/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.c
+        ../lib/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c
+        ../lib/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.c
+        ../lib/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c
+        ../lib/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.c
+        ../lib/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c
+        ../lib/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c
+        ../lib/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c
+        ../lib/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c
+        ../lib/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c
+        ../lib/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_usart.c
+        ../lib/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_usart_ex.c
+        ../lib/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_fdcan.c
     )
 endfunction()
 

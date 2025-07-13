@@ -1,4 +1,4 @@
-# Gaucho Racing Firmware Suite - Season 26
+# Firmware Suite - GR26
 
 An implementation of all GR26 low voltage firmware in mega-repo format. This repository contains firmware for three embedded systems that work together to control the Gaucho Racing electric vehicle.
 
@@ -10,18 +10,23 @@ This firmware suite manages critical vehicle systems including power management,
 
 ```
 Firmware-26/
-├── ECU/                    # Engine Control Unit (STM32G4)
+├── ECU/                    # Electronics Control Unit (STM32G4)
 │   ├── Application/        # ECU-specific application code
 │   └── Core/              # STM32 HAL and system files
 ├── DashPanel/             # Dashboard Panel (STM32U5 + LVGL)
 │   ├── Application/        # Dashboard UI and logic
 │   ├── TouchGFX/          # UI framework files
-│   └── Core/              # STM32 HAL and system files  
+│   ├── Core/              # STM32 HAL and system files
+│   └── Middlewares/       # STM32U5 FreeRTOS and middleware only
 ├── SteeringPanel/         # Steering Wheel Panel (STM32U5 + LVGL)
 │   ├── Application/        # Steering wheel UI and controls
-│   └── Core/              # STM32 HAL and system files
-└── lib/                   # Shared libraries and utilities
+│   ├── Core/              # STM32 HAL and system files
+│   └── Middlewares/       # STM32U5 FreeRTOS and middleware only
+└── lib/                   # Shared libraries and drivers
     ├── LVGL/              # Shared LVGL graphics library
+    ├── CMSIS/             # Shared ARM Cortex-M and STM32 drivers
+    ├── STM32G4xx_HAL_Driver/  # Shared STM32G4 HAL drivers
+    ├── STM32U5xx_HAL_Driver/  # Shared STM32U5 HAL drivers
     ├── CSVGenerator/      # CAN message ID management
     ├── cmake/             # ARM toolchain configurations
     └── utils.c/h          # Common utility functions
@@ -39,7 +44,7 @@ For detailed instructions, see [BUILD.md](BUILD.md).
 
 ## Firmware Boards
 
-### ECU (Engine Control Unit)
+### ECU (Electronics Control Unit)
 - **Target**: STM32G474RE 
 - **Role**: Vehicle state management, safety systems, CAN communication
 - **Features**: State machine, inverter control, sensor monitoring
@@ -67,6 +72,10 @@ For detailed instructions, see [BUILD.md](BUILD.md).
 - **CSV ID Management**: Centralized CAN message ID definitions
 - **Common Utilities**: Shared data structures and helper functions
 - **ARM Toolchains**: Consistent build environments across boards
+- **CMSIS Drivers**: Shared ARM Cortex-M and STM32 device drivers for all boards
+- **HAL Drivers**: Shared STM32 HAL driver libraries by MCU family
+  - STM32G4xx HAL drivers for ECU
+  - STM32U5xx HAL drivers for DashPanel and SteeringPanel
 
 ### Communication
 - **CAN Bus**: Primary communication between ECU and panels
@@ -102,6 +111,7 @@ See [BUILD.md](BUILD.md) for platform-specific installation instructions.
 - **[BUILD.md](BUILD.md)** - Complete build instructions and troubleshooting
 - **[DEBUGGING.md](DEBUGGING.md)** - Debug setup, tools, and techniques
 - **[EXTENDING.md](EXTENDING.md)** - Adding features, modifying boards, project structure
+- **[lib/SHARED_DRIVERS.md](lib/SHARED_DRIVERS.md)** - Shared driver architecture documentation
 
 ## Development Status
 
