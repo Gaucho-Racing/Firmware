@@ -13,12 +13,6 @@ Please use feature branches and avoid pushing directly to `main` until implement
 
 For detailed instructions, see [BUILD.md](BUILD.md).
 
-## Development
-
-- **Building**: Modern CMake with ExternalProject for incremental builds → [BUILD.md](BUILD.md)
-- **Debugging**: ST-Link/OpenOCD with VS Code Cortex Debug → [DEBUGGING.md](DEBUGGING.md)
-- **Extending**: Branch-based development, see feature development guide → [EXTENDING.md](EXTENDING.md)
-
 ## System Architecture
 
 ### Shared Components
@@ -28,13 +22,8 @@ For detailed instructions, see [BUILD.md](BUILD.md).
 - **ARM Toolchains**: Consistent build environments across boards
 - **CMSIS Drivers**: Shared ARM Cortex-M and STM32 device drivers for all boards
 - **HAL Drivers**: Shared STM32 HAL driver libraries by MCU family
-  - STM32G4xx HAL drivers for ECU
-  - STM32U5xx HAL drivers for DashPanel and SteeringPanel
-
-### Communication
-- **CAN Bus**: Primary communication between ECU and panels
-- **SWO Debug**: Real-time debug output from all boards
-- **USB**: Programming and debug interface
+  - STM32G4xx HAL drivers
+  - STM32U5xx HAL drivers
 
 ## Shared vs Board-Specific Code
 
@@ -47,11 +36,7 @@ For detailed instructions, see [BUILD.md](BUILD.md).
 - **STM32CubeMX Library**: Shared STM32 HAL and middleware code
   - `lib/stm32cubemx.cmake`: Functions for creating STM32U5 and STM32G4 targets
   - `lib/cmake/cmsis-config.cmake`: Shared CMSIS configuration functions
-  - Reduces code duplication across boards
-  - Provides consistent HAL driver integration
 
 ### Board-Specific Code
 - **Application/**: Business logic unique to each board
 - **Core/**: STM32 HAL configuration files, system initialization
-- **Build configs**: CMakeLists.txt, linker scripts
-- **Board-specific STM32 sources**: Additional peripherals not in the shared set
