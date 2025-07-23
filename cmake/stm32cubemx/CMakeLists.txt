@@ -6,12 +6,14 @@ add_library(stm32cubemx INTERFACE)
 # Enable CMake support for ASM and C languages
 enable_language(C ASM)
 
+
 target_compile_definitions(stm32cubemx INTERFACE 
 	USE_FULL_LL_DRIVER 
 	USE_HAL_DRIVER 
 	STM32G474xx
     $<$<CONFIG:Debug>:DEBUG>
 )
+
 
 target_include_directories(stm32cubemx INTERFACE
     ../../Core/Inc
@@ -20,6 +22,7 @@ target_include_directories(stm32cubemx INTERFACE
     ../../Drivers/CMSIS/Device/ST/STM32G4xx/Include
     ../../Drivers/CMSIS/Include
 )
+
 
 target_sources(stm32cubemx INTERFACE
     ../../Core/Src/main.c

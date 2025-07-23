@@ -44,7 +44,7 @@ void set_state(uint8_t value){
     state = value;
 }
 
-/// @ brief: just prints the state
+/// @brief: just prints the state
 void print_state(){
     switch(state){
         case INIT:
@@ -98,7 +98,8 @@ void shitdown(){
     }
 }
 
-/// @brief either mega-cooked or in init
+/// @brief either mega-cooked (BMS comms fail so we rerun init) or in init
+/// potentially caused by wires being plugged in incorrectly
 void init(){
     write_prechg(false);
     write_IRneg(false);

@@ -19,7 +19,6 @@
 #else
     typedef unsigned long uint32_t;
     typedef unsigned long long uint64_t; // maybe not needed?
-    typedef unsigned long long uint64_t; // maybe not needed?
 #endif
 
 extern void BCC_MCU_WaitUs(uint32_t delay);
