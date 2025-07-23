@@ -23,8 +23,9 @@ MC33771 vs MC33772 - 771 is 14 cell; 772 is 7 cell
         - SAE J1939 (for IMD & Charger)
         - TPL (Fancy SPI BCC/ISOSPI)
     - Utils
-        - queue system
-        - analyzer for da buffers
+        - Queue system
+        - Analyzer for da buffers
+        - Bit mapping utils
     - Sensor Libs
         - BCC
 - Autogen stuff (potentially ambitious)

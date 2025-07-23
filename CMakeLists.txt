@@ -20,9 +20,6 @@ endif()
 # Set the project name
 set(CMAKE_PROJECT_NAME ACU-25)
 
-# Include toolchain file
-include("cmake/gcc-arm-none-eabi.cmake")
-
 # Enable compile command to ease indexing with e.g. clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
@@ -34,45 +31,51 @@ project(${CMAKE_PROJECT_NAME})
 message("Build type: " ${CMAKE_BUILD_TYPE})
 
 # Create an executable object type
-add_executable(${CMAKE_PROJECT_NAME})
+if (CMAKE_BUILD_TYPE STREQUAL "Test")
+    add_executable(Test
+        Src/main.c
+    )
+else()
+    add_executable(${CMAKE_PROJECT_NAME})
 
-# Add STM32CubeMX generated sources
-add_subdirectory(cmake/stm32cubemx)
+    # Add STM32CubeMX generated sources
+    add_subdirectory(cmake/stm32cubemx)
 
-# Link directories setup
-target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
-    # Add user defined library search paths
-)
+    # Link directories setup
+    target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
+        # Add user defined library search paths
+    )
 
-# get rid of unused-parameter
-target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Wno-unused-parameter -Wno-pedantic -Wtrigraphs -Wno-dev)
+    # get rid of unused-parameter
+    target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Wno-unused-parameter -Wno-pedantic -Wtrigraphs -Wno-dev)
 
-# Add source files from Application/Src
-file(GLOB_RECURSE APP_SOURCES Application/Src/*.c)
+    # Add source files from Application/Src
+    file(GLOB_RECURSE APP_SOURCES Application/Src/*.c)
 
 
-# Add sources to executable
-target_sources(${CMAKE_PROJECT_NAME} PRIVATE
-    # Don't ask me why they aren't the same thing, idk, but it was yelling at me b4hand so...
-    ${APP_SOURCES}
-    Application/Src/
-)
+    # Add sources to executable
+    target_sources(${CMAKE_PROJECT_NAME} PRIVATE
+        # Don't ask me why they aren't the same thing, idk, but it was yelling at me b4hand so...
+        ${APP_SOURCES}
+        Application/Src/
+    )
 
-# Add include paths
-target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
-    # Add user defined include paths
-    Application/Inc/
-)
+    # Add include paths
+    target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
+        # Add user defined include paths
+        Application/Inc/
+    )
 
-# Add project symbols (macros)
-target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
-    # Add user defined symbols
-)
+    # Add project symbols (macros)
+    target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
+        # Add user defined symbols
+    )
 
-# Add linked libraries
-target_link_libraries(${CMAKE_PROJECT_NAME}
-    stm32cubemx
-    # Add user defined libraries
-)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -u _printf_float")
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -u _printf_float")
+    # Add linked libraries
+    target_link_libraries(${CMAKE_PROJECT_NAME}
+        stm32cubemx
+        # Add user defined libraries
+    )
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -u _printf_float")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -u _printf_float")
+endif()

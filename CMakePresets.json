@@ -2,38 +2,46 @@
     "version": 3,
     "configurePresets": [
         {
-            "name": "default",
+            "name": "stm",
             "hidden": true,
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/build/${presetName}",
-		    "toolchainFile": "${sourceDir}/cmake/gcc-arm-none-eabi.cmake",
+            "toolchainFile": "${sourceDir}/cmake/gcc-arm-none-eabi.cmake",
+            "cacheVariables": {}
+        },
+        {
+            "name": "HOOTLTest",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "toolchainFile": "${sourceDir}/cmake/HOOTL.cmake",
             "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Test"
             }
         },
         {
             "name": "Debug",
-            "inherits": "default",
+            "inherits": "stm",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
             }
         },
         {
             "name": "RelWithDebInfo",
-            "inherits": "default",
+            "inherits": "stm",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "RelWithDebInfo"
             }
         },
         {
             "name": "Release",
-            "inherits": "default",
+            "inherits": "stm",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
             }
         },
         {
             "name": "MinSizeRel",
-            "inherits": "default",
+            "inherits": "stm",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "MinSizeRel"
             }
@@ -55,6 +63,10 @@
         {
             "name": "MinSizeRel",
             "configurePreset": "MinSizeRel"
+        },
+        {
+            "name": "HOOTLTest",
+            "configurePreset": "HOOTLTest"
         }
     ]
 }
