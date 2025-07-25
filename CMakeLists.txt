@@ -32,9 +32,29 @@ message("Build type: " ${CMAKE_BUILD_TYPE})
 
 # Create an executable object type
 if (CMAKE_BUILD_TYPE STREQUAL "Test")
-    add_executable(Test
-        Src/main.c
+    # Enabling CTest w/ output on failure 
+    include(CTest)
+    set(CMAKE_CTEST_ARGUMENTS "--output-on-failure")
+    enable_testing()
+
+    # create basic hootl tests
+    add_executable(basic_hootl_test 
+        Application/Test/basic_hootl_test.c
     )
+
+    # create basic hootl tests
+    add_executable(advanced_hootl_test 
+        Application/Test/advanced_hootl_test.c
+    )
+    
+    # Run all tests
+    file(GLOB TEST_SOURCES Application/Test/*.c)
+    foreach(test_file ${TEST_SOURCES})
+        get_filename_component(test_name ${test_file} NAME_WE)
+        add_test(NAME ${test_name} COMMAND $<TARGET_FILE:${test_name}>)
+    endforeach()
+
+    # Todo, pretty output (just run `ctest` in output directory)
 else()
     add_executable(${CMAKE_PROJECT_NAME})
 
