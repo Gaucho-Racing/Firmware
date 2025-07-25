@@ -62,3 +62,12 @@ TODO:
 - Analyze ACU code and scavenge for stuff to put in Lib
 - Add in ECU to test that we can reuse the Drivers/CompileDependencies
 - Basically whatever to allow Andrey to start on SAM dev
+- Setup basic HOOTL testing infra inside of each level of Lib
+- Setup GitHub actions for CTests
+- Setup VS Code intellisense and syntax highlighting
+- Setup VS Code for flashing specific boards (cortex-debug | st-utils | st-link)
+- Look into J-Links in addition to ST-Links
+- Docker container for onboarding and github actions
+
+- ...
+- Profit

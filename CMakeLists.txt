@@ -37,12 +37,12 @@ if (CMAKE_BUILD_TYPE STREQUAL "Test")
     set(CMAKE_CTEST_ARGUMENTS "--output-on-failure")
     enable_testing()
 
-    # create basic hootl tests
+    # Create basic hootl tests
     add_executable(basic_hootl_test 
         Application/Test/basic_hootl_test.c
     )
 
-    # create basic hootl tests
+    # Create basic hootl tests
     add_executable(advanced_hootl_test 
         Application/Test/advanced_hootl_test.c
     )
