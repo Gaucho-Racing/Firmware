@@ -234,6 +234,7 @@ int main(void)
   MX_FDCAN2_Init();
   MX_FDCAN3_Init();
   MX_TIM7_Init();
+  
   /* USER CODE BEGIN 2 */
   DWT_Delay_Init();
   write_IRneg(false);

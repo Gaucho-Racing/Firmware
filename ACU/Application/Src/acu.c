@@ -25,7 +25,7 @@ extern volatile uint8_t p_top, p_bottom, p_level, d_top, d_bottom, d_level, c_to
 extern volatile uint8_t prim_q[256], data_q[256], charger_q[256];
 extern volatile uint8_t CAN_1_flag, CAN_2_flag, CAN_3_flag;
 
-data_union unicorn;
+data_union unicorn; 
 
 // Molicel P45B voltage to mAh lookup table
 #define CELL_CHGR_ARR_SIZE 339
