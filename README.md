@@ -1,16 +1,13 @@
-# ACU-25 [STM32 Version]
+# GR Firmware
 
------
+DO NOT DELETE ANY LICENSE INFORMATION ON ANY COPIED FILE OR LINE OF CODE
 
-## Desription
-Transferring from Teensy to STM32
+---
 
-----
+# LEGACY ACU-25 CONTENT
 
 ## Setup
-
 `launch.json`:
-
     "configurations": [
         {
             "name": "Debug with OpenOCD",
@@ -29,11 +26,9 @@ Transferring from Teensy to STM32
             "svdPath": "${workspaceFolder}/.vscode/STM32G474.svd" // optional
         }
     ]
-    
 
 `settings.json`:
 - add `"vscode-serial-monitor.customBaudRates": [1000000]`
-
 
 `c_cpp_properties.json`:
 - ensure you have the correct compiler path settings to `arm-none-eabi`: `"compilerPath": "/opt/homebrew/bin/arm-none-eabi-gcc",` (MacOS)
@@ -45,36 +40,4 @@ Transferring from Teensy to STM32
     - `openocd -f interface/stlink.cfg -f target/stm32g4x.cfg -c "program build/Debug/ACU-25.elf verify reset exit"`
     - if it still doesn't work, try removing the 'build' folder and configuring and rebuilding, sometimes cache stuff can screw u over
 
-## Tree
----
-#### Application/
----
-```
-- Inc/
-    - acu.h       -> struct defs & function protos for ACU, CAN functions too
-    - battery.h   -> struct defs & function protos for BCC-related things (Battery)
-    - config.h    -> definitions & macros, CAN ID mapping
-    - debug.h     -> not really used rn, but maybe later
-    - mcu.h       -> functions definitions for extern functions in BCC SDK
-    - state.h     -> struct defs & fcuntion protos for ACU state machine
-    - others      -> from BCC SDK
-- Src/
-    - acu.c       -> see acu.h
-    - battery.c   -> see battery.h
-    - debug.c     -> see debug.h
-    - mcu.c       -> see mcu.h
-    - state.c     -> see state.h
-    - others      -> from BCC SDK
-- Test/...
-```
-
-#### Core/
----
-```
-- Inc/ 
-    - main.h      -> self explanatory
-    - ...
-- Src/
-    - main.c      -> where everything starts
-    - ...
-```
+<!-- TODO: Create a section about how to make a new project from scratch, also probably explain how the infrastructure lets it work -->

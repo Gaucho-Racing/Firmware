@@ -1,11 +1,4 @@
-cmake_minimum_required(VERSION 3.22)
-
-#
-# This file is generated only once,
-# and is not re-generated if converter is called multiple times.
-#
-# User is free to modify the file as much as necessary
-#
+cmake_minimum_required(VERSION 3.25)
 
 # Setup compiler settings
 set(CMAKE_C_STANDARD 11)
@@ -18,7 +11,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 # Set the project name
-set(CMAKE_PROJECT_NAME ACU-25)
+set(CMAKE_PROJECT_NAME Firmware)
 
 # Enable compile command to ease indexing with e.g. clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
@@ -30,72 +23,57 @@ enable_language(C ASM)
 project(${CMAKE_PROJECT_NAME})
 message("Build type: " ${CMAKE_BUILD_TYPE})
 
-# Create an executable object type
+set(platform_path "Lib/Platform")
+# include the STMG474RE cmake
 if (CMAKE_BUILD_TYPE STREQUAL "Test")
-    # Enabling CTest w/ output on failure 
-    include(CTest)
-    set(CMAKE_CTEST_ARGUMENTS "--output-on-failure")
-    enable_testing()
 
-    # Create basic hootl tests
-    add_executable(basic_hootl_test 
-        Application/Test/basic_hootl_test.c
-    )
+message("using test build type, not going to do anything")
 
-    # Create basic hootl tests
-    add_executable(advanced_hootl_test 
-        Application/Test/advanced_hootl_test.c
-    )
-    
-    # Run all tests
-    file(GLOB TEST_SOURCES Application/Test/*.c)
-    foreach(test_file ${TEST_SOURCES})
-        get_filename_component(test_name ${test_file} NAME_WE)
-        add_test(NAME ${test_name} COMMAND $<TARGET_FILE:${test_name}>)
-    endforeach()
-
-    # Todo, pretty output (just run `ctest` in output directory)
 else()
-    add_executable(${CMAKE_PROJECT_NAME})
 
-    # Add STM32CubeMX generated sources
-    add_subdirectory(cmake/stm32cubemx)
+include(${platform_path}/STM32G474/stm32g474.cmake)
 
-    # Link directories setup
-    target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
-        # Add user defined library search paths
-    )
+add_executable_stmg474re(BLINKY)
 
-    # get rid of unused-parameter
-    target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Wno-unused-parameter -Wno-pedantic -Wtrigraphs -Wno-dev)
+target_sources(BLINKY INTERFACE
+  MVP/Core/Src/gpio.c
+  MVP/Core/Src/main.c
+)
 
-    # Add source files from Application/Src
-    file(GLOB_RECURSE APP_SOURCES Application/Src/*.c)
+target_include_directories(BLINKY INTERFACE
+  MVP/Application/Inc
+  MVP/Core/Inc
+)
 
 
-    # Add sources to executable
-    target_sources(${CMAKE_PROJECT_NAME} PRIVATE
-        # Don't ask me why they aren't the same thing, idk, but it was yelling at me b4hand so...
-        ${APP_SOURCES}
-        Application/Src/
-    )
 
-    # Add include paths
-    target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
-        # Add user defined include paths
-        Application/Inc/
-    )
-
-    # Add project symbols (macros)
-    target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
-        # Add user defined symbols
-    )
-
-    # Add linked libraries
-    target_link_libraries(${CMAKE_PROJECT_NAME}
-        stm32cubemx
-        # Add user defined libraries
-    )
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -u _printf_float")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -u _printf_float")
 endif()
+
+# target_link_library(BLINKY BLINK_lib)
+
+# add_executable_stm32g474re(ACU)
+# target_sources(ACU
+#   ACU/Application/Src/acu.c
+#   ACU/Application/Src/battery.c
+#   ACU/Application/Src/debug.c
+#   ACU/Application/Src/mcu.c
+#   ACU/Application/Src/state.c
+#   ACU/Core/Src/adc.c
+#   ACU/Core/Src/dma.c
+#   ACU/Core/Src/fdcan.c
+#   ACU/Core/Src/gpio.c
+#   ACU/Core/Src/main.c
+#   ACU/Core/Src/spi.c
+#   ACU/Core/Src/stm32g4xx_hal_msp.c
+#   ACU/Core/Src/stm32g4xx_it.c
+#   ACU/Core/Src/syscalls.c
+#   ACU/Core/Src/sysmem.c
+#   ACU/Core/Src/system_stm32g4xx.c
+#   ACU/Core/Src/tim.c
+#   ACU/Core/Src/usart.c
+#)
+# target_include_directory(ACU
+#   ACU/Application/Inc
+#   ACU/Core/Inc
+# )
+# target_link_library(ACU ...)

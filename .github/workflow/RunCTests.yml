@@ -25,5 +25,9 @@ jobs:
         run: cmake --build build
 
       - name: Run CTests
-        run: ctest --output-on-failure
         working-directory: build
+        run: |
+          echo "### CTest Output" >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
+          ctest --output-on-failure >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY

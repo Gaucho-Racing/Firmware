@@ -69,7 +69,6 @@ CMakeUserPresets.json
 .ccls-cache
 
 # VSCode
-.DS_Store
 .vscode
+.DS_Store
 Icon\r
-
