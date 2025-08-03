@@ -18,7 +18,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
 set(platform_path "Lib/Platform")
 
-include(${platform_path}/STM32G474/stm32g474.cmake)
+include(${platform_path}/STM32G474xE/chip.cmake)
 
 project(${CMAKE_PROJECT_NAME})
 
@@ -35,52 +35,19 @@ message("using test build type, not going to do anything")
 
 else()
 
-message("not using test")
-
-add_executable_stmg474re(BLINKY)
+add_executable_STM32G474xE(BLINKY)
 
 add_subdirectory(MVP)
 
-add_library(plzwork INTERFACE)
+add_library(BlinkyMvpCombinator INTERFACE)
 
-target_link_libraries(plzwork INTERFACE
-  STM32G474_LIB
+target_link_libraries(BlinkyMvpCombinator INTERFACE
+  STM32G474xE_LIB
   MVP
 )
 
 target_link_libraries(BLINKY
-  plzwork
+  BlinkyMvpCombinator
 )
 
-
-
 endif()
-
-# target_link_library(BLINKY BLINK_lib)
-
-# add_executable_stm32g474re(ACU)
-# target_sources(ACU
-#   ACU/Application/Src/acu.c
-#   ACU/Application/Src/battery.c
-#   ACU/Application/Src/debug.c
-#   ACU/Application/Src/mcu.c
-#   ACU/Application/Src/state.c
-#   ACU/Core/Src/adc.c
-#   ACU/Core/Src/dma.c
-#   ACU/Core/Src/fdcan.c
-#   ACU/Core/Src/gpio.c
-#   ACU/Core/Src/main.c
-#   ACU/Core/Src/spi.c
-#   ACU/Core/Src/stm32g4xx_hal_msp.c
-#   ACU/Core/Src/stm32g4xx_it.c
-#   ACU/Core/Src/syscalls.c
-#   ACU/Core/Src/sysmem.c
-#   ACU/Core/Src/system_stm32g4xx.c
-#   ACU/Core/Src/tim.c
-#   ACU/Core/Src/usart.c
-#)
-# target_include_directory(ACU
-#   ACU/Application/Inc
-#   ACU/Core/Inc
-# )
-# target_link_library(ACU ...)

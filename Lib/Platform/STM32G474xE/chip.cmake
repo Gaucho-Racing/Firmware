@@ -1,4 +1,4 @@
-set(CHIP "STM32G474")
+set(CHIP "STM32G474xE")
 set(CHIP_PATH "${CMAKE_SOURCE_DIR}/Lib/Platform/${CHIP}")
 
 set(TARGET_FLAGS "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard")
@@ -10,7 +10,7 @@ enable_language(C ASM)
 target_compile_definitions(${CHIP}_LIB INTERFACE 
 	USE_FULL_LL_DRIVER
 	USE_HAL_DRIVER
-	${CHIP}xx
+	STM32G474xx
 )
 
 target_include_directories(${CHIP}_LIB INTERFACE
@@ -109,7 +109,7 @@ target_sources(${CHIP}_LIB INTERFACE
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_utils.c
 )
 
-function(add_executable_stmg474re TARGET_NAME)
+function(add_executable_STM32G474xE TARGET_NAME)
 
 set(TARGET_FLAGS "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard")
 
