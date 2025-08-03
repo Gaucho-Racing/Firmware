@@ -1,9 +1,7 @@
 set(CHIP "STM32G474")
-
-# create the HAL/LL/CMSIS library
-
-# since we call this from the big CMakeLists in the sky, we need everything to be relative to that
 set(CHIP_PATH "${CMAKE_SOURCE_DIR}/Lib/Platform/${CHIP}")
+
+set(TARGET_FLAGS "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard")
 
 add_library(${CHIP}_LIB INTERFACE)
 
@@ -23,6 +21,8 @@ target_include_directories(${CHIP}_LIB INTERFACE
 
 target_sources(${CHIP}_LIB INTERFACE
     ${CHIP_PATH}/CompileDependencies/startup_stm32g474xx.s
+    ${CHIP_PATH}/CompileDependencies/system_stm32g4xx.c
+    ${CHIP_PATH}/CompileDependencies/syscalls.c
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_adc.c
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_adc_ex.c
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal.c
@@ -76,7 +76,7 @@ target_sources(${CHIP}_LIB INTERFACE
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_spi_ex.c
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_sram.c
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_tim.c
-    ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_timebase_tim_template.c
+    # ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_timebase_tim_template.c
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_tim_ex.c
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_uart.c
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_uart_ex.c
@@ -112,11 +112,9 @@ target_sources(${CHIP}_LIB INTERFACE
 )
 
 function(add_executable_stmg474re TARGET_NAME)
-set(TARGET_FLAGS "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard ")
-
-set(CMAKE_C_LINK_FLAGS "${CMAKE_C_LINK_FLAGS} -T '${CHIP_PATH}/CompileDependencies/STM32G474RETx_FLASH.ld'")
 
 add_executable(${TARGET_NAME})
 
-# target_link_libraries(${TARGET_NAME} ${CHIP}_LIB)
+set_target_properties(${TARGET_NAME} PROPERTIES LINK_FLAGS "-T${CHIP_PATH}/CompileDependencies/STM32G474RETx_FLASH.ld")
+
 endfunction()

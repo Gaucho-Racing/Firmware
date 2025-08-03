@@ -16,6 +16,10 @@ set(CMAKE_PROJECT_NAME Firmware)
 # Enable compile command to ease indexing with e.g. clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
+set(platform_path "Lib/Platform")
+
+include(${platform_path}/STM32G474/stm32g474.cmake)
+
 project(${CMAKE_PROJECT_NAME})
 
 # Enable CMake support for ASM and C languages
@@ -24,7 +28,6 @@ enable_language(C ASM)
 # Core project settings
 message("Build type: " ${CMAKE_BUILD_TYPE})
 
-set(platform_path "Lib/Platform")
 # include the STMG474RE cmake
 if (CMAKE_BUILD_TYPE STREQUAL "Test")
 
@@ -33,8 +36,6 @@ message("using test build type, not going to do anything")
 else()
 
 message("not using test")
-
-include(${platform_path}/STM32G474/stm32g474.cmake)
 
 add_executable_stmg474re(BLINKY)
 
