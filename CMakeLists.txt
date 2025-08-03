@@ -16,9 +16,11 @@ set(CMAKE_PROJECT_NAME Firmware)
 # Enable compile command to ease indexing with e.g. clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
-set(platform_path "Lib/Platform")
+set(lib_path "Lib")
+set(platform_path "${lib_path}/Platform")
 
 include(${platform_path}/STM32G474xE/chip.cmake)
+include(${lib_path}/cmake/gr-lib.cmake)
 
 project(${CMAKE_PROJECT_NAME})
 
@@ -35,19 +37,7 @@ message("using test build type, not going to do anything")
 
 else()
 
-add_executable_STM32G474xE(BLINKY)
-
-add_subdirectory(G4MVP)
-
-add_library(BlinkyMvpCombinator INTERFACE)
-
-target_link_libraries(BlinkyMvpCombinator INTERFACE
-  STM32G474xE_LIB
-  G4MVP
-)
-
-target_link_libraries(BLINKY
-  BlinkyMvpCombinator
-)
+add_GR_project(STM32G474xE G4BLINKY)
 
 endif()
+

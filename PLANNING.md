@@ -1,5 +1,5 @@
 Contains the planning for the structure of the monorepo
-- MVP
+Ad- BLINKY
     - Application
 - ACU
     - Application
