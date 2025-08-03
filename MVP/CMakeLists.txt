@@ -30,6 +30,8 @@ add_library(MVP INTERFACE)
 target_sources(MVP INTERFACE
     Core/Src/gpio.c
     Core/Src/main.c
+    Core/Src/syscalls.c
+    Core/Src/system_stm32g4xx.c
 )
 
 target_link_libraries(MVP INTERFACE

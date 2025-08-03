@@ -21,8 +21,6 @@ target_include_directories(${CHIP}_LIB INTERFACE
 
 target_sources(${CHIP}_LIB INTERFACE
     ${CHIP_PATH}/CompileDependencies/startup_stm32g474xx.s
-    ${CHIP_PATH}/CompileDependencies/system_stm32g4xx.c
-    ${CHIP_PATH}/CompileDependencies/syscalls.c
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_adc.c
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_adc_ex.c
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal.c
