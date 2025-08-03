@@ -112,11 +112,11 @@ target_sources(${CHIP}_LIB INTERFACE
 )
 
 function(add_executable_stmg474re TARGET_NAME)
-    set(TARGET_FLAGS "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard ")
+set(TARGET_FLAGS "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard ")
 
-    set(CMAKE_C_LINK_FLAGS "${CMAKE_C_LINK_FLAGS} -T '${CHIP_PATH}/CompileDependencies/STM32G474RETx_FLASH.ld'")
+set(CMAKE_C_LINK_FLAGS "${CMAKE_C_LINK_FLAGS} -T '${CHIP_PATH}/CompileDependencies/STM32G474RETx_FLASH.ld'")
 
-    add_executable(${TARGET_NAME})
+add_executable(${TARGET_NAME})
 
-    target_link_libraries(${TARGET_NAME} ${CHIP}_LIB)
+# target_link_libraries(${TARGET_NAME} ${CHIP}_LIB)
 endfunction()

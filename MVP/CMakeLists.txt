@@ -21,19 +21,21 @@ enable_language(C ASM)
 
 # Core project settings
 project(${CMAKE_PROJECT_NAME})
-message("Build type: " ${CMAKE_BUILD_TYPE})
+message(CMAKE_ASM_COMPILER=${CMAKE_ASM_COMPILER})
 
-add_subdirectory()
+set(TARGET_FLAGS "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard ")
+set(CMAKE_C_LINK_FLAGS "${CMAKE_C_LINK_FLAGS} -T 'C:/Users/Will/Documents/School/FSAE/Firmware/Lib/Platform/STM32G474/CompileDependencies/STM32G474RETx_FLASH.ld'")
 
 add_library(MVP INTERFACE)
 target_sources(MVP INTERFACE
-    
+    Core/Src/gpio.c
+    Core/Src/main.c
 )
 
 target_link_libraries(MVP INTERFACE
-    STM...
+
 )
 
 target_include_directories(MVP INTERFACE
-    ${platform_path}/
+    Core/Inc
 )
