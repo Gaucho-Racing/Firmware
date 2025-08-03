@@ -110,6 +110,7 @@ target_sources(${CHIP}_LIB INTERFACE
 )
 
 function(add_executable_stmg474re TARGET_NAME)
+set(TARGET_FLAGS "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard")
 
 add_executable(${TARGET_NAME})
 
