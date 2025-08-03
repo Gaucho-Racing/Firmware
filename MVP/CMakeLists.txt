@@ -29,10 +29,17 @@ message(CMAKE_ASM_COMPILER=${CMAKE_ASM_COMPILER})
 
 add_library(MVP INTERFACE)
 target_sources(MVP INTERFACE
-    Core/Src/gpio.c
     Core/Src/main.c
-    Core/Src/syscalls.c
+    Core/Src/gpio.c
+    Core/Src/adc.c
+    Core/Src/crc.c
+    Core/Src/fdcan.c
+    Core/Src/spi.c
+    Core/Src/stm32g4xx_it.c
+    Core/Src/stm32g4xx_hal_msp.c
     Core/Src/system_stm32g4xx.c
+    Core/Src/sysmem.c
+    Core/Src/syscalls.c
 )
 
 target_link_libraries(MVP INTERFACE

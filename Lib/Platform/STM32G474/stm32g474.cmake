@@ -49,7 +49,7 @@ target_sources(${CHIP}_LIB INTERFACE
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_irda.c
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_iwdg.c
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_lptim.c
-    ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_msp_template.c
+    # ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_msp_template.c
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_nand.c
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_nor.c
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_opamp.c
