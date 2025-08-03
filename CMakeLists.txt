@@ -37,13 +37,13 @@ else()
 
 add_executable_STM32G474xE(BLINKY)
 
-add_subdirectory(MVP)
+add_subdirectory(G4MVP)
 
 add_library(BlinkyMvpCombinator INTERFACE)
 
 target_link_libraries(BlinkyMvpCombinator INTERFACE
   STM32G474xE_LIB
-  MVP
+  G4MVP
 )
 
 target_link_libraries(BLINKY

@@ -27,8 +27,8 @@ message(CMAKE_ASM_COMPILER=${CMAKE_ASM_COMPILER})
 #set(TARGET_FLAGS "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard ")
 #set_target_properties(${TARGET_NAME} PROPERTIES LINK_FLAGS "-T${CHIP_PATH}/CompileDependencies/STM32G474RETx_FLASH.ld")
 
-add_library(MVP INTERFACE)
-target_sources(MVP INTERFACE
+add_library(G4MVP INTERFACE)
+target_sources(G4MVP INTERFACE
     Core/Src/main.c
     Core/Src/gpio.c
     Core/Src/adc.c
@@ -42,10 +42,10 @@ target_sources(MVP INTERFACE
     Core/Src/syscalls.c
 )
 
-target_link_libraries(MVP INTERFACE
+target_link_libraries(G4MVP INTERFACE
 
 )
 
-target_include_directories(MVP INTERFACE
+target_include_directories(G4MVP INTERFACE
     Core/Inc
 )
