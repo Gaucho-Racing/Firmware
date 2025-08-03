@@ -23,8 +23,9 @@ enable_language(C ASM)
 project(${CMAKE_PROJECT_NAME})
 message(CMAKE_ASM_COMPILER=${CMAKE_ASM_COMPILER})
 
-set(TARGET_FLAGS "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard ")
-set_target_properties(${TARGET_NAME} PROPERTIES LINK_FLAGS "-T${CHIP_PATH}/CompileDependencies/STM32G474RETx_FLASH.ld")
+# Questionable...
+#set(TARGET_FLAGS "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard ")
+#set_target_properties(${TARGET_NAME} PROPERTIES LINK_FLAGS "-T${CHIP_PATH}/CompileDependencies/STM32G474RETx_FLASH.ld")
 
 add_library(MVP INTERFACE)
 target_sources(MVP INTERFACE
