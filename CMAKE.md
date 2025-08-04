@@ -25,25 +25,53 @@ The CMake system is structured around a platform-agnostic architecture that allo
 
 ## Directory Structure
 
-```
-Firmware/
-├── CMakeLists.txt              # Root build configuration
-├── CMakePresets.json           # Build preset definitions
-├── Lib/                        # Library components
-│   ├── cmake/
-│   │   ├── gcc-arm-none-eabi.cmake  # ARM toolchain configuration
-│   │   └── gr-lib.cmake        # Gaucho Racing CMake utilities
-│   └── Platform/               # Platform-specific configurations
-│       ├── STM32G474xE/        # G474 platform files
-│       │   └── chip.cmake      # G474 configuration & HAL drivers
-│       └── STM32U5A9xJ/        # U5A9 platform files
-│           └── chip.cmake      # U5A9 configuration & HAL drivers
-├── cmake/
-│   └── HOOTL.cmake            # Hardware-out-of-the-loop testing
-├── G4BLINKY/                  # Example project directory
-│   ├── CMakeLists.txt         # Project-specific build config
-│   └── Core/                  # Project source code
-└── [OTHER_PROJECTS]/          # Additional project directories
+```mermaid
+flowchart TD
+    Firmware["📁 Firmware/"]
+    
+    %% Root Files
+    Firmware --> CMakeLists["📄 CMakeLists.txt<br/><small>Root build configuration</small>"]
+    Firmware --> CMakePresets["📄 CMakePresets.json<br/><small>Build preset definitions</small>"]
+    
+    %% Lib Directory
+    Firmware --> Lib["📁 Lib/<br/><small>Library components</small>"]
+    Lib --> LibCmake["📁 cmake/"]
+    LibCmake --> GccArm["📄 gcc-arm-none-eabi.cmake<br/><small>ARM toolchain configuration</small>"]
+    LibCmake --> GrLib["📄 gr-lib.cmake<br/><small>Gaucho Racing CMake utilities</small>"]
+    
+    Lib --> Platform["📁 Platform/<br/><small>Platform-specific configurations</small>"]
+    Platform --> STM32G474["📁 STM32G474xE/<br/><small>G474 platform files</small>"]
+    STM32G474 --> ChipG4["📄 chip.cmake<br/><small>G474 configuration & HAL drivers</small>"]
+    
+    Platform --> STM32U5A9["📁 STM32U5A9xJ/<br/><small>U5A9 platform files</small>"]
+    STM32U5A9 --> ChipU5["📄 chip.cmake<br/><small>U5A9 configuration & HAL drivers</small>"]
+    
+    Platform --> OtherPlatforms["📁 [OTHER_PLATFORMS]/<br/><small>Additional platform directories</small>"]
+    OtherPlatforms --> OtherChip["📄 chip.cmake<br/><small>Platform-specific configurations</small>"]
+    
+    %% Cmake Directory
+    Firmware --> CmakeDir["📁 cmake/"]
+    CmakeDir --> HOOTL["📄 HOOTL.cmake<br/><small>Hardware-out-of-the-loop testing</small>"]
+    
+    %% Project Directories
+    Firmware --> G4BLINKY["📁 G4BLINKY/<br/><small>Example project directory</small>"]
+    G4BLINKY --> G4CMake["📄 CMakeLists.txt<br/><small>Project-specific build config</small>"]
+    G4BLINKY --> G4Core["📁 Core/<br/><small>Project source code</small>"]
+    
+    Firmware --> OtherProjects["📁 [OTHER_PROJECTS]/<br/><small>Additional project directories</small>"]
+    OtherProjects --> OtherCMake["📄 CMakeLists.txt<br/><small>Project build configurations</small>"]
+    OtherProjects --> OtherCore["📁 Core/<br/><small>Project source files</small>"]
+    
+    %% Styling
+    classDef rootFile fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#000000
+    classDef libFile fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#000000
+    classDef projectFile fill:#e8f5e8,stroke:#388e3c,stroke-width:2px,color:#000000
+    classDef folder fill:#fff8e1,stroke:#f57c00,stroke-width:1px,color:#000000
+    
+    class CMakeLists,CMakePresets rootFile
+    class GccArm,GrLib,ChipG4,ChipU5,OtherChip,HOOTL libFile
+    class G4CMake,OtherCMake projectFile
+    class Firmware,Lib,LibCmake,Platform,STM32G474,STM32U5A9,OtherPlatforms,CmakeDir,G4BLINKY,G4Core,OtherProjects,OtherCore folder
 ```
 
 ## System Architecture Diagram
@@ -51,43 +79,43 @@ Firmware/
 ```mermaid
 flowchart TD
     %% Configuration Layer
-    Presets["CMakePresets.json<br/>configurePresets:<br/>• Debug → ${CMAKE_BUILD_TYPE}=Debug<br/>• Release → ${CMAKE_BUILD_TYPE}=Release<br/>• HOOTLTest → ${CMAKE_BUILD_TYPE}=Test<br/>• MinSizeRel → ${CMAKE_BUILD_TYPE}=MinSizeRel<br/>• RelWithDebInfo<br/>buildPresets:<br/>• Corresponding builds for each configuration"]
+    Presets["CMakePresets.json<br/><br/>configurePresets:<br/>• Debug → Debug build<br/>• Release → Release build<br/>• HOOTLTest → Test build<br/>• MinSizeRel → Min size<br/>• RelWithDebInfo<br/><br/>buildPresets:<br/>• Matching build configs"]
     
-    Root["Root CMakeLists.txt<br/>Variables:<br/>• ${CMAKE_PROJECT_NAME}=Firmware<br/>• ${lib_path}=Lib<br/>• ${platform_path}=${lib_path}/Platform<br/>Includes:<br/>• include(${platform_path}/${CHIP}/chip.cmake)<br/>• include(${lib_path}/cmake/gr-lib.cmake)<br/>Commands:<br/>• add_GR_project(${PLATFORM} ${PROJECT})"]
+    Root["Root CMakeLists.txt<br/><br/>Variables:<br/>• PROJECT_NAME=Firmware<br/>• lib_path=Lib<br/>• platform_path=Lib/Platform<br/><br/>Includes:<br/>• chip.cmake<br/>• gr-lib.cmake<br/><br/>Commands:<br/>• add_GR_project()"]
     
-    Toolchain1["gcc-arm-none-eabi.cmake<br/>ARM Cross-Compilation Toolchain:<br/>• set(CMAKE_C_COMPILER ${TOOLCHAIN_PREFIX}gcc)<br/>• set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} ${TARGET_FLAGS})<br/>• --specs=nano.specs<br/>• -Wl,--print-memory-usage<br/>• Configures linker settings<br/>• Enables debug symbols and optimization"]
+    Toolchain1["gcc-arm-none-eabi.cmake<br/><br/>ARM Cross-Compilation:<br/>• Sets C compiler<br/>• Configures C flags<br/>• --specs=nano.specs<br/>• Memory usage reporting<br/>• Debug & optimization"]
     
-    Toolchain2["HOOTL.cmake<br/>Host-Based Testing Toolchain:<br/>• set(CMAKE_SYSTEM_NAME Generic)<br/>• Host-based testing configuration<br/>• No cross-compilation<br/>• Allows running tests on development machine"]
+    Toolchain2["HOOTL.cmake<br/><br/>Host-Based Testing:<br/>• Generic system<br/>• No cross-compilation<br/>• Development machine<br/>• Unit testing support"]
     
     %% Core Library Layer
-    GRLib["gr-lib.cmake<br/>function add_GR_project(${Platform} ${Project} [${Optional_Path}]):<br/>1. cmake_language(CALL add_executable_${Platform} ${Project})<br/>2. add_subdirectory(${Project} or ${Optional_Path})<br/>3. add_library(Combinator_${Project} INTERFACE)<br/>4. target_link_libraries(Combinator_${Project} INTERFACE<br/>     ${Platform}_LIB ${Project}_USER_CODE)<br/>5. target_link_libraries(${Project} Combinator_${Project})"]
+    GRLib["gr-lib.cmake<br/><br/>add_GR_project function:<br/>1. Call add_executable_Platform<br/>2. Add project subdirectory<br/>3. Create Combinator library<br/>4. Link Platform & User libs<br/>5. Link to final executable"]
     
     %% Platform Layer
-    ChipConfig["${CHIP}/chip.cmake<br/>Platform Variables:<br/>• ${CHIP} identifier (STM32G474xE, STM32U5A9xJ)<br/>• ${CHIP_PATH} = ${CMAKE_SOURCE_DIR}/Lib/Platform/${CHIP}<br/>• ${TARGET_FLAGS} architecture-specific flags<br/>  (STM32G474xE: -mcpu=cortex-m4...)<br/>  (STM32U5A9xJ: -mcpu=cortex-m33...)<br/>Library Creation:<br/>• add_library(${CHIP}_LIB INTERFACE)<br/>Function:<br/>• add_executable_${CHIP}() with linker script config"]
+    ChipConfig["chip.cmake<br/><br/>Platform Variables:<br/>• CHIP identifier<br/>• CHIP_PATH directory<br/>• TARGET_FLAGS<br/><br/>Library Creation:<br/>• CHIP_LIB interface<br/><br/>Function:<br/>• add_executable_CHIP()"]
     
-    PlatformLib["${CHIP}_LIB Interface Library<br/>Compile Definitions:<br/>• HAL driver enable flags (USE_HAL_DRIVER)<br/>• Low-level driver enable flags (USE_FULL_LL_DRIVER)<br/>• ${CHIP}-specific preprocessor defines<br/>Include Directories:<br/>• ${CHIP_PATH}/Drivers/CMSIS/Include<br/>• ${CHIP_PATH}/Drivers/stm32-hal-driver/Inc<br/>• ${CHIP_PATH}/Drivers/CMSIS/Device/ST/${CHIP_FAMILY}/Include<br/>Source Files:<br/>• ${CHIP_PATH}/CompileDependencies/startup_*.s<br/>• ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/*_hal_*.c<br/>• ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/*_ll_*.c"]
+    PlatformLib["CHIP_LIB Interface<br/><br/>Compile Definitions:<br/>• HAL driver flags<br/>• LL driver flags<br/>• Chip-specific defines<br/><br/>Include Directories:<br/>• CMSIS headers<br/>• HAL driver headers<br/><br/>Source Files:<br/>• Startup assembly<br/>• HAL driver sources"]
     
     %% Project Layer
-    ProjectCMake["${PROJECT}/CMakeLists.txt<br/>Project Name Extraction:<br/>• get_filename_component(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR} NAME)<br/>User Code Library Creation:<br/>• add_library(${PROJECT_NAME}_USER_CODE INTERFACE)<br/>Source File Specification:<br/>• target_sources(${PROJECT_NAME}_USER_CODE INTERFACE<br/>  - Main application entry point<br/>  - Peripheral driver configurations<br/>  - Hardware abstraction layer customizations<br/>  - Interrupt service routines<br/>  - System configuration files<br/>  - Memory management utilities)<br/>Include Directory Specification:<br/>• target_include_directories(${PROJECT_NAME}_USER_CODE INTERFACE Core/Inc)"]
+    ProjectCMake["Project CMakeLists.txt<br/><br/>Name Extraction:<br/>• get_filename_component<br/><br/>User Code Library:<br/>• PROJECT_USER_CODE<br/><br/>Source Files:<br/>• Main application<br/>• Peripheral configs<br/>• HAL customizations<br/>• Interrupt handlers<br/><br/>Include Directories:<br/>• Core/Inc"]
     
-    UserCode["${PROJECT}/ Directory Structure<br/>Standard Layout:<br/>• ${PROJECT}/ (project root)<br/>  └── CMakeLists.txt (build configuration)<br/>  └── Core/<br/>      ├── Inc/ (Header files)<br/>      │   ├── Main application headers<br/>      │   ├── HAL configuration headers<br/>      │   ├── Interrupt handler headers<br/>      │   └── Peripheral driver headers<br/>      └── Src/ (Source files)<br/>          ├── Main application source<br/>          ├── Interrupt service routines<br/>          ├── HAL middleware support<br/>          └── Peripheral driver implementations"]
+    UserCode["Project Directory<br/><br/>Standard Layout:<br/>• PROJECT/ root<br/>• CMakeLists.txt<br/>• Core/Inc/ headers<br/>• Core/Src/ sources<br/><br/>File Types:<br/>• Application code<br/>• System config<br/>• Hardware drivers<br/>• ISR implementations"]
     
     %% Linking Layer
-    Combinator["Combinator_${PROJECT} Library<br/>INTERFACE Library<br/>Purpose: Links platform and project components together<br/>Dependencies:<br/>• ${PLATFORM}_LIB (HAL + hardware abstraction)<br/>• ${PROJECT}_USER_CODE (application-specific code)<br/>Complete dependency chain:<br/>Combinator_${PROJECT} → ${PLATFORM}_LIB + ${PROJECT}_USER_CODE"]
+    Combinator["Combinator Library<br/><br/>INTERFACE Library<br/><br/>Purpose:<br/>Links platform &<br/>project components<br/><br/>Dependencies:<br/>• PLATFORM_LIB<br/>• PROJECT_USER_CODE<br/><br/>Creates complete<br/>dependency chain"]
     
     %% Final Output
-    Executable["Final ${PROJECT}.elf Executable<br/>Creation Process:<br/>• add_executable(${PROJECT})<br/>• target_link_libraries(${PROJECT} Combinator_${PROJECT})<br/>Configuration:<br/>• LINK_FLAGS: -T${CHIP_PATH}/CompileDependencies/${LINKER_SCRIPT}.ld<br/>• Compiler flags: ${TARGET_FLAGS}<br/>• Linker specifications: --specs=nano.specs<br/>• Memory mapping: -Wl,-Map=${CMAKE_PROJECT_NAME}.map<br/>• Memory reporting: -Wl,--print-memory-usage<br/>Output Files:<br/>• ${PROJECT}.elf (executable binary)<br/>• ${CMAKE_PROJECT_NAME}.map (memory map)"]
+    Executable["Final Executable<br/><br/>Creation Process:<br/>• add_executable()<br/>• Link combinator<br/><br/>Configuration:<br/>• Linker script<br/>• Compiler flags<br/>• Memory mapping<br/><br/>Output Files:<br/>• PROJECT.elf<br/>• Memory map"]
     
     %% Build Process
-    Configure["Configure Phase<br/>cmake --preset ${preset}<br/>Process Overview:<br/>1. Read ${CMAKE_BUILD_TYPE} from presets<br/>2. Set build configuration<br/>3. Load toolchain file<br/>4. Process root build file<br/>5. Include chip configuration<br/>6. Include library utilities<br/>7. Call project function<br/>8. Generate build files"]
+    Configure["Configure Phase<br/><br/>cmake --preset<br/><br/>Process:<br/>1. Read presets<br/>2. Set build config<br/>3. Load toolchain<br/>4. Process CMakeLists<br/>5. Include configs<br/>6. Generate build files"]
     
-    Build["Build Phase<br/>cmake --build build/${preset}<br/>Compilation Steps:<br/>1. Compile HAL drivers from ${CHIP}_LIB<br/>2. Compile user sources from ${PROJECT}_USER_CODE<br/>3. Link with ${TARGET_FLAGS}<br/>4. Apply linker script<br/>5. Generate ${PROJECT}.elf<br/>6. Show memory usage report"]
+    Build["Build Phase<br/><br/>cmake --build<br/><br/>Compilation:<br/>1. Compile HAL drivers<br/>2. Compile user code<br/>3. Link with flags<br/>4. Apply linker script<br/>5. Generate executable<br/>6. Memory report"]
     
     %% Memory Output
-    Memory["Memory Usage Report<br/>Shows resource utilization:<br/>• RAM usage vs available<br/>• Flash memory usage vs available<br/>• Percentage utilization<br/>Generated Output Files:<br/>• build/${preset}/${PROJECT}.elf<br/>• build/${preset}/${CMAKE_PROJECT_NAME}.map<br/>Example:<br/>Memory region    Used Size  %<br/>RAM:            2408 B    1.84%<br/>FLASH:         34860 B    6.65%"]
+    Memory["Memory Usage Report<br/><br/>Resource Utilization:<br/>• RAM vs available<br/>• Flash vs available<br/>• Percentage usage<br/><br/>Output Files:<br/>• build/preset/PROJECT.elf<br/>• build/preset/PROJECT.map"]
     
     %% Available Projects
-    Projects["Available Projects<br/>Current Projects in Repository:<br/>• G4BLINKY/ - Example STM32G474 blinky project<br/>• G4MVP/ - STM32G474 MVP project<br/>• DASHBLINKY/ - Dashboard blinky project<br/>• ACU/ - Accumulator Control Unit<br/>• MVP/ - Main MVP project<br/>To add a new project:<br/>1. Create directory with CMakeLists.txt following<br/>   ${PROJECT_NAME}_USER_CODE pattern<br/>2. Add add_GR_project(${PLATFORM} ${PROJECT_NAME})<br/>   to root CMakeLists.txt"]
+    Projects["Available Projects<br/><br/>Current Projects:<br/>• G4BLINKY<br/>• G4MVP<br/>• DASHBLINKY<br/>• ACU<br/>• MVP<br/><br/>To Add New Project:<br/>1. Create CMakeLists.txt<br/>2. Follow USER_CODE pattern<br/>3. Add to root CMakeLists"]
     
     %% Connections
     Presets --> Root
