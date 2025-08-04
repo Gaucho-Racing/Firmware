@@ -70,11 +70,11 @@ flowchart TD
     Build --> Executable
     
     %% Styling
-    classDef config fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
-    classDef platform fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    classDef project fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
-    classDef build fill:#fff8e1,stroke:#f57c00,stroke-width:2px
-    classDef output fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    classDef config fill:#E8F4FD,stroke:#1565C0,stroke-width:2px,color:#000000
+    classDef platform fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px,color:#000000
+    classDef project fill:#E8F5E8,stroke:#2E7D32,stroke-width:2px,color:#000000
+    classDef build fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#000000
+    classDef output fill:#FCE4EC,stroke:#AD1457,stroke-width:2px,color:#000000
     
     class Presets,Root,Toolchain1,Toolchain2 config
     class ChipConfig,PlatformLib platform
@@ -94,14 +94,14 @@ flowchart TD
 │   CMakePresets.json     │    │    Root CMakeLists.txt    │    │           Toolchain Files              │
 │                         │    │                           │    │                                        │
 │ configurePresets:       │──▶│ Variables:                │──▶│ gcc-arm-none-eabi.cmake:               │
-│ • Debug                 │    │ • Project name setup      │    │ • ARM GCC compiler config             │
+│ • Debug                 │    │ • Project name setup      │    │ • ARM GCC compiler config              │
 │ • Release               │    │ • Library path definition │    │ • Cross-compilation flags              │
-│ • HOOTLTest             │    │ • Platform path setup     │    │ • Nano specs configuration            │
+│ • HOOTLTest             │    │ • Platform path setup     │    │ • Nano specs configuration             │
 │ • MinSizeRel            │    │                           │    │ • Memory usage reporting               │
 │ • RelWithDebInfo        │    │ File Includes:            │    │                                        │
 │                         │    │ • Platform-specific       │    │ HOOTL.cmake:                           │
 │ buildPresets:           │    │   chip configuration      │    │ • Host system targeting                │
-│ • Corresponding builds  │    │ • Library utilities       │    │ • Native compilation setup            │
+│ • Corresponding builds  │    │ • Library utilities       │    │ • Native compilation setup             │
 └─────────────────────────┘    │                           │    │ • Unit testing support                 │
                                │ Project Creation:         │    │                                        │
                                │ • Calls project function  │    └────────────────────────────────────────┘
@@ -121,10 +121,10 @@ flowchart TD
                                │ ┌─────────────────────────────────────────────────────────────────────┐   │
                                │ │ • Creates platform-specific executable                              │   │
                                │ │ • Adds project subdirectory to build                                │   │
-                               │ │ • Creates combinator interface library                               │   │
+                               │ │ • Creates combinator interface library                              │   │
                                │ │ • Links platform library and user code                              │   │
-                               │ │   to combinator                                                      │   │
-                               │ │ • Links combinator to final executable                               │   │
+                               │ │   to combinator                                                     │   │
+                               │ │ • Links combinator to final executable                              │   │
                                │ └─────────────────────────────────────────────────────────────────────┘   │
                                └───────────────────────────────────────────────────────────────────────────┘
                                            │
@@ -224,7 +224,7 @@ flowchart TD
                                        ▼
 
 ╔══════════════════════════════════════════════════════════════════════════════════════════════════════════╗
-║                                        LINKING LAYER                                                    ║
+║                                        LINKING LAYER                                                     ║
 ╚══════════════════════════════════════════════════════════════════════════════════════════════════════════╝
 
               ┌─────────────────────────────────────────────────────────────────────────┐
@@ -244,7 +244,7 @@ flowchart TD
                                        ▼
 
 ╔══════════════════════════════════════════════════════════════════════════════════════════════════════════╗
-║                                        FINAL OUTPUT                                                     ║
+║                                        FINAL OUTPUT                                                      ║
 ╚══════════════════════════════════════════════════════════════════════════════════════════════════════════╝
 
               ┌─────────────────────────────────────────────────────────────────────────┐
@@ -266,7 +266,7 @@ flowchart TD
               └─────────────────────────────────────────────────────────────────────────┘
 
 ╔══════════════════════════════════════════════════════════════════════════════════════════════════════════╗
-║                                     BUILD PROCESS FLOW                                                  ║
+║                                     BUILD PROCESS FLOW                                                   ║
 ╚══════════════════════════════════════════════════════════════════════════════════════════════════════════╝
 
 ┌────────────────────────────┐                     ┌──────────────────────────────┐
@@ -294,8 +294,8 @@ flowchart TD
                                    │ • Percentage utilization                    │
                                    │                                             │
                                    │ Generated Output Files:                     │
-                                   │ • build/preset/${PROJECT}.elf              │
-                                   │ • build/preset/${CMAKE_PROJECT_NAME}.map   │
+                                   │ • build/preset/${PROJECT}.elf               │
+                                   │ • build/preset/${CMAKE_PROJECT_NAME}.map    │
                                    └─────────────────────────────────────────────┘
 ```
 
