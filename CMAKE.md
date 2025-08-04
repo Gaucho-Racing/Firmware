@@ -25,53 +25,29 @@ The CMake system is structured around a platform-agnostic architecture that allo
 
 ## Directory Structure
 
-```mermaid
-flowchart TD
-    Firmware["📁 Firmware/"]
-    
-    %% Root Files
-    Firmware --> CMakeLists["📄 CMakeLists.txt<br/><small>Root build configuration</small>"]
-    Firmware --> CMakePresets["📄 CMakePresets.json<br/><small>Build preset definitions</small>"]
-    
-    %% Lib Directory
-    Firmware --> Lib["📁 Lib/<br/><small>Library components</small>"]
-    Lib --> LibCmake["📁 cmake/"]
-    LibCmake --> GccArm["📄 gcc-arm-none-eabi.cmake<br/><small>ARM toolchain configuration</small>"]
-    LibCmake --> GrLib["📄 gr-lib.cmake<br/><small>Gaucho Racing CMake utilities</small>"]
-    
-    Lib --> Platform["📁 Platform/<br/><small>Platform-specific configurations</small>"]
-    Platform --> STM32G474["📁 STM32G474xE/<br/><small>G474 platform files</small>"]
-    STM32G474 --> ChipG4["📄 chip.cmake<br/><small>G474 configuration & HAL drivers</small>"]
-    
-    Platform --> STM32U5A9["📁 STM32U5A9xJ/<br/><small>U5A9 platform files</small>"]
-    STM32U5A9 --> ChipU5["📄 chip.cmake<br/><small>U5A9 configuration & HAL drivers</small>"]
-    
-    Platform --> OtherPlatforms["📁 [OTHER_PLATFORMS]/<br/><small>Additional platform directories</small>"]
-    OtherPlatforms --> OtherChip["📄 chip.cmake<br/><small>Platform-specific configurations</small>"]
-    
-    %% Cmake Directory
-    Firmware --> CmakeDir["📁 cmake/"]
-    CmakeDir --> HOOTL["📄 HOOTL.cmake<br/><small>Hardware-out-of-the-loop testing</small>"]
-    
-    %% Project Directories
-    Firmware --> G4BLINKY["📁 G4BLINKY/<br/><small>Example project directory</small>"]
-    G4BLINKY --> G4CMake["📄 CMakeLists.txt<br/><small>Project-specific build config</small>"]
-    G4BLINKY --> G4Core["📁 Core/<br/><small>Project source code</small>"]
-    
-    Firmware --> OtherProjects["📁 [OTHER_PROJECTS]/<br/><small>Additional project directories</small>"]
-    OtherProjects --> OtherCMake["📄 CMakeLists.txt<br/><small>Project build configurations</small>"]
-    OtherProjects --> OtherCore["📁 Core/<br/><small>Project source files</small>"]
-    
-    %% Styling
-    classDef rootFile fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#000000
-    classDef libFile fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#000000
-    classDef projectFile fill:#e8f5e8,stroke:#388e3c,stroke-width:2px,color:#000000
-    classDef folder fill:#fff8e1,stroke:#f57c00,stroke-width:1px,color:#000000
-    
-    class CMakeLists,CMakePresets rootFile
-    class GccArm,GrLib,ChipG4,ChipU5,OtherChip,HOOTL libFile
-    class G4CMake,OtherCMake projectFile
-    class Firmware,Lib,LibCmake,Platform,STM32G474,STM32U5A9,OtherPlatforms,CmakeDir,G4BLINKY,G4Core,OtherProjects,OtherCore folder
+```
+Firmware/
+├── CMakeLists.txt              # Root build configuration
+├── CMakePresets.json           # Build preset definitions
+├── Lib/                        # Library components
+│   ├── cmake/
+│   │   ├── gcc-arm-none-eabi.cmake  # ARM toolchain configuration
+│   │   └── gr-lib.cmake        # Gaucho Racing CMake utilities
+│   └── Platform/               # Platform-specific configurations
+│       ├── STM32G474xE/        # G474 platform files
+│       │   └── chip.cmake      # G474 configuration & HAL drivers
+│       ├── STM32U5A9xJ/        # U5A9 platform files
+│       │   └── chip.cmake      # U5A9 configuration & HAL drivers
+│       └── [OTHER_PLATFORMS]/  # Additional platform directories
+│           └── chip.cmake      # Platform-specific configurations
+├── cmake/
+│   └── HOOTL.cmake            # Hardware-out-of-the-loop testing
+├── G4BLINKY/                  # Example project directory
+│   ├── CMakeLists.txt         # Project-specific build config
+│   └── Core/                  # Project source code
+└── [OTHER_PROJECTS]/          # Additional project directories
+    ├── CMakeLists.txt         # Project build configurations
+    └── Core/                  # Project source files
 ```
 
 ## System Architecture Diagram
@@ -79,78 +55,265 @@ flowchart TD
 ```mermaid
 flowchart TD
     %% Configuration Layer
-    Presets["CMakePresets.json<br/><br/>configurePresets:<br/>• Debug → Debug build<br/>• Release → Release build<br/>• HOOTLTest → Test build<br/>• MinSizeRel → Min size<br/>• RelWithDebInfo<br/><br/>buildPresets:<br/>• Matching build configs"]
+    Presets[CMakePresets.json] --> Root[Root CMakeLists.txt]
+    Presets -.-> Toolchain1[gcc-arm-none-eabi.cmake]
+    Presets -.-> Toolchain2[HOOTL.cmake]
     
-    Root["Root CMakeLists.txt<br/><br/>Variables:<br/>• PROJECT_NAME=Firmware<br/>• lib_path=Lib<br/>• platform_path=Lib/Platform<br/><br/>Includes:<br/>• chip.cmake<br/>• gr-lib.cmake<br/><br/>Commands:<br/>• add_GR_project()"]
+    %% Core Flow
+    Root --> GRLib[gr-lib.cmake]
+    Root --> ChipConfig[chip.cmake]
     
-    Toolchain1["gcc-arm-none-eabi.cmake<br/><br/>ARM Cross-Compilation:<br/>• Sets C compiler<br/>• Configures C flags<br/>• --specs=nano.specs<br/>• Memory usage reporting<br/>• Debug & optimization"]
+    %% Platform & Project
+    GRLib --> ProjectCMake[Project CMakeLists.txt]
+    ChipConfig --> PlatformLib[CHIP_LIB Interface]
     
-    Toolchain2["HOOTL.cmake<br/><br/>Host-Based Testing:<br/>• Generic system<br/>• No cross-compilation<br/>• Development machine<br/>• Unit testing support"]
-    
-    %% Core Library Layer
-    GRLib["gr-lib.cmake<br/><br/>add_GR_project function:<br/>1. Call add_executable_Platform<br/>2. Add project subdirectory<br/>3. Create Combinator library<br/>4. Link Platform & User libs<br/>5. Link to final executable"]
-    
-    %% Platform Layer
-    ChipConfig["chip.cmake<br/><br/>Platform Variables:<br/>• CHIP identifier<br/>• CHIP_PATH directory<br/>• TARGET_FLAGS<br/><br/>Library Creation:<br/>• CHIP_LIB interface<br/><br/>Function:<br/>• add_executable_CHIP()"]
-    
-    PlatformLib["CHIP_LIB Interface<br/><br/>Compile Definitions:<br/>• HAL driver flags<br/>• LL driver flags<br/>• Chip-specific defines<br/><br/>Include Directories:<br/>• CMSIS headers<br/>• HAL driver headers<br/><br/>Source Files:<br/>• Startup assembly<br/>• HAL driver sources"]
-    
-    %% Project Layer
-    ProjectCMake["Project CMakeLists.txt<br/><br/>Name Extraction:<br/>• get_filename_component<br/><br/>User Code Library:<br/>• PROJECT_USER_CODE<br/><br/>Source Files:<br/>• Main application<br/>• Peripheral configs<br/>• HAL customizations<br/>• Interrupt handlers<br/><br/>Include Directories:<br/>• Core/Inc"]
-    
-    UserCode["Project Directory<br/><br/>Standard Layout:<br/>• PROJECT/ root<br/>• CMakeLists.txt<br/>• Core/Inc/ headers<br/>• Core/Src/ sources<br/><br/>File Types:<br/>• Application code<br/>• System config<br/>• Hardware drivers<br/>• ISR implementations"]
-    
-    %% Linking Layer
-    Combinator["Combinator Library<br/><br/>INTERFACE Library<br/><br/>Purpose:<br/>Links platform &<br/>project components<br/><br/>Dependencies:<br/>• PLATFORM_LIB<br/>• PROJECT_USER_CODE<br/><br/>Creates complete<br/>dependency chain"]
-    
-    %% Final Output
-    Executable["Final Executable<br/><br/>Creation Process:<br/>• add_executable()<br/>• Link combinator<br/><br/>Configuration:<br/>• Linker script<br/>• Compiler flags<br/>• Memory mapping<br/><br/>Output Files:<br/>• PROJECT.elf<br/>• Memory map"]
-    
-    %% Build Process
-    Configure["Configure Phase<br/><br/>cmake --preset<br/><br/>Process:<br/>1. Read presets<br/>2. Set build config<br/>3. Load toolchain<br/>4. Process CMakeLists<br/>5. Include configs<br/>6. Generate build files"]
-    
-    Build["Build Phase<br/><br/>cmake --build<br/><br/>Compilation:<br/>1. Compile HAL drivers<br/>2. Compile user code<br/>3. Link with flags<br/>4. Apply linker script<br/>5. Generate executable<br/>6. Memory report"]
-    
-    %% Memory Output
-    Memory["Memory Usage Report<br/><br/>Resource Utilization:<br/>• RAM vs available<br/>• Flash vs available<br/>• Percentage usage<br/><br/>Output Files:<br/>• build/preset/PROJECT.elf<br/>• build/preset/PROJECT.map"]
-    
-    %% Available Projects
-    Projects["Available Projects<br/><br/>Current Projects:<br/>• G4BLINKY<br/>• G4MVP<br/>• DASHBLINKY<br/>• ACU<br/>• MVP<br/><br/>To Add New Project:<br/>1. Create CMakeLists.txt<br/>2. Follow USER_CODE pattern<br/>3. Add to root CMakeLists"]
-    
-    %% Connections
-    Presets --> Root
-    Presets -.-> Toolchain1
-    Presets -.-> Toolchain2
-    Root --> GRLib
-    Root --> ChipConfig
-    
-    GRLib --> ProjectCMake
-    ChipConfig --> PlatformLib
-    
-    ProjectCMake --> UserCode
-    PlatformLib --> Combinator
+    %% Linking
+    ProjectCMake --> UserCode[Project Directory]
+    PlatformLib --> Combinator[Combinator Library]
     UserCode --> Combinator
     
-    Combinator --> Executable
+    %% Output
+    Combinator --> Executable[Final Executable]
     
-    Configure --> Build
-    Build --> Memory
+    %% Build Process
+    Configure[Configure Phase] --> Build[Build Phase]
+    Build --> Memory[Memory Report]
     Build --> Executable
     
-    Root -.-> Projects
-    
     %% Styling
-    classDef config fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#000000
-    classDef platform fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#000000
-    classDef project fill:#e8f5e8,stroke:#388e3c,stroke-width:2px,color:#000000
-    classDef build fill:#fff8e1,stroke:#f57c00,stroke-width:2px,color:#000000
-    classDef output fill:#fce4ec,stroke:#c2185b,stroke-width:2px,color:#000000
+    classDef config fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef platform fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef project fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+    classDef build fill:#fff8e1,stroke:#f57c00,stroke-width:2px
+    classDef output fill:#fce4ec,stroke:#c2185b,stroke-width:2px
     
     class Presets,Root,Toolchain1,Toolchain2 config
     class ChipConfig,PlatformLib platform
-    class ProjectCMake,UserCode,Combinator,Projects project
+    class ProjectCMake,UserCode,Combinator project
     class Configure,Build build
     class Executable,Memory output
+```
+
+## Extended System Architecture
+
+```
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                                      GAUCHO RACING CMAKE BUILD SYSTEM                                     ║
+╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════╣
+║                                           CONFIGURATION LAYER                                             ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────┐    ┌───────────────────────────┐    ┌────────────────────────────────────────┐
+│   CMakePresets.json     │    │    Root CMakeLists.txt    │    │           Toolchain Files              │
+│                         │    │                           │    │                                        │
+│ configurePresets:       │──▶│ Variables:                │──▶│ gcc-arm-none-eabi.cmake:               │
+│ • Debug                 │    │ • CMAKE_PROJECT_NAME      │    │ • set(CMAKE_C_COMPILER                 │
+│   └→ CMAKE_BUILD_TYPE   │    │ • lib_path="Lib"          │    │     TOOLCHAIN_PREFIX}gcc)              │
+│      ="Debug"           │    │ • platform_path=          │    │ • set(CMAKE_C_FLAGS                    │
+│ • Release               │    │   "lib_path/Platform"     │    │     "CMAKE_C_FLAGS TARGET_FLAGS")      │
+│ • HOOTLTest             │    │                           │    │ • --specs=nano.specs                   │
+│   └→ CMAKE_BUILD_TYPE   │    │ Includes:                 │    │ • -Wl,--print-memory-usage             │
+│      ="Test"            │    │ • include(platform_path/  │    │                                        │
+│ • MinSizeRel            │    │   CHIP/chip.cmake)        │    │ HOOTL.cmake:                           │
+│ • RelWithDebInfo        │    │ • include(lib_path/       │    │ • set(CMAKE_SYSTEM_NAME Generic)       │
+│                         │    │   cmake/gr-lib.cmake)     │    │ • Host-based testing                   │
+│ buildPresets:           │    │                           │    │                                        │
+│ • Corresponding builds  │    │ Commands:                 │    │                                        │
+└─────────────────────────┘    │ • add_GR_project(         │    └────────────────────────────────────────┘
+                               │   PLATFORM PROJECT)       │
+                               └───────────────────────────┘
+                                           │
+                                           ▼
+
+╔══════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                                          LIBRARY CORE LAYER                                              ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+                               ┌───────────────────────────────────────────────────────────────────────────┐
+                               │                           gr-lib.cmake                                    │
+                               │                                                                           │
+                               │ function(add_GR_project Platform Project [Optional_Path])                 │
+                               │ ┌─────────────────────────────────────────────────────────────────────┐   │
+                               │ │ 1. cmake_language(CALL add_executable_Platform Project)             │   │
+                               │ │ 2. add_subdirectory(Project or Optional_Path)                       │   │
+                               │ │ 3. add_library(Combinator_Project INTERFACE)                        │   │
+                               │ │ 4. target_link_libraries(Combinator_Project INTERFACE               │   │
+                               │ │      Platform_LIB                                                   │   │
+                               │ │      Project_USER_CODE)                                             │   │
+                               │ │ 5. target_link_libraries(Project Combinator_Project)                │   │
+                               │ └─────────────────────────────────────────────────────────────────────┘   │
+                               └───────────────────────────────────────────────────────────────────────────┘
+                                           │
+                                           ▼
+
+╔══════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                                         PLATFORM LAYER                                                   ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+                                ┌──────────────────────────────────────┐
+                                │        CHIP/chip.cmake               │
+                                │                                      │
+                                │ Platform Variables:                  │
+                                │ • CHIP identifier                    │
+                                │ • CHIP_PATH directory                │
+                                │ • TARGET_FLAGS architecture          │
+                                │                                      │
+                                │ Library Creation:                    │
+                                │ • CHIP_LIB interface                 │
+                                │                                      │
+                                │ Function:                            │
+                                │ • add_executable_CHIP()              │
+                                │   └→ Linker script configuration     │
+                                └──────────────────────────────────────┘
+                                                   │
+                                                   ▼
+
+              ┌─────────────────────────────────────────────────────────────────────────┐
+              │                         CHIP_LIB Interface                              │
+              │                                                                         │
+              │ Compile Definitions:                                                    │
+              │ • HAL driver enable flags                                               │
+              │ • Low-level driver enable flags                                         │
+              │ • CHIP-specific preprocessor defines                                    │
+              │                                                                         │
+              │ Include Directories:                                                    │
+              │ • CHIP_PATH/Drivers/CMSIS/Include                                       │
+              │ • CHIP_PATH/Drivers/stm32-hal-driver/Inc                                │
+              │ • CHIP_PATH/Drivers/CMSIS/Device/ST/CHIP_FAMILY/Include                 │
+              │                                                                         │
+              │ Source Files:                                                           │
+              │ • CHIP_PATH/CompileDependencies/startup_*.s                             │
+              │ • CHIP_PATH/Drivers/stm32-hal-driver/Src/*_hal_*.c                      │
+              │ • CHIP_PATH/Drivers/stm32-hal-driver/Src/*_ll_*.c                       │
+              └─────────────────────────────────────────────────────────────────────────┘
+                                       │
+                                       ▼
+
+╔══════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                                         PROJECT LAYER                                                    ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                               PROJECT/CMakeLists.txt Structure                                          │
+│                              (Each project follows this pattern)                                        │
+│                                                                                                         │
+│ Project Name Extraction:                                                                                │
+│ • get_filename_component(PROJECT_NAME CMAKE_CURRENT_SOURCE_DIR NAME)                                    │
+│                                                                                                         │
+│ User Code Library Creation:                                                                             │
+│ • add_library(PROJECT_NAME_USER_CODE INTERFACE)                                                         │
+│                                                                                                         │
+│ Source File Specification:                                                                              │
+│ • target_sources(PROJECT_NAME_USER_CODE INTERFACE ...)                                                  │
+│   - Main application entry point                                                                        │
+│   - Peripheral driver configurations                                                                    │
+│   - Hardware abstraction layer customizations                                                           │
+│   - Interrupt service routines                                                                          │
+│   - System configuration files                                                                          │
+│   - Memory management utilities                                                                         │
+│                                                                                                         │
+│ Include Directory Specification:                                                                        │
+│ • target_include_directories(PROJECT_NAME_USER_CODE INTERFACE ...)                                      │
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+                                       │
+                                       ▼
+
+              ┌────────────────────────────────────────────────────────────────────────┐
+              │                   PROJECT/ Directory Structure                         │
+              │                                                                        │
+              │ Standard Layout:                                                       │
+              │ • PROJECT/ (project root)                                              │
+              │   └── CMakeLists.txt (build configuration)                             │
+              │   └── Core/                                                            │
+              │       ├── Inc/ (Header files)                                          │
+              │       │   ├── Main application headers                                 │
+              │       │   ├── HAL configuration headers                                │
+              │       │   ├── Interrupt handler headers                                │
+              │       │   └── Peripheral driver headers                                │
+              │       └── Src/ (Source files)                                          │
+              │           ├── Main application source                                  │
+              │           ├── Interrupt service routines                               │
+              │           ├── HAL middleware support                                   │
+              │           └── Peripheral driver implementations                        │
+              └────────────────────────────────────────────────────────────────────────┘
+                                       │
+                                       ▼
+
+╔══════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                                        LINKING LAYER                                                    ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+              ┌─────────────────────────────────────────────────────────────────────────┐
+              │                    Combinator_PROJECT Library                           │
+              │                     (Interface Library)                                 │
+              │                                                                         │
+              │ Purpose: Links platform and project components together                 │
+              │                                                                         │
+              │ Dependencies:                                                           │
+              │ • PLATFORM_LIB (HAL + hardware abstraction)                             │
+              │ • PROJECT_USER_CODE (application-specific code)                         │
+              │                                                                         │
+              │ This creates the complete dependency chain:                             │
+              │ Combinator_PROJECT → PLATFORM_LIB + PROJECT_USER_CODE                   │
+              └─────────────────────────────────────────────────────────────────────────┘
+                                       │
+                                       ▼
+
+╔══════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                                        FINAL OUTPUT                                                     ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+              ┌─────────────────────────────────────────────────────────────────────────┐
+              │                      Final PROJECT.elf Executable                       │
+              │                                                                         │
+              │ Creation Process:                                                       │
+              │ • add_executable(PROJECT)                                               │
+              │ • target_link_libraries(PROJECT Combinator_PROJECT)                     │
+              │                                                                         │
+              │ Configuration:                                                          │
+              │ • LINK_FLAGS: "-TCHIP_PATH/CompileDependencies/LINKER_SCRIPT.ld"        │
+              │ • Compiler flags: TARGET_FLAGS                                          │
+              │ • Linker specifications: --specs=nano.specs                             │
+              │ • Memory mapping: -Wl,-Map=CMAKE_PROJECT_NAME.map                       │
+              │ • Memory reporting: -Wl,--print-memory-usage                            │
+              │                                                                         │
+              │ Output Files:                                                           │
+              │ • PROJECT.elf (executable binary)                                       │
+              │ • CMAKE_PROJECT_NAME.map (memory map)                                   │
+              └─────────────────────────────────────────────────────────────────────────┘
+
+╔══════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                                     BUILD PROCESS FLOW                                                  ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+┌────────────────────────────┐                     ┌─────────────────────────────┐
+│      Configure Phase       │                     │         Build Phase         │
+│                            │───────────────────▶│                             │
+│                            │                     │                             │
+│ Process Overview:          │                     │ Compilation Steps:          │
+│ 1. Read CMAKE_BUILD_TYPE   │                     │ 1. Compile HAL drivers      │
+│ 2. Set build configuration │                     │    from CHIP_LIB            │
+│ 3. Load toolchain file     │                     │ 2. Compile user sources     │
+│ 4. Process root build file │                     │    from PROJECT_USER_CODE   │
+│ 5. Include chip config     │                     │ 3. Link with TARGET_FLAGS   │
+│ 6. Include library utils   │                     │ 4. Apply linker script      │
+│ 7. Call project function   │                     │ 5. Generate PROJECT.elf     │
+│ 8. Generate build files    │                     │ 6. Show memory usage        │
+└────────────────────────────┘                     └─────────────────────────────┘
+                                                               │
+                                                               ▼
+                                   ┌─────────────────────────────────────────────┐
+                                   │           Memory Usage Report               │
+                                   │                                             │
+                                   │ Shows resource utilization:                 │
+                                   │ • RAM usage vs available                    │
+                                   │ • Flash memory usage vs available           │
+                                   │ • Percentage utilization                    │
+                                   │                                             │
+                                   │ Generated Output Files:                     │
+                                   │ • build/preset/PROJECT.elf                  │
+                                   │ • build/preset/CMAKE_PROJECT_NAME.map       │
+                                   └─────────────────────────────────────────────┘
 ```
 
 ## Core Components
