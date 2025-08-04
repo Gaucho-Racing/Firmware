@@ -44,37 +44,37 @@ Firmware/
 ```mermaid
 flowchart TD
     %% Configuration Layer
-    Presets["CMakePresets.json"] --> Root["Root CMakeLists.txt"]
-    Presets -.-> Toolchain1["gcc-arm-none-eabi.cmake"]
-    Presets -.-> Toolchain2["HOOTL.cmake"]
+    Presets["📋 CMakePresets.json<br/>Build Configurations"] --> Root["🏗️ Root CMakeLists.txt<br/>Main Build Script"]
+    Presets -.-> Toolchain1["⚙️ gcc-arm-none-eabi.cmake<br/>ARM Cross-Compiler"]
+    Presets -.-> Toolchain2["🧪 HOOTL.cmake<br/>Host Testing"]
     
     %% Core Flow
-    Root --> GRLib["gr-lib.cmake"]
-    Root --> ChipConfig["${CHIP}/chip.cmake"]
+    Root --> GRLib["📚 gr-lib.cmake<br/>Project Creation Utils"]
+    Root --> ChipConfig["💾 ${CHIP}/chip.cmake<br/>Platform Config"]
     
     %% Platform & Project
-    GRLib --> ProjectCMake["${PROJECT}/CMakeLists.txt"]
-    ChipConfig --> PlatformLib["${CHIP}_LIB Interface"]
+    GRLib --> ProjectCMake["📁 ${PROJECT}/CMakeLists.txt<br/>Project Build Rules"]
+    ChipConfig --> PlatformLib["🔌 ${CHIP}_LIB Interface<br/>HAL + Drivers"]
     
     %% Linking
-    ProjectCMake --> UserCode["${PROJECT}/ Directory"]
-    PlatformLib --> Combinator["Combinator_${PROJECT}"]
+    ProjectCMake --> UserCode["👨‍💻 ${PROJECT}/ Directory<br/>Application Code"]
+    PlatformLib --> Combinator["🔗 Combinator_${PROJECT}<br/>Link Library"]
     UserCode --> Combinator
     
     %% Output
-    Combinator --> Executable["${PROJECT}.elf"]
+    Combinator --> Executable["🎯 ${PROJECT}.elf<br/>Final Binary"]
     
     %% Build Process
-    Configure["Configure Phase"] --> Build["Build Phase"]
-    Build --> Memory["Memory Report"]
+    Configure["⚙️ Configure Phase<br/>Setup Build System"] --> Build["🔨 Build Phase<br/>Compile & Link"]
+    Build --> Memory["📊 Memory Report<br/>Usage Analysis"]
     Build --> Executable
     
-    %% Styling
-    classDef config fill:#E8F4FD,stroke:#1565C0,stroke-width:2px,color:#000000
-    classDef platform fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px,color:#000000
-    classDef project fill:#E8F5E8,stroke:#2E7D32,stroke-width:2px,color:#000000
-    classDef build fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#000000
-    classDef output fill:#FCE4EC,stroke:#AD1457,stroke-width:2px,color:#000000
+    %% Enhanced Styling with better contrast and readability
+    classDef config fill:#E3F2FD,stroke:#0D47A1,stroke-width:3px,color:#000000,font-weight:bold,font-size:12px
+    classDef platform fill:#F1E8FF,stroke:#4A148C,stroke-width:3px,color:#000000,font-weight:bold,font-size:12px
+    classDef project fill:#E8F5E8,stroke:#1B5E20,stroke-width:3px,color:#000000,font-weight:bold,font-size:12px
+    classDef build fill:#FFF8E1,stroke:#E65100,stroke-width:3px,color:#000000,font-weight:bold,font-size:12px
+    classDef output fill:#E8F5E8,stroke:#2E7D32,stroke-width:3px,color:#000000,font-weight:bold,font-size:12px
     
     class Presets,Root,Toolchain1,Toolchain2 config
     class ChipConfig,PlatformLib platform
@@ -412,14 +412,3 @@ cmake --build build/Release
 cmake --preset HOOTLTest
 cmake --build build/HOOTLTest
 ```
-
-### Memory Usage
-
-The build system automatically displays memory usage after linking, such as:
-```
-Memory region         Used Size  Region Size  %age Used
-             RAM:        2408 B       128 KB      1.84%
-           FLASH:       34860 B       512 KB      6.65%
-```
-
-This information helps ensure the firmware fits within the target microcontroller's constraints.
