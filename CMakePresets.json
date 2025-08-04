@@ -13,7 +13,7 @@
             "name": "HOOTLTest",
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/build/${presetName}",
-            "toolchainFile": "${sourceDir}/cmake/HOOTL.cmake",
+            "toolchainFile": "${sourceDir}/Lib/cmake/HOOTL.cmake",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Test"
             }
