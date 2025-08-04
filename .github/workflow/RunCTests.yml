@@ -1,0 +1,33 @@
+name: Run CTests
+
+on:
+  push:
+    branches: [ main, Daniel, Will ]
+  pull_request:
+    branches: [ main, Daniel, Will ]
+
+jobs:
+  ctest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential
+
+      - name: Configure CMake
+        run: cmake -S . -B build
+
+      - name: Build CMake
+        run: cmake --build build
+
+      - name: Run CTests
+        working-directory: build
+        run: |
+          echo "### CTest Output" >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
+          ctest --output-on-failure >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
