@@ -43,7 +43,7 @@ Ad- BLINKY
                     -->
             - Drivers
                 - CMSIS
-                - HAL/LL Driver
+                - HAL/LL Driver (TODO: currently named stm32-hal-driver as that's what stm calls it, need to rename to make it fit better)
             - CMakeLists.txt
                 <!--
                 should compile the Drivers into an interface lib 
