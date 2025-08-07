@@ -14,8 +14,15 @@ jobs:
   clang-format:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout Branch
+        if: github.event_name != 'pull_request'
         uses: actions/checkout@v4
+
+      - name: Checkout Pull Request
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Cache Apt Packages
         uses: awalsh128/cache-apt-pkgs-action@latest
@@ -33,5 +40,5 @@ jobs:
           HOME: ${{ github.workspace }}
         with:
           default_author: github_actions
-          message: 'Automatic ${{ github.job }}: Fixed formatting with clang-format'
+          message: 'Automatic Clang-Format: Standardized formatting automatically'
           fetch: 'false'
