@@ -8,6 +8,8 @@
 - Each project needs it's own directory where the name of the directory is the name of the project/executable
   - this is because I am lazy and wanted to hardcode stuff for `add_GR_project` (see `gr-lib.cmake`)
 
+If you do not want GitHub Action emails please turn off notifications on your side. See something like https://stackoverflow.com/q/66116203
+
 # Testing
 
 ## Setup
