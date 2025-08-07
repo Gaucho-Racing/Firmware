@@ -6,6 +6,16 @@ function(ternary boolean first second)
     endif()
 endfunction()
 
+function(add_GR_test)
+    foreach(FILE IN LISTS ARGN)
+        get_filename_component(FILE_NO_EXT ${FILE} NAME_WE)
+        add_executable(${FILE_NO_EXT}
+            ${FILE}
+        )
+        add_test(NAME ${FILE_NO_EXT} COMMAND ${FILE_NO_EXT})
+    endforeach()
+endfunction()
+
 function(add_GR_project)
     # overload add_GR_project
     if(${ARGC} EQUAL 2)
@@ -18,23 +28,27 @@ function(add_GR_project)
     set(Platform ${ARGV0})
     set(GR_PROJECT ${ARGV1})
 
-    # equivalent to calling the funnction add_executable_${Platform}() but cmake won't let me do that
-    cmake_language(CALL add_executable_${Platform} ${GR_PROJECT})
-
-    if(DEFINED ${GR_PROJECT_PATH})
-        add_subdirectory(${GR_PROJECT_PATH})
-    else()
+    if (CMAKE_BUILD_TYPE STREQUAL "Test")
         add_subdirectory(${GR_PROJECT})
+    else()
+        # equivalent to calling the funnction add_executable_${Platform}() but cmake won't let me do that
+        cmake_language(CALL add_executable_${Platform} ${GR_PROJECT})
+
+        if(DEFINED ${GR_PROJECT_PATH})
+            add_subdirectory(${GR_PROJECT_PATH})
+        else()
+            add_subdirectory(${GR_PROJECT})
+        endif()
+
+        add_library(Combinator_${GR_PROJECT} INTERFACE)
+
+        target_link_libraries(Combinator_${GR_PROJECT} INTERFACE
+            ${Platform}_LIB
+            ${GR_PROJECT}_USER_CODE # Blame Owen
+        )
+
+        target_link_libraries(${GR_PROJECT}
+            Combinator_${GR_PROJECT}
+        )
     endif()
-
-    add_library(Combinator_${GR_PROJECT} INTERFACE)
-
-    target_link_libraries(Combinator_${GR_PROJECT} INTERFACE
-        ${Platform}_LIB
-        ${GR_PROJECT}_USER_CODE # Blame Owen
-    )
-
-    target_link_libraries(${GR_PROJECT}
-        Combinator_${GR_PROJECT}
-    )
 endfunction()

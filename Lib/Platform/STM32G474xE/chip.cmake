@@ -112,7 +112,6 @@ target_sources(${CHIP}_LIB INTERFACE
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_utils.c
 )
 
-
 function(add_executable_${CHIP} TARGET_NAME)
 
 set(TARGET_FLAGS "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard")

@@ -1,0 +1,66 @@
+name: Check STM32 HAL/LL Driver Version
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-hal-driver-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq curl
+
+      - name: Find chip directories
+        id: chips
+        run: |
+          find Lib/Platform -mindepth 1 -maxdepth 1 -type d | while read chipdir; do
+            chip=$(basename "$chipdir")
+            echo "chip=$chip" >> $GITHUB_OUTPUT
+          done
+
+      - name: Check each chip HAL driver version
+        id: check_versions
+        run: |
+          chips=$(find Lib/Platform -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
+          issues=""
+          for chip in $chips; do
+            local_version_file="Lib/Platform/$chip/Drivers/stm32-hal-driver/VERSION.md"
+            if [ ! -f "$local_version_file" ]; then
+              issues="${issues}\n- $chip: VERSION.md not found"
+              continue
+            fi
+            local_version=$(cat "$local_version_file")
+            chip_family=$(echo "$chip" | grep -Eo '^STM32[A-Z][0-9]')
+            hal_repo="https://api.github.com/repos/STMicroelectronics/${chip_family}xx-hal-driver/tags"
+            latest_tag=$(curl -s "$hal_repo" | jq -r '.[0].name' | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
+            if [ -z "$latest_tag" ]; then
+              issues="${issues}\n- $chip: Could not fetch latest tag"
+              continue
+            fi
+            if [ "$local_version" != "$latest_tag" ]; then
+              issues="${issues}\n- $chip: Local version $local_version, latest $latest_tag"
+            fi
+          done
+          echo "issues<<EOF" >> $GITHUB_OUTPUT
+          echo -e "$issues" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Save issues to file
+        if: steps.check_versions.outputs.issues != ''
+        run: echo "${{ steps.check_versions.outputs.issues }}" > issues.txt
+
+      - name: Create issue if versions mismatch
+        if: steps.check_versions.outputs.issues != ''
+        uses: peter-evans/create-issue-from-file@v4
+        with:
+          title: "HAL Driver Version Mismatch Detected"
+          content-filepath: issues.txt
+          labels: version-check, automated-issue

@@ -10,6 +10,15 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Debug")
 endif()
 
+if(CMAKE_BUILD_TYPE STREQUAL "Test")
+    add_GR_test(
+        Application/Test/basic_application_hootl_test.c
+        Application/Test/advanced_application_hootl_test.c
+        Core/Test/basic_core_test.c
+        Core/Test/advanced_core_test.c
+    )
+endif()
+
 # Enable compile command to ease indexing with e.g. clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
