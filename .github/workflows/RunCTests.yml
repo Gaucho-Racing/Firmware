@@ -1,13 +1,15 @@
-name: Run CTests
+name: CMake and CTest
 
 on:
   push:
-    branches: [ main, Daniel, Will ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, Daniel, Will ]
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   ctest:
+    name: CMake and CTest
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -15,21 +17,22 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          sudo apt-get update |& tee -a $GITHUB_STEP_SUMMARY
-          sudo apt-get install -y cmake build-essential --no-install-suggests --no-install-recommends |& tee -a $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential --no-install-suggests --no-install-recommends
 
       - name: CMake
         run: |
+          echo "# CMake Configuration" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           cmake --preset HOOTLTest |& tee -a $GITHUB_STEP_SUMMARY
+          echo "\`\`\` \`\`\`" >> $GITHUB_STEP_SUMMARY
           cmake --build build/HOOTLTest |& tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
 
       - name: Run HOOTL Tests
         working-directory: build/HOOTLTest
         run: |
+          echo "# CTest Output"
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           ctest --output-on-failure |& tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
