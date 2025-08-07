@@ -13,21 +13,33 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y cmake build-essential
+          echo "# Install Dependencies" >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
+          sudo apt-get update >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
+          sudo apt-get install -y cmake build-essential --no-install-suggests --no-install-recommends >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
 
-      - name: Configure CMake
-        run: cmake --preset HOOTLTest
-
-      - name: Build CMake
-        run: cmake --build build/HOOTLTest
+      - name: CMake
+        run: |
+          echo "# CMake Preset Output" >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
+          cmake --preset HOOTLTest >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
+          cmake --build build/HOOTLTest
+          echo "```" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
 
       - name: Run HOOTL Tests
         working-directory: build/HOOTLTest
         run: |
-          echo "### CTest Output" >> $GITHUB_STEP_SUMMARY
+          echo "# CTest Output" >> $GITHUB_STEP_SUMMARY
           echo "```" >> $GITHUB_STEP_SUMMARY
           ctest --output-on-failure >> $GITHUB_STEP_SUMMARY
           echo "```" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
