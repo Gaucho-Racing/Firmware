@@ -15,31 +15,31 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          echo "# Install Dependencies" | tee -a $GITHUB_STEP_SUMMARY
-          echo "```" | tee -a $GITHUB_STEP_SUMMARY
-          sudo apt-get update | tee -a $GITHUB_STEP_SUMMARY
-          echo "```" | tee -a $GITHUB_STEP_SUMMARY
-          echo "```" | tee -a $GITHUB_STEP_SUMMARY
-          sudo apt-get install -y cmake build-essential --no-install-suggests --no-install-recommends | tee -a $GITHUB_STEP_SUMMARY
-          echo "```" | tee -a $GITHUB_STEP_SUMMARY
-          echo "" | tee -a $GITHUB_STEP_SUMMARY
+          echo "# Install Dependencies" |& tee -a $GITHUB_STEP_SUMMARY
+          echo "```" |& tee -a $GITHUB_STEP_SUMMARY
+          sudo apt-get update |& tee -a $GITHUB_STEP_SUMMARY
+          echo "```" |& tee -a $GITHUB_STEP_SUMMARY
+          echo "```" |& tee -a $GITHUB_STEP_SUMMARY
+          sudo apt-get install -y cmake build-essential --no-install-suggests --no-install-recommends |& tee -a $GITHUB_STEP_SUMMARY
+          echo "```" |& tee -a $GITHUB_STEP_SUMMARY
+          echo "" |& tee -a $GITHUB_STEP_SUMMARY
 
       - name: CMake
         run: |
-          echo "# CMake Preset Output" | tee -a $GITHUB_STEP_SUMMARY
-          echo "```" | tee -a $GITHUB_STEP_SUMMARY
-          cmake --preset HOOTLTest | tee -a $GITHUB_STEP_SUMMARY
-          echo "```" | tee -a $GITHUB_STEP_SUMMARY
-          echo "```" | tee -a $GITHUB_STEP_SUMMARY
+          echo "# CMake Preset Output" |& tee -a $GITHUB_STEP_SUMMARY
+          echo "```" |& tee -a $GITHUB_STEP_SUMMARY
+          cmake --preset HOOTLTest |& tee -a $GITHUB_STEP_SUMMARY
+          echo "```" |& tee -a $GITHUB_STEP_SUMMARY
+          echo "```" |& tee -a $GITHUB_STEP_SUMMARY
           cmake --build build/HOOTLTest
-          echo "```" | tee -a $GITHUB_STEP_SUMMARY
-          echo "" | tee -a $GITHUB_STEP_SUMMARY
+          echo "```" |& tee -a $GITHUB_STEP_SUMMARY
+          echo "" |& tee -a $GITHUB_STEP_SUMMARY
 
       - name: Run HOOTL Tests
         working-directory: build/HOOTLTest
         run: |
-          echo "# CTest Output" | tee -a $GITHUB_STEP_SUMMARY
-          echo "```" | tee -a $GITHUB_STEP_SUMMARY
-          ctest --output-on-failure | tee -a $GITHUB_STEP_SUMMARY
-          echo "```" | tee -a $GITHUB_STEP_SUMMARY
-          echo "" | tee -a $GITHUB_STEP_SUMMARY
+          echo "# CTest Output" |& tee -a $GITHUB_STEP_SUMMARY
+          echo "```" |& tee -a $GITHUB_STEP_SUMMARY
+          ctest --output-on-failure |& tee -a $GITHUB_STEP_SUMMARY
+          echo "```" |& tee -a $GITHUB_STEP_SUMMARY
+          echo "" |& tee -a $GITHUB_STEP_SUMMARY
