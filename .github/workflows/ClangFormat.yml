@@ -13,6 +13,9 @@ concurrency:
 jobs:
   clang-format:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: Checkout Branch
         if: github.event_name != 'pull_request'
