@@ -22,7 +22,7 @@ jobs:
         run: cmake --preset HOOTLTest
 
       - name: Build CMake
-        run: cmake --build build
+        run: cmake --build build/HOOTLTest
 
       - name: Run HOOTL Tests
         working-directory: build/HOOTLTest
