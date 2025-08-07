@@ -1,16 +1,16 @@
 #ifndef STATE_H
 #define STATE_H
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 // Typedef
 typedef enum {
-    INIT,       // 🙏
-    STANDBY,    // 🏠
-    PRECHARGE,  // 🙏
-    CHARGE,     // 🛌
-    NORMAL,     // 💃
-    SHITDOWN    // 🪦
+	INIT,	   // 🙏
+	STANDBY,   // 🏠
+	PRECHARGE, // 🙏
+	CHARGE,	   // 🛌
+	NORMAL,	   // 💃
+	SHITDOWN   // 🪦
 } State;
 
 // State Functions

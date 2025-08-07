@@ -1,6 +1,3 @@
 #include "appdemo.h"
 
-int demoComputation(int input)
-{
-    return input << 1;
-}
+int demoComputation(int input) { return input << 1; }

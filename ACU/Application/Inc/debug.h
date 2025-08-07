@@ -1,21 +1,21 @@
 #ifndef DEBUG_H
 #define DEBUG_H
 
-#include "config.h"
 #include "bcc.h"
-#include "spi.h"
-#include "tim.h"
+#include "config.h"
 #include "gpio.h"
-#include "usart.h"
+#include "spi.h"
 #include "stm32g474xx.h"
-#include <stdio.h>
+#include "tim.h"
+#include "usart.h"
 #include <math.h>
+#include <stdio.h>
 
 #ifndef __UINT32_MAX__
-    #include <inttypes.h>
+#include <inttypes.h>
 #else
-    typedef unsigned long uint32_t;
-    typedef unsigned long long uint64_t; // maybe not needed?
+typedef unsigned long uint32_t;
+typedef unsigned long long uint64_t; // maybe not needed?
 #endif
 
 #define DEBUG_MODE 0
