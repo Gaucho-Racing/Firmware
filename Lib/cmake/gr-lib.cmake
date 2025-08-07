@@ -6,16 +6,6 @@ function(ternary boolean first second)
     endif()
 endfunction()
 
-function(add_GR_test)
-    foreach(FILE IN LISTS ARGN)
-        get_filename_component(FILE_NO_EXT ${FILE} NAME_WE)
-        add_executable(${FILE_NO_EXT}
-            ${FILE}
-        )
-        add_test(NAME ${FILE_NO_EXT} COMMAND ${FILE_NO_EXT})
-    endforeach()
-endfunction()
-
 function(add_GR_project)
     # overload add_GR_project
     if(${ARGC} EQUAL 2)

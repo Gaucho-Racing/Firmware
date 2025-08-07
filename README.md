@@ -8,6 +8,44 @@
 - Each project needs it's own directory where the name of the directory is the name of the project/executable
   - this is because I am lazy and wanted to hardcode stuff for `add_GR_project` (see `gr-lib.cmake`)
 
+# Testing
+
+## Setup
+While setting up your project using `add_GR_project`, have something that looks like this inside of your project's top level CMakeFile.txt
+```cmake
+if(CMAKE_BUILD_TYPE STREQUAL "Test")
+    include_directories(
+        Application/Inc
+        Core/Inc
+    )
+    
+    # Can have singleton files
+    add_executable(basic_application_hootl_test
+        Application/Test/basic_application_hootl_test.c
+    )
+    add_test(basic_app basic_application_hootl_test)
+
+    # Can link files
+    add_executable(advanced_application_hootl_test
+        Application/Test/advanced_application_hootl_test.c
+        Application/Src/appdemo.c
+    )
+    add_test(advanced_app advanced_application_hootl_test)
+
+    ...
+endif()
+```
+
+Setup each of the executables as an independent program with their own `int main(int argc, char *argv[])` that links from other files as needed.
+
+## Running
+
+```bash
+cmake --preset HOOTLTest
+cmake --build build/HOOTLTest
+cd build/HOOTLTest && ctest --output-on-failure
+```
+
 ---
 
 # LEGACY ACU-25 CONTENT

@@ -11,12 +11,32 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL "Test")
-    add_GR_test(
-        Application/Test/basic_application_hootl_test.c
-        Application/Test/advanced_application_hootl_test.c
-        Core/Test/basic_core_test.c
-        Core/Test/advanced_core_test.c
+    include_directories(
+        Application/Inc
+        Core/Inc
     )
+    
+    add_executable(basic_application_hootl_test
+        Application/Test/basic_application_hootl_test.c
+    )
+    add_test(basic_app basic_application_hootl_test)
+
+    add_executable(advanced_application_hootl_test
+        Application/Test/advanced_application_hootl_test.c
+        Application/Src/appdemo.c
+    )
+    add_test(advanced_app advanced_application_hootl_test)
+
+    add_executable(basic_core_test
+        Core/Test/basic_core_test.c
+    )
+    add_test(basic_core basic_core_test)
+
+    add_executable(advanced_core_test
+        Core/Test/advanced_core_test.c
+        Core/Src/coredemo.c
+    )
+    add_test(advanced_core advanced_core_test)
 endif()
 
 # Enable compile command to ease indexing with e.g. clangd
@@ -55,5 +75,6 @@ target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE
 )
 
 target_include_directories(${PROJECT_NAME}_USER_CODE INTERFACE
+    Application/Inc
     Core/Inc
 )
