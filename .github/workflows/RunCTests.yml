@@ -15,21 +15,21 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           sudo apt-get update |& tee -a $GITHUB_STEP_SUMMARY
           sudo apt-get install -y cmake build-essential --no-install-suggests --no-install-recommends |& tee -a $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
 
       - name: CMake
         run: |
-          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           cmake --preset HOOTLTest |& tee -a $GITHUB_STEP_SUMMARY
           cmake --build build/HOOTLTest |& tee -a $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
 
       - name: Run HOOTL Tests
         working-directory: build/HOOTLTest
         run: |
-          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           ctest --output-on-failure |& tee -a $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
