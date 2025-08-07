@@ -19,8 +19,8 @@ enable_language(C ASM)
 # Core project settings
 project(${CMAKE_PROJECT_NAME})
 
-# TODO: make this cleaner
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../Lib/Vendor/BCC ${CMAKE_CURRENT_SOURCE_DIR}/../Lib/Vendor/BCC/build)
+# add_subdirectory calls for libraries
+add_subdirectory(${CMAKE_SOURCE_DIR}/Lib/Vendor/BCC ${CMAKE_BINARY_DIR}/Vendor/BCC/${Platform})
 
 # what, does in fact not get the filename of somthing but rather the name of the project from the path
 get_filename_component(PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
