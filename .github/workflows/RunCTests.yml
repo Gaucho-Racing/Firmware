@@ -15,10 +15,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y cmake build-essential --no-install-suggests --no-install-recommends
+      - name: Cache Apt Packages
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: cmake build-essential
 
       - name: CMake
         run: |
