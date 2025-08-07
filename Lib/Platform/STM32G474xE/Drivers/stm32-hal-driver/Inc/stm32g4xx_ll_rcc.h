@@ -177,9 +177,10 @@ typedef struct {
 #define LL_RCC_CSR_SFTRSTF RCC_CSR_SFTRSTF   /*!< Software Reset flag */
 #define LL_RCC_CSR_IWDGRSTF                                                    \
 	RCC_CSR_IWDGRSTF /*!< Independent Watchdog reset flag */
-#define LL_RCC_CSR_WWDGRSTF RCC_CSR_WWDGRSTF /*!< Window watchdog reset flag   \
-					      */
-#define LL_RCC_CSR_BORRSTF RCC_CSR_BORRSTF   /*!< BOR reset flag */
+#define LL_RCC_CSR_WWDGRSTF                                                    \
+	RCC_CSR_WWDGRSTF		   /*!< Window watchdog reset flag     \
+					    */
+#define LL_RCC_CSR_BORRSTF RCC_CSR_BORRSTF /*!< BOR reset flag */
 /**
  * @}
  */
@@ -201,8 +202,9 @@ typedef struct {
 	RCC_CIER_PLLRDYIE /*!< PLL Ready Interrupt Enable */
 #define LL_RCC_CIER_HSI48RDYIE                                                 \
 	RCC_CIER_HSI48RDYIE /*!< HSI48 Ready Interrupt Enable */
-#define LL_RCC_CIER_LSECSSIE RCC_CIER_LSECSSIE /*!< LSE CSS Interrupt Enable   \
-						*/
+#define LL_RCC_CIER_LSECSSIE                                                   \
+	RCC_CIER_LSECSSIE /*!< LSE CSS Interrupt Enable                        \
+			   */
 /**
  * @}
  */
@@ -262,18 +264,21 @@ typedef struct {
 /** @defgroup RCC_LL_EC_SYSCLK_DIV  AHB prescaler
  * @{
  */
-#define LL_RCC_SYSCLK_DIV_1 RCC_CFGR_HPRE_DIV1	   /*!< SYSCLK not divided */
-#define LL_RCC_SYSCLK_DIV_2 RCC_CFGR_HPRE_DIV2	   /*!< SYSCLK divided by 2 */
-#define LL_RCC_SYSCLK_DIV_4 RCC_CFGR_HPRE_DIV4	   /*!< SYSCLK divided by 4 */
-#define LL_RCC_SYSCLK_DIV_8 RCC_CFGR_HPRE_DIV8	   /*!< SYSCLK divided by 8 */
-#define LL_RCC_SYSCLK_DIV_16 RCC_CFGR_HPRE_DIV16   /*!< SYSCLK divided by 16 */
-#define LL_RCC_SYSCLK_DIV_64 RCC_CFGR_HPRE_DIV64   /*!< SYSCLK divided by 64 */
-#define LL_RCC_SYSCLK_DIV_128 RCC_CFGR_HPRE_DIV128 /*!< SYSCLK divided by 128  \
-						    */
-#define LL_RCC_SYSCLK_DIV_256 RCC_CFGR_HPRE_DIV256 /*!< SYSCLK divided by 256  \
-						    */
-#define LL_RCC_SYSCLK_DIV_512 RCC_CFGR_HPRE_DIV512 /*!< SYSCLK divided by 512  \
-						    */
+#define LL_RCC_SYSCLK_DIV_1 RCC_CFGR_HPRE_DIV1	 /*!< SYSCLK not divided */
+#define LL_RCC_SYSCLK_DIV_2 RCC_CFGR_HPRE_DIV2	 /*!< SYSCLK divided by 2 */
+#define LL_RCC_SYSCLK_DIV_4 RCC_CFGR_HPRE_DIV4	 /*!< SYSCLK divided by 4 */
+#define LL_RCC_SYSCLK_DIV_8 RCC_CFGR_HPRE_DIV8	 /*!< SYSCLK divided by 8 */
+#define LL_RCC_SYSCLK_DIV_16 RCC_CFGR_HPRE_DIV16 /*!< SYSCLK divided by 16 */
+#define LL_RCC_SYSCLK_DIV_64 RCC_CFGR_HPRE_DIV64 /*!< SYSCLK divided by 64 */
+#define LL_RCC_SYSCLK_DIV_128                                                  \
+	RCC_CFGR_HPRE_DIV128 /*!< SYSCLK divided by 128                        \
+			      */
+#define LL_RCC_SYSCLK_DIV_256                                                  \
+	RCC_CFGR_HPRE_DIV256 /*!< SYSCLK divided by 256                        \
+			      */
+#define LL_RCC_SYSCLK_DIV_512                                                  \
+	RCC_CFGR_HPRE_DIV512 /*!< SYSCLK divided by 512                        \
+			      */
 /**
  * @}
  */
@@ -821,8 +826,9 @@ typedef struct {
 /** @defgroup RCC_LL_EC_RTC_CLKSOURCE  RTC clock source selection
  * @{
  */
-#define LL_RCC_RTC_CLKSOURCE_NONE 0x00000000U /*!< No clock used as RTC clock  \
-					       */
+#define LL_RCC_RTC_CLKSOURCE_NONE                                              \
+	0x00000000U /*!< No clock used as RTC clock                            \
+		     */
 #define LL_RCC_RTC_CLKSOURCE_LSE                                               \
 	RCC_BDCR_RTCSEL_0 /*!< LSE oscillator clock used as RTC clock */
 #define LL_RCC_RTC_CLKSOURCE_LSI                                               \

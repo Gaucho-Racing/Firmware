@@ -51,10 +51,11 @@ extern "C" {
 /** @defgroup CRC_LL_EC_POLYLENGTH Polynomial length
  * @{
  */
-#define LL_CRC_POLYLENGTH_32B 0x00000000U	/*!< 32 bits Polynomial size */
-#define LL_CRC_POLYLENGTH_16B CRC_CR_POLYSIZE_0 /*!< 16 bits Polynomial size   \
-						 */
-#define LL_CRC_POLYLENGTH_8B CRC_CR_POLYSIZE_1	/*!< 8 bits Polynomial size */
+#define LL_CRC_POLYLENGTH_32B 0x00000000U /*!< 32 bits Polynomial size */
+#define LL_CRC_POLYLENGTH_16B                                                  \
+	CRC_CR_POLYSIZE_0		       /*!< 16 bits Polynomial size    \
+						*/
+#define LL_CRC_POLYLENGTH_8B CRC_CR_POLYSIZE_1 /*!< 8 bits Polynomial size */
 #define LL_CRC_POLYLENGTH_7B                                                   \
 	(CRC_CR_POLYSIZE_1 | CRC_CR_POLYSIZE_0) /*!< 7 bits Polynomial size */
 /**

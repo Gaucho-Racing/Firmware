@@ -148,10 +148,11 @@ typedef struct {
 #define LL_EXTI_LINE_30 EXTI_IMR1_IM30 /*!< Extended line 30 */
 #endif				       /* EXTI_IMR1_IM30 */
 #if defined(EXTI_IMR1_IM31)
-#define LL_EXTI_LINE_31 EXTI_IMR1_IM31	   /*!< Extended line 31 */
-#endif					   /* EXTI_IMR1_IM31 */
-#define LL_EXTI_LINE_ALL_0_31 EXTI_IMR1_IM /*!< All Extended line not          \
-					      reserved*/
+#define LL_EXTI_LINE_31 EXTI_IMR1_IM31 /*!< Extended line 31 */
+#endif				       /* EXTI_IMR1_IM31 */
+#define LL_EXTI_LINE_ALL_0_31                                                  \
+	EXTI_IMR1_IM /*!< All Extended line not                                \
+			reserved*/
 
 #if defined(EXTI_IMR2_IM32)
 #define LL_EXTI_LINE_32 EXTI_IMR2_IM32 /*!< Extended line 32 */

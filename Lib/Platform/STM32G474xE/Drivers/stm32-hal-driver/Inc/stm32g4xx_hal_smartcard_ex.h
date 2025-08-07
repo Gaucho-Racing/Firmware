@@ -68,9 +68,8 @@ extern "C" {
 #define SMARTCARD_ADVFEATURE_RXINVERT_INIT                                     \
 	0x00000002U /*!< RX pin active level inversion */
 #define SMARTCARD_ADVFEATURE_DATAINVERT_INIT                                   \
-	0x00000004U /*!< Binary data inversion */
-#define SMARTCARD_ADVFEATURE_SWAP_INIT                                         \
-	0x00000008U /*!< TX/RX pins swap */
+	0x00000004U				   /*!< Binary data inversion */
+#define SMARTCARD_ADVFEATURE_SWAP_INIT 0x00000008U /*!< TX/RX pins swap */
 #define SMARTCARD_ADVFEATURE_RXOVERRUNDISABLE_INIT                             \
 	0x00000010U /*!< RX overrun disable */
 #define SMARTCARD_ADVFEATURE_DMADISABLEONERROR_INIT                            \
@@ -221,8 +220,9 @@ extern "C" {
 #define SMARTCARD_IT_FE 0x0100U	 /*!< SMARTCARD frame error interruption   */
 
 #define SMARTCARD_IT_EOB 0x0C3BU /*!< SMARTCARD end of block interruption */
-#define SMARTCARD_IT_RTO 0x0B3AU /*!< SMARTCARD receiver timeout interruption  \
-				  */
+#define SMARTCARD_IT_RTO                                                       \
+	0x0B3AU /*!< SMARTCARD receiver timeout interruption                   \
+		 */
 #define SMARTCARD_IT_TCBGT                                                     \
 	0x1978U /*!< SMARTCARD transmission complete before guard time         \
 		   completion interruption */

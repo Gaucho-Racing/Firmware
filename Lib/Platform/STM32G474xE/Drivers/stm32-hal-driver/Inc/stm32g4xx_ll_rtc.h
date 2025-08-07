@@ -842,8 +842,9 @@ typedef struct {
 /** @defgroup RTC_LL_EC_CALIB_OUTPUT  Calibration output
  * @{
  */
-#define LL_RTC_CALIB_OUTPUT_NONE 0x00000000U /*!< Calibration output disabled  \
-					      */
+#define LL_RTC_CALIB_OUTPUT_NONE                                               \
+	0x00000000U /*!< Calibration output disabled                           \
+		     */
 #define LL_RTC_CALIB_OUTPUT_1HZ                                                \
 	(RTC_CR_COE | RTC_CR_COSEL) /*!< Calibration output is 1 Hz */
 #define LL_RTC_CALIB_OUTPUT_512HZ                                              \

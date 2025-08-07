@@ -56,8 +56,7 @@ extern "C" {
 	((uint8_t)0x00) /* MCO (MCO1 and MCO2) Alternate Function mapping */
 #define GPIO_AF0_SWJ                                                           \
 	((uint8_t)0x00) /* SWJ (SWD and JTAG) Alternate Function mapping */
-#define GPIO_AF0_TRACE                                                         \
-	((uint8_t)0x00) /* TRACE Alternate Function mapping */
+#define GPIO_AF0_TRACE ((uint8_t)0x00) /* TRACE Alternate Function mapping */
 
 /**
  * @brief   AF 1 selection
@@ -70,10 +69,11 @@ extern "C" {
 #define GPIO_AF1_TIM17 ((uint8_t)0x01) /* TIM17 Alternate Function mapping  */
 #define GPIO_AF1_TIM17_COMP1                                                   \
 	((uint8_t)0x01) /* TIM17/COMP1 Break in Alternate Function mapping  */
-#define GPIO_AF1_TIM15 ((uint8_t)0x01)	/* TIM15 Alternate Function mapping  */
-#define GPIO_AF1_LPTIM1 ((uint8_t)0x01) /* LPTIM1 Alternate Function mapping   \
-					 */
-#define GPIO_AF1_IR ((uint8_t)0x01)	/* IR Alternate Function mapping     */
+#define GPIO_AF1_TIM15 ((uint8_t)0x01) /* TIM15 Alternate Function mapping  */
+#define GPIO_AF1_LPTIM1                                                        \
+	((uint8_t)0x01)		    /* LPTIM1 Alternate Function mapping       \
+				     */
+#define GPIO_AF1_IR ((uint8_t)0x01) /* IR Alternate Function mapping     */
 
 /**
  * @brief   AF 2 selection
@@ -119,9 +119,10 @@ extern "C" {
 #define GPIO_AF3_I2C4 ((uint8_t)0x03) /* I2C4 Alternate Function mapping    */
 #endif				      /* I2C4 */
 #if defined(HRTIM1)
-#define GPIO_AF3_HRTIM1 ((uint8_t)0x03) /* HRTIM1 Alternate Function mapping   \
-					 */
-#endif					/* HRTIM1 */
+#define GPIO_AF3_HRTIM1                                                        \
+	((uint8_t)0x03) /* HRTIM1 Alternate Function mapping                   \
+			 */
+#endif			/* HRTIM1 */
 #if defined(QUADSPI)
 #define GPIO_AF3_QUADSPI                                                       \
 	((uint8_t)0x03)		       /* QUADSPI Alternate Function mapping */
@@ -203,12 +204,15 @@ extern "C" {
 /**
  * @brief   AF 7 selection
  */
-#define GPIO_AF7_USART1 ((uint8_t)0x07) /* USART1 Alternate Function mapping   \
-					 */
-#define GPIO_AF7_USART2 ((uint8_t)0x07) /* USART2 Alternate Function mapping   \
-					 */
-#define GPIO_AF7_USART3 ((uint8_t)0x07) /* USART3 Alternate Function mapping   \
-					 */
+#define GPIO_AF7_USART1                                                        \
+	((uint8_t)0x07) /* USART1 Alternate Function mapping                   \
+			 */
+#define GPIO_AF7_USART2                                                        \
+	((uint8_t)0x07) /* USART2 Alternate Function mapping                   \
+			 */
+#define GPIO_AF7_USART3                                                        \
+	((uint8_t)0x07) /* USART3 Alternate Function mapping                   \
+			 */
 #if defined(COMP5)
 #define GPIO_AF7_COMP5 ((uint8_t)0x07) /* COMP5 Alternate Function mapping */
 #endif				       /* COMP5 */
@@ -258,12 +262,14 @@ extern "C" {
 	((uint8_t)0x09) /* TIM8/COMP1 Break in Alternate Function mapping   */
 #define GPIO_AF9_TIM15_COMP1                                                   \
 	((uint8_t)0x09) /* TIM15/COMP1 Break in Alternate Function mapping  */
-#define GPIO_AF9_FDCAN1 ((uint8_t)0x09) /* FDCAN1 Alternate Function mapping   \
-					 */
+#define GPIO_AF9_FDCAN1                                                        \
+	((uint8_t)0x09) /* FDCAN1 Alternate Function mapping                   \
+			 */
 #if defined(FDCAN2)
-#define GPIO_AF9_FDCAN2 ((uint8_t)0x09) /* FDCAN2 Alternate Function mapping   \
-					 */
-#endif					/* FDCAN2 */
+#define GPIO_AF9_FDCAN2                                                        \
+	((uint8_t)0x09) /* FDCAN2 Alternate Function mapping                   \
+			 */
+#endif			/* FDCAN2 */
 
 /**
  * @brief   AF 10 selection

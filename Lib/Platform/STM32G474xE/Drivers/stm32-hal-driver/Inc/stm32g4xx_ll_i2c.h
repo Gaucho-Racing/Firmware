@@ -278,8 +278,9 @@ typedef struct {
 /** @defgroup I2C_LL_EC_I2C_ACKNOWLEDGE Acknowledge Generation
  * @{
  */
-#define LL_I2C_ACK 0x00000000U /*!< ACK is sent after current received byte.   \
-				*/
+#define LL_I2C_ACK                                                             \
+	0x00000000U /*!< ACK is sent after current received byte.              \
+		     */
 #define LL_I2C_NACK                                                            \
 	I2C_CR2_NACK /*!< NACK is sent after current received byte.*/
 /**

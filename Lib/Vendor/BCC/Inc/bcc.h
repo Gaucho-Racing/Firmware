@@ -455,8 +455,9 @@ typedef struct {
 				functions defined by the user. */
 
 	bcc_mode_t commMode; /*!< BCC communication mode. */
-	uint8_t devicesCnt;  /*!< Number of BCC devices. SPI mode allows one
-				device only,  TPL mode allows up to 63 devices. */
+	uint8_t
+	    devicesCnt; /*!< Number of BCC devices. SPI mode allows one
+			   device only,  TPL mode allows up to 63 devices. */
 	bcc_device_t device[BCC_DEVICE_CNT_MAX]; /*!< BCC device type of
 						      [0] BCC with CID=1, [1]
 						    BCC with CID=2, etc. */

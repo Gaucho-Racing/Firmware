@@ -683,13 +683,17 @@ typedef struct {
 #define LL_TIM_SR_TIF TIM_SR_TIF     /*!< Trigger interrupt flag */
 #define LL_TIM_SR_BIF TIM_SR_BIF     /*!< Break interrupt flag */
 #define LL_TIM_SR_B2IF TIM_SR_B2IF   /*!< Second break interrupt flag */
-#define LL_TIM_SR_CC1OF TIM_SR_CC1OF /*!< Capture/Compare 1 overcapture flag   \
-				      */
-#define LL_TIM_SR_CC2OF TIM_SR_CC2OF /*!< Capture/Compare 2 overcapture flag   \
-				      */
-#define LL_TIM_SR_CC3OF TIM_SR_CC3OF /*!< Capture/Compare 3 overcapture flag   \
-				      */
-#define LL_TIM_SR_CC4OF TIM_SR_CC4OF /*!< Capture/Compare 4 overcapture flag   \
+#define LL_TIM_SR_CC1OF                                                        \
+	TIM_SR_CC1OF /*!< Capture/Compare 1 overcapture flag                   \
+		      */
+#define LL_TIM_SR_CC2OF                                                        \
+	TIM_SR_CC2OF /*!< Capture/Compare 2 overcapture flag                   \
+		      */
+#define LL_TIM_SR_CC3OF                                                        \
+	TIM_SR_CC3OF /*!< Capture/Compare 3 overcapture flag                   \
+		      */
+#define LL_TIM_SR_CC4OF                                                        \
+	TIM_SR_CC4OF		     /*!< Capture/Compare 4 overcapture flag   \
 				      */
 #define LL_TIM_SR_SBIF TIM_SR_SBIF   /*!< System Break interrupt flag  */
 #define LL_TIM_SR_IDXF TIM_SR_IDXF   /*!< Index interrupt flag  */
@@ -752,8 +756,9 @@ typedef struct {
 #define LL_TIM_DIER_IDXIE TIM_DIER_IDXIE /*!< Index interrupt enable */
 #define LL_TIM_DIER_DIRIE                                                      \
 	TIM_DIER_DIRIE /*!< Direction Change interrupt enable */
-#define LL_TIM_DIER_IERRIE TIM_DIER_IERRIE /*!< Index Error interrupt enable   \
-					    */
+#define LL_TIM_DIER_IERRIE                                                     \
+	TIM_DIER_IERRIE /*!< Index Error interrupt enable                      \
+			 */
 #define LL_TIM_DIER_TERRIE                                                     \
 	TIM_DIER_TERRIE /*!< Transition Error interrupt enable */
 /**
@@ -788,16 +793,17 @@ typedef struct {
 /** @defgroup TIM_LL_EC_COUNTERMODE Counter Mode
  * @{
  */
-#define LL_TIM_COUNTERMODE_UP 0x00000000U   /*!< Counter used as upcounter */
-#define LL_TIM_COUNTERMODE_DOWN TIM_CR1_DIR /*!< Counter used as downcounter   \
-					     */
+#define LL_TIM_COUNTERMODE_UP 0x00000000U /*!< Counter used as upcounter */
+#define LL_TIM_COUNTERMODE_DOWN                                                \
+	TIM_CR1_DIR /*!< Counter used as downcounter                           \
+		     */
 #define LL_TIM_COUNTERMODE_CENTER_DOWN                                         \
 	TIM_CR1_CMS_0 /*!< The counter counts up and down alternatively.       \
-			 Output compare interrupt flags of output channels are                                                                           \
+			 Output compare interrupt flags of output channels are \
 			 set only when the counter is counting down. */
 #define LL_TIM_COUNTERMODE_CENTER_UP                                           \
 	TIM_CR1_CMS_1 /*!< The counter counts up and down alternatively.       \
-			 Output compare interrupt flags of output channels are                                                                           \
+			 Output compare interrupt flags of output channels are \
 			 set only when the counter is counting up */
 #define LL_TIM_COUNTERMODE_CENTER_UP_DOWN                                      \
 	TIM_CR1_CMS /*!< The counter counts up and down alternatively. Output  \
@@ -1272,7 +1278,7 @@ typedef struct {
 	 TIM_SMCR_SMS_0) /*!< Combined gated + reset mode - The counter clock  \
 			    is enabled when the trigger input (TRGI) is high.  \
 			    The counter stops and is reset) as soon as the     \
-			    trigger becomes low.Both startand stop of the                                                                           \
+			    trigger becomes low.Both startand stop of the      \
 			    counter are controlled. */
 /**
  * @}
@@ -1382,23 +1388,27 @@ typedef struct {
  */
 #define LL_TIM_ETR_FILTER_FDIV1                                                \
 	0x00000000U /*!< No filter, sampling is done at fDTS */
-#define LL_TIM_ETR_FILTER_FDIV1_N2 TIM_SMCR_ETF_0 /*!< fSAMPLING=fCK_INT, N=2  \
-						   */
-#define LL_TIM_ETR_FILTER_FDIV1_N4 TIM_SMCR_ETF_1 /*!< fSAMPLING=fCK_INT, N=4  \
-						   */
+#define LL_TIM_ETR_FILTER_FDIV1_N2                                             \
+	TIM_SMCR_ETF_0 /*!< fSAMPLING=fCK_INT, N=2                             \
+			*/
+#define LL_TIM_ETR_FILTER_FDIV1_N4                                             \
+	TIM_SMCR_ETF_1 /*!< fSAMPLING=fCK_INT, N=4                             \
+			*/
 #define LL_TIM_ETR_FILTER_FDIV1_N8                                             \
-	(TIM_SMCR_ETF_1 | TIM_SMCR_ETF_0)	  /*!< fSAMPLING=fCK_INT, N=8 */
-#define LL_TIM_ETR_FILTER_FDIV2_N6 TIM_SMCR_ETF_2 /*!< fSAMPLING=fDTS/2, N=6   \
-						   */
+	(TIM_SMCR_ETF_1 | TIM_SMCR_ETF_0) /*!< fSAMPLING=fCK_INT, N=8 */
+#define LL_TIM_ETR_FILTER_FDIV2_N6                                             \
+	TIM_SMCR_ETF_2 /*!< fSAMPLING=fDTS/2, N=6                              \
+			*/
 #define LL_TIM_ETR_FILTER_FDIV2_N8                                             \
 	(TIM_SMCR_ETF_2 | TIM_SMCR_ETF_0) /*!< fSAMPLING=fDTS/2, N=8 */
 #define LL_TIM_ETR_FILTER_FDIV4_N6                                             \
 	(TIM_SMCR_ETF_2 | TIM_SMCR_ETF_1) /*!< fSAMPLING=fDTS/4, N=6 */
 #define LL_TIM_ETR_FILTER_FDIV4_N8                                             \
 	(TIM_SMCR_ETF_2 | TIM_SMCR_ETF_1 |                                     \
-	 TIM_SMCR_ETF_0)			  /*!< fSAMPLING=fDTS/4, N=8 */
-#define LL_TIM_ETR_FILTER_FDIV8_N6 TIM_SMCR_ETF_3 /*!< fSAMPLING=fDTS/8, N=6   \
-						   */
+	 TIM_SMCR_ETF_0) /*!< fSAMPLING=fDTS/4, N=8 */
+#define LL_TIM_ETR_FILTER_FDIV8_N6                                             \
+	TIM_SMCR_ETF_3 /*!< fSAMPLING=fDTS/8, N=6                              \
+			*/
 #define LL_TIM_ETR_FILTER_FDIV8_N8                                             \
 	(TIM_SMCR_ETF_3 | TIM_SMCR_ETF_0) /*!< fSAMPLING=fDTS/16, N=8 */
 #define LL_TIM_ETR_FILTER_FDIV16_N5                                            \
@@ -1413,9 +1423,10 @@ typedef struct {
 	 TIM_SMCR_ETF_0) /*!< fSAMPLING=fDTS/32, N=5 */
 #define LL_TIM_ETR_FILTER_FDIV32_N6                                            \
 	(TIM_SMCR_ETF_3 | TIM_SMCR_ETF_2 |                                     \
-	 TIM_SMCR_ETF_1)			 /*!< fSAMPLING=fDTS/32, N=6 */
-#define LL_TIM_ETR_FILTER_FDIV32_N8 TIM_SMCR_ETF /*!< fSAMPLING=fDTS/32, N=8   \
-						  */
+	 TIM_SMCR_ETF_1) /*!< fSAMPLING=fDTS/32, N=6 */
+#define LL_TIM_ETR_FILTER_FDIV32_N8                                            \
+	TIM_SMCR_ETF /*!< fSAMPLING=fDTS/32, N=8                               \
+		      */
 /**
  * @}
  */
@@ -1759,30 +1770,39 @@ typedef struct {
  */
 #define LL_TIM_BREAK_FILTER_FDIV1                                              \
 	0x00000000U /*!< No filter, BRK acts asynchronously */
-#define LL_TIM_BREAK_FILTER_FDIV1_N2 0x00010000U  /*!< fSAMPLING=fCK_INT, N=2  \
-						   */
-#define LL_TIM_BREAK_FILTER_FDIV1_N4 0x00020000U  /*!< fSAMPLING=fCK_INT, N=4  \
-						   */
-#define LL_TIM_BREAK_FILTER_FDIV1_N8 0x00030000U  /*!< fSAMPLING=fCK_INT, N=8  \
-						   */
-#define LL_TIM_BREAK_FILTER_FDIV2_N6 0x00040000U  /*!< fSAMPLING=fDTS/2, N=6 */
-#define LL_TIM_BREAK_FILTER_FDIV2_N8 0x00050000U  /*!< fSAMPLING=fDTS/2, N=8 */
-#define LL_TIM_BREAK_FILTER_FDIV4_N6 0x00060000U  /*!< fSAMPLING=fDTS/4, N=6 */
-#define LL_TIM_BREAK_FILTER_FDIV4_N8 0x00070000U  /*!< fSAMPLING=fDTS/4, N=8 */
-#define LL_TIM_BREAK_FILTER_FDIV8_N6 0x00080000U  /*!< fSAMPLING=fDTS/8, N=6 */
-#define LL_TIM_BREAK_FILTER_FDIV8_N8 0x00090000U  /*!< fSAMPLING=fDTS/8, N=8 */
-#define LL_TIM_BREAK_FILTER_FDIV16_N5 0x000A0000U /*!< fSAMPLING=fDTS/16, N=5  \
-						   */
-#define LL_TIM_BREAK_FILTER_FDIV16_N6 0x000B0000U /*!< fSAMPLING=fDTS/16, N=6  \
-						   */
-#define LL_TIM_BREAK_FILTER_FDIV16_N8 0x000C0000U /*!< fSAMPLING=fDTS/16, N=8  \
-						   */
-#define LL_TIM_BREAK_FILTER_FDIV32_N5 0x000D0000U /*!< fSAMPLING=fDTS/32, N=5  \
-						   */
-#define LL_TIM_BREAK_FILTER_FDIV32_N6 0x000E0000U /*!< fSAMPLING=fDTS/32, N=6  \
-						   */
-#define LL_TIM_BREAK_FILTER_FDIV32_N8 0x000F0000U /*!< fSAMPLING=fDTS/32, N=8  \
-						   */
+#define LL_TIM_BREAK_FILTER_FDIV1_N2                                           \
+	0x00010000U /*!< fSAMPLING=fCK_INT, N=2                                \
+		     */
+#define LL_TIM_BREAK_FILTER_FDIV1_N4                                           \
+	0x00020000U /*!< fSAMPLING=fCK_INT, N=4                                \
+		     */
+#define LL_TIM_BREAK_FILTER_FDIV1_N8                                           \
+	0x00030000U				 /*!< fSAMPLING=fCK_INT, N=8   \
+						  */
+#define LL_TIM_BREAK_FILTER_FDIV2_N6 0x00040000U /*!< fSAMPLING=fDTS/2, N=6 */
+#define LL_TIM_BREAK_FILTER_FDIV2_N8 0x00050000U /*!< fSAMPLING=fDTS/2, N=8 */
+#define LL_TIM_BREAK_FILTER_FDIV4_N6 0x00060000U /*!< fSAMPLING=fDTS/4, N=6 */
+#define LL_TIM_BREAK_FILTER_FDIV4_N8 0x00070000U /*!< fSAMPLING=fDTS/4, N=8 */
+#define LL_TIM_BREAK_FILTER_FDIV8_N6 0x00080000U /*!< fSAMPLING=fDTS/8, N=6 */
+#define LL_TIM_BREAK_FILTER_FDIV8_N8 0x00090000U /*!< fSAMPLING=fDTS/8, N=8 */
+#define LL_TIM_BREAK_FILTER_FDIV16_N5                                          \
+	0x000A0000U /*!< fSAMPLING=fDTS/16, N=5                                \
+		     */
+#define LL_TIM_BREAK_FILTER_FDIV16_N6                                          \
+	0x000B0000U /*!< fSAMPLING=fDTS/16, N=6                                \
+		     */
+#define LL_TIM_BREAK_FILTER_FDIV16_N8                                          \
+	0x000C0000U /*!< fSAMPLING=fDTS/16, N=8                                \
+		     */
+#define LL_TIM_BREAK_FILTER_FDIV32_N5                                          \
+	0x000D0000U /*!< fSAMPLING=fDTS/32, N=5                                \
+		     */
+#define LL_TIM_BREAK_FILTER_FDIV32_N6                                          \
+	0x000E0000U /*!< fSAMPLING=fDTS/32, N=6                                \
+		     */
+#define LL_TIM_BREAK_FILTER_FDIV32_N8                                          \
+	0x000F0000U /*!< fSAMPLING=fDTS/32, N=8                                \
+		     */
 /**
  * @}
  */
@@ -1803,24 +1823,33 @@ typedef struct {
  */
 #define LL_TIM_BREAK2_FILTER_FDIV1                                             \
 	0x00000000U /*!< No filter, BRK acts asynchronously */
-#define LL_TIM_BREAK2_FILTER_FDIV1_N2 0x00100000U /*!< fSAMPLING=fCK_INT, N=2  \
-						   */
-#define LL_TIM_BREAK2_FILTER_FDIV1_N4 0x00200000U /*!< fSAMPLING=fCK_INT, N=4  \
-						   */
-#define LL_TIM_BREAK2_FILTER_FDIV1_N8 0x00300000U /*!< fSAMPLING=fCK_INT, N=8  \
-						   */
-#define LL_TIM_BREAK2_FILTER_FDIV2_N6 0x00400000U /*!< fSAMPLING=fDTS/2, N=6   \
-						   */
-#define LL_TIM_BREAK2_FILTER_FDIV2_N8 0x00500000U /*!< fSAMPLING=fDTS/2, N=8   \
-						   */
-#define LL_TIM_BREAK2_FILTER_FDIV4_N6 0x00600000U /*!< fSAMPLING=fDTS/4, N=6   \
-						   */
-#define LL_TIM_BREAK2_FILTER_FDIV4_N8 0x00700000U /*!< fSAMPLING=fDTS/4, N=8   \
-						   */
-#define LL_TIM_BREAK2_FILTER_FDIV8_N6 0x00800000U /*!< fSAMPLING=fDTS/8, N=6   \
-						   */
-#define LL_TIM_BREAK2_FILTER_FDIV8_N8 0x00900000U /*!< fSAMPLING=fDTS/8, N=8   \
-						   */
+#define LL_TIM_BREAK2_FILTER_FDIV1_N2                                          \
+	0x00100000U /*!< fSAMPLING=fCK_INT, N=2                                \
+		     */
+#define LL_TIM_BREAK2_FILTER_FDIV1_N4                                          \
+	0x00200000U /*!< fSAMPLING=fCK_INT, N=4                                \
+		     */
+#define LL_TIM_BREAK2_FILTER_FDIV1_N8                                          \
+	0x00300000U /*!< fSAMPLING=fCK_INT, N=8                                \
+		     */
+#define LL_TIM_BREAK2_FILTER_FDIV2_N6                                          \
+	0x00400000U /*!< fSAMPLING=fDTS/2, N=6                                 \
+		     */
+#define LL_TIM_BREAK2_FILTER_FDIV2_N8                                          \
+	0x00500000U /*!< fSAMPLING=fDTS/2, N=8                                 \
+		     */
+#define LL_TIM_BREAK2_FILTER_FDIV4_N6                                          \
+	0x00600000U /*!< fSAMPLING=fDTS/4, N=6                                 \
+		     */
+#define LL_TIM_BREAK2_FILTER_FDIV4_N8                                          \
+	0x00700000U /*!< fSAMPLING=fDTS/4, N=8                                 \
+		     */
+#define LL_TIM_BREAK2_FILTER_FDIV8_N6                                          \
+	0x00800000U /*!< fSAMPLING=fDTS/8, N=6                                 \
+		     */
+#define LL_TIM_BREAK2_FILTER_FDIV8_N8                                          \
+	0x00900000U /*!< fSAMPLING=fDTS/8, N=8                                 \
+		     */
 #define LL_TIM_BREAK2_FILTER_FDIV16_N5                                         \
 	0x00A00000U /*!< fSAMPLING=fDTS/16, N=5 */
 #define LL_TIM_BREAK2_FILTER_FDIV16_N6                                         \
@@ -2721,8 +2750,9 @@ typedef struct {
 /** @defgroup TIM_LL_EC_HSE_32_REQUEST Clock HSE/32 request
  * @{
  */
-#define LL_TIM_HSE_32_NOT_REQUEST 0x00000000U /*!< Clock HSE/32 not requested  \
-					       */
+#define LL_TIM_HSE_32_NOT_REQUEST                                              \
+	0x00000000U /*!< Clock HSE/32 not requested                            \
+		     */
 #define LL_TIM_HSE_32_REQUEST                                                  \
 	TIM_OR_HSE32EN /*!< Clock HSE/32 requested for TIM16/17 TI1SEL remap   \
 			*/

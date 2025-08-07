@@ -789,9 +789,10 @@ typedef struct {
  * @{
  */
 #define LL_DAC_RESOLUTION_12B                                                  \
-	0x00000000UL			  /*!< DAC channel resolution 12 bits */
-#define LL_DAC_RESOLUTION_8B 0x00000002UL /*!< DAC channel resolution 8 bits   \
-					   */
+	0x00000000UL /*!< DAC channel resolution 12 bits */
+#define LL_DAC_RESOLUTION_8B                                                   \
+	0x00000002UL /*!< DAC channel resolution 8 bits                        \
+		      */
 /**
  * @}
  */

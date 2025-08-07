@@ -110,10 +110,8 @@ typedef struct {
 	UCPD_SR_TXMSGSENT /*!< Transmit message sent interrupt */
 #define LL_UCPD_SR_TXMSGABT                                                    \
 	UCPD_SR_TXMSGABT /*!< Transmit message abort interrupt */
-#define LL_UCPD_SR_HRSTDISC                                                    \
-	UCPD_SR_HRSTDISC /*!< HRST discarded interrupt */
-#define LL_UCPD_SR_HRSTSENT                                                    \
-	UCPD_SR_HRSTSENT /*!< HRST sent interrupt */
+#define LL_UCPD_SR_HRSTDISC UCPD_SR_HRSTDISC /*!< HRST discarded interrupt */
+#define LL_UCPD_SR_HRSTSENT UCPD_SR_HRSTSENT /*!< HRST sent interrupt */
 #define LL_UCPD_SR_TXUND                                                       \
 	UCPD_SR_TXUND /*!< Tx data underrun condition interrupt           */
 #define LL_UCPD_SR_RXNE                                                        \
@@ -124,8 +122,7 @@ typedef struct {
 	UCPD_SR_RXHRSTDET /*!< Rx Hard Reset detect interrupt */
 #define LL_UCPD_SR_RXOVR                                                       \
 	UCPD_SR_RXOVR /*!< Rx data overflow interrupt                     */
-#define LL_UCPD_SR_RXMSGEND                                                    \
-	UCPD_SR_RXMSGEND /*!< Rx message received */
+#define LL_UCPD_SR_RXMSGEND UCPD_SR_RXMSGEND /*!< Rx message received */
 #define LL_UCPD_SR_RXERR                                                       \
 	UCPD_SR_RXERR /*!< Rx error                                       */
 #define LL_UCPD_SR_TYPECEVT1                                                   \
@@ -242,12 +239,9 @@ typedef struct {
 /** @defgroup UCPD_LL_EC_RESISTOR Resistor value
  * @{
  */
-#define LL_UCPD_RESISTOR_DEFAULT                                               \
-	UCPD_CR_ANASUBMODE_0 /*!< Rp default */
-#define LL_UCPD_RESISTOR_1_5A                                                  \
-	UCPD_CR_ANASUBMODE_1 /*!< Rp 1.5 A */
-#define LL_UCPD_RESISTOR_3_0A                                                  \
-	UCPD_CR_ANASUBMODE /*!< Rp 3.0 A */
+#define LL_UCPD_RESISTOR_DEFAULT UCPD_CR_ANASUBMODE_0 /*!< Rp default */
+#define LL_UCPD_RESISTOR_1_5A UCPD_CR_ANASUBMODE_1    /*!< Rp 1.5 A */
+#define LL_UCPD_RESISTOR_3_0A UCPD_CR_ANASUBMODE      /*!< Rp 3.0 A */
 #define LL_UCPD_RESISTOR_NONE                                                  \
 	0x0U /*!< No resistor                                    */
 /**

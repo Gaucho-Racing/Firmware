@@ -111,9 +111,10 @@ typedef struct {
  * @{
  */
 #define PWR_MAINREGULATOR_ON                                                   \
-	((uint32_t)0x00000000)		     /*!< Regulator in main mode      */
-#define PWR_LOWPOWERREGULATOR_ON PWR_CR1_LPR /*!< Regulator in low-power mode  \
-					      */
+	((uint32_t)0x00000000) /*!< Regulator in main mode      */
+#define PWR_LOWPOWERREGULATOR_ON                                               \
+	PWR_CR1_LPR /*!< Regulator in low-power mode                           \
+		     */
 /**
  * @}
  */

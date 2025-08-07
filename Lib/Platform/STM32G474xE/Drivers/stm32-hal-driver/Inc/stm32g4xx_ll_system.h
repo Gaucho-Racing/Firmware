@@ -111,11 +111,11 @@ extern "C" {
  */
 #define LL_SYSCFG_BANKMODE_BANK1                                               \
 	0x00000000U /*!< Flash Bank1 mapped at 0x08000000 (and aliased         \
-		     @0x00000000) and Flash Bank2 mapped at 0x08040000 (and                                     \
+		     @0x00000000) and Flash Bank2 mapped at 0x08040000 (and    \
 		     aliased at 0x00080000) */
 #define LL_SYSCFG_BANKMODE_BANK2                                               \
 	SYSCFG_MEMRMP_FB_MODE /*!< Flash Bank2 mapped at 0x08000000 (and       \
-			       aliased @0x00000000) and Flash Bank1 mapped at                                                     \
+			       aliased @0x00000000) and Flash Bank1 mapped at  \
 			       0x08040000 (and aliased at 0x00080000) */
 /**
  * @}
@@ -469,21 +469,27 @@ extern "C" {
 #define LL_FLASH_LATENCY_0 FLASH_ACR_LATENCY_0WS /*!< FLASH Zero wait state */
 #define LL_FLASH_LATENCY_1 FLASH_ACR_LATENCY_1WS /*!< FLASH One wait state */
 #define LL_FLASH_LATENCY_2 FLASH_ACR_LATENCY_2WS /*!< FLASH Two wait states */
-#define LL_FLASH_LATENCY_3 FLASH_ACR_LATENCY_3WS /*!< FLASH Three wait states  \
-						  */
-#define LL_FLASH_LATENCY_4 FLASH_ACR_LATENCY_4WS /*!< FLASH Four wait states   \
-						  */
+#define LL_FLASH_LATENCY_3                                                     \
+	FLASH_ACR_LATENCY_3WS /*!< FLASH Three wait states                     \
+			       */
+#define LL_FLASH_LATENCY_4                                                     \
+	FLASH_ACR_LATENCY_4WS /*!< FLASH Four wait states                      \
+			       */
 #if defined(FLASH_ACR_LATENCY_5WS)
 #define LL_FLASH_LATENCY_5 FLASH_ACR_LATENCY_5WS /*!< FLASH five wait state */
 #define LL_FLASH_LATENCY_6 FLASH_ACR_LATENCY_6WS /*!< FLASH six wait state */
-#define LL_FLASH_LATENCY_7 FLASH_ACR_LATENCY_7WS /*!< FLASH seven wait states  \
-						  */
-#define LL_FLASH_LATENCY_8 FLASH_ACR_LATENCY_8WS /*!< FLASH eight wait states  \
-						  */
-#define LL_FLASH_LATENCY_9 FLASH_ACR_LATENCY_9WS /*!< FLASH nine wait states   \
-						  */
-#define LL_FLASH_LATENCY_10 FLASH_ACR_LATENCY_10WS /*!< FLASH ten wait states  \
-						    */
+#define LL_FLASH_LATENCY_7                                                     \
+	FLASH_ACR_LATENCY_7WS /*!< FLASH seven wait states                     \
+			       */
+#define LL_FLASH_LATENCY_8                                                     \
+	FLASH_ACR_LATENCY_8WS /*!< FLASH eight wait states                     \
+			       */
+#define LL_FLASH_LATENCY_9                                                     \
+	FLASH_ACR_LATENCY_9WS /*!< FLASH nine wait states                      \
+			       */
+#define LL_FLASH_LATENCY_10                                                    \
+	FLASH_ACR_LATENCY_10WS /*!< FLASH ten wait states                      \
+				*/
 #define LL_FLASH_LATENCY_11                                                    \
 	FLASH_ACR_LATENCY_11WS /*!< FLASH eleven wait states */
 #define LL_FLASH_LATENCY_12                                                    \

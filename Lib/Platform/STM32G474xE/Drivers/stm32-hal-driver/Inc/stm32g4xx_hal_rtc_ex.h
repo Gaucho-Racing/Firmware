@@ -77,11 +77,12 @@ typedef struct {
 				    This parameter can be a value of @ref
 				  RTCEx_Tamper_Pull_UP */
 
-	uint32_t TimeStampOnTamperDetection; /*!< Specifies the
-						TimeStampOnTamperDetection. This
-						parameter can be a value of @ref
-						RTCEx_Tamper_TimeStampOnTamperDetection
-					      */
+	uint32_t
+	    TimeStampOnTamperDetection; /*!< Specifies the
+					   TimeStampOnTamperDetection. This
+					   parameter can be a value of @ref
+					   RTCEx_Tamper_TimeStampOnTamperDetection
+					 */
 } RTC_TamperTypeDef;
 /**
  * @}
@@ -96,11 +97,12 @@ typedef struct {
 				 This parameter can be a value of @ref
 			       RTCEx_Internal_Tamper_Pins */
 
-	uint32_t TimeStampOnTamperDetection; /*!< Specifies the
-						TimeStampOnTamperDetection. This
-						parameter can be a value of @ref
-						RTCEx_Tamper_TimeStampOnTamperDetection
-					      */
+	uint32_t
+	    TimeStampOnTamperDetection; /*!< Specifies the
+					   TimeStampOnTamperDetection. This
+					   parameter can be a value of @ref
+					   RTCEx_Tamper_TimeStampOnTamperDetection
+					 */
 } RTC_InternalTamperTypeDef;
 /**
  * @}
@@ -418,38 +420,46 @@ with a frequency =  RTCCLK / 256   */
 #endif /* RTC_TAMP_NB */
 
 #if defined(RTC_TAMP_INT_1_SUPPORT)
-#define RTC_IT_INT_TAMP_1 TAMP_IER_ITAMP1IE /*!< Tamper 1 internal Interrupt   \
-					     */
+#define RTC_IT_INT_TAMP_1                                                      \
+	TAMP_IER_ITAMP1IE /*!< Tamper 1 internal Interrupt                     \
+			   */
 #else
 #define RTC_IT_INT_TAMP_1 0U
 #endif /* RTC_TAMP_INT_1_SUPPORT */
 #if defined(RTC_TAMP_INT_2_SUPPORT)
-#define RTC_IT_INT_TAMP_2 TAMP_IER_ITAMP2IE /*!< Tamper 2 internal Interrupt   \
-					     */
+#define RTC_IT_INT_TAMP_2                                                      \
+	TAMP_IER_ITAMP2IE /*!< Tamper 2 internal Interrupt                     \
+			   */
 #else
 #define RTC_IT_INT_TAMP_2 0U
-#endif					    /* RTC_TAMP_INT_2_SUPPORT */
-#define RTC_IT_INT_TAMP_3 TAMP_IER_ITAMP3IE /*!< Tamper 3 internal Interrupt   \
-					     */
-#define RTC_IT_INT_TAMP_4 TAMP_IER_ITAMP4IE /*!< Tamper 4 internal Interrupt   \
-					     */
-#define RTC_IT_INT_TAMP_5 TAMP_IER_ITAMP5IE /*!< Tamper 5 internal Interrupt   \
-					     */
+#endif /* RTC_TAMP_INT_2_SUPPORT */
+#define RTC_IT_INT_TAMP_3                                                      \
+	TAMP_IER_ITAMP3IE /*!< Tamper 3 internal Interrupt                     \
+			   */
+#define RTC_IT_INT_TAMP_4                                                      \
+	TAMP_IER_ITAMP4IE /*!< Tamper 4 internal Interrupt                     \
+			   */
+#define RTC_IT_INT_TAMP_5                                                      \
+	TAMP_IER_ITAMP5IE /*!< Tamper 5 internal Interrupt                     \
+			   */
 #if defined(RTC_TAMP_INT_6_SUPPORT)
-#define RTC_IT_INT_TAMP_6 TAMP_IER_ITAMP6IE /*!< Tamper 6 internal Interrupt   \
-					     */
+#define RTC_IT_INT_TAMP_6                                                      \
+	TAMP_IER_ITAMP6IE /*!< Tamper 6 internal Interrupt                     \
+			   */
 #else
 #define RTC_IT_INT_TAMP_6 0U
 #endif /* RTC_TAMP_INT_6_SUPPORT */
 #if defined(RTC_TAMP_INT_7_SUPPORT)
-#define RTC_IT_INT_TAMP_7 TAMP_IER_ITAMP7IE /*!< Tamper 7 internal Interrupt   \
-					     */
+#define RTC_IT_INT_TAMP_7                                                      \
+	TAMP_IER_ITAMP7IE /*!< Tamper 7 internal Interrupt                     \
+			   */
 #else
 #define RTC_IT_INT_TAMP_7 0U
 #endif /* RTC_TAMP_INT_7_SUPPORT */
 #if defined(RTC_TAMP_INT_8_SUPPORT)
-#define RTC_IT_INT_TAMP_8 TAMP_IER_ITAMP8IE /*!< Tamper 8 internal Interrupt   \
-					     */
+#define RTC_IT_INT_TAMP_8                                                      \
+	TAMP_IER_ITAMP8IE /*!< Tamper 8 internal Interrupt                     \
+			   */
 #else
 #define RTC_IT_INT_TAMP_8 0U
 #endif /* RTC_TAMP_INT_8_SUPPORT */

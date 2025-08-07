@@ -67,10 +67,12 @@ extern "C" {
  * @{
  */
 #define LL_IWDG_SR_PVU IWDG_SR_PVU /*!< Watchdog prescaler value update */
-#define LL_IWDG_SR_RVU IWDG_SR_RVU /*!< Watchdog counter reload value update   \
-				    */
-#define LL_IWDG_SR_WVU IWDG_SR_WVU /*!< Watchdog counter window value update   \
-				    */
+#define LL_IWDG_SR_RVU                                                         \
+	IWDG_SR_RVU /*!< Watchdog counter reload value update                  \
+		     */
+#define LL_IWDG_SR_WVU                                                         \
+	IWDG_SR_WVU /*!< Watchdog counter window value update                  \
+		     */
 /**
  * @}
  */

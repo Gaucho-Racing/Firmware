@@ -376,10 +376,12 @@ typedef struct __DMA_HandleTypeDef {
 /** @defgroup DMA_Data_transfer_direction DMA Data transfer direction
  * @{
  */
-#define DMA_PERIPH_TO_MEMORY 0x00000000U /*!< Peripheral to memory direction   \
-					  */
-#define DMA_MEMORY_TO_PERIPH DMA_CCR_DIR /*!< Memory to peripheral direction   \
-					  */
+#define DMA_PERIPH_TO_MEMORY                                                   \
+	0x00000000U /*!< Peripheral to memory direction                        \
+		     */
+#define DMA_MEMORY_TO_PERIPH                                                   \
+	DMA_CCR_DIR /*!< Memory to peripheral direction                        \
+		     */
 #define DMA_MEMORY_TO_MEMORY                                                   \
 	DMA_CCR_MEM2MEM /*!< Memory to memory direction     */
 /**

@@ -546,19 +546,19 @@ trigger software start */
 	the selected ADC channel */
 #define ADC_OFFSET_1                                                           \
 	(LL_ADC_OFFSET_1) /*!< ADC offset number 1: ADC channel and offset     \
-	level to which the offset programmed will be applied (independently of                       \
+	level to which the offset programmed will be applied (independently of \
 	channel mapped on ADC group regular or group injected) */
 #define ADC_OFFSET_2                                                           \
 	(LL_ADC_OFFSET_2) /*!< ADC offset number 2: ADC channel and offset     \
-	level to which the offset programmed will be applied (independently of                       \
+	level to which the offset programmed will be applied (independently of \
 	channel mapped on ADC group regular or group injected) */
 #define ADC_OFFSET_3                                                           \
 	(LL_ADC_OFFSET_3) /*!< ADC offset number 3: ADC channel and offset     \
-	level to which the offset programmed will be applied (independently of                       \
+	level to which the offset programmed will be applied (independently of \
 	channel mapped on ADC group regular or group injected) */
 #define ADC_OFFSET_4                                                           \
 	(LL_ADC_OFFSET_4) /*!< ADC offset number 4: ADC channel and offset     \
-	level to which the offset programmed will be applied (independently of                       \
+	level to which the offset programmed will be applied (independently of \
 	channel mapped on ADC group regular or group injected) */
 /**
  * @}
@@ -615,7 +615,7 @@ trigger software start */
 	Combined group regular simultaneous + group injected simultaneous */
 #define ADC_DUALMODE_REGSIMULT_ALTERTRIG                                       \
 	(LL_ADC_MULTI_DUAL_REG_SIM_INJ_ALT) /*!< ADC dual mode enabled:        \
-	Combined group regular simultaneous + group injected alternate trigger                 \
+	Combined group regular simultaneous + group injected alternate trigger \
       */
 #define ADC_DUALMODE_REGINTERL_INJECSIMULT                                     \
 	(LL_ADC_MULTI_DUAL_REG_INT_INJ_SIM) /*!< ADC dual mode enabled:        \

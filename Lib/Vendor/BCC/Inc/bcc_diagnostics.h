@@ -217,12 +217,11 @@ typedef struct {
 					     are closed. MC33771C: [0] Cell 1,
 					     .., [13] Cell 14. MC33772C: [0]
 					     Cell 1, .., [5] Cell 6. */
-	uint32_t
-	    measEvenClosed
-		[BCC_MAX_CELLS]; /*!< Measured cell voltages (in [uV]) when even
-				    CT open terminal switches are closed.
-				      MC33771C: [0] Cell 1, .., [13] Cell 14.
-				      MC33772C: [0] Cell 1, .., [5] Cell 6. */
+	uint32_t measEvenClosed
+	    [BCC_MAX_CELLS]; /*!< Measured cell voltages (in [uV]) when even
+				CT open terminal switches are closed.
+				  MC33771C: [0] Cell 1, .., [13] Cell 14.
+				  MC33772C: [0] Cell 1, .., [5] Cell 6. */
 	uint16_t ctxOpen;  /*!< Bit map representing open terminal status. Zero
 			      if no  CTx was detected open, non-zero otherwise.
 				Bit value "1" at 0th bit means open CT1,
@@ -288,12 +287,13 @@ typedef struct {
 				  [0] CT_REF (Vleak_1), [1] CT1 (Vleak_2), ...,
 				  MC33771C: [14] CT14 (Vleak_15).
 				  MC33772C: [6] CT6 (Vleak_7). */
-	uint16_t result;     /*!< Bit map representing leakage status on CTx
-				terminals.     0th bit: CT_REF, 1st bit: CT_1, ...,
-				  MC33771C: 14th bit: CT14.
-				  MC33772C: 6th bit: CT6.
-				  Bit value 0: CT not leaky. Bit value 1: CT is
-				leaky.     If result is zero, no error was detected. */
+	uint16_t
+	    result; /*!< Bit map representing leakage status on CTx
+		       terminals.     0th bit: CT_REF, 1st bit: CT_1, ...,
+			 MC33771C: 14th bit: CT14.
+			 MC33772C: 6th bit: CT6.
+			 Bit value 0: CT not leaky. Bit value 1: CT is
+		       leaky.     If result is zero, no error was detected. */
 } bcc_diag_ctx_leak_res_t;
 
 /*! @brief Result of GPIOx OT/UT functional verification. */

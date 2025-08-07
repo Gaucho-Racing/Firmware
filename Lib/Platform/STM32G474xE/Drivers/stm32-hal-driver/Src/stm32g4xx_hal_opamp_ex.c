@@ -117,7 +117,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 	uint32_t trimmingvaluen3;
 	uint32_t trimmingvaluep3;
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -141,7 +141,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
     defined(STM32G4A1xx)
 	    || (hopamp2 == NULL) || (hopamp3 == NULL)
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -164,7 +164,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		return HAL_ERROR;
 	}
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -191,7 +191,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		assert_param(IS_OPAMP_ALL_INSTANCE(hopamp2->Instance));
 		assert_param(IS_OPAMP_ALL_INSTANCE(hopamp3->Instance));
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -213,7 +213,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		SET_BIT(hopamp2->Instance->CSR, OPAMP_CSR_FORCEVP);
 		SET_BIT(hopamp3->Instance->CSR, OPAMP_CSR_FORCEVP);
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -233,7 +233,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		SET_BIT(hopamp2->Instance->CSR, OPAMP_CSR_USERTRIM);
 		SET_BIT(hopamp3->Instance->CSR, OPAMP_CSR_USERTRIM);
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -253,7 +253,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		SET_BIT(hopamp2->Instance->CSR, OPAMP_CSR_CALON);
 		SET_BIT(hopamp3->Instance->CSR, OPAMP_CSR_CALON);
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -277,7 +277,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		MODIFY_REG(hopamp3->Instance->CSR, OPAMP_CSR_CALSEL,
 			   OPAMP_VREF_90VDDA);
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -301,7 +301,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		SET_BIT(hopamp2->Instance->CSR, OPAMP_CSR_OPAMPxEN);
 		SET_BIT(hopamp3->Instance->CSR, OPAMP_CSR_OPAMPxEN);
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -322,7 +322,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		trimmingvaluen2 = 16UL;
 		trimmingvaluen3 = 16UL;
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -350,7 +350,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 				   OPAMP_CSR_TRIMOFFSETN,
 				   trimmingvaluen3 << OPAMP_INPUT_INVERTING);
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -410,7 +410,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 			}
 
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -474,7 +474,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		MODIFY_REG(hopamp3->Instance->CSR, OPAMP_CSR_TRIMOFFSETN,
 			   trimmingvaluen3 << OPAMP_INPUT_INVERTING);
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -527,7 +527,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		}
 
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -582,7 +582,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		MODIFY_REG(hopamp3->Instance->CSR, OPAMP_CSR_CALSEL,
 			   OPAMP_VREF_10VDDA);
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -607,7 +607,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		trimmingvaluep2 = 16UL;
 		trimmingvaluep3 = 16UL;
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -636,7 +636,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 				   OPAMP_CSR_TRIMOFFSETP,
 				   trimmingvaluep3 << OPAMP_INPUT_NONINVERTING);
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -694,7 +694,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 			}
 
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -755,7 +755,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		MODIFY_REG(hopamp3->Instance->CSR, OPAMP_CSR_TRIMOFFSETP,
 			   trimmingvaluep3 << OPAMP_INPUT_NONINVERTING);
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -809,7 +809,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		}
 
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -860,7 +860,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		CLEAR_BIT(hopamp2->Instance->CSR, OPAMP_CSR_CALON);
 		CLEAR_BIT(hopamp3->Instance->CSR, OPAMP_CSR_CALON);
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -880,7 +880,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		CLEAR_BIT(hopamp2->Instance->CSR, OPAMP_CSR_OPAMPxEN);
 		CLEAR_BIT(hopamp3->Instance->CSR, OPAMP_CSR_OPAMPxEN);
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -900,7 +900,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		CLEAR_BIT(hopamp2->Instance->CSR, OPAMP_CSR_FORCEVP);
 		CLEAR_BIT(hopamp3->Instance->CSR, OPAMP_CSR_FORCEVP);
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -924,7 +924,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		hopamp2->Init.TrimmingValueN = trimmingvaluen2;
 		hopamp3->Init.TrimmingValueN = trimmingvaluen3;
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -944,7 +944,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		hopamp2->Init.TrimmingValueP = trimmingvaluep2;
 		hopamp3->Init.TrimmingValueP = trimmingvaluep3;
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -965,7 +965,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		hopamp2->Init.UserTrimming = OPAMP_TRIMMING_USER;
 		hopamp3->Init.UserTrimming = OPAMP_TRIMMING_USER;
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -987,7 +987,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		MODIFY_REG(hopamp3->Instance->CSR, OPAMP_CSR_TRIMOFFSETN,
 			   trimmingvaluen3 << OPAMP_INPUT_INVERTING);
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)
@@ -1013,7 +1013,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1)
 		MODIFY_REG(hopamp3->Instance->CSR, OPAMP_CSR_TRIMOFFSETP,
 			   trimmingvaluep3 << OPAMP_INPUT_NONINVERTING);
 #endif /* STM32GBK1CB || STM32G431xx || STM32G441xx || STM32G471xx ||          \
-	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||                                                 \
+	  STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx ||          \
 	  STM32G491xx || STM32G4A1xx */
 #if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
     defined(STM32G484xx)

@@ -133,8 +133,9 @@ typedef void (*pWWDG_CallbackTypeDef)(
 /** @defgroup WWDG_Prescaler WWDG Prescaler
  * @{
  */
-#define WWDG_PRESCALER_1 0x00000000u /*!< WWDG counter clock = (PCLK1/4096)/1  \
-				      */
+#define WWDG_PRESCALER_1                                                       \
+	0x00000000u /*!< WWDG counter clock = (PCLK1/4096)/1                   \
+		     */
 #define WWDG_PRESCALER_2                                                       \
 	WWDG_CFR_WDGTB_0 /*!< WWDG counter clock = (PCLK1/4096)/2 */
 #define WWDG_PRESCALER_4                                                       \

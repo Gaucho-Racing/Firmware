@@ -1676,8 +1676,9 @@ typedef struct {
 /** @defgroup I2S_LL_EC_POLARITY Clock Polarity
  * @{
  */
-#define LL_I2S_POLARITY_LOW 0x00000000U /*!< Clock steady state is low level   \
-					 */
+#define LL_I2S_POLARITY_LOW                                                    \
+	0x00000000U /*!< Clock steady state is low level                       \
+		     */
 #define LL_I2S_POLARITY_HIGH                                                   \
 	(SPI_I2SCFGR_CKPOL) /*!< Clock steady state is high level */
 /**

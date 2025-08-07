@@ -341,23 +341,23 @@ typedef struct {
  */
 #define FMAC_THRESHOLD_1                                                       \
 	0x00000000U /*!< Input: Buffer full flag set if the number of free     \
-		       spaces in the buffer is less than 1. Output: Buffer                                                                \
-		       empty flag set if the number of unread values in the                                                       \
+		       spaces in the buffer is less than 1. Output: Buffer     \
+		       empty flag set if the number of unread values in the    \
 		       buffer is less than 1. */
 #define FMAC_THRESHOLD_2                                                       \
 	0x01000000U /*!< Input: Buffer full flag set if the number of free     \
-		       spaces in the buffer is less than 2. Output: Buffer                                                                \
-		       empty flag set if the number of unread values in the                                                       \
+		       spaces in the buffer is less than 2. Output: Buffer     \
+		       empty flag set if the number of unread values in the    \
 		       buffer is less than 2. */
 #define FMAC_THRESHOLD_4                                                       \
 	0x02000000U /*!< Input: Buffer full flag set if the number of free     \
-		       spaces in the buffer is less than 4. Output: Buffer                                                                \
-		       empty flag set if the number of unread values in the                                                       \
+		       spaces in the buffer is less than 4. Output: Buffer     \
+		       empty flag set if the number of unread values in the    \
 		       buffer is less than 4. */
 #define FMAC_THRESHOLD_8                                                       \
 	0x03000000U /*!< Input: Buffer full flag set if the number of free     \
-		       spaces in the buffer is less than 8. Output: Buffer                                                                \
-		       empty flag set if the number of unread values in the                                                       \
+		       spaces in the buffer is less than 8. Output: Buffer     \
+		       empty flag set if the number of unread values in the    \
 		       buffer is less than 8. */
 #define FMAC_THRESHOLD_NO_VALUE                                                \
 	0xFFFFFFFFU /*!< The configured threshold value shouldn't be changed   \
@@ -371,9 +371,10 @@ typedef struct {
  */
 #define FMAC_BUFFER_ACCESS_NONE                                                \
 	0x00U /*!< Buffer handled by an external IP (ADC for instance) */
-#define FMAC_BUFFER_ACCESS_DMA 0x01U	 /*!< Buffer accessed through DMA */
-#define FMAC_BUFFER_ACCESS_POLLING 0x02U /*!< Buffer accessed through polling  \
-					  */
+#define FMAC_BUFFER_ACCESS_DMA 0x01U /*!< Buffer accessed through DMA */
+#define FMAC_BUFFER_ACCESS_POLLING                                             \
+	0x02U /*!< Buffer accessed through polling                             \
+	       */
 #define FMAC_BUFFER_ACCESS_IT                                                  \
 	0x03U /*!< Buffer accessed through interruptions */
 /**
@@ -406,12 +407,14 @@ typedef struct {
 /** @defgroup FMAC_Interrupts_Enable FMAC Interrupts Enable bit
  * @{
  */
-#define FMAC_IT_RIEN FMAC_CR_RIEN	/*!< Read Interrupt Enable */
-#define FMAC_IT_WIEN FMAC_CR_WIEN	/*!< Write Interrupt Enable */
-#define FMAC_IT_OVFLIEN FMAC_CR_OVFLIEN /*!< Overflow Error Interrupt Enable   \
-					 */
-#define FMAC_IT_UNFLIEN FMAC_CR_UNFLIEN /*!< Underflow Error Interrupt Enable  \
-					 */
+#define FMAC_IT_RIEN FMAC_CR_RIEN /*!< Read Interrupt Enable */
+#define FMAC_IT_WIEN FMAC_CR_WIEN /*!< Write Interrupt Enable */
+#define FMAC_IT_OVFLIEN                                                        \
+	FMAC_CR_OVFLIEN /*!< Overflow Error Interrupt Enable                   \
+			 */
+#define FMAC_IT_UNFLIEN                                                        \
+	FMAC_CR_UNFLIEN /*!< Underflow Error Interrupt Enable                  \
+			 */
 #define FMAC_IT_SATIEN                                                         \
 	FMAC_CR_SATIEN /*!< Saturation Error Interrupt Enable                  \
 			    (this helps in debugging a filter) */
@@ -558,13 +561,14 @@ typedef struct {
  * @{
  */
 
-#define FMAC_PARAM_P_MAX_IIR 64U  /*!< Maximum value of P parameter with IIR */
-#define FMAC_PARAM_P_MAX_FIR 127U /*!< Maximum value of P parameter with FIR   \
-				   */
-#define FMAC_PARAM_P_MIN 2U	  /*!< Minimum value of P parameter */
-#define FMAC_PARAM_Q_MAX 63U	  /*!< Maximum value of Q parameter */
-#define FMAC_PARAM_Q_MIN 1U	  /*!< Minimum value of Q parameter */
-#define FMAC_PARAM_R_MAX 7U	  /*!< Maximum value of R parameter */
+#define FMAC_PARAM_P_MAX_IIR 64U /*!< Maximum value of P parameter with IIR */
+#define FMAC_PARAM_P_MAX_FIR                                                   \
+	127U		     /*!< Maximum value of P parameter with FIR        \
+			      */
+#define FMAC_PARAM_P_MIN 2U  /*!< Minimum value of P parameter */
+#define FMAC_PARAM_Q_MAX 63U /*!< Maximum value of Q parameter */
+#define FMAC_PARAM_Q_MIN 1U  /*!< Minimum value of Q parameter */
+#define FMAC_PARAM_R_MAX 7U  /*!< Maximum value of R parameter */
 
 /**
  * @}

@@ -417,8 +417,7 @@ typedef void (*pUSART_CallbackTypeDef)(
 	USART_ISR_TC /*!< USART transmission complete                */
 #define USART_FLAG_RXNE                                                        \
 	USART_ISR_RXNE_RXFNE /*!< USART read data register not empty */
-#define USART_FLAG_RXFNE                                                       \
-	USART_ISR_RXNE_RXFNE /*!< USART RXFIFO not empty */
+#define USART_FLAG_RXFNE USART_ISR_RXNE_RXFNE /*!< USART RXFIFO not empty */
 #define USART_FLAG_IDLE                                                        \
 	USART_ISR_IDLE /*!< USART idle flag                            */
 #define USART_FLAG_ORE                                                         \
