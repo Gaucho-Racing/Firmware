@@ -1,9 +1,9 @@
 #include <stdint.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 int main(int argc, char const *argv[])
 {
-    printf("Hello\n");
-    return 0;
+	printf("Hello\n");
+	return 0;
 }

@@ -30,14 +30,4 @@ enable_language(C ASM)
 # Core project settings
 message("Build type: " ${CMAKE_BUILD_TYPE})
 
-# include the STMG474RE cmake
-if (CMAKE_BUILD_TYPE STREQUAL "Test")
-
-message("using test build type, not going to do anything")
-
-else()
-
 add_GR_project(STM32G474xE G4BLINKY)
-
-endif()
-

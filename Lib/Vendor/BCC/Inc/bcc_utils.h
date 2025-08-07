@@ -26,9 +26,12 @@
  * @param coulombCnt1 Content of register COULOMB_CNT1.
  * @param coulombCnt2 Content of register COULOMB_CNT2.
  */
-#define BCC_GET_COULOMB_CNT(coulombCnt1, coulombCnt2) \
-  ((int32_t)(((uint32_t)((coulombCnt1) & MC33771C_TH_COULOMB_CNT_MSB_TH_COULOMB_CNT_MSB_MASK) << 16U) | \
-             ((uint32_t)(coulombCnt2) & MC33771C_TH_COULOMB_CNT_LSB_TH_COULOMB_CNT_LSB_MASK)))
+#define BCC_GET_COULOMB_CNT(coulombCnt1, coulombCnt2)                               \
+	((int32_t)(((uint32_t)((coulombCnt1) &                                      \
+			       MC33771C_TH_COULOMB_CNT_MSB_TH_COULOMB_CNT_MSB_MASK) \
+		    << 16U) |                                                       \
+		   ((uint32_t)(coulombCnt2) &                                       \
+		    MC33771C_TH_COULOMB_CNT_LSB_TH_COULOMB_CNT_LSB_MASK)))
 
 /*!
  * @brief Returns a raw value of ISENSE measurement composed from values
@@ -37,9 +40,10 @@
  * @param measISense1 Content of register MEAS_ISENSE1.
  * @param measISense2 Content of register MEAS_ISENSE2.
  */
-#define BCC_GET_ISENSE_RAW(measISense1, measISense2) \
-    ((((uint32_t)(measISense1) & MC33771C_MEAS_ISENSE1_MEAS_I_MSB_MASK) << 4U) | \
-      ((uint32_t)(measISense2) & MC33771C_MEAS_ISENSE2_MEAS_I_LSB_MASK))
+#define BCC_GET_ISENSE_RAW(measISense1, measISense2)                           \
+	((((uint32_t)(measISense1) & MC33771C_MEAS_ISENSE1_MEAS_I_MSB_MASK)    \
+	  << 4U) |                                                             \
+	 ((uint32_t)(measISense2) & MC33771C_MEAS_ISENSE2_MEAS_I_LSB_MASK))
 
 /*!
  * @brief Performed a sign extension on the raw value of ISENSE measurement
@@ -48,8 +52,9 @@
  * @param iSenseRaw Raw value of measured current (result of
  *                  BCC_GET_ISENSE_RAW macro).
  */
-#define BCC_GET_ISENSE_RAW_SIGN(iSenseRaw) \
-    ((int32_t)(((iSenseRaw) & 0x040000U) ? ((iSenseRaw) | 0xFFF80000U) : (iSenseRaw)))
+#define BCC_GET_ISENSE_RAW_SIGN(iSenseRaw)                                     \
+	((int32_t)(((iSenseRaw) & 0x040000U) ? ((iSenseRaw) | 0xFFF80000U)     \
+					     : (iSenseRaw)))
 
 /*!
  * @brief This macro calculates ISENSE value (in [uV]) from the content of
@@ -65,8 +70,9 @@
  *
  * @return ISENSE voltage in [uV]; int32_t type.
  */
-#define BCC_GET_ISENSE_VOLT(iSense1, iSense2) \
-    ((BCC_GET_ISENSE_RAW_SIGN(BCC_GET_ISENSE_RAW(iSense1, iSense2)) * 6) / 10)
+#define BCC_GET_ISENSE_VOLT(iSense1, iSense2)                                  \
+	((BCC_GET_ISENSE_RAW_SIGN(BCC_GET_ISENSE_RAW(iSense1, iSense2)) * 6) / \
+	 10)
 
 /*!
  * @brief This macro calculates the measured current (in [mA]) from the SHUNT
@@ -80,9 +86,10 @@
  *
  * @return ISENSE current in [mA]; int32_t type.
  */
-#define BCC_GET_ISENSE_AMP(rShunt, iSense1, iSense2) ( \
-    (BCC_GET_ISENSE_RAW_SIGN(BCC_GET_ISENSE_RAW(iSense1, iSense2)) * 600) / (int32_t)(rShunt) \
-)
+#define BCC_GET_ISENSE_AMP(rShunt, iSense1, iSense2)                           \
+	((BCC_GET_ISENSE_RAW_SIGN(BCC_GET_ISENSE_RAW(iSense1, iSense2)) *      \
+	  600) /                                                               \
+	 (int32_t)(rShunt))
 
 /*!
  * @brief Masks a register value and returns a raw measured value.
@@ -93,8 +100,7 @@
  * @param reg Value from a measurement register (MEAS_STACK, MEAS_CELLx,
  *            MEAS_ANx, MEAS_IC_TEMP or MEAS_VBG_DIAG_ADC1x).
  */
-#define BCC_GET_MEAS_RAW(reg) \
-    ((reg) & MC33771C_MEAS_STACK_MEAS_STACK_MASK)
+#define BCC_GET_MEAS_RAW(reg) ((reg) & MC33771C_MEAS_STACK_MEAS_STACK_MASK)
 
 /*!
  * @brief Converts a value of the MEAS_STACK register to [uV].
@@ -106,8 +112,7 @@
  *
  * @return Converted value in [uV]; uint32_t type.
  */
-#define BCC_GET_STACK_VOLT(reg) \
-    ((uint32_t)BCC_GET_MEAS_RAW(reg) * 24414U / 10U)
+#define BCC_GET_STACK_VOLT(reg) ((uint32_t)BCC_GET_MEAS_RAW(reg) * 24414U / 10U)
 
 /*!
  * @brief Converts a value of MEAS_CELLx, MEAS_ANx (absolute measurement),
@@ -123,8 +128,7 @@
  *
  * @return Converted value in [uV]; uint32_t type.
  */
-#define BCC_GET_VOLT(reg) \
-    (((uint32_t)BCC_GET_MEAS_RAW(reg) * 78125U) >> 9)
+#define BCC_GET_VOLT(reg) (((uint32_t)BCC_GET_MEAS_RAW(reg) * 78125U) >> 9)
 
 /*!
  * @brief Converts a value of MEAS_ANx (ratiometric measurement) MC33771C
@@ -141,26 +145,26 @@
  *
  * @return Converted value in [uV]; uint32_t type.
  */
-#define MC33771C_GET_AN_RATIO_VOLT(reg, vCom) \
-    (((((uint32_t)BCC_GET_MEAS_RAW(reg) * 3922U) / 251U) * (vCom)) >> 9)
+#define MC33771C_GET_AN_RATIO_VOLT(reg, vCom)                                  \
+	(((((uint32_t)BCC_GET_MEAS_RAW(reg) * 3922U) / 251U) * (vCom)) >> 9)
 
- /*!
-  * @brief Converts a value of MEAS_ANx (ratiometric measurement) MC33771C
-  * registers to [uV].
-  *
-  * Resolution of these registers is: VCOM*30.5176 uV/LSB.
-  * Result is in the range of 0 and (999970 * VCOM) uV.
-  *
-  * Note: Instead of operation ((reg * 30.5176) * VCOM) / 1000, which could
-  * overflow, ((reg * 15.6250112) * VCOM) / 512 is used.
-  *
-  * @param reg  Value of a measurement register.
-  * @param vCom VCOM voltage in [mV], max 5800 mV.
-  *
-  * @return Converted value in [uV]; uint32_t type.
-  */
-#define MC33772C_GET_AN_RATIO_VOLT(reg, vCom) \
-    (((((uint32_t)BCC_GET_MEAS_RAW(reg) * 39422U) / 2523U) * (vCom)) >> 9)
+/*!
+ * @brief Converts a value of MEAS_ANx (ratiometric measurement) MC33771C
+ * registers to [uV].
+ *
+ * Resolution of these registers is: VCOM*30.5176 uV/LSB.
+ * Result is in the range of 0 and (999970 * VCOM) uV.
+ *
+ * Note: Instead of operation ((reg * 30.5176) * VCOM) / 1000, which could
+ * overflow, ((reg * 15.6250112) * VCOM) / 512 is used.
+ *
+ * @param reg  Value of a measurement register.
+ * @param vCom VCOM voltage in [mV], max 5800 mV.
+ *
+ * @return Converted value in [uV]; uint32_t type.
+ */
+#define MC33772C_GET_AN_RATIO_VOLT(reg, vCom)                                  \
+	(((((uint32_t)BCC_GET_MEAS_RAW(reg) * 39422U) / 2523U) * (vCom)) >> 9)
 
 /*!
  * @brief Converts a value of the MEAS_IC_TEMP register to [K].
@@ -172,8 +176,8 @@
  * @return Converted value in [K] multiplied by 10
  *         (i.e. resolution of 0.1 K); int32_t type.
  */
-#define BCC_GET_IC_TEMP_K(reg) \
-    ((int16_t)((((int32_t)(BCC_GET_MEAS_RAW(reg))) * 32) / 100))
+#define BCC_GET_IC_TEMP_K(reg)                                                 \
+	((int16_t)((((int32_t)(BCC_GET_MEAS_RAW(reg))) * 32) / 100))
 
 /*!
  * @brief Converts a value of the MEAS_IC_TEMP register to [�C].
@@ -185,8 +189,8 @@
  * @return Converted value in [�C] multiplied by 10
  *         (i.e. resolution of 0.1 �C); int32_t type.
  */
-#define BCC_GET_IC_TEMP_C(reg) \
-    ((int16_t)((((int32_t)(BCC_GET_MEAS_RAW(reg))) * 32 - 273150) / 100))
+#define BCC_GET_IC_TEMP_C(reg)                                                 \
+	((int16_t)((((int32_t)(BCC_GET_MEAS_RAW(reg))) * 32 - 273150) / 100))
 
 /*!
  * @brief Converts a value of the MEAS_IC_TEMP register to [�F].
@@ -198,8 +202,8 @@
  * @return Converted value in [�F] multiplied by 10
  *         (i.e. resolution of 0.1 �F); int32_t type.
  */
-#define BCC_GET_IC_TEMP_F(reg) \
-    ((int16_t)((((int32_t)(BCC_GET_MEAS_RAW(reg))) * 288 - 2298350) / 500))
+#define BCC_GET_IC_TEMP_F(reg)                                                 \
+	((int16_t)((((int32_t)(BCC_GET_MEAS_RAW(reg))) * 288 - 2298350) / 500))
 
 /*******************************************************************************
  * Macros for conversion of the voltage thresholds
@@ -212,8 +216,7 @@
  * @param threshold Threshold value (signed two's complement, with V_2RES
  *                  resolution).
  */
-#define BCC_GET_TH_COULOMB_CNT_MSB(threshold) \
-    ((uint16_t)((threshold) >> 16U))
+#define BCC_GET_TH_COULOMB_CNT_MSB(threshold) ((uint16_t)((threshold) >> 16U))
 
 /*!
  * @brief Extracts a value from Over Coulomb counting threshold to be placed in
@@ -222,8 +225,8 @@
  * @param threshold Threshold value (signed two's complement, with V_2RES
  *                  resolution).
  */
-#define BCC_GET_TH_COULOMB_CNT_LSB(threshold) \
-  ((uint16_t)((threshold) && 0xFFFF))
+#define BCC_GET_TH_COULOMB_CNT_LSB(threshold)                                  \
+	((uint16_t)((threshold) && 0xFFFF))
 
 /*!
  * @brief Converts an overcurrent threshold voltage (in sleep mode) to a raw
@@ -231,8 +234,9 @@
  *
  * @param threshold Threshold value in [uV].
  */
-#define BCC_GET_TH_ISENSE_OC(threshold)                                  \
-    (((((threshold) * 5U) / 6U) > 0xFFFU) ? 0xFFFU : (((threshold) * 5U) / 6U))
+#define BCC_GET_TH_ISENSE_OC(threshold)                                        \
+	(((((threshold) * 5U) / 6U) > 0xFFFU) ? 0xFFFU                         \
+					      : (((threshold) * 5U) / 6U))
 
 /*!
  * @brief Converts a cell terminal OV/UV threshold voltage to a raw value to be
@@ -244,8 +248,10 @@
  *
  * @param threshold Threshold value in [mV].
  */
-#define BCC_GET_TH_CTX(threshold) \
-    (uint16_t)(((((threshold) * 10U) / 195U) > 0xFF) ? 0xFF : (((threshold) * 10U) / 195U))
+#define BCC_GET_TH_CTX(threshold)                                              \
+	(uint16_t)(((((threshold) * 10U) / 195U) > 0xFF)                       \
+		       ? 0xFF                                                  \
+		       : (((threshold) * 10U) / 195U))
 
 /*!
  * @brief Converts an analog input OV/UV (UT/OT) threshold voltage to a raw
@@ -253,9 +259,10 @@
  *
  * @param threshold Threshold value in [mV].
  */
-#define BCC_GET_TH_ANX(threshold) \
-    (uint16_t)((((((uint32_t)(threshold)) * 100U) / 488U) > 0x3FFU) ?  \
-            0x3FFU : ((((uint32_t)(threshold)) * 100U) / 488U))
+#define BCC_GET_TH_ANX(threshold)                                              \
+	(uint16_t)((((((uint32_t)(threshold)) * 100U) / 488U) > 0x3FFU)        \
+		       ? 0x3FFU                                                \
+		       : ((((uint32_t)(threshold)) * 100U) / 488U))
 
 /*******************************************************************************
  * Macros for other configuration
@@ -268,10 +275,12 @@
  *
  * @param offset Offset value in [uV] as 2's complement in int16_t.
  */
-#define BCC_GET_ADC2_OFFSET(offset) \
-    ((uint16_t) ((((((int16_t)(offset)) * 10) / 6) > 127) ? 127 :      \
-                 ((((((int16_t)(offset)) * 10) / 6) < -128) ? -128 :   \
-                  ((((int16_t)(offset)) * 10) / 6))))
+#define BCC_GET_ADC2_OFFSET(offset)                                            \
+	((uint16_t)((((((int16_t)(offset)) * 10) / 6) > 127)                   \
+			? 127                                                  \
+			: ((((((int16_t)(offset)) * 10) / 6) < -128)           \
+			       ? -128                                          \
+			       : ((((int16_t)(offset)) * 10) / 6))))
 
 #endif /* __BCC_UTILS_H__ */
 /*******************************************************************************

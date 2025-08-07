@@ -18,23 +18,27 @@ function(add_GR_project)
     set(Platform ${ARGV0})
     set(GR_PROJECT ${ARGV1})
 
-    # equivalent to calling the funnction add_executable_${Platform}() but cmake won't let me do that
-    cmake_language(CALL add_executable_${Platform} ${GR_PROJECT})
-
-    if(DEFINED ${GR_PROJECT_PATH})
-        add_subdirectory(${GR_PROJECT_PATH})
-    else()
+    if (CMAKE_BUILD_TYPE STREQUAL "Test")
         add_subdirectory(${GR_PROJECT})
+    else()
+        # equivalent to calling the funnction add_executable_${Platform}() but cmake won't let me do that
+        cmake_language(CALL add_executable_${Platform} ${GR_PROJECT})
+
+        if(DEFINED ${GR_PROJECT_PATH})
+            add_subdirectory(${GR_PROJECT_PATH})
+        else()
+            add_subdirectory(${GR_PROJECT})
+        endif()
+
+        add_library(Combinator_${GR_PROJECT} INTERFACE)
+
+        target_link_libraries(Combinator_${GR_PROJECT} INTERFACE
+            ${Platform}_LIB
+            ${GR_PROJECT}_USER_CODE # Blame Owen
+        )
+
+        target_link_libraries(${GR_PROJECT}
+            Combinator_${GR_PROJECT}
+        )
     endif()
-
-    add_library(Combinator_${GR_PROJECT} INTERFACE)
-
-    target_link_libraries(Combinator_${GR_PROJECT} INTERFACE
-        ${Platform}_LIB
-        ${GR_PROJECT}_USER_CODE # Blame Owen
-    )
-
-    target_link_libraries(${GR_PROJECT}
-        Combinator_${GR_PROJECT}
-    )
 endfunction()

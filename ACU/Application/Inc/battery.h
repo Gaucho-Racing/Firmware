@@ -2,57 +2,57 @@
 #ifndef BATTERY_H
 #define BATTERY_H
 
-#include "config.h"
-#include "stm32g474xx.h"
 #include "bcc_communication.h"
-#include "string.h"
+#include "config.h"
 #include "debug.h"
+#include "stm32g474xx.h"
+#include "string.h"
 
-typedef struct
-{
-    const uint8_t address;
-    const uint16_t defaultVal;
-    const float value;
+typedef struct {
+	const uint8_t address;
+	const uint16_t defaultVal;
+	const float value;
 } bcc_init_reg_t;
 
-typedef struct
-{
-    float cell_temp[NUM_CELL_IC*REAL_NUM_TOTAL_IC*2];
-    uint8_t cell_temp_err_cnt[NUM_CELL_IC*REAL_NUM_TOTAL_IC*2];
-    float cell_volt[NUM_CELL_IC*REAL_NUM_TOTAL_IC];
-    uint8_t cell_volt_err_cnt[NUM_CELL_IC*REAL_NUM_TOTAL_IC];
-    uint8_t cell_balancing[NUM_CELL_IC*REAL_NUM_TOTAL_IC]; // 0 = off, 1 = on, 2 = disabled
+typedef struct {
+	float cell_temp[NUM_CELL_IC * REAL_NUM_TOTAL_IC * 2];
+	uint8_t cell_temp_err_cnt[NUM_CELL_IC * REAL_NUM_TOTAL_IC * 2];
+	float cell_volt[NUM_CELL_IC * REAL_NUM_TOTAL_IC];
+	uint8_t cell_volt_err_cnt[NUM_CELL_IC * REAL_NUM_TOTAL_IC];
+	uint8_t
+	    cell_balancing[NUM_CELL_IC *
+			   REAL_NUM_TOTAL_IC]; // 0 = off, 1 = on, 2 = disabled
 
-    // Data we calculated from BCC measurements
-    float min_cell_volt; // the cell with the min volt
-    float max_cell_volt; // the cell with the max volt
-    float min_cell_temp; // the cell with the min temp
-    float max_cell_temp; // the cell with the max temp
-    
-    // stacks
-    float battery_total_voltage;
-    float stack_voltage[NUM_TOTAL_IC];
-    float calculated_stack_voltage[NUM_TOTAL_IC];
-    
-    float icTemp[NUM_TOTAL_IC];
+	// Data we calculated from BCC measurements
+	float min_cell_volt; // the cell with the min volt
+	float max_cell_volt; // the cell with the max volt
+	float min_cell_temp; // the cell with the min temp
+	float max_cell_temp; // the cell with the max temp
 
-    float max_chg_current; // idk what the purpose of this one is, doesn't really get used
+	// stacks
+	float battery_total_voltage;
+	float stack_voltage[NUM_TOTAL_IC];
+	float calculated_stack_voltage[NUM_TOTAL_IC];
 
-    // ACU Config Operational Parameters via Rx
-    uint16_t min_volt_thresh;
-    uint16_t max_temp_thresh;
+	float icTemp[NUM_TOTAL_IC];
 
-    // Internal Data
-    uint16_t max_volt_thresh;
-    uint16_t min_temp_thresh;
-    uint8_t cell_temp_errors;
-    uint8_t cell_volt_errors;
-    uint16_t faults[BCC_FS_MAX*NUM_TOTAL_IC];
-    uint8_t battery_check_faults;
+	float max_chg_current; // idk what the purpose of this one is, doesn't
+			       // really get used
 
+	// ACU Config Operational Parameters via Rx
+	uint16_t min_volt_thresh;
+	uint16_t max_temp_thresh;
 
-    // config
-    bcc_drv_config_t drvConfig;
+	// Internal Data
+	uint16_t max_volt_thresh;
+	uint16_t min_temp_thresh;
+	uint8_t cell_temp_errors;
+	uint8_t cell_volt_errors;
+	uint16_t faults[BCC_FS_MAX * NUM_TOTAL_IC];
+	uint8_t battery_check_faults;
+
+	// config
+	bcc_drv_config_t drvConfig;
 
 } Battery;
 
@@ -104,29 +104,31 @@ static const bcc_init_reg_t init_regs[INIT_REG_CNT] = {
     {MC33771C_CB14_CFG_OFFSET, MC33771C_CB14_CFG_POR_VAL, CBX_SET},
 };
 
-bcc_status_t read_device_measurements(Battery * bty, uint8_t read_volt, uint8_t read_temp);
-bcc_status_t set_cell_balance(Battery * bty, bcc_cid_t cid, uint8_t cellIndex, bool all, bool enable);
+bcc_status_t read_device_measurements(Battery *bty, uint8_t read_volt,
+				      uint8_t read_temp);
+bcc_status_t set_cell_balance(Battery *bty, bcc_cid_t cid, uint8_t cellIndex,
+			      bool all, bool enable);
 
-bool disable_cell_balancing(Battery * bty);
-bool init_cell_balancing(Battery * bty);
-bool init_registers(Battery * bty);
+bool disable_cell_balancing(Battery *bty);
+bool init_cell_balancing(Battery *bty);
+bool init_registers(Battery *bty);
 float V2T(float voltage, float B);
-void reset_discharge(Battery * bty, bool on);
+void reset_discharge(Battery *bty, bool on);
 
 bool check_volt(Battery *bty);
 bool check_temp(Battery *bty);
-bool do_cell_balancing(Battery * bty);
+bool do_cell_balancing(Battery *bty);
 bool battery_check(Battery *bty, bool full_check);
 
-void get_faults(Battery * bty);
-void clear_faults(bcc_drv_config_t * drvConfig);
+void get_faults(Battery *bty);
+void clear_faults(bcc_drv_config_t *drvConfig);
 
 // print individuals
-void print_volt(const float * voltages, const uint8_t cid, uint8_t index);
+void print_volt(const float *voltages, const uint8_t cid, uint8_t index);
 
 // print group
 void print_voltage(Battery *bty);
-void print_temperature(Battery * bty);
+void print_temperature(Battery *bty);
 
 // bcc stuff with spi
 uint8_t bcc_read_string(uint8_t *buffer, uint16_t length);
