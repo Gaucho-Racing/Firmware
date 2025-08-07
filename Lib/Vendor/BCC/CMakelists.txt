@@ -19,15 +19,11 @@ enable_language(C ASM)
 # Core project settings
 project(BCC)
 
-# what, does in fact not get the filename of somthing but rather the name of the project from the path
-
 add_library(${PROJECT_NAME} INTERFACE)
 target_sources(${PROJECT_NAME} INTERFACE
     Src/bcc.c
     Src/bcc_communication.c
     Src/bcc_diagnostics.c
-    # Core/Src/...
-    # Application/Src/...
 )
 
 target_link_libraries(${PROJECT_NAME} INTERFACE

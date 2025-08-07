@@ -27,10 +27,10 @@ get_filename_component(PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 add_library(${PROJECT_NAME}_USER_CODE INTERFACE)
 
+# provided by the ACU-25 CMakeLists.txt
 target_compile_options(${PROJECT_NAME} PRIVATE -Wno-unused-parameter -Wno-pedantic -Wtrigraphs -Wno-dev)
 
 target_sources(${PROJECT_NAME}_USER_CODE INTERFACE
-    # Core/Src/...
     Core/Src/adc.c
     Core/Src/dma.c
     Core/Src/fdcan.c
@@ -49,7 +49,6 @@ target_sources(${PROJECT_NAME}_USER_CODE INTERFACE
     Application/Src/debug.c
     Application/Src/mcu.c
     Application/Src/state.c
-    # Application/Src/...
 )
 
 target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE
