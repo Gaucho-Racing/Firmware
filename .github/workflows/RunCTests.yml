@@ -20,19 +20,20 @@ jobs:
         with:
           packages: cmake build-essential
 
-      - name: CMake
+      - name: CMake Configuration
         run: |
           echo "# CMake Configuration" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           cmake --preset HOOTLTest |& tee -a $GITHUB_STEP_SUMMARY
-          echo "\`\`\` \`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           cmake --build build/HOOTLTest |& tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
 
-      - name: Run HOOTL Tests
+      - name: Run CTest
         working-directory: build/HOOTLTest
         run: |
-          echo "# CTest Output"
+          echo "# Run CTest" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           ctest --output-on-failure |& tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY

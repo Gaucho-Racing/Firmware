@@ -1,0 +1,37 @@
+name: Clang Format
+
+on:
+  push:
+    tags-ignore: [ '**' ]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  clang-format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Cache Apt Packages
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: clang-format
+
+      - name: Run clang-format
+        run: |
+          find . -regex '.*\.[ch]$' | xargs clang-format -i
+
+      - name: Save Changes
+        uses: EndBug/add-and-commit@v9
+        if: github.ref_type != 'tag'
+        env:
+          HOME: ${{ github.workspace }}
+        with:
+          default_author: github_actions
+          message: 'Automatic ${{ github.job }}: Fixed formatting with clang-format'
+          fetch: 'false'
