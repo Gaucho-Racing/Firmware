@@ -39,5 +39,7 @@ else()
 
 add_GR_project(STM32G474xE G4BLINKY)
 
+add_GR_project(STM32G474xE ACU)
+
 endif()
 
