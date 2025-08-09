@@ -102,9 +102,9 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 	while (1) {
 		/* USER CODE END WHILE */
-		HAL_GPIO_WritePin(GPIOE, GPIO_PIN_5, RESET);
+		HAL_GPIO_WritePin(GPIOE, GPIO_PIN_5, GPIO_PIN_RESET);
 		HAL_Delay(500);
-		HAL_GPIO_WritePin(GPIOE, GPIO_PIN_5, SET);
+		HAL_GPIO_WritePin(GPIOE, GPIO_PIN_5, GPIO_PIN_SET);
 		HAL_Delay(500);
 		/* USER CODE BEGIN 3 */
 	}

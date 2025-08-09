@@ -174,6 +174,8 @@ ErrorStatus LL_DAC_DeInit(const DAC_TypeDef *DACx)
 	LL_AHB3_GRP1_ReleaseReset(LL_AHB3_GRP1_PERIPH_DAC1);
 #endif /* DAC1 */
 
+	UNUSED(DACx);
+
 	return SUCCESS;
 }
 

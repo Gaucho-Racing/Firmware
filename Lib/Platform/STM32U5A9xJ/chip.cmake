@@ -21,6 +21,7 @@ target_include_directories(${CHIP}_LIB INTERFACE
 )
 
 target_sources(${CHIP}_LIB INTERFACE
+    ${CHIP_PATH}/CompileDependencies/startup_stm32u5a9xx.s
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32u5xx_hal_adc_ex.c
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32u5xx_hal.c
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32u5xx_hal_comp.c
