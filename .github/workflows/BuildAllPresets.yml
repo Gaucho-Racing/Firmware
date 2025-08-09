@@ -25,7 +25,7 @@ jobs:
       - name: Cache Apt Packages
         uses: awalsh128/cache-apt-pkgs-action@latest
         with:
-          packages: cmake build-essential
+          packages: cmake build-essential gcc-arm-none-eabi
 
       - name: CMake Configuration
         run: |
