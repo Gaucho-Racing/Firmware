@@ -3,7 +3,8 @@
   * @file    stm32u5xx_hal_msp_template.c
   * @author  MCD Application Team
   * @brief   HAL MSP module.
-  *          This file template is located in the HAL folder and should be copied
+  *          This file template is located in the HAL folder and should be
+ copied
   *          to the user folder.
   *
   ******************************************************************************
@@ -19,7 +20,7 @@
   ******************************************************************************
   @verbatim
  ===============================================================================
-                     ##### How to use this driver #####
+		     ##### How to use this driver #####
  ===============================================================================
     [..]
 
@@ -31,13 +32,13 @@
 #include "stm32u5xx_hal.h"
 
 /** @addtogroup STM32U5xx_HAL_Driver
-  * @{
-  */
+ * @{
+ */
 
 /** @defgroup HAL_MSP HAL MSP module driver
-  * @brief HAL MSP module.
-  * @{
-  */
+ * @brief HAL MSP module.
+ * @{
+ */
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -47,31 +48,25 @@
 /* Private functions ---------------------------------------------------------*/
 
 /** @defgroup HAL_MSP_Private_Functions HAL MSP Private Functions
-  * @{
-  */
+ * @{
+ */
 
 /**
-  * @brief  Initializes the Global MSP.
-  * @retval None
-  */
-void HAL_MspInit(void)
-{
-
-}
+ * @brief  Initializes the Global MSP.
+ * @retval None
+ */
+void HAL_MspInit(void) {}
 
 /**
-  * @brief  DeInitializes the Global MSP.
-  * @retval None
-  */
-void HAL_MspDeInit(void)
-{
-
-}
+ * @brief  DeInitializes the Global MSP.
+ * @retval None
+ */
+void HAL_MspDeInit(void) {}
 
 /**
-  * @brief  Initialize the PPP MSP.
-  * @retval None
-  */
+ * @brief  Initialize the PPP MSP.
+ * @retval None
+ */
 /*
 void HAL_PPP_MspInit(void)
 {
@@ -79,9 +74,9 @@ void HAL_PPP_MspInit(void)
 */
 
 /**
-  * @brief  DeInitialize the PPP MSP.
-  * @retval None
-  */
+ * @brief  DeInitialize the PPP MSP.
+ * @retval None
+ */
 /*
 void HAL_PPP_MspDeInit(void)
 {
@@ -89,13 +84,13 @@ void HAL_PPP_MspDeInit(void)
 */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /**
-  * @}
-  */
+ * @}
+ */
