@@ -2,6 +2,7 @@ name: CMake and CTest
 
 on:
   push:
+    branches: [ main ]
   pull_request:
   workflow_dispatch:
 
