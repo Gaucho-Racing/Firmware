@@ -31,9 +31,8 @@ jobs:
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
 
       - name: Run CTest
-        working-directory: build/HOOTLTest
         run: |
           echo "# Run CTest" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          ctest --output-on-failure |& tee -a $GITHUB_STEP_SUMMARY
+          ctest --output-on-failure --test-dir build/HOOTLTest |& tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY

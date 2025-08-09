@@ -51,21 +51,12 @@ enable_language(C ASM)
 # Core project settings
 project(${CMAKE_PROJECT_NAME})
 
-# Questionable...
-# set(TARGET_FLAGS "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard ")
-# set_target_properties(${TARGET_NAME} PROPERTIES LINK_FLAGS "-T${CHIP_PATH}/CompileDependencies/STM32G474RETx_FLASH.ld")
-
 add_library(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
 target_sources(${GR_PROJECT_NAME}_USER_CODE INTERFACE
     Core/Src/main.c
-    Core/Src/gpio.c
-    Core/Src/adc.c
-    Core/Src/crc.c
-    Core/Src/fdcan.c
-    Core/Src/spi.c
-    Core/Src/stm32g4xx_it.c
-    Core/Src/stm32g4xx_hal_msp.c
-    Core/Src/system_stm32g4xx.c
+    Core/Src/stm32u5xx_it.c
+    Core/Src/stm32u5xx_hal_msp.c
+    Core/Src/system_stm32u5xx.c
     Core/Src/sysmem.c
     Core/Src/syscalls.c
 )
