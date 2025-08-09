@@ -314,8 +314,9 @@ typedef union {
 
 /* CONTROL Register Definitions */
 #define CONTROL_SPSEL_Pos 1U /*!< CONTROL: SPSEL Position */
-#define CONTROL_SPSEL_Msk (1UL << CONTROL_SPSEL_Pos) /*!< CONTROL: SPSEL Mask  \
-						      */
+#define CONTROL_SPSEL_Msk                                                      \
+	(1UL << CONTROL_SPSEL_Pos) /*!< CONTROL: SPSEL Mask                    \
+				    */
 
 #define CONTROL_nPRIV_Pos 0U /*!< CONTROL: nPRIV Position */
 #define CONTROL_nPRIV_Msk                                                      \
@@ -396,8 +397,9 @@ typedef struct {
 #define SCB_CPUID_VARIANT_Msk                                                  \
 	(0xFUL << SCB_CPUID_VARIANT_Pos) /*!< SCB CPUID: VARIANT Mask */
 
-#define SCB_CPUID_ARCHITECTURE_Pos 16U /*!< SCB CPUID: ARCHITECTURE Position   \
-					*/
+#define SCB_CPUID_ARCHITECTURE_Pos                                             \
+	16U /*!< SCB CPUID: ARCHITECTURE Position                              \
+	     */
 #define SCB_CPUID_ARCHITECTURE_Msk                                             \
 	(0xFUL                                                                 \
 	 << SCB_CPUID_ARCHITECTURE_Pos) /*!< SCB CPUID: ARCHITECTURE Mask */
@@ -474,8 +476,9 @@ typedef struct {
 #define SCB_AIRCR_SYSRESETREQ_Msk                                              \
 	(1UL << SCB_AIRCR_SYSRESETREQ_Pos) /*!< SCB AIRCR: SYSRESETREQ Mask */
 
-#define SCB_AIRCR_VECTCLRACTIVE_Pos 1U /*!< SCB AIRCR: VECTCLRACTIVE Position  \
-					*/
+#define SCB_AIRCR_VECTCLRACTIVE_Pos                                            \
+	1U /*!< SCB AIRCR: VECTCLRACTIVE Position                              \
+	    */
 #define SCB_AIRCR_VECTCLRACTIVE_Msk                                            \
 	(1UL                                                                   \
 	 << SCB_AIRCR_VECTCLRACTIVE_Pos) /*!< SCB AIRCR: VECTCLRACTIVE Mask */
@@ -503,8 +506,9 @@ typedef struct {
 	(1UL << SCB_CCR_UNALIGN_TRP_Pos) /*!< SCB CCR: UNALIGN_TRP Mask */
 
 /* SCB System Handler Control and State Register Definitions */
-#define SCB_SHCSR_SVCALLPENDED_Pos 15U /*!< SCB SHCSR: SVCALLPENDED Position   \
-					*/
+#define SCB_SHCSR_SVCALLPENDED_Pos                                             \
+	15U /*!< SCB SHCSR: SVCALLPENDED Position                              \
+	     */
 #define SCB_SHCSR_SVCALLPENDED_Msk                                             \
 	(1UL << SCB_SHCSR_SVCALLPENDED_Pos) /*!< SCB SHCSR: SVCALLPENDED Mask  \
 					     */
@@ -533,8 +537,9 @@ typedef struct {
 } SysTick_Type;
 
 /* SysTick Control / Status Register Definitions */
-#define SysTick_CTRL_COUNTFLAG_Pos 16U /*!< SysTick CTRL: COUNTFLAG Position   \
-					*/
+#define SysTick_CTRL_COUNTFLAG_Pos                                             \
+	16U /*!< SysTick CTRL: COUNTFLAG Position                              \
+	     */
 #define SysTick_CTRL_COUNTFLAG_Msk                                             \
 	(1UL << SysTick_CTRL_COUNTFLAG_Pos) /*!< SysTick CTRL: COUNTFLAG Mask  \
 					     */
@@ -656,8 +661,9 @@ typedef struct {
 					    field Mask */
 
 #define MPU_RASR_XN_Pos 28U /*!< MPU RASR: ATTRS.XN Position */
-#define MPU_RASR_XN_Msk (1UL << MPU_RASR_XN_Pos) /*!< MPU RASR: ATTRS.XN Mask  \
-						  */
+#define MPU_RASR_XN_Msk                                                        \
+	(1UL << MPU_RASR_XN_Pos) /*!< MPU RASR: ATTRS.XN Mask                  \
+				  */
 
 #define MPU_RASR_AP_Pos 24U /*!< MPU RASR: ATTRS.AP Position */
 #define MPU_RASR_AP_Msk                                                        \
@@ -740,8 +746,9 @@ typedef struct {
 #define SCS_BASE (0xE000E000UL) /*!< System Control Space Base Address */
 #define SysTick_BASE (SCS_BASE + 0x0010UL) /*!< SysTick Base Address */
 #define NVIC_BASE (SCS_BASE + 0x0100UL)	   /*!< NVIC Base Address */
-#define SCB_BASE (SCS_BASE + 0x0D00UL) /*!< System Control Block Base Address  \
-					*/
+#define SCB_BASE                                                               \
+	(SCS_BASE + 0x0D00UL) /*!< System Control Block Base Address           \
+			       */
 
 #define SCB ((SCB_Type *)SCB_BASE) /*!< SCB configuration struct */
 #define SysTick                                                                \
