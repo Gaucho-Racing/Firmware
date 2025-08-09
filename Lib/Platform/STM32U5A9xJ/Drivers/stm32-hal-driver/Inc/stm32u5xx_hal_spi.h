@@ -681,8 +681,9 @@ typedef void (*pSPI_CallbackTypeDef)(
 /** @defgroup SPI_Flags_definition SPI Flags Definition
  * @{
  */
-#define SPI_FLAG_RXP SPI_SR_RXP /* SPI status flag : Rx-Packet available flag  \
-				 */
+#define SPI_FLAG_RXP                                                           \
+	SPI_SR_RXP /* SPI status flag : Rx-Packet available flag               \
+		    */
 #define SPI_FLAG_TXP                                                           \
 	SPI_SR_TXP /* SPI status flag : Tx-Packet space available flag */
 #define SPI_FLAG_DXP SPI_SR_DXP /* SPI status flag : Duplex Packet flag */

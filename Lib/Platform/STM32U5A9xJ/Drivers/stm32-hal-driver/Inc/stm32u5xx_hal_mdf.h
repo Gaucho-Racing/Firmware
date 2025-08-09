@@ -258,10 +258,10 @@ typedef struct {
 	uint32_t HangoverWindow;     /*!< Hangover time window in frames.
 					  This parameter can be a value of @ref
 					MDF_SadHangoverWindow */
-	uint32_t
-	    LearningFrames;	    /*!< Number of learning frames for the first
+	uint32_t LearningFrames;    /*!< Number of learning frames for the first
 				       estimation of noise level.	 This parameter
-				       can be	 a value of @ref MDF_SadLearningFrames */
+				       can be	 a value of @ref
+				       MDF_SadLearningFrames */
 	uint32_t AmbientNoiseSlope; /*!< Ambient noise slope control.
 					 This parameter must be a number between
 				       Min_Data = 0 and Max_Data = 7.

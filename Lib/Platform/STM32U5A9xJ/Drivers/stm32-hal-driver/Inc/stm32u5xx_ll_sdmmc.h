@@ -235,8 +235,9 @@ typedef struct {
 	((uint32_t)0x10000000U) /*!< Error when feature is not insupported */
 #define SDMMC_ERROR_BUSY                                                       \
 	((uint32_t)0x20000000U) /*!< Error when transfer process is busy */
-#define SDMMC_ERROR_DMA ((uint32_t)0x40000000U) /*!< Error while DMA transfer  \
-						 */
+#define SDMMC_ERROR_DMA                                                        \
+	((uint32_t)0x40000000U) /*!< Error while DMA transfer                  \
+				 */
 #define SDMMC_ERROR_TIMEOUT ((uint32_t)0x80000000U) /*!< Timeout error */
 
 /**
@@ -338,8 +339,9 @@ typedef struct {
 	       interrupted by  STOP_TRANSMISSION command. */
 #define SDMMC_CMD_HS_BUSTEST_WRITE                                             \
 	19U /*!< 64 bytes tuning pattern is sent for SDR50 and SDR104. */
-#define SDMMC_CMD_WRITE_DAT_UNTIL_STOP 20U /*!< Speed class control command.   \
-					    */
+#define SDMMC_CMD_WRITE_DAT_UNTIL_STOP                                         \
+	20U /*!< Speed class control command.                                  \
+	     */
 #define SDMMC_CMD_SET_BLOCK_COUNT                                              \
 	23U /*!< Specify block count for CMD18 and CMD25. */
 #define SDMMC_CMD_WRITE_SINGLE_BLOCK                                           \

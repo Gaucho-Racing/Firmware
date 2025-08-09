@@ -476,9 +476,10 @@ typedef struct {
 #define PWR_VDM                                                                \
 	(PWR_SECCFGR_VDMSEC) /*!< Voltage detection and monitoring secure      \
 				protection */
-#define PWR_VB (PWR_SECCFGR_VBSEC)   /*!< Backup domain secure protection */
-#define PWR_APC (PWR_SECCFGR_APCSEC) /*!< Pull-up/pull-down secure protection  \
-				      */
+#define PWR_VB (PWR_SECCFGR_VBSEC) /*!< Backup domain secure protection */
+#define PWR_APC                                                                \
+	(PWR_SECCFGR_APCSEC) /*!< Pull-up/pull-down secure protection          \
+			      */
 #define PWR_ALL                                                                \
 	(PWR_WKUP1 | PWR_WKUP2 | PWR_WKUP3 | PWR_WKUP4 | PWR_WKUP5 |           \
 	 PWR_WKUP7 | PWR_WKUP6 | PWR_WKUP8 | PWR_LPM | PWR_VDM | PWR_VB |      \

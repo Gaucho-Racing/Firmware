@@ -346,8 +346,9 @@ typedef void (*pCRYP_CallbackTypeDef)(
  * @{
  */
 
-#define CRYP_AES_ECB 0x00000000U /*!< Electronic codebook chaining algorithm   \
-				  */
+#define CRYP_AES_ECB                                                           \
+	0x00000000U /*!< Electronic codebook chaining algorithm                \
+		     */
 #define CRYP_AES_CBC AES_CR_CHMOD_0 /*!< Cipher block chaining algorithm */
 #define CRYP_AES_CTR AES_CR_CHMOD_1 /*!< Counter mode chaining algorithm */
 #define CRYP_AES_GCM_GMAC                                                      \

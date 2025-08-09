@@ -303,8 +303,9 @@ typedef void (*pMMC_CallbackTypeDef)(MMC_HandleTypeDef *hmmc);
 				     failed)                   */
 #define HAL_MMC_ERROR_CMD_RSP_TIMEOUT                                          \
 	SDMMC_ERROR_CMD_RSP_TIMEOUT /*!< Command response timeout */
-#define HAL_MMC_ERROR_DATA_TIMEOUT SDMMC_ERROR_DATA_TIMEOUT /*!< Data timeout  \
-							     */
+#define HAL_MMC_ERROR_DATA_TIMEOUT                                             \
+	SDMMC_ERROR_DATA_TIMEOUT /*!< Data timeout                             \
+				  */
 #define HAL_MMC_ERROR_TX_UNDERRUN                                              \
 	SDMMC_ERROR_TX_UNDERRUN /*!< Transmit FIFO underrun */
 #define HAL_MMC_ERROR_RX_OVERRUN                                               \

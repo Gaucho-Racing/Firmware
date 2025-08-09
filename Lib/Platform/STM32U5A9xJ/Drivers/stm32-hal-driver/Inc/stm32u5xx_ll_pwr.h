@@ -808,10 +808,11 @@ extern "C" {
 	PWR_SECCFGR_VDMSEC /*!< Voltage detection and monitoring secure mode   \
 			    */
 #define LL_PWR_VB_NSEC 0U  /*!< Backup domain nsecure mode  */
-#define LL_PWR_VB_SEC PWR_SECCFGR_VBSEC	  /*!< Backup domain secure mode  */
-#define LL_PWR_APC_NSEC 0U		  /*!< Pull-up/pull-down nsecure mode */
-#define LL_PWR_APC_SEC PWR_SECCFGR_APCSEC /*!< Pull-up/pull-down secure mode   \
-					   */
+#define LL_PWR_VB_SEC PWR_SECCFGR_VBSEC /*!< Backup domain secure mode  */
+#define LL_PWR_APC_NSEC 0U		/*!< Pull-up/pull-down nsecure mode */
+#define LL_PWR_APC_SEC                                                         \
+	PWR_SECCFGR_APCSEC /*!< Pull-up/pull-down secure mode                  \
+			    */
 /**
  * @}
  */

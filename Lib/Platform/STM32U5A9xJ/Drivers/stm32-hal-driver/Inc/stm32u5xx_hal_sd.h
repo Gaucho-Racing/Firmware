@@ -341,8 +341,9 @@ typedef void (*pSD_TransceiverCallbackTypeDef)(FlagStatus status);
 				     failed)                  */
 #define HAL_SD_ERROR_CMD_RSP_TIMEOUT                                           \
 	SDMMC_ERROR_CMD_RSP_TIMEOUT /*!< Command response timeout */
-#define HAL_SD_ERROR_DATA_TIMEOUT SDMMC_ERROR_DATA_TIMEOUT /*!< Data timeout   \
-							    */
+#define HAL_SD_ERROR_DATA_TIMEOUT                                              \
+	SDMMC_ERROR_DATA_TIMEOUT /*!< Data timeout                             \
+				  */
 #define HAL_SD_ERROR_TX_UNDERRUN                                               \
 	SDMMC_ERROR_TX_UNDERRUN /*!< Transmit FIFO underrun */
 #define HAL_SD_ERROR_RX_OVERRUN                                                \

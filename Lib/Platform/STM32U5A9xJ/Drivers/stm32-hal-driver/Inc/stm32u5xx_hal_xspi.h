@@ -1024,8 +1024,9 @@ typedef struct {
 /** @defgroup XSPI_Flags XSPI Flags
  * @{
  */
-#define HAL_XSPI_FLAG_BUSY XSPI_SR_BUSY /*!< Busy flag: operation is ongoing   \
-					 */
+#define HAL_XSPI_FLAG_BUSY                                                     \
+	XSPI_SR_BUSY /*!< Busy flag: operation is ongoing                      \
+		      */
 #define HAL_XSPI_FLAG_TO                                                       \
 	XSPI_SR_TOF /*!< Timeout flag: timeout occurs in memory-mapped mode */
 #define HAL_XSPI_FLAG_SM                                                       \
