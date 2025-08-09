@@ -25,6 +25,7 @@ jobs:
 
       - name: CMake Configuration
         run: |
+          set -o pipefail
           echo "## CMake Configuration (HOOTLTest)" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           cmake --preset HOOTLTest |& tee -a $GITHUB_STEP_SUMMARY
@@ -32,6 +33,7 @@ jobs:
 
       - name: CMake Build
         run: |
+          set -o pipefail
           echo "## CMake Build (HOOTLTest)" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           cmake --build build/HOOTLTest |& tee -a $GITHUB_STEP_SUMMARY
@@ -39,6 +41,7 @@ jobs:
 
       - name: Run CTest
         run: |
+          set -o pipefail
           echo "## Run CTest (HOOTLTest)" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           ctest --output-on-failure --test-dir build/HOOTLTest |& tee -a $GITHUB_STEP_SUMMARY

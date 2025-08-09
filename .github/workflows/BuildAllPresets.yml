@@ -28,6 +28,7 @@ jobs:
 
       - name: CMake Configuration
         run: |
+          set -o pipefail
           echo "## CMake Configuration (${{ matrix.prefix }})" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           cmake --preset ${{ matrix.prefix }} |& tee -a $GITHUB_STEP_SUMMARY
@@ -35,6 +36,7 @@ jobs:
 
       - name: CMake Build
         run: |
+          set -o pipefail
           echo "## CMake Build (${{ matrix.prefix }})" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           cmake --build build/${{ matrix.prefix }} |& tee -a $GITHUB_STEP_SUMMARY

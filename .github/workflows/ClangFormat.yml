@@ -32,7 +32,9 @@ jobs:
           packages: clang-format
 
       - name: Run clang-format
-        run: find . -regex '.*\.[ch]$' | xargs clang-format -i
+        run: |
+          set -o pipefail
+          find . -regex '.*\.[ch]$' | xargs clang-format -i
 
       - name: Save Changes
         uses: EndBug/add-and-commit@v9
