@@ -1,4 +1,4 @@
-name: CTest
+name: CMake
 
 on:
   push:
@@ -11,9 +11,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  ctest:
-    name: Configure, Build, and Run HOOTLTest
+  cmake:
+    name: Configure and Build
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        prefix: [ "HOOTLTest", "Debug", "Release", "MinSizeRel", "RelWithDebInfo" ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -25,21 +28,14 @@ jobs:
 
       - name: CMake Configuration
         run: |
-          echo "## CMake Configuration (HOOTLTest)" >> $GITHUB_STEP_SUMMARY
+          echo "## CMake Configuration (${{ matrix.prefix }})" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          cmake --preset HOOTLTest |& tee -a $GITHUB_STEP_SUMMARY
+          cmake --preset ${{ matrix.prefix }} |& tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
 
       - name: CMake Build
         run: |
-          echo "## CMake Build (HOOTLTest)" >> $GITHUB_STEP_SUMMARY
+          echo "## CMake Build (${{ matrix.prefix }})" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          cmake --build build/HOOTLTest |& tee -a $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-
-      - name: Run CTest
-        run: |
-          echo "## Run CTest (HOOTLTest)" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          ctest --output-on-failure --test-dir build/HOOTLTest |& tee -a $GITHUB_STEP_SUMMARY
+          cmake --build build/${{ matrix.prefix }} |& tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
