@@ -18970,8 +18970,9 @@ typedef struct {
 			       */
 #define SAI_xIMR_FREQIE_Pos (3U)
 #define SAI_xIMR_FREQIE_Msk (0x1UL << SAI_xIMR_FREQIE_Pos) /*!< 0x00000008 */
-#define SAI_xIMR_FREQIE SAI_xIMR_FREQIE_Msk /*!<FIFO request interrupt enable  \
-					     */
+#define SAI_xIMR_FREQIE                                                        \
+	SAI_xIMR_FREQIE_Msk /*!<FIFO request interrupt enable                  \
+			     */
 #define SAI_xIMR_CNRDYIE_Pos (4U)
 #define SAI_xIMR_CNRDYIE_Msk                                                   \
 	(0x1UL << SAI_xIMR_CNRDYIE_Pos) /*!< 0x00000010                        \
@@ -19028,14 +19029,16 @@ typedef struct {
 /******************  Bit definition for SAI_xCLRFR register  ******************/
 #define SAI_xCLRFR_COVRUDR_Pos (0U)
 #define SAI_xCLRFR_COVRUDR_Msk                                                 \
-	(0x1UL << SAI_xCLRFR_COVRUDR_Pos)	  /*!< 0x00000001 */
-#define SAI_xCLRFR_COVRUDR SAI_xCLRFR_COVRUDR_Msk /*!<Clear Overrun underrun   \
-						   */
+	(0x1UL << SAI_xCLRFR_COVRUDR_Pos) /*!< 0x00000001 */
+#define SAI_xCLRFR_COVRUDR                                                     \
+	SAI_xCLRFR_COVRUDR_Msk /*!<Clear Overrun underrun                      \
+				*/
 #define SAI_xCLRFR_CMUTEDET_Pos (1U)
 #define SAI_xCLRFR_CMUTEDET_Msk                                                \
-	(0x1UL << SAI_xCLRFR_CMUTEDET_Pos)	    /*!< 0x00000002 */
-#define SAI_xCLRFR_CMUTEDET SAI_xCLRFR_CMUTEDET_Msk /*!<Clear Mute detection   \
-						     */
+	(0x1UL << SAI_xCLRFR_CMUTEDET_Pos) /*!< 0x00000002 */
+#define SAI_xCLRFR_CMUTEDET                                                    \
+	SAI_xCLRFR_CMUTEDET_Msk /*!<Clear Mute detection                       \
+				 */
 #define SAI_xCLRFR_CWCKCFG_Pos (2U)
 #define SAI_xCLRFR_CWCKCFG_Msk                                                 \
 	(0x1UL << SAI_xCLRFR_CWCKCFG_Pos) /*!< 0x00000004 */
