@@ -128,9 +128,9 @@ typedef struct
 #endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) &&                                 \
 	  (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
 {
-	XSPI_TypeDef *Instance;	 /*!< XSPI registers base address  */
-	XSPI_InitTypeDef Init;	 /*!< XSPI initialization parameters   */
-	uint8_t *pBuffPtr;	 /*!< Address of the XSPI buffer for transfer       */
+	XSPI_TypeDef *Instance; /*!< XSPI registers base address  */
+	XSPI_InitTypeDef Init;	/*!< XSPI initialization parameters   */
+	uint8_t *pBuffPtr; /*!< Address of the XSPI buffer for transfer       */
 	__IO uint32_t XferSize;	 /*!< Number of data to transfer  */
 	__IO uint32_t XferCount; /*!< Counter of data transferred */
 	DMA_HandleTypeDef
@@ -191,9 +191,9 @@ typedef struct {
 			       This parameter can be a value between 0 and
 			     0xFFFFFFFF */
 	uint32_t AddressMode;  /*!< It indicates the address mode. Address mode
-				  precises number of lines  for address (except no
-				  address).  This parameter can be a value of @ref
-				  XSPI_AddressMode */
+				  precises number of lines  for address (except
+				  no  address).  This parameter can be a value of
+				  @ref  XSPI_AddressMode */
 	uint32_t AddressWidth; /*!< It indicates the width of the address.
 				    This parameter can be a value of @ref
 				  XSPI_AddressWidth */
@@ -342,12 +342,11 @@ typedef struct {
 	uint32_t IOHighPort; /*!< It indicates which port of the XSPI IO Manager
 				is used for the IO[7:4] pins. This parameter can
 				be a value of @ref XSPIM_IOPort */
-	uint32_t
-	    Req2AckTime; /*!< It indicates the minimum switching duration (in
-			    number of clock cycles) expected if some signals are
-			    multiplexed in the XSPI IO Manager with the other
-			    XSPI. This parameter can be a value between 1 and
-			    256 */
+	uint32_t Req2AckTime; /*!< It indicates the minimum switching duration
+				 (in number of clock cycles) expected if some
+				 signals are multiplexed in the XSPI IO Manager
+				 with the other XSPI. This parameter can be a
+				 value between 1 and 256 */
 } XSPIM_CfgTypeDef;
 
 #endif /* OCTOSPIM */
@@ -393,8 +392,8 @@ typedef struct {
 			       the configuration. This parameter can be a value
 			       of @ref XSPI_DelayType */
 	uint32_t FineCalibrationUnit;	/*!< It indicates the fine calibration
-					   value of the delay.   This parameter can
-					   be a value between 0 and 0x7FU */
+					   value of the delay.   This parameter
+					   can   be a value between 0 and 0x7FU */
 	uint32_t CoarseCalibrationUnit; /*!< It indicates the coarse calibration
 					   value of the delay. This parameter
 					   can be a value between 0 and 0x1FU */
@@ -419,10 +418,8 @@ typedef struct {
 /** @defgroup XSPI_State XSPI State
  * @{
  */
-#define HAL_XSPI_STATE_RESET                                                   \
-	(0x00000000U) /*!< Initial state */
-#define HAL_XSPI_STATE_READY                                                   \
-	(0x00000002U) /*!< Driver ready to be used */
+#define HAL_XSPI_STATE_RESET (0x00000000U) /*!< Initial state */
+#define HAL_XSPI_STATE_READY (0x00000002U) /*!< Driver ready to be used */
 #define HAL_XSPI_STATE_HYPERBUS_INIT                                           \
 	(0x00000001U) /*!< Initialization done in hyperbus mode but timing     \
 			 configuration not done */
@@ -437,16 +434,13 @@ typedef struct {
 			 command configuration   */
 #define HAL_XSPI_STATE_BUSY_CMD                                                \
 	(0x00000008U) /*!< Command without data on-going */
-#define HAL_XSPI_STATE_BUSY_TX                                                 \
-	(0x00000018U) /*!< Indirect Tx on-going */
-#define HAL_XSPI_STATE_BUSY_RX                                                 \
-	(0x00000028U) /*!< Indirect Rx on-going */
+#define HAL_XSPI_STATE_BUSY_TX (0x00000018U) /*!< Indirect Tx on-going */
+#define HAL_XSPI_STATE_BUSY_RX (0x00000028U) /*!< Indirect Rx on-going */
 #define HAL_XSPI_STATE_BUSY_AUTO_POLLING                                       \
 	(0x00000048U) /*!< Auto-polling on-going */
 #define HAL_XSPI_STATE_BUSY_MEM_MAPPED                                         \
-	(0x00000088U) /*!< Memory-mapped on-going */
-#define HAL_XSPI_STATE_ABORT                                                   \
-	(0x00000100U) /*!< Abort on-going */
+	(0x00000088U)			   /*!< Memory-mapped on-going */
+#define HAL_XSPI_STATE_ABORT (0x00000100U) /*!< Abort on-going */
 #define HAL_XSPI_STATE_ERROR                                                   \
 	(0x00000200U) /*!< Blocking error, driver should be re-initialized */
 /**
@@ -971,8 +965,9 @@ typedef struct {
 /** @defgroup XSPI_LatencyMode XSPI Hyperbus Latency Mode
  * @{
  */
-#define HAL_XSPI_VARIABLE_LATENCY (0x00000000U) /*!< Variable initial latency  \
-						 */
+#define HAL_XSPI_VARIABLE_LATENCY                                              \
+	(0x00000000U) /*!< Variable initial latency                            \
+		       */
 #define HAL_XSPI_FIXED_LATENCY                                                 \
 	((uint32_t)XSPI_HLCR_LM) /*!< Fixed latency            */
 /**
@@ -1029,8 +1024,8 @@ typedef struct {
 /** @defgroup XSPI_Flags XSPI Flags
  * @{
  */
-#define HAL_XSPI_FLAG_BUSY                                                     \
-	XSPI_SR_BUSY /*!< Busy flag: operation is ongoing */
+#define HAL_XSPI_FLAG_BUSY XSPI_SR_BUSY /*!< Busy flag: operation is ongoing   \
+					 */
 #define HAL_XSPI_FLAG_TO                                                       \
 	XSPI_SR_TOF /*!< Timeout flag: timeout occurs in memory-mapped mode */
 #define HAL_XSPI_FLAG_SM                                                       \

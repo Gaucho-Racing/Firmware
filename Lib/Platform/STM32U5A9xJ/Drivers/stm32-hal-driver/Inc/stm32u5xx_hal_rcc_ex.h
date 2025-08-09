@@ -353,13 +353,14 @@ typedef struct {
 			      source. This parameter can be a value of @ref
 			      RCCEx_CRS_SynchroPolarity */
 
-	uint32_t ReloadValue; /*!< Specifies the value to be loaded in the
-				 frequency error counter with each SYNC event.
-				 It can be calculated in using macro
-				    __HAL_RCC_CRS_RELOADVALUE_CALCULATE(__FTARGET__,
-				 __FSYNC__) This parameter must be a number
-				 between 0 and 0xFFFF or a value of
-				   @ref RCCEx_CRS_ReloadValueDefault .*/
+	uint32_t
+	    ReloadValue; /*!< Specifies the value to be loaded in the
+			    frequency error counter with each SYNC event.
+			    It can be calculated in using macro
+			       __HAL_RCC_CRS_RELOADVALUE_CALCULATE(__FTARGET__,
+			    __FSYNC__) This parameter must be a number
+			    between 0 and 0xFFFF or a value of
+			      @ref RCCEx_CRS_ReloadValueDefault .*/
 
 	uint32_t ErrorLimitValue; /*!< Specifies the value to be used to
 				     evaluate the captured frequency error
@@ -1097,8 +1098,9 @@ typedef struct {
 /** @defgroup RCCEx_CRS_SynchroSource RCCEx CRS SynchroSource
  * @{
  */
-#define RCC_CRS_SYNC_SOURCE_GPIO 0x00000000U /*!< Synchro Signal source GPIO   \
-					      */
+#define RCC_CRS_SYNC_SOURCE_GPIO                                               \
+	0x00000000U /*!< Synchro Signal source GPIO                            \
+		     */
 #define RCC_CRS_SYNC_SOURCE_LSE                                                \
 	CRS_CFGR_SYNCSRC_0 /*!< Synchro Signal source LSE */
 #define RCC_CRS_SYNC_SOURCE_USB                                                \
@@ -1112,10 +1114,12 @@ typedef struct {
  */
 #define RCC_CRS_SYNC_DIV1                                                      \
 	0x00000000U /*!< Synchro Signal not divided (default) */
-#define RCC_CRS_SYNC_DIV2 CRS_CFGR_SYNCDIV_0 /*!< Synchro Signal divided by 2  \
-					      */
-#define RCC_CRS_SYNC_DIV4 CRS_CFGR_SYNCDIV_1 /*!< Synchro Signal divided by 4  \
-					      */
+#define RCC_CRS_SYNC_DIV2                                                      \
+	CRS_CFGR_SYNCDIV_0 /*!< Synchro Signal divided by 2                    \
+			    */
+#define RCC_CRS_SYNC_DIV4                                                      \
+	CRS_CFGR_SYNCDIV_1 /*!< Synchro Signal divided by 4                    \
+			    */
 #define RCC_CRS_SYNC_DIV8                                                      \
 	(CRS_CFGR_SYNCDIV_1 |                                                  \
 	 CRS_CFGR_SYNCDIV_0) /*!< Synchro Signal divided by 8 */

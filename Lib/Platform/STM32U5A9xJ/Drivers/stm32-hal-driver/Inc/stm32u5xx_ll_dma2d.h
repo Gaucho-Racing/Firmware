@@ -530,8 +530,9 @@ typedef struct {
 	DMA2D_ISR_TWIF /*!< Transfer Watermark Interrupt Flag */
 #define LL_DMA2D_FLAG_TCIF                                                     \
 	DMA2D_ISR_TCIF /*!< Transfer Complete Interrupt Flag */
-#define LL_DMA2D_FLAG_TEIF DMA2D_ISR_TEIF /*!< Transfer Error Interrupt Flag   \
-					   */
+#define LL_DMA2D_FLAG_TEIF                                                     \
+	DMA2D_ISR_TEIF /*!< Transfer Error Interrupt Flag                      \
+			*/
 /**
  * @}
  */

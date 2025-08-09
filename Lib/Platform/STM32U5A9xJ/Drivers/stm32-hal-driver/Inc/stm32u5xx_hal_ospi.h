@@ -123,7 +123,7 @@ typedef struct
 {
 	OCTOSPI_TypeDef *Instance; /*!< OSPI registers base address */
 	OSPI_InitTypeDef Init;	   /*!< OSPI initialization parameters     */
-	uint8_t *pBuffPtr;	 /*!< Address of the OSPI buffer for transfer       */
+	uint8_t *pBuffPtr; /*!< Address of the OSPI buffer for transfer       */
 	__IO uint32_t XferSize;	 /*!< Number of data to transfer  */
 	__IO uint32_t XferCount; /*!< Counter of data transferred */
 	DMA_HandleTypeDef
@@ -292,10 +292,10 @@ typedef struct {
  * @brief  HAL OSPI Memory Mapped mode configuration structure definition
  */
 typedef struct {
-	uint32_t
-	    TimeOutActivation;	/*!< Specifies if the timeout counter is enabled
-				   to release the chip select.  This parameter can
-				   be a value of @ref OSPI_TimeOutActivation */
+	uint32_t TimeOutActivation; /*!< Specifies if the timeout counter is
+				       enabled to release the chip select.  This
+				       parameter can be a value of @ref
+				       OSPI_TimeOutActivation */
 	uint32_t TimeOutPeriod; /*!< Specifies the number of clock to wait when
 				   the FIFO is full before to release the chip
 				   select. This parameter can be any value
@@ -374,8 +374,7 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_State OSPI State
  * @{
  */
-#define HAL_OSPI_STATE_RESET                                                   \
-	((uint32_t)0x00000000U) /*!< Initial state */
+#define HAL_OSPI_STATE_RESET ((uint32_t)0x00000000U) /*!< Initial state */
 #define HAL_OSPI_STATE_HYPERBUS_INIT                                           \
 	((uint32_t)0x00000001U) /*!< Initialization done in hyperbus mode but  \
 				   timing configuration not done */
@@ -400,8 +399,7 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 	((uint32_t)0x00000048U) /*!< Auto-polling on-going */
 #define HAL_OSPI_STATE_BUSY_MEM_MAPPED                                         \
 	((uint32_t)0x00000088U) /*!< Memory-mapped on-going */
-#define HAL_OSPI_STATE_ABORT                                                   \
-	((uint32_t)0x00000100U) /*!< Abort on-going */
+#define HAL_OSPI_STATE_ABORT ((uint32_t)0x00000100U) /*!< Abort on-going */
 #define HAL_OSPI_STATE_ERROR                                                   \
 	((uint32_t)0x00000200U) /*!< Blocking error, driver should be          \
 				   re-initialized                        */
@@ -412,14 +410,10 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_ErrorCode OSPI Error Code
  * @{
  */
-#define HAL_OSPI_ERROR_NONE                                                    \
-	((uint32_t)0x00000000U) /*!< No error */
-#define HAL_OSPI_ERROR_TIMEOUT                                                 \
-	((uint32_t)0x00000001U) /*!< Timeout error */
-#define HAL_OSPI_ERROR_TRANSFER                                                \
-	((uint32_t)0x00000002U) /*!< Transfer error */
-#define HAL_OSPI_ERROR_DMA                                                     \
-	((uint32_t)0x00000004U) /*!< DMA transfer error */
+#define HAL_OSPI_ERROR_NONE ((uint32_t)0x00000000U)	/*!< No error */
+#define HAL_OSPI_ERROR_TIMEOUT ((uint32_t)0x00000001U)	/*!< Timeout error */
+#define HAL_OSPI_ERROR_TRANSFER ((uint32_t)0x00000002U) /*!< Transfer error */
+#define HAL_OSPI_ERROR_DMA ((uint32_t)0x00000004U) /*!< DMA transfer error */
 #define HAL_OSPI_ERROR_INVALID_PARAM                                           \
 	((uint32_t)0x00000008U) /*!< Invalid parameters error */
 #define HAL_OSPI_ERROR_INVALID_SEQUENCE                                        \
@@ -568,9 +562,10 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_FlashID OSPI Flash Id
  * @{
  */
-#define HAL_OSPI_FLASH_ID_1 ((uint32_t)0x00000000U)	/*!< FLASH 1 selected */
-#define HAL_OSPI_FLASH_ID_2 ((uint32_t)OCTOSPI_CR_MSEL) /*!< FLASH 2 selected  \
-							 */
+#define HAL_OSPI_FLASH_ID_1 ((uint32_t)0x00000000U) /*!< FLASH 1 selected */
+#define HAL_OSPI_FLASH_ID_2                                                    \
+	((uint32_t)OCTOSPI_CR_MSEL) /*!< FLASH 2 selected                      \
+				     */
 /**
  * @}
  */

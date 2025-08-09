@@ -146,7 +146,7 @@ extern "C" {
 #if defined(STM32L0)
 #define COMP_LPTIMCONNECTION_ENABLED                                           \
 	((uint32_t)0x00000003U) /*!< COMPX output generic naming: connected to \
-				   LPTIM input 1 for COMP1, LPTIM input 2 for                                          \
+				   LPTIM input 1 for COMP1, LPTIM input 2 for  \
 				   COMP2 */
 #endif
 #define COMP_OUTPUT_COMP6TIM2OCREFCLR COMP_OUTPUT_COMP6_TIM2OCREFCLR
@@ -252,7 +252,7 @@ extern "C" {
 #else
 #define HAL_CRC_Input_Data_Reverse                                             \
 	HAL_CRCEx_Input_Data_Reverse /*!< Aliased to                           \
-					HAL_CRCEx_Input_Data_Reverse for inter                                                                         \
+					HAL_CRCEx_Input_Data_Reverse for inter \
 					STM32 series compatibility  */
 #define HAL_CRC_Output_Data_Reverse                                            \
 	HAL_CRCEx_Output_Data_Reverse /*!< Aliased to                          \
@@ -1812,7 +1812,7 @@ extern "C" {
  */
 #define HAL_DMA2D_DisableCLUT                                                  \
 	HAL_DMA2D_CLUTLoading_Abort /*!< Aliased to                            \
-				       HAL_DMA2D_CLUTLoading_Abort for                                                                           \
+				       HAL_DMA2D_CLUTLoading_Abort for         \
 				       compatibility with legacy code */
 /**
  * @}
@@ -2000,7 +2000,7 @@ extern "C" {
 #define HAL_I2C_Slave_Sequential_Transmit_IT HAL_I2C_Slave_Seq_Transmit_IT
 #define HAL_I2C_Slave_Sequential_Receive_IT HAL_I2C_Slave_Seq_Receive_IT
 #endif /* STM32H7 || STM32WB  || STM32G0 || STM32F0 || STM32F1 || STM32F2 ||   \
-	  STM32F3 || STM32F4 || STM32F7 || STM32L0 || STM32L4 || STM32L5 ||                                                         \
+	  STM32F3 || STM32F4 || STM32F7 || STM32L0 || STM32L4 || STM32L5 ||    \
 	  STM32G4 || STM32L1 */
 #if defined(STM32H7) || defined(STM32WB) || defined(STM32G0) ||                \
     defined(STM32F4) || defined(STM32F7) || defined(STM32L0) ||                \
@@ -3573,8 +3573,9 @@ extern "C" {
 #define __HAL_RCC_WWDG_CLK_SLEEP_DISABLE __HAL_RCC_WWDG1_CLK_SLEEP_DISABLE
 #define __HAL_RCC_WWDG_CLK_SLEEP_ENABLE __HAL_RCC_WWDG1_CLK_SLEEP_ENABLE
 
-#define __HAL_RCC_WWDG_FORCE_RESET ((void)0U) /* Not available on the          \
-						 STM32H7*/
+#define __HAL_RCC_WWDG_FORCE_RESET                                             \
+	((void)0U) /* Not available on the                                     \
+		      STM32H7*/
 #define __HAL_RCC_WWDG_RELEASE_RESET                                           \
 	((void)0U) /* Not available on the STM32H7*/
 

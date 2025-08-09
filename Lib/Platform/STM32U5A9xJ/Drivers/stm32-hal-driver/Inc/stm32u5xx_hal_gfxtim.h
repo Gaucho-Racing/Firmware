@@ -548,8 +548,9 @@ typedef struct {
 /** @defgroup GFXTIM_LineClockCalib GFXTIM Line Clock Calibration Output
  * @{
  */
-#define GFXTIM_LINE_CLK_CALIB_DISABLE 0U /*!< Disable Line clock calibration   \
-					  */
+#define GFXTIM_LINE_CLK_CALIB_DISABLE                                          \
+	0U /*!< Disable Line clock calibration                                 \
+	    */
 #define GFXTIM_LINE_CLK_CALIB_ENABLE                                           \
 	GFXTIM_CR_LCCOE /*!< Enable Line clock calibration */
 /**
@@ -584,8 +585,9 @@ typedef struct {
 	0x00000014U /*!< Absolute global time (frame and line) counters ATR*/
 #define GFXTIM_ABSOLUTE_FRAME_TIME                                             \
 	0x00000015U /*!< Absolute frame counter AFCR */
-#define GFXTIM_ABSOLUTE_LINE_TIME 0x00000016U /*!< Absolute line counter ALCR  \
-					       */
+#define GFXTIM_ABSOLUTE_LINE_TIME                                              \
+	0x00000016U /*!< Absolute line counter ALCR                            \
+		     */
 /**
  * @}
  */
@@ -602,9 +604,10 @@ typedef struct {
 /** @defgroup GFXTIM_RelativeCounterMode GFXTIM Relative Frame Counter Mode
  * @{
  */
-#define GFXTIM_MODE_ONE_SHOT 0U	  /*!< Relative Frame Counter One Shot Mode*/
-#define GFXTIM_MODE_CONTINUOUS 1U /*!< Relative Frame Counter Continuous Mode  \
-				   */
+#define GFXTIM_MODE_ONE_SHOT 0U /*!< Relative Frame Counter One Shot Mode*/
+#define GFXTIM_MODE_CONTINUOUS                                                 \
+	1U /*!< Relative Frame Counter Continuous Mode                         \
+	    */
 /**
  * @}
  */
@@ -624,8 +627,9 @@ typedef struct {
 #define GFXTIM_LINE_EVENT_NONE (0U << GFXTIM_EVSR_LES1_Pos) /*!< None */
 #define GFXTIM_LINE_EVENT_ALC_OVERFLOW                                         \
 	(1U << GFXTIM_EVSR_LES1_Pos) /*!< Absolute line counter overflow */
-#define GFXTIM_LINE_EVENT_TE (2U << GFXTIM_EVSR_LES1_Pos) /*!< Tearing effect  \
-							   */
+#define GFXTIM_LINE_EVENT_TE                                                   \
+	(2U << GFXTIM_EVSR_LES1_Pos) /*!< Tearing effect                       \
+				      */
 #define GFXTIM_LINE_EVENT_ALC1_COMPARE                                         \
 	(4U << GFXTIM_EVSR_LES1_Pos) /*!< Absolute line counter 1 compare */
 #define GFXTIM_LINE_EVENT_ALC2_COMPARE                                         \

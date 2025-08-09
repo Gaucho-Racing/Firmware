@@ -78,20 +78,15 @@ typedef uint32_t HAL_MMC_CardStateTypeDef;
 #define HAL_MMC_CARD_IDENTIFICATION                                            \
 	0x00000002U /*!< Card is in identification state (can't be checked by  \
 		       CMD13) */
-#define HAL_MMC_CARD_STANDBY                                                   \
-	0x00000003U /*!< Card is in standby state */
-#define HAL_MMC_CARD_TRANSFER                                                  \
-	0x00000004U /*!< Card is in transfer state */
-#define HAL_MMC_CARD_SENDING                                                   \
-	0x00000005U /*!< Card is sending an operation */
+#define HAL_MMC_CARD_STANDBY 0x00000003U  /*!< Card is in standby state */
+#define HAL_MMC_CARD_TRANSFER 0x00000004U /*!< Card is in transfer state */
+#define HAL_MMC_CARD_SENDING 0x00000005U  /*!< Card is sending an operation */
 #define HAL_MMC_CARD_RECEIVING                                                 \
 	0x00000006U /*!< Card is receiving operation information */
 #define HAL_MMC_CARD_PROGRAMMING                                               \
 	0x00000007U /*!< Card is in programming state */
-#define HAL_MMC_CARD_DISCONNECTED                                              \
-	0x00000008U /*!< Card is disconnected */
-#define HAL_MMC_CARD_BUSTEST                                                   \
-	0x00000009U /*!< Card is in bus test state */
+#define HAL_MMC_CARD_DISCONNECTED 0x00000008U /*!< Card is disconnected */
+#define HAL_MMC_CARD_BUSTEST 0x00000009U      /*!< Card is in bus test state */
 #define HAL_MMC_CARD_SLEEP                                                     \
 	0x0000000AU /*!< Card is in sleep state (can't be checked by CMD13) */
 #define HAL_MMC_CARD_ERROR                                                     \
@@ -299,8 +294,7 @@ typedef void (*pMMC_CallbackTypeDef)(MMC_HandleTypeDef *hmmc);
  * Structure definition
  * @{
  */
-#define HAL_MMC_ERROR_NONE                                                     \
-	SDMMC_ERROR_NONE /*!< No error */
+#define HAL_MMC_ERROR_NONE SDMMC_ERROR_NONE /*!< No error */
 #define HAL_MMC_ERROR_CMD_CRC_FAIL                                             \
 	SDMMC_ERROR_CMD_CRC_FAIL /*!< Command response received (but CRC check \
 				    failed)              */
@@ -309,8 +303,8 @@ typedef void (*pMMC_CallbackTypeDef)(MMC_HandleTypeDef *hmmc);
 				     failed)                   */
 #define HAL_MMC_ERROR_CMD_RSP_TIMEOUT                                          \
 	SDMMC_ERROR_CMD_RSP_TIMEOUT /*!< Command response timeout */
-#define HAL_MMC_ERROR_DATA_TIMEOUT                                             \
-	SDMMC_ERROR_DATA_TIMEOUT /*!< Data timeout */
+#define HAL_MMC_ERROR_DATA_TIMEOUT SDMMC_ERROR_DATA_TIMEOUT /*!< Data timeout  \
+							     */
 #define HAL_MMC_ERROR_TX_UNDERRUN                                              \
 	SDMMC_ERROR_TX_UNDERRUN /*!< Transmit FIFO underrun */
 #define HAL_MMC_ERROR_RX_OVERRUN                                               \
@@ -383,25 +377,17 @@ typedef void (*pMMC_CallbackTypeDef)(MMC_HandleTypeDef *hmmc);
 					   insupported */
 #define HAL_MMC_ERROR_BUSY                                                     \
 	SDMMC_ERROR_BUSY /*!< Error when transfer process is busy */
-#define HAL_MMC_ERROR_DMA                                                      \
-	SDMMC_ERROR_DMA /*!< Error while DMA transfer */
-#define HAL_MMC_ERROR_TIMEOUT                                                  \
-	SDMMC_ERROR_TIMEOUT /*!< Timeout error */
+#define HAL_MMC_ERROR_DMA SDMMC_ERROR_DMA /*!< Error while DMA transfer */
+#define HAL_MMC_ERROR_TIMEOUT SDMMC_ERROR_TIMEOUT /*!< Timeout error */
 /*!< response results after operating with RPMB partition          */
-#define HAL_MMC_ERROR_RPMB_OPERATION_OK                                        \
-	0x0000U /*!< Operation OK */
-#define HAL_MMC_ERROR_RPMB_GENERAL_FAILURE                                     \
-	0x0001U /*!< General failure */
+#define HAL_MMC_ERROR_RPMB_OPERATION_OK 0x0000U	   /*!< Operation OK */
+#define HAL_MMC_ERROR_RPMB_GENERAL_FAILURE 0x0001U /*!< General failure */
 #define HAL_MMC_ERROR_RPMB_AUTHENTICATION_FAILURE                              \
 	0x0002U /*!< Authentication failure */
-#define HAL_MMC_ERROR_RPMB_COUNTER_FAILURE                                     \
-	0x0003U /*!< Counter failure */
-#define HAL_MMC_ERROR_RPMB_ADDRESS_FAILURE                                     \
-	0x0004U /*!< Address failure */
-#define HAL_MMC_ERROR_RPMB_WRITE_FAILURE                                       \
-	0x0005U /*!< Write failure */
-#define HAL_MMC_ERROR_RPMB_READ_FAILURE                                        \
-	0x0006U /*!< Read failure */
+#define HAL_MMC_ERROR_RPMB_COUNTER_FAILURE 0x0003U /*!< Counter failure */
+#define HAL_MMC_ERROR_RPMB_ADDRESS_FAILURE 0x0004U /*!< Address failure */
+#define HAL_MMC_ERROR_RPMB_WRITE_FAILURE 0x0005U   /*!< Write failure */
+#define HAL_MMC_ERROR_RPMB_READ_FAILURE 0x0006U	   /*!< Read failure */
 #define HAL_MMC_ERROR_RPMB_KEY_NOT_YET_PROG                                    \
 	0x0007U /*!< Authentication Key not yet programmed */
 #define HAL_MMC_ERROR_RPMB_COUNTER_EXPIRED                                     \
@@ -444,14 +430,16 @@ typedef void (*pMMC_CallbackTypeDef)(MMC_HandleTypeDef *hmmc);
 /**
  * @brief
  */
-#define MMC_HIGH_VOLTAGE_RANGE 0x80FF8000U  /*!< High voltage in byte mode  */
-#define MMC_DUAL_VOLTAGE_RANGE 0x80FF8080U  /*!< Dual voltage in byte mode  */
-#define MMC_LOW_VOLTAGE_RANGE 0x80000080U   /*!< Low voltage in byte mode     */
-#define EMMC_HIGH_VOLTAGE_RANGE 0xC0FF8000U /*!< High voltage in sector mode   \
-					     */
-#define EMMC_DUAL_VOLTAGE_RANGE 0xC0FF8080U /*!< Dual voltage in sector mode   \
-					     */
-#define EMMC_LOW_VOLTAGE_RANGE 0xC0000080U  /*!< Low voltage in sector mode  */
+#define MMC_HIGH_VOLTAGE_RANGE 0x80FF8000U /*!< High voltage in byte mode  */
+#define MMC_DUAL_VOLTAGE_RANGE 0x80FF8080U /*!< Dual voltage in byte mode  */
+#define MMC_LOW_VOLTAGE_RANGE 0x80000080U  /*!< Low voltage in byte mode     */
+#define EMMC_HIGH_VOLTAGE_RANGE                                                \
+	0xC0FF8000U /*!< High voltage in sector mode                           \
+		     */
+#define EMMC_DUAL_VOLTAGE_RANGE                                                \
+	0xC0FF8080U			   /*!< Dual voltage in sector mode    \
+					    */
+#define EMMC_LOW_VOLTAGE_RANGE 0xC0000080U /*!< Low voltage in sector mode  */
 #define MMC_INVALID_VOLTAGE_RANGE 0x0001FF01U
 /**
  * @}
@@ -501,8 +489,7 @@ typedef void (*pMMC_CallbackTypeDef)(MMC_HandleTypeDef *hmmc);
 /** @defgroup MMC_Exported_Constansts_Group6 MMC Secure Removal Type
  * @{
  */
-#define HAL_MMC_SRT_ERASE                                                      \
-	0x00000001U /*!< Information removed by an erase */
+#define HAL_MMC_SRT_ERASE 0x00000001U /*!< Information removed by an erase */
 #define HAL_MMC_SRT_WRITE_CHAR_ERASE                                           \
 	0x00000002U /*!< Information removed by an overwriting with a          \
 		       character followed by an erase                    */

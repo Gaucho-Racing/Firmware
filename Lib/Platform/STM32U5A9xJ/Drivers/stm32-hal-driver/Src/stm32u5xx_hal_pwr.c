@@ -147,8 +147,8 @@
 /** @defgroup PWR_PVD_Mode_Mask PWR PVD Mode Mask
  * @{
  */
-#define PVD_RISING_EDGE                                                        \
-	(0x01U) /*!< Mask for rising edge set as PVD trigger */
+#define PVD_RISING_EDGE (0x01U) /*!< Mask for rising edge set as PVD trigger   \
+				 */
 #define PVD_FALLING_EDGE                                                       \
 	(0x02U) /*!< Mask for falling edge set as PVD trigger */
 #define PVD_MODE_IT                                                            \

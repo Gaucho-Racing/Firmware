@@ -123,7 +123,7 @@ HAL_StatusTypeDef USB_CoreInit(USB_OTG_GlobalTypeDef *USBx,
 		USBx->GCCFG &= ~(USB_OTG_GCCFG_PWRDWN);
 	}
 #endif /* defined (STM32U595xx) || defined (STM32U5A5xx) || defined            \
-	  (STM32U599xx) || defined (STM32U5A9xx) || defined (STM32U5F7xx) ||                                                      \
+	  (STM32U599xx) || defined (STM32U5A9xx) || defined (STM32U5F7xx) ||   \
 	  defined (STM32U5G7xx) || defined (STM32U5F9xx) || defined            \
 	  (STM32U5G9xx) */
 
@@ -283,7 +283,7 @@ HAL_StatusTypeDef USB_DevInit(USB_OTG_GlobalTypeDef *USBx,
 	/* Disable USB PHY pulldown resistors */
 	USBx->GCCFG &= ~USB_OTG_GCCFG_PULLDOWNEN;
 #endif /* defined (STM32U595xx) || defined (STM32U5A5xx) || defined            \
-	  (STM32U599xx) || defined (STM32U5A9xx) || defined (STM32U5F7xx) ||                                                      \
+	  (STM32U599xx) || defined (STM32U5A9xx) || defined (STM32U5F7xx) ||   \
 	  defined (STM32U5G7xx) || defined (STM32U5F9xx) || defined            \
 	  (STM32U5G9xx) */
 
@@ -304,7 +304,7 @@ HAL_StatusTypeDef USB_DevInit(USB_OTG_GlobalTypeDef *USBx,
 		USBx->GOTGCTL |= USB_OTG_GOTGCTL_BVALOEN;
 		USBx->GOTGCTL |= USB_OTG_GOTGCTL_BVALOVAL;
 #endif /* defined (STM32U595xx) || defined (STM32U5A5xx) || defined            \
-	  (STM32U599xx) || defined (STM32U5A9xx) || defined (STM32U5F7xx) ||                                                      \
+	  (STM32U599xx) || defined (STM32U5A9xx) || defined (STM32U5F7xx) ||   \
 	  defined (STM32U5G7xx) || defined (STM32U5F9xx) || defined            \
 	  (STM32U5G9xx) */
 	} else {
@@ -315,7 +315,7 @@ HAL_StatusTypeDef USB_DevInit(USB_OTG_GlobalTypeDef *USBx,
 		USBx->GCCFG &= ~USB_OTG_GCCFG_VBVALEXTOEN;
 		USBx->GCCFG &= ~USB_OTG_GCCFG_VBVALOVAL;
 #endif /* defined (STM32U595xx) || defined (STM32U5A5xx) || defined            \
-	  (STM32U599xx) || defined (STM32U5A9xx) || defined (STM32U5F7xx) ||                                                      \
+	  (STM32U599xx) || defined (STM32U5A9xx) || defined (STM32U5F7xx) ||   \
 	  defined (STM32U5G7xx) || defined (STM32U5F9xx) || defined            \
 	  (STM32U5G9xx) */
 
@@ -339,7 +339,7 @@ HAL_StatusTypeDef USB_DevInit(USB_OTG_GlobalTypeDef *USBx,
 		}
 	} else
 #endif /* defined (STM32U595xx) || defined (STM32U5A5xx) || defined            \
-	  (STM32U599xx) || defined (STM32U5A9xx) || defined (STM32U5F7xx) ||                                                      \
+	  (STM32U599xx) || defined (STM32U5A9xx) || defined (STM32U5F7xx) ||   \
 	  defined (STM32U5G7xx) || defined (STM32U5F9xx) || defined            \
 	  (STM32U5G9xx) */
 	{
@@ -1477,7 +1477,7 @@ HAL_StatusTypeDef USB_HostInit(USB_OTG_GlobalTypeDef *USBx,
 	/* Enable USB PHY pulldown resistors */
 	USBx->GCCFG |= USB_OTG_GCCFG_PULLDOWNEN;
 #endif /* defined (STM32U595xx) || defined (STM32U5A5xx) || defined            \
-	  (STM32U599xx) || defined (STM32U5A9xx) || defined (STM32U5F7xx) ||                                                      \
+	  (STM32U599xx) || defined (STM32U5A9xx) || defined (STM32U5F7xx) ||   \
 	  defined (STM32U5G7xx) || defined (STM32U5F9xx) || defined            \
 	  (STM32U5G9xx) */
 
@@ -1490,7 +1490,7 @@ HAL_StatusTypeDef USB_HostInit(USB_OTG_GlobalTypeDef *USBx,
 	/* Disable VBUS override */
 	USBx->GCCFG &= ~(USB_OTG_GCCFG_VBVALOVAL | USB_OTG_GCCFG_VBVALEXTOEN);
 #endif /* defined (STM32U595xx) || defined (STM32U5A5xx) || defined            \
-	  (STM32U599xx) || defined (STM32U5A9xx) || defined (STM32U5F7xx) ||                                                      \
+	  (STM32U599xx) || defined (STM32U5A9xx) || defined (STM32U5F7xx) ||   \
 	  defined (STM32U5G7xx) || defined (STM32U5F9xx) || defined            \
 	  (STM32U5G9xx) */
 

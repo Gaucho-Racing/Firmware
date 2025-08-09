@@ -618,12 +618,13 @@ typedef struct {
 					 DMA_LL_EC_BLK_RPT_DEST_ADDR_UPDATE_MODE.
 				       */
 
-	uint32_t BlkRptSrcAddrUpdateMode; /*!< This field specifies the block
-					     repeat source address update mode.
-					       This parameter can be a value of
-					       @ref
-					     DMA_LL_EC_BLK_RPT_SRC_ADDR_UPDATE_MODE.
-					   */
+	uint32_t
+	    BlkRptSrcAddrUpdateMode; /*!< This field specifies the block
+					repeat source address update mode.
+					  This parameter can be a value of
+					  @ref
+					DMA_LL_EC_BLK_RPT_SRC_ADDR_UPDATE_MODE.
+				      */
 
 	uint32_t
 	    DestAddrUpdateMode; /*!< This field specify the Destination address
@@ -891,9 +892,10 @@ typedef struct {
 /** @defgroup DMA_LL_EC_SOURCE_ALLOCATED_PORT Source Allocated Port
  * @{
  */
-#define LL_DMA_SRC_ALLOCATED_PORT0 0x00000000U	/*!< Source Allocated Port 0 */
-#define LL_DMA_SRC_ALLOCATED_PORT1 DMA_CTR1_SAP /*!< Source Allocated Port 1   \
-						 */
+#define LL_DMA_SRC_ALLOCATED_PORT0 0x00000000U /*!< Source Allocated Port 0 */
+#define LL_DMA_SRC_ALLOCATED_PORT1                                             \
+	DMA_CTR1_SAP /*!< Source Allocated Port 1                              \
+		      */
 /**
  * @}
  */
@@ -946,14 +948,14 @@ typedef struct {
 #define LL_DMA_DATA_ALIGN_SIGNEXTPADD                                          \
 	DMA_CTR1_PAM_0 /*!< If src data width < dest data width :              \
 			    => Right Aligned padded with sign extended up to   \
-			  destination data width. If src data width > dest                                                      \
+			  destination data width. If src data width > dest     \
 			  data width :                                         \
 			    => Left Aligned Right Truncated down to the        \
 			  destination data width */
 #define LL_DMA_DATA_PACK_UNPACK                                                \
 	DMA_CTR1_PAM_1 /*!< If src data width < dest data width :              \
 			    => Packed at the destination data width (Not       \
-			  Available for LPDMA) If src data width > dest data                                                 \
+			  Available for LPDMA) If src data width > dest data   \
 			  width :                                              \
 			    => Unpacked at the destination data width (Not     \
 			  Available for LPDMA) */
@@ -989,11 +991,11 @@ typedef struct {
  */
 #define LL_DMA_HWREQUEST_SINGLEBURST                                           \
 	0x00000000U /*!< Hardware request is driven by a peripheral with a     \
-		       hardware request/acknowledge protocol at a burst level                                 \
+		       hardware request/acknowledge protocol at a burst level  \
 		     */
 #define LL_DMA_HWREQUEST_BLK                                                   \
 	DMA_CTR2_BREQ /*!< Hardware request is driven by a peripheral with a   \
-			 hardware request/acknowledge protocol at a block                                       \
+			 hardware request/acknowledge protocol at a block      \
 			 level                 */
 /**
  * @}
@@ -1028,11 +1030,11 @@ typedef struct {
 			 Masked trigger event */
 #define LL_DMA_TRIG_POLARITY_RISING                                            \
 	DMA_CTR2_TRIGPOL_0 /*!< Trigger of the selected DMA request on the     \
-			      rising edge of the selected trigger event input                                      \
+			      rising edge of the selected trigger event input  \
 			    */
 #define LL_DMA_TRIG_POLARITY_FALLING                                           \
 	DMA_CTR2_TRIGPOL_1 /*!< Trigger of the selected DMA request on the     \
-			      falling edge of the selected trigger event input                                      \
+			      falling edge of the selected trigger event input \
 			    */
 /**
  * @}

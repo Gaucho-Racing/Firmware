@@ -120,7 +120,7 @@ typedef enum {
 		       process is ongoing                         */
 	HAL_I2C_STATE_BUSY_RX_LISTEN = 0x2AU, /*!< Address Listen Mode and Data
 						 Reception process is ongoing */
-	HAL_I2C_STATE_ABORT = 0x60U,	      /*!< Abort user request ongoing	  */
+	HAL_I2C_STATE_ABORT = 0x60U, /*!< Abort user request ongoing	  */
 
 } HAL_I2C_StateTypeDef;
 
@@ -150,7 +150,7 @@ typedef enum {
 	HAL_I2C_MODE_NONE = 0x00U,   /*!< No I2C communication on going   */
 	HAL_I2C_MODE_MASTER = 0x10U, /*!< I2C communication is in Master Mode */
 	HAL_I2C_MODE_SLAVE = 0x20U,  /*!< I2C communication is in Slave Mode  */
-	HAL_I2C_MODE_MEM = 0x40U     /*!< I2C communication is in Memory Mode     */
+	HAL_I2C_MODE_MEM = 0x40U /*!< I2C communication is in Memory Mode     */
 
 } HAL_I2C_ModeTypeDef;
 

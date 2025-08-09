@@ -158,8 +158,9 @@ typedef struct {
  */
 #define LL_LPUART_ICR_PECF USART_ICR_PECF /*!< Parity error clear flag */
 #define LL_LPUART_ICR_FECF USART_ICR_FECF /*!< Framing error clear flag */
-#define LL_LPUART_ICR_NCF USART_ICR_NECF  /*!< Noise error detected clear flag \
-					   */
+#define LL_LPUART_ICR_NCF                                                      \
+	USART_ICR_NECF /*!< Noise error detected clear flag                    \
+			*/
 #define LL_LPUART_ICR_ORECF USART_ICR_ORECF /*!< Overrun error clear flag */
 #define LL_LPUART_ICR_IDLECF                                                   \
 	USART_ICR_IDLECF /*!< Idle line detected clear flag */
@@ -403,7 +404,7 @@ typedef struct {
 			 in positive/direct logic. (1=H, 0=L) */
 #define LL_LPUART_BINARY_LOGIC_NEGATIVE                                        \
 	USART_CR2_DATAINV /*!< Logical data from the data register are         \
-			     send/received in negative/inverse logic. (1=L,                                              \
+			     send/received in negative/inverse logic. (1=L,    \
 			     0=H). The parity bit is also inverted. */
 /**
  * @}
@@ -455,10 +456,12 @@ typedef struct {
 /** @defgroup LPUART_LL_EC_DE_POLARITY Driver Enable Polarity
  * @{
  */
-#define LL_LPUART_DE_POLARITY_HIGH 0x00000000U	/*!< DE signal is active high  \
-						 */
-#define LL_LPUART_DE_POLARITY_LOW USART_CR3_DEP /*!< DE signal is active low   \
-						 */
+#define LL_LPUART_DE_POLARITY_HIGH                                             \
+	0x00000000U /*!< DE signal is active high                              \
+		     */
+#define LL_LPUART_DE_POLARITY_LOW                                              \
+	USART_CR3_DEP /*!< DE signal is active low                             \
+		       */
 /**
  * @}
  */

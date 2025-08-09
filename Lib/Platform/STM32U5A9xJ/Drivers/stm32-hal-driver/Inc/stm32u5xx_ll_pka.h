@@ -132,8 +132,9 @@ typedef struct {
 #define LL_PKA_MODE_COMPARISON ((uint32_t)0x0000000CU) /*!< Comparison */
 #define LL_PKA_MODE_MODULAR_REDUC                                              \
 	((uint32_t)0x0000000DU) /*!< Modular reduction */
-#define LL_PKA_MODE_MODULAR_ADD ((uint32_t)0x0000000EU) /*!< Modular addition  \
-							 */
+#define LL_PKA_MODE_MODULAR_ADD                                                \
+	((uint32_t)0x0000000EU) /*!< Modular addition                          \
+				 */
 #define LL_PKA_MODE_MODULAR_SUB                                                \
 	((uint32_t)0x0000000FU) /*!< Modular subtraction */
 #define LL_PKA_MODE_MONTGOMERY_MUL                                             \

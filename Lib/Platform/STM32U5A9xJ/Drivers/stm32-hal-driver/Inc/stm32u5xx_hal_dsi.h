@@ -1070,10 +1070,11 @@ typedef void (*pDSI_CallbackTypeDef)(
 /** @defgroup DSI_PLL_Tuning DSI PLL Tuning
  * @{
  */
-#define DSI_PLL_LOOP_FILTER_2000HZ_4400HZ 0x00000000U	/*!< 2.0 to 4.4 MHz  */
-#define DSI_PLL_LOOP_FILTER_4400HZ_30900HZ 0x00000001U	/*!< 4.4 to 30.9 MHz */
-#define DSI_PLL_LOOP_FILTER_30900HZ_50000HZ 0x00000002U /*!< 30.9 to 50  MHz   \
-							 */
+#define DSI_PLL_LOOP_FILTER_2000HZ_4400HZ 0x00000000U  /*!< 2.0 to 4.4 MHz  */
+#define DSI_PLL_LOOP_FILTER_4400HZ_30900HZ 0x00000001U /*!< 4.4 to 30.9 MHz */
+#define DSI_PLL_LOOP_FILTER_30900HZ_50000HZ                                    \
+	0x00000002U /*!< 30.9 to 50  MHz                                       \
+		     */
 
 /**
  * @}
@@ -1082,11 +1083,13 @@ typedef void (*pDSI_CallbackTypeDef)(
 /** @defgroup DSI_PLL_Charge_Pump DSI PLL Charge pump
  * @{
  */
-#define DSI_PLL_CHARGE_PUMP_2000HZ_4400HZ 0x00000000U	/*!< 2.0 to 4.4 MHz   */
-#define DSI_PLL_CHARGE_PUMP_4400HZ_14100HZ 0x00000001U	/*!< 4.4 to 14.1 MHz  */
-#define DSI_PLL_CHARGE_PUMP_14100HZ_30900HZ 0x00000000U /*!< 14.1 to 30.9 MHz  \
-							 */
-#define DSI_PLL_CHARGE_PUMP_30900HZ_45700HZ 0x00000003U /*!< 30.9 to 45.7 MHz  \
+#define DSI_PLL_CHARGE_PUMP_2000HZ_4400HZ 0x00000000U  /*!< 2.0 to 4.4 MHz   */
+#define DSI_PLL_CHARGE_PUMP_4400HZ_14100HZ 0x00000001U /*!< 4.4 to 14.1 MHz */
+#define DSI_PLL_CHARGE_PUMP_14100HZ_30900HZ                                    \
+	0x00000000U /*!< 14.1 to 30.9 MHz                                      \
+		     */
+#define DSI_PLL_CHARGE_PUMP_30900HZ_45700HZ                                    \
+	0x00000003U					/*!< 30.9 to 45.7 MHz  \
 							 */
 #define DSI_PLL_CHARGE_PUMP_45700HZ_50000HZ 0x00000002U /*!< 45.7 to 50 MHz */
 /**

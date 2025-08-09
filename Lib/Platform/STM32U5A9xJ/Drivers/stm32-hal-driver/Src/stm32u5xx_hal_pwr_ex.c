@@ -240,8 +240,8 @@
 /** @defgroup PWR_PVM_Mode_Mask PWR PVM Mode Mask
  * @{
  */
-#define PVM_RISING_EDGE                                                        \
-	(0x01U) /*!< Mask for rising edge set as PVM trigger */
+#define PVM_RISING_EDGE (0x01U) /*!< Mask for rising edge set as PVM trigger   \
+				 */
 #define PVM_FALLING_EDGE                                                       \
 	(0x02U) /*!< Mask for falling edge set as PVM trigger */
 #define PVM_MODE_IT                                                            \

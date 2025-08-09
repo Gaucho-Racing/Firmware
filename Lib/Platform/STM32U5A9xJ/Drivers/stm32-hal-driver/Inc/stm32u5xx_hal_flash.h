@@ -353,8 +353,9 @@ a burst (8xquad-word) at a specified non-secure address */
 #define OPTIONBYTE_BOOT_LOCK                                                   \
 	0x00000020U /*!< Boot lock option byte configuration */
 #endif		    /* __ARM_FEATURE_CMSE */
-#define OPTIONBYTE_RDPKEY 0x00000040U /*!< RDP Key option byte configuration   \
-				       */
+#define OPTIONBYTE_RDPKEY                                                      \
+	0x00000040U /*!< RDP Key option byte configuration                     \
+		     */
 /**
  * @}
  */
@@ -625,8 +626,9 @@ a burst (8xquad-word) at a specified non-secure address */
  */
 #define OB_BOOT0_FROM_OB                                                       \
 	0x00000000U /*!< BOOT0 taken from the option bit nBOOT0 */
-#define OB_BOOT0_FROM_PIN FLASH_OPTR_nSWBOOT0 /*!< BOOT0 taken from BOOT0 pin  \
-					       */
+#define OB_BOOT0_FROM_PIN                                                      \
+	FLASH_OPTR_nSWBOOT0 /*!< BOOT0 taken from BOOT0 pin                    \
+			     */
 /**
  * @}
  */
@@ -677,7 +679,7 @@ a burst (8xquad-word) at a specified non-secure address */
 			 (VDDIO2 can exceed 2.5 V) */
 #define OB_IO_VDDIO2_HSLV_ENABLE                                               \
 	FLASH_OPTR_IO_VDDIO2_HSLV /*!< High-speed IO at low VDDIO2 voltage     \
-				     feature enabled (VDDIO2 remains below 2.5                                                     \
+				     feature enabled (VDDIO2 remains below 2.5 \
 				     V) */
 /**
  * @}
@@ -687,8 +689,9 @@ a burst (8xquad-word) at a specified non-secure address */
  * @{
  */
 #define OB_TZEN_DISABLE 0x00000000U /*!< Global TrustZone security disabled */
-#define OB_TZEN_ENABLE FLASH_OPTR_TZEN /*!< Global TrustZone security enabled  \
-					*/
+#define OB_TZEN_ENABLE                                                         \
+	FLASH_OPTR_TZEN /*!< Global TrustZone security enabled                 \
+			 */
 /**
  * @}
  */
@@ -752,10 +755,12 @@ a burst (8xquad-word) at a specified non-secure address */
 #define FLASH_LATENCY_8 FLASH_ACR_LATENCY_8WS	/*!< FLASH Eight wait states */
 #define FLASH_LATENCY_9 FLASH_ACR_LATENCY_9WS	/*!< FLASH Nine wait states */
 #define FLASH_LATENCY_10 FLASH_ACR_LATENCY_10WS /*!< FLASH Ten wait state */
-#define FLASH_LATENCY_11 FLASH_ACR_LATENCY_11WS /*!< FLASH Eleven wait state   \
-						 */
-#define FLASH_LATENCY_12 FLASH_ACR_LATENCY_12WS /*!< FLASH Twelve wait states  \
-						 */
+#define FLASH_LATENCY_11                                                       \
+	FLASH_ACR_LATENCY_11WS /*!< FLASH Eleven wait state                    \
+				*/
+#define FLASH_LATENCY_12                                                       \
+	FLASH_ACR_LATENCY_12WS /*!< FLASH Twelve wait states                   \
+				*/
 #define FLASH_LATENCY_13                                                       \
 	FLASH_ACR_LATENCY_13WS /*!< FLASH Thirteen wait states */
 #define FLASH_LATENCY_14                                                       \

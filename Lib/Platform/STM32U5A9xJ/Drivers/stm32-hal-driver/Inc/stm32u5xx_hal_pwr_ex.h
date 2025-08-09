@@ -85,8 +85,7 @@ typedef struct {
 /** @defgroup PWREx_PVM_Mode PWR Extended PVM Interrupt and Event Mode
  * @{
  */
-#define PWR_PVM_MODE_NORMAL                                                    \
-	(0x00U) /*!< Basic Mode is used */
+#define PWR_PVM_MODE_NORMAL (0x00U) /*!< Basic Mode is used */
 #define PWR_PVM_MODE_IT_RISING                                                 \
 	(0x05U) /*!< External Interrupt Mode with Rising edge trigger          \
 		   detection         */
@@ -177,7 +176,7 @@ typedef struct {
 	(SRAM2_ID | PAGE02_ID) /*!< SRAM2 page 2 (54 KB) retention in Stop     \
 				  modes (Stop 0, 1, 2)       */
 #define PWR_SRAM2_FULL_STOP                                                    \
-	(SRAM2_ID | 0x03U) /*!< SRAM2 all pages retention in Stop modes (Stop                                                                         \
+	(SRAM2_ID | 0x03U) /*!< SRAM2 all pages retention in Stop modes (Stop  \
 			      0, 1, 2)       */
 
 #if defined(PWR_CR2_SRAM3PDS1)
@@ -227,7 +226,7 @@ typedef struct {
 				(Stop 0, 1, 2, 3)   */
 #else
 #define PWR_SRAM3_FULL_STOP                                                    \
-	(SRAM3_ID | 0xFFU) /*!< SRAM3 all pages retention in Stop modes (Stop                                                                         \
+	(SRAM3_ID | 0xFFU) /*!< SRAM3 all pages retention in Stop modes (Stop  \
 			      0, 1, 2, 3)   */
 #endif			   /* defined (PWR_CR4_SRAM3PDS9) */
 #endif			   /* PWR_CR2_SRAM3PDS1 */
@@ -310,7 +309,7 @@ typedef struct {
 	(SRAM6_ID | PAGE08_ID) /*!< SRAM6 page 8 (64 KB) retention in Stop     \
 				  modes (Stop 0, 1, 2, 3)    */
 #define PWR_SRAM6_FULL_STOP                                                    \
-	(SRAM6_ID | 0xFFU) /*!< SRAM6 all pages retention in Stop modes (Stop                                                                         \
+	(SRAM6_ID | 0xFFU) /*!< SRAM6 all pages retention in Stop modes (Stop  \
 			      0, 1, 2, 3)    */
 #endif			   /* defined (PWR_CR5_SRAM6PDS1) */
 

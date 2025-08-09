@@ -53,9 +53,9 @@ typedef struct {
 	uint32_t Config1; /*!< Config1 must be a value between 0 and 0x3F */
 	uint32_t Config2; /*!< Config2 must be a value between 0 and 0x7 */
 	uint32_t Config3; /*!< Config3 must be a value between 0 and 0xF */
-	uint32_t
-	    ClockDivider;	 /*!< Clock Divider factor.This parameter can
-				      be a value of @ref RNGEx_Clock_Divider_Factor	*/
+	uint32_t ClockDivider;	 /*!< Clock Divider factor.This parameter can
+				      be a value of @ref
+				    RNGEx_Clock_Divider_Factor	*/
 	uint32_t NistCompliance; /*!< NIST compliance.This parameter can be a
 				      value of @ref RNGEx_NIST_Compliance   */
 	uint32_t AutoReset;	 /*!< automatic reset When a noise source error
@@ -129,8 +129,9 @@ typedef struct {
 /** @defgroup RNGEx_Auto_Reset  Auto Reset configuration
  * @{
  */
-#define RNG_ARDIS_ENABLE (0x00000000UL) /*!< automatic reset after seed        \
-					   error*/
+#define RNG_ARDIS_ENABLE                                                       \
+	(0x00000000UL) /*!< automatic reset after seed                         \
+			  error*/
 #define RNG_ARDIS_DISABLE                                                      \
 	(RNG_CR_ARDIS) /*!< Disable automatic reset after seed error */
 

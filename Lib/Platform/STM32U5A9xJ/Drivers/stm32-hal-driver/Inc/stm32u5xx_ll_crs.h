@@ -94,10 +94,12 @@ extern "C" {
  */
 #define LL_CRS_SYNC_DIV_1                                                      \
 	0x00000000U /*!< Synchro Signal not divided (default) */
-#define LL_CRS_SYNC_DIV_2 CRS_CFGR_SYNCDIV_0 /*!< Synchro Signal divided by 2  \
-					      */
-#define LL_CRS_SYNC_DIV_4 CRS_CFGR_SYNCDIV_1 /*!< Synchro Signal divided by 4  \
-					      */
+#define LL_CRS_SYNC_DIV_2                                                      \
+	CRS_CFGR_SYNCDIV_0 /*!< Synchro Signal divided by 2                    \
+			    */
+#define LL_CRS_SYNC_DIV_4                                                      \
+	CRS_CFGR_SYNCDIV_1 /*!< Synchro Signal divided by 4                    \
+			    */
 #define LL_CRS_SYNC_DIV_8                                                      \
 	(CRS_CFGR_SYNCDIV_1 |                                                  \
 	 CRS_CFGR_SYNCDIV_0) /*!< Synchro Signal divided by 8 */

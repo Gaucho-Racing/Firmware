@@ -382,8 +382,9 @@ typedef void (*pCORDIC_CallbackTypeDef)(
 /** @defgroup CORDIC_DMA_Direction CORDIC DMA direction
  * @{
  */
-#define CORDIC_DMA_DIR_NONE ((uint32_t)0x00000000U) /*!< DMA direction : none  \
-						     */
+#define CORDIC_DMA_DIR_NONE                                                    \
+	((uint32_t)0x00000000U) /*!< DMA direction : none                      \
+				 */
 #define CORDIC_DMA_DIR_IN                                                      \
 	((uint32_t)0x00000001U) /*!< DMA direction : Input of CORDIC */
 #define CORDIC_DMA_DIR_OUT                                                     \

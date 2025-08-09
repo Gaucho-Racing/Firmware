@@ -339,15 +339,17 @@ typedef struct {
  *        filter and polarity.
  */
 typedef struct {
-	uint32_t OffStateRunMode; /*!< TIM off state in run mode, This parameter
-				     can be a value of @ref
-				     TIM_OSSR_Off_State_Selection_for_Run_mode_state
-				   */
+	uint32_t
+	    OffStateRunMode; /*!< TIM off state in run mode, This parameter
+				can be a value of @ref
+				TIM_OSSR_Off_State_Selection_for_Run_mode_state
+			      */
 
-	uint32_t OffStateIDLEMode; /*!< TIM off state in IDLE mode, This
-				      parameter can be a value of @ref
-				      TIM_OSSI_Off_State_Selection_for_Idle_mode_state
-				    */
+	uint32_t
+	    OffStateIDLEMode; /*!< TIM off state in IDLE mode, This
+				 parameter can be a value of @ref
+				 TIM_OSSI_Off_State_Selection_for_Idle_mode_state
+			       */
 
 	uint32_t LockLevel; /*!< TIM Lock level, This parameter can be a value
 			       of @ref TIM_Lock_level */
@@ -446,8 +448,8 @@ typedef struct __TIM_HandleTypeDef
 typedef struct
 #endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
 {
-	TIM_TypeDef *Instance;	       /*!< Register base address	 */
-	TIM_Base_InitTypeDef Init;     /*!< TIM Time Base required parameters     */
+	TIM_TypeDef *Instance;	   /*!< Register base address	 */
+	TIM_Base_InitTypeDef Init; /*!< TIM Time Base required parameters     */
 	HAL_TIM_ActiveChannel Channel; /*!< Active channel */
 	DMA_HandleTypeDef
 	    *hdma[7];			 /*!< DMA Handlers array
@@ -724,11 +726,13 @@ typedef void (*pTIM_CallbackTypeDef)(
 	TIM_EGR_CC4G /*!< A capture/compare event is generated on channel 4 */
 #define TIM_EVENTSOURCE_COM                                                    \
 	TIM_EGR_COMG /*!< A commutation event is generated */
-#define TIM_EVENTSOURCE_TRIGGER TIM_EGR_TG /*!< A trigger event is generated   \
-					    */
-#define TIM_EVENTSOURCE_BREAK TIM_EGR_BG   /*!< A break event is generated */
-#define TIM_EVENTSOURCE_BREAK2 TIM_EGR_B2G /*!< A break 2 event is generated   \
-					    */
+#define TIM_EVENTSOURCE_TRIGGER                                                \
+	TIM_EGR_TG			 /*!< A trigger event is generated     \
+					  */
+#define TIM_EVENTSOURCE_BREAK TIM_EGR_BG /*!< A break event is generated */
+#define TIM_EVENTSOURCE_BREAK2                                                 \
+	TIM_EGR_B2G /*!< A break 2 event is generated                          \
+		     */
 /**
  * @}
  */
@@ -749,9 +753,10 @@ typedef void (*pTIM_CallbackTypeDef)(
 /** @defgroup TIM_ETR_Polarity TIM ETR Polarity
  * @{
  */
-#define TIM_ETRPOLARITY_INVERTED TIM_SMCR_ETP	/*!< Polarity for ETR source */
-#define TIM_ETRPOLARITY_NONINVERTED 0x00000000U /*!< Polarity for ETR source   \
-						 */
+#define TIM_ETRPOLARITY_INVERTED TIM_SMCR_ETP /*!< Polarity for ETR source */
+#define TIM_ETRPOLARITY_NONINVERTED                                            \
+	0x00000000U /*!< Polarity for ETR source                               \
+		     */
 /**
  * @}
  */
@@ -853,8 +858,9 @@ typedef void (*pTIM_CallbackTypeDef)(
 /** @defgroup TIM_Output_Compare_Polarity TIM Output Compare Polarity
  * @{
  */
-#define TIM_OCPOLARITY_HIGH 0x00000000U /*!< Capture/Compare output polarity   \
-					 */
+#define TIM_OCPOLARITY_HIGH                                                    \
+	0x00000000U /*!< Capture/Compare output polarity                       \
+		     */
 #define TIM_OCPOLARITY_LOW                                                     \
 	TIM_CCER_CC1P /*!< Capture/Compare output polarity  */
 /**
@@ -1135,8 +1141,7 @@ typedef void (*pTIM_CallbackTypeDef)(
 /** @defgroup TIM_Clock_Source TIM Clock Source
  * @{
  */
-#define TIM_CLOCKSOURCE_INTERNAL                                               \
-	TIM_SMCR_ETPS_0 /*!< Internal clock source */
+#define TIM_CLOCKSOURCE_INTERNAL TIM_SMCR_ETPS_0 /*!< Internal clock source */
 #define TIM_CLOCKSOURCE_ETRMODE1                                               \
 	TIM_TS_ETRF /*!< External clock source mode 1 (ETRF) */
 #define TIM_CLOCKSOURCE_ETRMODE2                                               \
@@ -1288,8 +1293,9 @@ typedef void (*pTIM_CallbackTypeDef)(
 /** @defgroup TIM_Break_Polarity TIM Break Input Polarity
  * @{
  */
-#define TIM_BREAKPOLARITY_LOW 0x00000000U /*!< Break input BRK is active low   \
-					   */
+#define TIM_BREAKPOLARITY_LOW                                                  \
+	0x00000000U /*!< Break input BRK is active low                         \
+		     */
 #define TIM_BREAKPOLARITY_HIGH                                                 \
 	TIM_BDTR_BKP /*!< Break input BRK is active high */
 /**
@@ -1299,8 +1305,9 @@ typedef void (*pTIM_CallbackTypeDef)(
 /** @defgroup TIM_Break_Input_AF_Mode TIM Break Input Alternate Function Mode
  * @{
  */
-#define TIM_BREAK_AFMODE_INPUT 0x00000000U /*!< Break input BRK in input mode  \
-					    */
+#define TIM_BREAK_AFMODE_INPUT                                                 \
+	0x00000000U /*!< Break input BRK in input mode                         \
+		     */
 #define TIM_BREAK_AFMODE_BIDIRECTIONAL                                         \
 	TIM_BDTR_BKBID /*!< Break input BRK in bidirectional mode */
 /**
@@ -1471,8 +1478,8 @@ typedef void (*pTIM_CallbackTypeDef)(
  */
 #define TIM_SLAVEMODE_DISABLE 0x00000000U  /*!< Slave mode disabled  */
 #define TIM_SLAVEMODE_RESET TIM_SMCR_SMS_2 /*!< Reset Mode */
-#define TIM_SLAVEMODE_GATED                                                    \
-	(TIM_SMCR_SMS_2 | TIM_SMCR_SMS_0) /*!< Gated Mode */
+#define TIM_SLAVEMODE_GATED (TIM_SMCR_SMS_2 | TIM_SMCR_SMS_0) /*!< Gated Mode  \
+							       */
 #define TIM_SLAVEMODE_TRIGGER                                                  \
 	(TIM_SMCR_SMS_2 | TIM_SMCR_SMS_1) /*!< Trigger Mode */
 #define TIM_SLAVEMODE_EXTERNAL1                                                \
@@ -1495,10 +1502,9 @@ typedef void (*pTIM_CallbackTypeDef)(
 	TIM_CCMR1_OC1M_0 /*!< Set channel to active level on match   */
 #define TIM_OCMODE_INACTIVE                                                    \
 	TIM_CCMR1_OC1M_1 /*!< Set channel to inactive level on match */
-#define TIM_OCMODE_TOGGLE                                                      \
-	(TIM_CCMR1_OC1M_1 | TIM_CCMR1_OC1M_0) /*!< Toggle */
-#define TIM_OCMODE_PWM1                                                        \
-	(TIM_CCMR1_OC1M_2 | TIM_CCMR1_OC1M_1) /*!< PWM mode 1 */
+#define TIM_OCMODE_TOGGLE (TIM_CCMR1_OC1M_1 | TIM_CCMR1_OC1M_0) /*!< Toggle */
+#define TIM_OCMODE_PWM1 (TIM_CCMR1_OC1M_2 | TIM_CCMR1_OC1M_1) /*!< PWM mode 1  \
+							       */
 #define TIM_OCMODE_PWM2                                                        \
 	(TIM_CCMR1_OC1M_2 | TIM_CCMR1_OC1M_1 |                                 \
 	 TIM_CCMR1_OC1M_0) /*!< PWM mode 2                             */
@@ -1734,9 +1740,10 @@ typedef void (*pTIM_CallbackTypeDef)(
 /** @defgroup Channel_CC_State TIM Capture/Compare Channel State
  * @{
  */
-#define TIM_CCx_ENABLE 0x00000001U  /*!< Input or output channel is enabled */
-#define TIM_CCx_DISABLE 0x00000000U /*!< Input or output channel is disabled   \
-				     */
+#define TIM_CCx_ENABLE 0x00000001U /*!< Input or output channel is enabled */
+#define TIM_CCx_DISABLE                                                        \
+	0x00000000U /*!< Input or output channel is disabled                   \
+		     */
 #define TIM_CCxN_ENABLE                                                        \
 	0x00000004U /*!< Complementary output channel is enabled */
 #define TIM_CCxN_DISABLE                                                       \

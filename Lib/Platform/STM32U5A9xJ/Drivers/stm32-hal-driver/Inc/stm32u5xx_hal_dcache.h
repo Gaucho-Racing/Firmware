@@ -59,7 +59,7 @@ typedef enum {
 	    0x00U, /*!< DCACHE not yet initialized or disabled     */
 	HAL_DCACHE_STATE_READY =
 	    0x01U, /*!< Peripheral initialized and ready for use   */
-	HAL_DCACHE_STATE_BUSY = 0x02U,	  /*!< An internal process is ongoing    */
+	HAL_DCACHE_STATE_BUSY = 0x02U, /*!< An internal process is ongoing    */
 	HAL_DCACHE_STATE_TIMEOUT = 0x05U, /*!< Timeout state */
 	HAL_DCACHE_STATE_ERROR = 0x06U,	  /*!< DCACHE state error   */
 } HAL_DCACHE_StateTypeDef;
@@ -145,11 +145,13 @@ typedef enum {
 /** @defgroup DCACHE_Monitor_Type Monitor type
  * @{
  */
-#define DCACHE_MONITOR_READ_HIT DCACHE_CR_RHITMEN   /*!< Read Hit monitoring */
-#define DCACHE_MONITOR_READ_MISS DCACHE_CR_RMISSMEN /*!< Read Miss monitoring  \
-						     */
-#define DCACHE_MONITOR_WRITE_HIT DCACHE_CR_WHITMEN  /*!< Write Hit monitoring  \
-						     */
+#define DCACHE_MONITOR_READ_HIT DCACHE_CR_RHITMEN /*!< Read Hit monitoring */
+#define DCACHE_MONITOR_READ_MISS                                               \
+	DCACHE_CR_RMISSMEN /*!< Read Miss monitoring                           \
+			    */
+#define DCACHE_MONITOR_WRITE_HIT                                               \
+	DCACHE_CR_WHITMEN /*!< Write Hit monitoring                            \
+			   */
 #define DCACHE_MONITOR_WRITE_MISS                                              \
 	DCACHE_CR_WMISSMEN /*!< Write Miss monitoring */
 #define DCACHE_MONITOR_ALL                                                     \

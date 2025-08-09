@@ -236,9 +236,8 @@ typedef void (*HAL_SDIO_IOFunction_CallbackTypeDef)(SDIO_HandleTypeDef *hsdio,
 #define HAL_SDIO_ERROR_TX_UNDERRUN                                             \
 	SDMMC_ERROR_TX_UNDERRUN /*!< Transmit FIFO underrun */
 #define HAL_SDIO_ERROR_RX_OVERRUN                                              \
-	SDMMC_ERROR_RX_OVERRUN /*!< Receive FIFO overrun */
-#define HAL_SDIO_ERROR_TIMEOUT                                                 \
-	SDMMC_ERROR_TIMEOUT /*!< Timeout error */
+	SDMMC_ERROR_RX_OVERRUN			   /*!< Receive FIFO overrun */
+#define HAL_SDIO_ERROR_TIMEOUT SDMMC_ERROR_TIMEOUT /*!< Timeout error */
 #define HAL_SDIO_ERROR_INVALID_CALLBACK                                        \
 	SDMMC_ERROR_INVALID_PARAMETER /*!< Invalid callback error */
 /**

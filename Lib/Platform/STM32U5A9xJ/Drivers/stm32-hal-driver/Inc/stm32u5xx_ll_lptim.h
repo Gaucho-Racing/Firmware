@@ -162,16 +162,19 @@ typedef struct {
 	LPTIM_ISR_DIEROK /*!< Interrupt enable register update OK */
 #define LL_LPTIM_ISR_ARRM LPTIM_ISR_ARRM /*!< Autoreload match */
 #define LL_LPTIM_ISR_EXTTRIG                                                   \
-	LPTIM_ISR_EXTTRIG		   /*!< External trigger edge event */
-#define LL_LPTIM_ISR_ARROK LPTIM_ISR_ARROK /*!< Autoreload register update OK  \
-					    */
-#define LL_LPTIM_ISR_UP LPTIM_ISR_UP /*!< Counter direction change down to up  \
-				      */
+	LPTIM_ISR_EXTTRIG /*!< External trigger edge event */
+#define LL_LPTIM_ISR_ARROK                                                     \
+	LPTIM_ISR_ARROK /*!< Autoreload register update OK                     \
+			 */
+#define LL_LPTIM_ISR_UP                                                        \
+	LPTIM_ISR_UP /*!< Counter direction change down to up                  \
+		      */
 #define LL_LPTIM_ISR_DOWN                                                      \
 	LPTIM_ISR_DOWN		     /*!< Counter direction change up to down */
 #define LL_LPTIM_ISR_UE LPTIM_ISR_UE /*!< Update event */
-#define LL_LPTIM_ISR_REPOK LPTIM_ISR_REPOK /*!< Repetition register update OK  \
-					    */
+#define LL_LPTIM_ISR_REPOK                                                     \
+	LPTIM_ISR_REPOK /*!< Repetition register update OK                     \
+			 */
 /**
  * @}
  */
@@ -560,8 +563,9 @@ typedef struct {
 /** @defgroup LPTIM_EC_LPTIM1_IC1_RMP LPTIM1 Input Ch1 Remap
  * @{
  */
-#define LL_LPTIM_LPTIM1_IC1_RMP_GPIO 0x00000000UL /*!< IC1 connected to GPIO   \
-						   */
+#define LL_LPTIM_LPTIM1_IC1_RMP_GPIO                                           \
+	0x00000000UL /*!< IC1 connected to GPIO                                \
+		      */
 #define LL_LPTIM_LPTIM1_IC1_RMP_COMP1                                          \
 	LPTIM_CFGR2_IC1SEL_0 /*!< IC1 connected to COMP1 */
 #if defined(COMP2)
@@ -575,8 +579,9 @@ typedef struct {
 /** @defgroup LPTIM_EC_LPTIM1_IC2_RMP LPTIM1 Input Ch2 Remap
  * @{
  */
-#define LL_LPTIM_LPTIM1_IC2_RMP_GPIO 0x00000000UL /*!< IC2 connected to GPIO   \
-						   */
+#define LL_LPTIM_LPTIM1_IC2_RMP_GPIO                                           \
+	0x00000000UL /*!< IC2 connected to GPIO                                \
+		      */
 #define LL_LPTIM_LPTIM1_IC2_RMP_LSI                                            \
 	LPTIM_CFGR2_IC2SEL_0 /*!< IC2 connected to LSI */
 #define LL_LPTIM_LPTIM1_IC2_RMP_LSE                                            \
@@ -588,8 +593,9 @@ typedef struct {
 /** @defgroup LPTIM_EC_LPTIM2_IC1_RMP LPTIM2 Input Ch1 Remap
  * @{
  */
-#define LL_LPTIM_LPTIM2_IC1_RMP_GPIO 0x00000000UL /*!< IC1 connected to GPIO   \
-						   */
+#define LL_LPTIM_LPTIM2_IC1_RMP_GPIO                                           \
+	0x00000000UL /*!< IC1 connected to GPIO                                \
+		      */
 #define LL_LPTIM_LPTIM2_IC1_RMP_COMP1                                          \
 	LPTIM_CFGR2_IC1SEL_0 /*!< IC1 connected to COMP1 */
 #if defined(COMP2)
@@ -603,8 +609,9 @@ typedef struct {
 /** @defgroup LPTIM_EC_LPTIM2_IC2_RMP LPTIM2 Input Ch2 Remap
  * @{
  */
-#define LL_LPTIM_LPTIM2_IC2_RMP_GPIO 0x00000000UL /*!< IC2 connected to GPIO   \
-						   */
+#define LL_LPTIM_LPTIM2_IC2_RMP_GPIO                                           \
+	0x00000000UL /*!< IC2 connected to GPIO                                \
+		      */
 #define LL_LPTIM_LPTIM2_IC2_RMP_HSI                                            \
 	LPTIM_CFGR2_IC2SEL_0 /*!< IC2 connected to HSI */
 #define LL_LPTIM_LPTIM2_IC2_RMP_MSIS_1024                                      \
@@ -619,8 +626,9 @@ typedef struct {
 /** @defgroup LPTIM_EC_LPTIM3_IC1_RMP LPTIM3 Input Ch1 Remap
  * @{
  */
-#define LL_LPTIM_LPTIM3_IC1_RMP_GPIO 0x00000000UL /*!< IC1 connected to GPIO   \
-						   */
+#define LL_LPTIM_LPTIM3_IC1_RMP_GPIO                                           \
+	0x00000000UL /*!< IC1 connected to GPIO                                \
+		      */
 #define LL_LPTIM_LPTIM3_IC1_RMP_COMP1                                          \
 	LPTIM_CFGR2_IC1SEL_0 /*!< IC1 connected to COMP1 */
 #if defined(COMP2)

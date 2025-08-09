@@ -65,8 +65,8 @@ typedef struct {
 				       This parameter can be a value of @ref
 				     CORTEX_MPU_Instruction_Access  */
 	uint8_t IsShareable;	  /*!< Specifies the shareability status of the
-				     protected region.      This parameter can be a value
-				     of @ref CORTEX_MPU_Access_Shareable    */
+				     protected region.      This parameter can be a
+				     value      of @ref CORTEX_MPU_Access_Shareable    */
 } MPU_Region_InitTypeDef;
 /**
  * @}
@@ -194,8 +194,9 @@ typedef struct {
 #define MPU_REGION_ALL_RW                                                      \
 	1U /*!< Read/write privileged/unprivileged attribute */
 #define MPU_REGION_PRIV_RO 2U /*!< Read-only privileged-only attribute */
-#define MPU_REGION_ALL_RO 3U  /*!< Read-only privileged/unprivileged attribute \
-			       */
+#define MPU_REGION_ALL_RO                                                      \
+	3U /*!< Read-only privileged/unprivileged attribute                    \
+	    */
 /**
  * @}
  */

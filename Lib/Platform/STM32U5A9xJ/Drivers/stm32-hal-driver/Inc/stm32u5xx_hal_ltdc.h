@@ -240,7 +240,7 @@ typedef enum {
 	HAL_LTDC_MSPINIT_CB_ID = 0x00U,	  /*!< LTDC MspInit callback ID       */
 	HAL_LTDC_MSPDEINIT_CB_ID = 0x01U, /*!< LTDC MspDeInit callback ID     */
 
-	HAL_LTDC_LINE_EVENT_CB_ID = 0x02U,   /*!< LTDC Line Event Callback ID   */
+	HAL_LTDC_LINE_EVENT_CB_ID = 0x02U, /*!< LTDC Line Event Callback ID   */
 	HAL_LTDC_RELOAD_EVENT_CB_ID = 0x03U, /*!< LTDC Reload Callback ID */
 	HAL_LTDC_ERROR_CB_ID = 0x04U /*!< LTDC Error Callback ID         */
 
@@ -321,9 +321,10 @@ typedef void (*pLTDC_CallbackTypeDef)(
 /** @defgroup LTDC_PC_POLARITY LTDC PC POLARITY
  * @{
  */
-#define LTDC_PCPOLARITY_IPC 0x00000000U	    /*!< input pixel clock. */
-#define LTDC_PCPOLARITY_IIPC LTDC_GCR_PCPOL /*!< inverted input pixel clock.   \
-					     */
+#define LTDC_PCPOLARITY_IPC 0x00000000U /*!< input pixel clock. */
+#define LTDC_PCPOLARITY_IIPC                                                   \
+	LTDC_GCR_PCPOL /*!< inverted input pixel clock.                        \
+			*/
 /**
  * @}
  */
@@ -333,8 +334,9 @@ typedef void (*pLTDC_CallbackTypeDef)(
  */
 #define LTDC_HORIZONTALSYNC                                                    \
 	(LTDC_SSCR_HSW >> 16U) /*!< Horizontal synchronization width. */
-#define LTDC_VERTICALSYNC LTDC_SSCR_VSH /*!< Vertical synchronization height.  \
-					 */
+#define LTDC_VERTICALSYNC                                                      \
+	LTDC_SSCR_VSH /*!< Vertical synchronization height.                    \
+		       */
 /**
  * @}
  */
@@ -350,8 +352,9 @@ typedef void (*pLTDC_CallbackTypeDef)(
 /** @defgroup LTDC_BlendingFactor1 LTDC Blending Factor1
  * @{
  */
-#define LTDC_BLENDING_FACTOR1_CA 0x00000400U /*!< Blending factor : Cte Alpha  \
-					      */
+#define LTDC_BLENDING_FACTOR1_CA                                               \
+	0x00000400U /*!< Blending factor : Cte Alpha                           \
+		     */
 #define LTDC_BLENDING_FACTOR1_PAxCA                                            \
 	0x00000600U /*!< Blending factor : Cte Alpha x Pixel Alpha*/
 /**
@@ -361,8 +364,9 @@ typedef void (*pLTDC_CallbackTypeDef)(
 /** @defgroup LTDC_BlendingFactor2 LTDC Blending Factor2
  * @{
  */
-#define LTDC_BLENDING_FACTOR2_CA 0x00000005U /*!< Blending factor : Cte Alpha  \
-					      */
+#define LTDC_BLENDING_FACTOR2_CA                                               \
+	0x00000005U /*!< Blending factor : Cte Alpha                           \
+		     */
 #define LTDC_BLENDING_FACTOR2_PAxCA                                            \
 	0x00000007U /*!< Blending factor : Cte Alpha x Pixel Alpha*/
 /**
@@ -429,11 +433,12 @@ typedef void (*pLTDC_CallbackTypeDef)(
 /** @defgroup LTDC_Flags LTDC Flags
  * @{
  */
-#define LTDC_FLAG_LI LTDC_ISR_LIF    /*!< LTDC Line Interrupt Flag            */
-#define LTDC_FLAG_FU LTDC_ISR_FUIF   /*!< LTDC FIFO Underrun interrupt Flag   */
-#define LTDC_FLAG_TE LTDC_ISR_TERRIF /*!< LTDC Transfer Error interrupt Flag   \
-				      */
-#define LTDC_FLAG_RR LTDC_ISR_RRIF   /*!< LTDC Register Reload interrupt Flag */
+#define LTDC_FLAG_LI LTDC_ISR_LIF  /*!< LTDC Line Interrupt Flag            */
+#define LTDC_FLAG_FU LTDC_ISR_FUIF /*!< LTDC FIFO Underrun interrupt Flag   */
+#define LTDC_FLAG_TE                                                           \
+	LTDC_ISR_TERRIF		   /*!< LTDC Transfer Error interrupt Flag     \
+				    */
+#define LTDC_FLAG_RR LTDC_ISR_RRIF /*!< LTDC Register Reload interrupt Flag */
 /**
  * @}
  */

@@ -192,7 +192,7 @@ typedef enum {
 	    0x00U, /*!< Peripheral not yet initialized or disabled  */
 	HAL_LPTIM_STATE_READY =
 	    0x01U, /*!< Peripheral Initialized and ready for use    */
-	HAL_LPTIM_STATE_BUSY = 0x02U,	 /*!< An internal process is ongoing    */
+	HAL_LPTIM_STATE_BUSY = 0x02U, /*!< An internal process is ongoing    */
 	HAL_LPTIM_STATE_TIMEOUT = 0x03U, /*!< Timeout state */
 	HAL_LPTIM_STATE_ERROR = 0x04U	 /*!< Internal Process is ongoing    */
 } HAL_LPTIM_StateTypeDef;
@@ -563,9 +563,10 @@ typedef void (*pLPTIM_CallbackTypeDef)(
  * @{
  */
 #define LPTIM_OCPOLARITY_HIGH                                                  \
-	0x00000000U			 /*!< Capture/Compare output polarity */
-#define LPTIM_OCPOLARITY_LOW 0x00000001U /*!< Capture/Compare output polarity  \
-					  */
+	0x00000000U /*!< Capture/Compare output polarity */
+#define LPTIM_OCPOLARITY_LOW                                                   \
+	0x00000001U /*!< Capture/Compare output polarity                       \
+		     */
 /**
  * @}
  */
@@ -628,16 +629,18 @@ typedef void (*pLPTIM_CallbackTypeDef)(
 /** @defgroup LPTIM_Input_Capture_Source LPTIM Input Capture Source
  * @{
  */
-#define LPTIM_IC1SOURCE_GPIO 0x00000000UL /*!< For LPTIM1, LPTIM2 and LPTIM3   \
-					   */
+#define LPTIM_IC1SOURCE_GPIO                                                   \
+	0x00000000UL /*!< For LPTIM1, LPTIM2 and LPTIM3                        \
+		      */
 #define LPTIM_IC1SOURCE_COMP1                                                  \
 	LPTIM_CFGR2_IC1SEL_0 /*!< For LPTIM1, LPTIM2 and LPTIM3 */
 #if defined(COMP2)
 #define LPTIM_IC1SOURCE_COMP2                                                  \
-	LPTIM_CFGR2_IC1SEL_1		  /*!< For LPTIM1, LPTIM2 and LPTIM3 */
-#endif					  /* COMP2 */
-#define LPTIM_IC2SOURCE_GPIO 0x00000000UL /*!< For LPTIM1, LPTIM2 and LPTIM3   \
-					   */
+	LPTIM_CFGR2_IC1SEL_1 /*!< For LPTIM1, LPTIM2 and LPTIM3 */
+#endif			     /* COMP2 */
+#define LPTIM_IC2SOURCE_GPIO                                                   \
+	0x00000000UL /*!< For LPTIM1, LPTIM2 and LPTIM3                        \
+		      */
 #define LPTIM_IC2SOURCE_LSI LPTIM_CFGR2_IC2SEL_0       /*!< For LPTIM1 */
 #define LPTIM_IC2SOURCE_LSE LPTIM_CFGR2_IC2SEL_1       /*!< For LPTIM1 */
 #define LPTIM_IC2SOURCE_HSI_256 LPTIM_CFGR2_IC2SEL_0   /*!< For LPTIM2 */

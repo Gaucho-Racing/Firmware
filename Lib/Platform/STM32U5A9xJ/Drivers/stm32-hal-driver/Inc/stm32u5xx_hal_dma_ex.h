@@ -228,10 +228,8 @@ typedef struct __DMA_QListTypeDef {
  * @brief    Queue Error Codes
  * @{
  */
-#define HAL_DMA_QUEUE_ERROR_NONE                                               \
-	(0x00U) /*!< No error */
-#define HAL_DMA_QUEUE_ERROR_BUSY                                               \
-	(0x01U) /*!< Error busy */
+#define HAL_DMA_QUEUE_ERROR_NONE (0x00U) /*!< No error */
+#define HAL_DMA_QUEUE_ERROR_BUSY (0x01U) /*!< Error busy */
 #define HAL_DMA_QUEUE_ERROR_EMPTY                                              \
 	(0x02U) /*!< Error unallowed operation for empty queue */
 #define HAL_DMA_QUEUE_ERROR_UNSUPPORTED                                        \
@@ -296,8 +294,7 @@ typedef struct __DMA_QListTypeDef {
  * @brief    DMAEx Data Exchange
  * @{
  */
-#define DMA_EXCHANGE_NONE                                                      \
-	0x00000000U /*!< No data exchange */
+#define DMA_EXCHANGE_NONE 0x00000000U /*!< No data exchange */
 #define DMA_EXCHANGE_DEST_BYTE                                                 \
 	DMA_CTR1_DBX /*!< Destination Byte exchange when destination data      \
 			width is > Byte           */
@@ -811,10 +808,11 @@ typedef struct {
 #define DMA_CHANNEL_TYPE_GPDMA                                                 \
 	(0x0020UL) /* GPDMA channel node                    */
 
-#define NODE_TYPE_MASK (0x00FFUL)    /* DMA channel node type                 */
-#define NODE_CLLR_IDX (0x0700UL)     /* DMA channel node CLLR index mask      */
-#define NODE_CLLR_IDX_POS (0x0008UL) /* DMA channel node CLLR index position   \
-				      */
+#define NODE_TYPE_MASK (0x00FFUL) /* DMA channel node type                 */
+#define NODE_CLLR_IDX (0x0700UL)  /* DMA channel node CLLR index mask      */
+#define NODE_CLLR_IDX_POS                                                      \
+	(0x0008UL) /* DMA channel node CLLR index position                     \
+		    */
 
 #define NODE_MAXIMUM_SIZE (0x0008UL) /* Amount of registers of the node */
 

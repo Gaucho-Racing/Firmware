@@ -170,9 +170,10 @@ typedef void (*pCOMP_CallbackTypeDef)(
  */
 #define HAL_COMP_ERROR_NONE (0x00UL) /*!< No error */
 #if (USE_HAL_COMP_REGISTER_CALLBACKS == 1)
-#define HAL_COMP_ERROR_INVALID_CALLBACK (0x01UL) /*!< Invalid Callback error   \
-						  */
-#endif /* USE_HAL_COMP_REGISTER_CALLBACKS */
+#define HAL_COMP_ERROR_INVALID_CALLBACK                                        \
+	(0x01UL) /*!< Invalid Callback error                                   \
+		  */
+#endif		 /* USE_HAL_COMP_REGISTER_CALLBACKS */
 /**
  * @}
  */
@@ -214,42 +215,42 @@ typedef void (*pCOMP_CallbackTypeDef)(
 			    indicating each their own state.                   \
 			    To know window mode state: each comparator output  \
 			    must be read, if "((COMPx exclusive or COMPy) ==   \
-			  1)" then monitored signal is within comparators                                   \
+			  1)" then monitored signal is within comparators      \
 			  window.*/
 #define COMP_WINDOWOUTPUT_COMP1                                                \
 	(COMP_CSR_WINOUT) /*!< Window output synthesized on COMP1 output:      \
 			       COMP1 output is no more indicating its own      \
-			     state, but global window mode state (logical high                                        \
-			     means monitored signal is within comparators                                        \
-			     window). Note: impacts only comparator output                                          \
-			     signal level (COMPx_OUT propagated to GPIO, EXTI                                           \
-			     lines, timers, ...), does not impact output                                          \
-			     digital state of comparator (COMPx_VALUE) always                                            \
+			     state, but global window mode state (logical high \
+			     means monitored signal is within comparators      \
+			     window). Note: impacts only comparator output     \
+			     signal level (COMPx_OUT propagated to GPIO, EXTI  \
+			     lines, timers, ...), does not impact output       \
+			     digital state of comparator (COMPx_VALUE) always  \
 			     reflecting each comparator output state.*/
 #define COMP_WINDOWOUTPUT_COMP2                                                \
 	(COMP_CSR_WINOUT |                                                     \
 	 COMP_WINDOWMODE_COMP2) /*!< Window output synthesized on COMP2        \
-				   output: COMP2 output is no more indicating                                            \
-				   its own state, but global window mode state                                                      \
-				   (logical high means monitored signal is                                                           \
-				   within comparators window). Note: impacts                                                                 \
+				   output: COMP2 output is no more indicating  \
+				   its own state, but global window mode state \
+				   (logical high means monitored signal is     \
+				   within comparators window). Note: impacts   \
 				   only comparator output signal level         \
 				     (COMPx_OUT propagated to GPIO, EXTI       \
-				   lines, timers, ...), does not impact output                                          \
-				   digital state of comparator (COMPx_VALUE)                                                   \
-				   always reflecting each comparator output                                                             \
+				   lines, timers, ...), does not impact output \
+				   digital state of comparator (COMPx_VALUE)   \
+				   always reflecting each comparator output    \
 				   state.*/
 #define COMP_WINDOWOUTPUT_BOTH                                                 \
 	(0x00000001UL) /*!< Window output synthesized on both comparators      \
-			  output of pair of comparator selected (COMP1 and                                     \
-			  COMP2: both comparators outputs are no more                                          \
-			  indicating their own state, but global window mode                                             \
-			  state (logical high means monitored signal is within                                              \
-			  comparators window). This is a specific                                                            \
-			  configuration (technically possible but not relevant                                                     \
-			  from application point of view: 2 comparators output                                                          \
-			  used for the same signal level), standard                                                                      \
-			  configuration for window mode is one of the settings                                                                      \
+			  output of pair of comparator selected (COMP1 and     \
+			  COMP2: both comparators outputs are no more          \
+			  indicating their own state, but global window mode   \
+			  state (logical high means monitored signal is within \
+			  comparators window). This is a specific              \
+			  configuration (technically possible but not relevant \
+			  from application point of view: 2 comparators output \
+			  used for the same signal level), standard            \
+			  configuration for window mode is one of the settings \
 			  above. */
 /**
  * @}
@@ -335,10 +336,11 @@ typedef void (*pCOMP_CallbackTypeDef)(
 /** @defgroup COMP_Hysteresis COMP hysteresis
  * @{
  */
-#define COMP_HYSTERESIS_NONE (0x00000000UL)	 /*!< No hysteresis */
-#define COMP_HYSTERESIS_LOW (COMP_CSR_HYST_0)	 /*!< Hysteresis level low */
-#define COMP_HYSTERESIS_MEDIUM (COMP_CSR_HYST_1) /*!< Hysteresis level medium  \
-						  */
+#define COMP_HYSTERESIS_NONE (0x00000000UL)   /*!< No hysteresis */
+#define COMP_HYSTERESIS_LOW (COMP_CSR_HYST_0) /*!< Hysteresis level low */
+#define COMP_HYSTERESIS_MEDIUM                                                 \
+	(COMP_CSR_HYST_1) /*!< Hysteresis level medium                         \
+			   */
 #define COMP_HYSTERESIS_HIGH                                                   \
 	(COMP_CSR_HYST_1 | COMP_CSR_HYST_0) /*!< Hysteresis level high */
 /**
@@ -794,9 +796,10 @@ typedef void (*pCOMP_CallbackTypeDef)(
 #define COMP_EXTI_IT (0x00000001UL) /*!< EXTI line event with interruption */
 #define COMP_EXTI_EVENT                                                        \
 	(0x00000002UL) /*!< EXTI line event only (without interruption) */
-#define COMP_EXTI_RISING (0x00000010UL)	 /*!< EXTI line event on rising edge */
-#define COMP_EXTI_FALLING (0x00000020UL) /*!< EXTI line event on falling edge  \
-					  */
+#define COMP_EXTI_RISING (0x00000010UL) /*!< EXTI line event on rising edge */
+#define COMP_EXTI_FALLING                                                      \
+	(0x00000020UL) /*!< EXTI line event on falling edge                    \
+			*/
 /**
  * @}
  */

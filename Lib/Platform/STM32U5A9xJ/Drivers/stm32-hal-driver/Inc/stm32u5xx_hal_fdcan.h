@@ -627,10 +627,8 @@ typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(
 /** @defgroup HAL_FDCAN_Error_Code HAL FDCAN Error Code
  * @{
  */
-#define HAL_FDCAN_ERROR_NONE                                                   \
-	((uint32_t)0x00000000U) /*!< No error */
-#define HAL_FDCAN_ERROR_TIMEOUT                                                \
-	((uint32_t)0x00000001U) /*!< Timeout error */
+#define HAL_FDCAN_ERROR_NONE ((uint32_t)0x00000000U)	/*!< No error */
+#define HAL_FDCAN_ERROR_TIMEOUT ((uint32_t)0x00000001U) /*!< Timeout error */
 #define HAL_FDCAN_ERROR_NOT_INITIALIZED                                        \
 	((uint32_t)0x00000002U) /*!< Peripheral not initialized */
 #define HAL_FDCAN_ERROR_NOT_READY                                              \
@@ -638,9 +636,8 @@ typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(
 #define HAL_FDCAN_ERROR_NOT_STARTED                                            \
 	((uint32_t)0x00000008U) /*!< Peripheral not started */
 #define HAL_FDCAN_ERROR_NOT_SUPPORTED                                          \
-	((uint32_t)0x00000010U) /*!< Mode not supported */
-#define HAL_FDCAN_ERROR_PARAM                                                  \
-	((uint32_t)0x00000020U) /*!< Parameter error */
+	((uint32_t)0x00000010U)			      /*!< Mode not supported */
+#define HAL_FDCAN_ERROR_PARAM ((uint32_t)0x00000020U) /*!< Parameter error */
 #define HAL_FDCAN_ERROR_PENDING                                                \
 	((uint32_t)0x00000040U) /*!< Pending operation */
 #define HAL_FDCAN_ERROR_RAM_ACCESS                                             \
@@ -743,9 +740,10 @@ typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(
 /** @defgroup FDCAN_txFifoQueue_Mode FDCAN Tx FIFO/Queue Mode
  * @{
  */
-#define FDCAN_TX_FIFO_OPERATION ((uint32_t)0x00000000U)	     /*!< FIFO mode  */
-#define FDCAN_TX_QUEUE_OPERATION ((uint32_t)FDCAN_TXBC_TFQM) /*!< Queue mode   \
-							      */
+#define FDCAN_TX_FIFO_OPERATION ((uint32_t)0x00000000U) /*!< FIFO mode  */
+#define FDCAN_TX_QUEUE_OPERATION                                               \
+	((uint32_t)FDCAN_TXBC_TFQM) /*!< Queue mode                            \
+				     */
 /**
  * @}
  */
@@ -997,8 +995,9 @@ typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(
 /** @defgroup FDCAN_Reject_Remote_Frames FDCAN reject remote frames
  * @{
  */
-#define FDCAN_FILTER_REMOTE ((uint32_t)0x00000000U) /*!< Filter remote frames  \
-						     */
+#define FDCAN_FILTER_REMOTE                                                    \
+	((uint32_t)0x00000000U) /*!< Filter remote frames                      \
+				 */
 #define FDCAN_REJECT_REMOTE                                                    \
 	((uint32_t)0x00000001U) /*!< Reject all remote frames */
 /**
@@ -1109,30 +1108,25 @@ typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(
 /** @defgroup FDCAN_flags FDCAN Flags
  * @{
  */
-#define FDCAN_FLAG_TX_COMPLETE                                                 \
-	FDCAN_IR_TC /*!< Transmission Completed */
+#define FDCAN_FLAG_TX_COMPLETE FDCAN_IR_TC /*!< Transmission Completed */
 #define FDCAN_FLAG_TX_ABORT_COMPLETE                                           \
 	FDCAN_IR_TCF /*!< Transmission Cancellation Finished */
-#define FDCAN_FLAG_TX_FIFO_EMPTY                                               \
-	FDCAN_IR_TFE /*!< Tx FIFO Empty */
+#define FDCAN_FLAG_TX_FIFO_EMPTY FDCAN_IR_TFE /*!< Tx FIFO Empty */
 #define FDCAN_FLAG_RX_HIGH_PRIORITY_MSG                                        \
 	FDCAN_IR_HPM /*!< High priority message received */
 #define FDCAN_FLAG_TX_EVT_FIFO_ELT_LOST                                        \
 	FDCAN_IR_TEFL /*!< Tx Event FIFO element lost */
-#define FDCAN_FLAG_TX_EVT_FIFO_FULL                                            \
-	FDCAN_IR_TEFF /*!< Tx Event FIFO full */
+#define FDCAN_FLAG_TX_EVT_FIFO_FULL FDCAN_IR_TEFF /*!< Tx Event FIFO full */
 #define FDCAN_FLAG_TX_EVT_FIFO_NEW_DATA                                        \
 	FDCAN_IR_TEFN /*!< Tx Handler wrote Tx Event FIFO element */
 #define FDCAN_FLAG_RX_FIFO0_MESSAGE_LOST                                       \
-	FDCAN_IR_RF0L /*!< Rx FIFO 0 message lost */
-#define FDCAN_FLAG_RX_FIFO0_FULL                                               \
-	FDCAN_IR_RF0F /*!< Rx FIFO 0 full */
+	FDCAN_IR_RF0L			       /*!< Rx FIFO 0 message lost */
+#define FDCAN_FLAG_RX_FIFO0_FULL FDCAN_IR_RF0F /*!< Rx FIFO 0 full */
 #define FDCAN_FLAG_RX_FIFO0_NEW_MESSAGE                                        \
 	FDCAN_IR_RF0N /*!< New message written to Rx FIFO 0 */
 #define FDCAN_FLAG_RX_FIFO1_MESSAGE_LOST                                       \
-	FDCAN_IR_RF1L /*!< Rx FIFO 1 message lost */
-#define FDCAN_FLAG_RX_FIFO1_FULL                                               \
-	FDCAN_IR_RF1F /*!< Rx FIFO 1 full */
+	FDCAN_IR_RF1L			       /*!< Rx FIFO 1 message lost */
+#define FDCAN_FLAG_RX_FIFO1_FULL FDCAN_IR_RF1F /*!< Rx FIFO 1 full */
 #define FDCAN_FLAG_RX_FIFO1_NEW_MESSAGE                                        \
 	FDCAN_IR_RF1N /*!< New message written to Rx FIFO 1 */
 #define FDCAN_FLAG_RAM_ACCESS_FAILURE                                          \
@@ -1142,9 +1136,8 @@ typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(
 #define FDCAN_FLAG_ERROR_PASSIVE                                               \
 	FDCAN_IR_EP /*!< Error_Passive status changed */
 #define FDCAN_FLAG_ERROR_WARNING                                               \
-	FDCAN_IR_EW /*!< Error_Warning status changed */
-#define FDCAN_FLAG_BUS_OFF                                                     \
-	FDCAN_IR_BO /*!< Bus_Off status changed */
+	FDCAN_IR_EW		       /*!< Error_Warning status changed */
+#define FDCAN_FLAG_BUS_OFF FDCAN_IR_BO /*!< Bus_Off status changed */
 #define FDCAN_FLAG_RAM_WATCHDOG                                                \
 	FDCAN_IR_WDI /*!< Message RAM Watchdog event due to missing READY */
 #define FDCAN_FLAG_ARB_PROTOCOL_ERROR                                          \
@@ -1155,8 +1148,7 @@ typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(
 	FDCAN_IR_ARA /*!< Access to reserved address occurred */
 #define FDCAN_FLAG_TIMESTAMP_WRAPAROUND                                        \
 	FDCAN_IR_TSW /*!< Timestamp counter wrapped around */
-#define FDCAN_FLAG_TIMEOUT_OCCURRED                                            \
-	FDCAN_IR_TOO /*!< Timeout reached */
+#define FDCAN_FLAG_TIMEOUT_OCCURRED FDCAN_IR_TOO /*!< Timeout reached */
 /**
  * @}
  */
@@ -1168,12 +1160,10 @@ typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(
 /** @defgroup FDCAN_Tx_Interrupts FDCAN Tx Interrupts
  * @{
  */
-#define FDCAN_IT_TX_COMPLETE                                                   \
-	FDCAN_IE_TCE /*!< Transmission Completed */
+#define FDCAN_IT_TX_COMPLETE FDCAN_IE_TCE /*!< Transmission Completed */
 #define FDCAN_IT_TX_ABORT_COMPLETE                                             \
 	FDCAN_IE_TCFE /*!< Transmission Cancellation Finished */
-#define FDCAN_IT_TX_FIFO_EMPTY                                                 \
-	FDCAN_IE_TFEE /*!< Tx FIFO Empty */
+#define FDCAN_IT_TX_FIFO_EMPTY FDCAN_IE_TFEE /*!< Tx FIFO Empty */
 /**
  * @}
  */
@@ -1192,8 +1182,7 @@ typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(
  */
 #define FDCAN_IT_TIMESTAMP_WRAPAROUND                                          \
 	FDCAN_IE_TSWE /*!< Timestamp counter wrapped around */
-#define FDCAN_IT_TIMEOUT_OCCURRED                                              \
-	FDCAN_IE_TOOE /*!< Timeout reached */
+#define FDCAN_IT_TIMEOUT_OCCURRED FDCAN_IE_TOOE /*!< Timeout reached */
 /**
  * @}
  */

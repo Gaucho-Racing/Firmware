@@ -235,7 +235,7 @@ typedef void (*pDCMI_CallbackTypeDef)(
 			   into the destination memory through the DMA    */
 #define DCMI_MODE_SNAPSHOT                                                     \
 	((uint32_t)DCMI_CR_CM) /*!< Once activated, the interface waits for    \
-				  the start of frame and then transfers a                                                    \
+				  the start of frame and then transfers a      \
 				  single frame through the DMA */
 /**
  * @}
@@ -246,11 +246,11 @@ typedef void (*pDCMI_CallbackTypeDef)(
  */
 #define DCMI_SYNCHRO_HARDWARE                                                  \
 	(0x00000000U) /*!< Hardware synchronization data capture (frame/line   \
-			 start/stop) is synchronized with the HSYNC/VSYNC                                          \
+			 start/stop) is synchronized with the HSYNC/VSYNC      \
 			 signals               */
 #define DCMI_SYNCHRO_EMBEDDED                                                  \
 	((uint32_t)DCMI_CR_ESS) /*!< Embedded synchronization data capture is  \
-				   synchronized with synchronization codes                                                    \
+				   synchronized with synchronization codes     \
 				   embedded in the data flow */
 
 /**
@@ -431,8 +431,9 @@ typedef void (*pDCMI_CallbackTypeDef)(
 /** @defgroup DCMI_Byte_Select_Mode DCMI Byte Select Mode
  * @{
  */
-#define DCMI_BSM_ALL (0x00000000U) /*!< Interface captures all received data   \
-				    */
+#define DCMI_BSM_ALL                                                           \
+	(0x00000000U) /*!< Interface captures all received data                \
+		       */
 #define DCMI_BSM_OTHER                                                         \
 	((uint32_t)DCMI_CR_BSM_0) /*!< Interface captures every other byte     \
 				       from the received data */
@@ -466,8 +467,9 @@ typedef void (*pDCMI_CallbackTypeDef)(
 /** @defgroup DCMI_Line_Select_Mode DCMI Line Select Mode
  * @{
  */
-#define DCMI_LSM_ALL (0x00000000U) /*!< Interface captures all received lines  \
-				    */
+#define DCMI_LSM_ALL                                                           \
+	(0x00000000U) /*!< Interface captures all received lines               \
+		       */
 #define DCMI_LSM_ALTERNATE_2                                                   \
 	((uint32_t)DCMI_CR_LSM) /*!< Interface captures one line out of two */
 

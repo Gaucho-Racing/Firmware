@@ -172,8 +172,9 @@ typedef struct {
  * @brief    UART Autonomous mode
  * @{
  */
-#define UART_AUTONOMOUS_MODE_DISABLE 0x00000000U /*!< Autonomous mode disable  \
-						  */
+#define UART_AUTONOMOUS_MODE_DISABLE                                           \
+	0x00000000U /*!< Autonomous mode disable                               \
+		     */
 #define UART_AUTONOMOUS_MODE_ENABLE                                            \
 	USART_AUTOCR_TRIGEN /*!< Autonomous mode enable  */
 /**

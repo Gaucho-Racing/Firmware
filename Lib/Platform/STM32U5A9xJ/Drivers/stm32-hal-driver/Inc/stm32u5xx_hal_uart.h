@@ -391,7 +391,7 @@ typedef void (*pUART_RxEventCallbackTypeDef)(
 #define HAL_UART_STATE_BUSY_TX_RX                                              \
 	0x00000023U /*!< Data Transmission and Reception process is ongoing    \
 			 Not to be used for neither gState nor RxState.Value   \
-		       is result of combination (Or) between gState and                                        \
+		       is result of combination (Or) between gState and        \
 		       RxState values */
 #define HAL_UART_STATE_TIMEOUT                                                 \
 	0x000000A0U /*!< Timeout state                                         \
@@ -427,9 +427,10 @@ typedef void (*pUART_RxEventCallbackTypeDef)(
 /** @defgroup UART_Stop_Bits   UART Number of Stop Bits
  * @{
  */
-#define UART_STOPBITS_0_5 USART_CR2_STOP_0 /*!< UART frame with 0.5 stop bit   \
-					    */
-#define UART_STOPBITS_1 0x00000000U	   /*!< UART frame with 1 stop bit    */
+#define UART_STOPBITS_0_5                                                      \
+	USART_CR2_STOP_0	    /*!< UART frame with 0.5 stop bit          \
+				     */
+#define UART_STOPBITS_1 0x00000000U /*!< UART frame with 1 stop bit    */
 #define UART_STOPBITS_1_5                                                      \
 	(USART_CR2_STOP_0 |                                                    \
 	 USART_CR2_STOP_1)		 /*!< UART frame with 1.5 stop bits */
@@ -491,8 +492,9 @@ typedef void (*pUART_RxEventCallbackTypeDef)(
 /** @defgroup UART_OneBit_Sampling UART One Bit Sampling Method
  * @{
  */
-#define UART_ONE_BIT_SAMPLE_DISABLE 0x00000000U /*!< One-bit sampling disable  \
-						 */
+#define UART_ONE_BIT_SAMPLE_DISABLE                                            \
+	0x00000000U /*!< One-bit sampling disable                              \
+		     */
 #define UART_ONE_BIT_SAMPLE_ENABLE                                             \
 	USART_CR3_ONEBIT /*!< One-bit sampling enable  */
 /**
@@ -552,8 +554,9 @@ typedef void (*pUART_RxEventCallbackTypeDef)(
 /** @defgroup UART_LIN    UART Local Interconnection Network mode
  * @{
  */
-#define UART_LIN_DISABLE 0x00000000U /*!< Local Interconnect Network disable   \
-				      */
+#define UART_LIN_DISABLE                                                       \
+	0x00000000U /*!< Local Interconnect Network disable                    \
+		     */
 #define UART_LIN_ENABLE                                                        \
 	USART_CR2_LINEN /*!< Local Interconnect Network enable  */
 /**
@@ -693,8 +696,9 @@ typedef void (*pUART_RxEventCallbackTypeDef)(
 /** @defgroup UART_Rx_Tx_Swap UART Advanced Feature RX TX Pins Swap
  * @{
  */
-#define UART_ADVFEATURE_SWAP_DISABLE 0x00000000U /*!< TX/RX pins swap disable  \
-						  */
+#define UART_ADVFEATURE_SWAP_DISABLE                                           \
+	0x00000000U /*!< TX/RX pins swap disable                               \
+		     */
 #define UART_ADVFEATURE_SWAP_ENABLE                                            \
 	USART_CR2_SWAP /*!< TX/RX pins swap enable  */
 /**

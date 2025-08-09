@@ -92,8 +92,7 @@ typedef struct {
 /** @defgroup PWR_PVD_Mode PWR PVD Mode
  * @{
  */
-#define PWR_PVD_MODE_NORMAL                                                    \
-	(0x00U) /*!< Basic Mode is used */
+#define PWR_PVD_MODE_NORMAL (0x00U) /*!< Basic Mode is used */
 #define PWR_PVD_MODE_IT_RISING                                                 \
 	(0x05U) /*!< External Interrupt Mode with Rising edge trigger          \
 		   detection         */
@@ -151,28 +150,19 @@ typedef struct {
 /** @defgroup PWR_Flags PWR Flags
  * @{
  */
-#define PWR_FLAG_VOSRDY                                                        \
-	(0x01U) /*!< Voltage scaling ready flag */
-#define PWR_FLAG_BOOSTRDY                                                      \
-	(0x02U) /*!< EPOD booster ready flag */
-#define PWR_FLAG_STOPF                                                         \
-	(0x03U) /*!< Stop flag */
-#define PWR_FLAG_SBF                                                           \
-	(0x04U) /*!< Standby flag */
+#define PWR_FLAG_VOSRDY (0x01U)	  /*!< Voltage scaling ready flag */
+#define PWR_FLAG_BOOSTRDY (0x02U) /*!< EPOD booster ready flag */
+#define PWR_FLAG_STOPF (0x03U)	  /*!< Stop flag */
+#define PWR_FLAG_SBF (0x04U)	  /*!< Standby flag */
 #define PWR_FLAG_VDDA2RDY                                                      \
 	(0x05U) /*!< VDDA ready flag (versus 1.8 V threshold) */
 #define PWR_FLAG_VDDA1RDY                                                      \
 	(0x06U) /*!< VDDA ready flag (versus 1.6 V threshold) */
-#define PWR_FLAG_VDDIO2RDY                                                     \
-	(0x07U) /*!< VDDIO2 ready flag */
-#define PWR_FLAG_VDDUSBRDY                                                     \
-	(0x08U) /*!< VDDUSB ready flag */
-#define PWR_FLAG_ACTVOSRDY                                                     \
-	(0x09U) /*!< Currently applied VOS ready flag */
-#define PWR_FLAG_PVDO                                                          \
-	(0x0AU) /*!< VDD voltage detector output flag */
-#define PWR_FLAG_REGS                                                          \
-	(0x0BU) /*!< Regulator selection flag */
+#define PWR_FLAG_VDDIO2RDY (0x07U) /*!< VDDIO2 ready flag */
+#define PWR_FLAG_VDDUSBRDY (0x08U) /*!< VDDUSB ready flag */
+#define PWR_FLAG_ACTVOSRDY (0x09U) /*!< Currently applied VOS ready flag */
+#define PWR_FLAG_PVDO (0x0AU)	   /*!< VDD voltage detector output flag */
+#define PWR_FLAG_REGS (0x0BU)	   /*!< Regulator selection flag */
 #define PWR_FLAG_TEMPH                                                         \
 	(0x0CU) /*!< Temperature level flag (versus high threshold) */
 #define PWR_FLAG_TEMPL                                                         \
@@ -181,9 +171,8 @@ typedef struct {
 	(0x0EU) /*!< Backup domain voltage level flag (versus high threshold)  \
 		 */
 #if defined(PWR_VOSR_USBBOOSTRDY)
-#define PWR_FLAG_USBBOOSTRDY                                                   \
-	(0x0FU) /*!< USB EPOD booster ready flag */
-#endif		/* defined (PWR_VOSR_USBBOOSTRDY) */
+#define PWR_FLAG_USBBOOSTRDY (0x0FU) /*!< USB EPOD booster ready flag */
+#endif				     /* defined (PWR_VOSR_USBBOOSTRDY) */
 /**
  * @}
  */
@@ -475,31 +464,21 @@ typedef struct {
 /** @defgroup PWR_Items PWR Items
  * @{
  */
-#define PWR_WKUP1                                                              \
-	(PWR_SECCFGR_WUP1SEC) /*!< WUP1 secure protection */
-#define PWR_WKUP2                                                              \
-	(PWR_SECCFGR_WUP2SEC) /*!< WUP2 secure protection */
-#define PWR_WKUP3                                                              \
-	(PWR_SECCFGR_WUP3SEC) /*!< WUP3 secure protection */
-#define PWR_WKUP4                                                              \
-	(PWR_SECCFGR_WUP4SEC) /*!< WUP4 secure protection */
-#define PWR_WKUP5                                                              \
-	(PWR_SECCFGR_WUP5SEC) /*!< WUP5 secure protection */
-#define PWR_WKUP6                                                              \
-	(PWR_SECCFGR_WUP6SEC) /*!< WUP6 secure protection */
-#define PWR_WKUP7                                                              \
-	(PWR_SECCFGR_WUP7SEC) /*!< WUP7 secure protection */
-#define PWR_WKUP8                                                              \
-	(PWR_SECCFGR_WUP8SEC) /*!< WUP8 secure protection */
-#define PWR_LPM                                                                \
-	(PWR_SECCFGR_LPMSEC) /*!< Low power modes secure protection */
+#define PWR_WKUP1 (PWR_SECCFGR_WUP1SEC) /*!< WUP1 secure protection */
+#define PWR_WKUP2 (PWR_SECCFGR_WUP2SEC) /*!< WUP2 secure protection */
+#define PWR_WKUP3 (PWR_SECCFGR_WUP3SEC) /*!< WUP3 secure protection */
+#define PWR_WKUP4 (PWR_SECCFGR_WUP4SEC) /*!< WUP4 secure protection */
+#define PWR_WKUP5 (PWR_SECCFGR_WUP5SEC) /*!< WUP5 secure protection */
+#define PWR_WKUP6 (PWR_SECCFGR_WUP6SEC) /*!< WUP6 secure protection */
+#define PWR_WKUP7 (PWR_SECCFGR_WUP7SEC) /*!< WUP7 secure protection */
+#define PWR_WKUP8 (PWR_SECCFGR_WUP8SEC) /*!< WUP8 secure protection */
+#define PWR_LPM (PWR_SECCFGR_LPMSEC) /*!< Low power modes secure protection */
 #define PWR_VDM                                                                \
 	(PWR_SECCFGR_VDMSEC) /*!< Voltage detection and monitoring secure      \
 				protection */
-#define PWR_VB                                                                 \
-	(PWR_SECCFGR_VBSEC) /*!< Backup domain secure protection */
-#define PWR_APC                                                                \
-	(PWR_SECCFGR_APCSEC) /*!< Pull-up/pull-down secure protection */
+#define PWR_VB (PWR_SECCFGR_VBSEC)   /*!< Backup domain secure protection */
+#define PWR_APC (PWR_SECCFGR_APCSEC) /*!< Pull-up/pull-down secure protection  \
+				      */
 #define PWR_ALL                                                                \
 	(PWR_WKUP1 | PWR_WKUP2 | PWR_WKUP3 | PWR_WKUP4 | PWR_WKUP5 |           \
 	 PWR_WKUP7 | PWR_WKUP6 | PWR_WKUP8 | PWR_LPM | PWR_VDM | PWR_VB |      \

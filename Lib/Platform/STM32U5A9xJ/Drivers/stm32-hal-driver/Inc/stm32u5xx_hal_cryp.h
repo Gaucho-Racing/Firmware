@@ -346,17 +346,14 @@ typedef void (*pCRYP_CallbackTypeDef)(
  * @{
  */
 
-#define CRYP_AES_ECB                                                           \
-	0x00000000U /*!< Electronic codebook chaining algorithm */
-#define CRYP_AES_CBC                                                           \
-	AES_CR_CHMOD_0 /*!< Cipher block chaining algorithm */
-#define CRYP_AES_CTR                                                           \
-	AES_CR_CHMOD_1 /*!< Counter mode chaining algorithm */
+#define CRYP_AES_ECB 0x00000000U /*!< Electronic codebook chaining algorithm   \
+				  */
+#define CRYP_AES_CBC AES_CR_CHMOD_0 /*!< Cipher block chaining algorithm */
+#define CRYP_AES_CTR AES_CR_CHMOD_1 /*!< Counter mode chaining algorithm */
 #define CRYP_AES_GCM_GMAC                                                      \
 	(AES_CR_CHMOD_0 | AES_CR_CHMOD_1) /*!< Galois counter mode - Galois    \
 					     message authentication code */
-#define CRYP_AES_CCM                                                           \
-	AES_CR_CHMOD_2 /*!< Counter with Cipher Mode */
+#define CRYP_AES_CCM AES_CR_CHMOD_2	  /*!< Counter with Cipher Mode */
 
 /**
  * @}
@@ -412,8 +409,9 @@ typedef void (*pCRYP_CallbackTypeDef)(
  * @{
  */
 
-#define CRYP_KSHAREID_AES 0x00000000U /*!< Share SAES Key with AES peripheral  \
-				       */
+#define CRYP_KSHAREID_AES                                                      \
+	0x00000000U /*!< Share SAES Key with AES peripheral                    \
+		     */
 
 /**
  * @}
@@ -482,8 +480,9 @@ typedef void (*pCRYP_CallbackTypeDef)(
 	AES_ISR_CCF /*!< Computation completed flag as  AES_ISR_CCF    */
 #define CRYP_FLAG_KEYVALID AES_SR_KEYVALID /*!< Key Valid flag          */
 #define CRYP_FLAG_KEIF AES_ISR_KEIF	   /*!<Key error interrupt flag */
-#define CRYP_FLAG_RWEIF AES_ISR_RWEIF /*!<Read or write error Interrupt flag   \
-				       */
+#define CRYP_FLAG_RWEIF                                                        \
+	AES_ISR_RWEIF /*!<Read or write error Interrupt flag                   \
+		       */
 #define CRYP_FLAG_RNGEIF                                                       \
 	AES_ISR_RNGEIF /*!<RNG error interrupt flag           */
 

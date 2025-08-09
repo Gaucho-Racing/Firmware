@@ -62,10 +62,9 @@ extern "C" {
 	 ADC_CALIB_FACTOR_LINEARITY_REGOFFSET)
 #define ADC_CALIB_MODE_MASK (ADC_CR_ADCALLIN)
 #define ADC_CALIB_MODE_BINARY_MASK                                             \
-	(                                                                      \
-	    ADC_CALIB_FACTOR_REGOFFSET_MASK) /* Mask to get binary value of    \
-						calibration mode: 0 for        \
-						offset, 1 for linearity */
+	(ADC_CALIB_FACTOR_REGOFFSET_MASK) /* Mask to get binary value of       \
+					     calibration mode: 0 for           \
+					     offset, 1 for linearity */
 /* Internal algorithm for resolution parameters */
 /* ADC instances ADC1, ADC2 and ADC4 do not have same resolution and same
    bitfield value for equivalent resolution in ADC bitfield ADC_CFGR1_RES_1 */
@@ -284,8 +283,8 @@ extern "C" {
 /* - regular trigger edge                                                     */
 #define ADC_REG_TRIG_EXT_EDGE_DEFAULT                                          \
 	(ADC_CFGR1_EXTEN_0) /* Trigger edge set to rising edge (default        \
-			       setting for compatibility with some ADC on                                            \
-			       other STM32 families having this setting set by                                           \
+			       setting for compatibility with some ADC on      \
+			       other STM32 families having this setting set by \
 			       HW default value) */
 
 /* Mask containing trigger source masks for each of possible                  */
@@ -326,8 +325,8 @@ extern "C" {
 /* - injected trigger edge                                                    */
 #define ADC_INJ_TRIG_EXT_EDGE_DEFAULT                                          \
 	(ADC_JSQR_JEXTEN_0) /* Trigger edge set to rising edge (default        \
-			       setting for compatibility with some ADC on                                                \
-			       other STM32 families having this setting set by                                                    \
+			       setting for compatibility with some ADC on      \
+			       other STM32 families having this setting set by \
 			       HW default value) */
 
 /* Mask containing trigger source masks for each of possible                  */
@@ -373,7 +372,7 @@ extern "C" {
 #define ADC_CHANNEL_ID_MASK                                                    \
 	(ADC_CHANNEL_ID_NUMBER_MASK | ADC_CHANNEL_ID_BITFIELD_MASK |           \
 	 ADC_CHANNEL_ID_INTERNAL_CH_MASK) /* Equivalent mask of                \
-					     ADC_CHANNEL_NUMBER_MASK aligned                                                                       \
+					     ADC_CHANNEL_NUMBER_MASK aligned   \
 					     on register LSB (bit 0) */
 #define ADC_CHANNEL_ID_NUMBER_MASK_POSBIT0                                     \
 	(ADC_SQR2_SQ5) /* Equivalent to shift: (ADC_CHANNEL_NUMBER_MASK >>     \
@@ -402,11 +401,11 @@ extern "C" {
 	(ADC_CHSELR_SQ1                                                        \
 	 << ADC_CHANNEL_ID_NUMBER_BITOFFSET_POS) /* Value equivalent to        \
 						    ADC_CHANNEL_ID_NUMBER_MASK \
-						    with reduced range: on                                                             \
-						    this STM32 series, ADC                                                                           \
+						    with reduced range: on     \
+						    this STM32 series, ADC     \
 						    group regular sequencer,   \
-						    if set to mode "fully                                                                \
-						    configurable", can contain                                                                       \
+						    if set to mode "fully      \
+						    configurable", can contain \
 						    channels with a restricted \
 						    channel number. */
 
@@ -566,7 +565,7 @@ extern "C" {
 #define ADC_SINGLEDIFF_CHANNEL_SHIFT_MASK                                      \
 	(ADC_CALFACT_I_APB_ADDR_4 |                                            \
 	 ADC_CALFACT_I_APB_ADDR_3) /* Bits chosen to perform of shift when     \
-				      single mode is selected, shift value out                                             \
+				      single mode is selected, shift value out \
 				      of channels bits range. */
 #define ADC_SINGLEDIFF_CALIB_F_BIT_D_MASK                                      \
 	(0x00010000UL) /* Selection of 1 bit to discriminate differential      \
@@ -681,8 +680,8 @@ extern "C" {
 #define VREFINT_CAL_ADDR                                                       \
 	((const uint16_t                                                       \
 	      *)(0x0BFA07A5UL)) /* Internal voltage reference, address of      \
-			     parameter VREFINT_CAL: VrefInt ADC raw data                                             \
-			     acquired at temperature 30 DegC (tolerance: +-5                                           \
+			     parameter VREFINT_CAL: VrefInt ADC raw data       \
+			     acquired at temperature 30 DegC (tolerance: +-5   \
 			     DegC), Vref+ = 3.0 V (tolerance: +-10 mV). */
 #define VREFINT_CAL_VREF                                                       \
 	(3000UL) /* Analog voltage reference (Vref+) value with which          \
@@ -692,15 +691,15 @@ extern "C" {
 #define TEMPSENSOR_CAL1_ADDR                                                   \
 	((const uint16_t                                                       \
 	      *)(0x0BFA0710UL)) /* Internal temperature sensor, address of     \
-			     parameter TS_CAL1: On STM32U5, temperature sensor                                       \
-			     ADC raw data acquired at temperature  30 DegC                                         \
+			     parameter TS_CAL1: On STM32U5, temperature sensor \
+			     ADC raw data acquired at temperature  30 DegC     \
 				      (tolerance: +-5 DegC),Vref+ = 3.0 V      \
 				      (tolerance: +-10 mV). */
 #define TEMPSENSOR_CAL2_ADDR                                                   \
 	((const uint16_t                                                       \
 	      *)(0x0BFA0742UL)) /* Internal temperature sensor, address of     \
-			     parameter TS_CAL2: On STM32U5, temperature sensor                                       \
-			     ADC raw data acquired at temperature 110 DegC                                         \
+			     parameter TS_CAL2: On STM32U5, temperature sensor \
+			     ADC raw data acquired at temperature 110 DegC     \
 				      (tolerance: +-5 DegC), Vref+ = 3.0 V     \
 				      (tolerance: +-10 mV). */
 #define TEMPSENSOR_CAL1_TEMP                                                   \
@@ -1170,7 +1169,7 @@ typedef struct {
 	(0x00000000UL) /* ADC group regular conversion data register           \
 			  (corresponding to register DR) to be used with ADC   \
 			   configured in independent mode. Without DMA         \
-			  transfer, register accessed by LL function                                              \
+			  transfer, register accessed by LL function           \
 			   @ref LL_ADC_REG_ReadConversionData32() and          \
 			   other functions @ref                                \
 			  LL_ADC_REG_ReadConversionDatax() */
@@ -1179,8 +1178,8 @@ typedef struct {
 	(0x00000001UL) /* ADC group regular conversion data register           \
 			  (corresponding to register CDR) to be used with      \
 			  ADC configured in multimode (available on STM32      \
-			  devices with several ADC instances). Without DMA                                      \
-			  transfer, register accessed by LL function                                              \
+			  devices with several ADC instances). Without DMA     \
+			  transfer, register accessed by LL function           \
 			  @ref LL_ADC_REG_ReadMultiConversionData32() */
 #endif		       /* ADC_MULTIMODE_SUPPORT */
 /**
@@ -1278,21 +1277,21 @@ path to internal channel VCore */
 #define LL_ADC_CALIB_OFFSET                                                    \
 	(ADC_CALIB_FACTOR_OFFSET_REGOFFSET) /*!< Calibration of ADC offset.    \
 						 Duration of calibration of    \
-					       offset duration: 1280 ADC clock                                                      \
-					       cycles. For devices with                                                              \
-					       differential mode available:                                                                    \
-					       Calibration of offset is                                                                            \
+					       offset duration: 1280 ADC clock \
+					       cycles. For devices with        \
+					       differential mode available:    \
+					       Calibration of offset is        \
 					       specific to each of             \
-					       single-ended and differential                                                              \
+					       single-ended and differential   \
 					       modes. */
 #define LL_ADC_CALIB_LINEARITY                                                 \
 	(ADC_CALIB_FACTOR_LINEARITY_REGOFFSET) /*!< Calibration of ADC         \
-						  linearity. Duration of                                                                   \
-						  calibration of linearity:                                                                    \
-						  15104 ADC clock cycles. For                                                                           \
+						  linearity. Duration of       \
+						  calibration of linearity:    \
+						  15104 ADC clock cycles. For  \
 						  devices with differential    \
-						  mode available: Calibration                                                        \
-						  of linearity is common to                                                                  \
+						  mode available: Calibration  \
+						  of linearity is common to    \
 						  both single-ended and        \
 						    differential modes. */
 #define LL_ADC_CALIB_OFFSET_LINEARITY                                          \
@@ -1354,7 +1353,7 @@ single-ended and differential modes. */
 	(                                                                      \
 	    ADC_CFGR1_RES_1                                                    \
 	    << ADC_RESOLUTION_ADC4_PROCESSING) /*!< ADC resolution 6 bits      \
-						  (ADC4 only) (value shift out                                                              \
+						  (ADC4 only) (value shift out \
 						  of ADC_CFGR1_RES range,      \
 						    post-processing when       \
 						  applied with ADC4) */
@@ -2627,13 +2626,13 @@ single-ended and differential modes. */
 #define LL_ADC_REG_SAMPLING_MODE_BULB                                          \
 	(ADC_CFGR2_BULB) /*!< ADC conversions sampling phase starts            \
 			    immediately after end of conversion, and stops     \
-			    upon trigger event. Note: First conversion is                                                     \
-			    using minimal sampling time (see @ref                                                       \
+			    upon trigger event. Note: First conversion is      \
+			    using minimal sampling time (see @ref              \
 				    ADC_LL_EC_CHANNEL_SAMPLINGTIME). */
 #define LL_ADC_REG_SAMPLING_MODE_TRIGGER_CONTROLED                             \
 	(ADC_CFGR2_SMPTRIG) /*!< ADC conversions sampling phase is controlled  \
-			       by trigger events: Trigger rising edge  = start                                                  \
-			       sampling Trigger falling edge = stop sampling                                          \
+			       by trigger events: Trigger rising edge  = start \
+			       sampling Trigger falling edge = stop sampling   \
 			       and start conversion. */
 /**
  * @}

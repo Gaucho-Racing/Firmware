@@ -365,7 +365,7 @@ typedef void (*pDAC_CallbackTypeDef)(DAC_HandleTypeDef *hdac);
 		  (via internal paths) and to an external pin. */
 #define DAC_CHIPCONNECT_BOTH                                                   \
 	(1UL << 2) /*!< DAC channel  output is connected to on-chip            \
-		      peripherals (via internal paths) and to an external pin.                                       \
+		      peripherals (via internal paths) and to an external pin. \
 			Note: this connection is not available in mode normal  \
 			      with buffer disabled. */
 /**
@@ -394,8 +394,9 @@ typedef void (*pDAC_CallbackTypeDef)(DAC_HandleTypeDef *hdac);
  * @brief    DAC Autonomous mode
  * @{
  */
-#define DAC_AUTONOMOUS_MODE_DISABLE 0x00000000U /*!< Autonomous mode disable   \
-						 */
+#define DAC_AUTONOMOUS_MODE_DISABLE                                            \
+	0x00000000U /*!< Autonomous mode disable                               \
+		     */
 #define DAC_AUTONOMOUS_MODE_ENABLE                                             \
 	DAC_AUTOCR_AUTOMODE /*!< Autonomous mode enable  */
 /**

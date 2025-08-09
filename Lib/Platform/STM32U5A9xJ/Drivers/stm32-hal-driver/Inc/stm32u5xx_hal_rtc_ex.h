@@ -79,12 +79,13 @@ typedef struct {
 				    This parameter can be a value of @ref
 				  RTCEx_Tamper_Pull_UP */
 
-	uint32_t TimeStampOnTamperDetection; /*!< Specifies the
-						TimeStampOnTamperDetection. This
-						parameter can be a value of
-						   @ref
-						RTCEx_Tamper_TimeStampOnTamperDetection
-					      */
+	uint32_t
+	    TimeStampOnTamperDetection; /*!< Specifies the
+					   TimeStampOnTamperDetection. This
+					   parameter can be a value of
+					      @ref
+					   RTCEx_Tamper_TimeStampOnTamperDetection
+					 */
 } RTC_TamperTypeDef;
 /**
  * @}
@@ -137,12 +138,13 @@ typedef struct {
 					    @ref
 					  RTCEx_ActiveTamper_Async_prescaler */
 
-	uint32_t TimeStampOnTamperDetection; /*!< Specifies the timeStamp on
-						tamper detection. This parameter
-						can be a value of
-						  @ref
-						RTCEx_Tamper_TimeStampOnTamperDetection
-					      */
+	uint32_t
+	    TimeStampOnTamperDetection; /*!< Specifies the timeStamp on
+					   tamper detection. This parameter
+					   can be a value of
+					     @ref
+					   RTCEx_Tamper_TimeStampOnTamperDetection
+					 */
 
 	uint32_t
 	    ActiveOutputChangePeriod; /*!< Specifies the Active Tamper output
@@ -171,12 +173,13 @@ typedef struct {
 				 This parameter can be a value of @ref
 			       RTCEx_Internal_Tamper_Pins */
 
-	uint32_t TimeStampOnTamperDetection; /*!< Specifies the
-						TimeStampOnTamperDetection. This
-						parameter can be a value of
-						  @ref
-						RTCEx_Tamper_TimeStampOnTamperDetection
-					      */
+	uint32_t
+	    TimeStampOnTamperDetection; /*!< Specifies the
+					   TimeStampOnTamperDetection. This
+					   parameter can be a value of
+					     @ref
+					   RTCEx_Tamper_TimeStampOnTamperDetection
+					 */
 
 	uint32_t NoErase; /*!< Specifies the internal Tamper no erase mode.
 			       This parameter can be a value of @ref
@@ -296,12 +299,13 @@ typedef struct {
 					 is shared with RTC_SecureStateTypeDef.
 				       */
 
-	uint32_t MonotonicCounterPrivilege; /*!< Specifies If the monotonic
-					       counter is privileged or not This
-					       parameter can be a value of
-						  @ref
-					       RTCEx_TAMP_Monotonic_Counter_Privilege
-					     */
+	uint32_t
+	    MonotonicCounterPrivilege; /*!< Specifies If the monotonic
+					  counter is privileged or not This
+					  parameter can be a value of
+					     @ref
+					  RTCEx_TAMP_Monotonic_Counter_Privilege
+					*/
 } RTC_PrivilegeStateTypeDef;
 /**
  * @}
@@ -389,7 +393,7 @@ typedef struct {
 			  mode. */
 #define RTC_LPCAL_RESET                                                        \
 	0U /*!< Calibration window is 2exp20 RTCCLK, which is a                \
-	      high-consumption mode. This mode should be set only when less                                        \
+	      high-consumption mode. This mode should be set only when less    \
 		than 32s calibration window is required. */
 /**
  * @}
@@ -608,22 +612,30 @@ typedef struct {
 	(RTC_IT_TAMP_1 | RTC_IT_TAMP_2 | RTC_IT_TAMP_3 | RTC_IT_TAMP_4 |       \
 	 RTC_IT_TAMP_5 | RTC_IT_TAMP_6 | RTC_IT_TAMP_7 | RTC_IT_TAMP_8)
 
-#define RTC_IT_INT_TAMP_1 TAMP_IER_ITAMP1IE /*!< Tamper 1 internal Interrupt   \
-					     */
-#define RTC_IT_INT_TAMP_2 TAMP_IER_ITAMP2IE /*!< Tamper 2 internal Interrupt   \
-					     */
-#define RTC_IT_INT_TAMP_3 TAMP_IER_ITAMP3IE /*!< Tamper 3 internal Interrupt   \
-					     */
-#define RTC_IT_INT_TAMP_5 TAMP_IER_ITAMP5IE /*!< Tamper 5 internal Interrupt   \
-					     */
-#define RTC_IT_INT_TAMP_6 TAMP_IER_ITAMP6IE /*!< Tamper 6 internal Interrupt   \
-					     */
-#define RTC_IT_INT_TAMP_7 TAMP_IER_ITAMP7IE /*!< Tamper 7 internal Interrupt   \
-					     */
-#define RTC_IT_INT_TAMP_8 TAMP_IER_ITAMP8IE /*!< Tamper 8 internal Interrupt   \
-					     */
-#define RTC_IT_INT_TAMP_9 TAMP_IER_ITAMP9IE /*!< Tamper 9 internal Interrupt   \
-					     */
+#define RTC_IT_INT_TAMP_1                                                      \
+	TAMP_IER_ITAMP1IE /*!< Tamper 1 internal Interrupt                     \
+			   */
+#define RTC_IT_INT_TAMP_2                                                      \
+	TAMP_IER_ITAMP2IE /*!< Tamper 2 internal Interrupt                     \
+			   */
+#define RTC_IT_INT_TAMP_3                                                      \
+	TAMP_IER_ITAMP3IE /*!< Tamper 3 internal Interrupt                     \
+			   */
+#define RTC_IT_INT_TAMP_5                                                      \
+	TAMP_IER_ITAMP5IE /*!< Tamper 5 internal Interrupt                     \
+			   */
+#define RTC_IT_INT_TAMP_6                                                      \
+	TAMP_IER_ITAMP6IE /*!< Tamper 6 internal Interrupt                     \
+			   */
+#define RTC_IT_INT_TAMP_7                                                      \
+	TAMP_IER_ITAMP7IE /*!< Tamper 7 internal Interrupt                     \
+			   */
+#define RTC_IT_INT_TAMP_8                                                      \
+	TAMP_IER_ITAMP8IE /*!< Tamper 8 internal Interrupt                     \
+			   */
+#define RTC_IT_INT_TAMP_9                                                      \
+	TAMP_IER_ITAMP9IE /*!< Tamper 9 internal Interrupt                     \
+			   */
 #define RTC_IT_INT_TAMP_11                                                     \
 	TAMP_IER_ITAMP11IE /*!< Tamper 11 internal Interrupt */
 #define RTC_IT_INT_TAMP_12                                                     \
@@ -1054,7 +1066,8 @@ typedef struct {
  * @{
  */
 #define RTC_PRIVILEGE_FEATURE_NONE 0U
-#define RTC_PRIVILEGE_FEATURE_INIT RTC_PRIVCFGR_INITPRIV /*!< Initialization   \
+#define RTC_PRIVILEGE_FEATURE_INIT                                             \
+	RTC_PRIVCFGR_INITPRIV				 /*!< Initialization   \
 							  */
 #define RTC_PRIVILEGE_FEATURE_CAL RTC_PRIVCFGR_CALPRIV	 /*!< Calibration */
 #define RTC_PRIVILEGE_FEATURE_TS RTC_PRIVCFGR_TSPRIV	 /*!< Time stamp */

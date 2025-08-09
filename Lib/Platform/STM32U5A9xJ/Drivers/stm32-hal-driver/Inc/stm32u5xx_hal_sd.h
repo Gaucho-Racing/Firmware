@@ -332,8 +332,7 @@ typedef void (*pSD_TransceiverCallbackTypeDef)(FlagStatus status);
  * Structure definition
  * @{
  */
-#define HAL_SD_ERROR_NONE                                                      \
-	SDMMC_ERROR_NONE /*!< No error */
+#define HAL_SD_ERROR_NONE SDMMC_ERROR_NONE /*!< No error */
 #define HAL_SD_ERROR_CMD_CRC_FAIL                                              \
 	SDMMC_ERROR_CMD_CRC_FAIL /*!< Command response received (but CRC check \
 				    failed)             */
@@ -342,8 +341,8 @@ typedef void (*pSD_TransceiverCallbackTypeDef)(FlagStatus status);
 				     failed)                  */
 #define HAL_SD_ERROR_CMD_RSP_TIMEOUT                                           \
 	SDMMC_ERROR_CMD_RSP_TIMEOUT /*!< Command response timeout */
-#define HAL_SD_ERROR_DATA_TIMEOUT                                              \
-	SDMMC_ERROR_DATA_TIMEOUT /*!< Data timeout */
+#define HAL_SD_ERROR_DATA_TIMEOUT SDMMC_ERROR_DATA_TIMEOUT /*!< Data timeout   \
+							    */
 #define HAL_SD_ERROR_TX_UNDERRUN                                               \
 	SDMMC_ERROR_TX_UNDERRUN /*!< Transmit FIFO underrun */
 #define HAL_SD_ERROR_RX_OVERRUN                                                \
@@ -416,10 +415,8 @@ typedef void (*pSD_TransceiverCallbackTypeDef)(FlagStatus status);
 					   insupported */
 #define HAL_SD_ERROR_BUSY                                                      \
 	SDMMC_ERROR_BUSY /*!< Error when transfer process is busy */
-#define HAL_SD_ERROR_DMA                                                       \
-	SDMMC_ERROR_DMA /*!< Error while DMA transfer */
-#define HAL_SD_ERROR_TIMEOUT                                                   \
-	SDMMC_ERROR_TIMEOUT /*!< Timeout error */
+#define HAL_SD_ERROR_DMA SDMMC_ERROR_DMA /*!< Error while DMA transfer */
+#define HAL_SD_ERROR_TIMEOUT SDMMC_ERROR_TIMEOUT /*!< Timeout error */
 
 #if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
     (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
@@ -463,11 +460,10 @@ typedef void (*pSD_TransceiverCallbackTypeDef)(FlagStatus status);
 				   version 2.00        */
 #define CARD_ULTRA_HIGH_SPEED                                                  \
 	((uint32_t)0x00000200U) /*!< UHS-I SD Card <50Mo/s for SDR50, DDR5     \
-				   Cards and <104Mo/s for SDR104, Spec                                                 \
+				   Cards and <104Mo/s for SDR104, Spec         \
 				   version 3.01          */
 
-#define CARD_SDSC                                                              \
-	((uint32_t)0x00000000U) /*!< SD Standard Capacity <2Go */
+#define CARD_SDSC ((uint32_t)0x00000000U) /*!< SD Standard Capacity <2Go */
 #define CARD_SDHC_SDXC                                                         \
 	((uint32_t)0x00000001U) /*!< SD High Capacity <32Go, SD Extended       \
 				   Capacity <2To  */

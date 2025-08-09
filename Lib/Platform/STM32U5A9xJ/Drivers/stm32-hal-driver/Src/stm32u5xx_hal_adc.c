@@ -345,7 +345,7 @@ can be updated when no regular conversion is on-going */
 #define ADC_CFGR2_FIELDS                                                       \
 	((uint32_t)(ADC_CFGR2_ROVSE | ADC_CFGR2_OVSR | ADC_CFGR2_OVSS |        \
 		    ADC_CFGR2_TROVS | ADC_CFGR2_ROVSM)) /*!< ADC_CFGR2 fields  \
-of parameters that can be updated when no conversion (neither regular nor                                                          \
+of parameters that can be updated when no conversion (neither regular nor      \
 injected) is on-going  */
 
 /* Timeout values for ADC operations (enable settling time,                   */

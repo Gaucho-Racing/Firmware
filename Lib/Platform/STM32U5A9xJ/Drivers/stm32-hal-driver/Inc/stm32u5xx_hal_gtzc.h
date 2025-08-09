@@ -468,9 +468,10 @@ typedef struct {
  */
 
 /* user-oriented definitions for MPCBB */
-#define GTZC_MPCBB_BLOCK_SIZE 0x200U				 /* 512 Bytes */
-#define GTZC_MPCBB_SUPERBLOCK_SIZE (GTZC_MPCBB_BLOCK_SIZE * 32U) /* 16 KBytes  \
-								  */
+#define GTZC_MPCBB_BLOCK_SIZE 0x200U /* 512 Bytes */
+#define GTZC_MPCBB_SUPERBLOCK_SIZE                                             \
+	(GTZC_MPCBB_BLOCK_SIZE * 32U) /* 16 KBytes                             \
+				       */
 #define GTZC_MPCBB_SUPERBLOCK_UNLOCKED (0U)
 #define GTZC_MPCBB_SUPERBLOCK_LOCKED (1U)
 

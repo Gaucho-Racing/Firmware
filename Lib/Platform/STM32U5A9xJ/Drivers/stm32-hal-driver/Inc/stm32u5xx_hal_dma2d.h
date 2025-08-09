@@ -150,7 +150,7 @@ typedef enum {
 	    0x00U, /*!< DMA2D not yet initialized or disabled       */
 	HAL_DMA2D_STATE_READY =
 	    0x01U, /*!< Peripheral Initialized and ready for use    */
-	HAL_DMA2D_STATE_BUSY = 0x02U,	 /*!< An internal process is ongoing    */
+	HAL_DMA2D_STATE_BUSY = 0x02U, /*!< An internal process is ongoing    */
 	HAL_DMA2D_STATE_TIMEOUT = 0x03U, /*!< Timeout state */
 	HAL_DMA2D_STATE_ERROR = 0x04U,	 /*!< DMA2D state error   */
 	HAL_DMA2D_STATE_SUSPEND = 0x05U	 /*!< DMA2D process is suspended  */
@@ -314,8 +314,9 @@ typedef void (*pDMA2D_CallbackTypeDef)(
  */
 #define DMA2D_REGULAR_ALPHA                                                    \
 	0x00000000U /*!< No modification of the alpha channel value */
-#define DMA2D_INVERTED_ALPHA 0x00000001U /*!< Invert the alpha channel value   \
-					  */
+#define DMA2D_INVERTED_ALPHA                                                   \
+	0x00000001U /*!< Invert the alpha channel value                        \
+		     */
 /**
  * @}
  */
@@ -386,15 +387,17 @@ typedef void (*pDMA2D_CallbackTypeDef)(
 /** @defgroup DMA2D_Flags DMA2D Flags
  * @{
  */
-#define DMA2D_FLAG_CE DMA2D_ISR_CEIF /*!< Configuration Error Interrupt Flag   \
-				      */
+#define DMA2D_FLAG_CE                                                          \
+	DMA2D_ISR_CEIF /*!< Configuration Error Interrupt Flag                 \
+			*/
 #define DMA2D_FLAG_CTC                                                         \
 	DMA2D_ISR_CTCIF /*!< CLUT Transfer Complete Interrupt Flag */
-#define DMA2D_FLAG_CAE DMA2D_ISR_CAEIF /*!< CLUT Access Error Interrupt Flag   \
-					*/
-#define DMA2D_FLAG_TW DMA2D_ISR_TWIF   /*!< Transfer Watermark Interrupt Flag */
-#define DMA2D_FLAG_TC DMA2D_ISR_TCIF   /*!< Transfer Complete Interrupt Flag */
-#define DMA2D_FLAG_TE DMA2D_ISR_TEIF   /*!< Transfer Error Interrupt Flag */
+#define DMA2D_FLAG_CAE                                                         \
+	DMA2D_ISR_CAEIF		     /*!< CLUT Access Error Interrupt Flag     \
+				      */
+#define DMA2D_FLAG_TW DMA2D_ISR_TWIF /*!< Transfer Watermark Interrupt Flag */
+#define DMA2D_FLAG_TC DMA2D_ISR_TCIF /*!< Transfer Complete Interrupt Flag */
+#define DMA2D_FLAG_TE DMA2D_ISR_TEIF /*!< Transfer Error Interrupt Flag */
 /**
  * @}
  */
@@ -724,8 +727,9 @@ uint32_t HAL_DMA2D_GetError(const DMA2D_HandleTypeDef *hdma2d);
 /** @defgroup DMA2D_CLUT_Size DMA2D CLUT Size
  * @{
  */
-#define DMA2D_CLUT_SIZE (DMA2D_FGPFCCR_CS >> 8U) /*!< DMA2D maximum CLUT size  \
-						  */
+#define DMA2D_CLUT_SIZE                                                        \
+	(DMA2D_FGPFCCR_CS >> 8U) /*!< DMA2D maximum CLUT size                  \
+				  */
 /**
  * @}
  */

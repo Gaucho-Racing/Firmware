@@ -216,14 +216,16 @@ typedef struct {
 /** @defgroup RCC_Reset_Flag Reset Flag
  * @{
  */
-#define RCC_RESET_FLAG_OBL RCC_CSR_OBLRSTF /*!< Option Byte Loader reset flag  \
+#define RCC_RESET_FLAG_OBL                                                     \
+	RCC_CSR_OBLRSTF			   /*!< Option Byte Loader reset flag  \
 					    */
 #define RCC_RESET_FLAG_PIN RCC_CSR_PINRSTF /*!< PIN reset flag */
 #define RCC_RESET_FLAG_PWR RCC_CSR_BORRSTF /*!< BOR or POR/PDR reset flag */
 #define RCC_RESET_FLAG_SW RCC_CSR_SFTRSTF  /*!< Software Reset flag */
 #define RCC_RESET_FLAG_IWDG                                                    \
 	RCC_CSR_IWDGRSTF /*!< Independent Watchdog reset flag */
-#define RCC_RESET_FLAG_WWDG RCC_CSR_WWDGRSTF /*!< Window watchdog reset flag   \
+#define RCC_RESET_FLAG_WWDG                                                    \
+	RCC_CSR_WWDGRSTF		     /*!< Window watchdog reset flag   \
 					      */
 #define RCC_RESET_FLAG_LPWR RCC_CSR_LPWRRSTF /*!< Low power reset flag */
 #define RCC_RESET_FLAG_ALL                                                     \
@@ -246,7 +248,8 @@ typedef struct {
 /** @defgroup RCC_Oscillator_Type Oscillator Type
  * @{
  */
-#define RCC_OSCILLATORTYPE_NONE 0x0UL /*!< Oscillator configuration unchanged  \
+#define RCC_OSCILLATORTYPE_NONE                                                \
+	0x0UL			      /*!< Oscillator configuration unchanged  \
 				       */
 #define RCC_OSCILLATORTYPE_HSE 0x1UL  /*!< HSE to configure */
 #define RCC_OSCILLATORTYPE_HSI 0x2UL  /*!< HSI to configure */
@@ -549,8 +552,9 @@ typedef struct {
 /** @defgroup RCC_System_Clock_Source_Status System Clock Source Status
  * @{
  */
-#define RCC_SYSCLKSOURCE_STATUS_MSI 0x00000000U /*!< MSI used as system clock  \
-						 */
+#define RCC_SYSCLKSOURCE_STATUS_MSI                                            \
+	0x00000000U /*!< MSI used as system clock                              \
+		     */
 #define RCC_SYSCLKSOURCE_STATUS_HSI                                            \
 	RCC_CFGR1_SWS_0 /*!< HSI used as system clock */
 #define RCC_SYSCLKSOURCE_STATUS_HSE                                            \

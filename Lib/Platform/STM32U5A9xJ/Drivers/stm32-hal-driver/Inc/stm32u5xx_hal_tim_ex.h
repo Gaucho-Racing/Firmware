@@ -537,10 +537,12 @@ typedef struct {
 #endif			   /* COMP2 */
 
 #define TIM_TIM5_TI1_GPIO 0x00000000UL /*!< TIM5_TI1 is connected to GPIO */
-#define TIM_TIM5_TI1_LSI TIM_TISEL_TI1SEL_0 /*!< TIM5_TI1 is connected to LSI  \
-					     */
-#define TIM_TIM5_TI1_LSE TIM_TISEL_TI1SEL_1 /*!< TIM5_TI1 is connected to LSE  \
-					     */
+#define TIM_TIM5_TI1_LSI                                                       \
+	TIM_TISEL_TI1SEL_0 /*!< TIM5_TI1 is connected to LSI                   \
+			    */
+#define TIM_TIM5_TI1_LSE                                                       \
+	TIM_TISEL_TI1SEL_1 /*!< TIM5_TI1 is connected to LSE                   \
+			    */
 #define TIM_TIM5_TI1_RTC_WKUP                                                  \
 	(TIM_TISEL_TI1SEL_1 |                                                  \
 	 TIM_TISEL_TI1SEL_0) /*!< TIM5_TI1 is connected to RTC Wakeup */

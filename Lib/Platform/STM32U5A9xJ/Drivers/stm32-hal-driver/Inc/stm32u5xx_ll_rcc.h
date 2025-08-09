@@ -315,8 +315,9 @@ typedef struct {
 /** @defgroup RCC_LL_EC_HSEEXT  EXTERNAL HSE Mode
  * @{
  */
-#define LL_RCC_HSE_ANALOG_MODE 0U /*!< HSE clock used as ANALOG clock source   \
-				   */
+#define LL_RCC_HSE_ANALOG_MODE                                                 \
+	0U /*!< HSE clock used as ANALOG clock source                          \
+	    */
 #define LL_RCC_HSE_DIGITAL_MODE                                                \
 	RCC_CR_HSEEXT /*!< HSE clock used as DIGITAL clock source */
 /**
@@ -588,8 +589,9 @@ typedef struct {
 /** @defgroup RCC_LL_EC_RTC_CLKSOURCE  RTC clock source selection
  * @{
  */
-#define LL_RCC_RTC_CLKSOURCE_NONE 0x00000000U /*!< No clock used as RTC clock  \
-					       */
+#define LL_RCC_RTC_CLKSOURCE_NONE                                              \
+	0x00000000U /*!< No clock used as RTC clock                            \
+		     */
 #define LL_RCC_RTC_CLKSOURCE_LSE                                               \
 	RCC_BDCR_RTCSEL_0 /*!< LSE oscillator clock used as RTC clock */
 #define LL_RCC_RTC_CLKSOURCE_LSI                                               \
@@ -1665,9 +1667,10 @@ typedef struct {
 /** @defgroup RCC_LL_EC_MSIRANGESEL  MSI clock range selection
  * @{
  */
-#define LL_RCC_MSIRANGESEL_STANDBY 0U /*!< MSI Range is provided by MSISRANGE  \
-				       */
-#define LL_RCC_MSIRANGESEL_RUN 1U     /*!< MSI Range is provided by MSISRANGE */
+#define LL_RCC_MSIRANGESEL_STANDBY                                             \
+	0U			  /*!< MSI Range is provided by MSISRANGE      \
+				   */
+#define LL_RCC_MSIRANGESEL_RUN 1U /*!< MSI Range is provided by MSISRANGE */
 /**
  * @}
  */

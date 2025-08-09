@@ -254,7 +254,8 @@ typedef struct __DMA_HandleTypeDef {
 #define DMA_IT_TC DMA_CCR_TCIE	 /*!< Transfer complete interrupt             */
 #define DMA_IT_HT DMA_CCR_HTIE	 /*!< Half transfer complete interrupt        */
 #define DMA_IT_DTE DMA_CCR_DTEIE /*!< Data transfer error interrupt */
-#define DMA_IT_ULE DMA_CCR_ULEIE /*!< Update linked-list item error interrupt  \
+#define DMA_IT_ULE                                                             \
+	DMA_CCR_ULEIE		 /*!< Update linked-list item error interrupt  \
 				  */
 #define DMA_IT_USE DMA_CCR_USEIE /*!< User eetting error interrupt */
 #define DMA_IT_SUSP                                                            \
@@ -476,8 +477,9 @@ typedef struct __DMA_HandleTypeDef {
  * @brief    DMA transfer direction
  * @{
  */
-#define DMA_PERIPH_TO_MEMORY 0x00000000U /*!< Peripheral to memory direction   \
-					  */
+#define DMA_PERIPH_TO_MEMORY                                                   \
+	0x00000000U /*!< Peripheral to memory direction                        \
+		     */
 #define DMA_MEMORY_TO_PERIPH                                                   \
 	DMA_CTR2_DREQ /*!< Memory to peripheral direction */
 #define DMA_MEMORY_TO_MEMORY                                                   \
@@ -575,15 +577,15 @@ typedef struct __DMA_HandleTypeDef {
  */
 #define DMA_TCEM_BLOCK_TRANSFER                                                \
 	0x00000000U /*!< The TC event is generated at the end of each block    \
-		       and the HT event is generated at the half of each block                               \
+		       and the HT event is generated at the half of each block \
 		     */
 #define DMA_TCEM_REPEATED_BLOCK_TRANSFER                                       \
 	DMA_CTR2_TCEM_0 /*!< The TC event is generated at the end of the       \
-			   repeated block and the HT event is generated at the                                          \
+			   repeated block and the HT event is generated at the \
 			   half of the repeated block */
 #define DMA_TCEM_EACH_LL_ITEM_TRANSFER                                         \
 	DMA_CTR2_TCEM_1 /*!< The TC event is generated at the end of each      \
-			   linked-list item and the HT event is generated at                                         \
+			   linked-list item and the HT event is generated at   \
 			   the half of each linked-list item */
 #define DMA_TCEM_LAST_LL_ITEM_TRANSFER                                         \
 	DMA_CTR2_TCEM /*!< The TC event is generated at the end of the last    \

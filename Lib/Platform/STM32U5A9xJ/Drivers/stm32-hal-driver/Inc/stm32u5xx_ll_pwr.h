@@ -71,32 +71,25 @@ extern "C" {
  * @brief    Flags defines which can be used with LL_PWR_ReadReg function
  * @{
  */
-#define LL_PWR_FLAG_VOSRDY                                                     \
-	PWR_VOSR_VOSRDY /*!< Voltage scaling ready flag */
+#define LL_PWR_FLAG_VOSRDY PWR_VOSR_VOSRDY /*!< Voltage scaling ready flag */
 #define LL_PWR_FLAG_BOOSTRDY                                                   \
 	PWR_VOSR_BOOSTRDY /*!< VOS EPOD booster ready flag */
 #if defined(PWR_VOSR_USBBOOSTRDY)
 #define LL_PWR_FLAG_USBBOOSTRDY                                                \
-	PWR_VOSR_USBBOOSTRDY /*!< USB EPOD booster ready flag */
-#endif			     /* defined (PWR_VOSR_USBBOOSTRDY) */
-#define LL_PWR_FLAG_STOPF                                                      \
-	PWR_SR_STOPF /*!< Stop flag */
-#define LL_PWR_FLAG_SBF                                                        \
-	PWR_SR_SBF /*!< Standby flag */
+	PWR_VOSR_USBBOOSTRDY	       /*!< USB EPOD booster ready flag */
+#endif				       /* defined (PWR_VOSR_USBBOOSTRDY) */
+#define LL_PWR_FLAG_STOPF PWR_SR_STOPF /*!< Stop flag */
+#define LL_PWR_FLAG_SBF PWR_SR_SBF     /*!< Standby flag */
 #define LL_PWR_FLAG_VDDA2RDY                                                   \
 	PWR_SVMSR_VDDA2RDY /*!< VDDA ready flag (versus 1.8 V threshold) */
 #define LL_PWR_FLAG_VDDA1RDY                                                   \
 	PWR_SVMSR_VDDA1RDY /*!< VDDA ready flag (versus 1.6 V threshold) */
-#define LL_PWR_FLAG_VDDIO2RDY                                                  \
-	PWR_SVMSR_VDDIO2RDY /*!< VDDIO2 ready flag */
-#define LL_PWR_FLAG_VDDUSBRDY                                                  \
-	PWR_SVMSR_VDDUSBRDY /*!< VDDUSB ready flag */
+#define LL_PWR_FLAG_VDDIO2RDY PWR_SVMSR_VDDIO2RDY /*!< VDDIO2 ready flag */
+#define LL_PWR_FLAG_VDDUSBRDY PWR_SVMSR_VDDUSBRDY /*!< VDDUSB ready flag */
 #define LL_PWR_FLAG_ACTVOSRDY                                                  \
-	PWR_SVMSR_ACTVOSRDY /*!< Currently applied VOS ready flag */
-#define LL_PWR_FLAG_PVDO                                                       \
-	PWR_SR2_PVDO /*!< VDD voltage detector output flag */
-#define LL_PWR_FLAG_REGS                                                       \
-	PWR_SVMSR_REGS /*!< Regulator selection flag */
+	PWR_SVMSR_ACTVOSRDY		/*!< Currently applied VOS ready flag */
+#define LL_PWR_FLAG_PVDO PWR_SR2_PVDO	/*!< VDD voltage detector output flag */
+#define LL_PWR_FLAG_REGS PWR_SVMSR_REGS /*!< Regulator selection flag */
 #define LL_PWR_FLAG_TEMPH                                                      \
 	PWR_BDSR_TEMPH /*!< Temperature level flag (versus high threshold) */
 #define LL_PWR_FLAG_TEMPL                                                      \
@@ -228,7 +221,7 @@ extern "C" {
 			       (Stop 0, 1, 2) */
 #define LL_PWR_SRAM2_STOP_FULL_RETENTION                                       \
 	(PWR_CR2_SRAM2PDS1 |                                                   \
-	 PWR_CR2_SRAM2PDS2) /*!< SRAM2 all pages retention in Stop mode (Stop                                                                         \
+	 PWR_CR2_SRAM2PDS2) /*!< SRAM2 all pages retention in Stop mode (Stop  \
 			       0, 1, 2) */
 /**
  * @}
@@ -545,8 +538,9 @@ extern "C" {
  * in Run Mode
  * @{
  */
-#define LL_PWR_SRAM1_RUN_NO_RETENTION 0U /*!< SRAM1 no retention in Run mode   \
-					  */
+#define LL_PWR_SRAM1_RUN_NO_RETENTION                                          \
+	0U /*!< SRAM1 no retention in Run mode                                 \
+	    */
 #define LL_PWR_SRAM1_RUN_FULL_RETENTION                                        \
 	PWR_CR1_SRAM1PD /*!< SRAM1 retention in Run mode    */
 /**
@@ -557,8 +551,9 @@ extern "C" {
  * in Run Mode
  * @{
  */
-#define LL_PWR_SRAM2_RUN_NO_RETENTION 0U /*!< SRAM2 no retention in Run mode   \
-					  */
+#define LL_PWR_SRAM2_RUN_NO_RETENTION                                          \
+	0U /*!< SRAM2 no retention in Run mode                                 \
+	    */
 #define LL_PWR_SRAM2_RUN_FULL_RETENTION                                        \
 	PWR_CR1_SRAM2PD /*!< SRAM2 retention in Run mode    */
 /**
@@ -570,8 +565,9 @@ extern "C" {
  * in Run Mode
  * @{
  */
-#define LL_PWR_SRAM3_RUN_NO_RETENTION 0U /*!< SRAM3 no retention in Run mode   \
-					  */
+#define LL_PWR_SRAM3_RUN_NO_RETENTION                                          \
+	0U /*!< SRAM3 no retention in Run mode                                 \
+	    */
 #define LL_PWR_SRAM3_RUN_FULL_RETENTION                                        \
 	PWR_CR1_SRAM3PD /*!< SRAM3 retention in Run mode    */
 /**
@@ -583,8 +579,9 @@ extern "C" {
  * in Run Mode
  * @{
  */
-#define LL_PWR_SRAM4_RUN_NO_RETENTION 0U /*!< SRAM4 no retention in Run mode   \
-					  */
+#define LL_PWR_SRAM4_RUN_NO_RETENTION                                          \
+	0U /*!< SRAM4 no retention in Run mode                                 \
+	    */
 #define LL_PWR_SRAM4_RUN_FULL_RETENTION                                        \
 	PWR_CR1_SRAM4PD /*!< SRAM4 retention in Run mode    */
 /**
@@ -596,8 +593,9 @@ extern "C" {
  * in Run Mode
  * @{
  */
-#define LL_PWR_SRAM5_RUN_NO_RETENTION 0U /*!< SRAM5 no retention in Run mode   \
-					  */
+#define LL_PWR_SRAM5_RUN_NO_RETENTION                                          \
+	0U /*!< SRAM5 no retention in Run mode                                 \
+	    */
 #define LL_PWR_SRAM5_RUN_FULL_RETENTION                                        \
 	PWR_CR1_SRAM5PD /*!< SRAM5 retention in Run mode    */
 /**
@@ -610,8 +608,9 @@ extern "C" {
  * in Run Mode
  * @{
  */
-#define LL_PWR_SRAM6_RUN_NO_RETENTION 0U /*!< SRAM6 no retention in Run mode   \
-					  */
+#define LL_PWR_SRAM6_RUN_NO_RETENTION                                          \
+	0U /*!< SRAM6 no retention in Run mode                                 \
+	    */
 #define LL_PWR_SRAM6_RUN_FULL_RETENTION                                        \
 	PWR_CR1_SRAM6PD /*!< SRAM6 retention in Run mode    */
 /**
@@ -646,8 +645,9 @@ extern "C" {
  * range selection
  * @{
  */
-#define LL_PWR_REGU_VOLTAGE_SCALE1 PWR_VOSR_VOS /*!< Voltage scaling range 1   \
-						 */
+#define LL_PWR_REGU_VOLTAGE_SCALE1                                             \
+	PWR_VOSR_VOS /*!< Voltage scaling range 1                              \
+		      */
 #define LL_PWR_REGU_VOLTAGE_SCALE2                                             \
 	PWR_VOSR_VOS_1 /*!< Voltage scaling range 2 */
 #define LL_PWR_REGU_VOLTAGE_SCALE3                                             \
@@ -799,20 +799,19 @@ extern "C" {
 #define LL_PWR_WAKEUP_PIN8_SEC                                                 \
 	PWR_SECCFGR_WUP8SEC /*!< Wake up pin 8 secure mode             */
 
-#define LL_PWR_LPM_NSEC 0U /*!< Low-power modes nsecure mode */
-#define LL_PWR_LPM_SEC                                                         \
-	PWR_SECCFGR_LPMSEC /*!< Low-power modes secure mode */
-#define LL_PWR_VDM_NSEC 0U /*!< Voltage detection and monitoring nsecure mode  \
-			    */
+#define LL_PWR_LPM_NSEC 0U		  /*!< Low-power modes nsecure mode */
+#define LL_PWR_LPM_SEC PWR_SECCFGR_LPMSEC /*!< Low-power modes secure mode */
+#define LL_PWR_VDM_NSEC                                                        \
+	0U /*!< Voltage detection and monitoring nsecure mode                  \
+	    */
 #define LL_PWR_VDM_SEC                                                         \
 	PWR_SECCFGR_VDMSEC /*!< Voltage detection and monitoring secure mode   \
 			    */
 #define LL_PWR_VB_NSEC 0U  /*!< Backup domain nsecure mode  */
-#define LL_PWR_VB_SEC                                                          \
-	PWR_SECCFGR_VBSEC  /*!< Backup domain secure mode  */
-#define LL_PWR_APC_NSEC 0U /*!< Pull-up/pull-down nsecure mode */
-#define LL_PWR_APC_SEC                                                         \
-	PWR_SECCFGR_APCSEC /*!< Pull-up/pull-down secure mode */
+#define LL_PWR_VB_SEC PWR_SECCFGR_VBSEC	  /*!< Backup domain secure mode  */
+#define LL_PWR_APC_NSEC 0U		  /*!< Pull-up/pull-down nsecure mode */
+#define LL_PWR_APC_SEC PWR_SECCFGR_APCSEC /*!< Pull-up/pull-down secure mode   \
+					   */
 /**
  * @}
  */

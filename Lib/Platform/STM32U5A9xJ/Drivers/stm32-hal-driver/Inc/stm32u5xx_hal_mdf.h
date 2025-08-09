@@ -260,8 +260,8 @@ typedef struct {
 					MDF_SadHangoverWindow */
 	uint32_t
 	    LearningFrames;	    /*!< Number of learning frames for the first
-				       estimation of noise level.	 This parameter can be
-				       a value of @ref MDF_SadLearningFrames */
+				       estimation of noise level.	 This parameter
+				       can be	 a value of @ref MDF_SadLearningFrames */
 	uint32_t AmbientNoiseSlope; /*!< Ambient noise slope control.
 					 This parameter must be a number between
 				       Min_Data = 0 and Max_Data = 7.
@@ -394,10 +394,11 @@ typedef struct {
 				     This parameter must be a number between
 				   Min_Data = 1 and Max_Data = 32 */
 	int32_t
-	    HighThreshold;	 /*!< Out-off limit detector high threshold.
-				      This parameter must be a number between Min_Data
-				    = -33554432       and Max_Data = 33554431 */
-	int32_t LowThreshold;	 /*!< Out-off limit detector low threshold.
+	    HighThreshold; /*!< Out-off limit detector high threshold.
+				This parameter must be a number between Min_Data
+			      = -33554432       and Max_Data = 33554431 */
+	int32_t
+	    LowThreshold;	 /*!< Out-off limit detector low threshold.
 				      This parameter must be a number between
 				    Min_Data = -33554432    and Max_Data = 33554431 */
 	uint32_t OldEventConfig; /*!< Out-off limit event configuration.
@@ -709,15 +710,18 @@ typedef struct {
  * frames
  * @{
  */
-#define MDF_SAD_LEARNING_2_FRAMES 0x00000000U	      /*!< 2 learning frames */
-#define MDF_SAD_LEARNING_4_FRAMES MDF_SADCFGR_LFRNB_0 /*!< 4 learning frames   \
-						       */
-#define MDF_SAD_LEARNING_8_FRAMES MDF_SADCFGR_LFRNB_1 /*!< 8 learning frames   \
-						       */
+#define MDF_SAD_LEARNING_2_FRAMES 0x00000000U /*!< 2 learning frames */
+#define MDF_SAD_LEARNING_4_FRAMES                                              \
+	MDF_SADCFGR_LFRNB_0 /*!< 4 learning frames                             \
+			     */
+#define MDF_SAD_LEARNING_8_FRAMES                                              \
+	MDF_SADCFGR_LFRNB_1 /*!< 8 learning frames                             \
+			     */
 #define MDF_SAD_LEARNING_16_FRAMES                                             \
-	(MDF_SADCFGR_LFRNB_0 | MDF_SADCFGR_LFRNB_1)  /*!< 16 learning frames */
-#define MDF_SAD_LEARNING_32_FRAMES MDF_SADCFGR_LFRNB /*!< 32 learning frames   \
-						      */
+	(MDF_SADCFGR_LFRNB_0 | MDF_SADCFGR_LFRNB_1) /*!< 16 learning frames */
+#define MDF_SAD_LEARNING_32_FRAMES                                             \
+	MDF_SADCFGR_LFRNB /*!< 32 learning frames                              \
+			   */
 /**
  * @}
  */

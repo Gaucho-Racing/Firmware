@@ -150,8 +150,7 @@ typedef struct
 			 */
 #define RAMCFG_FLAG_DOUBLEERR                                                  \
 	RAMCFG_ISR_DED /*!< RAMCFG Double Error Detected Flag               */
-#define RAMCFG_FLAG_SRAMBUSY                                                   \
-	RAMCFG_ISR_SRAMBUSY /*!< RAMCFG SRAM busy Flag */
+#define RAMCFG_FLAG_SRAMBUSY RAMCFG_ISR_SRAMBUSY /*!< RAMCFG SRAM busy Flag */
 #define RAMCFG_FLAGS_ALL                                                       \
 	(RAMCFG_ISR_SEDC | RAMCFG_ISR_DED |                                    \
 	 RAMCFG_ISR_SRAMBUSY) /*!< RAMCFG All Flags */

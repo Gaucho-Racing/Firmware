@@ -50,7 +50,7 @@ typedef enum {
 	    0x00U, /*!< GPU2D not yet initialized or disabled      */
 	HAL_GPU2D_STATE_READY =
 	    0x01U, /*!< Peripheral Initialized and ready for use   */
-	HAL_GPU2D_STATE_BUSY = 0x02U,	 /*!< An internal process is ongoing    */
+	HAL_GPU2D_STATE_BUSY = 0x02U, /*!< An internal process is ongoing    */
 	HAL_GPU2D_STATE_TIMEOUT = 0x03U, /*!< Timeout state */
 	HAL_GPU2D_STATE_ERROR = 0x04U
 } HAL_GPU2D_StateTypeDef;
@@ -148,8 +148,9 @@ typedef void (*pGPU2D_CommandListCpltCallbackTypeDef)(
  * @brief GPU2D Flags definition
  * @{
  */
-#define GPU2D_FLAG_CLC 0x00000001U /*!< Command List Complete Interrupt Flag   \
-				    */
+#define GPU2D_FLAG_CLC                                                         \
+	0x00000001U /*!< Command List Complete Interrupt Flag                  \
+		     */
 /**
  * @}
  */

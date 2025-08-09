@@ -97,8 +97,9 @@ extern "C" {
  */
 #define LL_DCACHE_IER_BSYENDIE DCACHE_IER_BSYENDIE /*!< Busy end interrupt */
 #define LL_DCACHE_IER_ERRIE DCACHE_IER_ERRIE	   /*!< Cache error interrupt */
-#define LL_DCACHE_IER_CMDENDIE DCACHE_IER_CMDENDIE /*!< Command end interrupt  \
-						    */
+#define LL_DCACHE_IER_CMDENDIE                                                 \
+	DCACHE_IER_CMDENDIE /*!< Command end interrupt                         \
+			     */
 /**
  * @}
  */
@@ -106,8 +107,9 @@ extern "C" {
 /** @defgroup DCACHE_Monitor_Type Monitor type
  * @{
  */
-#define LL_DCACHE_MONITOR_READ_HIT DCACHE_CR_RHITMEN /*!< Read Hit monitoring  \
-						      */
+#define LL_DCACHE_MONITOR_READ_HIT                                             \
+	DCACHE_CR_RHITMEN /*!< Read Hit monitoring                             \
+			   */
 #define LL_DCACHE_MONITOR_READ_MISS                                            \
 	DCACHE_CR_RMISSMEN /*!< Read Miss monitoring */
 #define LL_DCACHE_MONITOR_WRITE_HIT                                            \

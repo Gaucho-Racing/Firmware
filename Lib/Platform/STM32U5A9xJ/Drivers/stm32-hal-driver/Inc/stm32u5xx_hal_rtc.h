@@ -191,14 +191,15 @@ typedef struct {
 				       @ref
 				   RTC_Alarm_Sub_Seconds_Masks_Definitions */
 
-	uint32_t BinaryAutoClr; /*!< Clear synchronously counter (RTC_SSR) on
-				   binary alarm.
-				     RTC_ALARMSUBSECONDBIN_AUTOCLR_YES must only
-				   be used if Binary mode is RTC_BINARY_ONLY
-				     This parameter can be a value of
-				     @ref
-				   RTCEx_Alarm_Sub_Seconds_binary_Clear_Definitions
-				 */
+	uint32_t
+	    BinaryAutoClr; /*!< Clear synchronously counter (RTC_SSR) on
+			      binary alarm.
+				RTC_ALARMSUBSECONDBIN_AUTOCLR_YES must only
+			      be used if Binary mode is RTC_BINARY_ONLY
+				This parameter can be a value of
+				@ref
+			      RTCEx_Alarm_Sub_Seconds_binary_Clear_Definitions
+			    */
 
 	uint32_t
 	    AlarmDateWeekDaySel; /*!< Specifies the RTC Alarm is on Date or
@@ -334,12 +335,12 @@ typedef enum {
 	    2U, /*!< RTC TimeStamp Event Callback ID     */
 	HAL_RTC_WAKEUPTIMER_EVENT_CB_ID =
 	    3U, /*!< RTC WakeUp Timer Event Callback ID  */
-	HAL_RTC_SSRU_EVENT_CB_ID = 4U,	   /*!< RTC SSRU Event Callback ID     */
-	HAL_RTC_TAMPER1_EVENT_CB_ID = 5U,  /*!< RTC Tamper 1 Callback ID  */
-	HAL_RTC_TAMPER2_EVENT_CB_ID = 6U,  /*!< RTC Tamper 2 Callback ID  */
-	HAL_RTC_TAMPER3_EVENT_CB_ID = 7U,  /*!< RTC Tamper 3 Callback ID  */
-	HAL_RTC_TAMPER4_EVENT_CB_ID = 8U,  /*!< RTC Tamper 4 Callback ID  */
-	HAL_RTC_TAMPER5_EVENT_CB_ID = 9U,  /*!< RTC Tamper 5 Callback ID  */
+	HAL_RTC_SSRU_EVENT_CB_ID = 4U,	  /*!< RTC SSRU Event Callback ID     */
+	HAL_RTC_TAMPER1_EVENT_CB_ID = 5U, /*!< RTC Tamper 1 Callback ID  */
+	HAL_RTC_TAMPER2_EVENT_CB_ID = 6U, /*!< RTC Tamper 2 Callback ID  */
+	HAL_RTC_TAMPER3_EVENT_CB_ID = 7U, /*!< RTC Tamper 3 Callback ID  */
+	HAL_RTC_TAMPER4_EVENT_CB_ID = 8U, /*!< RTC Tamper 4 Callback ID  */
+	HAL_RTC_TAMPER5_EVENT_CB_ID = 9U, /*!< RTC Tamper 5 Callback ID  */
 	HAL_RTC_TAMPER6_EVENT_CB_ID = 10U, /*!< RTC Tamper 6 Callback ID */
 	HAL_RTC_TAMPER7_EVENT_CB_ID = 11U, /*!< RTC Tamper 7 Callback ID */
 	HAL_RTC_TAMPER8_EVENT_CB_ID = 12U, /*!< RTC Tamper 8 Callback ID */

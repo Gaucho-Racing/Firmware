@@ -207,8 +207,9 @@ typedef struct {
  */
 #define LL_USART_ICR_PECF USART_ICR_PECF /*!< Parity error clear flag */
 #define LL_USART_ICR_FECF USART_ICR_FECF /*!< Framing error clear flag */
-#define LL_USART_ICR_NECF USART_ICR_NECF /*!< Noise error detected clear flag  \
-					  */
+#define LL_USART_ICR_NECF                                                      \
+	USART_ICR_NECF /*!< Noise error detected clear flag                    \
+			*/
 #define LL_USART_ICR_ORECF USART_ICR_ORECF /*!< Overrun error clear flag */
 #define LL_USART_ICR_IDLECF                                                    \
 	USART_ICR_IDLECF /*!< Idle line detected clear flag */
@@ -223,9 +224,10 @@ typedef struct {
 #define LL_USART_ICR_CTSCF USART_ICR_CTSCF /*!< CTS clear flag */
 #define LL_USART_ICR_RTOCF USART_ICR_RTOCF /*!< Receiver timeout clear flag */
 #define LL_USART_ICR_EOBCF USART_ICR_EOBCF /*!< End of block clear flag */
-#define LL_USART_ICR_UDRCF USART_ICR_UDRCF /*!< SPI Slave Underrun clear flag  \
-					    */
-#define LL_USART_ICR_CMCF USART_ICR_CMCF   /*!< Character match clear flag */
+#define LL_USART_ICR_UDRCF                                                     \
+	USART_ICR_UDRCF			 /*!< SPI Slave Underrun clear flag    \
+					  */
+#define LL_USART_ICR_CMCF USART_ICR_CMCF /*!< Character match clear flag */
 /**
  * @}
  */
@@ -293,8 +295,9 @@ typedef struct {
 	USART_CR1_CMIE /*!< Character match interrupt enable */
 #define LL_USART_CR1_RTOIE                                                     \
 	USART_CR1_RTOIE /*!< Receiver timeout interrupt enable */
-#define LL_USART_CR1_EOBIE USART_CR1_EOBIE /*!< End of Block interrupt enable  \
-					    */
+#define LL_USART_CR1_EOBIE                                                     \
+	USART_CR1_EOBIE /*!< End of Block interrupt enable                     \
+			 */
 #define LL_USART_CR1_TXFEIE                                                    \
 	USART_CR1_TXFEIE /*!< TX FIFO empty interrupt enable */
 #define LL_USART_CR1_RXFFIE                                                    \

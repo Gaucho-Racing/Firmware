@@ -61,7 +61,7 @@ typedef enum {
 	HAL_HASH_STATE_RESET = 0x00U, /*!< Peripheral is not initialized */
 	HAL_HASH_STATE_READY =
 	    0x01U, /*!< Peripheral Initialized and ready for use */
-	HAL_HASH_STATE_BUSY = 0x02U,	 /*!< Processing (hashing) is ongoing     */
+	HAL_HASH_STATE_BUSY = 0x02U, /*!< Processing (hashing) is ongoing     */
 	HAL_HASH_STATE_TIMEOUT = 0x06U,	 /*!< Timeout state  */
 	HAL_HASH_STATE_ERROR = 0x07U,	 /*!< Error state    */
 	HAL_HASH_STATE_SUSPENDED = 0x08U /*!< Suspended state */
@@ -207,11 +207,12 @@ typedef void (*pHASH_CallbackTypeDef)(
 /** @defgroup HASH_Algo_Selection   HASH algorithm selection
  * @{
  */
-#define HASH_ALGOSELECTION_SHA1 0x00000000U	 /*!< HASH function is SHA1   */
-#define HASH_ALGOSELECTION_MD5 HASH_CR_ALGO_0	 /*!< HASH function is MD5    */
-#define HASH_ALGOSELECTION_SHA224 HASH_CR_ALGO_1 /*!< HASH function is SHA224  \
-						  */
-#define HASH_ALGOSELECTION_SHA256 HASH_CR_ALGO	 /*!< HASH function is SHA256 */
+#define HASH_ALGOSELECTION_SHA1 0x00000000U   /*!< HASH function is SHA1   */
+#define HASH_ALGOSELECTION_MD5 HASH_CR_ALGO_0 /*!< HASH function is MD5    */
+#define HASH_ALGOSELECTION_SHA224                                              \
+	HASH_CR_ALGO_1			       /*!< HASH function is SHA224    \
+						*/
+#define HASH_ALGOSELECTION_SHA256 HASH_CR_ALGO /*!< HASH function is SHA256 */
 /**
  * @}
  */
@@ -257,8 +258,7 @@ typedef void (*pHASH_CallbackTypeDef)(
 #define HASH_FLAG_DINIS                                                        \
 	HASH_SR_DINIS /*!< 16 locations are free in the DIN : a new block can  \
 			 be entered in the Peripheral */
-#define HASH_FLAG_DCIS                                                         \
-	HASH_SR_DCIS /*!< Digest calculation complete */
+#define HASH_FLAG_DCIS HASH_SR_DCIS /*!< Digest calculation complete */
 #define HASH_FLAG_DMAS                                                         \
 	HASH_SR_DMAS /*!< DMA interface is enabled (DMAE=1) or a transfer is   \
 			ongoing                      */
@@ -278,8 +278,7 @@ typedef void (*pHASH_CallbackTypeDef)(
 #define HASH_IT_DINI                                                           \
 	HASH_IMR_DINIE /*!< A new block can be entered into the input buffer   \
 			  (DIN) */
-#define HASH_IT_DCI                                                            \
-	HASH_IMR_DCIE /*!< Digest calculation complete */
+#define HASH_IT_DCI HASH_IMR_DCIE /*!< Digest calculation complete */
 
 /**
  * @}

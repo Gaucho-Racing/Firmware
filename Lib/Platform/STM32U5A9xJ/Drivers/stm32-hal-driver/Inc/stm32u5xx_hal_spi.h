@@ -114,21 +114,23 @@ typedef struct {
 				       This parameter can be a value of @ref
 				   SPI_Fifo_Threshold */
 
-	uint32_t TxCRCInitializationPattern; /*!< Specifies the transmitter CRC
-						initialization Pattern used for
-						    the CRC calculation. This
-						parameter can be a value of
-						    @ref
-						SPI_CRC_Calculation_Initialization_Pattern
-					      */
+	uint32_t
+	    TxCRCInitializationPattern; /*!< Specifies the transmitter CRC
+					   initialization Pattern used for
+					       the CRC calculation. This
+					   parameter can be a value of
+					       @ref
+					   SPI_CRC_Calculation_Initialization_Pattern
+					 */
 
-	uint32_t RxCRCInitializationPattern; /*!< Specifies the receiver CRC
-						initialization Pattern used for
-						    the CRC calculation. This
-						parameter can be a value of
-						    @ref
-						SPI_CRC_Calculation_Initialization_Pattern
-					      */
+	uint32_t
+	    RxCRCInitializationPattern; /*!< Specifies the receiver CRC
+					   initialization Pattern used for
+					       the CRC calculation. This
+					   parameter can be a value of
+					       @ref
+					   SPI_CRC_Calculation_Initialization_Pattern
+					 */
 
 	uint32_t MasterSSIdleness; /*!< Specifies an extra delay, expressed in
 				      number of SPI clock cycle periods,
@@ -679,26 +681,20 @@ typedef void (*pSPI_CallbackTypeDef)(
 /** @defgroup SPI_Flags_definition SPI Flags Definition
  * @{
  */
-#define SPI_FLAG_RXP                                                           \
-	SPI_SR_RXP /* SPI status flag : Rx-Packet available flag */
+#define SPI_FLAG_RXP SPI_SR_RXP /* SPI status flag : Rx-Packet available flag  \
+				 */
 #define SPI_FLAG_TXP                                                           \
 	SPI_SR_TXP /* SPI status flag : Tx-Packet space available flag */
-#define SPI_FLAG_DXP                                                           \
-	SPI_SR_DXP /* SPI status flag : Duplex Packet flag */
-#define SPI_FLAG_EOT                                                           \
-	SPI_SR_EOT /* SPI status flag : End of transfer flag */
+#define SPI_FLAG_DXP SPI_SR_DXP /* SPI status flag : Duplex Packet flag */
+#define SPI_FLAG_EOT SPI_SR_EOT /* SPI status flag : End of transfer flag */
 #define SPI_FLAG_TXTF                                                          \
 	SPI_SR_TXTF /* SPI status flag : Transmission Transfer Filled flag */
-#define SPI_FLAG_UDR                                                           \
-	SPI_SR_UDR /* SPI Error flag  : Underrun flag */
-#define SPI_FLAG_OVR                                                           \
-	SPI_SR_OVR /* SPI Error flag  : Overrun flag */
-#define SPI_FLAG_CRCERR                                                        \
-	SPI_SR_CRCE /* SPI Error flag  : CRC error flag */
+#define SPI_FLAG_UDR SPI_SR_UDR	    /* SPI Error flag  : Underrun flag */
+#define SPI_FLAG_OVR SPI_SR_OVR	    /* SPI Error flag  : Overrun flag */
+#define SPI_FLAG_CRCERR SPI_SR_CRCE /* SPI Error flag  : CRC error flag */
 #define SPI_FLAG_FRE                                                           \
 	SPI_SR_TIFRE /* SPI Error flag  : TI mode frame format error flag */
-#define SPI_FLAG_MODF                                                          \
-	SPI_SR_MODF /* SPI Error flag  : Mode fault flag */
+#define SPI_FLAG_MODF SPI_SR_MODF /* SPI Error flag  : Mode fault flag */
 #define SPI_FLAG_SUSP                                                          \
 	SPI_SR_SUSP /* SPI status flag : Transfer suspend complete flag */
 #define SPI_FLAG_TXC                                                           \
