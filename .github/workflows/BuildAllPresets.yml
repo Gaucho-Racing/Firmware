@@ -15,6 +15,7 @@ jobs:
     name: Configure and Build
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         prefix: [ "HOOTLTest", "Debug", "Release", "MinSizeRel", "RelWithDebInfo" ]
     steps:
