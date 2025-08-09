@@ -2830,8 +2830,9 @@ typedef struct {
 
 /* Function Return Payload (from ARMv8-M Architecture Reference Manual) LR value
  * on entry from Secure BLXNS                   */
-#define FNC_RETURN (0xFEFFFFFFUL) /* bit [0] ignored when processing a branch  \
-				   */
+#define FNC_RETURN                                                             \
+	(0xFEFFFFFFUL) /* bit [0] ignored when processing a branch             \
+			*/
 
 /* The following EXC_RETURN mask values are used to evaluate the LR on exception
  * entry */
