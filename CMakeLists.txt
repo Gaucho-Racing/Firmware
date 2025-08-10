@@ -20,7 +20,6 @@ set(lib_path "Lib")
 set(platform_path "${lib_path}/Platform")
 
 include(${platform_path}/STM32G474xE/chip.cmake)
-include(${platform_path}/STM32U5A9xJ/chip.cmake)
 include(${lib_path}/cmake/gr-lib.cmake)
 
 project(${CMAKE_PROJECT_NAME})
@@ -32,7 +31,7 @@ enable_language(C ASM)
 message("Build type: " ${CMAKE_BUILD_TYPE})
 
 add_GR_project(STM32G474xE G4BLINKY)
-add_GR_project(STM32U5A9xJ U5BLINKY)
+
 add_GR_project(STM32G474xE ACU)
 
 endif()

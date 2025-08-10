@@ -10,36 +10,33 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Debug")
 endif()
 
-# what, does in fact not get the filename of somthing but rather the name of the project from the path
-get_filename_component(GR_PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
-
 if(CMAKE_BUILD_TYPE STREQUAL "Test")
     include_directories(
         Application/Inc
         Core/Inc
     )
     
-    add_executable(${GR_PROJECT_NAME}_basic_application_hootl_test
+    add_executable(basic_application_hootl_test
         Application/Test/basic_application_hootl_test.c
     )
-    add_test(${GR_PROJECT_NAME}_basic_app ${GR_PROJECT_NAME}_basic_application_hootl_test)
+    add_test(basic_app basic_application_hootl_test)
 
-    add_executable(${GR_PROJECT_NAME}_advanced_application_hootl_test
+    add_executable(advanced_application_hootl_test
         Application/Test/advanced_application_hootl_test.c
         Application/Src/appdemo.c
     )
-    add_test(${GR_PROJECT_NAME}_advanced_app ${GR_PROJECT_NAME}_advanced_application_hootl_test)
+    add_test(advanced_app advanced_application_hootl_test)
 
-    add_executable(${GR_PROJECT_NAME}_basic_core_test
+    add_executable(basic_core_test
         Core/Test/basic_core_test.c
     )
-    add_test(${GR_PROJECT_NAME}_basic_core ${GR_PROJECT_NAME}_basic_core_test)
+    add_test(basic_core basic_core_test)
 
-    add_executable(${GR_PROJECT_NAME}_advanced_core_test
+    add_executable(advanced_core_test
         Core/Test/advanced_core_test.c
         Core/Src/coredemo.c
     )
-    add_test(${GR_PROJECT_NAME}_advanced_core ${GR_PROJECT_NAME}_advanced_core_test)
+    add_test(advanced_core advanced_core_test)
 endif()
 
 # Enable compile command to ease indexing with e.g. clangd
@@ -55,8 +52,11 @@ project(${CMAKE_PROJECT_NAME})
 # set(TARGET_FLAGS "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard ")
 # set_target_properties(${TARGET_NAME} PROPERTIES LINK_FLAGS "-T${CHIP_PATH}/CompileDependencies/STM32G474RETx_FLASH.ld")
 
-add_library(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
-target_sources(${GR_PROJECT_NAME}_USER_CODE INTERFACE
+# what, does in fact not get the filename of somthing but rather the name of the project from the path
+get_filename_component(PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
+
+add_library(${PROJECT_NAME}_USER_CODE INTERFACE)
+target_sources(${PROJECT_NAME}_USER_CODE INTERFACE
     Core/Src/main.c
     Core/Src/gpio.c
     Core/Src/adc.c
@@ -70,11 +70,11 @@ target_sources(${GR_PROJECT_NAME}_USER_CODE INTERFACE
     Core/Src/syscalls.c
 )
 
-target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE
+target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE
 
 )
 
-target_include_directories(${GR_PROJECT_NAME}_USER_CODE INTERFACE
+target_include_directories(${PROJECT_NAME}_USER_CODE INTERFACE
     Application/Inc
     Core/Inc
 )

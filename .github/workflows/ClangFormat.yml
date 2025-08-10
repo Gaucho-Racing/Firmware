@@ -1,6 +1,8 @@
-name: ClangFormat
+name: Clang Format
 
 on:
+  push:
+    tags-ignore: [ '**' ]
   pull_request:
   workflow_dispatch:
 
@@ -10,7 +12,6 @@ concurrency:
 
 jobs:
   clang-format:
-    name: Auto Format
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -33,7 +34,6 @@ jobs:
 
       - name: Run clang-format
         run: |
-          set -o pipefail
           find . -regex '.*\.[ch]$' | xargs clang-format -i
 
       - name: Save Changes
