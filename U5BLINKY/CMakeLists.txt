@@ -62,7 +62,7 @@ target_sources(${GR_PROJECT_NAME}_USER_CODE INTERFACE
 )
 
 target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE
-    m
+
 )
 
 target_include_directories(${GR_PROJECT_NAME}_USER_CODE INTERFACE
