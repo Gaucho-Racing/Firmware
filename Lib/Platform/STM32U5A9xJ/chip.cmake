@@ -25,7 +25,8 @@ string(SUBSTRING ${CHIP} 0 9 TEMP)  # FIXME Scary
 target_compile_definitions(${CHIP}_LIB INTERFACE
 	USE_FULL_LL_DRIVER
 	USE_HAL_DRIVER
-	STM32U599xx
+	STM32U5A9xx
+    STM32U5
 )
 
 target_include_directories(${CHIP}_LIB INTERFACE

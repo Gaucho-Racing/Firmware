@@ -27,7 +27,7 @@ target_compile_definitions(${CHIP}_LIB INTERFACE
 	USE_FULL_LL_DRIVER
 	USE_HAL_DRIVER
 	${TEMP}xx # REPLACE: Check that this either works or needs to be overwritten w/ the new
-    FIXME   # If you get a TON of legacy warnings about things then replace this with the STM32?? of the chip
+    ${TEMP} # REPLACE: If you get a TON of legacy warnings about things in stm32_hal_legacy.h then replace this with the 'STM32??' of the chip and uncomment
 )
 
 
