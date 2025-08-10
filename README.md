@@ -48,6 +48,22 @@ cmake --build build/HOOTLTest
 cd build/HOOTLTest && ctest --output-on-failure
 ```
 
+# VS Code Setup
+
+Put into `.vscode/settings.json` the following starter template:
+```json
+{
+    "files.associations": {
+        "*.h": "c",
+        "*.c": "c"
+    },
+}
+```
+
+---
+
+---
+
 ---
 
 # LEGACY ACU-25 CONTENT
