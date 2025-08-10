@@ -20,7 +20,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
         Application/Inc
         Core/Inc
     )
-    
+
     # Can have singleton files
     add_executable(basic_application_hootl_test
         Application/Test/basic_application_hootl_test.c
@@ -48,7 +48,7 @@ cmake --build build/HOOTLTest
 cd build/HOOTLTest && ctest --output-on-failure
 ```
 
-# VS Code Setup
+## VS Code Setup
 
 Put into `.vscode/settings.json` the following starter template:
 ```json
@@ -58,7 +58,14 @@ Put into `.vscode/settings.json` the following starter template:
         "*.c": "c"
     },
 }
+
 ```
+
+
+## Chip Path Contamination
+Things get moved around and we should probably have some better solution than having CHIP defined in chip.cmake and such
+
+Bad because if there is a change in one of the chip.cmake then we need to manually / physically copy it to all of the others which is not using smart thinking
 
 ---
 
@@ -100,7 +107,7 @@ Put into `.vscode/settings.json` the following starter template:
 ## Build & Debug
 - Press Build
 - Press Debug
-    - if Debug doesn't work, open terminal in VSCode and run 
+    - if Debug doesn't work, open terminal in VSCode and run
     - `openocd -f interface/stlink.cfg -f target/stm32g4x.cfg -c "program build/Debug/ACU-25.elf verify reset exit"`
     - if it still doesn't work, try removing the 'build' folder and configuring and rebuilding, sometimes cache stuff can screw u over
 
