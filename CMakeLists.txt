@@ -33,3 +33,6 @@ message("Build type: " ${CMAKE_BUILD_TYPE})
 
 add_GR_project(STM32G474xE G4BLINKY)
 add_GR_project(STM32U5A9xJ U5BLINKY)
+add_GR_project(STM32G474xE ACU)
+
+endif()
