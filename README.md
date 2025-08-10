@@ -8,6 +8,69 @@
 - Each project needs it's own directory where the name of the directory is the name of the project/executable
   - this is because I am lazy and wanted to hardcode stuff for `add_GR_project` (see `gr-lib.cmake`)
 
+If you do not want GitHub Action emails please turn off notifications on your side. See something like https://stackoverflow.com/q/66116203
+
+# Testing
+
+## Setup
+While setting up your project using `add_GR_project`, have something that looks like this inside of your project's top level CMakeFile.txt
+```cmake
+if(CMAKE_BUILD_TYPE STREQUAL "Test")
+    include_directories(
+        Application/Inc
+        Core/Inc
+    )
+
+    # Can have singleton files
+    add_executable(basic_application_hootl_test
+        Application/Test/basic_application_hootl_test.c
+    )
+    add_test(basic_app basic_application_hootl_test)
+
+    # Can link files
+    add_executable(advanced_application_hootl_test
+        Application/Test/advanced_application_hootl_test.c
+        Application/Src/appdemo.c
+    )
+    add_test(advanced_app advanced_application_hootl_test)
+
+    ...
+endif()
+```
+
+Setup each of the executables as an independent program with their own `int main(int argc, char *argv[])` that links from other files as needed.
+
+## Running
+
+```bash
+cmake --preset HOOTLTest
+cmake --build build/HOOTLTest
+cd build/HOOTLTest && ctest --output-on-failure
+```
+
+## VS Code Setup
+
+Put into `.vscode/settings.json` the following starter template:
+```json
+{
+    "files.associations": {
+        "*.h": "c",
+        "*.c": "c"
+    },
+}
+
+```
+
+
+## Chip Path Contamination
+Things get moved around and we should probably have some better solution than having CHIP defined in chip.cmake and such
+
+Bad because if there is a change in one of the chip.cmake then we need to manually / physically copy it to all of the others which is not using smart thinking
+
+---
+
+---
+
 ---
 
 # LEGACY ACU-25 CONTENT
@@ -44,7 +107,7 @@
 ## Build & Debug
 - Press Build
 - Press Debug
-    - if Debug doesn't work, open terminal in VSCode and run 
+    - if Debug doesn't work, open terminal in VSCode and run
     - `openocd -f interface/stlink.cfg -f target/stm32g4x.cfg -c "program build/Debug/ACU-25.elf verify reset exit"`
     - if it still doesn't work, try removing the 'build' folder and configuring and rebuilding, sometimes cache stuff can screw u over
 

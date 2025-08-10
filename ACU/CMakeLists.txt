@@ -28,7 +28,7 @@ get_filename_component(PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 add_library(${PROJECT_NAME}_USER_CODE INTERFACE)
 
 # provided by the ACU-25 CMakeLists.txt
-target_compile_options(${PROJECT_NAME} PRIVATE -Wno-unused-parameter -Wno-pedantic -Wtrigraphs -Wno-dev)
+target_compile_options(${PROJECT_NAME}_USER_CODE INTERFACE -Wno-unused-parameter -Wno-pedantic -Wtrigraphs -Wno-dev)
 
 target_sources(${PROJECT_NAME}_USER_CODE INTERFACE
     Core/Src/adc.c

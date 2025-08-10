@@ -1,18 +1,33 @@
 set(CHIP "STM32G474xE")
 set(CHIP_PATH "${CMAKE_SOURCE_DIR}/Lib/Platform/${CHIP}")
-
 set(TARGET_FLAGS "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard")
+
+function(add_executable_${CHIP} TARGET_NAME)
+
+set(CHIP "STM32G474xE")
+set(CHIP_PATH "${CMAKE_SOURCE_DIR}/Lib/Platform/${CHIP}")
+set(TARGET_FLAGS "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard")
+add_executable(${TARGET_NAME})
+set_target_properties(${TARGET_NAME} PROPERTIES LINK_FLAGS "-T${CHIP_PATH}/CompileDependencies/STM32G474RETx_FLASH.ld")
+
+# Cleanup
+set(CHIP "YOUHAVENOTCONFIGUREDCHIPRIGHT!")
+set(CHIP_PATH "YOUHAVENOTCONFIGUREDCHIPPATHRIGHT!")
+set(TARGET_FLAGS "YOUHAVENOTCONFIGUREDTARGETFLAGSRIGHT!")
+
+endfunction()
 
 add_library(${CHIP}_LIB INTERFACE)
 
 # enable_language(C ASM)
 
 # used to strip the last 2 characters of CHIP to make the compile def
-string(SUBSTRING ${CHIP} 0 9 TEMP)  # Scary
-target_compile_definitions(${CHIP}_LIB INTERFACE 
+string(SUBSTRING ${CHIP} 0 9 TEMP)  # FIXME Scary
+target_compile_definitions(${CHIP}_LIB INTERFACE
 	USE_FULL_LL_DRIVER
 	USE_HAL_DRIVER
 	${TEMP}xx
+    STM32G4
 )
 
 
@@ -111,14 +126,3 @@ target_sources(${CHIP}_LIB INTERFACE
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_usb.c
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_utils.c
 )
-
-
-function(add_executable_${CHIP} TARGET_NAME)
-
-set(TARGET_FLAGS "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard")
-
-add_executable(${TARGET_NAME})
-
-set_target_properties(${TARGET_NAME} PROPERTIES LINK_FLAGS "-T${CHIP_PATH}/CompileDependencies/STM32G474RETx_FLASH.ld")
-
-endfunction()
