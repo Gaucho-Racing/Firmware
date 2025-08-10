@@ -424,20 +424,20 @@ typedef struct {
 			   synchronization event is generated. This parameter
 			   can be any value of @ref HRTIM_DAC_Synchronization */
 	uint32_t
-	    PreloadEnable; /*!< Relevant for all HRTIM timers, including the
-			      master. Specifies whether or not register preload
-			      is enabled. This parameter can be any value of
-			      @ref HRTIM_Register_Preload_Enable  */
-	uint32_t
-	    UpdateGating;   /*!< Relevant for all HRTIM timers, including the
-			       master.   Specifies how the update occurs with
-			       respect to a burst DMA transaction or   update
-			       enable   inputs (Slave timers only).   This parameter
-			       can be   any value of @ref HRTIM_Update_Gating   */
-	uint32_t BurstMode; /*!< Relevant for all HRTIM timers, including the
-			       master. Specifies how the timer behaves during a
-			       burst mode operation. This parameter can be any
-			       value of @ref HRTIM_Timer_Burst_Mode  */
+	    PreloadEnable;     /*!< Relevant for all HRTIM timers, including the
+				  master. Specifies whether or not register preload
+				  is enabled. This parameter can be any value of
+				  @ref HRTIM_Register_Preload_Enable  */
+	uint32_t UpdateGating; /*!< Relevant for all HRTIM timers, including the
+				  master.   Specifies how the update occurs with
+				  respect to a burst DMA transaction or   update
+				  enable   inputs (Slave timers only).   This
+				  parameter can be   any value of @ref
+				  HRTIM_Update_Gating   */
+	uint32_t BurstMode;    /*!< Relevant for all HRTIM timers, including the
+				  master. Specifies how the timer behaves during a
+				  burst mode operation. This parameter can be any
+				  value of @ref HRTIM_Timer_Burst_Mode  */
 	uint32_t
 	    RepetitionUpdate; /*!< Relevant for all HRTIM timers, including the
 				 master. Specifies whether or not registers

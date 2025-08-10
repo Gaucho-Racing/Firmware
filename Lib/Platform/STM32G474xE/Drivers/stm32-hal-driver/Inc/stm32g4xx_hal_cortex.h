@@ -71,12 +71,13 @@ typedef struct {
 	uint8_t DisableExec;	  /*!< Specifies the instruction access status.
 				       This parameter can be a value of @ref
 				     CORTEX_MPU_Instruction_Access            */
-	uint8_t IsShareable;	  /*!< Specifies the shareability status of the
-				     protected region.      This parameter can be a
-				     value      of @ref CORTEX_MPU_Access_Shareable      */
+	uint8_t
+	    IsShareable;      /*!< Specifies the shareability status of the
+				 protected region.      This parameter can be a
+				 value      of @ref CORTEX_MPU_Access_Shareable      */
 	uint8_t IsCacheable;  /*!< Specifies the cacheable status of the region
 				 protected.  This parameter can be a value of
-				 @ref  CORTEX_MPU_Access_Cacheable              */
+				 @ref  CORTEX_MPU_Access_Cacheable  */
 	uint8_t IsBufferable; /*!< Specifies the bufferable status of the
 				 protected region. This parameter can be a value
 				 of @ref CORTEX_MPU_Access_Bufferable */
