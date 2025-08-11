@@ -28,8 +28,8 @@ jobs:
           packages: cmake build-essential gcc-arm-none-eabi
           execute_install_scripts: true
 
-      # - name: Install Apt Packages
-      #   run: sudo apt install cmake build-essential gcc-arm-none-eabi
+      - name: Configure Arm Includes
+        run: sudo apt install gcc-arm-none-eabi
 
       - name: CMake Configuration
         run: |
