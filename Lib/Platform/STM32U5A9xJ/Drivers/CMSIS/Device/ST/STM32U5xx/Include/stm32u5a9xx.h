@@ -2625,17 +2625,17 @@ typedef struct {
 	__IO uint32_t JSQR;             /*!< ADC injected sequence register,                    Address offset: 0x4C */ /* Specific to ADC 14Bits*/
 	uint32_t RESERVED2[4]; /*!< Reserved, 0x050 - 0x05C */
 	__IO uint32_t OFR1;
-	    /*!< ADC offset register 1, Address offset: 0x60 */ /* Specific to
-								   ADC 14Bits*/
+	/*!< ADC offset register 1, Address offset: 0x60 */ /* Specific to
+							       ADC 14Bits*/
 	__IO uint32_t OFR2;
-	    /*!< ADC offset register 2, Address offset: 0x64 */ /* Specific to
-								   ADC 14Bits*/
+	/*!< ADC offset register 2, Address offset: 0x64 */ /* Specific to
+							       ADC 14Bits*/
 	__IO uint32_t OFR3;
-	    /*!< ADC offset register 3, Address offset: 0x68 */ /* Specific to
-								   ADC 14Bits*/
+	/*!< ADC offset register 3, Address offset: 0x68 */ /* Specific to
+							       ADC 14Bits*/
 	__IO uint32_t OFR4;
-	    /*!< ADC offset register 4, Address offset: 0x6C */ /* Specific to
-								   ADC 14Bits*/
+	/*!< ADC offset register 4, Address offset: 0x6C */ /* Specific to
+							       ADC 14Bits*/
 	__IO uint32_t GCOMP;            /*!< ADC gain compensation register,                    Address offset: 0x70 */ /* Specific to ADC 14Bits*/
 	uint32_t RESERVED3[3]; /*!< Reserved, 0x074 - 0x07C */
 	__IO uint32_t JDR1;             /*!< ADC injected data register 1,                      Address offset: 0x80 */ /* Specific to ADC 14Bits*/
@@ -2659,8 +2659,8 @@ typedef struct {
 	__IO uint32_t CALFACT2;         /*!< ADC  Linearity Calibration Factors,                Address offset: 0xC8 */ /* Specific to ADC 14Bits*/
 	uint32_t RESERVED5; /*!< Reserved, 0x0CC */
 	__IO uint32_t OR;
-	    /*!< ADC  Option Register,   Address offset: 0xD0 */ /* Specific to
-								    ADC 12Bits*/
+	/*!< ADC  Option Register,   Address offset: 0xD0 */ /* Specific to
+								ADC 12Bits*/
 } ADC_TypeDef;
 
 typedef struct {
@@ -2854,8 +2854,9 @@ typedef struct {
 	(0x28000000UL) /*!< SRAM4 (16 KB) non-secure base address */
 #define SRAM5_BASE_NS                                                          \
 	(0x201A0000UL) /*!< SRAM5 (832 KB) non-secure base address */
-#define PERIPH_BASE_NS (0x40000000UL) /*!< Peripheral non-secure base address  \
-				       */
+#define PERIPH_BASE_NS                                                         \
+	(0x40000000UL) /*!< Peripheral non-secure base address                 \
+			*/
 
 /* Peripheral memory map - Non secure */
 #define APB1PERIPH_BASE_NS PERIPH_BASE_NS
@@ -9654,8 +9655,9 @@ typedef struct {
 #define DMA_CCR_SUSP DMA_CCR_SUSP_Msk		     /*!< Channel suspend */
 #define DMA_CCR_TCIE_Pos (8UL)
 #define DMA_CCR_TCIE_Msk (0x1UL << DMA_CCR_TCIE_Pos) /*!< 0x00000100 */
-#define DMA_CCR_TCIE DMA_CCR_TCIE_Msk /*!< Transfer complete interrupt enable  \
-				       */
+#define DMA_CCR_TCIE                                                           \
+	DMA_CCR_TCIE_Msk /*!< Transfer complete interrupt enable               \
+			  */
 #define DMA_CCR_HTIE_Pos (9UL)
 #define DMA_CCR_HTIE_Msk (0x1UL << DMA_CCR_HTIE_Pos) /*!< 0x00000200 */
 #define DMA_CCR_HTIE                                                           \
@@ -9690,10 +9692,11 @@ typedef struct {
 	DMA_CCR_LAP_Msk /*!< Linked-list allocated port                     */
 #define DMA_CCR_PRIO_Pos (22UL)
 #define DMA_CCR_PRIO_Msk (0x3UL << DMA_CCR_PRIO_Pos) /*!< 0x00C00000 */
-#define DMA_CCR_PRIO DMA_CCR_PRIO_Msk		     /*!< Priority level       \
-						      */
-#define DMA_CCR_PRIO_0 (0x1UL << DMA_CCR_PRIO_Pos)   /*!< 0x00400000 */
-#define DMA_CCR_PRIO_1 (0x2UL << DMA_CCR_PRIO_Pos)   /*!< 0x00800000 */
+#define DMA_CCR_PRIO                                                           \
+	DMA_CCR_PRIO_Msk			   /*!< Priority level         \
+						    */
+#define DMA_CCR_PRIO_0 (0x1UL << DMA_CCR_PRIO_Pos) /*!< 0x00400000 */
+#define DMA_CCR_PRIO_1 (0x2UL << DMA_CCR_PRIO_Pos) /*!< 0x00800000 */
 
 /*******************  Bit definition for DMA_CTR1 register  *******************/
 #define DMA_CTR1_SDW_LOG2_Pos (0UL)
@@ -9878,8 +9881,9 @@ typedef struct {
 	DMA_CLLR_USA_Msk /*!< Update source address register from SRAM */
 #define DMA_CLLR_UB1_Pos (29UL)
 #define DMA_CLLR_UB1_Msk (0x1UL << DMA_CLLR_UB1_Pos) /*!< 0x20000000 */
-#define DMA_CLLR_UB1 DMA_CLLR_UB1_Msk /*!< Update block register 1 from SRAM   \
-				       */
+#define DMA_CLLR_UB1                                                           \
+	DMA_CLLR_UB1_Msk /*!< Update block register 1 from SRAM                \
+			  */
 #define DMA_CLLR_UT2_Pos (30UL)
 #define DMA_CLLR_UT2_Msk (0x1UL << DMA_CLLR_UT2_Pos) /*!< 0x40000000 */
 #define DMA_CLLR_UT2                                                           \
@@ -22359,10 +22363,11 @@ typedef struct {
 #define SDMMC_CMD_BOOTMODE SDMMC_CMD_BOOTMODE_Msk /*!<Boot mode */
 #define SDMMC_CMD_BOOTEN_Pos (15UL)
 #define SDMMC_CMD_BOOTEN_Msk                                                   \
-	(0x1UL << SDMMC_CMD_BOOTEN_Pos)	      /*!< 0x00008000                  \
-					       */
-#define SDMMC_CMD_BOOTEN SDMMC_CMD_BOOTEN_Msk /*!<Enable Boot mode procedure   \
-					       */
+	(0x1UL << SDMMC_CMD_BOOTEN_Pos) /*!< 0x00008000                        \
+					 */
+#define SDMMC_CMD_BOOTEN                                                       \
+	SDMMC_CMD_BOOTEN_Msk /*!<Enable Boot mode procedure                    \
+			      */
 #define SDMMC_CMD_CMDSUSPEND_Pos (16UL)
 #define SDMMC_CMD_CMDSUSPEND_Msk                                               \
 	(0x1UL << SDMMC_CMD_CMDSUSPEND_Pos) /*!< 0x00010000 */
@@ -22464,9 +22469,10 @@ typedef struct {
 #define SDMMC_DCTRL_RWMOD SDMMC_DCTRL_RWMOD_Msk /*!<Read wait mode */
 #define SDMMC_DCTRL_SDIOEN_Pos (11UL)
 #define SDMMC_DCTRL_SDIOEN_Msk                                                 \
-	(0x1UL << SDMMC_DCTRL_SDIOEN_Pos)	  /*!< 0x00000800 */
-#define SDMMC_DCTRL_SDIOEN SDMMC_DCTRL_SDIOEN_Msk /*!<SD I/O enable functions  \
-						   */
+	(0x1UL << SDMMC_DCTRL_SDIOEN_Pos) /*!< 0x00000800 */
+#define SDMMC_DCTRL_SDIOEN                                                     \
+	SDMMC_DCTRL_SDIOEN_Msk /*!<SD I/O enable functions                     \
+				*/
 #define SDMMC_DCTRL_BOOTACKEN_Pos (12UL)
 #define SDMMC_DCTRL_BOOTACKEN_Msk                                              \
 	(0x1UL << SDMMC_DCTRL_BOOTACKEN_Pos) /*!< 0x00001000 */
@@ -24770,20 +24776,24 @@ typedef struct {
 			    */
 #define PWR_CR1_SRAM1PD_Pos (8UL)
 #define PWR_CR1_SRAM1PD_Msk (0x1UL << PWR_CR1_SRAM1PD_Pos) /*!< 0x00000100 */
-#define PWR_CR1_SRAM1PD PWR_CR1_SRAM1PD_Msk /*!< SRAM1 power-down in Run mode  \
-					     */
+#define PWR_CR1_SRAM1PD                                                        \
+	PWR_CR1_SRAM1PD_Msk /*!< SRAM1 power-down in Run mode                  \
+			     */
 #define PWR_CR1_SRAM2PD_Pos (9UL)
 #define PWR_CR1_SRAM2PD_Msk (0x1UL << PWR_CR1_SRAM2PD_Pos) /*!< 0x00000200 */
-#define PWR_CR1_SRAM2PD PWR_CR1_SRAM2PD_Msk /*!< SRAM2 power-down in Run mode  \
-					     */
+#define PWR_CR1_SRAM2PD                                                        \
+	PWR_CR1_SRAM2PD_Msk /*!< SRAM2 power-down in Run mode                  \
+			     */
 #define PWR_CR1_SRAM3PD_Pos (10UL)
 #define PWR_CR1_SRAM3PD_Msk (0x1UL << PWR_CR1_SRAM3PD_Pos) /*!< 0x00000400 */
-#define PWR_CR1_SRAM3PD PWR_CR1_SRAM3PD_Msk /*!< SRAM3 power-down in Run mode  \
-					     */
+#define PWR_CR1_SRAM3PD                                                        \
+	PWR_CR1_SRAM3PD_Msk /*!< SRAM3 power-down in Run mode                  \
+			     */
 #define PWR_CR1_SRAM4PD_Pos (11UL)
 #define PWR_CR1_SRAM4PD_Msk (0x1UL << PWR_CR1_SRAM4PD_Pos) /*!< 0x00000800 */
-#define PWR_CR1_SRAM4PD PWR_CR1_SRAM4PD_Msk /*!< SRAM4 power-down in Run mode  \
-					     */
+#define PWR_CR1_SRAM4PD                                                        \
+	PWR_CR1_SRAM4PD_Msk /*!< SRAM4 power-down in Run mode                  \
+			     */
 #define PWR_CR1_SRAM5PD_Pos (12UL)
 #define PWR_CR1_SRAM5PD_Msk (0x1UL << PWR_CR1_SRAM5PD_Pos) /*!< 0x0001000 */
 #define PWR_CR1_SRAM5PD PWR_CR1_SRAM5PD_Msk /*!< SRAM5 power down */
@@ -33347,8 +33357,9 @@ typedef struct {
 			       */
 #define SAI_xIMR_FREQIE_Pos (3UL)
 #define SAI_xIMR_FREQIE_Msk (0x1UL << SAI_xIMR_FREQIE_Pos) /*!< 0x00000008 */
-#define SAI_xIMR_FREQIE SAI_xIMR_FREQIE_Msk /*!<FIFO request interrupt enable  \
-					     */
+#define SAI_xIMR_FREQIE                                                        \
+	SAI_xIMR_FREQIE_Msk /*!<FIFO request interrupt enable                  \
+			     */
 #define SAI_xIMR_CNRDYIE_Pos (4UL)
 #define SAI_xIMR_CNRDYIE_Msk                                                   \
 	(0x1UL << SAI_xIMR_CNRDYIE_Pos) /*!< 0x00000010                        \
@@ -33404,14 +33415,16 @@ typedef struct {
 /******************  Bit definition for SAI_xCLRFR register  ******************/
 #define SAI_xCLRFR_COVRUDR_Pos (0UL)
 #define SAI_xCLRFR_COVRUDR_Msk                                                 \
-	(0x1UL << SAI_xCLRFR_COVRUDR_Pos)	  /*!< 0x00000001 */
-#define SAI_xCLRFR_COVRUDR SAI_xCLRFR_COVRUDR_Msk /*!<Clear Overrun underrun   \
-						   */
+	(0x1UL << SAI_xCLRFR_COVRUDR_Pos) /*!< 0x00000001 */
+#define SAI_xCLRFR_COVRUDR                                                     \
+	SAI_xCLRFR_COVRUDR_Msk /*!<Clear Overrun underrun                      \
+				*/
 #define SAI_xCLRFR_CMUTEDET_Pos (1UL)
 #define SAI_xCLRFR_CMUTEDET_Msk                                                \
-	(0x1UL << SAI_xCLRFR_CMUTEDET_Pos)	    /*!< 0x00000002 */
-#define SAI_xCLRFR_CMUTEDET SAI_xCLRFR_CMUTEDET_Msk /*!<Clear Mute detection   \
-						     */
+	(0x1UL << SAI_xCLRFR_CMUTEDET_Pos) /*!< 0x00000002 */
+#define SAI_xCLRFR_CMUTEDET                                                    \
+	SAI_xCLRFR_CMUTEDET_Msk /*!<Clear Mute detection                       \
+				 */
 #define SAI_xCLRFR_CWCKCFG_Pos (2UL)
 #define SAI_xCLRFR_CWCKCFG_Msk                                                 \
 	(0x1UL << SAI_xCLRFR_CWCKCFG_Pos) /*!< 0x00000004 */
