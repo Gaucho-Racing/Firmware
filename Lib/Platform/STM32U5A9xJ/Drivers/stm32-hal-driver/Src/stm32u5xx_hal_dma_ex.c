@@ -1498,7 +1498,7 @@ HAL_DMAEx_List_InsertNode_Tail(DMA_QListTypeDef *const pQList,
 {
 	uint32_t cllr_mask;
 	uint32_t cllr_offset;
-	DMA_NodeInQInfoTypeDef node_info;
+	DMA_NodeInQInfoTypeDef node_info = {0};
 
 	/* Check the queue and the new node parameters */
 	if ((pQList == NULL) || (pNewNode == NULL)) {
@@ -1584,7 +1584,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_RemoveNode(DMA_QListTypeDef *const pQList,
 {
 	uint32_t previousnode_addr;
 	uint32_t cllr_offset;
-	DMA_NodeInQInfoTypeDef node_info;
+	DMA_NodeInQInfoTypeDef node_info = {0};
 
 	/* Check the queue and the node parameters */
 	if ((pQList == NULL) || (pNode == NULL)) {
@@ -1728,7 +1728,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_RemoveNode_Head(DMA_QListTypeDef *const pQList)
 {
 	uint32_t cllr_offset;
 	uint32_t current_addr;
-	DMA_NodeInQInfoTypeDef node_info;
+	DMA_NodeInQInfoTypeDef node_info = {0};
 
 	/* Check the queue parameter */
 	if (pQList == NULL) {
@@ -1820,7 +1820,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_RemoveNode_Head(DMA_QListTypeDef *const pQList)
 HAL_StatusTypeDef HAL_DMAEx_List_RemoveNode_Tail(DMA_QListTypeDef *const pQList)
 {
 	uint32_t cllr_offset;
-	DMA_NodeInQInfoTypeDef node_info;
+	DMA_NodeInQInfoTypeDef node_info = {0};
 
 	/* Check the queue parameter */
 	if (pQList == NULL) {
@@ -1913,7 +1913,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_ReplaceNode(DMA_QListTypeDef *const pQList,
 {
 	uint32_t cllr_mask;
 	uint32_t cllr_offset;
-	DMA_NodeInQInfoTypeDef node_info;
+	DMA_NodeInQInfoTypeDef node_info = {0};
 
 	/* Check the queue and the nodes parameters */
 	if ((pQList == NULL) || (pOldNode == NULL) || (pNewNode == NULL)) {
@@ -2089,7 +2089,7 @@ HAL_DMAEx_List_ReplaceNode_Head(DMA_QListTypeDef *const pQList,
 {
 	uint32_t cllr_offset;
 	uint32_t cllr_mask;
-	DMA_NodeInQInfoTypeDef node_info;
+	DMA_NodeInQInfoTypeDef node_info = {0};
 
 	/* Check the queue and the new node parameters */
 	if ((pQList == NULL) || (pNewNode == NULL)) {
@@ -2185,7 +2185,7 @@ HAL_DMAEx_List_ReplaceNode_Tail(DMA_QListTypeDef *const pQList,
 {
 	uint32_t cllr_mask;
 	uint32_t cllr_offset;
-	DMA_NodeInQInfoTypeDef node_info;
+	DMA_NodeInQInfoTypeDef node_info = {0};
 
 	/* Check the queue and the new node parameters */
 	if ((pQList == NULL) || (pNewNode == NULL)) {
@@ -2273,7 +2273,7 @@ HAL_DMAEx_List_ReplaceNode_Tail(DMA_QListTypeDef *const pQList,
 HAL_StatusTypeDef HAL_DMAEx_List_ResetQ(DMA_QListTypeDef *const pQList)
 {
 	uint32_t cllr_offset;
-	DMA_NodeInQInfoTypeDef node_info;
+	DMA_NodeInQInfoTypeDef node_info = {0};
 
 	/* Check the queue parameter */
 	if (pQList == NULL) {
@@ -2883,7 +2883,7 @@ HAL_DMAEx_List_SetCircularModeConfig(DMA_QListTypeDef *const pQList,
 {
 	uint32_t cllr_mask;
 	uint32_t cllr_offset;
-	DMA_NodeInQInfoTypeDef node_info;
+	DMA_NodeInQInfoTypeDef node_info = {0};
 
 	/* Check the queue and the first circular node parameters */
 	if ((pQList == NULL) || (pFirstCircularNode == NULL)) {
@@ -2971,7 +2971,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_SetCircularMode(DMA_QListTypeDef *const pQList)
 {
 	uint32_t cllr_mask;
 	uint32_t cllr_offset;
-	DMA_NodeInQInfoTypeDef node_info;
+	DMA_NodeInQInfoTypeDef node_info = {0};
 
 	/* Check the queue parameter */
 	if (pQList == NULL) {
@@ -3049,7 +3049,7 @@ HAL_StatusTypeDef
 HAL_DMAEx_List_ClearCircularMode(DMA_QListTypeDef *const pQList)
 {
 	uint32_t cllr_offset;
-	DMA_NodeInQInfoTypeDef node_info;
+	DMA_NodeInQInfoTypeDef node_info = {0};
 
 	/* Check the queue parameter */
 	if (pQList == NULL) {
@@ -3122,7 +3122,7 @@ HAL_DMAEx_List_ConvertQToDynamic(DMA_QListTypeDef *const pQList)
 	uint32_t cllr_offset;
 	uint32_t currentnode_addr;
 	DMA_NodeTypeDef context_node;
-	DMA_NodeInQInfoTypeDef node_info;
+	DMA_NodeInQInfoTypeDef node_info = {0};
 
 	/* Check the queue parameter */
 	if (pQList == NULL) {
