@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        prefix: [ "HOOTLTest", "Debug", "Release", "MinSizeRel", "RelWithDebInfo" ]
+        prefix: [ "Debug", "Release", "MinSizeRel", "RelWithDebInfo" ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -35,15 +35,19 @@ jobs:
           cmake --preset ${{ matrix.prefix }} |& tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
 
-      - name: Get Versions
-        run: |
-          arm-none-eabi-gcc --version
-          cmake --system-information
-
-      - name: CMake Build
+      - name: Ninja Build
+        working-directory: build/${{ matrix.prefix }}
         run: |
           set -o pipefail
-          echo "## CMake Build (${{ matrix.prefix }})" >> $GITHUB_STEP_SUMMARY
+          echo "## Ninja Build (${{ matrix.prefix }})" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          cmake --build build/${{ matrix.prefix }} |& tee -a $GITHUB_STEP_SUMMARY
+          ninja -v |& tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+
+      # - name: CMake Build
+      #   run: |
+      #     set -o pipefail
+      #     echo "## CMake Build (${{ matrix.prefix }})" >> $GITHUB_STEP_SUMMARY
+      #     echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+      #     cmake --build build/${{ matrix.prefix }} |& tee -a $GITHUB_STEP_SUMMARY
+      #     echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
