@@ -35,6 +35,11 @@ jobs:
           cmake --preset ${{ matrix.prefix }} |& tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
 
+      - name: Get Versions
+        run: |
+          arm-none-eabi-gcc --version
+          cmake --system-information
+
       - name: CMake Build
         run: |
           set -o pipefail
