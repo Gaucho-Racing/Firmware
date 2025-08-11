@@ -22,10 +22,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Cache Apt Packages
-        uses: awalsh128/cache-apt-pkgs-action@latest
-        with:
-          packages: cmake build-essential gcc-arm-none-eabi libnewlib-arm-none-eabi
+      # - name: Cache Apt Packages
+      #   uses: awalsh128/cache-apt-pkgs-action@latest
+      #   with:
+      #     packages: cmake build-essential gcc-arm-none-eabi libnewlib-arm-none-eabi
+      #     execute_install_scripts: true
+
+      - name: Install Apt Packages
+        run: sudo apt install cmake build-essential gcc-arm-none-eabi
 
       - name: CMake Configuration
         run: |

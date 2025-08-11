@@ -10,6 +10,8 @@
 
 If you do not want GitHub Action emails please turn off notifications on your side. See something like https://stackoverflow.com/q/66116203
 
+Rebase please, run `git config pull.rebase true`
+
 # Testing
 
 ## Setup
