@@ -23,13 +23,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Cache Apt Packages
-        uses: awalsh128/cache-apt-pkgs-action@latest
+        uses: tecolicom/actions-use-apt-tools@v1
         with:
-          packages: cmake build-essential gcc-arm-none-eabi
-          execute_install_scripts: true
-
-      - name: Configure Arm Includes
-        run: sudo dpkg --configure gcc-arm-none-eabi
+          tools: cmake build-essential gcc-arm-none-eabi
+          method: timestamp
 
       - name: CMake Configuration
         run: |
