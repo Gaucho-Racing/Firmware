@@ -19,9 +19,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Cache Apt Packages
-        uses: awalsh128/cache-apt-pkgs-action@latest
+        uses: tecolicom/actions-use-apt-tools@v1
         with:
-          packages: cmake build-essential
+          tools: cmake build-essential
 
       - name: CMake Configuration
         run: |

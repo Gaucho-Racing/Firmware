@@ -26,12 +26,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Cache Apt Packages
-        uses: awalsh128/cache-apt-pkgs-action@latest
-        with:
-          packages: clang-format
-
-      - name: Run clang-format
+      - name: Format Files
         run: |
           set -o pipefail
           find . -regex '.*\.[ch]$' | xargs clang-format -i
