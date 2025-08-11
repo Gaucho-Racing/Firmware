@@ -1289,7 +1289,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_InsertNode(DMA_QListTypeDef *const pQList,
 {
 	uint32_t cllr_mask;
 	uint32_t cllr_offset;
-	DMA_NodeInQInfoTypeDef node_info;
+	DMA_NodeInQInfoTypeDef node_info = {0};
 
 	/* Check the queue and the new node parameters */
 	if ((pQList == NULL) || (pNewNode == NULL)) {
