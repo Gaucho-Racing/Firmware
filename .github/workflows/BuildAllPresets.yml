@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Arm Toolchain
-        run: sudo apt-get install gcc-arm-none-eabi
+        run: sudo apt-get install gcc-arm-none-eabi --no-install-suggests
 
       - name: Get Versions
         run: |
