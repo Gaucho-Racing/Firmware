@@ -24,7 +24,7 @@ jobs:
 
       - name: Install Arm Toolchain
         run: |
-          echo "set man-db/auto-update false" | debconf-communicate
+          echo "set man-db/auto-update false" | sudo debconf-communicate
           sudo apt-get install gcc-arm-none-eabi --no-install-suggests
 
       - name: CMake Configuration
