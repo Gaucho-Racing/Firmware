@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.25)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS ON)
+set(CMAKE_C_COMPILER_VERSION 12.2)
 
 # Define the build type
 if(NOT CMAKE_BUILD_TYPE)
