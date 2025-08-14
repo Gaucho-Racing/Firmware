@@ -10,11 +10,6 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Debug")
 endif()
 
-# TODO: remove when dev container setup
-if (CMAKE_BUILD_TYPE STREQUAL "Release")
-    add_compile_options(-Wno-error)
-endif()
-
 # Enable compile command to ease indexing with e.g. clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
