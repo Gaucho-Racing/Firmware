@@ -25,13 +25,6 @@ jobs:
       - name: Install Arm Toolchain
         run: sudo apt-get install gcc-arm-none-eabi --no-install-suggests
 
-      - name: Get Versions
-        run: |
-          cmake --version
-          ninja --version
-          arm-none-eabi-gcc --version
-          gcc --version
-
       - name: CMake Configuration
         run: |
           set -o pipefail
