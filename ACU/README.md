@@ -1,0 +1,5 @@
+The Accumulator Control Unit is, as the name implies, the board that controls the Accumulator. In practice this means that it interacts with the series of Battery Management Systems to obtain the battery voltages and temperatures ensuring that the battery stays within safe parameters. Additionally it interacts with the Insulation Monitoring Devicec to ensure that the chassis is safe to touch (among other things), the Accumulator Isolation and Precharge Relays to control the flow of High Voltage Electricity to the rest of the Car, the Charger, and DC-DC converters to charge and power the Low Voltage side of the car. 
+
+BCC - Battery Cell Controller
+MC33771 vs MC33772 - 771 is 14 cell; 772 is 7 cell
+TPL - transformer physical layer basically a differential SPI to try and address EMI issues
