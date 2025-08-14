@@ -22,12 +22,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Cache Apt Packages
-        uses: awalsh128/cache-apt-pkgs-action@latest
-        with:
-          packages: cmake build-essential
-
-        # Cannot cache the toolchain as it builds files on install (namely ones like `errno.h` and `math.h`)
       - name: Install Arm Toolchain
         run: sudo apt-get install gcc-arm-none-eabi
 
