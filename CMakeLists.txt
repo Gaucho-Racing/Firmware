@@ -10,11 +10,6 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Debug")
 endif()
 
-# TODO: Remove when dev container is setup due to unfiltered warnings (U5 hal doesn't support )
-if (CMAKE_BUILD_TYPE STREQUAL "Release")
-    add_compile_options(-Wno-error)
-endif()
-
 # Set the project name
 set(CMAKE_PROJECT_NAME Firmware)
 
