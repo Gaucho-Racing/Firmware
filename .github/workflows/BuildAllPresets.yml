@@ -24,7 +24,7 @@ jobs:
 
       - name: Install Arm Toolchain
         run: |
-          sudo debconf-set man-db/auto-update false
+          echo "set man-db/auto-update false" | sudo debconf-communicate
           sudo rm /var/lib/man-db/auto-update
           sudo apt-get install gcc-arm-none-eabi --no-install-suggests
 
