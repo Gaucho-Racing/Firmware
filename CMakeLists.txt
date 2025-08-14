@@ -5,10 +5,6 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS ON)
 
-if (NOT CMAKE_C_COMPILER_VERSION EQUAL 12.2)
-    message(FATAL "Unsupported compiler version: ${CMAKE_C_COMPILER_VERSION}. Please use version 12.2.")
-endif ()
-
 # Define the build type
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Debug")
