@@ -23,7 +23,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Arm Toolchain
-        run: sudo apt-get install gcc-arm-none-eabi --no-install-suggests
+        run: |
+          echo "set man-db/auto-update false" | debconf-communicate
+          sudo apt-get install gcc-arm-none-eabi --no-install-suggests
 
       - name: CMake Configuration
         run: |
