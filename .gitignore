@@ -69,6 +69,12 @@ CMakeUserPresets.json
 .ccls-cache
 
 # VSCode
-.vscode
+.vscode/*
 .DS_Store
 Icon\r
+
+# Nano
+.*.swp
+
+# Exceptions (please work to reduce this list)
+!.vscode/c_cpp_properties.json

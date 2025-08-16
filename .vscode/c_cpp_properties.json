@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "name": "VS Code IntelliSense",
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++11",
+            "intelliSenseMode": "${default}",
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "compileCommands": [
+                "build/HOOTLTest/compile_commands.json",
+                "build/Debug/compile_commands.json",
+                "build/RelWithDebInfo/compile_commands.json",
+                "build/Release/compile_commands.json",
+                "build/MinSizeRel/compile_commands.json",
+                "compile_commands.json"
+            ],
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "mergeConfigurations": true
+        }
+    ],
+    "version": 4
+}
