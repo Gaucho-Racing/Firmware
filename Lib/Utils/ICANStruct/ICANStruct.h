@@ -1,9 +1,14 @@
 #ifndef ICANSTRUCT_H
 #define ICANSTRUCT_H
 
-//need to figure out how to have case dependent includes here, maybe have main.h define platform or smthn. 
-#include <stm32g4xx_hal_fdcan.h>
+#include <stdint.h>
 
+// Include necessary STM32 definitions
+#define FDCAN1 ((FDCAN_GlobalTypeDef *) FDCAN1_BASE)  // Enable FDCAN definitions
+#include "../../Platform/STM32G474xE/Drivers/CMSIS/Device/ST/STM32G4xx/Include/stm32g4xx.h"
+#include "../../Platform/STM32G474xE/Drivers/stm32-hal-driver/Inc/stm32g4xx_hal_def.h"
+#include "../../Platform/STM32G474xE/Drivers/stm32-hal-driver/Inc/stm32g4xx_hal_fdcan.h"
+//^^ these are so that syntax stops fucking complaining
 typedef struct{
     /*
     this struct will have the general CAN features 
@@ -22,20 +27,30 @@ typedef struct{
     // meant for the hw side of the can, needs to be inited when making CAN struct. 
     FDCAN_HandleTypeDef hfdcan;
 
-
-    // data would need to be a 64 byte array to allow for "all" data to be stored.
-    
-
     //functions that need to be platform specific
-    uint8_t (*init)();
-    uint8_t (*send)();
-    uint8_t (*recieve)();
+    uint8_t (*c_mx_init)(void);
+    uint8_t (*c_start)(CAN *self);
+    uint8_t (*c_activate_notification)(CAN *self);
+    uint8_t (*init)(CAN *self);
+    uint8_t (*send)(CAN *self);
+    uint8_t (*recieve)(CAN *self);
+} CAN;
 
-}CAN;
 
+uint8_t RX_dequeue(CAN *self, FDCAN_RxHeaderTypeDef *header, uint8_t* data);
+uint8_t RX_enqueue(CAN *self, FDCAN_RxHeaderTypeDef *header, uint8_t* data);
+uint8_t TX_dequeue(CAN *self, FDCAN_TxHeaderTypeDef *header, uint8_t* data);
+uint8_t TX_enqueue(CAN *self, FDCAN_TxHeaderTypeDef *header, uint8_t* data);
 
-uint8_t RX_dequeue(CAN *self, FDCAN_RxHeaderTypeDef &header, uint8_t* data);
-uint8_t RX_enqueue(CAN *self, FDCAN_RxHeaderTypeDef &header, uint8_t* data);
-uint8_t TX_dequeue(CAN *self, FDCAN_TxHeaderTypeDef &header, uint8_t* data);
-uint8_t TX_enqueue(CAN *self, FDCAN_TxHeaderTypeDef &header, uint8_t* data);
+// Weak default implementations - user can override these
+__weak uint8_t CAN_MX_Init(void);
+__weak uint8_t CAN_Start(void);
+__weak uint8_t CAN_Activate_Notification(void);
+__weak uint8_t CAN_Init(void);
+__weak uint8_t CAN_Send(void);
+__weak uint8_t CAN_Receive(void);
+
+// Helper function to initialize CAN struct with default weak functions
+void CAN_InitStruct(CAN *can_instance);
+
 #endif // ICANSTRUCT_H
