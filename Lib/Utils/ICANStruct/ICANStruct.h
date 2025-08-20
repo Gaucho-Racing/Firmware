@@ -24,33 +24,24 @@ typedef struct{
     in CAN occurs
     */
 
-    // meant for the hw side of the can, needs to be inited when making CAN struct. 
-    FDCAN_HandleTypeDef hfdcan;
+    //add cb here
 
     //functions that need to be platform specific
-    uint8_t (*c_mx_init)(void);
-    uint8_t (*c_start)(CAN *self);
-    uint8_t (*c_activate_notification)(CAN *self);
-    uint8_t (*init)(CAN *self);
-    uint8_t (*send)(CAN *self);
-    uint8_t (*recieve)(CAN *self);
+    //only need two functions since we only care about starting as well as sending a can message 
+    //In this case, c_send() would get called in the TX_dequeue call where ever that is
+    //this also means that this is done "asynch" as sending will be timer based as in ACU. 
+    uint8_t (*c_init)(void);
+    uint8_t (*c_send)(uint8_t* data, uint8_t size);
 } CAN;
 
 
-uint8_t RX_dequeue(CAN *self, FDCAN_RxHeaderTypeDef *header, uint8_t* data);
-uint8_t RX_enqueue(CAN *self, FDCAN_RxHeaderTypeDef *header, uint8_t* data);
-uint8_t TX_dequeue(CAN *self, FDCAN_TxHeaderTypeDef *header, uint8_t* data);
-uint8_t TX_enqueue(CAN *self, FDCAN_TxHeaderTypeDef *header, uint8_t* data);
+uint8_t* RX_dequeue(CAN *self);
+uint8_t RX_enqueue(CAN *self, uint8_t* data, uint8_t size, uint32_t id);
+uint8_t TX_dequeue(CAN *self);
+uint8_t TX_enqueue(CAN *self, uint8_t* data, uint8_t size);
 
 // Weak default implementations - user can override these
-__weak uint8_t CAN_MX_Init(void);
-__weak uint8_t CAN_Start(void);
-__weak uint8_t CAN_Activate_Notification(void);
 __weak uint8_t CAN_Init(void);
-__weak uint8_t CAN_Send(void);
-__weak uint8_t CAN_Receive(void);
-
-// Helper function to initialize CAN struct with default weak functions
-void CAN_InitStruct(CAN *can_instance);
+__weak uint8_t CAN_Send(uint8_t* data, uint8_t size);
 
 #endif // ICANSTRUCT_H
