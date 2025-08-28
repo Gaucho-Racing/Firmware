@@ -1,14 +1,14 @@
 # GR Firmware
 Table of Contents
-[Quickstart](#Quickstart)
-[Testing](#Testing)
-[Setup](#Setup)
-[Running](#Running)
-[VS Code Setup](#VS-Code-Setup)
-[REPO RULES (follow if you want your builds to work)](#REPO-RULES-(follow-if-you-want-your-builds-to-work))
-[To add a New Project](#To-add-a-New-Project)
-[To add a New Platform ](#To-add-a-New-Platform )
-[Chip Path Contamination](#Chip-Path-Contamination)
+* [Quickstart](#Quickstart)  
+* [Testing](#Testing)  
+    * [Setup](#Setup)  
+    * [Running](#Running)  
+* [VS Code Setup](#VS-Code-Setup)  
+* [REPO RULES (follow if you want your builds to work)](#REPO-RULES-(follow-if-you-want-your-builds-to-work))  
+* [To add a New Project](#To-add-a-New-Project)  
+* [To add a New Platform ](#To-add-a-New-Platform )  
+* [Chip Path Contamination](#Chip-Path-Contamination)  
 
 # Quickstart
 The goal of this section is to compile and flash any project  
