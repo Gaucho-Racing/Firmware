@@ -70,7 +70,7 @@ Put into `.vscode/settings.json` the following starter template:
 4. [OpenOCD](https://github.com/openocd-org/openocd/releases/tag/v0.12.0)
 
 **CMake** (metabuild system) --> **Ninja** (build system) --> **ARM Toolchain** (provides tools to compile & link code) 
-OpenOCD is an on-chip debugger, which allows us to examine code line-by-line in Debug mode
+**OpenOCD** is an on-chip debugger, which allows us to examine code line-by-line in Debug mode
 
 Verify that you have all these dependencies installed:
 - CMAKE - `cmake --version`
