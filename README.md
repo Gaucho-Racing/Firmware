@@ -65,6 +65,14 @@ cmake --build build/HOOTLTest
 cd build/HOOTLTest && ctest --output-on-failure
 ```
 
+```bash
+cmake --preset Release
+cmake --build build/Release
+cd build/Release
+openocd -f interface/stlink.cfg -f target/{your_chip}.cfg -c "program {your_project}.elf verify reset exit"
+```
+example: your_chip = stm32l4x, your_project = L4BLINKY
+
 ## VS Code Setup
 
 Put into `.vscode/settings.json` the following starter template:
