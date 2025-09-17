@@ -26,6 +26,14 @@ add_library(${PROJECT_NAME}_USER_CODE INTERFACE)
 target_sources(${PROJECT_NAME}_USER_CODE INTERFACE
     # Core/Src/...
     # Application/Src/...
+    Core/Src/gpio.c
+    Core/Src/main.c
+    Core/Src/stm32l4xx_hal_msp.c
+    Core/Src/stm32l4xx_it.c
+    Core/Src/syscalls.c
+    Core/Src/sysmem.c
+    Core/Src/system_stm32l4xx.c
+    Core/Src/usart.c
 )
 
 target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE
