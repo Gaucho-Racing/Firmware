@@ -111,7 +111,9 @@ All projects follow the following structure. 
         * Src
     * CMakeLists.txt
 
-Core should have Peripheral related code, it requires a {platform}_hal_conf.h, {platform}_it.h, {platform}_assert.h, {platform}_hal_msp.c, {platform}_it.c, syscall.c, sysmem.c, and system_{plat}.c. Some of these can be found as templates in the HAL/LL drivers section in the platform corresponding, others you might need to copy them from a cubemx project.
+Core should have Peripheral related code, it requires a {platform}\_hal\_conf.h, {platform}\_it.h, {platform}\_assert.h, {platform}\_hal\_msp.c, {platform}\_it.c, syscall.c, sysmem.c, and system\_{plat}.c. Some of these can be found as templates in the HAL/LL drivers section in the platform corresponding, others you might need to copy them from a cubemx project.
+
+Edit the target_sources/target_link_libraries to include all the 
 
 # To add a New Platform 
 
@@ -128,7 +130,7 @@ Copy PlatformTemplate underneath Platform and rename the directory to the platfo
 * chip.cmake
 * history.md
 
-Typical process would be to make a cubemx project and steal the CMSIS, startup_{platform}.s, {platform}_flash.ld. Copy the stm32-hal-driver from the STM github repo online, only steal Inc and Src. 
+Typical process would be to make a cubemx project and steal the CMSIS, startup\_{platform}.s, {platform}\_flash.ld. Copy the stm32-hal-driver from the STM github repo online, only steal Inc and Src. 
 
 Check chip.cmake and look for comments with REPLACE, do what it says.
 
