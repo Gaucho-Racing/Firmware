@@ -609,9 +609,10 @@ typedef struct {
 /** @defgroup DAC_LL_EC_RESOLUTION  DAC channel output resolution
  * @{
  */
-#define LL_DAC_RESOLUTION_12B 0x00000000U /*!< DAC channel resolution 12 bits  \
-					   */
-#define LL_DAC_RESOLUTION_8B 0x00000002U  /*!< DAC channel resolution 8 bits */
+#define LL_DAC_RESOLUTION_12B                                                  \
+	0x00000000U			 /*!< DAC channel resolution 12 bits   \
+					  */
+#define LL_DAC_RESOLUTION_8B 0x00000002U /*!< DAC channel resolution 8 bits */
 /**
  * @}
  */

@@ -465,8 +465,9 @@ typedef void (*pDFSDM_Filter_AwdCallbackTypeDef)(
 /** @defgroup DFSDM_Channel_SpiClock DFSDM channel SPI clock selection
  * @{
  */
-#define DFSDM_CHANNEL_SPI_CLOCK_EXTERNAL 0x00000000U /*!< External SPI clock   \
-						      */
+#define DFSDM_CHANNEL_SPI_CLOCK_EXTERNAL                                       \
+	0x00000000U /*!< External SPI clock                                    \
+		     */
 #define DFSDM_CHANNEL_SPI_CLOCK_INTERNAL                                       \
 	DFSDM_CHCFGR1_SPICKSEL_0 /*!< Internal SPI clock */
 #define DFSDM_CHANNEL_SPI_CLOCK_INTERNAL_DIV2_FALLING                          \
@@ -611,14 +612,17 @@ typedef void (*pDFSDM_Filter_AwdCallbackTypeDef)(
  * @{
  */
 #define DFSDM_FILTER_FASTSINC_ORDER 0x00000000U /*!< FastSinc filter type */
-#define DFSDM_FILTER_SINC1_ORDER DFSDM_FLTFCR_FORD_0 /*!< Sinc 1 filter type   \
-						      */
-#define DFSDM_FILTER_SINC2_ORDER DFSDM_FLTFCR_FORD_1 /*!< Sinc 2 filter type   \
-						      */
+#define DFSDM_FILTER_SINC1_ORDER                                               \
+	DFSDM_FLTFCR_FORD_0 /*!< Sinc 1 filter type                            \
+			     */
+#define DFSDM_FILTER_SINC2_ORDER                                               \
+	DFSDM_FLTFCR_FORD_1 /*!< Sinc 2 filter type                            \
+			     */
 #define DFSDM_FILTER_SINC3_ORDER                                               \
-	(DFSDM_FLTFCR_FORD_0 | DFSDM_FLTFCR_FORD_1)  /*!< Sinc 3 filter type */
-#define DFSDM_FILTER_SINC4_ORDER DFSDM_FLTFCR_FORD_2 /*!< Sinc 4 filter type   \
-						      */
+	(DFSDM_FLTFCR_FORD_0 | DFSDM_FLTFCR_FORD_1) /*!< Sinc 3 filter type */
+#define DFSDM_FILTER_SINC4_ORDER                                               \
+	DFSDM_FLTFCR_FORD_2 /*!< Sinc 4 filter type                            \
+			     */
 #define DFSDM_FILTER_SINC5_ORDER                                               \
 	(DFSDM_FLTFCR_FORD_0 | DFSDM_FLTFCR_FORD_2) /*!< Sinc 5 filter type */
 /**

@@ -421,8 +421,9 @@ typedef struct {
 #endif			   /* RCC_PLLSAI2_SUPPORT */
 #define RCC_PLL_48M1CLK                                                        \
 	RCC_PLLCFGR_PLLQEN /*!< PLL48M1CLK selection from main PLL */
-#define RCC_PLL_SYSCLK RCC_PLLCFGR_PLLREN /*!< PLLCLK selection from main PLL  \
-					   */
+#define RCC_PLL_SYSCLK                                                         \
+	RCC_PLLCFGR_PLLREN /*!< PLLCLK selection from main PLL                 \
+			    */
 /**
  * @}
  */
@@ -5607,14 +5608,16 @@ typedef struct {
 /** @defgroup RCC_Reset_Flag Reset Flag
  * @{
  */
-#define RCC_RESET_FLAG_OBL RCC_CSR_OBLRSTF /*!< Option Byte Loader reset flag  \
+#define RCC_RESET_FLAG_OBL                                                     \
+	RCC_CSR_OBLRSTF			   /*!< Option Byte Loader reset flag  \
 					    */
 #define RCC_RESET_FLAG_PIN RCC_CSR_PINRSTF /*!< PIN reset flag */
 #define RCC_RESET_FLAG_PWR RCC_CSR_BORRSTF /*!< BOR or POR/PDR reset flag */
 #define RCC_RESET_FLAG_SW RCC_CSR_SFTRSTF  /*!< Software Reset flag */
 #define RCC_RESET_FLAG_IWDG                                                    \
 	RCC_CSR_IWDGRSTF /*!< Independent Watchdog reset flag */
-#define RCC_RESET_FLAG_WWDG RCC_CSR_WWDGRSTF /*!< Window watchdog reset flag   \
+#define RCC_RESET_FLAG_WWDG                                                    \
+	RCC_CSR_WWDGRSTF		     /*!< Window watchdog reset flag   \
 					      */
 #define RCC_RESET_FLAG_LPWR RCC_CSR_LPWRRSTF /*!< Low power reset flag */
 #define RCC_RESET_FLAG_ALL                                                     \

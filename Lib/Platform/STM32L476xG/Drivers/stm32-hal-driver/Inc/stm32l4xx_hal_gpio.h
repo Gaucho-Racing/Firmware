@@ -109,8 +109,7 @@ typedef enum { GPIO_PIN_RESET = 0U, GPIO_PIN_SET } GPIO_PinState;
  *           - Z  : GPIO mode (Input, Output, Alternate or Analog) on 2 bits
  * @{
  */
-#define GPIO_MODE_INPUT                                                        \
-	MODE_INPUT /*!< Input Floating Mode */
+#define GPIO_MODE_INPUT MODE_INPUT /*!< Input Floating Mode */
 #define GPIO_MODE_OUTPUT_PP                                                    \
 	(MODE_OUTPUT | OUTPUT_PP) /*!< Output Push Pull Mode */
 #define GPIO_MODE_OUTPUT_OD                                                    \
@@ -118,9 +117,8 @@ typedef enum { GPIO_PIN_RESET = 0U, GPIO_PIN_SET } GPIO_PinState;
 #define GPIO_MODE_AF_PP                                                        \
 	(MODE_AF | OUTPUT_PP) /*!< Alternate Function Push Pull Mode */
 #define GPIO_MODE_AF_OD                                                        \
-	(MODE_AF | OUTPUT_OD) /*!< Alternate Function Open Drain Mode */
-#define GPIO_MODE_ANALOG                                                       \
-	MODE_ANALOG /*!< Analog Mode */
+	(MODE_AF | OUTPUT_OD)	     /*!< Alternate Function Open Drain Mode */
+#define GPIO_MODE_ANALOG MODE_ANALOG /*!< Analog Mode */
 #define GPIO_MODE_ANALOG_ADC_CONTROL                                           \
 	(MODE_ANALOG |                                                         \
 	 0x8uL) /*!< Analog Mode for ADC conversion (0x0000000Bu)*/

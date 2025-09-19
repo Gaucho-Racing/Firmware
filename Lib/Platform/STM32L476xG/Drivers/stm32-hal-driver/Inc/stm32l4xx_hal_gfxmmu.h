@@ -164,9 +164,10 @@ typedef void (*pGFXMMU_CallbackTypeDef)(GFXMMU_HandleTypeDef *hgfxmmu);
 /** @defgroup GFXMMU_BlocksPerLine GFXMMU blocks per line
  * @{
  */
-#define GFXMMU_256BLOCKS 0x00000000U	 /*!< 256 blocks of 16 bytes per line */
-#define GFXMMU_192BLOCKS GFXMMU_CR_192BM /*!< 192 blocks of 16 bytes per line  \
-					  */
+#define GFXMMU_256BLOCKS 0x00000000U /*!< 256 blocks of 16 bytes per line */
+#define GFXMMU_192BLOCKS                                                       \
+	GFXMMU_CR_192BM /*!< 192 blocks of 16 bytes per line                   \
+			 */
 /**
  * @}
  */
@@ -198,8 +199,9 @@ typedef void (*pGFXMMU_CallbackTypeDef)(GFXMMU_HandleTypeDef *hgfxmmu);
 #define GFXMMU_ERROR_BUFFER3_OVERFLOW GFXMMU_SR_B3OF /*!< Buffer 3 overflow */
 #define GFXMMU_ERROR_AHB_MASTER GFXMMU_SR_AMEF	     /*!< AHB master error */
 #if (USE_HAL_GFXMMU_REGISTER_CALLBACKS == 1)
-#define GFXMMU_ERROR_INVALID_CALLBACK 0x00000100U /*!< Invalid callback error  \
-						   */
+#define GFXMMU_ERROR_INVALID_CALLBACK                                          \
+	0x00000100U /*!< Invalid callback error                                \
+		     */
 #endif
 /**
  * @}

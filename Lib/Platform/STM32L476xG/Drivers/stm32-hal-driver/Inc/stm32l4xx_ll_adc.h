@@ -154,8 +154,8 @@ extern "C" {
 /* - regular trigger edge                                                     */
 #define ADC_REG_TRIG_EXT_EDGE_DEFAULT                                          \
 	(ADC_CFGR_EXTEN_0) /* Trigger edge set to rising edge (default setting \
-			      for compatibility with some ADC on other STM32                                    \
-			      series having this setting set by HW default                                         \
+			      for compatibility with some ADC on other STM32   \
+			      series having this setting set by HW default     \
 			      value) */
 
 /* Mask containing trigger source masks for each of possible                  */
@@ -190,8 +190,8 @@ extern "C" {
 /* - injected trigger edge                                                    */
 #define ADC_INJ_TRIG_EXT_EDGE_DEFAULT                                          \
 	(ADC_JSQR_JEXTEN_0) /* Trigger edge set to rising edge (default        \
-			       setting for compatibility with some ADC on                                                \
-			       other STM32 series having this setting set by                                                    \
+			       setting for compatibility with some ADC on      \
+			       other STM32 series having this setting set by   \
 			       HW default value) */
 
 /* Mask containing trigger source masks for each of possible                  */
@@ -246,7 +246,7 @@ extern "C" {
 	(0x80000000UL) /* Marker of internal channel */
 #define ADC_CHANNEL_ID_INTERNAL_CH_2                                           \
 	(0x00080000UL) /* Marker of internal channel for other ADC instances,  \
-			  in case of different ADC internal channels mapped on                                  \
+			  in case of different ADC internal channels mapped on \
 			  same channel number on different ADC instances */
 #define ADC_CHANNEL_ID_INTERNAL_CH_MASK                                        \
 	(ADC_CHANNEL_ID_INTERNAL_CH | ADC_CHANNEL_ID_INTERNAL_CH_2)
@@ -466,7 +466,7 @@ position of bit */
 #define ADC_CR_BITS_PROPERTY_RS                                                \
 	(ADC_CR_ADCAL | ADC_CR_ADEN | ADC_CR_ADDIS | ADC_CR_JADSTART |         \
 	 ADC_CR_JADSTP | ADC_CR_ADSTART | ADC_CR_ADSTP) /* ADC register CR     \
-	   bits with HW property "rs": Software can read as well as set this                       \
+	   bits with HW property "rs": Software can read as well as set this   \
 	   bit. Writing '0' has no effect on the bit value. */
 
 /* ADC internal channels related definitions */
@@ -482,12 +482,12 @@ with which VrefInt has been calibrated in production                           \
 /* Temperature sensor */
 #define TEMPSENSOR_CAL1_ADDR                                                   \
 	((uint16_t *)(0x1FFF75A8UL)) /* Address of parameter TS_CAL1: On       \
-	STM32L4, temperature sensor ADC raw data acquired at temperature  30                   \
+	STM32L4, temperature sensor ADC raw data acquired at temperature  30   \
 	DegC (tolerance: +-5 DegC), Vref+ = 3.0 V (tolerance: +-10 mV). */
 #define TEMPSENSOR_CAL2_ADDR                                                   \
 	((uint16_t *)(0x1FFF75CAUL)) /* Address of parameter TS_CAL2: On       \
-	STM32L4, temperature sensor ADC raw data acquired at temperature                       \
-	defined by TEMPSENSOR_CAL2_TEMP (tolerance: +-5 DegC), Vref+ = 3.0 V                     \
+	STM32L4, temperature sensor ADC raw data acquired at temperature       \
+	defined by TEMPSENSOR_CAL2_TEMP (tolerance: +-5 DegC), Vref+ = 3.0 V   \
 	(tolerance: +-10 mV). */
 #define TEMPSENSOR_CAL1_TEMP                                                   \
 	((int32_t)30L) /* Temperature at which temperature sensor              \
@@ -942,7 +942,7 @@ typedef struct {
 #define LL_ADC_DMA_REG_REGULAR_DATA                                            \
 	(0x00000000UL) /* ADC group regular conversion data register           \
    (corresponding to register DR) to be used with ADC configured in            \
-   independent mode. Without DMA transfer, register accessed by LL function                  \
+   independent mode. Without DMA transfer, register accessed by LL function    \
    @ref LL_ADC_REG_ReadConversionData32() and other                            \
    functions @ref LL_ADC_REG_ReadConversionDatax() */
 #if defined(ADC_MULTIMODE_SUPPORT)
@@ -1064,8 +1064,8 @@ prescaler division by 32 */
 	(0x00000000UL) /*!< No ADC low power mode activated */
 #define LL_ADC_LP_AUTOWAIT                                                     \
 	(ADC_CFGR_AUTDLY) /*!< ADC low power mode auto delay: Dynamic low      \
-       power mode, ADC conversions are performed only when necessary (when                                                                         \
-       previous ADC conversion data is read). See description with function                                                 \
+       power mode, ADC conversions are performed only when necessary (when     \
+       previous ADC conversion data is read). See description with function    \
        @ref LL_ADC_SetLowPowerMode(). */
 /**
  * @}
@@ -1076,19 +1076,19 @@ prescaler division by 32 */
  */
 #define LL_ADC_OFFSET_1                                                        \
 	ADC_OFR1_REGOFFSET /*!< ADC offset instance 1: ADC channel and offset  \
-	level to which the offset programmed will be applied (independently of              \
+	level to which the offset programmed will be applied (independently of \
 	channel mapped on ADC group regular or injected) */
 #define LL_ADC_OFFSET_2                                                        \
 	ADC_OFR2_REGOFFSET /*!< ADC offset instance 2: ADC channel and offset  \
-	level to which the offset programmed will be applied (independently of              \
+	level to which the offset programmed will be applied (independently of \
 	channel mapped on ADC group regular or injected) */
 #define LL_ADC_OFFSET_3                                                        \
 	ADC_OFR3_REGOFFSET /*!< ADC offset instance 3: ADC channel and offset  \
-	level to which the offset programmed will be applied (independently of              \
+	level to which the offset programmed will be applied (independently of \
 	channel mapped on ADC group regular or injected) */
 #define LL_ADC_OFFSET_4                                                        \
 	ADC_OFR4_REGOFFSET /*!< ADC offset instance 4: ADC channel and offset  \
-	level to which the offset programmed will be applied (independently of              \
+	level to which the offset programmed will be applied (independently of \
 	channel mapped on ADC group regular or injected) */
 /**
  * @}
@@ -1256,13 +1256,13 @@ compare: input capture or output capture). Trigger edge set to rising edge     \
 (default setting). */
 #define LL_ADC_REG_TRIG_EXT_TIM1_CH2                                           \
 	(ADC_CFGR_EXTSEL_0 | ADC_REG_TRIG_EXT_EDGE_DEFAULT) /*!< ADC group     \
-      regular conversion trigger from external peripheral: TIM1 channel 2                   \
-      event (capture compare: input capture or output capture). Trigger edge                       \
+      regular conversion trigger from external peripheral: TIM1 channel 2      \
+      event (capture compare: input capture or output capture). Trigger edge   \
       set to rising edge (default setting). */
 #define LL_ADC_REG_TRIG_EXT_TIM1_CH3                                           \
 	(ADC_CFGR_EXTSEL_1 | ADC_REG_TRIG_EXT_EDGE_DEFAULT) /*!< ADC group     \
-      regular conversion trigger from external peripheral: TIM1 channel 3                   \
-      event (capture compare: input capture or output capture). Trigger edge                       \
+      regular conversion trigger from external peripheral: TIM1 channel 3      \
+      event (capture compare: input capture or output capture). Trigger edge   \
       set to rising edge (default setting). */
 #define LL_ADC_REG_TRIG_EXT_TIM2_TRGO                                          \
 	(ADC_CFGR_EXTSEL_3 | ADC_CFGR_EXTSEL_1 | ADC_CFGR_EXTSEL_0 |           \
@@ -1277,13 +1277,13 @@ compare: input capture or output capture). Trigger edge set to rising edge     \
 (default setting). */
 #define LL_ADC_REG_TRIG_EXT_TIM3_TRGO                                          \
 	(ADC_CFGR_EXTSEL_2 | ADC_REG_TRIG_EXT_EDGE_DEFAULT) /*!< ADC group     \
-      regular conversion trigger from external peripheral: TIM3 TRGO. Trigger               \
+      regular conversion trigger from external peripheral: TIM3 TRGO. Trigger  \
       edge set to rising edge (default setting). */
 #define LL_ADC_REG_TRIG_EXT_TIM3_CH4                                           \
 	(ADC_CFGR_EXTSEL_3 | ADC_CFGR_EXTSEL_2 | ADC_CFGR_EXTSEL_1 |           \
 	 ADC_CFGR_EXTSEL_0 | ADC_REG_TRIG_EXT_EDGE_DEFAULT) /*!< ADC group     \
-      regular conversion trigger from external peripheral: TIM3 channel 4                   \
-      event (capture compare: input capture or output capture). Trigger edge                       \
+      regular conversion trigger from external peripheral: TIM3 channel 4      \
+      event (capture compare: input capture or output capture). Trigger edge   \
       set to rising edge (default setting). */
 #define LL_ADC_REG_TRIG_EXT_TIM4_TRGO                                          \
 	(ADC_CFGR_EXTSEL_3 | ADC_CFGR_EXTSEL_2 |                               \
@@ -1308,7 +1308,7 @@ conversion trigger from external peripheral: TIM8 TRGO. Trigger edge set to    \
 rising edge (default setting). */
 #define LL_ADC_REG_TRIG_EXT_TIM8_TRGO2                                         \
 	(ADC_CFGR_EXTSEL_3 | ADC_REG_TRIG_EXT_EDGE_DEFAULT) /*!< ADC group     \
-      regular conversion trigger from external peripheral: TIM8 TRGO2. Trigger              \
+      regular conversion trigger from external peripheral: TIM8 TRGO2. Trigger \
       edge set to rising edge (default setting). */
 #define LL_ADC_REG_TRIG_EXT_TIM15_TRGO                                         \
 	(ADC_CFGR_EXTSEL_3 | ADC_CFGR_EXTSEL_2 | ADC_CFGR_EXTSEL_1 |           \
@@ -1384,8 +1384,8 @@ This ADC mode is intended to be used with DMA mode circular. */
 	(0x00000000UL) /*!< ADC conversions are not transferred by DFSDM. */
 #define LL_ADC_REG_DFSDM_TRANSFER_ENABLE                                       \
 	(ADC_CFGR_DFSDMCFG) /*!< ADC conversion data are transferred to DFSDM  \
-	for post processing. The ADC conversion data format must be 16-bit                \
-	signed and right aligned, refer to reference manual. DFSDM transfer                                                                \
+	for post processing. The ADC conversion data format must be 16-bit     \
+	signed and right aligned, refer to reference manual. DFSDM transfer    \
 	cannot be used if DMA transfer is enabled. */
 /**
  * @}
@@ -1589,16 +1589,16 @@ conversion trigger from external peripheral: TIM1 TRGO. Trigger edge set to    \
 rising edge (default setting). */
 #define LL_ADC_INJ_TRIG_EXT_TIM1_TRGO2                                         \
 	(ADC_JSQR_JEXTSEL_3 | ADC_INJ_TRIG_EXT_EDGE_DEFAULT) /*!< ADC group    \
-       injected conversion trigger from external peripheral: TIM1 TRGO2.                      \
+       injected conversion trigger from external peripheral: TIM1 TRGO2.       \
        Trigger edge set to rising edge (default setting). */
 #define LL_ADC_INJ_TRIG_EXT_TIM1_CH4                                           \
 	(ADC_JSQR_JEXTSEL_0 | ADC_INJ_TRIG_EXT_EDGE_DEFAULT) /*!< ADC group    \
-       injected conversion trigger from external peripheral: TIM1 channel 4                   \
-       event (capture compare: input capture or output capture). Trigger edge                       \
+       injected conversion trigger from external peripheral: TIM1 channel 4    \
+       event (capture compare: input capture or output capture). Trigger edge  \
        set to rising edge (default setting). */
 #define LL_ADC_INJ_TRIG_EXT_TIM2_TRGO                                          \
 	(ADC_JSQR_JEXTSEL_1 | ADC_INJ_TRIG_EXT_EDGE_DEFAULT) /*!< ADC group    \
-       injected conversion trigger from external peripheral: TIM2 TRGO.                       \
+       injected conversion trigger from external peripheral: TIM2 TRGO.        \
        Trigger edge set to rising edge (default setting). */
 #define LL_ADC_INJ_TRIG_EXT_TIM2_CH1                                           \
 	(ADC_JSQR_JEXTSEL_1 | ADC_JSQR_JEXTSEL_0 |                             \
@@ -1625,8 +1625,8 @@ compare: input capture or output capture). Trigger edge set to rising edge     \
 (default setting). */
 #define LL_ADC_INJ_TRIG_EXT_TIM3_CH4                                           \
 	(ADC_JSQR_JEXTSEL_2 | ADC_INJ_TRIG_EXT_EDGE_DEFAULT) /*!< ADC group    \
-       injected conversion trigger from external peripheral: TIM3 channel 4                   \
-       event (capture compare: input capture or output capture). Trigger edge                       \
+       injected conversion trigger from external peripheral: TIM3 channel 4    \
+       event (capture compare: input capture or output capture). Trigger edge  \
        set to rising edge (default setting). */
 #define LL_ADC_INJ_TRIG_EXT_TIM4_TRGO                                          \
 	(ADC_JSQR_JEXTSEL_2 | ADC_JSQR_JEXTSEL_0 |                             \
@@ -1657,7 +1657,7 @@ rising edge (default setting). */
 #define LL_ADC_INJ_TRIG_EXT_TIM15_TRGO                                         \
 	(ADC_JSQR_JEXTSEL_3 | ADC_JSQR_JEXTSEL_2 | ADC_JSQR_JEXTSEL_1 |        \
 	 ADC_JSQR_JEXTSEL_0 | ADC_INJ_TRIG_EXT_EDGE_DEFAULT) /*!< ADC group    \
-       injected conversion trigger from external peripheral: TIM15 TRGO.                      \
+       injected conversion trigger from external peripheral: TIM15 TRGO.       \
        Trigger edge set to rising edge (default setting). */
 #define LL_ADC_INJ_TRIG_EXT_EXTI_LINE15                                        \
 	(ADC_JSQR_JEXTSEL_2 | ADC_JSQR_JEXTSEL_1 |                             \
@@ -1694,9 +1694,9 @@ trigger polarity set to falling edge */
     an external trigger. */
 #define LL_ADC_INJ_TRIG_FROM_GRP_REGULAR                                       \
 	(ADC_CFGR_JAUTO) /*!< ADC group injected conversion trigger from ADC   \
-      group regular. Setting compliant only with group injected trigger source            \
-      set to SW start, without any further action on  ADC group injected                   \
-      conversion start or stop: in this case, ADC group injected is controlled                       \
+      group regular. Setting compliant only with group injected trigger source \
+      set to SW start, without any further action on  ADC group injected       \
+      conversion start or stop: in this case, ADC group injected is controlled \
       only from ADC group regular. */
 /**
  * @}
@@ -1817,7 +1817,7 @@ set to single ended (literal also used to set calibration mode) */
 set to differential (literal also used to set calibration mode) */
 #define LL_ADC_BOTH_SINGLE_DIFF_ENDED                                          \
 	(LL_ADC_SINGLE_ENDED | LL_ADC_DIFFERENTIAL_ENDED) /*!< ADC channel     \
-	ending set to both single ended and differential (literal used only to               \
+	ending set to both single ended and differential (literal used only to \
 	set calibration factors) */
 /**
  * @}
@@ -2060,10 +2060,10 @@ monitoring of ADC channel ADCx_IN15, converted by group regular only */
 	 ADC_CFGR_AWD1SGL) /*!< ADC analog watchdog monitoring                 \
 of ADC channel ADCx_IN15, converted by group injected only */
 #define LL_ADC_AWD_CHANNEL_15_REG_INJ                                          \
-	((LL_ADC_CHANNEL_15 & ADC_CHANNEL_ID_MASK) |                           \
-	 ADC_CFGR_JAWD1EN | ADC_CFGR_AWD1EN | ADC_CFGR_AWD1SGL) /*!< ADC       \
-		      analog watchdog monitoring of ADC channel ADCx_IN15,                                                     \
-		      converted by either group regular or injected */
+	((LL_ADC_CHANNEL_15 & ADC_CHANNEL_ID_MASK) | ADC_CFGR_JAWD1EN |        \
+	 ADC_CFGR_AWD1EN | ADC_CFGR_AWD1SGL) /*!< ADC                          \
+   analog watchdog monitoring of ADC channel ADCx_IN15,                        \
+   converted by either group regular or injected */
 #define LL_ADC_AWD_CHANNEL_16_REG                                              \
 	((LL_ADC_CHANNEL_16 & ADC_CHANNEL_ID_MASK) | ADC_CFGR_AWD1EN |         \
 	 ADC_CFGR_AWD1SGL) /*!< ADC analog watchdog monitoring                 \
@@ -2099,10 +2099,10 @@ of ADC channel ADCx_IN18, converted by group regular only */
 	 ADC_CFGR_AWD1SGL) /*!< ADC analog watchdog monitoring                 \
 of ADC channel ADCx_IN18, converted by group injected only */
 #define LL_ADC_AWD_CHANNEL_18_REG_INJ                                          \
-	((LL_ADC_CHANNEL_18 & ADC_CHANNEL_ID_MASK) |                           \
-	 ADC_CFGR_JAWD1EN | ADC_CFGR_AWD1EN | ADC_CFGR_AWD1SGL) /*!< ADC       \
-		      analog watchdog monitoring of ADC channel ADCx_IN18,                                                     \
-		      converted by either group regular or injected */
+	((LL_ADC_CHANNEL_18 & ADC_CHANNEL_ID_MASK) | ADC_CFGR_JAWD1EN |        \
+	 ADC_CFGR_AWD1EN | ADC_CFGR_AWD1SGL) /*!< ADC                          \
+   analog watchdog monitoring of ADC channel ADCx_IN18,                        \
+   converted by either group regular or injected */
 #define LL_ADC_AWD_CH_VREFINT_REG                                              \
 	((LL_ADC_CHANNEL_VREFINT & ADC_CHANNEL_ID_MASK) | ADC_CFGR_AWD1EN |    \
 	 ADC_CFGR_AWD1SGL) /*!< ADC analog watchdog monitoring                 \
@@ -2127,7 +2127,7 @@ converted by group regular only */
 #define LL_ADC_AWD_CH_TEMPSENSOR_INJ                                           \
 	((LL_ADC_CHANNEL_TEMPSENSOR & ADC_CHANNEL_ID_MASK) |                   \
 	 ADC_CFGR_JAWD1EN | ADC_CFGR_AWD1SGL) /*!< ADC analog watchdog         \
-    monitoring of ADC internal channel connected to internal temperature                     \
+    monitoring of ADC internal channel connected to internal temperature       \
     sensor, converted by group injected only */
 #define LL_ADC_AWD_CH_TEMPSENSOR_REG_INJ                                       \
 	((LL_ADC_CHANNEL_TEMPSENSOR & ADC_CHANNEL_ID_MASK) |                   \
@@ -2291,8 +2291,8 @@ when ADC group injected is triggered, the oversampling on ADC group regular    \
 is temporary stopped and continued afterwards. */
 #define LL_ADC_OVS_GRP_REGULAR_RESUMED                                         \
 	(ADC_CFGR2_ROVSM | ADC_CFGR2_ROVSE) /*!< ADC oversampling on           \
-	conversions of ADC group regular. If group injected interrupts group                         \
-	regular: when ADC group injected is triggered, the oversampling on ADC                 \
+	conversions of ADC group regular. If group injected interrupts group   \
+	regular: when ADC group injected is triggered, the oversampling on ADC \
 	group regular is resumed from start (oversampler buffer reset). */
 #define LL_ADC_OVS_GRP_INJECTED                                                \
 	(ADC_CFGR2_JOVSE) /*!< ADC oversampling on conversions of              \
@@ -2315,7 +2315,7 @@ regular is resumed from start (oversampler buffer reset). */
 mode (all conversions of oversampling ratio are done from 1 trigger) */
 #define LL_ADC_OVS_REG_DISCONT                                                 \
 	(ADC_CFGR2_TROVS) /*!< ADC oversampling discontinuous mode:            \
-       discontinuous mode (each conversion of oversampling ratio needs a                           \
+       discontinuous mode (each conversion of oversampling ratio needs a       \
        trigger) */
 /**
  * @}
@@ -2338,7 +2338,7 @@ mode (all conversions of oversampling ratio are done from 1 trigger) */
 (before potential shift) */
 #define LL_ADC_OVS_RATIO_16                                                    \
 	(ADC_CFGR2_OVSR_1 | ADC_CFGR2_OVSR_0) /*!< ADC oversampling ratio of   \
-	16 (sum of conversions data computed to result as oversampling                   \
+	16 (sum of conversions data computed to result as oversampling         \
 	conversion data (before potential shift) */
 #define LL_ADC_OVS_RATIO_32                                                    \
 	(ADC_CFGR2_OVSR_2) /*!< ADC oversampling ratio of 32                   \
@@ -2346,11 +2346,11 @@ mode (all conversions of oversampling ratio are done from 1 trigger) */
 (before potential shift) */
 #define LL_ADC_OVS_RATIO_64                                                    \
 	(ADC_CFGR2_OVSR_2 | ADC_CFGR2_OVSR_0) /*!< ADC oversampling ratio of   \
-	64 (sum of conversions data computed to result as oversampling                   \
+	64 (sum of conversions data computed to result as oversampling         \
 	conversion data (before potential shift) */
 #define LL_ADC_OVS_RATIO_128                                                   \
 	(ADC_CFGR2_OVSR_2 | ADC_CFGR2_OVSR_1) /*!< ADC oversampling ratio of   \
-	128 (sum of conversions data computed to result as oversampling                   \
+	128 (sum of conversions data computed to result as oversampling        \
 	conversion data (before potential shift) */
 #define LL_ADC_OVS_RATIO_256                                                   \
 	(ADC_CFGR2_OVSR_2 | ADC_CFGR2_OVSR_1 |                                 \
@@ -2378,7 +2378,7 @@ to result as oversampling conversion data) */
 to result as oversampling conversion data) */
 #define LL_ADC_OVS_SHIFT_RIGHT_3                                               \
 	(ADC_CFGR2_OVSS_1 | ADC_CFGR2_OVSS_0) /*!< ADC oversampling right      \
-	shift of 3 (sum of the ADC conversions data (after OVS ratio) is                         \
+	shift of 3 (sum of the ADC conversions data (after OVS ratio) is       \
 	divided by 8 to result as oversampling conversion data) */
 #define LL_ADC_OVS_SHIFT_RIGHT_4                                               \
 	(ADC_CFGR2_OVSS_2) /*!< ADC oversampling right shift of 4              \
@@ -2386,11 +2386,11 @@ to result as oversampling conversion data) */
 to result as oversampling conversion data) */
 #define LL_ADC_OVS_SHIFT_RIGHT_5                                               \
 	(ADC_CFGR2_OVSS_2 | ADC_CFGR2_OVSS_0) /*!< ADC oversampling right      \
-	shift of 5 (sum of the ADC conversions data (after OVS ratio) is                         \
+	shift of 5 (sum of the ADC conversions data (after OVS ratio) is       \
 	divided by 32 to result as oversampling conversion data) */
 #define LL_ADC_OVS_SHIFT_RIGHT_6                                               \
 	(ADC_CFGR2_OVSS_2 | ADC_CFGR2_OVSS_1) /*!< ADC oversampling right      \
-	shift of 6 (sum of the ADC conversions data (after OVS ratio) is                         \
+	shift of 6 (sum of the ADC conversions data (after OVS ratio) is       \
 	divided by 64 to result as oversampling conversion data) */
 #define LL_ADC_OVS_SHIFT_RIGHT_7                                               \
 	(ADC_CFGR2_OVSS_2 | ADC_CFGR2_OVSS_1 |                                 \
@@ -2455,16 +2455,16 @@ non-circular. Setting for ADC resolution of 12 and 10 bits */
 #define LL_ADC_MULTI_REG_DMA_LIMIT_RES8_6B                                     \
 	(ADC_CCR_MDMA_1 | ADC_CCR_MDMA_0) /*!< ADC multimode group regular     \
 	conversions are transferred by DMA, one DMA channel for both ADC(DMA   \
-	of ADC master), in limited mode (one shot mode): DMA transfer requests           \
+	of ADC master), in limited mode (one shot mode): DMA transfer requests \
 	are stopped when number of DMA data transfers (number of ADC           \
-	conversions) is reached. This ADC mode is intended to be used with DMA                     \
+	conversions) is reached. This ADC mode is intended to be used with DMA \
 	mode non-circular. Setting for ADC resolution of 8 and 6 bits */
 #define LL_ADC_MULTI_REG_DMA_UNLMT_RES12_10B                                   \
 	(ADC_CCR_DMACFG | ADC_CCR_MDMA_1) /*!< ADC multimode group regular     \
 	conversions are transferred by DMA, one DMA channel for both ADC(DMA   \
-	of ADC master), in unlimited mode: DMA transfer requests are                     \
-	unlimited, whatever number of DMA data transferred (number of ADC                        \
-	conversions). This ADC mode is intended to be used with DMA mode                            \
+	of ADC master), in unlimited mode: DMA transfer requests are           \
+	unlimited, whatever number of DMA data transferred (number of ADC      \
+	conversions). This ADC mode is intended to be used with DMA mode       \
 	circular. Setting for ADC resolution of 12 and 10 bits */
 #define LL_ADC_MULTI_REG_DMA_UNLMT_RES8_6B                                     \
 	(ADC_CCR_DMACFG | ADC_CCR_MDMA_1 |                                     \
@@ -2584,8 +2584,8 @@ sampling phases: 12 ADC clock cycles */
 	((int16_t)0x7FFF) /* Temperature calculation error using helper macro  \
 			     @ref __LL_ADC_CALC_TEMPERATURE(), due to issue on \
 			     calibration parameters. This value is coded on 16 \
-			     bits (to fit on signed word or double word) and                                    \
-			     corresponds to an inconsistent temperature value.                                         \
+			     bits (to fit on signed word or double word) and   \
+			     corresponds to an inconsistent temperature value. \
 			   */
 /**
  * @}

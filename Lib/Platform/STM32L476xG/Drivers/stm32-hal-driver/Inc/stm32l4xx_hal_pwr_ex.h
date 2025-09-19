@@ -337,8 +337,9 @@ enable: VDDA versus 2.2 V. */
 #define PWR_FLAG_EXT_SMPS                                                      \
 	((uint32_t)0x002D) /*!< Switching to external SMPS ready flag */
 #endif			   /* PWR_SR1_EXT_SMPS_RDY */
-#define PWR_FLAG_WUFI ((uint32_t)0x002F) /*!< Wakeup on internal wakeup line   \
-					  */
+#define PWR_FLAG_WUFI                                                          \
+	((uint32_t)0x002F) /*!< Wakeup on internal wakeup line                 \
+			    */
 
 #define PWR_FLAG_REGLPS                                                        \
 	((uint32_t)0x0048) /*!< Low-power regulator start flag */

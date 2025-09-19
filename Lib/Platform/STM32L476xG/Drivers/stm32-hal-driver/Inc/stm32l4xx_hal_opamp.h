@@ -250,8 +250,9 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
 /** @defgroup OPAMP_PowerMode OPAMP PowerMode
  * @{
  */
-#define OPAMP_POWERMODE_NORMALPOWER 0x00000000U /*!< OPAMP power mode normal   \
-						 */
+#define OPAMP_POWERMODE_NORMALPOWER                                            \
+	0x00000000U /*!< OPAMP power mode normal                               \
+		     */
 #define OPAMP_POWERMODE_LOWPOWER                                               \
 	OPAMP_CSR_OPALPM /*!< OPAMP power mode low-power */
 

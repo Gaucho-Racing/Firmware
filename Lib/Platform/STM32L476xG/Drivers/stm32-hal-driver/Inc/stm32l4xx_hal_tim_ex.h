@@ -139,15 +139,17 @@ typedef struct {
 #define TIM_TIM2_ITR1_NONE                                                     \
 	TIM2_OR1_ITR1_RMP /*!< No internal trigger on TIM2_ITR1 */
 #else
-#define TIM_TIM2_ITR1_NONE 0x00000000U /*!< No internal trigger on TIM2_ITR1   \
-					*/
+#define TIM_TIM2_ITR1_NONE                                                     \
+	0x00000000U /*!< No internal trigger on TIM2_ITR1                      \
+		     */
 #define TIM_TIM2_ITR1_USB_SOF                                                  \
 	TIM2_OR1_ITR1_RMP	      /*!< TIM2_ITR1 is connected to USB SOF */
 #endif				      /* STM32L471xx */
 #endif				      /* USB_OTG_FS */
 #define TIM_TIM2_ETR_GPIO 0x00000000U /*!< TIM2_ETR is connected to GPIO */
-#define TIM_TIM2_ETR_LSE TIM2_OR1_ETR1_RMP /*!< TIM2_ETR is connected to LSE   \
-					    */
+#define TIM_TIM2_ETR_LSE                                                       \
+	TIM2_OR1_ETR1_RMP /*!< TIM2_ETR is connected to LSE                    \
+			   */
 #define TIM_TIM2_ETR_COMP1                                                     \
 	TIM2_OR2_ETRSEL_0 /*!< TIM2_ETR is connected to COMP1 output */
 #if defined(COMP2)
