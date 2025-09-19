@@ -242,15 +242,14 @@ typedef struct {
 				      discontinuous ranks increment is fixed to
 				      one-by-one. */
 
-	uint32_t
-	    NbrOfDiscConversion; /*!< Specifies the number of discontinuous
-				    conversions in which the main sequence of
-				    ADC group regular (parameter
-				    NbrOfConversion) will be subdivided. If
-				    parameter 'DiscontinuousConvMode' is
-				    disabled, this parameter is discarded. This
-				    parameter must be a number between Min_Data
-				    = 1 and Max_Data = 8. */
+	uint32_t NbrOfDiscConversion; /*!< Specifies the number of discontinuous
+					 conversions in which the main sequence
+					 of ADC group regular (parameter
+					 NbrOfConversion) will be subdivided. If
+					 parameter 'DiscontinuousConvMode' is
+					 disabled, this parameter is discarded.
+					 This parameter must be a number between
+					 Min_Data = 1 and Max_Data = 8. */
 
 	uint32_t
 	    ExternalTrigConv; /*!< Select the external event source used to
@@ -538,8 +537,9 @@ typedef struct {
 /* States of ADC global scope */
 #define HAL_ADC_STATE_RESET                                                    \
 	(0x00000000UL) /*!< ADC not yet initialized or disabled */
-#define HAL_ADC_STATE_READY (0x00000001UL) /*!< ADC peripheral ready for use   \
-					    */
+#define HAL_ADC_STATE_READY                                                    \
+	(0x00000001UL) /*!< ADC peripheral ready for use                       \
+			*/
 #define HAL_ADC_STATE_BUSY_INTERNAL                                            \
 	(0x00000002UL) /*!< ADC is busy due to an internal process             \
 			  (initialization, calibration, ...) */
@@ -555,9 +555,9 @@ typedef struct {
 /* States of ADC group regular */
 #define HAL_ADC_STATE_REG_BUSY                                                 \
 	(0x00000100UL) /*!< A conversion on ADC group regular is ongoing or    \
-			  can occur (either by continuous mode, external                                          \
-			  trigger, low power auto power-on (if feature                                                     \
-			  available), multimode ADC master control (if feature                                                           \
+			  can occur (either by continuous mode, external       \
+			  trigger, low power auto power-on (if feature         \
+			  available), multimode ADC master control (if feature \
 			  available)) */
 #define HAL_ADC_STATE_REG_EOC                                                  \
 	(0x00000200UL) /*!< Conversion data available on group regular */
@@ -569,9 +569,9 @@ typedef struct {
 /* States of ADC group injected */
 #define HAL_ADC_STATE_INJ_BUSY                                                 \
 	(0x00001000UL) /*!< A conversion on ADC group injected is ongoing or   \
-			  can occur (either by auto-injection mode, external                                      \
-			  trigger, low power auto power-on (if feature                                               \
-			  available), multimode ADC master control (if feature                                                \
+			  can occur (either by auto-injection mode, external   \
+			  trigger, low power auto power-on (if feature         \
+			  available), multimode ADC master control (if feature \
 			  available)) */
 #define HAL_ADC_STATE_INJ_EOC                                                  \
 	(0x00002000UL) /*!< Conversion data available on group injected */
@@ -777,11 +777,13 @@ typedef void (*pADC_CallbackTypeDef)(
 #define ADC_RESOLUTION_12B                                                     \
 	(LL_ADC_RESOLUTION_12B) /*!< ADC resolution 12 bits */
 #define ADC_RESOLUTION_10B                                                     \
-	(LL_ADC_RESOLUTION_10B)			 /*!< ADC resolution 10 bits */
-#define ADC_RESOLUTION_8B (LL_ADC_RESOLUTION_8B) /*!< ADC resolution  8 bits   \
-						  */
-#define ADC_RESOLUTION_6B (LL_ADC_RESOLUTION_6B) /*!< ADC resolution  6 bits   \
-						  */
+	(LL_ADC_RESOLUTION_10B) /*!< ADC resolution 10 bits */
+#define ADC_RESOLUTION_8B                                                      \
+	(LL_ADC_RESOLUTION_8B) /*!< ADC resolution  8 bits                     \
+				*/
+#define ADC_RESOLUTION_6B                                                      \
+	(LL_ADC_RESOLUTION_6B) /*!< ADC resolution  6 bits                     \
+				*/
 /**
  * @}
  */
@@ -1078,12 +1080,15 @@ Vdda. */
  * number
  * @{
  */
-#define ADC_ANALOGWATCHDOG_1 (LL_ADC_AWD1) /*!< ADC analog watchdog number 1   \
-					    */
-#define ADC_ANALOGWATCHDOG_2 (LL_ADC_AWD2) /*!< ADC analog watchdog number 2   \
-					    */
-#define ADC_ANALOGWATCHDOG_3 (LL_ADC_AWD3) /*!< ADC analog watchdog number 3   \
-					    */
+#define ADC_ANALOGWATCHDOG_1                                                   \
+	(LL_ADC_AWD1) /*!< ADC analog watchdog number 1                        \
+		       */
+#define ADC_ANALOGWATCHDOG_2                                                   \
+	(LL_ADC_AWD2) /*!< ADC analog watchdog number 2                        \
+		       */
+#define ADC_ANALOGWATCHDOG_3                                                   \
+	(LL_ADC_AWD3) /*!< ADC analog watchdog number 3                        \
+		       */
 /**
  * @}
  */
@@ -1232,7 +1237,7 @@ continuous mode (all conversions of OVS ratio are done from 1 trigger) */
  */
 #define ADC_AWD_EVENT                                                          \
 	ADC_AWD1_EVENT /*!< ADC Analog watchdog 1 event: Naming for            \
-			  compatibility with other STM32 devices having only                                          \
+			  compatibility with other STM32 devices having only   \
 			  one analog watchdog */
 
 /** @defgroup ADC_interrupts_definition ADC interrupts definition
@@ -1267,7 +1272,7 @@ continuous mode (all conversions of OVS ratio are done from 1 trigger) */
 
 #define ADC_IT_AWD                                                             \
 	ADC_IT_AWD1 /*!< Analog watchdog 1 interrupt source: naming for        \
-		       compatibility with other STM32 series having only one                                       \
+		       compatibility with other STM32 series having only one   \
 		       analog watchdog   */
 
 /**
@@ -1299,7 +1304,7 @@ continuous mode (all conversions of OVS ratio are done from 1 trigger) */
 
 #define ADC_FLAG_AWD                                                           \
 	ADC_FLAG_AWD1 /*!< ADC Analog watchdog 1 flag: Naming for              \
-			 compatibility with other STM32 series having only one                                                  \
+			 compatibility with other STM32 series having only one \
 			 analog watchdog */
 
 #define ADC_FLAG_ALL                                                           \

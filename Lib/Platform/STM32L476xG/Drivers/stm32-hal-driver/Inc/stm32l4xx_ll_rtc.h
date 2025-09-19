@@ -492,7 +492,7 @@ typedef struct {
 	RTC_ALRMASSR_SSCLR /*!<  The synchronous binary counter (SS[31:0] in   \
 			      RTC_SSR) is running from 0xFFFF FFFF to          \
 				 RTC_ALRMABINR -> SS[31:0] value and is        \
-			      automatically reloaded with 0xFFFF FFFF when                                                                          \
+			      automatically reloaded with 0xFFFF FFFF when     \
 			      reaching RTC_ALRMABINR -> SS[31:0]. */
 /**
  * @}
@@ -540,7 +540,7 @@ typedef struct {
 	RTC_ALRMBSSR_SSCLR /*!<  The synchronous binary counter (SS[31:0] in   \
 			      RTC_SSR) is running from 0xFFFF FFFF to          \
 				 RTC_ALRMABINR -> SS[31:0] value and is        \
-			      automatically reloaded with 0xFFFF FFFF when                                                                          \
+			      automatically reloaded with 0xFFFF FFFF when     \
 			      reaching RTC_ALRMABINR -> SS[31:0]. */
 /**
  * @}
@@ -970,8 +970,9 @@ typedef struct {
 /** @defgroup RTC_LL_EC_CALIB_OUTPUT  Calibration output
  * @{
  */
-#define LL_RTC_CALIB_OUTPUT_NONE 0x00000000U /*!< Calibration output disabled  \
-					      */
+#define LL_RTC_CALIB_OUTPUT_NONE                                               \
+	0x00000000U /*!< Calibration output disabled                           \
+		     */
 #define LL_RTC_CALIB_OUTPUT_1HZ                                                \
 	(RTC_CR_COE | RTC_CR_COSEL) /*!< Calibration output is 1 Hz */
 #define LL_RTC_CALIB_OUTPUT_512HZ                                              \

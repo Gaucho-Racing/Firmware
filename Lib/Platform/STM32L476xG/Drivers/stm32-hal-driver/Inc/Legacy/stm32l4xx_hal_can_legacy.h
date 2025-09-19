@@ -496,8 +496,9 @@ typedef struct {
 
 /* Operating Mode Interrupts */
 #define CAN_IT_WKU ((uint32_t)CAN_IER_WKUIE) /*!< Wake-up interrupt */
-#define CAN_IT_SLK ((uint32_t)CAN_IER_SLKIE) /*!< Sleep acknowledge interrupt  \
-					      */
+#define CAN_IT_SLK                                                             \
+	((uint32_t)CAN_IER_SLKIE) /*!< Sleep acknowledge interrupt             \
+				   */
 
 /* Error Interrupts */
 #define CAN_IT_EWG ((uint32_t)CAN_IER_EWGIE) /*!< Error warning interrupt   */
