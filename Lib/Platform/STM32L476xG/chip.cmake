@@ -8,7 +8,7 @@ set(CHIP "STM32L476xG") # REPLACE: with the appropriate platform name
 set(CHIP_PATH "${CMAKE_SOURCE_DIR}/Lib/Platform/${CHIP}")
 set(TARGET_FLAGS "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard") # REPLACE: with the appropriate linkerscript
 add_executable(${TARGET_NAME})
-# the FLASH.ld script is a linker script that tells the linker how to arrange compiled code in the MCUs FLASH and RAM memory 
+# the FLASH.ld script is a linker script that tells the linker how to arrange compiled code in the MCUs FLASH and RAM memory
 set_target_properties(${TARGET_NAME} PROPERTIES LINK_FLAGS "-T${CHIP_PATH}/CompileDependencies/STM32L476XX_FLASH.ld") # REPLACE: with the appropriate linkerscript
 
 # Cleanup (do not change, leave these 3 lines as is, trust)
@@ -28,14 +28,14 @@ target_compile_definitions(${CHIP}_LIB INTERFACE
 	USE_FULL_LL_DRIVER
 	USE_HAL_DRIVER
 	${TEMP}xx # REPLACE: Check that this either works or needs to be overwritten w/ the new
-    ${TEMP} # REPLACE: If you get a TON of legacy warnings about things in stm32_hal_legacy.h then replace this with the 'STM32??' of the chip and uncomment
+    STM32L4   # REPLACE: If you get a TON of legacy warnings about things in stm32_hal_legacy.h then replace this with the 'STM32??' of the chip and uncomment
 )
 
 
 target_include_directories(${CHIP}_LIB INTERFACE
     ${CHIP_PATH}/Drivers/CMSIS/Include
     ${CHIP_PATH}/Drivers/stm32-hal-driver/Inc
-    ${CHIP_PATH}/Drivers/CMSIS/Device/ST/STM32L4xx/Include 
+    ${CHIP_PATH}/Drivers/CMSIS/Device/ST/STM32L4xx/Include
 )
 
 target_sources(${CHIP}_LIB INTERFACE
