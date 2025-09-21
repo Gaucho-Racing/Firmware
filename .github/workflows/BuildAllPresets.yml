@@ -44,11 +44,11 @@ jobs:
           cmake --build build/${{ matrix.prefix }} |& tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
 
-      - name: Upload MinSizeRel Builds
-        if: matrix.prefix == 'MinSizeRel'
+      - name: Upload RelWithDebInfo Builds
+        if: matrix.prefix == 'RelWithDebInfo'
         uses: actions/upload-artifact@v4
         with:
-          name: firmware-release
+          name: firmware-release-with-deb-info
           path: build/${{ matrix.prefix }}/*.elf
           retention-days: 7
           if-no-files-found: error
