@@ -229,15 +229,17 @@ typedef struct {
 	((uint32_t)0x10000000U) /*!< Error when feature is not insupported */
 #define SDMMC_ERROR_BUSY                                                       \
 	((uint32_t)0x20000000U) /*!< Error when transfer process is busy */
-#define SDMMC_ERROR_DMA ((uint32_t)0x40000000U) /*!< Error while DMA transfer  \
-						 */
+#define SDMMC_ERROR_DMA                                                        \
+	((uint32_t)0x40000000U) /*!< Error while DMA transfer                  \
+				 */
 #define SDMMC_ERROR_TIMEOUT ((uint32_t)0x80000000U) /*!< Timeout error */
 
 /**
  * @brief SDMMC Commands Index
  */
-#define SDMMC_CMD_GO_IDLE_STATE ((uint8_t)0U) /*!< Resets the SD memory card.  \
-					       */
+#define SDMMC_CMD_GO_IDLE_STATE                                                \
+	((uint8_t)0U) /*!< Resets the SD memory card.                          \
+		       */
 #define SDMMC_CMD_SEND_OP_COND                                                 \
 	((uint8_t)1U) /*!< Sends host capacity support information and         \
 			 activates the card's initialization process. */
