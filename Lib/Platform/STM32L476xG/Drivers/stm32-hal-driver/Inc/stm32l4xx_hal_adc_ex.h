@@ -455,19 +455,19 @@ trigger software start */
 	the selected ADC channel */
 #define ADC_OFFSET_1                                                           \
 	(LL_ADC_OFFSET_1) /*!< ADC offset number 1: ADC channel and offset     \
-	level to which the offset programmed will be applied (independently of                       \
+	level to which the offset programmed will be applied (independently of \
 	channel mapped on ADC group regular or group injected) */
 #define ADC_OFFSET_2                                                           \
 	(LL_ADC_OFFSET_2) /*!< ADC offset number 2: ADC channel and offset     \
-	level to which the offset programmed will be applied (independently of                       \
+	level to which the offset programmed will be applied (independently of \
 	channel mapped on ADC group regular or group injected) */
 #define ADC_OFFSET_3                                                           \
 	(LL_ADC_OFFSET_3) /*!< ADC offset number 3: ADC channel and offset     \
-	level to which the offset programmed will be applied (independently of                       \
+	level to which the offset programmed will be applied (independently of \
 	channel mapped on ADC group regular or group injected) */
 #define ADC_OFFSET_4                                                           \
 	(LL_ADC_OFFSET_4) /*!< ADC offset number 4: ADC channel and offset     \
-	level to which the offset programmed will be applied (independently of                       \
+	level to which the offset programmed will be applied (independently of \
 	channel mapped on ADC group regular or group injected) */
 /**
  * @}
@@ -513,7 +513,7 @@ trigger software start */
 	Combined group regular simultaneous + group injected simultaneous */
 #define ADC_DUALMODE_REGSIMULT_ALTERTRIG                                       \
 	(LL_ADC_MULTI_DUAL_REG_SIM_INJ_ALT) /*!< ADC dual mode enabled:        \
-	Combined group regular simultaneous + group injected alternate trigger                 \
+	Combined group regular simultaneous + group injected alternate trigger \
       */
 #define ADC_DUALMODE_REGINTERL_INJECSIMULT                                     \
 	(LL_ADC_MULTI_DUAL_REG_INT_INJ_SIM) /*!< ADC dual mode enabled:        \
@@ -668,8 +668,8 @@ trigger software start */
 by DFSDM. */
 #define ADC_DFSDM_MODE_ENABLE                                                  \
 	(LL_ADC_REG_DFSDM_TRANSFER_ENABLE) /*!< ADC conversion data are        \
-	transferred to DFSDM for post processing. The ADC conversion data                         \
-	format must be 16-bit signed and right aligned, refer to reference                                  \
+	transferred to DFSDM for post processing. The ADC conversion data      \
+	format must be 16-bit signed and right aligned, refer to reference     \
 	manual. DFSDM transfer cannot be used if DMA transfer is enabled. */
 /**
  * @}
@@ -770,7 +770,7 @@ by DFSDM. */
     defined(STM32L4Q5xx)
 #define ADC_IS_INDEPENDENT(__HANDLE__) (RESET)
 #endif /* defined (STM32L471xx) || defined (STM32L475xx) || defined            \
-	  (STM32L476xx) || defined (STM32L485xx) || defined (STM32L486xx) ||                                                      \
+	  (STM32L476xx) || defined (STM32L485xx) || defined (STM32L486xx) ||   \
 	  defined (STM32L496xx) || defined (STM32L4A6xx) */
 
 /**
@@ -981,7 +981,7 @@ by DFSDM. */
 	     ? ((__HANDLE_SLAVE__)->Instance = ADC2)                           \
 	     : ((__HANDLE_SLAVE__)->Instance = NULL))
 #endif /* defined (STM32L412xx) || defined (STM32L422xx) || defined            \
-	  (STM32L471xx) || defined (STM32L475xx) || defined (STM32L476xx) ||                                                      \
+	  (STM32L471xx) || defined (STM32L475xx) || defined (STM32L476xx) ||   \
 	  defined (STM32L485xx) || defined (STM32L486xx) */
 
 /**
@@ -1007,12 +1007,12 @@ by DFSDM. */
 	((((__HANDLE__)->Instance) == ADC1) ||                                 \
 	 (((__HANDLE__)->Instance) == ADC3))
 #endif /* defined (STM32L412xx) || defined (STM32L422xx) || defined            \
-	  (STM32L431xx) || defined (STM32L432xx) || defined (STM32L433xx) ||                                                      \
+	  (STM32L431xx) || defined (STM32L432xx) || defined (STM32L433xx) ||   \
 	  defined (STM32L442xx) || defined (STM32L443xx) || defined            \
-	  (STM32L451xx) || defined (STM32L452xx) || defined (STM32L462xx) ||                             \
-	  defined (STM32L4P5xx) || defined (STM32L4Q5xx) || defined                                                                       \
+	  (STM32L451xx) || defined (STM32L452xx) || defined (STM32L462xx) ||   \
+	  defined (STM32L4P5xx) || defined (STM32L4Q5xx) || defined            \
 	  (STM32L4R5xx) || defined (STM32L4R7xx) || defined (STM32L4R9xx) ||   \
-	  defined (STM32L4S5xx) || defined (STM32L4S7xx) || defined                                              \
+	  defined (STM32L4S5xx) || defined (STM32L4S7xx) || defined            \
 	  (STM32L4S9xx) */
 
 /**
@@ -1038,12 +1038,12 @@ by DFSDM. */
 	((((__HANDLE__)->Instance) == ADC1) ||                                 \
 	 (((__HANDLE__)->Instance) == ADC3))
 #endif /* defined (STM32L412xx) || defined (STM32L422xx) || defined            \
-	  (STM32L431xx) || defined (STM32L432xx) || defined (STM32L433xx) ||                                                      \
+	  (STM32L431xx) || defined (STM32L432xx) || defined (STM32L433xx) ||   \
 	  defined (STM32L442xx) || defined (STM32L443xx) || defined            \
-	  (STM32L451xx) || defined (STM32L452xx) || defined (STM32L462xx) ||                             \
-	  defined (STM32L4P5xx) || defined (STM32L4Q5xx) || defined                                                                       \
+	  (STM32L451xx) || defined (STM32L452xx) || defined (STM32L462xx) ||   \
+	  defined (STM32L4P5xx) || defined (STM32L4Q5xx) || defined            \
 	  (STM32L4R5xx) || defined (STM32L4R7xx) || defined (STM32L4R9xx) ||   \
-	  defined (STM32L4S5xx) || defined (STM32L4S7xx) || defined                                              \
+	  defined (STM32L4S5xx) || defined (STM32L4S7xx) || defined            \
 	  (STM32L4S9xx) */
 
 /**
@@ -1257,10 +1257,10 @@ by DFSDM. */
 	   ((__CHANNEL__) == ADC_CHANNEL_DAC1CH1_ADC3) ||                      \
 	   ((__CHANNEL__) == ADC_CHANNEL_DAC1CH2_ADC3))))
 #endif /* defined (STM32L431xx) || defined (STM32L432xx) || defined            \
-	  (STM32L433xx) || defined (STM32L442xx) || defined (STM32L443xx) ||                                                      \
+	  (STM32L433xx) || defined (STM32L442xx) || defined (STM32L443xx) ||   \
 	  defined (STM32L451xx) || defined (STM32L452xx) || defined            \
-	  (STM32L462xx) || defined (STM32L4R5xx) || defined (STM32L4R7xx) ||                             \
-	  defined (STM32L4R9xx) || defined (STM32L4S5xx) || defined                                                                       \
+	  (STM32L462xx) || defined (STM32L4R5xx) || defined (STM32L4R7xx) ||   \
+	  defined (STM32L4R9xx) || defined (STM32L4S5xx) || defined            \
 	  (STM32L4S7xx) || defined (STM32L4S9xx) */
 
 /**
@@ -1328,12 +1328,12 @@ by DFSDM. */
 	   ((__CHANNEL__) == ADC_CHANNEL_11) ||                                \
 	   ((__CHANNEL__) == ADC_CHANNEL_12))))
 #endif /* defined (STM32L412xx) || defined (STM32L422xx) || defined            \
-	  (STM32L431xx) || defined (STM32L432xx) || defined (STM32L433xx) ||                                                      \
+	  (STM32L431xx) || defined (STM32L432xx) || defined (STM32L433xx) ||   \
 	  defined (STM32L442xx) || defined (STM32L443xx) || defined            \
-	  (STM32L451xx) || defined (STM32L452xx) || defined (STM32L462xx) ||                             \
-	  defined (STM32L4P5xx) || defined (STM32L4Q5xx) || defined                                                                       \
+	  (STM32L451xx) || defined (STM32L452xx) || defined (STM32L462xx) ||   \
+	  defined (STM32L4P5xx) || defined (STM32L4Q5xx) || defined            \
 	  (STM32L4R5xx) || defined (STM32L4R7xx) || defined (STM32L4R9xx) ||   \
-	  defined (STM32L4S5xx) || defined (STM32L4S7xx) || defined                                              \
+	  defined (STM32L4S5xx) || defined (STM32L4S7xx) || defined            \
 	  (STM32L4S9xx) */
 
 /**

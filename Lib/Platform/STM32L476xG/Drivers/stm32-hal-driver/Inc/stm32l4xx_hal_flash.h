@@ -79,9 +79,10 @@ typedef struct {
 				    OPTIONBYTE_WRP).   This parameter must be a
 				    value between WRPStartOffset and (max number
 				    of pages in the bank - 1) */
-	uint32_t RDPLevel;	 /*!< Set the read protection level.. (used for
-				    OPTIONBYTE_RDP).       This parameter can be a value of
-				    @ref FLASH_OB_Read_Protection */
+	uint32_t
+	    RDPLevel;	     /*!< Set the read protection level.. (used for
+				OPTIONBYTE_RDP).       This parameter can be a value of
+				@ref FLASH_OB_Read_Protection */
 	uint32_t USERType;   /*!< User option byte(s) to be configured (used for
 				OPTIONBYTE_USER).   This parameter can be a
 				combination of @ref FLASH_OB_USER_Type */
@@ -102,7 +103,8 @@ typedef struct {
 				FLASH_OB_USER_SRAM2_RST,
 				  @ref FLASH_OB_USER_nSWBOOT0 and @ref
 				FLASH_OB_USER_nBOOT0 */
-	uint32_t PCROPConfig;	 /*!< Configuration of the PCROP (used for
+	uint32_t
+	    PCROPConfig;	 /*!< Configuration of the PCROP (used for
 				    OPTIONBYTE_PCROP).    This parameter must be a
 				    combination of @ref FLASH_Banks (except
 				    FLASH_BANK_BOTH)    and @ref FLASH_OB_PCROP_RDP */
@@ -235,11 +237,11 @@ typedef struct {
 			    address.*/
 #define FLASH_TYPEPROGRAM_FAST                                                 \
 	((uint32_t)0x01) /*!<Fast program a 32 row double-word (64-bit) at a   \
-			    specified address. And another 32 row double-word                                                \
+			    specified address. And another 32 row double-word  \
 			    (64-bit) will be programmed */
 #define FLASH_TYPEPROGRAM_FAST_AND_LAST                                        \
 	((uint32_t)0x02) /*!<Fast program a 32 row double-word (64-bit) at a   \
-			    specified address. And this is the last 32 row                                                   \
+			    specified address. And this is the last 32 row     \
 			    double-word (64-bit) programmed */
 /**
  * @}
@@ -248,10 +250,11 @@ typedef struct {
 /** @defgroup FLASH_OB_Type FLASH Option Bytes Type
  * @{
  */
-#define OPTIONBYTE_WRP ((uint32_t)0x01)	 /*!< WRP option byte configuration */
-#define OPTIONBYTE_RDP ((uint32_t)0x02)	 /*!< RDP option byte configuration */
-#define OPTIONBYTE_USER ((uint32_t)0x04) /*!< USER option byte configuration   \
-					  */
+#define OPTIONBYTE_WRP ((uint32_t)0x01) /*!< WRP option byte configuration */
+#define OPTIONBYTE_RDP ((uint32_t)0x02) /*!< RDP option byte configuration */
+#define OPTIONBYTE_USER                                                        \
+	((uint32_t)0x04) /*!< USER option byte configuration                   \
+			  */
 #define OPTIONBYTE_PCROP                                                       \
 	((uint32_t)0x08) /*!< PCROP option byte configuration */
 /**
@@ -469,8 +472,9 @@ typedef struct {
  * @{
  */
 #define OB_BFB2_DISABLE ((uint32_t)0x000000) /*!< Dual-bank boot disable */
-#define OB_BFB2_ENABLE ((uint32_t)FLASH_OPTR_BFB2) /*!< Dual-bank boot enable  \
-						    */
+#define OB_BFB2_ENABLE                                                         \
+	((uint32_t)FLASH_OPTR_BFB2) /*!< Dual-bank boot enable                 \
+				     */
 /**
  * @}
  */
@@ -586,12 +590,12 @@ typedef struct {
  */
 #define OB_PCROP_RDP_NOT_ERASE                                                 \
 	((uint32_t)0x00000000) /*!< PCROP area is not erased when the RDP      \
-				  level is decreased from Level 1 to Level 0                                          \
+				  level is decreased from Level 1 to Level 0   \
 				*/
 #define OB_PCROP_RDP_ERASE                                                     \
 	((uint32_t)                                                            \
 	     FLASH_PCROP1ER_PCROP_RDP) /*!< PCROP area is erased when the RDP  \
-					  level is decreased from Level 1 to                                                     \
+					  level is decreased from Level 1 to   \
 					  Level 0 (full mass erase) */
 /**
  * @}
@@ -614,10 +618,12 @@ typedef struct {
 #define FLASH_LATENCY_8 FLASH_ACR_LATENCY_8WS	/*!< FLASH Eight wait states */
 #define FLASH_LATENCY_9 FLASH_ACR_LATENCY_9WS	/*!< FLASH Nine wait states */
 #define FLASH_LATENCY_10 FLASH_ACR_LATENCY_10WS /*!< FLASH Ten wait state */
-#define FLASH_LATENCY_11 FLASH_ACR_LATENCY_11WS /*!< FLASH Eleven wait state   \
-						 */
-#define FLASH_LATENCY_12 FLASH_ACR_LATENCY_12WS /*!< FLASH Twelve wait states  \
-						 */
+#define FLASH_LATENCY_11                                                       \
+	FLASH_ACR_LATENCY_11WS /*!< FLASH Eleven wait state                    \
+				*/
+#define FLASH_LATENCY_12                                                       \
+	FLASH_ACR_LATENCY_12WS /*!< FLASH Twelve wait states                   \
+				*/
 #define FLASH_LATENCY_13                                                       \
 	FLASH_ACR_LATENCY_13WS /*!< FLASH Thirteen wait states */
 #define FLASH_LATENCY_14                                                       \
@@ -653,10 +659,11 @@ typedef struct {
 /** @defgroup FLASH_Flags FLASH Flags Definition
  * @{
  */
-#define FLASH_FLAG_EOP FLASH_SR_EOP	    /*!< FLASH End of operation flag */
-#define FLASH_FLAG_OPERR FLASH_SR_OPERR	    /*!< FLASH Operation error flag */
-#define FLASH_FLAG_PROGERR FLASH_SR_PROGERR /*!< FLASH Programming error flag  \
-					     */
+#define FLASH_FLAG_EOP FLASH_SR_EOP	/*!< FLASH End of operation flag */
+#define FLASH_FLAG_OPERR FLASH_SR_OPERR /*!< FLASH Operation error flag */
+#define FLASH_FLAG_PROGERR                                                     \
+	FLASH_SR_PROGERR /*!< FLASH Programming error flag                     \
+			  */
 #define FLASH_FLAG_WRPERR                                                      \
 	FLASH_SR_WRPERR /*!< FLASH Write protection error flag */
 #define FLASH_FLAG_PGAERR                                                      \
@@ -719,9 +726,10 @@ typedef struct {
  */
 #define FLASH_IT_EOP                                                           \
 	FLASH_CR_EOPIE /*!< End of FLASH Operation Interrupt source */
-#define FLASH_IT_OPERR FLASH_CR_ERRIE	/*!< Error Interrupt source */
-#define FLASH_IT_RDERR FLASH_CR_RDERRIE /*!< PCROP Read Error Interrupt        \
-					   source*/
+#define FLASH_IT_OPERR FLASH_CR_ERRIE /*!< Error Interrupt source */
+#define FLASH_IT_RDERR                                                         \
+	FLASH_CR_RDERRIE /*!< PCROP Read Error Interrupt                       \
+			    source*/
 #define FLASH_IT_ECCC                                                          \
 	(FLASH_ECCR_ECCIE >> 24) /*!< ECC Correction Interrupt source */
 /**

@@ -443,8 +443,7 @@ typedef void (*pUSART_CallbackTypeDef)(
 #if defined(USART_CR1_FIFOEN)
 #define USART_FLAG_RXNE                                                        \
 	USART_ISR_RXNE_RXFNE /*!< USART read data register not empty */
-#define USART_FLAG_RXFNE                                                       \
-	USART_ISR_RXNE_RXFNE /*!< USART RXFIFO not empty */
+#define USART_FLAG_RXFNE USART_ISR_RXNE_RXFNE /*!< USART RXFIFO not empty */
 #else
 #define USART_FLAG_RXNE                                                        \
 	USART_ISR_RXNE /*!< USART read data register not empty         */

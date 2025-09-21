@@ -69,25 +69,28 @@ typedef struct {
 			      This parameter can be a value of @ref
 			    RTCEx_Tamper_Filter_Definitions */
 
-	uint32_t SamplingFrequency; /*!< Specifies the sampling frequency.
-					 This parameter can be a value of @ref
-				       RTCEx_Tamper_Sampling_Frequencies_Definitions
-				     */
+	uint32_t
+	    SamplingFrequency; /*!< Specifies the sampling frequency.
+				    This parameter can be a value of @ref
+				  RTCEx_Tamper_Sampling_Frequencies_Definitions
+				*/
 
-	uint32_t PrechargeDuration; /*!< Specifies the Precharge Duration .
-					 This parameter can be a value of @ref
-				       RTCEx_Tamper_Pin_Precharge_Duration_Definitions
-				     */
+	uint32_t
+	    PrechargeDuration; /*!< Specifies the Precharge Duration .
+				    This parameter can be a value of @ref
+				  RTCEx_Tamper_Pin_Precharge_Duration_Definitions
+				*/
 
 	uint32_t TamperPullUp; /*!< Specifies the Tamper PullUp .
 				    This parameter can be a value of @ref
 				  RTCEx_Tamper_Pull_UP_Definitions */
 
-	uint32_t TimeStampOnTamperDetection; /*!< Specifies the
-						TimeStampOnTamperDetection. This
-						parameter can be a value of @ref
-						RTCEx_Tamper_TimeStampOnTamperDetection_Definitions
-					      */
+	uint32_t
+	    TimeStampOnTamperDetection; /*!< Specifies the
+					   TimeStampOnTamperDetection. This
+					   parameter can be a value of @ref
+					   RTCEx_Tamper_TimeStampOnTamperDetection_Definitions
+					 */
 } RTC_TamperTypeDef;
 /**
  * @}
@@ -732,87 +735,87 @@ typedef struct {
 					   compared  */
 #define RTC_ALARMSUBSECONDBINMASK_SS31_10                                      \
 	(10UL << RTC_ALRMASSR_MASKSS_Pos) /*!< SS[31:10] are don't care in     \
-					    Alarm comparison. Only SS[9:0] are                                                  \
+					    Alarm comparison. Only SS[9:0] are \
 					    compared  */
 #define RTC_ALARMSUBSECONDBINMASK_SS31_11                                      \
 	(11UL << RTC_ALRMASSR_MASKSS_Pos) /*!< SS[31:11] are don't care in     \
-					    Alarm comparison. Only SS[10:0]                                                     \
+					    Alarm comparison. Only SS[10:0]    \
 					    are compared */
 #define RTC_ALARMSUBSECONDBINMASK_SS31_12                                      \
 	(12UL << RTC_ALRMASSR_MASKSS_Pos) /*!< SS[31:12] are don't care in     \
-					    Alarm comparison.Only SS[11:0] are                                                  \
+					    Alarm comparison.Only SS[11:0] are \
 					    compared  */
 #define RTC_ALARMSUBSECONDBINMASK_SS31_13                                      \
 	(13UL << RTC_ALRMASSR_MASKSS_Pos) /*!< SS[31:13] are don't care in     \
-					    Alarm comparison. Only SS[12:0]                                                     \
+					    Alarm comparison. Only SS[12:0]    \
 					    are compared */
 #define RTC_ALARMSUBSECONDBINMASK_SS31_14                                      \
 	(14UL << RTC_ALRMASSR_MASKSS_Pos) /*!< SS[31:14] are don't care in     \
-					    Alarm comparison. Only SS[13:0]                                                     \
+					    Alarm comparison. Only SS[13:0]    \
 					    are compared */
 #define RTC_ALARMSUBSECONDBINMASK_SS31_15                                      \
 	(15UL << RTC_ALRMASSR_MASKSS_Pos) /*!< SS[31:15] are don't care in     \
-					    Alarm comparison. Only SS[14:0]                                                     \
+					    Alarm comparison. Only SS[14:0]    \
 					    are compared */
 #define RTC_ALARMSUBSECONDBINMASK_SS31_16                                      \
 	(16UL << RTC_ALRMASSR_MASKSS_Pos) /*!< SS[31:16] are don't care in     \
-					    Alarm comparison. Only SS[15:0]                                                     \
+					    Alarm comparison. Only SS[15:0]    \
 					    are compared */
 #define RTC_ALARMSUBSECONDBINMASK_SS31_17                                      \
 	(17UL << RTC_ALRMASSR_MASKSS_Pos) /*!< SS[31:17] are don't care in     \
-					    Alarm comparison. Only SS[16:0]                                                     \
+					    Alarm comparison. Only SS[16:0]    \
 					    are compared */
 #define RTC_ALARMSUBSECONDBINMASK_SS31_18                                      \
 	(18UL << RTC_ALRMASSR_MASKSS_Pos) /*!< SS[31:18] are don't care in     \
-					    Alarm comparison. Only SS[17:0]                                                     \
+					    Alarm comparison. Only SS[17:0]    \
 					    are compared */
 #define RTC_ALARMSUBSECONDBINMASK_SS31_19                                      \
 	(19UL << RTC_ALRMASSR_MASKSS_Pos) /*!< SS[31:19] are don't care in     \
-					    Alarm comparison. Only SS[18:0]                                                     \
+					    Alarm comparison. Only SS[18:0]    \
 					    are compared */
 #define RTC_ALARMSUBSECONDBINMASK_SS31_20                                      \
 	(20UL << RTC_ALRMASSR_MASKSS_Pos) /*!< SS[31:20] are don't care in     \
-					    Alarm comparison. Only SS[19:0]                                                     \
+					    Alarm comparison. Only SS[19:0]    \
 					    are compared */
 #define RTC_ALARMSUBSECONDBINMASK_SS31_21                                      \
 	(21UL << RTC_ALRMASSR_MASKSS_Pos) /*!< SS[31:21] are don't care in     \
-					    Alarm comparison. Only SS[20:0]                                                     \
+					    Alarm comparison. Only SS[20:0]    \
 					    are compared */
 #define RTC_ALARMSUBSECONDBINMASK_SS31_22                                      \
 	(22UL << RTC_ALRMASSR_MASKSS_Pos) /*!< SS[31:22] are don't care in     \
-					    Alarm comparison. Only SS[21:0]                                                     \
+					    Alarm comparison. Only SS[21:0]    \
 					    are compared */
 #define RTC_ALARMSUBSECONDBINMASK_SS31_23                                      \
 	(23UL << RTC_ALRMASSR_MASKSS_Pos) /*!< SS[31:23] are don't care in     \
-					    Alarm comparison. Only SS[22:0]                                                     \
+					    Alarm comparison. Only SS[22:0]    \
 					    are compared */
 #define RTC_ALARMSUBSECONDBINMASK_SS31_24                                      \
 	(24UL << RTC_ALRMASSR_MASKSS_Pos) /*!< SS[31:24] are don't care in     \
-					    Alarm comparison. Only SS[23:0]                                                     \
+					    Alarm comparison. Only SS[23:0]    \
 					    are compared */
 #define RTC_ALARMSUBSECONDBINMASK_SS31_25                                      \
 	(25UL << RTC_ALRMASSR_MASKSS_Pos) /*!< SS[31:25] are don't care in     \
-					    Alarm comparison. Only SS[24:0]                                                     \
+					    Alarm comparison. Only SS[24:0]    \
 					    are compared */
 #define RTC_ALARMSUBSECONDBINMASK_SS31_26                                      \
 	(26UL << RTC_ALRMASSR_MASKSS_Pos) /*!< SS[31:26] are don't care in     \
-					    Alarm comparison. Only SS[25:0]                                                     \
+					    Alarm comparison. Only SS[25:0]    \
 					    are compared */
 #define RTC_ALARMSUBSECONDBINMASK_SS31_27                                      \
 	(27UL << RTC_ALRMASSR_MASKSS_Pos) /*!< SS[31:27] are don't care in     \
-					    Alarm comparison. Only SS[26:0]                                                     \
+					    Alarm comparison. Only SS[26:0]    \
 					    are compared */
 #define RTC_ALARMSUBSECONDBINMASK_SS31_28                                      \
 	(28UL << RTC_ALRMASSR_MASKSS_Pos) /*!< SS[31:28] are don't care in     \
-					    Alarm comparison. Only SS[27:0]                                                     \
+					    Alarm comparison. Only SS[27:0]    \
 					    are compared */
 #define RTC_ALARMSUBSECONDBINMASK_SS31_29                                      \
 	(29UL << RTC_ALRMASSR_MASKSS_Pos) /*!< SS[31:29] are don't care in     \
-					    Alarm comparison. Only SS[28:0]                                                     \
+					    Alarm comparison. Only SS[28:0]    \
 					    are compared */
 #define RTC_ALARMSUBSECONDBINMASK_SS31_30                                      \
 	(30UL << RTC_ALRMASSR_MASKSS_Pos) /*!< SS[31:30] are don't care in     \
-					    Alarm comparison. Only SS[29:0]                                                     \
+					    Alarm comparison. Only SS[29:0]    \
 					    are compared */
 #define RTC_ALARMSUBSECONDBINMASK_SS31                                         \
 	(31UL << RTC_ALRMASSR_MASKSS_Pos) /*!< SS[31] is don't care in Alarm   \

@@ -93,7 +93,7 @@ typedef enum {
 	HAL_CRYP_STATE_RESET =
 	    0x00, /*!< CRYP not yet initialized or disabled  */
 	HAL_CRYP_STATE_READY = 0x01, /*!< CRYP initialized and ready for use */
-	HAL_CRYP_STATE_BUSY = 0x02,  /*!< CRYP internal processing is ongoing  */
+	HAL_CRYP_STATE_BUSY = 0x02, /*!< CRYP internal processing is ongoing  */
 	HAL_CRYP_STATE_TIMEOUT = 0x03,	/*!< CRYP timeout state  */
 	HAL_CRYP_STATE_ERROR = 0x04,	/*!< CRYP error state    */
 	HAL_CRYP_STATE_SUSPENDED = 0x05 /*!< CRYP suspended */
@@ -288,12 +288,9 @@ typedef void (*pCRYP_CallbackTypeDef)(
 /** @defgroup CRYP_AES_OperatingMode AES operating mode
  * @{
  */
-#define CRYP_ALGOMODE_ENCRYPT                                                  \
-	((uint32_t)0x00000000) /*!< Encryption mode */
-#define CRYP_ALGOMODE_KEYDERIVATION                                            \
-	AES_CR_MODE_0 /*!< Key derivation mode */
-#define CRYP_ALGOMODE_DECRYPT                                                  \
-	AES_CR_MODE_1 /*!< Decryption */
+#define CRYP_ALGOMODE_ENCRYPT ((uint32_t)0x00000000) /*!< Encryption mode */
+#define CRYP_ALGOMODE_KEYDERIVATION AES_CR_MODE_0    /*!< Key derivation mode */
+#define CRYP_ALGOMODE_DECRYPT AES_CR_MODE_1	     /*!< Decryption */
 #define CRYP_ALGOMODE_KEYDERIVATION_DECRYPT                                    \
 	AES_CR_MODE /*!< Key derivation and decryption */
 #define CRYP_ALGOMODE_TAG_GENERATION                                           \
@@ -316,8 +313,7 @@ typedef void (*pCRYP_CallbackTypeDef)(
 	(AES_CR_CHMOD_0 | AES_CR_CHMOD_1) /*!< Galois counter mode - Galois    \
 					     message authentication code */
 #if defined(AES_CR_NPBLB)
-#define CRYP_CHAINMODE_AES_CCM                                                 \
-	AES_CR_CHMOD_2 /*!< Counter with Cipher Mode */
+#define CRYP_CHAINMODE_AES_CCM AES_CR_CHMOD_2 /*!< Counter with Cipher Mode */
 #else
 #define CRYP_CHAINMODE_AES_CMAC                                                \
 	AES_CR_CHMOD_2 /*!< Cipher message authentication code */
@@ -406,7 +402,8 @@ typedef void (*pCRYP_CallbackTypeDef)(
 /** @defgroup AES_Interrupts_Enable AES Interrupts Enable bits
  * @{
  */
-#define CRYP_IT_CCFIE AES_CR_CCFIE /*!< Computation Complete interrupt enable  \
+#define CRYP_IT_CCFIE                                                          \
+	AES_CR_CCFIE		   /*!< Computation Complete interrupt enable  \
 				    */
 #define CRYP_IT_ERRIE AES_CR_ERRIE /*!< Error interrupt enable */
 /**

@@ -124,12 +124,14 @@ extern "C" {
  * @{
  */
 #if defined(PWR_CR2_PVME1)
-#define LL_PWR_PVM_VDDUSB_1_2V (PWR_CR2_PVME1) /* Monitoring VDDUSB vs. 1.2V   \
-						*/
+#define LL_PWR_PVM_VDDUSB_1_2V                                                 \
+	(PWR_CR2_PVME1) /* Monitoring VDDUSB vs. 1.2V                          \
+			 */
 #endif
 #if defined(PWR_CR2_PVME2)
-#define LL_PWR_PVM_VDDIO2_0_9V (PWR_CR2_PVME2) /* Monitoring VDDIO2 vs. 0.9V   \
-						*/
+#define LL_PWR_PVM_VDDIO2_0_9V                                                 \
+	(PWR_CR2_PVME2) /* Monitoring VDDIO2 vs. 0.9V                          \
+			 */
 #endif
 #if defined(PWR_CR2_PVME3)
 #define LL_PWR_PVM_VDDA_1_62V (PWR_CR2_PVME3) /* Monitoring VDDA vs. 1.62V  */

@@ -150,8 +150,9 @@ typedef struct {
 #if defined(EXTI_IMR1_IM31)
 #define LL_EXTI_LINE_31 EXTI_IMR1_IM31 /*!< Extended line 31 */
 #endif
-#define LL_EXTI_LINE_ALL_0_31 EXTI_IMR1_IM /*!< All Extended line not          \
-					      reserved*/
+#define LL_EXTI_LINE_ALL_0_31                                                  \
+	EXTI_IMR1_IM /*!< All Extended line not                                \
+			reserved*/
 
 #define LL_EXTI_LINE_32 EXTI_IMR2_IM32 /*!< Extended line 32 */
 #if defined(EXTI_IMR2_IM33)

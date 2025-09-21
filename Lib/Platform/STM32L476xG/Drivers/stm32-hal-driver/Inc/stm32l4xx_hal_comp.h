@@ -167,9 +167,10 @@ typedef void (*pCOMP_CallbackTypeDef)(
  */
 #define HAL_COMP_ERROR_NONE (0x00UL) /*!< No error */
 #if (USE_HAL_COMP_REGISTER_CALLBACKS == 1)
-#define HAL_COMP_ERROR_INVALID_CALLBACK (0x01UL) /*!< Invalid Callback error   \
-						  */
-#endif /* USE_HAL_COMP_REGISTER_CALLBACKS */
+#define HAL_COMP_ERROR_INVALID_CALLBACK                                        \
+	(0x01UL) /*!< Invalid Callback error                                   \
+		  */
+#endif		 /* USE_HAL_COMP_REGISTER_CALLBACKS */
 /**
  * @}
  */
@@ -282,10 +283,11 @@ typedef void (*pCOMP_CallbackTypeDef)(
 /** @defgroup COMP_Hysteresis COMP hysteresis
  * @{
  */
-#define COMP_HYSTERESIS_NONE (0x00000000UL)	 /*!< No hysteresis */
-#define COMP_HYSTERESIS_LOW (COMP_CSR_HYST_0)	 /*!< Hysteresis level low */
-#define COMP_HYSTERESIS_MEDIUM (COMP_CSR_HYST_1) /*!< Hysteresis level medium  \
-						  */
+#define COMP_HYSTERESIS_NONE (0x00000000UL)   /*!< No hysteresis */
+#define COMP_HYSTERESIS_LOW (COMP_CSR_HYST_0) /*!< Hysteresis level low */
+#define COMP_HYSTERESIS_MEDIUM                                                 \
+	(COMP_CSR_HYST_1) /*!< Hysteresis level medium                         \
+			   */
 #define COMP_HYSTERESIS_HIGH                                                   \
 	(COMP_CSR_HYST_1 | COMP_CSR_HYST_0) /*!< Hysteresis level high */
 /**
@@ -702,9 +704,10 @@ typedef void (*pCOMP_CallbackTypeDef)(
 #define COMP_EXTI_IT (0x00000001UL) /*!< EXTI line event with interruption */
 #define COMP_EXTI_EVENT                                                        \
 	(0x00000002UL) /*!< EXTI line event only (without interruption) */
-#define COMP_EXTI_RISING (0x00000010UL)	 /*!< EXTI line event on rising edge */
-#define COMP_EXTI_FALLING (0x00000020UL) /*!< EXTI line event on falling edge  \
-					  */
+#define COMP_EXTI_RISING (0x00000010UL) /*!< EXTI line event on rising edge */
+#define COMP_EXTI_FALLING                                                      \
+	(0x00000020UL) /*!< EXTI line event on falling edge                    \
+			*/
 /**
  * @}
  */
