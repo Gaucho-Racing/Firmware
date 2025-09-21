@@ -1,0 +1,22 @@
+name: ValidateConfigs
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cmake:
+    name: Validate Configurations
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validates Configuration Files
+        uses: kehoecj/validate-configs-action@v4.0.1
