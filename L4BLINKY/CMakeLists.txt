@@ -27,21 +27,17 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
         Application/Inc
         Core/Inc
     )
-
     # Can have singleton files
     add_executable(basic_application_hootl_test
         Application/Test/basic_application_hootl_test.c
     )
     add_test(basic_app basic_application_hootl_test)
-
     # Can link files
     add_executable(advanced_application_hootl_test
         Application/Test/advanced_application_hootl_test.c
         Application/Src/appdemo.c
     )
     add_test(advanced_app advanced_application_hootl_test)
-
-    ...
 endif()
 
 add_library(${PROJECT_NAME}_USER_CODE INTERFACE)
