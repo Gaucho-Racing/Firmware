@@ -153,8 +153,8 @@ typedef struct {
 	uint32_t MckOverSampling; /*!< Specifies the master clock oversampling.
 				       This parameter can be a value of @ref
 				     SAI_Block_Mck_OverSampling */
-#endif	/* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||         \
-	   STM32L4S7xx || STM32L4S9xx || */
+#endif /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||          \
+	  STM32L4S7xx || STM32L4S9xx || */
 	/* STM32L4P5xx || STM32L4Q5xx */
 
 	uint32_t MonoStereoMode; /*!< Specifies if the mono or stereo mode is
@@ -173,8 +173,8 @@ typedef struct {
     defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx) ||    \
     defined(STM32L4P5xx) || defined(STM32L4Q5xx)
 	SAI_PdmInitTypeDef PdmInit; /*!< Specifies the PDM configuration. */
-#endif	/* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||         \
-	   STM32L4S7xx || STM32L4S9xx || */
+#endif /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||          \
+	  STM32L4S7xx || STM32L4S9xx || */
 	/* STM32L4P5xx || STM32L4Q5xx */
 
 	/* This part of the structure is automatically filled if your are using

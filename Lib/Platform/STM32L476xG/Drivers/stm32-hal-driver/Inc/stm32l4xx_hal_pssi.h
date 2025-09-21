@@ -81,7 +81,7 @@ typedef enum {
 	    0x00U, /* !< PSSI not yet initialized or disabled     */
 	HAL_PSSI_STATE_READY =
 	    0x01U, /* !< Peripheral initialized and ready for use */
-	HAL_PSSI_STATE_BUSY = 0x02U,	/* !< An internal process is ongoing    */
+	HAL_PSSI_STATE_BUSY = 0x02U, /* !< An internal process is ongoing    */
 	HAL_PSSI_STATE_BUSY_TX = 0x03U, /* !< Transmit process is ongoing */
 	HAL_PSSI_STATE_BUSY_RX = 0x04U, /* !< Receive process is ongoing */
 	HAL_PSSI_STATE_TIMEOUT = 0x05U, /* !< Timeout state */
@@ -172,13 +172,14 @@ typedef enum {
 /** @defgroup PSSI_Error_Code PSSI Error Code
  * @{
  */
-#define HAL_PSSI_ERROR_NONE 0x00000000U		 /*!< No error                */
-#define HAL_PSSI_ERROR_NOT_SUPPORTED 0x00000001U /*!< Not supported operation  \
-						  */
-#define HAL_PSSI_ERROR_UNDER_RUN 0x00000002U	 /*!< FIFO Under-run error    */
-#define HAL_PSSI_ERROR_OVER_RUN 0x00000004U	 /*!< FIFO Over-run  error    */
-#define HAL_PSSI_ERROR_DMA 0x00000008U		 /*!< Dma     error           */
-#define HAL_PSSI_ERROR_TIMEOUT 0x00000010U	 /*!< Timeout error           */
+#define HAL_PSSI_ERROR_NONE 0x00000000U /*!< No error                */
+#define HAL_PSSI_ERROR_NOT_SUPPORTED                                           \
+	0x00000001U			     /*!< Not supported operation      \
+					      */
+#define HAL_PSSI_ERROR_UNDER_RUN 0x00000002U /*!< FIFO Under-run error    */
+#define HAL_PSSI_ERROR_OVER_RUN 0x00000004U  /*!< FIFO Over-run  error    */
+#define HAL_PSSI_ERROR_DMA 0x00000008U	     /*!< Dma     error           */
+#define HAL_PSSI_ERROR_TIMEOUT 0x00000010U   /*!< Timeout error           */
 #if (USE_HAL_PSSI_REGISTER_CALLBACKS == 1)
 #define HAL_PSSI_ERROR_INVALID_CALLBACK                                        \
 	0x00000020U /*!< Invalid callback error  */
@@ -297,8 +298,9 @@ typedef enum {
  * @{
  */
 
-#define PSSI_FLAG_OVR_RIS PSSI_RIS_OVR_RIS /*!< Overrun, Underrun errors flag  \
-					    */
+#define PSSI_FLAG_OVR_RIS                                                      \
+	PSSI_RIS_OVR_RIS /*!< Overrun, Underrun errors flag                    \
+			  */
 #define PSSI_FLAG_MASK                                                         \
 	PSSI_RIS_OVR_RIS_Msk /*!< Overrun, Underrun errors Mask */
 #define PSSI_FLAG_OVR_MIS                                                      \

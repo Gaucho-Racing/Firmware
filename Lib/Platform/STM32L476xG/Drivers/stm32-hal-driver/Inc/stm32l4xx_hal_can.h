@@ -134,13 +134,12 @@ typedef struct {
 				 a number between Min_Data = 0x0000 and Max_Data
 				 = 0xFFFF. */
 
-	uint32_t
-	    FilterMaskIdLow; /*!< Specifies the filter mask number or
-				identification number, according to the mode
-				(LSBs for a 32-bit configuration, second one for
-				a 16-bit configuration). This parameter must be
-				a number between Min_Data = 0x0000 and Max_Data
-				= 0xFFFF. */
+	uint32_t FilterMaskIdLow; /*!< Specifies the filter mask number or
+				     identification number, according to the
+				     mode (LSBs for a 32-bit configuration,
+				     second one for a 16-bit configuration).
+				     This parameter must be a number between
+				     Min_Data = 0x0000 and Max_Data = 0xFFFF. */
 
 	uint32_t
 	    FilterFIFOAssignment; /*!< Specifies the FIFO (0 or 1U) which will
@@ -373,30 +372,18 @@ typedef void (*pCAN_CallbackTypeDef)(
 /** @defgroup CAN_Error_Code CAN Error Code
  * @{
  */
-#define HAL_CAN_ERROR_NONE                                                     \
-	(0x00000000U) /*!< No error */
-#define HAL_CAN_ERROR_EWG                                                      \
-	(0x00000001U) /*!< Protocol Error Warning */
-#define HAL_CAN_ERROR_EPV                                                      \
-	(0x00000002U) /*!< Error Passive */
-#define HAL_CAN_ERROR_BOF                                                      \
-	(0x00000004U) /*!< Bus-off error */
-#define HAL_CAN_ERROR_STF                                                      \
-	(0x00000008U) /*!< Stuff error */
-#define HAL_CAN_ERROR_FOR                                                      \
-	(0x00000010U) /*!< Form error */
-#define HAL_CAN_ERROR_ACK                                                      \
-	(0x00000020U) /*!< Acknowledgment error */
-#define HAL_CAN_ERROR_BR                                                       \
-	(0x00000040U) /*!< Bit recessive error */
-#define HAL_CAN_ERROR_BD                                                       \
-	(0x00000080U) /*!< Bit dominant error */
-#define HAL_CAN_ERROR_CRC                                                      \
-	(0x00000100U) /*!< CRC error */
-#define HAL_CAN_ERROR_RX_FOV0                                                  \
-	(0x00000200U) /*!< Rx FIFO0 overrun error */
-#define HAL_CAN_ERROR_RX_FOV1                                                  \
-	(0x00000400U) /*!< Rx FIFO1 overrun error */
+#define HAL_CAN_ERROR_NONE (0x00000000U)    /*!< No error */
+#define HAL_CAN_ERROR_EWG (0x00000001U)	    /*!< Protocol Error Warning */
+#define HAL_CAN_ERROR_EPV (0x00000002U)	    /*!< Error Passive */
+#define HAL_CAN_ERROR_BOF (0x00000004U)	    /*!< Bus-off error */
+#define HAL_CAN_ERROR_STF (0x00000008U)	    /*!< Stuff error */
+#define HAL_CAN_ERROR_FOR (0x00000010U)	    /*!< Form error */
+#define HAL_CAN_ERROR_ACK (0x00000020U)	    /*!< Acknowledgment error */
+#define HAL_CAN_ERROR_BR (0x00000040U)	    /*!< Bit recessive error */
+#define HAL_CAN_ERROR_BD (0x00000080U)	    /*!< Bit dominant error */
+#define HAL_CAN_ERROR_CRC (0x00000100U)	    /*!< CRC error */
+#define HAL_CAN_ERROR_RX_FOV0 (0x00000200U) /*!< Rx FIFO0 overrun error */
+#define HAL_CAN_ERROR_RX_FOV1 (0x00000400U) /*!< Rx FIFO1 overrun error */
 #define HAL_CAN_ERROR_TX_ALST0                                                 \
 	(0x00000800U) /*!< TxMailbox 0 transmit failure due to arbitration     \
 			 lost */
@@ -415,23 +402,18 @@ typedef void (*pCAN_CallbackTypeDef)(
 #define HAL_CAN_ERROR_TX_TERR2                                                 \
 	(0x00010000U) /*!< TxMailbox 2 transmit failure due to transmit error  \
 		       */
-#define HAL_CAN_ERROR_TIMEOUT                                                  \
-	(0x00020000U) /*!< Timeout error */
+#define HAL_CAN_ERROR_TIMEOUT (0x00020000U) /*!< Timeout error */
 #define HAL_CAN_ERROR_NOT_INITIALIZED                                          \
-	(0x00040000U) /*!< Peripheral not initialized */
-#define HAL_CAN_ERROR_NOT_READY                                                \
-	(0x00080000U) /*!< Peripheral not ready */
-#define HAL_CAN_ERROR_NOT_STARTED                                              \
-	(0x00100000U) /*!< Peripheral not started */
-#define HAL_CAN_ERROR_PARAM                                                    \
-	(0x00200000U) /*!< Parameter error */
+	(0x00040000U)			      /*!< Peripheral not initialized */
+#define HAL_CAN_ERROR_NOT_READY (0x00080000U) /*!< Peripheral not ready */
+#define HAL_CAN_ERROR_NOT_STARTED (0x00100000U) /*!< Peripheral not started */
+#define HAL_CAN_ERROR_PARAM (0x00200000U)	/*!< Parameter error */
 
 #if USE_HAL_CAN_REGISTER_CALLBACKS == 1
 #define HAL_CAN_ERROR_INVALID_CALLBACK                                         \
 	(0x00400000U) /*!< Invalid Callback error */
 #endif		      /* USE_HAL_CAN_REGISTER_CALLBACKS */
-#define HAL_CAN_ERROR_INTERNAL                                                 \
-	(0x00800000U) /*!< Internal error */
+#define HAL_CAN_ERROR_INTERNAL (0x00800000U) /*!< Internal error */
 
 /**
  * @}

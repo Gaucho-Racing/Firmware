@@ -246,11 +246,11 @@ typedef void (*pDCMI_CallbackTypeDef)(DCMI_HandleTypeDef *hdcmi);
  */
 #define DCMI_MODE_CONTINUOUS                                                   \
 	((uint32_t)0x00000000U) /*!< The received data are transferred         \
-				   continuously into the destination memory                                                   \
+				   continuously into the destination memory    \
 				   through the DMA             */
 #define DCMI_MODE_SNAPSHOT                                                     \
 	((uint32_t)DCMI_CR_CM) /*!< Once activated, the interface waits for    \
-				  the start of frame and then transfers a                                                    \
+				  the start of frame and then transfers a      \
 				  single frame through the DMA */
 /**
  * @}
@@ -261,11 +261,11 @@ typedef void (*pDCMI_CallbackTypeDef)(DCMI_HandleTypeDef *hdcmi);
  */
 #define DCMI_SYNCHRO_HARDWARE                                                  \
 	((uint32_t)0x00000000U) /*!< Hardware synchronization data capture     \
-				   (frame/line start/stop) is synchronized                                                               \
+				   (frame/line start/stop) is synchronized     \
 				   with the HSYNC/VSYNC signals */
 #define DCMI_SYNCHRO_EMBEDDED                                                  \
 	((uint32_t)DCMI_CR_ESS) /*!< Embedded synchronization data capture is  \
-				   synchronized with synchronization codes                                                         \
+				   synchronized with synchronization codes     \
 				   embedded in the data flow               */
 
 /**

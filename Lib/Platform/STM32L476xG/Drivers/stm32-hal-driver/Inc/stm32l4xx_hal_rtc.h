@@ -445,7 +445,7 @@ typedef void (*pRTC_CallbackTypeDef)(
  */
 #define RTC_FORMAT_BIN                                                         \
 	0x00000000u /* This parameter will trigger a SW conversion to fit with \
-		       the native BCD format of the HW Calendar. It should not                                                                 \
+		       the native BCD format of the HW Calendar. It should not \
 		       be confused with the Binary mode @ref                   \
 		       RTCEx_Binary_Mode. */
 
@@ -665,8 +665,9 @@ typedef void (*pRTC_CallbackTypeDef)(
 	(0x00000200U | RTC_SR_ITSF_Pos) /*!< Internal Time-stamp flag */
 #define RTC_FLAG_TSOVF                                                         \
 	(0x00000200U | RTC_SR_TSOVF_Pos) /*!< Time-stamp overflow flag */
-#define RTC_FLAG_TSF (0x00000200U | RTC_SR_TSF_Pos)	/*!< Time-stamp flag */
-#define RTC_FLAG_WUTF (0x00000200U | RTC_SR_WUTF_Pos)	/*!< Wakeup timer flag \
+#define RTC_FLAG_TSF (0x00000200U | RTC_SR_TSF_Pos) /*!< Time-stamp flag */
+#define RTC_FLAG_WUTF                                                          \
+	(0x00000200U | RTC_SR_WUTF_Pos)			/*!< Wakeup timer flag \
 							 */
 #define RTC_FLAG_ALRBF (0x00000200U | RTC_SR_ALRBF_Pos) /*!< Alarm B flag */
 #define RTC_FLAG_ALRAF (0x00000200U | RTC_SR_ALRAF_Pos) /*!< Alarm A flag */

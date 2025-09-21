@@ -210,8 +210,9 @@ typedef struct {
  */
 #define LL_USART_ICR_PECF USART_ICR_PECF /*!< Parity error clear flag */
 #define LL_USART_ICR_FECF USART_ICR_FECF /*!< Framing error clear flag */
-#define LL_USART_ICR_NECF USART_ICR_NECF /*!< Noise error detected clear flag  \
-					  */
+#define LL_USART_ICR_NECF                                                      \
+	USART_ICR_NECF /*!< Noise error detected clear flag                    \
+			*/
 #define LL_USART_ICR_ORECF USART_ICR_ORECF /*!< Overrun error clear flag */
 #define LL_USART_ICR_IDLECF                                                    \
 	USART_ICR_IDLECF /*!< Idle line detected clear flag */
@@ -231,10 +232,11 @@ typedef struct {
 #define LL_USART_ICR_RTOCF USART_ICR_RTOCF /*!< Receiver timeout clear flag */
 #define LL_USART_ICR_EOBCF USART_ICR_EOBCF /*!< End of block clear flag */
 #if defined(USART_CR2_SLVEN)
-#define LL_USART_ICR_UDRCF USART_ICR_UDRCF /*!< SPI Slave Underrun clear flag  \
-					    */
-#endif					   /* USART_CR2_SLVEN */
-#define LL_USART_ICR_CMCF USART_ICR_CMCF   /*!< Character match clear flag */
+#define LL_USART_ICR_UDRCF                                                     \
+	USART_ICR_UDRCF			 /*!< SPI Slave Underrun clear flag    \
+					  */
+#endif					 /* USART_CR2_SLVEN */
+#define LL_USART_ICR_CMCF USART_ICR_CMCF /*!< Character match clear flag */
 #define LL_USART_ICR_WUCF                                                      \
 	USART_ICR_WUCF /*!< Wakeup from Stop mode clear flag */
 /**
@@ -264,9 +266,10 @@ typedef struct {
 	USART_ISR_TXE_TXFNF /*!< Transmit data register empty or TX FIFO Not   \
 			       Full flag*/
 #else
-#define LL_USART_ISR_TXE USART_ISR_TXE /*!< Transmit data register empty flag  \
-					*/
-#endif				       /* USART_CR1_FIFOEN */
+#define LL_USART_ISR_TXE                                                       \
+	USART_ISR_TXE /*!< Transmit data register empty flag                   \
+		       */
+#endif		      /* USART_CR1_FIFOEN */
 #define LL_USART_ISR_LBDF USART_ISR_LBDF   /*!< LIN break detection flag */
 #define LL_USART_ISR_CTSIF USART_ISR_CTSIF /*!< CTS interrupt flag */
 #define LL_USART_ISR_CTS USART_ISR_CTS	   /*!< CTS flag */
@@ -333,8 +336,9 @@ typedef struct {
 	USART_CR1_CMIE /*!< Character match interrupt enable */
 #define LL_USART_CR1_RTOIE                                                     \
 	USART_CR1_RTOIE /*!< Receiver timeout interrupt enable */
-#define LL_USART_CR1_EOBIE USART_CR1_EOBIE /*!< End of Block interrupt enable  \
-					    */
+#define LL_USART_CR1_EOBIE                                                     \
+	USART_CR1_EOBIE /*!< End of Block interrupt enable                     \
+			 */
 #if defined(USART_CR1_FIFOEN)
 #define LL_USART_CR1_TXFEIE                                                    \
 	USART_CR1_TXFEIE /*!< TX FIFO empty interrupt enable */

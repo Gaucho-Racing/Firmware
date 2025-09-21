@@ -130,8 +130,9 @@ typedef struct {
 	(0x00000004U) /*!< Update display done flag timeout error */
 #define HAL_LCD_ERROR_ENS                                                      \
 	(0x00000008U) /*!< LCD enabled status flag timeout error */
-#define HAL_LCD_ERROR_RDY (0x00000010U) /*!< LCD Booster ready timeout error   \
-					 */
+#define HAL_LCD_ERROR_RDY                                                      \
+	(0x00000010U) /*!< LCD Booster ready timeout error                     \
+		       */
 /**
  * @}
  */
@@ -227,8 +228,9 @@ typedef struct {
 /** @defgroup LCD_PulseOnDuration LCD Pulse On Duration
  * @{
  */
-#define LCD_PULSEONDURATION_0 (0x00000000U) /*!< Pulse ON duration = 0 pulse   \
-					     */
+#define LCD_PULSEONDURATION_0                                                  \
+	(0x00000000U) /*!< Pulse ON duration = 0 pulse                         \
+		       */
 #define LCD_PULSEONDURATION_1                                                  \
 	(LCD_FCR_PON_0) /*!< Pulse ON duration = 1/CK_PS  */
 #define LCD_PULSEONDURATION_2                                                  \
@@ -240,9 +242,10 @@ typedef struct {
 #define LCD_PULSEONDURATION_5                                                  \
 	(LCD_FCR_PON_2 | LCD_FCR_PON_0) /*!< Pulse ON duration = 5/CK_PS  */
 #define LCD_PULSEONDURATION_6                                                  \
-	(LCD_FCR_PON_2 | LCD_FCR_PON_1)	    /*!< Pulse ON duration = 6/CK_PS  */
-#define LCD_PULSEONDURATION_7 (LCD_FCR_PON) /*!< Pulse ON duration = 7/CK_PS   \
-					     */
+	(LCD_FCR_PON_2 | LCD_FCR_PON_1) /*!< Pulse ON duration = 6/CK_PS  */
+#define LCD_PULSEONDURATION_7                                                  \
+	(LCD_FCR_PON) /*!< Pulse ON duration = 7/CK_PS                         \
+		       */
 /**
  * @}
  */
@@ -276,8 +279,7 @@ typedef struct {
 /** @defgroup LCD_BlinkMode LCD Blink Mode
  * @{
  */
-#define LCD_BLINKMODE_OFF                                                      \
-	(0x00000000U) /*!< Blink disabled */
+#define LCD_BLINKMODE_OFF (0x00000000U) /*!< Blink disabled */
 #define LCD_BLINKMODE_SEG0_COM0                                                \
 	(LCD_FCR_BLINK_0) /*!< Blink enabled on SEG[0], COM[0] (1 pixel) */
 #define LCD_BLINKMODE_SEG0_ALLCOM                                              \
@@ -361,9 +363,10 @@ typedef struct {
  * @{
  */
 
-#define LCD_HIGHDRIVE_DISABLE ((uint32_t)0x00000000) /*!< High drive disabled  \
-						      */
-#define LCD_HIGHDRIVE_ENABLE (LCD_FCR_HD)	     /*!< High drive enabled  */
+#define LCD_HIGHDRIVE_DISABLE                                                  \
+	((uint32_t)0x00000000)		  /*!< High drive disabled             \
+					   */
+#define LCD_HIGHDRIVE_ENABLE (LCD_FCR_HD) /*!< High drive enabled  */
 /**
  * @}
  */
