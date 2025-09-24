@@ -93,6 +93,37 @@
                     }
                 ]
             }
+        },
+        {
+            "cwd": "${workspaceFolder}",
+            "executable": "${command:cmake.buildDirectory}/L4BLINKY.elf",
+            "name": "L4BLINKY",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32l4x.cfg"
+            ],
+            "searchDir": [],
+            "preLaunchTask": "CMake: build",
+            "showDevDebugOutput": "raw",
+            "svdPath": "${workspaceFolder}/Lib/Platform/STM32L476xG/CompileDependencies/STM32L476.svd",
+            "swoConfig": {
+                "enabled": true,
+                "cpuFrequency": 160000000,
+                "swoFrequency": 115200,
+                "source": "probe",
+                "decoders": [
+                    {
+                        "type": "console",
+                        "label": "ITM",
+                        "showOnStartup": true,
+                        "port": 0,
+                        "encoding": "ascii"
+                    }
+                ]
+            }
         }
     ]
 }
