@@ -78,3 +78,6 @@ Icon\r
 
 # Exceptions (please work to reduce this list)
 !.vscode/c_cpp_properties.json
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
