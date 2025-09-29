@@ -1,6 +1,7 @@
 {
     "version": "0.2.0",
     "configurations": [
+    
         {
             "cwd": "${workspaceFolder}",
             "executable": "${command:cmake.buildDirectory}/ACU.elf",
@@ -36,6 +37,37 @@
             "cwd": "${workspaceFolder}",
             "executable": "${command:cmake.buildDirectory}/G4BLINKY.elf",
             "name": "G4BLINKY",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32g4x.cfg"
+            ],
+            "searchDir": [],
+            "preLaunchTask": "CMake: build",
+            "showDevDebugOutput": "raw",
+            "svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd",
+            "swoConfig": {
+                "enabled": true,
+                "cpuFrequency": 160000000,
+                "swoFrequency": 115200,
+                "source": "probe",
+                "decoders": [
+                    {
+                        "type": "console",
+                        "label": "ITM",
+                        "showOnStartup": true,
+                        "port": 0,
+                        "encoding": "ascii"
+                    }
+                ]
+            }
+        },
+        {
+            "cwd": "${workspaceFolder}",
+            "executable": "${command:cmake.buildDirectory}/G4SPI.elf",
+            "name": "G4SPI",
             "request": "launch",
             "type": "cortex-debug",
             "servertype": "openocd",
