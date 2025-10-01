@@ -13,5 +13,8 @@
 		]
       }
     },
-	// "runArgs": ["--privileged"]
+	"mounts": [
+      "type=volume,target=${containerWorkspaceFolder}/build/"
+    ],
+	"runArgs": ["--privileged"]
 }
