@@ -17,9 +17,14 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     cmake \
     ninja-build \
-    openocd
+    openocd \
+    libncurses5 \
+    software-properties-common
 
-RUN echo ${arm_toolchain_url}
+# Fixes since arm-none-eabi-gdb requires python3.8 and libncurses5
+RUN add-apt-repository ppa:deadsnakes/ppa -y
+RUN apt install python3.8 -y
+RUN ln -s /lib/x86_64-linux-gnu/libncursesw.so.6 /usr/lib/libncursesw.so.5
 
 # Install a specific version of the ARM GCC Toolchain
 RUN wget "${arm_toolchain_url}" -O arm-gnu-toolchain.tar.xz
