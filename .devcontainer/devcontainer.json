@@ -12,5 +12,6 @@
 			"marus25.cortex-debug"
 		]
       }
-    }
+    },
+	"runArgs": ["--privileged"]
 }
