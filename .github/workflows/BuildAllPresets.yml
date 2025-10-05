@@ -45,7 +45,40 @@ jobs:
           echo "<details><summary>CMake Build (${{ matrix.prefix }})</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          cmake --build build/${{ matrix.prefix }} |& tee -a $GITHUB_STEP_SUMMARY
+          cmake --build build/${{ matrix.prefix }} |& tee -a $GITHUB_STEP_SUMMARY build_output_${{ matrix.prefix }}.log
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
+
+      - name: Extract Memory Usage
+        run: |
+          set -o pipefail
+          echo "<details open><summary>Memory Usage Summary (${{ matrix.prefix }})</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+
+          # Extract memory usage information from build output
+          if [ -f build_output_${{ matrix.prefix }}.log ]; then
+            # Find lines with "Memory region" and include the next 3 lines (the table)
+            grep -A 3 "Memory region" build_output_${{ matrix.prefix }}.log | \
+            # Group by executable by looking for "Linking C executable" lines before memory info
+            awk '
+            /Linking C executable/ {
+              match($0, /Linking C executable (.*)\.elf/, arr)
+              if (arr[1]) current_exe = arr[1]
+            }
+            /Memory region/ {
+              if (current_exe) print "\n=== " current_exe " ==="
+              print $0
+              getline; print $0  # RAM line
+              getline; print $0  # FLASH line (and others)
+              getline; print $0  # Additional memory regions
+              current_exe = ""
+            }' >> $GITHUB_STEP_SUMMARY
+          else
+            echo "No build output found for memory analysis" >> $GITHUB_STEP_SUMMARY
+          fi
+
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
