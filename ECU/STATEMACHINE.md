@@ -1,4 +1,10 @@
-# ECU State Machine Diagram for GR26
+# State Machine Diagram
+
+This diagram governs the state of the car and represents the logical overview of processes on the car. This diagram must reflect the actual car operations and will help to confirm rules compliance.
+
+If changes are made to the state machine, either in diagram or in implementation, then that PR with the change must update both representations.
+
+The state machine runs on the ECU, but it maps to an enum which may be transmitted over CAN. Again, changes to implementation must be reflected in the diagram and vice-versa.
 
 ## Key
 - **Green:** Standard start up
