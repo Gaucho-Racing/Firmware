@@ -2,13 +2,15 @@
 
 **_DO NOT DELETE ANY LICENSE INFORMATION ON ANY COPIED FILE OR LINE OF CODE_**
 
-## Install Tools/Dependencies 
+When able, please add VS Code comptatible doc comments! These will help debugging and appear on the tool tip (hover) of any known function.
+
+## Install Tools/Dependencies
 1. [CMake](https://cmake.org/download/)
 2. [Ninja](https://github.com/ninja-build/ninja/releases)
 3. [ARM Toolchain (arm-none-eabi)](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
 4. [OpenOCD](https://github.com/openocd-org/openocd/releases/tag/v0.12.0)
 
-**CMake** (metabuild system) --> **Ninja** (build system) --> **ARM Toolchain** (provides tools to compile & link code) 
+**CMake** (metabuild system) --> **Ninja** (build system) --> **ARM Toolchain** (provides tools to compile & link code)
 **OpenOCD** is an on-chip debugger, which allows us to examine code line-by-line in Debug mode
 
 Verify that you have all these dependencies installed:
