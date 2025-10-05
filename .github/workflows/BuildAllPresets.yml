@@ -31,24 +31,30 @@ jobs:
       - name: CMake Configuration
         run: |
           set -o pipefail
-          echo "## CMake Configuration (${{ matrix.prefix }})" >> $GITHUB_STEP_SUMMARY
+          echo "<details><summary>CMake Configuration (${{ matrix.prefix }})</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           cmake --preset ${{ matrix.prefix }} |& tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
 
       - name: CMake Build
         run: |
           set -o pipefail
-          echo "## CMake Build (${{ matrix.prefix }})" >> $GITHUB_STEP_SUMMARY
+          echo "<details><summary>CMake Build (${{ matrix.prefix }})</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           cmake --build build/${{ matrix.prefix }} |& tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
 
       - name: Upload RelWithDebInfo Builds
         if: matrix.prefix == 'RelWithDebInfo'
         uses: actions/upload-artifact@v4
         with:
-          name: firmware-release-with-deb-info
+          name: firmware-release-with-debug-info
           path: build/${{ matrix.prefix }}/*.elf
           retention-days: 7
           if-no-files-found: error
