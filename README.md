@@ -1,5 +1,10 @@
 # GR Firmware
 
+[![CMake](https://github.com/Gaucho-Racing/Firmware/actions/workflows/BuildAllPresets.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/BuildAllPresets.yml)
+[![CTest](https://github.com/Gaucho-Racing/Firmware/actions/workflows/RunCTests.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/RunCTests.yml)
+[![ClangFormat](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ClangFormat.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ClangFormat.yml)
+[![ValidateConfigs](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ValidateConfigs.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ValidateConfigs.yml)
+
 **_DO NOT DELETE ANY LICENSE INFORMATION ON ANY COPIED FILE OR LINE OF CODE_**
 
 When able, please add VS Code comptatible doc comments! These will help debugging and appear on the tool tip (hover) of any known function.
