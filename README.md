@@ -23,14 +23,14 @@ When able, please add VS Code comptatible doc comments! These will help debuggin
 4. `brew install arm-none-eabi-gcc`
 5. `brew install open-ocd`
 
-**CMake** (metabuild system) --> **Ninja** (build system) --> **ARM Toolchain** (provides tools to compile & link code)
-**OpenOCD** is an on-chip debugger, which allows us to examine code line-by-line in Debug mode
-
 Verify that you have all these dependencies installed:
 - CMAKE - `cmake --version`
 - ninja - `ninja --version`
 - ARM toolchain - `arm-none-eabi-gcc --version`
 - openocd - `openocd --version`
+
+**CMake** (metabuild system) --> **Ninja** (build system) --> **ARM Toolchain** (provides tools to compile & link code)
+**OpenOCD** is an on-chip debugger, which allows us to examine code line-by-line in Debug mode
 
 # REPO RULES (follow if you want your builds to work)
 - Add a folder for each board with Core and Application, with Src and Inc in both
@@ -87,6 +87,8 @@ cd build/Release
 openocd -f interface/stlink.cfg -f target/{your_chip}.cfg -c "program {your_project}.elf verify reset exit"
 ```
 example: your_chip = stm32l4x, your_project = L4BLINKY
+
+If things aren't working on MacOS, read through this [wiki page](https://wiki.gauchoracing.com/books/gr26-architecture/page/cmake-notes-for-monorepo)
 
 ## VS Code Setup
 
