@@ -93,7 +93,7 @@ cmake --build build/Release
 cd build/Release
 openocd -f interface/stlink.cfg -f target/{your_chip}.cfg -c "program {your_project}.elf verify reset exit"
 ```
-example: your_chip = stm32l4x, your_project = L4BLINKY
+example: your_chip = stm32l4x, your_project = L4BLINKY <br>
 example: your_chip = stm32g4x, your_project = G4BLINKY
 
 This openocd command loads a configuration file 'target/{your_chip}.cfg' (defined in launch.json), and uses that to flash the '{your_project}.elf' executable onto the microcontroller.
