@@ -32,6 +32,5 @@ typedef enum {
 	 * The HV system is in the process of discharging, TS Voltage >60V.
 	 */
 	GR_TS_DISCHARGE_OFF = 5,
-}
-GR_ECU_State;
+} GR_ECU_State;
 #endif
