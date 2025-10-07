@@ -20,13 +20,13 @@ When able, please add VS Code comptatible doc comments! These will help debuggin
 1. Install Homebrew (paste this into terminal): `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 2. `brew install cmake`
 3. `brew install ninja`
+4. `brew install open-ocd`
 4. [ARM Toolchain (arm-none-eabi)](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
 - Look under "AArch32 bare-metal target (arm-none-eabi)" and install the .pkg file 
-- Add the ARM Toolchain to your PATH variable
-- `nano ~/.zshrc`
-- `export PATH="/Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin:$PATH"` 
-- `source ~/.zshrc`
-5. `brew install open-ocd`
+- Add the ARM Toolchain to your PATH variable using the following commands in your terminal:
+    - `nano ~/.zshrc`
+    - `export PATH="/Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin:$PATH"` 
+    - `source ~/.zshrc`
 
 **Note:** DO NOT use Homebrew to install "arm-none-eabi-gcc"- their ARM toolchain package is broken
 
@@ -95,6 +95,8 @@ openocd -f interface/stlink.cfg -f target/{your_chip}.cfg -c "program {your_proj
 ```
 example: your_chip = stm32l4x, your_project = L4BLINKY
 example: your_chip = stm32g4x, your_project = G4BLINKY
+
+This openocd command loads a configuration file 'target/{your_chip}.cfg' (defined in launch.json), and uses that to flash the '{your_project}.elf' executable onto the microcontroller.
 
 If things aren't working on MacOS, read through this [wiki page](https://wiki.gauchoracing.com/books/gr26-architecture/page/cmake-notes-for-monorepo)
 
