@@ -26,7 +26,7 @@ The state machine runs on the ECU, but it maps to an enum which may be transmitt
   }
 }}%%
 
-stateDiagram-v2
+stateDiagram
 
     [*] --> GLV_Off
 
