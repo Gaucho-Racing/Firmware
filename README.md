@@ -24,9 +24,9 @@ When able, please add VS Code comptatible doc comments! These will help debuggin
 4. [ARM Toolchain (arm-none-eabi)](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
 - Look under "AArch32 bare-metal target (arm-none-eabi)" and install the .pkg file 
 - Add the ARM Toolchain to your PATH variable using the following commands in your terminal:
-    - `nano ~/.zshrc`
-    - `export PATH="/Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin:$PATH"` 
-    - `source ~/.zshrc`
+    - `nano ~/.zshrc` --> use a basic text editor (nano) to edit the zsh configuration file
+    - `export PATH="/Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin:$PATH"` --> paste this into the config file
+    - `source ~/.zshrc` --> refresh your zsh terminal to apply the changes made
 
 **Note:** DO NOT use Homebrew to install "arm-none-eabi-gcc"- their ARM toolchain package is broken
 
