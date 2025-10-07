@@ -103,8 +103,16 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 	while (1) {
 		/* USER CODE END WHILE */
-		// HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-		// HAL_Delay(200);
+
+		// START HERE FOR Gaucho Racing "blinky" workshop
+		// 1. Use HAL_GPIO_WritePin(port, pin, set/reset) to set PA5 as high
+		
+		// 2. Use HAL_Delay() to wait for 1000 ms 
+		
+		// 3. Use the HAL to write PA5 as low
+		
+		// 4. Use HAL_Delay() to wait for 1000 ms 
+		
 		/* USER CODE BEGIN 3 */
 	}
 	/* USER CODE END 3 */
