@@ -32,7 +32,7 @@ jobs:
       - name: CMake Configuration
         run: |
           set -o pipefail
-          echo "<details><summary>CMake Configuration (${{ matrix.prefix }})</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "<details><summary>CMake Configuration</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           cmake --preset ${{ matrix.prefix }} |& tee -a $GITHUB_STEP_SUMMARY
@@ -43,7 +43,7 @@ jobs:
       - name: CMake Build
         run: |
           set -o pipefail
-          echo "<details><summary>CMake Build (${{ matrix.prefix }})</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "<details><summary>CMake Build</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           cmake --build build/${{ matrix.prefix }} |& tee -a $GITHUB_STEP_SUMMARY
@@ -54,7 +54,7 @@ jobs:
       - name: Executable Size
         run: |
           set -o pipefail
-          echo "<details open><summary>Executable Size (${{ matrix.prefix }})</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "<details open><summary>Executable Size</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           arm-none-eabi-size build/${{ matrix.prefix }}/*.elf |& tee -a $GITHUB_STEP_SUMMARY
