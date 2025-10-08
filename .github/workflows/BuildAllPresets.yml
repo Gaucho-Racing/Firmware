@@ -25,10 +25,16 @@ jobs:
 
       - name: Install Arm Toolchain
         run: |
-          set -o pipefail
           echo "set man-db/auto-update false" | sudo debconf-communicate
           sudo rm /var/lib/man-db/auto-update
-          sudo apt-get install gcc-arm-none-eabi --no-install-suggests
+          set -o pipefail
+          echo "<details><summary>Install Arm Toolchain</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          sudo apt-get install gcc-arm-none-eabi --no-install-suggests |& tee -a $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
 
       - name: CMake Configuration
         run: |
