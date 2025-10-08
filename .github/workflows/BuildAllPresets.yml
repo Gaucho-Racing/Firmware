@@ -1,4 +1,5 @@
 name: CMake
+run-name: ${{ github.actor }} CMake Build All Presets ${{ github.ref_name }}
 
 on:
   push:

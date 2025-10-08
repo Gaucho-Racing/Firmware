@@ -1,4 +1,5 @@
 name: CTest
+run-name: ${{ github.actor }} CTest HOOTL Tests ${{ github.ref_name }}
 
 on:
   push:
