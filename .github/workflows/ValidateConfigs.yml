@@ -1,5 +1,5 @@
 name: ValidateConfigs
-run-name: ${{ github.actor }} Validate Configuration Files ${{ github.ref_name }}
+run-name: Validate Configuration Files - ${{ github.ref_name }}
 
 on:
   push:
