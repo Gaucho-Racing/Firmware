@@ -100,14 +100,14 @@ int main(void)
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
-		// 1. Use HAL_GPIO_WritePin(port, pin, set/reset) to set PA5 as high
-		
-		// 2. Use HAL_Delay() to wait for 1000 ms 
+		// 1. Use HAL_GPIO_WritePin(port, pin, set/reset) to set PA5 as
+		// high
+
+		// 2. Use HAL_Delay() to wait for 1000 ms
 
 		// 3. Use the HAL to write PA5 as low
 
-		// 4. Use HAL delay to wait for 1000 ms 
-
+		// 4. Use HAL delay to wait for 1000 ms
 	}
 	/* USER CODE END 3 */
 }
