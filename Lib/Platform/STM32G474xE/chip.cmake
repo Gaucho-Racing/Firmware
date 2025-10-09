@@ -8,7 +8,7 @@ set(CHIP "STM32G474xE")
 set(CHIP_PATH "${CMAKE_SOURCE_DIR}/Lib/Platform/${CHIP}")
 set(TARGET_FLAGS "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard")
 add_executable(${TARGET_NAME})
-set_target_properties(${TARGET_NAME} PROPERTIES LINK_FLAGS "-T${CHIP_PATH}/CompileDependencies/STM32G474RETx_FLASH.ld")
+set_target_properties(${TARGET_NAME} PROPERTIES LINK_FLAGS "-T\"${CHIP_PATH}/CompileDependencies/STM32G474RETx_FLASH.ld\"")
 
 # Cleanup
 set(CHIP "YOUHAVENOTCONFIGUREDCHIPRIGHT!")
