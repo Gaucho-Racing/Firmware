@@ -63,10 +63,10 @@ extern "C" {
 
 /* CMSIS CM4 definitions */
 #define __CM4_CMSIS_VERSION_MAIN                                               \
-	(__CM_CMSIS_VERSION_MAIN) /*!< \deprecated [31:16] CMSIS HAL main      \
+	(__CM_CMSIS_VERSION_MAIN) /*!< \deprecated [31:16] CMSIS HAL main \                                                                             \
 				     version */
 #define __CM4_CMSIS_VERSION_SUB                                                \
-	(__CM_CMSIS_VERSION_SUB) /*!< \deprecated [15:0]  CMSIS HAL sub        \
+	(__CM_CMSIS_VERSION_SUB) /*!< \deprecated [15:0]  CMSIS HAL sub \                                                                             \
 				    version */
 #define __CM4_CMSIS_VERSION                                                    \
 	((__CM4_CMSIS_VERSION_MAIN << 16U) |                                   \
@@ -397,7 +397,7 @@ typedef union {
 
 #define CONTROL_SPSEL_Pos 1U /*!< CONTROL: SPSEL Position */
 #define CONTROL_SPSEL_Msk                                                      \
-	(1UL << CONTROL_SPSEL_Pos) /*!< CONTROL: SPSEL Mask                    \
+	(1UL << CONTROL_SPSEL_Pos) /*!< CONTROL: SPSEL Mask \                                                                             \
 				    */
 
 #define CONTROL_nPRIV_Pos 0U /*!< CONTROL: nPRIV Position */
@@ -509,7 +509,7 @@ typedef struct {
 	(0xFUL << SCB_CPUID_VARIANT_Pos) /*!< SCB CPUID: VARIANT Mask */
 
 #define SCB_CPUID_ARCHITECTURE_Pos                                             \
-	16U /*!< SCB CPUID: ARCHITECTURE Position                              \
+	16U /*!< SCB CPUID: ARCHITECTURE Position \                                                                             \
 	     */
 #define SCB_CPUID_ARCHITECTURE_Msk                                             \
 	(0xFUL                                                                 \
@@ -554,8 +554,9 @@ typedef struct {
 
 #define SCB_ICSR_VECTPENDING_Pos 12U /*!< SCB ICSR: VECTPENDING Position */
 #define SCB_ICSR_VECTPENDING_Msk                                               \
-	(0x1FFUL << SCB_ICSR_VECTPENDING_Pos) /*!< SCB ICSR: VECTPENDING Mask  \
-					       */
+	(0x1FFUL                                                               \
+	 << SCB_ICSR_VECTPENDING_Pos) /*!< SCB ICSR: VECTPENDING Mask  \       \
+				       */
 
 #define SCB_ICSR_RETTOBASE_Pos 11U /*!< SCB ICSR: RETTOBASE Position */
 #define SCB_ICSR_RETTOBASE_Msk                                                 \
@@ -563,7 +564,7 @@ typedef struct {
 
 #define SCB_ICSR_VECTACTIVE_Pos 0U /*!< SCB ICSR: VECTACTIVE Position */
 #define SCB_ICSR_VECTACTIVE_Msk                                                \
-	(0x1FFUL /*<< SCB_ICSR_VECTACTIVE_Pos*/) /*!< SCB ICSR: VECTACTIVE     \
+	(0x1FFUL /*<< SCB_ICSR_VECTACTIVE_Pos*/) /*!< SCB ICSR: VECTACTIVE \                                                                             \
 						    Mask */
 
 /* SCB Vector Table Offset Register Definitions */
@@ -594,7 +595,7 @@ typedef struct {
 	(1UL << SCB_AIRCR_SYSRESETREQ_Pos) /*!< SCB AIRCR: SYSRESETREQ Mask */
 
 #define SCB_AIRCR_VECTCLRACTIVE_Pos                                            \
-	1U /*!< SCB AIRCR: VECTCLRACTIVE Position                              \
+	1U /*!< SCB AIRCR: VECTCLRACTIVE Position \                                                                             \
 	    */
 #define SCB_AIRCR_VECTCLRACTIVE_Msk                                            \
 	(1UL                                                                   \
@@ -640,7 +641,7 @@ typedef struct {
 
 #define SCB_CCR_NONBASETHRDENA_Pos 0U /*!< SCB CCR: NONBASETHRDENA Position */
 #define SCB_CCR_NONBASETHRDENA_Msk                                             \
-	(1UL /*<< SCB_CCR_NONBASETHRDENA_Pos*/) /*!< SCB CCR: NONBASETHRDENA   \
+	(1UL /*<< SCB_CCR_NONBASETHRDENA_Pos*/) /*!< SCB CCR: NONBASETHRDENA \                                                                             \
 						   Mask */
 
 /* SCB System Handler Control and State Register Definitions */
@@ -657,28 +658,29 @@ typedef struct {
 	(1UL << SCB_SHCSR_MEMFAULTENA_Pos) /*!< SCB SHCSR: MEMFAULTENA Mask */
 
 #define SCB_SHCSR_SVCALLPENDED_Pos                                             \
-	15U /*!< SCB SHCSR: SVCALLPENDED Position                              \
+	15U /*!< SCB SHCSR: SVCALLPENDED Position \                                                                             \
 	     */
 #define SCB_SHCSR_SVCALLPENDED_Msk                                             \
-	(1UL << SCB_SHCSR_SVCALLPENDED_Pos) /*!< SCB SHCSR: SVCALLPENDED Mask  \
-					     */
+	(1UL                                                                   \
+	 << SCB_SHCSR_SVCALLPENDED_Pos) /*!< SCB SHCSR: SVCALLPENDED Mask  \   \
+					 */
 
 #define SCB_SHCSR_BUSFAULTPENDED_Pos                                           \
 	14U /*!< SCB SHCSR: BUSFAULTPENDED Position */
 #define SCB_SHCSR_BUSFAULTPENDED_Msk                                           \
-	(1UL << SCB_SHCSR_BUSFAULTPENDED_Pos) /*!< SCB SHCSR: BUSFAULTPENDED   \
+	(1UL << SCB_SHCSR_BUSFAULTPENDED_Pos) /*!< SCB SHCSR: BUSFAULTPENDED \                                                                             \
 						 Mask */
 
 #define SCB_SHCSR_MEMFAULTPENDED_Pos                                           \
 	13U /*!< SCB SHCSR: MEMFAULTPENDED Position */
 #define SCB_SHCSR_MEMFAULTPENDED_Msk                                           \
-	(1UL << SCB_SHCSR_MEMFAULTPENDED_Pos) /*!< SCB SHCSR: MEMFAULTPENDED   \
+	(1UL << SCB_SHCSR_MEMFAULTPENDED_Pos) /*!< SCB SHCSR: MEMFAULTPENDED \                                                                             \
 						 Mask */
 
 #define SCB_SHCSR_USGFAULTPENDED_Pos                                           \
 	12U /*!< SCB SHCSR: USGFAULTPENDED Position */
 #define SCB_SHCSR_USGFAULTPENDED_Msk                                           \
-	(1UL << SCB_SHCSR_USGFAULTPENDED_Pos) /*!< SCB SHCSR: USGFAULTPENDED   \
+	(1UL << SCB_SHCSR_USGFAULTPENDED_Pos) /*!< SCB SHCSR: USGFAULTPENDED \                                                                             \
 						 Mask */
 
 #define SCB_SHCSR_SYSTICKACT_Pos 11U /*!< SCB SHCSR: SYSTICKACT Position */
@@ -707,27 +709,28 @@ typedef struct {
 
 #define SCB_SHCSR_MEMFAULTACT_Pos 0U /*!< SCB SHCSR: MEMFAULTACT Position */
 #define SCB_SHCSR_MEMFAULTACT_Msk                                              \
-	(1UL /*<< SCB_SHCSR_MEMFAULTACT_Pos*/) /*!< SCB SHCSR: MEMFAULTACT     \
+	(1UL /*<< SCB_SHCSR_MEMFAULTACT_Pos*/) /*!< SCB SHCSR: MEMFAULTACT \                                                                             \
 						  Mask */
 
 /* SCB Configurable Fault Status Register Definitions */
 #define SCB_CFSR_USGFAULTSR_Pos                                                \
 	16U /*!< SCB CFSR: Usage Fault Status Register Position */
 #define SCB_CFSR_USGFAULTSR_Msk                                                \
-	(0xFFFFUL << SCB_CFSR_USGFAULTSR_Pos) /*!< SCB CFSR: Usage Fault       \
+	(0xFFFFUL << SCB_CFSR_USGFAULTSR_Pos) /*!< SCB CFSR: Usage Fault \                                                                             \
 						 Status Register Mask */
 
 #define SCB_CFSR_BUSFAULTSR_Pos                                                \
 	8U /*!< SCB CFSR: Bus Fault Status Register Position */
 #define SCB_CFSR_BUSFAULTSR_Msk                                                \
-	(0xFFUL << SCB_CFSR_BUSFAULTSR_Pos) /*!< SCB CFSR: Bus Fault Status    \
+	(0xFFUL << SCB_CFSR_BUSFAULTSR_Pos) /*!< SCB CFSR: Bus Fault Status \                                                                             \
 					       Register Mask */
 
 #define SCB_CFSR_MEMFAULTSR_Pos                                                \
 	0U /*!< SCB CFSR: Memory Manage Fault Status Register Position */
 #define SCB_CFSR_MEMFAULTSR_Msk                                                \
-	(0xFFUL /*<< SCB_CFSR_MEMFAULTSR_Pos*/) /*!< SCB CFSR: Memory Manage   \
+	(0xFFUL /*<< SCB_CFSR_MEMFAULTSR_Pos*/) /*!< SCB CFSR: Memory Manage \                                                                             \
 						   Fault Status Register Mask  \
+						   \                           \
 						 */
 
 /* MemManage Fault Status Register (part of SCB Configurable Fault Status
@@ -736,8 +739,9 @@ typedef struct {
 	(SCB_SHCSR_MEMFAULTACT_Pos +                                           \
 	 7U) /*!< SCB CFSR (MMFSR): MMARVALID Position */
 #define SCB_CFSR_MMARVALID_Msk                                                 \
-	(1UL << SCB_CFSR_MMARVALID_Pos) /*!< SCB CFSR (MMFSR): MMARVALID Mask  \
-					 */
+	(1UL                                                                   \
+	 << SCB_CFSR_MMARVALID_Pos) /*!< SCB CFSR (MMFSR): MMARVALID Mask  \   \
+				     */
 
 #define SCB_CFSR_MLSPERR_Pos                                                   \
 	(SCB_SHCSR_MEMFAULTACT_Pos +                                           \
@@ -755,8 +759,9 @@ typedef struct {
 	(SCB_SHCSR_MEMFAULTACT_Pos +                                           \
 	 3U) /*!< SCB CFSR (MMFSR): MUNSTKERR Position */
 #define SCB_CFSR_MUNSTKERR_Msk                                                 \
-	(1UL << SCB_CFSR_MUNSTKERR_Pos) /*!< SCB CFSR (MMFSR): MUNSTKERR Mask  \
-					 */
+	(1UL                                                                   \
+	 << SCB_CFSR_MUNSTKERR_Pos) /*!< SCB CFSR (MMFSR): MUNSTKERR Mask  \   \
+				     */
 
 #define SCB_CFSR_DACCVIOL_Pos                                                  \
 	(SCB_SHCSR_MEMFAULTACT_Pos +                                           \
@@ -768,7 +773,7 @@ typedef struct {
 	(SCB_SHCSR_MEMFAULTACT_Pos +                                           \
 	 0U) /*!< SCB CFSR (MMFSR): IACCVIOL Position */
 #define SCB_CFSR_IACCVIOL_Msk                                                  \
-	(1UL /*<< SCB_CFSR_IACCVIOL_Pos*/) /*!< SCB CFSR (MMFSR): IACCVIOL     \
+	(1UL /*<< SCB_CFSR_IACCVIOL_Pos*/) /*!< SCB CFSR (MMFSR): IACCVIOL \                                                                             \
 					      Mask */
 
 /* BusFault Status Register (part of SCB Configurable Fault Status Register) */
@@ -776,17 +781,17 @@ typedef struct {
 	(SCB_CFSR_BUSFAULTSR_Pos +                                             \
 	 7U) /*!< SCB CFSR (BFSR): BFARVALID Position */
 #define SCB_CFSR_BFARVALID_Msk                                                 \
-	(1UL << SCB_CFSR_BFARVALID_Pos) /*!< SCB CFSR (BFSR): BFARVALID Mask   \
+	(1UL << SCB_CFSR_BFARVALID_Pos) /*!< SCB CFSR (BFSR): BFARVALID Mask \                                                                             \
 					 */
 
 #define SCB_CFSR_LSPERR_Pos                                                    \
-	(SCB_CFSR_BUSFAULTSR_Pos + 5U) /*!< SCB CFSR (BFSR): LSPERR Position   \
+	(SCB_CFSR_BUSFAULTSR_Pos + 5U) /*!< SCB CFSR (BFSR): LSPERR Position \                                                                             \
 					*/
 #define SCB_CFSR_LSPERR_Msk                                                    \
 	(1UL << SCB_CFSR_LSPERR_Pos) /*!< SCB CFSR (BFSR): LSPERR Mask */
 
 #define SCB_CFSR_STKERR_Pos                                                    \
-	(SCB_CFSR_BUSFAULTSR_Pos + 4U) /*!< SCB CFSR (BFSR): STKERR Position   \
+	(SCB_CFSR_BUSFAULTSR_Pos + 4U) /*!< SCB CFSR (BFSR): STKERR Position \                                                                             \
 					*/
 #define SCB_CFSR_STKERR_Msk                                                    \
 	(1UL << SCB_CFSR_STKERR_Pos) /*!< SCB CFSR (BFSR): STKERR Mask */
@@ -801,19 +806,20 @@ typedef struct {
 	(SCB_CFSR_BUSFAULTSR_Pos +                                             \
 	 2U) /*!< SCB CFSR (BFSR): IMPRECISERR Position */
 #define SCB_CFSR_IMPRECISERR_Msk                                               \
-	(1UL << SCB_CFSR_IMPRECISERR_Pos) /*!< SCB CFSR (BFSR): IMPRECISERR    \
+	(1UL << SCB_CFSR_IMPRECISERR_Pos) /*!< SCB CFSR (BFSR): IMPRECISERR \                                                                             \
 					     Mask */
 
 #define SCB_CFSR_PRECISERR_Pos                                                 \
 	(SCB_CFSR_BUSFAULTSR_Pos +                                             \
 	 1U) /*!< SCB CFSR (BFSR): PRECISERR Position */
 #define SCB_CFSR_PRECISERR_Msk                                                 \
-	(1UL << SCB_CFSR_PRECISERR_Pos) /*!< SCB CFSR (BFSR): PRECISERR Mask   \
+	(1UL << SCB_CFSR_PRECISERR_Pos) /*!< SCB CFSR (BFSR): PRECISERR Mask \                                                                             \
 					 */
 
 #define SCB_CFSR_IBUSERR_Pos                                                   \
-	(SCB_CFSR_BUSFAULTSR_Pos + 0U) /*!< SCB CFSR (BFSR): IBUSERR Position  \
-					*/
+	(SCB_CFSR_BUSFAULTSR_Pos +                                             \
+	 0U) /*!< SCB CFSR (BFSR): IBUSERR Position  \                         \
+	      */
 #define SCB_CFSR_IBUSERR_Msk                                                   \
 	(1UL << SCB_CFSR_IBUSERR_Pos) /*!< SCB CFSR (BFSR): IBUSERR Mask */
 
@@ -823,14 +829,14 @@ typedef struct {
 	(SCB_CFSR_USGFAULTSR_Pos +                                             \
 	 9U) /*!< SCB CFSR (UFSR): DIVBYZERO Position */
 #define SCB_CFSR_DIVBYZERO_Msk                                                 \
-	(1UL << SCB_CFSR_DIVBYZERO_Pos) /*!< SCB CFSR (UFSR): DIVBYZERO Mask   \
+	(1UL << SCB_CFSR_DIVBYZERO_Pos) /*!< SCB CFSR (UFSR): DIVBYZERO Mask \                                                                             \
 					 */
 
 #define SCB_CFSR_UNALIGNED_Pos                                                 \
 	(SCB_CFSR_USGFAULTSR_Pos +                                             \
 	 8U) /*!< SCB CFSR (UFSR): UNALIGNED Position */
 #define SCB_CFSR_UNALIGNED_Msk                                                 \
-	(1UL << SCB_CFSR_UNALIGNED_Pos) /*!< SCB CFSR (UFSR): UNALIGNED Mask   \
+	(1UL << SCB_CFSR_UNALIGNED_Pos) /*!< SCB CFSR (UFSR): UNALIGNED Mask \                                                                             \
 					 */
 
 #define SCB_CFSR_NOCP_Pos                                                      \
@@ -884,7 +890,7 @@ typedef struct {
 
 #define SCB_DFSR_BKPT_Pos 1U /*!< SCB DFSR: BKPT Position */
 #define SCB_DFSR_BKPT_Msk                                                      \
-	(1UL << SCB_DFSR_BKPT_Pos) /*!< SCB DFSR: BKPT Mask                    \
+	(1UL << SCB_DFSR_BKPT_Pos) /*!< SCB DFSR: BKPT Mask \                                                                             \
 				    */
 
 #define SCB_DFSR_HALTED_Pos 0U /*!< SCB DFSR: HALTED Position */
@@ -917,6 +923,7 @@ typedef struct {
 #define SCnSCB_ICTR_INTLINESNUM_Pos 0U /*!< ICTR: INTLINESNUM Position */
 #define SCnSCB_ICTR_INTLINESNUM_Msk                                            \
 	(0xFUL /*<< SCnSCB_ICTR_INTLINESNUM_Pos*/) /*!< ICTR: INTLINESNUM Mask \
+						    * \                        \
 						    */
 
 /* Auxiliary Control Register Definitions */
@@ -938,7 +945,7 @@ typedef struct {
 
 #define SCnSCB_ACTLR_DISMCYCINT_Pos 0U /*!< ACTLR: DISMCYCINT Position */
 #define SCnSCB_ACTLR_DISMCYCINT_Msk                                            \
-	(1UL /*<< SCnSCB_ACTLR_DISMCYCINT_Pos*/) /*!< ACTLR: DISMCYCINT Mask   \
+	(1UL /*<< SCnSCB_ACTLR_DISMCYCINT_Pos*/) /*!< ACTLR: DISMCYCINT Mask \                                                                             \
 						  */
 
 /*@} end of group CMSIS_SCnotSCB */
@@ -966,16 +973,18 @@ typedef struct {
 
 /* SysTick Control / Status Register Definitions */
 #define SysTick_CTRL_COUNTFLAG_Pos                                             \
-	16U /*!< SysTick CTRL: COUNTFLAG Position                              \
+	16U /*!< SysTick CTRL: COUNTFLAG Position \                                                                             \
 	     */
 #define SysTick_CTRL_COUNTFLAG_Msk                                             \
-	(1UL << SysTick_CTRL_COUNTFLAG_Pos) /*!< SysTick CTRL: COUNTFLAG Mask  \
-					     */
+	(1UL                                                                   \
+	 << SysTick_CTRL_COUNTFLAG_Pos) /*!< SysTick CTRL: COUNTFLAG Mask  \   \
+					 */
 
 #define SysTick_CTRL_CLKSOURCE_Pos 2U /*!< SysTick CTRL: CLKSOURCE Position */
 #define SysTick_CTRL_CLKSOURCE_Msk                                             \
-	(1UL << SysTick_CTRL_CLKSOURCE_Pos) /*!< SysTick CTRL: CLKSOURCE Mask  \
-					     */
+	(1UL                                                                   \
+	 << SysTick_CTRL_CLKSOURCE_Pos) /*!< SysTick CTRL: CLKSOURCE Mask  \   \
+					 */
 
 #define SysTick_CTRL_TICKINT_Pos 1U /*!< SysTick CTRL: TICKINT Position */
 #define SysTick_CTRL_TICKINT_Msk                                               \
@@ -989,13 +998,13 @@ typedef struct {
 #define SysTick_LOAD_RELOAD_Pos 0U /*!< SysTick LOAD: RELOAD Position */
 #define SysTick_LOAD_RELOAD_Msk                                                \
 	(0xFFFFFFUL /*<< SysTick_LOAD_RELOAD_Pos*/) /*!< SysTick LOAD: RELOAD  \
-						       Mask */
+						       \ Mask */
 
 /* SysTick Current Register Definitions */
 #define SysTick_VAL_CURRENT_Pos 0U /*!< SysTick VAL: CURRENT Position */
 #define SysTick_VAL_CURRENT_Msk                                                \
 	(0xFFFFFFUL /*<< SysTick_VAL_CURRENT_Pos*/) /*!< SysTick VAL: CURRENT  \
-						       Mask */
+						       \ Mask */
 
 /* SysTick Calibration Register Definitions */
 #define SysTick_CALIB_NOREF_Pos 31U /*!< SysTick CALIB: NOREF Position */
@@ -1009,7 +1018,7 @@ typedef struct {
 #define SysTick_CALIB_TENMS_Pos 0U /*!< SysTick CALIB: TENMS Position */
 #define SysTick_CALIB_TENMS_Msk                                                \
 	(0xFFFFFFUL /*<< SysTick_CALIB_TENMS_Pos*/) /*!< SysTick CALIB: TENMS  \
-						       Mask */
+						       \ Mask */
 
 /*@} end of group CMSIS_SysTick */
 
@@ -1077,6 +1086,7 @@ typedef struct {
 #define ITM_TPR_PRIVMASK_Pos 0U /*!< ITM TPR: PRIVMASK Position */
 #define ITM_TPR_PRIVMASK_Msk                                                   \
 	(0xFFFFFFFFUL /*<< ITM_TPR_PRIVMASK_Pos*/) /*!< ITM TPR: PRIVMASK Mask \
+						    * \                        \
 						    */
 
 /* ITM Trace Control Register Definitions */
@@ -1091,7 +1101,7 @@ typedef struct {
 	10U /*!< ITM TCR: Global timestamp frequency Position */
 #define ITM_TCR_GTSFREQ_Msk                                                    \
 	(3UL << ITM_TCR_GTSFREQ_Pos) /*!< ITM TCR: Global timestamp frequency  \
-					Mask */
+					\ Mask */
 
 #define ITM_TCR_TSPrescale_Pos 8U /*!< ITM TCR: TSPrescale Position */
 #define ITM_TCR_TSPrescale_Msk                                                 \
@@ -1111,7 +1121,7 @@ typedef struct {
 
 #define ITM_TCR_TSENA_Pos 1U /*!< ITM TCR: TSENA Position */
 #define ITM_TCR_TSENA_Msk                                                      \
-	(1UL << ITM_TCR_TSENA_Pos) /*!< ITM TCR: TSENA Mask                    \
+	(1UL << ITM_TCR_TSENA_Pos) /*!< ITM TCR: TSENA Mask \                                                                             \
 				    */
 
 #define ITM_TCR_ITMENA_Pos 0U /*!< ITM TCR: ITM Enable bit Position */
@@ -1264,7 +1274,7 @@ typedef struct {
 #define DWT_SLEEPCNT_SLEEPCNT_Pos 0U /*!< DWT SLEEPCNT: SLEEPCNT Position */
 #define DWT_SLEEPCNT_SLEEPCNT_Msk                                              \
 	(0xFFUL /*<< DWT_SLEEPCNT_SLEEPCNT_Pos*/) /*!< DWT SLEEPCNT: SLEEPCNT  \
-						     Mask */
+						     \ Mask */
 
 /* DWT LSU Count Register Definitions */
 #define DWT_LSUCNT_LSUCNT_Pos 0U /*!< DWT LSUCNT: LSUCNT Position */
@@ -1275,6 +1285,7 @@ typedef struct {
 #define DWT_FOLDCNT_FOLDCNT_Pos 0U /*!< DWT FOLDCNT: FOLDCNT Position */
 #define DWT_FOLDCNT_FOLDCNT_Msk                                                \
 	(0xFFUL /*<< DWT_FOLDCNT_FOLDCNT_Pos*/) /*!< DWT FOLDCNT: FOLDCNT Mask \
+						 * \                           \
 						 */
 
 /* DWT Comparator Mask Register Definitions */
@@ -1300,7 +1311,7 @@ typedef struct {
 	 << DWT_FUNCTION_DATAVADDR0_Pos) /*!< DWT FUNCTION: DATAVADDR0 Mask */
 
 #define DWT_FUNCTION_DATAVSIZE_Pos                                             \
-	10U /*!< DWT FUNCTION: DATAVSIZE Position                              \
+	10U /*!< DWT FUNCTION: DATAVSIZE Position \                                                                             \
 	     */
 #define DWT_FUNCTION_DATAVSIZE_Msk                                             \
 	(0x3UL                                                                 \
@@ -1311,7 +1322,7 @@ typedef struct {
 	(0x1UL << DWT_FUNCTION_LNK1ENA_Pos) /*!< DWT FUNCTION: LNK1ENA Mask */
 
 #define DWT_FUNCTION_DATAVMATCH_Pos                                            \
-	8U /*!< DWT FUNCTION: DATAVMATCH Position                              \
+	8U /*!< DWT FUNCTION: DATAVMATCH Position \                                                                             \
 	    */
 #define DWT_FUNCTION_DATAVMATCH_Msk                                            \
 	(0x1UL                                                                 \
@@ -1319,8 +1330,9 @@ typedef struct {
 
 #define DWT_FUNCTION_CYCMATCH_Pos 7U /*!< DWT FUNCTION: CYCMATCH Position */
 #define DWT_FUNCTION_CYCMATCH_Msk                                              \
-	(0x1UL << DWT_FUNCTION_CYCMATCH_Pos) /*!< DWT FUNCTION: CYCMATCH Mask  \
-					      */
+	(0x1UL                                                                 \
+	 << DWT_FUNCTION_CYCMATCH_Pos) /*!< DWT FUNCTION: CYCMATCH Mask  \     \
+					*/
 
 #define DWT_FUNCTION_EMITRANGE_Pos 5U /*!< DWT FUNCTION: EMITRANGE Position */
 #define DWT_FUNCTION_EMITRANGE_Msk                                             \
@@ -1329,7 +1341,7 @@ typedef struct {
 
 #define DWT_FUNCTION_FUNCTION_Pos 0U /*!< DWT FUNCTION: FUNCTION Position */
 #define DWT_FUNCTION_FUNCTION_Msk                                              \
-	(0xFUL /*<< DWT_FUNCTION_FUNCTION_Pos*/) /*!< DWT FUNCTION: FUNCTION   \
+	(0xFUL /*<< DWT_FUNCTION_FUNCTION_Pos*/) /*!< DWT FUNCTION: FUNCTION \                                                                             \
 						    Mask */
 
 /*@}*/ /* end of group CMSIS_DWT */
@@ -1383,6 +1395,7 @@ typedef struct {
 #define TPI_ACPR_PRESCALER_Pos 0U /*!< TPI ACPR: PRESCALER Position */
 #define TPI_ACPR_PRESCALER_Msk                                                 \
 	(0x1FFFUL /*<< TPI_ACPR_PRESCALER_Pos*/) /*!< TPI ACPR: PRESCALER Mask \
+						  * \                          \
 						  */
 
 /* TPI Selected Pin Protocol Register Definitions */
@@ -1420,13 +1433,15 @@ typedef struct {
 #define TPI_TRIGGER_TRIGGER_Pos 0U /*!< TPI TRIGGER: TRIGGER Position */
 #define TPI_TRIGGER_TRIGGER_Msk                                                \
 	(0x1UL /*<< TPI_TRIGGER_TRIGGER_Pos*/) /*!< TPI TRIGGER: TRIGGER Mask  \
+						* \                            \
 						*/
 
 /* TPI Integration ETM Data Register Definitions (FIFO0) */
 #define TPI_FIFO0_ITM_ATVALID_Pos 29U /*!< TPI FIFO0: ITM_ATVALID Position */
 #define TPI_FIFO0_ITM_ATVALID_Msk                                              \
-	(0x1UL << TPI_FIFO0_ITM_ATVALID_Pos) /*!< TPI FIFO0: ITM_ATVALID Mask  \
-					      */
+	(0x1UL                                                                 \
+	 << TPI_FIFO0_ITM_ATVALID_Pos) /*!< TPI FIFO0: ITM_ATVALID Mask  \     \
+					*/
 
 #define TPI_FIFO0_ITM_bytecount_Pos                                            \
 	27U /*!< TPI FIFO0: ITM_bytecount Position */
@@ -1436,8 +1451,9 @@ typedef struct {
 
 #define TPI_FIFO0_ETM_ATVALID_Pos 26U /*!< TPI FIFO0: ETM_ATVALID Position */
 #define TPI_FIFO0_ETM_ATVALID_Msk                                              \
-	(0x1UL << TPI_FIFO0_ETM_ATVALID_Pos) /*!< TPI FIFO0: ETM_ATVALID Mask  \
-					      */
+	(0x1UL                                                                 \
+	 << TPI_FIFO0_ETM_ATVALID_Pos) /*!< TPI FIFO0: ETM_ATVALID Mask  \     \
+					*/
 
 #define TPI_FIFO0_ETM_bytecount_Pos                                            \
 	24U /*!< TPI FIFO0: ETM_bytecount Position */
@@ -1461,18 +1477,19 @@ typedef struct {
 #define TPI_ITATBCTR2_ATREADY2_Pos 0U /*!< TPI ITATBCTR2: ATREADY2 Position */
 #define TPI_ITATBCTR2_ATREADY2_Msk                                             \
 	(0x1UL /*<< TPI_ITATBCTR2_ATREADY2_Pos*/) /*!< TPI ITATBCTR2: ATREADY2 \
-						     Mask */
+						     \ Mask */
 
 #define TPI_ITATBCTR2_ATREADY1_Pos 0U /*!< TPI ITATBCTR2: ATREADY1 Position */
 #define TPI_ITATBCTR2_ATREADY1_Msk                                             \
 	(0x1UL /*<< TPI_ITATBCTR2_ATREADY1_Pos*/) /*!< TPI ITATBCTR2: ATREADY1 \
-						     Mask */
+						     \ Mask */
 
 /* TPI Integration ITM Data Register Definitions (FIFO1) */
 #define TPI_FIFO1_ITM_ATVALID_Pos 29U /*!< TPI FIFO1: ITM_ATVALID Position */
 #define TPI_FIFO1_ITM_ATVALID_Msk                                              \
-	(0x1UL << TPI_FIFO1_ITM_ATVALID_Pos) /*!< TPI FIFO1: ITM_ATVALID Mask  \
-					      */
+	(0x1UL                                                                 \
+	 << TPI_FIFO1_ITM_ATVALID_Pos) /*!< TPI FIFO1: ITM_ATVALID Mask  \     \
+					*/
 
 #define TPI_FIFO1_ITM_bytecount_Pos                                            \
 	27U /*!< TPI FIFO1: ITM_bytecount Position */
@@ -1482,8 +1499,9 @@ typedef struct {
 
 #define TPI_FIFO1_ETM_ATVALID_Pos 26U /*!< TPI FIFO1: ETM_ATVALID Position */
 #define TPI_FIFO1_ETM_ATVALID_Msk                                              \
-	(0x1UL << TPI_FIFO1_ETM_ATVALID_Pos) /*!< TPI FIFO1: ETM_ATVALID Mask  \
-					      */
+	(0x1UL                                                                 \
+	 << TPI_FIFO1_ETM_ATVALID_Pos) /*!< TPI FIFO1: ETM_ATVALID Mask  \     \
+					*/
 
 #define TPI_FIFO1_ETM_bytecount_Pos                                            \
 	24U /*!< TPI FIFO1: ETM_bytecount Position */
@@ -1507,12 +1525,12 @@ typedef struct {
 #define TPI_ITATBCTR0_ATREADY2_Pos 0U /*!< TPI ITATBCTR0: ATREADY2 Position */
 #define TPI_ITATBCTR0_ATREADY2_Msk                                             \
 	(0x1UL /*<< TPI_ITATBCTR0_ATREADY2_Pos*/) /*!< TPI ITATBCTR0: ATREADY2 \
-						     Mask */
+						     \ Mask */
 
 #define TPI_ITATBCTR0_ATREADY1_Pos 0U /*!< TPI ITATBCTR0: ATREADY1 Position */
 #define TPI_ITATBCTR0_ATREADY1_Msk                                             \
 	(0x1UL /*<< TPI_ITATBCTR0_ATREADY1_Pos*/) /*!< TPI ITATBCTR0: ATREADY1 \
-						     Mask */
+						     \ Mask */
 
 /* TPI Integration Mode Control Register Definitions */
 #define TPI_ITCTRL_Mode_Pos 0U /*!< TPI ITCTRL: Mode Position */
@@ -1542,19 +1560,21 @@ typedef struct {
 
 #define TPI_DEVID_NrTraceInput_Pos 0U /*!< TPI DEVID: NrTraceInput Position */
 #define TPI_DEVID_NrTraceInput_Msk                                             \
-	(0x1FUL /*<< TPI_DEVID_NrTraceInput_Pos*/) /*!< TPI DEVID:             \
+	(0x1FUL /*<< TPI_DEVID_NrTraceInput_Pos*/) /*!< TPI DEVID: \                                                                             \
 						      NrTraceInput Mask */
 
 /* TPI DEVTYPE Register Definitions */
 #define TPI_DEVTYPE_SubType_Pos 4U /*!< TPI DEVTYPE: SubType Position */
 #define TPI_DEVTYPE_SubType_Msk                                                \
 	(0xFUL /*<< TPI_DEVTYPE_SubType_Pos*/) /*!< TPI DEVTYPE: SubType Mask  \
+						* \                            \
 						*/
 
 #define TPI_DEVTYPE_MajorType_Pos 0U /*!< TPI DEVTYPE: MajorType Position */
 #define TPI_DEVTYPE_MajorType_Msk                                              \
-	(0xFUL << TPI_DEVTYPE_MajorType_Pos) /*!< TPI DEVTYPE: MajorType Mask  \
-					      */
+	(0xFUL                                                                 \
+	 << TPI_DEVTYPE_MajorType_Pos) /*!< TPI DEVTYPE: MajorType Mask  \     \
+					*/
 
 /*@}*/ /* end of group CMSIS_TPI */
 
@@ -1642,12 +1662,12 @@ typedef struct {
 #define MPU_RASR_ATTRS_Pos                                                     \
 	16U /*!< MPU RASR: MPU Region Attribute field Position */
 #define MPU_RASR_ATTRS_Msk                                                     \
-	(0xFFFFUL << MPU_RASR_ATTRS_Pos) /*!< MPU RASR: MPU Region Attribute   \
+	(0xFFFFUL << MPU_RASR_ATTRS_Pos) /*!< MPU RASR: MPU Region Attribute \                                                                             \
 					    field Mask */
 
 #define MPU_RASR_XN_Pos 28U /*!< MPU RASR: ATTRS.XN Position */
 #define MPU_RASR_XN_Msk                                                        \
-	(1UL << MPU_RASR_XN_Pos) /*!< MPU RASR: ATTRS.XN Mask                  \
+	(1UL << MPU_RASR_XN_Pos) /*!< MPU RASR: ATTRS.XN Mask \                                                                             \
 				  */
 
 #define MPU_RASR_AP_Pos 24U /*!< MPU RASR: ATTRS.AP Position */
@@ -1677,7 +1697,7 @@ typedef struct {
 
 #define MPU_RASR_ENABLE_Pos 0U /*!< MPU RASR: Region enable bit Position */
 #define MPU_RASR_ENABLE_Msk                                                    \
-	(1UL /*<< MPU_RASR_ENABLE_Pos*/) /*!< MPU RASR: Region enable bit      \
+	(1UL /*<< MPU_RASR_ENABLE_Pos*/) /*!< MPU RASR: Region enable bit \                                                                             \
 					    Disable Mask */
 
 /*@} end of group CMSIS_MPU */
@@ -1736,7 +1756,7 @@ typedef struct {
 
 #define FPU_FPCCR_THREAD_Pos 3U /*!< FPCCR: processor mode bit Position */
 #define FPU_FPCCR_THREAD_Msk                                                   \
-	(1UL << FPU_FPCCR_THREAD_Pos) /*!< FPCCR: processor mode active bit    \
+	(1UL << FPU_FPCCR_THREAD_Pos) /*!< FPCCR: processor mode active bit \                                                                             \
 					 Mask */
 
 #define FPU_FPCCR_USER_Pos 1U /*!< FPCCR: privilege level bit Position */
@@ -1747,12 +1767,12 @@ typedef struct {
 	0U /*!< FPCCR: Lazy state preservation active bit Position */
 #define FPU_FPCCR_LSPACT_Msk                                                   \
 	(1UL /*<< FPU_FPCCR_LSPACT_Pos*/) /*!< FPCCR: Lazy state preservation  \
-					     active bit Mask */
+					     \ active bit Mask */
 
 /* Floating-Point Context Address Register Definitions */
 #define FPU_FPCAR_ADDRESS_Pos 3U /*!< FPCAR: ADDRESS bit Position */
 #define FPU_FPCAR_ADDRESS_Msk                                                  \
-	(0x1FFFFFFFUL << FPU_FPCAR_ADDRESS_Pos) /*!< FPCAR: ADDRESS bit Mask   \
+	(0x1FFFFFFFUL << FPU_FPCAR_ADDRESS_Pos) /*!< FPCAR: ADDRESS bit Mask \                                                                             \
 						 */
 
 /* Floating-Point Default Status Control Register Definitions */
@@ -1762,12 +1782,12 @@ typedef struct {
 
 #define FPU_FPDSCR_DN_Pos 25U /*!< FPDSCR: DN bit Position */
 #define FPU_FPDSCR_DN_Msk                                                      \
-	(1UL << FPU_FPDSCR_DN_Pos) /*!< FPDSCR: DN bit Mask                    \
+	(1UL << FPU_FPDSCR_DN_Pos) /*!< FPDSCR: DN bit Mask \                                                                             \
 				    */
 
 #define FPU_FPDSCR_FZ_Pos 24U /*!< FPDSCR: FZ bit Position */
 #define FPU_FPDSCR_FZ_Msk                                                      \
-	(1UL << FPU_FPDSCR_FZ_Pos) /*!< FPDSCR: FZ bit Mask                    \
+	(1UL << FPU_FPDSCR_FZ_Pos) /*!< FPDSCR: FZ bit Mask \                                                                             \
 				    */
 
 #define FPU_FPDSCR_RMode_Pos 22U /*!< FPDSCR: RMode bit Position */
@@ -1778,14 +1798,14 @@ typedef struct {
 #define FPU_MVFR0_FP_rounding_modes_Pos                                        \
 	28U /*!< MVFR0: FP rounding modes bits Position */
 #define FPU_MVFR0_FP_rounding_modes_Msk                                        \
-	(0xFUL << FPU_MVFR0_FP_rounding_modes_Pos) /*!< MVFR0: FP rounding     \
+	(0xFUL << FPU_MVFR0_FP_rounding_modes_Pos) /*!< MVFR0: FP rounding \                                                                             \
 						      modes bits Mask */
 
 #define FPU_MVFR0_Short_vectors_Pos                                            \
 	24U /*!< MVFR0: Short vectors bits Position */
 #define FPU_MVFR0_Short_vectors_Msk                                            \
 	(0xFUL << FPU_MVFR0_Short_vectors_Pos) /*!< MVFR0: Short vectors bits  \
-						  Mask */
+						  \ Mask */
 
 #define FPU_MVFR0_Square_root_Pos 20U /*!< MVFR0: Square root bits Position */
 #define FPU_MVFR0_Square_root_Msk                                              \
@@ -1799,31 +1819,31 @@ typedef struct {
 #define FPU_MVFR0_FP_excep_trapping_Pos                                        \
 	12U /*!< MVFR0: FP exception trapping bits Position */
 #define FPU_MVFR0_FP_excep_trapping_Msk                                        \
-	(0xFUL << FPU_MVFR0_FP_excep_trapping_Pos) /*!< MVFR0: FP exception    \
+	(0xFUL << FPU_MVFR0_FP_excep_trapping_Pos) /*!< MVFR0: FP exception \                                                                             \
 						      trapping bits Mask */
 
 #define FPU_MVFR0_Double_precision_Pos                                         \
 	8U /*!< MVFR0: Double-precision bits Position */
 #define FPU_MVFR0_Double_precision_Msk                                         \
 	(0xFUL << FPU_MVFR0_Double_precision_Pos) /*!< MVFR0: Double-precision \
-						     bits Mask */
+						     \ bits Mask */
 
 #define FPU_MVFR0_Single_precision_Pos                                         \
 	4U /*!< MVFR0: Single-precision bits Position */
 #define FPU_MVFR0_Single_precision_Msk                                         \
 	(0xFUL << FPU_MVFR0_Single_precision_Pos) /*!< MVFR0: Single-precision \
-						     bits Mask */
+						     \ bits Mask */
 
 #define FPU_MVFR0_A_SIMD_registers_Pos                                         \
 	0U /*!< MVFR0: A_SIMD registers bits Position */
 #define FPU_MVFR0_A_SIMD_registers_Msk                                         \
-	(0xFUL /*<< FPU_MVFR0_A_SIMD_registers_Pos*/) /*!< MVFR0: A_SIMD       \
-							 registers bits Mask   \
+	(0xFUL /*<< FPU_MVFR0_A_SIMD_registers_Pos*/) /*!< MVFR0: A_SIMD \                                                                             \
+							 registers bits Mask \                                                                             \
 						       */
 
 /* Media and FP Feature Register 1 Definitions */
 #define FPU_MVFR1_FP_fused_MAC_Pos                                             \
-	28U /*!< MVFR1: FP fused MAC bits Position                             \
+	28U /*!< MVFR1: FP fused MAC bits Position \                                                                             \
 	     */
 #define FPU_MVFR1_FP_fused_MAC_Msk                                             \
 	(0xFUL                                                                 \
@@ -1835,12 +1855,12 @@ typedef struct {
 
 #define FPU_MVFR1_D_NaN_mode_Pos 4U /*!< MVFR1: D_NaN mode bits Position */
 #define FPU_MVFR1_D_NaN_mode_Msk                                               \
-	(0xFUL << FPU_MVFR1_D_NaN_mode_Pos) /*!< MVFR1: D_NaN mode bits Mask   \
+	(0xFUL << FPU_MVFR1_D_NaN_mode_Pos) /*!< MVFR1: D_NaN mode bits Mask \                                                                             \
 					     */
 
 #define FPU_MVFR1_FtZ_mode_Pos 0U /*!< MVFR1: FtZ mode bits Position */
 #define FPU_MVFR1_FtZ_mode_Msk                                                 \
-	(0xFUL /*<< FPU_MVFR1_FtZ_mode_Pos*/) /*!< MVFR1: FtZ mode bits Mask   \
+	(0xFUL /*<< FPU_MVFR1_FtZ_mode_Pos*/) /*!< MVFR1: FtZ mode bits Mask \                                                                             \
 					       */
 
 /* Media and FP Feature Register 2 Definitions */
@@ -1874,7 +1894,7 @@ typedef struct {
 
 /* Debug Halting Control and Status Register Definitions */
 #define CoreDebug_DHCSR_DBGKEY_Pos                                             \
-	16U /*!< CoreDebug DHCSR: DBGKEY Position                              \
+	16U /*!< CoreDebug DHCSR: DBGKEY Position \                                                                             \
 	     */
 #define CoreDebug_DHCSR_DBGKEY_Msk                                             \
 	(0xFFFFUL                                                              \
@@ -1883,19 +1903,19 @@ typedef struct {
 #define CoreDebug_DHCSR_S_RESET_ST_Pos                                         \
 	25U /*!< CoreDebug DHCSR: S_RESET_ST Position */
 #define CoreDebug_DHCSR_S_RESET_ST_Msk                                         \
-	(1UL << CoreDebug_DHCSR_S_RESET_ST_Pos) /*!< CoreDebug DHCSR:          \
+	(1UL << CoreDebug_DHCSR_S_RESET_ST_Pos) /*!< CoreDebug DHCSR: \                                                                             \
 						   S_RESET_ST Mask */
 
 #define CoreDebug_DHCSR_S_RETIRE_ST_Pos                                        \
 	24U /*!< CoreDebug DHCSR: S_RETIRE_ST Position */
 #define CoreDebug_DHCSR_S_RETIRE_ST_Msk                                        \
-	(1UL << CoreDebug_DHCSR_S_RETIRE_ST_Pos) /*!< CoreDebug DHCSR:         \
+	(1UL << CoreDebug_DHCSR_S_RETIRE_ST_Pos) /*!< CoreDebug DHCSR: \                                                                             \
 						    S_RETIRE_ST Mask */
 
 #define CoreDebug_DHCSR_S_LOCKUP_Pos                                           \
 	19U /*!< CoreDebug DHCSR: S_LOCKUP Position */
 #define CoreDebug_DHCSR_S_LOCKUP_Msk                                           \
-	(1UL << CoreDebug_DHCSR_S_LOCKUP_Pos) /*!< CoreDebug DHCSR: S_LOCKUP   \
+	(1UL << CoreDebug_DHCSR_S_LOCKUP_Pos) /*!< CoreDebug DHCSR: S_LOCKUP \                                                                             \
 						 Mask */
 
 #define CoreDebug_DHCSR_S_SLEEP_Pos                                            \
@@ -1905,66 +1925,71 @@ typedef struct {
 	 << CoreDebug_DHCSR_S_SLEEP_Pos) /*!< CoreDebug DHCSR: S_SLEEP Mask */
 
 #define CoreDebug_DHCSR_S_HALT_Pos                                             \
-	17U /*!< CoreDebug DHCSR: S_HALT Position                              \
+	17U /*!< CoreDebug DHCSR: S_HALT Position \                                                                             \
 	     */
 #define CoreDebug_DHCSR_S_HALT_Msk                                             \
-	(1UL << CoreDebug_DHCSR_S_HALT_Pos) /*!< CoreDebug DHCSR: S_HALT Mask  \
-					     */
+	(1UL                                                                   \
+	 << CoreDebug_DHCSR_S_HALT_Pos) /*!< CoreDebug DHCSR: S_HALT Mask  \   \
+					 */
 
 #define CoreDebug_DHCSR_S_REGRDY_Pos                                           \
 	16U /*!< CoreDebug DHCSR: S_REGRDY Position */
 #define CoreDebug_DHCSR_S_REGRDY_Msk                                           \
-	(1UL << CoreDebug_DHCSR_S_REGRDY_Pos) /*!< CoreDebug DHCSR: S_REGRDY   \
+	(1UL << CoreDebug_DHCSR_S_REGRDY_Pos) /*!< CoreDebug DHCSR: S_REGRDY \                                                                             \
 						 Mask */
 
 #define CoreDebug_DHCSR_C_SNAPSTALL_Pos                                        \
 	5U /*!< CoreDebug DHCSR: C_SNAPSTALL Position */
 #define CoreDebug_DHCSR_C_SNAPSTALL_Msk                                        \
-	(1UL << CoreDebug_DHCSR_C_SNAPSTALL_Pos) /*!< CoreDebug DHCSR:         \
+	(1UL << CoreDebug_DHCSR_C_SNAPSTALL_Pos) /*!< CoreDebug DHCSR: \                                                                             \
 						    C_SNAPSTALL Mask */
 
 #define CoreDebug_DHCSR_C_MASKINTS_Pos                                         \
 	3U /*!< CoreDebug DHCSR: C_MASKINTS Position */
 #define CoreDebug_DHCSR_C_MASKINTS_Msk                                         \
-	(1UL << CoreDebug_DHCSR_C_MASKINTS_Pos) /*!< CoreDebug DHCSR:          \
+	(1UL << CoreDebug_DHCSR_C_MASKINTS_Pos) /*!< CoreDebug DHCSR: \                                                                             \
 						   C_MASKINTS Mask */
 
 #define CoreDebug_DHCSR_C_STEP_Pos 2U /*!< CoreDebug DHCSR: C_STEP Position */
 #define CoreDebug_DHCSR_C_STEP_Msk                                             \
-	(1UL << CoreDebug_DHCSR_C_STEP_Pos) /*!< CoreDebug DHCSR: C_STEP Mask  \
-					     */
+	(1UL                                                                   \
+	 << CoreDebug_DHCSR_C_STEP_Pos) /*!< CoreDebug DHCSR: C_STEP Mask  \   \
+					 */
 
 #define CoreDebug_DHCSR_C_HALT_Pos 1U /*!< CoreDebug DHCSR: C_HALT Position */
 #define CoreDebug_DHCSR_C_HALT_Msk                                             \
-	(1UL << CoreDebug_DHCSR_C_HALT_Pos) /*!< CoreDebug DHCSR: C_HALT Mask  \
-					     */
+	(1UL                                                                   \
+	 << CoreDebug_DHCSR_C_HALT_Pos) /*!< CoreDebug DHCSR: C_HALT Mask  \   \
+					 */
 
 #define CoreDebug_DHCSR_C_DEBUGEN_Pos                                          \
 	0U /*!< CoreDebug DHCSR: C_DEBUGEN Position */
 #define CoreDebug_DHCSR_C_DEBUGEN_Msk                                          \
-	(1UL /*<< CoreDebug_DHCSR_C_DEBUGEN_Pos*/) /*!< CoreDebug DHCSR:       \
+	(1UL /*<< CoreDebug_DHCSR_C_DEBUGEN_Pos*/) /*!< CoreDebug DHCSR: \                                                                             \
 						      C_DEBUGEN Mask */
 
 /* Debug Core Register Selector Register Definitions */
 #define CoreDebug_DCRSR_REGWnR_Pos                                             \
-	16U /*!< CoreDebug DCRSR: REGWnR Position                              \
+	16U /*!< CoreDebug DCRSR: REGWnR Position \                                                                             \
 	     */
 #define CoreDebug_DCRSR_REGWnR_Msk                                             \
-	(1UL << CoreDebug_DCRSR_REGWnR_Pos) /*!< CoreDebug DCRSR: REGWnR Mask  \
-					     */
+	(1UL                                                                   \
+	 << CoreDebug_DCRSR_REGWnR_Pos) /*!< CoreDebug DCRSR: REGWnR Mask  \   \
+					 */
 
 #define CoreDebug_DCRSR_REGSEL_Pos 0U /*!< CoreDebug DCRSR: REGSEL Position */
 #define CoreDebug_DCRSR_REGSEL_Msk                                             \
-	(0x1FUL /*<< CoreDebug_DCRSR_REGSEL_Pos*/) /*!< CoreDebug DCRSR:       \
+	(0x1FUL /*<< CoreDebug_DCRSR_REGSEL_Pos*/) /*!< CoreDebug DCRSR: \                                                                             \
 						      REGSEL Mask */
 
 /* Debug Exception and Monitor Control Register Definitions */
 #define CoreDebug_DEMCR_TRCENA_Pos                                             \
-	24U /*!< CoreDebug DEMCR: TRCENA Position                              \
+	24U /*!< CoreDebug DEMCR: TRCENA Position \                                                                             \
 	     */
 #define CoreDebug_DEMCR_TRCENA_Msk                                             \
-	(1UL << CoreDebug_DEMCR_TRCENA_Pos) /*!< CoreDebug DEMCR: TRCENA Mask  \
-					     */
+	(1UL                                                                   \
+	 << CoreDebug_DEMCR_TRCENA_Pos) /*!< CoreDebug DEMCR: TRCENA Mask  \   \
+					 */
 
 #define CoreDebug_DEMCR_MON_REQ_Pos                                            \
 	19U /*!< CoreDebug DEMCR: MON_REQ Position */
@@ -1975,68 +2000,69 @@ typedef struct {
 #define CoreDebug_DEMCR_MON_STEP_Pos                                           \
 	18U /*!< CoreDebug DEMCR: MON_STEP Position */
 #define CoreDebug_DEMCR_MON_STEP_Msk                                           \
-	(1UL << CoreDebug_DEMCR_MON_STEP_Pos) /*!< CoreDebug DEMCR: MON_STEP   \
+	(1UL << CoreDebug_DEMCR_MON_STEP_Pos) /*!< CoreDebug DEMCR: MON_STEP \                                                                             \
 						 Mask */
 
 #define CoreDebug_DEMCR_MON_PEND_Pos                                           \
 	17U /*!< CoreDebug DEMCR: MON_PEND Position */
 #define CoreDebug_DEMCR_MON_PEND_Msk                                           \
-	(1UL << CoreDebug_DEMCR_MON_PEND_Pos) /*!< CoreDebug DEMCR: MON_PEND   \
+	(1UL << CoreDebug_DEMCR_MON_PEND_Pos) /*!< CoreDebug DEMCR: MON_PEND \                                                                             \
 						 Mask */
 
 #define CoreDebug_DEMCR_MON_EN_Pos                                             \
-	16U /*!< CoreDebug DEMCR: MON_EN Position                              \
+	16U /*!< CoreDebug DEMCR: MON_EN Position \                                                                             \
 	     */
 #define CoreDebug_DEMCR_MON_EN_Msk                                             \
-	(1UL << CoreDebug_DEMCR_MON_EN_Pos) /*!< CoreDebug DEMCR: MON_EN Mask  \
-					     */
+	(1UL                                                                   \
+	 << CoreDebug_DEMCR_MON_EN_Pos) /*!< CoreDebug DEMCR: MON_EN Mask  \   \
+					 */
 
 #define CoreDebug_DEMCR_VC_HARDERR_Pos                                         \
 	10U /*!< CoreDebug DEMCR: VC_HARDERR Position */
 #define CoreDebug_DEMCR_VC_HARDERR_Msk                                         \
-	(1UL << CoreDebug_DEMCR_VC_HARDERR_Pos) /*!< CoreDebug DEMCR:          \
+	(1UL << CoreDebug_DEMCR_VC_HARDERR_Pos) /*!< CoreDebug DEMCR: \                                                                             \
 						   VC_HARDERR Mask */
 
 #define CoreDebug_DEMCR_VC_INTERR_Pos                                          \
 	9U /*!< CoreDebug DEMCR: VC_INTERR Position */
 #define CoreDebug_DEMCR_VC_INTERR_Msk                                          \
 	(1UL << CoreDebug_DEMCR_VC_INTERR_Pos) /*!< CoreDebug DEMCR: VC_INTERR \
-						  Mask */
+						  \ Mask */
 
 #define CoreDebug_DEMCR_VC_BUSERR_Pos                                          \
 	8U /*!< CoreDebug DEMCR: VC_BUSERR Position */
 #define CoreDebug_DEMCR_VC_BUSERR_Msk                                          \
 	(1UL << CoreDebug_DEMCR_VC_BUSERR_Pos) /*!< CoreDebug DEMCR: VC_BUSERR \
-						  Mask */
+						  \ Mask */
 
 #define CoreDebug_DEMCR_VC_STATERR_Pos                                         \
 	7U /*!< CoreDebug DEMCR: VC_STATERR Position */
 #define CoreDebug_DEMCR_VC_STATERR_Msk                                         \
-	(1UL << CoreDebug_DEMCR_VC_STATERR_Pos) /*!< CoreDebug DEMCR:          \
+	(1UL << CoreDebug_DEMCR_VC_STATERR_Pos) /*!< CoreDebug DEMCR: \                                                                             \
 						   VC_STATERR Mask */
 
 #define CoreDebug_DEMCR_VC_CHKERR_Pos                                          \
 	6U /*!< CoreDebug DEMCR: VC_CHKERR Position */
 #define CoreDebug_DEMCR_VC_CHKERR_Msk                                          \
 	(1UL << CoreDebug_DEMCR_VC_CHKERR_Pos) /*!< CoreDebug DEMCR: VC_CHKERR \
-						  Mask */
+						  \ Mask */
 
 #define CoreDebug_DEMCR_VC_NOCPERR_Pos                                         \
 	5U /*!< CoreDebug DEMCR: VC_NOCPERR Position */
 #define CoreDebug_DEMCR_VC_NOCPERR_Msk                                         \
-	(1UL << CoreDebug_DEMCR_VC_NOCPERR_Pos) /*!< CoreDebug DEMCR:          \
+	(1UL << CoreDebug_DEMCR_VC_NOCPERR_Pos) /*!< CoreDebug DEMCR: \                                                                             \
 						   VC_NOCPERR Mask */
 
 #define CoreDebug_DEMCR_VC_MMERR_Pos                                           \
 	4U /*!< CoreDebug DEMCR: VC_MMERR Position */
 #define CoreDebug_DEMCR_VC_MMERR_Msk                                           \
-	(1UL << CoreDebug_DEMCR_VC_MMERR_Pos) /*!< CoreDebug DEMCR: VC_MMERR   \
+	(1UL << CoreDebug_DEMCR_VC_MMERR_Pos) /*!< CoreDebug DEMCR: VC_MMERR \                                                                             \
 						 Mask */
 
 #define CoreDebug_DEMCR_VC_CORERESET_Pos                                       \
 	0U /*!< CoreDebug DEMCR: VC_CORERESET Position */
 #define CoreDebug_DEMCR_VC_CORERESET_Msk                                       \
-	(1UL /*<< CoreDebug_DEMCR_VC_CORERESET_Pos*/) /*!< CoreDebug DEMCR:    \
+	(1UL /*<< CoreDebug_DEMCR_VC_CORERESET_Pos*/) /*!< CoreDebug DEMCR: \                                                                             \
 							 VC_CORERESET Mask */
 
 /*@} end of group CMSIS_CoreDebug */
@@ -2084,7 +2110,7 @@ typedef struct {
 #define SysTick_BASE (SCS_BASE + 0x0010UL) /*!< SysTick Base Address */
 #define NVIC_BASE (SCS_BASE + 0x0100UL)	   /*!< NVIC Base Address */
 #define SCB_BASE                                                               \
-	(SCS_BASE + 0x0D00UL) /*!< System Control Block Base Address           \
+	(SCS_BASE + 0x0D00UL) /*!< System Control Block Base Address \                                                                             \
 			       */
 
 #define SCnSCB                                                                 \
@@ -2171,13 +2197,13 @@ typedef struct {
 #define EXC_RETURN_THREAD_PSP                                                  \
 	(0xFFFFFFFDUL) /* return to Thread mode, uses PSP after return */
 #define EXC_RETURN_HANDLER_FPU                                                 \
-	(0xFFFFFFE1UL) /* return to Handler mode, uses MSP after return,       \
+	(0xFFFFFFE1UL) /* return to Handler mode, uses MSP after return, \                                                                             \
 			  restore floating-point state */
 #define EXC_RETURN_THREAD_MSP_FPU                                              \
-	(0xFFFFFFE9UL) /* return to Thread mode, uses MSP after return,        \
+	(0xFFFFFFE9UL) /* return to Thread mode, uses MSP after return, \                                                                             \
 			  restore floating-point state  */
 #define EXC_RETURN_THREAD_PSP_FPU                                              \
-	(0xFFFFFFEDUL) /* return to Thread mode, uses PSP after return,        \
+	(0xFFFFFFEDUL) /* return to Thread mode, uses PSP after return, \                                                                             \
 			  restore floating-point state  */
 
 /**
@@ -2608,7 +2634,7 @@ __STATIC_INLINE uint32_t SysTick_Config(uint32_t ticks)
 extern volatile int32_t
     ITM_RxBuffer; /*!< External variable to receive characters. */
 #define ITM_RXBUFFER_EMPTY                                                     \
-	((int32_t)0x5AA55AA5U) /*!< Value identifying \ref ITM_RxBuffer is     \
+	((int32_t)0x5AA55AA5U) /*!< Value identifying \ref ITM_RxBuffer is \                                                                             \
 				  ready for next character. */
 
 /**

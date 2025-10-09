@@ -819,7 +819,7 @@ __STATIC_INLINE uint32_t __USAT(int32_t val, uint32_t sat)
 }
 #endif
 
-#if (__CORTEX_M >= 0x03) /* __CORTEX_M is defined in core_cm0.h, core_cm3.h    \
+#if (__CORTEX_M >= 0x03) /* __CORTEX_M is defined in core_cm0.h, core_cm3.h \                                                                             \
 			    and core_cm4.h. */
 
 __IAR_FT uint8_t __LDRBT(volatile uint8_t *addr)
