@@ -87,8 +87,9 @@ void shitdown()
 	uint16_t precharge_error = acu.acu_err_warns & ACU_PRECHARGE;
 
 	acu.acu_err_warns &= ~(ACU_CLEAR_ERRR);
-	if (precharge_error)
+	if (precharge_error) {
 		acu.acu_err_warns |= ACU_PRECHARGE;
+	}
 
 	uint8_t pass = state_system_check(true, false);
 
@@ -150,8 +151,9 @@ void init()
 	reset_discharge(&battery, false);
 	state = init_cell_balancing(&battery) == 1 ? STANDBY : SHITDOWN;
 
-	if (state == SHITDOWN)
+	if (state == SHITDOWN) {
 		return;
+	}
 	print_lpuart("CALL state_system_check(true, true)\n");
 	if (!state_system_check(true, true)) {
 		print_lpuart("Failed 1st state_system_check. SHIT\n");
@@ -458,8 +460,9 @@ void normal()
 		check_ts_active = false;
 	}
 
-	if (fabsf(acu.ts_current) > 0.5)
+	if (fabsf(acu.ts_current) > 0.5) {
 		acu.cur_LastHighTime = HAL_GetTick();
+	}
 }
 
 /// @brief system check on acu, battery, errors/warnings
