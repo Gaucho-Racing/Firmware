@@ -63,8 +63,9 @@
 __STATIC_FORCEINLINE void SCB_EnableICache(void)
 {
 #if defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
-	if (SCB->CCR & SCB_CCR_IC_Msk)
+	if (SCB->CCR & SCB_CCR_IC_Msk) {
 		return; /* return if ICache is already enabled */
+	}
 
 	__DSB();
 	__ISB();
@@ -153,8 +154,9 @@ __STATIC_FORCEINLINE void SCB_EnableDCache(void)
 	uint32_t sets;
 	uint32_t ways;
 
-	if (SCB->CCR & SCB_CCR_DC_Msk)
+	if (SCB->CCR & SCB_CCR_DC_Msk) {
 		return; /* return if DCache is already enabled */
+	}
 
 	SCB->CSSELR = 0U; /* select Level 1 data cache */
 	__DSB();

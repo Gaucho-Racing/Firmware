@@ -37,8 +37,9 @@ bool BCC_MCU_TimeoutExpired(void)
 
 void BCC_MCU_Assert(const bool x)
 {
-	if (!x)
+	if (!x) {
 		print_lpuart("BCC_MCU_Assert failed\n");
+	}
 }
 
 // ideally won't be using this

@@ -929,10 +929,11 @@ float get_total_voltage(ACU *acu) { return acu->bty->battery_total_voltage; }
 /// @return the uint8_t
 uint8_t fconstrain(float value)
 {
-	if (value > 255.0)
+	if (value > 255.0) {
 		value = 255.0;
-	else if (value < 0.0)
+	} else if (value < 0.0) {
 		value = 0.0;
+	}
 	return (uint8_t)value;
 }
 
@@ -974,8 +975,9 @@ float calculate_acu_soc(ACU *acu)
 	// 0.0F, 255.0F) - acu->bat_soc) * 0.1; return acu->bat_soc;
 	uint16_t i = 1;
 	for (; i < CELL_CHGR_ARR_SIZE; i++) {
-		if (cell_volts_tbl[i] > min_cell_open_volt)
+		if (cell_volts_tbl[i] > min_cell_open_volt) {
 			break;
+		}
 	}
 	float minCellCharge =
 	    cell_charge_tbl[0] - map(min_cell_open_volt, cell_volts_tbl[i - 1],

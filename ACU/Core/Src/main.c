@@ -472,8 +472,9 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 	// Check if a new message is received in FIFO 0
 	if (RxFifo0ITs & FDCAN_IT_RX_FIFO0_NEW_MESSAGE) {
 		// if buffer full, then skip
-		if (CAN_RxBufferLevel == 255U)
+		if (CAN_RxBufferLevel == 255U) {
 			return;
+		}
 
 		// Retrieve the message from FIFO 0
 		if (HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &RxHeader,

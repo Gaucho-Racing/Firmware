@@ -54,8 +54,9 @@ uint8_t bcc_send_string(const uint8_t *data, uint16_t length)
 	BCC_MCU_WriteCsbPin(0, 0); // CS LOW
 	BCC_MCU_WaitUs(2);	   // delay required by MC33664
 	while (!LL_SPI_IsActiveFlag_TXE(SPI1)) {
-		if (counter++ > SPI_LOOP_TIMEOUT)
+		if (counter++ > SPI_LOOP_TIMEOUT) {
 			return 1;
+		}
 		BCC_MCU_WaitUs(1);
 	}
 	for (uint16_t i = 0; i < length; i++) {
@@ -104,8 +105,9 @@ void clear_faults(bcc_drv_config_t *drvConfig)
 		    BCC_Fault_ClearStatus(drvConfig, cid, BCC_FS_FAULT2);
 		bcc_error =
 		    BCC_Fault_ClearStatus(drvConfig, cid, BCC_FS_FAULT3);
-		if (bcc_error != BCC_STATUS_SUCCESS)
+		if (bcc_error != BCC_STATUS_SUCCESS) {
 			return;
+		}
 	}
 }
 
@@ -118,8 +120,9 @@ bool init_registers(Battery *bty)
 				bcc_error = BCC_Reg_Write(
 				    &(bty->drvConfig), (bcc_cid_t)cid,
 				    init_regs[i].address, init_regs[i].value);
-				if (bcc_error != BCC_STATUS_SUCCESS)
+				if (bcc_error != BCC_STATUS_SUCCESS) {
 					return false;
+				}
 			}
 		}
 	}
@@ -582,8 +585,9 @@ bool battery_check(Battery *bty, bool fullcheck)
 	bool success = true;
 	if (fullcheck) {
 		bcc_error = read_device_measurements(bty, true, true);
-		if (bcc_error != BCC_STATUS_SUCCESS)
+		if (bcc_error != BCC_STATUS_SUCCESS) {
 			print_bcc_status(bcc_error);
+		}
 	}
 
 	// check temp
