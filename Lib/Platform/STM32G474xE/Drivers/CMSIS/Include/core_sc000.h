@@ -63,10 +63,10 @@ extern "C" {
 
 /*  CMSIS SC000 definitions */
 #define __SC000_CMSIS_VERSION_MAIN                                             \
-	(__CM_CMSIS_VERSION_MAIN) /*!< \deprecated [31:16] CMSIS HAL main \                                                                             \
+	(__CM_CMSIS_VERSION_MAIN) /*!< \deprecated [31:16] CMSIS HAL main \    \
 				     version */
 #define __SC000_CMSIS_VERSION_SUB                                              \
-	(__CM_CMSIS_VERSION_SUB) /*!< \deprecated [15:0]  CMSIS HAL sub \                                                                             \
+	(__CM_CMSIS_VERSION_SUB) /*!< \deprecated [15:0]  CMSIS HAL sub \      \
 				    version */
 #define __SC000_CMSIS_VERSION                                                  \
 	((__SC000_CMSIS_VERSION_MAIN << 16U) |                                 \
@@ -310,7 +310,7 @@ typedef union {
 /* CONTROL Register Definitions */
 #define CONTROL_SPSEL_Pos 1U /*!< CONTROL: SPSEL Position */
 #define CONTROL_SPSEL_Msk                                                      \
-	(1UL << CONTROL_SPSEL_Pos) /*!< CONTROL: SPSEL Mask \                                                                             \
+	(1UL << CONTROL_SPSEL_Pos) /*!< CONTROL: SPSEL Mask \                  \
 				    */
 
 /*@} end of group CMSIS_CORE */
@@ -388,7 +388,7 @@ typedef struct {
 	(0xFUL << SCB_CPUID_VARIANT_Pos) /*!< SCB CPUID: VARIANT Mask */
 
 #define SCB_CPUID_ARCHITECTURE_Pos                                             \
-	16U /*!< SCB CPUID: ARCHITECTURE Position \                                                                             \
+	16U /*!< SCB CPUID: ARCHITECTURE Position \                            \
 	     */
 #define SCB_CPUID_ARCHITECTURE_Msk                                             \
 	(0xFUL                                                                 \
@@ -439,7 +439,7 @@ typedef struct {
 
 #define SCB_ICSR_VECTACTIVE_Pos 0U /*!< SCB ICSR: VECTACTIVE Position */
 #define SCB_ICSR_VECTACTIVE_Msk                                                \
-	(0x1FFUL /*<< SCB_ICSR_VECTACTIVE_Pos*/) /*!< SCB ICSR: VECTACTIVE \                                                                             \
+	(0x1FFUL /*<< SCB_ICSR_VECTACTIVE_Pos*/) /*!< SCB ICSR: VECTACTIVE \   \
 						    Mask */
 
 /* SCB Interrupt Control State Register Definitions */
@@ -466,7 +466,7 @@ typedef struct {
 	(1UL << SCB_AIRCR_SYSRESETREQ_Pos) /*!< SCB AIRCR: SYSRESETREQ Mask */
 
 #define SCB_AIRCR_VECTCLRACTIVE_Pos                                            \
-	1U /*!< SCB AIRCR: VECTCLRACTIVE Position \                                                                             \
+	1U /*!< SCB AIRCR: VECTCLRACTIVE Position \                            \
 	    */
 #define SCB_AIRCR_VECTCLRACTIVE_Msk                                            \
 	(1UL                                                                   \
@@ -496,7 +496,7 @@ typedef struct {
 
 /* SCB System Handler Control and State Register Definitions */
 #define SCB_SHCSR_SVCALLPENDED_Pos                                             \
-	15U /*!< SCB SHCSR: SVCALLPENDED Position \                                                                             \
+	15U /*!< SCB SHCSR: SVCALLPENDED Position \                            \
 	     */
 #define SCB_SHCSR_SVCALLPENDED_Msk                                             \
 	(1UL                                                                   \
@@ -526,7 +526,7 @@ typedef struct {
 /* Auxiliary Control Register Definitions */
 #define SCnSCB_ACTLR_DISMCYCINT_Pos 0U /*!< ACTLR: DISMCYCINT Position */
 #define SCnSCB_ACTLR_DISMCYCINT_Msk                                            \
-	(1UL /*<< SCnSCB_ACTLR_DISMCYCINT_Pos*/) /*!< ACTLR: DISMCYCINT Mask \                                                                             \
+	(1UL /*<< SCnSCB_ACTLR_DISMCYCINT_Pos*/) /*!< ACTLR: DISMCYCINT Mask \ \
 						  */
 
 /*@} end of group CMSIS_SCnotSCB */
@@ -554,7 +554,7 @@ typedef struct {
 
 /* SysTick Control / Status Register Definitions */
 #define SysTick_CTRL_COUNTFLAG_Pos                                             \
-	16U /*!< SysTick CTRL: COUNTFLAG Position \                                                                             \
+	16U /*!< SysTick CTRL: COUNTFLAG Position \                            \
 	     */
 #define SysTick_CTRL_COUNTFLAG_Msk                                             \
 	(1UL                                                                   \
@@ -673,12 +673,12 @@ typedef struct {
 #define MPU_RASR_ATTRS_Pos                                                     \
 	16U /*!< MPU RASR: MPU Region Attribute field Position */
 #define MPU_RASR_ATTRS_Msk                                                     \
-	(0xFFFFUL << MPU_RASR_ATTRS_Pos) /*!< MPU RASR: MPU Region Attribute \                                                                             \
+	(0xFFFFUL << MPU_RASR_ATTRS_Pos) /*!< MPU RASR: MPU Region Attribute \ \
 					    field Mask */
 
 #define MPU_RASR_XN_Pos 28U /*!< MPU RASR: ATTRS.XN Position */
 #define MPU_RASR_XN_Msk                                                        \
-	(1UL << MPU_RASR_XN_Pos) /*!< MPU RASR: ATTRS.XN Mask \                                                                             \
+	(1UL << MPU_RASR_XN_Pos) /*!< MPU RASR: ATTRS.XN Mask \                \
 				  */
 
 #define MPU_RASR_AP_Pos 24U /*!< MPU RASR: ATTRS.AP Position */
@@ -708,7 +708,7 @@ typedef struct {
 
 #define MPU_RASR_ENABLE_Pos 0U /*!< MPU RASR: Region enable bit Position */
 #define MPU_RASR_ENABLE_Msk                                                    \
-	(1UL /*<< MPU_RASR_ENABLE_Pos*/) /*!< MPU RASR: Region enable bit \                                                                             \
+	(1UL /*<< MPU_RASR_ENABLE_Pos*/) /*!< MPU RASR: Region enable bit \    \
 					    Disable Mask */
 
 /*@} end of group CMSIS_MPU */
@@ -763,7 +763,7 @@ typedef struct {
 #define SysTick_BASE (SCS_BASE + 0x0010UL) /*!< SysTick Base Address */
 #define NVIC_BASE (SCS_BASE + 0x0100UL)	   /*!< NVIC Base Address */
 #define SCB_BASE                                                               \
-	(SCS_BASE + 0x0D00UL) /*!< System Control Block Base Address \                                                                             \
+	(SCS_BASE + 0x0D00UL) /*!< System Control Block Base Address \         \
 			       */
 
 #define SCnSCB                                                                 \

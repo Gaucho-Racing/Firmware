@@ -63,10 +63,10 @@ extern "C" {
 
 /*  CMSIS CM1 definitions */
 #define __CM1_CMSIS_VERSION_MAIN                                               \
-	(__CM_CMSIS_VERSION_MAIN) /*!< \deprecated [31:16] CMSIS HAL main \                                                                             \
+	(__CM_CMSIS_VERSION_MAIN) /*!< \deprecated [31:16] CMSIS HAL main \    \
 				     version */
 #define __CM1_CMSIS_VERSION_SUB                                                \
-	(__CM_CMSIS_VERSION_SUB) /*!< \deprecated [15:0]  CMSIS HAL sub \                                                                             \
+	(__CM_CMSIS_VERSION_SUB) /*!< \deprecated [15:0]  CMSIS HAL sub \      \
 				    version */
 #define __CM1_CMSIS_VERSION                                                    \
 	((__CM1_CMSIS_VERSION_MAIN << 16U) |                                   \
@@ -302,7 +302,7 @@ typedef union {
 /* CONTROL Register Definitions */
 #define CONTROL_SPSEL_Pos 1U /*!< CONTROL: SPSEL Position */
 #define CONTROL_SPSEL_Msk                                                      \
-	(1UL << CONTROL_SPSEL_Pos) /*!< CONTROL: SPSEL Mask \                                                                             \
+	(1UL << CONTROL_SPSEL_Pos) /*!< CONTROL: SPSEL Mask \                  \
 				    */
 
 /*@} end of group CMSIS_CORE */
@@ -376,7 +376,7 @@ typedef struct {
 	(0xFUL << SCB_CPUID_VARIANT_Pos) /*!< SCB CPUID: VARIANT Mask */
 
 #define SCB_CPUID_ARCHITECTURE_Pos                                             \
-	16U /*!< SCB CPUID: ARCHITECTURE Position \                                                                             \
+	16U /*!< SCB CPUID: ARCHITECTURE Position \                            \
 	     */
 #define SCB_CPUID_ARCHITECTURE_Msk                                             \
 	(0xFUL                                                                 \
@@ -427,7 +427,7 @@ typedef struct {
 
 #define SCB_ICSR_VECTACTIVE_Pos 0U /*!< SCB ICSR: VECTACTIVE Position */
 #define SCB_ICSR_VECTACTIVE_Msk                                                \
-	(0x1FFUL /*<< SCB_ICSR_VECTACTIVE_Pos*/) /*!< SCB ICSR: VECTACTIVE \                                                                             \
+	(0x1FFUL /*<< SCB_ICSR_VECTACTIVE_Pos*/) /*!< SCB ICSR: VECTACTIVE \   \
 						    Mask */
 
 /* SCB Application Interrupt and Reset Control Register Definitions */
@@ -449,7 +449,7 @@ typedef struct {
 	(1UL << SCB_AIRCR_SYSRESETREQ_Pos) /*!< SCB AIRCR: SYSRESETREQ Mask */
 
 #define SCB_AIRCR_VECTCLRACTIVE_Pos                                            \
-	1U /*!< SCB AIRCR: VECTCLRACTIVE Position \                                                                             \
+	1U /*!< SCB AIRCR: VECTCLRACTIVE Position \                            \
 	    */
 #define SCB_AIRCR_VECTCLRACTIVE_Msk                                            \
 	(1UL                                                                   \
@@ -479,7 +479,7 @@ typedef struct {
 
 /* SCB System Handler Control and State Register Definitions */
 #define SCB_SHCSR_SVCALLPENDED_Pos                                             \
-	15U /*!< SCB SHCSR: SVCALLPENDED Position \                                                                             \
+	15U /*!< SCB SHCSR: SVCALLPENDED Position \                            \
 	     */
 #define SCB_SHCSR_SVCALLPENDED_Msk                                             \
 	(1UL                                                                   \
@@ -510,13 +510,13 @@ typedef struct {
 #define SCnSCB_ACTLR_ITCMUAEN_Pos                                              \
 	4U /*!< ACTLR: Instruction TCM Upper Alias Enable Position */
 #define SCnSCB_ACTLR_ITCMUAEN_Msk                                              \
-	(1UL << SCnSCB_ACTLR_ITCMUAEN_Pos) /*!< ACTLR: Instruction TCM Upper \                                                                             \
+	(1UL << SCnSCB_ACTLR_ITCMUAEN_Pos) /*!< ACTLR: Instruction TCM Upper \ \
 					      Alias Enable Mask */
 
 #define SCnSCB_ACTLR_ITCMLAEN_Pos                                              \
 	3U /*!< ACTLR: Instruction TCM Lower Alias Enable Position */
 #define SCnSCB_ACTLR_ITCMLAEN_Msk                                              \
-	(1UL << SCnSCB_ACTLR_ITCMLAEN_Pos) /*!< ACTLR: Instruction TCM Lower \                                                                             \
+	(1UL << SCnSCB_ACTLR_ITCMLAEN_Pos) /*!< ACTLR: Instruction TCM Lower \ \
 					      Alias Enable Mask */
 
 /*@} end of group CMSIS_SCnotSCB */
@@ -544,7 +544,7 @@ typedef struct {
 
 /* SysTick Control / Status Register Definitions */
 #define SysTick_CTRL_COUNTFLAG_Pos                                             \
-	16U /*!< SysTick CTRL: COUNTFLAG Position \                                                                             \
+	16U /*!< SysTick CTRL: COUNTFLAG Position \                            \
 	     */
 #define SysTick_CTRL_COUNTFLAG_Msk                                             \
 	(1UL                                                                   \
@@ -642,7 +642,7 @@ typedef struct {
 #define SysTick_BASE (SCS_BASE + 0x0010UL) /*!< SysTick Base Address */
 #define NVIC_BASE (SCS_BASE + 0x0100UL)	   /*!< NVIC Base Address */
 #define SCB_BASE                                                               \
-	(SCS_BASE + 0x0D00UL) /*!< System Control Block Base Address \                                                                             \
+	(SCS_BASE + 0x0D00UL) /*!< System Control Block Base Address \         \
 			       */
 
 #define SCnSCB                                                                 \

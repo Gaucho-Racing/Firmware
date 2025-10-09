@@ -252,12 +252,12 @@ extern "C" {
 #if defined(STM32H5) || defined(STM32C0)
 #else
 #define HAL_CRC_Input_Data_Reverse                                             \
-	HAL_CRCEx_Input_Data_Reverse /*!< Aliased to \                                                                             \
+	HAL_CRCEx_Input_Data_Reverse /*!< Aliased to \                         \
 					HAL_CRCEx_Input_Data_Reverse for inter \
 					\ STM32 series compatibility  */
 #define HAL_CRC_Output_Data_Reverse                                            \
-	HAL_CRCEx_Output_Data_Reverse /*!< Aliased to \                                                                             \
-					 HAL_CRCEx_Output_Data_Reverse for \                                                                             \
+	HAL_CRCEx_Output_Data_Reverse /*!< Aliased to \                        \
+					 HAL_CRCEx_Output_Data_Reverse for \   \
 					   inter STM32 series compatibility */
 #endif
 /**
@@ -828,7 +828,7 @@ extern "C" {
 #define GPIO_AF10_OTG2_HS GPIO_AF10_OTG2_FS
 #define GPIO_AF10_OTG1_FS GPIO_AF10_OTG1_HS
 #define GPIO_AF12_OTG2_FS GPIO_AF12_OTG1_FS
-#endif /*STM32H743xx || STM32H753xx || STM32H750xx || STM32H742xx || \                                                                             \
+#endif /*STM32H743xx || STM32H753xx || STM32H750xx || STM32H742xx || \         \
 	 STM32H745xx || STM32H755xx || STM32H747xx || STM32H757xx */
 #endif /* STM32H7 */
 
@@ -843,7 +843,7 @@ extern "C" {
 #define GPIO_SPEED_MEDIUM GPIO_SPEED_FREQ_MEDIUM
 #define GPIO_SPEED_FAST GPIO_SPEED_FREQ_HIGH
 #define GPIO_SPEED_HIGH GPIO_SPEED_FREQ_VERY_HIGH
-#endif /* STM32L0 || STM32L4 || STM32F4 || STM32F2 || STM32F7 || STM32G4 || \                                                                             \
+#endif /* STM32L0 || STM32L4 || STM32F4 || STM32F2 || STM32F7 || STM32G4 || \  \
 	  STM32H7 || STM32WB || STM32U5*/
 
 #if defined(STM32L1)
@@ -1686,34 +1686,34 @@ extern "C" {
 #define ETH_MAC_TXFIFO_WRITE_ACTIVE 0x00400000U /* Tx FIFO write active */
 #define ETH_MAC_TXFIFO_IDLE 0x00000000U		/* Tx FIFO read status: Idle */
 #define ETH_MAC_TXFIFO_READ                                                    \
-	0x00100000U /* Tx FIFO read status: Read (transferring data to \ the                                                                           \
+	0x00100000U /* Tx FIFO read status: Read (transferring data to \ the   \
 		       MAC transmitter) */
 #define ETH_MAC_TXFIFO_WAITING                                                 \
-	0x00200000U /* Tx FIFO read status: Waiting for TxStatus from \ MAC                                                                           \
+	0x00200000U /* Tx FIFO read status: Waiting for TxStatus from \ MAC    \
 		       transmitter */
 #define ETH_MAC_TXFIFO_WRITING                                                 \
-	0x00300000U /* Tx FIFO read status: Writing the received TxStatus \ or                                                                            \
+	0x00300000U /* Tx FIFO read status: Writing the received TxStatus \ or \
 		       flushing the TxFIFO */
 #define ETH_MAC_TRANSMISSION_PAUSE 0x00080000U /* MAC transmitter in pause */
 #define ETH_MAC_TRANSMITFRAMECONTROLLER_IDLE                                   \
 	0x00000000U /* MAC transmit frame controller: Idle */
 #define ETH_MAC_TRANSMITFRAMECONTROLLER_WAITING                                \
-	0x00020000U /* MAC transmit frame controller: Waiting for Status \ of                                                                            \
+	0x00020000U /* MAC transmit frame controller: Waiting for Status \ of  \
 		    previous frame or IFG/backoff period to be over */
 #define ETH_MAC_TRANSMITFRAMECONTROLLER_GENRATING_PCF                          \
-	0x00040000U /* MAC transmit frame controller: Generating and \                                                                             \
+	0x00040000U /* MAC transmit frame controller: Generating and \         \
 	      transmitting a Pause control frame (in full duplex mode) */
 #define ETH_MAC_TRANSMITFRAMECONTROLLER_TRANSFERRING                           \
-	0x00060000U /* MAC transmit frame controller: Transferring input \                                                                             \
+	0x00060000U /* MAC transmit frame controller: Transferring input \     \
 		       frame for transmission */
 #define ETH_MAC_MII_TRANSMIT_ACTIVE                                            \
 	0x00010000U			 /* MAC MII transmit engine active */
 #define ETH_MAC_RXFIFO_EMPTY 0x00000000U /* Rx FIFO fill level: empty */
 #define ETH_MAC_RXFIFO_BELOW_THRESHOLD                                         \
-	0x00000100U /* Rx FIFO fill level: fill-level below flow-control \                                                                             \
+	0x00000100U /* Rx FIFO fill level: fill-level below flow-control \     \
 		       de-activate threshold */
 #define ETH_MAC_RXFIFO_ABOVE_THRESHOLD                                         \
-	0x00000200U /* Rx FIFO fill level: fill-level above flow-control \                                                                             \
+	0x00000200U /* Rx FIFO fill level: fill-level above flow-control \     \
 		       activate threshold */
 #define ETH_MAC_RXFIFO_FULL 0x00000300U /* Rx FIFO fill level: full */
 #if defined(STM32F1)
@@ -1723,11 +1723,11 @@ extern "C" {
 #define ETH_MAC_READCONTROLLER_READING_DATA                                    \
 	0x00000020U /* Rx FIFO read controller Reading frame data */
 #define ETH_MAC_READCONTROLLER_READING_STATUS                                  \
-	0x00000040U /* Rx FIFO read controller Reading frame status \ (or                                                                           \
+	0x00000040U /* Rx FIFO read controller Reading frame status \ (or      \
 		      time-stamp) */
 #endif
 #define ETH_MAC_READCONTROLLER_FLUSHING                                        \
-	0x00000060U /* Rx FIFO read controller Flushing the frame data and \                                                                             \
+	0x00000060U /* Rx FIFO read controller Flushing the frame data and \   \
 		       status */
 #define ETH_MAC_RXFIFO_WRITE_ACTIVE                                            \
 	0x00000010U /* Rx FIFO write controller active */
@@ -1743,7 +1743,7 @@ extern "C" {
 	0x00000001U /* MAC MII receive protocol engine active */
 
 #define ETH_TxPacketConfig                                                     \
-	ETH_TxPacketConfigTypeDef /* Transmit Packet Configuration structure \                                                                             \
+	ETH_TxPacketConfigTypeDef /* Transmit Packet Configuration structure \ \
 				     definition */
 
 /**
@@ -1804,8 +1804,8 @@ extern "C" {
  * @{
  */
 #define HAL_DMA2D_DisableCLUT                                                  \
-	HAL_DMA2D_CLUTLoading_Abort /*!< Aliased to \                                                                             \
-				       HAL_DMA2D_CLUTLoading_Abort for \                                                                             \
+	HAL_DMA2D_CLUTLoading_Abort /*!< Aliased to \                          \
+				       HAL_DMA2D_CLUTLoading_Abort for \       \
 				       compatibility with legacy code */
 /**
  * @}
@@ -1852,7 +1852,7 @@ extern "C" {
  * @{
  */
 #define HAL_HASHEx_IRQHandler                                                  \
-	HAL_HASH_IRQHandler /*!< Redirection for compatibility with legacy \                                                                             \
+	HAL_HASH_IRQHandler /*!< Redirection for compatibility with legacy \   \
 			       code */
 /**
  *
@@ -1946,7 +1946,7 @@ extern "C" {
 #define HAL_DisableSRDomainDBGStopMode HAL_DisableDomain3DBGStopMode
 #define HAL_EnableSRDomainDBGStandbyMode HAL_EnableDomain3DBGStandbyMode
 #define HAL_DisableSRDomainDBGStandbyMode HAL_DisableDomain3DBGStandbyMode
-#endif /* STM32H7A3xx || STM32H7B3xx || STM32H7B0xx || STM32H7A3xxQ || \                                                                             \
+#endif /* STM32H7A3xx || STM32H7B3xx || STM32H7B0xx || STM32H7A3xxQ || \       \
 	  STM32H7B3xxQ  || STM32H7B0xxQ */
 
 /**
@@ -1992,8 +1992,8 @@ extern "C" {
 #define HAL_I2C_Master_Sequential_Receive_IT HAL_I2C_Master_Seq_Receive_IT
 #define HAL_I2C_Slave_Sequential_Transmit_IT HAL_I2C_Slave_Seq_Transmit_IT
 #define HAL_I2C_Slave_Sequential_Receive_IT HAL_I2C_Slave_Seq_Receive_IT
-#endif /* STM32H7 || STM32WB  || STM32G0 || STM32F0 || STM32F1 || STM32F2 || \                                                                             \
-	  STM32F3 || STM32F4 || STM32F7 || STM32L0 || STM32L4 || STM32L5 || \                                                                             \
+#endif /* STM32H7 || STM32WB  || STM32G0 || STM32F0 || STM32F1 || STM32F2 || \ \
+	  STM32F3 || STM32F4 || STM32F7 || STM32L0 || STM32L4 || STM32L5 || \  \
 	  STM32G4 || STM32L1 */
 #if defined(STM32H7) || defined(STM32WB) || defined(STM32G0) ||                \
     defined(STM32F4) || defined(STM32F7) || defined(STM32L0) ||                \
@@ -2003,7 +2003,7 @@ extern "C" {
 #define HAL_I2C_Master_Sequential_Receive_DMA HAL_I2C_Master_Seq_Receive_DMA
 #define HAL_I2C_Slave_Sequential_Transmit_DMA HAL_I2C_Slave_Seq_Transmit_DMA
 #define HAL_I2C_Slave_Sequential_Receive_DMA HAL_I2C_Slave_Seq_Receive_DMA
-#endif /* STM32H7 || STM32WB  || STM32G0 || STM32F4 || STM32F7 || STM32L0 || \                                                                             \
+#endif /* STM32H7 || STM32WB  || STM32G0 || STM32F4 || STM32F7 || STM32L0 || \ \
 	  STM32L4 || STM32L5 || STM32G4 || STM32L1 */
 
 #if defined(STM32F4)
@@ -2219,7 +2219,7 @@ extern "C" {
 #define HAL_TIMEx_ConfigCommutationEvent HAL_TIMEx_ConfigCommutEvent
 #define HAL_TIMEx_ConfigCommutationEvent_IT HAL_TIMEx_ConfigCommutEvent_IT
 #define HAL_TIMEx_ConfigCommutationEvent_DMA HAL_TIMEx_ConfigCommutEvent_DMA
-#endif /* STM32H7 || STM32G0 || STM32F0 || STM32F1 || STM32F2 || STM32F3 || \                                                                             \
+#endif /* STM32H7 || STM32G0 || STM32F0 || STM32F1 || STM32F2 || STM32F3 || \  \
 	  STM32F4 || STM32F7 || STM32L0 */
 /**
  * @}
@@ -2805,10 +2805,10 @@ extern "C" {
  * @{
  */
 #define HAL_COMP_Start_IT                                                      \
-	HAL_COMP_Start /* Function considered as legacy as EXTI event or IT \                                                                             \
+	HAL_COMP_Start /* Function considered as legacy as EXTI event or IT \  \
 			  configuration is done into HAL_COMP_Init() */
 #define HAL_COMP_Stop_IT                                                       \
-	HAL_COMP_Stop /* Function considered as legacy as EXTI event or IT \                                                                             \
+	HAL_COMP_Stop /* Function considered as legacy as EXTI event or IT \   \
 			 configuration is done into HAL_COMP_Init() */
 /**
  * @}
