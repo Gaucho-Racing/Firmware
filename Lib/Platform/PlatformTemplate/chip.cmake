@@ -8,7 +8,7 @@ set(CHIP "") # REPLACE: with the appropriate platform name
 set(CHIP_PATH "${CMAKE_SOURCE_DIR}/Lib/Platform/${CHIP}")
 set(TARGET_FLAGS "") # REPLACE: with the appropriate linkerscript
 add_executable(${TARGET_NAME})
-set_target_properties(${TARGET_NAME} PROPERTIES LINK_FLAGS "") # REPLACE: with the appropriate linkerscript
+set_target_properties(${TARGET_NAME} PROPERTIES LINK_FLAGS "") # REPLACE: with the appropriate linkerscript, make sure to quote!
 
 # Cleanup (do not change, leave these 3 lines as is, trust)
 set(CHIP "YOUHAVENOTCONFIGUREDCHIPRIGHT!")

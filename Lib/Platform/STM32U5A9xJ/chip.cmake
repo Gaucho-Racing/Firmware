@@ -8,7 +8,7 @@ set(CHIP "STM32U5A9xJ")
 set(CHIP_PATH "${CMAKE_SOURCE_DIR}/Lib/Platform/${CHIP}")
 set(TARGET_FLAGS "-mcpu=cortex-m33 -mfpu=fpv4-sp-d16 -mfloat-abi=hard")
 add_executable(${TARGET_NAME})
-set_target_properties(${TARGET_NAME} PROPERTIES LINK_FLAGS "-T${CHIP_PATH}/CompileDependencies/STM32U5A9xx_FLASH.ld")
+set_target_properties(${TARGET_NAME} PROPERTIES LINK_FLAGS "-T\"${CHIP_PATH}/CompileDependencies/STM32U5A9xx_FLASH.ld\"")
 
 # TODO: Remove when dev container is setup due to unfiltered warnings (U5 hal doesn't support arm gcc > 12.3)
 set_target_properties(${TARGET_NAME} PROPERTIES COMPILE_FLAGS "-Wno-error")

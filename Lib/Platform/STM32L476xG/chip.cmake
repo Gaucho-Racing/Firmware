@@ -9,7 +9,7 @@ set(CHIP_PATH "${CMAKE_SOURCE_DIR}/Lib/Platform/${CHIP}")
 set(TARGET_FLAGS "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard") # REPLACE: with the appropriate linkerscript
 add_executable(${TARGET_NAME})
 # the FLASH.ld script is a linker script that tells the linker how to arrange compiled code in the MCUs FLASH and RAM memory
-set_target_properties(${TARGET_NAME} PROPERTIES LINK_FLAGS "-T${CHIP_PATH}/CompileDependencies/STM32L476XX_FLASH.ld") # REPLACE: with the appropriate linkerscript
+set_target_properties(${TARGET_NAME} PROPERTIES LINK_FLAGS "-T\"${CHIP_PATH}/CompileDependencies/STM32L476XX_FLASH.ld\"") # REPLACE: with the appropriate linkerscript
 
 # Cleanup (do not change, leave these 3 lines as is, trust)
 set(CHIP "YOUHAVENOTCONFIGUREDCHIPRIGHT!")
