@@ -34,6 +34,31 @@ If simply trying to build the executable for the arm based platform: use any oth
 
 **_DO NOT DELETE ANY LICENSE INFORMATION ON ANY COPIED FILE OR LINE OF CODE_**
 
+## Install Tools/Dependencies 
+1. [CMake](https://cmake.org/download/)
+2. [Ninja](https://github.com/ninja-build/ninja/releases)
+3. [ARM Toolchain (arm-none-eabi)](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
+4. [OpenOCD](https://github.com/openocd-org/openocd/releases/tag/v0.12.0)
+
+**CMake** (metabuild system) --> **Ninja** (build system) --> **ARM Toolchain** (provides tools to compile & link code) 
+**OpenOCD** is an on-chip debugger, which allows us to examine code line-by-line in Debug mode
+
+Verify that you have all these dependencies installed:
+- CMAKE - `cmake --version`
+- ninja - `ninja --version`
+- ARM toolchain - `arm-none-eabi-gcc --version`
+- openocd - `openocd --version`
+
+# REPO RULES (follow if you want your builds to work)
+- Add a folder for each board with Core and Application, with Src and Inc in both
+- Do not question naming conventions please
+- Each project needs it's own directory where the name of the directory is the name of the project/executable
+  - this is because I am lazy and wanted to hardcode stuff for `add_GR_project` (see `gr-lib.cmake`)
+
+If you do not want GitHub Action emails please turn off notifications on your side. See something like https://stackoverflow.com/q/66116203
+
+Rebase please, run `git config pull.rebase true`
+
 # Testing
 
 ## Setup
@@ -71,6 +96,14 @@ cmake --preset HOOTLTest
 cmake --build build/HOOTLTest
 cd build/HOOTLTest && ctest --output-on-failure
 ```
+
+```bash
+cmake --preset Release
+cmake --build build/Release
+cd build/Release
+openocd -f interface/stlink.cfg -f target/{your_chip}.cfg -c "program {your_project}.elf verify reset exit"
+```
+example: your_chip = stm32l4x, your_project = L4BLINKY
 
 ## VS Code Setup
 
