@@ -40,6 +40,8 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
         Core/Src/coredemo.c
     )
     add_test(${GR_PROJECT_NAME}_advanced_core ${GR_PROJECT_NAME}_advanced_core_test)
+
+    
 endif()
 
 # Enable compile command to ease indexing with e.g. clangd
