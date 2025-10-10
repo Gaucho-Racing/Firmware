@@ -1,4 +1,5 @@
 name: ValidateConfigs
+run-name: Validate Configuration Files - ${{ github.ref_name }}
 
 on:
   push:
@@ -14,9 +15,11 @@ jobs:
   cmake:
     name: Validate Configurations
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Validates Configuration Files
-        uses: kehoecj/validate-configs-action@v4.0.1
+        uses: kehoecj/validate-configs-action@v4
