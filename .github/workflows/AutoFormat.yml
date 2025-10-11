@@ -9,8 +9,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  clang-format:
-    name: Clang Format
+  clang:
+    name: Clang
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -41,8 +41,8 @@ jobs:
           default_author: github_actions
           message: 'Automatic Clang-Format: Standardized formatting automatically'
           fetch: 'false'
-  cmake-format:
-    name: CMake Format
+  cmake:
+    name: CMake
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -73,8 +73,8 @@ jobs:
           default_author: github_actions
           message: 'Automatic CMake Format: Standardized formatting automatically'
           fetch: 'false'
-  json-format:
-    name: Json Format
+  json:
+    name: Json
     runs-on: ubuntu-latest
     permissions:
       contents: write
