@@ -41,13 +41,13 @@ jobs:
           default_author: github_actions
           message: 'Automatic Clang-Format: Standardized formatting automatically'
           fetch: 'false'
-  gersemi:
-    name: Gersemi
+  cmake-format:
+    name: CMake Format
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - name: Checkout Pull Reuqest
+      - name: Checkout Pull Request
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.ref }}
@@ -71,7 +71,7 @@ jobs:
           HOME: ${{ github.workspace }}
         with:
           default_author: github_actions
-          message: 'Automatic Gersemi: Standardized formatting automatically'
+          message: 'Automatic CMake Format: Standardized formatting automatically'
           fetch: 'false'
   json-format:
     name: Json Format
