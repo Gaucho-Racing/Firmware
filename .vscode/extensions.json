@@ -1,11 +1,11 @@
 {
-    "recommendations": [
-        "ms-vscode.cpptools-extension-pack",
-        "ms-vscode.cmake-tools",
-        "marus25.cortex-debug",
-        "ms-vsliveshare.vsliveshare",
-        "Gruntfuggly.todo-tree",
-        "eamodio.gitlens",
-        "github.vscode-github-actions"
-    ]
+	"recommendations": [
+		"ms-vscode.cpptools-extension-pack",
+		"ms-vscode.cmake-tools",
+		"marus25.cortex-debug",
+		"ms-vsliveshare.vsliveshare",
+		"Gruntfuggly.todo-tree",
+		"eamodio.gitlens",
+		"github.vscode-github-actions"
+	]
 }
