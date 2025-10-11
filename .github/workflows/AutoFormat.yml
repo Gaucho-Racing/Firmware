@@ -67,7 +67,7 @@ jobs:
           echo "<details open><summary>Gersemi Output</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          gersemi --in-place --warnings-as-errors --indent tabs . |& tee -a $GITHUB_STEP_SUMMARY
+          gersemi --in-place --warnings-as-errors --no-warn-about-unknown-commands --indent tabs . |& tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
