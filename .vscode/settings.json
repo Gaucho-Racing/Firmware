@@ -1,12 +1,12 @@
 {
-    "C_Cpp.default.intelliSenseMode": "gcc-arm",
-    "files.associations": {
-        "*.h": "c",
-        "*.c": "c",
-        "*.cmake": "cmake",
-        "CMakeLists.txt": "cmake",
-        "*.ld": "ld",
-        "*.s": "asm"
-    },
-    "C_Cpp.default.cStandard": "gnu11"
+	"C_Cpp.default.intelliSenseMode": "gcc-arm",
+	"files.associations": {
+		"*.h": "c",
+		"*.c": "c",
+		"*.cmake": "cmake",
+		"CMakeLists.txt": "cmake",
+		"*.ld": "ld",
+		"*.s": "asm"
+	},
+	"C_Cpp.default.cStandard": "gnu11"
 }

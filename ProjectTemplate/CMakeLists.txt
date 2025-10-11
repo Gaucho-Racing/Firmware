@@ -7,14 +7,17 @@ set(CMAKE_C_EXTENSIONS ON)
 
 # Define the build type
 if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE "Debug")
+	set(CMAKE_BUILD_TYPE "Debug")
 endif()
 
 # Enable compile command to ease indexing with e.g. clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
 # Enable CMake support for ASM and C languages
-enable_language(C ASM)
+enable_language(
+	C
+	ASM
+)
 
 # Core project settings
 project(${CMAKE_PROJECT_NAME})
@@ -23,16 +26,18 @@ project(${CMAKE_PROJECT_NAME})
 get_filename_component(PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 add_library(${PROJECT_NAME}_USER_CODE INTERFACE)
-target_sources(${PROJECT_NAME}_USER_CODE INTERFACE
-    # Core/Src/...
-    # Application/Src/...
+target_sources(
+	${PROJECT_NAME}_USER_CODE
+	INTERFACE
+	# Core/Src/...
+	# Application/Src/...
 )
 
-target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE
+target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE)
 
-)
-
-target_include_directories(${PROJECT_NAME}_USER_CODE INTERFACE
-    Core/Inc
-    Application/Inc
+target_include_directories(
+	${PROJECT_NAME}_USER_CODE
+	INTERFACE
+		Core/Inc
+		Application/Inc
 )
