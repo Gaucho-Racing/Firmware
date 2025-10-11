@@ -73,3 +73,29 @@ jobs:
           default_author: github_actions
           message: 'Automatic Gersemi: Standardized formatting automatically'
           fetch: 'false'
+  jq:
+    name: Json Format
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Pull Request
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN }}
+
+      - name: Format JSON Files
+        run: |
+          set -o pipefail
+          git ls-files '*.json' | xargs -r -I{} sh -c 'jq --tab . {} > {}.tmp && mv {}.tmp {}'
+
+      - name: Save Changes
+        uses: EndBug/add-and-commit@v9
+        if: github.ref_type != 'tag'
+        env:
+          HOME: ${{ github.workspace }}
+        with:
+          default_author: github_actions
+          message: 'Automatic jq: Standardized formatting automatically'
+          fetch: 'false'
