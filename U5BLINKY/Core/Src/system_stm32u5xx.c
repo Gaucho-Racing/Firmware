@@ -320,8 +320,8 @@ void SystemCoreClockUpdate(void)
 
 		case 0x0C: /* PLL used as system clock source */
 			/* PLL_VCO = (HSE_VALUE or HSI_VALUE or MSI_VALUE/ PLLM)
-			* PLLN SYSCLK = PLL_VCO / PLLR
-			*/
+			 * PLLN SYSCLK = PLL_VCO / PLLR
+			 */
 			pllsource = (RCC->PLL1CFGR & RCC_PLL1CFGR_PLL1SRC);
 			pllm = ((RCC->PLL1CFGR & RCC_PLL1CFGR_PLL1M) >>
 				RCC_PLL1CFGR_PLL1M_Pos) +
