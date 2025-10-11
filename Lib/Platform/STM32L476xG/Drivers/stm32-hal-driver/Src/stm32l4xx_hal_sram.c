@@ -754,16 +754,16 @@ HAL_SRAM_RegisterCallback(SRAM_HandleTypeDef *hsram,
 	    (state == HAL_SRAM_STATE_RESET) ||
 	    (state == HAL_SRAM_STATE_PROTECTED)) {
 		switch (CallbackId) {
-		case HAL_SRAM_MSP_INIT_CB_ID:
-			hsram->MspInitCallback = pCallback;
-			break;
-		case HAL_SRAM_MSP_DEINIT_CB_ID:
-			hsram->MspDeInitCallback = pCallback;
-			break;
-		default:
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_SRAM_MSP_INIT_CB_ID:
+				hsram->MspInitCallback = pCallback;
+				break;
+			case HAL_SRAM_MSP_DEINIT_CB_ID:
+				hsram->MspDeInitCallback = pCallback;
+				break;
+			default:
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* update return status */
@@ -798,37 +798,37 @@ HAL_SRAM_UnRegisterCallback(SRAM_HandleTypeDef *hsram,
 	if ((state == HAL_SRAM_STATE_READY) ||
 	    (state == HAL_SRAM_STATE_PROTECTED)) {
 		switch (CallbackId) {
-		case HAL_SRAM_MSP_INIT_CB_ID:
-			hsram->MspInitCallback = HAL_SRAM_MspInit;
-			break;
-		case HAL_SRAM_MSP_DEINIT_CB_ID:
-			hsram->MspDeInitCallback = HAL_SRAM_MspDeInit;
-			break;
-		case HAL_SRAM_DMA_XFER_CPLT_CB_ID:
-			hsram->DmaXferCpltCallback =
-			    HAL_SRAM_DMA_XferCpltCallback;
-			break;
-		case HAL_SRAM_DMA_XFER_ERR_CB_ID:
-			hsram->DmaXferErrorCallback =
-			    HAL_SRAM_DMA_XferErrorCallback;
-			break;
-		default:
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_SRAM_MSP_INIT_CB_ID:
+				hsram->MspInitCallback = HAL_SRAM_MspInit;
+				break;
+			case HAL_SRAM_MSP_DEINIT_CB_ID:
+				hsram->MspDeInitCallback = HAL_SRAM_MspDeInit;
+				break;
+			case HAL_SRAM_DMA_XFER_CPLT_CB_ID:
+				hsram->DmaXferCpltCallback =
+				    HAL_SRAM_DMA_XferCpltCallback;
+				break;
+			case HAL_SRAM_DMA_XFER_ERR_CB_ID:
+				hsram->DmaXferErrorCallback =
+				    HAL_SRAM_DMA_XferErrorCallback;
+				break;
+			default:
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (state == HAL_SRAM_STATE_RESET) {
 		switch (CallbackId) {
-		case HAL_SRAM_MSP_INIT_CB_ID:
-			hsram->MspInitCallback = HAL_SRAM_MspInit;
-			break;
-		case HAL_SRAM_MSP_DEINIT_CB_ID:
-			hsram->MspDeInitCallback = HAL_SRAM_MspDeInit;
-			break;
-		default:
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_SRAM_MSP_INIT_CB_ID:
+				hsram->MspInitCallback = HAL_SRAM_MspInit;
+				break;
+			case HAL_SRAM_MSP_DEINIT_CB_ID:
+				hsram->MspDeInitCallback = HAL_SRAM_MspDeInit;
+				break;
+			default:
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* update return status */
@@ -870,16 +870,16 @@ HAL_SRAM_RegisterDmaCallback(SRAM_HandleTypeDef *hsram,
 	if ((state == HAL_SRAM_STATE_READY) ||
 	    (state == HAL_SRAM_STATE_PROTECTED)) {
 		switch (CallbackId) {
-		case HAL_SRAM_DMA_XFER_CPLT_CB_ID:
-			hsram->DmaXferCpltCallback = pCallback;
-			break;
-		case HAL_SRAM_DMA_XFER_ERR_CB_ID:
-			hsram->DmaXferErrorCallback = pCallback;
-			break;
-		default:
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_SRAM_DMA_XFER_CPLT_CB_ID:
+				hsram->DmaXferCpltCallback = pCallback;
+				break;
+			case HAL_SRAM_DMA_XFER_ERR_CB_ID:
+				hsram->DmaXferErrorCallback = pCallback;
+				break;
+			default:
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* update return status */

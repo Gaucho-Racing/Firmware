@@ -2142,63 +2142,65 @@ HAL_QSPI_RegisterCallback(QSPI_HandleTypeDef *hqspi,
 
 	if (hqspi->State == HAL_QSPI_STATE_READY) {
 		switch (CallbackId) {
-		case HAL_QSPI_ERROR_CB_ID:
-			hqspi->ErrorCallback = pCallback;
-			break;
-		case HAL_QSPI_ABORT_CB_ID:
-			hqspi->AbortCpltCallback = pCallback;
-			break;
-		case HAL_QSPI_FIFO_THRESHOLD_CB_ID:
-			hqspi->FifoThresholdCallback = pCallback;
-			break;
-		case HAL_QSPI_CMD_CPLT_CB_ID:
-			hqspi->CmdCpltCallback = pCallback;
-			break;
-		case HAL_QSPI_RX_CPLT_CB_ID:
-			hqspi->RxCpltCallback = pCallback;
-			break;
-		case HAL_QSPI_TX_CPLT_CB_ID:
-			hqspi->TxCpltCallback = pCallback;
-			break;
-		case HAL_QSPI_RX_HALF_CPLT_CB_ID:
-			hqspi->RxHalfCpltCallback = pCallback;
-			break;
-		case HAL_QSPI_TX_HALF_CPLT_CB_ID:
-			hqspi->TxHalfCpltCallback = pCallback;
-			break;
-		case HAL_QSPI_STATUS_MATCH_CB_ID:
-			hqspi->StatusMatchCallback = pCallback;
-			break;
-		case HAL_QSPI_TIMEOUT_CB_ID:
-			hqspi->TimeOutCallback = pCallback;
-			break;
-		case HAL_QSPI_MSP_INIT_CB_ID:
-			hqspi->MspInitCallback = pCallback;
-			break;
-		case HAL_QSPI_MSP_DEINIT_CB_ID:
-			hqspi->MspDeInitCallback = pCallback;
-			break;
-		default:
-			/* Update the error code */
-			hqspi->ErrorCode |= HAL_QSPI_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_QSPI_ERROR_CB_ID:
+				hqspi->ErrorCallback = pCallback;
+				break;
+			case HAL_QSPI_ABORT_CB_ID:
+				hqspi->AbortCpltCallback = pCallback;
+				break;
+			case HAL_QSPI_FIFO_THRESHOLD_CB_ID:
+				hqspi->FifoThresholdCallback = pCallback;
+				break;
+			case HAL_QSPI_CMD_CPLT_CB_ID:
+				hqspi->CmdCpltCallback = pCallback;
+				break;
+			case HAL_QSPI_RX_CPLT_CB_ID:
+				hqspi->RxCpltCallback = pCallback;
+				break;
+			case HAL_QSPI_TX_CPLT_CB_ID:
+				hqspi->TxCpltCallback = pCallback;
+				break;
+			case HAL_QSPI_RX_HALF_CPLT_CB_ID:
+				hqspi->RxHalfCpltCallback = pCallback;
+				break;
+			case HAL_QSPI_TX_HALF_CPLT_CB_ID:
+				hqspi->TxHalfCpltCallback = pCallback;
+				break;
+			case HAL_QSPI_STATUS_MATCH_CB_ID:
+				hqspi->StatusMatchCallback = pCallback;
+				break;
+			case HAL_QSPI_TIMEOUT_CB_ID:
+				hqspi->TimeOutCallback = pCallback;
+				break;
+			case HAL_QSPI_MSP_INIT_CB_ID:
+				hqspi->MspInitCallback = pCallback;
+				break;
+			case HAL_QSPI_MSP_DEINIT_CB_ID:
+				hqspi->MspDeInitCallback = pCallback;
+				break;
+			default:
+				/* Update the error code */
+				hqspi->ErrorCode |=
+				    HAL_QSPI_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hqspi->State == HAL_QSPI_STATE_RESET) {
 		switch (CallbackId) {
-		case HAL_QSPI_MSP_INIT_CB_ID:
-			hqspi->MspInitCallback = pCallback;
-			break;
-		case HAL_QSPI_MSP_DEINIT_CB_ID:
-			hqspi->MspDeInitCallback = pCallback;
-			break;
-		default:
-			/* Update the error code */
-			hqspi->ErrorCode |= HAL_QSPI_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_QSPI_MSP_INIT_CB_ID:
+				hqspi->MspInitCallback = pCallback;
+				break;
+			case HAL_QSPI_MSP_DEINIT_CB_ID:
+				hqspi->MspDeInitCallback = pCallback;
+				break;
+			default:
+				/* Update the error code */
+				hqspi->ErrorCode |=
+				    HAL_QSPI_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -2248,65 +2250,72 @@ HAL_QSPI_UnRegisterCallback(QSPI_HandleTypeDef *hqspi,
 
 	if (hqspi->State == HAL_QSPI_STATE_READY) {
 		switch (CallbackId) {
-		case HAL_QSPI_ERROR_CB_ID:
-			hqspi->ErrorCallback = HAL_QSPI_ErrorCallback;
-			break;
-		case HAL_QSPI_ABORT_CB_ID:
-			hqspi->AbortCpltCallback = HAL_QSPI_AbortCpltCallback;
-			break;
-		case HAL_QSPI_FIFO_THRESHOLD_CB_ID:
-			hqspi->FifoThresholdCallback =
-			    HAL_QSPI_FifoThresholdCallback;
-			break;
-		case HAL_QSPI_CMD_CPLT_CB_ID:
-			hqspi->CmdCpltCallback = HAL_QSPI_CmdCpltCallback;
-			break;
-		case HAL_QSPI_RX_CPLT_CB_ID:
-			hqspi->RxCpltCallback = HAL_QSPI_RxCpltCallback;
-			break;
-		case HAL_QSPI_TX_CPLT_CB_ID:
-			hqspi->TxCpltCallback = HAL_QSPI_TxCpltCallback;
-			break;
-		case HAL_QSPI_RX_HALF_CPLT_CB_ID:
-			hqspi->RxHalfCpltCallback = HAL_QSPI_RxHalfCpltCallback;
-			break;
-		case HAL_QSPI_TX_HALF_CPLT_CB_ID:
-			hqspi->TxHalfCpltCallback = HAL_QSPI_TxHalfCpltCallback;
-			break;
-		case HAL_QSPI_STATUS_MATCH_CB_ID:
-			hqspi->StatusMatchCallback =
-			    HAL_QSPI_StatusMatchCallback;
-			break;
-		case HAL_QSPI_TIMEOUT_CB_ID:
-			hqspi->TimeOutCallback = HAL_QSPI_TimeOutCallback;
-			break;
-		case HAL_QSPI_MSP_INIT_CB_ID:
-			hqspi->MspInitCallback = HAL_QSPI_MspInit;
-			break;
-		case HAL_QSPI_MSP_DEINIT_CB_ID:
-			hqspi->MspDeInitCallback = HAL_QSPI_MspDeInit;
-			break;
-		default:
-			/* Update the error code */
-			hqspi->ErrorCode |= HAL_QSPI_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_QSPI_ERROR_CB_ID:
+				hqspi->ErrorCallback = HAL_QSPI_ErrorCallback;
+				break;
+			case HAL_QSPI_ABORT_CB_ID:
+				hqspi->AbortCpltCallback =
+				    HAL_QSPI_AbortCpltCallback;
+				break;
+			case HAL_QSPI_FIFO_THRESHOLD_CB_ID:
+				hqspi->FifoThresholdCallback =
+				    HAL_QSPI_FifoThresholdCallback;
+				break;
+			case HAL_QSPI_CMD_CPLT_CB_ID:
+				hqspi->CmdCpltCallback =
+				    HAL_QSPI_CmdCpltCallback;
+				break;
+			case HAL_QSPI_RX_CPLT_CB_ID:
+				hqspi->RxCpltCallback = HAL_QSPI_RxCpltCallback;
+				break;
+			case HAL_QSPI_TX_CPLT_CB_ID:
+				hqspi->TxCpltCallback = HAL_QSPI_TxCpltCallback;
+				break;
+			case HAL_QSPI_RX_HALF_CPLT_CB_ID:
+				hqspi->RxHalfCpltCallback =
+				    HAL_QSPI_RxHalfCpltCallback;
+				break;
+			case HAL_QSPI_TX_HALF_CPLT_CB_ID:
+				hqspi->TxHalfCpltCallback =
+				    HAL_QSPI_TxHalfCpltCallback;
+				break;
+			case HAL_QSPI_STATUS_MATCH_CB_ID:
+				hqspi->StatusMatchCallback =
+				    HAL_QSPI_StatusMatchCallback;
+				break;
+			case HAL_QSPI_TIMEOUT_CB_ID:
+				hqspi->TimeOutCallback =
+				    HAL_QSPI_TimeOutCallback;
+				break;
+			case HAL_QSPI_MSP_INIT_CB_ID:
+				hqspi->MspInitCallback = HAL_QSPI_MspInit;
+				break;
+			case HAL_QSPI_MSP_DEINIT_CB_ID:
+				hqspi->MspDeInitCallback = HAL_QSPI_MspDeInit;
+				break;
+			default:
+				/* Update the error code */
+				hqspi->ErrorCode |=
+				    HAL_QSPI_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hqspi->State == HAL_QSPI_STATE_RESET) {
 		switch (CallbackId) {
-		case HAL_QSPI_MSP_INIT_CB_ID:
-			hqspi->MspInitCallback = HAL_QSPI_MspInit;
-			break;
-		case HAL_QSPI_MSP_DEINIT_CB_ID:
-			hqspi->MspDeInitCallback = HAL_QSPI_MspDeInit;
-			break;
-		default:
-			/* Update the error code */
-			hqspi->ErrorCode |= HAL_QSPI_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_QSPI_MSP_INIT_CB_ID:
+				hqspi->MspInitCallback = HAL_QSPI_MspInit;
+				break;
+			case HAL_QSPI_MSP_DEINIT_CB_ID:
+				hqspi->MspDeInitCallback = HAL_QSPI_MspDeInit;
+				break;
+			default:
+				/* Update the error code */
+				hqspi->ErrorCode |=
+				    HAL_QSPI_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */

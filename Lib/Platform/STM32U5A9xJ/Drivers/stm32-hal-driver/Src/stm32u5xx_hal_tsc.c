@@ -457,47 +457,49 @@ HAL_StatusTypeDef HAL_TSC_RegisterCallback(TSC_HandleTypeDef *htsc,
 
 	if (HAL_TSC_STATE_READY == htsc->State) {
 		switch (CallbackID) {
-		case HAL_TSC_CONV_COMPLETE_CB_ID:
-			htsc->ConvCpltCallback = pCallback;
-			break;
+			case HAL_TSC_CONV_COMPLETE_CB_ID:
+				htsc->ConvCpltCallback = pCallback;
+				break;
 
-		case HAL_TSC_ERROR_CB_ID:
-			htsc->ErrorCallback = pCallback;
-			break;
+			case HAL_TSC_ERROR_CB_ID:
+				htsc->ErrorCallback = pCallback;
+				break;
 
-		case HAL_TSC_MSPINIT_CB_ID:
-			htsc->MspInitCallback = pCallback;
-			break;
+			case HAL_TSC_MSPINIT_CB_ID:
+				htsc->MspInitCallback = pCallback;
+				break;
 
-		case HAL_TSC_MSPDEINIT_CB_ID:
-			htsc->MspDeInitCallback = pCallback;
-			break;
+			case HAL_TSC_MSPDEINIT_CB_ID:
+				htsc->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			htsc->ErrorCode |= HAL_TSC_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				htsc->ErrorCode |=
+				    HAL_TSC_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_TSC_STATE_RESET == htsc->State) {
 		switch (CallbackID) {
-		case HAL_TSC_MSPINIT_CB_ID:
-			htsc->MspInitCallback = pCallback;
-			break;
+			case HAL_TSC_MSPINIT_CB_ID:
+				htsc->MspInitCallback = pCallback;
+				break;
 
-		case HAL_TSC_MSPDEINIT_CB_ID:
-			htsc->MspDeInitCallback = pCallback;
-			break;
+			case HAL_TSC_MSPDEINIT_CB_ID:
+				htsc->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			htsc->ErrorCode |= HAL_TSC_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				htsc->ErrorCode |=
+				    HAL_TSC_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -538,55 +540,61 @@ HAL_TSC_UnRegisterCallback(TSC_HandleTypeDef *htsc,
 
 	if (HAL_TSC_STATE_READY == htsc->State) {
 		switch (CallbackID) {
-		case HAL_TSC_CONV_COMPLETE_CB_ID:
-			htsc->ConvCpltCallback =
-			    HAL_TSC_ConvCpltCallback; /* Legacy weak
-							 ConvCpltCallback */
-			break;
+			case HAL_TSC_CONV_COMPLETE_CB_ID:
+				htsc->ConvCpltCallback =
+				    HAL_TSC_ConvCpltCallback; /* Legacy weak
+								 ConvCpltCallback
+							       */
+				break;
 
-		case HAL_TSC_ERROR_CB_ID:
-			htsc->ErrorCallback =
-			    HAL_TSC_ErrorCallback; /* Legacy weak ErrorCallback
-						    */
-			break;
+			case HAL_TSC_ERROR_CB_ID:
+				htsc->ErrorCallback =
+				    HAL_TSC_ErrorCallback; /* Legacy weak
+							    * ErrorCallback
+							    */
+				break;
 
-		case HAL_TSC_MSPINIT_CB_ID:
-			htsc->MspInitCallback =
-			    HAL_TSC_MspInit; /* Legacy weak MspInit */
-			break;
+			case HAL_TSC_MSPINIT_CB_ID:
+				htsc->MspInitCallback =
+				    HAL_TSC_MspInit; /* Legacy weak MspInit */
+				break;
 
-		case HAL_TSC_MSPDEINIT_CB_ID:
-			htsc->MspDeInitCallback =
-			    HAL_TSC_MspDeInit; /* Legacy weak MspDeInit */
-			break;
+			case HAL_TSC_MSPDEINIT_CB_ID:
+				htsc->MspDeInitCallback =
+				    HAL_TSC_MspDeInit; /* Legacy weak MspDeInit
+							*/
+				break;
 
-		default:
-			/* Update the error code */
-			htsc->ErrorCode |= HAL_TSC_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				htsc->ErrorCode |=
+				    HAL_TSC_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_TSC_STATE_RESET == htsc->State) {
 		switch (CallbackID) {
-		case HAL_TSC_MSPINIT_CB_ID:
-			htsc->MspInitCallback =
-			    HAL_TSC_MspInit; /* Legacy weak MspInit */
-			break;
+			case HAL_TSC_MSPINIT_CB_ID:
+				htsc->MspInitCallback =
+				    HAL_TSC_MspInit; /* Legacy weak MspInit */
+				break;
 
-		case HAL_TSC_MSPDEINIT_CB_ID:
-			htsc->MspDeInitCallback =
-			    HAL_TSC_MspDeInit; /* Legacy weak MspDeInit */
-			break;
+			case HAL_TSC_MSPDEINIT_CB_ID:
+				htsc->MspDeInitCallback =
+				    HAL_TSC_MspDeInit; /* Legacy weak MspDeInit
+							*/
+				break;
 
-		default:
-			/* Update the error code */
-			htsc->ErrorCode |= HAL_TSC_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				htsc->ErrorCode |=
+				    HAL_TSC_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */

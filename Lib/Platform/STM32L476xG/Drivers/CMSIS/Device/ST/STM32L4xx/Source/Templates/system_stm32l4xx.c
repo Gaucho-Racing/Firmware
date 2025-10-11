@@ -279,46 +279,49 @@ void SystemCoreClockUpdate(void)
 	/* Get SYSCLK source
 	 * -------------------------------------------------------*/
 	switch (RCC->CFGR & RCC_CFGR_SWS) {
-	case 0x00: /* MSI used as system clock source */
-		SystemCoreClock = msirange;
-		break;
-
-	case 0x04: /* HSI used as system clock source */
-		SystemCoreClock = HSI_VALUE;
-		break;
-
-	case 0x08: /* HSE used as system clock source */
-		SystemCoreClock = HSE_VALUE;
-		break;
-
-	case 0x0C: /* PLL used as system clock  source */
-		/* PLL_VCO = (HSE_VALUE or HSI_VALUE or MSI_VALUE/ PLLM) * PLLN
-		   SYSCLK = PLL_VCO / PLLR
-		   */
-		pllsource = (RCC->PLLCFGR & RCC_PLLCFGR_PLLSRC);
-		pllm = ((RCC->PLLCFGR & RCC_PLLCFGR_PLLM) >> 4U) + 1U;
-
-		switch (pllsource) {
-		case 0x02: /* HSI used as PLL clock source */
-			pllvco = (HSI_VALUE / pllm);
+		case 0x00: /* MSI used as system clock source */
+			SystemCoreClock = msirange;
 			break;
 
-		case 0x03: /* HSE used as PLL clock source */
-			pllvco = (HSE_VALUE / pllm);
+		case 0x04: /* HSI used as system clock source */
+			SystemCoreClock = HSI_VALUE;
 			break;
 
-		default: /* MSI used as PLL clock source */
-			pllvco = (msirange / pllm);
+		case 0x08: /* HSE used as system clock source */
+			SystemCoreClock = HSE_VALUE;
 			break;
-		}
-		pllvco = pllvco * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 8U);
-		pllr = (((RCC->PLLCFGR & RCC_PLLCFGR_PLLR) >> 25U) + 1U) * 2U;
-		SystemCoreClock = pllvco / pllr;
-		break;
 
-	default:
-		SystemCoreClock = msirange;
-		break;
+		case 0x0C: /* PLL used as system clock  source */
+			/* PLL_VCO = (HSE_VALUE or HSI_VALUE or MSI_VALUE/ PLLM)
+			   * PLLN SYSCLK = PLL_VCO / PLLR
+			   */
+			pllsource = (RCC->PLLCFGR & RCC_PLLCFGR_PLLSRC);
+			pllm = ((RCC->PLLCFGR & RCC_PLLCFGR_PLLM) >> 4U) + 1U;
+
+			switch (pllsource) {
+				case 0x02: /* HSI used as PLL clock source */
+					pllvco = (HSI_VALUE / pllm);
+					break;
+
+				case 0x03: /* HSE used as PLL clock source */
+					pllvco = (HSE_VALUE / pllm);
+					break;
+
+				default: /* MSI used as PLL clock source */
+					pllvco = (msirange / pllm);
+					break;
+			}
+			pllvco =
+			    pllvco * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 8U);
+			pllr =
+			    (((RCC->PLLCFGR & RCC_PLLCFGR_PLLR) >> 25U) + 1U) *
+			    2U;
+			SystemCoreClock = pllvco / pllr;
+			break;
+
+		default:
+			SystemCoreClock = msirange;
+			break;
 	}
 	/* Compute HCLK clock frequency
 	 * --------------------------------------------*/

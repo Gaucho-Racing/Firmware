@@ -363,18 +363,18 @@ HAL_StatusTypeDef HAL_SAI_InitProtocol(SAI_HandleTypeDef *hsai,
 	assert_param(IS_SAI_PROTOCOL_DATASIZE(datasize));
 
 	switch (protocol) {
-	case SAI_I2S_STANDARD:
-	case SAI_I2S_MSBJUSTIFIED:
-	case SAI_I2S_LSBJUSTIFIED:
-		status = SAI_InitI2S(hsai, protocol, datasize, nbslot);
-		break;
-	case SAI_PCM_LONG:
-	case SAI_PCM_SHORT:
-		status = SAI_InitPCM(hsai, protocol, datasize, nbslot);
-		break;
-	default:
-		status = HAL_ERROR;
-		break;
+		case SAI_I2S_STANDARD:
+		case SAI_I2S_MSBJUSTIFIED:
+		case SAI_I2S_LSBJUSTIFIED:
+			status = SAI_InitI2S(hsai, protocol, datasize, nbslot);
+			break;
+		case SAI_PCM_LONG:
+		case SAI_PCM_SHORT:
+			status = SAI_InitPCM(hsai, protocol, datasize, nbslot);
+			break;
+		default:
+			status = HAL_ERROR;
+			break;
 	}
 
 	if (status == HAL_OK) {
@@ -503,40 +503,40 @@ HAL_StatusTypeDef HAL_SAI_Init(SAI_HandleTypeDef *hsai)
 	/* This setting must be done with both audio block (A & B) disabled */
 #if defined(SAI2)
 	switch (hsai->Init.SynchroExt) {
-	case SAI_SYNCEXT_DISABLE:
-		tmpregisterGCR = 0;
-		break;
-	case SAI_SYNCEXT_OUTBLOCKA_ENABLE:
-		tmpregisterGCR = SAI_GCR_SYNCOUT_0;
-		break;
-	case SAI_SYNCEXT_OUTBLOCKB_ENABLE:
-		tmpregisterGCR = SAI_GCR_SYNCOUT_1;
-		break;
-	default:
-		tmpregisterGCR = 0;
-		break;
+		case SAI_SYNCEXT_DISABLE:
+			tmpregisterGCR = 0;
+			break;
+		case SAI_SYNCEXT_OUTBLOCKA_ENABLE:
+			tmpregisterGCR = SAI_GCR_SYNCOUT_0;
+			break;
+		case SAI_SYNCEXT_OUTBLOCKB_ENABLE:
+			tmpregisterGCR = SAI_GCR_SYNCOUT_1;
+			break;
+		default:
+			tmpregisterGCR = 0;
+			break;
 	}
 #endif /* SAI2 */
 
 	switch (hsai->Init.Synchro) {
-	case SAI_ASYNCHRONOUS:
-		syncen_bits = 0;
-		break;
-	case SAI_SYNCHRONOUS:
-		syncen_bits = SAI_xCR1_SYNCEN_0;
-		break;
+		case SAI_ASYNCHRONOUS:
+			syncen_bits = 0;
+			break;
+		case SAI_SYNCHRONOUS:
+			syncen_bits = SAI_xCR1_SYNCEN_0;
+			break;
 #if defined(SAI2)
-	case SAI_SYNCHRONOUS_EXT_SAI1:
-		syncen_bits = SAI_xCR1_SYNCEN_1;
-		break;
-	case SAI_SYNCHRONOUS_EXT_SAI2:
-		syncen_bits = SAI_xCR1_SYNCEN_1;
-		tmpregisterGCR |= SAI_GCR_SYNCIN_0;
-		break;
+		case SAI_SYNCHRONOUS_EXT_SAI1:
+			syncen_bits = SAI_xCR1_SYNCEN_1;
+			break;
+		case SAI_SYNCHRONOUS_EXT_SAI2:
+			syncen_bits = SAI_xCR1_SYNCEN_1;
+			tmpregisterGCR |= SAI_GCR_SYNCIN_0;
+			break;
 #endif /* SAI2 */
-	default:
-		syncen_bits = 0;
-		break;
+		default:
+			syncen_bits = 0;
+			break;
 	}
 
 #if defined(SAI2)
@@ -898,50 +898,50 @@ HAL_StatusTypeDef HAL_SAI_RegisterCallback(SAI_HandleTypeDef *hsai,
 	} else {
 		if (HAL_SAI_STATE_READY == hsai->State) {
 			switch (CallbackID) {
-			case HAL_SAI_RX_COMPLETE_CB_ID:
-				hsai->RxCpltCallback = pCallback;
-				break;
-			case HAL_SAI_RX_HALFCOMPLETE_CB_ID:
-				hsai->RxHalfCpltCallback = pCallback;
-				break;
-			case HAL_SAI_TX_COMPLETE_CB_ID:
-				hsai->TxCpltCallback = pCallback;
-				break;
-			case HAL_SAI_TX_HALFCOMPLETE_CB_ID:
-				hsai->TxHalfCpltCallback = pCallback;
-				break;
-			case HAL_SAI_ERROR_CB_ID:
-				hsai->ErrorCallback = pCallback;
-				break;
-			case HAL_SAI_MSPINIT_CB_ID:
-				hsai->MspInitCallback = pCallback;
-				break;
-			case HAL_SAI_MSPDEINIT_CB_ID:
-				hsai->MspDeInitCallback = pCallback;
-				break;
-			default:
-				/* update the error code */
-				hsai->ErrorCode |=
-				    HAL_SAI_ERROR_INVALID_CALLBACK;
-				/* update return status */
-				status = HAL_ERROR;
-				break;
+				case HAL_SAI_RX_COMPLETE_CB_ID:
+					hsai->RxCpltCallback = pCallback;
+					break;
+				case HAL_SAI_RX_HALFCOMPLETE_CB_ID:
+					hsai->RxHalfCpltCallback = pCallback;
+					break;
+				case HAL_SAI_TX_COMPLETE_CB_ID:
+					hsai->TxCpltCallback = pCallback;
+					break;
+				case HAL_SAI_TX_HALFCOMPLETE_CB_ID:
+					hsai->TxHalfCpltCallback = pCallback;
+					break;
+				case HAL_SAI_ERROR_CB_ID:
+					hsai->ErrorCallback = pCallback;
+					break;
+				case HAL_SAI_MSPINIT_CB_ID:
+					hsai->MspInitCallback = pCallback;
+					break;
+				case HAL_SAI_MSPDEINIT_CB_ID:
+					hsai->MspDeInitCallback = pCallback;
+					break;
+				default:
+					/* update the error code */
+					hsai->ErrorCode |=
+					    HAL_SAI_ERROR_INVALID_CALLBACK;
+					/* update return status */
+					status = HAL_ERROR;
+					break;
 			}
 		} else if (HAL_SAI_STATE_RESET == hsai->State) {
 			switch (CallbackID) {
-			case HAL_SAI_MSPINIT_CB_ID:
-				hsai->MspInitCallback = pCallback;
-				break;
-			case HAL_SAI_MSPDEINIT_CB_ID:
-				hsai->MspDeInitCallback = pCallback;
-				break;
-			default:
-				/* update the error code */
-				hsai->ErrorCode |=
-				    HAL_SAI_ERROR_INVALID_CALLBACK;
-				/* update return status */
-				status = HAL_ERROR;
-				break;
+				case HAL_SAI_MSPINIT_CB_ID:
+					hsai->MspInitCallback = pCallback;
+					break;
+				case HAL_SAI_MSPDEINIT_CB_ID:
+					hsai->MspDeInitCallback = pCallback;
+					break;
+				default:
+					/* update the error code */
+					hsai->ErrorCode |=
+					    HAL_SAI_ERROR_INVALID_CALLBACK;
+					/* update return status */
+					status = HAL_ERROR;
+					break;
 			}
 		} else {
 			/* update the error code */
@@ -978,48 +978,52 @@ HAL_SAI_UnRegisterCallback(SAI_HandleTypeDef *hsai,
 
 	if (HAL_SAI_STATE_READY == hsai->State) {
 		switch (CallbackID) {
-		case HAL_SAI_RX_COMPLETE_CB_ID:
-			hsai->RxCpltCallback = HAL_SAI_RxCpltCallback;
-			break;
-		case HAL_SAI_RX_HALFCOMPLETE_CB_ID:
-			hsai->RxHalfCpltCallback = HAL_SAI_RxHalfCpltCallback;
-			break;
-		case HAL_SAI_TX_COMPLETE_CB_ID:
-			hsai->TxCpltCallback = HAL_SAI_TxCpltCallback;
-			break;
-		case HAL_SAI_TX_HALFCOMPLETE_CB_ID:
-			hsai->TxHalfCpltCallback = HAL_SAI_TxHalfCpltCallback;
-			break;
-		case HAL_SAI_ERROR_CB_ID:
-			hsai->ErrorCallback = HAL_SAI_ErrorCallback;
-			break;
-		case HAL_SAI_MSPINIT_CB_ID:
-			hsai->MspInitCallback = HAL_SAI_MspInit;
-			break;
-		case HAL_SAI_MSPDEINIT_CB_ID:
-			hsai->MspDeInitCallback = HAL_SAI_MspDeInit;
-			break;
-		default:
-			/* update the error code */
-			hsai->ErrorCode |= HAL_SAI_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_SAI_RX_COMPLETE_CB_ID:
+				hsai->RxCpltCallback = HAL_SAI_RxCpltCallback;
+				break;
+			case HAL_SAI_RX_HALFCOMPLETE_CB_ID:
+				hsai->RxHalfCpltCallback =
+				    HAL_SAI_RxHalfCpltCallback;
+				break;
+			case HAL_SAI_TX_COMPLETE_CB_ID:
+				hsai->TxCpltCallback = HAL_SAI_TxCpltCallback;
+				break;
+			case HAL_SAI_TX_HALFCOMPLETE_CB_ID:
+				hsai->TxHalfCpltCallback =
+				    HAL_SAI_TxHalfCpltCallback;
+				break;
+			case HAL_SAI_ERROR_CB_ID:
+				hsai->ErrorCallback = HAL_SAI_ErrorCallback;
+				break;
+			case HAL_SAI_MSPINIT_CB_ID:
+				hsai->MspInitCallback = HAL_SAI_MspInit;
+				break;
+			case HAL_SAI_MSPDEINIT_CB_ID:
+				hsai->MspDeInitCallback = HAL_SAI_MspDeInit;
+				break;
+			default:
+				/* update the error code */
+				hsai->ErrorCode |=
+				    HAL_SAI_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_SAI_STATE_RESET == hsai->State) {
 		switch (CallbackID) {
-		case HAL_SAI_MSPINIT_CB_ID:
-			hsai->MspInitCallback = HAL_SAI_MspInit;
-			break;
-		case HAL_SAI_MSPDEINIT_CB_ID:
-			hsai->MspDeInitCallback = HAL_SAI_MspDeInit;
-			break;
-		default:
-			/* update the error code */
-			hsai->ErrorCode |= HAL_SAI_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_SAI_MSPINIT_CB_ID:
+				hsai->MspInitCallback = HAL_SAI_MspInit;
+				break;
+			case HAL_SAI_MSPDEINIT_CB_ID:
+				hsai->MspDeInitCallback = HAL_SAI_MspDeInit;
+				break;
+			default:
+				/* update the error code */
+				hsai->ErrorCode |=
+				    HAL_SAI_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* update the error code */
@@ -2264,33 +2268,33 @@ static HAL_StatusTypeDef SAI_InitI2S(SAI_HandleTypeDef *hsai, uint32_t protocol,
 
 	/* Frame definition */
 	switch (datasize) {
-	case SAI_PROTOCOL_DATASIZE_16BIT:
-		hsai->Init.DataSize = SAI_DATASIZE_16;
-		hsai->FrameInit.FrameLength = 32U * (nbslot / 2U);
-		hsai->FrameInit.ActiveFrameLength = 16U * (nbslot / 2U);
-		hsai->SlotInit.SlotSize = SAI_SLOTSIZE_16B;
-		break;
-	case SAI_PROTOCOL_DATASIZE_16BITEXTENDED:
-		hsai->Init.DataSize = SAI_DATASIZE_16;
-		hsai->FrameInit.FrameLength = 64U * (nbslot / 2U);
-		hsai->FrameInit.ActiveFrameLength = 32U * (nbslot / 2U);
-		hsai->SlotInit.SlotSize = SAI_SLOTSIZE_32B;
-		break;
-	case SAI_PROTOCOL_DATASIZE_24BIT:
-		hsai->Init.DataSize = SAI_DATASIZE_24;
-		hsai->FrameInit.FrameLength = 64U * (nbslot / 2U);
-		hsai->FrameInit.ActiveFrameLength = 32U * (nbslot / 2U);
-		hsai->SlotInit.SlotSize = SAI_SLOTSIZE_32B;
-		break;
-	case SAI_PROTOCOL_DATASIZE_32BIT:
-		hsai->Init.DataSize = SAI_DATASIZE_32;
-		hsai->FrameInit.FrameLength = 64U * (nbslot / 2U);
-		hsai->FrameInit.ActiveFrameLength = 32U * (nbslot / 2U);
-		hsai->SlotInit.SlotSize = SAI_SLOTSIZE_32B;
-		break;
-	default:
-		status = HAL_ERROR;
-		break;
+		case SAI_PROTOCOL_DATASIZE_16BIT:
+			hsai->Init.DataSize = SAI_DATASIZE_16;
+			hsai->FrameInit.FrameLength = 32U * (nbslot / 2U);
+			hsai->FrameInit.ActiveFrameLength = 16U * (nbslot / 2U);
+			hsai->SlotInit.SlotSize = SAI_SLOTSIZE_16B;
+			break;
+		case SAI_PROTOCOL_DATASIZE_16BITEXTENDED:
+			hsai->Init.DataSize = SAI_DATASIZE_16;
+			hsai->FrameInit.FrameLength = 64U * (nbslot / 2U);
+			hsai->FrameInit.ActiveFrameLength = 32U * (nbslot / 2U);
+			hsai->SlotInit.SlotSize = SAI_SLOTSIZE_32B;
+			break;
+		case SAI_PROTOCOL_DATASIZE_24BIT:
+			hsai->Init.DataSize = SAI_DATASIZE_24;
+			hsai->FrameInit.FrameLength = 64U * (nbslot / 2U);
+			hsai->FrameInit.ActiveFrameLength = 32U * (nbslot / 2U);
+			hsai->SlotInit.SlotSize = SAI_SLOTSIZE_32B;
+			break;
+		case SAI_PROTOCOL_DATASIZE_32BIT:
+			hsai->Init.DataSize = SAI_DATASIZE_32;
+			hsai->FrameInit.FrameLength = 64U * (nbslot / 2U);
+			hsai->FrameInit.ActiveFrameLength = 32U * (nbslot / 2U);
+			hsai->SlotInit.SlotSize = SAI_SLOTSIZE_32B;
+			break;
+		default:
+			status = HAL_ERROR;
+			break;
 	}
 	if (protocol == SAI_I2S_LSBJUSTIFIED) {
 		if (datasize == SAI_PROTOCOL_DATASIZE_16BITEXTENDED) {
@@ -2344,29 +2348,29 @@ static HAL_StatusTypeDef SAI_InitPCM(SAI_HandleTypeDef *hsai, uint32_t protocol,
 	}
 
 	switch (datasize) {
-	case SAI_PROTOCOL_DATASIZE_16BIT:
-		hsai->Init.DataSize = SAI_DATASIZE_16;
-		hsai->FrameInit.FrameLength = 16U * nbslot;
-		hsai->SlotInit.SlotSize = SAI_SLOTSIZE_16B;
-		break;
-	case SAI_PROTOCOL_DATASIZE_16BITEXTENDED:
-		hsai->Init.DataSize = SAI_DATASIZE_16;
-		hsai->FrameInit.FrameLength = 32U * nbslot;
-		hsai->SlotInit.SlotSize = SAI_SLOTSIZE_32B;
-		break;
-	case SAI_PROTOCOL_DATASIZE_24BIT:
-		hsai->Init.DataSize = SAI_DATASIZE_24;
-		hsai->FrameInit.FrameLength = 32U * nbslot;
-		hsai->SlotInit.SlotSize = SAI_SLOTSIZE_32B;
-		break;
-	case SAI_PROTOCOL_DATASIZE_32BIT:
-		hsai->Init.DataSize = SAI_DATASIZE_32;
-		hsai->FrameInit.FrameLength = 32U * nbslot;
-		hsai->SlotInit.SlotSize = SAI_SLOTSIZE_32B;
-		break;
-	default:
-		status = HAL_ERROR;
-		break;
+		case SAI_PROTOCOL_DATASIZE_16BIT:
+			hsai->Init.DataSize = SAI_DATASIZE_16;
+			hsai->FrameInit.FrameLength = 16U * nbslot;
+			hsai->SlotInit.SlotSize = SAI_SLOTSIZE_16B;
+			break;
+		case SAI_PROTOCOL_DATASIZE_16BITEXTENDED:
+			hsai->Init.DataSize = SAI_DATASIZE_16;
+			hsai->FrameInit.FrameLength = 32U * nbslot;
+			hsai->SlotInit.SlotSize = SAI_SLOTSIZE_32B;
+			break;
+		case SAI_PROTOCOL_DATASIZE_24BIT:
+			hsai->Init.DataSize = SAI_DATASIZE_24;
+			hsai->FrameInit.FrameLength = 32U * nbslot;
+			hsai->SlotInit.SlotSize = SAI_SLOTSIZE_32B;
+			break;
+		case SAI_PROTOCOL_DATASIZE_32BIT:
+			hsai->Init.DataSize = SAI_DATASIZE_32;
+			hsai->FrameInit.FrameLength = 32U * nbslot;
+			hsai->SlotInit.SlotSize = SAI_SLOTSIZE_32B;
+			break;
+		default:
+			status = HAL_ERROR;
+			break;
 	}
 
 	return status;

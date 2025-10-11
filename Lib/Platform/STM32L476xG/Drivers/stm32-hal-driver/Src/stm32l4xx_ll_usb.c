@@ -1481,47 +1481,48 @@ HAL_StatusTypeDef USB_HC_Init(USB_OTG_GlobalTypeDef *USBx, uint8_t ch_num,
 
 	/* Enable channel interrupts required for this transfer. */
 	switch (ep_type) {
-	case EP_TYPE_CTRL:
-	case EP_TYPE_BULK:
-		USBx_HC((uint32_t)ch_num)->HCINTMSK =
-		    USB_OTG_HCINTMSK_XFRCM | USB_OTG_HCINTMSK_STALLM |
-		    USB_OTG_HCINTMSK_TXERRM | USB_OTG_HCINTMSK_DTERRM |
-		    USB_OTG_HCINTMSK_AHBERR | USB_OTG_HCINTMSK_NAKM;
+		case EP_TYPE_CTRL:
+		case EP_TYPE_BULK:
+			USBx_HC((uint32_t)ch_num)->HCINTMSK =
+			    USB_OTG_HCINTMSK_XFRCM | USB_OTG_HCINTMSK_STALLM |
+			    USB_OTG_HCINTMSK_TXERRM | USB_OTG_HCINTMSK_DTERRM |
+			    USB_OTG_HCINTMSK_AHBERR | USB_OTG_HCINTMSK_NAKM;
 
-		if ((epnum & 0x80U) == 0x80U) {
-			USBx_HC((uint32_t)ch_num)->HCINTMSK |=
-			    USB_OTG_HCINTMSK_BBERRM;
-		}
-		break;
+			if ((epnum & 0x80U) == 0x80U) {
+				USBx_HC((uint32_t)ch_num)->HCINTMSK |=
+				    USB_OTG_HCINTMSK_BBERRM;
+			}
+			break;
 
-	case EP_TYPE_INTR:
-		USBx_HC((uint32_t)ch_num)->HCINTMSK =
-		    USB_OTG_HCINTMSK_XFRCM | USB_OTG_HCINTMSK_STALLM |
-		    USB_OTG_HCINTMSK_TXERRM | USB_OTG_HCINTMSK_DTERRM |
-		    USB_OTG_HCINTMSK_NAKM | USB_OTG_HCINTMSK_AHBERR |
-		    USB_OTG_HCINTMSK_FRMORM;
+		case EP_TYPE_INTR:
+			USBx_HC((uint32_t)ch_num)->HCINTMSK =
+			    USB_OTG_HCINTMSK_XFRCM | USB_OTG_HCINTMSK_STALLM |
+			    USB_OTG_HCINTMSK_TXERRM | USB_OTG_HCINTMSK_DTERRM |
+			    USB_OTG_HCINTMSK_NAKM | USB_OTG_HCINTMSK_AHBERR |
+			    USB_OTG_HCINTMSK_FRMORM;
 
-		if ((epnum & 0x80U) == 0x80U) {
-			USBx_HC((uint32_t)ch_num)->HCINTMSK |=
-			    USB_OTG_HCINTMSK_BBERRM;
-		}
+			if ((epnum & 0x80U) == 0x80U) {
+				USBx_HC((uint32_t)ch_num)->HCINTMSK |=
+				    USB_OTG_HCINTMSK_BBERRM;
+			}
 
-		break;
+			break;
 
-	case EP_TYPE_ISOC:
-		USBx_HC((uint32_t)ch_num)->HCINTMSK =
-		    USB_OTG_HCINTMSK_XFRCM | USB_OTG_HCINTMSK_ACKM |
-		    USB_OTG_HCINTMSK_AHBERR | USB_OTG_HCINTMSK_FRMORM;
+		case EP_TYPE_ISOC:
+			USBx_HC((uint32_t)ch_num)->HCINTMSK =
+			    USB_OTG_HCINTMSK_XFRCM | USB_OTG_HCINTMSK_ACKM |
+			    USB_OTG_HCINTMSK_AHBERR | USB_OTG_HCINTMSK_FRMORM;
 
-		if ((epnum & 0x80U) == 0x80U) {
-			USBx_HC((uint32_t)ch_num)->HCINTMSK |=
-			    (USB_OTG_HCINTMSK_TXERRM | USB_OTG_HCINTMSK_BBERRM);
-		}
-		break;
+			if ((epnum & 0x80U) == 0x80U) {
+				USBx_HC((uint32_t)ch_num)->HCINTMSK |=
+				    (USB_OTG_HCINTMSK_TXERRM |
+				     USB_OTG_HCINTMSK_BBERRM);
+			}
+			break;
 
-	default:
-		ret = HAL_ERROR;
-		break;
+		default:
+			ret = HAL_ERROR;
+			break;
 	}
 
 	/* Enable host channel Halt interrupt */
@@ -1629,36 +1630,44 @@ HAL_StatusTypeDef USB_HC_StartXfer(USB_OTG_GlobalTypeDef *USBx,
 
 	if ((hc->ep_is_in == 0U) && (hc->xfer_len > 0U)) {
 		switch (hc->ep_type) {
-		/* Non periodic transfer */
-		case EP_TYPE_CTRL:
-		case EP_TYPE_BULK:
+			/* Non periodic transfer */
+			case EP_TYPE_CTRL:
+			case EP_TYPE_BULK:
 
-			len_words = (uint16_t)((hc->xfer_len + 3U) / 4U);
+				len_words =
+				    (uint16_t)((hc->xfer_len + 3U) / 4U);
 
-			/* check if there is enough space in FIFO space */
-			if (len_words > (USBx->HNPTXSTS & 0xFFFFU)) {
-				/* need to process data in nptxfempty interrupt
+				/* check if there is enough space in FIFO space
 				 */
-				USBx->GINTMSK |= USB_OTG_GINTMSK_NPTXFEM;
-			}
-			break;
+				if (len_words > (USBx->HNPTXSTS & 0xFFFFU)) {
+					/* need to process data in nptxfempty
+					 * interrupt
+					 */
+					USBx->GINTMSK |=
+					    USB_OTG_GINTMSK_NPTXFEM;
+				}
+				break;
 
-		/* Periodic transfer */
-		case EP_TYPE_INTR:
-		case EP_TYPE_ISOC:
-			len_words = (uint16_t)((hc->xfer_len + 3U) / 4U);
-			/* check if there is enough space in FIFO space */
-			if (len_words > (USBx_HOST->HPTXSTS &
-					 0xFFFFU)) /* split the transfer */
-			{
-				/* need to process data in ptxfempty interrupt
+			/* Periodic transfer */
+			case EP_TYPE_INTR:
+			case EP_TYPE_ISOC:
+				len_words =
+				    (uint16_t)((hc->xfer_len + 3U) / 4U);
+				/* check if there is enough space in FIFO space
 				 */
-				USBx->GINTMSK |= USB_OTG_GINTMSK_PTXFEM;
-			}
-			break;
+				if (len_words >
+				    (USBx_HOST->HPTXSTS &
+				     0xFFFFU)) /* split the transfer */
+				{
+					/* need to process data in ptxfempty
+					 * interrupt
+					 */
+					USBx->GINTMSK |= USB_OTG_GINTMSK_PTXFEM;
+				}
+				break;
 
-		default:
-			break;
+			default:
+				break;
 		}
 
 		/* Write packet into the Tx FIFO. */
@@ -2057,25 +2066,25 @@ HAL_StatusTypeDef USB_ActivateEndpoint(USB_TypeDef *USBx, USB_EPTypeDef *ep)
 
 	/* initialize Endpoint */
 	switch (ep->type) {
-	case EP_TYPE_CTRL:
-		wEpRegVal |= USB_EP_CONTROL;
-		break;
+		case EP_TYPE_CTRL:
+			wEpRegVal |= USB_EP_CONTROL;
+			break;
 
-	case EP_TYPE_BULK:
-		wEpRegVal |= USB_EP_BULK;
-		break;
+		case EP_TYPE_BULK:
+			wEpRegVal |= USB_EP_BULK;
+			break;
 
-	case EP_TYPE_INTR:
-		wEpRegVal |= USB_EP_INTERRUPT;
-		break;
+		case EP_TYPE_INTR:
+			wEpRegVal |= USB_EP_INTERRUPT;
+			break;
 
-	case EP_TYPE_ISOC:
-		wEpRegVal |= USB_EP_ISOCHRONOUS;
-		break;
+		case EP_TYPE_ISOC:
+			wEpRegVal |= USB_EP_ISOCHRONOUS;
+			break;
 
-	default:
-		ret = HAL_ERROR;
-		break;
+		default:
+			ret = HAL_ERROR;
+			break;
 	}
 
 	PCD_SET_ENDPOINT(USBx, ep->num,

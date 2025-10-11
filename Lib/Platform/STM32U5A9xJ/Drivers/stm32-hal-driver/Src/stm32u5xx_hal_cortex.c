@@ -466,30 +466,31 @@ void HAL_SYSTICK_CLKSourceConfig(uint32_t CLKSource)
 	/* Check the parameters */
 	assert_param(IS_SYSTICK_CLK_SOURCE(CLKSource));
 	switch (CLKSource) {
-	/* Select HCLK as Systick clock source */
-	case SYSTICK_CLKSOURCE_HCLK:
-		SET_BIT(SysTick->CTRL, SysTick_CTRL_CLKSOURCE_Msk);
-		break;
-	/* Select HCLK_DIV8 as Systick clock source */
-	case SYSTICK_CLKSOURCE_HCLK_DIV8:
-		CLEAR_BIT(SysTick->CTRL, SysTick_CTRL_CLKSOURCE_Msk);
-		MODIFY_REG(RCC->CCIPR1, RCC_CCIPR1_SYSTICKSEL, (0x00000000U));
-		break;
-	/* Select LSI as Systick clock source */
-	case SYSTICK_CLKSOURCE_LSI:
-		CLEAR_BIT(SysTick->CTRL, SysTick_CTRL_CLKSOURCE_Msk);
-		MODIFY_REG(RCC->CCIPR1, RCC_CCIPR1_SYSTICKSEL,
-			   RCC_CCIPR1_SYSTICKSEL_0);
-		break;
-	/* Select LSE as Systick clock source */
-	case SYSTICK_CLKSOURCE_LSE:
-		CLEAR_BIT(SysTick->CTRL, SysTick_CTRL_CLKSOURCE_Msk);
-		MODIFY_REG(RCC->CCIPR1, RCC_CCIPR1_SYSTICKSEL,
-			   RCC_CCIPR1_SYSTICKSEL_1);
-		break;
-	default:
-		/* Nothing to do */
-		break;
+		/* Select HCLK as Systick clock source */
+		case SYSTICK_CLKSOURCE_HCLK:
+			SET_BIT(SysTick->CTRL, SysTick_CTRL_CLKSOURCE_Msk);
+			break;
+		/* Select HCLK_DIV8 as Systick clock source */
+		case SYSTICK_CLKSOURCE_HCLK_DIV8:
+			CLEAR_BIT(SysTick->CTRL, SysTick_CTRL_CLKSOURCE_Msk);
+			MODIFY_REG(RCC->CCIPR1, RCC_CCIPR1_SYSTICKSEL,
+				   (0x00000000U));
+			break;
+		/* Select LSI as Systick clock source */
+		case SYSTICK_CLKSOURCE_LSI:
+			CLEAR_BIT(SysTick->CTRL, SysTick_CTRL_CLKSOURCE_Msk);
+			MODIFY_REG(RCC->CCIPR1, RCC_CCIPR1_SYSTICKSEL,
+				   RCC_CCIPR1_SYSTICKSEL_0);
+			break;
+		/* Select LSE as Systick clock source */
+		case SYSTICK_CLKSOURCE_LSE:
+			CLEAR_BIT(SysTick->CTRL, SysTick_CTRL_CLKSOURCE_Msk);
+			MODIFY_REG(RCC->CCIPR1, RCC_CCIPR1_SYSTICKSEL,
+				   RCC_CCIPR1_SYSTICKSEL_1);
+			break;
+		default:
+			/* Nothing to do */
+			break;
 	}
 }
 
@@ -520,21 +521,21 @@ uint32_t HAL_SYSTICK_GetCLKSourceConfig(void)
 		    READ_BIT(RCC->CCIPR1, RCC_CCIPR1_SYSTICKSEL);
 
 		switch (systick_rcc_source) {
-		case (0x00000000U):
-			systick_source = SYSTICK_CLKSOURCE_HCLK_DIV8;
-			break;
+			case (0x00000000U):
+				systick_source = SYSTICK_CLKSOURCE_HCLK_DIV8;
+				break;
 
-		case (RCC_CCIPR1_SYSTICKSEL_0):
-			systick_source = SYSTICK_CLKSOURCE_LSI;
-			break;
+			case (RCC_CCIPR1_SYSTICKSEL_0):
+				systick_source = SYSTICK_CLKSOURCE_LSI;
+				break;
 
-		case (RCC_CCIPR1_SYSTICKSEL_1):
-			systick_source = SYSTICK_CLKSOURCE_LSE;
-			break;
+			case (RCC_CCIPR1_SYSTICKSEL_1):
+				systick_source = SYSTICK_CLKSOURCE_LSE;
+				break;
 
-		default:
-			systick_source = SYSTICK_CLKSOURCE_HCLK_DIV8;
-			break;
+			default:
+				systick_source = SYSTICK_CLKSOURCE_HCLK_DIV8;
+				break;
 		}
 	}
 	return systick_source;

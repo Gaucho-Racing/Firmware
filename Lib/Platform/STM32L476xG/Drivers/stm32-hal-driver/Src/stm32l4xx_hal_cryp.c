@@ -1273,53 +1273,55 @@ HAL_CRYP_RegisterCallback(CRYP_HandleTypeDef *hcryp,
 
 	if (HAL_CRYP_STATE_READY == hcryp->State) {
 		switch (CallbackID) {
-		case HAL_CRYP_INPUTCPLT_CB_ID:
-			hcryp->InCpltCallback = pCallback;
-			break;
+			case HAL_CRYP_INPUTCPLT_CB_ID:
+				hcryp->InCpltCallback = pCallback;
+				break;
 
-		case HAL_CRYP_OUTPUTCPLT_CB_ID:
-			hcryp->OutCpltCallback = pCallback;
-			break;
+			case HAL_CRYP_OUTPUTCPLT_CB_ID:
+				hcryp->OutCpltCallback = pCallback;
+				break;
 
-		case HAL_CRYP_COMPCPLT_CB_ID:
-			hcryp->CompCpltCallback = pCallback;
-			break;
+			case HAL_CRYP_COMPCPLT_CB_ID:
+				hcryp->CompCpltCallback = pCallback;
+				break;
 
-		case HAL_CRYP_ERROR_CB_ID:
-			hcryp->ErrorCallback = pCallback;
-			break;
+			case HAL_CRYP_ERROR_CB_ID:
+				hcryp->ErrorCallback = pCallback;
+				break;
 
-		case HAL_CRYP_MSPINIT_CB_ID:
-			hcryp->MspInitCallback = pCallback;
-			break;
+			case HAL_CRYP_MSPINIT_CB_ID:
+				hcryp->MspInitCallback = pCallback;
+				break;
 
-		case HAL_CRYP_MSPDEINIT_CB_ID:
-			hcryp->MspDeInitCallback = pCallback;
-			break;
+			case HAL_CRYP_MSPDEINIT_CB_ID:
+				hcryp->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hcryp->ErrorCode |= HAL_CRYP_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hcryp->ErrorCode |=
+				    HAL_CRYP_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_CRYP_STATE_RESET == hcryp->State) {
 		switch (CallbackID) {
-		case HAL_CRYP_MSPINIT_CB_ID:
-			hcryp->MspInitCallback = pCallback;
-			break;
+			case HAL_CRYP_MSPINIT_CB_ID:
+				hcryp->MspInitCallback = pCallback;
+				break;
 
-		case HAL_CRYP_MSPDEINIT_CB_ID:
-			hcryp->MspDeInitCallback = pCallback;
-			break;
+			case HAL_CRYP_MSPDEINIT_CB_ID:
+				hcryp->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hcryp->ErrorCode |= HAL_CRYP_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hcryp->ErrorCode |=
+				    HAL_CRYP_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -1362,75 +1364,89 @@ HAL_CRYP_UnRegisterCallback(CRYP_HandleTypeDef *hcryp,
 
 	if (HAL_CRYP_STATE_READY == hcryp->State) {
 		switch (CallbackID) {
-		case HAL_CRYP_INPUTCPLT_CB_ID:
-			hcryp->InCpltCallback =
-			    HAL_CRYP_InCpltCallback; /* Legacy weak (surcharged)
-							input DMA transfer
-							completion callback */
-			break;
+			case HAL_CRYP_INPUTCPLT_CB_ID:
+				hcryp->InCpltCallback =
+				    HAL_CRYP_InCpltCallback; /* Legacy weak
+								(surcharged)
+								input DMA
+								transfer
+								completion
+								callback */
+				break;
 
-		case HAL_CRYP_OUTPUTCPLT_CB_ID:
-			hcryp->OutCpltCallback =
-			    HAL_CRYP_OutCpltCallback; /* Legacy weak
-							 (surcharged) output DMA
-							 transfer completion
-							 callback */
-			break;
+			case HAL_CRYP_OUTPUTCPLT_CB_ID:
+				hcryp->OutCpltCallback =
+				    HAL_CRYP_OutCpltCallback; /* Legacy weak
+								 (surcharged)
+								 output DMA
+								 transfer
+								 completion
+								 callback */
+				break;
 
-		case HAL_CRYP_COMPCPLT_CB_ID:
-			hcryp->CompCpltCallback =
-			    HAL_CRYPEx_ComputationCpltCallback; /* Legacy weak
-								   (surcharged)
-								   computation
-								   completion
-								   callback */
-			break;
+			case HAL_CRYP_COMPCPLT_CB_ID:
+				hcryp->CompCpltCallback =
+				    HAL_CRYPEx_ComputationCpltCallback; /* Legacy
+									   weak
+									   (surcharged)
+									   computation
+									   completion
+									   callback
+									 */
+				break;
 
-		case HAL_CRYP_ERROR_CB_ID:
-			hcryp->ErrorCallback =
-			    HAL_CRYP_ErrorCallback; /* Legacy weak (surcharged)
-						       error callback */
-			break;
+			case HAL_CRYP_ERROR_CB_ID:
+				hcryp->ErrorCallback =
+				    HAL_CRYP_ErrorCallback; /* Legacy weak
+							       (surcharged)
+							       error callback */
+				break;
 
-		case HAL_CRYP_MSPINIT_CB_ID:
-			hcryp->MspInitCallback =
-			    HAL_CRYP_MspInit; /* Legacy weak (surcharged) Msp
-						 DeInit */
-			break;
+			case HAL_CRYP_MSPINIT_CB_ID:
+				hcryp->MspInitCallback =
+				    HAL_CRYP_MspInit; /* Legacy weak
+							 (surcharged) Msp DeInit
+						       */
+				break;
 
-		case HAL_CRYP_MSPDEINIT_CB_ID:
-			hcryp->MspDeInitCallback =
-			    HAL_CRYP_MspDeInit; /* Legacy weak (surcharged) Msp
-						   DeInit */
-			break;
+			case HAL_CRYP_MSPDEINIT_CB_ID:
+				hcryp->MspDeInitCallback =
+				    HAL_CRYP_MspDeInit; /* Legacy weak
+							   (surcharged) Msp
+							   DeInit */
+				break;
 
-		default:
-			/* Update the error code */
-			hcryp->ErrorCode |= HAL_CRYP_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hcryp->ErrorCode |=
+				    HAL_CRYP_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_CRYP_STATE_RESET == hcryp->State) {
 		switch (CallbackID) {
-		case HAL_CRYP_MSPINIT_CB_ID:
-			hcryp->MspInitCallback =
-			    HAL_CRYP_MspInit; /* Legacy weak (surcharged) Msp
-						 Init */
-			break;
+			case HAL_CRYP_MSPINIT_CB_ID:
+				hcryp->MspInitCallback =
+				    HAL_CRYP_MspInit; /* Legacy weak
+							 (surcharged) Msp Init
+						       */
+				break;
 
-		case HAL_CRYP_MSPDEINIT_CB_ID:
-			hcryp->MspDeInitCallback =
-			    HAL_CRYP_MspDeInit; /* Legacy weak (surcharged) Msp
-						   DeInit */
-			break;
+			case HAL_CRYP_MSPDEINIT_CB_ID:
+				hcryp->MspDeInitCallback =
+				    HAL_CRYP_MspDeInit; /* Legacy weak
+							   (surcharged) Msp
+							   DeInit */
+				break;
 
-		default:
-			/* Update the error code */
-			hcryp->ErrorCode |= HAL_CRYP_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hcryp->ErrorCode |=
+				    HAL_CRYP_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */

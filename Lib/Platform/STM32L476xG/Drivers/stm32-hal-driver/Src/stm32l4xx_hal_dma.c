@@ -932,25 +932,25 @@ HAL_DMA_RegisterCallback(DMA_HandleTypeDef *hdma,
 
 	if (HAL_DMA_STATE_READY == hdma->State) {
 		switch (CallbackID) {
-		case HAL_DMA_XFER_CPLT_CB_ID:
-			hdma->XferCpltCallback = pCallback;
-			break;
+			case HAL_DMA_XFER_CPLT_CB_ID:
+				hdma->XferCpltCallback = pCallback;
+				break;
 
-		case HAL_DMA_XFER_HALFCPLT_CB_ID:
-			hdma->XferHalfCpltCallback = pCallback;
-			break;
+			case HAL_DMA_XFER_HALFCPLT_CB_ID:
+				hdma->XferHalfCpltCallback = pCallback;
+				break;
 
-		case HAL_DMA_XFER_ERROR_CB_ID:
-			hdma->XferErrorCallback = pCallback;
-			break;
+			case HAL_DMA_XFER_ERROR_CB_ID:
+				hdma->XferErrorCallback = pCallback;
+				break;
 
-		case HAL_DMA_XFER_ABORT_CB_ID:
-			hdma->XferAbortCallback = pCallback;
-			break;
+			case HAL_DMA_XFER_ABORT_CB_ID:
+				hdma->XferAbortCallback = pCallback;
+				break;
 
-		default:
-			status = HAL_ERROR;
-			break;
+			default:
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		status = HAL_ERROR;
@@ -981,32 +981,32 @@ HAL_DMA_UnRegisterCallback(DMA_HandleTypeDef *hdma,
 
 	if (HAL_DMA_STATE_READY == hdma->State) {
 		switch (CallbackID) {
-		case HAL_DMA_XFER_CPLT_CB_ID:
-			hdma->XferCpltCallback = NULL;
-			break;
+			case HAL_DMA_XFER_CPLT_CB_ID:
+				hdma->XferCpltCallback = NULL;
+				break;
 
-		case HAL_DMA_XFER_HALFCPLT_CB_ID:
-			hdma->XferHalfCpltCallback = NULL;
-			break;
+			case HAL_DMA_XFER_HALFCPLT_CB_ID:
+				hdma->XferHalfCpltCallback = NULL;
+				break;
 
-		case HAL_DMA_XFER_ERROR_CB_ID:
-			hdma->XferErrorCallback = NULL;
-			break;
+			case HAL_DMA_XFER_ERROR_CB_ID:
+				hdma->XferErrorCallback = NULL;
+				break;
 
-		case HAL_DMA_XFER_ABORT_CB_ID:
-			hdma->XferAbortCallback = NULL;
-			break;
+			case HAL_DMA_XFER_ABORT_CB_ID:
+				hdma->XferAbortCallback = NULL;
+				break;
 
-		case HAL_DMA_XFER_ALL_CB_ID:
-			hdma->XferCpltCallback = NULL;
-			hdma->XferHalfCpltCallback = NULL;
-			hdma->XferErrorCallback = NULL;
-			hdma->XferAbortCallback = NULL;
-			break;
+			case HAL_DMA_XFER_ALL_CB_ID:
+				hdma->XferCpltCallback = NULL;
+				hdma->XferHalfCpltCallback = NULL;
+				hdma->XferErrorCallback = NULL;
+				hdma->XferAbortCallback = NULL;
+				break;
 
-		default:
-			status = HAL_ERROR;
-			break;
+			default:
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		status = HAL_ERROR;

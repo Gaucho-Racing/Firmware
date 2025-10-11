@@ -877,75 +877,77 @@ HAL_StatusTypeDef HAL_I2C_RegisterCallback(I2C_HandleTypeDef *hi2c,
 
 	if (HAL_I2C_STATE_READY == hi2c->State) {
 		switch (CallbackID) {
-		case HAL_I2C_MASTER_TX_COMPLETE_CB_ID:
-			hi2c->MasterTxCpltCallback = pCallback;
-			break;
+			case HAL_I2C_MASTER_TX_COMPLETE_CB_ID:
+				hi2c->MasterTxCpltCallback = pCallback;
+				break;
 
-		case HAL_I2C_MASTER_RX_COMPLETE_CB_ID:
-			hi2c->MasterRxCpltCallback = pCallback;
-			break;
+			case HAL_I2C_MASTER_RX_COMPLETE_CB_ID:
+				hi2c->MasterRxCpltCallback = pCallback;
+				break;
 
-		case HAL_I2C_SLAVE_TX_COMPLETE_CB_ID:
-			hi2c->SlaveTxCpltCallback = pCallback;
-			break;
+			case HAL_I2C_SLAVE_TX_COMPLETE_CB_ID:
+				hi2c->SlaveTxCpltCallback = pCallback;
+				break;
 
-		case HAL_I2C_SLAVE_RX_COMPLETE_CB_ID:
-			hi2c->SlaveRxCpltCallback = pCallback;
-			break;
+			case HAL_I2C_SLAVE_RX_COMPLETE_CB_ID:
+				hi2c->SlaveRxCpltCallback = pCallback;
+				break;
 
-		case HAL_I2C_LISTEN_COMPLETE_CB_ID:
-			hi2c->ListenCpltCallback = pCallback;
-			break;
+			case HAL_I2C_LISTEN_COMPLETE_CB_ID:
+				hi2c->ListenCpltCallback = pCallback;
+				break;
 
-		case HAL_I2C_MEM_TX_COMPLETE_CB_ID:
-			hi2c->MemTxCpltCallback = pCallback;
-			break;
+			case HAL_I2C_MEM_TX_COMPLETE_CB_ID:
+				hi2c->MemTxCpltCallback = pCallback;
+				break;
 
-		case HAL_I2C_MEM_RX_COMPLETE_CB_ID:
-			hi2c->MemRxCpltCallback = pCallback;
-			break;
+			case HAL_I2C_MEM_RX_COMPLETE_CB_ID:
+				hi2c->MemRxCpltCallback = pCallback;
+				break;
 
-		case HAL_I2C_ERROR_CB_ID:
-			hi2c->ErrorCallback = pCallback;
-			break;
+			case HAL_I2C_ERROR_CB_ID:
+				hi2c->ErrorCallback = pCallback;
+				break;
 
-		case HAL_I2C_ABORT_CB_ID:
-			hi2c->AbortCpltCallback = pCallback;
-			break;
+			case HAL_I2C_ABORT_CB_ID:
+				hi2c->AbortCpltCallback = pCallback;
+				break;
 
-		case HAL_I2C_MSPINIT_CB_ID:
-			hi2c->MspInitCallback = pCallback;
-			break;
+			case HAL_I2C_MSPINIT_CB_ID:
+				hi2c->MspInitCallback = pCallback;
+				break;
 
-		case HAL_I2C_MSPDEINIT_CB_ID:
-			hi2c->MspDeInitCallback = pCallback;
-			break;
+			case HAL_I2C_MSPDEINIT_CB_ID:
+				hi2c->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hi2c->ErrorCode |= HAL_I2C_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hi2c->ErrorCode |=
+				    HAL_I2C_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_I2C_STATE_RESET == hi2c->State) {
 		switch (CallbackID) {
-		case HAL_I2C_MSPINIT_CB_ID:
-			hi2c->MspInitCallback = pCallback;
-			break;
+			case HAL_I2C_MSPINIT_CB_ID:
+				hi2c->MspInitCallback = pCallback;
+				break;
 
-		case HAL_I2C_MSPDEINIT_CB_ID:
-			hi2c->MspDeInitCallback = pCallback;
-			break;
+			case HAL_I2C_MSPDEINIT_CB_ID:
+				hi2c->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hi2c->ErrorCode |= HAL_I2C_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hi2c->ErrorCode |=
+				    HAL_I2C_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -996,101 +998,110 @@ HAL_I2C_UnRegisterCallback(I2C_HandleTypeDef *hi2c,
 
 	if (HAL_I2C_STATE_READY == hi2c->State) {
 		switch (CallbackID) {
-		case HAL_I2C_MASTER_TX_COMPLETE_CB_ID:
-			hi2c->MasterTxCpltCallback =
-			    HAL_I2C_MasterTxCpltCallback; /* Legacy weak
-							     MasterTxCpltCallback
-							   */
-			break;
+			case HAL_I2C_MASTER_TX_COMPLETE_CB_ID:
+				hi2c->MasterTxCpltCallback =
+				    HAL_I2C_MasterTxCpltCallback; /* Legacy weak
+								     MasterTxCpltCallback
+								   */
+				break;
 
-		case HAL_I2C_MASTER_RX_COMPLETE_CB_ID:
-			hi2c->MasterRxCpltCallback =
-			    HAL_I2C_MasterRxCpltCallback; /* Legacy weak
-							     MasterRxCpltCallback
-							   */
-			break;
+			case HAL_I2C_MASTER_RX_COMPLETE_CB_ID:
+				hi2c->MasterRxCpltCallback =
+				    HAL_I2C_MasterRxCpltCallback; /* Legacy weak
+								     MasterRxCpltCallback
+								   */
+				break;
 
-		case HAL_I2C_SLAVE_TX_COMPLETE_CB_ID:
-			hi2c->SlaveTxCpltCallback =
-			    HAL_I2C_SlaveTxCpltCallback; /* Legacy weak
-							    SlaveTxCpltCallback
-							  */
-			break;
+			case HAL_I2C_SLAVE_TX_COMPLETE_CB_ID:
+				hi2c->SlaveTxCpltCallback =
+				    HAL_I2C_SlaveTxCpltCallback; /* Legacy weak
+								    SlaveTxCpltCallback
+								  */
+				break;
 
-		case HAL_I2C_SLAVE_RX_COMPLETE_CB_ID:
-			hi2c->SlaveRxCpltCallback =
-			    HAL_I2C_SlaveRxCpltCallback; /* Legacy weak
-							    SlaveRxCpltCallback
-							  */
-			break;
+			case HAL_I2C_SLAVE_RX_COMPLETE_CB_ID:
+				hi2c->SlaveRxCpltCallback =
+				    HAL_I2C_SlaveRxCpltCallback; /* Legacy weak
+								    SlaveRxCpltCallback
+								  */
+				break;
 
-		case HAL_I2C_LISTEN_COMPLETE_CB_ID:
-			hi2c->ListenCpltCallback =
-			    HAL_I2C_ListenCpltCallback; /* Legacy weak
-							   ListenCpltCallback */
-			break;
+			case HAL_I2C_LISTEN_COMPLETE_CB_ID:
+				hi2c->ListenCpltCallback =
+				    HAL_I2C_ListenCpltCallback; /* Legacy weak
+								   ListenCpltCallback
+								 */
+				break;
 
-		case HAL_I2C_MEM_TX_COMPLETE_CB_ID:
-			hi2c->MemTxCpltCallback =
-			    HAL_I2C_MemTxCpltCallback; /* Legacy weak
-							  MemTxCpltCallback */
-			break;
+			case HAL_I2C_MEM_TX_COMPLETE_CB_ID:
+				hi2c->MemTxCpltCallback =
+				    HAL_I2C_MemTxCpltCallback; /* Legacy weak
+								  MemTxCpltCallback
+								*/
+				break;
 
-		case HAL_I2C_MEM_RX_COMPLETE_CB_ID:
-			hi2c->MemRxCpltCallback =
-			    HAL_I2C_MemRxCpltCallback; /* Legacy weak
-							  MemRxCpltCallback */
-			break;
+			case HAL_I2C_MEM_RX_COMPLETE_CB_ID:
+				hi2c->MemRxCpltCallback =
+				    HAL_I2C_MemRxCpltCallback; /* Legacy weak
+								  MemRxCpltCallback
+								*/
+				break;
 
-		case HAL_I2C_ERROR_CB_ID:
-			hi2c->ErrorCallback =
-			    HAL_I2C_ErrorCallback; /* Legacy weak ErrorCallback
-						    */
-			break;
+			case HAL_I2C_ERROR_CB_ID:
+				hi2c->ErrorCallback =
+				    HAL_I2C_ErrorCallback; /* Legacy weak
+							    * ErrorCallback
+							    */
+				break;
 
-		case HAL_I2C_ABORT_CB_ID:
-			hi2c->AbortCpltCallback =
-			    HAL_I2C_AbortCpltCallback; /* Legacy weak
-							  AbortCpltCallback */
-			break;
+			case HAL_I2C_ABORT_CB_ID:
+				hi2c->AbortCpltCallback =
+				    HAL_I2C_AbortCpltCallback; /* Legacy weak
+								  AbortCpltCallback
+								*/
+				break;
 
-		case HAL_I2C_MSPINIT_CB_ID:
-			hi2c->MspInitCallback =
-			    HAL_I2C_MspInit; /* Legacy weak MspInit */
-			break;
+			case HAL_I2C_MSPINIT_CB_ID:
+				hi2c->MspInitCallback =
+				    HAL_I2C_MspInit; /* Legacy weak MspInit */
+				break;
 
-		case HAL_I2C_MSPDEINIT_CB_ID:
-			hi2c->MspDeInitCallback =
-			    HAL_I2C_MspDeInit; /* Legacy weak MspDeInit */
-			break;
+			case HAL_I2C_MSPDEINIT_CB_ID:
+				hi2c->MspDeInitCallback =
+				    HAL_I2C_MspDeInit; /* Legacy weak MspDeInit
+							*/
+				break;
 
-		default:
-			/* Update the error code */
-			hi2c->ErrorCode |= HAL_I2C_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hi2c->ErrorCode |=
+				    HAL_I2C_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_I2C_STATE_RESET == hi2c->State) {
 		switch (CallbackID) {
-		case HAL_I2C_MSPINIT_CB_ID:
-			hi2c->MspInitCallback =
-			    HAL_I2C_MspInit; /* Legacy weak MspInit */
-			break;
+			case HAL_I2C_MSPINIT_CB_ID:
+				hi2c->MspInitCallback =
+				    HAL_I2C_MspInit; /* Legacy weak MspInit */
+				break;
 
-		case HAL_I2C_MSPDEINIT_CB_ID:
-			hi2c->MspDeInitCallback =
-			    HAL_I2C_MspDeInit; /* Legacy weak MspDeInit */
-			break;
+			case HAL_I2C_MSPDEINIT_CB_ID:
+				hi2c->MspDeInitCallback =
+				    HAL_I2C_MspDeInit; /* Legacy weak MspDeInit
+							*/
+				break;
 
-		default:
-			/* Update the error code */
-			hi2c->ErrorCode |= HAL_I2C_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hi2c->ErrorCode |=
+				    HAL_I2C_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */

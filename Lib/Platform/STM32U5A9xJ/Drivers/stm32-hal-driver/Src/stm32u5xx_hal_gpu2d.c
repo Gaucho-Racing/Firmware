@@ -369,20 +369,20 @@ HAL_GPU2D_RegisterCallback(GPU2D_HandleTypeDef *hgpu2d,
 		if ((hgpu2d->State == HAL_GPU2D_STATE_READY) ||
 		    (hgpu2d->State == HAL_GPU2D_STATE_RESET)) {
 			switch (CallbackID) {
-			case HAL_GPU2D_MSPINIT_CB_ID:
-				hgpu2d->MspInitCallback = pCallback;
-				break;
+				case HAL_GPU2D_MSPINIT_CB_ID:
+					hgpu2d->MspInitCallback = pCallback;
+					break;
 
-			case HAL_GPU2D_MSPDEINIT_CB_ID:
-				hgpu2d->MspDeInitCallback = pCallback;
-				break;
+				case HAL_GPU2D_MSPDEINIT_CB_ID:
+					hgpu2d->MspDeInitCallback = pCallback;
+					break;
 
-			default:
-				/* Update the error code */
-				hgpu2d->ErrorCode |=
-				    HAL_GPU2D_ERROR_INVALID_CALLBACK;
-				status = HAL_ERROR;
-				break;
+				default:
+					/* Update the error code */
+					hgpu2d->ErrorCode |=
+					    HAL_GPU2D_ERROR_INVALID_CALLBACK;
+					status = HAL_ERROR;
+					break;
 			}
 		} else {
 			status = HAL_ERROR;
@@ -425,21 +425,24 @@ HAL_GPU2D_UnRegisterCallback(GPU2D_HandleTypeDef *hgpu2d,
 	if ((HAL_GPU2D_STATE_READY == hgpu2d->State) ||
 	    (HAL_GPU2D_STATE_RESET == hgpu2d->State)) {
 		switch (CallbackID) {
-		case HAL_GPU2D_MSPINIT_CB_ID:
-			hgpu2d->MspInitCallback =
-			    HAL_GPU2D_MspInit; /* Legacy weak Msp Init */
-			break;
+			case HAL_GPU2D_MSPINIT_CB_ID:
+				hgpu2d->MspInitCallback =
+				    HAL_GPU2D_MspInit; /* Legacy weak Msp Init
+							*/
+				break;
 
-		case HAL_GPU2D_MSPDEINIT_CB_ID:
-			hgpu2d->MspDeInitCallback =
-			    HAL_GPU2D_MspDeInit; /* Legacy weak Msp DeInit */
-			break;
+			case HAL_GPU2D_MSPDEINIT_CB_ID:
+				hgpu2d->MspDeInitCallback =
+				    HAL_GPU2D_MspDeInit; /* Legacy weak Msp
+							    DeInit */
+				break;
 
-		default:
-			/* Update the error code */
-			hgpu2d->ErrorCode |= HAL_GPU2D_ERROR_INVALID_CALLBACK;
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hgpu2d->ErrorCode |=
+				    HAL_GPU2D_ERROR_INVALID_CALLBACK;
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		status = HAL_ERROR;

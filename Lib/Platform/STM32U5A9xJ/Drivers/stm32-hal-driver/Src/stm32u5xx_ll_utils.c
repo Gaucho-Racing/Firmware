@@ -565,43 +565,45 @@ LL_PLL_ConfigSystemClock_MSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
 		if (LL_RCC_MSI_IsEnabledRangeSelect() != 0U) {
 			msi_range = LL_RCC_MSIS_GetRange();
 			switch (msi_range) {
-			case LL_RCC_MSISRANGE_15: /* MSI = 100 kHz  */
-			case LL_RCC_MSISRANGE_14: /* MSI = 150 kHz  */
-			case LL_RCC_MSISRANGE_13: /* MSI = 200 kHz  */
-			case LL_RCC_MSISRANGE_12: /* MSI = 400 kHz  */
-			case LL_RCC_MSISRANGE_11: /* MSI = 768 kHz  */
-			case LL_RCC_MSISRANGE_10: /* MSI = 1.024 MHz*/
-			case LL_RCC_MSISRANGE_9:  /* MSI = 1.536 MHz*/
-			case LL_RCC_MSISRANGE_8:  /* MSI = 3.072 MHz*/
-			case LL_RCC_MSISRANGE_7:  /* MSI = 1 MHz    */
-			case LL_RCC_MSISRANGE_6:  /* MSI = 1.5 MHz  */
-			case LL_RCC_MSISRANGE_5:  /* MSI = 2 MHz    */
-				/* PLLVCO input frequency is less then 4 MHz*/
-				status = ERROR;
-				break;
+				case LL_RCC_MSISRANGE_15: /* MSI = 100 kHz  */
+				case LL_RCC_MSISRANGE_14: /* MSI = 150 kHz  */
+				case LL_RCC_MSISRANGE_13: /* MSI = 200 kHz  */
+				case LL_RCC_MSISRANGE_12: /* MSI = 400 kHz  */
+				case LL_RCC_MSISRANGE_11: /* MSI = 768 kHz  */
+				case LL_RCC_MSISRANGE_10: /* MSI = 1.024 MHz*/
+				case LL_RCC_MSISRANGE_9:  /* MSI = 1.536 MHz*/
+				case LL_RCC_MSISRANGE_8:  /* MSI = 3.072 MHz*/
+				case LL_RCC_MSISRANGE_7:  /* MSI = 1 MHz    */
+				case LL_RCC_MSISRANGE_6:  /* MSI = 1.5 MHz  */
+				case LL_RCC_MSISRANGE_5:  /* MSI = 2 MHz    */
+					/* PLLVCO input frequency is less then 4
+					 * MHz*/
+					status = ERROR;
+					break;
 
-			case LL_RCC_MSISRANGE_0: /* MSI = 48 MHz   */
-			case LL_RCC_MSISRANGE_1: /* MSI = 24 MHz   */
-			case LL_RCC_MSISRANGE_2: /* MSI = 16 MHz   */
-			case LL_RCC_MSISRANGE_3: /* MSI = 12 MHz   */
-			case LL_RCC_MSISRANGE_4: /* MSI = 4 MHz    */
-			default:
-				break;
+				case LL_RCC_MSISRANGE_0: /* MSI = 48 MHz   */
+				case LL_RCC_MSISRANGE_1: /* MSI = 24 MHz   */
+				case LL_RCC_MSISRANGE_2: /* MSI = 16 MHz   */
+				case LL_RCC_MSISRANGE_3: /* MSI = 12 MHz   */
+				case LL_RCC_MSISRANGE_4: /* MSI = 4 MHz    */
+				default:
+					break;
 			}
 		} else {
 			msi_range = LL_RCC_MSIS_GetRangeAfterStandby();
 			switch (msi_range) {
-			case LL_RCC_MSISSRANGE_5: /* MSI = 2 MHz    */
-			case LL_RCC_MSISSRANGE_6: /* MSI = 1.5 MHz  */
-			case LL_RCC_MSISSRANGE_7: /* MSI = 1 MHz    */
-			case LL_RCC_MSISSRANGE_8: /* MSI = 3.072 MHz*/
-				/* PLLVCO input frequency is less then 4 MHz */
-				status = ERROR;
-				break;
+				case LL_RCC_MSISSRANGE_5: /* MSI = 2 MHz    */
+				case LL_RCC_MSISSRANGE_6: /* MSI = 1.5 MHz  */
+				case LL_RCC_MSISSRANGE_7: /* MSI = 1 MHz    */
+				case LL_RCC_MSISSRANGE_8: /* MSI = 3.072 MHz*/
+					/* PLLVCO input frequency is less then 4
+					 * MHz */
+					status = ERROR;
+					break;
 
-			case LL_RCC_MSISSRANGE_4: /* MSI = 4 MHz    */
-			default:
-				break;
+				case LL_RCC_MSISSRANGE_4: /* MSI = 4 MHz    */
+				default:
+					break;
 			}
 		}
 
