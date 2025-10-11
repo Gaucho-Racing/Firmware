@@ -73,7 +73,7 @@ jobs:
           default_author: github_actions
           message: 'Automatic Gersemi: Standardized formatting automatically'
           fetch: 'false'
-  jq:
+  json-format:
     name: Json Format
     runs-on: ubuntu-latest
     permissions:
@@ -97,5 +97,5 @@ jobs:
           HOME: ${{ github.workspace }}
         with:
           default_author: github_actions
-          message: 'Automatic jq: Standardized formatting automatically'
+          message: 'Automatic Json Format: Standardized formatting automatically'
           fetch: 'false'
