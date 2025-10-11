@@ -797,14 +797,16 @@ typedef void (*pLPTIM_CallbackTypeDef)(
 #define __HAL_LPTIM_CAPTURE_COMPARE_ENABLE(__HANDLE__, __CHANNEL__)            \
 	do {                                                                   \
 		switch (__CHANNEL__) {                                         \
-		case LPTIM_CHANNEL_1:                                          \
-			((__HANDLE__)->Instance->CCMR1 |= LPTIM_CCMR1_CC1E);   \
-			break;                                                 \
-		case LPTIM_CHANNEL_2:                                          \
-			((__HANDLE__)->Instance->CCMR1 |= LPTIM_CCMR1_CC2E);   \
-			break;                                                 \
-		default:                                                       \
-			break;                                                 \
+			case LPTIM_CHANNEL_1:                                  \
+				((__HANDLE__)->Instance->CCMR1 |=              \
+				 LPTIM_CCMR1_CC1E);                            \
+				break;                                         \
+			case LPTIM_CHANNEL_2:                                  \
+				((__HANDLE__)->Instance->CCMR1 |=              \
+				 LPTIM_CCMR1_CC2E);                            \
+				break;                                         \
+			default:                                               \
+				break;                                         \
 		}                                                              \
 	} while (0)
 
@@ -820,14 +822,16 @@ typedef void (*pLPTIM_CallbackTypeDef)(
 #define __HAL_LPTIM_CAPTURE_COMPARE_DISABLE(__HANDLE__, __CHANNEL__)           \
 	do {                                                                   \
 		switch (__CHANNEL__) {                                         \
-		case LPTIM_CHANNEL_1:                                          \
-			((__HANDLE__)->Instance->CCMR1 &= ~LPTIM_CCMR1_CC1E);  \
-			break;                                                 \
-		case LPTIM_CHANNEL_2:                                          \
-			((__HANDLE__)->Instance->CCMR1 &= ~LPTIM_CCMR1_CC2E);  \
-			break;                                                 \
-		default:                                                       \
-			break;                                                 \
+			case LPTIM_CHANNEL_1:                                  \
+				((__HANDLE__)->Instance->CCMR1 &=              \
+				 ~LPTIM_CCMR1_CC1E);                           \
+				break;                                         \
+			case LPTIM_CHANNEL_2:                                  \
+				((__HANDLE__)->Instance->CCMR1 &=              \
+				 ~LPTIM_CCMR1_CC2E);                           \
+				break;                                         \
+			default:                                               \
+				break;                                         \
 		}                                                              \
 	} while (0)
 

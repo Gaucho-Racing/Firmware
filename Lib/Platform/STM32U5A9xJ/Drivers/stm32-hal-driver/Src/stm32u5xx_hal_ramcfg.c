@@ -940,49 +940,51 @@ HAL_RAMCFG_RegisterCallback(RAMCFG_HandleTypeDef *hramcfg,
 	/* Check RAMCFG state */
 	if (hramcfg->State == HAL_RAMCFG_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_RAMCFG_SE_DETECT_CB_ID:
-			/* Register single error callback */
-			hramcfg->DetectSingleErrorCallback = pCallback;
-			break;
+			case HAL_RAMCFG_SE_DETECT_CB_ID:
+				/* Register single error callback */
+				hramcfg->DetectSingleErrorCallback = pCallback;
+				break;
 
-		case HAL_RAMCFG_DE_DETECT_CB_ID:
-			/* Register double error callback */
-			hramcfg->DetectDoubleErrorCallback = pCallback;
-			break;
+			case HAL_RAMCFG_DE_DETECT_CB_ID:
+				/* Register double error callback */
+				hramcfg->DetectDoubleErrorCallback = pCallback;
+				break;
 
-		case HAL_RAMCFG_MSPINIT_CB_ID:
-			/* Register msp init callback */
-			hramcfg->MspInitCallback = pCallback;
-			break;
+			case HAL_RAMCFG_MSPINIT_CB_ID:
+				/* Register msp init callback */
+				hramcfg->MspInitCallback = pCallback;
+				break;
 
-		case HAL_RAMCFG_MSPDEINIT_CB_ID:
-			/* Register msp de-init callback */
-			hramcfg->MspDeInitCallback = pCallback;
-			break;
+			case HAL_RAMCFG_MSPDEINIT_CB_ID:
+				/* Register msp de-init callback */
+				hramcfg->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code and return error */
-			hramcfg->ErrorCode |= HAL_RAMCFG_ERROR_INVALID_CALLBACK;
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code and return error */
+				hramcfg->ErrorCode |=
+				    HAL_RAMCFG_ERROR_INVALID_CALLBACK;
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hramcfg->State == HAL_RAMCFG_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_RAMCFG_MSPINIT_CB_ID:
-			/* Register msp init callback */
-			hramcfg->MspInitCallback = pCallback;
-			break;
+			case HAL_RAMCFG_MSPINIT_CB_ID:
+				/* Register msp init callback */
+				hramcfg->MspInitCallback = pCallback;
+				break;
 
-		case HAL_RAMCFG_MSPDEINIT_CB_ID:
-			/* Register msp de-init callback */
-			hramcfg->MspDeInitCallback = pCallback;
-			break;
+			case HAL_RAMCFG_MSPDEINIT_CB_ID:
+				/* Register msp de-init callback */
+				hramcfg->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code and return error */
-			hramcfg->ErrorCode |= HAL_RAMCFG_ERROR_INVALID_CALLBACK;
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code and return error */
+				hramcfg->ErrorCode |=
+				    HAL_RAMCFG_ERROR_INVALID_CALLBACK;
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code and return error  */
@@ -1014,64 +1016,65 @@ HAL_RAMCFG_UnRegisterCallback(RAMCFG_HandleTypeDef *hramcfg,
 	/* Check RAMCFG state */
 	if (hramcfg->State == HAL_RAMCFG_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_RAMCFG_SE_DETECT_CB_ID:
-			/* UnRegister single error callback */
-			hramcfg->DetectSingleErrorCallback = NULL;
-			break;
+			case HAL_RAMCFG_SE_DETECT_CB_ID:
+				/* UnRegister single error callback */
+				hramcfg->DetectSingleErrorCallback = NULL;
+				break;
 
-		case HAL_RAMCFG_DE_DETECT_CB_ID:
-			/* UnRegister double error callback */
-			hramcfg->DetectDoubleErrorCallback = NULL;
-			break;
+			case HAL_RAMCFG_DE_DETECT_CB_ID:
+				/* UnRegister double error callback */
+				hramcfg->DetectDoubleErrorCallback = NULL;
+				break;
 
-		case HAL_RAMCFG_MSPINIT_CB_ID:
-			/* UnRegister msp init callback */
-			hramcfg->MspInitCallback = NULL;
-			break;
+			case HAL_RAMCFG_MSPINIT_CB_ID:
+				/* UnRegister msp init callback */
+				hramcfg->MspInitCallback = NULL;
+				break;
 
-		case HAL_RAMCFG_MSPDEINIT_CB_ID:
-			/* UnRegister msp de-init callback */
-			hramcfg->MspDeInitCallback = NULL;
-			break;
+			case HAL_RAMCFG_MSPDEINIT_CB_ID:
+				/* UnRegister msp de-init callback */
+				hramcfg->MspDeInitCallback = NULL;
+				break;
 
-		case HAL_RAMCFG_ALL_CB_ID:
-			/* UnRegister all available callbacks */
-			hramcfg->DetectSingleErrorCallback = NULL;
-			hramcfg->DetectDoubleErrorCallback = NULL;
-			hramcfg->MspDeInitCallback = NULL;
-			hramcfg->MspInitCallback = NULL;
-			break;
+			case HAL_RAMCFG_ALL_CB_ID:
+				/* UnRegister all available callbacks */
+				hramcfg->DetectSingleErrorCallback = NULL;
+				hramcfg->DetectDoubleErrorCallback = NULL;
+				hramcfg->MspDeInitCallback = NULL;
+				hramcfg->MspInitCallback = NULL;
+				break;
 
-		default:
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hramcfg->State == HAL_RAMCFG_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_RAMCFG_MSPINIT_CB_ID:
-			/* UnRegister msp init callback */
-			hramcfg->MspInitCallback = NULL;
-			break;
+			case HAL_RAMCFG_MSPINIT_CB_ID:
+				/* UnRegister msp init callback */
+				hramcfg->MspInitCallback = NULL;
+				break;
 
-		case HAL_RAMCFG_MSPDEINIT_CB_ID:
-			/* UnRegister msp de-init callback */
-			hramcfg->MspDeInitCallback = NULL;
-			break;
+			case HAL_RAMCFG_MSPDEINIT_CB_ID:
+				/* UnRegister msp de-init callback */
+				hramcfg->MspDeInitCallback = NULL;
+				break;
 
-		case HAL_RAMCFG_ALL_CB_ID:
-			/* UnRegister all available callbacks */
-			hramcfg->MspDeInitCallback = NULL;
-			hramcfg->MspInitCallback = NULL;
-			break;
+			case HAL_RAMCFG_ALL_CB_ID:
+				/* UnRegister all available callbacks */
+				hramcfg->MspDeInitCallback = NULL;
+				hramcfg->MspInitCallback = NULL;
+				break;
 
-		default:
-			/* Update the error code */
-			hramcfg->ErrorCode |= HAL_RAMCFG_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hramcfg->ErrorCode |=
+				    HAL_RAMCFG_ERROR_INVALID_CALLBACK;
 
-			/* Update return status */
-			status = HAL_ERROR;
-			break;
+				/* Update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code and return error */

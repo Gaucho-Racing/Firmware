@@ -705,18 +705,18 @@ HAL_StatusTypeDef HAL_DAC_Start_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel,
 
 		/* Case of use of channel 1 */
 		switch (Alignment) {
-		case DAC_ALIGN_12B_R:
-			/* Get DHR12R1 address */
-			tmpreg = (uint32_t)&hdac->Instance->DHR12R1;
-			break;
-		case DAC_ALIGN_12B_L:
-			/* Get DHR12L1 address */
-			tmpreg = (uint32_t)&hdac->Instance->DHR12L1;
-			break;
-		default: /* case DAC_ALIGN_8B_R */
-			/* Get DHR8R1 address */
-			tmpreg = (uint32_t)&hdac->Instance->DHR8R1;
-			break;
+			case DAC_ALIGN_12B_R:
+				/* Get DHR12R1 address */
+				tmpreg = (uint32_t)&hdac->Instance->DHR12R1;
+				break;
+			case DAC_ALIGN_12B_L:
+				/* Get DHR12L1 address */
+				tmpreg = (uint32_t)&hdac->Instance->DHR12L1;
+				break;
+			default: /* case DAC_ALIGN_8B_R */
+				/* Get DHR8R1 address */
+				tmpreg = (uint32_t)&hdac->Instance->DHR8R1;
+				break;
 		}
 	}
 
@@ -736,18 +736,18 @@ HAL_StatusTypeDef HAL_DAC_Start_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel,
 
 		/* Case of use of channel 2 */
 		switch (Alignment) {
-		case DAC_ALIGN_12B_R:
-			/* Get DHR12R2 address */
-			tmpreg = (uint32_t)&hdac->Instance->DHR12R2;
-			break;
-		case DAC_ALIGN_12B_L:
-			/* Get DHR12L2 address */
-			tmpreg = (uint32_t)&hdac->Instance->DHR12L2;
-			break;
-		default: /* case DAC_ALIGN_8B_R */
-			/* Get DHR8R2 address */
-			tmpreg = (uint32_t)&hdac->Instance->DHR8R2;
-			break;
+			case DAC_ALIGN_12B_R:
+				/* Get DHR12R2 address */
+				tmpreg = (uint32_t)&hdac->Instance->DHR12R2;
+				break;
+			case DAC_ALIGN_12B_L:
+				/* Get DHR12L2 address */
+				tmpreg = (uint32_t)&hdac->Instance->DHR12L2;
+				break;
+			default: /* case DAC_ALIGN_8B_R */
+				/* Get DHR8R2 address */
+				tmpreg = (uint32_t)&hdac->Instance->DHR8R2;
+				break;
 		}
 	}
 
@@ -1595,59 +1595,61 @@ HAL_StatusTypeDef HAL_DAC_RegisterCallback(DAC_HandleTypeDef *hdac,
 
 	if (hdac->State == HAL_DAC_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_DAC_CH1_COMPLETE_CB_ID:
-			hdac->ConvCpltCallbackCh1 = pCallback;
-			break;
-		case HAL_DAC_CH1_HALF_COMPLETE_CB_ID:
-			hdac->ConvHalfCpltCallbackCh1 = pCallback;
-			break;
-		case HAL_DAC_CH1_ERROR_ID:
-			hdac->ErrorCallbackCh1 = pCallback;
-			break;
-		case HAL_DAC_CH1_UNDERRUN_CB_ID:
-			hdac->DMAUnderrunCallbackCh1 = pCallback;
-			break;
+			case HAL_DAC_CH1_COMPLETE_CB_ID:
+				hdac->ConvCpltCallbackCh1 = pCallback;
+				break;
+			case HAL_DAC_CH1_HALF_COMPLETE_CB_ID:
+				hdac->ConvHalfCpltCallbackCh1 = pCallback;
+				break;
+			case HAL_DAC_CH1_ERROR_ID:
+				hdac->ErrorCallbackCh1 = pCallback;
+				break;
+			case HAL_DAC_CH1_UNDERRUN_CB_ID:
+				hdac->DMAUnderrunCallbackCh1 = pCallback;
+				break;
 
-		case HAL_DAC_CH2_COMPLETE_CB_ID:
-			hdac->ConvCpltCallbackCh2 = pCallback;
-			break;
-		case HAL_DAC_CH2_HALF_COMPLETE_CB_ID:
-			hdac->ConvHalfCpltCallbackCh2 = pCallback;
-			break;
-		case HAL_DAC_CH2_ERROR_ID:
-			hdac->ErrorCallbackCh2 = pCallback;
-			break;
-		case HAL_DAC_CH2_UNDERRUN_CB_ID:
-			hdac->DMAUnderrunCallbackCh2 = pCallback;
-			break;
+			case HAL_DAC_CH2_COMPLETE_CB_ID:
+				hdac->ConvCpltCallbackCh2 = pCallback;
+				break;
+			case HAL_DAC_CH2_HALF_COMPLETE_CB_ID:
+				hdac->ConvHalfCpltCallbackCh2 = pCallback;
+				break;
+			case HAL_DAC_CH2_ERROR_ID:
+				hdac->ErrorCallbackCh2 = pCallback;
+				break;
+			case HAL_DAC_CH2_UNDERRUN_CB_ID:
+				hdac->DMAUnderrunCallbackCh2 = pCallback;
+				break;
 
-		case HAL_DAC_MSPINIT_CB_ID:
-			hdac->MspInitCallback = pCallback;
-			break;
-		case HAL_DAC_MSPDEINIT_CB_ID:
-			hdac->MspDeInitCallback = pCallback;
-			break;
-		default:
-			/* Update the error code */
-			hdac->ErrorCode |= HAL_DAC_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_DAC_MSPINIT_CB_ID:
+				hdac->MspInitCallback = pCallback;
+				break;
+			case HAL_DAC_MSPDEINIT_CB_ID:
+				hdac->MspDeInitCallback = pCallback;
+				break;
+			default:
+				/* Update the error code */
+				hdac->ErrorCode |=
+				    HAL_DAC_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hdac->State == HAL_DAC_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_DAC_MSPINIT_CB_ID:
-			hdac->MspInitCallback = pCallback;
-			break;
-		case HAL_DAC_MSPDEINIT_CB_ID:
-			hdac->MspDeInitCallback = pCallback;
-			break;
-		default:
-			/* Update the error code */
-			hdac->ErrorCode |= HAL_DAC_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_DAC_MSPINIT_CB_ID:
+				hdac->MspInitCallback = pCallback;
+				break;
+			case HAL_DAC_MSPDEINIT_CB_ID:
+				hdac->MspDeInitCallback = pCallback;
+				break;
+			default:
+				/* Update the error code */
+				hdac->ErrorCode |=
+				    HAL_DAC_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -1705,83 +1707,91 @@ HAL_DAC_UnRegisterCallback(DAC_HandleTypeDef *hdac,
 
 	if (hdac->State == HAL_DAC_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_DAC_CH1_COMPLETE_CB_ID:
-			hdac->ConvCpltCallbackCh1 = HAL_DAC_ConvCpltCallbackCh1;
-			break;
-		case HAL_DAC_CH1_HALF_COMPLETE_CB_ID:
-			hdac->ConvHalfCpltCallbackCh1 =
-			    HAL_DAC_ConvHalfCpltCallbackCh1;
-			break;
-		case HAL_DAC_CH1_ERROR_ID:
-			hdac->ErrorCallbackCh1 = HAL_DAC_ErrorCallbackCh1;
-			break;
-		case HAL_DAC_CH1_UNDERRUN_CB_ID:
-			hdac->DMAUnderrunCallbackCh1 =
-			    HAL_DAC_DMAUnderrunCallbackCh1;
-			break;
+			case HAL_DAC_CH1_COMPLETE_CB_ID:
+				hdac->ConvCpltCallbackCh1 =
+				    HAL_DAC_ConvCpltCallbackCh1;
+				break;
+			case HAL_DAC_CH1_HALF_COMPLETE_CB_ID:
+				hdac->ConvHalfCpltCallbackCh1 =
+				    HAL_DAC_ConvHalfCpltCallbackCh1;
+				break;
+			case HAL_DAC_CH1_ERROR_ID:
+				hdac->ErrorCallbackCh1 =
+				    HAL_DAC_ErrorCallbackCh1;
+				break;
+			case HAL_DAC_CH1_UNDERRUN_CB_ID:
+				hdac->DMAUnderrunCallbackCh1 =
+				    HAL_DAC_DMAUnderrunCallbackCh1;
+				break;
 
-		case HAL_DAC_CH2_COMPLETE_CB_ID:
-			hdac->ConvCpltCallbackCh2 =
-			    HAL_DACEx_ConvCpltCallbackCh2;
-			break;
-		case HAL_DAC_CH2_HALF_COMPLETE_CB_ID:
-			hdac->ConvHalfCpltCallbackCh2 =
-			    HAL_DACEx_ConvHalfCpltCallbackCh2;
-			break;
-		case HAL_DAC_CH2_ERROR_ID:
-			hdac->ErrorCallbackCh2 = HAL_DACEx_ErrorCallbackCh2;
-			break;
-		case HAL_DAC_CH2_UNDERRUN_CB_ID:
-			hdac->DMAUnderrunCallbackCh2 =
-			    HAL_DACEx_DMAUnderrunCallbackCh2;
-			break;
+			case HAL_DAC_CH2_COMPLETE_CB_ID:
+				hdac->ConvCpltCallbackCh2 =
+				    HAL_DACEx_ConvCpltCallbackCh2;
+				break;
+			case HAL_DAC_CH2_HALF_COMPLETE_CB_ID:
+				hdac->ConvHalfCpltCallbackCh2 =
+				    HAL_DACEx_ConvHalfCpltCallbackCh2;
+				break;
+			case HAL_DAC_CH2_ERROR_ID:
+				hdac->ErrorCallbackCh2 =
+				    HAL_DACEx_ErrorCallbackCh2;
+				break;
+			case HAL_DAC_CH2_UNDERRUN_CB_ID:
+				hdac->DMAUnderrunCallbackCh2 =
+				    HAL_DACEx_DMAUnderrunCallbackCh2;
+				break;
 
-		case HAL_DAC_MSPINIT_CB_ID:
-			hdac->MspInitCallback = HAL_DAC_MspInit;
-			break;
-		case HAL_DAC_MSPDEINIT_CB_ID:
-			hdac->MspDeInitCallback = HAL_DAC_MspDeInit;
-			break;
-		case HAL_DAC_ALL_CB_ID:
-			hdac->ConvCpltCallbackCh1 = HAL_DAC_ConvCpltCallbackCh1;
-			hdac->ConvHalfCpltCallbackCh1 =
-			    HAL_DAC_ConvHalfCpltCallbackCh1;
-			hdac->ErrorCallbackCh1 = HAL_DAC_ErrorCallbackCh1;
-			hdac->DMAUnderrunCallbackCh1 =
-			    HAL_DAC_DMAUnderrunCallbackCh1;
+			case HAL_DAC_MSPINIT_CB_ID:
+				hdac->MspInitCallback = HAL_DAC_MspInit;
+				break;
+			case HAL_DAC_MSPDEINIT_CB_ID:
+				hdac->MspDeInitCallback = HAL_DAC_MspDeInit;
+				break;
+			case HAL_DAC_ALL_CB_ID:
+				hdac->ConvCpltCallbackCh1 =
+				    HAL_DAC_ConvCpltCallbackCh1;
+				hdac->ConvHalfCpltCallbackCh1 =
+				    HAL_DAC_ConvHalfCpltCallbackCh1;
+				hdac->ErrorCallbackCh1 =
+				    HAL_DAC_ErrorCallbackCh1;
+				hdac->DMAUnderrunCallbackCh1 =
+				    HAL_DAC_DMAUnderrunCallbackCh1;
 
-			hdac->ConvCpltCallbackCh2 =
-			    HAL_DACEx_ConvCpltCallbackCh2;
-			hdac->ConvHalfCpltCallbackCh2 =
-			    HAL_DACEx_ConvHalfCpltCallbackCh2;
-			hdac->ErrorCallbackCh2 = HAL_DACEx_ErrorCallbackCh2;
-			hdac->DMAUnderrunCallbackCh2 =
-			    HAL_DACEx_DMAUnderrunCallbackCh2;
+				hdac->ConvCpltCallbackCh2 =
+				    HAL_DACEx_ConvCpltCallbackCh2;
+				hdac->ConvHalfCpltCallbackCh2 =
+				    HAL_DACEx_ConvHalfCpltCallbackCh2;
+				hdac->ErrorCallbackCh2 =
+				    HAL_DACEx_ErrorCallbackCh2;
+				hdac->DMAUnderrunCallbackCh2 =
+				    HAL_DACEx_DMAUnderrunCallbackCh2;
 
-			hdac->MspInitCallback = HAL_DAC_MspInit;
-			hdac->MspDeInitCallback = HAL_DAC_MspDeInit;
-			break;
-		default:
-			/* Update the error code */
-			hdac->ErrorCode |= HAL_DAC_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+				hdac->MspInitCallback = HAL_DAC_MspInit;
+				hdac->MspDeInitCallback = HAL_DAC_MspDeInit;
+				break;
+			default:
+				/* Update the error code */
+				hdac->ErrorCode |=
+				    HAL_DAC_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hdac->State == HAL_DAC_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_DAC_MSPINIT_CB_ID:
-			hdac->MspInitCallback = HAL_DAC_MspInit;
-			break;
-		case HAL_DAC_MSPDEINIT_CB_ID:
-			hdac->MspDeInitCallback = HAL_DAC_MspDeInit;
-			break;
-		default:
-			/* Update the error code */
-			hdac->ErrorCode |= HAL_DAC_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_DAC_MSPINIT_CB_ID:
+				hdac->MspInitCallback = HAL_DAC_MspInit;
+				break;
+			case HAL_DAC_MSPDEINIT_CB_ID:
+				hdac->MspDeInitCallback = HAL_DAC_MspDeInit;
+				break;
+			default:
+				/* Update the error code */
+				hdac->ErrorCode |=
+				    HAL_DAC_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */

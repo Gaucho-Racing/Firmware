@@ -465,49 +465,51 @@ HAL_LTDC_RegisterCallback(LTDC_HandleTypeDef *hltdc,
 
 	if (hltdc->State == HAL_LTDC_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_LTDC_LINE_EVENT_CB_ID:
-			hltdc->LineEventCallback = pCallback;
-			break;
+			case HAL_LTDC_LINE_EVENT_CB_ID:
+				hltdc->LineEventCallback = pCallback;
+				break;
 
-		case HAL_LTDC_RELOAD_EVENT_CB_ID:
-			hltdc->ReloadEventCallback = pCallback;
-			break;
+			case HAL_LTDC_RELOAD_EVENT_CB_ID:
+				hltdc->ReloadEventCallback = pCallback;
+				break;
 
-		case HAL_LTDC_ERROR_CB_ID:
-			hltdc->ErrorCallback = pCallback;
-			break;
+			case HAL_LTDC_ERROR_CB_ID:
+				hltdc->ErrorCallback = pCallback;
+				break;
 
-		case HAL_LTDC_MSPINIT_CB_ID:
-			hltdc->MspInitCallback = pCallback;
-			break;
+			case HAL_LTDC_MSPINIT_CB_ID:
+				hltdc->MspInitCallback = pCallback;
+				break;
 
-		case HAL_LTDC_MSPDEINIT_CB_ID:
-			hltdc->MspDeInitCallback = pCallback;
-			break;
+			case HAL_LTDC_MSPDEINIT_CB_ID:
+				hltdc->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hltdc->ErrorCode |= HAL_LTDC_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hltdc->ErrorCode |=
+				    HAL_LTDC_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hltdc->State == HAL_LTDC_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_LTDC_MSPINIT_CB_ID:
-			hltdc->MspInitCallback = pCallback;
-			break;
+			case HAL_LTDC_MSPINIT_CB_ID:
+				hltdc->MspInitCallback = pCallback;
+				break;
 
-		case HAL_LTDC_MSPDEINIT_CB_ID:
-			hltdc->MspDeInitCallback = pCallback;
-			break;
+			case HAL_LTDC_MSPDEINIT_CB_ID:
+				hltdc->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hltdc->ErrorCode |= HAL_LTDC_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hltdc->ErrorCode |=
+				    HAL_LTDC_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -546,62 +548,68 @@ HAL_LTDC_UnRegisterCallback(LTDC_HandleTypeDef *hltdc,
 
 	if (hltdc->State == HAL_LTDC_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_LTDC_LINE_EVENT_CB_ID:
-			hltdc->LineEventCallback =
-			    HAL_LTDC_LineEventCallback; /* Legacy weak
-							   LineEventCallback */
-			break;
+			case HAL_LTDC_LINE_EVENT_CB_ID:
+				hltdc->LineEventCallback =
+				    HAL_LTDC_LineEventCallback; /* Legacy weak
+								   LineEventCallback
+								 */
+				break;
 
-		case HAL_LTDC_RELOAD_EVENT_CB_ID:
-			hltdc->ReloadEventCallback =
-			    HAL_LTDC_ReloadEventCallback; /* Legacy weak
-							     ReloadEventCallback
-							   */
-			break;
+			case HAL_LTDC_RELOAD_EVENT_CB_ID:
+				hltdc->ReloadEventCallback =
+				    HAL_LTDC_ReloadEventCallback; /* Legacy weak
+								     ReloadEventCallback
+								   */
+				break;
 
-		case HAL_LTDC_ERROR_CB_ID:
-			hltdc->ErrorCallback =
-			    HAL_LTDC_ErrorCallback; /* Legacy weak ErrorCallback
-						     */
-			break;
+			case HAL_LTDC_ERROR_CB_ID:
+				hltdc->ErrorCallback =
+				    HAL_LTDC_ErrorCallback; /* Legacy weak
+							     * ErrorCallback
+							     */
+				break;
 
-		case HAL_LTDC_MSPINIT_CB_ID:
-			hltdc->MspInitCallback =
-			    HAL_LTDC_MspInit; /* Legcay weak MspInit Callback */
-			break;
+			case HAL_LTDC_MSPINIT_CB_ID:
+				hltdc->MspInitCallback =
+				    HAL_LTDC_MspInit; /* Legcay weak MspInit
+							 Callback */
+				break;
 
-		case HAL_LTDC_MSPDEINIT_CB_ID:
-			hltdc->MspDeInitCallback =
-			    HAL_LTDC_MspDeInit; /* Legcay weak MspDeInit
-						   Callback     */
-			break;
+			case HAL_LTDC_MSPDEINIT_CB_ID:
+				hltdc->MspDeInitCallback =
+				    HAL_LTDC_MspDeInit; /* Legcay weak MspDeInit
+							   Callback     */
+				break;
 
-		default:
-			/* Update the error code */
-			hltdc->ErrorCode |= HAL_LTDC_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hltdc->ErrorCode |=
+				    HAL_LTDC_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hltdc->State == HAL_LTDC_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_LTDC_MSPINIT_CB_ID:
-			hltdc->MspInitCallback =
-			    HAL_LTDC_MspInit; /* Legcay weak MspInit Callback */
-			break;
+			case HAL_LTDC_MSPINIT_CB_ID:
+				hltdc->MspInitCallback =
+				    HAL_LTDC_MspInit; /* Legcay weak MspInit
+							 Callback */
+				break;
 
-		case HAL_LTDC_MSPDEINIT_CB_ID:
-			hltdc->MspDeInitCallback =
-			    HAL_LTDC_MspDeInit; /* Legcay weak MspDeInit
-						   Callback     */
-			break;
+			case HAL_LTDC_MSPDEINIT_CB_ID:
+				hltdc->MspDeInitCallback =
+				    HAL_LTDC_MspDeInit; /* Legcay weak MspDeInit
+							   Callback     */
+				break;
 
-		default:
-			/* Update the error code */
-			hltdc->ErrorCode |= HAL_LTDC_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hltdc->ErrorCode |=
+				    HAL_LTDC_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */

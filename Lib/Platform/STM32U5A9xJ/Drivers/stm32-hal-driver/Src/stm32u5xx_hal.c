@@ -259,27 +259,27 @@ __weak HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 	} else {
 		systicksel = HAL_SYSTICK_GetCLKSourceConfig();
 		switch (systicksel) {
-		/* HCLK_DIV8 selected as SysTick clock source */
-		case SYSTICK_CLKSOURCE_HCLK_DIV8:
-			/* Calculate tick value */
-			ticknumber =
-			    (SystemCoreClock / (8000UL / (uint32_t)uwTickFreq));
-			break;
-		/* LSI selected as SysTick clock source */
-		case SYSTICK_CLKSOURCE_LSI:
-			/* Calculate tick value */
-			ticknumber =
-			    (LSI_VALUE / (1000UL / (uint32_t)uwTickFreq));
-			break;
-		/* LSE selected as SysTick clock source */
-		case SYSTICK_CLKSOURCE_LSE:
-			/* Calculate tick value */
-			ticknumber =
-			    (LSE_VALUE / (1000UL / (uint32_t)uwTickFreq));
-			break;
-		default:
-			/* Nothing to do */
-			break;
+			/* HCLK_DIV8 selected as SysTick clock source */
+			case SYSTICK_CLKSOURCE_HCLK_DIV8:
+				/* Calculate tick value */
+				ticknumber = (SystemCoreClock /
+					      (8000UL / (uint32_t)uwTickFreq));
+				break;
+			/* LSI selected as SysTick clock source */
+			case SYSTICK_CLKSOURCE_LSI:
+				/* Calculate tick value */
+				ticknumber = (LSI_VALUE /
+					      (1000UL / (uint32_t)uwTickFreq));
+				break;
+			/* LSE selected as SysTick clock source */
+			case SYSTICK_CLKSOURCE_LSE:
+				/* Calculate tick value */
+				ticknumber = (LSE_VALUE /
+					      (1000UL / (uint32_t)uwTickFreq));
+				break;
+			default:
+				/* Nothing to do */
+				break;
 		}
 	}
 

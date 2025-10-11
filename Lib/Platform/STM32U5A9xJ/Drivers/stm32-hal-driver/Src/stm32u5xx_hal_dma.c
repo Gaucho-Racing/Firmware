@@ -1160,41 +1160,41 @@ HAL_StatusTypeDef HAL_DMA_RegisterCallback(
 	if (hdma->State == HAL_DMA_STATE_READY) {
 		/* Check callback ID */
 		switch (CallbackID) {
-		case HAL_DMA_XFER_CPLT_CB_ID: {
-			/* Register transfer complete callback */
-			hdma->XferCpltCallback = pCallback;
-			break;
-		}
+			case HAL_DMA_XFER_CPLT_CB_ID: {
+				/* Register transfer complete callback */
+				hdma->XferCpltCallback = pCallback;
+				break;
+			}
 
-		case HAL_DMA_XFER_HALFCPLT_CB_ID: {
-			/* Register half transfer callback */
-			hdma->XferHalfCpltCallback = pCallback;
-			break;
-		}
+			case HAL_DMA_XFER_HALFCPLT_CB_ID: {
+				/* Register half transfer callback */
+				hdma->XferHalfCpltCallback = pCallback;
+				break;
+			}
 
-		case HAL_DMA_XFER_ERROR_CB_ID: {
-			/* Register transfer error callback */
-			hdma->XferErrorCallback = pCallback;
-			break;
-		}
+			case HAL_DMA_XFER_ERROR_CB_ID: {
+				/* Register transfer error callback */
+				hdma->XferErrorCallback = pCallback;
+				break;
+			}
 
-		case HAL_DMA_XFER_ABORT_CB_ID: {
-			/* Register abort callback */
-			hdma->XferAbortCallback = pCallback;
-			break;
-		}
+			case HAL_DMA_XFER_ABORT_CB_ID: {
+				/* Register abort callback */
+				hdma->XferAbortCallback = pCallback;
+				break;
+			}
 
-		case HAL_DMA_XFER_SUSPEND_CB_ID: {
-			/* Register suspend callback */
-			hdma->XferSuspendCallback = pCallback;
-			break;
-		}
+			case HAL_DMA_XFER_SUSPEND_CB_ID: {
+				/* Register suspend callback */
+				hdma->XferSuspendCallback = pCallback;
+				break;
+			}
 
-		default: {
-			/* Update error status */
-			status = HAL_ERROR;
-			break;
-		}
+			default: {
+				/* Update error status */
+				status = HAL_ERROR;
+				break;
+			}
 		}
 	} else {
 		/* Update error status */
@@ -1230,51 +1230,51 @@ HAL_DMA_UnRegisterCallback(DMA_HandleTypeDef *const hdma,
 	if (hdma->State == HAL_DMA_STATE_READY) {
 		/* Check callback ID */
 		switch (CallbackID) {
-		case HAL_DMA_XFER_CPLT_CB_ID: {
-			/* UnRegister transfer complete callback */
-			hdma->XferCpltCallback = NULL;
-			break;
-		}
+			case HAL_DMA_XFER_CPLT_CB_ID: {
+				/* UnRegister transfer complete callback */
+				hdma->XferCpltCallback = NULL;
+				break;
+			}
 
-		case HAL_DMA_XFER_HALFCPLT_CB_ID: {
-			/* UnRegister half transfer callback */
-			hdma->XferHalfCpltCallback = NULL;
-			break;
-		}
+			case HAL_DMA_XFER_HALFCPLT_CB_ID: {
+				/* UnRegister half transfer callback */
+				hdma->XferHalfCpltCallback = NULL;
+				break;
+			}
 
-		case HAL_DMA_XFER_ERROR_CB_ID: {
-			/* UnRegister transfer error callback */
-			hdma->XferErrorCallback = NULL;
-			break;
-		}
+			case HAL_DMA_XFER_ERROR_CB_ID: {
+				/* UnRegister transfer error callback */
+				hdma->XferErrorCallback = NULL;
+				break;
+			}
 
-		case HAL_DMA_XFER_ABORT_CB_ID: {
-			/* UnRegister abort callback */
-			hdma->XferAbortCallback = NULL;
-			break;
-		}
+			case HAL_DMA_XFER_ABORT_CB_ID: {
+				/* UnRegister abort callback */
+				hdma->XferAbortCallback = NULL;
+				break;
+			}
 
-		case HAL_DMA_XFER_SUSPEND_CB_ID: {
-			/* UnRegister suspend callback */
-			hdma->XferSuspendCallback = NULL;
-			break;
-		}
+			case HAL_DMA_XFER_SUSPEND_CB_ID: {
+				/* UnRegister suspend callback */
+				hdma->XferSuspendCallback = NULL;
+				break;
+			}
 
-		case HAL_DMA_XFER_ALL_CB_ID: {
-			/* UnRegister all available callbacks */
-			hdma->XferCpltCallback = NULL;
-			hdma->XferHalfCpltCallback = NULL;
-			hdma->XferErrorCallback = NULL;
-			hdma->XferAbortCallback = NULL;
-			hdma->XferSuspendCallback = NULL;
-			break;
-		}
+			case HAL_DMA_XFER_ALL_CB_ID: {
+				/* UnRegister all available callbacks */
+				hdma->XferCpltCallback = NULL;
+				hdma->XferHalfCpltCallback = NULL;
+				hdma->XferErrorCallback = NULL;
+				hdma->XferAbortCallback = NULL;
+				hdma->XferSuspendCallback = NULL;
+				break;
+			}
 
-		default: {
-			/* Update error status */
-			status = HAL_ERROR;
-			break;
-		}
+			default: {
+				/* Update error status */
+				status = HAL_ERROR;
+				break;
+			}
 		}
 	} else {
 		/* Update error status */

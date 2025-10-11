@@ -302,25 +302,26 @@ uint32_t HAL_CRC_Accumulate(CRC_HandleTypeDef *hcrc, uint32_t pBuffer[],
 	hcrc->State = HAL_CRC_STATE_BUSY;
 
 	switch (hcrc->InputDataFormat) {
-	case CRC_INPUTDATA_FORMAT_WORDS:
-		/* Enter Data to the CRC calculator */
-		for (index = 0U; index < BufferLength; index++) {
-			hcrc->Instance->DR = pBuffer[index];
-		}
-		temp = hcrc->Instance->DR;
-		break;
+		case CRC_INPUTDATA_FORMAT_WORDS:
+			/* Enter Data to the CRC calculator */
+			for (index = 0U; index < BufferLength; index++) {
+				hcrc->Instance->DR = pBuffer[index];
+			}
+			temp = hcrc->Instance->DR;
+			break;
 
-	case CRC_INPUTDATA_FORMAT_BYTES:
-		temp = CRC_Handle_8(hcrc, (uint8_t *)pBuffer, BufferLength);
-		break;
+		case CRC_INPUTDATA_FORMAT_BYTES:
+			temp = CRC_Handle_8(hcrc, (uint8_t *)pBuffer,
+					    BufferLength);
+			break;
 
-	case CRC_INPUTDATA_FORMAT_HALFWORDS:
-		temp = CRC_Handle_16(
-		    hcrc, (uint16_t *)(void *)pBuffer,
-		    BufferLength); /* Derogation MisraC2012 R.11.5 */
-		break;
-	default:
-		break;
+		case CRC_INPUTDATA_FORMAT_HALFWORDS:
+			temp = CRC_Handle_16(
+			    hcrc, (uint16_t *)(void *)pBuffer,
+			    BufferLength); /* Derogation MisraC2012 R.11.5 */
+			break;
+		default:
+			break;
 	}
 
 	/* Change CRC peripheral state */
@@ -360,28 +361,29 @@ uint32_t HAL_CRC_Calculate(CRC_HandleTypeDef *hcrc, uint32_t pBuffer[],
 	__HAL_CRC_DR_RESET(hcrc);
 
 	switch (hcrc->InputDataFormat) {
-	case CRC_INPUTDATA_FORMAT_WORDS:
-		/* Enter 32-bit input data to the CRC calculator */
-		for (index = 0U; index < BufferLength; index++) {
-			hcrc->Instance->DR = pBuffer[index];
-		}
-		temp = hcrc->Instance->DR;
-		break;
+		case CRC_INPUTDATA_FORMAT_WORDS:
+			/* Enter 32-bit input data to the CRC calculator */
+			for (index = 0U; index < BufferLength; index++) {
+				hcrc->Instance->DR = pBuffer[index];
+			}
+			temp = hcrc->Instance->DR;
+			break;
 
-	case CRC_INPUTDATA_FORMAT_BYTES:
-		/* Specific 8-bit input data handling  */
-		temp = CRC_Handle_8(hcrc, (uint8_t *)pBuffer, BufferLength);
-		break;
+		case CRC_INPUTDATA_FORMAT_BYTES:
+			/* Specific 8-bit input data handling  */
+			temp = CRC_Handle_8(hcrc, (uint8_t *)pBuffer,
+					    BufferLength);
+			break;
 
-	case CRC_INPUTDATA_FORMAT_HALFWORDS:
-		/* Specific 16-bit input data handling  */
-		temp = CRC_Handle_16(
-		    hcrc, (uint16_t *)(void *)pBuffer,
-		    BufferLength); /* Derogation MisraC2012 R.11.5 */
-		break;
+		case CRC_INPUTDATA_FORMAT_HALFWORDS:
+			/* Specific 16-bit input data handling  */
+			temp = CRC_Handle_16(
+			    hcrc, (uint16_t *)(void *)pBuffer,
+			    BufferLength); /* Derogation MisraC2012 R.11.5 */
+			break;
 
-	default:
-		break;
+		default:
+			break;
 	}
 
 	/* Change CRC peripheral state */

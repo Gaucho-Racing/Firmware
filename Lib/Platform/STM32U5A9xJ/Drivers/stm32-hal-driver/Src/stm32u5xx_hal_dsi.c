@@ -782,49 +782,51 @@ HAL_StatusTypeDef HAL_DSI_RegisterCallback(DSI_HandleTypeDef *hdsi,
 
 	if (hdsi->State == HAL_DSI_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_DSI_TEARING_EFFECT_CB_ID:
-			hdsi->TearingEffectCallback = pCallback;
-			break;
+			case HAL_DSI_TEARING_EFFECT_CB_ID:
+				hdsi->TearingEffectCallback = pCallback;
+				break;
 
-		case HAL_DSI_ENDOF_REFRESH_CB_ID:
-			hdsi->EndOfRefreshCallback = pCallback;
-			break;
+			case HAL_DSI_ENDOF_REFRESH_CB_ID:
+				hdsi->EndOfRefreshCallback = pCallback;
+				break;
 
-		case HAL_DSI_ERROR_CB_ID:
-			hdsi->ErrorCallback = pCallback;
-			break;
+			case HAL_DSI_ERROR_CB_ID:
+				hdsi->ErrorCallback = pCallback;
+				break;
 
-		case HAL_DSI_MSPINIT_CB_ID:
-			hdsi->MspInitCallback = pCallback;
-			break;
+			case HAL_DSI_MSPINIT_CB_ID:
+				hdsi->MspInitCallback = pCallback;
+				break;
 
-		case HAL_DSI_MSPDEINIT_CB_ID:
-			hdsi->MspDeInitCallback = pCallback;
-			break;
+			case HAL_DSI_MSPDEINIT_CB_ID:
+				hdsi->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hdsi->ErrorCode |= HAL_DSI_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hdsi->ErrorCode |=
+				    HAL_DSI_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hdsi->State == HAL_DSI_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_DSI_MSPINIT_CB_ID:
-			hdsi->MspInitCallback = pCallback;
-			break;
+			case HAL_DSI_MSPINIT_CB_ID:
+				hdsi->MspInitCallback = pCallback;
+				break;
 
-		case HAL_DSI_MSPDEINIT_CB_ID:
-			hdsi->MspDeInitCallback = pCallback;
-			break;
+			case HAL_DSI_MSPDEINIT_CB_ID:
+				hdsi->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hdsi->ErrorCode |= HAL_DSI_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hdsi->ErrorCode |=
+				    HAL_DSI_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -863,63 +865,71 @@ HAL_DSI_UnRegisterCallback(DSI_HandleTypeDef *hdsi,
 
 	if (hdsi->State == HAL_DSI_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_DSI_TEARING_EFFECT_CB_ID:
-			hdsi->TearingEffectCallback =
-			    HAL_DSI_TearingEffectCallback; /* Legacy weak
-							      TearingEffectCallback
+			case HAL_DSI_TEARING_EFFECT_CB_ID:
+				hdsi->TearingEffectCallback =
+				    HAL_DSI_TearingEffectCallback; /* Legacy
+								      weak
+								      TearingEffectCallback
+								    */
+				break;
+
+			case HAL_DSI_ENDOF_REFRESH_CB_ID:
+				hdsi->EndOfRefreshCallback =
+				    HAL_DSI_EndOfRefreshCallback; /* Legacy weak
+								     EndOfRefreshCallback
+								   */
+				break;
+
+			case HAL_DSI_ERROR_CB_ID:
+				hdsi->ErrorCallback =
+				    HAL_DSI_ErrorCallback; /* Legacy weak
+							    * ErrorCallback
 							    */
-			break;
+				break;
 
-		case HAL_DSI_ENDOF_REFRESH_CB_ID:
-			hdsi->EndOfRefreshCallback =
-			    HAL_DSI_EndOfRefreshCallback; /* Legacy weak
-							     EndOfRefreshCallback
-							   */
-			break;
+			case HAL_DSI_MSPINIT_CB_ID:
+				hdsi->MspInitCallback =
+				    HAL_DSI_MspInit; /* Legacy weak MspInit
+							Callback */
+				break;
 
-		case HAL_DSI_ERROR_CB_ID:
-			hdsi->ErrorCallback =
-			    HAL_DSI_ErrorCallback; /* Legacy weak ErrorCallback
-						    */
-			break;
+			case HAL_DSI_MSPDEINIT_CB_ID:
+				hdsi->MspDeInitCallback =
+				    HAL_DSI_MspDeInit; /* Legacy weak MspDeInit
+							* Callback
+							*/
+				break;
 
-		case HAL_DSI_MSPINIT_CB_ID:
-			hdsi->MspInitCallback =
-			    HAL_DSI_MspInit; /* Legacy weak MspInit Callback */
-			break;
-
-		case HAL_DSI_MSPDEINIT_CB_ID:
-			hdsi->MspDeInitCallback =
-			    HAL_DSI_MspDeInit; /* Legacy weak MspDeInit Callback
-						*/
-			break;
-
-		default:
-			/* Update the error code */
-			hdsi->ErrorCode |= HAL_DSI_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hdsi->ErrorCode |=
+				    HAL_DSI_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hdsi->State == HAL_DSI_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_DSI_MSPINIT_CB_ID:
-			hdsi->MspInitCallback =
-			    HAL_DSI_MspInit; /* Legacy weak MspInit Callback */
-			break;
+			case HAL_DSI_MSPINIT_CB_ID:
+				hdsi->MspInitCallback =
+				    HAL_DSI_MspInit; /* Legacy weak MspInit
+							Callback */
+				break;
 
-		case HAL_DSI_MSPDEINIT_CB_ID:
-			hdsi->MspDeInitCallback =
-			    HAL_DSI_MspDeInit; /* Legacy weak MspDeInit Callback
-						*/
-			break;
+			case HAL_DSI_MSPDEINIT_CB_ID:
+				hdsi->MspDeInitCallback =
+				    HAL_DSI_MspDeInit; /* Legacy weak MspDeInit
+							* Callback
+							*/
+				break;
 
-		default:
-			/* Update the error code */
-			hdsi->ErrorCode |= HAL_DSI_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hdsi->ErrorCode |=
+				    HAL_DSI_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -2691,28 +2701,31 @@ HAL_StatusTypeDef HAL_DSI_SetLanePinsConfiguration(DSI_HandleTypeDef *hdsi,
 	assert_param(IS_FUNCTIONAL_STATE(State));
 
 	switch (CustomLane) {
-	case DSI_SWAP_LANE_PINS:
-		if (Lane == DSI_CLK_LANE) {
-			/* Swap pins on clock lane */
-			hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_SWCL;
-			hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 6U);
-		} else if (Lane == DSI_DATA_LANE0) {
-			/* Swap pins on data lane 0 */
-			hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_SWDL0;
-			hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 7U);
-		} else if (Lane == DSI_DATA_LANE1) {
-			/* Swap pins on data lane 1 */
-			hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_SWDL1;
-			hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 8U);
-		} else {
-			/* Process unlocked */
-			__HAL_UNLOCK(hdsi);
+		case DSI_SWAP_LANE_PINS:
+			if (Lane == DSI_CLK_LANE) {
+				/* Swap pins on clock lane */
+				hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_SWCL;
+				hdsi->Instance->WPCR[0U] |=
+				    ((uint32_t)State << 6U);
+			} else if (Lane == DSI_DATA_LANE0) {
+				/* Swap pins on data lane 0 */
+				hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_SWDL0;
+				hdsi->Instance->WPCR[0U] |=
+				    ((uint32_t)State << 7U);
+			} else if (Lane == DSI_DATA_LANE1) {
+				/* Swap pins on data lane 1 */
+				hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_SWDL1;
+				hdsi->Instance->WPCR[0U] |=
+				    ((uint32_t)State << 8U);
+			} else {
+				/* Process unlocked */
+				__HAL_UNLOCK(hdsi);
 
-			return HAL_ERROR;
-		}
-		break;
-	default:
-		break;
+				return HAL_ERROR;
+			}
+			break;
+		default:
+			break;
 	}
 
 	/* Process unlocked */

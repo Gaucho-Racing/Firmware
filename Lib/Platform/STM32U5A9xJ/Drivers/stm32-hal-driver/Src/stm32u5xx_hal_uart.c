@@ -757,75 +757,77 @@ HAL_UART_RegisterCallback(UART_HandleTypeDef *huart,
 
 	if (huart->gState == HAL_UART_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_UART_TX_HALFCOMPLETE_CB_ID:
-			huart->TxHalfCpltCallback = pCallback;
-			break;
+			case HAL_UART_TX_HALFCOMPLETE_CB_ID:
+				huart->TxHalfCpltCallback = pCallback;
+				break;
 
-		case HAL_UART_TX_COMPLETE_CB_ID:
-			huart->TxCpltCallback = pCallback;
-			break;
+			case HAL_UART_TX_COMPLETE_CB_ID:
+				huart->TxCpltCallback = pCallback;
+				break;
 
-		case HAL_UART_RX_HALFCOMPLETE_CB_ID:
-			huart->RxHalfCpltCallback = pCallback;
-			break;
+			case HAL_UART_RX_HALFCOMPLETE_CB_ID:
+				huart->RxHalfCpltCallback = pCallback;
+				break;
 
-		case HAL_UART_RX_COMPLETE_CB_ID:
-			huart->RxCpltCallback = pCallback;
-			break;
+			case HAL_UART_RX_COMPLETE_CB_ID:
+				huart->RxCpltCallback = pCallback;
+				break;
 
-		case HAL_UART_ERROR_CB_ID:
-			huart->ErrorCallback = pCallback;
-			break;
+			case HAL_UART_ERROR_CB_ID:
+				huart->ErrorCallback = pCallback;
+				break;
 
-		case HAL_UART_ABORT_COMPLETE_CB_ID:
-			huart->AbortCpltCallback = pCallback;
-			break;
+			case HAL_UART_ABORT_COMPLETE_CB_ID:
+				huart->AbortCpltCallback = pCallback;
+				break;
 
-		case HAL_UART_ABORT_TRANSMIT_COMPLETE_CB_ID:
-			huart->AbortTransmitCpltCallback = pCallback;
-			break;
+			case HAL_UART_ABORT_TRANSMIT_COMPLETE_CB_ID:
+				huart->AbortTransmitCpltCallback = pCallback;
+				break;
 
-		case HAL_UART_ABORT_RECEIVE_COMPLETE_CB_ID:
-			huart->AbortReceiveCpltCallback = pCallback;
-			break;
+			case HAL_UART_ABORT_RECEIVE_COMPLETE_CB_ID:
+				huart->AbortReceiveCpltCallback = pCallback;
+				break;
 
-		case HAL_UART_RX_FIFO_FULL_CB_ID:
-			huart->RxFifoFullCallback = pCallback;
-			break;
+			case HAL_UART_RX_FIFO_FULL_CB_ID:
+				huart->RxFifoFullCallback = pCallback;
+				break;
 
-		case HAL_UART_TX_FIFO_EMPTY_CB_ID:
-			huart->TxFifoEmptyCallback = pCallback;
-			break;
+			case HAL_UART_TX_FIFO_EMPTY_CB_ID:
+				huart->TxFifoEmptyCallback = pCallback;
+				break;
 
-		case HAL_UART_MSPINIT_CB_ID:
-			huart->MspInitCallback = pCallback;
-			break;
+			case HAL_UART_MSPINIT_CB_ID:
+				huart->MspInitCallback = pCallback;
+				break;
 
-		case HAL_UART_MSPDEINIT_CB_ID:
-			huart->MspDeInitCallback = pCallback;
-			break;
+			case HAL_UART_MSPDEINIT_CB_ID:
+				huart->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			huart->ErrorCode |= HAL_UART_ERROR_INVALID_CALLBACK;
+			default:
+				huart->ErrorCode |=
+				    HAL_UART_ERROR_INVALID_CALLBACK;
 
-			status = HAL_ERROR;
-			break;
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (huart->gState == HAL_UART_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_UART_MSPINIT_CB_ID:
-			huart->MspInitCallback = pCallback;
-			break;
+			case HAL_UART_MSPINIT_CB_ID:
+				huart->MspInitCallback = pCallback;
+				break;
 
-		case HAL_UART_MSPDEINIT_CB_ID:
-			huart->MspDeInitCallback = pCallback;
-			break;
+			case HAL_UART_MSPDEINIT_CB_ID:
+				huart->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			huart->ErrorCode |= HAL_UART_ERROR_INVALID_CALLBACK;
+			default:
+				huart->ErrorCode |=
+				    HAL_UART_ERROR_INVALID_CALLBACK;
 
-			status = HAL_ERROR;
-			break;
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		huart->ErrorCode |= HAL_UART_ERROR_INVALID_CALLBACK;
@@ -872,104 +874,116 @@ HAL_UART_UnRegisterCallback(UART_HandleTypeDef *huart,
 
 	if (HAL_UART_STATE_READY == huart->gState) {
 		switch (CallbackID) {
-		case HAL_UART_TX_HALFCOMPLETE_CB_ID:
-			huart->TxHalfCpltCallback =
-			    HAL_UART_TxHalfCpltCallback; /* Legacy weak
-							    TxHalfCpltCallback
-							  */
-			break;
+			case HAL_UART_TX_HALFCOMPLETE_CB_ID:
+				huart->TxHalfCpltCallback =
+				    HAL_UART_TxHalfCpltCallback; /* Legacy weak
+								    TxHalfCpltCallback
+								  */
+				break;
 
-		case HAL_UART_TX_COMPLETE_CB_ID:
-			huart->TxCpltCallback =
-			    HAL_UART_TxCpltCallback; /* Legacy weak
-							TxCpltCallback */
-			break;
+			case HAL_UART_TX_COMPLETE_CB_ID:
+				huart->TxCpltCallback =
+				    HAL_UART_TxCpltCallback; /* Legacy weak
+								TxCpltCallback
+							      */
+				break;
 
-		case HAL_UART_RX_HALFCOMPLETE_CB_ID:
-			huart->RxHalfCpltCallback =
-			    HAL_UART_RxHalfCpltCallback; /* Legacy weak
-							    RxHalfCpltCallback
-							  */
-			break;
+			case HAL_UART_RX_HALFCOMPLETE_CB_ID:
+				huart->RxHalfCpltCallback =
+				    HAL_UART_RxHalfCpltCallback; /* Legacy weak
+								    RxHalfCpltCallback
+								  */
+				break;
 
-		case HAL_UART_RX_COMPLETE_CB_ID:
-			huart->RxCpltCallback =
-			    HAL_UART_RxCpltCallback; /* Legacy weak
-							RxCpltCallback */
-			break;
+			case HAL_UART_RX_COMPLETE_CB_ID:
+				huart->RxCpltCallback =
+				    HAL_UART_RxCpltCallback; /* Legacy weak
+								RxCpltCallback
+							      */
+				break;
 
-		case HAL_UART_ERROR_CB_ID:
-			huart->ErrorCallback =
-			    HAL_UART_ErrorCallback; /* Legacy weak ErrorCallback
-						     */
-			break;
-
-		case HAL_UART_ABORT_COMPLETE_CB_ID:
-			huart->AbortCpltCallback =
-			    HAL_UART_AbortCpltCallback; /* Legacy weak
-							   AbortCpltCallback */
-			break;
-
-		case HAL_UART_ABORT_TRANSMIT_COMPLETE_CB_ID:
-			huart->AbortTransmitCpltCallback =
-			    HAL_UART_AbortTransmitCpltCallback; /* Legacy weak
-								   AbortTransmitCpltCallback
-								 */
-			break;
-
-		case HAL_UART_ABORT_RECEIVE_COMPLETE_CB_ID:
-			huart->AbortReceiveCpltCallback =
-			    HAL_UART_AbortReceiveCpltCallback; /* Legacy weak
-								  AbortReceiveCpltCallback
-								*/
-			break;
-
-		case HAL_UART_RX_FIFO_FULL_CB_ID:
-			huart->RxFifoFullCallback =
-			    HAL_UARTEx_RxFifoFullCallback; /* Legacy weak
-							      RxFifoFullCallback
-							    */
-			break;
-
-		case HAL_UART_TX_FIFO_EMPTY_CB_ID:
-			huart->TxFifoEmptyCallback =
-			    HAL_UARTEx_TxFifoEmptyCallback; /* Legacy weak
-							       TxFifoEmptyCallback
+			case HAL_UART_ERROR_CB_ID:
+				huart->ErrorCallback =
+				    HAL_UART_ErrorCallback; /* Legacy weak
+							     * ErrorCallback
 							     */
-			break;
+				break;
 
-		case HAL_UART_MSPINIT_CB_ID:
-			huart->MspInitCallback =
-			    HAL_UART_MspInit; /* Legacy weak MspInitCallback */
-			break;
+			case HAL_UART_ABORT_COMPLETE_CB_ID:
+				huart->AbortCpltCallback =
+				    HAL_UART_AbortCpltCallback; /* Legacy weak
+								   AbortCpltCallback
+								 */
+				break;
 
-		case HAL_UART_MSPDEINIT_CB_ID:
-			huart->MspDeInitCallback =
-			    HAL_UART_MspDeInit; /* Legacy weak MspDeInitCallback
-						 */
-			break;
+			case HAL_UART_ABORT_TRANSMIT_COMPLETE_CB_ID:
+				huart->AbortTransmitCpltCallback =
+				    HAL_UART_AbortTransmitCpltCallback; /* Legacy
+									   weak
+									   AbortTransmitCpltCallback
+									 */
+				break;
 
-		default:
-			huart->ErrorCode |= HAL_UART_ERROR_INVALID_CALLBACK;
+			case HAL_UART_ABORT_RECEIVE_COMPLETE_CB_ID:
+				huart->AbortReceiveCpltCallback =
+				    HAL_UART_AbortReceiveCpltCallback; /* Legacy
+									  weak
+									  AbortReceiveCpltCallback
+									*/
+				break;
 
-			status = HAL_ERROR;
-			break;
+			case HAL_UART_RX_FIFO_FULL_CB_ID:
+				huart->RxFifoFullCallback =
+				    HAL_UARTEx_RxFifoFullCallback; /* Legacy
+								      weak
+								      RxFifoFullCallback
+								    */
+				break;
+
+			case HAL_UART_TX_FIFO_EMPTY_CB_ID:
+				huart->TxFifoEmptyCallback =
+				    HAL_UARTEx_TxFifoEmptyCallback; /* Legacy
+								       weak
+								       TxFifoEmptyCallback
+								     */
+				break;
+
+			case HAL_UART_MSPINIT_CB_ID:
+				huart->MspInitCallback =
+				    HAL_UART_MspInit; /* Legacy weak
+							 MspInitCallback */
+				break;
+
+			case HAL_UART_MSPDEINIT_CB_ID:
+				huart->MspDeInitCallback =
+				    HAL_UART_MspDeInit; /* Legacy weak
+							 * MspDeInitCallback
+							 */
+				break;
+
+			default:
+				huart->ErrorCode |=
+				    HAL_UART_ERROR_INVALID_CALLBACK;
+
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_UART_STATE_RESET == huart->gState) {
 		switch (CallbackID) {
-		case HAL_UART_MSPINIT_CB_ID:
-			huart->MspInitCallback = HAL_UART_MspInit;
-			break;
+			case HAL_UART_MSPINIT_CB_ID:
+				huart->MspInitCallback = HAL_UART_MspInit;
+				break;
 
-		case HAL_UART_MSPDEINIT_CB_ID:
-			huart->MspDeInitCallback = HAL_UART_MspDeInit;
-			break;
+			case HAL_UART_MSPDEINIT_CB_ID:
+				huart->MspDeInitCallback = HAL_UART_MspDeInit;
+				break;
 
-		default:
-			huart->ErrorCode |= HAL_UART_ERROR_INVALID_CALLBACK;
+			default:
+				huart->ErrorCode |=
+				    HAL_UART_ERROR_INVALID_CALLBACK;
 
-			status = HAL_ERROR;
-			break;
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		huart->ErrorCode |= HAL_UART_ERROR_INVALID_CALLBACK;

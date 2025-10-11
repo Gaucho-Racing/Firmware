@@ -552,73 +552,75 @@ HAL_SMARTCARD_RegisterCallback(SMARTCARD_HandleTypeDef *hsmartcard,
 	if (hsmartcard->gState == HAL_SMARTCARD_STATE_READY) {
 		switch (CallbackID) {
 
-		case HAL_SMARTCARD_TX_COMPLETE_CB_ID:
-			hsmartcard->TxCpltCallback = pCallback;
-			break;
+			case HAL_SMARTCARD_TX_COMPLETE_CB_ID:
+				hsmartcard->TxCpltCallback = pCallback;
+				break;
 
-		case HAL_SMARTCARD_RX_COMPLETE_CB_ID:
-			hsmartcard->RxCpltCallback = pCallback;
-			break;
+			case HAL_SMARTCARD_RX_COMPLETE_CB_ID:
+				hsmartcard->RxCpltCallback = pCallback;
+				break;
 
-		case HAL_SMARTCARD_ERROR_CB_ID:
-			hsmartcard->ErrorCallback = pCallback;
-			break;
+			case HAL_SMARTCARD_ERROR_CB_ID:
+				hsmartcard->ErrorCallback = pCallback;
+				break;
 
-		case HAL_SMARTCARD_ABORT_COMPLETE_CB_ID:
-			hsmartcard->AbortCpltCallback = pCallback;
-			break;
+			case HAL_SMARTCARD_ABORT_COMPLETE_CB_ID:
+				hsmartcard->AbortCpltCallback = pCallback;
+				break;
 
-		case HAL_SMARTCARD_ABORT_TRANSMIT_COMPLETE_CB_ID:
-			hsmartcard->AbortTransmitCpltCallback = pCallback;
-			break;
+			case HAL_SMARTCARD_ABORT_TRANSMIT_COMPLETE_CB_ID:
+				hsmartcard->AbortTransmitCpltCallback =
+				    pCallback;
+				break;
 
-		case HAL_SMARTCARD_ABORT_RECEIVE_COMPLETE_CB_ID:
-			hsmartcard->AbortReceiveCpltCallback = pCallback;
-			break;
+			case HAL_SMARTCARD_ABORT_RECEIVE_COMPLETE_CB_ID:
+				hsmartcard->AbortReceiveCpltCallback =
+				    pCallback;
+				break;
 
-		case HAL_SMARTCARD_RX_FIFO_FULL_CB_ID:
-			hsmartcard->RxFifoFullCallback = pCallback;
-			break;
+			case HAL_SMARTCARD_RX_FIFO_FULL_CB_ID:
+				hsmartcard->RxFifoFullCallback = pCallback;
+				break;
 
-		case HAL_SMARTCARD_TX_FIFO_EMPTY_CB_ID:
-			hsmartcard->TxFifoEmptyCallback = pCallback;
-			break;
+			case HAL_SMARTCARD_TX_FIFO_EMPTY_CB_ID:
+				hsmartcard->TxFifoEmptyCallback = pCallback;
+				break;
 
-		case HAL_SMARTCARD_MSPINIT_CB_ID:
-			hsmartcard->MspInitCallback = pCallback;
-			break;
+			case HAL_SMARTCARD_MSPINIT_CB_ID:
+				hsmartcard->MspInitCallback = pCallback;
+				break;
 
-		case HAL_SMARTCARD_MSPDEINIT_CB_ID:
-			hsmartcard->MspDeInitCallback = pCallback;
-			break;
+			case HAL_SMARTCARD_MSPDEINIT_CB_ID:
+				hsmartcard->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hsmartcard->ErrorCode |=
-			    HAL_SMARTCARD_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hsmartcard->ErrorCode |=
+				    HAL_SMARTCARD_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hsmartcard->gState == HAL_SMARTCARD_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_SMARTCARD_MSPINIT_CB_ID:
-			hsmartcard->MspInitCallback = pCallback;
-			break;
+			case HAL_SMARTCARD_MSPINIT_CB_ID:
+				hsmartcard->MspInitCallback = pCallback;
+				break;
 
-		case HAL_SMARTCARD_MSPDEINIT_CB_ID:
-			hsmartcard->MspDeInitCallback = pCallback;
-			break;
+			case HAL_SMARTCARD_MSPDEINIT_CB_ID:
+				hsmartcard->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hsmartcard->ErrorCode |=
-			    HAL_SMARTCARD_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hsmartcard->ErrorCode |=
+				    HAL_SMARTCARD_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -664,99 +666,108 @@ HAL_SMARTCARD_UnRegisterCallback(SMARTCARD_HandleTypeDef *hsmartcard,
 
 	if (HAL_SMARTCARD_STATE_READY == hsmartcard->gState) {
 		switch (CallbackID) {
-		case HAL_SMARTCARD_TX_COMPLETE_CB_ID:
-			hsmartcard->TxCpltCallback =
-			    HAL_SMARTCARD_TxCpltCallback; /* Legacy weak
-							     TxCpltCallback */
-			break;
+			case HAL_SMARTCARD_TX_COMPLETE_CB_ID:
+				hsmartcard->TxCpltCallback =
+				    HAL_SMARTCARD_TxCpltCallback; /* Legacy weak
+								     TxCpltCallback
+								   */
+				break;
 
-		case HAL_SMARTCARD_RX_COMPLETE_CB_ID:
-			hsmartcard->RxCpltCallback =
-			    HAL_SMARTCARD_RxCpltCallback; /* Legacy weak
-							     RxCpltCallback */
-			break;
+			case HAL_SMARTCARD_RX_COMPLETE_CB_ID:
+				hsmartcard->RxCpltCallback =
+				    HAL_SMARTCARD_RxCpltCallback; /* Legacy weak
+								     RxCpltCallback
+								   */
+				break;
 
-		case HAL_SMARTCARD_ERROR_CB_ID:
-			hsmartcard->ErrorCallback =
-			    HAL_SMARTCARD_ErrorCallback; /* Legacy weak
-							    ErrorCallback  */
-			break;
-
-		case HAL_SMARTCARD_ABORT_COMPLETE_CB_ID:
-			hsmartcard->AbortCpltCallback =
-			    HAL_SMARTCARD_AbortCpltCallback; /* Legacy weak
-								AbortCpltCallback
-							      */
-			break;
-
-		case HAL_SMARTCARD_ABORT_TRANSMIT_COMPLETE_CB_ID:
-			hsmartcard->AbortTransmitCpltCallback =
-			    HAL_SMARTCARD_AbortTransmitCpltCallback; /* Legacy
-									weak
-									AbortTransmitCpltCallback*/
-			break;
-
-		case HAL_SMARTCARD_ABORT_RECEIVE_COMPLETE_CB_ID:
-			hsmartcard->AbortReceiveCpltCallback =
-			    HAL_SMARTCARD_AbortReceiveCpltCallback; /* Legacy
-								       weak
-								       AbortReceiveCpltCallback
-								     */
-			break;
-
-		case HAL_SMARTCARD_RX_FIFO_FULL_CB_ID:
-			hsmartcard->RxFifoFullCallback =
-			    HAL_SMARTCARDEx_RxFifoFullCallback; /* Legacy weak
-								   RxFifoFullCallback
-								 */
-			break;
-
-		case HAL_SMARTCARD_TX_FIFO_EMPTY_CB_ID:
-			hsmartcard->TxFifoEmptyCallback =
-			    HAL_SMARTCARDEx_TxFifoEmptyCallback; /* Legacy weak
-								    TxFifoEmptyCallback
+			case HAL_SMARTCARD_ERROR_CB_ID:
+				hsmartcard->ErrorCallback =
+				    HAL_SMARTCARD_ErrorCallback; /* Legacy weak
+								    ErrorCallback
 								  */
-			break;
+				break;
 
-		case HAL_SMARTCARD_MSPINIT_CB_ID:
-			hsmartcard->MspInitCallback =
-			    HAL_SMARTCARD_MspInit; /* Legacy weak
-						      MspInitCallback  */
-			break;
+			case HAL_SMARTCARD_ABORT_COMPLETE_CB_ID:
+				hsmartcard->AbortCpltCallback =
+				    HAL_SMARTCARD_AbortCpltCallback; /* Legacy
+									weak
+									AbortCpltCallback
+								      */
+				break;
 
-		case HAL_SMARTCARD_MSPDEINIT_CB_ID:
-			hsmartcard->MspDeInitCallback =
-			    HAL_SMARTCARD_MspDeInit; /* Legacy weak
-							MspDeInitCallback */
-			break;
+			case HAL_SMARTCARD_ABORT_TRANSMIT_COMPLETE_CB_ID:
+				hsmartcard->AbortTransmitCpltCallback =
+				    HAL_SMARTCARD_AbortTransmitCpltCallback; /* Legacy
+										weak
+										AbortTransmitCpltCallback*/
+				break;
 
-		default:
-			/* Update the error code */
-			hsmartcard->ErrorCode |=
-			    HAL_SMARTCARD_ERROR_INVALID_CALLBACK;
+			case HAL_SMARTCARD_ABORT_RECEIVE_COMPLETE_CB_ID:
+				hsmartcard->AbortReceiveCpltCallback =
+				    HAL_SMARTCARD_AbortReceiveCpltCallback; /* Legacy
+									       weak
+									       AbortReceiveCpltCallback
+									     */
+				break;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			case HAL_SMARTCARD_RX_FIFO_FULL_CB_ID:
+				hsmartcard->RxFifoFullCallback =
+				    HAL_SMARTCARDEx_RxFifoFullCallback; /* Legacy
+									   weak
+									   RxFifoFullCallback
+									 */
+				break;
+
+			case HAL_SMARTCARD_TX_FIFO_EMPTY_CB_ID:
+				hsmartcard->TxFifoEmptyCallback =
+				    HAL_SMARTCARDEx_TxFifoEmptyCallback; /* Legacy
+									    weak
+									    TxFifoEmptyCallback
+									  */
+				break;
+
+			case HAL_SMARTCARD_MSPINIT_CB_ID:
+				hsmartcard->MspInitCallback =
+				    HAL_SMARTCARD_MspInit; /* Legacy weak
+							      MspInitCallback */
+				break;
+
+			case HAL_SMARTCARD_MSPDEINIT_CB_ID:
+				hsmartcard->MspDeInitCallback =
+				    HAL_SMARTCARD_MspDeInit; /* Legacy weak
+								MspDeInitCallback
+							      */
+				break;
+
+			default:
+				/* Update the error code */
+				hsmartcard->ErrorCode |=
+				    HAL_SMARTCARD_ERROR_INVALID_CALLBACK;
+
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_SMARTCARD_STATE_RESET == hsmartcard->gState) {
 		switch (CallbackID) {
-		case HAL_SMARTCARD_MSPINIT_CB_ID:
-			hsmartcard->MspInitCallback = HAL_SMARTCARD_MspInit;
-			break;
+			case HAL_SMARTCARD_MSPINIT_CB_ID:
+				hsmartcard->MspInitCallback =
+				    HAL_SMARTCARD_MspInit;
+				break;
 
-		case HAL_SMARTCARD_MSPDEINIT_CB_ID:
-			hsmartcard->MspDeInitCallback = HAL_SMARTCARD_MspDeInit;
-			break;
+			case HAL_SMARTCARD_MSPDEINIT_CB_ID:
+				hsmartcard->MspDeInitCallback =
+				    HAL_SMARTCARD_MspDeInit;
+				break;
 
-		default:
-			/* Update the error code */
-			hsmartcard->ErrorCode |=
-			    HAL_SMARTCARD_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hsmartcard->ErrorCode |=
+				    HAL_SMARTCARD_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -2740,52 +2751,53 @@ SMARTCARD_SetConfig(SMARTCARD_HandleTypeDef *hsmartcard)
 	SMARTCARD_GETCLOCKSOURCE(hsmartcard, clocksource);
 	tmpreg = 0U;
 	switch (clocksource) {
-	case SMARTCARD_CLOCKSOURCE_PCLK1:
-		pclk = HAL_RCC_GetPCLK1Freq();
-		tmpreg =
-		    (uint32_t)(((pclk /
-				 SMARTCARDPrescTable[hsmartcard->Init
-							 .ClockPrescaler]) +
-				(hsmartcard->Init.BaudRate / 2U)) /
-			       hsmartcard->Init.BaudRate);
-		break;
-	case SMARTCARD_CLOCKSOURCE_PCLK2:
-		pclk = HAL_RCC_GetPCLK2Freq();
-		tmpreg =
-		    (uint32_t)(((pclk /
-				 SMARTCARDPrescTable[hsmartcard->Init
-							 .ClockPrescaler]) +
-				(hsmartcard->Init.BaudRate / 2U)) /
-			       hsmartcard->Init.BaudRate);
-		break;
-	case SMARTCARD_CLOCKSOURCE_HSI:
-		tmpreg =
-		    (uint32_t)(((HSI_VALUE /
-				 SMARTCARDPrescTable[hsmartcard->Init
-							 .ClockPrescaler]) +
-				(hsmartcard->Init.BaudRate / 2U)) /
-			       hsmartcard->Init.BaudRate);
-		break;
-	case SMARTCARD_CLOCKSOURCE_SYSCLK:
-		pclk = HAL_RCC_GetSysClockFreq();
-		tmpreg =
-		    (uint32_t)(((pclk /
-				 SMARTCARDPrescTable[hsmartcard->Init
-							 .ClockPrescaler]) +
-				(hsmartcard->Init.BaudRate / 2U)) /
-			       hsmartcard->Init.BaudRate);
-		break;
-	case SMARTCARD_CLOCKSOURCE_LSE:
-		tmpreg = (uint32_t)(((uint16_t)(LSE_VALUE /
-						SMARTCARDPrescTable
+		case SMARTCARD_CLOCKSOURCE_PCLK1:
+			pclk = HAL_RCC_GetPCLK1Freq();
+			tmpreg =
+			    (uint32_t)(((pclk / SMARTCARDPrescTable
 						    [hsmartcard->Init
 							 .ClockPrescaler]) +
-				     (hsmartcard->Init.BaudRate / 2U)) /
-				    hsmartcard->Init.BaudRate);
-		break;
-	default:
-		ret = HAL_ERROR;
-		break;
+					(hsmartcard->Init.BaudRate / 2U)) /
+				       hsmartcard->Init.BaudRate);
+			break;
+		case SMARTCARD_CLOCKSOURCE_PCLK2:
+			pclk = HAL_RCC_GetPCLK2Freq();
+			tmpreg =
+			    (uint32_t)(((pclk / SMARTCARDPrescTable
+						    [hsmartcard->Init
+							 .ClockPrescaler]) +
+					(hsmartcard->Init.BaudRate / 2U)) /
+				       hsmartcard->Init.BaudRate);
+			break;
+		case SMARTCARD_CLOCKSOURCE_HSI:
+			tmpreg = (uint32_t)(((HSI_VALUE /
+					      SMARTCARDPrescTable
+						  [hsmartcard->Init
+						       .ClockPrescaler]) +
+					     (hsmartcard->Init.BaudRate / 2U)) /
+					    hsmartcard->Init.BaudRate);
+			break;
+		case SMARTCARD_CLOCKSOURCE_SYSCLK:
+			pclk = HAL_RCC_GetSysClockFreq();
+			tmpreg =
+			    (uint32_t)(((pclk / SMARTCARDPrescTable
+						    [hsmartcard->Init
+							 .ClockPrescaler]) +
+					(hsmartcard->Init.BaudRate / 2U)) /
+				       hsmartcard->Init.BaudRate);
+			break;
+		case SMARTCARD_CLOCKSOURCE_LSE:
+			tmpreg =
+			    (uint32_t)(((uint16_t)(LSE_VALUE /
+						   SMARTCARDPrescTable
+						       [hsmartcard->Init
+							    .ClockPrescaler]) +
+					(hsmartcard->Init.BaudRate / 2U)) /
+				       hsmartcard->Init.BaudRate);
+			break;
+		default:
+			ret = HAL_ERROR;
+			break;
 	}
 
 	/* USARTDIV must be greater than or equal to 0d16 */
