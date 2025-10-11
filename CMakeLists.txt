@@ -7,7 +7,7 @@ set(CMAKE_C_EXTENSIONS ON)
 
 # Define the build type
 if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE "Debug")
+	set(CMAKE_BUILD_TYPE "Debug")
 endif()
 
 # Set the project name
@@ -27,13 +27,19 @@ include("${lib_path}/cmake/gr-lib.cmake")
 project(${CMAKE_PROJECT_NAME})
 
 # Enable CMake support for ASM and C languages
-enable_language(C ASM)
+enable_language(
+	C
+	ASM
+)
 
 # Core project settings
-message("Build type: " ${CMAKE_BUILD_TYPE})
+message(
+	"Build type: "
+	${CMAKE_BUILD_TYPE}
+)
 
-add_GR_project(STM32G474xE G4BLINKY)
-add_GR_project(STM32U5A9xJ U5BLINKY)
-add_GR_project(STM32L476xG L4BLINKY)
+add_gr_project(STM32G474xE G4BLINKY)
+add_gr_project(STM32U5A9xJ U5BLINKY)
+add_gr_project(STM32L476xG L4BLINKY)
 
-add_GR_project(STM32G474xE ECU)
+add_gr_project(STM32G474xE ECU)
