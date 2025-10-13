@@ -22,7 +22,7 @@ function(add_GR_project)
 	set(GR_PROJECT ${ARGV1})
 
 	if(CMAKE_BUILD_TYPE STREQUAL "Test")
-		if (DEFINED GR_PROJECT_PATH)
+		if(DEFINED GR_PROJECT_PATH)
 			add_subdirectory("${GR_PROJECT}/${GR_PROJECT_PATH}")
 		else()
 			add_subdirectory(${GR_PROJECT})
@@ -58,10 +58,6 @@ function(add_GR_project)
 			)
 		endif()
 
-		target_link_libraries(
-			${TARGET_NAME}
-			PRIVATE
-				${INTERFACE_LIB}
-		)
+		target_link_libraries(${TARGET_NAME} PRIVATE ${INTERFACE_LIB})
 	endif()
 endfunction()
