@@ -22,30 +22,46 @@ function(add_GR_project)
 	set(GR_PROJECT ${ARGV1})
 
 	if(CMAKE_BUILD_TYPE STREQUAL "Test")
-		add_subdirectory(${GR_PROJECT})
-	else()
-		# equivalent to calling the funnction add_executable_${Platform}() but cmake won't let me do that
-		cmake_language(
-			CALL
-				add_executable_${Platform}
-				${GR_PROJECT}
-		)
-
-		if(DEFINED ${GR_PROJECT_PATH})
-			add_subdirectory(${GR_PROJECT_PATH})
+		if (DEFINED GR_PROJECT_PATH)
+			add_subdirectory("${GR_PROJECT}/${GR_PROJECT_PATH}")
 		else()
 			add_subdirectory(${GR_PROJECT})
 		endif()
+	else()
+		if(DEFINED GR_PROJECT_PATH)
+			set(TARGET_NAME "${GR_PROJECT_PATH}")
+			add_subdirectory("${GR_PROJECT}/${GR_PROJECT_PATH}")
+			set(COMBINATOR "${GR_PROJECT}_${GR_PROJECT_PATH}")
+		else()
+			set(TARGET_NAME "${GR_PROJECT}")
+			add_subdirectory(${GR_PROJECT})
+			set(COMBINATOR "${GR_PROJECT}")
+		endif()
 
-		add_library(Combinator_${GR_PROJECT} INTERFACE)
-
-		target_link_libraries(
-			Combinator_${GR_PROJECT}
-			INTERFACE
-				${Platform}_LIB
-				${GR_PROJECT}_USER_CODE # Blame Owen
+		cmake_language(
+			CALL
+				add_executable_${Platform}
+				${TARGET_NAME}
 		)
 
-		target_link_libraries(${GR_PROJECT} Combinator_${GR_PROJECT})
+		# Create unique interface library to avoid conflicts
+		set(INTERFACE_LIB "${COMBINATOR}_INTERFACE_LIB")
+
+		if(NOT TARGET ${INTERFACE_LIB})
+			add_library(${INTERFACE_LIB} INTERFACE)
+
+			target_link_libraries(
+				${INTERFACE_LIB}
+				INTERFACE
+					${Platform}_LIB
+					${TARGET_NAME}_USER_CODE # Blame Owen
+			)
+		endif()
+
+		target_link_libraries(
+			${TARGET_NAME}
+			PRIVATE
+				${INTERFACE_LIB}
+		)
 	endif()
 endfunction()

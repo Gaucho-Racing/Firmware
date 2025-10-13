@@ -42,4 +42,5 @@ add_gr_project(STM32G474xE G4BLINKY)
 add_gr_project(STM32U5A9xJ U5BLINKY)
 add_gr_project(STM32L476xG L4BLINKY)
 
-add_subdirectory(W3_Workshop)
+add_gr_project(STM32G474xE W3_Workshop G4SPI_Receive)
+add_gr_project(STM32G474xE W3_Workshop G4SPI_Transmit)
