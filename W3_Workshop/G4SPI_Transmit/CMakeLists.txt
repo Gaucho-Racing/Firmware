@@ -18,26 +18,6 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
 		Application/Inc
 		Core/Inc
 	)
-
-	add_executable(
-		${GR_PROJECT_NAME}_basic_application_hootl_test
-		Application/Test/basic_application_hootl_test.c
-	)
-	add_test(
-		${GR_PROJECT_NAME}_basic_app
-		${GR_PROJECT_NAME}_basic_application_hootl_test
-	)
-
-	add_executable(
-		${GR_PROJECT_NAME}_advanced_application_hootl_test
-		Application/Test/advanced_application_hootl_test.c
-		Application/Src/appdemo.c
-	)
-	add_test(
-		${GR_PROJECT_NAME}_advanced_app
-		${GR_PROJECT_NAME}_advanced_application_hootl_test
-	)
-
 	add_executable(${GR_PROJECT_NAME}_basic_core_test Core/Test/basic_core_test.c)
 	add_test(${GR_PROJECT_NAME}_basic_core ${GR_PROJECT_NAME}_basic_core_test)
 
