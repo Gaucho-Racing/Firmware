@@ -38,9 +38,9 @@ message(
 	${CMAKE_BUILD_TYPE}
 )
 
-add_GR_project(STM32G474xE G4BLINKY)
-add_GR_project(STM32U5A9xJ U5BLINKY)
-add_GR_project(STM32G474xE ACU)
-add_GR_project(STM32L476xG L4BLINKY)
+add_gr_project(STM32G474xE G4BLINKY)
+add_gr_project(STM32U5A9xJ U5BLINKY)
+add_gr_project(STM32G474xE ACU)
+add_gr_project(STM32L476xG L4BLINKY)
 
 add_subdirectory(W3_Workshop)

@@ -1,2 +1,2 @@
-add_GR_project(STM32G474xE G4SPI_Receive)
-add_GR_project(STM32G474xE G4SPI_Transmit)
+add_gr_project(STM32G474xE G4SPI_Receive)
+add_gr_project(STM32G474xE G4SPI_Transmit)
