@@ -122,6 +122,7 @@ int main(void)
 	int count = 0;
 	while (1) {
 		/* USER CODE END WHILE */
+		/* USER CODE BEGIN 3 */
 		HAL_SPI_Receive(&hspi2, (uint8_t *)RX_Buffer, sizeof(message),
 				3000);
 
@@ -138,8 +139,7 @@ int main(void)
 			HAL_Delay(100);
 		}
 
-		count &= 0b11; // count = count % 4
-			       /* USER CODE BEGIN 3 */
+		count &= __extension__ 0b11; // count = count % 4
 	}
 	/* USER CODE END 3 */
 }
