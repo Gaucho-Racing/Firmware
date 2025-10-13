@@ -166,8 +166,9 @@
 /** @defgroup USART_Private_Constants USART Private Constants
  * @{
  */
-#define USART_DUMMY_DATA ((uint16_t)0xFFFF) /*!< USART transmitted dummy data  \
-					     */
+#define USART_DUMMY_DATA                                                       \
+	((uint16_t)0xFFFF) /*!< USART transmitted dummy data                   \
+			    */
 #define USART_TEACK_REACK_TIMEOUT                                              \
 	1000U /*!< USART TX or RX enable acknowledge time-out value */
 #define USART_CR1_FIELDS                                                       \
