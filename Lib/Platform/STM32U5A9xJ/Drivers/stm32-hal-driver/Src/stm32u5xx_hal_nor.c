@@ -1341,16 +1341,16 @@ HAL_StatusTypeDef HAL_NOR_RegisterCallback(NOR_HandleTypeDef *hnor,
 	if ((state == HAL_NOR_STATE_READY) || (state == HAL_NOR_STATE_RESET) ||
 	    (state == HAL_NOR_STATE_PROTECTED)) {
 		switch (CallbackId) {
-		case HAL_NOR_MSP_INIT_CB_ID:
-			hnor->MspInitCallback = pCallback;
-			break;
-		case HAL_NOR_MSP_DEINIT_CB_ID:
-			hnor->MspDeInitCallback = pCallback;
-			break;
-		default:
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_NOR_MSP_INIT_CB_ID:
+				hnor->MspInitCallback = pCallback;
+				break;
+			case HAL_NOR_MSP_DEINIT_CB_ID:
+				hnor->MspDeInitCallback = pCallback;
+				break;
+			default:
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* update return status */
@@ -1381,16 +1381,16 @@ HAL_NOR_UnRegisterCallback(NOR_HandleTypeDef *hnor,
 	if ((state == HAL_NOR_STATE_READY) || (state == HAL_NOR_STATE_RESET) ||
 	    (state == HAL_NOR_STATE_PROTECTED)) {
 		switch (CallbackId) {
-		case HAL_NOR_MSP_INIT_CB_ID:
-			hnor->MspInitCallback = HAL_NOR_MspInit;
-			break;
-		case HAL_NOR_MSP_DEINIT_CB_ID:
-			hnor->MspDeInitCallback = HAL_NOR_MspDeInit;
-			break;
-		default:
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_NOR_MSP_INIT_CB_ID:
+				hnor->MspInitCallback = HAL_NOR_MspInit;
+				break;
+			case HAL_NOR_MSP_DEINIT_CB_ID:
+				hnor->MspDeInitCallback = HAL_NOR_MspDeInit;
+				break;
+			default:
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* update return status */

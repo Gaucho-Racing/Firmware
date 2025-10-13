@@ -2511,63 +2511,65 @@ HAL_XSPI_RegisterCallback(XSPI_HandleTypeDef *hxspi,
 
 	if (hxspi->State == HAL_XSPI_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_XSPI_ERROR_CB_ID:
-			hxspi->ErrorCallback = pCallback;
-			break;
-		case HAL_XSPI_ABORT_CB_ID:
-			hxspi->AbortCpltCallback = pCallback;
-			break;
-		case HAL_XSPI_FIFO_THRESHOLD_CB_ID:
-			hxspi->FifoThresholdCallback = pCallback;
-			break;
-		case HAL_XSPI_CMD_CPLT_CB_ID:
-			hxspi->CmdCpltCallback = pCallback;
-			break;
-		case HAL_XSPI_RX_CPLT_CB_ID:
-			hxspi->RxCpltCallback = pCallback;
-			break;
-		case HAL_XSPI_TX_CPLT_CB_ID:
-			hxspi->TxCpltCallback = pCallback;
-			break;
-		case HAL_XSPI_RX_HALF_CPLT_CB_ID:
-			hxspi->RxHalfCpltCallback = pCallback;
-			break;
-		case HAL_XSPI_TX_HALF_CPLT_CB_ID:
-			hxspi->TxHalfCpltCallback = pCallback;
-			break;
-		case HAL_XSPI_STATUS_MATCH_CB_ID:
-			hxspi->StatusMatchCallback = pCallback;
-			break;
-		case HAL_XSPI_TIMEOUT_CB_ID:
-			hxspi->TimeOutCallback = pCallback;
-			break;
-		case HAL_XSPI_MSP_INIT_CB_ID:
-			hxspi->MspInitCallback = pCallback;
-			break;
-		case HAL_XSPI_MSP_DEINIT_CB_ID:
-			hxspi->MspDeInitCallback = pCallback;
-			break;
-		default:
-			/* Update the error code */
-			hxspi->ErrorCode |= HAL_XSPI_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_XSPI_ERROR_CB_ID:
+				hxspi->ErrorCallback = pCallback;
+				break;
+			case HAL_XSPI_ABORT_CB_ID:
+				hxspi->AbortCpltCallback = pCallback;
+				break;
+			case HAL_XSPI_FIFO_THRESHOLD_CB_ID:
+				hxspi->FifoThresholdCallback = pCallback;
+				break;
+			case HAL_XSPI_CMD_CPLT_CB_ID:
+				hxspi->CmdCpltCallback = pCallback;
+				break;
+			case HAL_XSPI_RX_CPLT_CB_ID:
+				hxspi->RxCpltCallback = pCallback;
+				break;
+			case HAL_XSPI_TX_CPLT_CB_ID:
+				hxspi->TxCpltCallback = pCallback;
+				break;
+			case HAL_XSPI_RX_HALF_CPLT_CB_ID:
+				hxspi->RxHalfCpltCallback = pCallback;
+				break;
+			case HAL_XSPI_TX_HALF_CPLT_CB_ID:
+				hxspi->TxHalfCpltCallback = pCallback;
+				break;
+			case HAL_XSPI_STATUS_MATCH_CB_ID:
+				hxspi->StatusMatchCallback = pCallback;
+				break;
+			case HAL_XSPI_TIMEOUT_CB_ID:
+				hxspi->TimeOutCallback = pCallback;
+				break;
+			case HAL_XSPI_MSP_INIT_CB_ID:
+				hxspi->MspInitCallback = pCallback;
+				break;
+			case HAL_XSPI_MSP_DEINIT_CB_ID:
+				hxspi->MspDeInitCallback = pCallback;
+				break;
+			default:
+				/* Update the error code */
+				hxspi->ErrorCode |=
+				    HAL_XSPI_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hxspi->State == HAL_XSPI_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_XSPI_MSP_INIT_CB_ID:
-			hxspi->MspInitCallback = pCallback;
-			break;
-		case HAL_XSPI_MSP_DEINIT_CB_ID:
-			hxspi->MspDeInitCallback = pCallback;
-			break;
-		default:
-			/* Update the error code */
-			hxspi->ErrorCode |= HAL_XSPI_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_XSPI_MSP_INIT_CB_ID:
+				hxspi->MspInitCallback = pCallback;
+				break;
+			case HAL_XSPI_MSP_DEINIT_CB_ID:
+				hxspi->MspDeInitCallback = pCallback;
+				break;
+			default:
+				/* Update the error code */
+				hxspi->ErrorCode |=
+				    HAL_XSPI_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -2612,65 +2614,72 @@ HAL_XSPI_UnRegisterCallback(XSPI_HandleTypeDef *hxspi,
 
 	if (hxspi->State == HAL_XSPI_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_XSPI_ERROR_CB_ID:
-			hxspi->ErrorCallback = HAL_XSPI_ErrorCallback;
-			break;
-		case HAL_XSPI_ABORT_CB_ID:
-			hxspi->AbortCpltCallback = HAL_XSPI_AbortCpltCallback;
-			break;
-		case HAL_XSPI_FIFO_THRESHOLD_CB_ID:
-			hxspi->FifoThresholdCallback =
-			    HAL_XSPI_FifoThresholdCallback;
-			break;
-		case HAL_XSPI_CMD_CPLT_CB_ID:
-			hxspi->CmdCpltCallback = HAL_XSPI_CmdCpltCallback;
-			break;
-		case HAL_XSPI_RX_CPLT_CB_ID:
-			hxspi->RxCpltCallback = HAL_XSPI_RxCpltCallback;
-			break;
-		case HAL_XSPI_TX_CPLT_CB_ID:
-			hxspi->TxCpltCallback = HAL_XSPI_TxCpltCallback;
-			break;
-		case HAL_XSPI_RX_HALF_CPLT_CB_ID:
-			hxspi->RxHalfCpltCallback = HAL_XSPI_RxHalfCpltCallback;
-			break;
-		case HAL_XSPI_TX_HALF_CPLT_CB_ID:
-			hxspi->TxHalfCpltCallback = HAL_XSPI_TxHalfCpltCallback;
-			break;
-		case HAL_XSPI_STATUS_MATCH_CB_ID:
-			hxspi->StatusMatchCallback =
-			    HAL_XSPI_StatusMatchCallback;
-			break;
-		case HAL_XSPI_TIMEOUT_CB_ID:
-			hxspi->TimeOutCallback = HAL_XSPI_TimeOutCallback;
-			break;
-		case HAL_XSPI_MSP_INIT_CB_ID:
-			hxspi->MspInitCallback = HAL_XSPI_MspInit;
-			break;
-		case HAL_XSPI_MSP_DEINIT_CB_ID:
-			hxspi->MspDeInitCallback = HAL_XSPI_MspDeInit;
-			break;
-		default:
-			/* Update the error code */
-			hxspi->ErrorCode |= HAL_XSPI_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_XSPI_ERROR_CB_ID:
+				hxspi->ErrorCallback = HAL_XSPI_ErrorCallback;
+				break;
+			case HAL_XSPI_ABORT_CB_ID:
+				hxspi->AbortCpltCallback =
+				    HAL_XSPI_AbortCpltCallback;
+				break;
+			case HAL_XSPI_FIFO_THRESHOLD_CB_ID:
+				hxspi->FifoThresholdCallback =
+				    HAL_XSPI_FifoThresholdCallback;
+				break;
+			case HAL_XSPI_CMD_CPLT_CB_ID:
+				hxspi->CmdCpltCallback =
+				    HAL_XSPI_CmdCpltCallback;
+				break;
+			case HAL_XSPI_RX_CPLT_CB_ID:
+				hxspi->RxCpltCallback = HAL_XSPI_RxCpltCallback;
+				break;
+			case HAL_XSPI_TX_CPLT_CB_ID:
+				hxspi->TxCpltCallback = HAL_XSPI_TxCpltCallback;
+				break;
+			case HAL_XSPI_RX_HALF_CPLT_CB_ID:
+				hxspi->RxHalfCpltCallback =
+				    HAL_XSPI_RxHalfCpltCallback;
+				break;
+			case HAL_XSPI_TX_HALF_CPLT_CB_ID:
+				hxspi->TxHalfCpltCallback =
+				    HAL_XSPI_TxHalfCpltCallback;
+				break;
+			case HAL_XSPI_STATUS_MATCH_CB_ID:
+				hxspi->StatusMatchCallback =
+				    HAL_XSPI_StatusMatchCallback;
+				break;
+			case HAL_XSPI_TIMEOUT_CB_ID:
+				hxspi->TimeOutCallback =
+				    HAL_XSPI_TimeOutCallback;
+				break;
+			case HAL_XSPI_MSP_INIT_CB_ID:
+				hxspi->MspInitCallback = HAL_XSPI_MspInit;
+				break;
+			case HAL_XSPI_MSP_DEINIT_CB_ID:
+				hxspi->MspDeInitCallback = HAL_XSPI_MspDeInit;
+				break;
+			default:
+				/* Update the error code */
+				hxspi->ErrorCode |=
+				    HAL_XSPI_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hxspi->State == HAL_XSPI_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_XSPI_MSP_INIT_CB_ID:
-			hxspi->MspInitCallback = HAL_XSPI_MspInit;
-			break;
-		case HAL_XSPI_MSP_DEINIT_CB_ID:
-			hxspi->MspDeInitCallback = HAL_XSPI_MspDeInit;
-			break;
-		default:
-			/* Update the error code */
-			hxspi->ErrorCode |= HAL_XSPI_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_XSPI_MSP_INIT_CB_ID:
+				hxspi->MspInitCallback = HAL_XSPI_MspInit;
+				break;
+			case HAL_XSPI_MSP_DEINIT_CB_ID:
+				hxspi->MspDeInitCallback = HAL_XSPI_MspDeInit;
+				break;
+			default:
+				/* Update the error code */
+				hxspi->ErrorCode |=
+				    HAL_XSPI_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -3548,23 +3557,24 @@ HAL_StatusTypeDef HAL_XSPI_GetDelayValue(XSPI_HandleTypeDef *hxspi,
 		assert_param(IS_XSPI_DELAY_TYPE(pCfg->DelayValueType));
 
 		switch (pCfg->DelayValueType) {
-		case HAL_XSPI_CAL_FULL_CYCLE_DELAY:
-			reg = hxspi->Instance->CALFCR;
-			pCfg->MaxCalibration = (reg & HSPI_CALFCR_CALMAX);
-			break;
-		case HAL_XSPI_CAL_FEEDBACK_CLK_DELAY:
-			reg = hxspi->Instance->CALMR;
-			break;
-		case HAL_XSPI_CAL_DATA_OUTPUT_DELAY:
-			reg = hxspi->Instance->CALSOR;
-			break;
-		case HAL_XSPI_CAL_DQS_INPUT_DELAY:
-			reg = hxspi->Instance->CALSIR;
-			break;
-		default:
-			status = HAL_ERROR;
-			hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_PARAM;
-			break;
+			case HAL_XSPI_CAL_FULL_CYCLE_DELAY:
+				reg = hxspi->Instance->CALFCR;
+				pCfg->MaxCalibration =
+				    (reg & HSPI_CALFCR_CALMAX);
+				break;
+			case HAL_XSPI_CAL_FEEDBACK_CLK_DELAY:
+				reg = hxspi->Instance->CALMR;
+				break;
+			case HAL_XSPI_CAL_DATA_OUTPUT_DELAY:
+				reg = hxspi->Instance->CALSOR;
+				break;
+			case HAL_XSPI_CAL_DQS_INPUT_DELAY:
+				reg = hxspi->Instance->CALSIR;
+				break;
+			default:
+				status = HAL_ERROR;
+				hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_PARAM;
+				break;
 		}
 
 		if (status == HAL_OK) {
@@ -3603,34 +3613,38 @@ HAL_StatusTypeDef HAL_XSPI_SetDelayValue(XSPI_HandleTypeDef *hxspi,
 		/* Check if the state isn't in one of the busy states */
 		if ((hxspi->State & XSPI_BUSY_STATE_MASK) == 0U) {
 			switch (pCfg->DelayValueType) {
-			case HAL_XSPI_CAL_FEEDBACK_CLK_DELAY:
-				MODIFY_REG(
-				    hxspi->Instance->CALMR,
-				    (HSPI_CALMR_COARSE | HSPI_CALMR_FINE),
-				    (pCfg->FineCalibrationUnit |
-				     (pCfg->CoarseCalibrationUnit
-				      << HSPI_CALMR_COARSE_Pos)));
-				break;
-			case HAL_XSPI_CAL_DATA_OUTPUT_DELAY:
-				MODIFY_REG(
-				    hxspi->Instance->CALSOR,
-				    (HSPI_CALSOR_COARSE | HSPI_CALSOR_FINE),
-				    (pCfg->FineCalibrationUnit |
-				     (pCfg->CoarseCalibrationUnit
-				      << HSPI_CALSOR_COARSE_Pos)));
-				break;
-			case HAL_XSPI_CAL_DQS_INPUT_DELAY:
-				MODIFY_REG(
-				    hxspi->Instance->CALSIR,
-				    (HSPI_CALSIR_COARSE | HSPI_CALSIR_FINE),
-				    (pCfg->FineCalibrationUnit |
-				     (pCfg->CoarseCalibrationUnit
-				      << HSPI_CALSIR_COARSE_Pos)));
-				break;
-			default:
-				status = HAL_ERROR;
-				hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_PARAM;
-				break;
+				case HAL_XSPI_CAL_FEEDBACK_CLK_DELAY:
+					MODIFY_REG(
+					    hxspi->Instance->CALMR,
+					    (HSPI_CALMR_COARSE |
+					     HSPI_CALMR_FINE),
+					    (pCfg->FineCalibrationUnit |
+					     (pCfg->CoarseCalibrationUnit
+					      << HSPI_CALMR_COARSE_Pos)));
+					break;
+				case HAL_XSPI_CAL_DATA_OUTPUT_DELAY:
+					MODIFY_REG(
+					    hxspi->Instance->CALSOR,
+					    (HSPI_CALSOR_COARSE |
+					     HSPI_CALSOR_FINE),
+					    (pCfg->FineCalibrationUnit |
+					     (pCfg->CoarseCalibrationUnit
+					      << HSPI_CALSOR_COARSE_Pos)));
+					break;
+				case HAL_XSPI_CAL_DQS_INPUT_DELAY:
+					MODIFY_REG(
+					    hxspi->Instance->CALSIR,
+					    (HSPI_CALSIR_COARSE |
+					     HSPI_CALSIR_FINE),
+					    (pCfg->FineCalibrationUnit |
+					     (pCfg->CoarseCalibrationUnit
+					      << HSPI_CALSIR_COARSE_Pos)));
+					break;
+				default:
+					status = HAL_ERROR;
+					hxspi->ErrorCode =
+					    HAL_XSPI_ERROR_INVALID_PARAM;
+					break;
 			}
 		} else {
 			status = HAL_ERROR;

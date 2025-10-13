@@ -436,55 +436,57 @@ HAL_PSSI_RegisterCallback(PSSI_HandleTypeDef *hpssi,
 
 	if (HAL_PSSI_STATE_READY == hpssi->State) {
 		switch (CallbackID) {
-		case HAL_PSSI_TX_COMPLETE_CB_ID:
-			hpssi->TxCpltCallback = pCallback;
-			break;
+			case HAL_PSSI_TX_COMPLETE_CB_ID:
+				hpssi->TxCpltCallback = pCallback;
+				break;
 
-		case HAL_PSSI_RX_COMPLETE_CB_ID:
-			hpssi->RxCpltCallback = pCallback;
-			break;
+			case HAL_PSSI_RX_COMPLETE_CB_ID:
+				hpssi->RxCpltCallback = pCallback;
+				break;
 
-		case HAL_PSSI_ERROR_CB_ID:
-			hpssi->ErrorCallback = pCallback;
-			break;
+			case HAL_PSSI_ERROR_CB_ID:
+				hpssi->ErrorCallback = pCallback;
+				break;
 
-		case HAL_PSSI_ABORT_CB_ID:
-			hpssi->AbortCpltCallback = pCallback;
-			break;
+			case HAL_PSSI_ABORT_CB_ID:
+				hpssi->AbortCpltCallback = pCallback;
+				break;
 
-		case HAL_PSSI_MSPINIT_CB_ID:
-			hpssi->MspInitCallback = pCallback;
-			break;
+			case HAL_PSSI_MSPINIT_CB_ID:
+				hpssi->MspInitCallback = pCallback;
+				break;
 
-		case HAL_PSSI_MSPDEINIT_CB_ID:
-			hpssi->MspDeInitCallback = pCallback;
-			break;
+			case HAL_PSSI_MSPDEINIT_CB_ID:
+				hpssi->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hpssi->ErrorCode |= HAL_PSSI_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hpssi->ErrorCode |=
+				    HAL_PSSI_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_PSSI_STATE_RESET == hpssi->State) {
 		switch (CallbackID) {
-		case HAL_PSSI_MSPINIT_CB_ID:
-			hpssi->MspInitCallback = pCallback;
-			break;
+			case HAL_PSSI_MSPINIT_CB_ID:
+				hpssi->MspInitCallback = pCallback;
+				break;
 
-		case HAL_PSSI_MSPDEINIT_CB_ID:
-			hpssi->MspDeInitCallback = pCallback;
-			break;
+			case HAL_PSSI_MSPDEINIT_CB_ID:
+				hpssi->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hpssi->ErrorCode |= HAL_PSSI_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hpssi->ErrorCode |=
+				    HAL_PSSI_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -525,67 +527,75 @@ HAL_PSSI_UnRegisterCallback(PSSI_HandleTypeDef *hpssi,
 
 	if (HAL_PSSI_STATE_READY == hpssi->State) {
 		switch (CallbackID) {
-		case HAL_PSSI_TX_COMPLETE_CB_ID:
-			hpssi->TxCpltCallback =
-			    HAL_PSSI_TxCpltCallback; /* Legacy weak
-							TxCpltCallback     */
-			break;
+			case HAL_PSSI_TX_COMPLETE_CB_ID:
+				hpssi->TxCpltCallback =
+				    HAL_PSSI_TxCpltCallback; /* Legacy weak
+								TxCpltCallback
+							      */
+				break;
 
-		case HAL_PSSI_RX_COMPLETE_CB_ID:
-			hpssi->RxCpltCallback =
-			    HAL_PSSI_RxCpltCallback; /* Legacy weak
-							RxCpltCallback     */
-			break;
+			case HAL_PSSI_RX_COMPLETE_CB_ID:
+				hpssi->RxCpltCallback =
+				    HAL_PSSI_RxCpltCallback; /* Legacy weak
+								RxCpltCallback
+							      */
+				break;
 
-		case HAL_PSSI_ERROR_CB_ID:
-			hpssi->ErrorCallback =
-			    HAL_PSSI_ErrorCallback; /* Legacy weak ErrorCallback
-						     */
-			break;
+			case HAL_PSSI_ERROR_CB_ID:
+				hpssi->ErrorCallback =
+				    HAL_PSSI_ErrorCallback; /* Legacy weak
+							     * ErrorCallback
+							     */
+				break;
 
-		case HAL_PSSI_ABORT_CB_ID:
-			hpssi->AbortCpltCallback =
-			    HAL_PSSI_AbortCpltCallback; /* Legacy weak
-							   AbortCpltCallback  */
-			break;
+			case HAL_PSSI_ABORT_CB_ID:
+				hpssi->AbortCpltCallback =
+				    HAL_PSSI_AbortCpltCallback; /* Legacy weak
+								   AbortCpltCallback
+								 */
+				break;
 
-		case HAL_PSSI_MSPINIT_CB_ID:
-			hpssi->MspInitCallback =
-			    HAL_PSSI_MspInit; /* Legacy weak MspInit */
-			break;
+			case HAL_PSSI_MSPINIT_CB_ID:
+				hpssi->MspInitCallback =
+				    HAL_PSSI_MspInit; /* Legacy weak MspInit */
+				break;
 
-		case HAL_PSSI_MSPDEINIT_CB_ID:
-			hpssi->MspDeInitCallback =
-			    HAL_PSSI_MspDeInit; /* Legacy weak MspDeInit */
-			break;
+			case HAL_PSSI_MSPDEINIT_CB_ID:
+				hpssi->MspDeInitCallback =
+				    HAL_PSSI_MspDeInit; /* Legacy weak MspDeInit
+							 */
+				break;
 
-		default:
-			/* Update the error code */
-			hpssi->ErrorCode |= HAL_PSSI_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hpssi->ErrorCode |=
+				    HAL_PSSI_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_PSSI_STATE_RESET == hpssi->State) {
 		switch (CallbackID) {
-		case HAL_PSSI_MSPINIT_CB_ID:
-			hpssi->MspInitCallback =
-			    HAL_PSSI_MspInit; /* Legacy weak MspInit */
-			break;
+			case HAL_PSSI_MSPINIT_CB_ID:
+				hpssi->MspInitCallback =
+				    HAL_PSSI_MspInit; /* Legacy weak MspInit */
+				break;
 
-		case HAL_PSSI_MSPDEINIT_CB_ID:
-			hpssi->MspDeInitCallback =
-			    HAL_PSSI_MspDeInit; /* Legacy weak MspDeInit */
-			break;
+			case HAL_PSSI_MSPDEINIT_CB_ID:
+				hpssi->MspDeInitCallback =
+				    HAL_PSSI_MspDeInit; /* Legacy weak MspDeInit
+							 */
+				break;
 
-		default:
-			/* Update the error code */
-			hpssi->ErrorCode |= HAL_PSSI_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hpssi->ErrorCode |=
+				    HAL_PSSI_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */

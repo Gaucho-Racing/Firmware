@@ -1133,52 +1133,52 @@ HAL_DCMI_RegisterCallback(DCMI_HandleTypeDef *hdcmi,
 	} else {
 		if (hdcmi->State == HAL_DCMI_STATE_READY) {
 			switch (CallbackID) {
-			case HAL_DCMI_FRAME_EVENT_CB_ID:
-				hdcmi->FrameEventCallback = pCallback;
-				break;
+				case HAL_DCMI_FRAME_EVENT_CB_ID:
+					hdcmi->FrameEventCallback = pCallback;
+					break;
 
-			case HAL_DCMI_VSYNC_EVENT_CB_ID:
-				hdcmi->VsyncEventCallback = pCallback;
-				break;
+				case HAL_DCMI_VSYNC_EVENT_CB_ID:
+					hdcmi->VsyncEventCallback = pCallback;
+					break;
 
-			case HAL_DCMI_LINE_EVENT_CB_ID:
-				hdcmi->LineEventCallback = pCallback;
-				break;
+				case HAL_DCMI_LINE_EVENT_CB_ID:
+					hdcmi->LineEventCallback = pCallback;
+					break;
 
-			case HAL_DCMI_ERROR_CB_ID:
-				hdcmi->ErrorCallback = pCallback;
-				break;
+				case HAL_DCMI_ERROR_CB_ID:
+					hdcmi->ErrorCallback = pCallback;
+					break;
 
-			case HAL_DCMI_MSPINIT_CB_ID:
-				hdcmi->MspInitCallback = pCallback;
-				break;
+				case HAL_DCMI_MSPINIT_CB_ID:
+					hdcmi->MspInitCallback = pCallback;
+					break;
 
-			case HAL_DCMI_MSPDEINIT_CB_ID:
-				hdcmi->MspDeInitCallback = pCallback;
-				break;
+				case HAL_DCMI_MSPDEINIT_CB_ID:
+					hdcmi->MspDeInitCallback = pCallback;
+					break;
 
-			default:
-				/* Return error status */
-				status = HAL_ERROR;
-				break;
+				default:
+					/* Return error status */
+					status = HAL_ERROR;
+					break;
 			}
 		} else if (hdcmi->State == HAL_DCMI_STATE_RESET) {
 			switch (CallbackID) {
-			case HAL_DCMI_MSPINIT_CB_ID:
-				hdcmi->MspInitCallback = pCallback;
-				break;
+				case HAL_DCMI_MSPINIT_CB_ID:
+					hdcmi->MspInitCallback = pCallback;
+					break;
 
-			case HAL_DCMI_MSPDEINIT_CB_ID:
-				hdcmi->MspDeInitCallback = pCallback;
-				break;
+				case HAL_DCMI_MSPDEINIT_CB_ID:
+					hdcmi->MspDeInitCallback = pCallback;
+					break;
 
-			default:
-				/* update the error code */
-				hdcmi->ErrorCode |=
-				    HAL_DCMI_ERROR_INVALID_CALLBACK;
-				/* update return status */
-				status = HAL_ERROR;
-				break;
+				default:
+					/* update the error code */
+					hdcmi->ErrorCode |=
+					    HAL_DCMI_ERROR_INVALID_CALLBACK;
+					/* update return status */
+					status = HAL_ERROR;
+					break;
 			}
 		} else {
 			/* update the error code */
@@ -1213,63 +1213,67 @@ HAL_DCMI_UnRegisterCallback(DCMI_HandleTypeDef *hdcmi,
 
 	if (hdcmi->State == HAL_DCMI_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_DCMI_FRAME_EVENT_CB_ID:
-			hdcmi->FrameEventCallback =
-			    HAL_DCMI_FrameEventCallback; /* Legacy weak
-							    FrameEventCallback
-							  */
-			break;
+			case HAL_DCMI_FRAME_EVENT_CB_ID:
+				hdcmi->FrameEventCallback =
+				    HAL_DCMI_FrameEventCallback; /* Legacy weak
+								    FrameEventCallback
+								  */
+				break;
 
-		case HAL_DCMI_VSYNC_EVENT_CB_ID:
-			hdcmi->VsyncEventCallback =
-			    HAL_DCMI_VsyncEventCallback; /* Legacy weak
-							    VsyncEventCallback
-							  */
-			break;
+			case HAL_DCMI_VSYNC_EVENT_CB_ID:
+				hdcmi->VsyncEventCallback =
+				    HAL_DCMI_VsyncEventCallback; /* Legacy weak
+								    VsyncEventCallback
+								  */
+				break;
 
-		case HAL_DCMI_LINE_EVENT_CB_ID:
-			hdcmi->LineEventCallback =
-			    HAL_DCMI_LineEventCallback; /* Legacy weak
-							   LineEventCallback */
-			break;
+			case HAL_DCMI_LINE_EVENT_CB_ID:
+				hdcmi->LineEventCallback =
+				    HAL_DCMI_LineEventCallback; /* Legacy weak
+								   LineEventCallback
+								 */
+				break;
 
-		case HAL_DCMI_ERROR_CB_ID:
-			hdcmi->ErrorCallback =
-			    HAL_DCMI_ErrorCallback; /* Legacy weak ErrorCallback
-						     */
-			break;
+			case HAL_DCMI_ERROR_CB_ID:
+				hdcmi->ErrorCallback =
+				    HAL_DCMI_ErrorCallback; /* Legacy weak
+							     * ErrorCallback
+							     */
+				break;
 
-		case HAL_DCMI_MSPINIT_CB_ID:
-			hdcmi->MspInitCallback = HAL_DCMI_MspInit;
-			break;
+			case HAL_DCMI_MSPINIT_CB_ID:
+				hdcmi->MspInitCallback = HAL_DCMI_MspInit;
+				break;
 
-		case HAL_DCMI_MSPDEINIT_CB_ID:
-			hdcmi->MspDeInitCallback = HAL_DCMI_MspDeInit;
-			break;
+			case HAL_DCMI_MSPDEINIT_CB_ID:
+				hdcmi->MspDeInitCallback = HAL_DCMI_MspDeInit;
+				break;
 
-		default:
-			/* update the error code */
-			hdcmi->ErrorCode |= HAL_DCMI_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* update the error code */
+				hdcmi->ErrorCode |=
+				    HAL_DCMI_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hdcmi->State == HAL_DCMI_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_DCMI_MSPINIT_CB_ID:
-			hdcmi->MspInitCallback = HAL_DCMI_MspInit;
-			break;
+			case HAL_DCMI_MSPINIT_CB_ID:
+				hdcmi->MspInitCallback = HAL_DCMI_MspInit;
+				break;
 
-		case HAL_DCMI_MSPDEINIT_CB_ID:
-			hdcmi->MspDeInitCallback = HAL_DCMI_MspDeInit;
-			break;
+			case HAL_DCMI_MSPDEINIT_CB_ID:
+				hdcmi->MspDeInitCallback = HAL_DCMI_MspDeInit;
+				break;
 
-		default:
-			/* update the error code */
-			hdcmi->ErrorCode |= HAL_DCMI_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* update the error code */
+				hdcmi->ErrorCode |=
+				    HAL_DCMI_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* update the error code */

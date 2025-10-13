@@ -617,100 +617,100 @@ HAL_StatusTypeDef HAL_RTC_RegisterCallback(RTC_HandleTypeDef *hrtc,
 
 	if (HAL_RTC_STATE_READY == hrtc->State) {
 		switch (CallbackID) {
-		case HAL_RTC_ALARM_A_EVENT_CB_ID:
-			hrtc->AlarmAEventCallback = pCallback;
-			break;
+			case HAL_RTC_ALARM_A_EVENT_CB_ID:
+				hrtc->AlarmAEventCallback = pCallback;
+				break;
 
-		case HAL_RTC_ALARM_B_EVENT_CB_ID:
-			hrtc->AlarmBEventCallback = pCallback;
-			break;
+			case HAL_RTC_ALARM_B_EVENT_CB_ID:
+				hrtc->AlarmBEventCallback = pCallback;
+				break;
 
-		case HAL_RTC_TIMESTAMP_EVENT_CB_ID:
-			hrtc->TimeStampEventCallback = pCallback;
-			break;
+			case HAL_RTC_TIMESTAMP_EVENT_CB_ID:
+				hrtc->TimeStampEventCallback = pCallback;
+				break;
 
-		case HAL_RTC_WAKEUPTIMER_EVENT_CB_ID:
-			hrtc->WakeUpTimerEventCallback = pCallback;
-			break;
+			case HAL_RTC_WAKEUPTIMER_EVENT_CB_ID:
+				hrtc->WakeUpTimerEventCallback = pCallback;
+				break;
 
-		case HAL_RTC_TAMPER1_EVENT_CB_ID:
-			hrtc->Tamper1EventCallback = pCallback;
-			break;
+			case HAL_RTC_TAMPER1_EVENT_CB_ID:
+				hrtc->Tamper1EventCallback = pCallback;
+				break;
 
-		case HAL_RTC_TAMPER2_EVENT_CB_ID:
-			hrtc->Tamper2EventCallback = pCallback;
-			break;
+			case HAL_RTC_TAMPER2_EVENT_CB_ID:
+				hrtc->Tamper2EventCallback = pCallback;
+				break;
 
 #if (RTC_TAMP_NB == 3)
-		case HAL_RTC_TAMPER3_EVENT_CB_ID:
-			hrtc->Tamper3EventCallback = pCallback;
-			break;
+			case HAL_RTC_TAMPER3_EVENT_CB_ID:
+				hrtc->Tamper3EventCallback = pCallback;
+				break;
 
 #endif /* RTC_TAMP_NB */
 
 #ifdef RTC_TAMP_INT_1_SUPPORT
-		case HAL_RTC_INTERNAL_TAMPER1_EVENT_CB_ID:
-			hrtc->InternalTamper1EventCallback = pCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER1_EVENT_CB_ID:
+				hrtc->InternalTamper1EventCallback = pCallback;
+				break;
 #endif /* RTC_TAMP_INT_1_SUPPORT */
 
 #ifdef RTC_TAMP_INT_2_SUPPORT
-		case HAL_RTC_INTERNAL_TAMPER2_EVENT_CB_ID:
-			hrtc->InternalTamper2EventCallback = pCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER2_EVENT_CB_ID:
+				hrtc->InternalTamper2EventCallback = pCallback;
+				break;
 
 #endif /* RTC_TAMP_INT_2_SUPPORT */
-		case HAL_RTC_INTERNAL_TAMPER3_EVENT_CB_ID:
-			hrtc->InternalTamper3EventCallback = pCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER3_EVENT_CB_ID:
+				hrtc->InternalTamper3EventCallback = pCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER4_EVENT_CB_ID:
-			hrtc->InternalTamper4EventCallback = pCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER4_EVENT_CB_ID:
+				hrtc->InternalTamper4EventCallback = pCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER5_EVENT_CB_ID:
-			hrtc->InternalTamper5EventCallback = pCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER5_EVENT_CB_ID:
+				hrtc->InternalTamper5EventCallback = pCallback;
+				break;
 
 #ifdef RTC_TAMP_INT_6_SUPPORT
-		case HAL_RTC_INTERNAL_TAMPER6_EVENT_CB_ID:
-			hrtc->InternalTamper6EventCallback = pCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER6_EVENT_CB_ID:
+				hrtc->InternalTamper6EventCallback = pCallback;
+				break;
 
 #endif /* RTC_TAMP_INT_6_SUPPORT */
 #ifdef RTC_TAMP_INT_7_SUPPORT
-		case HAL_RTC_INTERNAL_TAMPER7_EVENT_CB_ID:
-			hrtc->InternalTamper7EventCallback = pCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER7_EVENT_CB_ID:
+				hrtc->InternalTamper7EventCallback = pCallback;
+				break;
 
 #endif /* RTC_TAMP_INT_7_SUPPORT */
-		case HAL_RTC_MSPINIT_CB_ID:
-			hrtc->MspInitCallback = pCallback;
-			break;
+			case HAL_RTC_MSPINIT_CB_ID:
+				hrtc->MspInitCallback = pCallback;
+				break;
 
-		case HAL_RTC_MSPDEINIT_CB_ID:
-			hrtc->MspDeInitCallback = pCallback;
-			break;
+			case HAL_RTC_MSPDEINIT_CB_ID:
+				hrtc->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_RTC_STATE_RESET == hrtc->State) {
 		switch (CallbackID) {
-		case HAL_RTC_MSPINIT_CB_ID:
-			hrtc->MspInitCallback = pCallback;
-			break;
+			case HAL_RTC_MSPINIT_CB_ID:
+				hrtc->MspInitCallback = pCallback;
+				break;
 
-		case HAL_RTC_MSPDEINIT_CB_ID:
-			hrtc->MspDeInitCallback = pCallback;
-			break;
+			case HAL_RTC_MSPDEINIT_CB_ID:
+				hrtc->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Return error status */
@@ -769,147 +769,153 @@ HAL_RTC_UnRegisterCallback(RTC_HandleTypeDef *hrtc,
 
 	if (HAL_RTC_STATE_READY == hrtc->State) {
 		switch (CallbackID) {
-		case HAL_RTC_ALARM_A_EVENT_CB_ID:
-			hrtc->AlarmAEventCallback =
-			    HAL_RTC_AlarmAEventCallback; /* Legacy weak
-							    AlarmAEventCallback
-							  */
-			break;
+			case HAL_RTC_ALARM_A_EVENT_CB_ID:
+				hrtc->AlarmAEventCallback =
+				    HAL_RTC_AlarmAEventCallback; /* Legacy weak
+								    AlarmAEventCallback
+								  */
+				break;
 
-		case HAL_RTC_ALARM_B_EVENT_CB_ID:
-			hrtc->AlarmBEventCallback =
-			    HAL_RTCEx_AlarmBEventCallback; /* Legacy weak
-							      AlarmBEventCallback
-							    */
-			break;
+			case HAL_RTC_ALARM_B_EVENT_CB_ID:
+				hrtc->AlarmBEventCallback =
+				    HAL_RTCEx_AlarmBEventCallback; /* Legacy
+								      weak
+								      AlarmBEventCallback
+								    */
+				break;
 
-		case HAL_RTC_TIMESTAMP_EVENT_CB_ID:
-			hrtc->TimeStampEventCallback =
-			    HAL_RTCEx_TimeStampEventCallback; /* Legacy weak
-								 TimeStampEventCallback
-							       */
-			break;
+			case HAL_RTC_TIMESTAMP_EVENT_CB_ID:
+				hrtc->TimeStampEventCallback =
+				    HAL_RTCEx_TimeStampEventCallback; /* Legacy
+									 weak
+									 TimeStampEventCallback
+								       */
+				break;
 
-		case HAL_RTC_WAKEUPTIMER_EVENT_CB_ID:
-			hrtc->WakeUpTimerEventCallback =
-			    HAL_RTCEx_WakeUpTimerEventCallback; /* Legacy weak
-								   WakeUpTimerEventCallback
-								 */
-			break;
+			case HAL_RTC_WAKEUPTIMER_EVENT_CB_ID:
+				hrtc->WakeUpTimerEventCallback =
+				    HAL_RTCEx_WakeUpTimerEventCallback; /* Legacy
+									   weak
+									   WakeUpTimerEventCallback
+									 */
+				break;
 
-		case HAL_RTC_TAMPER1_EVENT_CB_ID:
-			hrtc->Tamper1EventCallback =
-			    HAL_RTCEx_Tamper1EventCallback; /* Legacy weak
-							       Tamper1EventCallback
-							     */
-			break;
+			case HAL_RTC_TAMPER1_EVENT_CB_ID:
+				hrtc->Tamper1EventCallback =
+				    HAL_RTCEx_Tamper1EventCallback; /* Legacy
+								       weak
+								       Tamper1EventCallback
+								     */
+				break;
 
-		case HAL_RTC_TAMPER2_EVENT_CB_ID:
-			hrtc->Tamper2EventCallback =
-			    HAL_RTCEx_Tamper2EventCallback; /* Legacy weak
-							       Tamper2EventCallback
-							     */
-			break;
+			case HAL_RTC_TAMPER2_EVENT_CB_ID:
+				hrtc->Tamper2EventCallback =
+				    HAL_RTCEx_Tamper2EventCallback; /* Legacy
+								       weak
+								       Tamper2EventCallback
+								     */
+				break;
 
 #if (RTC_TAMP_NB == 3)
-		case HAL_RTC_TAMPER3_EVENT_CB_ID:
-			hrtc->Tamper3EventCallback =
-			    HAL_RTCEx_Tamper3EventCallback; /* Legacy weak
-							       Tamper3EventCallback
-							     */
-			break;
+			case HAL_RTC_TAMPER3_EVENT_CB_ID:
+				hrtc->Tamper3EventCallback =
+				    HAL_RTCEx_Tamper3EventCallback; /* Legacy
+								       weak
+								       Tamper3EventCallback
+								     */
+				break;
 #endif /* RTC_TAMP_NB */
 #ifdef RTC_TAMP_INT_1_SUPPORT
-		case HAL_RTC_INTERNAL_TAMPER1_EVENT_CB_ID:
-			hrtc->InternalTamper1EventCallback =
-			    HAL_RTCEx_InternalTamper1EventCallback; /* Legacy
-								       weak
-								       InternalTamper1EventCallback
-								     */
-			break;
+			case HAL_RTC_INTERNAL_TAMPER1_EVENT_CB_ID:
+				hrtc->InternalTamper1EventCallback =
+				    HAL_RTCEx_InternalTamper1EventCallback; /* Legacy
+									       weak
+									       InternalTamper1EventCallback
+									     */
+				break;
 #endif /* RTC_TAMP_INT_1_SUPPORT */
 
 #ifdef RTC_TAMP_INT_2_SUPPORT
-		case HAL_RTC_INTERNAL_TAMPER2_EVENT_CB_ID:
-			hrtc->InternalTamper2EventCallback =
-			    HAL_RTCEx_InternalTamper2EventCallback; /* Legacy
-								       weak
-								       InternalTamper2EventCallback
-								     */
-			break;
+			case HAL_RTC_INTERNAL_TAMPER2_EVENT_CB_ID:
+				hrtc->InternalTamper2EventCallback =
+				    HAL_RTCEx_InternalTamper2EventCallback; /* Legacy
+									       weak
+									       InternalTamper2EventCallback
+									     */
+				break;
 
 #endif /* RTC_TAMP_INT_2_SUPPORT */
-		case HAL_RTC_INTERNAL_TAMPER3_EVENT_CB_ID:
-			hrtc->InternalTamper3EventCallback =
-			    HAL_RTCEx_InternalTamper3EventCallback; /* Legacy
-								       weak
-								       InternalTamper3EventCallback
-								     */
-			break;
+			case HAL_RTC_INTERNAL_TAMPER3_EVENT_CB_ID:
+				hrtc->InternalTamper3EventCallback =
+				    HAL_RTCEx_InternalTamper3EventCallback; /* Legacy
+									       weak
+									       InternalTamper3EventCallback
+									     */
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER4_EVENT_CB_ID:
-			hrtc->InternalTamper4EventCallback =
-			    HAL_RTCEx_InternalTamper4EventCallback; /* Legacy
-								       weak
-								       InternalTamper4EventCallback
-								     */
-			break;
+			case HAL_RTC_INTERNAL_TAMPER4_EVENT_CB_ID:
+				hrtc->InternalTamper4EventCallback =
+				    HAL_RTCEx_InternalTamper4EventCallback; /* Legacy
+									       weak
+									       InternalTamper4EventCallback
+									     */
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER5_EVENT_CB_ID:
-			hrtc->InternalTamper5EventCallback =
-			    HAL_RTCEx_InternalTamper5EventCallback; /* Legacy
-								       weak
-								       InternalTamper5EventCallback
-								     */
-			break;
+			case HAL_RTC_INTERNAL_TAMPER5_EVENT_CB_ID:
+				hrtc->InternalTamper5EventCallback =
+				    HAL_RTCEx_InternalTamper5EventCallback; /* Legacy
+									       weak
+									       InternalTamper5EventCallback
+									     */
+				break;
 
 #ifdef RTC_TAMP_INT_6_SUPPORT
-		case HAL_RTC_INTERNAL_TAMPER6_EVENT_CB_ID:
-			hrtc->InternalTamper6EventCallback =
-			    HAL_RTCEx_InternalTamper6EventCallback; /* Legacy
-								       weak
-								       InternalTamper6EventCallback
-								     */
-			break;
+			case HAL_RTC_INTERNAL_TAMPER6_EVENT_CB_ID:
+				hrtc->InternalTamper6EventCallback =
+				    HAL_RTCEx_InternalTamper6EventCallback; /* Legacy
+									       weak
+									       InternalTamper6EventCallback
+									     */
+				break;
 
 #endif /* RTC_TAMP_INT_6_SUPPORT */
 #ifdef RTC_TAMP_INT_7_SUPPORT
-		case HAL_RTC_INTERNAL_TAMPER7_EVENT_CB_ID:
-			hrtc->InternalTamper7EventCallback =
-			    HAL_RTCEx_InternalTamper7EventCallback; /* Legacy
-								       weak
-								       InternalTamper7EventCallback
-								     */
-			break;
+			case HAL_RTC_INTERNAL_TAMPER7_EVENT_CB_ID:
+				hrtc->InternalTamper7EventCallback =
+				    HAL_RTCEx_InternalTamper7EventCallback; /* Legacy
+									       weak
+									       InternalTamper7EventCallback
+									     */
+				break;
 
 #endif /* RTC_TAMP_INT_7_SUPPORT */
-		case HAL_RTC_MSPINIT_CB_ID:
-			hrtc->MspInitCallback = HAL_RTC_MspInit;
-			break;
+			case HAL_RTC_MSPINIT_CB_ID:
+				hrtc->MspInitCallback = HAL_RTC_MspInit;
+				break;
 
-		case HAL_RTC_MSPDEINIT_CB_ID:
-			hrtc->MspDeInitCallback = HAL_RTC_MspDeInit;
-			break;
+			case HAL_RTC_MSPDEINIT_CB_ID:
+				hrtc->MspDeInitCallback = HAL_RTC_MspDeInit;
+				break;
 
-		default:
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_RTC_STATE_RESET == hrtc->State) {
 		switch (CallbackID) {
-		case HAL_RTC_MSPINIT_CB_ID:
-			hrtc->MspInitCallback = HAL_RTC_MspInit;
-			break;
+			case HAL_RTC_MSPINIT_CB_ID:
+				hrtc->MspInitCallback = HAL_RTC_MspInit;
+				break;
 
-		case HAL_RTC_MSPDEINIT_CB_ID:
-			hrtc->MspDeInitCallback = HAL_RTC_MspDeInit;
-			break;
+			case HAL_RTC_MSPDEINIT_CB_ID:
+				hrtc->MspDeInitCallback = HAL_RTC_MspDeInit;
+				break;
 
-		default:
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Return error status */

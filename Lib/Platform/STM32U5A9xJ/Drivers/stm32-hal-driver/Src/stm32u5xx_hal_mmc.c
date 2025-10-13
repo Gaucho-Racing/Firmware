@@ -1941,51 +1941,54 @@ HAL_StatusTypeDef HAL_MMC_RegisterCallback(MMC_HandleTypeDef *hmmc,
 
 	if (hmmc->State == HAL_MMC_STATE_READY) {
 		switch (CallbackId) {
-		case HAL_MMC_TX_CPLT_CB_ID:
-			hmmc->TxCpltCallback = pCallback;
-			break;
-		case HAL_MMC_RX_CPLT_CB_ID:
-			hmmc->RxCpltCallback = pCallback;
-			break;
-		case HAL_MMC_ERROR_CB_ID:
-			hmmc->ErrorCallback = pCallback;
-			break;
-		case HAL_MMC_ABORT_CB_ID:
-			hmmc->AbortCpltCallback = pCallback;
-			break;
-		case HAL_MMC_READ_DMA_LNKLST_BUF_CPLT_CB_ID:
-			hmmc->Read_DMALnkLstBufCpltCallback = pCallback;
-			break;
-		case HAL_MMC_WRITE_DMA_LNKLST_BUF_CPLT_CB_ID:
-			hmmc->Write_DMALnkLstBufCpltCallback = pCallback;
-			break;
-		case HAL_MMC_MSP_INIT_CB_ID:
-			hmmc->MspInitCallback = pCallback;
-			break;
-		case HAL_MMC_MSP_DEINIT_CB_ID:
-			hmmc->MspDeInitCallback = pCallback;
-			break;
-		default:
-			/* Update the error code */
-			hmmc->ErrorCode |= HAL_MMC_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_MMC_TX_CPLT_CB_ID:
+				hmmc->TxCpltCallback = pCallback;
+				break;
+			case HAL_MMC_RX_CPLT_CB_ID:
+				hmmc->RxCpltCallback = pCallback;
+				break;
+			case HAL_MMC_ERROR_CB_ID:
+				hmmc->ErrorCallback = pCallback;
+				break;
+			case HAL_MMC_ABORT_CB_ID:
+				hmmc->AbortCpltCallback = pCallback;
+				break;
+			case HAL_MMC_READ_DMA_LNKLST_BUF_CPLT_CB_ID:
+				hmmc->Read_DMALnkLstBufCpltCallback = pCallback;
+				break;
+			case HAL_MMC_WRITE_DMA_LNKLST_BUF_CPLT_CB_ID:
+				hmmc->Write_DMALnkLstBufCpltCallback =
+				    pCallback;
+				break;
+			case HAL_MMC_MSP_INIT_CB_ID:
+				hmmc->MspInitCallback = pCallback;
+				break;
+			case HAL_MMC_MSP_DEINIT_CB_ID:
+				hmmc->MspDeInitCallback = pCallback;
+				break;
+			default:
+				/* Update the error code */
+				hmmc->ErrorCode |=
+				    HAL_MMC_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hmmc->State == HAL_MMC_STATE_RESET) {
 		switch (CallbackId) {
-		case HAL_MMC_MSP_INIT_CB_ID:
-			hmmc->MspInitCallback = pCallback;
-			break;
-		case HAL_MMC_MSP_DEINIT_CB_ID:
-			hmmc->MspDeInitCallback = pCallback;
-			break;
-		default:
-			/* Update the error code */
-			hmmc->ErrorCode |= HAL_MMC_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_MMC_MSP_INIT_CB_ID:
+				hmmc->MspInitCallback = pCallback;
+				break;
+			case HAL_MMC_MSP_DEINIT_CB_ID:
+				hmmc->MspDeInitCallback = pCallback;
+				break;
+			default:
+				/* Update the error code */
+				hmmc->ErrorCode |=
+				    HAL_MMC_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -2033,53 +2036,55 @@ HAL_MMC_UnRegisterCallback(MMC_HandleTypeDef *hmmc,
 
 	if (hmmc->State == HAL_MMC_STATE_READY) {
 		switch (CallbackId) {
-		case HAL_MMC_TX_CPLT_CB_ID:
-			hmmc->TxCpltCallback = HAL_MMC_TxCpltCallback;
-			break;
-		case HAL_MMC_RX_CPLT_CB_ID:
-			hmmc->RxCpltCallback = HAL_MMC_RxCpltCallback;
-			break;
-		case HAL_MMC_ERROR_CB_ID:
-			hmmc->ErrorCallback = HAL_MMC_ErrorCallback;
-			break;
-		case HAL_MMC_ABORT_CB_ID:
-			hmmc->AbortCpltCallback = HAL_MMC_AbortCallback;
-			break;
-		case HAL_MMC_READ_DMA_LNKLST_BUF_CPLT_CB_ID:
-			hmmc->Read_DMALnkLstBufCpltCallback =
-			    HAL_MMCEx_Read_DMALnkLstBufCpltCallback;
-			break;
-		case HAL_MMC_WRITE_DMA_LNKLST_BUF_CPLT_CB_ID:
-			hmmc->Write_DMALnkLstBufCpltCallback =
-			    HAL_MMCEx_Write_DMALnkLstBufCpltCallback;
-			break;
-		case HAL_MMC_MSP_INIT_CB_ID:
-			hmmc->MspInitCallback = HAL_MMC_MspInit;
-			break;
-		case HAL_MMC_MSP_DEINIT_CB_ID:
-			hmmc->MspDeInitCallback = HAL_MMC_MspDeInit;
-			break;
-		default:
-			/* Update the error code */
-			hmmc->ErrorCode |= HAL_MMC_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_MMC_TX_CPLT_CB_ID:
+				hmmc->TxCpltCallback = HAL_MMC_TxCpltCallback;
+				break;
+			case HAL_MMC_RX_CPLT_CB_ID:
+				hmmc->RxCpltCallback = HAL_MMC_RxCpltCallback;
+				break;
+			case HAL_MMC_ERROR_CB_ID:
+				hmmc->ErrorCallback = HAL_MMC_ErrorCallback;
+				break;
+			case HAL_MMC_ABORT_CB_ID:
+				hmmc->AbortCpltCallback = HAL_MMC_AbortCallback;
+				break;
+			case HAL_MMC_READ_DMA_LNKLST_BUF_CPLT_CB_ID:
+				hmmc->Read_DMALnkLstBufCpltCallback =
+				    HAL_MMCEx_Read_DMALnkLstBufCpltCallback;
+				break;
+			case HAL_MMC_WRITE_DMA_LNKLST_BUF_CPLT_CB_ID:
+				hmmc->Write_DMALnkLstBufCpltCallback =
+				    HAL_MMCEx_Write_DMALnkLstBufCpltCallback;
+				break;
+			case HAL_MMC_MSP_INIT_CB_ID:
+				hmmc->MspInitCallback = HAL_MMC_MspInit;
+				break;
+			case HAL_MMC_MSP_DEINIT_CB_ID:
+				hmmc->MspDeInitCallback = HAL_MMC_MspDeInit;
+				break;
+			default:
+				/* Update the error code */
+				hmmc->ErrorCode |=
+				    HAL_MMC_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hmmc->State == HAL_MMC_STATE_RESET) {
 		switch (CallbackId) {
-		case HAL_MMC_MSP_INIT_CB_ID:
-			hmmc->MspInitCallback = HAL_MMC_MspInit;
-			break;
-		case HAL_MMC_MSP_DEINIT_CB_ID:
-			hmmc->MspDeInitCallback = HAL_MMC_MspDeInit;
-			break;
-		default:
-			/* Update the error code */
-			hmmc->ErrorCode |= HAL_MMC_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_MMC_MSP_INIT_CB_ID:
+				hmmc->MspInitCallback = HAL_MMC_MspInit;
+				break;
+			case HAL_MMC_MSP_DEINIT_CB_ID:
+				hmmc->MspDeInitCallback = HAL_MMC_MspDeInit;
+				break;
+			default:
+				/* Update the error code */
+				hmmc->ErrorCode |=
+				    HAL_MMC_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -2549,95 +2554,108 @@ HAL_StatusTypeDef HAL_MMC_ConfigSpeedBusOperation(MMC_HandleTypeDef *hmmc,
 	device_type = (hmmc->Ext_CSD[49] & 0x000000FFU);
 
 	switch (SpeedMode) {
-	case SDMMC_SPEED_MODE_AUTO: {
-		if (((hmmc->Instance->CLKCR & SDMMC_CLKCR_WIDBUS) != 0U) &&
-		    ((device_type & 0x04U) != 0U)) {
-			/* High Speed DDR mode allowed */
-			errorstate = MMC_HighSpeed(hmmc, ENABLE);
-			if (errorstate != HAL_MMC_ERROR_NONE) {
-				hmmc->ErrorCode |= errorstate;
-			} else {
-				if ((hmmc->Instance->CLKCR &
-				     SDMMC_CLKCR_CLKDIV) != 0U) {
-					/* DDR mode not supported with CLKDIV =
-					 * 0 */
-					errorstate = MMC_DDR_Mode(hmmc, ENABLE);
-					if (errorstate != HAL_MMC_ERROR_NONE) {
-						hmmc->ErrorCode |= errorstate;
+		case SDMMC_SPEED_MODE_AUTO: {
+			if (((hmmc->Instance->CLKCR & SDMMC_CLKCR_WIDBUS) !=
+			     0U) &&
+			    ((device_type & 0x04U) != 0U)) {
+				/* High Speed DDR mode allowed */
+				errorstate = MMC_HighSpeed(hmmc, ENABLE);
+				if (errorstate != HAL_MMC_ERROR_NONE) {
+					hmmc->ErrorCode |= errorstate;
+				} else {
+					if ((hmmc->Instance->CLKCR &
+					     SDMMC_CLKCR_CLKDIV) != 0U) {
+						/* DDR mode not supported with
+						 * CLKDIV =
+						 * 0 */
+						errorstate =
+						    MMC_DDR_Mode(hmmc, ENABLE);
+						if (errorstate !=
+						    HAL_MMC_ERROR_NONE) {
+							hmmc->ErrorCode |=
+							    errorstate;
+						}
 					}
 				}
-			}
-		} else if ((device_type & 0x02U) != 0U) {
-			/* High Speed mode allowed */
-			errorstate = MMC_HighSpeed(hmmc, ENABLE);
-			if (errorstate != HAL_MMC_ERROR_NONE) {
-				hmmc->ErrorCode |= errorstate;
-			}
-		} else {
-			/* Nothing to do : keep current speed */
-		}
-		break;
-	}
-	case SDMMC_SPEED_MODE_DDR: {
-		if (((hmmc->Instance->CLKCR & SDMMC_CLKCR_WIDBUS) != 0U) &&
-		    ((device_type & 0x04U) != 0U)) {
-			/* High Speed DDR mode allowed */
-			errorstate = MMC_HighSpeed(hmmc, ENABLE);
-			if (errorstate != HAL_MMC_ERROR_NONE) {
-				hmmc->ErrorCode |= errorstate;
+			} else if ((device_type & 0x02U) != 0U) {
+				/* High Speed mode allowed */
+				errorstate = MMC_HighSpeed(hmmc, ENABLE);
+				if (errorstate != HAL_MMC_ERROR_NONE) {
+					hmmc->ErrorCode |= errorstate;
+				}
 			} else {
-				if ((hmmc->Instance->CLKCR &
-				     SDMMC_CLKCR_CLKDIV) != 0U) {
-					/* DDR mode not supported with CLKDIV =
-					 * 0 */
-					errorstate = MMC_DDR_Mode(hmmc, ENABLE);
-					if (errorstate != HAL_MMC_ERROR_NONE) {
-						hmmc->ErrorCode |= errorstate;
+				/* Nothing to do : keep current speed */
+			}
+			break;
+		}
+		case SDMMC_SPEED_MODE_DDR: {
+			if (((hmmc->Instance->CLKCR & SDMMC_CLKCR_WIDBUS) !=
+			     0U) &&
+			    ((device_type & 0x04U) != 0U)) {
+				/* High Speed DDR mode allowed */
+				errorstate = MMC_HighSpeed(hmmc, ENABLE);
+				if (errorstate != HAL_MMC_ERROR_NONE) {
+					hmmc->ErrorCode |= errorstate;
+				} else {
+					if ((hmmc->Instance->CLKCR &
+					     SDMMC_CLKCR_CLKDIV) != 0U) {
+						/* DDR mode not supported with
+						 * CLKDIV =
+						 * 0 */
+						errorstate =
+						    MMC_DDR_Mode(hmmc, ENABLE);
+						if (errorstate !=
+						    HAL_MMC_ERROR_NONE) {
+							hmmc->ErrorCode |=
+							    errorstate;
+						}
 					}
 				}
+			} else {
+				/* High Speed DDR mode not allowed */
+				hmmc->ErrorCode |=
+				    HAL_MMC_ERROR_UNSUPPORTED_FEATURE;
+				status = HAL_ERROR;
 			}
-		} else {
-			/* High Speed DDR mode not allowed */
-			hmmc->ErrorCode |= HAL_MMC_ERROR_UNSUPPORTED_FEATURE;
+			break;
+		}
+		case SDMMC_SPEED_MODE_HIGH: {
+			if ((device_type & 0x02U) != 0U) {
+				/* High Speed mode allowed */
+				errorstate = MMC_HighSpeed(hmmc, ENABLE);
+				if (errorstate != HAL_MMC_ERROR_NONE) {
+					hmmc->ErrorCode |= errorstate;
+				}
+			} else {
+				/* High Speed mode not allowed */
+				hmmc->ErrorCode |=
+				    HAL_MMC_ERROR_UNSUPPORTED_FEATURE;
+				status = HAL_ERROR;
+			}
+			break;
+		}
+		case SDMMC_SPEED_MODE_DEFAULT: {
+			if ((hmmc->Instance->CLKCR & SDMMC_CLKCR_DDR) != 0U) {
+				/* High Speed DDR mode activated */
+				errorstate = MMC_DDR_Mode(hmmc, DISABLE);
+				if (errorstate != HAL_MMC_ERROR_NONE) {
+					hmmc->ErrorCode |= errorstate;
+				}
+			}
+			if ((hmmc->Instance->CLKCR & SDMMC_CLKCR_BUSSPEED) !=
+			    0U) {
+				/* High Speed mode activated */
+				errorstate = MMC_HighSpeed(hmmc, DISABLE);
+				if (errorstate != HAL_MMC_ERROR_NONE) {
+					hmmc->ErrorCode |= errorstate;
+				}
+			}
+			break;
+		}
+		default:
+			hmmc->ErrorCode |= HAL_MMC_ERROR_PARAM;
 			status = HAL_ERROR;
-		}
-		break;
-	}
-	case SDMMC_SPEED_MODE_HIGH: {
-		if ((device_type & 0x02U) != 0U) {
-			/* High Speed mode allowed */
-			errorstate = MMC_HighSpeed(hmmc, ENABLE);
-			if (errorstate != HAL_MMC_ERROR_NONE) {
-				hmmc->ErrorCode |= errorstate;
-			}
-		} else {
-			/* High Speed mode not allowed */
-			hmmc->ErrorCode |= HAL_MMC_ERROR_UNSUPPORTED_FEATURE;
-			status = HAL_ERROR;
-		}
-		break;
-	}
-	case SDMMC_SPEED_MODE_DEFAULT: {
-		if ((hmmc->Instance->CLKCR & SDMMC_CLKCR_DDR) != 0U) {
-			/* High Speed DDR mode activated */
-			errorstate = MMC_DDR_Mode(hmmc, DISABLE);
-			if (errorstate != HAL_MMC_ERROR_NONE) {
-				hmmc->ErrorCode |= errorstate;
-			}
-		}
-		if ((hmmc->Instance->CLKCR & SDMMC_CLKCR_BUSSPEED) != 0U) {
-			/* High Speed mode activated */
-			errorstate = MMC_HighSpeed(hmmc, DISABLE);
-			if (errorstate != HAL_MMC_ERROR_NONE) {
-				hmmc->ErrorCode |= errorstate;
-			}
-		}
-		break;
-	}
-	default:
-		hmmc->ErrorCode |= HAL_MMC_ERROR_PARAM;
-		status = HAL_ERROR;
-		break;
+			break;
 	}
 
 	/* Verify that MMC card is ready to use after Speed mode switch*/

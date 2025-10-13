@@ -476,53 +476,55 @@ HAL_DMA2D_RegisterCallback(DMA2D_HandleTypeDef *hdma2d,
 
 	if (HAL_DMA2D_STATE_READY == hdma2d->State) {
 		switch (CallbackID) {
-		case HAL_DMA2D_TRANSFERCOMPLETE_CB_ID:
-			hdma2d->XferCpltCallback = pCallback;
-			break;
+			case HAL_DMA2D_TRANSFERCOMPLETE_CB_ID:
+				hdma2d->XferCpltCallback = pCallback;
+				break;
 
-		case HAL_DMA2D_TRANSFERERROR_CB_ID:
-			hdma2d->XferErrorCallback = pCallback;
-			break;
+			case HAL_DMA2D_TRANSFERERROR_CB_ID:
+				hdma2d->XferErrorCallback = pCallback;
+				break;
 
-		case HAL_DMA2D_LINEEVENT_CB_ID:
-			hdma2d->LineEventCallback = pCallback;
-			break;
+			case HAL_DMA2D_LINEEVENT_CB_ID:
+				hdma2d->LineEventCallback = pCallback;
+				break;
 
-		case HAL_DMA2D_CLUTLOADINGCPLT_CB_ID:
-			hdma2d->CLUTLoadingCpltCallback = pCallback;
-			break;
+			case HAL_DMA2D_CLUTLOADINGCPLT_CB_ID:
+				hdma2d->CLUTLoadingCpltCallback = pCallback;
+				break;
 
-		case HAL_DMA2D_MSPINIT_CB_ID:
-			hdma2d->MspInitCallback = pCallback;
-			break;
+			case HAL_DMA2D_MSPINIT_CB_ID:
+				hdma2d->MspInitCallback = pCallback;
+				break;
 
-		case HAL_DMA2D_MSPDEINIT_CB_ID:
-			hdma2d->MspDeInitCallback = pCallback;
-			break;
+			case HAL_DMA2D_MSPDEINIT_CB_ID:
+				hdma2d->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hdma2d->ErrorCode |= HAL_DMA2D_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hdma2d->ErrorCode |=
+				    HAL_DMA2D_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_DMA2D_STATE_RESET == hdma2d->State) {
 		switch (CallbackID) {
-		case HAL_DMA2D_MSPINIT_CB_ID:
-			hdma2d->MspInitCallback = pCallback;
-			break;
+			case HAL_DMA2D_MSPINIT_CB_ID:
+				hdma2d->MspInitCallback = pCallback;
+				break;
 
-		case HAL_DMA2D_MSPDEINIT_CB_ID:
-			hdma2d->MspDeInitCallback = pCallback;
-			break;
+			case HAL_DMA2D_MSPDEINIT_CB_ID:
+				hdma2d->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hdma2d->ErrorCode |= HAL_DMA2D_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hdma2d->ErrorCode |=
+				    HAL_DMA2D_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -567,62 +569,69 @@ HAL_DMA2D_UnRegisterCallback(DMA2D_HandleTypeDef *hdma2d,
 
 	if (HAL_DMA2D_STATE_READY == hdma2d->State) {
 		switch (CallbackID) {
-		case HAL_DMA2D_TRANSFERCOMPLETE_CB_ID:
-			hdma2d->XferCpltCallback = NULL;
-			break;
+			case HAL_DMA2D_TRANSFERCOMPLETE_CB_ID:
+				hdma2d->XferCpltCallback = NULL;
+				break;
 
-		case HAL_DMA2D_TRANSFERERROR_CB_ID:
-			hdma2d->XferErrorCallback = NULL;
-			break;
+			case HAL_DMA2D_TRANSFERERROR_CB_ID:
+				hdma2d->XferErrorCallback = NULL;
+				break;
 
-		case HAL_DMA2D_LINEEVENT_CB_ID:
-			hdma2d->LineEventCallback = HAL_DMA2D_LineEventCallback;
-			break;
+			case HAL_DMA2D_LINEEVENT_CB_ID:
+				hdma2d->LineEventCallback =
+				    HAL_DMA2D_LineEventCallback;
+				break;
 
-		case HAL_DMA2D_CLUTLOADINGCPLT_CB_ID:
-			hdma2d->CLUTLoadingCpltCallback =
-			    HAL_DMA2D_CLUTLoadingCpltCallback;
-			break;
+			case HAL_DMA2D_CLUTLOADINGCPLT_CB_ID:
+				hdma2d->CLUTLoadingCpltCallback =
+				    HAL_DMA2D_CLUTLoadingCpltCallback;
+				break;
 
-		case HAL_DMA2D_MSPINIT_CB_ID:
-			hdma2d->MspInitCallback =
-			    HAL_DMA2D_MspInit; /* Legacy weak (overridden) Msp
-						  Init */
-			break;
+			case HAL_DMA2D_MSPINIT_CB_ID:
+				hdma2d->MspInitCallback =
+				    HAL_DMA2D_MspInit; /* Legacy weak
+							  (overridden) Msp Init
+							*/
+				break;
 
-		case HAL_DMA2D_MSPDEINIT_CB_ID:
-			hdma2d->MspDeInitCallback =
-			    HAL_DMA2D_MspDeInit; /* Legacy weak (overridden) Msp
-						    DeInit */
-			break;
+			case HAL_DMA2D_MSPDEINIT_CB_ID:
+				hdma2d->MspDeInitCallback =
+				    HAL_DMA2D_MspDeInit; /* Legacy weak
+							    (overridden) Msp
+							    DeInit */
+				break;
 
-		default:
-			/* Update the error code */
-			hdma2d->ErrorCode |= HAL_DMA2D_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hdma2d->ErrorCode |=
+				    HAL_DMA2D_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_DMA2D_STATE_RESET == hdma2d->State) {
 		switch (CallbackID) {
-		case HAL_DMA2D_MSPINIT_CB_ID:
-			hdma2d->MspInitCallback =
-			    HAL_DMA2D_MspInit; /* Legacy weak (overridden) Msp
-						  Init */
-			break;
+			case HAL_DMA2D_MSPINIT_CB_ID:
+				hdma2d->MspInitCallback =
+				    HAL_DMA2D_MspInit; /* Legacy weak
+							  (overridden) Msp Init
+							*/
+				break;
 
-		case HAL_DMA2D_MSPDEINIT_CB_ID:
-			hdma2d->MspDeInitCallback =
-			    HAL_DMA2D_MspDeInit; /* Legacy weak (overridden) Msp
-						    DeInit */
-			break;
+			case HAL_DMA2D_MSPDEINIT_CB_ID:
+				hdma2d->MspDeInitCallback =
+				    HAL_DMA2D_MspDeInit; /* Legacy weak
+							    (overridden) Msp
+							    DeInit */
+				break;
 
-		default:
-			/* Update the error code */
-			hdma2d->ErrorCode |= HAL_DMA2D_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hdma2d->ErrorCode |=
+				    HAL_DMA2D_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */

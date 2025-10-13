@@ -120,29 +120,29 @@ HAL_StatusTypeDef HAL_CRCEx_Polynomial_Set(CRC_HandleTypeDef *hcrc,
 
 		switch (PolyLength) {
 
-		case CRC_POLYLENGTH_7B:
-			if (msb >= HAL_CRC_LENGTH_7B) {
-				status = HAL_ERROR;
-			}
-			break;
-		case CRC_POLYLENGTH_8B:
-			if (msb >= HAL_CRC_LENGTH_8B) {
-				status = HAL_ERROR;
-			}
-			break;
-		case CRC_POLYLENGTH_16B:
-			if (msb >= HAL_CRC_LENGTH_16B) {
-				status = HAL_ERROR;
-			}
-			break;
+			case CRC_POLYLENGTH_7B:
+				if (msb >= HAL_CRC_LENGTH_7B) {
+					status = HAL_ERROR;
+				}
+				break;
+			case CRC_POLYLENGTH_8B:
+				if (msb >= HAL_CRC_LENGTH_8B) {
+					status = HAL_ERROR;
+				}
+				break;
+			case CRC_POLYLENGTH_16B:
+				if (msb >= HAL_CRC_LENGTH_16B) {
+					status = HAL_ERROR;
+				}
+				break;
 
-		case CRC_POLYLENGTH_32B:
-			/* no polynomial definition vs. polynomial length issue
-			 * possible */
-			break;
-		default:
-			status = HAL_ERROR;
-			break;
+			case CRC_POLYLENGTH_32B:
+				/* no polynomial definition vs. polynomial
+				 * length issue possible */
+				break;
+			default:
+				status = HAL_ERROR;
+				break;
 		}
 	}
 	if (status == HAL_OK) {

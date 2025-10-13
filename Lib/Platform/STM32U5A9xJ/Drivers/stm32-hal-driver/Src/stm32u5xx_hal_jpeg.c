@@ -764,49 +764,51 @@ HAL_JPEG_RegisterCallback(JPEG_HandleTypeDef *hjpeg,
 
 	if (HAL_JPEG_STATE_READY == hjpeg->State) {
 		switch (CallbackID) {
-		case HAL_JPEG_ENCODE_CPLT_CB_ID:
-			hjpeg->EncodeCpltCallback = pCallback;
-			break;
+			case HAL_JPEG_ENCODE_CPLT_CB_ID:
+				hjpeg->EncodeCpltCallback = pCallback;
+				break;
 
-		case HAL_JPEG_DECODE_CPLT_CB_ID:
-			hjpeg->DecodeCpltCallback = pCallback;
-			break;
+			case HAL_JPEG_DECODE_CPLT_CB_ID:
+				hjpeg->DecodeCpltCallback = pCallback;
+				break;
 
-		case HAL_JPEG_ERROR_CB_ID:
-			hjpeg->ErrorCallback = pCallback;
-			break;
+			case HAL_JPEG_ERROR_CB_ID:
+				hjpeg->ErrorCallback = pCallback;
+				break;
 
-		case HAL_JPEG_MSPINIT_CB_ID:
-			hjpeg->MspInitCallback = pCallback;
-			break;
+			case HAL_JPEG_MSPINIT_CB_ID:
+				hjpeg->MspInitCallback = pCallback;
+				break;
 
-		case HAL_JPEG_MSPDEINIT_CB_ID:
-			hjpeg->MspDeInitCallback = pCallback;
-			break;
+			case HAL_JPEG_MSPDEINIT_CB_ID:
+				hjpeg->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hjpeg->ErrorCode |= HAL_JPEG_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hjpeg->ErrorCode |=
+				    HAL_JPEG_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_JPEG_STATE_RESET == hjpeg->State) {
 		switch (CallbackID) {
-		case HAL_JPEG_MSPINIT_CB_ID:
-			hjpeg->MspInitCallback = pCallback;
-			break;
+			case HAL_JPEG_MSPINIT_CB_ID:
+				hjpeg->MspInitCallback = pCallback;
+				break;
 
-		case HAL_JPEG_MSPDEINIT_CB_ID:
-			hjpeg->MspDeInitCallback = pCallback;
-			break;
+			case HAL_JPEG_MSPDEINIT_CB_ID:
+				hjpeg->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hjpeg->ErrorCode |= HAL_JPEG_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hjpeg->ErrorCode |=
+				    HAL_JPEG_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -844,61 +846,66 @@ HAL_JPEG_UnRegisterCallback(JPEG_HandleTypeDef *hjpeg,
 
 	if (HAL_JPEG_STATE_READY == hjpeg->State) {
 		switch (CallbackID) {
-		case HAL_JPEG_ENCODE_CPLT_CB_ID:
-			hjpeg->EncodeCpltCallback =
-			    HAL_JPEG_EncodeCpltCallback; /* Legacy weak
-							    EncodeCpltCallback
-							  */
-			break;
+			case HAL_JPEG_ENCODE_CPLT_CB_ID:
+				hjpeg->EncodeCpltCallback =
+				    HAL_JPEG_EncodeCpltCallback; /* Legacy weak
+								    EncodeCpltCallback
+								  */
+				break;
 
-		case HAL_JPEG_DECODE_CPLT_CB_ID:
-			hjpeg->DecodeCpltCallback =
-			    HAL_JPEG_DecodeCpltCallback; /* Legacy weak
-							    DecodeCpltCallback
-							  */
-			break;
+			case HAL_JPEG_DECODE_CPLT_CB_ID:
+				hjpeg->DecodeCpltCallback =
+				    HAL_JPEG_DecodeCpltCallback; /* Legacy weak
+								    DecodeCpltCallback
+								  */
+				break;
 
-		case HAL_JPEG_ERROR_CB_ID:
-			hjpeg->ErrorCallback =
-			    HAL_JPEG_ErrorCallback; /* Legacy weak ErrorCallback
-						     */
-			break;
+			case HAL_JPEG_ERROR_CB_ID:
+				hjpeg->ErrorCallback =
+				    HAL_JPEG_ErrorCallback; /* Legacy weak
+							     * ErrorCallback
+							     */
+				break;
 
-		case HAL_JPEG_MSPINIT_CB_ID:
-			hjpeg->MspInitCallback =
-			    HAL_JPEG_MspInit; /* Legacy weak MspInit  */
-			break;
+			case HAL_JPEG_MSPINIT_CB_ID:
+				hjpeg->MspInitCallback =
+				    HAL_JPEG_MspInit; /* Legacy weak MspInit  */
+				break;
 
-		case HAL_JPEG_MSPDEINIT_CB_ID:
-			hjpeg->MspDeInitCallback =
-			    HAL_JPEG_MspDeInit; /* Legacy weak MspDeInit  */
-			break;
+			case HAL_JPEG_MSPDEINIT_CB_ID:
+				hjpeg->MspDeInitCallback =
+				    HAL_JPEG_MspDeInit; /* Legacy weak MspDeInit
+							 */
+				break;
 
-		default:
-			/* Update the error code */
-			hjpeg->ErrorCode |= HAL_JPEG_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hjpeg->ErrorCode |=
+				    HAL_JPEG_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_JPEG_STATE_RESET == hjpeg->State) {
 		switch (CallbackID) {
-		case HAL_JPEG_MSPINIT_CB_ID:
-			hjpeg->MspInitCallback =
-			    HAL_JPEG_MspInit; /* Legacy weak MspInit  */
-			break;
+			case HAL_JPEG_MSPINIT_CB_ID:
+				hjpeg->MspInitCallback =
+				    HAL_JPEG_MspInit; /* Legacy weak MspInit  */
+				break;
 
-		case HAL_JPEG_MSPDEINIT_CB_ID:
-			hjpeg->MspDeInitCallback =
-			    HAL_JPEG_MspDeInit; /* Legacy weak MspInit  */
-			break;
+			case HAL_JPEG_MSPDEINIT_CB_ID:
+				hjpeg->MspDeInitCallback =
+				    HAL_JPEG_MspDeInit; /* Legacy weak MspInit
+							 */
+				break;
 
-		default:
-			/* Update the error code */
-			hjpeg->ErrorCode |= HAL_JPEG_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hjpeg->ErrorCode |=
+				    HAL_JPEG_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -2518,23 +2525,24 @@ __weak void HAL_JPEG_DataReadyCallback(JPEG_HandleTypeDef *hjpeg,
 void HAL_JPEG_IRQHandler(JPEG_HandleTypeDef *hjpeg)
 {
 	switch (hjpeg->State) {
-	case HAL_JPEG_STATE_BUSY_ENCODING:
-	case HAL_JPEG_STATE_BUSY_DECODING:
-		/* continue JPEG data encoding/Decoding*/
-		/* JPEG data processing : In/Out FIFO transfer*/
-		if ((hjpeg->Context & JPEG_CONTEXT_METHOD_MASK) ==
-		    JPEG_CONTEXT_IT) {
-			(void)JPEG_Process(hjpeg);
-		} else if ((hjpeg->Context & JPEG_CONTEXT_METHOD_MASK) ==
-			   JPEG_CONTEXT_DMA) {
-			JPEG_DMA_ContinueProcess(hjpeg);
-		} else {
-			/* Nothing to do */
-		}
-		break;
+		case HAL_JPEG_STATE_BUSY_ENCODING:
+		case HAL_JPEG_STATE_BUSY_DECODING:
+			/* continue JPEG data encoding/Decoding*/
+			/* JPEG data processing : In/Out FIFO transfer*/
+			if ((hjpeg->Context & JPEG_CONTEXT_METHOD_MASK) ==
+			    JPEG_CONTEXT_IT) {
+				(void)JPEG_Process(hjpeg);
+			} else if ((hjpeg->Context &
+				    JPEG_CONTEXT_METHOD_MASK) ==
+				   JPEG_CONTEXT_DMA) {
+				JPEG_DMA_ContinueProcess(hjpeg);
+			} else {
+				/* Nothing to do */
+			}
+			break;
 
-	default:
-		break;
+		default:
+			break;
 	}
 }
 

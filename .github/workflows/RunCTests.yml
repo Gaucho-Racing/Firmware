@@ -1,4 +1,5 @@
 name: CTest
+run-name: CTest HOOTL Tests - ${{ github.ref_name }}
 
 on:
   push:
@@ -14,6 +15,8 @@ jobs:
   ctest:
     name: Configure, Build, and Run HOOTLTest
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -21,23 +24,32 @@ jobs:
       - name: CMake Configuration
         run: |
           set -o pipefail
-          echo "## CMake Configuration (HOOTLTest)" >> $GITHUB_STEP_SUMMARY
+          echo "<details><summary>CMake Configuration (HOOTLTest)</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           cmake --preset HOOTLTest |& tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
 
       - name: CMake Build
         run: |
           set -o pipefail
-          echo "## CMake Build (HOOTLTest)" >> $GITHUB_STEP_SUMMARY
+          echo "<details><summary>CMake Build (HOOTLTest)</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           cmake --build build/HOOTLTest |& tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
 
       - name: Run CTest
         run: |
           set -o pipefail
-          echo "## Run CTest (HOOTLTest)" >> $GITHUB_STEP_SUMMARY
+          echo "<details open><summary>Run CTest (HOOTLTest)</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           ctest --output-on-failure --test-dir build/HOOTLTest |& tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY

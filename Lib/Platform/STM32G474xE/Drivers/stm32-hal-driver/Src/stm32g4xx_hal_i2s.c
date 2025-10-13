@@ -558,61 +558,61 @@ HAL_StatusTypeDef HAL_I2S_RegisterCallback(I2S_HandleTypeDef *hi2s,
 
 	if (HAL_I2S_STATE_READY == hi2s->State) {
 		switch (CallbackID) {
-		case HAL_I2S_TX_COMPLETE_CB_ID:
-			hi2s->TxCpltCallback = pCallback;
-			break;
+			case HAL_I2S_TX_COMPLETE_CB_ID:
+				hi2s->TxCpltCallback = pCallback;
+				break;
 
-		case HAL_I2S_RX_COMPLETE_CB_ID:
-			hi2s->RxCpltCallback = pCallback;
-			break;
+			case HAL_I2S_RX_COMPLETE_CB_ID:
+				hi2s->RxCpltCallback = pCallback;
+				break;
 
-		case HAL_I2S_TX_HALF_COMPLETE_CB_ID:
-			hi2s->TxHalfCpltCallback = pCallback;
-			break;
+			case HAL_I2S_TX_HALF_COMPLETE_CB_ID:
+				hi2s->TxHalfCpltCallback = pCallback;
+				break;
 
-		case HAL_I2S_RX_HALF_COMPLETE_CB_ID:
-			hi2s->RxHalfCpltCallback = pCallback;
-			break;
+			case HAL_I2S_RX_HALF_COMPLETE_CB_ID:
+				hi2s->RxHalfCpltCallback = pCallback;
+				break;
 
-		case HAL_I2S_ERROR_CB_ID:
-			hi2s->ErrorCallback = pCallback;
-			break;
+			case HAL_I2S_ERROR_CB_ID:
+				hi2s->ErrorCallback = pCallback;
+				break;
 
-		case HAL_I2S_MSPINIT_CB_ID:
-			hi2s->MspInitCallback = pCallback;
-			break;
+			case HAL_I2S_MSPINIT_CB_ID:
+				hi2s->MspInitCallback = pCallback;
+				break;
 
-		case HAL_I2S_MSPDEINIT_CB_ID:
-			hi2s->MspDeInitCallback = pCallback;
-			break;
+			case HAL_I2S_MSPDEINIT_CB_ID:
+				hi2s->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			SET_BIT(hi2s->ErrorCode,
-				HAL_I2S_ERROR_INVALID_CALLBACK);
+			default:
+				/* Update the error code */
+				SET_BIT(hi2s->ErrorCode,
+					HAL_I2S_ERROR_INVALID_CALLBACK);
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_I2S_STATE_RESET == hi2s->State) {
 		switch (CallbackID) {
-		case HAL_I2S_MSPINIT_CB_ID:
-			hi2s->MspInitCallback = pCallback;
-			break;
+			case HAL_I2S_MSPINIT_CB_ID:
+				hi2s->MspInitCallback = pCallback;
+				break;
 
-		case HAL_I2S_MSPDEINIT_CB_ID:
-			hi2s->MspDeInitCallback = pCallback;
-			break;
+			case HAL_I2S_MSPDEINIT_CB_ID:
+				hi2s->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			SET_BIT(hi2s->ErrorCode,
-				HAL_I2S_ERROR_INVALID_CALLBACK);
+			default:
+				/* Update the error code */
+				SET_BIT(hi2s->ErrorCode,
+					HAL_I2S_ERROR_INVALID_CALLBACK);
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -646,75 +646,80 @@ HAL_I2S_UnRegisterCallback(I2S_HandleTypeDef *hi2s,
 
 	if (HAL_I2S_STATE_READY == hi2s->State) {
 		switch (CallbackID) {
-		case HAL_I2S_TX_COMPLETE_CB_ID:
-			hi2s->TxCpltCallback =
-			    HAL_I2S_TxCpltCallback; /* Legacy weak
-						       TxCpltCallback       */
-			break;
+			case HAL_I2S_TX_COMPLETE_CB_ID:
+				hi2s->TxCpltCallback =
+				    HAL_I2S_TxCpltCallback; /* Legacy weak
+							       TxCpltCallback */
+				break;
 
-		case HAL_I2S_RX_COMPLETE_CB_ID:
-			hi2s->RxCpltCallback =
-			    HAL_I2S_RxCpltCallback; /* Legacy weak
-						       RxCpltCallback       */
-			break;
+			case HAL_I2S_RX_COMPLETE_CB_ID:
+				hi2s->RxCpltCallback =
+				    HAL_I2S_RxCpltCallback; /* Legacy weak
+							       RxCpltCallback */
+				break;
 
-		case HAL_I2S_TX_HALF_COMPLETE_CB_ID:
-			hi2s->TxHalfCpltCallback =
-			    HAL_I2S_TxHalfCpltCallback; /* Legacy weak
-							   TxHalfCpltCallback */
-			break;
+			case HAL_I2S_TX_HALF_COMPLETE_CB_ID:
+				hi2s->TxHalfCpltCallback =
+				    HAL_I2S_TxHalfCpltCallback; /* Legacy weak
+								   TxHalfCpltCallback
+								 */
+				break;
 
-		case HAL_I2S_RX_HALF_COMPLETE_CB_ID:
-			hi2s->RxHalfCpltCallback =
-			    HAL_I2S_RxHalfCpltCallback; /* Legacy weak
-							   RxHalfCpltCallback */
-			break;
+			case HAL_I2S_RX_HALF_COMPLETE_CB_ID:
+				hi2s->RxHalfCpltCallback =
+				    HAL_I2S_RxHalfCpltCallback; /* Legacy weak
+								   RxHalfCpltCallback
+								 */
+				break;
 
-		case HAL_I2S_ERROR_CB_ID:
-			hi2s->ErrorCallback =
-			    HAL_I2S_ErrorCallback; /* Legacy weak ErrorCallback
-						    */
-			break;
+			case HAL_I2S_ERROR_CB_ID:
+				hi2s->ErrorCallback =
+				    HAL_I2S_ErrorCallback; /* Legacy weak
+							    * ErrorCallback
+							    */
+				break;
 
-		case HAL_I2S_MSPINIT_CB_ID:
-			hi2s->MspInitCallback =
-			    HAL_I2S_MspInit; /* Legacy weak MspInit */
-			break;
+			case HAL_I2S_MSPINIT_CB_ID:
+				hi2s->MspInitCallback =
+				    HAL_I2S_MspInit; /* Legacy weak MspInit */
+				break;
 
-		case HAL_I2S_MSPDEINIT_CB_ID:
-			hi2s->MspDeInitCallback =
-			    HAL_I2S_MspDeInit; /* Legacy weak MspDeInit */
-			break;
+			case HAL_I2S_MSPDEINIT_CB_ID:
+				hi2s->MspDeInitCallback =
+				    HAL_I2S_MspDeInit; /* Legacy weak MspDeInit
+							*/
+				break;
 
-		default:
-			/* Update the error code */
-			SET_BIT(hi2s->ErrorCode,
-				HAL_I2S_ERROR_INVALID_CALLBACK);
+			default:
+				/* Update the error code */
+				SET_BIT(hi2s->ErrorCode,
+					HAL_I2S_ERROR_INVALID_CALLBACK);
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_I2S_STATE_RESET == hi2s->State) {
 		switch (CallbackID) {
-		case HAL_I2S_MSPINIT_CB_ID:
-			hi2s->MspInitCallback =
-			    HAL_I2S_MspInit; /* Legacy weak MspInit */
-			break;
+			case HAL_I2S_MSPINIT_CB_ID:
+				hi2s->MspInitCallback =
+				    HAL_I2S_MspInit; /* Legacy weak MspInit */
+				break;
 
-		case HAL_I2S_MSPDEINIT_CB_ID:
-			hi2s->MspDeInitCallback =
-			    HAL_I2S_MspDeInit; /* Legacy weak MspDeInit */
-			break;
+			case HAL_I2S_MSPDEINIT_CB_ID:
+				hi2s->MspDeInitCallback =
+				    HAL_I2S_MspDeInit; /* Legacy weak MspDeInit
+							*/
+				break;
 
-		default:
-			/* Update the error code */
-			SET_BIT(hi2s->ErrorCode,
-				HAL_I2S_ERROR_INVALID_CALLBACK);
+			default:
+				/* Update the error code */
+				SET_BIT(hi2s->ErrorCode,
+					HAL_I2S_ERROR_INVALID_CALLBACK);
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */

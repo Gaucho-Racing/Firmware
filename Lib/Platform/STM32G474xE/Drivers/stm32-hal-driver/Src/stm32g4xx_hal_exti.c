@@ -430,15 +430,15 @@ HAL_StatusTypeDef HAL_EXTI_RegisterCallback(EXTI_HandleTypeDef *hexti,
 	assert_param(IS_EXTI_CB(CallbackID));
 
 	switch (CallbackID) {
-	/* set common callback */
-	case HAL_EXTI_COMMON_CB_ID:
-		hexti->PendingCallback = pPendingCbfn;
-		break;
+		/* set common callback */
+		case HAL_EXTI_COMMON_CB_ID:
+			hexti->PendingCallback = pPendingCbfn;
+			break;
 
-	default:
-		hexti->PendingCallback = NULL;
-		status = HAL_ERROR;
-		break;
+		default:
+			hexti->PendingCallback = NULL;
+			status = HAL_ERROR;
+			break;
 	}
 
 	return status;

@@ -63,14 +63,14 @@ extern "C" {
 
 /*  CMSIS CM0+ definitions */
 #define __CM0PLUS_CMSIS_VERSION_MAIN                                           \
-	(__CM_CMSIS_VERSION_MAIN) /*!< \deprecated [31:16] CMSIS HAL main      \
+	(__CM_CMSIS_VERSION_MAIN) /*!< \deprecated [31:16] CMSIS HAL main \    \
 				     version */
 #define __CM0PLUS_CMSIS_VERSION_SUB                                            \
-	(__CM_CMSIS_VERSION_SUB) /*!< \deprecated [15:0]  CMSIS HAL sub        \
+	(__CM_CMSIS_VERSION_SUB) /*!< \deprecated [15:0]  CMSIS HAL sub \      \
 				    version */
 #define __CM0PLUS_CMSIS_VERSION                                                \
 	((__CM0PLUS_CMSIS_VERSION_MAIN << 16U) |                               \
-	 __CM0PLUS_CMSIS_VERSION_SUB) /*!< \deprecated CMSIS HAL version       \
+	 __CM0PLUS_CMSIS_VERSION_SUB) /*!< \deprecated CMSIS HAL version \     \
 					 number */
 
 #define __CORTEX_M (0U) /*!< Cortex-M Core */
@@ -315,7 +315,7 @@ typedef union {
 /* CONTROL Register Definitions */
 #define CONTROL_SPSEL_Pos 1U /*!< CONTROL: SPSEL Position */
 #define CONTROL_SPSEL_Msk                                                      \
-	(1UL << CONTROL_SPSEL_Pos) /*!< CONTROL: SPSEL Mask                    \
+	(1UL << CONTROL_SPSEL_Pos) /*!< CONTROL: SPSEL Mask \                  \
 				    */
 
 #define CONTROL_nPRIV_Pos 0U /*!< CONTROL: nPRIV Position */
@@ -398,7 +398,7 @@ typedef struct {
 	(0xFUL << SCB_CPUID_VARIANT_Pos) /*!< SCB CPUID: VARIANT Mask */
 
 #define SCB_CPUID_ARCHITECTURE_Pos                                             \
-	16U /*!< SCB CPUID: ARCHITECTURE Position                              \
+	16U /*!< SCB CPUID: ARCHITECTURE Position \                            \
 	     */
 #define SCB_CPUID_ARCHITECTURE_Msk                                             \
 	(0xFUL                                                                 \
@@ -443,12 +443,13 @@ typedef struct {
 
 #define SCB_ICSR_VECTPENDING_Pos 12U /*!< SCB ICSR: VECTPENDING Position */
 #define SCB_ICSR_VECTPENDING_Msk                                               \
-	(0x1FFUL << SCB_ICSR_VECTPENDING_Pos) /*!< SCB ICSR: VECTPENDING Mask  \
-					       */
+	(0x1FFUL                                                               \
+	 << SCB_ICSR_VECTPENDING_Pos) /*!< SCB ICSR: VECTPENDING Mask  \       \
+				       */
 
 #define SCB_ICSR_VECTACTIVE_Pos 0U /*!< SCB ICSR: VECTACTIVE Position */
 #define SCB_ICSR_VECTACTIVE_Msk                                                \
-	(0x1FFUL /*<< SCB_ICSR_VECTACTIVE_Pos*/) /*!< SCB ICSR: VECTACTIVE     \
+	(0x1FFUL /*<< SCB_ICSR_VECTACTIVE_Pos*/) /*!< SCB ICSR: VECTACTIVE \   \
 						    Mask */
 
 #if defined(__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
@@ -477,7 +478,7 @@ typedef struct {
 	(1UL << SCB_AIRCR_SYSRESETREQ_Pos) /*!< SCB AIRCR: SYSRESETREQ Mask */
 
 #define SCB_AIRCR_VECTCLRACTIVE_Pos                                            \
-	1U /*!< SCB AIRCR: VECTCLRACTIVE Position                              \
+	1U /*!< SCB AIRCR: VECTCLRACTIVE Position \                            \
 	    */
 #define SCB_AIRCR_VECTCLRACTIVE_Msk                                            \
 	(1UL                                                                   \
@@ -507,11 +508,12 @@ typedef struct {
 
 /* SCB System Handler Control and State Register Definitions */
 #define SCB_SHCSR_SVCALLPENDED_Pos                                             \
-	15U /*!< SCB SHCSR: SVCALLPENDED Position                              \
+	15U /*!< SCB SHCSR: SVCALLPENDED Position \                            \
 	     */
 #define SCB_SHCSR_SVCALLPENDED_Msk                                             \
-	(1UL << SCB_SHCSR_SVCALLPENDED_Pos) /*!< SCB SHCSR: SVCALLPENDED Mask  \
-					     */
+	(1UL                                                                   \
+	 << SCB_SHCSR_SVCALLPENDED_Pos) /*!< SCB SHCSR: SVCALLPENDED Mask  \   \
+					 */
 
 /*@} end of group CMSIS_SCB */
 
@@ -538,16 +540,18 @@ typedef struct {
 
 /* SysTick Control / Status Register Definitions */
 #define SysTick_CTRL_COUNTFLAG_Pos                                             \
-	16U /*!< SysTick CTRL: COUNTFLAG Position                              \
+	16U /*!< SysTick CTRL: COUNTFLAG Position \                            \
 	     */
 #define SysTick_CTRL_COUNTFLAG_Msk                                             \
-	(1UL << SysTick_CTRL_COUNTFLAG_Pos) /*!< SysTick CTRL: COUNTFLAG Mask  \
-					     */
+	(1UL                                                                   \
+	 << SysTick_CTRL_COUNTFLAG_Pos) /*!< SysTick CTRL: COUNTFLAG Mask  \   \
+					 */
 
 #define SysTick_CTRL_CLKSOURCE_Pos 2U /*!< SysTick CTRL: CLKSOURCE Position */
 #define SysTick_CTRL_CLKSOURCE_Msk                                             \
-	(1UL << SysTick_CTRL_CLKSOURCE_Pos) /*!< SysTick CTRL: CLKSOURCE Mask  \
-					     */
+	(1UL                                                                   \
+	 << SysTick_CTRL_CLKSOURCE_Pos) /*!< SysTick CTRL: CLKSOURCE Mask  \   \
+					 */
 
 #define SysTick_CTRL_TICKINT_Pos 1U /*!< SysTick CTRL: TICKINT Position */
 #define SysTick_CTRL_TICKINT_Msk                                               \
@@ -561,13 +565,13 @@ typedef struct {
 #define SysTick_LOAD_RELOAD_Pos 0U /*!< SysTick LOAD: RELOAD Position */
 #define SysTick_LOAD_RELOAD_Msk                                                \
 	(0xFFFFFFUL /*<< SysTick_LOAD_RELOAD_Pos*/) /*!< SysTick LOAD: RELOAD  \
-						       Mask */
+						       \ Mask */
 
 /* SysTick Current Register Definitions */
 #define SysTick_VAL_CURRENT_Pos 0U /*!< SysTick VAL: CURRENT Position */
 #define SysTick_VAL_CURRENT_Msk                                                \
 	(0xFFFFFFUL /*<< SysTick_VAL_CURRENT_Pos*/) /*!< SysTick VAL: CURRENT  \
-						       Mask */
+						       \ Mask */
 
 /* SysTick Calibration Register Definitions */
 #define SysTick_CALIB_NOREF_Pos 31U /*!< SysTick CALIB: NOREF Position */
@@ -581,7 +585,7 @@ typedef struct {
 #define SysTick_CALIB_TENMS_Pos 0U /*!< SysTick CALIB: TENMS Position */
 #define SysTick_CALIB_TENMS_Msk                                                \
 	(0xFFFFFFUL /*<< SysTick_CALIB_TENMS_Pos*/) /*!< SysTick CALIB: TENMS  \
-						       Mask */
+						       \ Mask */
 
 /*@} end of group CMSIS_SysTick */
 
@@ -657,12 +661,12 @@ typedef struct {
 #define MPU_RASR_ATTRS_Pos                                                     \
 	16U /*!< MPU RASR: MPU Region Attribute field Position */
 #define MPU_RASR_ATTRS_Msk                                                     \
-	(0xFFFFUL << MPU_RASR_ATTRS_Pos) /*!< MPU RASR: MPU Region Attribute   \
+	(0xFFFFUL << MPU_RASR_ATTRS_Pos) /*!< MPU RASR: MPU Region Attribute \ \
 					    field Mask */
 
 #define MPU_RASR_XN_Pos 28U /*!< MPU RASR: ATTRS.XN Position */
 #define MPU_RASR_XN_Msk                                                        \
-	(1UL << MPU_RASR_XN_Pos) /*!< MPU RASR: ATTRS.XN Mask                  \
+	(1UL << MPU_RASR_XN_Pos) /*!< MPU RASR: ATTRS.XN Mask \                \
 				  */
 
 #define MPU_RASR_AP_Pos 24U /*!< MPU RASR: ATTRS.AP Position */
@@ -692,7 +696,7 @@ typedef struct {
 
 #define MPU_RASR_ENABLE_Pos 0U /*!< MPU RASR: Region enable bit Position */
 #define MPU_RASR_ENABLE_Msk                                                    \
-	(1UL /*<< MPU_RASR_ENABLE_Pos*/) /*!< MPU RASR: Region enable bit      \
+	(1UL /*<< MPU_RASR_ENABLE_Pos*/) /*!< MPU RASR: Region enable bit \    \
 					    Disable Mask */
 
 /*@} end of group CMSIS_MPU */
@@ -747,7 +751,7 @@ typedef struct {
 #define SysTick_BASE (SCS_BASE + 0x0010UL) /*!< SysTick Base Address */
 #define NVIC_BASE (SCS_BASE + 0x0100UL)	   /*!< NVIC Base Address */
 #define SCB_BASE                                                               \
-	(SCS_BASE + 0x0D00UL) /*!< System Control Block Base Address           \
+	(SCS_BASE + 0x0D00UL) /*!< System Control Block Base Address \         \
 			       */
 
 #define SCB ((SCB_Type *)SCB_BASE) /*!< SCB configuration struct */
