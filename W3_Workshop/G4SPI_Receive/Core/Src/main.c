@@ -139,7 +139,7 @@ int main(void)
 		}
 
 		count &= 0b11; // count = count % 4
-		/* USER CODE BEGIN 3 */
+			       /* USER CODE BEGIN 3 */
 	}
 	/* USER CODE END 3 */
 }
