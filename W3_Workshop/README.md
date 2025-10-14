@@ -22,7 +22,7 @@ To verify your predictions, you will need to flash the boards with G4SPI_Transmi
   - `cmake --build build/Debug`
 
 # 3. Flashing
-Wait for the files to compile. Once you have the .elf files, select Run and Debug. In the window that pops up, click on the dropdown next to the green play button. and select either "SPI Receive W3 WS" or "SPI Transmit W3 WS", depending on the board you would like to flash. You may have to disconnect one board while you program the other one. If multiple boards are connected at a time, openocd may just flash the first board it detects. 
+Wait for the files to compile. Once you have the .elf files, select the Run and Debug tab on the left-hand side of VSCode. In the window that pops up, click on the dropdown next to the green play button. and select either "SPI Receive W3 WS" or "SPI Transmit W3 WS", depending on the board you would like to flash. You may have to disconnect one board while you program the other one. If multiple boards are connected at a time, openocd may just flash the first board it detects. 
 
 # 4. Verification
 Once both boards are flashed plug them both back to the USB connectors so that they both have power. 
