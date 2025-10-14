@@ -406,16 +406,47 @@ HAL_StatusTypeDef HAL_HCD_HC_SubmitRequest(HCD_HandleTypeDef *hhcd,
 
 	/* Manage Data Toggle */
 	switch (ep_type) {
-	case EP_TYPE_CTRL:
-		if (token == 1U) /* send data */
-		{
-			if (direction == 0U) {
-				if (length == 0U) {
-					/* For Status OUT stage, Length == 0U,
-					 * Status Out PID = 1 */
-					hhcd->hc[ch_num].toggle_out = 1U;
-				}
+		case EP_TYPE_CTRL:
+			if (token == 1U) /* send data */
+			{
+				if (direction == 0U) {
+					if (length == 0U) {
+						/* For Status OUT stage, Length
+						 * == 0U, Status Out PID = 1 */
+						hhcd->hc[ch_num].toggle_out =
+						    1U;
+					}
 
+					/* Set the Data Toggle bit as per the
+					 * Flag */
+					if (hhcd->hc[ch_num].toggle_out == 0U) {
+						/* Put the PID 0 */
+						hhcd->hc[ch_num].data_pid =
+						    HC_PID_DATA0;
+					} else {
+						/* Put the PID 1 */
+						hhcd->hc[ch_num].data_pid =
+						    HC_PID_DATA1;
+					}
+				} else {
+					if (hhcd->hc[ch_num].do_ssplit == 1U) {
+						if (hhcd->hc[ch_num]
+							.toggle_in == 0U) {
+							hhcd->hc[ch_num]
+							    .data_pid =
+							    HC_PID_DATA0;
+						} else {
+							hhcd->hc[ch_num]
+							    .data_pid =
+							    HC_PID_DATA1;
+						}
+					}
+				}
+			}
+			break;
+
+		case EP_TYPE_BULK:
+			if (direction == 0U) {
 				/* Set the Data Toggle bit as per the Flag */
 				if (hhcd->hc[ch_num].toggle_out == 0U) {
 					/* Put the PID 0 */
@@ -427,63 +458,45 @@ HAL_StatusTypeDef HAL_HCD_HC_SubmitRequest(HCD_HandleTypeDef *hhcd,
 					    HC_PID_DATA1;
 				}
 			} else {
-				if (hhcd->hc[ch_num].do_ssplit == 1U) {
-					if (hhcd->hc[ch_num].toggle_in == 0U) {
-						hhcd->hc[ch_num].data_pid =
-						    HC_PID_DATA0;
-					} else {
-						hhcd->hc[ch_num].data_pid =
-						    HC_PID_DATA1;
-					}
+				if (hhcd->hc[ch_num].toggle_in == 0U) {
+					hhcd->hc[ch_num].data_pid =
+					    HC_PID_DATA0;
+				} else {
+					hhcd->hc[ch_num].data_pid =
+					    HC_PID_DATA1;
 				}
 			}
-		}
-		break;
 
-	case EP_TYPE_BULK:
-		if (direction == 0U) {
-			/* Set the Data Toggle bit as per the Flag */
-			if (hhcd->hc[ch_num].toggle_out == 0U) {
-				/* Put the PID 0 */
-				hhcd->hc[ch_num].data_pid = HC_PID_DATA0;
+			break;
+		case EP_TYPE_INTR:
+			if (direction == 0U) {
+				/* Set the Data Toggle bit as per the Flag */
+				if (hhcd->hc[ch_num].toggle_out == 0U) {
+					/* Put the PID 0 */
+					hhcd->hc[ch_num].data_pid =
+					    HC_PID_DATA0;
+				} else {
+					/* Put the PID 1 */
+					hhcd->hc[ch_num].data_pid =
+					    HC_PID_DATA1;
+				}
 			} else {
-				/* Put the PID 1 */
-				hhcd->hc[ch_num].data_pid = HC_PID_DATA1;
+				if (hhcd->hc[ch_num].toggle_in == 0U) {
+					hhcd->hc[ch_num].data_pid =
+					    HC_PID_DATA0;
+				} else {
+					hhcd->hc[ch_num].data_pid =
+					    HC_PID_DATA1;
+				}
 			}
-		} else {
-			if (hhcd->hc[ch_num].toggle_in == 0U) {
-				hhcd->hc[ch_num].data_pid = HC_PID_DATA0;
-			} else {
-				hhcd->hc[ch_num].data_pid = HC_PID_DATA1;
-			}
-		}
+			break;
 
-		break;
-	case EP_TYPE_INTR:
-		if (direction == 0U) {
-			/* Set the Data Toggle bit as per the Flag */
-			if (hhcd->hc[ch_num].toggle_out == 0U) {
-				/* Put the PID 0 */
-				hhcd->hc[ch_num].data_pid = HC_PID_DATA0;
-			} else {
-				/* Put the PID 1 */
-				hhcd->hc[ch_num].data_pid = HC_PID_DATA1;
-			}
-		} else {
-			if (hhcd->hc[ch_num].toggle_in == 0U) {
-				hhcd->hc[ch_num].data_pid = HC_PID_DATA0;
-			} else {
-				hhcd->hc[ch_num].data_pid = HC_PID_DATA1;
-			}
-		}
-		break;
+		case EP_TYPE_ISOC:
+			hhcd->hc[ch_num].data_pid = HC_PID_DATA0;
+			break;
 
-	case EP_TYPE_ISOC:
-		hhcd->hc[ch_num].data_pid = HC_PID_DATA0;
-		break;
-
-	default:
-		break;
+		default:
+			break;
 	}
 
 	hhcd->hc[ch_num].xfer_buff = pbuff;
@@ -755,57 +768,59 @@ HAL_StatusTypeDef HAL_HCD_RegisterCallback(HCD_HandleTypeDef *hhcd,
 
 	if (hhcd->State == HAL_HCD_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_HCD_SOF_CB_ID:
-			hhcd->SOFCallback = pCallback;
-			break;
+			case HAL_HCD_SOF_CB_ID:
+				hhcd->SOFCallback = pCallback;
+				break;
 
-		case HAL_HCD_CONNECT_CB_ID:
-			hhcd->ConnectCallback = pCallback;
-			break;
+			case HAL_HCD_CONNECT_CB_ID:
+				hhcd->ConnectCallback = pCallback;
+				break;
 
-		case HAL_HCD_DISCONNECT_CB_ID:
-			hhcd->DisconnectCallback = pCallback;
-			break;
+			case HAL_HCD_DISCONNECT_CB_ID:
+				hhcd->DisconnectCallback = pCallback;
+				break;
 
-		case HAL_HCD_PORT_ENABLED_CB_ID:
-			hhcd->PortEnabledCallback = pCallback;
-			break;
+			case HAL_HCD_PORT_ENABLED_CB_ID:
+				hhcd->PortEnabledCallback = pCallback;
+				break;
 
-		case HAL_HCD_PORT_DISABLED_CB_ID:
-			hhcd->PortDisabledCallback = pCallback;
-			break;
+			case HAL_HCD_PORT_DISABLED_CB_ID:
+				hhcd->PortDisabledCallback = pCallback;
+				break;
 
-		case HAL_HCD_MSPINIT_CB_ID:
-			hhcd->MspInitCallback = pCallback;
-			break;
+			case HAL_HCD_MSPINIT_CB_ID:
+				hhcd->MspInitCallback = pCallback;
+				break;
 
-		case HAL_HCD_MSPDEINIT_CB_ID:
-			hhcd->MspDeInitCallback = pCallback;
-			break;
+			case HAL_HCD_MSPDEINIT_CB_ID:
+				hhcd->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hhcd->ErrorCode |= HAL_HCD_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hhcd->ErrorCode |=
+				    HAL_HCD_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hhcd->State == HAL_HCD_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_HCD_MSPINIT_CB_ID:
-			hhcd->MspInitCallback = pCallback;
-			break;
+			case HAL_HCD_MSPINIT_CB_ID:
+				hhcd->MspInitCallback = pCallback;
+				break;
 
-		case HAL_HCD_MSPDEINIT_CB_ID:
-			hhcd->MspDeInitCallback = pCallback;
-			break;
+			case HAL_HCD_MSPDEINIT_CB_ID:
+				hhcd->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hhcd->ErrorCode |= HAL_HCD_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hhcd->ErrorCode |=
+				    HAL_HCD_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -848,61 +863,65 @@ HAL_HCD_UnRegisterCallback(HCD_HandleTypeDef *hhcd,
 	/* Setup Legacy weak Callbacks  */
 	if (hhcd->State == HAL_HCD_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_HCD_SOF_CB_ID:
-			hhcd->SOFCallback = HAL_HCD_SOF_Callback;
-			break;
+			case HAL_HCD_SOF_CB_ID:
+				hhcd->SOFCallback = HAL_HCD_SOF_Callback;
+				break;
 
-		case HAL_HCD_CONNECT_CB_ID:
-			hhcd->ConnectCallback = HAL_HCD_Connect_Callback;
-			break;
+			case HAL_HCD_CONNECT_CB_ID:
+				hhcd->ConnectCallback =
+				    HAL_HCD_Connect_Callback;
+				break;
 
-		case HAL_HCD_DISCONNECT_CB_ID:
-			hhcd->DisconnectCallback = HAL_HCD_Disconnect_Callback;
-			break;
+			case HAL_HCD_DISCONNECT_CB_ID:
+				hhcd->DisconnectCallback =
+				    HAL_HCD_Disconnect_Callback;
+				break;
 
-		case HAL_HCD_PORT_ENABLED_CB_ID:
-			hhcd->PortEnabledCallback =
-			    HAL_HCD_PortEnabled_Callback;
-			break;
+			case HAL_HCD_PORT_ENABLED_CB_ID:
+				hhcd->PortEnabledCallback =
+				    HAL_HCD_PortEnabled_Callback;
+				break;
 
-		case HAL_HCD_PORT_DISABLED_CB_ID:
-			hhcd->PortDisabledCallback =
-			    HAL_HCD_PortDisabled_Callback;
-			break;
+			case HAL_HCD_PORT_DISABLED_CB_ID:
+				hhcd->PortDisabledCallback =
+				    HAL_HCD_PortDisabled_Callback;
+				break;
 
-		case HAL_HCD_MSPINIT_CB_ID:
-			hhcd->MspInitCallback = HAL_HCD_MspInit;
-			break;
+			case HAL_HCD_MSPINIT_CB_ID:
+				hhcd->MspInitCallback = HAL_HCD_MspInit;
+				break;
 
-		case HAL_HCD_MSPDEINIT_CB_ID:
-			hhcd->MspDeInitCallback = HAL_HCD_MspDeInit;
-			break;
+			case HAL_HCD_MSPDEINIT_CB_ID:
+				hhcd->MspDeInitCallback = HAL_HCD_MspDeInit;
+				break;
 
-		default:
-			/* Update the error code */
-			hhcd->ErrorCode |= HAL_HCD_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hhcd->ErrorCode |=
+				    HAL_HCD_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hhcd->State == HAL_HCD_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_HCD_MSPINIT_CB_ID:
-			hhcd->MspInitCallback = HAL_HCD_MspInit;
-			break;
+			case HAL_HCD_MSPINIT_CB_ID:
+				hhcd->MspInitCallback = HAL_HCD_MspInit;
+				break;
 
-		case HAL_HCD_MSPDEINIT_CB_ID:
-			hhcd->MspDeInitCallback = HAL_HCD_MspDeInit;
-			break;
+			case HAL_HCD_MSPDEINIT_CB_ID:
+				hhcd->MspDeInitCallback = HAL_HCD_MspDeInit;
+				break;
 
-		default:
-			/* Update the error code */
-			hhcd->ErrorCode |= HAL_HCD_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hhcd->ErrorCode |=
+				    HAL_HCD_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -1759,47 +1778,51 @@ static void HCD_RXQLVL_IRQHandler(HCD_HandleTypeDef *hhcd)
 	pktcnt = (GrxstspReg & USB_OTG_GRXSTSP_BCNT) >> 4;
 
 	switch (pktsts) {
-	case GRXSTS_PKTSTS_IN:
-		/* Read the data into the host buffer. */
-		if ((pktcnt > 0U) && (hhcd->hc[chnum].xfer_buff != (void *)0)) {
-			if ((hhcd->hc[chnum].xfer_count + pktcnt) <=
-			    hhcd->hc[chnum].xfer_len) {
-				(void)USB_ReadPacket(hhcd->Instance,
-						     hhcd->hc[chnum].xfer_buff,
-						     (uint16_t)pktcnt);
+		case GRXSTS_PKTSTS_IN:
+			/* Read the data into the host buffer. */
+			if ((pktcnt > 0U) &&
+			    (hhcd->hc[chnum].xfer_buff != (void *)0)) {
+				if ((hhcd->hc[chnum].xfer_count + pktcnt) <=
+				    hhcd->hc[chnum].xfer_len) {
+					(void)USB_ReadPacket(
+					    hhcd->Instance,
+					    hhcd->hc[chnum].xfer_buff,
+					    (uint16_t)pktcnt);
 
-				/* manage multiple Xfer */
-				hhcd->hc[chnum].xfer_buff += pktcnt;
-				hhcd->hc[chnum].xfer_count += pktcnt;
+					/* manage multiple Xfer */
+					hhcd->hc[chnum].xfer_buff += pktcnt;
+					hhcd->hc[chnum].xfer_count += pktcnt;
 
-				/* get transfer size packet count */
-				xferSizePktCnt = (USBx_HC(chnum)->HCTSIZ &
-						  USB_OTG_HCTSIZ_PKTCNT) >>
-						 19;
+					/* get transfer size packet count */
+					xferSizePktCnt =
+					    (USBx_HC(chnum)->HCTSIZ &
+					     USB_OTG_HCTSIZ_PKTCNT) >>
+					    19;
 
-				if ((hhcd->hc[chnum].max_packet == pktcnt) &&
-				    (xferSizePktCnt > 0U)) {
-					/* re-activate the channel when more
-					 * packets are expected */
-					tmpreg = USBx_HC(chnum)->HCCHAR;
-					tmpreg &= ~USB_OTG_HCCHAR_CHDIS;
-					tmpreg |= USB_OTG_HCCHAR_CHENA;
-					USBx_HC(chnum)->HCCHAR = tmpreg;
-					hhcd->hc[chnum].toggle_in ^= 1U;
+					if ((hhcd->hc[chnum].max_packet ==
+					     pktcnt) &&
+					    (xferSizePktCnt > 0U)) {
+						/* re-activate the channel when
+						 * more packets are expected */
+						tmpreg = USBx_HC(chnum)->HCCHAR;
+						tmpreg &= ~USB_OTG_HCCHAR_CHDIS;
+						tmpreg |= USB_OTG_HCCHAR_CHENA;
+						USBx_HC(chnum)->HCCHAR = tmpreg;
+						hhcd->hc[chnum].toggle_in ^= 1U;
+					}
+				} else {
+					hhcd->hc[chnum].urb_state = URB_ERROR;
 				}
-			} else {
-				hhcd->hc[chnum].urb_state = URB_ERROR;
 			}
-		}
-		break;
+			break;
 
-	case GRXSTS_PKTSTS_DATA_TOGGLE_ERR:
-		break;
+		case GRXSTS_PKTSTS_DATA_TOGGLE_ERR:
+			break;
 
-	case GRXSTS_PKTSTS_IN_XFER_COMP:
-	case GRXSTS_PKTSTS_CH_HALTED:
-	default:
-		break;
+		case GRXSTS_PKTSTS_IN_XFER_COMP:
+		case GRXSTS_PKTSTS_CH_HALTED:
+		default:
+			break;
 	}
 }
 
@@ -2492,70 +2515,80 @@ HAL_StatusTypeDef HAL_HCD_HC_SubmitRequest(HCD_HandleTypeDef *hhcd,
 
 	/* Manage Data Toggle */
 	switch (ep_type) {
-	case EP_TYPE_CTRL:
-		if ((token == 1U) && (direction == 0U)) /* send data */
-		{
-			if (length == 0U) {
-				/* For Status OUT stage, Length==0, Status Out
-				 * PID = 1 */
-				hhcd->hc[ch_num & 0xFU].toggle_out = 1U;
-			}
+		case EP_TYPE_CTRL:
+			if ((token == 1U) && (direction == 0U)) /* send data */
+			{
+				if (length == 0U) {
+					/* For Status OUT stage, Length==0,
+					 * Status Out PID = 1 */
+					hhcd->hc[ch_num & 0xFU].toggle_out = 1U;
+				}
 
-			/* Set the Data Toggle bit as per the Flag */
-			if (hhcd->hc[ch_num & 0xFU].toggle_out == 0U) {
-				/* Put the PID 0 */
-				hhcd->hc[ch_num & 0xFU].data_pid = HC_PID_DATA0;
-			} else {
-				/* Put the PID 1 */
-				hhcd->hc[ch_num & 0xFU].data_pid = HC_PID_DATA1;
+				/* Set the Data Toggle bit as per the Flag */
+				if (hhcd->hc[ch_num & 0xFU].toggle_out == 0U) {
+					/* Put the PID 0 */
+					hhcd->hc[ch_num & 0xFU].data_pid =
+					    HC_PID_DATA0;
+				} else {
+					/* Put the PID 1 */
+					hhcd->hc[ch_num & 0xFU].data_pid =
+					    HC_PID_DATA1;
+				}
 			}
-		}
-		break;
+			break;
 
-	case EP_TYPE_BULK:
-		if (direction == 0U) {
-			/* Set the Data Toggle bit as per the Flag */
-			if (hhcd->hc[ch_num & 0xFU].toggle_out == 0U) {
-				/* Put the PID 0 */
-				hhcd->hc[ch_num & 0xFU].data_pid = HC_PID_DATA0;
+		case EP_TYPE_BULK:
+			if (direction == 0U) {
+				/* Set the Data Toggle bit as per the Flag */
+				if (hhcd->hc[ch_num & 0xFU].toggle_out == 0U) {
+					/* Put the PID 0 */
+					hhcd->hc[ch_num & 0xFU].data_pid =
+					    HC_PID_DATA0;
+				} else {
+					/* Put the PID 1 */
+					hhcd->hc[ch_num & 0xFU].data_pid =
+					    HC_PID_DATA1;
+				}
 			} else {
-				/* Put the PID 1 */
-				hhcd->hc[ch_num & 0xFU].data_pid = HC_PID_DATA1;
+				if (hhcd->hc[ch_num & 0xFU].toggle_in == 0U) {
+					hhcd->hc[ch_num & 0xFU].data_pid =
+					    HC_PID_DATA0;
+				} else {
+					hhcd->hc[ch_num & 0xFU].data_pid =
+					    HC_PID_DATA1;
+				}
 			}
-		} else {
-			if (hhcd->hc[ch_num & 0xFU].toggle_in == 0U) {
-				hhcd->hc[ch_num & 0xFU].data_pid = HC_PID_DATA0;
-			} else {
-				hhcd->hc[ch_num & 0xFU].data_pid = HC_PID_DATA1;
-			}
-		}
-		break;
+			break;
 
-	case EP_TYPE_INTR:
-		if (direction == 0U) {
-			/* Set the Data Toggle bit as per the Flag */
-			if (hhcd->hc[ch_num & 0xFU].toggle_out == 0U) {
-				/* Put the PID 0 */
-				hhcd->hc[ch_num & 0xFU].data_pid = HC_PID_DATA0;
+		case EP_TYPE_INTR:
+			if (direction == 0U) {
+				/* Set the Data Toggle bit as per the Flag */
+				if (hhcd->hc[ch_num & 0xFU].toggle_out == 0U) {
+					/* Put the PID 0 */
+					hhcd->hc[ch_num & 0xFU].data_pid =
+					    HC_PID_DATA0;
+				} else {
+					/* Put the PID 1 */
+					hhcd->hc[ch_num & 0xFU].data_pid =
+					    HC_PID_DATA1;
+				}
 			} else {
-				/* Put the PID 1 */
-				hhcd->hc[ch_num & 0xFU].data_pid = HC_PID_DATA1;
+				if (hhcd->hc[ch_num & 0xFU].toggle_in == 0U) {
+					hhcd->hc[ch_num & 0xFU].data_pid =
+					    HC_PID_DATA0;
+				} else {
+					hhcd->hc[ch_num & 0xFU].data_pid =
+					    HC_PID_DATA1;
+				}
 			}
-		} else {
-			if (hhcd->hc[ch_num & 0xFU].toggle_in == 0U) {
-				hhcd->hc[ch_num & 0xFU].data_pid = HC_PID_DATA0;
-			} else {
-				hhcd->hc[ch_num & 0xFU].data_pid = HC_PID_DATA1;
-			}
-		}
-		break;
+			break;
 
-	case EP_TYPE_ISOC:
-		hhcd->hc[ch_num & 0xFU].data_pid = HC_PID_DATA0;
-		break;
+		case EP_TYPE_ISOC:
+			hhcd->hc[ch_num & 0xFU].data_pid = HC_PID_DATA0;
+			break;
 
-	default:
-		break;
+		default:
+			break;
 	}
 
 	hhcd->hc[ch_num & 0xFU].xfer_buff = pbuff;
@@ -2826,57 +2859,59 @@ HAL_StatusTypeDef HAL_HCD_RegisterCallback(HCD_HandleTypeDef *hhcd,
 
 	if (hhcd->State == HAL_HCD_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_HCD_SOF_CB_ID:
-			hhcd->SOFCallback = pCallback;
-			break;
+			case HAL_HCD_SOF_CB_ID:
+				hhcd->SOFCallback = pCallback;
+				break;
 
-		case HAL_HCD_CONNECT_CB_ID:
-			hhcd->ConnectCallback = pCallback;
-			break;
+			case HAL_HCD_CONNECT_CB_ID:
+				hhcd->ConnectCallback = pCallback;
+				break;
 
-		case HAL_HCD_DISCONNECT_CB_ID:
-			hhcd->DisconnectCallback = pCallback;
-			break;
+			case HAL_HCD_DISCONNECT_CB_ID:
+				hhcd->DisconnectCallback = pCallback;
+				break;
 
-		case HAL_HCD_PORT_ENABLED_CB_ID:
-			hhcd->PortEnabledCallback = pCallback;
-			break;
+			case HAL_HCD_PORT_ENABLED_CB_ID:
+				hhcd->PortEnabledCallback = pCallback;
+				break;
 
-		case HAL_HCD_PORT_DISABLED_CB_ID:
-			hhcd->PortDisabledCallback = pCallback;
-			break;
+			case HAL_HCD_PORT_DISABLED_CB_ID:
+				hhcd->PortDisabledCallback = pCallback;
+				break;
 
-		case HAL_HCD_MSPINIT_CB_ID:
-			hhcd->MspInitCallback = pCallback;
-			break;
+			case HAL_HCD_MSPINIT_CB_ID:
+				hhcd->MspInitCallback = pCallback;
+				break;
 
-		case HAL_HCD_MSPDEINIT_CB_ID:
-			hhcd->MspDeInitCallback = pCallback;
-			break;
+			case HAL_HCD_MSPDEINIT_CB_ID:
+				hhcd->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hhcd->ErrorCode |= HAL_HCD_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hhcd->ErrorCode |=
+				    HAL_HCD_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hhcd->State == HAL_HCD_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_HCD_MSPINIT_CB_ID:
-			hhcd->MspInitCallback = pCallback;
-			break;
+			case HAL_HCD_MSPINIT_CB_ID:
+				hhcd->MspInitCallback = pCallback;
+				break;
 
-		case HAL_HCD_MSPDEINIT_CB_ID:
-			hhcd->MspDeInitCallback = pCallback;
-			break;
+			case HAL_HCD_MSPDEINIT_CB_ID:
+				hhcd->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hhcd->ErrorCode |= HAL_HCD_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hhcd->ErrorCode |=
+				    HAL_HCD_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -2919,61 +2954,65 @@ HAL_HCD_UnRegisterCallback(HCD_HandleTypeDef *hhcd,
 	/* Setup Legacy weak Callbacks */
 	if (hhcd->State == HAL_HCD_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_HCD_SOF_CB_ID:
-			hhcd->SOFCallback = HAL_HCD_SOF_Callback;
-			break;
+			case HAL_HCD_SOF_CB_ID:
+				hhcd->SOFCallback = HAL_HCD_SOF_Callback;
+				break;
 
-		case HAL_HCD_CONNECT_CB_ID:
-			hhcd->ConnectCallback = HAL_HCD_Connect_Callback;
-			break;
+			case HAL_HCD_CONNECT_CB_ID:
+				hhcd->ConnectCallback =
+				    HAL_HCD_Connect_Callback;
+				break;
 
-		case HAL_HCD_DISCONNECT_CB_ID:
-			hhcd->DisconnectCallback = HAL_HCD_Disconnect_Callback;
-			break;
+			case HAL_HCD_DISCONNECT_CB_ID:
+				hhcd->DisconnectCallback =
+				    HAL_HCD_Disconnect_Callback;
+				break;
 
-		case HAL_HCD_PORT_ENABLED_CB_ID:
-			hhcd->PortEnabledCallback =
-			    HAL_HCD_PortEnabled_Callback;
-			break;
+			case HAL_HCD_PORT_ENABLED_CB_ID:
+				hhcd->PortEnabledCallback =
+				    HAL_HCD_PortEnabled_Callback;
+				break;
 
-		case HAL_HCD_PORT_DISABLED_CB_ID:
-			hhcd->PortDisabledCallback =
-			    HAL_HCD_PortDisabled_Callback;
-			break;
+			case HAL_HCD_PORT_DISABLED_CB_ID:
+				hhcd->PortDisabledCallback =
+				    HAL_HCD_PortDisabled_Callback;
+				break;
 
-		case HAL_HCD_MSPINIT_CB_ID:
-			hhcd->MspInitCallback = HAL_HCD_MspInit;
-			break;
+			case HAL_HCD_MSPINIT_CB_ID:
+				hhcd->MspInitCallback = HAL_HCD_MspInit;
+				break;
 
-		case HAL_HCD_MSPDEINIT_CB_ID:
-			hhcd->MspDeInitCallback = HAL_HCD_MspDeInit;
-			break;
+			case HAL_HCD_MSPDEINIT_CB_ID:
+				hhcd->MspDeInitCallback = HAL_HCD_MspDeInit;
+				break;
 
-		default:
-			/* Update the error code */
-			hhcd->ErrorCode |= HAL_HCD_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hhcd->ErrorCode |=
+				    HAL_HCD_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hhcd->State == HAL_HCD_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_HCD_MSPINIT_CB_ID:
-			hhcd->MspInitCallback = HAL_HCD_MspInit;
-			break;
+			case HAL_HCD_MSPINIT_CB_ID:
+				hhcd->MspInitCallback = HAL_HCD_MspInit;
+				break;
 
-		case HAL_HCD_MSPDEINIT_CB_ID:
-			hhcd->MspDeInitCallback = HAL_HCD_MspDeInit;
-			break;
+			case HAL_HCD_MSPDEINIT_CB_ID:
+				hhcd->MspDeInitCallback = HAL_HCD_MspDeInit;
+				break;
 
-		default:
-			/* Update the error code */
-			hhcd->ErrorCode |= HAL_HCD_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hhcd->ErrorCode |=
+				    HAL_HCD_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */

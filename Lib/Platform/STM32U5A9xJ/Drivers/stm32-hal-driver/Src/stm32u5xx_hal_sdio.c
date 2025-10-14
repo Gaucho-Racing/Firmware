@@ -669,37 +669,39 @@ HAL_StatusTypeDef HAL_SDIO_SetSpeedMode(SDIO_HandleTypeDef *hsdio,
 	}
 
 	switch (DataRate) {
-	case HAL_SDIOS_DATA_RATE_SDR25:
-		data = SDIO_BUS_SPEED_SDR25;
-		errorstate = SDIO_WriteDirect(hsdio, SDMMC_SDIO_CCCR16_SD_BYTE3,
-					      HAL_SDIO_WRITE_ONLY,
-					      SDIO_FUNCTION_0, &data);
-		break;
+		case HAL_SDIOS_DATA_RATE_SDR25:
+			data = SDIO_BUS_SPEED_SDR25;
+			errorstate = SDIO_WriteDirect(
+			    hsdio, SDMMC_SDIO_CCCR16_SD_BYTE3,
+			    HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &data);
+			break;
 
-	case HAL_SDIOS_DATA_RATE_SDR50:
-		data = SDIO_BUS_SPEED_SDR50;
-		errorstate = SDIO_WriteDirect(
-		    hsdio,
-		    ((SDIO_FUNCTION_0 << 2U) | (SDIO_FUNCTION_0 << 1U) |
-		     (SDIO_FUNCTION_0 << 14U) | SDMMC_SDIO_CCCR16_SD_BYTE3),
-		    HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &data);
-		MODIFY_REG(hsdio->Instance->CLKCR, SDMMC_CLKCR_BUSSPEED,
-			   SDMMC_CLKCR_BUSSPEED);
-		break;
+		case HAL_SDIOS_DATA_RATE_SDR50:
+			data = SDIO_BUS_SPEED_SDR50;
+			errorstate = SDIO_WriteDirect(
+			    hsdio,
+			    ((SDIO_FUNCTION_0 << 2U) | (SDIO_FUNCTION_0 << 1U) |
+			     (SDIO_FUNCTION_0 << 14U) |
+			     SDMMC_SDIO_CCCR16_SD_BYTE3),
+			    HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &data);
+			MODIFY_REG(hsdio->Instance->CLKCR, SDMMC_CLKCR_BUSSPEED,
+				   SDMMC_CLKCR_BUSSPEED);
+			break;
 
-	case HAL_SDIOS_DATA_RATE_DDR50:
-		data = SDIO_BUS_SPEED_DDR50;
-		errorstate = SDIO_WriteDirect(
-		    hsdio,
-		    ((SDIO_FUNCTION_0 << 2) | (SDIO_FUNCTION_0 << 1) |
-		     (SDIO_FUNCTION_0 << 14) | SDMMC_SDIO_CCCR16_SD_BYTE3),
-		    HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &data);
-		MODIFY_REG(hsdio->Instance->CLKCR,
-			   SDMMC_CLKCR_DDR | SDMMC_CLKCR_BUSSPEED,
-			   SDMMC_CLKCR_DDR | SDMMC_CLKCR_BUSSPEED);
-		break;
-	default: /* SDR12 */
-		break;
+		case HAL_SDIOS_DATA_RATE_DDR50:
+			data = SDIO_BUS_SPEED_DDR50;
+			errorstate = SDIO_WriteDirect(
+			    hsdio,
+			    ((SDIO_FUNCTION_0 << 2) | (SDIO_FUNCTION_0 << 1) |
+			     (SDIO_FUNCTION_0 << 14) |
+			     SDMMC_SDIO_CCCR16_SD_BYTE3),
+			    HAL_SDIO_WRITE_ONLY, SDIO_FUNCTION_0, &data);
+			MODIFY_REG(hsdio->Instance->CLKCR,
+				   SDMMC_CLKCR_DDR | SDMMC_CLKCR_BUSSPEED,
+				   SDMMC_CLKCR_DDR | SDMMC_CLKCR_BUSSPEED);
+			break;
+		default: /* SDR12 */
+			break;
 	}
 
 	return (errorstate != HAL_OK) ? HAL_ERROR : HAL_OK;
@@ -1974,42 +1976,44 @@ HAL_SDIO_RegisterCallback(SDIO_HandleTypeDef *hsdio,
 
 	if (hsdio->State == HAL_SDIO_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_SDIO_TX_CPLT_CB_ID:
-			hsdio->TxCpltCallback = pCallback;
-			break;
-		case HAL_SDIO_RX_CPLT_CB_ID:
-			hsdio->RxCpltCallback = pCallback;
-			break;
-		case HAL_SDIO_ERROR_CB_ID:
-			hsdio->ErrorCallback = pCallback;
-			break;
-		case HAL_SDIO_MSP_INIT_CB_ID:
-			hsdio->MspInitCallback = pCallback;
-			break;
-		case HAL_SDIO_MSP_DEINIT_CB_ID:
-			hsdio->MspDeInitCallback = pCallback;
-			break;
-		default:
-			/* Update the error code */
-			hsdio->ErrorCode |= HAL_SDIO_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_SDIO_TX_CPLT_CB_ID:
+				hsdio->TxCpltCallback = pCallback;
+				break;
+			case HAL_SDIO_RX_CPLT_CB_ID:
+				hsdio->RxCpltCallback = pCallback;
+				break;
+			case HAL_SDIO_ERROR_CB_ID:
+				hsdio->ErrorCallback = pCallback;
+				break;
+			case HAL_SDIO_MSP_INIT_CB_ID:
+				hsdio->MspInitCallback = pCallback;
+				break;
+			case HAL_SDIO_MSP_DEINIT_CB_ID:
+				hsdio->MspDeInitCallback = pCallback;
+				break;
+			default:
+				/* Update the error code */
+				hsdio->ErrorCode |=
+				    HAL_SDIO_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hsdio->State == HAL_SDIO_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_SDIO_MSP_INIT_CB_ID:
-			hsdio->MspInitCallback = pCallback;
-			break;
-		case HAL_SDIO_MSP_DEINIT_CB_ID:
-			hsdio->MspDeInitCallback = pCallback;
-			break;
-		default:
-			/* Update the error code */
-			hsdio->ErrorCode |= HAL_SDIO_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_SDIO_MSP_INIT_CB_ID:
+				hsdio->MspInitCallback = pCallback;
+				break;
+			case HAL_SDIO_MSP_DEINIT_CB_ID:
+				hsdio->MspDeInitCallback = pCallback;
+				break;
+			default:
+				/* Update the error code */
+				hsdio->ErrorCode |=
+				    HAL_SDIO_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -2049,38 +2053,40 @@ HAL_SDIO_UnRegisterCallback(SDIO_HandleTypeDef *hsdio,
 
 	if (hsdio->State == HAL_SDIO_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_SDIO_TX_CPLT_CB_ID:
-			hsdio->TxCpltCallback = HAL_SDIO_TxCpltCallback;
-			break;
-		case HAL_SDIO_RX_CPLT_CB_ID:
-			hsdio->RxCpltCallback = HAL_SDIO_RxCpltCallback;
-			break;
-		case HAL_SDIO_ERROR_CB_ID:
-			hsdio->ErrorCallback = HAL_SDIO_ErrorCallback;
-			break;
-		case HAL_SDIO_MSP_INIT_CB_ID:
-			hsdio->MspInitCallback = HAL_SDIO_MspInit;
-			break;
-		case HAL_SDIO_MSP_DEINIT_CB_ID:
-			hsdio->MspDeInitCallback = HAL_SDIO_MspDeInit;
-			break;
-		default:
-			hsdio->ErrorCode |= HAL_SDIO_ERROR_INVALID_CALLBACK;
-			status = HAL_ERROR;
-			break;
+			case HAL_SDIO_TX_CPLT_CB_ID:
+				hsdio->TxCpltCallback = HAL_SDIO_TxCpltCallback;
+				break;
+			case HAL_SDIO_RX_CPLT_CB_ID:
+				hsdio->RxCpltCallback = HAL_SDIO_RxCpltCallback;
+				break;
+			case HAL_SDIO_ERROR_CB_ID:
+				hsdio->ErrorCallback = HAL_SDIO_ErrorCallback;
+				break;
+			case HAL_SDIO_MSP_INIT_CB_ID:
+				hsdio->MspInitCallback = HAL_SDIO_MspInit;
+				break;
+			case HAL_SDIO_MSP_DEINIT_CB_ID:
+				hsdio->MspDeInitCallback = HAL_SDIO_MspDeInit;
+				break;
+			default:
+				hsdio->ErrorCode |=
+				    HAL_SDIO_ERROR_INVALID_CALLBACK;
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hsdio->State == HAL_SDIO_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_SDIO_MSP_INIT_CB_ID:
-			hsdio->MspInitCallback = HAL_SDIO_MspInit;
-			break;
-		case HAL_SDIO_MSP_DEINIT_CB_ID:
-			hsdio->MspDeInitCallback = HAL_SDIO_MspDeInit;
-			break;
-		default:
-			hsdio->ErrorCode |= HAL_SDIO_ERROR_INVALID_CALLBACK;
-			status = HAL_ERROR;
-			break;
+			case HAL_SDIO_MSP_INIT_CB_ID:
+				hsdio->MspInitCallback = HAL_SDIO_MspInit;
+				break;
+			case HAL_SDIO_MSP_DEINIT_CB_ID:
+				hsdio->MspDeInitCallback = HAL_SDIO_MspDeInit;
+				break;
+			default:
+				hsdio->ErrorCode |=
+				    HAL_SDIO_ERROR_INVALID_CALLBACK;
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		hsdio->ErrorCode |= HAL_SDIO_ERROR_INVALID_CALLBACK;

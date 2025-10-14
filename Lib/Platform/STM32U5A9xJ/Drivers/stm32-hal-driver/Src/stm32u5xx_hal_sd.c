@@ -1823,51 +1823,51 @@ HAL_StatusTypeDef HAL_SD_RegisterCallback(SD_HandleTypeDef *hsd,
 
 	if (hsd->State == HAL_SD_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_SD_TX_CPLT_CB_ID:
-			hsd->TxCpltCallback = pCallback;
-			break;
-		case HAL_SD_RX_CPLT_CB_ID:
-			hsd->RxCpltCallback = pCallback;
-			break;
-		case HAL_SD_ERROR_CB_ID:
-			hsd->ErrorCallback = pCallback;
-			break;
-		case HAL_SD_ABORT_CB_ID:
-			hsd->AbortCpltCallback = pCallback;
-			break;
-		case HAL_SD_READ_DMA_LNKLST_BUF_CPLT_CB_ID:
-			hsd->Read_DMALnkLstBufCpltCallback = pCallback;
-			break;
-		case HAL_SD_WRITE_DMA_LNKLST_BUF_CPLT_CB_ID:
-			hsd->Write_DMALnkLstBufCpltCallback = pCallback;
-			break;
-		case HAL_SD_MSP_INIT_CB_ID:
-			hsd->MspInitCallback = pCallback;
-			break;
-		case HAL_SD_MSP_DEINIT_CB_ID:
-			hsd->MspDeInitCallback = pCallback;
-			break;
-		default:
-			/* Update the error code */
-			hsd->ErrorCode |= HAL_SD_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_SD_TX_CPLT_CB_ID:
+				hsd->TxCpltCallback = pCallback;
+				break;
+			case HAL_SD_RX_CPLT_CB_ID:
+				hsd->RxCpltCallback = pCallback;
+				break;
+			case HAL_SD_ERROR_CB_ID:
+				hsd->ErrorCallback = pCallback;
+				break;
+			case HAL_SD_ABORT_CB_ID:
+				hsd->AbortCpltCallback = pCallback;
+				break;
+			case HAL_SD_READ_DMA_LNKLST_BUF_CPLT_CB_ID:
+				hsd->Read_DMALnkLstBufCpltCallback = pCallback;
+				break;
+			case HAL_SD_WRITE_DMA_LNKLST_BUF_CPLT_CB_ID:
+				hsd->Write_DMALnkLstBufCpltCallback = pCallback;
+				break;
+			case HAL_SD_MSP_INIT_CB_ID:
+				hsd->MspInitCallback = pCallback;
+				break;
+			case HAL_SD_MSP_DEINIT_CB_ID:
+				hsd->MspDeInitCallback = pCallback;
+				break;
+			default:
+				/* Update the error code */
+				hsd->ErrorCode |= HAL_SD_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hsd->State == HAL_SD_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_SD_MSP_INIT_CB_ID:
-			hsd->MspInitCallback = pCallback;
-			break;
-		case HAL_SD_MSP_DEINIT_CB_ID:
-			hsd->MspDeInitCallback = pCallback;
-			break;
-		default:
-			/* Update the error code */
-			hsd->ErrorCode |= HAL_SD_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_SD_MSP_INIT_CB_ID:
+				hsd->MspInitCallback = pCallback;
+				break;
+			case HAL_SD_MSP_DEINIT_CB_ID:
+				hsd->MspDeInitCallback = pCallback;
+				break;
+			default:
+				/* Update the error code */
+				hsd->ErrorCode |= HAL_SD_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -1912,53 +1912,53 @@ HAL_StatusTypeDef HAL_SD_UnRegisterCallback(SD_HandleTypeDef *hsd,
 
 	if (hsd->State == HAL_SD_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_SD_TX_CPLT_CB_ID:
-			hsd->TxCpltCallback = HAL_SD_TxCpltCallback;
-			break;
-		case HAL_SD_RX_CPLT_CB_ID:
-			hsd->RxCpltCallback = HAL_SD_RxCpltCallback;
-			break;
-		case HAL_SD_ERROR_CB_ID:
-			hsd->ErrorCallback = HAL_SD_ErrorCallback;
-			break;
-		case HAL_SD_ABORT_CB_ID:
-			hsd->AbortCpltCallback = HAL_SD_AbortCallback;
-			break;
-		case HAL_SD_READ_DMA_LNKLST_BUF_CPLT_CB_ID:
-			hsd->Read_DMALnkLstBufCpltCallback =
-			    HAL_SDEx_Read_DMALnkLstBufCpltCallback;
-			break;
-		case HAL_SD_WRITE_DMA_LNKLST_BUF_CPLT_CB_ID:
-			hsd->Write_DMALnkLstBufCpltCallback =
-			    HAL_SDEx_Write_DMALnkLstBufCpltCallback;
-			break;
-		case HAL_SD_MSP_INIT_CB_ID:
-			hsd->MspInitCallback = HAL_SD_MspInit;
-			break;
-		case HAL_SD_MSP_DEINIT_CB_ID:
-			hsd->MspDeInitCallback = HAL_SD_MspDeInit;
-			break;
-		default:
-			/* Update the error code */
-			hsd->ErrorCode |= HAL_SD_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_SD_TX_CPLT_CB_ID:
+				hsd->TxCpltCallback = HAL_SD_TxCpltCallback;
+				break;
+			case HAL_SD_RX_CPLT_CB_ID:
+				hsd->RxCpltCallback = HAL_SD_RxCpltCallback;
+				break;
+			case HAL_SD_ERROR_CB_ID:
+				hsd->ErrorCallback = HAL_SD_ErrorCallback;
+				break;
+			case HAL_SD_ABORT_CB_ID:
+				hsd->AbortCpltCallback = HAL_SD_AbortCallback;
+				break;
+			case HAL_SD_READ_DMA_LNKLST_BUF_CPLT_CB_ID:
+				hsd->Read_DMALnkLstBufCpltCallback =
+				    HAL_SDEx_Read_DMALnkLstBufCpltCallback;
+				break;
+			case HAL_SD_WRITE_DMA_LNKLST_BUF_CPLT_CB_ID:
+				hsd->Write_DMALnkLstBufCpltCallback =
+				    HAL_SDEx_Write_DMALnkLstBufCpltCallback;
+				break;
+			case HAL_SD_MSP_INIT_CB_ID:
+				hsd->MspInitCallback = HAL_SD_MspInit;
+				break;
+			case HAL_SD_MSP_DEINIT_CB_ID:
+				hsd->MspDeInitCallback = HAL_SD_MspDeInit;
+				break;
+			default:
+				/* Update the error code */
+				hsd->ErrorCode |= HAL_SD_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hsd->State == HAL_SD_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_SD_MSP_INIT_CB_ID:
-			hsd->MspInitCallback = HAL_SD_MspInit;
-			break;
-		case HAL_SD_MSP_DEINIT_CB_ID:
-			hsd->MspDeInitCallback = HAL_SD_MspDeInit;
-			break;
-		default:
-			/* Update the error code */
-			hsd->ErrorCode |= HAL_SD_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_SD_MSP_INIT_CB_ID:
+				hsd->MspInitCallback = HAL_SD_MspInit;
+				break;
+			case HAL_SD_MSP_DEINIT_CB_ID:
+				hsd->MspDeInitCallback = HAL_SD_MspDeInit;
+				break;
+			default:
+				/* Update the error code */
+				hsd->ErrorCode |= HAL_SD_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -2488,14 +2488,29 @@ HAL_StatusTypeDef HAL_SD_ConfigSpeedBusOperation(SD_HandleTypeDef *hsd,
 #if (USE_SD_TRANSCEIVER != 0U)
 	if (hsd->Init.TranceiverPresent == SDMMC_TRANSCEIVER_PRESENT) {
 		switch (SpeedMode) {
-		case SDMMC_SPEED_MODE_AUTO: {
-			if ((hsd->SdCard.CardSpeed == CARD_ULTRA_HIGH_SPEED) ||
-			    (hsd->SdCard.CardType == CARD_SDHC_SDXC)) {
-				hsd->Instance->CLKCR |= SDMMC_CLKCR_BUSSPEED;
-				/* Enable Ultra High Speed */
-				if (SD_UltraHighSpeed(
-					hsd, SDMMC_SDR104_SWITCH_PATTERN) !=
-				    HAL_SD_ERROR_NONE) {
+			case SDMMC_SPEED_MODE_AUTO: {
+				if ((hsd->SdCard.CardSpeed ==
+				     CARD_ULTRA_HIGH_SPEED) ||
+				    (hsd->SdCard.CardType == CARD_SDHC_SDXC)) {
+					hsd->Instance->CLKCR |=
+					    SDMMC_CLKCR_BUSSPEED;
+					/* Enable Ultra High Speed */
+					if (SD_UltraHighSpeed(
+						hsd,
+						SDMMC_SDR104_SWITCH_PATTERN) !=
+					    HAL_SD_ERROR_NONE) {
+						if (SD_SwitchSpeed(
+							hsd,
+							SDMMC_SDR25_SWITCH_PATTERN) !=
+						    HAL_SD_ERROR_NONE) {
+							hsd->ErrorCode |=
+							    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+							status = HAL_ERROR;
+						}
+					}
+				} else if (hsd->SdCard.CardSpeed ==
+					   CARD_HIGH_SPEED) {
+					/* Enable High Speed */
 					if (SD_SwitchSpeed(
 						hsd,
 						SDMMC_SDR25_SWITCH_PATTERN) !=
@@ -2504,114 +2519,181 @@ HAL_StatusTypeDef HAL_SD_ConfigSpeedBusOperation(SD_HandleTypeDef *hsd,
 						    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
 						status = HAL_ERROR;
 					}
+				} else {
+					/*Nothing to do, Use defaultSpeed */
 				}
-			} else if (hsd->SdCard.CardSpeed == CARD_HIGH_SPEED) {
-				/* Enable High Speed */
+				break;
+			}
+			case SDMMC_SPEED_MODE_ULTRA_SDR104: {
+				if ((hsd->SdCard.CardSpeed ==
+				     CARD_ULTRA_HIGH_SPEED) ||
+				    (hsd->SdCard.CardType == CARD_SDHC_SDXC)) {
+					/* Enable UltraHigh Speed */
+					if (SD_UltraHighSpeed(
+						hsd,
+						SDMMC_SDR104_SWITCH_PATTERN) !=
+					    HAL_SD_ERROR_NONE) {
+						hsd->ErrorCode |=
+						    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+						status = HAL_ERROR;
+					}
+					hsd->Instance->CLKCR |=
+					    SDMMC_CLKCR_BUSSPEED;
+				} else {
+					hsd->ErrorCode |=
+					    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+					status = HAL_ERROR;
+				}
+				break;
+			}
+			case SDMMC_SPEED_MODE_ULTRA_SDR50: {
+				if ((hsd->SdCard.CardSpeed ==
+				     CARD_ULTRA_HIGH_SPEED) ||
+				    (hsd->SdCard.CardType == CARD_SDHC_SDXC)) {
+					/* Enable UltraHigh Speed */
+					if (SD_UltraHighSpeed(
+						hsd,
+						SDMMC_SDR50_SWITCH_PATTERN) !=
+					    HAL_SD_ERROR_NONE) {
+						hsd->ErrorCode |=
+						    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+						status = HAL_ERROR;
+					}
+					hsd->Instance->CLKCR |=
+					    SDMMC_CLKCR_BUSSPEED;
+				} else {
+					hsd->ErrorCode |=
+					    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+					status = HAL_ERROR;
+				}
+				break;
+			}
+			case SDMMC_SPEED_MODE_DDR: {
+				if ((hsd->SdCard.CardSpeed ==
+				     CARD_ULTRA_HIGH_SPEED) ||
+				    (hsd->SdCard.CardType == CARD_SDHC_SDXC)) {
+					/* Enable DDR Mode*/
+					if (SD_DDR_Mode(hsd) !=
+					    HAL_SD_ERROR_NONE) {
+						hsd->ErrorCode |=
+						    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+						status = HAL_ERROR;
+					}
+					hsd->Instance->CLKCR |=
+					    SDMMC_CLKCR_BUSSPEED |
+					    SDMMC_CLKCR_DDR;
+				} else {
+					hsd->ErrorCode |=
+					    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+					status = HAL_ERROR;
+				}
+				break;
+			}
+			case SDMMC_SPEED_MODE_HIGH: {
+				if ((hsd->SdCard.CardSpeed ==
+				     CARD_ULTRA_HIGH_SPEED) ||
+				    (hsd->SdCard.CardSpeed ==
+				     CARD_HIGH_SPEED) ||
+				    (hsd->SdCard.CardType == CARD_SDHC_SDXC)) {
+					/* Enable High Speed */
+					if (SD_SwitchSpeed(
+						hsd,
+						SDMMC_SDR25_SWITCH_PATTERN) !=
+					    HAL_SD_ERROR_NONE) {
+						hsd->ErrorCode |=
+						    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+						status = HAL_ERROR;
+					}
+				} else {
+					hsd->ErrorCode |=
+					    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+					status = HAL_ERROR;
+				}
+				break;
+			}
+			case SDMMC_SPEED_MODE_DEFAULT: {
+				/* Switch to default Speed */
 				if (SD_SwitchSpeed(
-					hsd, SDMMC_SDR25_SWITCH_PATTERN) !=
+					hsd, SDMMC_SDR12_SWITCH_PATTERN) !=
 				    HAL_SD_ERROR_NONE) {
 					hsd->ErrorCode |=
 					    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
 					status = HAL_ERROR;
 				}
-			} else {
-				/*Nothing to do, Use defaultSpeed */
-			}
-			break;
-		}
-		case SDMMC_SPEED_MODE_ULTRA_SDR104: {
-			if ((hsd->SdCard.CardSpeed == CARD_ULTRA_HIGH_SPEED) ||
-			    (hsd->SdCard.CardType == CARD_SDHC_SDXC)) {
-				/* Enable UltraHigh Speed */
-				if (SD_UltraHighSpeed(
-					hsd, SDMMC_SDR104_SWITCH_PATTERN) !=
-				    HAL_SD_ERROR_NONE) {
-					hsd->ErrorCode |=
-					    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
-					status = HAL_ERROR;
-				}
-				hsd->Instance->CLKCR |= SDMMC_CLKCR_BUSSPEED;
-			} else {
-				hsd->ErrorCode |=
-				    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
-				status = HAL_ERROR;
-			}
-			break;
-		}
-		case SDMMC_SPEED_MODE_ULTRA_SDR50: {
-			if ((hsd->SdCard.CardSpeed == CARD_ULTRA_HIGH_SPEED) ||
-			    (hsd->SdCard.CardType == CARD_SDHC_SDXC)) {
-				/* Enable UltraHigh Speed */
-				if (SD_UltraHighSpeed(
-					hsd, SDMMC_SDR50_SWITCH_PATTERN) !=
-				    HAL_SD_ERROR_NONE) {
-					hsd->ErrorCode |=
-					    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
-					status = HAL_ERROR;
-				}
-				hsd->Instance->CLKCR |= SDMMC_CLKCR_BUSSPEED;
-			} else {
-				hsd->ErrorCode |=
-				    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
-				status = HAL_ERROR;
-			}
-			break;
-		}
-		case SDMMC_SPEED_MODE_DDR: {
-			if ((hsd->SdCard.CardSpeed == CARD_ULTRA_HIGH_SPEED) ||
-			    (hsd->SdCard.CardType == CARD_SDHC_SDXC)) {
-				/* Enable DDR Mode*/
-				if (SD_DDR_Mode(hsd) != HAL_SD_ERROR_NONE) {
-					hsd->ErrorCode |=
-					    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
-					status = HAL_ERROR;
-				}
-				hsd->Instance->CLKCR |=
-				    SDMMC_CLKCR_BUSSPEED | SDMMC_CLKCR_DDR;
-			} else {
-				hsd->ErrorCode |=
-				    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
-				status = HAL_ERROR;
-			}
-			break;
-		}
-		case SDMMC_SPEED_MODE_HIGH: {
-			if ((hsd->SdCard.CardSpeed == CARD_ULTRA_HIGH_SPEED) ||
-			    (hsd->SdCard.CardSpeed == CARD_HIGH_SPEED) ||
-			    (hsd->SdCard.CardType == CARD_SDHC_SDXC)) {
-				/* Enable High Speed */
-				if (SD_SwitchSpeed(
-					hsd, SDMMC_SDR25_SWITCH_PATTERN) !=
-				    HAL_SD_ERROR_NONE) {
-					hsd->ErrorCode |=
-					    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
-					status = HAL_ERROR;
-				}
-			} else {
-				hsd->ErrorCode |=
-				    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
-				status = HAL_ERROR;
-			}
-			break;
-		}
-		case SDMMC_SPEED_MODE_DEFAULT: {
-			/* Switch to default Speed */
-			if (SD_SwitchSpeed(hsd, SDMMC_SDR12_SWITCH_PATTERN) !=
-			    HAL_SD_ERROR_NONE) {
-				hsd->ErrorCode |=
-				    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
-				status = HAL_ERROR;
-			}
 
-			break;
-		}
-		default:
-			hsd->ErrorCode |= HAL_SD_ERROR_PARAM;
-			status = HAL_ERROR;
-			break;
+				break;
+			}
+			default:
+				hsd->ErrorCode |= HAL_SD_ERROR_PARAM;
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		switch (SpeedMode) {
+			case SDMMC_SPEED_MODE_AUTO: {
+				if ((hsd->SdCard.CardSpeed ==
+				     CARD_ULTRA_HIGH_SPEED) ||
+				    (hsd->SdCard.CardSpeed ==
+				     CARD_HIGH_SPEED) ||
+				    (hsd->SdCard.CardType == CARD_SDHC_SDXC)) {
+					/* Enable High Speed */
+					if (SD_SwitchSpeed(
+						hsd,
+						SDMMC_SDR25_SWITCH_PATTERN) !=
+					    HAL_SD_ERROR_NONE) {
+						hsd->ErrorCode |=
+						    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+						status = HAL_ERROR;
+					}
+				} else {
+					/*Nothing to do, Use defaultSpeed */
+				}
+				break;
+			}
+			case SDMMC_SPEED_MODE_HIGH: {
+				if ((hsd->SdCard.CardSpeed ==
+				     CARD_ULTRA_HIGH_SPEED) ||
+				    (hsd->SdCard.CardSpeed ==
+				     CARD_HIGH_SPEED) ||
+				    (hsd->SdCard.CardType == CARD_SDHC_SDXC)) {
+					/* Enable High Speed */
+					if (SD_SwitchSpeed(
+						hsd,
+						SDMMC_SDR25_SWITCH_PATTERN) !=
+					    HAL_SD_ERROR_NONE) {
+						hsd->ErrorCode |=
+						    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+						status = HAL_ERROR;
+					}
+				} else {
+					hsd->ErrorCode |=
+					    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+					status = HAL_ERROR;
+				}
+				break;
+			}
+			case SDMMC_SPEED_MODE_DEFAULT: {
+				/* Switch to default Speed */
+				if (SD_SwitchSpeed(
+					hsd, SDMMC_SDR12_SWITCH_PATTERN) !=
+				    HAL_SD_ERROR_NONE) {
+					hsd->ErrorCode |=
+					    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+					status = HAL_ERROR;
+				}
+
+				break;
+			}
+			case SDMMC_SPEED_MODE_ULTRA: /*not valid without
+							transceiver*/
+			default:
+				hsd->ErrorCode |= HAL_SD_ERROR_PARAM;
+				status = HAL_ERROR;
+				break;
+		}
+	}
+#else
+	switch (SpeedMode) {
 		case SDMMC_SPEED_MODE_AUTO: {
 			if ((hsd->SdCard.CardSpeed == CARD_ULTRA_HIGH_SPEED) ||
 			    (hsd->SdCard.CardSpeed == CARD_HIGH_SPEED) ||
@@ -2664,58 +2746,6 @@ HAL_StatusTypeDef HAL_SD_ConfigSpeedBusOperation(SD_HandleTypeDef *hsd,
 			hsd->ErrorCode |= HAL_SD_ERROR_PARAM;
 			status = HAL_ERROR;
 			break;
-		}
-	}
-#else
-	switch (SpeedMode) {
-	case SDMMC_SPEED_MODE_AUTO: {
-		if ((hsd->SdCard.CardSpeed == CARD_ULTRA_HIGH_SPEED) ||
-		    (hsd->SdCard.CardSpeed == CARD_HIGH_SPEED) ||
-		    (hsd->SdCard.CardType == CARD_SDHC_SDXC)) {
-			/* Enable High Speed */
-			if (SD_SwitchSpeed(hsd, SDMMC_SDR25_SWITCH_PATTERN) !=
-			    HAL_SD_ERROR_NONE) {
-				hsd->ErrorCode |=
-				    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
-				status = HAL_ERROR;
-			}
-		} else {
-			/*Nothing to do, Use defaultSpeed */
-		}
-		break;
-	}
-	case SDMMC_SPEED_MODE_HIGH: {
-		if ((hsd->SdCard.CardSpeed == CARD_ULTRA_HIGH_SPEED) ||
-		    (hsd->SdCard.CardSpeed == CARD_HIGH_SPEED) ||
-		    (hsd->SdCard.CardType == CARD_SDHC_SDXC)) {
-			/* Enable High Speed */
-			if (SD_SwitchSpeed(hsd, SDMMC_SDR25_SWITCH_PATTERN) !=
-			    HAL_SD_ERROR_NONE) {
-				hsd->ErrorCode |=
-				    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
-				status = HAL_ERROR;
-			}
-		} else {
-			hsd->ErrorCode |= HAL_SD_ERROR_UNSUPPORTED_FEATURE;
-			status = HAL_ERROR;
-		}
-		break;
-	}
-	case SDMMC_SPEED_MODE_DEFAULT: {
-		/* Switch to default Speed */
-		if (SD_SwitchSpeed(hsd, SDMMC_SDR12_SWITCH_PATTERN) !=
-		    HAL_SD_ERROR_NONE) {
-			hsd->ErrorCode |= HAL_SD_ERROR_UNSUPPORTED_FEATURE;
-			status = HAL_ERROR;
-		}
-
-		break;
-	}
-	case SDMMC_SPEED_MODE_ULTRA: /*not valid without transceiver*/
-	default:
-		hsd->ErrorCode |= HAL_SD_ERROR_PARAM;
-		status = HAL_ERROR;
-		break;
 	}
 #endif /* USE_SD_TRANSCEIVER */
 

@@ -2081,61 +2081,61 @@ HAL_LPTIM_RegisterCallback(LPTIM_HandleTypeDef *hlptim,
 
 	if (hlptim->State == HAL_LPTIM_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_LPTIM_MSPINIT_CB_ID:
-			hlptim->MspInitCallback = pCallback;
-			break;
+			case HAL_LPTIM_MSPINIT_CB_ID:
+				hlptim->MspInitCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_MSPDEINIT_CB_ID:
-			hlptim->MspDeInitCallback = pCallback;
-			break;
+			case HAL_LPTIM_MSPDEINIT_CB_ID:
+				hlptim->MspDeInitCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_COMPARE_MATCH_CB_ID:
-			hlptim->CompareMatchCallback = pCallback;
-			break;
+			case HAL_LPTIM_COMPARE_MATCH_CB_ID:
+				hlptim->CompareMatchCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_AUTORELOAD_MATCH_CB_ID:
-			hlptim->AutoReloadMatchCallback = pCallback;
-			break;
+			case HAL_LPTIM_AUTORELOAD_MATCH_CB_ID:
+				hlptim->AutoReloadMatchCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_TRIGGER_CB_ID:
-			hlptim->TriggerCallback = pCallback;
-			break;
+			case HAL_LPTIM_TRIGGER_CB_ID:
+				hlptim->TriggerCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_COMPARE_WRITE_CB_ID:
-			hlptim->CompareWriteCallback = pCallback;
-			break;
+			case HAL_LPTIM_COMPARE_WRITE_CB_ID:
+				hlptim->CompareWriteCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_AUTORELOAD_WRITE_CB_ID:
-			hlptim->AutoReloadWriteCallback = pCallback;
-			break;
+			case HAL_LPTIM_AUTORELOAD_WRITE_CB_ID:
+				hlptim->AutoReloadWriteCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_DIRECTION_UP_CB_ID:
-			hlptim->DirectionUpCallback = pCallback;
-			break;
+			case HAL_LPTIM_DIRECTION_UP_CB_ID:
+				hlptim->DirectionUpCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_DIRECTION_DOWN_CB_ID:
-			hlptim->DirectionDownCallback = pCallback;
-			break;
+			case HAL_LPTIM_DIRECTION_DOWN_CB_ID:
+				hlptim->DirectionDownCallback = pCallback;
+				break;
 
-		default:
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hlptim->State == HAL_LPTIM_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_LPTIM_MSPINIT_CB_ID:
-			hlptim->MspInitCallback = pCallback;
-			break;
+			case HAL_LPTIM_MSPINIT_CB_ID:
+				hlptim->MspInitCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_MSPDEINIT_CB_ID:
-			hlptim->MspDeInitCallback = pCallback;
-			break;
+			case HAL_LPTIM_MSPDEINIT_CB_ID:
+				hlptim->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Return error status */
@@ -2178,82 +2178,87 @@ HAL_LPTIM_UnRegisterCallback(LPTIM_HandleTypeDef *hlptim,
 
 	if (hlptim->State == HAL_LPTIM_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_LPTIM_MSPINIT_CB_ID:
-			/* Legacy weak MspInit Callback */
-			hlptim->MspInitCallback = HAL_LPTIM_MspInit;
-			break;
+			case HAL_LPTIM_MSPINIT_CB_ID:
+				/* Legacy weak MspInit Callback */
+				hlptim->MspInitCallback = HAL_LPTIM_MspInit;
+				break;
 
-		case HAL_LPTIM_MSPDEINIT_CB_ID:
-			/* Legacy weak Msp DeInit Callback */
-			hlptim->MspDeInitCallback = HAL_LPTIM_MspDeInit;
-			break;
+			case HAL_LPTIM_MSPDEINIT_CB_ID:
+				/* Legacy weak Msp DeInit Callback */
+				hlptim->MspDeInitCallback = HAL_LPTIM_MspDeInit;
+				break;
 
-		case HAL_LPTIM_COMPARE_MATCH_CB_ID:
-			/* Legacy weak Compare match Callback */
-			hlptim->CompareMatchCallback =
-			    HAL_LPTIM_CompareMatchCallback;
-			break;
+			case HAL_LPTIM_COMPARE_MATCH_CB_ID:
+				/* Legacy weak Compare match Callback */
+				hlptim->CompareMatchCallback =
+				    HAL_LPTIM_CompareMatchCallback;
+				break;
 
-		case HAL_LPTIM_AUTORELOAD_MATCH_CB_ID:
-			/* Legacy weak Auto-reload match Callback */
-			hlptim->AutoReloadMatchCallback =
-			    HAL_LPTIM_AutoReloadMatchCallback;
-			break;
+			case HAL_LPTIM_AUTORELOAD_MATCH_CB_ID:
+				/* Legacy weak Auto-reload match Callback */
+				hlptim->AutoReloadMatchCallback =
+				    HAL_LPTIM_AutoReloadMatchCallback;
+				break;
 
-		case HAL_LPTIM_TRIGGER_CB_ID:
-			/* Legacy weak External trigger event detection Callback
-			 */
-			hlptim->TriggerCallback = HAL_LPTIM_TriggerCallback;
-			break;
+			case HAL_LPTIM_TRIGGER_CB_ID:
+				/* Legacy weak External trigger event detection
+				 * Callback
+				 */
+				hlptim->TriggerCallback =
+				    HAL_LPTIM_TriggerCallback;
+				break;
 
-		case HAL_LPTIM_COMPARE_WRITE_CB_ID:
-			/* Legacy weak Compare register write complete Callback
-			 */
-			hlptim->CompareWriteCallback =
-			    HAL_LPTIM_CompareWriteCallback;
-			break;
+			case HAL_LPTIM_COMPARE_WRITE_CB_ID:
+				/* Legacy weak Compare register write complete
+				 * Callback
+				 */
+				hlptim->CompareWriteCallback =
+				    HAL_LPTIM_CompareWriteCallback;
+				break;
 
-		case HAL_LPTIM_AUTORELOAD_WRITE_CB_ID:
-			/* Legacy weak Auto-reload register write complete
-			 * Callback */
-			hlptim->AutoReloadWriteCallback =
-			    HAL_LPTIM_AutoReloadWriteCallback;
-			break;
+			case HAL_LPTIM_AUTORELOAD_WRITE_CB_ID:
+				/* Legacy weak Auto-reload register write
+				 * complete Callback */
+				hlptim->AutoReloadWriteCallback =
+				    HAL_LPTIM_AutoReloadWriteCallback;
+				break;
 
-		case HAL_LPTIM_DIRECTION_UP_CB_ID:
-			/* Legacy weak Up-counting direction change Callback */
-			hlptim->DirectionUpCallback =
-			    HAL_LPTIM_DirectionUpCallback;
-			break;
+			case HAL_LPTIM_DIRECTION_UP_CB_ID:
+				/* Legacy weak Up-counting direction change
+				 * Callback */
+				hlptim->DirectionUpCallback =
+				    HAL_LPTIM_DirectionUpCallback;
+				break;
 
-		case HAL_LPTIM_DIRECTION_DOWN_CB_ID:
-			/* Legacy weak Down-counting direction change Callback
-			 */
-			hlptim->DirectionDownCallback =
-			    HAL_LPTIM_DirectionDownCallback;
-			break;
+			case HAL_LPTIM_DIRECTION_DOWN_CB_ID:
+				/* Legacy weak Down-counting direction change
+				 * Callback
+				 */
+				hlptim->DirectionDownCallback =
+				    HAL_LPTIM_DirectionDownCallback;
+				break;
 
-		default:
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hlptim->State == HAL_LPTIM_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_LPTIM_MSPINIT_CB_ID:
-			/* Legacy weak MspInit Callback */
-			hlptim->MspInitCallback = HAL_LPTIM_MspInit;
-			break;
+			case HAL_LPTIM_MSPINIT_CB_ID:
+				/* Legacy weak MspInit Callback */
+				hlptim->MspInitCallback = HAL_LPTIM_MspInit;
+				break;
 
-		case HAL_LPTIM_MSPDEINIT_CB_ID:
-			/* Legacy weak Msp DeInit Callback */
-			hlptim->MspDeInitCallback = HAL_LPTIM_MspDeInit;
-			break;
+			case HAL_LPTIM_MSPDEINIT_CB_ID:
+				/* Legacy weak Msp DeInit Callback */
+				hlptim->MspDeInitCallback = HAL_LPTIM_MspDeInit;
+				break;
 
-		default:
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Return error status */
@@ -2374,11 +2379,11 @@ void LPTIM_Disable(LPTIM_HandleTypeDef *hlptim)
 	/*********** Save LPTIM Config ***********/
 	/* Save LPTIM source clock */
 	switch ((uint32_t)hlptim->Instance) {
-	case LPTIM1_BASE:
-		tmpclksource = __HAL_RCC_GET_LPTIM1_SOURCE();
-		break;
-	default:
-		break;
+		case LPTIM1_BASE:
+			tmpclksource = __HAL_RCC_GET_LPTIM1_SOURCE();
+			break;
+		default:
+			break;
 	}
 
 	/* Save LPTIM configuration registers */
@@ -2390,23 +2395,24 @@ void LPTIM_Disable(LPTIM_HandleTypeDef *hlptim)
 
 	/*********** Reset LPTIM ***********/
 	switch ((uint32_t)hlptim->Instance) {
-	case LPTIM1_BASE:
-		__HAL_RCC_LPTIM1_FORCE_RESET();
-		__HAL_RCC_LPTIM1_RELEASE_RESET();
-		break;
-	default:
-		break;
+		case LPTIM1_BASE:
+			__HAL_RCC_LPTIM1_FORCE_RESET();
+			__HAL_RCC_LPTIM1_RELEASE_RESET();
+			break;
+		default:
+			break;
 	}
 
 	/*********** Restore LPTIM Config ***********/
 	if ((tmpCMP != 0UL) || (tmpARR != 0UL)) {
 		/* Force LPTIM source kernel clock from APB */
 		switch ((uint32_t)hlptim->Instance) {
-		case LPTIM1_BASE:
-			__HAL_RCC_LPTIM1_CONFIG(RCC_LPTIM1CLKSOURCE_PCLK1);
-			break;
-		default:
-			break;
+			case LPTIM1_BASE:
+				__HAL_RCC_LPTIM1_CONFIG(
+				    RCC_LPTIM1CLKSOURCE_PCLK1);
+				break;
+			default:
+				break;
 		}
 
 		if (tmpCMP != 0UL) {
@@ -2442,11 +2448,11 @@ void LPTIM_Disable(LPTIM_HandleTypeDef *hlptim)
 
 		/* Restore LPTIM source kernel clock */
 		switch ((uint32_t)hlptim->Instance) {
-		case LPTIM1_BASE:
-			__HAL_RCC_LPTIM1_CONFIG(tmpclksource);
-			break;
-		default:
-			break;
+			case LPTIM1_BASE:
+				__HAL_RCC_LPTIM1_CONFIG(tmpclksource);
+				break;
+			default:
+				break;
 		}
 	}
 

@@ -273,21 +273,21 @@ HAL_StatusTypeDef FMC_NORSRAM_Init(FMC_NORSRAM_TypeDef *Device,
 
 		/* Enable PSRAM chip select counter for the bank */
 		switch (Init->NSBank) {
-		case FMC_NORSRAM_BANK1:
-			SET_BIT(Device->PCSCNTR, FMC_PCSCNTR_CNTB1EN);
-			break;
+			case FMC_NORSRAM_BANK1:
+				SET_BIT(Device->PCSCNTR, FMC_PCSCNTR_CNTB1EN);
+				break;
 
-		case FMC_NORSRAM_BANK2:
-			SET_BIT(Device->PCSCNTR, FMC_PCSCNTR_CNTB2EN);
-			break;
+			case FMC_NORSRAM_BANK2:
+				SET_BIT(Device->PCSCNTR, FMC_PCSCNTR_CNTB2EN);
+				break;
 
-		case FMC_NORSRAM_BANK3:
-			SET_BIT(Device->PCSCNTR, FMC_PCSCNTR_CNTB3EN);
-			break;
+			case FMC_NORSRAM_BANK3:
+				SET_BIT(Device->PCSCNTR, FMC_PCSCNTR_CNTB3EN);
+				break;
 
-		default:
-			SET_BIT(Device->PCSCNTR, FMC_PCSCNTR_CNTB4EN);
-			break;
+			default:
+				SET_BIT(Device->PCSCNTR, FMC_PCSCNTR_CNTB4EN);
+				break;
 		}
 	}
 
@@ -328,21 +328,21 @@ HAL_StatusTypeDef FMC_NORSRAM_DeInit(FMC_NORSRAM_TypeDef *Device,
 
 	/* De-initialize PSRAM chip select counter */
 	switch (Bank) {
-	case FMC_NORSRAM_BANK1:
-		CLEAR_BIT(Device->PCSCNTR, FMC_PCSCNTR_CNTB1EN);
-		break;
+		case FMC_NORSRAM_BANK1:
+			CLEAR_BIT(Device->PCSCNTR, FMC_PCSCNTR_CNTB1EN);
+			break;
 
-	case FMC_NORSRAM_BANK2:
-		CLEAR_BIT(Device->PCSCNTR, FMC_PCSCNTR_CNTB2EN);
-		break;
+		case FMC_NORSRAM_BANK2:
+			CLEAR_BIT(Device->PCSCNTR, FMC_PCSCNTR_CNTB2EN);
+			break;
 
-	case FMC_NORSRAM_BANK3:
-		CLEAR_BIT(Device->PCSCNTR, FMC_PCSCNTR_CNTB3EN);
-		break;
+		case FMC_NORSRAM_BANK3:
+			CLEAR_BIT(Device->PCSCNTR, FMC_PCSCNTR_CNTB3EN);
+			break;
 
-	default:
-		CLEAR_BIT(Device->PCSCNTR, FMC_PCSCNTR_CNTB4EN);
-		break;
+		default:
+			CLEAR_BIT(Device->PCSCNTR, FMC_PCSCNTR_CNTB4EN);
+			break;
 	}
 
 	return HAL_OK;

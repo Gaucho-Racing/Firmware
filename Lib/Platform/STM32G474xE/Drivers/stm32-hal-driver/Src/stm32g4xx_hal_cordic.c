@@ -388,47 +388,49 @@ HAL_CORDIC_RegisterCallback(CORDIC_HandleTypeDef *hcordic,
 
 	if (hcordic->State == HAL_CORDIC_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_CORDIC_ERROR_CB_ID:
-			hcordic->ErrorCallback = pCallback;
-			break;
+			case HAL_CORDIC_ERROR_CB_ID:
+				hcordic->ErrorCallback = pCallback;
+				break;
 
-		case HAL_CORDIC_CALCULATE_CPLT_CB_ID:
-			hcordic->CalculateCpltCallback = pCallback;
-			break;
+			case HAL_CORDIC_CALCULATE_CPLT_CB_ID:
+				hcordic->CalculateCpltCallback = pCallback;
+				break;
 
-		case HAL_CORDIC_MSPINIT_CB_ID:
-			hcordic->MspInitCallback = pCallback;
-			break;
+			case HAL_CORDIC_MSPINIT_CB_ID:
+				hcordic->MspInitCallback = pCallback;
+				break;
 
-		case HAL_CORDIC_MSPDEINIT_CB_ID:
-			hcordic->MspDeInitCallback = pCallback;
-			break;
+			case HAL_CORDIC_MSPDEINIT_CB_ID:
+				hcordic->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hcordic->ErrorCode |= HAL_CORDIC_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hcordic->ErrorCode |=
+				    HAL_CORDIC_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hcordic->State == HAL_CORDIC_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_CORDIC_MSPINIT_CB_ID:
-			hcordic->MspInitCallback = pCallback;
-			break;
+			case HAL_CORDIC_MSPINIT_CB_ID:
+				hcordic->MspInitCallback = pCallback;
+				break;
 
-		case HAL_CORDIC_MSPDEINIT_CB_ID:
-			hcordic->MspDeInitCallback = pCallback;
-			break;
+			case HAL_CORDIC_MSPDEINIT_CB_ID:
+				hcordic->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hcordic->ErrorCode |= HAL_CORDIC_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hcordic->ErrorCode |=
+				    HAL_CORDIC_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -465,48 +467,53 @@ HAL_CORDIC_UnRegisterCallback(CORDIC_HandleTypeDef *hcordic,
 
 	if (hcordic->State == HAL_CORDIC_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_CORDIC_ERROR_CB_ID:
-			hcordic->ErrorCallback = HAL_CORDIC_ErrorCallback;
-			break;
+			case HAL_CORDIC_ERROR_CB_ID:
+				hcordic->ErrorCallback =
+				    HAL_CORDIC_ErrorCallback;
+				break;
 
-		case HAL_CORDIC_CALCULATE_CPLT_CB_ID:
-			hcordic->CalculateCpltCallback =
-			    HAL_CORDIC_CalculateCpltCallback;
-			break;
+			case HAL_CORDIC_CALCULATE_CPLT_CB_ID:
+				hcordic->CalculateCpltCallback =
+				    HAL_CORDIC_CalculateCpltCallback;
+				break;
 
-		case HAL_CORDIC_MSPINIT_CB_ID:
-			hcordic->MspInitCallback = HAL_CORDIC_MspInit;
-			break;
+			case HAL_CORDIC_MSPINIT_CB_ID:
+				hcordic->MspInitCallback = HAL_CORDIC_MspInit;
+				break;
 
-		case HAL_CORDIC_MSPDEINIT_CB_ID:
-			hcordic->MspDeInitCallback = HAL_CORDIC_MspDeInit;
-			break;
+			case HAL_CORDIC_MSPDEINIT_CB_ID:
+				hcordic->MspDeInitCallback =
+				    HAL_CORDIC_MspDeInit;
+				break;
 
-		default:
-			/* Update the error code */
-			hcordic->ErrorCode |= HAL_CORDIC_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hcordic->ErrorCode |=
+				    HAL_CORDIC_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hcordic->State == HAL_CORDIC_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_CORDIC_MSPINIT_CB_ID:
-			hcordic->MspInitCallback = HAL_CORDIC_MspInit;
-			break;
+			case HAL_CORDIC_MSPINIT_CB_ID:
+				hcordic->MspInitCallback = HAL_CORDIC_MspInit;
+				break;
 
-		case HAL_CORDIC_MSPDEINIT_CB_ID:
-			hcordic->MspDeInitCallback = HAL_CORDIC_MspDeInit;
-			break;
+			case HAL_CORDIC_MSPDEINIT_CB_ID:
+				hcordic->MspDeInitCallback =
+				    HAL_CORDIC_MspDeInit;
+				break;
 
-		default:
-			/* Update the error code */
-			hcordic->ErrorCode |= HAL_CORDIC_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hcordic->ErrorCode |=
+				    HAL_CORDIC_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */

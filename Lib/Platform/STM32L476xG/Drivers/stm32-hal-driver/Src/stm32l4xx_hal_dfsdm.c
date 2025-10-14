@@ -622,36 +622,41 @@ HAL_StatusTypeDef HAL_DFSDM_Channel_RegisterCallback(
 	} else {
 		if (HAL_DFSDM_CHANNEL_STATE_READY == hdfsdm_channel->State) {
 			switch (CallbackID) {
-			case HAL_DFSDM_CHANNEL_CKAB_CB_ID:
-				hdfsdm_channel->CkabCallback = pCallback;
-				break;
-			case HAL_DFSDM_CHANNEL_SCD_CB_ID:
-				hdfsdm_channel->ScdCallback = pCallback;
-				break;
-			case HAL_DFSDM_CHANNEL_MSPINIT_CB_ID:
-				hdfsdm_channel->MspInitCallback = pCallback;
-				break;
-			case HAL_DFSDM_CHANNEL_MSPDEINIT_CB_ID:
-				hdfsdm_channel->MspDeInitCallback = pCallback;
-				break;
-			default:
-				/* update return status */
-				status = HAL_ERROR;
-				break;
+				case HAL_DFSDM_CHANNEL_CKAB_CB_ID:
+					hdfsdm_channel->CkabCallback =
+					    pCallback;
+					break;
+				case HAL_DFSDM_CHANNEL_SCD_CB_ID:
+					hdfsdm_channel->ScdCallback = pCallback;
+					break;
+				case HAL_DFSDM_CHANNEL_MSPINIT_CB_ID:
+					hdfsdm_channel->MspInitCallback =
+					    pCallback;
+					break;
+				case HAL_DFSDM_CHANNEL_MSPDEINIT_CB_ID:
+					hdfsdm_channel->MspDeInitCallback =
+					    pCallback;
+					break;
+				default:
+					/* update return status */
+					status = HAL_ERROR;
+					break;
 			}
 		} else if (HAL_DFSDM_CHANNEL_STATE_RESET ==
 			   hdfsdm_channel->State) {
 			switch (CallbackID) {
-			case HAL_DFSDM_CHANNEL_MSPINIT_CB_ID:
-				hdfsdm_channel->MspInitCallback = pCallback;
-				break;
-			case HAL_DFSDM_CHANNEL_MSPDEINIT_CB_ID:
-				hdfsdm_channel->MspDeInitCallback = pCallback;
-				break;
-			default:
-				/* update return status */
-				status = HAL_ERROR;
-				break;
+				case HAL_DFSDM_CHANNEL_MSPINIT_CB_ID:
+					hdfsdm_channel->MspInitCallback =
+					    pCallback;
+					break;
+				case HAL_DFSDM_CHANNEL_MSPDEINIT_CB_ID:
+					hdfsdm_channel->MspDeInitCallback =
+					    pCallback;
+					break;
+				default:
+					/* update return status */
+					status = HAL_ERROR;
+					break;
 			}
 		} else {
 			/* update return status */
@@ -684,41 +689,41 @@ HAL_StatusTypeDef HAL_DFSDM_Channel_UnRegisterCallback(
 
 	if (HAL_DFSDM_CHANNEL_STATE_READY == hdfsdm_channel->State) {
 		switch (CallbackID) {
-		case HAL_DFSDM_CHANNEL_CKAB_CB_ID:
-			hdfsdm_channel->CkabCallback =
-			    HAL_DFSDM_ChannelCkabCallback;
-			break;
-		case HAL_DFSDM_CHANNEL_SCD_CB_ID:
-			hdfsdm_channel->ScdCallback =
-			    HAL_DFSDM_ChannelScdCallback;
-			break;
-		case HAL_DFSDM_CHANNEL_MSPINIT_CB_ID:
-			hdfsdm_channel->MspInitCallback =
-			    HAL_DFSDM_ChannelMspInit;
-			break;
-		case HAL_DFSDM_CHANNEL_MSPDEINIT_CB_ID:
-			hdfsdm_channel->MspDeInitCallback =
-			    HAL_DFSDM_ChannelMspDeInit;
-			break;
-		default:
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_DFSDM_CHANNEL_CKAB_CB_ID:
+				hdfsdm_channel->CkabCallback =
+				    HAL_DFSDM_ChannelCkabCallback;
+				break;
+			case HAL_DFSDM_CHANNEL_SCD_CB_ID:
+				hdfsdm_channel->ScdCallback =
+				    HAL_DFSDM_ChannelScdCallback;
+				break;
+			case HAL_DFSDM_CHANNEL_MSPINIT_CB_ID:
+				hdfsdm_channel->MspInitCallback =
+				    HAL_DFSDM_ChannelMspInit;
+				break;
+			case HAL_DFSDM_CHANNEL_MSPDEINIT_CB_ID:
+				hdfsdm_channel->MspDeInitCallback =
+				    HAL_DFSDM_ChannelMspDeInit;
+				break;
+			default:
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_DFSDM_CHANNEL_STATE_RESET == hdfsdm_channel->State) {
 		switch (CallbackID) {
-		case HAL_DFSDM_CHANNEL_MSPINIT_CB_ID:
-			hdfsdm_channel->MspInitCallback =
-			    HAL_DFSDM_ChannelMspInit;
-			break;
-		case HAL_DFSDM_CHANNEL_MSPDEINIT_CB_ID:
-			hdfsdm_channel->MspDeInitCallback =
-			    HAL_DFSDM_ChannelMspDeInit;
-			break;
-		default:
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_DFSDM_CHANNEL_MSPINIT_CB_ID:
+				hdfsdm_channel->MspInitCallback =
+				    HAL_DFSDM_ChannelMspInit;
+				break;
+			case HAL_DFSDM_CHANNEL_MSPDEINIT_CB_ID:
+				hdfsdm_channel->MspDeInitCallback =
+				    HAL_DFSDM_ChannelMspDeInit;
+				break;
+			default:
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* update return status */
@@ -1561,53 +1566,60 @@ HAL_DFSDM_Filter_RegisterCallback(DFSDM_Filter_HandleTypeDef *hdfsdm_filter,
 	} else {
 		if (HAL_DFSDM_FILTER_STATE_READY == hdfsdm_filter->State) {
 			switch (CallbackID) {
-			case HAL_DFSDM_FILTER_REGCONV_COMPLETE_CB_ID:
-				hdfsdm_filter->RegConvCpltCallback = pCallback;
-				break;
-			case HAL_DFSDM_FILTER_REGCONV_HALFCOMPLETE_CB_ID:
-				hdfsdm_filter->RegConvHalfCpltCallback =
-				    pCallback;
-				break;
-			case HAL_DFSDM_FILTER_INJCONV_COMPLETE_CB_ID:
-				hdfsdm_filter->InjConvCpltCallback = pCallback;
-				break;
-			case HAL_DFSDM_FILTER_INJCONV_HALFCOMPLETE_CB_ID:
-				hdfsdm_filter->InjConvHalfCpltCallback =
-				    pCallback;
-				break;
-			case HAL_DFSDM_FILTER_ERROR_CB_ID:
-				hdfsdm_filter->ErrorCallback = pCallback;
-				break;
-			case HAL_DFSDM_FILTER_MSPINIT_CB_ID:
-				hdfsdm_filter->MspInitCallback = pCallback;
-				break;
-			case HAL_DFSDM_FILTER_MSPDEINIT_CB_ID:
-				hdfsdm_filter->MspDeInitCallback = pCallback;
-				break;
-			default:
-				/* update the error code */
-				hdfsdm_filter->ErrorCode =
-				    DFSDM_FILTER_ERROR_INVALID_CALLBACK;
-				/* update return status */
-				status = HAL_ERROR;
-				break;
+				case HAL_DFSDM_FILTER_REGCONV_COMPLETE_CB_ID:
+					hdfsdm_filter->RegConvCpltCallback =
+					    pCallback;
+					break;
+				case HAL_DFSDM_FILTER_REGCONV_HALFCOMPLETE_CB_ID:
+					hdfsdm_filter->RegConvHalfCpltCallback =
+					    pCallback;
+					break;
+				case HAL_DFSDM_FILTER_INJCONV_COMPLETE_CB_ID:
+					hdfsdm_filter->InjConvCpltCallback =
+					    pCallback;
+					break;
+				case HAL_DFSDM_FILTER_INJCONV_HALFCOMPLETE_CB_ID:
+					hdfsdm_filter->InjConvHalfCpltCallback =
+					    pCallback;
+					break;
+				case HAL_DFSDM_FILTER_ERROR_CB_ID:
+					hdfsdm_filter->ErrorCallback =
+					    pCallback;
+					break;
+				case HAL_DFSDM_FILTER_MSPINIT_CB_ID:
+					hdfsdm_filter->MspInitCallback =
+					    pCallback;
+					break;
+				case HAL_DFSDM_FILTER_MSPDEINIT_CB_ID:
+					hdfsdm_filter->MspDeInitCallback =
+					    pCallback;
+					break;
+				default:
+					/* update the error code */
+					hdfsdm_filter->ErrorCode =
+					    DFSDM_FILTER_ERROR_INVALID_CALLBACK;
+					/* update return status */
+					status = HAL_ERROR;
+					break;
 			}
 		} else if (HAL_DFSDM_FILTER_STATE_RESET ==
 			   hdfsdm_filter->State) {
 			switch (CallbackID) {
-			case HAL_DFSDM_FILTER_MSPINIT_CB_ID:
-				hdfsdm_filter->MspInitCallback = pCallback;
-				break;
-			case HAL_DFSDM_FILTER_MSPDEINIT_CB_ID:
-				hdfsdm_filter->MspDeInitCallback = pCallback;
-				break;
-			default:
-				/* update the error code */
-				hdfsdm_filter->ErrorCode =
-				    DFSDM_FILTER_ERROR_INVALID_CALLBACK;
-				/* update return status */
-				status = HAL_ERROR;
-				break;
+				case HAL_DFSDM_FILTER_MSPINIT_CB_ID:
+					hdfsdm_filter->MspInitCallback =
+					    pCallback;
+					break;
+				case HAL_DFSDM_FILTER_MSPDEINIT_CB_ID:
+					hdfsdm_filter->MspDeInitCallback =
+					    pCallback;
+					break;
+				default:
+					/* update the error code */
+					hdfsdm_filter->ErrorCode =
+					    DFSDM_FILTER_ERROR_INVALID_CALLBACK;
+					/* update return status */
+					status = HAL_ERROR;
+					break;
 			}
 		} else {
 			/* update the error code */
@@ -1647,59 +1659,59 @@ HAL_StatusTypeDef HAL_DFSDM_Filter_UnRegisterCallback(
 
 	if (HAL_DFSDM_FILTER_STATE_READY == hdfsdm_filter->State) {
 		switch (CallbackID) {
-		case HAL_DFSDM_FILTER_REGCONV_COMPLETE_CB_ID:
-			hdfsdm_filter->RegConvCpltCallback =
-			    HAL_DFSDM_FilterRegConvCpltCallback;
-			break;
-		case HAL_DFSDM_FILTER_REGCONV_HALFCOMPLETE_CB_ID:
-			hdfsdm_filter->RegConvHalfCpltCallback =
-			    HAL_DFSDM_FilterRegConvHalfCpltCallback;
-			break;
-		case HAL_DFSDM_FILTER_INJCONV_COMPLETE_CB_ID:
-			hdfsdm_filter->InjConvCpltCallback =
-			    HAL_DFSDM_FilterInjConvCpltCallback;
-			break;
-		case HAL_DFSDM_FILTER_INJCONV_HALFCOMPLETE_CB_ID:
-			hdfsdm_filter->InjConvHalfCpltCallback =
-			    HAL_DFSDM_FilterInjConvHalfCpltCallback;
-			break;
-		case HAL_DFSDM_FILTER_ERROR_CB_ID:
-			hdfsdm_filter->ErrorCallback =
-			    HAL_DFSDM_FilterErrorCallback;
-			break;
-		case HAL_DFSDM_FILTER_MSPINIT_CB_ID:
-			hdfsdm_filter->MspInitCallback =
-			    HAL_DFSDM_FilterMspInit;
-			break;
-		case HAL_DFSDM_FILTER_MSPDEINIT_CB_ID:
-			hdfsdm_filter->MspDeInitCallback =
-			    HAL_DFSDM_FilterMspDeInit;
-			break;
-		default:
-			/* update the error code */
-			hdfsdm_filter->ErrorCode =
-			    DFSDM_FILTER_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_DFSDM_FILTER_REGCONV_COMPLETE_CB_ID:
+				hdfsdm_filter->RegConvCpltCallback =
+				    HAL_DFSDM_FilterRegConvCpltCallback;
+				break;
+			case HAL_DFSDM_FILTER_REGCONV_HALFCOMPLETE_CB_ID:
+				hdfsdm_filter->RegConvHalfCpltCallback =
+				    HAL_DFSDM_FilterRegConvHalfCpltCallback;
+				break;
+			case HAL_DFSDM_FILTER_INJCONV_COMPLETE_CB_ID:
+				hdfsdm_filter->InjConvCpltCallback =
+				    HAL_DFSDM_FilterInjConvCpltCallback;
+				break;
+			case HAL_DFSDM_FILTER_INJCONV_HALFCOMPLETE_CB_ID:
+				hdfsdm_filter->InjConvHalfCpltCallback =
+				    HAL_DFSDM_FilterInjConvHalfCpltCallback;
+				break;
+			case HAL_DFSDM_FILTER_ERROR_CB_ID:
+				hdfsdm_filter->ErrorCallback =
+				    HAL_DFSDM_FilterErrorCallback;
+				break;
+			case HAL_DFSDM_FILTER_MSPINIT_CB_ID:
+				hdfsdm_filter->MspInitCallback =
+				    HAL_DFSDM_FilterMspInit;
+				break;
+			case HAL_DFSDM_FILTER_MSPDEINIT_CB_ID:
+				hdfsdm_filter->MspDeInitCallback =
+				    HAL_DFSDM_FilterMspDeInit;
+				break;
+			default:
+				/* update the error code */
+				hdfsdm_filter->ErrorCode =
+				    DFSDM_FILTER_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_DFSDM_FILTER_STATE_RESET == hdfsdm_filter->State) {
 		switch (CallbackID) {
-		case HAL_DFSDM_FILTER_MSPINIT_CB_ID:
-			hdfsdm_filter->MspInitCallback =
-			    HAL_DFSDM_FilterMspInit;
-			break;
-		case HAL_DFSDM_FILTER_MSPDEINIT_CB_ID:
-			hdfsdm_filter->MspDeInitCallback =
-			    HAL_DFSDM_FilterMspDeInit;
-			break;
-		default:
-			/* update the error code */
-			hdfsdm_filter->ErrorCode =
-			    DFSDM_FILTER_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_DFSDM_FILTER_MSPINIT_CB_ID:
+				hdfsdm_filter->MspInitCallback =
+				    HAL_DFSDM_FilterMspInit;
+				break;
+			case HAL_DFSDM_FILTER_MSPDEINIT_CB_ID:
+				hdfsdm_filter->MspDeInitCallback =
+				    HAL_DFSDM_FilterMspDeInit;
+				break;
+			default:
+				/* update the error code */
+				hdfsdm_filter->ErrorCode =
+				    DFSDM_FILTER_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* update the error code */

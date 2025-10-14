@@ -1043,75 +1043,77 @@ HAL_StatusTypeDef HAL_ADC_RegisterCallback(ADC_HandleTypeDef *hadc,
 
 	if ((hadc->State & HAL_ADC_STATE_READY) != 0UL) {
 		switch (CallbackID) {
-		case HAL_ADC_CONVERSION_COMPLETE_CB_ID:
-			hadc->ConvCpltCallback = pCallback;
-			break;
+			case HAL_ADC_CONVERSION_COMPLETE_CB_ID:
+				hadc->ConvCpltCallback = pCallback;
+				break;
 
-		case HAL_ADC_CONVERSION_HALF_CB_ID:
-			hadc->ConvHalfCpltCallback = pCallback;
-			break;
+			case HAL_ADC_CONVERSION_HALF_CB_ID:
+				hadc->ConvHalfCpltCallback = pCallback;
+				break;
 
-		case HAL_ADC_LEVEL_OUT_OF_WINDOW_1_CB_ID:
-			hadc->LevelOutOfWindowCallback = pCallback;
-			break;
+			case HAL_ADC_LEVEL_OUT_OF_WINDOW_1_CB_ID:
+				hadc->LevelOutOfWindowCallback = pCallback;
+				break;
 
-		case HAL_ADC_ERROR_CB_ID:
-			hadc->ErrorCallback = pCallback;
-			break;
+			case HAL_ADC_ERROR_CB_ID:
+				hadc->ErrorCallback = pCallback;
+				break;
 
-		case HAL_ADC_INJ_CONVERSION_COMPLETE_CB_ID:
-			hadc->InjectedConvCpltCallback = pCallback;
-			break;
+			case HAL_ADC_INJ_CONVERSION_COMPLETE_CB_ID:
+				hadc->InjectedConvCpltCallback = pCallback;
+				break;
 
-		case HAL_ADC_INJ_QUEUE_OVEFLOW_CB_ID:
-			hadc->InjectedQueueOverflowCallback = pCallback;
-			break;
+			case HAL_ADC_INJ_QUEUE_OVEFLOW_CB_ID:
+				hadc->InjectedQueueOverflowCallback = pCallback;
+				break;
 
-		case HAL_ADC_LEVEL_OUT_OF_WINDOW_2_CB_ID:
-			hadc->LevelOutOfWindow2Callback = pCallback;
-			break;
+			case HAL_ADC_LEVEL_OUT_OF_WINDOW_2_CB_ID:
+				hadc->LevelOutOfWindow2Callback = pCallback;
+				break;
 
-		case HAL_ADC_LEVEL_OUT_OF_WINDOW_3_CB_ID:
-			hadc->LevelOutOfWindow3Callback = pCallback;
-			break;
+			case HAL_ADC_LEVEL_OUT_OF_WINDOW_3_CB_ID:
+				hadc->LevelOutOfWindow3Callback = pCallback;
+				break;
 
-		case HAL_ADC_END_OF_SAMPLING_CB_ID:
-			hadc->EndOfSamplingCallback = pCallback;
-			break;
+			case HAL_ADC_END_OF_SAMPLING_CB_ID:
+				hadc->EndOfSamplingCallback = pCallback;
+				break;
 
-		case HAL_ADC_MSPINIT_CB_ID:
-			hadc->MspInitCallback = pCallback;
-			break;
+			case HAL_ADC_MSPINIT_CB_ID:
+				hadc->MspInitCallback = pCallback;
+				break;
 
-		case HAL_ADC_MSPDEINIT_CB_ID:
-			hadc->MspDeInitCallback = pCallback;
-			break;
+			case HAL_ADC_MSPDEINIT_CB_ID:
+				hadc->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hadc->ErrorCode |= HAL_ADC_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hadc->ErrorCode |=
+				    HAL_ADC_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_ADC_STATE_RESET == hadc->State) {
 		switch (CallbackID) {
-		case HAL_ADC_MSPINIT_CB_ID:
-			hadc->MspInitCallback = pCallback;
-			break;
+			case HAL_ADC_MSPINIT_CB_ID:
+				hadc->MspInitCallback = pCallback;
+				break;
 
-		case HAL_ADC_MSPDEINIT_CB_ID:
-			hadc->MspDeInitCallback = pCallback;
-			break;
+			case HAL_ADC_MSPDEINIT_CB_ID:
+				hadc->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hadc->ErrorCode |= HAL_ADC_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hadc->ErrorCode |=
+				    HAL_ADC_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -1165,86 +1167,91 @@ HAL_ADC_UnRegisterCallback(ADC_HandleTypeDef *hadc,
 
 	if ((hadc->State & HAL_ADC_STATE_READY) != 0UL) {
 		switch (CallbackID) {
-		case HAL_ADC_CONVERSION_COMPLETE_CB_ID:
-			hadc->ConvCpltCallback = HAL_ADC_ConvCpltCallback;
-			break;
+			case HAL_ADC_CONVERSION_COMPLETE_CB_ID:
+				hadc->ConvCpltCallback =
+				    HAL_ADC_ConvCpltCallback;
+				break;
 
-		case HAL_ADC_CONVERSION_HALF_CB_ID:
-			hadc->ConvHalfCpltCallback =
-			    HAL_ADC_ConvHalfCpltCallback;
-			break;
+			case HAL_ADC_CONVERSION_HALF_CB_ID:
+				hadc->ConvHalfCpltCallback =
+				    HAL_ADC_ConvHalfCpltCallback;
+				break;
 
-		case HAL_ADC_LEVEL_OUT_OF_WINDOW_1_CB_ID:
-			hadc->LevelOutOfWindowCallback =
-			    HAL_ADC_LevelOutOfWindowCallback;
-			break;
+			case HAL_ADC_LEVEL_OUT_OF_WINDOW_1_CB_ID:
+				hadc->LevelOutOfWindowCallback =
+				    HAL_ADC_LevelOutOfWindowCallback;
+				break;
 
-		case HAL_ADC_ERROR_CB_ID:
-			hadc->ErrorCallback = HAL_ADC_ErrorCallback;
-			break;
+			case HAL_ADC_ERROR_CB_ID:
+				hadc->ErrorCallback = HAL_ADC_ErrorCallback;
+				break;
 
-		case HAL_ADC_INJ_CONVERSION_COMPLETE_CB_ID:
-			hadc->InjectedConvCpltCallback =
-			    HAL_ADCEx_InjectedConvCpltCallback;
-			break;
+			case HAL_ADC_INJ_CONVERSION_COMPLETE_CB_ID:
+				hadc->InjectedConvCpltCallback =
+				    HAL_ADCEx_InjectedConvCpltCallback;
+				break;
 
-		case HAL_ADC_INJ_QUEUE_OVEFLOW_CB_ID:
-			hadc->InjectedQueueOverflowCallback =
-			    HAL_ADCEx_InjectedQueueOverflowCallback;
-			break;
+			case HAL_ADC_INJ_QUEUE_OVEFLOW_CB_ID:
+				hadc->InjectedQueueOverflowCallback =
+				    HAL_ADCEx_InjectedQueueOverflowCallback;
+				break;
 
-		case HAL_ADC_LEVEL_OUT_OF_WINDOW_2_CB_ID:
-			hadc->LevelOutOfWindow2Callback =
-			    HAL_ADCEx_LevelOutOfWindow2Callback;
-			break;
+			case HAL_ADC_LEVEL_OUT_OF_WINDOW_2_CB_ID:
+				hadc->LevelOutOfWindow2Callback =
+				    HAL_ADCEx_LevelOutOfWindow2Callback;
+				break;
 
-		case HAL_ADC_LEVEL_OUT_OF_WINDOW_3_CB_ID:
-			hadc->LevelOutOfWindow3Callback =
-			    HAL_ADCEx_LevelOutOfWindow3Callback;
-			break;
+			case HAL_ADC_LEVEL_OUT_OF_WINDOW_3_CB_ID:
+				hadc->LevelOutOfWindow3Callback =
+				    HAL_ADCEx_LevelOutOfWindow3Callback;
+				break;
 
-		case HAL_ADC_END_OF_SAMPLING_CB_ID:
-			hadc->EndOfSamplingCallback =
-			    HAL_ADCEx_EndOfSamplingCallback;
-			break;
+			case HAL_ADC_END_OF_SAMPLING_CB_ID:
+				hadc->EndOfSamplingCallback =
+				    HAL_ADCEx_EndOfSamplingCallback;
+				break;
 
-		case HAL_ADC_MSPINIT_CB_ID:
-			hadc->MspInitCallback =
-			    HAL_ADC_MspInit; /* Legacy weak MspInit */
-			break;
+			case HAL_ADC_MSPINIT_CB_ID:
+				hadc->MspInitCallback =
+				    HAL_ADC_MspInit; /* Legacy weak MspInit */
+				break;
 
-		case HAL_ADC_MSPDEINIT_CB_ID:
-			hadc->MspDeInitCallback =
-			    HAL_ADC_MspDeInit; /* Legacy weak MspDeInit */
-			break;
+			case HAL_ADC_MSPDEINIT_CB_ID:
+				hadc->MspDeInitCallback =
+				    HAL_ADC_MspDeInit; /* Legacy weak MspDeInit
+							*/
+				break;
 
-		default:
-			/* Update the error code */
-			hadc->ErrorCode |= HAL_ADC_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hadc->ErrorCode |=
+				    HAL_ADC_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_ADC_STATE_RESET == hadc->State) {
 		switch (CallbackID) {
-		case HAL_ADC_MSPINIT_CB_ID:
-			hadc->MspInitCallback =
-			    HAL_ADC_MspInit; /* Legacy weak MspInit */
-			break;
+			case HAL_ADC_MSPINIT_CB_ID:
+				hadc->MspInitCallback =
+				    HAL_ADC_MspInit; /* Legacy weak MspInit */
+				break;
 
-		case HAL_ADC_MSPDEINIT_CB_ID:
-			hadc->MspDeInitCallback =
-			    HAL_ADC_MspDeInit; /* Legacy weak MspDeInit */
-			break;
+			case HAL_ADC_MSPDEINIT_CB_ID:
+				hadc->MspDeInitCallback =
+				    HAL_ADC_MspDeInit; /* Legacy weak MspDeInit
+							*/
+				break;
 
-		default:
-			/* Update the error code */
-			hadc->ErrorCode |= HAL_ADC_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hadc->ErrorCode |=
+				    HAL_ADC_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -1728,92 +1735,98 @@ HAL_StatusTypeDef HAL_ADC_PollForEvent(ADC_HandleTypeDef *hadc,
 	}
 
 	switch (EventType) {
-	/* End Of Sampling event */
-	case ADC_EOSMP_EVENT:
-		/* Set ADC state */
-		SET_BIT(hadc->State, HAL_ADC_STATE_REG_EOSMP);
-
-		/* Clear the End Of Sampling flag */
-		__HAL_ADC_CLEAR_FLAG(hadc, ADC_FLAG_EOSMP);
-
-		break;
-
-	/* Analog watchdog (level out of window) event */
-	/* Note: In case of several analog watchdog enabled, if needed to know
-	 */
-	/* which one triggered and on which ADCx, test ADC state of analog
-	 * watchdog */
-	/* flags HAL_ADC_STATE_AWD1/2/3 using function "HAL_ADC_GetState()". */
-	/* For example: */
-	/*  " if ((HAL_ADC_GetState(hadc1) & HAL_ADC_STATE_AWD1) != 0UL) " */
-	/*  " if ((HAL_ADC_GetState(hadc1) & HAL_ADC_STATE_AWD2) != 0UL) " */
-	/*  " if ((HAL_ADC_GetState(hadc1) & HAL_ADC_STATE_AWD3) != 0UL) " */
-
-	/* Check analog watchdog 1 flag */
-	case ADC_AWD_EVENT:
-		/* Set ADC state */
-		SET_BIT(hadc->State, HAL_ADC_STATE_AWD1);
-
-		/* Clear ADC analog watchdog flag */
-		__HAL_ADC_CLEAR_FLAG(hadc, ADC_FLAG_AWD1);
-
-		break;
-
-	/* Check analog watchdog 2 flag */
-	case ADC_AWD2_EVENT:
-		/* Set ADC state */
-		SET_BIT(hadc->State, HAL_ADC_STATE_AWD2);
-
-		/* Clear ADC analog watchdog flag */
-		__HAL_ADC_CLEAR_FLAG(hadc, ADC_FLAG_AWD2);
-
-		break;
-
-	/* Check analog watchdog 3 flag */
-	case ADC_AWD3_EVENT:
-		/* Set ADC state */
-		SET_BIT(hadc->State, HAL_ADC_STATE_AWD3);
-
-		/* Clear ADC analog watchdog flag */
-		__HAL_ADC_CLEAR_FLAG(hadc, ADC_FLAG_AWD3);
-
-		break;
-
-	/* Injected context queue overflow event */
-	case ADC_JQOVF_EVENT:
-		/* Set ADC state */
-		SET_BIT(hadc->State, HAL_ADC_STATE_INJ_JQOVF);
-
-		/* Set ADC error code to Injected context queue overflow */
-		SET_BIT(hadc->ErrorCode, HAL_ADC_ERROR_JQOVF);
-
-		/* Clear ADC Injected context queue overflow flag */
-		__HAL_ADC_CLEAR_FLAG(hadc, ADC_FLAG_JQOVF);
-
-		break;
-
-	/* Overrun event */
-	default: /* Case ADC_OVR_EVENT */
-		/* If overrun is set to overwrite previous data, overrun event
-		 * is not     */
-		/* considered as an error. */
-		/* (cf ref manual "Managing conversions without using the DMA
-		 * and without */
-		/* overrun ") */
-		if (hadc->Init.Overrun == ADC_OVR_DATA_PRESERVED) {
+		/* End Of Sampling event */
+		case ADC_EOSMP_EVENT:
 			/* Set ADC state */
-			SET_BIT(hadc->State, HAL_ADC_STATE_REG_OVR);
+			SET_BIT(hadc->State, HAL_ADC_STATE_REG_EOSMP);
 
-			/* Set ADC error code to overrun */
-			SET_BIT(hadc->ErrorCode, HAL_ADC_ERROR_OVR);
-		} else {
-			/* Clear ADC Overrun flag only if Overrun is set to
-			   ADC_OVR_DATA_OVERWRITTEN otherwise, data register is
-			   potentially overwritten by new converted data as soon
-			   as OVR is cleared. */
-			__HAL_ADC_CLEAR_FLAG(hadc, ADC_FLAG_OVR);
-		}
-		break;
+			/* Clear the End Of Sampling flag */
+			__HAL_ADC_CLEAR_FLAG(hadc, ADC_FLAG_EOSMP);
+
+			break;
+
+		/* Analog watchdog (level out of window) event */
+		/* Note: In case of several analog watchdog enabled, if needed
+		 * to know
+		 */
+		/* which one triggered and on which ADCx, test ADC state of
+		 * analog watchdog */
+		/* flags HAL_ADC_STATE_AWD1/2/3 using function
+		 * "HAL_ADC_GetState()". */
+		/* For example: */
+		/*  " if ((HAL_ADC_GetState(hadc1) & HAL_ADC_STATE_AWD1) != 0UL)
+		 * " */
+		/*  " if ((HAL_ADC_GetState(hadc1) & HAL_ADC_STATE_AWD2) != 0UL)
+		 * " */
+		/*  " if ((HAL_ADC_GetState(hadc1) & HAL_ADC_STATE_AWD3) != 0UL)
+		 * " */
+
+		/* Check analog watchdog 1 flag */
+		case ADC_AWD_EVENT:
+			/* Set ADC state */
+			SET_BIT(hadc->State, HAL_ADC_STATE_AWD1);
+
+			/* Clear ADC analog watchdog flag */
+			__HAL_ADC_CLEAR_FLAG(hadc, ADC_FLAG_AWD1);
+
+			break;
+
+		/* Check analog watchdog 2 flag */
+		case ADC_AWD2_EVENT:
+			/* Set ADC state */
+			SET_BIT(hadc->State, HAL_ADC_STATE_AWD2);
+
+			/* Clear ADC analog watchdog flag */
+			__HAL_ADC_CLEAR_FLAG(hadc, ADC_FLAG_AWD2);
+
+			break;
+
+		/* Check analog watchdog 3 flag */
+		case ADC_AWD3_EVENT:
+			/* Set ADC state */
+			SET_BIT(hadc->State, HAL_ADC_STATE_AWD3);
+
+			/* Clear ADC analog watchdog flag */
+			__HAL_ADC_CLEAR_FLAG(hadc, ADC_FLAG_AWD3);
+
+			break;
+
+		/* Injected context queue overflow event */
+		case ADC_JQOVF_EVENT:
+			/* Set ADC state */
+			SET_BIT(hadc->State, HAL_ADC_STATE_INJ_JQOVF);
+
+			/* Set ADC error code to Injected context queue overflow
+			 */
+			SET_BIT(hadc->ErrorCode, HAL_ADC_ERROR_JQOVF);
+
+			/* Clear ADC Injected context queue overflow flag */
+			__HAL_ADC_CLEAR_FLAG(hadc, ADC_FLAG_JQOVF);
+
+			break;
+
+		/* Overrun event */
+		default: /* Case ADC_OVR_EVENT */
+			/* If overrun is set to overwrite previous data, overrun
+			 * event is not     */
+			/* considered as an error. */
+			/* (cf ref manual "Managing conversions without using
+			 * the DMA and without */
+			/* overrun ") */
+			if (hadc->Init.Overrun == ADC_OVR_DATA_PRESERVED) {
+				/* Set ADC state */
+				SET_BIT(hadc->State, HAL_ADC_STATE_REG_OVR);
+
+				/* Set ADC error code to overrun */
+				SET_BIT(hadc->ErrorCode, HAL_ADC_ERROR_OVR);
+			} else {
+				/* Clear ADC Overrun flag only if Overrun is set
+				   to ADC_OVR_DATA_OVERWRITTEN otherwise, data
+				   register is potentially overwritten by new
+				   converted data as soon as OVR is cleared. */
+				__HAL_ADC_CLEAR_FLAG(hadc, ADC_FLAG_OVR);
+			}
+			break;
 	}
 
 	/* Return function status */
@@ -1926,13 +1939,13 @@ HAL_StatusTypeDef HAL_ADC_Start_IT(ADC_HandleTypeDef *hadc)
 
 			/* Enable ADC end of conversion interrupt */
 			switch (hadc->Init.EOCSelection) {
-			case ADC_EOC_SEQ_CONV:
-				__HAL_ADC_ENABLE_IT(hadc, ADC_IT_EOS);
-				break;
-			/* case ADC_EOC_SINGLE_CONV */
-			default:
-				__HAL_ADC_ENABLE_IT(hadc, ADC_IT_EOC);
-				break;
+				case ADC_EOC_SEQ_CONV:
+					__HAL_ADC_ENABLE_IT(hadc, ADC_IT_EOS);
+					break;
+				/* case ADC_EOC_SINGLE_CONV */
+				default:
+					__HAL_ADC_ENABLE_IT(hadc, ADC_IT_EOC);
+					break;
 			}
 
 			/* Enable ADC overrun interrupt */
@@ -1983,19 +1996,19 @@ HAL_StatusTypeDef HAL_ADC_Start_IT(ADC_HandleTypeDef *hadc)
 					 conversions when JAUTO is set with a
 					 single call to HAL_ADC_Start_IT() */
 					switch (hadc->Init.EOCSelection) {
-					case ADC_EOC_SEQ_CONV:
-						__HAL_ADC_DISABLE_IT(
-						    hadc, ADC_IT_JEOC);
-						__HAL_ADC_ENABLE_IT(
-						    hadc, ADC_IT_JEOS);
-						break;
-					/* case ADC_EOC_SINGLE_CONV */
-					default:
-						__HAL_ADC_DISABLE_IT(
-						    hadc, ADC_IT_JEOS);
-						__HAL_ADC_ENABLE_IT(
-						    hadc, ADC_IT_JEOC);
-						break;
+						case ADC_EOC_SEQ_CONV:
+							__HAL_ADC_DISABLE_IT(
+							    hadc, ADC_IT_JEOC);
+							__HAL_ADC_ENABLE_IT(
+							    hadc, ADC_IT_JEOS);
+							break;
+						/* case ADC_EOC_SINGLE_CONV */
+						default:
+							__HAL_ADC_DISABLE_IT(
+							    hadc, ADC_IT_JEOS);
+							__HAL_ADC_ENABLE_IT(
+							    hadc, ADC_IT_JEOC);
+							break;
 					}
 				}
 
@@ -2023,19 +2036,19 @@ HAL_StatusTypeDef HAL_ADC_Start_IT(ADC_HandleTypeDef *hadc)
 					/* Next, set Slave injected
 					 * interruptions */
 					switch (hadc->Init.EOCSelection) {
-					case ADC_EOC_SEQ_CONV:
-						__HAL_ADC_DISABLE_IT(
-						    hadc, ADC_IT_JEOC);
-						__HAL_ADC_ENABLE_IT(
-						    hadc, ADC_IT_JEOS);
-						break;
-					/* case ADC_EOC_SINGLE_CONV */
-					default:
-						__HAL_ADC_DISABLE_IT(
-						    hadc, ADC_IT_JEOS);
-						__HAL_ADC_ENABLE_IT(
-						    hadc, ADC_IT_JEOC);
-						break;
+						case ADC_EOC_SEQ_CONV:
+							__HAL_ADC_DISABLE_IT(
+							    hadc, ADC_IT_JEOC);
+							__HAL_ADC_ENABLE_IT(
+							    hadc, ADC_IT_JEOS);
+							break;
+						/* case ADC_EOC_SINGLE_CONV */
+						default:
+							__HAL_ADC_DISABLE_IT(
+							    hadc, ADC_IT_JEOS);
+							__HAL_ADC_ENABLE_IT(
+							    hadc, ADC_IT_JEOC);
+							break;
 					}
 				}
 			}
@@ -2054,15 +2067,19 @@ HAL_StatusTypeDef HAL_ADC_Start_IT(ADC_HandleTypeDef *hadc)
 				 and injected conversions when JAUTO is set with
 				 a single call to HAL_ADC_Start_IT() */
 				switch (hadc->Init.EOCSelection) {
-				case ADC_EOC_SEQ_CONV:
-					__HAL_ADC_DISABLE_IT(hadc, ADC_IT_JEOC);
-					__HAL_ADC_ENABLE_IT(hadc, ADC_IT_JEOS);
-					break;
-				/* case ADC_EOC_SINGLE_CONV */
-				default:
-					__HAL_ADC_DISABLE_IT(hadc, ADC_IT_JEOS);
-					__HAL_ADC_ENABLE_IT(hadc, ADC_IT_JEOC);
-					break;
+					case ADC_EOC_SEQ_CONV:
+						__HAL_ADC_DISABLE_IT(
+						    hadc, ADC_IT_JEOC);
+						__HAL_ADC_ENABLE_IT(
+						    hadc, ADC_IT_JEOS);
+						break;
+					/* case ADC_EOC_SINGLE_CONV */
+					default:
+						__HAL_ADC_DISABLE_IT(
+						    hadc, ADC_IT_JEOS);
+						__HAL_ADC_ENABLE_IT(
+						    hadc, ADC_IT_JEOC);
+						break;
 				}
 			}
 
@@ -2998,22 +3015,22 @@ HAL_StatusTypeDef HAL_ADC_ConfigChannel(ADC_HandleTypeDef *hadc,
 		 */
 		if (pConfig->Rank <= 5U) {
 			switch (pConfig->Rank) {
-			case 2U:
-				config_rank = ADC_REGULAR_RANK_2;
-				break;
-			case 3U:
-				config_rank = ADC_REGULAR_RANK_3;
-				break;
-			case 4U:
-				config_rank = ADC_REGULAR_RANK_4;
-				break;
-			case 5U:
-				config_rank = ADC_REGULAR_RANK_5;
-				break;
-			/* case 1U */
-			default:
-				config_rank = ADC_REGULAR_RANK_1;
-				break;
+				case 2U:
+					config_rank = ADC_REGULAR_RANK_2;
+					break;
+				case 3U:
+					config_rank = ADC_REGULAR_RANK_3;
+					break;
+				case 4U:
+					config_rank = ADC_REGULAR_RANK_4;
+					break;
+				case 5U:
+					config_rank = ADC_REGULAR_RANK_5;
+					break;
+				/* case 1U */
+				default:
+					config_rank = ADC_REGULAR_RANK_1;
+					break;
 			}
 		}
 		/* Set ADC group regular sequence: channel on the selected scan
@@ -3334,53 +3351,53 @@ HAL_ADC_AnalogWDGConfig(ADC_HandleTypeDef *hadc,
 			 * overall group of      */
 			/*    channels, on groups regular and-or injected. */
 			switch (pAnalogWDGConfig->WatchdogMode) {
-			case ADC_ANALOGWATCHDOG_SINGLE_REG:
-				LL_ADC_SetAnalogWDMonitChannels(
-				    hadc->Instance, LL_ADC_AWD1,
-				    __LL_ADC_ANALOGWD_CHANNEL_GROUP(
-					pAnalogWDGConfig->Channel,
-					LL_ADC_GROUP_REGULAR));
-				break;
+				case ADC_ANALOGWATCHDOG_SINGLE_REG:
+					LL_ADC_SetAnalogWDMonitChannels(
+					    hadc->Instance, LL_ADC_AWD1,
+					    __LL_ADC_ANALOGWD_CHANNEL_GROUP(
+						pAnalogWDGConfig->Channel,
+						LL_ADC_GROUP_REGULAR));
+					break;
 
-			case ADC_ANALOGWATCHDOG_SINGLE_INJEC:
-				LL_ADC_SetAnalogWDMonitChannels(
-				    hadc->Instance, LL_ADC_AWD1,
-				    __LL_ADC_ANALOGWD_CHANNEL_GROUP(
-					pAnalogWDGConfig->Channel,
-					LL_ADC_GROUP_INJECTED));
-				break;
+				case ADC_ANALOGWATCHDOG_SINGLE_INJEC:
+					LL_ADC_SetAnalogWDMonitChannels(
+					    hadc->Instance, LL_ADC_AWD1,
+					    __LL_ADC_ANALOGWD_CHANNEL_GROUP(
+						pAnalogWDGConfig->Channel,
+						LL_ADC_GROUP_INJECTED));
+					break;
 
-			case ADC_ANALOGWATCHDOG_SINGLE_REGINJEC:
-				LL_ADC_SetAnalogWDMonitChannels(
-				    hadc->Instance, LL_ADC_AWD1,
-				    __LL_ADC_ANALOGWD_CHANNEL_GROUP(
-					pAnalogWDGConfig->Channel,
-					LL_ADC_GROUP_REGULAR_INJECTED));
-				break;
+				case ADC_ANALOGWATCHDOG_SINGLE_REGINJEC:
+					LL_ADC_SetAnalogWDMonitChannels(
+					    hadc->Instance, LL_ADC_AWD1,
+					    __LL_ADC_ANALOGWD_CHANNEL_GROUP(
+						pAnalogWDGConfig->Channel,
+						LL_ADC_GROUP_REGULAR_INJECTED));
+					break;
 
-			case ADC_ANALOGWATCHDOG_ALL_REG:
-				LL_ADC_SetAnalogWDMonitChannels(
-				    hadc->Instance, LL_ADC_AWD1,
-				    LL_ADC_AWD_ALL_CHANNELS_REG);
-				break;
+				case ADC_ANALOGWATCHDOG_ALL_REG:
+					LL_ADC_SetAnalogWDMonitChannels(
+					    hadc->Instance, LL_ADC_AWD1,
+					    LL_ADC_AWD_ALL_CHANNELS_REG);
+					break;
 
-			case ADC_ANALOGWATCHDOG_ALL_INJEC:
-				LL_ADC_SetAnalogWDMonitChannels(
-				    hadc->Instance, LL_ADC_AWD1,
-				    LL_ADC_AWD_ALL_CHANNELS_INJ);
-				break;
+				case ADC_ANALOGWATCHDOG_ALL_INJEC:
+					LL_ADC_SetAnalogWDMonitChannels(
+					    hadc->Instance, LL_ADC_AWD1,
+					    LL_ADC_AWD_ALL_CHANNELS_INJ);
+					break;
 
-			case ADC_ANALOGWATCHDOG_ALL_REGINJEC:
-				LL_ADC_SetAnalogWDMonitChannels(
-				    hadc->Instance, LL_ADC_AWD1,
-				    LL_ADC_AWD_ALL_CHANNELS_REG_INJ);
-				break;
+				case ADC_ANALOGWATCHDOG_ALL_REGINJEC:
+					LL_ADC_SetAnalogWDMonitChannels(
+					    hadc->Instance, LL_ADC_AWD1,
+					    LL_ADC_AWD_ALL_CHANNELS_REG_INJ);
+					break;
 
-			default: /* ADC_ANALOGWATCHDOG_NONE */
-				LL_ADC_SetAnalogWDMonitChannels(
-				    hadc->Instance, LL_ADC_AWD1,
-				    LL_ADC_AWD_DISABLE);
-				break;
+				default: /* ADC_ANALOGWATCHDOG_NONE */
+					LL_ADC_SetAnalogWDMonitChannels(
+					    hadc->Instance, LL_ADC_AWD1,
+					    LL_ADC_AWD_DISABLE);
+					break;
 			}
 
 			/* Shift the offset in function of the selected ADC
@@ -3424,48 +3441,48 @@ HAL_ADC_AnalogWDGConfig(ADC_HandleTypeDef *hadc,
 		/* Case of ADC_ANALOGWATCHDOG_2 or ADC_ANALOGWATCHDOG_3 */
 		else {
 			switch (pAnalogWDGConfig->WatchdogMode) {
-			case ADC_ANALOGWATCHDOG_SINGLE_REG:
-			case ADC_ANALOGWATCHDOG_SINGLE_INJEC:
-			case ADC_ANALOGWATCHDOG_SINGLE_REGINJEC:
-				/* Update AWD by bitfield to keep the
-				 * possibility to monitor        */
-				/* several channels by successive calls of this
-				 * function.           */
-				if (pAnalogWDGConfig->WatchdogNumber ==
-				    ADC_ANALOGWATCHDOG_2) {
-					SET_BIT(
-					    hadc->Instance->AWD2CR,
-					    (1UL
-					     << (__LL_ADC_CHANNEL_TO_DECIMAL_NB(
-						     pAnalogWDGConfig
-							 ->Channel) &
-						 0x1FUL)));
-				} else {
-					SET_BIT(
-					    hadc->Instance->AWD3CR,
-					    (1UL
-					     << (__LL_ADC_CHANNEL_TO_DECIMAL_NB(
-						     pAnalogWDGConfig
-							 ->Channel) &
-						 0x1FUL)));
-				}
-				break;
+				case ADC_ANALOGWATCHDOG_SINGLE_REG:
+				case ADC_ANALOGWATCHDOG_SINGLE_INJEC:
+				case ADC_ANALOGWATCHDOG_SINGLE_REGINJEC:
+					/* Update AWD by bitfield to keep the
+					 * possibility to monitor        */
+					/* several channels by successive calls
+					 * of this function.           */
+					if (pAnalogWDGConfig->WatchdogNumber ==
+					    ADC_ANALOGWATCHDOG_2) {
+						SET_BIT(
+						    hadc->Instance->AWD2CR,
+						    (1UL
+						     << (__LL_ADC_CHANNEL_TO_DECIMAL_NB(
+							     pAnalogWDGConfig
+								 ->Channel) &
+							 0x1FUL)));
+					} else {
+						SET_BIT(
+						    hadc->Instance->AWD3CR,
+						    (1UL
+						     << (__LL_ADC_CHANNEL_TO_DECIMAL_NB(
+							     pAnalogWDGConfig
+								 ->Channel) &
+							 0x1FUL)));
+					}
+					break;
 
-			case ADC_ANALOGWATCHDOG_ALL_REG:
-			case ADC_ANALOGWATCHDOG_ALL_INJEC:
-			case ADC_ANALOGWATCHDOG_ALL_REGINJEC:
-				LL_ADC_SetAnalogWDMonitChannels(
-				    hadc->Instance,
-				    pAnalogWDGConfig->WatchdogNumber,
-				    LL_ADC_AWD_ALL_CHANNELS_REG_INJ);
-				break;
+				case ADC_ANALOGWATCHDOG_ALL_REG:
+				case ADC_ANALOGWATCHDOG_ALL_INJEC:
+				case ADC_ANALOGWATCHDOG_ALL_REGINJEC:
+					LL_ADC_SetAnalogWDMonitChannels(
+					    hadc->Instance,
+					    pAnalogWDGConfig->WatchdogNumber,
+					    LL_ADC_AWD_ALL_CHANNELS_REG_INJ);
+					break;
 
-			default: /* ADC_ANALOGWATCHDOG_NONE */
-				LL_ADC_SetAnalogWDMonitChannels(
-				    hadc->Instance,
-				    pAnalogWDGConfig->WatchdogNumber,
-				    LL_ADC_AWD_DISABLE);
-				break;
+				default: /* ADC_ANALOGWATCHDOG_NONE */
+					LL_ADC_SetAnalogWDMonitChannels(
+					    hadc->Instance,
+					    pAnalogWDGConfig->WatchdogNumber,
+					    LL_ADC_AWD_DISABLE);
+					break;
 			}
 
 			/* Shift the thresholds in function of the selected ADC
@@ -3723,17 +3740,17 @@ HAL_StatusTypeDef ADC_ConversionStop(ADC_HandleTypeDef *hadc,
 		/* Selection of start and stop bits with respect to the regular
 		 * or injected group */
 		switch (conversion_group_reassigned) {
-		case ADC_REGULAR_INJECTED_GROUP:
-			tmp_ADC_CR_ADSTART_JADSTART =
-			    (ADC_CR_ADSTART | ADC_CR_JADSTART);
-			break;
-		case ADC_INJECTED_GROUP:
-			tmp_ADC_CR_ADSTART_JADSTART = ADC_CR_JADSTART;
-			break;
-		/* Case ADC_REGULAR_GROUP only*/
-		default:
-			tmp_ADC_CR_ADSTART_JADSTART = ADC_CR_ADSTART;
-			break;
+			case ADC_REGULAR_INJECTED_GROUP:
+				tmp_ADC_CR_ADSTART_JADSTART =
+				    (ADC_CR_ADSTART | ADC_CR_JADSTART);
+				break;
+			case ADC_INJECTED_GROUP:
+				tmp_ADC_CR_ADSTART_JADSTART = ADC_CR_JADSTART;
+				break;
+			/* Case ADC_REGULAR_GROUP only*/
+			default:
+				tmp_ADC_CR_ADSTART_JADSTART = ADC_CR_ADSTART;
+				break;
 		}
 
 		/* Wait for conversion effectively stopped */

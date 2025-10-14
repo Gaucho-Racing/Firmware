@@ -2299,32 +2299,32 @@ HAL_NAND_RegisterCallback(NAND_HandleTypeDef *hnand,
 
 	if (hnand->State == HAL_NAND_STATE_READY) {
 		switch (CallbackId) {
-		case HAL_NAND_MSP_INIT_CB_ID:
-			hnand->MspInitCallback = pCallback;
-			break;
-		case HAL_NAND_MSP_DEINIT_CB_ID:
-			hnand->MspDeInitCallback = pCallback;
-			break;
-		case HAL_NAND_IT_CB_ID:
-			hnand->ItCallback = pCallback;
-			break;
-		default:
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_NAND_MSP_INIT_CB_ID:
+				hnand->MspInitCallback = pCallback;
+				break;
+			case HAL_NAND_MSP_DEINIT_CB_ID:
+				hnand->MspDeInitCallback = pCallback;
+				break;
+			case HAL_NAND_IT_CB_ID:
+				hnand->ItCallback = pCallback;
+				break;
+			default:
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hnand->State == HAL_NAND_STATE_RESET) {
 		switch (CallbackId) {
-		case HAL_NAND_MSP_INIT_CB_ID:
-			hnand->MspInitCallback = pCallback;
-			break;
-		case HAL_NAND_MSP_DEINIT_CB_ID:
-			hnand->MspDeInitCallback = pCallback;
-			break;
-		default:
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_NAND_MSP_INIT_CB_ID:
+				hnand->MspInitCallback = pCallback;
+				break;
+			case HAL_NAND_MSP_DEINIT_CB_ID:
+				hnand->MspDeInitCallback = pCallback;
+				break;
+			default:
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* update return status */
@@ -2353,32 +2353,32 @@ HAL_NAND_UnRegisterCallback(NAND_HandleTypeDef *hnand,
 
 	if (hnand->State == HAL_NAND_STATE_READY) {
 		switch (CallbackId) {
-		case HAL_NAND_MSP_INIT_CB_ID:
-			hnand->MspInitCallback = HAL_NAND_MspInit;
-			break;
-		case HAL_NAND_MSP_DEINIT_CB_ID:
-			hnand->MspDeInitCallback = HAL_NAND_MspDeInit;
-			break;
-		case HAL_NAND_IT_CB_ID:
-			hnand->ItCallback = HAL_NAND_ITCallback;
-			break;
-		default:
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_NAND_MSP_INIT_CB_ID:
+				hnand->MspInitCallback = HAL_NAND_MspInit;
+				break;
+			case HAL_NAND_MSP_DEINIT_CB_ID:
+				hnand->MspDeInitCallback = HAL_NAND_MspDeInit;
+				break;
+			case HAL_NAND_IT_CB_ID:
+				hnand->ItCallback = HAL_NAND_ITCallback;
+				break;
+			default:
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hnand->State == HAL_NAND_STATE_RESET) {
 		switch (CallbackId) {
-		case HAL_NAND_MSP_INIT_CB_ID:
-			hnand->MspInitCallback = HAL_NAND_MspInit;
-			break;
-		case HAL_NAND_MSP_DEINIT_CB_ID:
-			hnand->MspDeInitCallback = HAL_NAND_MspDeInit;
-			break;
-		default:
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_NAND_MSP_INIT_CB_ID:
+				hnand->MspInitCallback = HAL_NAND_MspInit;
+				break;
+			case HAL_NAND_MSP_DEINIT_CB_ID:
+				hnand->MspDeInitCallback = HAL_NAND_MspDeInit;
+				break;
+			default:
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* update return status */

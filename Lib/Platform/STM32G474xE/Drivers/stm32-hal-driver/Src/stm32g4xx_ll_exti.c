@@ -140,137 +140,152 @@ uint32_t LL_EXTI_Init(LL_EXTI_InitTypeDef *EXTI_InitStruct)
 		/* Configure EXTI Lines in range from 0 to 31 */
 		if (EXTI_InitStruct->Line_0_31 != LL_EXTI_LINE_NONE) {
 			switch (EXTI_InitStruct->Mode) {
-			case LL_EXTI_MODE_IT:
-				/* First Disable Event on provided Lines */
-				LL_EXTI_DisableEvent_0_31(
-				    EXTI_InitStruct->Line_0_31);
-				/* Then Enable IT on provided Lines */
-				LL_EXTI_EnableIT_0_31(
-				    EXTI_InitStruct->Line_0_31);
-				break;
-			case LL_EXTI_MODE_EVENT:
-				/* First Disable IT on provided Lines */
-				LL_EXTI_DisableIT_0_31(
-				    EXTI_InitStruct->Line_0_31);
-				/* Then Enable Event on provided Lines */
-				LL_EXTI_EnableEvent_0_31(
-				    EXTI_InitStruct->Line_0_31);
-				break;
-			case LL_EXTI_MODE_IT_EVENT:
-				/* Directly Enable IT on provided Lines */
-				LL_EXTI_EnableIT_0_31(
-				    EXTI_InitStruct->Line_0_31);
-				/* Directly Enable Event on provided Lines */
-				LL_EXTI_EnableEvent_0_31(
-				    EXTI_InitStruct->Line_0_31);
-				break;
-			default:
-				status = 0x01u;
-				break;
-			}
-			if (EXTI_InitStruct->Trigger != LL_EXTI_TRIGGER_NONE) {
-				switch (EXTI_InitStruct->Trigger) {
-				case LL_EXTI_TRIGGER_RISING:
-					/* First Disable Falling Trigger on
-					 * provided Lines */
-					LL_EXTI_DisableFallingTrig_0_31(
+				case LL_EXTI_MODE_IT:
+					/* First Disable Event on provided Lines
+					 */
+					LL_EXTI_DisableEvent_0_31(
 					    EXTI_InitStruct->Line_0_31);
-					/* Then Enable Rising Trigger on
-					 * provided Lines */
-					LL_EXTI_EnableRisingTrig_0_31(
+					/* Then Enable IT on provided Lines */
+					LL_EXTI_EnableIT_0_31(
 					    EXTI_InitStruct->Line_0_31);
 					break;
-				case LL_EXTI_TRIGGER_FALLING:
-					/* First Disable Rising Trigger on
-					 * provided Lines */
-					LL_EXTI_DisableRisingTrig_0_31(
+				case LL_EXTI_MODE_EVENT:
+					/* First Disable IT on provided Lines */
+					LL_EXTI_DisableIT_0_31(
 					    EXTI_InitStruct->Line_0_31);
-					/* Then Enable Falling Trigger on
-					 * provided Lines */
-					LL_EXTI_EnableFallingTrig_0_31(
+					/* Then Enable Event on provided Lines
+					 */
+					LL_EXTI_EnableEvent_0_31(
 					    EXTI_InitStruct->Line_0_31);
 					break;
-				case LL_EXTI_TRIGGER_RISING_FALLING:
-					/* Enable Rising Trigger on provided
-					 * Lines */
-					LL_EXTI_EnableRisingTrig_0_31(
+				case LL_EXTI_MODE_IT_EVENT:
+					/* Directly Enable IT on provided Lines
+					 */
+					LL_EXTI_EnableIT_0_31(
 					    EXTI_InitStruct->Line_0_31);
-					/* Enable Falling Trigger on provided
+					/* Directly Enable Event on provided
 					 * Lines */
-					LL_EXTI_EnableFallingTrig_0_31(
+					LL_EXTI_EnableEvent_0_31(
 					    EXTI_InitStruct->Line_0_31);
 					break;
 				default:
-					status |= 0x02u;
+					status = 0x01u;
 					break;
+			}
+			if (EXTI_InitStruct->Trigger != LL_EXTI_TRIGGER_NONE) {
+				switch (EXTI_InitStruct->Trigger) {
+					case LL_EXTI_TRIGGER_RISING:
+						/* First Disable Falling Trigger
+						 * on provided Lines */
+						LL_EXTI_DisableFallingTrig_0_31(
+						    EXTI_InitStruct->Line_0_31);
+						/* Then Enable Rising Trigger on
+						 * provided Lines */
+						LL_EXTI_EnableRisingTrig_0_31(
+						    EXTI_InitStruct->Line_0_31);
+						break;
+					case LL_EXTI_TRIGGER_FALLING:
+						/* First Disable Rising Trigger
+						 * on provided Lines */
+						LL_EXTI_DisableRisingTrig_0_31(
+						    EXTI_InitStruct->Line_0_31);
+						/* Then Enable Falling Trigger
+						 * on provided Lines */
+						LL_EXTI_EnableFallingTrig_0_31(
+						    EXTI_InitStruct->Line_0_31);
+						break;
+					case LL_EXTI_TRIGGER_RISING_FALLING:
+						/* Enable Rising Trigger on
+						 * provided Lines */
+						LL_EXTI_EnableRisingTrig_0_31(
+						    EXTI_InitStruct->Line_0_31);
+						/* Enable Falling Trigger on
+						 * provided Lines */
+						LL_EXTI_EnableFallingTrig_0_31(
+						    EXTI_InitStruct->Line_0_31);
+						break;
+					default:
+						status |= 0x02u;
+						break;
 				}
 			}
 		}
 		/* Configure EXTI Lines in range from 32 to 63 */
 		if (EXTI_InitStruct->Line_32_63 != LL_EXTI_LINE_NONE) {
 			switch (EXTI_InitStruct->Mode) {
-			case LL_EXTI_MODE_IT:
-				/* First Disable Event on provided Lines */
-				LL_EXTI_DisableEvent_32_63(
-				    EXTI_InitStruct->Line_32_63);
-				/* Then Enable IT on provided Lines */
-				LL_EXTI_EnableIT_32_63(
-				    EXTI_InitStruct->Line_32_63);
-				break;
-			case LL_EXTI_MODE_EVENT:
-				/* First Disable IT on provided Lines */
-				LL_EXTI_DisableIT_32_63(
-				    EXTI_InitStruct->Line_32_63);
-				/* Then Enable Event on provided Lines */
-				LL_EXTI_EnableEvent_32_63(
-				    EXTI_InitStruct->Line_32_63);
-				break;
-			case LL_EXTI_MODE_IT_EVENT:
-				/* Directly Enable IT on provided Lines */
-				LL_EXTI_EnableIT_32_63(
-				    EXTI_InitStruct->Line_32_63);
-				/* Directly Enable IT on provided Lines */
-				LL_EXTI_EnableEvent_32_63(
-				    EXTI_InitStruct->Line_32_63);
-				break;
-			default:
-				status |= 0x04u;
-				break;
-			}
-			if (EXTI_InitStruct->Trigger != LL_EXTI_TRIGGER_NONE) {
-				switch (EXTI_InitStruct->Trigger) {
-				case LL_EXTI_TRIGGER_RISING:
-					/* First Disable Falling Trigger on
-					 * provided Lines */
-					LL_EXTI_DisableFallingTrig_32_63(
+				case LL_EXTI_MODE_IT:
+					/* First Disable Event on provided Lines
+					 */
+					LL_EXTI_DisableEvent_32_63(
 					    EXTI_InitStruct->Line_32_63);
 					/* Then Enable IT on provided Lines */
-					LL_EXTI_EnableRisingTrig_32_63(
+					LL_EXTI_EnableIT_32_63(
 					    EXTI_InitStruct->Line_32_63);
 					break;
-				case LL_EXTI_TRIGGER_FALLING:
-					/* First Disable Rising Trigger on
-					 * provided Lines */
-					LL_EXTI_DisableRisingTrig_32_63(
+				case LL_EXTI_MODE_EVENT:
+					/* First Disable IT on provided Lines */
+					LL_EXTI_DisableIT_32_63(
 					    EXTI_InitStruct->Line_32_63);
-					/* Then Enable Falling Trigger on
-					 * provided Lines */
-					LL_EXTI_EnableFallingTrig_32_63(
+					/* Then Enable Event on provided Lines
+					 */
+					LL_EXTI_EnableEvent_32_63(
 					    EXTI_InitStruct->Line_32_63);
 					break;
-				case LL_EXTI_TRIGGER_RISING_FALLING:
-					/* Enable Rising Trigger on provided
-					 * Lines */
-					LL_EXTI_EnableRisingTrig_32_63(
+				case LL_EXTI_MODE_IT_EVENT:
+					/* Directly Enable IT on provided Lines
+					 */
+					LL_EXTI_EnableIT_32_63(
 					    EXTI_InitStruct->Line_32_63);
-					/* Enable Falling Trigger on provided
-					 * Lines */
-					LL_EXTI_EnableFallingTrig_32_63(
+					/* Directly Enable IT on provided Lines
+					 */
+					LL_EXTI_EnableEvent_32_63(
 					    EXTI_InitStruct->Line_32_63);
 					break;
 				default:
-					status |= 0x05u;
+					status |= 0x04u;
 					break;
+			}
+			if (EXTI_InitStruct->Trigger != LL_EXTI_TRIGGER_NONE) {
+				switch (EXTI_InitStruct->Trigger) {
+					case LL_EXTI_TRIGGER_RISING:
+						/* First Disable Falling Trigger
+						 * on provided Lines */
+						LL_EXTI_DisableFallingTrig_32_63(
+						    EXTI_InitStruct
+							->Line_32_63);
+						/* Then Enable IT on provided
+						 * Lines */
+						LL_EXTI_EnableRisingTrig_32_63(
+						    EXTI_InitStruct
+							->Line_32_63);
+						break;
+					case LL_EXTI_TRIGGER_FALLING:
+						/* First Disable Rising Trigger
+						 * on provided Lines */
+						LL_EXTI_DisableRisingTrig_32_63(
+						    EXTI_InitStruct
+							->Line_32_63);
+						/* Then Enable Falling Trigger
+						 * on provided Lines */
+						LL_EXTI_EnableFallingTrig_32_63(
+						    EXTI_InitStruct
+							->Line_32_63);
+						break;
+					case LL_EXTI_TRIGGER_RISING_FALLING:
+						/* Enable Rising Trigger on
+						 * provided Lines */
+						LL_EXTI_EnableRisingTrig_32_63(
+						    EXTI_InitStruct
+							->Line_32_63);
+						/* Enable Falling Trigger on
+						 * provided Lines */
+						LL_EXTI_EnableFallingTrig_32_63(
+						    EXTI_InitStruct
+							->Line_32_63);
+						break;
+					default:
+						status |= 0x05u;
+						break;
 				}
 			}
 		}

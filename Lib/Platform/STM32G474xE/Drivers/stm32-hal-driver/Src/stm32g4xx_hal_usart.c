@@ -468,75 +468,77 @@ HAL_USART_RegisterCallback(USART_HandleTypeDef *husart,
 
 	if (husart->State == HAL_USART_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_USART_TX_HALFCOMPLETE_CB_ID:
-			husart->TxHalfCpltCallback = pCallback;
-			break;
+			case HAL_USART_TX_HALFCOMPLETE_CB_ID:
+				husart->TxHalfCpltCallback = pCallback;
+				break;
 
-		case HAL_USART_TX_COMPLETE_CB_ID:
-			husart->TxCpltCallback = pCallback;
-			break;
+			case HAL_USART_TX_COMPLETE_CB_ID:
+				husart->TxCpltCallback = pCallback;
+				break;
 
-		case HAL_USART_RX_HALFCOMPLETE_CB_ID:
-			husart->RxHalfCpltCallback = pCallback;
-			break;
+			case HAL_USART_RX_HALFCOMPLETE_CB_ID:
+				husart->RxHalfCpltCallback = pCallback;
+				break;
 
-		case HAL_USART_RX_COMPLETE_CB_ID:
-			husart->RxCpltCallback = pCallback;
-			break;
+			case HAL_USART_RX_COMPLETE_CB_ID:
+				husart->RxCpltCallback = pCallback;
+				break;
 
-		case HAL_USART_TX_RX_COMPLETE_CB_ID:
-			husart->TxRxCpltCallback = pCallback;
-			break;
+			case HAL_USART_TX_RX_COMPLETE_CB_ID:
+				husart->TxRxCpltCallback = pCallback;
+				break;
 
-		case HAL_USART_ERROR_CB_ID:
-			husart->ErrorCallback = pCallback;
-			break;
+			case HAL_USART_ERROR_CB_ID:
+				husart->ErrorCallback = pCallback;
+				break;
 
-		case HAL_USART_ABORT_COMPLETE_CB_ID:
-			husart->AbortCpltCallback = pCallback;
-			break;
+			case HAL_USART_ABORT_COMPLETE_CB_ID:
+				husart->AbortCpltCallback = pCallback;
+				break;
 
-		case HAL_USART_RX_FIFO_FULL_CB_ID:
-			husart->RxFifoFullCallback = pCallback;
-			break;
+			case HAL_USART_RX_FIFO_FULL_CB_ID:
+				husart->RxFifoFullCallback = pCallback;
+				break;
 
-		case HAL_USART_TX_FIFO_EMPTY_CB_ID:
-			husart->TxFifoEmptyCallback = pCallback;
-			break;
+			case HAL_USART_TX_FIFO_EMPTY_CB_ID:
+				husart->TxFifoEmptyCallback = pCallback;
+				break;
 
-		case HAL_USART_MSPINIT_CB_ID:
-			husart->MspInitCallback = pCallback;
-			break;
+			case HAL_USART_MSPINIT_CB_ID:
+				husart->MspInitCallback = pCallback;
+				break;
 
-		case HAL_USART_MSPDEINIT_CB_ID:
-			husart->MspDeInitCallback = pCallback;
-			break;
+			case HAL_USART_MSPDEINIT_CB_ID:
+				husart->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			husart->ErrorCode |= HAL_USART_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				husart->ErrorCode |=
+				    HAL_USART_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (husart->State == HAL_USART_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_USART_MSPINIT_CB_ID:
-			husart->MspInitCallback = pCallback;
-			break;
+			case HAL_USART_MSPINIT_CB_ID:
+				husart->MspInitCallback = pCallback;
+				break;
 
-		case HAL_USART_MSPDEINIT_CB_ID:
-			husart->MspDeInitCallback = pCallback;
-			break;
+			case HAL_USART_MSPDEINIT_CB_ID:
+				husart->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			husart->ErrorCode |= HAL_USART_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				husart->ErrorCode |=
+				    HAL_USART_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -581,100 +583,109 @@ HAL_USART_UnRegisterCallback(USART_HandleTypeDef *husart,
 
 	if (HAL_USART_STATE_READY == husart->State) {
 		switch (CallbackID) {
-		case HAL_USART_TX_HALFCOMPLETE_CB_ID:
-			husart->TxHalfCpltCallback =
-			    HAL_USART_TxHalfCpltCallback; /* Legacy weak
-							     TxHalfCpltCallback
-							   */
-			break;
+			case HAL_USART_TX_HALFCOMPLETE_CB_ID:
+				husart->TxHalfCpltCallback =
+				    HAL_USART_TxHalfCpltCallback; /* Legacy weak
+								     TxHalfCpltCallback
+								   */
+				break;
 
-		case HAL_USART_TX_COMPLETE_CB_ID:
-			husart->TxCpltCallback =
-			    HAL_USART_TxCpltCallback; /* Legacy weak
-							 TxCpltCallback       */
-			break;
+			case HAL_USART_TX_COMPLETE_CB_ID:
+				husart->TxCpltCallback =
+				    HAL_USART_TxCpltCallback; /* Legacy weak
+								 TxCpltCallback
+							       */
+				break;
 
-		case HAL_USART_RX_HALFCOMPLETE_CB_ID:
-			husart->RxHalfCpltCallback =
-			    HAL_USART_RxHalfCpltCallback; /* Legacy weak
-							     RxHalfCpltCallback
-							   */
-			break;
+			case HAL_USART_RX_HALFCOMPLETE_CB_ID:
+				husart->RxHalfCpltCallback =
+				    HAL_USART_RxHalfCpltCallback; /* Legacy weak
+								     RxHalfCpltCallback
+								   */
+				break;
 
-		case HAL_USART_RX_COMPLETE_CB_ID:
-			husart->RxCpltCallback =
-			    HAL_USART_RxCpltCallback; /* Legacy weak
-							 RxCpltCallback       */
-			break;
+			case HAL_USART_RX_COMPLETE_CB_ID:
+				husart->RxCpltCallback =
+				    HAL_USART_RxCpltCallback; /* Legacy weak
+								 RxCpltCallback
+							       */
+				break;
 
-		case HAL_USART_TX_RX_COMPLETE_CB_ID:
-			husart->TxRxCpltCallback =
-			    HAL_USART_TxRxCpltCallback; /* Legacy weak
-							   TxRxCpltCallback */
-			break;
+			case HAL_USART_TX_RX_COMPLETE_CB_ID:
+				husart->TxRxCpltCallback =
+				    HAL_USART_TxRxCpltCallback; /* Legacy weak
+								   TxRxCpltCallback
+								 */
+				break;
 
-		case HAL_USART_ERROR_CB_ID:
-			husart->ErrorCallback =
-			    HAL_USART_ErrorCallback; /* Legacy weak
-							ErrorCallback        */
-			break;
+			case HAL_USART_ERROR_CB_ID:
+				husart->ErrorCallback =
+				    HAL_USART_ErrorCallback; /* Legacy weak
+								ErrorCallback */
+				break;
 
-		case HAL_USART_ABORT_COMPLETE_CB_ID:
-			husart->AbortCpltCallback =
-			    HAL_USART_AbortCpltCallback; /* Legacy weak
-							    AbortCpltCallback */
-			break;
+			case HAL_USART_ABORT_COMPLETE_CB_ID:
+				husart->AbortCpltCallback =
+				    HAL_USART_AbortCpltCallback; /* Legacy weak
+								    AbortCpltCallback
+								  */
+				break;
 
-		case HAL_USART_RX_FIFO_FULL_CB_ID:
-			husart->RxFifoFullCallback =
-			    HAL_USARTEx_RxFifoFullCallback; /* Legacy weak
-							       RxFifoFullCallback
-							     */
-			break;
+			case HAL_USART_RX_FIFO_FULL_CB_ID:
+				husart->RxFifoFullCallback =
+				    HAL_USARTEx_RxFifoFullCallback; /* Legacy
+								       weak
+								       RxFifoFullCallback
+								     */
+				break;
 
-		case HAL_USART_TX_FIFO_EMPTY_CB_ID:
-			husart->TxFifoEmptyCallback =
-			    HAL_USARTEx_TxFifoEmptyCallback; /* Legacy weak
-								TxFifoEmptyCallback
-							      */
-			break;
+			case HAL_USART_TX_FIFO_EMPTY_CB_ID:
+				husart->TxFifoEmptyCallback =
+				    HAL_USARTEx_TxFifoEmptyCallback; /* Legacy
+									weak
+									TxFifoEmptyCallback
+								      */
+				break;
 
-		case HAL_USART_MSPINIT_CB_ID:
-			husart->MspInitCallback =
-			    HAL_USART_MspInit; /* Legacy weak MspInitCallback */
-			break;
+			case HAL_USART_MSPINIT_CB_ID:
+				husart->MspInitCallback =
+				    HAL_USART_MspInit; /* Legacy weak
+							  MspInitCallback */
+				break;
 
-		case HAL_USART_MSPDEINIT_CB_ID:
-			husart->MspDeInitCallback =
-			    HAL_USART_MspDeInit; /* Legacy weak
-						    MspDeInitCallback    */
-			break;
+			case HAL_USART_MSPDEINIT_CB_ID:
+				husart->MspDeInitCallback =
+				    HAL_USART_MspDeInit; /* Legacy weak
+							    MspDeInitCallback */
+				break;
 
-		default:
-			/* Update the error code */
-			husart->ErrorCode |= HAL_USART_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				husart->ErrorCode |=
+				    HAL_USART_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_USART_STATE_RESET == husart->State) {
 		switch (CallbackID) {
-		case HAL_USART_MSPINIT_CB_ID:
-			husart->MspInitCallback = HAL_USART_MspInit;
-			break;
+			case HAL_USART_MSPINIT_CB_ID:
+				husart->MspInitCallback = HAL_USART_MspInit;
+				break;
 
-		case HAL_USART_MSPDEINIT_CB_ID:
-			husart->MspDeInitCallback = HAL_USART_MspDeInit;
-			break;
+			case HAL_USART_MSPDEINIT_CB_ID:
+				husart->MspDeInitCallback = HAL_USART_MspDeInit;
+				break;
 
-		default:
-			/* Update the error code */
-			husart->ErrorCode |= HAL_USART_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				husart->ErrorCode |=
+				    HAL_USART_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -2981,34 +2992,37 @@ static HAL_StatusTypeDef USART_SetConfig(USART_HandleTypeDef *husart)
 	USART_GETCLOCKSOURCE(husart, clocksource);
 
 	switch (clocksource) {
-	case USART_CLOCKSOURCE_PCLK1:
-		pclk = HAL_RCC_GetPCLK1Freq();
-		usartdiv = (uint32_t)(USART_DIV_SAMPLING8(
-		    pclk, husart->Init.BaudRate, husart->Init.ClockPrescaler));
-		break;
-	case USART_CLOCKSOURCE_PCLK2:
-		pclk = HAL_RCC_GetPCLK2Freq();
-		usartdiv = (uint32_t)(USART_DIV_SAMPLING8(
-		    pclk, husart->Init.BaudRate, husart->Init.ClockPrescaler));
-		break;
-	case USART_CLOCKSOURCE_HSI:
-		usartdiv = (uint32_t)(USART_DIV_SAMPLING8(
-		    HSI_VALUE, husart->Init.BaudRate,
-		    husart->Init.ClockPrescaler));
-		break;
-	case USART_CLOCKSOURCE_SYSCLK:
-		pclk = HAL_RCC_GetSysClockFreq();
-		usartdiv = (uint32_t)(USART_DIV_SAMPLING8(
-		    pclk, husart->Init.BaudRate, husart->Init.ClockPrescaler));
-		break;
-	case USART_CLOCKSOURCE_LSE:
-		usartdiv = (uint32_t)(USART_DIV_SAMPLING8(
-		    LSE_VALUE, husart->Init.BaudRate,
-		    husart->Init.ClockPrescaler));
-		break;
-	default:
-		ret = HAL_ERROR;
-		break;
+		case USART_CLOCKSOURCE_PCLK1:
+			pclk = HAL_RCC_GetPCLK1Freq();
+			usartdiv = (uint32_t)(USART_DIV_SAMPLING8(
+			    pclk, husart->Init.BaudRate,
+			    husart->Init.ClockPrescaler));
+			break;
+		case USART_CLOCKSOURCE_PCLK2:
+			pclk = HAL_RCC_GetPCLK2Freq();
+			usartdiv = (uint32_t)(USART_DIV_SAMPLING8(
+			    pclk, husart->Init.BaudRate,
+			    husart->Init.ClockPrescaler));
+			break;
+		case USART_CLOCKSOURCE_HSI:
+			usartdiv = (uint32_t)(USART_DIV_SAMPLING8(
+			    HSI_VALUE, husart->Init.BaudRate,
+			    husart->Init.ClockPrescaler));
+			break;
+		case USART_CLOCKSOURCE_SYSCLK:
+			pclk = HAL_RCC_GetSysClockFreq();
+			usartdiv = (uint32_t)(USART_DIV_SAMPLING8(
+			    pclk, husart->Init.BaudRate,
+			    husart->Init.ClockPrescaler));
+			break;
+		case USART_CLOCKSOURCE_LSE:
+			usartdiv = (uint32_t)(USART_DIV_SAMPLING8(
+			    LSE_VALUE, husart->Init.BaudRate,
+			    husart->Init.ClockPrescaler));
+			break;
+		default:
+			ret = HAL_ERROR;
+			break;
 	}
 
 	/* USARTDIV must be greater than or equal to 0d16 and smaller than or

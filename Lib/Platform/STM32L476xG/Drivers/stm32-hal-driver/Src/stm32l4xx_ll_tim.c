@@ -427,26 +427,26 @@ ErrorStatus LL_TIM_OC_Init(TIM_TypeDef *TIMx, uint32_t Channel,
 	ErrorStatus result = ERROR;
 
 	switch (Channel) {
-	case LL_TIM_CHANNEL_CH1:
-		result = OC1Config(TIMx, TIM_OC_InitStruct);
-		break;
-	case LL_TIM_CHANNEL_CH2:
-		result = OC2Config(TIMx, TIM_OC_InitStruct);
-		break;
-	case LL_TIM_CHANNEL_CH3:
-		result = OC3Config(TIMx, TIM_OC_InitStruct);
-		break;
-	case LL_TIM_CHANNEL_CH4:
-		result = OC4Config(TIMx, TIM_OC_InitStruct);
-		break;
-	case LL_TIM_CHANNEL_CH5:
-		result = OC5Config(TIMx, TIM_OC_InitStruct);
-		break;
-	case LL_TIM_CHANNEL_CH6:
-		result = OC6Config(TIMx, TIM_OC_InitStruct);
-		break;
-	default:
-		break;
+		case LL_TIM_CHANNEL_CH1:
+			result = OC1Config(TIMx, TIM_OC_InitStruct);
+			break;
+		case LL_TIM_CHANNEL_CH2:
+			result = OC2Config(TIMx, TIM_OC_InitStruct);
+			break;
+		case LL_TIM_CHANNEL_CH3:
+			result = OC3Config(TIMx, TIM_OC_InitStruct);
+			break;
+		case LL_TIM_CHANNEL_CH4:
+			result = OC4Config(TIMx, TIM_OC_InitStruct);
+			break;
+		case LL_TIM_CHANNEL_CH5:
+			result = OC5Config(TIMx, TIM_OC_InitStruct);
+			break;
+		case LL_TIM_CHANNEL_CH6:
+			result = OC6Config(TIMx, TIM_OC_InitStruct);
+			break;
+		default:
+			break;
 	}
 
 	return result;
@@ -488,20 +488,20 @@ ErrorStatus LL_TIM_IC_Init(TIM_TypeDef *TIMx, uint32_t Channel,
 	ErrorStatus result = ERROR;
 
 	switch (Channel) {
-	case LL_TIM_CHANNEL_CH1:
-		result = IC1Config(TIMx, TIM_IC_InitStruct);
-		break;
-	case LL_TIM_CHANNEL_CH2:
-		result = IC2Config(TIMx, TIM_IC_InitStruct);
-		break;
-	case LL_TIM_CHANNEL_CH3:
-		result = IC3Config(TIMx, TIM_IC_InitStruct);
-		break;
-	case LL_TIM_CHANNEL_CH4:
-		result = IC4Config(TIMx, TIM_IC_InitStruct);
-		break;
-	default:
-		break;
+		case LL_TIM_CHANNEL_CH1:
+			result = IC1Config(TIMx, TIM_IC_InitStruct);
+			break;
+		case LL_TIM_CHANNEL_CH2:
+			result = IC2Config(TIMx, TIM_IC_InitStruct);
+			break;
+		case LL_TIM_CHANNEL_CH3:
+			result = IC3Config(TIMx, TIM_IC_InitStruct);
+			break;
+		case LL_TIM_CHANNEL_CH4:
+			result = IC4Config(TIMx, TIM_IC_InitStruct);
+			break;
+		default:
+			break;
 	}
 
 	return result;

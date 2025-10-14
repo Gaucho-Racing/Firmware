@@ -2175,63 +2175,65 @@ HAL_OSPI_RegisterCallback(OSPI_HandleTypeDef *hospi,
 
 	if (hospi->State == HAL_OSPI_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_OSPI_ERROR_CB_ID:
-			hospi->ErrorCallback = pCallback;
-			break;
-		case HAL_OSPI_ABORT_CB_ID:
-			hospi->AbortCpltCallback = pCallback;
-			break;
-		case HAL_OSPI_FIFO_THRESHOLD_CB_ID:
-			hospi->FifoThresholdCallback = pCallback;
-			break;
-		case HAL_OSPI_CMD_CPLT_CB_ID:
-			hospi->CmdCpltCallback = pCallback;
-			break;
-		case HAL_OSPI_RX_CPLT_CB_ID:
-			hospi->RxCpltCallback = pCallback;
-			break;
-		case HAL_OSPI_TX_CPLT_CB_ID:
-			hospi->TxCpltCallback = pCallback;
-			break;
-		case HAL_OSPI_RX_HALF_CPLT_CB_ID:
-			hospi->RxHalfCpltCallback = pCallback;
-			break;
-		case HAL_OSPI_TX_HALF_CPLT_CB_ID:
-			hospi->TxHalfCpltCallback = pCallback;
-			break;
-		case HAL_OSPI_STATUS_MATCH_CB_ID:
-			hospi->StatusMatchCallback = pCallback;
-			break;
-		case HAL_OSPI_TIMEOUT_CB_ID:
-			hospi->TimeOutCallback = pCallback;
-			break;
-		case HAL_OSPI_MSP_INIT_CB_ID:
-			hospi->MspInitCallback = pCallback;
-			break;
-		case HAL_OSPI_MSP_DEINIT_CB_ID:
-			hospi->MspDeInitCallback = pCallback;
-			break;
-		default:
-			/* Update the error code */
-			hospi->ErrorCode |= HAL_OSPI_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_OSPI_ERROR_CB_ID:
+				hospi->ErrorCallback = pCallback;
+				break;
+			case HAL_OSPI_ABORT_CB_ID:
+				hospi->AbortCpltCallback = pCallback;
+				break;
+			case HAL_OSPI_FIFO_THRESHOLD_CB_ID:
+				hospi->FifoThresholdCallback = pCallback;
+				break;
+			case HAL_OSPI_CMD_CPLT_CB_ID:
+				hospi->CmdCpltCallback = pCallback;
+				break;
+			case HAL_OSPI_RX_CPLT_CB_ID:
+				hospi->RxCpltCallback = pCallback;
+				break;
+			case HAL_OSPI_TX_CPLT_CB_ID:
+				hospi->TxCpltCallback = pCallback;
+				break;
+			case HAL_OSPI_RX_HALF_CPLT_CB_ID:
+				hospi->RxHalfCpltCallback = pCallback;
+				break;
+			case HAL_OSPI_TX_HALF_CPLT_CB_ID:
+				hospi->TxHalfCpltCallback = pCallback;
+				break;
+			case HAL_OSPI_STATUS_MATCH_CB_ID:
+				hospi->StatusMatchCallback = pCallback;
+				break;
+			case HAL_OSPI_TIMEOUT_CB_ID:
+				hospi->TimeOutCallback = pCallback;
+				break;
+			case HAL_OSPI_MSP_INIT_CB_ID:
+				hospi->MspInitCallback = pCallback;
+				break;
+			case HAL_OSPI_MSP_DEINIT_CB_ID:
+				hospi->MspDeInitCallback = pCallback;
+				break;
+			default:
+				/* Update the error code */
+				hospi->ErrorCode |=
+				    HAL_OSPI_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hospi->State == HAL_OSPI_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_OSPI_MSP_INIT_CB_ID:
-			hospi->MspInitCallback = pCallback;
-			break;
-		case HAL_OSPI_MSP_DEINIT_CB_ID:
-			hospi->MspDeInitCallback = pCallback;
-			break;
-		default:
-			/* Update the error code */
-			hospi->ErrorCode |= HAL_OSPI_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_OSPI_MSP_INIT_CB_ID:
+				hospi->MspInitCallback = pCallback;
+				break;
+			case HAL_OSPI_MSP_DEINIT_CB_ID:
+				hospi->MspDeInitCallback = pCallback;
+				break;
+			default:
+				/* Update the error code */
+				hospi->ErrorCode |=
+				    HAL_OSPI_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -2276,65 +2278,72 @@ HAL_OSPI_UnRegisterCallback(OSPI_HandleTypeDef *hospi,
 
 	if (hospi->State == HAL_OSPI_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_OSPI_ERROR_CB_ID:
-			hospi->ErrorCallback = HAL_OSPI_ErrorCallback;
-			break;
-		case HAL_OSPI_ABORT_CB_ID:
-			hospi->AbortCpltCallback = HAL_OSPI_AbortCpltCallback;
-			break;
-		case HAL_OSPI_FIFO_THRESHOLD_CB_ID:
-			hospi->FifoThresholdCallback =
-			    HAL_OSPI_FifoThresholdCallback;
-			break;
-		case HAL_OSPI_CMD_CPLT_CB_ID:
-			hospi->CmdCpltCallback = HAL_OSPI_CmdCpltCallback;
-			break;
-		case HAL_OSPI_RX_CPLT_CB_ID:
-			hospi->RxCpltCallback = HAL_OSPI_RxCpltCallback;
-			break;
-		case HAL_OSPI_TX_CPLT_CB_ID:
-			hospi->TxCpltCallback = HAL_OSPI_TxCpltCallback;
-			break;
-		case HAL_OSPI_RX_HALF_CPLT_CB_ID:
-			hospi->RxHalfCpltCallback = HAL_OSPI_RxHalfCpltCallback;
-			break;
-		case HAL_OSPI_TX_HALF_CPLT_CB_ID:
-			hospi->TxHalfCpltCallback = HAL_OSPI_TxHalfCpltCallback;
-			break;
-		case HAL_OSPI_STATUS_MATCH_CB_ID:
-			hospi->StatusMatchCallback =
-			    HAL_OSPI_StatusMatchCallback;
-			break;
-		case HAL_OSPI_TIMEOUT_CB_ID:
-			hospi->TimeOutCallback = HAL_OSPI_TimeOutCallback;
-			break;
-		case HAL_OSPI_MSP_INIT_CB_ID:
-			hospi->MspInitCallback = HAL_OSPI_MspInit;
-			break;
-		case HAL_OSPI_MSP_DEINIT_CB_ID:
-			hospi->MspDeInitCallback = HAL_OSPI_MspDeInit;
-			break;
-		default:
-			/* Update the error code */
-			hospi->ErrorCode |= HAL_OSPI_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_OSPI_ERROR_CB_ID:
+				hospi->ErrorCallback = HAL_OSPI_ErrorCallback;
+				break;
+			case HAL_OSPI_ABORT_CB_ID:
+				hospi->AbortCpltCallback =
+				    HAL_OSPI_AbortCpltCallback;
+				break;
+			case HAL_OSPI_FIFO_THRESHOLD_CB_ID:
+				hospi->FifoThresholdCallback =
+				    HAL_OSPI_FifoThresholdCallback;
+				break;
+			case HAL_OSPI_CMD_CPLT_CB_ID:
+				hospi->CmdCpltCallback =
+				    HAL_OSPI_CmdCpltCallback;
+				break;
+			case HAL_OSPI_RX_CPLT_CB_ID:
+				hospi->RxCpltCallback = HAL_OSPI_RxCpltCallback;
+				break;
+			case HAL_OSPI_TX_CPLT_CB_ID:
+				hospi->TxCpltCallback = HAL_OSPI_TxCpltCallback;
+				break;
+			case HAL_OSPI_RX_HALF_CPLT_CB_ID:
+				hospi->RxHalfCpltCallback =
+				    HAL_OSPI_RxHalfCpltCallback;
+				break;
+			case HAL_OSPI_TX_HALF_CPLT_CB_ID:
+				hospi->TxHalfCpltCallback =
+				    HAL_OSPI_TxHalfCpltCallback;
+				break;
+			case HAL_OSPI_STATUS_MATCH_CB_ID:
+				hospi->StatusMatchCallback =
+				    HAL_OSPI_StatusMatchCallback;
+				break;
+			case HAL_OSPI_TIMEOUT_CB_ID:
+				hospi->TimeOutCallback =
+				    HAL_OSPI_TimeOutCallback;
+				break;
+			case HAL_OSPI_MSP_INIT_CB_ID:
+				hospi->MspInitCallback = HAL_OSPI_MspInit;
+				break;
+			case HAL_OSPI_MSP_DEINIT_CB_ID:
+				hospi->MspDeInitCallback = HAL_OSPI_MspDeInit;
+				break;
+			default:
+				/* Update the error code */
+				hospi->ErrorCode |=
+				    HAL_OSPI_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hospi->State == HAL_OSPI_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_OSPI_MSP_INIT_CB_ID:
-			hospi->MspInitCallback = HAL_OSPI_MspInit;
-			break;
-		case HAL_OSPI_MSP_DEINIT_CB_ID:
-			hospi->MspDeInitCallback = HAL_OSPI_MspDeInit;
-			break;
-		default:
-			/* Update the error code */
-			hospi->ErrorCode |= HAL_OSPI_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_OSPI_MSP_INIT_CB_ID:
+				hospi->MspInitCallback = HAL_OSPI_MspInit;
+				break;
+			case HAL_OSPI_MSP_DEINIT_CB_ID:
+				hospi->MspDeInitCallback = HAL_OSPI_MspDeInit;
+				break;
+			default:
+				/* Update the error code */
+				hospi->ErrorCode |=
+				    HAL_OSPI_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */

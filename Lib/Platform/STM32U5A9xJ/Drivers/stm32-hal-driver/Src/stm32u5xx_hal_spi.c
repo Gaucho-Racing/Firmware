@@ -624,77 +624,77 @@ HAL_StatusTypeDef HAL_SPI_RegisterCallback(SPI_HandleTypeDef *hspi,
 
 	if (HAL_SPI_STATE_READY == hspi->State) {
 		switch (CallbackID) {
-		case HAL_SPI_TX_COMPLETE_CB_ID:
-			hspi->TxCpltCallback = pCallback;
-			break;
+			case HAL_SPI_TX_COMPLETE_CB_ID:
+				hspi->TxCpltCallback = pCallback;
+				break;
 
-		case HAL_SPI_RX_COMPLETE_CB_ID:
-			hspi->RxCpltCallback = pCallback;
-			break;
+			case HAL_SPI_RX_COMPLETE_CB_ID:
+				hspi->RxCpltCallback = pCallback;
+				break;
 
-		case HAL_SPI_TX_RX_COMPLETE_CB_ID:
-			hspi->TxRxCpltCallback = pCallback;
-			break;
+			case HAL_SPI_TX_RX_COMPLETE_CB_ID:
+				hspi->TxRxCpltCallback = pCallback;
+				break;
 
-		case HAL_SPI_TX_HALF_COMPLETE_CB_ID:
-			hspi->TxHalfCpltCallback = pCallback;
-			break;
+			case HAL_SPI_TX_HALF_COMPLETE_CB_ID:
+				hspi->TxHalfCpltCallback = pCallback;
+				break;
 
-		case HAL_SPI_RX_HALF_COMPLETE_CB_ID:
-			hspi->RxHalfCpltCallback = pCallback;
-			break;
+			case HAL_SPI_RX_HALF_COMPLETE_CB_ID:
+				hspi->RxHalfCpltCallback = pCallback;
+				break;
 
-		case HAL_SPI_TX_RX_HALF_COMPLETE_CB_ID:
-			hspi->TxRxHalfCpltCallback = pCallback;
-			break;
+			case HAL_SPI_TX_RX_HALF_COMPLETE_CB_ID:
+				hspi->TxRxHalfCpltCallback = pCallback;
+				break;
 
-		case HAL_SPI_ERROR_CB_ID:
-			hspi->ErrorCallback = pCallback;
-			break;
+			case HAL_SPI_ERROR_CB_ID:
+				hspi->ErrorCallback = pCallback;
+				break;
 
-		case HAL_SPI_ABORT_CB_ID:
-			hspi->AbortCpltCallback = pCallback;
-			break;
+			case HAL_SPI_ABORT_CB_ID:
+				hspi->AbortCpltCallback = pCallback;
+				break;
 
-		case HAL_SPI_SUSPEND_CB_ID:
-			hspi->SuspendCallback = pCallback;
-			break;
+			case HAL_SPI_SUSPEND_CB_ID:
+				hspi->SuspendCallback = pCallback;
+				break;
 
-		case HAL_SPI_MSPINIT_CB_ID:
-			hspi->MspInitCallback = pCallback;
-			break;
+			case HAL_SPI_MSPINIT_CB_ID:
+				hspi->MspInitCallback = pCallback;
+				break;
 
-		case HAL_SPI_MSPDEINIT_CB_ID:
-			hspi->MspDeInitCallback = pCallback;
-			break;
+			case HAL_SPI_MSPDEINIT_CB_ID:
+				hspi->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			SET_BIT(hspi->ErrorCode,
-				HAL_SPI_ERROR_INVALID_CALLBACK);
+			default:
+				/* Update the error code */
+				SET_BIT(hspi->ErrorCode,
+					HAL_SPI_ERROR_INVALID_CALLBACK);
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_SPI_STATE_RESET == hspi->State) {
 		switch (CallbackID) {
-		case HAL_SPI_MSPINIT_CB_ID:
-			hspi->MspInitCallback = pCallback;
-			break;
+			case HAL_SPI_MSPINIT_CB_ID:
+				hspi->MspInitCallback = pCallback;
+				break;
 
-		case HAL_SPI_MSPDEINIT_CB_ID:
-			hspi->MspDeInitCallback = pCallback;
-			break;
+			case HAL_SPI_MSPDEINIT_CB_ID:
+				hspi->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			SET_BIT(hspi->ErrorCode,
-				HAL_SPI_ERROR_INVALID_CALLBACK);
+			default:
+				/* Update the error code */
+				SET_BIT(hspi->ErrorCode,
+					HAL_SPI_ERROR_INVALID_CALLBACK);
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -726,100 +726,108 @@ HAL_SPI_UnRegisterCallback(SPI_HandleTypeDef *hspi,
 
 	if (HAL_SPI_STATE_READY == hspi->State) {
 		switch (CallbackID) {
-		case HAL_SPI_TX_COMPLETE_CB_ID:
-			hspi->TxCpltCallback =
-			    HAL_SPI_TxCpltCallback; /* Legacy weak
-						       TxCpltCallback       */
-			break;
+			case HAL_SPI_TX_COMPLETE_CB_ID:
+				hspi->TxCpltCallback =
+				    HAL_SPI_TxCpltCallback; /* Legacy weak
+							       TxCpltCallback */
+				break;
 
-		case HAL_SPI_RX_COMPLETE_CB_ID:
-			hspi->RxCpltCallback =
-			    HAL_SPI_RxCpltCallback; /* Legacy weak
-						       RxCpltCallback       */
-			break;
+			case HAL_SPI_RX_COMPLETE_CB_ID:
+				hspi->RxCpltCallback =
+				    HAL_SPI_RxCpltCallback; /* Legacy weak
+							       RxCpltCallback */
+				break;
 
-		case HAL_SPI_TX_RX_COMPLETE_CB_ID:
-			hspi->TxRxCpltCallback =
-			    HAL_SPI_TxRxCpltCallback; /* Legacy weak
-							 TxRxCpltCallback     */
-			break;
+			case HAL_SPI_TX_RX_COMPLETE_CB_ID:
+				hspi->TxRxCpltCallback =
+				    HAL_SPI_TxRxCpltCallback; /* Legacy weak
+								 TxRxCpltCallback
+							       */
+				break;
 
-		case HAL_SPI_TX_HALF_COMPLETE_CB_ID:
-			hspi->TxHalfCpltCallback =
-			    HAL_SPI_TxHalfCpltCallback; /* Legacy weak
-							   TxHalfCpltCallback */
-			break;
+			case HAL_SPI_TX_HALF_COMPLETE_CB_ID:
+				hspi->TxHalfCpltCallback =
+				    HAL_SPI_TxHalfCpltCallback; /* Legacy weak
+								   TxHalfCpltCallback
+								 */
+				break;
 
-		case HAL_SPI_RX_HALF_COMPLETE_CB_ID:
-			hspi->RxHalfCpltCallback =
-			    HAL_SPI_RxHalfCpltCallback; /* Legacy weak
-							   RxHalfCpltCallback */
-			break;
+			case HAL_SPI_RX_HALF_COMPLETE_CB_ID:
+				hspi->RxHalfCpltCallback =
+				    HAL_SPI_RxHalfCpltCallback; /* Legacy weak
+								   RxHalfCpltCallback
+								 */
+				break;
 
-		case HAL_SPI_TX_RX_HALF_COMPLETE_CB_ID:
-			hspi->TxRxHalfCpltCallback =
-			    HAL_SPI_TxRxHalfCpltCallback; /* Legacy weak
-							     TxRxHalfCpltCallback
-							   */
-			break;
+			case HAL_SPI_TX_RX_HALF_COMPLETE_CB_ID:
+				hspi->TxRxHalfCpltCallback =
+				    HAL_SPI_TxRxHalfCpltCallback; /* Legacy weak
+								     TxRxHalfCpltCallback
+								   */
+				break;
 
-		case HAL_SPI_ERROR_CB_ID:
-			hspi->ErrorCallback =
-			    HAL_SPI_ErrorCallback; /* Legacy weak ErrorCallback
-						    */
-			break;
+			case HAL_SPI_ERROR_CB_ID:
+				hspi->ErrorCallback =
+				    HAL_SPI_ErrorCallback; /* Legacy weak
+							    * ErrorCallback
+							    */
+				break;
 
-		case HAL_SPI_ABORT_CB_ID:
-			hspi->AbortCpltCallback =
-			    HAL_SPI_AbortCpltCallback; /* Legacy weak
-							  AbortCpltCallback */
-			break;
+			case HAL_SPI_ABORT_CB_ID:
+				hspi->AbortCpltCallback =
+				    HAL_SPI_AbortCpltCallback; /* Legacy weak
+								  AbortCpltCallback
+								*/
+				break;
 
-		case HAL_SPI_SUSPEND_CB_ID:
-			hspi->SuspendCallback =
-			    HAL_SPI_SuspendCallback; /* Legacy weak
-							SuspendCallback      */
-			break;
+			case HAL_SPI_SUSPEND_CB_ID:
+				hspi->SuspendCallback =
+				    HAL_SPI_SuspendCallback; /* Legacy weak
+								SuspendCallback
+							      */
+				break;
 
-		case HAL_SPI_MSPINIT_CB_ID:
-			hspi->MspInitCallback =
-			    HAL_SPI_MspInit; /* Legacy weak MspInit */
-			break;
+			case HAL_SPI_MSPINIT_CB_ID:
+				hspi->MspInitCallback =
+				    HAL_SPI_MspInit; /* Legacy weak MspInit */
+				break;
 
-		case HAL_SPI_MSPDEINIT_CB_ID:
-			hspi->MspDeInitCallback =
-			    HAL_SPI_MspDeInit; /* Legacy weak MspDeInit */
-			break;
+			case HAL_SPI_MSPDEINIT_CB_ID:
+				hspi->MspDeInitCallback =
+				    HAL_SPI_MspDeInit; /* Legacy weak MspDeInit
+							*/
+				break;
 
-		default:
-			/* Update the error code */
-			SET_BIT(hspi->ErrorCode,
-				HAL_SPI_ERROR_INVALID_CALLBACK);
+			default:
+				/* Update the error code */
+				SET_BIT(hspi->ErrorCode,
+					HAL_SPI_ERROR_INVALID_CALLBACK);
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_SPI_STATE_RESET == hspi->State) {
 		switch (CallbackID) {
-		case HAL_SPI_MSPINIT_CB_ID:
-			hspi->MspInitCallback =
-			    HAL_SPI_MspInit; /* Legacy weak MspInit */
-			break;
+			case HAL_SPI_MSPINIT_CB_ID:
+				hspi->MspInitCallback =
+				    HAL_SPI_MspInit; /* Legacy weak MspInit */
+				break;
 
-		case HAL_SPI_MSPDEINIT_CB_ID:
-			hspi->MspDeInitCallback =
-			    HAL_SPI_MspDeInit; /* Legacy weak MspDeInit */
-			break;
+			case HAL_SPI_MSPDEINIT_CB_ID:
+				hspi->MspDeInitCallback =
+				    HAL_SPI_MspDeInit; /* Legacy weak MspDeInit
+							*/
+				break;
 
-		default:
-			/* Update the error code */
-			SET_BIT(hspi->ErrorCode,
-				HAL_SPI_ERROR_INVALID_CALLBACK);
+			default:
+				/* Update the error code */
+				SET_BIT(hspi->ErrorCode,
+					HAL_SPI_ERROR_INVALID_CALLBACK);
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */

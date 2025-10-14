@@ -626,128 +626,128 @@ HAL_StatusTypeDef HAL_RTC_RegisterCallback(RTC_HandleTypeDef *hrtc,
 
 	if (HAL_RTC_STATE_READY == hrtc->State) {
 		switch (CallbackID) {
-		case HAL_RTC_ALARM_A_EVENT_CB_ID:
-			hrtc->AlarmAEventCallback = pCallback;
-			break;
+			case HAL_RTC_ALARM_A_EVENT_CB_ID:
+				hrtc->AlarmAEventCallback = pCallback;
+				break;
 
-		case HAL_RTC_ALARM_B_EVENT_CB_ID:
-			hrtc->AlarmBEventCallback = pCallback;
-			break;
+			case HAL_RTC_ALARM_B_EVENT_CB_ID:
+				hrtc->AlarmBEventCallback = pCallback;
+				break;
 
-		case HAL_RTC_TIMESTAMP_EVENT_CB_ID:
-			hrtc->TimeStampEventCallback = pCallback;
-			break;
+			case HAL_RTC_TIMESTAMP_EVENT_CB_ID:
+				hrtc->TimeStampEventCallback = pCallback;
+				break;
 
-		case HAL_RTC_WAKEUPTIMER_EVENT_CB_ID:
-			hrtc->WakeUpTimerEventCallback = pCallback;
-			break;
+			case HAL_RTC_WAKEUPTIMER_EVENT_CB_ID:
+				hrtc->WakeUpTimerEventCallback = pCallback;
+				break;
 
-		case HAL_RTC_SSRU_EVENT_CB_ID:
-			hrtc->SSRUEventCallback = pCallback;
-			break;
+			case HAL_RTC_SSRU_EVENT_CB_ID:
+				hrtc->SSRUEventCallback = pCallback;
+				break;
 
-		case HAL_RTC_TAMPER1_EVENT_CB_ID:
-			hrtc->Tamper1EventCallback = pCallback;
-			break;
+			case HAL_RTC_TAMPER1_EVENT_CB_ID:
+				hrtc->Tamper1EventCallback = pCallback;
+				break;
 
-		case HAL_RTC_TAMPER2_EVENT_CB_ID:
-			hrtc->Tamper2EventCallback = pCallback;
-			break;
+			case HAL_RTC_TAMPER2_EVENT_CB_ID:
+				hrtc->Tamper2EventCallback = pCallback;
+				break;
 
-		case HAL_RTC_TAMPER3_EVENT_CB_ID:
-			hrtc->Tamper3EventCallback = pCallback;
-			break;
+			case HAL_RTC_TAMPER3_EVENT_CB_ID:
+				hrtc->Tamper3EventCallback = pCallback;
+				break;
 
-		case HAL_RTC_TAMPER4_EVENT_CB_ID:
-			hrtc->Tamper4EventCallback = pCallback;
-			break;
+			case HAL_RTC_TAMPER4_EVENT_CB_ID:
+				hrtc->Tamper4EventCallback = pCallback;
+				break;
 
-		case HAL_RTC_TAMPER5_EVENT_CB_ID:
-			hrtc->Tamper5EventCallback = pCallback;
-			break;
+			case HAL_RTC_TAMPER5_EVENT_CB_ID:
+				hrtc->Tamper5EventCallback = pCallback;
+				break;
 
-		case HAL_RTC_TAMPER6_EVENT_CB_ID:
-			hrtc->Tamper6EventCallback = pCallback;
-			break;
+			case HAL_RTC_TAMPER6_EVENT_CB_ID:
+				hrtc->Tamper6EventCallback = pCallback;
+				break;
 
-		case HAL_RTC_TAMPER7_EVENT_CB_ID:
-			hrtc->Tamper7EventCallback = pCallback;
-			break;
+			case HAL_RTC_TAMPER7_EVENT_CB_ID:
+				hrtc->Tamper7EventCallback = pCallback;
+				break;
 
-		case HAL_RTC_TAMPER8_EVENT_CB_ID:
-			hrtc->Tamper8EventCallback = pCallback;
-			break;
+			case HAL_RTC_TAMPER8_EVENT_CB_ID:
+				hrtc->Tamper8EventCallback = pCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER1_EVENT_CB_ID:
-			hrtc->InternalTamper1EventCallback = pCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER1_EVENT_CB_ID:
+				hrtc->InternalTamper1EventCallback = pCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER2_EVENT_CB_ID:
-			hrtc->InternalTamper2EventCallback = pCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER2_EVENT_CB_ID:
+				hrtc->InternalTamper2EventCallback = pCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER3_EVENT_CB_ID:
-			hrtc->InternalTamper3EventCallback = pCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER3_EVENT_CB_ID:
+				hrtc->InternalTamper3EventCallback = pCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER5_EVENT_CB_ID:
-			hrtc->InternalTamper5EventCallback = pCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER5_EVENT_CB_ID:
+				hrtc->InternalTamper5EventCallback = pCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER6_EVENT_CB_ID:
-			hrtc->InternalTamper6EventCallback = pCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER6_EVENT_CB_ID:
+				hrtc->InternalTamper6EventCallback = pCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER7_EVENT_CB_ID:
-			hrtc->InternalTamper7EventCallback = pCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER7_EVENT_CB_ID:
+				hrtc->InternalTamper7EventCallback = pCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER8_EVENT_CB_ID:
-			hrtc->InternalTamper8EventCallback = pCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER8_EVENT_CB_ID:
+				hrtc->InternalTamper8EventCallback = pCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER9_EVENT_CB_ID:
-			hrtc->InternalTamper9EventCallback = pCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER9_EVENT_CB_ID:
+				hrtc->InternalTamper9EventCallback = pCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER11_EVENT_CB_ID:
-			hrtc->InternalTamper11EventCallback = pCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER11_EVENT_CB_ID:
+				hrtc->InternalTamper11EventCallback = pCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER12_EVENT_CB_ID:
-			hrtc->InternalTamper12EventCallback = pCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER12_EVENT_CB_ID:
+				hrtc->InternalTamper12EventCallback = pCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER13_EVENT_CB_ID:
-			hrtc->InternalTamper13EventCallback = pCallback;
-			break;
-		case HAL_RTC_MSPINIT_CB_ID:
-			hrtc->MspInitCallback = pCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER13_EVENT_CB_ID:
+				hrtc->InternalTamper13EventCallback = pCallback;
+				break;
+			case HAL_RTC_MSPINIT_CB_ID:
+				hrtc->MspInitCallback = pCallback;
+				break;
 
-		case HAL_RTC_MSPDEINIT_CB_ID:
-			hrtc->MspDeInitCallback = pCallback;
-			break;
+			case HAL_RTC_MSPDEINIT_CB_ID:
+				hrtc->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_RTC_STATE_RESET == hrtc->State) {
 		switch (CallbackID) {
-		case HAL_RTC_MSPINIT_CB_ID:
-			hrtc->MspInitCallback = pCallback;
-			break;
+			case HAL_RTC_MSPINIT_CB_ID:
+				hrtc->MspInitCallback = pCallback;
+				break;
 
-		case HAL_RTC_MSPDEINIT_CB_ID:
-			hrtc->MspDeInitCallback = pCallback;
-			break;
+			case HAL_RTC_MSPDEINIT_CB_ID:
+				hrtc->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Return error status */
@@ -831,174 +831,176 @@ HAL_RTC_UnRegisterCallback(RTC_HandleTypeDef *hrtc,
 
 	if (HAL_RTC_STATE_READY == hrtc->State) {
 		switch (CallbackID) {
-		case HAL_RTC_ALARM_A_EVENT_CB_ID:
-			/* Legacy weak AlarmAEventCallback */
-			hrtc->AlarmAEventCallback = HAL_RTC_AlarmAEventCallback;
-			break;
+			case HAL_RTC_ALARM_A_EVENT_CB_ID:
+				/* Legacy weak AlarmAEventCallback */
+				hrtc->AlarmAEventCallback =
+				    HAL_RTC_AlarmAEventCallback;
+				break;
 
-		case HAL_RTC_ALARM_B_EVENT_CB_ID:
-			/* Legacy weak AlarmBEventCallback */
-			hrtc->AlarmBEventCallback =
-			    HAL_RTCEx_AlarmBEventCallback;
-			break;
+			case HAL_RTC_ALARM_B_EVENT_CB_ID:
+				/* Legacy weak AlarmBEventCallback */
+				hrtc->AlarmBEventCallback =
+				    HAL_RTCEx_AlarmBEventCallback;
+				break;
 
-		case HAL_RTC_TIMESTAMP_EVENT_CB_ID:
-			/* Legacy weak TimeStampEventCallback */
-			hrtc->TimeStampEventCallback =
-			    HAL_RTCEx_TimeStampEventCallback;
-			break;
+			case HAL_RTC_TIMESTAMP_EVENT_CB_ID:
+				/* Legacy weak TimeStampEventCallback */
+				hrtc->TimeStampEventCallback =
+				    HAL_RTCEx_TimeStampEventCallback;
+				break;
 
-		case HAL_RTC_WAKEUPTIMER_EVENT_CB_ID:
-			/* Legacy weak WakeUpTimerEventCallback */
-			hrtc->WakeUpTimerEventCallback =
-			    HAL_RTCEx_WakeUpTimerEventCallback;
-			break;
+			case HAL_RTC_WAKEUPTIMER_EVENT_CB_ID:
+				/* Legacy weak WakeUpTimerEventCallback */
+				hrtc->WakeUpTimerEventCallback =
+				    HAL_RTCEx_WakeUpTimerEventCallback;
+				break;
 
-		case HAL_RTC_SSRU_EVENT_CB_ID:
-			/* Legacy weak SSRUEventCallback */
-			hrtc->SSRUEventCallback = HAL_RTCEx_SSRUEventCallback;
-			break;
+			case HAL_RTC_SSRU_EVENT_CB_ID:
+				/* Legacy weak SSRUEventCallback */
+				hrtc->SSRUEventCallback =
+				    HAL_RTCEx_SSRUEventCallback;
+				break;
 
-		case HAL_RTC_TAMPER1_EVENT_CB_ID:
-			/* Legacy weak Tamper1EventCallback */
-			hrtc->Tamper1EventCallback =
-			    HAL_RTCEx_Tamper1EventCallback;
-			break;
+			case HAL_RTC_TAMPER1_EVENT_CB_ID:
+				/* Legacy weak Tamper1EventCallback */
+				hrtc->Tamper1EventCallback =
+				    HAL_RTCEx_Tamper1EventCallback;
+				break;
 
-		case HAL_RTC_TAMPER2_EVENT_CB_ID:
-			/* Legacy weak Tamper2EventCallback */
-			hrtc->Tamper2EventCallback =
-			    HAL_RTCEx_Tamper2EventCallback;
-			break;
+			case HAL_RTC_TAMPER2_EVENT_CB_ID:
+				/* Legacy weak Tamper2EventCallback */
+				hrtc->Tamper2EventCallback =
+				    HAL_RTCEx_Tamper2EventCallback;
+				break;
 
-		case HAL_RTC_TAMPER3_EVENT_CB_ID:
-			/* Legacy weak Tamper3EventCallback */
-			hrtc->Tamper3EventCallback =
-			    HAL_RTCEx_Tamper3EventCallback;
-			break;
+			case HAL_RTC_TAMPER3_EVENT_CB_ID:
+				/* Legacy weak Tamper3EventCallback */
+				hrtc->Tamper3EventCallback =
+				    HAL_RTCEx_Tamper3EventCallback;
+				break;
 
-		case HAL_RTC_TAMPER4_EVENT_CB_ID:
-			/* Legacy weak Tamper4EventCallback */
-			hrtc->Tamper4EventCallback =
-			    HAL_RTCEx_Tamper4EventCallback;
-			break;
+			case HAL_RTC_TAMPER4_EVENT_CB_ID:
+				/* Legacy weak Tamper4EventCallback */
+				hrtc->Tamper4EventCallback =
+				    HAL_RTCEx_Tamper4EventCallback;
+				break;
 
-		case HAL_RTC_TAMPER5_EVENT_CB_ID:
-			/* Legacy weak Tamper5EventCallback */
-			hrtc->Tamper5EventCallback =
-			    HAL_RTCEx_Tamper5EventCallback;
-			break;
+			case HAL_RTC_TAMPER5_EVENT_CB_ID:
+				/* Legacy weak Tamper5EventCallback */
+				hrtc->Tamper5EventCallback =
+				    HAL_RTCEx_Tamper5EventCallback;
+				break;
 
-		case HAL_RTC_TAMPER6_EVENT_CB_ID:
-			/* Legacy weak Tamper6EventCallback */
-			hrtc->Tamper6EventCallback =
-			    HAL_RTCEx_Tamper6EventCallback;
-			break;
+			case HAL_RTC_TAMPER6_EVENT_CB_ID:
+				/* Legacy weak Tamper6EventCallback */
+				hrtc->Tamper6EventCallback =
+				    HAL_RTCEx_Tamper6EventCallback;
+				break;
 
-		case HAL_RTC_TAMPER7_EVENT_CB_ID:
-			/* Legacy weak Tamper7EventCallback */
-			hrtc->Tamper7EventCallback =
-			    HAL_RTCEx_Tamper7EventCallback;
-			break;
+			case HAL_RTC_TAMPER7_EVENT_CB_ID:
+				/* Legacy weak Tamper7EventCallback */
+				hrtc->Tamper7EventCallback =
+				    HAL_RTCEx_Tamper7EventCallback;
+				break;
 
-		case HAL_RTC_TAMPER8_EVENT_CB_ID:
-			/* Legacy weak Tamper8EventCallback */
-			hrtc->Tamper8EventCallback =
-			    HAL_RTCEx_Tamper8EventCallback;
-			break;
+			case HAL_RTC_TAMPER8_EVENT_CB_ID:
+				/* Legacy weak Tamper8EventCallback */
+				hrtc->Tamper8EventCallback =
+				    HAL_RTCEx_Tamper8EventCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER1_EVENT_CB_ID:
-			/* Legacy weak InternalTamper1EventCallback */
-			hrtc->InternalTamper1EventCallback =
-			    HAL_RTCEx_InternalTamper1EventCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER1_EVENT_CB_ID:
+				/* Legacy weak InternalTamper1EventCallback */
+				hrtc->InternalTamper1EventCallback =
+				    HAL_RTCEx_InternalTamper1EventCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER2_EVENT_CB_ID:
-			/* Legacy weak InternalTamper2EventCallback */
-			hrtc->InternalTamper2EventCallback =
-			    HAL_RTCEx_InternalTamper2EventCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER2_EVENT_CB_ID:
+				/* Legacy weak InternalTamper2EventCallback */
+				hrtc->InternalTamper2EventCallback =
+				    HAL_RTCEx_InternalTamper2EventCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER3_EVENT_CB_ID:
-			/* Legacy weak InternalTamper3EventCallback */
-			hrtc->InternalTamper3EventCallback =
-			    HAL_RTCEx_InternalTamper3EventCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER3_EVENT_CB_ID:
+				/* Legacy weak InternalTamper3EventCallback */
+				hrtc->InternalTamper3EventCallback =
+				    HAL_RTCEx_InternalTamper3EventCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER5_EVENT_CB_ID:
-			/* Legacy weak InternalTamper5EventCallback */
-			hrtc->InternalTamper5EventCallback =
-			    HAL_RTCEx_InternalTamper5EventCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER5_EVENT_CB_ID:
+				/* Legacy weak InternalTamper5EventCallback */
+				hrtc->InternalTamper5EventCallback =
+				    HAL_RTCEx_InternalTamper5EventCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER6_EVENT_CB_ID:
-			/* Legacy weak InternalTamper6EventCallback */
-			hrtc->InternalTamper6EventCallback =
-			    HAL_RTCEx_InternalTamper6EventCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER6_EVENT_CB_ID:
+				/* Legacy weak InternalTamper6EventCallback */
+				hrtc->InternalTamper6EventCallback =
+				    HAL_RTCEx_InternalTamper6EventCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER7_EVENT_CB_ID:
-			/* Legacy weak InternalTamper7EventCallback */
-			hrtc->InternalTamper7EventCallback =
-			    HAL_RTCEx_InternalTamper7EventCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER7_EVENT_CB_ID:
+				/* Legacy weak InternalTamper7EventCallback */
+				hrtc->InternalTamper7EventCallback =
+				    HAL_RTCEx_InternalTamper7EventCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER8_EVENT_CB_ID:
-			/* Legacy weak InternalTamper8EventCallback */
-			hrtc->InternalTamper8EventCallback =
-			    HAL_RTCEx_InternalTamper8EventCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER8_EVENT_CB_ID:
+				/* Legacy weak InternalTamper8EventCallback */
+				hrtc->InternalTamper8EventCallback =
+				    HAL_RTCEx_InternalTamper8EventCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER9_EVENT_CB_ID:
-			/* Legacy weak InternalTamper9EventCallback */
-			hrtc->InternalTamper9EventCallback =
-			    HAL_RTCEx_InternalTamper9EventCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER9_EVENT_CB_ID:
+				/* Legacy weak InternalTamper9EventCallback */
+				hrtc->InternalTamper9EventCallback =
+				    HAL_RTCEx_InternalTamper9EventCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER11_EVENT_CB_ID:
-			/* Legacy weak InternalTamper11EventCallback */
-			hrtc->InternalTamper11EventCallback =
-			    HAL_RTCEx_InternalTamper11EventCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER11_EVENT_CB_ID:
+				/* Legacy weak InternalTamper11EventCallback */
+				hrtc->InternalTamper11EventCallback =
+				    HAL_RTCEx_InternalTamper11EventCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER12_EVENT_CB_ID:
-			/* Legacy weak InternalTamper12EventCallback */
-			hrtc->InternalTamper12EventCallback =
-			    HAL_RTCEx_InternalTamper12EventCallback;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER12_EVENT_CB_ID:
+				/* Legacy weak InternalTamper12EventCallback */
+				hrtc->InternalTamper12EventCallback =
+				    HAL_RTCEx_InternalTamper12EventCallback;
+				break;
 
-		case HAL_RTC_INTERNAL_TAMPER13_EVENT_CB_ID:
-			/* Legacy weak InternalTamper13EventCallback */
-			hrtc->InternalTamper13EventCallback =
-			    HAL_RTCEx_InternalTamper13EventCallback;
-			break;
-		case HAL_RTC_MSPINIT_CB_ID:
-			hrtc->MspInitCallback = HAL_RTC_MspInit;
-			break;
+			case HAL_RTC_INTERNAL_TAMPER13_EVENT_CB_ID:
+				/* Legacy weak InternalTamper13EventCallback */
+				hrtc->InternalTamper13EventCallback =
+				    HAL_RTCEx_InternalTamper13EventCallback;
+				break;
+			case HAL_RTC_MSPINIT_CB_ID:
+				hrtc->MspInitCallback = HAL_RTC_MspInit;
+				break;
 
-		case HAL_RTC_MSPDEINIT_CB_ID:
-			hrtc->MspDeInitCallback = HAL_RTC_MspDeInit;
-			break;
+			case HAL_RTC_MSPDEINIT_CB_ID:
+				hrtc->MspDeInitCallback = HAL_RTC_MspDeInit;
+				break;
 
-		default:
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_RTC_STATE_RESET == hrtc->State) {
 		switch (CallbackID) {
-		case HAL_RTC_MSPINIT_CB_ID:
-			hrtc->MspInitCallback = HAL_RTC_MspInit;
-			break;
+			case HAL_RTC_MSPINIT_CB_ID:
+				hrtc->MspInitCallback = HAL_RTC_MspInit;
+				break;
 
-		case HAL_RTC_MSPDEINIT_CB_ID:
-			hrtc->MspDeInitCallback = HAL_RTC_MspDeInit;
-			break;
+			case HAL_RTC_MSPDEINIT_CB_ID:
+				hrtc->MspDeInitCallback = HAL_RTC_MspDeInit;
+				break;
 
-		default:
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Return error status */

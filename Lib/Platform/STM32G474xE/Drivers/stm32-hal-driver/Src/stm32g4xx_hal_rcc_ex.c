@@ -825,541 +825,603 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 
 		switch (PeriphClk) {
 
-		case RCC_PERIPHCLK_USART1:
-			/* Get the current USART1 source */
-			srcclk = __HAL_RCC_GET_USART1_SOURCE();
+			case RCC_PERIPHCLK_USART1:
+				/* Get the current USART1 source */
+				srcclk = __HAL_RCC_GET_USART1_SOURCE();
 
-			if (srcclk == RCC_USART1CLKSOURCE_PCLK2) {
-				frequency = HAL_RCC_GetPCLK2Freq();
-			} else if (srcclk == RCC_USART1CLKSOURCE_SYSCLK) {
-				frequency = HAL_RCC_GetSysClockFreq();
-			} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-				   (srcclk == RCC_USART1CLKSOURCE_HSI)) {
-				frequency = HSI_VALUE;
-			} else if ((HAL_IS_BIT_SET(RCC->BDCR,
-						   RCC_BDCR_LSERDY)) &&
-				   (srcclk == RCC_USART1CLKSOURCE_LSE)) {
-				frequency = LSE_VALUE;
-			}
-			/* Clock not enabled for USART1 */
-			else {
-				/* nothing to do: frequency already initialized
-				 * to 0 */
-			}
-			break;
+				if (srcclk == RCC_USART1CLKSOURCE_PCLK2) {
+					frequency = HAL_RCC_GetPCLK2Freq();
+				} else if (srcclk ==
+					   RCC_USART1CLKSOURCE_SYSCLK) {
+					frequency = HAL_RCC_GetSysClockFreq();
+				} else if ((HAL_IS_BIT_SET(RCC->CR,
+							   RCC_CR_HSIRDY)) &&
+					   (srcclk ==
+					    RCC_USART1CLKSOURCE_HSI)) {
+					frequency = HSI_VALUE;
+				} else if ((HAL_IS_BIT_SET(RCC->BDCR,
+							   RCC_BDCR_LSERDY)) &&
+					   (srcclk ==
+					    RCC_USART1CLKSOURCE_LSE)) {
+					frequency = LSE_VALUE;
+				}
+				/* Clock not enabled for USART1 */
+				else {
+					/* nothing to do: frequency already
+					 * initialized to 0 */
+				}
+				break;
 
-		case RCC_PERIPHCLK_USART2:
-			/* Get the current USART2 source */
-			srcclk = __HAL_RCC_GET_USART2_SOURCE();
+			case RCC_PERIPHCLK_USART2:
+				/* Get the current USART2 source */
+				srcclk = __HAL_RCC_GET_USART2_SOURCE();
 
-			if (srcclk == RCC_USART2CLKSOURCE_PCLK1) {
-				frequency = HAL_RCC_GetPCLK1Freq();
-			} else if (srcclk == RCC_USART2CLKSOURCE_SYSCLK) {
-				frequency = HAL_RCC_GetSysClockFreq();
-			} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-				   (srcclk == RCC_USART2CLKSOURCE_HSI)) {
-				frequency = HSI_VALUE;
-			} else if ((HAL_IS_BIT_SET(RCC->BDCR,
-						   RCC_BDCR_LSERDY)) &&
-				   (srcclk == RCC_USART2CLKSOURCE_LSE)) {
-				frequency = LSE_VALUE;
-			}
-			/* Clock not enabled for USART2 */
-			else {
-				/* nothing to do: frequency already initialized
-				 * to 0 */
-			}
-			break;
+				if (srcclk == RCC_USART2CLKSOURCE_PCLK1) {
+					frequency = HAL_RCC_GetPCLK1Freq();
+				} else if (srcclk ==
+					   RCC_USART2CLKSOURCE_SYSCLK) {
+					frequency = HAL_RCC_GetSysClockFreq();
+				} else if ((HAL_IS_BIT_SET(RCC->CR,
+							   RCC_CR_HSIRDY)) &&
+					   (srcclk ==
+					    RCC_USART2CLKSOURCE_HSI)) {
+					frequency = HSI_VALUE;
+				} else if ((HAL_IS_BIT_SET(RCC->BDCR,
+							   RCC_BDCR_LSERDY)) &&
+					   (srcclk ==
+					    RCC_USART2CLKSOURCE_LSE)) {
+					frequency = LSE_VALUE;
+				}
+				/* Clock not enabled for USART2 */
+				else {
+					/* nothing to do: frequency already
+					 * initialized to 0 */
+				}
+				break;
 
 #if defined(USART3)
-		case RCC_PERIPHCLK_USART3:
-			/* Get the current USART3 source */
-			srcclk = __HAL_RCC_GET_USART3_SOURCE();
+			case RCC_PERIPHCLK_USART3:
+				/* Get the current USART3 source */
+				srcclk = __HAL_RCC_GET_USART3_SOURCE();
 
-			if (srcclk == RCC_USART3CLKSOURCE_PCLK1) {
-				frequency = HAL_RCC_GetPCLK1Freq();
-			} else if (srcclk == RCC_USART3CLKSOURCE_SYSCLK) {
-				frequency = HAL_RCC_GetSysClockFreq();
-			} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-				   (srcclk == RCC_USART3CLKSOURCE_HSI)) {
-				frequency = HSI_VALUE;
-			} else if ((HAL_IS_BIT_SET(RCC->BDCR,
-						   RCC_BDCR_LSERDY)) &&
-				   (srcclk == RCC_USART3CLKSOURCE_LSE)) {
-				frequency = LSE_VALUE;
-			}
-			/* Clock not enabled for USART3 */
-			else {
-				/* nothing to do: frequency already initialized
-				 * to 0 */
-			}
-			break;
+				if (srcclk == RCC_USART3CLKSOURCE_PCLK1) {
+					frequency = HAL_RCC_GetPCLK1Freq();
+				} else if (srcclk ==
+					   RCC_USART3CLKSOURCE_SYSCLK) {
+					frequency = HAL_RCC_GetSysClockFreq();
+				} else if ((HAL_IS_BIT_SET(RCC->CR,
+							   RCC_CR_HSIRDY)) &&
+					   (srcclk ==
+					    RCC_USART3CLKSOURCE_HSI)) {
+					frequency = HSI_VALUE;
+				} else if ((HAL_IS_BIT_SET(RCC->BDCR,
+							   RCC_BDCR_LSERDY)) &&
+					   (srcclk ==
+					    RCC_USART3CLKSOURCE_LSE)) {
+					frequency = LSE_VALUE;
+				}
+				/* Clock not enabled for USART3 */
+				else {
+					/* nothing to do: frequency already
+					 * initialized to 0 */
+				}
+				break;
 #endif /* USART3 */
 
 #if defined(UART4)
-		case RCC_PERIPHCLK_UART4:
-			/* Get the current UART4 source */
-			srcclk = __HAL_RCC_GET_UART4_SOURCE();
+			case RCC_PERIPHCLK_UART4:
+				/* Get the current UART4 source */
+				srcclk = __HAL_RCC_GET_UART4_SOURCE();
 
-			if (srcclk == RCC_UART4CLKSOURCE_PCLK1) {
-				frequency = HAL_RCC_GetPCLK1Freq();
-			} else if (srcclk == RCC_UART4CLKSOURCE_SYSCLK) {
-				frequency = HAL_RCC_GetSysClockFreq();
-			} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-				   (srcclk == RCC_UART4CLKSOURCE_HSI)) {
-				frequency = HSI_VALUE;
-			} else if ((HAL_IS_BIT_SET(RCC->BDCR,
-						   RCC_BDCR_LSERDY)) &&
-				   (srcclk == RCC_UART4CLKSOURCE_LSE)) {
-				frequency = LSE_VALUE;
-			}
-			/* Clock not enabled for UART4 */
-			else {
-				/* nothing to do: frequency already initialized
-				 * to 0 */
-			}
-			break;
+				if (srcclk == RCC_UART4CLKSOURCE_PCLK1) {
+					frequency = HAL_RCC_GetPCLK1Freq();
+				} else if (srcclk ==
+					   RCC_UART4CLKSOURCE_SYSCLK) {
+					frequency = HAL_RCC_GetSysClockFreq();
+				} else if ((HAL_IS_BIT_SET(RCC->CR,
+							   RCC_CR_HSIRDY)) &&
+					   (srcclk == RCC_UART4CLKSOURCE_HSI)) {
+					frequency = HSI_VALUE;
+				} else if ((HAL_IS_BIT_SET(RCC->BDCR,
+							   RCC_BDCR_LSERDY)) &&
+					   (srcclk == RCC_UART4CLKSOURCE_LSE)) {
+					frequency = LSE_VALUE;
+				}
+				/* Clock not enabled for UART4 */
+				else {
+					/* nothing to do: frequency already
+					 * initialized to 0 */
+				}
+				break;
 #endif /* UART4 */
 
 #if defined(UART5)
-		case RCC_PERIPHCLK_UART5:
-			/* Get the current UART5 source */
-			srcclk = __HAL_RCC_GET_UART5_SOURCE();
+			case RCC_PERIPHCLK_UART5:
+				/* Get the current UART5 source */
+				srcclk = __HAL_RCC_GET_UART5_SOURCE();
 
-			if (srcclk == RCC_UART5CLKSOURCE_PCLK1) {
-				frequency = HAL_RCC_GetPCLK1Freq();
-			} else if (srcclk == RCC_UART5CLKSOURCE_SYSCLK) {
-				frequency = HAL_RCC_GetSysClockFreq();
-			} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-				   (srcclk == RCC_UART5CLKSOURCE_HSI)) {
-				frequency = HSI_VALUE;
-			} else if ((HAL_IS_BIT_SET(RCC->BDCR,
-						   RCC_BDCR_LSERDY)) &&
-				   (srcclk == RCC_UART5CLKSOURCE_LSE)) {
-				frequency = LSE_VALUE;
-			}
-			/* Clock not enabled for UART5 */
-			else {
-				/* nothing to do: frequency already initialized
-				 * to 0 */
-			}
-			break;
+				if (srcclk == RCC_UART5CLKSOURCE_PCLK1) {
+					frequency = HAL_RCC_GetPCLK1Freq();
+				} else if (srcclk ==
+					   RCC_UART5CLKSOURCE_SYSCLK) {
+					frequency = HAL_RCC_GetSysClockFreq();
+				} else if ((HAL_IS_BIT_SET(RCC->CR,
+							   RCC_CR_HSIRDY)) &&
+					   (srcclk == RCC_UART5CLKSOURCE_HSI)) {
+					frequency = HSI_VALUE;
+				} else if ((HAL_IS_BIT_SET(RCC->BDCR,
+							   RCC_BDCR_LSERDY)) &&
+					   (srcclk == RCC_UART5CLKSOURCE_LSE)) {
+					frequency = LSE_VALUE;
+				}
+				/* Clock not enabled for UART5 */
+				else {
+					/* nothing to do: frequency already
+					 * initialized to 0 */
+				}
+				break;
 #endif /* UART5 */
 
-		case RCC_PERIPHCLK_LPUART1:
-			/* Get the current LPUART1 source */
-			srcclk = __HAL_RCC_GET_LPUART1_SOURCE();
+			case RCC_PERIPHCLK_LPUART1:
+				/* Get the current LPUART1 source */
+				srcclk = __HAL_RCC_GET_LPUART1_SOURCE();
 
-			if (srcclk == RCC_LPUART1CLKSOURCE_PCLK1) {
-				frequency = HAL_RCC_GetPCLK1Freq();
-			} else if (srcclk == RCC_LPUART1CLKSOURCE_SYSCLK) {
-				frequency = HAL_RCC_GetSysClockFreq();
-			} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-				   (srcclk == RCC_LPUART1CLKSOURCE_HSI)) {
-				frequency = HSI_VALUE;
-			} else if ((HAL_IS_BIT_SET(RCC->BDCR,
-						   RCC_BDCR_LSERDY)) &&
-				   (srcclk == RCC_LPUART1CLKSOURCE_LSE)) {
-				frequency = LSE_VALUE;
-			}
-			/* Clock not enabled for LPUART1 */
-			else {
-				/* nothing to do: frequency already initialized
-				 * to 0 */
-			}
-			break;
+				if (srcclk == RCC_LPUART1CLKSOURCE_PCLK1) {
+					frequency = HAL_RCC_GetPCLK1Freq();
+				} else if (srcclk ==
+					   RCC_LPUART1CLKSOURCE_SYSCLK) {
+					frequency = HAL_RCC_GetSysClockFreq();
+				} else if ((HAL_IS_BIT_SET(RCC->CR,
+							   RCC_CR_HSIRDY)) &&
+					   (srcclk ==
+					    RCC_LPUART1CLKSOURCE_HSI)) {
+					frequency = HSI_VALUE;
+				} else if ((HAL_IS_BIT_SET(RCC->BDCR,
+							   RCC_BDCR_LSERDY)) &&
+					   (srcclk ==
+					    RCC_LPUART1CLKSOURCE_LSE)) {
+					frequency = LSE_VALUE;
+				}
+				/* Clock not enabled for LPUART1 */
+				else {
+					/* nothing to do: frequency already
+					 * initialized to 0 */
+				}
+				break;
 
-		case RCC_PERIPHCLK_I2C1:
-			/* Get the current I2C1 source */
-			srcclk = __HAL_RCC_GET_I2C1_SOURCE();
+			case RCC_PERIPHCLK_I2C1:
+				/* Get the current I2C1 source */
+				srcclk = __HAL_RCC_GET_I2C1_SOURCE();
 
-			if (srcclk == RCC_I2C1CLKSOURCE_PCLK1) {
-				frequency = HAL_RCC_GetPCLK1Freq();
-			} else if (srcclk == RCC_I2C1CLKSOURCE_SYSCLK) {
-				frequency = HAL_RCC_GetSysClockFreq();
-			} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-				   (srcclk == RCC_I2C1CLKSOURCE_HSI)) {
-				frequency = HSI_VALUE;
-			}
-			/* Clock not enabled for I2C1 */
-			else {
-				/* nothing to do: frequency already initialized
-				 * to 0 */
-			}
-			break;
+				if (srcclk == RCC_I2C1CLKSOURCE_PCLK1) {
+					frequency = HAL_RCC_GetPCLK1Freq();
+				} else if (srcclk == RCC_I2C1CLKSOURCE_SYSCLK) {
+					frequency = HAL_RCC_GetSysClockFreq();
+				} else if ((HAL_IS_BIT_SET(RCC->CR,
+							   RCC_CR_HSIRDY)) &&
+					   (srcclk == RCC_I2C1CLKSOURCE_HSI)) {
+					frequency = HSI_VALUE;
+				}
+				/* Clock not enabled for I2C1 */
+				else {
+					/* nothing to do: frequency already
+					 * initialized to 0 */
+				}
+				break;
 
-		case RCC_PERIPHCLK_I2C2:
-			/* Get the current I2C2 source */
-			srcclk = __HAL_RCC_GET_I2C2_SOURCE();
+			case RCC_PERIPHCLK_I2C2:
+				/* Get the current I2C2 source */
+				srcclk = __HAL_RCC_GET_I2C2_SOURCE();
 
-			if (srcclk == RCC_I2C2CLKSOURCE_PCLK1) {
-				frequency = HAL_RCC_GetPCLK1Freq();
-			} else if (srcclk == RCC_I2C2CLKSOURCE_SYSCLK) {
-				frequency = HAL_RCC_GetSysClockFreq();
-			} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-				   (srcclk == RCC_I2C2CLKSOURCE_HSI)) {
-				frequency = HSI_VALUE;
-			}
-			/* Clock not enabled for I2C2 */
-			else {
-				/* nothing to do: frequency already initialized
-				 * to 0 */
-			}
-			break;
+				if (srcclk == RCC_I2C2CLKSOURCE_PCLK1) {
+					frequency = HAL_RCC_GetPCLK1Freq();
+				} else if (srcclk == RCC_I2C2CLKSOURCE_SYSCLK) {
+					frequency = HAL_RCC_GetSysClockFreq();
+				} else if ((HAL_IS_BIT_SET(RCC->CR,
+							   RCC_CR_HSIRDY)) &&
+					   (srcclk == RCC_I2C2CLKSOURCE_HSI)) {
+					frequency = HSI_VALUE;
+				}
+				/* Clock not enabled for I2C2 */
+				else {
+					/* nothing to do: frequency already
+					 * initialized to 0 */
+				}
+				break;
 
 #if defined(I2C3)
 
-		case RCC_PERIPHCLK_I2C3:
-			/* Get the current I2C3 source */
-			srcclk = __HAL_RCC_GET_I2C3_SOURCE();
+			case RCC_PERIPHCLK_I2C3:
+				/* Get the current I2C3 source */
+				srcclk = __HAL_RCC_GET_I2C3_SOURCE();
 
-			if (srcclk == RCC_I2C3CLKSOURCE_PCLK1) {
-				frequency = HAL_RCC_GetPCLK1Freq();
-			} else if (srcclk == RCC_I2C3CLKSOURCE_SYSCLK) {
-				frequency = HAL_RCC_GetSysClockFreq();
-			} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-				   (srcclk == RCC_I2C3CLKSOURCE_HSI)) {
-				frequency = HSI_VALUE;
-			}
-			/* Clock not enabled for I2C3 */
-			else {
-				/* nothing to do: frequency already initialized
-				 * to 0 */
-			}
-			break;
+				if (srcclk == RCC_I2C3CLKSOURCE_PCLK1) {
+					frequency = HAL_RCC_GetPCLK1Freq();
+				} else if (srcclk == RCC_I2C3CLKSOURCE_SYSCLK) {
+					frequency = HAL_RCC_GetSysClockFreq();
+				} else if ((HAL_IS_BIT_SET(RCC->CR,
+							   RCC_CR_HSIRDY)) &&
+					   (srcclk == RCC_I2C3CLKSOURCE_HSI)) {
+					frequency = HSI_VALUE;
+				}
+				/* Clock not enabled for I2C3 */
+				else {
+					/* nothing to do: frequency already
+					 * initialized to 0 */
+				}
+				break;
 
 #endif /* I2C3 */
 
 #if defined(I2C4)
 
-		case RCC_PERIPHCLK_I2C4:
-			/* Get the current I2C4 source */
-			srcclk = __HAL_RCC_GET_I2C4_SOURCE();
+			case RCC_PERIPHCLK_I2C4:
+				/* Get the current I2C4 source */
+				srcclk = __HAL_RCC_GET_I2C4_SOURCE();
 
-			if (srcclk == RCC_I2C4CLKSOURCE_PCLK1) {
-				frequency = HAL_RCC_GetPCLK1Freq();
-			} else if (srcclk == RCC_I2C4CLKSOURCE_SYSCLK) {
-				frequency = HAL_RCC_GetSysClockFreq();
-			} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-				   (srcclk == RCC_I2C4CLKSOURCE_HSI)) {
-				frequency = HSI_VALUE;
-			}
-			/* Clock not enabled for I2C4 */
-			else {
-				/* nothing to do: frequency already initialized
-				 * to 0 */
-			}
-			break;
+				if (srcclk == RCC_I2C4CLKSOURCE_PCLK1) {
+					frequency = HAL_RCC_GetPCLK1Freq();
+				} else if (srcclk == RCC_I2C4CLKSOURCE_SYSCLK) {
+					frequency = HAL_RCC_GetSysClockFreq();
+				} else if ((HAL_IS_BIT_SET(RCC->CR,
+							   RCC_CR_HSIRDY)) &&
+					   (srcclk == RCC_I2C4CLKSOURCE_HSI)) {
+					frequency = HSI_VALUE;
+				}
+				/* Clock not enabled for I2C4 */
+				else {
+					/* nothing to do: frequency already
+					 * initialized to 0 */
+				}
+				break;
 
 #endif /* I2C4 */
 
-		case RCC_PERIPHCLK_LPTIM1:
-			/* Get the current LPTIM1 source */
-			srcclk = __HAL_RCC_GET_LPTIM1_SOURCE();
+			case RCC_PERIPHCLK_LPTIM1:
+				/* Get the current LPTIM1 source */
+				srcclk = __HAL_RCC_GET_LPTIM1_SOURCE();
 
-			if (srcclk == RCC_LPTIM1CLKSOURCE_PCLK1) {
-				frequency = HAL_RCC_GetPCLK1Freq();
-			} else if ((HAL_IS_BIT_SET(RCC->CSR, RCC_CSR_LSIRDY)) &&
-				   (srcclk == RCC_LPTIM1CLKSOURCE_LSI)) {
-				frequency = LSI_VALUE;
-			} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-				   (srcclk == RCC_LPTIM1CLKSOURCE_HSI)) {
-				frequency = HSI_VALUE;
-			} else if ((HAL_IS_BIT_SET(RCC->BDCR,
-						   RCC_BDCR_LSERDY)) &&
-				   (srcclk == RCC_LPTIM1CLKSOURCE_LSE)) {
-				frequency = LSE_VALUE;
-			}
-			/* Clock not enabled for LPTIM1 */
-			else {
-				/* nothing to do: frequency already initialized
-				 * to 0 */
-			}
-			break;
+				if (srcclk == RCC_LPTIM1CLKSOURCE_PCLK1) {
+					frequency = HAL_RCC_GetPCLK1Freq();
+				} else if ((HAL_IS_BIT_SET(RCC->CSR,
+							   RCC_CSR_LSIRDY)) &&
+					   (srcclk ==
+					    RCC_LPTIM1CLKSOURCE_LSI)) {
+					frequency = LSI_VALUE;
+				} else if ((HAL_IS_BIT_SET(RCC->CR,
+							   RCC_CR_HSIRDY)) &&
+					   (srcclk ==
+					    RCC_LPTIM1CLKSOURCE_HSI)) {
+					frequency = HSI_VALUE;
+				} else if ((HAL_IS_BIT_SET(RCC->BDCR,
+							   RCC_BDCR_LSERDY)) &&
+					   (srcclk ==
+					    RCC_LPTIM1CLKSOURCE_LSE)) {
+					frequency = LSE_VALUE;
+				}
+				/* Clock not enabled for LPTIM1 */
+				else {
+					/* nothing to do: frequency already
+					 * initialized to 0 */
+				}
+				break;
 
 #if defined(SAI1)
 
-		case RCC_PERIPHCLK_SAI1:
-			/* Get the current SAI1 source */
-			srcclk = __HAL_RCC_GET_SAI1_SOURCE();
+			case RCC_PERIPHCLK_SAI1:
+				/* Get the current SAI1 source */
+				srcclk = __HAL_RCC_GET_SAI1_SOURCE();
 
-			if (srcclk == RCC_SAI1CLKSOURCE_SYSCLK) {
-				frequency = HAL_RCC_GetSysClockFreq();
-			} else if (srcclk == RCC_SAI1CLKSOURCE_PLL) {
-				if (__HAL_RCC_GET_PLLCLKOUT_CONFIG(
-					RCC_PLL_48M1CLK) != 0U) {
-					/* f(PLLQ) = f(VCO input) * PLLN / PLLQ
-					 */
-					plln = READ_BIT(RCC->PLLCFGR,
-							RCC_PLLCFGR_PLLN) >>
-					       RCC_PLLCFGR_PLLN_Pos;
-					frequency =
-					    (pllvco * plln) /
-					    (((READ_BIT(RCC->PLLCFGR,
-							RCC_PLLCFGR_PLLQ) >>
-					       RCC_PLLCFGR_PLLQ_Pos) +
-					      1U)
-					     << 1U);
+				if (srcclk == RCC_SAI1CLKSOURCE_SYSCLK) {
+					frequency = HAL_RCC_GetSysClockFreq();
+				} else if (srcclk == RCC_SAI1CLKSOURCE_PLL) {
+					if (__HAL_RCC_GET_PLLCLKOUT_CONFIG(
+						RCC_PLL_48M1CLK) != 0U) {
+						/* f(PLLQ) = f(VCO input) * PLLN
+						 * / PLLQ
+						 */
+						plln = READ_BIT(
+							   RCC->PLLCFGR,
+							   RCC_PLLCFGR_PLLN) >>
+						       RCC_PLLCFGR_PLLN_Pos;
+						frequency =
+						    (pllvco * plln) /
+						    (((READ_BIT(
+							   RCC->PLLCFGR,
+							   RCC_PLLCFGR_PLLQ) >>
+						       RCC_PLLCFGR_PLLQ_Pos) +
+						      1U)
+						     << 1U);
+					}
+				} else if (srcclk == RCC_SAI1CLKSOURCE_EXT) {
+					/* External clock used.*/
+					frequency = EXTERNAL_CLOCK_VALUE;
+				} else if ((HAL_IS_BIT_SET(RCC->CR,
+							   RCC_CR_HSIRDY)) &&
+					   (srcclk == RCC_SAI1CLKSOURCE_HSI)) {
+					frequency = HSI_VALUE;
 				}
-			} else if (srcclk == RCC_SAI1CLKSOURCE_EXT) {
-				/* External clock used.*/
-				frequency = EXTERNAL_CLOCK_VALUE;
-			} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-				   (srcclk == RCC_SAI1CLKSOURCE_HSI)) {
-				frequency = HSI_VALUE;
-			}
-			/* Clock not enabled for SAI1 */
-			else {
-				/* nothing to do: frequency already initialized
-				 * to 0 */
-			}
-			break;
+				/* Clock not enabled for SAI1 */
+				else {
+					/* nothing to do: frequency already
+					 * initialized to 0 */
+				}
+				break;
 
 #endif /* SAI1 */
 
 #if defined(SPI_I2S_SUPPORT)
-		case RCC_PERIPHCLK_I2S:
-			/* Get the current I2Sx source */
-			srcclk = __HAL_RCC_GET_I2S_SOURCE();
+			case RCC_PERIPHCLK_I2S:
+				/* Get the current I2Sx source */
+				srcclk = __HAL_RCC_GET_I2S_SOURCE();
 
-			if (srcclk == RCC_I2SCLKSOURCE_SYSCLK) {
-				frequency = HAL_RCC_GetSysClockFreq();
-			} else if (srcclk == RCC_I2SCLKSOURCE_PLL) {
-				if (__HAL_RCC_GET_PLLCLKOUT_CONFIG(
-					RCC_PLL_48M1CLK) != 0U) {
-					/* f(PLLQ) = f(VCO input) * PLLN / PLLQ
-					 */
-					plln = READ_BIT(RCC->PLLCFGR,
-							RCC_PLLCFGR_PLLN) >>
-					       RCC_PLLCFGR_PLLN_Pos;
-					frequency =
-					    (pllvco * plln) /
-					    (((READ_BIT(RCC->PLLCFGR,
-							RCC_PLLCFGR_PLLQ) >>
-					       RCC_PLLCFGR_PLLQ_Pos) +
-					      1U)
-					     << 1U);
+				if (srcclk == RCC_I2SCLKSOURCE_SYSCLK) {
+					frequency = HAL_RCC_GetSysClockFreq();
+				} else if (srcclk == RCC_I2SCLKSOURCE_PLL) {
+					if (__HAL_RCC_GET_PLLCLKOUT_CONFIG(
+						RCC_PLL_48M1CLK) != 0U) {
+						/* f(PLLQ) = f(VCO input) * PLLN
+						 * / PLLQ
+						 */
+						plln = READ_BIT(
+							   RCC->PLLCFGR,
+							   RCC_PLLCFGR_PLLN) >>
+						       RCC_PLLCFGR_PLLN_Pos;
+						frequency =
+						    (pllvco * plln) /
+						    (((READ_BIT(
+							   RCC->PLLCFGR,
+							   RCC_PLLCFGR_PLLQ) >>
+						       RCC_PLLCFGR_PLLQ_Pos) +
+						      1U)
+						     << 1U);
+					}
+				} else if (srcclk == RCC_I2SCLKSOURCE_EXT) {
+					/* External clock used.*/
+					frequency = EXTERNAL_CLOCK_VALUE;
+				} else if ((HAL_IS_BIT_SET(RCC->CR,
+							   RCC_CR_HSIRDY)) &&
+					   (srcclk == RCC_I2SCLKSOURCE_HSI)) {
+					frequency = HSI_VALUE;
 				}
-			} else if (srcclk == RCC_I2SCLKSOURCE_EXT) {
-				/* External clock used.*/
-				frequency = EXTERNAL_CLOCK_VALUE;
-			} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-				   (srcclk == RCC_I2SCLKSOURCE_HSI)) {
-				frequency = HSI_VALUE;
-			}
-			/* Clock not enabled for I2S */
-			else {
-				/* nothing to do: frequency already initialized
-				 * to 0 */
-			}
-			break;
+				/* Clock not enabled for I2S */
+				else {
+					/* nothing to do: frequency already
+					 * initialized to 0 */
+				}
+				break;
 #endif /* SPI_I2S_SUPPORT */
 
 #if defined(FDCAN1)
-		case RCC_PERIPHCLK_FDCAN:
-			/* Get the current FDCANx source */
-			srcclk = __HAL_RCC_GET_FDCAN_SOURCE();
+			case RCC_PERIPHCLK_FDCAN:
+				/* Get the current FDCANx source */
+				srcclk = __HAL_RCC_GET_FDCAN_SOURCE();
 
-			if (srcclk == RCC_FDCANCLKSOURCE_PCLK1) {
-				frequency = HAL_RCC_GetPCLK1Freq();
-			} else if (srcclk == RCC_FDCANCLKSOURCE_HSE) {
-				frequency = HSE_VALUE;
-			} else if (srcclk == RCC_FDCANCLKSOURCE_PLL) {
-				if (__HAL_RCC_GET_PLLCLKOUT_CONFIG(
-					RCC_PLL_48M1CLK) != 0U) {
-					/* f(PLLQ) = f(VCO input) * PLLN / PLLQ
-					 */
-					plln = READ_BIT(RCC->PLLCFGR,
-							RCC_PLLCFGR_PLLN) >>
-					       RCC_PLLCFGR_PLLN_Pos;
-					frequency =
-					    (pllvco * plln) /
-					    (((READ_BIT(RCC->PLLCFGR,
-							RCC_PLLCFGR_PLLQ) >>
-					       RCC_PLLCFGR_PLLQ_Pos) +
-					      1U)
-					     << 1U);
+				if (srcclk == RCC_FDCANCLKSOURCE_PCLK1) {
+					frequency = HAL_RCC_GetPCLK1Freq();
+				} else if (srcclk == RCC_FDCANCLKSOURCE_HSE) {
+					frequency = HSE_VALUE;
+				} else if (srcclk == RCC_FDCANCLKSOURCE_PLL) {
+					if (__HAL_RCC_GET_PLLCLKOUT_CONFIG(
+						RCC_PLL_48M1CLK) != 0U) {
+						/* f(PLLQ) = f(VCO input) * PLLN
+						 * / PLLQ
+						 */
+						plln = READ_BIT(
+							   RCC->PLLCFGR,
+							   RCC_PLLCFGR_PLLN) >>
+						       RCC_PLLCFGR_PLLN_Pos;
+						frequency =
+						    (pllvco * plln) /
+						    (((READ_BIT(
+							   RCC->PLLCFGR,
+							   RCC_PLLCFGR_PLLQ) >>
+						       RCC_PLLCFGR_PLLQ_Pos) +
+						      1U)
+						     << 1U);
+					}
 				}
-			}
-			/* Clock not enabled for FDCAN */
-			else {
-				/* nothing to do: frequency already initialized
-				 * to 0 */
-			}
-			break;
+				/* Clock not enabled for FDCAN */
+				else {
+					/* nothing to do: frequency already
+					 * initialized to 0 */
+				}
+				break;
 #endif /* FDCAN1 */
 
 #if defined(USB)
 
-		case RCC_PERIPHCLK_USB:
-			/* Get the current USB source */
-			srcclk = __HAL_RCC_GET_USB_SOURCE();
+			case RCC_PERIPHCLK_USB:
+				/* Get the current USB source */
+				srcclk = __HAL_RCC_GET_USB_SOURCE();
 
-			if (srcclk == RCC_USBCLKSOURCE_PLL) /* PLL ? */
-			{
-				/* f(PLLQ) = f(VCO input) * PLLN / PLLQ */
-				plln =
-				    READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >>
-				    RCC_PLLCFGR_PLLN_Pos;
-				frequency = (pllvco * plln) /
+				if (srcclk == RCC_USBCLKSOURCE_PLL) /* PLL ? */
+				{
+					/* f(PLLQ) = f(VCO input) * PLLN / PLLQ
+					 */
+					plln = READ_BIT(RCC->PLLCFGR,
+							RCC_PLLCFGR_PLLN) >>
+					       RCC_PLLCFGR_PLLN_Pos;
+					frequency =
+					    (pllvco * plln) /
 					    (((READ_BIT(RCC->PLLCFGR,
 							RCC_PLLCFGR_PLLQ) >>
 					       RCC_PLLCFGR_PLLQ_Pos) +
 					      1U)
 					     << 1U);
-			} else if ((HAL_IS_BIT_SET(RCC->CRRCR,
-						   RCC_CRRCR_HSI48RDY)) &&
-				   (srcclk ==
-				    RCC_USBCLKSOURCE_HSI48)) /* HSI48 ? */
-			{
-				frequency = HSI48_VALUE;
-			} else /* No clock source */
-			{
-				/* nothing to do: frequency already initialized
-				 * to 0 */
-			}
-			break;
+				} else if ((HAL_IS_BIT_SET(
+					       RCC->CRRCR,
+					       RCC_CRRCR_HSI48RDY)) &&
+					   (srcclk ==
+					    RCC_USBCLKSOURCE_HSI48)) /* HSI48 ?
+								      */
+				{
+					frequency = HSI48_VALUE;
+				} else /* No clock source */
+				{
+					/* nothing to do: frequency already
+					 * initialized to 0 */
+				}
+				break;
 
 #endif /* USB */
 
-		case RCC_PERIPHCLK_RNG:
-			/* Get the current RNG source */
-			srcclk = __HAL_RCC_GET_RNG_SOURCE();
+			case RCC_PERIPHCLK_RNG:
+				/* Get the current RNG source */
+				srcclk = __HAL_RCC_GET_RNG_SOURCE();
 
-			if (srcclk == RCC_RNGCLKSOURCE_PLL) /* PLL ? */
-			{
-				/* f(PLLQ) = f(VCO input) * PLLN / PLLQ */
-				plln =
-				    READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >>
-				    RCC_PLLCFGR_PLLN_Pos;
-				frequency = (pllvco * plln) /
+				if (srcclk == RCC_RNGCLKSOURCE_PLL) /* PLL ? */
+				{
+					/* f(PLLQ) = f(VCO input) * PLLN / PLLQ
+					 */
+					plln = READ_BIT(RCC->PLLCFGR,
+							RCC_PLLCFGR_PLLN) >>
+					       RCC_PLLCFGR_PLLN_Pos;
+					frequency =
+					    (pllvco * plln) /
 					    (((READ_BIT(RCC->PLLCFGR,
 							RCC_PLLCFGR_PLLQ) >>
 					       RCC_PLLCFGR_PLLQ_Pos) +
 					      1U)
 					     << 1U);
-			} else if ((HAL_IS_BIT_SET(RCC->CRRCR,
-						   RCC_CRRCR_HSI48RDY)) &&
-				   (srcclk ==
-				    RCC_RNGCLKSOURCE_HSI48)) /* HSI48 ? */
-			{
-				frequency = HSI48_VALUE;
-			} else /* No clock source */
-			{
-				/* nothing to do: frequency already initialized
-				 * to 0 */
-			}
-			break;
-
-		case RCC_PERIPHCLK_ADC12:
-			/* Get the current ADC12 source */
-			srcclk = __HAL_RCC_GET_ADC12_SOURCE();
-
-			if (srcclk == RCC_ADC12CLKSOURCE_PLL) {
-				if (__HAL_RCC_GET_PLLCLKOUT_CONFIG(
-					RCC_PLL_ADCCLK) != 0U) {
-					/* f(PLLP) = f(VCO input) * PLLN / PLLP
-					 */
-					plln = READ_BIT(RCC->PLLCFGR,
-							RCC_PLLCFGR_PLLN) >>
-					       RCC_PLLCFGR_PLLN_Pos;
-					pllp = READ_BIT(RCC->PLLCFGR,
-							RCC_PLLCFGR_PLLPDIV) >>
-					       RCC_PLLCFGR_PLLPDIV_Pos;
-					if (pllp == 0U) {
-						if (READ_BIT(
-							RCC->PLLCFGR,
-							RCC_PLLCFGR_PLLP) !=
-						    0U) {
-							pllp = 17U;
-						} else {
-							pllp = 7U;
-						}
-					}
-					frequency = (pllvco * plln) / pllp;
+				} else if ((HAL_IS_BIT_SET(
+					       RCC->CRRCR,
+					       RCC_CRRCR_HSI48RDY)) &&
+					   (srcclk ==
+					    RCC_RNGCLKSOURCE_HSI48)) /* HSI48 ?
+								      */
+				{
+					frequency = HSI48_VALUE;
+				} else /* No clock source */
+				{
+					/* nothing to do: frequency already
+					 * initialized to 0 */
 				}
-			} else if (srcclk == RCC_ADC12CLKSOURCE_SYSCLK) {
-				frequency = HAL_RCC_GetSysClockFreq();
-			}
-			/* Clock not enabled for ADC12 */
-			else {
-				/* nothing to do: frequency already initialized
-				 * to 0 */
-			}
-			break;
+				break;
+
+			case RCC_PERIPHCLK_ADC12:
+				/* Get the current ADC12 source */
+				srcclk = __HAL_RCC_GET_ADC12_SOURCE();
+
+				if (srcclk == RCC_ADC12CLKSOURCE_PLL) {
+					if (__HAL_RCC_GET_PLLCLKOUT_CONFIG(
+						RCC_PLL_ADCCLK) != 0U) {
+						/* f(PLLP) = f(VCO input) * PLLN
+						 * / PLLP
+						 */
+						plln = READ_BIT(
+							   RCC->PLLCFGR,
+							   RCC_PLLCFGR_PLLN) >>
+						       RCC_PLLCFGR_PLLN_Pos;
+						pllp =
+						    READ_BIT(
+							RCC->PLLCFGR,
+							RCC_PLLCFGR_PLLPDIV) >>
+						    RCC_PLLCFGR_PLLPDIV_Pos;
+						if (pllp == 0U) {
+							if (READ_BIT(
+								RCC->PLLCFGR,
+								RCC_PLLCFGR_PLLP) !=
+							    0U) {
+								pllp = 17U;
+							} else {
+								pllp = 7U;
+							}
+						}
+						frequency =
+						    (pllvco * plln) / pllp;
+					}
+				} else if (srcclk ==
+					   RCC_ADC12CLKSOURCE_SYSCLK) {
+					frequency = HAL_RCC_GetSysClockFreq();
+				}
+				/* Clock not enabled for ADC12 */
+				else {
+					/* nothing to do: frequency already
+					 * initialized to 0 */
+				}
+				break;
 
 #if defined(ADC345_COMMON)
-		case RCC_PERIPHCLK_ADC345:
-			/* Get the current ADC345 source */
-			srcclk = __HAL_RCC_GET_ADC345_SOURCE();
+			case RCC_PERIPHCLK_ADC345:
+				/* Get the current ADC345 source */
+				srcclk = __HAL_RCC_GET_ADC345_SOURCE();
 
-			if (srcclk == RCC_ADC345CLKSOURCE_PLL) {
-				if (__HAL_RCC_GET_PLLCLKOUT_CONFIG(
-					RCC_PLL_ADCCLK) != 0U) {
-					/* f(PLLP) = f(VCO input) * PLLN / PLLP
-					 */
-					plln = READ_BIT(RCC->PLLCFGR,
-							RCC_PLLCFGR_PLLN) >>
-					       RCC_PLLCFGR_PLLN_Pos;
-					pllp = READ_BIT(RCC->PLLCFGR,
-							RCC_PLLCFGR_PLLPDIV) >>
-					       RCC_PLLCFGR_PLLPDIV_Pos;
-					if (pllp == 0U) {
-						if (READ_BIT(
+				if (srcclk == RCC_ADC345CLKSOURCE_PLL) {
+					if (__HAL_RCC_GET_PLLCLKOUT_CONFIG(
+						RCC_PLL_ADCCLK) != 0U) {
+						/* f(PLLP) = f(VCO input) * PLLN
+						 * / PLLP
+						 */
+						plln = READ_BIT(
+							   RCC->PLLCFGR,
+							   RCC_PLLCFGR_PLLN) >>
+						       RCC_PLLCFGR_PLLN_Pos;
+						pllp =
+						    READ_BIT(
 							RCC->PLLCFGR,
-							RCC_PLLCFGR_PLLP) !=
-						    0U) {
-							pllp = 17U;
-						} else {
-							pllp = 7U;
+							RCC_PLLCFGR_PLLPDIV) >>
+						    RCC_PLLCFGR_PLLPDIV_Pos;
+						if (pllp == 0U) {
+							if (READ_BIT(
+								RCC->PLLCFGR,
+								RCC_PLLCFGR_PLLP) !=
+							    0U) {
+								pllp = 17U;
+							} else {
+								pllp = 7U;
+							}
 						}
+						frequency =
+						    (pllvco * plln) / pllp;
 					}
-					frequency = (pllvco * plln) / pllp;
+				} else if (srcclk ==
+					   RCC_ADC345CLKSOURCE_SYSCLK) {
+					frequency = HAL_RCC_GetSysClockFreq();
 				}
-			} else if (srcclk == RCC_ADC345CLKSOURCE_SYSCLK) {
-				frequency = HAL_RCC_GetSysClockFreq();
-			}
-			/* Clock not enabled for ADC345 */
-			else {
-				/* nothing to do: frequency already initialized
-				 * to 0 */
-			}
-			break;
+				/* Clock not enabled for ADC345 */
+				else {
+					/* nothing to do: frequency already
+					 * initialized to 0 */
+				}
+				break;
 #endif /* ADC345_COMMON */
 
 #if defined(QUADSPI)
 
-		case RCC_PERIPHCLK_QSPI:
-			/* Get the current QSPI source */
-			srcclk = __HAL_RCC_GET_QSPI_SOURCE();
+			case RCC_PERIPHCLK_QSPI:
+				/* Get the current QSPI source */
+				srcclk = __HAL_RCC_GET_QSPI_SOURCE();
 
-			if (srcclk == RCC_QSPICLKSOURCE_PLL) /* PLL ? */
-			{
-				/* f(PLLQ) = f(VCO input) * PLLN / PLLQ */
-				plln =
-				    READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >>
-				    RCC_PLLCFGR_PLLN_Pos;
-				frequency = (pllvco * plln) /
+				if (srcclk == RCC_QSPICLKSOURCE_PLL) /* PLL ? */
+				{
+					/* f(PLLQ) = f(VCO input) * PLLN / PLLQ
+					 */
+					plln = READ_BIT(RCC->PLLCFGR,
+							RCC_PLLCFGR_PLLN) >>
+					       RCC_PLLCFGR_PLLN_Pos;
+					frequency =
+					    (pllvco * plln) /
 					    (((READ_BIT(RCC->PLLCFGR,
 							RCC_PLLCFGR_PLLQ) >>
 					       RCC_PLLCFGR_PLLQ_Pos) +
 					      1U)
 					     << 1U);
-			} else if (srcclk == RCC_QSPICLKSOURCE_HSI) {
-				frequency = HSI_VALUE;
-			} else if (srcclk == RCC_QSPICLKSOURCE_SYSCLK) {
-				frequency = HAL_RCC_GetSysClockFreq();
-			} else /* No clock source */
-			{
-				/* nothing to do: frequency already initialized
-				 * to 0 */
-			}
-			break;
+				} else if (srcclk == RCC_QSPICLKSOURCE_HSI) {
+					frequency = HSI_VALUE;
+				} else if (srcclk == RCC_QSPICLKSOURCE_SYSCLK) {
+					frequency = HAL_RCC_GetSysClockFreq();
+				} else /* No clock source */
+				{
+					/* nothing to do: frequency already
+					 * initialized to 0 */
+				}
+				break;
 
 #endif /* QUADSPI */
 
-		default:
-			break;
+			default:
+				break;
 		}
 	}
 

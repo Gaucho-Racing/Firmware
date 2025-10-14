@@ -2,7 +2,7 @@
 
 [![CMake](https://github.com/Gaucho-Racing/Firmware/actions/workflows/BuildAllPresets.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/BuildAllPresets.yml)
 [![CTest](https://github.com/Gaucho-Racing/Firmware/actions/workflows/RunCTests.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/RunCTests.yml)
-[![ClangFormat](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ClangFormat.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ClangFormat.yml)
+[![Auto Format](https://github.com/Gaucho-Racing/Firmware/actions/workflows/AutoFormat.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/AutoFormat.yml)
 [![ValidateConfigs](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ValidateConfigs.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ValidateConfigs.yml)
 [![CodeQL](https://github.com/Gaucho-Racing/Firmware/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/github-code-scanning/codeql)
 
