@@ -61,7 +61,7 @@ jobs:
           echo "<details><summary>Install Arm Toolchain</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          choco install -y arm-none-eabi-gcc | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          choco install -y gcc-arm-embedded | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
