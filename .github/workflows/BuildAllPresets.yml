@@ -98,7 +98,7 @@ jobs:
           echo "</details>" >> $GITHUB_STEP_SUMMARY
 
       - name: Upload RelWithDebInfo Builds
-        if: matrix.prefix == 'RelWithDebInfo'
+        if: matrix.prefix == 'RelWithDebInfo' && matrix.operatingSystem == 'ubuntu-latest'
         uses: actions/upload-artifact@v4
         with:
           name: firmware-release-with-debug-info
