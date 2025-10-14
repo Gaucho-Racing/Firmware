@@ -117,6 +117,7 @@ jobs:
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
 
       - name: Executable Size (Ubuntu and macOS)
+        if: matrix.operatingSystem != 'windows-latest'
         shell: bash
         run: |
           set -o pipefail
