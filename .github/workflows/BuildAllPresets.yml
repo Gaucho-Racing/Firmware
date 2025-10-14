@@ -56,15 +56,9 @@ jobs:
 
       - name: Install Arm Toolchain (Windows)
         if: matrix.operatingSystem == 'windows-latest'
-        shell: pwsh
-        run: |
-          echo "<details><summary>Install Arm Toolchain</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          choco install -y gcc-arm-embedded | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+        uses: carlosperate/arm-none-eabi-gcc-action@v1
+        with:
+          release: '12.2.Rel1'
 
       - name: CMake Configuration (Ubuntu and macOS)
         if: matrix.operatingSystem != 'windows-latest'
