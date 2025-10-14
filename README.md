@@ -4,7 +4,6 @@
 [![CTest](https://github.com/Gaucho-Racing/Firmware/actions/workflows/RunCTests.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/RunCTests.yml)
 [![Auto Format](https://github.com/Gaucho-Racing/Firmware/actions/workflows/AutoFormat.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/AutoFormat.yml)
 [![ValidateConfigs](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ValidateConfigs.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ValidateConfigs.yml)
-[![CodeQL](https://github.com/Gaucho-Racing/Firmware/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/github-code-scanning/codeql)
 
 **_DO NOT DELETE ANY LICENSE INFORMATION ON ANY COPIED FILE OR LINE OF CODE_**
 
@@ -23,7 +22,7 @@ When able, please add VS Code comptatible doc comments! These will help debuggin
 3. `brew install ninja`
 4. `brew install open-ocd`
 4. [ARM Toolchain (arm-none-eabi)](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
-- Look under "AArch32 bare-metal target (arm-none-eabi)" and install the .pkg file 
+- Look under "AArch32 bare-metal target (arm-none-eabi)" and install the .pkg file
 - Add the ARM Toolchain to your PATH variable using the following commands in your terminal:
     - `nano ~/.zshrc` --> use a basic text editor (nano) to edit the zsh configuration file
     - `export PATH="/Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin:$PATH"` --> paste this into the config file
