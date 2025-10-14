@@ -101,8 +101,8 @@ jobs:
           echo "<details open><summary>Executable Size</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          ls build\\${{ matrix.prefix }} | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          arm-none-eabi-size build\\${{ matrix.prefix }}\\*.elf | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          ls build\${{ matrix.prefix }} | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          arm-none-eabi-size build\${{ matrix.prefix }}\*.elf | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
