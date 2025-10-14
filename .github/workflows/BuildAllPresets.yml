@@ -26,41 +26,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Arm Toolchain (Ubuntu)
-        if: matrix.operatingSystem == 'ubuntu-latest'
-        shell: bash
-        run: |
-          echo "set man-db/auto-update false" | sudo debconf-communicate
-          sudo rm /var/lib/man-db/auto-update
-          set -o pipefail
-          echo "<details><summary>Install Arm Toolchain</summary>" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          sudo apt-get install gcc-arm-none-eabi --no-install-suggests 2>&1 | tee -a $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "</details>" >> $GITHUB_STEP_SUMMARY
-
-      - name: Install Arm Toolchain (macOS)
-        if: matrix.operatingSystem == 'macos-latest'
-        shell: bash
-        run: |
-          set -o pipefail
-          echo "<details><summary>Install Arm Toolchain</summary>" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          brew install --cask gcc-arm-embedded 2>&1 | tee -a $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "</details>" >> $GITHUB_STEP_SUMMARY
-
-      - name: Install Arm Toolchain (Windows)
+      - name: Install Arm Toolchain
         if: matrix.operatingSystem == 'windows-latest'
         uses: carlosperate/arm-none-eabi-gcc-action@v1
         with:
           release: '12.2.Rel1'
 
-      - name: CMake Configuration (Ubuntu and macOS)
+      - name: CMake Configuration (Unix)
         if: matrix.operatingSystem != 'windows-latest'
         shell: bash
         run: |
@@ -85,7 +57,7 @@ jobs:
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
 
-      - name: CMake Build (Ubuntu and macOS)
+      - name: CMake Build (Unix)
         if: matrix.operatingSystem != 'windows-latest'
         shell: bash
         run: |
@@ -110,7 +82,7 @@ jobs:
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
 
-      - name: Executable Size (Ubuntu and macOS)
+      - name: Executable Size (Unix)
         if: matrix.operatingSystem != 'windows-latest'
         shell: bash
         run: |
@@ -130,6 +102,7 @@ jobs:
           echo "<details open><summary>Executable Size</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          ls build/${{ matrix.prefix }} 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
           arm-none-eabi-size build/${{ matrix.prefix }}/*.elf 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
