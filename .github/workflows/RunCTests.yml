@@ -25,7 +25,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: CMake Configuration (Linux and macOS)
+      - name: CMake Configuration (Ubuntu and macOS)
         if: matrix.operatingSystem != 'windows-latest'
         shell: bash
         run: |
@@ -50,7 +50,7 @@ jobs:
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
 
-      - name: CMake Build (Linux and macOS)
+      - name: CMake Build (Ubuntu and macOS)
         if: matrix.operatingSystem != 'windows-latest'
         shell: bash
         run: |
@@ -75,7 +75,7 @@ jobs:
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
 
-      - name: Run CTest (Linux and macOS)
+      - name: Run CTest (Ubuntu and macOS)
         if: matrix.operatingSystem != 'windows-latest'
         shell: bash
         run: |

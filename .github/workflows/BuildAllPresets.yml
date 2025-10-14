@@ -65,12 +65,9 @@ jobs:
           echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "C:\ProgramData\chocolatey\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
-          echo $env:PATH | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo $env:GITHUB_PATH | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          ls "C:\ProgramData\chocolatey\bin" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
 
-      - name: CMake Configuration
+      - name: CMake Configuration (Ubuntu and macOS)
+        if: matrix.operatingSystem != 'windows-latest'
         shell: bash
         run: |
           set -o pipefail
@@ -82,7 +79,20 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
 
-      - name: CMake Build
+      - name: CMake Configuration (Windows)
+        if: matrix.operatingSystem == 'windows-latest'
+        shell: pwsh
+        run: |
+          echo "<details><summary>CMake Configuration</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          cmake --preset ${{ matrix.prefix }} 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+
+      - name: CMake Build (Ubuntu and macOS)
+        if: matrix.operatingSystem != 'windows-latest'
         shell: bash
         run: |
           set -o pipefail
@@ -94,7 +104,19 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
 
-      - name: Executable Size
+      - name: CMake Build (Windows)
+        if: matrix.operatingSystem == 'windows-latest'
+        shell: pwsh
+        run: |
+          echo "<details><summary>CMake Build</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          cmake --build build/${{ matrix.prefix }} 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+
+      - name: Executable Size (Ubuntu and macOS)
         shell: bash
         run: |
           set -o pipefail
@@ -105,6 +127,18 @@ jobs:
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
+
+      - name: Executable Size (Windows)
+        if: matrix.operatingSystem == 'windows-latest'
+        shell: pwsh
+        run: |
+          echo "<details open><summary>Executable Size</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          arm-none-eabi-size build/${{ matrix.prefix }}/*.elf 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
 
       - name: Upload RelWithDebInfo Builds
         if: matrix.prefix == 'RelWithDebInfo' && matrix.operatingSystem == 'ubuntu-latest'
