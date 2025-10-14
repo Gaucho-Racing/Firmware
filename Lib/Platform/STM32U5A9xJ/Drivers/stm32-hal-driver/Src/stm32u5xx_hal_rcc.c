@@ -1872,27 +1872,33 @@ uint32_t HAL_RCC_GetSysClockFreq(void)
 					      RCC_PLL1FRACR_PLL1FRACN_Pos));
 
 		switch (pllsource) {
-		case RCC_PLLSOURCE_HSI: /* HSI used as PLL clock source */
-			pllvco = ((float_t)HSI_VALUE / (float_t)pllm) *
-				 ((float_t)(uint32_t)(RCC->PLL1DIVR &
-						      RCC_PLL1DIVR_PLL1N) +
-				  (fracn1 / (float_t)0x2000) + (float_t)1U);
-			break;
+			case RCC_PLLSOURCE_HSI: /* HSI used as PLL clock source
+						 */
+				pllvco =
+				    ((float_t)HSI_VALUE / (float_t)pllm) *
+				    ((float_t)(uint32_t)(RCC->PLL1DIVR &
+							 RCC_PLL1DIVR_PLL1N) +
+				     (fracn1 / (float_t)0x2000) + (float_t)1U);
+				break;
 
-		case RCC_PLLSOURCE_HSE: /* HSE used as PLL clock source */
-			pllvco = ((float_t)HSE_VALUE / (float_t)pllm) *
-				 ((float_t)(uint32_t)(RCC->PLL1DIVR &
-						      RCC_PLL1DIVR_PLL1N) +
-				  (fracn1 / (float_t)0x2000) + (float_t)1U);
-			break;
+			case RCC_PLLSOURCE_HSE: /* HSE used as PLL clock source
+						 */
+				pllvco =
+				    ((float_t)HSE_VALUE / (float_t)pllm) *
+				    ((float_t)(uint32_t)(RCC->PLL1DIVR &
+							 RCC_PLL1DIVR_PLL1N) +
+				     (fracn1 / (float_t)0x2000) + (float_t)1U);
+				break;
 
-		case RCC_PLLSOURCE_MSI: /* MSI used as PLL clock source */
-		default:
-			pllvco = ((float_t)msirange / (float_t)pllm) *
-				 ((float_t)(uint32_t)(RCC->PLL1DIVR &
-						      RCC_PLL1DIVR_PLL1N) +
-				  (fracn1 / (float_t)0x2000) + (float_t)1U);
-			break;
+			case RCC_PLLSOURCE_MSI: /* MSI used as PLL clock source
+						 */
+			default:
+				pllvco =
+				    ((float_t)msirange / (float_t)pllm) *
+				    ((float_t)(uint32_t)(RCC->PLL1DIVR &
+							 RCC_PLL1DIVR_PLL1N) +
+				     (fracn1 / (float_t)0x2000) + (float_t)1U);
+				break;
 		}
 
 		pllr = (((RCC->PLL1DIVR & RCC_PLL1DIVR_PLL1R) >>
@@ -2247,43 +2253,43 @@ void HAL_RCC_ConfigAttributes(uint32_t Item, uint32_t Attributes)
 
 	switch (Attributes) {
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-	/* Secure Privilege attribute */
-	case RCC_SEC_PRIV:
-		SET_BIT(RCC->SECCFGR, Item);
-		SET_BIT(RCC->PRIVCFGR, RCC_PRIVCFGR_SPRIV);
-		break;
-	/* Secure Non-Privilege attribute */
-	case RCC_SEC_NPRIV:
-		SET_BIT(RCC->SECCFGR, Item);
-		CLEAR_BIT(RCC->PRIVCFGR, RCC_PRIVCFGR_SPRIV);
-		break;
-	/* Non-secure Privilege attribute */
-	case RCC_NSEC_PRIV:
-		CLEAR_BIT(RCC->SECCFGR, Item);
-		SET_BIT(RCC->PRIVCFGR, RCC_PRIVCFGR_NSPRIV);
-		break;
-	/* Non-secure Non-Privilege attribute */
-	case RCC_NSEC_NPRIV:
-		CLEAR_BIT(RCC->SECCFGR, Item);
-		CLEAR_BIT(RCC->PRIVCFGR, RCC_PRIVCFGR_NSPRIV);
-		break;
+		/* Secure Privilege attribute */
+		case RCC_SEC_PRIV:
+			SET_BIT(RCC->SECCFGR, Item);
+			SET_BIT(RCC->PRIVCFGR, RCC_PRIVCFGR_SPRIV);
+			break;
+		/* Secure Non-Privilege attribute */
+		case RCC_SEC_NPRIV:
+			SET_BIT(RCC->SECCFGR, Item);
+			CLEAR_BIT(RCC->PRIVCFGR, RCC_PRIVCFGR_SPRIV);
+			break;
+		/* Non-secure Privilege attribute */
+		case RCC_NSEC_PRIV:
+			CLEAR_BIT(RCC->SECCFGR, Item);
+			SET_BIT(RCC->PRIVCFGR, RCC_PRIVCFGR_NSPRIV);
+			break;
+		/* Non-secure Non-Privilege attribute */
+		case RCC_NSEC_NPRIV:
+			CLEAR_BIT(RCC->SECCFGR, Item);
+			CLEAR_BIT(RCC->PRIVCFGR, RCC_PRIVCFGR_NSPRIV);
+			break;
 #else
-	/* Non-secure Privilege attribute */
-	case RCC_NSEC_PRIV:
-		SET_BIT(RCC->PRIVCFGR, RCC_PRIVCFGR_NSPRIV);
-		/* Prevent unused argument(s) compilation warning */
-		UNUSED(Item);
-		break;
-	/* Non-secure Non-Privilege attribute */
-	case RCC_NSEC_NPRIV:
-		CLEAR_BIT(RCC->PRIVCFGR, RCC_PRIVCFGR_NSPRIV);
-		/* Prevent unused argument(s) compilation warning */
-		UNUSED(Item);
-		break;
+		/* Non-secure Privilege attribute */
+		case RCC_NSEC_PRIV:
+			SET_BIT(RCC->PRIVCFGR, RCC_PRIVCFGR_NSPRIV);
+			/* Prevent unused argument(s) compilation warning */
+			UNUSED(Item);
+			break;
+		/* Non-secure Non-Privilege attribute */
+		case RCC_NSEC_NPRIV:
+			CLEAR_BIT(RCC->PRIVCFGR, RCC_PRIVCFGR_NSPRIV);
+			/* Prevent unused argument(s) compilation warning */
+			UNUSED(Item);
+			break;
 #endif /* __ARM_FEATURE_CMSE */
-	default:
-		/* Nothing to do */
-		break;
+		default:
+			/* Nothing to do */
+			break;
 	}
 }
 /**

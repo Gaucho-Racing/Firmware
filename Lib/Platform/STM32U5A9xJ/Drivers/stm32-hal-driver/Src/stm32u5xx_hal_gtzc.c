@@ -575,83 +575,89 @@ HAL_GTZC_TZSC_MPCWM_ConfigMemAttributes(uint32_t MemBaseAddress,
 
 	/* check descriptor content vs. memory capacity */
 	switch (MemBaseAddress) {
-	case OCTOSPI1_BASE:
-		size = TZSC_MPCWM1_MEM_SIZE;
-		if (pMPCWM_Desc->AreaId == GTZC_TZSC_MPCWM_ID1) {
-			register_address =
-			    (uint32_t) & (GTZC_TZSC1_S->MPCWM1AR);
-		} else {
-			/* Here pMPCWM_Desc->AreaId == GTZC_TZSC_MPCWM_ID2
-			 * (Parameter already checked)
-			 */
-			register_address =
-			    (uint32_t) & (GTZC_TZSC1_S->MPCWM1BR);
-		}
-		break;
+		case OCTOSPI1_BASE:
+			size = TZSC_MPCWM1_MEM_SIZE;
+			if (pMPCWM_Desc->AreaId == GTZC_TZSC_MPCWM_ID1) {
+				register_address =
+				    (uint32_t) & (GTZC_TZSC1_S->MPCWM1AR);
+			} else {
+				/* Here pMPCWM_Desc->AreaId ==
+				 * GTZC_TZSC_MPCWM_ID2 (Parameter already
+				 * checked)
+				 */
+				register_address =
+				    (uint32_t) & (GTZC_TZSC1_S->MPCWM1BR);
+			}
+			break;
 #if defined(FMC_BANK1)
-	case FMC_BANK1:
-		size = TZSC_MPCWM2_MEM_SIZE;
-		if (pMPCWM_Desc->AreaId == GTZC_TZSC_MPCWM_ID1) {
-			register_address =
-			    (uint32_t) & (GTZC_TZSC1_S->MPCWM2AR);
-		} else {
-			/* Here pMPCWM_Desc->AreaId == GTZC_TZSC_MPCWM_ID2
-			 * (Parameter already checked)
-			 */
-			register_address =
-			    (uint32_t) & (GTZC_TZSC1_S->MPCWM2BR);
-		}
-		break;
+		case FMC_BANK1:
+			size = TZSC_MPCWM2_MEM_SIZE;
+			if (pMPCWM_Desc->AreaId == GTZC_TZSC_MPCWM_ID1) {
+				register_address =
+				    (uint32_t) & (GTZC_TZSC1_S->MPCWM2AR);
+			} else {
+				/* Here pMPCWM_Desc->AreaId ==
+				 * GTZC_TZSC_MPCWM_ID2 (Parameter already
+				 * checked)
+				 */
+				register_address =
+				    (uint32_t) & (GTZC_TZSC1_S->MPCWM2BR);
+			}
+			break;
 #endif /* FMC_BANK1 */
 #if defined(FMC_BANK3)
-	case FMC_BANK3:
-		/* Here pMPCWM_Desc->AreaId == GTZC_TZSC_MPCWM_ID1
-		 * (Parameter already checked)
-		 */
-		size = TZSC_MPCWM3_MEM_SIZE;
-		register_address = (uint32_t) & (GTZC_TZSC1_S->MPCWM3AR);
-		break;
-#endif /* FMC_BANK3 */
-	case BKPSRAM_BASE:
-		/* Here pMPCWM_Desc->AreaId == GTZC_TZSC_MPCWM_ID1
-		 * (Parameter already checked)
-		 */
-		size = TZSC_MPCWM4_MEM_SIZE;
-		register_address = (uint32_t) & (GTZC_TZSC1_S->MPCWM4AR);
-		break;
-#if defined(OCTOSPI2_BASE)
-	case OCTOSPI2_BASE:
-		size = TZSC_MPCWM5_MEM_SIZE;
-		if (pMPCWM_Desc->AreaId == GTZC_TZSC_MPCWM_ID1) {
-			register_address =
-			    (uint32_t) & (GTZC_TZSC1_S->MPCWM5AR);
-		} else {
-			/* Here pMPCWM_Desc->AreaId == GTZC_TZSC_MPCWM_ID2
+		case FMC_BANK3:
+			/* Here pMPCWM_Desc->AreaId == GTZC_TZSC_MPCWM_ID1
 			 * (Parameter already checked)
 			 */
+			size = TZSC_MPCWM3_MEM_SIZE;
 			register_address =
-			    (uint32_t) & (GTZC_TZSC1_S->MPCWM5BR);
-		}
-		break;
+			    (uint32_t) & (GTZC_TZSC1_S->MPCWM3AR);
+			break;
+#endif /* FMC_BANK3 */
+		case BKPSRAM_BASE:
+			/* Here pMPCWM_Desc->AreaId == GTZC_TZSC_MPCWM_ID1
+			 * (Parameter already checked)
+			 */
+			size = TZSC_MPCWM4_MEM_SIZE;
+			register_address =
+			    (uint32_t) & (GTZC_TZSC1_S->MPCWM4AR);
+			break;
+#if defined(OCTOSPI2_BASE)
+		case OCTOSPI2_BASE:
+			size = TZSC_MPCWM5_MEM_SIZE;
+			if (pMPCWM_Desc->AreaId == GTZC_TZSC_MPCWM_ID1) {
+				register_address =
+				    (uint32_t) & (GTZC_TZSC1_S->MPCWM5AR);
+			} else {
+				/* Here pMPCWM_Desc->AreaId ==
+				 * GTZC_TZSC_MPCWM_ID2 (Parameter already
+				 * checked)
+				 */
+				register_address =
+				    (uint32_t) & (GTZC_TZSC1_S->MPCWM5BR);
+			}
+			break;
 #endif /* OCTOSPI2_BASE */
 #if defined(HSPI1)
-	case HSPI1_BASE:
-		size = TZSC_MPCWM6_MEM_SIZE;
-		if (pMPCWM_Desc->AreaId == GTZC_TZSC_MPCWM_ID1) {
-			register_address =
-			    (uint32_t) & (GTZC_TZSC1_S->MPCWM6AR);
-		} else {
-			/* Here pMPCWM_Desc->AreaId == GTZC_TZSC_MPCWM_ID2
-			 * (Parameter already checked)
-			 */
-			register_address =
-			    (uint32_t) & (GTZC_TZSC1_S->MPCWM6BR);
-		}
-		break;
+		case HSPI1_BASE:
+			size = TZSC_MPCWM6_MEM_SIZE;
+			if (pMPCWM_Desc->AreaId == GTZC_TZSC_MPCWM_ID1) {
+				register_address =
+				    (uint32_t) & (GTZC_TZSC1_S->MPCWM6AR);
+			} else {
+				/* Here pMPCWM_Desc->AreaId ==
+				 * GTZC_TZSC_MPCWM_ID2 (Parameter already
+				 * checked)
+				 */
+				register_address =
+				    (uint32_t) & (GTZC_TZSC1_S->MPCWM6BR);
+			}
+			break;
 #endif /* HSPI1 */
-	default:
-		return HAL_ERROR;
-		break;
+		default:
+			return HAL_ERROR;
+			break;
 	}
 
 	if ((pMPCWM_Desc->Offset > size) ||
@@ -706,49 +712,49 @@ HAL_GTZC_TZSC_MPCWM_GetConfigMemAttributes(uint32_t MemBaseAddress,
 	/* Loading the subregion A & B addresses into their specific variables
 	 */
 	switch (MemBaseAddress) {
-	case OCTOSPI1_BASE:
-		register_address_regionA =
-		    (uint32_t) & (GTZC_TZSC1_S->MPCWM1AR);
-		register_address_regionB =
-		    (uint32_t) & (GTZC_TZSC1_S->MPCWM1BR);
-		break;
+		case OCTOSPI1_BASE:
+			register_address_regionA =
+			    (uint32_t) & (GTZC_TZSC1_S->MPCWM1AR);
+			register_address_regionB =
+			    (uint32_t) & (GTZC_TZSC1_S->MPCWM1BR);
+			break;
 #if defined(FMC_BANK1)
-	case FMC_BANK1:
-		register_address_regionA =
-		    (uint32_t) & (GTZC_TZSC1_S->MPCWM2AR);
-		register_address_regionB =
-		    (uint32_t) & (GTZC_TZSC1_S->MPCWM2BR);
-		break;
+		case FMC_BANK1:
+			register_address_regionA =
+			    (uint32_t) & (GTZC_TZSC1_S->MPCWM2AR);
+			register_address_regionB =
+			    (uint32_t) & (GTZC_TZSC1_S->MPCWM2BR);
+			break;
 #endif /* FMC_BANK1 */
 #if defined(FMC_BANK3)
-	case FMC_BANK3:
-		register_address_regionA =
-		    (uint32_t) & (GTZC_TZSC1_S->MPCWM3AR);
-		break;
+		case FMC_BANK3:
+			register_address_regionA =
+			    (uint32_t) & (GTZC_TZSC1_S->MPCWM3AR);
+			break;
 #endif /* FMC_BANK3 */
-	case BKPSRAM_BASE:
-		register_address_regionA =
-		    (uint32_t) & (GTZC_TZSC1_S->MPCWM4AR);
-		break;
+		case BKPSRAM_BASE:
+			register_address_regionA =
+			    (uint32_t) & (GTZC_TZSC1_S->MPCWM4AR);
+			break;
 #if defined(OCTOSPI2_BASE)
-	case OCTOSPI2_BASE:
-		register_address_regionA =
-		    (uint32_t) & (GTZC_TZSC1_S->MPCWM5AR);
-		register_address_regionB =
-		    (uint32_t) & (GTZC_TZSC1_S->MPCWM5BR);
-		break;
+		case OCTOSPI2_BASE:
+			register_address_regionA =
+			    (uint32_t) & (GTZC_TZSC1_S->MPCWM5AR);
+			register_address_regionB =
+			    (uint32_t) & (GTZC_TZSC1_S->MPCWM5BR);
+			break;
 #endif /* OCTOSPI2_BASE */
 #if defined(HSPI1)
-	case HSPI1_BASE:
-		register_address_regionA =
-		    (uint32_t) & (GTZC_TZSC1_S->MPCWM6AR);
-		register_address_regionB =
-		    (uint32_t) & (GTZC_TZSC1_S->MPCWM6BR);
-		break;
+		case HSPI1_BASE:
+			register_address_regionA =
+			    (uint32_t) & (GTZC_TZSC1_S->MPCWM6AR);
+			register_address_regionB =
+			    (uint32_t) & (GTZC_TZSC1_S->MPCWM6BR);
+			break;
 #endif /* HSPI1 */
-	default:
-		return HAL_ERROR;
-		break;
+		default:
+			return HAL_ERROR;
+			break;
 	}
 
 	/* read register and update the descriptor for first area*/

@@ -7,29 +7,30 @@ set(CMAKE_C_EXTENSIONS ON)
 
 # Define the build type
 if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE "Debug")
+	set(CMAKE_BUILD_TYPE "Debug")
 endif()
 
 # Enable compile command to ease indexing with e.g. clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
 # Enable CMake support for ASM and C languages
-enable_language(C ASM)
+enable_language(
+	C
+	ASM
+)
 
 # Core project settings
 project(BCC)
 
 add_library(${PROJECT_NAME} INTERFACE)
-target_sources(${PROJECT_NAME} INTERFACE
-    Src/bcc.c
-    Src/bcc_communication.c
-    Src/bcc_diagnostics.c
+target_sources(
+	${PROJECT_NAME}
+	INTERFACE
+		Src/bcc.c
+		Src/bcc_communication.c
+		Src/bcc_diagnostics.c
 )
 
-target_link_libraries(${PROJECT_NAME} INTERFACE
+target_link_libraries(${PROJECT_NAME} INTERFACE)
 
-)
-
-target_include_directories(${PROJECT_NAME} INTERFACE
-    Inc
-)
+target_include_directories(${PROJECT_NAME} INTERFACE Inc)

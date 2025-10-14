@@ -6,125 +6,77 @@ If changes are made to the state machine, either in diagram or in implementation
 
 The state machine runs on the ECU, but it maps to an enum which may be transmitted over CAN. Again, changes to implementation must be reflected in the diagram and vice-versa.
 
-## Key
-- **Green:** Standard start up
-- **Blue:** Shutdown without critical errors
-- **Red:** Critical error handling
-- **Pink:** Between drive active substates
-
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': {
-    'primaryColor': '#d1d1f6',
-    'primaryBorderColor': '#4e2cb0',
-    'primaryTextColor': '#000',
-    'edgeLabelBackground': '#f1e9dc',
-    'fontSize': '24px'
-}}}%%
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#ff6b6b',
+    'primaryTextColor': '#ffffff',
+    'primaryBorderColor': '#ff6b6b',
+    'lineColor': '#ffffff',
+    'edgeLabelBackground': 'rgba(0,0,0,0.8)',
+    'transitionColor': '#ffffff',
+    'transitionLabelColor': '#ffffff',
+    'secondaryColor': '#4ecdc4',
+    'tertiaryColor': '#ffe66d',
+    'background': '#000000',
+    'mainBkg': '#000000',
+    'secondBkg': '#000000',
+    'tertiaryBkg': '#000000'
+  }
+}}%%
 
-flowchart TD;
-    A(GLV Off) -->|GLVMS On| B(GLV On);
-    linkStyle 0 stroke:#4CBB17,stroke-width:4px;
+stateDiagram
 
-    B -->|GLVMS Off| A;
-    linkStyle 1 stroke:#0096FF,stroke-width:4px;
+    [*] --> GLV_Off
 
-    B -->|TS Active On| C(Precharge Engaged);
-    linkStyle 2 stroke:#4CBB17,stroke-width:4px;
+    %% Main horizontal flow (top row)
+    GLV_Off --> GLV_On : GLVMS On
+    GLV_On --> GLV_Off : GLVMS Off
+    GLV_On --> Precharge_Engaged : TS Active
+    Precharge_Engaged --> Precharge_Complete : Precharge OK
+    Precharge_Complete --> Drive_Active : Brake & RTD
 
-    C --->|"TS Active Off"| B;
-    linkStyle 3 stroke:#0096FF,stroke-width:4px;
+    %% Normal Operation Cycle (horizontal)
+    Drive_Active --> Precharge_Complete : RTD
+    Drive_Active --> Precharge_Complete : APPS/BSE Violation
 
-    C -->|ACU Precharge Confirmation| D(Precharging);
-    linkStyle 4 stroke:#4CBB17,stroke-width:4px;
+    %% Discharge state positioned below
+    GLV_Off
+    GLV_On
+    Precharge_Engaged
+    Precharge_Complete
+    Drive_Active
+    Tractive_System_Discharge
 
-    D --> |Precharge Success Confirmation| E(Precharge Complete);
-    linkStyle 5 stroke:#4CBB17,stroke-width:4px;
+    %% Downward transitions to discharge
+    Precharge_Engaged --> Tractive_System_Discharge : TS Active OR Comm Error
+    Precharge_Complete --> Tractive_System_Discharge : TS Active OR Critical Error
+    Drive_Active --> Tractive_System_Discharge : TS Active OR Critical Error
 
-    E --> |Brake + RTD on| F(Drive Standby);
-    linkStyle 6 stroke:#4CBB17,stroke-width:4px;
+    %% Return upward from discharge
+    Tractive_System_Discharge --> GLV_On : TS Voltage < 60V
 
-    F --> |RTD Off| E;
-    linkStyle 7 stroke:#0096FF,stroke-width:4px;
+    %% State Descriptions
+    GLV_Off : GLV Off
+    GLV_On : GLV On
+    Precharge_Engaged : Precharge Engaged
+    Precharge_Complete : Precharge Complete
+    Drive_Active : Drive Active
+    Tractive_System_Discharge : Tractive System Discharge
 
-    F --> |Valid Torque Request| G(Drive Active);
-    linkStyle 8 stroke:#4CBB17,stroke-width:4px;
+    classDef safeState fill:#4ecdc4,stroke:#ffffff,stroke-width:1px,color:#000
+    classDef hvState fill:#ff6b6b,stroke:#ffffff,stroke-width:1px,color:#fff
+    classDef transitionState fill:#ffe66d,stroke:#ffffff,stroke-width:1px,color:#000
+    classDef dischargeState fill:#ff9500,stroke:#ffffff,stroke-width:1px,color:#000
 
-    G ---> |Non-critical Violation| F;
-    linkStyle 9 stroke:#E7180B,stroke-width:4px;
-
-    G --> |RTD Off| F;
-    linkStyle 10 stroke:#0096FF,stroke-width:4px;
-
-    G -..- Group1;
-    linkStyle 11 stroke:#fc8eac,stroke-width:5px;
-
-    subgraph Group1 [SUBSTATES]
-        H([Idle]) <--> I(["Power"]) <--> J([Regen]) <--> H
-        linkStyle 12 stroke:#fc8eac,stroke-width:3px;
-        linkStyle 13 stroke:#fc8eac,stroke-width:3px;
-        linkStyle 14 stroke:#fc8eac,stroke-width:3px;
-
-        Note["*Throttle map dependent*"]:::note
-    end
-
-    H --> |Inactivity Frame Filter| F;
-    linkStyle 15 stroke:#0096FF,stroke-width:4px;
-
-    %% Connections to TS discharge off
-    D --> |TS Active Off| TS(TS Discharge Off);
-    linkStyle 16 stroke:#0096FF,stroke-width:4px;
-
-    D --> |Precharge Cancellation| TS;
-    linkStyle 17 stroke:#0096FF,stroke-width:4px;
-
-    E --> |TS Active Off / ACU Shutdown| TS;
-    linkStyle 18 stroke:#0096FF,stroke-width:4px;
-
-    F --> |TS Active Off / ACU Shutdown| TS;
-    linkStyle 19 stroke:#0096FF,stroke-width:4px;
-
-    G ---> |TS Active Off / ACU Shutdown| TS;
-    linkStyle 20 stroke:#0096FF,stroke-width:4px;
-
-    %% Error state
-    B --> |"Critical Communication Error"| L["**ERROR**"];
-    linkStyle 21 stroke:#E7180B,stroke-width:4px;
-
-    C --> |"Critical Communication Error"| L;
-    linkStyle 22 stroke:#E7180B,stroke-width:4px;
-
-    D --> |Critical Error| L;
-    linkStyle 23 stroke:#E7180B,stroke-width:4px;
-
-    E --> |Critical Error| L;
-    linkStyle 24 stroke:#E7180B,stroke-width:4px;
-
-    F --> |Critical Error| L;
-    linkStyle 25 stroke:#E7180B,stroke-width:4px;
-
-    G --> |Critical Violation| L;
-    linkStyle 26 stroke:#E7180B,stroke-width:4px;
-
-    TS ---> |Unresolved Errors| L
-    linkStyle 27 stroke:#E7180B,stroke-width:4px;
-
-    L --> |TSV > 60V| TS
-    linkStyle 28 stroke:#E7180B,stroke-width:4px;
-
-    L --> |Errors Resolved| B
-    linkStyle 29 stroke:#4CBB17,stroke-width:4px;
-
-    TS --> |TSV < 60V + Timeout Reached| L;
-    linkStyle 30 stroke:#E7180B,stroke-width:4px;
-
-    TS --> |TSV < 60V + Errors Resolved| B;
-    linkStyle 31 stroke:#4CBB17,stroke-width:4px;
-
-    %% Extra styling
-    style L fill:#F0C6C6, stroke:#5D1818;
-
-    classDef sg fill:#FAFAD2, stroke:#121a23,font-weight:bold;
-    class Group1 sg;
-
-    classDef note fill:none,stroke:none,color:#000,font-style:italic;
+    class GLV_Off,GLV_On safeState
+    class Drive_Active hvState
+    class Precharge_Engaged,Precharge_Complete transitionState
+    class Tractive_System_Discharge dischargeState
 ```
+
+- 🟦 **Blue**: Low voltage
+- 🟥 **Red**: HV charged
+- 🟨 **Yellow**: HV precharge
+- 🟧 **Orange**: HV discharge

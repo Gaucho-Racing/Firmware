@@ -281,20 +281,20 @@ HAL_StatusTypeDef HAL_DACEx_DualStart_DMA(DAC_HandleTypeDef *hdac,
 	}
 
 	switch (Alignment) {
-	case DAC_ALIGN_12B_R:
-		/* Get DHR12R1 address */
-		tmpreg = (uint32_t)&hdac->Instance->DHR12RD;
-		break;
-	case DAC_ALIGN_12B_L:
-		/* Get DHR12L1 address */
-		tmpreg = (uint32_t)&hdac->Instance->DHR12LD;
-		break;
-	case DAC_ALIGN_8B_R:
-		/* Get DHR8R1 address */
-		tmpreg = (uint32_t)&hdac->Instance->DHR8RD;
-		break;
-	default:
-		break;
+		case DAC_ALIGN_12B_R:
+			/* Get DHR12R1 address */
+			tmpreg = (uint32_t)&hdac->Instance->DHR12RD;
+			break;
+		case DAC_ALIGN_12B_L:
+			/* Get DHR12L1 address */
+			tmpreg = (uint32_t)&hdac->Instance->DHR12LD;
+			break;
+		case DAC_ALIGN_8B_R:
+			/* Get DHR8R1 address */
+			tmpreg = (uint32_t)&hdac->Instance->DHR8RD;
+			break;
+		default:
+			break;
 	}
 
 	/* Enable the DMA channel */

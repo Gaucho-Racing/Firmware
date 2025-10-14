@@ -2,27 +2,43 @@
 
 [![CMake](https://github.com/Gaucho-Racing/Firmware/actions/workflows/BuildAllPresets.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/BuildAllPresets.yml)
 [![CTest](https://github.com/Gaucho-Racing/Firmware/actions/workflows/RunCTests.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/RunCTests.yml)
-[![ClangFormat](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ClangFormat.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ClangFormat.yml)
+[![Auto Format](https://github.com/Gaucho-Racing/Firmware/actions/workflows/AutoFormat.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/AutoFormat.yml)
 [![ValidateConfigs](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ValidateConfigs.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ValidateConfigs.yml)
+[![CodeQL](https://github.com/Gaucho-Racing/Firmware/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/github-code-scanning/codeql)
 
 **_DO NOT DELETE ANY LICENSE INFORMATION ON ANY COPIED FILE OR LINE OF CODE_**
 
 When able, please add VS Code comptatible doc comments! These will help debugging and appear on the tool tip (hover) of any known function.
 
 ## Install Tools/Dependencies
+*For Windows:*
 1. [CMake](https://cmake.org/download/)
 2. [Ninja](https://github.com/ninja-build/ninja/releases)
 3. [ARM Toolchain (arm-none-eabi)](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
 4. [OpenOCD](https://github.com/openocd-org/openocd/releases/tag/v0.12.0)
 
-**CMake** (metabuild system) --> **Ninja** (build system) --> **ARM Toolchain** (provides tools to compile & link code)
-**OpenOCD** is an on-chip debugger, which allows us to examine code line-by-line in Debug mode
+*For MacOS:*
+1. Install Homebrew (paste this into terminal): `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+2. `brew install cmake`
+3. `brew install ninja`
+4. `brew install open-ocd`
+4. [ARM Toolchain (arm-none-eabi)](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
+- Look under "AArch32 bare-metal target (arm-none-eabi)" and install the .pkg file 
+- Add the ARM Toolchain to your PATH variable using the following commands in your terminal:
+    - `nano ~/.zshrc` --> use a basic text editor (nano) to edit the zsh configuration file
+    - `export PATH="/Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin:$PATH"` --> paste this into the config file
+    - `source ~/.zshrc` --> refresh your zsh terminal to apply the changes made
+
+**Note:** DO NOT use Homebrew to install "arm-none-eabi-gcc"- their ARM toolchain package is broken
 
 Verify that you have all these dependencies installed:
 - CMAKE - `cmake --version`
 - ninja - `ninja --version`
 - ARM toolchain - `arm-none-eabi-gcc --version`
 - openocd - `openocd --version`
+
+**CMake** (metabuild system) --> **Ninja** (build system) --> **ARM Toolchain** (provides tools to compile & link code)
+**OpenOCD** is an on-chip debugger, which allows us to examine code line-by-line in Debug mode
 
 # REPO RULES (follow if you want your builds to work)
 - Add a folder for each board with Core and Application, with Src and Inc in both
@@ -78,7 +94,12 @@ cmake --build build/Release
 cd build/Release
 openocd -f interface/stlink.cfg -f target/{your_chip}.cfg -c "program {your_project}.elf verify reset exit"
 ```
-example: your_chip = stm32l4x, your_project = L4BLINKY
+example: your_chip = stm32l4x, your_project = L4BLINKY <br>
+example: your_chip = stm32g4x, your_project = G4BLINKY
+
+This openocd command loads a configuration file 'target/{your_chip}.cfg' (defined in launch.json), and uses that to flash the '{your_project}.elf' executable onto the microcontroller.
+
+If things aren't working on MacOS, read through this [wiki page](https://wiki.gauchoracing.com/books/gr26-architecture/page/cmake-notes-for-monorepo)
 
 ## VS Code Setup
 

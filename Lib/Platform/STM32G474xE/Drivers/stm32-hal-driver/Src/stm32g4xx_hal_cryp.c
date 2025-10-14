@@ -834,49 +834,51 @@ HAL_CRYP_RegisterCallback(CRYP_HandleTypeDef *hcryp,
 
 	if (hcryp->State == HAL_CRYP_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_CRYP_INPUT_COMPLETE_CB_ID:
-			hcryp->InCpltCallback = pCallback;
-			break;
+			case HAL_CRYP_INPUT_COMPLETE_CB_ID:
+				hcryp->InCpltCallback = pCallback;
+				break;
 
-		case HAL_CRYP_OUTPUT_COMPLETE_CB_ID:
-			hcryp->OutCpltCallback = pCallback;
-			break;
+			case HAL_CRYP_OUTPUT_COMPLETE_CB_ID:
+				hcryp->OutCpltCallback = pCallback;
+				break;
 
-		case HAL_CRYP_ERROR_CB_ID:
-			hcryp->ErrorCallback = pCallback;
-			break;
+			case HAL_CRYP_ERROR_CB_ID:
+				hcryp->ErrorCallback = pCallback;
+				break;
 
-		case HAL_CRYP_MSPINIT_CB_ID:
-			hcryp->MspInitCallback = pCallback;
-			break;
+			case HAL_CRYP_MSPINIT_CB_ID:
+				hcryp->MspInitCallback = pCallback;
+				break;
 
-		case HAL_CRYP_MSPDEINIT_CB_ID:
-			hcryp->MspDeInitCallback = pCallback;
-			break;
+			case HAL_CRYP_MSPDEINIT_CB_ID:
+				hcryp->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hcryp->ErrorCode |= HAL_CRYP_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hcryp->ErrorCode |=
+				    HAL_CRYP_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hcryp->State == HAL_CRYP_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_CRYP_MSPINIT_CB_ID:
-			hcryp->MspInitCallback = pCallback;
-			break;
+			case HAL_CRYP_MSPINIT_CB_ID:
+				hcryp->MspInitCallback = pCallback;
+				break;
 
-		case HAL_CRYP_MSPDEINIT_CB_ID:
-			hcryp->MspDeInitCallback = pCallback;
-			break;
+			case HAL_CRYP_MSPDEINIT_CB_ID:
+				hcryp->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hcryp->ErrorCode |= HAL_CRYP_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hcryp->ErrorCode |=
+				    HAL_CRYP_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -917,55 +919,60 @@ HAL_CRYP_UnRegisterCallback(CRYP_HandleTypeDef *hcryp,
 
 	if (hcryp->State == HAL_CRYP_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_CRYP_INPUT_COMPLETE_CB_ID:
-			hcryp->InCpltCallback =
-			    HAL_CRYP_InCpltCallback; /* Legacy weak
-							InCpltCallback  */
-			break;
+			case HAL_CRYP_INPUT_COMPLETE_CB_ID:
+				hcryp->InCpltCallback =
+				    HAL_CRYP_InCpltCallback; /* Legacy weak
+								InCpltCallback
+							      */
+				break;
 
-		case HAL_CRYP_OUTPUT_COMPLETE_CB_ID:
-			hcryp->OutCpltCallback =
-			    HAL_CRYP_OutCpltCallback; /* Legacy weak
-							 OutCpltCallback */
-			break;
+			case HAL_CRYP_OUTPUT_COMPLETE_CB_ID:
+				hcryp->OutCpltCallback =
+				    HAL_CRYP_OutCpltCallback; /* Legacy weak
+								 OutCpltCallback
+							       */
+				break;
 
-		case HAL_CRYP_ERROR_CB_ID:
-			hcryp->ErrorCallback =
-			    HAL_CRYP_ErrorCallback; /* Legacy weak ErrorCallback
-						     */
-			break;
+			case HAL_CRYP_ERROR_CB_ID:
+				hcryp->ErrorCallback =
+				    HAL_CRYP_ErrorCallback; /* Legacy weak
+							     * ErrorCallback
+							     */
+				break;
 
-		case HAL_CRYP_MSPINIT_CB_ID:
-			hcryp->MspInitCallback = HAL_CRYP_MspInit;
-			break;
+			case HAL_CRYP_MSPINIT_CB_ID:
+				hcryp->MspInitCallback = HAL_CRYP_MspInit;
+				break;
 
-		case HAL_CRYP_MSPDEINIT_CB_ID:
-			hcryp->MspDeInitCallback = HAL_CRYP_MspDeInit;
-			break;
+			case HAL_CRYP_MSPDEINIT_CB_ID:
+				hcryp->MspDeInitCallback = HAL_CRYP_MspDeInit;
+				break;
 
-		default:
-			/* Update the error code */
-			hcryp->ErrorCode |= HAL_CRYP_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hcryp->ErrorCode |=
+				    HAL_CRYP_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hcryp->State == HAL_CRYP_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_CRYP_MSPINIT_CB_ID:
-			hcryp->MspInitCallback = HAL_CRYP_MspInit;
-			break;
+			case HAL_CRYP_MSPINIT_CB_ID:
+				hcryp->MspInitCallback = HAL_CRYP_MspInit;
+				break;
 
-		case HAL_CRYP_MSPDEINIT_CB_ID:
-			hcryp->MspDeInitCallback = HAL_CRYP_MspDeInit;
-			break;
+			case HAL_CRYP_MSPDEINIT_CB_ID:
+				hcryp->MspDeInitCallback = HAL_CRYP_MspDeInit;
+				break;
 
-		default:
-			/* Update the error code */
-			hcryp->ErrorCode |= HAL_CRYP_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hcryp->ErrorCode |=
+				    HAL_CRYP_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -1330,30 +1337,31 @@ HAL_StatusTypeDef HAL_CRYP_Encrypt(CRYP_HandleTypeDef *hcryp, uint32_t *Input,
 
 		switch (algo) {
 
-		case CRYP_AES_ECB:
-		case CRYP_AES_CBC:
-		case CRYP_AES_CTR:
+			case CRYP_AES_ECB:
+			case CRYP_AES_CBC:
+			case CRYP_AES_CTR:
 
-			/* AES encryption */
-			status = CRYP_AES_Encrypt(hcryp, Timeout);
-			break;
+				/* AES encryption */
+				status = CRYP_AES_Encrypt(hcryp, Timeout);
+				break;
 
-		case CRYP_AES_GCM_GMAC:
+			case CRYP_AES_GCM_GMAC:
 
-			/* AES GCM encryption */
-			status = CRYP_AESGCM_Process(hcryp, Timeout);
-			break;
+				/* AES GCM encryption */
+				status = CRYP_AESGCM_Process(hcryp, Timeout);
+				break;
 
-		case CRYP_AES_CCM:
+			case CRYP_AES_CCM:
 
-			/* AES CCM encryption */
-			status = CRYP_AESCCM_Process(hcryp, Timeout);
-			break;
+				/* AES CCM encryption */
+				status = CRYP_AESCCM_Process(hcryp, Timeout);
+				break;
 
-		default:
-			hcryp->ErrorCode |= HAL_CRYP_ERROR_NOT_SUPPORTED;
-			status = HAL_ERROR;
-			break;
+			default:
+				hcryp->ErrorCode |=
+				    HAL_CRYP_ERROR_NOT_SUPPORTED;
+				status = HAL_ERROR;
+				break;
 		}
 
 		if (status == HAL_OK) {
@@ -1428,30 +1436,31 @@ HAL_StatusTypeDef HAL_CRYP_Decrypt(CRYP_HandleTypeDef *hcryp, uint32_t *Input,
 
 		switch (algo) {
 
-		case CRYP_AES_ECB:
-		case CRYP_AES_CBC:
-		case CRYP_AES_CTR:
+			case CRYP_AES_ECB:
+			case CRYP_AES_CBC:
+			case CRYP_AES_CTR:
 
-			/* AES decryption */
-			status = CRYP_AES_Decrypt(hcryp, Timeout);
-			break;
+				/* AES decryption */
+				status = CRYP_AES_Decrypt(hcryp, Timeout);
+				break;
 
-		case CRYP_AES_GCM_GMAC:
+			case CRYP_AES_GCM_GMAC:
 
-			/* AES GCM decryption */
-			status = CRYP_AESGCM_Process(hcryp, Timeout);
-			break;
+				/* AES GCM decryption */
+				status = CRYP_AESGCM_Process(hcryp, Timeout);
+				break;
 
-		case CRYP_AES_CCM:
+			case CRYP_AES_CCM:
 
-			/* AES CCM decryption */
-			status = CRYP_AESCCM_Process(hcryp, Timeout);
-			break;
+				/* AES CCM decryption */
+				status = CRYP_AESCCM_Process(hcryp, Timeout);
+				break;
 
-		default:
-			hcryp->ErrorCode |= HAL_CRYP_ERROR_NOT_SUPPORTED;
-			status = HAL_ERROR;
-			break;
+			default:
+				hcryp->ErrorCode |=
+				    HAL_CRYP_ERROR_NOT_SUPPORTED;
+				status = HAL_ERROR;
+				break;
 		}
 
 		if (status == HAL_OK) {
@@ -1542,30 +1551,31 @@ HAL_StatusTypeDef HAL_CRYP_Encrypt_IT(CRYP_HandleTypeDef *hcryp,
 
 		switch (algo) {
 
-		case CRYP_AES_ECB:
-		case CRYP_AES_CBC:
-		case CRYP_AES_CTR:
+			case CRYP_AES_ECB:
+			case CRYP_AES_CBC:
+			case CRYP_AES_CTR:
 
-			/* AES encryption */
-			status = CRYP_AES_Encrypt_IT(hcryp);
-			break;
+				/* AES encryption */
+				status = CRYP_AES_Encrypt_IT(hcryp);
+				break;
 
-		case CRYP_AES_GCM_GMAC:
+			case CRYP_AES_GCM_GMAC:
 
-			/* AES GCM encryption */
-			status = CRYP_AESGCM_Process_IT(hcryp);
-			break;
+				/* AES GCM encryption */
+				status = CRYP_AESGCM_Process_IT(hcryp);
+				break;
 
-		case CRYP_AES_CCM:
+			case CRYP_AES_CCM:
 
-			/* AES CCM encryption */
-			status = CRYP_AESCCM_Process_IT(hcryp);
-			break;
+				/* AES CCM encryption */
+				status = CRYP_AESCCM_Process_IT(hcryp);
+				break;
 
-		default:
-			hcryp->ErrorCode |= HAL_CRYP_ERROR_NOT_SUPPORTED;
-			status = HAL_ERROR;
-			break;
+			default:
+				hcryp->ErrorCode |=
+				    HAL_CRYP_ERROR_NOT_SUPPORTED;
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Busy error code field */
@@ -1647,30 +1657,31 @@ HAL_StatusTypeDef HAL_CRYP_Decrypt_IT(CRYP_HandleTypeDef *hcryp,
 
 		switch (algo) {
 
-		case CRYP_AES_ECB:
-		case CRYP_AES_CBC:
-		case CRYP_AES_CTR:
+			case CRYP_AES_ECB:
+			case CRYP_AES_CBC:
+			case CRYP_AES_CTR:
 
-			/* AES decryption */
-			status = CRYP_AES_Decrypt_IT(hcryp);
-			break;
+				/* AES decryption */
+				status = CRYP_AES_Decrypt_IT(hcryp);
+				break;
 
-		case CRYP_AES_GCM_GMAC:
+			case CRYP_AES_GCM_GMAC:
 
-			/* AES GCM decryption */
-			status = CRYP_AESGCM_Process_IT(hcryp);
-			break;
+				/* AES GCM decryption */
+				status = CRYP_AESGCM_Process_IT(hcryp);
+				break;
 
-		case CRYP_AES_CCM:
+			case CRYP_AES_CCM:
 
-			/* AES CCM decryption */
-			status = CRYP_AESCCM_Process_IT(hcryp);
-			break;
+				/* AES CCM decryption */
+				status = CRYP_AESCCM_Process_IT(hcryp);
+				break;
 
-		default:
-			hcryp->ErrorCode |= HAL_CRYP_ERROR_NOT_SUPPORTED;
-			status = HAL_ERROR;
-			break;
+			default:
+				hcryp->ErrorCode |=
+				    HAL_CRYP_ERROR_NOT_SUPPORTED;
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Busy error code field */
@@ -1738,74 +1749,83 @@ HAL_StatusTypeDef HAL_CRYP_Encrypt_DMA(CRYP_HandleTypeDef *hcryp,
 
 		switch (algo) {
 
-		case CRYP_AES_ECB:
-		case CRYP_AES_CBC:
-		case CRYP_AES_CTR:
+			case CRYP_AES_ECB:
+			case CRYP_AES_CBC:
+			case CRYP_AES_CTR:
 
-			if (hcryp->Init.KeyIVConfigSkip ==
-			    CRYP_KEYIVCONFIG_ONCE) {
-				if (hcryp->KeyIVConfig == 1U) {
-					/* If the Key and IV configuration has
-					   to be done only once and if it has
-					   already been done, skip it */
-					DoKeyIVConfig = 0U;
-				} else {
-					/* If the Key and IV configuration has
-					   to be done only once and if it has
-					   not been done already, do it and set
-					   KeyIVConfig to keep track it won't
-					   have to be done again next time */
-					hcryp->KeyIVConfig = 1U;
+				if (hcryp->Init.KeyIVConfigSkip ==
+				    CRYP_KEYIVCONFIG_ONCE) {
+					if (hcryp->KeyIVConfig == 1U) {
+						/* If the Key and IV
+						   configuration has to be done
+						   only once and if it has
+						   already been done, skip it */
+						DoKeyIVConfig = 0U;
+					} else {
+						/* If the Key and IV
+						   configuration has to be done
+						   only once and if it has not
+						   been done already, do it and
+						   set KeyIVConfig to keep track
+						   it won't have to be done
+						   again next time */
+						hcryp->KeyIVConfig = 1U;
+					}
 				}
-			}
 
-			if (DoKeyIVConfig == 1U) {
-				/*  Set the Key*/
-				CRYP_SetKey(hcryp, hcryp->Init.KeySize);
+				if (DoKeyIVConfig == 1U) {
+					/*  Set the Key*/
+					CRYP_SetKey(hcryp, hcryp->Init.KeySize);
 
-				/* Set the Initialization Vector*/
-				if (hcryp->Init.Algorithm != CRYP_AES_ECB) {
-					hcryp->Instance->IVR3 = *(
-					    uint32_t *)(hcryp->Init.pInitVect);
-					hcryp->Instance->IVR2 = *(
-					    uint32_t *)(hcryp->Init.pInitVect +
-							1U);
-					hcryp->Instance->IVR1 = *(
-					    uint32_t *)(hcryp->Init.pInitVect +
-							2U);
-					hcryp->Instance->IVR0 = *(
-					    uint32_t *)(hcryp->Init.pInitVect +
-							3U);
-				}
-			} /* if (DoKeyIVConfig == 1U) */
+					/* Set the Initialization Vector*/
+					if (hcryp->Init.Algorithm !=
+					    CRYP_AES_ECB) {
+						hcryp->Instance->IVR3 = *(
+						    uint32_t *)(hcryp->Init
+								    .pInitVect);
+						hcryp->Instance->IVR2 = *(
+						    uint32_t *)(hcryp->Init
+								    .pInitVect +
+								1U);
+						hcryp->Instance->IVR1 = *(
+						    uint32_t *)(hcryp->Init
+								    .pInitVect +
+								2U);
+						hcryp->Instance->IVR0 = *(
+						    uint32_t *)(hcryp->Init
+								    .pInitVect +
+								3U);
+					}
+				} /* if (DoKeyIVConfig == 1U) */
 
-			/* Set the phase */
-			hcryp->Phase = CRYP_PHASE_PROCESS;
+				/* Set the phase */
+				hcryp->Phase = CRYP_PHASE_PROCESS;
 
-			/* Start DMA process transfer for AES */
-			CRYP_SetDMAConfig(hcryp,
-					  (uint32_t)(hcryp->pCrypInBuffPtr),
-					  (hcryp->Size / 4U),
-					  (uint32_t)(hcryp->pCrypOutBuffPtr));
-			status = HAL_OK;
-			break;
+				/* Start DMA process transfer for AES */
+				CRYP_SetDMAConfig(
+				    hcryp, (uint32_t)(hcryp->pCrypInBuffPtr),
+				    (hcryp->Size / 4U),
+				    (uint32_t)(hcryp->pCrypOutBuffPtr));
+				status = HAL_OK;
+				break;
 
-		case CRYP_AES_GCM_GMAC:
+			case CRYP_AES_GCM_GMAC:
 
-			/* AES GCM encryption */
-			status = CRYP_AESGCM_Process_DMA(hcryp);
-			break;
+				/* AES GCM encryption */
+				status = CRYP_AESGCM_Process_DMA(hcryp);
+				break;
 
-		case CRYP_AES_CCM:
+			case CRYP_AES_CCM:
 
-			/* AES CCM encryption */
-			status = CRYP_AESCCM_Process_DMA(hcryp);
-			break;
+				/* AES CCM encryption */
+				status = CRYP_AESCCM_Process_DMA(hcryp);
+				break;
 
-		default:
-			hcryp->ErrorCode |= HAL_CRYP_ERROR_NOT_SUPPORTED;
-			status = HAL_ERROR;
-			break;
+			default:
+				hcryp->ErrorCode |=
+				    HAL_CRYP_ERROR_NOT_SUPPORTED;
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Busy error code field */
@@ -1872,30 +1892,31 @@ HAL_StatusTypeDef HAL_CRYP_Decrypt_DMA(CRYP_HandleTypeDef *hcryp,
 
 		switch (algo) {
 
-		case CRYP_AES_ECB:
-		case CRYP_AES_CBC:
-		case CRYP_AES_CTR:
+			case CRYP_AES_ECB:
+			case CRYP_AES_CBC:
+			case CRYP_AES_CTR:
 
-			/* AES decryption */
-			status = CRYP_AES_Decrypt_DMA(hcryp);
-			break;
+				/* AES decryption */
+				status = CRYP_AES_Decrypt_DMA(hcryp);
+				break;
 
-		case CRYP_AES_GCM_GMAC:
+			case CRYP_AES_GCM_GMAC:
 
-			/* AES GCM decryption */
-			status = CRYP_AESGCM_Process_DMA(hcryp);
-			break;
+				/* AES GCM decryption */
+				status = CRYP_AESGCM_Process_DMA(hcryp);
+				break;
 
-		case CRYP_AES_CCM:
+			case CRYP_AES_CCM:
 
-			/* AES CCM decryption */
-			status = CRYP_AESCCM_Process_DMA(hcryp);
-			break;
+				/* AES CCM decryption */
+				status = CRYP_AESCCM_Process_DMA(hcryp);
+				break;
 
-		default:
-			hcryp->ErrorCode |= HAL_CRYP_ERROR_NOT_SUPPORTED;
-			status = HAL_ERROR;
-			break;
+			default:
+				hcryp->ErrorCode |=
+				    HAL_CRYP_ERROR_NOT_SUPPORTED;
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Busy error code field */
@@ -3167,37 +3188,37 @@ static void CRYP_SetKey(CRYP_HandleTypeDef *hcryp, uint32_t KeySize)
 {
 	if (hcryp->Init.pKey != NULL) {
 		switch (KeySize) {
-		case CRYP_KEYSIZE_256B:
-			hcryp->Instance->KEYR7 =
-			    *(uint32_t *)(hcryp->Init.pKey);
-			hcryp->Instance->KEYR6 =
-			    *(uint32_t *)(hcryp->Init.pKey + 1U);
-			hcryp->Instance->KEYR5 =
-			    *(uint32_t *)(hcryp->Init.pKey + 2U);
-			hcryp->Instance->KEYR4 =
-			    *(uint32_t *)(hcryp->Init.pKey + 3U);
-			hcryp->Instance->KEYR3 =
-			    *(uint32_t *)(hcryp->Init.pKey + 4U);
-			hcryp->Instance->KEYR2 =
-			    *(uint32_t *)(hcryp->Init.pKey + 5U);
-			hcryp->Instance->KEYR1 =
-			    *(uint32_t *)(hcryp->Init.pKey + 6U);
-			hcryp->Instance->KEYR0 =
-			    *(uint32_t *)(hcryp->Init.pKey + 7U);
-			break;
-		case CRYP_KEYSIZE_128B:
-			hcryp->Instance->KEYR3 =
-			    *(uint32_t *)(hcryp->Init.pKey);
-			hcryp->Instance->KEYR2 =
-			    *(uint32_t *)(hcryp->Init.pKey + 1U);
-			hcryp->Instance->KEYR1 =
-			    *(uint32_t *)(hcryp->Init.pKey + 2U);
-			hcryp->Instance->KEYR0 =
-			    *(uint32_t *)(hcryp->Init.pKey + 3U);
+			case CRYP_KEYSIZE_256B:
+				hcryp->Instance->KEYR7 =
+				    *(uint32_t *)(hcryp->Init.pKey);
+				hcryp->Instance->KEYR6 =
+				    *(uint32_t *)(hcryp->Init.pKey + 1U);
+				hcryp->Instance->KEYR5 =
+				    *(uint32_t *)(hcryp->Init.pKey + 2U);
+				hcryp->Instance->KEYR4 =
+				    *(uint32_t *)(hcryp->Init.pKey + 3U);
+				hcryp->Instance->KEYR3 =
+				    *(uint32_t *)(hcryp->Init.pKey + 4U);
+				hcryp->Instance->KEYR2 =
+				    *(uint32_t *)(hcryp->Init.pKey + 5U);
+				hcryp->Instance->KEYR1 =
+				    *(uint32_t *)(hcryp->Init.pKey + 6U);
+				hcryp->Instance->KEYR0 =
+				    *(uint32_t *)(hcryp->Init.pKey + 7U);
+				break;
+			case CRYP_KEYSIZE_128B:
+				hcryp->Instance->KEYR3 =
+				    *(uint32_t *)(hcryp->Init.pKey);
+				hcryp->Instance->KEYR2 =
+				    *(uint32_t *)(hcryp->Init.pKey + 1U);
+				hcryp->Instance->KEYR1 =
+				    *(uint32_t *)(hcryp->Init.pKey + 2U);
+				hcryp->Instance->KEYR0 =
+				    *(uint32_t *)(hcryp->Init.pKey + 3U);
 
-			break;
-		default:
-			break;
+				break;
+			default:
+				break;
 		}
 	}
 }
@@ -5636,34 +5657,46 @@ static void CRYP_Read_KeyRegisters(CRYP_HandleTypeDef *hcryp, uint32_t *Output,
 	uint32_t keyaddr = (uint32_t)Output;
 
 	switch (KeySize) {
-	case CRYP_KEYSIZE_256B:
-		*(uint32_t *)(keyaddr) = *(uint32_t *)(hcryp->Init.pKey);
-		keyaddr += 4U;
-		*(uint32_t *)(keyaddr) = *(uint32_t *)(hcryp->Init.pKey + 1U);
-		keyaddr += 4U;
-		*(uint32_t *)(keyaddr) = *(uint32_t *)(hcryp->Init.pKey + 2U);
-		keyaddr += 4U;
-		*(uint32_t *)(keyaddr) = *(uint32_t *)(hcryp->Init.pKey + 3U);
-		keyaddr += 4U;
-		*(uint32_t *)(keyaddr) = *(uint32_t *)(hcryp->Init.pKey + 4U);
-		keyaddr += 4U;
-		*(uint32_t *)(keyaddr) = *(uint32_t *)(hcryp->Init.pKey + 5U);
-		keyaddr += 4U;
-		*(uint32_t *)(keyaddr) = *(uint32_t *)(hcryp->Init.pKey + 6U);
-		keyaddr += 4U;
-		*(uint32_t *)(keyaddr) = *(uint32_t *)(hcryp->Init.pKey + 7U);
-		break;
-	case CRYP_KEYSIZE_128B:
-		*(uint32_t *)(keyaddr) = *(uint32_t *)(hcryp->Init.pKey);
-		keyaddr += 4U;
-		*(uint32_t *)(keyaddr) = *(uint32_t *)(hcryp->Init.pKey + 1U);
-		keyaddr += 4U;
-		*(uint32_t *)(keyaddr) = *(uint32_t *)(hcryp->Init.pKey + 2U);
-		keyaddr += 4U;
-		*(uint32_t *)(keyaddr) = *(uint32_t *)(hcryp->Init.pKey + 3U);
-		break;
-	default:
-		break;
+		case CRYP_KEYSIZE_256B:
+			*(uint32_t *)(keyaddr) =
+			    *(uint32_t *)(hcryp->Init.pKey);
+			keyaddr += 4U;
+			*(uint32_t *)(keyaddr) =
+			    *(uint32_t *)(hcryp->Init.pKey + 1U);
+			keyaddr += 4U;
+			*(uint32_t *)(keyaddr) =
+			    *(uint32_t *)(hcryp->Init.pKey + 2U);
+			keyaddr += 4U;
+			*(uint32_t *)(keyaddr) =
+			    *(uint32_t *)(hcryp->Init.pKey + 3U);
+			keyaddr += 4U;
+			*(uint32_t *)(keyaddr) =
+			    *(uint32_t *)(hcryp->Init.pKey + 4U);
+			keyaddr += 4U;
+			*(uint32_t *)(keyaddr) =
+			    *(uint32_t *)(hcryp->Init.pKey + 5U);
+			keyaddr += 4U;
+			*(uint32_t *)(keyaddr) =
+			    *(uint32_t *)(hcryp->Init.pKey + 6U);
+			keyaddr += 4U;
+			*(uint32_t *)(keyaddr) =
+			    *(uint32_t *)(hcryp->Init.pKey + 7U);
+			break;
+		case CRYP_KEYSIZE_128B:
+			*(uint32_t *)(keyaddr) =
+			    *(uint32_t *)(hcryp->Init.pKey);
+			keyaddr += 4U;
+			*(uint32_t *)(keyaddr) =
+			    *(uint32_t *)(hcryp->Init.pKey + 1U);
+			keyaddr += 4U;
+			*(uint32_t *)(keyaddr) =
+			    *(uint32_t *)(hcryp->Init.pKey + 2U);
+			keyaddr += 4U;
+			*(uint32_t *)(keyaddr) =
+			    *(uint32_t *)(hcryp->Init.pKey + 3U);
+			break;
+		default:
+			break;
 	}
 }
 

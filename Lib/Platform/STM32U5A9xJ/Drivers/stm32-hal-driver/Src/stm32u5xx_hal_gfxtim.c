@@ -378,100 +378,105 @@ HAL_GFXTIM_RegisterCallback(GFXTIM_HandleTypeDef *hgfxtim,
 	} else {
 		if (hgfxtim->State == HAL_GFXTIM_STATE_READY) {
 			switch (CallbackID) {
-			case HAL_GFXTIM_AFC_COMPARE1_CB_ID:
-				hgfxtim
-				    ->HAL_GFXTIM_AbsoluteTimer_AFCC1Callback =
-				    pCallback;
-				break;
-			case HAL_GFXTIM_AFC_OVERFLOW_CB_ID:
-				hgfxtim
-				    ->HAL_GFXTIM_AbsoluteTimer_AFCOFCallback =
-				    pCallback;
-				break;
-			case HAL_GFXTIM_ALC_COMPARE1_CB_ID:
-				hgfxtim
-				    ->HAL_GFXTIM_AbsoluteTimer_ALCC1Callback =
-				    pCallback;
-				break;
-			case HAL_GFXTIM_ALC_COMPARE2_CB_ID:
-				hgfxtim
-				    ->HAL_GFXTIM_AbsoluteTimer_ALCC2Callback =
-				    pCallback;
-				break;
-			case HAL_GFXTIM_ALC_OVERFLOW_CB_ID:
-				hgfxtim
-				    ->HAL_GFXTIM_AbsoluteTimer_ALCOFCallback =
-				    pCallback;
-				break;
-			case HAL_GFXTIM_RFC1_RELOAD_CB_ID:
-				hgfxtim
-				    ->HAL_GFXTIM_RelativeTimer_RFC1RCallback =
-				    pCallback;
-				break;
-			case HAL_GFXTIM_RFC2_RELOAD_CB_ID:
-				hgfxtim
-				    ->HAL_GFXTIM_RelativeTimer_RFC2RCallback =
-				    pCallback;
-				break;
-			case HAL_GFXTIM_TE_CB_ID:
-				hgfxtim->HAL_GFXTIM_TECallback = pCallback;
-				break;
-			case HAL_GFXTIM_EVENT1_CB_ID:
-				hgfxtim->HAL_GFXTIM_EventGenerator_EV1Callback =
-				    pCallback;
-				break;
-			case HAL_GFXTIM_EVENT2_CB_ID:
-				hgfxtim->HAL_GFXTIM_EventGenerator_EV2Callback =
-				    pCallback;
-				break;
-			case HAL_GFXTIM_EVENT3_CB_ID:
-				hgfxtim->HAL_GFXTIM_EventGenerator_EV3Callback =
-				    pCallback;
-				break;
-			case HAL_GFXTIM_EVENT4_CB_ID:
-				hgfxtim->HAL_GFXTIM_EventGenerator_EV4Callback =
-				    pCallback;
-				break;
-			case HAL_GFXTIM_WDG_ALARM_CB_ID:
-				hgfxtim
-				    ->HAL_GFXTIM_WatchdogTimer_AlarmCallback =
-				    pCallback;
-				break;
-			case HAL_GFXTIM_WDG_PREALARM_CB_ID:
-				hgfxtim
-				    ->HAL_GFXTIM_WatchdogTimer_PreAlarmCallback =
-				    pCallback;
-				break;
-			case HAL_GFXTIM_ERROR_CB_ID:
-				hgfxtim->ErrorCallback = pCallback;
-				break;
-			case HAL_GFXTIM_MSP_INIT_CB_ID:
-				hgfxtim->MspInitCallback = pCallback;
-				break;
-			case HAL_GFXTIM_MSP_DEINIT_CB_ID:
-				hgfxtim->MspDeInitCallback = pCallback;
-				break;
-			default:
-				/* Update error code and status */
-				hgfxtim->ErrorCode |=
-				    GFXTIM_ERROR_INVALID_CALLBACK;
-				status = HAL_ERROR;
-				break;
+				case HAL_GFXTIM_AFC_COMPARE1_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_AbsoluteTimer_AFCC1Callback =
+					    pCallback;
+					break;
+				case HAL_GFXTIM_AFC_OVERFLOW_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_AbsoluteTimer_AFCOFCallback =
+					    pCallback;
+					break;
+				case HAL_GFXTIM_ALC_COMPARE1_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_AbsoluteTimer_ALCC1Callback =
+					    pCallback;
+					break;
+				case HAL_GFXTIM_ALC_COMPARE2_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_AbsoluteTimer_ALCC2Callback =
+					    pCallback;
+					break;
+				case HAL_GFXTIM_ALC_OVERFLOW_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_AbsoluteTimer_ALCOFCallback =
+					    pCallback;
+					break;
+				case HAL_GFXTIM_RFC1_RELOAD_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_RelativeTimer_RFC1RCallback =
+					    pCallback;
+					break;
+				case HAL_GFXTIM_RFC2_RELOAD_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_RelativeTimer_RFC2RCallback =
+					    pCallback;
+					break;
+				case HAL_GFXTIM_TE_CB_ID:
+					hgfxtim->HAL_GFXTIM_TECallback =
+					    pCallback;
+					break;
+				case HAL_GFXTIM_EVENT1_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_EventGenerator_EV1Callback =
+					    pCallback;
+					break;
+				case HAL_GFXTIM_EVENT2_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_EventGenerator_EV2Callback =
+					    pCallback;
+					break;
+				case HAL_GFXTIM_EVENT3_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_EventGenerator_EV3Callback =
+					    pCallback;
+					break;
+				case HAL_GFXTIM_EVENT4_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_EventGenerator_EV4Callback =
+					    pCallback;
+					break;
+				case HAL_GFXTIM_WDG_ALARM_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_WatchdogTimer_AlarmCallback =
+					    pCallback;
+					break;
+				case HAL_GFXTIM_WDG_PREALARM_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_WatchdogTimer_PreAlarmCallback =
+					    pCallback;
+					break;
+				case HAL_GFXTIM_ERROR_CB_ID:
+					hgfxtim->ErrorCallback = pCallback;
+					break;
+				case HAL_GFXTIM_MSP_INIT_CB_ID:
+					hgfxtim->MspInitCallback = pCallback;
+					break;
+				case HAL_GFXTIM_MSP_DEINIT_CB_ID:
+					hgfxtim->MspDeInitCallback = pCallback;
+					break;
+				default:
+					/* Update error code and status */
+					hgfxtim->ErrorCode |=
+					    GFXTIM_ERROR_INVALID_CALLBACK;
+					status = HAL_ERROR;
+					break;
 			}
 		} else if (hgfxtim->State == HAL_GFXTIM_STATE_RESET) {
 			switch (CallbackID) {
-			case HAL_GFXTIM_MSP_INIT_CB_ID:
-				hgfxtim->MspInitCallback = pCallback;
-				break;
-			case HAL_GFXTIM_MSP_DEINIT_CB_ID:
-				hgfxtim->MspDeInitCallback = pCallback;
-				break;
-			default:
-				/* Update error code and status */
-				hgfxtim->ErrorCode |=
-				    GFXTIM_ERROR_INVALID_CALLBACK;
-				status = HAL_ERROR;
-				break;
+				case HAL_GFXTIM_MSP_INIT_CB_ID:
+					hgfxtim->MspInitCallback = pCallback;
+					break;
+				case HAL_GFXTIM_MSP_DEINIT_CB_ID:
+					hgfxtim->MspDeInitCallback = pCallback;
+					break;
+				default:
+					/* Update error code and status */
+					hgfxtim->ErrorCode |=
+					    GFXTIM_ERROR_INVALID_CALLBACK;
+					status = HAL_ERROR;
+					break;
 			}
 		} else {
 			/* Update error code and status */
@@ -535,104 +540,110 @@ HAL_GFXTIM_UnRegisterCallback(GFXTIM_HandleTypeDef *hgfxtim,
 	} else {
 		if (hgfxtim->State == HAL_GFXTIM_STATE_READY) {
 			switch (CallbackID) {
-			case HAL_GFXTIM_AFC_COMPARE1_CB_ID:
-				hgfxtim
-				    ->HAL_GFXTIM_AbsoluteTimer_AFCC1Callback =
-				    HAL_GFXTIM_AbsoluteTimer_AFCC1Callback;
-				break;
-			case HAL_GFXTIM_AFC_OVERFLOW_CB_ID:
-				hgfxtim
-				    ->HAL_GFXTIM_AbsoluteTimer_AFCOFCallback =
-				    HAL_GFXTIM_AbsoluteTimer_AFCOFCallback;
-				break;
-			case HAL_GFXTIM_ALC_COMPARE1_CB_ID:
-				hgfxtim
-				    ->HAL_GFXTIM_AbsoluteTimer_ALCC1Callback =
-				    HAL_GFXTIM_AbsoluteTimer_ALCC1Callback;
-				break;
-			case HAL_GFXTIM_ALC_COMPARE2_CB_ID:
-				hgfxtim
-				    ->HAL_GFXTIM_AbsoluteTimer_ALCC2Callback =
-				    HAL_GFXTIM_AbsoluteTimer_ALCC2Callback;
-				break;
-			case HAL_GFXTIM_ALC_OVERFLOW_CB_ID:
-				hgfxtim
-				    ->HAL_GFXTIM_AbsoluteTimer_ALCOFCallback =
-				    HAL_GFXTIM_AbsoluteTimer_ALCOFCallback;
-				break;
-			case HAL_GFXTIM_RFC1_RELOAD_CB_ID:
-				hgfxtim
-				    ->HAL_GFXTIM_RelativeTimer_RFC1RCallback =
-				    HAL_GFXTIM_RelativeTimer_RFC1RCallback;
-				break;
-			case HAL_GFXTIM_RFC2_RELOAD_CB_ID:
-				hgfxtim
-				    ->HAL_GFXTIM_RelativeTimer_RFC2RCallback =
-				    HAL_GFXTIM_RelativeTimer_RFC2RCallback;
-				break;
-			case HAL_GFXTIM_TE_CB_ID:
-				hgfxtim->HAL_GFXTIM_TECallback =
-				    HAL_GFXTIM_TECallback;
-				break;
-			case HAL_GFXTIM_EVENT1_CB_ID:
-				hgfxtim->HAL_GFXTIM_EventGenerator_EV1Callback =
-				    HAL_GFXTIM_EventGenerator_EV1Callback;
-				break;
-			case HAL_GFXTIM_EVENT2_CB_ID:
-				hgfxtim->HAL_GFXTIM_EventGenerator_EV2Callback =
-				    HAL_GFXTIM_EventGenerator_EV2Callback;
-				break;
-			case HAL_GFXTIM_EVENT3_CB_ID:
-				hgfxtim->HAL_GFXTIM_EventGenerator_EV3Callback =
-				    HAL_GFXTIM_EventGenerator_EV3Callback;
-				break;
-			case HAL_GFXTIM_EVENT4_CB_ID:
-				hgfxtim->HAL_GFXTIM_EventGenerator_EV4Callback =
-				    HAL_GFXTIM_EventGenerator_EV4Callback;
-				break;
-			case HAL_GFXTIM_WDG_ALARM_CB_ID:
-				hgfxtim
-				    ->HAL_GFXTIM_WatchdogTimer_AlarmCallback =
-				    HAL_GFXTIM_WatchdogTimer_AlarmCallback;
-				break;
-			case HAL_GFXTIM_WDG_PREALARM_CB_ID:
-				hgfxtim
-				    ->HAL_GFXTIM_WatchdogTimer_PreAlarmCallback =
-				    HAL_GFXTIM_WatchdogTimer_PreAlarmCallback;
-				break;
-			case HAL_GFXTIM_ERROR_CB_ID:
-				hgfxtim->ErrorCallback =
-				    HAL_GFXTIM_ErrorCallback;
-				break;
-			case HAL_GFXTIM_MSP_INIT_CB_ID:
-				hgfxtim->MspInitCallback = HAL_GFXTIM_MspInit;
-				break;
-			case HAL_GFXTIM_MSP_DEINIT_CB_ID:
-				hgfxtim->MspDeInitCallback =
-				    HAL_GFXTIM_MspDeInit;
-				break;
-			default:
-				/* Update error code and status */
-				hgfxtim->ErrorCode |=
-				    GFXTIM_ERROR_INVALID_CALLBACK;
-				status = HAL_ERROR;
-				break;
+				case HAL_GFXTIM_AFC_COMPARE1_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_AbsoluteTimer_AFCC1Callback =
+					    HAL_GFXTIM_AbsoluteTimer_AFCC1Callback;
+					break;
+				case HAL_GFXTIM_AFC_OVERFLOW_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_AbsoluteTimer_AFCOFCallback =
+					    HAL_GFXTIM_AbsoluteTimer_AFCOFCallback;
+					break;
+				case HAL_GFXTIM_ALC_COMPARE1_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_AbsoluteTimer_ALCC1Callback =
+					    HAL_GFXTIM_AbsoluteTimer_ALCC1Callback;
+					break;
+				case HAL_GFXTIM_ALC_COMPARE2_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_AbsoluteTimer_ALCC2Callback =
+					    HAL_GFXTIM_AbsoluteTimer_ALCC2Callback;
+					break;
+				case HAL_GFXTIM_ALC_OVERFLOW_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_AbsoluteTimer_ALCOFCallback =
+					    HAL_GFXTIM_AbsoluteTimer_ALCOFCallback;
+					break;
+				case HAL_GFXTIM_RFC1_RELOAD_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_RelativeTimer_RFC1RCallback =
+					    HAL_GFXTIM_RelativeTimer_RFC1RCallback;
+					break;
+				case HAL_GFXTIM_RFC2_RELOAD_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_RelativeTimer_RFC2RCallback =
+					    HAL_GFXTIM_RelativeTimer_RFC2RCallback;
+					break;
+				case HAL_GFXTIM_TE_CB_ID:
+					hgfxtim->HAL_GFXTIM_TECallback =
+					    HAL_GFXTIM_TECallback;
+					break;
+				case HAL_GFXTIM_EVENT1_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_EventGenerator_EV1Callback =
+					    HAL_GFXTIM_EventGenerator_EV1Callback;
+					break;
+				case HAL_GFXTIM_EVENT2_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_EventGenerator_EV2Callback =
+					    HAL_GFXTIM_EventGenerator_EV2Callback;
+					break;
+				case HAL_GFXTIM_EVENT3_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_EventGenerator_EV3Callback =
+					    HAL_GFXTIM_EventGenerator_EV3Callback;
+					break;
+				case HAL_GFXTIM_EVENT4_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_EventGenerator_EV4Callback =
+					    HAL_GFXTIM_EventGenerator_EV4Callback;
+					break;
+				case HAL_GFXTIM_WDG_ALARM_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_WatchdogTimer_AlarmCallback =
+					    HAL_GFXTIM_WatchdogTimer_AlarmCallback;
+					break;
+				case HAL_GFXTIM_WDG_PREALARM_CB_ID:
+					hgfxtim
+					    ->HAL_GFXTIM_WatchdogTimer_PreAlarmCallback =
+					    HAL_GFXTIM_WatchdogTimer_PreAlarmCallback;
+					break;
+				case HAL_GFXTIM_ERROR_CB_ID:
+					hgfxtim->ErrorCallback =
+					    HAL_GFXTIM_ErrorCallback;
+					break;
+				case HAL_GFXTIM_MSP_INIT_CB_ID:
+					hgfxtim->MspInitCallback =
+					    HAL_GFXTIM_MspInit;
+					break;
+				case HAL_GFXTIM_MSP_DEINIT_CB_ID:
+					hgfxtim->MspDeInitCallback =
+					    HAL_GFXTIM_MspDeInit;
+					break;
+				default:
+					/* Update error code and status */
+					hgfxtim->ErrorCode |=
+					    GFXTIM_ERROR_INVALID_CALLBACK;
+					status = HAL_ERROR;
+					break;
 			}
 		} else if (hgfxtim->State == HAL_GFXTIM_STATE_RESET) {
 			switch (CallbackID) {
-			case HAL_GFXTIM_MSP_INIT_CB_ID:
-				hgfxtim->MspInitCallback = HAL_GFXTIM_MspInit;
-				break;
-			case HAL_GFXTIM_MSP_DEINIT_CB_ID:
-				hgfxtim->MspDeInitCallback =
-				    HAL_GFXTIM_MspDeInit;
-				break;
-			default:
-				/* Update error code and status */
-				hgfxtim->ErrorCode |=
-				    GFXTIM_ERROR_INVALID_CALLBACK;
-				status = HAL_ERROR;
-				break;
+				case HAL_GFXTIM_MSP_INIT_CB_ID:
+					hgfxtim->MspInitCallback =
+					    HAL_GFXTIM_MspInit;
+					break;
+				case HAL_GFXTIM_MSP_DEINIT_CB_ID:
+					hgfxtim->MspDeInitCallback =
+					    HAL_GFXTIM_MspDeInit;
+					break;
+				default:
+					/* Update error code and status */
+					hgfxtim->ErrorCode |=
+					    GFXTIM_ERROR_INVALID_CALLBACK;
+					status = HAL_ERROR;
+					break;
 			}
 		} else {
 			/* Update error code and status */
@@ -1017,16 +1028,19 @@ HAL_GFXTIM_AbsoluteTimer_GetCounter(const GFXTIM_HandleTypeDef *hgfxtim,
 
 		if (hgfxtim->State == HAL_GFXTIM_STATE_READY) {
 			switch (AbsoluteTime) {
-			case GFXTIM_ABSOLUTE_GLOBAL_TIME:
-				*pValue = READ_REG(hgfxtim->Instance->ATR);
-				break;
-			case GFXTIM_ABSOLUTE_FRAME_TIME:
-				*pValue = READ_REG(hgfxtim->Instance->AFCR);
-				break;
-			default:
-				/* GFXTIM_ABSOLUTE_LINE_TIME */
-				*pValue = READ_REG(hgfxtim->Instance->ALCR);
-				break;
+				case GFXTIM_ABSOLUTE_GLOBAL_TIME:
+					*pValue =
+					    READ_REG(hgfxtim->Instance->ATR);
+					break;
+				case GFXTIM_ABSOLUTE_FRAME_TIME:
+					*pValue =
+					    READ_REG(hgfxtim->Instance->AFCR);
+					break;
+				default:
+					/* GFXTIM_ABSOLUTE_LINE_TIME */
+					*pValue =
+					    READ_REG(hgfxtim->Instance->ALCR);
+					break;
 			}
 		} else {
 			status = HAL_ERROR;
@@ -1097,13 +1111,15 @@ HAL_GFXTIM_AbsoluteTimer_SetLineCompare(GFXTIM_HandleTypeDef *hgfxtim,
 
 		if (hgfxtim->State == HAL_GFXTIM_STATE_READY) {
 			switch (AbsoluteLineComparator) {
-			case GFXTIM_ABSOLUTE_LINE_COMPARE1:
-				WRITE_REG(hgfxtim->Instance->ALCC1R, Value);
-				break;
-			default:
-				/* GFXTIM_ABSOLUTE_LINE_COMPARE2 */
-				WRITE_REG(hgfxtim->Instance->ALCC2R, Value);
-				break;
+				case GFXTIM_ABSOLUTE_LINE_COMPARE1:
+					WRITE_REG(hgfxtim->Instance->ALCC1R,
+						  Value);
+					break;
+				default:
+					/* GFXTIM_ABSOLUTE_LINE_COMPARE2 */
+					WRITE_REG(hgfxtim->Instance->ALCC2R,
+						  Value);
+					break;
 			}
 		} else {
 			status = HAL_ERROR;

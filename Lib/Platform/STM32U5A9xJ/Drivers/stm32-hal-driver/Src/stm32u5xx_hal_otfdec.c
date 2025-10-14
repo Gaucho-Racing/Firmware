@@ -326,43 +326,45 @@ HAL_OTFDEC_RegisterCallback(OTFDEC_HandleTypeDef *hotfdec,
 
 	if (hotfdec->State == HAL_OTFDEC_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_OTFDEC_ERROR_CB_ID:
-			hotfdec->ErrorCallback = pCallback;
-			break;
+			case HAL_OTFDEC_ERROR_CB_ID:
+				hotfdec->ErrorCallback = pCallback;
+				break;
 
-		case HAL_OTFDEC_MSPINIT_CB_ID:
-			hotfdec->MspInitCallback = pCallback;
-			break;
+			case HAL_OTFDEC_MSPINIT_CB_ID:
+				hotfdec->MspInitCallback = pCallback;
+				break;
 
-		case HAL_OTFDEC_MSPDEINIT_CB_ID:
-			hotfdec->MspDeInitCallback = pCallback;
-			break;
+			case HAL_OTFDEC_MSPDEINIT_CB_ID:
+				hotfdec->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hotfdec->ErrorCode |= HAL_OTFDEC_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hotfdec->ErrorCode |=
+				    HAL_OTFDEC_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_OTFDEC_STATE_RESET == hotfdec->State) {
 		switch (CallbackID) {
-		case HAL_OTFDEC_MSPINIT_CB_ID:
-			hotfdec->MspInitCallback = pCallback;
-			break;
+			case HAL_OTFDEC_MSPINIT_CB_ID:
+				hotfdec->MspInitCallback = pCallback;
+				break;
 
-		case HAL_OTFDEC_MSPDEINIT_CB_ID:
-			hotfdec->MspDeInitCallback = pCallback;
-			break;
+			case HAL_OTFDEC_MSPDEINIT_CB_ID:
+				hotfdec->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hotfdec->ErrorCode |= HAL_OTFDEC_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hotfdec->ErrorCode |=
+				    HAL_OTFDEC_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -395,47 +397,54 @@ HAL_OTFDEC_UnRegisterCallback(OTFDEC_HandleTypeDef *hotfdec,
 
 	if (hotfdec->State == HAL_OTFDEC_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_OTFDEC_ERROR_CB_ID:
-			hotfdec->ErrorCallback = HAL_OTFDEC_ErrorCallback;
-			break;
+			case HAL_OTFDEC_ERROR_CB_ID:
+				hotfdec->ErrorCallback =
+				    HAL_OTFDEC_ErrorCallback;
+				break;
 
-		case HAL_OTFDEC_MSPINIT_CB_ID:
-			hotfdec->MspInitCallback =
-			    HAL_OTFDEC_MspInit; /* Legacy weak MspInit */
-			break;
+			case HAL_OTFDEC_MSPINIT_CB_ID:
+				hotfdec->MspInitCallback =
+				    HAL_OTFDEC_MspInit; /* Legacy weak MspInit
+							 */
+				break;
 
-		case HAL_OTFDEC_MSPDEINIT_CB_ID:
-			hotfdec->MspDeInitCallback =
-			    HAL_OTFDEC_MspDeInit; /* Legacy weak MspDeInit */
-			break;
+			case HAL_OTFDEC_MSPDEINIT_CB_ID:
+				hotfdec->MspDeInitCallback =
+				    HAL_OTFDEC_MspDeInit; /* Legacy weak
+							     MspDeInit */
+				break;
 
-		default:
-			/* Update the error code */
-			hotfdec->ErrorCode |= HAL_OTFDEC_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hotfdec->ErrorCode |=
+				    HAL_OTFDEC_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_OTFDEC_STATE_RESET == hotfdec->State) {
 		switch (CallbackID) {
-		case HAL_OTFDEC_MSPINIT_CB_ID:
-			hotfdec->MspInitCallback =
-			    HAL_OTFDEC_MspInit; /* Legacy weak MspInit */
-			break;
+			case HAL_OTFDEC_MSPINIT_CB_ID:
+				hotfdec->MspInitCallback =
+				    HAL_OTFDEC_MspInit; /* Legacy weak MspInit
+							 */
+				break;
 
-		case HAL_OTFDEC_MSPDEINIT_CB_ID:
-			hotfdec->MspDeInitCallback =
-			    HAL_OTFDEC_MspDeInit; /* Legacy weak MspDeInit */
-			break;
+			case HAL_OTFDEC_MSPDEINIT_CB_ID:
+				hotfdec->MspDeInitCallback =
+				    HAL_OTFDEC_MspDeInit; /* Legacy weak
+							     MspDeInit */
+				break;
 
-		default:
-			/* Update the error code */
-			hotfdec->ErrorCode |= HAL_OTFDEC_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hotfdec->ErrorCode |=
+				    HAL_OTFDEC_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */

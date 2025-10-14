@@ -598,49 +598,51 @@ HAL_HASH_RegisterCallback(HASH_HandleTypeDef *hhash,
 
 	if (HAL_HASH_STATE_READY == hhash->State) {
 		switch (CallbackID) {
-		case HAL_HASH_INPUTCPLT_CB_ID:
-			hhash->InCpltCallback = pCallback;
-			break;
+			case HAL_HASH_INPUTCPLT_CB_ID:
+				hhash->InCpltCallback = pCallback;
+				break;
 
-		case HAL_HASH_DGSTCPLT_CB_ID:
-			hhash->DgstCpltCallback = pCallback;
-			break;
+			case HAL_HASH_DGSTCPLT_CB_ID:
+				hhash->DgstCpltCallback = pCallback;
+				break;
 
-		case HAL_HASH_ERROR_CB_ID:
-			hhash->ErrorCallback = pCallback;
-			break;
+			case HAL_HASH_ERROR_CB_ID:
+				hhash->ErrorCallback = pCallback;
+				break;
 
-		case HAL_HASH_MSPINIT_CB_ID:
-			hhash->MspInitCallback = pCallback;
-			break;
+			case HAL_HASH_MSPINIT_CB_ID:
+				hhash->MspInitCallback = pCallback;
+				break;
 
-		case HAL_HASH_MSPDEINIT_CB_ID:
-			hhash->MspDeInitCallback = pCallback;
-			break;
+			case HAL_HASH_MSPDEINIT_CB_ID:
+				hhash->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hhash->ErrorCode |= HAL_HASH_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hhash->ErrorCode |=
+				    HAL_HASH_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_HASH_STATE_RESET == hhash->State) {
 		switch (CallbackID) {
-		case HAL_HASH_MSPINIT_CB_ID:
-			hhash->MspInitCallback = pCallback;
-			break;
+			case HAL_HASH_MSPINIT_CB_ID:
+				hhash->MspInitCallback = pCallback;
+				break;
 
-		case HAL_HASH_MSPDEINIT_CB_ID:
-			hhash->MspDeInitCallback = pCallback;
-			break;
+			case HAL_HASH_MSPDEINIT_CB_ID:
+				hhash->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hhash->ErrorCode |= HAL_HASH_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hhash->ErrorCode |=
+				    HAL_HASH_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -680,66 +682,76 @@ HAL_HASH_UnRegisterCallback(HASH_HandleTypeDef *hhash,
 
 	if (HAL_HASH_STATE_READY == hhash->State) {
 		switch (CallbackID) {
-		case HAL_HASH_INPUTCPLT_CB_ID:
-			hhash->InCpltCallback =
-			    HAL_HASH_InCpltCallback; /* Legacy weak (surcharged)
-							input completion
-							callback */
-			break;
+			case HAL_HASH_INPUTCPLT_CB_ID:
+				hhash->InCpltCallback =
+				    HAL_HASH_InCpltCallback; /* Legacy weak
+								(surcharged)
+								input completion
+								callback */
+				break;
 
-		case HAL_HASH_DGSTCPLT_CB_ID:
-			hhash->DgstCpltCallback =
-			    HAL_HASH_DgstCpltCallback; /* Legacy weak
-							  (surcharged) digest
-							  computation completion
-							  callback */
-			break;
+			case HAL_HASH_DGSTCPLT_CB_ID:
+				hhash->DgstCpltCallback =
+				    HAL_HASH_DgstCpltCallback; /* Legacy weak
+								  (surcharged)
+								  digest
+								  computation
+								  completion
+								  callback */
+				break;
 
-		case HAL_HASH_ERROR_CB_ID:
-			hhash->ErrorCallback =
-			    HAL_HASH_ErrorCallback; /* Legacy weak (surcharged)
-						       error callback */
-			break;
+			case HAL_HASH_ERROR_CB_ID:
+				hhash->ErrorCallback =
+				    HAL_HASH_ErrorCallback; /* Legacy weak
+							       (surcharged)
+							       error callback */
+				break;
 
-		case HAL_HASH_MSPINIT_CB_ID:
-			hhash->MspInitCallback =
-			    HAL_HASH_MspInit; /* Legacy weak (surcharged) Msp
-						 Init */
-			break;
+			case HAL_HASH_MSPINIT_CB_ID:
+				hhash->MspInitCallback =
+				    HAL_HASH_MspInit; /* Legacy weak
+							 (surcharged) Msp Init
+						       */
+				break;
 
-		case HAL_HASH_MSPDEINIT_CB_ID:
-			hhash->MspDeInitCallback =
-			    HAL_HASH_MspDeInit; /* Legacy weak (surcharged) Msp
-						   DeInit */
-			break;
+			case HAL_HASH_MSPDEINIT_CB_ID:
+				hhash->MspDeInitCallback =
+				    HAL_HASH_MspDeInit; /* Legacy weak
+							   (surcharged) Msp
+							   DeInit */
+				break;
 
-		default:
-			/* Update the error code */
-			hhash->ErrorCode |= HAL_HASH_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hhash->ErrorCode |=
+				    HAL_HASH_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_HASH_STATE_RESET == hhash->State) {
 		switch (CallbackID) {
-		case HAL_HASH_MSPINIT_CB_ID:
-			hhash->MspInitCallback =
-			    HAL_HASH_MspInit; /* Legacy weak (surcharged) Msp
-						 Init */
-			break;
+			case HAL_HASH_MSPINIT_CB_ID:
+				hhash->MspInitCallback =
+				    HAL_HASH_MspInit; /* Legacy weak
+							 (surcharged) Msp Init
+						       */
+				break;
 
-		case HAL_HASH_MSPDEINIT_CB_ID:
-			hhash->MspDeInitCallback =
-			    HAL_HASH_MspDeInit; /* Legacy weak (surcharged) Msp
-						   DeInit */
-			break;
+			case HAL_HASH_MSPDEINIT_CB_ID:
+				hhash->MspDeInitCallback =
+				    HAL_HASH_MspDeInit; /* Legacy weak
+							   (surcharged) Msp
+							   DeInit */
+				break;
 
-		default:
-			/* Update the error code */
-			hhash->ErrorCode |= HAL_HASH_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hhash->ErrorCode |=
+				    HAL_HASH_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -2124,61 +2136,61 @@ static void HASH_GetDigest(const uint8_t *pMsgDigest, uint8_t Size)
 	uint32_t msgdigest = (uint32_t)pMsgDigest;
 
 	switch (Size) {
-	/* Read the message digest */
-	case 16: /* MD5 */
-		*(uint32_t *)(msgdigest) = __REV(HASH->HR[0]);
-		msgdigest += 4U;
-		*(uint32_t *)(msgdigest) = __REV(HASH->HR[1]);
-		msgdigest += 4U;
-		*(uint32_t *)(msgdigest) = __REV(HASH->HR[2]);
-		msgdigest += 4U;
-		*(uint32_t *)(msgdigest) = __REV(HASH->HR[3]);
-		break;
-	case 20: /* SHA1 */
-		*(uint32_t *)(msgdigest) = __REV(HASH->HR[0]);
-		msgdigest += 4U;
-		*(uint32_t *)(msgdigest) = __REV(HASH->HR[1]);
-		msgdigest += 4U;
-		*(uint32_t *)(msgdigest) = __REV(HASH->HR[2]);
-		msgdigest += 4U;
-		*(uint32_t *)(msgdigest) = __REV(HASH->HR[3]);
-		msgdigest += 4U;
-		*(uint32_t *)(msgdigest) = __REV(HASH->HR[4]);
-		break;
-	case 28: /* SHA224 */
-		*(uint32_t *)(msgdigest) = __REV(HASH->HR[0]);
-		msgdigest += 4U;
-		*(uint32_t *)(msgdigest) = __REV(HASH->HR[1]);
-		msgdigest += 4U;
-		*(uint32_t *)(msgdigest) = __REV(HASH->HR[2]);
-		msgdigest += 4U;
-		*(uint32_t *)(msgdigest) = __REV(HASH->HR[3]);
-		msgdigest += 4U;
-		*(uint32_t *)(msgdigest) = __REV(HASH->HR[4]);
-		msgdigest += 4U;
-		*(uint32_t *)(msgdigest) = __REV(HASH_DIGEST->HR[5]);
-		msgdigest += 4U;
-		*(uint32_t *)(msgdigest) = __REV(HASH_DIGEST->HR[6]);
-		break;
-	case 32: /* SHA256 */
-		*(uint32_t *)(msgdigest) = __REV(HASH->HR[0]);
-		msgdigest += 4U;
-		*(uint32_t *)(msgdigest) = __REV(HASH->HR[1]);
-		msgdigest += 4U;
-		*(uint32_t *)(msgdigest) = __REV(HASH->HR[2]);
-		msgdigest += 4U;
-		*(uint32_t *)(msgdigest) = __REV(HASH->HR[3]);
-		msgdigest += 4U;
-		*(uint32_t *)(msgdigest) = __REV(HASH->HR[4]);
-		msgdigest += 4U;
-		*(uint32_t *)(msgdigest) = __REV(HASH_DIGEST->HR[5]);
-		msgdigest += 4U;
-		*(uint32_t *)(msgdigest) = __REV(HASH_DIGEST->HR[6]);
-		msgdigest += 4U;
-		*(uint32_t *)(msgdigest) = __REV(HASH_DIGEST->HR[7]);
-		break;
-	default:
-		break;
+		/* Read the message digest */
+		case 16: /* MD5 */
+			*(uint32_t *)(msgdigest) = __REV(HASH->HR[0]);
+			msgdigest += 4U;
+			*(uint32_t *)(msgdigest) = __REV(HASH->HR[1]);
+			msgdigest += 4U;
+			*(uint32_t *)(msgdigest) = __REV(HASH->HR[2]);
+			msgdigest += 4U;
+			*(uint32_t *)(msgdigest) = __REV(HASH->HR[3]);
+			break;
+		case 20: /* SHA1 */
+			*(uint32_t *)(msgdigest) = __REV(HASH->HR[0]);
+			msgdigest += 4U;
+			*(uint32_t *)(msgdigest) = __REV(HASH->HR[1]);
+			msgdigest += 4U;
+			*(uint32_t *)(msgdigest) = __REV(HASH->HR[2]);
+			msgdigest += 4U;
+			*(uint32_t *)(msgdigest) = __REV(HASH->HR[3]);
+			msgdigest += 4U;
+			*(uint32_t *)(msgdigest) = __REV(HASH->HR[4]);
+			break;
+		case 28: /* SHA224 */
+			*(uint32_t *)(msgdigest) = __REV(HASH->HR[0]);
+			msgdigest += 4U;
+			*(uint32_t *)(msgdigest) = __REV(HASH->HR[1]);
+			msgdigest += 4U;
+			*(uint32_t *)(msgdigest) = __REV(HASH->HR[2]);
+			msgdigest += 4U;
+			*(uint32_t *)(msgdigest) = __REV(HASH->HR[3]);
+			msgdigest += 4U;
+			*(uint32_t *)(msgdigest) = __REV(HASH->HR[4]);
+			msgdigest += 4U;
+			*(uint32_t *)(msgdigest) = __REV(HASH_DIGEST->HR[5]);
+			msgdigest += 4U;
+			*(uint32_t *)(msgdigest) = __REV(HASH_DIGEST->HR[6]);
+			break;
+		case 32: /* SHA256 */
+			*(uint32_t *)(msgdigest) = __REV(HASH->HR[0]);
+			msgdigest += 4U;
+			*(uint32_t *)(msgdigest) = __REV(HASH->HR[1]);
+			msgdigest += 4U;
+			*(uint32_t *)(msgdigest) = __REV(HASH->HR[2]);
+			msgdigest += 4U;
+			*(uint32_t *)(msgdigest) = __REV(HASH->HR[3]);
+			msgdigest += 4U;
+			*(uint32_t *)(msgdigest) = __REV(HASH->HR[4]);
+			msgdigest += 4U;
+			*(uint32_t *)(msgdigest) = __REV(HASH_DIGEST->HR[5]);
+			msgdigest += 4U;
+			*(uint32_t *)(msgdigest) = __REV(HASH_DIGEST->HR[6]);
+			msgdigest += 4U;
+			*(uint32_t *)(msgdigest) = __REV(HASH_DIGEST->HR[7]);
+			break;
+		default:
+			break;
 	}
 }
 

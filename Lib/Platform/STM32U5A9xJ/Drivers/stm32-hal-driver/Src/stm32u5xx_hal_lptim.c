@@ -678,22 +678,22 @@ HAL_StatusTypeDef HAL_LPTIM_PWM_Start_IT(LPTIM_HandleTypeDef *hlptim,
 	__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_DIEROK);
 
 	switch (Channel) {
-	case LPTIM_CHANNEL_1:
-		/* Enable interrupt */
-		__HAL_LPTIM_ENABLE_IT(hlptim,
-				      LPTIM_IT_CMP1OK | LPTIM_IT_CC1 |
-					  LPTIM_IT_ARROK | LPTIM_IT_ARRM |
-					  LPTIM_IT_REPOK | LPTIM_IT_UPDATE);
-		break;
-	case LPTIM_CHANNEL_2:
-		/* Enable interrupt */
-		__HAL_LPTIM_ENABLE_IT(hlptim,
-				      LPTIM_IT_CMP2OK | LPTIM_IT_CC2 |
-					  LPTIM_IT_ARROK | LPTIM_IT_ARRM |
-					  LPTIM_IT_REPOK | LPTIM_IT_UPDATE);
-		break;
-	default:
-		break;
+		case LPTIM_CHANNEL_1:
+			/* Enable interrupt */
+			__HAL_LPTIM_ENABLE_IT(
+			    hlptim, LPTIM_IT_CMP1OK | LPTIM_IT_CC1 |
+					LPTIM_IT_ARROK | LPTIM_IT_ARRM |
+					LPTIM_IT_REPOK | LPTIM_IT_UPDATE);
+			break;
+		case LPTIM_CHANNEL_2:
+			/* Enable interrupt */
+			__HAL_LPTIM_ENABLE_IT(
+			    hlptim, LPTIM_IT_CMP2OK | LPTIM_IT_CC2 |
+					LPTIM_IT_ARROK | LPTIM_IT_ARRM |
+					LPTIM_IT_REPOK | LPTIM_IT_UPDATE);
+			break;
+		default:
+			break;
 	}
 
 	/* Wait for the completion of the write operation to the LPTIM_DIER
@@ -762,22 +762,22 @@ HAL_StatusTypeDef HAL_LPTIM_PWM_Stop_IT(LPTIM_HandleTypeDef *hlptim,
 	__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_DIEROK);
 
 	switch (Channel) {
-	case LPTIM_CHANNEL_1:
-		/* Disable interrupt */
-		__HAL_LPTIM_DISABLE_IT(hlptim,
-				       LPTIM_IT_CMP1OK | LPTIM_IT_CC1 |
-					   LPTIM_IT_ARROK | LPTIM_IT_ARRM |
-					   LPTIM_IT_REPOK | LPTIM_IT_UPDATE);
-		break;
-	case LPTIM_CHANNEL_2:
-		/* Disable interrupt */
-		__HAL_LPTIM_DISABLE_IT(hlptim,
-				       LPTIM_IT_CMP2OK | LPTIM_IT_CC2 |
-					   LPTIM_IT_ARROK | LPTIM_IT_ARRM |
-					   LPTIM_IT_REPOK | LPTIM_IT_UPDATE);
-		break;
-	default:
-		break;
+		case LPTIM_CHANNEL_1:
+			/* Disable interrupt */
+			__HAL_LPTIM_DISABLE_IT(
+			    hlptim, LPTIM_IT_CMP1OK | LPTIM_IT_CC1 |
+					LPTIM_IT_ARROK | LPTIM_IT_ARRM |
+					LPTIM_IT_REPOK | LPTIM_IT_UPDATE);
+			break;
+		case LPTIM_CHANNEL_2:
+			/* Disable interrupt */
+			__HAL_LPTIM_DISABLE_IT(
+			    hlptim, LPTIM_IT_CMP2OK | LPTIM_IT_CC2 |
+					LPTIM_IT_ARROK | LPTIM_IT_ARRM |
+					LPTIM_IT_REPOK | LPTIM_IT_UPDATE);
+			break;
+		default:
+			break;
 	}
 
 	/* Wait for the completion of the write operation to the LPTIM_DIER
@@ -871,48 +871,50 @@ HAL_StatusTypeDef HAL_LPTIM_PWM_Start_DMA(LPTIM_HandleTypeDef *hlptim,
 	}
 
 	switch (Channel) {
-	case LPTIM_CHANNEL_1:
-		/* Set the DMA update event callbacks */
-		hlptim->hdma[LPTIM_DMA_ID_CC1]->XferCpltCallback =
-		    LPTIM_DMAUpdateEventCplt;
-		hlptim->hdma[LPTIM_DMA_ID_CC1]->XferHalfCpltCallback =
-		    LPTIM_DMAUpdateEventHalfCplt;
+		case LPTIM_CHANNEL_1:
+			/* Set the DMA update event callbacks */
+			hlptim->hdma[LPTIM_DMA_ID_CC1]->XferCpltCallback =
+			    LPTIM_DMAUpdateEventCplt;
+			hlptim->hdma[LPTIM_DMA_ID_CC1]->XferHalfCpltCallback =
+			    LPTIM_DMAUpdateEventHalfCplt;
 
-		/* Set the DMA error callback */
-		hlptim->hdma[LPTIM_DMA_ID_CC1]->XferErrorCallback =
-		    LPTIM_DMAError;
+			/* Set the DMA error callback */
+			hlptim->hdma[LPTIM_DMA_ID_CC1]->XferErrorCallback =
+			    LPTIM_DMAError;
 
-		/* Enable the DMA Channel */
-		hdma = hlptim->hdma[LPTIM_DMA_ID_CC1];
-		if (LPTIM_DMA_Start_IT(hdma, (uint32_t)pData,
-				       (uint32_t)&hlptim->Instance->CCR1,
-				       Length) != HAL_OK) {
-			/* Return error status */
-			return HAL_ERROR;
-		}
-		break;
-	case LPTIM_CHANNEL_2:
-		/* Set the DMA update event callbacks */
-		hlptim->hdma[LPTIM_DMA_ID_CC2]->XferCpltCallback =
-		    LPTIM_DMAUpdateEventCplt;
-		hlptim->hdma[LPTIM_DMA_ID_CC2]->XferHalfCpltCallback =
-		    LPTIM_DMAUpdateEventHalfCplt;
+			/* Enable the DMA Channel */
+			hdma = hlptim->hdma[LPTIM_DMA_ID_CC1];
+			if (LPTIM_DMA_Start_IT(
+				hdma, (uint32_t)pData,
+				(uint32_t)&hlptim->Instance->CCR1,
+				Length) != HAL_OK) {
+				/* Return error status */
+				return HAL_ERROR;
+			}
+			break;
+		case LPTIM_CHANNEL_2:
+			/* Set the DMA update event callbacks */
+			hlptim->hdma[LPTIM_DMA_ID_CC2]->XferCpltCallback =
+			    LPTIM_DMAUpdateEventCplt;
+			hlptim->hdma[LPTIM_DMA_ID_CC2]->XferHalfCpltCallback =
+			    LPTIM_DMAUpdateEventHalfCplt;
 
-		/* Set the DMA error callback */
-		hlptim->hdma[LPTIM_DMA_ID_CC2]->XferErrorCallback =
-		    LPTIM_DMAError;
+			/* Set the DMA error callback */
+			hlptim->hdma[LPTIM_DMA_ID_CC2]->XferErrorCallback =
+			    LPTIM_DMAError;
 
-		/* Enable the DMA Channel */
-		hdma = hlptim->hdma[LPTIM_DMA_ID_CC2];
-		if (LPTIM_DMA_Start_IT(hdma, (uint32_t)pData,
-				       (uint32_t)&hlptim->Instance->CCR2,
-				       Length) != HAL_OK) {
-			/* Return error status */
-			return HAL_ERROR;
-		}
-		break;
-	default:
-		break;
+			/* Enable the DMA Channel */
+			hdma = hlptim->hdma[LPTIM_DMA_ID_CC2];
+			if (LPTIM_DMA_Start_IT(
+				hdma, (uint32_t)pData,
+				(uint32_t)&hlptim->Instance->CCR2,
+				Length) != HAL_OK) {
+				/* Return error status */
+				return HAL_ERROR;
+			}
+			break;
+		default:
+			break;
 	}
 
 	/* Enable LPTIM signal on the corresponding output pin */
@@ -951,16 +953,16 @@ HAL_StatusTypeDef HAL_LPTIM_PWM_Stop_DMA(LPTIM_HandleTypeDef *hlptim,
 	__HAL_LPTIM_DISABLE_DMA(hlptim, LPTIM_DMA_UPDATE);
 
 	switch (Channel) {
-	case LPTIM_CHANNEL_1:
-		/* Disable update event DMA request */
-		(void)HAL_DMA_Abort_IT(hlptim->hdma[LPTIM_DMA_ID_CC1]);
-		break;
-	case LPTIM_CHANNEL_2:
-		/* Disable update event DMA request */
-		(void)HAL_DMA_Abort_IT(hlptim->hdma[LPTIM_DMA_ID_CC2]);
-		break;
-	default:
-		break;
+		case LPTIM_CHANNEL_1:
+			/* Disable update event DMA request */
+			(void)HAL_DMA_Abort_IT(hlptim->hdma[LPTIM_DMA_ID_CC1]);
+			break;
+		case LPTIM_CHANNEL_2:
+			/* Disable update event DMA request */
+			(void)HAL_DMA_Abort_IT(hlptim->hdma[LPTIM_DMA_ID_CC2]);
+			break;
+		default:
+			break;
 	}
 
 	/* Disable LPTIM signal from the corresponding output pin */
@@ -1096,22 +1098,22 @@ HAL_StatusTypeDef HAL_LPTIM_OnePulse_Start_IT(LPTIM_HandleTypeDef *hlptim,
 	__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_DIEROK);
 
 	switch (Channel) {
-	case LPTIM_CHANNEL_1:
-		/* Enable  interrupt */
-		__HAL_LPTIM_ENABLE_IT(hlptim,
-				      LPTIM_IT_CMP1OK | LPTIM_IT_CC1 |
-					  LPTIM_IT_ARROK | LPTIM_IT_ARRM |
-					  LPTIM_IT_REPOK | LPTIM_IT_UPDATE);
-		break;
-	case LPTIM_CHANNEL_2:
-		/* Enable interrupt */
-		__HAL_LPTIM_ENABLE_IT(hlptim,
-				      LPTIM_IT_CMP2OK | LPTIM_IT_CC2 |
-					  LPTIM_IT_ARROK | LPTIM_IT_ARRM |
-					  LPTIM_IT_REPOK | LPTIM_IT_UPDATE);
-		break;
-	default:
-		break;
+		case LPTIM_CHANNEL_1:
+			/* Enable  interrupt */
+			__HAL_LPTIM_ENABLE_IT(
+			    hlptim, LPTIM_IT_CMP1OK | LPTIM_IT_CC1 |
+					LPTIM_IT_ARROK | LPTIM_IT_ARRM |
+					LPTIM_IT_REPOK | LPTIM_IT_UPDATE);
+			break;
+		case LPTIM_CHANNEL_2:
+			/* Enable interrupt */
+			__HAL_LPTIM_ENABLE_IT(
+			    hlptim, LPTIM_IT_CMP2OK | LPTIM_IT_CC2 |
+					LPTIM_IT_ARROK | LPTIM_IT_ARRM |
+					LPTIM_IT_REPOK | LPTIM_IT_UPDATE);
+			break;
+		default:
+			break;
 	}
 
 	/* Wait for the completion of the write operation to the LPTIM_DIER
@@ -1179,22 +1181,22 @@ HAL_StatusTypeDef HAL_LPTIM_OnePulse_Stop_IT(LPTIM_HandleTypeDef *hlptim,
 	__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_DIEROK);
 
 	switch (Channel) {
-	case LPTIM_CHANNEL_1:
-		/* Disable interrupt */
-		__HAL_LPTIM_DISABLE_IT(hlptim,
-				       LPTIM_IT_CMP1OK | LPTIM_IT_CC1 |
-					   LPTIM_IT_ARROK | LPTIM_IT_ARRM |
-					   LPTIM_IT_REPOK | LPTIM_IT_UPDATE);
-		break;
-	case LPTIM_CHANNEL_2:
-		/* Disable interrupt */
-		__HAL_LPTIM_DISABLE_IT(hlptim,
-				       LPTIM_IT_CMP2OK | LPTIM_IT_CC2 |
-					   LPTIM_IT_ARROK | LPTIM_IT_ARRM |
-					   LPTIM_IT_REPOK | LPTIM_IT_UPDATE);
-		break;
-	default:
-		break;
+		case LPTIM_CHANNEL_1:
+			/* Disable interrupt */
+			__HAL_LPTIM_DISABLE_IT(
+			    hlptim, LPTIM_IT_CMP1OK | LPTIM_IT_CC1 |
+					LPTIM_IT_ARROK | LPTIM_IT_ARRM |
+					LPTIM_IT_REPOK | LPTIM_IT_UPDATE);
+			break;
+		case LPTIM_CHANNEL_2:
+			/* Disable interrupt */
+			__HAL_LPTIM_DISABLE_IT(
+			    hlptim, LPTIM_IT_CMP2OK | LPTIM_IT_CC2 |
+					LPTIM_IT_ARROK | LPTIM_IT_ARRM |
+					LPTIM_IT_REPOK | LPTIM_IT_UPDATE);
+			break;
+		default:
+			break;
 	}
 
 	/* Wait for the completion of the write operation to the LPTIM_DIER
@@ -1348,20 +1350,22 @@ HAL_StatusTypeDef HAL_LPTIM_SetOnce_Start_IT(LPTIM_HandleTypeDef *hlptim,
 	__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_DIEROK);
 
 	switch (Channel) {
-	case LPTIM_CHANNEL_1:
-		/* Enable interrupt */
-		__HAL_LPTIM_ENABLE_IT(
-		    hlptim, LPTIM_IT_CMP1OK | LPTIM_IT_CC1 | LPTIM_IT_ARROK |
-				LPTIM_IT_ARRM | LPTIM_IT_UPDATE);
-		break;
-	case LPTIM_CHANNEL_2:
-		/* Enable interrupt */
-		__HAL_LPTIM_ENABLE_IT(
-		    hlptim, LPTIM_IT_CMP2OK | LPTIM_IT_CC2 | LPTIM_IT_ARROK |
-				LPTIM_IT_ARRM | LPTIM_IT_UPDATE);
-		break;
-	default:
-		break;
+		case LPTIM_CHANNEL_1:
+			/* Enable interrupt */
+			__HAL_LPTIM_ENABLE_IT(
+			    hlptim, LPTIM_IT_CMP1OK | LPTIM_IT_CC1 |
+					LPTIM_IT_ARROK | LPTIM_IT_ARRM |
+					LPTIM_IT_UPDATE);
+			break;
+		case LPTIM_CHANNEL_2:
+			/* Enable interrupt */
+			__HAL_LPTIM_ENABLE_IT(
+			    hlptim, LPTIM_IT_CMP2OK | LPTIM_IT_CC2 |
+					LPTIM_IT_ARROK | LPTIM_IT_ARRM |
+					LPTIM_IT_UPDATE);
+			break;
+		default:
+			break;
 	}
 
 	/* Wait for the completion of the write operation to the LPTIM_DIER
@@ -1429,20 +1433,20 @@ HAL_StatusTypeDef HAL_LPTIM_SetOnce_Stop_IT(LPTIM_HandleTypeDef *hlptim,
 	__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_DIEROK);
 
 	switch (Channel) {
-	case LPTIM_CHANNEL_1:
-		/* Disable interrupt */
-		__HAL_LPTIM_DISABLE_IT(hlptim, LPTIM_IT_CMP1OK | LPTIM_IT_CC1 |
-						   LPTIM_IT_ARROK |
-						   LPTIM_IT_ARRM);
-		break;
-	case LPTIM_CHANNEL_2:
-		/* Disable interrupt */
-		__HAL_LPTIM_DISABLE_IT(hlptim, LPTIM_IT_CMP2OK | LPTIM_IT_CC2 |
-						   LPTIM_IT_ARROK |
-						   LPTIM_IT_ARRM);
-		break;
-	default:
-		break;
+		case LPTIM_CHANNEL_1:
+			/* Disable interrupt */
+			__HAL_LPTIM_DISABLE_IT(
+			    hlptim, LPTIM_IT_CMP1OK | LPTIM_IT_CC1 |
+					LPTIM_IT_ARROK | LPTIM_IT_ARRM);
+			break;
+		case LPTIM_CHANNEL_2:
+			/* Disable interrupt */
+			__HAL_LPTIM_DISABLE_IT(
+			    hlptim, LPTIM_IT_CMP2OK | LPTIM_IT_CC2 |
+					LPTIM_IT_ARROK | LPTIM_IT_ARRM);
+			break;
+		default:
+			break;
 	}
 
 	/* Wait for the completion of the write operation to the LPTIM_DIER
@@ -2097,16 +2101,16 @@ HAL_StatusTypeDef HAL_LPTIM_IC_Start_IT(LPTIM_HandleTypeDef *hlptim,
 	__HAL_LPTIM_ENABLE(hlptim);
 
 	switch (Channel) {
-	case LPTIM_CHANNEL_1:
-		/* Enable Capture/Compare 1 interrupt */
-		__HAL_LPTIM_ENABLE_IT(hlptim, LPTIM_IT_CC1);
-		break;
-	case LPTIM_CHANNEL_2:
-		/* Disable Capture/Compare 2 interrupt */
-		__HAL_LPTIM_ENABLE_IT(hlptim, LPTIM_IT_CC2);
-		break;
-	default:
-		break;
+		case LPTIM_CHANNEL_1:
+			/* Enable Capture/Compare 1 interrupt */
+			__HAL_LPTIM_ENABLE_IT(hlptim, LPTIM_IT_CC1);
+			break;
+		case LPTIM_CHANNEL_2:
+			/* Disable Capture/Compare 2 interrupt */
+			__HAL_LPTIM_ENABLE_IT(hlptim, LPTIM_IT_CC2);
+			break;
+		default:
+			break;
 	}
 
 	/* Wait for the completion of the write operation to the LPTIM_DIER
@@ -2148,17 +2152,17 @@ HAL_StatusTypeDef HAL_LPTIM_IC_Stop_IT(LPTIM_HandleTypeDef *hlptim,
 	hlptim->State = HAL_LPTIM_STATE_BUSY;
 
 	switch (Channel) {
-	case LPTIM_CHANNEL_1:
-		/* Disable Capture/Compare 1 interrupt */
-		__HAL_LPTIM_DISABLE_IT(hlptim, LPTIM_IT_CC1);
-		break;
-	case LPTIM_CHANNEL_2:
-		/* Disable Capture/Compare 2 interrupt */
-		__HAL_LPTIM_DISABLE_IT(hlptim, LPTIM_IT_CC2);
-		break;
-	default:
-		return HAL_ERROR;
-		break;
+		case LPTIM_CHANNEL_1:
+			/* Disable Capture/Compare 1 interrupt */
+			__HAL_LPTIM_DISABLE_IT(hlptim, LPTIM_IT_CC1);
+			break;
+		case LPTIM_CHANNEL_2:
+			/* Disable Capture/Compare 2 interrupt */
+			__HAL_LPTIM_DISABLE_IT(hlptim, LPTIM_IT_CC2);
+			break;
+		default:
+			return HAL_ERROR;
+			break;
 	}
 	/* Disable capture */
 	__HAL_LPTIM_CAPTURE_COMPARE_DISABLE(hlptim, Channel);
@@ -2218,54 +2222,56 @@ HAL_StatusTypeDef HAL_LPTIM_IC_Start_DMA(LPTIM_HandleTypeDef *hlptim,
 	__HAL_LPTIM_ENABLE(hlptim);
 
 	switch (Channel) {
-	case LPTIM_CHANNEL_1:
-		/* Set the DMA capture callbacks */
-		hlptim->hdma[LPTIM_DMA_ID_CC1]->XferCpltCallback =
-		    LPTIM_DMACaptureCplt;
-		hlptim->hdma[LPTIM_DMA_ID_CC1]->XferHalfCpltCallback =
-		    LPTIM_DMACaptureHalfCplt;
+		case LPTIM_CHANNEL_1:
+			/* Set the DMA capture callbacks */
+			hlptim->hdma[LPTIM_DMA_ID_CC1]->XferCpltCallback =
+			    LPTIM_DMACaptureCplt;
+			hlptim->hdma[LPTIM_DMA_ID_CC1]->XferHalfCpltCallback =
+			    LPTIM_DMACaptureHalfCplt;
 
-		/* Set the DMA error callback */
-		hlptim->hdma[LPTIM_DMA_ID_CC1]->XferErrorCallback =
-		    LPTIM_DMAError;
+			/* Set the DMA error callback */
+			hlptim->hdma[LPTIM_DMA_ID_CC1]->XferErrorCallback =
+			    LPTIM_DMAError;
 
-		/* Enable the DMA Channel */
-		hdma = hlptim->hdma[LPTIM_DMA_ID_CC1];
-		if (LPTIM_DMA_Start_IT(hdma, (uint32_t)&hlptim->Instance->CCR1,
-				       (uint32_t)pData, Length) != HAL_OK) {
-			/* Return error status */
-			return HAL_ERROR;
-		}
+			/* Enable the DMA Channel */
+			hdma = hlptim->hdma[LPTIM_DMA_ID_CC1];
+			if (LPTIM_DMA_Start_IT(
+				hdma, (uint32_t)&hlptim->Instance->CCR1,
+				(uint32_t)pData, Length) != HAL_OK) {
+				/* Return error status */
+				return HAL_ERROR;
+			}
 
-		/* Enable Capture/Compare 1 DMA request */
-		__HAL_LPTIM_ENABLE_DMA(hlptim, LPTIM_DMA_CC1);
-		break;
+			/* Enable Capture/Compare 1 DMA request */
+			__HAL_LPTIM_ENABLE_DMA(hlptim, LPTIM_DMA_CC1);
+			break;
 
-	case LPTIM_CHANNEL_2:
-		/* Set the DMA capture callbacks */
-		hlptim->hdma[LPTIM_DMA_ID_CC2]->XferCpltCallback =
-		    LPTIM_DMACaptureCplt;
-		hlptim->hdma[LPTIM_DMA_ID_CC2]->XferHalfCpltCallback =
-		    LPTIM_DMACaptureHalfCplt;
+		case LPTIM_CHANNEL_2:
+			/* Set the DMA capture callbacks */
+			hlptim->hdma[LPTIM_DMA_ID_CC2]->XferCpltCallback =
+			    LPTIM_DMACaptureCplt;
+			hlptim->hdma[LPTIM_DMA_ID_CC2]->XferHalfCpltCallback =
+			    LPTIM_DMACaptureHalfCplt;
 
-		/* Set the DMA error callback */
-		hlptim->hdma[LPTIM_DMA_ID_CC2]->XferErrorCallback =
-		    LPTIM_DMAError;
+			/* Set the DMA error callback */
+			hlptim->hdma[LPTIM_DMA_ID_CC2]->XferErrorCallback =
+			    LPTIM_DMAError;
 
-		/* Enable the DMA Channel */
-		hdma = hlptim->hdma[LPTIM_DMA_ID_CC2];
-		if (LPTIM_DMA_Start_IT(hdma, (uint32_t)&hlptim->Instance->CCR2,
-				       (uint32_t)pData, Length) != HAL_OK) {
-			/* Return error status */
-			return HAL_ERROR;
-		}
+			/* Enable the DMA Channel */
+			hdma = hlptim->hdma[LPTIM_DMA_ID_CC2];
+			if (LPTIM_DMA_Start_IT(
+				hdma, (uint32_t)&hlptim->Instance->CCR2,
+				(uint32_t)pData, Length) != HAL_OK) {
+				/* Return error status */
+				return HAL_ERROR;
+			}
 
-		/* Enable Capture/Compare 2 DMA request */
-		__HAL_LPTIM_ENABLE_DMA(hlptim, LPTIM_DMA_CC2);
-		break;
+			/* Enable Capture/Compare 2 DMA request */
+			__HAL_LPTIM_ENABLE_DMA(hlptim, LPTIM_DMA_CC2);
+			break;
 
-	default:
-		break;
+		default:
+			break;
 	}
 
 	/* Wait for the completion of the write operation to the LPTIM_DIER
@@ -2307,20 +2313,20 @@ HAL_StatusTypeDef HAL_LPTIM_IC_Stop_DMA(LPTIM_HandleTypeDef *hlptim,
 	hlptim->State = HAL_LPTIM_STATE_BUSY;
 
 	switch (Channel) {
-	case LPTIM_CHANNEL_1:
-		/* Disable Capture/Compare 1 DMA request */
-		__HAL_LPTIM_DISABLE_DMA(hlptim, LPTIM_DMA_CC1);
-		(void)HAL_DMA_Abort_IT(hlptim->hdma[LPTIM_DMA_ID_CC1]);
-		break;
+		case LPTIM_CHANNEL_1:
+			/* Disable Capture/Compare 1 DMA request */
+			__HAL_LPTIM_DISABLE_DMA(hlptim, LPTIM_DMA_CC1);
+			(void)HAL_DMA_Abort_IT(hlptim->hdma[LPTIM_DMA_ID_CC1]);
+			break;
 
-	case LPTIM_CHANNEL_2:
-		/* Disable Capture/Compare 2 DMA request */
-		__HAL_LPTIM_DISABLE_DMA(hlptim, LPTIM_DMA_CC2);
-		(void)HAL_DMA_Abort_IT(hlptim->hdma[LPTIM_DMA_ID_CC2]);
-		break;
-	default:
-		return HAL_ERROR;
-		break;
+		case LPTIM_CHANNEL_2:
+			/* Disable Capture/Compare 2 DMA request */
+			__HAL_LPTIM_DISABLE_DMA(hlptim, LPTIM_DMA_CC2);
+			(void)HAL_DMA_Abort_IT(hlptim->hdma[LPTIM_DMA_ID_CC2]);
+			break;
+		default:
+			return HAL_ERROR;
+			break;
 	}
 
 	/* Disable capture */
@@ -2401,15 +2407,15 @@ uint32_t HAL_LPTIM_ReadCapturedValue(const LPTIM_HandleTypeDef *hlptim,
 	assert_param(IS_LPTIM_CCX_INSTANCE(hlptim->Instance, Channel));
 
 	switch (Channel) {
-	case LPTIM_CHANNEL_1:
-		tmpccr = hlptim->Instance->CCR1;
-		break;
-	case LPTIM_CHANNEL_2:
-		tmpccr = hlptim->Instance->CCR2;
-		break;
-	default:
-		tmpccr = 0;
-		break;
+		case LPTIM_CHANNEL_1:
+			tmpccr = hlptim->Instance->CCR1;
+			break;
+		case LPTIM_CHANNEL_2:
+			tmpccr = hlptim->Instance->CCR2;
+			break;
+		default:
+			tmpccr = 0;
+			break;
 	}
 	return tmpccr;
 }
@@ -2495,30 +2501,30 @@ HAL_LPTIM_OC_ConfigChannel(LPTIM_HandleTypeDef *hlptim,
 	hlptim->State = HAL_LPTIM_STATE_BUSY;
 
 	switch (Channel) {
-	case LPTIM_CHANNEL_1: {
-		/* Check the parameters */
-		assert_param(IS_LPTIM_CC1_INSTANCE(hlptim->Instance));
+		case LPTIM_CHANNEL_1: {
+			/* Check the parameters */
+			assert_param(IS_LPTIM_CC1_INSTANCE(hlptim->Instance));
 
-		/* Configure the LPTIM Channel 1 in Output Compare */
-		status = LPTIM_OC1_SetConfig(hlptim, sConfig);
-		if (status != HAL_OK) {
-			return status;
+			/* Configure the LPTIM Channel 1 in Output Compare */
+			status = LPTIM_OC1_SetConfig(hlptim, sConfig);
+			if (status != HAL_OK) {
+				return status;
+			}
+			break;
 		}
-		break;
-	}
-	case LPTIM_CHANNEL_2: {
-		/* Check the parameters */
-		assert_param(IS_LPTIM_CC2_INSTANCE(hlptim->Instance));
+		case LPTIM_CHANNEL_2: {
+			/* Check the parameters */
+			assert_param(IS_LPTIM_CC2_INSTANCE(hlptim->Instance));
 
-		/* Configure the LPTIM Channel 2 in Output Compare */
-		status = LPTIM_OC2_SetConfig(hlptim, sConfig);
-		if (status != HAL_OK) {
-			return status;
+			/* Configure the LPTIM Channel 2 in Output Compare */
+			status = LPTIM_OC2_SetConfig(hlptim, sConfig);
+			if (status != HAL_OK) {
+				return status;
+			}
+			break;
 		}
-		break;
-	}
-	default:
-		break;
+		default:
+			break;
 	}
 
 	/* Change the LPTIM state */
@@ -2557,28 +2563,28 @@ HAL_LPTIM_IC_ConfigChannel(LPTIM_HandleTypeDef *hlptim,
 	hlptim->State = HAL_LPTIM_STATE_BUSY;
 
 	switch (Channel) {
-	case LPTIM_CHANNEL_1: {
-		/* Check the parameters */
-		assert_param(IS_LPTIM_CC1_INSTANCE(hlptim->Instance));
-		assert_param(IS_LPTIM_IC1_SOURCE(hlptim->Instance,
-						 sConfig->ICInputSource));
+		case LPTIM_CHANNEL_1: {
+			/* Check the parameters */
+			assert_param(IS_LPTIM_CC1_INSTANCE(hlptim->Instance));
+			assert_param(IS_LPTIM_IC1_SOURCE(
+			    hlptim->Instance, sConfig->ICInputSource));
 
-		/* Configure the LPTIM Channel 1 in Input Capture */
-		LPTIM_IC1_SetConfig(hlptim, sConfig);
-		break;
-	}
-	case LPTIM_CHANNEL_2: {
-		/* Check the parameters */
-		assert_param(IS_LPTIM_CC2_INSTANCE(hlptim->Instance));
-		assert_param(IS_LPTIM_IC2_SOURCE(hlptim->Instance,
-						 sConfig->ICInputSource));
+			/* Configure the LPTIM Channel 1 in Input Capture */
+			LPTIM_IC1_SetConfig(hlptim, sConfig);
+			break;
+		}
+		case LPTIM_CHANNEL_2: {
+			/* Check the parameters */
+			assert_param(IS_LPTIM_CC2_INSTANCE(hlptim->Instance));
+			assert_param(IS_LPTIM_IC2_SOURCE(
+			    hlptim->Instance, sConfig->ICInputSource));
 
-		/* Configure the LPTIM Channel 2 in Input Capture */
-		LPTIM_IC2_SetConfig(hlptim, sConfig);
-		break;
-	}
-	default:
-		break;
+			/* Configure the LPTIM Channel 2 in Input Capture */
+			LPTIM_IC2_SetConfig(hlptim, sConfig);
+			break;
+		}
+		default:
+			break;
 	}
 
 	/* Change the LPTIM state */
@@ -3136,89 +3142,89 @@ HAL_LPTIM_RegisterCallback(LPTIM_HandleTypeDef *hlptim,
 
 	if (hlptim->State == HAL_LPTIM_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_LPTIM_MSPINIT_CB_ID:
-			hlptim->MspInitCallback = pCallback;
-			break;
+			case HAL_LPTIM_MSPINIT_CB_ID:
+				hlptim->MspInitCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_MSPDEINIT_CB_ID:
-			hlptim->MspDeInitCallback = pCallback;
-			break;
+			case HAL_LPTIM_MSPDEINIT_CB_ID:
+				hlptim->MspDeInitCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_COMPARE_MATCH_CB_ID:
-			hlptim->CompareMatchCallback = pCallback;
-			break;
+			case HAL_LPTIM_COMPARE_MATCH_CB_ID:
+				hlptim->CompareMatchCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_AUTORELOAD_MATCH_CB_ID:
-			hlptim->AutoReloadMatchCallback = pCallback;
-			break;
+			case HAL_LPTIM_AUTORELOAD_MATCH_CB_ID:
+				hlptim->AutoReloadMatchCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_TRIGGER_CB_ID:
-			hlptim->TriggerCallback = pCallback;
-			break;
+			case HAL_LPTIM_TRIGGER_CB_ID:
+				hlptim->TriggerCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_COMPARE_WRITE_CB_ID:
-			hlptim->CompareWriteCallback = pCallback;
-			break;
+			case HAL_LPTIM_COMPARE_WRITE_CB_ID:
+				hlptim->CompareWriteCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_AUTORELOAD_WRITE_CB_ID:
-			hlptim->AutoReloadWriteCallback = pCallback;
-			break;
+			case HAL_LPTIM_AUTORELOAD_WRITE_CB_ID:
+				hlptim->AutoReloadWriteCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_DIRECTION_UP_CB_ID:
-			hlptim->DirectionUpCallback = pCallback;
-			break;
+			case HAL_LPTIM_DIRECTION_UP_CB_ID:
+				hlptim->DirectionUpCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_DIRECTION_DOWN_CB_ID:
-			hlptim->DirectionDownCallback = pCallback;
-			break;
+			case HAL_LPTIM_DIRECTION_DOWN_CB_ID:
+				hlptim->DirectionDownCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_UPDATE_EVENT_CB_ID:
-			hlptim->UpdateEventCallback = pCallback;
-			break;
+			case HAL_LPTIM_UPDATE_EVENT_CB_ID:
+				hlptim->UpdateEventCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_REP_COUNTER_WRITE_CB_ID:
-			hlptim->RepCounterWriteCallback = pCallback;
-			break;
+			case HAL_LPTIM_REP_COUNTER_WRITE_CB_ID:
+				hlptim->RepCounterWriteCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_UPDATE_EVENT_HALF_CB_ID:
-			hlptim->UpdateEventHalfCpltCallback = pCallback;
-			break;
+			case HAL_LPTIM_UPDATE_EVENT_HALF_CB_ID:
+				hlptim->UpdateEventHalfCpltCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_ERROR_CB_ID:
-			hlptim->ErrorCallback = pCallback;
-			break;
+			case HAL_LPTIM_ERROR_CB_ID:
+				hlptim->ErrorCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_IC_CAPTURE_CB_ID:
-			hlptim->IC_CaptureCallback = pCallback;
-			break;
+			case HAL_LPTIM_IC_CAPTURE_CB_ID:
+				hlptim->IC_CaptureCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_IC_CAPTURE_HALF_CB_ID:
-			hlptim->IC_CaptureHalfCpltCallback = pCallback;
-			break;
+			case HAL_LPTIM_IC_CAPTURE_HALF_CB_ID:
+				hlptim->IC_CaptureHalfCpltCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_OVER_CAPTURE_CB_ID:
-			hlptim->IC_OverCaptureCallback = pCallback;
-			break;
+			case HAL_LPTIM_OVER_CAPTURE_CB_ID:
+				hlptim->IC_OverCaptureCallback = pCallback;
+				break;
 
-		default:
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hlptim->State == HAL_LPTIM_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_LPTIM_MSPINIT_CB_ID:
-			hlptim->MspInitCallback = pCallback;
-			break;
+			case HAL_LPTIM_MSPINIT_CB_ID:
+				hlptim->MspInitCallback = pCallback;
+				break;
 
-		case HAL_LPTIM_MSPDEINIT_CB_ID:
-			hlptim->MspDeInitCallback = pCallback;
-			break;
+			case HAL_LPTIM_MSPDEINIT_CB_ID:
+				hlptim->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Return error status */
@@ -3273,125 +3279,132 @@ HAL_LPTIM_UnRegisterCallback(LPTIM_HandleTypeDef *hlptim,
 
 	if (hlptim->State == HAL_LPTIM_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_LPTIM_MSPINIT_CB_ID:
-			/* Legacy weak MspInit Callback */
-			hlptim->MspInitCallback = HAL_LPTIM_MspInit;
-			break;
+			case HAL_LPTIM_MSPINIT_CB_ID:
+				/* Legacy weak MspInit Callback */
+				hlptim->MspInitCallback = HAL_LPTIM_MspInit;
+				break;
 
-		case HAL_LPTIM_MSPDEINIT_CB_ID:
-			/* Legacy weak Msp DeInit Callback */
-			hlptim->MspDeInitCallback = HAL_LPTIM_MspDeInit;
-			break;
+			case HAL_LPTIM_MSPDEINIT_CB_ID:
+				/* Legacy weak Msp DeInit Callback */
+				hlptim->MspDeInitCallback = HAL_LPTIM_MspDeInit;
+				break;
 
-		case HAL_LPTIM_COMPARE_MATCH_CB_ID:
-			/* Legacy weak Compare match Callback */
-			hlptim->CompareMatchCallback =
-			    HAL_LPTIM_CompareMatchCallback;
-			break;
+			case HAL_LPTIM_COMPARE_MATCH_CB_ID:
+				/* Legacy weak Compare match Callback */
+				hlptim->CompareMatchCallback =
+				    HAL_LPTIM_CompareMatchCallback;
+				break;
 
-		case HAL_LPTIM_AUTORELOAD_MATCH_CB_ID:
-			/* Legacy weak Auto-reload match Callback */
-			hlptim->AutoReloadMatchCallback =
-			    HAL_LPTIM_AutoReloadMatchCallback;
-			break;
+			case HAL_LPTIM_AUTORELOAD_MATCH_CB_ID:
+				/* Legacy weak Auto-reload match Callback */
+				hlptim->AutoReloadMatchCallback =
+				    HAL_LPTIM_AutoReloadMatchCallback;
+				break;
 
-		case HAL_LPTIM_TRIGGER_CB_ID:
-			/* Legacy weak External trigger event detection Callback
-			 */
-			hlptim->TriggerCallback = HAL_LPTIM_TriggerCallback;
-			break;
+			case HAL_LPTIM_TRIGGER_CB_ID:
+				/* Legacy weak External trigger event detection
+				 * Callback
+				 */
+				hlptim->TriggerCallback =
+				    HAL_LPTIM_TriggerCallback;
+				break;
 
-		case HAL_LPTIM_COMPARE_WRITE_CB_ID:
-			/* Legacy weak Compare register write complete Callback
-			 */
-			hlptim->CompareWriteCallback =
-			    HAL_LPTIM_CompareWriteCallback;
-			break;
+			case HAL_LPTIM_COMPARE_WRITE_CB_ID:
+				/* Legacy weak Compare register write complete
+				 * Callback
+				 */
+				hlptim->CompareWriteCallback =
+				    HAL_LPTIM_CompareWriteCallback;
+				break;
 
-		case HAL_LPTIM_AUTORELOAD_WRITE_CB_ID:
-			/* Legacy weak Auto-reload register write complete
-			 * Callback */
-			hlptim->AutoReloadWriteCallback =
-			    HAL_LPTIM_AutoReloadWriteCallback;
-			break;
+			case HAL_LPTIM_AUTORELOAD_WRITE_CB_ID:
+				/* Legacy weak Auto-reload register write
+				 * complete Callback */
+				hlptim->AutoReloadWriteCallback =
+				    HAL_LPTIM_AutoReloadWriteCallback;
+				break;
 
-		case HAL_LPTIM_DIRECTION_UP_CB_ID:
-			/* Legacy weak Up-counting direction change Callback */
-			hlptim->DirectionUpCallback =
-			    HAL_LPTIM_DirectionUpCallback;
-			break;
+			case HAL_LPTIM_DIRECTION_UP_CB_ID:
+				/* Legacy weak Up-counting direction change
+				 * Callback */
+				hlptim->DirectionUpCallback =
+				    HAL_LPTIM_DirectionUpCallback;
+				break;
 
-		case HAL_LPTIM_DIRECTION_DOWN_CB_ID:
-			/* Legacy weak Down-counting direction change Callback
-			 */
-			hlptim->DirectionDownCallback =
-			    HAL_LPTIM_DirectionDownCallback;
-			break;
+			case HAL_LPTIM_DIRECTION_DOWN_CB_ID:
+				/* Legacy weak Down-counting direction change
+				 * Callback
+				 */
+				hlptim->DirectionDownCallback =
+				    HAL_LPTIM_DirectionDownCallback;
+				break;
 
-		case HAL_LPTIM_UPDATE_EVENT_CB_ID:
-			/* Legacy weak Update event detection Callback */
-			hlptim->UpdateEventCallback =
-			    HAL_LPTIM_UpdateEventCallback;
-			break;
+			case HAL_LPTIM_UPDATE_EVENT_CB_ID:
+				/* Legacy weak Update event detection Callback
+				 */
+				hlptim->UpdateEventCallback =
+				    HAL_LPTIM_UpdateEventCallback;
+				break;
 
-		case HAL_LPTIM_REP_COUNTER_WRITE_CB_ID:
-			/* Legacy weak Repetition counter register write
-			 * complete Callback */
-			hlptim->RepCounterWriteCallback =
-			    HAL_LPTIM_RepCounterWriteCallback;
-			break;
+			case HAL_LPTIM_REP_COUNTER_WRITE_CB_ID:
+				/* Legacy weak Repetition counter register write
+				 * complete Callback */
+				hlptim->RepCounterWriteCallback =
+				    HAL_LPTIM_RepCounterWriteCallback;
+				break;
 
-		case HAL_LPTIM_UPDATE_EVENT_HALF_CB_ID:
-			/* Legacy weak Update event half complete detection
-			 * Callback */
-			hlptim->UpdateEventHalfCpltCallback =
-			    HAL_LPTIM_UpdateEventHalfCpltCallback;
-			break;
+			case HAL_LPTIM_UPDATE_EVENT_HALF_CB_ID:
+				/* Legacy weak Update event half complete
+				 * detection Callback */
+				hlptim->UpdateEventHalfCpltCallback =
+				    HAL_LPTIM_UpdateEventHalfCpltCallback;
+				break;
 
-		case HAL_LPTIM_ERROR_CB_ID:
-			/* Legacy weak error Callback */
-			hlptim->ErrorCallback = HAL_LPTIM_ErrorCallback;
-			break;
+			case HAL_LPTIM_ERROR_CB_ID:
+				/* Legacy weak error Callback */
+				hlptim->ErrorCallback = HAL_LPTIM_ErrorCallback;
+				break;
 
-		case HAL_LPTIM_IC_CAPTURE_CB_ID:
-			/* Legacy weak IC Capture Callback */
-			hlptim->IC_CaptureCallback =
-			    HAL_LPTIM_IC_CaptureCallback;
-			break;
+			case HAL_LPTIM_IC_CAPTURE_CB_ID:
+				/* Legacy weak IC Capture Callback */
+				hlptim->IC_CaptureCallback =
+				    HAL_LPTIM_IC_CaptureCallback;
+				break;
 
-		case HAL_LPTIM_IC_CAPTURE_HALF_CB_ID:
-			/* Legacy weak IC Capture half complete Callback */
-			hlptim->IC_CaptureHalfCpltCallback =
-			    HAL_LPTIM_IC_CaptureHalfCpltCallback;
-			break;
+			case HAL_LPTIM_IC_CAPTURE_HALF_CB_ID:
+				/* Legacy weak IC Capture half complete Callback
+				 */
+				hlptim->IC_CaptureHalfCpltCallback =
+				    HAL_LPTIM_IC_CaptureHalfCpltCallback;
+				break;
 
-		case HAL_LPTIM_OVER_CAPTURE_CB_ID:
-			/* Legacy weak IC over capture Callback */
-			hlptim->IC_OverCaptureCallback =
-			    HAL_LPTIM_IC_OverCaptureCallback;
-			break;
+			case HAL_LPTIM_OVER_CAPTURE_CB_ID:
+				/* Legacy weak IC over capture Callback */
+				hlptim->IC_OverCaptureCallback =
+				    HAL_LPTIM_IC_OverCaptureCallback;
+				break;
 
-		default:
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hlptim->State == HAL_LPTIM_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_LPTIM_MSPINIT_CB_ID:
-			/* Legacy weak MspInit Callback */
-			hlptim->MspInitCallback = HAL_LPTIM_MspInit;
-			break;
+			case HAL_LPTIM_MSPINIT_CB_ID:
+				/* Legacy weak MspInit Callback */
+				hlptim->MspInitCallback = HAL_LPTIM_MspInit;
+				break;
 
-		case HAL_LPTIM_MSPDEINIT_CB_ID:
-			/* Legacy weak Msp DeInit Callback */
-			hlptim->MspDeInitCallback = HAL_LPTIM_MspDeInit;
-			break;
+			case HAL_LPTIM_MSPDEINIT_CB_ID:
+				/* Legacy weak Msp DeInit Callback */
+				hlptim->MspDeInitCallback = HAL_LPTIM_MspDeInit;
+				break;
 
-		default:
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Return error status */

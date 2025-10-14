@@ -1,4 +1,5 @@
 name: CTest
+run-name: CTest HOOTL Tests - ${{ github.ref_name }}
 
 on:
   push:
@@ -14,6 +15,8 @@ jobs:
   ctest:
     name: Configure, Build, and Run HOOTLTest
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

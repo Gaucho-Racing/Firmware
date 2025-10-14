@@ -360,25 +360,33 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 		 * with their   */
 		/*       output connected through exclusive-or circuitry. */
 		switch (hcomp->Init.WindowOutput) {
-		case COMP_WINDOWOUTPUT_COMP1:
-			SET_BIT(COMP12_COMMON->CSR_ODD, COMP_CSR_WINOUT);
-			CLEAR_BIT(COMP12_COMMON->CSR_EVEN, COMP_CSR_WINOUT);
-			break;
+			case COMP_WINDOWOUTPUT_COMP1:
+				SET_BIT(COMP12_COMMON->CSR_ODD,
+					COMP_CSR_WINOUT);
+				CLEAR_BIT(COMP12_COMMON->CSR_EVEN,
+					  COMP_CSR_WINOUT);
+				break;
 
-		case COMP_WINDOWOUTPUT_COMP2:
-			CLEAR_BIT(COMP12_COMMON->CSR_ODD, COMP_CSR_WINOUT);
-			SET_BIT(COMP12_COMMON->CSR_EVEN, COMP_CSR_WINOUT);
-			break;
+			case COMP_WINDOWOUTPUT_COMP2:
+				CLEAR_BIT(COMP12_COMMON->CSR_ODD,
+					  COMP_CSR_WINOUT);
+				SET_BIT(COMP12_COMMON->CSR_EVEN,
+					COMP_CSR_WINOUT);
+				break;
 
-		case COMP_WINDOWOUTPUT_BOTH:
-			SET_BIT(COMP12_COMMON->CSR_ODD, COMP_CSR_WINOUT);
-			SET_BIT(COMP12_COMMON->CSR_EVEN, COMP_CSR_WINOUT);
-			break;
+			case COMP_WINDOWOUTPUT_BOTH:
+				SET_BIT(COMP12_COMMON->CSR_ODD,
+					COMP_CSR_WINOUT);
+				SET_BIT(COMP12_COMMON->CSR_EVEN,
+					COMP_CSR_WINOUT);
+				break;
 
-		default: /* COMP_WINDOWOUTPUT_EACH_COMP */
-			CLEAR_BIT(COMP12_COMMON->CSR_ODD, COMP_CSR_WINOUT);
-			CLEAR_BIT(COMP12_COMMON->CSR_EVEN, COMP_CSR_WINOUT);
-			break;
+			default: /* COMP_WINDOWOUTPUT_EACH_COMP */
+				CLEAR_BIT(COMP12_COMMON->CSR_ODD,
+					  COMP_CSR_WINOUT);
+				CLEAR_BIT(COMP12_COMMON->CSR_EVEN,
+					  COMP_CSR_WINOUT);
+				break;
 		}
 #endif /* COMP_WINDOW_MODE_SUPPORT */
 
@@ -571,43 +579,45 @@ HAL_COMP_RegisterCallback(COMP_HandleTypeDef *hcomp,
 
 	if (HAL_COMP_STATE_READY == hcomp->State) {
 		switch (CallbackID) {
-		case HAL_COMP_TRIGGER_CB_ID:
-			hcomp->TriggerCallback = pCallback;
-			break;
+			case HAL_COMP_TRIGGER_CB_ID:
+				hcomp->TriggerCallback = pCallback;
+				break;
 
-		case HAL_COMP_MSPINIT_CB_ID:
-			hcomp->MspInitCallback = pCallback;
-			break;
+			case HAL_COMP_MSPINIT_CB_ID:
+				hcomp->MspInitCallback = pCallback;
+				break;
 
-		case HAL_COMP_MSPDEINIT_CB_ID:
-			hcomp->MspDeInitCallback = pCallback;
-			break;
+			case HAL_COMP_MSPDEINIT_CB_ID:
+				hcomp->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hcomp->ErrorCode |= HAL_COMP_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hcomp->ErrorCode |=
+				    HAL_COMP_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_COMP_STATE_RESET == hcomp->State) {
 		switch (CallbackID) {
-		case HAL_COMP_MSPINIT_CB_ID:
-			hcomp->MspInitCallback = pCallback;
-			break;
+			case HAL_COMP_MSPINIT_CB_ID:
+				hcomp->MspInitCallback = pCallback;
+				break;
 
-		case HAL_COMP_MSPDEINIT_CB_ID:
-			hcomp->MspDeInitCallback = pCallback;
-			break;
+			case HAL_COMP_MSPDEINIT_CB_ID:
+				hcomp->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hcomp->ErrorCode |= HAL_COMP_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hcomp->ErrorCode |=
+				    HAL_COMP_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -640,48 +650,53 @@ HAL_COMP_UnRegisterCallback(COMP_HandleTypeDef *hcomp,
 
 	if (HAL_COMP_STATE_READY == hcomp->State) {
 		switch (CallbackID) {
-		case HAL_COMP_TRIGGER_CB_ID:
-			hcomp->TriggerCallback =
-			    HAL_COMP_TriggerCallback; /* Legacy weak callback */
-			break;
+			case HAL_COMP_TRIGGER_CB_ID:
+				hcomp->TriggerCallback =
+				    HAL_COMP_TriggerCallback; /* Legacy weak
+								 callback */
+				break;
 
-		case HAL_COMP_MSPINIT_CB_ID:
-			hcomp->MspInitCallback =
-			    HAL_COMP_MspInit; /* Legacy weak MspInit */
-			break;
+			case HAL_COMP_MSPINIT_CB_ID:
+				hcomp->MspInitCallback =
+				    HAL_COMP_MspInit; /* Legacy weak MspInit */
+				break;
 
-		case HAL_COMP_MSPDEINIT_CB_ID:
-			hcomp->MspDeInitCallback =
-			    HAL_COMP_MspDeInit; /* Legacy weak MspDeInit */
-			break;
+			case HAL_COMP_MSPDEINIT_CB_ID:
+				hcomp->MspDeInitCallback =
+				    HAL_COMP_MspDeInit; /* Legacy weak MspDeInit
+							 */
+				break;
 
-		default:
-			/* Update the error code */
-			hcomp->ErrorCode |= HAL_COMP_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hcomp->ErrorCode |=
+				    HAL_COMP_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_COMP_STATE_RESET == hcomp->State) {
 		switch (CallbackID) {
-		case HAL_COMP_MSPINIT_CB_ID:
-			hcomp->MspInitCallback =
-			    HAL_COMP_MspInit; /* Legacy weak MspInit */
-			break;
+			case HAL_COMP_MSPINIT_CB_ID:
+				hcomp->MspInitCallback =
+				    HAL_COMP_MspInit; /* Legacy weak MspInit */
+				break;
 
-		case HAL_COMP_MSPDEINIT_CB_ID:
-			hcomp->MspDeInitCallback =
-			    HAL_COMP_MspDeInit; /* Legacy weak MspDeInit */
-			break;
+			case HAL_COMP_MSPDEINIT_CB_ID:
+				hcomp->MspDeInitCallback =
+				    HAL_COMP_MspDeInit; /* Legacy weak MspDeInit
+							 */
+				break;
 
-		default:
-			/* Update the error code */
-			hcomp->ErrorCode |= HAL_COMP_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hcomp->ErrorCode |=
+				    HAL_COMP_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -923,15 +938,15 @@ HAL_StatusTypeDef HAL_COMP_Lock(COMP_HandleTypeDef *hcomp)
 
 		/* Set HAL COMP handle state */
 		switch (hcomp->State) {
-		case HAL_COMP_STATE_RESET:
-			hcomp->State = HAL_COMP_STATE_RESET_LOCKED;
-			break;
-		case HAL_COMP_STATE_READY:
-			hcomp->State = HAL_COMP_STATE_READY_LOCKED;
-			break;
-		default: /* HAL_COMP_STATE_BUSY */
-			hcomp->State = HAL_COMP_STATE_BUSY_LOCKED;
-			break;
+			case HAL_COMP_STATE_RESET:
+				hcomp->State = HAL_COMP_STATE_RESET_LOCKED;
+				break;
+			case HAL_COMP_STATE_READY:
+				hcomp->State = HAL_COMP_STATE_READY_LOCKED;
+				break;
+			default: /* HAL_COMP_STATE_BUSY */
+				hcomp->State = HAL_COMP_STATE_BUSY_LOCKED;
+				break;
 		}
 
 		/* Set the lock bit corresponding to selected comparator */

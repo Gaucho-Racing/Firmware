@@ -21,40 +21,16 @@ typedef enum {
 	 */
 	GR_PRECHARGE_ENGAGED = 2,
 	/**
-	 * The HV precharging process is underway.
-	 */
-	GR_PRECHARGING = 3,
-	/**
 	 * The HV precharging process has been completed successfully.
 	 */
-	GR_PRECHARGE_COMPLETE = 4,
+	GR_PRECHARGE_COMPLETE = 3,
 	/**
-	 * The vehicle is in drive standby mode, ready to transition to active
-	 * states.
+	 * The HV system is fully operational and the drive system is active.
 	 */
-	GR_DRIVE_STANDBY = 5,
-	/**
-	 * The vehicle is in active idle mode, maintaining readiness without
-	 * significant power draw.
-	 */
-	GR_DRIVE_ACTIVE_IDLE = 6,
-	/**
-	 * The vehicle is in active power mode, delivering power to the
-	 * drivetrain.
-	 */
-	GR_DRIVE_ACTIVE_POWER = 7,
-	/**
-	 * The vehicle is in active regenerative braking mode, recovering
-	 * energy.
-	 */
-	GR_DRIVE_ACTIVE_REGEN = 8,
+	GR_DRIVE_ACTIVE = 4,
 	/**
 	 * The HV system is in the process of discharging, TS Voltage >60V.
 	 */
-	GR_TS_DISCHARGE_OFF = 9,
-	/**
-	 * An error has occurred, will handle discharge if necessary.
-	 */
-	GR_ERROR = 10,
+	GR_TS_DISCHARGE_OFF = 5,
 } GR_ECU_State;
 #endif

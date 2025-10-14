@@ -1120,59 +1120,62 @@ HAL_DCACHE_RegisterCallback(DCACHE_HandleTypeDef *hdcache,
 
 	if (hdcache->State == HAL_DCACHE_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_DCACHE_CLEAN_BY_ADDRESS_CB_ID:
-			hdcache->CleanByAddrCallback = pCallback;
-			break;
+			case HAL_DCACHE_CLEAN_BY_ADDRESS_CB_ID:
+				hdcache->CleanByAddrCallback = pCallback;
+				break;
 
-		case HAL_DCACHE_INVALIDATE_BY_ADDRESS_CB_ID:
-			hdcache->InvalidateByAddrCallback = pCallback;
-			break;
+			case HAL_DCACHE_INVALIDATE_BY_ADDRESS_CB_ID:
+				hdcache->InvalidateByAddrCallback = pCallback;
+				break;
 
-		case HAL_DCACHE_CLEAN_AND_INVALIDATE_BY_ADDRESS_CB_ID:
-			hdcache->CleanAndInvalidateByAddrCallback = pCallback;
-			break;
+			case HAL_DCACHE_CLEAN_AND_INVALIDATE_BY_ADDRESS_CB_ID:
+				hdcache->CleanAndInvalidateByAddrCallback =
+				    pCallback;
+				break;
 
-		case HAL_DCACHE_INVALIDATE_COMPLETE_CB_ID:
-			hdcache->InvalidateCompleteCallback = pCallback;
-			break;
+			case HAL_DCACHE_INVALIDATE_COMPLETE_CB_ID:
+				hdcache->InvalidateCompleteCallback = pCallback;
+				break;
 
-		case HAL_DCACHE_ERROR_CB_ID:
-			hdcache->ErrorCallback = pCallback;
-			break;
+			case HAL_DCACHE_ERROR_CB_ID:
+				hdcache->ErrorCallback = pCallback;
+				break;
 
-		case HAL_DCACHE_MSPINIT_CB_ID:
-			hdcache->MspInitCallback = pCallback;
-			break;
+			case HAL_DCACHE_MSPINIT_CB_ID:
+				hdcache->MspInitCallback = pCallback;
+				break;
 
-		case HAL_DCACHE_MSPDEINIT_CB_ID:
-			hdcache->MspDeInitCallback = pCallback;
-			break;
+			case HAL_DCACHE_MSPDEINIT_CB_ID:
+				hdcache->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hdcache->ErrorCode |= HAL_DCACHE_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hdcache->ErrorCode |=
+				    HAL_DCACHE_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hdcache->State == HAL_DCACHE_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_DCACHE_MSPINIT_CB_ID:
-			hdcache->MspInitCallback = pCallback;
-			break;
+			case HAL_DCACHE_MSPINIT_CB_ID:
+				hdcache->MspInitCallback = pCallback;
+				break;
 
-		case HAL_DCACHE_MSPDEINIT_CB_ID:
-			hdcache->MspDeInitCallback = pCallback;
-			break;
+			case HAL_DCACHE_MSPDEINIT_CB_ID:
+				hdcache->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hdcache->ErrorCode |= HAL_DCACHE_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hdcache->ErrorCode |=
+				    HAL_DCACHE_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -1219,72 +1222,78 @@ HAL_DCACHE_UnRegisterCallback(DCACHE_HandleTypeDef *hdcache,
 
 	if (hdcache->State == HAL_DCACHE_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_DCACHE_CLEAN_BY_ADDRESS_CB_ID:
-			/* Legacy weak Clean By Addr Callback */
-			hdcache->CleanByAddrCallback =
-			    HAL_DCACHE_CleanByAddrCallback;
-			break;
+			case HAL_DCACHE_CLEAN_BY_ADDRESS_CB_ID:
+				/* Legacy weak Clean By Addr Callback */
+				hdcache->CleanByAddrCallback =
+				    HAL_DCACHE_CleanByAddrCallback;
+				break;
 
-		case HAL_DCACHE_INVALIDATE_BY_ADDRESS_CB_ID:
-			/* Legacy weak Invalidate By Addr Callback */
-			hdcache->InvalidateByAddrCallback =
-			    HAL_DCACHE_InvalidateByAddrCallback;
-			break;
+			case HAL_DCACHE_INVALIDATE_BY_ADDRESS_CB_ID:
+				/* Legacy weak Invalidate By Addr Callback */
+				hdcache->InvalidateByAddrCallback =
+				    HAL_DCACHE_InvalidateByAddrCallback;
+				break;
 
-		case HAL_DCACHE_CLEAN_AND_INVALIDATE_BY_ADDRESS_CB_ID:
-			/* Legacy weak Clean and Invalidate By Addr Callback */
-			hdcache->CleanAndInvalidateByAddrCallback =
-			    HAL_DCACHE_CleanAndInvalidateByAddrCallback;
-			break;
+			case HAL_DCACHE_CLEAN_AND_INVALIDATE_BY_ADDRESS_CB_ID:
+				/* Legacy weak Clean and Invalidate By Addr
+				 * Callback */
+				hdcache->CleanAndInvalidateByAddrCallback =
+				    HAL_DCACHE_CleanAndInvalidateByAddrCallback;
+				break;
 
-		case HAL_DCACHE_INVALIDATE_COMPLETE_CB_ID:
-			/* Legacy weak Invalidate Complete Callback */
-			hdcache->InvalidateCompleteCallback =
-			    HAL_DCACHE_InvalidateCompleteCallback;
-			break;
+			case HAL_DCACHE_INVALIDATE_COMPLETE_CB_ID:
+				/* Legacy weak Invalidate Complete Callback */
+				hdcache->InvalidateCompleteCallback =
+				    HAL_DCACHE_InvalidateCompleteCallback;
+				break;
 
-		case HAL_DCACHE_ERROR_CB_ID:
-			/* Legacy weak ErrorCallback */
-			hdcache->ErrorCallback = HAL_DCACHE_ErrorCallback;
-			break;
+			case HAL_DCACHE_ERROR_CB_ID:
+				/* Legacy weak ErrorCallback */
+				hdcache->ErrorCallback =
+				    HAL_DCACHE_ErrorCallback;
+				break;
 
-		case HAL_DCACHE_MSPINIT_CB_ID:
-			/* Legacy weak MspInit */
-			hdcache->MspInitCallback = HAL_DCACHE_MspInit;
-			break;
+			case HAL_DCACHE_MSPINIT_CB_ID:
+				/* Legacy weak MspInit */
+				hdcache->MspInitCallback = HAL_DCACHE_MspInit;
+				break;
 
-		case HAL_DCACHE_MSPDEINIT_CB_ID:
-			/* Legacy weak MspDeInit */
-			hdcache->MspDeInitCallback = HAL_DCACHE_MspDeInit;
-			break;
+			case HAL_DCACHE_MSPDEINIT_CB_ID:
+				/* Legacy weak MspDeInit */
+				hdcache->MspDeInitCallback =
+				    HAL_DCACHE_MspDeInit;
+				break;
 
-		default:
-			/* Update the error code */
-			hdcache->ErrorCode |= HAL_DCACHE_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hdcache->ErrorCode |=
+				    HAL_DCACHE_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_DCACHE_STATE_RESET == hdcache->State) {
 		switch (CallbackID) {
-		case HAL_DCACHE_MSPINIT_CB_ID:
-			/* Legacy weak MspInit */
-			hdcache->MspInitCallback = HAL_DCACHE_MspInit;
-			break;
+			case HAL_DCACHE_MSPINIT_CB_ID:
+				/* Legacy weak MspInit */
+				hdcache->MspInitCallback = HAL_DCACHE_MspInit;
+				break;
 
-		case HAL_DCACHE_MSPDEINIT_CB_ID:
-			/* Legacy weak MspDeInit */
-			hdcache->MspDeInitCallback = HAL_DCACHE_MspDeInit;
-			break;
+			case HAL_DCACHE_MSPDEINIT_CB_ID:
+				/* Legacy weak MspDeInit */
+				hdcache->MspDeInitCallback =
+				    HAL_DCACHE_MspDeInit;
+				break;
 
-		default:
-			/* Update the error code */
-			hdcache->ErrorCode |= HAL_DCACHE_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hdcache->ErrorCode |=
+				    HAL_DCACHE_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
