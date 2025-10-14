@@ -101,9 +101,8 @@ jobs:
           echo "<details open><summary>Executable Size</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          Get-ChildItem build\${{ matrix.prefix }}\*.elf | ForEach-Object {
-              arm-none-eabi-size $_.FullName | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          }
+          $elfFiles = Get-ChildItem build\${{ matrix.prefix }}\*.elf | ForEach-Object { $_.FullName }
+          arm-none-eabi-size $elfFiles | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
