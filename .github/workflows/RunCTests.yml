@@ -14,9 +14,13 @@ concurrency:
 jobs:
   ctest:
     name: Configure, Build, and Run HOOTLTest
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.operatingSystem }}
     permissions:
       contents: read
+    strategy:
+      fail-fast: true
+      matrix:
+        operatingSystem: [ ubuntu-latest, windows-latest, macos-latest ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

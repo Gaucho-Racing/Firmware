@@ -14,18 +14,20 @@ concurrency:
 jobs:
   cmake:
     name: Configure and Build
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.operatingSystem }}
     permissions:
       contents: read
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         prefix: [ "Debug", "Release", "MinSizeRel", "RelWithDebInfo" ]
+        operatingSystem: [ ubuntu-latest, windows-latest, macos-latest ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Arm Toolchain
+      - name: Install Arm Toolchain (Ubuntu)
+        if: matrix.operatingSystem == 'ubuntu-latest'
         run: |
           echo "set man-db/auto-update false" | sudo debconf-communicate
           sudo rm /var/lib/man-db/auto-update
@@ -34,6 +36,30 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           sudo apt-get install gcc-arm-none-eabi --no-install-suggests |& tee -a $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
+
+      - name: Install Arm Toolchain (macOS)
+        if: matrix.operatingSystem == 'macos-latest'
+        run: |
+          set -o pipefail
+          echo "<details><summary>Install Arm Toolchain</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          brew install --cask gcc-arm-embedded |& tee -a $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
+
+      - name: Install Arm Toolchain (Windows)
+        if: matrix.operatingSystem == 'windows-latest'
+        run: |
+          set -o pipefail
+          echo "<details><summary>Install Arm Toolchain</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          choco install -y arm-none-eabi-gcc |& tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
