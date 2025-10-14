@@ -60,9 +60,9 @@ jobs:
         run: |
           echo "<details><summary>Install Arm Toolchain</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           choco install -y gcc-arm-embedded | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
 
@@ -85,9 +85,9 @@ jobs:
         run: |
           echo "<details><summary>CMake Configuration</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           cmake --preset ${{ matrix.prefix }} 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
 
@@ -110,9 +110,9 @@ jobs:
         run: |
           echo "<details><summary>CMake Build</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           cmake --build build/${{ matrix.prefix }} 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
 
@@ -135,13 +135,13 @@ jobs:
         run: |
           echo "<details open><summary>Executable Size</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           arm-none-eabi-size build/${{ matrix.prefix }}/*.elf 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
 
-      - name: Upload RelWithDebInfo Builds
+      - name: Upload Ubuntu RelWithDebInfo Builds
         if: matrix.prefix == 'RelWithDebInfo' && matrix.operatingSystem == 'ubuntu-latest'
         uses: actions/upload-artifact@v4
         with:

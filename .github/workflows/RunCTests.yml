@@ -44,9 +44,9 @@ jobs:
         run: |
           echo "<details><summary>CMake Configuration (HOOTLTest)</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           cmake --preset HOOTLTest 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
 
@@ -69,9 +69,9 @@ jobs:
         run: |
           echo "<details><summary>CMake Build (HOOTLTest)</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           cmake --build build/HOOTLTest 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
 
@@ -94,8 +94,8 @@ jobs:
         run: |
           echo "<details open><summary>Run CTest (HOOTLTest)</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           ctest --output-on-failure --test-dir build/HOOTLTest 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
