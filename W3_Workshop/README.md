@@ -22,30 +22,18 @@ To verify your predictions, you will need to flash the boards with G4SPI_Transmi
   - `cmake --build build/Debug`
 
 # 3. Flashing
-Wait for the files to compile. Once you have the .elf files, you can either run openocd commands to flash your boards or use GUI tools in VSCode or from elsewhere. 
-
-  - `openocd -f interface/stlink.cfg -f target/stm32g4x.cfg -c "program build/Debug/G4SPI_Transmit.elf reset verify exit"`
-  - `openocd -f interface/stlink.cfg -f target/stm32g4x.cfg -c "program build/Debug/G4SPI_Receive.elf reset verify exit"`
-
-If these commands don't work, double-check that the path to your elf files is correct.
-
-You might have trouble if you have two boards connected at once, as openocd will usually just select the first board that is detected. A simple fix is to program one while the other is disconnected from your computer. 
-
-If this seems a little janky to you, there is another way. You can command openocd to flash the STLink only if it has the correct serial number. To list this information, you can install the open source ![stlink tool](https://github.com/stlink-org/stlink/releases/tag/v1.7.0), then run `st-info --probe` in your command prompt to list. Once the serial numbers are obtained, run this command. Make sure to alternate the serial number and elf files (either G4SPI_Transmit.elf or G4SPI_Receive.elf).   
-    - `openocd -c "adapter serial {correct serial number}" -f interface/stlink.cfg -f target/stm32g4x.cfg -c "program build/Debug/{name}.elf reset verify exit"`
-
-You can also use other options like the STM32CubeProgrammer tool, which includes a GUI that lets you select an STLink if there are multiple connected. 
+Wait for the files to compile. Once you have the .elf files, select Run and Debug. In the window that pops up, click on the dropdown next to the green play button. and select either "SPI Receive W3 WS" or "SPI Transmit W3 WS", depending on the board you would like to flash. You may have to disconnect one board while you program the other one. If multiple boards are connected at a time, openocd may just flash the first board it detects. 
 
 # 4. Verification
-Once both boards are flashed (using whichever method you like), plug them back into power. 
+Once both boards are flashed plug them both back to the USB connectors so that they both have power. 
 - If nothing happened right after flashing, try pressing the black reset buttons on both boards.  
 - It may also help to check that your wiring is correct.
 - Occasionally, there are glitches in the receiver board. These should also get resolved by hitting the reset button. 
 
 If you think that the boards are working correctly (the User LEDs on both boards should both be blinking), see if the LED pattern matches your expectations from the code. Here are some other questions you could ask yourself:
-- SPI can be used in either full-duplex or half-duplex mode. Which mode is it being used in right now?
+- SPI can be used in either full-duplex or half-duplex mode. What do these terms mean, and which mode is it being used in right now?
 
-- Out of the 4 lines, are there any that are non-critical? Remove it and see if the board still functions as expected.
+- Out of the 4 wires used to connect the boards together, are there any that are non-critical? Remove it and see if the board still functions as expected.
 
 - What happens when you remove a line that is critical? Again, see if this matches your expectation from the code. 
 
