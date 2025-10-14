@@ -56,15 +56,16 @@ jobs:
 
       - name: Install Arm Toolchain (Windows)
         if: matrix.operatingSystem == 'windows-latest'
-        shell: pwsh
+        shell: bash
         run: |
-          echo "<details><summary>Install Arm Toolchain</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          choco install -y arm-none-eabi-gcc | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "\`\`\`" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
-          echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          set -o pipefail
+          echo "<details><summary>Install Arm Toolchain</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          choco install -y arm-none-eabi-gcc 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
 
       - name: CMake Configuration
         shell: bash
