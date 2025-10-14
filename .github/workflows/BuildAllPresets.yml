@@ -43,13 +43,13 @@ jobs:
 
       - name: Install Arm Toolchain (macOS)
         if: matrix.operatingSystem == 'macos-latest'
-        shell: zsh
+        shell: bash
         run: |
           set -o pipefail
           echo "<details><summary>Install Arm Toolchain</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          brew install --cask gcc-arm-embedded 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          brew install --cask gcc-arm-embedded |& tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
