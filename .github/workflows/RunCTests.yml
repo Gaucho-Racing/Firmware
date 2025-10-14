@@ -31,7 +31,7 @@ jobs:
           echo "<details><summary>CMake Configuration (HOOTLTest)</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          cmake --preset HOOTLTest |& tee -a $GITHUB_STEP_SUMMARY
+          cmake --preset HOOTLTest 2>&1 | tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
@@ -42,7 +42,7 @@ jobs:
           echo "<details><summary>CMake Build (HOOTLTest)</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          cmake --build build/HOOTLTest |& tee -a $GITHUB_STEP_SUMMARY
+          cmake --build build/HOOTLTest 2>&1 | tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
@@ -53,7 +53,7 @@ jobs:
           echo "<details open><summary>Run CTest (HOOTLTest)</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          ctest --output-on-failure --test-dir build/HOOTLTest |& tee -a $GITHUB_STEP_SUMMARY
+          ctest --output-on-failure --test-dir build/HOOTLTest 2>&1 | tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
