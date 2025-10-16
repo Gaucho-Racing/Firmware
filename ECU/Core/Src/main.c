@@ -27,6 +27,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Logomatic.h"
+#include "Peripherals/USART/usart.h"
 #include "StateTicks.h"
 /* USER CODE END Includes */
 
@@ -116,6 +117,8 @@ int main(void)
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
+	USARTConfig config;
+	USARTHandle handle = usart_init_peripheral(&config);
 	while (1) {
 		/* USER CODE END WHILE */
 
@@ -124,6 +127,7 @@ int main(void)
 		LOGOMATIC("Main Loop Tick Complete. I like Pi %f\n",
 			  3.14159265);
 		LL_mDelay(250); // FIXME Reduce or remove delay
+		usart_send(&handle, (uint8_t *)"Hello, USART!\n", 0);
 	}
 	/* USER CODE END 3 */
 }

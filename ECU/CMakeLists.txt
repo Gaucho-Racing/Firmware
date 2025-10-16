@@ -65,7 +65,7 @@ target_sources(
 		Application/Src/StateTicks.c
 )
 
-target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
+target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE PERIPHERAL_USART_LIB)
 
 target_include_directories(
 	${GR_PROJECT_NAME}_USER_CODE
