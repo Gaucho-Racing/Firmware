@@ -6,6 +6,7 @@ void push(circularBuffer buffer, void* object){
 	// Remove the buffer head if it's going to be overwritten
 	if(buffer.head == buffer.tail){
 		free(buffer.buffer[buffer.head]);
+		buffer.buffer[buffer.head] = NULL;
 		buffer.head++;
 		if(buffer.head == buffer.size)
 			buffer.head = 0;
@@ -25,6 +26,7 @@ void* pop(circularBuffer buffer){
 	memcpy(result, buffer.buffer[buffer.head], sizeof(*buffer.buffer[buffer.head]));
 	// Remove buffer head
 	free(buffer.buffer[buffer.head]);
+	buffer.buffer[buffer.head] = NULL;
 	// Update head iterator
 	buffer.head++;
 	if(buffer.head == buffer.size)
@@ -51,5 +53,10 @@ circularBuffer createCircularBuffer(uint32_t size){
 }
 
 void freeCircularBuffer(circularBuffer buffer){
+	for(uint32_t i = 0; i < buffer.size; i++)
+		if(buffer.buffer[i] != NULL){
+			free(buffer.buffer[i]);
+			buffer.buffer[i] = NULL;
+		}
 	free(buffer.buffer);
 }
