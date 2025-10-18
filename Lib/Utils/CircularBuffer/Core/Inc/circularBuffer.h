@@ -1,35 +1,20 @@
-#ifndef _CIRCULAR_BUFFER__
-#define _CIRCULAR_BUFFER__
+#ifndef _CIRCULAR_BUFFER_H_
+#define _CIRCULAR_BUFFER_H_
 
 #include <stdint.h>
 
-// Define the circularBuffer data type
-typedef struct{
-	uint32_t head; // the head position inclusive
-	uint32_t tail; // the tail position exclusive
-	uint32_t size; // the number of items in buffer
-	void** buffer; // the buffer body
+// Define the new data type CircularBuffer
+typedef struct circular_buffer_st CircularBuffer;
 
-	// Idea: generate hash with all attributes to reinforce data integrety
-} circularBuffer;
-
-// Define the holder of circularBuffer functions, a static instance of this
-// is initialized at the end of this file
-struct circularBufferFuncs{
-	void(*push)(circularBuffer, void*);
-	void*(*pop)(circularBuffer);
-	void*(*peek)(circularBuffer);
+// Define the wrapper for CircularBuffer functions
+struct circular_buffer_ops_st{
+	CircularBuffer*(* const create)(uint32_t size);
+	void(* const free)(CircularBuffer* buffer);
+	void(* const push)(CircularBuffer* buffer, void* object);
+	void*(* const pop)(CircularBuffer* buffer);
+	void*(* const peek)(CircularBuffer* buffer);
 };
-
-// Buffer manipulation functions defined
-void push(circularBuffer buffer, void* object);
-void* pop(circularBuffer buffer);
-void* peek(circularBuffer buffer);
-// Buffer initialization/deinitialization functions defined
-circularBuffer createCircularBuffer(uint32_t size);
-void freeCircularBuffer(circularBuffer buffer);
-
-// Static instance of functions' container
-static struct circularBufferFuncs circularBufferFuncs = {push, pop, peek};
+// Export an instance of this wrapper
+extern const struct circular_buffer_ops_st cbOps;
 
 #endif
