@@ -48,3 +48,5 @@ add_gr_project(STM32G474xE G4PERTESTING)
 
 add_gr_project(STM32G474xE W3_Workshop G4SPI_Receive)
 add_gr_project(STM32G474xE W3_Workshop G4SPI_Transmit)
+
+add_subdirectory(Lib/Utils/CircularBuffer)
