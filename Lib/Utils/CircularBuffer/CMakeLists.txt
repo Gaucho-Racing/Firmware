@@ -13,11 +13,11 @@ endif()
 # what, does in fact not get the filename of somthing but rather the name of the project from the path
 get_filename_component(GR_PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
-if(CMAKE_BUILD_TYPE STREQUAL "Test")
-	include_directories(
-		Core/Inc
-	)
+include_directories(
+	Core/Inc
+)
 
+if(CMAKE_BUILD_TYPE STREQUAL "Test")
 	add_executable(${GR_PROJECT_NAME}_basic_core_test Core/Test/basic_core_test.c)
 	add_test(${GR_PROJECT_NAME}_basic_core ${GR_PROJECT_NAME}_basic_core_test)
 
@@ -44,17 +44,24 @@ enable_language(
 # Core project settings
 project(${CMAKE_PROJECT_NAME})
 
-add_library(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
+add_library(${GR_PROJECT_NAME}_USER_CODE)
 target_sources(
 	${GR_PROJECT_NAME}_USER_CODE
-	INTERFACE
+	PRIVATE
 		Core/Src/circularBuffer.c
+	PUBLIC
+		FILE_SET circularBufferHeaders
+		TYPE HEADERS
+		BASE_DIRS
+			Core/Inc
+		FILES
+			Core/Inc/circularBuffer.h
 )
 
-target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
+# target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
 
-target_include_directories(
-	${GR_PROJECT_NAME}_USER_CODE
-	INTERFACE
-		Core/Inc
-)
+# target_include_directories(
+# 	${GR_PROJECT_NAME}_USER_CODE
+# 	INTERFACE
+# 		Core/Inc
+# )
