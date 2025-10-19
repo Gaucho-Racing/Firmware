@@ -1,4 +1,5 @@
 name: CTest
+run-name: CTest HOOTL Tests - ${{ github.ref_name }}
 
 on:
   push:
@@ -13,31 +14,88 @@ concurrency:
 jobs:
   ctest:
     name: Configure, Build, and Run HOOTLTest
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.operatingSystem }}
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: true
+      matrix:
+        operatingSystem: [ ubuntu-latest, windows-latest, macos-latest ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: CMake Configuration
+      - name: CMake Configuration (Unix)
+        if: matrix.operatingSystem != 'windows-latest'
+        shell: bash
         run: |
           set -o pipefail
-          echo "## CMake Configuration (HOOTLTest)" >> $GITHUB_STEP_SUMMARY
+          echo "<details><summary>CMake Configuration (HOOTLTest)</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          cmake --preset HOOTLTest |& tee -a $GITHUB_STEP_SUMMARY
+          cmake --preset HOOTLTest 2>&1 | tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
 
-      - name: CMake Build
+      - name: CMake Configuration (Windows)
+        if: matrix.operatingSystem == 'windows-latest'
+        shell: pwsh
         run: |
-          set -o pipefail
-          echo "## CMake Build (HOOTLTest)" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          cmake --build build/HOOTLTest |& tee -a $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "<details><summary>CMake Configuration (HOOTLTest)</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          cmake --preset HOOTLTest 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
 
-      - name: Run CTest
+      - name: CMake Build (Unix)
+        if: matrix.operatingSystem != 'windows-latest'
+        shell: bash
         run: |
           set -o pipefail
-          echo "## Run CTest (HOOTLTest)" >> $GITHUB_STEP_SUMMARY
+          echo "<details><summary>CMake Build (HOOTLTest)</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          ctest --output-on-failure --test-dir build/HOOTLTest |& tee -a $GITHUB_STEP_SUMMARY
+          cmake --build build/HOOTLTest 2>&1 | tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
+
+      - name: CMake Build (Windows)
+        if: matrix.operatingSystem == 'windows-latest'
+        shell: pwsh
+        run: |
+          echo "<details><summary>CMake Build (HOOTLTest)</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          cmake --build build/HOOTLTest 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+
+      - name: Run CTest (Unix)
+        if: matrix.operatingSystem != 'windows-latest'
+        shell: bash
+        run: |
+          set -o pipefail
+          echo "<details open><summary>Run CTest (HOOTLTest)</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          ctest --output-on-failure --test-dir build/HOOTLTest 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
+
+      - name: Run CTest (Windows)
+        if: matrix.operatingSystem == 'windows-latest'
+        shell: pwsh
+        run: |
+          echo "<details open><summary>Run CTest (HOOTLTest)</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          ctest --output-on-failure --test-dir build/HOOTLTest 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append

@@ -508,40 +508,40 @@ LL_PLL_ConfigSystemClock_MSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
 		if (LL_RCC_MSI_IsEnabledRangeSelect() != 0U) {
 			msi_range = LL_RCC_MSI_GetRange();
 			switch (msi_range) {
-			case LL_RCC_MSIRANGE_0: /* MSI = 100 KHz  */
-			case LL_RCC_MSIRANGE_1: /* MSI = 200 KHz  */
-			case LL_RCC_MSIRANGE_2: /* MSI = 400 KHz  */
-			case LL_RCC_MSIRANGE_3: /* MSI = 800 KHz  */
-			case LL_RCC_MSIRANGE_4: /* MSI = 1 MHz    */
-			case LL_RCC_MSIRANGE_5: /* MSI = 2 MHz    */
-				/* PLLVCO input frequency is not in the range
-				 * from 4 to 16 MHz*/
-				status = ERROR;
-				break;
+				case LL_RCC_MSIRANGE_0: /* MSI = 100 KHz  */
+				case LL_RCC_MSIRANGE_1: /* MSI = 200 KHz  */
+				case LL_RCC_MSIRANGE_2: /* MSI = 400 KHz  */
+				case LL_RCC_MSIRANGE_3: /* MSI = 800 KHz  */
+				case LL_RCC_MSIRANGE_4: /* MSI = 1 MHz    */
+				case LL_RCC_MSIRANGE_5: /* MSI = 2 MHz    */
+					/* PLLVCO input frequency is not in the
+					 * range from 4 to 16 MHz*/
+					status = ERROR;
+					break;
 
-			case LL_RCC_MSIRANGE_6:	 /* MSI = 4 MHz    */
-			case LL_RCC_MSIRANGE_7:	 /* MSI = 8 MHz    */
-			case LL_RCC_MSIRANGE_8:	 /* MSI = 16 MHz   */
-			case LL_RCC_MSIRANGE_9:	 /* MSI = 24 MHz   */
-			case LL_RCC_MSIRANGE_10: /* MSI = 32 MHz   */
-			case LL_RCC_MSIRANGE_11: /* MSI = 48 MHz   */
-			default:
-				break;
+				case LL_RCC_MSIRANGE_6:	 /* MSI = 4 MHz    */
+				case LL_RCC_MSIRANGE_7:	 /* MSI = 8 MHz    */
+				case LL_RCC_MSIRANGE_8:	 /* MSI = 16 MHz   */
+				case LL_RCC_MSIRANGE_9:	 /* MSI = 24 MHz   */
+				case LL_RCC_MSIRANGE_10: /* MSI = 32 MHz   */
+				case LL_RCC_MSIRANGE_11: /* MSI = 48 MHz   */
+				default:
+					break;
 			}
 		} else {
 			msi_range = LL_RCC_MSI_GetRangeAfterStandby();
 			switch (msi_range) {
-			case LL_RCC_MSISRANGE_4: /* MSI = 1 MHz    */
-			case LL_RCC_MSISRANGE_5: /* MSI = 2 MHz    */
-				/* PLLVCO input frequency is not in the range
-				 * from 4 to 16 MHz*/
-				status = ERROR;
-				break;
+				case LL_RCC_MSISRANGE_4: /* MSI = 1 MHz    */
+				case LL_RCC_MSISRANGE_5: /* MSI = 2 MHz    */
+					/* PLLVCO input frequency is not in the
+					 * range from 4 to 16 MHz*/
+					status = ERROR;
+					break;
 
-			case LL_RCC_MSISRANGE_7: /* MSI = 8 MHz    */
-			case LL_RCC_MSISRANGE_6: /* MSI = 4 MHz    */
-			default:
-				break;
+				case LL_RCC_MSISRANGE_7: /* MSI = 8 MHz    */
+				case LL_RCC_MSISRANGE_6: /* MSI = 4 MHz    */
+				default:
+					break;
 			}
 		}
 

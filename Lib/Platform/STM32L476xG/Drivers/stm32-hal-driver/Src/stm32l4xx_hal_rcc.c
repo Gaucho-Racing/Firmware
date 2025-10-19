@@ -1553,18 +1553,21 @@ uint32_t HAL_RCC_GetSysClockFreq(void)
 		pllsource = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLSRC);
 
 		switch (pllsource) {
-		case RCC_PLLSOURCE_HSI: /* HSI used as PLL clock source */
-			pllvco = HSI_VALUE;
-			break;
+			case RCC_PLLSOURCE_HSI: /* HSI used as PLL clock source
+						 */
+				pllvco = HSI_VALUE;
+				break;
 
-		case RCC_PLLSOURCE_HSE: /* HSE used as PLL clock source */
-			pllvco = HSE_VALUE;
-			break;
+			case RCC_PLLSOURCE_HSE: /* HSE used as PLL clock source
+						 */
+				pllvco = HSE_VALUE;
+				break;
 
-		case RCC_PLLSOURCE_MSI: /* MSI used as PLL clock source */
-		default:
-			pllvco = msirange;
-			break;
+			case RCC_PLLSOURCE_MSI: /* MSI used as PLL clock source
+						 */
+			default:
+				pllvco = msirange;
+				break;
 		}
 		pllm = (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >>
 			RCC_PLLCFGR_PLLM_Pos) +
@@ -1989,31 +1992,32 @@ static uint32_t RCC_GetSysClockFreqFromPLLSource(void)
 	pllsource = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLSRC);
 
 	switch (pllsource) {
-	case RCC_PLLSOURCE_HSI: /* HSI used as PLL clock source */
-		pllvco = HSI_VALUE;
-		break;
+		case RCC_PLLSOURCE_HSI: /* HSI used as PLL clock source */
+			pllvco = HSI_VALUE;
+			break;
 
-	case RCC_PLLSOURCE_HSE: /* HSE used as PLL clock source */
-		pllvco = HSE_VALUE;
-		break;
+		case RCC_PLLSOURCE_HSE: /* HSE used as PLL clock source */
+			pllvco = HSE_VALUE;
+			break;
 
-	case RCC_PLLSOURCE_MSI: /* MSI used as PLL clock source */
-		/* Get MSI range source */
-		if (READ_BIT(RCC->CR, RCC_CR_MSIRGSEL) ==
-		    0U) { /* MSISRANGE from RCC_CSR applies */
-			msirange = READ_BIT(RCC->CSR, RCC_CSR_MSISRANGE) >>
-				   RCC_CSR_MSISRANGE_Pos;
-		} else { /* MSIRANGE from RCC_CR applies */
-			msirange = READ_BIT(RCC->CR, RCC_CR_MSIRANGE) >>
-				   RCC_CR_MSIRANGE_Pos;
-		}
-		/*MSI frequency range in HZ*/
-		pllvco = MSIRangeTable[msirange];
-		break;
-	default:
-		/* unexpected */
-		pllvco = 0;
-		break;
+		case RCC_PLLSOURCE_MSI: /* MSI used as PLL clock source */
+			/* Get MSI range source */
+			if (READ_BIT(RCC->CR, RCC_CR_MSIRGSEL) ==
+			    0U) { /* MSISRANGE from RCC_CSR applies */
+				msirange =
+				    READ_BIT(RCC->CSR, RCC_CSR_MSISRANGE) >>
+				    RCC_CSR_MSISRANGE_Pos;
+			} else { /* MSIRANGE from RCC_CR applies */
+				msirange = READ_BIT(RCC->CR, RCC_CR_MSIRANGE) >>
+					   RCC_CR_MSIRANGE_Pos;
+			}
+			/*MSI frequency range in HZ*/
+			pllvco = MSIRangeTable[msirange];
+			break;
+		default:
+			/* unexpected */
+			pllvco = 0;
+			break;
 	}
 	pllm =
 	    (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >> RCC_PLLCFGR_PLLM_Pos) +

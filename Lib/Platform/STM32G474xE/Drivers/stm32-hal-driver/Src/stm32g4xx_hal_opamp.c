@@ -1099,29 +1099,29 @@ HAL_OPAMP_RegisterCallback(OPAMP_HandleTypeDef *hopamp,
 
 	if (hopamp->State == HAL_OPAMP_STATE_READY) {
 		switch (CallbackId) {
-		case HAL_OPAMP_MSPINIT_CB_ID:
-			hopamp->MspInitCallback = pCallback;
-			break;
-		case HAL_OPAMP_MSPDEINIT_CB_ID:
-			hopamp->MspDeInitCallback = pCallback;
-			break;
-		default:
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_OPAMP_MSPINIT_CB_ID:
+				hopamp->MspInitCallback = pCallback;
+				break;
+			case HAL_OPAMP_MSPDEINIT_CB_ID:
+				hopamp->MspDeInitCallback = pCallback;
+				break;
+			default:
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hopamp->State == HAL_OPAMP_STATE_RESET) {
 		switch (CallbackId) {
-		case HAL_OPAMP_MSPINIT_CB_ID:
-			hopamp->MspInitCallback = pCallback;
-			break;
-		case HAL_OPAMP_MSPDEINIT_CB_ID:
-			hopamp->MspDeInitCallback = pCallback;
-			break;
-		default:
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_OPAMP_MSPINIT_CB_ID:
+				hopamp->MspInitCallback = pCallback;
+				break;
+			case HAL_OPAMP_MSPDEINIT_CB_ID:
+				hopamp->MspDeInitCallback = pCallback;
+				break;
+			default:
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* update return status */
@@ -1159,33 +1159,33 @@ HAL_OPAMP_UnRegisterCallback(OPAMP_HandleTypeDef *hopamp,
 
 	if (hopamp->State == HAL_OPAMP_STATE_READY) {
 		switch (CallbackId) {
-		case HAL_OPAMP_MSPINIT_CB_ID:
-			hopamp->MspInitCallback = HAL_OPAMP_MspInit;
-			break;
-		case HAL_OPAMP_MSPDEINIT_CB_ID:
-			hopamp->MspDeInitCallback = HAL_OPAMP_MspDeInit;
-			break;
-		case HAL_OPAMP_ALL_CB_ID:
-			hopamp->MspInitCallback = HAL_OPAMP_MspInit;
-			hopamp->MspDeInitCallback = HAL_OPAMP_MspDeInit;
-			break;
-		default:
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_OPAMP_MSPINIT_CB_ID:
+				hopamp->MspInitCallback = HAL_OPAMP_MspInit;
+				break;
+			case HAL_OPAMP_MSPDEINIT_CB_ID:
+				hopamp->MspDeInitCallback = HAL_OPAMP_MspDeInit;
+				break;
+			case HAL_OPAMP_ALL_CB_ID:
+				hopamp->MspInitCallback = HAL_OPAMP_MspInit;
+				hopamp->MspDeInitCallback = HAL_OPAMP_MspDeInit;
+				break;
+			default:
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hopamp->State == HAL_OPAMP_STATE_RESET) {
 		switch (CallbackId) {
-		case HAL_OPAMP_MSPINIT_CB_ID:
-			hopamp->MspInitCallback = HAL_OPAMP_MspInit;
-			break;
-		case HAL_OPAMP_MSPDEINIT_CB_ID:
-			hopamp->MspDeInitCallback = HAL_OPAMP_MspDeInit;
-			break;
-		default:
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_OPAMP_MSPINIT_CB_ID:
+				hopamp->MspInitCallback = HAL_OPAMP_MspInit;
+				break;
+			case HAL_OPAMP_MSPDEINIT_CB_ID:
+				hopamp->MspDeInitCallback = HAL_OPAMP_MspDeInit;
+				break;
+			default:
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* update return status */

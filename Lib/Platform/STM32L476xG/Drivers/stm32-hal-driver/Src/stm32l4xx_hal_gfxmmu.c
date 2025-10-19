@@ -334,38 +334,38 @@ HAL_GFXMMU_RegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu,
 	} else {
 		if (HAL_GFXMMU_STATE_READY == hgfxmmu->State) {
 			switch (CallbackID) {
-			case HAL_GFXMMU_ERROR_CB_ID:
-				hgfxmmu->ErrorCallback = pCallback;
-				break;
-			case HAL_GFXMMU_MSPINIT_CB_ID:
-				hgfxmmu->MspInitCallback = pCallback;
-				break;
-			case HAL_GFXMMU_MSPDEINIT_CB_ID:
-				hgfxmmu->MspDeInitCallback = pCallback;
-				break;
-			default:
-				/* update the error code */
-				hgfxmmu->ErrorCode |=
-				    GFXMMU_ERROR_INVALID_CALLBACK;
-				/* update return status */
-				status = HAL_ERROR;
-				break;
+				case HAL_GFXMMU_ERROR_CB_ID:
+					hgfxmmu->ErrorCallback = pCallback;
+					break;
+				case HAL_GFXMMU_MSPINIT_CB_ID:
+					hgfxmmu->MspInitCallback = pCallback;
+					break;
+				case HAL_GFXMMU_MSPDEINIT_CB_ID:
+					hgfxmmu->MspDeInitCallback = pCallback;
+					break;
+				default:
+					/* update the error code */
+					hgfxmmu->ErrorCode |=
+					    GFXMMU_ERROR_INVALID_CALLBACK;
+					/* update return status */
+					status = HAL_ERROR;
+					break;
 			}
 		} else if (HAL_GFXMMU_STATE_RESET == hgfxmmu->State) {
 			switch (CallbackID) {
-			case HAL_GFXMMU_MSPINIT_CB_ID:
-				hgfxmmu->MspInitCallback = pCallback;
-				break;
-			case HAL_GFXMMU_MSPDEINIT_CB_ID:
-				hgfxmmu->MspDeInitCallback = pCallback;
-				break;
-			default:
-				/* update the error code */
-				hgfxmmu->ErrorCode |=
-				    GFXMMU_ERROR_INVALID_CALLBACK;
-				/* update return status */
-				status = HAL_ERROR;
-				break;
+				case HAL_GFXMMU_MSPINIT_CB_ID:
+					hgfxmmu->MspInitCallback = pCallback;
+					break;
+				case HAL_GFXMMU_MSPDEINIT_CB_ID:
+					hgfxmmu->MspDeInitCallback = pCallback;
+					break;
+				default:
+					/* update the error code */
+					hgfxmmu->ErrorCode |=
+					    GFXMMU_ERROR_INVALID_CALLBACK;
+					/* update return status */
+					status = HAL_ERROR;
+					break;
 			}
 		} else {
 			/* update the error code */
@@ -396,36 +396,41 @@ HAL_GFXMMU_UnRegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu,
 
 	if (HAL_GFXMMU_STATE_READY == hgfxmmu->State) {
 		switch (CallbackID) {
-		case HAL_GFXMMU_ERROR_CB_ID:
-			hgfxmmu->ErrorCallback = HAL_GFXMMU_ErrorCallback;
-			break;
-		case HAL_GFXMMU_MSPINIT_CB_ID:
-			hgfxmmu->MspInitCallback = HAL_GFXMMU_MspInit;
-			break;
-		case HAL_GFXMMU_MSPDEINIT_CB_ID:
-			hgfxmmu->MspDeInitCallback = HAL_GFXMMU_MspDeInit;
-			break;
-		default:
-			/* update the error code */
-			hgfxmmu->ErrorCode |= GFXMMU_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_GFXMMU_ERROR_CB_ID:
+				hgfxmmu->ErrorCallback =
+				    HAL_GFXMMU_ErrorCallback;
+				break;
+			case HAL_GFXMMU_MSPINIT_CB_ID:
+				hgfxmmu->MspInitCallback = HAL_GFXMMU_MspInit;
+				break;
+			case HAL_GFXMMU_MSPDEINIT_CB_ID:
+				hgfxmmu->MspDeInitCallback =
+				    HAL_GFXMMU_MspDeInit;
+				break;
+			default:
+				/* update the error code */
+				hgfxmmu->ErrorCode |=
+				    GFXMMU_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_GFXMMU_STATE_RESET == hgfxmmu->State) {
 		switch (CallbackID) {
-		case HAL_GFXMMU_MSPINIT_CB_ID:
-			hgfxmmu->MspInitCallback = HAL_GFXMMU_MspInit;
-			break;
-		case HAL_GFXMMU_MSPDEINIT_CB_ID:
-			hgfxmmu->MspDeInitCallback = HAL_GFXMMU_MspDeInit;
-			break;
-		default:
-			/* update the error code */
-			hgfxmmu->ErrorCode |= GFXMMU_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_GFXMMU_MSPINIT_CB_ID:
+				hgfxmmu->MspInitCallback = HAL_GFXMMU_MspInit;
+				break;
+			case HAL_GFXMMU_MSPDEINIT_CB_ID:
+				hgfxmmu->MspDeInitCallback =
+				    HAL_GFXMMU_MspDeInit;
+				break;
+			default:
+				/* update the error code */
+				hgfxmmu->ErrorCode |=
+				    GFXMMU_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* update the error code */

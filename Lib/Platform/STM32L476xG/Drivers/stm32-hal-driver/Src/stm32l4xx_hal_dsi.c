@@ -685,49 +685,51 @@ HAL_StatusTypeDef HAL_DSI_RegisterCallback(DSI_HandleTypeDef *hdsi,
 
 	if (hdsi->State == HAL_DSI_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_DSI_TEARING_EFFECT_CB_ID:
-			hdsi->TearingEffectCallback = pCallback;
-			break;
+			case HAL_DSI_TEARING_EFFECT_CB_ID:
+				hdsi->TearingEffectCallback = pCallback;
+				break;
 
-		case HAL_DSI_ENDOF_REFRESH_CB_ID:
-			hdsi->EndOfRefreshCallback = pCallback;
-			break;
+			case HAL_DSI_ENDOF_REFRESH_CB_ID:
+				hdsi->EndOfRefreshCallback = pCallback;
+				break;
 
-		case HAL_DSI_ERROR_CB_ID:
-			hdsi->ErrorCallback = pCallback;
-			break;
+			case HAL_DSI_ERROR_CB_ID:
+				hdsi->ErrorCallback = pCallback;
+				break;
 
-		case HAL_DSI_MSPINIT_CB_ID:
-			hdsi->MspInitCallback = pCallback;
-			break;
+			case HAL_DSI_MSPINIT_CB_ID:
+				hdsi->MspInitCallback = pCallback;
+				break;
 
-		case HAL_DSI_MSPDEINIT_CB_ID:
-			hdsi->MspDeInitCallback = pCallback;
-			break;
+			case HAL_DSI_MSPDEINIT_CB_ID:
+				hdsi->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hdsi->ErrorCode |= HAL_DSI_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hdsi->ErrorCode |=
+				    HAL_DSI_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hdsi->State == HAL_DSI_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_DSI_MSPINIT_CB_ID:
-			hdsi->MspInitCallback = pCallback;
-			break;
+			case HAL_DSI_MSPINIT_CB_ID:
+				hdsi->MspInitCallback = pCallback;
+				break;
 
-		case HAL_DSI_MSPDEINIT_CB_ID:
-			hdsi->MspDeInitCallback = pCallback;
-			break;
+			case HAL_DSI_MSPDEINIT_CB_ID:
+				hdsi->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hdsi->ErrorCode |= HAL_DSI_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hdsi->ErrorCode |=
+				    HAL_DSI_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -766,63 +768,71 @@ HAL_DSI_UnRegisterCallback(DSI_HandleTypeDef *hdsi,
 
 	if (hdsi->State == HAL_DSI_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_DSI_TEARING_EFFECT_CB_ID:
-			hdsi->TearingEffectCallback =
-			    HAL_DSI_TearingEffectCallback; /* Legacy weak
-							      TearingEffectCallback
+			case HAL_DSI_TEARING_EFFECT_CB_ID:
+				hdsi->TearingEffectCallback =
+				    HAL_DSI_TearingEffectCallback; /* Legacy
+								      weak
+								      TearingEffectCallback
+								    */
+				break;
+
+			case HAL_DSI_ENDOF_REFRESH_CB_ID:
+				hdsi->EndOfRefreshCallback =
+				    HAL_DSI_EndOfRefreshCallback; /* Legacy weak
+								     EndOfRefreshCallback
+								   */
+				break;
+
+			case HAL_DSI_ERROR_CB_ID:
+				hdsi->ErrorCallback =
+				    HAL_DSI_ErrorCallback; /* Legacy weak
+							    * ErrorCallback
 							    */
-			break;
+				break;
 
-		case HAL_DSI_ENDOF_REFRESH_CB_ID:
-			hdsi->EndOfRefreshCallback =
-			    HAL_DSI_EndOfRefreshCallback; /* Legacy weak
-							     EndOfRefreshCallback
-							   */
-			break;
+			case HAL_DSI_MSPINIT_CB_ID:
+				hdsi->MspInitCallback =
+				    HAL_DSI_MspInit; /* Legacy weak MspInit
+							Callback */
+				break;
 
-		case HAL_DSI_ERROR_CB_ID:
-			hdsi->ErrorCallback =
-			    HAL_DSI_ErrorCallback; /* Legacy weak ErrorCallback
-						    */
-			break;
+			case HAL_DSI_MSPDEINIT_CB_ID:
+				hdsi->MspDeInitCallback =
+				    HAL_DSI_MspDeInit; /* Legacy weak MspDeInit
+							* Callback
+							*/
+				break;
 
-		case HAL_DSI_MSPINIT_CB_ID:
-			hdsi->MspInitCallback =
-			    HAL_DSI_MspInit; /* Legacy weak MspInit Callback */
-			break;
-
-		case HAL_DSI_MSPDEINIT_CB_ID:
-			hdsi->MspDeInitCallback =
-			    HAL_DSI_MspDeInit; /* Legacy weak MspDeInit Callback
-						*/
-			break;
-
-		default:
-			/* Update the error code */
-			hdsi->ErrorCode |= HAL_DSI_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hdsi->ErrorCode |=
+				    HAL_DSI_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hdsi->State == HAL_DSI_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_DSI_MSPINIT_CB_ID:
-			hdsi->MspInitCallback =
-			    HAL_DSI_MspInit; /* Legacy weak MspInit Callback */
-			break;
+			case HAL_DSI_MSPINIT_CB_ID:
+				hdsi->MspInitCallback =
+				    HAL_DSI_MspInit; /* Legacy weak MspInit
+							Callback */
+				break;
 
-		case HAL_DSI_MSPDEINIT_CB_ID:
-			hdsi->MspDeInitCallback =
-			    HAL_DSI_MspDeInit; /* Legacy weak MspDeInit Callback
-						*/
-			break;
+			case HAL_DSI_MSPDEINIT_CB_ID:
+				hdsi->MspDeInitCallback =
+				    HAL_DSI_MspDeInit; /* Legacy weak MspDeInit
+							* Callback
+							*/
+				break;
 
-		default:
-			/* Update the error code */
-			hdsi->ErrorCode |= HAL_DSI_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hdsi->ErrorCode |=
+				    HAL_DSI_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -2538,60 +2548,64 @@ HAL_StatusTypeDef HAL_DSI_SetSlewRateAndDelayTuning(DSI_HandleTypeDef *hdsi,
 	assert_param(IS_DSI_LANE_GROUP(Lane));
 
 	switch (CommDelay) {
-	case DSI_SLEW_RATE_HSTX:
-		if (Lane == DSI_CLOCK_LANE) {
-			/* High-Speed Transmission Slew Rate Control on Clock
-			 * Lane */
-			hdsi->Instance->WPCR[1U] &= ~DSI_WPCR1_HSTXSRCCL;
-			hdsi->Instance->WPCR[1U] |= Value << 16U;
-		} else if (Lane == DSI_DATA_LANES) {
-			/* High-Speed Transmission Slew Rate Control on Data
-			 * Lanes */
-			hdsi->Instance->WPCR[1U] &= ~DSI_WPCR1_HSTXSRCDL;
-			hdsi->Instance->WPCR[1U] |= Value << 18U;
-		} else {
-			/* Process unlocked */
-			__HAL_UNLOCK(hdsi);
+		case DSI_SLEW_RATE_HSTX:
+			if (Lane == DSI_CLOCK_LANE) {
+				/* High-Speed Transmission Slew Rate Control on
+				 * Clock Lane */
+				hdsi->Instance->WPCR[1U] &=
+				    ~DSI_WPCR1_HSTXSRCCL;
+				hdsi->Instance->WPCR[1U] |= Value << 16U;
+			} else if (Lane == DSI_DATA_LANES) {
+				/* High-Speed Transmission Slew Rate Control on
+				 * Data Lanes */
+				hdsi->Instance->WPCR[1U] &=
+				    ~DSI_WPCR1_HSTXSRCDL;
+				hdsi->Instance->WPCR[1U] |= Value << 18U;
+			} else {
+				/* Process unlocked */
+				__HAL_UNLOCK(hdsi);
 
-			return HAL_ERROR;
-		}
-		break;
-	case DSI_SLEW_RATE_LPTX:
-		if (Lane == DSI_CLOCK_LANE) {
-			/* Low-Power transmission Slew Rate Compensation on
-			 * Clock Lane */
-			hdsi->Instance->WPCR[1U] &= ~DSI_WPCR1_LPSRCCL;
-			hdsi->Instance->WPCR[1U] |= Value << 6U;
-		} else if (Lane == DSI_DATA_LANES) {
-			/* Low-Power transmission Slew Rate Compensation on Data
-			 * Lanes */
-			hdsi->Instance->WPCR[1U] &= ~DSI_WPCR1_LPSRCDL;
-			hdsi->Instance->WPCR[1U] |= Value << 8U;
-		} else {
-			/* Process unlocked */
-			__HAL_UNLOCK(hdsi);
+				return HAL_ERROR;
+			}
+			break;
+		case DSI_SLEW_RATE_LPTX:
+			if (Lane == DSI_CLOCK_LANE) {
+				/* Low-Power transmission Slew Rate Compensation
+				 * on Clock Lane */
+				hdsi->Instance->WPCR[1U] &= ~DSI_WPCR1_LPSRCCL;
+				hdsi->Instance->WPCR[1U] |= Value << 6U;
+			} else if (Lane == DSI_DATA_LANES) {
+				/* Low-Power transmission Slew Rate Compensation
+				 * on Data Lanes */
+				hdsi->Instance->WPCR[1U] &= ~DSI_WPCR1_LPSRCDL;
+				hdsi->Instance->WPCR[1U] |= Value << 8U;
+			} else {
+				/* Process unlocked */
+				__HAL_UNLOCK(hdsi);
 
-			return HAL_ERROR;
-		}
-		break;
-	case DSI_HS_DELAY:
-		if (Lane == DSI_CLOCK_LANE) {
-			/* High-Speed Transmission Delay on Clock Lane */
-			hdsi->Instance->WPCR[1U] &= ~DSI_WPCR1_HSTXDCL;
-			hdsi->Instance->WPCR[1U] |= Value;
-		} else if (Lane == DSI_DATA_LANES) {
-			/* High-Speed Transmission Delay on Data Lanes */
-			hdsi->Instance->WPCR[1U] &= ~DSI_WPCR1_HSTXDDL;
-			hdsi->Instance->WPCR[1U] |= Value << 2U;
-		} else {
-			/* Process unlocked */
-			__HAL_UNLOCK(hdsi);
+				return HAL_ERROR;
+			}
+			break;
+		case DSI_HS_DELAY:
+			if (Lane == DSI_CLOCK_LANE) {
+				/* High-Speed Transmission Delay on Clock Lane
+				 */
+				hdsi->Instance->WPCR[1U] &= ~DSI_WPCR1_HSTXDCL;
+				hdsi->Instance->WPCR[1U] |= Value;
+			} else if (Lane == DSI_DATA_LANES) {
+				/* High-Speed Transmission Delay on Data Lanes
+				 */
+				hdsi->Instance->WPCR[1U] &= ~DSI_WPCR1_HSTXDDL;
+				hdsi->Instance->WPCR[1U] |= Value << 2U;
+			} else {
+				/* Process unlocked */
+				__HAL_UNLOCK(hdsi);
 
-			return HAL_ERROR;
-		}
-		break;
-	default:
-		break;
+				return HAL_ERROR;
+			}
+			break;
+		default:
+			break;
 	}
 
 	/* Process unlocked */
@@ -2674,48 +2688,54 @@ HAL_StatusTypeDef HAL_DSI_SetLanePinsConfiguration(DSI_HandleTypeDef *hdsi,
 	assert_param(IS_FUNCTIONAL_STATE(State));
 
 	switch (CustomLane) {
-	case DSI_SWAP_LANE_PINS:
-		if (Lane == DSI_CLK_LANE) {
-			/* Swap pins on clock lane */
-			hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_SWCL;
-			hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 6U);
-		} else if (Lane == DSI_DATA_LANE0) {
-			/* Swap pins on data lane 0 */
-			hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_SWDL0;
-			hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 7U);
-		} else if (Lane == DSI_DATA_LANE1) {
-			/* Swap pins on data lane 1 */
-			hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_SWDL1;
-			hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 8U);
-		} else {
-			/* Process unlocked */
-			__HAL_UNLOCK(hdsi);
+		case DSI_SWAP_LANE_PINS:
+			if (Lane == DSI_CLK_LANE) {
+				/* Swap pins on clock lane */
+				hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_SWCL;
+				hdsi->Instance->WPCR[0U] |=
+				    ((uint32_t)State << 6U);
+			} else if (Lane == DSI_DATA_LANE0) {
+				/* Swap pins on data lane 0 */
+				hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_SWDL0;
+				hdsi->Instance->WPCR[0U] |=
+				    ((uint32_t)State << 7U);
+			} else if (Lane == DSI_DATA_LANE1) {
+				/* Swap pins on data lane 1 */
+				hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_SWDL1;
+				hdsi->Instance->WPCR[0U] |=
+				    ((uint32_t)State << 8U);
+			} else {
+				/* Process unlocked */
+				__HAL_UNLOCK(hdsi);
 
-			return HAL_ERROR;
-		}
-		break;
-	case DSI_INVERT_HS_SIGNAL:
-		if (Lane == DSI_CLK_LANE) {
-			/* Invert HS signal on clock lane */
-			hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_HSICL;
-			hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 9U);
-		} else if (Lane == DSI_DATA_LANE0) {
-			/* Invert HS signal on data lane 0 */
-			hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_HSIDL0;
-			hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 10U);
-		} else if (Lane == DSI_DATA_LANE1) {
-			/* Invert HS signal on data lane 1 */
-			hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_HSIDL1;
-			hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 11U);
-		} else {
-			/* Process unlocked */
-			__HAL_UNLOCK(hdsi);
+				return HAL_ERROR;
+			}
+			break;
+		case DSI_INVERT_HS_SIGNAL:
+			if (Lane == DSI_CLK_LANE) {
+				/* Invert HS signal on clock lane */
+				hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_HSICL;
+				hdsi->Instance->WPCR[0U] |=
+				    ((uint32_t)State << 9U);
+			} else if (Lane == DSI_DATA_LANE0) {
+				/* Invert HS signal on data lane 0 */
+				hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_HSIDL0;
+				hdsi->Instance->WPCR[0U] |=
+				    ((uint32_t)State << 10U);
+			} else if (Lane == DSI_DATA_LANE1) {
+				/* Invert HS signal on data lane 1 */
+				hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_HSIDL1;
+				hdsi->Instance->WPCR[0U] |=
+				    ((uint32_t)State << 11U);
+			} else {
+				/* Process unlocked */
+				__HAL_UNLOCK(hdsi);
 
-			return HAL_ERROR;
-		}
-		break;
-	default:
-		break;
+				return HAL_ERROR;
+			}
+			break;
+		default:
+			break;
 	}
 
 	/* Process unlocked */
@@ -2746,122 +2766,125 @@ HAL_StatusTypeDef HAL_DSI_SetPHYTimings(DSI_HandleTypeDef *hdsi,
 	assert_param(IS_FUNCTIONAL_STATE(State));
 
 	switch (Timing) {
-	case DSI_TCLK_POST:
-		/* Enable/Disable custom timing setting */
-		hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_TCLKPOSTEN;
-		hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 27U);
+		case DSI_TCLK_POST:
+			/* Enable/Disable custom timing setting */
+			hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_TCLKPOSTEN;
+			hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 27U);
 
-		if (State != DISABLE) {
-			/* Set custom value */
-			hdsi->Instance->WPCR[4U] &= ~DSI_WPCR4_TCLKPOST;
-			hdsi->Instance->WPCR[4U] |= Value & DSI_WPCR4_TCLKPOST;
-		}
+			if (State != DISABLE) {
+				/* Set custom value */
+				hdsi->Instance->WPCR[4U] &= ~DSI_WPCR4_TCLKPOST;
+				hdsi->Instance->WPCR[4U] |=
+				    Value & DSI_WPCR4_TCLKPOST;
+			}
 
-		break;
-	case DSI_TLPX_CLK:
-		/* Enable/Disable custom timing setting */
-		hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_TLPXCEN;
-		hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 26U);
+			break;
+		case DSI_TLPX_CLK:
+			/* Enable/Disable custom timing setting */
+			hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_TLPXCEN;
+			hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 26U);
 
-		if (State != DISABLE) {
-			/* Set custom value */
-			hdsi->Instance->WPCR[3U] &= ~DSI_WPCR3_TLPXC;
-			hdsi->Instance->WPCR[3U] |=
-			    (Value << 24U) & DSI_WPCR3_TLPXC;
-		}
+			if (State != DISABLE) {
+				/* Set custom value */
+				hdsi->Instance->WPCR[3U] &= ~DSI_WPCR3_TLPXC;
+				hdsi->Instance->WPCR[3U] |=
+				    (Value << 24U) & DSI_WPCR3_TLPXC;
+			}
 
-		break;
-	case DSI_THS_EXIT:
-		/* Enable/Disable custom timing setting */
-		hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_THSEXITEN;
-		hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 25U);
+			break;
+		case DSI_THS_EXIT:
+			/* Enable/Disable custom timing setting */
+			hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_THSEXITEN;
+			hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 25U);
 
-		if (State != DISABLE) {
-			/* Set custom value */
-			hdsi->Instance->WPCR[3U] &= ~DSI_WPCR3_THSEXIT;
-			hdsi->Instance->WPCR[3U] |=
-			    (Value << 16U) & DSI_WPCR3_THSEXIT;
-		}
+			if (State != DISABLE) {
+				/* Set custom value */
+				hdsi->Instance->WPCR[3U] &= ~DSI_WPCR3_THSEXIT;
+				hdsi->Instance->WPCR[3U] |=
+				    (Value << 16U) & DSI_WPCR3_THSEXIT;
+			}
 
-		break;
-	case DSI_TLPX_DATA:
-		/* Enable/Disable custom timing setting */
-		hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_TLPXDEN;
-		hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 24U);
+			break;
+		case DSI_TLPX_DATA:
+			/* Enable/Disable custom timing setting */
+			hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_TLPXDEN;
+			hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 24U);
 
-		if (State != DISABLE) {
-			/* Set custom value */
-			hdsi->Instance->WPCR[3U] &= ~DSI_WPCR3_TLPXD;
-			hdsi->Instance->WPCR[3U] |=
-			    (Value << 8U) & DSI_WPCR3_TLPXD;
-		}
+			if (State != DISABLE) {
+				/* Set custom value */
+				hdsi->Instance->WPCR[3U] &= ~DSI_WPCR3_TLPXD;
+				hdsi->Instance->WPCR[3U] |=
+				    (Value << 8U) & DSI_WPCR3_TLPXD;
+			}
 
-		break;
-	case DSI_THS_ZERO:
-		/* Enable/Disable custom timing setting */
-		hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_THSZEROEN;
-		hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 23U);
+			break;
+		case DSI_THS_ZERO:
+			/* Enable/Disable custom timing setting */
+			hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_THSZEROEN;
+			hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 23U);
 
-		if (State != DISABLE) {
-			/* Set custom value */
-			hdsi->Instance->WPCR[3U] &= ~DSI_WPCR3_THSZERO;
-			hdsi->Instance->WPCR[3U] |= Value & DSI_WPCR3_THSZERO;
-		}
+			if (State != DISABLE) {
+				/* Set custom value */
+				hdsi->Instance->WPCR[3U] &= ~DSI_WPCR3_THSZERO;
+				hdsi->Instance->WPCR[3U] |=
+				    Value & DSI_WPCR3_THSZERO;
+			}
 
-		break;
-	case DSI_THS_TRAIL:
-		/* Enable/Disable custom timing setting */
-		hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_THSTRAILEN;
-		hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 22U);
+			break;
+		case DSI_THS_TRAIL:
+			/* Enable/Disable custom timing setting */
+			hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_THSTRAILEN;
+			hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 22U);
 
-		if (State != DISABLE) {
-			/* Set custom value */
-			hdsi->Instance->WPCR[2U] &= ~DSI_WPCR2_THSTRAIL;
-			hdsi->Instance->WPCR[2U] |=
-			    (Value << 24U) & DSI_WPCR2_THSTRAIL;
-		}
+			if (State != DISABLE) {
+				/* Set custom value */
+				hdsi->Instance->WPCR[2U] &= ~DSI_WPCR2_THSTRAIL;
+				hdsi->Instance->WPCR[2U] |=
+				    (Value << 24U) & DSI_WPCR2_THSTRAIL;
+			}
 
-		break;
-	case DSI_THS_PREPARE:
-		/* Enable/Disable custom timing setting */
-		hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_THSPREPEN;
-		hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 21U);
+			break;
+		case DSI_THS_PREPARE:
+			/* Enable/Disable custom timing setting */
+			hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_THSPREPEN;
+			hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 21U);
 
-		if (State != DISABLE) {
-			/* Set custom value */
-			hdsi->Instance->WPCR[2U] &= ~DSI_WPCR2_THSPREP;
-			hdsi->Instance->WPCR[2U] |=
-			    (Value << 16U) & DSI_WPCR2_THSPREP;
-		}
+			if (State != DISABLE) {
+				/* Set custom value */
+				hdsi->Instance->WPCR[2U] &= ~DSI_WPCR2_THSPREP;
+				hdsi->Instance->WPCR[2U] |=
+				    (Value << 16U) & DSI_WPCR2_THSPREP;
+			}
 
-		break;
-	case DSI_TCLK_ZERO:
-		/* Enable/Disable custom timing setting */
-		hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_TCLKZEROEN;
-		hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 20U);
+			break;
+		case DSI_TCLK_ZERO:
+			/* Enable/Disable custom timing setting */
+			hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_TCLKZEROEN;
+			hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 20U);
 
-		if (State != DISABLE) {
-			/* Set custom value */
-			hdsi->Instance->WPCR[2U] &= ~DSI_WPCR2_TCLKZERO;
-			hdsi->Instance->WPCR[2U] |=
-			    (Value << 8U) & DSI_WPCR2_TCLKZERO;
-		}
+			if (State != DISABLE) {
+				/* Set custom value */
+				hdsi->Instance->WPCR[2U] &= ~DSI_WPCR2_TCLKZERO;
+				hdsi->Instance->WPCR[2U] |=
+				    (Value << 8U) & DSI_WPCR2_TCLKZERO;
+			}
 
-		break;
-	case DSI_TCLK_PREPARE:
-		/* Enable/Disable custom timing setting */
-		hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_TCLKPREPEN;
-		hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 19U);
+			break;
+		case DSI_TCLK_PREPARE:
+			/* Enable/Disable custom timing setting */
+			hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_TCLKPREPEN;
+			hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 19U);
 
-		if (State != DISABLE) {
-			/* Set custom value */
-			hdsi->Instance->WPCR[2U] &= ~DSI_WPCR2_TCLKPREP;
-			hdsi->Instance->WPCR[2U] |= Value & DSI_WPCR2_TCLKPREP;
-		}
+			if (State != DISABLE) {
+				/* Set custom value */
+				hdsi->Instance->WPCR[2U] &= ~DSI_WPCR2_TCLKPREP;
+				hdsi->Instance->WPCR[2U] |=
+				    Value & DSI_WPCR2_TCLKPREP;
+			}
 
-		break;
-	default:
-		break;
+			break;
+		default:
+			break;
 	}
 
 	/* Process unlocked */

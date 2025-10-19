@@ -198,12 +198,12 @@ void LL_LPTIM_Disable(LPTIM_TypeDef *LPTIMx)
 	/********** Save LPTIM Config *********/
 	/* Save LPTIM source clock */
 	switch ((uint32_t)LPTIMx) {
-	case LPTIM1_BASE:
-		tmpclksource =
-		    LL_RCC_GetLPTIMClockSource(LL_RCC_LPTIM1_CLKSOURCE);
-		break;
-	default:
-		break;
+		case LPTIM1_BASE:
+			tmpclksource =
+			    LL_RCC_GetLPTIMClockSource(LL_RCC_LPTIM1_CLKSOURCE);
+			break;
+		default:
+			break;
 	}
 
 	/* Save LPTIM configuration registers */
@@ -222,12 +222,12 @@ void LL_LPTIM_Disable(LPTIM_TypeDef *LPTIMx)
 	if ((tmpCMP != 0UL) || (tmpARR != 0UL)) {
 		/* Force LPTIM source kernel clock from APB */
 		switch ((uint32_t)LPTIMx) {
-		case LPTIM1_BASE:
-			LL_RCC_SetLPTIMClockSource(
-			    LL_RCC_LPTIM1_CLKSOURCE_PCLK1);
-			break;
-		default:
-			break;
+			case LPTIM1_BASE:
+				LL_RCC_SetLPTIMClockSource(
+				    LL_RCC_LPTIM1_CLKSOURCE_PCLK1);
+				break;
+			default:
+				break;
 		}
 
 		if (tmpCMP != 0UL) {

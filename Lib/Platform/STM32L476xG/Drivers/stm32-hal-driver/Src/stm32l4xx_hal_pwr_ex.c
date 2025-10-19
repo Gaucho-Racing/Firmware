@@ -406,61 +406,69 @@ HAL_StatusTypeDef HAL_PWREx_EnableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber)
 	assert_param(IS_PWR_GPIO_BIT_NUMBER(GPIONumber));
 
 	switch (GPIO) {
-	case PWR_GPIO_A:
-		SET_BIT(PWR->PUCRA, (GPIONumber & (~(PWR_GPIO_BIT_14))));
-		CLEAR_BIT(PWR->PDCRA, (GPIONumber &
-				       (~(PWR_GPIO_BIT_13 | PWR_GPIO_BIT_15))));
-		break;
-	case PWR_GPIO_B:
-		SET_BIT(PWR->PUCRB, GPIONumber);
-		CLEAR_BIT(PWR->PDCRB, (GPIONumber & (~(PWR_GPIO_BIT_4))));
-		break;
-	case PWR_GPIO_C:
-		SET_BIT(PWR->PUCRC, GPIONumber);
-		CLEAR_BIT(PWR->PDCRC, GPIONumber);
-		break;
+		case PWR_GPIO_A:
+			SET_BIT(PWR->PUCRA,
+				(GPIONumber & (~(PWR_GPIO_BIT_14))));
+			CLEAR_BIT(PWR->PDCRA,
+				  (GPIONumber &
+				   (~(PWR_GPIO_BIT_13 | PWR_GPIO_BIT_15))));
+			break;
+		case PWR_GPIO_B:
+			SET_BIT(PWR->PUCRB, GPIONumber);
+			CLEAR_BIT(PWR->PDCRB,
+				  (GPIONumber & (~(PWR_GPIO_BIT_4))));
+			break;
+		case PWR_GPIO_C:
+			SET_BIT(PWR->PUCRC, GPIONumber);
+			CLEAR_BIT(PWR->PDCRC, GPIONumber);
+			break;
 #if defined(GPIOD)
-	case PWR_GPIO_D:
-		SET_BIT(PWR->PUCRD, GPIONumber);
-		CLEAR_BIT(PWR->PDCRD, GPIONumber);
-		break;
+		case PWR_GPIO_D:
+			SET_BIT(PWR->PUCRD, GPIONumber);
+			CLEAR_BIT(PWR->PDCRD, GPIONumber);
+			break;
 #endif
 #if defined(GPIOE)
-	case PWR_GPIO_E:
-		SET_BIT(PWR->PUCRE, GPIONumber);
-		CLEAR_BIT(PWR->PDCRE, GPIONumber);
-		break;
+		case PWR_GPIO_E:
+			SET_BIT(PWR->PUCRE, GPIONumber);
+			CLEAR_BIT(PWR->PDCRE, GPIONumber);
+			break;
 #endif
 #if defined(GPIOF)
-	case PWR_GPIO_F:
-		SET_BIT(PWR->PUCRF, GPIONumber);
-		CLEAR_BIT(PWR->PDCRF, GPIONumber);
-		break;
+		case PWR_GPIO_F:
+			SET_BIT(PWR->PUCRF, GPIONumber);
+			CLEAR_BIT(PWR->PDCRF, GPIONumber);
+			break;
 #endif
 #if defined(GPIOG)
-	case PWR_GPIO_G:
-		SET_BIT(PWR->PUCRG, GPIONumber);
-		CLEAR_BIT(PWR->PDCRG, GPIONumber);
-		break;
+		case PWR_GPIO_G:
+			SET_BIT(PWR->PUCRG, GPIONumber);
+			CLEAR_BIT(PWR->PDCRG, GPIONumber);
+			break;
 #endif
-	case PWR_GPIO_H:
-		SET_BIT(PWR->PUCRH, (GPIONumber & PWR_PORTH_AVAILABLE_PINS));
+		case PWR_GPIO_H:
+			SET_BIT(PWR->PUCRH,
+				(GPIONumber & PWR_PORTH_AVAILABLE_PINS));
 #if defined(STM32L496xx) || defined(STM32L4A6xx)
-		CLEAR_BIT(PWR->PDCRH, ((GPIONumber & PWR_PORTH_AVAILABLE_PINS) &
-				       (~(PWR_GPIO_BIT_3))));
+			CLEAR_BIT(PWR->PDCRH,
+				  ((GPIONumber & PWR_PORTH_AVAILABLE_PINS) &
+				   (~(PWR_GPIO_BIT_3))));
 #else
-		CLEAR_BIT(PWR->PDCRH, (GPIONumber & PWR_PORTH_AVAILABLE_PINS));
+			CLEAR_BIT(PWR->PDCRH,
+				  (GPIONumber & PWR_PORTH_AVAILABLE_PINS));
 #endif
-		break;
+			break;
 #if defined(GPIOI)
-	case PWR_GPIO_I:
-		SET_BIT(PWR->PUCRI, (GPIONumber & PWR_PORTI_AVAILABLE_PINS));
-		CLEAR_BIT(PWR->PDCRI, (GPIONumber & PWR_PORTI_AVAILABLE_PINS));
-		break;
+		case PWR_GPIO_I:
+			SET_BIT(PWR->PUCRI,
+				(GPIONumber & PWR_PORTI_AVAILABLE_PINS));
+			CLEAR_BIT(PWR->PDCRI,
+				  (GPIONumber & PWR_PORTI_AVAILABLE_PINS));
+			break;
 #endif
-	default:
-		status = HAL_ERROR;
-		break;
+		default:
+			status = HAL_ERROR;
+			break;
 	}
 
 	return status;
@@ -491,46 +499,49 @@ HAL_StatusTypeDef HAL_PWREx_DisableGPIOPullUp(uint32_t GPIO,
 	assert_param(IS_PWR_GPIO_BIT_NUMBER(GPIONumber));
 
 	switch (GPIO) {
-	case PWR_GPIO_A:
-		CLEAR_BIT(PWR->PUCRA, (GPIONumber & (~(PWR_GPIO_BIT_14))));
-		break;
-	case PWR_GPIO_B:
-		CLEAR_BIT(PWR->PUCRB, GPIONumber);
-		break;
-	case PWR_GPIO_C:
-		CLEAR_BIT(PWR->PUCRC, GPIONumber);
-		break;
+		case PWR_GPIO_A:
+			CLEAR_BIT(PWR->PUCRA,
+				  (GPIONumber & (~(PWR_GPIO_BIT_14))));
+			break;
+		case PWR_GPIO_B:
+			CLEAR_BIT(PWR->PUCRB, GPIONumber);
+			break;
+		case PWR_GPIO_C:
+			CLEAR_BIT(PWR->PUCRC, GPIONumber);
+			break;
 #if defined(GPIOD)
-	case PWR_GPIO_D:
-		CLEAR_BIT(PWR->PUCRD, GPIONumber);
-		break;
+		case PWR_GPIO_D:
+			CLEAR_BIT(PWR->PUCRD, GPIONumber);
+			break;
 #endif
 #if defined(GPIOE)
-	case PWR_GPIO_E:
-		CLEAR_BIT(PWR->PUCRE, GPIONumber);
-		break;
+		case PWR_GPIO_E:
+			CLEAR_BIT(PWR->PUCRE, GPIONumber);
+			break;
 #endif
 #if defined(GPIOF)
-	case PWR_GPIO_F:
-		CLEAR_BIT(PWR->PUCRF, GPIONumber);
-		break;
+		case PWR_GPIO_F:
+			CLEAR_BIT(PWR->PUCRF, GPIONumber);
+			break;
 #endif
 #if defined(GPIOG)
-	case PWR_GPIO_G:
-		CLEAR_BIT(PWR->PUCRG, GPIONumber);
-		break;
+		case PWR_GPIO_G:
+			CLEAR_BIT(PWR->PUCRG, GPIONumber);
+			break;
 #endif
-	case PWR_GPIO_H:
-		CLEAR_BIT(PWR->PUCRH, (GPIONumber & PWR_PORTH_AVAILABLE_PINS));
-		break;
+		case PWR_GPIO_H:
+			CLEAR_BIT(PWR->PUCRH,
+				  (GPIONumber & PWR_PORTH_AVAILABLE_PINS));
+			break;
 #if defined(GPIOI)
-	case PWR_GPIO_I:
-		CLEAR_BIT(PWR->PUCRI, (GPIONumber & PWR_PORTI_AVAILABLE_PINS));
-		break;
+		case PWR_GPIO_I:
+			CLEAR_BIT(PWR->PUCRI,
+				  (GPIONumber & PWR_PORTI_AVAILABLE_PINS));
+			break;
 #endif
-	default:
-		status = HAL_ERROR;
-		break;
+		default:
+			status = HAL_ERROR;
+			break;
 	}
 
 	return status;
@@ -567,61 +578,68 @@ HAL_StatusTypeDef HAL_PWREx_EnableGPIOPullDown(uint32_t GPIO,
 	assert_param(IS_PWR_GPIO_BIT_NUMBER(GPIONumber));
 
 	switch (GPIO) {
-	case PWR_GPIO_A:
-		SET_BIT(PWR->PDCRA,
-			(GPIONumber & (~(PWR_GPIO_BIT_13 | PWR_GPIO_BIT_15))));
-		CLEAR_BIT(PWR->PUCRA, (GPIONumber & (~(PWR_GPIO_BIT_14))));
-		break;
-	case PWR_GPIO_B:
-		SET_BIT(PWR->PDCRB, (GPIONumber & (~(PWR_GPIO_BIT_4))));
-		CLEAR_BIT(PWR->PUCRB, GPIONumber);
-		break;
-	case PWR_GPIO_C:
-		SET_BIT(PWR->PDCRC, GPIONumber);
-		CLEAR_BIT(PWR->PUCRC, GPIONumber);
-		break;
+		case PWR_GPIO_A:
+			SET_BIT(PWR->PDCRA,
+				(GPIONumber &
+				 (~(PWR_GPIO_BIT_13 | PWR_GPIO_BIT_15))));
+			CLEAR_BIT(PWR->PUCRA,
+				  (GPIONumber & (~(PWR_GPIO_BIT_14))));
+			break;
+		case PWR_GPIO_B:
+			SET_BIT(PWR->PDCRB, (GPIONumber & (~(PWR_GPIO_BIT_4))));
+			CLEAR_BIT(PWR->PUCRB, GPIONumber);
+			break;
+		case PWR_GPIO_C:
+			SET_BIT(PWR->PDCRC, GPIONumber);
+			CLEAR_BIT(PWR->PUCRC, GPIONumber);
+			break;
 #if defined(GPIOD)
-	case PWR_GPIO_D:
-		SET_BIT(PWR->PDCRD, GPIONumber);
-		CLEAR_BIT(PWR->PUCRD, GPIONumber);
-		break;
+		case PWR_GPIO_D:
+			SET_BIT(PWR->PDCRD, GPIONumber);
+			CLEAR_BIT(PWR->PUCRD, GPIONumber);
+			break;
 #endif
 #if defined(GPIOE)
-	case PWR_GPIO_E:
-		SET_BIT(PWR->PDCRE, GPIONumber);
-		CLEAR_BIT(PWR->PUCRE, GPIONumber);
-		break;
+		case PWR_GPIO_E:
+			SET_BIT(PWR->PDCRE, GPIONumber);
+			CLEAR_BIT(PWR->PUCRE, GPIONumber);
+			break;
 #endif
 #if defined(GPIOF)
-	case PWR_GPIO_F:
-		SET_BIT(PWR->PDCRF, GPIONumber);
-		CLEAR_BIT(PWR->PUCRF, GPIONumber);
-		break;
+		case PWR_GPIO_F:
+			SET_BIT(PWR->PDCRF, GPIONumber);
+			CLEAR_BIT(PWR->PUCRF, GPIONumber);
+			break;
 #endif
 #if defined(GPIOG)
-	case PWR_GPIO_G:
-		SET_BIT(PWR->PDCRG, GPIONumber);
-		CLEAR_BIT(PWR->PUCRG, GPIONumber);
-		break;
+		case PWR_GPIO_G:
+			SET_BIT(PWR->PDCRG, GPIONumber);
+			CLEAR_BIT(PWR->PUCRG, GPIONumber);
+			break;
 #endif
-	case PWR_GPIO_H:
+		case PWR_GPIO_H:
 #if defined(STM32L496xx) || defined(STM32L4A6xx)
-		SET_BIT(PWR->PDCRH, ((GPIONumber & PWR_PORTH_AVAILABLE_PINS) &
-				     (~(PWR_GPIO_BIT_3))));
+			SET_BIT(PWR->PDCRH,
+				((GPIONumber & PWR_PORTH_AVAILABLE_PINS) &
+				 (~(PWR_GPIO_BIT_3))));
 #else
-		SET_BIT(PWR->PDCRH, (GPIONumber & PWR_PORTH_AVAILABLE_PINS));
+			SET_BIT(PWR->PDCRH,
+				(GPIONumber & PWR_PORTH_AVAILABLE_PINS));
 #endif
-		CLEAR_BIT(PWR->PUCRH, (GPIONumber & PWR_PORTH_AVAILABLE_PINS));
-		break;
+			CLEAR_BIT(PWR->PUCRH,
+				  (GPIONumber & PWR_PORTH_AVAILABLE_PINS));
+			break;
 #if defined(GPIOI)
-	case PWR_GPIO_I:
-		SET_BIT(PWR->PDCRI, (GPIONumber & PWR_PORTI_AVAILABLE_PINS));
-		CLEAR_BIT(PWR->PUCRI, (GPIONumber & PWR_PORTI_AVAILABLE_PINS));
-		break;
+		case PWR_GPIO_I:
+			SET_BIT(PWR->PDCRI,
+				(GPIONumber & PWR_PORTI_AVAILABLE_PINS));
+			CLEAR_BIT(PWR->PUCRI,
+				  (GPIONumber & PWR_PORTI_AVAILABLE_PINS));
+			break;
 #endif
-	default:
-		status = HAL_ERROR;
-		break;
+		default:
+			status = HAL_ERROR;
+			break;
 	}
 
 	return status;
@@ -652,52 +670,57 @@ HAL_StatusTypeDef HAL_PWREx_DisableGPIOPullDown(uint32_t GPIO,
 	assert_param(IS_PWR_GPIO_BIT_NUMBER(GPIONumber));
 
 	switch (GPIO) {
-	case PWR_GPIO_A:
-		CLEAR_BIT(PWR->PDCRA, (GPIONumber &
-				       (~(PWR_GPIO_BIT_13 | PWR_GPIO_BIT_15))));
-		break;
-	case PWR_GPIO_B:
-		CLEAR_BIT(PWR->PDCRB, (GPIONumber & (~(PWR_GPIO_BIT_4))));
-		break;
-	case PWR_GPIO_C:
-		CLEAR_BIT(PWR->PDCRC, GPIONumber);
-		break;
+		case PWR_GPIO_A:
+			CLEAR_BIT(PWR->PDCRA,
+				  (GPIONumber &
+				   (~(PWR_GPIO_BIT_13 | PWR_GPIO_BIT_15))));
+			break;
+		case PWR_GPIO_B:
+			CLEAR_BIT(PWR->PDCRB,
+				  (GPIONumber & (~(PWR_GPIO_BIT_4))));
+			break;
+		case PWR_GPIO_C:
+			CLEAR_BIT(PWR->PDCRC, GPIONumber);
+			break;
 #if defined(GPIOD)
-	case PWR_GPIO_D:
-		CLEAR_BIT(PWR->PDCRD, GPIONumber);
-		break;
+		case PWR_GPIO_D:
+			CLEAR_BIT(PWR->PDCRD, GPIONumber);
+			break;
 #endif
 #if defined(GPIOE)
-	case PWR_GPIO_E:
-		CLEAR_BIT(PWR->PDCRE, GPIONumber);
-		break;
+		case PWR_GPIO_E:
+			CLEAR_BIT(PWR->PDCRE, GPIONumber);
+			break;
 #endif
 #if defined(GPIOF)
-	case PWR_GPIO_F:
-		CLEAR_BIT(PWR->PDCRF, GPIONumber);
-		break;
+		case PWR_GPIO_F:
+			CLEAR_BIT(PWR->PDCRF, GPIONumber);
+			break;
 #endif
 #if defined(GPIOG)
-	case PWR_GPIO_G:
-		CLEAR_BIT(PWR->PDCRG, GPIONumber);
-		break;
+		case PWR_GPIO_G:
+			CLEAR_BIT(PWR->PDCRG, GPIONumber);
+			break;
 #endif
-	case PWR_GPIO_H:
+		case PWR_GPIO_H:
 #if defined(STM32L496xx) || defined(STM32L4A6xx)
-		CLEAR_BIT(PWR->PDCRH, ((GPIONumber & PWR_PORTH_AVAILABLE_PINS) &
-				       (~(PWR_GPIO_BIT_3))));
+			CLEAR_BIT(PWR->PDCRH,
+				  ((GPIONumber & PWR_PORTH_AVAILABLE_PINS) &
+				   (~(PWR_GPIO_BIT_3))));
 #else
-		CLEAR_BIT(PWR->PDCRH, (GPIONumber & PWR_PORTH_AVAILABLE_PINS));
+			CLEAR_BIT(PWR->PDCRH,
+				  (GPIONumber & PWR_PORTH_AVAILABLE_PINS));
 #endif
-		break;
+			break;
 #if defined(GPIOI)
-	case PWR_GPIO_I:
-		CLEAR_BIT(PWR->PDCRI, (GPIONumber & PWR_PORTI_AVAILABLE_PINS));
-		break;
+		case PWR_GPIO_I:
+			CLEAR_BIT(PWR->PDCRI,
+				  (GPIONumber & PWR_PORTI_AVAILABLE_PINS));
+			break;
 #endif
-	default:
-		status = HAL_ERROR;
-		break;
+		default:
+			status = HAL_ERROR;
+			break;
 	}
 
 	return status;
@@ -947,124 +970,132 @@ HAL_StatusTypeDef HAL_PWREx_ConfigPVM(PWR_PVMTypeDef *sConfigPVM)
 	   configure the corresponding EXTI line accordingly. */
 	switch (sConfigPVM->PVMType) {
 #if defined(PWR_CR2_PVME1)
-	case PWR_PVM_1:
-		/* Clear any previous config. Keep it clear if no event or IT
-		 * mode is selected */
-		__HAL_PWR_PVM1_EXTI_DISABLE_EVENT();
-		__HAL_PWR_PVM1_EXTI_DISABLE_IT();
-		__HAL_PWR_PVM1_EXTI_DISABLE_FALLING_EDGE();
-		__HAL_PWR_PVM1_EXTI_DISABLE_RISING_EDGE();
+		case PWR_PVM_1:
+			/* Clear any previous config. Keep it clear if no event
+			 * or IT mode is selected */
+			__HAL_PWR_PVM1_EXTI_DISABLE_EVENT();
+			__HAL_PWR_PVM1_EXTI_DISABLE_IT();
+			__HAL_PWR_PVM1_EXTI_DISABLE_FALLING_EDGE();
+			__HAL_PWR_PVM1_EXTI_DISABLE_RISING_EDGE();
 
-		/* Configure interrupt mode */
-		if ((sConfigPVM->Mode & PVM_MODE_IT) == PVM_MODE_IT) {
-			__HAL_PWR_PVM1_EXTI_ENABLE_IT();
-		}
+			/* Configure interrupt mode */
+			if ((sConfigPVM->Mode & PVM_MODE_IT) == PVM_MODE_IT) {
+				__HAL_PWR_PVM1_EXTI_ENABLE_IT();
+			}
 
-		/* Configure event mode */
-		if ((sConfigPVM->Mode & PVM_MODE_EVT) == PVM_MODE_EVT) {
-			__HAL_PWR_PVM1_EXTI_ENABLE_EVENT();
-		}
+			/* Configure event mode */
+			if ((sConfigPVM->Mode & PVM_MODE_EVT) == PVM_MODE_EVT) {
+				__HAL_PWR_PVM1_EXTI_ENABLE_EVENT();
+			}
 
-		/* Configure the edge */
-		if ((sConfigPVM->Mode & PVM_RISING_EDGE) == PVM_RISING_EDGE) {
-			__HAL_PWR_PVM1_EXTI_ENABLE_RISING_EDGE();
-		}
+			/* Configure the edge */
+			if ((sConfigPVM->Mode & PVM_RISING_EDGE) ==
+			    PVM_RISING_EDGE) {
+				__HAL_PWR_PVM1_EXTI_ENABLE_RISING_EDGE();
+			}
 
-		if ((sConfigPVM->Mode & PVM_FALLING_EDGE) == PVM_FALLING_EDGE) {
-			__HAL_PWR_PVM1_EXTI_ENABLE_FALLING_EDGE();
-		}
-		break;
+			if ((sConfigPVM->Mode & PVM_FALLING_EDGE) ==
+			    PVM_FALLING_EDGE) {
+				__HAL_PWR_PVM1_EXTI_ENABLE_FALLING_EDGE();
+			}
+			break;
 #endif /* PWR_CR2_PVME1 */
 
 #if defined(PWR_CR2_PVME2)
-	case PWR_PVM_2:
-		/* Clear any previous config. Keep it clear if no event or IT
-		 * mode is selected */
-		__HAL_PWR_PVM2_EXTI_DISABLE_EVENT();
-		__HAL_PWR_PVM2_EXTI_DISABLE_IT();
-		__HAL_PWR_PVM2_EXTI_DISABLE_FALLING_EDGE();
-		__HAL_PWR_PVM2_EXTI_DISABLE_RISING_EDGE();
+		case PWR_PVM_2:
+			/* Clear any previous config. Keep it clear if no event
+			 * or IT mode is selected */
+			__HAL_PWR_PVM2_EXTI_DISABLE_EVENT();
+			__HAL_PWR_PVM2_EXTI_DISABLE_IT();
+			__HAL_PWR_PVM2_EXTI_DISABLE_FALLING_EDGE();
+			__HAL_PWR_PVM2_EXTI_DISABLE_RISING_EDGE();
 
-		/* Configure interrupt mode */
-		if ((sConfigPVM->Mode & PVM_MODE_IT) == PVM_MODE_IT) {
-			__HAL_PWR_PVM2_EXTI_ENABLE_IT();
-		}
+			/* Configure interrupt mode */
+			if ((sConfigPVM->Mode & PVM_MODE_IT) == PVM_MODE_IT) {
+				__HAL_PWR_PVM2_EXTI_ENABLE_IT();
+			}
 
-		/* Configure event mode */
-		if ((sConfigPVM->Mode & PVM_MODE_EVT) == PVM_MODE_EVT) {
-			__HAL_PWR_PVM2_EXTI_ENABLE_EVENT();
-		}
+			/* Configure event mode */
+			if ((sConfigPVM->Mode & PVM_MODE_EVT) == PVM_MODE_EVT) {
+				__HAL_PWR_PVM2_EXTI_ENABLE_EVENT();
+			}
 
-		/* Configure the edge */
-		if ((sConfigPVM->Mode & PVM_RISING_EDGE) == PVM_RISING_EDGE) {
-			__HAL_PWR_PVM2_EXTI_ENABLE_RISING_EDGE();
-		}
+			/* Configure the edge */
+			if ((sConfigPVM->Mode & PVM_RISING_EDGE) ==
+			    PVM_RISING_EDGE) {
+				__HAL_PWR_PVM2_EXTI_ENABLE_RISING_EDGE();
+			}
 
-		if ((sConfigPVM->Mode & PVM_FALLING_EDGE) == PVM_FALLING_EDGE) {
-			__HAL_PWR_PVM2_EXTI_ENABLE_FALLING_EDGE();
-		}
-		break;
+			if ((sConfigPVM->Mode & PVM_FALLING_EDGE) ==
+			    PVM_FALLING_EDGE) {
+				__HAL_PWR_PVM2_EXTI_ENABLE_FALLING_EDGE();
+			}
+			break;
 #endif /* PWR_CR2_PVME2 */
 
-	case PWR_PVM_3:
-		/* Clear any previous config. Keep it clear if no event or IT
-		 * mode is selected */
-		__HAL_PWR_PVM3_EXTI_DISABLE_EVENT();
-		__HAL_PWR_PVM3_EXTI_DISABLE_IT();
-		__HAL_PWR_PVM3_EXTI_DISABLE_FALLING_EDGE();
-		__HAL_PWR_PVM3_EXTI_DISABLE_RISING_EDGE();
+		case PWR_PVM_3:
+			/* Clear any previous config. Keep it clear if no event
+			 * or IT mode is selected */
+			__HAL_PWR_PVM3_EXTI_DISABLE_EVENT();
+			__HAL_PWR_PVM3_EXTI_DISABLE_IT();
+			__HAL_PWR_PVM3_EXTI_DISABLE_FALLING_EDGE();
+			__HAL_PWR_PVM3_EXTI_DISABLE_RISING_EDGE();
 
-		/* Configure interrupt mode */
-		if ((sConfigPVM->Mode & PVM_MODE_IT) == PVM_MODE_IT) {
-			__HAL_PWR_PVM3_EXTI_ENABLE_IT();
-		}
+			/* Configure interrupt mode */
+			if ((sConfigPVM->Mode & PVM_MODE_IT) == PVM_MODE_IT) {
+				__HAL_PWR_PVM3_EXTI_ENABLE_IT();
+			}
 
-		/* Configure event mode */
-		if ((sConfigPVM->Mode & PVM_MODE_EVT) == PVM_MODE_EVT) {
-			__HAL_PWR_PVM3_EXTI_ENABLE_EVENT();
-		}
+			/* Configure event mode */
+			if ((sConfigPVM->Mode & PVM_MODE_EVT) == PVM_MODE_EVT) {
+				__HAL_PWR_PVM3_EXTI_ENABLE_EVENT();
+			}
 
-		/* Configure the edge */
-		if ((sConfigPVM->Mode & PVM_RISING_EDGE) == PVM_RISING_EDGE) {
-			__HAL_PWR_PVM3_EXTI_ENABLE_RISING_EDGE();
-		}
+			/* Configure the edge */
+			if ((sConfigPVM->Mode & PVM_RISING_EDGE) ==
+			    PVM_RISING_EDGE) {
+				__HAL_PWR_PVM3_EXTI_ENABLE_RISING_EDGE();
+			}
 
-		if ((sConfigPVM->Mode & PVM_FALLING_EDGE) == PVM_FALLING_EDGE) {
-			__HAL_PWR_PVM3_EXTI_ENABLE_FALLING_EDGE();
-		}
-		break;
+			if ((sConfigPVM->Mode & PVM_FALLING_EDGE) ==
+			    PVM_FALLING_EDGE) {
+				__HAL_PWR_PVM3_EXTI_ENABLE_FALLING_EDGE();
+			}
+			break;
 
-	case PWR_PVM_4:
-		/* Clear any previous config. Keep it clear if no event or IT
-		 * mode is selected */
-		__HAL_PWR_PVM4_EXTI_DISABLE_EVENT();
-		__HAL_PWR_PVM4_EXTI_DISABLE_IT();
-		__HAL_PWR_PVM4_EXTI_DISABLE_FALLING_EDGE();
-		__HAL_PWR_PVM4_EXTI_DISABLE_RISING_EDGE();
+		case PWR_PVM_4:
+			/* Clear any previous config. Keep it clear if no event
+			 * or IT mode is selected */
+			__HAL_PWR_PVM4_EXTI_DISABLE_EVENT();
+			__HAL_PWR_PVM4_EXTI_DISABLE_IT();
+			__HAL_PWR_PVM4_EXTI_DISABLE_FALLING_EDGE();
+			__HAL_PWR_PVM4_EXTI_DISABLE_RISING_EDGE();
 
-		/* Configure interrupt mode */
-		if ((sConfigPVM->Mode & PVM_MODE_IT) == PVM_MODE_IT) {
-			__HAL_PWR_PVM4_EXTI_ENABLE_IT();
-		}
+			/* Configure interrupt mode */
+			if ((sConfigPVM->Mode & PVM_MODE_IT) == PVM_MODE_IT) {
+				__HAL_PWR_PVM4_EXTI_ENABLE_IT();
+			}
 
-		/* Configure event mode */
-		if ((sConfigPVM->Mode & PVM_MODE_EVT) == PVM_MODE_EVT) {
-			__HAL_PWR_PVM4_EXTI_ENABLE_EVENT();
-		}
+			/* Configure event mode */
+			if ((sConfigPVM->Mode & PVM_MODE_EVT) == PVM_MODE_EVT) {
+				__HAL_PWR_PVM4_EXTI_ENABLE_EVENT();
+			}
 
-		/* Configure the edge */
-		if ((sConfigPVM->Mode & PVM_RISING_EDGE) == PVM_RISING_EDGE) {
-			__HAL_PWR_PVM4_EXTI_ENABLE_RISING_EDGE();
-		}
+			/* Configure the edge */
+			if ((sConfigPVM->Mode & PVM_RISING_EDGE) ==
+			    PVM_RISING_EDGE) {
+				__HAL_PWR_PVM4_EXTI_ENABLE_RISING_EDGE();
+			}
 
-		if ((sConfigPVM->Mode & PVM_FALLING_EDGE) == PVM_FALLING_EDGE) {
-			__HAL_PWR_PVM4_EXTI_ENABLE_FALLING_EDGE();
-		}
-		break;
+			if ((sConfigPVM->Mode & PVM_FALLING_EDGE) ==
+			    PVM_FALLING_EDGE) {
+				__HAL_PWR_PVM4_EXTI_ENABLE_FALLING_EDGE();
+			}
+			break;
 
-	default:
-		status = HAL_ERROR;
-		break;
+		default:
+			status = HAL_ERROR;
+			break;
 	}
 
 	return status;

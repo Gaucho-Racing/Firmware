@@ -747,59 +747,61 @@ HAL_FDCAN_RegisterCallback(FDCAN_HandleTypeDef *hfdcan,
 
 	if (hfdcan->State == HAL_FDCAN_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_FDCAN_TX_FIFO_EMPTY_CB_ID:
-			hfdcan->TxFifoEmptyCallback = pCallback;
-			break;
+			case HAL_FDCAN_TX_FIFO_EMPTY_CB_ID:
+				hfdcan->TxFifoEmptyCallback = pCallback;
+				break;
 
-		case HAL_FDCAN_HIGH_PRIO_MESSAGE_CB_ID:
-			hfdcan->HighPriorityMessageCallback = pCallback;
-			break;
+			case HAL_FDCAN_HIGH_PRIO_MESSAGE_CB_ID:
+				hfdcan->HighPriorityMessageCallback = pCallback;
+				break;
 
-		case HAL_FDCAN_TIMESTAMP_WRAPAROUND_CB_ID:
-			hfdcan->TimestampWraparoundCallback = pCallback;
-			break;
+			case HAL_FDCAN_TIMESTAMP_WRAPAROUND_CB_ID:
+				hfdcan->TimestampWraparoundCallback = pCallback;
+				break;
 
-		case HAL_FDCAN_TIMEOUT_OCCURRED_CB_ID:
-			hfdcan->TimeoutOccurredCallback = pCallback;
-			break;
+			case HAL_FDCAN_TIMEOUT_OCCURRED_CB_ID:
+				hfdcan->TimeoutOccurredCallback = pCallback;
+				break;
 
-		case HAL_FDCAN_ERROR_CALLBACK_CB_ID:
-			hfdcan->ErrorCallback = pCallback;
-			break;
+			case HAL_FDCAN_ERROR_CALLBACK_CB_ID:
+				hfdcan->ErrorCallback = pCallback;
+				break;
 
-		case HAL_FDCAN_MSPINIT_CB_ID:
-			hfdcan->MspInitCallback = pCallback;
-			break;
+			case HAL_FDCAN_MSPINIT_CB_ID:
+				hfdcan->MspInitCallback = pCallback;
+				break;
 
-		case HAL_FDCAN_MSPDEINIT_CB_ID:
-			hfdcan->MspDeInitCallback = pCallback;
-			break;
+			case HAL_FDCAN_MSPDEINIT_CB_ID:
+				hfdcan->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hfdcan->ErrorCode |= HAL_FDCAN_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hfdcan->ErrorCode |=
+				    HAL_FDCAN_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hfdcan->State == HAL_FDCAN_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_FDCAN_MSPINIT_CB_ID:
-			hfdcan->MspInitCallback = pCallback;
-			break;
+			case HAL_FDCAN_MSPINIT_CB_ID:
+				hfdcan->MspInitCallback = pCallback;
+				break;
 
-		case HAL_FDCAN_MSPDEINIT_CB_ID:
-			hfdcan->MspDeInitCallback = pCallback;
-			break;
+			case HAL_FDCAN_MSPDEINIT_CB_ID:
+				hfdcan->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hfdcan->ErrorCode |= HAL_FDCAN_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hfdcan->ErrorCode |=
+				    HAL_FDCAN_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -839,63 +841,65 @@ HAL_FDCAN_UnRegisterCallback(FDCAN_HandleTypeDef *hfdcan,
 
 	if (hfdcan->State == HAL_FDCAN_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_FDCAN_TX_FIFO_EMPTY_CB_ID:
-			hfdcan->TxFifoEmptyCallback =
-			    HAL_FDCAN_TxFifoEmptyCallback;
-			break;
+			case HAL_FDCAN_TX_FIFO_EMPTY_CB_ID:
+				hfdcan->TxFifoEmptyCallback =
+				    HAL_FDCAN_TxFifoEmptyCallback;
+				break;
 
-		case HAL_FDCAN_HIGH_PRIO_MESSAGE_CB_ID:
-			hfdcan->HighPriorityMessageCallback =
-			    HAL_FDCAN_HighPriorityMessageCallback;
-			break;
+			case HAL_FDCAN_HIGH_PRIO_MESSAGE_CB_ID:
+				hfdcan->HighPriorityMessageCallback =
+				    HAL_FDCAN_HighPriorityMessageCallback;
+				break;
 
-		case HAL_FDCAN_TIMESTAMP_WRAPAROUND_CB_ID:
-			hfdcan->TimestampWraparoundCallback =
-			    HAL_FDCAN_TimestampWraparoundCallback;
-			break;
+			case HAL_FDCAN_TIMESTAMP_WRAPAROUND_CB_ID:
+				hfdcan->TimestampWraparoundCallback =
+				    HAL_FDCAN_TimestampWraparoundCallback;
+				break;
 
-		case HAL_FDCAN_TIMEOUT_OCCURRED_CB_ID:
-			hfdcan->TimeoutOccurredCallback =
-			    HAL_FDCAN_TimeoutOccurredCallback;
-			break;
+			case HAL_FDCAN_TIMEOUT_OCCURRED_CB_ID:
+				hfdcan->TimeoutOccurredCallback =
+				    HAL_FDCAN_TimeoutOccurredCallback;
+				break;
 
-		case HAL_FDCAN_ERROR_CALLBACK_CB_ID:
-			hfdcan->ErrorCallback = HAL_FDCAN_ErrorCallback;
-			break;
+			case HAL_FDCAN_ERROR_CALLBACK_CB_ID:
+				hfdcan->ErrorCallback = HAL_FDCAN_ErrorCallback;
+				break;
 
-		case HAL_FDCAN_MSPINIT_CB_ID:
-			hfdcan->MspInitCallback = HAL_FDCAN_MspInit;
-			break;
+			case HAL_FDCAN_MSPINIT_CB_ID:
+				hfdcan->MspInitCallback = HAL_FDCAN_MspInit;
+				break;
 
-		case HAL_FDCAN_MSPDEINIT_CB_ID:
-			hfdcan->MspDeInitCallback = HAL_FDCAN_MspDeInit;
-			break;
+			case HAL_FDCAN_MSPDEINIT_CB_ID:
+				hfdcan->MspDeInitCallback = HAL_FDCAN_MspDeInit;
+				break;
 
-		default:
-			/* Update the error code */
-			hfdcan->ErrorCode |= HAL_FDCAN_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hfdcan->ErrorCode |=
+				    HAL_FDCAN_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hfdcan->State == HAL_FDCAN_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_FDCAN_MSPINIT_CB_ID:
-			hfdcan->MspInitCallback = HAL_FDCAN_MspInit;
-			break;
+			case HAL_FDCAN_MSPINIT_CB_ID:
+				hfdcan->MspInitCallback = HAL_FDCAN_MspInit;
+				break;
 
-		case HAL_FDCAN_MSPDEINIT_CB_ID:
-			hfdcan->MspDeInitCallback = HAL_FDCAN_MspDeInit;
-			break;
+			case HAL_FDCAN_MSPDEINIT_CB_ID:
+				hfdcan->MspDeInitCallback = HAL_FDCAN_MspDeInit;
+				break;
 
-		default:
-			/* Update the error code */
-			hfdcan->ErrorCode |= HAL_FDCAN_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hfdcan->ErrorCode |=
+				    HAL_FDCAN_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */

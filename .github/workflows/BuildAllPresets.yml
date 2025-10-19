@@ -1,4 +1,5 @@
 name: CMake
+run-name: CMake Build All Presets - ${{ github.ref_name }}
 
 on:
   push:
@@ -13,42 +14,104 @@ concurrency:
 jobs:
   cmake:
     name: Configure and Build
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.operatingSystem }}
+    permissions:
+      contents: read
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         prefix: [ "Debug", "Release", "MinSizeRel", "RelWithDebInfo" ]
+        operatingSystem: [ ubuntu-latest, windows-latest, macos-latest ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Install Arm Toolchain
-        run: |
-          echo "set man-db/auto-update false" | sudo debconf-communicate
-          sudo rm /var/lib/man-db/auto-update
-          sudo apt-get install gcc-arm-none-eabi --no-install-suggests
+        uses: carlosperate/arm-none-eabi-gcc-action@v1
+        with:
+          release: '12.2.Rel1'
 
-      - name: CMake Configuration
-        run: |
-          set -o pipefail
-          echo "## CMake Configuration (${{ matrix.prefix }})" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          cmake --preset ${{ matrix.prefix }} |& tee -a $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-
-      - name: CMake Build
+      - name: CMake Configuration (Unix)
+        if: matrix.operatingSystem != 'windows-latest'
+        shell: bash
         run: |
           set -o pipefail
-          echo "## CMake Build (${{ matrix.prefix }})" >> $GITHUB_STEP_SUMMARY
+          echo "<details><summary>CMake Configuration</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          cmake --build build/${{ matrix.prefix }} |& tee -a $GITHUB_STEP_SUMMARY
+          cmake --preset ${{ matrix.prefix }} 2>&1 | tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
 
-      - name: Upload RelWithDebInfo Builds
-        if: matrix.prefix == 'RelWithDebInfo'
+      - name: CMake Configuration (Windows)
+        if: matrix.operatingSystem == 'windows-latest'
+        shell: pwsh
+        run: |
+          echo "<details><summary>CMake Configuration</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          cmake --preset ${{ matrix.prefix }} 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+
+      - name: CMake Build (Unix)
+        if: matrix.operatingSystem != 'windows-latest'
+        shell: bash
+        run: |
+          set -o pipefail
+          echo "<details><summary>CMake Build</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          cmake --build build/${{ matrix.prefix }} 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
+
+      - name: CMake Build (Windows)
+        if: matrix.operatingSystem == 'windows-latest'
+        shell: pwsh
+        run: |
+          echo "<details><summary>CMake Build</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          cmake --build build/${{ matrix.prefix }} 2>&1 | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+
+      - name: Executable Size (Unix)
+        if: matrix.operatingSystem != 'windows-latest'
+        shell: bash
+        run: |
+          set -o pipefail
+          echo "<details open><summary>Executable Size</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          arm-none-eabi-size build/${{ matrix.prefix }}/*.elf 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
+
+      - name: Executable Size (Windows)
+        if: matrix.operatingSystem == 'windows-latest'
+        shell: pwsh
+        run: |
+          echo "<details open><summary>Executable Size</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          $elfFiles = Get-ChildItem build\${{ matrix.prefix }}\*.elf | ForEach-Object { $_.FullName }
+          arm-none-eabi-size $elfFiles | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+
+      - name: Upload Ubuntu RelWithDebInfo Builds
+        if: matrix.prefix == 'RelWithDebInfo' && matrix.operatingSystem == 'ubuntu-latest'
         uses: actions/upload-artifact@v4
         with:
-          name: firmware-release-with-deb-info
+          name: firmware-release-with-debug-info
           path: build/${{ matrix.prefix }}/*.elf
           retention-days: 7
           if-no-files-found: error

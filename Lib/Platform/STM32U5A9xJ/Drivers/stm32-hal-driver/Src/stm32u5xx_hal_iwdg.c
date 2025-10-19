@@ -312,16 +312,16 @@ HAL_IWDG_RegisterCallback(IWDG_HandleTypeDef *hiwdg,
 		status = HAL_ERROR;
 	} else {
 		switch (CallbackID) {
-		case HAL_IWDG_EWI_CB_ID:
-			hiwdg->EwiCallback = pCallback;
-			break;
-		case HAL_IWDG_MSPINIT_CB_ID:
-			hiwdg->MspInitCallback = pCallback;
-			break;
+			case HAL_IWDG_EWI_CB_ID:
+				hiwdg->EwiCallback = pCallback;
+				break;
+			case HAL_IWDG_MSPINIT_CB_ID:
+				hiwdg->MspInitCallback = pCallback;
+				break;
 
-		default:
-			status = HAL_ERROR;
-			break;
+			default:
+				status = HAL_ERROR;
+				break;
 		}
 	}
 
@@ -346,16 +346,16 @@ HAL_IWDG_UnRegisterCallback(IWDG_HandleTypeDef *hiwdg,
 	HAL_StatusTypeDef status = HAL_OK;
 
 	switch (CallbackID) {
-	case HAL_IWDG_EWI_CB_ID:
-		hiwdg->EwiCallback = HAL_IWDG_EarlyWakeupCallback;
-		break;
-	case HAL_IWDG_MSPINIT_CB_ID:
-		hiwdg->MspInitCallback = HAL_IWDG_MspInit;
-		break;
+		case HAL_IWDG_EWI_CB_ID:
+			hiwdg->EwiCallback = HAL_IWDG_EarlyWakeupCallback;
+			break;
+		case HAL_IWDG_MSPINIT_CB_ID:
+			hiwdg->MspInitCallback = HAL_IWDG_MspInit;
+			break;
 
-	default:
-		status = HAL_ERROR;
-		break;
+		default:
+			status = HAL_ERROR;
+			break;
 	}
 
 	return status;

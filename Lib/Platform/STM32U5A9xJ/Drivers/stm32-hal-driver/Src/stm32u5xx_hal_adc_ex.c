@@ -949,35 +949,37 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedStart_IT(ADC_HandleTypeDef *hadc)
 
 			/* Enable ADC end of conversion interrupt */
 			switch (hadc->Init.EOCSelection) {
-			case ADC_EOC_SEQ_CONV:
-				__HAL_ADC_DISABLE_IT(hadc, ADC_IT_JEOC);
-				__HAL_ADC_ENABLE_IT(hadc, ADC_IT_JEOS);
-				break;
-			/* case ADC_EOC_SINGLE_CONV */
-			default:
-				__HAL_ADC_DISABLE_IT(hadc, ADC_IT_JEOS);
-				__HAL_ADC_ENABLE_IT(hadc, ADC_IT_JEOC);
-				break;
+				case ADC_EOC_SEQ_CONV:
+					__HAL_ADC_DISABLE_IT(hadc, ADC_IT_JEOC);
+					__HAL_ADC_ENABLE_IT(hadc, ADC_IT_JEOS);
+					break;
+				/* case ADC_EOC_SINGLE_CONV */
+				default:
+					__HAL_ADC_DISABLE_IT(hadc, ADC_IT_JEOS);
+					__HAL_ADC_ENABLE_IT(hadc, ADC_IT_JEOC);
+					break;
 			}
 
-			/* Enable conversion of injected group, if automatic
-			 * injected conversion  */
-			/* is disabled. */
-			/* If software start has been selected, conversion
-			 * starts immediately.    */
-			/* If external trigger has been selected, conversion
-			 * will start at next   */
-			/* trigger event. */
-			/* Case of multimode enabled (when multimode feature is
-			 * available):       */
-			/* if ADC is slave, */
-			/*    - ADC is enabled only (conversion is not started),
-			 */
-			/*    - if multimode only concerns regular conversion,
-			 * ADC is enabled     */
-			/*     and conversion is started. */
-			/* If ADC is master or independent, */
-			/*    - ADC is enabled and conversion is started. */
+				/* Enable conversion of injected group, if
+				 * automatic injected conversion  */
+				/* is disabled. */
+				/* If software start has been selected,
+				 * conversion starts immediately.    */
+				/* If external trigger has been selected,
+				 * conversion will start at next   */
+				/* trigger event. */
+				/* Case of multimode enabled (when multimode
+				 * feature is available):       */
+				/* if ADC is slave, */
+				/*    - ADC is enabled only (conversion is not
+				 * started),
+				 */
+				/*    - if multimode only concerns regular
+				 * conversion, ADC is enabled     */
+				/*     and conversion is started. */
+				/* If ADC is master or independent, */
+				/*    - ADC is enabled and conversion is
+				 * started. */
 #if defined(ADC_MULTIMODE_SUPPORT)
 			if ((__LL_ADC_MULTI_INSTANCE_MASTER(hadc->Instance) ==
 			     hadc->Instance) ||
@@ -1688,19 +1690,19 @@ uint32_t HAL_ADCEx_InjectedGetValue(const ADC_HandleTypeDef *hadc,
 
 	/* Get ADC converted value */
 	switch (InjectedRank) {
-	case ADC_INJECTED_RANK_4:
-		tmp_jdr = hadc->Instance->JDR4;
-		break;
-	case ADC_INJECTED_RANK_3:
-		tmp_jdr = hadc->Instance->JDR3;
-		break;
-	case ADC_INJECTED_RANK_2:
-		tmp_jdr = hadc->Instance->JDR2;
-		break;
-	case ADC_INJECTED_RANK_1:
-	default:
-		tmp_jdr = hadc->Instance->JDR1;
-		break;
+		case ADC_INJECTED_RANK_4:
+			tmp_jdr = hadc->Instance->JDR4;
+			break;
+		case ADC_INJECTED_RANK_3:
+			tmp_jdr = hadc->Instance->JDR3;
+			break;
+		case ADC_INJECTED_RANK_2:
+			tmp_jdr = hadc->Instance->JDR2;
+			break;
+		case ADC_INJECTED_RANK_1:
+		default:
+			tmp_jdr = hadc->Instance->JDR1;
+			break;
 	}
 
 	return tmp_jdr;
