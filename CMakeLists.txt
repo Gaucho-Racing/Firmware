@@ -6,7 +6,10 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS ON)
 
 if(NOT DEFINED CMAKE_BUILD_TYPE)
-    message(FATAL_ERROR "This project requires configuration using a CMake preset. Please use 'cmake --preset <preset-name>' or select a preset in your IDE.")
+	message(
+		FATAL_ERROR
+		"This project requires configuration using a CMake preset. Please use 'cmake --preset <preset-name>' or select a preset in your IDE."
+	)
 endif()
 
 # Set the project name
