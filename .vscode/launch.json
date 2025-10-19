@@ -34,7 +34,7 @@
 		},
 		{
 			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/G4SPI_Receive.elf",
+			"executable": "${command:cmake.buildDirectory}/W3_G4SPI_Receive.elf",
 			"name": "SPI Receive W3 WS",
 			"request": "launch",
 			"type": "cortex-debug",
@@ -65,7 +65,7 @@
 		},
 		{
 			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/G4SPI_Transmit.elf",
+			"executable": "${command:cmake.buildDirectory}/W3_G4SPI_Transmit.elf",
 			"name": "SPI Transmit W3 WS",
 			"request": "launch",
 			"type": "cortex-debug",
