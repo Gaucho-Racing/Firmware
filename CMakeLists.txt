@@ -5,9 +5,11 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS ON)
 
-# Define the build type
-if(NOT CMAKE_BUILD_TYPE)
-	set(CMAKE_BUILD_TYPE "Debug")
+if(NOT DEFINED CMAKE_BUILD_TYPE)
+	message(
+		FATAL_ERROR
+		"This project requires configuration using a CMake preset. Please use 'cmake --preset <preset-name>' or select a preset in your IDE."
+	)
 endif()
 
 # Set the project name
@@ -38,11 +40,11 @@ message(
 	${CMAKE_BUILD_TYPE}
 )
 
-add_gr_project(STM32G474xE G4BLINKY)
-add_gr_project(STM32U5A9xJ U5BLINKY)
-add_gr_project(STM32L476xG L4BLINKY)
+add_gr_project(STM32G474xE BLINKY G4BLINKY)
+add_gr_project(STM32U5A9xJ BLINKY U5BLINKY)
+add_gr_project(STM32L476xG BLINKY L4BLINKY)
 
 add_gr_project(STM32G474xE ECU)
 
-add_gr_project(STM32G474xE W3_Workshop G4SPI_Receive)
-add_gr_project(STM32G474xE W3_Workshop G4SPI_Transmit)
+add_gr_project(STM32G474xE Onboarding W3_G4SPI_Receive)
+add_gr_project(STM32G474xE Onboarding W3_G4SPI_Transmit)
