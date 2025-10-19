@@ -19,7 +19,7 @@ Wire the boards together by referring to the [MCU pin functions](Images/G4PinFun
 
 ## 2. Compilation
 
-Give the code for both boards a quick look and try to guess what their behaviour will look like. You only need to look at the main() functions in [G4SPI_Receive/Core/Src/main.c](G4SPI_Receive/Core/Src/main.c) and [G4SPI_Transmit/Core/Src/main.c](G4SPI_Transmit/Core/Src/main.c).
+Give the code for both boards a quick look and try to guess what their behaviour will look like. You only need to look at the main() functions in [W3_G4SPI_Receive](W3_G4SPI_Receive/Core/Src/main.c) and [W3_G4SPI_Transmit](W3_G4SPI_Transmit/Core/Src/main.c).
 
 To verify your predictions, you will need to flash the boards with G4SPI_Transmit.elf and G4SPI_Receive.elf. From the root directory of Firmware, run the cmake commands:
 
@@ -48,6 +48,6 @@ If you think that the boards are working correctly (the User LEDs on both boards
 
 You will probably need to dive deeper than the HAL API throughout the rest of this season, and interact with registers directly.
 
-- Take a look at MX_SPI2_Init() inside either transmitter or receiver [main.c](G4SPI_Receive/Core/Src/main.c) file. The code in this function should correspond roughly to SPI parameters in CubeMX.
+- Take a look at MX_SPI2_Init() inside either transmitter or receiver [main.c](W3_G4SPI_Receive/Core/Src/main.c) file. The code in this function should correspond roughly to SPI parameters in CubeMX.
 - Right-click on HAL_SPI_Init() at the end of MX_SPI2_Init(). Scroll past the assert statements until you get to the section that modifies the CR1 and CR2 registers.
 - These correspond directly to registers described in the datasheet for the STM32NucleoG474RE. Hopefully this removes the mystery behind the CubeMX magic.
