@@ -18,6 +18,10 @@ include_directories(
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL "Test")
+	include_directories(
+		Core/Inc
+	)
+
 	add_executable(${GR_PROJECT_NAME}_basic_core_test Core/Test/basic_core_test.c)
 	add_test(${GR_PROJECT_NAME}_basic_core ${GR_PROJECT_NAME}_basic_core_test)
 
@@ -44,24 +48,35 @@ enable_language(
 # Core project settings
 project(${CMAKE_PROJECT_NAME})
 
-add_library(${GR_PROJECT_NAME}_USER_CODE)
+add_library(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
 target_sources(
 	${GR_PROJECT_NAME}_USER_CODE
-	PRIVATE
+	INTERFACE
 		Core/Src/circularBuffer.c
-	PUBLIC
-		FILE_SET circularBufferHeaders
-		TYPE HEADERS
-		BASE_DIRS
-			Core/Inc
-		FILES
-			Core/Inc/circularBuffer.h
 )
 
-# target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
+target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
 
-# target_include_directories(
-# 	${GR_PROJECT_NAME}_USER_CODE
-# 	INTERFACE
-# 		Core/Inc
-# )
+target_include_directories(
+	${GR_PROJECT_NAME}_USER_CODE
+	INTERFACE
+		Core/Inc
+)
+
+# HACK: Setup as a gr-lib manually
+set(COMBINATOR "${GR_PROJECT}_${TARGET_NAME}")
+
+# Create unique interface library to avoid conflicts
+set(INTERFACE_LIB "${COMBINATOR}_INTERFACE_LIB")
+
+if(NOT TARGET ${INTERFACE_LIB})
+	add_library(${INTERFACE_LIB} INTERFACE)
+
+	target_link_libraries(
+			${INTERFACE_LIB}
+			INTERFACE
+				${TARGET_NAME}_USER_CODE # Blame Owen
+		)
+endif()
+
+target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE ${INTERFACE_LIB})
