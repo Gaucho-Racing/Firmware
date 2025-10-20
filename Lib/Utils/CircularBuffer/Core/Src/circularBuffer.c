@@ -72,6 +72,9 @@ CircularBuffer* cb_create(uint32_t size){
 }
 
 void cb_free(CircularBuffer* buffer){
+	// Error check
+	if(buffer == NULL)
+		return;
 	// Free contents
 	for(uint32_t i = 0; i < buffer->size; i++)
 		free(buffer->buffer[i]);
