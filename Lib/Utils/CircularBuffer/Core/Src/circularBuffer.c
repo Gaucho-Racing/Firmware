@@ -28,7 +28,7 @@ CircularBuffer* cb_create(uint32_t capacity){
 	buffer->head = 0;
 	buffer->tail = 0;
 	buffer->capacity = capacity;
-	buffer->buffer = malloc(capacity*sizeof(Item*));
+	buffer->buffer = calloc(capacity, sizeof(Item*));
 	return buffer;
 }
 
@@ -78,7 +78,7 @@ void* cb_pop(CircularBuffer* buffer){
 		return NULL;
 	// Copy buffer head to result
 	void* result = malloc(buffer->buffer[buffer->head]->size);
-	memcpy(result, buffer->buffer[buffer->head], buffer->buffer[buffer->head]->size);
+	memcpy(result, buffer->buffer[buffer->head]->ptr, buffer->buffer[buffer->head]->size);
 	// Remove buffer head
 	free(buffer->buffer[buffer->head]->ptr); // TODO: Make deeper free; see cb_free.
 	free(buffer->buffer[buffer->head]);
@@ -97,7 +97,7 @@ void* cb_peek(CircularBuffer* buffer){
 		return NULL;
 	// Copy buffer head to result and return it
 	void* result = malloc(buffer->buffer[buffer->head]->size);
-	memcpy(result, buffer->buffer[buffer->head], buffer->buffer[buffer->head]->size);
+	memcpy(result, buffer->buffer[buffer->head]->ptr, buffer->buffer[buffer->head]->size);
 	return result;
 }
 
