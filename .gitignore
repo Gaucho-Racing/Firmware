@@ -66,6 +66,9 @@ Icon\r
 !.vscode/extensions.json
 !.vscode/launch.json
 
+# Clangd
+.cache
+
 # Other Editors
 .*.swp
 .ccls-cache
