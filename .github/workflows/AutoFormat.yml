@@ -99,3 +99,12 @@ jobs:
           default_author: github_actions
           message: 'Automatic Json Format: Standardized formatting automatically'
           fetch: 'false'
+  format:
+    name: Complete Auto Format
+    needs: [ clang, cmake, json ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Complete Auto Format
+        run: |
+          echo "Auto Format has been completed for Clang, CMake, and JSON files."
+          echo "Please refer to the individual job logs for detailed formatting information."

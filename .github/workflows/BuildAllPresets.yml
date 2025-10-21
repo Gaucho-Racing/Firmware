@@ -117,3 +117,12 @@ jobs:
           if-no-files-found: error
           compression-level: 0
           overwrite: true
+  all:
+    name: Complete All Presets
+    needs: cmake
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build All Presets
+        run: |
+          echo "All CMake presets have been built across all operating systems."
+          echo "Please refer to the individual job logs for detailed information on each build."
