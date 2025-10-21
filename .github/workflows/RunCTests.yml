@@ -99,6 +99,7 @@ jobs:
           echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          INTENTIONALLY FAIL
   all:
     name: Complete HOOTL Tests
     needs: ctest
