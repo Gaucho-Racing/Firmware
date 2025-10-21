@@ -1,82 +1,26 @@
 cmake_minimum_required(VERSION 3.25)
 
-# Setup compiler settings
-set(CMAKE_C_STANDARD 11)
-set(CMAKE_C_STANDARD_REQUIRED ON)
-set(CMAKE_C_EXTENSIONS ON)
-
-# Define the build type
-if(NOT CMAKE_BUILD_TYPE)
-	set(CMAKE_BUILD_TYPE "Debug")
-endif()
-
-# what, does in fact not get the filename of somthing but rather the name of the project from the path
-get_filename_component(GR_PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
-
 include_directories(
-	Core/Inc
+	Inc
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL "Test")
-	include_directories(
-		Core/Inc
-	)
-
-	add_executable(${GR_PROJECT_NAME}_basic_core_test Core/Test/basic_core_test.c)
-	add_test(${GR_PROJECT_NAME}_basic_core ${GR_PROJECT_NAME}_basic_core_test)
-
-	# add_executable(
-	# 	${GR_PROJECT_NAME}_advanced_core_test
-	# 	Core/Test/advanced_core_test.c
-	# 	Core/Src/coredemo.c
-	# )
-	# add_test(
-	# 	${GR_PROJECT_NAME}_advanced_core
-	# 	${GR_PROJECT_NAME}_advanced_core_test
-	# )
+	add_executable(CircularBuffer_Lib_basic_test Test/basic_test.c)
+	add_test(CircularBuffer_Lib_basic CircularBuffer_Lib_basic_test)
 endif()
 
-# Enable compile command to ease indexing with e.g. clangd
-set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
-
-# Enable CMake support for ASM and C languages
-enable_language(
-	C
-	ASM
-)
-
-# Core project settings
-project(${CMAKE_PROJECT_NAME})
-
-add_library(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
+add_library(CircularBuffer_Lib INTERFACE)
 target_sources(
-	${GR_PROJECT_NAME}_USER_CODE
+	CircularBuffer_Lib
 	INTERFACE
-		Core/Src/circularBuffer.c
+		Src/circularBuffer.c
 )
-
-target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
 
 target_include_directories(
-	${GR_PROJECT_NAME}_USER_CODE
+	CircularBuffer_Lib
 	INTERFACE
-		Core/Inc
+		Inc
 )
 
-# HACK: Setup as a gr-lib manually
-set(COMBINATOR "${GR_PROJECT}_${TARGET_NAME}")
-
-# Create unique interface library to avoid conflicts
-set(INTERFACE_LIB "${COMBINATOR}_INTERFACE_LIB")
-
-if(NOT TARGET ${INTERFACE_LIB})
-	add_library(${INTERFACE_LIB} INTERFACE)
-
-	target_link_libraries(
-			${INTERFACE_LIB}
-			INTERFACE
-				${TARGET_NAME}_USER_CODE # Blame Owen
-		)
-endif()
-
-target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE ${INTERFACE_LIB})
+# link test to this library
+target_link_libraries(CircularBuffer_Lib_basic_test CircularBuffer_Lib)
