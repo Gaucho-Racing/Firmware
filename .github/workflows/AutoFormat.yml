@@ -99,7 +99,7 @@ jobs:
           default_author: github_actions
           message: 'Automatic Json Format: Standardized formatting automatically'
           fetch: 'false'
-  format:
+  all:
     name: Complete Auto Format
     needs: [ clang, cmake, json ]
     runs-on: ubuntu-latest
