@@ -55,6 +55,7 @@ function(add_GR_project)
 				INTERFACE
 					${Platform}_LIB
 					${TARGET_NAME}_USER_CODE # Blame Owen
+					GLOBALSHARE_LIB
 			)
 		endif()
 
