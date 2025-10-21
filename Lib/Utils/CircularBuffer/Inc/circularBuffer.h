@@ -8,30 +8,32 @@
 typedef struct circular_buffer_st CircularBuffer;
 
 // Define the wrapper for CircularBuffer functions
-struct circular_buffer_ops_st{
+struct circular_buffer_ops_st {
 	/// @brief Creates a CircularBuffer object with the specified capacity.
-	/// @param capacity The desired capacity of the circular buffer, in number of items.
+	/// @param capacity The desired capacity of the circular buffer, in
+	/// number of items.
 	/// @return The pointer to the created CircularBuffer object.
-	CircularBuffer*(* const create)(uint32_t capacity);
+	CircularBuffer *(*const create)(uint32_t capacity);
 	/// @brief Frees a CircularBuffer's all associated memories.
-	///        Note that any pointers defined within each items are not freed by this function.
+	///        Note that any pointers defined within each items are not
+	///        freed by this function.
 	/// @param buffer The pointer to the CircularBuffer to free.
-	void(* const free)(CircularBuffer* buffer);
+	void (*const free)(CircularBuffer *buffer);
 	/// @brief Push a copy of an item into a circular buffer.
 	/// @param buffer Pointer to the CircularBuffer to store the item.
 	/// @param object The item to be pushed into the CircularBuffer.
 	/// @param size The size of the item, in bytes.
-	void(* const push)(CircularBuffer* buffer, void* object, size_t size);
+	void (*const push)(CircularBuffer *buffer, void *object, size_t size);
 	/// @brief Removes a CircularBuffer's buffer head and retrives it.
 	/// @param buffer The CircularBuffer in subject.
 	/// @return The pointer to the removed item.
-	void*(* const pop)(CircularBuffer* buffer);
+	void *(*const pop)(CircularBuffer *buffer);
 	/// @brief Retrives a CircularBuffer's buffer head.
 	/// @param buffer The CircularBuffer in subject.
 	/// @return The pointer to the retrived item.
-	void*(* const peek)(CircularBuffer* buffer);
+	void *(*const peek)(CircularBuffer *buffer);
 };
-/// @brief This is the wrapper of all CircularBuffer-related functions 
+/// @brief This is the wrapper of all CircularBuffer-related functions
 extern const struct circular_buffer_ops_st cbOps;
 
 #endif
