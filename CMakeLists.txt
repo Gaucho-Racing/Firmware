@@ -24,6 +24,7 @@ set(platform_path "${lib_path}/Platform")
 include("${platform_path}/STM32G474xE/chip.cmake")
 include("${platform_path}/STM32U5A9xJ/chip.cmake")
 include("${platform_path}/STM32L476xG/chip.cmake")
+include("${lib_path}/GlobalShare/common.cmake")
 include("${lib_path}/cmake/gr-lib.cmake")
 
 project(${CMAKE_PROJECT_NAME})
@@ -48,5 +49,6 @@ add_gr_project(STM32L476xG BLINKY L4BLINKY)
 
 add_gr_project(STM32G474xE ECU)
 
+add_gr_project(STM32G474xE G4PERTESTING)
 add_gr_project(STM32G474xE Onboarding W3_G4SPI_Receive)
 add_gr_project(STM32G474xE Onboarding W3_G4SPI_Transmit)
