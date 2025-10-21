@@ -70,9 +70,6 @@ Icon\r
 # Clangd
 .cache
 
-# Clangd
-.cache
-
 # Other Editors
 .*.swp
 .ccls-cache
