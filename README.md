@@ -11,32 +11,30 @@ When able, please add VS Code comptatible doc comments! These will help debuggin
 
 ## Install Tools/Dependencies
 *For Windows:*
-1. [CMake](https://cmake.org/download/)
-2. [Ninja](https://github.com/ninja-build/ninja/releases)
-3. [ARM Toolchain (arm-none-eabi)](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
-4. [OpenOCD](https://github.com/openocd-org/openocd/releases/tag/v0.12.0)
+1. `winget install Ninja-build.Ninja Kitware.CMake Arm.GnuArmEmbeddedToolchain`
+2. [OpenOCD](https://github.com/openocd-org/openocd/releases/latest) -> Download the `.tar.gz` file, extract to directory, add the bin directory to your `PATH`
+3. Relaunch your terminal
 
 *For MacOS:*
-1. Install Homebrew (paste this into terminal): `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
-2. `brew install cmake`
-3. `brew install ninja`
-4. `brew install open-ocd`
-4. [ARM Toolchain (arm-none-eabi)](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
-- Look under "AArch32 bare-metal target (arm-none-eabi)" and install the .pkg file
-- Add the ARM Toolchain to your PATH variable using the following commands in your terminal:
-    - `nano ~/.zshrc` --> use a basic text editor (nano) to edit the zsh configuration file
-    - `export PATH="/Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin:$PATH"` --> paste this into the config file
-    - `source ~/.zshrc` --> refresh your zsh terminal to apply the changes made
+1. `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+2. `brew install cmake ninja open-ocd`
+3. `brew install --cask gcc-arm-embedded`
+4. Relaunch your terminal
 
-**Note:** DO NOT use Homebrew to install "arm-none-eabi-gcc"- their ARM toolchain package is broken
+*For Linux / BSD:*
+* `sudo apt install cmake ninja gcc-arm-none-eabi openocd`
+* `sudo dnf install cmake ninja openocd arm-none-eabi-gcc`
+* `sudo pacman -S cmake ninja openocd arm-none-eabi-gcc`
+* `pkg install cmake ninja openocd arm-none-eabi-gcc`
+* If you run into issues verify that binutils and newlib are installed for `arm-none-eabi`
 
-Verify that you have all these dependencies installed:
-- CMAKE - `cmake --version`
-- ninja - `ninja --version`
-- ARM toolchain - `arm-none-eabi-gcc --version`
-- openocd - `openocd --version`
+### Verify that you have all these dependencies installed:
+- CMake - `cmake --version`
+- Ninja - `ninja --version`
+- Arm - `arm-none-eabi-gcc --version`
+- OpenOCD - `openocd --version`
 
-**CMake** (metabuild system) --> **Ninja** (build system) --> **ARM Toolchain** (provides tools to compile & link code)
+**CMake** (metabuild system) --> **Ninja** (build system) --> **Arm Toolchain** (provides tools to compile & link code)
 **OpenOCD** is an on-chip debugger, which allows us to examine code line-by-line in Debug mode
 
 # REPO RULES (follow if you want your builds to work)
