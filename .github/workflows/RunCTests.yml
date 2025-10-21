@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-${{ github.run_id }}
   cancel-in-progress: true
 
 jobs:
@@ -99,3 +99,12 @@ jobs:
           echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+  all:
+    name: Complete HOOTL Tests
+    needs: ctest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Complete All CTest Runs
+        run: |
+          echo "CTest has been executed for the HOOTLTest preset across all operating systems."
+          echo "Please refer to the individual job logs for detailed test results."
