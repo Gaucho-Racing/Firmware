@@ -23,4 +23,6 @@ target_include_directories(
 )
 
 # link test to this library
-target_link_libraries(CircularBuffer_Lib_basic_test CircularBuffer_Lib)
+if(CMAKE_BUILD_TYPE STREQUAL "Test")
+	target_link_libraries(CircularBuffer_Lib_basic_test CircularBuffer_Lib)
+endif()
