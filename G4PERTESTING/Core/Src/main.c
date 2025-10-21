@@ -19,11 +19,11 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
+#include "circularBuffer.h"
 #include "crc.h"
 #include "fdcan.h"
 #include "gpio.h"
 #include "spi.h"
-#include "circularBuffer.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
