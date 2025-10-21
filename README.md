@@ -11,14 +11,6 @@ When able, please add VS Code comptatible doc comments! These will help debuggin
 
 ## Install Tools/Dependencies
 *For Windows:*
-1. [CMake](https://cmake.org/download/)
-2. [Ninja](https://github.com/ninja-build/ninja/releases)
-3. [ARM Toolchain (arm-none-eabi)](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
-4. [OpenOCD](https://github.com/openocd-org/openocd/releases/latest)
-5. Add the executable files to `PATH` if not already done at install time
-6. Relaunch your terminal
-
-*For Windows (WinGet):*
 1. `winget install Ninja-build.Ninja Kitware.CMake Arm.GnuArmEmbeddedToolchain`
 2. [OpenOCD](https://github.com/openocd-org/openocd/releases/latest) -> Download the `.tar.gz` file, extract to directory, add the bin directory to your `PATH`
 3. Relaunch your terminal
