@@ -4,41 +4,35 @@
 #include <stddef.h>
 #include <stdint.h>
 
-
 // Define the new data type CircularBuffer
 typedef struct circular_buffer_st CircularBuffer;
-
 
 /// @brief Creates a CircularBuffer object with the specified capacity.
 /// @param capacity The desired capacity of the circular buffer, in
 /// number of items.
 /// @return The pointer to the created CircularBuffer object.
-CircularBuffer* GR_CircularBuffer_Create(uint32_t capacity);
-
+CircularBuffer *GR_CircularBuffer_Create(uint32_t capacity);
 
 /// @brief Frees a CircularBuffer's all associated memories.
 ///        Note that any pointers defined within each items are not
 ///        freed by this function.
 /// @param buffer The pointer to the CircularBuffer to free.
-void GR_CircularBuffer_Free(CircularBuffer* buffer);
-
+void GR_CircularBuffer_Free(CircularBuffer *buffer);
 
 /// @brief Push a copy of an item into a circular buffer.
 /// @param buffer Pointer to the CircularBuffer to store the item.
 /// @param object The item to be pushed into the CircularBuffer.
 /// @param size The size of the item, in bytes.
-void GR_CircularBuffer_Push(CircularBuffer* buffer, void* object, size_t size);
-
+void GR_CircularBuffer_Push(CircularBuffer *buffer, void *object, size_t size);
 
 /// @brief Removes a CircularBuffer's buffer head and retrives it.
 /// @param buffer The CircularBuffer in subject.
 /// @return The pointer to the removed item.
-void* GR_CircularBuffer_Pop(CircularBuffer* buffer);
-
+void *GR_CircularBuffer_Pop(CircularBuffer *buffer);
 
 /// @brief Retrives a CircularBuffer's buffer head.
 /// @param buffer The CircularBuffer in subject.
 /// @return The pointer to the retrived item.
-void* GR_CircularBuffer_Peek(CircularBuffer* buffer);
+void *GR_CircularBuffer_Peek(CircularBuffer *buffer);
 
 #endif

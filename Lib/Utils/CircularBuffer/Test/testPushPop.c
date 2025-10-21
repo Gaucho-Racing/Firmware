@@ -24,7 +24,8 @@ int main()
 		GR_CircularBuffer_Pop(buffer);
 	}
 	for (int i = 0; i < 1000; i++) {
-		if (GR_CircularBuffer_Pop(buffer) != NULL) { // Should do nothing
+		if (GR_CircularBuffer_Pop(buffer) !=
+		    NULL) { // Should do nothing
 			GR_CircularBuffer_Free(buffer);
 			return 2;
 		}
