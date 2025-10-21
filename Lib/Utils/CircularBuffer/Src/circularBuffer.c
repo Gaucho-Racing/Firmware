@@ -1,5 +1,4 @@
 #include "circularBuffer.h"
-#include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -13,17 +12,11 @@ typedef struct {
 struct circular_buffer_st {
 	uint32_t head;	   // the head position inclusive
 	uint32_t tail;	   // the tail position exclusive
-	uint32_t capacity; // the number of items in buffer
+	uint32_t capacity; // the buffer's capacity in number of items
 	Item **buffer;	   // the buffer body
-
-	// Idea: generate hash with all attributes to reinforce data integrety
 };
 
-/// @brief Creates a CircularBuffer object with the specified capacity.
-/// @param capacity The desired capacity of the circular buffer, in number of
-/// items.
-/// @return pointer to the created CircularBuffer object.
-CircularBuffer *cb_create(uint32_t capacity)
+CircularBuffer *GR_CircularBuffer_Create(uint32_t capacity)
 {
 	// Return null pointer if an invalid size(< 1) is specified
 	if (capacity < 1) {
@@ -38,9 +31,7 @@ CircularBuffer *cb_create(uint32_t capacity)
 	return buffer;
 }
 
-/// @brief Frees a CircularBuffer's all associated memories.
-/// @param buffer pointer to the CircularBuffer to free.
-void cb_free(CircularBuffer *buffer)
+void GR_CircularBuffer_Free(CircularBuffer *buffer)
 {
 	// Error check
 	if (buffer == NULL) {
@@ -63,11 +54,7 @@ void cb_free(CircularBuffer *buffer)
 	free(buffer);
 }
 
-/// @brief Push a copy of an item into a circular buffer.
-/// @param buffer Pointer to the CircularBuffer to store the item.
-/// @param object The item to be pushed into the CircularBuffer.
-/// @param size The size of the item, in bytes.
-void cb_push(CircularBuffer *buffer, void *object, size_t size)
+void GR_CircularBuffer_Push(CircularBuffer *buffer, void *object, size_t size)
 {
 	// Remove the buffer head if it's going to be overwritten
 	// That is, if the buffer is already full
@@ -95,10 +82,7 @@ void cb_push(CircularBuffer *buffer, void *object, size_t size)
 	}
 }
 
-/// @brief Removes a CircularBuffer's buffer head and retrives it.
-/// @param buffer The CircularBuffer in subject.
-/// @return The pointer to the removed item.
-void *cb_pop(CircularBuffer *buffer)
+void *GR_CircularBuffer_Pop(CircularBuffer *buffer)
 {
 	// Return null pointer if buffer is empty
 	if (buffer->buffer[buffer->head] == NULL) {
@@ -122,10 +106,7 @@ void *cb_pop(CircularBuffer *buffer)
 	return result;
 }
 
-/// @brief Retrives a CircularBuffer's buffer head.
-/// @param buffer The CircularBuffer in subject.
-/// @return The pointer to the retrived item.
-void *cb_peek(CircularBuffer *buffer)
+void *GR_CircularBuffer_Peek(CircularBuffer *buffer)
 {
 	// Return null pointer if buffer is empty
 	if (buffer->buffer[buffer->head] == NULL) {
@@ -137,7 +118,3 @@ void *cb_peek(CircularBuffer *buffer)
 	       buffer->buffer[buffer->head]->size);
 	return result;
 }
-
-/// @brief This is the wrapper of all CircularBuffer-related functions
-const struct circular_buffer_ops_st cbOps = {cb_create, cb_free, cb_push,
-					     cb_pop, cb_peek};
