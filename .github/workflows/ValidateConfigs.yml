@@ -1,4 +1,4 @@
-name: ValidateConfigs
+name: Validate Configuration Files
 run-name: Validate Configuration Files - ${{ github.ref_name }}
 
 on:
@@ -12,8 +12,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  cmake:
-    name: Validate Configurations
+  validate:
+    name: Complete Validation
     runs-on: ubuntu-latest
     permissions:
       contents: read
