@@ -1,4 +1,5 @@
 #include "circularBuffer.h"
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -39,13 +40,13 @@ void GR_CircularBuffer_Free(CircularBuffer *buffer)
 	}
 	// Free contents
 	for (uint32_t i = 0; i < buffer->capacity; i++) {
-		if (buffer->buffer[i] != NULL) {
+		Item *item = buffer->buffer[i];
+		if (item != NULL) {
 			// Free item body
-			free(buffer->buffer[i]
-				 ->ptr); // TODO: Recursively free stored items
-					 // if a method becomes available
+			free(item->ptr); // TODO: Recursively free stored items
+					 // if there exists a way.
 			// Free item wrapper
-			free(buffer->buffer[i]);
+			free(item);
 		}
 	}
 	// Free buffer body
@@ -54,27 +55,58 @@ void GR_CircularBuffer_Free(CircularBuffer *buffer)
 	free(buffer);
 }
 
+uint32_t GR_CircularBuffer_GetCapacity(CircularBuffer *buffer){
+	return buffer->capacity;
+}
+
+uint32_t GR_CircularBuffer_GetCurrentSize(CircularBuffer *buffer){
+	// Empty case, since occupied member must have a non-null wrapper pointer
+	if(buffer->buffer[buffer->head] == NULL)
+		return 0;
+	// Account for circular buffer's loopback behaviour
+	if(buffer->tail <= buffer->head)
+		return buffer->tail + buffer->capacity - buffer->head;
+	// Normal case
+	return buffer->tail - buffer->head;
+}
+
+bool GR_CircularBuffer_IsFull(CircularBuffer* buffer){
+	// In the case where head and tail iterators are equal,
+	// the buffer is full if any entry in the buffer is occupied.
+	return buffer->head == buffer->tail && buffer->buffer[0] != NULL;
+}
+
+bool GR_CircularBuffer_IsEmpty(CircularBuffer* buffer){
+	// In the case where head and tail iterators are equal,
+	// the buffer is empty if any entry in the buffer is free.
+	return buffer->head == buffer->tail && buffer->buffer[0] == NULL;
+}
+
 void GR_CircularBuffer_Push(CircularBuffer *buffer, void *object, size_t size)
 {
 	// Remove the buffer head if it's going to be overwritten
 	// That is, if the buffer is already full
-	if (buffer->buffer[buffer->head] != NULL &&
-	    buffer->head == buffer->tail) {
-		free(buffer->buffer[buffer->head]
-			 ->ptr); // TODO: Make deeper free; see cb_free.
-		free(buffer->buffer[buffer->head]);
-		buffer->head++;
-		if (buffer->head == buffer->capacity) {
-			buffer->head = 0;
+	{
+		Item *head = buffer->buffer[buffer->head];
+		if (head != NULL && buffer->head == buffer->tail) {
+			free(head->ptr); // TODO: Make deeper free; see cb_free.
+			free(head);
+			buffer->head++;
+			if (buffer->head == buffer->capacity) {
+				buffer->head = 0;
+			}
 		}
 	}
-	// Copy object contents to the buffer
-	buffer->buffer[buffer->tail] =
-	    malloc(sizeof(Item)); // allocate wrapper memory
-	buffer->buffer[buffer->tail]->ptr =
-	    malloc(size);			   // allocate object memory
-	buffer->buffer[buffer->tail]->size = size; // record item size
-	memcpy(buffer->buffer[buffer->tail]->ptr, object, size);
+
+	// Copy object contents to a wrapper
+	Item* item = malloc(sizeof(Item));	// allocate wrapper memory
+	item->ptr = malloc(size);			// allocate object memory
+	item->size = size;					// record item size
+	memcpy(item->ptr, object, size);	// copy content
+
+	// Add the wrapper to the buffer
+	buffer->buffer[buffer->tail] = item;
+
 	// Update tail iterator
 	buffer->tail++;
 	if (buffer->tail == buffer->capacity) {
@@ -84,37 +116,46 @@ void GR_CircularBuffer_Push(CircularBuffer *buffer, void *object, size_t size)
 
 void *GR_CircularBuffer_Pop(CircularBuffer *buffer)
 {
+	// Get buffer head's pointer
+	Item* head = buffer->buffer[buffer->head];
+
 	// Return null pointer if buffer is empty
-	if (buffer->buffer[buffer->head] == NULL) {
+	if (head == NULL) {
 		return NULL;
 	}
+
 	// Copy buffer head to result
-	void *result = malloc(buffer->buffer[buffer->head]->size);
-	memcpy(result, buffer->buffer[buffer->head]->ptr,
-	       buffer->buffer[buffer->head]->size);
-	// Remove buffer head
-	free(buffer->buffer[buffer->head]
-		 ->ptr); // TODO: Make deeper free; see cb_free.
-	free(buffer->buffer[buffer->head]);
+	void *result = malloc(head->size);
+	memcpy(result, head->ptr, head->size);
+
+	// Remove and free buffer head
+	free(head->ptr); // TODO: Make deeper free; see cb_free.
+	free(head);
 	buffer->buffer[buffer->head] = NULL;
+
 	// Update head iterator
 	buffer->head++;
 	if (buffer->head == buffer->capacity) {
 		buffer->head = 0;
 	}
+
 	// Return result
 	return result;
 }
 
 void *GR_CircularBuffer_Peek(CircularBuffer *buffer)
 {
+	// Get buffer head's pointer
+	Item* head = buffer->buffer[buffer->head];
+
 	// Return null pointer if buffer is empty
-	if (buffer->buffer[buffer->head] == NULL) {
+	if (head == NULL) {
 		return NULL;
 	}
 	// Copy buffer head to result and return it
-	void *result = malloc(buffer->buffer[buffer->head]->size);
-	memcpy(result, buffer->buffer[buffer->head]->ptr,
-	       buffer->buffer[buffer->head]->size);
+	void *result = malloc(head->size);
+	memcpy(result, head->ptr, head->size);
+
+	// Return result
 	return result;
 }
