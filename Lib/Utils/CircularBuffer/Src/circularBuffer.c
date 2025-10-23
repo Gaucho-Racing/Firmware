@@ -55,28 +55,35 @@ void GR_CircularBuffer_Free(CircularBuffer *buffer)
 	free(buffer);
 }
 
-uint32_t GR_CircularBuffer_GetCapacity(CircularBuffer *buffer){
+uint32_t GR_CircularBuffer_GetCapacity(CircularBuffer *buffer)
+{
 	return buffer->capacity;
 }
 
-uint32_t GR_CircularBuffer_GetCurrentSize(CircularBuffer *buffer){
-	// Empty case, since occupied member must have a non-null wrapper pointer
-	if(buffer->buffer[buffer->head] == NULL)
+uint32_t GR_CircularBuffer_GetCurrentSize(CircularBuffer *buffer)
+{
+	// Empty case, since occupied member must have a non-null wrapper
+	// pointer
+	if (buffer->buffer[buffer->head] == NULL) {
 		return 0;
+	}
 	// Account for circular buffer's loopback behaviour
-	if(buffer->tail <= buffer->head)
+	if (buffer->tail <= buffer->head) {
 		return buffer->tail + buffer->capacity - buffer->head;
+	}
 	// Normal case
 	return buffer->tail - buffer->head;
 }
 
-bool GR_CircularBuffer_IsFull(CircularBuffer* buffer){
+bool GR_CircularBuffer_IsFull(CircularBuffer *buffer)
+{
 	// In the case where head and tail iterators are equal,
 	// the buffer is full if any entry in the buffer is occupied.
 	return buffer->head == buffer->tail && buffer->buffer[0] != NULL;
 }
 
-bool GR_CircularBuffer_IsEmpty(CircularBuffer* buffer){
+bool GR_CircularBuffer_IsEmpty(CircularBuffer *buffer)
+{
 	// In the case where head and tail iterators are equal,
 	// the buffer is empty if any entry in the buffer is free.
 	return buffer->head == buffer->tail && buffer->buffer[0] == NULL;
@@ -99,10 +106,10 @@ void GR_CircularBuffer_Push(CircularBuffer *buffer, void *object, size_t size)
 	}
 
 	// Copy object contents to a wrapper
-	Item* item = malloc(sizeof(Item));	// allocate wrapper memory
-	item->ptr = malloc(size);			// allocate object memory
-	item->size = size;					// record item size
-	memcpy(item->ptr, object, size);	// copy content
+	Item *item = malloc(sizeof(Item)); // allocate wrapper memory
+	item->ptr = malloc(size);	   // allocate object memory
+	item->size = size;		   // record item size
+	memcpy(item->ptr, object, size);   // copy content
 
 	// Add the wrapper to the buffer
 	buffer->buffer[buffer->tail] = item;
@@ -117,7 +124,7 @@ void GR_CircularBuffer_Push(CircularBuffer *buffer, void *object, size_t size)
 void *GR_CircularBuffer_Pop(CircularBuffer *buffer)
 {
 	// Get buffer head's pointer
-	Item* head = buffer->buffer[buffer->head];
+	Item *head = buffer->buffer[buffer->head];
 
 	// Return null pointer if buffer is empty
 	if (head == NULL) {
@@ -146,7 +153,7 @@ void *GR_CircularBuffer_Pop(CircularBuffer *buffer)
 void *GR_CircularBuffer_Peek(CircularBuffer *buffer)
 {
 	// Get buffer head's pointer
-	Item* head = buffer->buffer[buffer->head];
+	Item *head = buffer->buffer[buffer->head];
 
 	// Return null pointer if buffer is empty
 	if (head == NULL) {

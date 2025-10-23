@@ -1,9 +1,9 @@
 #ifndef _CIRCULAR_BUFFER_H_
 #define _CIRCULAR_BUFFER_H_
 
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
-#include <stdbool.h>
 
 // Define the new data type CircularBuffer
 typedef struct circular_buffer_st CircularBuffer;
