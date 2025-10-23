@@ -1,5 +1,9 @@
 To Do:
 Check head and tail at every test
+- Test Inspection functions
+    - get capacity
+    - get occupied size
+    - check if full or empty
 - Test Initialization
 - Test Push/Pop
     - Pop empty buffer --> should do nothing
