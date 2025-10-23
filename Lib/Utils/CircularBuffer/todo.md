@@ -1,1 +1,0 @@
-- add our library to G4PERTESTING
