@@ -12,7 +12,8 @@ struct circular_buffer_st {
 	void **buffer;	   // the buffer body
 };
 
-CircularBuffer *GR_CircularBuffer_Create(uint16_t capacity, CircularBufferMode mode)
+CircularBuffer *GR_CircularBuffer_Create(uint16_t capacity,
+					 CircularBufferMode mode)
 {
 	// Return null pointer if an invalid size(< 1) is specified
 	if (capacity < 1) {
@@ -81,8 +82,10 @@ void GR_CircularBuffer_Push(CircularBuffer *buffer, void *object, uint16_t size)
 	{
 		void *head = buffer->buffer[buffer->head];
 		if (head != NULL && buffer->head == buffer->tail) {
-			if(buffer->mode == CIRCULAR_BUFFER_FREE_ITEM_ON_OVERWRITE)
+			if (buffer->mode ==
+			    CIRCULAR_BUFFER_FREE_ITEM_ON_OVERWRITE) {
 				free(head);
+			}
 			buffer->head++;
 			if (buffer->head == buffer->capacity) {
 				buffer->head = 0;
