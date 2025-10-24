@@ -12,7 +12,7 @@ typedef struct circular_buffer_st CircularBuffer;
 /// @param capacity The desired capacity of the circular buffer, in
 /// number of items.
 /// @return The pointer to the created CircularBuffer object.
-CircularBuffer *GR_CircularBuffer_Create(uint32_t capacity);
+CircularBuffer *GR_CircularBuffer_Create(uint16_t capacity);
 
 /// @brief Frees a CircularBuffer's all associated memories.
 ///        Note that any pointers defined within each items are not
@@ -23,12 +23,12 @@ void GR_CircularBuffer_Free(CircularBuffer *buffer);
 /// @brief Get a CircularBuffer's maximum capacity.
 /// @param buffer The pointer to the CircularBuffer to inspect.
 /// @return The buffer's capacity, in number of items.
-uint32_t GR_CircularBuffer_GetCapacity(CircularBuffer *buffer);
+uint16_t GR_CircularBuffer_GetCapacity(CircularBuffer *buffer);
 
 /// @brief Get a CircularBuffer's currently used size.
 /// @param buffer The pointer to the CircularBuffer to inspect.
 /// @return The buffer's usage, in number of items stored.
-uint32_t GR_CircularBuffer_GetCurrentSize(CircularBuffer *buffer);
+uint16_t GR_CircularBuffer_GetCurrentSize(CircularBuffer *buffer);
 
 /// @brief Check if a CircularBuffer is full.
 /// @param buffer The pointer to the CircularBuffer to inspect.
@@ -44,7 +44,7 @@ bool GR_CircularBuffer_IsEmpty(CircularBuffer *buffer);
 /// @param buffer Pointer to the CircularBuffer to store the item.
 /// @param object The item to be pushed into the CircularBuffer.
 /// @param size The size of the item, in bytes.
-void GR_CircularBuffer_Push(CircularBuffer *buffer, void *object, size_t size);
+void GR_CircularBuffer_Push(CircularBuffer *buffer, void *object, uint16_t size);
 
 /// @brief Removes a CircularBuffer's buffer head and retrives it.
 /// @param buffer The CircularBuffer in subject.
