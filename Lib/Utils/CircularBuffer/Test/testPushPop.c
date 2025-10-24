@@ -59,7 +59,7 @@ int main()
 	int num = 0;
 	GR_CircularBuffer_Push(bufferOne, &num, sizeof(num));
 
-	int* tmp = GR_CircularBuffer_Pop(bufferOne);
+	int *tmp = GR_CircularBuffer_Pop(bufferOne);
 	if (*tmp != num) {
 		GR_CircularBuffer_Free(bufferOne);
 		return 4;
@@ -70,7 +70,8 @@ int main()
 		GR_CircularBuffer_Push(bufferOne, &i, sizeof(i));
 	}
 
-	tmp = GR_CircularBuffer_Pop(bufferOne); // Should contain the last pushed element, 1
+	tmp = GR_CircularBuffer_Pop(
+	    bufferOne); // Should contain the last pushed element, 1
 	if (*tmp != 1) {
 		GR_CircularBuffer_Free(bufferOne);
 		return 5;
