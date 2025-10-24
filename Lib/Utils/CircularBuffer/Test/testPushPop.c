@@ -51,5 +51,30 @@ int main()
 	}
 
 	GR_CircularBuffer_Free(buffer);
+
+	// Edge case: Buffer with capacity 1
+	CircularBuffer *bufferOne = GR_CircularBuffer_Create(1);
+
+	// Pushing and popping one element
+	int num = 0;
+	GR_CircularBuffer_Push(bufferOne, &num, sizeof(num));
+
+	int* tmp = GR_CircularBuffer_Pop(bufferOne);
+	if (*tmp != num) {
+		GR_CircularBuffer_Free(bufferOne);
+		return 4;
+	}
+
+	// Pushing beyond limit (same element should repeatedly get overwritten)
+	for (int i = 0; i < 2; i++) {
+		GR_CircularBuffer_Push(bufferOne, &i, sizeof(i));
+	}
+
+	tmp = GR_CircularBuffer_Pop(bufferOne); // Should contain the last pushed element, 1
+	if (*tmp != 1) {
+		GR_CircularBuffer_Free(bufferOne);
+		return 5;
+	}
+
 	return 0;
 }
