@@ -7,7 +7,7 @@
 		"vscode": {
 			"extensions": [
 				"ms-vscode.cpptools-extension-pack",
-				"ms-python.python",
+				"Gruntfuggly.todo-tree",
 				"ms-vscode.cmake-tools",
 				"ms-vsliveshare.vsliveshare",
 				"marus25.cortex-debug"
