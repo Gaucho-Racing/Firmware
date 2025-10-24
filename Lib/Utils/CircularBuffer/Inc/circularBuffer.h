@@ -7,9 +7,10 @@
 // Circular buffer is a FIFO data structure.
 typedef struct circular_buffer_st CircularBuffer;
 
-// Specifies certain behaviours for a CircularBuffer. Possible values are 
-// CIRCULAR_BUFFER_KEEP_ITEM_ON_OVERWRITE and CIRCULAR_BUFFER_FREE_ITEM_ON_OVERWRITE
-typedef enum{
+// Specifies certain behaviours for a CircularBuffer. Possible values are
+// CIRCULAR_BUFFER_KEEP_ITEM_ON_OVERWRITE and
+// CIRCULAR_BUFFER_FREE_ITEM_ON_OVERWRITE
+typedef enum {
 	// @brief In this mode, when an item is overwritten by a push command,
 	// the item's memory is not automatically freed.
 	CIRCULAR_BUFFER_KEEP_ITEM_ON_OVERWRITE,
@@ -23,7 +24,8 @@ typedef enum{
 /// number of items.
 /// @param mode The operating mode of the buffer, see the enum's definition.
 /// @return The pointer to the created CircularBuffer object.
-CircularBuffer *GR_CircularBuffer_Create(uint16_t capacity, CircularBufferMode mode);
+CircularBuffer *GR_CircularBuffer_Create(uint16_t capacity,
+					 CircularBufferMode mode);
 
 /// @brief Frees a CircularBuffer's all associated memories.
 ///        Note that any pointers defined within each items are not
