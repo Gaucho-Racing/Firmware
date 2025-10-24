@@ -56,9 +56,7 @@ bool GR_CircularBuffer_IsEmpty(CircularBuffer *buffer);
 /// @brief Push a copy of an item into a circular buffer.
 /// @param buffer Pointer to the CircularBuffer to store the item.
 /// @param object The item to be pushed into the CircularBuffer.
-/// @param size The size of the item, in bytes.
-void GR_CircularBuffer_Push(CircularBuffer *buffer, void *object,
-			    uint16_t size);
+void GR_CircularBuffer_Push(CircularBuffer *buffer, void *object);
 
 /// @brief Removes a CircularBuffer's buffer head and retrives it.
 /// @param buffer The CircularBuffer in subject.
