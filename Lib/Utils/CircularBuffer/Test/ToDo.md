@@ -1,15 +1,15 @@
 To Do:
 Check head and tail at every test
-- Test Inspection functions
-    - get capacity
-    - get occupied size
-    - check if full or empty
-- Test Initialization
-- Test Push/Pop
-    - Pop empty buffer --> should do nothing
-    - Push full buffer --> test data overwrite
-    - Push buffer past size limite --> test data loopback
-- Test Peek
+- [X] Test Inspection functions
+    - [x] Get capacity
+    - [x] get occupied size
+    - [x] check if full or empty
+- [X] Test Initialization
+- [x] Test Push/Pop
+    - [x] Pop empty buffer --> should do nothing
+    - [x] Push full buffer --> test data overwrite
+    - [x] Push buffer past size limite --> test data loopback
+- [x] Test Peek
 - Test Memory stuff (Address Sanitizer + Maybe Valgrind)
     - Test free
     - Make sure memory overwrite free's the old data
