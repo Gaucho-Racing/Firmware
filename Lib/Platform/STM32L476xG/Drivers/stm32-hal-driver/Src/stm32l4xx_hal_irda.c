@@ -545,71 +545,73 @@ HAL_IRDA_RegisterCallback(IRDA_HandleTypeDef *hirda,
 
 	if (hirda->gState == HAL_IRDA_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_IRDA_TX_HALFCOMPLETE_CB_ID:
-			hirda->TxHalfCpltCallback = pCallback;
-			break;
+			case HAL_IRDA_TX_HALFCOMPLETE_CB_ID:
+				hirda->TxHalfCpltCallback = pCallback;
+				break;
 
-		case HAL_IRDA_TX_COMPLETE_CB_ID:
-			hirda->TxCpltCallback = pCallback;
-			break;
+			case HAL_IRDA_TX_COMPLETE_CB_ID:
+				hirda->TxCpltCallback = pCallback;
+				break;
 
-		case HAL_IRDA_RX_HALFCOMPLETE_CB_ID:
-			hirda->RxHalfCpltCallback = pCallback;
-			break;
+			case HAL_IRDA_RX_HALFCOMPLETE_CB_ID:
+				hirda->RxHalfCpltCallback = pCallback;
+				break;
 
-		case HAL_IRDA_RX_COMPLETE_CB_ID:
-			hirda->RxCpltCallback = pCallback;
-			break;
+			case HAL_IRDA_RX_COMPLETE_CB_ID:
+				hirda->RxCpltCallback = pCallback;
+				break;
 
-		case HAL_IRDA_ERROR_CB_ID:
-			hirda->ErrorCallback = pCallback;
-			break;
+			case HAL_IRDA_ERROR_CB_ID:
+				hirda->ErrorCallback = pCallback;
+				break;
 
-		case HAL_IRDA_ABORT_COMPLETE_CB_ID:
-			hirda->AbortCpltCallback = pCallback;
-			break;
+			case HAL_IRDA_ABORT_COMPLETE_CB_ID:
+				hirda->AbortCpltCallback = pCallback;
+				break;
 
-		case HAL_IRDA_ABORT_TRANSMIT_COMPLETE_CB_ID:
-			hirda->AbortTransmitCpltCallback = pCallback;
-			break;
+			case HAL_IRDA_ABORT_TRANSMIT_COMPLETE_CB_ID:
+				hirda->AbortTransmitCpltCallback = pCallback;
+				break;
 
-		case HAL_IRDA_ABORT_RECEIVE_COMPLETE_CB_ID:
-			hirda->AbortReceiveCpltCallback = pCallback;
-			break;
+			case HAL_IRDA_ABORT_RECEIVE_COMPLETE_CB_ID:
+				hirda->AbortReceiveCpltCallback = pCallback;
+				break;
 
-		case HAL_IRDA_MSPINIT_CB_ID:
-			hirda->MspInitCallback = pCallback;
-			break;
+			case HAL_IRDA_MSPINIT_CB_ID:
+				hirda->MspInitCallback = pCallback;
+				break;
 
-		case HAL_IRDA_MSPDEINIT_CB_ID:
-			hirda->MspDeInitCallback = pCallback;
-			break;
+			case HAL_IRDA_MSPDEINIT_CB_ID:
+				hirda->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hirda->ErrorCode |= HAL_IRDA_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hirda->ErrorCode |=
+				    HAL_IRDA_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hirda->gState == HAL_IRDA_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_IRDA_MSPINIT_CB_ID:
-			hirda->MspInitCallback = pCallback;
-			break;
+			case HAL_IRDA_MSPINIT_CB_ID:
+				hirda->MspInitCallback = pCallback;
+				break;
 
-		case HAL_IRDA_MSPDEINIT_CB_ID:
-			hirda->MspDeInitCallback = pCallback;
-			break;
+			case HAL_IRDA_MSPDEINIT_CB_ID:
+				hirda->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hirda->ErrorCode |= HAL_IRDA_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hirda->ErrorCode |=
+				    HAL_IRDA_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -655,94 +657,104 @@ HAL_IRDA_UnRegisterCallback(IRDA_HandleTypeDef *hirda,
 
 	if (HAL_IRDA_STATE_READY == hirda->gState) {
 		switch (CallbackID) {
-		case HAL_IRDA_TX_HALFCOMPLETE_CB_ID:
-			hirda->TxHalfCpltCallback =
-			    HAL_IRDA_TxHalfCpltCallback; /* Legacy weak
-							    TxHalfCpltCallback
-							  */
-			break;
+			case HAL_IRDA_TX_HALFCOMPLETE_CB_ID:
+				hirda->TxHalfCpltCallback =
+				    HAL_IRDA_TxHalfCpltCallback; /* Legacy weak
+								    TxHalfCpltCallback
+								  */
+				break;
 
-		case HAL_IRDA_TX_COMPLETE_CB_ID:
-			hirda->TxCpltCallback =
-			    HAL_IRDA_TxCpltCallback; /* Legacy weak
-							TxCpltCallback */
-			break;
+			case HAL_IRDA_TX_COMPLETE_CB_ID:
+				hirda->TxCpltCallback =
+				    HAL_IRDA_TxCpltCallback; /* Legacy weak
+								TxCpltCallback
+							      */
+				break;
 
-		case HAL_IRDA_RX_HALFCOMPLETE_CB_ID:
-			hirda->RxHalfCpltCallback =
-			    HAL_IRDA_RxHalfCpltCallback; /* Legacy weak
-							    RxHalfCpltCallback
-							  */
-			break;
+			case HAL_IRDA_RX_HALFCOMPLETE_CB_ID:
+				hirda->RxHalfCpltCallback =
+				    HAL_IRDA_RxHalfCpltCallback; /* Legacy weak
+								    RxHalfCpltCallback
+								  */
+				break;
 
-		case HAL_IRDA_RX_COMPLETE_CB_ID:
-			hirda->RxCpltCallback =
-			    HAL_IRDA_RxCpltCallback; /* Legacy weak
-							RxCpltCallback */
-			break;
+			case HAL_IRDA_RX_COMPLETE_CB_ID:
+				hirda->RxCpltCallback =
+				    HAL_IRDA_RxCpltCallback; /* Legacy weak
+								RxCpltCallback
+							      */
+				break;
 
-		case HAL_IRDA_ERROR_CB_ID:
-			hirda->ErrorCallback =
-			    HAL_IRDA_ErrorCallback; /* Legacy weak ErrorCallback
-						     */
-			break;
+			case HAL_IRDA_ERROR_CB_ID:
+				hirda->ErrorCallback =
+				    HAL_IRDA_ErrorCallback; /* Legacy weak
+							     * ErrorCallback
+							     */
+				break;
 
-		case HAL_IRDA_ABORT_COMPLETE_CB_ID:
-			hirda->AbortCpltCallback =
-			    HAL_IRDA_AbortCpltCallback; /* Legacy weak
-							   AbortCpltCallback */
-			break;
-
-		case HAL_IRDA_ABORT_TRANSMIT_COMPLETE_CB_ID:
-			hirda->AbortTransmitCpltCallback =
-			    HAL_IRDA_AbortTransmitCpltCallback; /* Legacy weak
-								   AbortTransmitCpltCallback
+			case HAL_IRDA_ABORT_COMPLETE_CB_ID:
+				hirda->AbortCpltCallback =
+				    HAL_IRDA_AbortCpltCallback; /* Legacy weak
+								   AbortCpltCallback
 								 */
-			break;
+				break;
 
-		case HAL_IRDA_ABORT_RECEIVE_COMPLETE_CB_ID:
-			hirda->AbortReceiveCpltCallback =
-			    HAL_IRDA_AbortReceiveCpltCallback; /* Legacy weak
-								  AbortReceiveCpltCallback
-								*/
-			break;
+			case HAL_IRDA_ABORT_TRANSMIT_COMPLETE_CB_ID:
+				hirda->AbortTransmitCpltCallback =
+				    HAL_IRDA_AbortTransmitCpltCallback; /* Legacy
+									   weak
+									   AbortTransmitCpltCallback
+									 */
+				break;
 
-		case HAL_IRDA_MSPINIT_CB_ID:
-			hirda->MspInitCallback =
-			    HAL_IRDA_MspInit; /* Legacy weak MspInitCallback */
-			break;
+			case HAL_IRDA_ABORT_RECEIVE_COMPLETE_CB_ID:
+				hirda->AbortReceiveCpltCallback =
+				    HAL_IRDA_AbortReceiveCpltCallback; /* Legacy
+									  weak
+									  AbortReceiveCpltCallback
+									*/
+				break;
 
-		case HAL_IRDA_MSPDEINIT_CB_ID:
-			hirda->MspDeInitCallback =
-			    HAL_IRDA_MspDeInit; /* Legacy weak MspDeInitCallback
-						 */
-			break;
+			case HAL_IRDA_MSPINIT_CB_ID:
+				hirda->MspInitCallback =
+				    HAL_IRDA_MspInit; /* Legacy weak
+							 MspInitCallback */
+				break;
 
-		default:
-			/* Update the error code */
-			hirda->ErrorCode |= HAL_IRDA_ERROR_INVALID_CALLBACK;
+			case HAL_IRDA_MSPDEINIT_CB_ID:
+				hirda->MspDeInitCallback =
+				    HAL_IRDA_MspDeInit; /* Legacy weak
+							 * MspDeInitCallback
+							 */
+				break;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hirda->ErrorCode |=
+				    HAL_IRDA_ERROR_INVALID_CALLBACK;
+
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_IRDA_STATE_RESET == hirda->gState) {
 		switch (CallbackID) {
-		case HAL_IRDA_MSPINIT_CB_ID:
-			hirda->MspInitCallback = HAL_IRDA_MspInit;
-			break;
+			case HAL_IRDA_MSPINIT_CB_ID:
+				hirda->MspInitCallback = HAL_IRDA_MspInit;
+				break;
 
-		case HAL_IRDA_MSPDEINIT_CB_ID:
-			hirda->MspDeInitCallback = HAL_IRDA_MspDeInit;
-			break;
+			case HAL_IRDA_MSPDEINIT_CB_ID:
+				hirda->MspDeInitCallback = HAL_IRDA_MspDeInit;
+				break;
 
-		default:
-			/* Update the error code */
-			hirda->ErrorCode |= HAL_IRDA_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hirda->ErrorCode |=
+				    HAL_IRDA_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -2469,59 +2481,62 @@ static HAL_StatusTypeDef IRDA_SetConfig(IRDA_HandleTypeDef *hirda)
 	IRDA_GETCLOCKSOURCE(hirda, clocksource);
 	tmpreg = 0U;
 	switch (clocksource) {
-	case IRDA_CLOCKSOURCE_PCLK1:
-		pclk = HAL_RCC_GetPCLK1Freq();
+		case IRDA_CLOCKSOURCE_PCLK1:
+			pclk = HAL_RCC_GetPCLK1Freq();
 #if defined(USART_PRESC_PRESCALER)
-		tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(
-		    pclk, hirda->Init.BaudRate, hirda->Init.ClockPrescaler));
+			tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(
+			    pclk, hirda->Init.BaudRate,
+			    hirda->Init.ClockPrescaler));
 #else
-		tmpreg =
-		    (uint32_t)(IRDA_DIV_SAMPLING16(pclk, hirda->Init.BaudRate));
+			tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(
+			    pclk, hirda->Init.BaudRate));
 #endif /* USART_PRESC_PRESCALER */
-		break;
-	case IRDA_CLOCKSOURCE_PCLK2:
-		pclk = HAL_RCC_GetPCLK2Freq();
+			break;
+		case IRDA_CLOCKSOURCE_PCLK2:
+			pclk = HAL_RCC_GetPCLK2Freq();
 #if defined(USART_PRESC_PRESCALER)
-		tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(
-		    pclk, hirda->Init.BaudRate, hirda->Init.ClockPrescaler));
+			tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(
+			    pclk, hirda->Init.BaudRate,
+			    hirda->Init.ClockPrescaler));
 #else
-		tmpreg =
-		    (uint32_t)(IRDA_DIV_SAMPLING16(pclk, hirda->Init.BaudRate));
+			tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(
+			    pclk, hirda->Init.BaudRate));
 #endif /* USART_PRESC_PRESCALER */
-		break;
-	case IRDA_CLOCKSOURCE_HSI:
+			break;
+		case IRDA_CLOCKSOURCE_HSI:
 #if defined(USART_PRESC_PRESCALER)
-		tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(
-		    HSI_VALUE, hirda->Init.BaudRate,
-		    hirda->Init.ClockPrescaler));
+			tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(
+			    HSI_VALUE, hirda->Init.BaudRate,
+			    hirda->Init.ClockPrescaler));
 #else
-		tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(HSI_VALUE,
-							hirda->Init.BaudRate));
+			tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(
+			    HSI_VALUE, hirda->Init.BaudRate));
 #endif /* USART_PRESC_PRESCALER */
-		break;
-	case IRDA_CLOCKSOURCE_SYSCLK:
-		pclk = HAL_RCC_GetSysClockFreq();
+			break;
+		case IRDA_CLOCKSOURCE_SYSCLK:
+			pclk = HAL_RCC_GetSysClockFreq();
 #if defined(USART_PRESC_PRESCALER)
-		tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(
-		    pclk, hirda->Init.BaudRate, hirda->Init.ClockPrescaler));
+			tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(
+			    pclk, hirda->Init.BaudRate,
+			    hirda->Init.ClockPrescaler));
 #else
-		tmpreg =
-		    (uint32_t)(IRDA_DIV_SAMPLING16(pclk, hirda->Init.BaudRate));
+			tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(
+			    pclk, hirda->Init.BaudRate));
 #endif /* USART_PRESC_PRESCALER */
-		break;
-	case IRDA_CLOCKSOURCE_LSE:
+			break;
+		case IRDA_CLOCKSOURCE_LSE:
 #if defined(USART_PRESC_PRESCALER)
-		tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(
-		    (uint32_t)LSE_VALUE, hirda->Init.BaudRate,
-		    hirda->Init.ClockPrescaler));
+			tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(
+			    (uint32_t)LSE_VALUE, hirda->Init.BaudRate,
+			    hirda->Init.ClockPrescaler));
 #else
-		tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16((uint32_t)LSE_VALUE,
-							hirda->Init.BaudRate));
+			tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(
+			    (uint32_t)LSE_VALUE, hirda->Init.BaudRate));
 #endif /* USART_PRESC_PRESCALER */
-		break;
-	default:
-		ret = HAL_ERROR;
-		break;
+			break;
+		default:
+			ret = HAL_ERROR;
+			break;
 	}
 
 	/* USARTDIV must be greater than or equal to 0d16 */

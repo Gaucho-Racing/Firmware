@@ -590,67 +590,69 @@ HAL_FMAC_RegisterCallback(FMAC_HandleTypeDef *hfmac,
 
 	if (hfmac->State == HAL_FMAC_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_FMAC_ERROR_CB_ID:
-			hfmac->ErrorCallback = pCallback;
-			break;
+			case HAL_FMAC_ERROR_CB_ID:
+				hfmac->ErrorCallback = pCallback;
+				break;
 
-		case HAL_FMAC_HALF_GET_DATA_CB_ID:
-			hfmac->HalfGetDataCallback = pCallback;
-			break;
+			case HAL_FMAC_HALF_GET_DATA_CB_ID:
+				hfmac->HalfGetDataCallback = pCallback;
+				break;
 
-		case HAL_FMAC_GET_DATA_CB_ID:
-			hfmac->GetDataCallback = pCallback;
-			break;
+			case HAL_FMAC_GET_DATA_CB_ID:
+				hfmac->GetDataCallback = pCallback;
+				break;
 
-		case HAL_FMAC_HALF_OUTPUT_DATA_READY_CB_ID:
-			hfmac->HalfOutputDataReadyCallback = pCallback;
-			break;
+			case HAL_FMAC_HALF_OUTPUT_DATA_READY_CB_ID:
+				hfmac->HalfOutputDataReadyCallback = pCallback;
+				break;
 
-		case HAL_FMAC_OUTPUT_DATA_READY_CB_ID:
-			hfmac->OutputDataReadyCallback = pCallback;
-			break;
+			case HAL_FMAC_OUTPUT_DATA_READY_CB_ID:
+				hfmac->OutputDataReadyCallback = pCallback;
+				break;
 
-		case HAL_FMAC_FILTER_CONFIG_CB_ID:
-			hfmac->FilterConfigCallback = pCallback;
-			break;
+			case HAL_FMAC_FILTER_CONFIG_CB_ID:
+				hfmac->FilterConfigCallback = pCallback;
+				break;
 
-		case HAL_FMAC_FILTER_PRELOAD_CB_ID:
-			hfmac->FilterPreloadCallback = pCallback;
-			break;
+			case HAL_FMAC_FILTER_PRELOAD_CB_ID:
+				hfmac->FilterPreloadCallback = pCallback;
+				break;
 
-		case HAL_FMAC_MSPINIT_CB_ID:
-			hfmac->MspInitCallback = pCallback;
-			break;
+			case HAL_FMAC_MSPINIT_CB_ID:
+				hfmac->MspInitCallback = pCallback;
+				break;
 
-		case HAL_FMAC_MSPDEINIT_CB_ID:
-			hfmac->MspDeInitCallback = pCallback;
-			break;
+			case HAL_FMAC_MSPDEINIT_CB_ID:
+				hfmac->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hfmac->ErrorCode |= HAL_FMAC_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hfmac->ErrorCode |=
+				    HAL_FMAC_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hfmac->State == HAL_FMAC_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_FMAC_MSPINIT_CB_ID:
-			hfmac->MspInitCallback = pCallback;
-			break;
+			case HAL_FMAC_MSPINIT_CB_ID:
+				hfmac->MspInitCallback = pCallback;
+				break;
 
-		case HAL_FMAC_MSPDEINIT_CB_ID:
-			hfmac->MspDeInitCallback = pCallback;
-			break;
+			case HAL_FMAC_MSPDEINIT_CB_ID:
+				hfmac->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hfmac->ErrorCode |= HAL_FMAC_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hfmac->ErrorCode |=
+				    HAL_FMAC_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -700,89 +702,99 @@ HAL_FMAC_UnRegisterCallback(FMAC_HandleTypeDef *hfmac,
 
 	if (hfmac->State == HAL_FMAC_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_FMAC_ERROR_CB_ID:
-			hfmac->ErrorCallback =
-			    HAL_FMAC_ErrorCallback; /* Legacy weak ErrorCallback
-						     */
-			break;
-
-		case HAL_FMAC_HALF_GET_DATA_CB_ID:
-			hfmac->HalfGetDataCallback =
-			    HAL_FMAC_HalfGetDataCallback; /* Legacy weak
-							     HalfGetDataCallback
-							   */
-			break;
-
-		case HAL_FMAC_GET_DATA_CB_ID:
-			hfmac->GetDataCallback =
-			    HAL_FMAC_GetDataCallback; /* Legacy weak
-							 GetDataCallback     */
-			break;
-
-		case HAL_FMAC_HALF_OUTPUT_DATA_READY_CB_ID:
-			hfmac->HalfOutputDataReadyCallback =
-			    HAL_FMAC_HalfOutputDataReadyCallback; /* Legacy weak
-								     HalfOutputDataReadyCallback
-								   */
-			break;
-
-		case HAL_FMAC_OUTPUT_DATA_READY_CB_ID:
-			hfmac->OutputDataReadyCallback =
-			    HAL_FMAC_OutputDataReadyCallback; /* Legacy weak
-								 OutputDataReadyCallback
-							       */
-			break;
-
-		case HAL_FMAC_FILTER_CONFIG_CB_ID:
-			hfmac->FilterConfigCallback =
-			    HAL_FMAC_FilterConfigCallback; /* Legacy weak
-							      FilterConfigCallback
-							    */
-			break;
-
-		case HAL_FMAC_FILTER_PRELOAD_CB_ID:
-			hfmac->FilterPreloadCallback =
-			    HAL_FMAC_FilterPreloadCallback; /* Legacy weak
-							       FilterPreloadCallba
+			case HAL_FMAC_ERROR_CB_ID:
+				hfmac->ErrorCallback =
+				    HAL_FMAC_ErrorCallback; /* Legacy weak
+							     * ErrorCallback
 							     */
-			break;
+				break;
 
-		case HAL_FMAC_MSPINIT_CB_ID:
-			hfmac->MspInitCallback =
-			    HAL_FMAC_MspInit; /* Legacy weak MspInitCallback */
-			break;
+			case HAL_FMAC_HALF_GET_DATA_CB_ID:
+				hfmac->HalfGetDataCallback =
+				    HAL_FMAC_HalfGetDataCallback; /* Legacy weak
+								     HalfGetDataCallback
+								   */
+				break;
 
-		case HAL_FMAC_MSPDEINIT_CB_ID:
-			hfmac->MspDeInitCallback =
-			    HAL_FMAC_MspDeInit; /* Legacy weak MspDeInitCallback
-						 */
-			break;
+			case HAL_FMAC_GET_DATA_CB_ID:
+				hfmac->GetDataCallback =
+				    HAL_FMAC_GetDataCallback; /* Legacy weak
+								 GetDataCallback
+							       */
+				break;
 
-		default:
-			/* Update the error code */
-			hfmac->ErrorCode |= HAL_FMAC_ERROR_INVALID_CALLBACK;
+			case HAL_FMAC_HALF_OUTPUT_DATA_READY_CB_ID:
+				hfmac->HalfOutputDataReadyCallback =
+				    HAL_FMAC_HalfOutputDataReadyCallback; /* Legacy
+									     weak
+									     HalfOutputDataReadyCallback
+									   */
+				break;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			case HAL_FMAC_OUTPUT_DATA_READY_CB_ID:
+				hfmac->OutputDataReadyCallback =
+				    HAL_FMAC_OutputDataReadyCallback; /* Legacy
+									 weak
+									 OutputDataReadyCallback
+								       */
+				break;
+
+			case HAL_FMAC_FILTER_CONFIG_CB_ID:
+				hfmac->FilterConfigCallback =
+				    HAL_FMAC_FilterConfigCallback; /* Legacy
+								      weak
+								      FilterConfigCallback
+								    */
+				break;
+
+			case HAL_FMAC_FILTER_PRELOAD_CB_ID:
+				hfmac->FilterPreloadCallback =
+				    HAL_FMAC_FilterPreloadCallback; /* Legacy
+								       weak
+								       FilterPreloadCallba
+								     */
+				break;
+
+			case HAL_FMAC_MSPINIT_CB_ID:
+				hfmac->MspInitCallback =
+				    HAL_FMAC_MspInit; /* Legacy weak
+							 MspInitCallback */
+				break;
+
+			case HAL_FMAC_MSPDEINIT_CB_ID:
+				hfmac->MspDeInitCallback =
+				    HAL_FMAC_MspDeInit; /* Legacy weak
+							 * MspDeInitCallback
+							 */
+				break;
+
+			default:
+				/* Update the error code */
+				hfmac->ErrorCode |=
+				    HAL_FMAC_ERROR_INVALID_CALLBACK;
+
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hfmac->State == HAL_FMAC_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_FMAC_MSPINIT_CB_ID:
-			hfmac->MspInitCallback = HAL_FMAC_MspInit;
-			break;
+			case HAL_FMAC_MSPINIT_CB_ID:
+				hfmac->MspInitCallback = HAL_FMAC_MspInit;
+				break;
 
-		case HAL_FMAC_MSPDEINIT_CB_ID:
-			hfmac->MspDeInitCallback = HAL_FMAC_MspDeInit;
-			break;
+			case HAL_FMAC_MSPDEINIT_CB_ID:
+				hfmac->MspDeInitCallback = HAL_FMAC_MspDeInit;
+				break;
 
-		default:
-			/* Update the error code */
-			hfmac->ErrorCode |= HAL_FMAC_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hfmac->ErrorCode |=
+				    HAL_FMAC_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */

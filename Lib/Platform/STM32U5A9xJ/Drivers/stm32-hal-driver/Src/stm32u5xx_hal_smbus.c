@@ -662,63 +662,65 @@ HAL_SMBUS_RegisterCallback(SMBUS_HandleTypeDef *hsmbus,
 
 	if (HAL_SMBUS_STATE_READY == hsmbus->State) {
 		switch (CallbackID) {
-		case HAL_SMBUS_MASTER_TX_COMPLETE_CB_ID:
-			hsmbus->MasterTxCpltCallback = pCallback;
-			break;
+			case HAL_SMBUS_MASTER_TX_COMPLETE_CB_ID:
+				hsmbus->MasterTxCpltCallback = pCallback;
+				break;
 
-		case HAL_SMBUS_MASTER_RX_COMPLETE_CB_ID:
-			hsmbus->MasterRxCpltCallback = pCallback;
-			break;
+			case HAL_SMBUS_MASTER_RX_COMPLETE_CB_ID:
+				hsmbus->MasterRxCpltCallback = pCallback;
+				break;
 
-		case HAL_SMBUS_SLAVE_TX_COMPLETE_CB_ID:
-			hsmbus->SlaveTxCpltCallback = pCallback;
-			break;
+			case HAL_SMBUS_SLAVE_TX_COMPLETE_CB_ID:
+				hsmbus->SlaveTxCpltCallback = pCallback;
+				break;
 
-		case HAL_SMBUS_SLAVE_RX_COMPLETE_CB_ID:
-			hsmbus->SlaveRxCpltCallback = pCallback;
-			break;
+			case HAL_SMBUS_SLAVE_RX_COMPLETE_CB_ID:
+				hsmbus->SlaveRxCpltCallback = pCallback;
+				break;
 
-		case HAL_SMBUS_LISTEN_COMPLETE_CB_ID:
-			hsmbus->ListenCpltCallback = pCallback;
-			break;
+			case HAL_SMBUS_LISTEN_COMPLETE_CB_ID:
+				hsmbus->ListenCpltCallback = pCallback;
+				break;
 
-		case HAL_SMBUS_ERROR_CB_ID:
-			hsmbus->ErrorCallback = pCallback;
-			break;
+			case HAL_SMBUS_ERROR_CB_ID:
+				hsmbus->ErrorCallback = pCallback;
+				break;
 
-		case HAL_SMBUS_MSPINIT_CB_ID:
-			hsmbus->MspInitCallback = pCallback;
-			break;
+			case HAL_SMBUS_MSPINIT_CB_ID:
+				hsmbus->MspInitCallback = pCallback;
+				break;
 
-		case HAL_SMBUS_MSPDEINIT_CB_ID:
-			hsmbus->MspDeInitCallback = pCallback;
-			break;
+			case HAL_SMBUS_MSPDEINIT_CB_ID:
+				hsmbus->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hsmbus->ErrorCode |= HAL_SMBUS_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hsmbus->ErrorCode |=
+				    HAL_SMBUS_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_SMBUS_STATE_RESET == hsmbus->State) {
 		switch (CallbackID) {
-		case HAL_SMBUS_MSPINIT_CB_ID:
-			hsmbus->MspInitCallback = pCallback;
-			break;
+			case HAL_SMBUS_MSPINIT_CB_ID:
+				hsmbus->MspInitCallback = pCallback;
+				break;
 
-		case HAL_SMBUS_MSPDEINIT_CB_ID:
-			hsmbus->MspDeInitCallback = pCallback;
-			break;
+			case HAL_SMBUS_MSPDEINIT_CB_ID:
+				hsmbus->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hsmbus->ErrorCode |= HAL_SMBUS_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hsmbus->ErrorCode |=
+				    HAL_SMBUS_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -765,84 +767,92 @@ HAL_SMBUS_UnRegisterCallback(SMBUS_HandleTypeDef *hsmbus,
 
 	if (HAL_SMBUS_STATE_READY == hsmbus->State) {
 		switch (CallbackID) {
-		case HAL_SMBUS_MASTER_TX_COMPLETE_CB_ID:
-			hsmbus->MasterTxCpltCallback =
-			    HAL_SMBUS_MasterTxCpltCallback; /* Legacy weak
-							       MasterTxCpltCallback
-							     */
-			break;
+			case HAL_SMBUS_MASTER_TX_COMPLETE_CB_ID:
+				hsmbus->MasterTxCpltCallback =
+				    HAL_SMBUS_MasterTxCpltCallback; /* Legacy
+								       weak
+								       MasterTxCpltCallback
+								     */
+				break;
 
-		case HAL_SMBUS_MASTER_RX_COMPLETE_CB_ID:
-			hsmbus->MasterRxCpltCallback =
-			    HAL_SMBUS_MasterRxCpltCallback; /* Legacy weak
-							       MasterRxCpltCallback
-							     */
-			break;
+			case HAL_SMBUS_MASTER_RX_COMPLETE_CB_ID:
+				hsmbus->MasterRxCpltCallback =
+				    HAL_SMBUS_MasterRxCpltCallback; /* Legacy
+								       weak
+								       MasterRxCpltCallback
+								     */
+				break;
 
-		case HAL_SMBUS_SLAVE_TX_COMPLETE_CB_ID:
-			hsmbus->SlaveTxCpltCallback =
-			    HAL_SMBUS_SlaveTxCpltCallback; /* Legacy weak
-							      SlaveTxCpltCallback
-							    */
-			break;
+			case HAL_SMBUS_SLAVE_TX_COMPLETE_CB_ID:
+				hsmbus->SlaveTxCpltCallback =
+				    HAL_SMBUS_SlaveTxCpltCallback; /* Legacy
+								      weak
+								      SlaveTxCpltCallback
+								    */
+				break;
 
-		case HAL_SMBUS_SLAVE_RX_COMPLETE_CB_ID:
-			hsmbus->SlaveRxCpltCallback =
-			    HAL_SMBUS_SlaveRxCpltCallback; /* Legacy weak
-							      SlaveRxCpltCallback
-							    */
-			break;
+			case HAL_SMBUS_SLAVE_RX_COMPLETE_CB_ID:
+				hsmbus->SlaveRxCpltCallback =
+				    HAL_SMBUS_SlaveRxCpltCallback; /* Legacy
+								      weak
+								      SlaveRxCpltCallback
+								    */
+				break;
 
-		case HAL_SMBUS_LISTEN_COMPLETE_CB_ID:
-			hsmbus->ListenCpltCallback =
-			    HAL_SMBUS_ListenCpltCallback; /* Legacy weak
-							     ListenCpltCallback
-							   */
-			break;
+			case HAL_SMBUS_LISTEN_COMPLETE_CB_ID:
+				hsmbus->ListenCpltCallback =
+				    HAL_SMBUS_ListenCpltCallback; /* Legacy weak
+								     ListenCpltCallback
+								   */
+				break;
 
-		case HAL_SMBUS_ERROR_CB_ID:
-			hsmbus->ErrorCallback =
-			    HAL_SMBUS_ErrorCallback; /* Legacy weak
-							ErrorCallback        */
-			break;
+			case HAL_SMBUS_ERROR_CB_ID:
+				hsmbus->ErrorCallback =
+				    HAL_SMBUS_ErrorCallback; /* Legacy weak
+								ErrorCallback */
+				break;
 
-		case HAL_SMBUS_MSPINIT_CB_ID:
-			hsmbus->MspInitCallback =
-			    HAL_SMBUS_MspInit; /* Legacy weak MspInit */
-			break;
+			case HAL_SMBUS_MSPINIT_CB_ID:
+				hsmbus->MspInitCallback =
+				    HAL_SMBUS_MspInit; /* Legacy weak MspInit */
+				break;
 
-		case HAL_SMBUS_MSPDEINIT_CB_ID:
-			hsmbus->MspDeInitCallback =
-			    HAL_SMBUS_MspDeInit; /* Legacy weak MspDeInit */
-			break;
+			case HAL_SMBUS_MSPDEINIT_CB_ID:
+				hsmbus->MspDeInitCallback =
+				    HAL_SMBUS_MspDeInit; /* Legacy weak
+							    MspDeInit */
+				break;
 
-		default:
-			/* Update the error code */
-			hsmbus->ErrorCode |= HAL_SMBUS_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hsmbus->ErrorCode |=
+				    HAL_SMBUS_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_SMBUS_STATE_RESET == hsmbus->State) {
 		switch (CallbackID) {
-		case HAL_SMBUS_MSPINIT_CB_ID:
-			hsmbus->MspInitCallback =
-			    HAL_SMBUS_MspInit; /* Legacy weak MspInit */
-			break;
+			case HAL_SMBUS_MSPINIT_CB_ID:
+				hsmbus->MspInitCallback =
+				    HAL_SMBUS_MspInit; /* Legacy weak MspInit */
+				break;
 
-		case HAL_SMBUS_MSPDEINIT_CB_ID:
-			hsmbus->MspDeInitCallback =
-			    HAL_SMBUS_MspDeInit; /* Legacy weak MspDeInit */
-			break;
+			case HAL_SMBUS_MSPDEINIT_CB_ID:
+				hsmbus->MspDeInitCallback =
+				    HAL_SMBUS_MspDeInit; /* Legacy weak
+							    MspDeInit */
+				break;
 
-		default:
-			/* Update the error code */
-			hsmbus->ErrorCode |= HAL_SMBUS_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hsmbus->ErrorCode |=
+				    HAL_SMBUS_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */

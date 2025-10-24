@@ -235,25 +235,25 @@ HAL_StatusTypeDef USB_ActivateEndpoint(USB_TypeDef *USBx, USB_EPTypeDef *ep)
 
 	/* initialize Endpoint */
 	switch (ep->type) {
-	case EP_TYPE_CTRL:
-		wEpRegVal |= USB_EP_CONTROL;
-		break;
+		case EP_TYPE_CTRL:
+			wEpRegVal |= USB_EP_CONTROL;
+			break;
 
-	case EP_TYPE_BULK:
-		wEpRegVal |= USB_EP_BULK;
-		break;
+		case EP_TYPE_BULK:
+			wEpRegVal |= USB_EP_BULK;
+			break;
 
-	case EP_TYPE_INTR:
-		wEpRegVal |= USB_EP_INTERRUPT;
-		break;
+		case EP_TYPE_INTR:
+			wEpRegVal |= USB_EP_INTERRUPT;
+			break;
 
-	case EP_TYPE_ISOC:
-		wEpRegVal |= USB_EP_ISOCHRONOUS;
-		break;
+		case EP_TYPE_ISOC:
+			wEpRegVal |= USB_EP_ISOCHRONOUS;
+			break;
 
-	default:
-		ret = HAL_ERROR;
-		break;
+		default:
+			ret = HAL_ERROR;
+			break;
 	}
 
 	PCD_SET_ENDPOINT(USBx, ep->num,

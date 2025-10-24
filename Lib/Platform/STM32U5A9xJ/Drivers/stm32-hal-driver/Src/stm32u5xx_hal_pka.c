@@ -640,47 +640,49 @@ HAL_StatusTypeDef HAL_PKA_RegisterCallback(PKA_HandleTypeDef *hpka,
 
 	if (HAL_PKA_STATE_READY == hpka->State) {
 		switch (CallbackID) {
-		case HAL_PKA_OPERATION_COMPLETE_CB_ID:
-			hpka->OperationCpltCallback = pCallback;
-			break;
+			case HAL_PKA_OPERATION_COMPLETE_CB_ID:
+				hpka->OperationCpltCallback = pCallback;
+				break;
 
-		case HAL_PKA_ERROR_CB_ID:
-			hpka->ErrorCallback = pCallback;
-			break;
+			case HAL_PKA_ERROR_CB_ID:
+				hpka->ErrorCallback = pCallback;
+				break;
 
-		case HAL_PKA_MSPINIT_CB_ID:
-			hpka->MspInitCallback = pCallback;
-			break;
+			case HAL_PKA_MSPINIT_CB_ID:
+				hpka->MspInitCallback = pCallback;
+				break;
 
-		case HAL_PKA_MSPDEINIT_CB_ID:
-			hpka->MspDeInitCallback = pCallback;
-			break;
+			case HAL_PKA_MSPDEINIT_CB_ID:
+				hpka->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hpka->ErrorCode |= HAL_PKA_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hpka->ErrorCode |=
+				    HAL_PKA_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_PKA_STATE_RESET == hpka->State) {
 		switch (CallbackID) {
-		case HAL_PKA_MSPINIT_CB_ID:
-			hpka->MspInitCallback = pCallback;
-			break;
+			case HAL_PKA_MSPINIT_CB_ID:
+				hpka->MspInitCallback = pCallback;
+				break;
 
-		case HAL_PKA_MSPDEINIT_CB_ID:
-			hpka->MspDeInitCallback = pCallback;
-			break;
+			case HAL_PKA_MSPDEINIT_CB_ID:
+				hpka->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hpka->ErrorCode |= HAL_PKA_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hpka->ErrorCode |=
+				    HAL_PKA_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -715,56 +717,62 @@ HAL_PKA_UnRegisterCallback(PKA_HandleTypeDef *hpka,
 
 	if (HAL_PKA_STATE_READY == hpka->State) {
 		switch (CallbackID) {
-		case HAL_PKA_OPERATION_COMPLETE_CB_ID:
-			hpka->OperationCpltCallback =
-			    HAL_PKA_OperationCpltCallback; /* Legacy weak
-							      OperationCpltCallback
+			case HAL_PKA_OPERATION_COMPLETE_CB_ID:
+				hpka->OperationCpltCallback =
+				    HAL_PKA_OperationCpltCallback; /* Legacy
+								      weak
+								      OperationCpltCallback
+								    */
+				break;
+
+			case HAL_PKA_ERROR_CB_ID:
+				hpka->ErrorCallback =
+				    HAL_PKA_ErrorCallback; /* Legacy weak
+							    * ErrorCallback
 							    */
-			break;
+				break;
 
-		case HAL_PKA_ERROR_CB_ID:
-			hpka->ErrorCallback =
-			    HAL_PKA_ErrorCallback; /* Legacy weak ErrorCallback
-						    */
-			break;
+			case HAL_PKA_MSPINIT_CB_ID:
+				hpka->MspInitCallback =
+				    HAL_PKA_MspInit; /* Legacy weak MspInit */
+				break;
 
-		case HAL_PKA_MSPINIT_CB_ID:
-			hpka->MspInitCallback =
-			    HAL_PKA_MspInit; /* Legacy weak MspInit */
-			break;
+			case HAL_PKA_MSPDEINIT_CB_ID:
+				hpka->MspDeInitCallback =
+				    HAL_PKA_MspDeInit; /* Legacy weak MspDeInit
+							*/
+				break;
 
-		case HAL_PKA_MSPDEINIT_CB_ID:
-			hpka->MspDeInitCallback =
-			    HAL_PKA_MspDeInit; /* Legacy weak MspDeInit */
-			break;
+			default:
+				/* Update the error code */
+				hpka->ErrorCode |=
+				    HAL_PKA_ERROR_INVALID_CALLBACK;
 
-		default:
-			/* Update the error code */
-			hpka->ErrorCode |= HAL_PKA_ERROR_INVALID_CALLBACK;
-
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (HAL_PKA_STATE_RESET == hpka->State) {
 		switch (CallbackID) {
-		case HAL_PKA_MSPINIT_CB_ID:
-			hpka->MspInitCallback =
-			    HAL_PKA_MspInit; /* Legacy weak MspInit */
-			break;
+			case HAL_PKA_MSPINIT_CB_ID:
+				hpka->MspInitCallback =
+				    HAL_PKA_MspInit; /* Legacy weak MspInit */
+				break;
 
-		case HAL_PKA_MSPDEINIT_CB_ID:
-			hpka->MspDeInitCallback =
-			    HAL_PKA_MspDeInit; /* Legacy weak MspDeInit */
-			break;
+			case HAL_PKA_MSPDEINIT_CB_ID:
+				hpka->MspDeInitCallback =
+				    HAL_PKA_MspDeInit; /* Legacy weak MspDeInit
+							*/
+				break;
 
-		default:
-			/* Update the error code */
-			hpka->ErrorCode |= HAL_PKA_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hpka->ErrorCode |=
+				    HAL_PKA_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -1660,56 +1668,58 @@ void HAL_PKA_Arithmetic_GetResult(PKA_HandleTypeDef *hpka, uint32_t *pRes)
 	/* Move the result to appropriate location (indicated in pRes parameter)
 	 */
 	switch (mode) {
-	case PKA_MODE_MONTGOMERY_PARAM:
-	case PKA_MODE_ARITHMETIC_SUB:
-	case PKA_MODE_MODULAR_ADD:
-	case PKA_MODE_MODULAR_RED:
-	case PKA_MODE_MODULAR_INV:
-	case PKA_MODE_MONTGOMERY_MUL:
-		size = hpka->Instance->RAM[2] / 32UL;
-		break;
-	case PKA_MODE_ARITHMETIC_ADD:
-	case PKA_MODE_MODULAR_SUB:
-		size =
-		    hpka->Instance->RAM[PKA_ARITHMETIC_ALL_OPS_NB_BITS] / 32UL;
-
-		/* Manage the overflow of the addition */
-		if (hpka->Instance->RAM[PKA_ARITHMETIC_ALL_OPS_OUT_RESULT +
-					size] != 0UL) {
-			size += 1UL;
-		}
-
-		break;
-	case PKA_MODE_COMPARISON:
-		size = 1;
-		break;
-	case PKA_MODE_ARITHMETIC_MUL:
-		size = hpka->Instance->RAM[PKA_ARITHMETIC_MUL_NB_BITS] / 32UL *
-		       2UL;
-		break;
-	default:
-		break;
-	}
-
-	if (pRes != NULL) {
-		switch (mode) {
+		case PKA_MODE_MONTGOMERY_PARAM:
 		case PKA_MODE_ARITHMETIC_SUB:
 		case PKA_MODE_MODULAR_ADD:
 		case PKA_MODE_MODULAR_RED:
 		case PKA_MODE_MODULAR_INV:
-		case PKA_MODE_MODULAR_SUB:
 		case PKA_MODE_MONTGOMERY_MUL:
+			size = hpka->Instance->RAM[2] / 32UL;
+			break;
 		case PKA_MODE_ARITHMETIC_ADD:
+		case PKA_MODE_MODULAR_SUB:
+			size = hpka->Instance
+				   ->RAM[PKA_ARITHMETIC_ALL_OPS_NB_BITS] /
+			       32UL;
+
+			/* Manage the overflow of the addition */
+			if (hpka->Instance
+				->RAM[PKA_ARITHMETIC_ALL_OPS_OUT_RESULT +
+				      size] != 0UL) {
+				size += 1UL;
+			}
+
+			break;
 		case PKA_MODE_COMPARISON:
+			size = 1;
+			break;
 		case PKA_MODE_ARITHMETIC_MUL:
-			PKA_Memcpy_u32_to_u32(
-			    pRes,
-			    &hpka->Instance
-				 ->RAM[PKA_ARITHMETIC_ALL_OPS_OUT_RESULT],
-			    size);
+			size = hpka->Instance->RAM[PKA_ARITHMETIC_MUL_NB_BITS] /
+			       32UL * 2UL;
 			break;
 		default:
 			break;
+	}
+
+	if (pRes != NULL) {
+		switch (mode) {
+			case PKA_MODE_ARITHMETIC_SUB:
+			case PKA_MODE_MODULAR_ADD:
+			case PKA_MODE_MODULAR_RED:
+			case PKA_MODE_MODULAR_INV:
+			case PKA_MODE_MODULAR_SUB:
+			case PKA_MODE_MONTGOMERY_MUL:
+			case PKA_MODE_ARITHMETIC_ADD:
+			case PKA_MODE_COMPARISON:
+			case PKA_MODE_ARITHMETIC_MUL:
+				PKA_Memcpy_u32_to_u32(
+				    pRes,
+				    &hpka->Instance->RAM
+					 [PKA_ARITHMETIC_ALL_OPS_OUT_RESULT],
+				    size);
+				break;
+			default:
+				break;
 		}
 	}
 }
@@ -1957,52 +1967,54 @@ void HAL_PKA_IRQHandler(PKA_HandleTypeDef *hpka)
 
 	/* Check the operation success in case of ECDSA signature */
 	switch (mode) {
-	case PKA_MODE_ECDSA_SIGNATURE:
-		/* If error output result is different from no error, operation
-		 * need to be repeated */
-		if (hpka->Instance->RAM[PKA_ECDSA_SIGN_OUT_ERROR] !=
-		    PKA_NO_ERROR) {
-			hpka->ErrorCode |= HAL_PKA_ERROR_OPERATION;
-		}
-		break;
+		case PKA_MODE_ECDSA_SIGNATURE:
+			/* If error output result is different from no error,
+			 * operation need to be repeated */
+			if (hpka->Instance->RAM[PKA_ECDSA_SIGN_OUT_ERROR] !=
+			    PKA_NO_ERROR) {
+				hpka->ErrorCode |= HAL_PKA_ERROR_OPERATION;
+			}
+			break;
 
-	case PKA_MODE_DOUBLE_BASE_LADDER:
-		/* If error output result is different from no error, operation
-		 * need to be repeated */
-		if (hpka->Instance->RAM[PKA_ECC_DOUBLE_LADDER_OUT_ERROR] !=
-		    PKA_NO_ERROR) {
-			hpka->ErrorCode |= HAL_PKA_ERROR_OPERATION;
-		}
-		break;
+		case PKA_MODE_DOUBLE_BASE_LADDER:
+			/* If error output result is different from no error,
+			 * operation need to be repeated */
+			if (hpka->Instance
+				->RAM[PKA_ECC_DOUBLE_LADDER_OUT_ERROR] !=
+			    PKA_NO_ERROR) {
+				hpka->ErrorCode |= HAL_PKA_ERROR_OPERATION;
+			}
+			break;
 
-	case PKA_MODE_ECC_PROJECTIVE_AFF:
-		/* If error output result is different from no error, operation
-		 * need to be repeated */
-		if (hpka->Instance->RAM[PKA_ECC_PROJECTIVE_AFF_OUT_ERROR] !=
-		    PKA_NO_ERROR) {
-			hpka->ErrorCode |= HAL_PKA_ERROR_OPERATION;
-		}
-		break;
+		case PKA_MODE_ECC_PROJECTIVE_AFF:
+			/* If error output result is different from no error,
+			 * operation need to be repeated */
+			if (hpka->Instance
+				->RAM[PKA_ECC_PROJECTIVE_AFF_OUT_ERROR] !=
+			    PKA_NO_ERROR) {
+				hpka->ErrorCode |= HAL_PKA_ERROR_OPERATION;
+			}
+			break;
 
-	case PKA_MODE_ECC_MUL:
-		/* If error output result is different from no error, operation
-		 * need to be repeated */
-		if (hpka->Instance->RAM[PKA_ECC_SCALAR_MUL_OUT_ERROR] !=
-		    PKA_NO_ERROR) {
-			hpka->ErrorCode |= HAL_PKA_ERROR_OPERATION;
-		}
-		break;
+		case PKA_MODE_ECC_MUL:
+			/* If error output result is different from no error,
+			 * operation need to be repeated */
+			if (hpka->Instance->RAM[PKA_ECC_SCALAR_MUL_OUT_ERROR] !=
+			    PKA_NO_ERROR) {
+				hpka->ErrorCode |= HAL_PKA_ERROR_OPERATION;
+			}
+			break;
 
-	case PKA_MODE_MODULAR_EXP_PROTECT:
-		/* If error output result is different from no error, operation
-		 * need to be repeated */
-		if (hpka->Instance->RAM[PKA_MODULAR_EXP_OUT_ERROR] !=
-		    PKA_NO_ERROR) {
-			hpka->ErrorCode |= HAL_PKA_ERROR_OPERATION;
-		}
-		break;
-	default:
-		break;
+		case PKA_MODE_MODULAR_EXP_PROTECT:
+			/* If error output result is different from no error,
+			 * operation need to be repeated */
+			if (hpka->Instance->RAM[PKA_MODULAR_EXP_OUT_ERROR] !=
+			    PKA_NO_ERROR) {
+				hpka->ErrorCode |= HAL_PKA_ERROR_OPERATION;
+			}
+			break;
+		default:
+			break;
 	}
 	/* Trigger the error callback if an error is present */
 	if (hpka->ErrorCode != HAL_PKA_ERROR_NONE) {

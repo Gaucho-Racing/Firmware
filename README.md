@@ -1,10 +1,41 @@
 # GR Firmware
+Table of Contents
+* [Quickstart](#Quickstart)  
+* [Testing](#Testing)  
+    * [Setup](#Setup)  
+    * [Running](#Running)  
+* [VS Code Setup](#VS-Code-Setup)  
+* [REPO RULES (follow if you want your builds to work)](#REPO-RULES-(follow-if-you-want-your-builds-to-work))  
+* [To add a New Project](#To-add-a-New-Project)  
+* [To add a New Platform ](#To-add-a-New-Platform )  
+* [Chip Path Contamination](#Chip-Path-Contamination)  
+
+# Quickstart
+The goal of this section is to compile and flash any project  
+The monorepo relies on CMake to build the projects. 
+
+If trying to run HOOTL tests or simulated development: see [Testing](#testing)
+
+If simply trying to build the executable for the arm based platform: use any other configure preset (Options as of 8/28/2025: Debug, RelWithDebInfo, Release, MinSizeRel)
+
+**To choose configure preset:** 
+
+*If using CMake VSCode plugin*: VScode will prompt upon first entrance, otherwise go to the CMake plugin window and click the pencil icon on the option under configure. Alternatively use the command palette and call CMake: Select Configure Preset.
+
+*If using CLI*: run 
+`cmake -S . -B {build directory, ex: build or Debug/build} -G Ninja --preset={preset}`
+
+**Then Build**:
+
+*If using CMake VSCode plugin*: Check under the Project Outline Category in the CMake plugin window, There should be build all projects option and a build specific target (executable is a type of target) next to the target. Alternatively use the command palette and call CMake: Build
+
+*If using CLI*: run
+`cmake --build {path to build directory} --target {name of target; optional} --preset={build preset; optional}`
 
 [![CMake](https://github.com/Gaucho-Racing/Firmware/actions/workflows/BuildAllPresets.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/BuildAllPresets.yml)
 [![CTest](https://github.com/Gaucho-Racing/Firmware/actions/workflows/RunCTests.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/RunCTests.yml)
-[![ClangFormat](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ClangFormat.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ClangFormat.yml)
+[![Auto Format](https://github.com/Gaucho-Racing/Firmware/actions/workflows/AutoFormat.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/AutoFormat.yml)
 [![ValidateConfigs](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ValidateConfigs.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ValidateConfigs.yml)
-[![CodeQL](https://github.com/Gaucho-Racing/Firmware/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/github-code-scanning/codeql)
 
 **_DO NOT DELETE ANY LICENSE INFORMATION ON ANY COPIED FILE OR LINE OF CODE_**
 
@@ -12,32 +43,30 @@ When able, please add VS Code comptatible doc comments! These will help debuggin
 
 ## Install Tools/Dependencies
 *For Windows:*
-1. [CMake](https://cmake.org/download/)
-2. [Ninja](https://github.com/ninja-build/ninja/releases)
-3. [ARM Toolchain (arm-none-eabi)](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
-4. [OpenOCD](https://github.com/openocd-org/openocd/releases/tag/v0.12.0)
+1. `winget install Ninja-build.Ninja Kitware.CMake Arm.GnuArmEmbeddedToolchain`
+2. [OpenOCD](https://github.com/openocd-org/openocd/releases/latest) -> Download the `.tar.gz` file, extract to directory, add the bin directory to your `PATH`
+3. Relaunch your terminal
 
 *For MacOS:*
-1. Install Homebrew (paste this into terminal): `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
-2. `brew install cmake`
-3. `brew install ninja`
-4. `brew install open-ocd`
-4. [ARM Toolchain (arm-none-eabi)](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
-- Look under "AArch32 bare-metal target (arm-none-eabi)" and install the .pkg file 
-- Add the ARM Toolchain to your PATH variable using the following commands in your terminal:
-    - `nano ~/.zshrc` --> use a basic text editor (nano) to edit the zsh configuration file
-    - `export PATH="/Applications/ArmGNUToolchain/14.3.rel1/arm-none-eabi/bin:$PATH"` --> paste this into the config file
-    - `source ~/.zshrc` --> refresh your zsh terminal to apply the changes made
+1. `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+2. `brew install cmake ninja open-ocd`
+3. `brew install --cask gcc-arm-embedded`
+4. Relaunch your terminal
 
-**Note:** DO NOT use Homebrew to install "arm-none-eabi-gcc"- their ARM toolchain package is broken
+*For Linux / BSD:*
+* `sudo apt install cmake ninja gcc-arm-none-eabi openocd`
+* `sudo dnf install cmake ninja openocd arm-none-eabi-gcc`
+* `sudo pacman -S cmake ninja openocd arm-none-eabi-gcc`
+* `pkg install cmake ninja openocd arm-none-eabi-gcc`
+* If you run into issues verify that binutils and newlib are installed for `arm-none-eabi`
 
-Verify that you have all these dependencies installed:
-- CMAKE - `cmake --version`
-- ninja - `ninja --version`
-- ARM toolchain - `arm-none-eabi-gcc --version`
-- openocd - `openocd --version`
+### Verify that you have all these dependencies installed:
+- CMake - `cmake --version`
+- Ninja - `ninja --version`
+- Arm - `arm-none-eabi-gcc --version`
+- OpenOCD - `openocd --version`
 
-**CMake** (metabuild system) --> **Ninja** (build system) --> **ARM Toolchain** (provides tools to compile & link code)
+**CMake** (metabuild system) --> **Ninja** (build system) --> **Arm Toolchain** (provides tools to compile & link code)
 **OpenOCD** is an on-chip debugger, which allows us to examine code line-by-line in Debug mode
 
 # REPO RULES (follow if you want your builds to work)
@@ -114,53 +143,59 @@ Put into `.vscode/settings.json` the following starter template:
 
 ```
 
+# REPO RULES (follow if you want your builds to work)
+- Add a folder for each board with Core and Application, with Src and Inc in both
+- Do not question naming conventions please
+- Each project needs it's own directory where the name of the directory is the name of the project/executable
+  - this is because I am lazy and wanted to hardcode stuff for `add_GR_project` (see `gr-lib.cmake`)
+
+If you do not want GitHub Action emails please turn off notifications on your side. See something like https://stackoverflow.com/q/66116203
+
+Rebase please, run `git config pull.rebase true`
+
+# To add a New Project
+
+Copy ProjectTemplate right underneath the parent directory (Firmware)
+
+All projects follow the following structure. 
+
+* *Project*
+    * Application
+        * Inc
+        * Src
+        * Test
+    * Core
+        * Inc
+        * Src
+    * CMakeLists.txt
+
+Core should have Peripheral related code, it requires a {platform}\_hal\_conf.h, {platform}\_it.h, {platform}\_assert.h, {platform}\_hal\_msp.c, {platform}\_it.c, syscall.c, sysmem.c, and system\_{plat}.c. Some of these can be found as templates in the HAL/LL drivers section in the platform corresponding, others you might need to copy them from a cubemx project.
+
+Edit the target_sources/target_link_libraries to include all the 
+
+# To add a New Platform 
+
+Copy PlatformTemplate underneath Platform and rename the directory to the platform 
+
+* CompileDependencies
+    * startup_{platform}.s
+    * {platform}.svd
+    * {platform}_flash.ld
+* Drivers
+    * CMSIS
+    * stm32-hal-driver
+* Peripheral
+* chip.cmake
+* history.md
+
+Typical process would be to make a cubemx project and steal the CMSIS, startup\_{platform}.s, {platform}\_flash.ld. Copy the stm32-hal-driver from the STM github repo online, only steal Inc and Src. 
+
+Check chip.cmake and look for comments with REPLACE, do what it says.
+
+in the main Cmakelists.txt include the chip.cmake next to where all the other chip.cmake files are included
+
+
 ## Chip Path Contamination
 Things get moved around and we should probably have some better solution than having CHIP defined in chip.cmake and such
 
 Bad because if there is a change in one of the chip.cmake then we need to manually / physically copy it to all of the others which is not using smart thinking
-
----
-
----
-
----
-
-# LEGACY ACU-25 CONTENT
-
-## Setup
-`launch.json`:
-    ```json
-    "configurations": [
-        {
-            "name": "Debug with OpenOCD",
-            "cwd": "${workspaceFolder}",
-            "executable": "${workspaceFolder}/build/Debug/ACU-25.elf",
-            "type": "cortex-debug",
-            "device": "STM32G474RE",
-            "servertype": "openocd",
-            "configFiles": [
-                "interface/stlink.cfg",
-                "target/stm32g4x.cfg"
-            ],
-            "searchDir": [],
-            "preLaunchTask": "CMake: build",
-            "showDevDebugOutput": "none",
-            "svdPath": "${workspaceFolder}/.vscode/STM32G474.svd" // optional
-        }
-    ]
-    ```
-
-`settings.json`:
-- add `"vscode-serial-monitor.customBaudRates": [1000000]`
-
-`c_cpp_properties.json`:
-- ensure you have the correct compiler path settings to `arm-none-eabi`: `"compilerPath": "/opt/homebrew/bin/arm-none-eabi-gcc",` (MacOS)
-
-## Build & Debug
-- Press Build
-- Press Debug
-    - if Debug doesn't work, open terminal in VSCode and run
-    - `openocd -f interface/stlink.cfg -f target/stm32g4x.cfg -c "program build/Debug/ACU-25.elf verify reset exit"`
-    - if it still doesn't work, try removing the 'build' folder and configuring and rebuilding, sometimes cache stuff can screw u over
-
-<!-- TODO: Create a section about how to make a new project from scratch, also probably explain how the infrastructure lets it work -->

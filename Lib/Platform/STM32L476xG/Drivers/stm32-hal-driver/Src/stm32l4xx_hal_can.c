@@ -589,91 +589,93 @@ HAL_CAN_RegisterCallback(CAN_HandleTypeDef *hcan,
 
 	if (hcan->State == HAL_CAN_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_CAN_TX_MAILBOX0_COMPLETE_CB_ID:
-			hcan->TxMailbox0CompleteCallback = pCallback;
-			break;
+			case HAL_CAN_TX_MAILBOX0_COMPLETE_CB_ID:
+				hcan->TxMailbox0CompleteCallback = pCallback;
+				break;
 
-		case HAL_CAN_TX_MAILBOX1_COMPLETE_CB_ID:
-			hcan->TxMailbox1CompleteCallback = pCallback;
-			break;
+			case HAL_CAN_TX_MAILBOX1_COMPLETE_CB_ID:
+				hcan->TxMailbox1CompleteCallback = pCallback;
+				break;
 
-		case HAL_CAN_TX_MAILBOX2_COMPLETE_CB_ID:
-			hcan->TxMailbox2CompleteCallback = pCallback;
-			break;
+			case HAL_CAN_TX_MAILBOX2_COMPLETE_CB_ID:
+				hcan->TxMailbox2CompleteCallback = pCallback;
+				break;
 
-		case HAL_CAN_TX_MAILBOX0_ABORT_CB_ID:
-			hcan->TxMailbox0AbortCallback = pCallback;
-			break;
+			case HAL_CAN_TX_MAILBOX0_ABORT_CB_ID:
+				hcan->TxMailbox0AbortCallback = pCallback;
+				break;
 
-		case HAL_CAN_TX_MAILBOX1_ABORT_CB_ID:
-			hcan->TxMailbox1AbortCallback = pCallback;
-			break;
+			case HAL_CAN_TX_MAILBOX1_ABORT_CB_ID:
+				hcan->TxMailbox1AbortCallback = pCallback;
+				break;
 
-		case HAL_CAN_TX_MAILBOX2_ABORT_CB_ID:
-			hcan->TxMailbox2AbortCallback = pCallback;
-			break;
+			case HAL_CAN_TX_MAILBOX2_ABORT_CB_ID:
+				hcan->TxMailbox2AbortCallback = pCallback;
+				break;
 
-		case HAL_CAN_RX_FIFO0_MSG_PENDING_CB_ID:
-			hcan->RxFifo0MsgPendingCallback = pCallback;
-			break;
+			case HAL_CAN_RX_FIFO0_MSG_PENDING_CB_ID:
+				hcan->RxFifo0MsgPendingCallback = pCallback;
+				break;
 
-		case HAL_CAN_RX_FIFO0_FULL_CB_ID:
-			hcan->RxFifo0FullCallback = pCallback;
-			break;
+			case HAL_CAN_RX_FIFO0_FULL_CB_ID:
+				hcan->RxFifo0FullCallback = pCallback;
+				break;
 
-		case HAL_CAN_RX_FIFO1_MSG_PENDING_CB_ID:
-			hcan->RxFifo1MsgPendingCallback = pCallback;
-			break;
+			case HAL_CAN_RX_FIFO1_MSG_PENDING_CB_ID:
+				hcan->RxFifo1MsgPendingCallback = pCallback;
+				break;
 
-		case HAL_CAN_RX_FIFO1_FULL_CB_ID:
-			hcan->RxFifo1FullCallback = pCallback;
-			break;
+			case HAL_CAN_RX_FIFO1_FULL_CB_ID:
+				hcan->RxFifo1FullCallback = pCallback;
+				break;
 
-		case HAL_CAN_SLEEP_CB_ID:
-			hcan->SleepCallback = pCallback;
-			break;
+			case HAL_CAN_SLEEP_CB_ID:
+				hcan->SleepCallback = pCallback;
+				break;
 
-		case HAL_CAN_WAKEUP_FROM_RX_MSG_CB_ID:
-			hcan->WakeUpFromRxMsgCallback = pCallback;
-			break;
+			case HAL_CAN_WAKEUP_FROM_RX_MSG_CB_ID:
+				hcan->WakeUpFromRxMsgCallback = pCallback;
+				break;
 
-		case HAL_CAN_ERROR_CB_ID:
-			hcan->ErrorCallback = pCallback;
-			break;
+			case HAL_CAN_ERROR_CB_ID:
+				hcan->ErrorCallback = pCallback;
+				break;
 
-		case HAL_CAN_MSPINIT_CB_ID:
-			hcan->MspInitCallback = pCallback;
-			break;
+			case HAL_CAN_MSPINIT_CB_ID:
+				hcan->MspInitCallback = pCallback;
+				break;
 
-		case HAL_CAN_MSPDEINIT_CB_ID:
-			hcan->MspDeInitCallback = pCallback;
-			break;
+			case HAL_CAN_MSPDEINIT_CB_ID:
+				hcan->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hcan->ErrorCode |= HAL_CAN_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hcan->ErrorCode |=
+				    HAL_CAN_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hcan->State == HAL_CAN_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_CAN_MSPINIT_CB_ID:
-			hcan->MspInitCallback = pCallback;
-			break;
+			case HAL_CAN_MSPINIT_CB_ID:
+				hcan->MspInitCallback = pCallback;
+				break;
 
-		case HAL_CAN_MSPDEINIT_CB_ID:
-			hcan->MspDeInitCallback = pCallback;
-			break;
+			case HAL_CAN_MSPDEINIT_CB_ID:
+				hcan->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hcan->ErrorCode |= HAL_CAN_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hcan->ErrorCode |=
+				    HAL_CAN_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -727,100 +729,104 @@ HAL_CAN_UnRegisterCallback(CAN_HandleTypeDef *hcan,
 
 	if (hcan->State == HAL_CAN_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_CAN_TX_MAILBOX0_COMPLETE_CB_ID:
-			hcan->TxMailbox0CompleteCallback =
-			    HAL_CAN_TxMailbox0CompleteCallback;
-			break;
+			case HAL_CAN_TX_MAILBOX0_COMPLETE_CB_ID:
+				hcan->TxMailbox0CompleteCallback =
+				    HAL_CAN_TxMailbox0CompleteCallback;
+				break;
 
-		case HAL_CAN_TX_MAILBOX1_COMPLETE_CB_ID:
-			hcan->TxMailbox1CompleteCallback =
-			    HAL_CAN_TxMailbox1CompleteCallback;
-			break;
+			case HAL_CAN_TX_MAILBOX1_COMPLETE_CB_ID:
+				hcan->TxMailbox1CompleteCallback =
+				    HAL_CAN_TxMailbox1CompleteCallback;
+				break;
 
-		case HAL_CAN_TX_MAILBOX2_COMPLETE_CB_ID:
-			hcan->TxMailbox2CompleteCallback =
-			    HAL_CAN_TxMailbox2CompleteCallback;
-			break;
+			case HAL_CAN_TX_MAILBOX2_COMPLETE_CB_ID:
+				hcan->TxMailbox2CompleteCallback =
+				    HAL_CAN_TxMailbox2CompleteCallback;
+				break;
 
-		case HAL_CAN_TX_MAILBOX0_ABORT_CB_ID:
-			hcan->TxMailbox0AbortCallback =
-			    HAL_CAN_TxMailbox0AbortCallback;
-			break;
+			case HAL_CAN_TX_MAILBOX0_ABORT_CB_ID:
+				hcan->TxMailbox0AbortCallback =
+				    HAL_CAN_TxMailbox0AbortCallback;
+				break;
 
-		case HAL_CAN_TX_MAILBOX1_ABORT_CB_ID:
-			hcan->TxMailbox1AbortCallback =
-			    HAL_CAN_TxMailbox1AbortCallback;
-			break;
+			case HAL_CAN_TX_MAILBOX1_ABORT_CB_ID:
+				hcan->TxMailbox1AbortCallback =
+				    HAL_CAN_TxMailbox1AbortCallback;
+				break;
 
-		case HAL_CAN_TX_MAILBOX2_ABORT_CB_ID:
-			hcan->TxMailbox2AbortCallback =
-			    HAL_CAN_TxMailbox2AbortCallback;
-			break;
+			case HAL_CAN_TX_MAILBOX2_ABORT_CB_ID:
+				hcan->TxMailbox2AbortCallback =
+				    HAL_CAN_TxMailbox2AbortCallback;
+				break;
 
-		case HAL_CAN_RX_FIFO0_MSG_PENDING_CB_ID:
-			hcan->RxFifo0MsgPendingCallback =
-			    HAL_CAN_RxFifo0MsgPendingCallback;
-			break;
+			case HAL_CAN_RX_FIFO0_MSG_PENDING_CB_ID:
+				hcan->RxFifo0MsgPendingCallback =
+				    HAL_CAN_RxFifo0MsgPendingCallback;
+				break;
 
-		case HAL_CAN_RX_FIFO0_FULL_CB_ID:
-			hcan->RxFifo0FullCallback = HAL_CAN_RxFifo0FullCallback;
-			break;
+			case HAL_CAN_RX_FIFO0_FULL_CB_ID:
+				hcan->RxFifo0FullCallback =
+				    HAL_CAN_RxFifo0FullCallback;
+				break;
 
-		case HAL_CAN_RX_FIFO1_MSG_PENDING_CB_ID:
-			hcan->RxFifo1MsgPendingCallback =
-			    HAL_CAN_RxFifo1MsgPendingCallback;
-			break;
+			case HAL_CAN_RX_FIFO1_MSG_PENDING_CB_ID:
+				hcan->RxFifo1MsgPendingCallback =
+				    HAL_CAN_RxFifo1MsgPendingCallback;
+				break;
 
-		case HAL_CAN_RX_FIFO1_FULL_CB_ID:
-			hcan->RxFifo1FullCallback = HAL_CAN_RxFifo1FullCallback;
-			break;
+			case HAL_CAN_RX_FIFO1_FULL_CB_ID:
+				hcan->RxFifo1FullCallback =
+				    HAL_CAN_RxFifo1FullCallback;
+				break;
 
-		case HAL_CAN_SLEEP_CB_ID:
-			hcan->SleepCallback = HAL_CAN_SleepCallback;
-			break;
+			case HAL_CAN_SLEEP_CB_ID:
+				hcan->SleepCallback = HAL_CAN_SleepCallback;
+				break;
 
-		case HAL_CAN_WAKEUP_FROM_RX_MSG_CB_ID:
-			hcan->WakeUpFromRxMsgCallback =
-			    HAL_CAN_WakeUpFromRxMsgCallback;
-			break;
+			case HAL_CAN_WAKEUP_FROM_RX_MSG_CB_ID:
+				hcan->WakeUpFromRxMsgCallback =
+				    HAL_CAN_WakeUpFromRxMsgCallback;
+				break;
 
-		case HAL_CAN_ERROR_CB_ID:
-			hcan->ErrorCallback = HAL_CAN_ErrorCallback;
-			break;
+			case HAL_CAN_ERROR_CB_ID:
+				hcan->ErrorCallback = HAL_CAN_ErrorCallback;
+				break;
 
-		case HAL_CAN_MSPINIT_CB_ID:
-			hcan->MspInitCallback = HAL_CAN_MspInit;
-			break;
+			case HAL_CAN_MSPINIT_CB_ID:
+				hcan->MspInitCallback = HAL_CAN_MspInit;
+				break;
 
-		case HAL_CAN_MSPDEINIT_CB_ID:
-			hcan->MspDeInitCallback = HAL_CAN_MspDeInit;
-			break;
+			case HAL_CAN_MSPDEINIT_CB_ID:
+				hcan->MspDeInitCallback = HAL_CAN_MspDeInit;
+				break;
 
-		default:
-			/* Update the error code */
-			hcan->ErrorCode |= HAL_CAN_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hcan->ErrorCode |=
+				    HAL_CAN_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hcan->State == HAL_CAN_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_CAN_MSPINIT_CB_ID:
-			hcan->MspInitCallback = HAL_CAN_MspInit;
-			break;
+			case HAL_CAN_MSPINIT_CB_ID:
+				hcan->MspInitCallback = HAL_CAN_MspInit;
+				break;
 
-		case HAL_CAN_MSPDEINIT_CB_ID:
-			hcan->MspDeInitCallback = HAL_CAN_MspDeInit;
-			break;
+			case HAL_CAN_MSPDEINIT_CB_ID:
+				hcan->MspDeInitCallback = HAL_CAN_MspDeInit;
+				break;
 
-		default:
-			/* Update the error code */
-			hcan->ErrorCode |= HAL_CAN_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hcan->ErrorCode |=
+				    HAL_CAN_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -2026,35 +2032,38 @@ void HAL_CAN_IRQHandler(CAN_HandleTypeDef *hcan)
 			if (((interrupts & CAN_IT_LAST_ERROR_CODE) != 0U) &&
 			    ((esrflags & CAN_ESR_LEC) != 0U)) {
 				switch (esrflags & CAN_ESR_LEC) {
-				case (CAN_ESR_LEC_0):
-					/* Set CAN error code to Stuff error */
-					errorcode |= HAL_CAN_ERROR_STF;
-					break;
-				case (CAN_ESR_LEC_1):
-					/* Set CAN error code to Form error */
-					errorcode |= HAL_CAN_ERROR_FOR;
-					break;
-				case (CAN_ESR_LEC_1 | CAN_ESR_LEC_0):
-					/* Set CAN error code to Acknowledgement
-					 * error */
-					errorcode |= HAL_CAN_ERROR_ACK;
-					break;
-				case (CAN_ESR_LEC_2):
-					/* Set CAN error code to Bit recessive
-					 * error */
-					errorcode |= HAL_CAN_ERROR_BR;
-					break;
-				case (CAN_ESR_LEC_2 | CAN_ESR_LEC_0):
-					/* Set CAN error code to Bit Dominant
-					 * error */
-					errorcode |= HAL_CAN_ERROR_BD;
-					break;
-				case (CAN_ESR_LEC_2 | CAN_ESR_LEC_1):
-					/* Set CAN error code to CRC error */
-					errorcode |= HAL_CAN_ERROR_CRC;
-					break;
-				default:
-					break;
+					case (CAN_ESR_LEC_0):
+						/* Set CAN error code to Stuff
+						 * error */
+						errorcode |= HAL_CAN_ERROR_STF;
+						break;
+					case (CAN_ESR_LEC_1):
+						/* Set CAN error code to Form
+						 * error */
+						errorcode |= HAL_CAN_ERROR_FOR;
+						break;
+					case (CAN_ESR_LEC_1 | CAN_ESR_LEC_0):
+						/* Set CAN error code to
+						 * Acknowledgement error */
+						errorcode |= HAL_CAN_ERROR_ACK;
+						break;
+					case (CAN_ESR_LEC_2):
+						/* Set CAN error code to Bit
+						 * recessive error */
+						errorcode |= HAL_CAN_ERROR_BR;
+						break;
+					case (CAN_ESR_LEC_2 | CAN_ESR_LEC_0):
+						/* Set CAN error code to Bit
+						 * Dominant error */
+						errorcode |= HAL_CAN_ERROR_BD;
+						break;
+					case (CAN_ESR_LEC_2 | CAN_ESR_LEC_1):
+						/* Set CAN error code to CRC
+						 * error */
+						errorcode |= HAL_CAN_ERROR_CRC;
+						break;
+					default:
+						break;
 				}
 
 				/* Clear Last error code Flag */

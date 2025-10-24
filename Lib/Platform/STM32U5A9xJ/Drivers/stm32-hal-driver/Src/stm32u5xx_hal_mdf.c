@@ -716,43 +716,45 @@ HAL_StatusTypeDef HAL_MDF_RegisterCallback(MDF_HandleTypeDef *hmdf,
 	} else {
 		if (hmdf->State == HAL_MDF_STATE_READY) {
 			switch (CallbackID) {
-			case HAL_MDF_ACQ_COMPLETE_CB_ID:
-				hmdf->AcqCpltCallback = pCallback;
-				break;
-			case HAL_MDF_ACQ_HALFCOMPLETE_CB_ID:
-				hmdf->AcqHalfCpltCallback = pCallback;
-				break;
-			case HAL_MDF_SAD_CB_ID:
-				hmdf->SadCallback = pCallback;
-				break;
-			case HAL_MDF_ERROR_CB_ID:
-				hmdf->ErrorCallback = pCallback;
-				break;
-			case HAL_MDF_MSPINIT_CB_ID:
-				hmdf->MspInitCallback = pCallback;
-				break;
-			case HAL_MDF_MSPDEINIT_CB_ID:
-				hmdf->MspDeInitCallback = pCallback;
-				break;
-			default:
-				/* Update error code and status */
-				hmdf->ErrorCode |= MDF_ERROR_INVALID_CALLBACK;
-				status = HAL_ERROR;
-				break;
+				case HAL_MDF_ACQ_COMPLETE_CB_ID:
+					hmdf->AcqCpltCallback = pCallback;
+					break;
+				case HAL_MDF_ACQ_HALFCOMPLETE_CB_ID:
+					hmdf->AcqHalfCpltCallback = pCallback;
+					break;
+				case HAL_MDF_SAD_CB_ID:
+					hmdf->SadCallback = pCallback;
+					break;
+				case HAL_MDF_ERROR_CB_ID:
+					hmdf->ErrorCallback = pCallback;
+					break;
+				case HAL_MDF_MSPINIT_CB_ID:
+					hmdf->MspInitCallback = pCallback;
+					break;
+				case HAL_MDF_MSPDEINIT_CB_ID:
+					hmdf->MspDeInitCallback = pCallback;
+					break;
+				default:
+					/* Update error code and status */
+					hmdf->ErrorCode |=
+					    MDF_ERROR_INVALID_CALLBACK;
+					status = HAL_ERROR;
+					break;
 			}
 		} else if (hmdf->State == HAL_MDF_STATE_RESET) {
 			switch (CallbackID) {
-			case HAL_MDF_MSPINIT_CB_ID:
-				hmdf->MspInitCallback = pCallback;
-				break;
-			case HAL_MDF_MSPDEINIT_CB_ID:
-				hmdf->MspDeInitCallback = pCallback;
-				break;
-			default:
-				/* Update error code and status */
-				hmdf->ErrorCode |= MDF_ERROR_INVALID_CALLBACK;
-				status = HAL_ERROR;
-				break;
+				case HAL_MDF_MSPINIT_CB_ID:
+					hmdf->MspInitCallback = pCallback;
+					break;
+				case HAL_MDF_MSPDEINIT_CB_ID:
+					hmdf->MspDeInitCallback = pCallback;
+					break;
+				default:
+					/* Update error code and status */
+					hmdf->ErrorCode |=
+					    MDF_ERROR_INVALID_CALLBACK;
+					status = HAL_ERROR;
+					break;
 			}
 		} else {
 			/* Update error code and status */
@@ -790,43 +792,44 @@ HAL_MDF_UnRegisterCallback(MDF_HandleTypeDef *hmdf,
 
 	if (hmdf->State == HAL_MDF_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_MDF_ACQ_COMPLETE_CB_ID:
-			hmdf->AcqCpltCallback = HAL_MDF_AcqCpltCallback;
-			break;
-		case HAL_MDF_ACQ_HALFCOMPLETE_CB_ID:
-			hmdf->AcqHalfCpltCallback = HAL_MDF_AcqHalfCpltCallback;
-			break;
-		case HAL_MDF_SAD_CB_ID:
-			hmdf->SadCallback = HAL_MDF_SadCallback;
-			break;
-		case HAL_MDF_ERROR_CB_ID:
-			hmdf->ErrorCallback = HAL_MDF_ErrorCallback;
-			break;
-		case HAL_MDF_MSPINIT_CB_ID:
-			hmdf->MspInitCallback = HAL_MDF_MspInit;
-			break;
-		case HAL_MDF_MSPDEINIT_CB_ID:
-			hmdf->MspDeInitCallback = HAL_MDF_MspDeInit;
-			break;
-		default:
-			/* Update error code and status */
-			hmdf->ErrorCode |= MDF_ERROR_INVALID_CALLBACK;
-			status = HAL_ERROR;
-			break;
+			case HAL_MDF_ACQ_COMPLETE_CB_ID:
+				hmdf->AcqCpltCallback = HAL_MDF_AcqCpltCallback;
+				break;
+			case HAL_MDF_ACQ_HALFCOMPLETE_CB_ID:
+				hmdf->AcqHalfCpltCallback =
+				    HAL_MDF_AcqHalfCpltCallback;
+				break;
+			case HAL_MDF_SAD_CB_ID:
+				hmdf->SadCallback = HAL_MDF_SadCallback;
+				break;
+			case HAL_MDF_ERROR_CB_ID:
+				hmdf->ErrorCallback = HAL_MDF_ErrorCallback;
+				break;
+			case HAL_MDF_MSPINIT_CB_ID:
+				hmdf->MspInitCallback = HAL_MDF_MspInit;
+				break;
+			case HAL_MDF_MSPDEINIT_CB_ID:
+				hmdf->MspDeInitCallback = HAL_MDF_MspDeInit;
+				break;
+			default:
+				/* Update error code and status */
+				hmdf->ErrorCode |= MDF_ERROR_INVALID_CALLBACK;
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hmdf->State == HAL_MDF_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_MDF_MSPINIT_CB_ID:
-			hmdf->MspInitCallback = HAL_MDF_MspInit;
-			break;
-		case HAL_MDF_MSPDEINIT_CB_ID:
-			hmdf->MspDeInitCallback = HAL_MDF_MspDeInit;
-			break;
-		default:
-			/* Update error code and status */
-			hmdf->ErrorCode |= MDF_ERROR_INVALID_CALLBACK;
-			status = HAL_ERROR;
-			break;
+			case HAL_MDF_MSPINIT_CB_ID:
+				hmdf->MspInitCallback = HAL_MDF_MspInit;
+				break;
+			case HAL_MDF_MSPDEINIT_CB_ID:
+				hmdf->MspDeInitCallback = HAL_MDF_MspDeInit;
+				break;
+			default:
+				/* Update error code and status */
+				hmdf->ErrorCode |= MDF_ERROR_INVALID_CALLBACK;
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update error code and status */

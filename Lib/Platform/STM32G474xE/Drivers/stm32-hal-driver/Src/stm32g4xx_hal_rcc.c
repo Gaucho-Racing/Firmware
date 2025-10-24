@@ -1126,18 +1126,22 @@ uint32_t HAL_RCC_GetSysClockFreq(void)
 		       1U;
 
 		switch (pllsource) {
-		case RCC_PLLSOURCE_HSE: /* HSE used as PLL clock source */
-			pllvco = (HSE_VALUE / pllm) *
-				 (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >>
-				  RCC_PLLCFGR_PLLN_Pos);
-			break;
+			case RCC_PLLSOURCE_HSE: /* HSE used as PLL clock source
+						 */
+				pllvco =
+				    (HSE_VALUE / pllm) *
+				    (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >>
+				     RCC_PLLCFGR_PLLN_Pos);
+				break;
 
-		case RCC_PLLSOURCE_HSI: /* HSI used as PLL clock source */
-		default:
-			pllvco = (HSI_VALUE / pllm) *
-				 (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >>
-				  RCC_PLLCFGR_PLLN_Pos);
-			break;
+			case RCC_PLLSOURCE_HSI: /* HSI used as PLL clock source
+						 */
+			default:
+				pllvco =
+				    (HSI_VALUE / pllm) *
+				    (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >>
+				     RCC_PLLCFGR_PLLN_Pos);
+				break;
 		}
 		pllr = ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLR) >>
 			 RCC_PLLCFGR_PLLR_Pos) +
@@ -1427,18 +1431,18 @@ static uint32_t RCC_GetSysClockFreqFromPLLSource(void)
 	    1U;
 
 	switch (pllsource) {
-	case RCC_PLLSOURCE_HSE: /* HSE used as PLL clock source */
-		pllvco = (HSE_VALUE / pllm) *
-			 (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >>
-			  RCC_PLLCFGR_PLLN_Pos);
-		break;
+		case RCC_PLLSOURCE_HSE: /* HSE used as PLL clock source */
+			pllvco = (HSE_VALUE / pllm) *
+				 (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >>
+				  RCC_PLLCFGR_PLLN_Pos);
+			break;
 
-	case RCC_PLLSOURCE_HSI: /* HSI used as PLL clock source */
-	default:
-		pllvco = (HSI_VALUE / pllm) *
-			 (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >>
-			  RCC_PLLCFGR_PLLN_Pos);
-		break;
+		case RCC_PLLSOURCE_HSI: /* HSI used as PLL clock source */
+		default:
+			pllvco = (HSI_VALUE / pllm) *
+				 (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >>
+				  RCC_PLLCFGR_PLLN_Pos);
+			break;
 	}
 
 	pllr = ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLR) >>

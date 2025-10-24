@@ -455,50 +455,50 @@ HAL_SWPMI_RegisterCallback(SWPMI_HandleTypeDef *hswpmi,
 	} else {
 		if (hswpmi->State == HAL_SWPMI_STATE_READY) {
 			switch (CallbackID) {
-			case HAL_SWPMI_RX_COMPLETE_CB_ID:
-				hswpmi->RxCpltCallback = pCallback;
-				break;
-			case HAL_SWPMI_RX_HALFCOMPLETE_CB_ID:
-				hswpmi->RxHalfCpltCallback = pCallback;
-				break;
-			case HAL_SWPMI_TX_COMPLETE_CB_ID:
-				hswpmi->TxCpltCallback = pCallback;
-				break;
-			case HAL_SWPMI_TX_HALFCOMPLETE_CB_ID:
-				hswpmi->TxHalfCpltCallback = pCallback;
-				break;
-			case HAL_SWPMI_ERROR_CB_ID:
-				hswpmi->ErrorCallback = pCallback;
-				break;
-			case HAL_SWPMI_MSPINIT_CB_ID:
-				hswpmi->MspInitCallback = pCallback;
-				break;
-			case HAL_SWPMI_MSPDEINIT_CB_ID:
-				hswpmi->MspDeInitCallback = pCallback;
-				break;
-			default:
-				/* update the error code */
-				hswpmi->ErrorCode |=
-				    HAL_SWPMI_ERROR_INVALID_CALLBACK;
-				/* update return status */
-				status = HAL_ERROR;
-				break;
+				case HAL_SWPMI_RX_COMPLETE_CB_ID:
+					hswpmi->RxCpltCallback = pCallback;
+					break;
+				case HAL_SWPMI_RX_HALFCOMPLETE_CB_ID:
+					hswpmi->RxHalfCpltCallback = pCallback;
+					break;
+				case HAL_SWPMI_TX_COMPLETE_CB_ID:
+					hswpmi->TxCpltCallback = pCallback;
+					break;
+				case HAL_SWPMI_TX_HALFCOMPLETE_CB_ID:
+					hswpmi->TxHalfCpltCallback = pCallback;
+					break;
+				case HAL_SWPMI_ERROR_CB_ID:
+					hswpmi->ErrorCallback = pCallback;
+					break;
+				case HAL_SWPMI_MSPINIT_CB_ID:
+					hswpmi->MspInitCallback = pCallback;
+					break;
+				case HAL_SWPMI_MSPDEINIT_CB_ID:
+					hswpmi->MspDeInitCallback = pCallback;
+					break;
+				default:
+					/* update the error code */
+					hswpmi->ErrorCode |=
+					    HAL_SWPMI_ERROR_INVALID_CALLBACK;
+					/* update return status */
+					status = HAL_ERROR;
+					break;
 			}
 		} else if (hswpmi->State == HAL_SWPMI_STATE_RESET) {
 			switch (CallbackID) {
-			case HAL_SWPMI_MSPINIT_CB_ID:
-				hswpmi->MspInitCallback = pCallback;
-				break;
-			case HAL_SWPMI_MSPDEINIT_CB_ID:
-				hswpmi->MspDeInitCallback = pCallback;
-				break;
-			default:
-				/* update the error code */
-				hswpmi->ErrorCode |=
-				    HAL_SWPMI_ERROR_INVALID_CALLBACK;
-				/* update return status */
-				status = HAL_ERROR;
-				break;
+				case HAL_SWPMI_MSPINIT_CB_ID:
+					hswpmi->MspInitCallback = pCallback;
+					break;
+				case HAL_SWPMI_MSPDEINIT_CB_ID:
+					hswpmi->MspDeInitCallback = pCallback;
+					break;
+				default:
+					/* update the error code */
+					hswpmi->ErrorCode |=
+					    HAL_SWPMI_ERROR_INVALID_CALLBACK;
+					/* update return status */
+					status = HAL_ERROR;
+					break;
 			}
 		} else {
 			/* update the error code */
@@ -536,50 +536,54 @@ HAL_SWPMI_UnRegisterCallback(SWPMI_HandleTypeDef *hswpmi,
 
 	if (hswpmi->State == HAL_SWPMI_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_SWPMI_RX_COMPLETE_CB_ID:
-			hswpmi->RxCpltCallback = HAL_SWPMI_RxCpltCallback;
-			break;
-		case HAL_SWPMI_RX_HALFCOMPLETE_CB_ID:
-			hswpmi->RxHalfCpltCallback =
-			    HAL_SWPMI_RxHalfCpltCallback;
-			break;
-		case HAL_SWPMI_TX_COMPLETE_CB_ID:
-			hswpmi->TxCpltCallback = HAL_SWPMI_TxCpltCallback;
-			break;
-		case HAL_SWPMI_TX_HALFCOMPLETE_CB_ID:
-			hswpmi->TxHalfCpltCallback =
-			    HAL_SWPMI_TxHalfCpltCallback;
-			break;
-		case HAL_SWPMI_ERROR_CB_ID:
-			hswpmi->ErrorCallback = HAL_SWPMI_ErrorCallback;
-			break;
-		case HAL_SWPMI_MSPINIT_CB_ID:
-			hswpmi->MspInitCallback = HAL_SWPMI_MspInit;
-			break;
-		case HAL_SWPMI_MSPDEINIT_CB_ID:
-			hswpmi->MspDeInitCallback = HAL_SWPMI_MspDeInit;
-			break;
-		default:
-			/* update the error code */
-			hswpmi->ErrorCode |= HAL_SWPMI_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_SWPMI_RX_COMPLETE_CB_ID:
+				hswpmi->RxCpltCallback =
+				    HAL_SWPMI_RxCpltCallback;
+				break;
+			case HAL_SWPMI_RX_HALFCOMPLETE_CB_ID:
+				hswpmi->RxHalfCpltCallback =
+				    HAL_SWPMI_RxHalfCpltCallback;
+				break;
+			case HAL_SWPMI_TX_COMPLETE_CB_ID:
+				hswpmi->TxCpltCallback =
+				    HAL_SWPMI_TxCpltCallback;
+				break;
+			case HAL_SWPMI_TX_HALFCOMPLETE_CB_ID:
+				hswpmi->TxHalfCpltCallback =
+				    HAL_SWPMI_TxHalfCpltCallback;
+				break;
+			case HAL_SWPMI_ERROR_CB_ID:
+				hswpmi->ErrorCallback = HAL_SWPMI_ErrorCallback;
+				break;
+			case HAL_SWPMI_MSPINIT_CB_ID:
+				hswpmi->MspInitCallback = HAL_SWPMI_MspInit;
+				break;
+			case HAL_SWPMI_MSPDEINIT_CB_ID:
+				hswpmi->MspDeInitCallback = HAL_SWPMI_MspDeInit;
+				break;
+			default:
+				/* update the error code */
+				hswpmi->ErrorCode |=
+				    HAL_SWPMI_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hswpmi->State == HAL_SWPMI_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_SWPMI_MSPINIT_CB_ID:
-			hswpmi->MspInitCallback = HAL_SWPMI_MspInit;
-			break;
-		case HAL_SWPMI_MSPDEINIT_CB_ID:
-			hswpmi->MspDeInitCallback = HAL_SWPMI_MspDeInit;
-			break;
-		default:
-			/* update the error code */
-			hswpmi->ErrorCode |= HAL_SWPMI_ERROR_INVALID_CALLBACK;
-			/* update return status */
-			status = HAL_ERROR;
-			break;
+			case HAL_SWPMI_MSPINIT_CB_ID:
+				hswpmi->MspInitCallback = HAL_SWPMI_MspInit;
+				break;
+			case HAL_SWPMI_MSPDEINIT_CB_ID:
+				hswpmi->MspDeInitCallback = HAL_SWPMI_MspDeInit;
+				break;
+			default:
+				/* update the error code */
+				hswpmi->ErrorCode |=
+				    HAL_SWPMI_ERROR_INVALID_CALLBACK;
+				/* update return status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* update the error code */

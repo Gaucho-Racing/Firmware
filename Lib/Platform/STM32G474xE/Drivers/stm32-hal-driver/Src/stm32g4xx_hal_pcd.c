@@ -319,65 +319,67 @@ HAL_StatusTypeDef HAL_PCD_RegisterCallback(PCD_HandleTypeDef *hpcd,
 
 	if (hpcd->State == HAL_PCD_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_PCD_SOF_CB_ID:
-			hpcd->SOFCallback = pCallback;
-			break;
+			case HAL_PCD_SOF_CB_ID:
+				hpcd->SOFCallback = pCallback;
+				break;
 
-		case HAL_PCD_SETUPSTAGE_CB_ID:
-			hpcd->SetupStageCallback = pCallback;
-			break;
+			case HAL_PCD_SETUPSTAGE_CB_ID:
+				hpcd->SetupStageCallback = pCallback;
+				break;
 
-		case HAL_PCD_RESET_CB_ID:
-			hpcd->ResetCallback = pCallback;
-			break;
+			case HAL_PCD_RESET_CB_ID:
+				hpcd->ResetCallback = pCallback;
+				break;
 
-		case HAL_PCD_SUSPEND_CB_ID:
-			hpcd->SuspendCallback = pCallback;
-			break;
+			case HAL_PCD_SUSPEND_CB_ID:
+				hpcd->SuspendCallback = pCallback;
+				break;
 
-		case HAL_PCD_RESUME_CB_ID:
-			hpcd->ResumeCallback = pCallback;
-			break;
+			case HAL_PCD_RESUME_CB_ID:
+				hpcd->ResumeCallback = pCallback;
+				break;
 
-		case HAL_PCD_CONNECT_CB_ID:
-			hpcd->ConnectCallback = pCallback;
-			break;
+			case HAL_PCD_CONNECT_CB_ID:
+				hpcd->ConnectCallback = pCallback;
+				break;
 
-		case HAL_PCD_DISCONNECT_CB_ID:
-			hpcd->DisconnectCallback = pCallback;
-			break;
+			case HAL_PCD_DISCONNECT_CB_ID:
+				hpcd->DisconnectCallback = pCallback;
+				break;
 
-		case HAL_PCD_MSPINIT_CB_ID:
-			hpcd->MspInitCallback = pCallback;
-			break;
+			case HAL_PCD_MSPINIT_CB_ID:
+				hpcd->MspInitCallback = pCallback;
+				break;
 
-		case HAL_PCD_MSPDEINIT_CB_ID:
-			hpcd->MspDeInitCallback = pCallback;
-			break;
+			case HAL_PCD_MSPDEINIT_CB_ID:
+				hpcd->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hpcd->ErrorCode |= HAL_PCD_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hpcd->ErrorCode |=
+				    HAL_PCD_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hpcd->State == HAL_PCD_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_PCD_MSPINIT_CB_ID:
-			hpcd->MspInitCallback = pCallback;
-			break;
+			case HAL_PCD_MSPINIT_CB_ID:
+				hpcd->MspInitCallback = pCallback;
+				break;
 
-		case HAL_PCD_MSPDEINIT_CB_ID:
-			hpcd->MspDeInitCallback = pCallback;
-			break;
+			case HAL_PCD_MSPDEINIT_CB_ID:
+				hpcd->MspDeInitCallback = pCallback;
+				break;
 
-		default:
-			/* Update the error code */
-			hpcd->ErrorCode |= HAL_PCD_ERROR_INVALID_CALLBACK;
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+			default:
+				/* Update the error code */
+				hpcd->ErrorCode |=
+				    HAL_PCD_ERROR_INVALID_CALLBACK;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
@@ -420,67 +422,71 @@ HAL_PCD_UnRegisterCallback(PCD_HandleTypeDef *hpcd,
 	/* Setup Legacy weak Callbacks  */
 	if (hpcd->State == HAL_PCD_STATE_READY) {
 		switch (CallbackID) {
-		case HAL_PCD_SOF_CB_ID:
-			hpcd->SOFCallback = HAL_PCD_SOFCallback;
-			break;
+			case HAL_PCD_SOF_CB_ID:
+				hpcd->SOFCallback = HAL_PCD_SOFCallback;
+				break;
 
-		case HAL_PCD_SETUPSTAGE_CB_ID:
-			hpcd->SetupStageCallback = HAL_PCD_SetupStageCallback;
-			break;
+			case HAL_PCD_SETUPSTAGE_CB_ID:
+				hpcd->SetupStageCallback =
+				    HAL_PCD_SetupStageCallback;
+				break;
 
-		case HAL_PCD_RESET_CB_ID:
-			hpcd->ResetCallback = HAL_PCD_ResetCallback;
-			break;
+			case HAL_PCD_RESET_CB_ID:
+				hpcd->ResetCallback = HAL_PCD_ResetCallback;
+				break;
 
-		case HAL_PCD_SUSPEND_CB_ID:
-			hpcd->SuspendCallback = HAL_PCD_SuspendCallback;
-			break;
+			case HAL_PCD_SUSPEND_CB_ID:
+				hpcd->SuspendCallback = HAL_PCD_SuspendCallback;
+				break;
 
-		case HAL_PCD_RESUME_CB_ID:
-			hpcd->ResumeCallback = HAL_PCD_ResumeCallback;
-			break;
+			case HAL_PCD_RESUME_CB_ID:
+				hpcd->ResumeCallback = HAL_PCD_ResumeCallback;
+				break;
 
-		case HAL_PCD_CONNECT_CB_ID:
-			hpcd->ConnectCallback = HAL_PCD_ConnectCallback;
-			break;
+			case HAL_PCD_CONNECT_CB_ID:
+				hpcd->ConnectCallback = HAL_PCD_ConnectCallback;
+				break;
 
-		case HAL_PCD_DISCONNECT_CB_ID:
-			hpcd->DisconnectCallback = HAL_PCD_DisconnectCallback;
-			break;
+			case HAL_PCD_DISCONNECT_CB_ID:
+				hpcd->DisconnectCallback =
+				    HAL_PCD_DisconnectCallback;
+				break;
 
-		case HAL_PCD_MSPINIT_CB_ID:
-			hpcd->MspInitCallback = HAL_PCD_MspInit;
-			break;
+			case HAL_PCD_MSPINIT_CB_ID:
+				hpcd->MspInitCallback = HAL_PCD_MspInit;
+				break;
 
-		case HAL_PCD_MSPDEINIT_CB_ID:
-			hpcd->MspDeInitCallback = HAL_PCD_MspDeInit;
-			break;
+			case HAL_PCD_MSPDEINIT_CB_ID:
+				hpcd->MspDeInitCallback = HAL_PCD_MspDeInit;
+				break;
 
-		default:
-			/* Update the error code */
-			hpcd->ErrorCode |= HAL_PCD_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hpcd->ErrorCode |=
+				    HAL_PCD_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else if (hpcd->State == HAL_PCD_STATE_RESET) {
 		switch (CallbackID) {
-		case HAL_PCD_MSPINIT_CB_ID:
-			hpcd->MspInitCallback = HAL_PCD_MspInit;
-			break;
+			case HAL_PCD_MSPINIT_CB_ID:
+				hpcd->MspInitCallback = HAL_PCD_MspInit;
+				break;
 
-		case HAL_PCD_MSPDEINIT_CB_ID:
-			hpcd->MspDeInitCallback = HAL_PCD_MspDeInit;
-			break;
+			case HAL_PCD_MSPDEINIT_CB_ID:
+				hpcd->MspDeInitCallback = HAL_PCD_MspDeInit;
+				break;
 
-		default:
-			/* Update the error code */
-			hpcd->ErrorCode |= HAL_PCD_ERROR_INVALID_CALLBACK;
+			default:
+				/* Update the error code */
+				hpcd->ErrorCode |=
+				    HAL_PCD_ERROR_INVALID_CALLBACK;
 
-			/* Return error status */
-			status = HAL_ERROR;
-			break;
+				/* Return error status */
+				status = HAL_ERROR;
+				break;
 		}
 	} else {
 		/* Update the error code */
