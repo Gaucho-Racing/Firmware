@@ -5,7 +5,7 @@
 
 // Define the Item type, a wrapper of stored items
 typedef struct {
-	void *ptr;   // pointer to the item
+	void *ptr;     // pointer to the item
 	uint16_t size; // size of the item
 } Item;
 
