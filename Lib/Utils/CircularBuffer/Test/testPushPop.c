@@ -1,4 +1,5 @@
 #include "circularBuffer.h"
+#include "stdlib.h"
 
 int main()
 {
