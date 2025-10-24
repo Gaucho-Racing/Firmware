@@ -3,21 +3,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Define the Item type, a wrapper of stored items
-typedef struct {
-	void *ptr;     // pointer to the item
-	uint16_t size; // size of the item
-} Item;
-
 // Define the circularBuffer data type
 struct circular_buffer_st {
+	CircularBufferMode mode;
 	uint16_t head;	   // the head position inclusive
 	uint16_t tail;	   // the tail position exclusive
 	uint16_t capacity; // the buffer's capacity in number of items
-	Item **buffer;	   // the buffer body
+	void **buffer;	   // the buffer body
 };
 
-CircularBuffer *GR_CircularBuffer_Create(uint16_t capacity)
+CircularBuffer *GR_CircularBuffer_Create(uint16_t capacity, CircularBufferMode mode)
 {
 	// Return null pointer if an invalid size(< 1) is specified
 	if (capacity < 1) {
@@ -25,10 +20,11 @@ CircularBuffer *GR_CircularBuffer_Create(uint16_t capacity)
 	}
 	// For specifications see the header file
 	CircularBuffer *buffer = malloc(sizeof(CircularBuffer));
+	buffer->mode = mode;
 	buffer->head = 0;
 	buffer->tail = 0;
 	buffer->capacity = capacity;
-	buffer->buffer = calloc(capacity, sizeof(Item *));
+	buffer->buffer = calloc(capacity, sizeof(void *));
 	return buffer;
 }
 
@@ -37,17 +33,6 @@ void GR_CircularBuffer_Free(CircularBuffer *buffer)
 	// Error check
 	if (buffer == NULL) {
 		return;
-	}
-	// Free contents
-	for (uint16_t i = 0; i < buffer->capacity; i++) {
-		Item *item = buffer->buffer[i];
-		if (item != NULL) {
-			// Free item body
-			free(item->ptr); // TODO: Recursively free stored items
-					 // if there exists a way.
-			// Free item wrapper
-			free(item);
-		}
 	}
 	// Free buffer body
 	free(buffer->buffer);
@@ -94,10 +79,10 @@ void GR_CircularBuffer_Push(CircularBuffer *buffer, void *object, uint16_t size)
 	// Remove the buffer head if it's going to be overwritten
 	// That is, if the buffer is already full
 	{
-		Item *head = buffer->buffer[buffer->head];
+		void *head = buffer->buffer[buffer->head];
 		if (head != NULL && buffer->head == buffer->tail) {
-			free(head->ptr); // TODO: Make deeper free; see cb_free.
-			free(head);
+			if(buffer->mode == CIRCULAR_BUFFER_FREE_ITEM_ON_OVERWRITE)
+				free(head);
 			buffer->head++;
 			if (buffer->head == buffer->capacity) {
 				buffer->head = 0;
@@ -105,14 +90,8 @@ void GR_CircularBuffer_Push(CircularBuffer *buffer, void *object, uint16_t size)
 		}
 	}
 
-	// Copy object contents to a wrapper
-	Item *item = malloc(sizeof(Item)); // allocate wrapper memory
-	item->ptr = malloc(size);	   // allocate object memory
-	item->size = size;		   // record item size
-	memcpy(item->ptr, object, size);   // copy content
-
-	// Add the wrapper to the buffer
-	buffer->buffer[buffer->tail] = item;
+	// Add the object to the buffer
+	buffer->buffer[buffer->tail] = object;
 
 	// Update tail iterator
 	buffer->tail++;
@@ -124,20 +103,14 @@ void GR_CircularBuffer_Push(CircularBuffer *buffer, void *object, uint16_t size)
 void *GR_CircularBuffer_Pop(CircularBuffer *buffer)
 {
 	// Get buffer head's pointer
-	Item *head = buffer->buffer[buffer->head];
+	void *result = buffer->buffer[buffer->head];
 
-	// Return null pointer if buffer is empty
-	if (head == NULL) {
+	// Return immediately if buffer is empty
+	if (result == NULL) {
 		return NULL;
 	}
 
-	// Copy buffer head to result
-	void *result = malloc(head->size);
-	memcpy(result, head->ptr, head->size);
-
-	// Remove and free buffer head
-	free(head->ptr); // TODO: Make deeper free; see cb_free.
-	free(head);
+	// Update the buffer
 	buffer->buffer[buffer->head] = NULL;
 
 	// Update head iterator
@@ -152,17 +125,5 @@ void *GR_CircularBuffer_Pop(CircularBuffer *buffer)
 
 void *GR_CircularBuffer_Peek(CircularBuffer *buffer)
 {
-	// Get buffer head's pointer
-	Item *head = buffer->buffer[buffer->head];
-
-	// Return null pointer if buffer is empty
-	if (head == NULL) {
-		return NULL;
-	}
-	// Copy buffer head to result and return it
-	void *result = malloc(head->size);
-	memcpy(result, head->ptr, head->size);
-
-	// Return result
-	return result;
+	return buffer->buffer[buffer->head];
 }
