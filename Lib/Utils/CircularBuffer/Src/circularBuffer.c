@@ -6,18 +6,18 @@
 // Define the Item type, a wrapper of stored items
 typedef struct {
 	void *ptr;   // pointer to the item
-	size_t size; // size of the item
+	uint16_t size; // size of the item
 } Item;
 
 // Define the circularBuffer data type
 struct circular_buffer_st {
-	uint32_t head;	   // the head position inclusive
-	uint32_t tail;	   // the tail position exclusive
-	uint32_t capacity; // the buffer's capacity in number of items
+	uint16_t head;	   // the head position inclusive
+	uint16_t tail;	   // the tail position exclusive
+	uint16_t capacity; // the buffer's capacity in number of items
 	Item **buffer;	   // the buffer body
 };
 
-CircularBuffer *GR_CircularBuffer_Create(uint32_t capacity)
+CircularBuffer *GR_CircularBuffer_Create(uint16_t capacity)
 {
 	// Return null pointer if an invalid size(< 1) is specified
 	if (capacity < 1) {
@@ -39,7 +39,7 @@ void GR_CircularBuffer_Free(CircularBuffer *buffer)
 		return;
 	}
 	// Free contents
-	for (uint32_t i = 0; i < buffer->capacity; i++) {
+	for (uint16_t i = 0; i < buffer->capacity; i++) {
 		Item *item = buffer->buffer[i];
 		if (item != NULL) {
 			// Free item body
@@ -55,12 +55,12 @@ void GR_CircularBuffer_Free(CircularBuffer *buffer)
 	free(buffer);
 }
 
-uint32_t GR_CircularBuffer_GetCapacity(CircularBuffer *buffer)
+uint16_t GR_CircularBuffer_GetCapacity(CircularBuffer *buffer)
 {
 	return buffer->capacity;
 }
 
-uint32_t GR_CircularBuffer_GetCurrentSize(CircularBuffer *buffer)
+uint16_t GR_CircularBuffer_GetCurrentSize(CircularBuffer *buffer)
 {
 	// Empty case, since occupied member must have a non-null wrapper
 	// pointer
@@ -89,7 +89,7 @@ bool GR_CircularBuffer_IsEmpty(CircularBuffer *buffer)
 	return buffer->head == buffer->tail && buffer->buffer[0] == NULL;
 }
 
-void GR_CircularBuffer_Push(CircularBuffer *buffer, void *object, size_t size)
+void GR_CircularBuffer_Push(CircularBuffer *buffer, void *object, uint16_t size)
 {
 	// Remove the buffer head if it's going to be overwritten
 	// That is, if the buffer is already full
