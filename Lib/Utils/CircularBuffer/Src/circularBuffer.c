@@ -75,7 +75,7 @@ bool GR_CircularBuffer_IsEmpty(CircularBuffer *buffer)
 	return buffer->head == buffer->tail && buffer->buffer[0] == NULL;
 }
 
-void GR_CircularBuffer_Push(CircularBuffer *buffer, void *object, uint16_t size)
+void GR_CircularBuffer_Push(CircularBuffer *buffer, void *object)
 {
 	// Remove the buffer head if it's going to be overwritten
 	// That is, if the buffer is already full
