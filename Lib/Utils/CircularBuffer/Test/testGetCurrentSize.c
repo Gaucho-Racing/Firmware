@@ -113,9 +113,9 @@ int main()
 
 	buffer = GR_CircularBuffer_Create(
 	    10, CIRCULAR_BUFFER_FREE_ITEM_ON_OVERWRITE);
-	int arr3[15] = {0};
+	int arr4[15] = {0};
 	for (int i = 0; i < 15; i++) {
-		GR_CircularBuffer_Push(buffer, &arr3[i]);
+		GR_CircularBuffer_Push(buffer, &arr4[i]);
 	}
 	for (int i = 0; i < 4; i++) {
 		GR_CircularBuffer_Pop(buffer);
