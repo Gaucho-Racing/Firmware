@@ -6,20 +6,23 @@ int main()
 	CircularBuffer *buffer;
 
 	// Is empty
-	buffer = GR_CircularBuffer_Create(10, CIRCULAR_BUFFER_FREE_ITEM_ON_OVERWRITE);
+	buffer = GR_CircularBuffer_Create(
+	    10, CIRCULAR_BUFFER_FREE_ITEM_ON_OVERWRITE);
 	if (!GR_CircularBuffer_IsEmpty(buffer)) {
 		return 1;
 	}
 	GR_CircularBuffer_Free(buffer);
 
-	buffer = GR_CircularBuffer_Create(10, CIRCULAR_BUFFER_KEEP_ITEM_ON_OVERWRITE);
+	buffer = GR_CircularBuffer_Create(
+	    10, CIRCULAR_BUFFER_KEEP_ITEM_ON_OVERWRITE);
 	if (GR_CircularBuffer_IsEmpty(buffer)) {
 		return 2;
 	}
 	GR_CircularBuffer_Free(buffer);
 
 	// Partially full
-	buffer = GR_CircularBuffer_Create(10, CIRCULAR_BUFFER_FREE_ITEM_ON_OVERWRITE);
+	buffer = GR_CircularBuffer_Create(
+	    10, CIRCULAR_BUFFER_FREE_ITEM_ON_OVERWRITE);
 	int arr1[3] = {0};
 	for (int i = 0; i < 3; i++) {
 		GR_CircularBuffer_Push(buffer, &arr1[i]);
@@ -29,8 +32,8 @@ int main()
 	}
 	GR_CircularBuffer_Free(buffer);
 
-	
-	buffer = GR_CircularBuffer_Create(10, CIRCULAR_BUFFER_KEEP_ITEM_ON_OVERWRITE);
+	buffer = GR_CircularBuffer_Create(
+	    10, CIRCULAR_BUFFER_KEEP_ITEM_ON_OVERWRITE);
 	for (int i = 0; i < 3; i++) {
 		GR_CircularBuffer_Push(buffer, &arr1[i]);
 	}
@@ -40,7 +43,8 @@ int main()
 	GR_CircularBuffer_Free(buffer);
 
 	// Pushed and popped
-	buffer = GR_CircularBuffer_Create(10, CIRCULAR_BUFFER_FREE_ITEM_ON_OVERWRITE);
+	buffer = GR_CircularBuffer_Create(
+	    10, CIRCULAR_BUFFER_FREE_ITEM_ON_OVERWRITE);
 	int arr2[8] = {0};
 	for (int i = 0; i < 8; i++) {
 		GR_CircularBuffer_Push(buffer, &arr2[i]);
@@ -52,7 +56,8 @@ int main()
 		return 5;
 	}
 
-	buffer = GR_CircularBuffer_Create(10, CIRCULAR_BUFFER_KEEP_ITEM_ON_OVERWRITE);
+	buffer = GR_CircularBuffer_Create(
+	    10, CIRCULAR_BUFFER_KEEP_ITEM_ON_OVERWRITE);
 	for (int i = 0; i < 8; i++) {
 		GR_CircularBuffer_Push(buffer, &arr2[i]);
 	}
@@ -64,7 +69,8 @@ int main()
 	}
 
 	// Full
-	buffer = GR_CircularBuffer_Create(10, CIRCULAR_BUFFER_FREE_ITEM_ON_OVERWRITE);
+	buffer = GR_CircularBuffer_Create(
+	    10, CIRCULAR_BUFFER_FREE_ITEM_ON_OVERWRITE);
 	int arr3[10] = {0};
 	for (int i = 0; i < 10; i++) {
 		GR_CircularBuffer_Push(buffer, &arr3[i]);
@@ -72,8 +78,9 @@ int main()
 	if (GR_CircularBuffer_IsEmpty(buffer)) {
 		return 7;
 	}
-	
-	buffer = GR_CircularBuffer_Create(10, CIRCULAR_BUFFER_FREE_ITEM_ON_OVERWRITE);
+
+	buffer = GR_CircularBuffer_Create(
+	    10, CIRCULAR_BUFFER_FREE_ITEM_ON_OVERWRITE);
 	for (int i = 0; i < 10; i++) {
 		GR_CircularBuffer_Push(buffer, &arr3[i]);
 	}
@@ -82,7 +89,8 @@ int main()
 	}
 
 	// Filled then emptied
-	buffer = GR_CircularBuffer_Create(10, CIRCULAR_BUFFER_FREE_ITEM_ON_OVERWRITE);
+	buffer = GR_CircularBuffer_Create(
+	    10, CIRCULAR_BUFFER_FREE_ITEM_ON_OVERWRITE);
 	int arr4[3] = {0};
 	for (int i = 0; i < 3; i++) {
 		GR_CircularBuffer_Push(buffer, &arr4[i]);
@@ -94,7 +102,8 @@ int main()
 		return 9;
 	}
 
-	buffer = GR_CircularBuffer_Create(10, CIRCULAR_BUFFER_FREE_ITEM_ON_OVERWRITE);
+	buffer = GR_CircularBuffer_Create(
+	    10, CIRCULAR_BUFFER_FREE_ITEM_ON_OVERWRITE);
 	for (int i = 0; i < 3; i++) {
 		GR_CircularBuffer_Push(buffer, &arr4[i]);
 	}
