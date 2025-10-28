@@ -10,6 +10,5 @@ Check head and tail at every test
     - [x] Push full buffer --> test data overwrite
     - [x] Push buffer past size limite --> test data loopback
 - [x] Test Peek
-- Test Memory stuff (Address Sanitizer + Maybe Valgrind)
-    - Test free
-    - Make sure memory overwrite free's the old data
+- [x] Test Memory stuff (Address Sanitizer + Maybe Valgrind)
+    - [x] Test free
