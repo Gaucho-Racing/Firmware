@@ -10,7 +10,10 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
 	set(CMAKE_BUILD_TYPE Debug)
 	# add integrety check of syntax and memory
 	set(CMAKE_C_FLAGS_PREV "${CMAKE_C_FLAGS}")
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Werror -fsanitize=undefined -fsanitize=address")
+	set(
+		CMAKE_C_FLAGS
+		"${CMAKE_C_FLAGS} -Werror -fsanitize=undefined -fsanitize=address"
+	)
 
 	add_executable(
 		CircularBuffer_Lib_Initialization_test
@@ -20,7 +23,14 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
 		CircularBuffer_Lib_Initialization_test
 		CircularBuffer_Lib
 	)
-	target_link_options(CircularBuffer_Lib_Initialization_test BEFORE PUBLIC -fsanitize=undefined PUBLIC -fsanitize=address)
+	target_link_options(
+		CircularBuffer_Lib_Initialization_test
+		BEFORE
+		PUBLIC
+			-fsanitize=undefined
+		PUBLIC
+			-fsanitize=address
+	)
 	add_test(
 		CircularBuffer_Lib_Initialization
 		CircularBuffer_Lib_Initialization_test
@@ -28,17 +38,38 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
 
 	add_executable(CircularBuffer_Lib_Push_Pop_test Test/testPushPop.c)
 	target_link_libraries(CircularBuffer_Lib_Push_Pop_test CircularBuffer_Lib)
-	target_link_options(CircularBuffer_Lib_Push_Pop_test BEFORE PUBLIC -fsanitize=undefined PUBLIC -fsanitize=address)
+	target_link_options(
+		CircularBuffer_Lib_Push_Pop_test
+		BEFORE
+		PUBLIC
+			-fsanitize=undefined
+		PUBLIC
+			-fsanitize=address
+	)
 	add_test(CircularBuffer_Lib_Push_Pop CircularBuffer_Lib_Push_Pop_test)
 
 	add_executable(CircularBuffer_Lib_Peek_test Test/testPeek.c)
 	target_link_libraries(CircularBuffer_Lib_Peek_test CircularBuffer_Lib)
-	target_link_options(CircularBuffer_Lib_Peek_test BEFORE PUBLIC -fsanitize=undefined PUBLIC -fsanitize=address)
+	target_link_options(
+		CircularBuffer_Lib_Peek_test
+		BEFORE
+		PUBLIC
+			-fsanitize=undefined
+		PUBLIC
+			-fsanitize=address
+	)
 	add_test(CircularBuffer_Lib_Peek CircularBuffer_Lib_Peek_test)
 
 	add_executable(CircularBuffer_Lib_Get_Capacity_test Test/testGetCapacity.c)
 	target_link_libraries(CircularBuffer_Lib_Get_Capacity_test CircularBuffer_Lib)
-	target_link_options(CircularBuffer_Lib_Get_Capacity_test BEFORE PUBLIC -fsanitize=undefined PUBLIC -fsanitize=address)
+	target_link_options(
+		CircularBuffer_Lib_Get_Capacity_test
+		BEFORE
+		PUBLIC
+			-fsanitize=undefined
+		PUBLIC
+			-fsanitize=address
+	)
 	add_test(CircularBuffer_Lib_Get_Capacity CircularBuffer_Lib_Get_Capacity_test)
 
 	add_executable(
@@ -49,7 +80,14 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
 		CircularBuffer_Lib_Get_Current_Size_test
 		CircularBuffer_Lib
 	)
-	target_link_options(CircularBuffer_Lib_Get_Current_Size_test BEFORE PUBLIC -fsanitize=undefined PUBLIC -fsanitize=address)
+	target_link_options(
+		CircularBuffer_Lib_Get_Current_Size_test
+		BEFORE
+		PUBLIC
+			-fsanitize=undefined
+		PUBLIC
+			-fsanitize=address
+	)
 	add_test(
 		CircularBuffer_Lib_Get_Current_Size
 		CircularBuffer_Lib_Get_Current_Size_test
@@ -57,12 +95,26 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
 
 	add_executable(CircularBuffer_Lib_If_Full_test Test/testIfFull.c)
 	target_link_libraries(CircularBuffer_Lib_If_Full_test CircularBuffer_Lib)
-	target_link_options(CircularBuffer_Lib_If_Full_test BEFORE PUBLIC -fsanitize=undefined PUBLIC -fsanitize=address)
+	target_link_options(
+		CircularBuffer_Lib_If_Full_test
+		BEFORE
+		PUBLIC
+			-fsanitize=undefined
+		PUBLIC
+			-fsanitize=address
+	)
 	add_test(CircularBuffer_Lib_If_Full CircularBuffer_Lib_If_Full_test)
 
 	add_executable(CircularBuffer_Lib_Is_Empty_test Test/testIsEmpty.c)
 	target_link_libraries(CircularBuffer_Lib_Is_Empty_test CircularBuffer_Lib)
-	target_link_options(CircularBuffer_Lib_Is_Empty_test BEFORE PUBLIC -fsanitize=undefined PUBLIC -fsanitize=address)
+	target_link_options(
+		CircularBuffer_Lib_Is_Empty_test
+		BEFORE
+		PUBLIC
+			-fsanitize=undefined
+		PUBLIC
+			-fsanitize=address
+	)
 	add_test(CircularBuffer_Lib_Is_Empty CircularBuffer_Lib_Is_Empty_test)
 
 	# Revert the variables to not disturb other processes.
