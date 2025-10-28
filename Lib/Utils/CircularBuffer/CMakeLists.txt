@@ -6,6 +6,9 @@ target_include_directories(CircularBuffer_Lib INTERFACE Inc)
 
 # link test to this library
 if(CMAKE_BUILD_TYPE STREQUAL "Test")
+	# set the debug flag for debugger to work in case codes need fixings.
+	set(CMAKE_BUILD_TYPE Debug)
+
 	add_executable(
 		CircularBuffer_Lib_Initialization_test
 		Test/testInitialization.c
@@ -51,4 +54,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
 	add_executable(CircularBuffer_Lib_Is_Empty_test Test/testIsEmpty.c)
 	target_link_libraries(CircularBuffer_Lib_Is_Empty_test CircularBuffer_Lib)
 	add_test(CircularBuffer_Lib_Is_Empty CircularBuffer_Lib_Is_Empty_test)
+
+	# Revert the flag to not disturb other processes.
+	set(CMAKE_BUILD_TYPE Test)
 endif()
