@@ -8,6 +8,7 @@ int main()
 	// Is empty
 	buffer = GR_CircularBuffer_Create(10);
 	if (GR_CircularBuffer_IsFull(buffer)) {
+		GR_CircularBuffer_Free(buffer);
 		return 1;
 	}
 	GR_CircularBuffer_Free(buffer);
@@ -19,6 +20,7 @@ int main()
 		GR_CircularBuffer_Push(buffer, &arr1[i]);
 	}
 	if (GR_CircularBuffer_IsFull(buffer)) {
+		GR_CircularBuffer_Free(buffer);
 		return 2;
 	}
 	GR_CircularBuffer_Free(buffer);
@@ -33,8 +35,10 @@ int main()
 		GR_CircularBuffer_Pop(buffer);
 	}
 	if (GR_CircularBuffer_IsFull(buffer)) {
+		GR_CircularBuffer_Free(buffer);
 		return 3;
 	}
+	GR_CircularBuffer_Free(buffer);
 
 	// Full
 	buffer = GR_CircularBuffer_Create(10);
@@ -43,8 +47,10 @@ int main()
 		GR_CircularBuffer_Push(buffer, &arr3[i]);
 	}
 	if (!GR_CircularBuffer_IsFull(buffer)) {
+		GR_CircularBuffer_Free(buffer);
 		return 4;
 	}
+	GR_CircularBuffer_Free(buffer);
 
 	// Filled then emptied
 	buffer = GR_CircularBuffer_Create(10);
@@ -56,8 +62,10 @@ int main()
 		GR_CircularBuffer_Pop(buffer);
 	}
 	if (GR_CircularBuffer_IsFull(buffer)) {
+		GR_CircularBuffer_Free(buffer);
 		return 5;
 	}
+	GR_CircularBuffer_Free(buffer);
 
 	return 0;
 }
