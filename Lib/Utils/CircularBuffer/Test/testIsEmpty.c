@@ -16,7 +16,7 @@ int main()
 
 	buffer = GR_CircularBuffer_Create(
 	    10, CIRCULAR_BUFFER_KEEP_ITEM_ON_OVERWRITE);
-	if (GR_CircularBuffer_IsEmpty(buffer)) {
+	if (!GR_CircularBuffer_IsEmpty(buffer)) {
 		return 2;
 	}
 	GR_CircularBuffer_Free(buffer);
