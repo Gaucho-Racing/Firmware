@@ -1,5 +1,4 @@
 #include "circularBuffer.h"
-#include <stdlib.h>
 
 int main()
 {
@@ -13,6 +12,7 @@ int main()
 	int temp = 0;
 	GR_CircularBuffer_Push(buffer, &temp);
 	if (GR_CircularBuffer_GetCurrentSize(buffer) != 1) {
+		GR_CircularBuffer_Free(buffer);
 		return 1;
 	}
 	GR_CircularBuffer_Free(buffer);
@@ -21,6 +21,7 @@ int main()
 	    10, CIRCULAR_BUFFER_FREE_ITEM_ON_OVERWRITE);
 	GR_CircularBuffer_Push(buffer, &temp);
 	if (GR_CircularBuffer_GetCurrentSize(buffer) != 1) {
+		GR_CircularBuffer_Free(buffer);
 		return 2;
 	}
 	GR_CircularBuffer_Free(buffer);
@@ -33,6 +34,7 @@ int main()
 		GR_CircularBuffer_Push(buffer, &arr1[i]);
 	}
 	if (GR_CircularBuffer_GetCurrentSize(buffer) != 6) {
+		GR_CircularBuffer_Free(buffer);
 		return 3;
 	}
 	GR_CircularBuffer_Free(buffer);
@@ -43,6 +45,7 @@ int main()
 		GR_CircularBuffer_Push(buffer, &arr1[i]);
 	}
 	if (GR_CircularBuffer_GetCurrentSize(buffer) != 6) {
+		GR_CircularBuffer_Free(buffer);
 		return 4;
 	}
 	GR_CircularBuffer_Free(buffer);
@@ -55,6 +58,7 @@ int main()
 		GR_CircularBuffer_Push(buffer, &arr2[i]);
 	}
 	if (GR_CircularBuffer_GetCurrentSize(buffer) != 10) {
+		GR_CircularBuffer_Free(buffer);
 		return 5;
 	}
 	GR_CircularBuffer_Free(buffer);
@@ -65,6 +69,7 @@ int main()
 		GR_CircularBuffer_Push(buffer, &arr2[i]);
 	}
 	if (GR_CircularBuffer_GetCurrentSize(buffer) != 10) {
+		GR_CircularBuffer_Free(buffer);
 		return 6;
 	}
 	GR_CircularBuffer_Free(buffer);
@@ -79,6 +84,7 @@ int main()
 		GR_CircularBuffer_Pop(buffer);
 	}
 	if (GR_CircularBuffer_GetCurrentSize(buffer) != 5) {
+		GR_CircularBuffer_Free(buffer);
 		return 7;
 	}
 	GR_CircularBuffer_Free(buffer);
@@ -92,6 +98,7 @@ int main()
 		GR_CircularBuffer_Pop(buffer);
 	}
 	if (GR_CircularBuffer_GetCurrentSize(buffer) != 5) {
+		GR_CircularBuffer_Free(buffer);
 		return 8;
 	}
 	GR_CircularBuffer_Free(buffer);
@@ -107,6 +114,7 @@ int main()
 		GR_CircularBuffer_Pop(buffer);
 	}
 	if (GR_CircularBuffer_GetCurrentSize(buffer) != 6) {
+		GR_CircularBuffer_Free(buffer);
 		return 9;
 	}
 	GR_CircularBuffer_Free(buffer);
@@ -121,6 +129,7 @@ int main()
 		GR_CircularBuffer_Pop(buffer);
 	}
 	if (GR_CircularBuffer_GetCurrentSize(buffer) != 6) {
+		GR_CircularBuffer_Free(buffer);
 		return 10;
 	}
 	GR_CircularBuffer_Free(buffer);
