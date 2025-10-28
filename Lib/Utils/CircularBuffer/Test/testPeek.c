@@ -6,17 +6,16 @@ int main()
 	CircularBuffer *buffer;
 
 	// Empty buffer
-	buffer = GR_CircularBuffer_Create(
-	    10, CIRCULAR_BUFFER_KEEP_ITEM_ON_OVERWRITE);
+	buffer = GR_CircularBuffer_Create(10);
 	void *ptr1 = GR_CircularBuffer_Peek(buffer);
 	if (ptr1 != NULL) {
+		GR_CircularBuffer_Free(buffer);
 		return 1;
 	}
 	GR_CircularBuffer_Free(buffer);
 
 	// Pushing without overwriting
-	buffer = GR_CircularBuffer_Create(
-	    10, CIRCULAR_BUFFER_KEEP_ITEM_ON_OVERWRITE);
+	buffer = GR_CircularBuffer_Create(10);
 	int arr1[6] = {1, 2, 3, 4, 5, 6};
 	for (int i = 0; i < 6; i++) {
 		GR_CircularBuffer_Push(buffer, &arr1[i]);
@@ -25,14 +24,14 @@ int main()
 		int *tmp;
 		tmp = GR_CircularBuffer_Peek(buffer);
 		if (*tmp != 1) { // should not modify the buffer
+			GR_CircularBuffer_Free(buffer);
 			return 2;
 		}
 	}
 	GR_CircularBuffer_Free(buffer);
 
 	// Pushing with overwriting
-	buffer = GR_CircularBuffer_Create(
-	    10, CIRCULAR_BUFFER_KEEP_ITEM_ON_OVERWRITE);
+	buffer = GR_CircularBuffer_Create(10);
 	int arr2[13] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
 	for (int i = 0; i < 13; i++) {
 		GR_CircularBuffer_Push(buffer, &arr2[i]);
@@ -41,14 +40,14 @@ int main()
 		int *tmp;
 		tmp = GR_CircularBuffer_Peek(buffer);
 		if (*tmp != 4) { // should not modify the buffer
+			GR_CircularBuffer_Free(buffer);
 			return 3;
 		}
 	}
 	GR_CircularBuffer_Free(buffer);
 
 	// Pushing and popping
-	buffer = GR_CircularBuffer_Create(
-	    10, CIRCULAR_BUFFER_KEEP_ITEM_ON_OVERWRITE);
+	buffer = GR_CircularBuffer_Create(10);
 	int arr3[7] = {1, 2, 3, 4, 5, 6, 7};
 	for (int i = 0; i < 7; i++) {
 		GR_CircularBuffer_Push(buffer, &arr3[i]);
@@ -60,6 +59,7 @@ int main()
 		int *tmp;
 		tmp = GR_CircularBuffer_Peek(buffer);
 		if (*tmp != 4) { // should not modify the buffer
+			GR_CircularBuffer_Free(buffer);
 			return 4;
 		}
 	}

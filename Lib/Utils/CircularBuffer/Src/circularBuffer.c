@@ -5,15 +5,13 @@
 
 // Define the circularBuffer data type
 struct circular_buffer_st {
-	CircularBufferMode mode;
 	uint16_t head;	   // the head position inclusive
 	uint16_t tail;	   // the tail position exclusive
 	uint16_t capacity; // the buffer's capacity in number of items
 	void **buffer;	   // the buffer body
 };
 
-CircularBuffer *GR_CircularBuffer_Create(uint16_t capacity,
-					 CircularBufferMode mode)
+CircularBuffer *GR_CircularBuffer_Create(uint16_t capacity)
 {
 	// Return null pointer if an invalid size(< 1) is specified
 	if (capacity < 1) {
@@ -21,7 +19,6 @@ CircularBuffer *GR_CircularBuffer_Create(uint16_t capacity,
 	}
 	// For specifications see the header file
 	CircularBuffer *buffer = malloc(sizeof(CircularBuffer));
-	buffer->mode = mode;
 	buffer->head = 0;
 	buffer->tail = 0;
 	buffer->capacity = capacity;
@@ -79,17 +76,10 @@ void GR_CircularBuffer_Push(CircularBuffer *buffer, void *object)
 {
 	// Remove the buffer head if it's going to be overwritten
 	// That is, if the buffer is already full
-	{
-		void *head = buffer->buffer[buffer->head];
-		if (head != NULL && buffer->head == buffer->tail) {
-			if (buffer->mode ==
-			    CIRCULAR_BUFFER_FREE_ITEM_ON_OVERWRITE) {
-				free(head);
-			}
-			buffer->head++;
-			if (buffer->head == buffer->capacity) {
-				buffer->head = 0;
-			}
+	if (GR_CircularBuffer_IsFull(buffer)) {
+		buffer->head++;
+		if (buffer->head == buffer->capacity) {
+			buffer->head = 0;
 		}
 	}
 
