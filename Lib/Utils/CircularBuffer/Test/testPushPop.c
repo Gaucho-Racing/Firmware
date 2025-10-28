@@ -24,7 +24,7 @@ int main()
 	GR_CircularBuffer_Free(buffer);
 
 	buffer = GR_CircularBuffer_Create(
-	    buffer, CIRCULAR_BUFFER_KEEP_ITEM_ON_OVERWRITE);
+	    10, CIRCULAR_BUFFER_KEEP_ITEM_ON_OVERWRITE);
 	// poping empty buffer
 	for (int i = 0; i < 1000; i++) {
 		GR_CircularBuffer_Pop(buffer);
