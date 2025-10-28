@@ -3,7 +3,12 @@ cmake_minimum_required(VERSION 3.25)
 add_library(CircularBuffer_Lib INTERFACE)
 target_sources(CircularBuffer_Lib INTERFACE Src/circularBuffer.c)
 target_include_directories(CircularBuffer_Lib INTERFACE Inc)
-
+if(WIN32)
+    message(STATUS "Detected Windows — disabling Linux-only features.")
+    set(SKIP_UNIX_FEATURES TRUE)
+else()
+    message(STATUS "Non-Windows system — enabling full features.")
+endif()
 # link test to this library
 if(CMAKE_BUILD_TYPE STREQUAL "Test")
 	# set the debug flag for debugger to work in case codes need fixings.
