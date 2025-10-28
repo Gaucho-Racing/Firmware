@@ -31,9 +31,18 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
 	target_link_libraries(CircularBuffer_Lib_Get_Capacity_test CircularBuffer_Lib)
 	add_test(CircularBuffer_Lib_Get_Capacity CircularBuffer_Lib_Get_Capacity_test)
 
-	add_executable(CircularBuffer_Lib_Get_Current_Size_test Test/testGetCurrentSize.c)
-	target_link_libraries(CircularBuffer_Lib_Get_Current_Size_test CircularBuffer_Lib)
-	add_test(CircularBuffer_Lib_Get_Current_Size CircularBuffer_Lib_Get_Current_Size_test)
+	add_executable(
+		CircularBuffer_Lib_Get_Current_Size_test
+		Test/testGetCurrentSize.c
+	)
+	target_link_libraries(
+		CircularBuffer_Lib_Get_Current_Size_test
+		CircularBuffer_Lib
+	)
+	add_test(
+		CircularBuffer_Lib_Get_Current_Size
+		CircularBuffer_Lib_Get_Current_Size_test
+	)
 
 	add_executable(CircularBuffer_Lib_If_Full_test Test/testIfFull.c)
 	target_link_libraries(CircularBuffer_Lib_If_Full_test CircularBuffer_Lib)
