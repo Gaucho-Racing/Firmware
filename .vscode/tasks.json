@@ -6,7 +6,7 @@
             "dependsOrder": "sequence",
             "dependsOn": [
                 "CMake: configure",
-                "CMake: build",
+                "CMake: build"
             ]
         }
     ]
