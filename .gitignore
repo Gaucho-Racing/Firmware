@@ -65,6 +65,7 @@ Icon\r
 !.vscode/settings.json
 !.vscode/extensions.json
 !.vscode/launch.json
+!.vscode/tasks.json
 
 # Clangd
 .cache
