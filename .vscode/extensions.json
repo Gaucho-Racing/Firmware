@@ -5,7 +5,9 @@
 		"marus25.cortex-debug",
 		"ms-vsliveshare.vsliveshare",
 		"Gruntfuggly.todo-tree",
+		"github.vscode-github-actions",
+		"github.vscode-pull-request-github",
 		"eamodio.gitlens",
-		"github.vscode-github-actions"
+		"davidanson.vscode-markdownlint"
 	]
 }
