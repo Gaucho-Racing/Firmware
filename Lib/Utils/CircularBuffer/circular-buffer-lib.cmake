@@ -1,6 +1,7 @@
+add_library(CircularBuffer_Lib INTERFACE)
+
 set(CircularBuffer_DIR $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)
 
-add_library(CircularBuffer_Lib INTERFACE)
 target_sources(
 	CircularBuffer_Lib
 	INTERFACE
