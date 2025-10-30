@@ -56,6 +56,7 @@ function(add_GR_project)
 					${Platform}_LIB
 					${TARGET_NAME}_USER_CODE # Blame Owen
 					GLOBALSHARE_LIB
+					CircularBuffer_Lib
 			)
 		endif()
 
