@@ -8,7 +8,7 @@
 typedef struct circular_buffer_st CircularBuffer;
 
 // Create an alias for CircularBuffer*
-typedef CircularBuffer* Circular_Buffer_Ptr;
+typedef CircularBuffer *Circular_Buffer_Ptr;
 
 /// @brief Creates a CircularBuffer object with the specified capacity.
 /// @param capacity The desired capacity of the circular buffer, in
