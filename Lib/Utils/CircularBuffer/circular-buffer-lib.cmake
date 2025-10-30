@@ -4,12 +4,12 @@ add_library(CircularBuffer_Lib INTERFACE)
 target_sources(
 	CircularBuffer_Lib
 	INTERFACE
-	${CircularBuffer_DIR}/Src/circularBuffer.c
+		${CircularBuffer_DIR}/Src/circularBuffer.c
 )
 target_include_directories(
 	CircularBuffer_Lib
 	INTERFACE
-	${CircularBuffer_DIR}/Inc
+		${CircularBuffer_DIR}/Inc
 )
 
 # link test to this library
@@ -49,7 +49,10 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
 		CircularBuffer_Lib_Initialization_test
 	)
 
-	add_executable(CircularBuffer_Lib_Push_Pop_test ${CircularBuffer_DIR}/Test/testPushPop.c)
+	add_executable(
+		CircularBuffer_Lib_Push_Pop_test
+		${CircularBuffer_DIR}/Test/testPushPop.c
+	)
 	target_link_libraries(CircularBuffer_Lib_Push_Pop_test CircularBuffer_Lib)
 	if(UNIX)
 		target_link_options(
@@ -63,7 +66,10 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
 	endif()
 	add_test(CircularBuffer_Lib_Push_Pop CircularBuffer_Lib_Push_Pop_test)
 
-	add_executable(CircularBuffer_Lib_Peek_test ${CircularBuffer_DIR}/Test/testPeek.c)
+	add_executable(
+		CircularBuffer_Lib_Peek_test
+		${CircularBuffer_DIR}/Test/testPeek.c
+	)
 	target_link_libraries(CircularBuffer_Lib_Peek_test CircularBuffer_Lib)
 	if(UNIX)
 		target_link_options(
@@ -77,7 +83,10 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
 	endif()
 	add_test(CircularBuffer_Lib_Peek CircularBuffer_Lib_Peek_test)
 
-	add_executable(CircularBuffer_Lib_Get_Capacity_test ${CircularBuffer_DIR}/Test/testGetCapacity.c)
+	add_executable(
+		CircularBuffer_Lib_Get_Capacity_test
+		${CircularBuffer_DIR}/Test/testGetCapacity.c
+	)
 	target_link_libraries(CircularBuffer_Lib_Get_Capacity_test CircularBuffer_Lib)
 	if(UNIX)
 		target_link_options(
@@ -114,7 +123,10 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
 		CircularBuffer_Lib_Get_Current_Size_test
 	)
 
-	add_executable(CircularBuffer_Lib_If_Full_test ${CircularBuffer_DIR}/Test/testIfFull.c)
+	add_executable(
+		CircularBuffer_Lib_If_Full_test
+		${CircularBuffer_DIR}/Test/testIfFull.c
+	)
 	target_link_libraries(CircularBuffer_Lib_If_Full_test CircularBuffer_Lib)
 	if(UNIX)
 		target_link_options(
@@ -128,7 +140,10 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
 	endif()
 	add_test(CircularBuffer_Lib_If_Full CircularBuffer_Lib_If_Full_test)
 
-	add_executable(CircularBuffer_Lib_Is_Empty_test ${CircularBuffer_DIR}/Test/testIsEmpty.c)
+	add_executable(
+		CircularBuffer_Lib_Is_Empty_test
+		${CircularBuffer_DIR}/Test/testIsEmpty.c
+	)
 	target_link_libraries(CircularBuffer_Lib_Is_Empty_test CircularBuffer_Lib)
 	if(UNIX)
 		target_link_options(
