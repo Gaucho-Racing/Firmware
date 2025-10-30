@@ -3,7 +3,10 @@
 int main()
 {
 
-	CircularBuffer *buffer;
+	CircularBuffer_Ptr buffer = NULL;
+
+	// Test for Null error
+	GR_CircularBuffer_GetCapacity(buffer);
 
 	// Test GetCapacity
 	buffer = GR_CircularBuffer_Create(10);
