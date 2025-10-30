@@ -26,7 +26,7 @@ CircularBuffer *GR_CircularBuffer_Create(uint16_t capacity)
 	return buffer;
 }
 
-void GR_CircularBuffer_Free(CircularBuffer** bufferPtr)
+void GR_CircularBuffer_Free(CircularBuffer **bufferPtr)
 {
 	// Error check
 	if (*bufferPtr == NULL) {
@@ -38,7 +38,6 @@ void GR_CircularBuffer_Free(CircularBuffer** bufferPtr)
 	free(*bufferPtr);
 
 	*bufferPtr = NULL;
-
 }
 
 uint16_t GR_CircularBuffer_GetCapacity(CircularBuffer *buffer)
