@@ -77,7 +77,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd",
+			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd"
 		},
 		{
 			"cwd": "${workspaceFolder}",
@@ -93,7 +93,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Platform/STM32U5A9xJ/CompileDependencies/STM32U5A9.svd",
+			"svdPath": "${workspaceFolder}/Lib/Platform/STM32U5A9xJ/CompileDependencies/STM32U5A9.svd"
 		},
 		{
 			"cwd": "${workspaceFolder}",
@@ -109,7 +109,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Platform/STM32L476xG/CompileDependencies/STM32L476.svd",
+			"svdPath": "${workspaceFolder}/Lib/Platform/STM32L476xG/CompileDependencies/STM32L476.svd"
 		},
 		{
 			"cwd": "${workspaceFolder}",
@@ -125,7 +125,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd",
+			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd"
 		},
 		{
 			"cwd": "${workspaceFolder}",
@@ -141,7 +141,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd",
+			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd"
 		}
 	]
 }
