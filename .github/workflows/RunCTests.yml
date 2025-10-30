@@ -104,7 +104,7 @@ jobs:
   all:
     name: Complete HOOTL Tests
     needs: ctest
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     steps:
       - name: Complete All CTest Runs
         run: |
