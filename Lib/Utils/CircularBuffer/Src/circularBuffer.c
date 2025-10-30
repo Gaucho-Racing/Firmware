@@ -93,8 +93,8 @@ bool GR_CircularBuffer_IsEmpty(CircularBuffer_Ptr buffer)
 
 int GR_CircularBuffer_Push(CircularBuffer_Ptr buffer, void *object)
 {
-	//Buffer null error
-	if (!buffer){
+	// Buffer null error
+	if (!buffer) {
 		return -1;
 	}
 	// Remove the buffer head if it's going to be overwritten
@@ -118,7 +118,7 @@ int GR_CircularBuffer_Push(CircularBuffer_Ptr buffer, void *object)
 	return 0;
 }
 
-void* GR_CircularBuffer_Pop(CircularBuffer_Ptr buffer)
+void *GR_CircularBuffer_Pop(CircularBuffer_Ptr buffer)
 {
 	// Buffer null error
 	if (!buffer) {
@@ -146,7 +146,7 @@ void* GR_CircularBuffer_Pop(CircularBuffer_Ptr buffer)
 	return result;
 }
 
-void* GR_CircularBuffer_Peek(CircularBuffer_Ptr buffer)
+void *GR_CircularBuffer_Peek(CircularBuffer_Ptr buffer)
 {
 	// Buffer null error
 	if (!buffer) {
