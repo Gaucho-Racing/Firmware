@@ -43,7 +43,7 @@ void GR_CircularBuffer_Free(CircularBuffer_Ptr *bufferPtr)
 uint16_t GR_CircularBuffer_GetCapacity(CircularBuffer_Ptr buffer)
 {
 	// Buffer null error
-	if (buffer == NULL){
+	if (buffer == NULL) {
 		return -1;
 	}
 
@@ -53,7 +53,7 @@ uint16_t GR_CircularBuffer_GetCapacity(CircularBuffer_Ptr buffer)
 uint16_t GR_CircularBuffer_GetCurrentSize(CircularBuffer_Ptr buffer)
 {
 	// Buffer null error
-	if (buffer == NULL){
+	if (buffer == NULL) {
 		return -1;
 	}
 	// Empty case, since occupied member must have a non-null wrapper
@@ -72,7 +72,7 @@ uint16_t GR_CircularBuffer_GetCurrentSize(CircularBuffer_Ptr buffer)
 bool GR_CircularBuffer_IsFull(CircularBuffer_Ptr buffer)
 {
 	// Buffer null error
-	if (!buffer){
+	if (!buffer) {
 		return true;
 	}
 	// In the case where head and tail iterators are equal,
@@ -82,8 +82,8 @@ bool GR_CircularBuffer_IsFull(CircularBuffer_Ptr buffer)
 
 bool GR_CircularBuffer_IsEmpty(CircularBuffer_Ptr buffer)
 {
-	//Buffer null error
-	if (!buffer){
+	// Buffer null error
+	if (!buffer) {
 		return true;
 	}
 	// In the case where head and tail iterators are equal,
@@ -93,8 +93,8 @@ bool GR_CircularBuffer_IsEmpty(CircularBuffer_Ptr buffer)
 
 void GR_CircularBuffer_Push(CircularBuffer_Ptr buffer, void *object)
 {
-	//Buffer null error
-	if (!buffer){
+	// Buffer null error
+	if (!buffer) {
 		return;
 	}
 	// Remove the buffer head if it's going to be overwritten
@@ -118,8 +118,8 @@ void GR_CircularBuffer_Push(CircularBuffer_Ptr buffer, void *object)
 
 void *GR_CircularBuffer_Pop(CircularBuffer_Ptr buffer)
 {
-	//Buffer null error
-	if (!buffer){
+	// Buffer null error
+	if (!buffer) {
 		return NULL;
 	}
 
@@ -147,7 +147,7 @@ void *GR_CircularBuffer_Pop(CircularBuffer_Ptr buffer)
 void *GR_CircularBuffer_Peek(CircularBuffer_Ptr buffer)
 {
 	// Buffer null error
-	if (!buffer){
+	if (!buffer) {
 		return NULL;
 	}
 	return buffer->buffer[buffer->head];
