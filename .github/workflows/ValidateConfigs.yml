@@ -14,7 +14,7 @@ concurrency:
 jobs:
   validate:
     name: Complete Validation
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
