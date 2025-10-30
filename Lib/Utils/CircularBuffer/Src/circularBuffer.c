@@ -18,7 +18,7 @@ CircularBuffer_Ptr GR_CircularBuffer_Create(uint16_t capacity)
 		return NULL;
 	}
 	// For specifications see the header file
-	CircularBuffer *buffer = malloc(sizeof(CircularBuffer));
+	CircularBuffer_Ptr buffer = malloc(sizeof(CircularBuffer));
 	buffer->head = 0;
 	buffer->tail = 0;
 	buffer->capacity = capacity;
@@ -91,11 +91,11 @@ bool GR_CircularBuffer_IsEmpty(CircularBuffer_Ptr buffer)
 	return buffer->head == buffer->tail && buffer->buffer[0] == NULL;
 }
 
-void GR_CircularBuffer_Push(CircularBuffer_Ptr buffer, void *object)
+int GR_CircularBuffer_Push(CircularBuffer_Ptr buffer, void *object)
 {
-	// Buffer null error
-	if (!buffer) {
-		return;
+	//Buffer null error
+	if (!buffer){
+		return -1;
 	}
 	// Remove the buffer head if it's going to be overwritten
 	// That is, if the buffer is already full
@@ -114,9 +114,11 @@ void GR_CircularBuffer_Push(CircularBuffer_Ptr buffer, void *object)
 	if (buffer->tail == buffer->capacity) {
 		buffer->tail = 0;
 	}
+
+	return 0;
 }
 
-void *GR_CircularBuffer_Pop(CircularBuffer_Ptr buffer)
+void* GR_CircularBuffer_Pop(CircularBuffer_Ptr buffer)
 {
 	// Buffer null error
 	if (!buffer) {
@@ -144,7 +146,7 @@ void *GR_CircularBuffer_Pop(CircularBuffer_Ptr buffer)
 	return result;
 }
 
-void *GR_CircularBuffer_Peek(CircularBuffer_Ptr buffer)
+void* GR_CircularBuffer_Peek(CircularBuffer_Ptr buffer)
 {
 	// Buffer null error
 	if (!buffer) {
