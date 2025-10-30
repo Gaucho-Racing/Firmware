@@ -25,6 +25,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
       - name: Install Arm Toolchain
         uses: carlosperate/arm-none-eabi-gcc-action@v1
@@ -120,7 +122,7 @@ jobs:
   all:
     name: Complete All Presets
     needs: cmake
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     steps:
       - name: Build All Presets
         run: |
