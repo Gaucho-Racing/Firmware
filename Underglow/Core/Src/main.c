@@ -31,6 +31,51 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
+#define NUM_LEDS 16
+uint8_t led_data[NUM_LEDS][5];
+int led_brightness = 0;
+void WS2812_SetColor(int LED, int RED, int GREEN, int BLUE, int BRIGHT)
+{
+   led_data[LED][0] = LED;
+   led_data[LED][1] = GREEN;
+   led_data[LED][2] = RED;
+   led_data[LED][3] = BLUE;
+   led_data[LED][4] = BRIGHT;
+}
+void WS2812_spi(int GREEN, int RED, int BLUE, int brightness)
+{
+   if (brightness >= 100) brightness = 100;
+   GREEN = (GREEN * brightness)/100;
+   RED   = (RED   * brightness)/100;
+   BLUE  = (BLUE  * brightness)/100;
+   uint32_t color = GREEN<<16 | RED<<8 | BLUE;
+   uint8_t sendData[12];
+   int index = 0;
+   for (int i = 23; i >= 0; i -= 2)
+   {
+       uint8_t packedByte = 0;
+       if (((color>>i)&0x01)==1){
+           packedByte |= 0b1110 << 4;
+       } else {
+           packedByte |= 0b1000 << 4;
+       }
+       if (((color>>i-1)&0x01)==1){
+           packedByte |= 0b1110;
+       } else {
+           packedByte |= 0b1000;
+       }
+       sendData[index++] = packedByte;
+   }
+   HAL_SPI_Transmit(&hspi1, sendData, sizeof(sendData), 1000);
+}
+void WS2812_Send (void)
+{
+   for (int i = 0; i < NUM_LEDS; i++)
+   {
+       WS2812_spi(led_data[i][1], led_data[i][2], led_data[i][3], led_data[i][4]);
+   }
+   HAL_Delay(1);
+}
 
 /* USER CODE END PTD */
 
@@ -91,23 +136,58 @@ int main(void)
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
-	MX_ADC1_Init();
-	MX_CRC_Init();
-	MX_FDCAN1_Init();
-	MX_FDCAN2_Init();
-	// MX_SPI1_Init(); //SPI1 SCK intereferes with led PA5
+	//MX_ADC1_Init();
+	//MX_CRC_Init();
+	//MX_FDCAN1_Init();
+	//MX_FDCAN2_Init();
+	MX_SPI1_Init(); //SPI1 SCK intereferes with led PA5
 	/* USER CODE BEGIN 2 */
+ /* USER CODE END 2 */
+
+
+ /* Infinite loop */
+ /* USER CODE BEGIN WHILE */
+ while (1)
+ {
+   /* USER CODE END WHILE */
+
+
+   /* USER CODE BEGIN 3 */
+   for (int i = 0; i < NUM_LEDS; i++)
+   {
+     // WS2812_SetColor(i, 255, 0, 0, 100); //RED
+     WS2812_SetColor(i, 0, 0, 0 , 0);
+   }
+   WS2812_Send();
+   HAL_Delay(1000);
+   for (int i = 0; i < NUM_LEDS; i++)
+   {
+     //  WS2812_SetColor(i, 0, 255, 0, 100); //GREEN
+       WS2812_SetColor(i, 0, 0, 0, 0);
+   }
+   WS2812_Send();
+   HAL_Delay(1000);
+   for (int i = 0; i < NUM_LEDS; i++)
+ {
+    // WS2812_SetColor(i, 0, 0, 255, 100); //BLUE
+     WS2812_SetColor(i, 0, 0, 0, 0);
+ }
+ WS2812_Send();
+ HAL_Delay(1000);
+ }
+ 
+ /* USER CODE END 3 */
+}
 
 	/* USER CODE END 2 */
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	while (1) {
 		/* USER CODE END WHILE */
 
 		// START HERE FOR Gaucho Racing "blinky" workshop
 		// 1. Use HAL_GPIO_WritePin(port, pin, set/reset) to set PA5 as
 		// high
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
+		/*HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
 
 		// 2. Use HAL_Delay() to wait for 1000 ms
 		HAL_Delay(1000);
@@ -117,11 +197,11 @@ int main(void)
 
 		// 4. Use HAL_Delay() to wait for 1000 ms
 		HAL_Delay(1000);
-
+*/
 		/* USER CODE BEGIN 3 */
-	}
+	
 	/* USER CODE END 3 */
-}
+
 
 /**
  * @brief System Clock Configuration
