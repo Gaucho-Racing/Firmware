@@ -4,6 +4,6 @@
 
 int main(void)
 {
-    LOGOMATIC("I like %f\n", M_PI);
-    return 0;
+	LOGOMATIC("I like %f\n", M_PI);
+	return 0;
 }

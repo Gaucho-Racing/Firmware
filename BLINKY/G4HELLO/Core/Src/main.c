@@ -90,7 +90,7 @@ int main(void)
 	 * Systick. */
 	HAL_Init();
 
-  /* USER CODE BEGIN Init */
+	/* USER CODE BEGIN Init */
 	ITM_Enable();
 	/* USER CODE END Init */
 
@@ -114,7 +114,8 @@ int main(void)
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
-		LOGOMATIC("Hello, LOGOMATIC! Great to be here %f\n", 3.14159265);
+		LOGOMATIC("Hello, LOGOMATIC! Great to be here %f\n",
+			  3.14159265);
 		LL_mDelay(750);
 	}
 	/* USER CODE END 3 */

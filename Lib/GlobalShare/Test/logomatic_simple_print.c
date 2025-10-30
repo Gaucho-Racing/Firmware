@@ -2,6 +2,6 @@
 
 int main(void)
 {
-    LOGOMATIC("Hello, Logomatic!\n");
-    return 0;
+	LOGOMATIC("Hello, Logomatic!\n");
+	return 0;
 }
