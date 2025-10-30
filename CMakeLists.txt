@@ -25,6 +25,7 @@ include("${platform_path}/STM32G474xE/chip.cmake")
 include("${platform_path}/STM32U5A9xJ/chip.cmake")
 include("${platform_path}/STM32L476xG/chip.cmake")
 include("${lib_path}/GlobalShare/common.cmake")
+include("${lib_path}/Utils/CircularBuffer/circular-buffer-lib.cmake")
 include("${lib_path}/cmake/gr-lib.cmake")
 
 project(${CMAKE_PROJECT_NAME})
@@ -41,9 +42,6 @@ message(
 	${CMAKE_BUILD_TYPE}
 )
 
-add_subdirectory(Lib/Utils/CircularBuffer)
-
-add_gr_project(STM32G474xE BLINKY G4BLINKY)
 add_gr_project(STM32U5A9xJ BLINKY U5BLINKY)
 add_gr_project(STM32L476xG BLINKY L4BLINKY)
 
