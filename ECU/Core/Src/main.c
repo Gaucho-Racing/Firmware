@@ -26,7 +26,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "StateTicks.h"
+#include "Logomatic.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -58,7 +59,18 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+/* Enable ITM for SWO output */
+static void ITM_Enable(void)
+{
+	/* Enable TRC (Trace) */
+	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
 
+	/* Enable stimulus port 0 */
+	ITM->TER |= (1UL << 0);
+
+	/* Set trace control register */
+	ITM->TCR |= ITM_TCR_ITMENA_Msk;
+}
 /* USER CODE END 0 */
 
 /**
@@ -78,7 +90,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  ITM_Enable();
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -107,6 +119,9 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    ECU_State_Tick();
+    LOGOMATIC("Main Loop Tick Complete\n");
+    LL_mDelay(250); // FIXME Reduce or remove delay
   }
   /* USER CODE END 3 */
 }

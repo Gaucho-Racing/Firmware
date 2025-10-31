@@ -18,8 +18,8 @@
 			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd",
 			"swoConfig": {
 				"enabled": true,
-				"cpuFrequency": 160000000,
-				"swoFrequency": 115200,
+				"cpuFrequency": 170000000,
+				"swoFrequency": 2000000,
 				"source": "probe",
 				"decoders": [
 					{
