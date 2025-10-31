@@ -14,42 +14,7 @@ endif()
 get_filename_component(GR_PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Test")
-	include_directories(
-		Application/Inc
-		Core/Inc
-	)
-
-	add_executable(
-		${GR_PROJECT_NAME}_basic_application_hootl_test
-		Application/Test/basic_application_hootl_test.c
-	)
-	add_test(
-		${GR_PROJECT_NAME}_basic_app
-		${GR_PROJECT_NAME}_basic_application_hootl_test
-	)
-
-	add_executable(
-		${GR_PROJECT_NAME}_advanced_application_hootl_test
-		Application/Test/advanced_application_hootl_test.c
-		Application/Src/appdemo.c
-	)
-	add_test(
-		${GR_PROJECT_NAME}_advanced_app
-		${GR_PROJECT_NAME}_advanced_application_hootl_test
-	)
-
-	add_executable(${GR_PROJECT_NAME}_basic_core_test Core/Test/basic_core_test.c)
-	add_test(${GR_PROJECT_NAME}_basic_core ${GR_PROJECT_NAME}_basic_core_test)
-
-	add_executable(
-		${GR_PROJECT_NAME}_advanced_core_test
-		Core/Test/advanced_core_test.c
-		Core/Src/coredemo.c
-	)
-	add_test(
-		${GR_PROJECT_NAME}_advanced_core
-		${GR_PROJECT_NAME}_advanced_core_test
-	)
+	# Do nothing for now
 endif()
 
 # Enable compile command to ease indexing with e.g. clangd
@@ -72,19 +37,22 @@ add_library(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
 target_sources(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
+		# Core
+
 		Core/Src/adc.c
-		Core/Src/crc.c
 		Core/Src/dma.c
 		Core/Src/fdcan.c
 		Core/Src/gpio.c
 		Core/Src/main.c
-		Core/Src/spi.c
 		Core/Src/stm32g4xx_hal_msp.c
 		Core/Src/stm32g4xx_it.c
 		Core/Src/syscalls.c
 		Core/Src/sysmem.c
 		Core/Src/system_stm32g4xx.c
 		Core/Src/usart.c
+
+		# Application
+		# TODO Create application files
 )
 
 target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
