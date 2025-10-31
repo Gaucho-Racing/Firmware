@@ -1,7 +1,6 @@
-cmake_minimum_required (VERSION 3.6)
+cmake_minimum_required(VERSION 3.6)
 
 project(CMSISDSPStatistics)
-
 
 file(GLOB SRC "./*_*.c")
 
@@ -11,6 +10,3 @@ configdsp(CMSISDSPStatistics ..)
 
 ### Includes
 target_include_directories(CMSISDSPStatistics PUBLIC "${DSP}/../../Include")
-
-
-
