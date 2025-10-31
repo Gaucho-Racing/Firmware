@@ -71,7 +71,8 @@ void ECU_Drive_Active(ECU_StateData *stateData);
 /**
  * @brief State handler for the Tractive System Discharge state.
  *
- * Handles actions and transitions specific to the Tractive System Discharge state.
+ * Handles actions and transitions specific to the Tractive System Discharge
+ * state.
  *
  * @param stateData Pointer to the ECU state data structure.
  *
