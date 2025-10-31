@@ -43,239 +43,253 @@
   @param[in]     pSrcB      points to second input complex matrix structure
   @param[out]    pDst       points to output complex matrix structure
   @return        execution status
-                   - \ref ARM_MATH_SUCCESS       : Operation successful
-                   - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
+		   - \ref ARM_MATH_SUCCESS       : Operation successful
+		   - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
 
   @par           Scaling and Overflow Behavior
-                   The function is implemented using an internal 64-bit accumulator.
-                   The accumulator has a 2.62 format and maintains full precision of the intermediate
-                   multiplication results but provides only a single guard bit. There is no saturation
-                   on intermediate additions. Thus, if the accumulator overflows it wraps around and
-                   distorts the result. The input signals should be scaled down to avoid intermediate
-                   overflows. The input is thus scaled down by log2(numColsA) bits
-                   to avoid overflows, as a total of numColsA additions are performed internally.
-                   The 2.62 accumulator is right shifted by 31 bits and saturated to 1.31 format to yield the final result.
+		   The function is implemented using an internal 64-bit
+  accumulator. The accumulator has a 2.62 format and maintains full precision of
+  the intermediate multiplication results but provides only a single guard bit.
+  There is no saturation on intermediate additions. Thus, if the accumulator
+  overflows it wraps around and distorts the result. The input signals should be
+  scaled down to avoid intermediate overflows. The input is thus scaled down by
+  log2(numColsA) bits to avoid overflows, as a total of numColsA additions are
+  performed internally. The 2.62 accumulator is right shifted by 31 bits and
+  saturated to 1.31 format to yield the final result.
  */
 
-arm_status arm_mat_cmplx_mult_q31(
-  const arm_matrix_instance_q31 * pSrcA,
-  const arm_matrix_instance_q31 * pSrcB,
-        arm_matrix_instance_q31 * pDst)
+arm_status arm_mat_cmplx_mult_q31(const arm_matrix_instance_q31 *pSrcA,
+				  const arm_matrix_instance_q31 *pSrcB,
+				  arm_matrix_instance_q31 *pDst)
 {
-  q31_t *pIn1 = pSrcA->pData;                    /* Input data matrix pointer A */
-  q31_t *pIn2 = pSrcB->pData;                    /* Input data matrix pointer B */
-  q31_t *pInA = pSrcA->pData;                    /* Input data matrix pointer A */
-  q31_t *pOut = pDst->pData;                     /* Output data matrix pointer */
-  q31_t *px;                                     /* Temporary output data matrix pointer */
-  uint16_t numRowsA = pSrcA->numRows;            /* Number of rows of input matrix A */
-  uint16_t numColsB = pSrcB->numCols;            /* Number of columns of input matrix B */
-  uint16_t numColsA = pSrcA->numCols;            /* Number of columns of input matrix A */
-  q63_t sumReal, sumImag;                        /* Accumulator */
-  q31_t a1, b1, c1, d1;
-  uint32_t col, i = 0U, j, row = numRowsA, colCnt; /* loop counters */
-  arm_status status;                             /* status of matrix multiplication */
+	q31_t *pIn1 = pSrcA->pData; /* Input data matrix pointer A */
+	q31_t *pIn2 = pSrcB->pData; /* Input data matrix pointer B */
+	q31_t *pInA = pSrcA->pData; /* Input data matrix pointer A */
+	q31_t *pOut = pDst->pData;  /* Output data matrix pointer */
+	q31_t *px;		    /* Temporary output data matrix pointer */
+	uint16_t numRowsA =
+	    pSrcA->numRows; /* Number of rows of input matrix A */
+	uint16_t numColsB =
+	    pSrcB->numCols; /* Number of columns of input matrix B */
+	uint16_t numColsA =
+	    pSrcA->numCols;	/* Number of columns of input matrix A */
+	q63_t sumReal, sumImag; /* Accumulator */
+	q31_t a1, b1, c1, d1;
+	uint32_t col, i = 0U, j, row = numRowsA, colCnt; /* loop counters */
+	arm_status status; /* status of matrix multiplication */
 
-#if defined (ARM_MATH_LOOPUNROLL)
-  q31_t a0, b0, c0, d0;
+#if defined(ARM_MATH_LOOPUNROLL)
+	q31_t a0, b0, c0, d0;
 #endif
 
 #ifdef ARM_MATH_MATRIX_CHECK
 
-  /* Check for matrix mismatch condition */
-  if ((pSrcA->numCols != pSrcB->numRows) ||
-      (pSrcA->numRows != pDst->numRows)  ||
-      (pSrcB->numCols != pDst->numCols)    )
-  {
-    /* Set status as ARM_MATH_SIZE_MISMATCH */
-    status = ARM_MATH_SIZE_MISMATCH;
-  }
-  else
+	/* Check for matrix mismatch condition */
+	if ((pSrcA->numCols != pSrcB->numRows) ||
+	    (pSrcA->numRows != pDst->numRows) ||
+	    (pSrcB->numCols != pDst->numCols)) {
+		/* Set status as ARM_MATH_SIZE_MISMATCH */
+		status = ARM_MATH_SIZE_MISMATCH;
+	} else
 
 #endif /* #ifdef ARM_MATH_MATRIX_CHECK */
 
-  {
-    /* The following loop performs the dot-product of each row in pSrcA with each column in pSrcB */
-    /* row loop */
-    do
-    {
-      /* Output pointer is set to starting address of the row being processed */
-      px = pOut + 2 * i;
+	{
+		/* The following loop performs the dot-product of each row in
+		 * pSrcA with each column in pSrcB */
+		/* row loop */
+		do {
+			/* Output pointer is set to starting address of the row
+			 * being processed */
+			px = pOut + 2 * i;
 
-      /* For every row wise process, the column loop counter is to be initiated */
-      col = numColsB;
+			/* For every row wise process, the column loop counter
+			 * is to be initiated */
+			col = numColsB;
 
-      /* For every row wise process, the pIn2 pointer is set
-       ** to the starting address of the pSrcB data */
-      pIn2 = pSrcB->pData;
+			/* For every row wise process, the pIn2 pointer is set
+			 ** to the starting address of the pSrcB data */
+			pIn2 = pSrcB->pData;
 
-      j = 0U;
+			j = 0U;
 
-      /* column loop */
-      do
-      {
-        /* Set the variable sum, that acts as accumulator, to zero */
-        sumReal = 0.0;
-        sumImag = 0.0;
+			/* column loop */
+			do {
+				/* Set the variable sum, that acts as
+				 * accumulator, to zero */
+				sumReal = 0.0;
+				sumImag = 0.0;
 
-        /* Initiate pointer pIn1 to point to starting address of column being processed */
-        pIn1 = pInA;
+				/* Initiate pointer pIn1 to point to starting
+				 * address of column being processed */
+				pIn1 = pInA;
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined(ARM_MATH_LOOPUNROLL)
 
-        /* Apply loop unrolling and compute 4 MACs simultaneously. */
-        colCnt = numColsA >> 2U;
+				/* Apply loop unrolling and compute 4 MACs
+				 * simultaneously. */
+				colCnt = numColsA >> 2U;
 
-        /* matrix multiplication */
-        while (colCnt > 0U)
-        {
+				/* matrix multiplication */
+				while (colCnt > 0U) {
 
-          /* Reading real part of complex matrix A */
-          a0 = *pIn1;
+					/* Reading real part of complex matrix A
+					 */
+					a0 = *pIn1;
 
-          /* Reading real part of complex matrix B */
-          c0 = *pIn2;
+					/* Reading real part of complex matrix B
+					 */
+					c0 = *pIn2;
 
-          /* Reading imaginary part of complex matrix A */
-          b0 = *(pIn1 + 1U);
+					/* Reading imaginary part of complex
+					 * matrix A */
+					b0 = *(pIn1 + 1U);
 
-          /* Reading imaginary part of complex matrix B */
-          d0 = *(pIn2 + 1U);
+					/* Reading imaginary part of complex
+					 * matrix B */
+					d0 = *(pIn2 + 1U);
 
-          /* Multiply and Accumlates */
-          sumReal += (q63_t) a0 * c0;
-          sumImag += (q63_t) b0 * c0;
+					/* Multiply and Accumlates */
+					sumReal += (q63_t)a0 * c0;
+					sumImag += (q63_t)b0 * c0;
 
-          /* update pointers */
-          pIn1 += 2U;
-          pIn2 += 2 * numColsB;
+					/* update pointers */
+					pIn1 += 2U;
+					pIn2 += 2 * numColsB;
 
-          /* Multiply and Accumlates */
-          sumReal -= (q63_t) b0 * d0;
-          sumImag += (q63_t) a0 * d0;
+					/* Multiply and Accumlates */
+					sumReal -= (q63_t)b0 * d0;
+					sumImag += (q63_t)a0 * d0;
 
-          /* c(m,n) = a(1,1) * b(1,1) + a(1,2) * b(2,1) + .... + a(m,p) * b(p,n) */
+					/* c(m,n) = a(1,1) * b(1,1) + a(1,2) *
+					 * b(2,1) + .... + a(m,p) * b(p,n) */
 
-          /* read real and imag values from pSrcA and pSrcB buffer */
-          a1 = *(pIn1     );
-          c1 = *(pIn2     );
-          b1 = *(pIn1 + 1U);
-          d1 = *(pIn2 + 1U);
+					/* read real and imag values from pSrcA
+					 * and pSrcB buffer */
+					a1 = *(pIn1);
+					c1 = *(pIn2);
+					b1 = *(pIn1 + 1U);
+					d1 = *(pIn2 + 1U);
 
-          /* Multiply and Accumlates */
-          sumReal += (q63_t) a1 * c1;
-          sumImag += (q63_t) b1 * c1;
+					/* Multiply and Accumlates */
+					sumReal += (q63_t)a1 * c1;
+					sumImag += (q63_t)b1 * c1;
 
-          /* update pointers */
-          pIn1 += 2U;
-          pIn2 += 2 * numColsB;
+					/* update pointers */
+					pIn1 += 2U;
+					pIn2 += 2 * numColsB;
 
-          /* Multiply and Accumlates */
-          sumReal -= (q63_t) b1 * d1;
-          sumImag += (q63_t) a1 * d1;
+					/* Multiply and Accumlates */
+					sumReal -= (q63_t)b1 * d1;
+					sumImag += (q63_t)a1 * d1;
 
-          a0 = *(pIn1     );
-          c0 = *(pIn2     );
-          b0 = *(pIn1 + 1U);
-          d0 = *(pIn2 + 1U);
+					a0 = *(pIn1);
+					c0 = *(pIn2);
+					b0 = *(pIn1 + 1U);
+					d0 = *(pIn2 + 1U);
 
-          /* Multiply and Accumlates */
-          sumReal += (q63_t) a0 * c0;
-          sumImag += (q63_t) b0 * c0;
+					/* Multiply and Accumlates */
+					sumReal += (q63_t)a0 * c0;
+					sumImag += (q63_t)b0 * c0;
 
-          /* update pointers */
-          pIn1 += 2U;
-          pIn2 += 2 * numColsB;
+					/* update pointers */
+					pIn1 += 2U;
+					pIn2 += 2 * numColsB;
 
-          /* Multiply and Accumlates */
-          sumReal -= (q63_t) b0 * d0;
-          sumImag += (q63_t) a0 * d0;
+					/* Multiply and Accumlates */
+					sumReal -= (q63_t)b0 * d0;
+					sumImag += (q63_t)a0 * d0;
 
-          /* c(m,n) = a(1,1) * b(1,1) + a(1,2) * b(2,1) + .... + a(m,p) * b(p,n) */
+					/* c(m,n) = a(1,1) * b(1,1) + a(1,2) *
+					 * b(2,1) + .... + a(m,p) * b(p,n) */
 
-          a1 = *(pIn1     );
-          c1 = *(pIn2     );
-          b1 = *(pIn1 + 1U);
-          d1 = *(pIn2 + 1U);
+					a1 = *(pIn1);
+					c1 = *(pIn2);
+					b1 = *(pIn1 + 1U);
+					d1 = *(pIn2 + 1U);
 
-          /* Multiply and Accumlates */
-          sumReal += (q63_t) a1 * c1;
-          sumImag += (q63_t) b1 * c1;
+					/* Multiply and Accumlates */
+					sumReal += (q63_t)a1 * c1;
+					sumImag += (q63_t)b1 * c1;
 
-          /* update pointers */
-          pIn1 += 2U;
-          pIn2 += 2 * numColsB;
+					/* update pointers */
+					pIn1 += 2U;
+					pIn2 += 2 * numColsB;
 
-          /* Multiply and Accumlates */
-          sumReal -= (q63_t) b1 * d1;
-          sumImag += (q63_t) a1 * d1;
+					/* Multiply and Accumlates */
+					sumReal -= (q63_t)b1 * d1;
+					sumImag += (q63_t)a1 * d1;
 
-          /* Decrement loop count */
-          colCnt--;
-        }
+					/* Decrement loop count */
+					colCnt--;
+				}
 
-        /* If the columns of pSrcA is not a multiple of 4, compute any remaining MACs here.
-         ** No loop unrolling is used. */
-        colCnt = numColsA % 0x4U;
+				/* If the columns of pSrcA is not a multiple of
+				 *4, compute any remaining MACs here.
+				 ** No loop unrolling is used. */
+				colCnt = numColsA % 0x4U;
 
 #else
 
-        /* Initialize blkCnt with number of samples */
-        colCnt = numColsA;
+				/* Initialize blkCnt with number of samples */
+				colCnt = numColsA;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 
-        while (colCnt > 0U)
-        {
-          /* c(m,n) = a(1,1) * b(1,1) + a(1,2) * b(2,1) + .... + a(m,p) * b(p,n) */
-          a1 = *(pIn1     );
-          c1 = *(pIn2     );
-          b1 = *(pIn1 + 1U);
-          d1 = *(pIn2 + 1U);
+				while (colCnt > 0U) {
+					/* c(m,n) = a(1,1) * b(1,1) + a(1,2) *
+					 * b(2,1) + .... + a(m,p) * b(p,n) */
+					a1 = *(pIn1);
+					c1 = *(pIn2);
+					b1 = *(pIn1 + 1U);
+					d1 = *(pIn2 + 1U);
 
-          /* Multiply and Accumlates */
-          sumReal += (q63_t) a1 * c1;
-          sumImag += (q63_t) b1 * c1;
+					/* Multiply and Accumlates */
+					sumReal += (q63_t)a1 * c1;
+					sumImag += (q63_t)b1 * c1;
 
-          /* update pointers */
-          pIn1 += 2U;
-          pIn2 += 2 * numColsB;
+					/* update pointers */
+					pIn1 += 2U;
+					pIn2 += 2 * numColsB;
 
-          /* Multiply and Accumlates */
-          sumReal -= (q63_t) b1 * d1;
-          sumImag += (q63_t) a1 * d1;
+					/* Multiply and Accumlates */
+					sumReal -= (q63_t)b1 * d1;
+					sumImag += (q63_t)a1 * d1;
 
-          /* Decrement loop counter */
-          colCnt--;
-        }
+					/* Decrement loop counter */
+					colCnt--;
+				}
 
-        /* Store result in destination buffer */
-        *px++ = (q31_t) clip_q63_to_q31(sumReal >> 31);
-        *px++ = (q31_t) clip_q63_to_q31(sumImag >> 31);
+				/* Store result in destination buffer */
+				*px++ = (q31_t)clip_q63_to_q31(sumReal >> 31);
+				*px++ = (q31_t)clip_q63_to_q31(sumImag >> 31);
 
-        /* Update pointer pIn2 to point to starting address of next column */
-        j++;
-        pIn2 = pSrcB->pData + 2U * j;
+				/* Update pointer pIn2 to point to starting
+				 * address of next column */
+				j++;
+				pIn2 = pSrcB->pData + 2U * j;
 
-        /* Decrement column loop counter */
-        col--;
+				/* Decrement column loop counter */
+				col--;
 
-      } while (col > 0U);
+			} while (col > 0U);
 
-      /* Update pointer pInA to point to starting address of next row */
-      i = i + numColsB;
-      pInA = pInA + 2 * numColsA;
+			/* Update pointer pInA to point to starting address of
+			 * next row */
+			i = i + numColsB;
+			pInA = pInA + 2 * numColsA;
 
-      /* Decrement row loop counter */
-      row--;
+			/* Decrement row loop counter */
+			row--;
 
-    } while (row > 0U);
+		} while (row > 0U);
 
-    /* Set status as ARM_MATH_SUCCESS */
-    status = ARM_MATH_SUCCESS;
-  }
+		/* Set status as ARM_MATH_SUCCESS */
+		status = ARM_MATH_SUCCESS;
+	}
 
-  /* Return to application */
-  return (status);
+	/* Return to application */
+	return (status);
 }
 
 /**

@@ -1,10 +1,10 @@
-/**************************************************************************//**
- * @file     system_ARMSC300.c
- * @brief    CMSIS Device System Source File for
- *           ARMSC300 Device Series
- * @version  V5.00
- * @date     07. September 2016
- ******************************************************************************/
+/**************************************************************************/ /**
+									      * @file     system_ARMSC300.c
+									      * @brief    CMSIS Device System Source File for
+									      *           ARMSC300 Device Series
+									      * @version  V5.00
+									      * @date     07. September 2016
+									      ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
  *
@@ -28,16 +28,15 @@
 /*----------------------------------------------------------------------------
   Define clocks
  *----------------------------------------------------------------------------*/
-#define  XTAL            ( 5000000UL)      /* Oscillator frequency */
+#define XTAL (5000000UL) /* Oscillator frequency */
 
-#define  SYSTEM_CLOCK    (5U * XTAL)
-
+#define SYSTEM_CLOCK (5U * XTAL)
 
 /*----------------------------------------------------------------------------
   Externals
  *----------------------------------------------------------------------------*/
-#if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-  extern uint32_t __Vectors;
+#if defined(__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
+extern uint32_t __Vectors;
 #endif
 
 /*----------------------------------------------------------------------------
@@ -45,28 +44,24 @@
  *----------------------------------------------------------------------------*/
 uint32_t SystemCoreClock = SYSTEM_CLOCK;
 
-
 /*----------------------------------------------------------------------------
   System Core Clock update function
  *----------------------------------------------------------------------------*/
-void SystemCoreClockUpdate (void)
-{
-  SystemCoreClock = SYSTEM_CLOCK;
-}
+void SystemCoreClockUpdate(void) { SystemCoreClock = SYSTEM_CLOCK; }
 
 /*----------------------------------------------------------------------------
   System initialization function
  *----------------------------------------------------------------------------*/
-void SystemInit (void)
+void SystemInit(void)
 {
 
-#if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-  SCB->VTOR = (uint32_t) &__Vectors;
+#if defined(__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
+	SCB->VTOR = (uint32_t)&__Vectors;
 #endif
 
 #ifdef UNALIGNED_SUPPORT_DISABLE
-  SCB->CCR |= SCB_CCR_UNALIGN_TRP_Msk;
+	SCB->CCR |= SCB_CCR_UNALIGN_TRP_Msk;
 #endif
 
-  SystemCoreClock = SYSTEM_CLOCK;
+	SystemCoreClock = SYSTEM_CLOCK;
 }

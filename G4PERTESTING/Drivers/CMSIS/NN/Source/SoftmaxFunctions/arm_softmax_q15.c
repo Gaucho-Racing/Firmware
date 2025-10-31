@@ -40,79 +40,71 @@
  * @{
  */
 
-  /**
-   * @brief Q15 softmax function
-   * @param[in]       vec_in      pointer to input vector
-   * @param[in]       dim_vec     input vector dimention
-   * @param[out]      p_out       pointer to output vector
-   * @return none.
-   *
-   * @details
-   *
-   *  Here, instead of typical e based softmax, we use
-   *  2-based softmax, i.e.,:
-   *
-   *  y_i = 2^(x_i) / sum(2^x_j)
-   *
-   *  The relative output will be different here.
-   *  But mathematically, the gradient will be the same
-   *  with a log(2) scaling factor.
-   *
-   */
+/**
+ * @brief Q15 softmax function
+ * @param[in]       vec_in      pointer to input vector
+ * @param[in]       dim_vec     input vector dimention
+ * @param[out]      p_out       pointer to output vector
+ * @return none.
+ *
+ * @details
+ *
+ *  Here, instead of typical e based softmax, we use
+ *  2-based softmax, i.e.,:
+ *
+ *  y_i = 2^(x_i) / sum(2^x_j)
+ *
+ *  The relative output will be different here.
+ *  But mathematically, the gradient will be the same
+ *  with a log(2) scaling factor.
+ *
+ */
 
-void arm_softmax_q15(const q15_t * vec_in, const uint16_t dim_vec, q15_t * p_out)
+void arm_softmax_q15(const q15_t *vec_in, const uint16_t dim_vec, q15_t *p_out)
 {
-    q31_t     sum;
-    int16_t   i;
-    uint8_t   shift;
-    q31_t     base;
-    base = -1 * 0x100000;
-    for (i = 0; i < dim_vec; i++)
-    {
-        if (vec_in[i] > base)
-        {
-            base = vec_in[i];
-        }
-    }
+	q31_t sum;
+	int16_t i;
+	uint8_t shift;
+	q31_t base;
+	base = -1 * 0x100000;
+	for (i = 0; i < dim_vec; i++) {
+		if (vec_in[i] > base) {
+			base = vec_in[i];
+		}
+	}
 
-    /* we ignore really small values  
-     * anyway, they will be 0 after shrinking
-     * to q15_t
-     */
-    base = base - 16;
+	/* we ignore really small values
+	 * anyway, they will be 0 after shrinking
+	 * to q15_t
+	 */
+	base = base - 16;
 
-    sum = 0;
+	sum = 0;
 
-    for (i = 0; i < dim_vec; i++)
-    {
-        if (vec_in[i] > base)
-        {
-            shift = (uint8_t)__USAT(vec_in[i] - base, 5);
-            sum += 0x1 << shift;
-        }
-    }
+	for (i = 0; i < dim_vec; i++) {
+		if (vec_in[i] > base) {
+			shift = (uint8_t)__USAT(vec_in[i] - base, 5);
+			sum += 0x1 << shift;
+		}
+	}
 
-    /* This is effectively (0x1 << 32) / sum */
-    int64_t div_base = 0x100000000LL;
-    int output_base = (int32_t)(div_base / sum);
+	/* This is effectively (0x1 << 32) / sum */
+	int64_t div_base = 0x100000000LL;
+	int output_base = (int32_t)(div_base / sum);
 
-    /* Final confidence will be output_base >> ( 17 - (vec_in[i] - base) )
-     * so 32768 (0x1<<15) -> 100% confidence when sum = 0x1 << 16, output_base = 0x1 << 16
-     * and vec_in[i]-base = 16
-     */
-    for (i = 0; i < dim_vec; i++)
-    {
-        if (vec_in[i] > base) 
-        {
-            /* Here minimum value of 17+base-vec[i] will be 1 */
-            shift = (uint8_t)__USAT(17+base-vec_in[i], 5);
-            p_out[i] = (q15_t) __SSAT((output_base >> shift), 16);
-        } else
-        {
-            p_out[i] = 0;
-        }
-    }
-
+	/* Final confidence will be output_base >> ( 17 - (vec_in[i] - base) )
+	 * so 32768 (0x1<<15) -> 100% confidence when sum = 0x1 << 16,
+	 * output_base = 0x1 << 16 and vec_in[i]-base = 16
+	 */
+	for (i = 0; i < dim_vec; i++) {
+		if (vec_in[i] > base) {
+			/* Here minimum value of 17+base-vec[i] will be 1 */
+			shift = (uint8_t)__USAT(17 + base - vec_in[i], 5);
+			p_out[i] = (q15_t)__SSAT((output_base >> shift), 16);
+		} else {
+			p_out[i] = 0;
+		}
+	}
 }
 
 /**

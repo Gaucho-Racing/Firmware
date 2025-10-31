@@ -1,10 +1,10 @@
-/**************************************************************************//**
- * @file     system_ARMCM23.c
- * @brief    CMSIS Device System Source File for
- *           ARMCM23 Device Series
- * @version  V5.00
- * @date     21. October 2016
- ******************************************************************************/
+/**************************************************************************/ /**
+									      * @file     system_ARMCM23.c
+									      * @brief    CMSIS Device System Source File for
+									      *           ARMCM23 Device Series
+									      * @version  V5.00
+									      * @date     21. October 2016
+									      ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
  *
@@ -23,31 +23,30 @@
  * limitations under the License.
  */
 
-#if defined (ARMCM23)
-  #include "ARMCM23.h"
-#elif defined (ARMCM23_TZ)
-  #include "ARMCM23_TZ.h"
+#if defined(ARMCM23)
+#include "ARMCM23.h"
+#elif defined(ARMCM23_TZ)
+#include "ARMCM23_TZ.h"
 
-  #if defined (__ARM_FEATURE_CMSE) &&  (__ARM_FEATURE_CMSE == 3U)
-    #include "partition_ARMCM23.h"
-  #endif
+#if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+#include "partition_ARMCM23.h"
+#endif
 #else
-  #error device not specified!
+#error device not specified!
 #endif
 
 /*----------------------------------------------------------------------------
   Define clocks
  *----------------------------------------------------------------------------*/
-#define  XTAL            ( 5000000UL)      /* Oscillator frequency */
+#define XTAL (5000000UL) /* Oscillator frequency */
 
-#define  SYSTEM_CLOCK    (5U * XTAL)
-
+#define SYSTEM_CLOCK (5U * XTAL)
 
 /*----------------------------------------------------------------------------
   Externals
  *----------------------------------------------------------------------------*/
-#if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-  extern uint32_t __Vectors;
+#if defined(__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
+extern uint32_t __Vectors;
 #endif
 
 /*----------------------------------------------------------------------------
@@ -55,28 +54,24 @@
  *----------------------------------------------------------------------------*/
 uint32_t SystemCoreClock = SYSTEM_CLOCK;
 
-
 /*----------------------------------------------------------------------------
   System Core Clock update function
  *----------------------------------------------------------------------------*/
-void SystemCoreClockUpdate (void)
-{
-  SystemCoreClock = SYSTEM_CLOCK;
-}
+void SystemCoreClockUpdate(void) { SystemCoreClock = SYSTEM_CLOCK; }
 
 /*----------------------------------------------------------------------------
   System initialization function
  *----------------------------------------------------------------------------*/
-void SystemInit (void)
+void SystemInit(void)
 {
 
-#if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-  SCB->VTOR = (uint32_t) &__Vectors;
+#if defined(__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
+	SCB->VTOR = (uint32_t)&__Vectors;
 #endif
 
-#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-  TZ_SAU_Setup();
+#if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+	TZ_SAU_Setup();
 #endif
 
-  SystemCoreClock = SYSTEM_CLOCK;
+	SystemCoreClock = SYSTEM_CLOCK;
 }

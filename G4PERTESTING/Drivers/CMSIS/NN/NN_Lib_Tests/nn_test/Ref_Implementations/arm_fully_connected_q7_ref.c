@@ -18,26 +18,25 @@
 
 #include "ref_functions.h"
 
-void arm_fully_connected_q7_ref(const q7_t * pV,    // pointer to vector
-                                const q7_t * pM,    // pointer to matrix
-                                const uint16_t dim_vec, // length of the vector
-                                const uint16_t num_of_rows, // numCol of A
-                                const uint16_t bias_shift,  // amount of left-shift for bias
-                                const uint16_t out_shift,   // amount of right-shift for output
-                                const q7_t * bias, q7_t * pOut, // output operand
-                                q15_t * vec_buffer)
+void arm_fully_connected_q7_ref(
+    const q7_t *pV,		  // pointer to vector
+    const q7_t *pM,		  // pointer to matrix
+    const uint16_t dim_vec,	  // length of the vector
+    const uint16_t num_of_rows,	  // numCol of A
+    const uint16_t bias_shift,	  // amount of left-shift for bias
+    const uint16_t out_shift,	  // amount of right-shift for output
+    const q7_t *bias, q7_t *pOut, // output operand
+    q15_t *vec_buffer)
 {
-    for (int i = 0; i < num_of_rows; i++)
-    {
+	for (int i = 0; i < num_of_rows; i++) {
 #ifndef ARM_NN_TRUNCATE
-        int       ip_out = (bias[i] << bias_shift) + (0x1 << (out_shift - 1));
+		int ip_out = (bias[i] << bias_shift) + (0x1 << (out_shift - 1));
 #else
-        int       ip_out = bias[i] << bias_shift;
+		int ip_out = bias[i] << bias_shift;
 #endif
-        for (int j = 0; j < dim_vec; j++)
-        {
-            ip_out += pV[j] * pM[i * dim_vec + j];
-        }
-        pOut[i] = (q7_t) __SSAT((ip_out >> out_shift), 8);
-    }
+		for (int j = 0; j < dim_vec; j++) {
+			ip_out += pV[j] * pM[i * dim_vec + j];
+		}
+		pOut[i] = (q7_t)__SSAT((ip_out >> out_shift), 8);
+	}
 }

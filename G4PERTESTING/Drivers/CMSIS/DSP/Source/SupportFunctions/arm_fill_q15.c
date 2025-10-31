@@ -45,54 +45,49 @@
   @return        none
  */
 
-void arm_fill_q15(
-  q15_t value,
-  q15_t * pDst,
-  uint32_t blockSize)
+void arm_fill_q15(q15_t value, q15_t *pDst, uint32_t blockSize)
 {
-  uint32_t blkCnt;                               /* Loop counter */
+	uint32_t blkCnt; /* Loop counter */
 
-#if defined (ARM_MATH_LOOPUNROLL)
-  q31_t packedValue;                             /* value packed to 32 bits */
+#if defined(ARM_MATH_LOOPUNROLL)
+	q31_t packedValue; /* value packed to 32 bits */
 
-  /* Packing two 16 bit values to 32 bit value in order to use SIMD */
-  packedValue = __PKHBT(value, value, 16U);
+	/* Packing two 16 bit values to 32 bit value in order to use SIMD */
+	packedValue = __PKHBT(value, value, 16U);
 
-  /* Loop unrolling: Compute 4 outputs at a time */
-  blkCnt = blockSize >> 2U;
+	/* Loop unrolling: Compute 4 outputs at a time */
+	blkCnt = blockSize >> 2U;
 
-  while (blkCnt > 0U)
-  {
-    /* C = value */
+	while (blkCnt > 0U) {
+		/* C = value */
 
-    /* fill 2 times 2 samples at a time */
-    write_q15x2_ia (&pDst, packedValue);
-    write_q15x2_ia (&pDst, packedValue);
+		/* fill 2 times 2 samples at a time */
+		write_q15x2_ia(&pDst, packedValue);
+		write_q15x2_ia(&pDst, packedValue);
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
+		/* Decrement loop counter */
+		blkCnt--;
+	}
 
-  /* Loop unrolling: Compute remaining outputs */
-  blkCnt = blockSize % 0x4U;
+	/* Loop unrolling: Compute remaining outputs */
+	blkCnt = blockSize % 0x4U;
 
 #else
 
-  /* Initialize blkCnt with number of samples */
-  blkCnt = blockSize;
+	/* Initialize blkCnt with number of samples */
+	blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 
-  while (blkCnt > 0U)
-  {
-    /* C = value */
+	while (blkCnt > 0U) {
+		/* C = value */
 
-    /* Fill value in destination buffer */
-    *pDst++ = value;
+		/* Fill value in destination buffer */
+		*pDst++ = value;
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
+		/* Decrement loop counter */
+		blkCnt--;
+	}
 }
 
 /**

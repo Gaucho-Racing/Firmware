@@ -5,4 +5,3 @@
 #include "cmplx_mag_squared.c"
 #include "cmplx_mult_cmplx.c"
 #include "cmplx_mult_real.c"
-

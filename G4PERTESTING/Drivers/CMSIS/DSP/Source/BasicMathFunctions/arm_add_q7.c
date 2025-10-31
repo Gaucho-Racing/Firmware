@@ -46,62 +46,59 @@
   @return        none
 
   @par           Scaling and Overflow Behavior
-                   The function uses saturating arithmetic.
-                   Results outside of the allowable Q7 range [0x80 0x7F] are saturated.
+		   The function uses saturating arithmetic.
+		   Results outside of the allowable Q7 range [0x80 0x7F] are
+  saturated.
  */
 
-void arm_add_q7(
-  const q7_t * pSrcA,
-  const q7_t * pSrcB,
-        q7_t * pDst,
-        uint32_t blockSize)
+void arm_add_q7(const q7_t *pSrcA, const q7_t *pSrcB, q7_t *pDst,
+		uint32_t blockSize)
 {
-        uint32_t blkCnt;                               /* Loop counter */
+	uint32_t blkCnt; /* Loop counter */
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined(ARM_MATH_LOOPUNROLL)
 
-  /* Loop unrolling: Compute 4 outputs at a time */
-  blkCnt = blockSize >> 2U;
+	/* Loop unrolling: Compute 4 outputs at a time */
+	blkCnt = blockSize >> 2U;
 
-  while (blkCnt > 0U)
-  {
-    /* C = A + B */
+	while (blkCnt > 0U) {
+		/* C = A + B */
 
-#if defined (ARM_MATH_DSP)
-    /* Add and store result in destination buffer (4 samples at a time). */
-    write_q7x4_ia (&pDst, __QADD8 (read_q7x4_ia ((q7_t **) &pSrcA), read_q7x4_ia ((q7_t **) &pSrcB)));
+#if defined(ARM_MATH_DSP)
+		/* Add and store result in destination buffer (4 samples at a
+		 * time). */
+		write_q7x4_ia(&pDst, __QADD8(read_q7x4_ia((q7_t **)&pSrcA),
+					     read_q7x4_ia((q7_t **)&pSrcB)));
 #else
-    *pDst++ = (q7_t) __SSAT ((q15_t) *pSrcA++ + *pSrcB++, 8);
-    *pDst++ = (q7_t) __SSAT ((q15_t) *pSrcA++ + *pSrcB++, 8);
-    *pDst++ = (q7_t) __SSAT ((q15_t) *pSrcA++ + *pSrcB++, 8);
-    *pDst++ = (q7_t) __SSAT ((q15_t) *pSrcA++ + *pSrcB++, 8);
+		*pDst++ = (q7_t)__SSAT((q15_t)*pSrcA++ + *pSrcB++, 8);
+		*pDst++ = (q7_t)__SSAT((q15_t)*pSrcA++ + *pSrcB++, 8);
+		*pDst++ = (q7_t)__SSAT((q15_t)*pSrcA++ + *pSrcB++, 8);
+		*pDst++ = (q7_t)__SSAT((q15_t)*pSrcA++ + *pSrcB++, 8);
 #endif
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
+		/* Decrement loop counter */
+		blkCnt--;
+	}
 
-  /* Loop unrolling: Compute remaining outputs */
-  blkCnt = blockSize % 0x4U;
+	/* Loop unrolling: Compute remaining outputs */
+	blkCnt = blockSize % 0x4U;
 
 #else
 
-  /* Initialize blkCnt with number of samples */
-  blkCnt = blockSize;
+	/* Initialize blkCnt with number of samples */
+	blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 
-  while (blkCnt > 0U)
-  {
-    /* C = A + B */
+	while (blkCnt > 0U) {
+		/* C = A + B */
 
-    /* Add and store result in destination buffer. */
-    *pDst++ = (q7_t) __SSAT((q15_t) *pSrcA++ + *pSrcB++, 8);
+		/* Add and store result in destination buffer. */
+		*pDst++ = (q7_t)__SSAT((q15_t)*pSrcA++ + *pSrcB++, 8);
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
-
+		/* Decrement loop counter */
+		blkCnt--;
+	}
 }
 
 /**

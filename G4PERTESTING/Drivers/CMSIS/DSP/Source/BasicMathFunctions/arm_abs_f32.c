@@ -60,85 +60,79 @@
   @return        none
  */
 
-void arm_abs_f32(
-  const float32_t * pSrc,
-        float32_t * pDst,
-        uint32_t blockSize)
+void arm_abs_f32(const float32_t *pSrc, float32_t *pDst, uint32_t blockSize)
 {
-        uint32_t blkCnt;                               /* Loop counter */
+	uint32_t blkCnt; /* Loop counter */
 
 #if defined(ARM_MATH_NEON)
-    float32x4_t vec1;
-    float32x4_t res;
+	float32x4_t vec1;
+	float32x4_t res;
 
-    /* Compute 4 outputs at a time */
-    blkCnt = blockSize >> 2U;
+	/* Compute 4 outputs at a time */
+	blkCnt = blockSize >> 2U;
 
-    while (blkCnt > 0U)
-    {
-        /* C = |A| */
+	while (blkCnt > 0U) {
+		/* C = |A| */
 
-    	/* Calculate absolute values and then store the results in the destination buffer. */
-        vec1 = vld1q_f32(pSrc);
-        res = vabsq_f32(vec1);
-        vst1q_f32(pDst, res);
+		/* Calculate absolute values and then store the results in the
+		 * destination buffer. */
+		vec1 = vld1q_f32(pSrc);
+		res = vabsq_f32(vec1);
+		vst1q_f32(pDst, res);
 
-        /* Increment pointers */
-        pSrc += 4;
-        pDst += 4;
-        
-        /* Decrement the loop counter */
-        blkCnt--;
-    }
+		/* Increment pointers */
+		pSrc += 4;
+		pDst += 4;
 
-    /* Tail */
-    blkCnt = blockSize & 0x3;
+		/* Decrement the loop counter */
+		blkCnt--;
+	}
 
-#else
-#if defined (ARM_MATH_LOOPUNROLL)
-
-  /* Loop unrolling: Compute 4 outputs at a time */
-  blkCnt = blockSize >> 2U;
-
-  while (blkCnt > 0U)
-  {
-    /* C = |A| */
-
-    /* Calculate absolute and store result in destination buffer. */
-    *pDst++ = fabsf(*pSrc++);
-
-    *pDst++ = fabsf(*pSrc++);
-
-    *pDst++ = fabsf(*pSrc++);
-
-    *pDst++ = fabsf(*pSrc++);
-
-    /* Decrement loop counter */
-    blkCnt--;
-  }
-
-  /* Loop unrolling: Compute remaining outputs */
-  blkCnt = blockSize % 0x4U;
+	/* Tail */
+	blkCnt = blockSize & 0x3;
 
 #else
+#if defined(ARM_MATH_LOOPUNROLL)
 
-  /* Initialize blkCnt with number of samples */
-  blkCnt = blockSize;
+	/* Loop unrolling: Compute 4 outputs at a time */
+	blkCnt = blockSize >> 2U;
+
+	while (blkCnt > 0U) {
+		/* C = |A| */
+
+		/* Calculate absolute and store result in destination buffer. */
+		*pDst++ = fabsf(*pSrc++);
+
+		*pDst++ = fabsf(*pSrc++);
+
+		*pDst++ = fabsf(*pSrc++);
+
+		*pDst++ = fabsf(*pSrc++);
+
+		/* Decrement loop counter */
+		blkCnt--;
+	}
+
+	/* Loop unrolling: Compute remaining outputs */
+	blkCnt = blockSize % 0x4U;
+
+#else
+
+	/* Initialize blkCnt with number of samples */
+	blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 #endif /* #if defined(ARM_MATH_NEON) */
 
-  while (blkCnt > 0U)
-  {
-    /* C = |A| */
+	while (blkCnt > 0U) {
+		/* C = |A| */
 
-    /* Calculate absolute and store result in destination buffer. */
-    *pDst++ = fabsf(*pSrc++);
+		/* Calculate absolute and store result in destination buffer. */
+		*pDst++ = fabsf(*pSrc++);
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
-
+		/* Decrement loop counter */
+		blkCnt--;
+	}
 }
 
 /**

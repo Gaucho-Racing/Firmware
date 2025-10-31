@@ -19,24 +19,24 @@
 #include "arm_math.h"
 #include "arm_nnfunctions.h"
 
-void arm_relu_q7_ref(q7_t * data, uint16_t size)
+void arm_relu_q7_ref(q7_t *data, uint16_t size)
 {
-    uint16_t  i;
+	uint16_t i;
 
-    for (i = 0; i < size; i++)
-    {
-        if (data[i] < 0)
-            data[i] = 0;
-    }
+	for (i = 0; i < size; i++) {
+		if (data[i] < 0) {
+			data[i] = 0;
+		}
+	}
 }
 
-void arm_relu_q15_ref(q15_t * data, uint16_t size)
+void arm_relu_q15_ref(q15_t *data, uint16_t size)
 {
-    uint16_t  i;
+	uint16_t i;
 
-    for (i = 0; i < size; i++)
-    {
-        if (data[i] < 0)
-            data[i] = 0;
-    }
+	for (i = 0; i < size; i++) {
+		if (data[i] < 0) {
+			data[i] = 0;
+		}
+	}
 }

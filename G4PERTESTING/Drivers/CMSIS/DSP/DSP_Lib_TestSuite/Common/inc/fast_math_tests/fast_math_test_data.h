@@ -24,6 +24,6 @@ extern float32_t fast_math_output_f32_fut[FAST_MATH_MAX_LEN];
 extern float32_t fast_math_output_f32_ref[FAST_MATH_MAX_LEN];
 extern const float32_t fast_math_f32_inputs[FAST_MATH_MAX_LEN];
 extern const q31_t fast_math_q31_inputs[FAST_MATH_MAX_LEN];
-extern const q15_t * fast_math_q15_inputs;
+extern const q15_t *fast_math_q15_inputs;
 
 #endif /* _FAST_MATH_TEST_DATA_H_ */

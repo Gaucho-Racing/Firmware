@@ -1,10 +1,10 @@
-/**************************************************************************//**
- * @file     system_ARMCM0.c
- * @brief    CMSIS Device System Source File for
- *           ARMCM0 Device Series
- * @version  V5.00
- * @date     08. April 2016
- ******************************************************************************/
+/**************************************************************************/ /**
+									      * @file     system_ARMCM0.c
+									      * @brief    CMSIS Device System Source File for
+									      *           ARMCM0 Device Series
+									      * @version  V5.00
+									      * @date     08. April 2016
+									      ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
  *
@@ -28,29 +28,21 @@
 /*----------------------------------------------------------------------------
   Define clocks
  *----------------------------------------------------------------------------*/
-#define  XTAL            ( 5000000U)      /* Oscillator frequency */
+#define XTAL (5000000U) /* Oscillator frequency */
 
-#define  SYSTEM_CLOCK    (5 * XTAL)
-
+#define SYSTEM_CLOCK (5 * XTAL)
 
 /*----------------------------------------------------------------------------
   System Core Clock Variable
  *----------------------------------------------------------------------------*/
 uint32_t SystemCoreClock = SYSTEM_CLOCK;
 
-
 /*----------------------------------------------------------------------------
   System Core Clock update function
  *----------------------------------------------------------------------------*/
-void SystemCoreClockUpdate (void)
-{
-  SystemCoreClock = SYSTEM_CLOCK;
-}
+void SystemCoreClockUpdate(void) { SystemCoreClock = SYSTEM_CLOCK; }
 
 /*----------------------------------------------------------------------------
   System initialization function
  *----------------------------------------------------------------------------*/
-void SystemInit (void)
-{
-  SystemCoreClock = SYSTEM_CLOCK;
-}
+void SystemInit(void) { SystemCoreClock = SYSTEM_CLOCK; }

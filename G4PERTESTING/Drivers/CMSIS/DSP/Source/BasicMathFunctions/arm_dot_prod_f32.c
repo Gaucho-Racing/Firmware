@@ -39,7 +39,8 @@
   The vectors are multiplied element-by-element and then summed.
 
   <pre>
-      sum = pSrcA[0]*pSrcB[0] + pSrcA[1]*pSrcB[1] + ... + pSrcA[blockSize-1]*pSrcB[blockSize-1]
+      sum = pSrcA[0]*pSrcB[0] + pSrcA[1]*pSrcB[1] + ... +
+  pSrcA[blockSize-1]*pSrcB[blockSize-1]
   </pre>
 
   There are separate functions for floating-point, Q7, Q15, and Q31 data types.
@@ -59,103 +60,105 @@
   @return        none
  */
 
-void arm_dot_prod_f32(
-  const float32_t * pSrcA,
-  const float32_t * pSrcB,
-        uint32_t blockSize,
-        float32_t * result)
+void arm_dot_prod_f32(const float32_t *pSrcA, const float32_t *pSrcB,
+		      uint32_t blockSize, float32_t *result)
 {
-        uint32_t blkCnt;                               /* Loop counter */
-        float32_t sum = 0.0f;                          /* Temporary return variable */
+	uint32_t blkCnt;      /* Loop counter */
+	float32_t sum = 0.0f; /* Temporary return variable */
 
 #if defined(ARM_MATH_NEON)
-    float32x4_t vec1;
-    float32x4_t vec2;
-    float32x4_t res;
-    float32x4_t accum = vdupq_n_f32(0);    
+	float32x4_t vec1;
+	float32x4_t vec2;
+	float32x4_t res;
+	float32x4_t accum = vdupq_n_f32(0);
 
-    /* Compute 4 outputs at a time */
-    blkCnt = blockSize >> 2U;
+	/* Compute 4 outputs at a time */
+	blkCnt = blockSize >> 2U;
 
-    vec1 = vld1q_f32(pSrcA);
-    vec2 = vld1q_f32(pSrcB);
+	vec1 = vld1q_f32(pSrcA);
+	vec2 = vld1q_f32(pSrcB);
 
-    while (blkCnt > 0U)
-    {
-        /* C = A[0]*B[0] + A[1]*B[1] + A[2]*B[2] + ... + A[blockSize-1]*B[blockSize-1] */
-        /* Calculate dot product and then store the result in a temporary buffer. */
-        
-	accum = vmlaq_f32(accum, vec1, vec2);
-	
-        /* Increment pointers */
-        pSrcA += 4;
-        pSrcB += 4; 
+	while (blkCnt > 0U) {
+		/* C = A[0]*B[0] + A[1]*B[1] + A[2]*B[2] + ... +
+		 * A[blockSize-1]*B[blockSize-1] */
+		/* Calculate dot product and then store the result in a
+		 * temporary buffer. */
 
-        vec1 = vld1q_f32(pSrcA);
-        vec2 = vld1q_f32(pSrcB);
-        
-        /* Decrement the loop counter */
-        blkCnt--;
-    }
-    
+		accum = vmlaq_f32(accum, vec1, vec2);
+
+		/* Increment pointers */
+		pSrcA += 4;
+		pSrcB += 4;
+
+		vec1 = vld1q_f32(pSrcA);
+		vec2 = vld1q_f32(pSrcB);
+
+		/* Decrement the loop counter */
+		blkCnt--;
+	}
+
 #if __aarch64__
-    sum = vpadds_f32(vpadd_f32(vget_low_f32(accum), vget_high_f32(accum)));
+	sum = vpadds_f32(vpadd_f32(vget_low_f32(accum), vget_high_f32(accum)));
 #else
-    sum = (vpadd_f32(vget_low_f32(accum), vget_high_f32(accum)))[0] + (vpadd_f32(vget_low_f32(accum), vget_high_f32(accum)))[1];
-#endif    
+	sum = (vpadd_f32(vget_low_f32(accum), vget_high_f32(accum)))[0] +
+	      (vpadd_f32(vget_low_f32(accum), vget_high_f32(accum)))[1];
+#endif
 
-    /* Tail */
-    blkCnt = blockSize & 0x3;
-
-#else
-#if defined (ARM_MATH_LOOPUNROLL)
-
-  /* Loop unrolling: Compute 4 outputs at a time */
-  blkCnt = blockSize >> 2U;
-
-  /* First part of the processing with loop unrolling. Compute 4 outputs at a time.
-   ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0U)
-  {
-    /* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1] */
-
-    /* Calculate dot product and store result in a temporary buffer. */
-    sum += (*pSrcA++) * (*pSrcB++);
-
-    sum += (*pSrcA++) * (*pSrcB++);
-
-    sum += (*pSrcA++) * (*pSrcB++);
-
-    sum += (*pSrcA++) * (*pSrcB++);
-
-    /* Decrement loop counter */
-    blkCnt--;
-  }
-
-  /* Loop unrolling: Compute remaining outputs */
-  blkCnt = blockSize % 0x4U;
+	/* Tail */
+	blkCnt = blockSize & 0x3;
 
 #else
+#if defined(ARM_MATH_LOOPUNROLL)
 
-  /* Initialize blkCnt with number of samples */
-  blkCnt = blockSize;
+	/* Loop unrolling: Compute 4 outputs at a time */
+	blkCnt = blockSize >> 2U;
+
+	/* First part of the processing with loop unrolling. Compute 4 outputs
+	 *at a time.
+	 ** a second loop below computes the remaining 1 to 3 samples. */
+	while (blkCnt > 0U) {
+		/* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+
+		 * A[blockSize-1]* B[blockSize-1] */
+
+		/* Calculate dot product and store result in a temporary buffer.
+		 */
+		sum += (*pSrcA++) * (*pSrcB++);
+
+		sum += (*pSrcA++) * (*pSrcB++);
+
+		sum += (*pSrcA++) * (*pSrcB++);
+
+		sum += (*pSrcA++) * (*pSrcB++);
+
+		/* Decrement loop counter */
+		blkCnt--;
+	}
+
+	/* Loop unrolling: Compute remaining outputs */
+	blkCnt = blockSize % 0x4U;
+
+#else
+
+	/* Initialize blkCnt with number of samples */
+	blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 #endif /* #if defined(ARM_MATH_NEON) */
 
-  while (blkCnt > 0U)
-  {
-    /* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1] */
+	while (blkCnt > 0U) {
+		/* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+
+		 * A[blockSize-1]* B[blockSize-1] */
 
-    /* Calculate dot product and store result in a temporary buffer. */
-    sum += (*pSrcA++) * (*pSrcB++);
+		/* Calculate dot product and store result in a temporary buffer.
+		 */
+		sum += (*pSrcA++) * (*pSrcB++);
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
+		/* Decrement loop counter */
+		blkCnt--;
+	}
 
-  /* Store result in destination buffer */
-  *result = sum;
+	/* Store result in destination buffer */
+	*result = sum;
 }
 
 /**

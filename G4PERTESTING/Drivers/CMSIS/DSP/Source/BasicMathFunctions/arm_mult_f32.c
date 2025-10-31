@@ -58,89 +58,83 @@
   @return        none
  */
 
-void arm_mult_f32(
-  const float32_t * pSrcA,
-  const float32_t * pSrcB,
-        float32_t * pDst,
-        uint32_t blockSize)
+void arm_mult_f32(const float32_t *pSrcA, const float32_t *pSrcB,
+		  float32_t *pDst, uint32_t blockSize)
 {
-    uint32_t blkCnt;                               /* Loop counter */
+	uint32_t blkCnt; /* Loop counter */
 
 #if defined(ARM_MATH_NEON)
-    float32x4_t vec1;
-    float32x4_t vec2;
-    float32x4_t res;
+	float32x4_t vec1;
+	float32x4_t vec2;
+	float32x4_t res;
 
-    /* Compute 4 outputs at a time */
-    blkCnt = blockSize >> 2U;
+	/* Compute 4 outputs at a time */
+	blkCnt = blockSize >> 2U;
 
-    while (blkCnt > 0U)
-    {
-        /* C = A * B */
+	while (blkCnt > 0U) {
+		/* C = A * B */
 
-    	/* Multiply the inputs and then store the results in the destination buffer. */
-        vec1 = vld1q_f32(pSrcA);
-        vec2 = vld1q_f32(pSrcB);
-        res = vmulq_f32(vec1, vec2);
-        vst1q_f32(pDst, res);
+		/* Multiply the inputs and then store the results in the
+		 * destination buffer. */
+		vec1 = vld1q_f32(pSrcA);
+		vec2 = vld1q_f32(pSrcB);
+		res = vmulq_f32(vec1, vec2);
+		vst1q_f32(pDst, res);
 
-        /* Increment pointers */
-        pSrcA += 4;
-        pSrcB += 4; 
-        pDst += 4;
-        
-        /* Decrement the loop counter */
-        blkCnt--;
-    }
+		/* Increment pointers */
+		pSrcA += 4;
+		pSrcB += 4;
+		pDst += 4;
 
-    /* Tail */
-    blkCnt = blockSize & 0x3;
+		/* Decrement the loop counter */
+		blkCnt--;
+	}
 
-#else
-#if defined (ARM_MATH_LOOPUNROLL)
-
-  /* Loop unrolling: Compute 4 outputs at a time */
-  blkCnt = blockSize >> 2U;
-
-  while (blkCnt > 0U)
-  {
-    /* C = A * B */
-
-    /* Multiply inputs and store result in destination buffer. */
-    *pDst++ = (*pSrcA++) * (*pSrcB++);
-
-    *pDst++ = (*pSrcA++) * (*pSrcB++);
-
-    *pDst++ = (*pSrcA++) * (*pSrcB++);
-
-    *pDst++ = (*pSrcA++) * (*pSrcB++);
-
-    /* Decrement loop counter */
-    blkCnt--;
-  }
-
-  /* Loop unrolling: Compute remaining outputs */
-  blkCnt = blockSize % 0x4U;
+	/* Tail */
+	blkCnt = blockSize & 0x3;
 
 #else
+#if defined(ARM_MATH_LOOPUNROLL)
 
-  /* Initialize blkCnt with number of samples */
-  blkCnt = blockSize;
+	/* Loop unrolling: Compute 4 outputs at a time */
+	blkCnt = blockSize >> 2U;
+
+	while (blkCnt > 0U) {
+		/* C = A * B */
+
+		/* Multiply inputs and store result in destination buffer. */
+		*pDst++ = (*pSrcA++) * (*pSrcB++);
+
+		*pDst++ = (*pSrcA++) * (*pSrcB++);
+
+		*pDst++ = (*pSrcA++) * (*pSrcB++);
+
+		*pDst++ = (*pSrcA++) * (*pSrcB++);
+
+		/* Decrement loop counter */
+		blkCnt--;
+	}
+
+	/* Loop unrolling: Compute remaining outputs */
+	blkCnt = blockSize % 0x4U;
+
+#else
+
+	/* Initialize blkCnt with number of samples */
+	blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 #endif /* #if defined(ARM_MATH_NEON) */
 
-  while (blkCnt > 0U)
-  {
-    /* C = A * B */
+	while (blkCnt > 0U) {
+		/* C = A * B */
 
-    /* Multiply input and store result in destination buffer. */
-    *pDst++ = (*pSrcA++) * (*pSrcB++);
+		/* Multiply input and store result in destination buffer. */
+		*pDst++ = (*pSrcA++) * (*pSrcB++);
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
-
+		/* Decrement loop counter */
+		blkCnt--;
+	}
 }
 
 /**

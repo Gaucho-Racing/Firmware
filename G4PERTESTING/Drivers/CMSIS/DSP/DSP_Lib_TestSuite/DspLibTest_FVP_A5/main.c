@@ -1,4 +1,4 @@
-/* -------------------------------------------------------------------------- 
+/* --------------------------------------------------------------------------
  * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -19,16 +19,17 @@
 
 #include <stdio.h>
 
-#include "jtest.h"
 #include "all_tests.h"
 #include "arm_math.h"
+#include "jtest.h"
 
+int main(void)
+{
 
-int main (void) {
+	JTEST_INIT();		     /* Initialize test framework. */
+	JTEST_GROUP_CALL(all_tests); /* Run all tests. */
+	JTEST_ACT_EXIT_FW();	     /* Exit test framework.  */
 
-  JTEST_INIT();                 /* Initialize test framework. */
-  JTEST_GROUP_CALL(all_tests);  /* Run all tests. */
-  JTEST_ACT_EXIT_FW();          /* Exit test framework.  */
-
-  while(1);						/* Never return */
+	while (1)
+		; /* Never return */
 }

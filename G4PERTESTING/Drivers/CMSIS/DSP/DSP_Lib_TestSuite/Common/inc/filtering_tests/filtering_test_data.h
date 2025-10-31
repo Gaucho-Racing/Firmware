@@ -5,42 +5,48 @@
 /* Includes */
 /*--------------------------------------------------------------------------------*/
 
-#include "arr_desc.h"
 #include "arm_math.h"
+#include "arr_desc.h"
 
 /*--------------------------------------------------------------------------------*/
 /* Macros and Defines */
 /*--------------------------------------------------------------------------------*/
 
-#define FILTERING_MAX_BLOCKSIZE  33
-#define LMS_MAX_BLOCKSIZE        512
-#define FILTERING_MAX_NUMTAPS		34
-#define FILTERING_MAX_NUMSTAGES  14
-#define FILTERING_MAX_POSTSHIFT  8
-#define FILTERING_MAX_TAP_DELAY	0xFF
-#define FILTERING_MAX_L				3
-#define FILTERING_MAX_M				33
+#define FILTERING_MAX_BLOCKSIZE 33
+#define LMS_MAX_BLOCKSIZE 512
+#define FILTERING_MAX_NUMTAPS 34
+#define FILTERING_MAX_NUMSTAGES 14
+#define FILTERING_MAX_POSTSHIFT 8
+#define FILTERING_MAX_TAP_DELAY 0xFF
+#define FILTERING_MAX_L 3
+#define FILTERING_MAX_M 33
 
 /*--------------------------------------------------------------------------------*/
 /* Declare Variables */
 /*--------------------------------------------------------------------------------*/
 
 /* Input/Output Buffers */
-extern float32_t filtering_output_fut[LMS_MAX_BLOCKSIZE*2];
-extern float32_t filtering_output_ref[LMS_MAX_BLOCKSIZE*2];
-extern float32_t filtering_output_f32_fut[LMS_MAX_BLOCKSIZE*2];
-extern float32_t filtering_output_f32_ref[LMS_MAX_BLOCKSIZE*2];
-extern float32_t filtering_input_lms[LMS_MAX_BLOCKSIZE*2];
+extern float32_t filtering_output_fut[LMS_MAX_BLOCKSIZE * 2];
+extern float32_t filtering_output_ref[LMS_MAX_BLOCKSIZE * 2];
+extern float32_t filtering_output_f32_fut[LMS_MAX_BLOCKSIZE * 2];
+extern float32_t filtering_output_f32_ref[LMS_MAX_BLOCKSIZE * 2];
+extern float32_t filtering_input_lms[LMS_MAX_BLOCKSIZE * 2];
 extern float32_t filtering_pState[LMS_MAX_BLOCKSIZE + FILTERING_MAX_NUMTAPS];
 extern float32_t filtering_scratch[FILTERING_MAX_BLOCKSIZE * 3];
 extern float32_t filtering_scratch2[FILTERING_MAX_BLOCKSIZE * 3];
 extern float32_t filtering_coeffs_lms[FILTERING_MAX_NUMTAPS];
 
-extern const float64_t filtering_f64_inputs[FILTERING_MAX_BLOCKSIZE * FILTERING_MAX_M + FILTERING_MAX_NUMTAPS];
-extern const float32_t filtering_f32_inputs[FILTERING_MAX_BLOCKSIZE * FILTERING_MAX_M + FILTERING_MAX_NUMTAPS];
-extern const q31_t filtering_q31_inputs[FILTERING_MAX_BLOCKSIZE * FILTERING_MAX_M + FILTERING_MAX_NUMTAPS];
-extern const q15_t * filtering_q15_inputs;
-extern const q7_t * filtering_q7_inputs;
+extern const float64_t
+    filtering_f64_inputs[FILTERING_MAX_BLOCKSIZE * FILTERING_MAX_M +
+			 FILTERING_MAX_NUMTAPS];
+extern const float32_t
+    filtering_f32_inputs[FILTERING_MAX_BLOCKSIZE * FILTERING_MAX_M +
+			 FILTERING_MAX_NUMTAPS];
+extern const q31_t
+    filtering_q31_inputs[FILTERING_MAX_BLOCKSIZE * FILTERING_MAX_M +
+			 FILTERING_MAX_NUMTAPS];
+extern const q15_t *filtering_q15_inputs;
+extern const q7_t *filtering_q7_inputs;
 
 /* Block Sizes */
 ARR_DESC_DECLARE(filtering_blocksizes);

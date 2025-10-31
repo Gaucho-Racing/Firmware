@@ -6,4 +6,3 @@
 #include "mat_scale.c"
 #include "mat_sub.c"
 #include "mat_trans.c"
-

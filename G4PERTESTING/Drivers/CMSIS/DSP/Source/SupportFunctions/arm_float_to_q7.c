@@ -55,196 +55,191 @@
  * The function uses saturating arithmetic.
  * Results outside of the allowable Q7 range [0x80 0x7F] will be saturated.
  * \note
- * In order to apply rounding, the library should be rebuilt with the ROUNDING macro
- * defined in the preprocessor section of project options.
+ * In order to apply rounding, the library should be rebuilt with the ROUNDING
+ *macro defined in the preprocessor section of project options.
  */
 
 #if defined(ARM_MATH_NEON)
-void arm_float_to_q7(
-  const float32_t * pSrc,
-  q7_t * pDst,
-  uint32_t blockSize)
+void arm_float_to_q7(const float32_t *pSrc, q7_t *pDst, uint32_t blockSize)
 {
-  const float32_t *pIn = pSrc;                         /* Src pointer */
-  uint32_t blkCnt;                               /* loop counter */
+	const float32_t *pIn = pSrc; /* Src pointer */
+	uint32_t blkCnt;	     /* loop counter */
 
-  float32_t in;
-  float32x4_t inV;
-  #ifdef ARM_MATH_ROUNDING
-  float32x4_t zeroV = vdupq_n_f32(0.0f);
-  float32x4_t pHalf = vdupq_n_f32(0.5f / 128.0f);
-  float32x4_t mHalf = vdupq_n_f32(-0.5f / 128.0f);
-  float32x4_t r;
-  uint32x4_t cmp;
-  #endif
+	float32_t in;
+	float32x4_t inV;
+#ifdef ARM_MATH_ROUNDING
+	float32x4_t zeroV = vdupq_n_f32(0.0f);
+	float32x4_t pHalf = vdupq_n_f32(0.5f / 128.0f);
+	float32x4_t mHalf = vdupq_n_f32(-0.5f / 128.0f);
+	float32x4_t r;
+	uint32x4_t cmp;
+#endif
 
-  int32x4_t cvt;
-  int16x4_t cvt1,cvt2;
-  int8x8_t outV;
+	int32x4_t cvt;
+	int16x4_t cvt1, cvt2;
+	int8x8_t outV;
 
-  blkCnt = blockSize >> 3U;
+	blkCnt = blockSize >> 3U;
 
-  /* Compute 8 outputs at a time.
-   ** a second loop below computes the remaining 1 to 7 samples. */
-  while (blkCnt > 0U)
-  {
+	/* Compute 8 outputs at a time.
+	 ** a second loop below computes the remaining 1 to 7 samples. */
+	while (blkCnt > 0U) {
 
 #ifdef ARM_MATH_ROUNDING
-    /* C = A * 128 */
-    /* Convert from float to q7 and then store the results in the destination buffer */
-    inV = vld1q_f32(pIn);
-    cmp = vcgtq_f32(inV,zeroV);
-    r = vbslq_f32(cmp,pHalf,mHalf);
-    inV = vaddq_f32(inV, r);
-    cvt1 = vqmovn_s32(vcvtq_n_s32_f32(inV,7));
-    pIn += 4;
+		/* C = A * 128 */
+		/* Convert from float to q7 and then store the results in the
+		 * destination buffer */
+		inV = vld1q_f32(pIn);
+		cmp = vcgtq_f32(inV, zeroV);
+		r = vbslq_f32(cmp, pHalf, mHalf);
+		inV = vaddq_f32(inV, r);
+		cvt1 = vqmovn_s32(vcvtq_n_s32_f32(inV, 7));
+		pIn += 4;
 
-    inV = vld1q_f32(pIn);
-    cmp = vcgtq_f32(inV,zeroV);
-    r = vbslq_f32(cmp,pHalf,mHalf);
-    inV = vaddq_f32(inV, r);
-    cvt2 = vqmovn_s32(vcvtq_n_s32_f32(inV,7));
-    pIn += 4;
-    
-    outV = vqmovn_s16(vcombine_s16(cvt1,cvt2));
-    vst1_s8(pDst, outV);
-    pDst += 8;
+		inV = vld1q_f32(pIn);
+		cmp = vcgtq_f32(inV, zeroV);
+		r = vbslq_f32(cmp, pHalf, mHalf);
+		inV = vaddq_f32(inV, r);
+		cvt2 = vqmovn_s32(vcvtq_n_s32_f32(inV, 7));
+		pIn += 4;
+
+		outV = vqmovn_s16(vcombine_s16(cvt1, cvt2));
+		vst1_s8(pDst, outV);
+		pDst += 8;
 
 #else
 
-    /* C = A * 128 */
-    /* Convert from float to q7 and then store the results in the destination buffer */
-    inV = vld1q_f32(pIn);
-    cvt1 = vqmovn_s32(vcvtq_n_s32_f32(inV,7));
-    pIn += 4;
+		/* C = A * 128 */
+		/* Convert from float to q7 and then store the results in the
+		 * destination buffer */
+		inV = vld1q_f32(pIn);
+		cvt1 = vqmovn_s32(vcvtq_n_s32_f32(inV, 7));
+		pIn += 4;
 
-    inV = vld1q_f32(pIn);
-    cvt2 = vqmovn_s32(vcvtq_n_s32_f32(inV,7));
-    pIn += 4;
+		inV = vld1q_f32(pIn);
+		cvt2 = vqmovn_s32(vcvtq_n_s32_f32(inV, 7));
+		pIn += 4;
 
-    outV = vqmovn_s16(vcombine_s16(cvt1,cvt2));
+		outV = vqmovn_s16(vcombine_s16(cvt1, cvt2));
 
-    vst1_s8(pDst, outV);
-    pDst += 8;
+		vst1_s8(pDst, outV);
+		pDst += 8;
 #endif /*      #ifdef ARM_MATH_ROUNDING        */
 
-    /* Decrement the loop counter */
-    blkCnt--;
-  }
+		/* Decrement the loop counter */
+		blkCnt--;
+	}
 
-  /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
-   ** No loop unrolling is used. */
-  blkCnt = blockSize & 7;
+	/* If the blockSize is not a multiple of 4, compute any remaining output
+	 *samples here.
+	 ** No loop unrolling is used. */
+	blkCnt = blockSize & 7;
 
-  while (blkCnt > 0U)
-  {
+	while (blkCnt > 0U) {
 
 #ifdef ARM_MATH_ROUNDING
-    /* C = A * 128 */
-    /* Convert from float to q7 and then store the results in the destination buffer */
-    in = *pIn++;
-    in = (in * 128);
-    in += in > 0.0f ? 0.5f : -0.5f;
-    *pDst++ = (q7_t) (__SSAT((q15_t) (in), 8));
+		/* C = A * 128 */
+		/* Convert from float to q7 and then store the results in the
+		 * destination buffer */
+		in = *pIn++;
+		in = (in * 128);
+		in += in > 0.0f ? 0.5f : -0.5f;
+		*pDst++ = (q7_t)(__SSAT((q15_t)(in), 8));
 
 #else
 
-    /* C = A * 128 */
-    /* Convert from float to q7 and then store the results in the destination buffer */
-    *pDst++ = __SSAT((q31_t) (*pIn++ * 128.0f), 8);
+		/* C = A * 128 */
+		/* Convert from float to q7 and then store the results in the
+		 * destination buffer */
+		*pDst++ = __SSAT((q31_t)(*pIn++ * 128.0f), 8);
 
 #endif /*      #ifdef ARM_MATH_ROUNDING        */
 
-    /* Decrement the loop counter */
-    blkCnt--;
-  }
-
+		/* Decrement the loop counter */
+		blkCnt--;
+	}
 }
 #else
-void arm_float_to_q7(
-  const float32_t * pSrc,
-        q7_t * pDst,
-        uint32_t blockSize)
+void arm_float_to_q7(const float32_t *pSrc, q7_t *pDst, uint32_t blockSize)
 {
-        uint32_t blkCnt;                               /* Loop counter */
-  const float32_t *pIn = pSrc;                         /* Source pointer */
+	uint32_t blkCnt;	     /* Loop counter */
+	const float32_t *pIn = pSrc; /* Source pointer */
 
 #ifdef ARM_MATH_ROUNDING
-        float32_t in;
+	float32_t in;
 #endif /* #ifdef ARM_MATH_ROUNDING */
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined(ARM_MATH_LOOPUNROLL)
 
-  /* Loop unrolling: Compute 4 outputs at a time */
-  blkCnt = blockSize >> 2U;
+	/* Loop unrolling: Compute 4 outputs at a time */
+	blkCnt = blockSize >> 2U;
 
-  while (blkCnt > 0U)
-  {
-    /* C = A * 128 */
+	while (blkCnt > 0U) {
+		/* C = A * 128 */
 
-    /* Convert from float to q7 and store result in destination buffer */
+		/* Convert from float to q7 and store result in destination
+		 * buffer */
 #ifdef ARM_MATH_ROUNDING
 
-    in = (*pIn++ * 128);
-    in += in > 0.0f ? 0.5f : -0.5f;
-    *pDst++ = (q7_t) (__SSAT((q15_t) (in), 8));
+		in = (*pIn++ * 128);
+		in += in > 0.0f ? 0.5f : -0.5f;
+		*pDst++ = (q7_t)(__SSAT((q15_t)(in), 8));
 
-    in = (*pIn++ * 128);
-    in += in > 0.0f ? 0.5f : -0.5f;
-    *pDst++ = (q7_t) (__SSAT((q15_t) (in), 8));
+		in = (*pIn++ * 128);
+		in += in > 0.0f ? 0.5f : -0.5f;
+		*pDst++ = (q7_t)(__SSAT((q15_t)(in), 8));
 
-    in = (*pIn++ * 128);
-    in += in > 0.0f ? 0.5f : -0.5f;
-    *pDst++ = (q7_t) (__SSAT((q15_t) (in), 8));
+		in = (*pIn++ * 128);
+		in += in > 0.0f ? 0.5f : -0.5f;
+		*pDst++ = (q7_t)(__SSAT((q15_t)(in), 8));
 
-    in = (*pIn++ * 128);
-    in += in > 0.0f ? 0.5f : -0.5f;
-    *pDst++ = (q7_t) (__SSAT((q15_t) (in), 8));
+		in = (*pIn++ * 128);
+		in += in > 0.0f ? 0.5f : -0.5f;
+		*pDst++ = (q7_t)(__SSAT((q15_t)(in), 8));
 
 #else
 
-    *pDst++ = __SSAT((q31_t) (*pIn++ * 128.0f), 8);
-    *pDst++ = __SSAT((q31_t) (*pIn++ * 128.0f), 8);
-    *pDst++ = __SSAT((q31_t) (*pIn++ * 128.0f), 8);
-    *pDst++ = __SSAT((q31_t) (*pIn++ * 128.0f), 8);
+		*pDst++ = __SSAT((q31_t)(*pIn++ * 128.0f), 8);
+		*pDst++ = __SSAT((q31_t)(*pIn++ * 128.0f), 8);
+		*pDst++ = __SSAT((q31_t)(*pIn++ * 128.0f), 8);
+		*pDst++ = __SSAT((q31_t)(*pIn++ * 128.0f), 8);
 
 #endif /* #ifdef ARM_MATH_ROUNDING */
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
+		/* Decrement loop counter */
+		blkCnt--;
+	}
 
-  /* Loop unrolling: Compute remaining outputs */
-  blkCnt = blockSize % 0x4U;
+	/* Loop unrolling: Compute remaining outputs */
+	blkCnt = blockSize % 0x4U;
 
 #else
 
-  /* Initialize blkCnt with number of samples */
-  blkCnt = blockSize;
+	/* Initialize blkCnt with number of samples */
+	blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 
-  while (blkCnt > 0U)
-  {
-    /* C = A * 128 */
+	while (blkCnt > 0U) {
+		/* C = A * 128 */
 
-    /* Convert from float to q7 and store result in destination buffer */
+		/* Convert from float to q7 and store result in destination
+		 * buffer */
 #ifdef ARM_MATH_ROUNDING
 
-    in = (*pIn++ * 128);
-    in += in > 0.0f ? 0.5f : -0.5f;
-    *pDst++ = (q7_t) (__SSAT((q15_t) (in), 8));
+		in = (*pIn++ * 128);
+		in += in > 0.0f ? 0.5f : -0.5f;
+		*pDst++ = (q7_t)(__SSAT((q15_t)(in), 8));
 
 #else
 
-    *pDst++ = (q7_t) __SSAT((q31_t) (*pIn++ * 128.0f), 8);
+		*pDst++ = (q7_t)__SSAT((q31_t)(*pIn++ * 128.0f), 8);
 
 #endif /* #ifdef ARM_MATH_ROUNDING */
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
-
+		/* Decrement loop counter */
+		blkCnt--;
+	}
 }
 #endif /* #if defined(ARM_MATH_NEON) */
 

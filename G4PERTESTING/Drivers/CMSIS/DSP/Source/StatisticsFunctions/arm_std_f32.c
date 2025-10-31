@@ -39,10 +39,12 @@
   The underlying algorithm is used:
 
   <pre>
-      Result = sqrt((sumOfSquares - sum<sup>2</sup> / blockSize) / (blockSize - 1))
+      Result = sqrt((sumOfSquares - sum<sup>2</sup> / blockSize) / (blockSize -
+  1))
 
-      sumOfSquares = pSrc[0] * pSrc[0] + pSrc[1] * pSrc[1] + ... + pSrc[blockSize-1] * pSrc[blockSize-1]
-      sum = pSrc[0] + pSrc[1] + pSrc[2] + ... + pSrc[blockSize-1]
+      sumOfSquares = pSrc[0] * pSrc[0] + pSrc[1] * pSrc[1] + ... +
+  pSrc[blockSize-1] * pSrc[blockSize-1] sum = pSrc[0] + pSrc[1] + pSrc[2] + ...
+  + pSrc[blockSize-1]
   </pre>
 
   There are separate functions for floating point, Q31, and Q15 data types.
@@ -61,125 +63,120 @@
   @return        none
  */
 #if defined(ARM_MATH_NEON_EXPERIMENTAL)
-void arm_std_f32(
-  const float32_t * pSrc,
-        uint32_t blockSize,
-        float32_t * pResult)
+void arm_std_f32(const float32_t *pSrc, uint32_t blockSize, float32_t *pResult)
 {
-  float32_t var;
-  arm_var_f32(pSrc,blockSize,&var);
-  arm_sqrt_f32(var, pResult);
+	float32_t var;
+	arm_var_f32(pSrc, blockSize, &var);
+	arm_sqrt_f32(var, pResult);
 }
 #else
-void arm_std_f32(
-  const float32_t * pSrc,
-        uint32_t blockSize,
-        float32_t * pResult)
+void arm_std_f32(const float32_t *pSrc, uint32_t blockSize, float32_t *pResult)
 {
-        uint32_t blkCnt;                               /* Loop counter */
-        float32_t sum = 0.0f;                          /* Temporary result storage */
-        float32_t sumOfSquares = 0.0f;                 /* Sum of squares */
-        float32_t in;                                  /* Temporary variable to store input value */
+	uint32_t blkCnt;	       /* Loop counter */
+	float32_t sum = 0.0f;	       /* Temporary result storage */
+	float32_t sumOfSquares = 0.0f; /* Sum of squares */
+	float32_t in; /* Temporary variable to store input value */
 
 #ifndef ARM_MATH_CM0_FAMILY
-        float32_t meanOfSquares, mean, squareOfMean;   /* Temporary variables */
+	float32_t meanOfSquares, mean, squareOfMean; /* Temporary variables */
 #else
-        float32_t squareOfSum;                         /* Square of Sum */
-        float32_t var;                                 /* Temporary varaince storage */
+	float32_t squareOfSum; /* Square of Sum */
+	float32_t var;	       /* Temporary varaince storage */
 #endif
 
-  if (blockSize <= 1U)
-  {
-    *pResult = 0;
-    return;
-  }
+	if (blockSize <= 1U) {
+		*pResult = 0;
+		return;
+	}
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined(ARM_MATH_LOOPUNROLL)
 
-  /* Loop unrolling: Compute 4 outputs at a time */
-  blkCnt = blockSize >> 2U;
+	/* Loop unrolling: Compute 4 outputs at a time */
+	blkCnt = blockSize >> 2U;
 
-  while (blkCnt > 0U)
-  {
-    /* C = A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1] */
-    /* C = A[0] + A[1] + ... + A[blockSize-1] */
+	while (blkCnt > 0U) {
+		/* C = A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] *
+		 * A[blockSize-1] */
+		/* C = A[0] + A[1] + ... + A[blockSize-1] */
 
-    in = *pSrc++;
-    /* Compute sum of squares and store result in a temporary variable, sumOfSquares. */
-    sumOfSquares += in * in;
-    /* Compute sum and store result in a temporary variable, sum. */
-    sum += in;
+		in = *pSrc++;
+		/* Compute sum of squares and store result in a temporary
+		 * variable, sumOfSquares. */
+		sumOfSquares += in * in;
+		/* Compute sum and store result in a temporary variable, sum. */
+		sum += in;
 
-    in = *pSrc++;
-    sumOfSquares += in * in;
-    sum += in;
+		in = *pSrc++;
+		sumOfSquares += in * in;
+		sum += in;
 
-    in = *pSrc++;
-    sumOfSquares += in * in;
-    sum += in;
+		in = *pSrc++;
+		sumOfSquares += in * in;
+		sum += in;
 
-    in = *pSrc++;
-    sumOfSquares += in * in;
-    sum += in;
+		in = *pSrc++;
+		sumOfSquares += in * in;
+		sum += in;
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
+		/* Decrement loop counter */
+		blkCnt--;
+	}
 
-  /* Loop unrolling: Compute remaining outputs */
-  blkCnt = blockSize % 0x4U;
+	/* Loop unrolling: Compute remaining outputs */
+	blkCnt = blockSize % 0x4U;
 
 #else
 
-  /* Initialize blkCnt with number of samples */
-  blkCnt = blockSize;
+	/* Initialize blkCnt with number of samples */
+	blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 
-  while (blkCnt > 0U)
-  {
-    /* C = A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1] */
-    /* C = A[0] + A[1] + ... + A[blockSize-1] */
+	while (blkCnt > 0U) {
+		/* C = A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] *
+		 * A[blockSize-1] */
+		/* C = A[0] + A[1] + ... + A[blockSize-1] */
 
-    in = *pSrc++;
-    /* Compute sum of squares and store result in a temporary variable, sumOfSquares. */
-    sumOfSquares += ( in * in);
-    /* Compute sum and store result in a temporary variable, sum. */
-    sum += in;
+		in = *pSrc++;
+		/* Compute sum of squares and store result in a temporary
+		 * variable, sumOfSquares. */
+		sumOfSquares += (in * in);
+		/* Compute sum and store result in a temporary variable, sum. */
+		sum += in;
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
+		/* Decrement loop counter */
+		blkCnt--;
+	}
 
 #ifndef ARM_MATH_CM0_FAMILY
 
-  /* Compute Mean of squares and store result in a temporary variable, meanOfSquares. */
-  meanOfSquares = sumOfSquares / ((float32_t) blockSize - 1.0f);
+	/* Compute Mean of squares and store result in a temporary variable,
+	 * meanOfSquares. */
+	meanOfSquares = sumOfSquares / ((float32_t)blockSize - 1.0f);
 
-  /* Compute mean of all input values */
-  mean = sum / (float32_t) blockSize;
+	/* Compute mean of all input values */
+	mean = sum / (float32_t)blockSize;
 
-  /* Compute square of mean */
-  squareOfMean = (mean * mean) * (((float32_t) blockSize) /
-                                  ((float32_t) blockSize - 1.0f));
+	/* Compute square of mean */
+	squareOfMean = (mean * mean) *
+		       (((float32_t)blockSize) / ((float32_t)blockSize - 1.0f));
 
-  /* Compute standard deviation and store result to destination */
-  arm_sqrt_f32((meanOfSquares - squareOfMean), pResult);
+	/* Compute standard deviation and store result to destination */
+	arm_sqrt_f32((meanOfSquares - squareOfMean), pResult);
 
 #else
-  /* Run the below code for Cortex-M0 */
+	/* Run the below code for Cortex-M0 */
 
-  /* Compute square of sum */
-  squareOfSum = ((sum * sum) / (float32_t) blockSize);
+	/* Compute square of sum */
+	squareOfSum = ((sum * sum) / (float32_t)blockSize);
 
-  /* Compute variance */
-  var = ((sumOfSquares - squareOfSum) / (float32_t) (blockSize - 1.0f));
+	/* Compute variance */
+	var = ((sumOfSquares - squareOfSum) / (float32_t)(blockSize - 1.0f));
 
-  /* Compute standard deviation and store result in destination */
-  arm_sqrt_f32(var, pResult);
+	/* Compute standard deviation and store result in destination */
+	arm_sqrt_f32(var, pResult);
 
 #endif /* #ifndef ARM_MATH_CM0_FAMILY */
-
 }
 #endif /* #if defined(ARM_MATH_NEON) */
 

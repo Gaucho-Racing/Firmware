@@ -43,105 +43,105 @@
   @param[in]     pSrcB      points to second input matrix structure
   @param[out]    pDst       points to output matrix structure
   @return        execution status
-                   - \ref ARM_MATH_SUCCESS       : Operation successful
-                   - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
+		   - \ref ARM_MATH_SUCCESS       : Operation successful
+		   - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
 
   @par           Scaling and Overflow Behavior
-                   The function uses saturating arithmetic.
-                   Results outside of the allowable Q15 range [0x8000 0x7FFF] are saturated.
+		   The function uses saturating arithmetic.
+		   Results outside of the allowable Q15 range [0x8000 0x7FFF]
+  are saturated.
  */
 
-arm_status arm_mat_add_q15(
-  const arm_matrix_instance_q15 * pSrcA,
-  const arm_matrix_instance_q15 * pSrcB,
-        arm_matrix_instance_q15 * pDst)
+arm_status arm_mat_add_q15(const arm_matrix_instance_q15 *pSrcA,
+			   const arm_matrix_instance_q15 *pSrcB,
+			   arm_matrix_instance_q15 *pDst)
 {
-        q15_t *pInA = pSrcA->pData;                    /* input data matrix pointer A */
-        q15_t *pInB = pSrcB->pData;                    /* input data matrix pointer B */
-        q15_t *pOut = pDst->pData;                     /* output data matrix pointer */
-        
-        uint32_t numSamples;                           /* total number of elements in the matrix */
-        uint32_t blkCnt;                               /* loop counters */
-        arm_status status;                             /* status of matrix addition */
+	q15_t *pInA = pSrcA->pData; /* input data matrix pointer A */
+	q15_t *pInB = pSrcB->pData; /* input data matrix pointer B */
+	q15_t *pOut = pDst->pData;  /* output data matrix pointer */
+
+	uint32_t numSamples; /* total number of elements in the matrix */
+	uint32_t blkCnt;     /* loop counters */
+	arm_status status;   /* status of matrix addition */
 
 #ifdef ARM_MATH_MATRIX_CHECK
 
-  /* Check for matrix mismatch condition */
-  if ((pSrcA->numRows != pSrcB->numRows) ||
-      (pSrcA->numCols != pSrcB->numCols) ||
-      (pSrcA->numRows != pDst->numRows)  ||
-      (pSrcA->numCols != pDst->numCols)    )
-  {
-    /* Set status as ARM_MATH_SIZE_MISMATCH */
-    status = ARM_MATH_SIZE_MISMATCH;
-  }
-  else
+	/* Check for matrix mismatch condition */
+	if ((pSrcA->numRows != pSrcB->numRows) ||
+	    (pSrcA->numCols != pSrcB->numCols) ||
+	    (pSrcA->numRows != pDst->numRows) ||
+	    (pSrcA->numCols != pDst->numCols)) {
+		/* Set status as ARM_MATH_SIZE_MISMATCH */
+		status = ARM_MATH_SIZE_MISMATCH;
+	} else
 
 #endif /* #ifdef ARM_MATH_MATRIX_CHECK */
 
-  {
-    /* Total number of samples in input matrix */
-    numSamples = (uint32_t) pSrcA->numRows * pSrcA->numCols;
+	{
+		/* Total number of samples in input matrix */
+		numSamples = (uint32_t)pSrcA->numRows * pSrcA->numCols;
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined(ARM_MATH_LOOPUNROLL)
 
-    /* Loop unrolling: Compute 4 outputs at a time */
-    blkCnt = numSamples >> 2U;
+		/* Loop unrolling: Compute 4 outputs at a time */
+		blkCnt = numSamples >> 2U;
 
-    while (blkCnt > 0U)
-    {
-      /* C(m,n) = A(m,n) + B(m,n) */
+		while (blkCnt > 0U) {
+			/* C(m,n) = A(m,n) + B(m,n) */
 
-      /* Add, saturate and store result in destination buffer. */
-#if defined (ARM_MATH_DSP)
-      write_q15x2_ia (&pOut, __QADD16(read_q15x2_ia (&pInA), read_q15x2_ia (&pInB)));
+			/* Add, saturate and store result in destination buffer.
+			 */
+#if defined(ARM_MATH_DSP)
+			write_q15x2_ia(&pOut, __QADD16(read_q15x2_ia(&pInA),
+						       read_q15x2_ia(&pInB)));
 
-      write_q15x2_ia (&pOut, __QADD16(read_q15x2_ia (&pInA), read_q15x2_ia (&pInB)));
+			write_q15x2_ia(&pOut, __QADD16(read_q15x2_ia(&pInA),
+						       read_q15x2_ia(&pInB)));
 #else
-      *pOut++ = (q15_t) __SSAT(((q31_t) *pInA++ + *pInB++), 16);
+			*pOut++ = (q15_t)__SSAT(((q31_t)*pInA++ + *pInB++), 16);
 
-      *pOut++ = (q15_t) __SSAT(((q31_t) *pInA++ + *pInB++), 16);
+			*pOut++ = (q15_t)__SSAT(((q31_t)*pInA++ + *pInB++), 16);
 
-      *pOut++ = (q15_t) __SSAT(((q31_t) *pInA++ + *pInB++), 16);
+			*pOut++ = (q15_t)__SSAT(((q31_t)*pInA++ + *pInB++), 16);
 
-      *pOut++ = (q15_t) __SSAT(((q31_t) *pInA++ + *pInB++), 16);
+			*pOut++ = (q15_t)__SSAT(((q31_t)*pInA++ + *pInB++), 16);
 #endif
 
-      /* Decrement loop counter */
-      blkCnt--;
-    }
+			/* Decrement loop counter */
+			blkCnt--;
+		}
 
-    /* Loop unrolling: Compute remaining outputs */
-    blkCnt = numSamples % 0x4U;
+		/* Loop unrolling: Compute remaining outputs */
+		blkCnt = numSamples % 0x4U;
 
 #else
 
-    /* Initialize blkCnt with number of samples */
-    blkCnt = numSamples;
+		/* Initialize blkCnt with number of samples */
+		blkCnt = numSamples;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 
-    while (blkCnt > 0U)
-    {
-      /* C(m,n) = A(m,n) + B(m,n) */
+		while (blkCnt > 0U) {
+			/* C(m,n) = A(m,n) + B(m,n) */
 
-      /* Add, saturate and store result in destination buffer. */
-#if defined (ARM_MATH_DSP)
-      *pOut++ = (q15_t) __QADD16(*pInA++, *pInB++);
+			/* Add, saturate and store result in destination buffer.
+			 */
+#if defined(ARM_MATH_DSP)
+			*pOut++ = (q15_t)__QADD16(*pInA++, *pInB++);
 #else
-      *pOut++ = (q15_t) __SSAT(((q31_t) *pInA++ + *pInB++), 16);
+			*pOut++ = (q15_t)__SSAT(((q31_t)*pInA++ + *pInB++), 16);
 #endif
 
-      /* Decrement loop counter */
-      blkCnt--;
-    }
+			/* Decrement loop counter */
+			blkCnt--;
+		}
 
-    /* Set status as ARM_MATH_SUCCESS */
-    status = ARM_MATH_SUCCESS;
-  }
+		/* Set status as ARM_MATH_SUCCESS */
+		status = ARM_MATH_SUCCESS;
+	}
 
-  /* Return to application */
-  return (status);
+	/* Return to application */
+	return (status);
 }
 
 /**

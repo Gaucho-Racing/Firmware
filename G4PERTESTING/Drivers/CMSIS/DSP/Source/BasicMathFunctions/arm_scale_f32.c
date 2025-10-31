@@ -35,16 +35,17 @@
 /**
   @defgroup BasicScale Vector Scale
 
-  Multiply a vector by a scalar value.  For floating-point data, the algorithm used is:
+  Multiply a vector by a scalar value.  For floating-point data, the algorithm
+  used is:
 
   <pre>
       pDst[n] = pSrc[n] * scale,   0 <= n < blockSize.
   </pre>
 
-  In the fixed-point Q7, Q15, and Q31 functions, <code>scale</code> is represented by
-  a fractional multiplication <code>scaleFract</code> and an arithmetic shift <code>shift</code>.
-  The shift allows the gain of the scaling operation to exceed 1.0.
-  The algorithm used with fixed-point data is:
+  In the fixed-point Q7, Q15, and Q31 functions, <code>scale</code> is
+  represented by a fractional multiplication <code>scaleFract</code> and an
+  arithmetic shift <code>shift</code>. The shift allows the gain of the scaling
+  operation to exceed 1.0. The algorithm used with fixed-point data is:
 
   <pre>
       pDst[n] = (pSrc[n] * scaleFract) << shift,   0 <= n < blockSize.
@@ -73,85 +74,79 @@
   @return        none
  */
 
-void arm_scale_f32(
-  const float32_t *pSrc,
-        float32_t scale,
-        float32_t *pDst,
-        uint32_t blockSize)
+void arm_scale_f32(const float32_t *pSrc, float32_t scale, float32_t *pDst,
+		   uint32_t blockSize)
 {
-  uint32_t blkCnt;                               /* Loop counter */
+	uint32_t blkCnt; /* Loop counter */
 #if defined(ARM_MATH_NEON_EXPERIMENTAL)
-    float32x4_t vec1;
-    float32x4_t res;
+	float32x4_t vec1;
+	float32x4_t res;
 
-    /* Compute 4 outputs at a time */
-    blkCnt = blockSize >> 2U;
+	/* Compute 4 outputs at a time */
+	blkCnt = blockSize >> 2U;
 
-    while (blkCnt > 0U)
-    {
-        /* C = A * scale */
+	while (blkCnt > 0U) {
+		/* C = A * scale */
 
-    	/* Scale the input and then store the results in the destination buffer. */
-        vec1 = vld1q_f32(pSrc);
-        res = vmulq_f32(vec1, vdupq_n_f32(scale));
-        vst1q_f32(pDst, res);
+		/* Scale the input and then store the results in the destination
+		 * buffer. */
+		vec1 = vld1q_f32(pSrc);
+		res = vmulq_f32(vec1, vdupq_n_f32(scale));
+		vst1q_f32(pDst, res);
 
-        /* Increment pointers */
-        pSrc += 4; 
-        pDst += 4;
-        
-        /* Decrement the loop counter */
-        blkCnt--;
-    }
+		/* Increment pointers */
+		pSrc += 4;
+		pDst += 4;
 
-    /* Tail */
-    blkCnt = blockSize & 0x3;
+		/* Decrement the loop counter */
+		blkCnt--;
+	}
 
-#else
-#if defined (ARM_MATH_LOOPUNROLL)
-
-  /* Loop unrolling: Compute 4 outputs at a time */
-  blkCnt = blockSize >> 2U;
-
-  while (blkCnt > 0U)
-  {
-    /* C = A * scale */
-
-    /* Scale input and store result in destination buffer. */
-    *pDst++ = (*pSrc++) * scale;
-
-    *pDst++ = (*pSrc++) * scale;
-
-    *pDst++ = (*pSrc++) * scale;
-
-    *pDst++ = (*pSrc++) * scale;
-
-    /* Decrement loop counter */
-    blkCnt--;
-  }
-
-  /* Loop unrolling: Compute remaining outputs */
-  blkCnt = blockSize % 0x4U;
+	/* Tail */
+	blkCnt = blockSize & 0x3;
 
 #else
+#if defined(ARM_MATH_LOOPUNROLL)
 
-  /* Initialize blkCnt with number of samples */
-  blkCnt = blockSize;
+	/* Loop unrolling: Compute 4 outputs at a time */
+	blkCnt = blockSize >> 2U;
+
+	while (blkCnt > 0U) {
+		/* C = A * scale */
+
+		/* Scale input and store result in destination buffer. */
+		*pDst++ = (*pSrc++) * scale;
+
+		*pDst++ = (*pSrc++) * scale;
+
+		*pDst++ = (*pSrc++) * scale;
+
+		*pDst++ = (*pSrc++) * scale;
+
+		/* Decrement loop counter */
+		blkCnt--;
+	}
+
+	/* Loop unrolling: Compute remaining outputs */
+	blkCnt = blockSize % 0x4U;
+
+#else
+
+	/* Initialize blkCnt with number of samples */
+	blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 #endif /* #if defined(ARM_MATH_NEON_EXPERIMENTAL) */
 
-  while (blkCnt > 0U)
-  {
-    /* C = A * scale */
+	while (blkCnt > 0U) {
+		/* C = A * scale */
 
-    /* Scale input and store result in destination buffer. */
-    *pDst++ = (*pSrc++) * scale;
+		/* Scale input and store result in destination buffer. */
+		*pDst++ = (*pSrc++) * scale;
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
-
+		/* Decrement loop counter */
+		blkCnt--;
+	}
 }
 
 /**

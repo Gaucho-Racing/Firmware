@@ -5,8 +5,8 @@
 /* Includes */
 /*--------------------------------------------------------------------------------*/
 
+#include "arm_math.h" /* float32_t */
 #include "arr_desc.h"
-#include "arm_math.h"           /* float32_t */
 
 /*--------------------------------------------------------------------------------*/
 /* Macros and Defines */
@@ -21,11 +21,10 @@
 /**
  *  Declare the matrix inputs defined by MATRIX_DEFINE_INPUTS.
  */
-#define MATRIX_DECLARE_INPUTS(suffix)               \
-    ARR_DESC_DECLARE(matrix_##suffix##_a_inputs);   \
-    ARR_DESC_DECLARE(matrix_##suffix##_b_inputs);   \
-    ARR_DESC_DECLARE(matrix_##suffix##_invertible_inputs)
-
+#define MATRIX_DECLARE_INPUTS(suffix)                                          \
+	ARR_DESC_DECLARE(matrix_##suffix##_a_inputs);                          \
+	ARR_DESC_DECLARE(matrix_##suffix##_b_inputs);                          \
+	ARR_DESC_DECLARE(matrix_##suffix##_invertible_inputs)
 
 /*--------------------------------------------------------------------------------*/
 /* Declare Variables */
@@ -36,9 +35,12 @@ extern arm_matrix_instance_f32 matrix_output_fut;
 extern arm_matrix_instance_f32 matrix_output_ref;
 extern arm_matrix_instance_f64 matrix_output_fut64;
 extern arm_matrix_instance_f64 matrix_output_ref64;
-extern MATRIX_TEST_BIGGEST_INPUT_TYPE matrix_output_f32_fut[MATRIX_TEST_MAX_ELTS];
-extern MATRIX_TEST_BIGGEST_INPUT_TYPE matrix_output_f32_ref[MATRIX_TEST_MAX_ELTS];
-extern MATRIX_TEST_BIGGEST_INPUT_TYPE matrix_output_scratch[MATRIX_TEST_MAX_ELTS];
+extern MATRIX_TEST_BIGGEST_INPUT_TYPE
+    matrix_output_f32_fut[MATRIX_TEST_MAX_ELTS];
+extern MATRIX_TEST_BIGGEST_INPUT_TYPE
+    matrix_output_f32_ref[MATRIX_TEST_MAX_ELTS];
+extern MATRIX_TEST_BIGGEST_INPUT_TYPE
+    matrix_output_scratch[MATRIX_TEST_MAX_ELTS];
 
 /* Matrix Inputs */
 MATRIX_DECLARE_INPUTS(f64);

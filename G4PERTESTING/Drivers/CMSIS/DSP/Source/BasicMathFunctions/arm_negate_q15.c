@@ -45,80 +45,76 @@
   @return        none
 
   @par           Conditions for optimum performance
-                   Input and output buffers should be aligned by 32-bit
+		   Input and output buffers should be aligned by 32-bit
   @par           Scaling and Overflow Behavior
-                   The function uses saturating arithmetic.
-                   The Q15 value -1 (0x8000) is saturated to the maximum allowable positive value 0x7FFF.
+		   The function uses saturating arithmetic.
+		   The Q15 value -1 (0x8000) is saturated to the maximum
+  allowable positive value 0x7FFF.
  */
 
-void arm_negate_q15(
-  const q15_t * pSrc,
-        q15_t * pDst,
-        uint32_t blockSize)
+void arm_negate_q15(const q15_t *pSrc, q15_t *pDst, uint32_t blockSize)
 {
-        uint32_t blkCnt;                               /* Loop counter */
-        q15_t in;                                      /* Temporary input variable */
+	uint32_t blkCnt; /* Loop counter */
+	q15_t in;	 /* Temporary input variable */
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined(ARM_MATH_LOOPUNROLL)
 
-#if defined (ARM_MATH_DSP)
-  q31_t in1;                                    /* Temporary input variables */
+#if defined(ARM_MATH_DSP)
+	q31_t in1; /* Temporary input variables */
 #endif
 
-  /* Loop unrolling: Compute 4 outputs at a time */
-  blkCnt = blockSize >> 2U;
+	/* Loop unrolling: Compute 4 outputs at a time */
+	blkCnt = blockSize >> 2U;
 
-  while (blkCnt > 0U)
-  {
-    /* C = -A */
+	while (blkCnt > 0U) {
+		/* C = -A */
 
-#if defined (ARM_MATH_DSP)
-    /* Negate and store result in destination buffer (2 samples at a time). */
-    in1 = read_q15x2_ia ((q15_t **) &pSrc);
-    write_q15x2_ia (&pDst, __QSUB16(0, in1));
+#if defined(ARM_MATH_DSP)
+		/* Negate and store result in destination buffer (2 samples at a
+		 * time). */
+		in1 = read_q15x2_ia((q15_t **)&pSrc);
+		write_q15x2_ia(&pDst, __QSUB16(0, in1));
 
-    in1 = read_q15x2_ia ((q15_t **) &pSrc);
-    write_q15x2_ia (&pDst, __QSUB16(0, in1));
+		in1 = read_q15x2_ia((q15_t **)&pSrc);
+		write_q15x2_ia(&pDst, __QSUB16(0, in1));
 #else
-    in = *pSrc++;
-    *pDst++ = (in == (q15_t) 0x8000) ? (q15_t) 0x7fff : -in;
+		in = *pSrc++;
+		*pDst++ = (in == (q15_t)0x8000) ? (q15_t)0x7fff : -in;
 
-    in = *pSrc++;
-    *pDst++ = (in == (q15_t) 0x8000) ? (q15_t) 0x7fff : -in;
+		in = *pSrc++;
+		*pDst++ = (in == (q15_t)0x8000) ? (q15_t)0x7fff : -in;
 
-    in = *pSrc++;
-    *pDst++ = (in == (q15_t) 0x8000) ? (q15_t) 0x7fff : -in;
+		in = *pSrc++;
+		*pDst++ = (in == (q15_t)0x8000) ? (q15_t)0x7fff : -in;
 
-    in = *pSrc++;
-    *pDst++ = (in == (q15_t) 0x8000) ? (q15_t) 0x7fff : -in;
+		in = *pSrc++;
+		*pDst++ = (in == (q15_t)0x8000) ? (q15_t)0x7fff : -in;
 #endif
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
+		/* Decrement loop counter */
+		blkCnt--;
+	}
 
-  /* Loop unrolling: Compute remaining outputs */
-  blkCnt = blockSize % 0x4U;
+	/* Loop unrolling: Compute remaining outputs */
+	blkCnt = blockSize % 0x4U;
 
 #else
 
-  /* Initialize blkCnt with number of samples */
-  blkCnt = blockSize;
+	/* Initialize blkCnt with number of samples */
+	blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 
-  while (blkCnt > 0U)
-  {
-    /* C = -A */
+	while (blkCnt > 0U) {
+		/* C = -A */
 
-    /* Negate and store result in destination buffer. */
-    in = *pSrc++;
-    *pDst++ = (in == (q15_t) 0x8000) ? (q15_t) 0x7fff : -in;
+		/* Negate and store result in destination buffer. */
+		in = *pSrc++;
+		*pDst++ = (in == (q15_t)0x8000) ? (q15_t)0x7fff : -in;
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
-
+		/* Decrement loop counter */
+		blkCnt--;
+	}
 }
 
 /**

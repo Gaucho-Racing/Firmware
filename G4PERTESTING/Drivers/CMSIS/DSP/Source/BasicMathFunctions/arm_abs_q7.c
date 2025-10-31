@@ -45,88 +45,90 @@
   @return        none
 
   @par           Conditions for optimum performance
-                   Input and output buffers should be aligned by 32-bit
+		   Input and output buffers should be aligned by 32-bit
   @par           Scaling and Overflow Behavior
-                   The function uses saturating arithmetic.
-                   The Q7 value -1 (0x80) will be saturated to the maximum allowable positive value 0x7F.
+		   The function uses saturating arithmetic.
+		   The Q7 value -1 (0x80) will be saturated to the maximum
+  allowable positive value 0x7F.
  */
 
-void arm_abs_q7(
-  const q7_t * pSrc,
-        q7_t * pDst,
-        uint32_t blockSize)
+void arm_abs_q7(const q7_t *pSrc, q7_t *pDst, uint32_t blockSize)
 {
-        uint32_t blkCnt;                               /* Loop counter */
-        q7_t in;                                       /* Temporary input variable */
+	uint32_t blkCnt; /* Loop counter */
+	q7_t in;	 /* Temporary input variable */
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined(ARM_MATH_LOOPUNROLL)
 
-  /* Loop unrolling: Compute 4 outputs at a time */
-  blkCnt = blockSize >> 2U;
+	/* Loop unrolling: Compute 4 outputs at a time */
+	blkCnt = blockSize >> 2U;
 
-  while (blkCnt > 0U)
-  {
-    /* C = |A| */
+	while (blkCnt > 0U) {
+		/* C = |A| */
 
-    /* Calculate absolute of input (if -1 then saturated to 0x7f) and store result in destination buffer. */
-    in = *pSrc++;
-#if defined (ARM_MATH_DSP)
-    *pDst++ = (in > 0) ? in : (q7_t)__QSUB(0, in);
+		/* Calculate absolute of input (if -1 then saturated to 0x7f)
+		 * and store result in destination buffer. */
+		in = *pSrc++;
+#if defined(ARM_MATH_DSP)
+		*pDst++ = (in > 0) ? in : (q7_t)__QSUB(0, in);
 #else
-    *pDst++ = (in > 0) ? in : ((in == (q7_t) 0x80) ? (q7_t) 0x7f : -in);
+		*pDst++ =
+		    (in > 0) ? in : ((in == (q7_t)0x80) ? (q7_t)0x7f : -in);
 #endif
 
-    in = *pSrc++;
-#if defined (ARM_MATH_DSP)
-    *pDst++ = (in > 0) ? in : (q7_t)__QSUB(0, in);
+		in = *pSrc++;
+#if defined(ARM_MATH_DSP)
+		*pDst++ = (in > 0) ? in : (q7_t)__QSUB(0, in);
 #else
-    *pDst++ = (in > 0) ? in : ((in == (q7_t) 0x80) ? (q7_t) 0x7f : -in);
+		*pDst++ =
+		    (in > 0) ? in : ((in == (q7_t)0x80) ? (q7_t)0x7f : -in);
 #endif
 
-    in = *pSrc++;
-#if defined (ARM_MATH_DSP)
-    *pDst++ = (in > 0) ? in : (q7_t)__QSUB(0, in);
+		in = *pSrc++;
+#if defined(ARM_MATH_DSP)
+		*pDst++ = (in > 0) ? in : (q7_t)__QSUB(0, in);
 #else
-    *pDst++ = (in > 0) ? in : ((in == (q7_t) 0x80) ? (q7_t) 0x7f : -in);
+		*pDst++ =
+		    (in > 0) ? in : ((in == (q7_t)0x80) ? (q7_t)0x7f : -in);
 #endif
 
-    in = *pSrc++;
-#if defined (ARM_MATH_DSP)
-    *pDst++ = (in > 0) ? in : (q7_t)__QSUB(0, in);
+		in = *pSrc++;
+#if defined(ARM_MATH_DSP)
+		*pDst++ = (in > 0) ? in : (q7_t)__QSUB(0, in);
 #else
-    *pDst++ = (in > 0) ? in : ((in == (q7_t) 0x80) ? (q7_t) 0x7f : -in);
+		*pDst++ =
+		    (in > 0) ? in : ((in == (q7_t)0x80) ? (q7_t)0x7f : -in);
 #endif
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
+		/* Decrement loop counter */
+		blkCnt--;
+	}
 
-  /* Loop unrolling: Compute remaining outputs */
-  blkCnt = blockSize % 0x4U;
+	/* Loop unrolling: Compute remaining outputs */
+	blkCnt = blockSize % 0x4U;
 
 #else
 
-  /* Initialize blkCnt with number of samples */
-  blkCnt = blockSize;
+	/* Initialize blkCnt with number of samples */
+	blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 
-  while (blkCnt > 0U)
-  {
-    /* C = |A| */
+	while (blkCnt > 0U) {
+		/* C = |A| */
 
-    /* Calculate absolute of input (if -1 then saturated to 0x7f) and store result in destination buffer. */
-    in = *pSrc++;
-#if defined (ARM_MATH_DSP)
-    *pDst++ = (in > 0) ? in : (q7_t) __QSUB(0, in);
+		/* Calculate absolute of input (if -1 then saturated to 0x7f)
+		 * and store result in destination buffer. */
+		in = *pSrc++;
+#if defined(ARM_MATH_DSP)
+		*pDst++ = (in > 0) ? in : (q7_t)__QSUB(0, in);
 #else
-    *pDst++ = (in > 0) ? in : ((in == (q7_t) 0x80) ? (q7_t) 0x7f : -in);
+		*pDst++ =
+		    (in > 0) ? in : ((in == (q7_t)0x80) ? (q7_t)0x7f : -in);
 #endif
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
-
+		/* Decrement loop counter */
+		blkCnt--;
+	}
 }
 
 /**

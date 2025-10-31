@@ -3,8 +3,8 @@
 
 JTEST_DEFINE_GROUP(support_tests)
 {
-    JTEST_GROUP_CALL(copy_tests);
-    JTEST_GROUP_CALL(fill_tests);
-    JTEST_GROUP_CALL(x_to_y_tests);
-    return;
+	JTEST_GROUP_CALL(copy_tests);
+	JTEST_GROUP_CALL(fill_tests);
+	JTEST_GROUP_CALL(x_to_y_tests);
+	return;
 }

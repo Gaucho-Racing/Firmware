@@ -43,95 +43,93 @@
   @param[in]     pSrcB      points to the second input matrix structure
   @param[out]    pDst       points to output matrix structure
   @return        execution status
-                   - \ref ARM_MATH_SUCCESS       : Operation successful
-                   - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
+		   - \ref ARM_MATH_SUCCESS       : Operation successful
+		   - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
 
   @par           Scaling and Overflow Behavior
-                   The function uses saturating arithmetic.
-                   Results outside of the allowable Q31 range [0x80000000 0x7FFFFFFF] are saturated.
+		   The function uses saturating arithmetic.
+		   Results outside of the allowable Q31 range [0x80000000
+  0x7FFFFFFF] are saturated.
  */
 
-arm_status arm_mat_sub_q31(
-  const arm_matrix_instance_q31 * pSrcA,
-  const arm_matrix_instance_q31 * pSrcB,
-        arm_matrix_instance_q31 * pDst)
+arm_status arm_mat_sub_q31(const arm_matrix_instance_q31 *pSrcA,
+			   const arm_matrix_instance_q31 *pSrcB,
+			   arm_matrix_instance_q31 *pDst)
 {
-  q31_t *pInA = pSrcA->pData;                    /* input data matrix pointer A */
-  q31_t *pInB = pSrcB->pData;                    /* input data matrix pointer B */
-  q31_t *pOut = pDst->pData;                     /* output data matrix pointer */
+	q31_t *pInA = pSrcA->pData; /* input data matrix pointer A */
+	q31_t *pInB = pSrcB->pData; /* input data matrix pointer B */
+	q31_t *pOut = pDst->pData;  /* output data matrix pointer */
 
-  uint32_t numSamples;                           /* total number of elements in the matrix */
-  uint32_t blkCnt;                               /* loop counters */
-  arm_status status;                             /* status of matrix subtraction */
+	uint32_t numSamples; /* total number of elements in the matrix */
+	uint32_t blkCnt;     /* loop counters */
+	arm_status status;   /* status of matrix subtraction */
 
 #ifdef ARM_MATH_MATRIX_CHECK
 
-  /* Check for matrix mismatch condition */
-  if ((pSrcA->numRows != pSrcB->numRows) ||
-      (pSrcA->numCols != pSrcB->numCols) ||
-      (pSrcA->numRows != pDst->numRows)  ||
-      (pSrcA->numCols != pDst->numCols)    )
-  {
-    /* Set status as ARM_MATH_SIZE_MISMATCH */
-    status = ARM_MATH_SIZE_MISMATCH;
-  }
-  else
+	/* Check for matrix mismatch condition */
+	if ((pSrcA->numRows != pSrcB->numRows) ||
+	    (pSrcA->numCols != pSrcB->numCols) ||
+	    (pSrcA->numRows != pDst->numRows) ||
+	    (pSrcA->numCols != pDst->numCols)) {
+		/* Set status as ARM_MATH_SIZE_MISMATCH */
+		status = ARM_MATH_SIZE_MISMATCH;
+	} else
 
 #endif /* #ifdef ARM_MATH_MATRIX_CHECK */
 
-  {
-    /* Total number of samples in input matrix */
-    numSamples = (uint32_t) pSrcA->numRows * pSrcA->numCols;
+	{
+		/* Total number of samples in input matrix */
+		numSamples = (uint32_t)pSrcA->numRows * pSrcA->numCols;
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined(ARM_MATH_LOOPUNROLL)
 
-    /* Loop unrolling: Compute 4 outputs at a time */
-    blkCnt = numSamples >> 2U;
+		/* Loop unrolling: Compute 4 outputs at a time */
+		blkCnt = numSamples >> 2U;
 
-    while (blkCnt > 0U)
-    {
-      /* C(m,n) = A(m,n) - B(m,n) */
+		while (blkCnt > 0U) {
+			/* C(m,n) = A(m,n) - B(m,n) */
 
-      /* Subtract, saturate and then store the results in the destination buffer. */
-      *pOut++ = __QSUB(*pInA++, *pInB++);
+			/* Subtract, saturate and then store the results in the
+			 * destination buffer. */
+			*pOut++ = __QSUB(*pInA++, *pInB++);
 
-      *pOut++ = __QSUB(*pInA++, *pInB++);
+			*pOut++ = __QSUB(*pInA++, *pInB++);
 
-      *pOut++ = __QSUB(*pInA++, *pInB++);
+			*pOut++ = __QSUB(*pInA++, *pInB++);
 
-      *pOut++ = __QSUB(*pInA++, *pInB++);
+			*pOut++ = __QSUB(*pInA++, *pInB++);
 
-      /* Decrement loop counter */
-      blkCnt--;
-    }
+			/* Decrement loop counter */
+			blkCnt--;
+		}
 
-    /* Loop unrolling: Compute remaining outputs */
-    blkCnt = numSamples % 0x4U;
+		/* Loop unrolling: Compute remaining outputs */
+		blkCnt = numSamples % 0x4U;
 
 #else
 
-    /* Initialize blkCnt with number of samples */
-    blkCnt = numSamples;
+		/* Initialize blkCnt with number of samples */
+		blkCnt = numSamples;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 
-    while (blkCnt > 0U)
-    {
-      /* C(m,n) = A(m,n) - B(m,n) */
+		while (blkCnt > 0U) {
+			/* C(m,n) = A(m,n) - B(m,n) */
 
-      /* Subtract, saturate and store result in destination buffer. */
-      *pOut++ = __QSUB(*pInA++, *pInB++);
+			/* Subtract, saturate and store result in destination
+			 * buffer. */
+			*pOut++ = __QSUB(*pInA++, *pInB++);
 
-      /* Decrement loop counter */
-      blkCnt--;
-    }
+			/* Decrement loop counter */
+			blkCnt--;
+		}
 
-    /* Set status as ARM_MATH_SUCCESS */
-    status = ARM_MATH_SUCCESS;
-  }
+		/* Set status as ARM_MATH_SUCCESS */
+		status = ARM_MATH_SUCCESS;
+	}
 
-  /* Return to application */
-  return (status);
+	/* Return to application */
+	return (status);
 }
 
 /**

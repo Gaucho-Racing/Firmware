@@ -45,115 +45,117 @@
   @return        none
 
   @par           Scaling and Overflow Behavior
-                   The function is implemented using a 64-bit internal accumulator.
-                   The input is represented in 1.15 format.
-                   Intermediate multiplication yields a 2.30 format, and this
-                   result is added without saturation to a 64-bit accumulator in 34.30 format.
-                   With 33 guard bits in the accumulator, there is no risk of overflow, and the
-                   full precision of the intermediate multiplication is preserved.
-                   Finally, the 34.30 result is truncated to 34.15 format by discarding the lower
-                   15 bits, and then saturated to yield a result in 1.15 format.
+		   The function is implemented using a 64-bit internal
+  accumulator. The input is represented in 1.15 format. Intermediate
+  multiplication yields a 2.30 format, and this result is added without
+  saturation to a 64-bit accumulator in 34.30 format. With 33 guard bits in the
+  accumulator, there is no risk of overflow, and the full precision of the
+  intermediate multiplication is preserved. Finally, the 34.30 result is
+  truncated to 34.15 format by discarding the lower 15 bits, and then saturated
+  to yield a result in 1.15 format.
  */
 
-void arm_std_q15(
-  const q15_t * pSrc,
-        uint32_t blockSize,
-        q15_t * pResult)
+void arm_std_q15(const q15_t *pSrc, uint32_t blockSize, q15_t *pResult)
 {
-        uint32_t blkCnt;                               /* Loop counter */
-        q31_t sum = 0;                                 /* Accumulator */
-        q31_t meanOfSquares, squareOfMean;             /* Square of mean and mean of square */
-        q63_t sumOfSquares = 0;                        /* Sum of squares */
-        q15_t in;                                      /* Temporary variable to store input value */
+	uint32_t blkCnt; /* Loop counter */
+	q31_t sum = 0;	 /* Accumulator */
+	q31_t meanOfSquares,
+	    squareOfMean;	/* Square of mean and mean of square */
+	q63_t sumOfSquares = 0; /* Sum of squares */
+	q15_t in;		/* Temporary variable to store input value */
 
-#if defined (ARM_MATH_LOOPUNROLL) && defined (ARM_MATH_DSP)
-  q31_t in32;                                    /* Temporary variable to store input value */
+#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
+	q31_t in32; /* Temporary variable to store input value */
 #endif
 
-  if (blockSize <= 1U)
-  {
-    *pResult = 0;
-    return;
-  }
+	if (blockSize <= 1U) {
+		*pResult = 0;
+		return;
+	}
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined(ARM_MATH_LOOPUNROLL)
 
-  /* Loop unrolling: Compute 4 outputs at a time */
-  blkCnt = blockSize >> 2U;
+	/* Loop unrolling: Compute 4 outputs at a time */
+	blkCnt = blockSize >> 2U;
 
-  while (blkCnt > 0U)
-  {
-    /* C = A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1] */
-    /* C = A[0] + A[1] + ... + A[blockSize-1] */
+	while (blkCnt > 0U) {
+		/* C = A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] *
+		 * A[blockSize-1] */
+		/* C = A[0] + A[1] + ... + A[blockSize-1] */
 
-    /* Compute sum of squares and store result in a temporary variable, sumOfSquares. */
-    /* Compute sum and store result in a temporary variable, sum. */
-#if defined (ARM_MATH_DSP)
-    in32 = read_q15x2_ia ((q15_t **) &pSrc);
-    sumOfSquares = __SMLALD(in32, in32, sumOfSquares);
-    sum += ((in32 << 16U) >> 16U);
-    sum +=  (in32 >> 16U);
+		/* Compute sum of squares and store result in a temporary
+		 * variable, sumOfSquares. */
+		/* Compute sum and store result in a temporary variable, sum. */
+#if defined(ARM_MATH_DSP)
+		in32 = read_q15x2_ia((q15_t **)&pSrc);
+		sumOfSquares = __SMLALD(in32, in32, sumOfSquares);
+		sum += ((in32 << 16U) >> 16U);
+		sum += (in32 >> 16U);
 
-    in32 = read_q15x2_ia ((q15_t **) &pSrc);
-    sumOfSquares = __SMLALD(in32, in32, sumOfSquares);
-    sum += ((in32 << 16U) >> 16U);
-    sum +=  (in32 >> 16U);
+		in32 = read_q15x2_ia((q15_t **)&pSrc);
+		sumOfSquares = __SMLALD(in32, in32, sumOfSquares);
+		sum += ((in32 << 16U) >> 16U);
+		sum += (in32 >> 16U);
 #else
-    in = *pSrc++;
-    sumOfSquares += (in * in);
-    sum += in;
+		in = *pSrc++;
+		sumOfSquares += (in * in);
+		sum += in;
 
-    in = *pSrc++;
-    sumOfSquares += (in * in);
-    sum += in;
+		in = *pSrc++;
+		sumOfSquares += (in * in);
+		sum += in;
 
-    in = *pSrc++;
-    sumOfSquares += (in * in);
-    sum += in;
+		in = *pSrc++;
+		sumOfSquares += (in * in);
+		sum += in;
 
-    in = *pSrc++;
-    sumOfSquares += (in * in);
-    sum += in;
+		in = *pSrc++;
+		sumOfSquares += (in * in);
+		sum += in;
 #endif /* #if defined (ARM_MATH_DSP) */
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
+		/* Decrement loop counter */
+		blkCnt--;
+	}
 
-  /* Loop unrolling: Compute remaining outputs */
-  blkCnt = blockSize % 0x4U;
+	/* Loop unrolling: Compute remaining outputs */
+	blkCnt = blockSize % 0x4U;
 
 #else
 
-  /* Initialize blkCnt with number of samples */
-  blkCnt = blockSize;
+	/* Initialize blkCnt with number of samples */
+	blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 
-  while (blkCnt > 0U)
-  {
-    /* C = A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1] */
-    /* C = A[0] + A[1] + ... + A[blockSize-1] */
+	while (blkCnt > 0U) {
+		/* C = A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] *
+		 * A[blockSize-1] */
+		/* C = A[0] + A[1] + ... + A[blockSize-1] */
 
-    in = *pSrc++;
-    /* Compute sum of squares and store result in a temporary variable, sumOfSquares. */
-    sumOfSquares += (in * in);
-    /* Compute sum and store result in a temporary variable, sum. */
-    sum += in;
+		in = *pSrc++;
+		/* Compute sum of squares and store result in a temporary
+		 * variable, sumOfSquares. */
+		sumOfSquares += (in * in);
+		/* Compute sum and store result in a temporary variable, sum. */
+		sum += in;
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
+		/* Decrement loop counter */
+		blkCnt--;
+	}
 
-  /* Compute Mean of squares and store result in a temporary variable, meanOfSquares. */
-  meanOfSquares = (q31_t) (sumOfSquares / (q63_t)(blockSize - 1U));
+	/* Compute Mean of squares and store result in a temporary variable,
+	 * meanOfSquares. */
+	meanOfSquares = (q31_t)(sumOfSquares / (q63_t)(blockSize - 1U));
 
-  /* Compute square of mean */
-  squareOfMean = (q31_t) ((q63_t) sum * sum / (q63_t)(blockSize * (blockSize - 1U)));
+	/* Compute square of mean */
+	squareOfMean =
+	    (q31_t)((q63_t)sum * sum / (q63_t)(blockSize * (blockSize - 1U)));
 
-  /* mean of squares minus the square of mean. */
-  /* Compute standard deviation and store result in destination */
-  arm_sqrt_q15(__SSAT((meanOfSquares - squareOfMean) >> 15U, 16U), pResult);
+	/* mean of squares minus the square of mean. */
+	/* Compute standard deviation and store result in destination */
+	arm_sqrt_q15(__SSAT((meanOfSquares - squareOfMean) >> 15U, 16U),
+		     pResult);
 }
 
 /**

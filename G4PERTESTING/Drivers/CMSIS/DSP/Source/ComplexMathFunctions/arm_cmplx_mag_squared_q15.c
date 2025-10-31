@@ -45,115 +45,111 @@
   @return        none
 
   @par           Scaling and Overflow Behavior
-                   The function implements 1.15 by 1.15 multiplications and finally output is converted into 3.13 format.
+		   The function implements 1.15 by 1.15 multiplications and
+  finally output is converted into 3.13 format.
  */
 
-void arm_cmplx_mag_squared_q15(
-  const q15_t * pSrc,
-        q15_t * pDst,
-        uint32_t numSamples)
+void arm_cmplx_mag_squared_q15(const q15_t *pSrc, q15_t *pDst,
+			       uint32_t numSamples)
 {
-        uint32_t blkCnt;                               /* Loop counter */
+	uint32_t blkCnt; /* Loop counter */
 
-#if defined (ARM_MATH_DSP)
-        q31_t in;
-        q31_t acc0;                                    /* Accumulators */
+#if defined(ARM_MATH_DSP)
+	q31_t in;
+	q31_t acc0; /* Accumulators */
 #else
-        q15_t real, imag;                              /* Temporary input variables */
-        q31_t acc0, acc1;                              /* Accumulators */
+	q15_t real, imag; /* Temporary input variables */
+	q31_t acc0, acc1; /* Accumulators */
 #endif
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined(ARM_MATH_LOOPUNROLL)
 
-  /* Loop unrolling: Compute 4 outputs at a time */
-  blkCnt = numSamples >> 2U;
+	/* Loop unrolling: Compute 4 outputs at a time */
+	blkCnt = numSamples >> 2U;
 
-  while (blkCnt > 0U)
-  {
-    /* C[0] = (A[0] * A[0] + A[1] * A[1]) */
+	while (blkCnt > 0U) {
+		/* C[0] = (A[0] * A[0] + A[1] * A[1]) */
 
-#if defined (ARM_MATH_DSP)
-    in = read_q15x2_ia ((q15_t **) &pSrc);
-    acc0 = __SMUAD(in, in);
-    /* store result in 3.13 format in destination buffer. */
-    *pDst++ = (q15_t) (acc0 >> 17);
+#if defined(ARM_MATH_DSP)
+		in = read_q15x2_ia((q15_t **)&pSrc);
+		acc0 = __SMUAD(in, in);
+		/* store result in 3.13 format in destination buffer. */
+		*pDst++ = (q15_t)(acc0 >> 17);
 
-    in = read_q15x2_ia ((q15_t **) &pSrc);
-    acc0 = __SMUAD(in, in);
-    *pDst++ = (q15_t) (acc0 >> 17);
+		in = read_q15x2_ia((q15_t **)&pSrc);
+		acc0 = __SMUAD(in, in);
+		*pDst++ = (q15_t)(acc0 >> 17);
 
-    in = read_q15x2_ia ((q15_t **) &pSrc);
-    acc0 = __SMUAD(in, in);
-    *pDst++ = (q15_t) (acc0 >> 17);
+		in = read_q15x2_ia((q15_t **)&pSrc);
+		acc0 = __SMUAD(in, in);
+		*pDst++ = (q15_t)(acc0 >> 17);
 
-    in = read_q15x2_ia ((q15_t **) &pSrc);
-    acc0 = __SMUAD(in, in);
-    *pDst++ = (q15_t) (acc0 >> 17);
+		in = read_q15x2_ia((q15_t **)&pSrc);
+		acc0 = __SMUAD(in, in);
+		*pDst++ = (q15_t)(acc0 >> 17);
 #else
-    real = *pSrc++;
-    imag = *pSrc++;
-    acc0 = ((q31_t) real * real);
-    acc1 = ((q31_t) imag * imag);
-    /* store result in 3.13 format in destination buffer. */
-    *pDst++ = (q15_t) (((q63_t) acc0 + acc1) >> 17);
+		real = *pSrc++;
+		imag = *pSrc++;
+		acc0 = ((q31_t)real * real);
+		acc1 = ((q31_t)imag * imag);
+		/* store result in 3.13 format in destination buffer. */
+		*pDst++ = (q15_t)(((q63_t)acc0 + acc1) >> 17);
 
-    real = *pSrc++;
-    imag = *pSrc++;
-    acc0 = ((q31_t) real * real);
-    acc1 = ((q31_t) imag * imag);
-    *pDst++ = (q15_t) (((q63_t) acc0 + acc1) >> 17);
+		real = *pSrc++;
+		imag = *pSrc++;
+		acc0 = ((q31_t)real * real);
+		acc1 = ((q31_t)imag * imag);
+		*pDst++ = (q15_t)(((q63_t)acc0 + acc1) >> 17);
 
-    real = *pSrc++;
-    imag = *pSrc++;
-    acc0 = ((q31_t) real * real);
-    acc1 = ((q31_t) imag * imag);
-    *pDst++ = (q15_t) (((q63_t) acc0 + acc1) >> 17);
+		real = *pSrc++;
+		imag = *pSrc++;
+		acc0 = ((q31_t)real * real);
+		acc1 = ((q31_t)imag * imag);
+		*pDst++ = (q15_t)(((q63_t)acc0 + acc1) >> 17);
 
-    real = *pSrc++;
-    imag = *pSrc++;
-    acc0 = ((q31_t) real * real);
-    acc1 = ((q31_t) imag * imag);
-    *pDst++ = (q15_t) (((q63_t) acc0 + acc1) >> 17);
+		real = *pSrc++;
+		imag = *pSrc++;
+		acc0 = ((q31_t)real * real);
+		acc1 = ((q31_t)imag * imag);
+		*pDst++ = (q15_t)(((q63_t)acc0 + acc1) >> 17);
 #endif /* #if defined (ARM_MATH_DSP) */
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
+		/* Decrement loop counter */
+		blkCnt--;
+	}
 
-  /* Loop unrolling: Compute remaining outputs */
-  blkCnt = numSamples % 0x4U;
+	/* Loop unrolling: Compute remaining outputs */
+	blkCnt = numSamples % 0x4U;
 
 #else
 
-  /* Initialize blkCnt with number of samples */
-  blkCnt = numSamples;
+	/* Initialize blkCnt with number of samples */
+	blkCnt = numSamples;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 
-  while (blkCnt > 0U)
-  {
-    /* C[0] = (A[0] * A[0] + A[1] * A[1]) */
+	while (blkCnt > 0U) {
+		/* C[0] = (A[0] * A[0] + A[1] * A[1]) */
 
-#if defined (ARM_MATH_DSP)
-    in = read_q15x2_ia ((q15_t **) &pSrc);
-    acc0 = __SMUAD(in, in);
+#if defined(ARM_MATH_DSP)
+		in = read_q15x2_ia((q15_t **)&pSrc);
+		acc0 = __SMUAD(in, in);
 
-    /* store result in 3.13 format in destination buffer. */
-    *pDst++ = (q15_t) (acc0 >> 17);
+		/* store result in 3.13 format in destination buffer. */
+		*pDst++ = (q15_t)(acc0 >> 17);
 #else
-    real = *pSrc++;
-    imag = *pSrc++;
-    acc0 = ((q31_t) real * real);
-    acc1 = ((q31_t) imag * imag);
+		real = *pSrc++;
+		imag = *pSrc++;
+		acc0 = ((q31_t)real * real);
+		acc1 = ((q31_t)imag * imag);
 
-    /* store result in 3.13 format in destination buffer. */
-    *pDst++ = (q15_t) (((q63_t) acc0 + acc1) >> 17);
+		/* store result in 3.13 format in destination buffer. */
+		*pDst++ = (q15_t)(((q63_t)acc0 + acc1) >> 17);
 #endif
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
-
+		/* Decrement loop counter */
+		blkCnt--;
+	}
 }
 
 /**

@@ -8,4 +8,3 @@
 #include "scale.c"
 #include "shift.c"
 #include "sub.c"
-

@@ -1,10 +1,10 @@
-/**************************************************************************//**
- * @file     system_ARMCM7.c
- * @brief    CMSIS Device System Source File for
- *           ARMCM7 Device Series
- * @version  V5.00
- * @date     07. September 2016
- ******************************************************************************/
+/**************************************************************************/ /**
+									      * @file     system_ARMCM7.c
+									      * @brief    CMSIS Device System Source File for
+									      *           ARMCM7 Device Series
+									      * @version  V5.00
+									      * @date     07. September 2016
+									      ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
  *
@@ -23,29 +23,28 @@
  * limitations under the License.
  */
 
-#if defined (ARMCM7)
-  #include "ARMCM7.h"
-#elif defined (ARMCM7_SP)
-  #include "ARMCM7_SP.h"
-#elif defined (ARMCM7_DP)
-  #include "ARMCM7_DP.h"
+#if defined(ARMCM7)
+#include "ARMCM7.h"
+#elif defined(ARMCM7_SP)
+#include "ARMCM7_SP.h"
+#elif defined(ARMCM7_DP)
+#include "ARMCM7_DP.h"
 #else
-  #error device not specified!
+#error device not specified!
 #endif
 
 /*----------------------------------------------------------------------------
   Define clocks
  *----------------------------------------------------------------------------*/
-#define  XTAL            ( 5000000UL)      /* Oscillator frequency */
+#define XTAL (5000000UL) /* Oscillator frequency */
 
-#define  SYSTEM_CLOCK    (5U * XTAL)
-
+#define SYSTEM_CLOCK (5U * XTAL)
 
 /*----------------------------------------------------------------------------
   Externals
  *----------------------------------------------------------------------------*/
-#if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-  extern uint32_t __Vectors;
+#if defined(__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
+extern uint32_t __Vectors;
 #endif
 
 /*----------------------------------------------------------------------------
@@ -53,33 +52,29 @@
  *----------------------------------------------------------------------------*/
 uint32_t SystemCoreClock = SYSTEM_CLOCK;
 
-
 /*----------------------------------------------------------------------------
   System Core Clock update function
  *----------------------------------------------------------------------------*/
-void SystemCoreClockUpdate (void)
-{
-  SystemCoreClock = SYSTEM_CLOCK;
-}
+void SystemCoreClockUpdate(void) { SystemCoreClock = SYSTEM_CLOCK; }
 
 /*----------------------------------------------------------------------------
   System initialization function
  *----------------------------------------------------------------------------*/
-void SystemInit (void)
+void SystemInit(void)
 {
 
-#if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-  SCB->VTOR = (uint32_t) &__Vectors;
+#if defined(__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
+	SCB->VTOR = (uint32_t)&__Vectors;
 #endif
 
-#if defined (__FPU_USED) && (__FPU_USED == 1U)
-  SCB->CPACR |= ((3U << 10U*2U) |           /* set CP10 Full Access */
-                 (3U << 11U*2U)  );         /* set CP11 Full Access */
+#if defined(__FPU_USED) && (__FPU_USED == 1U)
+	SCB->CPACR |= ((3U << 10U * 2U) | /* set CP10 Full Access */
+		       (3U << 11U * 2U)); /* set CP11 Full Access */
 #endif
 
 #ifdef UNALIGNED_SUPPORT_DISABLE
-  SCB->CCR |= SCB_CCR_UNALIGN_TRP_Msk;
+	SCB->CCR |= SCB_CCR_UNALIGN_TRP_Msk;
 #endif
 
-  SystemCoreClock = SYSTEM_CLOCK;
+	SystemCoreClock = SYSTEM_CLOCK;
 }
