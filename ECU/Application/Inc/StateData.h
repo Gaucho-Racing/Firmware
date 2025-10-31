@@ -39,6 +39,7 @@ typedef union ECU_StateData {
 	};
 
 	struct {
+		uint8_t data[32];
 		// TODO Add CAN messages here
 	};
 } ECU_StateData;

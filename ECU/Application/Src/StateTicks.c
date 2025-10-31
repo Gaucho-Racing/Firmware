@@ -3,6 +3,8 @@
 #include "StateData.h"
 #include "StateMachine.h"
 
+#include "main.h"
+
 /**
  * @brief The ECU state data lump.
  *
@@ -45,30 +47,36 @@ void ECU_State_Tick(void)
 
 void ECU_GLV_Off(ECU_StateData *stateData)
 {
+	UNUSED(stateData);
 	// TODO Implement functionality
 }
 
 void ECU_GLV_On(ECU_StateData *stateData)
 {
+	UNUSED(stateData);
 	// TODO Implement functionality
 }
 
 void ECU_Precharge_Engaged(ECU_StateData *stateData)
 {
+	UNUSED(stateData);
 	// TODO Implement functionality
 }
 
 void ECU_Precharge_Complete(ECU_StateData *stateData)
 {
+	UNUSED(stateData);
 	// TODO Implement functionality
 }
 
 void ECU_Drive_Active(ECU_StateData *stateData)
 {
+	UNUSED(stateData);
 	// TODO Implement functionality
 }
 
 void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 {
+	UNUSED(stateData);
 	// TODO Implement functionality
 }
