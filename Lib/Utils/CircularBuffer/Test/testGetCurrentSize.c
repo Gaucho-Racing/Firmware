@@ -3,9 +3,9 @@
 
 int main()
 {
- 
-	CircularBuffer*buffer_ptr = NULL;
-	
+
+	CircularBuffer *buffer_ptr = NULL;
+
 	// Test for Null error
 	if (GR_CircularBuffer_GetCurrentSize(buffer_ptr) != 0) {
 		return 1;

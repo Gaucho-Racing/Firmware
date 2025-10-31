@@ -11,7 +11,8 @@ typedef struct circular_buffer_st CircularBuffer;
 /// @brief Creates a CircularBuffer object with the specified capacity.
 /// @param capacity The desired capacity of the circular buffer, in
 /// number of items. This value must be greater than 0.
-/// @return The pointer to the created CircularBuffer object. NULL if capacity specified is 0.
+/// @return The pointer to the created CircularBuffer object. NULL if capacity
+/// specified is 0.
 CircularBuffer *GR_CircularBuffer_Create(uint16_t capacity);
 
 /// @brief Frees a CircularBuffer's all associated memories.
@@ -47,17 +48,20 @@ bool GR_CircularBuffer_IsEmpty(CircularBuffer *buffer);
 /// @brief Push a copy of an item into a circular buffer.
 /// @param buffer Pointer to the CircularBuffer to store the item.
 /// @param object The item to be pushed into the CircularBuffer.
-/// @return 0 if the operation finished successfully, -1 if buffer is a null pointer.
+/// @return 0 if the operation finished successfully, -1 if buffer is a null
+/// pointer.
 int8_t GR_CircularBuffer_Push(CircularBuffer *buffer, void *object);
 
 /// @brief Removes a CircularBuffer's buffer head and retrives it.
 /// @param buffer The CircularBuffer in subject.
-/// @return The pointer to the removed item. NULL if the buffer is null or is empty.
+/// @return The pointer to the removed item. NULL if the buffer is null or is
+/// empty.
 void *GR_CircularBuffer_Pop(CircularBuffer *buffer);
 
 /// @brief Retrives a CircularBuffer's buffer head.
 /// @param buffer The CircularBuffer in subject.
-/// @return The pointer to the retrived item. NULL if the buffer is null or is empty.
+/// @return The pointer to the retrived item. NULL if the buffer is null or is
+/// empty.
 void *GR_CircularBuffer_Peek(CircularBuffer *buffer);
 
 #endif

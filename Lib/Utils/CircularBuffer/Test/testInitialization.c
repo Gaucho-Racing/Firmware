@@ -19,8 +19,9 @@ int main()
 	}
 	GR_CircularBuffer_Free(&buffer_ptr);
 	// De-allocator should nullify the buffer's pointer.
-	if(buffer_ptr != NULL)
+	if (buffer_ptr != NULL) {
 		return 3;
+	}
 
 	return 0;
 }
