@@ -11,14 +11,14 @@ struct circular_buffer_st {
 	void **buffer;	   // the buffer body
 };
 
-CircularBuffer_Ptr GR_CircularBuffer_Create(uint16_t capacity)
+CircularBuffer *GR_CircularBuffer_Create(uint16_t capacity)
 {
 	// Return null pointer if an invalid size(< 1) is specified
 	if (capacity < 1) {
 		return NULL;
 	}
 	// For specifications see the header file
-	CircularBuffer_Ptr buffer = malloc(sizeof(CircularBuffer));
+	CircularBuffer *buffer = malloc(sizeof(CircularBuffer));
 	buffer->head = 0;
 	buffer->tail = 0;
 	buffer->capacity = capacity;
@@ -26,10 +26,10 @@ CircularBuffer_Ptr GR_CircularBuffer_Create(uint16_t capacity)
 	return buffer;
 }
 
-void GR_CircularBuffer_Free(CircularBuffer_Ptr *bufferPtr)
+void GR_CircularBuffer_Free(CircularBuffer **bufferPtr)
 {
 	// Error check
-	if (*bufferPtr == NULL) {
+	if (!bufferPtr || !*bufferPtr) {
 		return;
 	}
 	// Free buffer body
@@ -40,20 +40,20 @@ void GR_CircularBuffer_Free(CircularBuffer_Ptr *bufferPtr)
 	*bufferPtr = NULL;
 }
 
-uint16_t GR_CircularBuffer_GetCapacity(CircularBuffer_Ptr buffer)
+uint16_t GR_CircularBuffer_GetCapacity(CircularBuffer *buffer)
 {
 	// Buffer null error
-	if (buffer == NULL) {
+	if (!buffer) {
 		return -1;
 	}
 
 	return buffer->capacity;
 }
 
-uint16_t GR_CircularBuffer_GetCurrentSize(CircularBuffer_Ptr buffer)
+uint16_t GR_CircularBuffer_GetCurrentSize(CircularBuffer *buffer)
 {
 	// Buffer null error
-	if (buffer == NULL) {
+	if (!buffer) {
 		return -1;
 	}
 	// Empty case, since occupied member must have a non-null wrapper
@@ -69,7 +69,7 @@ uint16_t GR_CircularBuffer_GetCurrentSize(CircularBuffer_Ptr buffer)
 	return buffer->tail - buffer->head;
 }
 
-bool GR_CircularBuffer_IsFull(CircularBuffer_Ptr buffer)
+bool GR_CircularBuffer_IsFull(CircularBuffer *buffer)
 {
 	// Buffer null error
 	if (!buffer) {
@@ -80,7 +80,7 @@ bool GR_CircularBuffer_IsFull(CircularBuffer_Ptr buffer)
 	return buffer->head == buffer->tail && buffer->buffer[0] != NULL;
 }
 
-bool GR_CircularBuffer_IsEmpty(CircularBuffer_Ptr buffer)
+bool GR_CircularBuffer_IsEmpty(CircularBuffer *buffer)
 {
 	// Buffer null error
 	if (!buffer) {
@@ -91,7 +91,7 @@ bool GR_CircularBuffer_IsEmpty(CircularBuffer_Ptr buffer)
 	return buffer->head == buffer->tail && buffer->buffer[0] == NULL;
 }
 
-int GR_CircularBuffer_Push(CircularBuffer_Ptr buffer, void *object)
+int8_t GR_CircularBuffer_Push(CircularBuffer *buffer, void *object)
 {
 	// Buffer null error
 	if (!buffer) {
@@ -118,7 +118,7 @@ int GR_CircularBuffer_Push(CircularBuffer_Ptr buffer, void *object)
 	return 0;
 }
 
-void *GR_CircularBuffer_Pop(CircularBuffer_Ptr buffer)
+void *GR_CircularBuffer_Pop(CircularBuffer *buffer)
 {
 	// Buffer null error
 	if (!buffer) {
@@ -146,7 +146,7 @@ void *GR_CircularBuffer_Pop(CircularBuffer_Ptr buffer)
 	return result;
 }
 
-void *GR_CircularBuffer_Peek(CircularBuffer_Ptr buffer)
+void *GR_CircularBuffer_Peek(CircularBuffer *buffer)
 {
 	// Buffer null error
 	if (!buffer) {
