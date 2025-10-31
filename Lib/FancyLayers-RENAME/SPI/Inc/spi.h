@@ -1,9 +1,11 @@
+#include "circularBuffer.h"
+
 #ifndef SPI_H
 #define SPI_H
 
 // Generic type
 typedef struct {
-
+    CircularBuffer* buffer;
 } SPI_Handler;
 
 // Generic type
