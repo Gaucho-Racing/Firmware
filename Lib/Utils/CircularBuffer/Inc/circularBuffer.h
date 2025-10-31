@@ -48,9 +48,8 @@ bool GR_CircularBuffer_IsEmpty(CircularBuffer *buffer);
 /// @brief Push a copy of an item into a circular buffer.
 /// @param buffer Pointer to the CircularBuffer to store the item.
 /// @param object The item to be pushed into the CircularBuffer.
-/// @return 0 if the operation finished successfully, -1 if buffer is a null
-/// pointer.
-int8_t GR_CircularBuffer_Push(CircularBuffer *buffer, void *object);
+/// @return 0 if the operation finished successfully, non-0 on error.
+uint8_t GR_CircularBuffer_Push(CircularBuffer *buffer, void *object);
 
 /// @brief Removes a CircularBuffer's buffer head and retrives it.
 /// @param buffer The CircularBuffer in subject.
