@@ -34,8 +34,8 @@
 		},
 		{
 			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/W3_G4SPI_Receive.elf",
-			"name": "SPI Receive W3 WS",
+			"executable": "${command:cmake.buildDirectory}/G4HELLO.elf",
+			"name": "G4HELLO",
 			"request": "launch",
 			"type": "cortex-debug",
 			"servertype": "openocd",
@@ -49,39 +49,8 @@
 			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd",
 			"swoConfig": {
 				"enabled": true,
-				"cpuFrequency": 160000000,
-				"swoFrequency": 115200,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
-		},
-		{
-			"cwd": "${workspaceFolder}",
-			"executable": "${command:cmake.buildDirectory}/W3_G4SPI_Transmit.elf",
-			"name": "SPI Transmit W3 WS",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"configFiles": [
-				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
-			],
-			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build",
-			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 160000000,
-				"swoFrequency": 115200,
+				"cpuFrequency": 170000000,
+				"swoFrequency": 2000000,
 				"source": "probe",
 				"decoders": [
 					{
@@ -108,22 +77,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 160000000,
-				"swoFrequency": 115200,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
+			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd"
 		},
 		{
 			"cwd": "${workspaceFolder}",
@@ -139,22 +93,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Platform/STM32U5A9xJ/CompileDependencies/STM32U5A9.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 160000000,
-				"swoFrequency": 115200,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
+			"svdPath": "${workspaceFolder}/Lib/Platform/STM32U5A9xJ/CompileDependencies/STM32U5A9.svd"
 		},
 		{
 			"cwd": "${workspaceFolder}",
@@ -170,22 +109,39 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Platform/STM32L476xG/CompileDependencies/STM32L476.svd",
-			"swoConfig": {
-				"enabled": true,
-				"cpuFrequency": 160000000,
-				"swoFrequency": 115200,
-				"source": "probe",
-				"decoders": [
-					{
-						"type": "console",
-						"label": "ITM",
-						"showOnStartup": true,
-						"port": 0,
-						"encoding": "ascii"
-					}
-				]
-			}
+			"svdPath": "${workspaceFolder}/Lib/Platform/STM32L476xG/CompileDependencies/STM32L476.svd"
+		},
+		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/W3_G4SPI_Receive.elf",
+			"name": "SPI Receive W3 WS",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32g4x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd"
+		},
+		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/W3_G4SPI_Transmit.elf",
+			"name": "SPI Transmit W3 WS",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32g4x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Platform/STM32L476xG/CompileDependencies/STM32L476.svd"
 		},
 		{
 			"cwd": "${workspaceFolder}",

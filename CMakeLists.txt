@@ -41,6 +41,8 @@ message(
 	${CMAKE_BUILD_TYPE}
 )
 
+add_gr_project(STM32G474xE BLINKY G4HELLO)
+
 add_gr_project(STM32G474xE BLINKY G4BLINKY)
 add_gr_project(STM32U5A9xJ BLINKY U5BLINKY)
 add_gr_project(STM32L476xG BLINKY L4BLINKY)
