@@ -1,10 +1,14 @@
-FROM ubuntu:latest
+FROM ubuntu:20.04
 
-# If we ever need to change the version just update this to the new URL
-ARG arm_toolchain_url=https://developer.arm.com/-/media/Files/downloads/gnu/12.2.rel1/binrel/arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi.tar.xz?rev=7bd049b7a3034e64885fa1a71c12f91d&hash=2C60D7D4E432953DB65C4AA2E7129304F9CD05BF
+# Set default ARGs for ARM toolchain version and release
+ARG TOOLCHAIN_VERSION=12.2.rel1
+ARG TOOLCHAIN_BASE_URL=https://developer.arm.com/-/media/Files/downloads/gnu/${TOOLCHAIN_VERSION}/binrel
+ARG TOOLCHAIN_NAME_BASE=arm-gnu-toolchain-${TOOLCHAIN_VERSION}
+
+# prevent `apt install` from prompting for user input
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Install base dependencies
-# For libncurses
 RUN apt-get update && apt-get install -y \
     build-essential \
     curl \
@@ -17,22 +21,30 @@ RUN apt-get update && apt-get install -y \
     cmake \
     ninja-build \
     openocd \
-    libncurses6 \
-    software-properties-common
+    libncurses5 \
+    software-properties-common \
+    && rm -rf /var/lib/apt/lists/*
 
-
-# arm-none-eabi-gdb requires libncurses5, but that's not available by default
-# libncurses6 is similar enough to libncurses5 for our purposes
-# so we'll just pretend that libncurses6 is libncurses5
-RUN ln -s /lib/x86_64-linux-gnu/libncursesw.so.6 /usr/lib/libncursesw.so.5
+# # arm-none-eabi-gdb requires libncurses5, not available by default
+# # We'll symlink libncurses6 to satisfy it
+# # RUN ln -sf /lib/$(uname -m)-linux-gnu/libncursesw.so.6 /lib/$(uname -m)-linux-gnu/libncursesw.so.5 || true
+# # RUN ln -sf /lib/$(uname -m)-linux-gnu/libncurses.so.6 /lib/$(uname -m)-linux-gnu/libncurses.so.5 || true
+# # RUN ln -sf /lib/$(uname -m)-linux-gnu/libtinfo.so.6 /lib/$(uname -m)-linux-gnu/libtinfo.so.5 || true
 
 # arm-none-eabi-gdb requires python3.8
-RUN add-apt-repository ppa:deadsnakes/ppa -y
-RUN apt install python3.8 -y
+RUN add-apt-repository ppa:deadsnakes/ppa -y && apt-get update && apt-get install -y python3.8
 
-# Install a specific version of the ARM GCC Toolchain
-RUN wget "${arm_toolchain_url}" -O arm-gnu-toolchain.tar.xz
-RUN mkdir arm-gnu-toolchain && tar -xf arm-gnu-toolchain.tar.xz -C arm-gnu-toolchain --strip-components 1 
-RUN mv arm-gnu-toolchain /usr/local/arm-gnu-toolchain
-RUN rm arm-gnu-toolchain.tar.xz
+# Detect architecture and set the correct toolchain URL
+RUN ARCH=$(uname -m) && \
+    case "$ARCH" in \
+    x86_64) TOOLCHAIN_URL="${TOOLCHAIN_BASE_URL}/${TOOLCHAIN_NAME_BASE}-x86_64-arm-none-eabi.tar.xz" ;; \
+    aarch64) TOOLCHAIN_URL="${TOOLCHAIN_BASE_URL}/${TOOLCHAIN_NAME_BASE}-aarch64-arm-none-eabi.tar.xz" ;; \
+    *) echo "Unsupported architecture: $ARCH" && exit 1 ;; \
+    esac && \
+    echo "Downloading ARM toolchain for architecture: $ARCH" && \
+    wget -O arm-gnu-toolchain.tar.xz "$TOOLCHAIN_URL" && \
+    mkdir -p /usr/local/arm-gnu-toolchain && \
+    tar -xf arm-gnu-toolchain.tar.xz -C /usr/local/arm-gnu-toolchain --strip-components 1 && \
+    rm arm-gnu-toolchain.tar.xz
+
 ENV PATH="/usr/local/arm-gnu-toolchain/bin:${PATH}"
