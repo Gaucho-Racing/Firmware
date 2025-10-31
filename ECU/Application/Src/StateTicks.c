@@ -5,7 +5,7 @@
 
 /**
  * @brief The ECU state data lump.
- * 
+ *
  * Lumped state data for the ECU state machine passed to each state function on
  * tick.
  *
