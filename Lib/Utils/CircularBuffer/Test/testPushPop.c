@@ -4,7 +4,18 @@
 int main()
 {
 
-	CircularBuffer *buffer_ptr;
+	CircularBuffer *buffer_ptr = NULL;
+
+	// Test for Null error when pushing into null buffer
+	int temp = 1;
+	if (GR_CircularBuffer_Push(buffer_ptr, &temp) != -1) {
+		return 1;
+	}
+
+	// Test for Null error when popping from null buffer
+	if (GR_CircularBuffer_Pop(buffer_ptr) != NULL) {
+		return 2;
+	}
 
 	buffer_ptr = GR_CircularBuffer_Create(10);
 	int arr1[6] = {1, 2, 3, 4, 5, 6};
@@ -17,13 +28,13 @@ int main()
 		tmp = GR_CircularBuffer_Pop(buffer_ptr);
 		if (*tmp != arr1[i]) {
 			GR_CircularBuffer_Free(&buffer_ptr);
-			return 1;
+			return 3;
 		}
 	}
 	GR_CircularBuffer_Free(&buffer_ptr);
 
 	buffer_ptr = GR_CircularBuffer_Create(10);
-	// poping empty buffer
+	// popping empty buffer
 	for (int i = 0; i < 1000; i++) {
 		GR_CircularBuffer_Pop(buffer_ptr);
 	}
@@ -31,7 +42,7 @@ int main()
 		if (GR_CircularBuffer_Pop(buffer_ptr) !=
 		    NULL) { // Should do nothing
 			GR_CircularBuffer_Free(&buffer_ptr);
-			return 2;
+			return 4;
 		}
 	}
 	GR_CircularBuffer_Free(&buffer_ptr);
@@ -47,7 +58,7 @@ int main()
 		tmp = GR_CircularBuffer_Pop(buffer_ptr);
 		if (*tmp != arr2[i + 3]) {
 			GR_CircularBuffer_Free(&buffer_ptr);
-			return 3;
+			return 5;
 		}
 	}
 	GR_CircularBuffer_Free(&buffer_ptr);
@@ -62,7 +73,7 @@ int main()
 	int *tmp = GR_CircularBuffer_Pop(buffer_ptr);
 	if (*tmp != num) {
 		GR_CircularBuffer_Free(&buffer_ptr);
-		return 4;
+		return 6;
 	}
 
 	// Pushing beyond limit (same element should repeatedly get overwritten)
@@ -74,7 +85,7 @@ int main()
 	tmp = GR_CircularBuffer_Pop(
 	    buffer_ptr); // Should contain the last pushed element, 1
 	if (*tmp != 2) {
-		return 5;
+		return 7;
 	}
 	GR_CircularBuffer_Free(&buffer_ptr);
 

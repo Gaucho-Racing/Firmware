@@ -1,9 +1,15 @@
 #include "circularBuffer.h"
+#include <stdlib.h>
 
 int main()
 {
 
-	CircularBuffer *buffer_ptr;
+	CircularBuffer *buffer_ptr = NULL;
+
+	// Test for Null error
+	if (GR_CircularBuffer_IsEmpty(buffer_ptr)) {
+		return 1;
+	}
 
 	// Is empty
 	buffer_ptr = GR_CircularBuffer_Create(10);

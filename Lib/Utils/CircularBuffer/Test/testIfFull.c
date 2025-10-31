@@ -1,15 +1,21 @@
 #include "circularBuffer.h"
+#include <stdlib.h>
 
 int main()
 {
 
-	CircularBuffer *buffer_ptr;
+	CircularBuffer *buffer_ptr = NULL;
+
+	// Test for Null error
+	if (GR_CircularBuffer_IsFull(buffer_ptr)) {
+		return 1;
+	}
 
 	// Is empty
 	buffer_ptr = GR_CircularBuffer_Create(10);
 	if (GR_CircularBuffer_IsFull(buffer_ptr)) {
 		GR_CircularBuffer_Free(&buffer_ptr);
-		return 1;
+		return 2;
 	}
 	GR_CircularBuffer_Free(&buffer_ptr);
 
@@ -21,7 +27,7 @@ int main()
 	}
 	if (GR_CircularBuffer_IsFull(buffer_ptr)) {
 		GR_CircularBuffer_Free(&buffer_ptr);
-		return 2;
+		return 3;
 	}
 	GR_CircularBuffer_Free(&buffer_ptr);
 
@@ -36,7 +42,7 @@ int main()
 	}
 	if (GR_CircularBuffer_IsFull(buffer_ptr)) {
 		GR_CircularBuffer_Free(&buffer_ptr);
-		return 3;
+		return 4;
 	}
 	GR_CircularBuffer_Free(&buffer_ptr);
 
@@ -48,7 +54,7 @@ int main()
 	}
 	if (!GR_CircularBuffer_IsFull(buffer_ptr)) {
 		GR_CircularBuffer_Free(&buffer_ptr);
-		return 4;
+		return 5;
 	}
 	GR_CircularBuffer_Free(&buffer_ptr);
 
@@ -63,7 +69,7 @@ int main()
 	}
 	if (GR_CircularBuffer_IsFull(buffer_ptr)) {
 		GR_CircularBuffer_Free(&buffer_ptr);
-		return 5;
+		return 6;
 	}
 	GR_CircularBuffer_Free(&buffer_ptr);
 

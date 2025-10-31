@@ -73,7 +73,7 @@ bool GR_CircularBuffer_IsFull(CircularBuffer *buffer)
 {
 	// Buffer null error
 	if (!buffer) {
-		return true;
+		return false;
 	}
 	// In the case where head and tail iterators are equal,
 	// the buffer is full if any entry in the buffer is occupied.
@@ -84,7 +84,7 @@ bool GR_CircularBuffer_IsEmpty(CircularBuffer *buffer)
 {
 	// Buffer null error
 	if (!buffer) {
-		return true;
+		return false;
 	}
 	// In the case where head and tail iterators are equal,
 	// the buffer is empty if any entry in the buffer is free.

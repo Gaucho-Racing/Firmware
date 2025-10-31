@@ -3,14 +3,19 @@
 
 int main()
 {
-	CircularBuffer *buffer_ptr;
+	CircularBuffer *buffer_ptr = NULL;
+
+	// Test for Null error
+	if (GR_CircularBuffer_Peek(buffer_ptr) != NULL) {
+		return 1;
+	}
 
 	// Empty buffer
 	buffer_ptr = GR_CircularBuffer_Create(10);
 	void *ptr1 = GR_CircularBuffer_Peek(buffer_ptr);
 	if (ptr1 != NULL) {
 		GR_CircularBuffer_Free(&buffer_ptr);
-		return 1;
+		return 2;
 	}
 	GR_CircularBuffer_Free(&buffer_ptr);
 
@@ -25,7 +30,7 @@ int main()
 		tmp = GR_CircularBuffer_Peek(buffer_ptr);
 		if (*tmp != 1) { // should not modify the buffer
 			GR_CircularBuffer_Free(&buffer_ptr);
-			return 2;
+			return 3;
 		}
 	}
 	GR_CircularBuffer_Free(&buffer_ptr);
@@ -41,7 +46,7 @@ int main()
 		tmp = GR_CircularBuffer_Peek(buffer_ptr);
 		if (*tmp != 4) { // should not modify the buffer
 			GR_CircularBuffer_Free(&buffer_ptr);
-			return 3;
+			return 4;
 		}
 	}
 	GR_CircularBuffer_Free(&buffer_ptr);
@@ -60,7 +65,7 @@ int main()
 		tmp = GR_CircularBuffer_Peek(buffer_ptr);
 		if (*tmp != 4) { // should not modify the buffer
 			GR_CircularBuffer_Free(&buffer_ptr);
-			return 4;
+			return 5;
 		}
 	}
 	GR_CircularBuffer_Free(&buffer_ptr);
