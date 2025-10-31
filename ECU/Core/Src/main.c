@@ -121,7 +121,8 @@ int main(void)
 
 		/* USER CODE BEGIN 3 */
 		ECU_State_Tick();
-		LOGOMATIC("Main Loop Tick Complete. I like Pi %f\n", 3.14159265);
+		LOGOMATIC("Main Loop Tick Complete. I like Pi %f\n",
+			  3.14159265);
 		LL_mDelay(250); // FIXME Reduce or remove delay
 	}
 	/* USER CODE END 3 */

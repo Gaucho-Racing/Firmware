@@ -39,7 +39,8 @@ void ECU_State_Tick(void)
 			ECU_Tractive_System_Discharge(&stateLump);
 			break;
 		default:
-			LOGOMATIC("ECU_State_Tick: Unknown State %d\n", stateLump.currentState);
+			LOGOMATIC("ECU_State_Tick: Unknown State %d\n",
+				  stateLump.currentState);
 			LOGOMATIC("ECU_State_Tick: Resetting to GR_GLV_ON\n");
 			stateLump.currentState = GR_GLV_ON;
 			break;
