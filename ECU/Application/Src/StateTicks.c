@@ -2,8 +2,7 @@
 #include "Logomatic.h"
 #include "StateData.h"
 #include "StateMachine.h"
-
-#include "main.h"
+#include "Unused.h"
 
 /**
  * @brief The ECU state data lump.
@@ -40,7 +39,9 @@ void ECU_State_Tick(void)
 			ECU_Tractive_System_Discharge(&stateLump);
 			break;
 		default:
-			Error_Handler();
+			LOGOMATIC("ECU_State_Tick: Unknown State %d\n", stateLump.currentState);
+			LOGOMATIC("ECU_State_Tick: Resetting to GR_GLV_ON\n");
+			stateLump.currentState = GR_GLV_ON;
 			break;
 	}
 }

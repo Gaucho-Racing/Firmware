@@ -14,6 +14,20 @@ endif()
 get_filename_component(GR_PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Test")
+	add_executable(state_machine_tick_returns)
+	target_include_directories(state_machine_tick_returns PRIVATE
+		Application/Inc
+		Core/Inc
+	)
+	target_sources(state_machine_tick_returns PRIVATE
+		Test/state_machine_tick_returns.c
+		Application/Src/StateTicks.c
+	)
+	target_link_libraries(state_machine_tick_returns PRIVATE
+		GLOBALSHARE_LIB
+	)
+	add_test(state_machine_tick_returns state_machine_tick_returns)
+
 	# FIXME Add HOOTL tests
 endif()
 
