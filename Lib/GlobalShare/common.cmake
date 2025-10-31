@@ -25,24 +25,28 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
 
 	add_executable(logomatic_simple)
 	target_include_directories(
-		logomatic_simple PRIVATE
-		${CMAKE_CURRENT_LIST_DIR}/Inc
+		logomatic_simple
+		PRIVATE
+			${CMAKE_CURRENT_LIST_DIR}/Inc
 	)
 	target_sources(
-		logomatic_simple PRIVATE
-		${CMAKE_CURRENT_LIST_DIR}/Test/logomatic_simple_print.c
+		logomatic_simple
+		PRIVATE
+			${CMAKE_CURRENT_LIST_DIR}/Test/logomatic_simple_print.c
 	)
 	target_link_libraries(logomatic_simple PRIVATE GLOBALSHARE_LIB)
 	add_test(logomatic_simple_test logomatic_simple)
 
 	add_executable(logomatic_float)
 	target_include_directories(
-		logomatic_float PRIVATE
-		${CMAKE_CURRENT_LIST_DIR}/Inc
+		logomatic_float
+		PRIVATE
+			${CMAKE_CURRENT_LIST_DIR}/Inc
 	)
 	target_sources(
-		logomatic_float PRIVATE
-		${CMAKE_CURRENT_LIST_DIR}/Test/logomatic_float_print.c
+		logomatic_float
+		PRIVATE
+			${CMAKE_CURRENT_LIST_DIR}/Test/logomatic_float_print.c
 	)
 	target_link_libraries(logomatic_float PRIVATE GLOBALSHARE_LIB)
 	add_test(logomatic_float_test logomatic_float)
