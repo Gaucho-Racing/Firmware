@@ -5,7 +5,6 @@ ARG arm_toolchain_url=https://developer.arm.com/-/media/Files/downloads/gnu/12.2
 
 # Install base dependencies
 # For libncurses
-RUN echo "deb http://security.ubuntu.com/ubuntu focal-security main universe" > /etc/apt/sources.list.d/ubuntu-focal-sources.list
 RUN apt-get update && apt-get install -y \
     build-essential \
     curl \
@@ -18,18 +17,22 @@ RUN apt-get update && apt-get install -y \
     cmake \
     ninja-build \
     openocd \
-    libncurses5 \
+    libncurses6 \
     software-properties-common
 
-# Fixes since arm-none-eabi-gdb requires python3.8 and libncurses5
+
+# arm-none-eabi-gdb requires libncurses5, but that's not available by default
+# libncurses6 is similar enough to libncurses5 for our purposes
+# so we'll just pretend that libncurses6 is libncurses5
+RUN ln -s /lib/x86_64-linux-gnu/libncursesw.so.6 /usr/lib/libncursesw.so.5
+
+# arm-none-eabi-gdb requires python3.8
 RUN add-apt-repository ppa:deadsnakes/ppa -y
 RUN apt install python3.8 -y
-RUN ln -s /lib/x86_64-linux-gnu/libncursesw.so.6 /usr/lib/libncursesw.so.5
 
 # Install a specific version of the ARM GCC Toolchain
 RUN wget "${arm_toolchain_url}" -O arm-gnu-toolchain.tar.xz
 RUN mkdir arm-gnu-toolchain && tar -xf arm-gnu-toolchain.tar.xz -C arm-gnu-toolchain --strip-components 1 
 RUN mv arm-gnu-toolchain /usr/local/arm-gnu-toolchain
 RUN rm arm-gnu-toolchain.tar.xz
-# RUN rm -rf /var/lib/apt/lists/
 ENV PATH="/usr/local/arm-gnu-toolchain/bin:${PATH}"
