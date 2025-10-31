@@ -3,80 +3,80 @@
 int main()
 {
 
-	CircularBuffer *buffer;
+	CircularBuffer *buffer_ptr;
 
 	// Test GetCurrentSize
-	buffer = GR_CircularBuffer_Create(10);
+	buffer_ptr = GR_CircularBuffer_Create(10);
 
 	// Test single item
 	int temp = 0;
-	GR_CircularBuffer_Push(buffer, &temp);
-	if (GR_CircularBuffer_GetCurrentSize(buffer) != 1) {
-		GR_CircularBuffer_Free(buffer);
+	GR_CircularBuffer_Push(buffer_ptr, &temp);
+	if (GR_CircularBuffer_GetCurrentSize(buffer_ptr) != 1) {
+		GR_CircularBuffer_Free(&buffer_ptr);
 		return 1;
 	}
-	GR_CircularBuffer_Free(buffer);
+	GR_CircularBuffer_Free(&buffer_ptr);
 
-	buffer = GR_CircularBuffer_Create(10);
-	GR_CircularBuffer_Push(buffer, &temp);
-	if (GR_CircularBuffer_GetCurrentSize(buffer) != 1) {
-		GR_CircularBuffer_Free(buffer);
+	buffer_ptr = GR_CircularBuffer_Create(10);
+	GR_CircularBuffer_Push(buffer_ptr, &temp);
+	if (GR_CircularBuffer_GetCurrentSize(buffer_ptr) != 1) {
+		GR_CircularBuffer_Free(&buffer_ptr);
 		return 2;
 	}
-	GR_CircularBuffer_Free(buffer);
+	GR_CircularBuffer_Free(&buffer_ptr);
 
 	// Push multiple items
-	buffer = GR_CircularBuffer_Create(10);
+	buffer_ptr = GR_CircularBuffer_Create(10);
 	int arr1[6] = {0};
 	for (int i = 0; i < 6; i++) {
-		GR_CircularBuffer_Push(buffer, &arr1[i]);
+		GR_CircularBuffer_Push(buffer_ptr, &arr1[i]);
 	}
-	if (GR_CircularBuffer_GetCurrentSize(buffer) != 6) {
-		GR_CircularBuffer_Free(buffer);
+	if (GR_CircularBuffer_GetCurrentSize(buffer_ptr) != 6) {
+		GR_CircularBuffer_Free(&buffer_ptr);
 		return 3;
 	}
-	GR_CircularBuffer_Free(buffer);
+	GR_CircularBuffer_Free(&buffer_ptr);
 
 	// Push over limit
-	buffer = GR_CircularBuffer_Create(10);
+	buffer_ptr = GR_CircularBuffer_Create(10);
 	int arr2[12] = {0};
 	for (int i = 0; i < 12; i++) {
-		GR_CircularBuffer_Push(buffer, &arr2[i]);
+		GR_CircularBuffer_Push(buffer_ptr, &arr2[i]);
 	}
-	if (GR_CircularBuffer_GetCurrentSize(buffer) != 10) {
-		GR_CircularBuffer_Free(buffer);
+	if (GR_CircularBuffer_GetCurrentSize(buffer_ptr) != 10) {
+		GR_CircularBuffer_Free(&buffer_ptr);
 		return 4;
 	}
-	GR_CircularBuffer_Free(buffer);
+	GR_CircularBuffer_Free(&buffer_ptr);
 
 	// Push and pop
-	buffer = GR_CircularBuffer_Create(10);
+	buffer_ptr = GR_CircularBuffer_Create(10);
 	for (int i = 0; i < 9; i++) {
-		GR_CircularBuffer_Push(buffer, &arr2[i]);
+		GR_CircularBuffer_Push(buffer_ptr, &arr2[i]);
 	}
 	for (int i = 0; i < 4; i++) {
-		GR_CircularBuffer_Pop(buffer);
+		GR_CircularBuffer_Pop(buffer_ptr);
 	}
-	if (GR_CircularBuffer_GetCurrentSize(buffer) != 5) {
-		GR_CircularBuffer_Free(buffer);
+	if (GR_CircularBuffer_GetCurrentSize(buffer_ptr) != 5) {
+		GR_CircularBuffer_Free(&buffer_ptr);
 		return 5;
 	}
-	GR_CircularBuffer_Free(buffer);
+	GR_CircularBuffer_Free(&buffer_ptr);
 
 	// Push over limit and pop
-	buffer = GR_CircularBuffer_Create(10);
+	buffer_ptr = GR_CircularBuffer_Create(10);
 	int arr4[15] = {0};
 	for (int i = 0; i < 15; i++) {
-		GR_CircularBuffer_Push(buffer, &arr4[i]);
+		GR_CircularBuffer_Push(buffer_ptr, &arr4[i]);
 	}
 	for (int i = 0; i < 4; i++) {
-		GR_CircularBuffer_Pop(buffer);
+		GR_CircularBuffer_Pop(buffer_ptr);
 	}
-	if (GR_CircularBuffer_GetCurrentSize(buffer) != 6) {
-		GR_CircularBuffer_Free(buffer);
+	if (GR_CircularBuffer_GetCurrentSize(buffer_ptr) != 6) {
+		GR_CircularBuffer_Free(&buffer_ptr);
 		return 6;
 	}
-	GR_CircularBuffer_Free(buffer);
+	GR_CircularBuffer_Free(&buffer_ptr);
 
 	return 0;
 }
