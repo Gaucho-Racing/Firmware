@@ -22,7 +22,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Logomatic.h"
-#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -116,6 +115,7 @@ int main(void)
 		/* USER CODE BEGIN 3 */
 		LOGOMATIC("Hello, LOGOMATIC! Great to be here %f\n",
 			  3.14159265);
+
 		LL_mDelay(750);
 	}
 	/* USER CODE END 3 */

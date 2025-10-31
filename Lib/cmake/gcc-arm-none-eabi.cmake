@@ -57,7 +57,3 @@ set(
 	CMAKE_CXX_LINK_FLAGS
 	"${CMAKE_C_LINK_FLAGS} -Wl,--start-group -lstdc++ -lsupc++ -Wl,--end-group"
 )
-
-# Enable float prints for debug (avoid these when possible as they are expensive)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -u _printf_float")
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -u _printf_float")

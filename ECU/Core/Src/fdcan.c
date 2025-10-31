@@ -7,7 +7,7 @@
  ******************************************************************************
  * @attention
  *
- * Copyright (c) 2024 STMicroelectronics.
+ * Copyright (c) 2025 STMicroelectronics.
  * All rights reserved.
  *
  * This software is licensed under terms that can be found in the LICENSE file
@@ -106,19 +106,11 @@ void HAL_FDCAN_MspInit(FDCAN_HandleTypeDef *fdcanHandle)
 {
 
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
-	RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 	if (fdcanHandle->Instance == FDCAN1) {
 		/* USER CODE BEGIN FDCAN1_MspInit 0 */
 
 		/* USER CODE END FDCAN1_MspInit 0 */
-
-		/** Initializes the peripherals clocks
-		 */
-		PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_FDCAN;
-		PeriphClkInit.FdcanClockSelection = RCC_FDCANCLKSOURCE_PCLK1;
-		if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK) {
-			Error_Handler();
-		}
+		LL_RCC_SetFDCANClockSource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
 
 		/* FDCAN1 clock enable */
 		HAL_RCC_FDCAN_CLK_ENABLED++;
@@ -156,13 +148,7 @@ void HAL_FDCAN_MspInit(FDCAN_HandleTypeDef *fdcanHandle)
 
 		/* USER CODE END FDCAN2_MspInit 0 */
 
-		/** Initializes the peripherals clocks
-		 */
-		PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_FDCAN;
-		PeriphClkInit.FdcanClockSelection = RCC_FDCANCLKSOURCE_PCLK1;
-		if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK) {
-			Error_Handler();
-		}
+		LL_RCC_SetFDCANClockSource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
 
 		/* FDCAN2 clock enable */
 		HAL_RCC_FDCAN_CLK_ENABLED++;
