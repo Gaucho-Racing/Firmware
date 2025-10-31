@@ -39,7 +39,7 @@ typedef union ECU_StateData {
 	};
 
 	struct {
-		uint8_t data[32];
+		__attribute__((unused)) uint8_t temporaryPlaceholder;
 		// TODO Add CAN messages here
 	};
 } ECU_StateData;
