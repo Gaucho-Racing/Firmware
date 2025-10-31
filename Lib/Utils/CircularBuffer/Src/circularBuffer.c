@@ -73,7 +73,7 @@ bool GR_CircularBuffer_IsFull(CircularBuffer *buffer)
 {
 	// Buffer null error
 	if (!buffer) {
-		return true;
+		return false;
 	}
 	// In the case where head and tail iterators are equal,
 	// the buffer is full if any entry in the buffer is occupied.
@@ -95,7 +95,7 @@ int8_t GR_CircularBuffer_Push(CircularBuffer *buffer, void *object)
 {
 	// Buffer null error
 	if (!buffer) {
-		return -1;
+		return 1;
 	}
 	// Remove the buffer head if it's going to be overwritten
 	// That is, if the buffer is already full
