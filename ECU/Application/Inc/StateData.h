@@ -5,14 +5,16 @@
 #ifndef _STATEDATA_H_
 #define _STATEDATA_H_
 
+// FIXME Use CAN message structures when available
+
 /**
  * @brief The ECU state data structure.
  *
  * This structure contains all relevant data for the ECU state machine,
  * including current state, status bits, sensor readings, and control inputs.
  *
- * It is passed to each state function on tick to allow state-specific logic
- * to access and modify the ECU's operational data.
+ * @remark It is passed to each state function on tick to allow state-specific
+ * logic to access and modify the ECU's operational data.
  */
 typedef union ECU_StateData {
 	struct {
