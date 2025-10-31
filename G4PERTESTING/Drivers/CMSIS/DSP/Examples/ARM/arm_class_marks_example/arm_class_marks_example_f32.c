@@ -169,37 +169,37 @@ int32_t main()
 	/* ----------------------------------------------------------------------
 	 *Call the Matrix multiplication process function
 	 * -------------------------------------------------------------------
-	*/
+	 */
 	arm_mat_mult_f32(&srcA, &srcB, &dstC);
 
 	/* ----------------------------------------------------------------------
 	** Call the Max function to calculate max marks among numStudents
 	** -------------------------------------------------------------------
-       */
+	*/
 	arm_max_f32(testOutput, numStudents, &max_marks, &student_num);
 
 	/* ----------------------------------------------------------------------
 	** Call the Min function to calculate min marks among numStudents
 	** -------------------------------------------------------------------
-       */
+	*/
 	arm_min_f32(testOutput, numStudents, &min_marks, &student_num);
 
 	/* ----------------------------------------------------------------------
 	** Call the Mean function to calculate mean
 	** -------------------------------------------------------------------
-       */
+	*/
 	arm_mean_f32(testOutput, numStudents, &mean);
 
 	/* ----------------------------------------------------------------------
 	** Call the std function to calculate standard deviation
 	** -------------------------------------------------------------------
-       */
+	*/
 	arm_std_f32(testOutput, numStudents, &std);
 
 	/* ----------------------------------------------------------------------
 	** Call the var function to calculate variance
 	** -------------------------------------------------------------------
-       */
+	*/
 	arm_var_f32(testOutput, numStudents, &var);
 
 	while (1)

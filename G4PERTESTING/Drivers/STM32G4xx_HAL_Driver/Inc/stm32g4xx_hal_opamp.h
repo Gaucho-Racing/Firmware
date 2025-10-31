@@ -56,17 +56,16 @@ typedef struct {
 			    This parameter must be a value of @ref OPAMP_Mode
 			    mode is either Standalone, Follower or PGA */
 
-	uint32_t
-	    InvertingInput; /*!< Specifies the inverting input in Standalone &
-			       Pga modes
-				   - In Standalone mode:   i.e when mode is
-			       OPAMP_STANDALONE_MODE This parameter must be a
-			       value of @ref OPAMP_InvertingInput InvertingInput
-			       is either VINM0 or VINM1
-				   - In PGA mode:          i.e when mode is
-			       OPAMP_PGA_MODE & in Follower mode    i.e when
-			       mode is OPAMP_FOLLOWER_MODE This parameter is Not
-			       Applicable */
+	uint32_t InvertingInput; /*!< Specifies the inverting input in
+				    Standalone & Pga modes
+					- In Standalone mode:   i.e when mode is
+				    OPAMP_STANDALONE_MODE This parameter must be
+				    a value of @ref OPAMP_InvertingInput
+				    InvertingInput is either VINM0 or VINM1
+					- In PGA mode:          i.e when mode is
+				    OPAMP_PGA_MODE & in Follower mode    i.e
+				    when mode is OPAMP_FOLLOWER_MODE This
+				    parameter is Not Applicable */
 
 	uint32_t
 	    NonInvertingInput; /*!< Specifies the non inverting input of the
@@ -245,21 +244,21 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
 	(0x00000000UL) /*!< Non inverting input connected to I/O VINP0         \
 			    (PA1  for OPAMP1, PA7  for OPAMP2, PB0  for        \
 			  OPAMP3, PB13 for OPAMP4, PB14 for OPAMP5, PB12 for   \
-			  OPAMP6) Note: On this STM32 series, all OPAMPx are                                    \
+			  OPAMP6) Note: On this STM32 series, all OPAMPx are   \
 			  not available on all devices. Refer to device        \
 			  datasheet for more details */
 #define OPAMP_NONINVERTINGINPUT_IO1                                            \
 	OPAMP_CSR_VPSEL_0 /*!< Non inverting input connected to I/O VINP1      \
 			       (PA3  for OPAMP1, PB14 for OPAMP2, PB13 for     \
-			     OPAMP3, PD11 for OPAMP4, PD12 for OPAMP5, PD9 for                                                                           \
-			     OPAMP6) Note: On this STM32 series, all OPAMPx                                        \
+			     OPAMP3, PD11 for OPAMP4, PD12 for OPAMP5, PD9 for \
+			     OPAMP6) Note: On this STM32 series, all OPAMPx    \
 			     are not available on all devices. Refer to device \
 			     datasheet for more details */
 #define OPAMP_NONINVERTINGINPUT_IO2                                            \
 	OPAMP_CSR_VPSEL_1 /*!< Non inverting input connected to I/O VINP2      \
 			       (PA7  for OPAMP1, PB0  for OPAMP2, PA1  for     \
 			     OPAMP3, PB11 for OPAMP4, PC3  for OPAMP5, PB13    \
-			     for OPAMP6) Note: On this STM32 series, all                                               \
+			     for OPAMP6) Note: On this STM32 series, all       \
 			     OPAMPx are not available on all devices. Refer to \
 			     device datasheet for more details */
 #define OPAMP_NONINVERTINGINPUT_IO3                                            \
@@ -267,9 +266,9 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
 			     (PD14 for OPAMP2) */
 #define OPAMP_NONINVERTINGINPUT_DAC                                            \
 	OPAMP_CSR_VPSEL /*!< Non inverting input connected internally to DAC   \
-			   channel (DAC3_CH1 for OPAMP1, DAC3_CH2  for OPAMP3,                                   \
+			   channel (DAC3_CH1 for OPAMP1, DAC3_CH2  for OPAMP3, \
 			   DAC4_CH1 for OPAMP4, DAC4_CH2 for OPAMP5, DAC3_CH1  \
-			   for OPAMP6) Note: On this STM32 series, all OPAMPx                                        \
+			   for OPAMP6) Note: On this STM32 series, all OPAMPx  \
 			   are not available on all devices. Refer to device   \
 			   datasheet for more details */
 /**
@@ -289,8 +288,8 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
 #define OPAMP_INVERTINGINPUT_IO1                                               \
 	OPAMP_CSR_VMSEL_0 /*!< Inverting input connected to I/0 VINM1          \
 			      (PC5  for OPAMP1, PC5  for OPAMP2, PB10 for      \
-			     OPAMP3, PB8  for OPAMP4, PA3  for OPAMP5, PB1 for                                                                           \
-			     OPAMP6) Note: On this STM32 series, all OPAMPx                                        \
+			     OPAMP3, PB8  for OPAMP4, PA3  for OPAMP5, PB1 for \
+			     OPAMP6) Note: On this STM32 series, all OPAMPx    \
 			     are not available on all devices. Refer to device \
 			     datasheet for more details */
 /**
@@ -315,7 +314,7 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
 #if defined(TIM20)
 #define OPAMP_TIMERCONTROLLEDMUXMODE_TIM20_CH6                                 \
 	OPAMP_TCMR_T20CMEN /*!< Timer controlled Mux mode enabled using TIM20  \
-			      OC6 Note: On this STM32 series, TIM20 is not                                      \
+			      OC6 Note: On this STM32 series, TIM20 is not     \
 			      available on all devices. Refer to device        \
 			      datasheet for more details */
 #endif
@@ -329,24 +328,24 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
  */
 #define OPAMP_SEC_NONINVERTINGINPUT_IO0                                        \
 	(0x00000000UL) /*!< Secondary non inverting input connected to I/O     \
-			  VINP0 (PA1  for OPAMP1, PA7  for OPAMP2, PB0  for                                   \
+			  VINP0 (PA1  for OPAMP1, PA7  for OPAMP2, PB0  for    \
 			  OPAMP3, PB13 for OPAMP4, PB14 for OPAMP5, PB12 for   \
-			  OPAMP6) Note: On this STM32 series, all OPAMPx are                                    \
+			  OPAMP6) Note: On this STM32 series, all OPAMPx are   \
 			  not available on all devices. Refer to device        \
 			  datasheet for more details */
 #define OPAMP_SEC_NONINVERTINGINPUT_IO1                                        \
 	OPAMP_TCMR_VPSSEL_0 /*!< Secondary non inverting input connected to    \
-			       I/O VINP1 (PA3  for OPAMP1, PB14 for OPAMP2,                                            \
+			       I/O VINP1 (PA3  for OPAMP1, PB14 for OPAMP2,    \
 			       PB13 for OPAMP3, PD11 for OPAMP4, PD12 for      \
-			       OPAMP5, PD9  for OPAMP6) Note: On this STM32                                                           \
+			       OPAMP5, PD9  for OPAMP6) Note: On this STM32    \
 			       series, all OPAMPx are not available on all     \
 			       devices. Refer to device datasheet for more     \
 			       details */
 #define OPAMP_SEC_NONINVERTINGINPUT_IO2                                        \
 	OPAMP_TCMR_VPSSEL_1 /*!< Secondary non inverting input connected to    \
-			       I/O VINP2 (PA7  for OPAMP1, PB0  for OPAMP2,                                            \
+			       I/O VINP2 (PA7  for OPAMP1, PB0  for OPAMP2,    \
 			       PA1  for OPAMP3, PB11 for OPAMP4, PC3  for      \
-			       OPAMP5, PB13 for OPAMP6) Note: On this STM32                                                           \
+			       OPAMP5, PB13 for OPAMP6) Note: On this STM32    \
 			       series, all OPAMPx are not available on all     \
 			       devices. Refer to device datasheet for more     \
 			       details */
@@ -355,9 +354,9 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
 			     VINP3 (PD14 for OPAMP2) */
 #define OPAMP_SEC_NONINVERTINGINPUT_DAC                                        \
 	OPAMP_TCMR_VPSSEL /*!< Secondary non inverting input connected         \
-			     internally to DAC channel (DAC3_CH1 for OPAMP1,                                                         \
+			     internally to DAC channel (DAC3_CH1 for OPAMP1,   \
 			     DAC3_CH2  for OPAMP3, DAC4_CH1 for OPAMP4,        \
-			     DAC4_CH2 for OPAMP5, DAC3_CH1 for OPAMP6) Note:                                                                         \
+			     DAC4_CH2 for OPAMP5, DAC3_CH1 for OPAMP6) Note:   \
 			     On this STM32 series, all OPAMPx are not          \
 			     available on all devices. Refer to device         \
 			     datasheet for more details */
@@ -370,29 +369,29 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
  */
 #define OPAMP_SEC_INVERTINGINPUT_IO0                                           \
 	(0x00000000UL) /*!< OPAMP secondary mode is standalone mode - Only     \
-			  applicable if @ref OPAMP_STANDALONE_MODE has been                                                                      \
+			  applicable if @ref OPAMP_STANDALONE_MODE has been    \
 			  configured by call to @ref HAL_OPAMP_Init().         \
 			    Secondary inverting input connected to I/O VINM0   \
 			    (PA3  for OPAMP1, PA5  for OPAMP2, PB2  for        \
 			  OPAMP3, PB10 for OPAMP4, PB15 for OPAMP5, PA1  for   \
-			  OPAMP6) Note: On this STM32 series, all OPAMPx are                                    \
+			  OPAMP6) Note: On this STM32 series, all OPAMPx are   \
 			  not available on all devices. Refer to device        \
 			  datasheet for more details */
 #define OPAMP_SEC_INVERTINGINPUT_IO1                                           \
 	OPAMP_TCMR_VMSSEL /*!< OPAMP secondary mode is standalone mode - Only  \
-			     applicable if @ref OPAMP_STANDALONE_MODE has been                                                                      \
+			     applicable if @ref OPAMP_STANDALONE_MODE has been \
 			     configured by call to @ref HAL_OPAMP_Init().      \
 			       Secondary inverting input connected to I/0      \
-			     VINM1 (PC5  for OPAMP1, PC5  for OPAMP2, PB10 for                                   \
-			     OPAMP3, PB8  for OPAMP4, PA3  for OPAMP5, PB1 for                                                                           \
-			     OPAMP6) Note: On this STM32 series, all OPAMPx                                        \
+			     VINM1 (PC5  for OPAMP1, PC5  for OPAMP2, PB10 for \
+			     OPAMP3, PB8  for OPAMP4, PA3  for OPAMP5, PB1 for \
+			     OPAMP6) Note: On this STM32 series, all OPAMPx    \
 			     are not available on all devices. Refer to device \
 			     datasheet for more details */
 #define OPAMP_SEC_INVERTINGINPUT_PGA                                           \
 	(0x00000000UL) /*!< OPAMP secondary mode is PGA mode - Only applicable \
 			  if configured mode through call to @ref              \
-			  HAL_OPAMP_Init() is @ref OPAMP_PGA_MODE or @ref                                                \
-			  OPAMP_FOLLOWER_MODE. OPAMP secondary inverting input                                               \
+			  HAL_OPAMP_Init() is @ref OPAMP_PGA_MODE or @ref      \
+			  OPAMP_FOLLOWER_MODE. OPAMP secondary inverting input \
 			  is:                                                  \
 			     - Not connected if configured mode is @ref        \
 			  OPAMP_FOLLOWER_MODE                                  \
@@ -400,14 +399,14 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
 			  OPAMP_PGA_MODE and PGA connect mode is @ref          \
 			  OPAMP_PGA_CONNECT_INVERTINGINPUT_NO                  \
 			     - Connected to VINM0 and possibly VINM1 if any of \
-			  the other modes as been configured (see @ref                                                                     \
+			  the other modes as been configured (see @ref         \
 			  OPAMP_PgaConnect description for more details on PGA \
 			  connection modes) */
 #define OPAMP_SEC_INVERTINGINPUT_FOLLOWER                                      \
 	OPAMP_TCMR_VMSSEL /*!< OPAMP secondary mode is Follower mode - Only    \
 			     applicable if configured mode through call to     \
-			     @ref HAL_OPAMP_Init() is @ref OPAMP_PGA_MODE or                                                     \
-			     @ref OPAMP_FOLLOWER_MODE. OPAMP secondary                                                               \
+			     @ref HAL_OPAMP_Init() is @ref OPAMP_PGA_MODE or   \
+			     @ref OPAMP_FOLLOWER_MODE. OPAMP secondary         \
 			     inverting input is not connected. */
 /**
  * @}
@@ -436,7 +435,7 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
 			       - Input signal on VINM0, bias on VINPx:         \
 			       negative gain                                   \
 			       - Bias on VINM0, input signal on VINPx:         \
-			       positive gain And VINM1 is connected too for                                                \
+			       positive gain And VINM1 is connected too for    \
 			       filtering */
 /**
  * @}
@@ -475,8 +474,9 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
 /** @defgroup OPAMP_PowerMode OPAMP PowerMode
  * @{
  */
-#define OPAMP_POWERMODE_NORMALSPEED (0x00000000UL) /*!< Output in normal mode  \
-						    */
+#define OPAMP_POWERMODE_NORMALSPEED                                            \
+	(0x00000000UL) /*!< Output in normal mode                              \
+			*/
 #define OPAMP_POWERMODE_HIGHSPEED                                              \
 	OPAMP_CSR_HIGHSPEEDEN /*!< Output in highspeed mode */
 /**
@@ -495,8 +495,9 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
 /** @defgroup OPAMP_FactoryTrimming OPAMP Factory Trimming
  * @{
  */
-#define OPAMP_FACTORYTRIMMING_DUMMY (0xFFFFFFFFUL) /*!< Dummy trimming value   \
-						    */
+#define OPAMP_FACTORYTRIMMING_DUMMY                                            \
+	(0xFFFFFFFFUL) /*!< Dummy trimming value                               \
+			*/
 
 #define OPAMP_FACTORYTRIMMING_N (0x00000000UL) /*!< Offset trimming N */
 #define OPAMP_FACTORYTRIMMING_P (0x00000001UL) /*!< Offset trimming P */

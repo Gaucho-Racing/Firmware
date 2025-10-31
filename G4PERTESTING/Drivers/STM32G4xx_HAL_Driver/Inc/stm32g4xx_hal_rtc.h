@@ -605,8 +605,9 @@ typedef void (*pRTC_CallbackTypeDef)(
 	(0x00000200U | RTC_SR_ITSF_Pos) /*!< Internal Time-stamp flag */
 #define RTC_FLAG_TSOVF                                                         \
 	(0x00000200U | RTC_SR_TSOVF_Pos) /*!< Time-stamp overflow flag */
-#define RTC_FLAG_TSF (0x00000200U | RTC_SR_TSF_Pos)	/*!< Time-stamp flag */
-#define RTC_FLAG_WUTF (0x00000200U | RTC_SR_WUTF_Pos)	/*!< Wakeup timer flag \
+#define RTC_FLAG_TSF (0x00000200U | RTC_SR_TSF_Pos) /*!< Time-stamp flag */
+#define RTC_FLAG_WUTF                                                          \
+	(0x00000200U | RTC_SR_WUTF_Pos)			/*!< Wakeup timer flag \
 							 */
 #define RTC_FLAG_ALRBF (0x00000200U | RTC_SR_ALRBF_Pos) /*!< Alarm B flag */
 #define RTC_FLAG_ALRAF (0x00000200U | RTC_SR_ALRAF_Pos) /*!< Alarm A flag */

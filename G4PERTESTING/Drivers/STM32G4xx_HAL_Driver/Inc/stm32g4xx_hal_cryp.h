@@ -326,17 +326,14 @@ typedef void (*pCRYP_CallbackTypeDef)(
  * @{
  */
 
-#define CRYP_AES_ECB                                                           \
-	0x00000000U /*!< Electronic codebook chaining algorithm */
-#define CRYP_AES_CBC                                                           \
-	AES_CR_CHMOD_0 /*!< Cipher block chaining algorithm */
-#define CRYP_AES_CTR                                                           \
-	AES_CR_CHMOD_1 /*!< Counter mode chaining algorithm */
+#define CRYP_AES_ECB 0x00000000U /*!< Electronic codebook chaining algorithm   \
+				  */
+#define CRYP_AES_CBC AES_CR_CHMOD_0 /*!< Cipher block chaining algorithm */
+#define CRYP_AES_CTR AES_CR_CHMOD_1 /*!< Counter mode chaining algorithm */
 #define CRYP_AES_GCM_GMAC                                                      \
 	(AES_CR_CHMOD_0 | AES_CR_CHMOD_1) /*!< Galois counter mode - Galois    \
 					     message authentication code */
-#define CRYP_AES_CCM                                                           \
-	AES_CR_CHMOD_2 /*!< Counter with Cipher Mode */
+#define CRYP_AES_CCM AES_CR_CHMOD_2	  /*!< Counter with Cipher Mode */
 
 /**
  * @}
@@ -374,7 +371,8 @@ typedef void (*pCRYP_CallbackTypeDef)(
  * @{
  */
 
-#define CRYP_IT_CCFIE AES_CR_CCFIE /*!< Computation Complete interrupt enable  \
+#define CRYP_IT_CCFIE                                                          \
+	AES_CR_CCFIE		   /*!< Computation Complete interrupt enable  \
 				    */
 #define CRYP_IT_ERRIE AES_CR_ERRIE /*!< Error interrupt enable */
 #define CRYP_IT_WRERR AES_SR_WRERR /*!< Write Error           */

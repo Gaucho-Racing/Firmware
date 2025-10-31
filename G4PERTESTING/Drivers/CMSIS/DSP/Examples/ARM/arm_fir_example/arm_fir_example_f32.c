@@ -191,7 +191,7 @@ int32_t main(void)
 	/* ----------------------------------------------------------------------
 	** Call the FIR process function for every blockSize samples
 	** -------------------------------------------------------------------
-       */
+	*/
 
 	for (i = 0; i < numBlocks; i++) {
 		arm_fir_f32(&S, inputF32 + (i * blockSize),
@@ -202,7 +202,7 @@ int32_t main(void)
 	** Compare the generated output against the reference output computed
 	** in MATLAB.
 	** -------------------------------------------------------------------
-       */
+	*/
 
 	snr = arm_snr_f32(&refOutput[0], &testOutput[0], TEST_LENGTH_SAMPLES);
 
@@ -215,7 +215,7 @@ int32_t main(void)
 	/* ----------------------------------------------------------------------
 	** Loop here if the signal does not match the reference output.
 	** -------------------------------------------------------------------
-       */
+	*/
 
 	if (status != ARM_MATH_SUCCESS) {
 		while (1)

@@ -48,16 +48,12 @@ extern "C" {
  * @{
  */
 #define LL_FMAC_SR_SAT                                                         \
-	FMAC_SR_SAT /*!< Saturation Error Flag                                 \
-			 (this helps in debugging a filter) */
-#define LL_FMAC_SR_UNFL                                                        \
-	FMAC_SR_UNFL /*!< Underflow Error Flag */
-#define LL_FMAC_SR_OVFL                                                        \
-	FMAC_SR_OVFL /*!< Overflow Error Flag */
-#define LL_FMAC_SR_X1FULL                                                      \
-	FMAC_SR_X1FULL /*!< X1 Buffer Full Flag */
-#define LL_FMAC_SR_YEMPTY                                                      \
-	FMAC_SR_YEMPTY /*!< Y Buffer Empty Flag */
+	FMAC_SR_SAT			 /*!< Saturation Error Flag            \
+					      (this helps in debugging a filter) */
+#define LL_FMAC_SR_UNFL FMAC_SR_UNFL	 /*!< Underflow Error Flag */
+#define LL_FMAC_SR_OVFL FMAC_SR_OVFL	 /*!< Overflow Error Flag */
+#define LL_FMAC_SR_X1FULL FMAC_SR_X1FULL /*!< X1 Buffer Full Flag */
+#define LL_FMAC_SR_YEMPTY FMAC_SR_YEMPTY /*!< Y Buffer Empty Flag */
 /**
  * @}
  */
@@ -73,11 +69,9 @@ extern "C" {
 #define LL_FMAC_CR_UNFLIEN                                                     \
 	FMAC_CR_UNFLIEN /*!< Underflow Error Interrupt Enable */
 #define LL_FMAC_CR_OVFLIEN                                                     \
-	FMAC_CR_OVFLIEN /*!< Overflow Error Interrupt Enable */
-#define LL_FMAC_CR_WIEN                                                        \
-	FMAC_CR_WIEN /*!< Write Interrupt Enable */
-#define LL_FMAC_CR_RIEN                                                        \
-	FMAC_CR_RIEN /*!< Read Interrupt Enable */
+	FMAC_CR_OVFLIEN		     /*!< Overflow Error Interrupt Enable */
+#define LL_FMAC_CR_WIEN FMAC_CR_WIEN /*!< Write Interrupt Enable */
+#define LL_FMAC_CR_RIEN FMAC_CR_RIEN /*!< Read Interrupt Enable */
 /**
  * @}
  */
@@ -124,10 +118,8 @@ extern "C" {
 /** @defgroup FMAC_LL_EC_PROCESSING FMAC processing
  * @{
  */
-#define LL_FMAC_PROCESSING_STOP                                                \
-	0x00U /*!< Stop FMAC Processing */
-#define LL_FMAC_PROCESSING_START                                               \
-	0x01U /*!< Start FMAC Processing */
+#define LL_FMAC_PROCESSING_STOP 0x00U  /*!< Stop FMAC Processing */
+#define LL_FMAC_PROCESSING_START 0x01U /*!< Start FMAC Processing */
 /**
  * @}
  */

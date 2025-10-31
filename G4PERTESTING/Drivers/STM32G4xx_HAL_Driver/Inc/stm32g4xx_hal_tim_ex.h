@@ -146,8 +146,9 @@ typedef struct {
 	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1 |                               \
 	 TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP7_OUT */
 #endif			    /* COMP7 */
-#define TIM_TIM1_ETR_ADC1_AWD1 TIM1_AF1_ETRSEL_3 /*!< ADC1 analog watchdog 1   \
-						  */
+#define TIM_TIM1_ETR_ADC1_AWD1                                                 \
+	TIM1_AF1_ETRSEL_3 /*!< ADC1 analog watchdog 1                          \
+			   */
 #define TIM_TIM1_ETR_ADC1_AWD2                                                 \
 	(TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_0) /*!< ADC1 analog watchdog 2 */
 #define TIM_TIM1_ETR_ADC1_AWD3                                                 \
@@ -332,8 +333,9 @@ typedef struct {
 	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1 |                               \
 	 TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP7_OUT */
 #endif			    /* COMP7 */
-#define TIM_TIM8_ETR_ADC2_AWD1 TIM1_AF1_ETRSEL_3 /*!< ADC2 analog watchdog 1   \
-						  */
+#define TIM_TIM8_ETR_ADC2_AWD1                                                 \
+	TIM1_AF1_ETRSEL_3 /*!< ADC2 analog watchdog 1                          \
+			   */
 #define TIM_TIM8_ETR_ADC2_AWD2                                                 \
 	(TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_0) /*!< ADC2 analog watchdog 2 */
 #define TIM_TIM8_ETR_ADC2_AWD3                                                 \
@@ -375,8 +377,9 @@ typedef struct {
 	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1 |                               \
 	 TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP7_OUT */
 #endif			    /* COMP7 */
-#define TIM_TIM20_ETR_ADC3_AWD1 TIM1_AF1_ETRSEL_3 /*!< ADC3 analog watchdog 1  \
-						   */
+#define TIM_TIM20_ETR_ADC3_AWD1                                                \
+	TIM1_AF1_ETRSEL_3 /*!< ADC3 analog watchdog 1                          \
+			   */
 #define TIM_TIM20_ETR_ADC3_AWD2                                                \
 	(TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_0) /*!< ADC3 analog watchdog 2 */
 #define TIM_TIM20_ETR_ADC3_AWD3                                                \
@@ -462,8 +465,9 @@ typedef struct {
 /** @defgroup TIMEx_Timer_Input_Selection TIM Extended Timer input selection
  * @{
  */
-#define TIM_TIM1_TI1_GPIO 0x00000000U /*!< TIM1 input 1 is connected to GPIO   \
-				       */
+#define TIM_TIM1_TI1_GPIO                                                      \
+	0x00000000U /*!< TIM1 input 1 is connected to GPIO                     \
+		     */
 #define TIM_TIM1_TI1_COMP1                                                     \
 	TIM_TISEL_TI1SEL_0 /*!< TIM1 input 1 is connected to COMP1_OUT */
 #define TIM_TIM1_TI1_COMP2                                                     \
@@ -474,8 +478,9 @@ typedef struct {
 #define TIM_TIM1_TI1_COMP4                                                     \
 	TIM_TISEL_TI1SEL_2 /*!< TIM1 input 1 is connected to COMP4_OUT */
 
-#define TIM_TIM2_TI1_GPIO 0x00000000U /*!< TIM2 input 1 is connected to GPIO   \
-				       */
+#define TIM_TIM2_TI1_GPIO                                                      \
+	0x00000000U /*!< TIM2 input 1 is connected to GPIO                     \
+		     */
 #define TIM_TIM2_TI1_COMP1                                                     \
 	TIM_TISEL_TI1SEL_0 /*!< TIM2 input 1 is connected to COMP1_OUT */
 #define TIM_TIM2_TI1_COMP2                                                     \
@@ -491,8 +496,9 @@ typedef struct {
 	 TIM_TISEL_TI1SEL_0) /*!< TIM2 input 1 is connected to COMP5_OUT */
 #endif			     /* COMP5 */
 
-#define TIM_TIM2_TI2_GPIO 0x00000000U /*!< TIM2 input 2 is connected to GPIO   \
-				       */
+#define TIM_TIM2_TI2_GPIO                                                      \
+	0x00000000U /*!< TIM2 input 2 is connected to GPIO                     \
+		     */
 #define TIM_TIM2_TI2_COMP1                                                     \
 	TIM_TISEL_TI2SEL_0 /*!< TIM2 input 2 is connected to COMP1_OUT */
 #define TIM_TIM2_TI2_COMP2                                                     \
@@ -508,20 +514,23 @@ typedef struct {
 	 TIM_TISEL_TI2SEL_0) /*!< TIM2 input 2 is connected to COMP6_OUT */
 #endif			     /* COMP6 */
 
-#define TIM_TIM2_TI3_GPIO 0x00000000U /*!< TIM2 input 3 is connected to GPIO   \
-				       */
+#define TIM_TIM2_TI3_GPIO                                                      \
+	0x00000000U /*!< TIM2 input 3 is connected to GPIO                     \
+		     */
 #define TIM_TIM2_TI3_COMP4                                                     \
 	TIM_TISEL_TI3SEL_0 /*!< TIM2 input 3 is connected to COMP4_OUT */
 
-#define TIM_TIM2_TI4_GPIO 0x00000000U /*!< TIM2 input 4 is connected to GPIO   \
-				       */
+#define TIM_TIM2_TI4_GPIO                                                      \
+	0x00000000U /*!< TIM2 input 4 is connected to GPIO                     \
+		     */
 #define TIM_TIM2_TI4_COMP1                                                     \
 	TIM_TISEL_TI4SEL_0 /*!< TIM2 input 4 is connected to COMP1_OUT */
 #define TIM_TIM2_TI4_COMP2                                                     \
 	TIM_TISEL_TI4SEL_1 /*!< TIM2 input 4 is connected to COMP2_OUT */
 
-#define TIM_TIM3_TI1_GPIO 0x00000000U /*!< TIM3 input 1 is connected to GPIO   \
-				       */
+#define TIM_TIM3_TI1_GPIO                                                      \
+	0x00000000U /*!< TIM3 input 1 is connected to GPIO                     \
+		     */
 #define TIM_TIM3_TI1_COMP1                                                     \
 	TIM_TISEL_TI1SEL_0 /*!< TIM3 input 1 is connected to COMP1_OUT */
 #define TIM_TIM3_TI1_COMP2                                                     \
@@ -547,8 +556,9 @@ typedef struct {
 	 TIM_TISEL_TI1SEL_0) /*!< TIM3 input 1 is connected to COMP7_OUT */
 #endif			     /* COMP7 */
 
-#define TIM_TIM3_TI2_GPIO 0x00000000U /*!< TIM3 input 2 is connected to GPIO   \
-				       */
+#define TIM_TIM3_TI2_GPIO                                                      \
+	0x00000000U /*!< TIM3 input 2 is connected to GPIO                     \
+		     */
 #define TIM_TIM3_TI2_COMP1                                                     \
 	TIM_TISEL_TI2SEL_0 /*!< TIM3 input 2 is connected to COMP1_OUT */
 #define TIM_TIM3_TI2_COMP2                                                     \
@@ -574,13 +584,15 @@ typedef struct {
 	 TIM_TISEL_TI2SEL_0) /*!< TIM3 input 2 is connected to COMP7_OUT */
 #endif			     /* COMP7 */
 
-#define TIM_TIM3_TI3_GPIO 0x00000000U /*!< TIM3 input 3 is connected to GPIO   \
-				       */
+#define TIM_TIM3_TI3_GPIO                                                      \
+	0x00000000U /*!< TIM3 input 3 is connected to GPIO                     \
+		     */
 #define TIM_TIM3_TI3_COMP3                                                     \
 	TIM_TISEL_TI3SEL_0 /*!< TIM3 input 3 is connected to COMP3_OUT */
 
-#define TIM_TIM4_TI1_GPIO 0x00000000U /*!< TIM4 input 1 is connected to GPIO   \
-				       */
+#define TIM_TIM4_TI1_GPIO                                                      \
+	0x00000000U /*!< TIM4 input 1 is connected to GPIO                     \
+		     */
 #define TIM_TIM4_TI1_COMP1                                                     \
 	TIM_TISEL_TI1SEL_0 /*!< TIM4 input 1 is connected to COMP1_OUT */
 #define TIM_TIM4_TI1_COMP2                                                     \
@@ -606,8 +618,9 @@ typedef struct {
 	 TIM_TISEL_TI1SEL_0) /*!< TIM4 input 1 is connected to COMP7_OUT */
 #endif			     /* COMP7 */
 
-#define TIM_TIM4_TI2_GPIO 0x00000000U /*!< TIM4 input 2 is connected to GPIO   \
-				       */
+#define TIM_TIM4_TI2_GPIO                                                      \
+	0x00000000U /*!< TIM4 input 2 is connected to GPIO                     \
+		     */
 #define TIM_TIM4_TI2_COMP1                                                     \
 	TIM_TISEL_TI2SEL_0 /*!< TIM4 input 2 is connected to COMP1_OUT */
 #define TIM_TIM4_TI2_COMP2                                                     \
@@ -633,23 +646,26 @@ typedef struct {
 	 TIM_TISEL_TI2SEL_0) /*!< TIM4 input 2 is connected to COMP7_OUT */
 #endif			     /* COMP7 */
 
-#define TIM_TIM4_TI3_GPIO 0x00000000U /*!< TIM4 input 3 is connected to GPIO   \
-				       */
+#define TIM_TIM4_TI3_GPIO                                                      \
+	0x00000000U /*!< TIM4 input 3 is connected to GPIO                     \
+		     */
 #if defined(COMP5)
 #define TIM_TIM4_TI3_COMP5                                                     \
 	TIM_TISEL_TI3SEL_0 /*!< TIM4 input 3 is connected to COMP5_OUT */
 #endif			   /* COMP5 */
 
-#define TIM_TIM4_TI4_GPIO 0x00000000U /*!< TIM4 input 4 is connected to GPIO   \
-				       */
+#define TIM_TIM4_TI4_GPIO                                                      \
+	0x00000000U /*!< TIM4 input 4 is connected to GPIO                     \
+		     */
 #if defined(COMP6)
 #define TIM_TIM4_TI4_COMP6                                                     \
 	TIM_TISEL_TI4SEL_0 /*!< TIM4 input 4 is connected to COMP6_OUT */
 #endif			   /* COMP6 */
 
 #if defined(TIM5)
-#define TIM_TIM5_TI1_GPIO 0x00000000U /*!< TIM5 input 1 is connected to GPIO   \
-				       */
+#define TIM_TIM5_TI1_GPIO                                                      \
+	0x00000000U /*!< TIM5 input 1 is connected to GPIO                     \
+		     */
 #define TIM_TIM5_TI1_LSI                                                       \
 	TIM_TISEL_TI1SEL_0 /*!< TIM5 input 1 is connected to LSI */
 #define TIM_TIM5_TI1_LSE                                                       \
@@ -683,8 +699,9 @@ typedef struct {
 	 TIM_TISEL_TI1SEL_1) /*!< TIM5 input 1 is connected to COMP7_OUT */
 #endif			     /* COMP7 */
 
-#define TIM_TIM5_TI2_GPIO 0x00000000U /*!< TIM5 input 2 is connected to GPIO   \
-				       */
+#define TIM_TIM5_TI2_GPIO                                                      \
+	0x00000000U /*!< TIM5 input 2 is connected to GPIO                     \
+		     */
 #define TIM_TIM5_TI2_COMP1                                                     \
 	TIM_TISEL_TI2SEL_0 /*!< TIM5 input 2 is connected to COMP1_OUT */
 #define TIM_TIM5_TI2_COMP2                                                     \
@@ -711,8 +728,9 @@ typedef struct {
 #endif			     /* COMP7 */
 #endif			     /* TIM5 */
 
-#define TIM_TIM8_TI1_GPIO 0x00000000U /*!< TIM8 input 1 is connected to GPIO   \
-				       */
+#define TIM_TIM8_TI1_GPIO                                                      \
+	0x00000000U /*!< TIM8 input 1 is connected to GPIO                     \
+		     */
 #define TIM_TIM8_TI1_COMP1                                                     \
 	TIM_TISEL_TI1SEL_0 /*!< TIM8 input 1 is connected to COMP1_OUT */
 #define TIM_TIM8_TI1_COMP2                                                     \

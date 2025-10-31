@@ -114,8 +114,9 @@
 /** @defgroup EXTI_Private_Constants EXTI Private Constants
  * @{
  */
-#define EXTI_MODE_OFFSET 0x08U /* 0x20: offset between MCU IMR/EMR registers   \
-				*/
+#define EXTI_MODE_OFFSET                                                       \
+	0x08U /* 0x20: offset between MCU IMR/EMR registers                    \
+	       */
 #define EXTI_CONFIG_OFFSET                                                     \
 	0x08U /* 0x20: offset between MCU Rising/Falling configuration         \
 		 registers */

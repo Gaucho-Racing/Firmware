@@ -461,7 +461,7 @@ int32_t main(void)
 	/* ----------------------------------------------------------------------
 	** Loop here if the signal does not match the reference output.
 	** -------------------------------------------------------------------
-       */
+	*/
 
 	if (status != ARM_MATH_SUCCESS) {
 		while (1)

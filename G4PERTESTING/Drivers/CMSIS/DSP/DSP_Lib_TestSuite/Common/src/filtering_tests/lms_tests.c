@@ -41,7 +41,7 @@ static const q15_t mu_q15 = 0x7fff;
 			}                                                      \
                                                                                \
 			for (i = 0; i < blockSize; i++) {                      \
-				/* scaled down so that lms will converge */                                                                            \
+				/* scaled down so that lms will converge */    \
 				/* scaled down by almost the max of the        \
 				 * abs(input) */                               \
 				*((output_type *)filtering_input_lms + i) =    \
@@ -134,7 +134,7 @@ static const q15_t mu_q15 = 0x7fff;
 			    for (i = 0; i < blockSize; i++) {                  \
 				    /* scaled down so that lms will converge   \
 				     */                                        \
-				    /* scaled down by log2(numTaps) bits */                                                                            \
+				    /* scaled down by log2(numTaps) bits */    \
 				    *((output_type *)                          \
 					  filtering_output_f32_fut +           \
 				      i) = *((output_type *)                   \

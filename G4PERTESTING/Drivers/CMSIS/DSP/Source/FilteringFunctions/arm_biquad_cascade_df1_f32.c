@@ -235,7 +235,7 @@ void arm_biquad_cascade_df1_f32(const arm_biquad_casd_df1_inst_f32 *S,
 		/* First part of the processing with loop unrolling.  Compute 4
 		 *outputs at a time.
 		 ** a second loop below computes the remaining 1 to 3 samples.
-		*/
+		 */
 		sample = blockSize >> 2U;
 
 		while (sample > 0U) {

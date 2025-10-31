@@ -777,7 +777,7 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *hdma)
 		}
 	}
 	/* Transfer Complete Interrupt management
-	   ***********************************/
+	 ***********************************/
 	else if ((0U != (flag_it & ((uint32_t)DMA_FLAG_TC1
 				    << (hdma->ChannelIndex & 0x1FU)))) &&
 		 (0U != (source_it & DMA_IT_TC))) {
@@ -801,7 +801,7 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *hdma)
 		}
 	}
 	/* Transfer Error Interrupt management
-	   **************************************/
+	 **************************************/
 	else if ((0U != (flag_it & ((uint32_t)DMA_FLAG_TE1
 				    << (hdma->ChannelIndex & 0x1FU)))) &&
 		 (0U != (source_it & DMA_IT_TE))) {

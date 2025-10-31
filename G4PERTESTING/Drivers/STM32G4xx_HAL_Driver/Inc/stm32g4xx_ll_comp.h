@@ -205,15 +205,18 @@ typedef struct {
 /** @defgroup COMP_LL_EC_INPUT_HYSTERESIS Comparator input - Hysteresis
  * @{
  */
-#define LL_COMP_HYSTERESIS_NONE (0x00000000UL)	  /*!< No hysteresis */
-#define LL_COMP_HYSTERESIS_10MV (COMP_CSR_HYST_0) /*!< Hysteresis level 10mV   \
-						   */
-#define LL_COMP_HYSTERESIS_20MV (COMP_CSR_HYST_1) /*!< Hysteresis level 20mV   \
-						   */
+#define LL_COMP_HYSTERESIS_NONE (0x00000000UL) /*!< No hysteresis */
+#define LL_COMP_HYSTERESIS_10MV                                                \
+	(COMP_CSR_HYST_0) /*!< Hysteresis level 10mV                           \
+			   */
+#define LL_COMP_HYSTERESIS_20MV                                                \
+	(COMP_CSR_HYST_1) /*!< Hysteresis level 20mV                           \
+			   */
 #define LL_COMP_HYSTERESIS_30MV                                                \
-	(COMP_CSR_HYST_1 | COMP_CSR_HYST_0)	  /*!< Hysteresis level 30mV */
-#define LL_COMP_HYSTERESIS_40MV (COMP_CSR_HYST_2) /*!< Hysteresis level 40mV   \
-						   */
+	(COMP_CSR_HYST_1 | COMP_CSR_HYST_0) /*!< Hysteresis level 30mV */
+#define LL_COMP_HYSTERESIS_40MV                                                \
+	(COMP_CSR_HYST_2) /*!< Hysteresis level 40mV                           \
+			   */
 #define LL_COMP_HYSTERESIS_50MV                                                \
 	(COMP_CSR_HYST_2 | COMP_CSR_HYST_0) /*!< Hysteresis level 50mV */
 #define LL_COMP_HYSTERESIS_60MV                                                \

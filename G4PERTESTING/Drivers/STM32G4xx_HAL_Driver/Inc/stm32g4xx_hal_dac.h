@@ -490,7 +490,7 @@ typedef void (*pDAC_CallbackTypeDef)(DAC_HandleTypeDef *hdac);
 		  (via internal paths) and to an external pin. */
 #define DAC_CHIPCONNECT_BOTH                                                   \
 	(1UL << 2) /*!< DAC channel  output is connected to on-chip            \
-		      peripherals (via internal paths) and to an external pin.                                       \
+		      peripherals (via internal paths) and to an external pin. \
 			Note: this connection is not available in mode normal  \
 			      with buffer disabled. */
 /**

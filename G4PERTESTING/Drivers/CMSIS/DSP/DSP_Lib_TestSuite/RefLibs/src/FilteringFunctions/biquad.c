@@ -304,10 +304,9 @@ void ref_biquad_cascade_df1_f32(const arm_biquad_casd_df1_inst_f32 *S,
 void ref_biquad_cas_df1_32x64_q31(const arm_biquad_cas_df1_32x64_ins_q31 *S,
 				  q31_t *pSrc, q31_t *pDst, uint32_t blockSize)
 {
-	q31_t *pIn = pSrc;  /*  input pointer initialization  */
-	q31_t *pOut = pDst; /*  output pointer initialization */
-	q63_t *pState =
-	    S->pState; /*  state pointer initialization */
+	q31_t *pIn = pSrc;	   /*  input pointer initialization  */
+	q31_t *pOut = pDst;	   /*  output pointer initialization */
+	q63_t *pState = S->pState; /*  state pointer initialization */
 	const q31_t *pCoeffs =
 	    S->pCoeffs;		  /*  coeff pointer initialization	   */
 	q63_t acc;		  /*  accumulator                   			*/
@@ -576,15 +575,13 @@ void ref_biquad_cascade_df1_fast_q15(const arm_biquad_casd_df1_inst_q15 *S,
 {
 	q15_t *pIn = pSrc;  /*  Source pointer                           */
 	q15_t *pOut = pDst; /*  Destination pointer                      */
-	q15_t b0, b1, b2, a1,
-	    a2; /*  Filter coefficients */
-	q15_t Xn1, Xn2, Yn1,
-	    Yn2;   /*  Filter state variables   */
-	q15_t Xn;  /*  temporary input  */
+	q15_t b0, b1, b2, a1, a2; /*  Filter coefficients */
+	q15_t Xn1, Xn2, Yn1, Yn2; /*  Filter state variables   */
+	q15_t Xn;		  /*  temporary input  */
 	q31_t acc; /*  Accumulator                              */
 	int32_t shift = (15 - (int32_t)S->postShift); /*  Post shift */
 	q15_t *pState = S->pState;		      /*  State pointer		    */
-	const q15_t *pCoeffs = S->pCoeffs;	      /*  Coefficient pointer	    */
+	const q15_t *pCoeffs = S->pCoeffs; /*  Coefficient pointer	    */
 	uint32_t sample,
 	    stage = (uint32_t)S->numStages; /*  Stage loop counter */
 
@@ -655,15 +652,13 @@ void ref_biquad_cascade_df1_q15(const arm_biquad_casd_df1_inst_q15 *S,
 {
 	q15_t *pIn = pSrc;  /*  Source pointer                           */
 	q15_t *pOut = pDst; /*  Destination pointer                      */
-	q15_t b0, b1, b2, a1,
-	    a2; /*  Filter coefficients */
-	q15_t Xn1, Xn2, Yn1,
-	    Yn2;   /*  Filter state variables   */
-	q15_t Xn;  /*  temporary input  */
+	q15_t b0, b1, b2, a1, a2; /*  Filter coefficients */
+	q15_t Xn1, Xn2, Yn1, Yn2; /*  Filter state variables   */
+	q15_t Xn;		  /*  temporary input  */
 	q63_t acc; /*  Accumulator                              */
 	int32_t shift = (15 - (int32_t)S->postShift); /*  Post shift */
 	q15_t *pState = S->pState;		      /*  State pointer		    */
-	const q15_t *pCoeffs = S->pCoeffs;	      /*  Coefficient pointer	    */
+	const q15_t *pCoeffs = S->pCoeffs; /*  Coefficient pointer	    */
 	uint32_t sample,
 	    stage = (uint32_t)S->numStages; /*  Stage loop counter */
 

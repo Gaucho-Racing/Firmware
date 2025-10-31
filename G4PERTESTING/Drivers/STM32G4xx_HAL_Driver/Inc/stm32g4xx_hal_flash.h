@@ -79,9 +79,10 @@ typedef struct {
 				    OPTIONBYTE_WRP).   This parameter must be a
 				    value between WRPStartOffset and (max number
 				    of pages in the bank - 1) */
-	uint32_t RDPLevel;	 /*!< Set the read protection level.. (used for
-				    OPTIONBYTE_RDP).       This parameter can be a value of
-				    @ref FLASH_OB_Read_Protection */
+	uint32_t
+	    RDPLevel;	     /*!< Set the read protection level.. (used for
+				OPTIONBYTE_RDP).       This parameter can be a value of
+				@ref FLASH_OB_Read_Protection */
 	uint32_t USERType;   /*!< User option byte(s) to be configured (used for
 				OPTIONBYTE_USER).   This parameter can be a
 				combination of @ref FLASH_OB_USER_Type */
@@ -100,7 +101,8 @@ typedef struct {
 				FLASH_OB_USER_SRAM_PE,
 				  @ref FLASH_OB_USER_CCMSRAM_RST
 				  @note (*) availability depends on devices */
-	uint32_t PCROPConfig;	 /*!< Configuration of the PCROP (used for
+	uint32_t
+	    PCROPConfig;	 /*!< Configuration of the PCROP (used for
 				    OPTIONBYTE_PCROP).    This parameter must be a
 				    combination of @ref FLASH_Banks (except
 				    FLASH_BANK_BOTH)    and @ref FLASH_OB_PCROP_RDP */
@@ -239,11 +241,11 @@ typedef struct {
 	0x00U /*!< Program a double-word (64-bit) at a specified address.*/
 #define FLASH_TYPEPROGRAM_FAST                                                 \
 	0x01U /*!< Fast program a 32 row double-word (64-bit) at a specified   \
-		 address. And another 32 row double-word (64-bit) will be                               \
+		 address. And another 32 row double-word (64-bit) will be      \
 		 programmed */
 #define FLASH_TYPEPROGRAM_FAST_AND_LAST                                        \
 	0x02U /*!< Fast program a 32 row double-word (64-bit) at a specified   \
-		 address. And this is the last 32 row double-word (64-bit)                              \
+		 address. And this is the last 32 row double-word (64-bit)     \
 		 programmed */
 /**
  * @}
@@ -257,8 +259,9 @@ typedef struct {
 #define OPTIONBYTE_USER 0x04U	   /*!< USER option byte configuration */
 #define OPTIONBYTE_PCROP 0x08U	   /*!< PCROP option byte configuration */
 #define OPTIONBYTE_BOOT_LOCK 0x10U /*!< Boot lock option byte configuration */
-#define OPTIONBYTE_SEC 0x20U /*!< Securable memory option byte configuration   \
-			      */
+#define OPTIONBYTE_SEC                                                         \
+	0x20U /*!< Securable memory option byte configuration                  \
+	       */
 /**
  * @}
  */
@@ -326,8 +329,9 @@ typedef struct {
 #define OB_USER_SRAM_PE                                                        \
 	0x00000400U /*!< SRAM parity check enable (first 32kB of SRAM1 + CCM   \
 		       SRAM) */
-#define OB_USER_CCMSRAM_RST 0x00000800U /*!< CCMSRAM Erase when system reset   \
-					 */
+#define OB_USER_CCMSRAM_RST                                                    \
+	0x00000800U /*!< CCMSRAM Erase when system reset                       \
+		     */
 #define OB_USER_nRST_SHDW                                                      \
 	0x00001000U /*!< Reset generated when entering the shutdown mode */
 #define OB_USER_nSWBOOT0 0x00002000U  /*!< Software BOOT0 */
@@ -563,7 +567,7 @@ typedef struct {
 			 is decreased from Level 1 to Level 0 */
 #define OB_PCROP_RDP_ERASE                                                     \
 	FLASH_PCROP1ER_PCROP_RDP /*!< PCROP area is erased when the RDP level  \
-				    is decreased from Level 1 to Level 0 (full                                       \
+				    is decreased from Level 1 to Level 0 (full \
 				    mass erase) */
 /**
  * @}
@@ -583,10 +587,12 @@ typedef struct {
 #define FLASH_LATENCY_8 FLASH_ACR_LATENCY_8WS	/*!< FLASH Eight wait states */
 #define FLASH_LATENCY_9 FLASH_ACR_LATENCY_9WS	/*!< FLASH Nine wait states */
 #define FLASH_LATENCY_10 FLASH_ACR_LATENCY_10WS /*!< FLASH Ten wait state */
-#define FLASH_LATENCY_11 FLASH_ACR_LATENCY_11WS /*!< FLASH Eleven wait state   \
-						 */
-#define FLASH_LATENCY_12 FLASH_ACR_LATENCY_12WS /*!< FLASH Twelve wait states  \
-						 */
+#define FLASH_LATENCY_11                                                       \
+	FLASH_ACR_LATENCY_11WS /*!< FLASH Eleven wait state                    \
+				*/
+#define FLASH_LATENCY_12                                                       \
+	FLASH_ACR_LATENCY_12WS /*!< FLASH Twelve wait states                   \
+				*/
 #define FLASH_LATENCY_13                                                       \
 	FLASH_ACR_LATENCY_13WS /*!< FLASH Thirteen wait states */
 #define FLASH_LATENCY_14                                                       \
@@ -621,10 +627,11 @@ typedef struct {
 /** @defgroup FLASH_Flags FLASH Flags Definition
  * @{
  */
-#define FLASH_FLAG_EOP FLASH_SR_EOP	    /*!< FLASH End of operation flag */
-#define FLASH_FLAG_OPERR FLASH_SR_OPERR	    /*!< FLASH Operation error flag */
-#define FLASH_FLAG_PROGERR FLASH_SR_PROGERR /*!< FLASH Programming error flag  \
-					     */
+#define FLASH_FLAG_EOP FLASH_SR_EOP	/*!< FLASH End of operation flag */
+#define FLASH_FLAG_OPERR FLASH_SR_OPERR /*!< FLASH Operation error flag */
+#define FLASH_FLAG_PROGERR                                                     \
+	FLASH_SR_PROGERR /*!< FLASH Programming error flag                     \
+			  */
 #define FLASH_FLAG_WRPERR                                                      \
 	FLASH_SR_WRPERR /*!< FLASH Write protection error flag */
 #define FLASH_FLAG_PGAERR                                                      \
@@ -676,9 +683,10 @@ typedef struct {
  */
 #define FLASH_IT_EOP                                                           \
 	FLASH_CR_EOPIE /*!< End of FLASH Operation Interrupt source */
-#define FLASH_IT_OPERR FLASH_CR_ERRIE	/*!< Error Interrupt source */
-#define FLASH_IT_RDERR FLASH_CR_RDERRIE /*!< PCROP Read Error Interrupt        \
-					   source*/
+#define FLASH_IT_OPERR FLASH_CR_ERRIE /*!< Error Interrupt source */
+#define FLASH_IT_RDERR                                                         \
+	FLASH_CR_RDERRIE /*!< PCROP Read Error Interrupt                       \
+			    source*/
 #define FLASH_IT_ECCC                                                          \
 	(FLASH_ECCR_ECCIE >> 24U) /*!< ECC Correction Interrupt source */
 /**

@@ -136,7 +136,7 @@ static uint32_t Sect_Normal; // outer & inner wb/wa, non-shareable, executable,
 			     // rw, domain 0, base addr 0
 static uint32_t Sect_Normal_Cod; // outer & inner wb/wa, non-shareable,
 				 // executable, ro, domain 0, base addr 0
-static uint32_t Sect_Normal_RO; // as Sect_Normal_Cod, but not executable
+static uint32_t Sect_Normal_RO;	 // as Sect_Normal_Cod, but not executable
 static uint32_t
     Sect_Normal_RW; // as Sect_Normal_Cod, but writeable and not executable
 static uint32_t Sect_Device_RO; // device, non-shareable, non-executable, ro,

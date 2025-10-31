@@ -144,7 +144,7 @@ typedef enum {
 	    0x00U, /*!< Peripheral not yet initialized or disabled  */
 	HAL_LPTIM_STATE_READY =
 	    0x01U, /*!< Peripheral Initialized and ready for use    */
-	HAL_LPTIM_STATE_BUSY = 0x02U,	 /*!< An internal process is ongoing    */
+	HAL_LPTIM_STATE_BUSY = 0x02U, /*!< An internal process is ongoing    */
 	HAL_LPTIM_STATE_TIMEOUT = 0x03U, /*!< Timeout state */
 	HAL_LPTIM_STATE_ERROR = 0x04U	 /*!< Internal Process is ongoing    */
 } HAL_LPTIM_StateTypeDef;

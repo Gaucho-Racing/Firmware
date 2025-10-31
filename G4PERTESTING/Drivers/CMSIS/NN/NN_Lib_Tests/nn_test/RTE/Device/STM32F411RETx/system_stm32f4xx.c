@@ -774,7 +774,7 @@ void SystemInit_ExtMemCtl(void)
 
 #endif /* DATA_IN_ExtSRAM */
 #endif /* STM32F405xx || STM32F415xx || STM32F407xx || STM32F417xx ||          \
-	  STM32F427xx || STM32F437xx || STM32F429xx || STM32F439xx ||                                                 \
+	  STM32F427xx || STM32F437xx || STM32F429xx || STM32F439xx ||          \
 	  STM32F469xx || STM32F479xx || STM32F412Zx || STM32F412Vx  */
 	(void)(tmp);
 }

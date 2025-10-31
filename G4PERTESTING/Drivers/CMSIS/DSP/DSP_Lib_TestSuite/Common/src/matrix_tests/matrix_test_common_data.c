@@ -7,9 +7,9 @@
 /*--------------------------------------------------------------------------------*/
 
 MATRIX_TEST_BIGGEST_INPUT_TYPE
-    matrix_output_fut_data[2 * MATRIX_TEST_MAX_ELTS] = {0};
+matrix_output_fut_data[2 * MATRIX_TEST_MAX_ELTS] = {0};
 MATRIX_TEST_BIGGEST_INPUT_TYPE
-    matrix_output_ref_data[2 * MATRIX_TEST_MAX_ELTS] = {0};
+matrix_output_ref_data[2 * MATRIX_TEST_MAX_ELTS] = {0};
 MATRIX_TEST_BIGGEST_INPUT_TYPE matrix_output_scratch[MATRIX_TEST_MAX_ELTS] = {
     0};
 

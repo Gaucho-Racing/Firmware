@@ -189,7 +189,7 @@ int32_t main(void)
 	** Loop here if the signals fail the PASS check.
 	** This denotes a test failure
 	** -------------------------------------------------------------------
-       */
+	*/
 	if (status != ARM_MATH_SUCCESS) {
 		while (1)
 			;

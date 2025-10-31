@@ -137,12 +137,13 @@ typedef struct {
  * @brief  SMARTCARD advanced features initialization structure definition
  */
 typedef struct {
-	uint32_t AdvFeatureInit; /*!< Specifies which advanced SMARTCARD
-				    features is initialized. Several advanced
-				    features may be initialized at the same
-				    time. This parameter can be a value of @ref
-				    SMARTCARDEx_Advanced_Features_Initialization_Type
-				  */
+	uint32_t
+	    AdvFeatureInit; /*!< Specifies which advanced SMARTCARD
+			       features is initialized. Several advanced
+			       features may be initialized at the same
+			       time. This parameter can be a value of @ref
+			       SMARTCARDEx_Advanced_Features_Initialization_Type
+			     */
 
 	uint32_t TxPinLevelInvert; /*!< Specifies whether the TX pin active
 				      level is inverted. This parameter can be a
@@ -451,8 +452,9 @@ typedef enum {
 /** @defgroup SMARTCARD_Parity SMARTCARD Parity
  * @{
  */
-#define SMARTCARD_PARITY_EVEN USART_CR1_PCE /*!< SMARTCARD frame even parity   \
-					     */
+#define SMARTCARD_PARITY_EVEN                                                  \
+	USART_CR1_PCE /*!< SMARTCARD frame even parity                         \
+		       */
 #define SMARTCARD_PARITY_ODD                                                   \
 	(USART_CR1_PCE | USART_CR1_PS) /*!< SMARTCARD frame odd parity  */
 /**
@@ -473,8 +475,9 @@ typedef enum {
 /** @defgroup SMARTCARD_Clock_Polarity SMARTCARD Clock Polarity
  * @{
  */
-#define SMARTCARD_POLARITY_LOW 0x00000000U /*!< SMARTCARD frame low polarity   \
-					    */
+#define SMARTCARD_POLARITY_LOW                                                 \
+	0x00000000U /*!< SMARTCARD frame low polarity                          \
+		     */
 #define SMARTCARD_POLARITY_HIGH                                                \
 	USART_CR2_CPOL /*!< SMARTCARD frame high polarity */
 /**

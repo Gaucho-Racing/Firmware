@@ -342,8 +342,9 @@ typedef struct {
 	RCC_PLLCFGR_PLLPEN /*!< PLLADCCLK selection from main PLL */
 #define RCC_PLL_48M1CLK                                                        \
 	RCC_PLLCFGR_PLLQEN /*!< PLL48M1CLK selection from main PLL */
-#define RCC_PLL_SYSCLK RCC_PLLCFGR_PLLREN /*!< PLLCLK selection from main PLL  \
-					   */
+#define RCC_PLL_SYSCLK                                                         \
+	RCC_PLLCFGR_PLLREN /*!< PLLCLK selection from main PLL                 \
+			    */
 /**
  * @}
  */

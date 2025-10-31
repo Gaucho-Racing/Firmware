@@ -117,7 +117,7 @@ arm_status arm_conv_partial_opt_q7(const q7_t *pSrcA, uint32_t srcALen,
 		/* First part of the processing with loop unrolling copies 4
 		 *data points at a time.
 		 ** a second loop below copies for the remaining 1 to 3 samples.
-		*/
+		 */
 		while (k > 0U) {
 			/* copy second buffer in reversal manner */
 			x4 = (q15_t)*px--;
@@ -164,7 +164,7 @@ arm_status arm_conv_partial_opt_q7(const q7_t *pSrcA, uint32_t srcALen,
 		/* First part of the processing with loop unrolling copies 4
 		 *data points at a time.
 		 ** a second loop below copies for the remaining 1 to 3 samples.
-		*/
+		 */
 		while (k > 0U) {
 			/* copy second buffer in reversal manner */
 			x4 = (q15_t)*pIn1++;

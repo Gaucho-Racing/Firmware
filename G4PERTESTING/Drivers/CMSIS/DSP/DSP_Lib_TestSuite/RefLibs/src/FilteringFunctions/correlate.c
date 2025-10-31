@@ -9,8 +9,7 @@ void ref_correlate_f32(float32_t *pSrcA, uint32_t srcALen, float32_t *pSrcB,
 	float32_t sum;		    /* Accumulator 				*/
 	uint32_t i = 0U, j;	    /* loop counters 			*/
 	uint32_t inv = 0U;	    /* Reverse order flag 	*/
-	uint32_t tot =
-	    0U; /* Length */
+	uint32_t tot = 0U;	    /* Length */
 
 	/* The algorithm implementation is based on the lengths of the inputs.
 	 * srcB is always made to slide across srcA.

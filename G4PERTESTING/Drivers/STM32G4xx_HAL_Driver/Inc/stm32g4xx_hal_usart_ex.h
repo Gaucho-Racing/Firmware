@@ -67,8 +67,9 @@ extern "C" {
  * @brief    USART SLAVE mode
  * @{
  */
-#define USART_SLAVEMODE_DISABLE 0x00000000U /*!< USART SPI Slave Mode Enable   \
-					     */
+#define USART_SLAVEMODE_DISABLE                                                \
+	0x00000000U /*!< USART SPI Slave Mode Enable                           \
+		     */
 #define USART_SLAVEMODE_ENABLE                                                 \
 	USART_CR2_SLVEN /*!< USART SPI Slave Mode Disable */
 /**

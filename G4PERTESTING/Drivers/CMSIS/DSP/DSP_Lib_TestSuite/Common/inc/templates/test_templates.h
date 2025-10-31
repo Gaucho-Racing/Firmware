@@ -327,17 +327,21 @@
 /**
  *  Test template that uses a single element.
  */
-#define TEST_TEMPLATE_ELT1(arr_desc_elts, elt_type, output_type, fut,                                                                                               \
-			   fut_arg_interface, ref, ref_arg_interface,                                                                                               \
-			   compare_interface)                                                                                                                       \
-	do {                                                                                                                                                        \
-		TEMPLATE_DO_ARR_DESC(                                                                                                                               \
-		    elt_idx, elt_type, elt, arr_desc_elts,                                                                                                          \
-		    TEST_CALL_FUT_AND_REF(                                                                                                                          \
-			fut,                                                                                                                                        \
-			fut_arg_interface(elt), ref, ref_arg_interface(elt)); /* Comparison interfaces typically accept */ /* a block_size. Pass a dummy value 1.*/ \
-		    compare_interface(1, output_type));                                                                                                             \
-		return JTEST_TEST_PASSED;                                                                                                                           \
+#define TEST_TEMPLATE_ELT1(arr_desc_elts, elt_type, output_type, fut,           \
+			   fut_arg_interface, ref, ref_arg_interface,           \
+			   compare_interface)                                   \
+	do {                                                                    \
+		TEMPLATE_DO_ARR_DESC(                                           \
+		    elt_idx, elt_type, elt, arr_desc_elts,                      \
+		    TEST_CALL_FUT_AND_REF(fut, fut_arg_interface(elt), ref,     \
+					  ref_arg_interface(elt));              \
+		    /* Comparison interfaces typically accept */ /* a           \
+								    block_size. \
+								    Pass a      \
+								    dummy       \
+								    value 1.*/  \
+		    compare_interface(1, output_type));                         \
+		return JTEST_TEST_PASSED;                                       \
 	} while (0)
 
 /**
@@ -345,22 +349,25 @@
  *
  *  The length of the first set determines the number of iteratsions.
  */
-#define TEST_TEMPLATE_ELT2(arr_desc_elts_a, arr_desc_elts_b, elt_a_type,                                                                                         \
-			   elt_b_type, output_type, fut, fut_arg_interface,                                                                                      \
-			   ref, ref_arg_interface, compare_interface)                                                                                            \
-	do {                                                                                                                                                     \
-		TEMPLATE_DO_ARR_DESC(elt_a_idx, elt_a_type, elt_a,                                                                                               \
-				     arr_desc_elts_a,                                                                                                            \
-				     elt_b_type *elt_b =                                                                                                         \
-					 ARR_DESC_ELT(elt_b_type, elt_a_idx,                                                                                     \
-						      arr_desc_elts_b);                                                                                          \
-                                                                                                                                                                 \
-				     TEST_CALL_FUT_AND_REF(                                                                                                      \
-					 fut, fut_arg_interface(elt_a, elt_b),                                                                                   \
-					 ref,                                                                                                                    \
-					 ref_arg_interface(elt_a, elt_b)); /* Comparison interfaces typically accept */ /* a block_size. Pass a dummy value 1.*/ \
-				     compare_interface(1, output_type));                                                                                         \
-		return JTEST_TEST_PASSED;                                                                                                                        \
+#define TEST_TEMPLATE_ELT2(arr_desc_elts_a, arr_desc_elts_b, elt_a_type,        \
+			   elt_b_type, output_type, fut, fut_arg_interface,     \
+			   ref, ref_arg_interface, compare_interface)           \
+	do {                                                                    \
+		TEMPLATE_DO_ARR_DESC(                                           \
+		    elt_a_idx, elt_a_type, elt_a, arr_desc_elts_a,              \
+		    elt_b_type *elt_b =                                         \
+			ARR_DESC_ELT(elt_b_type, elt_a_idx, arr_desc_elts_b);   \
+                                                                                \
+		    TEST_CALL_FUT_AND_REF(                                      \
+			fut, fut_arg_interface(elt_a, elt_b), ref,              \
+			ref_arg_interface(elt_a, elt_b));                       \
+		    /* Comparison interfaces typically accept */ /* a           \
+								    block_size. \
+								    Pass a      \
+								    dummy       \
+								    value 1.*/  \
+		    compare_interface(1, output_type));                         \
+		return JTEST_TEST_PASSED;                                       \
 	} while (0)
 
 /**

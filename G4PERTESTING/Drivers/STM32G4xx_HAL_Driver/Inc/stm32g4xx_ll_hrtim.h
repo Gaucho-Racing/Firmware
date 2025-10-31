@@ -1180,8 +1180,9 @@ static const uint32_t REG_MASK_TAB_CPT[] = {
  * @brief Constants defining whether the registers update is done synchronously
  * with any other timer or master update.
  */
-#define LL_HRTIM_UPDATETRIG_NONE 0x00000000U /*!< Register update is disabled  \
-					      */
+#define LL_HRTIM_UPDATETRIG_NONE                                               \
+	0x00000000U /*!< Register update is disabled                           \
+		     */
 #define LL_HRTIM_UPDATETRIG_MASTER                                             \
 	HRTIM_TIMCR_MSTU /*!< Register update is triggered by the master timer \
 			    update */
@@ -2659,8 +2660,9 @@ static const uint32_t REG_MASK_TAB_CPT[] = {
  * @{
  * @brief Constants defining the polarity of a timer output.
  */
-#define LL_HRTIM_OUT_POSITIVE_POLARITY 0x00000000U /*!< Output is active HIGH  \
-						    */
+#define LL_HRTIM_OUT_POSITIVE_POLARITY                                         \
+	0x00000000U /*!< Output is active HIGH                                 \
+		     */
 #define LL_HRTIM_OUT_NEGATIVE_POLARITY                                         \
 	(HRTIM_OUTR_POL1) /*!< Output is active LOW */
 /**
@@ -2702,8 +2704,9 @@ static const uint32_t REG_MASK_TAB_CPT[] = {
  * @brief Constants defining the half mode of an HRTIM Timer instance.
  */
 #define LL_HRTIM_HALF_MODE_DISABLED 0x000U /*!< HRTIM Half Mode is disabled */
-#define LL_HRTIM_HALF_MODE_ENABLE HRTIM_MCR_HALF /*!< HRTIM Half Mode is Half  \
-						  */
+#define LL_HRTIM_HALF_MODE_ENABLE                                              \
+	HRTIM_MCR_HALF /*!< HRTIM Half Mode is Half                            \
+			*/
 /**
  * @}
  */
@@ -3072,8 +3075,9 @@ state.
  * @{
  * @brief Constants defining the polarity of a fault event.
  */
-#define LL_HRTIM_FLT_POLARITY_LOW 0x00000000U /*!< Fault input is active low   \
-					       */
+#define LL_HRTIM_FLT_POLARITY_LOW                                              \
+	0x00000000U /*!< Fault input is active low                             \
+		     */
 #define LL_HRTIM_FLT_POLARITY_HIGH                                             \
 	(HRTIM_FLTINR1_FLT1P) /*!< Fault input is active high */
 /**

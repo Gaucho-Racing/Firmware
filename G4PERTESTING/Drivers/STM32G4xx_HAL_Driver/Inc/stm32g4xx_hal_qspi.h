@@ -48,8 +48,8 @@ extern "C" {
 typedef struct {
 	uint32_t
 	    ClockPrescaler;	/* Specifies the prescaler factor for generating
-				   clock based on the AHB clock.     This parameter can
-				   be a number between 0 and 255 */
+				   clock based on the AHB clock.     This parameter
+				   can     be a number between 0 and 255 */
 	uint32_t FifoThreshold; /* Specifies the threshold number of bytes in
 				   the FIFO (used only in indirect mode) This
 				   parameter can be a value between 1 and 16 */
@@ -182,12 +182,12 @@ typedef struct {
 			      data phases) This parameter can be a value of @ref
 			      QSPI_DataMode */
 	uint32_t NbData;   /* Specifies the number of data to transfer. (This is
-			      the number of bytes)   This parameter can be any value
-			      between 0 and 0xFFFFFFFF (0 means undefined length
-			      until end of memory)*/
+			      the number of bytes)   This parameter can be any
+			      value   between 0 and 0xFFFFFFFF (0 means undefined
+			      length   until end of memory)*/
 	uint32_t DdrMode;  /* Specifies the double data rate mode for address,
-			      alternate byte and data phase  This parameter can be
-			      a value of @ref QSPI_DdrMode */
+			      alternate byte and data phase  This parameter can
+			      be  a value of @ref QSPI_DdrMode */
 	uint32_t DdrHoldHalfCycle; /* Specifies if the DDR hold is enabled. When
 				      enabled it delays the data output by one
 				      quarter of QUADSPI output clock in DDR
@@ -215,11 +215,11 @@ typedef struct {
 				     received. This parameter can be any value
 				     between 1 and 4 */
 	uint32_t MatchMode;	  /* Specifies the method used for determining a
-				     match.       This parameter can be a value of @ref
-				     QSPI_MatchMode */
+				     match.       This parameter can be a value of
+				     @ref       QSPI_MatchMode */
 	uint32_t AutomaticStop;	  /* Specifies if automatic polling is stopped
-				     after a match.   This parameter can be a value
-				     of @ref QSPI_AutomaticStop */
+				     after a match.   This parameter can be a
+				     value   of @ref QSPI_AutomaticStop */
 } QSPI_AutoPollingTypeDef;
 
 /**
@@ -341,8 +341,9 @@ typedef void (*pQSPI_CallbackTypeDef)(QSPI_HandleTypeDef *hqspi);
 /** @defgroup QSPI_ClockMode QSPI Clock Mode
  * @{
  */
-#define QSPI_CLOCK_MODE_0 0x00000000U /*!<Clk stays low while nCS is           \
-					 released*/
+#define QSPI_CLOCK_MODE_0                                                      \
+	0x00000000U /*!<Clk stays low while nCS is                             \
+		       released*/
 #define QSPI_CLOCK_MODE_3                                                      \
 	((uint32_t)QUADSPI_DCR_CKMODE) /*!<Clk goes high while nCS is          \
 					  released*/
@@ -376,9 +377,10 @@ typedef void (*pQSPI_CallbackTypeDef)(QSPI_HandleTypeDef *hqspi);
 #define QSPI_ADDRESS_16_BITS                                                   \
 	((uint32_t)QUADSPI_CCR_ADSIZE_0) /*!<16-bit address*/
 #define QSPI_ADDRESS_24_BITS                                                   \
-	((uint32_t)QUADSPI_CCR_ADSIZE_1)		    /*!<24-bit address*/
-#define QSPI_ADDRESS_32_BITS ((uint32_t)QUADSPI_CCR_ADSIZE) /*!<32-bit         \
-							       address*/
+	((uint32_t)QUADSPI_CCR_ADSIZE_1) /*!<24-bit address*/
+#define QSPI_ADDRESS_32_BITS                                                   \
+	((uint32_t)QUADSPI_CCR_ADSIZE) /*!<32-bit                              \
+					  address*/
 /**
  * @}
  */
@@ -447,9 +449,10 @@ typedef void (*pQSPI_CallbackTypeDef)(QSPI_HandleTypeDef *hqspi);
 #define QSPI_DATA_1_LINE                                                       \
 	((uint32_t)QUADSPI_CCR_DMODE_0) /*!<Data on a single line*/
 #define QSPI_DATA_2_LINES                                                      \
-	((uint32_t)QUADSPI_CCR_DMODE_1)			/*!<Data on two lines*/
-#define QSPI_DATA_4_LINES ((uint32_t)QUADSPI_CCR_DMODE) /*!<Data on four       \
-							   lines*/
+	((uint32_t)QUADSPI_CCR_DMODE_1) /*!<Data on two lines*/
+#define QSPI_DATA_4_LINES                                                      \
+	((uint32_t)QUADSPI_CCR_DMODE) /*!<Data on four                         \
+					 lines*/
 /**
  * @}
  */
@@ -553,7 +556,8 @@ typedef void (*pQSPI_CallbackTypeDef)(QSPI_HandleTypeDef *hqspi);
 #define QSPI_IT_TO QUADSPI_CR_TOIE /*!<Interrupt on the timeout flag*/
 #define QSPI_IT_SM QUADSPI_CR_SMIE /*!<Interrupt on the status match flag*/
 #define QSPI_IT_FT QUADSPI_CR_FTIE /*!<Interrupt on the fifo threshold flag*/
-#define QSPI_IT_TC QUADSPI_CR_TCIE /*!<Interrupt on the transfer complete      \
+#define QSPI_IT_TC                                                             \
+	QUADSPI_CR_TCIE		   /*!<Interrupt on the transfer complete      \
 				      flag*/
 #define QSPI_IT_TE QUADSPI_CR_TEIE /*!<Interrupt on the transfer error flag*/
 /**

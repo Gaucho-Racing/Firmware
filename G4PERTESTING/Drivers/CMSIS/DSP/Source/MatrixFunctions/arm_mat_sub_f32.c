@@ -95,7 +95,7 @@ arm_status arm_mat_sub_f32(const arm_matrix_instance_f32 *pSrcA,
 
 		/* Compute 4 outputs at a time.
 		 ** a second loop below computes the remaining 1 to 3 samples.
-		*/
+		 */
 		while (blkCnt > 0U) {
 			/* C(m,n) = A(m,n) - B(m,n) */
 			/* Subtract and then store the results in the

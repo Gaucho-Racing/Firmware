@@ -109,11 +109,13 @@ typedef struct {
 #define LL_LPTIM_ISR_CMPOK LPTIM_ISR_CMPOK /*!< Compare register update OK */
 #define LL_LPTIM_ISR_ARRM LPTIM_ISR_ARRM   /*!< Autoreload match */
 #define LL_LPTIM_ISR_EXTTRIG                                                   \
-	LPTIM_ISR_EXTTRIG		   /*!< External trigger edge event */
-#define LL_LPTIM_ISR_ARROK LPTIM_ISR_ARROK /*!< Autoreload register update OK  \
-					    */
-#define LL_LPTIM_ISR_UP LPTIM_ISR_UP /*!< Counter direction change down to up  \
-				      */
+	LPTIM_ISR_EXTTRIG /*!< External trigger edge event */
+#define LL_LPTIM_ISR_ARROK                                                     \
+	LPTIM_ISR_ARROK /*!< Autoreload register update OK                     \
+			 */
+#define LL_LPTIM_ISR_UP                                                        \
+	LPTIM_ISR_UP /*!< Counter direction change down to up                  \
+		      */
 #define LL_LPTIM_ISR_DOWN                                                      \
 	LPTIM_ISR_DOWN /*!< Counter direction change up to down */
 /**

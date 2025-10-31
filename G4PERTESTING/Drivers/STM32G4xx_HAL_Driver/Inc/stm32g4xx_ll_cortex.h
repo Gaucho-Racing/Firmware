@@ -236,14 +236,18 @@ extern "C" {
 /** @defgroup CORTEX_LL_EC_TEX MPU TEX Level
  * @{
  */
-#define LL_MPU_TEX_LEVEL0 (0x00U << MPU_RASR_TEX_Pos) /*!< b000 for TEX bits   \
-						       */
-#define LL_MPU_TEX_LEVEL1 (0x01U << MPU_RASR_TEX_Pos) /*!< b001 for TEX bits   \
-						       */
-#define LL_MPU_TEX_LEVEL2 (0x02U << MPU_RASR_TEX_Pos) /*!< b010 for TEX bits   \
-						       */
-#define LL_MPU_TEX_LEVEL4 (0x04U << MPU_RASR_TEX_Pos) /*!< b100 for TEX bits   \
-						       */
+#define LL_MPU_TEX_LEVEL0                                                      \
+	(0x00U << MPU_RASR_TEX_Pos) /*!< b000 for TEX bits                     \
+				     */
+#define LL_MPU_TEX_LEVEL1                                                      \
+	(0x01U << MPU_RASR_TEX_Pos) /*!< b001 for TEX bits                     \
+				     */
+#define LL_MPU_TEX_LEVEL2                                                      \
+	(0x02U << MPU_RASR_TEX_Pos) /*!< b010 for TEX bits                     \
+				     */
+#define LL_MPU_TEX_LEVEL4                                                      \
+	(0x04U << MPU_RASR_TEX_Pos) /*!< b100 for TEX bits                     \
+				     */
 /**
  * @}
  */
@@ -263,9 +267,10 @@ extern "C" {
  * @{
  */
 #define LL_MPU_ACCESS_SHAREABLE                                                \
-	MPU_RASR_S_Msk			  /*!< Shareable memory attribute */
-#define LL_MPU_ACCESS_NOT_SHAREABLE 0x00U /*!< Not Shareable memory attribute  \
-					   */
+	MPU_RASR_S_Msk /*!< Shareable memory attribute */
+#define LL_MPU_ACCESS_NOT_SHAREABLE                                            \
+	0x00U /*!< Not Shareable memory attribute                              \
+	       */
 /**
  * @}
  */
@@ -274,9 +279,10 @@ extern "C" {
  * @{
  */
 #define LL_MPU_ACCESS_CACHEABLE                                                \
-	MPU_RASR_C_Msk			  /*!< Cacheable memory attribute */
-#define LL_MPU_ACCESS_NOT_CACHEABLE 0x00U /*!< Not Cacheable memory attribute  \
-					   */
+	MPU_RASR_C_Msk /*!< Cacheable memory attribute */
+#define LL_MPU_ACCESS_NOT_CACHEABLE                                            \
+	0x00U /*!< Not Cacheable memory attribute                              \
+	       */
 /**
  * @}
  */
