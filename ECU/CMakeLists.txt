@@ -48,7 +48,6 @@ target_sources(
 		Core/Src/sysmem.c
 		Core/Src/system_stm32g4xx.c
 		Core/Src/usart.c
-
 		# Application
 		Application/Src/StateTicks.c
 )
