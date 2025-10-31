@@ -25,12 +25,6 @@ RUN apt-get update && apt-get install -y \
     software-properties-common \
     && rm -rf /var/lib/apt/lists/*
 
-# # arm-none-eabi-gdb requires libncurses5, not available by default
-# # We'll symlink libncurses6 to satisfy it
-# # RUN ln -sf /lib/$(uname -m)-linux-gnu/libncursesw.so.6 /lib/$(uname -m)-linux-gnu/libncursesw.so.5 || true
-# # RUN ln -sf /lib/$(uname -m)-linux-gnu/libncurses.so.6 /lib/$(uname -m)-linux-gnu/libncurses.so.5 || true
-# # RUN ln -sf /lib/$(uname -m)-linux-gnu/libtinfo.so.6 /lib/$(uname -m)-linux-gnu/libtinfo.so.5 || true
-
 # arm-none-eabi-gdb requires python3.8
 RUN add-apt-repository ppa:deadsnakes/ppa -y && apt-get update && apt-get install -y python3.8
 
