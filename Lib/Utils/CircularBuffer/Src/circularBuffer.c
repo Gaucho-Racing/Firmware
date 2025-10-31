@@ -44,7 +44,7 @@ uint16_t GR_CircularBuffer_GetCapacity(CircularBuffer *buffer)
 {
 	// Buffer null error
 	if (!buffer) {
-		return -1;
+		return 0;
 	}
 
 	return buffer->capacity;
@@ -54,7 +54,7 @@ uint16_t GR_CircularBuffer_GetCurrentSize(CircularBuffer *buffer)
 {
 	// Buffer null error
 	if (!buffer) {
-		return -1;
+		return 0;
 	}
 	// Empty case, since occupied member must have a non-null wrapper
 	// pointer

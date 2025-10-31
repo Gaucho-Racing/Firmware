@@ -4,40 +4,44 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-// Circular buffer is a FIFO data structure.
+// Circular buffer is a FIFO data structure. This struct's fields should not be
+// visible to the user.
 typedef struct circular_buffer_st CircularBuffer;
 
 /// @brief Creates a CircularBuffer object with the specified capacity.
 /// @param capacity The desired capacity of the circular buffer, in
-/// number of items.
-/// @param mode The operating mode of the buffer, see the enum's definition.
+/// number of items. This value must be greater than 0.
 /// @return The pointer to the created CircularBuffer object.
 CircularBuffer *GR_CircularBuffer_Create(uint16_t capacity);
 
 /// @brief Frees a CircularBuffer's all associated memories.
-///        Note that any pointers defined within each items are not
+///        Note that any pointer stored by this buffer is not
 ///        freed by this function.
-/// @param buffer The pointer to the CircularBuffer to free.
+/// @param buffer The pointer to the pointer to the CircularBuffer to free.
 void GR_CircularBuffer_Free(CircularBuffer **buffer);
 
 /// @brief Get a CircularBuffer's maximum capacity.
 /// @param buffer The pointer to the CircularBuffer to inspect.
-/// @return The buffer's capacity, in number of items.
+/// @return The buffer's capacity, in number of items. Returns zero if buffer is
+/// a null pointer.
 uint16_t GR_CircularBuffer_GetCapacity(CircularBuffer *buffer);
 
 /// @brief Get a CircularBuffer's currently used size.
 /// @param buffer The pointer to the CircularBuffer to inspect.
-/// @return The buffer's usage, in number of items stored.
+/// @return The buffer's usage, in number of items stored. Returns 0 if buffer
+/// is a null pointer.
 uint16_t GR_CircularBuffer_GetCurrentSize(CircularBuffer *buffer);
 
 /// @brief Check if a CircularBuffer is full.
 /// @param buffer The pointer to the CircularBuffer to inspect.
-/// @return true if full, false otherwise.
+/// @return true if full, false otherwise. Returns true if buffer is a null
+/// pointer.
 bool GR_CircularBuffer_IsFull(CircularBuffer *buffer);
 
 /// @brief Check if a CircularBuffer is empty.
 /// @param buffer The pointer to the CircularBuffer to inspect.
-/// @return true if empty, false otherwise.
+/// @return true if empty, false otherwise. Returns true if buffer is a null
+/// pointer.
 bool GR_CircularBuffer_IsEmpty(CircularBuffer *buffer);
 
 /// @brief Push a copy of an item into a circular buffer.
