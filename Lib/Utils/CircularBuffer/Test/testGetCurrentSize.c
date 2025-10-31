@@ -1,9 +1,15 @@
 #include "circularBuffer.h"
+#include <stdlib.h>
 
 int main()
 {
 
-	CircularBuffer *buffer_ptr;
+	CircularBuffer *buffer_ptr = NULL;
+	
+	// Test for Null error
+	if (GR_CircularBuffer_GetCurrentSize(buffer_ptr) != 0) {
+		return 1;
+	}
 
 	// Test GetCurrentSize
 	buffer_ptr = GR_CircularBuffer_Create(10);
@@ -13,7 +19,7 @@ int main()
 	GR_CircularBuffer_Push(buffer_ptr, &temp);
 	if (GR_CircularBuffer_GetCurrentSize(buffer_ptr) != 1) {
 		GR_CircularBuffer_Free(&buffer_ptr);
-		return 1;
+		return 2;
 	}
 	GR_CircularBuffer_Free(&buffer_ptr);
 
@@ -21,7 +27,7 @@ int main()
 	GR_CircularBuffer_Push(buffer_ptr, &temp);
 	if (GR_CircularBuffer_GetCurrentSize(buffer_ptr) != 1) {
 		GR_CircularBuffer_Free(&buffer_ptr);
-		return 2;
+		return 3;
 	}
 	GR_CircularBuffer_Free(&buffer_ptr);
 
@@ -33,7 +39,7 @@ int main()
 	}
 	if (GR_CircularBuffer_GetCurrentSize(buffer_ptr) != 6) {
 		GR_CircularBuffer_Free(&buffer_ptr);
-		return 3;
+		return 4;
 	}
 	GR_CircularBuffer_Free(&buffer_ptr);
 
@@ -45,7 +51,7 @@ int main()
 	}
 	if (GR_CircularBuffer_GetCurrentSize(buffer_ptr) != 10) {
 		GR_CircularBuffer_Free(&buffer_ptr);
-		return 4;
+		return 5;
 	}
 	GR_CircularBuffer_Free(&buffer_ptr);
 
@@ -59,7 +65,7 @@ int main()
 	}
 	if (GR_CircularBuffer_GetCurrentSize(buffer_ptr) != 5) {
 		GR_CircularBuffer_Free(&buffer_ptr);
-		return 5;
+		return 6;
 	}
 	GR_CircularBuffer_Free(&buffer_ptr);
 
@@ -74,7 +80,7 @@ int main()
 	}
 	if (GR_CircularBuffer_GetCurrentSize(buffer_ptr) != 6) {
 		GR_CircularBuffer_Free(&buffer_ptr);
-		return 6;
+		return 7;
 	}
 	GR_CircularBuffer_Free(&buffer_ptr);
 
