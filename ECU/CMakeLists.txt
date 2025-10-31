@@ -28,7 +28,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
 	)
 	add_test(state_machine_tick_returns state_machine_tick_returns)
 
-	# FIXME Add HOOTL tests
+	# FIXME Add more HOOTL tests
 endif()
 
 # Enable compile command to ease indexing with e.g. clangd
