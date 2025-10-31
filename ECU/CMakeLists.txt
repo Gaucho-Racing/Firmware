@@ -14,7 +14,7 @@ endif()
 get_filename_component(GR_PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Test")
-	# Do nothing for now
+	# FIXME Add HOOTL tests
 endif()
 
 # Enable compile command to ease indexing with e.g. clangd
@@ -37,8 +37,6 @@ add_library(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
 target_sources(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
-		# Core
-
 		Core/Src/adc.c
 		Core/Src/dma.c
 		Core/Src/fdcan.c
@@ -52,7 +50,7 @@ target_sources(
 		Core/Src/usart.c
 
 		# Application
-		# TODO Create application files
+		Application/Src/StateTicks.c
 )
 
 target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
