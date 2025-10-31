@@ -21,158 +21,148 @@
  */
 
 /* Includes */
-#include <sys/stat.h>
-#include <stdlib.h>
 #include <errno.h>
-#include <stdio.h>
 #include <signal.h>
-#include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/stat.h>
 #include <sys/time.h>
 #include <sys/times.h>
-
+#include <time.h>
 
 /* Variables */
 extern int __io_putchar(int ch) __attribute__((weak));
 extern int __io_getchar(void) __attribute__((weak));
 
-
-char *__env[1] = { 0 };
+char *__env[1] = {0};
 char **environ = __env;
 
-
 /* Functions */
-void initialise_monitor_handles()
-{
-}
+void initialise_monitor_handles() {}
 
-int _getpid(void)
-{
-  return 1;
-}
+int _getpid(void) { return 1; }
 
 int _kill(int pid, int sig)
 {
-  (void)pid;
-  (void)sig;
-  errno = EINVAL;
-  return -1;
+	(void)pid;
+	(void)sig;
+	errno = EINVAL;
+	return -1;
 }
 
-void _exit (int status)
+void _exit(int status)
 {
-  _kill(status, -1);
-  while (1) {}    /* Make sure we hang here */
+	_kill(status, -1);
+	while (1) {
+	} /* Make sure we hang here */
 }
 
 __attribute__((weak)) int _read(int file, char *ptr, int len)
 {
-  (void)file;
-  int DataIdx;
+	(void)file;
+	int DataIdx;
 
-  for (DataIdx = 0; DataIdx < len; DataIdx++)
-  {
-    *ptr++ = __io_getchar();
-  }
+	for (DataIdx = 0; DataIdx < len; DataIdx++) {
+		*ptr++ = __io_getchar();
+	}
 
-  return len;
+	return len;
 }
 
 __attribute__((weak)) int _write(int file, char *ptr, int len)
 {
-  (void)file;
-  int DataIdx;
+	(void)file;
+	int DataIdx;
 
-  for (DataIdx = 0; DataIdx < len; DataIdx++)
-  {
-    __io_putchar(*ptr++);
-  }
-  return len;
+	for (DataIdx = 0; DataIdx < len; DataIdx++) {
+		__io_putchar(*ptr++);
+	}
+	return len;
 }
 
 int _close(int file)
 {
-  (void)file;
-  return -1;
+	(void)file;
+	return -1;
 }
-
 
 int _fstat(int file, struct stat *st)
 {
-  (void)file;
-  st->st_mode = S_IFCHR;
-  return 0;
+	(void)file;
+	st->st_mode = S_IFCHR;
+	return 0;
 }
 
 int _isatty(int file)
 {
-  (void)file;
-  return 1;
+	(void)file;
+	return 1;
 }
 
 int _lseek(int file, int ptr, int dir)
 {
-  (void)file;
-  (void)ptr;
-  (void)dir;
-  return 0;
+	(void)file;
+	(void)ptr;
+	(void)dir;
+	return 0;
 }
 
 int _open(char *path, int flags, ...)
 {
-  (void)path;
-  (void)flags;
-  /* Pretend like we always fail */
-  return -1;
+	(void)path;
+	(void)flags;
+	/* Pretend like we always fail */
+	return -1;
 }
 
 int _wait(int *status)
 {
-  (void)status;
-  errno = ECHILD;
-  return -1;
+	(void)status;
+	errno = ECHILD;
+	return -1;
 }
 
 int _unlink(char *name)
 {
-  (void)name;
-  errno = ENOENT;
-  return -1;
+	(void)name;
+	errno = ENOENT;
+	return -1;
 }
 
 clock_t _times(struct tms *buf)
 {
-  (void)buf;
-  return -1;
+	(void)buf;
+	return -1;
 }
 
 int _stat(const char *file, struct stat *st)
 {
-  (void)file;
-  st->st_mode = S_IFCHR;
-  return 0;
+	(void)file;
+	st->st_mode = S_IFCHR;
+	return 0;
 }
 
 int _link(char *old, char *new)
 {
-  (void)old;
-  (void)new;
-  errno = EMLINK;
-  return -1;
+	(void)old;
+	(void)new;
+	errno = EMLINK;
+	return -1;
 }
 
 int _fork(void)
 {
-  errno = EAGAIN;
-  return -1;
+	errno = EAGAIN;
+	return -1;
 }
 
 int _execve(char *name, char **argv, char **env)
 {
-  (void)name;
-  (void)argv;
-  (void)env;
-  errno = ENOMEM;
-  return -1;
+	(void)name;
+	(void)argv;
+	(void)env;
+	errno = ENOMEM;
+	return -1;
 }
 
 // --- Picolibc Specific Section ---
@@ -187,8 +177,8 @@ int _execve(char *name, char **argv, char **env)
  */
 static int starm_putc(char c, FILE *file)
 {
-	(void) file;
-  __io_putchar(c);
+	(void)file;
+	__io_putchar(c);
 	return c;
 }
 
@@ -201,28 +191,28 @@ static int starm_putc(char c, FILE *file)
 static int starm_getc(FILE *file)
 {
 	unsigned char c;
-	(void) file;
-  c = __io_getchar();
+	(void)file;
+	c = __io_getchar();
 	return c;
 }
 
 // Define and initialize the standard I/O streams for Picolibc.
-// FDEV_SETUP_STREAM connects the starm_putc and starm_getc helper functions to a FILE structure.
-// _FDEV_SETUP_RW indicates the stream is for reading and writing.
-static FILE __stdio = FDEV_SETUP_STREAM(starm_putc,
-					starm_getc,
-					NULL,
-					_FDEV_SETUP_RW);
+// FDEV_SETUP_STREAM connects the starm_putc and starm_getc helper functions to
+// a FILE structure. _FDEV_SETUP_RW indicates the stream is for reading and
+// writing.
+static FILE __stdio =
+    FDEV_SETUP_STREAM(starm_putc, starm_getc, NULL, _FDEV_SETUP_RW);
 
-// Assign the standard stream pointers (stdin, stdout, stderr) to the initialized stream.
-// Picolibc uses these pointers for standard I/O operations (printf, scanf, etc.).
+// Assign the standard stream pointers (stdin, stdout, stderr) to the
+// initialized stream. Picolibc uses these pointers for standard I/O operations
+// (printf, scanf, etc.).
 FILE *const stdin = &__stdio;
 __strong_reference(stdin, stdout);
 __strong_reference(stdin, stderr);
 
-// Create strong aliases mapping standard C library function names (without underscore)
-// to the implemented system call stubs (with underscore). Picolibc uses these
-// standard names internally, so this linking is required.
+// Create strong aliases mapping standard C library function names (without
+// underscore) to the implemented system call stubs (with underscore). Picolibc
+// uses these standard names internally, so this linking is required.
 __strong_reference(_read, read);
 __strong_reference(_write, write);
 __strong_reference(_times, times);

@@ -8,7 +8,8 @@
  * Each state corresponds to a specific operational mode of the ECU.
  * See the state diagram in the documentation for more details.
  *
- * Maps to the enum `GR_ECU_State` with the same name, used for `uint8_t` backing.
+ * Maps to the enum `GR_ECU_State` with the same name, used for `uint8_t`
+ * backing.
  */
 typedef uint8_t GR_ECU_State;
 
