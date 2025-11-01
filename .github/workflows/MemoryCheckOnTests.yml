@@ -1,0 +1,57 @@
+name: Valgrind
+run-name: Valgrind HOOTL Tests - ${{ github.ref_name }}
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-${{ github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  ctest:
+    name: Run Valgrind on HOOTLTest
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Install Valgrind
+        run: sudo apt-get install -y valgrind
+
+      - name: Build HOOTLTest
+        run: |
+          set -o pipefail
+          echo "<details><summary>Make HOOTLTest</summary>" >> $GITHUB_STEP_SUMMARY
+          make HOOTLTest 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
+
+      - name: Run Valgrind Memory Check
+        run: |
+          set -o pipefail
+          echo "<details><summary>Valgrind Memory Check</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          make memory_check 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
+
+      - name: Logomatic Simple
+        uses: Ximaz/valgrind-action@v1.2.1
+        with:
+            binary_path: "./build/HOOTLTest/logomatic_simple"
+            verbose: true
+
+      - name: Logomatic Float
+        uses: Ximaz/valgrind-action@v1.2.1
+        with:
+            binary_path: "./build/HOOTLTest/logomatic_float"
+            verbose: true
