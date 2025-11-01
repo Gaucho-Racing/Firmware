@@ -13,7 +13,7 @@
 				"target/stm32g4x.cfg"
 			],
 			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build",
+			"preLaunchTask": "CMake: configure and build ECU",
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd",
 			"swoConfig": {
@@ -44,7 +44,7 @@
 				"target/stm32g4x.cfg"
 			],
 			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build",
+			"preLaunchTask": "CMake: configure and build G4HELLO",
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd",
 			"swoConfig": {
@@ -75,7 +75,7 @@
 				"target/stm32g4x.cfg"
 			],
 			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build",
+			"preLaunchTask": "CMake: configure and build G4BLINKY",
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd"
 		},
@@ -91,7 +91,7 @@
 				"target/stm32g4x.cfg"
 			],
 			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build",
+			"preLaunchTask": "CMake: configure and build U5BLINKY",
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Platform/STM32U5A9xJ/CompileDependencies/STM32U5A9.svd"
 		},
@@ -107,7 +107,7 @@
 				"target/stm32l4x.cfg"
 			],
 			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build",
+			"preLaunchTask": "CMake: configure and build L4BLINKY",
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Platform/STM32L476xG/CompileDependencies/STM32L476.svd"
 		},
@@ -123,7 +123,7 @@
 				"target/stm32g4x.cfg"
 			],
 			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build",
+			"preLaunchTask": "CMake: configure and build W3_G4SPI_Receive",
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd"
 		},
@@ -139,7 +139,7 @@
 				"target/stm32g4x.cfg"
 			],
 			"searchDir": [],
-			"preLaunchTask": "CMake: configure and build",
+			"preLaunchTask": "CMake: configure and build W3_G4SPI_Transmit",
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd"
 		}
