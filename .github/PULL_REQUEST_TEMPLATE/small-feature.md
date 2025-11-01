@@ -2,7 +2,7 @@
 name: Small Features
 about: Pull request for small changes or quick fixes
 title: ''
-labels: 0 TRIAGE, Enhancement
+labels: 0 TRIAGE, Enhancement, Small Fry
 assignees: ''
 
 ---
