@@ -23,7 +23,7 @@ int main()
 	buffer_ptr = GR_CircularBuffer_Create(10);
 	int arr1[6] = {1, 2, 3, 4, 5, 6};
 	for (int i = 0; i < 6; i++) {
-		GR_CircularBuffer_Push(buffer_ptr, &arr1[i]);
+		GR_CircularBuffer_Push(buffer_ptr, &arr1[i], sizeof(arr1[i]));
 	}
 	for (int i = 0; i < 10; i++) {
 		int *tmp;
@@ -39,7 +39,7 @@ int main()
 	buffer_ptr = GR_CircularBuffer_Create(10);
 	int arr2[13] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
 	for (int i = 0; i < 13; i++) {
-		GR_CircularBuffer_Push(buffer_ptr, &arr2[i]);
+		GR_CircularBuffer_Push(buffer_ptr, &arr2[i], sizeof(arr2[i]));
 	}
 	for (int i = 0; i < 10; i++) {
 		int *tmp;
@@ -55,10 +55,10 @@ int main()
 	buffer_ptr = GR_CircularBuffer_Create(10);
 	int arr3[7] = {1, 2, 3, 4, 5, 6, 7};
 	for (int i = 0; i < 7; i++) {
-		GR_CircularBuffer_Push(buffer_ptr, &arr3[i]);
+		GR_CircularBuffer_Push(buffer_ptr, &arr3[i], sizeof(arr3[i]));
 	}
 	for (int i = 0; i < 3; i++) {
-		GR_CircularBuffer_Pop(buffer_ptr);
+		free(GR_CircularBuffer_Pop(buffer_ptr));
 	}
 	for (int i = 0; i < 10; i++) {
 		int *tmp;
