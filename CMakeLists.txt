@@ -25,6 +25,7 @@ include("${platform_path}/STM32G474xE/chip.cmake")
 include("${platform_path}/STM32U5A9xJ/chip.cmake")
 include("${platform_path}/STM32L476xG/chip.cmake")
 include("${lib_path}/GlobalShare/common.cmake")
+include("${lib_path}/Utils/CircularBuffer/circular-buffer-lib.cmake")
 include("${lib_path}/cmake/gr-lib.cmake")
 
 project(${CMAKE_PROJECT_NAME})

@@ -104,6 +104,7 @@ jobs:
     name: Complete Auto Format
     needs: [ clang, cmake, json ]
     runs-on: ubuntu-slim
+    permissions: {}
     steps:
       - name: Complete Auto Format
         run: |

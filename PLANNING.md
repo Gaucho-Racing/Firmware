@@ -22,7 +22,7 @@ Ad- BLINKY
         - gcc-arm-none-eabi.cmake
     - Platform
         - CMakeLists.txt
-        - [chip]
+        - \[chip]
             - Peripheral Lib (Register Domain, per chip)
                 - CAN
                 - GPIO
@@ -32,11 +32,11 @@ Ad- BLINKY
                 - I2C
                 - Serial/Printf debug
             - CompileDependencies
-                - startup_stm[chip].s
+                - startup_stm\[chip].s
                     <!-- Startup assembly -->
-                - STM[chip]_FLASH.ld
-                - [chip].svd
-                - [chip].cmake
+                - STM\[chip]_FLASH.ld
+                - \[chip].svd
+                - \[chip].cmake
                     <!--
                     creates a function for setting the specific executable target to be compiled for said chip
                     said function should act like add_executable but have the Driver library automatically linked
@@ -46,9 +46,9 @@ Ad- BLINKY
                 - HAL/LL Driver (TODO: currently named stm32-hal-driver as that's what stm calls it, need to rename to make it fit better)
             - CMakeLists.txt
                 <!--
-                should compile the Drivers into an interface lib 
+                should compile the Drivers into an interface lib
                 -->
-                
+
     - Fancy Layers (TODO: Rename)
         - NeoPixel *TBD*
         - GRCAN *HOOTL Tests*
@@ -63,7 +63,7 @@ Ad- BLINKY
         - BCC
 - Autogen stuff (potentially ambitious)
     - CAN spreadsheet
-   
+
 BCC - Battery Cell Controller
 MC33771 vs MC33772 - 771 is 14 cell; 772 is 7 cell
 ECU & CCU shares precharge sequence, ccu extends for charge comms?
