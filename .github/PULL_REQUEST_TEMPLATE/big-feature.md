@@ -2,7 +2,7 @@
 name: Big Features
 about: Pull request for whole projects or large changes
 title: ''
-labels: 0 TRIAGE, Enhancement
+labels: 0 TRIAGE, Enhancement, Big Fry
 assignees: ''
 
 ---
