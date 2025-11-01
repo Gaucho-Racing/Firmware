@@ -1,7 +1,7 @@
 # Circular Buffer
 
-This library defines a new type `Circular Buffer` and declares manipulating/inspecting functions.
-`Circular Buffer` is a fixed size queue that that stores references to structs allowing for message
+This library defines a new type `CircularBuffer` and declares manipulating/inspecting functions.
+`CircularBuffer` is a fixed size queue that that stores references to structs allowing for message
 buffering.
 
 ## Functions
