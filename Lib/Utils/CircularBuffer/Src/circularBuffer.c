@@ -63,7 +63,8 @@ uint16_t GR_CircularBuffer_GetCurrentSize(CircularBuffer *buffer_ptr)
 	}
 	// Account for circular buffer's loopback behaviour
 	if (buffer_ptr->tail <= buffer_ptr->head) {
-		return buffer_ptr->tail + buffer_ptr->capacity - buffer_ptr->head;
+		return buffer_ptr->tail + buffer_ptr->capacity -
+		       buffer_ptr->head;
 	}
 	// Normal case
 	return buffer_ptr->tail - buffer_ptr->head;
@@ -77,7 +78,8 @@ bool GR_CircularBuffer_IsFull(CircularBuffer *buffer_ptr)
 	}
 	// In the case where head and tail iterators are equal,
 	// the buffer is full if any entry in the buffer is occupied.
-	return buffer_ptr->head == buffer_ptr->tail && buffer_ptr->buffer[0] != NULL;
+	return buffer_ptr->head == buffer_ptr->tail &&
+	       buffer_ptr->buffer[0] != NULL;
 }
 
 bool GR_CircularBuffer_IsEmpty(CircularBuffer *buffer_ptr)
@@ -88,7 +90,8 @@ bool GR_CircularBuffer_IsEmpty(CircularBuffer *buffer_ptr)
 	}
 	// In the case where head and tail iterators are equal,
 	// the buffer is empty if any entry in the buffer is free.
-	return buffer_ptr->head == buffer_ptr->tail && buffer_ptr->buffer[0] == NULL;
+	return buffer_ptr->head == buffer_ptr->tail &&
+	       buffer_ptr->buffer[0] == NULL;
 }
 
 uint8_t GR_CircularBuffer_Push(CircularBuffer *buffer_ptr, void *object)
