@@ -54,16 +54,19 @@ int main()
 	}
 	GR_CircularBuffer_Free(&buffer_ptr);
 
-	buffer_ptr = GR_CircularBuffer_Create(10);
-	int arr2[13] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
 	// pushing past size limit
-	for (int i = 0; i < 13; i++) {
+	buffer_ptr = GR_CircularBuffer_Create(20);
+	int arr2[1000];
+	for (int i = 0; i < 1000; i++) {
+		arr2[i] = i;
+	}
+	for (int i = 0; i < 1000; i++) {
 		GR_CircularBuffer_Push(buffer_ptr, &arr2[i], sizeof(arr2[i]));
 	}
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 20; i++) {
 		int *tmp;
 		tmp = GR_CircularBuffer_Pop(buffer_ptr);
-		if (*tmp != arr2[i + 3]) {
+		if (*tmp != arr2[i + 1000 - 20]) {
 			free(tmp);
 			GR_CircularBuffer_Free(&buffer_ptr);
 			return 5;
@@ -116,6 +119,13 @@ int main()
 		free(ptr);
 		GR_CircularBuffer_Free(&buffer_ptr);
 	}
+
+	// Stress Test push and free
+	buffer_ptr = GR_CircularBuffer_Create(100);
+	for(int i = 0; i < 1000; i++)
+		if(GR_CircularBuffer_Push(buffer_ptr, &i, sizeof(i)))
+			return 9;
+	GR_CircularBuffer_Free(&buffer_ptr);
 
 	return 0;
 }
