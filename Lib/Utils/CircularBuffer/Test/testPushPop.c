@@ -122,9 +122,11 @@ int main()
 
 	// Stress Test push and free
 	buffer_ptr = GR_CircularBuffer_Create(100);
-	for(int i = 0; i < 1000; i++)
-		if(GR_CircularBuffer_Push(buffer_ptr, &i, sizeof(i)))
+	for (int i = 0; i < 1000; i++) {
+		if (GR_CircularBuffer_Push(buffer_ptr, &i, sizeof(i))) {
 			return 9;
+		}
+	}
 	GR_CircularBuffer_Free(&buffer_ptr);
 
 	return 0;
