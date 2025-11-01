@@ -14,7 +14,7 @@ int main()
 
 	// Test for Null error when popping from null buffer
 	{
-		int* ptr = GR_CircularBuffer_Pop(buffer_ptr);
+		int *ptr = GR_CircularBuffer_Pop(buffer_ptr);
 		if (ptr != NULL) {
 			free(ptr);
 			return 2;
@@ -45,7 +45,7 @@ int main()
 		free(GR_CircularBuffer_Pop(buffer_ptr));
 	}
 	for (int i = 0; i < 1000; i++) {
-		int* ptr = GR_CircularBuffer_Pop(buffer_ptr);
+		int *ptr = GR_CircularBuffer_Pop(buffer_ptr);
 		if (ptr != NULL) { // Should do nothing
 			free(ptr);
 			GR_CircularBuffer_Free(&buffer_ptr);
@@ -101,14 +101,15 @@ int main()
 	}
 	free(tmp);
 
-	// Pushing limited-scoped variable to the buffer (should persist in the buffer)
+	// Pushing limited-scoped variable to the buffer (should persist in the
+	// buffer)
 	{
 		int local = 114514;
 		GR_CircularBuffer_Push(buffer_ptr, &local, sizeof(local));
 	}
 	{
-		int* ptr = GR_CircularBuffer_Pop(buffer_ptr);
-		if(*ptr != 114514){
+		int *ptr = GR_CircularBuffer_Pop(buffer_ptr);
+		if (*ptr != 114514) {
 			free(ptr);
 			return 8;
 		}

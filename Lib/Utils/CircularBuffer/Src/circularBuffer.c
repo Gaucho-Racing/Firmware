@@ -102,21 +102,23 @@ bool GR_CircularBuffer_IsEmpty(CircularBuffer *buffer_ptr)
 	return buffer_ptr->head == buffer_ptr->tail && !buffer_ptr->buffer[0];
 }
 
-uint8_t GR_CircularBuffer_Push(CircularBuffer *buffer_ptr, void *object_ptr, uint16_t object_size)
+uint8_t GR_CircularBuffer_Push(CircularBuffer *buffer_ptr, void *object_ptr,
+			       uint16_t object_size)
 {
 	// Buffer null error
 	if (!buffer_ptr) {
 		return 1;
 	}
-	void* new_item = malloc(object_size);
-	if(!new_item)
+	void *new_item = malloc(object_size);
+	if (!new_item) {
 		return 2;
+	}
 	memcpy(new_item, object_ptr, object_size);
 
 	// Remove the buffer head if it's going to be overwritten
 	// That is, if the buffer is already full
 	{
-		void* head_item = buffer_ptr->buffer[buffer_ptr->head];
+		void *head_item = buffer_ptr->buffer[buffer_ptr->head];
 		if (buffer_ptr->head == buffer_ptr->tail && head_item) {
 			free(head_item);
 			buffer_ptr->head++;
