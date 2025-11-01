@@ -105,6 +105,7 @@ jobs:
     name: Complete HOOTL Tests
     needs: ctest
     runs-on: ubuntu-slim
+    permissions: {}
     steps:
       - name: Complete All CTest Runs
         run: |
