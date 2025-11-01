@@ -8,7 +8,7 @@ int main()
 
 	// Test for Null error when pushing into null buffer
 	int temp = 1;
-	if (GR_CircularBuffer_Push(buffer_ptr, &temp) != -1) {
+	if (GR_CircularBuffer_Push(buffer_ptr, &temp) != 1) {
 		return 1;
 	}
 
