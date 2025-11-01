@@ -23,6 +23,16 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Logomatic Simple
+        uses: Ximaz/valgrind-action@v1.2.1
+        with:
+          binary_path: ./build/HOOTLTest/logomatic_simple
+
+      - name: Logomatic Float
+        uses: Ximaz/valgrind-action@v1.2.1
+        with:
+          binary_path: ./build/HOOTLTest/logomatic_float
+
       - name: Install Valgrind
         run: |
           echo "set man-db/auto-update false" | sudo debconf-communicate
