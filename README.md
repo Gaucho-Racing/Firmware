@@ -1,28 +1,28 @@
 # GR Firmware
 Table of Contents
-* [Quickstart](#Quickstart)  
-* [Testing](#Testing)  
-    * [Setup](#Setup)  
-    * [Running](#Running)  
-* [VS Code Setup](#VS-Code-Setup)  
-* [REPO RULES (follow if you want your builds to work)](#REPO-RULES-(follow-if-you-want-your-builds-to-work))  
-* [To add a New Project](#To-add-a-New-Project)  
-* [To add a New Platform ](#To-add-a-New-Platform )  
-* [Chip Path Contamination](#Chip-Path-Contamination)  
+* [Quickstart](#Quickstart)
+* [Testing](#Testing)
+    * [Setup](#Setup)
+    * [Running](#Running)
+* [VS Code Setup](#VS-Code-Setup)
+* [REPO RULES (follow if you want your builds to work)](#REPO-RULES-follow-if-you-want-your-builds-to-work)
+* [To add a New Project](#To-add-a-New-Project)
+* [To add a New Platform ](#To-add-a-New-Platform )
+* [Chip Path Contamination](#Chip-Path-Contamination)
 
 # Quickstart
-The goal of this section is to compile and flash any project  
-The monorepo relies on CMake to build the projects. 
+The goal of this section is to compile and flash any project
+The monorepo relies on CMake to build the projects.
 
 If trying to run HOOTL tests or simulated development: see [Testing](#testing)
 
 If simply trying to build the executable for the arm based platform: use any other configure preset (Options as of 8/28/2025: Debug, RelWithDebInfo, Release, MinSizeRel)
 
-**To choose configure preset:** 
+**To choose configure preset:**
 
 *If using CMake VSCode plugin*: VScode will prompt upon first entrance, otherwise go to the CMake plugin window and click the pencil icon on the option under configure. Alternatively use the command palette and call CMake: Select Configure Preset.
 
-*If using CLI*: run 
+*If using CLI*: run
 `cmake -S . -B {build directory, ex: build or Debug/build} -G Ninja --preset={preset}`
 
 **Then Build**:
@@ -171,7 +171,7 @@ All projects follow the following structure. 
 
 Core should have Peripheral related code, it requires a {platform}\_hal\_conf.h, {platform}\_it.h, {platform}\_assert.h, {platform}\_hal\_msp.c, {platform}\_it.c, syscall.c, sysmem.c, and system\_{plat}.c. Some of these can be found as templates in the HAL/LL drivers section in the platform corresponding, others you might need to copy them from a cubemx project.
 
-Edit the target_sources/target_link_libraries to include all the 
+Edit the target_sources/target_link_libraries to include all the
 
 # To add a New Platform 
 
