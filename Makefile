@@ -36,3 +36,7 @@ test: HOOTLTest
 
 clean:
 	$(rmd) build
+
+memory_check: test
+	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all -s --error-exitcode=1 ./build/HOOTLTest/logomatic_simple
+	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all -s --error-exitcode=1 ./build/HOOTLTest/logomatic_float
