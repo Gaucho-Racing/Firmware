@@ -8,5 +8,6 @@
 		"*.ld": "ld",
 		"*.s": "asm"
 	},
-	"C_Cpp.default.cStandard": "gnu11"
+	"C_Cpp.default.cStandard": "gnu11",
+	"markdown.validate.enabled": true
 }

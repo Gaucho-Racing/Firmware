@@ -123,6 +123,7 @@ jobs:
     name: Complete All Presets
     needs: cmake
     runs-on: ubuntu-slim
+    permissions: {}
     steps:
       - name: Build All Presets
         run: |
