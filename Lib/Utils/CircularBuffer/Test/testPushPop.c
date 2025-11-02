@@ -132,65 +132,91 @@ int main()
 	// Test pushing and popping different types of objects
 	{
 		buffer_ptr = GR_CircularBuffer_Create(8);
-		typedef struct a_struct_st{
+		typedef struct a_struct_st {
 			int data1;
 			short data2;
 		} A_Struct;
-		typedef struct another_struct_st{
+		typedef struct another_struct_st {
 			float f;
 			double d;
 		} Another_Struct;
-		{ char tmp = 'a'; GR_CircularBuffer_Push(buffer_ptr, &tmp, sizeof(tmp)); }
-		{ short tmp = ((short)-1)>>1; GR_CircularBuffer_Push(buffer_ptr, &tmp, sizeof(tmp)); }
-		{ int tmp = (-1)>>1; GR_CircularBuffer_Push(buffer_ptr, &tmp, sizeof(tmp)); }
-		{ long long tmp = (-1LL)>>1; GR_CircularBuffer_Push(buffer_ptr, &tmp, sizeof(tmp)); }
-		{ float tmp = 2.0f; GR_CircularBuffer_Push(buffer_ptr, &tmp, sizeof(tmp)); }
-		{ double tmp = 2.0; GR_CircularBuffer_Push(buffer_ptr, &tmp, sizeof(tmp)); }
-		{ A_Struct tmp = { 114514, 810}; GR_CircularBuffer_Push(buffer_ptr, &tmp, sizeof(tmp)); }
-		{ Another_Struct tmp = { 1024.0f, 2048.0}; GR_CircularBuffer_Push(buffer_ptr, &tmp, sizeof(tmp)); }
+		{
+			char tmp = 'a';
+			GR_CircularBuffer_Push(buffer_ptr, &tmp, sizeof(tmp));
+		}
+		{
+			short tmp = ((short)-1) >> 1;
+			GR_CircularBuffer_Push(buffer_ptr, &tmp, sizeof(tmp));
+		}
+		{
+			int tmp = (-1) >> 1;
+			GR_CircularBuffer_Push(buffer_ptr, &tmp, sizeof(tmp));
+		}
+		{
+			long long tmp = (-1LL) >> 1;
+			GR_CircularBuffer_Push(buffer_ptr, &tmp, sizeof(tmp));
+		}
+		{
+			float tmp = 2.0f;
+			GR_CircularBuffer_Push(buffer_ptr, &tmp, sizeof(tmp));
+		}
+		{
+			double tmp = 2.0;
+			GR_CircularBuffer_Push(buffer_ptr, &tmp, sizeof(tmp));
+		}
+		{
+			A_Struct tmp = {114514, 810};
+			GR_CircularBuffer_Push(buffer_ptr, &tmp, sizeof(tmp));
+		}
+		{
+			Another_Struct tmp = {1024.0f, 2048.0};
+			GR_CircularBuffer_Push(buffer_ptr, &tmp, sizeof(tmp));
+		}
 		int success_cases = 0;
 		{
-			char* tmp = GR_CircularBuffer_Pop(buffer_ptr);
+			char *tmp = GR_CircularBuffer_Pop(buffer_ptr);
 			success_cases += (*tmp == 'a');
 			free(tmp);
 		}
 		{
-			short* tmp = GR_CircularBuffer_Pop(buffer_ptr);
-			success_cases += (*tmp == ((short)-1)>>1);
+			short *tmp = GR_CircularBuffer_Pop(buffer_ptr);
+			success_cases += (*tmp == ((short)-1) >> 1);
 			free(tmp);
 		}
 		{
-			int* tmp = GR_CircularBuffer_Pop(buffer_ptr);
-			success_cases += (*tmp == (-1)>>1);
+			int *tmp = GR_CircularBuffer_Pop(buffer_ptr);
+			success_cases += (*tmp == (-1) >> 1);
 			free(tmp);
 		}
 		{
-			long long* tmp = GR_CircularBuffer_Pop(buffer_ptr);
-			success_cases += (*tmp == (-1LL)>>1);
+			long long *tmp = GR_CircularBuffer_Pop(buffer_ptr);
+			success_cases += (*tmp == (-1LL) >> 1);
 			free(tmp);
 		}
 		{
-			float* tmp = GR_CircularBuffer_Pop(buffer_ptr);
+			float *tmp = GR_CircularBuffer_Pop(buffer_ptr);
 			success_cases += (*tmp == 2.0f);
 			free(tmp);
 		}
 		{
-			double* tmp = GR_CircularBuffer_Pop(buffer_ptr);
+			double *tmp = GR_CircularBuffer_Pop(buffer_ptr);
 			success_cases += (*tmp == 2.0);
 			free(tmp);
 		}
 		{
-			A_Struct* tmp = GR_CircularBuffer_Pop(buffer_ptr);
-			success_cases += (tmp->data1 == 114514 && tmp->data2 == 810);
+			A_Struct *tmp = GR_CircularBuffer_Pop(buffer_ptr);
+			success_cases +=
+			    (tmp->data1 == 114514 && tmp->data2 == 810);
 			free(tmp);
 		}
 		{
-			Another_Struct* tmp = GR_CircularBuffer_Pop(buffer_ptr);
-			success_cases += (tmp->f == 1024.0f && tmp->d == 2048.0);
+			Another_Struct *tmp = GR_CircularBuffer_Pop(buffer_ptr);
+			success_cases +=
+			    (tmp->f == 1024.0f && tmp->d == 2048.0);
 			free(tmp);
 		}
 		GR_CircularBuffer_Free(&buffer_ptr);
-		if(success_cases != 8){
+		if (success_cases != 8) {
 			return 10;
 		}
 	}
