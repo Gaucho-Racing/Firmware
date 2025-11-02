@@ -12,7 +12,7 @@ int main()
 
 	// Empty buffer
 	buffer_ptr = GR_CircularBuffer_Create(10);
-	void *ptr1 = GR_CircularBuffer_Peek(buffer_ptr);
+	const void *ptr1 = GR_CircularBuffer_Peek(buffer_ptr);
 	if (ptr1 != NULL) {
 		GR_CircularBuffer_Free(&buffer_ptr);
 		return 2;
@@ -26,7 +26,7 @@ int main()
 		GR_CircularBuffer_Push(buffer_ptr, &arr1[i], sizeof(arr1[i]));
 	}
 	for (int i = 0; i < 10; i++) {
-		int *tmp;
+		const int *tmp;
 		tmp = GR_CircularBuffer_Peek(buffer_ptr);
 		if (*tmp != 1) { // should not modify the buffer
 			GR_CircularBuffer_Free(&buffer_ptr);
@@ -42,7 +42,7 @@ int main()
 		GR_CircularBuffer_Push(buffer_ptr, &arr2[i], sizeof(arr2[i]));
 	}
 	for (int i = 0; i < 10; i++) {
-		int *tmp;
+		const int *tmp;
 		tmp = GR_CircularBuffer_Peek(buffer_ptr);
 		if (*tmp != 4) { // should not modify the buffer
 			GR_CircularBuffer_Free(&buffer_ptr);
@@ -61,7 +61,7 @@ int main()
 		free(GR_CircularBuffer_Pop(buffer_ptr));
 	}
 	for (int i = 0; i < 10; i++) {
-		int *tmp;
+		const int *tmp;
 		tmp = GR_CircularBuffer_Peek(buffer_ptr);
 		if (*tmp != 4) { // should not modify the buffer
 			GR_CircularBuffer_Free(&buffer_ptr);

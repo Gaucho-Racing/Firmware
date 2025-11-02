@@ -163,7 +163,7 @@ void *GR_CircularBuffer_Pop(CircularBuffer *buffer_ptr)
 	return result;
 }
 
-void *GR_CircularBuffer_Peek(CircularBuffer *buffer_ptr)
+const void *GR_CircularBuffer_Peek(CircularBuffer *buffer_ptr)
 {
 	// Buffer null error
 	if (!buffer_ptr) {

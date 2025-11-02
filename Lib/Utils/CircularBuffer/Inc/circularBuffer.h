@@ -66,6 +66,6 @@ void *GR_CircularBuffer_Pop(CircularBuffer *buffer_ptr);
 /// @return The pointer to the retrived item. NULL if the buffer is null or is
 /// empty. Note that the user MUST NOT deallocate this retrived item
 /// with free(void*) from stdlib.h.
-void *GR_CircularBuffer_Peek(CircularBuffer *buffer_ptr);
+const void *GR_CircularBuffer_Peek(CircularBuffer *buffer_ptr);
 
 #endif
