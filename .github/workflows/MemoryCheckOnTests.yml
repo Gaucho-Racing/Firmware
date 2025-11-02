@@ -23,21 +23,16 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Logomatic Simple
-        uses: Ximaz/valgrind-action@v1.2.1
+      - name: Set up Valgrind
+        uses: awalsh128/cache-apt-pkgs-action@v1
         with:
-          binary_path: ./build/HOOTLTest/logomatic_simple
+          packages: valgrind
 
-      - name: Logomatic Float
-        uses: Ximaz/valgrind-action@v1.2.1
-        with:
-          binary_path: ./build/HOOTLTest/logomatic_float
-
-      - name: Install Valgrind
-        run: |
-          echo "set man-db/auto-update false" | sudo debconf-communicate
-          sudo rm /var/lib/man-db/auto-update
-          sudo apt-get install -y valgrind --no-install-suggests --no-install-recommends
+      # - name: Install Valgrind
+      #   run: |
+      #     echo "set man-db/auto-update false" | sudo debconf-communicate
+      #     sudo rm /var/lib/man-db/auto-update
+      #     sudo apt-get install -y valgrind --no-install-suggests --no-install-recommends
 
       - name: Build HOOTLTest
         run: |
@@ -56,7 +51,7 @@ jobs:
       - name: Run Memory Check
         run: |
           set -o pipefail
-          echo "<details><summary>HOOTLTest Memory Check</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "<details open><summary>HOOTLTest Memory Check</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           make memory_check 2>&1 | tee -a $GITHUB_STEP_SUMMARY
