@@ -12,7 +12,7 @@ define cmake_build
 	cmake --build build/$(1)
 endef
 
-.PHONY: Debug Release RelWithDebInfo MinSizeRel HOOTLTest test clean
+.PHONY: Debug Release RelWithDebInfo MinSizeRel HOOTLTest test clean memory_check
 
 all: Debug Release RelWithDebInfo MinSizeRel HOOTLTest
 
@@ -38,5 +38,8 @@ clean:
 	$(rmd) build
 
 memory_check: HOOTLTest
-	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all -s --error-exitcode=1 ./build/HOOTLTest/logomatic_simple
-	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all -s --error-exitcode=1 ./build/HOOTLTest/logomatic_float
+	@for test in $(shell find ./build/HOOTLTest -maxdepth 1 -type f -executable); do \
+		echo ""; \
+		valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all -s --error-exitcode=1 "$$test"; \
+		echo ""; \
+	done
