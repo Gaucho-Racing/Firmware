@@ -44,6 +44,12 @@ Output:
 9
 ```
 
+## Gotchas and Limitations
+- If there are pointers within the objects pushed into the buffer, their addressed contents are not copied (It is not possible without reinforcing object types in the buffer).
+- The user is responsible for deallocating items retrieved by GR_CircularBuffer_Pop.
+- The user MUST NOT deallocate items retrieved by GR_CircularBuffer_Peek.
+- The user must deallocate the CircularBuffer's by using GR_CircularBuffer_Free.
+
 ## Functions
 `GR_CircularBuffer_Create(uint16_t capacity) -> CircularBuffer*` take size as the parameter and creates a circular buffer object and returns its memory address.
 
@@ -61,4 +67,4 @@ Output:
 
 `GR_CircularBuffer_Pop(CircularBuffer *buffer_ptr) -> void*`: Removes a CircularBuffer's buffer head and retrives it.
 
-`GR_CircularBuffer_Peek(CircularBuffer *buffer_ptr) -> void*`: Retrives a CircularBuffer's buffer head.
+`GR_CircularBuffer_Peek(CircularBuffer *buffer_ptr) -> const void*`: Retrives a CircularBuffer's buffer head.
