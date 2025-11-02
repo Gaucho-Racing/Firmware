@@ -12,7 +12,6 @@
 				"build/RelWithDebInfo/compile_commands.json",
 				"build/Release/compile_commands.json",
 				"build/MinSizeRel/compile_commands.json",
-				"compile_commands.json"
 			],
 			"includePath": [
 				"${workspaceFolder}/**"

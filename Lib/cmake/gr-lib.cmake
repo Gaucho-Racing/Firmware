@@ -1,13 +1,5 @@
-function(ternary boolean first second)
-	if(boolean)
-		return(first)
-	else()
-		return(second)
-	endif()
-endfunction()
-
-function(add_GR_project)
-	# overload add_GR_project
+function(add_gr_project)
+	# overload add_gr_project
 	if(${ARGC} EQUAL 2)
 	elseif(${ARGC} EQUAL 3)
 		set(GR_PROJECT_PATH ${ARGV2})
