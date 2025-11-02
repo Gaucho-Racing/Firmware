@@ -52,5 +52,11 @@ function(add_gr_project)
 		endif()
 
 		target_link_libraries(${TARGET_NAME} PRIVATE ${INTERFACE_LIB})
+
+		target_link_options(
+			${TARGET_NAME}
+			PRIVATE
+				LINKER:-Map,$<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_BASE_NAME:${TARGET_NAME}>.map
+		)
 	endif()
 endfunction()
