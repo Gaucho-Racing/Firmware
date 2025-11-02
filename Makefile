@@ -40,6 +40,7 @@ clean:
 memory_check: HOOTLTest
 	@for test in $(shell find ./build/HOOTLTest -maxdepth 1 -type f -executable); do \
 		echo ""; \
+		echo "Running memory check on $$test"; \
 		valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all -s --error-exitcode=1 "$$test"; \
 		echo ""; \
 	done
