@@ -28,24 +28,11 @@ jobs:
         with:
           packages: valgrind
 
-      # - name: Install Valgrind
-      #   run: |
-      #     echo "set man-db/auto-update false" | sudo debconf-communicate
-      #     sudo rm /var/lib/man-db/auto-update
-      #     sudo apt-get install -y valgrind --no-install-suggests --no-install-recommends
-
       - name: Build HOOTLTest
         run: |
           set -o pipefail
           echo "<details><summary>Make HOOTLTest</summary>" >> $GITHUB_STEP_SUMMARY
           make HOOTLTest 2>&1 | tee -a $GITHUB_STEP_SUMMARY
-          echo "</details>" >> $GITHUB_STEP_SUMMARY
-
-      - name: Run Tests
-        run: |
-          set -o pipefail
-          echo "<details><summary>Run HOOTLTest</summary>" >> $GITHUB_STEP_SUMMARY
-          make test 2>&1 | tee -a $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
 
       - name: Run Memory Check
