@@ -1,4 +1,11 @@
 # GR Firmware
+
+[![CMake](https://github.com/Gaucho-Racing/Firmware/actions/workflows/BuildAllPresets.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/BuildAllPresets.yml)
+[![CTest](https://github.com/Gaucho-Racing/Firmware/actions/workflows/RunCTests.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/RunCTests.yml)
+[![Auto Format](https://github.com/Gaucho-Racing/Firmware/actions/workflows/AutoFormat.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/AutoFormat.yml)
+[![ValidateConfigs](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ValidateConfigs.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ValidateConfigs.yml)
+[![Valgrind](https://github.com/Gaucho-Racing/Firmware/actions/workflows/MemoryCheckOnTests.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/MemoryCheckOnTests.yml)
+
 Table of Contents
 * [Quickstart](#Quickstart)
 * [Testing](#Testing)
@@ -10,7 +17,7 @@ Table of Contents
 * [To add a New Platform ](#To-add-a-New-Platform )
 * [Chip Path Contamination](#Chip-Path-Contamination)
 
-# Quickstart
+## Quickstart
 The goal of this section is to compile and flash any project
 The monorepo relies on CMake to build the projects.
 
@@ -31,11 +38,6 @@ If simply trying to build the executable for the arm based platform: use any oth
 
 *If using CLI*: run
 `cmake --build {path to build directory} --target {name of target; optional} --preset={build preset; optional}`
-
-[![CMake](https://github.com/Gaucho-Racing/Firmware/actions/workflows/BuildAllPresets.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/BuildAllPresets.yml)
-[![CTest](https://github.com/Gaucho-Racing/Firmware/actions/workflows/RunCTests.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/RunCTests.yml)
-[![Auto Format](https://github.com/Gaucho-Racing/Firmware/actions/workflows/AutoFormat.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/AutoFormat.yml)
-[![ValidateConfigs](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ValidateConfigs.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ValidateConfigs.yml)
 
 **_DO NOT DELETE ANY LICENSE INFORMATION ON ANY COPIED FILE OR LINE OF CODE_**
 
