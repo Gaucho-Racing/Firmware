@@ -8,16 +8,15 @@ function(add_executable_${CHIP} TARGET_NAME)
 	set(TARGET_FLAGS "") # REPLACE: with the appropriate linkerscript
 
 	add_executable(${TARGET_NAME})
-	target_compile_options(
-		${TARGET_NAME}
-		PRIVATE
-			${TARGET_FLAGS}
-	)
+	target_compile_options(${TARGET_NAME} PRIVATE ${TARGET_FLAGS})
 	target_link_options(
 		${TARGET_NAME}
 		PRIVATE
 			${TARGET_FLAGS}
-			-T${CHIP_PATH}/CompileDependencies/<FLASH LINKER SCRIPT HERE>.ld
+			-T${CHIP_PATH}/CompileDependencies/<FLASH
+			LINKER
+			SCRIPT
+			HERE>.ld
 	)
 
 	# Cleanup (do not change, leave these 3 lines as is, trust)

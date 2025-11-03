@@ -1,25 +1,33 @@
 set(CHIP "STM32L476xG")
 set(CHIP_PATH "${CMAKE_SOURCE_DIR}/Lib/Platform/${CHIP}")
-set(TARGET_FLAGS -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard)
+set(
+	TARGET_FLAGS
+	-mcpu=cortex-m4
+	-mfpu=fpv4-sp-d16
+	-mfloat-abi=hard
+)
 
 function(add_executable_${CHIP} TARGET_NAME)
 	set(CHIP "STM32L476xG")
 	set(CHIP_PATH "${CMAKE_SOURCE_DIR}/Lib/Platform/${CHIP}")
-	set(TARGET_FLAGS -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb)
+	set(
+		TARGET_FLAGS
+		-mcpu=cortex-m4
+		-mfpu=fpv4-sp-d16
+		-mfloat-abi=hard
+		-mthumb
+	)
 
 	add_executable(${TARGET_NAME})
 
 	# Ensure target itself is built with correct CPU/Thumb/FPU flags
-	target_compile_options(
-		${TARGET_NAME}
-		PRIVATE
-			${TARGET_FLAGS}
-	)
+	target_compile_options(${TARGET_NAME} PRIVATE ${TARGET_FLAGS})
 	target_link_options(
 		${TARGET_NAME}
 		PRIVATE
 			${TARGET_FLAGS}
-			-T "${CHIP_PATH}/CompileDependencies/STM32L476XX_FLASH.ld"
+			-T
+			"${CHIP_PATH}/CompileDependencies/STM32L476XX_FLASH.ld"
 	)
 
 	set(CHIP "YOUHAVENOTCONFIGUREDCHIPRIGHT!")
@@ -48,17 +56,9 @@ target_include_directories(
 		${CHIP_PATH}/Drivers/CMSIS/Device/ST/STM32L4xx/Include
 )
 
-target_compile_options(
-	${CHIP}_LIB
-	INTERFACE
-		${TARGET_FLAGS}
-)
+target_compile_options(${CHIP}_LIB INTERFACE ${TARGET_FLAGS})
 
-target_link_options(
-	${CHIP}_LIB
-	INTERFACE
-		${TARGET_FLAGS}
-)
+target_link_options(${CHIP}_LIB INTERFACE ${TARGET_FLAGS})
 
 target_sources(
 	${CHIP}_LIB

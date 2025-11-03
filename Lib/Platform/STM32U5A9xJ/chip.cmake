@@ -1,24 +1,36 @@
 set(CHIP "STM32U5A9xJ")
 set(CHIP_PATH "${CMAKE_SOURCE_DIR}/Lib/Platform/${CHIP}")
-set(TARGET_FLAGS -mcpu=cortex-m33 -mfpu=fpv4-sp-d16 -mfloat-abi=hard)
+set(
+	TARGET_FLAGS
+	-mcpu=cortex-m33
+	-mfpu=fpv4-sp-d16
+	-mfloat-abi=hard
+)
 
 function(add_executable_${CHIP} TARGET_NAME)
 	set(CHIP "STM32U5A9xJ")
 	set(CHIP_PATH "${CMAKE_SOURCE_DIR}/Lib/Platform/${CHIP}")
-	set(TARGET_FLAGS -mcpu=cortex-m33 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb)
+	set(
+		TARGET_FLAGS
+		-mcpu=cortex-m33
+		-mfpu=fpv4-sp-d16
+		-mfloat-abi=hard
+		-mthumb
+	)
 	add_executable(${TARGET_NAME})
 
 	target_compile_options(
 		${TARGET_NAME}
 		PRIVATE
-			-Wno-error	# TODO Remove when dev container is setup due to unfiltered warnings (U5 hal doesn't support arm gcc > 12.3)
+			-Wno-error # TODO Remove when dev container is setup due to unfiltered warnings (U5 hal doesn't support arm gcc > 12.3)
 			${TARGET_FLAGS}
 	)
 	target_link_options(
 		${TARGET_NAME}
 		PRIVATE
 			${TARGET_FLAGS}
-			-T "${CHIP_PATH}/CompileDependencies/STM32U5A9xx_FLASH.ld"
+			-T
+			"${CHIP_PATH}/CompileDependencies/STM32U5A9xx_FLASH.ld"
 	)
 
 	# Cleanup
@@ -49,17 +61,9 @@ target_include_directories(
 		${CHIP_PATH}/Drivers/CMSIS/Device/ST/STM32U5xx/Include
 )
 
-target_compile_options(
-	${CHIP}_LIB
-	INTERFACE
-		${TARGET_FLAGS}
-)
+target_compile_options(${CHIP}_LIB INTERFACE ${TARGET_FLAGS})
 
-target_link_options(
-	${CHIP}_LIB
-	INTERFACE
-		${TARGET_FLAGS}
-)
+target_link_options(${CHIP}_LIB INTERFACE ${TARGET_FLAGS})
 
 target_sources(
 	${CHIP}_LIB

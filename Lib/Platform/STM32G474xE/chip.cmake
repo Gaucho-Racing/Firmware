@@ -1,24 +1,32 @@
 set(CHIP "STM32G474xE")
 set(CHIP_PATH "${CMAKE_SOURCE_DIR}/Lib/Platform/${CHIP}")
-set(TARGET_FLAGS -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard)
+set(
+	TARGET_FLAGS
+	-mcpu=cortex-m4
+	-mfpu=fpv4-sp-d16
+	-mfloat-abi=hard
+)
 
 function(add_executable_${CHIP} TARGET_NAME)
 	set(CHIP "STM32G474xE")
 	set(CHIP_PATH "${CMAKE_SOURCE_DIR}/Lib/Platform/${CHIP}")
-	set(TARGET_FLAGS -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb)
+	set(
+		TARGET_FLAGS
+		-mcpu=cortex-m4
+		-mfpu=fpv4-sp-d16
+		-mfloat-abi=hard
+		-mthumb
+	)
 
 	add_executable(${TARGET_NAME})
 
-	target_compile_options(
-		${TARGET_NAME}
-		PRIVATE
-			${TARGET_FLAGS}
-	)
+	target_compile_options(${TARGET_NAME} PRIVATE ${TARGET_FLAGS})
 	target_link_options(
 		${TARGET_NAME}
 		PRIVATE
 			${TARGET_FLAGS}
-			-T "${CHIP_PATH}/CompileDependencies/STM32G474RETx_FLASH.ld"
+			-T
+			"${CHIP_PATH}/CompileDependencies/STM32G474RETx_FLASH.ld"
 	)
 
 	# Cleanup

@@ -18,8 +18,14 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
 		CircularBuffer_Lib_Initialization_test
 		${CMAKE_CURRENT_LIST_DIR}/Test/testInitialization.c
 	)
-	target_link_libraries(CircularBuffer_Lib_Initialization_test CircularBuffer_Lib)
-	add_test(CircularBuffer_Lib_Initialization CircularBuffer_Lib_Initialization_test)
+	target_link_libraries(
+		CircularBuffer_Lib_Initialization_test
+		CircularBuffer_Lib
+	)
+	add_test(
+		CircularBuffer_Lib_Initialization
+		CircularBuffer_Lib_Initialization_test
+	)
 
 	# Push/Pop
 	add_executable(
@@ -50,8 +56,14 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
 		CircularBuffer_Lib_Get_Current_Size_test
 		${CMAKE_CURRENT_LIST_DIR}/Test/testGetCurrentSize.c
 	)
-	target_link_libraries(CircularBuffer_Lib_Get_Current_Size_test CircularBuffer_Lib)
-	add_test(CircularBuffer_Lib_Get_Current_Size CircularBuffer_Lib_Get_Current_Size_test)
+	target_link_libraries(
+		CircularBuffer_Lib_Get_Current_Size_test
+		CircularBuffer_Lib
+	)
+	add_test(
+		CircularBuffer_Lib_Get_Current_Size
+		CircularBuffer_Lib_Get_Current_Size_test
+	)
 
 	# If Full
 	add_executable(
