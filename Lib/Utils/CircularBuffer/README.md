@@ -13,22 +13,23 @@ To use this library with CMake, one needs to link the library `CircularBuffer_Li
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(void){
- CircularBuffer* buffer_ptr = GR_CircularBuffer_Create(10);
+int main(void)
+{
+    CircularBuffer* buffer_ptr = GR_CircularBuffer_Create(10);
 
     {
         int arr[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-        for(int i = 0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             GR_CircularBuffer_Push(buffer_ptr, &arr[i], sizeof(arr[i]));
         }
     }
- for(int i = 0; i < 10; i++){
-  int* tmp = GR_CircularBuffer_Pop(buffer_ptr);
-  printf("%d\n", *tmp);
+    for (int i = 0; i < 10; i++) {
+        int* tmp = GR_CircularBuffer_Pop(buffer_ptr);
+        printf("%d\n", *tmp);
         free(tmp);
- }
+    }
 
- GR_CircularBuffer_Free(&buffer_ptr);
+    GR_CircularBuffer_Free(&buffer_ptr);
 }
 ```
 
