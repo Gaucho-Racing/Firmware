@@ -26,16 +26,29 @@ add_compile_options(
 if (ADDRESS_SANITIZER)
     message(STATUS "Address sanitizer enabled for tests")
 
-    add_compile_options(
-        -fno-omit-frame-pointer
-        -fsanitize=address
-        -fsanitize=undefined
-        -fsanitize=leak
-    )
-
-    add_link_options(
-        -fsanitize=address
-        -fsanitize=undefined
-        -fsanitize=leak
-    )
+    if (APPLE)  # MacOS does not support leak sanitizer
+        add_compile_options(
+            -fno-omit-frame-pointer
+            -fsanitize=address
+            -fsanitize=undefined
+        )
+        add_link_options(
+            -fsanitize=address
+            -fsanitize=undefined
+        )
+    elseif(WIN32)
+        message(WARNING "Address sanitizer is not supported on Windows")
+    else()  # Assume Linux
+        add_compile_options(
+            -fno-omit-frame-pointer
+            -fsanitize=address
+            -fsanitize=undefined
+            -fsanitize=leak
+        )
+        add_link_options(
+            -fsanitize=address
+            -fsanitize=undefined
+            -fsanitize=leak
+        )
+    endif()
 endif()
