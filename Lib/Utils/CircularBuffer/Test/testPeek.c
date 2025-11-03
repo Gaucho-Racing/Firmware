@@ -1,7 +1,7 @@
 #include "circularBuffer.h"
 #include <stdlib.h>
 
-int main()
+int main(void)
 {
 	CircularBuffer *buffer_ptr = NULL;
 
