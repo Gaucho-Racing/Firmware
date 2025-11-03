@@ -1,6 +1,3 @@
-# Note: Depending on use this Makefile may be deprecated and removed at a later date
-# If you are using VS Code with CMake Tools extension this Makefile is not needed at all
-
 ifeq ($(OS), Windows_NT)
 	rmd = rmdir /q /q
 else
@@ -12,7 +9,7 @@ define cmake_build
 	cmake --build build/$(1)
 endef
 
-.PHONY: Debug Release RelWithDebInfo MinSizeRel HOOTLTest test clean memory_check
+.PHONY: clean Debug Release RelWithDebInfo MinSizeRel HOOTLTest sanitizer valgrind
 
 all: Debug Release RelWithDebInfo MinSizeRel HOOTLTest
 
@@ -31,14 +28,16 @@ MinSizeRel:
 HOOTLTest:
 	$(call cmake_build,$(@))
 
-test: HOOTLTest
+sanitizer: HOOTLTest
 	ctest --test-dir build/HOOTLTest
 
 clean:
 	$(rmd) build
 
-memory_check: HOOTLTest
-	@for test in $(shell find ./build/HOOTLTest -maxdepth 1 -type f -executable); do \
+valgrind:
+	cmake -S . -B build/HOOTLValgrind --preset HOOTLTest -DADDRESS_SANITIZER=OFF
+	cmake --build build/HOOTLValgrind
+	for test in $$(find build/HOOTLValgrind -maxdepth 1 -type f -executable); do \
 		echo ""; \
 		echo "Running memory check on '$$test'"; \
 		valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all -s --error-exitcode=1 "$$test"; \

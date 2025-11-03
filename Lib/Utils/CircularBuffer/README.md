@@ -7,30 +7,34 @@ buffering.
 To use this library with CMake, one needs to link the library `CircularBuffer_Lib` as an `INTERFACE` to his or her targets with `target_link_libraries()`.
 
 ## Example Usage
+
 ```c
 #include "circularBuffer.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(){
-	CircularBuffer* buffer_ptr = GR_CircularBuffer_Create(10);
+int main(void)
+{
+    CircularBuffer* buffer_ptr = GR_CircularBuffer_Create(10);
 
     {
         int arr[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-        for(int i = 0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             GR_CircularBuffer_Push(buffer_ptr, &arr[i], sizeof(arr[i]));
         }
     }
-	for(int i = 0; i < 10; i++){
-		int* tmp = GR_CircularBuffer_Pop(buffer_ptr);
-		printf("%d\n", *tmp);
+    for (int i = 0; i < 10; i++) {
+        int* tmp = GR_CircularBuffer_Pop(buffer_ptr);
+        printf("%d\n", *tmp);
         free(tmp);
-	}
+    }
 
-	GR_CircularBuffer_Free(&buffer_ptr);
+    GR_CircularBuffer_Free(&buffer_ptr);
 }
 ```
+
 Output:
+
 ```stdout
 0
 1
@@ -45,12 +49,14 @@ Output:
 ```
 
 ## Gotchas and Limitations
+
 - If there are pointers within the objects pushed into the buffer, their addressed contents are not copied (It is not possible without reinforcing object types in the buffer).
 - The user is responsible for deallocating items retrieved by GR_CircularBuffer_Pop.
 - The user MUST NOT deallocate items retrieved by GR_CircularBuffer_Peek.
 - The user must deallocate the CircularBuffer's by using GR_CircularBuffer_Free.
 
 ## Functions
+
 `GR_CircularBuffer_Create(uint16_t capacity) -> CircularBuffer*` take size as the parameter and creates a circular buffer object and returns its memory address.
 
 `GR_CircularBuffer_Free(CircularBuffer **buffer_pp) -> void`: Frees a CircularBuffer's all associated memories. Note that any pointer stored by this buffer is not freed by this function.

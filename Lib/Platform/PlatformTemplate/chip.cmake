@@ -6,13 +6,18 @@ function(add_executable_${CHIP} TARGET_NAME)
 	set(CHIP "") # REPLACE: with the appropriate platform name
 	set(CHIP_PATH "${CMAKE_SOURCE_DIR}/Lib/Platform/${CHIP}")
 	set(TARGET_FLAGS "") # REPLACE: with the appropriate linkerscript
+
 	add_executable(${TARGET_NAME})
-	set_target_properties(
+	target_compile_options(${TARGET_NAME} PRIVATE ${TARGET_FLAGS})
+	target_link_options(
 		${TARGET_NAME}
-		PROPERTIES
-			LINK_FLAGS
-				""
-	) # REPLACE: with the appropriate linkerscript, make sure to quote!
+		PRIVATE
+			${TARGET_FLAGS}
+			-T${CHIP_PATH}/CompileDependencies/<FLASH
+			LINKER
+			SCRIPT
+			HERE>.ld
+	)
 
 	# Cleanup (do not change, leave these 3 lines as is, trust)
 	set(CHIP "YOUHAVENOTCONFIGUREDCHIPRIGHT!")
