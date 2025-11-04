@@ -2,7 +2,9 @@
 #include "Logomatic.h"
 #include "StateData.h"
 #include "StateMachine.h"
+#include "Errors.h"
 #include "Unused.h"
+#include "StateUtils.h"
 
 /**
  * @brief The ECU state data lump.
@@ -51,34 +53,93 @@ void ECU_GLV_Off(ECU_StateData *stateData)
 {
 	UNUSED(stateData);
 	// TODO Implement functionality
+	// ERROR --> GLV_OFF should never be reached 
 }
 
 void ECU_GLV_On(ECU_StateData *stateData)
 {
-	UNUSED(stateData);
+	if(stateData->TractiveSystemVoltage >= 60){
+		stateData->currentState = GR_TS_DISCHARGE_OFF;
+	}
+
 	// TODO Implement functionality
+	/*if(TS Active is pressed or error){
+	* 	stateData->currentState = GR_PRECHARGE_ENGAGED
+	}*/
 }
 
 void ECU_Precharge_Engaged(ECU_StateData *stateData)
 {
 	UNUSED(stateData);
 	// TODO Implement functionality
+	/*if(TS Active is pressed || Communication Error (CAN)){
+		stateData->currentState = GR_TS_DISCHARGE_OFF
+	}*/
+	/*if(1 Isolation relay close && second isolation relay close){
+		stateData->currentState = GR_PRECHARGE_COMPLETE
+	}*/
 }
 
 void ECU_Precharge_Complete(ECU_StateData *stateData)
 {
 	UNUSED(stateData);
 	// TODO Implement functionality
+	/*
+		On but idle
+
+		If Tractive System (TS) active/Critical Error --> Tractive System Discharge
+		If Brake & RTD (Ready to Drive) --> Drive Active
+	*/
+
+	// Pseudocode
+	/*
+		if (stateData->brake >= 5% && RTD pressed) {
+			stateData->currentState = GR_DRIVE_ACTIVE
+		}
+		if (TS pressed or critical error) {
+			stateData->currentState = GR_TS_DISCHARGE_OFF
+		}
+	*/
+	
+
 }
 
 void ECU_Drive_Active(ECU_StateData *stateData)
 {
 	UNUSED(stateData);
 	// TODO Implement functionality
+	/*
+		If RTD (Ready to Drive) --> Precharge Complete
+		If APPS/BSE Violation --> Precharge Complete
+		If Tractive System (TS) active/Critical Error --> Tractive System Discharge
+			--> pressed again
+	*/
+
+	// Pseudocode
+	/*
+		if (TSActive pressed again OR critical error) {
+			stateData->currentState = GR_TS_DISCHARGE_OFF
+		}
+		if (RTD pressed again) {
+			stateData->currentState = GR_PRECHARGE_COMPLETE
+		}
+		if (APPS/BSE Violation) {
+			stateData->currentState = GR_PRECHARGE_COMPLETE
+		}
+	
+	
+	*/
+	
 }
 
 void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 {
-	UNUSED(stateData);
 	// TODO Implement functionality
+	/*
+		Discharge the tractive system to below 60 volts
+		If TS voltage < 60 --> GLV_ON
+	*/
+	if(stateData->TractiveSystemVoltage < 60){
+		stateData->currentState = GR_GLV_OFF;
+	}
 }
