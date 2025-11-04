@@ -39,7 +39,6 @@ stateDiagram
 
     %% Normal Operation Cycle (horizontal)
     Drive_Active --> Precharge_Complete : RTD
-    Drive_Active --> Precharge_Complete : APPS/BSE Violation
 
     %% Discharge state positioned below
     GLV_Off
