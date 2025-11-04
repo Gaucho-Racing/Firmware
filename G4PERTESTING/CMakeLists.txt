@@ -30,7 +30,6 @@ target_sources(
 	${PROJECT_NAME}_USER_CODE
 	INTERFACE
 	Core/Src/adc.c
-	Core/Src/coredemo.c
 	Core/Src/crc.c
 	Core/Src/dma.c
 	Core/Src/fdcan.c
