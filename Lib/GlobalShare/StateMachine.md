@@ -22,7 +22,7 @@ The state machine runs on the ECU, but it maps to an enum which may be transmitt
     'secondBkg': 'transparent',
     'tertiaryBkg': 'transparent'
   },
-  'themeCSS': '.transition { stroke: #808080; } marker path { fill: #808080; stroke: #808080; } .node rect, .node circle, .node ellipse, .node polygon, .node path { stroke: #808080; }'
+  'themeCSS': '.transition { stroke: #808080; } marker path { fill: #808080; stroke: #808080; } .node rect, .node circle, .node ellipse, .node polygon, .node path { stroke: #808080; stroke-width: 0; }'
 }}%%
 
 stateDiagram
