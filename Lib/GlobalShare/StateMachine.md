@@ -8,13 +8,21 @@ The state machine runs on the ECU, but it maps to an enum which may be transmitt
 
 ```mermaid
 %%{init: {
-  "theme": "neutral",
-  "themeVariables": {
-    "background": "transparent",
-    "primaryColor": "#ff6b6b",
-    "secondaryColor": "#4ecdc4",
-    "tertiaryColor": "#ffe66d",
-    "fontFamily": "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#ff6b6b',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#666666',
+    'lineColor': '#666666',
+    'edgeLabelBackground': 'transparent',
+    'transitionColor': '#666666',
+    'transitionLabelColor': '#000000',
+    'secondaryColor': '#4ecdc4',
+    'tertiaryColor': '#ffe66d',
+    'background': 'transparent',
+    'mainBkg': 'transparent',
+    'secondBkg': 'transparent',
+    'tertiaryBkg': 'transparent'
   }
 }}%%
 
@@ -56,10 +64,10 @@ stateDiagram
     Drive_Active : Drive Active
     Tractive_System_Discharge : Tractive System Discharge
 
-    classDef safeState fill:#4ecdc4,stroke:#666,stroke-width:1px,color:#000
-    classDef hvState fill:#ff6b6b,stroke:#666,stroke-width:1px,color:#fff
-    classDef transitionState fill:#ffe66d,stroke:#666,stroke-width:1px,color:#000
-    classDef dischargeState fill:#ff9500,stroke:#666,stroke-width:1px,color:#000
+    classDef safeState fill:#4ecdc4,stroke:#666666,stroke-width:1px,color:#000
+    classDef hvState fill:#ff6b6b,stroke:#666666,stroke-width:1px,color:#fff
+    classDef transitionState fill:#ffe66d,stroke:#666666,stroke-width:1px,color:#000
+    classDef dischargeState fill:#ff9500,stroke:#666666,stroke-width:1px,color:#000
 
     class GLV_Off,GLV_On safeState
     class Drive_Active hvState
