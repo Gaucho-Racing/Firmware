@@ -24,6 +24,7 @@ typedef union ECU_StateData {
 		uint8_t MaxCellTemp;
 		uint8_t AccumulatorStateOfCharge;
 		uint8_t GLVStateOfCharge;
+		bool PrechargeSuccess;
 
 		uint16_t TractiveSystemVoltage;
 		uint16_t VehicleSpeed;
@@ -32,6 +33,10 @@ typedef union ECU_StateData {
 
 		int16_t RRWheelRPM;
 		int16_t RLWheelRPM;
+
+		//Dash Status Msg
+		bool TS_on;
+		bool RTD;
 
 		uint16_t APPS1_SIGNAL;
 		uint16_t APPS2_SIGNAL;

@@ -15,6 +15,7 @@
  * @remark Intentionally not a globally accessible variable
  */
 ECU_StateData stateLump = {0};
+volatile uint8_t numberOfBadMessages = 0;
 
 void ECU_State_Tick(void)
 {
