@@ -90,6 +90,9 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 		If Tractive System (TS) active/Critical Error --> Tractive System Discharge
 		If Brake & RTD (Ready to Drive) --> Drive Active
 	*/
+	if(pressingBrake() && stateData->RTD){
+		stateData->currentState = GR_DRIVE_ACTIVE;
+	}
 
 	// Pseudocode
 	/*
@@ -117,18 +120,15 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 
 	// Pseudocode
 	/*
-		if (TSActive pressed again OR critical error) {
+		if (TSActive pressed again OR criticalError(stateData)) {
 			stateData->currentState = GR_TS_DISCHARGE_OFF
 		}
 		if (RTD pressed again) {
 			stateData->currentState = GR_PRECHARGE_COMPLETE
-		}
-		if (APPS/BSE Violation) {
-			stateData->currentState = GR_PRECHARGE_COMPLETE
-		}
-	
-	
 	*/
+		if (APPS_BSE_Violation(stateData)) {
+			stateData->currentState = GR_PRECHARGE_COMPLETE;
+		}
 	
 }
 
