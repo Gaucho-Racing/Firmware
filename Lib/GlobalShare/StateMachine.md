@@ -26,7 +26,8 @@ The state machine runs on the ECU, but it maps to an enum which may be transmitt
     'mainBkg': 'transparent',
     'secondBkg': 'transparent',
     'tertiaryBkg': 'transparent'
-  }
+  },
+  'themeCSS': '.arrowheadPath { fill: #d0d0d0 !important; stroke: #d0d0d0 !important; }'
 }}%%
 
 stateDiagram
