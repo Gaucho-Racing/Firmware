@@ -51,6 +51,7 @@ stateDiagram
     Precharge_Engaged --> Tractive_System_Discharge : TS Active OR Comm Error
     Precharge_Complete --> Tractive_System_Discharge : TS Active OR Critical Error
     Drive_Active --> Tractive_System_Discharge : TS Active OR Critical Error
+    GLV_On --> Tractive_System_Discharge : TS Voltage > 60V
 
     %% Return upward from discharge
     Tractive_System_Discharge --> GLV_On : TS Voltage < 60V
