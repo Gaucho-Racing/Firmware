@@ -39,6 +39,7 @@ message(
 
 # Projects
 add_gr_project(STM32G474xE ECU)
+add_gr_project(STM32G474xE G4PERTESTING)
 
 # BLINKY Demos
 add_gr_project(STM32G474xE BLINKY G4HELLO)
