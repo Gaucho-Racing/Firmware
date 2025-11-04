@@ -19,10 +19,10 @@ The state machine runs on the ECU, but it maps to an enum which may be transmitt
     'transitionLabelColor': '#ffffff',
     'secondaryColor': '#4ecdc4',
     'tertiaryColor': '#ffe66d',
-    'background': '#1a1a1a',
-    'mainBkg': '#1a1a1a',
-    'secondBkg': '#1a1a1a',
-    'tertiaryBkg': '#1a1a1a'
+    'background': '#2d2d2d',
+    'mainBkg': '#2d2d2d',
+    'secondBkg': '#2d2d2d',
+    'tertiaryBkg': '#2d2d2d'
   }
 }}%%
 
