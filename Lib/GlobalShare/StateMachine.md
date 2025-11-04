@@ -22,7 +22,7 @@ The state machine runs on the ECU, but it maps to an enum which may be transmitt
     'secondBkg': 'transparent',
     'tertiaryBkg': 'transparent'
   },
-  'themeCSS': '.transition { stroke: #808080; } marker path { fill: #808080; stroke: #808080; } .node rect, .node circle, .node ellipse, .node polygon, .node path { stroke: #808080; stroke-width: 0; }'
+  'themeCSS': '.transition { stroke: #808080; } marker path { fill: #808080; stroke: #808080; }'
 }}%%
 
 stateDiagram
@@ -63,10 +63,10 @@ stateDiagram
     Drive_Active : Drive Active
     Tractive_System_Discharge : Tractive System Discharge
 
-    classDef safeState fill:#4ecdc4,stroke:#ffffff,stroke-width:1px,color:#000
-    classDef hvState fill:#ff6b6b,stroke:#ffffff,stroke-width:1px,color:#fff
-    classDef transitionState fill:#ffe66d,stroke:#ffffff,stroke-width:1px,color:#000
-    classDef dischargeState fill:#ff9500,stroke:#ffffff,stroke-width:1px,color:#000
+    classDef safeState fill:#4ecdc4,stroke:#808080,stroke-width:1px,color:#000
+    classDef hvState fill:#ff6b6b,stroke:#808080,stroke-width:1px,color:#fff
+    classDef transitionState fill:#ffe66d,stroke:#808080,stroke-width:1px,color:#000
+    classDef dischargeState fill:#ff9500,stroke:#808080,stroke-width:1px,color:#000
 
     class GLV_Off,GLV_On safeState
     class Drive_Active hvState
