@@ -12,7 +12,7 @@ The state machine runs on the ECU, but it maps to an enum which may be transmitt
   'themeVariables': {
     'primaryColor': '#ff6b6b',
     'primaryTextColor': '#1f2328',
-    'lineColor': '#d0d0d0',
+    'lineColor': '#808080',
     'edgeLabelBackground': 'rgba(255,255,255,0.9)',
     'transitionLabelColor': '#1f2328',
     'secondaryColor': '#4ecdc4',
@@ -22,7 +22,7 @@ The state machine runs on the ECU, but it maps to an enum which may be transmitt
     'secondBkg': 'transparent',
     'tertiaryBkg': 'transparent'
   },
-  'themeCSS': '.transition { stroke: #d0d0d0; } marker path { fill: #d0d0d0; stroke: #d0d0d0; }'
+  'themeCSS': '.transition { stroke: #808080; } marker path { fill: #808080; stroke: #808080; }'
 }}%%
 
 stateDiagram
