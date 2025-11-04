@@ -12,10 +12,10 @@ The state machine runs on the ECU, but it maps to an enum which may be transmitt
   'themeVariables': {
     'primaryColor': '#ff6b6b',
     'primaryTextColor': '#000000',
-    'primaryBorderColor': '#666666',
-    'lineColor': '#666666',
+    'primaryBorderColor': '#999999',
+    'lineColor': '#999999',
     'edgeLabelBackground': 'rgba(255,255,255,0.8)',
-    'transitionColor': '#666666',
+    'transitionColor': '#999999',
     'transitionLabelColor': '#000000',
     'secondaryColor': '#4ecdc4',
     'tertiaryColor': '#ffe66d',
