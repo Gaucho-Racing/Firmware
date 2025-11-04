@@ -8,7 +8,7 @@ The state machine runs on the ECU, but it maps to an enum which may be transmitt
 
 ```mermaid
 %%{init: {
-  'theme': 'base',
+  'theme': 'dark',
   'themeVariables': {
     'primaryColor': '#ff6b6b',
     'primaryTextColor': '#ffffff',
@@ -19,10 +19,7 @@ The state machine runs on the ECU, but it maps to an enum which may be transmitt
     'transitionLabelColor': '#ffffff',
     'secondaryColor': '#4ecdc4',
     'tertiaryColor': '#ffe66d',
-    'background': '#2d2d2d',
-    'mainBkg': '#2d2d2d',
-    'secondBkg': '#2d2d2d',
-    'tertiaryBkg': '#2d2d2d'
+    'darkMode': true
   }
 }}%%
 
