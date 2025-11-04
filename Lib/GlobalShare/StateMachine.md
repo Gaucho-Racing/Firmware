@@ -14,7 +14,7 @@ The state machine runs on the ECU, but it maps to an enum which may be transmitt
     'primaryTextColor': '#000000',
     'primaryBorderColor': '#666666',
     'lineColor': '#666666',
-    'edgeLabelBackground': 'transparent',
+    'edgeLabelBackground': 'rgba(255,255,255,0.8)',
     'transitionColor': '#666666',
     'transitionLabelColor': '#000000',
     'secondaryColor': '#4ecdc4',
