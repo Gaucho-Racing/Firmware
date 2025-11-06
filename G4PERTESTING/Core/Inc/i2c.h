@@ -47,3 +47,4 @@ void MX_I2C2_Init(void);
 #endif
 
 #endif /* __I2C_H__ */
+

@@ -30,21 +30,21 @@ extern "C" {
 #include "stm32g4xx_hal.h"
 
 #include "stm32g4xx_ll_adc.h"
-#include "stm32g4xx_ll_bus.h"
-#include "stm32g4xx_ll_cortex.h"
-#include "stm32g4xx_ll_crs.h"
 #include "stm32g4xx_ll_dma.h"
-#include "stm32g4xx_ll_exti.h"
-#include "stm32g4xx_ll_gpio.h"
 #include "stm32g4xx_ll_i2c.h"
 #include "stm32g4xx_ll_lpuart.h"
-#include "stm32g4xx_ll_pwr.h"
 #include "stm32g4xx_ll_rcc.h"
-#include "stm32g4xx_ll_spi.h"
+#include "stm32g4xx_ll_bus.h"
+#include "stm32g4xx_ll_crs.h"
 #include "stm32g4xx_ll_system.h"
+#include "stm32g4xx_ll_exti.h"
+#include "stm32g4xx_ll_cortex.h"
+#include "stm32g4xx_ll_utils.h"
+#include "stm32g4xx_ll_pwr.h"
+#include "stm32g4xx_ll_spi.h"
 #include "stm32g4xx_ll_tim.h"
 #include "stm32g4xx_ll_usart.h"
-#include "stm32g4xx_ll_utils.h"
+#include "stm32g4xx_ll_gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -80,8 +80,8 @@ void Error_Handler(void);
 #define APPS1_SIGNAL_GPIO_Port GPIOC
 #define APPS2_SIGNAL_Pin LL_GPIO_PIN_3
 #define APPS2_SIGNAL_GPIO_Port GPIOC
-#define BSPD_SENSE_Pin LL_GPIO_PIN_5
-#define BSPD_SENSE_GPIO_Port GPIOA
+#define BLINKY_Pin LL_GPIO_PIN_5
+#define BLINKY_GPIO_Port GPIOA
 #define IMD_SENSE_Pin LL_GPIO_PIN_6
 #define IMD_SENSE_GPIO_Port GPIOA
 #define AMS_SENSE_Pin LL_GPIO_PIN_7
