@@ -142,6 +142,22 @@
 			"preLaunchTask": "CMake: configure and build W3_G4SPI_Transmit",
 			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd"
+		},
+		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/G4PERTESTING.elf",
+			"name": "G4PERTESTING",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32g4x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build G4PERTESTING",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd"
 		}
 	]
 }
