@@ -24,7 +24,7 @@ jobs:
         operatingSystem: [ ubuntu-latest, windows-latest, macos-latest ]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 1
 
@@ -111,7 +111,7 @@ jobs:
 
       - name: Upload Ubuntu RelWithDebInfo Builds
         if: matrix.prefix == 'RelWithDebInfo' && matrix.operatingSystem == 'ubuntu-latest'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: firmware-release-with-debug-info
           path: build/${{ matrix.prefix }}/*.elf
