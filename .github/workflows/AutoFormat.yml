@@ -16,7 +16,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout Pull Request
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 1
           ref: ${{ github.event.pull_request.head.ref }}
@@ -49,13 +49,13 @@ jobs:
       contents: write
     steps:
       - name: Checkout Pull Request
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN || github.token }}
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         with:
           python-version: '3.x'
 
@@ -81,7 +81,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout Pull Request
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.AUTOFORMAT_COMMIT_TOKEN || github.token }}
