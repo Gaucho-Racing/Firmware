@@ -34,19 +34,17 @@
 /* USER CODE END 1 */
 
 /**
-  * Enable DMA controller clock
-  */
+ * Enable DMA controller clock
+ */
 void MX_DMA_Init(void)
 {
 
-  /* Init with LL driver */
-  /* DMA controller clock enable */
-  LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMAMUX1);
-  LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMA1);
-
+	/* Init with LL driver */
+	/* DMA controller clock enable */
+	LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMAMUX1);
+	LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMA1);
 }
 
 /* USER CODE BEGIN 2 */
 
 /* USER CODE END 2 */
-
