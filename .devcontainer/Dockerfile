@@ -18,11 +18,17 @@ RUN apt-get update && apt-get install -y \
     nano \
     python3 \
     python3-pip \
-    cmake \
     ninja-build \
     openocd \
     libncurses5 \
     software-properties-common \
+    ca-certificates \
+    gpg \
+    # get latest cmake
+    && wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null \
+    && echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ focal main' | tee /etc/apt/sources.list.d/kitware.list >/dev/null \
+    && apt-get update \
+    && apt-get install -y cmake \
     && rm -rf /var/lib/apt/lists/*
 
 # arm-none-eabi-gdb requires python3.8
