@@ -27,9 +27,8 @@ Ensure Perl's in directory is in your `PATH` with `cpanm --version`. If the comm
 ```
 echo 'export PATH="$HOME/perl5/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
-
-#### Mac: replace bashrc with zshrc above
 ```
+#### Mac: replace bashrc with zshrc above
 
 ## Installing YAML::XS
 ```
