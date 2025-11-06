@@ -22,7 +22,12 @@ download and install [StrawberryPerl](https://strawberryperl.com/)
 ```
 curl -L https://cpanmin.us | perl - App::cpanminus
 ```
-ensure Perl's in directory is in your `PATH` with `cpanm --version`
+ensure Perl's in directory is in your `PATH` with `cpanm --version`. If the command is not found, move it into your `PATH`
+#### macOS/Linux:
+```
+echo 'export PATH="$HOME/perl5/bin:$PATH"' >> ~/.bash_profile
+source ~/.bash_profile
+```
 
 ## Installing YAML::XS
 ```
