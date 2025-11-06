@@ -18,4 +18,5 @@ updates:
       - "GitHub"
       - "Small Fry"
     commit-message:
+      prefix: "Dependabot"
       include: "scope"
