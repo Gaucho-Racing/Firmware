@@ -35,7 +35,7 @@ cpanm YAML::XS
 ```
 Verify with:
 ```
-perl -MYAML::XS -e 'print "YAML::XS installed\n"
+perl -MYAML::XS -e 'print "YAML::XS installed\n";'
 ```
 
 
