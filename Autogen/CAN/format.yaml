@@ -1,0 +1,50 @@
+
+ECE Status 1: 
+  MSG ID: 0x003
+  MSG LENGTH: 8
+  ECU State: 0 
+  #Dataname : bit start
+	#####################
+	
+  ACU Node Status: 8  
+	#description
+  GR Inv 1 Status: 9
+	#description
+  GR Inv 2 Status: 10
+	#description
+  GR Inv 3 Status: 11
+	#description
+  GR Inv 4 Status: 12
+	#description
+  Fan Controller 1: 13
+	#description
+  Fan Controller 2: 14
+	#description
+  Fan Controller 3: 15
+	#description
+  Fan Controller 4: 16
+	#description
+  Fan Controller 5: 17
+	#description
+  Fan Controller 6: 18
+	#description
+  Fan Controller 7: 19
+	#description
+  Fan Controller 8: 20
+	#description
+  Dash: 21
+	#description
+  Steering: 22 
+	#description
+  Reserved: 23
+	#description
+  Power level: 32
+	#description
+  Torque: 36
+	#description
+  Max Cel Temp: 40
+	#description
+  Accumulator State of Charge: 48 
+	#description
+  GLV State of Charge: 56
+	#description
