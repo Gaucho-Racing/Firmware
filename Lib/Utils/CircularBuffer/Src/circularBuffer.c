@@ -19,10 +19,17 @@ CircularBuffer *GR_CircularBuffer_Create(uint16_t capacity)
 	}
 	// For specifications see the header file
 	CircularBuffer *buffer = malloc(sizeof(CircularBuffer));
+	if (!buffer) {
+		return NULL;
+	}
 	buffer->head = 0;
 	buffer->tail = 0;
 	buffer->capacity = capacity;
 	buffer->buffer = calloc(capacity, sizeof(void *));
+	if (!buffer->buffer) {
+		free(buffer);
+		return NULL;
+	}
 	return buffer;
 }
 
@@ -31,6 +38,9 @@ void GR_CircularBuffer_Free(CircularBuffer **buffer_pp)
 	// Error check
 	if (!buffer_pp || !*buffer_pp) {
 		return;
+	}
+	for (uint16_t i = 0; i < (*buffer_pp)->capacity; i++) {
+		free((*buffer_pp)->buffer[i]);
 	}
 	// Free buffer body
 	free((*buffer_pp)->buffer);
@@ -58,7 +68,7 @@ uint16_t GR_CircularBuffer_GetCurrentSize(CircularBuffer *buffer_ptr)
 	}
 	// Empty case, since occupied member must have a non-null wrapper
 	// pointer
-	if (buffer_ptr->buffer[buffer_ptr->head] == NULL) {
+	if (!buffer_ptr->buffer[buffer_ptr->head]) {
 		return 0;
 	}
 	// Account for circular buffer's loopback behaviour
@@ -78,8 +88,7 @@ bool GR_CircularBuffer_IsFull(CircularBuffer *buffer_ptr)
 	}
 	// In the case where head and tail iterators are equal,
 	// the buffer is full if any entry in the buffer is occupied.
-	return buffer_ptr->head == buffer_ptr->tail &&
-	       buffer_ptr->buffer[0] != NULL;
+	return buffer_ptr->head == buffer_ptr->tail && buffer_ptr->buffer[0];
 }
 
 bool GR_CircularBuffer_IsEmpty(CircularBuffer *buffer_ptr)
@@ -90,27 +99,37 @@ bool GR_CircularBuffer_IsEmpty(CircularBuffer *buffer_ptr)
 	}
 	// In the case where head and tail iterators are equal,
 	// the buffer is empty if any entry in the buffer is free.
-	return buffer_ptr->head == buffer_ptr->tail &&
-	       buffer_ptr->buffer[0] == NULL;
+	return buffer_ptr->head == buffer_ptr->tail && !buffer_ptr->buffer[0];
 }
 
-uint8_t GR_CircularBuffer_Push(CircularBuffer *buffer_ptr, void *object)
+uint8_t GR_CircularBuffer_Push(CircularBuffer *buffer_ptr, void *object_ptr,
+			       uint16_t object_size)
 {
 	// Buffer null error
 	if (!buffer_ptr) {
 		return 1;
 	}
+	void *new_item = malloc(object_size);
+	if (!new_item) {
+		return 2;
+	}
+	memcpy(new_item, object_ptr, object_size);
+
 	// Remove the buffer head if it's going to be overwritten
 	// That is, if the buffer is already full
-	if (GR_CircularBuffer_IsFull(buffer_ptr)) {
-		buffer_ptr->head++;
-		if (buffer_ptr->head == buffer_ptr->capacity) {
-			buffer_ptr->head = 0;
+	{
+		void *head_item = buffer_ptr->buffer[buffer_ptr->head];
+		if (buffer_ptr->head == buffer_ptr->tail && head_item) {
+			free(head_item);
+			buffer_ptr->head++;
+			if (buffer_ptr->head == buffer_ptr->capacity) {
+				buffer_ptr->head = 0;
+			}
 		}
 	}
 
 	// Add the object to the buffer
-	buffer_ptr->buffer[buffer_ptr->tail] = object;
+	buffer_ptr->buffer[buffer_ptr->tail] = new_item;
 
 	// Update tail iterator
 	buffer_ptr->tail++;
@@ -131,11 +150,6 @@ void *GR_CircularBuffer_Pop(CircularBuffer *buffer_ptr)
 	// Get buffer head's pointer
 	void *result = buffer_ptr->buffer[buffer_ptr->head];
 
-	// Return immediately if buffer is empty
-	if (result == NULL) {
-		return NULL;
-	}
-
 	// Update the buffer
 	buffer_ptr->buffer[buffer_ptr->head] = NULL;
 
@@ -149,7 +163,7 @@ void *GR_CircularBuffer_Pop(CircularBuffer *buffer_ptr)
 	return result;
 }
 
-void *GR_CircularBuffer_Peek(CircularBuffer *buffer_ptr)
+const void *GR_CircularBuffer_Peek(CircularBuffer *buffer_ptr)
 {
 	// Buffer null error
 	if (!buffer_ptr) {

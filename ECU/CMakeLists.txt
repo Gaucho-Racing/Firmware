@@ -33,9 +33,6 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
 	# FIXME Add more HOOTL tests
 endif()
 
-# Enable compile command to ease indexing with e.g. clangd
-set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
-
 # Enable CMake support for ASM and C languages
 enable_language(
 	C

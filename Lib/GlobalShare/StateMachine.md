@@ -11,19 +11,18 @@ The state machine runs on the ECU, but it maps to an enum which may be transmitt
   'theme': 'base',
   'themeVariables': {
     'primaryColor': '#ff6b6b',
-    'primaryTextColor': '#ffffff',
-    'primaryBorderColor': '#ff6b6b',
-    'lineColor': '#ffffff',
-    'edgeLabelBackground': 'rgba(0,0,0,0.8)',
-    'transitionColor': '#ffffff',
-    'transitionLabelColor': '#ffffff',
+    'primaryTextColor': '#1f2328',
+    'lineColor': '#808080',
+    'edgeLabelBackground': 'rgba(255,255,255,0.8)',
+    'transitionLabelColor': '#1f2328',
     'secondaryColor': '#4ecdc4',
     'tertiaryColor': '#ffe66d',
-    'background': '#000000',
-    'mainBkg': '#000000',
-    'secondBkg': '#000000',
-    'tertiaryBkg': '#000000'
-  }
+    'background': 'transparent',
+    'mainBkg': 'transparent',
+    'secondBkg': 'transparent',
+    'tertiaryBkg': 'transparent'
+  },
+  'themeCSS': '.transition { stroke: #808080; } marker path { fill: #808080; stroke: #808080; }'
 }}%%
 
 stateDiagram
@@ -39,7 +38,6 @@ stateDiagram
 
     %% Normal Operation Cycle (horizontal)
     Drive_Active --> Precharge_Complete : RTD
-    Drive_Active --> Precharge_Complete : APPS/BSE Violation
 
     %% Discharge state positioned below
     GLV_Off
@@ -65,10 +63,10 @@ stateDiagram
     Drive_Active : Drive Active
     Tractive_System_Discharge : Tractive System Discharge
 
-    classDef safeState fill:#4ecdc4,stroke:#ffffff,stroke-width:1px,color:#000
-    classDef hvState fill:#ff6b6b,stroke:#ffffff,stroke-width:1px,color:#fff
-    classDef transitionState fill:#ffe66d,stroke:#ffffff,stroke-width:1px,color:#000
-    classDef dischargeState fill:#ff9500,stroke:#ffffff,stroke-width:1px,color:#000
+    classDef safeState fill:#4ecdc4,stroke:#808080,stroke-width:1px,color:#000
+    classDef hvState fill:#ff6b6b,stroke:#808080,stroke-width:1px,color:#fff
+    classDef transitionState fill:#ffe66d,stroke:#808080,stroke-width:1px,color:#000
+    classDef dischargeState fill:#ff9500,stroke:#808080,stroke-width:1px,color:#000
 
     class GLV_Off,GLV_On safeState
     class Drive_Active hvState

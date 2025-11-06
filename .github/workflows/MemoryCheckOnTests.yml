@@ -28,24 +28,13 @@ jobs:
         with:
           packages: valgrind
 
-      - name: Build HOOTLTest
-        run: |
-          set -o pipefail
-          echo "<details><summary>Make HOOTLTest</summary>" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          make HOOTLTest 2>&1 | tee -a $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "</details>" >> $GITHUB_STEP_SUMMARY
-
-      - name: Run Memory Check
+      - name: Build and Run Memory Check
         run: |
           set -o pipefail
           echo "<details open><summary>HOOTLTest Memory Check</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          make memory_check 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+          make valgrind 2>&1 | tee -a $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
