@@ -6,7 +6,7 @@ parser description here
 ---
 ## Installing Perl
 ### for macOS:
-macOS comes with Perl, but you can install a newer version via [HomeBrew](https://brew.sh/)
+macOS comes with Perl, but you can install a newer version via [HomeBrew](https://brew.sh/).
 ```
 brew install perl
 ```
@@ -16,13 +16,13 @@ Ubuntu/Debian:
 sudo apt-get install -y perl build-essential libyaml-dev
 ```
 ### for Windows:
-download and install [StrawberryPerl](https://strawberryperl.com/)
+Download and install [StrawberryPerl](https://strawberryperl.com/).
 
 ## Installing CPANM (for YAML)
 ```
 curl -L https://cpanmin.us | perl - App::cpanminus
 ```
-ensure Perl's in directory is in your `PATH` with `cpanm --version`. If the command is not found, move it into your `PATH`
+Ensure Perl's in directory is in your `PATH` with `cpanm --version`. If the command is not found, move it into your `PATH` with the commands below:
 #### macOS/Linux:
 ```
 echo 'export PATH="$HOME/perl5/bin:$PATH"' >> ~/.bash_profile
@@ -33,7 +33,7 @@ source ~/.bash_profile
 ```
 cpanm YAML::XS
 ```
-verify with:
+Verify with:
 ```
 perl -MYAML::XS -e 'print "YAML::XS installed\n"
 ```
