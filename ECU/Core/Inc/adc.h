@@ -44,6 +44,40 @@ void MX_ADC2_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
+typedef struct {
+    // ADC1
+    float AUX_SIGNAL;
+    float BSPD_SIGNAL;
+    float APPS1_SIGNAL;
+    float APPS2_SIGNAL;
+    float BRAKE_R_SIGNAL;
+    float BRAKE_F_SIGNAL;
+    // ADC2
+    float IMD_SENSE;
+    float AMS_SENSE;
+    float BSE_SIGNAL;
+    float BSPD_SENSE;
+    float STEERING_ANGLE;
+} AnalogInput;
+typedef enum {
+    // ADC1
+    AUX_SIGNAL = 0,
+    BSPD_SIGNAL,
+    APPS1_SIGNAL,
+    APPS2_SIGNAL,
+    BRAKE_R_SIGNAL,
+    BRAKE_F_SIGNAL,
+    // ADC2
+    IMD_SENSE,
+    AMS_SENSE,
+    BSE_SIGNAL, // Who knows
+    BSPD_SENSE,
+    STEERING_ANGLE,
+} AnalogSignal;
+
+void updateAnalogInputs(void);
+
+extern AnalogInput globalAnalog;
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
