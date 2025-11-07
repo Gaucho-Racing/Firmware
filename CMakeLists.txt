@@ -32,7 +32,7 @@ include("${lib_path}/Utils/CircularBuffer/circular-buffer-lib.cmake")
 include("${lib_path}/cmake/gr-lib.cmake")
 
 # Peripherals
-include("${lib_path}/Inhouse/Peripherals/USART/common.cmake")
+include("${lib_path}/Peripherals/USART/common.cmake")
 
 message(
 	STATUS
