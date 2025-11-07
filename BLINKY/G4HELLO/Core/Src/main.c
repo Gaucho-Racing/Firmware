@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Logomatic.h"
+#include "Peripherals/USART/usart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -115,6 +116,7 @@ int main(void)
 		/* USER CODE BEGIN 3 */
 		LOGOMATIC("Hello, LOGOMATIC! Great to be here %f\n",
 			  3.14159265);
+		usart_example();
 
 		LL_mDelay(750);
 	}
