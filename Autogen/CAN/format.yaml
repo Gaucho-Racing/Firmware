@@ -2,41 +2,124 @@
 ECE Status 1: 
   MSG ID: 0x003
   MSG LENGTH: 8
-  ECU State: 0 
   # Dataname : bit start
 	#####################
-	# See: https://wiki.gauchoracing.com/link/189#bkmrk-state-machine
-  ACU Node Status: 
-    bit start: 8
-  # Lines 11-24 Description: [1: OK, 0: Timeout]
-  GR Inv 1 Status: # bit start: 9
+  ECU State: # bit start 0
     data type: u8
+    units: Enum
+  # Lines 10-24 Description: [1: OK, 0: Timeout]
+	# See: https://wiki.gauchoracing.com/link/189#bkmrk-state-machine
+  ACU Node Status: # bit start: 8
+    data type: byte
     min: 0
     max: 1
-    Units: Enum
+    units: Bool
+  GR Inv 1 Status: # bit start: 9
+    data type: byte
+    min: 0
+    max: 1
+    units: Bool
   GR Inv 2 Status:  # bit start: 10 
+    data type: byte
+    min: 0
+    max: 1
+    units: Bool
   GR Inv 3 Status:  # bit start: 11 
+    data type: byte
+    min: 0
+    max: 1
+    units: Bool
   GR Inv 4 Status:  # bit start: 12
+    data type: byte
+    min: 0
+    max: 1
+    units: Bool
   Fan Controller 1:  # bit start: 13
+    data type: byte
+    min: 0
+    max: 1
+    units: Bool
   Fan Controller 2:  # bit start: 14
+    data type: byte
+    min: 0
+    max: 1
+    units: Bool
   Fan Controller 3:  # bit start: 15
+    data type: byte
+    min: 0
+    max: 1
+    units: Bool
   Fan Controller 4:  # bit start: 16
+    data type: byte
+    min: 0
+    max: 1
+    units: Bool
   Fan Controller 5:  # bit start: 17
+    data type: byte
+    min: 0
+    max: 1
+    units: Bool
   Fan Controller 6:  # bit start: 18
+    data type: byte
+    min: 0
+    max: 1
+    units: Bool
   Fan Controller 7:  # bit start: 19
+    data type: byte
+    min: 0
+    max: 1
+    units: Bool
   Fan Controller 8:  # bit start: 20
+    data type: byte
+    min: 0
+    max: 1
+    units: Bool
   Dash:  # bit start: 21
+    data type: byte
+    min: 0
+    max: 1
+    units: Bool
   Steering:  # bit start: 22 
-	# Reserved for future use
+    data type: byte
+    min: 0
+    max: 1
+    units: Bool
   Reserved:  # bit start: 23
 	# Controls the AC current limits to each of the inverters
   # Discrete Mapping, actual values TBD (16 possible values)
   Power level:  # bit start: 32
+    data type: u4
+    min: 0
+    max: 15
 	# The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor
   Torque:  # bit start: 36
+    data type: u4
+    min: 0
+    max: 16
 	# the temperature of the hottest cell of the accumulator
   Max Cel Temp:  # bit start: 40
+    data type: u8
+    min: 0
+    max: 255
+    scaled min: 0
+    scaled max: 63.75
+    map equation:.25x
+    units: Celsius
 	# % charged of the Accumulator
   Accumulator State of Charge:  # bit start: 48 
+    data type: u8
+    min: 0
+    max: 255
+    scaled min: 0
+    scaled max: 100
+    map equation: 20x/51
+    units: %
 	# % charged of the Low Voltage Bat
   GLV State of Charge:  # bit start: 56
+    ata type: u8
+    min: 0
+    max: 255
+    scaled min: 0
+    scaled max: 100
+    map equation: 20x/51
+    units: %
