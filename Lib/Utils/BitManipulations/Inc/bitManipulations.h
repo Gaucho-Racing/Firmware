@@ -1,8 +1,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#ifndef _GETBITS_H_
-#define _GETBITS_H_
+#ifndef _BIT_MANIPULATIONS_H_
+#define _BIT_MANIPULATIONS_H_
 
 /**
  * @brief Get the value of a single bit within a byte.
