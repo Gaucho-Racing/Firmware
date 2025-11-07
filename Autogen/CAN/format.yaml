@@ -2,8 +2,6 @@
 ECE Status 1: 
   MSG ID: 0x003
   MSG LENGTH: 8
-  # Dataname : bit start
-	#####################
   ECU State: # bit start 0
     data type: u8
     units: Enum
