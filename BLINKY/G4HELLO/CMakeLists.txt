@@ -38,6 +38,6 @@ target_sources(
 		Core/Src/syscalls.c
 )
 
-target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE PERIPHERAL_USART_LIB)
+target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
 
 target_include_directories(${GR_PROJECT_NAME}_USER_CODE INTERFACE Core/Inc)
