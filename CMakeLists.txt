@@ -24,12 +24,16 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 set(lib_path "Lib")
 set(platform_path "${lib_path}/Platform")
 
+# Platforms
 include("${platform_path}/STM32G474xE/chip.cmake")
 include("${platform_path}/STM32U5A9xJ/chip.cmake")
 include("${platform_path}/STM32L476xG/chip.cmake")
+
+# Utils
 include("${lib_path}/GlobalShare/common.cmake")
 include("${lib_path}/Utils/CircularBuffer/circular-buffer-lib.cmake")
 include("${lib_path}/cmake/gr-lib.cmake")
+include("${lib_path}/Utils/BitManipulations/bit-utils.cmake")
 
 # Peripherals
 include("${lib_path}/Peripherals/USART/common.cmake")
