@@ -90,7 +90,8 @@
  *   GETBITS(data, 2, 4);  // returns 0b1101 (bits 2-5)
  *   GETBITS(data, 5, 3);  // returns 0b101 (bits 5-7: MSB side)
  */
-#define GETBITS(value, bit_index, length) ((value >> bit_index) & ((1uLL << length) - 1))
+#define GETBITS(value, bit_index, length)                                      \
+	((value >> bit_index) & ((1uLL << length) - 1))
 
 /**
  * @brief Set or clear a single bit within a byte (MSB-first indexing).
@@ -110,7 +111,8 @@
  * @note Index must be in range [0, 7]; out-of-range causes undefined behavior
  * @note Does not modify the input; returns a new value
  *
- * @warning Index must be in range [0, 7]; out-of-range causes undefined behavior
+ * @warning Index must be in range [0, 7]; out-of-range causes undefined
+ * behavior
  *
  * Example:
  *   uint8_t data = 0b00000000;
@@ -161,6 +163,7 @@ uint8_t SetBitInByte(uint8_t number, uint8_t index, bool value);
  *   HW bit:    7   6   5   4   3   2   1   0
  *   Position: MSB                         LSB
  */
-uint8_t SetBitsInByte(uint8_t number, uint8_t index, uint8_t length, uint8_t value);
+uint8_t SetBitsInByte(uint8_t number, uint8_t index, uint8_t length,
+		      uint8_t value);
 
 #endif
