@@ -4,13 +4,13 @@
 #ifndef GR_PERIPHERALS_ADC
 #define GR_PERIPHERALS_ADC
 
-enum ADC_Group {
+typedef enum{
     GROUP_12,
     GROUP_34,
     GROUP_5
-};
+} ADC_Group;
 
-enum Pre_Scaler_Values{
+typedef enum{
     PS_1 = LL_ADC_CLOCK_ASYNC_DIV1,
     PS_2 = LL_ADC_CLOCK_ASYNC_DIV2,
     PS_4 = LL_ADC_CLOCK_ASYNC_DIV4,
@@ -23,28 +23,28 @@ enum Pre_Scaler_Values{
     PS_64 = LL_ADC_CLOCK_ASYNC_DIV64,
     PS_128 = LL_ADC_CLOCK_ASYNC_DIV128,
     PS_256 = LL_ADC_CLOCK_ASYNC_DIV256
-};
+} Pre_Scaler_Values;
 
-void ADC_Group_Init(enum ADC_Group group, enum Pre_Scaler_Values PS_Val);
+void ADC_Group_Init(ADC_Group group, Pre_Scaler_Values PS_Val);
 
-enum ADC_Number {
+typedef enum{
     ADC_1,
     ADC_2,
     ADC_3,
     ADC_4,
     ADC_5
-};
+} ADC_Number;
 
-enum Bit_Alignment{
+typedef enum{
     RIGHT,
     LEFT
-};
+} Bit_Alignment;
 
 // Return a pointer to DMA 
 
 typedef struct ADC_Initializer{
-    enum ADC_Number ADC_Num; // ADC to use
-    enum Bit_Alignment Bit_Align; // The bit alignment for the ADC output
+    ADC_Number ADC_Num; // ADC to use
+    Bit_Alignment Bit_Align; // The bit alignment for the ADC output
 };
 
 // Input for initializing a single pin
