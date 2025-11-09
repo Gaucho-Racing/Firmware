@@ -1,24 +1,27 @@
 #include <stdbool.h>
 #include <stdint.h>
+#include <stddef.h>
 
 #include "bitManipulations.h"
 
-void SetBitInByte(uint8_t *byte, uint8_t index, bool value)
-{
+uint8_t SetBitInByte(uint8_t number, uint8_t index, bool value)  {
+	if (index > 7) {
+		return number;	// Invalid index, undefined behavior
+	}
+
 	if (value) {
-		*byte |= (1 << index);
+		return number | (1u << (7 - index));	// Set bit to 1
 	} else {
-		*byte &= ~(1 << index);
+		return number & ~(1u << (7 - index));	// Set bit to 0
 	}
 }
 
-void SetBitsInByte(uint8_t *byte, uint8_t index, uint8_t length, uint8_t value)
+uint8_t SetBitsInByte(uint8_t number, uint8_t index, uint8_t length, uint8_t value)
 {
-	uint8_t mask = ((1 << length) - 1) << index;
-	*byte = (*byte & ~mask) | ((value << index) & mask);
-}
+	if (length == 0 || index + length > 8) {
+		return number;	// Invalid parameters, undefined behavior
+	}
 
-void SetBitInByteArray(uint8_t *byteArray, uint8_t bitIndex, bool value)
-{
-	SetBitInByte(&byteArray[bitIndex / 8], bitIndex % 8, value);
+	uint8_t mask = ((1u << length) - 1) << (sizeof(uint8_t) * 8 - index - length);
+	return (number & ~mask) | ((value << (sizeof(uint8_t) * 8 - index - length)) & mask);
 }
