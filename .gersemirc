@@ -2,6 +2,6 @@
 
 indent: tabs
 line_length: 100
-list_expansion: favour-inlining
+list_expansion: favour-expansion
 warn_about_unknown_commands: false
 warnings_as_errors: true
