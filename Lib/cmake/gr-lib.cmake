@@ -4,7 +4,10 @@ function(add_gr_project)
 	elseif(${ARGC} EQUAL 3)
 		set(GR_PROJECT_PATH ${ARGV2})
 	else()
-		message(FATAL_ERROR "You called add_GR_project with an unsupported number of inputs/arguments! Do better please :)")
+		message(
+			FATAL_ERROR
+			"You called add_GR_project with an unsupported number of inputs/arguments! Do better please :)"
+		)
 	endif()
 
 	set(Platform ${ARGV0})

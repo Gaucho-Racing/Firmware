@@ -13,7 +13,11 @@ else()
 	set(_ADDRESS_SANITIZER_DEFAULT_ OFF)
 endif()
 
-option(ADDRESS_SANITIZER "Enable address sanitizer for tests, breaks Valgrind" ${_ADDRESS_SANITIZER_DEFAULT_})
+option(
+	ADDRESS_SANITIZER
+	"Enable address sanitizer for tests, breaks Valgrind"
+	${_ADDRESS_SANITIZER_DEFAULT_}
+)
 
 add_compile_options(
 	-Wall
