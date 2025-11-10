@@ -1,0 +1,22 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "19:00"
+      timezone: "America/Los_Angeles"
+    assignees:
+      - "dchansen06"
+    groups:
+      actions-updates:
+        patterns:
+          - "*"
+    labels:
+      - "0 TRIAGE"
+      - "GitHub"
+      - "Small Fry"
+    commit-message:
+      prefix: "Dependabot"
+      include: "scope"
