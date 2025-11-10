@@ -1,7 +1,7 @@
 # Gersemi CMake Formatter Configuration
 
 indent: tabs
-line_length: 100
-list_expansion: favour-expansion
+line_length: 60
+list_expansion: favour-inlining
 warn_about_unknown_commands: false
 warnings_as_errors: true
