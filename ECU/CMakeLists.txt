@@ -15,17 +15,10 @@ get_filename_component(GR_PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Test")
 	add_executable(state_machine_tick_returns)
-	target_include_directories(
-		state_machine_tick_returns
-		PRIVATE
-			Application/Inc
-			Core/Inc
-	)
+	target_include_directories(state_machine_tick_returns PRIVATE Application/Inc Core/Inc)
 	target_sources(
 		state_machine_tick_returns
-		PRIVATE
-			Test/state_machine_tick_returns.c
-			Application/Src/StateTicks.c
+		PRIVATE Test/state_machine_tick_returns.c Application/Src/StateTicks.c
 	)
 	target_link_libraries(state_machine_tick_returns PRIVATE GLOBALSHARE_LIB)
 	add_test(state_machine_tick_returns state_machine_tick_returns)
@@ -34,10 +27,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
 endif()
 
 # Enable CMake support for ASM and C languages
-enable_language(
-	C
-	ASM
-)
+enable_language(C ASM)
 
 # Core project settings
 project(${CMAKE_PROJECT_NAME})
@@ -67,9 +57,4 @@ target_sources(
 
 target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
 
-target_include_directories(
-	${GR_PROJECT_NAME}_USER_CODE
-	INTERFACE
-		Application/Inc
-		Core/Inc
-)
+target_include_directories(${GR_PROJECT_NAME}_USER_CODE INTERFACE Application/Inc Core/Inc)

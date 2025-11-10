@@ -11,22 +11,13 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 # Enable CMake support for ASM and C languages
-enable_language(
-	C
-	ASM
-)
+enable_language(C ASM)
 
 # Core project settings
 project(BCC)
 
 add_library(${PROJECT_NAME} INTERFACE)
-target_sources(
-	${PROJECT_NAME}
-	INTERFACE
-		Src/bcc.c
-		Src/bcc_communication.c
-		Src/bcc_diagnostics.c
-)
+target_sources(${PROJECT_NAME} INTERFACE Src/bcc.c Src/bcc_communication.c Src/bcc_diagnostics.c)
 
 target_link_libraries(${PROJECT_NAME} INTERFACE)
 

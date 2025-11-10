@@ -2,10 +2,7 @@ cmake_minimum_required(VERSION 3.25)
 
 project(Firmware)
 
-enable_language(
-	C
-	ASM
-)
+enable_language(C ASM)
 
 # Setup compiler settings
 set(CMAKE_C_STANDARD 11)
@@ -31,11 +28,7 @@ include("${lib_path}/GlobalShare/common.cmake")
 include("${lib_path}/Utils/CircularBuffer/circular-buffer-lib.cmake")
 include("${lib_path}/cmake/gr-lib.cmake")
 
-message(
-	STATUS
-	"Build type: "
-	${CMAKE_BUILD_TYPE}
-)
+message(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
 
 # Projects
 add_gr_project(STM32G474xE ECU)

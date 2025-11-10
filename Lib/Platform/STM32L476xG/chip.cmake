@@ -1,22 +1,11 @@
 set(CHIP "STM32L476xG")
 set(CHIP_PATH "${CMAKE_SOURCE_DIR}/Lib/Platform/${CHIP}")
-set(
-	TARGET_FLAGS
-	-mcpu=cortex-m4
-	-mfpu=fpv4-sp-d16
-	-mfloat-abi=hard
-)
+set(TARGET_FLAGS -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard)
 
 function(add_executable_${CHIP} TARGET_NAME)
 	set(CHIP "STM32L476xG")
 	set(CHIP_PATH "${CMAKE_SOURCE_DIR}/Lib/Platform/${CHIP}")
-	set(
-		TARGET_FLAGS
-		-mcpu=cortex-m4
-		-mfpu=fpv4-sp-d16
-		-mfloat-abi=hard
-		-mthumb
-	)
+	set(TARGET_FLAGS -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb)
 
 	add_executable(${TARGET_NAME})
 
@@ -24,10 +13,7 @@ function(add_executable_${CHIP} TARGET_NAME)
 	target_compile_options(${TARGET_NAME} PRIVATE ${TARGET_FLAGS})
 	target_link_options(
 		${TARGET_NAME}
-		PRIVATE
-			${TARGET_FLAGS}
-			-T
-			"${CHIP_PATH}/CompileDependencies/STM32L476XX_FLASH.ld"
+		PRIVATE ${TARGET_FLAGS} -T "${CHIP_PATH}/CompileDependencies/STM32L476XX_FLASH.ld"
 	)
 
 	set(CHIP "YOUHAVENOTCONFIGUREDCHIPRIGHT!")
@@ -38,12 +24,7 @@ endfunction()
 add_library(${CHIP}_LIB INTERFACE)
 
 # used to strip the last 2 characters of CHIP to make the compile def
-string(
-	SUBSTRING ${CHIP}
-	0
-	9
-	TEMP
-) # FIXME Scary
+string(SUBSTRING ${CHIP} 0 9 TEMP) # FIXME Scary
 target_compile_definitions(
 	${CHIP}_LIB
 	INTERFACE

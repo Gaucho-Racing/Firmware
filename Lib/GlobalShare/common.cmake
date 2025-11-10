@@ -4,14 +4,8 @@ target_include_directories(GLOBALSHARE_LIB INTERFACE ${CMAKE_CURRENT_LIST_DIR}/I
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
 	target_compile_definitions(GLOBALSHARE_LIB INTERFACE LOGOMATIC_ENABLED)
-	add_compile_options(
-		-u
-		_printf_float
-	)
-	add_link_options(
-		-u
-		_printf_float
-	)
+	add_compile_options(-u _printf_float)
+	add_link_options(-u _printf_float)
 endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL "Test")

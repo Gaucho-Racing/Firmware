@@ -1,22 +1,11 @@
 set(CHIP "STM32U5A9xJ")
 set(CHIP_PATH "${CMAKE_SOURCE_DIR}/Lib/Platform/${CHIP}")
-set(
-	TARGET_FLAGS
-	-mcpu=cortex-m33
-	-mfpu=fpv4-sp-d16
-	-mfloat-abi=hard
-)
+set(TARGET_FLAGS -mcpu=cortex-m33 -mfpu=fpv4-sp-d16 -mfloat-abi=hard)
 
 function(add_executable_${CHIP} TARGET_NAME)
 	set(CHIP "STM32U5A9xJ")
 	set(CHIP_PATH "${CMAKE_SOURCE_DIR}/Lib/Platform/${CHIP}")
-	set(
-		TARGET_FLAGS
-		-mcpu=cortex-m33
-		-mfpu=fpv4-sp-d16
-		-mfloat-abi=hard
-		-mthumb
-	)
+	set(TARGET_FLAGS -mcpu=cortex-m33 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb)
 	add_executable(${TARGET_NAME})
 
 	target_compile_options(
@@ -27,10 +16,7 @@ function(add_executable_${CHIP} TARGET_NAME)
 	)
 	target_link_options(
 		${TARGET_NAME}
-		PRIVATE
-			${TARGET_FLAGS}
-			-T
-			"${CHIP_PATH}/CompileDependencies/STM32U5A9xx_FLASH.ld"
+		PRIVATE ${TARGET_FLAGS} -T "${CHIP_PATH}/CompileDependencies/STM32U5A9xx_FLASH.ld"
 	)
 
 	# Cleanup
@@ -43,19 +29,10 @@ add_library(${CHIP}_LIB INTERFACE)
 
 # enable_language(C ASM)
 
-string(
-	SUBSTRING ${CHIP}
-	0
-	9
-	TEMP
-) # FIXME Scary
+string(SUBSTRING ${CHIP} 0 9 TEMP) # FIXME Scary
 target_compile_definitions(
 	${CHIP}_LIB
-	INTERFACE
-		USE_FULL_LL_DRIVER
-		USE_HAL_DRIVER
-		STM32U5A9xx
-		STM32U5
+	INTERFACE USE_FULL_LL_DRIVER USE_HAL_DRIVER STM32U5A9xx STM32U5
 )
 
 target_include_directories(
