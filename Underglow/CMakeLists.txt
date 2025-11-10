@@ -31,11 +31,16 @@ target_sources(
 	INTERFACE
 	
 	Core/Src/main.c
+	Core/Src/gpio.c
+	Core/Src/adc.c
+	Core/Src/crc.c
+	Core/Src/fdcan.c
+	Core/Src/spi.c
 	Core/Src/stm32g4xx_it.c
 	Core/Src/stm32g4xx_hal_msp.c
 	Core/Src/system_stm32g4xx.c
-	Core/Src/syscalls.c
 	Core/Src/sysmem.c
+	Core/Src/syscalls.c
 )
 
 target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE)
@@ -45,6 +50,4 @@ target_include_directories(
 	INTERFACE
 		Core/Inc
 		Application/Inc
-		../Lib/Platform/STM32G474xE/Drivers/stm32-hal-driver/Inc
-		
 )
