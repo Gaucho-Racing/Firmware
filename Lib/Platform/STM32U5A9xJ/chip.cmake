@@ -43,7 +43,12 @@ add_library(${CHIP}_LIB INTERFACE)
 
 # enable_language(C ASM)
 
-string(SUBSTRING ${CHIP} 0 9 TEMP) # FIXME Scary
+string(
+	SUBSTRING ${CHIP}
+	0
+	9
+	TEMP
+) # FIXME Scary
 target_compile_definitions(
 	${CHIP}_LIB
 	INTERFACE

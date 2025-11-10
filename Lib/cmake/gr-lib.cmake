@@ -30,11 +30,7 @@ function(add_gr_project)
 			set(COMBINATOR "${GR_PROJECT}")
 		endif()
 
-		cmake_language(
-			CALL
-				add_executable_${Platform}
-				${TARGET_NAME}
-		)
+		cmake_language(CALL add_executable_${Platform} ${TARGET_NAME})
 
 		# Create unique interface library to avoid conflicts
 		set(INTERFACE_LIB "${COMBINATOR}_INTERFACE_LIB")
