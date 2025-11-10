@@ -36,12 +36,12 @@ if(ADDRESS_SANITIZER)
 			-fsanitize=address
 			-fsanitize=undefined
 		)
-		add_link_options(
-			-fsanitize=address
-			-fsanitize=undefined
-		)
+		add_link_options(-fsanitize=address -fsanitize=undefined)
 	elseif(WIN32)
-		message(FATAL_ERROR "Address sanitizer is not supported on Windows")
+		message(
+			FATAL_ERROR
+			"Address sanitizer is not supported on Windows"
+		)
 	else() # Assume Linux
 		add_compile_options(
 			-fno-omit-frame-pointer

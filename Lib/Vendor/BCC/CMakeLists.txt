@@ -11,10 +11,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 # Enable CMake support for ASM and C languages
-enable_language(
-	C
-	ASM
-)
+enable_language(C ASM)
 
 # Core project settings
 project(BCC)
