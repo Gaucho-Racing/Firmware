@@ -30,7 +30,12 @@ add_library(${CHIP}_LIB INTERFACE)
 # enable_language(C ASM)
 
 # used to strip the last 2 characters of CHIP to make the compile def
-string(SUBSTRING ${CHIP} 0 9 TEMP) # FIXME Scary
+string(
+	SUBSTRING ${CHIP}
+	0
+	9
+	TEMP
+) # FIXME Scary
 target_compile_definitions(
 	${CHIP}_LIB
 	INTERFACE
