@@ -52,9 +52,9 @@ TIM_HandleTypeDef htim2;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_DMA_Init(void);
+//static void MX_DMA_Init(void);
 
-static void MX_TIM2_Init(void);
+//static void MX_TIM2_Init(void);
 static void MX_SPI2_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -65,11 +65,15 @@ static void MX_SPI2_Init(void);
 
 /* USER CODE END 0 */
 
+
+//SPI PROBABLY NEEDS TO BE REWORKED, LOOK AT TIM FIRST
 /**
+ * 
  * @brief Each WS2812B bit corresponds to 6 SPI bits
  * @param val The 8 bits to convert to 3 half-words
  * @param out_arr The location to store the 3 half-words
  */
+#define SPI_BITS_TO_LED 6
 short WS2812B_SPI_Encoding(uint8_t val, uint16_t* out_arr) {
   uint8_t mask = 0b1 << 7;
   
@@ -113,11 +117,12 @@ short WS2812B_SPI_Encoding(uint8_t val, uint16_t* out_arr) {
 }
 /**
  * @brief
- *  SPI Freq = 5 MHz -> 0.2 us
+ *  SPI Freq = 2.5 MHz -> 0.4 us
  *  WS2812B Bit Period = 1.2 us
- *  6 SPI bits per WS2812B 
+ *  3 SPI bits per WS2812B 
  *  for a single LED (24 RGB bits):
  *    6*24 / 16 = 9 half-words
+ *        3 *24 / 8 can rework to use 9 bytes
  * 
  *  Takes in a pointer to arr of 9 half-words and computes the packed format
  * 
@@ -176,9 +181,9 @@ void WS2812B_writeRGB_TIM(uint8_t R, uint8_t G, uint8_t B, uint8_t brightness, u
 #define NUM_LEDS 10
 #define RESET_PIXELS 20 
 #define BITS_PER_LED 24
-#define LED_BUFFER_LEN ((NUM_LEDS + RESET_PIXELS) * BITS_PER_LED)
-uint16_t led_data[LED_BUFFER_LEN]; 
-void WS2812B_SendFrame(void) {
+#define LED_TIM_BUFFER_LEN ((NUM_LEDS + RESET_PIXELS) * BITS_PER_LED)
+uint16_t led_tim_data[LED_TIM_BUFFER_LEN]; 
+void WS2812B_TIM_SendFrame(void) {
     // --- 1. Enable clocks ---
     LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
     LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMA1);
@@ -221,7 +226,7 @@ void WS2812B_SendFrame(void) {
 
     LL_DMA_ConfigAddresses(DMA1,
                            LL_DMA_CHANNEL_1,
-                           (uint32_t)led_data,
+                           (uint32_t)led_tim_data,
                            (uint32_t)&TIM2->CCR1,
                            LL_DMA_DIRECTION_MEMORY_TO_PERIPH);
 
@@ -251,6 +256,8 @@ void WS2812B_SendFrame(void) {
     //LL_TIM_Disable
 }
 
+
+uint16_t led_spi_data[];
 /**
   * @brief  The application entry point.
   * @retval int
@@ -277,7 +284,7 @@ int main(void)
   //MX_GPIO_Init();
   //MX_DMA_Init();
   //MX_TIM2_Init();
-  //MX_SPI2_Init();
+  MX_SPI2_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -299,9 +306,13 @@ int main(void)
   //50 / 1.25 = 40
   //round up to 48 -> 48/24 = 2 pixels
 
+
+  //#define USE_SPI
+  //#define USE_TIM
+
+  #ifdef USE_TIM
  // =================================== FRAME DEFINITION =========================
   //LEDS
-  uint32_t color = 0xFF; 
   for (int i = 0; i < NUM_LEDS; i++) {
       switch (i % 3) {
         case 0:
@@ -384,16 +395,18 @@ int main(void)
   LL_TIM_EnableCounter(TIM2);
 */
 
-  WS2812B_SendFrame();
+  WS2812B_TIM_SendFrame();
+  #endif
+
   while (1)
   {
-    //WS2812B_SendFrame();
-    //HAL_Delay(100);
+    #ifdef USE_SPI
+    HAL_SPI_Transmit(&hspi2, (uint8_t*) led_spi_data, 9, 1000);
+    #endif
   }
 }
 
-    //HAL_SPI_Transmit(&hspi2, (uint8_t*) led, 9, 1000);
-
+    
 
     /*
     LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
@@ -502,7 +515,7 @@ void assert_failed(uint8_t *file, uint32_t line)
   * @param None
   * @retval None
   */
- /*
+
 static void MX_SPI2_Init(void)
 {
 
@@ -514,14 +527,14 @@ static void MX_SPI2_Init(void)
 
   /* USER CODE END SPI2_Init 1 */
   /* SPI2 parameter configuration*/
-  /*hspi2.Instance = SPI2;
+  hspi2.Instance = SPI2;
   hspi2.Init.Mode = SPI_MODE_MASTER;
   hspi2.Init.Direction = SPI_DIRECTION_2LINES;
   hspi2.Init.DataSize = SPI_DATASIZE_16BIT; 
   hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi2.Init.NSS = SPI_NSS_SOFT;
-  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
+  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
   hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -536,7 +549,7 @@ static void MX_SPI2_Init(void)
 
   /* USER CODE END SPI2_Init 2 */
 
-//}
+}
 
 /**
   * @brief TIM2 Initialization Function
