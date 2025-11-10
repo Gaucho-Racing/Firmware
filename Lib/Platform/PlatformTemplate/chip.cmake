@@ -11,7 +11,12 @@ function(add_executable_${CHIP} TARGET_NAME)
 	target_compile_options(${TARGET_NAME} PRIVATE ${TARGET_FLAGS})
 	target_link_options(
 		${TARGET_NAME}
-		PRIVATE ${TARGET_FLAGS} -T${CHIP_PATH}/CompileDependencies/<FLASH LINKER SCRIPT HERE>.ld
+		PRIVATE
+			${TARGET_FLAGS}
+			-T${CHIP_PATH}/CompileDependencies/<FLASH
+			LINKER
+			SCRIPT
+			HERE>.ld
 	)
 
 	# Cleanup (do not change, leave these 3 lines as is, trust)
@@ -25,7 +30,12 @@ add_library(${CHIP}_LIB INTERFACE)
 # enable_language(C ASM)
 
 # used to strip the last 2 characters of CHIP to make the compile def
-string(SUBSTRING ${CHIP} 0 9 TEMP) # FIXME Scary
+string(
+	SUBSTRING ${CHIP}
+	0
+	9
+	TEMP
+) # FIXME Scary
 target_compile_definitions(
 	${CHIP}_LIB
 	INTERFACE

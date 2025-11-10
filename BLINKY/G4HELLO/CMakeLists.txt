@@ -14,7 +14,10 @@ endif()
 get_filename_component(GR_PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 # Enable CMake support for ASM and C languages
-enable_language(C ASM)
+enable_language(
+	C
+	ASM
+)
 
 # Core project settings
 project(${CMAKE_PROJECT_NAME})
