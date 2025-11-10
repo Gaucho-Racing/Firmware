@@ -153,11 +153,7 @@ void WS2812B_TIM_Encoding(uint8_t val, uint16_t *out_arr) {
     // Each bit becomes one uint16_t in the output array
     // Bit 1 -> 32, Bit 0 -> 16
     for (int i = 0; i < 8; i++) {
-        if (val & (1 << (7 - i))) {
-            out_arr[i] = 32;  // logical '1'
-        } else {
-            out_arr[i] = 16;  // logical '0'
-        }
+        out_arr[i] = (val & (1 << (7 - i))) ? 66 : 33; // 1 or 0 duty
     }
 }
 
@@ -177,17 +173,90 @@ void WS2812B_writeRGB_TIM(uint8_t R, uint8_t G, uint8_t B, uint8_t brightness, u
     // Total of 24 elements in arr per LED
 }
 
+#define NUM_LEDS 10
+#define RESET_PIXELS 20 
+#define BITS_PER_LED 24
+#define LED_BUFFER_LEN ((NUM_LEDS + RESET_PIXELS) * BITS_PER_LED)
+uint16_t led_data[LED_BUFFER_LEN]; 
+void WS2812B_SendFrame(void) {
+    // --- 1. Enable clocks ---
+    LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
+    LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMA1);
+    LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMAMUX1);
+    LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_TIM2);
+
+    // --- 2. GPIO setup (PA0 = TIM2_CH1) ---
+    LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_0, LL_GPIO_MODE_ALTERNATE);
+    LL_GPIO_SetAFPin_0_7(GPIOA, LL_GPIO_PIN_0, LL_GPIO_AF_1);
+    LL_GPIO_SetPinSpeed(GPIOA, LL_GPIO_PIN_0, LL_GPIO_SPEED_FREQ_HIGH);
+    LL_GPIO_SetPinOutputType(GPIOA, LL_GPIO_PIN_0, LL_GPIO_OUTPUT_PUSHPULL);
+    LL_GPIO_SetPinPull(GPIOA, LL_GPIO_PIN_0, LL_GPIO_PULL_NO);
+
+    // --- 3. Timer setup (PWM, 800kHz bit rate = 1.25 µs) ---
+    LL_TIM_DisableCounter(TIM2);
+    LL_TIM_SetPrescaler(TIM2, 0);
+    LL_TIM_SetAutoReload(TIM2, 100 - 1);
+    LL_TIM_OC_SetMode(TIM2, LL_TIM_CHANNEL_CH1, LL_TIM_OCMODE_PWM1);
+    LL_TIM_OC_EnablePreload(TIM2, LL_TIM_CHANNEL_CH1);
+    LL_TIM_CC_EnableChannel(TIM2, LL_TIM_CHANNEL_CH1);
+    LL_TIM_EnableARRPreload(TIM2);
+    LL_TIM_SetUpdateSource(TIM2, LL_TIM_UPDATESOURCE_REGULAR);
+    LL_TIM_SetCounterMode(TIM2, LL_TIM_COUNTERMODE_UP);
+    LL_TIM_EnableDMAReq_UPDATE(TIM2);  // DMA triggers on overflow
+    LL_TIM_SetCounter(TIM2, 0);
+
+
+
+    // --- 4. DMA setup (Normal mode, not circular) ---
+    LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
+    LL_DMA_ConfigTransfer(DMA1,
+                          LL_DMA_CHANNEL_1,
+                          LL_DMA_DIRECTION_MEMORY_TO_PERIPH |
+                          LL_DMA_MODE_NORMAL |                 // stop after one transfer
+                          LL_DMA_PERIPH_NOINCREMENT |
+                          LL_DMA_MEMORY_INCREMENT |
+                          LL_DMA_PDATAALIGN_WORD |
+                          LL_DMA_MDATAALIGN_HALFWORD |
+                          LL_DMA_PRIORITY_HIGH);
+
+    LL_DMA_ConfigAddresses(DMA1,
+                           LL_DMA_CHANNEL_1,
+                           (uint32_t)led_data,
+                           (uint32_t)&TIM2->CCR1,
+                           LL_DMA_DIRECTION_MEMORY_TO_PERIPH);
+
+    LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_1, LED_BUFFER_LEN);
+
+    // --- 5. DMAMUX: connect TIM2 update request to DMA channel 1 ---
+    LL_DMAMUX_SetRequestID(DMAMUX1, LL_DMAMUX_CHANNEL_0, LL_DMAMUX_REQ_TIM2_UP);
+
+    // --- 6. Clear DMA flags ---
+    LL_DMA_ClearFlag_TC1(DMA1);
+    LL_DMA_ClearFlag_TE1(DMA1);
+
+    DMA1->IFCR |= 0; //NOT IMPORTANT, not using interrupts
+
+    // --- 7. Enable DMA + start transfer ---
+    LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
+    LL_TIM_EnableDMAReq_UPDATE(TIM2);
+    LL_TIM_GenerateEvent_UPDATE(TIM2);
+    LL_TIM_EnableCounter(TIM2);
+
+    // --- 8. Wait for completion ---
+    while (!LL_DMA_IsActiveFlag_TC1(DMA1));  // wait until done
+
+    // --- 9. Disable timer + DMA ---
+    LL_TIM_DisableCounter(TIM2);
+    LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
+    //LL_TIM_Disable
+}
+
 /**
   * @brief  The application entry point.
   * @retval int
   */
 int main(void)
 {
-
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
-
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
@@ -216,8 +285,7 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
-  uint32_t spi_freq = HAL_RCC_GetPCLK2Freq();
-  //uint32_t spi_baud_rate = spi_freq / ; 
+  uint32_t spi_freq = HAL_RCC_GetPCLK1Freq();
   //__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 0); // 75% duty cycle
   //HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
 
@@ -225,32 +293,49 @@ int main(void)
   //uint8_t reset = 0; 
   //WS2812B_writeRGB_SPI(255, 0, 0, 50, led);
     
-  // *SPIx = (&hspi2)->Instance;  // <-- get peripheral base
+  // *SPIx = (&hspi2)->Instance;
   //LL_SPI_Enable(SPIx);
 
+  //50 / 1.25 = 40
+  //round up to 48 -> 48/24 = 2 pixels
 
-  uint16_t led_tim[24]; 
-  WS2812B_writeRGB_TIM(255,0,0,50,led_tim);
+ // =================================== FRAME DEFINITION =========================
+  //LEDS
+  uint32_t color = 0xFF; 
+  for (int i = 0; i < NUM_LEDS; i++) {
+      switch (i % 3) {
+        case 0:
+          WS2812B_writeRGB_TIM(255,0,0,10,led_data+24*i);
+          break;
+        case 1:
+          WS2812B_writeRGB_TIM(0,255,0,10,led_data+24*i);
+          break;
+        case 2:
+          WS2812B_writeRGB_TIM(0,0,255,10,led_data+24*i);
+      }
+  }
+  //RESET Pixels
+  for (int i = NUM_LEDS*24; i < LED_BUFFER_LEN; i++) led_data[i] = 0;
 
-  // 1️⃣ Enable clocks
-  // 1️⃣ Enable clocks
+  // ================================= INITIALIZATION ====================
+  /*// Enable clocks
   LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
   LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMA1);
   LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMAMUX1);
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_TIM2);
 
-  // 2️⃣ GPIO for TIM2_CH1
+  // GPIO for TIM2_CH1
   LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_0, LL_GPIO_MODE_ALTERNATE);
   LL_GPIO_SetAFPin_0_7(GPIOA, LL_GPIO_PIN_0, LL_GPIO_AF_1);
   LL_GPIO_SetPinSpeed(GPIOA, LL_GPIO_PIN_0, LL_GPIO_SPEED_FREQ_HIGH);
   LL_GPIO_SetPinOutputType(GPIOA, LL_GPIO_PIN_0, LL_GPIO_OUTPUT_PUSHPULL);
   LL_GPIO_SetPinPull(GPIOA, LL_GPIO_PIN_0, LL_GPIO_PULL_NO);
 
-  // 3️⃣ Timer
+  // Timer settings
   LL_TIM_EnableARRPreload(TIM2);
   LL_TIM_SetPrescaler(TIM2, 0);
   LL_TIM_SetCounterMode(TIM2, LL_TIM_COUNTERMODE_UP);
-  LL_TIM_SetAutoReload(TIM2, 50-1);
+  LL_TIM_SetAutoReload(TIM2, 100-1);
 
   //LL_TIM_SetAutoReload(TIM2, 50-1);
   //for (int i = 0; i < 24; i ++) led_tim[i] = 5; 
@@ -268,43 +353,44 @@ int main(void)
   LL_DMA_ConfigTransfer(DMA1,
                           LL_DMA_CHANNEL_1,
                           LL_DMA_DIRECTION_MEMORY_TO_PERIPH |
-                          LL_DMA_MODE_CIRCULAR |
+                          LL_DMA_MODE_NORMAL |
                           LL_DMA_PERIPH_NOINCREMENT |
                           LL_DMA_MEMORY_INCREMENT |
-                          LL_DMA_PDATAALIGN_HALFWORD |
-                          LL_DMA_MDATAALIGN_HALFWORD |
+                          LL_DMA_PDATAALIGN_WORD |     //VERY IMPORTANT, VERY STRANGE BEHAVIOUR UNLESS USE EXACTLY THIS COMBINATION
+                          LL_DMA_MDATAALIGN_HALFWORD | //
                           LL_DMA_PRIORITY_HIGH);
 
   LL_DMA_ConfigAddresses(DMA1,
                            LL_DMA_CHANNEL_1,
-                           (uint32_t) led_tim,
+                           (uint32_t) led_data,
                            (uint32_t)&TIM2->CCR1,
                            LL_DMA_DIRECTION_MEMORY_TO_PERIPH);
 
-  LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_1, sizeof(led_tim)/sizeof(led_tim[0]));
+  LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_1, sizeof(led_data)/sizeof(led_data[0]));
 
   // 4️⃣ DMAMUX: TIM2 update → DMA1 channel 1
   LL_DMAMUX_SetRequestID(DMAMUX1, LL_DMAMUX_CHANNEL_0, LL_DMAMUX_REQ_TIM2_UP);
+  //VERY IMPORTANT TO SET THE MULTIPLEXER CORRECTLY
 
+  DMA1->IFCR |= 0; //NOT IMPORTANT, not using interrupts
 
-  DMA1->IFCR |= 0; 
-  LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
+  LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1); //very important
 
   //Enable Timer
   LL_TIM_GenerateEvent_UPDATE(TIM2); // ensure preload registers are loaded
-  
-  //LL_TIM_OC_SetCompareCH1(TIM2, 32);
-  LL_TIM_EnableCounter(TIM2);
+  //NOT SURE THIS IS IMPORTANT
 
+  //LL_TIM_OC_SetCompareCH1(TIM2, 32); //manually set the duty cycle of the waveform, not needed with DMA
+  LL_TIM_EnableCounter(TIM2);
+*/
+
+  WS2812B_SendFrame();
   while (1)
   {
-    
+    //WS2812B_SendFrame();
+    //HAL_Delay(100);
   }
 }
-    
-
-    
-
 
     //HAL_SPI_Transmit(&hspi2, (uint8_t*) led, 9, 1000);
 
@@ -330,10 +416,7 @@ int main(void)
     while(LL_SPI_IsActiveFlag_BSY(SPIx));
     */
 
-    //for ( int i = 0; i < 10000; i++); 
     
-
-    /* USER CODE BEGIN 3 */
   
 
 /**
@@ -373,154 +456,14 @@ void SystemClock_Config(void)
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV4;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
   {
     Error_Handler();
   }
 }
-
-/**
-  * @brief SPI2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_SPI2_Init(void)
-{
-
-  /* USER CODE BEGIN SPI2_Init 0 */
-
-  /* USER CODE END SPI2_Init 0 */
-
-  /* USER CODE BEGIN SPI2_Init 1 */
-
-  /* USER CODE END SPI2_Init 1 */
-  /* SPI2 parameter configuration*/
-  hspi2.Instance = SPI2;
-  hspi2.Init.Mode = SPI_MODE_MASTER;
-  hspi2.Init.Direction = SPI_DIRECTION_2LINES;
-  hspi2.Init.DataSize = SPI_DATASIZE_16BIT; 
-  hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
-  hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
-  hspi2.Init.NSS = SPI_NSS_SOFT;
-  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
-  hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
-  hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
-  hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
-  hspi2.Init.CRCPolynomial = 7;
-  hspi2.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
-  hspi2.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
-  if (HAL_SPI_Init(&hspi2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN SPI2_Init 2 */
-
-  /* USER CODE END SPI2_Init 2 */
-
-}
-
-/**
-  * @brief TIM2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_TIM2_Init(void)
-{
-
-  /* USER CODE BEGIN TIM2_Init 0 */
-
-  /* USER CODE END TIM2_Init 0 */
-
-  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
-  TIM_MasterConfigTypeDef sMasterConfig = {0};
-  TIM_OC_InitTypeDef sConfigOC = {0};
-
-  /* USER CODE BEGIN TIM2_Init 1 */
-
-  /* USER CODE END TIM2_Init 1 */
-  htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 0;
-  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 50 - 1 ;
-  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
-  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
-  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_TIM_PWM_Init(&htim2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
-  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 0;
-  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-  if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN TIM2_Init 2 */
-
-  /* USER CODE END TIM2_Init 2 */
-  HAL_TIM_MspPostInit(&htim2);
-
-}
-
-static void MX_DMA_Init(void)
-{
-
-  /* DMA controller clock enable */
-  __HAL_RCC_DMAMUX1_CLK_ENABLE();
-  __HAL_RCC_DMA1_CLK_ENABLE();
-
-  /* DMA interrupt init */
-  /* DMA1_Channel1_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
-  /* DMAMUX_OVR_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMAMUX_OVR_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMAMUX_OVR_IRQn);
-
-}
-
-/**
-  * @brief GPIO Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_GPIO_Init(void)
-{
-  /* USER CODE BEGIN MX_GPIO_Init_1 */
-
-  /* USER CODE END MX_GPIO_Init_1 */
-
-  /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
-
-  /* USER CODE BEGIN MX_GPIO_Init_2 */
-
-  /* USER CODE END MX_GPIO_Init_2 */
-}
-
-/* USER CODE BEGIN 4 */
-
-/* USER CODE END 4 */
 
 /**
   * @brief  This function is executed in case of error occurrence.
@@ -553,3 +496,145 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+
+/**
+  * @brief SPI2 Initialization Function
+  * @param None
+  * @retval None
+  */
+ /*
+static void MX_SPI2_Init(void)
+{
+
+  /* USER CODE BEGIN SPI2_Init 0 */
+
+  /* USER CODE END SPI2_Init 0 */
+
+  /* USER CODE BEGIN SPI2_Init 1 */
+
+  /* USER CODE END SPI2_Init 1 */
+  /* SPI2 parameter configuration*/
+  /*hspi2.Instance = SPI2;
+  hspi2.Init.Mode = SPI_MODE_MASTER;
+  hspi2.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi2.Init.DataSize = SPI_DATASIZE_16BIT; 
+  hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi2.Init.NSS = SPI_NSS_SOFT;
+  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
+  hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi2.Init.CRCPolynomial = 7;
+  hspi2.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
+  hspi2.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
+  if (HAL_SPI_Init(&hspi2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN SPI2_Init 2 */
+
+  /* USER CODE END SPI2_Init 2 */
+
+//}
+
+/**
+  * @brief TIM2 Initialization Function
+  * @param None
+  * @retval None
+  */
+/*static void MX_TIM2_Init(void)
+{
+
+  /* USER CODE BEGIN TIM2_Init 0 */
+
+  /* USER CODE END TIM2_Init 0 */
+
+  /*TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+  TIM_OC_InitTypeDef sConfigOC = {0};
+
+  /* USER CODE BEGIN TIM2_Init 1 */
+
+  /* USER CODE END TIM2_Init 1 */
+  /*htim2.Instance = TIM2;
+  htim2.Init.Prescaler = 0;
+  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim2.Init.Period = 100 - 1 ;
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
+  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_TIM_PWM_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = 0;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM2_Init 2 */
+
+  /* USER CODE END TIM2_Init 2 */
+  //HAL_TIM_MspPostInit(&htim2);*/
+
+//}
+/*
+static void MX_DMA_Init(void)
+{
+
+  /* DMA controller clock enable */
+  //__HAL_RCC_DMAMUX1_CLK_ENABLE();
+  //__HAL_RCC_DMA1_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA1_Channel1_IRQn interrupt configuration */
+  /*HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
+  /* DMAMUX_OVR_IRQn interrupt configuration */
+  /*HAL_NVIC_SetPriority(DMAMUX_OVR_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMAMUX_OVR_IRQn);
+
+}*/
+
+/**
+  * @brief GPIO Initialization Function
+  * @param None
+  * @retval None
+  */
+ /*
+static void MX_GPIO_Init(void)
+{
+  /* USER CODE BEGIN MX_GPIO_Init_1 */
+
+  /* USER CODE END MX_GPIO_Init_1 */
+
+  /* GPIO Ports Clock Enable */
+ // __HAL_RCC_GPIOA_CLK_ENABLE();
+  //__HAL_RCC_GPIOB_CLK_ENABLE();
+
+  /* USER CODE BEGIN MX_GPIO_Init_2 */
+
+  /* USER CODE END MX_GPIO_Init_2 */
+//}
+
+/* USER CODE BEGIN 4 */
+
+/* USER CODE END 4 */
