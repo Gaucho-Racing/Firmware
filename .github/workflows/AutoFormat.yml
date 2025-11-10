@@ -63,7 +63,7 @@ jobs:
         run: pip3 install gersemi
 
       - name: Format CMake Files
-        run: gersemi --in-place --warnings-as-errors --no-warn-about-unknown-commands --indent tabs --list-expansion favour-expansion --line-length 100 .
+        run: gersemi --in-place ${{ github.workspace }}
 
       - name: Save Changes
         uses: EndBug/add-and-commit@v9
