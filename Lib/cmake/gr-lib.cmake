@@ -4,10 +4,7 @@ function(add_gr_project)
 	elseif(${ARGC} EQUAL 3)
 		set(GR_PROJECT_PATH ${ARGV2})
 	else()
-		message(
-			FATAL_ERROR
-			"You called add_GR_project with an unsupported number of inputs/arguments! Do better please :)"
-		)
+		message(FATAL_ERROR "You called add_GR_project with an unsupported number of inputs/arguments! Do better please :)")
 	endif()
 
 	set(Platform ${ARGV0})
@@ -30,10 +27,7 @@ function(add_gr_project)
 			set(COMBINATOR "${GR_PROJECT}")
 		endif()
 
-		cmake_language(
-			CALL add_executable_${Platform}
-			${TARGET_NAME}
-		)
+		cmake_language(CALL add_executable_${Platform} ${TARGET_NAME})
 
 		# Create unique interface library to avoid conflicts
 		set(INTERFACE_LIB "${COMBINATOR}_INTERFACE_LIB")
@@ -50,10 +44,7 @@ function(add_gr_project)
 			)
 		endif()
 
-		target_link_libraries(
-			${TARGET_NAME}
-			PRIVATE ${INTERFACE_LIB}
-		)
+		target_link_libraries(${TARGET_NAME} PRIVATE ${INTERFACE_LIB})
 
 		target_link_options(
 			${TARGET_NAME}

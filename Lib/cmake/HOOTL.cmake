@@ -13,11 +13,7 @@ else()
 	set(_ADDRESS_SANITIZER_DEFAULT_ OFF)
 endif()
 
-option(
-	ADDRESS_SANITIZER
-	"Enable address sanitizer for tests, breaks Valgrind"
-	${_ADDRESS_SANITIZER_DEFAULT_}
-)
+option(ADDRESS_SANITIZER "Enable address sanitizer for tests, breaks Valgrind" ${_ADDRESS_SANITIZER_DEFAULT_})
 
 add_compile_options(
 	-Wall
@@ -36,12 +32,12 @@ if(ADDRESS_SANITIZER)
 			-fsanitize=address
 			-fsanitize=undefined
 		)
-		add_link_options(-fsanitize=address -fsanitize=undefined)
-	elseif(WIN32)
-		message(
-			FATAL_ERROR
-			"Address sanitizer is not supported on Windows"
+		add_link_options(
+			-fsanitize=address
+			-fsanitize=undefined
 		)
+	elseif(WIN32)
+		message(FATAL_ERROR "Address sanitizer is not supported on Windows")
 	else() # Assume Linux
 		add_compile_options(
 			-fno-omit-frame-pointer

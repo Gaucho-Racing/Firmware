@@ -11,17 +11,16 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 # Enable CMake support for ASM and C languages
-enable_language(C ASM)
+enable_language(
+	C
+	ASM
+)
 
 # Core project settings
 project(${CMAKE_PROJECT_NAME})
 
 # what, does in fact not get the filename of somthing but rather the name of the project from the path
-get_filename_component(
-	PROJECT_NAME
-	${CMAKE_CURRENT_SOURCE_DIR}
-	NAME
-)
+get_filename_component(PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 add_library(${PROJECT_NAME}_USER_CODE INTERFACE)
 target_sources(
@@ -43,5 +42,7 @@ target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE)
 
 target_include_directories(
 	${PROJECT_NAME}_USER_CODE
-	INTERFACE Core/Inc Application/Inc
+	INTERFACE
+		Core/Inc
+		Application/Inc
 )

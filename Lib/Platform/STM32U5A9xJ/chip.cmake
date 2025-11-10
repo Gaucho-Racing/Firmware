@@ -43,7 +43,12 @@ add_library(${CHIP}_LIB INTERFACE)
 
 # enable_language(C ASM)
 
-string(SUBSTRING ${CHIP} 0 9 TEMP) # FIXME Scary
+string(
+	SUBSTRING ${CHIP}
+	0
+	9
+	TEMP
+) # FIXME Scary
 target_compile_definitions(
 	${CHIP}_LIB
 	INTERFACE
@@ -61,10 +66,7 @@ target_include_directories(
 		${CHIP_PATH}/Drivers/CMSIS/Device/ST/STM32U5xx/Include
 )
 
-target_compile_options(
-	${CHIP}_LIB
-	INTERFACE ${TARGET_FLAGS}
-)
+target_compile_options(${CHIP}_LIB INTERFACE ${TARGET_FLAGS})
 
 target_link_options(${CHIP}_LIB INTERFACE ${TARGET_FLAGS})
 
