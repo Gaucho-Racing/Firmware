@@ -230,7 +230,7 @@ void WS2812B_TIM_SendFrame(void) {
                            (uint32_t)&TIM2->CCR1,
                            LL_DMA_DIRECTION_MEMORY_TO_PERIPH);
 
-    LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_1, LED_BUFFER_LEN);
+    LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_1, LED_TIM_BUFFER_LEN);
 
     // --- 5. DMAMUX: connect TIM2 update request to DMA channel 1 ---
     LL_DMAMUX_SetRequestID(DMAMUX1, LL_DMAMUX_CHANNEL_0, LL_DMAMUX_REQ_TIM2_UP);
