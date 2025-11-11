@@ -4,10 +4,11 @@
 #define SPI_H
 
 typedef struct {
-    uint32_t CIPO_Pin, COPI_Pin, CS_Pin, SCLK_Pin;
-    uint32_t CIPO_Port, COPI_Port, CS_Port, SCLK_Port;
-    uint32_t Alternate_Function;
-    uint32_t SPIx_Number;
+    uint32_t num_pins = 4;
+    uint32_t pin_nums[4];
+    uint32_t ports[4];
+    uint32_t alternate_function_number;
+    uint32_t SPIx_number;
 } GR_SPI_Pins;
 
 // Generic type
@@ -15,6 +16,8 @@ typedef struct {
     //LL structs
     SPI_TypeDef* spi = nullptr;
     uint32_t SPIx_Number;
+    GPIO_TypeDef* pins[4];
+    uint32_t num_pins = 4;
     //GR structs
     CircularBuffer* buffer;
     //GPIO pin data
