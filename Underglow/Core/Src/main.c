@@ -178,7 +178,7 @@ void WS2812B_writeRGB_TIM(uint8_t R, uint8_t G, uint8_t B, uint8_t brightness, u
     // Total of 24 elements in arr per LED
 }
 
-#define NUM_LEDS 10
+#define NUM_LEDS 55
 #define RESET_PIXELS 20 
 #define BITS_PER_LED 24
 #define LED_TIM_BUFFER_LEN ((NUM_LEDS + RESET_PIXELS) * BITS_PER_LED)
@@ -308,7 +308,7 @@ int main(void)
 
 
   //#define USE_SPI
-  //#define USE_TIM
+  #define USE_TIM
 
   #ifdef USE_TIM
  // =================================== FRAME DEFINITION =========================
@@ -316,17 +316,17 @@ int main(void)
   for (int i = 0; i < NUM_LEDS; i++) {
       switch (i % 3) {
         case 0:
-          WS2812B_writeRGB_TIM(255,0,0,10,led_data+24*i);
+          WS2812B_writeRGB_TIM(255,0,0,10,led_tim_data+24*i);
           break;
         case 1:
-          WS2812B_writeRGB_TIM(0,255,0,10,led_data+24*i);
+          WS2812B_writeRGB_TIM(0,255,0,10,led_tim_data+24*i);
           break;
         case 2:
-          WS2812B_writeRGB_TIM(0,0,255,10,led_data+24*i);
+          WS2812B_writeRGB_TIM(0,0,255,10,led_tim_data+24*i);
       }
   }
   //RESET Pixels
-  for (int i = NUM_LEDS*24; i < LED_BUFFER_LEN; i++) led_data[i] = 0;
+  for (int i = NUM_LEDS*24; i < LED_TIM_BUFFER_LEN; i++) led_tim_data[i] = 0;
 
   // ================================= INITIALIZATION ====================
   /*// Enable clocks
