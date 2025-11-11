@@ -78,6 +78,18 @@ typedef enum {
 void updateAnalogInputs(void);
 
 extern AnalogInput globalAnalog;
+
+const uint32_t ADC1_COUNT = 6;
+unsigned long ADC1_pins[ADC1_COUNT] = {BSPD_SIGNAL_Pin,	 APPS1_SIGNAL_Pin,
+			     APPS2_SIGNAL_Pin,	 BRAKE_F_SIGNAL_Pin,
+			     BRAKE_R_SIGNAL_Pin, AUX_SIGNAL_Pin};
+unsigned long ADC1_ports[ADC1_COUNT] = {BSPD_SIGNAL_GPIO_Port, APPS1_SIGNAL_GPIO_Port, APPS2_SIGNAL_GPIO_Port, BRAKE_F_SIGNAL_GPIO_Port, BRAKE_R_SIGNAL_GPIO_Port, AUX_SIGNAL_GPIO_Port};
+
+const uint32_t ADC2_COUNT = 5;
+unsigned long ADC2_pins[ADC2_COUNT] = {BSE_SIGNAL_Pin, BSPD_SENSE_Pin, IMD_SENSE_Pin,
+			     AMS_SENSE_Pin, STEERING_ANGLE_Pin};
+unsigned long ADC2_ports[ADC2_COUNT] = {BSE_SIGNAL_GPIO_Port, BSPD_SENSE_GPIO_Port, IMD_SENSE_GPIO_Port, AMS_SENSE_GPIO_Port, STEERING_ANGLE_GPIO_Port};
+
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

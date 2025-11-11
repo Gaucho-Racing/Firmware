@@ -100,6 +100,7 @@ void MX_ADC1_Init(void)
 	PB1   ------> ADC1_IN12
 	PB14   ------> ADC1_IN5
 	*/
+
 	GPIO_InitStruct.Pin = BSPD_SIGNAL_Pin;
 	GPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
 	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
