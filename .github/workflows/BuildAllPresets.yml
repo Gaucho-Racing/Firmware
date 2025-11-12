@@ -28,6 +28,8 @@ jobs:
       SCCACHE_LOG: "info"
       SCCACHE_ERROR_LOG: ${{ github.workspace }}/sccache-error.log
       SCCACHE_IGNORE_SERVER_IO_ERROR: "1"
+      SCCACHE_GHA_SCOPE: ${{ matrix.prefix }}-${{ matrix.operatingSystem }}
+      SCCACHE_GHA_BRANCH: ${{ github.ref_name }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
