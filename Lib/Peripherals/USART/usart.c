@@ -140,26 +140,6 @@ void usart_send(USARTHandle *handle, void *object_ptr, uint32_t object_size)
 	GR_CircularBuffer_Push(handle->tx_buffer, &msg, sizeof(msg));
 }
 
-uint32_t usart_receive(USARTHandle *handle, uint8_t *buffer, uint32_t size,
-		       uint32_t timeout)
-{
-	// suppress unused variable warning (eventually we'll need the handle)
-	handle = handle;
-
-	uint32_t bytes_received = 0;
-	uint32_t start_tick = HAL_GetTick();
-	while (bytes_received < size) {
-		if (LL_USART_IsActiveFlag_RXNE(USART1)) {
-			buffer[bytes_received++] =
-			    LL_USART_ReceiveData8(USART1);
-		}
-		if ((HAL_GetTick() - start_tick) > timeout) {
-			break;
-		}
-	}
-	return bytes_received;
-}
-
 void usart_release(USARTHandle **handle)
 {
 	usart_free_handle(handle);
