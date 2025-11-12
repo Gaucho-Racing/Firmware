@@ -10,4 +10,3 @@ target_include_directories(
 	INTERFACE
 		${CMAKE_CURRENT_LIST_DIR}/../..
 )
-
