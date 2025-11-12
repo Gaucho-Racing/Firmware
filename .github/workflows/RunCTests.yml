@@ -23,16 +23,23 @@ jobs:
       matrix:
         operatingSystem: [ ubuntu-latest, windows-latest, macos-latest ]
     env:
-      SCCACHE_GHA_ENABLED: "true"
-      SCCACHE_LOG: "debug"
+      SCCACHE_DIR: ${{ github.workspace }}/sccache
+      SCCACHE_LOG: "info"
       SCCACHE_ERROR_LOG: ${{ github.workspace }}/sccache-error.log
-      SCCACHE_IGNORE_SERVER_IO_ERROR: "1"
-      SCCACHE_GHA_SCOPE: ${{ github.workflow }}-${{ matrix.operatingSystem }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
         with:
           fetch-depth: 1
+
+      - name: Setup Shared Compilation Cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.SCCACHE_DIR }}
+          key: sccache-${{ github.workflow }}-${{ runner.os }}-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-${{ hashFiles('Lib/**/*.[ch]') }}
+          restore-keys: |
+            sccache-${{ github.workflow }}-${{ runner.os }}-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-
+            sccache-${{ github.workflow }}-${{ runner.os }}-
 
       - name: Setup Shared Compilation Cache
         uses: mozilla-actions/sccache-action@v0.0.9
