@@ -6,7 +6,10 @@
 		"*.cmake": "cmake",
 		"CMakeLists.txt": "cmake",
 		"*.ld": "ld",
-		"*.s": "asm"
+		"*.s": "asm",
+		"initializer_list": "c",
+		"type_traits": "c",
+		"xutility": "c"
 	},
 	"C_Cpp.default.cStandard": "gnu11",
 	"markdown.validate.enabled": true
