@@ -17,6 +17,7 @@ jobs:
     runs-on: ${{ matrix.operatingSystem }}
     permissions:
       contents: read
+      actions: write
     strategy:
       fail-fast: true
       matrix:
