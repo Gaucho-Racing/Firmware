@@ -1,0 +1,23 @@
+{
+	"name": "GRFirmware",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-vscode.cpptools-extension-pack",
+				"Gruntfuggly.todo-tree",
+				"ms-vscode.cmake-tools",
+				"ms-vsliveshare.vsliveshare",
+				"marus25.cortex-debug"
+			]
+		}
+	},
+	"mounts": [
+		"type=volume,target=${containerWorkspaceFolder}/build/"
+	],
+	"runArgs": [
+		"--privileged"
+	]
+}
