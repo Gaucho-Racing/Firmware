@@ -5,7 +5,7 @@
 #ifndef _STATEDATA_H_
 #define _STATEDATA_H_
 
-// FIXME Use CAN message structures when available
+// FIXME Use CAN message structures when it is available
 
 /**
  * @brief The ECU state data structure.
