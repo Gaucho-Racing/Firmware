@@ -118,7 +118,7 @@ int main(void)
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	USARTConfig config;
-	USARTHandle handle = usart_init_peripheral(&config);
+	USARTHandle *handle = usart_init_peripheral(&config);
 	while (1) {
 		/* USER CODE END WHILE */
 
@@ -127,7 +127,7 @@ int main(void)
 		LOGOMATIC("Main Loop Tick Complete. I like Pi %f\n",
 			  3.14159265);
 		LL_mDelay(250); // FIXME Reduce or remove delay
-		usart_send(&handle, (uint8_t *)"Hello, USART!\n", 0);
+		usart_send(handle, "Hello, USART!\n", 15);
 	}
 	/* USER CODE END 3 */
 }
