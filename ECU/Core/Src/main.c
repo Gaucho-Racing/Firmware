@@ -117,7 +117,11 @@ int main(void)
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	USARTConfig config;
+	USARTConfig config = {
+	    .instance = USART1,
+	    .tx_queue_length = 16,
+	    .baud_rate = 115200,
+	};
 	USARTHandle *handle = usart_init_peripheral(&config);
 	while (1) {
 		/* USER CODE END WHILE */
