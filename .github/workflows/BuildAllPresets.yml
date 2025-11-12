@@ -26,6 +26,7 @@ jobs:
     env:
       SCCACHE_GHA_ENABLED: "true"
       SCCACHE_LOG: "debug"
+      SCCACHE_ERROR_LOG: ${{ github.workspace }}/sccache-error.log
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -38,7 +39,7 @@ jobs:
           release: '12.2.Rel1'
 
       - name: Setup Shared Compilation Cache
-        uses: mozilla-actions/sccache-action@v0.0.8
+        uses: mozilla-actions/sccache-action@v0.0.9
 
       - name: CMake Configuration (Unix)
         if: matrix.operatingSystem != 'windows-latest'
@@ -142,6 +143,36 @@ jobs:
           echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
           echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+
+      - name: sccache error log (Unix)
+        if: matrix.operatingSystem != 'windows-latest'
+        shell: bash
+        run: |
+          set -o pipefail
+          if [ -f "$SCCACHE_ERROR_LOG" ]; then
+            echo "<details><summary>sccache error log</summary>" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            cat "$SCCACHE_ERROR_LOG" | tee -a $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "</details>" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: sccache error log (Windows)
+        if: matrix.operatingSystem == 'windows-latest'
+        shell: pwsh
+        run: |
+          $log = $env:SCCACHE_ERROR_LOG
+          if (Test-Path $log) {
+            echo "<details><summary>sccache error log</summary>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+            echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+            echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+            Get-Content $log | Tee-Object -FilePath $env:GITHUB_STEP_SUMMARY -Append
+            echo "``````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+            echo "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+            echo "</details>" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          }
 
       - name: Upload Ubuntu RelWithDebInfo Builds
         if: matrix.prefix == 'RelWithDebInfo' && matrix.operatingSystem == 'ubuntu-latest'
