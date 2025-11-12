@@ -57,7 +57,7 @@ When able, please add VS Code comptatible doc comments! These will help debuggin
 
 *For Linux / BSD:*
 * `sudo apt install cmake ninja gcc-arm-none-eabi openocd`
-* `sudo dnf install cmake ninja openocd arm-none-eabi-gcc`
+* `sudo dnf install cmake ninja openocd arm-none-eabi-gcc arm-none-eabi-newlib`
 * `sudo pacman -S cmake ninja openocd arm-none-eabi-gcc`
 * `pkg install cmake ninja openocd arm-none-eabi-gcc`
 * If you run into issues verify that binutils and newlib are installed for `arm-none-eabi`
