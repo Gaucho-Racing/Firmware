@@ -13,22 +13,65 @@ struct usart_handle_st {
 	CircularBuffer *tx_buffer;
 };
 
-USARTHandle usart_init_peripheral(USARTConfig *config)
+USARTHandle *USART1Handle = NULL;
+USARTHandle *USART2Handle = NULL;
+USARTHandle *USART3Handle = NULL;
+USARTHandle *UART4Handle = NULL;
+USARTHandle *UART5Handle = NULL;
+USARTHandle *LPUART1Handle = NULL;
+
+USARTHandle *usart_init_peripheral(USARTConfig *config)
 {
-	USARTHandle handle;
+	// allocate handle
+	USARTHandle *handle_ptr = usart_allocate_handle(config);
+	if (!handle_ptr) {
+		return NULL;
+	}
 
-	handle.tx_buffer = GR_CircularBuffer_Create(config->tx_queue_length);
+	// configure hardware
+	usart_configure_hardware(config, handle_ptr);
 
+	return handle_ptr;
+}
+
+USARTHandle *usart_allocate_handle(USARTConfig *config)
+{
+	// map the instance to the global handle pointer
+	USARTHandle **handle_pptr =
+	    usart_get_global_handle_pptr(config->instance);
+	if (!handle_pptr) {
+		LOGOMATIC_Error(
+		    "usart_allocate_handle: invalid USART instance");
+		return NULL;
+	}
+
+	// check if the global handle is already allocated
+	if (*handle_pptr) {
+		LOGOMATIC_Error("usart_init_peripheral: this USART instance "
+				"already in use");
+		return NULL;
+	}
+
+	// create handle
+	USARTHandle *handle_ptr = *handle_pptr = malloc(sizeof(USARTHandle));
+	if (!handle_ptr) {
+		LOGOMATIC_Error("usart_init_peripheral: malloc failed");
+		return NULL;
+	}
+	handle_ptr->tx_buffer =
+	    GR_CircularBuffer_Create(config->tx_queue_length);
+
+	return handle_ptr;
+}
+
+void usart_configure_hardware(USARTConfig *config, USARTHandle *handle)
+{
 	// Enable GPIOB and USART1 clocks
 	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);
 	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_USART1);
 
 	// Select PCLK2 as USART1 clock source
 	LL_RCC_SetUSARTClockSource(LL_RCC_USART1_CLKSOURCE_PCLK2);
-
-	// TODO: need to think about how to (1) register the
-	// callback (2) tell the callback which handle to use
-	LL_USART_EnableIT_TXE(USART1);
 
 	// Configure PB6 = TX, PB7 = RX
 	LL_GPIO_InitTypeDef gpio = {0};
@@ -59,12 +102,10 @@ USARTHandle usart_init_peripheral(USARTConfig *config)
 	LL_USART_EnableDirectionRx(USART1);
 	LL_USART_Enable(USART1);
 
-	// Wait for TEACK/REACK
+	// Wait for hardware to acknowledge that usart is enabled
 	while (!LL_USART_IsActiveFlag_TEACK(USART1) ||
 	       !LL_USART_IsActiveFlag_REACK(USART1)) {
 	}
-
-	return handle;
 }
 
 // queue a message to be sent
@@ -119,17 +160,34 @@ uint32_t usart_receive(USARTHandle *handle, uint8_t *buffer, uint32_t size,
 	return bytes_received;
 }
 
-void usart_release(USARTHandle *handle)
+void usart_release(USARTHandle **handle)
 {
-	// free each message in the tx buffer
-	USARTMessage *msg;
-	while (msg = GR_CircularBuffer_Pop(handle->tx_buffer)) {
-		free(msg->data);
-		free(msg);
+	usart_free_handle(handle);
+	// TODO: disable USART hardware
+}
+
+void usart_free_handle(USARTHandle **handle)
+{
+	if (!handle || !*handle) {
+		return;
 	}
 
-	// free the tx buffer itself
-	GR_CircularBuffer_Free(&handle->tx_buffer);
+	// free TX buffer
+	{
+		// each message in the tx buffer
+		USARTMessage *msg;
+		while (msg = GR_CircularBuffer_Pop((*handle)->tx_buffer)) {
+			free(msg->data);
+			free(msg);
+		}
+
+		// the buffer itself
+		GR_CircularBuffer_Free(&(*handle)->tx_buffer);
+	}
+
+	// free the handle
+	free(*handle);
+	*handle = NULL;
 }
 
 uint8_t usart_pop_next_tx_byte(USARTHandle *handle, uint8_t *byte_ptr)
@@ -160,5 +218,26 @@ void usart_tx_ready_callback(USARTHandle *handle)
 	uint8_t byte;
 	if (usart_pop_next_tx_byte(handle, &byte)) {
 		LL_USART_TransmitData8(USART1, byte);
+	}
+}
+
+USARTHandle **usart_get_global_handle_pptr(USART_TypeDef *instance)
+{
+	if (instance == USART1) {
+		return &USART1Handle;
+	} else if (instance == USART2) {
+		return &USART2Handle;
+	} else if (instance == USART3) {
+		return &USART3Handle;
+	} else if (instance == UART4) {
+		return &UART4Handle;
+	} else if (instance == UART5) {
+		return &UART5Handle;
+	} else if (instance == LPUART1) {
+		return &LPUART1Handle;
+	} else {
+		LOGOMATIC_Error(
+		    "usart_get_global_handle_pptr: unknown USART instance");
+		return NULL;
 	}
 }
