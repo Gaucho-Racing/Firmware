@@ -42,11 +42,10 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ env.SCCACHE_DIR }}
-          key: sccache-${{ github.workflow }}-${{ runner.os }}-${{ matrix.prefix }}-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-${{ hashFiles('Lib/**/*.[ch]') }}
+          key: sccache-${{ github.workflow }}-${{ runner.os }}-${{ matrix.prefix }}-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-${{ github.event.pull_request.number || github.ref }}
           restore-keys: |
             sccache-${{ github.workflow }}-${{ runner.os }}-${{ matrix.prefix }}-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-
             sccache-${{ github.workflow }}-${{ runner.os }}-${{ matrix.prefix }}-
-            sccache-${{ github.workflow }}-${{ runner.os }}-
 
       - name: Setup Shared Compilation Cache
         uses: mozilla-actions/sccache-action@v0.0.9
