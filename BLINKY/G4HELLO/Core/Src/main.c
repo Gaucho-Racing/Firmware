@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Logomatic.h"
+#include "Peripherals/USART/usart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -55,6 +56,15 @@ static void MX_LPUART1_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void received_byte_callback(uint8_t byte)
+{
+	LOGOMATIC("Received byte: 0x%02X ('%c')\n", byte,
+		  (byte >= 32 && byte <= 126) ? byte : '.');
+
+#ifndef LOGOMATIC_ENABLED
+	byte = byte; // suppress unused variable warning
+#endif
+}
 
 /* Enable ITM for SWO output */
 static void ITM_Enable(void)
@@ -104,7 +114,20 @@ int main(void)
 	MX_GPIO_Init();
 	MX_LPUART1_UART_Init();
 	/* USER CODE BEGIN 2 */
-
+	USARTConfig config = {
+	    .instance = USART1,
+	    .tx_queue_length = 16,
+	    .baud_rate = 115200,
+	    .on_rx_byte = received_byte_callback,
+	};
+	USARTHandle *handle = usart_init_peripheral(&config);
+	for (uint8_t i = 0; i < 30; i++) {
+		LOGOMATIC("sending message over usart... %d\n", i);
+		usart_send(handle, "Hello World!", 13);
+		LL_mDelay(1000);
+	}
+	LOGOMATIC("USART test messages sent, releasing...\n");
+	usart_release(&handle);
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
