@@ -120,11 +120,11 @@ uint8_t GR_CircularBuffer_Push(CircularBuffer *buffer_ptr, void *object_ptr,
 	{
 		void *head_item = buffer_ptr->buffer[buffer_ptr->head];
 		if (buffer_ptr->head == buffer_ptr->tail && head_item) {
-			free(head_item);
 			buffer_ptr->head++;
 			if (buffer_ptr->head == buffer_ptr->capacity) {
 				buffer_ptr->head = 0;
 			}
+			free(head_item);
 		}
 	}
 
