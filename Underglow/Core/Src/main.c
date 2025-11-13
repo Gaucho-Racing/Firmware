@@ -40,7 +40,7 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-// SPI_HandleTypeDef hspi2; (HAL)
+SPI_HandleTypeDef hspi2;
 LL_SPI_InitTypeDef SPI_InitStruct = {0};
 DMA_HandleTypeDef hdma_spi2_tx;
 
@@ -290,7 +290,8 @@ int main(void)
   //MX_GPIO_Init();
   //MX_DMA_Init();
   //MX_TIM2_Init();
-  MX_SPI2_Init();
+  //MX_SPI2_Init(); --> MXCube, HAL
+  SPI2_LL_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -306,8 +307,8 @@ int main(void)
   //uint8_t reset = 0; 
   //WS2812B_writeRGB_SPI(255, 0, 0, 50, led);
     
-  // *SPIx = (&hspi2)->Instance;
-  //LL_SPI_Enable(SPIx);
+  *SPIx = (&hspi2)->Instance;
+  LL_SPI_Enable(SPIx);
 
   //50 / 1.25 = 40
   //round up to 48 -> 48/24 = 2 pixels
@@ -522,9 +523,30 @@ void assert_failed(uint8_t *file, uint32_t line)
   * @retval None
   */
 
+// TODO: finish LL init
+
+// Initializes LL for SPI (freely adjust params here)
+// Data Size is 8 bit --> MSB = 0x1_______, each "bit" is 3 bits --> 0x110 = high, 0x100 = low
+  // MSB important here
+// adjust
 void SPI2_LL_Init(void) {
 
   LL_SPI_InitTypeDef SPI_InitStruct = {0};
+  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+  // Enable peripheral and GPIO clocks
+  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_SPI2);
+  LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);
+
+  // Configure GPIO pins for SPI2: PB13=SCK, PB14=MISO, PB15=MOSI
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_13 | LL_GPIO_PIN_14 | LL_GPIO_PIN_15;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
+  GPIO_InitStruct.Alternate = LL_GPIO_AF_5;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+  LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
 
   SPI_InitStruct.Mode = LL_SPI_MODE_MASTER;
   SPI_InitStruct.TransferDirection = LL_SPI_HALF_DUPLEX_RX;
@@ -535,6 +557,7 @@ void SPI2_LL_Init(void) {
   SPI_InitStruct.BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV32;
   SPI_InitStruct.BitOrder = LL_SPI_MSB_FIRST;
   SPI_InitStruct.CRCCalculation = LL_SPI_CRCCALCULATION_DISABLE;
+  LL_SPI_Init(SPI2, &SPI_InitStruct);
 
   LL_SPI_Enable(SPI2);
 
