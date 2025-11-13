@@ -40,7 +40,8 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-SPI_HandleTypeDef hspi2;
+// SPI_HandleTypeDef hspi2; (HAL)
+LL_SPI_InitTypeDef SPI_InitStruct = {0};
 DMA_HandleTypeDef hdma_spi2_tx;
 
 TIM_HandleTypeDef htim2;
@@ -73,6 +74,11 @@ static void MX_SPI2_Init(void);
  * @param val The 8 bits to convert to 3 half-words
  * @param out_arr The location to store the 3 half-words
  */
+
+ //TODO: fix SPI --> incorrect waveform (check notes app)
+
+ //TODO: fix pragmas
+ 
 #define SPI_BITS_TO_LED 6
 short WS2812B_SPI_Encoding(uint8_t val, uint16_t* out_arr) {
   uint8_t mask = 0b1 << 7;
@@ -307,8 +313,8 @@ int main(void)
   //round up to 48 -> 48/24 = 2 pixels
 
 
-  //#define USE_SPI
-  #define USE_TIM
+  #define USE_SPI
+  //#define USE_TIM
 
   #ifdef USE_TIM
  // =================================== FRAME DEFINITION =========================
@@ -516,6 +522,29 @@ void assert_failed(uint8_t *file, uint32_t line)
   * @retval None
   */
 
+void SPI2_LL_Init(void) {
+
+  LL_SPI_InitTypeDef SPI_InitStruct = {0};
+
+  SPI_InitStruct.Mode = LL_SPI_MODE_MASTER;
+  SPI_InitStruct.TransferDirection = LL_SPI_HALF_DUPLEX_RX;
+  SPI_InitStruct.DataWidth = LL_SPI_DATAWIDTH_8BIT;
+  SPI_InitStruct.ClockPolarity = LL_SPI_POLARITY_LOW;
+  SPI_InitStruct.ClockPhase = LL_SPI_PHASE_1EDGE;
+  SPI_InitStruct.NSS = LL_SPI_NSS_SOFT;
+  SPI_InitStruct.BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV32;
+  SPI_InitStruct.BitOrder = LL_SPI_MSB_FIRST;
+  SPI_InitStruct.CRCCalculation = LL_SPI_CRCCALCULATION_DISABLE;
+
+  LL_SPI_Enable(SPI2);
+
+}
+
+
+
+
+
+// HAL
 static void MX_SPI2_Init(void)
 {
 
@@ -527,20 +556,26 @@ static void MX_SPI2_Init(void)
 
   /* USER CODE END SPI2_Init 1 */
   /* SPI2 parameter configuration*/
+
+  // commented = HAL
+
+  /*
   hspi2.Instance = SPI2;
   hspi2.Init.Mode = SPI_MODE_MASTER;
-  hspi2.Init.Direction = SPI_DIRECTION_2LINES;
-  hspi2.Init.DataSize = SPI_DATASIZE_16BIT; 
+  hspi2.Init.Direction = SPI_DIRECTION_1LINE;
+  hspi2.Init.DataSize = SPI_DATASIZE_8BIT; 
   hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi2.Init.NSS = SPI_NSS_SOFT;
-  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
+  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_32;
   hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
   hspi2.Init.CRCPolynomial = 7;
   hspi2.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
   hspi2.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
+  */
+
   if (HAL_SPI_Init(&hspi2) != HAL_OK)
   {
     Error_Handler();
