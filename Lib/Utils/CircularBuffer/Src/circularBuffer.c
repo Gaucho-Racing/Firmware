@@ -150,6 +150,11 @@ void *GR_CircularBuffer_Pop(CircularBuffer *buffer_ptr)
 	// Get buffer head's pointer
 	void *result = buffer_ptr->buffer[buffer_ptr->head];
 
+	if (!result) {
+		// Buffer is empty; do not shift head
+		return NULL;
+	}
+
 	// Update the buffer
 	buffer_ptr->buffer[buffer_ptr->head] = NULL;
 
