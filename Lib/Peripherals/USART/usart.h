@@ -6,8 +6,10 @@ typedef void (*USART_RxByteCallback)(uint8_t byte);
 typedef struct {
 	USART_TypeDef *instance;  // i.e. USART1, USART2, etc.
 	uint32_t tx_queue_length; // in # of messages
-	uint32_t baud_rate;
 	USART_RxByteCallback on_rx_byte;
+	GPIO_TypeDef *gpio_port; // i.e. GPIOA, GPIOB, etc.
+	LL_GPIO_InitTypeDef *ll_gpio;
+	LL_USART_InitTypeDef *ll_usart;
 } USARTConfig;
 
 typedef struct usart_handle_st USARTHandle;

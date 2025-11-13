@@ -97,27 +97,8 @@ void usart_init_hardware(USARTConfig *config, USARTHandle *handle)
 	// Select PCLK2 as USART1 clock source
 	LL_RCC_SetUSARTClockSource(LL_RCC_USART1_CLKSOURCE_PCLK2);
 
-	// Configure PB6 = TX, PB7 = RX
-	LL_GPIO_InitTypeDef gpio = {0};
-	gpio.Pin = LL_GPIO_PIN_6 | LL_GPIO_PIN_7;
-	gpio.Mode = LL_GPIO_MODE_ALTERNATE;
-	gpio.Alternate = LL_GPIO_AF_7;
-	gpio.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-	gpio.Pull = LL_GPIO_PULL_UP;
-	gpio.Speed = LL_GPIO_SPEED_FREQ_HIGH;
-	LL_GPIO_Init(GPIOB, &gpio);
-
-	// Configure USART
-	LL_USART_InitTypeDef us = {0};
-	us.PrescalerValue = LL_USART_PRESCALER_DIV1;
-	us.BaudRate = config->baud_rate;
-	us.DataWidth = LL_USART_DATAWIDTH_8B;
-	us.StopBits = LL_USART_STOPBITS_1;
-	us.Parity = LL_USART_PARITY_NONE;
-	us.TransferDirection = LL_USART_DIRECTION_TX_RX;
-	us.HardwareFlowControl = LL_USART_HWCONTROL_NONE;
-	us.OverSampling = LL_USART_OVERSAMPLING_16;
-	LL_USART_Init(handle->instance, &us);
+	LL_GPIO_Init(config->gpio_port, config->ll_gpio);
+	LL_USART_Init(handle->instance, config->ll_usart);
 
 	LL_USART_ConfigAsyncMode(handle->instance);
 
