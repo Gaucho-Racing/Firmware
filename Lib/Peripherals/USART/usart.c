@@ -14,6 +14,7 @@ struct usart_handle_st {
 	CircularBuffer *tx_buffer;
 	USARTMessage *current_tx_message;
 	uint32_t current_tx_index;
+	USART_RxByteCallback on_rx_byte;
 };
 
 USARTHandle *USART1Handle = NULL;
@@ -22,26 +23,8 @@ USARTHandle *USART3Handle = NULL;
 USARTHandle *UART4Handle = NULL;
 USARTHandle *UART5Handle = NULL;
 USARTHandle *LPUART1Handle = NULL;
-USARTHandle **usart_get_global_handle_pptr(USART_TypeDef *instance)
-{
-	if (instance == USART1) {
-		return &USART1Handle;
-	} else if (instance == USART2) {
-		return &USART2Handle;
-	} else if (instance == USART3) {
-		return &USART3Handle;
-	} else if (instance == UART4) {
-		return &UART4Handle;
-	} else if (instance == UART5) {
-		return &UART5Handle;
-	} else if (instance == LPUART1) {
-		return &LPUART1Handle;
-	} else {
-		LOGOMATIC(
-		    "usart_get_global_handle_pptr: unknown USART instance");
-		return NULL;
-	}
-}
+USARTHandle **usart_get_global_handle_pptr(USART_TypeDef *instance);
+IRQn_Type usart_get_irqn(USART_TypeDef *instance);
 void usart_irq(USARTHandle *handle);
 void USART1_IRQHandler(void) { usart_irq(USART1Handle); }
 void USART2_IRQHandler(void) { usart_irq(USART2Handle); }
@@ -98,6 +81,7 @@ USARTHandle *usart_init_handle(USARTConfig *config)
 	handle_ptr->instance = config->instance;
 	handle_ptr->tx_buffer =
 	    GR_CircularBuffer_Create(config->tx_queue_length);
+	handle_ptr->on_rx_byte = config->on_rx_byte;
 
 	return handle_ptr;
 }
@@ -145,8 +129,53 @@ void usart_init_hardware(USARTConfig *config, USARTHandle *handle)
 	       !LL_USART_IsActiveFlag_REACK(handle->instance)) {
 	}
 
-	// enable receive interrupt
+	// configure interrupt callback
+	NVIC_EnableIRQ(usart_get_irqn(handle->instance));
+
+	// enable receive interrupt (always on)
+	// note: transmit interrupt is enabled only when there is data to send
 	LL_USART_EnableIT_RXNE(handle->instance);
+}
+
+USARTHandle **usart_get_global_handle_pptr(USART_TypeDef *instance)
+{
+	if (instance == USART1) {
+		return &USART1Handle;
+	} else if (instance == USART2) {
+		return &USART2Handle;
+	} else if (instance == USART3) {
+		return &USART3Handle;
+	} else if (instance == UART4) {
+		return &UART4Handle;
+	} else if (instance == UART5) {
+		return &UART5Handle;
+	} else if (instance == LPUART1) {
+		return &LPUART1Handle;
+	} else {
+		LOGOMATIC(
+		    "usart_get_global_handle_pptr: unknown USART instance");
+		return NULL;
+	}
+}
+
+IRQn_Type usart_get_irqn(USART_TypeDef *instance)
+{
+	if (instance == USART1) {
+		return USART1_IRQn;
+	} else if (instance == USART2) {
+		return USART2_IRQn;
+	} else if (instance == USART3) {
+		return USART3_IRQn;
+	} else if (instance == UART4) {
+		return UART4_IRQn;
+	} else if (instance == UART5) {
+		return UART5_IRQn;
+	} else if (instance == LPUART1) {
+		return LPUART1_IRQn;
+	} else {
+		LOGOMATIC("usart_get_irqn: unknown USART instance");
+		return NonMaskableInt_IRQn;
+	}
 }
 
 // queue a message to be sent
@@ -238,12 +267,7 @@ void usart_tx_ready_callback(USARTHandle *handle)
 void usart_rx_ready_callback(USARTHandle *handle)
 {
 	uint8_t byte = LL_USART_ReceiveData8(handle->instance);
-	LOGOMATIC("USART received byte: 0x%02X ('%c')\n", byte,
-		  (byte >= 32 && byte <= 126) ? byte : '.');
-
-#ifndef LOGOMATIC_ENABLED
-	byte = byte; // suppress unused variable warning
-#endif
+	handle->on_rx_byte(byte);
 }
 
 void usart_release(USARTHandle **handle)
@@ -293,6 +317,9 @@ void usart_release_hardware(USARTHandle **handle)
 	// disable interrupts (it's okay if they were already disabled)
 	LL_USART_DisableIT_TXE(instance);
 	LL_USART_DisableIT_RXNE(instance);
+
+	// unregister callback
+	NVIC_DisableIRQ(usart_get_irqn(instance));
 
 	// disable USART
 	LL_USART_Disable(instance);
