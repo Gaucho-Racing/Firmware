@@ -81,6 +81,8 @@ USARTHandle *usart_init_handle(USARTConfig *config)
 	handle_ptr->instance = config->instance;
 	handle_ptr->tx_buffer =
 	    GR_CircularBuffer_Create(config->tx_queue_length);
+	handle_ptr->current_tx_message = NULL;
+	handle_ptr->current_tx_index = 0;
 	handle_ptr->on_rx_byte = config->on_rx_byte;
 
 	return handle_ptr;
@@ -259,9 +261,9 @@ void usart_tx_ready_callback(USARTHandle *handle)
 		return;
 	}
 
-	LL_USART_TransmitData8(
-	    handle->instance,
-	    handle->current_tx_message->data[handle->current_tx_index++]);
+	char byte =
+	    handle->current_tx_message->data[handle->current_tx_index++];
+	LL_USART_TransmitData8(handle->instance, byte);
 }
 
 void usart_rx_ready_callback(USARTHandle *handle)
