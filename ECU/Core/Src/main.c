@@ -59,7 +59,6 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
 /* Enable ITM for SWO output */
 static void ITM_Enable(void)
 {
