@@ -57,7 +57,7 @@ When able, please add VS Code comptatible doc comments! These will help debuggin
 
 *For Linux / BSD:*
 * `sudo apt install cmake ninja gcc-arm-none-eabi openocd`
-* `sudo dnf install cmake ninja openocd arm-none-eabi-gcc-cs arm-none-eabi-newlib`
+* `sudo dnf install cmake ninja openocd` (Normally also `arm-none-eabi-gcc-cs arm-none-eabi-newlib` which worked on Fedora 42 but is broken on Fedora 43, use [Arm's version](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads) instead for the moment)
 * `sudo pacman -S cmake ninja openocd arm-none-eabi-gcc`
 * `pkg install cmake ninja openocd arm-none-eabi-gcc`
 * If you run into issues verify that binutils and newlib are installed for `arm-none-eabi`
