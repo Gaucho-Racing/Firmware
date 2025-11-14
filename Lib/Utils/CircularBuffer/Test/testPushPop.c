@@ -221,5 +221,16 @@ int main(void)
 		}
 	}
 
+	// popping from an empty buffer
+	{
+		buffer_ptr = GR_CircularBuffer_Create(5);
+		GR_CircularBuffer_Pop(buffer_ptr);
+		if (!GR_CircularBuffer_IsEmpty(buffer_ptr)) {
+			GR_CircularBuffer_Free(&buffer_ptr);
+			return 11;
+		}
+		GR_CircularBuffer_Free(&buffer_ptr);
+	}
+
 	return 0;
 }
