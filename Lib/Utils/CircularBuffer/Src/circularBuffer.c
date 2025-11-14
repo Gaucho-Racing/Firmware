@@ -120,11 +120,11 @@ uint8_t GR_CircularBuffer_Push(CircularBuffer *buffer_ptr, void *object_ptr,
 	{
 		void *head_item = buffer_ptr->buffer[buffer_ptr->head];
 		if (buffer_ptr->head == buffer_ptr->tail && head_item) {
-			free(head_item);
 			buffer_ptr->head++;
-			if (buffer_ptr->head == buffer_ptr->capacity) {
+			if (buffer_ptr->head >= buffer_ptr->capacity) {
 				buffer_ptr->head = 0;
 			}
+			free(head_item);
 		}
 	}
 
@@ -133,7 +133,7 @@ uint8_t GR_CircularBuffer_Push(CircularBuffer *buffer_ptr, void *object_ptr,
 
 	// Update tail iterator
 	buffer_ptr->tail++;
-	if (buffer_ptr->tail == buffer_ptr->capacity) {
+	if (buffer_ptr->tail >= buffer_ptr->capacity) {
 		buffer_ptr->tail = 0;
 	}
 
@@ -160,7 +160,7 @@ void *GR_CircularBuffer_Pop(CircularBuffer *buffer_ptr)
 
 	// Update head iterator
 	buffer_ptr->head++;
-	if (buffer_ptr->head == buffer_ptr->capacity) {
+	if (buffer_ptr->head >= buffer_ptr->capacity) {
 		buffer_ptr->head = 0;
 	}
 
