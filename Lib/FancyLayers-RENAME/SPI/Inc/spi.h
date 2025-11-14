@@ -93,4 +93,12 @@ uint32_t GR_SPI_Get_IRQn(uint32_t SPIx_number);
  */
 void GR_SPI_Enable_Clocks(GR_SPI_Pins* pins);
 
+/**
+ * @brief Configures GPIO pins for SPI
+ * 
+ * @param config
+ * @param pins
+ */
+void GR_SPI_Configure_Pins(LL_GPIO_InitTypeDef* pin_config, GR_SPI_Pins* pins)
+
 #endif
