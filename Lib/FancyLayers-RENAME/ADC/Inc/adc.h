@@ -52,6 +52,7 @@ unsigned long ADC2_pins[ADC2_COUNT] = {BSE_SIGNAL_Pin, BSPD_SENSE_Pin, IMD_SENSE
 unsigned long ADC2_ports[ADC2_COUNT] = {BSE_SIGNAL_GPIO_Port, BSPD_SENSE_GPIO_Port, IMD_SENSE_GPIO_Port, AMS_SENSE_GPIO_Port, STEERING_ANGLE_GPIO_Port};
 */
 
+// What the prescaler value 
 typedef enum{
     PS_1 = LL_ADC_CLOCK_ASYNC_DIV1,
     PS_2 = LL_ADC_CLOCK_ASYNC_DIV2,
@@ -67,6 +68,7 @@ typedef enum{
     PS_256 = LL_ADC_CLOCK_ASYNC_DIV256
 } Pre_Scaler_Values;
 
+// Which ADC to initialize
 typedef enum{
     ADC_1,
     ADC_2,
@@ -75,24 +77,18 @@ typedef enum{
     ADC_5,
 } ADC_Number;
 
+
 typedef enum{
-    RIGHT,
-    LEFT
-} Bit_Alignment;
-
-typedef struct ADC_Initializer{
-    ADC_Number ADC_Num; // ADC to use
-    Bit_Alignment Bit_Align; // The bit alignment for the ADC output
-};
-
-// Input for initializing a single pin
-typedef struct ADCPinInitializer{
-    GPIO_TypeDef *GPIOx; // GPIO Bus
-    uint16_t GPIO_Pin; // Pin number
-};
+    RESOLUTION_12 = LL_ADC_RESOLUTION_12B,
+    RESOLUTION_10 = LL_ADC_RESOLUTION_10B,
+    RESOLUTION_8 =  LL_ADC_RESOLUTION_8B,
+    RESOLUTION_6 = LL_ADC_RESOLUTION_6B
+} Resolution;
 
 // Initializes an ADC group
 void ADC_Group_Init(ADC_Number ADC, Pre_Scaler_Values PS_Val);
+
+void ADC_Init(ADC_Number ADC, Resolution res, );
 
 /* 3 Init Function
  * 1. Initialize each group: 1&2, 3&4, 5
