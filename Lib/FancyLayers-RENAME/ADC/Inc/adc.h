@@ -77,7 +77,7 @@ typedef enum{
     ADC_5,
 } ADC_Number;
 
-
+// Resolution of the ADC in bits
 typedef enum{
     RESOLUTION_12 = LL_ADC_RESOLUTION_12B,
     RESOLUTION_10 = LL_ADC_RESOLUTION_10B,
@@ -85,10 +85,18 @@ typedef enum{
     RESOLUTION_6 = LL_ADC_RESOLUTION_6B
 } Resolution;
 
+// Data Alignment
+typedef enum{
+    RIGHT = LL_ADC_DATA_ALIGN_RIGHT,
+    LEFT = LL_ADC_DATA_ALIGN_LEFT
+} Alignment;
+
 // Initializes an ADC group
 void ADC_Group_Init(ADC_Number ADC, Pre_Scaler_Values PS_Val);
 
-void ADC_Init(ADC_Number ADC, Resolution res, );
+// Initializes each individ
+void ADC_Init(ADC_Number ADC, Resolution res, Alignment align);
+
 
 /* 3 Init Function
  * 1. Initialize each group: 1&2, 3&4, 5

@@ -26,6 +26,49 @@
 
 AnalogInput globalAnalog = {0};
 
+struct {
+	uint16_t adc1buf[6];
+	uint16_t adc2buf[5];
+} adcBuffers;
+
+float adcSumValues[11];
+uint16_t adcDataValues[11][WINDOW_SIZE] = {0};
+uint8_t readIndex = 0;
+
+uint16_t analogRead(AnalogSignal signal)
+{
+	switch(signal)
+	{
+		case AUX_SIGNAL:
+			return 0;
+
+		default:
+			if (signal > STEERING_ANGLE)
+			{
+				Error_Handler();
+				return -1;
+			}
+
+			return ((uint16_t*)&adcBuffers)[signal];
+	}
+}
+
+void updateAnalogInputs(void)
+{
+	float newValue;
+
+	for (uint8_t sig = AUX_SIGNAL; sig <= STEERING_ANGLE; sig++)
+	{
+		newValue = (float)analogRead(sig);
+		adcSumValues[sig] -= adcDataValues[sig][readIndex];
+		adcDataValues[sig][readIndex] = newValue;
+		adcSumValues[sig] += newValue;
+		((float*)&globalAnalog)[sig] = adcSumValues[sig] / WINDOW_SIZE;
+	}
+
+	readIndex = (readIndex + 1) % WINDOW_SIZE;
+}
+
 /* USER CODE END 0 */
 
 /* ADC1 init function */
@@ -34,48 +77,6 @@ void MX_ADC1_Init(void)
 
 	/* USER CODE BEGIN ADC1_Init 0 */
 
-	struct {
-		uint16_t adc1buf[6];
-		uint16_t adc2buf[5];
-	} adcBuffers;
-	
-	float adcSumValues[11];
-	uint16_t adcDataValues[11][WINDOW_SIZE] = {0};
-	uint8_t readIndex = 0;
-	
-	uint16_t analogRead(AnalogSignal signal)
-	{
-		switch(signal)
-		{
-			case AUX_SIGNAL:
-				return 0;
-	
-			default:
-				if (signal > STEERING_ANGLE)
-				{
-					Error_Handler();
-					return -1;
-				}
-	
-				return ((uint16_t*)&adcBuffers)[signal];
-		}
-	}
-	
-	void updateAnalogInputs(void)
-	{
-		float newValue;
-	
-		for (uint8_t sig = AUX_SIGNAL; sig <= STEERING_ANGLE; sig++)
-		{
-			newValue = (float)analogRead(sig);
-			adcSumValues[sig] -= adcDataValues[sig][readIndex];
-			adcDataValues[sig][readIndex] = newValue;
-			adcSumValues[sig] += newValue;
-			((float*)&globalAnalog)[sig] = adcSumValues[sig] / WINDOW_SIZE;
-		}
-	
-		readIndex = (readIndex + 1) % WINDOW_SIZE;
-	}
 
 	/* USER CODE END ADC1_Init 0 */
 
