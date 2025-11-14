@@ -5,7 +5,7 @@
 #define GR_PERIPHERALS_ADC
 
 
-typedef struct {
+/*typedef struct {
     // ADC1
     float AUX_SIGNAL;
     float BSPD_SIGNAL;
@@ -50,12 +50,7 @@ const uint32_t ADC2_COUNT = 5;
 unsigned long ADC2_pins[ADC2_COUNT] = {BSE_SIGNAL_Pin, BSPD_SENSE_Pin, IMD_SENSE_Pin,
 			     AMS_SENSE_Pin, STEERING_ANGLE_Pin};
 unsigned long ADC2_ports[ADC2_COUNT] = {BSE_SIGNAL_GPIO_Port, BSPD_SENSE_GPIO_Port, IMD_SENSE_GPIO_Port, AMS_SENSE_GPIO_Port, STEERING_ANGLE_GPIO_Port};
-
-typedef enum{
-    GROUP_12,
-    GROUP_34,
-    GROUP_5
-} ADC_Group;
+*/
 
 typedef enum{
     PS_1 = LL_ADC_CLOCK_ASYNC_DIV1,
@@ -72,22 +67,18 @@ typedef enum{
     PS_256 = LL_ADC_CLOCK_ASYNC_DIV256
 } Pre_Scaler_Values;
 
-void ADC_Group_Init(ADC_Group group, Pre_Scaler_Values PS_Val);
-
 typedef enum{
-    ADC_1 = 0,
+    ADC_1,
     ADC_2,
     ADC_3,
     ADC_4,
-    ADC_5
+    ADC_5,
 } ADC_Number;
 
 typedef enum{
     RIGHT,
     LEFT
 } Bit_Alignment;
-
-// Return a pointer to DMA 
 
 typedef struct ADC_Initializer{
     ADC_Number ADC_Num; // ADC to use
@@ -100,9 +91,14 @@ typedef struct ADCPinInitializer{
     uint16_t GPIO_Pin; // Pin number
 };
 
+// Initializes an ADC group
+void ADC_Group_Init(ADC_Number ADC, Pre_Scaler_Values PS_Val);
+
 /* 3 Init Function
  * 1. Initialize each group: 1&2, 3&4, 5
  * 2. Initialize each ADC
  * 4. Initialize each pin in the ADC
  */
+
+// Return a pointer to DMA 
 #endif
