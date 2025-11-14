@@ -35,6 +35,7 @@ void LPUART1_IRQHandler(void) { usart_irq(LPUART1Handle); }
 
 USARTHandle *usart_init_handle(USARTConfig *config);
 void usart_init_hardware(USARTConfig *config, USARTHandle *handle);
+void usart_enable_clocks(USART_TypeDef *instance);
 
 void usart_release_handle(USARTHandle **handle);
 void usart_release_hardware(USARTHandle **handle);
@@ -90,26 +91,39 @@ USARTHandle *usart_init_handle(USARTConfig *config)
 
 void usart_init_hardware(USARTConfig *config, USARTHandle *handle)
 {
-	// Enable GPIOB and USART1 clocks
-	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);
-	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_USART1);
-
-	// Select PCLK2 as USART1 clock source
-	LL_RCC_SetUSARTClockSource(LL_RCC_USART1_CLKSOURCE_PCLK2);
+	// TODO: I'm hardcoding a ton of stuff here,
+	// I have no idea what most of this does
+	usart_enable_clocks(handle->instance);
 
 	LL_GPIO_Init(config->gpio_port, config->ll_gpio);
-	LL_USART_Init(handle->instance, config->ll_usart);
 
-	LL_USART_ConfigAsyncMode(handle->instance);
+	if (handle->instance == LPUART1) {
+		LL_LPUART_Init(handle->instance, config->ll_lpuart);
+		LL_LPUART_SetTXFIFOThreshold(handle->instance,
+					     LL_LPUART_FIFOTHRESHOLD_1_8);
+		LL_LPUART_SetRXFIFOThreshold(handle->instance,
+					     LL_LPUART_FIFOTHRESHOLD_1_8);
+		LL_LPUART_DisableFIFO(handle->instance);
+		LL_LPUART_SetWakeUpMethod(handle->instance,
+					  LL_LPUART_WAKEUP_IDLELINE);
 
-	// Enable TX/RX explicitly and enable USART
-	LL_USART_EnableDirectionTx(handle->instance);
-	LL_USART_EnableDirectionRx(handle->instance);
-	LL_USART_Enable(handle->instance);
+		LL_LPUART_Enable(handle->instance);
 
-	// Wait for hardware to acknowledge that usart is enabled
-	while (!LL_USART_IsActiveFlag_TEACK(handle->instance) ||
-	       !LL_USART_IsActiveFlag_REACK(handle->instance)) {
+		while ((!(LL_LPUART_IsActiveFlag_TEACK(handle->instance))) ||
+		       (!(LL_LPUART_IsActiveFlag_REACK(handle->instance)))) {
+		}
+	} else {
+		LL_USART_Init(handle->instance, config->ll_usart);
+
+		LL_USART_ConfigAsyncMode(handle->instance);
+
+		LL_USART_EnableDirectionTx(handle->instance);
+		LL_USART_EnableDirectionRx(handle->instance);
+		LL_USART_Enable(handle->instance);
+
+		while (!LL_USART_IsActiveFlag_TEACK(handle->instance) ||
+		       !LL_USART_IsActiveFlag_REACK(handle->instance)) {
+		}
 	}
 
 	// configure interrupt callback
@@ -159,6 +173,31 @@ IRQn_Type usart_get_irqn(USART_TypeDef *instance)
 	} else {
 		LOGOMATIC("usart_get_irqn: unknown USART instance");
 		return NonMaskableInt_IRQn;
+	}
+}
+
+void usart_enable_clocks(USART_TypeDef *instance)
+{
+	if (instance == USART1) {
+		LL_RCC_SetUSARTClockSource(LL_RCC_USART1_CLKSOURCE_PCLK2);
+		LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_USART1);
+	} else if (instance == USART2) {
+		LL_RCC_SetUSARTClockSource(LL_RCC_USART2_CLKSOURCE_PCLK1);
+		LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_USART2);
+	} else if (instance == USART3) {
+		LL_RCC_SetUSARTClockSource(LL_RCC_USART3_CLKSOURCE_PCLK1);
+		LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_USART3);
+	} else if (instance == UART4) {
+		LL_RCC_SetUARTClockSource(LL_RCC_UART4_CLKSOURCE_PCLK1);
+		LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_UART4);
+	} else if (instance == UART5) {
+		LL_RCC_SetUARTClockSource(LL_RCC_UART5_CLKSOURCE_PCLK1);
+		LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_UART5);
+	} else if (instance == LPUART1) {
+		LL_RCC_SetLPUARTClockSource(LL_RCC_LPUART1_CLKSOURCE_PCLK1);
+		LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_LPUART1);
+	} else {
+		LOGOMATIC("usart_enable_clocks: unknown USART instance");
 	}
 }
 

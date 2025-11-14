@@ -9,7 +9,11 @@ typedef struct {
 	USART_RxByteCallback on_rx_byte; // nullable
 	GPIO_TypeDef *gpio_port;	 // i.e. GPIOA, GPIOB, etc.
 	LL_GPIO_InitTypeDef *ll_gpio;
-	LL_USART_InitTypeDef *ll_usart;
+	union {
+		// provide the correct one depending on `instance`
+		LL_USART_InitTypeDef *ll_usart;
+		LL_LPUART_InitTypeDef *ll_lpuart;
+	};
 } USARTConfig;
 
 typedef struct usart_handle_st USARTHandle;
