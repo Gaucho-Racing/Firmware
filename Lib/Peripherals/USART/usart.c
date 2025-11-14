@@ -115,9 +115,10 @@ void usart_init_hardware(USARTConfig *config, USARTHandle *handle)
 	// configure interrupt callback
 	NVIC_EnableIRQ(usart_get_irqn(handle->instance));
 
-	// enable receive interrupt (always on)
-	// note: transmit interrupt is enabled only when there is data to send
-	LL_USART_EnableIT_RXNE(handle->instance);
+	if (handle->on_rx_byte) {
+		// enable receive interrupt (always on)
+		LL_USART_EnableIT_RXNE(handle->instance);
+	}
 }
 
 USARTHandle **usart_get_global_handle_pptr(USART_TypeDef *instance)
@@ -204,8 +205,9 @@ void usart_irq(USARTHandle *handle)
 		usart_tx_ready_callback(handle);
 	}
 
-	// if (data received)
-	if (LL_USART_IsActiveFlag_RXNE(handle->instance)) {
+	// if ((want to receive) && (data received))
+	if (LL_USART_IsEnabledIT_RXNE(handle->instance) &&
+	    LL_USART_IsActiveFlag_RXNE(handle->instance)) {
 		usart_rx_ready_callback(handle);
 	}
 }
@@ -249,8 +251,10 @@ void usart_tx_ready_callback(USARTHandle *handle)
 
 void usart_rx_ready_callback(USARTHandle *handle)
 {
-	uint8_t byte = LL_USART_ReceiveData8(handle->instance);
-	handle->on_rx_byte(byte);
+	if (handle->on_rx_byte) {
+		uint8_t byte = LL_USART_ReceiveData8(handle->instance);
+		handle->on_rx_byte(byte);
+	}
 }
 
 void usart_release(USARTHandle **handle)
