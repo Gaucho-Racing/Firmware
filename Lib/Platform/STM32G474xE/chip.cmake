@@ -53,11 +53,7 @@ target_compile_definitions(
 		STM32G4
 )
 
-target_include_directories(
-	${CHIP}_LIB
-	INTERFACE
-		${CHIP_PATH}/STM32_HAL_LL/Inc
-)
+target_include_directories(${CHIP}_LIB INTERFACE ${CHIP_PATH}/STM32_HAL_LL/Inc)
 
 target_compile_options(${CHIP}_LIB INTERFACE ${TARGET_FLAGS})
 

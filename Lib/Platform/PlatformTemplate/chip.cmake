@@ -58,7 +58,7 @@ target_compile_options(${CHIP}_LIB INTERFACE ${TARGET_FLAGS})
 
 target_link_options(${CHIP}_LIB INTERFACE ${TARGET_FLAGS})
 
-target_link_libraries(${CHIP}_LIB INTERFACE CMSIS_5_CORE)	# Update if using a different CMSIS
+target_link_libraries(${CHIP}_LIB INTERFACE CMSIS_5_CORE) # Update if using a different CMSIS
 
 target_sources(
 	${CHIP}_LIB
