@@ -49,9 +49,10 @@
 #define ARM_PMU_ST_RETIRED                                                     \
 	0x0007 /*!< Memory-writing instruction architecturally executed and    \
 		  condition code check pass */
-#define ARM_PMU_INST_RETIRED 0x0008 /*!< Instruction architecturally executed  \
-				     */
-#define ARM_PMU_EXC_TAKEN 0x0009    /*!< Exception entry */
+#define ARM_PMU_INST_RETIRED                                                   \
+	0x0008			 /*!< Instruction architecturally executed     \
+				  */
+#define ARM_PMU_EXC_TAKEN 0x0009 /*!< Exception entry */
 #define ARM_PMU_EXC_RETURN                                                     \
 	0x000A /*!< Exception return instruction architecturally executed and  \
 		  the condition code check pass */
@@ -71,8 +72,9 @@
 	0x0010 /*!< Mispredicted or not predicted branch speculatively         \
 		  executed */
 #define ARM_PMU_CPU_CYCLES 0x0011 /*!< Cycle */
-#define ARM_PMU_BR_PRED 0x0012 /*!< Predictable branch speculatively executed  \
-				*/
+#define ARM_PMU_BR_PRED                                                        \
+	0x0012 /*!< Predictable branch speculatively executed                  \
+		*/
 #define ARM_PMU_MEM_ACCESS 0x0013	/*!< Data memory access */
 #define ARM_PMU_L1I_CACHE 0x0014	/*!< Level 1 instruction cache access */
 #define ARM_PMU_L1D_CACHE_WB 0x0015	/*!< Level 1 data cache write-back */
@@ -100,16 +102,18 @@
 	0x0023 /*!< No operation issued because of the frontend */
 #define ARM_PMU_STALL_BACKEND                                                  \
 	0x0024 /*!< No operation issued because of the backend */
-#define ARM_PMU_L2I_CACHE 0x0027	/*!< Level 2 instruction cache access */
-#define ARM_PMU_L2I_CACHE_REFILL 0x0028 /*!< Level 2 instruction cache refill  \
-					 */
+#define ARM_PMU_L2I_CACHE 0x0027 /*!< Level 2 instruction cache access */
+#define ARM_PMU_L2I_CACHE_REFILL                                               \
+	0x0028 /*!< Level 2 instruction cache refill                           \
+		*/
 #define ARM_PMU_L3D_CACHE_ALLOCATE                                             \
 	0x0029 /*!< Level 3 data cache allocation without refill */
-#define ARM_PMU_L3D_CACHE_REFILL 0x002A	 /*!< Level 3 data cache refill */
-#define ARM_PMU_L3D_CACHE 0x002B	 /*!< Level 3 data cache access */
-#define ARM_PMU_L3D_CACHE_WB 0x002C	 /*!< Level 3 data cache write-back */
-#define ARM_PMU_LL_CACHE_RD 0x0036	 /*!< Last level data cache read */
-#define ARM_PMU_LL_CACHE_MISS_RD 0x0037	 /*!< Last level data cache read miss  \
+#define ARM_PMU_L3D_CACHE_REFILL 0x002A /*!< Level 3 data cache refill */
+#define ARM_PMU_L3D_CACHE 0x002B	/*!< Level 3 data cache access */
+#define ARM_PMU_L3D_CACHE_WB 0x002C	/*!< Level 3 data cache write-back */
+#define ARM_PMU_LL_CACHE_RD 0x0036	/*!< Last level data cache read */
+#define ARM_PMU_LL_CACHE_MISS_RD                                               \
+	0x0037				 /*!< Last level data cache read miss  \
 					  */
 #define ARM_PMU_L1D_CACHE_MISS_RD 0x0039 /*!< Level 1 data cache read miss */
 #define ARM_PMU_OP_COMPLETE 0x003A	 /*!< Operation retired */
