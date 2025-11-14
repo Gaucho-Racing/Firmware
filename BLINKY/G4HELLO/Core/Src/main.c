@@ -112,38 +112,36 @@ int main(void)
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
-	MX_LPUART1_UART_Init();
+	// MX_LPUART1_UART_Init();
 	/* USER CODE BEGIN 2 */
 	USARTConfig config = {
-	    .instance = USART1,
+	    .instance = LPUART1,
 	    .tx_queue_length = 16,
-	    .on_rx_byte = received_byte_callback,
-	    .gpio_port = GPIOB,
+	    .on_rx_byte = NULL,
+	    .gpio_port = GPIOA,
 	    .ll_gpio =
 		&(LL_GPIO_InitTypeDef){
-		    .Pin = LL_GPIO_PIN_6 | LL_GPIO_PIN_7,
+		    .Pin = LL_GPIO_PIN_2 | LL_GPIO_PIN_3,
 		    .Mode = LL_GPIO_MODE_ALTERNATE,
-		    .Alternate = LL_GPIO_AF_7,
+		    .Alternate = LL_GPIO_AF_12,
 		    .OutputType = LL_GPIO_OUTPUT_PUSHPULL,
-		    .Pull = LL_GPIO_PULL_UP,
-		    .Speed = LL_GPIO_SPEED_FREQ_HIGH,
+		    .Pull = LL_GPIO_PULL_NO,
+		    .Speed = LL_GPIO_SPEED_FREQ_LOW,
 		},
-	    .ll_usart =
-		&(LL_USART_InitTypeDef){
-		    .PrescalerValue = LL_USART_PRESCALER_DIV1,
+	    .ll_lpuart =
+		&(LL_LPUART_InitTypeDef){
+		    .PrescalerValue = LL_LPUART_PRESCALER_DIV1,
 		    .BaudRate = 115200,
-		    .DataWidth = LL_USART_DATAWIDTH_8B,
-		    .StopBits = LL_USART_STOPBITS_1,
-		    .Parity = LL_USART_PARITY_NONE,
-		    .TransferDirection = LL_USART_DIRECTION_TX_RX,
-		    .HardwareFlowControl = LL_USART_HWCONTROL_NONE,
-		    .OverSampling = LL_USART_OVERSAMPLING_16,
+		    .DataWidth = LL_LPUART_DATAWIDTH_8B,
+		    .StopBits = LL_LPUART_STOPBITS_1,
+		    .Parity = LL_LPUART_PARITY_NONE,
+		    .TransferDirection = LL_LPUART_DIRECTION_TX_RX,
 		},
 	};
 	USARTHandle *handle = usart_init_peripheral(&config);
 	for (uint8_t i = 0; i < 30; i++) {
 		LOGOMATIC("sending message over usart... %d\n", i);
-		usart_send(handle, "Hello World!", 13);
+		usart_send(handle, "Hello World!\r\n", 14);
 		LL_mDelay(1000);
 	}
 	LOGOMATIC("USART test messages sent, releasing...\n");
