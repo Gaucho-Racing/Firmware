@@ -68,15 +68,6 @@ typedef enum{
     PS_256 = LL_ADC_CLOCK_ASYNC_DIV256
 } Pre_Scaler_Values;
 
-// Which ADC to initialize
-typedef enum{
-    ADC_1,
-    ADC_2,
-    ADC_3,
-    ADC_4,
-    ADC_5,
-} ADC_Number;
-
 // Resolution of the ADC in bits
 typedef enum{
     RESOLUTION_12 = LL_ADC_RESOLUTION_12B,
@@ -92,11 +83,21 @@ typedef enum{
 } Alignment;
 
 // Initializes an ADC group
-void ADC_Group_Init(ADC_Number ADC, Pre_Scaler_Values PS_Val);
+void ADC_Group_Init(unsigned long ADC, Pre_Scaler_Values PS_Val);
 
-// Initializes each individ
-void ADC_Init(ADC_Number ADC, Resolution res, Alignment align);
+// Initializes each individual ADC
+void ADC_Init(unsigned long ADC, Resolution res, Alignment align);
 
+// Initialize a single port and all the pins used on that port
+void ADC_Init_Pins(Pin_Ports *hello)
+
+// 
+
+// Struct to easily 
+typedef struct{
+    unsigned long pin; // Bit mask of pins
+    unsigned long port; // Port
+} Pin_Ports;
 
 /* 3 Init Function
  * 1. Initialize each group: 1&2, 3&4, 5
