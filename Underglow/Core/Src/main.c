@@ -40,7 +40,7 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-SPI_HandleTypeDef hspi2;
+// SPI_HandleTypeDef hspi2; (un-needed? TIM?)
 LL_SPI_InitTypeDef SPI_InitStruct = {0};
 DMA_HandleTypeDef hdma_spi2_tx;
 
@@ -70,57 +70,72 @@ static void MX_SPI2_Init(void);
 //SPI PROBABLY NEEDS TO BE REWORKED, LOOK AT TIM FIRST
 /**
  * 
- * @brief Each WS2812B bit corresponds to 6 SPI bits
- * @param val The 8 bits to convert to 3 half-words
- * @param out_arr The location to store the 3 half-words
+ * @brief Each WS2812B bit corresponds to 3 SPI bits
+ * @param val The 8 bits to convert to 3 half-words (fix)
+ * @param out_arr The location to store the 3 half-words (fix)
  */
 
  //TODO: fix SPI --> incorrect waveform (check notes app)
 
  //TODO: fix pragmas
  
-#define SPI_BITS_TO_LED 6
-short WS2812B_SPI_Encoding(uint8_t val, uint16_t* out_arr) {
+#define SPI_BITS_TO_LED 3
+short WS2812B_SPI_Encoding(uint8_t val, uint8_t* out_arr) {
   uint8_t mask = 0b1 << 7;
+  uint32_t allBits = 0; // bitstream
+  int bitPos = 24; // build 24 bits, start at position 24
   
-  int words = 0; 
+  int words =  0; 
   int bits_used = 0; 
 
-  uint16_t buff = 0; 
+  uint8_t buff = 0; 
+  // TODO: test
   for (int i = 0; i < 8; i++) {
-    // Each bit of 'val' becomes a 6-bit encoding
-    uint16_t encoding = (val & mask) ? 0b111100 : 0b110000;
+    // Each bit of 'val' becomes a 3-bit encoding
+    uint8_t encoding = (val & mask) ? 0b110 : 0b100; // logical high or low
 
-    // Remaining bits in the current buffer
-    int bits_left = 16 - bits_used;
+    // new method --> gets full bit stream (32 bit int) but only uses first 24 positions
+      // assembles bitstream and then gets the desired bytes by shifting and masking to 8 bits
+    bitPos -= SPI_BITS_TO_LED;
+    allBits |= ((uint32_t)encoding << bitPos);
 
-    if (bits_left >= 6) {
+// old method of doing it
+/*
+    // Remaining bits in the current buffer --> configured to 8 bit words
+    int bits_left = 8 - bits_used;
+
+    if (bits_left >= SPI_BITS_TO_LED) {
         // Fits fully in current buffer
-        buff |= (encoding << (bits_left - 6));
-        bits_used += 6;
+        buff |= (encoding << (bits_left - SPI_BITS_TO_LED));
+        bits_used += SPI_BITS_TO_LED;
     } else {
         // Split across current and next word
-        buff |= (encoding >> (6 - bits_left));   // upper part into remaining bits
+        buff |= (encoding >> (SPI_BITS_TO_LED - bits_left));   // upper part into remaining bits
         out_arr[words++] = buff;                 // write full word
 
         // carry remainder into next buffer (MSBs)
-        buff = (encoding << (16 - (6 - bits_left))) & 0xFFFF;
-        bits_used = (6 - bits_left);
+        buff = (encoding << (8 - (SPI_BITS_TO_LED - bits_left))) & 0xFF;
+        bits_used = (SPI_BITS_TO_LED - bits_left);
     }
 
         // If current buffer filled, push it out
-        if (bits_used == 16) {
+        if (bits_used == 8) {
             out_arr[words++] = buff;
             buff = 0;
             bits_used = 0;
         }
+*/
+    out_arr[0] = (allBits >> 16) & 0xFF;
+    out_arr[1] = (allBits >> 8) & 0xFF;
+    out_arr[2] = allBits & 0xFF;
 
-        mask >>= 1;
-    }
+    mask >>= 1;
+  }
 
     // If any bits remain in buffer at end, flush them
     //if (bits_used > 0) out_arr[words++] = buff;
 }
+
 /**
  * @brief
  *  SPI Freq = 2.5 MHz -> 0.4 us
@@ -138,14 +153,14 @@ short WS2812B_SPI_Encoding(uint8_t val, uint16_t* out_arr) {
  * @param brightness 0-100
  * @param arr pointer to an array of 9 half-words
  */
-void WS2812B_writeRGB_SPI(uint8_t R, uint8_t G, uint8_t B, uint8_t brightness, uint16_t *arr) {
+void WS2812B_writeRGB_SPI(uint8_t R, uint8_t G, uint8_t B, uint8_t brightness, uint8_t *arr) {
   brightness = (brightness <=100) ? brightness : 100;
   
   R = R * ((float)brightness/100);
   G = G * ((float)brightness/100);
   B = B * ((float)brightness/100); 
 
-  uint16_t out_arr[3]; 
+  uint8_t out_arr[3]; 
   
   int j = 0; 
   WS2812B_SPI_Encoding(G, out_arr);
@@ -303,10 +318,11 @@ int main(void)
   //__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 0); // 75% duty cycle
   //HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
 
-  //uint16_t led[9]; 
+  //uint8_t led[9]; 
   //uint8_t reset = 0; 
   //WS2812B_writeRGB_SPI(255, 0, 0, 50, led);
-    
+  
+  // what does this do LOL
   *SPIx = (&hspi2)->Instance;
   LL_SPI_Enable(SPIx);
 
