@@ -78,7 +78,30 @@ static void MX_SPI2_Init(void);
  //TODO: fix SPI --> incorrect waveform (check notes app)
 
  //TODO: fix pragmas
- 
+
+/**
+ * @brief
+ *  
+ * Manually transmits data with SPI by waiting for SPI queue/buffer to empty, then transmits a single byte (data-width)
+ * 
+ * @param SPIx the enabled SPI thing (idk what to call it)
+ * @param data array of bytes (size 9)
+ */
+void LL_SPI_Transmit(SPI_TypeDef *SPIx, uint8_t *data)
+{
+    for (uint16_t i = 0; i < 9; i++)
+    {
+        // Wait TXE = 1 (TX = empty)
+        while (!LL_SPI_IsActiveFlag_TXE(SPIx));
+
+        // Send one byte
+        LL_SPI_TransmitData8(SPIx, data[i]);
+    }
+
+    // Wait for BSY flag to clear
+    while (LL_SPI_IsActiveFlag_BSY(SPIx));
+}
+
 #define SPI_BITS_TO_LED 3
 short WS2812B_SPI_Encoding(uint8_t val, uint8_t* out_arr) {
   uint8_t mask = 0b1 << 7;
@@ -303,9 +326,9 @@ int main(void)
 
   /* Initialize all configured peripherals */
   //MX_GPIO_Init();
-  //MX_DMA_Init();
+  MX_DMA_Init();
   //MX_TIM2_Init();
-  //MX_SPI2_Init(); --> MXCube, HAL
+  //MX_SPI2_Init(); --> MXCube, HAL (stinky!)
   SPI2_LL_Init();
   /* USER CODE BEGIN 2 */
 
@@ -313,7 +336,12 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  while (1) {
 
+  // TODO: implement SPI
+
+  SystemCoreClockUpdate();
+  // TODO: get clock freq (looks very annoying to get LOL)
   uint32_t spi_freq = HAL_RCC_GetPCLK1Freq();
   //__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 0); // 75% duty cycle
   //HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
@@ -322,10 +350,11 @@ int main(void)
   //uint8_t reset = 0; 
   //WS2812B_writeRGB_SPI(255, 0, 0, 50, led);
   
-  // what does this do LOL
+  // what does this do LOL --> not needed?? HAL?? SPI2 used instead for LL
+  /*
   *SPIx = (&hspi2)->Instance;
   LL_SPI_Enable(SPIx);
-
+  */
   //50 / 1.25 = 40
   //round up to 48 -> 48/24 = 2 pixels
 
@@ -421,13 +450,17 @@ int main(void)
   WS2812B_TIM_SendFrame();
   #endif
 
-  while (1)
-  {
+ 
     #ifdef USE_SPI
-    HAL_SPI_Transmit(&hspi2, (uint8_t*) led_spi_data, 9, 1000);
+      uint8_t led[9]; 
+      uint8_t reset = 0;
+      
+      // TODO: implement more variable patterns HERE (light_patterns.c)
+      WS2812B_writeRGB_SPI(255, 0, 0, 50, led);
+
+      // Transmits LED data
+      LL_SPI_Transmit(SPI2, led);
     #endif
-  }
-}
 
     
 
@@ -452,7 +485,8 @@ int main(void)
     while(LL_SPI_IsActiveFlag_BSY(SPIx));
     */
 
-    
+  }
+} 
   
 
 /**
@@ -573,7 +607,11 @@ void SPI2_LL_Init(void) {
   SPI_InitStruct.BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV32;
   SPI_InitStruct.BitOrder = LL_SPI_MSB_FIRST;
   SPI_InitStruct.CRCCalculation = LL_SPI_CRCCALCULATION_DISABLE;
-  LL_SPI_Init(SPI2, &SPI_InitStruct);
+
+  if (LL_SPI_Init(SPI2, &SPI_InitStruct) != SUCCESS)
+  {
+    Error_Handler();
+  }
 
   LL_SPI_Enable(SPI2);
 
@@ -614,11 +652,12 @@ static void MX_SPI2_Init(void)
   hspi2.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
   hspi2.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
   */
-
+/*
   if (HAL_SPI_Init(&hspi2) != HAL_OK)
   {
     Error_Handler();
   }
+    */
   /* USER CODE BEGIN SPI2_Init 2 */
 
   /* USER CODE END SPI2_Init 2 */
