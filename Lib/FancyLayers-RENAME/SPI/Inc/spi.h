@@ -4,6 +4,7 @@
 #define SPI_H
 
 #define GR_SPI_UNKNOWN_IRQN -64
+#define GR_SPI_BUFFER_MESSAGE_CAPACITY 16
 
 // Generic type
 typedef struct {
@@ -14,8 +15,11 @@ typedef struct {
     //COPI, CIPO, SCLK, CS
     uint32_t pins[4]; // SPI pin numbers (e.g. LL_GPIO_PIN_0, LL_GPIO_PIN_1, LL_GPIO_PIN_2 macro defines)
     uint32_t num_pins = 4;
+    //Flags
+    uint32_t* rx_circular_buffer_NE;
     //GR structs
-    CircularBuffer* buffer;
+    CircularBuffer* rx_buffer;
+    CircularBuffer* tx_buffer;
     //GPIO pin data
     SPI_message cur_message;
     volatile uint16_t tx_index;
@@ -32,9 +36,11 @@ typedef struct {
 // ============================= Handler Functions =============================
 
 /**
- * @brief Initializes SPI with config values
+ * @brief Initializes SPI with config values and alternate function number. Creates circular buffer structs.
  * 
  * @param handle
+ * @param config
+ * @param alternate_function_num
  * @return 
  */
 void GR_SPI_Initialize(GR_SPI_Handler* handle, LL_SPI_InitTypeDef* config, uint32_t alternate_function_num);

@@ -4,11 +4,19 @@
 #define spi_ongoing -1
 
 void GR_SPI_Initialize(GR_SPI_Handler* handle, LL_SPI_InitTypeDef* config, uint32_t alternate_function_num) {    
-    //Copy necessary pin references
-    handle->SPIx = pins->SPIx;
-    handle->num_pins = pins->num_pins;
-    for(int i = 0; i < pins->num_pins; i++) {
-        handle->GPIOx[i] = pins->GPIOx[i];
+    //Create Circular Buffers
+    CircularBuffer* circular_buffer_ptr;
+    circular_buffer_ptr = GR_CircularBuffer_Create(GR_SPI_BUFFER_MESSAGE_CAPACITY);
+    if(circular_buffer_ptr == NULL) {
+        //Attempt to Create Rx Buffer Error
+    } else {
+        handle->rx_buffer = circular_buffer_ptr;
+    }
+    circular_buffer_ptr = GR_CircularBuffer_Create(GR_SPI_BUFFER_MESSAGE_CAPACITY);
+    if(circular_buffer_ptr == NULL) {
+        //Attempt to Create Tx Buffer Error
+    } else {
+        handle->tx_buffer = circular_buffer_ptr;
     }
     
     //Enable GPIO and SPI clocks
@@ -47,7 +55,7 @@ uint32_t GR_SPI_Get_IRQn(SPI_TypeDef* SPIx) {
     switch(SPIx) {
         case SPI1: return SPI1_IRQn; //35
         case SPI2: return SPI2_IRQn; //36
-        case SPI3: return SPI3+IRQn; //51
+        case SPI3: return SPI3_IRQn; //51
         default: return GR_SPI_UNKNOWN_IRQN;
     }
 }
