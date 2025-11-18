@@ -41,7 +41,6 @@ function(add_gr_project)
 			target_link_libraries(
 				${INTERFACE_LIB}
 				INTERFACE
-					${Platform}_LIB
 					${TARGET_NAME}_USER_CODE # Blame Owen
 					GLOBALSHARE_LIB
 			)
