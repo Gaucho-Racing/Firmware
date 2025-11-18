@@ -3,7 +3,7 @@
 #define spi_status 0
 #define spi_ongoing -1
 
-void GR_SPI_Initialize(GR_SPI_Handler* handle, LL_SPI_InitTypeDef* config, uint32_t alternate_function_num) {    
+void GR_SPI_Initialize(GR_SPI_Handler* handle, LL_SPI_InitTypeDef* config, GR_SPI_Pins* pin_config, uint32_t* rx_NE_flag) {    
     //Create Circular Buffers
     CircularBuffer* circular_buffer_ptr;
     circular_buffer_ptr = GR_CircularBuffer_Create(GR_SPI_BUFFER_MESSAGE_CAPACITY);
@@ -18,6 +18,37 @@ void GR_SPI_Initialize(GR_SPI_Handler* handle, LL_SPI_InitTypeDef* config, uint3
     } else {
         handle->tx_buffer = circular_buffer_ptr;
     }
+
+    //Deep copy of pins struct
+    handle->pins = (GR_SPI_Pins *)malloc(sizeof(GR_SPI_Pins)); //Make memory for GR_SPI_Pins struct
+    handle->pins->pin_nums = (uint32_t *)malloc(pin_config->num_pins * sizeof(uint32_t)); // Make memory for pin_nums[num_pins]
+    handle->pins->GPIOx = (GPIO_TypeDef *)malloc(pin_config->num_pins * sizeof(GPIO_TypeDef)); //Make memory for GPIOx[num_pins]
+    for (int i = 0; i < pin_config->num_pins; i++) {
+        handle->pins->pin_nums[i] = pin_config->pin_nums[i];
+        handle->pins->GPIOx[i] = pin_config->GPIOx[i];
+    }
+    handle->pins->SPIx = pin_config->SPIx;
+    handle->pins->num_pins = pin_config->num_pins;
+    handle->pins->alternate_function_number = pin_config->alternate_function_number;
+    
+    //Copy rx_NE_flag
+    handle->rx_NE_flag = rx_NE_flag;
+
+    // Store handler in lookup table for interrupts
+    switch(SPIx) {
+        case SPI1: {
+            GR_SPI_HANDLER_LUT[0] = handler;
+            break;
+        }
+        case SPI1: {
+            GR_SPI_HANDLER_LUT[1] = handler;
+            break;
+        }
+        case SPI1: {
+            GR_SPI_HANDLER_LUT[2] = handler;
+            break;
+        }
+    }
     
     //Enable GPIO and SPI clocks
     GR_SPI_Enable_Clocks(pins);
@@ -28,6 +59,10 @@ void GR_SPI_Initialize(GR_SPI_Handler* handle, LL_SPI_InitTypeDef* config, uint3
 
     //Configure SPI protocol with config values
     LL_SPI_Init(handle->spi, config);
+    //Transaction size is 8-bits
+    if(config->DataWidth <= 8) handle->tx_rx_size = 0;
+    //Transaction size is 16-bits
+    else tx_rx_size = 1;
 
     //Enable SPI peripheral
     LL_SPI_Enable(handle->spi);
@@ -47,10 +82,58 @@ void GR_SPI_Initialize(GR_SPI_Handler* handle, LL_SPI_InitTypeDef* config, uint3
     LL_SPI_EnableIT_TXE(handle->spi); // Empty Tx buffer
 }
 
-void GR_SPI_Interrupt_Handler(void) {
-    //STUB
+void GR_SPI_Interrupt_Handler(GR_SPI_Handler* handle) {
+    //Check if valid handle
+    if(handle == NULL) {
+        //Throw an error
+        return;
+    }
+
+    
+    //Check if called by error interrupt
+    //Frame format error
+    if(LL_SPI_IsActiveFlag_FRE(handle->pins->SPIx)) {
+        //Log an error
+        return;
+    }
+    //Overrun error
+    else if(LL_SPI_IsActiveFlag_OVR(handle->pins->SPIx)) {
+        //Log an error
+        return;
+    }
+    //Fault mode error
+    else if(LL_SPI_IsActiveFlag_MODF(handle->pins->SPIx)) {
+        //Log an error
+        return;
+    }
+    //CRC error
+    else if(LL_SPI_IsActiveFlag_CRCERR(handle->pins->SPIx)) {
+        //Log an error
+        return;
+    }
+    
+    // No errors detected...
+
+    //Check if Rx not empty
+    if(LL_SPI_IsActiveFlag_RXNE(handle->pins->SPIx)) {
+        GR_CircularBuffer_Push(handle->rx_buffer, LL_SPI_ReceiveData8());
+    }
+    //Check if Tx is empty
+    if(LL_SPI_IsActiveFlag_TXE(handle->pins->SPIx)) {
+        //Grab a message off of the send buffer if there is one
+        if(GR_CircularBuffer_Peek(handle->tx_buffer) != NULL) {
+            if(tx_rx_size == 0) {
+                uint8_t* data = GR_CircularBuffer_Pop(handle->tx_buffer);
+                LL_SPI_TransmitData8(handle->pins->SPIx, data);
+            } else {
+                uint16_t* data = GR_CircularBuffer_Pop(handle->tx_buffer);
+                LL_SPI_TransmitData16(handle->pins->SPIx, data);
+            }
+        }
+    }
 }
 
+//SPIx_IRQn is defined in stm32 libraries
 uint32_t GR_SPI_Get_IRQn(SPI_TypeDef* SPIx) {
     switch(SPIx) {
         case SPI1: return SPI1_IRQn; //35
@@ -109,29 +192,29 @@ void GR_SPI_Enable_Clocks(GR_SPI_Handler* handle) {
     }
 }
 
-void GR_SPI_Send(GR_SPI_Handler* handler, SPI_Message data) {
+void GR_SPI_Send(GR_SPI_Handler* handle, SPI_Message data) {
     if(handler->ongoing){
         return spi_ongoing; 
     }
-    handler->ongoing = 1;
-    handler->tx_index = 0;
-    handler->rx_index = 0;
-    handler->cur_msg = *msg;
+    handle->ongoing = 1;
+    handle->tx_index = 0;
+    handle->rx_index = 0;
+    handle->cur_msg = data;
 
-    if (handler->CS_Port != NULL) {
-        LL_GPIO_ResetOutputPin(handler->GPI0x[3], handler->pins[3]);
+    if (handle->CS_Port != NULL) {
+        LL_GPIO_ResetOutputPin(handle->GPI0x[3], handle->pins[3]);
     }
 
-    while (LL_SPI_IsActiveFlag_RXNE(handler->SPI1)) {
-        if (LL_SPI_GetDataWidth(handler->SPI1) == LL_SPI_DATAWIDTH_16BIT) {
-            (void)LL_SPI_ReceiveData16(handler->SPI1);
+    while (LL_SPI_IsActiveFlag_RXNE(handle->SPIx)) {
+        if (LL_SPI_GetDataWidth(handle->SPIx) == LL_SPI_DATAWIDTH_16BIT) {
+            (void)LL_SPI_ReceiveData16(handle->SPIx);
         } else {
-            (void)LL_SPI_ReceiveData8(handler->SPI1);
+            (void)LL_SPI_ReceiveData8(handle->SPIx);
         }
     }
 
-    LL_SPI_EnableIT_TXE(handler->SPI1);
-    LL_SPI_EnableIT_RXNE(handler->SPI1);
+    LL_SPI_EnableIT_TXE(handle->SPIx);
+    LL_SPI_EnableIT_RXNE(handle->SPIx);
     return spi_status;
 }
 

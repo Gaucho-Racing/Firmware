@@ -6,20 +6,29 @@
 #define GR_SPI_UNKNOWN_IRQN -64
 #define GR_SPI_BUFFER_MESSAGE_CAPACITY 16
 
-// Generic type
+static GR_SPI_Handler* GR_SPI_HANDLER_LUT[3]; //Stores pointer to the handler structs for SPI1 (0), SPI2 (1), & SPI3 (2)
+
 typedef struct {
-    //LL structs
     SPI_TypeDef* SPIx; // Pointer to SPI register wrapper (e.g. SPI1, SPI2, SPI3 macro defines)
     //COPI, CIPO, SCLK, CS
     GPIO_TypeDef* GPIOx[4]; // Pointer to GPIO port register wrapper (e.g. GPIOA, GPIOB, GPIOC, etc. macro defines)
     //COPI, CIPO, SCLK, CS
-    uint32_t pins[4]; // SPI pin numbers (e.g. LL_GPIO_PIN_0, LL_GPIO_PIN_1, LL_GPIO_PIN_2 macro defines)
+    uint32_t pin_nums[4]; // SPI pin numbers (e.g. LL_GPIO_PIN_0, LL_GPIO_PIN_1, LL_GPIO_PIN_2 macro defines)
     uint32_t num_pins = 4;
+    uint32_t alternate_function_number;
+} GR_SPI_Pins;
+
+// Generic type
+typedef struct {
+    // Contains all information regarding pins
+    GR_SPI_Pins* pins;
     //Flags
-    uint32_t* rx_circular_buffer_NE;
+    uint32_t* rx_NE_flag;
     //GR structs
     CircularBuffer* rx_buffer;
     CircularBuffer* tx_buffer;
+    //Config flags
+    uint8_t tx_rx_size;
     //GPIO pin data
     SPI_message cur_message;
     volatile uint16_t tx_index;
@@ -43,7 +52,7 @@ typedef struct {
  * @param alternate_function_num
  * @return 
  */
-void GR_SPI_Initialize(GR_SPI_Handler* handle, LL_SPI_InitTypeDef* config, uint32_t alternate_function_num);
+void GR_SPI_Initialize(GR_SPI_Handler* handle, LL_SPI_InitTypeDef* config, GR_SPI_Pins* pin_config, uint32_t* rx_flag);
 
 /**
  * @brief Tear down the SPI handler
@@ -58,19 +67,19 @@ void GR_SPI_Close(GR_SPI_Handler* handler);
  * @param 
  * @return 
  */
-void GR_SPI_Interrupt_Handler(void);
+void GR_SPI_Interrupt_Handler(GR_SPI_Handler* handle);
 
 //Map SPI1-3 IRQHandlers to custom interrupt handler
-void SPI1_IRQHandler(void) { GR_SPI_Interrupt_Handler(); }
-void SPI2_IRQHandler(void) { GR_SPI_Interrupt_Handler(); }
-void SPI3_IRQHandler(void) { GR_SPI_Interrupt_Handler(); }
+void SPI1_IRQHandler(void) { GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[0]); }
+void SPI2_IRQHandler(void) { GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[1]); }
+void SPI3_IRQHandler(void) { GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[2]); }
 
 // ============================= Tx/Rx =============================
 
 /**
  * @brief Send data through SPI
  * 
- * @param handler
+ * @param handle
  * @param data
  */
 void GR_SPI_Send(GR_SPI_Handler* handler, SPI_Message data);
@@ -78,7 +87,7 @@ void GR_SPI_Send(GR_SPI_Handler* handler, SPI_Message data);
 /**
  * @brief Read from the SPI buffer; primarily intended for polling. Rely on the passed in handler when setup() is called 
  * 
- * @param handler
+ * @param handle
  * @return SPI_Message 
  */
 
