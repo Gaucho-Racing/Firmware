@@ -22,7 +22,8 @@ function(add_executable_${CHIP} TARGET_NAME)
 			STM32U5
 	)
 
-	target_compile_options(${TARGET_NAME}
+	target_compile_options(
+		${TARGET_NAME}
 		PRIVATE
 			-Wno-error # TODO Remove when dev container is setup due to unfiltered warnings (U5 hal doesn't support arm gcc > 12.3)
 			${TARGET_FLAGS}
@@ -38,10 +39,16 @@ function(add_executable_${CHIP} TARGET_NAME)
 		${TARGET_NAME}
 		PRIVATE
 			${TARGET_FLAGS}
-			-T "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/STM32U5A9xx_FLASH.ld"
+			-T
+			"${CMAKE_CURRENT_FUNCTION_LIST_DIR}/STM32U5A9xx_FLASH.ld"
 	)
 
-	target_link_libraries(${TARGET_NAME} PRIVATE STM32_HAL_LL_U5xx CMSIS_5_CORE)
+	target_link_libraries(
+		${TARGET_NAME}
+		PRIVATE
+			STM32_HAL_LL_U5xx
+			CMSIS_5_CORE
+	)
 
 	# Cleanup
 	set(CHIP "YOUHAVENOTCONFIGUREDCHIPRIGHT!")

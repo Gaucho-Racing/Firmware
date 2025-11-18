@@ -1,10 +1,13 @@
 add_library(STM32_HAL_LL_L4xx INTERFACE)
 
-target_include_directories(STM32_HAL_LL_L4xx INTERFACE
-    ${CMAKE_CURRENT_LIST_DIR}/Inc
+target_include_directories(
+	STM32_HAL_LL_L4xx
+	INTERFACE
+		${CMAKE_CURRENT_LIST_DIR}/Inc
 )
 
-target_sources(STM32_HAL_LL_L4xx
+target_sources(
+	STM32_HAL_LL_L4xx
 	INTERFACE
 		${CMAKE_CURRENT_LIST_DIR}/Src/stm32l4xx_hal.c
 		${CMAKE_CURRENT_LIST_DIR}/Src/stm32l4xx_hal_adc.c

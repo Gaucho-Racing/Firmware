@@ -38,7 +38,12 @@ function(add_executable_${CHIP} TARGET_NAME)
 			"${CMAKE_CURRENT_FUNCTION_LIST_DIR}/STM32G474RETx_FLASH.ld"
 	)
 
-	target_link_libraries(${TARGET_NAME} PRIVATE STM32_HAL_LL_G4xx CMSIS_5_CORE)
+	target_link_libraries(
+		${TARGET_NAME}
+		PRIVATE
+			STM32_HAL_LL_G4xx
+			CMSIS_5_CORE
+	)
 
 	# Cleanup
 	set(CHIP "YOUHAVENOTCONFIGUREDCHIPRIGHT!")
