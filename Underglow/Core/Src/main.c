@@ -282,9 +282,9 @@ void WS2812B_TIM_Encoding(uint8_t val, uint16_t *out_arr) {
 void WS2812B_writeRGB_TIM(uint8_t R, uint8_t G, uint8_t B, uint8_t brightness, uint16_t *arr) {
     brightness = (brightness > 100) ? 100: brightness; 
 
-    uint8_t r = (R * brightness) / 100;
-    uint8_t g = (G * brightness) / 100;
-    uint8_t b = (B * brightness) / 100;
+    uint8_t r = (float)(R * brightness) / 100;
+    uint8_t g = (float)(G * brightness) / 100;
+    uint8_t b = (float)(B * brightness) / 100;
 
     // WS2812B expects **GRB order**
     // Each call writes 8 elements into arr
@@ -372,8 +372,8 @@ void WS2812B_TIM_SendFrame(void) {
     //LL_TIM_Disable
 }
 
-// needed?
-uint16_t led_spi_data[];
+#define LED_SPI_BUFFER_SIZE (9*NUM_LEDS) 
+uint16_t led_spi_data[LED_SPI_BUFFER_SIZE];
 /**
   * @brief  The application entry point.
   * @retval int
