@@ -57,6 +57,11 @@ static void MX_GPIO_Init(void);
 
 //static void MX_TIM2_Init(void);
 static void MX_SPI2_Init(void);
+
+static void SPI2_LL_Init();
+static void DMA_LL_Init();
+
+
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -64,21 +69,110 @@ static void MX_SPI2_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-/* USER CODE END 0 */
 
 
-//SPI PROBABLY NEEDS TO BE REWORKED, LOOK AT TIM FIRST
 /**
- * 
- * @brief Each WS2812B bit corresponds to 3 SPI bits
- * @param val The 8 bits to convert to 3 half-words (fix)
- * @param out_arr The location to store the 3 half-words (fix)
- */
+  * @brief SPI2 Initialization Function
+  * @param None
+  * @retval None
+**/
 
- //TODO: fix SPI --> incorrect waveform (check notes app)
+// TODO: finish LL init
 
- //TODO: fix pragmas
+static void DMA_LL_Init(void) {
 
+  LL_SPI_InitTypeDef SPI_InitStruct = {0};
+  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+  // Enable peripheral and GPIO clocks
+  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_SPI2);
+  LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);
+
+  // Configure GPIO pins for SPI2: PB13=SCK, PB14=MISO, PB15=MOSI
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_13 | LL_GPIO_PIN_14 | LL_GPIO_PIN_15;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
+  GPIO_InitStruct.Alternate = LL_GPIO_AF_5;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+  LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+
+  SPI_InitStruct.Mode = LL_SPI_MODE_MASTER;
+  SPI_InitStruct.TransferDirection = LL_SPI_HALF_DUPLEX_RX;
+  SPI_InitStruct.DataWidth = LL_SPI_DATAWIDTH_8BIT;
+  SPI_InitStruct.ClockPolarity = LL_SPI_POLARITY_LOW;
+  SPI_InitStruct.ClockPhase = LL_SPI_PHASE_1EDGE;
+  SPI_InitStruct.NSS = LL_SPI_NSS_SOFT;
+  SPI_InitStruct.BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV32;
+  SPI_InitStruct.BitOrder = LL_SPI_MSB_FIRST;
+  SPI_InitStruct.CRCCalculation = LL_SPI_CRCCALCULATION_DISABLE;
+
+  // TODO: DMA set up?
+
+  if (LL_SPI_Init(SPI2, &SPI_InitStruct) != SUCCESS)
+  {
+    Error_Handler();
+  }
+
+  LL_SPI_Enable(SPI2);
+
+}
+
+
+/**
+  * @brief SPI2 Initialization Function
+  * @param None
+  * @retval None
+  */
+
+// TODO: finish LL init
+
+// Initializes LL for SPI (freely adjust params here)
+// Data Size is 8 bit --> MSB = 0x1_______, each "bit" is 3 bits --> 0x110 = high, 0x100 = low
+  // MSB important here
+// adjust
+void SPI2_LL_Init(void) {
+
+  LL_SPI_InitTypeDef SPI_InitStruct = {0};
+  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+  // Enable peripheral and GPIO clocks
+  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_SPI2);
+  LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);
+
+  // Configure GPIO pins for SPI2: PB13=SCK, PB14=MISO, PB15=MOSI
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_13 | LL_GPIO_PIN_14 | LL_GPIO_PIN_15;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
+  GPIO_InitStruct.Alternate = LL_GPIO_AF_5;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+  LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+
+  SPI_InitStruct.Mode = LL_SPI_MODE_MASTER;
+  SPI_InitStruct.TransferDirection = LL_SPI_HALF_DUPLEX_RX;
+  SPI_InitStruct.DataWidth = LL_SPI_DATAWIDTH_8BIT;
+  SPI_InitStruct.ClockPolarity = LL_SPI_POLARITY_LOW;
+  SPI_InitStruct.ClockPhase = LL_SPI_PHASE_1EDGE;
+  SPI_InitStruct.NSS = LL_SPI_NSS_SOFT;
+  SPI_InitStruct.BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV32;
+  SPI_InitStruct.BitOrder = LL_SPI_MSB_FIRST;
+  SPI_InitStruct.CRCCalculation = LL_SPI_CRCCALCULATION_DISABLE;
+
+  // TODO: DMA set up?
+
+  if (LL_SPI_Init(SPI2, &SPI_InitStruct) != SUCCESS)
+  {
+    Error_Handler();
+  }
+
+  LL_SPI_Enable(SPI2);
+
+}
+
+  
 /**
  * @brief
  *  
@@ -102,6 +196,16 @@ void LL_SPI_Transmit(SPI_TypeDef *SPIx, uint8_t *data)
     while (LL_SPI_IsActiveFlag_BSY(SPIx));
 }
 
+
+/**
+ * @brief
+ *  
+ * Encodes WS2812B bits from 3 actual bits
+ * Utilizes bitstream technique --> 4 byte bit stream, bitwise operators to extract the 3 bits needed
+ * 
+ * @param val the given value
+ * @param our_arr an array of 3 bytes 
+ */
 #define SPI_BITS_TO_LED 3
 short WS2812B_SPI_Encoding(uint8_t val, uint8_t* out_arr) {
   uint8_t mask = 0b1 << 7;
@@ -113,16 +217,16 @@ short WS2812B_SPI_Encoding(uint8_t val, uint8_t* out_arr) {
 
   uint8_t buff = 0; 
   // TODO: test
-  for (int i = 0; i < 8; i++) {
+  for (int i = 0; i < 7; i++) {
     // Each bit of 'val' becomes a 3-bit encoding
-    uint8_t encoding = (val & mask) ? 0b110 : 0b100; // logical high or low
+    uint8_t encoding = (val>>i & mask) ? 0b110 : 0b100; // logical high or low if val AND mask are 1
 
     // new method --> gets full bit stream (32 bit int) but only uses first 24 positions
       // assembles bitstream and then gets the desired bytes by shifting and masking to 8 bits
     bitPos -= SPI_BITS_TO_LED;
     allBits |= ((uint32_t)encoding << bitPos);
-
-// old method of doing it
+  
+// old method of doing it --> kinda annoying with byte splitting
 /*
     // Remaining bits in the current buffer --> configured to 8 bit words
     int bits_left = 8 - bits_used;
@@ -148,13 +252,14 @@ short WS2812B_SPI_Encoding(uint8_t val, uint8_t* out_arr) {
             bits_used = 0;
         }
 */
-    out_arr[0] = (allBits >> 16) & 0xFF;
+  }  
+
+  
+  out_arr[0] = (allBits >> 16) & 0xFF;
     out_arr[1] = (allBits >> 8) & 0xFF;
     out_arr[2] = allBits & 0xFF;
 
     mask >>= 1;
-  }
-
     // If any bits remain in buffer at end, flush them
     //if (bits_used > 0) out_arr[words++] = buff;
 }
@@ -185,6 +290,7 @@ void WS2812B_writeRGB_SPI(uint8_t R, uint8_t G, uint8_t B, uint8_t brightness, u
 
   uint8_t out_arr[3]; 
   
+  // remember GRB and NOT RGB!
   int j = 0; 
   WS2812B_SPI_Encoding(G, out_arr);
   for (int i = 0; i < 3; i++) arr[j++] = out_arr[i]; 
@@ -300,7 +406,7 @@ void WS2812B_TIM_SendFrame(void) {
     //LL_TIM_Disable
 }
 
-
+// needed?
 uint16_t led_spi_data[];
 /**
   * @brief  The application entry point.
@@ -311,7 +417,7 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+  // HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -326,10 +432,14 @@ int main(void)
 
   /* Initialize all configured peripherals */
   //MX_GPIO_Init();
-  MX_DMA_Init();
+  //MX_DMA_Init(); --> HAL also (stinky!)
   //MX_TIM2_Init();
   //MX_SPI2_Init(); --> MXCube, HAL (stinky!)
+
+  // TODO: make DMA init for LL
   SPI2_LL_Init();
+  
+
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -341,6 +451,7 @@ int main(void)
   // TODO: implement SPI
 
   SystemCoreClockUpdate();
+
   // TODO: get clock freq (looks very annoying to get LOL)
   uint32_t spi_freq = HAL_RCC_GetPCLK1Freq();
   //__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 0); // 75% duty cycle
@@ -452,40 +563,82 @@ int main(void)
 
  
     #ifdef USE_SPI
-      uint8_t led[9]; 
+      uint8_t led[9]; // this works! each led has 3 REAL bytes but each WS2812B bit is 3 actual bytes! so 3 real bytes is 9 of THOSE bytes
       uint8_t reset = 0;
       
       // TODO: implement more variable patterns HERE (light_patterns.c)
+      // also --> iterate over TOTAL LEDs, 3 bytes PER LED...
+
       WS2812B_writeRGB_SPI(255, 0, 0, 50, led);
 
       // Transmits LED data
       LL_SPI_Transmit(SPI2, led);
-    #endif
 
+      for (int i = 0; i < 9; i++) {
+        led[i] = reset;
+      }
+
+      LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
+      LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMA1);
+      LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMAMUX1);
+      LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_SPI2);
+
+      // --- 2. GPIO setup (PA0 = TIM2_CH1) ---
+      LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_0, LL_GPIO_MODE_ALTERNATE);
+      LL_GPIO_SetAFPin_0_7(GPIOA, LL_GPIO_PIN_0, LL_GPIO_AF_1);
+      LL_GPIO_SetPinSpeed(GPIOA, LL_GPIO_PIN_0, LL_GPIO_SPEED_FREQ_HIGH);
+      LL_GPIO_SetPinOutputType(GPIOA, LL_GPIO_PIN_0, LL_GPIO_OUTPUT_PUSHPULL);
+      LL_GPIO_SetPinPull(GPIOA, LL_GPIO_PIN_0, LL_GPIO_PULL_NO); 
+
+      // fix this for LL SPI
+      LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
+      while(LL_DMA_IsEnabledChannel(DMA1, LL_DMA_CHANNEL_1));
+
+      LL_DMA_ClearFlag_TC1(DMA1);
+      LL_DMA_ClearFlag_HT1(DMA1);
+      LL_DMA_ClearFlag_TE1(DMA1);
+
+      LL_DMA_SetMemoryAddress(DMA1, LL_DMA_CHANNEL_1, (uint32_t)led);
+      LL_DMA_SetPeriphAddress(DMA1, LL_DMA_CHANNEL_1, (uint32_t)& (SPI2->DR) );
+      LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_1, sizeof(led)/sizeof(uint16_t));
+      
+      //start transfer
+      LL_SPI_EnableDMAReq_TX(SPI2);
+      LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
+
+      // Wait for DMA channel transfer complete
+      while(!LL_DMA_IsActiveFlag_TC1(DMA1));
+      
+      // 5️⃣ DMA channel 1 setup
+      LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
+      while(LL_DMA_IsEnabledChannel(DMA1, LL_DMA_CHANNEL_1));
+      LL_DMA_ConfigTransfer(DMA1,
+                              LL_DMA_CHANNEL_1,
+                              LL_DMA_DIRECTION_MEMORY_TO_PERIPH |
+                              LL_DMA_MODE_NORMAL |
+                              LL_DMA_PERIPH_NOINCREMENT |
+                              LL_DMA_MEMORY_INCREMENT |
+                              LL_DMA_PDATAALIGN_WORD |     //VERY IMPORTANT, VERY STRANGE BEHAVIOUR UNLESS USE EXACTLY THIS COMBINATION
+                              LL_DMA_MDATAALIGN_HALFWORD | //
+                              LL_DMA_PRIORITY_HIGH);
     
+      // TODO: CHANGE FOR LL_SPI (check SPI->DR)
+      LL_DMA_ConfigAddresses(DMA1,
+                              LL_DMA_CHANNEL_1,
+                              (uint32_t) led,
+                              (uint32_t)&SPI2->DR,
+                              LL_DMA_DIRECTION_MEMORY_TO_PERIPH);
+      LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_1, sizeof(led)/sizeof(led[0]));
 
-    /*
-    LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_1);
-    while(LL_DMA_IsEnabledChannel(DMA1, LL_DMA_CHANNEL_1));
+      // 4️⃣ DMAMUX: TIM2 update → DMA1 channel 1
+      LL_DMAMUX_SetRequestID(DMAMUX1, LL_DMAMUX_CHANNEL_0, LL_DMAMUX_REQ_SPI2_TX);
+      //VERY IMPORTANT TO SET THE MULTIPLEXER CORRECTLY
 
-    LL_DMA_ClearFlag_TC1(DMA1);
-    LL_DMA_ClearFlag_HT1(DMA1);
-    LL_DMA_ClearFlag_TE1(DMA1);
+      DMA1->IFCR |= 0; //NOT IMPORTANT, not using interrupts
 
-    LL_DMA_SetMemoryAddress(DMA1, LL_DMA_CHANNEL_1, (uint32_t)led);
-    LL_DMA_SetPeriphAddress(DMA1, LL_DMA_CHANNEL_1, (uint32_t)& (SPIx->DR) );
-    LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_1, sizeof(led)/sizeof(uint16_t));
-    
-    //start transfer
-    LL_SPI_EnableDMAReq_TX(SPIx);
-    LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
-
-    // Wait for DMA channel transfer complete
-    while(!LL_DMA_IsActiveFlag_TC1(DMA1));
-    while(LL_SPI_IsActiveFlag_BSY(SPIx));
-    */
-
-  }
+      LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1); //very important
+      #endif
+    }
 } 
   
 
@@ -566,57 +719,6 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
-
-/**
-  * @brief SPI2 Initialization Function
-  * @param None
-  * @retval None
-  */
-
-// TODO: finish LL init
-
-// Initializes LL for SPI (freely adjust params here)
-// Data Size is 8 bit --> MSB = 0x1_______, each "bit" is 3 bits --> 0x110 = high, 0x100 = low
-  // MSB important here
-// adjust
-void SPI2_LL_Init(void) {
-
-  LL_SPI_InitTypeDef SPI_InitStruct = {0};
-  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
-
-  // Enable peripheral and GPIO clocks
-  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_SPI2);
-  LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);
-
-  // Configure GPIO pins for SPI2: PB13=SCK, PB14=MISO, PB15=MOSI
-  GPIO_InitStruct.Pin = LL_GPIO_PIN_13 | LL_GPIO_PIN_14 | LL_GPIO_PIN_15;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
-  GPIO_InitStruct.Alternate = LL_GPIO_AF_5;
-  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
-  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-  LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-
-  SPI_InitStruct.Mode = LL_SPI_MODE_MASTER;
-  SPI_InitStruct.TransferDirection = LL_SPI_HALF_DUPLEX_RX;
-  SPI_InitStruct.DataWidth = LL_SPI_DATAWIDTH_8BIT;
-  SPI_InitStruct.ClockPolarity = LL_SPI_POLARITY_LOW;
-  SPI_InitStruct.ClockPhase = LL_SPI_PHASE_1EDGE;
-  SPI_InitStruct.NSS = LL_SPI_NSS_SOFT;
-  SPI_InitStruct.BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV32;
-  SPI_InitStruct.BitOrder = LL_SPI_MSB_FIRST;
-  SPI_InitStruct.CRCCalculation = LL_SPI_CRCCALCULATION_DISABLE;
-
-  if (LL_SPI_Init(SPI2, &SPI_InitStruct) != SUCCESS)
-  {
-    Error_Handler();
-  }
-
-  LL_SPI_Enable(SPI2);
-
-}
-
 
 
 
@@ -722,6 +824,7 @@ static void MX_SPI2_Init(void)
   //HAL_TIM_MspPostInit(&htim2);*/
 
 //}
+
 /*
 static void MX_DMA_Init(void)
 {
