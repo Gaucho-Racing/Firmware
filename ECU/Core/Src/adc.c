@@ -23,7 +23,7 @@
 /* USER CODE BEGIN 0 */
 
 #define WINDOW_SIZE 100
-
+/*
 AnalogInput globalAnalog = {0};
 
 struct {
@@ -67,7 +67,7 @@ void updateAnalogInputs(void)
 	}
 
 	readIndex = (readIndex + 1) % WINDOW_SIZE;
-}
+}*/
 
 /* USER CODE END 0 */
 

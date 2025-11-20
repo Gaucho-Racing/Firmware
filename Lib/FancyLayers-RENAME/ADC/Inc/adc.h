@@ -89,7 +89,7 @@ void ADC_Group_Init(unsigned long ADC, Pre_Scaler_Values PS_Val);
 void ADC_Init(unsigned long ADC, Resolution res, Alignment align);
 
 // Initialize a single port and all the pins used on that port
-void ADC_Init_Pins(Pin_Ports *hello)
+void ADC_Init_Pins(Pin_Ports *hello);
 
 // 
 
