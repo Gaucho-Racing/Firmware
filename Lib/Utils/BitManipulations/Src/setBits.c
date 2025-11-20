@@ -11,9 +11,11 @@ uint8_t SetBitInByte(uint8_t number, uint8_t index, bool value)
 	}
 
 	if (value) {
-		return number | (1u << ((sizeof(uint8_t) * 8 - 1) - index)); // Set bit to 1 (MSB-first)
+		return number | (1u << ((sizeof(uint8_t) * 8 - 1) -
+					index)); // Set bit to 1 (MSB-first)
 	} else {
-		return number & ~(1u << ((sizeof(uint8_t) * 8 - 1) - index)); // Set bit to 0 (MSB-first)
+		return number & ~(1u << ((sizeof(uint8_t) * 8 - 1) -
+					 index)); // Set bit to 0 (MSB-first)
 	}
 }
 
