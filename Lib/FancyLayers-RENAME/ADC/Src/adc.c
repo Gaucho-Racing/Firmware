@@ -32,12 +32,11 @@ void ADC_Regular_Group_Init(unsigned long ADC){
 	LL_ADC_REG_Init(ADC, &ADC_REG_InitStruct);
 }
 
-void ADC_Init_Pins(Pin_Ports *hello){
+void ADC_Init_Pins(Pin_Ports *input){
     LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
-    GPIO_InitStruct.Pin = hello->pin;
+    GPIO_InitStruct.Pin = input->pin;
     GPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-    LL_GPIO_Init(hello->port, &GPIO_InitStruct);
+    LL_GPIO_Init(input->port, &GPIO_InitStruct);
 }
-
 
