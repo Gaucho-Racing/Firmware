@@ -89,8 +89,7 @@
  * @note Index must be in range [0, 7]; out-of-range causes undefined behavior
  * @note Does not modify the input; returns a new value
  *
- * @warning Index must be in range [0, 7]; out-of-range causes undefined
- * behavior
+
  *
  * Example:
  *   uint8_t data = 0b00000000;
