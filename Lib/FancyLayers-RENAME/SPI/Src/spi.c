@@ -1,9 +1,14 @@
 // Wonderful SPI Abstraction Layer courtesy of Bailey
 #include "spi.h"
-#define spi_status 0
-#define spi_ongoing -1
 
-void GR_SPI_Initialize(GR_SPI_Handler* handle, LL_SPI_InitTypeDef* config, GR_SPI_Pins* pin_config, uint32_t* rx_NE_flag) {    
+//Defines hidden from user space
+#define GR_SPI_TRANSFER_SIZE_8 8
+#define GR_SPI_TRANSFER_SIZE_16 16
+#define GR_SPI_STATUS 0
+#define GR_SPI_MSG_IN_PROGRESS -1
+#define GR_SPI_MSG_IDLE -1
+
+void GR_SPI_Initialize(GR_SPI_Handler* handle, LL_SPI_InitTypeDef* config, GR_SPI_Pins* pin_config) {    
     //Create Circular Buffers
     CircularBuffer* circular_buffer_ptr;
     circular_buffer_ptr = GR_CircularBuffer_Create(GR_SPI_BUFFER_MESSAGE_CAPACITY);
@@ -30,9 +35,6 @@ void GR_SPI_Initialize(GR_SPI_Handler* handle, LL_SPI_InitTypeDef* config, GR_SP
     handle->pins->SPIx = pin_config->SPIx;
     handle->pins->num_pins = pin_config->num_pins;
     handle->pins->alternate_function_number = pin_config->alternate_function_number;
-    
-    //Copy rx_NE_flag
-    handle->rx_NE_flag = rx_NE_flag;
 
     // Store handler in lookup table for interrupts
     switch(SPIx) {
@@ -55,14 +57,14 @@ void GR_SPI_Initialize(GR_SPI_Handler* handle, LL_SPI_InitTypeDef* config, GR_SP
 
     //Configure GPIOs
     LL_GPIO_InitTypeDef pin_config;
-    GR_SPI_Configure_Pins(handle, &pin_config, pins);
+    GR_SPI_Configure_Pins(handle, &pin_config);
 
     //Configure SPI protocol with config values
     LL_SPI_Init(handle->spi, config);
     //Transaction size is 8-bits
-    if(config->DataWidth <= 8) handle->tx_rx_size = 0;
+    if(config->DataWidth <= 8) handle->transfer_size = GR_SPI_TRANSFER_SIZE_8;
     //Transaction size is 16-bits
-    else tx_rx_size = 1;
+    else transfer_size = GR_SPI_TRANSFER_SIZE_16;
 
     //Enable SPI peripheral
     LL_SPI_Enable(handle->spi);
@@ -89,7 +91,6 @@ void GR_SPI_Interrupt_Handler(GR_SPI_Handler* handle) {
         return;
     }
 
-    
     //Check if called by error interrupt
     //Frame format error
     if(LL_SPI_IsActiveFlag_FRE(handle->pins->SPIx)) {
@@ -114,22 +115,46 @@ void GR_SPI_Interrupt_Handler(GR_SPI_Handler* handle) {
     
     // No errors detected...
 
-    //Check if Rx not empty
+    //Check if Rx circular buffer is not empty
     if(LL_SPI_IsActiveFlag_RXNE(handle->pins->SPIx)) {
-        GR_CircularBuffer_Push(handle->rx_buffer, LL_SPI_ReceiveData8());
+        uint16_t rx_index = handle->rx_index, msg_size = handle->current_msg->size;
+        //Queue the message into the circular buffer
+        if(transfer_size == GR_SPI_TRANSFER_SIZE_16 && rx_index <= msg_size - 2) {
+            uint16_t data = LL_SPI_ReceiveData16();
+            handle->current_msg->data[rx_index+1] = (uint8_t)(data & 0xFF);
+            handle->current_msg->data[rx_index] = (uint8_t)(data >> 8);
+        } else if(transfer_size == GR_SPI_TRANSFER_SIZE_8 && rx_index <= msg_size - 1) {
+            uint8_t data = LL_SPI_ReceiveData8();
+            handle->current_msg->data[rx_index] = data;
+        } else {
+            //ERROR: Current message is full
+        }
+
+        //Push current message into Rx circular buffer to mark completion
+        if(rx_index == msg_size) {
+            GR_CircularBuffer_Push(handle->rx_buffer, current_msg);
+            current_msg = NULL;
+            rx_index = 0;
+            msg_status = GR_SPI_MSG_IDLE;
+        }
     }
     //Check if Tx is empty
     if(LL_SPI_IsActiveFlag_TXE(handle->pins->SPIx)) {
-        //Grab a message off of the send buffer if there is one
-        if(GR_CircularBuffer_Peek(handle->tx_buffer) != NULL) {
-            if(tx_rx_size == 0) {
-                uint8_t* data = GR_CircularBuffer_Pop(handle->tx_buffer);
-                LL_SPI_TransmitData8(handle->pins->SPIx, data);
-            } else {
-                uint16_t* data = GR_CircularBuffer_Pop(handle->tx_buffer);
-                LL_SPI_TransmitData16(handle->pins->SPIx, data);
+        //Check if there is no ongoing message
+        if(handle->msg_status != GR_SPI_MSG_IN_PROGRESS) {
+            //Check if there is a message in the Tx circular buffer
+            if(GR_CircularBuffer_Peek(handle->tx_buffer) != NULL) {
+                //Pop off the message
+                handle->current_msg = GR_CircularBuffer_Pop(handle->tx_buffer);
+                handle->msg_status = GR_SPI_MSG_IN_PROGRESS;
+                handle->tx_index = 0;
             }
         }
+        //Now check if there is an ongoing message
+        if(handle->msg_status == GR_SPI_MSG_IN_PROGRESS) {
+            GR_SPI_Transfer_Current_Msg(handle);
+        }
+        
     }
 }
 
@@ -173,6 +198,7 @@ void GR_SPI_Enable_Clocks(GR_SPI_Handler* handle) {
                 GPIOx_Port = LL_AHB2_GRP1_PERIPH_GPIOH;
                 break;
             default: //Do nothing (unknown GPIOx)
+                continue;
         }
         LL_AHB2_GRP1_EnableClock(GPIOx_Port);
     }
@@ -192,45 +218,66 @@ void GR_SPI_Enable_Clocks(GR_SPI_Handler* handle) {
     }
 }
 
-void GR_SPI_Send(GR_SPI_Handler* handle, SPI_Message data) {
-    if(handler->ongoing){
-        return spi_ongoing; 
+void GR_SPI_Send(GR_SPI_Handler* handle, GR_SPI_Message* msg) {
+    //Check if a message is currently in progress
+    if(handle->msg_status == GR_SPI_MSG_IN_PROGRESS){
+        //Push the new message onto the Tx circular buffer
+        GR_CircularBuffer_Push(handle->tx_buffer, msg);
     }
-    handle->ongoing = 1;
-    handle->tx_index = 0;
-    handle->rx_index = 0;
-    handle->cur_msg = data;
-
-    if (handle->CS_Port != NULL) {
-        LL_GPIO_ResetOutputPin(handle->GPI0x[3], handle->pins[3]);
-    }
-
-    while (LL_SPI_IsActiveFlag_RXNE(handle->SPIx)) {
-        if (LL_SPI_GetDataWidth(handle->SPIx) == LL_SPI_DATAWIDTH_16BIT) {
-            (void)LL_SPI_ReceiveData16(handle->SPIx);
-        } else {
-            (void)LL_SPI_ReceiveData8(handle->SPIx);
+    else {
+        handle->msg_status = GR_SPI_MSG_IN_PROGRESS;
+        handle->tx_index = 0;
+        handle->rx_index = 0;
+        handle->current_msg = msg;
+        
+        //Initiate new transaction with chip select 
+        if (handle->CS_Port != NULL) {
+            LL_GPIO_ResetOutputPin(handle->GPI0x[3], handle->pins[3]);
         }
-    }
 
-    LL_SPI_EnableIT_TXE(handle->SPIx);
-    LL_SPI_EnableIT_RXNE(handle->SPIx);
-    return spi_status;
+        GR_SPI_Transfer_Current_Msg(handle);
+    }
 }
 
-void GR_SPI_Configure_Pins(GR_SPI_Handler* handle, LL_GPIO_InitTypeDef* pin_config, uint32_t alternate_function_num) {
+GR_SPI_Message* GR_SPI_Receive(GR_SPI_Handler* handle){
+    //Returns NULL if there is no message to receive
+    GR_SPI_Message* data = GR_CircularBuffer_Pop(handle->rx_buffer);
+    return data;
+}
+
+void GR_SPI_Configure_Pins(GR_SPI_Handler* handle, LL_GPIO_InitTypeDef* pin_config) {
     LL_GPIO_StructInit(pin_config); // Default config values
     pin_config.Speed = LL_GPIO_SPEED_FREQ_VERY_HIGH; // Very high output speed
     pin_config.Pull = LL_GPIO_PULL_NO; //No pull-up or pull-down resistance
     pin_config.OutputType = LL_GPIO_OUTPUT_PUSHPULL; // Push-pull output (not open-drain)
     pin_config.Mode = LL_GPIO_MODE_ALTERNATE; // Alternate pin function mode
     pin_config.Alternate = alternate_function_num; // Alternate function number
-    for(int i = 0; i < handle->num_pins; i++) {
-        pin_config.Pin = handle->pins[i];
-        LL_GPIO_Init(handle->pins[i], &pin_config);
+    for(int i = 0; i < handle->pins->num_pins; i++) {
+        pin_config.Pin = handle->pins->pin_nums[i];
+        LL_GPIO_Init(handle->pins->GPIOx[i], &pin_config);
     }
 }
 
-SPI_Message GR_SPI_Receive(GR_SPI_Handler* handler){
-    
+void GR_SPI_Transfer_Current_Msg(GR_SPI_Handler* handle) {
+    uint16_t tx_index = handle->tx_index, msg_size = handle->current_msg->size;
+    //Send two bytes if transferring 16 bits
+    if(transfer_size == GR_SPI_TRANSFER_SIZE_16 && tx_index <= msg_size - 2) {
+        uint16_t data = (((uint16_t)handle->current_msg->data[tx_index]) << 8) + handle->current_msg->data[tx_index+1];
+        LL_SPI_TransmitData16(handle->pins->SPIx, data);
+        handle->tx_index += 2;
+    }
+    //Send one byte if transferring 8 bits or transferring 16 bits with only 8 bits left
+    else if(transfer_size == GR_SPI_TRANSFER_SIZE_8 && tx_index <= msg_size - 1) {
+        uint8_t data = handle->current_msg->data[tx_index];
+        LL_SPI_TransmitData8(handle->pins->SPIx, data);
+        handle->tx_index += 1;
+    } else {
+        //ERROR: Message was already fully transmitted
+    }
+
+    //Mark message send complete
+    if(tx_index == msg_size) {
+        tx_index = 0;
+        //Queue up next message to be sent after current_msg
+    }
 }
