@@ -28,7 +28,7 @@ jobs:
       SCCACHE_ERROR_LOG: ${{ github.workspace }}/sccache-error.log
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
 
