@@ -26,9 +26,8 @@ typedef struct {
 
 /** ECU Status 1 */
 typedef struct {
-	uint8_t ecu_status; /** ECU state (see diagram) */
-	uint8_t
-	    ping_block[3]; /** Node timeout status bits (1=OK, 0=Timeout) */
+	uint8_t ecu_status;    /** ECU state (see diagram) */
+	uint8_t ping_block[3]; /** Node timeout status bits (1=OK, 0=Timeout) */
 	uint8_t powerlevel_torquemap; /** Power lvl (4b) & torque map (4b) */
 	uint8_t max_cell_temp;	      /** Hottest cell temp, 0.25°C/bit */
 	uint8_t tractivebattery_soc;  /** Accumulator SoC, 20x/51=% */
@@ -215,8 +214,7 @@ typedef struct {
 typedef struct {
 	uint8_t
 	    encoder_bits; /** Current encoder pos (1-16) & torque map (1-16) */
-	uint8_t
-	    regen_and_button_bits; /** Regen pos (1-16) & 4 button states */
+	uint8_t regen_and_button_bits; /** Regen pos (1-16) & 4 button states */
 } GR_OLD_STEERING_STATUS_MSG;
 
 /** Steering Wheel Config */

@@ -1,7 +1,7 @@
 #include <stdint.h>
 
-#include "StateMachine.h"
 #include "GR_OLD_MSG_DAT.h"
+#include "StateMachine.h"
 
 #ifndef _STATEDATA_H_
 #define _STATEDATA_H_
