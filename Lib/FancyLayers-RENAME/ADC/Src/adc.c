@@ -1,6 +1,8 @@
 #include "adc.h"
 #include "main.h"
 
+
+
 void ADC_Group_Init(unsigned long ADC, Pre_Scaler_Values PS_Val){
 	LL_ADC_CommonInitTypeDef ADC_CommonInitStruct = {0};
     ADC_CommonInitStruct.CommonClock = PS_Val;
@@ -21,10 +23,10 @@ void ADC_Init(unsigned long ADC, Resolution res, Alignment align){
     LL_ADC_Init(ADC, &ADC_InitStruct);
 }
 
-void ADC_Regular_Group_Init(unsigned long ADC){
+void ADC_Regular_Group_Init(unsigned long ADC, NUM_RANKS ranks){
     LL_ADC_REG_InitTypeDef ADC_REG_InitStruct = {0};
 	ADC_REG_InitStruct.TriggerSource = LL_ADC_REG_TRIG_SOFTWARE;
-	ADC_REG_InitStruct.SequencerLength = LL_ADC_REG_SEQ_SCAN_ENABLE_6RANKS;
+	ADC_REG_InitStruct.SequencerLength = rank;
 	ADC_REG_InitStruct.SequencerDiscont = LL_ADC_REG_SEQ_DISCONT_DISABLE;
 	ADC_REG_InitStruct.ContinuousMode = LL_ADC_REG_CONV_CONTINUOUS;
 	ADC_REG_InitStruct.DMATransfer = LL_ADC_REG_DMA_TRANSFER_UNLIMITED;
@@ -38,5 +40,13 @@ void ADC_Init_Pins(Pin_Ports *input){
     GPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
     LL_GPIO_Init(input->port, &GPIO_InitStruct);
+}
+
+void ADC_Channel_Init(unsigned long adc, RANK rank, ){
+    LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_1, LL_ADC_CHANNEL_5);
+	LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_5,
+				      LL_ADC_SAMPLINGTIME_92CYCLES_5);
+	LL_ADC_SetChannelSingleDiff(ADC1, LL_ADC_CHANNEL_5,
+				    LL_ADC_SINGLE_ENDED);
 }
 

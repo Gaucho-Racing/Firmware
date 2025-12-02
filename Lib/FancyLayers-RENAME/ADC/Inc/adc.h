@@ -43,9 +43,52 @@ void ADC_Init(unsigned long ADC, Resolution res, Alignment align);
 // Initialize a single port and all the pins used on that port
 void ADC_Init_Pins(Pin_Ports *input);
 
-// Initialize the regular channels of the ADC
-void ADC_Regular_Group_Init(unsigned long ADC);
+// How many ranks to enable
+typedef enum{
+    NO_RANKS = LL_ADC_REG_SEQ_SCAN_DISABLE,
+	RANKS_2 = LL_ADC_REG_SEQ_SCAN_ENABLE_2RANKS,
+    RANKS_3 = LL_ADC_REG_SEQ_SCAN_ENABLE_3RANKS,
+    RANKS_4 = LL_ADC_REG_SEQ_SCAN_ENABLE_4RANKS,
+    RANKS_5 = LL_ADC_REG_SEQ_SCAN_ENABLE_5RANKS,
+    RANKS_6 = LL_ADC_REG_SEQ_SCAN_ENABLE_6RANKS,
+    RANKS_7 = LL_ADC_REG_SEQ_SCAN_ENABLE_7RANKS,
+    RANKS_8 = LL_ADC_REG_SEQ_SCAN_ENABLE_8RANKS,
+    RANKS_9 = LL_ADC_REG_SEQ_SCAN_ENABLE_9RANKS,
+    RANKS_10 = LL_ADC_REG_SEQ_SCAN_ENABLE_10RANKS,
+    RANKS_11 = LL_ADC_REG_SEQ_SCAN_ENABLE_11RANKS,
+    RANKS_12 = LL_ADC_REG_SEQ_SCAN_ENABLE_12RANKS,
+    RANKS_13 = LL_ADC_REG_SEQ_SCAN_ENABLE_13RANKS,
+    RANKS_14 = LL_ADC_REG_SEQ_SCAN_ENABLE_14RANKS,
+    RANKS_15 = LL_ADC_REG_SEQ_SCAN_ENABLE_15RANKS,
+    RANKS_16 = LL_ADC_REG_SEQ_SCAN_ENABLE_16RANKS   
+} NUM_RANKS;
 
+// Initialize the channel configurations of the ADC
+void ADC_Regular_Group_Init(unsigned long ADC, NUM_RANKS ranks);
+
+// How many ranks to enable
+typedef enum{
+    RANK_1 = LL_ADC_REG_RANK_1,
+    RANK_2 = LL_ADC_REG_RANK_2,
+    RANK_3 = LL_ADC_REG_RANK_3,
+    RANK_4 = LL_ADC_REG_RANK_4,
+    RANK_5 = LL_ADC_REG_RANK_5,
+    RANK_6 = LL_ADC_REG_RANK_6,
+    RANK_7 = LL_ADC_REG_RANK_7,
+    RANK_8 = LL_ADC_REG_RANK_8,
+    RANK_9 = LL_ADC_REG_RANK_9,
+    RANK_10 = LL_ADC_REG_RANK_10,
+    RANK_11 = LL_ADC_REG_RANK_11,
+    RANK_12 = LL_ADC_REG_RANK_12,
+    RANK_13 = LL_ADC_REG_RANK_13,
+    RANK_14 = LL_ADC_REG_RANK_14,
+    RANK_15 = LL_ADC_REG_RANK_15,
+    RANK_16 = LL_ADC_REG_RANK_16
+} RANK;
+
+
+// Initialize each channel
+void ADC_Channel_Init();
 
 // Struct to easily 
 typedef struct{
