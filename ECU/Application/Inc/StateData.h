@@ -1,5 +1,6 @@
 #include <stdint.h>
 
+#include "GR_OLD_MSG_DAT.h"
 #include "StateMachine.h"
 
 #ifndef _STATEDATA_H_
@@ -46,8 +47,9 @@ typedef union ECU_StateData {
 	};
 
 	struct {
-		__attribute__((unused)) uint8_t temporaryPlaceholder;
-		// TODO Add CAN messages here
+		GR_OLD_ECU_STATUS_1_MSG ecuStatus1;
+		GR_OLD_ECU_STATUS_2_MSG ecuStatus2;
+		GR_OLD_ECU_STATUS_3_MSG ecuStatus3;
 	};
 } ECU_StateData;
 

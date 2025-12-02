@@ -27,7 +27,12 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
 			Test/state_machine_tick_returns.c
 			Application/Src/StateTicks.c
 	)
-	target_link_libraries(state_machine_tick_returns PRIVATE GLOBALSHARE_LIB)
+	target_link_libraries(
+		state_machine_tick_returns
+		PRIVATE
+			GLOBALSHARE_LIB
+			GR_OLD_CAN_MESSAGES
+	)
 	add_test(state_machine_tick_returns state_machine_tick_returns)
 
 	# FIXME Add more HOOTL tests
@@ -65,7 +70,11 @@ target_sources(
 		Application/Src/StateTicks.c
 )
 
-target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
+target_link_libraries(
+	${GR_PROJECT_NAME}_USER_CODE
+	INTERFACE
+		GR_OLD_CAN_MESSAGES
+)
 
 target_include_directories(
 	${GR_PROJECT_NAME}_USER_CODE
