@@ -20,16 +20,17 @@ typedef struct {
 
 // Generic type
 typedef struct {
-    // Contains all information regarding pins
+    // Contains all configuration information
+    LL_SPI_InitTypeDef* spi_config;
     GR_SPI_Pins* pins;
     //GR structs
     CircularBuffer* rx_buffer;
     CircularBuffer* tx_buffer;
-    //Tx/Rx values
+    //Tx-Rx parameters
     uint8_t transfer_size;
-    SPI_Message* current_msg;
-    volatile uint16_t tx_index;
-    volatile uint16_t rx_index;
+    //Tx-Rx current messages
+    SPI_Message* current_tx_msg, current_rx_msg;
+    volatile uint16_t current_tx_msg_index, current_rx_msg_index;
     volatile uint8_t msg_status;
 } GR_SPI_Handler;
 
@@ -79,7 +80,7 @@ void SPI3_IRQHandler(void) { GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[2]); }
  * @param handle
  * @param data
  */
-void GR_SPI_Send(GR_SPI_Handler* handle, SPI_Message data);
+void GR_SPI_Send(GR_SPI_Handler* handle, GR_SPI_Message* data);
 
 /**
  * @brief Read from the SPI buffer; primarily intended for polling. Rely on the passed in handler when setup() is called 
@@ -88,7 +89,7 @@ void GR_SPI_Send(GR_SPI_Handler* handle, SPI_Message data);
  * @return SPI_Message 
  */
 
-SPI_Message GR_SPI_Receive(GR_SPI_Handler* handle);
+GR_SPI_Message* GR_SPI_Receive(GR_SPI_Handler* handle);
 
 /**
  * @brief Checks if the Rx circular buffer is empty
@@ -127,6 +128,6 @@ void GR_SPI_Configure_Pins(GR_SPI_Handler* handle, LL_GPIO_InitTypeDef* pin_conf
  * @param config
  * @param pins
  */
-void GR_SPI_Transfer_Current_Msg(GR_SPI_Handler* handle);
+void GR_SPI_Transfer_Tx_Bytes(GR_SPI_Handler* handle);
 
 #endif
