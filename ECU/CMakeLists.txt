@@ -65,7 +65,11 @@ target_sources(
 		Application/Src/StateTicks.c
 )
 
-target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
+target_link_libraries(
+	${GR_PROJECT_NAME}_USER_CODE
+	INTERFACE
+		GR_OLD_CAN_MESSAGES
+)
 
 target_include_directories(
 	${GR_PROJECT_NAME}_USER_CODE
