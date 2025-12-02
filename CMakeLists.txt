@@ -24,6 +24,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 set(lib_path "Lib")
 set(platform_path "${lib_path}/Platform")
 
+# CMSIS
+include("${lib_path}/Vendor/CMSIS_5/cmsis_5.cmake")
+
 # Platforms
 include("${platform_path}/STM32G474xE/chip.cmake")
 include("${platform_path}/STM32U5A9xJ/chip.cmake")

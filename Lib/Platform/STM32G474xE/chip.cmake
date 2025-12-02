@@ -53,102 +53,102 @@ target_compile_definitions(
 		STM32G4
 )
 
-target_include_directories(
-	${CHIP}_LIB
-	INTERFACE
-		${CHIP_PATH}/Drivers/CMSIS/Include
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Inc
-		${CHIP_PATH}/Drivers/CMSIS/Device/ST/STM32G4xx/Include
-)
+target_include_directories(${CHIP}_LIB INTERFACE ${CHIP_PATH}/STM32_HAL_LL/Inc)
+
+target_compile_options(${CHIP}_LIB INTERFACE ${TARGET_FLAGS})
+
+target_link_options(${CHIP}_LIB INTERFACE ${TARGET_FLAGS})
+
+target_link_libraries(${CHIP}_LIB INTERFACE CMSIS_5_CORE)
 
 target_sources(
 	${CHIP}_LIB
 	INTERFACE
 		${CHIP_PATH}/CompileDependencies/startup_stm32g474xx.s
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_adc.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_adc_ex.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_comp.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_cordic.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_cortex.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_crc.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_crc_ex.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_cryp.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_cryp_ex.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_dac.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_dac_ex.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_dma.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_dma_ex.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_exti.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_fdcan.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_flash.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_flash_ex.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_flash_ramfunc.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_fmac.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_gpio.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_hrtim.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_i2c.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_i2c_ex.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_i2s.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_irda.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_iwdg.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_lptim.c
-		# ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_msp_template.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_nand.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_nor.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_opamp.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_opamp_ex.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_pcd.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_pcd_ex.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_pwr.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_pwr_ex.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_qspi.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_rcc.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_rcc_ex.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_rng.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_rtc.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_rtc_ex.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_sai.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_sai_ex.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_smartcard.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_smartcard_ex.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_smbus.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_smbus_ex.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_spi.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_spi_ex.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_sram.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_tim.c
-		# ${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_timebase_tim_template.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_tim_ex.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_uart.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_uart_ex.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_usart.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_usart_ex.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_hal_wwdg.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_adc.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_comp.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_cordic.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_crc.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_crs.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_dac.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_dma.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_exti.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_fmac.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_fmc.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_gpio.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_hrtim.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_i2c.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_lptim.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_lpuart.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_opamp.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_pwr.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_rcc.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_rng.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_rtc.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_spi.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_tim.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_ucpd.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_usart.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_usb.c
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Src/stm32g4xx_ll_utils.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_adc.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_adc_ex.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_comp.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_cordic.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_cortex.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_crc.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_crc_ex.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_cryp.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_cryp_ex.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_dac.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_dac_ex.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_dma.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_dma_ex.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_exti.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_fdcan.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_flash.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_flash_ex.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_flash_ramfunc.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_fmac.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_gpio.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_hrtim.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_i2c.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_i2c_ex.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_i2s.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_irda.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_iwdg.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_lptim.c
+		# ${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_msp_template.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_nand.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_nor.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_opamp.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_opamp_ex.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_pcd.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_pcd_ex.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_pwr.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_pwr_ex.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_qspi.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_rcc.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_rcc_ex.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_rng.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_rtc.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_rtc_ex.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_sai.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_sai_ex.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_smartcard.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_smartcard_ex.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_smbus.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_smbus_ex.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_spi.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_spi_ex.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_sram.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_tim.c
+		# ${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_timebase_tim_template.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_tim_ex.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_uart.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_uart_ex.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_usart.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_usart_ex.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_hal_wwdg.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_adc.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_comp.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_cordic.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_crc.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_crs.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_dac.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_dma.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_exti.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_fmac.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_fmc.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_gpio.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_hrtim.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_i2c.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_lptim.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_lpuart.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_opamp.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_pwr.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_rcc.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_rng.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_rtc.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_spi.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_tim.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_ucpd.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_usart.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_usb.c
+		${CHIP_PATH}/STM32_HAL_LL/Src/stm32g4xx_ll_utils.c
 )
