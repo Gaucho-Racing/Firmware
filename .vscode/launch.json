@@ -85,7 +85,7 @@
 			"name": "U5BLINKY",
 			"request": "launch",
 			"type": "cortex-debug",
-			"servertype": "openocd",
+			"servertype": "stutil",
 			"configFiles": [
 				"interface/stlink.cfg",
 				"target/stm32u5x.cfg"
