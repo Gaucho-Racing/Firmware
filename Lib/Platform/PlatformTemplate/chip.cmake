@@ -36,6 +36,7 @@ string(
 	9
 	TEMP
 ) # FIXME Scary
+
 target_compile_definitions(
 	${CHIP}_LIB
 	INTERFACE
@@ -49,9 +50,15 @@ target_include_directories(
 	${CHIP}_LIB
 	INTERFACE
 		${CHIP_PATH}/Drivers/CMSIS/Include
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Inc
+		${CHIP_PATH}/STM32_HAL_LL/Inc
 		${CHIP_PATH}/Drivers/CMSIS/Device/ST/____/Include # REPLACE: Whatever the new cmsis include path is
 )
+
+target_compile_options(${CHIP}_LIB INTERFACE ${TARGET_FLAGS})
+
+target_link_options(${CHIP}_LIB INTERFACE ${TARGET_FLAGS})
+
+target_link_libraries(${CHIP}_LIB INTERFACE CMSIS_5_CORE) # Update if using a different CMSIS
 
 target_sources(
 	${CHIP}_LIB
