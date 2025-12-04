@@ -21,7 +21,7 @@ jobs:
       matrix:
         include:
         - languages: 'c-cpp'
-          build_mode: 'autobuild'
+          build_mode: 'manual'
         - languages: 'actions'
           build_mode: 'none'
     steps:
@@ -33,6 +33,16 @@ jobs:
         with:
           languages: ${{ matrix.languages }}
           build-mode: ${{ matrix.build_mode }}
+
+      - name: Install Arm Toolchain
+        if: matrix.build_mode == 'manual'
+        uses: carlosperate/arm-none-eabi-gcc-action@v1
+        with:
+          release: '12.2.Rel1'
+
+      - name: Build CodeQL Database
+        if: matrix.build_mode == 'manual'
+        run: make MinSizeRel -j$(nproc)
 
       - name: Analyze
         uses: github/codeql-action/analyze@v3
