@@ -87,7 +87,8 @@ flowchart TD
    UserCode --> Combinator
 
    %% Arbitrary Interface Libraries
-   ArbitraryLibs["Arbitrary Interface Libraries"] --> Combinator
+   Root --> ArbitraryLibs["Arbitrary Interface Libraries"]
+   ArbitraryLibs --> Combinator
 
    %% Output
    Combinator --> Executable["${PROJECT}.elf"]
