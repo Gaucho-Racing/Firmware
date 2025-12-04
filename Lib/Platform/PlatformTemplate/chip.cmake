@@ -1,61 +1,48 @@
-set(CHIP "") # REPLACE: with the appropriate platform name
-set(CHIP_PATH "${CMAKE_SOURCE_DIR}/Lib/Platform/${CHIP}")
-set(TARGET_FLAGS "") # REPLACE: with the appropriate linkerscript
+set(CHIP "STM32G474xE") # FIXME Replace with real chip name
 
 function(add_executable_${CHIP} TARGET_NAME)
-	set(CHIP "") # REPLACE: with the appropriate platform name
-	set(CHIP_PATH "${CMAKE_SOURCE_DIR}/Lib/Platform/${CHIP}")
-	set(TARGET_FLAGS "") # REPLACE: with the appropriate linkerscript
+	# Setup
+	set(CHIP "STM32G474xE") # FIXME Replace with real chip name
+	set(
+		TARGET_FLAGS
+		# Replace with real target flags
+	)
 
 	add_executable(${TARGET_NAME})
+
+	target_compile_definitions(
+		${TARGET_NAME}
+		PRIVATE
+			USE_FULL_LL_DRIVER
+			USE_HAL_DRIVER
+		# STM32G474xx	# FIXME Replace with real chip series designation
+		# STM32G4		# FIXME Replace with real series designation
+	)
+
 	target_compile_options(${TARGET_NAME} PRIVATE ${TARGET_FLAGS})
+
 	target_link_options(
 		${TARGET_NAME}
 		PRIVATE
 			${TARGET_FLAGS}
-			-T${CHIP_PATH}/CompileDependencies/<FLASH
-			LINKER
-			SCRIPT
-			HERE>.ld
+			-T
+			"${CMAKE_CURRENT_FUNCTION_LIST_DIR}/FLASH_LINKER_SCRIPT.ld" # FIXME Replace with real linker script
 	)
 
-	# Cleanup (do not change, leave these 3 lines as is, trust)
+	target_sources(
+		${TARGET_NAME}
+		PRIVATE
+			"${CMAKE_CURRENT_FUNCTION_LIST_DIR}/STARTUP_ASSEMBLY_SCRIPT.s" # FIXME Replace with real startup assembly script
+	)
+
+	target_link_libraries(
+		${TARGET_NAME}
+		PRIVATE
+			STM32_HAL_LL_G4xx
+			CMSIS_5_CORE
+	) # FIXME Replace with real HAL/LL library
+
+	# Cleanup
 	set(CHIP "YOUHAVENOTCONFIGUREDCHIPRIGHT!")
-	set(CHIP_PATH "YOUHAVENOTCONFIGUREDCHIPPATHRIGHT!")
 	set(TARGET_FLAGS "YOUHAVENOTCONFIGUREDTARGETFLAGSRIGHT!")
 endfunction()
-
-add_library(${CHIP}_LIB INTERFACE)
-
-# enable_language(C ASM)
-
-# used to strip the last 2 characters of CHIP to make the compile def
-string(
-	SUBSTRING ${CHIP}
-	0
-	9
-	TEMP
-) # FIXME Scary
-target_compile_definitions(
-	${CHIP}_LIB
-	INTERFACE
-		USE_FULL_LL_DRIVER
-		USE_HAL_DRIVER
-		${TEMP}xx # REPLACE: Check that this either works or needs to be overwritten w/ the new
-		${TEMP} # REPLACE: If you get a TON of legacy warnings about things in stm32_hal_legacy.h then replace this with the 'STM32??' of the chip and uncomment
-)
-
-target_include_directories(
-	${CHIP}_LIB
-	INTERFACE
-		${CHIP_PATH}/Drivers/CMSIS/Include
-		${CHIP_PATH}/Drivers/stm32-hal-driver/Inc
-		${CHIP_PATH}/Drivers/CMSIS/Device/ST/____/Include # REPLACE: Whatever the new cmsis include path is
-)
-
-target_sources(
-	${CHIP}_LIB
-	INTERFACE
-	# REPLACE: everything here with the files in the hal-driver & the startup_<platform>.s
-	# you can just ls and use that but don't forget to comment out the templates
-)

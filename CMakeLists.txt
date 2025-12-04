@@ -24,15 +24,26 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 set(lib_path "Lib")
 set(platform_path "${lib_path}/Platform")
 
+# CMSIS and HAL/LL
+include("${lib_path}/Vendor/CMSIS_5/cmsis_5.cmake")
+include("${lib_path}/Vendor/STM32_HAL_LL/cube.cmake")
+
+# Platforms
 include("${platform_path}/STM32G474xE/chip.cmake")
 include("${platform_path}/STM32U5A9xJ/chip.cmake")
 include("${platform_path}/STM32L476xG/chip.cmake")
+
+# Utils
 include("${lib_path}/GlobalShare/common.cmake")
 include("${lib_path}/Utils/CircularBuffer/circular-buffer-lib.cmake")
 include("${lib_path}/cmake/gr-lib.cmake")
+include("${lib_path}/Utils/BitManipulations/bit-utils.cmake")
 
 # Peripherals
 include("${lib_path}/Peripherals/USART/common.cmake")
+
+# FIXME Temporary holdover for CAN messages until URCA is ready for merge
+include("${lib_path}/FancyLayers-RENAME/GRCAN/TemporaryHoldover/temp.cmake")
 
 message(
 	STATUS
