@@ -4,6 +4,17 @@ This document describes the CMake build system architecture for the Gaucho Racin
 
 Ideally, each relevant area has its own `README.md` or similar file with more information that can be used as a reference. If an area is lacking documentation please open a new issue.
 
+## Table of Contents
+
+1. [Makefile Overview](#makefile-overview)
+2. [Directory Structure](#directory-structure)
+3. [System Architecture Diagram](#system-architecture-diagram)
+4. [Core Components](#core-components)
+5. [Build Process Flow](#build-process-flow)
+6. [Compile Logical Flow](#compile-logical-flow)
+7. [Adding New Platforms](#adding-new-platforms)
+8. [Adding New Projects](#adding-new-projects)
+
 ## Makefile Overview
 
 The top-level `Makefile` provides convenient targets for building, cleaning, and testing across all major CMake configurations:
@@ -25,16 +36,6 @@ To clean all build artifacts:
 ```sh
 make clean
 ```
-
-## Table of Contents
-
-1. [Directory Structure](#directory-structure)
-2. [System Architecture Diagram](#system-architecture-diagram)
-3. [Core Components](#core-components)
-4. [Build Process Flow](#build-process-flow)
-5. [Compile Logical Flow](#compile-logical-flow)
-6. [Adding New Platforms](#adding-new-platforms)
-7. [Adding New Projects](#adding-new-projects)
 
 ## Directory Structure
 
