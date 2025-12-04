@@ -2,18 +2,6 @@
 #include "StateUtils.h"
 #include "StateData.h"
 
-//0 indexed LSB first
-bool getBit(uint8_t number, uint8_t index)
-{
-    return getBits(number, index, 1);   // Equivalent to `(number >> index) & 0x1
-}
-
-//0 indexed LSB first
-uint8_t getBits(uint8_t number, uint8_t index, uint8_t length)
-{
-    return (number >> index) & ((1 << length) - 1);
-}
-
 void setSoftwareLatch(bool close)
 {
     // LOGOMATIC("Setting software latch to %d\n", close);
@@ -32,26 +20,25 @@ void setSoftwareLatch(bool close)
 bool CriticalError(const ECU_StateData *stateData)
 {
     if (stateData->MaxCellTemp > 60){
-        return 1;
+        return true;
     }
     if (stateData->TractiveSystemVoltage > 600) {
-        return 1;
+        return true;
     }
-
+    return false;
 }
 
 bool CommunicationError(const ECU_StateData *stateData)
 {
-
     // TODO: implement COMMS errors
-
+    return false;
 }
 
 bool APPS_BSE_Violation(const ECU_StateData *stateData)
-{ 
+{
     //Checks 2 * APPS_1 is within 10% of APPS_2 and break + throttle at the same time
-    return fabs(stateData->APPS2_Signal - stateData->APPS1_SIGNAL * APPS_PROPORTION - APPS_OFFSET) > stateData->APPS2_Signal * 0.1f 
-            || (pressingBrake() && getPedalTravel() >= 0.25f);
+    return fabs(stateData->APPS2_SIGNAL - stateData->APPS1_SIGNAL * APPS_PROPORTION - APPS_OFFSET) > stateData->APPS2_SIGNAL * 0.1f
+            || (PressingBrake(stateData) && getPedalTravel(stateData) >= 0.25f);
 }
 
 bool PressingBrake(const ECU_StateData *stateData)
