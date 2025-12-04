@@ -182,10 +182,19 @@ flowchart TD
 
 ## Adding New Platforms
 
-TODO
+Ensure that licenses are preserved!
+
+1. Setup Vendor
+   1. Copy CMSIS library from ST Microelectronics
+   2. Copy HAL/LL libraries from ST Microelectronics
+   3. Add CMake files to bundle as an INTERFACE as appropriate
+2. Include new HAL/LL library INTERFACE into root `CMakeLists.txt`
+3. Copy `Lib/Platform/PlatformTemplate` into `Lib/Platform/CHIP`
+   1. Modify following instructions in the file
+   2. Copy startup assembly script and linker script
+   3. Write brief `README.md` in the form of the others
+4. Include new platform in root `CMakeLists.txt`
 
 ## Adding New Projects
 
-To create a new project for any supported platform:
-
-TODO
+TODO... For now use STM32 CubeMX to configure peripherals and then copy `Core` code and follow pattern in other projects to compile. See the onboarding lecture on the monorepo for more information.
