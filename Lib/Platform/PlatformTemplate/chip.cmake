@@ -38,9 +38,9 @@ function(add_executable_${CHIP} TARGET_NAME)
 	target_link_libraries(
 		${TARGET_NAME}
 		PRIVATE
-			STM32_HAL_LL_G4xx
+			STM32_HAL_LL_G4xx # FIXME Replace with real HAL/LL library
 			CMSIS_5_CORE
-	) # FIXME Replace with real HAL/LL library
+	)
 
 	# Cleanup
 	set(CHIP "YOUHAVENOTCONFIGUREDCHIPRIGHT!")
