@@ -25,7 +25,7 @@ jobs:
         - languages: 'actions'
           build_mode: 'none'
     steps:
-      - name: Checkout Repo
+      - name: Checkout Repository
         uses: actions/checkout@v5
 
       - name: Setup Trap Cache Directory
