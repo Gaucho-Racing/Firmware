@@ -19,7 +19,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        languages: [ 'cpp', 'actions' ]
+        include:
+        - languages: 'c-cpp'
+          build_mode: 'autobuild'
+        - languages: 'actions'
+          build_mode: 'none'
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v5
@@ -28,9 +32,7 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.languages }}
-
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v3
+          build-mode: ${{ matrix.build_mode }}
 
       - name: Analyze
         uses: github/codeql-action/analyze@v3
