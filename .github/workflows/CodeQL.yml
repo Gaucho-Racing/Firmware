@@ -29,7 +29,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+        uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.languages }}
           build-mode: ${{ matrix.build_mode }}
@@ -42,7 +42,9 @@ jobs:
 
       - name: Build CodeQL Database
         if: matrix.build_mode == 'manual'
-        run: make MinSizeRel -j$(nproc)
+        uses: github/codeql-action/autobuild@v3
+        with:
+          build-command: make MinSizeRel -j$(nproc)
 
-      - name: Analyze
+      - name: Analyze CodeQL
         uses: github/codeql-action/analyze@v3
