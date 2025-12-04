@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <stdbool.h>
 
 #include "GR_OLD_MSG_DAT.h"
 #include "StateMachine.h"
