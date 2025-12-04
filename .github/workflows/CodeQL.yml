@@ -28,6 +28,10 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v5
 
+      - name: Setup Trap Cache Directory
+        if: matrix.build_mode == 'manual'
+        run: mkdir -p /home/runner/work/_temp/trapCaches/cpp/tarballs
+
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
