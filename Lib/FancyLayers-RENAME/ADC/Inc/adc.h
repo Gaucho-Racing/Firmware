@@ -1,11 +1,10 @@
 #include "main.h"
 
-
 #ifndef GR_PERIPHERALS_ADC
 #define GR_PERIPHERALS_ADC
 
-// What the prescaler value 
-typedef enum{
+// What the prescaler value
+typedef enum {
     PS_1 = LL_ADC_CLOCK_ASYNC_DIV1,
     PS_2 = LL_ADC_CLOCK_ASYNC_DIV2,
     PS_4 = LL_ADC_CLOCK_ASYNC_DIV4,
@@ -21,15 +20,15 @@ typedef enum{
 } Pre_Scaler_Values;
 
 // Resolution of the ADC in bits
-typedef enum{
+typedef enum {
     RESOLUTION_12 = LL_ADC_RESOLUTION_12B,
     RESOLUTION_10 = LL_ADC_RESOLUTION_10B,
-    RESOLUTION_8 =  LL_ADC_RESOLUTION_8B,
+    RESOLUTION_8 = LL_ADC_RESOLUTION_8B,
     RESOLUTION_6 = LL_ADC_RESOLUTION_6B
 } Resolution;
 
 // Data Alignment
-typedef enum{
+typedef enum {
     RIGHT = LL_ADC_DATA_ALIGN_RIGHT,
     LEFT = LL_ADC_DATA_ALIGN_LEFT
 } Alignment;
@@ -44,9 +43,9 @@ void ADC_Init(unsigned long ADC, Resolution res, Alignment align);
 void ADC_Init_Pins(Pin_Ports *input);
 
 // How many ranks to enable
-typedef enum{
+typedef enum {
     NO_RANKS = LL_ADC_REG_SEQ_SCAN_DISABLE,
-	RANKS_2 = LL_ADC_REG_SEQ_SCAN_ENABLE_2RANKS,
+    RANKS_2 = LL_ADC_REG_SEQ_SCAN_ENABLE_2RANKS,
     RANKS_3 = LL_ADC_REG_SEQ_SCAN_ENABLE_3RANKS,
     RANKS_4 = LL_ADC_REG_SEQ_SCAN_ENABLE_4RANKS,
     RANKS_5 = LL_ADC_REG_SEQ_SCAN_ENABLE_5RANKS,
@@ -60,14 +59,14 @@ typedef enum{
     RANKS_13 = LL_ADC_REG_SEQ_SCAN_ENABLE_13RANKS,
     RANKS_14 = LL_ADC_REG_SEQ_SCAN_ENABLE_14RANKS,
     RANKS_15 = LL_ADC_REG_SEQ_SCAN_ENABLE_15RANKS,
-    RANKS_16 = LL_ADC_REG_SEQ_SCAN_ENABLE_16RANKS   
-} NUM_RANKS;
+    RANKS_16 = LL_ADC_REG_SEQ_SCAN_ENABLE_16RANKS
+} NumRanks;
 
 // Initialize the channel configurations of the ADC
-void ADC_Regular_Group_Init(unsigned long ADC, NUM_RANKS ranks);
+void ADC_Regular_Group_Init(unsigned long ADC, NumRanks ranks);
 
 // How many ranks to enable
-typedef enum{
+typedef enum {
     RANK_1 = LL_ADC_REG_RANK_1,
     RANK_2 = LL_ADC_REG_RANK_2,
     RANK_3 = LL_ADC_REG_RANK_3,
@@ -84,15 +83,62 @@ typedef enum{
     RANK_14 = LL_ADC_REG_RANK_14,
     RANK_15 = LL_ADC_REG_RANK_15,
     RANK_16 = LL_ADC_REG_RANK_16
-} RANK;
+} Rank;
 
+typedef enum {
+    CHANNEL_1 = LL_ADC_CHANNEL_1,
+    CHANNEL_2 = LL_ADC_CHANNEL_2,
+    CHANNEL_3 = LL_ADC_CHANNEL_3,
+    CHANNEL_4 = LL_ADC_CHANNEL_4,
+    CHANNEL_5 = LL_ADC_CHANNEL_5,
+    CHANNEL_6 = LL_ADC_CHANNEL_6,
+    CHANNEL_7 = LL_ADC_CHANNEL_7,
+    CHANNEL_8 = LL_ADC_CHANNEL_8,
+    CHANNEL_9 = LL_ADC_CHANNEL_9,
+    CHANNEL_10 = LL_ADC_CHANNEL_10,
+    CHANNEL_11 = LL_ADC_CHANNEL_11,
+    CHANNEL_12 = LL_ADC_CHANNEL_12,
+    CHANNEL_13 = LL_ADC_CHANNEL_13,
+    CHANNEL_14 = LL_ADC_CHANNEL_14,
+    CHANNEL_15 = LL_ADC_CHANNEL_15,
+    CHANNEL_16 = LL_ADC_CHANNEL_16,
+    CHANNEL_17 = LL_ADC_CHANNEL_17,
+    CHANNEL_18 = LL_ADC_CHANNEL_18,
+    VREFINT = LL_ADC_CHANNEL_VREFINT,
+    TEMPSENSOR_ADC1 = LL_ADC_CHANNEL_TEMPSENSOR_ADC1,
+    TEMPSENSOR_ADC5 = LL_ADC_CHANNEL_TEMPSENSOR_ADC5,
+    VBAT = LL_ADC_CHANNEL_VBAT,
+    VOPAMP1 = LL_ADC_CHANNEL_VOPAMP1,
+    VOPAMP2 = LL_ADC_CHANNEL_VOPAMP2,
+    VOPAMP3_ADC2 = LL_ADC_CHANNEL_VOPAMP3_ADC2,
+    VOPAMP3_ADC3 = LL_ADC_CHANNEL_VOPAMP3_ADC3,
+    VOPAMP4 = LL_ADC_CHANNEL_VOPAMP4,
+    VOPAMP5 = LL_ADC_CHANNEL_VOPAMP5,
+    VOPAMP6 = LL_ADC_CHANNEL_VOPAMP6,
+} Channel;
+
+typedef enum {
+    SINGLE_ENDED = LL_ADC_SINGLE_ENDED,
+    DIFFERENTIAL_ENDED = LL_ADC_DIFFERENTIAL_ENDED
+} ChannelSingleDiff;
+
+typedef enum {
+    SAMPLINGTIME_2CYCLES_5 = LL_ADC_SAMPLINGTIME_2CYCLES_5,
+    SAMPLINGTIME_6CYCLES_5 = LL_ADC_SAMPLINGTIME_6CYCLES_5,
+    SAMPLINGTIME_12CYCLES_5 = LL_ADC_SAMPLINGTIME_12CYCLES_5,
+    SAMPLINGTIME_24CYCLES_5 = LL_ADC_SAMPLINGTIME_24CYCLES_5,
+    SAMPLINGTIME_47CYCLES_5 = LL_ADC_SAMPLINGTIME_47CYCLES_5,
+    SAMPLINGTIME_92CYCLES_5 = LL_ADC_SAMPLINGTIME_92CYCLES_5,
+    SAMPLINGTIME_247CYCLES_5 = LL_ADC_SAMPLINGTIME_247CYCLES_5,
+    SAMPLINGTIME_640CYCLES_5 = LL_ADC_SAMPLINGTIME_640CYCLES_5,
+} SamplingTime;
 
 // Initialize each channel
-void ADC_Channel_Init();
+void ADC_Channel_Init(unsigned long adc, Rank rank, Channel channel, ChannelSingleDiff diff, SamplingTime time);
 
-// Struct to easily 
-typedef struct{
-    unsigned long pin; // Bit mask of pins
+// Struct to easily
+typedef struct {
+    unsigned long pin;  // Bit mask of pins
     unsigned long port; // Port
 } Pin_Ports;
 
@@ -102,5 +148,26 @@ typedef struct{
  * 4. Initialize each pin in the ADC
  */
 
-// Return a pointer to DMA 
+// Return a pointer to DMA
+
+typedef enum {
+    SYNC_PCLK_DIV1 = LL_ADC_CLOCK_SYNC_PCLK_DIV1,
+    SYNC_PCLK_DIV2 = LL_ADC_CLOCK_SYNC_PCLK_DIV2,
+    SYNC_PCLK_DIV4 = LL_ADC_CLOCK_SYNC_PCLK_DIV4,
+    ASYNC_DIV1 = LL_ADC_CLOCK_ASYNC_DIV1,
+    ASYNC_DIV2 = LL_ADC_CLOCK_ASYNC_DIV2,
+    ASYNC_DIV4 = LL_ADC_CLOCK_ASYNC_DIV4,
+    ASYNC_DIV6 = LL_ADC_CLOCK_ASYNC_DIV6,
+    ASYNC_DIV8 = LL_ADC_CLOCK_ASYNC_DIV8,
+    ASYNC_DIV10 = LL_ADC_CLOCK_ASYNC_DIV10,
+    ASYNC_DIV12 = LL_ADC_CLOCK_ASYNC_DIV12,
+    ASYNC_DIV16 = LL_ADC_CLOCK_ASYNC_DIV16,
+    ASYNC_DIV32 = LL_ADC_CLOCK_ASYNC_DIV32,
+    ASYNC_DIV64 = LL_ADC_CLOCK_ASYNC_DIV64,
+    ASYNC_DIV128 = LL_ADC_CLOCK_ASYNC_DIV128,
+    ASYNC_DIV256 = LL_ADC_CLOCK_ASYNC_DIV256,
+} CommonClock;
+
+void ADC_Set_Common_Clock(ADC_Common_TypeDef *ADC_Common, CommonClock commonClock);
+CommonClock ADC_Get_Common_Clock(ADC_Common_TypeDef *ADC_Common);
 #endif

@@ -1,7 +1,20 @@
 #include "adc.h"
 #include "main.h"
 
-
+ADC_TypeDef *GetADC(unsigned long adc) {
+    switch (adc) {
+        case 1:
+            return ADC1;
+        case 2:
+            return ADC2;
+        case 3:
+            return ADC3;
+        case 4:
+            return ADC4;
+        case 5:
+            return ADC5;
+        }
+}
 
 void ADC_Group_Init(unsigned long ADC, Pre_Scaler_Values PS_Val){
 	LL_ADC_CommonInitTypeDef ADC_CommonInitStruct = {0};
@@ -20,10 +33,10 @@ void ADC_Init(unsigned long ADC, Resolution res, Alignment align){
     ADC_InitStruct.Resolution = res;
 	ADC_InitStruct.DataAlignment = align;
 	ADC_InitStruct.LowPowerMode = LL_ADC_LP_MODE_NONE;
-    LL_ADC_Init(ADC, &ADC_InitStruct);
+    LL_ADC_Init(GetADC(ADC), &ADC_InitStruct);
 }
 
-void ADC_Regular_Group_Init(unsigned long ADC, NUM_RANKS ranks){
+void ADC_Regular_Group_Init(unsigned long ADC, NumRanks ranks){
     LL_ADC_REG_InitTypeDef ADC_REG_InitStruct = {0};
 	ADC_REG_InitStruct.TriggerSource = LL_ADC_REG_TRIG_SOFTWARE;
 	ADC_REG_InitStruct.SequencerLength = rank;
@@ -42,11 +55,16 @@ void ADC_Init_Pins(Pin_Ports *input){
     LL_GPIO_Init(input->port, &GPIO_InitStruct);
 }
 
-void ADC_Channel_Init(unsigned long adc, RANK rank, ){
-    LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_1, LL_ADC_CHANNEL_5);
-	LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_5,
-				      LL_ADC_SAMPLINGTIME_92CYCLES_5);
-	LL_ADC_SetChannelSingleDiff(ADC1, LL_ADC_CHANNEL_5,
-				    LL_ADC_SINGLE_ENDED);
+void ADC_Channel_Init(unsigned long adc, Rank rank, Channel channel, ChannelSingleDiff diff, SamplingTime time) {
+    LL_ADC_REG_SetSequencerRanks(GetADC(adc), rank, channel);
+	LL_ADC_SetChannelSamplingTime(GetADC(adc), channel, time);
+	LL_ADC_SetChannelSingleDiff(GetADC(adc), channel, diff);
 }
 
+void ADC_Set_Common_Clock(ADC_Common_TypeDef *ADC_Common, CommonClock commonClock) {
+    LL_ADC_SetCommonClock(ADC_Common, commonClock);
+}
+
+CommonClock ADC_Get_Common_Clock(ADC_Common_TypeDef *ADC_Common) {
+    return LL_ADC_GetCommonClock(ADC_Common);
+}
