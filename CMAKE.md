@@ -76,7 +76,7 @@ flowchart TD
    ChipConfig --> PlatformLib["${CHIP}_LIB Interface"]
 
    %% Linking
-   ProjectCMake --> UserCode["${PROJECT}/ Directory"]
+   ProjectCMake --> UserCode["Directory ${PROJECT}/"]
    PlatformLib --> Combinator["Combinator_${PROJECT}"]
    UserCode --> Combinator
 
