@@ -11,7 +11,7 @@ on:
 
 jobs:
   codeql:
-    name: Analyze
+    name: Analyze Code
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -77,3 +77,4 @@ jobs:
         with:
           name: codeql-${{ matrix.languages }}
           path: ${{ steps.analyze.outputs.sarif-output }}
+          retention-days: 2
