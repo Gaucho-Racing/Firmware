@@ -2,6 +2,8 @@
 
 This document describes the CMake build system architecture for the Gaucho Racing Firmware repository. The system supports multiple STM32 microcontroller platforms and different build configurations. INTERFACE libraries should be preferred wherever possible.
 
+Ideally, each relevant area has its own `README.md` or similar file with more information that can be used as a reference. If an area is lacking documentation please open a new issue.
+
 ## Makefile Overview
 
 The top-level `Makefile` provides convenient targets for building, cleaning, and testing across all major CMake configurations:
@@ -44,6 +46,10 @@ Firmware/
 │   ├── `cmake`/
 │   │   ├── `gcc-arm-none-eabi.cmake`  # ARM toolchain configuration
 │   │   └── `gr-lib.cmake`             # CMake utilities
+│   ├── `GlobalShare`/                 # Shared CMake modules, headers, and utilities
+│   ├── `Peripherals`/                 # Peripheral-specific code and modules
+│   ├── `Utils`/                       # Utility libraries (e.g., buffers, bit utils, etc.)
+│   ├── `Vendor`/                      # Third-party and vendor libraries (e.g., CMSIS, HAL/LL)
 │   └── `Platform`/                    # Platform-specific configurations
 │       ├── `STM32G474xE`/             # G474 platform files (`chip.cmake`)
 │       ├── `STM32U5A9xJ`/             # U5A9 platform files (`chip.cmake`)
