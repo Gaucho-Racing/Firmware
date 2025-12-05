@@ -29,7 +29,7 @@ typedef struct {
     //Tx-Rx parameters
     uint8_t transfer_size;
     //Tx-Rx current messages
-    SPI_Message* current_tx_msg, current_rx_msg;
+    SPI_Message* current_msg;
     volatile uint16_t current_tx_msg_index, current_rx_msg_index;
     volatile uint8_t msg_status;
 } GR_SPI_Handler;
