@@ -5,6 +5,7 @@
 [![Auto Format](https://github.com/Gaucho-Racing/Firmware/actions/workflows/AutoFormat.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/AutoFormat.yml)
 [![ValidateConfigs](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ValidateConfigs.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/ValidateConfigs.yml)
 [![Valgrind](https://github.com/Gaucho-Racing/Firmware/actions/workflows/MemoryCheckOnTests.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/MemoryCheckOnTests.yml)
+[![CodeQL](https://github.com/Gaucho-Racing/Firmware/actions/workflows/CodeQL.yml/badge.svg)](https://github.com/Gaucho-Racing/Firmware/actions/workflows/CodeQL.yml)
 
 Table of Contents
 * [Quickstart](#Quickstart)
