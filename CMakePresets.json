@@ -15,7 +15,7 @@
 			"binaryDir": "${sourceDir}/build/${presetName}",
 			"toolchainFile": "${sourceDir}/Lib/cmake/HOOTL.cmake",
 			"cacheVariables": {
-				"CMAKE_BUILD_TYPE": "Test"
+				"CMAKE_BUILD_TYPE": "Debug"
 			}
 		},
 		{
