@@ -2,12 +2,75 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "CMake: configure and build",
+			"label": "CMake: configure and build all",
 			"dependsOrder": "sequence",
 			"dependsOn": [
 				"CMake: configure",
 				"CMake: build"
 			]
+		},
+		{
+			"label": "CMake: configure and build ECU",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target ECU"
+		},
+		{
+			"label": "CMake: configure and build G4HELLO",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target G4HELLO"
+		},
+		{
+			"label": "CMake: configure and build G4BLINKY",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target G4BLINKY"
+		},
+		{
+			"label": "CMake: configure and build U5BLINKY",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target U5BLINKY"
+		},
+		{
+			"label": "CMake: configure and build L4BLINKY",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target L4BLINKY"
+		},
+		{
+			"label": "CMake: configure and build W3_G4SPI_Transmit",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target W3_G4SPI_Transmit"
+		},
+		{
+			"label": "CMake: configure and build W3_G4SPI_Receive",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target W3_G4SPI_Receive"
 		}
 	]
 }

@@ -13,9 +13,6 @@ endif()
 # what, does in fact not get the filename of somthing but rather the name of the project from the path
 get_filename_component(GR_PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
-# Enable compile command to ease indexing with e.g. clangd
-set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
-
 # Enable CMake support for ASM and C languages
 enable_language(
 	C

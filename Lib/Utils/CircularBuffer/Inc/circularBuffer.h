@@ -49,19 +49,23 @@ bool GR_CircularBuffer_IsEmpty(CircularBuffer *buffer_ptr);
 /// @param buffer_ptr Pointer to the CircularBuffer to store the item.
 /// @param object_ptr A pointer to the item to be pushed into the
 /// CircularBuffer.
+/// @param object_size Size of the item to be pushed in bytes.
 /// @return 0 if the operation finished successfully, non-0 on error.
-uint8_t GR_CircularBuffer_Push(CircularBuffer *buffer_ptr, void *object_ptr);
+uint8_t GR_CircularBuffer_Push(CircularBuffer *buffer_ptr, void *object_ptr,
+			       uint16_t object_size);
 
 /// @brief Removes a CircularBuffer's buffer head and retrives it.
 /// @param buffer_ptr The CircularBuffer in subject.
 /// @return The pointer to the removed item. NULL if the buffer is null or is
-/// empty.
+/// empty. Note that the user is responsible for deallocating this retrived item
+/// with free(void*) from stdlib.h.
 void *GR_CircularBuffer_Pop(CircularBuffer *buffer_ptr);
 
 /// @brief Retrives a CircularBuffer's buffer head.
 /// @param buffer_ptr The CircularBuffer in subject.
 /// @return The pointer to the retrived item. NULL if the buffer is null or is
-/// empty.
-void *GR_CircularBuffer_Peek(CircularBuffer *buffer_ptr);
+/// empty. Note that the user MUST NOT deallocate this retrived item
+/// with free(void*) from stdlib.h.
+const void *GR_CircularBuffer_Peek(CircularBuffer *buffer_ptr);
 
 #endif

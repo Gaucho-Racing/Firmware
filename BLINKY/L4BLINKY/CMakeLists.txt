@@ -10,9 +10,6 @@ if(NOT CMAKE_BUILD_TYPE)
 	set(CMAKE_BUILD_TYPE "Debug")
 endif()
 
-# Enable compile command to ease indexing with e.g. clangd
-set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
-
 # Enable CMake support for ASM and C languages
 enable_language(
 	C
@@ -24,26 +21,6 @@ project(${CMAKE_PROJECT_NAME})
 
 # what, does in fact not get the filename of somthing but rather the name of the project from the path
 get_filename_component(PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
-
-if(CMAKE_BUILD_TYPE STREQUAL "Test")
-	include_directories(
-		Application/Inc
-		Core/Inc
-	)
-	# Can have singleton files
-	add_executable(
-		basic_application_hootl_test
-		Application/Test/basic_application_hootl_test.c
-	)
-	add_test(basic_app basic_application_hootl_test)
-	# Can link files
-	add_executable(
-		advanced_application_hootl_test
-		Application/Test/advanced_application_hootl_test.c
-		Application/Src/appdemo.c
-	)
-	add_test(advanced_app advanced_application_hootl_test)
-endif()
 
 add_library(${PROJECT_NAME}_USER_CODE INTERFACE)
 target_sources(

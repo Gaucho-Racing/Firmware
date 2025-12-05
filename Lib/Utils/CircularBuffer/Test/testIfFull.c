@@ -1,7 +1,7 @@
 #include "circularBuffer.h"
 #include <stdlib.h>
 
-int main()
+int main(void)
 {
 
 	CircularBuffer *buffer_ptr = NULL;
@@ -23,7 +23,7 @@ int main()
 	buffer_ptr = GR_CircularBuffer_Create(10);
 	int arr1[3] = {0};
 	for (int i = 0; i < 3; i++) {
-		GR_CircularBuffer_Push(buffer_ptr, &arr1[i]);
+		GR_CircularBuffer_Push(buffer_ptr, &arr1[i], sizeof(arr1[i]));
 	}
 	if (GR_CircularBuffer_IsFull(buffer_ptr)) {
 		GR_CircularBuffer_Free(&buffer_ptr);
@@ -35,10 +35,10 @@ int main()
 	buffer_ptr = GR_CircularBuffer_Create(10);
 	int arr2[8] = {0};
 	for (int i = 0; i < 8; i++) {
-		GR_CircularBuffer_Push(buffer_ptr, &arr2[i]);
+		GR_CircularBuffer_Push(buffer_ptr, &arr2[i], sizeof(arr2[i]));
 	}
 	for (int i = 0; i < 5; i++) {
-		GR_CircularBuffer_Pop(buffer_ptr);
+		free(GR_CircularBuffer_Pop(buffer_ptr));
 	}
 	if (GR_CircularBuffer_IsFull(buffer_ptr)) {
 		GR_CircularBuffer_Free(&buffer_ptr);
@@ -50,7 +50,7 @@ int main()
 	buffer_ptr = GR_CircularBuffer_Create(10);
 	int arr3[10] = {0};
 	for (int i = 0; i < 10; i++) {
-		GR_CircularBuffer_Push(buffer_ptr, &arr3[i]);
+		GR_CircularBuffer_Push(buffer_ptr, &arr3[i], sizeof(arr3[i]));
 	}
 	if (!GR_CircularBuffer_IsFull(buffer_ptr)) {
 		GR_CircularBuffer_Free(&buffer_ptr);
@@ -62,10 +62,10 @@ int main()
 	buffer_ptr = GR_CircularBuffer_Create(10);
 	int arr4[3] = {0};
 	for (int i = 0; i < 3; i++) {
-		GR_CircularBuffer_Push(buffer_ptr, &arr4[i]);
+		GR_CircularBuffer_Push(buffer_ptr, &arr4[i], sizeof(arr4[i]));
 	}
 	for (int i = 0; i < 3; i++) {
-		GR_CircularBuffer_Pop(buffer_ptr);
+		free(GR_CircularBuffer_Pop(buffer_ptr));
 	}
 	if (GR_CircularBuffer_IsFull(buffer_ptr)) {
 		GR_CircularBuffer_Free(&buffer_ptr);
