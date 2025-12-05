@@ -12,7 +12,7 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS ON)
 
-if(NOT DEFINED CMAKE_BUILD_TYPE)
+if(NOT DEFINED CMAKE_PRESET_NAME)
 	message(
 		FATAL_ERROR
 		"This project requires configuration using a CMake preset. Please use 'cmake --preset <preset-name>' or select a preset in your IDE."
@@ -49,6 +49,12 @@ message(
 	STATUS
 	"Build type: "
 	${CMAKE_BUILD_TYPE}
+)
+
+message(
+	STATUS
+	"Active CMake Preset: "
+	${CMAKE_PRESET_NAME}
 )
 
 # Projects
