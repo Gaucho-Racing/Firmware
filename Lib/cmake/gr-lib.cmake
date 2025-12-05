@@ -13,7 +13,7 @@ function(add_gr_project)
 	set(Platform ${ARGV0})
 	set(GR_PROJECT ${ARGV1})
 
-	if(CMAKE_BUILD_TYPE STREQUAL "Test")
+	if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 		if(DEFINED GR_PROJECT_PATH)
 			add_subdirectory("${GR_PROJECT}/${GR_PROJECT_PATH}")
 		else()

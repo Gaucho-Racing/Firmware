@@ -12,7 +12,7 @@ target_sources(
 		${CMAKE_CURRENT_LIST_DIR}/Src/setBits.c
 )
 
-if(CMAKE_BUILD_TYPE STREQUAL "Test")
+if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 	add_executable(
 		BitManipulations_VerifyGetBit_test
 		${CMAKE_CURRENT_LIST_DIR}/Test/verifyGetBit.c

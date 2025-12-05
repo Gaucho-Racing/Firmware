@@ -104,7 +104,7 @@ flowchart TD
 
 ### Configuration Layer
 
-- `CMakePresets.json`: Build and configure presets for cross-compilation and host testing.
+- `CMakePresets.json`: Configure and build presets for cross-compilation and host testing.
 - Toolchain files: `gcc-arm-none-eabi.cmake`, `HOOTL.cmake` for compiler, flags, and environment.
 - Root `CMakeLists.txt`: Includes platform, utility, and project CMake files. Calls `add_GR_project()` for each project/platform.
 
@@ -139,9 +139,22 @@ flowchart TD
 
 ### `CMakePresets.json`
 
-- Build presets for different configurations:
-  - Debug/Release/MinSizeRel: ARM cross-compilation builds
-  - HOOTLTest: Host-based testing
+Defines configure and build presets for different target configurations:
+
+**Configure Presets:**
+
+- `stm` hidden base: Common configuration for all STM32 embedded targets
+  - Uses `gcc-arm-none-eabi.cmake` toolchain
+  - Sets `TARGET_TYPE=Embedded` and `CMAKE_PRESET_NAME`
+- `Debug`, `Release`, `RelWithDebInfo`, `MinSizeRel`: Inherit from `stm` with corresponding `CMAKE_BUILD_TYPE`
+- `HOOTLTest`: Host-based testing configuration
+  - Uses `HOOTL.cmake` toolchain
+  - Sets `CMAKE_BUILD_TYPE=Debug`, `TARGET_TYPE=Host`
+
+**Build Presets:**
+
+- Corresponding build presets for each configure preset
+- Convenience for building a given preset
 
 ### Toolchain Files
 
