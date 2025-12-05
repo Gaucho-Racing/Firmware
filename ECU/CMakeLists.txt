@@ -13,7 +13,7 @@ endif()
 # what, does in fact not get the filename of somthing but rather the name of the project from the path
 get_filename_component(GR_PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
-if(CMAKE_BUILD_TYPE STREQUAL "Test")
+if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 	add_executable(state_machine_tick_returns)
 	target_include_directories(
 		state_machine_tick_returns
