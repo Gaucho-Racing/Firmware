@@ -51,6 +51,8 @@ message(
 	${CMAKE_BUILD_TYPE}
 )
 
+message(STATUS "Target type: ${TARGET_TYPE}")
+
 message(
 	STATUS
 	"Active CMake Preset: "
