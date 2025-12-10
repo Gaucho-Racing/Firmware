@@ -298,8 +298,8 @@ void usart_rx_ready_callback(USARTHandle *handle)
 
 void usart_release(USARTHandle **handle)
 {
-	usart_release_handle(handle);
 	usart_release_hardware(handle);
+	usart_release_handle(handle);
 }
 
 void usart_release_handle(USARTHandle **handle_pptr)
