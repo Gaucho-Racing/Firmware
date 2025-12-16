@@ -31,7 +31,7 @@ jobs:
       SCCACHE_ERROR_LOG: ${{ github.workspace }}/sccache-error.log
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install Arm Toolchain
         if: matrix.build_mode == 'manual'
@@ -41,7 +41,7 @@ jobs:
 
       - name: Setup Shared Compilation Cache
         if: matrix.build_mode == 'manual'
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ${{ env.SCCACHE_DIR }}
           key: sccache-${{ github.workflow }}-${{ runner.os }}-${{ matrix.languages }}-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-${{ github.event.pull_request.number || github.ref }}
@@ -73,7 +73,7 @@ jobs:
 
       - name: Upload Analysis Results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: codeql-${{ matrix.languages }}
           path: ${{ steps.analyze.outputs.sarif-output }}
