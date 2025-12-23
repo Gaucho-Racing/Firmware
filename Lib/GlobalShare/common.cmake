@@ -46,4 +46,22 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 	)
 	target_link_libraries(logomatic_float PRIVATE GLOBALSHARE_LIB)
 	add_test(logomatic_float_test logomatic_float)
+
+	add_executable(stringification)
+	target_sources(
+		stringification
+		PRIVATE
+			${CMAKE_CURRENT_LIST_DIR}/Test/stringification.c
+	)
+	target_link_libraries(stringification PRIVATE GLOBALSHARE_LIB)
+	add_test(stringification_test stringification)
+
+	add_executable(unused)
+	target_sources(
+		unused
+		PRIVATE
+			${CMAKE_CURRENT_LIST_DIR}/Test/unused.c
+	)
+	target_link_libraries(unused PRIVATE GLOBALSHARE_LIB)
+	add_test(unused_test unused)
 endif()
