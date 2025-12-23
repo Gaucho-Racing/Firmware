@@ -11,4 +11,5 @@
  * @param x The variable or parameter to be marked as unused.
  */
 #define UNUSED(x) (void)(x)
+
 #endif
