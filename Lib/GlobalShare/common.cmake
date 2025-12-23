@@ -57,11 +57,7 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 	add_test(stringification_test stringification)
 
 	add_executable(unused)
-	target_sources(
-		unused
-		PRIVATE
-			${CMAKE_CURRENT_LIST_DIR}/Test/unused.c
-	)
+	target_sources(unused PRIVATE ${CMAKE_CURRENT_LIST_DIR}/Test/unused.c)
 	target_link_libraries(unused PRIVATE GLOBALSHARE_LIB)
 	add_test(unused_test unused)
 endif()
