@@ -1,7 +1,7 @@
 #include <string.h>
 
-#include "Unused.h"
 #include "Stringification.h"
+#include "Unused.h"
 
 int main(void)
 {
