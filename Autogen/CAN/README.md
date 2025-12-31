@@ -18,7 +18,7 @@ sudo apt-get install -y perl build-essential libyaml-dev
 ### for Windows:
 Download and install [StrawberryPerl](https://strawberryperl.com/).
 
-## Installing CPANM (for YAML)
+## Installing CPANM (NON-WINDOWS only) (like pip but for perl)
 ```
 curl -L https://cpanmin.us | perl - App::cpanminus
 ```
