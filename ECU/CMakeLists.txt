@@ -68,6 +68,7 @@ target_sources(
 		Core/Src/usart.c
 		# Application
 		Application/Src/StateTicks.c
+		Application/Src/CANdler.c
 )
 
 target_link_libraries(
