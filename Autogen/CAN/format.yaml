@@ -1,357 +1,182 @@
-# GR25 Message ID
-ECE Status 1: 
-  MSG ID: 0x003
-  MSG LENGTH: 8
-  ECU State: # bit start 0
-    data type: u8
-    units: Enum
-	# See: https://wiki.gauchoracing.com/link/189#bkmrk-state-machine
-  ACU Node Status: # [1: OK, 0: Timeout] - bit start: 8
-    data type: byte
-    units: Bool
-  GR Inv 1 Status: # [1: OK, 0: Timeout] - bit start: 9
-    data type: byte
-    units: Bool
-  GR Inv 2 Status:  # [1: OK, 0: Timeout] - bit start: 10 
-    data type: byte
-    units: Bool
-  GR Inv 3 Status:  # [1: OK, 0: Timeout] - bit start: 11 
-    data type: byte 
-    units: Bool
-  GR Inv 4 Status:  # [1: OK, 0: Timeout] - bit start: 12
-    data type: byte
-    units: Bool
-  Fan Controller 1:  # [1: OK, 0: Timeout] - bit start: 13
-    data type: byte
-    units: Bool
-  Fan Controller 2:  # [1: OK, 0: Timeout] - bit start: 14
-    data type: byte
-    units: Bool
-  Fan Controller 3:  # [1: OK, 0: Timeout] - bit start: 15
-    data type: byte
-    units: Bool
-  Fan Controller 4:  # [1: OK, 0: Timeout] - bit start: 16
-    data type: byte
-    units: Bool
-  Fan Controller 5:  # [1: OK, 0: Timeout] - bit start: 17
-    data type: byte
-    units: Bool
-  Fan Controller 6:  # [1: OK, 0: Timeout] - bit start: 18
-    data type: byte
-    units: Bool
-  Fan Controller 7:  # [1: OK, 0: Timeout] - bit start: 19
-    data type: byte
-    units: Bool
-  Fan Controller 8:  # [1: OK, 0: Timeout] - bit start: 20
-    data type: byte
-    units: Bool
-  Dash:  # [1: OK, 0: Timeout] - bit start: 21
-    data type: byte
-    units: Bool
-  Steering:  # [1: OK, 0: Timeout] - bit start: 22 
-    data type: byte
-    units: Bool
-  Reserved:  # bit start: 23
-	# Controls the AC current limits to each of the inverters
-  # Discrete Mapping, actual values TBD (16 possible values)
-  Power level:  # bit start: 32
-    data type: u4
-	# The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor
-  Torque:  # bit start: 36
-    data type: u4
-	# the temperature of the hottest cell of the accumulator
-  Max Cel Temp:  # bit start: 40
-    data type: u8
-    scaled min: 0
-    scaled max: 63.75
-    map equation:.25x
-    units: Celsius
-	# % charged of the Accumulator
-  Accumulator State of Charge:  # bit start: 48 
-    data type: u8
-    scaled min: 0
-    scaled max: 100
-    map equation: 20x/51
-    units: %
-	# % charged of the Low Voltage Bat
-  GLV State of Charge:  # bit start: 56
-    ata type: u8
-    scaled min: 0
-    scaled max: 100
-    map equation: 20x/51
-    units: %
+Message ID:
+  ECU Status 1: 
+    MSG ID: 0x003
+    MSG LENGTH: 8
+    ECU State: # bit start 0
+      data type: u8
+      units: Enum
+    # See: https://wiki.gauchoracing.com/link/189#bkmrk-state-machine
+    ACU Node Status: # [1: OK, 0: Timeout] - bit start: 8
+      data type: byte
+      units: Bool
+    GR Inv 1 Status: # [1: OK, 0: Timeout] - bit start: 9
+      data type: byte
+      units: Bool
+    GR Inv 2 Status:  # [1: OK, 0: Timeout] - bit start: 10 
+      data type: byte
+      units: Bool
+    GR Inv 3 Status:  # [1: OK, 0: Timeout] - bit start: 11 
+      data type: byte 
+      units: Bool
+    GR Inv 4 Status:  # [1: OK, 0: Timeout] - bit start: 12
+      data type: byte
+      units: Bool
+    Fan Controller 1:  # [1: OK, 0: Timeout] - bit start: 13
+      data type: byte
+      units: Bool
+    Fan Controller 2:  # [1: OK, 0: Timeout] - bit start: 14
+      data type: byte
+      units: Bool
+    Fan Controller 3:  # [1: OK, 0: Timeout] - bit start: 15
+      data type: byte
+      units: Bool
+    Fan Controller 4:  # [1: OK, 0: Timeout] - bit start: 16
+      data type: byte
+      units: Bool
+    Fan Controller 5:  # [1: OK, 0: Timeout] - bit start: 17
+      data type: byte
+      units: Bool
+    Fan Controller 6:  # [1: OK, 0: Timeout] - bit start: 18
+      data type: byte
+      units: Bool
+    Fan Controller 7:  # [1: OK, 0: Timeout] - bit start: 19
+      data type: byte
+      units: Bool
+    Fan Controller 8:  # [1: OK, 0: Timeout] - bit start: 20
+      data type: byte
+      units: Bool
+    Dash:  # [1: OK, 0: Timeout] - bit start: 21
+      data type: byte
+      units: Bool
+    Steering:  # [1: OK, 0: Timeout] - bit start: 22 
+      data type: byte
+      units: Bool
+    Reserved:  # bit start: 23
+    # Controls the AC current limits to each of the inverters
+    # Discrete Mapping, actual values TBD (16 possible values)
+    Power level:  # bit start: 32
+      data type: u4
+    # The torque map selected; torque map is the mapping of the throttle to the torque sent to each motor
+    Torque:  # bit start: 36
+      data type: u4
+    # the temperature of the hottest cell of the accumulator
+    Max Cel Temp:  # bit start: 40
+      data type: u8
+      scaled min: 0
+      scaled max: 63.75
+      map equation: ".25x"
+      units: Celsius
+    # % charged of the Accumulator
+    Accumulator State of Charge:  # bit start: 48 
+      data type: u8
+      scaled min: 0
+      scaled max: 100
+      map equation: 20x/51
+      units: "%"
+    # % charged of the Low Voltage Bat
+    GLV State of Charge:  # bit start: 56
+      ata type: u8
+      scaled min: 0
+      scaled max: 100
+      map equation: 20x/51
+      units: "%"
 
-#CustomCANID
-Message Name: #DTI Control 1
-  CAN ID: 116
-  Length: 2
-  Bit Start: 0
-  Data Name: Target AC current
-  #This command sets the target motor AC current (peak, not RMS). 
-  #When the controller receives this message, it automatically switches to current control mode.
-  #This value must not be above the limits of the inverter and mustbe multiplied by 10 before sending. 
-  #This is a signed parameter, and the sign represents the direction of the torque which correlates with the motor AC current. 
-  #(For the correlation, please refer to the motor parameters)
-
-Message Name: #DTI Control 7
-  CAN ID: 716
-  Length: 1
-  #Bit Start 0
-  Data Name: Digital Output 1 #Sets the digital output 1 to HIGH (1) or LOW (0) state 
-  #Bit Start 1
-  Data Name: Digital Output 2 #Sets the digital output 1 to HIGH (1) or LOW (0) state 
-  #Bit Start 2
-  Data Name: Digital Output 3 #Sets the digital output 1 to HIGH (1) or LOW (0) state 
-  #Bit Start 3
-  Data Name: Digital Output 4 #Sets the digital output 1 to HIGH (1) or LOW (0) state 
-  
-Message Name: #DTI Data 5
-  CAN ID: 2416
-  Length: 8 
-  Byte 0:
-    #Bit Start 0
-    Data Name: Throttle #Throttle signal derived from analog inputs or CAN2 
-  Byte 1:
-    #Bit Start 8
-    Data Name: Brake #Brake signal derived from analog inputs or CAN2 
-  Byte 2:
-    #Bit Start 16
-    Data Name: Digital Input 1 
-    #Bit Start 17
-    Data Name: Digital Input 2
-    #Bit Start 18
-    Data Name: Digital Input 3
-    #Bit Start 19
-    Data Name: Digital Input 4
-    #Bit Start 20
-    Data Name: Digital Output 1
-    #Bit Start 21
-    Data Name: Digital Output 2
-    #Bit Start 22
-    Data Name: Digital Output 3
-    #Bit Start 23
-    Data Name: Digital Output 4
+Custom CAN ID:
+  DTI Control 1:
+    CAN ID: 116
+    Length: 2
+    Bit Start: 0
+    Data Name: Target AC current
+    #This command sets the target motor AC current (peak, not RMS). 
+    #When the controller receives this message, it automatically switches to current control mode.
+    #This value must not be above the limits of the inverter and mustbe multiplied by 10 before sending. 
+    #This is a signed parameter, and the sign represents the direction of the torque which correlates with the motor AC current. 
+    #(For the correlation, please refer to the motor parameters)
     
-# GR25 GR ID
-# "nodes" represents the collection wheras "Node" represents the name
-# information "not", Gaucho Racing ID number, and name of "Node" are the data included
+  DTI Control 7:
+    CAN ID: 716
+    Length: 1
+    #Bit Start 0
+    Data Name: Digital Output 1 #Sets the digital output 1 to HIGH (1) or LOW (0) state 
+    #Bit Start 1
+    Data Name: Digital Output 2 #Sets the digital output 1 to HIGH (1) or LOW (0) state 
+    #Bit Start 2
+    Data Name: Digital Output 3 #Sets the digital output 1 to HIGH (1) or LOW (0) state 
+    #Bit Start 3
+    Data Name: Digital Output 4 #Sets the digital output 1 to HIGH (1) or LOW (0) state 
+    
+  DTI Data 5:
+    CAN ID: 2416
+    Length: 8 
+    Byte 0:
+      #Bit Start 0
+      Data Name: Throttle #Throttle signal derived from analog inputs or CAN2 
+    Byte 1:
+      #Bit Start 8
+      Data Name: Brake #Brake signal derived from analog inputs or CAN2 
+    Byte 2:
+      #Bit Start 16
+      Data Name: Digital Input 1 
+      #Bit Start 17
+      Data Name: Digital Input 2
+      #Bit Start 18
+      Data Name: Digital Input 3
+      #Bit Start 19
+      Data Name: Digital Input 4
+      #Bit Start 20
+      Data Name: Digital Output 1
+      #Bit Start 21
+      Data Name: Digital Output 2
+      #Bit Start 22
+      Data Name: Digital Output 3
+      #Bit Start 23
+      Data Name: Digital Output 4
+    
 
-  not: "0x00"
-  GR_ID_DEC: 0
-  Node: "DTI Inverter"
-
-  not: "0x00"
-  GR_ID_DEC: 0
-  Node: "Energy Meter"
-
-  not: "0x00"
-  GR_ID_DEC: 0
-  Node: "Charger"
-
-  not: "0x00"
-  GR_ID_DEC: 0
-  Node: "IMD"
-
-  not: "0x01"
-  GR_ID_DEC: 1
-  Node: "Debugger"
-
-  not: "0x02"
-  GR_ID_DEC: 2
-  Node: "ECU"
-
-  not: "0x03"
-  GR_ID_DEC: 3
-  Node: "ACU"
-
-  not: "0x04"
-  GR_ID_DEC: 4
-  Node: "TCM"
-
-  not: "0x05"
-  GR_ID_DEC: 5
-  Node: "Dash Panel"
-
-  not: "0x06"
-  GR_ID_DEC: 6
-  Node: "Steering Wheel"
-
-  not: "0x07"
-  GR_ID_DEC: 7
-  Node: ""
-
-  not: "0x08"
-  GR_ID_DEC: 8
-  Node: "GR Inverter 1"
-
-  not: "0x09"
-  GR_ID_DEC: 9
-  Node: "GR Inverter 2"
-
-  not: "0x0A"
-  GR_ID_DEC: 10
-  Node: "GR Inverter 3"
-
-  not: "0x0B"
-  GR_ID_DEC: 11
-  Node: "GR Inverter 4"
-
-  not: "0x0C"
-  GR_ID_DEC: 12
-  Node: "Charging SDC"
-
-  not: "0x0D"
-  GR_ID_DEC: 13
-  Node: "Fan Controller 1"
-
-  not: "0x0E"
-  GR_ID_DEC: 14
-  Node: "Fan Controller 2"
-
-  not: "0x0F"
-  GR_ID_DEC: 15
-  Node: "Fan Controller 3"
-
-  not: "0x10"
-  GR_ID_DEC: 16
-  Node: "Fan Controller 4"
-
-  not: "0x11"
-  GR_ID_DEC: 17
-  Node: "Fan Controller 5"
-
-  not: "0x12"
-  GR_ID_DEC: 18
-  Node: "Fan Controller 6"
-
-  not: "0x13"
-  GR_ID_DEC: 19
-  Node: "Fan Controller 7"
-
-  not: "0x14"
-  GR_ID_DEC: 20
-  Node: "Fan Controller 8"
-
-  not: "0x15"
-  GR_ID_DEC: 21
-  Node: "SAM1"
-
-  not: "0x16"
-  GR_ID_DEC: 22
-  Node: "SAM2"
-
-  not: "0x17"
-  GR_ID_DEC: 23
-  Node: "SAM3"
-
-  not: "0x18"
-  GR_ID_DEC: 24
-  Node: "SAM4"
-
-  not: "0x19"
-  GR_ID_DEC: 25
-  Node: "SAM5"
-
-  not: "0x1A"
-  GR_ID_DEC: 26
-  Node: "SAM6"
-
-  not: "0x1B"
-  GR_ID_DEC: 27
-  Node: "SAM7"
-
-  not: "0x1C"
-  GR_ID_DEC: 28
-  Node: "SAM8"
-
-  not: "0x1D"
-  GR_ID_DEC: 29
-  Node: "SAM9"
-
-  not: "0x1E"
-  GR_ID_DEC: 30
-  Node: "SAM10"
-
-  not: "0x1F"
-  GR_ID_DEC: 31
-  Node: "SAM11"
-
-  not: "0x20"
-  GR_ID_DEC: 32
-  Node: "SAM12"
-
-  not: "0x21"
-  GR_ID_DEC: 33
-  Node: "SAM13"
-
-  not: "0x22"
-  GR_ID_DEC: 34
-  Node: "SAM14"
-
-  not: "0x23"
-  GR_ID_DEC: 35
-  Node: "SAM15"
-
-  not: "0x24"
-  GR_ID_DEC: 36
-  Node: "SAM16"
-
-  not: "0x25"
-  GR_ID_DEC: 37
-  Node: "SAM17"
-
-  not: "0x26"
-  GR_ID_DEC: 38
-  Node: "SAM18"
-
-  not: "0x27"
-  GR_ID_DEC: 39
-  Node: "SAM19"
-
-  not: "0x28"
-  GR_ID_DEC: 40
-  Node: "SAM20"
-
-  not: "0x29"
-  GR_ID_DEC: 41
-  Node: "LV DC-DC"
-
-  not: "0x2A"
-  GR_ID_DEC: 42
-  Node: ""
-
-  not: "0x2B"
-  GR_ID_DEC: 43
-  Node: ""
-
-  not: "0x2C"
-  GR_ID_DEC: 44
-  Node: ""
-
-  not: "0x2D"
-  GR_ID_DEC: 45
-  Node: ""
-
-  not: "0x2E"
-  GR_ID_DEC: 46
-  Node: ""
-
-  not: "0x2F"
-  GR_ID_DEC: 47
-  Node: ""
-
-  not: "0x30"
-  GR_ID_DEC: 48
-  Node: "DGPS"
-
-  not: "0x31"
-  GR_ID_DEC: 49
-  Node: ""
-
-  not: "0x32"
-  GR_ID_DEC: 50
-  Node: ""
-
-  not: "0xFF"
-  GR_ID_DEC: 255
-  Node: "ALL"
+GR ID:
+  DTI Inverter: "0x00"
+  Energy Meter: "0x00"
+  Charger: "0x00"
+  IMD: "0x00"
+  Debugger: "0x01"
+  ECU: "0x02"
+  ACU: "0x03"
+  TCM: "0x04"
+  Dash Panel: "0x05"
+  Steering Wheel: "0x06"
+  GR Inverter 1: "0x08"
+  GR Inverter 2: "0x09"
+  GR Inverter 3: "0x0A"
+  GR Inverter 4: "0x0B"
+  Charging SDC: "0x0C"
+  Fan Controller 1: "0x0D"
+  Fan Controller 2: "0x0E"
+  Fan Controller 3: "0x0F"
+  Fan Controller 4: "0x10"
+  Fan Controller 5: "0x11"
+  Fan Controller 6: "0x12"
+  Fan Controller 7: "0x13"
+  Fan Controller 8: "0x14"
+  SAM1: "0x15"
+  SAM2: "0x16"
+  SAM3: "0x17"
+  SAM4: "0x18"
+  SAM5: "0x19"
+  SAM6: "0x1A"
+  SAM7: "0x1B"
+  SAM8: "0x1C"
+  SAM9: "0x1D"
+  SAM10: "0x1E"
+  SAM11: "0x1F"
+  SAM12: "0x20"
+  SAM13: "0x21"
+  SAM14: "0x22"
+  SAM15: "0x23"
+  SAM16: "0x24"
+  SAM17: "0x25"
+  SAM18: "0x26"
+  SAM19: "0x27"
+  SAM20: "0x28"
+  LV DC-DC: "0x29"
+  DGPS: "0x30"
+  ALL: "0xFF"
