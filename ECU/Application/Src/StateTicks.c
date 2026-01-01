@@ -65,9 +65,15 @@ void ECU_GLV_On(ECU_StateData *stateData)
 	}
 
 	// TODO Implement functionality
-	/*if(TS Active is pressed or error){
+	/*if(TS Active is pressed){
 	* 	stateData->currentState = GR_PRECHARGE_ENGAGED
 	}*/
+	/*
+	if(TS voltage >= 60) {
+		Go to TS discharge
+		Emit an error
+	}
+	*/
 }
 
 void ECU_Precharge_Engaged(ECU_StateData *stateData)
@@ -80,6 +86,12 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 	/*if(1 Isolation relay close && second isolation relay close){
 		stateData->currentState = GR_PRECHARGE_COMPLETE
 	}*/
+	/*
+	if(TS voltage >= 60) {
+		Go to TS discharge
+		Emit an error
+	}
+	*/
 }
 
 void ECU_Precharge_Complete(ECU_StateData *stateData)
@@ -115,7 +127,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	// TODO Implement functionality
 	/*
 		If RTD (Ready to Drive) --> Precharge Complete
-		If APPS/BSE Violation --> Precharge Complete
+		If APPS/BSE Violation --> Don't drive until resolved (no state change)
 		If Tractive System (TS) active/Critical Error --> Tractive System Discharge
 			--> pressed again
 	*/
@@ -124,13 +136,12 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	/*
 		if (TSActive pressed again OR criticalError(stateData)) {
 			stateData->currentState = GR_TS_DISCHARGE_OFF
+			emit an error
 		}
 		if (RTD pressed again) {
 			stateData->currentState = GR_PRECHARGE_COMPLETE
+			emit a warning if not moving
 	*/
-		if (APPS_BSE_Violation(stateData)) {
-			stateData->currentState = GR_PRECHARGE_COMPLETE;
-		}
 	
 }
 
@@ -141,7 +152,7 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 		Discharge the tractive system to below 60 volts
 		If TS voltage < 60 --> GLV_ON
 	*/
-	if(stateData->TractiveSystemVoltage < 60){
-		stateData->currentState = GR_GLV_OFF;
-	}
+	/*
+		If TS fails to discharge over time then stay and emit a warning, see #129
+	*/
 }
