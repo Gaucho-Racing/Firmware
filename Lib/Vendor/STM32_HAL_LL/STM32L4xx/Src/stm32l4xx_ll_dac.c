@@ -19,6 +19,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l4xx_ll_dac.h"
+
 #include "stm32l4xx_ll_bus.h"
 
 #ifdef USE_FULL_ASSERT

@@ -19,6 +19,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l4xx_ll_crs.h"
+
 #include "stm32l4xx_ll_bus.h"
 
 /** @addtogroup STM32L4xx_LL_Driver

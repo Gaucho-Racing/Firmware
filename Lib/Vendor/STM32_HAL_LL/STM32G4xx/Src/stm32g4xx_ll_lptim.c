@@ -19,6 +19,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g4xx_ll_lptim.h"
+
 #include "stm32g4xx_ll_bus.h"
 #include "stm32g4xx_ll_rcc.h"
 

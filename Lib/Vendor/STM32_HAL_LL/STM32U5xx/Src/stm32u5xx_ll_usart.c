@@ -19,6 +19,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx_ll_usart.h"
+
 #include "stm32u5xx_ll_bus.h"
 #include "stm32u5xx_ll_rcc.h"
 #ifdef USE_FULL_ASSERT

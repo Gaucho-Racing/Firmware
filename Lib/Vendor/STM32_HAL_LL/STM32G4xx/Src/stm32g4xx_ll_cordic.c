@@ -19,6 +19,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g4xx_ll_cordic.h"
+
 #include "stm32g4xx_ll_bus.h"
 #ifdef USE_FULL_ASSERT
 #include "stm32_assert.h"
