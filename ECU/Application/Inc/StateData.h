@@ -3,7 +3,6 @@
 
 #include "GR_OLD_MSG_DAT.h"
 #include "StateMachine.h"
-#include "main.h"
 
 #ifndef _STATEDATA_H_
 #define _STATEDATA_H_
