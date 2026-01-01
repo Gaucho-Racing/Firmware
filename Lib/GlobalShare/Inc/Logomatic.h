@@ -6,7 +6,7 @@
 #ifdef LOGOMATIC_ENABLED
 #define LOGOMATIC(...)                                                         \
 	do {                                                                   \
-		printf(__VA_ARGS__)                                            \
+    printf(__VA_ARGS__);                                           \
 	} while (0)
 #else
 #define LOGOMATIC(...)                                                         \
