@@ -1,9 +1,9 @@
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
-#include "main.h"
 #include "GR_OLD_MSG_DAT.h"
 #include "StateMachine.h"
+#include "main.h"
 
 #ifndef _STATEDATA_H_
 #define _STATEDATA_H_
@@ -60,7 +60,9 @@ typedef union ECU_StateData {
 		GR_OLD_ECU_STATUS_1_MSG ecuStatus1;
 		GR_OLD_ECU_STATUS_2_MSG ecuStatus2;
 		GR_OLD_ECU_STATUS_3_MSG ecuStatus3;
-		uint8_t internalState[25];	// FIXME BE AWARE OF BYTE PACKING! WHAT THIS REPLACES IS BAD AND WILL BREAK SOON
+		uint8_t internalState[25]; // FIXME BE AWARE OF BYTE PACKING!
+					   // WHAT THIS REPLACES IS BAD AND WILL
+					   // BREAK SOON
 	};
 } ECU_StateData;
 
