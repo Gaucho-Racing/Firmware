@@ -18,6 +18,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g4xx_ll_utils.h"
+
 #include "stm32g4xx_ll_pwr.h"
 #include "stm32g4xx_ll_rcc.h"
 #include "stm32g4xx_ll_system.h"

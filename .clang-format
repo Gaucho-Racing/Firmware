@@ -6,3 +6,10 @@ AllowShortIfStatementsOnASingleLine: false
 IndentCaseLabels: true
 InsertBraces: true
 LineEnding: LF
+SortIncludes: CaseSensitive
+IncludeBlocks: Regroup
+IncludeCategories:
+  - Regex:           '<[^>]*>'
+    Priority:        1
+  - Regex:           '"[^"]*"'
+    Priority:        2

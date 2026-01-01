@@ -100,8 +100,9 @@
  * @{
  */
 
-#include "stm32u5xx.h"
 #include <math.h>
+
+#include "stm32u5xx.h"
 
 /**
  * @}
