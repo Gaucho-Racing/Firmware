@@ -19,6 +19,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g4xx_ll_pwr.h"
+
 #include "stm32g4xx_ll_bus.h"
 
 /** @addtogroup STM32G4xx_LL_Driver
