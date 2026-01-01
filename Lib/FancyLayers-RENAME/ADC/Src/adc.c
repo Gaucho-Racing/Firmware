@@ -1,4 +1,5 @@
 #include "adc.h"
+
 #include "main.h"
 
 ADC_TypeDef *GetADC(unsigned long adc)
