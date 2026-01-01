@@ -17,10 +17,12 @@
  */
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx_ll_utils.h"
+
+#include <math.h>
+
 #include "stm32u5xx_ll_pwr.h"
 #include "stm32u5xx_ll_rcc.h"
 #include "stm32u5xx_ll_system.h"
-#include <math.h>
 #ifdef USE_FULL_ASSERT
 #include "stm32_assert.h"
 #else

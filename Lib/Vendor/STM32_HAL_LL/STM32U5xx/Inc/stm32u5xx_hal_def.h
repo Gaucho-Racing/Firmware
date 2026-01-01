@@ -30,10 +30,11 @@ extern "C" {
 #include <arm_cmse.h>
 #endif /* __ARM_FEATURE_CMSE */
 
-#include "Legacy/stm32_hal_legacy.h" /* Aliases file for old names compatibility */
-#include "stm32u5xx.h"
 #include <math.h>
 #include <stddef.h>
+
+#include "Legacy/stm32_hal_legacy.h" /* Aliases file for old names compatibility */
+#include "stm32u5xx.h"
 
 /* Exported types ------------------------------------------------------------*/
 
