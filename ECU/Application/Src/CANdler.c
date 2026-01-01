@@ -22,8 +22,7 @@ void ReportUnhandledMessage(GR_OLD_BUS_ID bus_id, GR_OLD_MSG_ID msg_id,
 
 void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id,
 			    GR_OLD_MSG_ID msg_id, GR_OLD_NODE_ID sender_id,
-			    uint8_t *data, uint32_t data_length,
-			    uint32_t timestamp)
+			    uint8_t *data, uint32_t data_length)
 {
 	switch (msg_id) {
 		case MSG_DEBUG_2_0:
@@ -33,7 +32,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id,
 				break;
 			}
 			LOGOMATIC("Received from %02X on bus %d: %.*s\n",
-				  sender_id, bus_id, data_length, data);
+				  sender_id, bus_id, (int)data_length, data);
 			break;
 		case MSG_DEBUG_FD:
 			if (data_length > sizeof(GR_OLD_DEBUG_2_MSG)) {
@@ -42,7 +41,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id,
 				break;
 			}
 			LOGOMATIC("Received from %02X on bus %d: %.*s\n",
-				  sender_id, bus_id, data_length, data);
+				  sender_id, bus_id, (int)data_length, data);
 			break;
 		case MSG_PING:
 			if (data_length != sizeof(GR_OLD_PING_MSG)) {
