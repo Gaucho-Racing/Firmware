@@ -19,6 +19,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l4xx_ll_gpio.h"
+
 #include "stm32l4xx_ll_bus.h"
 #ifdef USE_FULL_ASSERT
 #include "stm32_assert.h"

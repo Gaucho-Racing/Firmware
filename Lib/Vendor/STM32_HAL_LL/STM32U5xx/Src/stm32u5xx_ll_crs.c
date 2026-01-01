@@ -19,6 +19,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx_ll_crs.h"
+
 #include "stm32u5xx_ll_bus.h"
 
 /** @addtogroup STM32U5xx_LL_Driver

@@ -19,6 +19,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx_ll_dma2d.h"
+
 #include "stm32u5xx_ll_bus.h"
 #ifdef USE_FULL_ASSERT
 #include "stm32_assert.h"

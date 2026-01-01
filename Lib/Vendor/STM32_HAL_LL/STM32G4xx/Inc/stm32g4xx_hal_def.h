@@ -26,9 +26,10 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#include <stddef.h>
+
 #include "Legacy/stm32_hal_legacy.h" /* Aliases file for old names compatibility */
 #include "stm32g4xx.h"
-#include <stddef.h>
 
 /* Exported types ------------------------------------------------------------*/
 
