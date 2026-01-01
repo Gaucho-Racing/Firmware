@@ -1,5 +1,7 @@
 #include <stdint.h>
+#include <stdbool.h>
 
+#include "main.h"
 #include "GR_OLD_MSG_DAT.h"
 #include "StateMachine.h"
 
@@ -39,12 +41,26 @@ typedef union ECU_StateData {
 		uint16_t AUX_SIGNAL;
 		uint16_t BRAKE_F_SIGNAL;
 		uint16_t BRAKE_R_SIGNAL;
+
+		int32_t dischargeStartMillis;
+		uint32_t lastECUStatusMsgTick;
+		uint32_t lastTSSIFlash;
+		bool bse_apps_violation;
+		int32_t last_drive_active_control_ms;
+		uint16_t driving_heat_capacity_1;
+		uint16_t driving_heat_capacity_2;
+		float min_amk_heat_cap_throttle_percent;
+		uint8_t acu_error_warning_bits;
+		uint8_t inverter_fault_map;
+		bool ts_active;
+		bool rtd_engaged;
 	};
 
 	struct {
 		GR_OLD_ECU_STATUS_1_MSG ecuStatus1;
 		GR_OLD_ECU_STATUS_2_MSG ecuStatus2;
 		GR_OLD_ECU_STATUS_3_MSG ecuStatus3;
+		uint8_t internalState[25];	// FIXME BE AWARE OF BYTE PACKING! WHAT THIS REPLACES IS BAD AND WILL BREAK SOON
 	};
 } ECU_StateData;
 
