@@ -4,10 +4,7 @@
 #define _LOGOMATIC_H_
 
 #ifdef LOGOMATIC_ENABLED
-#define LOGOMATIC(...)                                                         \
-	do {                                                                   \
-		printf(__VA_ARGS__)                                            \
-	} while (0)
+#define LOGOMATIC(...) do { printf(__VA_ARGS__); } while (0)
 #else
 #define LOGOMATIC(...)                                                         \
 	do {                                                                   \
