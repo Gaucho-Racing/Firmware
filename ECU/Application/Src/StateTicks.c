@@ -18,8 +18,7 @@ ECU_StateData stateLump = {0};
 
 void ECU_State_Tick(void)
 {
-	LOGOMATIC("ECU Current State: %d\n",
-		  stateLump.ecuStatus1.ecu_status);
+	LOGOMATIC("ECU Current State: %d\n", stateLump.ecuStatus1.ecu_status);
 
 	switch (stateLump.ecuStatus1.ecu_status) {
 		case GR_GLV_OFF:
