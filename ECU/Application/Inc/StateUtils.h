@@ -7,10 +7,10 @@
 #define _STATE_UTILS_H_
 
 // Constants
-#define BRAKE_F_MIN 0	    // TODO: need to be determined
-#define BRAKE_F_MAX 4095    // TODO: need to be determined
-#define BRAKE_R_MIN 0	    // TODO: need to be determined
-#define BRAKE_R_MAX 4095    // TODO: need to be determined
+#define BRAKE_F_MIN 0	    // TODO: need to be determined FIXME: Rename better
+#define BRAKE_F_MAX 4095    // TODO: need to be determined FIXME: Rename better
+#define BRAKE_R_MIN 0	    // TODO: need to be determined FIXME: Rename better
+#define BRAKE_R_MAX 4095    // TODO: need to be determined FIXME: Rename better
 #define THROTTLE_MIN_1 0    // TODO: need to be determined
 #define THROTTLE_MAX_1 4095 // TODO: need to be determined
 #define THROTTLE_MIN_2 0    // TODO: need to be determined
