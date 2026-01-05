@@ -68,6 +68,7 @@ target_sources(
 		Core/Src/system_stm32g4xx.c
 		Core/Src/usart.c
 		# Application
+		Application/Src/CANdler.c
 		Application/Src/StateTicks.c
 		Application/Src/StateUtils.c
 )

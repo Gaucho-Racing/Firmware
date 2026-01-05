@@ -18,9 +18,10 @@ ECU_StateData stateLump = {0};
 
 void ECU_State_Tick(void)
 {
-	LOGOMATIC("ECU Current State: %d\n", stateLump.currentState);
+	LOGOMATIC("ECU Current State: %d\n",
+		  stateLump.ecuStatus1.ecu_status);
 
-	switch (stateLump.currentState) {
+	switch (stateLump.ecuStatus1.ecu_status) {
 		case GR_GLV_OFF:
 			ECU_GLV_Off(&stateLump);
 			break;
@@ -41,9 +42,9 @@ void ECU_State_Tick(void)
 			break;
 		default:
 			LOGOMATIC("ECU Current State Unknown: %d\n",
-				  stateLump.currentState);
+				  stateLump.ecuStatus1.ecu_status);
 			LOGOMATIC("ECU: Resetting to GLV On\n");
-			stateLump.currentState = GR_GLV_ON;
+			stateLump.ecuStatus1.ecu_status = GR_GLV_ON;
 			break;
 	}
 }
