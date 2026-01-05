@@ -53,7 +53,8 @@ bool APPS_BSE_Violation(const ECU_StateData *stateData)
 	return fabs(stateData->APPS2_SIGNAL -
 		    stateData->APPS1_SIGNAL * APPS_PROPORTION - APPS_OFFSET) >
 		   stateData->APPS2_SIGNAL * 0.1f ||
-	       (PressingBrake(stateData) && getPedalTravel(stateData) >= 0.25f);
+	       (PressingBrake(stateData) &&
+		CalcPedalTravel(stateData) >= 0.25f);
 }
 
 bool PressingBrake(const ECU_StateData *stateData)
@@ -65,7 +66,7 @@ bool PressingBrake(const ECU_StateData *stateData)
 	// Ideally TCM receives values of 0 after this is no longer called xD.
 }
 
-float getBrakePercent(
+float CalcBrakePercent(
     const ECU_StateData *stateData) // THIS IS NOT ACTUALLY BRAKE TRAVEL,
 				    // PRESSURE SENSORS CAPTURE BRAKE TRAVEL
 {
@@ -74,7 +75,7 @@ float getBrakePercent(
 	       (BRAKE_F_MAX - BRAKE_F_MIN + BRAKE_R_MAX - BRAKE_R_MIN);
 }
 
-float getPedalTravel(const ECU_StateData *stateData)
+float CalcPedalTravel(const ECU_StateData *stateData)
 {
 	return (float)(stateData->APPS1_SIGNAL + stateData->APPS2_SIGNAL -
 		       THROTTLE_MIN_2 - THROTTLE_MIN_1) /

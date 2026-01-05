@@ -24,7 +24,7 @@ bool CriticalError(const ECU_StateData *stateData);
 bool CommunicationError(const ECU_StateData *stateData);
 bool APPS_BSE_Violation(const ECU_StateData *stateData);
 bool PressingBrake(const ECU_StateData *stateData);
-float getBrakePercent(const ECU_StateData *stateData);
-float getPedalTravel(const ECU_StateData *stateData);
+float CalcBrakePercent(const ECU_StateData *stateData);
+float CalcPedalTravel(const ECU_StateData *stateData);
 
 #endif
