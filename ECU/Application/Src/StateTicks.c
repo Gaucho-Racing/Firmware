@@ -15,12 +15,10 @@
  * @remark Intentionally not a globally accessible variable
  */
 ECU_StateData stateLump = {0};
-volatile uint8_t numberOfBadMessages = 0;
 
 void ECU_State_Tick(void)
 {
-	LOGOMATIC("ECU_State_Tick: Current State: %d\n",
-		  stateLump.currentState);
+	LOGOMATIC("ECU Current State: %d\n", stateLump.currentState);
 
 	switch (stateLump.currentState) {
 		case GR_GLV_OFF:
@@ -42,9 +40,8 @@ void ECU_State_Tick(void)
 			ECU_Tractive_System_Discharge(&stateLump);
 			break;
 		default:
-			LOGOMATIC("ECU_State_Tick: Unknown State %d\n",
-				  stateLump.currentState);
-			LOGOMATIC("ECU_State_Tick: Resetting to GR_GLV_ON\n");
+			LOGOMATIC("ECU Current State Unknown: %d\n", stateLump.currentState);
+			LOGOMATIC("ECU: Resetting to GLV On\n");
 			stateLump.currentState = GR_GLV_ON;
 			break;
 	}
