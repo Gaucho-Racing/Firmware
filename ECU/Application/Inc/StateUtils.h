@@ -3,8 +3,8 @@
 
 #include "StateData.h"
 
-#ifndef STATE_DATA_PARSER_H
-#define STATE_DATA_PARSER_H
+#ifndef _STATE_UTILS_H_
+#define _STATE_UTILS_H_
 
 // Constants
 #define BRAKE_F_MIN 0	    // TODO: need to be determined
