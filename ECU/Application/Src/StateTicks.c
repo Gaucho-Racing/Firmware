@@ -3,8 +3,8 @@
 #include "Logomatic.h"
 #include "StateData.h"
 #include "StateMachine.h"
-#include "Unused.h"
 #include "StateUtils.h"
+#include "Unused.h"
 
 /**
  * @brief The ECU state data lump.
@@ -103,8 +103,8 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 	/*
 		On but idle
 
-		If Tractive System (TS) active/Critical Error --> Tractive System Discharge
-		If Brake & RTD (Ready to Drive) --> Drive Active
+		If Tractive System (TS) active/Critical Error --> Tractive
+	   System Discharge If Brake & RTD (Ready to Drive) --> Drive Active
 	*/
 	/*
 	if(pressingBrake() && stateData->RTD){
@@ -121,8 +121,6 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 			stateData->currentState = GR_TS_DISCHARGE_OFF
 		}
 	*/
-
-
 }
 
 void ECU_Drive_Active(ECU_StateData *stateData)
@@ -131,8 +129,9 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	// TODO Implement functionality
 	/*
 		If RTD (Ready to Drive) --> Precharge Complete
-		If APPS/BSE Violation --> Don't drive until resolved (no state change)
-		If Tractive System (TS) active/Critical Error --> Tractive System Discharge
+		If APPS/BSE Violation --> Don't drive until resolved (no state
+	   change) If Tractive System (TS) active/Critical Error --> Tractive
+	   System Discharge
 			--> pressed again
 	*/
 
@@ -146,7 +145,6 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 			stateData->currentState = GR_PRECHARGE_COMPLETE
 			emit a warning if not moving
 	*/
-
 }
 
 void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
@@ -158,6 +156,7 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 		If TS voltage < 60 --> GLV_ON
 	*/
 	/*
-		If TS fails to discharge over time then stay and emit a warning, see #129
+		If TS fails to discharge over time then stay and emit a warning,
+	   see #129
 	*/
 }

@@ -1,11 +1,12 @@
+#include <stdint.h>
+
 #include "StateData.h"
 #include "StateMachine.h"
-#include <stdint.h>
 
 #ifndef _STATEMACHINE_H_
 #define _STATEMACHINE_H_
 
-//We should delete this and add it to ECU state data
+// We should delete this and add it to ECU state data
 extern volatile uint8_t numberOfBadMessages;
 
 /**

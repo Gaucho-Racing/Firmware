@@ -1,5 +1,5 @@
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 #include "GR_OLD_MSG_DAT.h"
 #include "StateMachine.h"
@@ -36,7 +36,7 @@ typedef union ECU_StateData {
 		int16_t RRWheelRPM;
 		int16_t RLWheelRPM;
 
-		//Dash Status Msg
+		// Dash Status Msg
 		bool TS_on;
 		bool RTD;
 
