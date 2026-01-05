@@ -54,14 +54,17 @@ void ECU_GLV_Off(ECU_StateData *stateData)
 {
 	UNUSED(stateData);
 	// TODO Implement functionality
-	// ERROR --> GLV_OFF should never be reached 
+	// ERROR --> GLV_OFF should never be reached
 }
 
 void ECU_GLV_On(ECU_StateData *stateData)
 {
+	UNUSED(stateData);
+	/*
 	if(stateData->TractiveSystemVoltage >= 60){
 		stateData->currentState = GR_TS_DISCHARGE_OFF;
 	}
+	*/
 
 	// TODO Implement functionality
 	/*if(TS Active is pressed){
@@ -103,9 +106,11 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 		If Tractive System (TS) active/Critical Error --> Tractive System Discharge
 		If Brake & RTD (Ready to Drive) --> Drive Active
 	*/
+	/*
 	if(pressingBrake() && stateData->RTD){
 		stateData->currentState = GR_DRIVE_ACTIVE;
 	}
+	*/
 
 	// Pseudocode
 	/*
@@ -116,7 +121,7 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 			stateData->currentState = GR_TS_DISCHARGE_OFF
 		}
 	*/
-	
+
 
 }
 
@@ -141,11 +146,12 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 			stateData->currentState = GR_PRECHARGE_COMPLETE
 			emit a warning if not moving
 	*/
-	
+
 }
 
 void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 {
+	UNUSED(stateData);
 	// TODO Implement functionality
 	/*
 		Discharge the tractive system to below 60 volts
