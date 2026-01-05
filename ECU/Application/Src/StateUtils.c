@@ -1,11 +1,15 @@
 #include "StateUtils.h"
+#include "Unused.h"
 
 #include <stdbool.h>
+#include <math.h>
 
 #include "StateData.h"
 
 void setSoftwareLatch(bool close)
 {
+	UNUSED(close);
+	// TODO Implement functionality
 	// LOGOMATIC("Setting software latch to %d\n", close);
 	/*
 	    if (close && !HAL_GPIO_ReadPin(SOFTWARE_OK_CONTROL_GPIO_Port,
@@ -37,6 +41,7 @@ bool CriticalError(const ECU_StateData *stateData)
 
 bool CommunicationError(const ECU_StateData *stateData)
 {
+	UNUSED(stateData);
 	// TODO: implement COMMS errors
 	return false;
 }
