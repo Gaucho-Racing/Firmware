@@ -29,6 +29,10 @@ typedef struct ECU_StateData {
 	float min_amk_heat_cap_throttle_percent;
 	uint16_t driving_heat_capacity_1;
 	uint16_t driving_heat_capacity_2;
+	uint16_t APPS1_Signal;
+	uint16_t APPS2_Signal;
+	uint16_t Brake_R_Signal;
+	uint16_t Brake_F_Signal;
 	uint8_t acu_error_warning_bits;
 	uint8_t inverter_fault_map;
 	bool bse_apps_violation;
