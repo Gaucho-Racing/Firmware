@@ -34,6 +34,7 @@ typedef struct ECU_StateData {
 	bool bse_apps_violation;
 	bool ts_active;
 	bool rtd_engaged;
-} ECU_StateData;	// FIXME Add comments to each data field with descriptions and rules (eg -1 = invalid?, etc)
+} ECU_StateData; // FIXME Add comments to each data field with descriptions and
+		 // rules (eg -1 = invalid?, etc)
 
 #endif
