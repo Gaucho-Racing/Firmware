@@ -1,10 +1,10 @@
 #include "StateUtils.h"
-#include "Unused.h"
 
-#include <stdbool.h>
 #include <math.h>
+#include <stdbool.h>
 
 #include "StateData.h"
+#include "Unused.h"
 
 void setSoftwareLatch(bool close)
 {
