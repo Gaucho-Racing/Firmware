@@ -11,6 +11,7 @@
 void ReportBadMessageLength(GR_OLD_BUS_ID bus_id, GR_OLD_MSG_ID msg_id,
 			    GR_OLD_NODE_ID sender_id)
 {
+	// TODO Ideally change some state data to note a bad message, ie if BCU that can be a comms error
 	LOGOMATIC("Bad ECU CAN Rx length! Bus: %d, Msg: %X, Sender: %X\n",
 		  bus_id, msg_id, sender_id);
 }
@@ -18,6 +19,7 @@ void ReportBadMessageLength(GR_OLD_BUS_ID bus_id, GR_OLD_MSG_ID msg_id,
 void ReportUnhandledMessage(GR_OLD_BUS_ID bus_id, GR_OLD_MSG_ID msg_id,
 			    GR_OLD_NODE_ID sender_id)
 {
+	// Filtering likely needs to be adjusted if this is happening often
 	LOGOMATIC("Unhandled ECU CAN Rx msg! Bus: %d, Msg: %X, Sender: %X\n",
 		  bus_id, msg_id, sender_id);
 }
