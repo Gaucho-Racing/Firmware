@@ -32,8 +32,8 @@ typedef struct ECU_StateData {
 	uint8_t acu_error_warning_bits;
 	uint8_t inverter_fault_map;
 	bool bse_apps_violation;
-	bool ts_active;
-	bool rtd_engaged;
+	bool ts_active_button_engaged;
+	bool rtd_button_engaged;
 } ECU_StateData; // FIXME Add comments to each data field with descriptions and
 		 // rules (eg -1 = invalid?, etc)
 
