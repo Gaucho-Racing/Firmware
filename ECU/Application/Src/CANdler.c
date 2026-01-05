@@ -1,5 +1,7 @@
 #include "CANdler.h"
 
+#include <stdint.h>
+
 #include "GR_OLD_BUS_ID.h"
 #include "GR_OLD_MSG_ID.h"
 #include "GR_OLD_NODE_ID.h"
@@ -49,7 +51,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id,
 						       sender_id);
 				break;
 			}
-			// TODO See #143
+			// TODO See Issue #143
 			break;
 		case MSG_ACU_STATUS_1:
 			if (data_length != sizeof(GR_OLD_BCU_STATUS_1_MSG)) {
@@ -59,10 +61,10 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id,
 			}
 			GR_OLD_BCU_STATUS_1_MSG *bcu_status_1 =
 			    (GR_OLD_BCU_STATUS_1_MSG *)data;
-			state_data->AccumulatorStateOfCharge =
+			state_data->ecuStatus1.tractivebattery_soc =
 			    bcu_status_1->tractivebattery_soc;
-			state_data->GLVStateOfCharge = bcu_status_1->glv_soc;
-			state_data->TractiveSystemVoltage =
+			state_data->ecuStatus1.glv_soc = bcu_status_1->glv_soc;
+			state_data->ecuStatus2.ts_voltage =
 			    bcu_status_1->ts_voltage;
 			break;
 		case MSG_ACU_STATUS_2:
@@ -73,7 +75,8 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id,
 			}
 			GR_OLD_BCU_STATUS_2_MSG *bcu_status_2 =
 			    (GR_OLD_BCU_STATUS_2_MSG *)data;
-			state_data->MaxCellTemp = bcu_status_2->max_cell_temp;
+			state_data->ecuStatus1.max_cell_temp =
+			    bcu_status_2->max_cell_temp;
 			state_data->acu_error_warning_bits =
 			    bcu_status_2->error_bits;
 			break;
@@ -86,8 +89,10 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id,
 			}
 			GR_OLD_INVERTER_STATUS_1_MSG *inverter_status_1 =
 			    (GR_OLD_INVERTER_STATUS_1_MSG *)data;
-			state_data->RLWheelRPM = inverter_status_1->motor_rpm;
-			state_data->RRWheelRPM = inverter_status_1->motor_rpm;
+			state_data->ecuStatus3.rl_wheel_rpm =
+			    inverter_status_1->motor_rpm;
+			state_data->ecuStatus3.rr_wheel_rpm =
+			    inverter_status_1->motor_rpm;
 			break;
 		case MSG_INVERTER_STATUS_3:
 			if (data_length !=
@@ -120,7 +125,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id,
 			}
 			GR_OLD_STEERING_STATUS_MSG *steering_status =
 			    (GR_OLD_STEERING_STATUS_MSG *)data;
-			state_data->PowerLevelTorqueMap =
+			state_data->ecuStatus1.powerlevel_torquemap =
 			    steering_status->encoder_bits;
 			break;
 		default:
