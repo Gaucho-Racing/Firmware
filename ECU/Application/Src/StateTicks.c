@@ -3,7 +3,6 @@
 #include "Logomatic.h"
 #include "StateData.h"
 #include "StateMachine.h"
-#include "Errors.h"
 #include "Unused.h"
 #include "StateUtils.h"
 
