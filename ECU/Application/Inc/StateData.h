@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdint.h>
 
 #include "GR_OLD_MSG_DAT.h"
@@ -17,35 +18,23 @@
  * @remark It is passed to each state function on tick to allow state-specific
  * logic to access and modify the ECU's operational data.
  */
-typedef union ECU_StateData {
-	struct {
-		GR_ECU_State currentState;
-		uint8_t StatusBits[3];
-		uint8_t PowerLevelTorqueMap;
-		uint8_t MaxCellTemp;
-		uint8_t AccumulatorStateOfCharge;
-		uint8_t GLVStateOfCharge;
-
-		uint16_t TractiveSystemVoltage;
-		uint16_t VehicleSpeed;
-		int16_t FRWheelRPM;
-		int16_t FLWheelRPM;
-
-		int16_t RRWheelRPM;
-		int16_t RLWheelRPM;
-
-		uint16_t APPS1_SIGNAL;
-		uint16_t APPS2_SIGNAL;
-		uint16_t AUX_SIGNAL;
-		uint16_t BRAKE_F_SIGNAL;
-		uint16_t BRAKE_R_SIGNAL;
-	};
-
-	struct {
-		GR_OLD_ECU_STATUS_1_MSG ecuStatus1;
-		GR_OLD_ECU_STATUS_2_MSG ecuStatus2;
-		GR_OLD_ECU_STATUS_3_MSG ecuStatus3;
-	};
-} ECU_StateData;
+typedef struct ECU_StateData {
+	GR_OLD_ECU_STATUS_1_MSG ecuStatus1;
+	GR_OLD_ECU_STATUS_2_MSG ecuStatus2;
+	GR_OLD_ECU_STATUS_3_MSG ecuStatus3;
+	int32_t dischargeStartMillis;
+	uint32_t lastECUStatusMsgTick;
+	uint32_t lastTSSIFlash;
+	int32_t last_drive_active_control_ms;
+	float min_amk_heat_cap_throttle_percent;
+	uint16_t driving_heat_capacity_1;
+	uint16_t driving_heat_capacity_2;
+	uint8_t acu_error_warning_bits;
+	uint8_t inverter_fault_map;
+	bool bse_apps_violation;
+	bool ts_active_button_engaged;
+	bool rtd_button_engaged;
+} ECU_StateData; // FIXME Add comments to each data field with descriptions and
+		 // rules (eg -1 = invalid?, etc)
 
 #endif
