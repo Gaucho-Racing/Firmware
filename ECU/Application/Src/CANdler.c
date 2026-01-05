@@ -117,8 +117,10 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id,
 			}
 			GR_OLD_DASH_STATUS_MSG *dash_status =
 			    (GR_OLD_DASH_STATUS_MSG *)data;
-			state_data->ts_active_button_engaged = dash_status->ts_button;
-			state_data->rtd_button_engaged = dash_status->rtd_button;
+			state_data->ts_active_button_engaged =
+			    dash_status->ts_button;
+			state_data->rtd_button_engaged =
+			    dash_status->rtd_button;
 			break;
 		case MSG_STEERING_STATUS:
 			if (data_length != sizeof(GR_OLD_STEERING_STATUS_MSG)) {
