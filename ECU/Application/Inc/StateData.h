@@ -40,6 +40,8 @@ typedef struct ECU_StateData {
 	bool rtd_button_engaged;
 } ECU_StateData; // FIXME Add comments to each data field with descriptions and
 		 // rules (eg -1 = invalid?, etc)
-		 // Will also need to add information from ADC into this struct --- such as the APPS and Brake signals after doing smoothing and whatnot to get the values sane
+		 // Will also need to add information from ADC into this struct
+		 // --- such as the APPS and Brake signals after doing smoothing
+		 // and whatnot to get the values sane
 
 #endif
