@@ -186,14 +186,11 @@
  */
 #define DSI_TIMEOUT_VALUE ((uint32_t)1000U) /* 1s */
 
-#define DSI_ERROR_ACK_MASK                                                     \
-	(DSI_ISR0_AE0 | DSI_ISR0_AE1 | DSI_ISR0_AE2 | DSI_ISR0_AE3 |           \
-	 DSI_ISR0_AE4 | DSI_ISR0_AE5 | DSI_ISR0_AE6 | DSI_ISR0_AE7 |           \
-	 DSI_ISR0_AE8 | DSI_ISR0_AE9 | DSI_ISR0_AE10 | DSI_ISR0_AE11 |         \
-	 DSI_ISR0_AE12 | DSI_ISR0_AE13 | DSI_ISR0_AE14 | DSI_ISR0_AE15)
-#define DSI_ERROR_PHY_MASK                                                     \
-	(DSI_ISR0_PE0 | DSI_ISR0_PE1 | DSI_ISR0_PE2 | DSI_ISR0_PE3 |           \
-	 DSI_ISR0_PE4)
+#define DSI_ERROR_ACK_MASK                                                                                             \
+	(DSI_ISR0_AE0 | DSI_ISR0_AE1 | DSI_ISR0_AE2 | DSI_ISR0_AE3 | DSI_ISR0_AE4 | DSI_ISR0_AE5 | DSI_ISR0_AE6 |      \
+	 DSI_ISR0_AE7 | DSI_ISR0_AE8 | DSI_ISR0_AE9 | DSI_ISR0_AE10 | DSI_ISR0_AE11 | DSI_ISR0_AE12 | DSI_ISR0_AE13 |  \
+	 DSI_ISR0_AE14 | DSI_ISR0_AE15)
+#define DSI_ERROR_PHY_MASK (DSI_ISR0_PE0 | DSI_ISR0_PE1 | DSI_ISR0_PE2 | DSI_ISR0_PE3 | DSI_ISR0_PE4)
 #define DSI_ERROR_TX_MASK DSI_ISR1_TOHSTX
 #define DSI_ERROR_RX_MASK DSI_ISR1_TOLPRX
 #define DSI_ERROR_ECC_MASK (DSI_ISR1_ECCSE | DSI_ISR1_ECCME)
@@ -201,9 +198,7 @@
 #define DSI_ERROR_PSE_MASK DSI_ISR1_PSE
 #define DSI_ERROR_EOT_MASK DSI_ISR1_EOTPE
 #define DSI_ERROR_OVF_MASK DSI_ISR1_LPWRE
-#define DSI_ERROR_GEN_MASK                                                     \
-	(DSI_ISR1_GCWRE | DSI_ISR1_GPWRE | DSI_ISR1_GPTXE | DSI_ISR1_GPRDE |   \
-	 DSI_ISR1_GPRXE)
+#define DSI_ERROR_GEN_MASK (DSI_ISR1_GCWRE | DSI_ISR1_GPWRE | DSI_ISR1_GPTXE | DSI_ISR1_GPRDE | DSI_ISR1_GPRXE)
 /**
  * @}
  */
@@ -212,13 +207,11 @@
 /* Private constants ---------------------------------------------------------*/
 /* Private macros ------------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
-static void DSI_ConfigPacketHeader(DSI_TypeDef *DSIx, uint32_t ChannelID,
-				   uint32_t DataType, uint32_t Data0,
+static void DSI_ConfigPacketHeader(DSI_TypeDef *DSIx, uint32_t ChannelID, uint32_t DataType, uint32_t Data0,
 				   uint32_t Data1);
 
-static HAL_StatusTypeDef DSI_ShortWrite(DSI_HandleTypeDef *hdsi,
-					uint32_t ChannelID, uint32_t Mode,
-					uint32_t Param1, uint32_t Param2);
+static HAL_StatusTypeDef DSI_ShortWrite(DSI_HandleTypeDef *hdsi, uint32_t ChannelID, uint32_t Mode, uint32_t Param1,
+					uint32_t Param2);
 /* Private functions ---------------------------------------------------------*/
 /** @defgroup DSI_Private_Functions DSI Private Functions
  * @{
@@ -237,13 +230,11 @@ static HAL_StatusTypeDef DSI_ShortWrite(DSI_HandleTypeDef *hdsi,
  * @param  Data1  Word count MSB
  * @retval None
  */
-static void DSI_ConfigPacketHeader(DSI_TypeDef *DSIx, uint32_t ChannelID,
-				   uint32_t DataType, uint32_t Data0,
+static void DSI_ConfigPacketHeader(DSI_TypeDef *DSIx, uint32_t ChannelID, uint32_t DataType, uint32_t Data0,
 				   uint32_t Data1)
 {
 	/* Update the DSI packet header with new information */
-	DSIx->GHCR =
-	    (DataType | (ChannelID << 6U) | (Data0 << 8U) | (Data1 << 16U));
+	DSIx->GHCR = (DataType | (ChannelID << 6U) | (Data0 << 8U) | (Data1 << 16U));
 }
 
 /**
@@ -260,9 +251,8 @@ static void DSI_ConfigPacketHeader(DSI_TypeDef *DSIx, uint32_t ChannelID,
  * @param  Param2  DSC parameter or second generic parameter.
  * @retval HAL status
  */
-static HAL_StatusTypeDef DSI_ShortWrite(DSI_HandleTypeDef *hdsi,
-					uint32_t ChannelID, uint32_t Mode,
-					uint32_t Param1, uint32_t Param2)
+static HAL_StatusTypeDef DSI_ShortWrite(DSI_HandleTypeDef *hdsi, uint32_t ChannelID, uint32_t Mode, uint32_t Param1,
+					uint32_t Param2)
 {
 	uint32_t tickstart;
 
@@ -280,8 +270,7 @@ static HAL_StatusTypeDef DSI_ShortWrite(DSI_HandleTypeDef *hdsi,
 	/* Configure the packet to send a short DCS command with 0 or 1
 	 * parameter */
 	/* Update the DSI packet header with new information */
-	hdsi->Instance->GHCR =
-	    (Mode | (ChannelID << 6U) | (Param1 << 8U) | (Param2 << 16U));
+	hdsi->Instance->GHCR = (Mode | (ChannelID << 6U) | (Param1 << 8U) | (Param2 << 16U));
 
 	return HAL_OK;
 }
@@ -319,8 +308,7 @@ static HAL_StatusTypeDef DSI_ShortWrite(DSI_HandleTypeDef *hdsi,
  *                  the PLL Clock structure definition for the DSI.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DSI_Init(DSI_HandleTypeDef *hdsi,
-			       DSI_PLLInitTypeDef *PLLInit)
+HAL_StatusTypeDef HAL_DSI_Init(DSI_HandleTypeDef *hdsi, DSI_PLLInitTypeDef *PLLInit)
 {
 	uint32_t tickstart;
 	uint32_t unitIntervalx4;
@@ -335,21 +323,17 @@ HAL_StatusTypeDef HAL_DSI_Init(DSI_HandleTypeDef *hdsi,
 	assert_param(IS_DSI_PLL_NDIV(PLLInit->PLLNDIV));
 	assert_param(IS_DSI_PLL_IDF(PLLInit->PLLIDF));
 	assert_param(IS_DSI_PLL_ODF(PLLInit->PLLODF));
-	assert_param(
-	    IS_DSI_AUTO_CLKLANE_CONTROL(hdsi->Init.AutomaticClockLaneControl));
+	assert_param(IS_DSI_AUTO_CLKLANE_CONTROL(hdsi->Init.AutomaticClockLaneControl));
 	assert_param(IS_DSI_NUMBER_OF_LANES(hdsi->Init.NumberOfLanes));
 
 #if (USE_HAL_DSI_REGISTER_CALLBACKS == 1)
 	if (hdsi->State == HAL_DSI_STATE_RESET) {
 		/* Reset the DSI callback to the legacy weak callbacks */
-		hdsi->TearingEffectCallback =
-		    HAL_DSI_TearingEffectCallback; /* Legacy weak
-						      TearingEffectCallback */
-		hdsi->EndOfRefreshCallback =
-		    HAL_DSI_EndOfRefreshCallback; /* Legacy weak
-						     EndOfRefreshCallback  */
-		hdsi->ErrorCallback =
-		    HAL_DSI_ErrorCallback; /* Legacy weak ErrorCallback */
+		hdsi->TearingEffectCallback = HAL_DSI_TearingEffectCallback; /* Legacy weak
+										TearingEffectCallback */
+		hdsi->EndOfRefreshCallback = HAL_DSI_EndOfRefreshCallback;   /* Legacy weak
+										EndOfRefreshCallback  */
+		hdsi->ErrorCallback = HAL_DSI_ErrorCallback;		     /* Legacy weak ErrorCallback */
 
 		if (hdsi->MspInitCallback == NULL) {
 			hdsi->MspInitCallback = HAL_DSI_MspInit;
@@ -385,11 +369,9 @@ HAL_StatusTypeDef HAL_DSI_Init(DSI_HandleTypeDef *hdsi,
 	}
 
 	/* Set the PLL division factors */
-	hdsi->Instance->WRPCR &=
-	    ~(DSI_WRPCR_PLL_NDIV | DSI_WRPCR_PLL_IDF | DSI_WRPCR_PLL_ODF);
+	hdsi->Instance->WRPCR &= ~(DSI_WRPCR_PLL_NDIV | DSI_WRPCR_PLL_IDF | DSI_WRPCR_PLL_ODF);
 	hdsi->Instance->WRPCR |=
-	    (((PLLInit->PLLNDIV) << DSI_WRPCR_PLL_NDIV_Pos) |
-	     ((PLLInit->PLLIDF) << DSI_WRPCR_PLL_IDF_Pos) |
+	    (((PLLInit->PLLNDIV) << DSI_WRPCR_PLL_NDIV_Pos) | ((PLLInit->PLLIDF) << DSI_WRPCR_PLL_IDF_Pos) |
 	     ((PLLInit->PLLODF) << DSI_WRPCR_PLL_ODF_Pos));
 
 	/* Enable the DSI PLL */
@@ -432,8 +414,7 @@ HAL_StatusTypeDef HAL_DSI_Init(DSI_HandleTypeDef *hdsi,
 	/* Get tick */
 	tickstart = HAL_GetTick();
 	if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_ONE_DATA_LANE) {
-		while ((hdsi->Instance->PSR & (DSI_PSR_PSS0 | DSI_PSR_PSSC)) !=
-		       (DSI_PSR_PSS0 | DSI_PSR_PSSC)) {
+		while ((hdsi->Instance->PSR & (DSI_PSR_PSS0 | DSI_PSR_PSSC)) != (DSI_PSR_PSS0 | DSI_PSR_PSSC)) {
 			if ((HAL_GetTick() - tickstart) > DSI_TIMEOUT_VALUE) {
 				/* Process Unlocked */
 				__HAL_UNLOCK(hdsi);
@@ -442,8 +423,7 @@ HAL_StatusTypeDef HAL_DSI_Init(DSI_HandleTypeDef *hdsi,
 			}
 		}
 	} else {
-		while ((hdsi->Instance->PSR &
-			(DSI_PSR_PSS0 | DSI_PSR_PSS1 | DSI_PSR_PSSC)) !=
+		while ((hdsi->Instance->PSR & (DSI_PSR_PSS0 | DSI_PSR_PSS1 | DSI_PSR_PSSC)) !=
 		       (DSI_PSR_PSS0 | DSI_PSR_PSS1 | DSI_PSR_PSSC)) {
 			if ((HAL_GetTick() - tickstart) > DSI_TIMEOUT_VALUE) {
 				/* Process Unlocked */
@@ -460,8 +440,7 @@ HAL_StatusTypeDef HAL_DSI_Init(DSI_HandleTypeDef *hdsi,
 	/* Where : F_PHY_Mhz = (NDIV * HSE_Mhz) / (IDF * ODF) */
 	tempIDF = (PLLInit->PLLIDF > 0U) ? PLLInit->PLLIDF : 1U;
 	unitIntervalx4 =
-	    (4000000U * tempIDF * ((1UL << (0x3U & PLLInit->PLLODF)))) /
-	    ((HSE_VALUE / 1000U) * PLLInit->PLLNDIV);
+	    (4000000U * tempIDF * ((1UL << (0x3U & PLLInit->PLLODF)))) / ((HSE_VALUE / 1000U) * PLLInit->PLLNDIV);
 
 	/* Set the bit period in high-speed mode */
 	hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_UIX4;
@@ -479,8 +458,7 @@ HAL_StatusTypeDef HAL_DSI_Init(DSI_HandleTypeDef *hdsi,
 
 	/* Clock lane configuration */
 	hdsi->Instance->CLCR &= ~(DSI_CLCR_DPCC | DSI_CLCR_ACR);
-	hdsi->Instance->CLCR |=
-	    (DSI_CLCR_DPCC | hdsi->Init.AutomaticClockLaneControl);
+	hdsi->Instance->CLCR |= (DSI_CLCR_DPCC | hdsi->Init.AutomaticClockLaneControl);
 
 	/* Initialize the error code */
 	hdsi->ErrorCode = HAL_DSI_ERROR_NONE;
@@ -555,8 +533,7 @@ HAL_StatusTypeDef HAL_DSI_DeInit(DSI_HandleTypeDef *hdsi)
  * DSI_Error_Data_Type.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DSI_ConfigErrorMonitor(DSI_HandleTypeDef *hdsi,
-					     uint32_t ActiveErrors)
+HAL_StatusTypeDef HAL_DSI_ConfigErrorMonitor(DSI_HandleTypeDef *hdsi, uint32_t ActiveErrors)
 {
 	/* Process locked */
 	__HAL_LOCK(hdsi);
@@ -668,8 +645,7 @@ __weak void HAL_DSI_MspDeInit(DSI_HandleTypeDef *hdsi)
  * @param pCallback pointer to the Callback function
  * @retval status
  */
-HAL_StatusTypeDef HAL_DSI_RegisterCallback(DSI_HandleTypeDef *hdsi,
-					   HAL_DSI_CallbackIDTypeDef CallbackID,
+HAL_StatusTypeDef HAL_DSI_RegisterCallback(DSI_HandleTypeDef *hdsi, HAL_DSI_CallbackIDTypeDef CallbackID,
 					   pDSI_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
@@ -707,8 +683,7 @@ HAL_StatusTypeDef HAL_DSI_RegisterCallback(DSI_HandleTypeDef *hdsi,
 
 			default:
 				/* Update the error code */
-				hdsi->ErrorCode |=
-				    HAL_DSI_ERROR_INVALID_CALLBACK;
+				hdsi->ErrorCode |= HAL_DSI_ERROR_INVALID_CALLBACK;
 				/* Return error status */
 				status = HAL_ERROR;
 				break;
@@ -725,8 +700,7 @@ HAL_StatusTypeDef HAL_DSI_RegisterCallback(DSI_HandleTypeDef *hdsi,
 
 			default:
 				/* Update the error code */
-				hdsi->ErrorCode |=
-				    HAL_DSI_ERROR_INVALID_CALLBACK;
+				hdsi->ErrorCode |= HAL_DSI_ERROR_INVALID_CALLBACK;
 				/* Return error status */
 				status = HAL_ERROR;
 				break;
@@ -757,9 +731,7 @@ HAL_StatusTypeDef HAL_DSI_RegisterCallback(DSI_HandleTypeDef *hdsi,
  *          @arg HAL_DSI_MSPDEINIT_CB_ID MspDeInit callback ID
  * @retval status
  */
-HAL_StatusTypeDef
-HAL_DSI_UnRegisterCallback(DSI_HandleTypeDef *hdsi,
-			   HAL_DSI_CallbackIDTypeDef CallbackID)
+HAL_StatusTypeDef HAL_DSI_UnRegisterCallback(DSI_HandleTypeDef *hdsi, HAL_DSI_CallbackIDTypeDef CallbackID)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -769,44 +741,38 @@ HAL_DSI_UnRegisterCallback(DSI_HandleTypeDef *hdsi,
 	if (hdsi->State == HAL_DSI_STATE_READY) {
 		switch (CallbackID) {
 			case HAL_DSI_TEARING_EFFECT_CB_ID:
-				hdsi->TearingEffectCallback =
-				    HAL_DSI_TearingEffectCallback; /* Legacy
-								      weak
-								      TearingEffectCallback
-								    */
+				hdsi->TearingEffectCallback = HAL_DSI_TearingEffectCallback; /* Legacy
+												weak
+												TearingEffectCallback
+											      */
 				break;
 
 			case HAL_DSI_ENDOF_REFRESH_CB_ID:
-				hdsi->EndOfRefreshCallback =
-				    HAL_DSI_EndOfRefreshCallback; /* Legacy weak
-								     EndOfRefreshCallback
-								   */
+				hdsi->EndOfRefreshCallback = HAL_DSI_EndOfRefreshCallback; /* Legacy weak
+											      EndOfRefreshCallback
+											    */
 				break;
 
 			case HAL_DSI_ERROR_CB_ID:
-				hdsi->ErrorCallback =
-				    HAL_DSI_ErrorCallback; /* Legacy weak
-							    * ErrorCallback
-							    */
+				hdsi->ErrorCallback = HAL_DSI_ErrorCallback; /* Legacy weak
+									      * ErrorCallback
+									      */
 				break;
 
 			case HAL_DSI_MSPINIT_CB_ID:
-				hdsi->MspInitCallback =
-				    HAL_DSI_MspInit; /* Legacy weak MspInit
-							Callback */
+				hdsi->MspInitCallback = HAL_DSI_MspInit; /* Legacy weak MspInit
+									    Callback */
 				break;
 
 			case HAL_DSI_MSPDEINIT_CB_ID:
-				hdsi->MspDeInitCallback =
-				    HAL_DSI_MspDeInit; /* Legacy weak MspDeInit
-							* Callback
-							*/
+				hdsi->MspDeInitCallback = HAL_DSI_MspDeInit; /* Legacy weak MspDeInit
+									      * Callback
+									      */
 				break;
 
 			default:
 				/* Update the error code */
-				hdsi->ErrorCode |=
-				    HAL_DSI_ERROR_INVALID_CALLBACK;
+				hdsi->ErrorCode |= HAL_DSI_ERROR_INVALID_CALLBACK;
 				/* Return error status */
 				status = HAL_ERROR;
 				break;
@@ -814,22 +780,19 @@ HAL_DSI_UnRegisterCallback(DSI_HandleTypeDef *hdsi,
 	} else if (hdsi->State == HAL_DSI_STATE_RESET) {
 		switch (CallbackID) {
 			case HAL_DSI_MSPINIT_CB_ID:
-				hdsi->MspInitCallback =
-				    HAL_DSI_MspInit; /* Legacy weak MspInit
-							Callback */
+				hdsi->MspInitCallback = HAL_DSI_MspInit; /* Legacy weak MspInit
+									    Callback */
 				break;
 
 			case HAL_DSI_MSPDEINIT_CB_ID:
-				hdsi->MspDeInitCallback =
-				    HAL_DSI_MspDeInit; /* Legacy weak MspDeInit
-							* Callback
-							*/
+				hdsi->MspDeInitCallback = HAL_DSI_MspDeInit; /* Legacy weak MspDeInit
+									      * Callback
+									      */
 				break;
 
 			default:
 				/* Update the error code */
-				hdsi->ErrorCode |=
-				    HAL_DSI_ERROR_INVALID_CALLBACK;
+				hdsi->ErrorCode |= HAL_DSI_ERROR_INVALID_CALLBACK;
 				/* Return error status */
 				status = HAL_ERROR;
 				break;
@@ -1076,8 +1039,7 @@ unused
  * @param  VirtualChannelID  Virtual channel ID
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DSI_SetGenericVCID(DSI_HandleTypeDef *hdsi,
-					 uint32_t VirtualChannelID)
+HAL_StatusTypeDef HAL_DSI_SetGenericVCID(DSI_HandleTypeDef *hdsi, uint32_t VirtualChannelID)
 {
 	/* Process locked */
 	__HAL_LOCK(hdsi);
@@ -1100,8 +1062,7 @@ HAL_StatusTypeDef HAL_DSI_SetGenericVCID(DSI_HandleTypeDef *hdsi,
  *                the DSI video mode configuration parameters
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DSI_ConfigVideoMode(DSI_HandleTypeDef *hdsi,
-					  DSI_VidCfgTypeDef *VidCfg)
+HAL_StatusTypeDef HAL_DSI_ConfigVideoMode(DSI_HandleTypeDef *hdsi, DSI_VidCfgTypeDef *VidCfg)
 {
 	/* Process locked */
 	__HAL_LOCK(hdsi);
@@ -1151,8 +1112,7 @@ HAL_StatusTypeDef HAL_DSI_ConfigVideoMode(DSI_HandleTypeDef *hdsi,
 
 	/* Configure the polarity of control signals */
 	hdsi->Instance->LPCR &= ~(DSI_LPCR_DEP | DSI_LPCR_VSP | DSI_LPCR_HSP);
-	hdsi->Instance->LPCR |=
-	    (VidCfg->DEPolarity | VidCfg->VSPolarity | VidCfg->HSPolarity);
+	hdsi->Instance->LPCR |= (VidCfg->DEPolarity | VidCfg->VSPolarity | VidCfg->HSPolarity);
 
 	/* Select the color coding for the host */
 	hdsi->Instance->LCOLCR &= ~DSI_LCOLCR_COLC;
@@ -1254,8 +1214,7 @@ HAL_StatusTypeDef HAL_DSI_ConfigVideoMode(DSI_HandleTypeDef *hdsi,
  *                 the DSI command mode configuration parameters
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DSI_ConfigAdaptedCommandMode(DSI_HandleTypeDef *hdsi,
-						   DSI_CmdCfgTypeDef *CmdCfg)
+HAL_StatusTypeDef HAL_DSI_ConfigAdaptedCommandMode(DSI_HandleTypeDef *hdsi, DSI_CmdCfgTypeDef *CmdCfg)
 {
 	/* Process locked */
 	__HAL_LOCK(hdsi);
@@ -1282,8 +1241,7 @@ HAL_StatusTypeDef HAL_DSI_ConfigAdaptedCommandMode(DSI_HandleTypeDef *hdsi,
 
 	/* Configure the polarity of control signals */
 	hdsi->Instance->LPCR &= ~(DSI_LPCR_DEP | DSI_LPCR_VSP | DSI_LPCR_HSP);
-	hdsi->Instance->LPCR |=
-	    (CmdCfg->DEPolarity | CmdCfg->VSPolarity | CmdCfg->HSPolarity);
+	hdsi->Instance->LPCR |= (CmdCfg->DEPolarity | CmdCfg->VSPolarity | CmdCfg->HSPolarity);
 
 	/* Select the color coding for the host */
 	hdsi->Instance->LCOLCR &= ~DSI_LCOLCR_COLC;
@@ -1299,11 +1257,9 @@ HAL_StatusTypeDef HAL_DSI_ConfigAdaptedCommandMode(DSI_HandleTypeDef *hdsi,
 
 	/* Configure the tearing effect source and polarity and select the
 	 * refresh mode */
-	hdsi->Instance->WCFGR &= ~(DSI_WCFGR_TESRC | DSI_WCFGR_TEPOL |
-				   DSI_WCFGR_AR | DSI_WCFGR_VSPOL);
+	hdsi->Instance->WCFGR &= ~(DSI_WCFGR_TESRC | DSI_WCFGR_TEPOL | DSI_WCFGR_AR | DSI_WCFGR_VSPOL);
 	hdsi->Instance->WCFGR |=
-	    (CmdCfg->TearingEffectSource | CmdCfg->TearingEffectPolarity |
-	     CmdCfg->AutomaticRefresh | CmdCfg->VSyncPol);
+	    (CmdCfg->TearingEffectSource | CmdCfg->TearingEffectPolarity | CmdCfg->AutomaticRefresh | CmdCfg->VSyncPol);
 
 	/* Configure the tearing effect acknowledge request */
 	hdsi->Instance->CMCR &= ~DSI_CMCR_TEARE;
@@ -1330,8 +1286,7 @@ HAL_StatusTypeDef HAL_DSI_ConfigAdaptedCommandMode(DSI_HandleTypeDef *hdsi,
  *                the DSI command transmission mode configuration parameters
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DSI_ConfigCommand(DSI_HandleTypeDef *hdsi,
-					DSI_LPCmdTypeDef *LPCmd)
+HAL_StatusTypeDef HAL_DSI_ConfigCommand(DSI_HandleTypeDef *hdsi, DSI_LPCmdTypeDef *LPCmd)
 {
 	/* Process locked */
 	__HAL_LOCK(hdsi);
@@ -1351,18 +1306,13 @@ HAL_StatusTypeDef HAL_DSI_ConfigCommand(DSI_HandleTypeDef *hdsi,
 	assert_param(IS_DSI_ACK_REQUEST(LPCmd->AcknowledgeRequest));
 
 	/* Select High-speed or Low-power for command transmission */
-	hdsi->Instance->CMCR &=
-	    ~(DSI_CMCR_GSW0TX | DSI_CMCR_GSW1TX | DSI_CMCR_GSW2TX |
-	      DSI_CMCR_GSR0TX | DSI_CMCR_GSR1TX | DSI_CMCR_GSR2TX |
-	      DSI_CMCR_GLWTX | DSI_CMCR_DSW0TX | DSI_CMCR_DSW1TX |
-	      DSI_CMCR_DSR0TX | DSI_CMCR_DLWTX | DSI_CMCR_MRDPS);
-	hdsi->Instance->CMCR |=
-	    (LPCmd->LPGenShortWriteNoP | LPCmd->LPGenShortWriteOneP |
-	     LPCmd->LPGenShortWriteTwoP | LPCmd->LPGenShortReadNoP |
-	     LPCmd->LPGenShortReadOneP | LPCmd->LPGenShortReadTwoP |
-	     LPCmd->LPGenLongWrite | LPCmd->LPDcsShortWriteNoP |
-	     LPCmd->LPDcsShortWriteOneP | LPCmd->LPDcsShortReadNoP |
-	     LPCmd->LPDcsLongWrite | LPCmd->LPMaxReadPacket);
+	hdsi->Instance->CMCR &= ~(DSI_CMCR_GSW0TX | DSI_CMCR_GSW1TX | DSI_CMCR_GSW2TX | DSI_CMCR_GSR0TX |
+				  DSI_CMCR_GSR1TX | DSI_CMCR_GSR2TX | DSI_CMCR_GLWTX | DSI_CMCR_DSW0TX |
+				  DSI_CMCR_DSW1TX | DSI_CMCR_DSR0TX | DSI_CMCR_DLWTX | DSI_CMCR_MRDPS);
+	hdsi->Instance->CMCR |= (LPCmd->LPGenShortWriteNoP | LPCmd->LPGenShortWriteOneP | LPCmd->LPGenShortWriteTwoP |
+				 LPCmd->LPGenShortReadNoP | LPCmd->LPGenShortReadOneP | LPCmd->LPGenShortReadTwoP |
+				 LPCmd->LPGenLongWrite | LPCmd->LPDcsShortWriteNoP | LPCmd->LPDcsShortWriteOneP |
+				 LPCmd->LPDcsShortReadNoP | LPCmd->LPDcsLongWrite | LPCmd->LPMaxReadPacket);
 
 	/* Configure the acknowledge request after each packet transmission */
 	hdsi->Instance->CMCR &= ~DSI_CMCR_ARE;
@@ -1383,8 +1333,7 @@ HAL_StatusTypeDef HAL_DSI_ConfigCommand(DSI_HandleTypeDef *hdsi,
  * DSI_FlowControl.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DSI_ConfigFlowControl(DSI_HandleTypeDef *hdsi,
-					    uint32_t FlowControl)
+HAL_StatusTypeDef HAL_DSI_ConfigFlowControl(DSI_HandleTypeDef *hdsi, uint32_t FlowControl)
 {
 	/* Process locked */
 	__HAL_LOCK(hdsi);
@@ -1410,17 +1359,14 @@ HAL_StatusTypeDef HAL_DSI_ConfigFlowControl(DSI_HandleTypeDef *hdsi,
  *                    the DSI PHY timing parameters
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DSI_ConfigPhyTimer(DSI_HandleTypeDef *hdsi,
-					 DSI_PHY_TimerTypeDef *PhyTimers)
+HAL_StatusTypeDef HAL_DSI_ConfigPhyTimer(DSI_HandleTypeDef *hdsi, DSI_PHY_TimerTypeDef *PhyTimers)
 {
 	uint32_t maxTime;
 	/* Process locked */
 	__HAL_LOCK(hdsi);
 
-	maxTime =
-	    (PhyTimers->ClockLaneLP2HSTime > PhyTimers->ClockLaneHS2LPTime)
-		? PhyTimers->ClockLaneLP2HSTime
-		: PhyTimers->ClockLaneHS2LPTime;
+	maxTime = (PhyTimers->ClockLaneLP2HSTime > PhyTimers->ClockLaneHS2LPTime) ? PhyTimers->ClockLaneLP2HSTime
+										  : PhyTimers->ClockLaneHS2LPTime;
 
 	/* Clock lane timer configuration */
 
@@ -1439,10 +1385,8 @@ HAL_StatusTypeDef HAL_DSI_ConfigPhyTimer(DSI_HandleTypeDef *hdsi,
 	hdsi->Instance->CLTCR |= (maxTime | ((maxTime) << 16U));
 
 	/* Data lane timer configuration */
-	hdsi->Instance->DLTCR &=
-	    ~(DSI_DLTCR_MRD_TIME | DSI_DLTCR_LP2HS_TIME | DSI_DLTCR_HS2LP_TIME);
-	hdsi->Instance->DLTCR |= (PhyTimers->DataLaneMaxReadTime |
-				  ((PhyTimers->DataLaneLP2HSTime) << 16U) |
+	hdsi->Instance->DLTCR &= ~(DSI_DLTCR_MRD_TIME | DSI_DLTCR_LP2HS_TIME | DSI_DLTCR_HS2LP_TIME);
+	hdsi->Instance->DLTCR |= (PhyTimers->DataLaneMaxReadTime | ((PhyTimers->DataLaneLP2HSTime) << 16U) |
 				  ((PhyTimers->DataLaneHS2LPTime) << 24U));
 
 	/* Configure the wait period to request HS transmission after a stop
@@ -1464,9 +1408,7 @@ HAL_StatusTypeDef HAL_DSI_ConfigPhyTimer(DSI_HandleTypeDef *hdsi,
  *                       the DSI host timeout parameters
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_DSI_ConfigHostTimeouts(DSI_HandleTypeDef *hdsi,
-			   DSI_HOST_TimeoutTypeDef *HostTimeouts)
+HAL_StatusTypeDef HAL_DSI_ConfigHostTimeouts(DSI_HandleTypeDef *hdsi, DSI_HOST_TimeoutTypeDef *HostTimeouts)
 {
 	/* Process locked */
 	__HAL_LOCK(hdsi);
@@ -1477,8 +1419,7 @@ HAL_DSI_ConfigHostTimeouts(DSI_HandleTypeDef *hdsi,
 
 	/* High-speed transmission timeout */
 	hdsi->Instance->TCCR[0U] &= ~DSI_TCCR0_HSTX_TOCNT;
-	hdsi->Instance->TCCR[0U] |=
-	    ((HostTimeouts->HighSpeedTransmissionTimeout) << 16U);
+	hdsi->Instance->TCCR[0U] |= ((HostTimeouts->HighSpeedTransmissionTimeout) << 16U);
 
 	/* Low-power reception timeout */
 	hdsi->Instance->TCCR[0U] &= ~DSI_TCCR0_LPRX_TOCNT;
@@ -1646,9 +1587,8 @@ HAL_StatusTypeDef HAL_DSI_Shutdown(DSI_HandleTypeDef *hdsi, uint32_t Shutdown)
  * @param  Param2  DSC parameter or second generic parameter.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DSI_ShortWrite(DSI_HandleTypeDef *hdsi,
-				     uint32_t ChannelID, uint32_t Mode,
-				     uint32_t Param1, uint32_t Param2)
+HAL_StatusTypeDef HAL_DSI_ShortWrite(DSI_HandleTypeDef *hdsi, uint32_t ChannelID, uint32_t Mode, uint32_t Param1,
+				     uint32_t Param2)
 {
 	HAL_StatusTypeDef status;
 	/* Check the parameters */
@@ -1680,10 +1620,8 @@ HAL_StatusTypeDef HAL_DSI_ShortWrite(DSI_HandleTypeDef *hdsi,
  * @param  ParametersTable  Pointer to parameter values table.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DSI_LongWrite(DSI_HandleTypeDef *hdsi, uint32_t ChannelID,
-				    uint32_t Mode, uint32_t NbParams,
-				    uint32_t Param1,
-				    const uint8_t *ParametersTable)
+HAL_StatusTypeDef HAL_DSI_LongWrite(DSI_HandleTypeDef *hdsi, uint32_t ChannelID, uint32_t Mode, uint32_t NbParams,
+				    uint32_t Param1, const uint8_t *ParametersTable)
 {
 	uint32_t uicounter;
 	uint32_t nbBytes;
@@ -1718,8 +1656,7 @@ HAL_StatusTypeDef HAL_DSI_LongWrite(DSI_HandleTypeDef *hdsi, uint32_t ChannelID,
 	nbBytes = (NbParams < 3U) ? NbParams : 3U;
 
 	for (count = 0U; count < nbBytes; count++) {
-		fifoword |=
-		    (((uint32_t)(*(pparams + count))) << (8U + (8U * count)));
+		fifoword |= (((uint32_t)(*(pparams + count))) << (8U + (8U * count)));
 	}
 	hdsi->Instance->GPDR = fifoword;
 
@@ -1730,8 +1667,7 @@ HAL_StatusTypeDef HAL_DSI_LongWrite(DSI_HandleTypeDef *hdsi, uint32_t ChannelID,
 		nbBytes = (uicounter < 4U) ? uicounter : 4U;
 		fifoword = 0U;
 		for (count = 0U; count < nbBytes; count++) {
-			fifoword |=
-			    (((uint32_t)(*(pparams + count))) << (8U * count));
+			fifoword |= (((uint32_t)(*(pparams + count))) << (8U * count));
 		}
 		hdsi->Instance->GPDR = fifoword;
 
@@ -1740,8 +1676,7 @@ HAL_StatusTypeDef HAL_DSI_LongWrite(DSI_HandleTypeDef *hdsi, uint32_t ChannelID,
 	}
 
 	/* Configure the packet to send a long DCS command */
-	DSI_ConfigPacketHeader(hdsi->Instance, ChannelID, Mode,
-			       ((NbParams + 1U) & 0x00FFU),
+	DSI_ConfigPacketHeader(hdsi->Instance, ChannelID, Mode, ((NbParams + 1U) & 0x00FFU),
 			       (((NbParams + 1U) & 0xFF00U) >> 8U));
 
 	/* Process unlocked */
@@ -1765,9 +1700,8 @@ HAL_StatusTypeDef HAL_DSI_LongWrite(DSI_HandleTypeDef *hdsi, uint32_t ChannelID,
  * @param  ParametersTable  Pointer to parameter values table.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DSI_Read(DSI_HandleTypeDef *hdsi, uint32_t ChannelNbr,
-			       uint8_t *Array, uint32_t Size, uint32_t Mode,
-			       uint32_t DCSCmd, uint8_t *ParametersTable)
+HAL_StatusTypeDef HAL_DSI_Read(DSI_HandleTypeDef *hdsi, uint32_t ChannelNbr, uint8_t *Array, uint32_t Size,
+			       uint32_t Mode, uint32_t DCSCmd, uint8_t *ParametersTable)
 {
 	uint32_t tickstart;
 	uint8_t *pdata = Array;
@@ -1784,8 +1718,7 @@ HAL_StatusTypeDef HAL_DSI_Read(DSI_HandleTypeDef *hdsi, uint32_t ChannelNbr,
 
 	if (datasize > 2U) {
 		/* set max return packet size */
-		if (DSI_ShortWrite(hdsi, ChannelNbr, DSI_MAX_RETURN_PKT_SIZE,
-				   ((datasize) & 0xFFU),
+		if (DSI_ShortWrite(hdsi, ChannelNbr, DSI_MAX_RETURN_PKT_SIZE, ((datasize) & 0xFFU),
 				   (((datasize) >> 8U) & 0xFFU)) != HAL_OK) {
 			/* Process Unlocked */
 			__HAL_UNLOCK(hdsi);
@@ -1796,18 +1729,13 @@ HAL_StatusTypeDef HAL_DSI_Read(DSI_HandleTypeDef *hdsi, uint32_t ChannelNbr,
 
 	/* Configure the packet to read command */
 	if (Mode == DSI_DCS_SHORT_PKT_READ) {
-		DSI_ConfigPacketHeader(hdsi->Instance, ChannelNbr, Mode, DCSCmd,
-				       0U);
+		DSI_ConfigPacketHeader(hdsi->Instance, ChannelNbr, Mode, DCSCmd, 0U);
 	} else if (Mode == DSI_GEN_SHORT_PKT_READ_P0) {
-		DSI_ConfigPacketHeader(hdsi->Instance, ChannelNbr, Mode, 0U,
-				       0U);
+		DSI_ConfigPacketHeader(hdsi->Instance, ChannelNbr, Mode, 0U, 0U);
 	} else if (Mode == DSI_GEN_SHORT_PKT_READ_P1) {
-		DSI_ConfigPacketHeader(hdsi->Instance, ChannelNbr, Mode,
-				       ParametersTable[0U], 0U);
+		DSI_ConfigPacketHeader(hdsi->Instance, ChannelNbr, Mode, ParametersTable[0U], 0U);
 	} else if (Mode == DSI_GEN_SHORT_PKT_READ_P2) {
-		DSI_ConfigPacketHeader(hdsi->Instance, ChannelNbr, Mode,
-				       ParametersTable[0U],
-				       ParametersTable[1U]);
+		DSI_ConfigPacketHeader(hdsi->Instance, ChannelNbr, Mode, ParametersTable[0U], ParametersTable[1U]);
 	} else {
 		/* Process Unlocked */
 		__HAL_UNLOCK(hdsi);
@@ -1847,8 +1775,7 @@ HAL_StatusTypeDef HAL_DSI_Read(DSI_HandleTypeDef *hdsi, uint32_t ChannelNbr,
 		/* Need to ensure that the Read command has finished before
 		 * checking PSE */
 		if ((hdsi->Instance->GPSR & DSI_GPSR_RCB) == 0U) {
-			if ((hdsi->Instance->ISR[1U] & DSI_ISR1_PSE) ==
-			    DSI_ISR1_PSE) {
+			if ((hdsi->Instance->ISR[1U] & DSI_ISR1_PSE) == DSI_ISR1_PSE) {
 				/* Process Unlocked */
 				__HAL_UNLOCK(hdsi);
 
@@ -1881,8 +1808,7 @@ HAL_StatusTypeDef HAL_DSI_EnterULPMData(DSI_HandleTypeDef *hdsi)
 
 	/* Verify that the clock lane and the digital section of the D-PHY are
 	 * enabled */
-	if ((hdsi->Instance->PCTLR & (DSI_PCTLR_CKE | DSI_PCTLR_DEN)) !=
-	    (DSI_PCTLR_CKE | DSI_PCTLR_DEN)) {
+	if ((hdsi->Instance->PCTLR & (DSI_PCTLR_CKE | DSI_PCTLR_DEN)) != (DSI_PCTLR_CKE | DSI_PCTLR_DEN)) {
 		/* Process Unlocked */
 		__HAL_UNLOCK(hdsi);
 		return HAL_ERROR;
@@ -1893,8 +1819,7 @@ HAL_StatusTypeDef HAL_DSI_EnterULPMData(DSI_HandleTypeDef *hdsi)
 		/* Process Unlocked */
 		__HAL_UNLOCK(hdsi);
 		return HAL_ERROR;
-	} else if ((hdsi->Instance->WRPCR & DSI_WRPCR_REGEN) !=
-		   DSI_WRPCR_REGEN) {
+	} else if ((hdsi->Instance->WRPCR & DSI_WRPCR_REGEN) != DSI_WRPCR_REGEN) {
 		/* Process Unlocked */
 		__HAL_UNLOCK(hdsi);
 		return HAL_ERROR;
@@ -1940,10 +1865,8 @@ HAL_StatusTypeDef HAL_DSI_EnterULPMData(DSI_HandleTypeDef *hdsi)
 			__HAL_UNLOCK(hdsi);
 			return HAL_ERROR;
 		}
-	} else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) ==
-		   DSI_TWO_DATA_LANES) {
-		if ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UAN1)) !=
-		    (DSI_PSR_UAN0 | DSI_PSR_UAN1)) {
+	} else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_TWO_DATA_LANES) {
+		if ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UAN1)) != (DSI_PSR_UAN0 | DSI_PSR_UAN1)) {
 			/* Process Unlocked */
 			__HAL_UNLOCK(hdsi);
 			return HAL_ERROR;
@@ -1971,10 +1894,8 @@ HAL_StatusTypeDef HAL_DSI_EnterULPMData(DSI_HandleTypeDef *hdsi)
 				return HAL_TIMEOUT;
 			}
 		}
-	} else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) ==
-		   DSI_TWO_DATA_LANES) {
-		while ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UAN1)) !=
-		       0U) {
+	} else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_TWO_DATA_LANES) {
+		while ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UAN1)) != 0U) {
 			/* Check for the Timeout */
 			if ((HAL_GetTick() - tickstart) > DSI_TIMEOUT_VALUE) {
 				/* Process Unlocked */
@@ -2018,10 +1939,8 @@ HAL_StatusTypeDef HAL_DSI_ExitULPMData(DSI_HandleTypeDef *hdsi)
 
 			return HAL_ERROR;
 		}
-	} else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) ==
-		   DSI_TWO_DATA_LANES) {
-		if ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UAN1)) !=
-		    0U) {
+	} else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_TWO_DATA_LANES) {
+		if ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UAN1)) != 0U) {
 			/* Process Unlocked */
 			__HAL_UNLOCK(hdsi);
 
@@ -2072,10 +1991,8 @@ HAL_StatusTypeDef HAL_DSI_ExitULPMData(DSI_HandleTypeDef *hdsi)
 				return HAL_TIMEOUT;
 			}
 		}
-	} else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) ==
-		   DSI_TWO_DATA_LANES) {
-		while ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UAN1)) !=
-		       (DSI_PSR_UAN0 | DSI_PSR_UAN1)) {
+	} else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_TWO_DATA_LANES) {
+		while ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UAN1)) != (DSI_PSR_UAN0 | DSI_PSR_UAN1)) {
 			/* Check for the Timeout */
 			if ((HAL_GetTick() - tickstart) > DSI_TIMEOUT_VALUE) {
 				/* Process Unlocked */
@@ -2111,10 +2028,8 @@ HAL_StatusTypeDef HAL_DSI_ExitULPMData(DSI_HandleTypeDef *hdsi)
 			__HAL_UNLOCK(hdsi);
 			return HAL_ERROR;
 		}
-	} else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) ==
-		   DSI_TWO_DATA_LANES) {
-		if ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UAN1)) !=
-		    (DSI_PSR_UAN0 | DSI_PSR_UAN1)) {
+	} else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_TWO_DATA_LANES) {
+		if ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UAN1)) != (DSI_PSR_UAN0 | DSI_PSR_UAN1)) {
 			/* Process Unlocked */
 			__HAL_UNLOCK(hdsi);
 			return HAL_ERROR;
@@ -2168,8 +2083,7 @@ HAL_StatusTypeDef HAL_DSI_EnterULPM(DSI_HandleTypeDef *hdsi)
 
 	/* Verify that the clock lane and the digital section of the D-PHY are
 	 * enabled */
-	if ((hdsi->Instance->PCTLR & (DSI_PCTLR_CKE | DSI_PCTLR_DEN)) !=
-	    (DSI_PCTLR_CKE | DSI_PCTLR_DEN)) {
+	if ((hdsi->Instance->PCTLR & (DSI_PCTLR_CKE | DSI_PCTLR_DEN)) != (DSI_PCTLR_CKE | DSI_PCTLR_DEN)) {
 		/* Process Unlocked */
 		__HAL_UNLOCK(hdsi);
 		return HAL_ERROR;
@@ -2180,8 +2094,7 @@ HAL_StatusTypeDef HAL_DSI_EnterULPM(DSI_HandleTypeDef *hdsi)
 		/* Process Unlocked */
 		__HAL_UNLOCK(hdsi);
 		return HAL_ERROR;
-	} else if ((hdsi->Instance->WRPCR & DSI_WRPCR_REGEN) !=
-		   DSI_WRPCR_REGEN) {
+	} else if ((hdsi->Instance->WRPCR & DSI_WRPCR_REGEN) != DSI_WRPCR_REGEN) {
 		/* Process Unlocked */
 		__HAL_UNLOCK(hdsi);
 		return HAL_ERROR;
@@ -2191,8 +2104,7 @@ HAL_StatusTypeDef HAL_DSI_EnterULPM(DSI_HandleTypeDef *hdsi)
 
 	/* Verify that there are no ULPS exit or request on both data and clock
 	 * lanes */
-	if ((hdsi->Instance->PUCR & (DSI_PUCR_UEDL | DSI_PUCR_URDL |
-				     DSI_PUCR_UECL | DSI_PUCR_URCL)) != 0U) {
+	if ((hdsi->Instance->PUCR & (DSI_PUCR_UEDL | DSI_PUCR_URDL | DSI_PUCR_UECL | DSI_PUCR_URCL)) != 0U) {
 		/* Process Unlocked */
 		__HAL_UNLOCK(hdsi);
 		return HAL_ERROR;
@@ -2224,18 +2136,14 @@ HAL_StatusTypeDef HAL_DSI_EnterULPM(DSI_HandleTypeDef *hdsi)
 
 	/* Verify that all active lanes are in Stop state */
 	if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_ONE_DATA_LANE) {
-		if ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_PSS0)) !=
-		    (DSI_PSR_UAN0 | DSI_PSR_PSS0)) {
+		if ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_PSS0)) != (DSI_PSR_UAN0 | DSI_PSR_PSS0)) {
 			/* Process Unlocked */
 			__HAL_UNLOCK(hdsi);
 			return HAL_ERROR;
 		}
-	} else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) ==
-		   DSI_TWO_DATA_LANES) {
-		if ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_PSS0 |
-					    DSI_PSR_PSS1 | DSI_PSR_UAN1)) !=
-		    (DSI_PSR_UAN0 | DSI_PSR_PSS0 | DSI_PSR_PSS1 |
-		     DSI_PSR_UAN1)) {
+	} else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_TWO_DATA_LANES) {
+		if ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_PSS0 | DSI_PSR_PSS1 | DSI_PSR_UAN1)) !=
+		    (DSI_PSR_UAN0 | DSI_PSR_PSS0 | DSI_PSR_PSS1 | DSI_PSR_UAN1)) {
 			/* Process Unlocked */
 			__HAL_UNLOCK(hdsi);
 			return HAL_ERROR;
@@ -2261,8 +2169,7 @@ HAL_StatusTypeDef HAL_DSI_EnterULPM(DSI_HandleTypeDef *hdsi)
 
 	/* Wait until all active lanes enter ULPM */
 	if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_ONE_DATA_LANE) {
-		while ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UANC)) !=
-		       0U) {
+		while ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UANC)) != 0U) {
 			/* Check for the Timeout */
 			if ((HAL_GetTick() - tickstart) > DSI_TIMEOUT_VALUE) {
 				/* Process Unlocked */
@@ -2271,10 +2178,8 @@ HAL_StatusTypeDef HAL_DSI_EnterULPM(DSI_HandleTypeDef *hdsi)
 				return HAL_TIMEOUT;
 			}
 		}
-	} else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) ==
-		   DSI_TWO_DATA_LANES) {
-		while ((hdsi->Instance->PSR &
-			(DSI_PSR_UAN0 | DSI_PSR_UAN1 | DSI_PSR_UANC)) != 0U) {
+	} else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_TWO_DATA_LANES) {
+		while ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UAN1 | DSI_PSR_UANC)) != 0U) {
 			/* Check for the Timeout */
 			if ((HAL_GetTick() - tickstart) > DSI_TIMEOUT_VALUE) {
 				/* Process Unlocked */
@@ -2316,19 +2221,15 @@ HAL_StatusTypeDef HAL_DSI_ExitULPM(DSI_HandleTypeDef *hdsi)
 	/* Verify that all active lanes are in ULPM */
 	if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_ONE_DATA_LANE) {
 		if ((hdsi->Instance->PSR &
-		     (DSI_PSR_RUE0 | DSI_PSR_UAN0 | DSI_PSR_PSS0 |
-		      DSI_PSR_UANC | DSI_PSR_PSSC | DSI_PSR_PD)) != 0U) {
+		     (DSI_PSR_RUE0 | DSI_PSR_UAN0 | DSI_PSR_PSS0 | DSI_PSR_UANC | DSI_PSR_PSSC | DSI_PSR_PD)) != 0U) {
 			/* Process Unlocked */
 			__HAL_UNLOCK(hdsi);
 
 			return HAL_ERROR;
 		}
-	} else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) ==
-		   DSI_TWO_DATA_LANES) {
-		if ((hdsi->Instance->PSR &
-		     (DSI_PSR_RUE0 | DSI_PSR_UAN0 | DSI_PSR_PSS0 |
-		      DSI_PSR_UAN1 | DSI_PSR_PSS1 | DSI_PSR_UANC |
-		      DSI_PSR_PSSC | DSI_PSR_PD)) != 0U) {
+	} else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_TWO_DATA_LANES) {
+		if ((hdsi->Instance->PSR & (DSI_PSR_RUE0 | DSI_PSR_UAN0 | DSI_PSR_PSS0 | DSI_PSR_UAN1 | DSI_PSR_PSS1 |
+					    DSI_PSR_UANC | DSI_PSR_PSSC | DSI_PSR_PD)) != 0U) {
 			/* Process Unlocked */
 			__HAL_UNLOCK(hdsi);
 
@@ -2370,8 +2271,7 @@ HAL_StatusTypeDef HAL_DSI_ExitULPM(DSI_HandleTypeDef *hdsi)
 
 	/* Wait until all active lanes exit ULPM */
 	if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_ONE_DATA_LANE) {
-		while ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UANC)) !=
-		       (DSI_PSR_UAN0 | DSI_PSR_UANC)) {
+		while ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UANC)) != (DSI_PSR_UAN0 | DSI_PSR_UANC)) {
 			/* Check for the Timeout */
 			if ((HAL_GetTick() - tickstart) > DSI_TIMEOUT_VALUE) {
 				/* Process Unlocked */
@@ -2380,10 +2280,8 @@ HAL_StatusTypeDef HAL_DSI_ExitULPM(DSI_HandleTypeDef *hdsi)
 				return HAL_TIMEOUT;
 			}
 		}
-	} else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) ==
-		   DSI_TWO_DATA_LANES) {
-		while ((hdsi->Instance->PSR &
-			(DSI_PSR_UAN0 | DSI_PSR_UAN1 | DSI_PSR_UANC)) !=
+	} else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_TWO_DATA_LANES) {
+		while ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UAN1 | DSI_PSR_UANC)) !=
 		       (DSI_PSR_UAN0 | DSI_PSR_UAN1 | DSI_PSR_UANC)) {
 			/* Check for the Timeout */
 			if ((HAL_GetTick() - tickstart) > DSI_TIMEOUT_VALUE) {
@@ -2422,18 +2320,14 @@ HAL_StatusTypeDef HAL_DSI_ExitULPM(DSI_HandleTypeDef *hdsi)
 
 	/* Verify that all active lanes are in Stop state */
 	if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_ONE_DATA_LANE) {
-		if ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_PSS0)) !=
-		    (DSI_PSR_UAN0 | DSI_PSR_PSS0)) {
+		if ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_PSS0)) != (DSI_PSR_UAN0 | DSI_PSR_PSS0)) {
 			/* Process Unlocked */
 			__HAL_UNLOCK(hdsi);
 			return HAL_ERROR;
 		}
-	} else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) ==
-		   DSI_TWO_DATA_LANES) {
-		if ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_PSS0 |
-					    DSI_PSR_PSS1 | DSI_PSR_UAN1)) !=
-		    (DSI_PSR_UAN0 | DSI_PSR_PSS0 | DSI_PSR_PSS1 |
-		     DSI_PSR_UAN1)) {
+	} else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_TWO_DATA_LANES) {
+		if ((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_PSS0 | DSI_PSR_PSS1 | DSI_PSR_UAN1)) !=
+		    (DSI_PSR_UAN0 | DSI_PSR_PSS0 | DSI_PSR_PSS1 | DSI_PSR_UAN1)) {
 			/* Process Unlocked */
 			__HAL_UNLOCK(hdsi);
 			return HAL_ERROR;
@@ -2483,9 +2377,7 @@ HAL_StatusTypeDef HAL_DSI_ExitULPM(DSI_HandleTypeDef *hdsi)
  *           1 : Horizontal color bars
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DSI_PatternGeneratorStart(DSI_HandleTypeDef *hdsi,
-						uint32_t Mode,
-						uint32_t Orientation)
+HAL_StatusTypeDef HAL_DSI_PatternGeneratorStart(DSI_HandleTypeDef *hdsi, uint32_t Mode, uint32_t Orientation)
 {
 	/* Process locked */
 	__HAL_LOCK(hdsi);
@@ -2535,9 +2427,7 @@ HAL_StatusTypeDef HAL_DSI_PatternGeneratorStop(DSI_HandleTypeDef *hdsi)
  * @param  Value  Custom value of the slew-rate or delay
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DSI_SetSlewRateAndDelayTuning(DSI_HandleTypeDef *hdsi,
-						    uint32_t CommDelay,
-						    uint32_t Lane,
+HAL_StatusTypeDef HAL_DSI_SetSlewRateAndDelayTuning(DSI_HandleTypeDef *hdsi, uint32_t CommDelay, uint32_t Lane,
 						    uint32_t Value)
 {
 	/* Process locked */
@@ -2552,14 +2442,12 @@ HAL_StatusTypeDef HAL_DSI_SetSlewRateAndDelayTuning(DSI_HandleTypeDef *hdsi,
 			if (Lane == DSI_CLOCK_LANE) {
 				/* High-Speed Transmission Slew Rate Control on
 				 * Clock Lane */
-				hdsi->Instance->WPCR[1U] &=
-				    ~DSI_WPCR1_HSTXSRCCL;
+				hdsi->Instance->WPCR[1U] &= ~DSI_WPCR1_HSTXSRCCL;
 				hdsi->Instance->WPCR[1U] |= Value << 16U;
 			} else if (Lane == DSI_DATA_LANES) {
 				/* High-Speed Transmission Slew Rate Control on
 				 * Data Lanes */
-				hdsi->Instance->WPCR[1U] &=
-				    ~DSI_WPCR1_HSTXSRCDL;
+				hdsi->Instance->WPCR[1U] &= ~DSI_WPCR1_HSTXSRCDL;
 				hdsi->Instance->WPCR[1U] |= Value << 18U;
 			} else {
 				/* Process unlocked */
@@ -2621,8 +2509,7 @@ HAL_StatusTypeDef HAL_DSI_SetSlewRateAndDelayTuning(DSI_HandleTypeDef *hdsi,
  * @param  Frequency  cutoff frequency of low-pass filter at the input of LPRX
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DSI_SetLowPowerRXFilter(DSI_HandleTypeDef *hdsi,
-					      uint32_t Frequency)
+HAL_StatusTypeDef HAL_DSI_SetLowPowerRXFilter(DSI_HandleTypeDef *hdsi, uint32_t Frequency)
 {
 	/* Process locked */
 	__HAL_LOCK(hdsi);
@@ -2674,9 +2561,7 @@ HAL_StatusTypeDef HAL_DSI_SetSDD(DSI_HandleTypeDef *hdsi, FunctionalState State)
  * @param  State  ENABLE or DISABLE
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DSI_SetLanePinsConfiguration(DSI_HandleTypeDef *hdsi,
-						   uint32_t CustomLane,
-						   uint32_t Lane,
+HAL_StatusTypeDef HAL_DSI_SetLanePinsConfiguration(DSI_HandleTypeDef *hdsi, uint32_t CustomLane, uint32_t Lane,
 						   FunctionalState State)
 {
 	/* Process locked */
@@ -2692,18 +2577,15 @@ HAL_StatusTypeDef HAL_DSI_SetLanePinsConfiguration(DSI_HandleTypeDef *hdsi,
 			if (Lane == DSI_CLK_LANE) {
 				/* Swap pins on clock lane */
 				hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_SWCL;
-				hdsi->Instance->WPCR[0U] |=
-				    ((uint32_t)State << 6U);
+				hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 6U);
 			} else if (Lane == DSI_DATA_LANE0) {
 				/* Swap pins on data lane 0 */
 				hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_SWDL0;
-				hdsi->Instance->WPCR[0U] |=
-				    ((uint32_t)State << 7U);
+				hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 7U);
 			} else if (Lane == DSI_DATA_LANE1) {
 				/* Swap pins on data lane 1 */
 				hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_SWDL1;
-				hdsi->Instance->WPCR[0U] |=
-				    ((uint32_t)State << 8U);
+				hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 8U);
 			} else {
 				/* Process unlocked */
 				__HAL_UNLOCK(hdsi);
@@ -2715,18 +2597,15 @@ HAL_StatusTypeDef HAL_DSI_SetLanePinsConfiguration(DSI_HandleTypeDef *hdsi,
 			if (Lane == DSI_CLK_LANE) {
 				/* Invert HS signal on clock lane */
 				hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_HSICL;
-				hdsi->Instance->WPCR[0U] |=
-				    ((uint32_t)State << 9U);
+				hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 9U);
 			} else if (Lane == DSI_DATA_LANE0) {
 				/* Invert HS signal on data lane 0 */
 				hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_HSIDL0;
-				hdsi->Instance->WPCR[0U] |=
-				    ((uint32_t)State << 10U);
+				hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 10U);
 			} else if (Lane == DSI_DATA_LANE1) {
 				/* Invert HS signal on data lane 1 */
 				hdsi->Instance->WPCR[0U] &= ~DSI_WPCR0_HSIDL1;
-				hdsi->Instance->WPCR[0U] |=
-				    ((uint32_t)State << 11U);
+				hdsi->Instance->WPCR[0U] |= ((uint32_t)State << 11U);
 			} else {
 				/* Process unlocked */
 				__HAL_UNLOCK(hdsi);
@@ -2754,9 +2633,7 @@ HAL_StatusTypeDef HAL_DSI_SetLanePinsConfiguration(DSI_HandleTypeDef *hdsi,
  * @param  Value  Custom value of the timing
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DSI_SetPHYTimings(DSI_HandleTypeDef *hdsi,
-					uint32_t Timing, FunctionalState State,
-					uint32_t Value)
+HAL_StatusTypeDef HAL_DSI_SetPHYTimings(DSI_HandleTypeDef *hdsi, uint32_t Timing, FunctionalState State, uint32_t Value)
 {
 	/* Process locked */
 	__HAL_LOCK(hdsi);
@@ -2774,8 +2651,7 @@ HAL_StatusTypeDef HAL_DSI_SetPHYTimings(DSI_HandleTypeDef *hdsi,
 			if (State != DISABLE) {
 				/* Set custom value */
 				hdsi->Instance->WPCR[4U] &= ~DSI_WPCR4_TCLKPOST;
-				hdsi->Instance->WPCR[4U] |=
-				    Value & DSI_WPCR4_TCLKPOST;
+				hdsi->Instance->WPCR[4U] |= Value & DSI_WPCR4_TCLKPOST;
 			}
 
 			break;
@@ -2787,8 +2663,7 @@ HAL_StatusTypeDef HAL_DSI_SetPHYTimings(DSI_HandleTypeDef *hdsi,
 			if (State != DISABLE) {
 				/* Set custom value */
 				hdsi->Instance->WPCR[3U] &= ~DSI_WPCR3_TLPXC;
-				hdsi->Instance->WPCR[3U] |=
-				    (Value << 24U) & DSI_WPCR3_TLPXC;
+				hdsi->Instance->WPCR[3U] |= (Value << 24U) & DSI_WPCR3_TLPXC;
 			}
 
 			break;
@@ -2800,8 +2675,7 @@ HAL_StatusTypeDef HAL_DSI_SetPHYTimings(DSI_HandleTypeDef *hdsi,
 			if (State != DISABLE) {
 				/* Set custom value */
 				hdsi->Instance->WPCR[3U] &= ~DSI_WPCR3_THSEXIT;
-				hdsi->Instance->WPCR[3U] |=
-				    (Value << 16U) & DSI_WPCR3_THSEXIT;
+				hdsi->Instance->WPCR[3U] |= (Value << 16U) & DSI_WPCR3_THSEXIT;
 			}
 
 			break;
@@ -2813,8 +2687,7 @@ HAL_StatusTypeDef HAL_DSI_SetPHYTimings(DSI_HandleTypeDef *hdsi,
 			if (State != DISABLE) {
 				/* Set custom value */
 				hdsi->Instance->WPCR[3U] &= ~DSI_WPCR3_TLPXD;
-				hdsi->Instance->WPCR[3U] |=
-				    (Value << 8U) & DSI_WPCR3_TLPXD;
+				hdsi->Instance->WPCR[3U] |= (Value << 8U) & DSI_WPCR3_TLPXD;
 			}
 
 			break;
@@ -2826,8 +2699,7 @@ HAL_StatusTypeDef HAL_DSI_SetPHYTimings(DSI_HandleTypeDef *hdsi,
 			if (State != DISABLE) {
 				/* Set custom value */
 				hdsi->Instance->WPCR[3U] &= ~DSI_WPCR3_THSZERO;
-				hdsi->Instance->WPCR[3U] |=
-				    Value & DSI_WPCR3_THSZERO;
+				hdsi->Instance->WPCR[3U] |= Value & DSI_WPCR3_THSZERO;
 			}
 
 			break;
@@ -2839,8 +2711,7 @@ HAL_StatusTypeDef HAL_DSI_SetPHYTimings(DSI_HandleTypeDef *hdsi,
 			if (State != DISABLE) {
 				/* Set custom value */
 				hdsi->Instance->WPCR[2U] &= ~DSI_WPCR2_THSTRAIL;
-				hdsi->Instance->WPCR[2U] |=
-				    (Value << 24U) & DSI_WPCR2_THSTRAIL;
+				hdsi->Instance->WPCR[2U] |= (Value << 24U) & DSI_WPCR2_THSTRAIL;
 			}
 
 			break;
@@ -2852,8 +2723,7 @@ HAL_StatusTypeDef HAL_DSI_SetPHYTimings(DSI_HandleTypeDef *hdsi,
 			if (State != DISABLE) {
 				/* Set custom value */
 				hdsi->Instance->WPCR[2U] &= ~DSI_WPCR2_THSPREP;
-				hdsi->Instance->WPCR[2U] |=
-				    (Value << 16U) & DSI_WPCR2_THSPREP;
+				hdsi->Instance->WPCR[2U] |= (Value << 16U) & DSI_WPCR2_THSPREP;
 			}
 
 			break;
@@ -2865,8 +2735,7 @@ HAL_StatusTypeDef HAL_DSI_SetPHYTimings(DSI_HandleTypeDef *hdsi,
 			if (State != DISABLE) {
 				/* Set custom value */
 				hdsi->Instance->WPCR[2U] &= ~DSI_WPCR2_TCLKZERO;
-				hdsi->Instance->WPCR[2U] |=
-				    (Value << 8U) & DSI_WPCR2_TCLKZERO;
+				hdsi->Instance->WPCR[2U] |= (Value << 8U) & DSI_WPCR2_TCLKZERO;
 			}
 
 			break;
@@ -2878,8 +2747,7 @@ HAL_StatusTypeDef HAL_DSI_SetPHYTimings(DSI_HandleTypeDef *hdsi,
 			if (State != DISABLE) {
 				/* Set custom value */
 				hdsi->Instance->WPCR[2U] &= ~DSI_WPCR2_TCLKPREP;
-				hdsi->Instance->WPCR[2U] |=
-				    Value & DSI_WPCR2_TCLKPREP;
+				hdsi->Instance->WPCR[2U] |= Value & DSI_WPCR2_TCLKPREP;
 			}
 
 			break;
@@ -2902,8 +2770,7 @@ HAL_StatusTypeDef HAL_DSI_SetPHYTimings(DSI_HandleTypeDef *hdsi,
  * @param  State  ENABLE or DISABLE
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DSI_ForceTXStopMode(DSI_HandleTypeDef *hdsi,
-					  uint32_t Lane, FunctionalState State)
+HAL_StatusTypeDef HAL_DSI_ForceTXStopMode(DSI_HandleTypeDef *hdsi, uint32_t Lane, FunctionalState State)
 {
 	/* Process locked */
 	__HAL_LOCK(hdsi);
@@ -2940,8 +2807,7 @@ HAL_StatusTypeDef HAL_DSI_ForceTXStopMode(DSI_HandleTypeDef *hdsi,
  * @param  State  ENABLE or DISABLE
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DSI_ForceRXLowPower(DSI_HandleTypeDef *hdsi,
-					  FunctionalState State)
+HAL_StatusTypeDef HAL_DSI_ForceRXLowPower(DSI_HandleTypeDef *hdsi, FunctionalState State)
 {
 	/* Process locked */
 	__HAL_LOCK(hdsi);
@@ -2966,8 +2832,7 @@ HAL_StatusTypeDef HAL_DSI_ForceRXLowPower(DSI_HandleTypeDef *hdsi,
  * @param  State  ENABLE or DISABLE
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DSI_ForceDataLanesInRX(DSI_HandleTypeDef *hdsi,
-					     FunctionalState State)
+HAL_StatusTypeDef HAL_DSI_ForceDataLanesInRX(DSI_HandleTypeDef *hdsi, FunctionalState State)
 {
 	/* Process locked */
 	__HAL_LOCK(hdsi);
@@ -2993,8 +2858,7 @@ HAL_StatusTypeDef HAL_DSI_ForceDataLanesInRX(DSI_HandleTypeDef *hdsi,
  * @param  State  ENABLE or DISABLE
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DSI_SetPullDown(DSI_HandleTypeDef *hdsi,
-				      FunctionalState State)
+HAL_StatusTypeDef HAL_DSI_SetPullDown(DSI_HandleTypeDef *hdsi, FunctionalState State)
 {
 	/* Process locked */
 	__HAL_LOCK(hdsi);
@@ -3019,8 +2883,7 @@ HAL_StatusTypeDef HAL_DSI_SetPullDown(DSI_HandleTypeDef *hdsi,
  * @param  State  ENABLE or DISABLE
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DSI_SetContentionDetectionOff(DSI_HandleTypeDef *hdsi,
-						    FunctionalState State)
+HAL_StatusTypeDef HAL_DSI_SetContentionDetectionOff(DSI_HandleTypeDef *hdsi, FunctionalState State)
 {
 	/* Process locked */
 	__HAL_LOCK(hdsi);
@@ -3064,10 +2927,7 @@ HAL_StatusTypeDef HAL_DSI_SetContentionDetectionOff(DSI_HandleTypeDef *hdsi,
  *               the configuration information for the DSI.
  * @retval HAL state
  */
-HAL_DSI_StateTypeDef HAL_DSI_GetState(const DSI_HandleTypeDef *hdsi)
-{
-	return hdsi->State;
-}
+HAL_DSI_StateTypeDef HAL_DSI_GetState(const DSI_HandleTypeDef *hdsi) { return hdsi->State; }
 
 /**
  * @brief  Return the DSI error code

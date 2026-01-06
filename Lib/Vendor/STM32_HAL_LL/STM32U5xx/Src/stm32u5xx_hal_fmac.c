@@ -272,62 +272,56 @@ HAL_FMAC_STATE_READY or HAL_FMAC_STATE_RESET state, thus registered (user)
  * @param  __HANDLE__ FMAC handle.
  * @retval X1_BUF_SIZE
  */
-#define FMAC_GET_X1_SIZE(__HANDLE__)                                           \
-	((((__HANDLE__)->Instance->X1BUFCFG) & (FMAC_X1BUFCFG_X1_BUF_SIZE)) >> \
-	 (FMAC_X1BUFCFG_X1_BUF_SIZE_Pos))
+#define FMAC_GET_X1_SIZE(__HANDLE__)                                                                                   \
+	((((__HANDLE__)->Instance->X1BUFCFG) & (FMAC_X1BUFCFG_X1_BUF_SIZE)) >> (FMAC_X1BUFCFG_X1_BUF_SIZE_Pos))
 
 /**
  * @brief  Get the X1 watermark.
  * @param  __HANDLE__ FMAC handle.
  * @retval FULL_WM
  */
-#define FMAC_GET_X1_FULL_WM(__HANDLE__)                                        \
-	(((__HANDLE__)->Instance->X1BUFCFG) & (FMAC_X1BUFCFG_FULL_WM))
+#define FMAC_GET_X1_FULL_WM(__HANDLE__) (((__HANDLE__)->Instance->X1BUFCFG) & (FMAC_X1BUFCFG_FULL_WM))
 
 /**
  * @brief  Get the X2 memory area size.
  * @param  __HANDLE__ FMAC handle.
  * @retval X2_BUF_SIZE
  */
-#define FMAC_GET_X2_SIZE(__HANDLE__)                                           \
-	((((__HANDLE__)->Instance->X2BUFCFG) & (FMAC_X2BUFCFG_X2_BUF_SIZE)) >> \
-	 (FMAC_X2BUFCFG_X2_BUF_SIZE_Pos))
+#define FMAC_GET_X2_SIZE(__HANDLE__)                                                                                   \
+	((((__HANDLE__)->Instance->X2BUFCFG) & (FMAC_X2BUFCFG_X2_BUF_SIZE)) >> (FMAC_X2BUFCFG_X2_BUF_SIZE_Pos))
 
 /**
  * @brief  Get the Y memory area size.
  * @param  __HANDLE__ FMAC handle.
  * @retval Y_BUF_SIZE
  */
-#define FMAC_GET_Y_SIZE(__HANDLE__)                                            \
-	((((__HANDLE__)->Instance->YBUFCFG) & (FMAC_YBUFCFG_Y_BUF_SIZE)) >>    \
-	 (FMAC_YBUFCFG_Y_BUF_SIZE_Pos))
+#define FMAC_GET_Y_SIZE(__HANDLE__)                                                                                    \
+	((((__HANDLE__)->Instance->YBUFCFG) & (FMAC_YBUFCFG_Y_BUF_SIZE)) >> (FMAC_YBUFCFG_Y_BUF_SIZE_Pos))
 
 /**
  * @brief  Get the Y watermark.
  * @param  __HANDLE__ FMAC handle.
  * @retval EMPTY_WM
  */
-#define FMAC_GET_Y_EMPTY_WM(__HANDLE__)                                        \
-	(((__HANDLE__)->Instance->YBUFCFG) & (FMAC_YBUFCFG_EMPTY_WM))
+#define FMAC_GET_Y_EMPTY_WM(__HANDLE__) (((__HANDLE__)->Instance->YBUFCFG) & (FMAC_YBUFCFG_EMPTY_WM))
 
 /**
  * @brief  Get the start bit state.
  * @param  __HANDLE__ FMAC handle.
  * @retval START
  */
-#define FMAC_GET_START_BIT(__HANDLE__)                                         \
-	((((__HANDLE__)->Instance->PARAM) & (FMAC_PARAM_START)) >>             \
-	 (FMAC_PARAM_START_Pos))
+#define FMAC_GET_START_BIT(__HANDLE__)                                                                                 \
+	((((__HANDLE__)->Instance->PARAM) & (FMAC_PARAM_START)) >> (FMAC_PARAM_START_Pos))
 
 /**
  * @brief  Get the threshold matching the watermark.
  * @param  __WM__ Watermark value.
  * @retval THRESHOLD
  */
-#define FMAC_GET_THRESHOLD_FROM_WM(__WM__)                                     \
-	(((__WM__) == FMAC_THRESHOLD_1)	  ? 1U                                 \
-	 : ((__WM__) == FMAC_THRESHOLD_2) ? 2U                                 \
-	 : ((__WM__) == FMAC_THRESHOLD_4) ? 4U                                 \
+#define FMAC_GET_THRESHOLD_FROM_WM(__WM__)                                                                             \
+	(((__WM__) == FMAC_THRESHOLD_1)	  ? 1U                                                                         \
+	 : ((__WM__) == FMAC_THRESHOLD_2) ? 2U                                                                         \
+	 : ((__WM__) == FMAC_THRESHOLD_4) ? 4U                                                                         \
 					  : 8U)
 
 /**
@@ -341,28 +335,18 @@ static HAL_StatusTypeDef FMAC_Reset(FMAC_HandleTypeDef *hfmac);
 static void FMAC_ResetDataPointers(FMAC_HandleTypeDef *hfmac);
 static void FMAC_ResetOutputStateAndDataPointers(FMAC_HandleTypeDef *hfmac);
 static void FMAC_ResetInputStateAndDataPointers(FMAC_HandleTypeDef *hfmac);
-static HAL_StatusTypeDef FMAC_FilterConfig(FMAC_HandleTypeDef *hfmac,
-					   FMAC_FilterConfigTypeDef *pConfig,
+static HAL_StatusTypeDef FMAC_FilterConfig(FMAC_HandleTypeDef *hfmac, FMAC_FilterConfigTypeDef *pConfig,
 					   uint8_t PreloadAccess);
-static HAL_StatusTypeDef FMAC_FilterPreload(FMAC_HandleTypeDef *hfmac,
-					    int16_t *pInput, uint8_t InputSize,
-					    int16_t *pOutput,
-					    uint8_t OutputSize,
-					    uint8_t PreloadAccess);
-static void FMAC_WritePreloadDataIncrementPtr(FMAC_HandleTypeDef *hfmac,
-					      int16_t **ppData, uint8_t Size);
-static HAL_StatusTypeDef FMAC_WaitOnStartUntilTimeout(FMAC_HandleTypeDef *hfmac,
-						      uint32_t Tickstart,
-						      uint32_t Timeout);
-static HAL_StatusTypeDef
-FMAC_AppendFilterDataUpdateState(FMAC_HandleTypeDef *hfmac, int16_t *pInput,
-				 uint16_t *pInputSize);
-static HAL_StatusTypeDef FMAC_ConfigFilterOutputBufferUpdateState(
-    FMAC_HandleTypeDef *hfmac, int16_t *pOutput, uint16_t *pOutputSize);
-static void FMAC_WriteDataIncrementPtr(FMAC_HandleTypeDef *hfmac,
-				       uint16_t MaxSizeToWrite);
-static void FMAC_ReadDataIncrementPtr(FMAC_HandleTypeDef *hfmac,
-				      uint16_t MaxSizeToRead);
+static HAL_StatusTypeDef FMAC_FilterPreload(FMAC_HandleTypeDef *hfmac, int16_t *pInput, uint8_t InputSize,
+					    int16_t *pOutput, uint8_t OutputSize, uint8_t PreloadAccess);
+static void FMAC_WritePreloadDataIncrementPtr(FMAC_HandleTypeDef *hfmac, int16_t **ppData, uint8_t Size);
+static HAL_StatusTypeDef FMAC_WaitOnStartUntilTimeout(FMAC_HandleTypeDef *hfmac, uint32_t Tickstart, uint32_t Timeout);
+static HAL_StatusTypeDef FMAC_AppendFilterDataUpdateState(FMAC_HandleTypeDef *hfmac, int16_t *pInput,
+							  uint16_t *pInputSize);
+static HAL_StatusTypeDef FMAC_ConfigFilterOutputBufferUpdateState(FMAC_HandleTypeDef *hfmac, int16_t *pOutput,
+								  uint16_t *pOutputSize);
+static void FMAC_WriteDataIncrementPtr(FMAC_HandleTypeDef *hfmac, uint16_t MaxSizeToWrite);
+static void FMAC_ReadDataIncrementPtr(FMAC_HandleTypeDef *hfmac, uint16_t MaxSizeToRead);
 static void FMAC_DMAHalfGetData(DMA_HandleTypeDef *hdma);
 static void FMAC_DMAGetData(DMA_HandleTypeDef *hdma);
 static void FMAC_DMAHalfOutputDataReady(DMA_HandleTypeDef *hdma);
@@ -424,10 +408,8 @@ HAL_StatusTypeDef HAL_FMAC_Init(FMAC_HandleTypeDef *hfmac)
 		hfmac->ErrorCallback = HAL_FMAC_ErrorCallback;
 		hfmac->HalfGetDataCallback = HAL_FMAC_HalfGetDataCallback;
 		hfmac->GetDataCallback = HAL_FMAC_GetDataCallback;
-		hfmac->HalfOutputDataReadyCallback =
-		    HAL_FMAC_HalfOutputDataReadyCallback;
-		hfmac->OutputDataReadyCallback =
-		    HAL_FMAC_OutputDataReadyCallback;
+		hfmac->HalfOutputDataReadyCallback = HAL_FMAC_HalfOutputDataReadyCallback;
+		hfmac->OutputDataReadyCallback = HAL_FMAC_OutputDataReadyCallback;
 		hfmac->FilterConfigCallback = HAL_FMAC_FilterConfigCallback;
 		hfmac->FilterPreloadCallback = HAL_FMAC_FilterPreloadCallback;
 
@@ -569,10 +551,8 @@ __weak void HAL_FMAC_MspDeInit(FMAC_HandleTypeDef *hfmac)
  * @param  pCallback pointer to the Callback function.
  * @retval HAL_StatusTypeDef HAL status
  */
-HAL_StatusTypeDef
-HAL_FMAC_RegisterCallback(FMAC_HandleTypeDef *hfmac,
-			  HAL_FMAC_CallbackIDTypeDef CallbackID,
-			  pFMAC_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_FMAC_RegisterCallback(FMAC_HandleTypeDef *hfmac, HAL_FMAC_CallbackIDTypeDef CallbackID,
+					    pFMAC_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -628,8 +608,7 @@ HAL_FMAC_RegisterCallback(FMAC_HandleTypeDef *hfmac,
 
 			default:
 				/* Update the error code */
-				hfmac->ErrorCode |=
-				    HAL_FMAC_ERROR_INVALID_CALLBACK;
+				hfmac->ErrorCode |= HAL_FMAC_ERROR_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -647,8 +626,7 @@ HAL_FMAC_RegisterCallback(FMAC_HandleTypeDef *hfmac,
 
 			default:
 				/* Update the error code */
-				hfmac->ErrorCode |=
-				    HAL_FMAC_ERROR_INVALID_CALLBACK;
+				hfmac->ErrorCode |= HAL_FMAC_ERROR_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -689,9 +667,7 @@ HAL_FMAC_RegisterCallback(FMAC_HandleTypeDef *hfmac,
  *           @arg @ref HAL_FMAC_MSPDEINIT_CB_ID FMAC MspDeInit ID
  * @retval HAL_StatusTypeDef HAL status
  */
-HAL_StatusTypeDef
-HAL_FMAC_UnRegisterCallback(FMAC_HandleTypeDef *hfmac,
-			    HAL_FMAC_CallbackIDTypeDef CallbackID)
+HAL_StatusTypeDef HAL_FMAC_UnRegisterCallback(FMAC_HandleTypeDef *hfmac, HAL_FMAC_CallbackIDTypeDef CallbackID)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -703,24 +679,21 @@ HAL_FMAC_UnRegisterCallback(FMAC_HandleTypeDef *hfmac,
 	if (hfmac->State == HAL_FMAC_STATE_READY) {
 		switch (CallbackID) {
 			case HAL_FMAC_ERROR_CB_ID:
-				hfmac->ErrorCallback =
-				    HAL_FMAC_ErrorCallback; /* Legacy weak
-							     * ErrorCallback
-							     */
+				hfmac->ErrorCallback = HAL_FMAC_ErrorCallback; /* Legacy weak
+										* ErrorCallback
+										*/
 				break;
 
 			case HAL_FMAC_HALF_GET_DATA_CB_ID:
-				hfmac->HalfGetDataCallback =
-				    HAL_FMAC_HalfGetDataCallback; /* Legacy weak
-								     HalfGetDataCallback
-								   */
+				hfmac->HalfGetDataCallback = HAL_FMAC_HalfGetDataCallback; /* Legacy weak
+											      HalfGetDataCallback
+											    */
 				break;
 
 			case HAL_FMAC_GET_DATA_CB_ID:
-				hfmac->GetDataCallback =
-				    HAL_FMAC_GetDataCallback; /* Legacy weak
-								 GetDataCallback
-							       */
+				hfmac->GetDataCallback = HAL_FMAC_GetDataCallback; /* Legacy weak
+										      GetDataCallback
+										    */
 				break;
 
 			case HAL_FMAC_HALF_OUTPUT_DATA_READY_CB_ID:
@@ -740,38 +713,33 @@ HAL_FMAC_UnRegisterCallback(FMAC_HandleTypeDef *hfmac,
 				break;
 
 			case HAL_FMAC_FILTER_CONFIG_CB_ID:
-				hfmac->FilterConfigCallback =
-				    HAL_FMAC_FilterConfigCallback; /* Legacy
-								      weak
-								      FilterConfigCallback
-								    */
+				hfmac->FilterConfigCallback = HAL_FMAC_FilterConfigCallback; /* Legacy
+												weak
+												FilterConfigCallback
+											      */
 				break;
 
 			case HAL_FMAC_FILTER_PRELOAD_CB_ID:
-				hfmac->FilterPreloadCallback =
-				    HAL_FMAC_FilterPreloadCallback; /* Legacy
-								       weak
-								       FilterPreloadCallba
-								     */
+				hfmac->FilterPreloadCallback = HAL_FMAC_FilterPreloadCallback; /* Legacy
+												  weak
+												  FilterPreloadCallba
+												*/
 				break;
 
 			case HAL_FMAC_MSPINIT_CB_ID:
-				hfmac->MspInitCallback =
-				    HAL_FMAC_MspInit; /* Legacy weak
-							 MspInitCallback */
+				hfmac->MspInitCallback = HAL_FMAC_MspInit; /* Legacy weak
+									      MspInitCallback */
 				break;
 
 			case HAL_FMAC_MSPDEINIT_CB_ID:
-				hfmac->MspDeInitCallback =
-				    HAL_FMAC_MspDeInit; /* Legacy weak
-							 * MspDeInitCallback
-							 */
+				hfmac->MspDeInitCallback = HAL_FMAC_MspDeInit; /* Legacy weak
+										* MspDeInitCallback
+										*/
 				break;
 
 			default:
 				/* Update the error code */
-				hfmac->ErrorCode |=
-				    HAL_FMAC_ERROR_INVALID_CALLBACK;
+				hfmac->ErrorCode |= HAL_FMAC_ERROR_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -789,8 +757,7 @@ HAL_FMAC_UnRegisterCallback(FMAC_HandleTypeDef *hfmac,
 
 			default:
 				/* Update the error code */
-				hfmac->ErrorCode |=
-				    HAL_FMAC_ERROR_INVALID_CALLBACK;
+				hfmac->ErrorCode |= HAL_FMAC_ERROR_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -843,8 +810,7 @@ IT, DMA).
  *         contains the FMAC configuration information.
  * @retval HAL_StatusTypeDef HAL status
  */
-HAL_StatusTypeDef HAL_FMAC_FilterConfig(FMAC_HandleTypeDef *hfmac,
-					FMAC_FilterConfigTypeDef *pConfig)
+HAL_StatusTypeDef HAL_FMAC_FilterConfig(FMAC_HandleTypeDef *hfmac, FMAC_FilterConfigTypeDef *pConfig)
 {
 	return (FMAC_FilterConfig(hfmac, pConfig, PRELOAD_ACCESS_POLLING));
 }
@@ -860,8 +826,7 @@ HAL_StatusTypeDef HAL_FMAC_FilterConfig(FMAC_HandleTypeDef *hfmac,
  *         contains the FMAC configuration information.
  * @retval HAL_StatusTypeDef HAL status
  */
-HAL_StatusTypeDef HAL_FMAC_FilterConfig_DMA(FMAC_HandleTypeDef *hfmac,
-					    FMAC_FilterConfigTypeDef *pConfig)
+HAL_StatusTypeDef HAL_FMAC_FilterConfig_DMA(FMAC_HandleTypeDef *hfmac, FMAC_FilterConfigTypeDef *pConfig)
 {
 	return (FMAC_FilterConfig(hfmac, pConfig, PRELOAD_ACCESS_DMA));
 }
@@ -891,12 +856,10 @@ HAL_StatusTypeDef HAL_FMAC_FilterConfig_DMA(FMAC_HandleTypeDef *hfmac,
  * will be returned.
  * @retval HAL_StatusTypeDef HAL status
  */
-HAL_StatusTypeDef HAL_FMAC_FilterPreload(FMAC_HandleTypeDef *hfmac,
-					 int16_t *pInput, uint8_t InputSize,
+HAL_StatusTypeDef HAL_FMAC_FilterPreload(FMAC_HandleTypeDef *hfmac, int16_t *pInput, uint8_t InputSize,
 					 int16_t *pOutput, uint8_t OutputSize)
 {
-	return (FMAC_FilterPreload(hfmac, pInput, InputSize, pOutput,
-				   OutputSize, PRELOAD_ACCESS_POLLING));
+	return (FMAC_FilterPreload(hfmac, pInput, InputSize, pOutput, OutputSize, PRELOAD_ACCESS_POLLING));
 }
 
 /**
@@ -923,13 +886,10 @@ HAL_StatusTypeDef HAL_FMAC_FilterPreload(FMAC_HandleTypeDef *hfmac,
  * will be returned.
  * @retval HAL_StatusTypeDef HAL status
  */
-HAL_StatusTypeDef HAL_FMAC_FilterPreload_DMA(FMAC_HandleTypeDef *hfmac,
-					     int16_t *pInput, uint8_t InputSize,
-					     int16_t *pOutput,
-					     uint8_t OutputSize)
+HAL_StatusTypeDef HAL_FMAC_FilterPreload_DMA(FMAC_HandleTypeDef *hfmac, int16_t *pInput, uint8_t InputSize,
+					     int16_t *pOutput, uint8_t OutputSize)
 {
-	return (FMAC_FilterPreload(hfmac, pInput, InputSize, pOutput,
-				   OutputSize, PRELOAD_ACCESS_DMA));
+	return (FMAC_FilterPreload(hfmac, pInput, InputSize, pOutput, OutputSize, PRELOAD_ACCESS_DMA));
 }
 
 /**
@@ -944,8 +904,7 @@ HAL_StatusTypeDef HAL_FMAC_FilterPreload_DMA(FMAC_HandleTypeDef *hfmac,
  * read data will be written here.
  * @retval HAL_StatusTypeDef HAL status
  */
-HAL_StatusTypeDef HAL_FMAC_FilterStart(FMAC_HandleTypeDef *hfmac,
-				       int16_t *pOutput, uint16_t *pOutputSize)
+HAL_StatusTypeDef HAL_FMAC_FilterStart(FMAC_HandleTypeDef *hfmac, int16_t *pOutput, uint16_t *pOutputSize)
 {
 	uint32_t tmpcr = 0U;
 	HAL_StatusTypeDef status;
@@ -986,21 +945,16 @@ HAL_StatusTypeDef HAL_FMAC_FilterStart(FMAC_HandleTypeDef *hfmac,
 		}
 
 		/* CR: Write the configuration */
-		MODIFY_REG(hfmac->Instance->CR,
-			   FMAC_IT_RIEN | FMAC_IT_WIEN | FMAC_DMA_REN |
-			       FMAC_CR_DMAWEN,
-			   tmpcr);
+		MODIFY_REG(hfmac->Instance->CR, FMAC_IT_RIEN | FMAC_IT_WIEN | FMAC_DMA_REN | FMAC_CR_DMAWEN, tmpcr);
 
 		/* Register the new output buffer */
-		status = FMAC_ConfigFilterOutputBufferUpdateState(
-		    hfmac, pOutput, pOutputSize);
+		status = FMAC_ConfigFilterOutputBufferUpdateState(hfmac, pOutput, pOutputSize);
 
 		if (status == HAL_OK) {
 			/* PARAM: Start the filter ( this can generate
 			 * interrupts before the end of the HAL_FMAC_FilterStart
 			 * ) */
-			WRITE_REG(hfmac->Instance->PARAM,
-				  (uint32_t)(hfmac->FilterParam));
+			WRITE_REG(hfmac->Instance->PARAM, (uint32_t)(hfmac->FilterParam));
 		}
 
 		/* Reset the busy flag (do not overwrite the possible write and
@@ -1023,9 +977,7 @@ HAL_StatusTypeDef HAL_FMAC_FilterStart(FMAC_HandleTypeDef *hfmac,
  *         written, it will be updated with the number of data read from FMAC).
  * @retval HAL_StatusTypeDef HAL status
  */
-HAL_StatusTypeDef HAL_FMAC_AppendFilterData(FMAC_HandleTypeDef *hfmac,
-					    int16_t *pInput,
-					    uint16_t *pInputSize)
+HAL_StatusTypeDef HAL_FMAC_AppendFilterData(FMAC_HandleTypeDef *hfmac, int16_t *pInput, uint16_t *pInputSize)
 {
 	HAL_StatusTypeDef status;
 
@@ -1048,8 +1000,7 @@ HAL_StatusTypeDef HAL_FMAC_AppendFilterData(FMAC_HandleTypeDef *hfmac,
 	}
 
 	/* Check whether the previous input vector has been handled */
-	if ((hfmac->pInputSize != NULL) &&
-	    (hfmac->InputCurrentSize < *(hfmac->pInputSize))) {
+	if ((hfmac->pInputSize != NULL) && (hfmac->InputCurrentSize < *(hfmac->pInputSize))) {
 		return HAL_ERROR;
 	}
 
@@ -1057,8 +1008,7 @@ HAL_StatusTypeDef HAL_FMAC_AppendFilterData(FMAC_HandleTypeDef *hfmac,
 	 * ongoing */
 	if (hfmac->WrState == HAL_FMAC_STATE_READY) {
 		/* Register the new input buffer */
-		status =
-		    FMAC_AppendFilterDataUpdateState(hfmac, pInput, pInputSize);
+		status = FMAC_AppendFilterDataUpdateState(hfmac, pInput, pInputSize);
 	} else {
 		status = HAL_ERROR;
 	}
@@ -1077,9 +1027,7 @@ HAL_StatusTypeDef HAL_FMAC_AppendFilterData(FMAC_HandleTypeDef *hfmac,
  *         of data read from FMAC).
  * @retval HAL_StatusTypeDef HAL status
  */
-HAL_StatusTypeDef HAL_FMAC_ConfigFilterOutputBuffer(FMAC_HandleTypeDef *hfmac,
-						    int16_t *pOutput,
-						    uint16_t *pOutputSize)
+HAL_StatusTypeDef HAL_FMAC_ConfigFilterOutputBuffer(FMAC_HandleTypeDef *hfmac, int16_t *pOutput, uint16_t *pOutputSize)
 {
 	HAL_StatusTypeDef status;
 
@@ -1102,8 +1050,7 @@ HAL_StatusTypeDef HAL_FMAC_ConfigFilterOutputBuffer(FMAC_HandleTypeDef *hfmac,
 	}
 
 	/* Check whether the previous output vector has been handled */
-	if ((hfmac->pOutputSize != NULL) &&
-	    (hfmac->OutputCurrentSize < *(hfmac->pOutputSize))) {
+	if ((hfmac->pOutputSize != NULL) && (hfmac->OutputCurrentSize < *(hfmac->pOutputSize))) {
 		return HAL_ERROR;
 	}
 
@@ -1111,8 +1058,7 @@ HAL_StatusTypeDef HAL_FMAC_ConfigFilterOutputBuffer(FMAC_HandleTypeDef *hfmac,
 	 * ongoing */
 	if (hfmac->RdState == HAL_FMAC_STATE_READY) {
 		/* Register the new output buffer */
-		status = FMAC_ConfigFilterOutputBufferUpdateState(
-		    hfmac, pOutput, pOutputSize);
+		status = FMAC_ConfigFilterOutputBufferUpdateState(hfmac, pOutput, pOutputSize);
 	} else {
 		status = HAL_ERROR;
 	}
@@ -1135,8 +1081,7 @@ HAL_StatusTypeDef HAL_FMAC_ConfigFilterOutputBuffer(FMAC_HandleTypeDef *hfmac,
  * @param  Timeout timeout value.
  * @retval HAL_StatusTypeDef HAL status
  */
-HAL_StatusTypeDef HAL_FMAC_PollFilterData(FMAC_HandleTypeDef *hfmac,
-					  uint32_t Timeout)
+HAL_StatusTypeDef HAL_FMAC_PollFilterData(FMAC_HandleTypeDef *hfmac, uint32_t Timeout)
 {
 	uint32_t tickstart;
 	uint8_t inpolling;
@@ -1154,22 +1099,19 @@ HAL_StatusTypeDef HAL_FMAC_PollFilterData(FMAC_HandleTypeDef *hfmac,
 
 	/* Get the input and output mode (if no buffer was previously provided,
 	 * nothing will be read/written) */
-	if ((hfmac->InputAccess == FMAC_BUFFER_ACCESS_POLLING) &&
-	    (hfmac->pInput != NULL)) {
+	if ((hfmac->InputAccess == FMAC_BUFFER_ACCESS_POLLING) && (hfmac->pInput != NULL)) {
 		inpolling = POLLING_ENABLED;
 	} else {
 		inpolling = POLLING_DISABLED;
 	}
-	if ((hfmac->OutputAccess == FMAC_BUFFER_ACCESS_POLLING) &&
-	    (hfmac->pOutput != NULL)) {
+	if ((hfmac->OutputAccess == FMAC_BUFFER_ACCESS_POLLING) && (hfmac->pOutput != NULL)) {
 		outpolling = POLLING_ENABLED;
 	} else {
 		outpolling = POLLING_DISABLED;
 	}
 
 	/* Check the configuration */
-	if ((inpolling == POLLING_DISABLED) &&
-	    (outpolling == POLLING_DISABLED)) {
+	if ((inpolling == POLLING_DISABLED) && (outpolling == POLLING_DISABLED)) {
 		return HAL_ERROR;
 	}
 
@@ -1185,28 +1127,23 @@ HAL_StatusTypeDef HAL_FMAC_PollFilterData(FMAC_HandleTypeDef *hfmac,
 		while ((HAL_GetTick() - tickstart) < Timeout) {
 			/* X1: Check the mode: polling or none */
 			if (inpolling != POLLING_DISABLED) {
-				FMAC_WriteDataIncrementPtr(
-				    hfmac, MAX_FILTER_DATA_SIZE_TO_HANDLE);
-				if (hfmac->InputCurrentSize ==
-				    *(hfmac->pInputSize)) {
+				FMAC_WriteDataIncrementPtr(hfmac, MAX_FILTER_DATA_SIZE_TO_HANDLE);
+				if (hfmac->InputCurrentSize == *(hfmac->pInputSize)) {
 					inpollingover = POLLING_STOPPED;
 				}
 			}
 
 			/* Y: Check the mode: polling or none */
 			if (outpolling != POLLING_DISABLED) {
-				FMAC_ReadDataIncrementPtr(
-				    hfmac, MAX_FILTER_DATA_SIZE_TO_HANDLE);
-				if (hfmac->OutputCurrentSize ==
-				    *(hfmac->pOutputSize)) {
+				FMAC_ReadDataIncrementPtr(hfmac, MAX_FILTER_DATA_SIZE_TO_HANDLE);
+				if (hfmac->OutputCurrentSize == *(hfmac->pOutputSize)) {
 					outpollingover = POLLING_STOPPED;
 				}
 			}
 
 			/* Exit if there isn't data to handle anymore on one
 			 * side or another */
-			if ((inpollingover != POLLING_NOT_STOPPED) ||
-			    (outpollingover != POLLING_NOT_STOPPED)) {
+			if ((inpollingover != POLLING_NOT_STOPPED) || (outpollingover != POLLING_NOT_STOPPED)) {
 				break;
 			}
 		}
@@ -1259,33 +1196,27 @@ HAL_StatusTypeDef HAL_FMAC_FilterStop(FMAC_HandleTypeDef *hfmac)
 		CLEAR_BIT(hfmac->Instance->PARAM, FMAC_PARAM_START);
 
 		/* Disable the interrupts in order to avoid crossing cases */
-		CLEAR_BIT(hfmac->Instance->CR, FMAC_DMA_REN | FMAC_DMA_WEN |
-						   FMAC_IT_RIEN | FMAC_IT_WIEN);
+		CLEAR_BIT(hfmac->Instance->CR, FMAC_DMA_REN | FMAC_DMA_WEN | FMAC_IT_RIEN | FMAC_IT_WIEN);
 
 		/* In case of IT, update the sizes */
-		if ((hfmac->InputAccess == FMAC_BUFFER_ACCESS_IT) &&
-		    (hfmac->pInput != NULL)) {
+		if ((hfmac->InputAccess == FMAC_BUFFER_ACCESS_IT) && (hfmac->pInput != NULL)) {
 			(*(hfmac->pInputSize)) = hfmac->InputCurrentSize;
 		}
 
-		if ((hfmac->OutputAccess == FMAC_BUFFER_ACCESS_IT) &&
-		    (hfmac->pOutput != NULL)) {
+		if ((hfmac->OutputAccess == FMAC_BUFFER_ACCESS_IT) && (hfmac->pOutput != NULL)) {
 			(*(hfmac->pOutputSize)) = hfmac->OutputCurrentSize;
 		}
 
 		if (hfmac->InputAccess == FMAC_BUFFER_ACCESS_DMA) {
-			if (HAL_DMA_GetState(hfmac->hdmaIn) !=
-			    HAL_DMA_STATE_READY) {
+			if (HAL_DMA_GetState(hfmac->hdmaIn) != HAL_DMA_STATE_READY) {
 				/* Disable the DMA stream managing FMAC input
 				 * data */
 				status = HAL_DMA_Abort_IT(hfmac->hdmaIn);
 			}
 		}
 
-		if ((hfmac->OutputAccess == FMAC_BUFFER_ACCESS_DMA) &&
-		    (status == HAL_OK)) {
-			if (HAL_DMA_GetState(hfmac->hdmaOut) !=
-			    HAL_DMA_STATE_READY) {
+		if ((hfmac->OutputAccess == FMAC_BUFFER_ACCESS_DMA) && (status == HAL_OK)) {
+			if (HAL_DMA_GetState(hfmac->hdmaOut) != HAL_DMA_STATE_READY) {
 				/* Disable the DMA stream managing FMAC output
 				 * data */
 				status = HAL_DMA_Abort_IT(hfmac->hdmaOut);
@@ -1483,20 +1414,17 @@ void HAL_FMAC_IRQHandler(FMAC_HandleTypeDef *hfmac)
 	/* Check if the read interrupt is enabled and if Y buffer empty flag
 	 * isn't set */
 	itsource = __HAL_FMAC_GET_IT_SOURCE(hfmac, FMAC_IT_RIEN);
-	if ((__HAL_FMAC_GET_FLAG(hfmac, FMAC_FLAG_YEMPTY) == 0U) &&
-	    (itsource != 0U)) {
+	if ((__HAL_FMAC_GET_FLAG(hfmac, FMAC_FLAG_YEMPTY) == 0U) && (itsource != 0U)) {
 		/* Read some data if possible (Y size is used as a pseudo
 		   timeout in order to not get stuck too long under IT if FMAC
 		   keeps on processing input data reloaded via DMA for
 		   instance). */
 		if (hfmac->pOutput != NULL) {
-			FMAC_ReadDataIncrementPtr(
-			    hfmac, (uint16_t)FMAC_GET_Y_SIZE(hfmac));
+			FMAC_ReadDataIncrementPtr(hfmac, (uint16_t)FMAC_GET_Y_SIZE(hfmac));
 		}
 
 		/* Indicate that data is ready to be read */
-		if ((hfmac->pOutput == NULL) ||
-		    (hfmac->OutputCurrentSize == *(hfmac->pOutputSize))) {
+		if ((hfmac->pOutput == NULL) || (hfmac->OutputCurrentSize == *(hfmac->pOutputSize))) {
 			/* Reset the pointers to indicate new data will be
 			 * needed */
 			FMAC_ResetOutputStateAndDataPointers(hfmac);
@@ -1513,20 +1441,17 @@ void HAL_FMAC_IRQHandler(FMAC_HandleTypeDef *hfmac)
 	/* Check if the write interrupt is enabled and if X1 buffer full flag
 	 * isn't set */
 	itsource = __HAL_FMAC_GET_IT_SOURCE(hfmac, FMAC_IT_WIEN);
-	if ((__HAL_FMAC_GET_FLAG(hfmac, FMAC_FLAG_X1FULL) == 0U) &&
-	    (itsource != 0U)) {
+	if ((__HAL_FMAC_GET_FLAG(hfmac, FMAC_FLAG_X1FULL) == 0U) && (itsource != 0U)) {
 		/* Write some data if possible (X1 size is used as a pseudo
 		   timeout in order to not get stuck too long under IT if FMAC
 		   keep on processing input data whereas its output emptied via
 		   DMA for instance). */
 		if (hfmac->pInput != NULL) {
-			FMAC_WriteDataIncrementPtr(
-			    hfmac, (uint16_t)FMAC_GET_X1_SIZE(hfmac));
+			FMAC_WriteDataIncrementPtr(hfmac, (uint16_t)FMAC_GET_X1_SIZE(hfmac));
 		}
 
 		/* Indicate that new data will be needed */
-		if ((hfmac->pInput == NULL) ||
-		    (hfmac->InputCurrentSize == *(hfmac->pInputSize))) {
+		if ((hfmac->pInput == NULL) || (hfmac->InputCurrentSize == *(hfmac->pInputSize))) {
 			/* Reset the pointers to indicate new data will be
 			 * needed */
 			FMAC_ResetInputStateAndDataPointers(hfmac);
@@ -1543,24 +1468,21 @@ void HAL_FMAC_IRQHandler(FMAC_HandleTypeDef *hfmac)
 	/* Check if the overflow error interrupt is enabled and if overflow
 	 * error flag is raised */
 	itsource = __HAL_FMAC_GET_IT_SOURCE(hfmac, FMAC_IT_OVFLIEN);
-	if ((__HAL_FMAC_GET_FLAG(hfmac, FMAC_FLAG_OVFL) != 0U) &&
-	    (itsource != 0U)) {
+	if ((__HAL_FMAC_GET_FLAG(hfmac, FMAC_FLAG_OVFL) != 0U) && (itsource != 0U)) {
 		hfmac->ErrorCode |= HAL_FMAC_ERROR_OVFL;
 	}
 
 	/* Check if the underflow error interrupt is enabled and if underflow
 	 * error flag is raised */
 	itsource = __HAL_FMAC_GET_IT_SOURCE(hfmac, FMAC_IT_UNFLIEN);
-	if ((__HAL_FMAC_GET_FLAG(hfmac, FMAC_FLAG_UNFL) != 0U) &&
-	    (itsource != 0U)) {
+	if ((__HAL_FMAC_GET_FLAG(hfmac, FMAC_FLAG_UNFL) != 0U) && (itsource != 0U)) {
 		hfmac->ErrorCode |= HAL_FMAC_ERROR_UNFL;
 	}
 
 	/* Check if the saturation error interrupt is enabled and if saturation
 	 * error flag is raised */
 	itsource = __HAL_FMAC_GET_IT_SOURCE(hfmac, FMAC_IT_SATIEN);
-	if ((__HAL_FMAC_GET_FLAG(hfmac, FMAC_FLAG_SAT) != 0U) &&
-	    (itsource != 0U)) {
+	if ((__HAL_FMAC_GET_FLAG(hfmac, FMAC_FLAG_SAT) != 0U) && (itsource != 0U)) {
 		hfmac->ErrorCode |= HAL_FMAC_ERROR_SAT;
 	}
 
@@ -1654,8 +1576,7 @@ static HAL_StatusTypeDef FMAC_Reset(FMAC_HandleTypeDef *hfmac)
 
 	/* Wait until flag is reset */
 	while (READ_BIT(hfmac->Instance->CR, FMAC_CR_RESET) != 0U) {
-		if ((HAL_GetTick() - tickstart) >
-		    HAL_FMAC_RESET_TIMEOUT_VALUE) {
+		if ((HAL_GetTick() - tickstart) > HAL_FMAC_RESET_TIMEOUT_VALUE) {
 			hfmac->ErrorCode |= HAL_FMAC_ERROR_TIMEOUT;
 			return HAL_ERROR;
 		}
@@ -1713,8 +1634,7 @@ static void FMAC_ResetOutputStateAndDataPointers(FMAC_HandleTypeDef *hfmac)
  * @param  PreloadAccess access mode used for the preload (polling or DMA).
  * @retval HAL_StatusTypeDef HAL status
  */
-static HAL_StatusTypeDef FMAC_FilterConfig(FMAC_HandleTypeDef *hfmac,
-					   FMAC_FilterConfigTypeDef *pConfig,
+static HAL_StatusTypeDef FMAC_FilterConfig(FMAC_HandleTypeDef *hfmac, FMAC_FilterConfigTypeDef *pConfig,
 					   uint8_t PreloadAccess)
 {
 	uint32_t tickstart;
@@ -1757,23 +1677,19 @@ static HAL_StatusTypeDef FMAC_FilterConfig(FMAC_HandleTypeDef *hfmac,
 	/* FMAC_X1BUFCFG: Configure the input buffer within the internal memory
 	 * if required */
 	if (pConfig->InputBufferSize != 0U) {
-		MODIFY_REG(hfmac->Instance->X1BUFCFG,
-			   (FMAC_X1BUFCFG_X1_BASE | FMAC_X1BUFCFG_X1_BUF_SIZE),
-			   (((((uint32_t)(pConfig->InputBaseAddress))
-			      << FMAC_X1BUFCFG_X1_BASE_Pos) &
-			     FMAC_X1BUFCFG_X1_BASE) |
-			    ((((uint32_t)(pConfig->InputBufferSize))
-			      << FMAC_X1BUFCFG_X1_BUF_SIZE_Pos) &
-			     FMAC_X1BUFCFG_X1_BUF_SIZE)));
+		MODIFY_REG(
+		    hfmac->Instance->X1BUFCFG, (FMAC_X1BUFCFG_X1_BASE | FMAC_X1BUFCFG_X1_BUF_SIZE),
+		    (((((uint32_t)(pConfig->InputBaseAddress)) << FMAC_X1BUFCFG_X1_BASE_Pos) & FMAC_X1BUFCFG_X1_BASE) |
+		     ((((uint32_t)(pConfig->InputBufferSize)) << FMAC_X1BUFCFG_X1_BUF_SIZE_Pos) &
+		      FMAC_X1BUFCFG_X1_BUF_SIZE)));
 	}
 
 	/* FMAC_X1BUFCFG: Configure the input threshold if valid when compared
 	 * to the configured X1 size */
 	if (pConfig->InputThreshold != FMAC_THRESHOLD_NO_VALUE) {
 		/* Check the parameter */
-		assert_param(IS_FMAC_THRESHOLD_APPLICABLE(
-		    FMAC_GET_X1_SIZE(hfmac), pConfig->InputThreshold,
-		    pConfig->InputAccess));
+		assert_param(IS_FMAC_THRESHOLD_APPLICABLE(FMAC_GET_X1_SIZE(hfmac), pConfig->InputThreshold,
+							  pConfig->InputAccess));
 
 		MODIFY_REG(hfmac->Instance->X1BUFCFG, FMAC_X1BUFCFG_FULL_WM,
 			   ((pConfig->InputThreshold) & FMAC_X1BUFCFG_FULL_WM));
@@ -1782,40 +1698,32 @@ static HAL_StatusTypeDef FMAC_FilterConfig(FMAC_HandleTypeDef *hfmac,
 	/* FMAC_X2BUFCFG: Configure the coefficient buffer within the internal
 	 * memory */
 	if (pConfig->CoeffBufferSize != 0U) {
-		MODIFY_REG(hfmac->Instance->X2BUFCFG,
-			   (FMAC_X2BUFCFG_X2_BASE | FMAC_X2BUFCFG_X2_BUF_SIZE),
-			   (((((uint32_t)(pConfig->CoeffBaseAddress))
-			      << FMAC_X2BUFCFG_X2_BASE_Pos) &
-			     FMAC_X2BUFCFG_X2_BASE) |
-			    ((((uint32_t)(pConfig->CoeffBufferSize))
-			      << FMAC_X2BUFCFG_X2_BUF_SIZE_Pos) &
-			     FMAC_X2BUFCFG_X2_BUF_SIZE)));
+		MODIFY_REG(
+		    hfmac->Instance->X2BUFCFG, (FMAC_X2BUFCFG_X2_BASE | FMAC_X2BUFCFG_X2_BUF_SIZE),
+		    (((((uint32_t)(pConfig->CoeffBaseAddress)) << FMAC_X2BUFCFG_X2_BASE_Pos) & FMAC_X2BUFCFG_X2_BASE) |
+		     ((((uint32_t)(pConfig->CoeffBufferSize)) << FMAC_X2BUFCFG_X2_BUF_SIZE_Pos) &
+		      FMAC_X2BUFCFG_X2_BUF_SIZE)));
 	}
 
 	/* FMAC_YBUFCFG: Configure the output buffer within the internal memory
 	 * if required */
 	if (pConfig->OutputBufferSize != 0U) {
-		MODIFY_REG(hfmac->Instance->YBUFCFG,
-			   (FMAC_YBUFCFG_Y_BASE | FMAC_YBUFCFG_Y_BUF_SIZE),
-			   (((((uint32_t)(pConfig->OutputBaseAddress))
-			      << FMAC_YBUFCFG_Y_BASE_Pos) &
-			     FMAC_YBUFCFG_Y_BASE) |
-			    ((((uint32_t)(pConfig->OutputBufferSize))
-			      << FMAC_YBUFCFG_Y_BUF_SIZE_Pos) &
-			     FMAC_YBUFCFG_Y_BUF_SIZE)));
+		MODIFY_REG(
+		    hfmac->Instance->YBUFCFG, (FMAC_YBUFCFG_Y_BASE | FMAC_YBUFCFG_Y_BUF_SIZE),
+		    (((((uint32_t)(pConfig->OutputBaseAddress)) << FMAC_YBUFCFG_Y_BASE_Pos) & FMAC_YBUFCFG_Y_BASE) |
+		     ((((uint32_t)(pConfig->OutputBufferSize)) << FMAC_YBUFCFG_Y_BUF_SIZE_Pos) &
+		      FMAC_YBUFCFG_Y_BUF_SIZE)));
 	}
 
 	/* FMAC_YBUFCFG: Configure the output threshold if valid when compared
 	 * to the configured Y size */
 	if (pConfig->OutputThreshold != FMAC_THRESHOLD_NO_VALUE) {
 		/* Check the parameter */
-		assert_param(IS_FMAC_THRESHOLD_APPLICABLE(
-		    FMAC_GET_Y_SIZE(hfmac), pConfig->OutputThreshold,
-		    pConfig->OutputAccess));
+		assert_param(IS_FMAC_THRESHOLD_APPLICABLE(FMAC_GET_Y_SIZE(hfmac), pConfig->OutputThreshold,
+							  pConfig->OutputAccess));
 
-		MODIFY_REG(
-		    hfmac->Instance->YBUFCFG, FMAC_YBUFCFG_EMPTY_WM,
-		    ((pConfig->OutputThreshold) & FMAC_YBUFCFG_EMPTY_WM));
+		MODIFY_REG(hfmac->Instance->YBUFCFG, FMAC_YBUFCFG_EMPTY_WM,
+			   ((pConfig->OutputThreshold) & FMAC_YBUFCFG_EMPTY_WM));
 	}
 
 	/* FMAC_CR: Configure the clip feature */
@@ -1824,10 +1732,8 @@ static HAL_StatusTypeDef FMAC_FilterConfig(FMAC_HandleTypeDef *hfmac,
 	/* FMAC_CR: If IT or DMA will be used, enable error interrupts.
 	 * Being more a debugging feature, FMAC_CR_SATIEN isn't enabled by
 	 * default. */
-	if ((pConfig->InputAccess == FMAC_BUFFER_ACCESS_DMA) ||
-	    (pConfig->InputAccess == FMAC_BUFFER_ACCESS_IT) ||
-	    (pConfig->OutputAccess == FMAC_BUFFER_ACCESS_DMA) ||
-	    (pConfig->OutputAccess == FMAC_BUFFER_ACCESS_IT)) {
+	if ((pConfig->InputAccess == FMAC_BUFFER_ACCESS_DMA) || (pConfig->InputAccess == FMAC_BUFFER_ACCESS_IT) ||
+	    (pConfig->OutputAccess == FMAC_BUFFER_ACCESS_DMA) || (pConfig->OutputAccess == FMAC_BUFFER_ACCESS_IT)) {
 		tmpcr |= FMAC_IT_UNFLIEN | FMAC_IT_OVFLIEN;
 	}
 
@@ -1843,16 +1749,13 @@ static HAL_StatusTypeDef FMAC_FilterConfig(FMAC_HandleTypeDef *hfmac,
 #if defined(USE_FULL_ASSERT)
 	x2size = FMAC_GET_X2_SIZE(hfmac);
 #endif /* USE_FULL_ASSERT */
-	assert_param(
-	    ((pConfig->Filter == FMAC_FUNC_CONVO_FIR) &&
-	     (x2size >= pConfig->P)) ||
-	    ((pConfig->Filter == FMAC_FUNC_IIR_DIRECT_FORM_1) &&
-	     (x2size >= ((uint32_t)pConfig->P + (uint32_t)pConfig->Q))));
+	assert_param(((pConfig->Filter == FMAC_FUNC_CONVO_FIR) && (x2size >= pConfig->P)) ||
+		     ((pConfig->Filter == FMAC_FUNC_IIR_DIRECT_FORM_1) &&
+		      (x2size >= ((uint32_t)pConfig->P + (uint32_t)pConfig->Q))));
 
 	/* Build the PARAM value that will be used when starting the filter */
 	hfmac->FilterParam =
-	    (FMAC_PARAM_START | pConfig->Filter |
-	     ((((uint32_t)(pConfig->P)) << FMAC_PARAM_P_Pos) & FMAC_PARAM_P) |
+	    (FMAC_PARAM_START | pConfig->Filter | ((((uint32_t)(pConfig->P)) << FMAC_PARAM_P_Pos) & FMAC_PARAM_P) |
 	     ((((uint32_t)(pConfig->Q)) << FMAC_PARAM_Q_Pos) & FMAC_PARAM_Q) |
 	     ((((uint32_t)(pConfig->R)) << FMAC_PARAM_R_Pos) & FMAC_PARAM_R));
 
@@ -1860,48 +1763,35 @@ static HAL_StatusTypeDef FMAC_FilterConfig(FMAC_HandleTypeDef *hfmac,
 	 */
 	if ((pConfig->pCoeffB != NULL) && (pConfig->CoeffBSize != 0U)) {
 		/* FIR/IIR: The provided coefficients should match X2 size */
-		assert_param(((uint32_t)pConfig->CoeffASize +
-			      (uint32_t)pConfig->CoeffBSize) <= x2size);
+		assert_param(((uint32_t)pConfig->CoeffASize + (uint32_t)pConfig->CoeffBSize) <= x2size);
 		/* FIR/IIR: The size of pCoeffB should match the parameter P */
 		assert_param(pConfig->CoeffBSize >= pConfig->P);
 		/* pCoeffA should be provided for IIR but not for FIR */
 		/* IIR : if pCoeffB is provided, pCoeffA should also be there */
 		/* IIR: The size of pCoeffA should match the parameter Q */
-		assert_param(
-		    ((pConfig->Filter == FMAC_FUNC_CONVO_FIR) &&
-		     (pConfig->pCoeffA == NULL) &&
-		     (pConfig->CoeffASize == 0U)) ||
-		    ((pConfig->Filter == FMAC_FUNC_IIR_DIRECT_FORM_1) &&
-		     (pConfig->pCoeffA != NULL) &&
-		     (pConfig->CoeffASize != 0U) &&
-		     (pConfig->CoeffASize >= pConfig->Q)));
+		assert_param(((pConfig->Filter == FMAC_FUNC_CONVO_FIR) && (pConfig->pCoeffA == NULL) &&
+			      (pConfig->CoeffASize == 0U)) ||
+			     ((pConfig->Filter == FMAC_FUNC_IIR_DIRECT_FORM_1) && (pConfig->pCoeffA != NULL) &&
+			      (pConfig->CoeffASize != 0U) && (pConfig->CoeffASize >= pConfig->Q)));
 
 		/* Write number of values to be loaded, the data load function
 		 * and start the operation */
-		WRITE_REG(
-		    hfmac->Instance->PARAM,
-		    (((uint32_t)(pConfig->CoeffBSize) << FMAC_PARAM_P_Pos) |
-		     ((uint32_t)(pConfig->CoeffASize) << FMAC_PARAM_Q_Pos) |
-		     FMAC_FUNC_LOAD_X2 | FMAC_PARAM_START));
+		WRITE_REG(hfmac->Instance->PARAM, (((uint32_t)(pConfig->CoeffBSize) << FMAC_PARAM_P_Pos) |
+						   ((uint32_t)(pConfig->CoeffASize) << FMAC_PARAM_Q_Pos) |
+						   FMAC_FUNC_LOAD_X2 | FMAC_PARAM_START));
 
 		if (PreloadAccess == PRELOAD_ACCESS_POLLING) {
 			/* Load the buffer into the internal memory */
-			FMAC_WritePreloadDataIncrementPtr(
-			    hfmac, &(pConfig->pCoeffB), pConfig->CoeffBSize);
+			FMAC_WritePreloadDataIncrementPtr(hfmac, &(pConfig->pCoeffB), pConfig->CoeffBSize);
 
 			/* Load pCoeffA if needed */
-			if ((pConfig->pCoeffA != NULL) &&
-			    (pConfig->CoeffASize != 0U)) {
+			if ((pConfig->pCoeffA != NULL) && (pConfig->CoeffASize != 0U)) {
 				/* Load the buffer into the internal memory */
-				FMAC_WritePreloadDataIncrementPtr(
-				    hfmac, &(pConfig->pCoeffA),
-				    pConfig->CoeffASize);
+				FMAC_WritePreloadDataIncrementPtr(hfmac, &(pConfig->pCoeffA), pConfig->CoeffASize);
 			}
 
 			/* Wait for the end of the writing */
-			if (FMAC_WaitOnStartUntilTimeout(
-				hfmac, tickstart, HAL_FMAC_TIMEOUT_VALUE) !=
-			    HAL_OK) {
+			if (FMAC_WaitOnStartUntilTimeout(hfmac, tickstart, HAL_FMAC_TIMEOUT_VALUE) != HAL_OK) {
 				hfmac->ErrorCode |= HAL_FMAC_ERROR_TIMEOUT;
 				hfmac->State = HAL_FMAC_STATE_TIMEOUT;
 				return HAL_ERROR;
@@ -1915,55 +1805,41 @@ static HAL_StatusTypeDef FMAC_FilterConfig(FMAC_HandleTypeDef *hfmac,
 
 			/* Set the FMAC DMA transfer complete callback */
 			hfmac->hdmaPreload->XferHalfCpltCallback = NULL;
-			hfmac->hdmaPreload->XferCpltCallback =
-			    FMAC_DMAFilterConfig;
+			hfmac->hdmaPreload->XferCpltCallback = FMAC_DMAFilterConfig;
 			/* Set the DMA error callback */
 			hfmac->hdmaPreload->XferErrorCallback = FMAC_DMAError;
 
 			/* Enable the DMA stream managing FMAC preload data
 			 * write */
-			if ((hfmac->hdmaPreload->Mode & DMA_LINKEDLIST) ==
-			    DMA_LINKEDLIST) {
-				if ((hfmac->hdmaPreload->LinkedListQueue !=
-				     NULL) &&
-				    (hfmac->hdmaPreload->LinkedListQueue
-					 ->Head != NULL)) {
+			if ((hfmac->hdmaPreload->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
+				if ((hfmac->hdmaPreload->LinkedListQueue != NULL) &&
+				    (hfmac->hdmaPreload->LinkedListQueue->Head != NULL)) {
 					/* Enable the DMA channel */
-					hfmac->hdmaPreload->LinkedListQueue
-					    ->Head->LinkRegisters
-						[NODE_CBR1_DEFAULT_OFFSET] =
-					    (uint32_t)(2UL *
-						       pConfig
-							   ->CoeffBSize); /* Set
-									     DMA
-									     data
-									     size
-									   */
-					hfmac->hdmaPreload->LinkedListQueue
-					    ->Head->LinkRegisters
-						[NODE_CSAR_DEFAULT_OFFSET] =
-					    (uint32_t)pConfig
-						->pCoeffB; /* Set DMA source
-							      address      */
-					hfmac->hdmaPreload->LinkedListQueue
-					    ->Head->LinkRegisters
-						[NODE_CDAR_DEFAULT_OFFSET] =
-					    (uint32_t)&hfmac->Instance
-						->WDATA; /* Set DMA destination
-							    address */
+					hfmac->hdmaPreload->LinkedListQueue->Head
+					    ->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] =
+					    (uint32_t)(2UL * pConfig->CoeffBSize); /* Set
+										      DMA
+										      data
+										      size
+										    */
+					hfmac->hdmaPreload->LinkedListQueue->Head
+					    ->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] =
+					    (uint32_t)pConfig->pCoeffB; /* Set DMA source
+									   address      */
+					hfmac->hdmaPreload->LinkedListQueue->Head
+					    ->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] =
+					    (uint32_t)&hfmac->Instance->WDATA; /* Set DMA destination
+										  address */
 
-					status = HAL_DMAEx_List_Start_IT(
-					    hfmac->hdmaPreload);
+					status = HAL_DMAEx_List_Start_IT(hfmac->hdmaPreload);
 				} else {
 					/* Return error status */
 					return HAL_ERROR;
 				}
 			} else {
-				status = HAL_DMA_Start_IT(
-				    hfmac->hdmaPreload,
-				    (uint32_t)pConfig->pCoeffB,
-				    (uint32_t)&hfmac->Instance->WDATA,
-				    (uint32_t)(2UL * pConfig->CoeffBSize));
+				status = HAL_DMA_Start_IT(hfmac->hdmaPreload, (uint32_t)pConfig->pCoeffB,
+							  (uint32_t)&hfmac->Instance->WDATA,
+							  (uint32_t)(2UL * pConfig->CoeffBSize));
 			}
 
 			if (status != HAL_OK) {
@@ -2004,11 +1880,8 @@ static HAL_StatusTypeDef FMAC_FilterConfig(FMAC_HandleTypeDef *hfmac,
  * will be returned.
  * @retval HAL_StatusTypeDef HAL status
  */
-static HAL_StatusTypeDef FMAC_FilterPreload(FMAC_HandleTypeDef *hfmac,
-					    int16_t *pInput, uint8_t InputSize,
-					    int16_t *pOutput,
-					    uint8_t OutputSize,
-					    uint8_t PreloadAccess)
+static HAL_StatusTypeDef FMAC_FilterPreload(FMAC_HandleTypeDef *hfmac, int16_t *pInput, uint8_t InputSize,
+					    int16_t *pOutput, uint8_t OutputSize, uint8_t PreloadAccess)
 {
 	uint32_t tickstart;
 	HAL_StatusTypeDef status;
@@ -2049,18 +1922,14 @@ static HAL_StatusTypeDef FMAC_FilterPreload(FMAC_HandleTypeDef *hfmac,
 		/* Write number of values to be loaded, the data load function
 		 * and start the operation */
 		WRITE_REG(hfmac->Instance->PARAM,
-			  (((uint32_t)InputSize << FMAC_PARAM_P_Pos) |
-			   FMAC_FUNC_LOAD_X1 | FMAC_PARAM_START));
+			  (((uint32_t)InputSize << FMAC_PARAM_P_Pos) | FMAC_FUNC_LOAD_X1 | FMAC_PARAM_START));
 
 		if (PreloadAccess == PRELOAD_ACCESS_POLLING) {
 			/* Load the buffer into the internal memory */
-			FMAC_WritePreloadDataIncrementPtr(hfmac, &pInput,
-							  InputSize);
+			FMAC_WritePreloadDataIncrementPtr(hfmac, &pInput, InputSize);
 
 			/* Wait for the end of the writing */
-			if (FMAC_WaitOnStartUntilTimeout(
-				hfmac, tickstart, HAL_FMAC_TIMEOUT_VALUE) !=
-			    HAL_OK) {
+			if (FMAC_WaitOnStartUntilTimeout(hfmac, tickstart, HAL_FMAC_TIMEOUT_VALUE) != HAL_OK) {
 				hfmac->ErrorCode |= HAL_FMAC_ERROR_TIMEOUT;
 				hfmac->State = HAL_FMAC_STATE_TIMEOUT;
 				return HAL_ERROR;
@@ -2071,50 +1940,39 @@ static HAL_StatusTypeDef FMAC_FilterPreload(FMAC_HandleTypeDef *hfmac,
 
 			/* Set the FMAC DMA transfer complete callback */
 			hfmac->hdmaPreload->XferHalfCpltCallback = NULL;
-			hfmac->hdmaPreload->XferCpltCallback =
-			    FMAC_DMAFilterPreload;
+			hfmac->hdmaPreload->XferCpltCallback = FMAC_DMAFilterPreload;
 			/* Set the DMA error callback */
 			hfmac->hdmaPreload->XferErrorCallback = FMAC_DMAError;
 
 			/* Enable the DMA stream managing FMAC preload data
 			 * write */
-			if ((hfmac->hdmaPreload->Mode & DMA_LINKEDLIST) ==
-			    DMA_LINKEDLIST) {
-				if ((hfmac->hdmaPreload->LinkedListQueue !=
-				     NULL) &&
-				    (hfmac->hdmaPreload->LinkedListQueue
-					 ->Head != NULL)) {
+			if ((hfmac->hdmaPreload->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
+				if ((hfmac->hdmaPreload->LinkedListQueue != NULL) &&
+				    (hfmac->hdmaPreload->LinkedListQueue->Head != NULL)) {
 					/* Enable the DMA channel */
-					hfmac->hdmaPreload->LinkedListQueue
-					    ->Head->LinkRegisters
-						[NODE_CBR1_DEFAULT_OFFSET] =
-					    (uint32_t)(2UL *
-						       InputSize); /* Set DMA
-								      data size
-								    */
-					hfmac->hdmaPreload->LinkedListQueue
-					    ->Head->LinkRegisters
-						[NODE_CSAR_DEFAULT_OFFSET] =
+					hfmac->hdmaPreload->LinkedListQueue->Head
+					    ->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] =
+					    (uint32_t)(2UL * InputSize); /* Set DMA
+									    data size
+									  */
+					hfmac->hdmaPreload->LinkedListQueue->Head
+					    ->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] =
 					    (uint32_t)pInput; /* Set DMA source
 								 address      */
-					hfmac->hdmaPreload->LinkedListQueue
-					    ->Head->LinkRegisters
-						[NODE_CDAR_DEFAULT_OFFSET] =
-					    (uint32_t)&hfmac->Instance
-						->WDATA; /* Set DMA destination
-							    address */
+					hfmac->hdmaPreload->LinkedListQueue->Head
+					    ->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] =
+					    (uint32_t)&hfmac->Instance->WDATA; /* Set DMA destination
+										  address */
 
-					return (HAL_DMAEx_List_Start_IT(
-					    hfmac->hdmaPreload));
+					return (HAL_DMAEx_List_Start_IT(hfmac->hdmaPreload));
 				} else {
 					/* Return error status */
 					return HAL_ERROR;
 				}
 			} else {
-				return (HAL_DMA_Start_IT(
-				    hfmac->hdmaPreload, (uint32_t)pInput,
-				    (uint32_t)&hfmac->Instance->WDATA,
-				    (uint32_t)(2UL * InputSize)));
+				return (HAL_DMA_Start_IT(hfmac->hdmaPreload, (uint32_t)pInput,
+							 (uint32_t)&hfmac->Instance->WDATA,
+							 (uint32_t)(2UL * InputSize)));
 			}
 		}
 	}
@@ -2124,18 +1982,14 @@ static HAL_StatusTypeDef FMAC_FilterPreload(FMAC_HandleTypeDef *hfmac,
 		/* Write number of values to be loaded, the data load function
 		 * and start the operation */
 		WRITE_REG(hfmac->Instance->PARAM,
-			  (((uint32_t)OutputSize << FMAC_PARAM_P_Pos) |
-			   FMAC_FUNC_LOAD_Y | FMAC_PARAM_START));
+			  (((uint32_t)OutputSize << FMAC_PARAM_P_Pos) | FMAC_FUNC_LOAD_Y | FMAC_PARAM_START));
 
 		if (PreloadAccess == PRELOAD_ACCESS_POLLING) {
 			/* Load the buffer into the internal memory */
-			FMAC_WritePreloadDataIncrementPtr(hfmac, &pOutput,
-							  OutputSize);
+			FMAC_WritePreloadDataIncrementPtr(hfmac, &pOutput, OutputSize);
 
 			/* Wait for the end of the writing */
-			if (FMAC_WaitOnStartUntilTimeout(
-				hfmac, tickstart, HAL_FMAC_TIMEOUT_VALUE) !=
-			    HAL_OK) {
+			if (FMAC_WaitOnStartUntilTimeout(hfmac, tickstart, HAL_FMAC_TIMEOUT_VALUE) != HAL_OK) {
 				hfmac->ErrorCode |= HAL_FMAC_ERROR_TIMEOUT;
 				hfmac->State = HAL_FMAC_STATE_TIMEOUT;
 				return HAL_ERROR;
@@ -2146,50 +2000,39 @@ static HAL_StatusTypeDef FMAC_FilterPreload(FMAC_HandleTypeDef *hfmac,
 
 			/* Set the FMAC DMA transfer complete callback */
 			hfmac->hdmaPreload->XferHalfCpltCallback = NULL;
-			hfmac->hdmaPreload->XferCpltCallback =
-			    FMAC_DMAFilterPreload;
+			hfmac->hdmaPreload->XferCpltCallback = FMAC_DMAFilterPreload;
 			/* Set the DMA error callback */
 			hfmac->hdmaPreload->XferErrorCallback = FMAC_DMAError;
 
 			/* Enable the DMA stream managing FMAC preload data
 			 * write */
-			if ((hfmac->hdmaPreload->Mode & DMA_LINKEDLIST) ==
-			    DMA_LINKEDLIST) {
-				if ((hfmac->hdmaPreload->LinkedListQueue !=
-				     NULL) &&
-				    (hfmac->hdmaPreload->LinkedListQueue
-					 ->Head != NULL)) {
+			if ((hfmac->hdmaPreload->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
+				if ((hfmac->hdmaPreload->LinkedListQueue != NULL) &&
+				    (hfmac->hdmaPreload->LinkedListQueue->Head != NULL)) {
 					/* Enable the DMA channel */
-					hfmac->hdmaPreload->LinkedListQueue
-					    ->Head->LinkRegisters
-						[NODE_CBR1_DEFAULT_OFFSET] =
-					    (uint32_t)(2UL *
-						       OutputSize); /* Set DMA
-								       data size
-								     */
-					hfmac->hdmaPreload->LinkedListQueue
-					    ->Head->LinkRegisters
-						[NODE_CSAR_DEFAULT_OFFSET] =
+					hfmac->hdmaPreload->LinkedListQueue->Head
+					    ->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] =
+					    (uint32_t)(2UL * OutputSize); /* Set DMA
+									     data size
+									   */
+					hfmac->hdmaPreload->LinkedListQueue->Head
+					    ->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] =
 					    (uint32_t)pOutput; /* Set DMA source
 								  address */
-					hfmac->hdmaPreload->LinkedListQueue
-					    ->Head->LinkRegisters
-						[NODE_CDAR_DEFAULT_OFFSET] =
-					    (uint32_t)&hfmac->Instance
-						->WDATA; /* Set DMA destination
-							    address */
+					hfmac->hdmaPreload->LinkedListQueue->Head
+					    ->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] =
+					    (uint32_t)&hfmac->Instance->WDATA; /* Set DMA destination
+										  address */
 
-					return (HAL_DMAEx_List_Start_IT(
-					    hfmac->hdmaPreload));
+					return (HAL_DMAEx_List_Start_IT(hfmac->hdmaPreload));
 				} else {
 					/* Return error status */
 					return HAL_ERROR;
 				}
 			} else {
-				return (HAL_DMA_Start_IT(
-				    hfmac->hdmaPreload, (uint32_t)pOutput,
-				    (uint32_t)&hfmac->Instance->WDATA,
-				    (uint32_t)(2UL * OutputSize)));
+				return (HAL_DMA_Start_IT(hfmac->hdmaPreload, (uint32_t)pOutput,
+							 (uint32_t)&hfmac->Instance->WDATA,
+							 (uint32_t)(2UL * OutputSize)));
 			}
 		}
 	}
@@ -2227,15 +2070,13 @@ static HAL_StatusTypeDef FMAC_FilterPreload(FMAC_HandleTypeDef *hfmac,
  * @param  Size size of the data buffer.
  * @retval None
  */
-static void FMAC_WritePreloadDataIncrementPtr(FMAC_HandleTypeDef *hfmac,
-					      int16_t **ppData, uint8_t Size)
+static void FMAC_WritePreloadDataIncrementPtr(FMAC_HandleTypeDef *hfmac, int16_t **ppData, uint8_t Size)
 {
 	uint8_t index;
 
 	/* Load the buffer into the internal memory */
 	for (index = Size; index > 0U; index--) {
-		WRITE_REG(hfmac->Instance->WDATA,
-			  (((uint32_t)(*(*ppData))) & FMAC_WDATA_WDATA));
+		WRITE_REG(hfmac->Instance->WDATA, (((uint32_t)(*(*ppData))) & FMAC_WDATA_WDATA));
 		(*ppData)++;
 	}
 }
@@ -2247,9 +2088,7 @@ static void FMAC_WritePreloadDataIncrementPtr(FMAC_HandleTypeDef *hfmac,
  * @param  Timeout Timeout duration.
  * @retval HAL_StatusTypeDef HAL status
  */
-static HAL_StatusTypeDef FMAC_WaitOnStartUntilTimeout(FMAC_HandleTypeDef *hfmac,
-						      uint32_t Tickstart,
-						      uint32_t Timeout)
+static HAL_StatusTypeDef FMAC_WaitOnStartUntilTimeout(FMAC_HandleTypeDef *hfmac, uint32_t Tickstart, uint32_t Timeout)
 {
 	/* Wait until flag changes */
 	while (READ_BIT(hfmac->Instance->PARAM, FMAC_PARAM_START) != 0U) {
@@ -2272,9 +2111,8 @@ static HAL_StatusTypeDef FMAC_WaitOnStartUntilTimeout(FMAC_HandleTypeDef *hfmac,
  *         written, it will be updated with the number of data read from FMAC).
  * @retval HAL_StatusTypeDef HAL status
  */
-static HAL_StatusTypeDef
-FMAC_AppendFilterDataUpdateState(FMAC_HandleTypeDef *hfmac, int16_t *pInput,
-				 uint16_t *pInputSize)
+static HAL_StatusTypeDef FMAC_AppendFilterDataUpdateState(FMAC_HandleTypeDef *hfmac, int16_t *pInput,
+							  uint16_t *pInputSize)
 {
 	HAL_StatusTypeDef status;
 	/* Change the FMAC state */
@@ -2299,20 +2137,14 @@ FMAC_AppendFilterDataUpdateState(FMAC_HandleTypeDef *hfmac, int16_t *pInput,
 			if ((hfmac->hdmaIn->LinkedListQueue != NULL) &&
 			    (hfmac->hdmaIn->LinkedListQueue->Head != NULL)) {
 				/* Enable the DMA channel */
-				hfmac->hdmaIn->LinkedListQueue->Head
-				    ->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] =
-				    (uint32_t)(2UL *
-					       (*pInputSize)); /* Set DMA data
-								  size */
-				hfmac->hdmaIn->LinkedListQueue->Head
-				    ->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] =
-				    (uint32_t)
-					pInput; /* Set DMA source address */
-				hfmac->hdmaIn->LinkedListQueue->Head
-				    ->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] =
-				    (uint32_t)&hfmac->Instance
-					->WDATA; /* Set DMA destination address
-						  */
+				hfmac->hdmaIn->LinkedListQueue->Head->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] =
+				    (uint32_t)(2UL * (*pInputSize)); /* Set DMA data
+									size */
+				hfmac->hdmaIn->LinkedListQueue->Head->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] =
+				    (uint32_t)pInput; /* Set DMA source address */
+				hfmac->hdmaIn->LinkedListQueue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] =
+				    (uint32_t)&hfmac->Instance->WDATA; /* Set DMA destination address
+									*/
 
 				status = HAL_DMAEx_List_Start_IT(hfmac->hdmaIn);
 			} else {
@@ -2320,10 +2152,8 @@ FMAC_AppendFilterDataUpdateState(FMAC_HandleTypeDef *hfmac, int16_t *pInput,
 				return HAL_ERROR;
 			}
 		} else {
-			status =
-			    HAL_DMA_Start_IT(hfmac->hdmaIn, (uint32_t)pInput,
-					     (uint32_t)&hfmac->Instance->WDATA,
-					     (uint32_t)(2UL * (*pInputSize)));
+			status = HAL_DMA_Start_IT(hfmac->hdmaIn, (uint32_t)pInput, (uint32_t)&hfmac->Instance->WDATA,
+						  (uint32_t)(2UL * (*pInputSize)));
 		}
 
 		if (status != HAL_OK) {
@@ -2350,16 +2180,15 @@ FMAC_AppendFilterDataUpdateState(FMAC_HandleTypeDef *hfmac, int16_t *pInput,
  *         of data read from FMAC).
  * @retval HAL_StatusTypeDef HAL status
  */
-static HAL_StatusTypeDef FMAC_ConfigFilterOutputBufferUpdateState(
-    FMAC_HandleTypeDef *hfmac, int16_t *pOutput, uint16_t *pOutputSize)
+static HAL_StatusTypeDef FMAC_ConfigFilterOutputBufferUpdateState(FMAC_HandleTypeDef *hfmac, int16_t *pOutput,
+								  uint16_t *pOutputSize)
 {
 	HAL_StatusTypeDef status;
 	/* Reset the current size */
 	hfmac->OutputCurrentSize = 0U;
 
 	/* Check whether a valid pointer was provided */
-	if ((pOutput == NULL) || (pOutputSize == NULL) ||
-	    (*pOutputSize == 0U)) {
+	if ((pOutput == NULL) || (pOutputSize == NULL) || (*pOutputSize == 0U)) {
 		/* The user will have to provide a valid configuration later */
 		hfmac->pOutput = NULL;
 		hfmac->pOutputSize = NULL;
@@ -2372,8 +2201,7 @@ static HAL_StatusTypeDef FMAC_ConfigFilterOutputBufferUpdateState(
 		hfmac->RdState = HAL_FMAC_STATE_BUSY_RD;
 
 		/* Set the FMAC DMA transfer complete callback */
-		hfmac->hdmaOut->XferHalfCpltCallback =
-		    FMAC_DMAHalfOutputDataReady;
+		hfmac->hdmaOut->XferHalfCpltCallback = FMAC_DMAHalfOutputDataReady;
 		hfmac->hdmaOut->XferCpltCallback = FMAC_DMAOutputDataReady;
 		/* Set the DMA error callback */
 		hfmac->hdmaOut->XferErrorCallback = FMAC_DMAError;
@@ -2383,31 +2211,23 @@ static HAL_StatusTypeDef FMAC_ConfigFilterOutputBufferUpdateState(
 			if ((hfmac->hdmaOut->LinkedListQueue != NULL) &&
 			    (hfmac->hdmaOut->LinkedListQueue->Head != NULL)) {
 				/* Enable the DMA channel */
-				hfmac->hdmaOut->LinkedListQueue->Head
-				    ->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] =
-				    (uint32_t)(4UL *
-					       (*pOutputSize)); /* Set DMA data
-								   size */
-				hfmac->hdmaOut->LinkedListQueue->Head
-				    ->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] =
-				    (uint32_t)&hfmac->Instance
-					->RDATA; /* Set DMA source address */
-				hfmac->hdmaOut->LinkedListQueue->Head
-				    ->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] =
+				hfmac->hdmaOut->LinkedListQueue->Head->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] =
+				    (uint32_t)(4UL * (*pOutputSize)); /* Set DMA data
+									 size */
+				hfmac->hdmaOut->LinkedListQueue->Head->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] =
+				    (uint32_t)&hfmac->Instance->RDATA; /* Set DMA source address */
+				hfmac->hdmaOut->LinkedListQueue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] =
 				    (uint32_t)pOutput; /* Set DMA destination
 							  address */
 
-				status =
-				    HAL_DMAEx_List_Start_IT(hfmac->hdmaOut);
+				status = HAL_DMAEx_List_Start_IT(hfmac->hdmaOut);
 			} else {
 				/* Return error status */
 				return HAL_ERROR;
 			}
 		} else {
-			status = HAL_DMA_Start_IT(
-			    hfmac->hdmaOut, (uint32_t)&hfmac->Instance->RDATA,
-			    (uint32_t)pOutput,
-			    (uint32_t)(4UL * (*pOutputSize)));
+			status = HAL_DMA_Start_IT(hfmac->hdmaOut, (uint32_t)&hfmac->Instance->RDATA, (uint32_t)pOutput,
+						  (uint32_t)(4UL * (*pOutputSize)));
 		}
 
 		if (status != HAL_OK) {
@@ -2435,8 +2255,7 @@ static HAL_StatusTypeDef FMAC_ConfigFilterOutputBufferUpdateState(
  * timeout if FMAC continuously writes into the output buffer).
  * @retval None
  */
-static void FMAC_ReadDataIncrementPtr(FMAC_HandleTypeDef *hfmac,
-				      uint16_t MaxSizeToRead)
+static void FMAC_ReadDataIncrementPtr(FMAC_HandleTypeDef *hfmac, uint16_t MaxSizeToRead)
 {
 	uint16_t maxsize;
 	uint16_t threshold;
@@ -2449,8 +2268,7 @@ static void FMAC_ReadDataIncrementPtr(FMAC_HandleTypeDef *hfmac,
 
 	/* Get the maximum index (no wait allowed, no overstepping of the output
 	 * buffer) */
-	if ((hfmac->OutputCurrentSize + MaxSizeToRead) >
-	    *(hfmac->pOutputSize)) {
+	if ((hfmac->OutputCurrentSize + MaxSizeToRead) > *(hfmac->pOutputSize)) {
 		maxsize = *(hfmac->pOutputSize);
 	} else {
 		maxsize = hfmac->OutputCurrentSize + MaxSizeToRead;
@@ -2464,17 +2282,14 @@ static void FMAC_ReadDataIncrementPtr(FMAC_HandleTypeDef *hfmac,
 		}
 
 		/* Read the available data */
-		tmpvalue =
-		    ((READ_REG(hfmac->Instance->RDATA)) & FMAC_RDATA_RDATA);
+		tmpvalue = ((READ_REG(hfmac->Instance->RDATA)) & FMAC_RDATA_RDATA);
 		*(hfmac->pOutput) = (int16_t)tmpvalue;
 		hfmac->pOutput++;
 		hfmac->OutputCurrentSize++;
 	} while (READ_BIT(hfmac->Instance->SR, FMAC_SR_YEMPTY) == 0U);
 
 	/* Y buffer empty flag has just be raised, read the threshold */
-	threshold =
-	    (uint16_t)FMAC_GET_THRESHOLD_FROM_WM(FMAC_GET_Y_EMPTY_WM(hfmac)) -
-	    1U;
+	threshold = (uint16_t)FMAC_GET_THRESHOLD_FROM_WM(FMAC_GET_Y_EMPTY_WM(hfmac)) - 1U;
 
 	/* Update the maximum size if needed (limited data available) */
 	if ((hfmac->OutputCurrentSize + threshold) < maxsize) {
@@ -2483,8 +2298,7 @@ static void FMAC_ReadDataIncrementPtr(FMAC_HandleTypeDef *hfmac,
 
 	/* Read the available data */
 	while (hfmac->OutputCurrentSize < maxsize) {
-		tmpvalue =
-		    ((READ_REG(hfmac->Instance->RDATA)) & FMAC_RDATA_RDATA);
+		tmpvalue = ((READ_REG(hfmac->Instance->RDATA)) & FMAC_RDATA_RDATA);
 		*(hfmac->pOutput) = (int16_t)tmpvalue;
 		hfmac->pOutput++;
 		hfmac->OutputCurrentSize++;
@@ -2498,8 +2312,7 @@ static void FMAC_ReadDataIncrementPtr(FMAC_HandleTypeDef *hfmac,
  * timeout if FMAC continuously empties the input buffer).
  * @retval None
  */
-static void FMAC_WriteDataIncrementPtr(FMAC_HandleTypeDef *hfmac,
-				       uint16_t MaxSizeToWrite)
+static void FMAC_WriteDataIncrementPtr(FMAC_HandleTypeDef *hfmac, uint16_t MaxSizeToWrite)
 {
 	uint16_t maxsize;
 	uint16_t threshold;
@@ -2525,16 +2338,13 @@ static void FMAC_WriteDataIncrementPtr(FMAC_HandleTypeDef *hfmac,
 		}
 
 		/* Write the available data */
-		WRITE_REG(hfmac->Instance->WDATA,
-			  (((uint32_t)(*(hfmac->pInput))) & FMAC_WDATA_WDATA));
+		WRITE_REG(hfmac->Instance->WDATA, (((uint32_t)(*(hfmac->pInput))) & FMAC_WDATA_WDATA));
 		hfmac->pInput++;
 		hfmac->InputCurrentSize++;
 	} while (READ_BIT(hfmac->Instance->SR, FMAC_SR_X1FULL) == 0U);
 
 	/* X1 buffer full flag has just be raised, read the threshold */
-	threshold =
-	    (uint16_t)FMAC_GET_THRESHOLD_FROM_WM(FMAC_GET_X1_FULL_WM(hfmac)) -
-	    1U;
+	threshold = (uint16_t)FMAC_GET_THRESHOLD_FROM_WM(FMAC_GET_X1_FULL_WM(hfmac)) - 1U;
 
 	/* Update the maximum size if needed (limited data available) */
 	if ((hfmac->InputCurrentSize + threshold) < maxsize) {
@@ -2543,8 +2353,7 @@ static void FMAC_WriteDataIncrementPtr(FMAC_HandleTypeDef *hfmac,
 
 	/* Write the available data */
 	while (hfmac->InputCurrentSize < maxsize) {
-		WRITE_REG(hfmac->Instance->WDATA,
-			  (((uint32_t)(*(hfmac->pInput))) & FMAC_WDATA_WDATA));
+		WRITE_REG(hfmac->Instance->WDATA, (((uint32_t)(*(hfmac->pInput))) & FMAC_WDATA_WDATA));
 		hfmac->pInput++;
 		hfmac->InputCurrentSize++;
 	}
@@ -2557,8 +2366,7 @@ static void FMAC_WriteDataIncrementPtr(FMAC_HandleTypeDef *hfmac,
  */
 static void FMAC_DMAHalfGetData(DMA_HandleTypeDef *hdma)
 {
-	FMAC_HandleTypeDef *hfmac =
-	    (FMAC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
+	FMAC_HandleTypeDef *hfmac = (FMAC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
 
 	/* Call half get data callback */
 #if (USE_HAL_FMAC_REGISTER_CALLBACKS == 1)
@@ -2575,8 +2383,7 @@ static void FMAC_DMAHalfGetData(DMA_HandleTypeDef *hdma)
  */
 static void FMAC_DMAGetData(DMA_HandleTypeDef *hdma)
 {
-	FMAC_HandleTypeDef *hfmac =
-	    (FMAC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
+	FMAC_HandleTypeDef *hfmac = (FMAC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
 
 	/* Reset the pointers to indicate new data will be needed */
 	FMAC_ResetInputStateAndDataPointers(hfmac);
@@ -2596,8 +2403,7 @@ static void FMAC_DMAGetData(DMA_HandleTypeDef *hdma)
  */
 static void FMAC_DMAHalfOutputDataReady(DMA_HandleTypeDef *hdma)
 {
-	FMAC_HandleTypeDef *hfmac =
-	    (FMAC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
+	FMAC_HandleTypeDef *hfmac = (FMAC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
 
 	/* Call half output data ready callback */
 #if (USE_HAL_FMAC_REGISTER_CALLBACKS == 1)
@@ -2614,8 +2420,7 @@ static void FMAC_DMAHalfOutputDataReady(DMA_HandleTypeDef *hdma)
  */
 static void FMAC_DMAOutputDataReady(DMA_HandleTypeDef *hdma)
 {
-	FMAC_HandleTypeDef *hfmac =
-	    (FMAC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
+	FMAC_HandleTypeDef *hfmac = (FMAC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
 
 	/* Reset the pointers to indicate new data will be needed */
 	FMAC_ResetOutputStateAndDataPointers(hfmac);
@@ -2638,8 +2443,7 @@ static void FMAC_DMAFilterConfig(DMA_HandleTypeDef *hdma)
 	HAL_StatusTypeDef status;
 	uint8_t index;
 
-	FMAC_HandleTypeDef *hfmac =
-	    (FMAC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
+	FMAC_HandleTypeDef *hfmac = (FMAC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
 
 	/* If needed, write CoeffA and exit */
 	if (hfmac->pInput != NULL) {
@@ -2650,41 +2454,31 @@ static void FMAC_DMAFilterConfig(DMA_HandleTypeDef *hdma)
 		hfmac->hdmaPreload->XferErrorCallback = FMAC_DMAError;
 
 		/* Enable the DMA stream managing FMAC preload data write */
-		if ((hfmac->hdmaPreload->Mode & DMA_LINKEDLIST) ==
-		    DMA_LINKEDLIST) {
+		if ((hfmac->hdmaPreload->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
 			if ((hfmac->hdmaPreload->LinkedListQueue != NULL) &&
-			    (hfmac->hdmaPreload->LinkedListQueue->Head !=
-			     NULL)) {
+			    (hfmac->hdmaPreload->LinkedListQueue->Head != NULL)) {
 				/* Enable the DMA channel */
-				hfmac->hdmaPreload->LinkedListQueue->Head
-				    ->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] =
-				    (uint32_t)(2UL *
-					       hfmac->InputCurrentSize); /* Set
-									    DMA
-									    data
-									    size
-									  */
-				hfmac->hdmaPreload->LinkedListQueue->Head
-				    ->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] =
-				    (uint32_t)hfmac
-					->pInput; /* Set DMA source address */
-				hfmac->hdmaPreload->LinkedListQueue->Head
-				    ->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] =
-				    (uint32_t)&hfmac->Instance
-					->WDATA; /* Set DMA destination address
-						  */
+				hfmac->hdmaPreload->LinkedListQueue->Head->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] =
+				    (uint32_t)(2UL * hfmac->InputCurrentSize); /* Set
+										  DMA
+										  data
+										  size
+										*/
+				hfmac->hdmaPreload->LinkedListQueue->Head->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] =
+				    (uint32_t)hfmac->pInput; /* Set DMA source address */
+				hfmac->hdmaPreload->LinkedListQueue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] =
+				    (uint32_t)&hfmac->Instance->WDATA; /* Set DMA destination address
+									*/
 
-				status =
-				    HAL_DMAEx_List_Start_IT(hfmac->hdmaPreload);
+				status = HAL_DMAEx_List_Start_IT(hfmac->hdmaPreload);
 			} else {
 				/* Return error status */
 				status = HAL_ERROR;
 			}
 		} else {
-			status = HAL_DMA_Start_IT(
-			    hfmac->hdmaPreload, (uint32_t)hfmac->pInput,
-			    (uint32_t)&hfmac->Instance->WDATA,
-			    (uint32_t)(2UL * hfmac->InputCurrentSize));
+			status = HAL_DMA_Start_IT(hfmac->hdmaPreload, (uint32_t)hfmac->pInput,
+						  (uint32_t)&hfmac->Instance->WDATA,
+						  (uint32_t)(2UL * hfmac->InputCurrentSize));
 		}
 
 		if (status == HAL_OK) {
@@ -2699,8 +2493,7 @@ static void FMAC_DMAFilterConfig(DMA_HandleTypeDef *hdma)
 	} else {
 		/* Wait for the end of the writing */
 		for (index = 0U; index < MAX_PRELOAD_INDEX; index++) {
-			if (READ_BIT(hfmac->Instance->PARAM,
-				     FMAC_PARAM_START) == 0U) {
+			if (READ_BIT(hfmac->Instance->PARAM, FMAC_PARAM_START) == 0U) {
 				break;
 			}
 		}
@@ -2745,8 +2538,7 @@ static void FMAC_DMAFilterPreload(DMA_HandleTypeDef *hdma)
 	HAL_StatusTypeDef status;
 	uint8_t index;
 
-	FMAC_HandleTypeDef *hfmac =
-	    (FMAC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
+	FMAC_HandleTypeDef *hfmac = (FMAC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
 
 	/* Wait for the end of the X1 writing */
 	for (index = 0U; index < MAX_PRELOAD_INDEX; index++) {
@@ -2765,10 +2557,8 @@ static void FMAC_DMAFilterPreload(DMA_HandleTypeDef *hdma)
 	else if ((hfmac->pInput != NULL) && (hfmac->InputCurrentSize != 0U)) {
 		/* Write number of values to be loaded, the data load function
 		 * and start the operation */
-		WRITE_REG(
-		    hfmac->Instance->PARAM,
-		    (((uint32_t)(hfmac->InputCurrentSize) << FMAC_PARAM_P_Pos) |
-		     FMAC_FUNC_LOAD_Y | FMAC_PARAM_START));
+		WRITE_REG(hfmac->Instance->PARAM, (((uint32_t)(hfmac->InputCurrentSize) << FMAC_PARAM_P_Pos) |
+						   FMAC_FUNC_LOAD_Y | FMAC_PARAM_START));
 
 		/* Set the FMAC DMA transfer complete callback */
 		hfmac->hdmaPreload->XferHalfCpltCallback = NULL;
@@ -2777,41 +2567,31 @@ static void FMAC_DMAFilterPreload(DMA_HandleTypeDef *hdma)
 		hfmac->hdmaPreload->XferErrorCallback = FMAC_DMAError;
 
 		/* Enable the DMA stream managing FMAC preload data write */
-		if ((hfmac->hdmaPreload->Mode & DMA_LINKEDLIST) ==
-		    DMA_LINKEDLIST) {
+		if ((hfmac->hdmaPreload->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
 			if ((hfmac->hdmaPreload->LinkedListQueue != NULL) &&
-			    (hfmac->hdmaPreload->LinkedListQueue->Head !=
-			     NULL)) {
+			    (hfmac->hdmaPreload->LinkedListQueue->Head != NULL)) {
 				/* Enable the DMA channel */
-				hfmac->hdmaPreload->LinkedListQueue->Head
-				    ->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] =
-				    (uint32_t)(2UL *
-					       hfmac->InputCurrentSize); /* Set
-									    DMA
-									    data
-									    size
-									  */
-				hfmac->hdmaPreload->LinkedListQueue->Head
-				    ->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] =
-				    (uint32_t)hfmac
-					->pInput; /* Set DMA source address */
-				hfmac->hdmaPreload->LinkedListQueue->Head
-				    ->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] =
-				    (uint32_t)&hfmac->Instance
-					->WDATA; /* Set DMA destination address
-						  */
+				hfmac->hdmaPreload->LinkedListQueue->Head->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] =
+				    (uint32_t)(2UL * hfmac->InputCurrentSize); /* Set
+										  DMA
+										  data
+										  size
+										*/
+				hfmac->hdmaPreload->LinkedListQueue->Head->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] =
+				    (uint32_t)hfmac->pInput; /* Set DMA source address */
+				hfmac->hdmaPreload->LinkedListQueue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] =
+				    (uint32_t)&hfmac->Instance->WDATA; /* Set DMA destination address
+									*/
 
-				status =
-				    HAL_DMAEx_List_Start_IT(hfmac->hdmaPreload);
+				status = HAL_DMAEx_List_Start_IT(hfmac->hdmaPreload);
 			} else {
 				/* Return error status */
 				status = HAL_ERROR;
 			}
 		} else {
-			status = HAL_DMA_Start_IT(
-			    hfmac->hdmaPreload, (uint32_t)hfmac->pInput,
-			    (uint32_t)&hfmac->Instance->WDATA,
-			    (uint32_t)(2UL * hfmac->InputCurrentSize));
+			status = HAL_DMA_Start_IT(hfmac->hdmaPreload, (uint32_t)hfmac->pInput,
+						  (uint32_t)&hfmac->Instance->WDATA,
+						  (uint32_t)(2UL * hfmac->InputCurrentSize));
 		}
 
 		if (status == HAL_OK) {
@@ -2854,8 +2634,7 @@ static void FMAC_DMAFilterPreload(DMA_HandleTypeDef *hdma)
  */
 static void FMAC_DMAError(DMA_HandleTypeDef *hdma)
 {
-	FMAC_HandleTypeDef *hfmac =
-	    (FMAC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
+	FMAC_HandleTypeDef *hfmac = (FMAC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
 
 	/* Set FMAC handle state to error */
 	hfmac->State = HAL_FMAC_STATE_ERROR;

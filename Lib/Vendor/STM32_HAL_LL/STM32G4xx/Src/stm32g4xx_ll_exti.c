@@ -43,21 +43,16 @@
  * @{
  */
 
-#define IS_LL_EXTI_LINE_0_31(__VALUE__)                                        \
-	(((__VALUE__) & ~LL_EXTI_LINE_ALL_0_31) == 0x00000000U)
-#define IS_LL_EXTI_LINE_32_63(__VALUE__)                                       \
-	(((__VALUE__) & ~LL_EXTI_LINE_ALL_32_63) == 0x00000000U)
+#define IS_LL_EXTI_LINE_0_31(__VALUE__) (((__VALUE__) & ~LL_EXTI_LINE_ALL_0_31) == 0x00000000U)
+#define IS_LL_EXTI_LINE_32_63(__VALUE__) (((__VALUE__) & ~LL_EXTI_LINE_ALL_32_63) == 0x00000000U)
 
-#define IS_LL_EXTI_MODE(__VALUE__)                                             \
-	(((__VALUE__) == LL_EXTI_MODE_IT) ||                                   \
-	 ((__VALUE__) == LL_EXTI_MODE_EVENT) ||                                \
+#define IS_LL_EXTI_MODE(__VALUE__)                                                                                     \
+	(((__VALUE__) == LL_EXTI_MODE_IT) || ((__VALUE__) == LL_EXTI_MODE_EVENT) ||                                    \
 	 ((__VALUE__) == LL_EXTI_MODE_IT_EVENT))
 
-#define IS_LL_EXTI_TRIGGER(__VALUE__)                                          \
-	(((__VALUE__) == LL_EXTI_TRIGGER_NONE) ||                              \
-	 ((__VALUE__) == LL_EXTI_TRIGGER_RISING) ||                            \
-	 ((__VALUE__) == LL_EXTI_TRIGGER_FALLING) ||                           \
-	 ((__VALUE__) == LL_EXTI_TRIGGER_RISING_FALLING))
+#define IS_LL_EXTI_TRIGGER(__VALUE__)                                                                                  \
+	(((__VALUE__) == LL_EXTI_TRIGGER_NONE) || ((__VALUE__) == LL_EXTI_TRIGGER_RISING) ||                           \
+	 ((__VALUE__) == LL_EXTI_TRIGGER_FALLING) || ((__VALUE__) == LL_EXTI_TRIGGER_RISING_FALLING))
 
 /**
  * @}
@@ -95,8 +90,7 @@ uint32_t LL_EXTI_DeInit(void)
 	LL_EXTI_WriteReg(PR1, 0x007DFFFFU);
 
 	/* Interrupt mask register 2 set to default reset values */
-#if defined(LL_EXTI_LINE_32) && defined(LL_EXTI_LINE_33) &&                    \
-    defined(LL_EXTI_LINE_35) && defined(LL_EXTI_LINE_42)
+#if defined(LL_EXTI_LINE_32) && defined(LL_EXTI_LINE_33) && defined(LL_EXTI_LINE_35) && defined(LL_EXTI_LINE_42)
 	LL_EXTI_WriteReg(IMR2, 0x0000043CU);
 #else
 	LL_EXTI_WriteReg(IMR2, 0x00000034U);
@@ -143,30 +137,24 @@ uint32_t LL_EXTI_Init(LL_EXTI_InitTypeDef *EXTI_InitStruct)
 				case LL_EXTI_MODE_IT:
 					/* First Disable Event on provided Lines
 					 */
-					LL_EXTI_DisableEvent_0_31(
-					    EXTI_InitStruct->Line_0_31);
+					LL_EXTI_DisableEvent_0_31(EXTI_InitStruct->Line_0_31);
 					/* Then Enable IT on provided Lines */
-					LL_EXTI_EnableIT_0_31(
-					    EXTI_InitStruct->Line_0_31);
+					LL_EXTI_EnableIT_0_31(EXTI_InitStruct->Line_0_31);
 					break;
 				case LL_EXTI_MODE_EVENT:
 					/* First Disable IT on provided Lines */
-					LL_EXTI_DisableIT_0_31(
-					    EXTI_InitStruct->Line_0_31);
+					LL_EXTI_DisableIT_0_31(EXTI_InitStruct->Line_0_31);
 					/* Then Enable Event on provided Lines
 					 */
-					LL_EXTI_EnableEvent_0_31(
-					    EXTI_InitStruct->Line_0_31);
+					LL_EXTI_EnableEvent_0_31(EXTI_InitStruct->Line_0_31);
 					break;
 				case LL_EXTI_MODE_IT_EVENT:
 					/* Directly Enable IT on provided Lines
 					 */
-					LL_EXTI_EnableIT_0_31(
-					    EXTI_InitStruct->Line_0_31);
+					LL_EXTI_EnableIT_0_31(EXTI_InitStruct->Line_0_31);
 					/* Directly Enable Event on provided
 					 * Lines */
-					LL_EXTI_EnableEvent_0_31(
-					    EXTI_InitStruct->Line_0_31);
+					LL_EXTI_EnableEvent_0_31(EXTI_InitStruct->Line_0_31);
 					break;
 				default:
 					status = 0x01u;
@@ -177,32 +165,26 @@ uint32_t LL_EXTI_Init(LL_EXTI_InitTypeDef *EXTI_InitStruct)
 					case LL_EXTI_TRIGGER_RISING:
 						/* First Disable Falling Trigger
 						 * on provided Lines */
-						LL_EXTI_DisableFallingTrig_0_31(
-						    EXTI_InitStruct->Line_0_31);
+						LL_EXTI_DisableFallingTrig_0_31(EXTI_InitStruct->Line_0_31);
 						/* Then Enable Rising Trigger on
 						 * provided Lines */
-						LL_EXTI_EnableRisingTrig_0_31(
-						    EXTI_InitStruct->Line_0_31);
+						LL_EXTI_EnableRisingTrig_0_31(EXTI_InitStruct->Line_0_31);
 						break;
 					case LL_EXTI_TRIGGER_FALLING:
 						/* First Disable Rising Trigger
 						 * on provided Lines */
-						LL_EXTI_DisableRisingTrig_0_31(
-						    EXTI_InitStruct->Line_0_31);
+						LL_EXTI_DisableRisingTrig_0_31(EXTI_InitStruct->Line_0_31);
 						/* Then Enable Falling Trigger
 						 * on provided Lines */
-						LL_EXTI_EnableFallingTrig_0_31(
-						    EXTI_InitStruct->Line_0_31);
+						LL_EXTI_EnableFallingTrig_0_31(EXTI_InitStruct->Line_0_31);
 						break;
 					case LL_EXTI_TRIGGER_RISING_FALLING:
 						/* Enable Rising Trigger on
 						 * provided Lines */
-						LL_EXTI_EnableRisingTrig_0_31(
-						    EXTI_InitStruct->Line_0_31);
+						LL_EXTI_EnableRisingTrig_0_31(EXTI_InitStruct->Line_0_31);
 						/* Enable Falling Trigger on
 						 * provided Lines */
-						LL_EXTI_EnableFallingTrig_0_31(
-						    EXTI_InitStruct->Line_0_31);
+						LL_EXTI_EnableFallingTrig_0_31(EXTI_InitStruct->Line_0_31);
 						break;
 					default:
 						status |= 0x02u;
@@ -216,30 +198,24 @@ uint32_t LL_EXTI_Init(LL_EXTI_InitTypeDef *EXTI_InitStruct)
 				case LL_EXTI_MODE_IT:
 					/* First Disable Event on provided Lines
 					 */
-					LL_EXTI_DisableEvent_32_63(
-					    EXTI_InitStruct->Line_32_63);
+					LL_EXTI_DisableEvent_32_63(EXTI_InitStruct->Line_32_63);
 					/* Then Enable IT on provided Lines */
-					LL_EXTI_EnableIT_32_63(
-					    EXTI_InitStruct->Line_32_63);
+					LL_EXTI_EnableIT_32_63(EXTI_InitStruct->Line_32_63);
 					break;
 				case LL_EXTI_MODE_EVENT:
 					/* First Disable IT on provided Lines */
-					LL_EXTI_DisableIT_32_63(
-					    EXTI_InitStruct->Line_32_63);
+					LL_EXTI_DisableIT_32_63(EXTI_InitStruct->Line_32_63);
 					/* Then Enable Event on provided Lines
 					 */
-					LL_EXTI_EnableEvent_32_63(
-					    EXTI_InitStruct->Line_32_63);
+					LL_EXTI_EnableEvent_32_63(EXTI_InitStruct->Line_32_63);
 					break;
 				case LL_EXTI_MODE_IT_EVENT:
 					/* Directly Enable IT on provided Lines
 					 */
-					LL_EXTI_EnableIT_32_63(
-					    EXTI_InitStruct->Line_32_63);
+					LL_EXTI_EnableIT_32_63(EXTI_InitStruct->Line_32_63);
 					/* Directly Enable IT on provided Lines
 					 */
-					LL_EXTI_EnableEvent_32_63(
-					    EXTI_InitStruct->Line_32_63);
+					LL_EXTI_EnableEvent_32_63(EXTI_InitStruct->Line_32_63);
 					break;
 				default:
 					status |= 0x04u;
@@ -250,38 +226,26 @@ uint32_t LL_EXTI_Init(LL_EXTI_InitTypeDef *EXTI_InitStruct)
 					case LL_EXTI_TRIGGER_RISING:
 						/* First Disable Falling Trigger
 						 * on provided Lines */
-						LL_EXTI_DisableFallingTrig_32_63(
-						    EXTI_InitStruct
-							->Line_32_63);
+						LL_EXTI_DisableFallingTrig_32_63(EXTI_InitStruct->Line_32_63);
 						/* Then Enable IT on provided
 						 * Lines */
-						LL_EXTI_EnableRisingTrig_32_63(
-						    EXTI_InitStruct
-							->Line_32_63);
+						LL_EXTI_EnableRisingTrig_32_63(EXTI_InitStruct->Line_32_63);
 						break;
 					case LL_EXTI_TRIGGER_FALLING:
 						/* First Disable Rising Trigger
 						 * on provided Lines */
-						LL_EXTI_DisableRisingTrig_32_63(
-						    EXTI_InitStruct
-							->Line_32_63);
+						LL_EXTI_DisableRisingTrig_32_63(EXTI_InitStruct->Line_32_63);
 						/* Then Enable Falling Trigger
 						 * on provided Lines */
-						LL_EXTI_EnableFallingTrig_32_63(
-						    EXTI_InitStruct
-							->Line_32_63);
+						LL_EXTI_EnableFallingTrig_32_63(EXTI_InitStruct->Line_32_63);
 						break;
 					case LL_EXTI_TRIGGER_RISING_FALLING:
 						/* Enable Rising Trigger on
 						 * provided Lines */
-						LL_EXTI_EnableRisingTrig_32_63(
-						    EXTI_InitStruct
-							->Line_32_63);
+						LL_EXTI_EnableRisingTrig_32_63(EXTI_InitStruct->Line_32_63);
 						/* Enable Falling Trigger on
 						 * provided Lines */
-						LL_EXTI_EnableFallingTrig_32_63(
-						    EXTI_InitStruct
-							->Line_32_63);
+						LL_EXTI_EnableFallingTrig_32_63(EXTI_InitStruct->Line_32_63);
 						break;
 					default:
 						status |= 0x05u;

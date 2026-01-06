@@ -105,13 +105,10 @@
 /** @defgroup EXTI_Private_Constants EXTI Private Constants
  * @{
  */
-#define EXTI_MODE_OFFSET 0x04U /* byte offset between IMR/EMR registers */
-#define EXTI_CONFIG_OFFSET                                                     \
-	0x08U /* byte offset between Rising/Falling configuration registers */
-#define EXTI_PRIVCFGR_OFFSET                                                   \
-	0x04U /* byte offset between PRIVCFGR1/PRIVCFGR2 registers */
-#define EXTI_SECCFGR_OFFSET                                                    \
-	0x04U /* byte offset between SECCFGR1/SECCFGR2 registers */
+#define EXTI_MODE_OFFSET 0x04U	   /* byte offset between IMR/EMR registers */
+#define EXTI_CONFIG_OFFSET 0x08U   /* byte offset between Rising/Falling configuration registers */
+#define EXTI_PRIVCFGR_OFFSET 0x04U /* byte offset between PRIVCFGR1/PRIVCFGR2 registers */
+#define EXTI_SECCFGR_OFFSET 0x04U  /* byte offset between SECCFGR1/SECCFGR2 registers */
 /**
  * @}
  */
@@ -143,8 +140,7 @@
  * @param  pExtiConfig Pointer on EXTI configuration to be set.
  * @retval HAL Status.
  */
-HAL_StatusTypeDef HAL_EXTI_SetConfigLine(EXTI_HandleTypeDef *hexti,
-					 EXTI_ConfigTypeDef *pExtiConfig)
+HAL_StatusTypeDef HAL_EXTI_SetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigTypeDef *pExtiConfig)
 {
 	__IO uint32_t *regaddr;
 	uint32_t regval;
@@ -174,8 +170,7 @@ HAL_StatusTypeDef HAL_EXTI_SetConfigLine(EXTI_HandleTypeDef *hexti,
 		assert_param(IS_EXTI_TRIGGER(pExtiConfig->Trigger));
 
 		/* Configure rising trigger */
-		regaddr = (__IO uint32_t *)(&EXTI->RTSR1 +
-					    (EXTI_CONFIG_OFFSET * offset));
+		regaddr = (__IO uint32_t *)(&EXTI->RTSR1 + (EXTI_CONFIG_OFFSET * offset));
 		regval = *regaddr;
 
 		/* Mask or set line */
@@ -189,8 +184,7 @@ HAL_StatusTypeDef HAL_EXTI_SetConfigLine(EXTI_HandleTypeDef *hexti,
 		*regaddr = regval;
 
 		/* Configure falling trigger */
-		regaddr = (__IO uint32_t *)(&EXTI->FTSR1 +
-					    (EXTI_CONFIG_OFFSET * offset));
+		regaddr = (__IO uint32_t *)(&EXTI->FTSR1 + (EXTI_CONFIG_OFFSET * offset));
 		regval = *regaddr;
 
 		/* Mask or set line */
@@ -209,12 +203,8 @@ HAL_StatusTypeDef HAL_EXTI_SetConfigLine(EXTI_HandleTypeDef *hexti,
 			assert_param(IS_EXTI_GPIO_PIN(linepos));
 
 			regval = EXTI->EXTICR[(linepos >> 2U) & 0x03UL];
-			regval &=
-			    ~(EXTI_EXTICR1_EXTI0
-			      << (EXTI_EXTICR1_EXTI1_Pos * (linepos & 0x03U)));
-			regval |=
-			    (pExtiConfig->GPIOSel
-			     << (EXTI_EXTICR1_EXTI1_Pos * (linepos & 0x03U)));
+			regval &= ~(EXTI_EXTICR1_EXTI0 << (EXTI_EXTICR1_EXTI1_Pos * (linepos & 0x03U)));
+			regval |= (pExtiConfig->GPIOSel << (EXTI_EXTICR1_EXTI1_Pos * (linepos & 0x03U)));
 			EXTI->EXTICR[(linepos >> 2U) & 0x03UL] = regval;
 		}
 	}
@@ -256,8 +246,7 @@ HAL_StatusTypeDef HAL_EXTI_SetConfigLine(EXTI_HandleTypeDef *hexti,
  * @param  pExtiConfig Pointer on structure to store Exti configuration.
  * @retval HAL Status.
  */
-HAL_StatusTypeDef HAL_EXTI_GetConfigLine(EXTI_HandleTypeDef *hexti,
-					 EXTI_ConfigTypeDef *pExtiConfig)
+HAL_StatusTypeDef HAL_EXTI_GetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigTypeDef *pExtiConfig)
 {
 	const __IO uint32_t *regaddr;
 	uint32_t regval;
@@ -303,8 +292,7 @@ HAL_StatusTypeDef HAL_EXTI_GetConfigLine(EXTI_HandleTypeDef *hexti,
 
 	/* 2] Get trigger for configurable lines : rising */
 	if ((pExtiConfig->Line & EXTI_CONFIG) != 0U) {
-		regaddr = (__IO uint32_t *)(&EXTI->RTSR1 +
-					    (EXTI_CONFIG_OFFSET * offset));
+		regaddr = (__IO uint32_t *)(&EXTI->RTSR1 + (EXTI_CONFIG_OFFSET * offset));
 		regval = *regaddr;
 
 		/* Get default Trigger and GPIOSel configuration */
@@ -317,8 +305,7 @@ HAL_StatusTypeDef HAL_EXTI_GetConfigLine(EXTI_HandleTypeDef *hexti,
 		}
 
 		/* Get falling configuration */
-		regaddr = (__IO uint32_t *)(&EXTI->FTSR1 +
-					    (EXTI_CONFIG_OFFSET * offset));
+		regaddr = (__IO uint32_t *)(&EXTI->FTSR1 + (EXTI_CONFIG_OFFSET * offset));
 		regval = *regaddr;
 
 		/* Check if configuration of selected line is enable */
@@ -332,9 +319,7 @@ HAL_StatusTypeDef HAL_EXTI_GetConfigLine(EXTI_HandleTypeDef *hexti,
 
 			regval = EXTI->EXTICR[(linepos >> 2U) & 0x03UL];
 			pExtiConfig->GPIOSel =
-			    (regval >>
-			     (EXTI_EXTICR1_EXTI1_Pos * (linepos & 0x03U))) &
-			    EXTI_EXTICR1_EXTI0;
+			    (regval >> (EXTI_EXTICR1_EXTI1_Pos * (linepos & 0x03U))) & EXTI_EXTICR1_EXTI0;
 		}
 	}
 
@@ -379,13 +364,11 @@ HAL_StatusTypeDef HAL_EXTI_ClearConfigLine(const EXTI_HandleTypeDef *hexti)
 
 	/* 3] Clear triggers in case of configurable lines */
 	if ((hexti->Line & EXTI_CONFIG) != 0U) {
-		regaddr = (__IO uint32_t *)(&EXTI->RTSR1 +
-					    (EXTI_CONFIG_OFFSET * offset));
+		regaddr = (__IO uint32_t *)(&EXTI->RTSR1 + (EXTI_CONFIG_OFFSET * offset));
 		regval = (*regaddr & ~maskline);
 		*regaddr = regval;
 
-		regaddr = (__IO uint32_t *)(&EXTI->FTSR1 +
-					    (EXTI_CONFIG_OFFSET * offset));
+		regaddr = (__IO uint32_t *)(&EXTI->FTSR1 + (EXTI_CONFIG_OFFSET * offset));
 		regval = (*regaddr & ~maskline);
 		*regaddr = regval;
 
@@ -394,9 +377,7 @@ HAL_StatusTypeDef HAL_EXTI_ClearConfigLine(const EXTI_HandleTypeDef *hexti)
 			assert_param(IS_EXTI_GPIO_PIN(linepos));
 
 			regval = EXTI->EXTICR[(linepos >> 2U) & 0x03UL];
-			regval &=
-			    ~(EXTI_EXTICR1_EXTI0
-			      << (EXTI_EXTICR1_EXTI1_Pos * (linepos & 0x03U)));
+			regval &= ~(EXTI_EXTICR1_EXTI0 << (EXTI_EXTICR1_EXTI1_Pos * (linepos & 0x03U)));
 			EXTI->EXTICR[(linepos >> 2U) & 0x03UL] = regval;
 		}
 	}
@@ -412,8 +393,7 @@ HAL_StatusTypeDef HAL_EXTI_ClearConfigLine(const EXTI_HandleTypeDef *hexti)
  * @param  pPendingCbfn function pointer to be stored as callback.
  * @retval HAL Status.
  */
-HAL_StatusTypeDef HAL_EXTI_RegisterCallback(EXTI_HandleTypeDef *hexti,
-					    EXTI_CallbackIDTypeDef CallbackID,
+HAL_StatusTypeDef HAL_EXTI_RegisterCallback(EXTI_HandleTypeDef *hexti, EXTI_CallbackIDTypeDef CallbackID,
 					    void (*pPendingCbfn)(void))
 {
 	HAL_StatusTypeDef status = HAL_OK;
@@ -447,8 +427,7 @@ HAL_StatusTypeDef HAL_EXTI_RegisterCallback(EXTI_HandleTypeDef *hexti,
  *         This parameter can be from 0 to @ref EXTI_LINE_NB.
  * @retval HAL Status.
  */
-HAL_StatusTypeDef HAL_EXTI_GetHandle(EXTI_HandleTypeDef *hexti,
-				     uint32_t ExtiLine)
+HAL_StatusTypeDef HAL_EXTI_GetHandle(EXTI_HandleTypeDef *hexti, uint32_t ExtiLine)
 {
 	/* Check the parameters */
 	assert_param(IS_EXTI_LINE(ExtiLine));
@@ -497,8 +476,7 @@ void HAL_EXTI_IRQHandler(const EXTI_HandleTypeDef *hexti)
 	maskline = (1UL << (hexti->Line & EXTI_PIN_MASK));
 
 	/* Get rising edge pending bit  */
-	regaddr =
-	    (__IO uint32_t *)(&EXTI->RPR1 + (EXTI_CONFIG_OFFSET * offset));
+	regaddr = (__IO uint32_t *)(&EXTI->RPR1 + (EXTI_CONFIG_OFFSET * offset));
 	regval = (*regaddr & maskline);
 
 	if (regval != 0U) {
@@ -512,8 +490,7 @@ void HAL_EXTI_IRQHandler(const EXTI_HandleTypeDef *hexti)
 	}
 
 	/* Get falling edge pending bit  */
-	regaddr =
-	    (__IO uint32_t *)(&EXTI->FPR1 + (EXTI_CONFIG_OFFSET * offset));
+	regaddr = (__IO uint32_t *)(&EXTI->FPR1 + (EXTI_CONFIG_OFFSET * offset));
 	regval = (*regaddr & maskline);
 
 	if (regval != 0U) {
@@ -556,12 +533,10 @@ uint32_t HAL_EXTI_GetPending(const EXTI_HandleTypeDef *hexti, uint32_t Edge)
 
 	if (Edge != EXTI_TRIGGER_RISING) {
 		/* Get falling edge pending bit */
-		regaddr = (__IO uint32_t *)(&EXTI->FPR1 +
-					    (EXTI_CONFIG_OFFSET * offset));
+		regaddr = (__IO uint32_t *)(&EXTI->FPR1 + (EXTI_CONFIG_OFFSET * offset));
 	} else {
 		/* Get rising edge pending bit */
-		regaddr = (__IO uint32_t *)(&EXTI->RPR1 +
-					    (EXTI_CONFIG_OFFSET * offset));
+		regaddr = (__IO uint32_t *)(&EXTI->RPR1 + (EXTI_CONFIG_OFFSET * offset));
 	}
 
 	/* return 1 if bit is set else 0 */
@@ -595,12 +570,10 @@ void HAL_EXTI_ClearPending(const EXTI_HandleTypeDef *hexti, uint32_t Edge)
 
 	if (Edge != EXTI_TRIGGER_RISING) {
 		/* Get falling edge pending register address */
-		regaddr = (__IO uint32_t *)(&EXTI->FPR1 +
-					    (EXTI_CONFIG_OFFSET * offset));
+		regaddr = (__IO uint32_t *)(&EXTI->FPR1 + (EXTI_CONFIG_OFFSET * offset));
 	} else {
 		/* Get falling edge pending register address */
-		regaddr = (__IO uint32_t *)(&EXTI->RPR1 +
-					    (EXTI_CONFIG_OFFSET * offset));
+		regaddr = (__IO uint32_t *)(&EXTI->RPR1 + (EXTI_CONFIG_OFFSET * offset));
 	}
 
 	/* Clear Pending bit */
@@ -626,8 +599,7 @@ void HAL_EXTI_GenerateSWI(const EXTI_HandleTypeDef *hexti)
 	offset = ((hexti->Line & EXTI_REG_MASK) >> EXTI_REG_SHIFT);
 	maskline = (1UL << (hexti->Line & EXTI_PIN_MASK));
 
-	regaddr =
-	    (__IO uint32_t *)(&EXTI->SWIER1 + (EXTI_CONFIG_OFFSET * offset));
+	regaddr = (__IO uint32_t *)(&EXTI->SWIER1 + (EXTI_CONFIG_OFFSET * offset));
 	*regaddr = maskline;
 }
 
@@ -682,8 +654,7 @@ void HAL_EXTI_ConfigLineAttributes(uint32_t ExtiLine, uint32_t LineAttributes)
 	maskline = (1UL << linepos);
 
 	/* Configure privilege or non-privilege attributes */
-	regaddr = (__IO uint32_t *)(&EXTI->PRIVCFGR1 +
-				    (EXTI_PRIVCFGR_OFFSET * offset));
+	regaddr = (__IO uint32_t *)(&EXTI->PRIVCFGR1 + (EXTI_PRIVCFGR_OFFSET * offset));
 	regval = *regaddr;
 
 	/* Mask or set line */
@@ -701,8 +672,7 @@ void HAL_EXTI_ConfigLineAttributes(uint32_t ExtiLine, uint32_t LineAttributes)
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 
 	/* Configure secure or non-secure attributes */
-	regaddr =
-	    (__IO uint32_t *)(&EXTI->SECCFGR1 + (EXTI_SECCFGR_OFFSET * offset));
+	regaddr = (__IO uint32_t *)(&EXTI->SECCFGR1 + (EXTI_SECCFGR_OFFSET * offset));
 	regval = *regaddr;
 
 	/* Mask or set line */
@@ -729,8 +699,7 @@ void HAL_EXTI_ConfigLineAttributes(uint32_t ExtiLine, uint32_t LineAttributes)
  * @param  pLineAttributes: pointer to return line attributes.
  * @retval HAL Status.
  */
-HAL_StatusTypeDef HAL_EXTI_GetConfigLineAttributes(uint32_t ExtiLine,
-						   uint32_t *pLineAttributes)
+HAL_StatusTypeDef HAL_EXTI_GetConfigLineAttributes(uint32_t ExtiLine, uint32_t *pLineAttributes)
 {
 	const __IO uint32_t *regaddr;
 	uint32_t linepos;
@@ -752,8 +721,7 @@ HAL_StatusTypeDef HAL_EXTI_GetConfigLineAttributes(uint32_t ExtiLine,
 	maskline = (1UL << linepos);
 
 	/* Get privilege or non-privilege attribute */
-	regaddr = (__IO uint32_t *)(&EXTI->PRIVCFGR1 +
-				    (EXTI_PRIVCFGR_OFFSET * offset));
+	regaddr = (__IO uint32_t *)(&EXTI->PRIVCFGR1 + (EXTI_PRIVCFGR_OFFSET * offset));
 
 	if ((*regaddr & maskline) != 0U) {
 		attributes = EXTI_LINE_PRIV;
@@ -764,8 +732,7 @@ HAL_StatusTypeDef HAL_EXTI_GetConfigLineAttributes(uint32_t ExtiLine,
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 
 	/* Get secure or non-secure attribute */
-	regaddr =
-	    (__IO uint32_t *)(&EXTI->SECCFGR1 + (EXTI_SECCFGR_OFFSET * offset));
+	regaddr = (__IO uint32_t *)(&EXTI->SECCFGR1 + (EXTI_SECCFGR_OFFSET * offset));
 
 	if ((*regaddr & maskline) != 0U) {
 		attributes |= EXTI_LINE_SEC;
@@ -792,10 +759,7 @@ void HAL_EXTI_LockAttributes(void) { SET_BIT(EXTI->LOCKR, EXTI_LOCKR_LOCK); }
  * @retval 1 if the secure and privilege configuration registers have been
  * locked else 0.
  */
-uint32_t HAL_EXTI_GetLockAttributes(void)
-{
-	return READ_BIT(EXTI->LOCKR, EXTI_LOCKR_LOCK);
-}
+uint32_t HAL_EXTI_GetLockAttributes(void) { return READ_BIT(EXTI->LOCKR, EXTI_LOCKR_LOCK); }
 #endif /* __ARM_FEATURE_CMSE */
 
 /**

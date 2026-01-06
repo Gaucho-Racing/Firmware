@@ -209,9 +209,7 @@ HAL_StatusTypeDef HAL_WWDG_Init(WWDG_HandleTypeDef *hwwdg)
 	WRITE_REG(hwwdg->Instance->CR, (WWDG_CR_WDGA | hwwdg->Init.Counter));
 
 	/* Set WWDG Prescaler and Window */
-	WRITE_REG(
-	    hwwdg->Instance->CFR,
-	    (hwwdg->Init.EWIMode | hwwdg->Init.Prescaler | hwwdg->Init.Window));
+	WRITE_REG(hwwdg->Instance->CFR, (hwwdg->Init.EWIMode | hwwdg->Init.Prescaler | hwwdg->Init.Window));
 
 	/* Return function status */
 	return HAL_OK;
@@ -248,10 +246,8 @@ __weak void HAL_WWDG_MspInit(WWDG_HandleTypeDef *hwwdg)
  * @param  pCallback pointer to the Callback function
  * @retval status
  */
-HAL_StatusTypeDef
-HAL_WWDG_RegisterCallback(WWDG_HandleTypeDef *hwwdg,
-			  HAL_WWDG_CallbackIDTypeDef CallbackID,
-			  pWWDG_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_WWDG_RegisterCallback(WWDG_HandleTypeDef *hwwdg, HAL_WWDG_CallbackIDTypeDef CallbackID,
+					    pWWDG_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -287,9 +283,7 @@ HAL_WWDG_RegisterCallback(WWDG_HandleTypeDef *hwwdg,
  *           @arg @ref HAL_WWDG_MSPINIT_CB_ID MspInit callback ID
  * @retval status
  */
-HAL_StatusTypeDef
-HAL_WWDG_UnRegisterCallback(WWDG_HandleTypeDef *hwwdg,
-			    HAL_WWDG_CallbackIDTypeDef CallbackID)
+HAL_StatusTypeDef HAL_WWDG_UnRegisterCallback(WWDG_HandleTypeDef *hwwdg, HAL_WWDG_CallbackIDTypeDef CallbackID)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 

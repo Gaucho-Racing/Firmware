@@ -117,9 +117,7 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 	if (Status == HAL_OK) {
 #if (USE_HAL_TIM_REGISTER_CALLBACKS == 1U)
 		/* Register callback */
-		HAL_TIM_RegisterCallback(&TimHandle,
-					 HAL_TIM_PERIOD_ELAPSED_CB_ID,
-					 TimeBase_TIM_PeriodElapsedCallback);
+		HAL_TIM_RegisterCallback(&TimHandle, HAL_TIM_PERIOD_ELAPSED_CB_ID, TimeBase_TIM_PeriodElapsedCallback);
 #endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
 
 		/* Start the TIM time Base generation in interrupt mode */
@@ -128,8 +126,7 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 			if (TickPriority < (1UL << __NVIC_PRIO_BITS)) {
 				/* Configure the TIM6 global Interrupt priority
 				 */
-				HAL_NVIC_SetPriority(TIM6_IRQn, TickPriority,
-						     0);
+				HAL_NVIC_SetPriority(TIM6_IRQn, TickPriority, 0);
 
 				/* Enable the TIM6 global Interrupt */
 				HAL_NVIC_EnableIRQ(TIM6_IRQn);

@@ -192,8 +192,7 @@
 #if (USE_HAL_LPTIM_REGISTER_CALLBACKS == 1)
 static void LPTIM_ResetCallback(LPTIM_HandleTypeDef *lptim);
 #endif /* USE_HAL_LPTIM_REGISTER_CALLBACKS */
-static HAL_StatusTypeDef LPTIM_WaitForFlag(const LPTIM_HandleTypeDef *hlptim,
-					   uint32_t flag);
+static HAL_StatusTypeDef LPTIM_WaitForFlag(const LPTIM_HandleTypeDef *hlptim, uint32_t flag);
 
 /* Exported functions --------------------------------------------------------*/
 
@@ -242,17 +241,13 @@ HAL_StatusTypeDef HAL_LPTIM_Init(LPTIM_HandleTypeDef *hlptim)
 	assert_param(IS_LPTIM_CLOCK_PRESCALER(hlptim->Init.Clock.Prescaler));
 	if ((hlptim->Init.Clock.Source == LPTIM_CLOCKSOURCE_ULPTIM) ||
 	    (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL)) {
-		assert_param(IS_LPTIM_CLOCK_POLARITY(
-		    hlptim->Init.UltraLowPowerClock.Polarity));
-		assert_param(IS_LPTIM_CLOCK_SAMPLE_TIME(
-		    hlptim->Init.UltraLowPowerClock.SampleTime));
+		assert_param(IS_LPTIM_CLOCK_POLARITY(hlptim->Init.UltraLowPowerClock.Polarity));
+		assert_param(IS_LPTIM_CLOCK_SAMPLE_TIME(hlptim->Init.UltraLowPowerClock.SampleTime));
 	}
 	assert_param(IS_LPTIM_TRG_SOURCE(hlptim->Init.Trigger.Source));
 	if (hlptim->Init.Trigger.Source != LPTIM_TRIGSOURCE_SOFTWARE) {
-		assert_param(
-		    IS_LPTIM_EXT_TRG_POLARITY(hlptim->Init.Trigger.ActiveEdge));
-		assert_param(
-		    IS_LPTIM_TRIG_SAMPLE_TIME(hlptim->Init.Trigger.SampleTime));
+		assert_param(IS_LPTIM_EXT_TRG_POLARITY(hlptim->Init.Trigger.ActiveEdge));
+		assert_param(IS_LPTIM_TRIG_SAMPLE_TIME(hlptim->Init.Trigger.SampleTime));
 	}
 	assert_param(IS_LPTIM_OUTPUT_POLARITY(hlptim->Init.OutputPolarity));
 	assert_param(IS_LPTIM_UPDATE_MODE(hlptim->Init.UpdateMode));
@@ -289,42 +284,36 @@ HAL_StatusTypeDef HAL_LPTIM_Init(LPTIM_HandleTypeDef *hlptim)
 		tmpcfgr &= (uint32_t)(~(LPTIM_CFGR_CKPOL | LPTIM_CFGR_CKFLT));
 	}
 	if (hlptim->Init.Trigger.Source != LPTIM_TRIGSOURCE_SOFTWARE) {
-		tmpcfgr &=
-		    (uint32_t)(~(LPTIM_CFGR_TRGFLT | LPTIM_CFGR_TRIGSEL));
+		tmpcfgr &= (uint32_t)(~(LPTIM_CFGR_TRGFLT | LPTIM_CFGR_TRIGSEL));
 	}
 
 	/* Clear CKSEL, PRESC, TRIGEN, TRGFLT, WAVPOL, PRELOAD & COUNTMODE bits
 	 */
-	tmpcfgr &= (uint32_t)(~(LPTIM_CFGR_CKSEL | LPTIM_CFGR_TRIGEN |
-				LPTIM_CFGR_PRELOAD | LPTIM_CFGR_WAVPOL |
+	tmpcfgr &= (uint32_t)(~(LPTIM_CFGR_CKSEL | LPTIM_CFGR_TRIGEN | LPTIM_CFGR_PRELOAD | LPTIM_CFGR_WAVPOL |
 				LPTIM_CFGR_PRESC | LPTIM_CFGR_COUNTMODE));
 
 	/* Set initialization parameters */
-	tmpcfgr |= (hlptim->Init.Clock.Source | hlptim->Init.Clock.Prescaler |
-		    hlptim->Init.OutputPolarity | hlptim->Init.UpdateMode |
-		    hlptim->Init.CounterSource);
+	tmpcfgr |= (hlptim->Init.Clock.Source | hlptim->Init.Clock.Prescaler | hlptim->Init.OutputPolarity |
+		    hlptim->Init.UpdateMode | hlptim->Init.CounterSource);
 
 	/* Glitch filters for internal triggers and  external inputs are
 	 * configured only if an internal clock source is provided to the LPTIM
 	 */
 	if (hlptim->Init.Clock.Source == LPTIM_CLOCKSOURCE_APBCLOCK_LPOSC) {
-		tmpcfgr |= (hlptim->Init.Trigger.SampleTime |
-			    hlptim->Init.UltraLowPowerClock.SampleTime);
+		tmpcfgr |= (hlptim->Init.Trigger.SampleTime | hlptim->Init.UltraLowPowerClock.SampleTime);
 	}
 
 	/* Configure LPTIM external clock polarity and digital filter */
 	if ((hlptim->Init.Clock.Source == LPTIM_CLOCKSOURCE_ULPTIM) ||
 	    (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL)) {
-		tmpcfgr |= (hlptim->Init.UltraLowPowerClock.Polarity |
-			    hlptim->Init.UltraLowPowerClock.SampleTime);
+		tmpcfgr |= (hlptim->Init.UltraLowPowerClock.Polarity | hlptim->Init.UltraLowPowerClock.SampleTime);
 	}
 
 	/* Configure LPTIM external trigger */
 	if (hlptim->Init.Trigger.Source != LPTIM_TRIGSOURCE_SOFTWARE) {
 		/* Enable External trigger and set the trigger source */
-		tmpcfgr |= (hlptim->Init.Trigger.Source |
-			    hlptim->Init.Trigger.ActiveEdge |
-			    hlptim->Init.Trigger.SampleTime);
+		tmpcfgr |=
+		    (hlptim->Init.Trigger.Source | hlptim->Init.Trigger.ActiveEdge | hlptim->Init.Trigger.SampleTime);
 	}
 
 	/* Write to LPTIMx CFGR */
@@ -333,14 +322,11 @@ HAL_StatusTypeDef HAL_LPTIM_Init(LPTIM_HandleTypeDef *hlptim)
 	/* Configure LPTIM input sources */
 	if (hlptim->Instance == LPTIM1) {
 		/* Check LPTIM Input1 and Input2 sources */
-		assert_param(IS_LPTIM_INPUT1_SOURCE(hlptim->Instance,
-						    hlptim->Init.Input1Source));
-		assert_param(IS_LPTIM_INPUT2_SOURCE(hlptim->Instance,
-						    hlptim->Init.Input2Source));
+		assert_param(IS_LPTIM_INPUT1_SOURCE(hlptim->Instance, hlptim->Init.Input1Source));
+		assert_param(IS_LPTIM_INPUT2_SOURCE(hlptim->Instance, hlptim->Init.Input2Source));
 
 		/* Configure LPTIM Input1 and Input2 sources */
-		hlptim->Instance->OR =
-		    (hlptim->Init.Input1Source | hlptim->Init.Input2Source);
+		hlptim->Instance->OR = (hlptim->Init.Input1Source | hlptim->Init.Input2Source);
 	}
 
 	/* Change the LPTIM state */
@@ -464,8 +450,7 @@ functions
  *         This parameter must be a value between 0x0000 and 0xFFFF.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_LPTIM_PWM_Start(LPTIM_HandleTypeDef *hlptim,
-				      uint32_t Period, uint32_t Pulse)
+HAL_StatusTypeDef HAL_LPTIM_PWM_Start(LPTIM_HandleTypeDef *hlptim, uint32_t Period, uint32_t Pulse)
 {
 	/* Check the parameters */
 	assert_param(IS_LPTIM_INSTANCE(hlptim->Instance));
@@ -551,8 +536,7 @@ HAL_StatusTypeDef HAL_LPTIM_PWM_Stop(LPTIM_HandleTypeDef *hlptim)
  *         This parameter must be a value between 0x0000 and 0xFFFF
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_LPTIM_PWM_Start_IT(LPTIM_HandleTypeDef *hlptim,
-					 uint32_t Period, uint32_t Pulse)
+HAL_StatusTypeDef HAL_LPTIM_PWM_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Period, uint32_t Pulse)
 {
 	/* Check the parameters */
 	assert_param(IS_LPTIM_INSTANCE(hlptim->Instance));
@@ -686,8 +670,7 @@ HAL_StatusTypeDef HAL_LPTIM_PWM_Stop_IT(LPTIM_HandleTypeDef *hlptim)
  *         This parameter must be a value between 0x0000 and 0xFFFF.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_LPTIM_OnePulse_Start(LPTIM_HandleTypeDef *hlptim,
-					   uint32_t Period, uint32_t Pulse)
+HAL_StatusTypeDef HAL_LPTIM_OnePulse_Start(LPTIM_HandleTypeDef *hlptim, uint32_t Period, uint32_t Pulse)
 {
 	/* Check the parameters */
 	assert_param(IS_LPTIM_INSTANCE(hlptim->Instance));
@@ -773,8 +756,7 @@ HAL_StatusTypeDef HAL_LPTIM_OnePulse_Stop(LPTIM_HandleTypeDef *hlptim)
  *         This parameter must be a value between 0x0000 and 0xFFFF.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_LPTIM_OnePulse_Start_IT(LPTIM_HandleTypeDef *hlptim,
-					      uint32_t Period, uint32_t Pulse)
+HAL_StatusTypeDef HAL_LPTIM_OnePulse_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Period, uint32_t Pulse)
 {
 	/* Check the parameters */
 	assert_param(IS_LPTIM_INSTANCE(hlptim->Instance));
@@ -908,8 +890,7 @@ HAL_StatusTypeDef HAL_LPTIM_OnePulse_Stop_IT(LPTIM_HandleTypeDef *hlptim)
  *         This parameter must be a value between 0x0000 and 0xFFFF.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_LPTIM_SetOnce_Start(LPTIM_HandleTypeDef *hlptim,
-					  uint32_t Period, uint32_t Pulse)
+HAL_StatusTypeDef HAL_LPTIM_SetOnce_Start(LPTIM_HandleTypeDef *hlptim, uint32_t Period, uint32_t Pulse)
 {
 	/* Check the parameters */
 	assert_param(IS_LPTIM_INSTANCE(hlptim->Instance));
@@ -995,8 +976,7 @@ HAL_StatusTypeDef HAL_LPTIM_SetOnce_Stop(LPTIM_HandleTypeDef *hlptim)
  *         This parameter must be a value between 0x0000 and 0xFFFF.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_LPTIM_SetOnce_Start_IT(LPTIM_HandleTypeDef *hlptim,
-					     uint32_t Period, uint32_t Pulse)
+HAL_StatusTypeDef HAL_LPTIM_SetOnce_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Period, uint32_t Pulse)
 {
 	/* Check the parameters */
 	assert_param(IS_LPTIM_INSTANCE(hlptim->Instance));
@@ -1128,19 +1108,16 @@ HAL_StatusTypeDef HAL_LPTIM_SetOnce_Stop_IT(LPTIM_HandleTypeDef *hlptim)
  *         This parameter must be a value between 0x0001 and 0xFFFF.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_LPTIM_Encoder_Start(LPTIM_HandleTypeDef *hlptim,
-					  uint32_t Period)
+HAL_StatusTypeDef HAL_LPTIM_Encoder_Start(LPTIM_HandleTypeDef *hlptim, uint32_t Period)
 {
 	uint32_t tmpcfgr;
 
 	/* Check the parameters */
 	assert_param(IS_LPTIM_INSTANCE(hlptim->Instance));
 	assert_param(IS_LPTIM_PERIOD(Period));
-	assert_param(hlptim->Init.Clock.Source ==
-		     LPTIM_CLOCKSOURCE_APBCLOCK_LPOSC);
+	assert_param(hlptim->Init.Clock.Source == LPTIM_CLOCKSOURCE_APBCLOCK_LPOSC);
 	assert_param(hlptim->Init.Clock.Prescaler == LPTIM_PRESCALER_DIV1);
-	assert_param(
-	    IS_LPTIM_CLOCK_POLARITY(hlptim->Init.UltraLowPowerClock.Polarity));
+	assert_param(IS_LPTIM_CLOCK_POLARITY(hlptim->Init.UltraLowPowerClock.Polarity));
 
 	/* Set the LPTIM state */
 	hlptim->State = HAL_LPTIM_STATE_BUSY;
@@ -1222,19 +1199,16 @@ HAL_StatusTypeDef HAL_LPTIM_Encoder_Stop(LPTIM_HandleTypeDef *hlptim)
  *         This parameter must be a value between 0x0000 and 0xFFFF.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_LPTIM_Encoder_Start_IT(LPTIM_HandleTypeDef *hlptim,
-					     uint32_t Period)
+HAL_StatusTypeDef HAL_LPTIM_Encoder_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Period)
 {
 	uint32_t tmpcfgr;
 
 	/* Check the parameters */
 	assert_param(IS_LPTIM_INSTANCE(hlptim->Instance));
 	assert_param(IS_LPTIM_PERIOD(Period));
-	assert_param(hlptim->Init.Clock.Source ==
-		     LPTIM_CLOCKSOURCE_APBCLOCK_LPOSC);
+	assert_param(hlptim->Init.Clock.Source == LPTIM_CLOCKSOURCE_APBCLOCK_LPOSC);
 	assert_param(hlptim->Init.Clock.Prescaler == LPTIM_PRESCALER_DIV1);
-	assert_param(
-	    IS_LPTIM_CLOCK_POLARITY(hlptim->Init.UltraLowPowerClock.Polarity));
+	assert_param(IS_LPTIM_CLOCK_POLARITY(hlptim->Init.UltraLowPowerClock.Polarity));
 
 	/* Set the LPTIM state */
 	hlptim->State = HAL_LPTIM_STATE_BUSY;
@@ -1343,8 +1317,7 @@ HAL_StatusTypeDef HAL_LPTIM_Encoder_Stop_IT(LPTIM_HandleTypeDef *hlptim)
  *         This parameter must be a value between 0x0000 and 0xFFFF.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_LPTIM_TimeOut_Start(LPTIM_HandleTypeDef *hlptim,
-					  uint32_t Period, uint32_t Timeout)
+HAL_StatusTypeDef HAL_LPTIM_TimeOut_Start(LPTIM_HandleTypeDef *hlptim, uint32_t Period, uint32_t Timeout)
 {
 	/* Check the parameters */
 	assert_param(IS_LPTIM_INSTANCE(hlptim->Instance));
@@ -1435,8 +1408,7 @@ HAL_StatusTypeDef HAL_LPTIM_TimeOut_Stop(LPTIM_HandleTypeDef *hlptim)
  *         This parameter must be a value between 0x0000 and 0xFFFF.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_LPTIM_TimeOut_Start_IT(LPTIM_HandleTypeDef *hlptim,
-					     uint32_t Period, uint32_t Timeout)
+HAL_StatusTypeDef HAL_LPTIM_TimeOut_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Period, uint32_t Timeout)
 {
 	/* Check the parameters */
 	assert_param(IS_LPTIM_INSTANCE(hlptim->Instance));
@@ -1545,8 +1517,7 @@ HAL_StatusTypeDef HAL_LPTIM_TimeOut_Stop_IT(LPTIM_HandleTypeDef *hlptim)
  *         This parameter must be a value between 0x0001 and 0xFFFF.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_LPTIM_Counter_Start(LPTIM_HandleTypeDef *hlptim,
-					  uint32_t Period)
+HAL_StatusTypeDef HAL_LPTIM_Counter_Start(LPTIM_HandleTypeDef *hlptim, uint32_t Period)
 {
 	/* Check the parameters */
 	assert_param(IS_LPTIM_INSTANCE(hlptim->Instance));
@@ -1560,8 +1531,7 @@ HAL_StatusTypeDef HAL_LPTIM_Counter_Start(LPTIM_HandleTypeDef *hlptim,
 	if ((hlptim->Init.Clock.Source != LPTIM_CLOCKSOURCE_ULPTIM) &&
 	    (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL)) {
 		/* Check if clock is prescaled */
-		assert_param(
-		    IS_LPTIM_CLOCK_PRESCALERDIV1(hlptim->Init.Clock.Prescaler));
+		assert_param(IS_LPTIM_CLOCK_PRESCALERDIV1(hlptim->Init.Clock.Prescaler));
 		/* Set clock prescaler to 0 */
 		hlptim->Instance->CFGR &= ~LPTIM_CFGR_PRESC;
 	}
@@ -1625,8 +1595,7 @@ HAL_StatusTypeDef HAL_LPTIM_Counter_Stop(LPTIM_HandleTypeDef *hlptim)
  *         This parameter must be a value between 0x0001 and 0xFFFF.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_LPTIM_Counter_Start_IT(LPTIM_HandleTypeDef *hlptim,
-					     uint32_t Period)
+HAL_StatusTypeDef HAL_LPTIM_Counter_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Period)
 {
 	/* Check the parameters */
 	assert_param(IS_LPTIM_INSTANCE(hlptim->Instance));
@@ -1643,8 +1612,7 @@ HAL_StatusTypeDef HAL_LPTIM_Counter_Start_IT(LPTIM_HandleTypeDef *hlptim,
 	if ((hlptim->Init.Clock.Source != LPTIM_CLOCKSOURCE_ULPTIM) &&
 	    (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL)) {
 		/* Check if clock is prescaled */
-		assert_param(
-		    IS_LPTIM_CLOCK_PRESCALERDIV1(hlptim->Init.Clock.Prescaler));
+		assert_param(IS_LPTIM_CLOCK_PRESCALERDIV1(hlptim->Init.Clock.Prescaler));
 		/* Set clock prescaler to 0 */
 		hlptim->Instance->CFGR &= ~LPTIM_CFGR_PRESC;
 	}
@@ -1848,8 +1816,7 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
 
 	/* Trigger detected interrupt */
 	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_EXTTRIG) != RESET) {
-		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_EXTTRIG) !=
-		    RESET) {
+		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_EXTTRIG) != RESET) {
 			/* Clear Trigger detected flag */
 			__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_EXTTRIG);
 
@@ -1864,8 +1831,7 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
 
 	/* Compare write interrupt */
 	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_CMPOK) != RESET) {
-		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_CMPOK) !=
-		    RESET) {
+		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_CMPOK) != RESET) {
 			/* Clear Compare write flag */
 			__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_CMPOK);
 
@@ -1880,8 +1846,7 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
 
 	/* Autoreload write interrupt */
 	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_ARROK) != RESET) {
-		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_ARROK) !=
-		    RESET) {
+		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_ARROK) != RESET) {
 			/* Clear Autoreload write flag */
 			__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_ARROK);
 
@@ -2068,10 +2033,8 @@ __weak void HAL_LPTIM_DirectionDownCallback(LPTIM_HandleTypeDef *hlptim)
  * @param pCallback pointer to the callback function
  * @retval status
  */
-HAL_StatusTypeDef
-HAL_LPTIM_RegisterCallback(LPTIM_HandleTypeDef *hlptim,
-			   HAL_LPTIM_CallbackIDTypeDef CallbackID,
-			   pLPTIM_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_LPTIM_RegisterCallback(LPTIM_HandleTypeDef *hlptim, HAL_LPTIM_CallbackIDTypeDef CallbackID,
+					     pLPTIM_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -2170,9 +2133,7 @@ HAL_LPTIM_RegisterCallback(LPTIM_HandleTypeDef *hlptim,
  * change Callback ID
  * @retval status
  */
-HAL_StatusTypeDef
-HAL_LPTIM_UnRegisterCallback(LPTIM_HandleTypeDef *hlptim,
-			     HAL_LPTIM_CallbackIDTypeDef CallbackID)
+HAL_StatusTypeDef HAL_LPTIM_UnRegisterCallback(LPTIM_HandleTypeDef *hlptim, HAL_LPTIM_CallbackIDTypeDef CallbackID)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -2190,52 +2151,45 @@ HAL_LPTIM_UnRegisterCallback(LPTIM_HandleTypeDef *hlptim,
 
 			case HAL_LPTIM_COMPARE_MATCH_CB_ID:
 				/* Legacy weak Compare match Callback */
-				hlptim->CompareMatchCallback =
-				    HAL_LPTIM_CompareMatchCallback;
+				hlptim->CompareMatchCallback = HAL_LPTIM_CompareMatchCallback;
 				break;
 
 			case HAL_LPTIM_AUTORELOAD_MATCH_CB_ID:
 				/* Legacy weak Auto-reload match Callback */
-				hlptim->AutoReloadMatchCallback =
-				    HAL_LPTIM_AutoReloadMatchCallback;
+				hlptim->AutoReloadMatchCallback = HAL_LPTIM_AutoReloadMatchCallback;
 				break;
 
 			case HAL_LPTIM_TRIGGER_CB_ID:
 				/* Legacy weak External trigger event detection
 				 * Callback
 				 */
-				hlptim->TriggerCallback =
-				    HAL_LPTIM_TriggerCallback;
+				hlptim->TriggerCallback = HAL_LPTIM_TriggerCallback;
 				break;
 
 			case HAL_LPTIM_COMPARE_WRITE_CB_ID:
 				/* Legacy weak Compare register write complete
 				 * Callback
 				 */
-				hlptim->CompareWriteCallback =
-				    HAL_LPTIM_CompareWriteCallback;
+				hlptim->CompareWriteCallback = HAL_LPTIM_CompareWriteCallback;
 				break;
 
 			case HAL_LPTIM_AUTORELOAD_WRITE_CB_ID:
 				/* Legacy weak Auto-reload register write
 				 * complete Callback */
-				hlptim->AutoReloadWriteCallback =
-				    HAL_LPTIM_AutoReloadWriteCallback;
+				hlptim->AutoReloadWriteCallback = HAL_LPTIM_AutoReloadWriteCallback;
 				break;
 
 			case HAL_LPTIM_DIRECTION_UP_CB_ID:
 				/* Legacy weak Up-counting direction change
 				 * Callback */
-				hlptim->DirectionUpCallback =
-				    HAL_LPTIM_DirectionUpCallback;
+				hlptim->DirectionUpCallback = HAL_LPTIM_DirectionUpCallback;
 				break;
 
 			case HAL_LPTIM_DIRECTION_DOWN_CB_ID:
 				/* Legacy weak Down-counting direction change
 				 * Callback
 				 */
-				hlptim->DirectionDownCallback =
-				    HAL_LPTIM_DirectionDownCallback;
+				hlptim->DirectionDownCallback = HAL_LPTIM_DirectionDownCallback;
 				break;
 
 			default:
@@ -2338,8 +2292,7 @@ static void LPTIM_ResetCallback(LPTIM_HandleTypeDef *lptim)
  * @param  flag   The lptim flag
  * @retval HAL status
  */
-static HAL_StatusTypeDef LPTIM_WaitForFlag(const LPTIM_HandleTypeDef *hlptim,
-					   uint32_t flag)
+static HAL_StatusTypeDef LPTIM_WaitForFlag(const LPTIM_HandleTypeDef *hlptim, uint32_t flag)
 {
 	HAL_StatusTypeDef result = HAL_OK;
 	uint32_t count = TIMEOUT * (SystemCoreClock / 20UL / 1000UL);
@@ -2408,8 +2361,7 @@ void LPTIM_Disable(LPTIM_HandleTypeDef *hlptim)
 		/* Force LPTIM source kernel clock from APB */
 		switch ((uint32_t)hlptim->Instance) {
 			case LPTIM1_BASE:
-				__HAL_RCC_LPTIM1_CONFIG(
-				    RCC_LPTIM1CLKSOURCE_PCLK1);
+				__HAL_RCC_LPTIM1_CONFIG(RCC_LPTIM1CLKSOURCE_PCLK1);
 				break;
 			default:
 				break;
@@ -2423,8 +2375,7 @@ void LPTIM_Disable(LPTIM_HandleTypeDef *hlptim)
 
 			/* Wait for the completion of the write operation to the
 			 * LPTIM_CMP register */
-			if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_CMPOK) ==
-			    HAL_TIMEOUT) {
+			if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_CMPOK) == HAL_TIMEOUT) {
 				hlptim->State = HAL_LPTIM_STATE_TIMEOUT;
 			}
 			__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_CMPOK);
@@ -2438,8 +2389,7 @@ void LPTIM_Disable(LPTIM_HandleTypeDef *hlptim)
 
 			/* Wait for the completion of the write operation to the
 			 * LPTIM_ARR register */
-			if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_ARROK) ==
-			    HAL_TIMEOUT) {
+			if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_ARROK) == HAL_TIMEOUT) {
 				hlptim->State = HAL_LPTIM_STATE_TIMEOUT;
 			}
 

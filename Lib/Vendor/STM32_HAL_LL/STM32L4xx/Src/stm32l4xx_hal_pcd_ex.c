@@ -67,8 +67,7 @@
  * @param  size Fifo size
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_PCDEx_SetTxFiFo(PCD_HandleTypeDef *hpcd, uint8_t fifo,
-				      uint16_t size)
+HAL_StatusTypeDef HAL_PCDEx_SetTxFiFo(PCD_HandleTypeDef *hpcd, uint8_t fifo, uint16_t size)
 {
 	uint8_t i;
 	uint32_t Tx_Offset;
@@ -89,8 +88,7 @@ HAL_StatusTypeDef HAL_PCDEx_SetTxFiFo(PCD_HandleTypeDef *hpcd, uint8_t fifo,
 	Tx_Offset = hpcd->Instance->GRXFSIZ;
 
 	if (fifo == 0U) {
-		hpcd->Instance->DIEPTXF0_HNPTXFSIZ =
-		    ((uint32_t)size << 16) | Tx_Offset;
+		hpcd->Instance->DIEPTXF0_HNPTXFSIZ = ((uint32_t)size << 16) | Tx_Offset;
 	} else {
 		Tx_Offset += (hpcd->Instance->DIEPTXF0_HNPTXFSIZ) >> 16;
 		for (i = 0U; i < (fifo - 1U); i++) {
@@ -98,8 +96,7 @@ HAL_StatusTypeDef HAL_PCDEx_SetTxFiFo(PCD_HandleTypeDef *hpcd, uint8_t fifo,
 		}
 
 		/* Multiply Tx_Size by 2 to get higher performance */
-		hpcd->Instance->DIEPTXF[fifo - 1U] =
-		    ((uint32_t)size << 16) | Tx_Offset;
+		hpcd->Instance->DIEPTXF[fifo - 1U] = ((uint32_t)size << 16) | Tx_Offset;
 	}
 
 	return HAL_OK;
@@ -130,8 +127,7 @@ HAL_StatusTypeDef HAL_PCDEx_ActivateLPM(PCD_HandleTypeDef *hpcd)
 	hpcd->lpm_active = 1U;
 	hpcd->LPM_State = LPM_L0;
 	USBx->GINTMSK |= USB_OTG_GINTMSK_LPMINTM;
-	USBx->GLPMCFG |= (USB_OTG_GLPMCFG_LPMEN | USB_OTG_GLPMCFG_LPMACK |
-			  USB_OTG_GLPMCFG_ENBESL);
+	USBx->GLPMCFG |= (USB_OTG_GLPMCFG_LPMEN | USB_OTG_GLPMCFG_LPMACK | USB_OTG_GLPMCFG_ENBESL);
 
 	return HAL_OK;
 }
@@ -147,8 +143,7 @@ HAL_StatusTypeDef HAL_PCDEx_DeActivateLPM(PCD_HandleTypeDef *hpcd)
 
 	hpcd->lpm_active = 0U;
 	USBx->GINTMSK &= ~USB_OTG_GINTMSK_LPMINTM;
-	USBx->GLPMCFG &= ~(USB_OTG_GLPMCFG_LPMEN | USB_OTG_GLPMCFG_LPMACK |
-			   USB_OTG_GLPMCFG_ENBESL);
+	USBx->GLPMCFG &= ~(USB_OTG_GLPMCFG_LPMEN | USB_OTG_GLPMCFG_LPMACK | USB_OTG_GLPMCFG_ENBESL);
 
 	return HAL_OK;
 }
@@ -203,20 +198,16 @@ void HAL_PCDEx_BCD_VBUSDetect(PCD_HandleTypeDef *hpcd)
 		if ((USBx->GCCFG & USB_OTG_GCCFG_SDET) == USB_OTG_GCCFG_SDET) {
 			/* case Dedicated Charging Port  */
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
-			hpcd->BCDCallback(hpcd,
-					  PCD_BCD_DEDICATED_CHARGING_PORT);
+			hpcd->BCDCallback(hpcd, PCD_BCD_DEDICATED_CHARGING_PORT);
 #else
-			HAL_PCDEx_BCD_Callback(hpcd,
-					       PCD_BCD_DEDICATED_CHARGING_PORT);
+			HAL_PCDEx_BCD_Callback(hpcd, PCD_BCD_DEDICATED_CHARGING_PORT);
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 		} else {
 			/* case Charging Downstream Port */
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
-			hpcd->BCDCallback(hpcd,
-					  PCD_BCD_CHARGING_DOWNSTREAM_PORT);
+			hpcd->BCDCallback(hpcd, PCD_BCD_CHARGING_DOWNSTREAM_PORT);
 #else
-			HAL_PCDEx_BCD_Callback(
-			    hpcd, PCD_BCD_CHARGING_DOWNSTREAM_PORT);
+			HAL_PCDEx_BCD_Callback(hpcd, PCD_BCD_CHARGING_DOWNSTREAM_PORT);
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 		}
 	}
@@ -302,8 +293,7 @@ HAL_StatusTypeDef HAL_PCDEx_DeActivateBCD(PCD_HandleTypeDef *hpcd)
  * @retval HAL status
  */
 
-HAL_StatusTypeDef HAL_PCDEx_PMAConfig(PCD_HandleTypeDef *hpcd, uint16_t ep_addr,
-				      uint16_t ep_kind, uint32_t pmaadress)
+HAL_StatusTypeDef HAL_PCDEx_PMAConfig(PCD_HandleTypeDef *hpcd, uint16_t ep_addr, uint16_t ep_kind, uint32_t pmaadress)
 {
 	PCD_EPTypeDef *ep;
 
@@ -413,20 +403,16 @@ void HAL_PCDEx_BCD_VBUSDetect(PCD_HandleTypeDef *hpcd)
 		if ((USBx->BCDR & USB_BCDR_SDET) == USB_BCDR_SDET) {
 			/* Dedicated Downstream Port DCP */
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
-			hpcd->BCDCallback(hpcd,
-					  PCD_BCD_DEDICATED_CHARGING_PORT);
+			hpcd->BCDCallback(hpcd, PCD_BCD_DEDICATED_CHARGING_PORT);
 #else
-			HAL_PCDEx_BCD_Callback(hpcd,
-					       PCD_BCD_DEDICATED_CHARGING_PORT);
+			HAL_PCDEx_BCD_Callback(hpcd, PCD_BCD_DEDICATED_CHARGING_PORT);
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 		} else {
 			/* Charging Downstream Port CDP */
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
-			hpcd->BCDCallback(hpcd,
-					  PCD_BCD_CHARGING_DOWNSTREAM_PORT);
+			hpcd->BCDCallback(hpcd, PCD_BCD_CHARGING_DOWNSTREAM_PORT);
 #else
-			HAL_PCDEx_BCD_Callback(
-			    hpcd, PCD_BCD_CHARGING_DOWNSTREAM_PORT);
+			HAL_PCDEx_BCD_Callback(hpcd, PCD_BCD_CHARGING_DOWNSTREAM_PORT);
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 		}
 	} else /* NO */
@@ -500,8 +486,7 @@ HAL_StatusTypeDef HAL_PCDEx_DeActivateLPM(PCD_HandleTypeDef *hpcd)
  * @param  msg LPM message
  * @retval HAL status
  */
-__weak void HAL_PCDEx_LPM_Callback(PCD_HandleTypeDef *hpcd,
-				   PCD_LPM_MsgTypeDef msg)
+__weak void HAL_PCDEx_LPM_Callback(PCD_HandleTypeDef *hpcd, PCD_LPM_MsgTypeDef msg)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hpcd);
@@ -519,8 +504,7 @@ __weak void HAL_PCDEx_LPM_Callback(PCD_HandleTypeDef *hpcd,
  * @param  msg LPM message
  * @retval HAL status
  */
-__weak void HAL_PCDEx_BCD_Callback(PCD_HandleTypeDef *hpcd,
-				   PCD_BCD_MsgTypeDef msg)
+__weak void HAL_PCDEx_BCD_Callback(PCD_HandleTypeDef *hpcd, PCD_BCD_MsgTypeDef msg)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hpcd);

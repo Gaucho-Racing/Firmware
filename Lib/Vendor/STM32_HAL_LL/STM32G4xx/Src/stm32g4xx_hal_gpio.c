@@ -196,23 +196,19 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)
 				assert_param(IS_GPIO_SPEED(GPIO_Init->Speed));
 				/* Configure the IO Speed */
 				temp = GPIOx->OSPEEDR;
-				temp &=
-				    ~(GPIO_OSPEEDR_OSPEED0 << (position * 2U));
+				temp &= ~(GPIO_OSPEEDR_OSPEED0 << (position * 2U));
 				temp |= (GPIO_Init->Speed << (position * 2U));
 				GPIOx->OSPEEDR = temp;
 
 				/* Configure the IO Output Type */
 				temp = GPIOx->OTYPER;
 				temp &= ~(GPIO_OTYPER_OT0 << position);
-				temp |= (((GPIO_Init->Mode & OUTPUT_TYPE) >>
-					  OUTPUT_TYPE_Pos)
-					 << position);
+				temp |= (((GPIO_Init->Mode & OUTPUT_TYPE) >> OUTPUT_TYPE_Pos) << position);
 				GPIOx->OTYPER = temp;
 			}
 
 			if (((GPIO_Init->Mode & GPIO_MODE) != MODE_ANALOG) ||
-			    (((GPIO_Init->Mode & GPIO_MODE) == MODE_ANALOG) &&
-			     (GPIO_Init->Pull != GPIO_PULLUP))) {
+			    (((GPIO_Init->Mode & GPIO_MODE) == MODE_ANALOG) && (GPIO_Init->Pull != GPIO_PULLUP))) {
 				/* Check the Pull parameter */
 				assert_param(IS_GPIO_PULL(GPIO_Init->Pull));
 
@@ -234,8 +230,7 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)
 				 * current IO */
 				temp = GPIOx->AFR[position >> 3U];
 				temp &= ~(0xFU << ((position & 0x07U) * 4U));
-				temp |= ((GPIO_Init->Alternate)
-					 << ((position & 0x07U) * 4U));
+				temp |= ((GPIO_Init->Alternate) << ((position & 0x07U) * 4U));
 				GPIOx->AFR[position >> 3U] = temp;
 			}
 
@@ -243,8 +238,7 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)
 			 * or Analog) */
 			temp = GPIOx->MODER;
 			temp &= ~(GPIO_MODER_MODE0 << (position * 2U));
-			temp |=
-			    ((GPIO_Init->Mode & GPIO_MODE) << (position * 2U));
+			temp |= ((GPIO_Init->Mode & GPIO_MODE) << (position * 2U));
 			GPIOx->MODER = temp;
 
 			/*--------------------- EXTI Mode Configuration
@@ -257,23 +251,20 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)
 
 				temp = SYSCFG->EXTICR[position >> 2U];
 				temp &= ~(0x0FUL << (4U * (position & 0x03U)));
-				temp |= (GPIO_GET_INDEX(GPIOx)
-					 << (4U * (position & 0x03U)));
+				temp |= (GPIO_GET_INDEX(GPIOx) << (4U * (position & 0x03U)));
 				SYSCFG->EXTICR[position >> 2U] = temp;
 
 				/* Clear Rising Falling edge configuration */
 				temp = EXTI->RTSR1;
 				temp &= ~(iocurrent);
-				if ((GPIO_Init->Mode & TRIGGER_RISING) !=
-				    0x00U) {
+				if ((GPIO_Init->Mode & TRIGGER_RISING) != 0x00U) {
 					temp |= iocurrent;
 				}
 				EXTI->RTSR1 = temp;
 
 				temp = EXTI->FTSR1;
 				temp &= ~(iocurrent);
-				if ((GPIO_Init->Mode & TRIGGER_FALLING) !=
-				    0x00U) {
+				if ((GPIO_Init->Mode & TRIGGER_FALLING) != 0x00U) {
 					temp |= iocurrent;
 				}
 				EXTI->FTSR1 = temp;
@@ -332,8 +323,7 @@ void HAL_GPIO_DeInit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
 
 			tmp = SYSCFG->EXTICR[position >> 2U];
 			tmp &= (0x0FUL << (4U * (position & 0x03U)));
-			if (tmp == (GPIO_GET_INDEX(GPIOx)
-				    << (4U * (position & 0x03U)))) {
+			if (tmp == (GPIO_GET_INDEX(GPIOx) << (4U * (position & 0x03U)))) {
 				/* Clear EXTI line configuration */
 				EXTI->IMR1 &= ~(iocurrent);
 				EXTI->EMR1 &= ~(iocurrent);
@@ -353,8 +343,7 @@ void HAL_GPIO_DeInit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
 
 			/* Configure the default Alternate Function in current
 			 * IO */
-			GPIOx->AFR[position >> 3u] &=
-			    ~(0xFu << ((position & 0x07u) * 4u));
+			GPIOx->AFR[position >> 3u] &= ~(0xFu << ((position & 0x07u) * 4u));
 
 			/* Deactivate the Pull-up and Pull-down resistor for the
 			 * current IO */
@@ -364,8 +353,7 @@ void HAL_GPIO_DeInit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
 			GPIOx->OTYPER &= ~(GPIO_OTYPER_OT0 << position);
 
 			/* Configure the default value for IO Speed */
-			GPIOx->OSPEEDR &=
-			    ~(GPIO_OSPEEDR_OSPEED0 << (position * 2u));
+			GPIOx->OSPEEDR &= ~(GPIO_OSPEEDR_OSPEED0 << (position * 2u));
 		}
 
 		position++;
@@ -430,8 +418,7 @@ GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
  *            @arg GPIO_PIN_SET: to set the port pin
  * @retval None
  */
-void HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin,
-		       GPIO_PinState PinState)
+void HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState)
 {
 	/* Check the parameters */
 	assert_param(IS_GPIO_PIN(GPIO_Pin));

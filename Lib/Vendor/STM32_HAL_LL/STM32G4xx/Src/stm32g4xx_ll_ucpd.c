@@ -113,8 +113,7 @@ ErrorStatus LL_UCPD_DeInit(UCPD_TypeDef *UCPDx)
  * contains the configuration information for the UCPD peripheral.
  * @retval An ErrorStatus enumeration value. (Return always SUCCESS)
  */
-ErrorStatus LL_UCPD_Init(UCPD_TypeDef *UCPDx,
-			 const LL_UCPD_InitTypeDef *UCPD_InitStruct)
+ErrorStatus LL_UCPD_Init(UCPD_TypeDef *UCPDx, const LL_UCPD_InitTypeDef *UCPD_InitStruct)
 {
 	/* Check the ucpd Instance UCPDx*/
 	assert_param(IS_UCPD_ALL_INSTANCE(UCPDx));
@@ -127,13 +126,9 @@ ErrorStatus LL_UCPD_Init(UCPD_TypeDef *UCPDx,
 
 	/*---------------------------- UCPDx CFG1 Configuration
 	 * ------------------------*/
-	MODIFY_REG(UCPDx->CFG1,
-		   UCPD_CFG1_PSC_UCPDCLK | UCPD_CFG1_TRANSWIN |
-		       UCPD_CFG1_IFRGAP | UCPD_CFG1_HBITCLKDIV,
-		   UCPD_InitStruct->psc_ucpdclk |
-		       (UCPD_InitStruct->transwin << UCPD_CFG1_TRANSWIN_Pos) |
-		       (UCPD_InitStruct->IfrGap << UCPD_CFG1_IFRGAP_Pos) |
-		       UCPD_InitStruct->HbitClockDiv);
+	MODIFY_REG(UCPDx->CFG1, UCPD_CFG1_PSC_UCPDCLK | UCPD_CFG1_TRANSWIN | UCPD_CFG1_IFRGAP | UCPD_CFG1_HBITCLKDIV,
+		   UCPD_InitStruct->psc_ucpdclk | (UCPD_InitStruct->transwin << UCPD_CFG1_TRANSWIN_Pos) |
+		       (UCPD_InitStruct->IfrGap << UCPD_CFG1_IFRGAP_Pos) | UCPD_InitStruct->HbitClockDiv);
 
 	return SUCCESS;
 }
@@ -148,10 +143,9 @@ void LL_UCPD_StructInit(LL_UCPD_InitTypeDef *UCPD_InitStruct)
 {
 	/* Set UCPD_InitStruct fields to default values */
 	UCPD_InitStruct->psc_ucpdclk = LL_UCPD_PSC_DIV2;
-	UCPD_InitStruct->transwin = 0x7; /* Divide by 8                     */
-	UCPD_InitStruct->IfrGap = 0x10;	 /* Divide by 17                    */
-	UCPD_InitStruct->HbitClockDiv =
-	    0x0D; /* Divide by 14 to produce HBITCLK */
+	UCPD_InitStruct->transwin = 0x7;      /* Divide by 8                     */
+	UCPD_InitStruct->IfrGap = 0x10;	      /* Divide by 17                    */
+	UCPD_InitStruct->HbitClockDiv = 0x0D; /* Divide by 14 to produce HBITCLK */
 }
 
 /**

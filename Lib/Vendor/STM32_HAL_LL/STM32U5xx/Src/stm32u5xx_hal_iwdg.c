@@ -138,11 +138,8 @@
    The timeout value is multiplied by 1000 to be converted in milliseconds.
    LSI startup time is also considered here by adding LSI_STARTUP_TIME
    converted in milliseconds. */
-#define HAL_IWDG_DEFAULT_TIMEOUT                                               \
-	(((1UL * 1024UL * 1000UL) / (LSI_VALUE / 128U)) +                      \
-	 ((LSI_STARTUP_TIME / 1000UL) + 1UL))
-#define IWDG_KERNEL_UPDATE_FLAGS                                               \
-	(IWDG_SR_EWU | IWDG_SR_WVU | IWDG_SR_RVU | IWDG_SR_PVU)
+#define HAL_IWDG_DEFAULT_TIMEOUT (((1UL * 1024UL * 1000UL) / (LSI_VALUE / 128U)) + ((LSI_STARTUP_TIME / 1000UL) + 1UL))
+#define IWDG_KERNEL_UPDATE_FLAGS (IWDG_SR_EWU | IWDG_SR_WVU | IWDG_SR_RVU | IWDG_SR_PVU)
 /**
  * @}
  */
@@ -236,8 +233,7 @@ HAL_StatusTypeDef HAL_IWDG_Init(IWDG_HandleTypeDef *hiwdg)
 		 * wakeup interrupt, acknowledge the early wakeup interrupt in
 		 * any cases. it clears the EWIF flag in SR register Set
 		 * Watchdog Early Wakeup Comparator value */
-		hiwdg->Instance->EWCR =
-		    IWDG_EWCR_EWIE | IWDG_EWCR_EWIC | hiwdg->Init.EWI;
+		hiwdg->Instance->EWCR = IWDG_EWCR_EWIE | IWDG_EWCR_EWIC | hiwdg->Init.EWI;
 	}
 
 	/* Check pending flag, if previous update not done, return timeout */
@@ -246,8 +242,7 @@ HAL_StatusTypeDef HAL_IWDG_Init(IWDG_HandleTypeDef *hiwdg)
 	/* Wait for register to be updated */
 	while ((hiwdg->Instance->SR & IWDG_KERNEL_UPDATE_FLAGS) != 0x00u) {
 		if ((HAL_GetTick() - tickstart) > HAL_IWDG_DEFAULT_TIMEOUT) {
-			if ((hiwdg->Instance->SR & IWDG_KERNEL_UPDATE_FLAGS) !=
-			    0x00u) {
+			if ((hiwdg->Instance->SR & IWDG_KERNEL_UPDATE_FLAGS) != 0x00u) {
 				return HAL_TIMEOUT;
 			}
 		}
@@ -301,10 +296,8 @@ __weak void HAL_IWDG_MspInit(IWDG_HandleTypeDef *hiwdg)
  * @param  pCallback pointer to the Callback function
  * @retval status
  */
-HAL_StatusTypeDef
-HAL_IWDG_RegisterCallback(IWDG_HandleTypeDef *hiwdg,
-			  HAL_IWDG_CallbackIDTypeDef CallbackID,
-			  pIWDG_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_IWDG_RegisterCallback(IWDG_HandleTypeDef *hiwdg, HAL_IWDG_CallbackIDTypeDef CallbackID,
+					    pIWDG_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -339,9 +332,7 @@ HAL_IWDG_RegisterCallback(IWDG_HandleTypeDef *hiwdg,
  *           @arg @ref HAL_IWDG_MSPINIT_CB_ID MspInit callback ID
  * @retval status
  */
-HAL_StatusTypeDef
-HAL_IWDG_UnRegisterCallback(IWDG_HandleTypeDef *hiwdg,
-			    HAL_IWDG_CallbackIDTypeDef CallbackID)
+HAL_StatusTypeDef HAL_IWDG_UnRegisterCallback(IWDG_HandleTypeDef *hiwdg, HAL_IWDG_CallbackIDTypeDef CallbackID)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 

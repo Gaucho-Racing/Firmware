@@ -21,9 +21,7 @@ extern "C" {
  * from all zeros. Not accessible with global write. */
 #define MC33771C_INIT_CID_SHIFT (0x0U)
 #define MC33771C_INIT_CID_MASK (0x3FU)
-#define MC33771C_INIT_CID(x)                                                   \
-	((uint16_t)((uint16_t)(x) << MC33771C_INIT_CID_SHIFT) &                \
-	 MC33771C_INIT_CID_MASK)
+#define MC33771C_INIT_CID(x) ((uint16_t)((uint16_t)(x) << MC33771C_INIT_CID_SHIFT) & MC33771C_INIT_CID_MASK)
 
 /* Enumerated value DEFAULT: Default CID. */
 #define MC33771C_INIT_CID_DEFAULT_ENUM_VAL (0x0U)
@@ -31,9 +29,8 @@ extern "C" {
 /* Field RDTX_OUT: Enable for TPL port termination for RDTX_OUT pin. */
 #define MC33771C_INIT_RDTX_OUT_SHIFT (0x6U)
 #define MC33771C_INIT_RDTX_OUT_MASK (0x40U)
-#define MC33771C_INIT_RDTX_OUT(x)                                              \
-	((uint16_t)((uint16_t)(x) << MC33771C_INIT_RDTX_OUT_SHIFT) &           \
-	 MC33771C_INIT_RDTX_OUT_MASK)
+#define MC33771C_INIT_RDTX_OUT(x)                                                                                      \
+	((uint16_t)((uint16_t)(x) << MC33771C_INIT_RDTX_OUT_SHIFT) & MC33771C_INIT_RDTX_OUT_MASK)
 
 /* Enumerated value DISABLED: DISABLED */
 #define MC33771C_INIT_RDTX_OUT_DISABLED_ENUM_VAL (0x0U)
@@ -44,9 +41,7 @@ extern "C" {
 /* Field RDTX_IN: Enable for TPL port termination for RDTX_IN pin. */
 #define MC33771C_INIT_RDTX_IN_SHIFT (0x7U)
 #define MC33771C_INIT_RDTX_IN_MASK (0x80U)
-#define MC33771C_INIT_RDTX_IN(x)                                               \
-	((uint16_t)((uint16_t)(x) << MC33771C_INIT_RDTX_IN_SHIFT) &            \
-	 MC33771C_INIT_RDTX_IN_MASK)
+#define MC33771C_INIT_RDTX_IN(x) ((uint16_t)((uint16_t)(x) << MC33771C_INIT_RDTX_IN_SHIFT) & MC33771C_INIT_RDTX_IN_MASK)
 
 /* Enumerated value DISABLED: DISABLED */
 #define MC33771C_INIT_RDTX_IN_DISABLED_ENUM_VAL (0x0U)
@@ -63,9 +58,8 @@ extern "C" {
 /* Field GO2SLEEP (write-only): Go to sleep command */
 #define MC33771C_SYS_CFG_GLOBAL_GO2SLEEP_SHIFT (0x0U)
 #define MC33771C_SYS_CFG_GLOBAL_GO2SLEEP_MASK (0x1U)
-#define MC33771C_SYS_CFG_GLOBAL_GO2SLEEP(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG_GLOBAL_GO2SLEEP_SHIFT) & \
-	 MC33771C_SYS_CFG_GLOBAL_GO2SLEEP_MASK)
+#define MC33771C_SYS_CFG_GLOBAL_GO2SLEEP(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG_GLOBAL_GO2SLEEP_SHIFT) & MC33771C_SYS_CFG_GLOBAL_GO2SLEEP_MASK)
 
 /* Enumerated value DISABLED: No reaction. */
 #define MC33771C_SYS_CFG_GLOBAL_GO2SLEEP_DISABLED_ENUM_VAL (0x0U)
@@ -83,9 +77,8 @@ extern "C" {
 /* Field WAVE_DC_BITx: Controls the off time of the heartbeat pulse. */
 #define MC33771C_SYS_CFG1_WAVE_DC_BITX_SHIFT (0x1U)
 #define MC33771C_SYS_CFG1_WAVE_DC_BITX_MASK (0x6U)
-#define MC33771C_SYS_CFG1_WAVE_DC_BITX(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG1_WAVE_DC_BITX_SHIFT) &   \
-	 MC33771C_SYS_CFG1_WAVE_DC_BITX_MASK)
+#define MC33771C_SYS_CFG1_WAVE_DC_BITX(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG1_WAVE_DC_BITX_SHIFT) & MC33771C_SYS_CFG1_WAVE_DC_BITX_MASK)
 
 /* Enumerated value 500US: 500 us */
 #define MC33771C_SYS_CFG1_WAVE_DC_BITX_500US_ENUM_VAL (0x0U)
@@ -102,9 +95,8 @@ extern "C" {
 /* Field FAULT_WAVE: FAULT pin wave form control bit. */
 #define MC33771C_SYS_CFG1_FAULT_WAVE_SHIFT (0x3U)
 #define MC33771C_SYS_CFG1_FAULT_WAVE_MASK (0x8U)
-#define MC33771C_SYS_CFG1_FAULT_WAVE(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG1_FAULT_WAVE_SHIFT) &     \
-	 MC33771C_SYS_CFG1_FAULT_WAVE_MASK)
+#define MC33771C_SYS_CFG1_FAULT_WAVE(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG1_FAULT_WAVE_SHIFT) & MC33771C_SYS_CFG1_FAULT_WAVE_MASK)
 
 /* Enumerated value DISABLED: FAULT pin has high or low level behavior. FAULT
  * pin high, fault is present. FAULT pin low indicates no fault present. */
@@ -117,9 +109,8 @@ extern "C" {
 /* Field SOFT_RST (write-only): Software reset. */
 #define MC33771C_SYS_CFG1_SOFT_RST_SHIFT (0x4U)
 #define MC33771C_SYS_CFG1_SOFT_RST_MASK (0x10U)
-#define MC33771C_SYS_CFG1_SOFT_RST(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG1_SOFT_RST_SHIFT) &       \
-	 MC33771C_SYS_CFG1_SOFT_RST_MASK)
+#define MC33771C_SYS_CFG1_SOFT_RST(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG1_SOFT_RST_SHIFT) & MC33771C_SYS_CFG1_SOFT_RST_MASK)
 
 /* Enumerated value DISABLED: DISABLED */
 #define MC33771C_SYS_CFG1_SOFT_RST_DISABLED_ENUM_VAL (0x0U)
@@ -130,10 +121,8 @@ extern "C" {
 /* Field CB_MANUAL_PAUSE: Cell balancing manual pause. */
 #define MC33771C_SYS_CFG1_CB_MANUAL_PAUSE_SHIFT (0x5U)
 #define MC33771C_SYS_CFG1_CB_MANUAL_PAUSE_MASK (0x20U)
-#define MC33771C_SYS_CFG1_CB_MANUAL_PAUSE(x)                                   \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_SYS_CFG1_CB_MANUAL_PAUSE_SHIFT) &              \
-	 MC33771C_SYS_CFG1_CB_MANUAL_PAUSE_MASK)
+#define MC33771C_SYS_CFG1_CB_MANUAL_PAUSE(x)                                                                           \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG1_CB_MANUAL_PAUSE_SHIFT) & MC33771C_SYS_CFG1_CB_MANUAL_PAUSE_MASK)
 
 /* Enumerated value DISABLED: Disabled CB switches can be normally commanded
  * on/off by the dedicated logic functions. */
@@ -147,9 +136,8 @@ extern "C" {
  * GO2DIAG bit restarts the DIAG_TIMEOUT. */
 #define MC33771C_SYS_CFG1_GO2DIAG_SHIFT (0x6U)
 #define MC33771C_SYS_CFG1_GO2DIAG_MASK (0x40U)
-#define MC33771C_SYS_CFG1_GO2DIAG(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG1_GO2DIAG_SHIFT) &        \
-	 MC33771C_SYS_CFG1_GO2DIAG_MASK)
+#define MC33771C_SYS_CFG1_GO2DIAG(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG1_GO2DIAG_SHIFT) & MC33771C_SYS_CFG1_GO2DIAG_MASK)
 
 /* Enumerated value EXIT: Exit diag mode. */
 #define MC33771C_SYS_CFG1_GO2DIAG_EXIT_ENUM_VAL (0x0U)
@@ -160,9 +148,8 @@ extern "C" {
 /* Field DIAG_ST (read-only): Identifies when the device is in diag mode. */
 #define MC33771C_SYS_CFG1_DIAG_ST_SHIFT (0x6U)
 #define MC33771C_SYS_CFG1_DIAG_ST_MASK (0x40U)
-#define MC33771C_SYS_CFG1_DIAG_ST(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG1_DIAG_ST_SHIFT) &        \
-	 MC33771C_SYS_CFG1_DIAG_ST_MASK)
+#define MC33771C_SYS_CFG1_DIAG_ST(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG1_DIAG_ST_SHIFT) & MC33771C_SYS_CFG1_DIAG_ST_MASK)
 
 /* Enumerated value NOT_IN_DIAG: System is not in diag mode. */
 #define MC33771C_SYS_CFG1_DIAG_ST_NOT_IN_DIAG_ENUM_VAL (0x0U)
@@ -173,9 +160,8 @@ extern "C" {
 /* Field CB_DRVEN: General enable or disable for all cell balance drivers. */
 #define MC33771C_SYS_CFG1_CB_DRVEN_SHIFT (0x7U)
 #define MC33771C_SYS_CFG1_CB_DRVEN_MASK (0x80U)
-#define MC33771C_SYS_CFG1_CB_DRVEN(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG1_CB_DRVEN_SHIFT) &       \
-	 MC33771C_SYS_CFG1_CB_DRVEN_MASK)
+#define MC33771C_SYS_CFG1_CB_DRVEN(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG1_CB_DRVEN_SHIFT) & MC33771C_SYS_CFG1_CB_DRVEN_MASK)
 
 /* Enumerated value DISABLED: DISABLED */
 #define MC33771C_SYS_CFG1_CB_DRVEN_DISABLED_ENUM_VAL (0x0U)
@@ -187,9 +173,8 @@ extern "C" {
 /* Field I_MEAS_EN: Enable for current measurement chain. */
 #define MC33771C_SYS_CFG1_I_MEAS_EN_SHIFT (0x9U)
 #define MC33771C_SYS_CFG1_I_MEAS_EN_MASK (0x200U)
-#define MC33771C_SYS_CFG1_I_MEAS_EN(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG1_I_MEAS_EN_SHIFT) &      \
-	 MC33771C_SYS_CFG1_I_MEAS_EN_MASK)
+#define MC33771C_SYS_CFG1_I_MEAS_EN(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG1_I_MEAS_EN_SHIFT) & MC33771C_SYS_CFG1_I_MEAS_EN_MASK)
 
 /* Enumerated value DISABLED: DISABLED */
 #define MC33771C_SYS_CFG1_I_MEAS_EN_DISABLED_ENUM_VAL (0x0U)
@@ -201,9 +186,8 @@ extern "C" {
  * sleep mode */
 #define MC33771C_SYS_CFG1_DIAG_TIMEOUT_SHIFT (0xAU)
 #define MC33771C_SYS_CFG1_DIAG_TIMEOUT_MASK (0x1C00U)
-#define MC33771C_SYS_CFG1_DIAG_TIMEOUT(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG1_DIAG_TIMEOUT_SHIFT) &   \
-	 MC33771C_SYS_CFG1_DIAG_TIMEOUT_MASK)
+#define MC33771C_SYS_CFG1_DIAG_TIMEOUT(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG1_DIAG_TIMEOUT_SHIFT) & MC33771C_SYS_CFG1_DIAG_TIMEOUT_MASK)
 
 /* Enumerated value NO_TIMER: No timer, not allowed to enter diag mode. */
 #define MC33771C_SYS_CFG1_DIAG_TIMEOUT_NO_TIMER_ENUM_VAL (0x0U)
@@ -233,9 +217,8 @@ extern "C" {
  * sleep mode. */
 #define MC33771C_SYS_CFG1_CYCLIC_TIMER_SHIFT (0xDU)
 #define MC33771C_SYS_CFG1_CYCLIC_TIMER_MASK (0xE000U)
-#define MC33771C_SYS_CFG1_CYCLIC_TIMER(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG1_CYCLIC_TIMER_SHIFT) &   \
-	 MC33771C_SYS_CFG1_CYCLIC_TIMER_MASK)
+#define MC33771C_SYS_CFG1_CYCLIC_TIMER(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG1_CYCLIC_TIMER_SHIFT) & MC33771C_SYS_CFG1_CYCLIC_TIMER_MASK)
 
 /* Enumerated value DISABLED: Cyclic measure is disabled, whatever the mode. */
 #define MC33771C_SYS_CFG1_CYCLIC_TIMER_DISABLED_ENUM_VAL (0x0U)
@@ -270,9 +253,8 @@ extern "C" {
 /* Field HAMM_ENCOD: Hamming encoders */
 #define MC33771C_SYS_CFG2_HAMM_ENCOD_SHIFT (0x0U)
 #define MC33771C_SYS_CFG2_HAMM_ENCOD_MASK (0x1U)
-#define MC33771C_SYS_CFG2_HAMM_ENCOD(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG2_HAMM_ENCOD_SHIFT) &     \
-	 MC33771C_SYS_CFG2_HAMM_ENCOD_MASK)
+#define MC33771C_SYS_CFG2_HAMM_ENCOD(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG2_HAMM_ENCOD_SHIFT) & MC33771C_SYS_CFG2_HAMM_ENCOD_MASK)
 
 /* Enumerated value DECODE: Decode - the DED Hamming decoders fulfill their job.
  */
@@ -286,9 +268,8 @@ extern "C" {
  * diagnosis) */
 #define MC33771C_SYS_CFG2_NUMB_ODD_SHIFT (0x1U)
 #define MC33771C_SYS_CFG2_NUMB_ODD_MASK (0x2U)
-#define MC33771C_SYS_CFG2_NUMB_ODD(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG2_NUMB_ODD_SHIFT) &       \
-	 MC33771C_SYS_CFG2_NUMB_ODD_MASK)
+#define MC33771C_SYS_CFG2_NUMB_ODD(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG2_NUMB_ODD_SHIFT) & MC33771C_SYS_CFG2_NUMB_ODD_MASK)
 
 /* Enumerated value EVEN: Even configuration. */
 #define MC33771C_SYS_CFG2_NUMB_ODD_EVEN_ENUM_VAL (0x0U)
@@ -300,9 +281,8 @@ extern "C" {
  * FAULT1_STATUS[COM_LOSS] if no communication during... */
 #define MC33771C_SYS_CFG2_TIMEOUT_COMM_SHIFT (0x4U)
 #define MC33771C_SYS_CFG2_TIMEOUT_COMM_MASK (0x30U)
-#define MC33771C_SYS_CFG2_TIMEOUT_COMM(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG2_TIMEOUT_COMM_SHIFT) &   \
-	 MC33771C_SYS_CFG2_TIMEOUT_COMM_MASK)
+#define MC33771C_SYS_CFG2_TIMEOUT_COMM(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG2_TIMEOUT_COMM_SHIFT) & MC33771C_SYS_CFG2_TIMEOUT_COMM_MASK)
 
 /* Enumerated value 32MS: 32 ms */
 #define MC33771C_SYS_CFG2_TIMEOUT_COMM_32MS_ENUM_VAL (0x0U)
@@ -319,9 +299,8 @@ extern "C" {
 /* Field FLT_RST_CFG: Fault reset configuration. */
 #define MC33771C_SYS_CFG2_FLT_RST_CFG_SHIFT (0x6U)
 #define MC33771C_SYS_CFG2_FLT_RST_CFG_MASK (0x3C0U)
-#define MC33771C_SYS_CFG2_FLT_RST_CFG(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG2_FLT_RST_CFG_SHIFT) &    \
-	 MC33771C_SYS_CFG2_FLT_RST_CFG_MASK)
+#define MC33771C_SYS_CFG2_FLT_RST_CFG(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG2_FLT_RST_CFG_SHIFT) & MC33771C_SYS_CFG2_FLT_RST_CFG_MASK)
 
 /* Enumerated value RESET_DISABLED: Disabled COM timeout (1024 ms) reset and OSC
  * fault monitoring and reset. */
@@ -348,9 +327,8 @@ extern "C" {
  * device. */
 #define MC33771C_SYS_CFG2_PREVIOUS_STATE_SHIFT (0xAU)
 #define MC33771C_SYS_CFG2_PREVIOUS_STATE_MASK (0x1C00U)
-#define MC33771C_SYS_CFG2_PREVIOUS_STATE(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG2_PREVIOUS_STATE_SHIFT) & \
-	 MC33771C_SYS_CFG2_PREVIOUS_STATE_MASK)
+#define MC33771C_SYS_CFG2_PREVIOUS_STATE(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_CFG2_PREVIOUS_STATE_SHIFT) & MC33771C_SYS_CFG2_PREVIOUS_STATE_MASK)
 
 /* Enumerated value INIT: The device is coming from INIT state. */
 #define MC33771C_SYS_CFG2_PREVIOUS_STATE_INIT_ENUM_VAL (0x0U)
@@ -380,9 +358,8 @@ extern "C" {
  * detection switches. */
 #define MC33771C_SYS_DIAG_CB_OL_EVEN_SHIFT (0x0U)
 #define MC33771C_SYS_DIAG_CB_OL_EVEN_MASK (0x1U)
-#define MC33771C_SYS_DIAG_CB_OL_EVEN(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_CB_OL_EVEN_SHIFT) &     \
-	 MC33771C_SYS_DIAG_CB_OL_EVEN_MASK)
+#define MC33771C_SYS_DIAG_CB_OL_EVEN(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_CB_OL_EVEN_SHIFT) & MC33771C_SYS_DIAG_CB_OL_EVEN_MASK)
 
 /* Enumerated value OPEN: EVEN cell balance open load detection switches are
  * open. */
@@ -396,9 +373,8 @@ extern "C" {
  * detection switches. */
 #define MC33771C_SYS_DIAG_CB_OL_ODD_SHIFT (0x1U)
 #define MC33771C_SYS_DIAG_CB_OL_ODD_MASK (0x2U)
-#define MC33771C_SYS_DIAG_CB_OL_ODD(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_CB_OL_ODD_SHIFT) &      \
-	 MC33771C_SYS_DIAG_CB_OL_ODD_MASK)
+#define MC33771C_SYS_DIAG_CB_OL_ODD(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_CB_OL_ODD_SHIFT) & MC33771C_SYS_DIAG_CB_OL_ODD_MASK)
 
 /* Enumerated value OPEN: ODD cell balance open load detection switches are
  * open. */
@@ -412,9 +388,8 @@ extern "C" {
  * open detect switches. */
 #define MC33771C_SYS_DIAG_CT_OL_EVEN_SHIFT (0x2U)
 #define MC33771C_SYS_DIAG_CT_OL_EVEN_MASK (0x4U)
-#define MC33771C_SYS_DIAG_CT_OL_EVEN(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_CT_OL_EVEN_SHIFT) &     \
-	 MC33771C_SYS_DIAG_CT_OL_EVEN_MASK)
+#define MC33771C_SYS_DIAG_CT_OL_EVEN(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_CT_OL_EVEN_SHIFT) & MC33771C_SYS_DIAG_CT_OL_EVEN_MASK)
 
 /* Enumerated value OPEN: Even switches are open. */
 #define MC33771C_SYS_DIAG_CT_OL_EVEN_OPEN_ENUM_VAL (0x0U)
@@ -426,9 +401,8 @@ extern "C" {
  * open detect switches. */
 #define MC33771C_SYS_DIAG_CT_OL_ODD_SHIFT (0x3U)
 #define MC33771C_SYS_DIAG_CT_OL_ODD_MASK (0x8U)
-#define MC33771C_SYS_DIAG_CT_OL_ODD(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_CT_OL_ODD_SHIFT) &      \
-	 MC33771C_SYS_DIAG_CT_OL_ODD_MASK)
+#define MC33771C_SYS_DIAG_CT_OL_ODD(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_CT_OL_ODD_SHIFT) & MC33771C_SYS_DIAG_CT_OL_ODD_MASK)
 
 /* Enumerated value OPEN: Odd switches are open. */
 #define MC33771C_SYS_DIAG_CT_OL_ODD_OPEN_ENUM_VAL (0x0U)
@@ -440,9 +414,8 @@ extern "C" {
  * logic 0 when performing CT open load diagnostic. */
 #define MC33771C_SYS_DIAG_CT_OV_UV_SHIFT (0x4U)
 #define MC33771C_SYS_DIAG_CT_OV_UV_MASK (0x10U)
-#define MC33771C_SYS_DIAG_CT_OV_UV(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_CT_OV_UV_SHIFT) &       \
-	 MC33771C_SYS_DIAG_CT_OV_UV_MASK)
+#define MC33771C_SYS_DIAG_CT_OV_UV(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_CT_OV_UV_SHIFT) & MC33771C_SYS_DIAG_CT_OV_UV_MASK)
 
 /* Enumerated value DISABLED: OV and UV diagnostic disabled. */
 #define MC33771C_SYS_DIAG_CT_OV_UV_DISABLED_ENUM_VAL (0x0U)
@@ -455,9 +428,8 @@ extern "C" {
  * exclusive vs. DA_DIAG. */
 #define MC33771C_SYS_DIAG_CT_LEAK_DIAG_SHIFT (0x5U)
 #define MC33771C_SYS_DIAG_CT_LEAK_DIAG_MASK (0x20U)
-#define MC33771C_SYS_DIAG_CT_LEAK_DIAG(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_CT_LEAK_DIAG_SHIFT) &   \
-	 MC33771C_SYS_DIAG_CT_LEAK_DIAG_MASK)
+#define MC33771C_SYS_DIAG_CT_LEAK_DIAG(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_CT_LEAK_DIAG_SHIFT) & MC33771C_SYS_DIAG_CT_LEAK_DIAG_MASK)
 
 /* Enumerated value NORMAL: Normal operation, CTx are MUXed to converter. */
 #define MC33771C_SYS_DIAG_CT_LEAK_DIAG_NORMAL_ENUM_VAL (0x0U)
@@ -470,9 +442,8 @@ extern "C" {
  * polarity between the level shifter and the ADC1-A and ADC1-B converters. */
 #define MC33771C_SYS_DIAG_POLARITY_SHIFT (0x6U)
 #define MC33771C_SYS_DIAG_POLARITY_MASK (0x40U)
-#define MC33771C_SYS_DIAG_POLARITY(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_POLARITY_SHIFT) &       \
-	 MC33771C_SYS_DIAG_POLARITY_MASK)
+#define MC33771C_SYS_DIAG_POLARITY(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_POLARITY_SHIFT) & MC33771C_SYS_DIAG_POLARITY_MASK)
 
 /* Enumerated value NONINVERTED: Noninverted. */
 #define MC33771C_SYS_DIAG_POLARITY_NONINVERTED_ENUM_VAL (0x0U)
@@ -484,9 +455,8 @@ extern "C" {
  * function only. */
 #define MC33771C_SYS_DIAG_DA_DIAG_SHIFT (0x7U)
 #define MC33771C_SYS_DIAG_DA_DIAG_MASK (0x80U)
-#define MC33771C_SYS_DIAG_DA_DIAG(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_DA_DIAG_SHIFT) &        \
-	 MC33771C_SYS_DIAG_DA_DIAG_MASK)
+#define MC33771C_SYS_DIAG_DA_DIAG(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_DA_DIAG_SHIFT) & MC33771C_SYS_DIAG_DA_DIAG_MASK)
 
 /* Enumerated value DISABLED: No check. */
 #define MC33771C_SYS_DIAG_DA_DIAG_DISABLED_ENUM_VAL (0x0U)
@@ -499,9 +469,8 @@ extern "C" {
  * configured as ANx ratiometric or single ended ADC input. */
 #define MC33771C_SYS_DIAG_ANX_TEMP_DIAG_SHIFT (0x8U)
 #define MC33771C_SYS_DIAG_ANX_TEMP_DIAG_MASK (0x100U)
-#define MC33771C_SYS_DIAG_ANX_TEMP_DIAG(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_ANX_TEMP_DIAG_SHIFT) &  \
-	 MC33771C_SYS_DIAG_ANX_TEMP_DIAG_MASK)
+#define MC33771C_SYS_DIAG_ANX_TEMP_DIAG(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_ANX_TEMP_DIAG_SHIFT) & MC33771C_SYS_DIAG_ANX_TEMP_DIAG_MASK)
 
 /* Enumerated value DISABLED: Diagnostic inactive. */
 #define MC33771C_SYS_DIAG_ANX_TEMP_DIAG_DISABLED_ENUM_VAL (0x0U)
@@ -513,9 +482,8 @@ extern "C" {
  * pull down on GPIO input pins. */
 #define MC33771C_SYS_DIAG_ANX_OL_DIAG_SHIFT (0x9U)
 #define MC33771C_SYS_DIAG_ANX_OL_DIAG_MASK (0x200U)
-#define MC33771C_SYS_DIAG_ANX_OL_DIAG(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_ANX_OL_DIAG_SHIFT) &    \
-	 MC33771C_SYS_DIAG_ANX_OL_DIAG_MASK)
+#define MC33771C_SYS_DIAG_ANX_OL_DIAG(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_ANX_OL_DIAG_SHIFT) & MC33771C_SYS_DIAG_ANX_OL_DIAG_MASK)
 
 /* Enumerated value DISABLED: Diagnostic disabled. */
 #define MC33771C_SYS_DIAG_ANX_OL_DIAG_DISABLED_ENUM_VAL (0x0U)
@@ -527,9 +495,8 @@ extern "C" {
  * disables internal pull-up resistors on the ISENSE input pins. */
 #define MC33771C_SYS_DIAG_ISENSE_OL_DIAG_SHIFT (0xAU)
 #define MC33771C_SYS_DIAG_ISENSE_OL_DIAG_MASK (0x400U)
-#define MC33771C_SYS_DIAG_ISENSE_OL_DIAG(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_ISENSE_OL_DIAG_SHIFT) & \
-	 MC33771C_SYS_DIAG_ISENSE_OL_DIAG_MASK)
+#define MC33771C_SYS_DIAG_ISENSE_OL_DIAG(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_ISENSE_OL_DIAG_SHIFT) & MC33771C_SYS_DIAG_ISENSE_OL_DIAG_MASK)
 
 /* Enumerated value DISABLED: Disabled. */
 #define MC33771C_SYS_DIAG_ISENSE_OL_DIAG_DISABLED_ENUM_VAL (0x0U)
@@ -541,9 +508,8 @@ extern "C" {
  * converted by ADC2. */
 #define MC33771C_SYS_DIAG_I_MUX_SHIFT (0xBU)
 #define MC33771C_SYS_DIAG_I_MUX_MASK (0x1800U)
-#define MC33771C_SYS_DIAG_I_MUX(x)                                             \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_I_MUX_SHIFT) &          \
-	 MC33771C_SYS_DIAG_I_MUX_MASK)
+#define MC33771C_SYS_DIAG_I_MUX(x)                                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_I_MUX_SHIFT) & MC33771C_SYS_DIAG_I_MUX_MASK)
 
 /* Enumerated value ISENSE: (ISENSE+, ISENSE?) */
 #define MC33771C_SYS_DIAG_I_MUX_ISENSE_ENUM_VAL (0x0U)
@@ -561,9 +527,8 @@ extern "C" {
 /* Field FAULT_DIAG: FAULT pin driver command */
 #define MC33771C_SYS_DIAG_FAULT_DIAG_SHIFT (0xFU)
 #define MC33771C_SYS_DIAG_FAULT_DIAG_MASK (0x8000U)
-#define MC33771C_SYS_DIAG_FAULT_DIAG(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_FAULT_DIAG_SHIFT) &     \
-	 MC33771C_SYS_DIAG_FAULT_DIAG_MASK)
+#define MC33771C_SYS_DIAG_FAULT_DIAG(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_SYS_DIAG_FAULT_DIAG_SHIFT) & MC33771C_SYS_DIAG_FAULT_DIAG_MASK)
 
 /* Enumerated value PACK_CTRL: No FAULT pin drive, FAULT pin is under command of
  * the pack controller. */
@@ -581,9 +546,8 @@ extern "C" {
 /* Field ADC2_DEF: ADC2 measurement resolution. */
 #define MC33771C_ADC_CFG_ADC2_DEF_SHIFT (0x0U)
 #define MC33771C_ADC_CFG_ADC2_DEF_MASK (0x3U)
-#define MC33771C_ADC_CFG_ADC2_DEF(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_ADC_CFG_ADC2_DEF_SHIFT) &        \
-	 MC33771C_ADC_CFG_ADC2_DEF_MASK)
+#define MC33771C_ADC_CFG_ADC2_DEF(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_ADC_CFG_ADC2_DEF_SHIFT) & MC33771C_ADC_CFG_ADC2_DEF_MASK)
 
 /* Enumerated value 13_BIT: 13 bit */
 #define MC33771C_ADC_CFG_ADC2_DEF_13_BIT_ENUM_VAL (0x0U)
@@ -600,9 +564,8 @@ extern "C" {
 /* Field ADC1_B_DEF: ADC1_B measurement resolution. */
 #define MC33771C_ADC_CFG_ADC1_B_DEF_SHIFT (0x2U)
 #define MC33771C_ADC_CFG_ADC1_B_DEF_MASK (0xCU)
-#define MC33771C_ADC_CFG_ADC1_B_DEF(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_ADC_CFG_ADC1_B_DEF_SHIFT) &      \
-	 MC33771C_ADC_CFG_ADC1_B_DEF_MASK)
+#define MC33771C_ADC_CFG_ADC1_B_DEF(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_ADC_CFG_ADC1_B_DEF_SHIFT) & MC33771C_ADC_CFG_ADC1_B_DEF_MASK)
 
 /* Enumerated value 13_BIT: 13 bit */
 #define MC33771C_ADC_CFG_ADC1_B_DEF_13_BIT_ENUM_VAL (0x0U)
@@ -619,9 +582,8 @@ extern "C" {
 /* Field ADC1_A_DEF: None */
 #define MC33771C_ADC_CFG_ADC1_A_DEF_SHIFT (0x4U)
 #define MC33771C_ADC_CFG_ADC1_A_DEF_MASK (0x30U)
-#define MC33771C_ADC_CFG_ADC1_A_DEF(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_ADC_CFG_ADC1_A_DEF_SHIFT) &      \
-	 MC33771C_ADC_CFG_ADC1_A_DEF_MASK)
+#define MC33771C_ADC_CFG_ADC1_A_DEF(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_ADC_CFG_ADC1_A_DEF_SHIFT) & MC33771C_ADC_CFG_ADC1_A_DEF_MASK)
 
 /* Enumerated value 13_BIT: 13 bit */
 #define MC33771C_ADC_CFG_ADC1_A_DEF_13_BIT_ENUM_VAL (0x0U)
@@ -638,9 +600,8 @@ extern "C" {
 /* Field CC_RST (write-only): None */
 #define MC33771C_ADC_CFG_CC_RST_SHIFT (0x7U)
 #define MC33771C_ADC_CFG_CC_RST_MASK (0x80U)
-#define MC33771C_ADC_CFG_CC_RST(x)                                             \
-	((uint16_t)((uint16_t)(x) << MC33771C_ADC_CFG_CC_RST_SHIFT) &          \
-	 MC33771C_ADC_CFG_CC_RST_MASK)
+#define MC33771C_ADC_CFG_CC_RST(x)                                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_ADC_CFG_CC_RST_SHIFT) & MC33771C_ADC_CFG_CC_RST_MASK)
 
 /* Enumerated value NO_ACTION: No action. */
 #define MC33771C_ADC_CFG_CC_RST_NO_ACTION_ENUM_VAL (0x0U)
@@ -653,9 +614,8 @@ extern "C" {
  * amplifier. */
 #define MC33771C_ADC_CFG_PGA_GAIN_SHIFT (0x8U)
 #define MC33771C_ADC_CFG_PGA_GAIN_MASK (0x700U)
-#define MC33771C_ADC_CFG_PGA_GAIN(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_ADC_CFG_PGA_GAIN_SHIFT) &        \
-	 MC33771C_ADC_CFG_PGA_GAIN_MASK)
+#define MC33771C_ADC_CFG_PGA_GAIN(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_ADC_CFG_PGA_GAIN_SHIFT) & MC33771C_ADC_CFG_PGA_GAIN_MASK)
 
 /* Enumerated value 4: 4 */
 #define MC33771C_ADC_CFG_PGA_GAIN_4_ENUM_VAL (0x0U)
@@ -676,9 +636,8 @@ extern "C" {
  * amplifier (information available only if SYS_CFG1[I_MEAS_EN] = 1). */
 #define MC33771C_ADC_CFG_PGA_GAIN_AMP_S_SHIFT (0x8U)
 #define MC33771C_ADC_CFG_PGA_GAIN_AMP_S_MASK (0x300U)
-#define MC33771C_ADC_CFG_PGA_GAIN_AMP_S(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_ADC_CFG_PGA_GAIN_AMP_S_SHIFT) &  \
-	 MC33771C_ADC_CFG_PGA_GAIN_AMP_S_MASK)
+#define MC33771C_ADC_CFG_PGA_GAIN_AMP_S(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_ADC_CFG_PGA_GAIN_AMP_S_SHIFT) & MC33771C_ADC_CFG_PGA_GAIN_AMP_S_MASK)
 
 /* Enumerated value 4: 4 */
 #define MC33771C_ADC_CFG_PGA_GAIN_AMP_S_4_ENUM_VAL (0x0U)
@@ -696,9 +655,8 @@ extern "C" {
  * available only if SYS_CFG1[I_MEAS_EN] = 1). */
 #define MC33771C_ADC_CFG_PGA_GAIN_S_SHIFT (0xAU)
 #define MC33771C_ADC_CFG_PGA_GAIN_S_MASK (0x400U)
-#define MC33771C_ADC_CFG_PGA_GAIN_S(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_ADC_CFG_PGA_GAIN_S_SHIFT) &      \
-	 MC33771C_ADC_CFG_PGA_GAIN_S_MASK)
+#define MC33771C_ADC_CFG_PGA_GAIN_S(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_ADC_CFG_PGA_GAIN_S_SHIFT) & MC33771C_ADC_CFG_PGA_GAIN_S_MASK)
 
 /* Enumerated value FIXED: Fixed gain. */
 #define MC33771C_ADC_CFG_PGA_GAIN_S_FIXED_ENUM_VAL (0x0U)
@@ -711,9 +669,7 @@ extern "C" {
  * sequence. */
 #define MC33771C_ADC_CFG_SOC_SHIFT (0xBU)
 #define MC33771C_ADC_CFG_SOC_MASK (0x800U)
-#define MC33771C_ADC_CFG_SOC(x)                                                \
-	((uint16_t)((uint16_t)(x) << MC33771C_ADC_CFG_SOC_SHIFT) &             \
-	 MC33771C_ADC_CFG_SOC_MASK)
+#define MC33771C_ADC_CFG_SOC(x) ((uint16_t)((uint16_t)(x) << MC33771C_ADC_CFG_SOC_SHIFT) & MC33771C_ADC_CFG_SOC_MASK)
 
 /* Enumerated value DISABLED: Writing SOC to 0 has no effect on an ongoing
  * conversion sequence. */
@@ -725,9 +681,8 @@ extern "C" {
 /* Field EOC_N (read-only): End of conversion flag. */
 #define MC33771C_ADC_CFG_EOC_N_SHIFT (0xBU)
 #define MC33771C_ADC_CFG_EOC_N_MASK (0x800U)
-#define MC33771C_ADC_CFG_EOC_N(x)                                              \
-	((uint16_t)((uint16_t)(x) << MC33771C_ADC_CFG_EOC_N_SHIFT) &           \
-	 MC33771C_ADC_CFG_EOC_N_MASK)
+#define MC33771C_ADC_CFG_EOC_N(x)                                                                                      \
+	((uint16_t)((uint16_t)(x) << MC33771C_ADC_CFG_EOC_N_SHIFT) & MC33771C_ADC_CFG_EOC_N_MASK)
 
 /* Enumerated value COMPLETED: Device has completed the commanded conversion. */
 #define MC33771C_ADC_CFG_EOC_N_COMPLETED_ENUM_VAL (0x0U)
@@ -740,9 +695,7 @@ extern "C" {
  * can be configured. */
 #define MC33771C_ADC_CFG_AVG_SHIFT (0xCU)
 #define MC33771C_ADC_CFG_AVG_MASK (0xF000U)
-#define MC33771C_ADC_CFG_AVG(x)                                                \
-	((uint16_t)((uint16_t)(x) << MC33771C_ADC_CFG_AVG_SHIFT) &             \
-	 MC33771C_ADC_CFG_AVG_MASK)
+#define MC33771C_ADC_CFG_AVG(x) ((uint16_t)((uint16_t)(x) << MC33771C_ADC_CFG_AVG_SHIFT) & MC33771C_ADC_CFG_AVG_MASK)
 
 /* Enumerated value NO_AVERAGING: No averaging, the result is taken as is
  * (compatibility mode). */
@@ -782,17 +735,15 @@ extern "C" {
  * resolution. It can be used to compensate for a PCB offset. */
 #define MC33771C_ADC2_OFFSET_COMP_ADC2_OFFSET_COMP_SHIFT (0x0U)
 #define MC33771C_ADC2_OFFSET_COMP_ADC2_OFFSET_COMP_MASK (0xFFU)
-#define MC33771C_ADC2_OFFSET_COMP_ADC2_OFFSET_COMP(x)                          \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_ADC2_OFFSET_COMP_ADC2_OFFSET_COMP_SHIFT) &     \
+#define MC33771C_ADC2_OFFSET_COMP_ADC2_OFFSET_COMP(x)                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_ADC2_OFFSET_COMP_ADC2_OFFSET_COMP_SHIFT) &                               \
 	 MC33771C_ADC2_OFFSET_COMP_ADC2_OFFSET_COMP_MASK)
 
 /* Field ALLCBOFFONSHORT: All CB's turn off in case of at least one short. */
 #define MC33771C_ADC2_OFFSET_COMP_ALLCBOFFONSHORT_SHIFT (0x8U)
 #define MC33771C_ADC2_OFFSET_COMP_ALLCBOFFONSHORT_MASK (0x100U)
-#define MC33771C_ADC2_OFFSET_COMP_ALLCBOFFONSHORT(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_ADC2_OFFSET_COMP_ALLCBOFFONSHORT_SHIFT) &      \
+#define MC33771C_ADC2_OFFSET_COMP_ALLCBOFFONSHORT(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_ADC2_OFFSET_COMP_ALLCBOFFONSHORT_SHIFT) &                                \
 	 MC33771C_ADC2_OFFSET_COMP_ALLCBOFFONSHORT_MASK)
 
 /* Enumerated value SHORTED: Only shorted CB's are turned off. */
@@ -805,9 +756,8 @@ extern "C" {
 /* Field CC_OVT: Overthreshold indicator on the COULOMB_CNT1,2[COULOMB_CNT]. */
 #define MC33771C_ADC2_OFFSET_COMP_CC_OVT_SHIFT (0xAU)
 #define MC33771C_ADC2_OFFSET_COMP_CC_OVT_MASK (0x400U)
-#define MC33771C_ADC2_OFFSET_COMP_CC_OVT(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_ADC2_OFFSET_COMP_CC_OVT_SHIFT) & \
-	 MC33771C_ADC2_OFFSET_COMP_CC_OVT_MASK)
+#define MC33771C_ADC2_OFFSET_COMP_CC_OVT(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_ADC2_OFFSET_COMP_CC_OVT_SHIFT) & MC33771C_ADC2_OFFSET_COMP_CC_OVT_MASK)
 
 /* Enumerated value DISABLED: No over threshold. */
 #define MC33771C_ADC2_OFFSET_COMP_CC_OVT_DISABLED_ENUM_VAL (0x0U)
@@ -819,9 +769,8 @@ extern "C" {
 /* Field SAMP_OVF: Overflow indicator on the CC_NB_SAMPLES. */
 #define MC33771C_ADC2_OFFSET_COMP_SAMP_OVF_SHIFT (0xBU)
 #define MC33771C_ADC2_OFFSET_COMP_SAMP_OVF_MASK (0x800U)
-#define MC33771C_ADC2_OFFSET_COMP_SAMP_OVF(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_ADC2_OFFSET_COMP_SAMP_OVF_SHIFT) &             \
+#define MC33771C_ADC2_OFFSET_COMP_SAMP_OVF(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_ADC2_OFFSET_COMP_SAMP_OVF_SHIFT) &                                       \
 	 MC33771C_ADC2_OFFSET_COMP_SAMP_OVF_MASK)
 
 /* Enumerated value DISABLED: No overflow. */
@@ -833,9 +782,8 @@ extern "C" {
 /* Field CC_N_OVF: Underflow indicator on the COULOMB_CNT1,2[COULOMB_CNT]. */
 #define MC33771C_ADC2_OFFSET_COMP_CC_N_OVF_SHIFT (0xCU)
 #define MC33771C_ADC2_OFFSET_COMP_CC_N_OVF_MASK (0x1000U)
-#define MC33771C_ADC2_OFFSET_COMP_CC_N_OVF(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_ADC2_OFFSET_COMP_CC_N_OVF_SHIFT) &             \
+#define MC33771C_ADC2_OFFSET_COMP_CC_N_OVF(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_ADC2_OFFSET_COMP_CC_N_OVF_SHIFT) &                                       \
 	 MC33771C_ADC2_OFFSET_COMP_CC_N_OVF_MASK)
 
 /* Enumerated value DISABLED: No underflow. */
@@ -847,9 +795,8 @@ extern "C" {
 /* Field CC_P_OVF: Overflow indicator on the COULOMB_CNT1,2[COULOMB_CNT]. */
 #define MC33771C_ADC2_OFFSET_COMP_CC_P_OVF_SHIFT (0xDU)
 #define MC33771C_ADC2_OFFSET_COMP_CC_P_OVF_MASK (0x2000U)
-#define MC33771C_ADC2_OFFSET_COMP_CC_P_OVF(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_ADC2_OFFSET_COMP_CC_P_OVF_SHIFT) &             \
+#define MC33771C_ADC2_OFFSET_COMP_CC_P_OVF(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_ADC2_OFFSET_COMP_CC_P_OVF_SHIFT) &                                       \
 	 MC33771C_ADC2_OFFSET_COMP_CC_P_OVF_MASK)
 
 /* Enumerated value DISABLED: No overflow. */
@@ -861,9 +808,8 @@ extern "C" {
 /* Field FREE_CNT: Configuration of the free running coulomb counters. */
 #define MC33771C_ADC2_OFFSET_COMP_FREE_CNT_SHIFT (0xEU)
 #define MC33771C_ADC2_OFFSET_COMP_FREE_CNT_MASK (0x4000U)
-#define MC33771C_ADC2_OFFSET_COMP_FREE_CNT(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_ADC2_OFFSET_COMP_FREE_CNT_SHIFT) &             \
+#define MC33771C_ADC2_OFFSET_COMP_FREE_CNT(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_ADC2_OFFSET_COMP_FREE_CNT_SHIFT) &                                       \
 	 MC33771C_ADC2_OFFSET_COMP_FREE_CNT_MASK)
 
 /* Enumerated value CLAMP: No free-running, coulomb counters clamp on min/max
@@ -877,9 +823,8 @@ extern "C" {
  * count results. */
 #define MC33771C_ADC2_OFFSET_COMP_CC_RST_CFG_SHIFT (0xFU)
 #define MC33771C_ADC2_OFFSET_COMP_CC_RST_CFG_MASK (0x8000U)
-#define MC33771C_ADC2_OFFSET_COMP_CC_RST_CFG(x)                                \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_ADC2_OFFSET_COMP_CC_RST_CFG_SHIFT) &           \
+#define MC33771C_ADC2_OFFSET_COMP_CC_RST_CFG(x)                                                                        \
+	((uint16_t)((uint16_t)(x) << MC33771C_ADC2_OFFSET_COMP_CC_RST_CFG_SHIFT) &                                     \
 	 MC33771C_ADC2_OFFSET_COMP_CC_RST_CFG_MASK)
 
 /* Enumerated value NO_ACTION: No linked action. */
@@ -899,9 +844,8 @@ extern "C" {
  * for OV/UV. If disabled no OVUV fault is set. */
 #define MC33771C_OV_UV_EN_CT1_OVUV_EN_SHIFT (0x0U)
 #define MC33771C_OV_UV_EN_CT1_OVUV_EN_MASK (0x1U)
-#define MC33771C_OV_UV_EN_CT1_OVUV_EN(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT1_OVUV_EN_SHIFT) &    \
-	 MC33771C_OV_UV_EN_CT1_OVUV_EN_MASK)
+#define MC33771C_OV_UV_EN_CT1_OVUV_EN(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT1_OVUV_EN_SHIFT) & MC33771C_OV_UV_EN_CT1_OVUV_EN_MASK)
 
 /* Enumerated value DISABLED: OVUV disabled */
 #define MC33771C_OV_UV_EN_CT1_OVUV_EN_DISABLED_ENUM_VAL (0x0U)
@@ -913,9 +857,8 @@ extern "C" {
  * for OV/UV. If disabled no OVUV fault is set. */
 #define MC33771C_OV_UV_EN_CT2_OVUV_EN_SHIFT (0x1U)
 #define MC33771C_OV_UV_EN_CT2_OVUV_EN_MASK (0x2U)
-#define MC33771C_OV_UV_EN_CT2_OVUV_EN(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT2_OVUV_EN_SHIFT) &    \
-	 MC33771C_OV_UV_EN_CT2_OVUV_EN_MASK)
+#define MC33771C_OV_UV_EN_CT2_OVUV_EN(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT2_OVUV_EN_SHIFT) & MC33771C_OV_UV_EN_CT2_OVUV_EN_MASK)
 
 /* Enumerated value DISABLED: OVUV disabled */
 #define MC33771C_OV_UV_EN_CT2_OVUV_EN_DISABLED_ENUM_VAL (0x0U)
@@ -927,9 +870,8 @@ extern "C" {
  * for OV/UV. If disabled no OVUV fault is set. */
 #define MC33771C_OV_UV_EN_CT3_OVUV_EN_SHIFT (0x2U)
 #define MC33771C_OV_UV_EN_CT3_OVUV_EN_MASK (0x4U)
-#define MC33771C_OV_UV_EN_CT3_OVUV_EN(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT3_OVUV_EN_SHIFT) &    \
-	 MC33771C_OV_UV_EN_CT3_OVUV_EN_MASK)
+#define MC33771C_OV_UV_EN_CT3_OVUV_EN(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT3_OVUV_EN_SHIFT) & MC33771C_OV_UV_EN_CT3_OVUV_EN_MASK)
 
 /* Enumerated value DISABLED: OVUV disabled */
 #define MC33771C_OV_UV_EN_CT3_OVUV_EN_DISABLED_ENUM_VAL (0x0U)
@@ -941,9 +883,8 @@ extern "C" {
  * for OV/UV. If disabled no OVUV fault is set. */
 #define MC33771C_OV_UV_EN_CT4_OVUV_EN_SHIFT (0x3U)
 #define MC33771C_OV_UV_EN_CT4_OVUV_EN_MASK (0x8U)
-#define MC33771C_OV_UV_EN_CT4_OVUV_EN(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT4_OVUV_EN_SHIFT) &    \
-	 MC33771C_OV_UV_EN_CT4_OVUV_EN_MASK)
+#define MC33771C_OV_UV_EN_CT4_OVUV_EN(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT4_OVUV_EN_SHIFT) & MC33771C_OV_UV_EN_CT4_OVUV_EN_MASK)
 
 /* Enumerated value DISABLED: OVUV disabled */
 #define MC33771C_OV_UV_EN_CT4_OVUV_EN_DISABLED_ENUM_VAL (0x0U)
@@ -955,9 +896,8 @@ extern "C" {
  * for OV/UV. If disabled no OVUV fault is set. */
 #define MC33771C_OV_UV_EN_CT5_OVUV_EN_SHIFT (0x4U)
 #define MC33771C_OV_UV_EN_CT5_OVUV_EN_MASK (0x10U)
-#define MC33771C_OV_UV_EN_CT5_OVUV_EN(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT5_OVUV_EN_SHIFT) &    \
-	 MC33771C_OV_UV_EN_CT5_OVUV_EN_MASK)
+#define MC33771C_OV_UV_EN_CT5_OVUV_EN(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT5_OVUV_EN_SHIFT) & MC33771C_OV_UV_EN_CT5_OVUV_EN_MASK)
 
 /* Enumerated value DISABLED: OVUV disabled */
 #define MC33771C_OV_UV_EN_CT5_OVUV_EN_DISABLED_ENUM_VAL (0x0U)
@@ -969,9 +909,8 @@ extern "C" {
  * for OV/UV. If disabled no OVUV fault is set. */
 #define MC33771C_OV_UV_EN_CT6_OVUV_EN_SHIFT (0x5U)
 #define MC33771C_OV_UV_EN_CT6_OVUV_EN_MASK (0x20U)
-#define MC33771C_OV_UV_EN_CT6_OVUV_EN(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT6_OVUV_EN_SHIFT) &    \
-	 MC33771C_OV_UV_EN_CT6_OVUV_EN_MASK)
+#define MC33771C_OV_UV_EN_CT6_OVUV_EN(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT6_OVUV_EN_SHIFT) & MC33771C_OV_UV_EN_CT6_OVUV_EN_MASK)
 
 /* Enumerated value DISABLED: OVUV disabled */
 #define MC33771C_OV_UV_EN_CT6_OVUV_EN_DISABLED_ENUM_VAL (0x0U)
@@ -983,9 +922,8 @@ extern "C" {
  * for OV/UV. If disabled no OVUV fault is set. */
 #define MC33771C_OV_UV_EN_CT7_OVUV_EN_SHIFT (0x6U)
 #define MC33771C_OV_UV_EN_CT7_OVUV_EN_MASK (0x40U)
-#define MC33771C_OV_UV_EN_CT7_OVUV_EN(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT7_OVUV_EN_SHIFT) &    \
-	 MC33771C_OV_UV_EN_CT7_OVUV_EN_MASK)
+#define MC33771C_OV_UV_EN_CT7_OVUV_EN(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT7_OVUV_EN_SHIFT) & MC33771C_OV_UV_EN_CT7_OVUV_EN_MASK)
 
 /* Enumerated value DISABLED: OVUV disabled */
 #define MC33771C_OV_UV_EN_CT7_OVUV_EN_DISABLED_ENUM_VAL (0x0U)
@@ -997,9 +935,8 @@ extern "C" {
  * for OV/UV. If disabled no OVUV fault is set. */
 #define MC33771C_OV_UV_EN_CT8_OVUV_EN_SHIFT (0x7U)
 #define MC33771C_OV_UV_EN_CT8_OVUV_EN_MASK (0x80U)
-#define MC33771C_OV_UV_EN_CT8_OVUV_EN(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT8_OVUV_EN_SHIFT) &    \
-	 MC33771C_OV_UV_EN_CT8_OVUV_EN_MASK)
+#define MC33771C_OV_UV_EN_CT8_OVUV_EN(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT8_OVUV_EN_SHIFT) & MC33771C_OV_UV_EN_CT8_OVUV_EN_MASK)
 
 /* Enumerated value DISABLED: OVUV disabled */
 #define MC33771C_OV_UV_EN_CT8_OVUV_EN_DISABLED_ENUM_VAL (0x0U)
@@ -1011,9 +948,8 @@ extern "C" {
  * for OV/UV. If disabled no OVUV fault is set. */
 #define MC33771C_OV_UV_EN_CT9_OVUV_EN_SHIFT (0x8U)
 #define MC33771C_OV_UV_EN_CT9_OVUV_EN_MASK (0x100U)
-#define MC33771C_OV_UV_EN_CT9_OVUV_EN(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT9_OVUV_EN_SHIFT) &    \
-	 MC33771C_OV_UV_EN_CT9_OVUV_EN_MASK)
+#define MC33771C_OV_UV_EN_CT9_OVUV_EN(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT9_OVUV_EN_SHIFT) & MC33771C_OV_UV_EN_CT9_OVUV_EN_MASK)
 
 /* Enumerated value DISABLED: OVUV disabled */
 #define MC33771C_OV_UV_EN_CT9_OVUV_EN_DISABLED_ENUM_VAL (0x0U)
@@ -1025,9 +961,8 @@ extern "C" {
  * for OV/UV. If disabled no OVUV fault is set. */
 #define MC33771C_OV_UV_EN_CT10_OVUV_EN_SHIFT (0x9U)
 #define MC33771C_OV_UV_EN_CT10_OVUV_EN_MASK (0x200U)
-#define MC33771C_OV_UV_EN_CT10_OVUV_EN(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT10_OVUV_EN_SHIFT) &   \
-	 MC33771C_OV_UV_EN_CT10_OVUV_EN_MASK)
+#define MC33771C_OV_UV_EN_CT10_OVUV_EN(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT10_OVUV_EN_SHIFT) & MC33771C_OV_UV_EN_CT10_OVUV_EN_MASK)
 
 /* Enumerated value DISABLED: OVUV disabled */
 #define MC33771C_OV_UV_EN_CT10_OVUV_EN_DISABLED_ENUM_VAL (0x0U)
@@ -1039,9 +974,8 @@ extern "C" {
  * for OV/UV. If disabled no OVUV fault is set. */
 #define MC33771C_OV_UV_EN_CT11_OVUV_EN_SHIFT (0xAU)
 #define MC33771C_OV_UV_EN_CT11_OVUV_EN_MASK (0x400U)
-#define MC33771C_OV_UV_EN_CT11_OVUV_EN(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT11_OVUV_EN_SHIFT) &   \
-	 MC33771C_OV_UV_EN_CT11_OVUV_EN_MASK)
+#define MC33771C_OV_UV_EN_CT11_OVUV_EN(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT11_OVUV_EN_SHIFT) & MC33771C_OV_UV_EN_CT11_OVUV_EN_MASK)
 
 /* Enumerated value DISABLED: OVUV disabled */
 #define MC33771C_OV_UV_EN_CT11_OVUV_EN_DISABLED_ENUM_VAL (0x0U)
@@ -1053,9 +987,8 @@ extern "C" {
  * for OV/UV. If disabled no OVUV fault is set. */
 #define MC33771C_OV_UV_EN_CT12_OVUV_EN_SHIFT (0xBU)
 #define MC33771C_OV_UV_EN_CT12_OVUV_EN_MASK (0x800U)
-#define MC33771C_OV_UV_EN_CT12_OVUV_EN(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT12_OVUV_EN_SHIFT) &   \
-	 MC33771C_OV_UV_EN_CT12_OVUV_EN_MASK)
+#define MC33771C_OV_UV_EN_CT12_OVUV_EN(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT12_OVUV_EN_SHIFT) & MC33771C_OV_UV_EN_CT12_OVUV_EN_MASK)
 
 /* Enumerated value DISABLED: OVUV disabled */
 #define MC33771C_OV_UV_EN_CT12_OVUV_EN_DISABLED_ENUM_VAL (0x0U)
@@ -1067,9 +1000,8 @@ extern "C" {
  * for OV/UV. If disabled no OVUV fault is set. */
 #define MC33771C_OV_UV_EN_CT13_OVUV_EN_SHIFT (0xCU)
 #define MC33771C_OV_UV_EN_CT13_OVUV_EN_MASK (0x1000U)
-#define MC33771C_OV_UV_EN_CT13_OVUV_EN(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT13_OVUV_EN_SHIFT) &   \
-	 MC33771C_OV_UV_EN_CT13_OVUV_EN_MASK)
+#define MC33771C_OV_UV_EN_CT13_OVUV_EN(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT13_OVUV_EN_SHIFT) & MC33771C_OV_UV_EN_CT13_OVUV_EN_MASK)
 
 /* Enumerated value DISABLED: OVUV disabled */
 #define MC33771C_OV_UV_EN_CT13_OVUV_EN_DISABLED_ENUM_VAL (0x0U)
@@ -1081,9 +1013,8 @@ extern "C" {
  * for OV/UV. If disabled no OVUV fault is set. */
 #define MC33771C_OV_UV_EN_CT14_OVUV_EN_SHIFT (0xDU)
 #define MC33771C_OV_UV_EN_CT14_OVUV_EN_MASK (0x2000U)
-#define MC33771C_OV_UV_EN_CT14_OVUV_EN(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT14_OVUV_EN_SHIFT) &   \
-	 MC33771C_OV_UV_EN_CT14_OVUV_EN_MASK)
+#define MC33771C_OV_UV_EN_CT14_OVUV_EN(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_CT14_OVUV_EN_SHIFT) & MC33771C_OV_UV_EN_CT14_OVUV_EN_MASK)
 
 /* Enumerated value DISABLED: OVUV disabled */
 #define MC33771C_OV_UV_EN_CT14_OVUV_EN_DISABLED_ENUM_VAL (0x0U)
@@ -1095,9 +1026,8 @@ extern "C" {
  * register for comparison. */
 #define MC33771C_OV_UV_EN_COMMON_UV_TH_SHIFT (0xEU)
 #define MC33771C_OV_UV_EN_COMMON_UV_TH_MASK (0x4000U)
-#define MC33771C_OV_UV_EN_COMMON_UV_TH(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_COMMON_UV_TH_SHIFT) &   \
-	 MC33771C_OV_UV_EN_COMMON_UV_TH_MASK)
+#define MC33771C_OV_UV_EN_COMMON_UV_TH(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_COMMON_UV_TH_SHIFT) & MC33771C_OV_UV_EN_COMMON_UV_TH_MASK)
 
 /* Enumerated value INDIVIDUAL: Use individual threshold register. */
 #define MC33771C_OV_UV_EN_COMMON_UV_TH_INDIVIDUAL_ENUM_VAL (0x0U)
@@ -1109,9 +1039,8 @@ extern "C" {
  * register for comparison. */
 #define MC33771C_OV_UV_EN_COMMON_OV_TH_SHIFT (0xFU)
 #define MC33771C_OV_UV_EN_COMMON_OV_TH_MASK (0x8000U)
-#define MC33771C_OV_UV_EN_COMMON_OV_TH(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_COMMON_OV_TH_SHIFT) &   \
-	 MC33771C_OV_UV_EN_COMMON_OV_TH_MASK)
+#define MC33771C_OV_UV_EN_COMMON_OV_TH(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_OV_UV_EN_COMMON_OV_TH_SHIFT) & MC33771C_OV_UV_EN_COMMON_OV_TH_MASK)
 
 /* Enumerated value INDIVIDUAL: Use individual threshold register. */
 #define MC33771C_OV_UV_EN_COMMON_OV_TH_INDIVIDUAL_ENUM_VAL (0x0U)
@@ -1130,9 +1059,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_OV_FLT_CT1_OV_FLT_SHIFT (0x0U)
 #define MC33771C_CELL_OV_FLT_CT1_OV_FLT_MASK (0x1U)
-#define MC33771C_CELL_OV_FLT_CT1_OV_FLT(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT1_OV_FLT_SHIFT) &  \
-	 MC33771C_CELL_OV_FLT_CT1_OV_FLT_MASK)
+#define MC33771C_CELL_OV_FLT_CT1_OV_FLT(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT1_OV_FLT_SHIFT) & MC33771C_CELL_OV_FLT_CT1_OV_FLT_MASK)
 
 /* Enumerated value NO_OVERVOLTAGE: No Cell Terminal overvoltage. */
 #define MC33771C_CELL_OV_FLT_CT1_OV_FLT_NO_OVERVOLTAGE_ENUM_VAL (0x0U)
@@ -1146,9 +1074,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_OV_FLT_CT2_OV_FLT_SHIFT (0x1U)
 #define MC33771C_CELL_OV_FLT_CT2_OV_FLT_MASK (0x2U)
-#define MC33771C_CELL_OV_FLT_CT2_OV_FLT(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT2_OV_FLT_SHIFT) &  \
-	 MC33771C_CELL_OV_FLT_CT2_OV_FLT_MASK)
+#define MC33771C_CELL_OV_FLT_CT2_OV_FLT(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT2_OV_FLT_SHIFT) & MC33771C_CELL_OV_FLT_CT2_OV_FLT_MASK)
 
 /* Enumerated value NO_OVERVOLTAGE: No Cell Terminal overvoltage. */
 #define MC33771C_CELL_OV_FLT_CT2_OV_FLT_NO_OVERVOLTAGE_ENUM_VAL (0x0U)
@@ -1162,9 +1089,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_OV_FLT_CT3_OV_FLT_SHIFT (0x2U)
 #define MC33771C_CELL_OV_FLT_CT3_OV_FLT_MASK (0x4U)
-#define MC33771C_CELL_OV_FLT_CT3_OV_FLT(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT3_OV_FLT_SHIFT) &  \
-	 MC33771C_CELL_OV_FLT_CT3_OV_FLT_MASK)
+#define MC33771C_CELL_OV_FLT_CT3_OV_FLT(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT3_OV_FLT_SHIFT) & MC33771C_CELL_OV_FLT_CT3_OV_FLT_MASK)
 
 /* Enumerated value NO_OVERVOLTAGE: No Cell Terminal overvoltage. */
 #define MC33771C_CELL_OV_FLT_CT3_OV_FLT_NO_OVERVOLTAGE_ENUM_VAL (0x0U)
@@ -1178,9 +1104,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_OV_FLT_CT4_OV_FLT_SHIFT (0x3U)
 #define MC33771C_CELL_OV_FLT_CT4_OV_FLT_MASK (0x8U)
-#define MC33771C_CELL_OV_FLT_CT4_OV_FLT(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT4_OV_FLT_SHIFT) &  \
-	 MC33771C_CELL_OV_FLT_CT4_OV_FLT_MASK)
+#define MC33771C_CELL_OV_FLT_CT4_OV_FLT(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT4_OV_FLT_SHIFT) & MC33771C_CELL_OV_FLT_CT4_OV_FLT_MASK)
 
 /* Enumerated value NO_OVERVOLTAGE: No Cell Terminal overvoltage. */
 #define MC33771C_CELL_OV_FLT_CT4_OV_FLT_NO_OVERVOLTAGE_ENUM_VAL (0x0U)
@@ -1194,9 +1119,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_OV_FLT_CT5_OV_FLT_SHIFT (0x4U)
 #define MC33771C_CELL_OV_FLT_CT5_OV_FLT_MASK (0x10U)
-#define MC33771C_CELL_OV_FLT_CT5_OV_FLT(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT5_OV_FLT_SHIFT) &  \
-	 MC33771C_CELL_OV_FLT_CT5_OV_FLT_MASK)
+#define MC33771C_CELL_OV_FLT_CT5_OV_FLT(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT5_OV_FLT_SHIFT) & MC33771C_CELL_OV_FLT_CT5_OV_FLT_MASK)
 
 /* Enumerated value NO_OVERVOLTAGE: No Cell Terminal overvoltage. */
 #define MC33771C_CELL_OV_FLT_CT5_OV_FLT_NO_OVERVOLTAGE_ENUM_VAL (0x0U)
@@ -1210,9 +1134,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_OV_FLT_CT6_OV_FLT_SHIFT (0x5U)
 #define MC33771C_CELL_OV_FLT_CT6_OV_FLT_MASK (0x20U)
-#define MC33771C_CELL_OV_FLT_CT6_OV_FLT(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT6_OV_FLT_SHIFT) &  \
-	 MC33771C_CELL_OV_FLT_CT6_OV_FLT_MASK)
+#define MC33771C_CELL_OV_FLT_CT6_OV_FLT(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT6_OV_FLT_SHIFT) & MC33771C_CELL_OV_FLT_CT6_OV_FLT_MASK)
 
 /* Enumerated value NO_OVERVOLTAGE: No Cell Terminal overvoltage. */
 #define MC33771C_CELL_OV_FLT_CT6_OV_FLT_NO_OVERVOLTAGE_ENUM_VAL (0x0U)
@@ -1226,9 +1149,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_OV_FLT_CT7_OV_FLT_SHIFT (0x6U)
 #define MC33771C_CELL_OV_FLT_CT7_OV_FLT_MASK (0x40U)
-#define MC33771C_CELL_OV_FLT_CT7_OV_FLT(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT7_OV_FLT_SHIFT) &  \
-	 MC33771C_CELL_OV_FLT_CT7_OV_FLT_MASK)
+#define MC33771C_CELL_OV_FLT_CT7_OV_FLT(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT7_OV_FLT_SHIFT) & MC33771C_CELL_OV_FLT_CT7_OV_FLT_MASK)
 
 /* Enumerated value NO_OVERVOLTAGE: No Cell Terminal overvoltage. */
 #define MC33771C_CELL_OV_FLT_CT7_OV_FLT_NO_OVERVOLTAGE_ENUM_VAL (0x0U)
@@ -1242,9 +1164,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_OV_FLT_CT8_OV_FLT_SHIFT (0x7U)
 #define MC33771C_CELL_OV_FLT_CT8_OV_FLT_MASK (0x80U)
-#define MC33771C_CELL_OV_FLT_CT8_OV_FLT(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT8_OV_FLT_SHIFT) &  \
-	 MC33771C_CELL_OV_FLT_CT8_OV_FLT_MASK)
+#define MC33771C_CELL_OV_FLT_CT8_OV_FLT(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT8_OV_FLT_SHIFT) & MC33771C_CELL_OV_FLT_CT8_OV_FLT_MASK)
 
 /* Enumerated value NO_OVERVOLTAGE: No Cell Terminal overvoltage. */
 #define MC33771C_CELL_OV_FLT_CT8_OV_FLT_NO_OVERVOLTAGE_ENUM_VAL (0x0U)
@@ -1258,9 +1179,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_OV_FLT_CT9_OV_FLT_SHIFT (0x8U)
 #define MC33771C_CELL_OV_FLT_CT9_OV_FLT_MASK (0x100U)
-#define MC33771C_CELL_OV_FLT_CT9_OV_FLT(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT9_OV_FLT_SHIFT) &  \
-	 MC33771C_CELL_OV_FLT_CT9_OV_FLT_MASK)
+#define MC33771C_CELL_OV_FLT_CT9_OV_FLT(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT9_OV_FLT_SHIFT) & MC33771C_CELL_OV_FLT_CT9_OV_FLT_MASK)
 
 /* Enumerated value NO_OVERVOLTAGE: No Cell Terminal overvoltage. */
 #define MC33771C_CELL_OV_FLT_CT9_OV_FLT_NO_OVERVOLTAGE_ENUM_VAL (0x0U)
@@ -1274,9 +1194,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_OV_FLT_CT10_OV_FLT_SHIFT (0x9U)
 #define MC33771C_CELL_OV_FLT_CT10_OV_FLT_MASK (0x200U)
-#define MC33771C_CELL_OV_FLT_CT10_OV_FLT(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT10_OV_FLT_SHIFT) & \
-	 MC33771C_CELL_OV_FLT_CT10_OV_FLT_MASK)
+#define MC33771C_CELL_OV_FLT_CT10_OV_FLT(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT10_OV_FLT_SHIFT) & MC33771C_CELL_OV_FLT_CT10_OV_FLT_MASK)
 
 /* Enumerated value NO_OVERVOLTAGE: No Cell Terminal overvoltage. */
 #define MC33771C_CELL_OV_FLT_CT10_OV_FLT_NO_OVERVOLTAGE_ENUM_VAL (0x0U)
@@ -1290,9 +1209,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_OV_FLT_CT11_OV_FLT_SHIFT (0xAU)
 #define MC33771C_CELL_OV_FLT_CT11_OV_FLT_MASK (0x400U)
-#define MC33771C_CELL_OV_FLT_CT11_OV_FLT(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT11_OV_FLT_SHIFT) & \
-	 MC33771C_CELL_OV_FLT_CT11_OV_FLT_MASK)
+#define MC33771C_CELL_OV_FLT_CT11_OV_FLT(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT11_OV_FLT_SHIFT) & MC33771C_CELL_OV_FLT_CT11_OV_FLT_MASK)
 
 /* Enumerated value NO_OVERVOLTAGE: No Cell Terminal overvoltage. */
 #define MC33771C_CELL_OV_FLT_CT11_OV_FLT_NO_OVERVOLTAGE_ENUM_VAL (0x0U)
@@ -1306,9 +1224,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_OV_FLT_CT12_OV_FLT_SHIFT (0xBU)
 #define MC33771C_CELL_OV_FLT_CT12_OV_FLT_MASK (0x800U)
-#define MC33771C_CELL_OV_FLT_CT12_OV_FLT(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT12_OV_FLT_SHIFT) & \
-	 MC33771C_CELL_OV_FLT_CT12_OV_FLT_MASK)
+#define MC33771C_CELL_OV_FLT_CT12_OV_FLT(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT12_OV_FLT_SHIFT) & MC33771C_CELL_OV_FLT_CT12_OV_FLT_MASK)
 
 /* Enumerated value NO_OVERVOLTAGE: No Cell Terminal overvoltage. */
 #define MC33771C_CELL_OV_FLT_CT12_OV_FLT_NO_OVERVOLTAGE_ENUM_VAL (0x0U)
@@ -1322,9 +1239,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_OV_FLT_CT13_OV_FLT_SHIFT (0xCU)
 #define MC33771C_CELL_OV_FLT_CT13_OV_FLT_MASK (0x1000U)
-#define MC33771C_CELL_OV_FLT_CT13_OV_FLT(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT13_OV_FLT_SHIFT) & \
-	 MC33771C_CELL_OV_FLT_CT13_OV_FLT_MASK)
+#define MC33771C_CELL_OV_FLT_CT13_OV_FLT(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT13_OV_FLT_SHIFT) & MC33771C_CELL_OV_FLT_CT13_OV_FLT_MASK)
 
 /* Enumerated value NO_OVERVOLTAGE: No Cell Terminal overvoltage. */
 #define MC33771C_CELL_OV_FLT_CT13_OV_FLT_NO_OVERVOLTAGE_ENUM_VAL (0x0U)
@@ -1338,9 +1254,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_OV_FLT_CT14_OV_FLT_SHIFT (0xDU)
 #define MC33771C_CELL_OV_FLT_CT14_OV_FLT_MASK (0x2000U)
-#define MC33771C_CELL_OV_FLT_CT14_OV_FLT(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT14_OV_FLT_SHIFT) & \
-	 MC33771C_CELL_OV_FLT_CT14_OV_FLT_MASK)
+#define MC33771C_CELL_OV_FLT_CT14_OV_FLT(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_OV_FLT_CT14_OV_FLT_SHIFT) & MC33771C_CELL_OV_FLT_CT14_OV_FLT_MASK)
 
 /* Enumerated value NO_OVERVOLTAGE: No Cell Terminal overvoltage. */
 #define MC33771C_CELL_OV_FLT_CT14_OV_FLT_NO_OVERVOLTAGE_ENUM_VAL (0x0U)
@@ -1360,9 +1275,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_UV_FLT_CT1_UV_FLT_SHIFT (0x0U)
 #define MC33771C_CELL_UV_FLT_CT1_UV_FLT_MASK (0x1U)
-#define MC33771C_CELL_UV_FLT_CT1_UV_FLT(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT1_UV_FLT_SHIFT) &  \
-	 MC33771C_CELL_UV_FLT_CT1_UV_FLT_MASK)
+#define MC33771C_CELL_UV_FLT_CT1_UV_FLT(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT1_UV_FLT_SHIFT) & MC33771C_CELL_UV_FLT_CT1_UV_FLT_MASK)
 
 /* Enumerated value NO_UNDERVOLTAGE: No Cell Terminal undervoltage. */
 #define MC33771C_CELL_UV_FLT_CT1_UV_FLT_NO_UNDERVOLTAGE_ENUM_VAL (0x0U)
@@ -1375,9 +1289,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_UV_FLT_CT2_UV_FLT_SHIFT (0x1U)
 #define MC33771C_CELL_UV_FLT_CT2_UV_FLT_MASK (0x2U)
-#define MC33771C_CELL_UV_FLT_CT2_UV_FLT(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT2_UV_FLT_SHIFT) &  \
-	 MC33771C_CELL_UV_FLT_CT2_UV_FLT_MASK)
+#define MC33771C_CELL_UV_FLT_CT2_UV_FLT(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT2_UV_FLT_SHIFT) & MC33771C_CELL_UV_FLT_CT2_UV_FLT_MASK)
 
 /* Enumerated value NO_UNDERVOLTAGE: No Cell Terminal undervoltage. */
 #define MC33771C_CELL_UV_FLT_CT2_UV_FLT_NO_UNDERVOLTAGE_ENUM_VAL (0x0U)
@@ -1390,9 +1303,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_UV_FLT_CT3_UV_FLT_SHIFT (0x2U)
 #define MC33771C_CELL_UV_FLT_CT3_UV_FLT_MASK (0x4U)
-#define MC33771C_CELL_UV_FLT_CT3_UV_FLT(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT3_UV_FLT_SHIFT) &  \
-	 MC33771C_CELL_UV_FLT_CT3_UV_FLT_MASK)
+#define MC33771C_CELL_UV_FLT_CT3_UV_FLT(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT3_UV_FLT_SHIFT) & MC33771C_CELL_UV_FLT_CT3_UV_FLT_MASK)
 
 /* Enumerated value NO_UNDERVOLTAGE: No Cell Terminal undervoltage. */
 #define MC33771C_CELL_UV_FLT_CT3_UV_FLT_NO_UNDERVOLTAGE_ENUM_VAL (0x0U)
@@ -1405,9 +1317,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_UV_FLT_CT4_UV_FLT_SHIFT (0x3U)
 #define MC33771C_CELL_UV_FLT_CT4_UV_FLT_MASK (0x8U)
-#define MC33771C_CELL_UV_FLT_CT4_UV_FLT(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT4_UV_FLT_SHIFT) &  \
-	 MC33771C_CELL_UV_FLT_CT4_UV_FLT_MASK)
+#define MC33771C_CELL_UV_FLT_CT4_UV_FLT(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT4_UV_FLT_SHIFT) & MC33771C_CELL_UV_FLT_CT4_UV_FLT_MASK)
 
 /* Enumerated value NO_UNDERVOLTAGE: No Cell Terminal undervoltage. */
 #define MC33771C_CELL_UV_FLT_CT4_UV_FLT_NO_UNDERVOLTAGE_ENUM_VAL (0x0U)
@@ -1420,9 +1331,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_UV_FLT_CT5_UV_FLT_SHIFT (0x4U)
 #define MC33771C_CELL_UV_FLT_CT5_UV_FLT_MASK (0x10U)
-#define MC33771C_CELL_UV_FLT_CT5_UV_FLT(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT5_UV_FLT_SHIFT) &  \
-	 MC33771C_CELL_UV_FLT_CT5_UV_FLT_MASK)
+#define MC33771C_CELL_UV_FLT_CT5_UV_FLT(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT5_UV_FLT_SHIFT) & MC33771C_CELL_UV_FLT_CT5_UV_FLT_MASK)
 
 /* Enumerated value NO_UNDERVOLTAGE: No Cell Terminal undervoltage. */
 #define MC33771C_CELL_UV_FLT_CT5_UV_FLT_NO_UNDERVOLTAGE_ENUM_VAL (0x0U)
@@ -1435,9 +1345,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_UV_FLT_CT6_UV_FLT_SHIFT (0x5U)
 #define MC33771C_CELL_UV_FLT_CT6_UV_FLT_MASK (0x20U)
-#define MC33771C_CELL_UV_FLT_CT6_UV_FLT(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT6_UV_FLT_SHIFT) &  \
-	 MC33771C_CELL_UV_FLT_CT6_UV_FLT_MASK)
+#define MC33771C_CELL_UV_FLT_CT6_UV_FLT(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT6_UV_FLT_SHIFT) & MC33771C_CELL_UV_FLT_CT6_UV_FLT_MASK)
 
 /* Enumerated value NO_UNDERVOLTAGE: No Cell Terminal undervoltage. */
 #define MC33771C_CELL_UV_FLT_CT6_UV_FLT_NO_UNDERVOLTAGE_ENUM_VAL (0x0U)
@@ -1450,9 +1359,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_UV_FLT_CT7_UV_FLT_SHIFT (0x6U)
 #define MC33771C_CELL_UV_FLT_CT7_UV_FLT_MASK (0x40U)
-#define MC33771C_CELL_UV_FLT_CT7_UV_FLT(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT7_UV_FLT_SHIFT) &  \
-	 MC33771C_CELL_UV_FLT_CT7_UV_FLT_MASK)
+#define MC33771C_CELL_UV_FLT_CT7_UV_FLT(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT7_UV_FLT_SHIFT) & MC33771C_CELL_UV_FLT_CT7_UV_FLT_MASK)
 
 /* Enumerated value NO_UNDERVOLTAGE: No Cell Terminal undervoltage. */
 #define MC33771C_CELL_UV_FLT_CT7_UV_FLT_NO_UNDERVOLTAGE_ENUM_VAL (0x0U)
@@ -1465,9 +1373,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_UV_FLT_CT8_UV_FLT_SHIFT (0x7U)
 #define MC33771C_CELL_UV_FLT_CT8_UV_FLT_MASK (0x80U)
-#define MC33771C_CELL_UV_FLT_CT8_UV_FLT(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT8_UV_FLT_SHIFT) &  \
-	 MC33771C_CELL_UV_FLT_CT8_UV_FLT_MASK)
+#define MC33771C_CELL_UV_FLT_CT8_UV_FLT(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT8_UV_FLT_SHIFT) & MC33771C_CELL_UV_FLT_CT8_UV_FLT_MASK)
 
 /* Enumerated value NO_UNDERVOLTAGE: No Cell Terminal undervoltage. */
 #define MC33771C_CELL_UV_FLT_CT8_UV_FLT_NO_UNDERVOLTAGE_ENUM_VAL (0x0U)
@@ -1480,9 +1387,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_UV_FLT_CT9_UV_FLT_SHIFT (0x8U)
 #define MC33771C_CELL_UV_FLT_CT9_UV_FLT_MASK (0x100U)
-#define MC33771C_CELL_UV_FLT_CT9_UV_FLT(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT9_UV_FLT_SHIFT) &  \
-	 MC33771C_CELL_UV_FLT_CT9_UV_FLT_MASK)
+#define MC33771C_CELL_UV_FLT_CT9_UV_FLT(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT9_UV_FLT_SHIFT) & MC33771C_CELL_UV_FLT_CT9_UV_FLT_MASK)
 
 /* Enumerated value NO_UNDERVOLTAGE: No Cell Terminal undervoltage. */
 #define MC33771C_CELL_UV_FLT_CT9_UV_FLT_NO_UNDERVOLTAGE_ENUM_VAL (0x0U)
@@ -1495,9 +1401,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_UV_FLT_CT10_UV_FLT_SHIFT (0x9U)
 #define MC33771C_CELL_UV_FLT_CT10_UV_FLT_MASK (0x200U)
-#define MC33771C_CELL_UV_FLT_CT10_UV_FLT(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT10_UV_FLT_SHIFT) & \
-	 MC33771C_CELL_UV_FLT_CT10_UV_FLT_MASK)
+#define MC33771C_CELL_UV_FLT_CT10_UV_FLT(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT10_UV_FLT_SHIFT) & MC33771C_CELL_UV_FLT_CT10_UV_FLT_MASK)
 
 /* Enumerated value NO_UNDERVOLTAGE: No Cell Terminal undervoltage. */
 #define MC33771C_CELL_UV_FLT_CT10_UV_FLT_NO_UNDERVOLTAGE_ENUM_VAL (0x0U)
@@ -1510,9 +1415,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_UV_FLT_CT11_UV_FLT_SHIFT (0xAU)
 #define MC33771C_CELL_UV_FLT_CT11_UV_FLT_MASK (0x400U)
-#define MC33771C_CELL_UV_FLT_CT11_UV_FLT(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT11_UV_FLT_SHIFT) & \
-	 MC33771C_CELL_UV_FLT_CT11_UV_FLT_MASK)
+#define MC33771C_CELL_UV_FLT_CT11_UV_FLT(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT11_UV_FLT_SHIFT) & MC33771C_CELL_UV_FLT_CT11_UV_FLT_MASK)
 
 /* Enumerated value NO_UNDERVOLTAGE: No Cell Terminal undervoltage. */
 #define MC33771C_CELL_UV_FLT_CT11_UV_FLT_NO_UNDERVOLTAGE_ENUM_VAL (0x0U)
@@ -1525,9 +1429,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_UV_FLT_CT12_UV_FLT_SHIFT (0xBU)
 #define MC33771C_CELL_UV_FLT_CT12_UV_FLT_MASK (0x800U)
-#define MC33771C_CELL_UV_FLT_CT12_UV_FLT(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT12_UV_FLT_SHIFT) & \
-	 MC33771C_CELL_UV_FLT_CT12_UV_FLT_MASK)
+#define MC33771C_CELL_UV_FLT_CT12_UV_FLT(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT12_UV_FLT_SHIFT) & MC33771C_CELL_UV_FLT_CT12_UV_FLT_MASK)
 
 /* Enumerated value NO_UNDERVOLTAGE: No Cell Terminal undervoltage. */
 #define MC33771C_CELL_UV_FLT_CT12_UV_FLT_NO_UNDERVOLTAGE_ENUM_VAL (0x0U)
@@ -1540,9 +1443,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_UV_FLT_CT13_UV_FLT_SHIFT (0xCU)
 #define MC33771C_CELL_UV_FLT_CT13_UV_FLT_MASK (0x1000U)
-#define MC33771C_CELL_UV_FLT_CT13_UV_FLT(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT13_UV_FLT_SHIFT) & \
-	 MC33771C_CELL_UV_FLT_CT13_UV_FLT_MASK)
+#define MC33771C_CELL_UV_FLT_CT13_UV_FLT(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT13_UV_FLT_SHIFT) & MC33771C_CELL_UV_FLT_CT13_UV_FLT_MASK)
 
 /* Enumerated value NO_UNDERVOLTAGE: No Cell Terminal undervoltage. */
 #define MC33771C_CELL_UV_FLT_CT13_UV_FLT_NO_UNDERVOLTAGE_ENUM_VAL (0x0U)
@@ -1555,9 +1457,8 @@ extern "C" {
  * controller on-demand conversion cycle. */
 #define MC33771C_CELL_UV_FLT_CT14_UV_FLT_SHIFT (0xDU)
 #define MC33771C_CELL_UV_FLT_CT14_UV_FLT_MASK (0x2000U)
-#define MC33771C_CELL_UV_FLT_CT14_UV_FLT(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT14_UV_FLT_SHIFT) & \
-	 MC33771C_CELL_UV_FLT_CT14_UV_FLT_MASK)
+#define MC33771C_CELL_UV_FLT_CT14_UV_FLT(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_CELL_UV_FLT_CT14_UV_FLT_SHIFT) & MC33771C_CELL_UV_FLT_CT14_UV_FLT_MASK)
 
 /* Enumerated value NO_UNDERVOLTAGE: No Cell Terminal undervoltage. */
 #define MC33771C_CELL_UV_FLT_CT14_UV_FLT_NO_UNDERVOLTAGE_ENUM_VAL (0x0U)
@@ -1574,16 +1475,14 @@ extern "C" {
 /* Field TPL_TX_CFG_2 (read-only): RDTX_IN (Reserved). */
 #define MC33771C_TPL_CFG_TPL_TX_CFG_2_SHIFT (0x0U)
 #define MC33771C_TPL_CFG_TPL_TX_CFG_2_MASK (0xFFU)
-#define MC33771C_TPL_CFG_TPL_TX_CFG_2(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_TPL_CFG_TPL_TX_CFG_2_SHIFT) &    \
-	 MC33771C_TPL_CFG_TPL_TX_CFG_2_MASK)
+#define MC33771C_TPL_CFG_TPL_TX_CFG_2(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_TPL_CFG_TPL_TX_CFG_2_SHIFT) & MC33771C_TPL_CFG_TPL_TX_CFG_2_MASK)
 
 /* Field TPL_TX_CFG_1 (read-only): RDTX_OUT (Reserved). */
 #define MC33771C_TPL_CFG_TPL_TX_CFG_1_SHIFT (0x8U)
 #define MC33771C_TPL_CFG_TPL_TX_CFG_1_MASK (0xFF00U)
-#define MC33771C_TPL_CFG_TPL_TX_CFG_1(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_TPL_CFG_TPL_TX_CFG_1_SHIFT) &    \
-	 MC33771C_TPL_CFG_TPL_TX_CFG_1_MASK)
+#define MC33771C_TPL_CFG_TPL_TX_CFG_1(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_TPL_CFG_TPL_TX_CFG_1_SHIFT) & MC33771C_TPL_CFG_TPL_TX_CFG_1_MASK)
 
 /* --------------------------------------------------------------------------
  * CB1_CFG (read-write): Cell balance configuration register
@@ -1594,16 +1493,14 @@ extern "C" {
 /* Field CB_TIMER: Cell balance timer in minutes (0 means 30 seconds). */
 #define MC33771C_CB1_CFG_CB_TIMER_SHIFT (0x0U)
 #define MC33771C_CB1_CFG_CB_TIMER_MASK (0x1FFU)
-#define MC33771C_CB1_CFG_CB_TIMER(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB1_CFG_CB_TIMER_SHIFT) &        \
-	 MC33771C_CB1_CFG_CB_TIMER_MASK)
+#define MC33771C_CB1_CFG_CB_TIMER(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB1_CFG_CB_TIMER_SHIFT) & MC33771C_CB1_CFG_CB_TIMER_MASK)
 
 /* Field CB_EN: Cell balance enable. */
 #define MC33771C_CB1_CFG_CB_EN_SHIFT (0x9U)
 #define MC33771C_CB1_CFG_CB_EN_MASK (0x200U)
-#define MC33771C_CB1_CFG_CB_EN(x)                                              \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB1_CFG_CB_EN_SHIFT) &           \
-	 MC33771C_CB1_CFG_CB_EN_MASK)
+#define MC33771C_CB1_CFG_CB_EN(x)                                                                                      \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB1_CFG_CB_EN_SHIFT) & MC33771C_CB1_CFG_CB_EN_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver disabled. */
 #define MC33771C_CB1_CFG_CB_EN_DISABLED_ENUM_VAL (0x0U)
@@ -1615,9 +1512,8 @@ extern "C" {
 /* Field CB_STS: Cell balance driver status. */
 #define MC33771C_CB1_CFG_CB_STS_SHIFT (0x9U)
 #define MC33771C_CB1_CFG_CB_STS_MASK (0x200U)
-#define MC33771C_CB1_CFG_CB_STS(x)                                             \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB1_CFG_CB_STS_SHIFT) &          \
-	 MC33771C_CB1_CFG_CB_STS_MASK)
+#define MC33771C_CB1_CFG_CB_STS(x)                                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB1_CFG_CB_STS_SHIFT) & MC33771C_CB1_CFG_CB_STS_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver is off. */
 #define MC33771C_CB1_CFG_CB_STS_DISABLED_ENUM_VAL (0x0U)
@@ -1634,16 +1530,14 @@ extern "C" {
 /* Field CB_TIMER: Cell balance timer in minutes (0 means 30 seconds). */
 #define MC33771C_CB2_CFG_CB_TIMER_SHIFT (0x0U)
 #define MC33771C_CB2_CFG_CB_TIMER_MASK (0x1FFU)
-#define MC33771C_CB2_CFG_CB_TIMER(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB2_CFG_CB_TIMER_SHIFT) &        \
-	 MC33771C_CB2_CFG_CB_TIMER_MASK)
+#define MC33771C_CB2_CFG_CB_TIMER(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB2_CFG_CB_TIMER_SHIFT) & MC33771C_CB2_CFG_CB_TIMER_MASK)
 
 /* Field CB_EN: Cell balance enable. */
 #define MC33771C_CB2_CFG_CB_EN_SHIFT (0x9U)
 #define MC33771C_CB2_CFG_CB_EN_MASK (0x200U)
-#define MC33771C_CB2_CFG_CB_EN(x)                                              \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB2_CFG_CB_EN_SHIFT) &           \
-	 MC33771C_CB2_CFG_CB_EN_MASK)
+#define MC33771C_CB2_CFG_CB_EN(x)                                                                                      \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB2_CFG_CB_EN_SHIFT) & MC33771C_CB2_CFG_CB_EN_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver disabled. */
 #define MC33771C_CB2_CFG_CB_EN_DISABLED_ENUM_VAL (0x0U)
@@ -1655,9 +1549,8 @@ extern "C" {
 /* Field CB_STS: Cell balance driver status. */
 #define MC33771C_CB2_CFG_CB_STS_SHIFT (0x9U)
 #define MC33771C_CB2_CFG_CB_STS_MASK (0x200U)
-#define MC33771C_CB2_CFG_CB_STS(x)                                             \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB2_CFG_CB_STS_SHIFT) &          \
-	 MC33771C_CB2_CFG_CB_STS_MASK)
+#define MC33771C_CB2_CFG_CB_STS(x)                                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB2_CFG_CB_STS_SHIFT) & MC33771C_CB2_CFG_CB_STS_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver is off. */
 #define MC33771C_CB2_CFG_CB_STS_DISABLED_ENUM_VAL (0x0U)
@@ -1674,16 +1567,14 @@ extern "C" {
 /* Field CB_TIMER: Cell balance timer in minutes (0 means 30 seconds). */
 #define MC33771C_CB3_CFG_CB_TIMER_SHIFT (0x0U)
 #define MC33771C_CB3_CFG_CB_TIMER_MASK (0x1FFU)
-#define MC33771C_CB3_CFG_CB_TIMER(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB3_CFG_CB_TIMER_SHIFT) &        \
-	 MC33771C_CB3_CFG_CB_TIMER_MASK)
+#define MC33771C_CB3_CFG_CB_TIMER(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB3_CFG_CB_TIMER_SHIFT) & MC33771C_CB3_CFG_CB_TIMER_MASK)
 
 /* Field CB_EN: Cell balance enable. */
 #define MC33771C_CB3_CFG_CB_EN_SHIFT (0x9U)
 #define MC33771C_CB3_CFG_CB_EN_MASK (0x200U)
-#define MC33771C_CB3_CFG_CB_EN(x)                                              \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB3_CFG_CB_EN_SHIFT) &           \
-	 MC33771C_CB3_CFG_CB_EN_MASK)
+#define MC33771C_CB3_CFG_CB_EN(x)                                                                                      \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB3_CFG_CB_EN_SHIFT) & MC33771C_CB3_CFG_CB_EN_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver disabled. */
 #define MC33771C_CB3_CFG_CB_EN_DISABLED_ENUM_VAL (0x0U)
@@ -1695,9 +1586,8 @@ extern "C" {
 /* Field CB_STS: Cell balance driver status. */
 #define MC33771C_CB3_CFG_CB_STS_SHIFT (0x9U)
 #define MC33771C_CB3_CFG_CB_STS_MASK (0x200U)
-#define MC33771C_CB3_CFG_CB_STS(x)                                             \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB3_CFG_CB_STS_SHIFT) &          \
-	 MC33771C_CB3_CFG_CB_STS_MASK)
+#define MC33771C_CB3_CFG_CB_STS(x)                                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB3_CFG_CB_STS_SHIFT) & MC33771C_CB3_CFG_CB_STS_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver is off. */
 #define MC33771C_CB3_CFG_CB_STS_DISABLED_ENUM_VAL (0x0U)
@@ -1714,16 +1604,14 @@ extern "C" {
 /* Field CB_TIMER: Cell balance timer in minutes (0 means 30 seconds). */
 #define MC33771C_CB4_CFG_CB_TIMER_SHIFT (0x0U)
 #define MC33771C_CB4_CFG_CB_TIMER_MASK (0x1FFU)
-#define MC33771C_CB4_CFG_CB_TIMER(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB4_CFG_CB_TIMER_SHIFT) &        \
-	 MC33771C_CB4_CFG_CB_TIMER_MASK)
+#define MC33771C_CB4_CFG_CB_TIMER(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB4_CFG_CB_TIMER_SHIFT) & MC33771C_CB4_CFG_CB_TIMER_MASK)
 
 /* Field CB_EN: Cell balance enable. */
 #define MC33771C_CB4_CFG_CB_EN_SHIFT (0x9U)
 #define MC33771C_CB4_CFG_CB_EN_MASK (0x200U)
-#define MC33771C_CB4_CFG_CB_EN(x)                                              \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB4_CFG_CB_EN_SHIFT) &           \
-	 MC33771C_CB4_CFG_CB_EN_MASK)
+#define MC33771C_CB4_CFG_CB_EN(x)                                                                                      \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB4_CFG_CB_EN_SHIFT) & MC33771C_CB4_CFG_CB_EN_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver disabled. */
 #define MC33771C_CB4_CFG_CB_EN_DISABLED_ENUM_VAL (0x0U)
@@ -1735,9 +1623,8 @@ extern "C" {
 /* Field CB_STS: Cell balance driver status. */
 #define MC33771C_CB4_CFG_CB_STS_SHIFT (0x9U)
 #define MC33771C_CB4_CFG_CB_STS_MASK (0x200U)
-#define MC33771C_CB4_CFG_CB_STS(x)                                             \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB4_CFG_CB_STS_SHIFT) &          \
-	 MC33771C_CB4_CFG_CB_STS_MASK)
+#define MC33771C_CB4_CFG_CB_STS(x)                                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB4_CFG_CB_STS_SHIFT) & MC33771C_CB4_CFG_CB_STS_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver is off. */
 #define MC33771C_CB4_CFG_CB_STS_DISABLED_ENUM_VAL (0x0U)
@@ -1754,16 +1641,14 @@ extern "C" {
 /* Field CB_TIMER: Cell balance timer in minutes (0 means 30 seconds). */
 #define MC33771C_CB5_CFG_CB_TIMER_SHIFT (0x0U)
 #define MC33771C_CB5_CFG_CB_TIMER_MASK (0x1FFU)
-#define MC33771C_CB5_CFG_CB_TIMER(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB5_CFG_CB_TIMER_SHIFT) &        \
-	 MC33771C_CB5_CFG_CB_TIMER_MASK)
+#define MC33771C_CB5_CFG_CB_TIMER(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB5_CFG_CB_TIMER_SHIFT) & MC33771C_CB5_CFG_CB_TIMER_MASK)
 
 /* Field CB_EN: Cell balance enable. */
 #define MC33771C_CB5_CFG_CB_EN_SHIFT (0x9U)
 #define MC33771C_CB5_CFG_CB_EN_MASK (0x200U)
-#define MC33771C_CB5_CFG_CB_EN(x)                                              \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB5_CFG_CB_EN_SHIFT) &           \
-	 MC33771C_CB5_CFG_CB_EN_MASK)
+#define MC33771C_CB5_CFG_CB_EN(x)                                                                                      \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB5_CFG_CB_EN_SHIFT) & MC33771C_CB5_CFG_CB_EN_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver disabled. */
 #define MC33771C_CB5_CFG_CB_EN_DISABLED_ENUM_VAL (0x0U)
@@ -1775,9 +1660,8 @@ extern "C" {
 /* Field CB_STS: Cell balance driver status. */
 #define MC33771C_CB5_CFG_CB_STS_SHIFT (0x9U)
 #define MC33771C_CB5_CFG_CB_STS_MASK (0x200U)
-#define MC33771C_CB5_CFG_CB_STS(x)                                             \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB5_CFG_CB_STS_SHIFT) &          \
-	 MC33771C_CB5_CFG_CB_STS_MASK)
+#define MC33771C_CB5_CFG_CB_STS(x)                                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB5_CFG_CB_STS_SHIFT) & MC33771C_CB5_CFG_CB_STS_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver is off. */
 #define MC33771C_CB5_CFG_CB_STS_DISABLED_ENUM_VAL (0x0U)
@@ -1794,16 +1678,14 @@ extern "C" {
 /* Field CB_TIMER: Cell balance timer in minutes (0 means 30 seconds). */
 #define MC33771C_CB6_CFG_CB_TIMER_SHIFT (0x0U)
 #define MC33771C_CB6_CFG_CB_TIMER_MASK (0x1FFU)
-#define MC33771C_CB6_CFG_CB_TIMER(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB6_CFG_CB_TIMER_SHIFT) &        \
-	 MC33771C_CB6_CFG_CB_TIMER_MASK)
+#define MC33771C_CB6_CFG_CB_TIMER(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB6_CFG_CB_TIMER_SHIFT) & MC33771C_CB6_CFG_CB_TIMER_MASK)
 
 /* Field CB_EN: Cell balance enable. */
 #define MC33771C_CB6_CFG_CB_EN_SHIFT (0x9U)
 #define MC33771C_CB6_CFG_CB_EN_MASK (0x200U)
-#define MC33771C_CB6_CFG_CB_EN(x)                                              \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB6_CFG_CB_EN_SHIFT) &           \
-	 MC33771C_CB6_CFG_CB_EN_MASK)
+#define MC33771C_CB6_CFG_CB_EN(x)                                                                                      \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB6_CFG_CB_EN_SHIFT) & MC33771C_CB6_CFG_CB_EN_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver disabled. */
 #define MC33771C_CB6_CFG_CB_EN_DISABLED_ENUM_VAL (0x0U)
@@ -1815,9 +1697,8 @@ extern "C" {
 /* Field CB_STS: Cell balance driver status. */
 #define MC33771C_CB6_CFG_CB_STS_SHIFT (0x9U)
 #define MC33771C_CB6_CFG_CB_STS_MASK (0x200U)
-#define MC33771C_CB6_CFG_CB_STS(x)                                             \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB6_CFG_CB_STS_SHIFT) &          \
-	 MC33771C_CB6_CFG_CB_STS_MASK)
+#define MC33771C_CB6_CFG_CB_STS(x)                                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB6_CFG_CB_STS_SHIFT) & MC33771C_CB6_CFG_CB_STS_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver is off. */
 #define MC33771C_CB6_CFG_CB_STS_DISABLED_ENUM_VAL (0x0U)
@@ -1834,16 +1715,14 @@ extern "C" {
 /* Field CB_TIMER: Cell balance timer in minutes (0 means 30 seconds). */
 #define MC33771C_CB7_CFG_CB_TIMER_SHIFT (0x0U)
 #define MC33771C_CB7_CFG_CB_TIMER_MASK (0x1FFU)
-#define MC33771C_CB7_CFG_CB_TIMER(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB7_CFG_CB_TIMER_SHIFT) &        \
-	 MC33771C_CB7_CFG_CB_TIMER_MASK)
+#define MC33771C_CB7_CFG_CB_TIMER(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB7_CFG_CB_TIMER_SHIFT) & MC33771C_CB7_CFG_CB_TIMER_MASK)
 
 /* Field CB_EN: Cell balance enable. */
 #define MC33771C_CB7_CFG_CB_EN_SHIFT (0x9U)
 #define MC33771C_CB7_CFG_CB_EN_MASK (0x200U)
-#define MC33771C_CB7_CFG_CB_EN(x)                                              \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB7_CFG_CB_EN_SHIFT) &           \
-	 MC33771C_CB7_CFG_CB_EN_MASK)
+#define MC33771C_CB7_CFG_CB_EN(x)                                                                                      \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB7_CFG_CB_EN_SHIFT) & MC33771C_CB7_CFG_CB_EN_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver disabled. */
 #define MC33771C_CB7_CFG_CB_EN_DISABLED_ENUM_VAL (0x0U)
@@ -1855,9 +1734,8 @@ extern "C" {
 /* Field CB_STS: Cell balance driver status. */
 #define MC33771C_CB7_CFG_CB_STS_SHIFT (0x9U)
 #define MC33771C_CB7_CFG_CB_STS_MASK (0x200U)
-#define MC33771C_CB7_CFG_CB_STS(x)                                             \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB7_CFG_CB_STS_SHIFT) &          \
-	 MC33771C_CB7_CFG_CB_STS_MASK)
+#define MC33771C_CB7_CFG_CB_STS(x)                                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB7_CFG_CB_STS_SHIFT) & MC33771C_CB7_CFG_CB_STS_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver is off. */
 #define MC33771C_CB7_CFG_CB_STS_DISABLED_ENUM_VAL (0x0U)
@@ -1874,16 +1752,14 @@ extern "C" {
 /* Field CB_TIMER: Cell balance timer in minutes (0 means 30 seconds). */
 #define MC33771C_CB8_CFG_CB_TIMER_SHIFT (0x0U)
 #define MC33771C_CB8_CFG_CB_TIMER_MASK (0x1FFU)
-#define MC33771C_CB8_CFG_CB_TIMER(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB8_CFG_CB_TIMER_SHIFT) &        \
-	 MC33771C_CB8_CFG_CB_TIMER_MASK)
+#define MC33771C_CB8_CFG_CB_TIMER(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB8_CFG_CB_TIMER_SHIFT) & MC33771C_CB8_CFG_CB_TIMER_MASK)
 
 /* Field CB_EN: Cell balance enable. */
 #define MC33771C_CB8_CFG_CB_EN_SHIFT (0x9U)
 #define MC33771C_CB8_CFG_CB_EN_MASK (0x200U)
-#define MC33771C_CB8_CFG_CB_EN(x)                                              \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB8_CFG_CB_EN_SHIFT) &           \
-	 MC33771C_CB8_CFG_CB_EN_MASK)
+#define MC33771C_CB8_CFG_CB_EN(x)                                                                                      \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB8_CFG_CB_EN_SHIFT) & MC33771C_CB8_CFG_CB_EN_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver disabled. */
 #define MC33771C_CB8_CFG_CB_EN_DISABLED_ENUM_VAL (0x0U)
@@ -1895,9 +1771,8 @@ extern "C" {
 /* Field CB_STS: Cell balance driver status. */
 #define MC33771C_CB8_CFG_CB_STS_SHIFT (0x9U)
 #define MC33771C_CB8_CFG_CB_STS_MASK (0x200U)
-#define MC33771C_CB8_CFG_CB_STS(x)                                             \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB8_CFG_CB_STS_SHIFT) &          \
-	 MC33771C_CB8_CFG_CB_STS_MASK)
+#define MC33771C_CB8_CFG_CB_STS(x)                                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB8_CFG_CB_STS_SHIFT) & MC33771C_CB8_CFG_CB_STS_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver is off. */
 #define MC33771C_CB8_CFG_CB_STS_DISABLED_ENUM_VAL (0x0U)
@@ -1914,16 +1789,14 @@ extern "C" {
 /* Field CB_TIMER: Cell balance timer in minutes (0 means 30 seconds). */
 #define MC33771C_CB9_CFG_CB_TIMER_SHIFT (0x0U)
 #define MC33771C_CB9_CFG_CB_TIMER_MASK (0x1FFU)
-#define MC33771C_CB9_CFG_CB_TIMER(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB9_CFG_CB_TIMER_SHIFT) &        \
-	 MC33771C_CB9_CFG_CB_TIMER_MASK)
+#define MC33771C_CB9_CFG_CB_TIMER(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB9_CFG_CB_TIMER_SHIFT) & MC33771C_CB9_CFG_CB_TIMER_MASK)
 
 /* Field CB_EN: Cell balance enable. */
 #define MC33771C_CB9_CFG_CB_EN_SHIFT (0x9U)
 #define MC33771C_CB9_CFG_CB_EN_MASK (0x200U)
-#define MC33771C_CB9_CFG_CB_EN(x)                                              \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB9_CFG_CB_EN_SHIFT) &           \
-	 MC33771C_CB9_CFG_CB_EN_MASK)
+#define MC33771C_CB9_CFG_CB_EN(x)                                                                                      \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB9_CFG_CB_EN_SHIFT) & MC33771C_CB9_CFG_CB_EN_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver disabled. */
 #define MC33771C_CB9_CFG_CB_EN_DISABLED_ENUM_VAL (0x0U)
@@ -1935,9 +1808,8 @@ extern "C" {
 /* Field CB_STS: Cell balance driver status. */
 #define MC33771C_CB9_CFG_CB_STS_SHIFT (0x9U)
 #define MC33771C_CB9_CFG_CB_STS_MASK (0x200U)
-#define MC33771C_CB9_CFG_CB_STS(x)                                             \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB9_CFG_CB_STS_SHIFT) &          \
-	 MC33771C_CB9_CFG_CB_STS_MASK)
+#define MC33771C_CB9_CFG_CB_STS(x)                                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB9_CFG_CB_STS_SHIFT) & MC33771C_CB9_CFG_CB_STS_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver is off. */
 #define MC33771C_CB9_CFG_CB_STS_DISABLED_ENUM_VAL (0x0U)
@@ -1954,16 +1826,14 @@ extern "C" {
 /* Field CB_TIMER: Cell balance timer in minutes (0 means 30 seconds). */
 #define MC33771C_CB10_CFG_CB_TIMER_SHIFT (0x0U)
 #define MC33771C_CB10_CFG_CB_TIMER_MASK (0x1FFU)
-#define MC33771C_CB10_CFG_CB_TIMER(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB10_CFG_CB_TIMER_SHIFT) &       \
-	 MC33771C_CB10_CFG_CB_TIMER_MASK)
+#define MC33771C_CB10_CFG_CB_TIMER(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB10_CFG_CB_TIMER_SHIFT) & MC33771C_CB10_CFG_CB_TIMER_MASK)
 
 /* Field CB_EN: Cell balance enable. */
 #define MC33771C_CB10_CFG_CB_EN_SHIFT (0x9U)
 #define MC33771C_CB10_CFG_CB_EN_MASK (0x200U)
-#define MC33771C_CB10_CFG_CB_EN(x)                                             \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB10_CFG_CB_EN_SHIFT) &          \
-	 MC33771C_CB10_CFG_CB_EN_MASK)
+#define MC33771C_CB10_CFG_CB_EN(x)                                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB10_CFG_CB_EN_SHIFT) & MC33771C_CB10_CFG_CB_EN_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver disabled. */
 #define MC33771C_CB10_CFG_CB_EN_DISABLED_ENUM_VAL (0x0U)
@@ -1975,9 +1845,8 @@ extern "C" {
 /* Field CB_STS: Cell balance driver status. */
 #define MC33771C_CB10_CFG_CB_STS_SHIFT (0x9U)
 #define MC33771C_CB10_CFG_CB_STS_MASK (0x200U)
-#define MC33771C_CB10_CFG_CB_STS(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB10_CFG_CB_STS_SHIFT) &         \
-	 MC33771C_CB10_CFG_CB_STS_MASK)
+#define MC33771C_CB10_CFG_CB_STS(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB10_CFG_CB_STS_SHIFT) & MC33771C_CB10_CFG_CB_STS_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver is off. */
 #define MC33771C_CB10_CFG_CB_STS_DISABLED_ENUM_VAL (0x0U)
@@ -1994,16 +1863,14 @@ extern "C" {
 /* Field CB_TIMER: Cell balance timer in minutes (0 means 30 seconds). */
 #define MC33771C_CB11_CFG_CB_TIMER_SHIFT (0x0U)
 #define MC33771C_CB11_CFG_CB_TIMER_MASK (0x1FFU)
-#define MC33771C_CB11_CFG_CB_TIMER(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB11_CFG_CB_TIMER_SHIFT) &       \
-	 MC33771C_CB11_CFG_CB_TIMER_MASK)
+#define MC33771C_CB11_CFG_CB_TIMER(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB11_CFG_CB_TIMER_SHIFT) & MC33771C_CB11_CFG_CB_TIMER_MASK)
 
 /* Field CB_EN: Cell balance enable. */
 #define MC33771C_CB11_CFG_CB_EN_SHIFT (0x9U)
 #define MC33771C_CB11_CFG_CB_EN_MASK (0x200U)
-#define MC33771C_CB11_CFG_CB_EN(x)                                             \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB11_CFG_CB_EN_SHIFT) &          \
-	 MC33771C_CB11_CFG_CB_EN_MASK)
+#define MC33771C_CB11_CFG_CB_EN(x)                                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB11_CFG_CB_EN_SHIFT) & MC33771C_CB11_CFG_CB_EN_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver disabled. */
 #define MC33771C_CB11_CFG_CB_EN_DISABLED_ENUM_VAL (0x0U)
@@ -2015,9 +1882,8 @@ extern "C" {
 /* Field CB_STS: Cell balance driver status. */
 #define MC33771C_CB11_CFG_CB_STS_SHIFT (0x9U)
 #define MC33771C_CB11_CFG_CB_STS_MASK (0x200U)
-#define MC33771C_CB11_CFG_CB_STS(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB11_CFG_CB_STS_SHIFT) &         \
-	 MC33771C_CB11_CFG_CB_STS_MASK)
+#define MC33771C_CB11_CFG_CB_STS(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB11_CFG_CB_STS_SHIFT) & MC33771C_CB11_CFG_CB_STS_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver is off. */
 #define MC33771C_CB11_CFG_CB_STS_DISABLED_ENUM_VAL (0x0U)
@@ -2034,16 +1900,14 @@ extern "C" {
 /* Field CB_TIMER: Cell balance timer in minutes (0 means 30 seconds). */
 #define MC33771C_CB12_CFG_CB_TIMER_SHIFT (0x0U)
 #define MC33771C_CB12_CFG_CB_TIMER_MASK (0x1FFU)
-#define MC33771C_CB12_CFG_CB_TIMER(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB12_CFG_CB_TIMER_SHIFT) &       \
-	 MC33771C_CB12_CFG_CB_TIMER_MASK)
+#define MC33771C_CB12_CFG_CB_TIMER(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB12_CFG_CB_TIMER_SHIFT) & MC33771C_CB12_CFG_CB_TIMER_MASK)
 
 /* Field CB_EN: Cell balance enable. */
 #define MC33771C_CB12_CFG_CB_EN_SHIFT (0x9U)
 #define MC33771C_CB12_CFG_CB_EN_MASK (0x200U)
-#define MC33771C_CB12_CFG_CB_EN(x)                                             \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB12_CFG_CB_EN_SHIFT) &          \
-	 MC33771C_CB12_CFG_CB_EN_MASK)
+#define MC33771C_CB12_CFG_CB_EN(x)                                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB12_CFG_CB_EN_SHIFT) & MC33771C_CB12_CFG_CB_EN_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver disabled. */
 #define MC33771C_CB12_CFG_CB_EN_DISABLED_ENUM_VAL (0x0U)
@@ -2055,9 +1919,8 @@ extern "C" {
 /* Field CB_STS: Cell balance driver status. */
 #define MC33771C_CB12_CFG_CB_STS_SHIFT (0x9U)
 #define MC33771C_CB12_CFG_CB_STS_MASK (0x200U)
-#define MC33771C_CB12_CFG_CB_STS(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB12_CFG_CB_STS_SHIFT) &         \
-	 MC33771C_CB12_CFG_CB_STS_MASK)
+#define MC33771C_CB12_CFG_CB_STS(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB12_CFG_CB_STS_SHIFT) & MC33771C_CB12_CFG_CB_STS_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver is off. */
 #define MC33771C_CB12_CFG_CB_STS_DISABLED_ENUM_VAL (0x0U)
@@ -2074,16 +1937,14 @@ extern "C" {
 /* Field CB_TIMER: Cell balance timer in minutes (0 means 30 seconds). */
 #define MC33771C_CB13_CFG_CB_TIMER_SHIFT (0x0U)
 #define MC33771C_CB13_CFG_CB_TIMER_MASK (0x1FFU)
-#define MC33771C_CB13_CFG_CB_TIMER(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB13_CFG_CB_TIMER_SHIFT) &       \
-	 MC33771C_CB13_CFG_CB_TIMER_MASK)
+#define MC33771C_CB13_CFG_CB_TIMER(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB13_CFG_CB_TIMER_SHIFT) & MC33771C_CB13_CFG_CB_TIMER_MASK)
 
 /* Field CB_EN: Cell balance enable. */
 #define MC33771C_CB13_CFG_CB_EN_SHIFT (0x9U)
 #define MC33771C_CB13_CFG_CB_EN_MASK (0x200U)
-#define MC33771C_CB13_CFG_CB_EN(x)                                             \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB13_CFG_CB_EN_SHIFT) &          \
-	 MC33771C_CB13_CFG_CB_EN_MASK)
+#define MC33771C_CB13_CFG_CB_EN(x)                                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB13_CFG_CB_EN_SHIFT) & MC33771C_CB13_CFG_CB_EN_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver disabled. */
 #define MC33771C_CB13_CFG_CB_EN_DISABLED_ENUM_VAL (0x0U)
@@ -2095,9 +1956,8 @@ extern "C" {
 /* Field CB_STS: Cell balance driver status. */
 #define MC33771C_CB13_CFG_CB_STS_SHIFT (0x9U)
 #define MC33771C_CB13_CFG_CB_STS_MASK (0x200U)
-#define MC33771C_CB13_CFG_CB_STS(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB13_CFG_CB_STS_SHIFT) &         \
-	 MC33771C_CB13_CFG_CB_STS_MASK)
+#define MC33771C_CB13_CFG_CB_STS(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB13_CFG_CB_STS_SHIFT) & MC33771C_CB13_CFG_CB_STS_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver is off. */
 #define MC33771C_CB13_CFG_CB_STS_DISABLED_ENUM_VAL (0x0U)
@@ -2114,16 +1974,14 @@ extern "C" {
 /* Field CB_TIMER: Cell balance timer in minutes (0 means 30 seconds). */
 #define MC33771C_CB14_CFG_CB_TIMER_SHIFT (0x0U)
 #define MC33771C_CB14_CFG_CB_TIMER_MASK (0x1FFU)
-#define MC33771C_CB14_CFG_CB_TIMER(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB14_CFG_CB_TIMER_SHIFT) &       \
-	 MC33771C_CB14_CFG_CB_TIMER_MASK)
+#define MC33771C_CB14_CFG_CB_TIMER(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB14_CFG_CB_TIMER_SHIFT) & MC33771C_CB14_CFG_CB_TIMER_MASK)
 
 /* Field CB_EN: Cell balance enable. */
 #define MC33771C_CB14_CFG_CB_EN_SHIFT (0x9U)
 #define MC33771C_CB14_CFG_CB_EN_MASK (0x200U)
-#define MC33771C_CB14_CFG_CB_EN(x)                                             \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB14_CFG_CB_EN_SHIFT) &          \
-	 MC33771C_CB14_CFG_CB_EN_MASK)
+#define MC33771C_CB14_CFG_CB_EN(x)                                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB14_CFG_CB_EN_SHIFT) & MC33771C_CB14_CFG_CB_EN_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver disabled. */
 #define MC33771C_CB14_CFG_CB_EN_DISABLED_ENUM_VAL (0x0U)
@@ -2135,9 +1993,8 @@ extern "C" {
 /* Field CB_STS: Cell balance driver status. */
 #define MC33771C_CB14_CFG_CB_STS_SHIFT (0x9U)
 #define MC33771C_CB14_CFG_CB_STS_MASK (0x200U)
-#define MC33771C_CB14_CFG_CB_STS(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB14_CFG_CB_STS_SHIFT) &         \
-	 MC33771C_CB14_CFG_CB_STS_MASK)
+#define MC33771C_CB14_CFG_CB_STS(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB14_CFG_CB_STS_SHIFT) & MC33771C_CB14_CFG_CB_STS_MASK)
 
 /* Enumerated value DISABLED: Cell balance driver is off. */
 #define MC33771C_CB14_CFG_CB_STS_DISABLED_ENUM_VAL (0x0U)
@@ -2155,10 +2012,8 @@ extern "C" {
  * Logic OR of CBx_OPEN_FLT is provided in the FAULT2_STATUS[CB_OPEN_FLT]. */
 #define MC33771C_CB_OPEN_FLT_CB1_OPEN_FLT_SHIFT (0x0U)
 #define MC33771C_CB_OPEN_FLT_CB1_OPEN_FLT_MASK (0x1U)
-#define MC33771C_CB_OPEN_FLT_CB1_OPEN_FLT(x)                                   \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_OPEN_FLT_CB1_OPEN_FLT_SHIFT) &              \
-	 MC33771C_CB_OPEN_FLT_CB1_OPEN_FLT_MASK)
+#define MC33771C_CB_OPEN_FLT_CB1_OPEN_FLT(x)                                                                           \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_OPEN_FLT_CB1_OPEN_FLT_SHIFT) & MC33771C_CB_OPEN_FLT_CB1_OPEN_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No open load cell balance fault detected. */
 #define MC33771C_CB_OPEN_FLT_CB1_OPEN_FLT_NO_FAULT_ENUM_VAL (0x0U)
@@ -2170,10 +2025,8 @@ extern "C" {
  * Logic OR of CBx_OPEN_FLT is provided in the FAULT2_STATUS[CB_OPEN_FLT]. */
 #define MC33771C_CB_OPEN_FLT_CB2_OPEN_FLT_SHIFT (0x1U)
 #define MC33771C_CB_OPEN_FLT_CB2_OPEN_FLT_MASK (0x2U)
-#define MC33771C_CB_OPEN_FLT_CB2_OPEN_FLT(x)                                   \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_OPEN_FLT_CB2_OPEN_FLT_SHIFT) &              \
-	 MC33771C_CB_OPEN_FLT_CB2_OPEN_FLT_MASK)
+#define MC33771C_CB_OPEN_FLT_CB2_OPEN_FLT(x)                                                                           \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_OPEN_FLT_CB2_OPEN_FLT_SHIFT) & MC33771C_CB_OPEN_FLT_CB2_OPEN_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No open load cell balance fault detected. */
 #define MC33771C_CB_OPEN_FLT_CB2_OPEN_FLT_NO_FAULT_ENUM_VAL (0x0U)
@@ -2185,10 +2038,8 @@ extern "C" {
  * Logic OR of CBx_OPEN_FLT is provided in the FAULT2_STATUS[CB_OPEN_FLT]. */
 #define MC33771C_CB_OPEN_FLT_CB3_OPEN_FLT_SHIFT (0x2U)
 #define MC33771C_CB_OPEN_FLT_CB3_OPEN_FLT_MASK (0x4U)
-#define MC33771C_CB_OPEN_FLT_CB3_OPEN_FLT(x)                                   \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_OPEN_FLT_CB3_OPEN_FLT_SHIFT) &              \
-	 MC33771C_CB_OPEN_FLT_CB3_OPEN_FLT_MASK)
+#define MC33771C_CB_OPEN_FLT_CB3_OPEN_FLT(x)                                                                           \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_OPEN_FLT_CB3_OPEN_FLT_SHIFT) & MC33771C_CB_OPEN_FLT_CB3_OPEN_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No open load cell balance fault detected. */
 #define MC33771C_CB_OPEN_FLT_CB3_OPEN_FLT_NO_FAULT_ENUM_VAL (0x0U)
@@ -2200,10 +2051,8 @@ extern "C" {
  * Logic OR of CBx_OPEN_FLT is provided in the FAULT2_STATUS[CB_OPEN_FLT]. */
 #define MC33771C_CB_OPEN_FLT_CB4_OPEN_FLT_SHIFT (0x3U)
 #define MC33771C_CB_OPEN_FLT_CB4_OPEN_FLT_MASK (0x8U)
-#define MC33771C_CB_OPEN_FLT_CB4_OPEN_FLT(x)                                   \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_OPEN_FLT_CB4_OPEN_FLT_SHIFT) &              \
-	 MC33771C_CB_OPEN_FLT_CB4_OPEN_FLT_MASK)
+#define MC33771C_CB_OPEN_FLT_CB4_OPEN_FLT(x)                                                                           \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_OPEN_FLT_CB4_OPEN_FLT_SHIFT) & MC33771C_CB_OPEN_FLT_CB4_OPEN_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No open load cell balance fault detected. */
 #define MC33771C_CB_OPEN_FLT_CB4_OPEN_FLT_NO_FAULT_ENUM_VAL (0x0U)
@@ -2215,10 +2064,8 @@ extern "C" {
  * Logic OR of CBx_OPEN_FLT is provided in the FAULT2_STATUS[CB_OPEN_FLT]. */
 #define MC33771C_CB_OPEN_FLT_CB5_OPEN_FLT_SHIFT (0x4U)
 #define MC33771C_CB_OPEN_FLT_CB5_OPEN_FLT_MASK (0x10U)
-#define MC33771C_CB_OPEN_FLT_CB5_OPEN_FLT(x)                                   \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_OPEN_FLT_CB5_OPEN_FLT_SHIFT) &              \
-	 MC33771C_CB_OPEN_FLT_CB5_OPEN_FLT_MASK)
+#define MC33771C_CB_OPEN_FLT_CB5_OPEN_FLT(x)                                                                           \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_OPEN_FLT_CB5_OPEN_FLT_SHIFT) & MC33771C_CB_OPEN_FLT_CB5_OPEN_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No open load cell balance fault detected. */
 #define MC33771C_CB_OPEN_FLT_CB5_OPEN_FLT_NO_FAULT_ENUM_VAL (0x0U)
@@ -2230,10 +2077,8 @@ extern "C" {
  * Logic OR of CBx_OPEN_FLT is provided in the FAULT2_STATUS[CB_OPEN_FLT]. */
 #define MC33771C_CB_OPEN_FLT_CB6_OPEN_FLT_SHIFT (0x5U)
 #define MC33771C_CB_OPEN_FLT_CB6_OPEN_FLT_MASK (0x20U)
-#define MC33771C_CB_OPEN_FLT_CB6_OPEN_FLT(x)                                   \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_OPEN_FLT_CB6_OPEN_FLT_SHIFT) &              \
-	 MC33771C_CB_OPEN_FLT_CB6_OPEN_FLT_MASK)
+#define MC33771C_CB_OPEN_FLT_CB6_OPEN_FLT(x)                                                                           \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_OPEN_FLT_CB6_OPEN_FLT_SHIFT) & MC33771C_CB_OPEN_FLT_CB6_OPEN_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No open load cell balance fault detected. */
 #define MC33771C_CB_OPEN_FLT_CB6_OPEN_FLT_NO_FAULT_ENUM_VAL (0x0U)
@@ -2245,10 +2090,8 @@ extern "C" {
  * Logic OR of CBx_OPEN_FLT is provided in the FAULT2_STATUS[CB_OPEN_FLT]. */
 #define MC33771C_CB_OPEN_FLT_CB7_OPEN_FLT_SHIFT (0x6U)
 #define MC33771C_CB_OPEN_FLT_CB7_OPEN_FLT_MASK (0x40U)
-#define MC33771C_CB_OPEN_FLT_CB7_OPEN_FLT(x)                                   \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_OPEN_FLT_CB7_OPEN_FLT_SHIFT) &              \
-	 MC33771C_CB_OPEN_FLT_CB7_OPEN_FLT_MASK)
+#define MC33771C_CB_OPEN_FLT_CB7_OPEN_FLT(x)                                                                           \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_OPEN_FLT_CB7_OPEN_FLT_SHIFT) & MC33771C_CB_OPEN_FLT_CB7_OPEN_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No open load cell balance fault detected. */
 #define MC33771C_CB_OPEN_FLT_CB7_OPEN_FLT_NO_FAULT_ENUM_VAL (0x0U)
@@ -2260,10 +2103,8 @@ extern "C" {
  * Logic OR of CBx_OPEN_FLT is provided in the FAULT2_STATUS[CB_OPEN_FLT]. */
 #define MC33771C_CB_OPEN_FLT_CB8_OPEN_FLT_SHIFT (0x7U)
 #define MC33771C_CB_OPEN_FLT_CB8_OPEN_FLT_MASK (0x80U)
-#define MC33771C_CB_OPEN_FLT_CB8_OPEN_FLT(x)                                   \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_OPEN_FLT_CB8_OPEN_FLT_SHIFT) &              \
-	 MC33771C_CB_OPEN_FLT_CB8_OPEN_FLT_MASK)
+#define MC33771C_CB_OPEN_FLT_CB8_OPEN_FLT(x)                                                                           \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_OPEN_FLT_CB8_OPEN_FLT_SHIFT) & MC33771C_CB_OPEN_FLT_CB8_OPEN_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No open load cell balance fault detected. */
 #define MC33771C_CB_OPEN_FLT_CB8_OPEN_FLT_NO_FAULT_ENUM_VAL (0x0U)
@@ -2275,10 +2116,8 @@ extern "C" {
  * Logic OR of CBx_OPEN_FLT is provided in the FAULT2_STATUS[CB_OPEN_FLT]. */
 #define MC33771C_CB_OPEN_FLT_CB9_OPEN_FLT_SHIFT (0x8U)
 #define MC33771C_CB_OPEN_FLT_CB9_OPEN_FLT_MASK (0x100U)
-#define MC33771C_CB_OPEN_FLT_CB9_OPEN_FLT(x)                                   \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_OPEN_FLT_CB9_OPEN_FLT_SHIFT) &              \
-	 MC33771C_CB_OPEN_FLT_CB9_OPEN_FLT_MASK)
+#define MC33771C_CB_OPEN_FLT_CB9_OPEN_FLT(x)                                                                           \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_OPEN_FLT_CB9_OPEN_FLT_SHIFT) & MC33771C_CB_OPEN_FLT_CB9_OPEN_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No open load cell balance fault detected. */
 #define MC33771C_CB_OPEN_FLT_CB9_OPEN_FLT_NO_FAULT_ENUM_VAL (0x0U)
@@ -2290,9 +2129,8 @@ extern "C" {
  * Logic OR of CBx_OPEN_FLT is provided in the FAULT2_STATUS[CB_OPEN_FLT]. */
 #define MC33771C_CB_OPEN_FLT_CB10_OPEN_FLT_SHIFT (0x9U)
 #define MC33771C_CB_OPEN_FLT_CB10_OPEN_FLT_MASK (0x200U)
-#define MC33771C_CB_OPEN_FLT_CB10_OPEN_FLT(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_OPEN_FLT_CB10_OPEN_FLT_SHIFT) &             \
+#define MC33771C_CB_OPEN_FLT_CB10_OPEN_FLT(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_OPEN_FLT_CB10_OPEN_FLT_SHIFT) &                                       \
 	 MC33771C_CB_OPEN_FLT_CB10_OPEN_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No open load cell balance fault detected. */
@@ -2305,9 +2143,8 @@ extern "C" {
  * Logic OR of CBx_OPEN_FLT is provided in the FAULT2_STATUS[CB_OPEN_FLT]. */
 #define MC33771C_CB_OPEN_FLT_CB11_OPEN_FLT_SHIFT (0xAU)
 #define MC33771C_CB_OPEN_FLT_CB11_OPEN_FLT_MASK (0x400U)
-#define MC33771C_CB_OPEN_FLT_CB11_OPEN_FLT(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_OPEN_FLT_CB11_OPEN_FLT_SHIFT) &             \
+#define MC33771C_CB_OPEN_FLT_CB11_OPEN_FLT(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_OPEN_FLT_CB11_OPEN_FLT_SHIFT) &                                       \
 	 MC33771C_CB_OPEN_FLT_CB11_OPEN_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No open load cell balance fault detected. */
@@ -2320,9 +2157,8 @@ extern "C" {
  * Logic OR of CBx_OPEN_FLT is provided in the FAULT2_STATUS[CB_OPEN_FLT]. */
 #define MC33771C_CB_OPEN_FLT_CB12_OPEN_FLT_SHIFT (0xBU)
 #define MC33771C_CB_OPEN_FLT_CB12_OPEN_FLT_MASK (0x800U)
-#define MC33771C_CB_OPEN_FLT_CB12_OPEN_FLT(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_OPEN_FLT_CB12_OPEN_FLT_SHIFT) &             \
+#define MC33771C_CB_OPEN_FLT_CB12_OPEN_FLT(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_OPEN_FLT_CB12_OPEN_FLT_SHIFT) &                                       \
 	 MC33771C_CB_OPEN_FLT_CB12_OPEN_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No open load cell balance fault detected. */
@@ -2335,9 +2171,8 @@ extern "C" {
  * Logic OR of CBx_OPEN_FLT is provided in the FAULT2_STATUS[CB_OPEN_FLT]. */
 #define MC33771C_CB_OPEN_FLT_CB13_OPEN_FLT_SHIFT (0xCU)
 #define MC33771C_CB_OPEN_FLT_CB13_OPEN_FLT_MASK (0x1000U)
-#define MC33771C_CB_OPEN_FLT_CB13_OPEN_FLT(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_OPEN_FLT_CB13_OPEN_FLT_SHIFT) &             \
+#define MC33771C_CB_OPEN_FLT_CB13_OPEN_FLT(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_OPEN_FLT_CB13_OPEN_FLT_SHIFT) &                                       \
 	 MC33771C_CB_OPEN_FLT_CB13_OPEN_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No open load cell balance fault detected. */
@@ -2350,9 +2185,8 @@ extern "C" {
  * Logic OR of CBx_OPEN_FLT is provided in the FAULT2_STATUS[CB_OPEN_FLT]. */
 #define MC33771C_CB_OPEN_FLT_CB14_OPEN_FLT_SHIFT (0xDU)
 #define MC33771C_CB_OPEN_FLT_CB14_OPEN_FLT_MASK (0x2000U)
-#define MC33771C_CB_OPEN_FLT_CB14_OPEN_FLT(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_OPEN_FLT_CB14_OPEN_FLT_SHIFT) &             \
+#define MC33771C_CB_OPEN_FLT_CB14_OPEN_FLT(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_OPEN_FLT_CB14_OPEN_FLT_SHIFT) &                                       \
 	 MC33771C_CB_OPEN_FLT_CB14_OPEN_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No open load cell balance fault detected. */
@@ -2371,9 +2205,8 @@ extern "C" {
  * - (info) CBx_SHORT_FLT Ored is provided in the FAULT2[CB_SHORT_FLT]. */
 #define MC33771C_CB_SHORT_FLT_CB1_SHORT_FLT_SHIFT (0x0U)
 #define MC33771C_CB_SHORT_FLT_CB1_SHORT_FLT_MASK (0x1U)
-#define MC33771C_CB_SHORT_FLT_CB1_SHORT_FLT(x)                                 \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_SHORT_FLT_CB1_SHORT_FLT_SHIFT) &            \
+#define MC33771C_CB_SHORT_FLT_CB1_SHORT_FLT(x)                                                                         \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_SHORT_FLT_CB1_SHORT_FLT_SHIFT) &                                      \
 	 MC33771C_CB_SHORT_FLT_CB1_SHORT_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No shorted load cell balance fault detected. */
@@ -2386,9 +2219,8 @@ extern "C" {
  * - (info) CBx_SHORT_FLT Ored is provided in the FAULT2[CB_SHORT_FLT]. */
 #define MC33771C_CB_SHORT_FLT_CB2_SHORT_FLT_SHIFT (0x1U)
 #define MC33771C_CB_SHORT_FLT_CB2_SHORT_FLT_MASK (0x2U)
-#define MC33771C_CB_SHORT_FLT_CB2_SHORT_FLT(x)                                 \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_SHORT_FLT_CB2_SHORT_FLT_SHIFT) &            \
+#define MC33771C_CB_SHORT_FLT_CB2_SHORT_FLT(x)                                                                         \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_SHORT_FLT_CB2_SHORT_FLT_SHIFT) &                                      \
 	 MC33771C_CB_SHORT_FLT_CB2_SHORT_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No shorted load cell balance fault detected. */
@@ -2401,9 +2233,8 @@ extern "C" {
  * - (info) CBx_SHORT_FLT Ored is provided in the FAULT2[CB_SHORT_FLT]. */
 #define MC33771C_CB_SHORT_FLT_CB3_SHORT_FLT_SHIFT (0x2U)
 #define MC33771C_CB_SHORT_FLT_CB3_SHORT_FLT_MASK (0x4U)
-#define MC33771C_CB_SHORT_FLT_CB3_SHORT_FLT(x)                                 \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_SHORT_FLT_CB3_SHORT_FLT_SHIFT) &            \
+#define MC33771C_CB_SHORT_FLT_CB3_SHORT_FLT(x)                                                                         \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_SHORT_FLT_CB3_SHORT_FLT_SHIFT) &                                      \
 	 MC33771C_CB_SHORT_FLT_CB3_SHORT_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No shorted load cell balance fault detected. */
@@ -2416,9 +2247,8 @@ extern "C" {
  * - (info) CBx_SHORT_FLT Ored is provided in the FAULT2[CB_SHORT_FLT]. */
 #define MC33771C_CB_SHORT_FLT_CB4_SHORT_FLT_SHIFT (0x3U)
 #define MC33771C_CB_SHORT_FLT_CB4_SHORT_FLT_MASK (0x8U)
-#define MC33771C_CB_SHORT_FLT_CB4_SHORT_FLT(x)                                 \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_SHORT_FLT_CB4_SHORT_FLT_SHIFT) &            \
+#define MC33771C_CB_SHORT_FLT_CB4_SHORT_FLT(x)                                                                         \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_SHORT_FLT_CB4_SHORT_FLT_SHIFT) &                                      \
 	 MC33771C_CB_SHORT_FLT_CB4_SHORT_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No shorted load cell balance fault detected. */
@@ -2431,9 +2261,8 @@ extern "C" {
  * - (info) CBx_SHORT_FLT Ored is provided in the FAULT2[CB_SHORT_FLT]. */
 #define MC33771C_CB_SHORT_FLT_CB5_SHORT_FLT_SHIFT (0x4U)
 #define MC33771C_CB_SHORT_FLT_CB5_SHORT_FLT_MASK (0x10U)
-#define MC33771C_CB_SHORT_FLT_CB5_SHORT_FLT(x)                                 \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_SHORT_FLT_CB5_SHORT_FLT_SHIFT) &            \
+#define MC33771C_CB_SHORT_FLT_CB5_SHORT_FLT(x)                                                                         \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_SHORT_FLT_CB5_SHORT_FLT_SHIFT) &                                      \
 	 MC33771C_CB_SHORT_FLT_CB5_SHORT_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No shorted load cell balance fault detected. */
@@ -2446,9 +2275,8 @@ extern "C" {
  * - (info) CBx_SHORT_FLT Ored is provided in the FAULT2[CB_SHORT_FLT]. */
 #define MC33771C_CB_SHORT_FLT_CB6_SHORT_FLT_SHIFT (0x5U)
 #define MC33771C_CB_SHORT_FLT_CB6_SHORT_FLT_MASK (0x20U)
-#define MC33771C_CB_SHORT_FLT_CB6_SHORT_FLT(x)                                 \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_SHORT_FLT_CB6_SHORT_FLT_SHIFT) &            \
+#define MC33771C_CB_SHORT_FLT_CB6_SHORT_FLT(x)                                                                         \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_SHORT_FLT_CB6_SHORT_FLT_SHIFT) &                                      \
 	 MC33771C_CB_SHORT_FLT_CB6_SHORT_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No shorted load cell balance fault detected. */
@@ -2461,9 +2289,8 @@ extern "C" {
  * - (info) CBx_SHORT_FLT Ored is provided in the FAULT2[CB_SHORT_FLT]. */
 #define MC33771C_CB_SHORT_FLT_CB7_SHORT_FLT_SHIFT (0x6U)
 #define MC33771C_CB_SHORT_FLT_CB7_SHORT_FLT_MASK (0x40U)
-#define MC33771C_CB_SHORT_FLT_CB7_SHORT_FLT(x)                                 \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_SHORT_FLT_CB7_SHORT_FLT_SHIFT) &            \
+#define MC33771C_CB_SHORT_FLT_CB7_SHORT_FLT(x)                                                                         \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_SHORT_FLT_CB7_SHORT_FLT_SHIFT) &                                      \
 	 MC33771C_CB_SHORT_FLT_CB7_SHORT_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No shorted load cell balance fault detected. */
@@ -2476,9 +2303,8 @@ extern "C" {
  * - (info) CBx_SHORT_FLT Ored is provided in the FAULT2[CB_SHORT_FLT]. */
 #define MC33771C_CB_SHORT_FLT_CB8_SHORT_FLT_SHIFT (0x7U)
 #define MC33771C_CB_SHORT_FLT_CB8_SHORT_FLT_MASK (0x80U)
-#define MC33771C_CB_SHORT_FLT_CB8_SHORT_FLT(x)                                 \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_SHORT_FLT_CB8_SHORT_FLT_SHIFT) &            \
+#define MC33771C_CB_SHORT_FLT_CB8_SHORT_FLT(x)                                                                         \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_SHORT_FLT_CB8_SHORT_FLT_SHIFT) &                                      \
 	 MC33771C_CB_SHORT_FLT_CB8_SHORT_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No shorted load cell balance fault detected. */
@@ -2491,9 +2317,8 @@ extern "C" {
  * - (info) CBx_SHORT_FLT Ored is provided in the FAULT2[CB_SHORT_FLT]. */
 #define MC33771C_CB_SHORT_FLT_CB9_SHORT_FLT_SHIFT (0x8U)
 #define MC33771C_CB_SHORT_FLT_CB9_SHORT_FLT_MASK (0x100U)
-#define MC33771C_CB_SHORT_FLT_CB9_SHORT_FLT(x)                                 \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_SHORT_FLT_CB9_SHORT_FLT_SHIFT) &            \
+#define MC33771C_CB_SHORT_FLT_CB9_SHORT_FLT(x)                                                                         \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_SHORT_FLT_CB9_SHORT_FLT_SHIFT) &                                      \
 	 MC33771C_CB_SHORT_FLT_CB9_SHORT_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No shorted load cell balance fault detected. */
@@ -2506,9 +2331,8 @@ extern "C" {
  * - (info) CBx_SHORT_FLT Ored is provided in the FAULT2[CB_SHORT_FLT]. */
 #define MC33771C_CB_SHORT_FLT_CB10_SHORT_FLT_SHIFT (0x9U)
 #define MC33771C_CB_SHORT_FLT_CB10_SHORT_FLT_MASK (0x200U)
-#define MC33771C_CB_SHORT_FLT_CB10_SHORT_FLT(x)                                \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_SHORT_FLT_CB10_SHORT_FLT_SHIFT) &           \
+#define MC33771C_CB_SHORT_FLT_CB10_SHORT_FLT(x)                                                                        \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_SHORT_FLT_CB10_SHORT_FLT_SHIFT) &                                     \
 	 MC33771C_CB_SHORT_FLT_CB10_SHORT_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No shorted load cell balance fault detected. */
@@ -2521,9 +2345,8 @@ extern "C" {
  * - (info) CBx_SHORT_FLT Ored is provided in the FAULT2[CB_SHORT_FLT]. */
 #define MC33771C_CB_SHORT_FLT_CB11_SHORT_FLT_SHIFT (0xAU)
 #define MC33771C_CB_SHORT_FLT_CB11_SHORT_FLT_MASK (0x400U)
-#define MC33771C_CB_SHORT_FLT_CB11_SHORT_FLT(x)                                \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_SHORT_FLT_CB11_SHORT_FLT_SHIFT) &           \
+#define MC33771C_CB_SHORT_FLT_CB11_SHORT_FLT(x)                                                                        \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_SHORT_FLT_CB11_SHORT_FLT_SHIFT) &                                     \
 	 MC33771C_CB_SHORT_FLT_CB11_SHORT_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No shorted load cell balance fault detected. */
@@ -2536,9 +2359,8 @@ extern "C" {
  * - (info) CBx_SHORT_FLT Ored is provided in the FAULT2[CB_SHORT_FLT]. */
 #define MC33771C_CB_SHORT_FLT_CB12_SHORT_FLT_SHIFT (0xBU)
 #define MC33771C_CB_SHORT_FLT_CB12_SHORT_FLT_MASK (0x800U)
-#define MC33771C_CB_SHORT_FLT_CB12_SHORT_FLT(x)                                \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_SHORT_FLT_CB12_SHORT_FLT_SHIFT) &           \
+#define MC33771C_CB_SHORT_FLT_CB12_SHORT_FLT(x)                                                                        \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_SHORT_FLT_CB12_SHORT_FLT_SHIFT) &                                     \
 	 MC33771C_CB_SHORT_FLT_CB12_SHORT_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No shorted load cell balance fault detected. */
@@ -2551,9 +2373,8 @@ extern "C" {
  * - (info) CBx_SHORT_FLT Ored is provided in the FAULT2[CB_SHORT_FLT]. */
 #define MC33771C_CB_SHORT_FLT_CB13_SHORT_FLT_SHIFT (0xCU)
 #define MC33771C_CB_SHORT_FLT_CB13_SHORT_FLT_MASK (0x1000U)
-#define MC33771C_CB_SHORT_FLT_CB13_SHORT_FLT(x)                                \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_SHORT_FLT_CB13_SHORT_FLT_SHIFT) &           \
+#define MC33771C_CB_SHORT_FLT_CB13_SHORT_FLT(x)                                                                        \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_SHORT_FLT_CB13_SHORT_FLT_SHIFT) &                                     \
 	 MC33771C_CB_SHORT_FLT_CB13_SHORT_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No shorted load cell balance fault detected. */
@@ -2566,9 +2387,8 @@ extern "C" {
  * - (info) CBx_SHORT_FLT Ored is provided in the FAULT2[CB_SHORT_FLT]. */
 #define MC33771C_CB_SHORT_FLT_CB14_SHORT_FLT_SHIFT (0xDU)
 #define MC33771C_CB_SHORT_FLT_CB14_SHORT_FLT_MASK (0x2000U)
-#define MC33771C_CB_SHORT_FLT_CB14_SHORT_FLT(x)                                \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CB_SHORT_FLT_CB14_SHORT_FLT_SHIFT) &           \
+#define MC33771C_CB_SHORT_FLT_CB14_SHORT_FLT(x)                                                                        \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_SHORT_FLT_CB14_SHORT_FLT_SHIFT) &                                     \
 	 MC33771C_CB_SHORT_FLT_CB14_SHORT_FLT_MASK)
 
 /* Enumerated value NO_FAULT: No shorted load cell balance fault detected. */
@@ -2586,9 +2406,8 @@ extern "C" {
 /* Field CB1_STS (read-only): Contains the state of the cell balance driver. */
 #define MC33771C_CB_DRV_STS_CB1_STS_SHIFT (0x0U)
 #define MC33771C_CB_DRV_STS_CB1_STS_MASK (0x1U)
-#define MC33771C_CB_DRV_STS_CB1_STS(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB1_STS_SHIFT) &      \
-	 MC33771C_CB_DRV_STS_CB1_STS_MASK)
+#define MC33771C_CB_DRV_STS_CB1_STS(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB1_STS_SHIFT) & MC33771C_CB_DRV_STS_CB1_STS_MASK)
 
 /* Enumerated value False: Driver is off. */
 #define MC33771C_CB_DRV_STS_CB1_STS_FALSE_ENUM_VAL (0x0U)
@@ -2599,9 +2418,8 @@ extern "C" {
 /* Field CB2_STS (read-only): Contains the state of the cell balance driver. */
 #define MC33771C_CB_DRV_STS_CB2_STS_SHIFT (0x1U)
 #define MC33771C_CB_DRV_STS_CB2_STS_MASK (0x2U)
-#define MC33771C_CB_DRV_STS_CB2_STS(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB2_STS_SHIFT) &      \
-	 MC33771C_CB_DRV_STS_CB2_STS_MASK)
+#define MC33771C_CB_DRV_STS_CB2_STS(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB2_STS_SHIFT) & MC33771C_CB_DRV_STS_CB2_STS_MASK)
 
 /* Enumerated value False: Driver is off. */
 #define MC33771C_CB_DRV_STS_CB2_STS_FALSE_ENUM_VAL (0x0U)
@@ -2612,9 +2430,8 @@ extern "C" {
 /* Field CB3_STS (read-only): Contains the state of the cell balance driver. */
 #define MC33771C_CB_DRV_STS_CB3_STS_SHIFT (0x2U)
 #define MC33771C_CB_DRV_STS_CB3_STS_MASK (0x4U)
-#define MC33771C_CB_DRV_STS_CB3_STS(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB3_STS_SHIFT) &      \
-	 MC33771C_CB_DRV_STS_CB3_STS_MASK)
+#define MC33771C_CB_DRV_STS_CB3_STS(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB3_STS_SHIFT) & MC33771C_CB_DRV_STS_CB3_STS_MASK)
 
 /* Enumerated value False: Driver is off. */
 #define MC33771C_CB_DRV_STS_CB3_STS_FALSE_ENUM_VAL (0x0U)
@@ -2625,9 +2442,8 @@ extern "C" {
 /* Field CB4_STS (read-only): Contains the state of the cell balance driver. */
 #define MC33771C_CB_DRV_STS_CB4_STS_SHIFT (0x3U)
 #define MC33771C_CB_DRV_STS_CB4_STS_MASK (0x8U)
-#define MC33771C_CB_DRV_STS_CB4_STS(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB4_STS_SHIFT) &      \
-	 MC33771C_CB_DRV_STS_CB4_STS_MASK)
+#define MC33771C_CB_DRV_STS_CB4_STS(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB4_STS_SHIFT) & MC33771C_CB_DRV_STS_CB4_STS_MASK)
 
 /* Enumerated value False: Driver is off. */
 #define MC33771C_CB_DRV_STS_CB4_STS_FALSE_ENUM_VAL (0x0U)
@@ -2638,9 +2454,8 @@ extern "C" {
 /* Field CB5_STS (read-only): Contains the state of the cell balance driver. */
 #define MC33771C_CB_DRV_STS_CB5_STS_SHIFT (0x4U)
 #define MC33771C_CB_DRV_STS_CB5_STS_MASK (0x10U)
-#define MC33771C_CB_DRV_STS_CB5_STS(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB5_STS_SHIFT) &      \
-	 MC33771C_CB_DRV_STS_CB5_STS_MASK)
+#define MC33771C_CB_DRV_STS_CB5_STS(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB5_STS_SHIFT) & MC33771C_CB_DRV_STS_CB5_STS_MASK)
 
 /* Enumerated value False: Driver is off. */
 #define MC33771C_CB_DRV_STS_CB5_STS_FALSE_ENUM_VAL (0x0U)
@@ -2651,9 +2466,8 @@ extern "C" {
 /* Field CB6_STS (read-only): Contains the state of the cell balance driver. */
 #define MC33771C_CB_DRV_STS_CB6_STS_SHIFT (0x5U)
 #define MC33771C_CB_DRV_STS_CB6_STS_MASK (0x20U)
-#define MC33771C_CB_DRV_STS_CB6_STS(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB6_STS_SHIFT) &      \
-	 MC33771C_CB_DRV_STS_CB6_STS_MASK)
+#define MC33771C_CB_DRV_STS_CB6_STS(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB6_STS_SHIFT) & MC33771C_CB_DRV_STS_CB6_STS_MASK)
 
 /* Enumerated value False: Driver is off. */
 #define MC33771C_CB_DRV_STS_CB6_STS_FALSE_ENUM_VAL (0x0U)
@@ -2664,9 +2478,8 @@ extern "C" {
 /* Field CB7_STS (read-only): Contains the state of the cell balance driver. */
 #define MC33771C_CB_DRV_STS_CB7_STS_SHIFT (0x6U)
 #define MC33771C_CB_DRV_STS_CB7_STS_MASK (0x40U)
-#define MC33771C_CB_DRV_STS_CB7_STS(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB7_STS_SHIFT) &      \
-	 MC33771C_CB_DRV_STS_CB7_STS_MASK)
+#define MC33771C_CB_DRV_STS_CB7_STS(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB7_STS_SHIFT) & MC33771C_CB_DRV_STS_CB7_STS_MASK)
 
 /* Enumerated value False: Driver is off. */
 #define MC33771C_CB_DRV_STS_CB7_STS_FALSE_ENUM_VAL (0x0U)
@@ -2677,9 +2490,8 @@ extern "C" {
 /* Field CB8_STS (read-only): Contains the state of the cell balance driver. */
 #define MC33771C_CB_DRV_STS_CB8_STS_SHIFT (0x7U)
 #define MC33771C_CB_DRV_STS_CB8_STS_MASK (0x80U)
-#define MC33771C_CB_DRV_STS_CB8_STS(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB8_STS_SHIFT) &      \
-	 MC33771C_CB_DRV_STS_CB8_STS_MASK)
+#define MC33771C_CB_DRV_STS_CB8_STS(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB8_STS_SHIFT) & MC33771C_CB_DRV_STS_CB8_STS_MASK)
 
 /* Enumerated value False: Driver is off. */
 #define MC33771C_CB_DRV_STS_CB8_STS_FALSE_ENUM_VAL (0x0U)
@@ -2690,9 +2502,8 @@ extern "C" {
 /* Field CB9_STS (read-only): Contains the state of the cell balance driver. */
 #define MC33771C_CB_DRV_STS_CB9_STS_SHIFT (0x8U)
 #define MC33771C_CB_DRV_STS_CB9_STS_MASK (0x100U)
-#define MC33771C_CB_DRV_STS_CB9_STS(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB9_STS_SHIFT) &      \
-	 MC33771C_CB_DRV_STS_CB9_STS_MASK)
+#define MC33771C_CB_DRV_STS_CB9_STS(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB9_STS_SHIFT) & MC33771C_CB_DRV_STS_CB9_STS_MASK)
 
 /* Enumerated value False: Driver is off. */
 #define MC33771C_CB_DRV_STS_CB9_STS_FALSE_ENUM_VAL (0x0U)
@@ -2703,9 +2514,8 @@ extern "C" {
 /* Field CB10_STS (read-only): Contains the state of the cell balance driver. */
 #define MC33771C_CB_DRV_STS_CB10_STS_SHIFT (0x9U)
 #define MC33771C_CB_DRV_STS_CB10_STS_MASK (0x200U)
-#define MC33771C_CB_DRV_STS_CB10_STS(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB10_STS_SHIFT) &     \
-	 MC33771C_CB_DRV_STS_CB10_STS_MASK)
+#define MC33771C_CB_DRV_STS_CB10_STS(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB10_STS_SHIFT) & MC33771C_CB_DRV_STS_CB10_STS_MASK)
 
 /* Enumerated value False: Driver is off. */
 #define MC33771C_CB_DRV_STS_CB10_STS_FALSE_ENUM_VAL (0x0U)
@@ -2716,9 +2526,8 @@ extern "C" {
 /* Field CB11_STS (read-only): Contains the state of the cell balance driver. */
 #define MC33771C_CB_DRV_STS_CB11_STS_SHIFT (0xAU)
 #define MC33771C_CB_DRV_STS_CB11_STS_MASK (0x400U)
-#define MC33771C_CB_DRV_STS_CB11_STS(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB11_STS_SHIFT) &     \
-	 MC33771C_CB_DRV_STS_CB11_STS_MASK)
+#define MC33771C_CB_DRV_STS_CB11_STS(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB11_STS_SHIFT) & MC33771C_CB_DRV_STS_CB11_STS_MASK)
 
 /* Enumerated value False: Driver is off. */
 #define MC33771C_CB_DRV_STS_CB11_STS_FALSE_ENUM_VAL (0x0U)
@@ -2729,9 +2538,8 @@ extern "C" {
 /* Field CB12_STS (read-only): Contains the state of the cell balance driver. */
 #define MC33771C_CB_DRV_STS_CB12_STS_SHIFT (0xBU)
 #define MC33771C_CB_DRV_STS_CB12_STS_MASK (0x800U)
-#define MC33771C_CB_DRV_STS_CB12_STS(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB12_STS_SHIFT) &     \
-	 MC33771C_CB_DRV_STS_CB12_STS_MASK)
+#define MC33771C_CB_DRV_STS_CB12_STS(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB12_STS_SHIFT) & MC33771C_CB_DRV_STS_CB12_STS_MASK)
 
 /* Enumerated value False: Driver is off. */
 #define MC33771C_CB_DRV_STS_CB12_STS_FALSE_ENUM_VAL (0x0U)
@@ -2742,9 +2550,8 @@ extern "C" {
 /* Field CB13_STS (read-only): Contains the state of the cell balance driver. */
 #define MC33771C_CB_DRV_STS_CB13_STS_SHIFT (0xCU)
 #define MC33771C_CB_DRV_STS_CB13_STS_MASK (0x1000U)
-#define MC33771C_CB_DRV_STS_CB13_STS(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB13_STS_SHIFT) &     \
-	 MC33771C_CB_DRV_STS_CB13_STS_MASK)
+#define MC33771C_CB_DRV_STS_CB13_STS(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB13_STS_SHIFT) & MC33771C_CB_DRV_STS_CB13_STS_MASK)
 
 /* Enumerated value False: Driver is off. */
 #define MC33771C_CB_DRV_STS_CB13_STS_FALSE_ENUM_VAL (0x0U)
@@ -2755,9 +2562,8 @@ extern "C" {
 /* Field CB14_STS (read-only): Contains the state of the cell balance driver. */
 #define MC33771C_CB_DRV_STS_CB14_STS_SHIFT (0xDU)
 #define MC33771C_CB_DRV_STS_CB14_STS_MASK (0x2000U)
-#define MC33771C_CB_DRV_STS_CB14_STS(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB14_STS_SHIFT) &     \
-	 MC33771C_CB_DRV_STS_CB14_STS_MASK)
+#define MC33771C_CB_DRV_STS_CB14_STS(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_CB_DRV_STS_CB14_STS_SHIFT) & MC33771C_CB_DRV_STS_CB14_STS_MASK)
 
 /* Enumerated value False: Driver is off. */
 #define MC33771C_CB_DRV_STS_CB14_STS_FALSE_ENUM_VAL (0x0U)
@@ -2774,9 +2580,8 @@ extern "C" {
 /* Field GPIO0_CFG: Register controls the configuration of the GPIO port. */
 #define MC33771C_GPIO_CFG1_GPIO0_CFG_SHIFT (0x0U)
 #define MC33771C_GPIO_CFG1_GPIO0_CFG_MASK (0x3U)
-#define MC33771C_GPIO_CFG1_GPIO0_CFG(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG1_GPIO0_CFG_SHIFT) &     \
-	 MC33771C_GPIO_CFG1_GPIO0_CFG_MASK)
+#define MC33771C_GPIO_CFG1_GPIO0_CFG(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG1_GPIO0_CFG_SHIFT) & MC33771C_GPIO_CFG1_GPIO0_CFG_MASK)
 
 /* Enumerated value ANALOG_RATIO: GPIOx configured as analog input for
  * ratiometric measurement. */
@@ -2795,9 +2600,8 @@ extern "C" {
 /* Field GPIO1_CFG: Register controls the configuration of the GPIO port. */
 #define MC33771C_GPIO_CFG1_GPIO1_CFG_SHIFT (0x2U)
 #define MC33771C_GPIO_CFG1_GPIO1_CFG_MASK (0xCU)
-#define MC33771C_GPIO_CFG1_GPIO1_CFG(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG1_GPIO1_CFG_SHIFT) &     \
-	 MC33771C_GPIO_CFG1_GPIO1_CFG_MASK)
+#define MC33771C_GPIO_CFG1_GPIO1_CFG(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG1_GPIO1_CFG_SHIFT) & MC33771C_GPIO_CFG1_GPIO1_CFG_MASK)
 
 /* Enumerated value ANALOG_RATIO: GPIOx configured as analog input for
  * ratiometric measurement. */
@@ -2816,9 +2620,8 @@ extern "C" {
 /* Field GPIO2_CFG: Register controls the configuration of the GPIO port. */
 #define MC33771C_GPIO_CFG1_GPIO2_CFG_SHIFT (0x4U)
 #define MC33771C_GPIO_CFG1_GPIO2_CFG_MASK (0x30U)
-#define MC33771C_GPIO_CFG1_GPIO2_CFG(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG1_GPIO2_CFG_SHIFT) &     \
-	 MC33771C_GPIO_CFG1_GPIO2_CFG_MASK)
+#define MC33771C_GPIO_CFG1_GPIO2_CFG(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG1_GPIO2_CFG_SHIFT) & MC33771C_GPIO_CFG1_GPIO2_CFG_MASK)
 
 /* Enumerated value ANALOG_RATIO: GPIOx configured as analog input for
  * ratiometric measurement. */
@@ -2837,9 +2640,8 @@ extern "C" {
 /* Field GPIO3_CFG: Register controls the configuration of the GPIO port. */
 #define MC33771C_GPIO_CFG1_GPIO3_CFG_SHIFT (0x6U)
 #define MC33771C_GPIO_CFG1_GPIO3_CFG_MASK (0xC0U)
-#define MC33771C_GPIO_CFG1_GPIO3_CFG(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG1_GPIO3_CFG_SHIFT) &     \
-	 MC33771C_GPIO_CFG1_GPIO3_CFG_MASK)
+#define MC33771C_GPIO_CFG1_GPIO3_CFG(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG1_GPIO3_CFG_SHIFT) & MC33771C_GPIO_CFG1_GPIO3_CFG_MASK)
 
 /* Enumerated value ANALOG_RATIO: GPIOx configured as analog input for
  * ratiometric measurement. */
@@ -2858,9 +2660,8 @@ extern "C" {
 /* Field GPIO4_CFG: Register controls the configuration of the GPIO port. */
 #define MC33771C_GPIO_CFG1_GPIO4_CFG_SHIFT (0x8U)
 #define MC33771C_GPIO_CFG1_GPIO4_CFG_MASK (0x300U)
-#define MC33771C_GPIO_CFG1_GPIO4_CFG(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG1_GPIO4_CFG_SHIFT) &     \
-	 MC33771C_GPIO_CFG1_GPIO4_CFG_MASK)
+#define MC33771C_GPIO_CFG1_GPIO4_CFG(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG1_GPIO4_CFG_SHIFT) & MC33771C_GPIO_CFG1_GPIO4_CFG_MASK)
 
 /* Enumerated value ANALOG_RATIO: GPIOx configured as analog input for
  * ratiometric measurement. */
@@ -2879,9 +2680,8 @@ extern "C" {
 /* Field GPIO5_CFG: Register controls the configuration of the GPIO port. */
 #define MC33771C_GPIO_CFG1_GPIO5_CFG_SHIFT (0xAU)
 #define MC33771C_GPIO_CFG1_GPIO5_CFG_MASK (0xC00U)
-#define MC33771C_GPIO_CFG1_GPIO5_CFG(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG1_GPIO5_CFG_SHIFT) &     \
-	 MC33771C_GPIO_CFG1_GPIO5_CFG_MASK)
+#define MC33771C_GPIO_CFG1_GPIO5_CFG(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG1_GPIO5_CFG_SHIFT) & MC33771C_GPIO_CFG1_GPIO5_CFG_MASK)
 
 /* Enumerated value ANALOG_RATIO: GPIOx configured as analog input for
  * ratiometric measurement. */
@@ -2900,9 +2700,8 @@ extern "C" {
 /* Field GPIO6_CFG: Register controls the configuration of the GPIO port. */
 #define MC33771C_GPIO_CFG1_GPIO6_CFG_SHIFT (0xCU)
 #define MC33771C_GPIO_CFG1_GPIO6_CFG_MASK (0x3000U)
-#define MC33771C_GPIO_CFG1_GPIO6_CFG(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG1_GPIO6_CFG_SHIFT) &     \
-	 MC33771C_GPIO_CFG1_GPIO6_CFG_MASK)
+#define MC33771C_GPIO_CFG1_GPIO6_CFG(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG1_GPIO6_CFG_SHIFT) & MC33771C_GPIO_CFG1_GPIO6_CFG_MASK)
 
 /* Enumerated value ANALOG_RATIO: GPIOx configured as analog input for
  * ratiometric measurement. */
@@ -2927,9 +2726,8 @@ extern "C" {
 /* Field GPIO0_DR: GPIOx pin drive. Ignored when GPIOx_CFG = 0b11. */
 #define MC33771C_GPIO_CFG2_GPIO0_DR_SHIFT (0x0U)
 #define MC33771C_GPIO_CFG2_GPIO0_DR_MASK (0x1U)
-#define MC33771C_GPIO_CFG2_GPIO0_DR(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG2_GPIO0_DR_SHIFT) &      \
-	 MC33771C_GPIO_CFG2_GPIO0_DR_MASK)
+#define MC33771C_GPIO_CFG2_GPIO0_DR(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG2_GPIO0_DR_SHIFT) & MC33771C_GPIO_CFG2_GPIO0_DR_MASK)
 
 /* Enumerated value LOW: Drive GPIOx to low level. */
 #define MC33771C_GPIO_CFG2_GPIO0_DR_LOW_ENUM_VAL (0x0U)
@@ -2940,9 +2738,8 @@ extern "C" {
 /* Field GPIO1_DR: GPIOx pin drive. Ignored when GPIOx_CFG = 0b11. */
 #define MC33771C_GPIO_CFG2_GPIO1_DR_SHIFT (0x1U)
 #define MC33771C_GPIO_CFG2_GPIO1_DR_MASK (0x2U)
-#define MC33771C_GPIO_CFG2_GPIO1_DR(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG2_GPIO1_DR_SHIFT) &      \
-	 MC33771C_GPIO_CFG2_GPIO1_DR_MASK)
+#define MC33771C_GPIO_CFG2_GPIO1_DR(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG2_GPIO1_DR_SHIFT) & MC33771C_GPIO_CFG2_GPIO1_DR_MASK)
 
 /* Enumerated value LOW: Drive GPIOx to low level. */
 #define MC33771C_GPIO_CFG2_GPIO1_DR_LOW_ENUM_VAL (0x0U)
@@ -2953,9 +2750,8 @@ extern "C" {
 /* Field GPIO2_DR: GPIOx pin drive. Ignored when GPIOx_CFG = 0b11. */
 #define MC33771C_GPIO_CFG2_GPIO2_DR_SHIFT (0x2U)
 #define MC33771C_GPIO_CFG2_GPIO2_DR_MASK (0x4U)
-#define MC33771C_GPIO_CFG2_GPIO2_DR(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG2_GPIO2_DR_SHIFT) &      \
-	 MC33771C_GPIO_CFG2_GPIO2_DR_MASK)
+#define MC33771C_GPIO_CFG2_GPIO2_DR(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG2_GPIO2_DR_SHIFT) & MC33771C_GPIO_CFG2_GPIO2_DR_MASK)
 
 /* Enumerated value LOW: Drive GPIOx to low level. */
 #define MC33771C_GPIO_CFG2_GPIO2_DR_LOW_ENUM_VAL (0x0U)
@@ -2966,9 +2762,8 @@ extern "C" {
 /* Field GPIO3_DR: GPIOx pin drive. Ignored when GPIOx_CFG = 0b11. */
 #define MC33771C_GPIO_CFG2_GPIO3_DR_SHIFT (0x3U)
 #define MC33771C_GPIO_CFG2_GPIO3_DR_MASK (0x8U)
-#define MC33771C_GPIO_CFG2_GPIO3_DR(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG2_GPIO3_DR_SHIFT) &      \
-	 MC33771C_GPIO_CFG2_GPIO3_DR_MASK)
+#define MC33771C_GPIO_CFG2_GPIO3_DR(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG2_GPIO3_DR_SHIFT) & MC33771C_GPIO_CFG2_GPIO3_DR_MASK)
 
 /* Enumerated value LOW: Drive GPIOx to low level. */
 #define MC33771C_GPIO_CFG2_GPIO3_DR_LOW_ENUM_VAL (0x0U)
@@ -2979,9 +2774,8 @@ extern "C" {
 /* Field GPIO4_DR: GPIOx pin drive. Ignored when GPIOx_CFG = 0b11. */
 #define MC33771C_GPIO_CFG2_GPIO4_DR_SHIFT (0x4U)
 #define MC33771C_GPIO_CFG2_GPIO4_DR_MASK (0x10U)
-#define MC33771C_GPIO_CFG2_GPIO4_DR(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG2_GPIO4_DR_SHIFT) &      \
-	 MC33771C_GPIO_CFG2_GPIO4_DR_MASK)
+#define MC33771C_GPIO_CFG2_GPIO4_DR(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG2_GPIO4_DR_SHIFT) & MC33771C_GPIO_CFG2_GPIO4_DR_MASK)
 
 /* Enumerated value LOW: Drive GPIOx to low level. */
 #define MC33771C_GPIO_CFG2_GPIO4_DR_LOW_ENUM_VAL (0x0U)
@@ -2992,9 +2786,8 @@ extern "C" {
 /* Field GPIO5_DR: GPIOx pin drive. Ignored when GPIOx_CFG = 0b11. */
 #define MC33771C_GPIO_CFG2_GPIO5_DR_SHIFT (0x5U)
 #define MC33771C_GPIO_CFG2_GPIO5_DR_MASK (0x20U)
-#define MC33771C_GPIO_CFG2_GPIO5_DR(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG2_GPIO5_DR_SHIFT) &      \
-	 MC33771C_GPIO_CFG2_GPIO5_DR_MASK)
+#define MC33771C_GPIO_CFG2_GPIO5_DR(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG2_GPIO5_DR_SHIFT) & MC33771C_GPIO_CFG2_GPIO5_DR_MASK)
 
 /* Enumerated value LOW: Drive GPIOx to low level. */
 #define MC33771C_GPIO_CFG2_GPIO5_DR_LOW_ENUM_VAL (0x0U)
@@ -3005,9 +2798,8 @@ extern "C" {
 /* Field GPIO6_DR: GPIOx pin drive. Ignored when GPIOx_CFG = 0b11. */
 #define MC33771C_GPIO_CFG2_GPIO6_DR_SHIFT (0x6U)
 #define MC33771C_GPIO_CFG2_GPIO6_DR_MASK (0x40U)
-#define MC33771C_GPIO_CFG2_GPIO6_DR(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG2_GPIO6_DR_SHIFT) &      \
-	 MC33771C_GPIO_CFG2_GPIO6_DR_MASK)
+#define MC33771C_GPIO_CFG2_GPIO6_DR(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG2_GPIO6_DR_SHIFT) & MC33771C_GPIO_CFG2_GPIO6_DR_MASK)
 
 /* Enumerated value LOW: Drive GPIOx to low level. */
 #define MC33771C_GPIO_CFG2_GPIO6_DR_LOW_ENUM_VAL (0x0U)
@@ -3019,9 +2811,8 @@ extern "C" {
  * GPIO0_CFG = 0b10. */
 #define MC33771C_GPIO_CFG2_GPIO0_FLT_ACT_SHIFT (0x7U)
 #define MC33771C_GPIO_CFG2_GPIO0_FLT_ACT_MASK (0x80U)
-#define MC33771C_GPIO_CFG2_GPIO0_FLT_ACT(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG2_GPIO0_FLT_ACT_SHIFT) & \
-	 MC33771C_GPIO_CFG2_GPIO0_FLT_ACT_MASK)
+#define MC33771C_GPIO_CFG2_GPIO0_FLT_ACT(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG2_GPIO0_FLT_ACT_SHIFT) & MC33771C_GPIO_CFG2_GPIO0_FLT_ACT_MASK)
 
 /* Enumerated value DISABLED: Does not activate FAULT pin when GPIO0 is
  * configured as an input and is logic 1. */
@@ -3035,9 +2826,8 @@ extern "C" {
  */
 #define MC33771C_GPIO_CFG2_GPIO0_WU_SHIFT (0x8U)
 #define MC33771C_GPIO_CFG2_GPIO0_WU_MASK (0x100U)
-#define MC33771C_GPIO_CFG2_GPIO0_WU(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG2_GPIO0_WU_SHIFT) &      \
-	 MC33771C_GPIO_CFG2_GPIO0_WU_MASK)
+#define MC33771C_GPIO_CFG2_GPIO0_WU(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG2_GPIO0_WU_SHIFT) & MC33771C_GPIO_CFG2_GPIO0_WU_MASK)
 
 /* Enumerated value NO_WAKEUP: No wake-up capability. */
 #define MC33771C_GPIO_CFG2_GPIO0_WU_NO_WAKEUP_ENUM_VAL (0x0U)
@@ -3050,9 +2840,8 @@ extern "C" {
  * GPIO2_CFG = 0b10. */
 #define MC33771C_GPIO_CFG2_GPIO2_SOC_SHIFT (0x9U)
 #define MC33771C_GPIO_CFG2_GPIO2_SOC_MASK (0x200U)
-#define MC33771C_GPIO_CFG2_GPIO2_SOC(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG2_GPIO2_SOC_SHIFT) &     \
-	 MC33771C_GPIO_CFG2_GPIO2_SOC_MASK)
+#define MC33771C_GPIO_CFG2_GPIO2_SOC(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_CFG2_GPIO2_SOC_SHIFT) & MC33771C_GPIO_CFG2_GPIO2_SOC_MASK)
 
 /* Enumerated value ADC_TRG_DISABLED: GPIO2 port ADC trigger is disabled. */
 #define MC33771C_GPIO_CFG2_GPIO2_SOC_ADC_TRG_DISABLED_ENUM_VAL (0x0U)
@@ -3071,9 +2860,8 @@ extern "C" {
 /* Field GPIO0_ST (read-only): Real time GPIOx status. */
 #define MC33771C_GPIO_STS_GPIO0_ST_SHIFT (0x0U)
 #define MC33771C_GPIO_STS_GPIO0_ST_MASK (0x1U)
-#define MC33771C_GPIO_STS_GPIO0_ST(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO0_ST_SHIFT) &       \
-	 MC33771C_GPIO_STS_GPIO0_ST_MASK)
+#define MC33771C_GPIO_STS_GPIO0_ST(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO0_ST_SHIFT) & MC33771C_GPIO_STS_GPIO0_ST_MASK)
 
 /* Enumerated value REPORT_LOW: Report GPIOx at low level. */
 #define MC33771C_GPIO_STS_GPIO0_ST_REPORT_LOW_ENUM_VAL (0x0U)
@@ -3084,9 +2872,8 @@ extern "C" {
 /* Field GPIO1_ST (read-only): Real time GPIOx status. */
 #define MC33771C_GPIO_STS_GPIO1_ST_SHIFT (0x1U)
 #define MC33771C_GPIO_STS_GPIO1_ST_MASK (0x2U)
-#define MC33771C_GPIO_STS_GPIO1_ST(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO1_ST_SHIFT) &       \
-	 MC33771C_GPIO_STS_GPIO1_ST_MASK)
+#define MC33771C_GPIO_STS_GPIO1_ST(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO1_ST_SHIFT) & MC33771C_GPIO_STS_GPIO1_ST_MASK)
 
 /* Enumerated value REPORT_LOW: Report GPIOx at low level. */
 #define MC33771C_GPIO_STS_GPIO1_ST_REPORT_LOW_ENUM_VAL (0x0U)
@@ -3097,9 +2884,8 @@ extern "C" {
 /* Field GPIO2_ST (read-only): Real time GPIOx status. */
 #define MC33771C_GPIO_STS_GPIO2_ST_SHIFT (0x2U)
 #define MC33771C_GPIO_STS_GPIO2_ST_MASK (0x4U)
-#define MC33771C_GPIO_STS_GPIO2_ST(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO2_ST_SHIFT) &       \
-	 MC33771C_GPIO_STS_GPIO2_ST_MASK)
+#define MC33771C_GPIO_STS_GPIO2_ST(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO2_ST_SHIFT) & MC33771C_GPIO_STS_GPIO2_ST_MASK)
 
 /* Enumerated value REPORT_LOW: Report GPIOx at low level. */
 #define MC33771C_GPIO_STS_GPIO2_ST_REPORT_LOW_ENUM_VAL (0x0U)
@@ -3110,9 +2896,8 @@ extern "C" {
 /* Field GPIO3_ST (read-only): Real time GPIOx status. */
 #define MC33771C_GPIO_STS_GPIO3_ST_SHIFT (0x3U)
 #define MC33771C_GPIO_STS_GPIO3_ST_MASK (0x8U)
-#define MC33771C_GPIO_STS_GPIO3_ST(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO3_ST_SHIFT) &       \
-	 MC33771C_GPIO_STS_GPIO3_ST_MASK)
+#define MC33771C_GPIO_STS_GPIO3_ST(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO3_ST_SHIFT) & MC33771C_GPIO_STS_GPIO3_ST_MASK)
 
 /* Enumerated value REPORT_LOW: Report GPIOx at low level. */
 #define MC33771C_GPIO_STS_GPIO3_ST_REPORT_LOW_ENUM_VAL (0x0U)
@@ -3123,9 +2908,8 @@ extern "C" {
 /* Field GPIO4_ST (read-only): Real time GPIOx status. */
 #define MC33771C_GPIO_STS_GPIO4_ST_SHIFT (0x4U)
 #define MC33771C_GPIO_STS_GPIO4_ST_MASK (0x10U)
-#define MC33771C_GPIO_STS_GPIO4_ST(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO4_ST_SHIFT) &       \
-	 MC33771C_GPIO_STS_GPIO4_ST_MASK)
+#define MC33771C_GPIO_STS_GPIO4_ST(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO4_ST_SHIFT) & MC33771C_GPIO_STS_GPIO4_ST_MASK)
 
 /* Enumerated value REPORT_LOW: Report GPIOx at low level. */
 #define MC33771C_GPIO_STS_GPIO4_ST_REPORT_LOW_ENUM_VAL (0x0U)
@@ -3136,9 +2920,8 @@ extern "C" {
 /* Field GPIO5_ST (read-only): Real time GPIOx status. */
 #define MC33771C_GPIO_STS_GPIO5_ST_SHIFT (0x5U)
 #define MC33771C_GPIO_STS_GPIO5_ST_MASK (0x20U)
-#define MC33771C_GPIO_STS_GPIO5_ST(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO5_ST_SHIFT) &       \
-	 MC33771C_GPIO_STS_GPIO5_ST_MASK)
+#define MC33771C_GPIO_STS_GPIO5_ST(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO5_ST_SHIFT) & MC33771C_GPIO_STS_GPIO5_ST_MASK)
 
 /* Enumerated value REPORT_LOW: Report GPIOx at low level. */
 #define MC33771C_GPIO_STS_GPIO5_ST_REPORT_LOW_ENUM_VAL (0x0U)
@@ -3149,9 +2932,8 @@ extern "C" {
 /* Field GPIO6_ST (read-only): Real time GPIOx status. */
 #define MC33771C_GPIO_STS_GPIO6_ST_SHIFT (0x6U)
 #define MC33771C_GPIO_STS_GPIO6_ST_MASK (0x40U)
-#define MC33771C_GPIO_STS_GPIO6_ST(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO6_ST_SHIFT) &       \
-	 MC33771C_GPIO_STS_GPIO6_ST_MASK)
+#define MC33771C_GPIO_STS_GPIO6_ST(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO6_ST_SHIFT) & MC33771C_GPIO_STS_GPIO6_ST_MASK)
 
 /* Enumerated value REPORT_LOW: Report GPIOx at low level. */
 #define MC33771C_GPIO_STS_GPIO6_ST_REPORT_LOW_ENUM_VAL (0x0U)
@@ -3163,9 +2945,8 @@ extern "C" {
  * high transition occurring on the GPIOx input. */
 #define MC33771C_GPIO_STS_GPIO0_H_SHIFT (0x8U)
 #define MC33771C_GPIO_STS_GPIO0_H_MASK (0x100U)
-#define MC33771C_GPIO_STS_GPIO0_H(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO0_H_SHIFT) &        \
-	 MC33771C_GPIO_STS_GPIO0_H_MASK)
+#define MC33771C_GPIO_STS_GPIO0_H(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO0_H_SHIFT) & MC33771C_GPIO_STS_GPIO0_H_MASK)
 
 /* Enumerated value NOT_DETECTED: No high state detected. */
 #define MC33771C_GPIO_STS_GPIO0_H_NOT_DETECTED_ENUM_VAL (0x0U)
@@ -3177,9 +2958,8 @@ extern "C" {
  * high transition occurring on the GPIOx input. */
 #define MC33771C_GPIO_STS_GPIO1_H_SHIFT (0x9U)
 #define MC33771C_GPIO_STS_GPIO1_H_MASK (0x200U)
-#define MC33771C_GPIO_STS_GPIO1_H(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO1_H_SHIFT) &        \
-	 MC33771C_GPIO_STS_GPIO1_H_MASK)
+#define MC33771C_GPIO_STS_GPIO1_H(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO1_H_SHIFT) & MC33771C_GPIO_STS_GPIO1_H_MASK)
 
 /* Enumerated value NOT_DETECTED: No high state detected. */
 #define MC33771C_GPIO_STS_GPIO1_H_NOT_DETECTED_ENUM_VAL (0x0U)
@@ -3191,9 +2971,8 @@ extern "C" {
  * high transition occurring on the GPIOx input. */
 #define MC33771C_GPIO_STS_GPIO2_H_SHIFT (0xAU)
 #define MC33771C_GPIO_STS_GPIO2_H_MASK (0x400U)
-#define MC33771C_GPIO_STS_GPIO2_H(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO2_H_SHIFT) &        \
-	 MC33771C_GPIO_STS_GPIO2_H_MASK)
+#define MC33771C_GPIO_STS_GPIO2_H(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO2_H_SHIFT) & MC33771C_GPIO_STS_GPIO2_H_MASK)
 
 /* Enumerated value NOT_DETECTED: No high state detected. */
 #define MC33771C_GPIO_STS_GPIO2_H_NOT_DETECTED_ENUM_VAL (0x0U)
@@ -3205,9 +2984,8 @@ extern "C" {
  * high transition occurring on the GPIOx input. */
 #define MC33771C_GPIO_STS_GPIO3_H_SHIFT (0xBU)
 #define MC33771C_GPIO_STS_GPIO3_H_MASK (0x800U)
-#define MC33771C_GPIO_STS_GPIO3_H(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO3_H_SHIFT) &        \
-	 MC33771C_GPIO_STS_GPIO3_H_MASK)
+#define MC33771C_GPIO_STS_GPIO3_H(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO3_H_SHIFT) & MC33771C_GPIO_STS_GPIO3_H_MASK)
 
 /* Enumerated value NOT_DETECTED: No high state detected. */
 #define MC33771C_GPIO_STS_GPIO3_H_NOT_DETECTED_ENUM_VAL (0x0U)
@@ -3219,9 +2997,8 @@ extern "C" {
  * high transition occurring on the GPIOx input. */
 #define MC33771C_GPIO_STS_GPIO4_H_SHIFT (0xCU)
 #define MC33771C_GPIO_STS_GPIO4_H_MASK (0x1000U)
-#define MC33771C_GPIO_STS_GPIO4_H(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO4_H_SHIFT) &        \
-	 MC33771C_GPIO_STS_GPIO4_H_MASK)
+#define MC33771C_GPIO_STS_GPIO4_H(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO4_H_SHIFT) & MC33771C_GPIO_STS_GPIO4_H_MASK)
 
 /* Enumerated value NOT_DETECTED: No high state detected. */
 #define MC33771C_GPIO_STS_GPIO4_H_NOT_DETECTED_ENUM_VAL (0x0U)
@@ -3233,9 +3010,8 @@ extern "C" {
  * high transition occurring on the GPIOx input. */
 #define MC33771C_GPIO_STS_GPIO5_H_SHIFT (0xDU)
 #define MC33771C_GPIO_STS_GPIO5_H_MASK (0x2000U)
-#define MC33771C_GPIO_STS_GPIO5_H(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO5_H_SHIFT) &        \
-	 MC33771C_GPIO_STS_GPIO5_H_MASK)
+#define MC33771C_GPIO_STS_GPIO5_H(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO5_H_SHIFT) & MC33771C_GPIO_STS_GPIO5_H_MASK)
 
 /* Enumerated value NOT_DETECTED: No high state detected. */
 #define MC33771C_GPIO_STS_GPIO5_H_NOT_DETECTED_ENUM_VAL (0x0U)
@@ -3247,9 +3023,8 @@ extern "C" {
  * high transition occurring on the GPIOx input. */
 #define MC33771C_GPIO_STS_GPIO6_H_SHIFT (0xEU)
 #define MC33771C_GPIO_STS_GPIO6_H_MASK (0x4000U)
-#define MC33771C_GPIO_STS_GPIO6_H(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO6_H_SHIFT) &        \
-	 MC33771C_GPIO_STS_GPIO6_H_MASK)
+#define MC33771C_GPIO_STS_GPIO6_H(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_STS_GPIO6_H_SHIFT) & MC33771C_GPIO_STS_GPIO6_H_MASK)
 
 /* Enumerated value NOT_DETECTED: No high state detected. */
 #define MC33771C_GPIO_STS_GPIO6_H_NOT_DETECTED_ENUM_VAL (0x0U)
@@ -3267,9 +3042,8 @@ extern "C" {
  * provided in FAULT1_STATUS[AN_UT_FLT]. */
 #define MC33771C_AN_OT_UT_FLT_AN0_UT_SHIFT (0x0U)
 #define MC33771C_AN_OT_UT_FLT_AN0_UT_MASK (0x1U)
-#define MC33771C_AN_OT_UT_FLT_AN0_UT(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN0_UT_SHIFT) &     \
-	 MC33771C_AN_OT_UT_FLT_AN0_UT_MASK)
+#define MC33771C_AN_OT_UT_FLT_AN0_UT(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN0_UT_SHIFT) & MC33771C_AN_OT_UT_FLT_AN0_UT_MASK)
 
 /* Enumerated value NO_UNDERTEMP: No undertemperature fault detected. */
 #define MC33771C_AN_OT_UT_FLT_AN0_UT_NO_UNDERTEMP_ENUM_VAL (0x0U)
@@ -3281,9 +3055,8 @@ extern "C" {
  * provided in FAULT1_STATUS[AN_UT_FLT]. */
 #define MC33771C_AN_OT_UT_FLT_AN1_UT_SHIFT (0x1U)
 #define MC33771C_AN_OT_UT_FLT_AN1_UT_MASK (0x2U)
-#define MC33771C_AN_OT_UT_FLT_AN1_UT(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN1_UT_SHIFT) &     \
-	 MC33771C_AN_OT_UT_FLT_AN1_UT_MASK)
+#define MC33771C_AN_OT_UT_FLT_AN1_UT(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN1_UT_SHIFT) & MC33771C_AN_OT_UT_FLT_AN1_UT_MASK)
 
 /* Enumerated value NO_UNDERTEMP: No undertemperature fault detected. */
 #define MC33771C_AN_OT_UT_FLT_AN1_UT_NO_UNDERTEMP_ENUM_VAL (0x0U)
@@ -3295,9 +3068,8 @@ extern "C" {
  * provided in FAULT1_STATUS[AN_UT_FLT]. */
 #define MC33771C_AN_OT_UT_FLT_AN2_UT_SHIFT (0x2U)
 #define MC33771C_AN_OT_UT_FLT_AN2_UT_MASK (0x4U)
-#define MC33771C_AN_OT_UT_FLT_AN2_UT(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN2_UT_SHIFT) &     \
-	 MC33771C_AN_OT_UT_FLT_AN2_UT_MASK)
+#define MC33771C_AN_OT_UT_FLT_AN2_UT(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN2_UT_SHIFT) & MC33771C_AN_OT_UT_FLT_AN2_UT_MASK)
 
 /* Enumerated value NO_UNDERTEMP: No undertemperature fault detected. */
 #define MC33771C_AN_OT_UT_FLT_AN2_UT_NO_UNDERTEMP_ENUM_VAL (0x0U)
@@ -3309,9 +3081,8 @@ extern "C" {
  * provided in FAULT1_STATUS[AN_UT_FLT]. */
 #define MC33771C_AN_OT_UT_FLT_AN3_UT_SHIFT (0x3U)
 #define MC33771C_AN_OT_UT_FLT_AN3_UT_MASK (0x8U)
-#define MC33771C_AN_OT_UT_FLT_AN3_UT(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN3_UT_SHIFT) &     \
-	 MC33771C_AN_OT_UT_FLT_AN3_UT_MASK)
+#define MC33771C_AN_OT_UT_FLT_AN3_UT(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN3_UT_SHIFT) & MC33771C_AN_OT_UT_FLT_AN3_UT_MASK)
 
 /* Enumerated value NO_UNDERTEMP: No undertemperature fault detected. */
 #define MC33771C_AN_OT_UT_FLT_AN3_UT_NO_UNDERTEMP_ENUM_VAL (0x0U)
@@ -3323,9 +3094,8 @@ extern "C" {
  * provided in FAULT1_STATUS[AN_UT_FLT]. */
 #define MC33771C_AN_OT_UT_FLT_AN4_UT_SHIFT (0x4U)
 #define MC33771C_AN_OT_UT_FLT_AN4_UT_MASK (0x10U)
-#define MC33771C_AN_OT_UT_FLT_AN4_UT(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN4_UT_SHIFT) &     \
-	 MC33771C_AN_OT_UT_FLT_AN4_UT_MASK)
+#define MC33771C_AN_OT_UT_FLT_AN4_UT(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN4_UT_SHIFT) & MC33771C_AN_OT_UT_FLT_AN4_UT_MASK)
 
 /* Enumerated value NO_UNDERTEMP: No undertemperature fault detected. */
 #define MC33771C_AN_OT_UT_FLT_AN4_UT_NO_UNDERTEMP_ENUM_VAL (0x0U)
@@ -3337,9 +3107,8 @@ extern "C" {
  * provided in FAULT1_STATUS[AN_UT_FLT]. */
 #define MC33771C_AN_OT_UT_FLT_AN5_UT_SHIFT (0x5U)
 #define MC33771C_AN_OT_UT_FLT_AN5_UT_MASK (0x20U)
-#define MC33771C_AN_OT_UT_FLT_AN5_UT(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN5_UT_SHIFT) &     \
-	 MC33771C_AN_OT_UT_FLT_AN5_UT_MASK)
+#define MC33771C_AN_OT_UT_FLT_AN5_UT(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN5_UT_SHIFT) & MC33771C_AN_OT_UT_FLT_AN5_UT_MASK)
 
 /* Enumerated value NO_UNDERTEMP: No undertemperature fault detected. */
 #define MC33771C_AN_OT_UT_FLT_AN5_UT_NO_UNDERTEMP_ENUM_VAL (0x0U)
@@ -3351,9 +3120,8 @@ extern "C" {
  * provided in FAULT1_STATUS[AN_UT_FLT]. */
 #define MC33771C_AN_OT_UT_FLT_AN6_UT_SHIFT (0x6U)
 #define MC33771C_AN_OT_UT_FLT_AN6_UT_MASK (0x40U)
-#define MC33771C_AN_OT_UT_FLT_AN6_UT(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN6_UT_SHIFT) &     \
-	 MC33771C_AN_OT_UT_FLT_AN6_UT_MASK)
+#define MC33771C_AN_OT_UT_FLT_AN6_UT(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN6_UT_SHIFT) & MC33771C_AN_OT_UT_FLT_AN6_UT_MASK)
 
 /* Enumerated value NO_UNDERTEMP: No undertemperature fault detected. */
 #define MC33771C_AN_OT_UT_FLT_AN6_UT_NO_UNDERTEMP_ENUM_VAL (0x0U)
@@ -3365,9 +3133,8 @@ extern "C" {
  * provided in FAULT1_STATUS[AN_OT_FLT]. */
 #define MC33771C_AN_OT_UT_FLT_AN0_OT_SHIFT (0x8U)
 #define MC33771C_AN_OT_UT_FLT_AN0_OT_MASK (0x100U)
-#define MC33771C_AN_OT_UT_FLT_AN0_OT(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN0_OT_SHIFT) &     \
-	 MC33771C_AN_OT_UT_FLT_AN0_OT_MASK)
+#define MC33771C_AN_OT_UT_FLT_AN0_OT(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN0_OT_SHIFT) & MC33771C_AN_OT_UT_FLT_AN0_OT_MASK)
 
 /* Enumerated value REPORT_LOW: No high state detected. */
 #define MC33771C_AN_OT_UT_FLT_AN0_OT_REPORT_LOW_ENUM_VAL (0x0U)
@@ -3379,9 +3146,8 @@ extern "C" {
  * provided in FAULT1_STATUS[AN_OT_FLT]. */
 #define MC33771C_AN_OT_UT_FLT_AN1_OT_SHIFT (0x9U)
 #define MC33771C_AN_OT_UT_FLT_AN1_OT_MASK (0x200U)
-#define MC33771C_AN_OT_UT_FLT_AN1_OT(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN1_OT_SHIFT) &     \
-	 MC33771C_AN_OT_UT_FLT_AN1_OT_MASK)
+#define MC33771C_AN_OT_UT_FLT_AN1_OT(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN1_OT_SHIFT) & MC33771C_AN_OT_UT_FLT_AN1_OT_MASK)
 
 /* Enumerated value REPORT_LOW: No high state detected. */
 #define MC33771C_AN_OT_UT_FLT_AN1_OT_REPORT_LOW_ENUM_VAL (0x0U)
@@ -3393,9 +3159,8 @@ extern "C" {
  * provided in FAULT1_STATUS[AN_OT_FLT]. */
 #define MC33771C_AN_OT_UT_FLT_AN2_OT_SHIFT (0xAU)
 #define MC33771C_AN_OT_UT_FLT_AN2_OT_MASK (0x400U)
-#define MC33771C_AN_OT_UT_FLT_AN2_OT(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN2_OT_SHIFT) &     \
-	 MC33771C_AN_OT_UT_FLT_AN2_OT_MASK)
+#define MC33771C_AN_OT_UT_FLT_AN2_OT(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN2_OT_SHIFT) & MC33771C_AN_OT_UT_FLT_AN2_OT_MASK)
 
 /* Enumerated value REPORT_LOW: No high state detected. */
 #define MC33771C_AN_OT_UT_FLT_AN2_OT_REPORT_LOW_ENUM_VAL (0x0U)
@@ -3407,9 +3172,8 @@ extern "C" {
  * provided in FAULT1_STATUS[AN_OT_FLT]. */
 #define MC33771C_AN_OT_UT_FLT_AN3_OT_SHIFT (0xBU)
 #define MC33771C_AN_OT_UT_FLT_AN3_OT_MASK (0x800U)
-#define MC33771C_AN_OT_UT_FLT_AN3_OT(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN3_OT_SHIFT) &     \
-	 MC33771C_AN_OT_UT_FLT_AN3_OT_MASK)
+#define MC33771C_AN_OT_UT_FLT_AN3_OT(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN3_OT_SHIFT) & MC33771C_AN_OT_UT_FLT_AN3_OT_MASK)
 
 /* Enumerated value REPORT_LOW: No high state detected. */
 #define MC33771C_AN_OT_UT_FLT_AN3_OT_REPORT_LOW_ENUM_VAL (0x0U)
@@ -3421,9 +3185,8 @@ extern "C" {
  * provided in FAULT1_STATUS[AN_OT_FLT]. */
 #define MC33771C_AN_OT_UT_FLT_AN4_OT_SHIFT (0xCU)
 #define MC33771C_AN_OT_UT_FLT_AN4_OT_MASK (0x1000U)
-#define MC33771C_AN_OT_UT_FLT_AN4_OT(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN4_OT_SHIFT) &     \
-	 MC33771C_AN_OT_UT_FLT_AN4_OT_MASK)
+#define MC33771C_AN_OT_UT_FLT_AN4_OT(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN4_OT_SHIFT) & MC33771C_AN_OT_UT_FLT_AN4_OT_MASK)
 
 /* Enumerated value REPORT_LOW: No high state detected. */
 #define MC33771C_AN_OT_UT_FLT_AN4_OT_REPORT_LOW_ENUM_VAL (0x0U)
@@ -3435,9 +3198,8 @@ extern "C" {
  * provided in FAULT1_STATUS[AN_OT_FLT]. */
 #define MC33771C_AN_OT_UT_FLT_AN5_OT_SHIFT (0xDU)
 #define MC33771C_AN_OT_UT_FLT_AN5_OT_MASK (0x2000U)
-#define MC33771C_AN_OT_UT_FLT_AN5_OT(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN5_OT_SHIFT) &     \
-	 MC33771C_AN_OT_UT_FLT_AN5_OT_MASK)
+#define MC33771C_AN_OT_UT_FLT_AN5_OT(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN5_OT_SHIFT) & MC33771C_AN_OT_UT_FLT_AN5_OT_MASK)
 
 /* Enumerated value REPORT_LOW: No high state detected. */
 #define MC33771C_AN_OT_UT_FLT_AN5_OT_REPORT_LOW_ENUM_VAL (0x0U)
@@ -3449,9 +3211,8 @@ extern "C" {
  * provided in FAULT1_STATUS[AN_OT_FLT]. */
 #define MC33771C_AN_OT_UT_FLT_AN6_OT_SHIFT (0xEU)
 #define MC33771C_AN_OT_UT_FLT_AN6_OT_MASK (0x4000U)
-#define MC33771C_AN_OT_UT_FLT_AN6_OT(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN6_OT_SHIFT) &     \
-	 MC33771C_AN_OT_UT_FLT_AN6_OT_MASK)
+#define MC33771C_AN_OT_UT_FLT_AN6_OT(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_AN_OT_UT_FLT_AN6_OT_SHIFT) & MC33771C_AN_OT_UT_FLT_AN6_OT_MASK)
 
 /* Enumerated value REPORT_LOW: No high state detected. */
 #define MC33771C_AN_OT_UT_FLT_AN6_OT_REPORT_LOW_ENUM_VAL (0x0U)
@@ -3469,9 +3230,8 @@ extern "C" {
  * is provided in FAULT2_STATUS[AN_OPEN_FLT]. */
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN0_OPEN_SHIFT (0x0U)
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN0_OPEN_MASK (0x1U)
-#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN0_OPEN(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN0_OPEN_SHIFT) &      \
+#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN0_OPEN(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN0_OPEN_SHIFT) &                                \
 	 MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN0_OPEN_MASK)
 
 /* Enumerated value NO_OPEN_LOAD: No open load detected. */
@@ -3484,9 +3244,8 @@ extern "C" {
  * is provided in FAULT2_STATUS[AN_OPEN_FLT]. */
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN1_OPEN_SHIFT (0x1U)
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN1_OPEN_MASK (0x2U)
-#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN1_OPEN(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN1_OPEN_SHIFT) &      \
+#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN1_OPEN(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN1_OPEN_SHIFT) &                                \
 	 MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN1_OPEN_MASK)
 
 /* Enumerated value NO_OPEN_LOAD: No open load detected. */
@@ -3499,9 +3258,8 @@ extern "C" {
  * is provided in FAULT2_STATUS[AN_OPEN_FLT]. */
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN2_OPEN_SHIFT (0x2U)
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN2_OPEN_MASK (0x4U)
-#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN2_OPEN(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN2_OPEN_SHIFT) &      \
+#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN2_OPEN(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN2_OPEN_SHIFT) &                                \
 	 MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN2_OPEN_MASK)
 
 /* Enumerated value NO_OPEN_LOAD: No open load detected. */
@@ -3514,9 +3272,8 @@ extern "C" {
  * is provided in FAULT2_STATUS[AN_OPEN_FLT]. */
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN3_OPEN_SHIFT (0x3U)
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN3_OPEN_MASK (0x8U)
-#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN3_OPEN(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN3_OPEN_SHIFT) &      \
+#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN3_OPEN(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN3_OPEN_SHIFT) &                                \
 	 MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN3_OPEN_MASK)
 
 /* Enumerated value NO_OPEN_LOAD: No open load detected. */
@@ -3529,9 +3286,8 @@ extern "C" {
  * is provided in FAULT2_STATUS[AN_OPEN_FLT]. */
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN4_OPEN_SHIFT (0x4U)
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN4_OPEN_MASK (0x10U)
-#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN4_OPEN(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN4_OPEN_SHIFT) &      \
+#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN4_OPEN(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN4_OPEN_SHIFT) &                                \
 	 MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN4_OPEN_MASK)
 
 /* Enumerated value NO_OPEN_LOAD: No open load detected. */
@@ -3544,9 +3300,8 @@ extern "C" {
  * is provided in FAULT2_STATUS[AN_OPEN_FLT]. */
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN5_OPEN_SHIFT (0x5U)
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN5_OPEN_MASK (0x20U)
-#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN5_OPEN(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN5_OPEN_SHIFT) &      \
+#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN5_OPEN(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN5_OPEN_SHIFT) &                                \
 	 MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN5_OPEN_MASK)
 
 /* Enumerated value NO_OPEN_LOAD: No open load detected. */
@@ -3559,9 +3314,8 @@ extern "C" {
  * is provided in FAULT2_STATUS[AN_OPEN_FLT]. */
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN6_OPEN_SHIFT (0x6U)
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN6_OPEN_MASK (0x40U)
-#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN6_OPEN(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN6_OPEN_SHIFT) &      \
+#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN6_OPEN(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN6_OPEN_SHIFT) &                                \
 	 MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN6_OPEN_MASK)
 
 /* Enumerated value NO_OPEN_LOAD: No open load detected. */
@@ -3574,9 +3328,8 @@ extern "C" {
  * in FAULT2_STATUS[GPIO_SHORT_FLT]. */
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO0_SH_SHIFT (0x8U)
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO0_SH_MASK (0x100U)
-#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO0_SH(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO0_SH_SHIFT) &      \
+#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO0_SH(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO0_SH_SHIFT) &                                \
 	 MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO0_SH_MASK)
 
 /* Enumerated value NO_SHORT: No short detected. */
@@ -3590,9 +3343,8 @@ extern "C" {
  * in FAULT2_STATUS[GPIO_SHORT_FLT]. */
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO1_SH_SHIFT (0x9U)
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO1_SH_MASK (0x200U)
-#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO1_SH(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO1_SH_SHIFT) &      \
+#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO1_SH(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO1_SH_SHIFT) &                                \
 	 MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO1_SH_MASK)
 
 /* Enumerated value NO_SHORT: No short detected. */
@@ -3606,9 +3358,8 @@ extern "C" {
  * in FAULT2_STATUS[GPIO_SHORT_FLT]. */
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO2_SH_SHIFT (0xAU)
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO2_SH_MASK (0x400U)
-#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO2_SH(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO2_SH_SHIFT) &      \
+#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO2_SH(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO2_SH_SHIFT) &                                \
 	 MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO2_SH_MASK)
 
 /* Enumerated value NO_SHORT: No short detected. */
@@ -3622,9 +3373,8 @@ extern "C" {
  * in FAULT2_STATUS[GPIO_SHORT_FLT]. */
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO3_SH_SHIFT (0xBU)
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO3_SH_MASK (0x800U)
-#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO3_SH(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO3_SH_SHIFT) &      \
+#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO3_SH(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO3_SH_SHIFT) &                                \
 	 MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO3_SH_MASK)
 
 /* Enumerated value NO_SHORT: No short detected. */
@@ -3638,9 +3388,8 @@ extern "C" {
  * in FAULT2_STATUS[GPIO_SHORT_FLT]. */
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO4_SH_SHIFT (0xCU)
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO4_SH_MASK (0x1000U)
-#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO4_SH(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO4_SH_SHIFT) &      \
+#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO4_SH(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO4_SH_SHIFT) &                                \
 	 MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO4_SH_MASK)
 
 /* Enumerated value NO_SHORT: No short detected. */
@@ -3654,9 +3403,8 @@ extern "C" {
  * in FAULT2_STATUS[GPIO_SHORT_FLT]. */
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO5_SH_SHIFT (0xDU)
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO5_SH_MASK (0x2000U)
-#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO5_SH(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO5_SH_SHIFT) &      \
+#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO5_SH(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO5_SH_SHIFT) &                                \
 	 MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO5_SH_MASK)
 
 /* Enumerated value NO_SHORT: No short detected. */
@@ -3670,9 +3418,8 @@ extern "C" {
  * in FAULT2_STATUS[GPIO_SHORT_FLT]. */
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO6_SH_SHIFT (0xEU)
 #define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO6_SH_MASK (0x4000U)
-#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO6_SH(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO6_SH_SHIFT) &      \
+#define MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO6_SH(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO6_SH_SHIFT) &                                \
 	 MC33771C_GPIO_SHORT_ANX_OPEN_STS_GPIO6_SH_MASK)
 
 /* Enumerated value NO_SHORT: No short detected. */
@@ -3692,9 +3439,8 @@ extern "C" {
  * cancellation), calculated through an autozero phase. */
 #define MC33771C_I_STATUS_PGA_DAC_SHIFT (0x8U)
 #define MC33771C_I_STATUS_PGA_DAC_MASK (0xFF00U)
-#define MC33771C_I_STATUS_PGA_DAC(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_I_STATUS_PGA_DAC_SHIFT) &        \
-	 MC33771C_I_STATUS_PGA_DAC_MASK)
+#define MC33771C_I_STATUS_PGA_DAC(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_I_STATUS_PGA_DAC_SHIFT) & MC33771C_I_STATUS_PGA_DAC_MASK)
 
 /* Enumerated value INIT_VALUE: DAC code is initially all zeros. */
 #define MC33771C_I_STATUS_PGA_DAC_INIT_VALUE_ENUM_VAL (0x0U)
@@ -3708,10 +3454,8 @@ extern "C" {
 /* Field COM_ERR_COUNT (read-only): Number of communication errors detected. */
 #define MC33771C_COM_STATUS_COM_ERR_COUNT_SHIFT (0x8U)
 #define MC33771C_COM_STATUS_COM_ERR_COUNT_MASK (0xFF00U)
-#define MC33771C_COM_STATUS_COM_ERR_COUNT(x)                                   \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_COM_STATUS_COM_ERR_COUNT_SHIFT) &              \
-	 MC33771C_COM_STATUS_COM_ERR_COUNT_MASK)
+#define MC33771C_COM_STATUS_COM_ERR_COUNT(x)                                                                           \
+	((uint16_t)((uint16_t)(x) << MC33771C_COM_STATUS_COM_ERR_COUNT_SHIFT) & MC33771C_COM_STATUS_COM_ERR_COUNT_MASK)
 
 /* Enumerated value COMM_ERR_OVF: 255 communication errors have been detected.
  * Overflow of counter sets FAULT1_STATUS[COM_ERR_OVR_FLT]. Count remains at 255
@@ -3727,9 +3471,8 @@ extern "C" {
 /* Field CT_UV_FLT (read-only): Cell terminal undervoltage detection. */
 #define MC33771C_FAULT1_STATUS_CT_UV_FLT_SHIFT (0x0U)
 #define MC33771C_FAULT1_STATUS_CT_UV_FLT_MASK (0x1U)
-#define MC33771C_FAULT1_STATUS_CT_UV_FLT(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_CT_UV_FLT_SHIFT) & \
-	 MC33771C_FAULT1_STATUS_CT_UV_FLT_MASK)
+#define MC33771C_FAULT1_STATUS_CT_UV_FLT(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_CT_UV_FLT_SHIFT) & MC33771C_FAULT1_STATUS_CT_UV_FLT_MASK)
 
 /* Enumerated value NO_UNDERVOLTAGE: No undervoltage detected. */
 #define MC33771C_FAULT1_STATUS_CT_UV_FLT_NO_UNDERVOLTAGE_ENUM_VAL (0x0U)
@@ -3741,9 +3484,8 @@ extern "C" {
 /* Field CT_OV_FLT (read-only): Cell terminal overvoltage detection. */
 #define MC33771C_FAULT1_STATUS_CT_OV_FLT_SHIFT (0x1U)
 #define MC33771C_FAULT1_STATUS_CT_OV_FLT_MASK (0x2U)
-#define MC33771C_FAULT1_STATUS_CT_OV_FLT(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_CT_OV_FLT_SHIFT) & \
-	 MC33771C_FAULT1_STATUS_CT_OV_FLT_MASK)
+#define MC33771C_FAULT1_STATUS_CT_OV_FLT(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_CT_OV_FLT_SHIFT) & MC33771C_FAULT1_STATUS_CT_OV_FLT_MASK)
 
 /* Enumerated value NO_OVERVOLTAGE: No overvoltage detected. */
 #define MC33771C_FAULT1_STATUS_CT_OV_FLT_NO_OVERVOLTAGE_ENUM_VAL (0x0U)
@@ -3755,9 +3497,8 @@ extern "C" {
 /* Field AN_UT_FLT (read-only): Analog inputs undertemperature detection. */
 #define MC33771C_FAULT1_STATUS_AN_UT_FLT_SHIFT (0x2U)
 #define MC33771C_FAULT1_STATUS_AN_UT_FLT_MASK (0x4U)
-#define MC33771C_FAULT1_STATUS_AN_UT_FLT(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_AN_UT_FLT_SHIFT) & \
-	 MC33771C_FAULT1_STATUS_AN_UT_FLT_MASK)
+#define MC33771C_FAULT1_STATUS_AN_UT_FLT(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_AN_UT_FLT_SHIFT) & MC33771C_FAULT1_STATUS_AN_UT_FLT_MASK)
 
 /* Enumerated value NO_UNDERTEMP: No undertemperature detected. */
 #define MC33771C_FAULT1_STATUS_AN_UT_FLT_NO_UNDERTEMP_ENUM_VAL (0x0U)
@@ -3769,9 +3510,8 @@ extern "C" {
 /* Field AN_OT_FLT (read-only): Analog input overtemperature detection. */
 #define MC33771C_FAULT1_STATUS_AN_OT_FLT_SHIFT (0x3U)
 #define MC33771C_FAULT1_STATUS_AN_OT_FLT_MASK (0x8U)
-#define MC33771C_FAULT1_STATUS_AN_OT_FLT(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_AN_OT_FLT_SHIFT) & \
-	 MC33771C_FAULT1_STATUS_AN_OT_FLT_MASK)
+#define MC33771C_FAULT1_STATUS_AN_OT_FLT(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_AN_OT_FLT_SHIFT) & MC33771C_FAULT1_STATUS_AN_OT_FLT_MASK)
 
 /* Enumerated value NO_OVERTEMP: No overtemperature detected. */
 #define MC33771C_FAULT1_STATUS_AN_OT_FLT_NO_OVERTEMP_ENUM_VAL (0x0U)
@@ -3783,9 +3523,8 @@ extern "C" {
 /* Field IS_OC_FLT: ISENSE overcurrent detected (sleep mode only). */
 #define MC33771C_FAULT1_STATUS_IS_OC_FLT_SHIFT (0x4U)
 #define MC33771C_FAULT1_STATUS_IS_OC_FLT_MASK (0x10U)
-#define MC33771C_FAULT1_STATUS_IS_OC_FLT(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_IS_OC_FLT_SHIFT) & \
-	 MC33771C_FAULT1_STATUS_IS_OC_FLT_MASK)
+#define MC33771C_FAULT1_STATUS_IS_OC_FLT(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_IS_OC_FLT_SHIFT) & MC33771C_FAULT1_STATUS_IS_OC_FLT_MASK)
 
 /* Enumerated value NO_OVERCURRENT: No overcurrent detected. */
 #define MC33771C_FAULT1_STATUS_IS_OC_FLT_NO_OVERCURRENT_ENUM_VAL (0x0U)
@@ -3796,9 +3535,8 @@ extern "C" {
 /* Field IS_OL_FLT: ISENSE pins open load detected. */
 #define MC33771C_FAULT1_STATUS_IS_OL_FLT_SHIFT (0x5U)
 #define MC33771C_FAULT1_STATUS_IS_OL_FLT_MASK (0x20U)
-#define MC33771C_FAULT1_STATUS_IS_OL_FLT(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_IS_OL_FLT_SHIFT) & \
-	 MC33771C_FAULT1_STATUS_IS_OL_FLT_MASK)
+#define MC33771C_FAULT1_STATUS_IS_OL_FLT(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_IS_OL_FLT_SHIFT) & MC33771C_FAULT1_STATUS_IS_OL_FLT_MASK)
 
 /* Enumerated value NO_OPEN_LOAD: No open load detected. */
 #define MC33771C_FAULT1_STATUS_IS_OL_FLT_NO_OPEN_LOAD_ENUM_VAL (0x0U)
@@ -3810,9 +3548,8 @@ extern "C" {
  * the IC. */
 #define MC33771C_FAULT1_STATUS_I2C_ERR_FLT_SHIFT (0x6U)
 #define MC33771C_FAULT1_STATUS_I2C_ERR_FLT_MASK (0x40U)
-#define MC33771C_FAULT1_STATUS_I2C_ERR_FLT(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT1_STATUS_I2C_ERR_FLT_SHIFT) &             \
+#define MC33771C_FAULT1_STATUS_I2C_ERR_FLT(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_I2C_ERR_FLT_SHIFT) &                                       \
 	 MC33771C_FAULT1_STATUS_I2C_ERR_FLT_MASK)
 
 /* Enumerated value NO_ERROR: No Error. */
@@ -3824,9 +3561,8 @@ extern "C" {
 /* Field GPIO0_WUP_FLT: GPIO0 wake-up notification */
 #define MC33771C_FAULT1_STATUS_GPIO0_WUP_FLT_SHIFT (0x7U)
 #define MC33771C_FAULT1_STATUS_GPIO0_WUP_FLT_MASK (0x80U)
-#define MC33771C_FAULT1_STATUS_GPIO0_WUP_FLT(x)                                \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT1_STATUS_GPIO0_WUP_FLT_SHIFT) &           \
+#define MC33771C_FAULT1_STATUS_GPIO0_WUP_FLT(x)                                                                        \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_GPIO0_WUP_FLT_SHIFT) &                                     \
 	 MC33771C_FAULT1_STATUS_GPIO0_WUP_FLT_MASK)
 
 /* Enumerated value NO_WAKEUP: No wake-up. */
@@ -3838,9 +3574,8 @@ extern "C" {
 /* Field CSB_WUP_FLT: CSB wake-up notification. */
 #define MC33771C_FAULT1_STATUS_CSB_WUP_FLT_SHIFT (0x8U)
 #define MC33771C_FAULT1_STATUS_CSB_WUP_FLT_MASK (0x100U)
-#define MC33771C_FAULT1_STATUS_CSB_WUP_FLT(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT1_STATUS_CSB_WUP_FLT_SHIFT) &             \
+#define MC33771C_FAULT1_STATUS_CSB_WUP_FLT(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_CSB_WUP_FLT_SHIFT) &                                       \
 	 MC33771C_FAULT1_STATUS_CSB_WUP_FLT_MASK)
 
 /* Enumerated value NO_WAKEUP: No wake-up. */
@@ -3852,9 +3587,8 @@ extern "C" {
 /* Field COM_ERR_FLT: Communication error detected. */
 #define MC33771C_FAULT1_STATUS_COM_ERR_FLT_SHIFT (0x9U)
 #define MC33771C_FAULT1_STATUS_COM_ERR_FLT_MASK (0x200U)
-#define MC33771C_FAULT1_STATUS_COM_ERR_FLT(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT1_STATUS_COM_ERR_FLT_SHIFT) &             \
+#define MC33771C_FAULT1_STATUS_COM_ERR_FLT(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_COM_ERR_FLT_SHIFT) &                                       \
 	 MC33771C_FAULT1_STATUS_COM_ERR_FLT_MASK)
 
 /* Enumerated value NO_ERROR: No error. */
@@ -3867,9 +3601,8 @@ extern "C" {
  * message within the programmed period or COM_LOSS_FLT flag is set. */
 #define MC33771C_FAULT1_STATUS_COM_LOSS_FLT_SHIFT (0xAU)
 #define MC33771C_FAULT1_STATUS_COM_LOSS_FLT_MASK (0x400U)
-#define MC33771C_FAULT1_STATUS_COM_LOSS_FLT(x)                                 \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT1_STATUS_COM_LOSS_FLT_SHIFT) &            \
+#define MC33771C_FAULT1_STATUS_COM_LOSS_FLT(x)                                                                         \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_COM_LOSS_FLT_SHIFT) &                                      \
 	 MC33771C_FAULT1_STATUS_COM_LOSS_FLT_MASK)
 
 /* Enumerated value NO_ERROR: No error. */
@@ -3882,9 +3615,8 @@ extern "C" {
 /* Field VPWR_LV_FLT: VPWR low-voltage notification. */
 #define MC33771C_FAULT1_STATUS_VPWR_LV_FLT_SHIFT (0xBU)
 #define MC33771C_FAULT1_STATUS_VPWR_LV_FLT_MASK (0x800U)
-#define MC33771C_FAULT1_STATUS_VPWR_LV_FLT(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT1_STATUS_VPWR_LV_FLT_SHIFT) &             \
+#define MC33771C_FAULT1_STATUS_VPWR_LV_FLT(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_VPWR_LV_FLT_SHIFT) &                                       \
 	 MC33771C_FAULT1_STATUS_VPWR_LV_FLT_MASK)
 
 /* Enumerated value NO_LV_DETECTED: No low-voltage (VPWR > VPWR(LV_FLAG))
@@ -3898,9 +3630,8 @@ extern "C" {
 /* Field VPWR_OV_FLT: VPWR overvoltage notification. */
 #define MC33771C_FAULT1_STATUS_VPWR_OV_FLT_SHIFT (0xCU)
 #define MC33771C_FAULT1_STATUS_VPWR_OV_FLT_MASK (0x1000U)
-#define MC33771C_FAULT1_STATUS_VPWR_OV_FLT(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT1_STATUS_VPWR_OV_FLT_SHIFT) &             \
+#define MC33771C_FAULT1_STATUS_VPWR_OV_FLT(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_VPWR_OV_FLT_SHIFT) &                                       \
 	 MC33771C_FAULT1_STATUS_VPWR_OV_FLT_MASK)
 
 /* Enumerated value NO_OVERVOLTAGE: No overvoltage (VPWR < VPWR(OV_FLAG))
@@ -3915,9 +3646,8 @@ extern "C" {
  */
 #define MC33771C_FAULT1_STATUS_COM_ERR_OVR_FLT_SHIFT (0xDU)
 #define MC33771C_FAULT1_STATUS_COM_ERR_OVR_FLT_MASK (0x2000U)
-#define MC33771C_FAULT1_STATUS_COM_ERR_OVR_FLT(x)                              \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT1_STATUS_COM_ERR_OVR_FLT_SHIFT) &         \
+#define MC33771C_FAULT1_STATUS_COM_ERR_OVR_FLT(x)                                                                      \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_COM_ERR_OVR_FLT_SHIFT) &                                   \
 	 MC33771C_FAULT1_STATUS_COM_ERR_OVR_FLT_MASK)
 
 /* Enumerated value NO_ERROR: No error. */
@@ -3929,9 +3659,8 @@ extern "C" {
 /* Field RESET_FLT: RESET Indication (nonmaskable). */
 #define MC33771C_FAULT1_STATUS_RESET_FLT_SHIFT (0xEU)
 #define MC33771C_FAULT1_STATUS_RESET_FLT_MASK (0x4000U)
-#define MC33771C_FAULT1_STATUS_RESET_FLT(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_RESET_FLT_SHIFT) & \
-	 MC33771C_FAULT1_STATUS_RESET_FLT_MASK)
+#define MC33771C_FAULT1_STATUS_RESET_FLT(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_RESET_FLT_SHIFT) & MC33771C_FAULT1_STATUS_RESET_FLT_MASK)
 
 /* Enumerated value NO_RESET: No reset. */
 #define MC33771C_FAULT1_STATUS_RESET_FLT_NO_RESET_ENUM_VAL (0x0U)
@@ -3944,9 +3673,8 @@ extern "C" {
 /* Field POR: Power on reset indication (POR). Clear on write 0. */
 #define MC33771C_FAULT1_STATUS_POR_SHIFT (0xFU)
 #define MC33771C_FAULT1_STATUS_POR_MASK (0x8000U)
-#define MC33771C_FAULT1_STATUS_POR(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_POR_SHIFT) &       \
-	 MC33771C_FAULT1_STATUS_POR_MASK)
+#define MC33771C_FAULT1_STATUS_POR(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT1_STATUS_POR_SHIFT) & MC33771C_FAULT1_STATUS_POR_MASK)
 
 /* Enumerated value NO_POR: No POR. */
 #define MC33771C_FAULT1_STATUS_POR_NO_POR_ENUM_VAL (0x0U)
@@ -3963,9 +3691,8 @@ extern "C" {
 /* Field FUSE_ERR_FLT: Error in the loading of fuses. */
 #define MC33771C_FAULT2_STATUS_FUSE_ERR_FLT_SHIFT (0x0U)
 #define MC33771C_FAULT2_STATUS_FUSE_ERR_FLT_MASK (0x1U)
-#define MC33771C_FAULT2_STATUS_FUSE_ERR_FLT(x)                                 \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT2_STATUS_FUSE_ERR_FLT_SHIFT) &            \
+#define MC33771C_FAULT2_STATUS_FUSE_ERR_FLT(x)                                                                         \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT2_STATUS_FUSE_ERR_FLT_SHIFT) &                                      \
 	 MC33771C_FAULT2_STATUS_FUSE_ERR_FLT_MASK)
 
 /* Enumerated value NO_ERROR: No error. */
@@ -3978,9 +3705,8 @@ extern "C" {
 /* Field DED_ERR_FLT: ECC error, double error detection. */
 #define MC33771C_FAULT2_STATUS_DED_ERR_FLT_SHIFT (0x1U)
 #define MC33771C_FAULT2_STATUS_DED_ERR_FLT_MASK (0x2U)
-#define MC33771C_FAULT2_STATUS_DED_ERR_FLT(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT2_STATUS_DED_ERR_FLT_SHIFT) &             \
+#define MC33771C_FAULT2_STATUS_DED_ERR_FLT(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT2_STATUS_DED_ERR_FLT_SHIFT) &                                       \
 	 MC33771C_FAULT2_STATUS_DED_ERR_FLT_MASK)
 
 /* Enumerated value NO_ERROR: No error. */
@@ -3993,9 +3719,8 @@ extern "C" {
 /* Field OSC_ERR_FLT: Low-power oscillator error. */
 #define MC33771C_FAULT2_STATUS_OSC_ERR_FLT_SHIFT (0x2U)
 #define MC33771C_FAULT2_STATUS_OSC_ERR_FLT_MASK (0x4U)
-#define MC33771C_FAULT2_STATUS_OSC_ERR_FLT(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT2_STATUS_OSC_ERR_FLT_SHIFT) &             \
+#define MC33771C_FAULT2_STATUS_OSC_ERR_FLT(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT2_STATUS_OSC_ERR_FLT_SHIFT) &                                       \
 	 MC33771C_FAULT2_STATUS_OSC_ERR_FLT_MASK)
 
 /* Enumerated value NO_ERROR: No error. */
@@ -4008,9 +3733,8 @@ extern "C" {
 /* Field CB_OPEN_FLT: Cell balancing open load detection. */
 #define MC33771C_FAULT2_STATUS_CB_OPEN_FLT_SHIFT (0x3U)
 #define MC33771C_FAULT2_STATUS_CB_OPEN_FLT_MASK (0x8U)
-#define MC33771C_FAULT2_STATUS_CB_OPEN_FLT(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT2_STATUS_CB_OPEN_FLT_SHIFT) &             \
+#define MC33771C_FAULT2_STATUS_CB_OPEN_FLT(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT2_STATUS_CB_OPEN_FLT_SHIFT) &                                       \
 	 MC33771C_FAULT2_STATUS_CB_OPEN_FLT_MASK)
 
 /* Enumerated value NO_ERROR: No cell balance open load detected. */
@@ -4023,9 +3747,8 @@ extern "C" {
 /* Field CB_SHORT_FLT: Cell balance short-circuit detection. */
 #define MC33771C_FAULT2_STATUS_CB_SHORT_FLT_SHIFT (0x4U)
 #define MC33771C_FAULT2_STATUS_CB_SHORT_FLT_MASK (0x10U)
-#define MC33771C_FAULT2_STATUS_CB_SHORT_FLT(x)                                 \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT2_STATUS_CB_SHORT_FLT_SHIFT) &            \
+#define MC33771C_FAULT2_STATUS_CB_SHORT_FLT(x)                                                                         \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT2_STATUS_CB_SHORT_FLT_SHIFT) &                                      \
 	 MC33771C_FAULT2_STATUS_CB_SHORT_FLT_MASK)
 
 /* Enumerated value NO_ERROR: No short-circuit detected. */
@@ -4038,9 +3761,8 @@ extern "C" {
 /* Field GPIO_SHORT_FLT: GPIO short detection. */
 #define MC33771C_FAULT2_STATUS_GPIO_SHORT_FLT_SHIFT (0x5U)
 #define MC33771C_FAULT2_STATUS_GPIO_SHORT_FLT_MASK (0x20U)
-#define MC33771C_FAULT2_STATUS_GPIO_SHORT_FLT(x)                               \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT2_STATUS_GPIO_SHORT_FLT_SHIFT) &          \
+#define MC33771C_FAULT2_STATUS_GPIO_SHORT_FLT(x)                                                                       \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT2_STATUS_GPIO_SHORT_FLT_SHIFT) &                                    \
 	 MC33771C_FAULT2_STATUS_GPIO_SHORT_FLT_MASK)
 
 /* Enumerated value NO_ERROR: No short detected. */
@@ -4053,9 +3775,8 @@ extern "C" {
 /* Field AN_OPEN_FLT: Analog inputs open load detection. */
 #define MC33771C_FAULT2_STATUS_AN_OPEN_FLT_SHIFT (0x6U)
 #define MC33771C_FAULT2_STATUS_AN_OPEN_FLT_MASK (0x40U)
-#define MC33771C_FAULT2_STATUS_AN_OPEN_FLT(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT2_STATUS_AN_OPEN_FLT_SHIFT) &             \
+#define MC33771C_FAULT2_STATUS_AN_OPEN_FLT(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT2_STATUS_AN_OPEN_FLT_SHIFT) &                                       \
 	 MC33771C_FAULT2_STATUS_AN_OPEN_FLT_MASK)
 
 /* Enumerated value NO_ERROR: No open load detected. */
@@ -4068,9 +3789,8 @@ extern "C" {
 /* Field IDLE_MODE_FLT: IDLE mode notification. */
 #define MC33771C_FAULT2_STATUS_IDLE_MODE_FLT_SHIFT (0x7U)
 #define MC33771C_FAULT2_STATUS_IDLE_MODE_FLT_MASK (0x80U)
-#define MC33771C_FAULT2_STATUS_IDLE_MODE_FLT(x)                                \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT2_STATUS_IDLE_MODE_FLT_SHIFT) &           \
+#define MC33771C_FAULT2_STATUS_IDLE_MODE_FLT(x)                                                                        \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT2_STATUS_IDLE_MODE_FLT_SHIFT) &                                     \
 	 MC33771C_FAULT2_STATUS_IDLE_MODE_FLT_MASK)
 
 /* Enumerated value NO_NOTIFICATION: No notification. */
@@ -4083,10 +3803,8 @@ extern "C" {
 /* Field IC_TSD_FLT: IC thermal limitation notification. */
 #define MC33771C_FAULT2_STATUS_IC_TSD_FLT_SHIFT (0x8U)
 #define MC33771C_FAULT2_STATUS_IC_TSD_FLT_MASK (0x100U)
-#define MC33771C_FAULT2_STATUS_IC_TSD_FLT(x)                                   \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT2_STATUS_IC_TSD_FLT_SHIFT) &              \
-	 MC33771C_FAULT2_STATUS_IC_TSD_FLT_MASK)
+#define MC33771C_FAULT2_STATUS_IC_TSD_FLT(x)                                                                           \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT2_STATUS_IC_TSD_FLT_SHIFT) & MC33771C_FAULT2_STATUS_IC_TSD_FLT_MASK)
 
 /* Enumerated value NO_ERROR: No thermal limitation detected. */
 #define MC33771C_FAULT2_STATUS_IC_TSD_FLT_NO_ERROR_ENUM_VAL (0x0U)
@@ -4097,9 +3815,8 @@ extern "C" {
 /* Field GND_LOSS_FLT: Loss of ground has been detected on DGND or AGND. */
 #define MC33771C_FAULT2_STATUS_GND_LOSS_FLT_SHIFT (0x9U)
 #define MC33771C_FAULT2_STATUS_GND_LOSS_FLT_MASK (0x200U)
-#define MC33771C_FAULT2_STATUS_GND_LOSS_FLT(x)                                 \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT2_STATUS_GND_LOSS_FLT_SHIFT) &            \
+#define MC33771C_FAULT2_STATUS_GND_LOSS_FLT(x)                                                                         \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT2_STATUS_GND_LOSS_FLT_SHIFT) &                                      \
 	 MC33771C_FAULT2_STATUS_GND_LOSS_FLT_MASK)
 
 /* Enumerated value NO_ERROR: No error. */
@@ -4111,10 +3828,8 @@ extern "C" {
 /* Field ADC1_A_FLT: ADC1_A fault notification. */
 #define MC33771C_FAULT2_STATUS_ADC1_A_FLT_SHIFT (0xAU)
 #define MC33771C_FAULT2_STATUS_ADC1_A_FLT_MASK (0x400U)
-#define MC33771C_FAULT2_STATUS_ADC1_A_FLT(x)                                   \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT2_STATUS_ADC1_A_FLT_SHIFT) &              \
-	 MC33771C_FAULT2_STATUS_ADC1_A_FLT_MASK)
+#define MC33771C_FAULT2_STATUS_ADC1_A_FLT(x)                                                                           \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT2_STATUS_ADC1_A_FLT_SHIFT) & MC33771C_FAULT2_STATUS_ADC1_A_FLT_MASK)
 
 /* Enumerated value NO_ERROR: No fault detected. */
 #define MC33771C_FAULT2_STATUS_ADC1_A_FLT_NO_ERROR_ENUM_VAL (0x0U)
@@ -4126,10 +3841,8 @@ extern "C" {
 /* Field ADC1_B_FLT: ADC1_B fault notification. */
 #define MC33771C_FAULT2_STATUS_ADC1_B_FLT_SHIFT (0xBU)
 #define MC33771C_FAULT2_STATUS_ADC1_B_FLT_MASK (0x800U)
-#define MC33771C_FAULT2_STATUS_ADC1_B_FLT(x)                                   \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT2_STATUS_ADC1_B_FLT_SHIFT) &              \
-	 MC33771C_FAULT2_STATUS_ADC1_B_FLT_MASK)
+#define MC33771C_FAULT2_STATUS_ADC1_B_FLT(x)                                                                           \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT2_STATUS_ADC1_B_FLT_SHIFT) & MC33771C_FAULT2_STATUS_ADC1_B_FLT_MASK)
 
 /* Enumerated value NO_ERROR: No fault detected. */
 #define MC33771C_FAULT2_STATUS_ADC1_B_FLT_NO_ERROR_ENUM_VAL (0x0U)
@@ -4141,9 +3854,8 @@ extern "C" {
 /* Field VANA_UV_FLT: VANA undervoltage notification. */
 #define MC33771C_FAULT2_STATUS_VANA_UV_FLT_SHIFT (0xCU)
 #define MC33771C_FAULT2_STATUS_VANA_UV_FLT_MASK (0x1000U)
-#define MC33771C_FAULT2_STATUS_VANA_UV_FLT(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT2_STATUS_VANA_UV_FLT_SHIFT) &             \
+#define MC33771C_FAULT2_STATUS_VANA_UV_FLT(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT2_STATUS_VANA_UV_FLT_SHIFT) &                                       \
 	 MC33771C_FAULT2_STATUS_VANA_UV_FLT_MASK)
 
 /* Enumerated value NO_ERROR: No undervoltage detected. */
@@ -4155,9 +3867,8 @@ extern "C" {
 /* Field VANA_OV_FLT: VANA overvoltage notification. */
 #define MC33771C_FAULT2_STATUS_VANA_OV_FLT_SHIFT (0xDU)
 #define MC33771C_FAULT2_STATUS_VANA_OV_FLT_MASK (0x2000U)
-#define MC33771C_FAULT2_STATUS_VANA_OV_FLT(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT2_STATUS_VANA_OV_FLT_SHIFT) &             \
+#define MC33771C_FAULT2_STATUS_VANA_OV_FLT(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT2_STATUS_VANA_OV_FLT_SHIFT) &                                       \
 	 MC33771C_FAULT2_STATUS_VANA_OV_FLT_MASK)
 
 /* Enumerated value NO_ERROR: No overvoltage detected. */
@@ -4169,9 +3880,8 @@ extern "C" {
 /* Field VCOM_UV_FLT: VCOM undervoltage notification. */
 #define MC33771C_FAULT2_STATUS_VCOM_UV_FLT_SHIFT (0xEU)
 #define MC33771C_FAULT2_STATUS_VCOM_UV_FLT_MASK (0x4000U)
-#define MC33771C_FAULT2_STATUS_VCOM_UV_FLT(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT2_STATUS_VCOM_UV_FLT_SHIFT) &             \
+#define MC33771C_FAULT2_STATUS_VCOM_UV_FLT(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT2_STATUS_VCOM_UV_FLT_SHIFT) &                                       \
 	 MC33771C_FAULT2_STATUS_VCOM_UV_FLT_MASK)
 
 /* Enumerated value NO_ERROR: No undervoltage detected. */
@@ -4183,9 +3893,8 @@ extern "C" {
 /* Field VCOM_OV_FLT: VCOM overvoltage notification. */
 #define MC33771C_FAULT2_STATUS_VCOM_OV_FLT_SHIFT (0xFU)
 #define MC33771C_FAULT2_STATUS_VCOM_OV_FLT_MASK (0x8000U)
-#define MC33771C_FAULT2_STATUS_VCOM_OV_FLT(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT2_STATUS_VCOM_OV_FLT_SHIFT) &             \
+#define MC33771C_FAULT2_STATUS_VCOM_OV_FLT(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT2_STATUS_VCOM_OV_FLT_SHIFT) &                                       \
 	 MC33771C_FAULT2_STATUS_VCOM_OV_FLT_MASK)
 
 /* Enumerated value NO_ERROR: No overvoltage detected. */
@@ -4204,9 +3913,8 @@ extern "C" {
  * cell balance timer has expired and driver has been shutoff. */
 #define MC33771C_FAULT3_STATUS_EOT_CB1_SHIFT (0x0U)
 #define MC33771C_FAULT3_STATUS_EOT_CB1_MASK (0x1U)
-#define MC33771C_FAULT3_STATUS_EOT_CB1(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB1_SHIFT) &   \
-	 MC33771C_FAULT3_STATUS_EOT_CB1_MASK)
+#define MC33771C_FAULT3_STATUS_EOT_CB1(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB1_SHIFT) & MC33771C_FAULT3_STATUS_EOT_CB1_MASK)
 
 /* Enumerated value NO_TIMEOUT: Cell balance timer has not timed out. */
 #define MC33771C_FAULT3_STATUS_EOT_CB1_NO_TIMEOUT_ENUM_VAL (0x0U)
@@ -4218,9 +3926,8 @@ extern "C" {
  * cell balance timer has expired and driver has been shutoff. */
 #define MC33771C_FAULT3_STATUS_EOT_CB2_SHIFT (0x1U)
 #define MC33771C_FAULT3_STATUS_EOT_CB2_MASK (0x2U)
-#define MC33771C_FAULT3_STATUS_EOT_CB2(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB2_SHIFT) &   \
-	 MC33771C_FAULT3_STATUS_EOT_CB2_MASK)
+#define MC33771C_FAULT3_STATUS_EOT_CB2(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB2_SHIFT) & MC33771C_FAULT3_STATUS_EOT_CB2_MASK)
 
 /* Enumerated value NO_TIMEOUT: Cell balance timer has not timed out. */
 #define MC33771C_FAULT3_STATUS_EOT_CB2_NO_TIMEOUT_ENUM_VAL (0x0U)
@@ -4232,9 +3939,8 @@ extern "C" {
  * cell balance timer has expired and driver has been shutoff. */
 #define MC33771C_FAULT3_STATUS_EOT_CB3_SHIFT (0x2U)
 #define MC33771C_FAULT3_STATUS_EOT_CB3_MASK (0x4U)
-#define MC33771C_FAULT3_STATUS_EOT_CB3(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB3_SHIFT) &   \
-	 MC33771C_FAULT3_STATUS_EOT_CB3_MASK)
+#define MC33771C_FAULT3_STATUS_EOT_CB3(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB3_SHIFT) & MC33771C_FAULT3_STATUS_EOT_CB3_MASK)
 
 /* Enumerated value NO_TIMEOUT: Cell balance timer has not timed out. */
 #define MC33771C_FAULT3_STATUS_EOT_CB3_NO_TIMEOUT_ENUM_VAL (0x0U)
@@ -4246,9 +3952,8 @@ extern "C" {
  * cell balance timer has expired and driver has been shutoff. */
 #define MC33771C_FAULT3_STATUS_EOT_CB4_SHIFT (0x3U)
 #define MC33771C_FAULT3_STATUS_EOT_CB4_MASK (0x8U)
-#define MC33771C_FAULT3_STATUS_EOT_CB4(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB4_SHIFT) &   \
-	 MC33771C_FAULT3_STATUS_EOT_CB4_MASK)
+#define MC33771C_FAULT3_STATUS_EOT_CB4(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB4_SHIFT) & MC33771C_FAULT3_STATUS_EOT_CB4_MASK)
 
 /* Enumerated value NO_TIMEOUT: Cell balance timer has not timed out. */
 #define MC33771C_FAULT3_STATUS_EOT_CB4_NO_TIMEOUT_ENUM_VAL (0x0U)
@@ -4260,9 +3965,8 @@ extern "C" {
  * cell balance timer has expired and driver has been shutoff. */
 #define MC33771C_FAULT3_STATUS_EOT_CB5_SHIFT (0x4U)
 #define MC33771C_FAULT3_STATUS_EOT_CB5_MASK (0x10U)
-#define MC33771C_FAULT3_STATUS_EOT_CB5(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB5_SHIFT) &   \
-	 MC33771C_FAULT3_STATUS_EOT_CB5_MASK)
+#define MC33771C_FAULT3_STATUS_EOT_CB5(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB5_SHIFT) & MC33771C_FAULT3_STATUS_EOT_CB5_MASK)
 
 /* Enumerated value NO_TIMEOUT: Cell balance timer has not timed out. */
 #define MC33771C_FAULT3_STATUS_EOT_CB5_NO_TIMEOUT_ENUM_VAL (0x0U)
@@ -4274,9 +3978,8 @@ extern "C" {
  * cell balance timer has expired and driver has been shutoff. */
 #define MC33771C_FAULT3_STATUS_EOT_CB6_SHIFT (0x5U)
 #define MC33771C_FAULT3_STATUS_EOT_CB6_MASK (0x20U)
-#define MC33771C_FAULT3_STATUS_EOT_CB6(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB6_SHIFT) &   \
-	 MC33771C_FAULT3_STATUS_EOT_CB6_MASK)
+#define MC33771C_FAULT3_STATUS_EOT_CB6(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB6_SHIFT) & MC33771C_FAULT3_STATUS_EOT_CB6_MASK)
 
 /* Enumerated value NO_TIMEOUT: Cell balance timer has not timed out. */
 #define MC33771C_FAULT3_STATUS_EOT_CB6_NO_TIMEOUT_ENUM_VAL (0x0U)
@@ -4288,9 +3991,8 @@ extern "C" {
  * cell balance timer has expired and driver has been shutoff. */
 #define MC33771C_FAULT3_STATUS_EOT_CB7_SHIFT (0x6U)
 #define MC33771C_FAULT3_STATUS_EOT_CB7_MASK (0x40U)
-#define MC33771C_FAULT3_STATUS_EOT_CB7(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB7_SHIFT) &   \
-	 MC33771C_FAULT3_STATUS_EOT_CB7_MASK)
+#define MC33771C_FAULT3_STATUS_EOT_CB7(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB7_SHIFT) & MC33771C_FAULT3_STATUS_EOT_CB7_MASK)
 
 /* Enumerated value NO_TIMEOUT: Cell balance timer has not timed out. */
 #define MC33771C_FAULT3_STATUS_EOT_CB7_NO_TIMEOUT_ENUM_VAL (0x0U)
@@ -4302,9 +4004,8 @@ extern "C" {
  * cell balance timer has expired and driver has been shutoff. */
 #define MC33771C_FAULT3_STATUS_EOT_CB8_SHIFT (0x7U)
 #define MC33771C_FAULT3_STATUS_EOT_CB8_MASK (0x80U)
-#define MC33771C_FAULT3_STATUS_EOT_CB8(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB8_SHIFT) &   \
-	 MC33771C_FAULT3_STATUS_EOT_CB8_MASK)
+#define MC33771C_FAULT3_STATUS_EOT_CB8(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB8_SHIFT) & MC33771C_FAULT3_STATUS_EOT_CB8_MASK)
 
 /* Enumerated value NO_TIMEOUT: Cell balance timer has not timed out. */
 #define MC33771C_FAULT3_STATUS_EOT_CB8_NO_TIMEOUT_ENUM_VAL (0x0U)
@@ -4316,9 +4017,8 @@ extern "C" {
  * cell balance timer has expired and driver has been shutoff. */
 #define MC33771C_FAULT3_STATUS_EOT_CB9_SHIFT (0x8U)
 #define MC33771C_FAULT3_STATUS_EOT_CB9_MASK (0x100U)
-#define MC33771C_FAULT3_STATUS_EOT_CB9(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB9_SHIFT) &   \
-	 MC33771C_FAULT3_STATUS_EOT_CB9_MASK)
+#define MC33771C_FAULT3_STATUS_EOT_CB9(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB9_SHIFT) & MC33771C_FAULT3_STATUS_EOT_CB9_MASK)
 
 /* Enumerated value NO_TIMEOUT: Cell balance timer has not timed out. */
 #define MC33771C_FAULT3_STATUS_EOT_CB9_NO_TIMEOUT_ENUM_VAL (0x0U)
@@ -4330,9 +4030,8 @@ extern "C" {
  * cell balance timer has expired and driver has been shutoff. */
 #define MC33771C_FAULT3_STATUS_EOT_CB10_SHIFT (0x9U)
 #define MC33771C_FAULT3_STATUS_EOT_CB10_MASK (0x200U)
-#define MC33771C_FAULT3_STATUS_EOT_CB10(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB10_SHIFT) &  \
-	 MC33771C_FAULT3_STATUS_EOT_CB10_MASK)
+#define MC33771C_FAULT3_STATUS_EOT_CB10(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB10_SHIFT) & MC33771C_FAULT3_STATUS_EOT_CB10_MASK)
 
 /* Enumerated value NO_TIMEOUT: Cell balance timer has not timed out. */
 #define MC33771C_FAULT3_STATUS_EOT_CB10_NO_TIMEOUT_ENUM_VAL (0x0U)
@@ -4344,9 +4043,8 @@ extern "C" {
  * cell balance timer has expired and driver has been shutoff. */
 #define MC33771C_FAULT3_STATUS_EOT_CB11_SHIFT (0xAU)
 #define MC33771C_FAULT3_STATUS_EOT_CB11_MASK (0x400U)
-#define MC33771C_FAULT3_STATUS_EOT_CB11(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB11_SHIFT) &  \
-	 MC33771C_FAULT3_STATUS_EOT_CB11_MASK)
+#define MC33771C_FAULT3_STATUS_EOT_CB11(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB11_SHIFT) & MC33771C_FAULT3_STATUS_EOT_CB11_MASK)
 
 /* Enumerated value NO_TIMEOUT: Cell balance timer has not timed out. */
 #define MC33771C_FAULT3_STATUS_EOT_CB11_NO_TIMEOUT_ENUM_VAL (0x0U)
@@ -4358,9 +4056,8 @@ extern "C" {
  * cell balance timer has expired and driver has been shutoff. */
 #define MC33771C_FAULT3_STATUS_EOT_CB12_SHIFT (0xBU)
 #define MC33771C_FAULT3_STATUS_EOT_CB12_MASK (0x800U)
-#define MC33771C_FAULT3_STATUS_EOT_CB12(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB12_SHIFT) &  \
-	 MC33771C_FAULT3_STATUS_EOT_CB12_MASK)
+#define MC33771C_FAULT3_STATUS_EOT_CB12(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB12_SHIFT) & MC33771C_FAULT3_STATUS_EOT_CB12_MASK)
 
 /* Enumerated value NO_TIMEOUT: Cell balance timer has not timed out. */
 #define MC33771C_FAULT3_STATUS_EOT_CB12_NO_TIMEOUT_ENUM_VAL (0x0U)
@@ -4372,9 +4069,8 @@ extern "C" {
  * cell balance timer has expired and driver has been shutoff. */
 #define MC33771C_FAULT3_STATUS_EOT_CB13_SHIFT (0xCU)
 #define MC33771C_FAULT3_STATUS_EOT_CB13_MASK (0x1000U)
-#define MC33771C_FAULT3_STATUS_EOT_CB13(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB13_SHIFT) &  \
-	 MC33771C_FAULT3_STATUS_EOT_CB13_MASK)
+#define MC33771C_FAULT3_STATUS_EOT_CB13(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB13_SHIFT) & MC33771C_FAULT3_STATUS_EOT_CB13_MASK)
 
 /* Enumerated value NO_TIMEOUT: Cell balance timer has not timed out. */
 #define MC33771C_FAULT3_STATUS_EOT_CB13_NO_TIMEOUT_ENUM_VAL (0x0U)
@@ -4386,9 +4082,8 @@ extern "C" {
  * cell balance timer has expired and driver has been shutoff. */
 #define MC33771C_FAULT3_STATUS_EOT_CB14_SHIFT (0xDU)
 #define MC33771C_FAULT3_STATUS_EOT_CB14_MASK (0x2000U)
-#define MC33771C_FAULT3_STATUS_EOT_CB14(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB14_SHIFT) &  \
-	 MC33771C_FAULT3_STATUS_EOT_CB14_MASK)
+#define MC33771C_FAULT3_STATUS_EOT_CB14(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_EOT_CB14_SHIFT) & MC33771C_FAULT3_STATUS_EOT_CB14_MASK)
 
 /* Enumerated value NO_TIMEOUT: Cell balance timer has not timed out. */
 #define MC33771C_FAULT3_STATUS_EOT_CB14_NO_TIMEOUT_ENUM_VAL (0x0U)
@@ -4399,9 +4094,8 @@ extern "C" {
 /* Field DIAG_TO_FLT: Timeout of diagnostic state. */
 #define MC33771C_FAULT3_STATUS_DIAG_TO_FLT_SHIFT (0xEU)
 #define MC33771C_FAULT3_STATUS_DIAG_TO_FLT_MASK (0x4000U)
-#define MC33771C_FAULT3_STATUS_DIAG_TO_FLT(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT3_STATUS_DIAG_TO_FLT_SHIFT) &             \
+#define MC33771C_FAULT3_STATUS_DIAG_TO_FLT(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_DIAG_TO_FLT_SHIFT) &                                       \
 	 MC33771C_FAULT3_STATUS_DIAG_TO_FLT_MASK)
 
 /* Enumerated value NO_TIMEOUT: No timeout. */
@@ -4415,10 +4109,8 @@ extern "C" {
  * CC_NB_SAMPLES. */
 #define MC33771C_FAULT3_STATUS_CC_OVR_FLT_SHIFT (0xFU)
 #define MC33771C_FAULT3_STATUS_CC_OVR_FLT_MASK (0x8000U)
-#define MC33771C_FAULT3_STATUS_CC_OVR_FLT(x)                                   \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT3_STATUS_CC_OVR_FLT_SHIFT) &              \
-	 MC33771C_FAULT3_STATUS_CC_OVR_FLT_MASK)
+#define MC33771C_FAULT3_STATUS_CC_OVR_FLT(x)                                                                           \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT3_STATUS_CC_OVR_FLT_SHIFT) & MC33771C_FAULT3_STATUS_CC_OVR_FLT_MASK)
 
 /* Enumerated value NO_ERROR: No error. */
 #define MC33771C_FAULT3_STATUS_CC_OVR_FLT_NO_ERROR_ENUM_VAL (0x0U)
@@ -4437,9 +4129,8 @@ extern "C" {
  * activate the FAULT pin. */
 #define MC33771C_FAULT_MASK1_CT_UV_FLT_MASK_0_F_SHIFT (0x0U)
 #define MC33771C_FAULT_MASK1_CT_UV_FLT_MASK_0_F_MASK (0x1U)
-#define MC33771C_FAULT_MASK1_CT_UV_FLT_MASK_0_F(x)                             \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK1_CT_UV_FLT_MASK_0_F_SHIFT) &        \
+#define MC33771C_FAULT_MASK1_CT_UV_FLT_MASK_0_F(x)                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK1_CT_UV_FLT_MASK_0_F_SHIFT) &                                  \
 	 MC33771C_FAULT_MASK1_CT_UV_FLT_MASK_0_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4452,9 +4143,8 @@ extern "C" {
  * activate the FAULT pin. */
 #define MC33771C_FAULT_MASK1_CT_OV_FLT_MASK_1_F_SHIFT (0x1U)
 #define MC33771C_FAULT_MASK1_CT_OV_FLT_MASK_1_F_MASK (0x2U)
-#define MC33771C_FAULT_MASK1_CT_OV_FLT_MASK_1_F(x)                             \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK1_CT_OV_FLT_MASK_1_F_SHIFT) &        \
+#define MC33771C_FAULT_MASK1_CT_OV_FLT_MASK_1_F(x)                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK1_CT_OV_FLT_MASK_1_F_SHIFT) &                                  \
 	 MC33771C_FAULT_MASK1_CT_OV_FLT_MASK_1_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4467,9 +4157,8 @@ extern "C" {
  * activate the FAULT pin. */
 #define MC33771C_FAULT_MASK1_AN_UT_FLT_MASK_2_F_SHIFT (0x2U)
 #define MC33771C_FAULT_MASK1_AN_UT_FLT_MASK_2_F_MASK (0x4U)
-#define MC33771C_FAULT_MASK1_AN_UT_FLT_MASK_2_F(x)                             \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK1_AN_UT_FLT_MASK_2_F_SHIFT) &        \
+#define MC33771C_FAULT_MASK1_AN_UT_FLT_MASK_2_F(x)                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK1_AN_UT_FLT_MASK_2_F_SHIFT) &                                  \
 	 MC33771C_FAULT_MASK1_AN_UT_FLT_MASK_2_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4482,9 +4171,8 @@ extern "C" {
  * activate the FAULT pin. */
 #define MC33771C_FAULT_MASK1_AN_OT_FLT_MASK_3_F_SHIFT (0x3U)
 #define MC33771C_FAULT_MASK1_AN_OT_FLT_MASK_3_F_MASK (0x8U)
-#define MC33771C_FAULT_MASK1_AN_OT_FLT_MASK_3_F(x)                             \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK1_AN_OT_FLT_MASK_3_F_SHIFT) &        \
+#define MC33771C_FAULT_MASK1_AN_OT_FLT_MASK_3_F(x)                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK1_AN_OT_FLT_MASK_3_F_SHIFT) &                                  \
 	 MC33771C_FAULT_MASK1_AN_OT_FLT_MASK_3_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4497,9 +4185,8 @@ extern "C" {
  * activate the FAULT pin. */
 #define MC33771C_FAULT_MASK1_IS_OC_FLT_MASK_4_F_SHIFT (0x4U)
 #define MC33771C_FAULT_MASK1_IS_OC_FLT_MASK_4_F_MASK (0x10U)
-#define MC33771C_FAULT_MASK1_IS_OC_FLT_MASK_4_F(x)                             \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK1_IS_OC_FLT_MASK_4_F_SHIFT) &        \
+#define MC33771C_FAULT_MASK1_IS_OC_FLT_MASK_4_F(x)                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK1_IS_OC_FLT_MASK_4_F_SHIFT) &                                  \
 	 MC33771C_FAULT_MASK1_IS_OC_FLT_MASK_4_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4512,9 +4199,8 @@ extern "C" {
  * activate the FAULT pin. */
 #define MC33771C_FAULT_MASK1_IS_OL_FLT_MASK_5_F_SHIFT (0x5U)
 #define MC33771C_FAULT_MASK1_IS_OL_FLT_MASK_5_F_MASK (0x20U)
-#define MC33771C_FAULT_MASK1_IS_OL_FLT_MASK_5_F(x)                             \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK1_IS_OL_FLT_MASK_5_F_SHIFT) &        \
+#define MC33771C_FAULT_MASK1_IS_OL_FLT_MASK_5_F(x)                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK1_IS_OL_FLT_MASK_5_F_SHIFT) &                                  \
 	 MC33771C_FAULT_MASK1_IS_OL_FLT_MASK_5_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4527,9 +4213,8 @@ extern "C" {
  * to activate the FAULT pin. */
 #define MC33771C_FAULT_MASK1_I2C_ERR_FLT_MASK_6_F_SHIFT (0x6U)
 #define MC33771C_FAULT_MASK1_I2C_ERR_FLT_MASK_6_F_MASK (0x40U)
-#define MC33771C_FAULT_MASK1_I2C_ERR_FLT_MASK_6_F(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK1_I2C_ERR_FLT_MASK_6_F_SHIFT) &      \
+#define MC33771C_FAULT_MASK1_I2C_ERR_FLT_MASK_6_F(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK1_I2C_ERR_FLT_MASK_6_F_SHIFT) &                                \
 	 MC33771C_FAULT_MASK1_I2C_ERR_FLT_MASK_6_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4542,9 +4227,8 @@ extern "C" {
  * FAULT1_STATUS to activate the FAULT pin. */
 #define MC33771C_FAULT_MASK1_GPIO0_WUP_FLT_MASK_7_F_SHIFT (0x7U)
 #define MC33771C_FAULT_MASK1_GPIO0_WUP_FLT_MASK_7_F_MASK (0x80U)
-#define MC33771C_FAULT_MASK1_GPIO0_WUP_FLT_MASK_7_F(x)                         \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK1_GPIO0_WUP_FLT_MASK_7_F_SHIFT) &    \
+#define MC33771C_FAULT_MASK1_GPIO0_WUP_FLT_MASK_7_F(x)                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK1_GPIO0_WUP_FLT_MASK_7_F_SHIFT) &                              \
 	 MC33771C_FAULT_MASK1_GPIO0_WUP_FLT_MASK_7_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4557,9 +4241,8 @@ extern "C" {
  * to activate the FAULT pin. */
 #define MC33771C_FAULT_MASK1_CSB_WUP_FLT_MASK_8_F_SHIFT (0x8U)
 #define MC33771C_FAULT_MASK1_CSB_WUP_FLT_MASK_8_F_MASK (0x100U)
-#define MC33771C_FAULT_MASK1_CSB_WUP_FLT_MASK_8_F(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK1_CSB_WUP_FLT_MASK_8_F_SHIFT) &      \
+#define MC33771C_FAULT_MASK1_CSB_WUP_FLT_MASK_8_F(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK1_CSB_WUP_FLT_MASK_8_F_SHIFT) &                                \
 	 MC33771C_FAULT_MASK1_CSB_WUP_FLT_MASK_8_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4572,9 +4255,8 @@ extern "C" {
  * to activate the FAULT pin. */
 #define MC33771C_FAULT_MASK1_COM_ERR_FLT_MASK_9_F_SHIFT (0x9U)
 #define MC33771C_FAULT_MASK1_COM_ERR_FLT_MASK_9_F_MASK (0x200U)
-#define MC33771C_FAULT_MASK1_COM_ERR_FLT_MASK_9_F(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK1_COM_ERR_FLT_MASK_9_F_SHIFT) &      \
+#define MC33771C_FAULT_MASK1_COM_ERR_FLT_MASK_9_F(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK1_COM_ERR_FLT_MASK_9_F_SHIFT) &                                \
 	 MC33771C_FAULT_MASK1_COM_ERR_FLT_MASK_9_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4587,9 +4269,8 @@ extern "C" {
  * FAULT1_STATUS to activate the FAULT pin. */
 #define MC33771C_FAULT_MASK1_COM_LOSS_FLT_MASK_10_F_SHIFT (0xAU)
 #define MC33771C_FAULT_MASK1_COM_LOSS_FLT_MASK_10_F_MASK (0x400U)
-#define MC33771C_FAULT_MASK1_COM_LOSS_FLT_MASK_10_F(x)                         \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK1_COM_LOSS_FLT_MASK_10_F_SHIFT) &    \
+#define MC33771C_FAULT_MASK1_COM_LOSS_FLT_MASK_10_F(x)                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK1_COM_LOSS_FLT_MASK_10_F_SHIFT) &                              \
 	 MC33771C_FAULT_MASK1_COM_LOSS_FLT_MASK_10_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4602,9 +4283,8 @@ extern "C" {
  * to activate the FAULT pin. */
 #define MC33771C_FAULT_MASK1_VPWR_LV_FLT_MASK_11_F_SHIFT (0xBU)
 #define MC33771C_FAULT_MASK1_VPWR_LV_FLT_MASK_11_F_MASK (0x800U)
-#define MC33771C_FAULT_MASK1_VPWR_LV_FLT_MASK_11_F(x)                          \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK1_VPWR_LV_FLT_MASK_11_F_SHIFT) &     \
+#define MC33771C_FAULT_MASK1_VPWR_LV_FLT_MASK_11_F(x)                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK1_VPWR_LV_FLT_MASK_11_F_SHIFT) &                               \
 	 MC33771C_FAULT_MASK1_VPWR_LV_FLT_MASK_11_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4617,9 +4297,8 @@ extern "C" {
  * to activate the FAULT pin. */
 #define MC33771C_FAULT_MASK1_VPWR_OV_FLT_MASK_12_F_SHIFT (0xCU)
 #define MC33771C_FAULT_MASK1_VPWR_OV_FLT_MASK_12_F_MASK (0x1000U)
-#define MC33771C_FAULT_MASK1_VPWR_OV_FLT_MASK_12_F(x)                          \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK1_VPWR_OV_FLT_MASK_12_F_SHIFT) &     \
+#define MC33771C_FAULT_MASK1_VPWR_OV_FLT_MASK_12_F(x)                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK1_VPWR_OV_FLT_MASK_12_F_SHIFT) &                               \
 	 MC33771C_FAULT_MASK1_VPWR_OV_FLT_MASK_12_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4638,9 +4317,8 @@ extern "C" {
  * to activate the FAULT pin. */
 #define MC33771C_FAULT_MASK2_FUSE_ERR_FLT_MASK_0_F_SHIFT (0x0U)
 #define MC33771C_FAULT_MASK2_FUSE_ERR_FLT_MASK_0_F_MASK (0x1U)
-#define MC33771C_FAULT_MASK2_FUSE_ERR_FLT_MASK_0_F(x)                          \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK2_FUSE_ERR_FLT_MASK_0_F_SHIFT) &     \
+#define MC33771C_FAULT_MASK2_FUSE_ERR_FLT_MASK_0_F(x)                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK2_FUSE_ERR_FLT_MASK_0_F_SHIFT) &                               \
 	 MC33771C_FAULT_MASK2_FUSE_ERR_FLT_MASK_0_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4653,9 +4331,8 @@ extern "C" {
  * to activate the FAULT pin. */
 #define MC33771C_FAULT_MASK2_DED_ERR_FLT_MASK_1_F_SHIFT (0x1U)
 #define MC33771C_FAULT_MASK2_DED_ERR_FLT_MASK_1_F_MASK (0x2U)
-#define MC33771C_FAULT_MASK2_DED_ERR_FLT_MASK_1_F(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK2_DED_ERR_FLT_MASK_1_F_SHIFT) &      \
+#define MC33771C_FAULT_MASK2_DED_ERR_FLT_MASK_1_F(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK2_DED_ERR_FLT_MASK_1_F_SHIFT) &                                \
 	 MC33771C_FAULT_MASK2_DED_ERR_FLT_MASK_1_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4668,9 +4345,8 @@ extern "C" {
  * to activate the FAULT pin. */
 #define MC33771C_FAULT_MASK2_OSC_ERR_FLT_MASK_2_F_SHIFT (0x2U)
 #define MC33771C_FAULT_MASK2_OSC_ERR_FLT_MASK_2_F_MASK (0x4U)
-#define MC33771C_FAULT_MASK2_OSC_ERR_FLT_MASK_2_F(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK2_OSC_ERR_FLT_MASK_2_F_SHIFT) &      \
+#define MC33771C_FAULT_MASK2_OSC_ERR_FLT_MASK_2_F(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK2_OSC_ERR_FLT_MASK_2_F_SHIFT) &                                \
 	 MC33771C_FAULT_MASK2_OSC_ERR_FLT_MASK_2_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4683,9 +4359,8 @@ extern "C" {
  * to activate the FAULT pin. */
 #define MC33771C_FAULT_MASK2_CB_OPEN_FLT_MASK_3_F_SHIFT (0x3U)
 #define MC33771C_FAULT_MASK2_CB_OPEN_FLT_MASK_3_F_MASK (0x8U)
-#define MC33771C_FAULT_MASK2_CB_OPEN_FLT_MASK_3_F(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK2_CB_OPEN_FLT_MASK_3_F_SHIFT) &      \
+#define MC33771C_FAULT_MASK2_CB_OPEN_FLT_MASK_3_F(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK2_CB_OPEN_FLT_MASK_3_F_SHIFT) &                                \
 	 MC33771C_FAULT_MASK2_CB_OPEN_FLT_MASK_3_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4698,9 +4373,8 @@ extern "C" {
  * to activate the FAULT pin. */
 #define MC33771C_FAULT_MASK2_CB_SHORT_FLT_MASK_4_F_SHIFT (0x4U)
 #define MC33771C_FAULT_MASK2_CB_SHORT_FLT_MASK_4_F_MASK (0x10U)
-#define MC33771C_FAULT_MASK2_CB_SHORT_FLT_MASK_4_F(x)                          \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK2_CB_SHORT_FLT_MASK_4_F_SHIFT) &     \
+#define MC33771C_FAULT_MASK2_CB_SHORT_FLT_MASK_4_F(x)                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK2_CB_SHORT_FLT_MASK_4_F_SHIFT) &                               \
 	 MC33771C_FAULT_MASK2_CB_SHORT_FLT_MASK_4_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4713,9 +4387,8 @@ extern "C" {
  * FAULT2_STATUS to activate the FAULT pin. */
 #define MC33771C_FAULT_MASK2_GPIO_SHORT_FLT_MASK_5_F_SHIFT (0x5U)
 #define MC33771C_FAULT_MASK2_GPIO_SHORT_FLT_MASK_5_F_MASK (0x20U)
-#define MC33771C_FAULT_MASK2_GPIO_SHORT_FLT_MASK_5_F(x)                        \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK2_GPIO_SHORT_FLT_MASK_5_F_SHIFT) &   \
+#define MC33771C_FAULT_MASK2_GPIO_SHORT_FLT_MASK_5_F(x)                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK2_GPIO_SHORT_FLT_MASK_5_F_SHIFT) &                             \
 	 MC33771C_FAULT_MASK2_GPIO_SHORT_FLT_MASK_5_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4728,9 +4401,8 @@ extern "C" {
  * to activate the FAULT pin. */
 #define MC33771C_FAULT_MASK2_AN_OPEN_FLT_MASK_6_F_SHIFT (0x6U)
 #define MC33771C_FAULT_MASK2_AN_OPEN_FLT_MASK_6_F_MASK (0x40U)
-#define MC33771C_FAULT_MASK2_AN_OPEN_FLT_MASK_6_F(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK2_AN_OPEN_FLT_MASK_6_F_SHIFT) &      \
+#define MC33771C_FAULT_MASK2_AN_OPEN_FLT_MASK_6_F(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK2_AN_OPEN_FLT_MASK_6_F_SHIFT) &                                \
 	 MC33771C_FAULT_MASK2_AN_OPEN_FLT_MASK_6_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4743,9 +4415,8 @@ extern "C" {
  * to activate the FAULT pin. */
 #define MC33771C_FAULT_MASK2_GND_LOSS_FLT_MASK_9_F_SHIFT (0x9U)
 #define MC33771C_FAULT_MASK2_GND_LOSS_FLT_MASK_9_F_MASK (0x200U)
-#define MC33771C_FAULT_MASK2_GND_LOSS_FLT_MASK_9_F(x)                          \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK2_GND_LOSS_FLT_MASK_9_F_SHIFT) &     \
+#define MC33771C_FAULT_MASK2_GND_LOSS_FLT_MASK_9_F(x)                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK2_GND_LOSS_FLT_MASK_9_F_SHIFT) &                               \
 	 MC33771C_FAULT_MASK2_GND_LOSS_FLT_MASK_9_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4758,9 +4429,8 @@ extern "C" {
  * to activate the FAULT pin. */
 #define MC33771C_FAULT_MASK2_ADC1_A_FLT_MASK_10_F_SHIFT (0xAU)
 #define MC33771C_FAULT_MASK2_ADC1_A_FLT_MASK_10_F_MASK (0x400U)
-#define MC33771C_FAULT_MASK2_ADC1_A_FLT_MASK_10_F(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK2_ADC1_A_FLT_MASK_10_F_SHIFT) &      \
+#define MC33771C_FAULT_MASK2_ADC1_A_FLT_MASK_10_F(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK2_ADC1_A_FLT_MASK_10_F_SHIFT) &                                \
 	 MC33771C_FAULT_MASK2_ADC1_A_FLT_MASK_10_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4773,9 +4443,8 @@ extern "C" {
  * to activate the FAULT pin. */
 #define MC33771C_FAULT_MASK2_ADC1_B_FLT_MASK_11_F_SHIFT (0xBU)
 #define MC33771C_FAULT_MASK2_ADC1_B_FLT_MASK_11_F_MASK (0x800U)
-#define MC33771C_FAULT_MASK2_ADC1_B_FLT_MASK_11_F(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK2_ADC1_B_FLT_MASK_11_F_SHIFT) &      \
+#define MC33771C_FAULT_MASK2_ADC1_B_FLT_MASK_11_F(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK2_ADC1_B_FLT_MASK_11_F_SHIFT) &                                \
 	 MC33771C_FAULT_MASK2_ADC1_B_FLT_MASK_11_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4788,9 +4457,8 @@ extern "C" {
  * to activate the FAULT pin. */
 #define MC33771C_FAULT_MASK2_VANA_UV_FLT_MASK_12_F_SHIFT (0xCU)
 #define MC33771C_FAULT_MASK2_VANA_UV_FLT_MASK_12_F_MASK (0x1000U)
-#define MC33771C_FAULT_MASK2_VANA_UV_FLT_MASK_12_F(x)                          \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK2_VANA_UV_FLT_MASK_12_F_SHIFT) &     \
+#define MC33771C_FAULT_MASK2_VANA_UV_FLT_MASK_12_F(x)                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK2_VANA_UV_FLT_MASK_12_F_SHIFT) &                               \
 	 MC33771C_FAULT_MASK2_VANA_UV_FLT_MASK_12_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4803,9 +4471,8 @@ extern "C" {
  * to activate the FAULT pin. */
 #define MC33771C_FAULT_MASK2_VANA_OV_FLT_MASK_13_F_SHIFT (0xDU)
 #define MC33771C_FAULT_MASK2_VANA_OV_FLT_MASK_13_F_MASK (0x2000U)
-#define MC33771C_FAULT_MASK2_VANA_OV_FLT_MASK_13_F(x)                          \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK2_VANA_OV_FLT_MASK_13_F_SHIFT) &     \
+#define MC33771C_FAULT_MASK2_VANA_OV_FLT_MASK_13_F(x)                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK2_VANA_OV_FLT_MASK_13_F_SHIFT) &                               \
 	 MC33771C_FAULT_MASK2_VANA_OV_FLT_MASK_13_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4818,9 +4485,8 @@ extern "C" {
  * to activate the FAULT pin. */
 #define MC33771C_FAULT_MASK2_VCOM_UV_FLT_MASK_14_F_SHIFT (0xEU)
 #define MC33771C_FAULT_MASK2_VCOM_UV_FLT_MASK_14_F_MASK (0x4000U)
-#define MC33771C_FAULT_MASK2_VCOM_UV_FLT_MASK_14_F(x)                          \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK2_VCOM_UV_FLT_MASK_14_F_SHIFT) &     \
+#define MC33771C_FAULT_MASK2_VCOM_UV_FLT_MASK_14_F(x)                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK2_VCOM_UV_FLT_MASK_14_F_SHIFT) &                               \
 	 MC33771C_FAULT_MASK2_VCOM_UV_FLT_MASK_14_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4833,9 +4499,8 @@ extern "C" {
  * to activate the FAULT pin. */
 #define MC33771C_FAULT_MASK2_VCOM_OV_FLT_MASK_15_F_SHIFT (0xFU)
 #define MC33771C_FAULT_MASK2_VCOM_OV_FLT_MASK_15_F_MASK (0x8000U)
-#define MC33771C_FAULT_MASK2_VCOM_OV_FLT_MASK_15_F(x)                          \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK2_VCOM_OV_FLT_MASK_15_F_SHIFT) &     \
+#define MC33771C_FAULT_MASK2_VCOM_OV_FLT_MASK_15_F(x)                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK2_VCOM_OV_FLT_MASK_15_F_SHIFT) &                               \
 	 MC33771C_FAULT_MASK2_VCOM_OV_FLT_MASK_15_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4854,9 +4519,8 @@ extern "C" {
  * activate the FAULT pin. */
 #define MC33771C_FAULT_MASK3_EOT_CB1_MASK_0_F_SHIFT (0x0U)
 #define MC33771C_FAULT_MASK3_EOT_CB1_MASK_0_F_MASK (0x1U)
-#define MC33771C_FAULT_MASK3_EOT_CB1_MASK_0_F(x)                               \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK3_EOT_CB1_MASK_0_F_SHIFT) &          \
+#define MC33771C_FAULT_MASK3_EOT_CB1_MASK_0_F(x)                                                                       \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK3_EOT_CB1_MASK_0_F_SHIFT) &                                    \
 	 MC33771C_FAULT_MASK3_EOT_CB1_MASK_0_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4869,9 +4533,8 @@ extern "C" {
  * activate the FAULT pin. */
 #define MC33771C_FAULT_MASK3_EOT_CB2_MASK_1_F_SHIFT (0x1U)
 #define MC33771C_FAULT_MASK3_EOT_CB2_MASK_1_F_MASK (0x2U)
-#define MC33771C_FAULT_MASK3_EOT_CB2_MASK_1_F(x)                               \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK3_EOT_CB2_MASK_1_F_SHIFT) &          \
+#define MC33771C_FAULT_MASK3_EOT_CB2_MASK_1_F(x)                                                                       \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK3_EOT_CB2_MASK_1_F_SHIFT) &                                    \
 	 MC33771C_FAULT_MASK3_EOT_CB2_MASK_1_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4884,9 +4547,8 @@ extern "C" {
  * activate the FAULT pin. */
 #define MC33771C_FAULT_MASK3_EOT_CB3_MASK_2_F_SHIFT (0x2U)
 #define MC33771C_FAULT_MASK3_EOT_CB3_MASK_2_F_MASK (0x4U)
-#define MC33771C_FAULT_MASK3_EOT_CB3_MASK_2_F(x)                               \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK3_EOT_CB3_MASK_2_F_SHIFT) &          \
+#define MC33771C_FAULT_MASK3_EOT_CB3_MASK_2_F(x)                                                                       \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK3_EOT_CB3_MASK_2_F_SHIFT) &                                    \
 	 MC33771C_FAULT_MASK3_EOT_CB3_MASK_2_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4899,9 +4561,8 @@ extern "C" {
  * activate the FAULT pin. */
 #define MC33771C_FAULT_MASK3_EOT_CB4_MASK_3_F_SHIFT (0x3U)
 #define MC33771C_FAULT_MASK3_EOT_CB4_MASK_3_F_MASK (0x8U)
-#define MC33771C_FAULT_MASK3_EOT_CB4_MASK_3_F(x)                               \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK3_EOT_CB4_MASK_3_F_SHIFT) &          \
+#define MC33771C_FAULT_MASK3_EOT_CB4_MASK_3_F(x)                                                                       \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK3_EOT_CB4_MASK_3_F_SHIFT) &                                    \
 	 MC33771C_FAULT_MASK3_EOT_CB4_MASK_3_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4914,9 +4575,8 @@ extern "C" {
  * activate the FAULT pin. */
 #define MC33771C_FAULT_MASK3_EOT_CB5_MASK_4_F_SHIFT (0x4U)
 #define MC33771C_FAULT_MASK3_EOT_CB5_MASK_4_F_MASK (0x10U)
-#define MC33771C_FAULT_MASK3_EOT_CB5_MASK_4_F(x)                               \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK3_EOT_CB5_MASK_4_F_SHIFT) &          \
+#define MC33771C_FAULT_MASK3_EOT_CB5_MASK_4_F(x)                                                                       \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK3_EOT_CB5_MASK_4_F_SHIFT) &                                    \
 	 MC33771C_FAULT_MASK3_EOT_CB5_MASK_4_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4929,9 +4589,8 @@ extern "C" {
  * activate the FAULT pin. */
 #define MC33771C_FAULT_MASK3_EOT_CB6_MASK_5_F_SHIFT (0x5U)
 #define MC33771C_FAULT_MASK3_EOT_CB6_MASK_5_F_MASK (0x20U)
-#define MC33771C_FAULT_MASK3_EOT_CB6_MASK_5_F(x)                               \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK3_EOT_CB6_MASK_5_F_SHIFT) &          \
+#define MC33771C_FAULT_MASK3_EOT_CB6_MASK_5_F(x)                                                                       \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK3_EOT_CB6_MASK_5_F_SHIFT) &                                    \
 	 MC33771C_FAULT_MASK3_EOT_CB6_MASK_5_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4944,9 +4603,8 @@ extern "C" {
  * activate the FAULT pin. */
 #define MC33771C_FAULT_MASK3_EOT_CB7_MASK_6_F_SHIFT (0x6U)
 #define MC33771C_FAULT_MASK3_EOT_CB7_MASK_6_F_MASK (0x40U)
-#define MC33771C_FAULT_MASK3_EOT_CB7_MASK_6_F(x)                               \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK3_EOT_CB7_MASK_6_F_SHIFT) &          \
+#define MC33771C_FAULT_MASK3_EOT_CB7_MASK_6_F(x)                                                                       \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK3_EOT_CB7_MASK_6_F_SHIFT) &                                    \
 	 MC33771C_FAULT_MASK3_EOT_CB7_MASK_6_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4959,9 +4617,8 @@ extern "C" {
  * activate the FAULT pin. */
 #define MC33771C_FAULT_MASK3_EOT_CB8_MASK_7_F_SHIFT (0x7U)
 #define MC33771C_FAULT_MASK3_EOT_CB8_MASK_7_F_MASK (0x80U)
-#define MC33771C_FAULT_MASK3_EOT_CB8_MASK_7_F(x)                               \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK3_EOT_CB8_MASK_7_F_SHIFT) &          \
+#define MC33771C_FAULT_MASK3_EOT_CB8_MASK_7_F(x)                                                                       \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK3_EOT_CB8_MASK_7_F_SHIFT) &                                    \
 	 MC33771C_FAULT_MASK3_EOT_CB8_MASK_7_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4974,9 +4631,8 @@ extern "C" {
  * activate the FAULT pin. */
 #define MC33771C_FAULT_MASK3_EOT_CB9_MASK_8_F_SHIFT (0x8U)
 #define MC33771C_FAULT_MASK3_EOT_CB9_MASK_8_F_MASK (0x100U)
-#define MC33771C_FAULT_MASK3_EOT_CB9_MASK_8_F(x)                               \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK3_EOT_CB9_MASK_8_F_SHIFT) &          \
+#define MC33771C_FAULT_MASK3_EOT_CB9_MASK_8_F(x)                                                                       \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK3_EOT_CB9_MASK_8_F_SHIFT) &                                    \
 	 MC33771C_FAULT_MASK3_EOT_CB9_MASK_8_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -4989,9 +4645,8 @@ extern "C" {
  * activate the FAULT pin. */
 #define MC33771C_FAULT_MASK3_EOT_CB10_MASK_9_F_SHIFT (0x9U)
 #define MC33771C_FAULT_MASK3_EOT_CB10_MASK_9_F_MASK (0x200U)
-#define MC33771C_FAULT_MASK3_EOT_CB10_MASK_9_F(x)                              \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK3_EOT_CB10_MASK_9_F_SHIFT) &         \
+#define MC33771C_FAULT_MASK3_EOT_CB10_MASK_9_F(x)                                                                      \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK3_EOT_CB10_MASK_9_F_SHIFT) &                                   \
 	 MC33771C_FAULT_MASK3_EOT_CB10_MASK_9_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -5004,9 +4659,8 @@ extern "C" {
  * activate the FAULT pin. */
 #define MC33771C_FAULT_MASK3_EOT_CB11_MASK_10_F_SHIFT (0xAU)
 #define MC33771C_FAULT_MASK3_EOT_CB11_MASK_10_F_MASK (0x400U)
-#define MC33771C_FAULT_MASK3_EOT_CB11_MASK_10_F(x)                             \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK3_EOT_CB11_MASK_10_F_SHIFT) &        \
+#define MC33771C_FAULT_MASK3_EOT_CB11_MASK_10_F(x)                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK3_EOT_CB11_MASK_10_F_SHIFT) &                                  \
 	 MC33771C_FAULT_MASK3_EOT_CB11_MASK_10_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -5019,9 +4673,8 @@ extern "C" {
  * activate the FAULT pin. */
 #define MC33771C_FAULT_MASK3_EOT_CB12_MASK_11_F_SHIFT (0xBU)
 #define MC33771C_FAULT_MASK3_EOT_CB12_MASK_11_F_MASK (0x800U)
-#define MC33771C_FAULT_MASK3_EOT_CB12_MASK_11_F(x)                             \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK3_EOT_CB12_MASK_11_F_SHIFT) &        \
+#define MC33771C_FAULT_MASK3_EOT_CB12_MASK_11_F(x)                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK3_EOT_CB12_MASK_11_F_SHIFT) &                                  \
 	 MC33771C_FAULT_MASK3_EOT_CB12_MASK_11_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -5034,9 +4687,8 @@ extern "C" {
  * activate the FAULT pin. */
 #define MC33771C_FAULT_MASK3_EOT_CB13_MASK_12_F_SHIFT (0xCU)
 #define MC33771C_FAULT_MASK3_EOT_CB13_MASK_12_F_MASK (0x1000U)
-#define MC33771C_FAULT_MASK3_EOT_CB13_MASK_12_F(x)                             \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK3_EOT_CB13_MASK_12_F_SHIFT) &        \
+#define MC33771C_FAULT_MASK3_EOT_CB13_MASK_12_F(x)                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK3_EOT_CB13_MASK_12_F_SHIFT) &                                  \
 	 MC33771C_FAULT_MASK3_EOT_CB13_MASK_12_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -5049,9 +4701,8 @@ extern "C" {
  * activate the FAULT pin. */
 #define MC33771C_FAULT_MASK3_EOT_CB14_MASK_13_F_SHIFT (0xDU)
 #define MC33771C_FAULT_MASK3_EOT_CB14_MASK_13_F_MASK (0x2000U)
-#define MC33771C_FAULT_MASK3_EOT_CB14_MASK_13_F(x)                             \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK3_EOT_CB14_MASK_13_F_SHIFT) &        \
+#define MC33771C_FAULT_MASK3_EOT_CB14_MASK_13_F(x)                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK3_EOT_CB14_MASK_13_F_SHIFT) &                                  \
 	 MC33771C_FAULT_MASK3_EOT_CB14_MASK_13_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -5064,9 +4715,8 @@ extern "C" {
  * to activate the FAULT pin. */
 #define MC33771C_FAULT_MASK3_DIAG_TO_FLT_MASK_14_F_SHIFT (0xEU)
 #define MC33771C_FAULT_MASK3_DIAG_TO_FLT_MASK_14_F_MASK (0x4000U)
-#define MC33771C_FAULT_MASK3_DIAG_TO_FLT_MASK_14_F(x)                          \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK3_DIAG_TO_FLT_MASK_14_F_SHIFT) &     \
+#define MC33771C_FAULT_MASK3_DIAG_TO_FLT_MASK_14_F(x)                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK3_DIAG_TO_FLT_MASK_14_F_SHIFT) &                               \
 	 MC33771C_FAULT_MASK3_DIAG_TO_FLT_MASK_14_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -5079,9 +4729,8 @@ extern "C" {
  * to activate the FAULT pin. */
 #define MC33771C_FAULT_MASK3_CC_OVR_FLT_MASK_15_F_SHIFT (0xFU)
 #define MC33771C_FAULT_MASK3_CC_OVR_FLT_MASK_15_F_MASK (0x8000U)
-#define MC33771C_FAULT_MASK3_CC_OVR_FLT_MASK_15_F(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FAULT_MASK3_CC_OVR_FLT_MASK_15_F_SHIFT) &      \
+#define MC33771C_FAULT_MASK3_CC_OVR_FLT_MASK_15_F(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_FAULT_MASK3_CC_OVR_FLT_MASK_15_F_SHIFT) &                                \
 	 MC33771C_FAULT_MASK3_CC_OVR_FLT_MASK_15_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag activates the FAULT pin. */
@@ -5100,9 +4749,8 @@ extern "C" {
  * wake-up the device. */
 #define MC33771C_WAKEUP_MASK1_CT_UV_FLT_MASK_0_F_SHIFT (0x0U)
 #define MC33771C_WAKEUP_MASK1_CT_UV_FLT_MASK_0_F_MASK (0x1U)
-#define MC33771C_WAKEUP_MASK1_CT_UV_FLT_MASK_0_F(x)                            \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK1_CT_UV_FLT_MASK_0_F_SHIFT) &       \
+#define MC33771C_WAKEUP_MASK1_CT_UV_FLT_MASK_0_F(x)                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK1_CT_UV_FLT_MASK_0_F_SHIFT) &                                 \
 	 MC33771C_WAKEUP_MASK1_CT_UV_FLT_MASK_0_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5115,9 +4763,8 @@ extern "C" {
  * wake-up the device. */
 #define MC33771C_WAKEUP_MASK1_CT_OV_FLT_MASK_1_F_SHIFT (0x1U)
 #define MC33771C_WAKEUP_MASK1_CT_OV_FLT_MASK_1_F_MASK (0x2U)
-#define MC33771C_WAKEUP_MASK1_CT_OV_FLT_MASK_1_F(x)                            \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK1_CT_OV_FLT_MASK_1_F_SHIFT) &       \
+#define MC33771C_WAKEUP_MASK1_CT_OV_FLT_MASK_1_F(x)                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK1_CT_OV_FLT_MASK_1_F_SHIFT) &                                 \
 	 MC33771C_WAKEUP_MASK1_CT_OV_FLT_MASK_1_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5130,9 +4777,8 @@ extern "C" {
  * wake-up the device. */
 #define MC33771C_WAKEUP_MASK1_AN_UT_FLT_MASK_2_F_SHIFT (0x2U)
 #define MC33771C_WAKEUP_MASK1_AN_UT_FLT_MASK_2_F_MASK (0x4U)
-#define MC33771C_WAKEUP_MASK1_AN_UT_FLT_MASK_2_F(x)                            \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK1_AN_UT_FLT_MASK_2_F_SHIFT) &       \
+#define MC33771C_WAKEUP_MASK1_AN_UT_FLT_MASK_2_F(x)                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK1_AN_UT_FLT_MASK_2_F_SHIFT) &                                 \
 	 MC33771C_WAKEUP_MASK1_AN_UT_FLT_MASK_2_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5145,9 +4791,8 @@ extern "C" {
  * wake-up the device. */
 #define MC33771C_WAKEUP_MASK1_AN_OT_FLT_MASK_3_F_SHIFT (0x3U)
 #define MC33771C_WAKEUP_MASK1_AN_OT_FLT_MASK_3_F_MASK (0x8U)
-#define MC33771C_WAKEUP_MASK1_AN_OT_FLT_MASK_3_F(x)                            \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK1_AN_OT_FLT_MASK_3_F_SHIFT) &       \
+#define MC33771C_WAKEUP_MASK1_AN_OT_FLT_MASK_3_F(x)                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK1_AN_OT_FLT_MASK_3_F_SHIFT) &                                 \
 	 MC33771C_WAKEUP_MASK1_AN_OT_FLT_MASK_3_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5160,9 +4805,8 @@ extern "C" {
  * wake-up the device. */
 #define MC33771C_WAKEUP_MASK1_IS_OC_FLT_MASK_4_F_SHIFT (0x4U)
 #define MC33771C_WAKEUP_MASK1_IS_OC_FLT_MASK_4_F_MASK (0x10U)
-#define MC33771C_WAKEUP_MASK1_IS_OC_FLT_MASK_4_F(x)                            \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK1_IS_OC_FLT_MASK_4_F_SHIFT) &       \
+#define MC33771C_WAKEUP_MASK1_IS_OC_FLT_MASK_4_F(x)                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK1_IS_OC_FLT_MASK_4_F_SHIFT) &                                 \
 	 MC33771C_WAKEUP_MASK1_IS_OC_FLT_MASK_4_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5175,9 +4819,8 @@ extern "C" {
  * FAULT1_STATUS to wake-up the device. */
 #define MC33771C_WAKEUP_MASK1_GPIO0_WUP_FLT_MASK_7_F_SHIFT (0x7U)
 #define MC33771C_WAKEUP_MASK1_GPIO0_WUP_FLT_MASK_7_F_MASK (0x80U)
-#define MC33771C_WAKEUP_MASK1_GPIO0_WUP_FLT_MASK_7_F(x)                        \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK1_GPIO0_WUP_FLT_MASK_7_F_SHIFT) &   \
+#define MC33771C_WAKEUP_MASK1_GPIO0_WUP_FLT_MASK_7_F(x)                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK1_GPIO0_WUP_FLT_MASK_7_F_SHIFT) &                             \
 	 MC33771C_WAKEUP_MASK1_GPIO0_WUP_FLT_MASK_7_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5190,9 +4833,8 @@ extern "C" {
  * to wake-up the device. */
 #define MC33771C_WAKEUP_MASK1_VPWR_LV_FLT_MASK_11_F_SHIFT (0xBU)
 #define MC33771C_WAKEUP_MASK1_VPWR_LV_FLT_MASK_11_F_MASK (0x800U)
-#define MC33771C_WAKEUP_MASK1_VPWR_LV_FLT_MASK_11_F(x)                         \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK1_VPWR_LV_FLT_MASK_11_F_SHIFT) &    \
+#define MC33771C_WAKEUP_MASK1_VPWR_LV_FLT_MASK_11_F(x)                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK1_VPWR_LV_FLT_MASK_11_F_SHIFT) &                              \
 	 MC33771C_WAKEUP_MASK1_VPWR_LV_FLT_MASK_11_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5205,9 +4847,8 @@ extern "C" {
  * to wake-up the device. */
 #define MC33771C_WAKEUP_MASK1_VPWR_OV_FLT_MASK_12_F_SHIFT (0xCU)
 #define MC33771C_WAKEUP_MASK1_VPWR_OV_FLT_MASK_12_F_MASK (0x1000U)
-#define MC33771C_WAKEUP_MASK1_VPWR_OV_FLT_MASK_12_F(x)                         \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK1_VPWR_OV_FLT_MASK_12_F_SHIFT) &    \
+#define MC33771C_WAKEUP_MASK1_VPWR_OV_FLT_MASK_12_F(x)                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK1_VPWR_OV_FLT_MASK_12_F_SHIFT) &                              \
 	 MC33771C_WAKEUP_MASK1_VPWR_OV_FLT_MASK_12_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5226,9 +4867,8 @@ extern "C" {
  * to wake-up the device. */
 #define MC33771C_WAKEUP_MASK2_DED_ERR_FLT_MASK_1_F_SHIFT (0x1U)
 #define MC33771C_WAKEUP_MASK2_DED_ERR_FLT_MASK_1_F_MASK (0x2U)
-#define MC33771C_WAKEUP_MASK2_DED_ERR_FLT_MASK_1_F(x)                          \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK2_DED_ERR_FLT_MASK_1_F_SHIFT) &     \
+#define MC33771C_WAKEUP_MASK2_DED_ERR_FLT_MASK_1_F(x)                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK2_DED_ERR_FLT_MASK_1_F_SHIFT) &                               \
 	 MC33771C_WAKEUP_MASK2_DED_ERR_FLT_MASK_1_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5241,9 +4881,8 @@ extern "C" {
  * to wake-up the device. */
 #define MC33771C_WAKEUP_MASK2_OSC_ERR_FLT_MASK_2_F_SHIFT (0x2U)
 #define MC33771C_WAKEUP_MASK2_OSC_ERR_FLT_MASK_2_F_MASK (0x4U)
-#define MC33771C_WAKEUP_MASK2_OSC_ERR_FLT_MASK_2_F(x)                          \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK2_OSC_ERR_FLT_MASK_2_F_SHIFT) &     \
+#define MC33771C_WAKEUP_MASK2_OSC_ERR_FLT_MASK_2_F(x)                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK2_OSC_ERR_FLT_MASK_2_F_SHIFT) &                               \
 	 MC33771C_WAKEUP_MASK2_OSC_ERR_FLT_MASK_2_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5256,9 +4895,8 @@ extern "C" {
  * to wake-up the device. */
 #define MC33771C_WAKEUP_MASK2_CB_SHORT_FLT_MASK_4_F_SHIFT (0x4U)
 #define MC33771C_WAKEUP_MASK2_CB_SHORT_FLT_MASK_4_F_MASK (0x10U)
-#define MC33771C_WAKEUP_MASK2_CB_SHORT_FLT_MASK_4_F(x)                         \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK2_CB_SHORT_FLT_MASK_4_F_SHIFT) &    \
+#define MC33771C_WAKEUP_MASK2_CB_SHORT_FLT_MASK_4_F(x)                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK2_CB_SHORT_FLT_MASK_4_F_SHIFT) &                              \
 	 MC33771C_WAKEUP_MASK2_CB_SHORT_FLT_MASK_4_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5271,9 +4909,8 @@ extern "C" {
  * FAULT2_STATUS to wake-up the device. */
 #define MC33771C_WAKEUP_MASK2_GPIO_SHORT_FLT_MASK_5_F_SHIFT (0x5U)
 #define MC33771C_WAKEUP_MASK2_GPIO_SHORT_FLT_MASK_5_F_MASK (0x20U)
-#define MC33771C_WAKEUP_MASK2_GPIO_SHORT_FLT_MASK_5_F(x)                       \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK2_GPIO_SHORT_FLT_MASK_5_F_SHIFT) &  \
+#define MC33771C_WAKEUP_MASK2_GPIO_SHORT_FLT_MASK_5_F(x)                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK2_GPIO_SHORT_FLT_MASK_5_F_SHIFT) &                            \
 	 MC33771C_WAKEUP_MASK2_GPIO_SHORT_FLT_MASK_5_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5286,9 +4923,8 @@ extern "C" {
  * to wake-up the device. */
 #define MC33771C_WAKEUP_MASK2_IC_TSD_FLT_MASK_8_F_SHIFT (0x8U)
 #define MC33771C_WAKEUP_MASK2_IC_TSD_FLT_MASK_8_F_MASK (0x100U)
-#define MC33771C_WAKEUP_MASK2_IC_TSD_FLT_MASK_8_F(x)                           \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK2_IC_TSD_FLT_MASK_8_F_SHIFT) &      \
+#define MC33771C_WAKEUP_MASK2_IC_TSD_FLT_MASK_8_F(x)                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK2_IC_TSD_FLT_MASK_8_F_SHIFT) &                                \
 	 MC33771C_WAKEUP_MASK2_IC_TSD_FLT_MASK_8_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5301,9 +4937,8 @@ extern "C" {
  * to wake-up the device. */
 #define MC33771C_WAKEUP_MASK2_GND_LOSS_FLT_MASK_9_F_SHIFT (0x9U)
 #define MC33771C_WAKEUP_MASK2_GND_LOSS_FLT_MASK_9_F_MASK (0x200U)
-#define MC33771C_WAKEUP_MASK2_GND_LOSS_FLT_MASK_9_F(x)                         \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK2_GND_LOSS_FLT_MASK_9_F_SHIFT) &    \
+#define MC33771C_WAKEUP_MASK2_GND_LOSS_FLT_MASK_9_F(x)                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK2_GND_LOSS_FLT_MASK_9_F_SHIFT) &                              \
 	 MC33771C_WAKEUP_MASK2_GND_LOSS_FLT_MASK_9_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5316,9 +4951,8 @@ extern "C" {
  * to wake-up the device. */
 #define MC33771C_WAKEUP_MASK2_ADC1_A_FLT_MASK_10_F_SHIFT (0xAU)
 #define MC33771C_WAKEUP_MASK2_ADC1_A_FLT_MASK_10_F_MASK (0x400U)
-#define MC33771C_WAKEUP_MASK2_ADC1_A_FLT_MASK_10_F(x)                          \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK2_ADC1_A_FLT_MASK_10_F_SHIFT) &     \
+#define MC33771C_WAKEUP_MASK2_ADC1_A_FLT_MASK_10_F(x)                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK2_ADC1_A_FLT_MASK_10_F_SHIFT) &                               \
 	 MC33771C_WAKEUP_MASK2_ADC1_A_FLT_MASK_10_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5331,9 +4965,8 @@ extern "C" {
  * to wake-up the device. */
 #define MC33771C_WAKEUP_MASK2_ADC1_B_FLT_MASK_11_F_SHIFT (0xBU)
 #define MC33771C_WAKEUP_MASK2_ADC1_B_FLT_MASK_11_F_MASK (0x800U)
-#define MC33771C_WAKEUP_MASK2_ADC1_B_FLT_MASK_11_F(x)                          \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK2_ADC1_B_FLT_MASK_11_F_SHIFT) &     \
+#define MC33771C_WAKEUP_MASK2_ADC1_B_FLT_MASK_11_F(x)                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK2_ADC1_B_FLT_MASK_11_F_SHIFT) &                               \
 	 MC33771C_WAKEUP_MASK2_ADC1_B_FLT_MASK_11_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5346,9 +4979,8 @@ extern "C" {
  * to wake-up the device. */
 #define MC33771C_WAKEUP_MASK2_VANA_UV_FLT_MASK_12_F_SHIFT (0xCU)
 #define MC33771C_WAKEUP_MASK2_VANA_UV_FLT_MASK_12_F_MASK (0x1000U)
-#define MC33771C_WAKEUP_MASK2_VANA_UV_FLT_MASK_12_F(x)                         \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK2_VANA_UV_FLT_MASK_12_F_SHIFT) &    \
+#define MC33771C_WAKEUP_MASK2_VANA_UV_FLT_MASK_12_F(x)                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK2_VANA_UV_FLT_MASK_12_F_SHIFT) &                              \
 	 MC33771C_WAKEUP_MASK2_VANA_UV_FLT_MASK_12_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5361,9 +4993,8 @@ extern "C" {
  * to wake-up the device. */
 #define MC33771C_WAKEUP_MASK2_VANA_OV_FLT_MASK_13_F_SHIFT (0xDU)
 #define MC33771C_WAKEUP_MASK2_VANA_OV_FLT_MASK_13_F_MASK (0x2000U)
-#define MC33771C_WAKEUP_MASK2_VANA_OV_FLT_MASK_13_F(x)                         \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK2_VANA_OV_FLT_MASK_13_F_SHIFT) &    \
+#define MC33771C_WAKEUP_MASK2_VANA_OV_FLT_MASK_13_F(x)                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK2_VANA_OV_FLT_MASK_13_F_SHIFT) &                              \
 	 MC33771C_WAKEUP_MASK2_VANA_OV_FLT_MASK_13_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5376,9 +5007,8 @@ extern "C" {
  * to wake-up the device. */
 #define MC33771C_WAKEUP_MASK2_VCOM_UV_FLT_MASK_14_F_SHIFT (0xEU)
 #define MC33771C_WAKEUP_MASK2_VCOM_UV_FLT_MASK_14_F_MASK (0x4000U)
-#define MC33771C_WAKEUP_MASK2_VCOM_UV_FLT_MASK_14_F(x)                         \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK2_VCOM_UV_FLT_MASK_14_F_SHIFT) &    \
+#define MC33771C_WAKEUP_MASK2_VCOM_UV_FLT_MASK_14_F(x)                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK2_VCOM_UV_FLT_MASK_14_F_SHIFT) &                              \
 	 MC33771C_WAKEUP_MASK2_VCOM_UV_FLT_MASK_14_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5391,9 +5021,8 @@ extern "C" {
  * to wake-up the device. */
 #define MC33771C_WAKEUP_MASK2_VCOM_OV_FLT_MASK_15_F_SHIFT (0xFU)
 #define MC33771C_WAKEUP_MASK2_VCOM_OV_FLT_MASK_15_F_MASK (0x8000U)
-#define MC33771C_WAKEUP_MASK2_VCOM_OV_FLT_MASK_15_F(x)                         \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK2_VCOM_OV_FLT_MASK_15_F_SHIFT) &    \
+#define MC33771C_WAKEUP_MASK2_VCOM_OV_FLT_MASK_15_F(x)                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK2_VCOM_OV_FLT_MASK_15_F_SHIFT) &                              \
 	 MC33771C_WAKEUP_MASK2_VCOM_OV_FLT_MASK_15_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5412,9 +5041,8 @@ extern "C" {
  * wake-up the device. */
 #define MC33771C_WAKEUP_MASK3_EOT_CB1_MASK_0_F_SHIFT (0x0U)
 #define MC33771C_WAKEUP_MASK3_EOT_CB1_MASK_0_F_MASK (0x1U)
-#define MC33771C_WAKEUP_MASK3_EOT_CB1_MASK_0_F(x)                              \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK3_EOT_CB1_MASK_0_F_SHIFT) &         \
+#define MC33771C_WAKEUP_MASK3_EOT_CB1_MASK_0_F(x)                                                                      \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK3_EOT_CB1_MASK_0_F_SHIFT) &                                   \
 	 MC33771C_WAKEUP_MASK3_EOT_CB1_MASK_0_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5427,9 +5055,8 @@ extern "C" {
  * wake-up the device. */
 #define MC33771C_WAKEUP_MASK3_EOT_CB2_MASK_1_F_SHIFT (0x1U)
 #define MC33771C_WAKEUP_MASK3_EOT_CB2_MASK_1_F_MASK (0x2U)
-#define MC33771C_WAKEUP_MASK3_EOT_CB2_MASK_1_F(x)                              \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK3_EOT_CB2_MASK_1_F_SHIFT) &         \
+#define MC33771C_WAKEUP_MASK3_EOT_CB2_MASK_1_F(x)                                                                      \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK3_EOT_CB2_MASK_1_F_SHIFT) &                                   \
 	 MC33771C_WAKEUP_MASK3_EOT_CB2_MASK_1_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5442,9 +5069,8 @@ extern "C" {
  * wake-up the device. */
 #define MC33771C_WAKEUP_MASK3_EOT_CB3_MASK_2_F_SHIFT (0x2U)
 #define MC33771C_WAKEUP_MASK3_EOT_CB3_MASK_2_F_MASK (0x4U)
-#define MC33771C_WAKEUP_MASK3_EOT_CB3_MASK_2_F(x)                              \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK3_EOT_CB3_MASK_2_F_SHIFT) &         \
+#define MC33771C_WAKEUP_MASK3_EOT_CB3_MASK_2_F(x)                                                                      \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK3_EOT_CB3_MASK_2_F_SHIFT) &                                   \
 	 MC33771C_WAKEUP_MASK3_EOT_CB3_MASK_2_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5457,9 +5083,8 @@ extern "C" {
  * wake-up the device. */
 #define MC33771C_WAKEUP_MASK3_EOT_CB4_MASK_3_F_SHIFT (0x3U)
 #define MC33771C_WAKEUP_MASK3_EOT_CB4_MASK_3_F_MASK (0x8U)
-#define MC33771C_WAKEUP_MASK3_EOT_CB4_MASK_3_F(x)                              \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK3_EOT_CB4_MASK_3_F_SHIFT) &         \
+#define MC33771C_WAKEUP_MASK3_EOT_CB4_MASK_3_F(x)                                                                      \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK3_EOT_CB4_MASK_3_F_SHIFT) &                                   \
 	 MC33771C_WAKEUP_MASK3_EOT_CB4_MASK_3_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5472,9 +5097,8 @@ extern "C" {
  * wake-up the device. */
 #define MC33771C_WAKEUP_MASK3_EOT_CB5_MASK_4_F_SHIFT (0x4U)
 #define MC33771C_WAKEUP_MASK3_EOT_CB5_MASK_4_F_MASK (0x10U)
-#define MC33771C_WAKEUP_MASK3_EOT_CB5_MASK_4_F(x)                              \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK3_EOT_CB5_MASK_4_F_SHIFT) &         \
+#define MC33771C_WAKEUP_MASK3_EOT_CB5_MASK_4_F(x)                                                                      \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK3_EOT_CB5_MASK_4_F_SHIFT) &                                   \
 	 MC33771C_WAKEUP_MASK3_EOT_CB5_MASK_4_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5487,9 +5111,8 @@ extern "C" {
  * wake-up the device. */
 #define MC33771C_WAKEUP_MASK3_EOT_CB6_MASK_5_F_SHIFT (0x5U)
 #define MC33771C_WAKEUP_MASK3_EOT_CB6_MASK_5_F_MASK (0x20U)
-#define MC33771C_WAKEUP_MASK3_EOT_CB6_MASK_5_F(x)                              \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK3_EOT_CB6_MASK_5_F_SHIFT) &         \
+#define MC33771C_WAKEUP_MASK3_EOT_CB6_MASK_5_F(x)                                                                      \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK3_EOT_CB6_MASK_5_F_SHIFT) &                                   \
 	 MC33771C_WAKEUP_MASK3_EOT_CB6_MASK_5_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5502,9 +5125,8 @@ extern "C" {
  * wake-up the device. */
 #define MC33771C_WAKEUP_MASK3_EOT_CB7_MASK_6_F_SHIFT (0x6U)
 #define MC33771C_WAKEUP_MASK3_EOT_CB7_MASK_6_F_MASK (0x40U)
-#define MC33771C_WAKEUP_MASK3_EOT_CB7_MASK_6_F(x)                              \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK3_EOT_CB7_MASK_6_F_SHIFT) &         \
+#define MC33771C_WAKEUP_MASK3_EOT_CB7_MASK_6_F(x)                                                                      \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK3_EOT_CB7_MASK_6_F_SHIFT) &                                   \
 	 MC33771C_WAKEUP_MASK3_EOT_CB7_MASK_6_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5517,9 +5139,8 @@ extern "C" {
  * wake-up the device. */
 #define MC33771C_WAKEUP_MASK3_EOT_CB8_MASK_7_F_SHIFT (0x7U)
 #define MC33771C_WAKEUP_MASK3_EOT_CB8_MASK_7_F_MASK (0x80U)
-#define MC33771C_WAKEUP_MASK3_EOT_CB8_MASK_7_F(x)                              \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK3_EOT_CB8_MASK_7_F_SHIFT) &         \
+#define MC33771C_WAKEUP_MASK3_EOT_CB8_MASK_7_F(x)                                                                      \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK3_EOT_CB8_MASK_7_F_SHIFT) &                                   \
 	 MC33771C_WAKEUP_MASK3_EOT_CB8_MASK_7_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5532,9 +5153,8 @@ extern "C" {
  * wake-up the device. */
 #define MC33771C_WAKEUP_MASK3_EOT_CB9_MASK_8_F_SHIFT (0x8U)
 #define MC33771C_WAKEUP_MASK3_EOT_CB9_MASK_8_F_MASK (0x100U)
-#define MC33771C_WAKEUP_MASK3_EOT_CB9_MASK_8_F(x)                              \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK3_EOT_CB9_MASK_8_F_SHIFT) &         \
+#define MC33771C_WAKEUP_MASK3_EOT_CB9_MASK_8_F(x)                                                                      \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK3_EOT_CB9_MASK_8_F_SHIFT) &                                   \
 	 MC33771C_WAKEUP_MASK3_EOT_CB9_MASK_8_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5547,9 +5167,8 @@ extern "C" {
  * wake-up the device. */
 #define MC33771C_WAKEUP_MASK3_EOT_CB10_MASK_9_F_SHIFT (0x9U)
 #define MC33771C_WAKEUP_MASK3_EOT_CB10_MASK_9_F_MASK (0x200U)
-#define MC33771C_WAKEUP_MASK3_EOT_CB10_MASK_9_F(x)                             \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK3_EOT_CB10_MASK_9_F_SHIFT) &        \
+#define MC33771C_WAKEUP_MASK3_EOT_CB10_MASK_9_F(x)                                                                     \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK3_EOT_CB10_MASK_9_F_SHIFT) &                                  \
 	 MC33771C_WAKEUP_MASK3_EOT_CB10_MASK_9_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5562,9 +5181,8 @@ extern "C" {
  * wake-up the device. */
 #define MC33771C_WAKEUP_MASK3_EOT_CB11_MASK_10_F_SHIFT (0xAU)
 #define MC33771C_WAKEUP_MASK3_EOT_CB11_MASK_10_F_MASK (0x400U)
-#define MC33771C_WAKEUP_MASK3_EOT_CB11_MASK_10_F(x)                            \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK3_EOT_CB11_MASK_10_F_SHIFT) &       \
+#define MC33771C_WAKEUP_MASK3_EOT_CB11_MASK_10_F(x)                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK3_EOT_CB11_MASK_10_F_SHIFT) &                                 \
 	 MC33771C_WAKEUP_MASK3_EOT_CB11_MASK_10_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5577,9 +5195,8 @@ extern "C" {
  * wake-up the device. */
 #define MC33771C_WAKEUP_MASK3_EOT_CB12_MASK_11_F_SHIFT (0xBU)
 #define MC33771C_WAKEUP_MASK3_EOT_CB12_MASK_11_F_MASK (0x800U)
-#define MC33771C_WAKEUP_MASK3_EOT_CB12_MASK_11_F(x)                            \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK3_EOT_CB12_MASK_11_F_SHIFT) &       \
+#define MC33771C_WAKEUP_MASK3_EOT_CB12_MASK_11_F(x)                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK3_EOT_CB12_MASK_11_F_SHIFT) &                                 \
 	 MC33771C_WAKEUP_MASK3_EOT_CB12_MASK_11_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5592,9 +5209,8 @@ extern "C" {
  * wake-up the device. */
 #define MC33771C_WAKEUP_MASK3_EOT_CB13_MASK_12_F_SHIFT (0xCU)
 #define MC33771C_WAKEUP_MASK3_EOT_CB13_MASK_12_F_MASK (0x1000U)
-#define MC33771C_WAKEUP_MASK3_EOT_CB13_MASK_12_F(x)                            \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK3_EOT_CB13_MASK_12_F_SHIFT) &       \
+#define MC33771C_WAKEUP_MASK3_EOT_CB13_MASK_12_F(x)                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK3_EOT_CB13_MASK_12_F_SHIFT) &                                 \
 	 MC33771C_WAKEUP_MASK3_EOT_CB13_MASK_12_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5607,9 +5223,8 @@ extern "C" {
  * wake-up the device. */
 #define MC33771C_WAKEUP_MASK3_EOT_CB14_MASK_13_F_SHIFT (0xDU)
 #define MC33771C_WAKEUP_MASK3_EOT_CB14_MASK_13_F_MASK (0x2000U)
-#define MC33771C_WAKEUP_MASK3_EOT_CB14_MASK_13_F(x)                            \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK3_EOT_CB14_MASK_13_F_SHIFT) &       \
+#define MC33771C_WAKEUP_MASK3_EOT_CB14_MASK_13_F(x)                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK3_EOT_CB14_MASK_13_F_SHIFT) &                                 \
 	 MC33771C_WAKEUP_MASK3_EOT_CB14_MASK_13_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5622,9 +5237,8 @@ extern "C" {
  * to wake-up the device. */
 #define MC33771C_WAKEUP_MASK3_CC_OVR_FLT_MASK_15_F_SHIFT (0xFU)
 #define MC33771C_WAKEUP_MASK3_CC_OVR_FLT_MASK_15_F_MASK (0x8000U)
-#define MC33771C_WAKEUP_MASK3_CC_OVR_FLT_MASK_15_F(x)                          \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_WAKEUP_MASK3_CC_OVR_FLT_MASK_15_F_SHIFT) &     \
+#define MC33771C_WAKEUP_MASK3_CC_OVR_FLT_MASK_15_F(x)                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_WAKEUP_MASK3_CC_OVR_FLT_MASK_15_F_SHIFT) &                               \
 	 MC33771C_WAKEUP_MASK3_CC_OVR_FLT_MASK_15_F_MASK)
 
 /* Enumerated value NOT_MASKED: The flag wakes the device up, when active. */
@@ -5643,9 +5257,8 @@ extern "C" {
  * coulomb count value. */
 #define MC33771C_CC_NB_SAMPLES_CC_NB_SAMPLES_SHIFT (0x0U)
 #define MC33771C_CC_NB_SAMPLES_CC_NB_SAMPLES_MASK (0xFFFFU)
-#define MC33771C_CC_NB_SAMPLES_CC_NB_SAMPLES(x)                                \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_CC_NB_SAMPLES_CC_NB_SAMPLES_SHIFT) &           \
+#define MC33771C_CC_NB_SAMPLES_CC_NB_SAMPLES(x)                                                                        \
+	((uint16_t)((uint16_t)(x) << MC33771C_CC_NB_SAMPLES_CC_NB_SAMPLES_SHIFT) &                                     \
 	 MC33771C_CC_NB_SAMPLES_CC_NB_SAMPLES_MASK)
 
 /* --------------------------------------------------------------------------
@@ -5657,9 +5270,8 @@ extern "C" {
 /* Field COULOMB_CNT_MSB (read-only): Coulomb counting accumulator. */
 #define MC33771C_COULOMB_CNT1_COULOMB_CNT_MSB_SHIFT (0x0U)
 #define MC33771C_COULOMB_CNT1_COULOMB_CNT_MSB_MASK (0xFFFFU)
-#define MC33771C_COULOMB_CNT1_COULOMB_CNT_MSB(x)                               \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_COULOMB_CNT1_COULOMB_CNT_MSB_SHIFT) &          \
+#define MC33771C_COULOMB_CNT1_COULOMB_CNT_MSB(x)                                                                       \
+	((uint16_t)((uint16_t)(x) << MC33771C_COULOMB_CNT1_COULOMB_CNT_MSB_SHIFT) &                                    \
 	 MC33771C_COULOMB_CNT1_COULOMB_CNT_MSB_MASK)
 
 /* --------------------------------------------------------------------------
@@ -5671,9 +5283,8 @@ extern "C" {
 /* Field COULOMB_CNT_LSB (read-only): Coulomb counting accumulator. */
 #define MC33771C_COULOMB_CNT2_COULOMB_CNT_LSB_SHIFT (0x0U)
 #define MC33771C_COULOMB_CNT2_COULOMB_CNT_LSB_MASK (0xFFFFU)
-#define MC33771C_COULOMB_CNT2_COULOMB_CNT_LSB(x)                               \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_COULOMB_CNT2_COULOMB_CNT_LSB_SHIFT) &          \
+#define MC33771C_COULOMB_CNT2_COULOMB_CNT_LSB(x)                                                                       \
+	((uint16_t)((uint16_t)(x) << MC33771C_COULOMB_CNT2_COULOMB_CNT_LSB_SHIFT) &                                    \
 	 MC33771C_COULOMB_CNT2_COULOMB_CNT_LSB_MASK)
 
 /* --------------------------------------------------------------------------
@@ -5686,18 +5297,16 @@ extern "C" {
  * signed. */
 #define MC33771C_MEAS_ISENSE1_MEAS_I_MSB_SHIFT (0x0U)
 #define MC33771C_MEAS_ISENSE1_MEAS_I_MSB_MASK (0x7FFFU)
-#define MC33771C_MEAS_ISENSE1_MEAS_I_MSB(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_ISENSE1_MEAS_I_MSB_SHIFT) & \
-	 MC33771C_MEAS_ISENSE1_MEAS_I_MSB_MASK)
+#define MC33771C_MEAS_ISENSE1_MEAS_I_MSB(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_ISENSE1_MEAS_I_MSB_SHIFT) & MC33771C_MEAS_ISENSE1_MEAS_I_MSB_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
  * and the register is updated. The DATA_RDY bit is cleared when a request to
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_ISENSE1_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_ISENSE1_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_ISENSE1_DATA_RDY(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_ISENSE1_DATA_RDY_SHIFT) &   \
-	 MC33771C_MEAS_ISENSE1_DATA_RDY_MASK)
+#define MC33771C_MEAS_ISENSE1_DATA_RDY(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_ISENSE1_DATA_RDY_SHIFT) & MC33771C_MEAS_ISENSE1_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -5716,18 +5325,15 @@ extern "C" {
  * signed. */
 #define MC33771C_MEAS_ISENSE2_MEAS_I_LSB_SHIFT (0x0U)
 #define MC33771C_MEAS_ISENSE2_MEAS_I_LSB_MASK (0xFU)
-#define MC33771C_MEAS_ISENSE2_MEAS_I_LSB(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_ISENSE2_MEAS_I_LSB_SHIFT) & \
-	 MC33771C_MEAS_ISENSE2_MEAS_I_LSB_MASK)
+#define MC33771C_MEAS_ISENSE2_MEAS_I_LSB(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_ISENSE2_MEAS_I_LSB_SHIFT) & MC33771C_MEAS_ISENSE2_MEAS_I_LSB_MASK)
 
 /* Field PGA_GCHANGE (read-only): PGA gain change information during ISENSE
  * on-demand conversion. */
 #define MC33771C_MEAS_ISENSE2_PGA_GCHANGE_SHIFT (0x6U)
 #define MC33771C_MEAS_ISENSE2_PGA_GCHANGE_MASK (0x40U)
-#define MC33771C_MEAS_ISENSE2_PGA_GCHANGE(x)                                   \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_MEAS_ISENSE2_PGA_GCHANGE_SHIFT) &              \
-	 MC33771C_MEAS_ISENSE2_PGA_GCHANGE_MASK)
+#define MC33771C_MEAS_ISENSE2_PGA_GCHANGE(x)                                                                           \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_ISENSE2_PGA_GCHANGE_SHIFT) & MC33771C_MEAS_ISENSE2_PGA_GCHANGE_MASK)
 
 /* Enumerated value NO_CHANGE: No gain change during ISENSE on-demand
  * measurement; result is accurate. */
@@ -5740,9 +5346,8 @@ extern "C" {
 /* Field ADC2_SAT (read-only): ADC2 saturation information. */
 #define MC33771C_MEAS_ISENSE2_ADC2_SAT_SHIFT (0x7U)
 #define MC33771C_MEAS_ISENSE2_ADC2_SAT_MASK (0x80U)
-#define MC33771C_MEAS_ISENSE2_ADC2_SAT(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_ISENSE2_ADC2_SAT_SHIFT) &   \
-	 MC33771C_MEAS_ISENSE2_ADC2_SAT_MASK)
+#define MC33771C_MEAS_ISENSE2_ADC2_SAT(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_ISENSE2_ADC2_SAT_SHIFT) & MC33771C_MEAS_ISENSE2_ADC2_SAT_MASK)
 
 /* Enumerated value NO_SATURATION: No saturation reported. */
 #define MC33771C_MEAS_ISENSE2_ADC2_SAT_NO_SATURATION_ENUM_VAL (0x0U)
@@ -5755,9 +5360,8 @@ extern "C" {
  * gain amplifier (automatically settled or not). */
 #define MC33771C_MEAS_ISENSE2_PGA_GAIN_SHIFT (0x8U)
 #define MC33771C_MEAS_ISENSE2_PGA_GAIN_MASK (0x300U)
-#define MC33771C_MEAS_ISENSE2_PGA_GAIN(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_ISENSE2_PGA_GAIN_SHIFT) &   \
-	 MC33771C_MEAS_ISENSE2_PGA_GAIN_MASK)
+#define MC33771C_MEAS_ISENSE2_PGA_GAIN(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_ISENSE2_PGA_GAIN_SHIFT) & MC33771C_MEAS_ISENSE2_PGA_GAIN_MASK)
 
 /* Enumerated value 4: 4 */
 #define MC33771C_MEAS_ISENSE2_PGA_GAIN_4_ENUM_VAL (0x0U)
@@ -5776,9 +5380,8 @@ extern "C" {
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_ISENSE2_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_ISENSE2_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_ISENSE2_DATA_RDY(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_ISENSE2_DATA_RDY_SHIFT) &   \
-	 MC33771C_MEAS_ISENSE2_DATA_RDY_MASK)
+#define MC33771C_MEAS_ISENSE2_DATA_RDY(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_ISENSE2_DATA_RDY_SHIFT) & MC33771C_MEAS_ISENSE2_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -5797,18 +5400,16 @@ extern "C" {
  * independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_STACK_MEAS_STACK_SHIFT (0x0U)
 #define MC33771C_MEAS_STACK_MEAS_STACK_MASK (0x7FFFU)
-#define MC33771C_MEAS_STACK_MEAS_STACK(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_STACK_MEAS_STACK_SHIFT) &   \
-	 MC33771C_MEAS_STACK_MEAS_STACK_MASK)
+#define MC33771C_MEAS_STACK_MEAS_STACK(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_STACK_MEAS_STACK_SHIFT) & MC33771C_MEAS_STACK_MEAS_STACK_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
  * and the register is updated. The DATA_RDY bit is cleared when a request to
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_STACK_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_STACK_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_STACK_DATA_RDY(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_STACK_DATA_RDY_SHIFT) &     \
-	 MC33771C_MEAS_STACK_DATA_RDY_MASK)
+#define MC33771C_MEAS_STACK_DATA_RDY(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_STACK_DATA_RDY_SHIFT) & MC33771C_MEAS_STACK_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -5827,18 +5428,16 @@ extern "C" {
  * independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_CELL14_MEAS_CELL_SHIFT (0x0U)
 #define MC33771C_MEAS_CELL14_MEAS_CELL_MASK (0x7FFFU)
-#define MC33771C_MEAS_CELL14_MEAS_CELL(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL14_MEAS_CELL_SHIFT) &   \
-	 MC33771C_MEAS_CELL14_MEAS_CELL_MASK)
+#define MC33771C_MEAS_CELL14_MEAS_CELL(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL14_MEAS_CELL_SHIFT) & MC33771C_MEAS_CELL14_MEAS_CELL_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
  * and the register is updated. The DATA_RDY bit is cleared when a request to
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_CELL14_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_CELL14_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_CELL14_DATA_RDY(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL14_DATA_RDY_SHIFT) &    \
-	 MC33771C_MEAS_CELL14_DATA_RDY_MASK)
+#define MC33771C_MEAS_CELL14_DATA_RDY(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL14_DATA_RDY_SHIFT) & MC33771C_MEAS_CELL14_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -5857,18 +5456,16 @@ extern "C" {
  * independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_CELL13_MEAS_CELL_SHIFT (0x0U)
 #define MC33771C_MEAS_CELL13_MEAS_CELL_MASK (0x7FFFU)
-#define MC33771C_MEAS_CELL13_MEAS_CELL(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL13_MEAS_CELL_SHIFT) &   \
-	 MC33771C_MEAS_CELL13_MEAS_CELL_MASK)
+#define MC33771C_MEAS_CELL13_MEAS_CELL(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL13_MEAS_CELL_SHIFT) & MC33771C_MEAS_CELL13_MEAS_CELL_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
  * and the register is updated. The DATA_RDY bit is cleared when a request to
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_CELL13_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_CELL13_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_CELL13_DATA_RDY(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL13_DATA_RDY_SHIFT) &    \
-	 MC33771C_MEAS_CELL13_DATA_RDY_MASK)
+#define MC33771C_MEAS_CELL13_DATA_RDY(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL13_DATA_RDY_SHIFT) & MC33771C_MEAS_CELL13_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -5887,18 +5484,16 @@ extern "C" {
  * independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_CELL12_MEAS_CELL_SHIFT (0x0U)
 #define MC33771C_MEAS_CELL12_MEAS_CELL_MASK (0x7FFFU)
-#define MC33771C_MEAS_CELL12_MEAS_CELL(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL12_MEAS_CELL_SHIFT) &   \
-	 MC33771C_MEAS_CELL12_MEAS_CELL_MASK)
+#define MC33771C_MEAS_CELL12_MEAS_CELL(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL12_MEAS_CELL_SHIFT) & MC33771C_MEAS_CELL12_MEAS_CELL_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
  * and the register is updated. The DATA_RDY bit is cleared when a request to
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_CELL12_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_CELL12_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_CELL12_DATA_RDY(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL12_DATA_RDY_SHIFT) &    \
-	 MC33771C_MEAS_CELL12_DATA_RDY_MASK)
+#define MC33771C_MEAS_CELL12_DATA_RDY(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL12_DATA_RDY_SHIFT) & MC33771C_MEAS_CELL12_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -5917,18 +5512,16 @@ extern "C" {
  * independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_CELL11_MEAS_CELL_SHIFT (0x0U)
 #define MC33771C_MEAS_CELL11_MEAS_CELL_MASK (0x7FFFU)
-#define MC33771C_MEAS_CELL11_MEAS_CELL(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL11_MEAS_CELL_SHIFT) &   \
-	 MC33771C_MEAS_CELL11_MEAS_CELL_MASK)
+#define MC33771C_MEAS_CELL11_MEAS_CELL(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL11_MEAS_CELL_SHIFT) & MC33771C_MEAS_CELL11_MEAS_CELL_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
  * and the register is updated. The DATA_RDY bit is cleared when a request to
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_CELL11_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_CELL11_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_CELL11_DATA_RDY(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL11_DATA_RDY_SHIFT) &    \
-	 MC33771C_MEAS_CELL11_DATA_RDY_MASK)
+#define MC33771C_MEAS_CELL11_DATA_RDY(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL11_DATA_RDY_SHIFT) & MC33771C_MEAS_CELL11_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -5947,18 +5540,16 @@ extern "C" {
  * independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_CELL10_MEAS_CELL_SHIFT (0x0U)
 #define MC33771C_MEAS_CELL10_MEAS_CELL_MASK (0x7FFFU)
-#define MC33771C_MEAS_CELL10_MEAS_CELL(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL10_MEAS_CELL_SHIFT) &   \
-	 MC33771C_MEAS_CELL10_MEAS_CELL_MASK)
+#define MC33771C_MEAS_CELL10_MEAS_CELL(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL10_MEAS_CELL_SHIFT) & MC33771C_MEAS_CELL10_MEAS_CELL_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
  * and the register is updated. The DATA_RDY bit is cleared when a request to
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_CELL10_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_CELL10_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_CELL10_DATA_RDY(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL10_DATA_RDY_SHIFT) &    \
-	 MC33771C_MEAS_CELL10_DATA_RDY_MASK)
+#define MC33771C_MEAS_CELL10_DATA_RDY(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL10_DATA_RDY_SHIFT) & MC33771C_MEAS_CELL10_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -5977,18 +5568,16 @@ extern "C" {
  * independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_CELL9_MEAS_CELL_SHIFT (0x0U)
 #define MC33771C_MEAS_CELL9_MEAS_CELL_MASK (0x7FFFU)
-#define MC33771C_MEAS_CELL9_MEAS_CELL(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL9_MEAS_CELL_SHIFT) &    \
-	 MC33771C_MEAS_CELL9_MEAS_CELL_MASK)
+#define MC33771C_MEAS_CELL9_MEAS_CELL(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL9_MEAS_CELL_SHIFT) & MC33771C_MEAS_CELL9_MEAS_CELL_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
  * and the register is updated. The DATA_RDY bit is cleared when a request to
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_CELL9_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_CELL9_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_CELL9_DATA_RDY(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL9_DATA_RDY_SHIFT) &     \
-	 MC33771C_MEAS_CELL9_DATA_RDY_MASK)
+#define MC33771C_MEAS_CELL9_DATA_RDY(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL9_DATA_RDY_SHIFT) & MC33771C_MEAS_CELL9_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -6007,18 +5596,16 @@ extern "C" {
  * independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_CELL8_MEAS_CELL_SHIFT (0x0U)
 #define MC33771C_MEAS_CELL8_MEAS_CELL_MASK (0x7FFFU)
-#define MC33771C_MEAS_CELL8_MEAS_CELL(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL8_MEAS_CELL_SHIFT) &    \
-	 MC33771C_MEAS_CELL8_MEAS_CELL_MASK)
+#define MC33771C_MEAS_CELL8_MEAS_CELL(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL8_MEAS_CELL_SHIFT) & MC33771C_MEAS_CELL8_MEAS_CELL_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
  * and the register is updated. The DATA_RDY bit is cleared when a request to
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_CELL8_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_CELL8_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_CELL8_DATA_RDY(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL8_DATA_RDY_SHIFT) &     \
-	 MC33771C_MEAS_CELL8_DATA_RDY_MASK)
+#define MC33771C_MEAS_CELL8_DATA_RDY(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL8_DATA_RDY_SHIFT) & MC33771C_MEAS_CELL8_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -6037,18 +5624,16 @@ extern "C" {
  * independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_CELL7_MEAS_CELL_SHIFT (0x0U)
 #define MC33771C_MEAS_CELL7_MEAS_CELL_MASK (0x7FFFU)
-#define MC33771C_MEAS_CELL7_MEAS_CELL(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL7_MEAS_CELL_SHIFT) &    \
-	 MC33771C_MEAS_CELL7_MEAS_CELL_MASK)
+#define MC33771C_MEAS_CELL7_MEAS_CELL(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL7_MEAS_CELL_SHIFT) & MC33771C_MEAS_CELL7_MEAS_CELL_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
  * and the register is updated. The DATA_RDY bit is cleared when a request to
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_CELL7_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_CELL7_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_CELL7_DATA_RDY(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL7_DATA_RDY_SHIFT) &     \
-	 MC33771C_MEAS_CELL7_DATA_RDY_MASK)
+#define MC33771C_MEAS_CELL7_DATA_RDY(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL7_DATA_RDY_SHIFT) & MC33771C_MEAS_CELL7_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -6067,18 +5652,16 @@ extern "C" {
  * independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_CELL6_MEAS_CELL_SHIFT (0x0U)
 #define MC33771C_MEAS_CELL6_MEAS_CELL_MASK (0x7FFFU)
-#define MC33771C_MEAS_CELL6_MEAS_CELL(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL6_MEAS_CELL_SHIFT) &    \
-	 MC33771C_MEAS_CELL6_MEAS_CELL_MASK)
+#define MC33771C_MEAS_CELL6_MEAS_CELL(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL6_MEAS_CELL_SHIFT) & MC33771C_MEAS_CELL6_MEAS_CELL_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
  * and the register is updated. The DATA_RDY bit is cleared when a request to
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_CELL6_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_CELL6_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_CELL6_DATA_RDY(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL6_DATA_RDY_SHIFT) &     \
-	 MC33771C_MEAS_CELL6_DATA_RDY_MASK)
+#define MC33771C_MEAS_CELL6_DATA_RDY(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL6_DATA_RDY_SHIFT) & MC33771C_MEAS_CELL6_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -6097,18 +5680,16 @@ extern "C" {
  * independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_CELL5_MEAS_CELL_SHIFT (0x0U)
 #define MC33771C_MEAS_CELL5_MEAS_CELL_MASK (0x7FFFU)
-#define MC33771C_MEAS_CELL5_MEAS_CELL(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL5_MEAS_CELL_SHIFT) &    \
-	 MC33771C_MEAS_CELL5_MEAS_CELL_MASK)
+#define MC33771C_MEAS_CELL5_MEAS_CELL(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL5_MEAS_CELL_SHIFT) & MC33771C_MEAS_CELL5_MEAS_CELL_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
  * and the register is updated. The DATA_RDY bit is cleared when a request to
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_CELL5_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_CELL5_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_CELL5_DATA_RDY(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL5_DATA_RDY_SHIFT) &     \
-	 MC33771C_MEAS_CELL5_DATA_RDY_MASK)
+#define MC33771C_MEAS_CELL5_DATA_RDY(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL5_DATA_RDY_SHIFT) & MC33771C_MEAS_CELL5_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -6127,18 +5708,16 @@ extern "C" {
  * independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_CELL4_MEAS_CELL_SHIFT (0x0U)
 #define MC33771C_MEAS_CELL4_MEAS_CELL_MASK (0x7FFFU)
-#define MC33771C_MEAS_CELL4_MEAS_CELL(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL4_MEAS_CELL_SHIFT) &    \
-	 MC33771C_MEAS_CELL4_MEAS_CELL_MASK)
+#define MC33771C_MEAS_CELL4_MEAS_CELL(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL4_MEAS_CELL_SHIFT) & MC33771C_MEAS_CELL4_MEAS_CELL_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
  * and the register is updated. The DATA_RDY bit is cleared when a request to
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_CELL4_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_CELL4_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_CELL4_DATA_RDY(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL4_DATA_RDY_SHIFT) &     \
-	 MC33771C_MEAS_CELL4_DATA_RDY_MASK)
+#define MC33771C_MEAS_CELL4_DATA_RDY(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL4_DATA_RDY_SHIFT) & MC33771C_MEAS_CELL4_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -6157,18 +5736,16 @@ extern "C" {
  * independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_CELL3_MEAS_CELL_SHIFT (0x0U)
 #define MC33771C_MEAS_CELL3_MEAS_CELL_MASK (0x7FFFU)
-#define MC33771C_MEAS_CELL3_MEAS_CELL(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL3_MEAS_CELL_SHIFT) &    \
-	 MC33771C_MEAS_CELL3_MEAS_CELL_MASK)
+#define MC33771C_MEAS_CELL3_MEAS_CELL(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL3_MEAS_CELL_SHIFT) & MC33771C_MEAS_CELL3_MEAS_CELL_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
  * and the register is updated. The DATA_RDY bit is cleared when a request to
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_CELL3_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_CELL3_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_CELL3_DATA_RDY(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL3_DATA_RDY_SHIFT) &     \
-	 MC33771C_MEAS_CELL3_DATA_RDY_MASK)
+#define MC33771C_MEAS_CELL3_DATA_RDY(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL3_DATA_RDY_SHIFT) & MC33771C_MEAS_CELL3_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -6187,18 +5764,16 @@ extern "C" {
  * independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_CELL2_MEAS_CELL_SHIFT (0x0U)
 #define MC33771C_MEAS_CELL2_MEAS_CELL_MASK (0x7FFFU)
-#define MC33771C_MEAS_CELL2_MEAS_CELL(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL2_MEAS_CELL_SHIFT) &    \
-	 MC33771C_MEAS_CELL2_MEAS_CELL_MASK)
+#define MC33771C_MEAS_CELL2_MEAS_CELL(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL2_MEAS_CELL_SHIFT) & MC33771C_MEAS_CELL2_MEAS_CELL_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
  * and the register is updated. The DATA_RDY bit is cleared when a request to
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_CELL2_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_CELL2_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_CELL2_DATA_RDY(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL2_DATA_RDY_SHIFT) &     \
-	 MC33771C_MEAS_CELL2_DATA_RDY_MASK)
+#define MC33771C_MEAS_CELL2_DATA_RDY(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL2_DATA_RDY_SHIFT) & MC33771C_MEAS_CELL2_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -6217,18 +5792,16 @@ extern "C" {
  * independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_CELL1_MEAS_CELL_SHIFT (0x0U)
 #define MC33771C_MEAS_CELL1_MEAS_CELL_MASK (0x7FFFU)
-#define MC33771C_MEAS_CELL1_MEAS_CELL(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL1_MEAS_CELL_SHIFT) &    \
-	 MC33771C_MEAS_CELL1_MEAS_CELL_MASK)
+#define MC33771C_MEAS_CELL1_MEAS_CELL(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL1_MEAS_CELL_SHIFT) & MC33771C_MEAS_CELL1_MEAS_CELL_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
  * and the register is updated. The DATA_RDY bit is cleared when a request to
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_CELL1_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_CELL1_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_CELL1_DATA_RDY(x)                                        \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL1_DATA_RDY_SHIFT) &     \
-	 MC33771C_MEAS_CELL1_DATA_RDY_MASK)
+#define MC33771C_MEAS_CELL1_DATA_RDY(x)                                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_CELL1_DATA_RDY_SHIFT) & MC33771C_MEAS_CELL1_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -6247,18 +5820,16 @@ extern "C" {
  * independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_AN6_MEAS_AN_SHIFT (0x0U)
 #define MC33771C_MEAS_AN6_MEAS_AN_MASK (0x7FFFU)
-#define MC33771C_MEAS_AN6_MEAS_AN(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN6_MEAS_AN_SHIFT) &        \
-	 MC33771C_MEAS_AN6_MEAS_AN_MASK)
+#define MC33771C_MEAS_AN6_MEAS_AN(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN6_MEAS_AN_SHIFT) & MC33771C_MEAS_AN6_MEAS_AN_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
  * and the register is updated. The DATA_RDY bit is cleared when a request to
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_AN6_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_AN6_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_AN6_DATA_RDY(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN6_DATA_RDY_SHIFT) &       \
-	 MC33771C_MEAS_AN6_DATA_RDY_MASK)
+#define MC33771C_MEAS_AN6_DATA_RDY(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN6_DATA_RDY_SHIFT) & MC33771C_MEAS_AN6_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -6277,18 +5848,16 @@ extern "C" {
  * independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_AN5_MEAS_AN_SHIFT (0x0U)
 #define MC33771C_MEAS_AN5_MEAS_AN_MASK (0x7FFFU)
-#define MC33771C_MEAS_AN5_MEAS_AN(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN5_MEAS_AN_SHIFT) &        \
-	 MC33771C_MEAS_AN5_MEAS_AN_MASK)
+#define MC33771C_MEAS_AN5_MEAS_AN(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN5_MEAS_AN_SHIFT) & MC33771C_MEAS_AN5_MEAS_AN_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
  * and the register is updated. The DATA_RDY bit is cleared when a request to
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_AN5_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_AN5_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_AN5_DATA_RDY(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN5_DATA_RDY_SHIFT) &       \
-	 MC33771C_MEAS_AN5_DATA_RDY_MASK)
+#define MC33771C_MEAS_AN5_DATA_RDY(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN5_DATA_RDY_SHIFT) & MC33771C_MEAS_AN5_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -6307,18 +5876,16 @@ extern "C" {
  * independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_AN4_MEAS_AN_SHIFT (0x0U)
 #define MC33771C_MEAS_AN4_MEAS_AN_MASK (0x7FFFU)
-#define MC33771C_MEAS_AN4_MEAS_AN(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN4_MEAS_AN_SHIFT) &        \
-	 MC33771C_MEAS_AN4_MEAS_AN_MASK)
+#define MC33771C_MEAS_AN4_MEAS_AN(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN4_MEAS_AN_SHIFT) & MC33771C_MEAS_AN4_MEAS_AN_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
  * and the register is updated. The DATA_RDY bit is cleared when a request to
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_AN4_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_AN4_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_AN4_DATA_RDY(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN4_DATA_RDY_SHIFT) &       \
-	 MC33771C_MEAS_AN4_DATA_RDY_MASK)
+#define MC33771C_MEAS_AN4_DATA_RDY(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN4_DATA_RDY_SHIFT) & MC33771C_MEAS_AN4_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -6337,18 +5904,16 @@ extern "C" {
  * independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_AN3_MEAS_AN_SHIFT (0x0U)
 #define MC33771C_MEAS_AN3_MEAS_AN_MASK (0x7FFFU)
-#define MC33771C_MEAS_AN3_MEAS_AN(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN3_MEAS_AN_SHIFT) &        \
-	 MC33771C_MEAS_AN3_MEAS_AN_MASK)
+#define MC33771C_MEAS_AN3_MEAS_AN(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN3_MEAS_AN_SHIFT) & MC33771C_MEAS_AN3_MEAS_AN_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
  * and the register is updated. The DATA_RDY bit is cleared when a request to
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_AN3_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_AN3_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_AN3_DATA_RDY(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN3_DATA_RDY_SHIFT) &       \
-	 MC33771C_MEAS_AN3_DATA_RDY_MASK)
+#define MC33771C_MEAS_AN3_DATA_RDY(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN3_DATA_RDY_SHIFT) & MC33771C_MEAS_AN3_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -6367,18 +5932,16 @@ extern "C" {
  * independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_AN2_MEAS_AN_SHIFT (0x0U)
 #define MC33771C_MEAS_AN2_MEAS_AN_MASK (0x7FFFU)
-#define MC33771C_MEAS_AN2_MEAS_AN(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN2_MEAS_AN_SHIFT) &        \
-	 MC33771C_MEAS_AN2_MEAS_AN_MASK)
+#define MC33771C_MEAS_AN2_MEAS_AN(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN2_MEAS_AN_SHIFT) & MC33771C_MEAS_AN2_MEAS_AN_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
  * and the register is updated. The DATA_RDY bit is cleared when a request to
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_AN2_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_AN2_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_AN2_DATA_RDY(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN2_DATA_RDY_SHIFT) &       \
-	 MC33771C_MEAS_AN2_DATA_RDY_MASK)
+#define MC33771C_MEAS_AN2_DATA_RDY(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN2_DATA_RDY_SHIFT) & MC33771C_MEAS_AN2_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -6397,18 +5960,16 @@ extern "C" {
  * independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_AN1_MEAS_AN_SHIFT (0x0U)
 #define MC33771C_MEAS_AN1_MEAS_AN_MASK (0x7FFFU)
-#define MC33771C_MEAS_AN1_MEAS_AN(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN1_MEAS_AN_SHIFT) &        \
-	 MC33771C_MEAS_AN1_MEAS_AN_MASK)
+#define MC33771C_MEAS_AN1_MEAS_AN(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN1_MEAS_AN_SHIFT) & MC33771C_MEAS_AN1_MEAS_AN_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
  * and the register is updated. The DATA_RDY bit is cleared when a request to
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_AN1_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_AN1_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_AN1_DATA_RDY(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN1_DATA_RDY_SHIFT) &       \
-	 MC33771C_MEAS_AN1_DATA_RDY_MASK)
+#define MC33771C_MEAS_AN1_DATA_RDY(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN1_DATA_RDY_SHIFT) & MC33771C_MEAS_AN1_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -6427,18 +5988,16 @@ extern "C" {
  * independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_AN0_MEAS_AN_SHIFT (0x0U)
 #define MC33771C_MEAS_AN0_MEAS_AN_MASK (0x7FFFU)
-#define MC33771C_MEAS_AN0_MEAS_AN(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN0_MEAS_AN_SHIFT) &        \
-	 MC33771C_MEAS_AN0_MEAS_AN_MASK)
+#define MC33771C_MEAS_AN0_MEAS_AN(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN0_MEAS_AN_SHIFT) & MC33771C_MEAS_AN0_MEAS_AN_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
  * and the register is updated. The DATA_RDY bit is cleared when a request to
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_AN0_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_AN0_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_AN0_DATA_RDY(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN0_DATA_RDY_SHIFT) &       \
-	 MC33771C_MEAS_AN0_DATA_RDY_MASK)
+#define MC33771C_MEAS_AN0_DATA_RDY(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_AN0_DATA_RDY_SHIFT) & MC33771C_MEAS_AN0_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -6457,9 +6016,8 @@ extern "C" {
  * independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_IC_TEMP_MEAS_IC_TEMP_SHIFT (0x0U)
 #define MC33771C_MEAS_IC_TEMP_MEAS_IC_TEMP_MASK (0x7FFFU)
-#define MC33771C_MEAS_IC_TEMP_MEAS_IC_TEMP(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_MEAS_IC_TEMP_MEAS_IC_TEMP_SHIFT) &             \
+#define MC33771C_MEAS_IC_TEMP_MEAS_IC_TEMP(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_IC_TEMP_MEAS_IC_TEMP_SHIFT) &                                       \
 	 MC33771C_MEAS_IC_TEMP_MEAS_IC_TEMP_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
@@ -6467,9 +6025,8 @@ extern "C" {
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_IC_TEMP_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_IC_TEMP_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_IC_TEMP_DATA_RDY(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_IC_TEMP_DATA_RDY_SHIFT) &   \
-	 MC33771C_MEAS_IC_TEMP_DATA_RDY_MASK)
+#define MC33771C_MEAS_IC_TEMP_DATA_RDY(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_IC_TEMP_DATA_RDY_SHIFT) & MC33771C_MEAS_IC_TEMP_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
  * running. */
@@ -6488,9 +6045,8 @@ extern "C" {
  * VCT_ANx_RES independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_VBG_DIAG_ADC1A_MEAS_VBG_DIAG_ADC1A_SHIFT (0x0U)
 #define MC33771C_MEAS_VBG_DIAG_ADC1A_MEAS_VBG_DIAG_ADC1A_MASK (0x7FFFU)
-#define MC33771C_MEAS_VBG_DIAG_ADC1A_MEAS_VBG_DIAG_ADC1A(x)                      \
-	((uint16_t)((uint16_t)(x)                                                \
-		    << MC33771C_MEAS_VBG_DIAG_ADC1A_MEAS_VBG_DIAG_ADC1A_SHIFT) & \
+#define MC33771C_MEAS_VBG_DIAG_ADC1A_MEAS_VBG_DIAG_ADC1A(x)                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_VBG_DIAG_ADC1A_MEAS_VBG_DIAG_ADC1A_SHIFT) &                         \
 	 MC33771C_MEAS_VBG_DIAG_ADC1A_MEAS_VBG_DIAG_ADC1A_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
@@ -6498,9 +6054,8 @@ extern "C" {
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_VBG_DIAG_ADC1A_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_VBG_DIAG_ADC1A_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_VBG_DIAG_ADC1A_DATA_RDY(x)                               \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_MEAS_VBG_DIAG_ADC1A_DATA_RDY_SHIFT) &          \
+#define MC33771C_MEAS_VBG_DIAG_ADC1A_DATA_RDY(x)                                                                       \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_VBG_DIAG_ADC1A_DATA_RDY_SHIFT) &                                    \
 	 MC33771C_MEAS_VBG_DIAG_ADC1A_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
@@ -6520,9 +6075,8 @@ extern "C" {
  * VCT_ANx_RES independently on the selected resolution of ADC_CFG. */
 #define MC33771C_MEAS_VBG_DIAG_ADC1B_MEAS_VBG_DIAG_ADC1B_SHIFT (0x0U)
 #define MC33771C_MEAS_VBG_DIAG_ADC1B_MEAS_VBG_DIAG_ADC1B_MASK (0x7FFFU)
-#define MC33771C_MEAS_VBG_DIAG_ADC1B_MEAS_VBG_DIAG_ADC1B(x)                      \
-	((uint16_t)((uint16_t)(x)                                                \
-		    << MC33771C_MEAS_VBG_DIAG_ADC1B_MEAS_VBG_DIAG_ADC1B_SHIFT) & \
+#define MC33771C_MEAS_VBG_DIAG_ADC1B_MEAS_VBG_DIAG_ADC1B(x)                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_VBG_DIAG_ADC1B_MEAS_VBG_DIAG_ADC1B_SHIFT) &                         \
 	 MC33771C_MEAS_VBG_DIAG_ADC1B_MEAS_VBG_DIAG_ADC1B_MASK)
 
 /* Field DATA_RDY (read-only): This bit is set when the conversion is complete
@@ -6530,9 +6084,8 @@ extern "C" {
  * convert is received either through the SOC or GPIO2 convert trigger. */
 #define MC33771C_MEAS_VBG_DIAG_ADC1B_DATA_RDY_SHIFT (0xFU)
 #define MC33771C_MEAS_VBG_DIAG_ADC1B_DATA_RDY_MASK (0x8000U)
-#define MC33771C_MEAS_VBG_DIAG_ADC1B_DATA_RDY(x)                               \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_MEAS_VBG_DIAG_ADC1B_DATA_RDY_SHIFT) &          \
+#define MC33771C_MEAS_VBG_DIAG_ADC1B_DATA_RDY(x)                                                                       \
+	((uint16_t)((uint16_t)(x) << MC33771C_MEAS_VBG_DIAG_ADC1B_DATA_RDY_SHIFT) &                                    \
 	 MC33771C_MEAS_VBG_DIAG_ADC1B_DATA_RDY_MASK)
 
 /* Enumerated value IN_PROGRESS: A new sequence of conversions is currently
@@ -6552,9 +6105,8 @@ extern "C" {
  * Enabled through register OV_UV_EN. */
 #define MC33771C_TH_ALL_CT_ALL_CT_UV_TH_SHIFT (0x0U)
 #define MC33771C_TH_ALL_CT_ALL_CT_UV_TH_MASK (0xFFU)
-#define MC33771C_TH_ALL_CT_ALL_CT_UV_TH(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_ALL_CT_ALL_CT_UV_TH_SHIFT) &  \
-	 MC33771C_TH_ALL_CT_ALL_CT_UV_TH_MASK)
+#define MC33771C_TH_ALL_CT_ALL_CT_UV_TH(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_ALL_CT_ALL_CT_UV_TH_SHIFT) & MC33771C_TH_ALL_CT_ALL_CT_UV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default undervoltage threshold set to 2.5 V */
 #define MC33771C_TH_ALL_CT_ALL_CT_UV_TH_DEFAULT_ENUM_VAL (0x80U)
@@ -6563,9 +6115,8 @@ extern "C" {
  * Enabled through register OV_UV_EN. */
 #define MC33771C_TH_ALL_CT_ALL_CT_OV_TH_SHIFT (0x8U)
 #define MC33771C_TH_ALL_CT_ALL_CT_OV_TH_MASK (0xFF00U)
-#define MC33771C_TH_ALL_CT_ALL_CT_OV_TH(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_ALL_CT_ALL_CT_OV_TH_SHIFT) &  \
-	 MC33771C_TH_ALL_CT_ALL_CT_OV_TH_MASK)
+#define MC33771C_TH_ALL_CT_ALL_CT_OV_TH(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_ALL_CT_ALL_CT_OV_TH_SHIFT) & MC33771C_TH_ALL_CT_ALL_CT_OV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default overvoltage threshold set to 4.2 V */
 #define MC33771C_TH_ALL_CT_ALL_CT_OV_TH_DEFAULT_ENUM_VAL (0xD7U)
@@ -6581,9 +6132,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT14_CT_UV_TH_SHIFT (0x0U)
 #define MC33771C_TH_CT14_CT_UV_TH_MASK (0xFFU)
-#define MC33771C_TH_CT14_CT_UV_TH(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT14_CT_UV_TH_SHIFT) &        \
-	 MC33771C_TH_CT14_CT_UV_TH_MASK)
+#define MC33771C_TH_CT14_CT_UV_TH(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT14_CT_UV_TH_SHIFT) & MC33771C_TH_CT14_CT_UV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default undervoltage threshold set to 2.5 V */
 #define MC33771C_TH_CT14_CT_UV_TH_DEFAULT_ENUM_VAL (0x80U)
@@ -6593,9 +6143,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT14_CT_OV_TH_SHIFT (0x8U)
 #define MC33771C_TH_CT14_CT_OV_TH_MASK (0xFF00U)
-#define MC33771C_TH_CT14_CT_OV_TH(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT14_CT_OV_TH_SHIFT) &        \
-	 MC33771C_TH_CT14_CT_OV_TH_MASK)
+#define MC33771C_TH_CT14_CT_OV_TH(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT14_CT_OV_TH_SHIFT) & MC33771C_TH_CT14_CT_OV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default overvoltage threshold set to 4.2 V */
 #define MC33771C_TH_CT14_CT_OV_TH_DEFAULT_ENUM_VAL (0xD7U)
@@ -6611,9 +6160,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT13_CT_UV_TH_SHIFT (0x0U)
 #define MC33771C_TH_CT13_CT_UV_TH_MASK (0xFFU)
-#define MC33771C_TH_CT13_CT_UV_TH(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT13_CT_UV_TH_SHIFT) &        \
-	 MC33771C_TH_CT13_CT_UV_TH_MASK)
+#define MC33771C_TH_CT13_CT_UV_TH(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT13_CT_UV_TH_SHIFT) & MC33771C_TH_CT13_CT_UV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default undervoltage threshold set to 2.5 V */
 #define MC33771C_TH_CT13_CT_UV_TH_DEFAULT_ENUM_VAL (0x80U)
@@ -6623,9 +6171,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT13_CT_OV_TH_SHIFT (0x8U)
 #define MC33771C_TH_CT13_CT_OV_TH_MASK (0xFF00U)
-#define MC33771C_TH_CT13_CT_OV_TH(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT13_CT_OV_TH_SHIFT) &        \
-	 MC33771C_TH_CT13_CT_OV_TH_MASK)
+#define MC33771C_TH_CT13_CT_OV_TH(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT13_CT_OV_TH_SHIFT) & MC33771C_TH_CT13_CT_OV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default overvoltage threshold set to 4.2 V */
 #define MC33771C_TH_CT13_CT_OV_TH_DEFAULT_ENUM_VAL (0xD7U)
@@ -6641,9 +6188,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT12_CT_UV_TH_SHIFT (0x0U)
 #define MC33771C_TH_CT12_CT_UV_TH_MASK (0xFFU)
-#define MC33771C_TH_CT12_CT_UV_TH(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT12_CT_UV_TH_SHIFT) &        \
-	 MC33771C_TH_CT12_CT_UV_TH_MASK)
+#define MC33771C_TH_CT12_CT_UV_TH(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT12_CT_UV_TH_SHIFT) & MC33771C_TH_CT12_CT_UV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default undervoltage threshold set to 2.5 V */
 #define MC33771C_TH_CT12_CT_UV_TH_DEFAULT_ENUM_VAL (0x80U)
@@ -6653,9 +6199,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT12_CT_OV_TH_SHIFT (0x8U)
 #define MC33771C_TH_CT12_CT_OV_TH_MASK (0xFF00U)
-#define MC33771C_TH_CT12_CT_OV_TH(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT12_CT_OV_TH_SHIFT) &        \
-	 MC33771C_TH_CT12_CT_OV_TH_MASK)
+#define MC33771C_TH_CT12_CT_OV_TH(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT12_CT_OV_TH_SHIFT) & MC33771C_TH_CT12_CT_OV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default overvoltage threshold set to 4.2 V */
 #define MC33771C_TH_CT12_CT_OV_TH_DEFAULT_ENUM_VAL (0xD7U)
@@ -6671,9 +6216,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT11_CT_UV_TH_SHIFT (0x0U)
 #define MC33771C_TH_CT11_CT_UV_TH_MASK (0xFFU)
-#define MC33771C_TH_CT11_CT_UV_TH(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT11_CT_UV_TH_SHIFT) &        \
-	 MC33771C_TH_CT11_CT_UV_TH_MASK)
+#define MC33771C_TH_CT11_CT_UV_TH(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT11_CT_UV_TH_SHIFT) & MC33771C_TH_CT11_CT_UV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default undervoltage threshold set to 2.5 V */
 #define MC33771C_TH_CT11_CT_UV_TH_DEFAULT_ENUM_VAL (0x80U)
@@ -6683,9 +6227,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT11_CT_OV_TH_SHIFT (0x8U)
 #define MC33771C_TH_CT11_CT_OV_TH_MASK (0xFF00U)
-#define MC33771C_TH_CT11_CT_OV_TH(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT11_CT_OV_TH_SHIFT) &        \
-	 MC33771C_TH_CT11_CT_OV_TH_MASK)
+#define MC33771C_TH_CT11_CT_OV_TH(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT11_CT_OV_TH_SHIFT) & MC33771C_TH_CT11_CT_OV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default overvoltage threshold set to 4.2 V */
 #define MC33771C_TH_CT11_CT_OV_TH_DEFAULT_ENUM_VAL (0xD7U)
@@ -6701,9 +6244,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT10_CT_UV_TH_SHIFT (0x0U)
 #define MC33771C_TH_CT10_CT_UV_TH_MASK (0xFFU)
-#define MC33771C_TH_CT10_CT_UV_TH(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT10_CT_UV_TH_SHIFT) &        \
-	 MC33771C_TH_CT10_CT_UV_TH_MASK)
+#define MC33771C_TH_CT10_CT_UV_TH(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT10_CT_UV_TH_SHIFT) & MC33771C_TH_CT10_CT_UV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default undervoltage threshold set to 2.5 V */
 #define MC33771C_TH_CT10_CT_UV_TH_DEFAULT_ENUM_VAL (0x80U)
@@ -6713,9 +6255,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT10_CT_OV_TH_SHIFT (0x8U)
 #define MC33771C_TH_CT10_CT_OV_TH_MASK (0xFF00U)
-#define MC33771C_TH_CT10_CT_OV_TH(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT10_CT_OV_TH_SHIFT) &        \
-	 MC33771C_TH_CT10_CT_OV_TH_MASK)
+#define MC33771C_TH_CT10_CT_OV_TH(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT10_CT_OV_TH_SHIFT) & MC33771C_TH_CT10_CT_OV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default overvoltage threshold set to 4.2 V */
 #define MC33771C_TH_CT10_CT_OV_TH_DEFAULT_ENUM_VAL (0xD7U)
@@ -6731,9 +6272,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT9_CT_UV_TH_SHIFT (0x0U)
 #define MC33771C_TH_CT9_CT_UV_TH_MASK (0xFFU)
-#define MC33771C_TH_CT9_CT_UV_TH(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT9_CT_UV_TH_SHIFT) &         \
-	 MC33771C_TH_CT9_CT_UV_TH_MASK)
+#define MC33771C_TH_CT9_CT_UV_TH(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT9_CT_UV_TH_SHIFT) & MC33771C_TH_CT9_CT_UV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default undervoltage threshold set to 2.5 V */
 #define MC33771C_TH_CT9_CT_UV_TH_DEFAULT_ENUM_VAL (0x80U)
@@ -6743,9 +6283,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT9_CT_OV_TH_SHIFT (0x8U)
 #define MC33771C_TH_CT9_CT_OV_TH_MASK (0xFF00U)
-#define MC33771C_TH_CT9_CT_OV_TH(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT9_CT_OV_TH_SHIFT) &         \
-	 MC33771C_TH_CT9_CT_OV_TH_MASK)
+#define MC33771C_TH_CT9_CT_OV_TH(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT9_CT_OV_TH_SHIFT) & MC33771C_TH_CT9_CT_OV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default overvoltage threshold set to 4.2 V */
 #define MC33771C_TH_CT9_CT_OV_TH_DEFAULT_ENUM_VAL (0xD7U)
@@ -6761,9 +6300,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT8_CT_UV_TH_SHIFT (0x0U)
 #define MC33771C_TH_CT8_CT_UV_TH_MASK (0xFFU)
-#define MC33771C_TH_CT8_CT_UV_TH(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT8_CT_UV_TH_SHIFT) &         \
-	 MC33771C_TH_CT8_CT_UV_TH_MASK)
+#define MC33771C_TH_CT8_CT_UV_TH(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT8_CT_UV_TH_SHIFT) & MC33771C_TH_CT8_CT_UV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default undervoltage threshold set to 2.5 V */
 #define MC33771C_TH_CT8_CT_UV_TH_DEFAULT_ENUM_VAL (0x80U)
@@ -6773,9 +6311,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT8_CT_OV_TH_SHIFT (0x8U)
 #define MC33771C_TH_CT8_CT_OV_TH_MASK (0xFF00U)
-#define MC33771C_TH_CT8_CT_OV_TH(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT8_CT_OV_TH_SHIFT) &         \
-	 MC33771C_TH_CT8_CT_OV_TH_MASK)
+#define MC33771C_TH_CT8_CT_OV_TH(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT8_CT_OV_TH_SHIFT) & MC33771C_TH_CT8_CT_OV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default overvoltage threshold set to 4.2 V */
 #define MC33771C_TH_CT8_CT_OV_TH_DEFAULT_ENUM_VAL (0xD7U)
@@ -6791,9 +6328,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT7_CT_UV_TH_SHIFT (0x0U)
 #define MC33771C_TH_CT7_CT_UV_TH_MASK (0xFFU)
-#define MC33771C_TH_CT7_CT_UV_TH(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT7_CT_UV_TH_SHIFT) &         \
-	 MC33771C_TH_CT7_CT_UV_TH_MASK)
+#define MC33771C_TH_CT7_CT_UV_TH(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT7_CT_UV_TH_SHIFT) & MC33771C_TH_CT7_CT_UV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default undervoltage threshold set to 2.5 V */
 #define MC33771C_TH_CT7_CT_UV_TH_DEFAULT_ENUM_VAL (0x80U)
@@ -6803,9 +6339,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT7_CT_OV_TH_SHIFT (0x8U)
 #define MC33771C_TH_CT7_CT_OV_TH_MASK (0xFF00U)
-#define MC33771C_TH_CT7_CT_OV_TH(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT7_CT_OV_TH_SHIFT) &         \
-	 MC33771C_TH_CT7_CT_OV_TH_MASK)
+#define MC33771C_TH_CT7_CT_OV_TH(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT7_CT_OV_TH_SHIFT) & MC33771C_TH_CT7_CT_OV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default overvoltage threshold set to 4.2 V */
 #define MC33771C_TH_CT7_CT_OV_TH_DEFAULT_ENUM_VAL (0xD7U)
@@ -6821,9 +6356,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT6_CT_UV_TH_SHIFT (0x0U)
 #define MC33771C_TH_CT6_CT_UV_TH_MASK (0xFFU)
-#define MC33771C_TH_CT6_CT_UV_TH(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT6_CT_UV_TH_SHIFT) &         \
-	 MC33771C_TH_CT6_CT_UV_TH_MASK)
+#define MC33771C_TH_CT6_CT_UV_TH(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT6_CT_UV_TH_SHIFT) & MC33771C_TH_CT6_CT_UV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default undervoltage threshold set to 2.5 V */
 #define MC33771C_TH_CT6_CT_UV_TH_DEFAULT_ENUM_VAL (0x80U)
@@ -6833,9 +6367,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT6_CT_OV_TH_SHIFT (0x8U)
 #define MC33771C_TH_CT6_CT_OV_TH_MASK (0xFF00U)
-#define MC33771C_TH_CT6_CT_OV_TH(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT6_CT_OV_TH_SHIFT) &         \
-	 MC33771C_TH_CT6_CT_OV_TH_MASK)
+#define MC33771C_TH_CT6_CT_OV_TH(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT6_CT_OV_TH_SHIFT) & MC33771C_TH_CT6_CT_OV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default overvoltage threshold set to 4.2 V */
 #define MC33771C_TH_CT6_CT_OV_TH_DEFAULT_ENUM_VAL (0xD7U)
@@ -6851,9 +6384,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT5_CT_UV_TH_SHIFT (0x0U)
 #define MC33771C_TH_CT5_CT_UV_TH_MASK (0xFFU)
-#define MC33771C_TH_CT5_CT_UV_TH(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT5_CT_UV_TH_SHIFT) &         \
-	 MC33771C_TH_CT5_CT_UV_TH_MASK)
+#define MC33771C_TH_CT5_CT_UV_TH(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT5_CT_UV_TH_SHIFT) & MC33771C_TH_CT5_CT_UV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default undervoltage threshold set to 2.5 V */
 #define MC33771C_TH_CT5_CT_UV_TH_DEFAULT_ENUM_VAL (0x80U)
@@ -6863,9 +6395,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT5_CT_OV_TH_SHIFT (0x8U)
 #define MC33771C_TH_CT5_CT_OV_TH_MASK (0xFF00U)
-#define MC33771C_TH_CT5_CT_OV_TH(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT5_CT_OV_TH_SHIFT) &         \
-	 MC33771C_TH_CT5_CT_OV_TH_MASK)
+#define MC33771C_TH_CT5_CT_OV_TH(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT5_CT_OV_TH_SHIFT) & MC33771C_TH_CT5_CT_OV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default overvoltage threshold set to 4.2 V */
 #define MC33771C_TH_CT5_CT_OV_TH_DEFAULT_ENUM_VAL (0xD7U)
@@ -6881,9 +6412,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT4_CT_UV_TH_SHIFT (0x0U)
 #define MC33771C_TH_CT4_CT_UV_TH_MASK (0xFFU)
-#define MC33771C_TH_CT4_CT_UV_TH(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT4_CT_UV_TH_SHIFT) &         \
-	 MC33771C_TH_CT4_CT_UV_TH_MASK)
+#define MC33771C_TH_CT4_CT_UV_TH(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT4_CT_UV_TH_SHIFT) & MC33771C_TH_CT4_CT_UV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default undervoltage threshold set to 2.5 V */
 #define MC33771C_TH_CT4_CT_UV_TH_DEFAULT_ENUM_VAL (0x80U)
@@ -6893,9 +6423,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT4_CT_OV_TH_SHIFT (0x8U)
 #define MC33771C_TH_CT4_CT_OV_TH_MASK (0xFF00U)
-#define MC33771C_TH_CT4_CT_OV_TH(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT4_CT_OV_TH_SHIFT) &         \
-	 MC33771C_TH_CT4_CT_OV_TH_MASK)
+#define MC33771C_TH_CT4_CT_OV_TH(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT4_CT_OV_TH_SHIFT) & MC33771C_TH_CT4_CT_OV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default overvoltage threshold set to 4.2 V */
 #define MC33771C_TH_CT4_CT_OV_TH_DEFAULT_ENUM_VAL (0xD7U)
@@ -6911,9 +6440,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT3_CT_UV_TH_SHIFT (0x0U)
 #define MC33771C_TH_CT3_CT_UV_TH_MASK (0xFFU)
-#define MC33771C_TH_CT3_CT_UV_TH(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT3_CT_UV_TH_SHIFT) &         \
-	 MC33771C_TH_CT3_CT_UV_TH_MASK)
+#define MC33771C_TH_CT3_CT_UV_TH(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT3_CT_UV_TH_SHIFT) & MC33771C_TH_CT3_CT_UV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default undervoltage threshold set to 2.5 V */
 #define MC33771C_TH_CT3_CT_UV_TH_DEFAULT_ENUM_VAL (0x80U)
@@ -6923,9 +6451,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT3_CT_OV_TH_SHIFT (0x8U)
 #define MC33771C_TH_CT3_CT_OV_TH_MASK (0xFF00U)
-#define MC33771C_TH_CT3_CT_OV_TH(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT3_CT_OV_TH_SHIFT) &         \
-	 MC33771C_TH_CT3_CT_OV_TH_MASK)
+#define MC33771C_TH_CT3_CT_OV_TH(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT3_CT_OV_TH_SHIFT) & MC33771C_TH_CT3_CT_OV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default overvoltage threshold set to 4.2 V */
 #define MC33771C_TH_CT3_CT_OV_TH_DEFAULT_ENUM_VAL (0xD7U)
@@ -6941,9 +6468,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT2_CT_UV_TH_SHIFT (0x0U)
 #define MC33771C_TH_CT2_CT_UV_TH_MASK (0xFFU)
-#define MC33771C_TH_CT2_CT_UV_TH(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT2_CT_UV_TH_SHIFT) &         \
-	 MC33771C_TH_CT2_CT_UV_TH_MASK)
+#define MC33771C_TH_CT2_CT_UV_TH(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT2_CT_UV_TH_SHIFT) & MC33771C_TH_CT2_CT_UV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default undervoltage threshold set to 2.5 V */
 #define MC33771C_TH_CT2_CT_UV_TH_DEFAULT_ENUM_VAL (0x80U)
@@ -6953,9 +6479,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT2_CT_OV_TH_SHIFT (0x8U)
 #define MC33771C_TH_CT2_CT_OV_TH_MASK (0xFF00U)
-#define MC33771C_TH_CT2_CT_OV_TH(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT2_CT_OV_TH_SHIFT) &         \
-	 MC33771C_TH_CT2_CT_OV_TH_MASK)
+#define MC33771C_TH_CT2_CT_OV_TH(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT2_CT_OV_TH_SHIFT) & MC33771C_TH_CT2_CT_OV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default overvoltage threshold set to 4.2 V */
 #define MC33771C_TH_CT2_CT_OV_TH_DEFAULT_ENUM_VAL (0xD7U)
@@ -6971,9 +6496,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT1_CT_UV_TH_SHIFT (0x0U)
 #define MC33771C_TH_CT1_CT_UV_TH_MASK (0xFFU)
-#define MC33771C_TH_CT1_CT_UV_TH(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT1_CT_UV_TH_SHIFT) &         \
-	 MC33771C_TH_CT1_CT_UV_TH_MASK)
+#define MC33771C_TH_CT1_CT_UV_TH(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT1_CT_UV_TH_SHIFT) & MC33771C_TH_CT1_CT_UV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default undervoltage threshold set to 2.5 V */
 #define MC33771C_TH_CT1_CT_UV_TH_DEFAULT_ENUM_VAL (0x80U)
@@ -6983,9 +6507,8 @@ extern "C" {
  * be logic 1 to use TH_CTx register as threshold. */
 #define MC33771C_TH_CT1_CT_OV_TH_SHIFT (0x8U)
 #define MC33771C_TH_CT1_CT_OV_TH_MASK (0xFF00U)
-#define MC33771C_TH_CT1_CT_OV_TH(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT1_CT_OV_TH_SHIFT) &         \
-	 MC33771C_TH_CT1_CT_OV_TH_MASK)
+#define MC33771C_TH_CT1_CT_OV_TH(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_CT1_CT_OV_TH_SHIFT) & MC33771C_TH_CT1_CT_OV_TH_MASK)
 
 /* Enumerated value DEFAULT: Default overvoltage threshold set to 4.2 V */
 #define MC33771C_TH_CT1_CT_OV_TH_DEFAULT_ENUM_VAL (0xD7U)
@@ -6999,9 +6522,8 @@ extern "C" {
 /* Field AN_OT_TH: Overtemperature threshold setting for analog input. */
 #define MC33771C_TH_AN6_OT_AN_OT_TH_SHIFT (0x0U)
 #define MC33771C_TH_AN6_OT_AN_OT_TH_MASK (0x3FFU)
-#define MC33771C_TH_AN6_OT_AN_OT_TH(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN6_OT_AN_OT_TH_SHIFT) &      \
-	 MC33771C_TH_AN6_OT_AN_OT_TH_MASK)
+#define MC33771C_TH_AN6_OT_AN_OT_TH(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN6_OT_AN_OT_TH_SHIFT) & MC33771C_TH_AN6_OT_AN_OT_TH_MASK)
 
 /* Enumerated value DEFAULT: Overtemperature default set to 1.16 V */
 #define MC33771C_TH_AN6_OT_AN_OT_TH_DEFAULT_ENUM_VAL (0xEDU)
@@ -7015,9 +6537,8 @@ extern "C" {
 /* Field AN_OT_TH: Overtemperature threshold setting for analog input. */
 #define MC33771C_TH_AN5_OT_AN_OT_TH_SHIFT (0x0U)
 #define MC33771C_TH_AN5_OT_AN_OT_TH_MASK (0x3FFU)
-#define MC33771C_TH_AN5_OT_AN_OT_TH(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN5_OT_AN_OT_TH_SHIFT) &      \
-	 MC33771C_TH_AN5_OT_AN_OT_TH_MASK)
+#define MC33771C_TH_AN5_OT_AN_OT_TH(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN5_OT_AN_OT_TH_SHIFT) & MC33771C_TH_AN5_OT_AN_OT_TH_MASK)
 
 /* Enumerated value DEFAULT: Overtemperature default set to 1.16 V */
 #define MC33771C_TH_AN5_OT_AN_OT_TH_DEFAULT_ENUM_VAL (0xEDU)
@@ -7031,9 +6552,8 @@ extern "C" {
 /* Field AN_OT_TH: Overtemperature threshold setting for analog input. */
 #define MC33771C_TH_AN4_OT_AN_OT_TH_SHIFT (0x0U)
 #define MC33771C_TH_AN4_OT_AN_OT_TH_MASK (0x3FFU)
-#define MC33771C_TH_AN4_OT_AN_OT_TH(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN4_OT_AN_OT_TH_SHIFT) &      \
-	 MC33771C_TH_AN4_OT_AN_OT_TH_MASK)
+#define MC33771C_TH_AN4_OT_AN_OT_TH(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN4_OT_AN_OT_TH_SHIFT) & MC33771C_TH_AN4_OT_AN_OT_TH_MASK)
 
 /* Enumerated value DEFAULT: Overtemperature default set to 1.16 V */
 #define MC33771C_TH_AN4_OT_AN_OT_TH_DEFAULT_ENUM_VAL (0xEDU)
@@ -7047,9 +6567,8 @@ extern "C" {
 /* Field AN_OT_TH: Overtemperature threshold setting for analog input. */
 #define MC33771C_TH_AN3_OT_AN_OT_TH_SHIFT (0x0U)
 #define MC33771C_TH_AN3_OT_AN_OT_TH_MASK (0x3FFU)
-#define MC33771C_TH_AN3_OT_AN_OT_TH(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN3_OT_AN_OT_TH_SHIFT) &      \
-	 MC33771C_TH_AN3_OT_AN_OT_TH_MASK)
+#define MC33771C_TH_AN3_OT_AN_OT_TH(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN3_OT_AN_OT_TH_SHIFT) & MC33771C_TH_AN3_OT_AN_OT_TH_MASK)
 
 /* Enumerated value DEFAULT: Overtemperature default set to 1.16 V */
 #define MC33771C_TH_AN3_OT_AN_OT_TH_DEFAULT_ENUM_VAL (0xEDU)
@@ -7063,9 +6582,8 @@ extern "C" {
 /* Field AN_OT_TH: Overtemperature threshold setting for analog input. */
 #define MC33771C_TH_AN2_OT_AN_OT_TH_SHIFT (0x0U)
 #define MC33771C_TH_AN2_OT_AN_OT_TH_MASK (0x3FFU)
-#define MC33771C_TH_AN2_OT_AN_OT_TH(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN2_OT_AN_OT_TH_SHIFT) &      \
-	 MC33771C_TH_AN2_OT_AN_OT_TH_MASK)
+#define MC33771C_TH_AN2_OT_AN_OT_TH(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN2_OT_AN_OT_TH_SHIFT) & MC33771C_TH_AN2_OT_AN_OT_TH_MASK)
 
 /* Enumerated value DEFAULT: Overtemperature default set to 1.16 V */
 #define MC33771C_TH_AN2_OT_AN_OT_TH_DEFAULT_ENUM_VAL (0xEDU)
@@ -7079,9 +6597,8 @@ extern "C" {
 /* Field AN_OT_TH: Overtemperature threshold setting for analog input. */
 #define MC33771C_TH_AN1_OT_AN_OT_TH_SHIFT (0x0U)
 #define MC33771C_TH_AN1_OT_AN_OT_TH_MASK (0x3FFU)
-#define MC33771C_TH_AN1_OT_AN_OT_TH(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN1_OT_AN_OT_TH_SHIFT) &      \
-	 MC33771C_TH_AN1_OT_AN_OT_TH_MASK)
+#define MC33771C_TH_AN1_OT_AN_OT_TH(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN1_OT_AN_OT_TH_SHIFT) & MC33771C_TH_AN1_OT_AN_OT_TH_MASK)
 
 /* Enumerated value DEFAULT: Overtemperature default set to 1.16 V */
 #define MC33771C_TH_AN1_OT_AN_OT_TH_DEFAULT_ENUM_VAL (0xEDU)
@@ -7095,9 +6612,8 @@ extern "C" {
 /* Field AN_OT_TH: Overtemperature threshold setting for analog input. */
 #define MC33771C_TH_AN0_OT_AN_OT_TH_SHIFT (0x0U)
 #define MC33771C_TH_AN0_OT_AN_OT_TH_MASK (0x3FFU)
-#define MC33771C_TH_AN0_OT_AN_OT_TH(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN0_OT_AN_OT_TH_SHIFT) &      \
-	 MC33771C_TH_AN0_OT_AN_OT_TH_MASK)
+#define MC33771C_TH_AN0_OT_AN_OT_TH(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN0_OT_AN_OT_TH_SHIFT) & MC33771C_TH_AN0_OT_AN_OT_TH_MASK)
 
 /* Enumerated value DEFAULT: Overtemperature default set to 1.16 V */
 #define MC33771C_TH_AN0_OT_AN_OT_TH_DEFAULT_ENUM_VAL (0xEDU)
@@ -7111,9 +6627,8 @@ extern "C" {
 /* Field AN_UT_TH: Undertemperature threshold setting for analog input. */
 #define MC33771C_TH_AN6_UT_AN_UT_TH_SHIFT (0x0U)
 #define MC33771C_TH_AN6_UT_AN_UT_TH_MASK (0x3FFU)
-#define MC33771C_TH_AN6_UT_AN_UT_TH(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN6_UT_AN_UT_TH_SHIFT) &      \
-	 MC33771C_TH_AN6_UT_AN_UT_TH_MASK)
+#define MC33771C_TH_AN6_UT_AN_UT_TH(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN6_UT_AN_UT_TH_SHIFT) & MC33771C_TH_AN6_UT_AN_UT_TH_MASK)
 
 /* Enumerated value DEFAULT: Undertemperature default set to 3.82 V */
 #define MC33771C_TH_AN6_UT_AN_UT_TH_DEFAULT_ENUM_VAL (0x30EU)
@@ -7127,9 +6642,8 @@ extern "C" {
 /* Field AN_UT_TH: Undertemperature threshold setting for analog input. */
 #define MC33771C_TH_AN5_UT_AN_UT_TH_SHIFT (0x0U)
 #define MC33771C_TH_AN5_UT_AN_UT_TH_MASK (0x3FFU)
-#define MC33771C_TH_AN5_UT_AN_UT_TH(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN5_UT_AN_UT_TH_SHIFT) &      \
-	 MC33771C_TH_AN5_UT_AN_UT_TH_MASK)
+#define MC33771C_TH_AN5_UT_AN_UT_TH(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN5_UT_AN_UT_TH_SHIFT) & MC33771C_TH_AN5_UT_AN_UT_TH_MASK)
 
 /* Enumerated value DEFAULT: Undertemperature default set to 3.82 V */
 #define MC33771C_TH_AN5_UT_AN_UT_TH_DEFAULT_ENUM_VAL (0x30EU)
@@ -7143,9 +6657,8 @@ extern "C" {
 /* Field AN_UT_TH: Undertemperature threshold setting for analog input. */
 #define MC33771C_TH_AN4_UT_AN_UT_TH_SHIFT (0x0U)
 #define MC33771C_TH_AN4_UT_AN_UT_TH_MASK (0x3FFU)
-#define MC33771C_TH_AN4_UT_AN_UT_TH(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN4_UT_AN_UT_TH_SHIFT) &      \
-	 MC33771C_TH_AN4_UT_AN_UT_TH_MASK)
+#define MC33771C_TH_AN4_UT_AN_UT_TH(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN4_UT_AN_UT_TH_SHIFT) & MC33771C_TH_AN4_UT_AN_UT_TH_MASK)
 
 /* Enumerated value DEFAULT: Undertemperature default set to 3.82 V */
 #define MC33771C_TH_AN4_UT_AN_UT_TH_DEFAULT_ENUM_VAL (0x30EU)
@@ -7159,9 +6672,8 @@ extern "C" {
 /* Field AN_UT_TH: Undertemperature threshold setting for analog input. */
 #define MC33771C_TH_AN3_UT_AN_UT_TH_SHIFT (0x0U)
 #define MC33771C_TH_AN3_UT_AN_UT_TH_MASK (0x3FFU)
-#define MC33771C_TH_AN3_UT_AN_UT_TH(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN3_UT_AN_UT_TH_SHIFT) &      \
-	 MC33771C_TH_AN3_UT_AN_UT_TH_MASK)
+#define MC33771C_TH_AN3_UT_AN_UT_TH(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN3_UT_AN_UT_TH_SHIFT) & MC33771C_TH_AN3_UT_AN_UT_TH_MASK)
 
 /* Enumerated value DEFAULT: Undertemperature default set to 3.82 V */
 #define MC33771C_TH_AN3_UT_AN_UT_TH_DEFAULT_ENUM_VAL (0x30EU)
@@ -7175,9 +6687,8 @@ extern "C" {
 /* Field AN_UT_TH: Undertemperature threshold setting for analog input. */
 #define MC33771C_TH_AN2_UT_AN_UT_TH_SHIFT (0x0U)
 #define MC33771C_TH_AN2_UT_AN_UT_TH_MASK (0x3FFU)
-#define MC33771C_TH_AN2_UT_AN_UT_TH(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN2_UT_AN_UT_TH_SHIFT) &      \
-	 MC33771C_TH_AN2_UT_AN_UT_TH_MASK)
+#define MC33771C_TH_AN2_UT_AN_UT_TH(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN2_UT_AN_UT_TH_SHIFT) & MC33771C_TH_AN2_UT_AN_UT_TH_MASK)
 
 /* Enumerated value DEFAULT: Undertemperature default set to 3.82 V */
 #define MC33771C_TH_AN2_UT_AN_UT_TH_DEFAULT_ENUM_VAL (0x30EU)
@@ -7191,9 +6702,8 @@ extern "C" {
 /* Field AN_UT_TH: Undertemperature threshold setting for analog input. */
 #define MC33771C_TH_AN1_UT_AN_UT_TH_SHIFT (0x0U)
 #define MC33771C_TH_AN1_UT_AN_UT_TH_MASK (0x3FFU)
-#define MC33771C_TH_AN1_UT_AN_UT_TH(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN1_UT_AN_UT_TH_SHIFT) &      \
-	 MC33771C_TH_AN1_UT_AN_UT_TH_MASK)
+#define MC33771C_TH_AN1_UT_AN_UT_TH(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN1_UT_AN_UT_TH_SHIFT) & MC33771C_TH_AN1_UT_AN_UT_TH_MASK)
 
 /* Enumerated value DEFAULT: Undertemperature default set to 3.82 V */
 #define MC33771C_TH_AN1_UT_AN_UT_TH_DEFAULT_ENUM_VAL (0x30EU)
@@ -7207,9 +6717,8 @@ extern "C" {
 /* Field AN_UT_TH: Undertemperature threshold setting for analog input. */
 #define MC33771C_TH_AN0_UT_AN_UT_TH_SHIFT (0x0U)
 #define MC33771C_TH_AN0_UT_AN_UT_TH_MASK (0x3FFU)
-#define MC33771C_TH_AN0_UT_AN_UT_TH(x)                                         \
-	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN0_UT_AN_UT_TH_SHIFT) &      \
-	 MC33771C_TH_AN0_UT_AN_UT_TH_MASK)
+#define MC33771C_TH_AN0_UT_AN_UT_TH(x)                                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_AN0_UT_AN_UT_TH_SHIFT) & MC33771C_TH_AN0_UT_AN_UT_TH_MASK)
 
 /* Enumerated value DEFAULT: Undertemperature default set to 3.82 V */
 #define MC33771C_TH_AN0_UT_AN_UT_TH_DEFAULT_ENUM_VAL (0x30EU)
@@ -7224,9 +6733,8 @@ extern "C" {
  * Resolution is 1.2 uV/LSB. */
 #define MC33771C_TH_ISENSE_OC_TH_ISENSE_OC_SHIFT (0x0U)
 #define MC33771C_TH_ISENSE_OC_TH_ISENSE_OC_MASK (0xFFFU)
-#define MC33771C_TH_ISENSE_OC_TH_ISENSE_OC(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_TH_ISENSE_OC_TH_ISENSE_OC_SHIFT) &             \
+#define MC33771C_TH_ISENSE_OC_TH_ISENSE_OC(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_ISENSE_OC_TH_ISENSE_OC_SHIFT) &                                       \
 	 MC33771C_TH_ISENSE_OC_TH_ISENSE_OC_MASK)
 
 /* --------------------------------------------------------------------------
@@ -7239,9 +6747,8 @@ extern "C" {
  */
 #define MC33771C_TH_COULOMB_CNT_MSB_TH_COULOMB_CNT_MSB_SHIFT (0x0U)
 #define MC33771C_TH_COULOMB_CNT_MSB_TH_COULOMB_CNT_MSB_MASK (0xFFFFU)
-#define MC33771C_TH_COULOMB_CNT_MSB_TH_COULOMB_CNT_MSB(x)                      \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_TH_COULOMB_CNT_MSB_TH_COULOMB_CNT_MSB_SHIFT) & \
+#define MC33771C_TH_COULOMB_CNT_MSB_TH_COULOMB_CNT_MSB(x)                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_COULOMB_CNT_MSB_TH_COULOMB_CNT_MSB_SHIFT) &                           \
 	 MC33771C_TH_COULOMB_CNT_MSB_TH_COULOMB_CNT_MSB_MASK)
 
 /* --------------------------------------------------------------------------
@@ -7254,9 +6761,8 @@ extern "C" {
  */
 #define MC33771C_TH_COULOMB_CNT_LSB_TH_COULOMB_CNT_LSB_SHIFT (0x0U)
 #define MC33771C_TH_COULOMB_CNT_LSB_TH_COULOMB_CNT_LSB_MASK (0xFFFFU)
-#define MC33771C_TH_COULOMB_CNT_LSB_TH_COULOMB_CNT_LSB(x)                      \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_TH_COULOMB_CNT_LSB_TH_COULOMB_CNT_LSB_SHIFT) & \
+#define MC33771C_TH_COULOMB_CNT_LSB_TH_COULOMB_CNT_LSB(x)                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_TH_COULOMB_CNT_LSB_TH_COULOMB_CNT_LSB_SHIFT) &                           \
 	 MC33771C_TH_COULOMB_CNT_LSB_TH_COULOMB_CNT_LSB_MASK)
 
 /* --------------------------------------------------------------------------
@@ -7268,16 +6774,14 @@ extern "C" {
 /* Field MREV (read-only): Metal mask revision. */
 #define MC33771C_SILICON_REV_MREV_SHIFT (0x0U)
 #define MC33771C_SILICON_REV_MREV_MASK (0x7U)
-#define MC33771C_SILICON_REV_MREV(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_SILICON_REV_MREV_SHIFT) &        \
-	 MC33771C_SILICON_REV_MREV_MASK)
+#define MC33771C_SILICON_REV_MREV(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_SILICON_REV_MREV_SHIFT) & MC33771C_SILICON_REV_MREV_MASK)
 
 /* Field FREV (read-only): Full mask revision. */
 #define MC33771C_SILICON_REV_FREV_SHIFT (0x3U)
 #define MC33771C_SILICON_REV_FREV_MASK (0x38U)
-#define MC33771C_SILICON_REV_FREV(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_SILICON_REV_FREV_SHIFT) &        \
-	 MC33771C_SILICON_REV_FREV_MASK)
+#define MC33771C_SILICON_REV_FREV(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_SILICON_REV_FREV_SHIFT) & MC33771C_SILICON_REV_FREV_MASK)
 
 /* --------------------------------------------------------------------------
  * EEPROM_CTRL (read-write): EEPROM communication register.
@@ -7289,31 +6793,27 @@ extern "C" {
  * EEPROM_ADD. */
 #define MC33771C_EEPROM_CTRL_READ_DATA_SHIFT (0x0U)
 #define MC33771C_EEPROM_CTRL_READ_DATA_MASK (0xFFU)
-#define MC33771C_EEPROM_CTRL_READ_DATA(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_EEPROM_CTRL_READ_DATA_SHIFT) &   \
-	 MC33771C_EEPROM_CTRL_READ_DATA_MASK)
+#define MC33771C_EEPROM_CTRL_READ_DATA(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_EEPROM_CTRL_READ_DATA_SHIFT) & MC33771C_EEPROM_CTRL_READ_DATA_MASK)
 
 /* Field DATA_TO_WRITE (write-only): Data to be written into the EEPROM. */
 #define MC33771C_EEPROM_CTRL_DATA_TO_WRITE_SHIFT (0x0U)
 #define MC33771C_EEPROM_CTRL_DATA_TO_WRITE_MASK (0xFFU)
-#define MC33771C_EEPROM_CTRL_DATA_TO_WRITE(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_EEPROM_CTRL_DATA_TO_WRITE_SHIFT) &             \
+#define MC33771C_EEPROM_CTRL_DATA_TO_WRITE(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_EEPROM_CTRL_DATA_TO_WRITE_SHIFT) &                                       \
 	 MC33771C_EEPROM_CTRL_DATA_TO_WRITE_MASK)
 
 /* Field EEPROM_ADD (write-only): EEPROM address to read or write. */
 #define MC33771C_EEPROM_CTRL_EEPROM_ADD_SHIFT (0x8U)
 #define MC33771C_EEPROM_CTRL_EEPROM_ADD_MASK (0x7F00U)
-#define MC33771C_EEPROM_CTRL_EEPROM_ADD(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_EEPROM_CTRL_EEPROM_ADD_SHIFT) &  \
-	 MC33771C_EEPROM_CTRL_EEPROM_ADD_MASK)
+#define MC33771C_EEPROM_CTRL_EEPROM_ADD(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_EEPROM_CTRL_EEPROM_ADD_SHIFT) & MC33771C_EEPROM_CTRL_EEPROM_ADD_MASK)
 
 /* Field EE_PRESENT (read-only): EEPROM detection. */
 #define MC33771C_EEPROM_CTRL_EE_PRESENT_SHIFT (0xDU)
 #define MC33771C_EEPROM_CTRL_EE_PRESENT_MASK (0x2000U)
-#define MC33771C_EEPROM_CTRL_EE_PRESENT(x)                                     \
-	((uint16_t)((uint16_t)(x) << MC33771C_EEPROM_CTRL_EE_PRESENT_SHIFT) &  \
-	 MC33771C_EEPROM_CTRL_EE_PRESENT_MASK)
+#define MC33771C_EEPROM_CTRL_EE_PRESENT(x)                                                                             \
+	((uint16_t)((uint16_t)(x) << MC33771C_EEPROM_CTRL_EE_PRESENT_SHIFT) & MC33771C_EEPROM_CTRL_EE_PRESENT_MASK)
 
 /* Enumerated value NOT_DETECTED: No EEPROM detected. */
 #define MC33771C_EEPROM_CTRL_EE_PRESENT_NOT_DETECTED_ENUM_VAL (0x0U)
@@ -7324,9 +6824,8 @@ extern "C" {
 /* Field ERROR (read-only): EEPROM communication error bit.. */
 #define MC33771C_EEPROM_CTRL_ERROR_SHIFT (0xEU)
 #define MC33771C_EEPROM_CTRL_ERROR_MASK (0x4000U)
-#define MC33771C_EEPROM_CTRL_ERROR(x)                                          \
-	((uint16_t)((uint16_t)(x) << MC33771C_EEPROM_CTRL_ERROR_SHIFT) &       \
-	 MC33771C_EEPROM_CTRL_ERROR_MASK)
+#define MC33771C_EEPROM_CTRL_ERROR(x)                                                                                  \
+	((uint16_t)((uint16_t)(x) << MC33771C_EEPROM_CTRL_ERROR_SHIFT) & MC33771C_EEPROM_CTRL_ERROR_MASK)
 
 /* Enumerated value NO_ERROR: No error occurred during the communication to
  * EEPROM. */
@@ -7339,9 +6838,8 @@ extern "C" {
 /* Field BUSY (read-only): Busy bit. */
 #define MC33771C_EEPROM_CTRL_BUSY_SHIFT (0xFU)
 #define MC33771C_EEPROM_CTRL_BUSY_MASK (0x8000U)
-#define MC33771C_EEPROM_CTRL_BUSY(x)                                           \
-	((uint16_t)((uint16_t)(x) << MC33771C_EEPROM_CTRL_BUSY_SHIFT) &        \
-	 MC33771C_EEPROM_CTRL_BUSY_MASK)
+#define MC33771C_EEPROM_CTRL_BUSY(x)                                                                                   \
+	((uint16_t)((uint16_t)(x) << MC33771C_EEPROM_CTRL_BUSY_SHIFT) & MC33771C_EEPROM_CTRL_BUSY_MASK)
 
 /* Enumerated value COMPLETED: Indicates the IC has completed the EEPROM read or
  * write operation. */
@@ -7355,9 +6853,8 @@ extern "C" {
  * from EEPROM. */
 #define MC33771C_EEPROM_CTRL_R_W_SHIFT (0xFU)
 #define MC33771C_EEPROM_CTRL_R_W_MASK (0x8000U)
-#define MC33771C_EEPROM_CTRL_R_W(x)                                            \
-	((uint16_t)((uint16_t)(x) << MC33771C_EEPROM_CTRL_R_W_SHIFT) &         \
-	 MC33771C_EEPROM_CTRL_R_W_MASK)
+#define MC33771C_EEPROM_CTRL_R_W(x)                                                                                    \
+	((uint16_t)((uint16_t)(x) << MC33771C_EEPROM_CTRL_R_W_SHIFT) & MC33771C_EEPROM_CTRL_R_W_MASK)
 
 /* Enumerated value WRITE: Write. */
 #define MC33771C_EEPROM_CTRL_R_W_WRITE_ENUM_VAL (0x0U)
@@ -7375,9 +6872,8 @@ extern "C" {
  * the fuse matrix (ECC). */
 #define MC33771C_DED_ENCODE1_DED_HAMMING_COUT1_31_16_SHIFT (0x0U)
 #define MC33771C_DED_ENCODE1_DED_HAMMING_COUT1_31_16_MASK (0xFFFFU)
-#define MC33771C_DED_ENCODE1_DED_HAMMING_COUT1_31_16(x)                        \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_DED_ENCODE1_DED_HAMMING_COUT1_31_16_SHIFT) &   \
+#define MC33771C_DED_ENCODE1_DED_HAMMING_COUT1_31_16(x)                                                                \
+	((uint16_t)((uint16_t)(x) << MC33771C_DED_ENCODE1_DED_HAMMING_COUT1_31_16_SHIFT) &                             \
 	 MC33771C_DED_ENCODE1_DED_HAMMING_COUT1_31_16_MASK)
 
 /* --------------------------------------------------------------------------
@@ -7390,9 +6886,8 @@ extern "C" {
  * the fuse matrix (ECC). */
 #define MC33771C_DED_ENCODE2_DED_HAMMING_COUT1_15_0_SHIFT (0x0U)
 #define MC33771C_DED_ENCODE2_DED_HAMMING_COUT1_15_0_MASK (0xFFFFU)
-#define MC33771C_DED_ENCODE2_DED_HAMMING_COUT1_15_0(x)                         \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_DED_ENCODE2_DED_HAMMING_COUT1_15_0_SHIFT) &    \
+#define MC33771C_DED_ENCODE2_DED_HAMMING_COUT1_15_0(x)                                                                 \
+	((uint16_t)((uint16_t)(x) << MC33771C_DED_ENCODE2_DED_HAMMING_COUT1_15_0_SHIFT) &                              \
 	 MC33771C_DED_ENCODE2_DED_HAMMING_COUT1_15_0_MASK)
 
 /* --------------------------------------------------------------------------
@@ -7404,9 +6899,8 @@ extern "C" {
 /* Field FMR_DATA: Fuse mirror data to read or write. */
 #define MC33771C_FUSE_MIRROR_DATA_FMR_DATA_SHIFT (0x0U)
 #define MC33771C_FUSE_MIRROR_DATA_FMR_DATA_MASK (0xFFFFU)
-#define MC33771C_FUSE_MIRROR_DATA_FMR_DATA(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FUSE_MIRROR_DATA_FMR_DATA_SHIFT) &             \
+#define MC33771C_FUSE_MIRROR_DATA_FMR_DATA(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_FUSE_MIRROR_DATA_FMR_DATA_SHIFT) &                                       \
 	 MC33771C_FUSE_MIRROR_DATA_FMR_DATA_MASK)
 
 /* --------------------------------------------------------------------------
@@ -7419,18 +6913,16 @@ extern "C" {
  * to trace the current state. */
 #define MC33771C_FUSE_MIRROR_CNTL_FST_ST_SHIFT (0x0U)
 #define MC33771C_FUSE_MIRROR_CNTL_FST_ST_MASK (0x7U)
-#define MC33771C_FUSE_MIRROR_CNTL_FST_ST(x)                                    \
-	((uint16_t)((uint16_t)(x) << MC33771C_FUSE_MIRROR_CNTL_FST_ST_SHIFT) & \
-	 MC33771C_FUSE_MIRROR_CNTL_FST_ST_MASK)
+#define MC33771C_FUSE_MIRROR_CNTL_FST_ST(x)                                                                            \
+	((uint16_t)((uint16_t)(x) << MC33771C_FUSE_MIRROR_CNTL_FST_ST_SHIFT) & MC33771C_FUSE_MIRROR_CNTL_FST_ST_MASK)
 
 /* Field FST (write-only): Fuse state control. write to this register controls
  * the switching of the fuse state machine. Read in this register enables
  * tracing the current state. */
 #define MC33771C_FUSE_MIRROR_CNTL_FST_SHIFT (0x0U)
 #define MC33771C_FUSE_MIRROR_CNTL_FST_MASK (0x7U)
-#define MC33771C_FUSE_MIRROR_CNTL_FST(x)                                       \
-	((uint16_t)((uint16_t)(x) << MC33771C_FUSE_MIRROR_CNTL_FST_SHIFT) &    \
-	 MC33771C_FUSE_MIRROR_CNTL_FST_MASK)
+#define MC33771C_FUSE_MIRROR_CNTL_FST(x)                                                                               \
+	((uint16_t)((uint16_t)(x) << MC33771C_FUSE_MIRROR_CNTL_FST_SHIFT) & MC33771C_FUSE_MIRROR_CNTL_FST_MASK)
 
 /* Enumerated value SPI_WRITE_ENABLE: Enable SPI write. */
 #define MC33771C_FUSE_MIRROR_CNTL_FST_SPI_WRITE_ENABLE_ENUM_VAL (0x0U)
@@ -7442,9 +6934,8 @@ extern "C" {
  * access to the FST[2:0] bits. */
 #define MC33771C_FUSE_MIRROR_CNTL_FSTM_SHIFT (0x3U)
 #define MC33771C_FUSE_MIRROR_CNTL_FSTM_MASK (0x8U)
-#define MC33771C_FUSE_MIRROR_CNTL_FSTM(x)                                      \
-	((uint16_t)((uint16_t)(x) << MC33771C_FUSE_MIRROR_CNTL_FSTM_SHIFT) &   \
-	 MC33771C_FUSE_MIRROR_CNTL_FSTM_MASK)
+#define MC33771C_FUSE_MIRROR_CNTL_FSTM(x)                                                                              \
+	((uint16_t)((uint16_t)(x) << MC33771C_FUSE_MIRROR_CNTL_FSTM_SHIFT) & MC33771C_FUSE_MIRROR_CNTL_FSTM_MASK)
 
 /* Enumerated value LOCKED: Writing in FST bits has no effect. */
 #define MC33771C_FUSE_MIRROR_CNTL_FSTM_LOCKED_ENUM_VAL (0x0U)
@@ -7455,17 +6946,15 @@ extern "C" {
 /* Field FMR_ADDR: Fuse mirror register address. */
 #define MC33771C_FUSE_MIRROR_CNTL_FMR_ADDR_SHIFT (0x8U)
 #define MC33771C_FUSE_MIRROR_CNTL_FMR_ADDR_MASK (0x1F00U)
-#define MC33771C_FUSE_MIRROR_CNTL_FMR_ADDR(x)                                  \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FUSE_MIRROR_CNTL_FMR_ADDR_SHIFT) &             \
+#define MC33771C_FUSE_MIRROR_CNTL_FMR_ADDR(x)                                                                          \
+	((uint16_t)((uint16_t)(x) << MC33771C_FUSE_MIRROR_CNTL_FMR_ADDR_SHIFT) &                                       \
 	 MC33771C_FUSE_MIRROR_CNTL_FMR_ADDR_MASK)
 
 /* Field SEC_ERR_FLT (read-only): ECC error, single error correction. */
 #define MC33771C_FUSE_MIRROR_CNTL_SEC_ERR_FLT_SHIFT (0xFU)
 #define MC33771C_FUSE_MIRROR_CNTL_SEC_ERR_FLT_MASK (0x8000U)
-#define MC33771C_FUSE_MIRROR_CNTL_SEC_ERR_FLT(x)                               \
-	((uint16_t)((uint16_t)(x)                                              \
-		    << MC33771C_FUSE_MIRROR_CNTL_SEC_ERR_FLT_SHIFT) &          \
+#define MC33771C_FUSE_MIRROR_CNTL_SEC_ERR_FLT(x)                                                                       \
+	((uint16_t)((uint16_t)(x) << MC33771C_FUSE_MIRROR_CNTL_SEC_ERR_FLT_SHIFT) &                                    \
 	 MC33771C_FUSE_MIRROR_CNTL_SEC_ERR_FLT_MASK)
 
 /* Enumerated value NO_ERROR: No error. */

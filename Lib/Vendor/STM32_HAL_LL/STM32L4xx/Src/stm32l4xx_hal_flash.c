@@ -103,9 +103,8 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private defines -----------------------------------------------------------*/
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 #define FLASH_NB_DOUBLE_WORDS_IN_ROW 64
 #else
 #define FLASH_NB_DOUBLE_WORDS_IN_ROW 32
@@ -172,8 +171,7 @@ static void FLASH_Program_Fast(uint32_t Address, uint32_t DataAddress);
  *
  * @retval HAL_StatusTypeDef HAL Status
  */
-HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address,
-				    uint64_t Data)
+HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address, uint64_t Data)
 {
 	HAL_StatusTypeDef status;
 	uint32_t prog_bit = 0;
@@ -221,8 +219,7 @@ HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address,
 		}
 
 		/* Wait for last operation to be completed */
-		status =
-		    FLASH_WaitForLastOperation((uint32_t)FLASH_TIMEOUT_VALUE);
+		status = FLASH_WaitForLastOperation((uint32_t)FLASH_TIMEOUT_VALUE);
 
 		/* If the program operation is completed, disable the PG or
 		 * FSTPG Bit */
@@ -253,8 +250,7 @@ HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address,
  *
  * @retval HAL Status
  */
-HAL_StatusTypeDef HAL_FLASH_Program_IT(uint32_t TypeProgram, uint32_t Address,
-				       uint64_t Data)
+HAL_StatusTypeDef HAL_FLASH_Program_IT(uint32_t TypeProgram, uint32_t Address, uint64_t Data)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -290,8 +286,7 @@ HAL_StatusTypeDef HAL_FLASH_Program_IT(uint32_t TypeProgram, uint32_t Address,
 	if (TypeProgram == FLASH_TYPEPROGRAM_DOUBLEWORD) {
 		/* Program double-word (64-bit) at a specified address */
 		FLASH_Program_DoubleWord(Address, Data);
-	} else if ((TypeProgram == FLASH_TYPEPROGRAM_FAST) ||
-		   (TypeProgram == FLASH_TYPEPROGRAM_FAST_AND_LAST)) {
+	} else if ((TypeProgram == FLASH_TYPEPROGRAM_FAST) || (TypeProgram == FLASH_TYPEPROGRAM_FAST_AND_LAST)) {
 		/* Fast program a 32 row double-word (64-bit) at a specified
 		 * address */
 		FLASH_Program_Fast(Address, (uint32_t)Data);
@@ -314,12 +309,10 @@ void HAL_FLASH_IRQHandler(void)
 
 	/* If the operation is completed, disable the PG, PNB, MER1, MER2 and
 	 * PER Bit */
-	CLEAR_BIT(FLASH->CR,
-		  (FLASH_CR_PG | FLASH_CR_MER1 | FLASH_CR_PER | FLASH_CR_PNB));
-#if defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) ||    \
-    defined(STM32L485xx) || defined(STM32L486xx) || defined(STM32L496xx) ||    \
-    defined(STM32L4A6xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx) ||    \
-    defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) ||    \
+	CLEAR_BIT(FLASH->CR, (FLASH_CR_PG | FLASH_CR_MER1 | FLASH_CR_PER | FLASH_CR_PNB));
+#if defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) ||                    \
+    defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) ||                    \
+    defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) ||                    \
     defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	CLEAR_BIT(FLASH->CR, FLASH_CR_MER2);
 #endif
@@ -348,8 +341,7 @@ void HAL_FLASH_IRQHandler(void)
 			HAL_FLASH_OperationErrorCallback(pFlash.Page);
 		} else if (procedure == FLASH_PROC_MASS_ERASE) {
 			HAL_FLASH_OperationErrorCallback(pFlash.Bank);
-		} else if ((procedure == FLASH_PROC_PROGRAM) ||
-			   (procedure == FLASH_PROC_PROGRAM_LAST)) {
+		} else if ((procedure == FLASH_PROC_PROGRAM) || (procedure == FLASH_PROC_PROGRAM_LAST)) {
 			HAL_FLASH_OperationErrorCallback(pFlash.Address);
 		} else {
 			HAL_FLASH_OperationErrorCallback(0U);
@@ -401,12 +393,10 @@ void HAL_FLASH_IRQHandler(void)
 				/* MassErase ended. Return the selected bank */
 				/* FLASH EOP interrupt user callback */
 				HAL_FLASH_EndOfOperationCallback(pFlash.Bank);
-			} else if ((procedure == FLASH_PROC_PROGRAM) ||
-				   (procedure == FLASH_PROC_PROGRAM_LAST)) {
+			} else if ((procedure == FLASH_PROC_PROGRAM) || (procedure == FLASH_PROC_PROGRAM_LAST)) {
 				/* Program ended. Return the selected address */
 				/* FLASH EOP interrupt user callback */
-				HAL_FLASH_EndOfOperationCallback(
-				    pFlash.Address);
+				HAL_FLASH_EndOfOperationCallback(pFlash.Address);
 			} else {
 				/* Nothing to do */
 			}

@@ -124,8 +124,7 @@ int main(void)
 	while (1) {
 		/* USER CODE END WHILE */
 		/* USER CODE BEGIN 3 */
-		HAL_SPI_Receive(&hspi2, (uint8_t *)RX_Buffer, sizeof(message),
-				3000);
+		HAL_SPI_Receive(&hspi2, (uint8_t *)RX_Buffer, sizeof(message), 3000);
 
 		if (strncmp(message, RX_Buffer, sizeof(message)) == 0) {
 			count += 1;
@@ -171,16 +170,14 @@ void SystemClock_Config(void)
 
 	/** Initializes the CPU, AHB and APB buses clocks
 	 */
-	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK |
-				      RCC_CLOCKTYPE_SYSCLK |
-				      RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+	RCC_ClkInitStruct.ClockType =
+	    RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
 	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
 	RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
 	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
 	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) !=
-	    HAL_OK) {
+	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK) {
 		Error_Handler();
 	}
 }
@@ -208,9 +205,8 @@ static void MX_SPI2_Init(void)
 	hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
 	hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
 
-	hspi2.Init.NSS =
-	    SPI_NSS_HARD_INPUT; // Must select this option for the SPI slave to
-				// listen to the Chip select line, otherwise
+	hspi2.Init.NSS = SPI_NSS_HARD_INPUT; // Must select this option for the SPI slave to
+					     // listen to the Chip select line, otherwise
 	// CS line is ignored completely, regardless of whether the master pulls
 	// it high or low
 
@@ -254,12 +250,10 @@ static void MX_USART2_Init(void)
 	if (HAL_USART_Init(&husart2) != HAL_OK) {
 		Error_Handler();
 	}
-	if (HAL_USARTEx_SetTxFifoThreshold(
-		&husart2, USART_TXFIFO_THRESHOLD_1_8) != HAL_OK) {
+	if (HAL_USARTEx_SetTxFifoThreshold(&husart2, USART_TXFIFO_THRESHOLD_1_8) != HAL_OK) {
 		Error_Handler();
 	}
-	if (HAL_USARTEx_SetRxFifoThreshold(
-		&husart2, USART_RXFIFO_THRESHOLD_1_8) != HAL_OK) {
+	if (HAL_USARTEx_SetRxFifoThreshold(&husart2, USART_RXFIFO_THRESHOLD_1_8) != HAL_OK) {
 		Error_Handler();
 	}
 	if (HAL_USARTEx_DisableFifoMode(&husart2) != HAL_OK) {

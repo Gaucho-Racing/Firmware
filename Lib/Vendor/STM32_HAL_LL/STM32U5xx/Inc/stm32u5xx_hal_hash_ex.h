@@ -50,30 +50,16 @@ extern "C" {
  * @{
  */
 
-HAL_StatusTypeDef HAL_HASHEx_SHA224_Start(HASH_HandleTypeDef *hhash,
-					  const uint8_t *const pInBuffer,
-					  uint32_t Size, uint8_t *pOutBuffer,
-					  uint32_t Timeout);
-HAL_StatusTypeDef HAL_HASHEx_SHA224_Accmlt(HASH_HandleTypeDef *hhash,
-					   const uint8_t *const pInBuffer,
-					   uint32_t Size);
-HAL_StatusTypeDef HAL_HASHEx_SHA224_Accmlt_End(HASH_HandleTypeDef *hhash,
-					       const uint8_t *const pInBuffer,
-					       uint32_t Size,
-					       uint8_t *pOutBuffer,
-					       uint32_t Timeout);
-HAL_StatusTypeDef HAL_HASHEx_SHA256_Start(HASH_HandleTypeDef *hhash,
-					  const uint8_t *const pInBuffer,
-					  uint32_t Size, uint8_t *pOutBuffer,
-					  uint32_t Timeout);
-HAL_StatusTypeDef HAL_HASHEx_SHA256_Accmlt(HASH_HandleTypeDef *hhash,
-					   const uint8_t *const pInBuffer,
-					   uint32_t Size);
-HAL_StatusTypeDef HAL_HASHEx_SHA256_Accmlt_End(HASH_HandleTypeDef *hhash,
-					       const uint8_t *const pInBuffer,
-					       uint32_t Size,
-					       uint8_t *pOutBuffer,
-					       uint32_t Timeout);
+HAL_StatusTypeDef HAL_HASHEx_SHA224_Start(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size,
+					  uint8_t *pOutBuffer, uint32_t Timeout);
+HAL_StatusTypeDef HAL_HASHEx_SHA224_Accmlt(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
+HAL_StatusTypeDef HAL_HASHEx_SHA224_Accmlt_End(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size,
+					       uint8_t *pOutBuffer, uint32_t Timeout);
+HAL_StatusTypeDef HAL_HASHEx_SHA256_Start(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size,
+					  uint8_t *pOutBuffer, uint32_t Timeout);
+HAL_StatusTypeDef HAL_HASHEx_SHA256_Accmlt(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
+HAL_StatusTypeDef HAL_HASHEx_SHA256_Accmlt_End(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size,
+					       uint8_t *pOutBuffer, uint32_t Timeout);
 
 /**
  * @}
@@ -84,28 +70,16 @@ HAL_StatusTypeDef HAL_HASHEx_SHA256_Accmlt_End(HASH_HandleTypeDef *hhash,
  * @{
  */
 
-HAL_StatusTypeDef HAL_HASHEx_SHA224_Start_IT(HASH_HandleTypeDef *hhash,
-					     const uint8_t *const pInBuffer,
-					     uint32_t Size,
+HAL_StatusTypeDef HAL_HASHEx_SHA224_Start_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size,
 					     uint8_t *pOutBuffer);
-HAL_StatusTypeDef HAL_HASHEx_SHA224_Accmlt_IT(HASH_HandleTypeDef *hhash,
-					      const uint8_t *const pInBuffer,
-					      uint32_t Size);
-HAL_StatusTypeDef
-HAL_HASHEx_SHA224_Accmlt_End_IT(HASH_HandleTypeDef *hhash,
-				const uint8_t *const pInBuffer, uint32_t Size,
-				uint8_t *pOutBuffer);
-HAL_StatusTypeDef HAL_HASHEx_SHA256_Start_IT(HASH_HandleTypeDef *hhash,
-					     const uint8_t *const pInBuffer,
-					     uint32_t Size,
+HAL_StatusTypeDef HAL_HASHEx_SHA224_Accmlt_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
+HAL_StatusTypeDef HAL_HASHEx_SHA224_Accmlt_End_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer,
+						  uint32_t Size, uint8_t *pOutBuffer);
+HAL_StatusTypeDef HAL_HASHEx_SHA256_Start_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size,
 					     uint8_t *pOutBuffer);
-HAL_StatusTypeDef HAL_HASHEx_SHA256_Accmlt_IT(HASH_HandleTypeDef *hhash,
-					      const uint8_t *const pInBuffer,
-					      uint32_t Size);
-HAL_StatusTypeDef
-HAL_HASHEx_SHA256_Accmlt_End_IT(HASH_HandleTypeDef *hhash,
-				const uint8_t *const pInBuffer, uint32_t Size,
-				uint8_t *pOutBuffer);
+HAL_StatusTypeDef HAL_HASHEx_SHA256_Accmlt_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
+HAL_StatusTypeDef HAL_HASHEx_SHA256_Accmlt_End_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer,
+						  uint32_t Size, uint8_t *pOutBuffer);
 
 /**
  * @}
@@ -115,18 +89,10 @@ HAL_HASHEx_SHA256_Accmlt_End_IT(HASH_HandleTypeDef *hhash,
  * functions in DMA mode
  * @{
  */
-HAL_StatusTypeDef HAL_HASHEx_SHA224_Start_DMA(HASH_HandleTypeDef *hhash,
-					      const uint8_t *const pInBuffer,
-					      uint32_t Size);
-HAL_StatusTypeDef HAL_HASHEx_SHA224_Finish(HASH_HandleTypeDef *hhash,
-					   uint8_t *pOutBuffer,
-					   uint32_t Timeout);
-HAL_StatusTypeDef HAL_HASHEx_SHA256_Start_DMA(HASH_HandleTypeDef *hhash,
-					      const uint8_t *const pInBuffer,
-					      uint32_t Size);
-HAL_StatusTypeDef HAL_HASHEx_SHA256_Finish(HASH_HandleTypeDef *hhash,
-					   uint8_t *pOutBuffer,
-					   uint32_t Timeout);
+HAL_StatusTypeDef HAL_HASHEx_SHA224_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
+HAL_StatusTypeDef HAL_HASHEx_SHA224_Finish(HASH_HandleTypeDef *hhash, uint8_t *pOutBuffer, uint32_t Timeout);
+HAL_StatusTypeDef HAL_HASHEx_SHA256_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
+HAL_StatusTypeDef HAL_HASHEx_SHA256_Finish(HASH_HandleTypeDef *hhash, uint8_t *pOutBuffer, uint32_t Timeout);
 
 /**
  * @}
@@ -136,14 +102,10 @@ HAL_StatusTypeDef HAL_HASHEx_SHA256_Finish(HASH_HandleTypeDef *hhash,
  * functions in polling mode
  * @{
  */
-HAL_StatusTypeDef HAL_HMACEx_SHA224_Start(HASH_HandleTypeDef *hhash,
-					  const uint8_t *const pInBuffer,
-					  uint32_t Size, uint8_t *pOutBuffer,
-					  uint32_t Timeout);
-HAL_StatusTypeDef HAL_HMACEx_SHA256_Start(HASH_HandleTypeDef *hhash,
-					  const uint8_t *const pInBuffer,
-					  uint32_t Size, uint8_t *pOutBuffer,
-					  uint32_t Timeout);
+HAL_StatusTypeDef HAL_HMACEx_SHA224_Start(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size,
+					  uint8_t *pOutBuffer, uint32_t Timeout);
+HAL_StatusTypeDef HAL_HMACEx_SHA256_Start(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size,
+					  uint8_t *pOutBuffer, uint32_t Timeout);
 /**
  * @}
  */
@@ -153,13 +115,9 @@ HAL_StatusTypeDef HAL_HMACEx_SHA256_Start(HASH_HandleTypeDef *hhash,
  * @{
  */
 
-HAL_StatusTypeDef HAL_HMACEx_SHA224_Start_IT(HASH_HandleTypeDef *hhash,
-					     const uint8_t *const pInBuffer,
-					     uint32_t Size,
+HAL_StatusTypeDef HAL_HMACEx_SHA224_Start_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size,
 					     uint8_t *pOutBuffer);
-HAL_StatusTypeDef HAL_HMACEx_SHA256_Start_IT(HASH_HandleTypeDef *hhash,
-					     const uint8_t *const pInBuffer,
-					     uint32_t Size,
+HAL_StatusTypeDef HAL_HMACEx_SHA256_Start_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size,
 					     uint8_t *pOutBuffer);
 
 /**
@@ -171,12 +129,8 @@ HAL_StatusTypeDef HAL_HMACEx_SHA256_Start_IT(HASH_HandleTypeDef *hhash,
  * @{
  */
 
-HAL_StatusTypeDef HAL_HMACEx_SHA224_Start_DMA(HASH_HandleTypeDef *hhash,
-					      const uint8_t *const pInBuffer,
-					      uint32_t Size);
-HAL_StatusTypeDef HAL_HMACEx_SHA256_Start_DMA(HASH_HandleTypeDef *hhash,
-					      const uint8_t *const pInBuffer,
-					      uint32_t Size);
+HAL_StatusTypeDef HAL_HMACEx_SHA224_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
+HAL_StatusTypeDef HAL_HMACEx_SHA256_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
 
 /**
  * @}
@@ -187,43 +141,23 @@ HAL_StatusTypeDef HAL_HMACEx_SHA256_Start_DMA(HASH_HandleTypeDef *hhash,
  * @{
  */
 
-HAL_StatusTypeDef HAL_HMACEx_MD5_Step1_2_DMA(HASH_HandleTypeDef *hhash,
-					     const uint8_t *const pInBuffer,
-					     uint32_t Size);
-HAL_StatusTypeDef HAL_HMACEx_MD5_Step2_DMA(HASH_HandleTypeDef *hhash,
-					   const uint8_t *const pInBuffer,
-					   uint32_t Size);
-HAL_StatusTypeDef HAL_HMACEx_MD5_Step2_3_DMA(HASH_HandleTypeDef *hhash,
-					     const uint8_t *const pInBuffer,
-					     uint32_t Size);
+HAL_StatusTypeDef HAL_HMACEx_MD5_Step1_2_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
+HAL_StatusTypeDef HAL_HMACEx_MD5_Step2_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
+HAL_StatusTypeDef HAL_HMACEx_MD5_Step2_3_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
 
-HAL_StatusTypeDef HAL_HMACEx_SHA1_Step1_2_DMA(HASH_HandleTypeDef *hhash,
-					      const uint8_t *const pInBuffer,
-					      uint32_t Size);
-HAL_StatusTypeDef HAL_HMACEx_SHA1_Step2_DMA(HASH_HandleTypeDef *hhash,
-					    const uint8_t *const pInBuffer,
-					    uint32_t Size);
-HAL_StatusTypeDef HAL_HMACEx_SHA1_Step2_3_DMA(HASH_HandleTypeDef *hhash,
-					      const uint8_t *const pInBuffer,
-					      uint32_t Size);
-HAL_StatusTypeDef HAL_HMACEx_SHA224_Step1_2_DMA(HASH_HandleTypeDef *hhash,
-						const uint8_t *const pInBuffer,
+HAL_StatusTypeDef HAL_HMACEx_SHA1_Step1_2_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
+HAL_StatusTypeDef HAL_HMACEx_SHA1_Step2_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
+HAL_StatusTypeDef HAL_HMACEx_SHA1_Step2_3_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
+HAL_StatusTypeDef HAL_HMACEx_SHA224_Step1_2_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer,
 						uint32_t Size);
-HAL_StatusTypeDef HAL_HMACEx_SHA224_Step2_DMA(HASH_HandleTypeDef *hhash,
-					      const uint8_t *const pInBuffer,
-					      uint32_t Size);
-HAL_StatusTypeDef HAL_HMACEx_SHA224_Step2_3_DMA(HASH_HandleTypeDef *hhash,
-						const uint8_t *const pInBuffer,
+HAL_StatusTypeDef HAL_HMACEx_SHA224_Step2_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
+HAL_StatusTypeDef HAL_HMACEx_SHA224_Step2_3_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer,
 						uint32_t Size);
 
-HAL_StatusTypeDef HAL_HMACEx_SHA256_Step1_2_DMA(HASH_HandleTypeDef *hhash,
-						const uint8_t *const pInBuffer,
+HAL_StatusTypeDef HAL_HMACEx_SHA256_Step1_2_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer,
 						uint32_t Size);
-HAL_StatusTypeDef HAL_HMACEx_SHA256_Step2_DMA(HASH_HandleTypeDef *hhash,
-					      const uint8_t *const pInBuffer,
-					      uint32_t Size);
-HAL_StatusTypeDef HAL_HMACEx_SHA256_Step2_3_DMA(HASH_HandleTypeDef *hhash,
-						const uint8_t *const pInBuffer,
+HAL_StatusTypeDef HAL_HMACEx_SHA256_Step2_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size);
+HAL_StatusTypeDef HAL_HMACEx_SHA256_Step2_3_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer,
 						uint32_t Size);
 /**
  * @}

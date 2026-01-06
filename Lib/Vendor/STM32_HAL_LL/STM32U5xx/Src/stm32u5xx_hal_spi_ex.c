@@ -77,8 +77,7 @@ HAL_StatusTypeDef HAL_SPIEx_FlushRxFifo(const SPI_HandleTypeDef *hspi)
 	uint32_t itflag = hspi->Instance->SR;
 	__IO uint32_t tmpreg;
 
-	while (((hspi->Instance->SR & SPI_FLAG_FRLVL) != SPI_RX_FIFO_0PACKET) ||
-	       ((itflag & SPI_FLAG_RXWNE) != 0UL)) {
+	while (((hspi->Instance->SR & SPI_FLAG_FRLVL) != SPI_RX_FIFO_0PACKET) || ((itflag & SPI_FLAG_RXWNE) != 0UL)) {
 		count += (uint8_t)4UL;
 		tmpreg = hspi->Instance->RXDR;
 		UNUSED(tmpreg); /* To avoid GCC warning */
@@ -149,8 +148,7 @@ HAL_StatusTypeDef HAL_SPIEx_EnableLockConfiguration(SPI_HandleTypeDef *hspi)
  * condition This parameter can be a value of @ref SPI_Underrun_Behaviour.
  * @retval None
  */
-HAL_StatusTypeDef HAL_SPIEx_ConfigureUnderrun(SPI_HandleTypeDef *hspi,
-					      uint32_t UnderrunDetection,
+HAL_StatusTypeDef HAL_SPIEx_ConfigureUnderrun(SPI_HandleTypeDef *hspi, uint32_t UnderrunDetection,
 					      uint32_t UnderrunBehaviour)
 {
 	/* Prevent unused argument(s) compilation warning */
@@ -163,8 +161,7 @@ HAL_StatusTypeDef HAL_SPIEx_ConfigureUnderrun(SPI_HandleTypeDef *hspi,
 
 	/* Check State and Insure that Underrun configuration is managed only by
 	 * Salve */
-	if ((hspi->State != HAL_SPI_STATE_READY) ||
-	    (hspi->Init.Mode != SPI_MODE_SLAVE)) {
+	if ((hspi->State != HAL_SPI_STATE_READY) || (hspi->Init.Mode != SPI_MODE_SLAVE)) {
 		errorcode = HAL_BUSY;
 		hspi->State = HAL_SPI_STATE_READY;
 		/* Process Unlocked */
@@ -178,15 +175,13 @@ HAL_StatusTypeDef HAL_SPIEx_ConfigureUnderrun(SPI_HandleTypeDef *hspi,
 	/* Check if the SPI is disabled to edit CFG1 register */
 	if ((hspi->Instance->CR1 & SPI_CR1_SPE) != SPI_CR1_SPE) {
 		/* Configure Underrun fields */
-		MODIFY_REG(hspi->Instance->CFG1, SPI_CFG1_UDRCFG,
-			   UnderrunBehaviour);
+		MODIFY_REG(hspi->Instance->CFG1, SPI_CFG1_UDRCFG, UnderrunBehaviour);
 	} else {
 		/* Disable SPI peripheral */
 		__HAL_SPI_DISABLE(hspi);
 
 		/* Configure Underrun fields */
-		MODIFY_REG(hspi->Instance->CFG1, SPI_CFG1_UDRCFG,
-			   UnderrunBehaviour);
+		MODIFY_REG(hspi->Instance->CFG1, SPI_CFG1_UDRCFG, UnderrunBehaviour);
 
 		/* Enable SPI peripheral */
 		__HAL_SPI_ENABLE(hspi);
@@ -208,9 +203,8 @@ HAL_StatusTypeDef HAL_SPIEx_ConfigureUnderrun(SPI_HandleTypeDef *hspi,
  * specified SPIx peripheral.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_SPIEx_SetConfigAutonomousMode(SPI_HandleTypeDef *hspi,
-				  const SPI_AutonomousModeConfTypeDef *sConfig)
+HAL_StatusTypeDef HAL_SPIEx_SetConfigAutonomousMode(SPI_HandleTypeDef *hspi,
+						    const SPI_AutonomousModeConfTypeDef *sConfig)
 {
 	if (hspi->State == HAL_SPI_STATE_READY) {
 		/* Process Locked */
@@ -220,21 +214,17 @@ HAL_SPIEx_SetConfigAutonomousMode(SPI_HandleTypeDef *hspi,
 
 		/* Check the parameters */
 		assert_param(IS_SPI_AUTONOMOUS_INSTANCE(hspi->Instance));
-		assert_param(IS_SPI_TRIG_SOURCE(hspi->Instance,
-						sConfig->TriggerSelection));
-		assert_param(
-		    IS_SPI_AUTO_MODE_TRG_POL(sConfig->TriggerPolarity));
+		assert_param(IS_SPI_TRIG_SOURCE(hspi->Instance, sConfig->TriggerSelection));
+		assert_param(IS_SPI_AUTO_MODE_TRG_POL(sConfig->TriggerPolarity));
 
 		/* Disable the selected SPI peripheral to be able to configure
 		 * AUTOCR */
 		__HAL_SPI_DISABLE(hspi);
 
 		/* SPIx AUTOCR Configuration */
-		WRITE_REG(
-		    hspi->Instance->AUTOCR,
-		    (sConfig->TriggerState |
-		     ((sConfig->TriggerSelection) & SPI_AUTOCR_TRIGSEL_Msk) |
-		     sConfig->TriggerPolarity));
+		WRITE_REG(hspi->Instance->AUTOCR,
+			  (sConfig->TriggerState | ((sConfig->TriggerSelection) & SPI_AUTOCR_TRIGSEL_Msk) |
+			   sConfig->TriggerPolarity));
 
 		hspi->State = HAL_SPI_STATE_READY;
 
@@ -257,9 +247,8 @@ HAL_SPIEx_SetConfigAutonomousMode(SPI_HandleTypeDef *hspi,
  * specified SPIx peripheral.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_SPIEx_GetConfigAutonomousMode(const SPI_HandleTypeDef *hspi,
-				  SPI_AutonomousModeConfTypeDef *sConfig)
+HAL_StatusTypeDef HAL_SPIEx_GetConfigAutonomousMode(const SPI_HandleTypeDef *hspi,
+						    SPI_AutonomousModeConfTypeDef *sConfig)
 {
 	uint32_t autocr_tmp;
 
@@ -271,15 +260,12 @@ HAL_SPIEx_GetConfigAutonomousMode(const SPI_HandleTypeDef *hspi,
 	sConfig->TriggerState = (autocr_tmp & SPI_AUTOCR_TRIGEN);
 #if defined(SPI_TRIG_GRP2)
 	if (IS_SPI_GRP2_INSTANCE(hspi->Instance)) {
-		sConfig->TriggerSelection =
-		    ((autocr_tmp & SPI_AUTOCR_TRIGSEL) | SPI_TRIG_GRP2);
+		sConfig->TriggerSelection = ((autocr_tmp & SPI_AUTOCR_TRIGSEL) | SPI_TRIG_GRP2);
 	} else {
-		sConfig->TriggerSelection =
-		    ((autocr_tmp & SPI_AUTOCR_TRIGSEL) | SPI_TRIG_GRP1);
+		sConfig->TriggerSelection = ((autocr_tmp & SPI_AUTOCR_TRIGSEL) | SPI_TRIG_GRP1);
 	}
 #else
-	sConfig->TriggerSelection =
-	    ((autocr_tmp & SPI_AUTOCR_TRIGSEL) | SPI_TRIG_GRP1);
+	sConfig->TriggerSelection = ((autocr_tmp & SPI_AUTOCR_TRIGSEL) | SPI_TRIG_GRP1);
 #endif /* SPI_TRIG_GRP2 */
 	sConfig->TriggerPolarity = (autocr_tmp & SPI_AUTOCR_TRIGPOL);
 

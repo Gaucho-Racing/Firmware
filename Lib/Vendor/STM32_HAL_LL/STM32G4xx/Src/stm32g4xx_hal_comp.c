@@ -187,8 +187,7 @@
 /* Literal set to maximum value (refer to device datasheet,                   */
 /* parameter "tSTART_SCALER").                                                */
 /* Unit: us                                                                   */
-#define COMP_DELAY_VOLTAGE_SCALER_STAB_US                                      \
-	(200UL) /*!< Delay for COMP voltage scaler stabilization time */
+#define COMP_DELAY_VOLTAGE_SCALER_STAB_US (200UL) /*!< Delay for COMP voltage scaler stabilization time */
 
 #define COMP_OUTPUT_LEVEL_BITOFFSET_POS (30UL)
 
@@ -233,9 +232,8 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 {
 	uint32_t tmp_csr;
 	uint32_t exti_line;
-	uint32_t
-	    comp_voltage_scaler_initialized; /* Value "0" if comparator voltage
-						scaler is not initialized */
+	uint32_t comp_voltage_scaler_initialized; /* Value "0" if comparator voltage
+						     scaler is not initialized */
 	__IO uint32_t wait_loop_index = 0UL;
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -247,14 +245,11 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 	} else {
 		/* Check the parameters */
 		assert_param(IS_COMP_ALL_INSTANCE(hcomp->Instance));
-		assert_param(
-		    IS_COMP_INPUT_PLUS(hcomp->Instance, hcomp->Init.InputPlus));
-		assert_param(IS_COMP_INPUT_MINUS(hcomp->Instance,
-						 hcomp->Init.InputMinus));
+		assert_param(IS_COMP_INPUT_PLUS(hcomp->Instance, hcomp->Init.InputPlus));
+		assert_param(IS_COMP_INPUT_MINUS(hcomp->Instance, hcomp->Init.InputMinus));
 		assert_param(IS_COMP_OUTPUTPOL(hcomp->Init.OutputPol));
 		assert_param(IS_COMP_HYSTERESIS(hcomp->Init.Hysteresis));
-		assert_param(IS_COMP_BLANKINGSRC_INSTANCE(
-		    hcomp->Instance, hcomp->Init.BlankingSrce));
+		assert_param(IS_COMP_BLANKINGSRC_INSTANCE(hcomp->Instance, hcomp->Init.BlankingSrce));
 		assert_param(IS_COMP_TRIGGERMODE(hcomp->Init.TriggerMode));
 
 		if (hcomp->State == HAL_COMP_STATE_RESET) {
@@ -266,12 +261,10 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 
 #if (USE_HAL_COMP_REGISTER_CALLBACKS == 1)
 			/* Init the COMP Callback settings */
-			hcomp->TriggerCallback =
-			    HAL_COMP_TriggerCallback; /* Legacy weak callback */
+			hcomp->TriggerCallback = HAL_COMP_TriggerCallback; /* Legacy weak callback */
 
 			if (hcomp->MspInitCallback == NULL) {
-				hcomp->MspInitCallback =
-				    HAL_COMP_MspInit; /* Legacy weak MspInit  */
+				hcomp->MspInitCallback = HAL_COMP_MspInit; /* Legacy weak MspInit  */
 			}
 
 			/* Init the low level hardware */
@@ -291,22 +284,18 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 		}
 
 		/* Memorize voltage scaler state before initialization */
-		comp_voltage_scaler_initialized =
-		    READ_BIT(hcomp->Instance->CSR, COMP_CSR_SCALEN);
+		comp_voltage_scaler_initialized = READ_BIT(hcomp->Instance->CSR, COMP_CSR_SCALEN);
 
 		/* Set COMP parameters */
-		tmp_csr = (hcomp->Init.InputMinus | hcomp->Init.InputPlus |
-			   hcomp->Init.BlankingSrce | hcomp->Init.Hysteresis |
-			   hcomp->Init.OutputPol);
+		tmp_csr = (hcomp->Init.InputMinus | hcomp->Init.InputPlus | hcomp->Init.BlankingSrce |
+			   hcomp->Init.Hysteresis | hcomp->Init.OutputPol);
 
 		/* Set parameters in COMP register */
 		/* Note: Update all bits except read-only, lock and enable bits
 		 */
 		MODIFY_REG(hcomp->Instance->CSR,
-			   COMP_CSR_INMSEL | COMP_CSR_INPSEL |
-			       COMP_CSR_POLARITY | COMP_CSR_HYST |
-			       COMP_CSR_BLANKING | COMP_CSR_BRGEN |
-			       COMP_CSR_SCALEN,
+			   COMP_CSR_INMSEL | COMP_CSR_INPSEL | COMP_CSR_POLARITY | COMP_CSR_HYST | COMP_CSR_BLANKING |
+			       COMP_CSR_BRGEN | COMP_CSR_SCALEN,
 			   tmp_csr);
 
 		/* Delay for COMP scaler bridge voltage stabilization */
@@ -322,8 +311,7 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 			/*       exceed 32 bits register capacity and handle low
 			 * frequency. */
 			wait_loop_index =
-			    ((COMP_DELAY_VOLTAGE_SCALER_STAB_US / 10UL) *
-			     ((SystemCoreClock / (100000UL * 2UL)) + 1UL));
+			    ((COMP_DELAY_VOLTAGE_SCALER_STAB_US / 10UL) * ((SystemCoreClock / (100000UL * 2UL)) + 1UL));
 			while (wait_loop_index != 0UL) {
 				wait_loop_index--;
 			}
@@ -334,32 +322,24 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 		exti_line = COMP_GET_EXTI_LINE(hcomp->Instance);
 
 		/* Manage EXTI settings */
-		if ((hcomp->Init.TriggerMode &
-		     (COMP_EXTI_IT | COMP_EXTI_EVENT)) != 0UL) {
+		if ((hcomp->Init.TriggerMode & (COMP_EXTI_IT | COMP_EXTI_EVENT)) != 0UL) {
 			/* Configure EXTI rising edge */
-			if ((hcomp->Init.TriggerMode & COMP_EXTI_RISING) !=
-			    0UL) {
+			if ((hcomp->Init.TriggerMode & COMP_EXTI_RISING) != 0UL) {
 #if defined(COMP7)
-				if ((hcomp->Instance == COMP6) ||
-				    (hcomp->Instance == COMP7)) {
-					LL_EXTI_EnableRisingTrig_32_63(
-					    exti_line);
+				if ((hcomp->Instance == COMP6) || (hcomp->Instance == COMP7)) {
+					LL_EXTI_EnableRisingTrig_32_63(exti_line);
 				} else {
-					LL_EXTI_EnableRisingTrig_0_31(
-					    exti_line);
+					LL_EXTI_EnableRisingTrig_0_31(exti_line);
 				}
 #else
 				LL_EXTI_EnableRisingTrig_0_31(exti_line);
 #endif /* COMP7 */
 			} else {
 #if defined(COMP7)
-				if ((hcomp->Instance == COMP6) ||
-				    (hcomp->Instance == COMP7)) {
-					LL_EXTI_DisableRisingTrig_32_63(
-					    exti_line);
+				if ((hcomp->Instance == COMP6) || (hcomp->Instance == COMP7)) {
+					LL_EXTI_DisableRisingTrig_32_63(exti_line);
 				} else {
-					LL_EXTI_DisableRisingTrig_0_31(
-					    exti_line);
+					LL_EXTI_DisableRisingTrig_0_31(exti_line);
 				}
 #else
 				LL_EXTI_DisableRisingTrig_0_31(exti_line);
@@ -367,29 +347,22 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 			}
 
 			/* Configure EXTI falling edge */
-			if ((hcomp->Init.TriggerMode & COMP_EXTI_FALLING) !=
-			    0UL) {
+			if ((hcomp->Init.TriggerMode & COMP_EXTI_FALLING) != 0UL) {
 #if defined(COMP7)
-				if ((hcomp->Instance == COMP6) ||
-				    (hcomp->Instance == COMP7)) {
-					LL_EXTI_EnableFallingTrig_32_63(
-					    exti_line);
+				if ((hcomp->Instance == COMP6) || (hcomp->Instance == COMP7)) {
+					LL_EXTI_EnableFallingTrig_32_63(exti_line);
 				} else {
-					LL_EXTI_EnableFallingTrig_0_31(
-					    exti_line);
+					LL_EXTI_EnableFallingTrig_0_31(exti_line);
 				}
 #else
 				LL_EXTI_EnableFallingTrig_0_31(exti_line);
 #endif /* COMP7 */
 			} else {
 #if defined(COMP7)
-				if ((hcomp->Instance == COMP6) ||
-				    (hcomp->Instance == COMP7)) {
-					LL_EXTI_DisableFallingTrig_32_63(
-					    exti_line);
+				if ((hcomp->Instance == COMP6) || (hcomp->Instance == COMP7)) {
+					LL_EXTI_DisableFallingTrig_32_63(exti_line);
 				} else {
-					LL_EXTI_DisableFallingTrig_0_31(
-					    exti_line);
+					LL_EXTI_DisableFallingTrig_0_31(exti_line);
 				}
 #else
 				LL_EXTI_DisableFallingTrig_0_31(exti_line);
@@ -398,8 +371,7 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 
 			/* Clear COMP EXTI pending bit (if any) */
 #if defined(COMP7)
-			if ((hcomp->Instance == COMP6) ||
-			    (hcomp->Instance == COMP7)) {
+			if ((hcomp->Instance == COMP6) || (hcomp->Instance == COMP7)) {
 				LL_EXTI_ClearFlag_32_63(exti_line);
 			} else {
 				LL_EXTI_ClearFlag_0_31(exti_line);
@@ -409,11 +381,9 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 #endif /* COMP7 */
 
 			/* Configure EXTI event mode */
-			if ((hcomp->Init.TriggerMode & COMP_EXTI_EVENT) !=
-			    0UL) {
+			if ((hcomp->Init.TriggerMode & COMP_EXTI_EVENT) != 0UL) {
 #if defined(COMP7)
-				if ((hcomp->Instance == COMP6) ||
-				    (hcomp->Instance == COMP7)) {
+				if ((hcomp->Instance == COMP6) || (hcomp->Instance == COMP7)) {
 					LL_EXTI_EnableEvent_32_63(exti_line);
 				} else {
 					LL_EXTI_EnableEvent_0_31(exti_line);
@@ -423,8 +393,7 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 #endif /* COMP7 */
 			} else {
 #if defined(COMP7)
-				if ((hcomp->Instance == COMP6) ||
-				    (hcomp->Instance == COMP7)) {
+				if ((hcomp->Instance == COMP6) || (hcomp->Instance == COMP7)) {
 					LL_EXTI_DisableEvent_32_63(exti_line);
 				} else {
 					LL_EXTI_DisableEvent_0_31(exti_line);
@@ -437,8 +406,7 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 			/* Configure EXTI interrupt mode */
 			if ((hcomp->Init.TriggerMode & COMP_EXTI_IT) != 0UL) {
 #if defined(COMP7)
-				if ((hcomp->Instance == COMP6) ||
-				    (hcomp->Instance == COMP7)) {
+				if ((hcomp->Instance == COMP6) || (hcomp->Instance == COMP7)) {
 					LL_EXTI_EnableIT_32_63(exti_line);
 				} else {
 					LL_EXTI_EnableIT_0_31(exti_line);
@@ -448,8 +416,7 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 #endif /* COMP7 */
 			} else {
 #if defined(COMP7)
-				if ((hcomp->Instance == COMP6) ||
-				    (hcomp->Instance == COMP7)) {
+				if ((hcomp->Instance == COMP6) || (hcomp->Instance == COMP7)) {
 					LL_EXTI_DisableIT_32_63(exti_line);
 				} else {
 					LL_EXTI_DisableIT_0_31(exti_line);
@@ -461,8 +428,7 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 		} else {
 			/* Disable EXTI event mode */
 #if defined(COMP7)
-			if ((hcomp->Instance == COMP6) ||
-			    (hcomp->Instance == COMP7)) {
+			if ((hcomp->Instance == COMP6) || (hcomp->Instance == COMP7)) {
 				LL_EXTI_DisableEvent_32_63(exti_line);
 			} else {
 				LL_EXTI_DisableEvent_0_31(exti_line);
@@ -473,8 +439,7 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 
 			/* Disable EXTI interrupt mode */
 #if defined(COMP7)
-			if ((hcomp->Instance == COMP6) ||
-			    (hcomp->Instance == COMP7)) {
+			if ((hcomp->Instance == COMP6) || (hcomp->Instance == COMP7)) {
 				LL_EXTI_DisableIT_32_63(exti_line);
 			} else {
 				LL_EXTI_DisableIT_0_31(exti_line);
@@ -521,8 +486,7 @@ HAL_StatusTypeDef HAL_COMP_DeInit(COMP_HandleTypeDef *hcomp)
 
 #if (USE_HAL_COMP_REGISTER_CALLBACKS == 1)
 		if (hcomp->MspDeInitCallback == NULL) {
-			hcomp->MspDeInitCallback =
-			    HAL_COMP_MspDeInit; /* Legacy weak MspDeInit  */
+			hcomp->MspDeInitCallback = HAL_COMP_MspDeInit; /* Legacy weak MspDeInit  */
 		}
 
 		/* DeInit the low level hardware: GPIO, RCC clock, NVIC */
@@ -586,10 +550,8 @@ __weak void HAL_COMP_MspDeInit(COMP_HandleTypeDef *hcomp)
  * @param  pCallback pointer to the Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_COMP_RegisterCallback(COMP_HandleTypeDef *hcomp,
-			  HAL_COMP_CallbackIDTypeDef CallbackID,
-			  pCOMP_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_COMP_RegisterCallback(COMP_HandleTypeDef *hcomp, HAL_COMP_CallbackIDTypeDef CallbackID,
+					    pCOMP_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -616,8 +578,7 @@ HAL_COMP_RegisterCallback(COMP_HandleTypeDef *hcomp,
 
 			default:
 				/* Update the error code */
-				hcomp->ErrorCode |=
-				    HAL_COMP_ERROR_INVALID_CALLBACK;
+				hcomp->ErrorCode |= HAL_COMP_ERROR_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -635,8 +596,7 @@ HAL_COMP_RegisterCallback(COMP_HandleTypeDef *hcomp,
 
 			default:
 				/* Update the error code */
-				hcomp->ErrorCode |=
-				    HAL_COMP_ERROR_INVALID_CALLBACK;
+				hcomp->ErrorCode |= HAL_COMP_ERROR_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -665,35 +625,29 @@ HAL_COMP_RegisterCallback(COMP_HandleTypeDef *hcomp,
  *          @arg @ref HAL_COMP_MSPDEINIT_CB_ID MspDeInit callback ID
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_COMP_UnRegisterCallback(COMP_HandleTypeDef *hcomp,
-			    HAL_COMP_CallbackIDTypeDef CallbackID)
+HAL_StatusTypeDef HAL_COMP_UnRegisterCallback(COMP_HandleTypeDef *hcomp, HAL_COMP_CallbackIDTypeDef CallbackID)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
 	if (HAL_COMP_STATE_READY == hcomp->State) {
 		switch (CallbackID) {
 			case HAL_COMP_TRIGGER_CB_ID:
-				hcomp->TriggerCallback =
-				    HAL_COMP_TriggerCallback; /* Legacy weak
-								 callback */
+				hcomp->TriggerCallback = HAL_COMP_TriggerCallback; /* Legacy weak
+										      callback */
 				break;
 
 			case HAL_COMP_MSPINIT_CB_ID:
-				hcomp->MspInitCallback =
-				    HAL_COMP_MspInit; /* Legacy weak MspInit */
+				hcomp->MspInitCallback = HAL_COMP_MspInit; /* Legacy weak MspInit */
 				break;
 
 			case HAL_COMP_MSPDEINIT_CB_ID:
-				hcomp->MspDeInitCallback =
-				    HAL_COMP_MspDeInit; /* Legacy weak MspDeInit
-							 */
+				hcomp->MspDeInitCallback = HAL_COMP_MspDeInit; /* Legacy weak MspDeInit
+										*/
 				break;
 
 			default:
 				/* Update the error code */
-				hcomp->ErrorCode |=
-				    HAL_COMP_ERROR_INVALID_CALLBACK;
+				hcomp->ErrorCode |= HAL_COMP_ERROR_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -702,20 +656,17 @@ HAL_COMP_UnRegisterCallback(COMP_HandleTypeDef *hcomp,
 	} else if (HAL_COMP_STATE_RESET == hcomp->State) {
 		switch (CallbackID) {
 			case HAL_COMP_MSPINIT_CB_ID:
-				hcomp->MspInitCallback =
-				    HAL_COMP_MspInit; /* Legacy weak MspInit */
+				hcomp->MspInitCallback = HAL_COMP_MspInit; /* Legacy weak MspInit */
 				break;
 
 			case HAL_COMP_MSPDEINIT_CB_ID:
-				hcomp->MspDeInitCallback =
-				    HAL_COMP_MspDeInit; /* Legacy weak MspDeInit
-							 */
+				hcomp->MspDeInitCallback = HAL_COMP_MspDeInit; /* Legacy weak MspDeInit
+										*/
 				break;
 
 			default:
 				/* Update the error code */
-				hcomp->ErrorCode |=
-				    HAL_COMP_ERROR_INVALID_CALLBACK;
+				hcomp->ErrorCode |= HAL_COMP_ERROR_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -789,9 +740,7 @@ HAL_StatusTypeDef HAL_COMP_Start(COMP_HandleTypeDef *hcomp)
 			/*       of startup time (few us) is within CPU
 			 * processing cycles       */
 			/*       of following instructions. */
-			wait_loop_index =
-			    (COMP_DELAY_STARTUP_US *
-			     (SystemCoreClock / (1000000UL * 2UL)));
+			wait_loop_index = (COMP_DELAY_STARTUP_US * (SystemCoreClock / (1000000UL * 2UL)));
 			while (wait_loop_index != 0UL) {
 				wait_loop_index--;
 			}
@@ -967,8 +916,7 @@ uint32_t HAL_COMP_GetOutputLevel(const COMP_HandleTypeDef *hcomp)
 	/* Check the parameter */
 	assert_param(IS_COMP_ALL_INSTANCE(hcomp->Instance));
 
-	return (uint32_t)(READ_BIT(hcomp->Instance->CSR, COMP_CSR_VALUE) >>
-			  COMP_OUTPUT_LEVEL_BITOFFSET_POS);
+	return (uint32_t)(READ_BIT(hcomp->Instance->CSR, COMP_CSR_VALUE) >> COMP_OUTPUT_LEVEL_BITOFFSET_POS);
 }
 
 /**

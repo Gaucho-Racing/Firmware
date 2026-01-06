@@ -196,8 +196,7 @@ void HAL_NVIC_SetPriorityGrouping(uint32_t PriorityGroup)
  *         A lower priority value indicates a higher priority.
  * @retval None
  */
-void HAL_NVIC_SetPriority(IRQn_Type IRQn, uint32_t PreemptPriority,
-			  uint32_t SubPriority)
+void HAL_NVIC_SetPriority(IRQn_Type IRQn, uint32_t PreemptPriority, uint32_t SubPriority)
 {
 	uint32_t prioritygroup;
 
@@ -207,9 +206,7 @@ void HAL_NVIC_SetPriority(IRQn_Type IRQn, uint32_t PreemptPriority,
 
 	prioritygroup = NVIC_GetPriorityGrouping();
 
-	NVIC_SetPriority(
-	    IRQn,
-	    NVIC_EncodePriority(prioritygroup, PreemptPriority, SubPriority));
+	NVIC_SetPriority(IRQn, NVIC_EncodePriority(prioritygroup, PreemptPriority, SubPriority));
 }
 
 /**
@@ -267,10 +264,7 @@ void HAL_NVIC_SystemReset(void)
  * @retval status:  - 0  Function succeeded.
  *                  - 1  Function failed.
  */
-uint32_t HAL_SYSTICK_Config(uint32_t TicksNumb)
-{
-	return SysTick_Config(TicksNumb);
-}
+uint32_t HAL_SYSTICK_Config(uint32_t TicksNumb) { return SysTick_Config(TicksNumb); }
 /**
  * @}
  */
@@ -324,14 +318,12 @@ uint32_t HAL_NVIC_GetPriorityGrouping(void)
  * @param  pSubPriority: Pointer on the Subpriority value (starting from 0).
  * @retval None
  */
-void HAL_NVIC_GetPriority(IRQn_Type IRQn, uint32_t PriorityGroup,
-			  uint32_t *pPreemptPriority, uint32_t *pSubPriority)
+void HAL_NVIC_GetPriority(IRQn_Type IRQn, uint32_t PriorityGroup, uint32_t *pPreemptPriority, uint32_t *pSubPriority)
 {
 	/* Check the parameters */
 	assert_param(IS_NVIC_PRIORITY_GROUP(PriorityGroup));
 	/* Get priority for Cortex-M system or device specific interrupts */
-	NVIC_DecodePriority(NVIC_GetPriority(IRQn), PriorityGroup,
-			    pPreemptPriority, pSubPriority);
+	NVIC_DecodePriority(NVIC_GetPriority(IRQn), PriorityGroup, pPreemptPriority, pSubPriority);
 }
 
 /**
@@ -521,8 +513,7 @@ void HAL_MPU_ConfigRegion(MPU_Region_InitTypeDef *MPU_Init)
 	assert_param(IS_MPU_REGION_NUMBER(MPU_Init->Number));
 	assert_param(IS_MPU_REGION_ENABLE(MPU_Init->Enable));
 	assert_param(IS_MPU_INSTRUCTION_ACCESS(MPU_Init->DisableExec));
-	assert_param(
-	    IS_MPU_REGION_PERMISSION_ATTRIBUTE(MPU_Init->AccessPermission));
+	assert_param(IS_MPU_REGION_PERMISSION_ATTRIBUTE(MPU_Init->AccessPermission));
 	assert_param(IS_MPU_TEX_LEVEL(MPU_Init->TypeExtField));
 	assert_param(IS_MPU_ACCESS_SHAREABLE(MPU_Init->IsShareable));
 	assert_param(IS_MPU_ACCESS_CACHEABLE(MPU_Init->IsCacheable));
@@ -537,15 +528,14 @@ void HAL_MPU_ConfigRegion(MPU_Region_InitTypeDef *MPU_Init)
 
 	/* Apply configuration */
 	MPU->RBAR = MPU_Init->BaseAddress;
-	MPU->RASR = ((uint32_t)MPU_Init->DisableExec << MPU_RASR_XN_Pos) |
-		    ((uint32_t)MPU_Init->AccessPermission << MPU_RASR_AP_Pos) |
-		    ((uint32_t)MPU_Init->TypeExtField << MPU_RASR_TEX_Pos) |
-		    ((uint32_t)MPU_Init->IsShareable << MPU_RASR_S_Pos) |
-		    ((uint32_t)MPU_Init->IsCacheable << MPU_RASR_C_Pos) |
-		    ((uint32_t)MPU_Init->IsBufferable << MPU_RASR_B_Pos) |
-		    ((uint32_t)MPU_Init->SubRegionDisable << MPU_RASR_SRD_Pos) |
-		    ((uint32_t)MPU_Init->Size << MPU_RASR_SIZE_Pos) |
-		    ((uint32_t)MPU_Init->Enable << MPU_RASR_ENABLE_Pos);
+	MPU->RASR =
+	    ((uint32_t)MPU_Init->DisableExec << MPU_RASR_XN_Pos) |
+	    ((uint32_t)MPU_Init->AccessPermission << MPU_RASR_AP_Pos) |
+	    ((uint32_t)MPU_Init->TypeExtField << MPU_RASR_TEX_Pos) |
+	    ((uint32_t)MPU_Init->IsShareable << MPU_RASR_S_Pos) | ((uint32_t)MPU_Init->IsCacheable << MPU_RASR_C_Pos) |
+	    ((uint32_t)MPU_Init->IsBufferable << MPU_RASR_B_Pos) |
+	    ((uint32_t)MPU_Init->SubRegionDisable << MPU_RASR_SRD_Pos) |
+	    ((uint32_t)MPU_Init->Size << MPU_RASR_SIZE_Pos) | ((uint32_t)MPU_Init->Enable << MPU_RASR_ENABLE_Pos);
 }
 #endif /* __MPU_PRESENT */
 

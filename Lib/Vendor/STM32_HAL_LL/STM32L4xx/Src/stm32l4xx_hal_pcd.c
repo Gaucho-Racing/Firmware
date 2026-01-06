@@ -90,22 +90,16 @@
  * @{
  */
 #if defined(USB_OTG_FS)
-static HAL_StatusTypeDef PCD_WriteEmptyTxFifo(PCD_HandleTypeDef *hpcd,
-					      uint32_t epnum);
-static HAL_StatusTypeDef PCD_EP_OutXfrComplete_int(PCD_HandleTypeDef *hpcd,
-						   uint32_t epnum);
-static HAL_StatusTypeDef PCD_EP_OutSetupPacket_int(PCD_HandleTypeDef *hpcd,
-						   uint32_t epnum);
+static HAL_StatusTypeDef PCD_WriteEmptyTxFifo(PCD_HandleTypeDef *hpcd, uint32_t epnum);
+static HAL_StatusTypeDef PCD_EP_OutXfrComplete_int(PCD_HandleTypeDef *hpcd, uint32_t epnum);
+static HAL_StatusTypeDef PCD_EP_OutSetupPacket_int(PCD_HandleTypeDef *hpcd, uint32_t epnum);
 #endif /* defined (USB_OTG_FS) */
 
 #if defined(USB)
 static HAL_StatusTypeDef PCD_EP_ISR_Handler(PCD_HandleTypeDef *hpcd);
 #if (USE_USB_DOUBLE_BUFFER == 1U)
-static HAL_StatusTypeDef HAL_PCD_EP_DB_Transmit(PCD_HandleTypeDef *hpcd,
-						PCD_EPTypeDef *ep,
-						uint16_t wEPVal);
-static uint16_t HAL_PCD_EP_DB_Receive(PCD_HandleTypeDef *hpcd,
-				      PCD_EPTypeDef *ep, uint16_t wEPVal);
+static HAL_StatusTypeDef HAL_PCD_EP_DB_Transmit(PCD_HandleTypeDef *hpcd, PCD_EPTypeDef *ep, uint16_t wEPVal);
+static uint16_t HAL_PCD_EP_DB_Receive(PCD_HandleTypeDef *hpcd, PCD_EPTypeDef *ep, uint16_t wEPVal);
 #endif /* (USE_USB_DOUBLE_BUFFER == 1U) */
 #endif /* defined (USB) */
 /**
@@ -164,8 +158,7 @@ HAL_StatusTypeDef HAL_PCD_Init(PCD_HandleTypeDef *hpcd)
 		hpcd->DisconnectCallback = HAL_PCD_DisconnectCallback;
 		hpcd->DataOutStageCallback = HAL_PCD_DataOutStageCallback;
 		hpcd->DataInStageCallback = HAL_PCD_DataInStageCallback;
-		hpcd->ISOOUTIncompleteCallback =
-		    HAL_PCD_ISOOUTIncompleteCallback;
+		hpcd->ISOOUTIncompleteCallback = HAL_PCD_ISOOUTIncompleteCallback;
 		hpcd->ISOINIncompleteCallback = HAL_PCD_ISOINIncompleteCallback;
 		hpcd->LPMCallback = HAL_PCDEx_LPM_Callback;
 		hpcd->BCDCallback = HAL_PCDEx_BCD_Callback;
@@ -267,8 +260,7 @@ HAL_StatusTypeDef HAL_PCD_DeInit(PCD_HandleTypeDef *hpcd)
 
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
 	if (hpcd->MspDeInitCallback == NULL) {
-		hpcd->MspDeInitCallback =
-		    HAL_PCD_MspDeInit; /* Legacy weak MspDeInit  */
+		hpcd->MspDeInitCallback = HAL_PCD_MspDeInit; /* Legacy weak MspDeInit  */
 	}
 
 	/* DeInit the low level hardware */
@@ -332,8 +324,7 @@ __weak void HAL_PCD_MspDeInit(PCD_HandleTypeDef *hpcd)
  * @param  pCallback pointer to the Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_PCD_RegisterCallback(PCD_HandleTypeDef *hpcd,
-					   HAL_PCD_CallbackIDTypeDef CallbackID,
+HAL_StatusTypeDef HAL_PCD_RegisterCallback(PCD_HandleTypeDef *hpcd, HAL_PCD_CallbackIDTypeDef CallbackID,
 					   pPCD_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
@@ -386,8 +377,7 @@ HAL_StatusTypeDef HAL_PCD_RegisterCallback(PCD_HandleTypeDef *hpcd,
 
 			default:
 				/* Update the error code */
-				hpcd->ErrorCode |=
-				    HAL_PCD_ERROR_INVALID_CALLBACK;
+				hpcd->ErrorCode |= HAL_PCD_ERROR_INVALID_CALLBACK;
 				/* Return error status */
 				status = HAL_ERROR;
 				break;
@@ -404,8 +394,7 @@ HAL_StatusTypeDef HAL_PCD_RegisterCallback(PCD_HandleTypeDef *hpcd,
 
 			default:
 				/* Update the error code */
-				hpcd->ErrorCode |=
-				    HAL_PCD_ERROR_INVALID_CALLBACK;
+				hpcd->ErrorCode |= HAL_PCD_ERROR_INVALID_CALLBACK;
 				/* Return error status */
 				status = HAL_ERROR;
 				break;
@@ -439,9 +428,7 @@ HAL_StatusTypeDef HAL_PCD_RegisterCallback(PCD_HandleTypeDef *hpcd,
  *          @arg @ref HAL_PCD_MSPDEINIT_CB_ID MspDeInit callback ID
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_PCD_UnRegisterCallback(PCD_HandleTypeDef *hpcd,
-			   HAL_PCD_CallbackIDTypeDef CallbackID)
+HAL_StatusTypeDef HAL_PCD_UnRegisterCallback(PCD_HandleTypeDef *hpcd, HAL_PCD_CallbackIDTypeDef CallbackID)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -456,8 +443,7 @@ HAL_PCD_UnRegisterCallback(PCD_HandleTypeDef *hpcd,
 				break;
 
 			case HAL_PCD_SETUPSTAGE_CB_ID:
-				hpcd->SetupStageCallback =
-				    HAL_PCD_SetupStageCallback;
+				hpcd->SetupStageCallback = HAL_PCD_SetupStageCallback;
 				break;
 
 			case HAL_PCD_RESET_CB_ID:
@@ -477,8 +463,7 @@ HAL_PCD_UnRegisterCallback(PCD_HandleTypeDef *hpcd,
 				break;
 
 			case HAL_PCD_DISCONNECT_CB_ID:
-				hpcd->DisconnectCallback =
-				    HAL_PCD_DisconnectCallback;
+				hpcd->DisconnectCallback = HAL_PCD_DisconnectCallback;
 				break;
 
 			case HAL_PCD_MSPINIT_CB_ID:
@@ -491,8 +476,7 @@ HAL_PCD_UnRegisterCallback(PCD_HandleTypeDef *hpcd,
 
 			default:
 				/* Update the error code */
-				hpcd->ErrorCode |=
-				    HAL_PCD_ERROR_INVALID_CALLBACK;
+				hpcd->ErrorCode |= HAL_PCD_ERROR_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -510,8 +494,7 @@ HAL_PCD_UnRegisterCallback(PCD_HandleTypeDef *hpcd,
 
 			default:
 				/* Update the error code */
-				hpcd->ErrorCode |=
-				    HAL_PCD_ERROR_INVALID_CALLBACK;
+				hpcd->ErrorCode |= HAL_PCD_ERROR_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -538,9 +521,8 @@ HAL_PCD_UnRegisterCallback(PCD_HandleTypeDef *hpcd,
  * @param  pCallback pointer to the USB PCD Data OUT Stage Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_PCD_RegisterDataOutStageCallback(PCD_HandleTypeDef *hpcd,
-				     pPCD_DataOutStageCallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_PCD_RegisterDataOutStageCallback(PCD_HandleTypeDef *hpcd,
+						       pPCD_DataOutStageCallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -577,8 +559,7 @@ HAL_PCD_RegisterDataOutStageCallback(PCD_HandleTypeDef *hpcd,
  * @param  hpcd PCD handle
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_PCD_UnRegisterDataOutStageCallback(PCD_HandleTypeDef *hpcd)
+HAL_StatusTypeDef HAL_PCD_UnRegisterDataOutStageCallback(PCD_HandleTypeDef *hpcd)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -586,9 +567,8 @@ HAL_PCD_UnRegisterDataOutStageCallback(PCD_HandleTypeDef *hpcd)
 	__HAL_LOCK(hpcd);
 
 	if (hpcd->State == HAL_PCD_STATE_READY) {
-		hpcd->DataOutStageCallback =
-		    HAL_PCD_DataOutStageCallback; /* Legacy weak
-						     DataOutStageCallback  */
+		hpcd->DataOutStageCallback = HAL_PCD_DataOutStageCallback; /* Legacy weak
+									      DataOutStageCallback  */
 	} else {
 		/* Update the error code */
 		hpcd->ErrorCode |= HAL_PCD_ERROR_INVALID_CALLBACK;
@@ -611,9 +591,8 @@ HAL_PCD_UnRegisterDataOutStageCallback(PCD_HandleTypeDef *hpcd)
  * @param  pCallback pointer to the USB PCD Data IN Stage Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_PCD_RegisterDataInStageCallback(PCD_HandleTypeDef *hpcd,
-				    pPCD_DataInStageCallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_PCD_RegisterDataInStageCallback(PCD_HandleTypeDef *hpcd,
+						      pPCD_DataInStageCallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -658,9 +637,8 @@ HAL_StatusTypeDef HAL_PCD_UnRegisterDataInStageCallback(PCD_HandleTypeDef *hpcd)
 	__HAL_LOCK(hpcd);
 
 	if (hpcd->State == HAL_PCD_STATE_READY) {
-		hpcd->DataInStageCallback =
-		    HAL_PCD_DataInStageCallback; /* Legacy weak
-						    DataInStageCallback  */
+		hpcd->DataInStageCallback = HAL_PCD_DataInStageCallback; /* Legacy weak
+									    DataInStageCallback  */
 	} else {
 		/* Update the error code */
 		hpcd->ErrorCode |= HAL_PCD_ERROR_INVALID_CALLBACK;
@@ -683,9 +661,8 @@ HAL_StatusTypeDef HAL_PCD_UnRegisterDataInStageCallback(PCD_HandleTypeDef *hpcd)
  * @param  pCallback pointer to the USB PCD Iso OUT incomplete Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_PCD_RegisterIsoOutIncpltCallback(PCD_HandleTypeDef *hpcd,
-				     pPCD_IsoOutIncpltCallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_PCD_RegisterIsoOutIncpltCallback(PCD_HandleTypeDef *hpcd,
+						       pPCD_IsoOutIncpltCallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -722,8 +699,7 @@ HAL_PCD_RegisterIsoOutIncpltCallback(PCD_HandleTypeDef *hpcd,
  * @param  hpcd PCD handle
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_PCD_UnRegisterIsoOutIncpltCallback(PCD_HandleTypeDef *hpcd)
+HAL_StatusTypeDef HAL_PCD_UnRegisterIsoOutIncpltCallback(PCD_HandleTypeDef *hpcd)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -731,10 +707,9 @@ HAL_PCD_UnRegisterIsoOutIncpltCallback(PCD_HandleTypeDef *hpcd)
 	__HAL_LOCK(hpcd);
 
 	if (hpcd->State == HAL_PCD_STATE_READY) {
-		hpcd->ISOOUTIncompleteCallback =
-		    HAL_PCD_ISOOUTIncompleteCallback; /* Legacy weak
-							 ISOOUTIncompleteCallback
-						       */
+		hpcd->ISOOUTIncompleteCallback = HAL_PCD_ISOOUTIncompleteCallback; /* Legacy weak
+										      ISOOUTIncompleteCallback
+										    */
 	} else {
 		/* Update the error code */
 		hpcd->ErrorCode |= HAL_PCD_ERROR_INVALID_CALLBACK;
@@ -757,9 +732,8 @@ HAL_PCD_UnRegisterIsoOutIncpltCallback(PCD_HandleTypeDef *hpcd)
  * @param  pCallback pointer to the USB PCD Iso IN incomplete Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_PCD_RegisterIsoInIncpltCallback(PCD_HandleTypeDef *hpcd,
-				    pPCD_IsoInIncpltCallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_PCD_RegisterIsoInIncpltCallback(PCD_HandleTypeDef *hpcd,
+						      pPCD_IsoInIncpltCallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -804,10 +778,9 @@ HAL_StatusTypeDef HAL_PCD_UnRegisterIsoInIncpltCallback(PCD_HandleTypeDef *hpcd)
 	__HAL_LOCK(hpcd);
 
 	if (hpcd->State == HAL_PCD_STATE_READY) {
-		hpcd->ISOINIncompleteCallback =
-		    HAL_PCD_ISOINIncompleteCallback; /* Legacy weak
-							ISOINIncompleteCallback
-						      */
+		hpcd->ISOINIncompleteCallback = HAL_PCD_ISOINIncompleteCallback; /* Legacy weak
+										    ISOINIncompleteCallback
+										  */
 	} else {
 		/* Update the error code */
 		hpcd->ErrorCode |= HAL_PCD_ERROR_INVALID_CALLBACK;
@@ -830,8 +803,7 @@ HAL_StatusTypeDef HAL_PCD_UnRegisterIsoInIncpltCallback(PCD_HandleTypeDef *hpcd)
  * @param  pCallback pointer to the USB PCD BCD Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_PCD_RegisterBcdCallback(PCD_HandleTypeDef *hpcd,
-					      pPCD_BcdCallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_PCD_RegisterBcdCallback(PCD_HandleTypeDef *hpcd, pPCD_BcdCallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -876,9 +848,8 @@ HAL_StatusTypeDef HAL_PCD_UnRegisterBcdCallback(PCD_HandleTypeDef *hpcd)
 	__HAL_LOCK(hpcd);
 
 	if (hpcd->State == HAL_PCD_STATE_READY) {
-		hpcd->BCDCallback =
-		    HAL_PCDEx_BCD_Callback; /* Legacy weak
-					       HAL_PCDEx_BCD_Callback  */
+		hpcd->BCDCallback = HAL_PCDEx_BCD_Callback; /* Legacy weak
+							       HAL_PCDEx_BCD_Callback  */
 	} else {
 		/* Update the error code */
 		hpcd->ErrorCode |= HAL_PCD_ERROR_INVALID_CALLBACK;
@@ -901,8 +872,7 @@ HAL_StatusTypeDef HAL_PCD_UnRegisterBcdCallback(PCD_HandleTypeDef *hpcd)
  * @param  pCallback pointer to the USB PCD LPM Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_PCD_RegisterLpmCallback(PCD_HandleTypeDef *hpcd,
-					      pPCD_LpmCallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_PCD_RegisterLpmCallback(PCD_HandleTypeDef *hpcd, pPCD_LpmCallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -947,9 +917,8 @@ HAL_StatusTypeDef HAL_PCD_UnRegisterLpmCallback(PCD_HandleTypeDef *hpcd)
 	__HAL_LOCK(hpcd);
 
 	if (hpcd->State == HAL_PCD_STATE_READY) {
-		hpcd->LPMCallback =
-		    HAL_PCDEx_LPM_Callback; /* Legacy weak
-					       HAL_PCDEx_LPM_Callback  */
+		hpcd->LPMCallback = HAL_PCDEx_LPM_Callback; /* Legacy weak
+							       HAL_PCDEx_LPM_Callback  */
 	} else {
 		/* Update the error code */
 		hpcd->ErrorCode |= HAL_PCD_ERROR_INVALID_CALLBACK;
@@ -1064,9 +1033,7 @@ void HAL_PCD_IRQHandler(PCD_HandleTypeDef *hpcd)
 		}
 
 		/* store current frame number */
-		hpcd->FrameNumber =
-		    (USBx_DEVICE->DSTS & USB_OTG_DSTS_FNSOF_Msk) >>
-		    USB_OTG_DSTS_FNSOF_Pos;
+		hpcd->FrameNumber = (USBx_DEVICE->DSTS & USB_OTG_DSTS_FNSOF_Msk) >> USB_OTG_DSTS_FNSOF_Pos;
 
 		if (__HAL_PCD_GET_FLAG(hpcd, USB_OTG_GINTSTS_MMIS)) {
 			/* incorrect mode, acknowledge the interrupt */
@@ -1075,41 +1042,28 @@ void HAL_PCD_IRQHandler(PCD_HandleTypeDef *hpcd)
 
 		/* Handle RxQLevel Interrupt */
 		if (__HAL_PCD_GET_FLAG(hpcd, USB_OTG_GINTSTS_RXFLVL)) {
-			USB_MASK_INTERRUPT(hpcd->Instance,
-					   USB_OTG_GINTSTS_RXFLVL);
+			USB_MASK_INTERRUPT(hpcd->Instance, USB_OTG_GINTSTS_RXFLVL);
 
 			RegVal = USBx->GRXSTSP;
 
 			ep = &hpcd->OUT_ep[RegVal & USB_OTG_GRXSTSP_EPNUM];
 
-			if (((RegVal & USB_OTG_GRXSTSP_PKTSTS) >> 17) ==
-			    STS_DATA_UPDT) {
+			if (((RegVal & USB_OTG_GRXSTSP_PKTSTS) >> 17) == STS_DATA_UPDT) {
 				if ((RegVal & USB_OTG_GRXSTSP_BCNT) != 0U) {
-					(void)USB_ReadPacket(
-					    USBx, ep->xfer_buff,
-					    (uint16_t)((RegVal &
-							USB_OTG_GRXSTSP_BCNT) >>
-						       4));
+					(void)USB_ReadPacket(USBx, ep->xfer_buff,
+							     (uint16_t)((RegVal & USB_OTG_GRXSTSP_BCNT) >> 4));
 
-					ep->xfer_buff +=
-					    (RegVal & USB_OTG_GRXSTSP_BCNT) >>
-					    4;
-					ep->xfer_count +=
-					    (RegVal & USB_OTG_GRXSTSP_BCNT) >>
-					    4;
+					ep->xfer_buff += (RegVal & USB_OTG_GRXSTSP_BCNT) >> 4;
+					ep->xfer_count += (RegVal & USB_OTG_GRXSTSP_BCNT) >> 4;
 				}
-			} else if (((RegVal & USB_OTG_GRXSTSP_PKTSTS) >> 17) ==
-				   STS_SETUP_UPDT) {
-				(void)USB_ReadPacket(
-				    USBx, (uint8_t *)hpcd->Setup, 8U);
-				ep->xfer_count +=
-				    (RegVal & USB_OTG_GRXSTSP_BCNT) >> 4;
+			} else if (((RegVal & USB_OTG_GRXSTSP_PKTSTS) >> 17) == STS_SETUP_UPDT) {
+				(void)USB_ReadPacket(USBx, (uint8_t *)hpcd->Setup, 8U);
+				ep->xfer_count += (RegVal & USB_OTG_GRXSTSP_BCNT) >> 4;
 			} else {
 				/* ... */
 			}
 
-			USB_UNMASK_INTERRUPT(hpcd->Instance,
-					     USB_OTG_GINTSTS_RXFLVL);
+			USB_UNMASK_INTERRUPT(hpcd->Instance, USB_OTG_GINTSTS_RXFLVL);
 		}
 
 		if (__HAL_PCD_GET_FLAG(hpcd, USB_OTG_GINTSTS_OEPINT)) {
@@ -1120,84 +1074,56 @@ void HAL_PCD_IRQHandler(PCD_HandleTypeDef *hpcd)
 
 			while (ep_intr != 0U) {
 				if ((ep_intr & 0x1U) != 0U) {
-					epint = USB_ReadDevOutEPInterrupt(
-					    hpcd->Instance, (uint8_t)epnum);
+					epint = USB_ReadDevOutEPInterrupt(hpcd->Instance, (uint8_t)epnum);
 
-					if ((epint & USB_OTG_DOEPINT_XFRC) ==
-					    USB_OTG_DOEPINT_XFRC) {
-						CLEAR_OUT_EP_INTR(
-						    epnum,
-						    USB_OTG_DOEPINT_XFRC);
-						(void)PCD_EP_OutXfrComplete_int(
-						    hpcd, epnum);
+					if ((epint & USB_OTG_DOEPINT_XFRC) == USB_OTG_DOEPINT_XFRC) {
+						CLEAR_OUT_EP_INTR(epnum, USB_OTG_DOEPINT_XFRC);
+						(void)PCD_EP_OutXfrComplete_int(hpcd, epnum);
 					}
 
-					if ((epint & USB_OTG_DOEPINT_STUP) ==
-					    USB_OTG_DOEPINT_STUP) {
-						CLEAR_OUT_EP_INTR(
-						    epnum,
-						    USB_OTG_DOEPINT_STUP);
+					if ((epint & USB_OTG_DOEPINT_STUP) == USB_OTG_DOEPINT_STUP) {
+						CLEAR_OUT_EP_INTR(epnum, USB_OTG_DOEPINT_STUP);
 						/* Class B setup phase done for
 						 * previous decoded setup */
-						(void)PCD_EP_OutSetupPacket_int(
-						    hpcd, epnum);
+						(void)PCD_EP_OutSetupPacket_int(hpcd, epnum);
 					}
 
-					if ((epint & USB_OTG_DOEPINT_OTEPDIS) ==
-					    USB_OTG_DOEPINT_OTEPDIS) {
-						CLEAR_OUT_EP_INTR(
-						    epnum,
-						    USB_OTG_DOEPINT_OTEPDIS);
+					if ((epint & USB_OTG_DOEPINT_OTEPDIS) == USB_OTG_DOEPINT_OTEPDIS) {
+						CLEAR_OUT_EP_INTR(epnum, USB_OTG_DOEPINT_OTEPDIS);
 					}
 
 					/* Clear OUT Endpoint disable interrupt
 					 */
-					if ((epint & USB_OTG_DOEPINT_EPDISD) ==
-					    USB_OTG_DOEPINT_EPDISD) {
-						if ((USBx->GINTSTS &
-						     USB_OTG_GINTSTS_BOUTNAKEFF) ==
+					if ((epint & USB_OTG_DOEPINT_EPDISD) == USB_OTG_DOEPINT_EPDISD) {
+						if ((USBx->GINTSTS & USB_OTG_GINTSTS_BOUTNAKEFF) ==
 						    USB_OTG_GINTSTS_BOUTNAKEFF) {
-							USBx_DEVICE->DCTL |=
-							    USB_OTG_DCTL_CGONAK;
+							USBx_DEVICE->DCTL |= USB_OTG_DCTL_CGONAK;
 						}
 
 						ep = &hpcd->OUT_ep[epnum];
 
-						if (ep->is_iso_incomplete ==
-						    1U) {
-							ep->is_iso_incomplete =
-							    0U;
+						if (ep->is_iso_incomplete == 1U) {
+							ep->is_iso_incomplete = 0U;
 
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
-							hpcd->ISOOUTIncompleteCallback(
-							    hpcd,
-							    (uint8_t)epnum);
+							hpcd->ISOOUTIncompleteCallback(hpcd, (uint8_t)epnum);
 #else
-							HAL_PCD_ISOOUTIncompleteCallback(
-							    hpcd,
-							    (uint8_t)epnum);
+							HAL_PCD_ISOOUTIncompleteCallback(hpcd, (uint8_t)epnum);
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 						}
 
-						CLEAR_OUT_EP_INTR(
-						    epnum,
-						    USB_OTG_DOEPINT_EPDISD);
+						CLEAR_OUT_EP_INTR(epnum, USB_OTG_DOEPINT_EPDISD);
 					}
 
 					/* Clear Status Phase Received interrupt
 					 */
-					if ((epint & USB_OTG_DOEPINT_OTEPSPR) ==
-					    USB_OTG_DOEPINT_OTEPSPR) {
-						CLEAR_OUT_EP_INTR(
-						    epnum,
-						    USB_OTG_DOEPINT_OTEPSPR);
+					if ((epint & USB_OTG_DOEPINT_OTEPSPR) == USB_OTG_DOEPINT_OTEPSPR) {
+						CLEAR_OUT_EP_INTR(epnum, USB_OTG_DOEPINT_OTEPSPR);
 					}
 
 					/* Clear OUT NAK interrupt */
-					if ((epint & USB_OTG_DOEPINT_NAK) ==
-					    USB_OTG_DOEPINT_NAK) {
-						CLEAR_OUT_EP_INTR(
-						    epnum, USB_OTG_DOEPINT_NAK);
+					if ((epint & USB_OTG_DOEPINT_NAK) == USB_OTG_DOEPINT_NAK) {
+						CLEAR_OUT_EP_INTR(epnum, USB_OTG_DOEPINT_NAK);
 					}
 				}
 				epnum++;
@@ -1214,78 +1140,48 @@ void HAL_PCD_IRQHandler(PCD_HandleTypeDef *hpcd)
 			while (ep_intr != 0U) {
 				if ((ep_intr & 0x1U) != 0U) /* In ITR */
 				{
-					epint = USB_ReadDevInEPInterrupt(
-					    hpcd->Instance, (uint8_t)epnum);
+					epint = USB_ReadDevInEPInterrupt(hpcd->Instance, (uint8_t)epnum);
 
-					if ((epint & USB_OTG_DIEPINT_XFRC) ==
-					    USB_OTG_DIEPINT_XFRC) {
-						fifoemptymsk =
-						    (uint32_t)(0x1UL
-							       << (epnum &
-								   EP_ADDR_MSK));
-						USBx_DEVICE->DIEPEMPMSK &=
-						    ~fifoemptymsk;
+					if ((epint & USB_OTG_DIEPINT_XFRC) == USB_OTG_DIEPINT_XFRC) {
+						fifoemptymsk = (uint32_t)(0x1UL << (epnum & EP_ADDR_MSK));
+						USBx_DEVICE->DIEPEMPMSK &= ~fifoemptymsk;
 
-						CLEAR_IN_EP_INTR(
-						    epnum,
-						    USB_OTG_DIEPINT_XFRC);
+						CLEAR_IN_EP_INTR(epnum, USB_OTG_DIEPINT_XFRC);
 
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
-						hpcd->DataInStageCallback(
-						    hpcd, (uint8_t)epnum);
+						hpcd->DataInStageCallback(hpcd, (uint8_t)epnum);
 #else
-						HAL_PCD_DataInStageCallback(
-						    hpcd, (uint8_t)epnum);
+						HAL_PCD_DataInStageCallback(hpcd, (uint8_t)epnum);
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 					}
-					if ((epint & USB_OTG_DIEPINT_TOC) ==
-					    USB_OTG_DIEPINT_TOC) {
-						CLEAR_IN_EP_INTR(
-						    epnum, USB_OTG_DIEPINT_TOC);
+					if ((epint & USB_OTG_DIEPINT_TOC) == USB_OTG_DIEPINT_TOC) {
+						CLEAR_IN_EP_INTR(epnum, USB_OTG_DIEPINT_TOC);
 					}
-					if ((epint & USB_OTG_DIEPINT_ITTXFE) ==
-					    USB_OTG_DIEPINT_ITTXFE) {
-						CLEAR_IN_EP_INTR(
-						    epnum,
-						    USB_OTG_DIEPINT_ITTXFE);
+					if ((epint & USB_OTG_DIEPINT_ITTXFE) == USB_OTG_DIEPINT_ITTXFE) {
+						CLEAR_IN_EP_INTR(epnum, USB_OTG_DIEPINT_ITTXFE);
 					}
-					if ((epint & USB_OTG_DIEPINT_INEPNE) ==
-					    USB_OTG_DIEPINT_INEPNE) {
-						CLEAR_IN_EP_INTR(
-						    epnum,
-						    USB_OTG_DIEPINT_INEPNE);
+					if ((epint & USB_OTG_DIEPINT_INEPNE) == USB_OTG_DIEPINT_INEPNE) {
+						CLEAR_IN_EP_INTR(epnum, USB_OTG_DIEPINT_INEPNE);
 					}
-					if ((epint & USB_OTG_DIEPINT_EPDISD) ==
-					    USB_OTG_DIEPINT_EPDISD) {
-						(void)USB_FlushTxFifo(USBx,
-								      epnum);
+					if ((epint & USB_OTG_DIEPINT_EPDISD) == USB_OTG_DIEPINT_EPDISD) {
+						(void)USB_FlushTxFifo(USBx, epnum);
 
 						ep = &hpcd->IN_ep[epnum];
 
-						if (ep->is_iso_incomplete ==
-						    1U) {
-							ep->is_iso_incomplete =
-							    0U;
+						if (ep->is_iso_incomplete == 1U) {
+							ep->is_iso_incomplete = 0U;
 
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
-							hpcd->ISOINIncompleteCallback(
-							    hpcd,
-							    (uint8_t)epnum);
+							hpcd->ISOINIncompleteCallback(hpcd, (uint8_t)epnum);
 #else
-							HAL_PCD_ISOINIncompleteCallback(
-							    hpcd,
-							    (uint8_t)epnum);
+							HAL_PCD_ISOINIncompleteCallback(hpcd, (uint8_t)epnum);
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 						}
 
-						CLEAR_IN_EP_INTR(
-						    epnum,
-						    USB_OTG_DIEPINT_EPDISD);
+						CLEAR_IN_EP_INTR(epnum, USB_OTG_DIEPINT_EPDISD);
 					}
-					if ((epint & USB_OTG_DIEPINT_TXFE) ==
-					    USB_OTG_DIEPINT_TXFE) {
-						(void)PCD_WriteEmptyTxFifo(
-						    hpcd, epnum);
+					if ((epint & USB_OTG_DIEPINT_TXFE) == USB_OTG_DIEPINT_TXFE) {
+						(void)PCD_WriteEmptyTxFifo(hpcd, epnum);
 					}
 				}
 				epnum++;
@@ -1319,8 +1215,7 @@ void HAL_PCD_IRQHandler(PCD_HandleTypeDef *hpcd)
 
 		/* Handle Suspend Interrupt */
 		if (__HAL_PCD_GET_FLAG(hpcd, USB_OTG_GINTSTS_USBSUSP)) {
-			if ((USBx_DEVICE->DSTS & USB_OTG_DSTS_SUSPSTS) ==
-			    USB_OTG_DSTS_SUSPSTS) {
+			if ((USBx_DEVICE->DSTS & USB_OTG_DSTS_SUSPSTS) == USB_OTG_DSTS_SUSPSTS) {
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
 				hpcd->SuspendCallback(hpcd);
 #else
@@ -1336,9 +1231,7 @@ void HAL_PCD_IRQHandler(PCD_HandleTypeDef *hpcd)
 
 			if (hpcd->LPM_State == LPM_L0) {
 				hpcd->LPM_State = LPM_L1;
-				hpcd->BESL = (hpcd->Instance->GLPMCFG &
-					      USB_OTG_GLPMCFG_BESL) >>
-					     2U;
+				hpcd->BESL = (hpcd->Instance->GLPMCFG & USB_OTG_GLPMCFG_BESL) >> 2U;
 
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
 				hpcd->LPMCallback(hpcd, PCD_LPM_L1_ACTIVE);
@@ -1363,41 +1256,31 @@ void HAL_PCD_IRQHandler(PCD_HandleTypeDef *hpcd)
 				USBx_INEP(i)->DIEPINT = 0xFB7FU;
 				USBx_INEP(i)->DIEPCTL &= ~USB_OTG_DIEPCTL_STALL;
 				USBx_OUTEP(i)->DOEPINT = 0xFB7FU;
-				USBx_OUTEP(i)->DOEPCTL &=
-				    ~USB_OTG_DOEPCTL_STALL;
+				USBx_OUTEP(i)->DOEPCTL &= ~USB_OTG_DOEPCTL_STALL;
 				USBx_OUTEP(i)->DOEPCTL |= USB_OTG_DOEPCTL_SNAK;
 			}
 			USBx_DEVICE->DAINTMSK |= 0x10001U;
 
 			if (hpcd->Init.use_dedicated_ep1 != 0U) {
 				USBx_DEVICE->DOUTEP1MSK |=
-				    USB_OTG_DOEPMSK_STUPM |
-				    USB_OTG_DOEPMSK_XFRCM |
-				    USB_OTG_DOEPMSK_EPDM;
+				    USB_OTG_DOEPMSK_STUPM | USB_OTG_DOEPMSK_XFRCM | USB_OTG_DOEPMSK_EPDM;
 
 				USBx_DEVICE->DINEP1MSK |=
-				    USB_OTG_DIEPMSK_TOM |
-				    USB_OTG_DIEPMSK_XFRCM |
-				    USB_OTG_DIEPMSK_EPDM;
+				    USB_OTG_DIEPMSK_TOM | USB_OTG_DIEPMSK_XFRCM | USB_OTG_DIEPMSK_EPDM;
 			} else {
-				USBx_DEVICE->DOEPMSK |=
-				    USB_OTG_DOEPMSK_STUPM |
-				    USB_OTG_DOEPMSK_XFRCM |
-				    USB_OTG_DOEPMSK_EPDM |
-				    USB_OTG_DOEPMSK_OTEPSPRM |
-				    USB_OTG_DOEPMSK_NAKM;
+				USBx_DEVICE->DOEPMSK |= USB_OTG_DOEPMSK_STUPM | USB_OTG_DOEPMSK_XFRCM |
+							USB_OTG_DOEPMSK_EPDM | USB_OTG_DOEPMSK_OTEPSPRM |
+							USB_OTG_DOEPMSK_NAKM;
 
-				USBx_DEVICE->DIEPMSK |= USB_OTG_DIEPMSK_TOM |
-							USB_OTG_DIEPMSK_XFRCM |
-							USB_OTG_DIEPMSK_EPDM;
+				USBx_DEVICE->DIEPMSK |=
+				    USB_OTG_DIEPMSK_TOM | USB_OTG_DIEPMSK_XFRCM | USB_OTG_DIEPMSK_EPDM;
 			}
 
 			/* Set Default Address to 0 */
 			USBx_DEVICE->DCFG &= ~USB_OTG_DCFG_DAD;
 
 			/* setup EP0 to receive SETUP packets */
-			(void)USB_EP0_OutStart(hpcd->Instance,
-					       (uint8_t *)hpcd->Setup);
+			(void)USB_EP0_OutStart(hpcd->Instance, (uint8_t *)hpcd->Setup);
 
 			__HAL_PCD_CLEAR_FLAG(hpcd, USB_OTG_GINTSTS_USBRST);
 		}
@@ -1408,9 +1291,7 @@ void HAL_PCD_IRQHandler(PCD_HandleTypeDef *hpcd)
 			hpcd->Init.speed = USB_GetDevSpeed(hpcd->Instance);
 
 			/* Set USB Turnaround time */
-			(void)USB_SetTurnaroundTime(hpcd->Instance,
-						    HAL_RCC_GetHCLKFreq(),
-						    (uint8_t)hpcd->Init.speed);
+			(void)USB_SetTurnaroundTime(hpcd->Instance, HAL_RCC_GetHCLKFreq(), (uint8_t)hpcd->Init.speed);
 
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
 			hpcd->ResetCallback(hpcd);
@@ -1436,34 +1317,27 @@ void HAL_PCD_IRQHandler(PCD_HandleTypeDef *hpcd)
 		if (__HAL_PCD_GET_FLAG(hpcd, USB_OTG_GINTSTS_BOUTNAKEFF)) {
 			USBx->GINTMSK &= ~USB_OTG_GINTMSK_GONAKEFFM;
 
-			for (epnum = 1U; epnum < hpcd->Init.dev_endpoints;
-			     epnum++) {
-				if (hpcd->OUT_ep[epnum].is_iso_incomplete ==
-				    1U) {
+			for (epnum = 1U; epnum < hpcd->Init.dev_endpoints; epnum++) {
+				if (hpcd->OUT_ep[epnum].is_iso_incomplete == 1U) {
 					/* Abort current transaction and disable
 					 * the EP */
-					(void)HAL_PCD_EP_Abort(hpcd,
-							       (uint8_t)epnum);
+					(void)HAL_PCD_EP_Abort(hpcd, (uint8_t)epnum);
 				}
 			}
 		}
 
 		/* Handle Incomplete ISO IN Interrupt */
 		if (__HAL_PCD_GET_FLAG(hpcd, USB_OTG_GINTSTS_IISOIXFR)) {
-			for (epnum = 1U; epnum < hpcd->Init.dev_endpoints;
-			     epnum++) {
+			for (epnum = 1U; epnum < hpcd->Init.dev_endpoints; epnum++) {
 				RegVal = USBx_INEP(epnum)->DIEPCTL;
 
 				if ((hpcd->IN_ep[epnum].type == EP_TYPE_ISOC) &&
-				    ((RegVal & USB_OTG_DIEPCTL_EPENA) ==
-				     USB_OTG_DIEPCTL_EPENA)) {
-					hpcd->IN_ep[epnum].is_iso_incomplete =
-					    1U;
+				    ((RegVal & USB_OTG_DIEPCTL_EPENA) == USB_OTG_DIEPCTL_EPENA)) {
+					hpcd->IN_ep[epnum].is_iso_incomplete = 1U;
 
 					/* Abort current transaction and disable
 					 * the EP */
-					(void)HAL_PCD_EP_Abort(
-					    hpcd, (uint8_t)(epnum | 0x80U));
+					(void)HAL_PCD_EP_Abort(hpcd, (uint8_t)(epnum | 0x80U));
 				}
 			}
 
@@ -1471,36 +1345,25 @@ void HAL_PCD_IRQHandler(PCD_HandleTypeDef *hpcd)
 		}
 
 		/* Handle Incomplete ISO OUT Interrupt */
-		if (__HAL_PCD_GET_FLAG(hpcd,
-				       USB_OTG_GINTSTS_PXFR_INCOMPISOOUT)) {
-			for (epnum = 1U; epnum < hpcd->Init.dev_endpoints;
-			     epnum++) {
+		if (__HAL_PCD_GET_FLAG(hpcd, USB_OTG_GINTSTS_PXFR_INCOMPISOOUT)) {
+			for (epnum = 1U; epnum < hpcd->Init.dev_endpoints; epnum++) {
 				RegVal = USBx_OUTEP(epnum)->DOEPCTL;
 
-				if ((hpcd->OUT_ep[epnum].type ==
-				     EP_TYPE_ISOC) &&
-				    ((RegVal & USB_OTG_DOEPCTL_EPENA) ==
-				     USB_OTG_DOEPCTL_EPENA) &&
-				    ((RegVal & (0x1U << 16)) ==
-				     (hpcd->FrameNumber & 0x1U))) {
-					hpcd->OUT_ep[epnum].is_iso_incomplete =
-					    1U;
+				if ((hpcd->OUT_ep[epnum].type == EP_TYPE_ISOC) &&
+				    ((RegVal & USB_OTG_DOEPCTL_EPENA) == USB_OTG_DOEPCTL_EPENA) &&
+				    ((RegVal & (0x1U << 16)) == (hpcd->FrameNumber & 0x1U))) {
+					hpcd->OUT_ep[epnum].is_iso_incomplete = 1U;
 
-					USBx->GINTMSK |=
-					    USB_OTG_GINTMSK_GONAKEFFM;
+					USBx->GINTMSK |= USB_OTG_GINTMSK_GONAKEFFM;
 
-					if ((USBx->GINTSTS &
-					     USB_OTG_GINTSTS_BOUTNAKEFF) ==
-					    0U) {
-						USBx_DEVICE->DCTL |=
-						    USB_OTG_DCTL_SGONAK;
+					if ((USBx->GINTSTS & USB_OTG_GINTSTS_BOUTNAKEFF) == 0U) {
+						USBx_DEVICE->DCTL |= USB_OTG_DCTL_SGONAK;
 						break;
 					}
 				}
 			}
 
-			__HAL_PCD_CLEAR_FLAG(hpcd,
-					     USB_OTG_GINTSTS_PXFR_INCOMPISOOUT);
+			__HAL_PCD_CLEAR_FLAG(hpcd, USB_OTG_GINTSTS_PXFR_INCOMPISOOUT);
 		}
 
 		/* Handle Connection event Interrupt */
@@ -1518,8 +1381,7 @@ void HAL_PCD_IRQHandler(PCD_HandleTypeDef *hpcd)
 		if (__HAL_PCD_GET_FLAG(hpcd, USB_OTG_GINTSTS_OTGINT)) {
 			RegVal = hpcd->Instance->GOTGINT;
 
-			if ((RegVal & USB_OTG_GOTGINT_SEDET) ==
-			    USB_OTG_GOTGINT_SEDET) {
+			if ((RegVal & USB_OTG_GOTGINT_SEDET) == USB_OTG_GOTGINT_SEDET) {
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
 				hpcd->DisconnectCallback(hpcd);
 #else
@@ -1629,9 +1491,7 @@ void HAL_PCD_IRQHandler(PCD_HandleTypeDef *hpcd)
 			hpcd->Instance->CNTR |= (uint16_t)USB_CNTR_FSUSP;
 
 			hpcd->LPM_State = LPM_L1;
-			hpcd->BESL = ((uint32_t)hpcd->Instance->LPMCSR &
-				      USB_LPMCSR_BESL) >>
-				     2;
+			hpcd->BESL = ((uint32_t)hpcd->Instance->LPMCSR & USB_LPMCSR_BESL) >> 2;
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
 			hpcd->LPMCallback(hpcd, PCD_LPM_L1_ACTIVE);
 #else
@@ -1789,8 +1649,7 @@ __weak void HAL_PCD_ResumeCallback(PCD_HandleTypeDef *hpcd)
  * @param  epnum endpoint number
  * @retval None
  */
-__weak void HAL_PCD_ISOOUTIncompleteCallback(PCD_HandleTypeDef *hpcd,
-					     uint8_t epnum)
+__weak void HAL_PCD_ISOOUTIncompleteCallback(PCD_HandleTypeDef *hpcd, uint8_t epnum)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hpcd);
@@ -1808,8 +1667,7 @@ __weak void HAL_PCD_ISOOUTIncompleteCallback(PCD_HandleTypeDef *hpcd,
  * @param  epnum endpoint number
  * @retval None
  */
-__weak void HAL_PCD_ISOINIncompleteCallback(PCD_HandleTypeDef *hpcd,
-					    uint8_t epnum)
+__weak void HAL_PCD_ISOINIncompleteCallback(PCD_HandleTypeDef *hpcd, uint8_t epnum)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hpcd);
@@ -1947,8 +1805,7 @@ HAL_StatusTypeDef HAL_PCD_SetAddress(PCD_HandleTypeDef *hpcd, uint8_t address)
  * @param  ep_type endpoint type
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_PCD_EP_Open(PCD_HandleTypeDef *hpcd, uint8_t ep_addr,
-				  uint16_t ep_mps, uint8_t ep_type)
+HAL_StatusTypeDef HAL_PCD_EP_Open(PCD_HandleTypeDef *hpcd, uint8_t ep_addr, uint16_t ep_mps, uint8_t ep_type)
 {
 	HAL_StatusTypeDef ret = HAL_OK;
 	PCD_EPTypeDef *ep;
@@ -2017,8 +1874,7 @@ HAL_StatusTypeDef HAL_PCD_EP_Close(PCD_HandleTypeDef *hpcd, uint8_t ep_addr)
  * @param  len amount of data to be received
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_PCD_EP_Receive(PCD_HandleTypeDef *hpcd, uint8_t ep_addr,
-				     uint8_t *pBuf, uint32_t len)
+HAL_StatusTypeDef HAL_PCD_EP_Receive(PCD_HandleTypeDef *hpcd, uint8_t ep_addr, uint8_t *pBuf, uint32_t len)
 {
 	PCD_EPTypeDef *ep;
 
@@ -2054,8 +1910,7 @@ uint32_t HAL_PCD_EP_GetRxCount(PCD_HandleTypeDef const *hpcd, uint8_t ep_addr)
  * @param  len amount of data to be sent
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_PCD_EP_Transmit(PCD_HandleTypeDef *hpcd, uint8_t ep_addr,
-				      uint8_t *pBuf, uint32_t len)
+HAL_StatusTypeDef HAL_PCD_EP_Transmit(PCD_HandleTypeDef *hpcd, uint8_t ep_addr, uint8_t *pBuf, uint32_t len)
 {
 	PCD_EPTypeDef *ep;
 
@@ -2181,8 +2036,7 @@ HAL_StatusTypeDef HAL_PCD_EP_Flush(PCD_HandleTypeDef *hpcd, uint8_t ep_addr)
 	__HAL_LOCK(hpcd);
 
 	if ((ep_addr & 0x80U) == 0x80U) {
-		(void)USB_FlushTxFifo(hpcd->Instance,
-				      (uint32_t)ep_addr & EP_ADDR_MSK);
+		(void)USB_FlushTxFifo(hpcd->Instance, (uint32_t)ep_addr & EP_ADDR_MSK);
 	} else {
 		(void)USB_FlushRxFifo(hpcd->Instance);
 	}
@@ -2236,10 +2090,7 @@ HAL_StatusTypeDef HAL_PCD_DeActivateRemoteWakeup(PCD_HandleTypeDef *hpcd)
  * @param  hpcd PCD handle
  * @retval HAL state
  */
-PCD_StateTypeDef HAL_PCD_GetState(PCD_HandleTypeDef const *hpcd)
-{
-	return hpcd->State;
-}
+PCD_StateTypeDef HAL_PCD_GetState(PCD_HandleTypeDef const *hpcd) { return hpcd->State; }
 
 /**
  * @}
@@ -2260,8 +2111,7 @@ PCD_StateTypeDef HAL_PCD_GetState(PCD_HandleTypeDef const *hpcd)
  * @param  epnum endpoint number
  * @retval HAL status
  */
-static HAL_StatusTypeDef PCD_WriteEmptyTxFifo(PCD_HandleTypeDef *hpcd,
-					      uint32_t epnum)
+static HAL_StatusTypeDef PCD_WriteEmptyTxFifo(PCD_HandleTypeDef *hpcd, uint32_t epnum)
 {
 	USB_OTG_GlobalTypeDef *USBx = hpcd->Instance;
 	uint32_t USBx_BASE = (uint32_t)USBx;
@@ -2284,9 +2134,8 @@ static HAL_StatusTypeDef PCD_WriteEmptyTxFifo(PCD_HandleTypeDef *hpcd,
 
 	len32b = (len + 3U) / 4U;
 
-	while (((USBx_INEP(epnum)->DTXFSTS & USB_OTG_DTXFSTS_INEPTFSAV) >=
-		len32b) &&
-	       (ep->xfer_count < ep->xfer_len) && (ep->xfer_len != 0U)) {
+	while (((USBx_INEP(epnum)->DTXFSTS & USB_OTG_DTXFSTS_INEPTFSAV) >= len32b) && (ep->xfer_count < ep->xfer_len) &&
+	       (ep->xfer_len != 0U)) {
 		/* Write the FIFO */
 		len = ep->xfer_len - ep->xfer_count;
 
@@ -2295,8 +2144,7 @@ static HAL_StatusTypeDef PCD_WriteEmptyTxFifo(PCD_HandleTypeDef *hpcd,
 		}
 		len32b = (len + 3U) / 4U;
 
-		(void)USB_WritePacket(USBx, ep->xfer_buff, (uint8_t)epnum,
-				      (uint16_t)len);
+		(void)USB_WritePacket(USBx, ep->xfer_buff, (uint8_t)epnum, (uint16_t)len);
 
 		ep->xfer_buff += len;
 		ep->xfer_count += len;
@@ -2316,8 +2164,7 @@ static HAL_StatusTypeDef PCD_WriteEmptyTxFifo(PCD_HandleTypeDef *hpcd,
  * @param  epnum endpoint number
  * @retval HAL status
  */
-static HAL_StatusTypeDef PCD_EP_OutXfrComplete_int(PCD_HandleTypeDef *hpcd,
-						   uint32_t epnum)
+static HAL_StatusTypeDef PCD_EP_OutXfrComplete_int(PCD_HandleTypeDef *hpcd, uint32_t epnum)
 {
 	const USB_OTG_GlobalTypeDef *USBx = hpcd->Instance;
 	uint32_t USBx_BASE = (uint32_t)USBx;
@@ -2326,14 +2173,11 @@ static HAL_StatusTypeDef PCD_EP_OutXfrComplete_int(PCD_HandleTypeDef *hpcd,
 
 	if (gSNPSiD == USB_OTG_CORE_ID_310A) {
 		/* StupPktRcvd = 1 this is a setup packet */
-		if ((DoepintReg & USB_OTG_DOEPINT_STPKTRX) ==
-		    USB_OTG_DOEPINT_STPKTRX) {
+		if ((DoepintReg & USB_OTG_DOEPINT_STPKTRX) == USB_OTG_DOEPINT_STPKTRX) {
 			CLEAR_OUT_EP_INTR(epnum, USB_OTG_DOEPINT_STPKTRX);
 		} else {
-			if ((DoepintReg & USB_OTG_DOEPINT_OTEPSPR) ==
-			    USB_OTG_DOEPINT_OTEPSPR) {
-				CLEAR_OUT_EP_INTR(epnum,
-						  USB_OTG_DOEPINT_OTEPSPR);
+			if ((DoepintReg & USB_OTG_DOEPINT_OTEPSPR) == USB_OTG_DOEPINT_OTEPSPR) {
+				CLEAR_OUT_EP_INTR(epnum, USB_OTG_DOEPINT_OTEPSPR);
 			}
 
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
@@ -2359,17 +2203,14 @@ static HAL_StatusTypeDef PCD_EP_OutXfrComplete_int(PCD_HandleTypeDef *hpcd,
  * @param  epnum endpoint number
  * @retval HAL status
  */
-static HAL_StatusTypeDef PCD_EP_OutSetupPacket_int(PCD_HandleTypeDef *hpcd,
-						   uint32_t epnum)
+static HAL_StatusTypeDef PCD_EP_OutSetupPacket_int(PCD_HandleTypeDef *hpcd, uint32_t epnum)
 {
 	const USB_OTG_GlobalTypeDef *USBx = hpcd->Instance;
 	uint32_t USBx_BASE = (uint32_t)USBx;
 	uint32_t gSNPSiD = *(__IO const uint32_t *)(&USBx->CID + 0x1U);
 	uint32_t DoepintReg = USBx_OUTEP(epnum)->DOEPINT;
 
-	if ((gSNPSiD > USB_OTG_CORE_ID_300A) &&
-	    ((DoepintReg & USB_OTG_DOEPINT_STPKTRX) ==
-	     USB_OTG_DOEPINT_STPKTRX)) {
+	if ((gSNPSiD > USB_OTG_CORE_ID_300A) && ((DoepintReg & USB_OTG_DOEPINT_STPKTRX) == USB_OTG_DOEPINT_STPKTRX)) {
 		CLEAR_OUT_EP_INTR(epnum, USB_OTG_DOEPINT_STPKTRX);
 	}
 
@@ -2423,8 +2264,7 @@ static HAL_StatusTypeDef PCD_EP_ISR_Handler(PCD_HandleTypeDef *hpcd)
 				PCD_CLEAR_TX_EP_CTR(hpcd->Instance, PCD_ENDP0);
 				ep = &hpcd->IN_ep[0];
 
-				ep->xfer_count =
-				    PCD_GET_EP_TX_CNT(hpcd->Instance, ep->num);
+				ep->xfer_count = PCD_GET_EP_TX_CNT(hpcd->Instance, ep->num);
 				ep->xfer_buff += ep->xfer_count;
 
 				/* TX COMPLETE */
@@ -2434,11 +2274,8 @@ static HAL_StatusTypeDef PCD_EP_ISR_Handler(PCD_HandleTypeDef *hpcd)
 				HAL_PCD_DataInStageCallback(hpcd, 0U);
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 
-				if ((hpcd->USB_Address > 0U) &&
-				    (ep->xfer_len == 0U)) {
-					hpcd->Instance->DADDR =
-					    ((uint16_t)hpcd->USB_Address |
-					     USB_DADDR_EF);
+				if ((hpcd->USB_Address > 0U) && (ep->xfer_len == 0U)) {
+					hpcd->Instance->DADDR = ((uint16_t)hpcd->USB_Address | USB_DADDR_EF);
 					hpcd->USB_Address = 0U;
 				}
 			} else {
@@ -2448,23 +2285,18 @@ static HAL_StatusTypeDef PCD_EP_ISR_Handler(PCD_HandleTypeDef *hpcd)
 				/* DIR = 1 & (CTR_TX | CTR_RX) => 2 int pending
 				 */
 				ep = &hpcd->OUT_ep[0];
-				wEPVal =
-				    PCD_GET_ENDPOINT(hpcd->Instance, PCD_ENDP0);
+				wEPVal = PCD_GET_ENDPOINT(hpcd->Instance, PCD_ENDP0);
 
 				if ((wEPVal & USB_EP_SETUP) != 0U) {
 					/* Get SETUP Packet */
-					ep->xfer_count = PCD_GET_EP_RX_CNT(
-					    hpcd->Instance, ep->num);
+					ep->xfer_count = PCD_GET_EP_RX_CNT(hpcd->Instance, ep->num);
 
-					USB_ReadPMA(hpcd->Instance,
-						    (uint8_t *)hpcd->Setup,
-						    ep->pmaadress,
+					USB_ReadPMA(hpcd->Instance, (uint8_t *)hpcd->Setup, ep->pmaadress,
 						    (uint16_t)ep->xfer_count);
 
 					/* SETUP bit kept frozen while CTR_RX =
 					 * 1 */
-					PCD_CLEAR_RX_EP_CTR(hpcd->Instance,
-							    PCD_ENDP0);
+					PCD_CLEAR_RX_EP_CTR(hpcd->Instance, PCD_ENDP0);
 
 					/* Process SETUP Packet*/
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
@@ -2473,43 +2305,31 @@ static HAL_StatusTypeDef PCD_EP_ISR_Handler(PCD_HandleTypeDef *hpcd)
 					HAL_PCD_SetupStageCallback(hpcd);
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 				} else if ((wEPVal & USB_EP_CTR_RX) != 0U) {
-					PCD_CLEAR_RX_EP_CTR(hpcd->Instance,
-							    PCD_ENDP0);
+					PCD_CLEAR_RX_EP_CTR(hpcd->Instance, PCD_ENDP0);
 
 					/* Get Control Data OUT Packet */
-					ep->xfer_count = PCD_GET_EP_RX_CNT(
-					    hpcd->Instance, ep->num);
+					ep->xfer_count = PCD_GET_EP_RX_CNT(hpcd->Instance, ep->num);
 
-					if ((ep->xfer_count != 0U) &&
-					    (ep->xfer_buff != 0U)) {
-						USB_ReadPMA(
-						    hpcd->Instance,
-						    ep->xfer_buff,
-						    ep->pmaadress,
-						    (uint16_t)ep->xfer_count);
+					if ((ep->xfer_count != 0U) && (ep->xfer_buff != 0U)) {
+						USB_ReadPMA(hpcd->Instance, ep->xfer_buff, ep->pmaadress,
+							    (uint16_t)ep->xfer_count);
 
 						ep->xfer_buff += ep->xfer_count;
 
 						/* Process Control Data OUT
 						 * Packet */
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
-						hpcd->DataOutStageCallback(hpcd,
-									   0U);
+						hpcd->DataOutStageCallback(hpcd, 0U);
 #else
-						HAL_PCD_DataOutStageCallback(
-						    hpcd, 0U);
+						HAL_PCD_DataOutStageCallback(hpcd, 0U);
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 					}
 
-					wEPVal = (uint16_t)PCD_GET_ENDPOINT(
-					    hpcd->Instance, PCD_ENDP0);
+					wEPVal = (uint16_t)PCD_GET_ENDPOINT(hpcd->Instance, PCD_ENDP0);
 
 					if (((wEPVal & USB_EP_SETUP) == 0U) &&
-					    ((wEPVal & USB_EP_RX_STRX) !=
-					     USB_EP_RX_VALID)) {
-						PCD_SET_EP_RX_STATUS(
-						    hpcd->Instance, PCD_ENDP0,
-						    USB_EP_RX_VALID);
+					    ((wEPVal & USB_EP_RX_STRX) != USB_EP_RX_VALID)) {
+						PCD_SET_EP_RX_STATUS(hpcd->Instance, PCD_ENDP0, USB_EP_RX_VALID);
 					}
 				}
 			}
@@ -2525,62 +2345,41 @@ static HAL_StatusTypeDef PCD_EP_ISR_Handler(PCD_HandleTypeDef *hpcd)
 
 				/* OUT Single Buffering */
 				if (ep->doublebuffer == 0U) {
-					count = (uint16_t)PCD_GET_EP_RX_CNT(
-					    hpcd->Instance, ep->num);
+					count = (uint16_t)PCD_GET_EP_RX_CNT(hpcd->Instance, ep->num);
 
 					if (count != 0U) {
-						USB_ReadPMA(hpcd->Instance,
-							    ep->xfer_buff,
-							    ep->pmaadress,
-							    count);
+						USB_ReadPMA(hpcd->Instance, ep->xfer_buff, ep->pmaadress, count);
 					}
 				}
 #if (USE_USB_DOUBLE_BUFFER == 1U)
 				else {
 					/* manage double buffer bulk out */
 					if (ep->type == EP_TYPE_BULK) {
-						count = HAL_PCD_EP_DB_Receive(
-						    hpcd, ep, wEPVal);
+						count = HAL_PCD_EP_DB_Receive(hpcd, ep, wEPVal);
 					} else /* manage double buffer iso out
 						*/
 					{
 						/* free EP OUT Buffer */
-						PCD_FREE_USER_BUFFER(
-						    hpcd->Instance, ep->num,
-						    0U);
+						PCD_FREE_USER_BUFFER(hpcd->Instance, ep->num, 0U);
 
-						if ((PCD_GET_ENDPOINT(
-							 hpcd->Instance,
-							 ep->num) &
-						     USB_EP_DTOG_RX) != 0U) {
+						if ((PCD_GET_ENDPOINT(hpcd->Instance, ep->num) & USB_EP_DTOG_RX) !=
+						    0U) {
 							/* read from endpoint
 							 * BUF0Addr buffer */
-							count = (uint16_t)
-							    PCD_GET_EP_DBUF0_CNT(
-								hpcd->Instance,
-								ep->num);
+							count = (uint16_t)PCD_GET_EP_DBUF0_CNT(hpcd->Instance, ep->num);
 
 							if (count != 0U) {
-								USB_ReadPMA(
-								    hpcd->Instance,
-								    ep->xfer_buff,
-								    ep->pmaaddr0,
-								    count);
+								USB_ReadPMA(hpcd->Instance, ep->xfer_buff, ep->pmaaddr0,
+									    count);
 							}
 						} else {
 							/* read from endpoint
 							 * BUF1Addr buffer */
-							count = (uint16_t)
-							    PCD_GET_EP_DBUF1_CNT(
-								hpcd->Instance,
-								ep->num);
+							count = (uint16_t)PCD_GET_EP_DBUF1_CNT(hpcd->Instance, ep->num);
 
 							if (count != 0U) {
-								USB_ReadPMA(
-								    hpcd->Instance,
-								    ep->xfer_buff,
-								    ep->pmaaddr1,
-								    count);
+								USB_ReadPMA(hpcd->Instance, ep->xfer_buff, ep->pmaaddr1,
+									    count);
 							}
 						}
 					}
@@ -2592,19 +2391,15 @@ static HAL_StatusTypeDef PCD_EP_ISR_Handler(PCD_HandleTypeDef *hpcd)
 				ep->xfer_count += count;
 				ep->xfer_buff += count;
 
-				if ((ep->xfer_len == 0U) ||
-				    (count < ep->maxpacket)) {
+				if ((ep->xfer_len == 0U) || (count < ep->maxpacket)) {
 					/* RX COMPLETE */
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
-					hpcd->DataOutStageCallback(hpcd,
-								   ep->num);
+					hpcd->DataOutStageCallback(hpcd, ep->num);
 #else
-					HAL_PCD_DataOutStageCallback(hpcd,
-								     ep->num);
+					HAL_PCD_DataOutStageCallback(hpcd, ep->num);
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 				} else {
-					(void)USB_EPStartXfer(hpcd->Instance,
-							      ep);
+					(void)USB_EPStartXfer(hpcd->Instance, ep);
 				}
 			}
 
@@ -2619,42 +2414,29 @@ static HAL_StatusTypeDef PCD_EP_ISR_Handler(PCD_HandleTypeDef *hpcd)
 
 #if (USE_USB_DOUBLE_BUFFER == 1U)
 					if (ep->doublebuffer != 0U) {
-						if ((wEPVal & USB_EP_DTOG_TX) !=
-						    0U) {
-							PCD_SET_EP_DBUF0_CNT(
-							    hpcd->Instance,
-							    ep->num, ep->is_in,
-							    0U);
+						if ((wEPVal & USB_EP_DTOG_TX) != 0U) {
+							PCD_SET_EP_DBUF0_CNT(hpcd->Instance, ep->num, ep->is_in, 0U);
 						} else {
-							PCD_SET_EP_DBUF1_CNT(
-							    hpcd->Instance,
-							    ep->num, ep->is_in,
-							    0U);
+							PCD_SET_EP_DBUF1_CNT(hpcd->Instance, ep->num, ep->is_in, 0U);
 						}
 					}
 #endif /* (USE_USB_DOUBLE_BUFFER == 1U) */
 
 					/* TX COMPLETE */
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
-					hpcd->DataInStageCallback(hpcd,
-								  ep->num);
+					hpcd->DataInStageCallback(hpcd, ep->num);
 #else
-					HAL_PCD_DataInStageCallback(hpcd,
-								    ep->num);
+					HAL_PCD_DataInStageCallback(hpcd, ep->num);
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 				} else {
 					/* Manage Single Buffer Transaction */
 					if ((wEPVal & USB_EP_KIND) == 0U) {
 						/* Multi-packet on the NON
 						 * control IN endpoint */
-						TxPctSize =
-						    (uint16_t)PCD_GET_EP_TX_CNT(
-							hpcd->Instance,
-							ep->num);
+						TxPctSize = (uint16_t)PCD_GET_EP_TX_CNT(hpcd->Instance, ep->num);
 
 						if (ep->xfer_len > TxPctSize) {
-							ep->xfer_len -=
-							    TxPctSize;
+							ep->xfer_len -= TxPctSize;
 						} else {
 							ep->xfer_len = 0U;
 						}
@@ -2663,29 +2445,23 @@ static HAL_StatusTypeDef PCD_EP_ISR_Handler(PCD_HandleTypeDef *hpcd)
 						if (ep->xfer_len == 0U) {
 							/* TX COMPLETE */
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
-							hpcd->DataInStageCallback(
-							    hpcd, ep->num);
+							hpcd->DataInStageCallback(hpcd, ep->num);
 #else
-							HAL_PCD_DataInStageCallback(
-							    hpcd, ep->num);
+							HAL_PCD_DataInStageCallback(hpcd, ep->num);
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 						} else {
 							/* Transfer is not yet
 							 * Done */
-							ep->xfer_buff +=
-							    TxPctSize;
-							ep->xfer_count +=
-							    TxPctSize;
-							(void)USB_EPStartXfer(
-							    hpcd->Instance, ep);
+							ep->xfer_buff += TxPctSize;
+							ep->xfer_count += TxPctSize;
+							(void)USB_EPStartXfer(hpcd->Instance, ep);
 						}
 					}
 #if (USE_USB_DOUBLE_BUFFER == 1U)
 					/* Double Buffer bulk IN (bulk transfer
 					   Len > Ep_Mps) */
 					else {
-						(void)HAL_PCD_EP_DB_Transmit(
-						    hpcd, ep, wEPVal);
+						(void)HAL_PCD_EP_DB_Transmit(hpcd, ep, wEPVal);
 					}
 #endif /* (USE_USB_DOUBLE_BUFFER == 1U) */
 				}
@@ -2704,8 +2480,7 @@ static HAL_StatusTypeDef PCD_EP_ISR_Handler(PCD_HandleTypeDef *hpcd)
  * @param  wEPVal Last snapshot of EPRx register value taken in ISR
  * @retval HAL status
  */
-static uint16_t HAL_PCD_EP_DB_Receive(PCD_HandleTypeDef *hpcd,
-				      PCD_EPTypeDef *ep, uint16_t wEPVal)
+static uint16_t HAL_PCD_EP_DB_Receive(PCD_HandleTypeDef *hpcd, PCD_EPTypeDef *ep, uint16_t wEPVal)
 {
 	uint16_t count;
 
@@ -2723,8 +2498,7 @@ static uint16_t HAL_PCD_EP_DB_Receive(PCD_HandleTypeDef *hpcd,
 		if (ep->xfer_len == 0U) {
 			/* Set NAK to OUT endpoint since double buffer is
 			 * enabled */
-			PCD_SET_EP_RX_STATUS(hpcd->Instance, ep->num,
-					     USB_EP_RX_NAK);
+			PCD_SET_EP_RX_STATUS(hpcd->Instance, ep->num, USB_EP_RX_NAK);
 		}
 
 		/* Check if Buffer1 is in blocked state which requires to toggle
@@ -2734,8 +2508,7 @@ static uint16_t HAL_PCD_EP_DB_Receive(PCD_HandleTypeDef *hpcd,
 		}
 
 		if (count != 0U) {
-			USB_ReadPMA(hpcd->Instance, ep->xfer_buff, ep->pmaaddr0,
-				    count);
+			USB_ReadPMA(hpcd->Instance, ep->xfer_buff, ep->pmaaddr0, count);
 		}
 	}
 	/* Manage Buffer 1 DTOG_RX=0 */
@@ -2751,8 +2524,7 @@ static uint16_t HAL_PCD_EP_DB_Receive(PCD_HandleTypeDef *hpcd,
 
 		if (ep->xfer_len == 0U) {
 			/* Set NAK on the current endpoint */
-			PCD_SET_EP_RX_STATUS(hpcd->Instance, ep->num,
-					     USB_EP_RX_NAK);
+			PCD_SET_EP_RX_STATUS(hpcd->Instance, ep->num, USB_EP_RX_NAK);
 		}
 
 		/* Need to FreeUser Buffer */
@@ -2761,8 +2533,7 @@ static uint16_t HAL_PCD_EP_DB_Receive(PCD_HandleTypeDef *hpcd,
 		}
 
 		if (count != 0U) {
-			USB_ReadPMA(hpcd->Instance, ep->xfer_buff, ep->pmaaddr1,
-				    count);
+			USB_ReadPMA(hpcd->Instance, ep->xfer_buff, ep->pmaaddr1, count);
 		}
 	}
 
@@ -2776,9 +2547,7 @@ static uint16_t HAL_PCD_EP_DB_Receive(PCD_HandleTypeDef *hpcd,
  * @param  wEPVal Last snapshot of EPRx register value taken in ISR
  * @retval HAL status
  */
-static HAL_StatusTypeDef HAL_PCD_EP_DB_Transmit(PCD_HandleTypeDef *hpcd,
-						PCD_EPTypeDef *ep,
-						uint16_t wEPVal)
+static HAL_StatusTypeDef HAL_PCD_EP_DB_Transmit(PCD_HandleTypeDef *hpcd, PCD_EPTypeDef *ep, uint16_t wEPVal)
 {
 	uint32_t len;
 	uint16_t TxPctSize;
@@ -2786,8 +2555,7 @@ static HAL_StatusTypeDef HAL_PCD_EP_DB_Transmit(PCD_HandleTypeDef *hpcd,
 	/* Data Buffer0 ACK received */
 	if ((wEPVal & USB_EP_DTOG_TX) != 0U) {
 		/* multi-packet on the NON control IN endpoint */
-		TxPctSize =
-		    (uint16_t)PCD_GET_EP_DBUF0_CNT(hpcd->Instance, ep->num);
+		TxPctSize = (uint16_t)PCD_GET_EP_DBUF0_CNT(hpcd->Instance, ep->num);
 
 		if (ep->xfer_len > TxPctSize) {
 			ep->xfer_len -= TxPctSize;
@@ -2797,15 +2565,12 @@ static HAL_StatusTypeDef HAL_PCD_EP_DB_Transmit(PCD_HandleTypeDef *hpcd,
 
 		/* Transfer is completed */
 		if (ep->xfer_len == 0U) {
-			PCD_SET_EP_DBUF0_CNT(hpcd->Instance, ep->num, ep->is_in,
-					     0U);
-			PCD_SET_EP_DBUF1_CNT(hpcd->Instance, ep->num, ep->is_in,
-					     0U);
+			PCD_SET_EP_DBUF0_CNT(hpcd->Instance, ep->num, ep->is_in, 0U);
+			PCD_SET_EP_DBUF1_CNT(hpcd->Instance, ep->num, ep->is_in, 0U);
 
 			if (ep->type == EP_TYPE_BULK) {
 				/* Set Bulk endpoint in NAK state */
-				PCD_SET_EP_TX_STATUS(hpcd->Instance, ep->num,
-						     USB_EP_TX_NAK);
+				PCD_SET_EP_TX_STATUS(hpcd->Instance, ep->num, USB_EP_TX_NAK);
 			}
 
 			/* TX COMPLETE */
@@ -2816,8 +2581,7 @@ static HAL_StatusTypeDef HAL_PCD_EP_DB_Transmit(PCD_HandleTypeDef *hpcd,
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 
 			if ((wEPVal & USB_EP_DTOG_RX) != 0U) {
-				PCD_FREE_USER_BUFFER(hpcd->Instance, ep->num,
-						     1U);
+				PCD_FREE_USER_BUFFER(hpcd->Instance, ep->num, 1U);
 			}
 
 			return HAL_OK;
@@ -2825,8 +2589,7 @@ static HAL_StatusTypeDef HAL_PCD_EP_DB_Transmit(PCD_HandleTypeDef *hpcd,
 		{
 			/* Need to Free USB Buffer */
 			if ((wEPVal & USB_EP_DTOG_RX) != 0U) {
-				PCD_FREE_USER_BUFFER(hpcd->Instance, ep->num,
-						     1U);
+				PCD_FREE_USER_BUFFER(hpcd->Instance, ep->num, 1U);
 			}
 
 			/* Still there is data to Fill in the next Buffer */
@@ -2851,19 +2614,16 @@ static HAL_StatusTypeDef HAL_PCD_EP_DB_Transmit(PCD_HandleTypeDef *hpcd,
 				/* Write remaining Data to Buffer */
 				/* Set the Double buffer counter for pma buffer0
 				 */
-				PCD_SET_EP_DBUF0_CNT(hpcd->Instance, ep->num,
-						     ep->is_in, len);
+				PCD_SET_EP_DBUF0_CNT(hpcd->Instance, ep->num, ep->is_in, len);
 
 				/* Copy user buffer to USB PMA */
-				USB_WritePMA(hpcd->Instance, ep->xfer_buff,
-					     ep->pmaaddr0, (uint16_t)len);
+				USB_WritePMA(hpcd->Instance, ep->xfer_buff, ep->pmaaddr0, (uint16_t)len);
 			}
 		}
 	} else /* Data Buffer1 ACK received */
 	{
 		/* multi-packet on the NON control IN endpoint */
-		TxPctSize =
-		    (uint16_t)PCD_GET_EP_DBUF1_CNT(hpcd->Instance, ep->num);
+		TxPctSize = (uint16_t)PCD_GET_EP_DBUF1_CNT(hpcd->Instance, ep->num);
 
 		if (ep->xfer_len >= TxPctSize) {
 			ep->xfer_len -= TxPctSize;
@@ -2873,15 +2633,12 @@ static HAL_StatusTypeDef HAL_PCD_EP_DB_Transmit(PCD_HandleTypeDef *hpcd,
 
 		/* Transfer is completed */
 		if (ep->xfer_len == 0U) {
-			PCD_SET_EP_DBUF0_CNT(hpcd->Instance, ep->num, ep->is_in,
-					     0U);
-			PCD_SET_EP_DBUF1_CNT(hpcd->Instance, ep->num, ep->is_in,
-					     0U);
+			PCD_SET_EP_DBUF0_CNT(hpcd->Instance, ep->num, ep->is_in, 0U);
+			PCD_SET_EP_DBUF1_CNT(hpcd->Instance, ep->num, ep->is_in, 0U);
 
 			if (ep->type == EP_TYPE_BULK) {
 				/* Set Bulk endpoint in NAK state */
-				PCD_SET_EP_TX_STATUS(hpcd->Instance, ep->num,
-						     USB_EP_TX_NAK);
+				PCD_SET_EP_TX_STATUS(hpcd->Instance, ep->num, USB_EP_TX_NAK);
 			}
 
 			/* TX COMPLETE */
@@ -2893,8 +2650,7 @@ static HAL_StatusTypeDef HAL_PCD_EP_DB_Transmit(PCD_HandleTypeDef *hpcd,
 
 			/* need to Free USB Buff */
 			if ((wEPVal & USB_EP_DTOG_RX) == 0U) {
-				PCD_FREE_USER_BUFFER(hpcd->Instance, ep->num,
-						     1U);
+				PCD_FREE_USER_BUFFER(hpcd->Instance, ep->num, 1U);
 			}
 
 			return HAL_OK;
@@ -2902,8 +2658,7 @@ static HAL_StatusTypeDef HAL_PCD_EP_DB_Transmit(PCD_HandleTypeDef *hpcd,
 		{
 			/* Need to Free USB Buffer */
 			if ((wEPVal & USB_EP_DTOG_RX) == 0U) {
-				PCD_FREE_USER_BUFFER(hpcd->Instance, ep->num,
-						     1U);
+				PCD_FREE_USER_BUFFER(hpcd->Instance, ep->num, 1U);
 			}
 
 			/* Still there is data to Fill in the next Buffer */
@@ -2927,12 +2682,10 @@ static HAL_StatusTypeDef HAL_PCD_EP_DB_Transmit(PCD_HandleTypeDef *hpcd,
 
 				/* Set the Double buffer counter for pma buffer1
 				 */
-				PCD_SET_EP_DBUF1_CNT(hpcd->Instance, ep->num,
-						     ep->is_in, len);
+				PCD_SET_EP_DBUF1_CNT(hpcd->Instance, ep->num, ep->is_in, len);
 
 				/* Copy the user buffer to USB PMA */
-				USB_WritePMA(hpcd->Instance, ep->xfer_buff,
-					     ep->pmaaddr1, (uint16_t)len);
+				USB_WritePMA(hpcd->Instance, ep->xfer_buff, ep->pmaaddr1, (uint16_t)len);
 			}
 		}
 	}

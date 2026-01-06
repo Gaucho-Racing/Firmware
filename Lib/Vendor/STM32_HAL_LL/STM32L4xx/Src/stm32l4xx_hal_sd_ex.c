@@ -38,9 +38,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l4xx_hal.h"
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 
 /** @addtogroup STM32L4xx_HAL_Driver
  * @{
@@ -136,9 +135,7 @@ and start read and write multibuffer mode for SD HAL driver.
  * the same size.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SDEx_ConfigDMAMultiBuffer(SD_HandleTypeDef *hsd,
-						uint32_t *pDataBuffer0,
-						uint32_t *pDataBuffer1,
+HAL_StatusTypeDef HAL_SDEx_ConfigDMAMultiBuffer(SD_HandleTypeDef *hsd, uint32_t *pDataBuffer0, uint32_t *pDataBuffer1,
 						uint32_t BufferSize)
 {
 	if (hsd->State == HAL_SD_STATE_READY) {
@@ -162,9 +159,7 @@ HAL_StatusTypeDef HAL_SDEx_ConfigDMAMultiBuffer(SD_HandleTypeDef *hsd,
  * @param  NumberOfBlocks Total number of blocks to read
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SDEx_ReadBlocksDMAMultiBuffer(SD_HandleTypeDef *hsd,
-						    uint32_t BlockAdd,
-						    uint32_t NumberOfBlocks)
+HAL_StatusTypeDef HAL_SDEx_ReadBlocksDMAMultiBuffer(SD_HandleTypeDef *hsd, uint32_t BlockAdd, uint32_t NumberOfBlocks)
 {
 	SDMMC_DataInitTypeDef config;
 	uint32_t errorstate;
@@ -179,8 +174,7 @@ HAL_StatusTypeDef HAL_SDEx_ReadBlocksDMAMultiBuffer(SD_HandleTypeDef *hsd,
 
 		DmaBase0_reg = hsd->Instance->IDMABASE0;
 		DmaBase1_reg = hsd->Instance->IDMABASE1;
-		if ((hsd->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) ||
-		    (DmaBase1_reg == 0U)) {
+		if ((hsd->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) || (DmaBase1_reg == 0U)) {
 			hsd->ErrorCode = HAL_SD_ERROR_ADDR_OUT_OF_RANGE;
 			return HAL_ERROR;
 		}
@@ -213,8 +207,7 @@ HAL_StatusTypeDef HAL_SDEx_ReadBlocksDMAMultiBuffer(SD_HandleTypeDef *hsd,
 		hsd->Instance->IDMACTRL = SDMMC_ENABLE_IDMA_DOUBLE_BUFF0;
 
 		/* Read Blocks in DMA mode */
-		hsd->Context =
-		    (SD_CONTEXT_READ_MULTIPLE_BLOCK | SD_CONTEXT_DMA);
+		hsd->Context = (SD_CONTEXT_READ_MULTIPLE_BLOCK | SD_CONTEXT_DMA);
 
 		/* Read Multi Block command */
 		errorstate = SDMMC_CmdReadMultiBlock(hsd->Instance, add);
@@ -224,8 +217,7 @@ HAL_StatusTypeDef HAL_SDEx_ReadBlocksDMAMultiBuffer(SD_HandleTypeDef *hsd,
 			return HAL_ERROR;
 		}
 
-		__HAL_SD_ENABLE_IT(hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT |
-					 SDMMC_IT_RXOVERR | SDMMC_IT_DATAEND |
+		__HAL_SD_ENABLE_IT(hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_RXOVERR | SDMMC_IT_DATAEND |
 					 SDMMC_IT_IDMABTC));
 
 		return HAL_OK;
@@ -244,9 +236,7 @@ HAL_StatusTypeDef HAL_SDEx_ReadBlocksDMAMultiBuffer(SD_HandleTypeDef *hsd,
  * @param  NumberOfBlocks Total number of blocks to read
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SDEx_WriteBlocksDMAMultiBuffer(SD_HandleTypeDef *hsd,
-						     uint32_t BlockAdd,
-						     uint32_t NumberOfBlocks)
+HAL_StatusTypeDef HAL_SDEx_WriteBlocksDMAMultiBuffer(SD_HandleTypeDef *hsd, uint32_t BlockAdd, uint32_t NumberOfBlocks)
 {
 	SDMMC_DataInitTypeDef config;
 	uint32_t errorstate;
@@ -261,8 +251,7 @@ HAL_StatusTypeDef HAL_SDEx_WriteBlocksDMAMultiBuffer(SD_HandleTypeDef *hsd,
 
 		DmaBase0_reg = hsd->Instance->IDMABASE0;
 		DmaBase1_reg = hsd->Instance->IDMABASE1;
-		if ((hsd->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) ||
-		    (DmaBase1_reg == 0U)) {
+		if ((hsd->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) || (DmaBase1_reg == 0U)) {
 			hsd->ErrorCode = HAL_SD_ERROR_ADDR_OUT_OF_RANGE;
 			return HAL_ERROR;
 		}
@@ -292,8 +281,7 @@ HAL_StatusTypeDef HAL_SDEx_WriteBlocksDMAMultiBuffer(SD_HandleTypeDef *hsd,
 		hsd->Instance->IDMACTRL = SDMMC_ENABLE_IDMA_DOUBLE_BUFF0;
 
 		/* Write Blocks in DMA mode */
-		hsd->Context =
-		    (SD_CONTEXT_WRITE_MULTIPLE_BLOCK | SD_CONTEXT_DMA);
+		hsd->Context = (SD_CONTEXT_WRITE_MULTIPLE_BLOCK | SD_CONTEXT_DMA);
 
 		/* Write Multi Block command */
 		errorstate = SDMMC_CmdWriteMultiBlock(hsd->Instance, add);
@@ -303,8 +291,7 @@ HAL_StatusTypeDef HAL_SDEx_WriteBlocksDMAMultiBuffer(SD_HandleTypeDef *hsd,
 			return HAL_ERROR;
 		}
 
-		__HAL_SD_ENABLE_IT(hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT |
-					 SDMMC_IT_TXUNDERR | SDMMC_IT_DATAEND |
+		__HAL_SD_ENABLE_IT(hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_TXUNDERR | SDMMC_IT_DATAEND |
 					 SDMMC_IT_IDMABTC));
 
 		return HAL_OK;
@@ -324,10 +311,8 @@ HAL_StatusTypeDef HAL_SDEx_WriteBlocksDMAMultiBuffer(SD_HandleTypeDef *hsd,
  *         transfer use BUFFER0.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_SDEx_ChangeDMABuffer(SD_HandleTypeDef *hsd,
-			 HAL_SDEx_DMABuffer_MemoryTypeDef Buffer,
-			 uint32_t *pDataBuffer)
+HAL_StatusTypeDef HAL_SDEx_ChangeDMABuffer(SD_HandleTypeDef *hsd, HAL_SDEx_DMABuffer_MemoryTypeDef Buffer,
+					   uint32_t *pDataBuffer)
 {
 	if (Buffer == SD_DMA_BUFFER0) {
 		/* change the buffer0 address */
@@ -422,5 +407,5 @@ __weak void HAL_SDEx_Write_DMADoubleBuffer1CpltCallback(SD_HandleTypeDef *hsd)
  * @}
  */
 
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */

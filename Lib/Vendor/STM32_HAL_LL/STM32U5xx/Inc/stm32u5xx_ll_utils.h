@@ -131,32 +131,29 @@ typedef struct {
 				   using unitary function
 				     @ref LL_RCC_SetAHBPrescaler(). */
 
-	uint32_t
-	    APB1CLKDivider; /*!< The APB1 clock (PCLK1) divider. This clock is
-			       derived from the AHB clock (HCLK). This parameter
-			       can be a value of @ref RCC_LL_EC_APB1_DIV
+	uint32_t APB1CLKDivider; /*!< The APB1 clock (PCLK1) divider. This clock is
+				    derived from the AHB clock (HCLK). This parameter
+				    can be a value of @ref RCC_LL_EC_APB1_DIV
 
-				 This feature can be modified afterwards using
-			       unitary function
-				 @ref LL_RCC_SetAPB1Prescaler(). */
+				      This feature can be modified afterwards using
+				    unitary function
+				      @ref LL_RCC_SetAPB1Prescaler(). */
 
-	uint32_t
-	    APB2CLKDivider; /*!< The APB2 clock (PCLK2) divider. This clock is
-			       derived from the AHB clock (HCLK). This parameter
-			       can be a value of @ref RCC_LL_EC_APB2_DIV
+	uint32_t APB2CLKDivider; /*!< The APB2 clock (PCLK2) divider. This clock is
+				    derived from the AHB clock (HCLK). This parameter
+				    can be a value of @ref RCC_LL_EC_APB2_DIV
 
-				 This feature can be modified afterwards using
-			       unitary function
-				 @ref LL_RCC_SetAPB2Prescaler(). */
+				      This feature can be modified afterwards using
+				    unitary function
+				      @ref LL_RCC_SetAPB2Prescaler(). */
 
-	uint32_t
-	    APB3CLKDivider; /*!< The APB3 clock (PCLK3) divider. This clock is
-			       derived from the AHB clock (HCLK). This parameter
-			       can be a value of @ref RCC_LL_EC_APB3_DIV
+	uint32_t APB3CLKDivider; /*!< The APB3 clock (PCLK3) divider. This clock is
+				    derived from the AHB clock (HCLK). This parameter
+				    can be a value of @ref RCC_LL_EC_APB3_DIV
 
-				 This feature can be modified afterwards using
-			       unitary function
-				 @ref LL_RCC_SetAPB3Prescaler(). */
+				      This feature can be modified afterwards using
+				    unitary function
+				      @ref LL_RCC_SetAPB3Prescaler(). */
 
 } LL_UTILS_ClkInitTypeDef;
 
@@ -172,10 +169,8 @@ typedef struct {
 /** @defgroup UTILS_EC_HSE_BYPASS HSE Bypass activation
  * @{
  */
-#define LL_UTILS_HSEBYPASS_OFF                                                 \
-	0x00000000U /*!< HSE Bypass is not enabled                */
-#define LL_UTILS_HSEBYPASS_ON                                                  \
-	0x00000001U /*!< HSE Bypass is enabled                    */
+#define LL_UTILS_HSEBYPASS_OFF 0x00000000U /*!< HSE Bypass is not enabled                */
+#define LL_UTILS_HSEBYPASS_ON 0x00000001U  /*!< HSE Bypass is enabled                    */
 /**
  * @}
  */
@@ -183,52 +178,37 @@ typedef struct {
 /** @defgroup UTILS_EC_PACKAGETYPE PACKAGE TYPE
  * @{
  */
-#define LL_UTILS_PACKAGETYPE_LQFP64 0x00000000U /*!< LQFP64 package type */
-#define LL_UTILS_PACKAGETYPE_WLCSP72_SMPS                                      \
-	0x00000001U /*!< WLCSP72 with internal SMPS package type */
-#define LL_UTILS_PACKAGETYPE_LQFP100 0x00000002U /*!< LQFP100 package type */
-#define LL_UTILS_PACKAGETYPE_UFBGA132                                          \
-	0x00000003U				 /*!< UFBGA132 package type    \
+#define LL_UTILS_PACKAGETYPE_LQFP64 0x00000000U	      /*!< LQFP64 package type */
+#define LL_UTILS_PACKAGETYPE_WLCSP72_SMPS 0x00000001U /*!< WLCSP72 with internal SMPS package type */
+#define LL_UTILS_PACKAGETYPE_LQFP100 0x00000002U      /*!< LQFP100 package type */
+#define LL_UTILS_PACKAGETYPE_UFBGA132                                                                                  \
+	0x00000003U				 /*!< UFBGA132 package type                                            \
 						  */
 #define LL_UTILS_PACKAGETYPE_LQFP144 0x00000004U /*!< LQFP144 package type */
 #define LL_UTILS_PACKAGETYPE_LQFP48 0x00000005U	 /*!< LQFP48 package type */
-#define LL_UTILS_PACKAGETYPE_UFBGA169                                          \
-	0x00000007U /*!< UFBGA169 package type                                 \
-		     */
-#define LL_UTILS_PACKAGETYPE_LQFP64_SMPS                                       \
-	0x00000008U /*!< LQFP64 with internal SMPS package type */
-#define LL_UTILS_PACKAGETYPE_WLSCP90_SMPS                                      \
-	0x00000009U /*!< WLSCP90 with internal SMPS package type */
-#define LL_UTILS_PACKAGETYPE_LQFP100_SMPS                                      \
-	0x0000000AU /*!< LQFP100 with internal SMPS package type */
-#define LL_UTILS_PACKAGETYPE_UFBGA132_SMPS                                     \
-	0x0000000BU /*!< UFBGA132 with internal SMPS package type */
-#define LL_UTILS_PACKAGETYPE_LQFP144_SMPS                                      \
-	0x0000000CU /*!< LQFP144 with internal SMPS package type */
-#define LL_UTILS_PACKAGETYPE_LQFP48_SMPS                                       \
-	0x0000000DU /*!< LQFP48 with internal SMPS package type */
-#define LL_UTILS_PACKAGETYPE_UFBGA169_SMPS                                     \
-	0x0000000FU /*!< UFBGA169 with internal SMPS package type */
-#define LL_UTILS_PACKAGETYPE_UFBGA64 0x00000012U /*!< UFBGA64 package type */
-#define LL_UTILS_PACKAGETYPE_UFBGA100                                          \
-	0x00000013U /*!< UFBGA100 package type                                 \
-		     */
-#define LL_UTILS_PACKAGETYPE_LQFP100_DSI_SMPS                                  \
-	0x00000014U /*!< LQFP100 DSI with internal SMPS package type */
-#define LL_UTILS_PACKAGETYPE_LQFP144_DSI_SMPS                                  \
-	0x00000015U /*!< LQFP144 DSI with internal SMPS package type */
-#define LL_UTILS_PACKAGETYPE_UFBGA144_SMPS                                     \
-	0x00000019U /*!< UFBGA144 with internal SMPS package type */
-#define LL_UTILS_PACKAGETYPE_WLCSP208_SMPS                                     \
-	0x0000001BU /*!< WLCSP208 with internal SMPS package type */
-#define LL_UTILS_PACKAGETYPE_TFBGA216_SMPS                                     \
-	0x0000001CU /*!< TFBGA216 with internal SMPS package type */
-#define LL_UTILS_PACKAGETYPE_UFBGA100_SMPS                                     \
-	0x0000001DU /*!< UFBGA100 with internal SMPS package type */
-#define LL_UTILS_PACKAGETYPE_WLCSP56_SMPS                                      \
-	0x0000001EU /*!< WLCSP56  with internal SMPS package type */
-#define LL_UTILS_PACKAGETYPE_WLCSP150_SMPS                                     \
-	0x0000001FU /*!< WLCSP150 or WLCSP150 DSI with internal  package type  \
+#define LL_UTILS_PACKAGETYPE_UFBGA169                                                                                  \
+	0x00000007U				       /*!< UFBGA169 package type                                      \
+							*/
+#define LL_UTILS_PACKAGETYPE_LQFP64_SMPS 0x00000008U   /*!< LQFP64 with internal SMPS package type */
+#define LL_UTILS_PACKAGETYPE_WLSCP90_SMPS 0x00000009U  /*!< WLSCP90 with internal SMPS package type */
+#define LL_UTILS_PACKAGETYPE_LQFP100_SMPS 0x0000000AU  /*!< LQFP100 with internal SMPS package type */
+#define LL_UTILS_PACKAGETYPE_UFBGA132_SMPS 0x0000000BU /*!< UFBGA132 with internal SMPS package type */
+#define LL_UTILS_PACKAGETYPE_LQFP144_SMPS 0x0000000CU  /*!< LQFP144 with internal SMPS package type */
+#define LL_UTILS_PACKAGETYPE_LQFP48_SMPS 0x0000000DU   /*!< LQFP48 with internal SMPS package type */
+#define LL_UTILS_PACKAGETYPE_UFBGA169_SMPS 0x0000000FU /*!< UFBGA169 with internal SMPS package type */
+#define LL_UTILS_PACKAGETYPE_UFBGA64 0x00000012U       /*!< UFBGA64 package type */
+#define LL_UTILS_PACKAGETYPE_UFBGA100                                                                                  \
+	0x00000013U					  /*!< UFBGA100 package type                                   \
+							   */
+#define LL_UTILS_PACKAGETYPE_LQFP100_DSI_SMPS 0x00000014U /*!< LQFP100 DSI with internal SMPS package type */
+#define LL_UTILS_PACKAGETYPE_LQFP144_DSI_SMPS 0x00000015U /*!< LQFP144 DSI with internal SMPS package type */
+#define LL_UTILS_PACKAGETYPE_UFBGA144_SMPS 0x00000019U	  /*!< UFBGA144 with internal SMPS package type */
+#define LL_UTILS_PACKAGETYPE_WLCSP208_SMPS 0x0000001BU	  /*!< WLCSP208 with internal SMPS package type */
+#define LL_UTILS_PACKAGETYPE_TFBGA216_SMPS 0x0000001CU	  /*!< TFBGA216 with internal SMPS package type */
+#define LL_UTILS_PACKAGETYPE_UFBGA100_SMPS 0x0000001DU	  /*!< UFBGA100 with internal SMPS package type */
+#define LL_UTILS_PACKAGETYPE_WLCSP56_SMPS 0x0000001EU	  /*!< WLCSP56  with internal SMPS package type */
+#define LL_UTILS_PACKAGETYPE_WLCSP150_SMPS                                                                             \
+	0x0000001FU /*!< WLCSP150 or WLCSP150 DSI with internal  package type                                          \
 		     */
 
 /**
@@ -254,28 +234,19 @@ typedef struct {
  * @brief  Get Word0 of the unique device identifier (UID based on 96 bits)
  * @retval UID[31:0]: X and Y coordinates on the wafer expressed in BCD format
  */
-__STATIC_INLINE uint32_t LL_GetUID_Word0(void)
-{
-	return (uint32_t)(READ_REG(*((uint32_t *)UID_BASE_ADDRESS)));
-}
+__STATIC_INLINE uint32_t LL_GetUID_Word0(void) { return (uint32_t)(READ_REG(*((uint32_t *)UID_BASE_ADDRESS))); }
 
 /**
  * @brief  Get Word1 of the unique device identifier (UID based on 96 bits)
  * @retval UID[63:32]: Wafer number (UID[39:32]) & LOT_NUM[23:0] (UID[63:40])
  */
-__STATIC_INLINE uint32_t LL_GetUID_Word1(void)
-{
-	return (uint32_t)(READ_REG(*((uint32_t *)(UID_BASE_ADDRESS + 4U))));
-}
+__STATIC_INLINE uint32_t LL_GetUID_Word1(void) { return (uint32_t)(READ_REG(*((uint32_t *)(UID_BASE_ADDRESS + 4U)))); }
 
 /**
  * @brief  Get Word2 of the unique device identifier (UID based on 96 bits)
  * @retval UID[95:64]: Lot number (ASCII encoded) - LOT_NUM[55:24]
  */
-__STATIC_INLINE uint32_t LL_GetUID_Word2(void)
-{
-	return (uint32_t)(READ_REG(*((uint32_t *)(UID_BASE_ADDRESS + 8U))));
-}
+__STATIC_INLINE uint32_t LL_GetUID_Word2(void) { return (uint32_t)(READ_REG(*((uint32_t *)(UID_BASE_ADDRESS + 8U)))); }
 
 /**
  * @brief  Get Flash memory size
@@ -285,8 +256,7 @@ __STATIC_INLINE uint32_t LL_GetUID_Word2(void)
  */
 __STATIC_INLINE uint32_t LL_GetFlashSize(void)
 {
-	return (uint32_t)(READ_REG(*((uint32_t *)FLASHSIZE_BASE_ADDRESS)) &
-			  0xFFFFU);
+	return (uint32_t)(READ_REG(*((uint32_t *)FLASHSIZE_BASE_ADDRESS)) & 0xFFFFU);
 }
 
 /**
@@ -314,8 +284,7 @@ __STATIC_INLINE uint32_t LL_GetFlashSize(void)
  */
 __STATIC_INLINE uint32_t LL_GetPackageType(void)
 {
-	return (uint32_t)(READ_REG(*((uint32_t *)PACKAGE_BASE_ADDRESS)) &
-			  0x1FU);
+	return (uint32_t)(READ_REG(*((uint32_t *)PACKAGE_BASE_ADDRESS)) & 0x1FU);
 }
 
 /**
@@ -340,11 +309,9 @@ __STATIC_INLINE uint32_t LL_GetPackageType(void)
 __STATIC_INLINE void LL_InitTick(uint32_t HCLKFrequency, uint32_t Ticks)
 {
 	/* Configure the SysTick to have interrupt in 1ms time base */
-	SysTick->LOAD =
-	    (uint32_t)((HCLKFrequency / Ticks) - 1UL); /* set reload register */
-	SysTick->VAL = 0UL; /* Load the SysTick Counter Value */
-	SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk |
-			SysTick_CTRL_ENABLE_Msk; /* Enable the Systick Timer */
+	SysTick->LOAD = (uint32_t)((HCLKFrequency / Ticks) - 1UL);	      /* set reload register */
+	SysTick->VAL = 0UL;						      /* Load the SysTick Counter Value */
+	SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk; /* Enable the Systick Timer */
 }
 
 void LL_Init1msTick(uint32_t HCLKFrequency);
@@ -361,12 +328,9 @@ void LL_mDelay(uint32_t Delay);
  * for legacy purpose
  * @{
  */
-#define LL_PLL1_ConfigSystemClock_MSI                                          \
-	LL_PLL_ConfigSystemClock_MSI /* for legacy purpose */
-#define LL_PLL1_ConfigSystemClock_HSI                                          \
-	LL_PLL_ConfigSystemClock_HSI /* for legacy purpose */
-#define LL_PLL1_ConfigSystemClock_HSE                                          \
-	LL_PLL_ConfigSystemClock_HSE /* for legacy purpose */
+#define LL_PLL1_ConfigSystemClock_MSI LL_PLL_ConfigSystemClock_MSI /* for legacy purpose */
+#define LL_PLL1_ConfigSystemClock_HSI LL_PLL_ConfigSystemClock_HSI /* for legacy purpose */
+#define LL_PLL1_ConfigSystemClock_HSE LL_PLL_ConfigSystemClock_HSE /* for legacy purpose */
 /**
  * @}
  */
@@ -376,16 +340,13 @@ void LL_mDelay(uint32_t Delay);
  */
 
 void LL_SetSystemCoreClock(uint32_t HCLKFrequency);
-ErrorStatus
-LL_PLL_ConfigSystemClock_MSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
-			     LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct);
-ErrorStatus
-LL_PLL_ConfigSystemClock_HSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
-			     LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct);
-ErrorStatus
-LL_PLL_ConfigSystemClock_HSE(uint32_t HSEFrequency, uint32_t HSEBypass,
-			     LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
-			     LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct);
+ErrorStatus LL_PLL_ConfigSystemClock_MSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
+					 LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct);
+ErrorStatus LL_PLL_ConfigSystemClock_HSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
+					 LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct);
+ErrorStatus LL_PLL_ConfigSystemClock_HSE(uint32_t HSEFrequency, uint32_t HSEBypass,
+					 LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
+					 LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct);
 ErrorStatus LL_SetFlashLatency(uint32_t HCLK_Frequency);
 /**
  * @}

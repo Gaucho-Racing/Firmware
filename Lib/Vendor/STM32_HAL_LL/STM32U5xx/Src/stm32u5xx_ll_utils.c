@@ -43,83 +43,77 @@
 /** @addtogroup UTILS_LL_Private_Constants
  * @{
  */
-#define UTILS_MAX_FREQUENCY_SCALE0                                             \
-	160000000U /*!< Maximum frequency for system clock at power scale0, in \
+#define UTILS_MAX_FREQUENCY_SCALE0                                                                                     \
+	160000000U /*!< Maximum frequency for system clock at power scale0, in                                         \
 		      Hz */
-#define UTILS_MAX_FREQUENCY_SCALE1                                             \
-	110000000U /*!< Maximum frequency for system clock at power scale1, in \
+#define UTILS_MAX_FREQUENCY_SCALE1                                                                                     \
+	110000000U /*!< Maximum frequency for system clock at power scale1, in                                         \
 		      Hz */
-#define UTILS_MAX_FREQUENCY_SCALE2                                             \
-	55000000U /*!< Maximum frequency for system clock at power scale2, in  \
+#define UTILS_MAX_FREQUENCY_SCALE2                                                                                     \
+	55000000U /*!< Maximum frequency for system clock at power scale2, in                                          \
 		     Hz */
-#define UTILS_MAX_FREQUENCY_SCALE3                                             \
-	25000000U /*!< Maximum frequency for system clock at power scale3, in  \
+#define UTILS_MAX_FREQUENCY_SCALE3                                                                                     \
+	25000000U /*!< Maximum frequency for system clock at power scale3, in                                          \
 		     Hz */
 
 /* Defines used for PLL range */
-#define UTILS_PLLVCO_INPUT_MIN                                                 \
-	4000000U /*!< Frequency min for PLLVCO input, in Hz   */
-#define UTILS_PLLVCO_INPUT_MAX                                                 \
-	16000000U /*!< Frequency max for PLLVCO input, in Hz   */
-#define UTILS_PLLVCO_OUTPUT_MIN                                                \
-	64000000U /*!< Frequency min for PLLVCO output, in Hz  */
-#define UTILS_PLLVCO_OUTPUT_MAX                                                \
-	344000000U /*!< Frequency max for PLLVCO output, in Hz  */
+#define UTILS_PLLVCO_INPUT_MIN 4000000U	   /*!< Frequency min for PLLVCO input, in Hz   */
+#define UTILS_PLLVCO_INPUT_MAX 16000000U   /*!< Frequency max for PLLVCO input, in Hz   */
+#define UTILS_PLLVCO_OUTPUT_MIN 64000000U  /*!< Frequency min for PLLVCO output, in Hz  */
+#define UTILS_PLLVCO_OUTPUT_MAX 344000000U /*!< Frequency max for PLLVCO output, in Hz  */
 
 /* Defines used for HSE range */
-#define UTILS_HSE_FREQUENCY_MIN                                                \
-	4000000U /*!< Frequency min for HSE frequency, in Hz   */
-#define UTILS_HSE_FREQUENCY_MAX                                                \
-	50000000U /*!< Frequency max for HSE frequency, in Hz   */
+#define UTILS_HSE_FREQUENCY_MIN 4000000U  /*!< Frequency min for HSE frequency, in Hz   */
+#define UTILS_HSE_FREQUENCY_MAX 50000000U /*!< Frequency max for HSE frequency, in Hz   */
 
 /* Defines used for FLASH latency according to HCLK Frequency */
-#define UTILS_SCALE1_LATENCY0_FREQ                                             \
-	(32000000U) /*!< HCLK frequency to set FLASH latency 0 in power scale  \
+#define UTILS_SCALE1_LATENCY0_FREQ                                                                                     \
+	(32000000U) /*!< HCLK frequency to set FLASH latency 0 in power scale                                          \
 		       1 */
-#define UTILS_SCALE1_LATENCY1_FREQ                                             \
-	(64000000U) /*!< HCLK frequency to set FLASH latency 1 in power scale  \
+#define UTILS_SCALE1_LATENCY1_FREQ                                                                                     \
+	(64000000U) /*!< HCLK frequency to set FLASH latency 1 in power scale                                          \
 		       1 */
-#define UTILS_SCALE1_LATENCY2_FREQ                                             \
-	(96000000U) /*!< HCLK frequency to set FLASH latency 2 in power scale  \
+#define UTILS_SCALE1_LATENCY2_FREQ                                                                                     \
+	(96000000U) /*!< HCLK frequency to set FLASH latency 2 in power scale                                          \
 		       1 */
-#define UTILS_SCALE1_LATENCY3_FREQ                                             \
-	(128000000U) /*!< HCLK frequency to set FLASH latency 3 in power scale \
+#define UTILS_SCALE1_LATENCY3_FREQ                                                                                     \
+	(128000000U) /*!< HCLK frequency to set FLASH latency 3 in power scale                                         \
 			1 */
-#define UTILS_SCALE1_LATENCY4_FREQ                                             \
-	(160000000U) /*!< HCLK frequency to set FLASH latency 4 in power scale \
+#define UTILS_SCALE1_LATENCY4_FREQ                                                                                     \
+	(160000000U) /*!< HCLK frequency to set FLASH latency 4 in power scale                                         \
 			1 */
-#define UTILS_SCALE2_LATENCY0_FREQ                                             \
-	(25000000U) /*!< HCLK frequency to set FLASH latency 0 in power scale  \
+#define UTILS_SCALE2_LATENCY0_FREQ                                                                                     \
+	(25000000U) /*!< HCLK frequency to set FLASH latency 0 in power scale                                          \
 		       2 */
-#define UTILS_SCALE2_LATENCY1_FREQ                                             \
-	(50000000U) /*!< HCLK frequency to set FLASH latency 1 in power scale  \
+#define UTILS_SCALE2_LATENCY1_FREQ                                                                                     \
+	(50000000U) /*!< HCLK frequency to set FLASH latency 1 in power scale                                          \
 		       2 */
-#define UTILS_SCALE2_LATENCY2_FREQ                                             \
-	(75000000U) /*!< HCLK frequency to set FLASH latency 2 in power scale  \
+#define UTILS_SCALE2_LATENCY2_FREQ                                                                                     \
+	(75000000U) /*!< HCLK frequency to set FLASH latency 2 in power scale                                          \
 		       2 */
-#define UTILS_SCALE2_LATENCY3_FREQ                                             \
-	(100000000U) /*!< HCLK frequency to set FLASH latency 3 in power scale \
+#define UTILS_SCALE2_LATENCY3_FREQ                                                                                     \
+	(100000000U) /*!< HCLK frequency to set FLASH latency 3 in power scale                                         \
 			2 */
-#define UTILS_SCALE3_LATENCY0_FREQ                                             \
-	(12500000U) /*!< HCLK frequency to set FLASH latency 0 in power scale  \
+#define UTILS_SCALE3_LATENCY0_FREQ                                                                                     \
+	(12500000U) /*!< HCLK frequency to set FLASH latency 0 in power scale                                          \
 		       3 */
-#define UTILS_SCALE3_LATENCY1_FREQ                                             \
-	(25000000U) /*!< HCLK frequency to set FLASH latency 1 in power scale  \
+#define UTILS_SCALE3_LATENCY1_FREQ                                                                                     \
+	(25000000U) /*!< HCLK frequency to set FLASH latency 1 in power scale                                          \
 		       3 */
-#define UTILS_SCALE3_LATENCY2_FREQ                                             \
-	(37500000U) /*!< HCLK frequency to set FLASH latency 2 in power scale  \
+#define UTILS_SCALE3_LATENCY2_FREQ                                                                                     \
+	(37500000U) /*!< HCLK frequency to set FLASH latency 2 in power scale                                          \
 		       3 */
-#define UTILS_SCALE3_LATENCY3_FREQ                                             \
-	(50000000U) /*!< HCLK frequency to set FLASH latency 3 in power scale  \
+#define UTILS_SCALE3_LATENCY3_FREQ                                                                                     \
+	(50000000U) /*!< HCLK frequency to set FLASH latency 3 in power scale                                          \
 		       3 */
-#define UTILS_SCALE4_LATENCY0_FREQ                                             \
-	(8000000U) /*!< HCLK frequency to set FLASH latency 0 in power scale 4 \
+#define UTILS_SCALE4_LATENCY0_FREQ                                                                                     \
+	(8000000U) /*!< HCLK frequency to set FLASH latency 0 in power scale 4                                         \
 		    */
-#define UTILS_SCALE4_LATENCY1_FREQ                                             \
-	(16000000U) /*!< HCLK frequency to set FLASH latency 1 in power scale  \
+#define UTILS_SCALE4_LATENCY1_FREQ                                                                                     \
+	(16000000U) /*!< HCLK frequency to set FLASH latency 1 in power scale                                          \
 		       4 */
-#define UTILS_SCALE4_LATENCY2_FREQ                                             \
-	(24000000U) /*!< HCLK frequency to set FLASH latency 2 in power scale  \
+#define UTILS_SCALE4_LATENCY2_FREQ                                                                                     \
+	(24000000U) /*!< HCLK frequency to set FLASH latency 2 in power scale                                          \
 		       4 */
 /**
  * @}
@@ -129,71 +123,53 @@
 /** @addtogroup UTILS_LL_Private_Macros
  * @{
  */
-#define IS_LL_UTILS_SYSCLK_DIV(__VALUE__)                                      \
-	(((__VALUE__) == LL_RCC_SYSCLK_DIV_1) ||                               \
-	 ((__VALUE__) == LL_RCC_SYSCLK_DIV_2) ||                               \
-	 ((__VALUE__) == LL_RCC_SYSCLK_DIV_4) ||                               \
-	 ((__VALUE__) == LL_RCC_SYSCLK_DIV_8) ||                               \
-	 ((__VALUE__) == LL_RCC_SYSCLK_DIV_16) ||                              \
-	 ((__VALUE__) == LL_RCC_SYSCLK_DIV_64) ||                              \
-	 ((__VALUE__) == LL_RCC_SYSCLK_DIV_128) ||                             \
-	 ((__VALUE__) == LL_RCC_SYSCLK_DIV_256) ||                             \
+#define IS_LL_UTILS_SYSCLK_DIV(__VALUE__)                                                                              \
+	(((__VALUE__) == LL_RCC_SYSCLK_DIV_1) || ((__VALUE__) == LL_RCC_SYSCLK_DIV_2) ||                               \
+	 ((__VALUE__) == LL_RCC_SYSCLK_DIV_4) || ((__VALUE__) == LL_RCC_SYSCLK_DIV_8) ||                               \
+	 ((__VALUE__) == LL_RCC_SYSCLK_DIV_16) || ((__VALUE__) == LL_RCC_SYSCLK_DIV_64) ||                             \
+	 ((__VALUE__) == LL_RCC_SYSCLK_DIV_128) || ((__VALUE__) == LL_RCC_SYSCLK_DIV_256) ||                           \
 	 ((__VALUE__) == LL_RCC_SYSCLK_DIV_512))
 
-#define IS_LL_UTILS_APB1_DIV(__VALUE__)                                        \
-	(((__VALUE__) == LL_RCC_APB1_DIV_1) ||                                 \
-	 ((__VALUE__) == LL_RCC_APB1_DIV_2) ||                                 \
-	 ((__VALUE__) == LL_RCC_APB1_DIV_4) ||                                 \
-	 ((__VALUE__) == LL_RCC_APB1_DIV_8) ||                                 \
+#define IS_LL_UTILS_APB1_DIV(__VALUE__)                                                                                \
+	(((__VALUE__) == LL_RCC_APB1_DIV_1) || ((__VALUE__) == LL_RCC_APB1_DIV_2) ||                                   \
+	 ((__VALUE__) == LL_RCC_APB1_DIV_4) || ((__VALUE__) == LL_RCC_APB1_DIV_8) ||                                   \
 	 ((__VALUE__) == LL_RCC_APB1_DIV_16))
 
-#define IS_LL_UTILS_APB2_DIV(__VALUE__)                                        \
-	(((__VALUE__) == LL_RCC_APB2_DIV_1) ||                                 \
-	 ((__VALUE__) == LL_RCC_APB2_DIV_2) ||                                 \
-	 ((__VALUE__) == LL_RCC_APB2_DIV_4) ||                                 \
-	 ((__VALUE__) == LL_RCC_APB2_DIV_8) ||                                 \
+#define IS_LL_UTILS_APB2_DIV(__VALUE__)                                                                                \
+	(((__VALUE__) == LL_RCC_APB2_DIV_1) || ((__VALUE__) == LL_RCC_APB2_DIV_2) ||                                   \
+	 ((__VALUE__) == LL_RCC_APB2_DIV_4) || ((__VALUE__) == LL_RCC_APB2_DIV_8) ||                                   \
 	 ((__VALUE__) == LL_RCC_APB2_DIV_16))
 
-#define IS_LL_UTILS_APB3_DIV(__VALUE__)                                        \
-	(((__VALUE__) == LL_RCC_APB3_DIV_1) ||                                 \
-	 ((__VALUE__) == LL_RCC_APB3_DIV_2) ||                                 \
-	 ((__VALUE__) == LL_RCC_APB3_DIV_4) ||                                 \
-	 ((__VALUE__) == LL_RCC_APB3_DIV_8) ||                                 \
+#define IS_LL_UTILS_APB3_DIV(__VALUE__)                                                                                \
+	(((__VALUE__) == LL_RCC_APB3_DIV_1) || ((__VALUE__) == LL_RCC_APB3_DIV_2) ||                                   \
+	 ((__VALUE__) == LL_RCC_APB3_DIV_4) || ((__VALUE__) == LL_RCC_APB3_DIV_8) ||                                   \
 	 ((__VALUE__) == LL_RCC_APB3_DIV_16))
 
-#define IS_LL_UTILS_PLLM_VALUE(__VALUE__)                                      \
-	((1U <= (__VALUE__)) && ((__VALUE__) <= 16U))
+#define IS_LL_UTILS_PLLM_VALUE(__VALUE__) ((1U <= (__VALUE__)) && ((__VALUE__) <= 16U))
 
-#define IS_LL_UTILS_PLLN_VALUE(__VALUE__)                                      \
-	((4U <= (__VALUE__)) && ((__VALUE__) <= 512U))
+#define IS_LL_UTILS_PLLN_VALUE(__VALUE__) ((4U <= (__VALUE__)) && ((__VALUE__) <= 512U))
 
-#define IS_LL_UTILS_PLLR_VALUE(__VALUE__)                                      \
-	((1U <= (__VALUE__)) && ((__VALUE__) <= 128U))
+#define IS_LL_UTILS_PLLR_VALUE(__VALUE__) ((1U <= (__VALUE__)) && ((__VALUE__) <= 128U))
 
-#define IS_LL_UTILS_PLLVCO_INPUT(__VALUE__)                                    \
-	((UTILS_PLLVCO_INPUT_MIN <= (__VALUE__)) &&                            \
-	 ((__VALUE__) <= UTILS_PLLVCO_INPUT_MAX))
+#define IS_LL_UTILS_PLLVCO_INPUT(__VALUE__)                                                                            \
+	((UTILS_PLLVCO_INPUT_MIN <= (__VALUE__)) && ((__VALUE__) <= UTILS_PLLVCO_INPUT_MAX))
 
-#define IS_LL_UTILS_PLLVCO_OUTPUT(__VALUE__)                                   \
-	((UTILS_PLLVCO_OUTPUT_MIN <= (__VALUE__)) &&                           \
-	 ((__VALUE__) <= UTILS_PLLVCO_OUTPUT_MAX))
+#define IS_LL_UTILS_PLLVCO_OUTPUT(__VALUE__)                                                                           \
+	((UTILS_PLLVCO_OUTPUT_MIN <= (__VALUE__)) && ((__VALUE__) <= UTILS_PLLVCO_OUTPUT_MAX))
 
-#define IS_LL_UTILS_PLL_FREQUENCY(__VALUE__)                                   \
-	((LL_PWR_GetRegulVoltageScaling() == LL_PWR_REGU_VOLTAGE_SCALE4)       \
-	     ? ((__VALUE__) <= UTILS_MAX_FREQUENCY_SCALE0)                     \
-	 : (LL_PWR_GetRegulVoltageScaling() == LL_PWR_REGU_VOLTAGE_SCALE1)     \
-	     ? ((__VALUE__) <= UTILS_MAX_FREQUENCY_SCALE1)                     \
-	 : (LL_PWR_GetRegulVoltageScaling() == LL_PWR_REGU_VOLTAGE_SCALE2)     \
-	     ? ((__VALUE__) <= UTILS_MAX_FREQUENCY_SCALE2)                     \
+#define IS_LL_UTILS_PLL_FREQUENCY(__VALUE__)                                                                           \
+	((LL_PWR_GetRegulVoltageScaling() == LL_PWR_REGU_VOLTAGE_SCALE4) ? ((__VALUE__) <= UTILS_MAX_FREQUENCY_SCALE0) \
+	 : (LL_PWR_GetRegulVoltageScaling() == LL_PWR_REGU_VOLTAGE_SCALE1)                                             \
+	     ? ((__VALUE__) <= UTILS_MAX_FREQUENCY_SCALE1)                                                             \
+	 : (LL_PWR_GetRegulVoltageScaling() == LL_PWR_REGU_VOLTAGE_SCALE2)                                             \
+	     ? ((__VALUE__) <= UTILS_MAX_FREQUENCY_SCALE2)                                                             \
 	     : ((__VALUE__) <= UTILS_MAX_FREQUENCY_SCALE3))
 
-#define IS_LL_UTILS_HSE_BYPASS(__STATE__)                                      \
-	(((__STATE__) == LL_UTILS_HSEBYPASS_ON) ||                             \
-	 ((__STATE__) == LL_UTILS_HSEBYPASS_OFF))
+#define IS_LL_UTILS_HSE_BYPASS(__STATE__)                                                                              \
+	(((__STATE__) == LL_UTILS_HSEBYPASS_ON) || ((__STATE__) == LL_UTILS_HSEBYPASS_OFF))
 
-#define IS_LL_UTILS_HSE_FREQUENCY(__FREQUENCY__)                               \
-	(((__FREQUENCY__) >= UTILS_HSE_FREQUENCY_MIN) &&                       \
-	 ((__FREQUENCY__) <= UTILS_HSE_FREQUENCY_MAX))
+#define IS_LL_UTILS_HSE_FREQUENCY(__FREQUENCY__)                                                                       \
+	(((__FREQUENCY__) >= UTILS_HSE_FREQUENCY_MIN) && ((__FREQUENCY__) <= UTILS_HSE_FREQUENCY_MAX))
 /**
  * @}
  */
@@ -201,12 +177,9 @@
 /** @defgroup UTILS_LL_Private_Functions UTILS Private functions
  * @{
  */
-static uint32_t
-UTILS_GetPLLOutputFrequency(uint32_t PLL_InputFrequency,
-			    LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct);
-static ErrorStatus
-UTILS_EnablePLLAndSwitchSystem(uint32_t SYSCLK_Frequency,
-			       LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct);
+static uint32_t UTILS_GetPLLOutputFrequency(uint32_t PLL_InputFrequency, LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct);
+static ErrorStatus UTILS_EnablePLLAndSwitchSystem(uint32_t SYSCLK_Frequency,
+						  LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct);
 static ErrorStatus UTILS_PLL_IsBusy(void);
 /**
  * @}
@@ -413,26 +386,21 @@ ErrorStatus LL_SetFlashLatency(uint32_t HCLK_Frequency)
 	if (HCLK_Frequency == 0U) {
 		status = ERROR;
 	} else {
-		if (LL_PWR_GetRegulVoltageScaling() ==
-		    LL_PWR_REGU_VOLTAGE_SCALE1) {
+		if (LL_PWR_GetRegulVoltageScaling() == LL_PWR_REGU_VOLTAGE_SCALE1) {
 			if (HCLK_Frequency <= UTILS_SCALE1_LATENCY0_FREQ) {
 				/* 0 < HCLK <= 32 => 0WS (1 CPU cycles) : Do
 				 * nothing, keep latency to default
 				 * LL_FLASH_LATENCY_0 */
-			} else if ((HCLK_Frequency <=
-				    UTILS_SCALE1_LATENCY1_FREQ)) {
+			} else if ((HCLK_Frequency <= UTILS_SCALE1_LATENCY1_FREQ)) {
 				/* 32 < HCLK <=64  => 1WS (2 CPU cycles) */
 				latency = LL_FLASH_LATENCY_1;
-			} else if (HCLK_Frequency <=
-				   UTILS_SCALE1_LATENCY2_FREQ) {
+			} else if (HCLK_Frequency <= UTILS_SCALE1_LATENCY2_FREQ) {
 				/* 64 < HCLK <= 96 => 2WS (3 CPU cycles) */
 				latency = LL_FLASH_LATENCY_2;
-			} else if (HCLK_Frequency <=
-				   UTILS_SCALE1_LATENCY3_FREQ) {
+			} else if (HCLK_Frequency <= UTILS_SCALE1_LATENCY3_FREQ) {
 				/* 96 < HCLK <= 128 => 3WS (4 CPU cycles) */
 				latency = LL_FLASH_LATENCY_3;
-			} else if (HCLK_Frequency <=
-				   UTILS_SCALE1_LATENCY4_FREQ) {
+			} else if (HCLK_Frequency <= UTILS_SCALE1_LATENCY4_FREQ) {
 				/* 128 < HCLK <= 160 => 4WS (5 CPU cycles) */
 				latency = LL_FLASH_LATENCY_4;
 			} else {
@@ -440,22 +408,18 @@ ErrorStatus LL_SetFlashLatency(uint32_t HCLK_Frequency)
 			}
 			/* else HCLK_Frequency <= 10MHz default
 			 * LL_FLASH_LATENCY_0 0WS */
-		} else if (LL_PWR_GetRegulVoltageScaling() ==
-			   LL_PWR_REGU_VOLTAGE_SCALE2) {
+		} else if (LL_PWR_GetRegulVoltageScaling() == LL_PWR_REGU_VOLTAGE_SCALE2) {
 			if (HCLK_Frequency <= UTILS_SCALE2_LATENCY0_FREQ) {
 				/* 0 < HCLK <= 25 => 0WS (1 CPU cycles) : Do
 				 * nothing, keep latency to default
 				 * LL_FLASH_LATENCY_0 */
-			} else if (HCLK_Frequency <=
-				   UTILS_SCALE2_LATENCY1_FREQ) {
+			} else if (HCLK_Frequency <= UTILS_SCALE2_LATENCY1_FREQ) {
 				/* 25 < HCLK <= 50 => 1WS (2 CPU cycles) */
 				latency = LL_FLASH_LATENCY_1;
-			} else if (HCLK_Frequency <=
-				   UTILS_SCALE2_LATENCY2_FREQ) {
+			} else if (HCLK_Frequency <= UTILS_SCALE2_LATENCY2_FREQ) {
 				/* 50 < HCLK <= 75 => 2WS (3 CPU cycles) */
 				latency = LL_FLASH_LATENCY_2;
-			} else if (HCLK_Frequency <=
-				   UTILS_SCALE2_LATENCY3_FREQ) {
+			} else if (HCLK_Frequency <= UTILS_SCALE2_LATENCY3_FREQ) {
 				/* 75 < HCLK <= 100 => 3WS (4 CPU cycles) */
 				latency = LL_FLASH_LATENCY_3;
 			} else {
@@ -463,22 +427,18 @@ ErrorStatus LL_SetFlashLatency(uint32_t HCLK_Frequency)
 			}
 			/* else HCLK_Frequency <= 10MHz default
 			 * LL_FLASH_LATENCY_0 0WS */
-		} else if (LL_PWR_GetRegulVoltageScaling() ==
-			   LL_PWR_REGU_VOLTAGE_SCALE3) {
+		} else if (LL_PWR_GetRegulVoltageScaling() == LL_PWR_REGU_VOLTAGE_SCALE3) {
 			if (HCLK_Frequency <= UTILS_SCALE3_LATENCY0_FREQ) {
 				/* 0 < HCLK <= 12.5 => 0WS (1 CPU cycles) : Do
 				 * nothing, keep latency to default
 				 * LL_FLASH_LATENCY_0 */
-			} else if (HCLK_Frequency <=
-				   UTILS_SCALE3_LATENCY1_FREQ) {
+			} else if (HCLK_Frequency <= UTILS_SCALE3_LATENCY1_FREQ) {
 				/* 12.5 < HCLK <= 25 => 1WS (2 CPU cycles) */
 				latency = LL_FLASH_LATENCY_1;
-			} else if (HCLK_Frequency <=
-				   UTILS_SCALE3_LATENCY2_FREQ) {
+			} else if (HCLK_Frequency <= UTILS_SCALE3_LATENCY2_FREQ) {
 				/* 25 < HCLK <= 37.5 => 2WS (3 CPU cycles) */
 				latency = LL_FLASH_LATENCY_2;
-			} else if (HCLK_Frequency <=
-				   UTILS_SCALE3_LATENCY3_FREQ) {
+			} else if (HCLK_Frequency <= UTILS_SCALE3_LATENCY3_FREQ) {
 				/* 37.5 < HCLK <= 50 => 3WS (4 CPU cycles) */
 				latency = LL_FLASH_LATENCY_3;
 			} else {
@@ -491,12 +451,10 @@ ErrorStatus LL_SetFlashLatency(uint32_t HCLK_Frequency)
 				/* 0 < HCLK <= 8 => 0WS (1 CPU cycles) : Do
 				 * nothing, keep latency to default
 				 * LL_FLASH_LATENCY_0 */
-			} else if (HCLK_Frequency <=
-				   UTILS_SCALE4_LATENCY1_FREQ) {
+			} else if (HCLK_Frequency <= UTILS_SCALE4_LATENCY1_FREQ) {
 				/* 8 < HCLK <= 16 => 1WS (2 CPU cycles) */
 				latency = LL_FLASH_LATENCY_1;
-			} else if (HCLK_Frequency <=
-				   UTILS_SCALE4_LATENCY2_FREQ) {
+			} else if (HCLK_Frequency <= UTILS_SCALE4_LATENCY2_FREQ) {
 				/* 16 < HCLK <= 24 => 2WS (3 CPU cycles) */
 				latency = LL_FLASH_LATENCY_2;
 			} else {
@@ -553,9 +511,8 @@ ErrorStatus LL_SetFlashLatency(uint32_t HCLK_Frequency)
   *          - SUCCESS: Max frequency configuration done
   *          - ERROR: Max frequency configuration not done
   */
-ErrorStatus
-LL_PLL_ConfigSystemClock_MSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
-			     LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct)
+ErrorStatus LL_PLL_ConfigSystemClock_MSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
+					 LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct)
 {
 	ErrorStatus status = SUCCESS;
 	uint32_t pllfreq;
@@ -613,9 +570,7 @@ LL_PLL_ConfigSystemClock_MSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
 		if (status != ERROR) {
 			/* Calculate the new PLL output frequency */
 			pllfreq = UTILS_GetPLLOutputFrequency(
-			    __LL_RCC_CALC_MSIS_FREQ(
-				LL_RCC_MSI_IsEnabledRangeSelect(), msi_range),
-			    UTILS_PLLInitStruct);
+			    __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(), msi_range), UTILS_PLLInitStruct);
 
 			/* Enable MSI if not enabled */
 			if (LL_RCC_MSIS_IsReady() != 1U) {
@@ -626,14 +581,11 @@ LL_PLL_ConfigSystemClock_MSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
 			}
 
 			/* Configure PLL1 */
-			LL_RCC_PLL1_ConfigDomain_SYS(LL_RCC_PLL1SOURCE_MSIS,
-						     UTILS_PLLInitStruct->PLLM,
-						     UTILS_PLLInitStruct->PLLN,
-						     UTILS_PLLInitStruct->PLLR);
+			LL_RCC_PLL1_ConfigDomain_SYS(LL_RCC_PLL1SOURCE_MSIS, UTILS_PLLInitStruct->PLLM,
+						     UTILS_PLLInitStruct->PLLN, UTILS_PLLInitStruct->PLLR);
 
 			/* Enable PLL and switch system clock to PLL */
-			status = UTILS_EnablePLLAndSwitchSystem(
-			    pllfreq, UTILS_ClkInitStruct);
+			status = UTILS_EnablePLLAndSwitchSystem(pllfreq, UTILS_ClkInitStruct);
 		}
 	} else {
 		/* Current PLL configuration cannot be modified */
@@ -667,9 +619,8 @@ LL_PLL_ConfigSystemClock_MSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
   *          - SUCCESS: Max frequency configuration done
   *          - ERROR: Max frequency configuration not done
   */
-ErrorStatus
-LL_PLL_ConfigSystemClock_HSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
-			     LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct)
+ErrorStatus LL_PLL_ConfigSystemClock_HSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
+					 LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct)
 {
 	ErrorStatus status;
 	uint32_t pllfreq;
@@ -677,8 +628,7 @@ LL_PLL_ConfigSystemClock_HSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
 	/* Check if one of the PLL is enabled */
 	if (UTILS_PLL_IsBusy() == SUCCESS) {
 		/* Calculate the new PLL output frequency */
-		pllfreq =
-		    UTILS_GetPLLOutputFrequency(HSI_VALUE, UTILS_PLLInitStruct);
+		pllfreq = UTILS_GetPLLOutputFrequency(HSI_VALUE, UTILS_PLLInitStruct);
 
 		/* Enable HSI if not enabled */
 		if (LL_RCC_HSI_IsReady() != 1U) {
@@ -689,13 +639,11 @@ LL_PLL_ConfigSystemClock_HSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
 		}
 
 		/* Configure PLL */
-		LL_RCC_PLL1_ConfigDomain_SYS(
-		    LL_RCC_PLL1SOURCE_HSI, UTILS_PLLInitStruct->PLLM,
-		    UTILS_PLLInitStruct->PLLN, UTILS_PLLInitStruct->PLLR);
+		LL_RCC_PLL1_ConfigDomain_SYS(LL_RCC_PLL1SOURCE_HSI, UTILS_PLLInitStruct->PLLM,
+					     UTILS_PLLInitStruct->PLLN, UTILS_PLLInitStruct->PLLR);
 
 		/* Enable PLL and switch system clock to PLL */
-		status = UTILS_EnablePLLAndSwitchSystem(pllfreq,
-							UTILS_ClkInitStruct);
+		status = UTILS_EnablePLLAndSwitchSystem(pllfreq, UTILS_ClkInitStruct);
 	} else {
 		/* Current PLL configuration cannot be modified */
 		status = ERROR;
@@ -733,10 +681,9 @@ LL_PLL_ConfigSystemClock_HSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
   *          - SUCCESS: Max frequency configuration done
   *          - ERROR: Max frequency configuration not done
   */
-ErrorStatus
-LL_PLL_ConfigSystemClock_HSE(uint32_t HSEFrequency, uint32_t HSEBypass,
-			     LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
-			     LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct)
+ErrorStatus LL_PLL_ConfigSystemClock_HSE(uint32_t HSEFrequency, uint32_t HSEBypass,
+					 LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
+					 LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct)
 {
 	ErrorStatus status;
 	uint32_t pllfreq;
@@ -748,8 +695,7 @@ LL_PLL_ConfigSystemClock_HSE(uint32_t HSEFrequency, uint32_t HSEBypass,
 	/* Check if one of the PLL is enabled */
 	if (UTILS_PLL_IsBusy() == SUCCESS) {
 		/* Calculate the new PLL output frequency */
-		pllfreq = UTILS_GetPLLOutputFrequency(HSEFrequency,
-						      UTILS_PLLInitStruct);
+		pllfreq = UTILS_GetPLLOutputFrequency(HSEFrequency, UTILS_PLLInitStruct);
 
 		/* Enable HSE if not enabled */
 		if (LL_RCC_HSE_IsReady() != 1U) {
@@ -768,13 +714,11 @@ LL_PLL_ConfigSystemClock_HSE(uint32_t HSEFrequency, uint32_t HSEBypass,
 		}
 
 		/* Configure PLL */
-		LL_RCC_PLL1_ConfigDomain_SYS(
-		    LL_RCC_PLL1SOURCE_HSE, UTILS_PLLInitStruct->PLLM,
-		    UTILS_PLLInitStruct->PLLN, UTILS_PLLInitStruct->PLLR);
+		LL_RCC_PLL1_ConfigDomain_SYS(LL_RCC_PLL1SOURCE_HSE, UTILS_PLLInitStruct->PLLM,
+					     UTILS_PLLInitStruct->PLLN, UTILS_PLLInitStruct->PLLR);
 
 		/* Enable PLL and switch system clock to PLL */
-		status = UTILS_EnablePLLAndSwitchSystem(pllfreq,
-							UTILS_ClkInitStruct);
+		status = UTILS_EnablePLLAndSwitchSystem(pllfreq, UTILS_ClkInitStruct);
 	} else {
 		/* Current PLL configuration cannot be modified */
 		status = ERROR;
@@ -802,9 +746,7 @@ LL_PLL_ConfigSystemClock_HSE(uint32_t HSEFrequency, uint32_t HSEBypass,
  * structure that contains the configuration information for the PLL.
  * @retval PLL output frequency (in Hz)
  */
-static uint32_t
-UTILS_GetPLLOutputFrequency(uint32_t PLL_InputFrequency,
-			    LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct)
+static uint32_t UTILS_GetPLLOutputFrequency(uint32_t PLL_InputFrequency, LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct)
 {
 	uint32_t pllfreq;
 
@@ -871,22 +813,19 @@ static ErrorStatus UTILS_PLL_IsBusy(void)
  *          - SUCCESS: No problem to switch system to PLL
  *          - ERROR: Problem to switch system to PLL
  */
-static ErrorStatus
-UTILS_EnablePLLAndSwitchSystem(uint32_t SYSCLK_Frequency,
-			       LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct)
+static ErrorStatus UTILS_EnablePLLAndSwitchSystem(uint32_t SYSCLK_Frequency,
+						  LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct)
 {
 	ErrorStatus status = SUCCESS;
 	uint32_t hclk_frequency;
 
-	assert_param(
-	    IS_LL_UTILS_SYSCLK_DIV(UTILS_ClkInitStruct->AHBCLKDivider));
+	assert_param(IS_LL_UTILS_SYSCLK_DIV(UTILS_ClkInitStruct->AHBCLKDivider));
 	assert_param(IS_LL_UTILS_APB1_DIV(UTILS_ClkInitStruct->APB1CLKDivider));
 	assert_param(IS_LL_UTILS_APB2_DIV(UTILS_ClkInitStruct->APB2CLKDivider));
 	assert_param(IS_LL_UTILS_APB3_DIV(UTILS_ClkInitStruct->APB3CLKDivider));
 
 	/* Calculate HCLK frequency */
-	hclk_frequency = __LL_RCC_CALC_HCLK_FREQ(
-	    SYSCLK_Frequency, UTILS_ClkInitStruct->AHBCLKDivider);
+	hclk_frequency = __LL_RCC_CALC_HCLK_FREQ(SYSCLK_Frequency, UTILS_ClkInitStruct->AHBCLKDivider);
 
 	/* Increasing the number of wait states because of higher CPU frequency
 	 */
@@ -907,8 +846,7 @@ UTILS_EnablePLLAndSwitchSystem(uint32_t SYSCLK_Frequency,
 		/* Sysclk activation on the main PLL */
 		LL_RCC_SetAHBPrescaler(UTILS_ClkInitStruct->AHBCLKDivider);
 		LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL1);
-		while (LL_RCC_GetSysClkSource() !=
-		       LL_RCC_SYS_CLKSOURCE_STATUS_PLL1) {
+		while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL1) {
 			/* Wait for system clock switch to PLL */
 		}
 

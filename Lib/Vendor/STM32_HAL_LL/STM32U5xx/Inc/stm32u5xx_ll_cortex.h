@@ -75,11 +75,11 @@ extern "C" {
 /** @defgroup CORTEX_LL_EC_CLKSOURCE_HCLK SYSTICK Clock Source
  * @{
  */
-#define LL_SYSTICK_CLKSOURCE_EXTERNAL                                          \
-	0x00000000U /*!< External clock source selected as SysTick             \
+#define LL_SYSTICK_CLKSOURCE_EXTERNAL                                                                                  \
+	0x00000000U /*!< External clock source selected as SysTick                                                     \
 			 clock source */
-#define LL_SYSTICK_CLKSOURCE_HCLK                                              \
-	SysTick_CTRL_CLKSOURCE_Msk /*!< AHB clock selected as SysTick          \
+#define LL_SYSTICK_CLKSOURCE_HCLK                                                                                      \
+	SysTick_CTRL_CLKSOURCE_Msk /*!< AHB clock selected as SysTick                                                  \
 					clock source */
 /** Legacy definitions for backward compatibility purpose
  */
@@ -93,12 +93,10 @@ extern "C" {
 /** @defgroup CORTEX_LL_EC_FAULT Handler Fault type
  * @{
  */
-#define LL_HANDLER_FAULT_USG SCB_SHCSR_USGFAULTENA_Msk /*!< Usage fault */
-#define LL_HANDLER_FAULT_BUS SCB_SHCSR_BUSFAULTENA_Msk /*!< Bus fault */
-#define LL_HANDLER_FAULT_MEM                                                   \
-	SCB_SHCSR_MEMFAULTENA_Msk /*!< Memory management fault */
-#define LL_HANDLER_FAULT_SECURE                                                \
-	SCB_SHCSR_SECUREFAULTENA_Msk /*!< Secure fault */
+#define LL_HANDLER_FAULT_USG SCB_SHCSR_USGFAULTENA_Msk	     /*!< Usage fault */
+#define LL_HANDLER_FAULT_BUS SCB_SHCSR_BUSFAULTENA_Msk	     /*!< Bus fault */
+#define LL_HANDLER_FAULT_MEM SCB_SHCSR_MEMFAULTENA_Msk	     /*!< Memory management fault */
+#define LL_HANDLER_FAULT_SECURE SCB_SHCSR_SECUREFAULTENA_Msk /*!< Secure fault */
 /**
  * @}
  */
@@ -107,17 +105,17 @@ extern "C" {
  * PRIVILEGED Access control
  * @{
  */
-#define LL_MPU_CTRL_HFNMI_PRIVDEF_NONE                                         \
-	0U /*!< Background region access not allowed, MPU disabled for         \
+#define LL_MPU_CTRL_HFNMI_PRIVDEF_NONE                                                                                 \
+	0U /*!< Background region access not allowed, MPU disabled for                                                 \
 	      Hardfaults, NMIs, and exception handlers when FAULTMASK=1 */
-#define LL_MPU_CTRL_HARDFAULT_NMI                                              \
-	2U /*!< Background region access not allowed, MPU enabled for          \
+#define LL_MPU_CTRL_HARDFAULT_NMI                                                                                      \
+	2U /*!< Background region access not allowed, MPU enabled for                                                  \
 	      Hardfaults, NMIs, and exception handlers when FAULTMASK=1 */
-#define LL_MPU_CTRL_PRIVILEGED_DEFAULT                                         \
-	4U /*!< Background region privileged-only access allowed, MPU disabled \
+#define LL_MPU_CTRL_PRIVILEGED_DEFAULT                                                                                 \
+	4U /*!< Background region privileged-only access allowed, MPU disabled                                         \
 	      for Hardfaults, NMIs, and exception handlers when FAULTMASK=1 */
-#define LL_MPU_CTRL_HFNMI_PRIVDEF                                              \
-	6U /*!< Background region privileged-only access allowed, MPU enabled  \
+#define LL_MPU_CTRL_HFNMI_PRIVDEF                                                                                      \
+	6U /*!< Background region privileged-only access allowed, MPU enabled                                          \
 	      for Hardfaults, NMIs, and exception handlers when FAULTMASK=1 */
 /**
  * @}
@@ -127,17 +125,16 @@ extern "C" {
  * @{
  */
 /* Device memory attributes */
-#define LL_MPU_DEVICE_NGNRNE                                                   \
-	0x0U /*!< Device non-Gathering, non-Reordering, no Early write         \
+#define LL_MPU_DEVICE_NGNRNE                                                                                           \
+	0x0U /*!< Device non-Gathering, non-Reordering, no Early write                                                 \
 		acknowledgement */
-#define LL_MPU_DEVICE_NGNRE                                                    \
-	0x4U /*!< Device non-Gathering, non-Reordering, Early write            \
+#define LL_MPU_DEVICE_NGNRE                                                                                            \
+	0x4U /*!< Device non-Gathering, non-Reordering, Early write                                                    \
 		acknowledgement */
-#define LL_MPU_DEVICE_NGRE                                                     \
-	0x8U /*!< Device non-Gathering, Reordering, Early write                \
-		acknowledgement */
-#define LL_MPU_DEVICE_GRE                                                      \
-	0xCU /*!< Device Gathering, Reordering, Early write acknowledgement */
+#define LL_MPU_DEVICE_NGRE                                                                                             \
+	0x8U		       /*!< Device non-Gathering, Reordering, Early write                                      \
+				  acknowledgement */
+#define LL_MPU_DEVICE_GRE 0xCU /*!< Device Gathering, Reordering, Early write acknowledgement */
 
 /* Normal memory attributes */
 /* Non-cacheable memory attribute */
@@ -172,10 +169,8 @@ extern "C" {
 /** @defgroup CORTEX_LL_MPU_Instruction_Access CORTEX LL MPU Instruction Access
  * @{
  */
-#define LL_MPU_INSTRUCTION_ACCESS_ENABLE                                       \
-	(0U << MPU_RBAR_XN_Pos) /*!< Execute attribute */
-#define LL_MPU_INSTRUCTION_ACCESS_DISABLE                                      \
-	(1U << MPU_RBAR_XN_Pos) /*!< Execute never attribute */
+#define LL_MPU_INSTRUCTION_ACCESS_ENABLE (0U << MPU_RBAR_XN_Pos)  /*!< Execute attribute */
+#define LL_MPU_INSTRUCTION_ACCESS_DISABLE (1U << MPU_RBAR_XN_Pos) /*!< Execute never attribute */
 /**
  * @}
  */
@@ -184,12 +179,9 @@ extern "C" {
  * Shareable
  * @{
  */
-#define LL_MPU_ACCESS_NOT_SHAREABLE                                            \
-	(0U << MPU_RBAR_SH_Pos) /*!< Not shareable attribute */
-#define LL_MPU_ACCESS_OUTER_SHAREABLE                                          \
-	(2U << MPU_RBAR_SH_Pos) /*!< Outer shareable attribute */
-#define LL_MPU_ACCESS_INNER_SHAREABLE                                          \
-	(3U << MPU_RBAR_SH_Pos) /*!< Inner shareable attribute */
+#define LL_MPU_ACCESS_NOT_SHAREABLE (0U << MPU_RBAR_SH_Pos)   /*!< Not shareable attribute */
+#define LL_MPU_ACCESS_OUTER_SHAREABLE (2U << MPU_RBAR_SH_Pos) /*!< Outer shareable attribute */
+#define LL_MPU_ACCESS_INNER_SHAREABLE (3U << MPU_RBAR_SH_Pos) /*!< Inner shareable attribute */
 /**
  * @}
  */
@@ -198,15 +190,13 @@ extern "C" {
  * Permission Attributes
  * @{
  */
-#define LL_MPU_REGION_PRIV_RW                                                  \
-	(0U << MPU_RBAR_AP_Pos) /*!< Read/write privileged-only attribute */
-#define LL_MPU_REGION_ALL_RW                                                   \
-	(1U << MPU_RBAR_AP_Pos) /*!< Read/write privileged/unprivileged        \
-				   attribute */
-#define LL_MPU_REGION_PRIV_RO                                                  \
-	(2U << MPU_RBAR_AP_Pos) /*!< Read-only privileged-only attribute */
-#define LL_MPU_REGION_ALL_RO                                                   \
-	(3U << MPU_RBAR_AP_Pos) /*!< Read-only privileged/unprivileged         \
+#define LL_MPU_REGION_PRIV_RW (0U << MPU_RBAR_AP_Pos) /*!< Read/write privileged-only attribute */
+#define LL_MPU_REGION_ALL_RW                                                                                           \
+	(1U << MPU_RBAR_AP_Pos)			      /*!< Read/write privileged/unprivileged                          \
+							 attribute */
+#define LL_MPU_REGION_PRIV_RO (2U << MPU_RBAR_AP_Pos) /*!< Read-only privileged-only attribute */
+#define LL_MPU_REGION_ALL_RO                                                                                           \
+	(3U << MPU_RBAR_AP_Pos) /*!< Read-only privileged/unprivileged                                                 \
 				   attribute */
 /**
  * @}
@@ -267,10 +257,7 @@ extern "C" {
  */
 __STATIC_INLINE uint32_t LL_SYSTICK_IsActiveCounterFlag(void)
 {
-	return (((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) ==
-		 (SysTick_CTRL_COUNTFLAG_Msk))
-		    ? 1UL
-		    : 0UL);
+	return (((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) == (SysTick_CTRL_COUNTFLAG_Msk)) ? 1UL : 0UL);
 }
 
 /**
@@ -297,30 +284,21 @@ __STATIC_INLINE void LL_SYSTICK_SetClkSource(uint32_t Source)
  *         @arg @ref LL_SYSTICK_CLKSOURCE_EXTERNAL
  *         @arg @ref LL_SYSTICK_CLKSOURCE_HCLK
  */
-__STATIC_INLINE uint32_t LL_SYSTICK_GetClkSource(void)
-{
-	return READ_BIT(SysTick->CTRL, LL_SYSTICK_CLKSOURCE_HCLK);
-}
+__STATIC_INLINE uint32_t LL_SYSTICK_GetClkSource(void) { return READ_BIT(SysTick->CTRL, LL_SYSTICK_CLKSOURCE_HCLK); }
 
 /**
  * @brief  Enable SysTick exception request
  * @rmtoll STK_CTRL     TICKINT       LL_SYSTICK_EnableIT
  * @retval None
  */
-__STATIC_INLINE void LL_SYSTICK_EnableIT(void)
-{
-	SET_BIT(SysTick->CTRL, SysTick_CTRL_TICKINT_Msk);
-}
+__STATIC_INLINE void LL_SYSTICK_EnableIT(void) { SET_BIT(SysTick->CTRL, SysTick_CTRL_TICKINT_Msk); }
 
 /**
  * @brief  Disable SysTick exception request
  * @rmtoll STK_CTRL     TICKINT       LL_SYSTICK_DisableIT
  * @retval None
  */
-__STATIC_INLINE void LL_SYSTICK_DisableIT(void)
-{
-	CLEAR_BIT(SysTick->CTRL, SysTick_CTRL_TICKINT_Msk);
-}
+__STATIC_INLINE void LL_SYSTICK_DisableIT(void) { CLEAR_BIT(SysTick->CTRL, SysTick_CTRL_TICKINT_Msk); }
 
 /**
  * @brief  Checks if the SYSTICK interrupt is enabled or disabled.
@@ -329,10 +307,7 @@ __STATIC_INLINE void LL_SYSTICK_DisableIT(void)
  */
 __STATIC_INLINE uint32_t LL_SYSTICK_IsEnabledIT(void)
 {
-	return ((READ_BIT(SysTick->CTRL, SysTick_CTRL_TICKINT_Msk) ==
-		 (SysTick_CTRL_TICKINT_Msk))
-		    ? 1UL
-		    : 0UL);
+	return ((READ_BIT(SysTick->CTRL, SysTick_CTRL_TICKINT_Msk) == (SysTick_CTRL_TICKINT_Msk)) ? 1UL : 0UL);
 }
 
 /**
@@ -481,8 +456,7 @@ __STATIC_INLINE void LL_HANDLER_DisableFault(uint32_t Fault)
  */
 __STATIC_INLINE uint32_t LL_CPUID_GetImplementer(void)
 {
-	return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_IMPLEMENTER_Msk) >>
-			  SCB_CPUID_IMPLEMENTER_Pos);
+	return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_IMPLEMENTER_Msk) >> SCB_CPUID_IMPLEMENTER_Pos);
 }
 
 /**
@@ -493,8 +467,7 @@ __STATIC_INLINE uint32_t LL_CPUID_GetImplementer(void)
  */
 __STATIC_INLINE uint32_t LL_CPUID_GetVariant(void)
 {
-	return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_VARIANT_Msk) >>
-			  SCB_CPUID_VARIANT_Pos);
+	return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_VARIANT_Msk) >> SCB_CPUID_VARIANT_Pos);
 }
 
 /**
@@ -505,8 +478,7 @@ __STATIC_INLINE uint32_t LL_CPUID_GetVariant(void)
  */
 __STATIC_INLINE uint32_t LL_CPUID_GetArchitecture(void)
 {
-	return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_ARCHITECTURE_Msk) >>
-			  SCB_CPUID_ARCHITECTURE_Pos);
+	return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_ARCHITECTURE_Msk) >> SCB_CPUID_ARCHITECTURE_Pos);
 }
 
 /**
@@ -516,8 +488,7 @@ __STATIC_INLINE uint32_t LL_CPUID_GetArchitecture(void)
  */
 __STATIC_INLINE uint32_t LL_CPUID_GetParNo(void)
 {
-	return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_PARTNO_Msk) >>
-			  SCB_CPUID_PARTNO_Pos);
+	return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_PARTNO_Msk) >> SCB_CPUID_PARTNO_Pos);
 }
 
 /**
@@ -528,8 +499,7 @@ __STATIC_INLINE uint32_t LL_CPUID_GetParNo(void)
  */
 __STATIC_INLINE uint32_t LL_CPUID_GetRevision(void)
 {
-	return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_REVISION_Msk) >>
-			  SCB_CPUID_REVISION_Pos);
+	return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_REVISION_Msk) >> SCB_CPUID_REVISION_Pos);
 }
 
 /**
@@ -649,10 +619,7 @@ __STATIC_INLINE void LL_MPU_Disable_NS(void)
  */
 __STATIC_INLINE uint32_t LL_MPU_IsEnabled(void)
 {
-	return (
-	    (READ_BIT(MPU->CTRL, MPU_CTRL_ENABLE_Msk) == (MPU_CTRL_ENABLE_Msk))
-		? 1UL
-		: 0UL);
+	return ((READ_BIT(MPU->CTRL, MPU_CTRL_ENABLE_Msk) == (MPU_CTRL_ENABLE_Msk)) ? 1UL : 0UL);
 }
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
@@ -663,10 +630,7 @@ __STATIC_INLINE uint32_t LL_MPU_IsEnabled(void)
  */
 __STATIC_INLINE uint32_t LL_MPU_IsEnabled_NS(void)
 {
-	return ((READ_BIT(MPU_NS->CTRL, MPU_CTRL_ENABLE_Msk) ==
-		 (MPU_CTRL_ENABLE_Msk))
-		    ? 1UL
-		    : 0UL);
+	return ((READ_BIT(MPU_NS->CTRL, MPU_CTRL_ENABLE_Msk) == (MPU_CTRL_ENABLE_Msk)) ? 1UL : 0UL);
 }
 #endif /* __ARM_FEATURE_CMSE */
 
@@ -715,9 +679,7 @@ __STATIC_INLINE uint32_t LL_MPU_IsEnabled_Region(uint32_t Region)
 	WRITE_REG(MPU->RNR, Region);
 
 	/* Return MPU region status */
-	return ((READ_BIT(MPU->RLAR, MPU_RLAR_EN_Msk) == (MPU_RLAR_EN_Msk))
-		    ? 1UL
-		    : 0UL);
+	return ((READ_BIT(MPU->RLAR, MPU_RLAR_EN_Msk) == (MPU_RLAR_EN_Msk)) ? 1UL : 0UL);
 }
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
@@ -766,9 +728,7 @@ __STATIC_INLINE uint32_t LL_MPU_IsEnabled_Region_NS(uint32_t Region)
 	WRITE_REG(MPU_NS->RNR, Region);
 
 	/* Return non-secure MPU region status */
-	return ((READ_BIT(MPU_NS->RLAR, MPU_RLAR_EN_Msk) == (MPU_RLAR_EN_Msk))
-		    ? 1UL
-		    : 0UL);
+	return ((READ_BIT(MPU_NS->RLAR, MPU_RLAR_EN_Msk) == (MPU_RLAR_EN_Msk)) ? 1UL : 0UL);
 }
 #endif /* __ARM_FEATURE_CMSE */
 
@@ -865,9 +825,7 @@ __STATIC_INLINE void LL_MPU_DisableRegion_NS(uint32_t Region)
  * @note   cortex-M33 supports 8 secure and 8 non secure regions.
  * @retval None
  */
-__STATIC_INLINE void LL_MPU_ConfigRegion(uint32_t Region, uint32_t Attributes,
-					 uint32_t AttrIndx,
-					 uint32_t BaseAddress,
+__STATIC_INLINE void LL_MPU_ConfigRegion(uint32_t Region, uint32_t Attributes, uint32_t AttrIndx, uint32_t BaseAddress,
 					 uint32_t LimitAddress)
 {
 	/* Set region index */
@@ -878,8 +836,7 @@ __STATIC_INLINE void LL_MPU_ConfigRegion(uint32_t Region, uint32_t Attributes,
 
 	/* Set region limit address, memory attributes index and enable region
 	 */
-	WRITE_REG(MPU->RLAR, ((LimitAddress & MPU_RLAR_LIMIT_Msk) | AttrIndx |
-			      MPU_RLAR_EN_Msk));
+	WRITE_REG(MPU->RLAR, ((LimitAddress & MPU_RLAR_LIMIT_Msk) | AttrIndx | MPU_RLAR_EN_Msk));
 }
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
@@ -924,21 +881,18 @@ __STATIC_INLINE void LL_MPU_ConfigRegion(uint32_t Region, uint32_t Attributes,
  * @note   cortex-M33 supports 8 secure and 8 non secure regions.
  * @retval None
  */
-__STATIC_INLINE void
-LL_MPU_ConfigRegion_NS(uint32_t Region, uint32_t Attributes, uint32_t AttrIndx,
-		       uint32_t BaseAddress, uint32_t LimitAddress)
+__STATIC_INLINE void LL_MPU_ConfigRegion_NS(uint32_t Region, uint32_t Attributes, uint32_t AttrIndx,
+					    uint32_t BaseAddress, uint32_t LimitAddress)
 {
 	/* Set Region number */
 	WRITE_REG(MPU_NS->RNR, Region);
 
 	/* Set region base address and region access attributes */
-	WRITE_REG(MPU_NS->RBAR,
-		  ((BaseAddress & MPU_RBAR_BASE_Msk) | Attributes));
+	WRITE_REG(MPU_NS->RBAR, ((BaseAddress & MPU_RBAR_BASE_Msk) | Attributes));
 
 	/* Set region limit address, memory attributes index and enable region
 	 */
-	WRITE_REG(MPU_NS->RLAR, ((LimitAddress & MPU_RLAR_LIMIT_Msk) |
-				 AttrIndx | MPU_RLAR_EN_Msk));
+	WRITE_REG(MPU_NS->RLAR, ((LimitAddress & MPU_RLAR_LIMIT_Msk) | AttrIndx | MPU_RLAR_EN_Msk));
 }
 #endif /* __ARM_FEATURE_CMSE */
 
@@ -961,20 +915,16 @@ LL_MPU_ConfigRegion_NS(uint32_t Region, uint32_t Attributes, uint32_t AttrIndx,
  * @note   cortex-M33 supports 8 secure and 8 non secure regions.
  * @retval None
  */
-__STATIC_INLINE void LL_MPU_ConfigRegionAddress(uint32_t Region,
-						uint32_t BaseAddress,
-						uint32_t LimitAddress)
+__STATIC_INLINE void LL_MPU_ConfigRegionAddress(uint32_t Region, uint32_t BaseAddress, uint32_t LimitAddress)
 {
 	/* Set Region number */
 	WRITE_REG(MPU->RNR, Region);
 
 	/* Modify region base address */
-	MODIFY_REG(MPU->RBAR, MPU_RBAR_BASE_Msk,
-		   (BaseAddress & MPU_RBAR_BASE_Msk));
+	MODIFY_REG(MPU->RBAR, MPU_RBAR_BASE_Msk, (BaseAddress & MPU_RBAR_BASE_Msk));
 
 	/* Modify region limit address */
-	MODIFY_REG(MPU->RLAR, MPU_RLAR_LIMIT_Msk,
-		   (LimitAddress & MPU_RLAR_LIMIT_Msk));
+	MODIFY_REG(MPU->RLAR, MPU_RLAR_LIMIT_Msk, (LimitAddress & MPU_RLAR_LIMIT_Msk));
 }
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
@@ -997,20 +947,16 @@ __STATIC_INLINE void LL_MPU_ConfigRegionAddress(uint32_t Region,
  * @note   cortex-M33 supports 8 secure and 8 non secure regions.
  * @retval None
  */
-__STATIC_INLINE void LL_MPU_ConfigRegionAddress_NS(uint32_t Region,
-						   uint32_t BaseAddress,
-						   uint32_t LimitAddress)
+__STATIC_INLINE void LL_MPU_ConfigRegionAddress_NS(uint32_t Region, uint32_t BaseAddress, uint32_t LimitAddress)
 {
 	/* Set Region number */
 	WRITE_REG(MPU_NS->RNR, Region);
 
 	/* Set base address */
-	MODIFY_REG(MPU_NS->RBAR, MPU_RBAR_BASE_Msk,
-		   (BaseAddress & MPU_RBAR_BASE_Msk));
+	MODIFY_REG(MPU_NS->RBAR, MPU_RBAR_BASE_Msk, (BaseAddress & MPU_RBAR_BASE_Msk));
 
 	/* Set limit address */
-	MODIFY_REG(MPU_NS->RLAR, MPU_RLAR_LIMIT_Msk,
-		   (LimitAddress & MPU_RLAR_LIMIT_Msk));
+	MODIFY_REG(MPU_NS->RLAR, MPU_RLAR_LIMIT_Msk, (LimitAddress & MPU_RLAR_LIMIT_Msk));
 }
 #endif /* __ARM_FEATURE_CMSE */
 
@@ -1031,20 +977,17 @@ __STATIC_INLINE void LL_MPU_ConfigRegionAddress_NS(uint32_t Region,
  * CORTEX_LL_MPU_Attributes
  * @retval None
  */
-__STATIC_INLINE void LL_MPU_ConfigAttributes(uint32_t AttIndex,
-					     uint32_t Attributes)
+__STATIC_INLINE void LL_MPU_ConfigAttributes(uint32_t AttIndex, uint32_t Attributes)
 {
 	/* When selected index is in range [0;3] */
 	if (AttIndex < LL_MPU_ATTRIBUTES_NUMBER4) {
 		/* Modify Attr<i> field of MPU_MAIR0 accordingly */
-		MODIFY_REG(MPU->MAIR0, (0xFFUL << (AttIndex * 8U)),
-			   (Attributes << (AttIndex * 8U)));
+		MODIFY_REG(MPU->MAIR0, (0xFFUL << (AttIndex * 8U)), (Attributes << (AttIndex * 8U)));
 	}
 	/* When selected index is in range [4;7] */
 	else {
 		/* Modify Attr<i> field of MPU_MAIR1 accordingly */
-		MODIFY_REG(MPU->MAIR1, (0xFFU << ((AttIndex - 4U) * 8U)),
-			   (Attributes << ((AttIndex - 4U) * 8U)));
+		MODIFY_REG(MPU->MAIR1, (0xFFU << ((AttIndex - 4U) * 8U)), (Attributes << ((AttIndex - 4U) * 8U)));
 	}
 }
 
@@ -1066,20 +1009,17 @@ __STATIC_INLINE void LL_MPU_ConfigAttributes(uint32_t AttIndex,
  * CORTEX_LL_MPU_Attributes
  * @retval None
  */
-__STATIC_INLINE void LL_MPU_ConfigAttributes_NS(uint32_t AttIndex,
-						uint32_t Attributes)
+__STATIC_INLINE void LL_MPU_ConfigAttributes_NS(uint32_t AttIndex, uint32_t Attributes)
 {
 	/* When selected index is in range [0;3] */
 	if (AttIndex < LL_MPU_ATTRIBUTES_NUMBER4) {
 		/* Modify Attr<i> field of MPU_MAIR0_NS accordingly */
-		MODIFY_REG(MPU_NS->MAIR0, (0xFFUL << (AttIndex * 8U)),
-			   (Attributes << (AttIndex * 8U)));
+		MODIFY_REG(MPU_NS->MAIR0, (0xFFUL << (AttIndex * 8U)), (Attributes << (AttIndex * 8U)));
 	}
 	/* When selected index is in range [4;7] */
 	else {
 		/* Modify Attr<i> field of MPU_MAIR1_NS accordingly */
-		MODIFY_REG(MPU_NS->MAIR1, (0xFFU << ((AttIndex - 4U) * 8U)),
-			   (Attributes << ((AttIndex - 4U) * 8U)));
+		MODIFY_REG(MPU_NS->MAIR1, (0xFFU << ((AttIndex - 4U) * 8U)), (Attributes << ((AttIndex - 4U) * 8U)));
 	}
 }
 #endif /* __ARM_FEATURE_CMSE */
@@ -1101,15 +1041,13 @@ __STATIC_INLINE void LL_MPU_ConfigAttributes_NS(uint32_t AttIndex,
  * @note   cortex-M33 supports 8 secure and 8 non secure regions.
  * @retval None
  */
-__STATIC_INLINE void LL_MPU_SetRegionLimitAddress(uint32_t Region,
-						  uint32_t LimitAddress)
+__STATIC_INLINE void LL_MPU_SetRegionLimitAddress(uint32_t Region, uint32_t LimitAddress)
 {
 	/* Set Region number */
 	WRITE_REG(MPU->RNR, Region);
 
 	/* Set limit address */
-	MODIFY_REG(MPU->RLAR, MPU_RLAR_LIMIT_Msk,
-		   (LimitAddress & MPU_RLAR_LIMIT_Msk));
+	MODIFY_REG(MPU->RLAR, MPU_RLAR_LIMIT_Msk, (LimitAddress & MPU_RLAR_LIMIT_Msk));
 }
 
 /**
@@ -1151,15 +1089,13 @@ __STATIC_INLINE uint32_t LL_MPU_GetRegionLimitAddress(uint32_t Region)
  * @note   cortex-M33 supports 8 secure and 8 non secure regions.
  * @retval None
  */
-__STATIC_INLINE void LL_MPU_SetRegionBaseAddress(uint32_t Region,
-						 uint32_t BaseAddress)
+__STATIC_INLINE void LL_MPU_SetRegionBaseAddress(uint32_t Region, uint32_t BaseAddress)
 {
 	/* Set Region number */
 	WRITE_REG(MPU->RNR, Region);
 
 	/* Set base address */
-	MODIFY_REG(MPU->RBAR, MPU_RBAR_BASE_Msk,
-		   (BaseAddress & MPU_RBAR_BASE_Msk));
+	MODIFY_REG(MPU->RBAR, MPU_RBAR_BASE_Msk, (BaseAddress & MPU_RBAR_BASE_Msk));
 }
 
 /**
@@ -1210,8 +1146,7 @@ __STATIC_INLINE uint32_t LL_MPU_GetRegionBaseAddress(uint32_t Region)
  * @note   cortex-M33 supports 8 secure and 8 non secure regions.
  * @retval None
  */
-__STATIC_INLINE void LL_MPU_SetRegionAccess(uint32_t Region,
-					    uint32_t Attributes)
+__STATIC_INLINE void LL_MPU_SetRegionAccess(uint32_t Region, uint32_t Attributes)
 {
 	/* Set Region number */
 	WRITE_REG(MPU->RNR, Region);
@@ -1242,8 +1177,7 @@ __STATIC_INLINE uint32_t LL_MPU_GetRegionAccess(uint32_t Region)
 	/* Set Region number */
 	WRITE_REG(MPU->RNR, Region);
 
-	return (READ_REG(
-	    MPU->RBAR & (MPU_RBAR_XN_Msk | MPU_RBAR_AP_Msk | MPU_RBAR_SH_Msk)));
+	return (READ_REG(MPU->RBAR & (MPU_RBAR_XN_Msk | MPU_RBAR_AP_Msk | MPU_RBAR_SH_Msk)));
 }
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
@@ -1264,15 +1198,13 @@ __STATIC_INLINE uint32_t LL_MPU_GetRegionAccess(uint32_t Region)
  * @note   cortex-M33 supports 8 secure and 8 non secure regions.
  * @retval None
  */
-__STATIC_INLINE void LL_MPU_SetRegionLimitAddress_NS(uint32_t Region,
-						     uint32_t LimitAddress)
+__STATIC_INLINE void LL_MPU_SetRegionLimitAddress_NS(uint32_t Region, uint32_t LimitAddress)
 {
 	/* Set Region number */
 	WRITE_REG(MPU_NS->RNR, Region);
 
 	/* Set limit address */
-	MODIFY_REG(MPU_NS->RLAR, MPU_RLAR_LIMIT_Msk,
-		   (LimitAddress & MPU_RLAR_LIMIT_Msk));
+	MODIFY_REG(MPU_NS->RLAR, MPU_RLAR_LIMIT_Msk, (LimitAddress & MPU_RLAR_LIMIT_Msk));
 }
 
 /**
@@ -1314,15 +1246,13 @@ __STATIC_INLINE uint32_t LL_MPU_GetRegionLimitAddress_NS(uint32_t Region)
  * @note   cortex-M33 supports 8 secure and 8 non secure regions.
  * @retval None
  */
-__STATIC_INLINE void LL_MPU_SetRegionBaseAddress_NS(uint32_t Region,
-						    uint32_t BaseAddress)
+__STATIC_INLINE void LL_MPU_SetRegionBaseAddress_NS(uint32_t Region, uint32_t BaseAddress)
 {
 	/* Set Region number */
 	WRITE_REG(MPU_NS->RNR, Region);
 
 	/* Set base address */
-	MODIFY_REG(MPU_NS->RBAR, MPU_RBAR_BASE_Msk,
-		   (BaseAddress & MPU_RBAR_BASE_Msk));
+	MODIFY_REG(MPU_NS->RBAR, MPU_RBAR_BASE_Msk, (BaseAddress & MPU_RBAR_BASE_Msk));
 }
 
 /**
@@ -1374,8 +1304,7 @@ __STATIC_INLINE uint32_t LL_MPU_GetRegionBaseAddress_NS(uint32_t Region)
  * @note   cortex-M33 supports 8 secure and 8 non secure regions.
  * @retval None
  */
-__STATIC_INLINE void LL_MPU_SetRegionAccess_NS(uint32_t Region,
-					       uint32_t Attributes)
+__STATIC_INLINE void LL_MPU_SetRegionAccess_NS(uint32_t Region, uint32_t Attributes)
 {
 	/* Set Region number */
 	WRITE_REG(MPU_NS->RNR, Region);
@@ -1406,8 +1335,7 @@ __STATIC_INLINE uint32_t LL_MPU_GetRegionAccess_NS(uint32_t Region)
 	/* Set Region number */
 	WRITE_REG(MPU_NS->RNR, Region);
 
-	return (READ_REG(MPU_NS->RBAR & (MPU_RBAR_XN_Msk | MPU_RBAR_AP_Msk |
-					 MPU_RBAR_SH_Msk)));
+	return (READ_REG(MPU_NS->RBAR & (MPU_RBAR_XN_Msk | MPU_RBAR_AP_Msk | MPU_RBAR_SH_Msk)));
 }
 #endif /* __ARM_FEATURE_CMSE */
 

@@ -52,10 +52,9 @@ typedef struct {
 				      parameter can be a value of @ref
 				      USARTEx_Autonomous_Trigger_selection */
 
-	uint32_t
-	    TriggerPolarity; /*!< Specifies the autonomous mode trigger signal
-				polarity. This parameter can be a value of @ref
-				USARTEx_Autonomous_Trigger_Polarity */
+	uint32_t TriggerPolarity; /*!< Specifies the autonomous mode trigger signal
+				     polarity. This parameter can be a value of @ref
+				     USARTEx_Autonomous_Trigger_Polarity */
 
 	uint32_t DataSize; /*!< Specifies the transmitted data size in byte */
 
@@ -86,10 +85,9 @@ typedef struct {
 /** @defgroup USARTEx_Slave_Select_management USARTEx Slave Select Management
  * @{
  */
-#define USART_NSS_HARD                                                         \
-	0x00000000U /*!< SPI slave selection depends on NSS input pin */
-#define USART_NSS_SOFT                                                         \
-	USART_CR2_DIS_NSS /*!< SPI slave is always selected and NSS input pin  \
+#define USART_NSS_HARD 0x00000000U /*!< SPI slave selection depends on NSS input pin */
+#define USART_NSS_SOFT                                                                                                 \
+	USART_CR2_DIS_NSS /*!< SPI slave is always selected and NSS input pin                                          \
 			     is ignored */
 /**
  * @}
@@ -99,11 +97,10 @@ typedef struct {
  * @brief    USART SLAVE mode
  * @{
  */
-#define USART_SLAVEMODE_DISABLE                                                \
-	0x00000000U /*!< USART SPI Slave Mode Enable                           \
-		     */
-#define USART_SLAVEMODE_ENABLE                                                 \
-	USART_CR2_SLVEN /*!< USART SPI Slave Mode Disable */
+#define USART_SLAVEMODE_DISABLE                                                                                        \
+	0x00000000U			       /*!< USART SPI Slave Mode Enable                                        \
+						*/
+#define USART_SLAVEMODE_ENABLE USART_CR2_SLVEN /*!< USART SPI Slave Mode Disable */
 /**
  * @}
  */
@@ -122,20 +119,12 @@ typedef struct {
  * @brief    USART TXFIFO level
  * @{
  */
-#define USART_TXFIFO_THRESHOLD_1_8                                             \
-	0x00000000U /*!< TXFIFO reaches 1/8 of its depth */
-#define USART_TXFIFO_THRESHOLD_1_4                                             \
-	USART_CR3_TXFTCFG_0 /*!< TXFIFO reaches 1/4 of its depth */
-#define USART_TXFIFO_THRESHOLD_1_2                                             \
-	USART_CR3_TXFTCFG_1 /*!< TXFIFO reaches 1/2 of its depth */
-#define USART_TXFIFO_THRESHOLD_3_4                                             \
-	(USART_CR3_TXFTCFG_0 |                                                 \
-	 USART_CR3_TXFTCFG_1) /*!< TXFIFO reaches 3/4 of its depth */
-#define USART_TXFIFO_THRESHOLD_7_8                                             \
-	USART_CR3_TXFTCFG_2 /*!< TXFIFO reaches 7/8 of its depth */
-#define USART_TXFIFO_THRESHOLD_8_8                                             \
-	(USART_CR3_TXFTCFG_2 |                                                 \
-	 USART_CR3_TXFTCFG_0) /*!< TXFIFO becomes empty            */
+#define USART_TXFIFO_THRESHOLD_1_8 0x00000000U				       /*!< TXFIFO reaches 1/8 of its depth */
+#define USART_TXFIFO_THRESHOLD_1_4 USART_CR3_TXFTCFG_0			       /*!< TXFIFO reaches 1/4 of its depth */
+#define USART_TXFIFO_THRESHOLD_1_2 USART_CR3_TXFTCFG_1			       /*!< TXFIFO reaches 1/2 of its depth */
+#define USART_TXFIFO_THRESHOLD_3_4 (USART_CR3_TXFTCFG_0 | USART_CR3_TXFTCFG_1) /*!< TXFIFO reaches 3/4 of its depth */
+#define USART_TXFIFO_THRESHOLD_7_8 USART_CR3_TXFTCFG_2			       /*!< TXFIFO reaches 7/8 of its depth */
+#define USART_TXFIFO_THRESHOLD_8_8 (USART_CR3_TXFTCFG_2 | USART_CR3_TXFTCFG_0) /*!< TXFIFO becomes empty            */
 /**
  * @}
  */
@@ -144,20 +133,14 @@ typedef struct {
  * @brief    USART RXFIFO level
  * @{
  */
-#define USART_RXFIFO_THRESHOLD_1_8                                             \
-	0x00000000U /*!< RXFIFO FIFO reaches 1/8 of its depth */
-#define USART_RXFIFO_THRESHOLD_1_4                                             \
-	USART_CR3_RXFTCFG_0 /*!< RXFIFO FIFO reaches 1/4 of its depth */
-#define USART_RXFIFO_THRESHOLD_1_2                                             \
-	USART_CR3_RXFTCFG_1 /*!< RXFIFO FIFO reaches 1/2 of its depth */
-#define USART_RXFIFO_THRESHOLD_3_4                                             \
-	(USART_CR3_RXFTCFG_0 |                                                 \
-	 USART_CR3_RXFTCFG_1) /*!< RXFIFO FIFO reaches 3/4 of its depth */
-#define USART_RXFIFO_THRESHOLD_7_8                                             \
-	USART_CR3_RXFTCFG_2 /*!< RXFIFO FIFO reaches 7/8 of its depth */
-#define USART_RXFIFO_THRESHOLD_8_8                                             \
-	(USART_CR3_RXFTCFG_2 |                                                 \
-	 USART_CR3_RXFTCFG_0) /*!< RXFIFO FIFO becomes full             */
+#define USART_RXFIFO_THRESHOLD_1_8 0x00000000U	       /*!< RXFIFO FIFO reaches 1/8 of its depth */
+#define USART_RXFIFO_THRESHOLD_1_4 USART_CR3_RXFTCFG_0 /*!< RXFIFO FIFO reaches 1/4 of its depth */
+#define USART_RXFIFO_THRESHOLD_1_2 USART_CR3_RXFTCFG_1 /*!< RXFIFO FIFO reaches 1/2 of its depth */
+#define USART_RXFIFO_THRESHOLD_3_4                                                                                     \
+	(USART_CR3_RXFTCFG_0 | USART_CR3_RXFTCFG_1)    /*!< RXFIFO FIFO reaches 3/4 of its depth */
+#define USART_RXFIFO_THRESHOLD_7_8 USART_CR3_RXFTCFG_2 /*!< RXFIFO FIFO reaches 7/8 of its depth */
+#define USART_RXFIFO_THRESHOLD_8_8                                                                                     \
+	(USART_CR3_RXFTCFG_2 | USART_CR3_RXFTCFG_0) /*!< RXFIFO FIFO becomes full             */
 /**
  * @}
  */
@@ -166,10 +149,8 @@ typedef struct {
  * @brief    USART Autonomous mode
  * @{
  */
-#define USART_AUTONOMOUS_MODE_DISABLE                                          \
-	0x00000000U /*!< Autonomous mode disable */
-#define USART_AUTONOMOUS_MODE_ENABLE                                           \
-	USART_AUTOCR_TRIGEN /*!< Autonomous mode enable  */
+#define USART_AUTONOMOUS_MODE_DISABLE 0x00000000U	 /*!< Autonomous mode disable */
+#define USART_AUTONOMOUS_MODE_ENABLE USART_AUTOCR_TRIGEN /*!< Autonomous mode enable  */
 /**
  * @}
  */
@@ -179,10 +160,8 @@ typedef struct {
  * @brief    USART Trigger polarity edge selection
  * @{
  */
-#define USART_TRIG_POLARITY_RISING                                             \
-	0x00000000U /*!< USART triggered on rising edge  */
-#define USART_TRIG_POLARITY_FALLING                                            \
-	USART_AUTOCR_TRIGPOL /*!< USART triggered on falling edge */
+#define USART_TRIG_POLARITY_RISING 0x00000000U		 /*!< USART triggered on rising edge  */
+#define USART_TRIG_POLARITY_FALLING USART_AUTOCR_TRIGPOL /*!< USART triggered on falling edge */
 /**
  * @}
  */
@@ -191,10 +170,9 @@ typedef struct {
  * @brief    USART IDLE frame transmission
  * @{
  */
-#define USART_IDLE_FRAME_ENABLE                                                \
-	0x00000000U /*!< IDLE Frame sent after enabling the transmitter */
-#define USART_IDLE_FRAME_DISABLE                                               \
-	USART_AUTOCR_IDLEDIS /*!< IDLE Frame not sent after enabling the       \
+#define USART_IDLE_FRAME_ENABLE 0x00000000U /*!< IDLE Frame sent after enabling the transmitter */
+#define USART_IDLE_FRAME_DISABLE                                                                                       \
+	USART_AUTOCR_IDLEDIS /*!< IDLE Frame not sent after enabling the                                               \
 				transmitter */
 /**
  * @}
@@ -205,22 +183,18 @@ typedef struct {
  * @brief    USART Autonomous Trigger selection
  * @{
  */
-#define USART_GPDMA1_CH0_TCF_TRG                                               \
-	0U /*!< USART GPDMA1 channel0 Internal Trigger  */
-#define USART_GPDMA1_CH1_TCF_TRG                                               \
-	1U /*!< USART GPDMA1 channel1 Internal Trigger  */
-#define USART_GPDMA1_CH2_TCF_TRG                                               \
-	2U /*!< USART GPDMA1 channel2 Internal Trigger  */
-#define USART_GPDMA1_CH3_TCF_TRG                                               \
-	3U			/*!< USART GPDMA1 channel3 Internal Trigger  */
-#define USART_EXTI_LINE6_TRG 4U /*!< USART EXTI line 6 Internal Trigger */
-#define USART_EXTI_LINE9_TRG 5U /*!< USART EXTI line 9 Internal Trigger */
-#define USART_LPTIM1_OUT_TRG 6U /*!< USART LPTIM1 out Internal Trigger */
-#define USART_LPTIM2_OUT_TRG 7U /*!< USART LPTIM2 out Internal Trigger */
-#define USART_COMP1_OUT_TRG 8U	/*!< USART COMP1 out Internal Trigger        */
-#define USART_COMP2_OUT_TRG 9U	/*!< USART COMP2 out Internal Trigger        */
-#define USART_RTC_ALRA_TRG 10U	/*!< USART RTC alarm Internal Trigger        */
-#define USART_RTC_WUT_TRG 11U	/*!< USART RTC wakeup Internal Trigger       */
+#define USART_GPDMA1_CH0_TCF_TRG 0U /*!< USART GPDMA1 channel0 Internal Trigger  */
+#define USART_GPDMA1_CH1_TCF_TRG 1U /*!< USART GPDMA1 channel1 Internal Trigger  */
+#define USART_GPDMA1_CH2_TCF_TRG 2U /*!< USART GPDMA1 channel2 Internal Trigger  */
+#define USART_GPDMA1_CH3_TCF_TRG 3U /*!< USART GPDMA1 channel3 Internal Trigger  */
+#define USART_EXTI_LINE6_TRG 4U	    /*!< USART EXTI line 6 Internal Trigger */
+#define USART_EXTI_LINE9_TRG 5U	    /*!< USART EXTI line 9 Internal Trigger */
+#define USART_LPTIM1_OUT_TRG 6U	    /*!< USART LPTIM1 out Internal Trigger */
+#define USART_LPTIM2_OUT_TRG 7U	    /*!< USART LPTIM2 out Internal Trigger */
+#define USART_COMP1_OUT_TRG 8U	    /*!< USART COMP1 out Internal Trigger        */
+#define USART_COMP2_OUT_TRG 9U	    /*!< USART COMP2 out Internal Trigger        */
+#define USART_RTC_ALRA_TRG 10U	    /*!< USART RTC alarm Internal Trigger        */
+#define USART_RTC_WUT_TRG 11U	    /*!< USART RTC wakeup Internal Trigger       */
 /**
  * @}
  */
@@ -244,31 +218,29 @@ typedef struct {
  * @retval None, the mask to apply to USART RDR register is stored in
  * (__HANDLE__)->Mask field.
  */
-#define USART_MASK_COMPUTATION(__HANDLE__)                                     \
-	do {                                                                   \
-		if ((__HANDLE__)->Init.WordLength == USART_WORDLENGTH_9B) {    \
-			if ((__HANDLE__)->Init.Parity == USART_PARITY_NONE) {  \
-				(__HANDLE__)->Mask = 0x01FFU;                  \
-			} else {                                               \
-				(__HANDLE__)->Mask = 0x00FFU;                  \
-			}                                                      \
-		} else if ((__HANDLE__)->Init.WordLength ==                    \
-			   USART_WORDLENGTH_8B) {                              \
-			if ((__HANDLE__)->Init.Parity == USART_PARITY_NONE) {  \
-				(__HANDLE__)->Mask = 0x00FFU;                  \
-			} else {                                               \
-				(__HANDLE__)->Mask = 0x007FU;                  \
-			}                                                      \
-		} else if ((__HANDLE__)->Init.WordLength ==                    \
-			   USART_WORDLENGTH_7B) {                              \
-			if ((__HANDLE__)->Init.Parity == USART_PARITY_NONE) {  \
-				(__HANDLE__)->Mask = 0x007FU;                  \
-			} else {                                               \
-				(__HANDLE__)->Mask = 0x003FU;                  \
-			}                                                      \
-		} else {                                                       \
-			(__HANDLE__)->Mask = 0x0000U;                          \
-		}                                                              \
+#define USART_MASK_COMPUTATION(__HANDLE__)                                                                             \
+	do {                                                                                                           \
+		if ((__HANDLE__)->Init.WordLength == USART_WORDLENGTH_9B) {                                            \
+			if ((__HANDLE__)->Init.Parity == USART_PARITY_NONE) {                                          \
+				(__HANDLE__)->Mask = 0x01FFU;                                                          \
+			} else {                                                                                       \
+				(__HANDLE__)->Mask = 0x00FFU;                                                          \
+			}                                                                                              \
+		} else if ((__HANDLE__)->Init.WordLength == USART_WORDLENGTH_8B) {                                     \
+			if ((__HANDLE__)->Init.Parity == USART_PARITY_NONE) {                                          \
+				(__HANDLE__)->Mask = 0x00FFU;                                                          \
+			} else {                                                                                       \
+				(__HANDLE__)->Mask = 0x007FU;                                                          \
+			}                                                                                              \
+		} else if ((__HANDLE__)->Init.WordLength == USART_WORDLENGTH_7B) {                                     \
+			if ((__HANDLE__)->Init.Parity == USART_PARITY_NONE) {                                          \
+				(__HANDLE__)->Mask = 0x007FU;                                                          \
+			} else {                                                                                       \
+				(__HANDLE__)->Mask = 0x003FU;                                                          \
+			}                                                                                              \
+		} else {                                                                                               \
+			(__HANDLE__)->Mask = 0x0000U;                                                                  \
+		}                                                                                                      \
 	} while (0U)
 
 /**
@@ -276,9 +248,8 @@ typedef struct {
  * @param __LENGTH__ USART frame length.
  * @retval SET (__LENGTH__ is valid) or RESET (__LENGTH__ is invalid)
  */
-#define IS_USART_WORD_LENGTH(__LENGTH__)                                       \
-	(((__LENGTH__) == USART_WORDLENGTH_7B) ||                              \
-	 ((__LENGTH__) == USART_WORDLENGTH_8B) ||                              \
+#define IS_USART_WORD_LENGTH(__LENGTH__)                                                                               \
+	(((__LENGTH__) == USART_WORDLENGTH_7B) || ((__LENGTH__) == USART_WORDLENGTH_8B) ||                             \
 	 ((__LENGTH__) == USART_WORDLENGTH_9B))
 
 /**
@@ -286,69 +257,58 @@ typedef struct {
  * @param __NSS__ USART Negative Slave Select pin management.
  * @retval SET (__NSS__ is valid) or RESET (__NSS__ is invalid)
  */
-#define IS_USART_NSS(__NSS__)                                                  \
-	(((__NSS__) == USART_NSS_HARD) || ((__NSS__) == USART_NSS_SOFT))
+#define IS_USART_NSS(__NSS__) (((__NSS__) == USART_NSS_HARD) || ((__NSS__) == USART_NSS_SOFT))
 
 /**
  * @brief Ensure that USART Slave Mode is valid.
  * @param __STATE__ USART Slave Mode.
  * @retval SET (__STATE__ is valid) or RESET (__STATE__ is invalid)
  */
-#define IS_USART_SLAVEMODE(__STATE__)                                          \
-	(((__STATE__) == USART_SLAVEMODE_DISABLE) ||                           \
-	 ((__STATE__) == USART_SLAVEMODE_ENABLE))
+#define IS_USART_SLAVEMODE(__STATE__)                                                                                  \
+	(((__STATE__) == USART_SLAVEMODE_DISABLE) || ((__STATE__) == USART_SLAVEMODE_ENABLE))
 
 /**
  * @brief Ensure that USART FIFO mode is valid.
  * @param __STATE__ USART FIFO mode.
  * @retval SET (__STATE__ is valid) or RESET (__STATE__ is invalid)
  */
-#define IS_USART_FIFO_MODE_STATE(__STATE__)                                    \
-	(((__STATE__) == USART_FIFOMODE_DISABLE) ||                            \
-	 ((__STATE__) == USART_FIFOMODE_ENABLE))
+#define IS_USART_FIFO_MODE_STATE(__STATE__)                                                                            \
+	(((__STATE__) == USART_FIFOMODE_DISABLE) || ((__STATE__) == USART_FIFOMODE_ENABLE))
 
 /**
  * @brief Ensure that USART TXFIFO threshold level is valid.
  * @param __THRESHOLD__ USART TXFIFO threshold level.
  * @retval SET (__THRESHOLD__ is valid) or RESET (__THRESHOLD__ is invalid)
  */
-#define IS_USART_TXFIFO_THRESHOLD(__THRESHOLD__)                               \
-	(((__THRESHOLD__) == USART_TXFIFO_THRESHOLD_1_8) ||                    \
-	 ((__THRESHOLD__) == USART_TXFIFO_THRESHOLD_1_4) ||                    \
-	 ((__THRESHOLD__) == USART_TXFIFO_THRESHOLD_1_2) ||                    \
-	 ((__THRESHOLD__) == USART_TXFIFO_THRESHOLD_3_4) ||                    \
-	 ((__THRESHOLD__) == USART_TXFIFO_THRESHOLD_7_8) ||                    \
-	 ((__THRESHOLD__) == USART_TXFIFO_THRESHOLD_8_8))
+#define IS_USART_TXFIFO_THRESHOLD(__THRESHOLD__)                                                                       \
+	(((__THRESHOLD__) == USART_TXFIFO_THRESHOLD_1_8) || ((__THRESHOLD__) == USART_TXFIFO_THRESHOLD_1_4) ||         \
+	 ((__THRESHOLD__) == USART_TXFIFO_THRESHOLD_1_2) || ((__THRESHOLD__) == USART_TXFIFO_THRESHOLD_3_4) ||         \
+	 ((__THRESHOLD__) == USART_TXFIFO_THRESHOLD_7_8) || ((__THRESHOLD__) == USART_TXFIFO_THRESHOLD_8_8))
 
 /**
  * @brief Ensure that USART RXFIFO threshold level is valid.
  * @param __THRESHOLD__ USART RXFIFO threshold level.
  * @retval SET (__THRESHOLD__ is valid) or RESET (__THRESHOLD__ is invalid)
  */
-#define IS_USART_RXFIFO_THRESHOLD(__THRESHOLD__)                               \
-	(((__THRESHOLD__) == USART_RXFIFO_THRESHOLD_1_8) ||                    \
-	 ((__THRESHOLD__) == USART_RXFIFO_THRESHOLD_1_4) ||                    \
-	 ((__THRESHOLD__) == USART_RXFIFO_THRESHOLD_1_2) ||                    \
-	 ((__THRESHOLD__) == USART_RXFIFO_THRESHOLD_3_4) ||                    \
-	 ((__THRESHOLD__) == USART_RXFIFO_THRESHOLD_7_8) ||                    \
-	 ((__THRESHOLD__) == USART_RXFIFO_THRESHOLD_8_8))
+#define IS_USART_RXFIFO_THRESHOLD(__THRESHOLD__)                                                                       \
+	(((__THRESHOLD__) == USART_RXFIFO_THRESHOLD_1_8) || ((__THRESHOLD__) == USART_RXFIFO_THRESHOLD_1_4) ||         \
+	 ((__THRESHOLD__) == USART_RXFIFO_THRESHOLD_1_2) || ((__THRESHOLD__) == USART_RXFIFO_THRESHOLD_3_4) ||         \
+	 ((__THRESHOLD__) == USART_RXFIFO_THRESHOLD_7_8) || ((__THRESHOLD__) == USART_RXFIFO_THRESHOLD_8_8))
 /**
  * @brief Ensure that USART Trigger polarity state is valid.
  * @param __POLARITY__ USART Trigger polarity.
  * @retval SET (__POLARITY__ is valid) or RESET (__POLARITY__ is invalid)
  */
-#define IS_USART_TRIGGER_POLARITY(__POLARITY__)                                \
-	(((__POLARITY__) == USART_TRIG_POLARITY_RISING) ||                     \
-	 ((__POLARITY__) == USART_TRIG_POLARITY_FALLING))
+#define IS_USART_TRIGGER_POLARITY(__POLARITY__)                                                                        \
+	(((__POLARITY__) == USART_TRIG_POLARITY_RISING) || ((__POLARITY__) == USART_TRIG_POLARITY_FALLING))
 
 /**
  * @brief Ensure that USART IDLE Frame Transmit state is valid.
  * @param __IDLE__ USART IDLE Frame Transmit state.
  * @retval SET (__IDLE__ is valid) or RESET (__IDLE__ is invalid)
  */
-#define IS_USART_IDLE_FRAME_TRANSMIT(__IDLE__)                                 \
-	(((__IDLE__) == USART_IDLE_FRAME_ENABLE) ||                            \
-	 ((__IDLE__) == USART_IDLE_FRAME_DISABLE))
+#define IS_USART_IDLE_FRAME_TRANSMIT(__IDLE__)                                                                         \
+	(((__IDLE__) == USART_IDLE_FRAME_ENABLE) || ((__IDLE__) == USART_IDLE_FRAME_DISABLE))
 
 /**
  * @brief Ensure that USART Trigger source selection is valid.
@@ -392,22 +352,16 @@ void HAL_USARTEx_TxFifoEmptyCallback(USART_HandleTypeDef *husart);
 /* Peripheral Control functions ***********************************************/
 HAL_StatusTypeDef HAL_USARTEx_EnableSlaveMode(USART_HandleTypeDef *husart);
 HAL_StatusTypeDef HAL_USARTEx_DisableSlaveMode(USART_HandleTypeDef *husart);
-HAL_StatusTypeDef HAL_USARTEx_ConfigNSS(USART_HandleTypeDef *husart,
-					uint32_t NSSConfig);
+HAL_StatusTypeDef HAL_USARTEx_ConfigNSS(USART_HandleTypeDef *husart, uint32_t NSSConfig);
 HAL_StatusTypeDef HAL_USARTEx_EnableFifoMode(USART_HandleTypeDef *husart);
 HAL_StatusTypeDef HAL_USARTEx_DisableFifoMode(USART_HandleTypeDef *husart);
-HAL_StatusTypeDef HAL_USARTEx_SetTxFifoThreshold(USART_HandleTypeDef *husart,
-						 uint32_t Threshold);
-HAL_StatusTypeDef HAL_USARTEx_SetRxFifoThreshold(USART_HandleTypeDef *husart,
-						 uint32_t Threshold);
-HAL_StatusTypeDef HAL_USARTEx_SetConfigAutonomousMode(
-    USART_HandleTypeDef *husart,
-    const USART_AutonomousModeConfTypeDef *sConfig);
-HAL_StatusTypeDef
-HAL_USARTEx_GetConfigAutonomousMode(const USART_HandleTypeDef *husart,
-				    USART_AutonomousModeConfTypeDef *sConfig);
-HAL_StatusTypeDef
-HAL_USARTEx_ClearConfigAutonomousMode(USART_HandleTypeDef *husart);
+HAL_StatusTypeDef HAL_USARTEx_SetTxFifoThreshold(USART_HandleTypeDef *husart, uint32_t Threshold);
+HAL_StatusTypeDef HAL_USARTEx_SetRxFifoThreshold(USART_HandleTypeDef *husart, uint32_t Threshold);
+HAL_StatusTypeDef HAL_USARTEx_SetConfigAutonomousMode(USART_HandleTypeDef *husart,
+						      const USART_AutonomousModeConfTypeDef *sConfig);
+HAL_StatusTypeDef HAL_USARTEx_GetConfigAutonomousMode(const USART_HandleTypeDef *husart,
+						      USART_AutonomousModeConfTypeDef *sConfig);
+HAL_StatusTypeDef HAL_USARTEx_ClearConfigAutonomousMode(USART_HandleTypeDef *husart);
 
 /**
  * @}

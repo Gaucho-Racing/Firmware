@@ -45,23 +45,21 @@ extern "C" {
  * @brief  PWR PVM configuration structure definition
  */
 typedef struct {
-	uint32_t
-	    PVMType; /*!< PVMType: Specifies which voltage is monitored and
-against which threshold. This parameter can be a value of @ref PWREx_PVM_Type.
-			  @arg @ref PWR_PVM_1 Peripheral Voltage Monitoring 1
-enable: VDDUSB versus 1.2 V (applicable when USB feature is supported).
-@if STM32L486xx
-			  @arg @ref PWR_PVM_2 Peripheral Voltage Monitoring 2
-enable: VDDIO2 versus 0.9 V (applicable when VDDIO2 is present on device).
-@endif
-			  @arg @ref PWR_PVM_3 Peripheral Voltage Monitoring 3
-enable: VDDA versus 1.62 V.
-			  @arg @ref PWR_PVM_4 Peripheral Voltage Monitoring 4
-enable: VDDA versus 2.2 V. */
+	uint32_t PVMType; /*!< PVMType: Specifies which voltage is monitored and
+     against which threshold. This parameter can be a value of @ref PWREx_PVM_Type.
+			       @arg @ref PWR_PVM_1 Peripheral Voltage Monitoring 1
+     enable: VDDUSB versus 1.2 V (applicable when USB feature is supported).
+     @if STM32L486xx
+			       @arg @ref PWR_PVM_2 Peripheral Voltage Monitoring 2
+     enable: VDDIO2 versus 0.9 V (applicable when VDDIO2 is present on device).
+     @endif
+			       @arg @ref PWR_PVM_3 Peripheral Voltage Monitoring 3
+     enable: VDDA versus 1.62 V.
+			       @arg @ref PWR_PVM_4 Peripheral Voltage Monitoring 4
+     enable: VDDA versus 2.2 V. */
 
-	uint32_t
-	    Mode; /*!< Mode: Specifies the operating mode for the selected pins.
-		       This parameter can be a value of @ref PWREx_PVM_Mode. */
+	uint32_t Mode; /*!< Mode: Specifies the operating mode for the selected pins.
+			    This parameter can be a value of @ref PWREx_PVM_Mode. */
 } PWR_PVMTypeDef;
 
 /**
@@ -78,8 +76,7 @@ enable: VDDA versus 2.2 V. */
  * from PWR_WAKEUP_PINy_xxx constants
  * @{
  */
-#define PWR_WUP_POLARITY_SHIFT                                                 \
-	0x05 /*!< Internal constant used to retrieve wakeup pin polariry */
+#define PWR_WUP_POLARITY_SHIFT 0x05 /*!< Internal constant used to retrieve wakeup pin polariry */
 /**
  * @}
  */
@@ -87,46 +84,31 @@ enable: VDDA versus 2.2 V. */
 /** @defgroup PWREx_WakeUp_Pins  PWR wake-up pins
  * @{
  */
-#define PWR_WAKEUP_PIN1                                                        \
-	PWR_CR3_EWUP1 /*!< Wakeup pin 1 (with high level polarity) */
-#define PWR_WAKEUP_PIN2                                                        \
-	PWR_CR3_EWUP2 /*!< Wakeup pin 2 (with high level polarity) */
-#define PWR_WAKEUP_PIN3                                                        \
-	PWR_CR3_EWUP3 /*!< Wakeup pin 3 (with high level polarity) */
-#define PWR_WAKEUP_PIN4                                                        \
-	PWR_CR3_EWUP4 /*!< Wakeup pin 4 (with high level polarity) */
-#define PWR_WAKEUP_PIN5                                                        \
-	PWR_CR3_EWUP5 /*!< Wakeup pin 5 (with high level polarity) */
-#define PWR_WAKEUP_PIN1_HIGH                                                   \
-	PWR_CR3_EWUP1 /*!< Wakeup pin 1 (with high level polarity) */
-#define PWR_WAKEUP_PIN2_HIGH                                                   \
-	PWR_CR3_EWUP2 /*!< Wakeup pin 2 (with high level polarity) */
-#define PWR_WAKEUP_PIN3_HIGH                                                   \
-	PWR_CR3_EWUP3 /*!< Wakeup pin 3 (with high level polarity) */
-#define PWR_WAKEUP_PIN4_HIGH                                                   \
-	PWR_CR3_EWUP4 /*!< Wakeup pin 4 (with high level polarity) */
-#define PWR_WAKEUP_PIN5_HIGH                                                   \
-	PWR_CR3_EWUP5 /*!< Wakeup pin 5 (with high level polarity) */
-#define PWR_WAKEUP_PIN1_LOW                                                    \
-	(uint32_t)(                                                            \
-	    (PWR_CR4_WP1 << PWR_WUP_POLARITY_SHIFT) |                          \
-	    PWR_CR3_EWUP1) /*!< Wakeup pin 1 (with low level polarity) */
-#define PWR_WAKEUP_PIN2_LOW                                                    \
-	(uint32_t)(                                                            \
-	    (PWR_CR4_WP2 << PWR_WUP_POLARITY_SHIFT) |                          \
-	    PWR_CR3_EWUP2) /*!< Wakeup pin 2 (with low level polarity) */
-#define PWR_WAKEUP_PIN3_LOW                                                    \
-	(uint32_t)(                                                            \
-	    (PWR_CR4_WP3 << PWR_WUP_POLARITY_SHIFT) |                          \
-	    PWR_CR3_EWUP3) /*!< Wakeup pin 3 (with low level polarity) */
-#define PWR_WAKEUP_PIN4_LOW                                                    \
-	(uint32_t)(                                                            \
-	    (PWR_CR4_WP4 << PWR_WUP_POLARITY_SHIFT) |                          \
-	    PWR_CR3_EWUP4) /*!< Wakeup pin 4 (with low level polarity) */
-#define PWR_WAKEUP_PIN5_LOW                                                    \
-	(uint32_t)(                                                            \
-	    (PWR_CR4_WP5 << PWR_WUP_POLARITY_SHIFT) |                          \
-	    PWR_CR3_EWUP5) /*!< Wakeup pin 5 (with low level polarity) */
+#define PWR_WAKEUP_PIN1 PWR_CR3_EWUP1	   /*!< Wakeup pin 1 (with high level polarity) */
+#define PWR_WAKEUP_PIN2 PWR_CR3_EWUP2	   /*!< Wakeup pin 2 (with high level polarity) */
+#define PWR_WAKEUP_PIN3 PWR_CR3_EWUP3	   /*!< Wakeup pin 3 (with high level polarity) */
+#define PWR_WAKEUP_PIN4 PWR_CR3_EWUP4	   /*!< Wakeup pin 4 (with high level polarity) */
+#define PWR_WAKEUP_PIN5 PWR_CR3_EWUP5	   /*!< Wakeup pin 5 (with high level polarity) */
+#define PWR_WAKEUP_PIN1_HIGH PWR_CR3_EWUP1 /*!< Wakeup pin 1 (with high level polarity) */
+#define PWR_WAKEUP_PIN2_HIGH PWR_CR3_EWUP2 /*!< Wakeup pin 2 (with high level polarity) */
+#define PWR_WAKEUP_PIN3_HIGH PWR_CR3_EWUP3 /*!< Wakeup pin 3 (with high level polarity) */
+#define PWR_WAKEUP_PIN4_HIGH PWR_CR3_EWUP4 /*!< Wakeup pin 4 (with high level polarity) */
+#define PWR_WAKEUP_PIN5_HIGH PWR_CR3_EWUP5 /*!< Wakeup pin 5 (with high level polarity) */
+#define PWR_WAKEUP_PIN1_LOW                                                                                            \
+	(uint32_t)((PWR_CR4_WP1 << PWR_WUP_POLARITY_SHIFT) |                                                           \
+		   PWR_CR3_EWUP1) /*!< Wakeup pin 1 (with low level polarity) */
+#define PWR_WAKEUP_PIN2_LOW                                                                                            \
+	(uint32_t)((PWR_CR4_WP2 << PWR_WUP_POLARITY_SHIFT) |                                                           \
+		   PWR_CR3_EWUP2) /*!< Wakeup pin 2 (with low level polarity) */
+#define PWR_WAKEUP_PIN3_LOW                                                                                            \
+	(uint32_t)((PWR_CR4_WP3 << PWR_WUP_POLARITY_SHIFT) |                                                           \
+		   PWR_CR3_EWUP3) /*!< Wakeup pin 3 (with low level polarity) */
+#define PWR_WAKEUP_PIN4_LOW                                                                                            \
+	(uint32_t)((PWR_CR4_WP4 << PWR_WUP_POLARITY_SHIFT) |                                                           \
+		   PWR_CR3_EWUP4) /*!< Wakeup pin 4 (with low level polarity) */
+#define PWR_WAKEUP_PIN5_LOW                                                                                            \
+	(uint32_t)((PWR_CR4_WP5 << PWR_WUP_POLARITY_SHIFT) |                                                           \
+		   PWR_CR3_EWUP5) /*!< Wakeup pin 5 (with low level polarity) */
 /**
  * @}
  */
@@ -135,22 +117,22 @@ enable: VDDA versus 2.2 V. */
  * @{
  */
 #if defined(PWR_CR2_PVME1)
-#define PWR_PVM_1                                                              \
-	PWR_CR2_PVME1 /*!< Peripheral Voltage Monitoring 1 enable: VDDUSB      \
-			 versus 1.2 V (applicable when USB feature is          \
+#define PWR_PVM_1                                                                                                      \
+	PWR_CR2_PVME1 /*!< Peripheral Voltage Monitoring 1 enable: VDDUSB                                              \
+			 versus 1.2 V (applicable when USB feature is                                                  \
 			 supported) */
 #endif		      /* PWR_CR2_PVME1 */
 #if defined(PWR_CR2_PVME2)
-#define PWR_PVM_2                                                              \
-	PWR_CR2_PVME2 /*!< Peripheral Voltage Monitoring 2 enable: VDDIO2      \
-			 versus 0.9 V (applicable when VDDIO2 is present on    \
+#define PWR_PVM_2                                                                                                      \
+	PWR_CR2_PVME2 /*!< Peripheral Voltage Monitoring 2 enable: VDDIO2                                              \
+			 versus 0.9 V (applicable when VDDIO2 is present on                                            \
 			 device) */
 #endif		      /* PWR_CR2_PVME2 */
-#define PWR_PVM_3                                                              \
-	PWR_CR2_PVME3 /*!< Peripheral Voltage Monitoring 3 enable: VDDA        \
+#define PWR_PVM_3                                                                                                      \
+	PWR_CR2_PVME3 /*!< Peripheral Voltage Monitoring 3 enable: VDDA                                                \
 			 versus 1.62 V */
-#define PWR_PVM_4                                                              \
-	PWR_CR2_PVME4 /*!< Peripheral Voltage Monitoring 4 enable: VDDA        \
+#define PWR_PVM_4                                                                                                      \
+	PWR_CR2_PVME4 /*!< Peripheral Voltage Monitoring 4 enable: VDDA                                                \
 			 versus 2.2 V  */
 /**
  * @}
@@ -160,23 +142,23 @@ enable: VDDA versus 2.2 V. */
  * @{
  */
 #define PWR_PVM_MODE_NORMAL ((uint32_t)0x00000000) /*!< basic mode is used */
-#define PWR_PVM_MODE_IT_RISING                                                 \
-	((uint32_t)0x00010001) /*!< External Interrupt Mode with Rising edge   \
+#define PWR_PVM_MODE_IT_RISING                                                                                         \
+	((uint32_t)0x00010001) /*!< External Interrupt Mode with Rising edge                                           \
 				  trigger detection */
-#define PWR_PVM_MODE_IT_FALLING                                                \
-	((uint32_t)0x00010002) /*!< External Interrupt Mode with Falling edge  \
+#define PWR_PVM_MODE_IT_FALLING                                                                                        \
+	((uint32_t)0x00010002) /*!< External Interrupt Mode with Falling edge                                          \
 				  trigger detection */
-#define PWR_PVM_MODE_IT_RISING_FALLING                                         \
-	((uint32_t)0x00010003) /*!< External Interrupt Mode with               \
+#define PWR_PVM_MODE_IT_RISING_FALLING                                                                                 \
+	((uint32_t)0x00010003) /*!< External Interrupt Mode with                                                       \
 				  Rising/Falling edge trigger detection */
-#define PWR_PVM_MODE_EVENT_RISING                                              \
-	((uint32_t)0x00020001) /*!< Event Mode with Rising edge trigger        \
+#define PWR_PVM_MODE_EVENT_RISING                                                                                      \
+	((uint32_t)0x00020001) /*!< Event Mode with Rising edge trigger                                                \
 				  detection */
-#define PWR_PVM_MODE_EVENT_FALLING                                             \
-	((uint32_t)0x00020002) /*!< Event Mode with Falling edge trigger       \
+#define PWR_PVM_MODE_EVENT_FALLING                                                                                     \
+	((uint32_t)0x00020002) /*!< Event Mode with Falling edge trigger                                               \
 				  detection */
-#define PWR_PVM_MODE_EVENT_RISING_FALLING                                      \
-	((uint32_t)0x00020003) /*!< Event Mode with Rising/Falling edge        \
+#define PWR_PVM_MODE_EVENT_RISING_FALLING                                                                              \
+	((uint32_t)0x00020003) /*!< Event Mode with Rising/Falling edge                                                \
 				  trigger detection */
 /**
  * @}
@@ -186,13 +168,10 @@ enable: VDDA versus 2.2 V. */
  * @{
  */
 #if defined(PWR_CR5_R1MODE)
-#define PWR_REGULATOR_VOLTAGE_SCALE1_BOOST                                     \
-	((uint32_t)0x00000000) /*!< Voltage scaling range 1 boost mode  */
+#define PWR_REGULATOR_VOLTAGE_SCALE1_BOOST ((uint32_t)0x00000000) /*!< Voltage scaling range 1 boost mode  */
 #endif
-#define PWR_REGULATOR_VOLTAGE_SCALE1                                           \
-	PWR_CR1_VOS_0 /*!< Voltage scaling range 1 normal mode */
-#define PWR_REGULATOR_VOLTAGE_SCALE2                                           \
-	PWR_CR1_VOS_1 /*!< Voltage scaling range 2             */
+#define PWR_REGULATOR_VOLTAGE_SCALE1 PWR_CR1_VOS_0 /*!< Voltage scaling range 1 normal mode */
+#define PWR_REGULATOR_VOLTAGE_SCALE2 PWR_CR1_VOS_1 /*!< Voltage scaling range 2             */
 /**
  * @}
  */
@@ -201,11 +180,10 @@ enable: VDDA versus 2.2 V. */
  * resistor selection
  * @{
  */
-#define PWR_BATTERY_CHARGING_RESISTOR_5                                        \
-	((uint32_t)0x00000000) /*!< VBAT charging through a 5 kOhms resistor   \
-				*/
-#define PWR_BATTERY_CHARGING_RESISTOR_1_5                                      \
-	PWR_CR4_VBRS /*!< VBAT charging through a 1.5 kOhms resistor */
+#define PWR_BATTERY_CHARGING_RESISTOR_5                                                                                \
+	((uint32_t)0x00000000)			       /*!< VBAT charging through a 5 kOhms resistor                   \
+							*/
+#define PWR_BATTERY_CHARGING_RESISTOR_1_5 PWR_CR4_VBRS /*!< VBAT charging through a 1.5 kOhms resistor */
 /**
  * @}
  */
@@ -273,20 +251,20 @@ enable: VDDA versus 2.2 V. */
  * @{
  */
 #if defined(PWR_CR2_PVME1)
-#define PWR_EXTI_LINE_PVM1                                                     \
-	((uint32_t)0x00000008) /*!< External interrupt line 35 Connected to    \
+#define PWR_EXTI_LINE_PVM1                                                                                             \
+	((uint32_t)0x00000008) /*!< External interrupt line 35 Connected to                                            \
 				  the PVM1 EXTI Line   */
 #endif			       /* PWR_CR2_PVME1 */
 #if defined(PWR_CR2_PVME2)
-#define PWR_EXTI_LINE_PVM2                                                     \
-	((uint32_t)0x00000010) /*!< External interrupt line 36 Connected to    \
+#define PWR_EXTI_LINE_PVM2                                                                                             \
+	((uint32_t)0x00000010) /*!< External interrupt line 36 Connected to                                            \
 				  the PVM2 EXTI Line   */
 #endif			       /* PWR_CR2_PVME2 */
-#define PWR_EXTI_LINE_PVM3                                                     \
-	((uint32_t)0x00000020) /*!< External interrupt line 37 Connected to    \
+#define PWR_EXTI_LINE_PVM3                                                                                             \
+	((uint32_t)0x00000020) /*!< External interrupt line 37 Connected to                                            \
 				  the PVM3 EXTI Line   */
-#define PWR_EXTI_LINE_PVM4                                                     \
-	((uint32_t)0x00000040) /*!< External interrupt line 38 Connected to    \
+#define PWR_EXTI_LINE_PVM4                                                                                             \
+	((uint32_t)0x00000040) /*!< External interrupt line 38 Connected to                                            \
 				  the PVM4 EXTI Line   */
 /**
  * @}
@@ -296,20 +274,20 @@ enable: VDDA versus 2.2 V. */
  * @{
  */
 #if defined(PWR_CR2_PVME1)
-#define PWR_EVENT_LINE_PVM1                                                    \
-	((uint32_t)0x00000008) /*!< Event line 35 Connected to the PVM1 EXTI   \
+#define PWR_EVENT_LINE_PVM1                                                                                            \
+	((uint32_t)0x00000008) /*!< Event line 35 Connected to the PVM1 EXTI                                           \
 				  Line */
 #endif			       /* PWR_CR2_PVME1 */
 #if defined(PWR_CR2_PVME2)
-#define PWR_EVENT_LINE_PVM2                                                    \
-	((uint32_t)0x00000010) /*!< Event line 36 Connected to the PVM2 EXTI   \
+#define PWR_EVENT_LINE_PVM2                                                                                            \
+	((uint32_t)0x00000010) /*!< Event line 36 Connected to the PVM2 EXTI                                           \
 				  Line */
 #endif			       /* PWR_CR2_PVME2 */
-#define PWR_EVENT_LINE_PVM3                                                    \
-	((uint32_t)0x00000020) /*!< Event line 37 Connected to the PVM3 EXTI   \
+#define PWR_EVENT_LINE_PVM3                                                                                            \
+	((uint32_t)0x00000020) /*!< Event line 37 Connected to the PVM3 EXTI                                           \
 				  Line */
-#define PWR_EVENT_LINE_PVM4                                                    \
-	((uint32_t)0x00000040) /*!< Event line 38 Connected to the PVM4 EXTI   \
+#define PWR_EVENT_LINE_PVM4                                                                                            \
+	((uint32_t)0x00000040) /*!< Event line 38 Connected to the PVM4 EXTI                                           \
 				  Line */
 /**
  * @}
@@ -330,35 +308,27 @@ enable: VDDA versus 2.2 V. */
 #define PWR_FLAG_WUF3 ((uint32_t)0x0022) /*!< Wakeup event on wakeup pin 3 */
 #define PWR_FLAG_WUF4 ((uint32_t)0x0023) /*!< Wakeup event on wakeup pin 4 */
 #define PWR_FLAG_WUF5 ((uint32_t)0x0024) /*!< Wakeup event on wakeup pin 5 */
-#define PWR_FLAG_WU                                                            \
-	PWR_SR1_WUF /*!< Encompass wakeup event on all wakeup pins */
-#define PWR_FLAG_SB ((uint32_t)0x0028) /*!< Standby flag */
+#define PWR_FLAG_WU PWR_SR1_WUF		 /*!< Encompass wakeup event on all wakeup pins */
+#define PWR_FLAG_SB ((uint32_t)0x0028)	 /*!< Standby flag */
 #if defined(PWR_SR1_EXT_SMPS_RDY)
-#define PWR_FLAG_EXT_SMPS                                                      \
-	((uint32_t)0x002D) /*!< Switching to external SMPS ready flag */
-#endif			   /* PWR_SR1_EXT_SMPS_RDY */
-#define PWR_FLAG_WUFI                                                          \
-	((uint32_t)0x002F) /*!< Wakeup on internal wakeup line                 \
+#define PWR_FLAG_EXT_SMPS ((uint32_t)0x002D) /*!< Switching to external SMPS ready flag */
+#endif					     /* PWR_SR1_EXT_SMPS_RDY */
+#define PWR_FLAG_WUFI                                                                                                  \
+	((uint32_t)0x002F) /*!< Wakeup on internal wakeup line                                                         \
 			    */
 
-#define PWR_FLAG_REGLPS                                                        \
-	((uint32_t)0x0048) /*!< Low-power regulator start flag */
+#define PWR_FLAG_REGLPS ((uint32_t)0x0048) /*!< Low-power regulator start flag */
 #define PWR_FLAG_REGLPF ((uint32_t)0x0049) /*!< Low-power regulator flag */
 #define PWR_FLAG_VOSF ((uint32_t)0x004A)   /*!< Voltage scaling flag */
-#define PWR_FLAG_PVDO                                                          \
-	((uint32_t)0x004B) /*!< Power Voltage Detector output flag */
+#define PWR_FLAG_PVDO ((uint32_t)0x004B)   /*!< Power Voltage Detector output flag */
 #if defined(PWR_CR2_PVME1)
-#define PWR_FLAG_PVMO1                                                         \
-	((uint32_t)0x004C) /*!< Power Voltage Monitoring 1 output flag */
-#endif			   /* PWR_CR2_PVME1 */
+#define PWR_FLAG_PVMO1 ((uint32_t)0x004C) /*!< Power Voltage Monitoring 1 output flag */
+#endif					  /* PWR_CR2_PVME1 */
 #if defined(PWR_CR2_PVME2)
-#define PWR_FLAG_PVMO2                                                         \
-	((uint32_t)0x004D) /*!< Power Voltage Monitoring 2 output flag */
-#endif			   /* PWR_CR2_PVME2 */
-#define PWR_FLAG_PVMO3                                                         \
-	((uint32_t)0x004E) /*!< Power Voltage Monitoring 3 output flag */
-#define PWR_FLAG_PVMO4                                                         \
-	((uint32_t)0x004F) /*!< Power Voltage Monitoring 4 output flag */
+#define PWR_FLAG_PVMO2 ((uint32_t)0x004D) /*!< Power Voltage Monitoring 2 output flag */
+#endif					  /* PWR_CR2_PVME2 */
+#define PWR_FLAG_PVMO3 ((uint32_t)0x004E) /*!< Power Voltage Monitoring 3 output flag */
+#define PWR_FLAG_PVMO4 ((uint32_t)0x004F) /*!< Power Voltage Monitoring 4 output flag */
 /**
  * @}
  */
@@ -366,19 +336,19 @@ enable: VDDA versus 2.2 V. */
 /** @defgroup PWREx_SRAM2_Retention PWR SRAM2 Retention in Standby mode
  * @{
  */
-#define PWR_NO_SRAM2_RETENTION                                                 \
-	((uint32_t)0x00000000) /*!< SRAM2 is powered off in Standby mode       \
+#define PWR_NO_SRAM2_RETENTION                                                                                         \
+	((uint32_t)0x00000000) /*!< SRAM2 is powered off in Standby mode                                               \
 				  (SRAM2 content is lost) */
 #if defined(PWR_CR3_RRS_1)
-#define PWR_FULL_SRAM2_RETENTION                                               \
-	PWR_CR3_RRS_0 /*!< Full SRAM2 is powered by the low-power regulator in \
+#define PWR_FULL_SRAM2_RETENTION                                                                                       \
+	PWR_CR3_RRS_0 /*!< Full SRAM2 is powered by the low-power regulator in                                         \
 			 Standby mode */
-#define PWR_4KBYTES_SRAM2_RETENTION                                            \
-	PWR_CR3_RRS_1 /*!< Only 4 Kbytes of SRAM2 is powered by the low-power  \
+#define PWR_4KBYTES_SRAM2_RETENTION                                                                                    \
+	PWR_CR3_RRS_1 /*!< Only 4 Kbytes of SRAM2 is powered by the low-power                                          \
 			 regulator in Standby mode */
 #else
-#define PWR_FULL_SRAM2_RETENTION                                               \
-	PWR_CR3_RRS /*!< Full SRAM2 is powered by the low-power regulator in   \
+#define PWR_FULL_SRAM2_RETENTION                                                                                       \
+	PWR_CR3_RRS /*!< Full SRAM2 is powered by the low-power regulator in                                           \
 		       Standby mode */
 #endif		    /* PWR_CR3_RRS_1 */
 /**
@@ -405,77 +375,69 @@ enable: VDDA versus 2.2 V. */
  * @brief Disable the PVM1 Extended Interrupt Line.
  * @retval None
  */
-#define __HAL_PWR_PVM1_EXTI_DISABLE_IT()                                       \
-	CLEAR_BIT(EXTI->IMR2, PWR_EXTI_LINE_PVM1)
+#define __HAL_PWR_PVM1_EXTI_DISABLE_IT() CLEAR_BIT(EXTI->IMR2, PWR_EXTI_LINE_PVM1)
 
 /**
  * @brief Enable the PVM1 Event Line.
  * @retval None
  */
-#define __HAL_PWR_PVM1_EXTI_ENABLE_EVENT()                                     \
-	SET_BIT(EXTI->EMR2, PWR_EVENT_LINE_PVM1)
+#define __HAL_PWR_PVM1_EXTI_ENABLE_EVENT() SET_BIT(EXTI->EMR2, PWR_EVENT_LINE_PVM1)
 
 /**
  * @brief Disable the PVM1 Event Line.
  * @retval None
  */
-#define __HAL_PWR_PVM1_EXTI_DISABLE_EVENT()                                    \
-	CLEAR_BIT(EXTI->EMR2, PWR_EVENT_LINE_PVM1)
+#define __HAL_PWR_PVM1_EXTI_DISABLE_EVENT() CLEAR_BIT(EXTI->EMR2, PWR_EVENT_LINE_PVM1)
 
 /**
  * @brief Enable the PVM1 Extended Interrupt Rising Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM1_EXTI_ENABLE_RISING_EDGE()                               \
-	SET_BIT(EXTI->RTSR2, PWR_EXTI_LINE_PVM1)
+#define __HAL_PWR_PVM1_EXTI_ENABLE_RISING_EDGE() SET_BIT(EXTI->RTSR2, PWR_EXTI_LINE_PVM1)
 
 /**
  * @brief Disable the PVM1 Extended Interrupt Rising Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM1_EXTI_DISABLE_RISING_EDGE()                              \
-	CLEAR_BIT(EXTI->RTSR2, PWR_EXTI_LINE_PVM1)
+#define __HAL_PWR_PVM1_EXTI_DISABLE_RISING_EDGE() CLEAR_BIT(EXTI->RTSR2, PWR_EXTI_LINE_PVM1)
 
 /**
  * @brief Enable the PVM1 Extended Interrupt Falling Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM1_EXTI_ENABLE_FALLING_EDGE()                              \
-	SET_BIT(EXTI->FTSR2, PWR_EXTI_LINE_PVM1)
+#define __HAL_PWR_PVM1_EXTI_ENABLE_FALLING_EDGE() SET_BIT(EXTI->FTSR2, PWR_EXTI_LINE_PVM1)
 
 /**
  * @brief Disable the PVM1 Extended Interrupt Falling Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM1_EXTI_DISABLE_FALLING_EDGE()                             \
-	CLEAR_BIT(EXTI->FTSR2, PWR_EXTI_LINE_PVM1)
+#define __HAL_PWR_PVM1_EXTI_DISABLE_FALLING_EDGE() CLEAR_BIT(EXTI->FTSR2, PWR_EXTI_LINE_PVM1)
 
 /**
  * @brief  PVM1 EXTI line configuration: set rising & falling edge trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM1_EXTI_ENABLE_RISING_FALLING_EDGE()                       \
-	do {                                                                   \
-		__HAL_PWR_PVM1_EXTI_ENABLE_RISING_EDGE();                      \
-		__HAL_PWR_PVM1_EXTI_ENABLE_FALLING_EDGE();                     \
+#define __HAL_PWR_PVM1_EXTI_ENABLE_RISING_FALLING_EDGE()                                                               \
+	do {                                                                                                           \
+		__HAL_PWR_PVM1_EXTI_ENABLE_RISING_EDGE();                                                              \
+		__HAL_PWR_PVM1_EXTI_ENABLE_FALLING_EDGE();                                                             \
 	} while (0)
 
 /**
  * @brief Disable the PVM1 Extended Interrupt Rising & Falling Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM1_EXTI_DISABLE_RISING_FALLING_EDGE()                      \
-	do {                                                                   \
-		__HAL_PWR_PVM1_EXTI_DISABLE_RISING_EDGE();                     \
-		__HAL_PWR_PVM1_EXTI_DISABLE_FALLING_EDGE();                    \
+#define __HAL_PWR_PVM1_EXTI_DISABLE_RISING_FALLING_EDGE()                                                              \
+	do {                                                                                                           \
+		__HAL_PWR_PVM1_EXTI_DISABLE_RISING_EDGE();                                                             \
+		__HAL_PWR_PVM1_EXTI_DISABLE_FALLING_EDGE();                                                            \
 	} while (0)
 
 /**
  * @brief  Generate a Software interrupt on selected EXTI line.
  * @retval None
  */
-#define __HAL_PWR_PVM1_EXTI_GENERATE_SWIT()                                    \
-	SET_BIT(EXTI->SWIER2, PWR_EXTI_LINE_PVM1)
+#define __HAL_PWR_PVM1_EXTI_GENERATE_SWIT() SET_BIT(EXTI->SWIER2, PWR_EXTI_LINE_PVM1)
 
 /**
  * @brief Check whether the specified PVM1 EXTI interrupt flag is set or not.
@@ -487,8 +449,7 @@ enable: VDDA versus 2.2 V. */
  * @brief Clear the PVM1 EXTI flag.
  * @retval None
  */
-#define __HAL_PWR_PVM1_EXTI_CLEAR_FLAG()                                       \
-	WRITE_REG(EXTI->PR2, PWR_EXTI_LINE_PVM1)
+#define __HAL_PWR_PVM1_EXTI_CLEAR_FLAG() WRITE_REG(EXTI->PR2, PWR_EXTI_LINE_PVM1)
 
 #endif /* PWR_CR2_PVME1 */
 
@@ -503,77 +464,69 @@ enable: VDDA versus 2.2 V. */
  * @brief Disable the PVM2 Extended Interrupt Line.
  * @retval None
  */
-#define __HAL_PWR_PVM2_EXTI_DISABLE_IT()                                       \
-	CLEAR_BIT(EXTI->IMR2, PWR_EXTI_LINE_PVM2)
+#define __HAL_PWR_PVM2_EXTI_DISABLE_IT() CLEAR_BIT(EXTI->IMR2, PWR_EXTI_LINE_PVM2)
 
 /**
  * @brief Enable the PVM2 Event Line.
  * @retval None
  */
-#define __HAL_PWR_PVM2_EXTI_ENABLE_EVENT()                                     \
-	SET_BIT(EXTI->EMR2, PWR_EVENT_LINE_PVM2)
+#define __HAL_PWR_PVM2_EXTI_ENABLE_EVENT() SET_BIT(EXTI->EMR2, PWR_EVENT_LINE_PVM2)
 
 /**
  * @brief Disable the PVM2 Event Line.
  * @retval None
  */
-#define __HAL_PWR_PVM2_EXTI_DISABLE_EVENT()                                    \
-	CLEAR_BIT(EXTI->EMR2, PWR_EVENT_LINE_PVM2)
+#define __HAL_PWR_PVM2_EXTI_DISABLE_EVENT() CLEAR_BIT(EXTI->EMR2, PWR_EVENT_LINE_PVM2)
 
 /**
  * @brief Enable the PVM2 Extended Interrupt Rising Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM2_EXTI_ENABLE_RISING_EDGE()                               \
-	SET_BIT(EXTI->RTSR2, PWR_EXTI_LINE_PVM2)
+#define __HAL_PWR_PVM2_EXTI_ENABLE_RISING_EDGE() SET_BIT(EXTI->RTSR2, PWR_EXTI_LINE_PVM2)
 
 /**
  * @brief Disable the PVM2 Extended Interrupt Rising Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM2_EXTI_DISABLE_RISING_EDGE()                              \
-	CLEAR_BIT(EXTI->RTSR2, PWR_EXTI_LINE_PVM2)
+#define __HAL_PWR_PVM2_EXTI_DISABLE_RISING_EDGE() CLEAR_BIT(EXTI->RTSR2, PWR_EXTI_LINE_PVM2)
 
 /**
  * @brief Enable the PVM2 Extended Interrupt Falling Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM2_EXTI_ENABLE_FALLING_EDGE()                              \
-	SET_BIT(EXTI->FTSR2, PWR_EXTI_LINE_PVM2)
+#define __HAL_PWR_PVM2_EXTI_ENABLE_FALLING_EDGE() SET_BIT(EXTI->FTSR2, PWR_EXTI_LINE_PVM2)
 
 /**
  * @brief Disable the PVM2 Extended Interrupt Falling Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM2_EXTI_DISABLE_FALLING_EDGE()                             \
-	CLEAR_BIT(EXTI->FTSR2, PWR_EXTI_LINE_PVM2)
+#define __HAL_PWR_PVM2_EXTI_DISABLE_FALLING_EDGE() CLEAR_BIT(EXTI->FTSR2, PWR_EXTI_LINE_PVM2)
 
 /**
  * @brief  PVM2 EXTI line configuration: set rising & falling edge trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM2_EXTI_ENABLE_RISING_FALLING_EDGE()                       \
-	do {                                                                   \
-		__HAL_PWR_PVM2_EXTI_ENABLE_RISING_EDGE();                      \
-		__HAL_PWR_PVM2_EXTI_ENABLE_FALLING_EDGE();                     \
+#define __HAL_PWR_PVM2_EXTI_ENABLE_RISING_FALLING_EDGE()                                                               \
+	do {                                                                                                           \
+		__HAL_PWR_PVM2_EXTI_ENABLE_RISING_EDGE();                                                              \
+		__HAL_PWR_PVM2_EXTI_ENABLE_FALLING_EDGE();                                                             \
 	} while (0)
 
 /**
  * @brief Disable the PVM2 Extended Interrupt Rising & Falling Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM2_EXTI_DISABLE_RISING_FALLING_EDGE()                      \
-	do {                                                                   \
-		__HAL_PWR_PVM2_EXTI_DISABLE_RISING_EDGE();                     \
-		__HAL_PWR_PVM2_EXTI_DISABLE_FALLING_EDGE();                    \
+#define __HAL_PWR_PVM2_EXTI_DISABLE_RISING_FALLING_EDGE()                                                              \
+	do {                                                                                                           \
+		__HAL_PWR_PVM2_EXTI_DISABLE_RISING_EDGE();                                                             \
+		__HAL_PWR_PVM2_EXTI_DISABLE_FALLING_EDGE();                                                            \
 	} while (0)
 
 /**
  * @brief  Generate a Software interrupt on selected EXTI line.
  * @retval None
  */
-#define __HAL_PWR_PVM2_EXTI_GENERATE_SWIT()                                    \
-	SET_BIT(EXTI->SWIER2, PWR_EXTI_LINE_PVM2)
+#define __HAL_PWR_PVM2_EXTI_GENERATE_SWIT() SET_BIT(EXTI->SWIER2, PWR_EXTI_LINE_PVM2)
 
 /**
  * @brief Check whether the specified PVM2 EXTI interrupt flag is set or not.
@@ -585,8 +538,7 @@ enable: VDDA versus 2.2 V. */
  * @brief Clear the PVM2 EXTI flag.
  * @retval None
  */
-#define __HAL_PWR_PVM2_EXTI_CLEAR_FLAG()                                       \
-	WRITE_REG(EXTI->PR2, PWR_EXTI_LINE_PVM2)
+#define __HAL_PWR_PVM2_EXTI_CLEAR_FLAG() WRITE_REG(EXTI->PR2, PWR_EXTI_LINE_PVM2)
 
 #endif /* PWR_CR2_PVME2 */
 
@@ -600,77 +552,69 @@ enable: VDDA versus 2.2 V. */
  * @brief Disable the PVM3 Extended Interrupt Line.
  * @retval None
  */
-#define __HAL_PWR_PVM3_EXTI_DISABLE_IT()                                       \
-	CLEAR_BIT(EXTI->IMR2, PWR_EXTI_LINE_PVM3)
+#define __HAL_PWR_PVM3_EXTI_DISABLE_IT() CLEAR_BIT(EXTI->IMR2, PWR_EXTI_LINE_PVM3)
 
 /**
  * @brief Enable the PVM3 Event Line.
  * @retval None
  */
-#define __HAL_PWR_PVM3_EXTI_ENABLE_EVENT()                                     \
-	SET_BIT(EXTI->EMR2, PWR_EVENT_LINE_PVM3)
+#define __HAL_PWR_PVM3_EXTI_ENABLE_EVENT() SET_BIT(EXTI->EMR2, PWR_EVENT_LINE_PVM3)
 
 /**
  * @brief Disable the PVM3 Event Line.
  * @retval None
  */
-#define __HAL_PWR_PVM3_EXTI_DISABLE_EVENT()                                    \
-	CLEAR_BIT(EXTI->EMR2, PWR_EVENT_LINE_PVM3)
+#define __HAL_PWR_PVM3_EXTI_DISABLE_EVENT() CLEAR_BIT(EXTI->EMR2, PWR_EVENT_LINE_PVM3)
 
 /**
  * @brief Enable the PVM3 Extended Interrupt Rising Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM3_EXTI_ENABLE_RISING_EDGE()                               \
-	SET_BIT(EXTI->RTSR2, PWR_EXTI_LINE_PVM3)
+#define __HAL_PWR_PVM3_EXTI_ENABLE_RISING_EDGE() SET_BIT(EXTI->RTSR2, PWR_EXTI_LINE_PVM3)
 
 /**
  * @brief Disable the PVM3 Extended Interrupt Rising Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM3_EXTI_DISABLE_RISING_EDGE()                              \
-	CLEAR_BIT(EXTI->RTSR2, PWR_EXTI_LINE_PVM3)
+#define __HAL_PWR_PVM3_EXTI_DISABLE_RISING_EDGE() CLEAR_BIT(EXTI->RTSR2, PWR_EXTI_LINE_PVM3)
 
 /**
  * @brief Enable the PVM3 Extended Interrupt Falling Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM3_EXTI_ENABLE_FALLING_EDGE()                              \
-	SET_BIT(EXTI->FTSR2, PWR_EXTI_LINE_PVM3)
+#define __HAL_PWR_PVM3_EXTI_ENABLE_FALLING_EDGE() SET_BIT(EXTI->FTSR2, PWR_EXTI_LINE_PVM3)
 
 /**
  * @brief Disable the PVM3 Extended Interrupt Falling Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM3_EXTI_DISABLE_FALLING_EDGE()                             \
-	CLEAR_BIT(EXTI->FTSR2, PWR_EXTI_LINE_PVM3)
+#define __HAL_PWR_PVM3_EXTI_DISABLE_FALLING_EDGE() CLEAR_BIT(EXTI->FTSR2, PWR_EXTI_LINE_PVM3)
 
 /**
  * @brief  PVM3 EXTI line configuration: set rising & falling edge trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM3_EXTI_ENABLE_RISING_FALLING_EDGE()                       \
-	do {                                                                   \
-		__HAL_PWR_PVM3_EXTI_ENABLE_RISING_EDGE();                      \
-		__HAL_PWR_PVM3_EXTI_ENABLE_FALLING_EDGE();                     \
+#define __HAL_PWR_PVM3_EXTI_ENABLE_RISING_FALLING_EDGE()                                                               \
+	do {                                                                                                           \
+		__HAL_PWR_PVM3_EXTI_ENABLE_RISING_EDGE();                                                              \
+		__HAL_PWR_PVM3_EXTI_ENABLE_FALLING_EDGE();                                                             \
 	} while (0)
 
 /**
  * @brief Disable the PVM3 Extended Interrupt Rising & Falling Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM3_EXTI_DISABLE_RISING_FALLING_EDGE()                      \
-	do {                                                                   \
-		__HAL_PWR_PVM3_EXTI_DISABLE_RISING_EDGE();                     \
-		__HAL_PWR_PVM3_EXTI_DISABLE_FALLING_EDGE();                    \
+#define __HAL_PWR_PVM3_EXTI_DISABLE_RISING_FALLING_EDGE()                                                              \
+	do {                                                                                                           \
+		__HAL_PWR_PVM3_EXTI_DISABLE_RISING_EDGE();                                                             \
+		__HAL_PWR_PVM3_EXTI_DISABLE_FALLING_EDGE();                                                            \
 	} while (0)
 
 /**
  * @brief  Generate a Software interrupt on selected EXTI line.
  * @retval None
  */
-#define __HAL_PWR_PVM3_EXTI_GENERATE_SWIT()                                    \
-	SET_BIT(EXTI->SWIER2, PWR_EXTI_LINE_PVM3)
+#define __HAL_PWR_PVM3_EXTI_GENERATE_SWIT() SET_BIT(EXTI->SWIER2, PWR_EXTI_LINE_PVM3)
 
 /**
  * @brief Check whether the specified PVM3 EXTI interrupt flag is set or not.
@@ -682,8 +626,7 @@ enable: VDDA versus 2.2 V. */
  * @brief Clear the PVM3 EXTI flag.
  * @retval None
  */
-#define __HAL_PWR_PVM3_EXTI_CLEAR_FLAG()                                       \
-	WRITE_REG(EXTI->PR2, PWR_EXTI_LINE_PVM3)
+#define __HAL_PWR_PVM3_EXTI_CLEAR_FLAG() WRITE_REG(EXTI->PR2, PWR_EXTI_LINE_PVM3)
 
 /**
  * @brief Enable the PVM4 Extended Interrupt Line.
@@ -695,77 +638,69 @@ enable: VDDA versus 2.2 V. */
  * @brief Disable the PVM4 Extended Interrupt Line.
  * @retval None
  */
-#define __HAL_PWR_PVM4_EXTI_DISABLE_IT()                                       \
-	CLEAR_BIT(EXTI->IMR2, PWR_EXTI_LINE_PVM4)
+#define __HAL_PWR_PVM4_EXTI_DISABLE_IT() CLEAR_BIT(EXTI->IMR2, PWR_EXTI_LINE_PVM4)
 
 /**
  * @brief Enable the PVM4 Event Line.
  * @retval None
  */
-#define __HAL_PWR_PVM4_EXTI_ENABLE_EVENT()                                     \
-	SET_BIT(EXTI->EMR2, PWR_EVENT_LINE_PVM4)
+#define __HAL_PWR_PVM4_EXTI_ENABLE_EVENT() SET_BIT(EXTI->EMR2, PWR_EVENT_LINE_PVM4)
 
 /**
  * @brief Disable the PVM4 Event Line.
  * @retval None
  */
-#define __HAL_PWR_PVM4_EXTI_DISABLE_EVENT()                                    \
-	CLEAR_BIT(EXTI->EMR2, PWR_EVENT_LINE_PVM4)
+#define __HAL_PWR_PVM4_EXTI_DISABLE_EVENT() CLEAR_BIT(EXTI->EMR2, PWR_EVENT_LINE_PVM4)
 
 /**
  * @brief Enable the PVM4 Extended Interrupt Rising Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM4_EXTI_ENABLE_RISING_EDGE()                               \
-	SET_BIT(EXTI->RTSR2, PWR_EXTI_LINE_PVM4)
+#define __HAL_PWR_PVM4_EXTI_ENABLE_RISING_EDGE() SET_BIT(EXTI->RTSR2, PWR_EXTI_LINE_PVM4)
 
 /**
  * @brief Disable the PVM4 Extended Interrupt Rising Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM4_EXTI_DISABLE_RISING_EDGE()                              \
-	CLEAR_BIT(EXTI->RTSR2, PWR_EXTI_LINE_PVM4)
+#define __HAL_PWR_PVM4_EXTI_DISABLE_RISING_EDGE() CLEAR_BIT(EXTI->RTSR2, PWR_EXTI_LINE_PVM4)
 
 /**
  * @brief Enable the PVM4 Extended Interrupt Falling Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM4_EXTI_ENABLE_FALLING_EDGE()                              \
-	SET_BIT(EXTI->FTSR2, PWR_EXTI_LINE_PVM4)
+#define __HAL_PWR_PVM4_EXTI_ENABLE_FALLING_EDGE() SET_BIT(EXTI->FTSR2, PWR_EXTI_LINE_PVM4)
 
 /**
  * @brief Disable the PVM4 Extended Interrupt Falling Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM4_EXTI_DISABLE_FALLING_EDGE()                             \
-	CLEAR_BIT(EXTI->FTSR2, PWR_EXTI_LINE_PVM4)
+#define __HAL_PWR_PVM4_EXTI_DISABLE_FALLING_EDGE() CLEAR_BIT(EXTI->FTSR2, PWR_EXTI_LINE_PVM4)
 
 /**
  * @brief  PVM4 EXTI line configuration: set rising & falling edge trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM4_EXTI_ENABLE_RISING_FALLING_EDGE()                       \
-	do {                                                                   \
-		__HAL_PWR_PVM4_EXTI_ENABLE_RISING_EDGE();                      \
-		__HAL_PWR_PVM4_EXTI_ENABLE_FALLING_EDGE();                     \
+#define __HAL_PWR_PVM4_EXTI_ENABLE_RISING_FALLING_EDGE()                                                               \
+	do {                                                                                                           \
+		__HAL_PWR_PVM4_EXTI_ENABLE_RISING_EDGE();                                                              \
+		__HAL_PWR_PVM4_EXTI_ENABLE_FALLING_EDGE();                                                             \
 	} while (0)
 
 /**
  * @brief Disable the PVM4 Extended Interrupt Rising & Falling Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM4_EXTI_DISABLE_RISING_FALLING_EDGE()                      \
-	do {                                                                   \
-		__HAL_PWR_PVM4_EXTI_DISABLE_RISING_EDGE();                     \
-		__HAL_PWR_PVM4_EXTI_DISABLE_FALLING_EDGE();                    \
+#define __HAL_PWR_PVM4_EXTI_DISABLE_RISING_FALLING_EDGE()                                                              \
+	do {                                                                                                           \
+		__HAL_PWR_PVM4_EXTI_DISABLE_RISING_EDGE();                                                             \
+		__HAL_PWR_PVM4_EXTI_DISABLE_FALLING_EDGE();                                                            \
 	} while (0)
 
 /**
  * @brief  Generate a Software interrupt on selected EXTI line.
  * @retval None
  */
-#define __HAL_PWR_PVM4_EXTI_GENERATE_SWIT()                                    \
-	SET_BIT(EXTI->SWIER2, PWR_EXTI_LINE_PVM4)
+#define __HAL_PWR_PVM4_EXTI_GENERATE_SWIT() SET_BIT(EXTI->SWIER2, PWR_EXTI_LINE_PVM4)
 
 /**
  * @brief Check whether or not the specified PVM4 EXTI interrupt flag is set.
@@ -777,8 +712,7 @@ enable: VDDA versus 2.2 V. */
  * @brief Clear the PVM4 EXTI flag.
  * @retval None
  */
-#define __HAL_PWR_PVM4_EXTI_CLEAR_FLAG()                                       \
-	WRITE_REG(EXTI->PR2, PWR_EXTI_LINE_PVM4)
+#define __HAL_PWR_PVM4_EXTI_CLEAR_FLAG() WRITE_REG(EXTI->PR2, PWR_EXTI_LINE_PVM4)
 
 /**
  * @brief Configure the main internal regulator output voltage.
@@ -795,13 +729,13 @@ enable: VDDA versus 2.2 V. */
  * resetting.
  * @retval None
  */
-#define __HAL_PWR_VOLTAGESCALING_CONFIG(__REGULATOR__)                         \
-	do {                                                                   \
-		__IO uint32_t tmpreg;                                          \
-		MODIFY_REG(PWR->CR1, PWR_CR1_VOS, (__REGULATOR__));            \
-		/* Delay after an RCC peripheral clock enabling */             \
-		tmpreg = READ_BIT(PWR->CR1, PWR_CR1_VOS);                      \
-		UNUSED(tmpreg);                                                \
+#define __HAL_PWR_VOLTAGESCALING_CONFIG(__REGULATOR__)                                                                 \
+	do {                                                                                                           \
+		__IO uint32_t tmpreg;                                                                                  \
+		MODIFY_REG(PWR->CR1, PWR_CR1_VOS, (__REGULATOR__));                                                    \
+		/* Delay after an RCC peripheral clock enabling */                                                     \
+		tmpreg = READ_BIT(PWR->CR1, PWR_CR1_VOS);                                                              \
+		UNUSED(tmpreg);                                                                                        \
 	} while (0)
 
 /**
@@ -813,114 +747,85 @@ enable: VDDA versus 2.2 V. */
  * @{
  */
 
-#define IS_PWR_WAKEUP_PIN(PIN)                                                 \
-	(((PIN) == PWR_WAKEUP_PIN1) || ((PIN) == PWR_WAKEUP_PIN2) ||           \
-	 ((PIN) == PWR_WAKEUP_PIN3) || ((PIN) == PWR_WAKEUP_PIN4) ||           \
-	 ((PIN) == PWR_WAKEUP_PIN5) || ((PIN) == PWR_WAKEUP_PIN1_HIGH) ||      \
-	 ((PIN) == PWR_WAKEUP_PIN2_HIGH) || ((PIN) == PWR_WAKEUP_PIN3_HIGH) || \
-	 ((PIN) == PWR_WAKEUP_PIN4_HIGH) || ((PIN) == PWR_WAKEUP_PIN5_HIGH) || \
-	 ((PIN) == PWR_WAKEUP_PIN1_LOW) || ((PIN) == PWR_WAKEUP_PIN2_LOW) ||   \
-	 ((PIN) == PWR_WAKEUP_PIN3_LOW) || ((PIN) == PWR_WAKEUP_PIN4_LOW) ||   \
-	 ((PIN) == PWR_WAKEUP_PIN5_LOW))
+#define IS_PWR_WAKEUP_PIN(PIN)                                                                                         \
+	(((PIN) == PWR_WAKEUP_PIN1) || ((PIN) == PWR_WAKEUP_PIN2) || ((PIN) == PWR_WAKEUP_PIN3) ||                     \
+	 ((PIN) == PWR_WAKEUP_PIN4) || ((PIN) == PWR_WAKEUP_PIN5) || ((PIN) == PWR_WAKEUP_PIN1_HIGH) ||                \
+	 ((PIN) == PWR_WAKEUP_PIN2_HIGH) || ((PIN) == PWR_WAKEUP_PIN3_HIGH) || ((PIN) == PWR_WAKEUP_PIN4_HIGH) ||      \
+	 ((PIN) == PWR_WAKEUP_PIN5_HIGH) || ((PIN) == PWR_WAKEUP_PIN1_LOW) || ((PIN) == PWR_WAKEUP_PIN2_LOW) ||        \
+	 ((PIN) == PWR_WAKEUP_PIN3_LOW) || ((PIN) == PWR_WAKEUP_PIN4_LOW) || ((PIN) == PWR_WAKEUP_PIN5_LOW))
 
-#if defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) ||    \
-    defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx) ||    \
-    defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
+#if defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) || defined(STM32L486xx) ||                    \
+    defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx) ||                    \
+    defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||                    \
     defined(STM32L4S7xx) || defined(STM32L4S9xx)
-#define IS_PWR_PVM_TYPE(TYPE)                                                  \
-	(((TYPE) == PWR_PVM_1) || ((TYPE) == PWR_PVM_2) ||                     \
-	 ((TYPE) == PWR_PVM_3) || ((TYPE) == PWR_PVM_4))
+#define IS_PWR_PVM_TYPE(TYPE)                                                                                          \
+	(((TYPE) == PWR_PVM_1) || ((TYPE) == PWR_PVM_2) || ((TYPE) == PWR_PVM_3) || ((TYPE) == PWR_PVM_4))
 #elif defined(STM32L471xx)
-#define IS_PWR_PVM_TYPE(TYPE)                                                  \
-	(((TYPE) == PWR_PVM_2) || ((TYPE) == PWR_PVM_3) ||                     \
-	 ((TYPE) == PWR_PVM_4))
+#define IS_PWR_PVM_TYPE(TYPE) (((TYPE) == PWR_PVM_2) || ((TYPE) == PWR_PVM_3) || ((TYPE) == PWR_PVM_4))
 #endif
 
-#if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L433xx) ||    \
-    defined(STM32L443xx) || defined(STM32L452xx) || defined(STM32L462xx)
-#define IS_PWR_PVM_TYPE(TYPE)                                                  \
-	(((TYPE) == PWR_PVM_1) || ((TYPE) == PWR_PVM_3) ||                     \
-	 ((TYPE) == PWR_PVM_4))
-#elif defined(STM32L431xx) || defined(STM32L432xx) || defined(STM32L442xx) ||  \
-    defined(STM32L451xx)
+#if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L433xx) || defined(STM32L443xx) ||                    \
+    defined(STM32L452xx) || defined(STM32L462xx)
+#define IS_PWR_PVM_TYPE(TYPE) (((TYPE) == PWR_PVM_1) || ((TYPE) == PWR_PVM_3) || ((TYPE) == PWR_PVM_4))
+#elif defined(STM32L431xx) || defined(STM32L432xx) || defined(STM32L442xx) || defined(STM32L451xx)
 #define IS_PWR_PVM_TYPE(TYPE) (((TYPE) == PWR_PVM_3) || ((TYPE) == PWR_PVM_4))
 #endif
 
-#define IS_PWR_PVM_MODE(MODE)                                                  \
-	(((MODE) == PWR_PVM_MODE_NORMAL) ||                                    \
-	 ((MODE) == PWR_PVM_MODE_IT_RISING) ||                                 \
-	 ((MODE) == PWR_PVM_MODE_IT_FALLING) ||                                \
-	 ((MODE) == PWR_PVM_MODE_IT_RISING_FALLING) ||                         \
-	 ((MODE) == PWR_PVM_MODE_EVENT_RISING) ||                              \
-	 ((MODE) == PWR_PVM_MODE_EVENT_FALLING) ||                             \
+#define IS_PWR_PVM_MODE(MODE)                                                                                          \
+	(((MODE) == PWR_PVM_MODE_NORMAL) || ((MODE) == PWR_PVM_MODE_IT_RISING) ||                                      \
+	 ((MODE) == PWR_PVM_MODE_IT_FALLING) || ((MODE) == PWR_PVM_MODE_IT_RISING_FALLING) ||                          \
+	 ((MODE) == PWR_PVM_MODE_EVENT_RISING) || ((MODE) == PWR_PVM_MODE_EVENT_FALLING) ||                            \
 	 ((MODE) == PWR_PVM_MODE_EVENT_RISING_FALLING))
 
 #if defined(PWR_CR5_R1MODE)
-#define IS_PWR_VOLTAGE_SCALING_RANGE(RANGE)                                    \
-	(((RANGE) == PWR_REGULATOR_VOLTAGE_SCALE1_BOOST) ||                    \
-	 ((RANGE) == PWR_REGULATOR_VOLTAGE_SCALE1) ||                          \
+#define IS_PWR_VOLTAGE_SCALING_RANGE(RANGE)                                                                            \
+	(((RANGE) == PWR_REGULATOR_VOLTAGE_SCALE1_BOOST) || ((RANGE) == PWR_REGULATOR_VOLTAGE_SCALE1) ||               \
 	 ((RANGE) == PWR_REGULATOR_VOLTAGE_SCALE2))
 #else
-#define IS_PWR_VOLTAGE_SCALING_RANGE(RANGE)                                    \
-	(((RANGE) == PWR_REGULATOR_VOLTAGE_SCALE1) ||                          \
-	 ((RANGE) == PWR_REGULATOR_VOLTAGE_SCALE2))
+#define IS_PWR_VOLTAGE_SCALING_RANGE(RANGE)                                                                            \
+	(((RANGE) == PWR_REGULATOR_VOLTAGE_SCALE1) || ((RANGE) == PWR_REGULATOR_VOLTAGE_SCALE2))
 #endif
 
-#define IS_PWR_BATTERY_RESISTOR_SELECT(RESISTOR)                               \
-	(((RESISTOR) == PWR_BATTERY_CHARGING_RESISTOR_5) ||                    \
-	 ((RESISTOR) == PWR_BATTERY_CHARGING_RESISTOR_1_5))
+#define IS_PWR_BATTERY_RESISTOR_SELECT(RESISTOR)                                                                       \
+	(((RESISTOR) == PWR_BATTERY_CHARGING_RESISTOR_5) || ((RESISTOR) == PWR_BATTERY_CHARGING_RESISTOR_1_5))
 
-#define IS_PWR_BATTERY_CHARGING(CHARGING)                                      \
-	(((CHARGING) == PWR_BATTERY_CHARGING_DISABLE) ||                       \
-	 ((CHARGING) == PWR_BATTERY_CHARGING_ENABLE))
+#define IS_PWR_BATTERY_CHARGING(CHARGING)                                                                              \
+	(((CHARGING) == PWR_BATTERY_CHARGING_DISABLE) || ((CHARGING) == PWR_BATTERY_CHARGING_ENABLE))
 
-#define IS_PWR_GPIO_BIT_NUMBER(BIT_NUMBER)                                     \
-	(((BIT_NUMBER) & GPIO_PIN_MASK) != (uint32_t)0x00)
+#define IS_PWR_GPIO_BIT_NUMBER(BIT_NUMBER) (((BIT_NUMBER) & GPIO_PIN_MASK) != (uint32_t)0x00)
 
 #if defined(STM32L412xx) || defined(STM32L422xx)
-#define IS_PWR_GPIO(GPIO)                                                      \
-	(((GPIO) == PWR_GPIO_A) || ((GPIO) == PWR_GPIO_B) ||                   \
-	 ((GPIO) == PWR_GPIO_C) || ((GPIO) == PWR_GPIO_D) ||                   \
+#define IS_PWR_GPIO(GPIO)                                                                                              \
+	(((GPIO) == PWR_GPIO_A) || ((GPIO) == PWR_GPIO_B) || ((GPIO) == PWR_GPIO_C) || ((GPIO) == PWR_GPIO_D) ||       \
 	 ((GPIO) == PWR_GPIO_H))
-#elif defined(STM32L431xx) || defined(STM32L433xx) || defined(STM32L443xx) ||  \
-    defined(STM32L451xx) || defined(STM32L452xx) || defined(STM32L462xx)
-#define IS_PWR_GPIO(GPIO)                                                      \
-	(((GPIO) == PWR_GPIO_A) || ((GPIO) == PWR_GPIO_B) ||                   \
-	 ((GPIO) == PWR_GPIO_C) || ((GPIO) == PWR_GPIO_D) ||                   \
+#elif defined(STM32L431xx) || defined(STM32L433xx) || defined(STM32L443xx) || defined(STM32L451xx) ||                  \
+    defined(STM32L452xx) || defined(STM32L462xx)
+#define IS_PWR_GPIO(GPIO)                                                                                              \
+	(((GPIO) == PWR_GPIO_A) || ((GPIO) == PWR_GPIO_B) || ((GPIO) == PWR_GPIO_C) || ((GPIO) == PWR_GPIO_D) ||       \
 	 ((GPIO) == PWR_GPIO_E) || ((GPIO) == PWR_GPIO_H))
 #elif defined(STM32L432xx) || defined(STM32L442xx)
-#define IS_PWR_GPIO(GPIO)                                                      \
-	(((GPIO) == PWR_GPIO_A) || ((GPIO) == PWR_GPIO_B) ||                   \
-	 ((GPIO) == PWR_GPIO_C) || ((GPIO) == PWR_GPIO_H))
-#elif defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) ||  \
-    defined(STM32L485xx) || defined(STM32L486xx)
-#define IS_PWR_GPIO(GPIO)                                                      \
-	(((GPIO) == PWR_GPIO_A) || ((GPIO) == PWR_GPIO_B) ||                   \
-	 ((GPIO) == PWR_GPIO_C) || ((GPIO) == PWR_GPIO_D) ||                   \
-	 ((GPIO) == PWR_GPIO_E) || ((GPIO) == PWR_GPIO_F) ||                   \
-	 ((GPIO) == PWR_GPIO_G) || ((GPIO) == PWR_GPIO_H))
-#elif defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) ||  \
-    defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||    \
-    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) ||    \
-    defined(STM32L4S9xx)
-#define IS_PWR_GPIO(GPIO)                                                      \
-	(((GPIO) == PWR_GPIO_A) || ((GPIO) == PWR_GPIO_B) ||                   \
-	 ((GPIO) == PWR_GPIO_C) || ((GPIO) == PWR_GPIO_D) ||                   \
-	 ((GPIO) == PWR_GPIO_E) || ((GPIO) == PWR_GPIO_F) ||                   \
-	 ((GPIO) == PWR_GPIO_G) || ((GPIO) == PWR_GPIO_H) ||                   \
+#define IS_PWR_GPIO(GPIO)                                                                                              \
+	(((GPIO) == PWR_GPIO_A) || ((GPIO) == PWR_GPIO_B) || ((GPIO) == PWR_GPIO_C) || ((GPIO) == PWR_GPIO_H))
+#elif defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) ||                  \
+    defined(STM32L486xx)
+#define IS_PWR_GPIO(GPIO)                                                                                              \
+	(((GPIO) == PWR_GPIO_A) || ((GPIO) == PWR_GPIO_B) || ((GPIO) == PWR_GPIO_C) || ((GPIO) == PWR_GPIO_D) ||       \
+	 ((GPIO) == PWR_GPIO_E) || ((GPIO) == PWR_GPIO_F) || ((GPIO) == PWR_GPIO_G) || ((GPIO) == PWR_GPIO_H))
+#elif defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx) ||                  \
+    defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||                    \
+    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#define IS_PWR_GPIO(GPIO)                                                                                              \
+	(((GPIO) == PWR_GPIO_A) || ((GPIO) == PWR_GPIO_B) || ((GPIO) == PWR_GPIO_C) || ((GPIO) == PWR_GPIO_D) ||       \
+	 ((GPIO) == PWR_GPIO_E) || ((GPIO) == PWR_GPIO_F) || ((GPIO) == PWR_GPIO_G) || ((GPIO) == PWR_GPIO_H) ||       \
 	 ((GPIO) == PWR_GPIO_I))
 #endif
 
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx)
-#define IS_PWR_SRAM2_RETENTION(SRAM2)                                          \
-	(((SRAM2) == PWR_NO_SRAM2_RETENTION) ||                                \
-	 ((SRAM2) == PWR_FULL_SRAM2_RETENTION) ||                              \
+#define IS_PWR_SRAM2_RETENTION(SRAM2)                                                                                  \
+	(((SRAM2) == PWR_NO_SRAM2_RETENTION) || ((SRAM2) == PWR_FULL_SRAM2_RETENTION) ||                               \
 	 ((SRAM2) == PWR_4KBYTES_SRAM2_RETENTION))
 #else
-#define IS_PWR_SRAM2_RETENTION(SRAM2)                                          \
-	(((SRAM2) == PWR_NO_SRAM2_RETENTION) ||                                \
-	 ((SRAM2) == PWR_FULL_SRAM2_RETENTION))
+#define IS_PWR_SRAM2_RETENTION(SRAM2) (((SRAM2) == PWR_NO_SRAM2_RETENTION) || ((SRAM2) == PWR_FULL_SRAM2_RETENTION))
 #endif
 
 /**
@@ -951,14 +856,10 @@ void HAL_PWREx_DisableVddIO2(void);
 #endif /* PWR_CR2_IOSV */
 void HAL_PWREx_EnableInternalWakeUpLine(void);
 void HAL_PWREx_DisableInternalWakeUpLine(void);
-HAL_StatusTypeDef HAL_PWREx_EnableGPIOPullUp(uint32_t GPIO,
-					     uint32_t GPIONumber);
-HAL_StatusTypeDef HAL_PWREx_DisableGPIOPullUp(uint32_t GPIO,
-					      uint32_t GPIONumber);
-HAL_StatusTypeDef HAL_PWREx_EnableGPIOPullDown(uint32_t GPIO,
-					       uint32_t GPIONumber);
-HAL_StatusTypeDef HAL_PWREx_DisableGPIOPullDown(uint32_t GPIO,
-						uint32_t GPIONumber);
+HAL_StatusTypeDef HAL_PWREx_EnableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber);
+HAL_StatusTypeDef HAL_PWREx_DisableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber);
+HAL_StatusTypeDef HAL_PWREx_EnableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumber);
+HAL_StatusTypeDef HAL_PWREx_DisableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumber);
 void HAL_PWREx_EnablePullUpPullDownConfig(void);
 void HAL_PWREx_DisablePullUpPullDownConfig(void);
 void HAL_PWREx_EnableSRAM2ContentRetention(void);

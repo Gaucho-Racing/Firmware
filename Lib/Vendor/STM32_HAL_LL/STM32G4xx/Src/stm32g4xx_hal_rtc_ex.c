@@ -164,9 +164,7 @@
  *               compatibility, this parameter is required.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp(RTC_HandleTypeDef *hrtc,
-					 uint32_t TimeStampEdge,
-					 uint32_t RTC_TimeStampPin)
+HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp(RTC_HandleTypeDef *hrtc, uint32_t TimeStampEdge, uint32_t RTC_TimeStampPin)
 {
 	/* Check the parameters */
 	assert_param(IS_TIMESTAMP_EDGE(TimeStampEdge));
@@ -217,9 +215,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp(RTC_HandleTypeDef *hrtc,
  *               compatibility, this parameter is required.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp_IT(RTC_HandleTypeDef *hrtc,
-					    uint32_t TimeStampEdge,
-					    uint32_t RTC_TimeStampPin)
+HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp_IT(RTC_HandleTypeDef *hrtc, uint32_t TimeStampEdge, uint32_t RTC_TimeStampPin)
 {
 	/* Check the parameters */
 	assert_param(IS_TIMESTAMP_EDGE(TimeStampEdge));
@@ -235,8 +231,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp_IT(RTC_HandleTypeDef *hrtc,
 	__HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
 
 	/* Get the RTC_CR register and clear the bits to be configured */
-	CLEAR_BIT(hrtc->Instance->CR,
-		  (RTC_CR_TSEDGE | RTC_CR_TSE | RTC_CR_TSIE));
+	CLEAR_BIT(hrtc->Instance->CR, (RTC_CR_TSEDGE | RTC_CR_TSE | RTC_CR_TSIE));
 
 	/* Configure the Time Stamp TSEDGE before Enable bit to avoid unwanted
 	 * TSF setting. */
@@ -284,8 +279,7 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateTimeStamp(RTC_HandleTypeDef *hrtc)
 
 	/* In case of interrupt mode is used, the interrupt source must disabled
 	 */
-	CLEAR_BIT(hrtc->Instance->CR,
-		  (RTC_CR_TSEDGE | RTC_CR_TSE | RTC_CR_TSIE));
+	CLEAR_BIT(hrtc->Instance->CR, (RTC_CR_TSEDGE | RTC_CR_TSE | RTC_CR_TSIE));
 
 	__HAL_RTC_TIMESTAMP_EXTI_CLEAR_IT();
 
@@ -372,10 +366,8 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateInternalTimeStamp(RTC_HandleTypeDef *hrtc)
  *             @arg RTC_FORMAT_BCD: BCD data format
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_GetTimeStamp(RTC_HandleTypeDef *hrtc,
-					 RTC_TimeTypeDef *sTimeStamp,
-					 RTC_DateTypeDef *sTimeStampDate,
-					 uint32_t Format)
+HAL_StatusTypeDef HAL_RTCEx_GetTimeStamp(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTimeStamp,
+					 RTC_DateTypeDef *sTimeStampDate, uint32_t Format)
 {
 	uint32_t tmptime, tmpdate;
 
@@ -383,54 +375,35 @@ HAL_StatusTypeDef HAL_RTCEx_GetTimeStamp(RTC_HandleTypeDef *hrtc,
 	assert_param(IS_RTC_FORMAT(Format));
 
 	/* Get the TimeStamp time and date registers values */
-	tmptime =
-	    (uint32_t)READ_BIT(hrtc->Instance->TSTR, RTC_TR_RESERVED_MASK);
-	tmpdate =
-	    (uint32_t)READ_BIT(hrtc->Instance->TSDR, RTC_DR_RESERVED_MASK);
+	tmptime = (uint32_t)READ_BIT(hrtc->Instance->TSTR, RTC_TR_RESERVED_MASK);
+	tmpdate = (uint32_t)READ_BIT(hrtc->Instance->TSDR, RTC_DR_RESERVED_MASK);
 
 	/* Fill the Time structure fields with the read parameters */
-	sTimeStamp->Hours = (uint8_t)((tmptime & (RTC_TSTR_HT | RTC_TSTR_HU)) >>
-				      RTC_TSTR_HU_Pos);
-	sTimeStamp->Minutes =
-	    (uint8_t)((tmptime & (RTC_TSTR_MNT | RTC_TSTR_MNU)) >>
-		      RTC_TSTR_MNU_Pos);
-	sTimeStamp->Seconds =
-	    (uint8_t)((tmptime & (RTC_TSTR_ST | RTC_TSTR_SU)) >>
-		      RTC_TSTR_SU_Pos);
-	sTimeStamp->TimeFormat =
-	    (uint8_t)((tmptime & (RTC_TSTR_PM)) >> RTC_TSTR_PM_Pos);
-	sTimeStamp->SubSeconds =
-	    (uint32_t)READ_BIT(hrtc->Instance->TSSSR, RTC_TSSSR_SS);
+	sTimeStamp->Hours = (uint8_t)((tmptime & (RTC_TSTR_HT | RTC_TSTR_HU)) >> RTC_TSTR_HU_Pos);
+	sTimeStamp->Minutes = (uint8_t)((tmptime & (RTC_TSTR_MNT | RTC_TSTR_MNU)) >> RTC_TSTR_MNU_Pos);
+	sTimeStamp->Seconds = (uint8_t)((tmptime & (RTC_TSTR_ST | RTC_TSTR_SU)) >> RTC_TSTR_SU_Pos);
+	sTimeStamp->TimeFormat = (uint8_t)((tmptime & (RTC_TSTR_PM)) >> RTC_TSTR_PM_Pos);
+	sTimeStamp->SubSeconds = (uint32_t)READ_BIT(hrtc->Instance->TSSSR, RTC_TSSSR_SS);
 
 	/* Fill the Date structure fields with the read parameters */
 	sTimeStampDate->Year = 0U;
-	sTimeStampDate->Month =
-	    (uint8_t)((tmpdate & (RTC_TSDR_MT | RTC_TSDR_MU)) >>
-		      RTC_TSDR_MU_Pos);
-	sTimeStampDate->Date =
-	    (uint8_t)((tmpdate & (RTC_TSDR_DT | RTC_TSDR_DU)) >>
-		      RTC_TSDR_DU_Pos);
-	sTimeStampDate->WeekDay =
-	    (uint8_t)((tmpdate & (RTC_TSDR_WDU)) >> RTC_TSDR_WDU_Pos);
+	sTimeStampDate->Month = (uint8_t)((tmpdate & (RTC_TSDR_MT | RTC_TSDR_MU)) >> RTC_TSDR_MU_Pos);
+	sTimeStampDate->Date = (uint8_t)((tmpdate & (RTC_TSDR_DT | RTC_TSDR_DU)) >> RTC_TSDR_DU_Pos);
+	sTimeStampDate->WeekDay = (uint8_t)((tmpdate & (RTC_TSDR_WDU)) >> RTC_TSDR_WDU_Pos);
 
 	/* Check the input parameters format */
 	if (Format == RTC_FORMAT_BIN) {
 		/* Convert the TimeStamp structure parameters to Binary format
 		 */
 		sTimeStamp->Hours = (uint8_t)RTC_Bcd2ToByte(sTimeStamp->Hours);
-		sTimeStamp->Minutes =
-		    (uint8_t)RTC_Bcd2ToByte(sTimeStamp->Minutes);
-		sTimeStamp->Seconds =
-		    (uint8_t)RTC_Bcd2ToByte(sTimeStamp->Seconds);
+		sTimeStamp->Minutes = (uint8_t)RTC_Bcd2ToByte(sTimeStamp->Minutes);
+		sTimeStamp->Seconds = (uint8_t)RTC_Bcd2ToByte(sTimeStamp->Seconds);
 
 		/* Convert the DateTimeStamp structure parameters to Binary
 		 * format */
-		sTimeStampDate->Month =
-		    (uint8_t)RTC_Bcd2ToByte(sTimeStampDate->Month);
-		sTimeStampDate->Date =
-		    (uint8_t)RTC_Bcd2ToByte(sTimeStampDate->Date);
-		sTimeStampDate->WeekDay =
-		    (uint8_t)RTC_Bcd2ToByte(sTimeStampDate->WeekDay);
+		sTimeStampDate->Month = (uint8_t)RTC_Bcd2ToByte(sTimeStampDate->Month);
+		sTimeStampDate->Date = (uint8_t)RTC_Bcd2ToByte(sTimeStampDate->Date);
+		sTimeStampDate->WeekDay = (uint8_t)RTC_Bcd2ToByte(sTimeStampDate->WeekDay);
 	}
 
 	/* Clear the TIMESTAMP Flags */
@@ -483,8 +456,7 @@ void HAL_RTCEx_TimeStampIRQHandler(RTC_HandleTypeDef *hrtc)
 			/* ITSF flag is set, TSF must be cleared together with
 			 * ITSF (this will clear timestamp time and date
 			 * registers) */
-			WRITE_REG(hrtc->Instance->SCR,
-				  (RTC_SCR_CITSF | RTC_SCR_CTSF));
+			WRITE_REG(hrtc->Instance->SCR, (RTC_SCR_CITSF | RTC_SCR_CTSF));
 		} else {
 			/* Clear the TIMESTAMP interrupt pending bit (this will
 			 * clear timestamp time and date registers) */
@@ -502,8 +474,7 @@ void HAL_RTCEx_TimeStampIRQHandler(RTC_HandleTypeDef *hrtc)
  * @param  Timeout Timeout duration
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_PollForTimeStampEvent(RTC_HandleTypeDef *hrtc,
-						  uint32_t Timeout)
+HAL_StatusTypeDef HAL_RTCEx_PollForTimeStampEvent(RTC_HandleTypeDef *hrtc, uint32_t Timeout)
 {
 	uint32_t tickstart = HAL_GetTick();
 
@@ -519,8 +490,7 @@ HAL_StatusTypeDef HAL_RTCEx_PollForTimeStampEvent(RTC_HandleTypeDef *hrtc,
 		}
 
 		if (Timeout != HAL_MAX_DELAY) {
-			if (((HAL_GetTick() - tickstart) > Timeout) ||
-			    (Timeout == 0U)) {
+			if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
 				hrtc->State = HAL_RTC_STATE_TIMEOUT;
 
 				/* Process Unlocked */
@@ -562,9 +532,7 @@ HAL_StatusTypeDef HAL_RTCEx_PollForTimeStampEvent(RTC_HandleTypeDef *hrtc,
  * @param  WakeUpClock Wake up clock
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer(RTC_HandleTypeDef *hrtc,
-					   uint32_t WakeUpCounter,
-					   uint32_t WakeUpClock)
+HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer(RTC_HandleTypeDef *hrtc, uint32_t WakeUpCounter, uint32_t WakeUpClock)
 {
 	uint32_t tickstart;
 
@@ -634,9 +602,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer(RTC_HandleTypeDef *hrtc,
  * @param  WakeUpClock Wake up clock
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer_IT(RTC_HandleTypeDef *hrtc,
-					      uint32_t WakeUpCounter,
-					      uint32_t WakeUpClock)
+HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer_IT(RTC_HandleTypeDef *hrtc, uint32_t WakeUpCounter, uint32_t WakeUpClock)
 {
 	uint32_t tickstart;
 
@@ -816,15 +782,13 @@ __weak void HAL_RTCEx_WakeUpTimerEventCallback(RTC_HandleTypeDef *hrtc)
  * @param  Timeout Timeout duration
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_PollForWakeUpTimerEvent(RTC_HandleTypeDef *hrtc,
-						    uint32_t Timeout)
+HAL_StatusTypeDef HAL_RTCEx_PollForWakeUpTimerEvent(RTC_HandleTypeDef *hrtc, uint32_t Timeout)
 {
 	uint32_t tickstart = HAL_GetTick();
 
 	while (READ_BIT(hrtc->Instance->SR, RTC_SR_WUTF) == 0U) {
 		if (Timeout != HAL_MAX_DELAY) {
-			if (((HAL_GetTick() - tickstart) > Timeout) ||
-			    (Timeout == 0U)) {
+			if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
 				hrtc->State = HAL_RTC_STATE_TIMEOUT;
 
 				/* Process Unlocked */
@@ -899,10 +863,8 @@ HAL_StatusTypeDef HAL_RTCEx_PollForWakeUpTimerEvent(RTC_HandleTypeDef *hrtc,
  *          This parameter can be one any value from 0 to 0x000001FF.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_SetSmoothCalib(RTC_HandleTypeDef *hrtc,
-					   uint32_t SmoothCalibPeriod,
-					   uint32_t SmoothCalibPlusPulses,
-					   uint32_t SmoothCalibMinusPulsesValue)
+HAL_StatusTypeDef HAL_RTCEx_SetSmoothCalib(RTC_HandleTypeDef *hrtc, uint32_t SmoothCalibPeriod,
+					   uint32_t SmoothCalibPlusPulses, uint32_t SmoothCalibMinusPulsesValue)
 {
 	uint32_t tickstart;
 
@@ -942,11 +904,8 @@ HAL_StatusTypeDef HAL_RTCEx_SetSmoothCalib(RTC_HandleTypeDef *hrtc,
 	}
 
 	/* Configure the Smooth calibration settings */
-	MODIFY_REG(
-	    hrtc->Instance->CALR,
-	    (RTC_CALR_CALP | RTC_CALR_CALW8 | RTC_CALR_CALW16 | RTC_CALR_CALM),
-	    (uint32_t)(SmoothCalibPeriod | SmoothCalibPlusPulses |
-		       SmoothCalibMinusPulsesValue));
+	MODIFY_REG(hrtc->Instance->CALR, (RTC_CALR_CALP | RTC_CALR_CALW8 | RTC_CALR_CALW16 | RTC_CALR_CALM),
+		   (uint32_t)(SmoothCalibPeriod | SmoothCalibPlusPulses | SmoothCalibMinusPulsesValue));
 
 	/* Enable the write protection for RTC registers */
 	__HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
@@ -973,9 +932,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetSmoothCalib(RTC_HandleTypeDef *hrtc,
  *          This parameter can be one any value from 0 to 0x7FFF.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_SetSynchroShift(RTC_HandleTypeDef *hrtc,
-					    uint32_t ShiftAdd1S,
-					    uint32_t ShiftSubFS)
+HAL_StatusTypeDef HAL_RTCEx_SetSynchroShift(RTC_HandleTypeDef *hrtc, uint32_t ShiftAdd1S, uint32_t ShiftSubFS)
 {
 	uint32_t tickstart;
 
@@ -1011,8 +968,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetSynchroShift(RTC_HandleTypeDef *hrtc,
 	/* Check if the reference clock detection is disabled */
 	if (READ_BIT(hrtc->Instance->CR, RTC_CR_REFCKON) == 0U) {
 		/* Configure the Shift settings */
-		MODIFY_REG(hrtc->Instance->SHIFTR, RTC_SHIFTR_SUBFS,
-			   (uint32_t)(ShiftSubFS) | (uint32_t)(ShiftAdd1S));
+		MODIFY_REG(hrtc->Instance->SHIFTR, RTC_SHIFTR_SUBFS, (uint32_t)(ShiftSubFS) | (uint32_t)(ShiftAdd1S));
 
 		/* If  RTC_CR_BYPSHAD bit = 0, wait for synchro else this check
 		 * is not needed */
@@ -1066,8 +1022,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetSynchroShift(RTC_HandleTypeDef *hrtc,
  *             @arg RTC_CALIBOUTPUT_1HZ: A signal has a regular waveform at 1Hz.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_SetCalibrationOutPut(RTC_HandleTypeDef *hrtc,
-						 uint32_t CalibOutput)
+HAL_StatusTypeDef HAL_RTCEx_SetCalibrationOutPut(RTC_HandleTypeDef *hrtc, uint32_t CalibOutput)
 {
 	/* Check the parameters */
 	assert_param(IS_RTC_CALIB_OUTPUT(CalibOutput));
@@ -1314,15 +1269,13 @@ __weak void HAL_RTCEx_AlarmBEventCallback(RTC_HandleTypeDef *hrtc)
  * @param  Timeout Timeout duration
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_PollForAlarmBEvent(RTC_HandleTypeDef *hrtc,
-					       uint32_t Timeout)
+HAL_StatusTypeDef HAL_RTCEx_PollForAlarmBEvent(RTC_HandleTypeDef *hrtc, uint32_t Timeout)
 {
 	uint32_t tickstart = HAL_GetTick();
 
 	while (READ_BIT(hrtc->Instance->SR, RTC_SR_ALRBF) == 0U) {
 		if (Timeout != HAL_MAX_DELAY) {
-			if (((HAL_GetTick() - tickstart) > Timeout) ||
-			    (Timeout == 0U)) {
+			if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
 				hrtc->State = HAL_RTC_STATE_TIMEOUT;
 
 				/* Process Unlocked */
@@ -1380,8 +1333,7 @@ avoid erase, enable the NoErase field on the TAMP_TAMPCR register.
  * @param  sTamper Pointer to Tamper Structure.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_SetTamper(RTC_HandleTypeDef *hrtc,
-				      RTC_TamperTypeDef *sTamper)
+HAL_StatusTypeDef HAL_RTCEx_SetTamper(RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef *sTamper)
 {
 	uint32_t tmpreg;
 
@@ -1392,27 +1344,22 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper(RTC_HandleTypeDef *hrtc,
 	assert_param(IS_RTC_TAMPER_MASKFLAG_STATE(sTamper->MaskFlag));
 	assert_param(IS_RTC_TAMPER_FILTER(sTamper->Filter));
 	assert_param(IS_RTC_TAMPER_SAMPLING_FREQ(sTamper->SamplingFrequency));
-	assert_param(
-	    IS_RTC_TAMPER_PRECHARGE_DURATION(sTamper->PrechargeDuration));
+	assert_param(IS_RTC_TAMPER_PRECHARGE_DURATION(sTamper->PrechargeDuration));
 	assert_param(IS_RTC_TAMPER_PULLUP_STATE(sTamper->TamperPullUp));
-	assert_param(IS_RTC_TAMPER_TIMESTAMPONTAMPER_DETECTION(
-	    sTamper->TimeStampOnTamperDetection));
+	assert_param(IS_RTC_TAMPER_TIMESTAMPONTAMPER_DETECTION(sTamper->TimeStampOnTamperDetection));
 	/* Trigger and Filter have exclusive configurations */
-	assert_param(((sTamper->Filter != RTC_TAMPERFILTER_DISABLE) &&
-		      ((sTamper->Trigger == RTC_TAMPERTRIGGER_LOWLEVEL) ||
-		       (sTamper->Trigger == RTC_TAMPERTRIGGER_HIGHLEVEL))) ||
-		     ((sTamper->Filter == RTC_TAMPERFILTER_DISABLE) &&
-		      ((sTamper->Trigger == RTC_TAMPERTRIGGER_RISINGEDGE) ||
-		       (sTamper->Trigger == RTC_TAMPERTRIGGER_FALLINGEDGE))));
+	assert_param(
+	    ((sTamper->Filter != RTC_TAMPERFILTER_DISABLE) &&
+	     ((sTamper->Trigger == RTC_TAMPERTRIGGER_LOWLEVEL) || (sTamper->Trigger == RTC_TAMPERTRIGGER_HIGHLEVEL))) ||
+	    ((sTamper->Filter == RTC_TAMPERFILTER_DISABLE) && ((sTamper->Trigger == RTC_TAMPERTRIGGER_RISINGEDGE) ||
+							       (sTamper->Trigger == RTC_TAMPERTRIGGER_FALLINGEDGE))));
 
 	/* Configuration register 2 */
 	tmpreg = READ_REG(TAMP->CR2);
-	tmpreg &= ~((sTamper->Tamper << TAMP_CR2_TAMP1TRG_Pos) |
-		    (sTamper->Tamper << TAMP_CR2_TAMP1MSK_Pos) |
+	tmpreg &= ~((sTamper->Tamper << TAMP_CR2_TAMP1TRG_Pos) | (sTamper->Tamper << TAMP_CR2_TAMP1MSK_Pos) |
 		    (sTamper->Tamper << TAMP_CR2_TAMP1NOERASE_Pos));
 
-	if ((sTamper->Trigger == RTC_TAMPERTRIGGER_HIGHLEVEL) ||
-	    (sTamper->Trigger == RTC_TAMPERTRIGGER_FALLINGEDGE)) {
+	if ((sTamper->Trigger == RTC_TAMPERTRIGGER_HIGHLEVEL) || (sTamper->Trigger == RTC_TAMPERTRIGGER_FALLINGEDGE)) {
 		tmpreg |= (sTamper->Tamper << TAMP_CR2_TAMP1TRG_Pos);
 	}
 
@@ -1427,15 +1374,12 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper(RTC_HandleTypeDef *hrtc,
 
 	/* Filter control register */
 	WRITE_REG(TAMP->FLTCR,
-		  (sTamper->Filter | sTamper->SamplingFrequency |
-		   sTamper->PrechargeDuration | sTamper->TamperPullUp));
+		  (sTamper->Filter | sTamper->SamplingFrequency | sTamper->PrechargeDuration | sTamper->TamperPullUp));
 
 	/* timestamp on tamper */
-	if (READ_BIT(hrtc->Instance->CR, RTC_CR_TAMPTS) !=
-	    (sTamper->TimeStampOnTamperDetection)) {
+	if (READ_BIT(hrtc->Instance->CR, RTC_CR_TAMPTS) != (sTamper->TimeStampOnTamperDetection)) {
 		__HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
-		MODIFY_REG(hrtc->Instance->CR, RTC_CR_TAMPTS,
-			   sTamper->TimeStampOnTamperDetection);
+		MODIFY_REG(hrtc->Instance->CR, RTC_CR_TAMPTS, sTamper->TimeStampOnTamperDetection);
 		__HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
 	}
 
@@ -1451,8 +1395,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper(RTC_HandleTypeDef *hrtc,
  * @param  sTamper Pointer to Tamper Structure.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_SetTamper_IT(RTC_HandleTypeDef *hrtc,
-					 RTC_TamperTypeDef *sTamper)
+HAL_StatusTypeDef HAL_RTCEx_SetTamper_IT(RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef *sTamper)
 {
 	uint32_t tmpreg;
 
@@ -1463,20 +1406,16 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper_IT(RTC_HandleTypeDef *hrtc,
 	assert_param(IS_RTC_TAMPER_MASKFLAG_STATE(sTamper->MaskFlag));
 	assert_param(IS_RTC_TAMPER_FILTER(sTamper->Filter));
 	assert_param(IS_RTC_TAMPER_SAMPLING_FREQ(sTamper->SamplingFrequency));
-	assert_param(
-	    IS_RTC_TAMPER_PRECHARGE_DURATION(sTamper->PrechargeDuration));
+	assert_param(IS_RTC_TAMPER_PRECHARGE_DURATION(sTamper->PrechargeDuration));
 	assert_param(IS_RTC_TAMPER_PULLUP_STATE(sTamper->TamperPullUp));
-	assert_param(IS_RTC_TAMPER_TIMESTAMPONTAMPER_DETECTION(
-	    sTamper->TimeStampOnTamperDetection));
+	assert_param(IS_RTC_TAMPER_TIMESTAMPONTAMPER_DETECTION(sTamper->TimeStampOnTamperDetection));
 
 	/* Configuration register 2 */
 	tmpreg = READ_REG(TAMP->CR2);
-	tmpreg &= ~((sTamper->Tamper << TAMP_CR2_TAMP1TRG_Pos) |
-		    (sTamper->Tamper << TAMP_CR2_TAMP1MSK_Pos) |
+	tmpreg &= ~((sTamper->Tamper << TAMP_CR2_TAMP1TRG_Pos) | (sTamper->Tamper << TAMP_CR2_TAMP1MSK_Pos) |
 		    (sTamper->Tamper << TAMP_CR2_TAMP1NOERASE_Pos));
 
-	if ((sTamper->Trigger == RTC_TAMPERTRIGGER_HIGHLEVEL) ||
-	    (sTamper->Trigger == RTC_TAMPERTRIGGER_FALLINGEDGE)) {
+	if ((sTamper->Trigger == RTC_TAMPERTRIGGER_HIGHLEVEL) || (sTamper->Trigger == RTC_TAMPERTRIGGER_FALLINGEDGE)) {
 		tmpreg |= (sTamper->Tamper << TAMP_CR2_TAMP1TRG_Pos);
 	}
 
@@ -1491,15 +1430,12 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper_IT(RTC_HandleTypeDef *hrtc,
 
 	/* Filter control register */
 	WRITE_REG(TAMP->FLTCR,
-		  (sTamper->Filter | sTamper->SamplingFrequency |
-		   sTamper->PrechargeDuration | sTamper->TamperPullUp));
+		  (sTamper->Filter | sTamper->SamplingFrequency | sTamper->PrechargeDuration | sTamper->TamperPullUp));
 
 	/* timestamp on tamper */
-	if (READ_BIT(hrtc->Instance->CR, RTC_CR_TAMPTS) !=
-	    sTamper->TimeStampOnTamperDetection) {
+	if (READ_BIT(hrtc->Instance->CR, RTC_CR_TAMPTS) != sTamper->TimeStampOnTamperDetection) {
 		__HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
-		MODIFY_REG(hrtc->Instance->CR, RTC_CR_TAMPTS,
-			   sTamper->TimeStampOnTamperDetection);
+		MODIFY_REG(hrtc->Instance->CR, RTC_CR_TAMPTS, sTamper->TimeStampOnTamperDetection);
 		__HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
 	}
 
@@ -1526,8 +1462,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper_IT(RTC_HandleTypeDef *hrtc,
  *         @arg RTC_TAMPER_2
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_DeactivateTamper(RTC_HandleTypeDef *hrtc,
-					     uint32_t Tamper)
+HAL_StatusTypeDef HAL_RTCEx_DeactivateTamper(RTC_HandleTypeDef *hrtc, uint32_t Tamper)
 {
 	UNUSED(hrtc);
 
@@ -1537,8 +1472,7 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateTamper(RTC_HandleTypeDef *hrtc,
 	CLEAR_BIT(TAMP->CR1, Tamper);
 
 	/* Clear tamper mask/noerase/trigger configuration */
-	CLEAR_BIT(TAMP->CR2, ((Tamper << TAMP_CR2_TAMP1TRG_Pos) |
-			      (Tamper << TAMP_CR2_TAMP1MSK_Pos) |
+	CLEAR_BIT(TAMP->CR2, ((Tamper << TAMP_CR2_TAMP1TRG_Pos) | (Tamper << TAMP_CR2_TAMP1MSK_Pos) |
 			      (Tamper << TAMP_CR2_TAMP1NOERASE_Pos)));
 
 	/* Clear tamper interrupt mode configuration */
@@ -1564,9 +1498,7 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateTamper(RTC_HandleTypeDef *hrtc,
  * @param  Timeout Timeout duration
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_PollForTamperEvent(RTC_HandleTypeDef *hrtc,
-					       uint32_t Tamper,
-					       uint32_t Timeout)
+HAL_StatusTypeDef HAL_RTCEx_PollForTamperEvent(RTC_HandleTypeDef *hrtc, uint32_t Tamper, uint32_t Timeout)
 {
 	uint32_t tickstart = HAL_GetTick();
 
@@ -1577,8 +1509,7 @@ HAL_StatusTypeDef HAL_RTCEx_PollForTamperEvent(RTC_HandleTypeDef *hrtc,
 	/* Get the status of the Interrupt */
 	while (READ_BIT(TAMP->SR, Tamper) != Tamper) {
 		if (Timeout != HAL_MAX_DELAY) {
-			if (((HAL_GetTick() - tickstart) > Timeout) ||
-			    (Timeout == 0U)) {
+			if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
 				return HAL_TIMEOUT;
 			}
 		}
@@ -1596,22 +1527,17 @@ HAL_StatusTypeDef HAL_RTCEx_PollForTamperEvent(RTC_HandleTypeDef *hrtc,
  * @param  sIntTamper Pointer to Internal Tamper Structure.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_RTCEx_SetInternalTamper(RTC_HandleTypeDef *hrtc,
-			    RTC_InternalTamperTypeDef *sIntTamper)
+HAL_StatusTypeDef HAL_RTCEx_SetInternalTamper(RTC_HandleTypeDef *hrtc, RTC_InternalTamperTypeDef *sIntTamper)
 {
 
 	/* Check the parameters */
 	assert_param(IS_RTC_INTERNAL_TAMPER(sIntTamper->IntTamper));
-	assert_param(IS_RTC_TAMPER_TIMESTAMPONTAMPER_DETECTION(
-	    sIntTamper->TimeStampOnTamperDetection));
+	assert_param(IS_RTC_TAMPER_TIMESTAMPONTAMPER_DETECTION(sIntTamper->TimeStampOnTamperDetection));
 
 	/* timestamp on internal tamper */
-	if (READ_BIT(hrtc->Instance->CR, RTC_CR_TAMPTS) !=
-	    sIntTamper->TimeStampOnTamperDetection) {
+	if (READ_BIT(hrtc->Instance->CR, RTC_CR_TAMPTS) != sIntTamper->TimeStampOnTamperDetection) {
 		__HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
-		MODIFY_REG(hrtc->Instance->CR, RTC_CR_TAMPTS,
-			   sIntTamper->TimeStampOnTamperDetection);
+		MODIFY_REG(hrtc->Instance->CR, RTC_CR_TAMPTS, sIntTamper->TimeStampOnTamperDetection);
 		__HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
 	}
 
@@ -1627,21 +1553,16 @@ HAL_RTCEx_SetInternalTamper(RTC_HandleTypeDef *hrtc,
  * @param  sIntTamper Pointer to Internal Tamper Structure.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_RTCEx_SetInternalTamper_IT(RTC_HandleTypeDef *hrtc,
-			       RTC_InternalTamperTypeDef *sIntTamper)
+HAL_StatusTypeDef HAL_RTCEx_SetInternalTamper_IT(RTC_HandleTypeDef *hrtc, RTC_InternalTamperTypeDef *sIntTamper)
 {
 	/* Check the parameters */
 	assert_param(IS_RTC_INTERNAL_TAMPER(sIntTamper->IntTamper));
-	assert_param(IS_RTC_TAMPER_TIMESTAMPONTAMPER_DETECTION(
-	    sIntTamper->TimeStampOnTamperDetection));
+	assert_param(IS_RTC_TAMPER_TIMESTAMPONTAMPER_DETECTION(sIntTamper->TimeStampOnTamperDetection));
 
 	/* timestamp on internal tamper */
-	if (READ_BIT(hrtc->Instance->CR, RTC_CR_TAMPTS) !=
-	    sIntTamper->TimeStampOnTamperDetection) {
+	if (READ_BIT(hrtc->Instance->CR, RTC_CR_TAMPTS) != sIntTamper->TimeStampOnTamperDetection) {
 		__HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
-		MODIFY_REG(hrtc->Instance->CR, RTC_CR_TAMPTS,
-			   sIntTamper->TimeStampOnTamperDetection);
+		MODIFY_REG(hrtc->Instance->CR, RTC_CR_TAMPTS, sIntTamper->TimeStampOnTamperDetection);
 		__HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
 	}
 
@@ -1665,8 +1586,7 @@ HAL_RTCEx_SetInternalTamper_IT(RTC_HandleTypeDef *hrtc,
  *          This parameter can be any combination of existing internal tampers.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_DeactivateInternalTamper(RTC_HandleTypeDef *hrtc,
-						     uint32_t IntTamper)
+HAL_StatusTypeDef HAL_RTCEx_DeactivateInternalTamper(RTC_HandleTypeDef *hrtc, uint32_t IntTamper)
 {
 	UNUSED(hrtc);
 
@@ -1696,9 +1616,7 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateInternalTamper(RTC_HandleTypeDef *hrtc,
  * @param  Timeout Timeout duration
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_PollForInternalTamperEvent(RTC_HandleTypeDef *hrtc,
-						       uint32_t IntTamper,
-						       uint32_t Timeout)
+HAL_StatusTypeDef HAL_RTCEx_PollForInternalTamperEvent(RTC_HandleTypeDef *hrtc, uint32_t IntTamper, uint32_t Timeout)
 {
 	UNUSED(hrtc);
 
@@ -1709,8 +1627,7 @@ HAL_StatusTypeDef HAL_RTCEx_PollForInternalTamperEvent(RTC_HandleTypeDef *hrtc,
 	/* Get the status of the Interrupt */
 	while (READ_BIT(TAMP->SR, IntTamper) != IntTamper) {
 		if (Timeout != HAL_MAX_DELAY) {
-			if (((HAL_GetTick() - tickstart) > Timeout) ||
-			    (Timeout == 0U)) {
+			if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
 				return HAL_TIMEOUT;
 			}
 		}
@@ -2069,8 +1986,7 @@ first HAL_RTC_Init() function.
  * @param  Data Data to be written in the specified TAMP Backup data register.
  * @retval None
  */
-void HAL_RTCEx_BKUPWrite(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister,
-			 uint32_t Data)
+void HAL_RTCEx_BKUPWrite(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister, uint32_t Data)
 {
 	uint32_t tmp;
 

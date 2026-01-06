@@ -176,8 +176,7 @@ de-initialization functions
  * @param  ExtTiming Pointer to SRAM extended mode timing structure
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SRAM_Init(SRAM_HandleTypeDef *hsram,
-				FMC_NORSRAM_TimingTypeDef *Timing,
+HAL_StatusTypeDef HAL_SRAM_Init(SRAM_HandleTypeDef *hsram, FMC_NORSRAM_TimingTypeDef *Timing,
 				FMC_NORSRAM_TimingTypeDef *ExtTiming)
 {
 	/* Check the SRAM handle parameter */
@@ -208,12 +207,10 @@ HAL_StatusTypeDef HAL_SRAM_Init(SRAM_HandleTypeDef *hsram,
 	(void)FMC_NORSRAM_Init(hsram->Instance, &(hsram->Init));
 
 	/* Initialize SRAM timing Interface */
-	(void)FMC_NORSRAM_Timing_Init(hsram->Instance, Timing,
-				      hsram->Init.NSBank);
+	(void)FMC_NORSRAM_Timing_Init(hsram->Instance, Timing, hsram->Init.NSBank);
 
 	/* Initialize SRAM extended mode timing Interface */
-	(void)FMC_NORSRAM_Extended_Timing_Init(hsram->Extended, ExtTiming,
-					       hsram->Init.NSBank,
+	(void)FMC_NORSRAM_Extended_Timing_Init(hsram->Extended, ExtTiming, hsram->Init.NSBank,
 					       hsram->Init.ExtendedMode);
 
 	/* Enable the NORSRAM device */
@@ -246,8 +243,7 @@ HAL_StatusTypeDef HAL_SRAM_DeInit(SRAM_HandleTypeDef *hsram)
 #endif /* USE_HAL_SRAM_REGISTER_CALLBACKS */
 
 	/* Configure the SRAM registers with their reset values */
-	(void)FMC_NORSRAM_DeInit(hsram->Instance, hsram->Extended,
-				 hsram->Init.NSBank);
+	(void)FMC_NORSRAM_DeInit(hsram->Instance, hsram->Extended, hsram->Init.NSBank);
 
 	/* Reset the SRAM controller state */
 	hsram->State = HAL_SRAM_STATE_RESET;
@@ -352,8 +348,7 @@ functions
  * @param  BufferSize Size of the buffer to read from memory
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SRAM_Read_8b(SRAM_HandleTypeDef *hsram,
-				   uint32_t *pAddress, uint8_t *pDstBuffer,
+HAL_StatusTypeDef HAL_SRAM_Read_8b(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint8_t *pDstBuffer,
 				   uint32_t BufferSize)
 {
 	uint32_t size;
@@ -362,8 +357,7 @@ HAL_StatusTypeDef HAL_SRAM_Read_8b(SRAM_HandleTypeDef *hsram,
 	HAL_SRAM_StateTypeDef state = hsram->State;
 
 	/* Check the SRAM controller state */
-	if ((state == HAL_SRAM_STATE_READY) ||
-	    (state == HAL_SRAM_STATE_PROTECTED)) {
+	if ((state == HAL_SRAM_STATE_READY) || (state == HAL_SRAM_STATE_PROTECTED)) {
 		/* Process Locked */
 		__HAL_LOCK(hsram);
 
@@ -398,8 +392,7 @@ HAL_StatusTypeDef HAL_SRAM_Read_8b(SRAM_HandleTypeDef *hsram,
  * @param  BufferSize Size of the buffer to write to memory
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SRAM_Write_8b(SRAM_HandleTypeDef *hsram,
-				    uint32_t *pAddress, uint8_t *pSrcBuffer,
+HAL_StatusTypeDef HAL_SRAM_Write_8b(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint8_t *pSrcBuffer,
 				    uint32_t BufferSize)
 {
 	uint32_t size;
@@ -442,8 +435,7 @@ HAL_StatusTypeDef HAL_SRAM_Write_8b(SRAM_HandleTypeDef *hsram,
  * @param  BufferSize Size of the buffer to read from memory
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SRAM_Read_16b(SRAM_HandleTypeDef *hsram,
-				    uint32_t *pAddress, uint16_t *pDstBuffer,
+HAL_StatusTypeDef HAL_SRAM_Read_16b(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint16_t *pDstBuffer,
 				    uint32_t BufferSize)
 {
 	uint32_t size;
@@ -453,8 +445,7 @@ HAL_StatusTypeDef HAL_SRAM_Read_16b(SRAM_HandleTypeDef *hsram,
 	HAL_SRAM_StateTypeDef state = hsram->State;
 
 	/* Check the SRAM controller state */
-	if ((state == HAL_SRAM_STATE_READY) ||
-	    (state == HAL_SRAM_STATE_PROTECTED)) {
+	if ((state == HAL_SRAM_STATE_READY) || (state == HAL_SRAM_STATE_PROTECTED)) {
 		/* Process Locked */
 		__HAL_LOCK(hsram);
 
@@ -468,8 +459,7 @@ HAL_StatusTypeDef HAL_SRAM_Read_16b(SRAM_HandleTypeDef *hsram,
 		for (size = BufferSize; size != limit; size -= 2U) {
 			*pdestbuff = (uint16_t)((*psramaddress) & 0x0000FFFFU);
 			pdestbuff++;
-			*pdestbuff =
-			    (uint16_t)(((*psramaddress) & 0xFFFF0000U) >> 16U);
+			*pdestbuff = (uint16_t)(((*psramaddress) & 0xFFFF0000U) >> 16U);
 			pdestbuff++;
 			psramaddress++;
 		}
@@ -500,8 +490,7 @@ HAL_StatusTypeDef HAL_SRAM_Read_16b(SRAM_HandleTypeDef *hsram,
  * @param  BufferSize Size of the buffer to write to memory
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SRAM_Write_16b(SRAM_HandleTypeDef *hsram,
-				     uint32_t *pAddress, uint16_t *pSrcBuffer,
+HAL_StatusTypeDef HAL_SRAM_Write_16b(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint16_t *pSrcBuffer,
 				     uint32_t BufferSize)
 {
 	uint32_t size;
@@ -531,8 +520,7 @@ HAL_StatusTypeDef HAL_SRAM_Write_16b(SRAM_HandleTypeDef *hsram,
 
 		/* Write last 16-bits if size is not 32-bits multiple */
 		if (limit != 0U) {
-			*psramaddress = ((uint32_t)(*psrcbuff) & 0x0000FFFFU) |
-					((*psramaddress) & 0xFFFF0000U);
+			*psramaddress = ((uint32_t)(*psrcbuff) & 0x0000FFFFU) | ((*psramaddress) & 0xFFFF0000U);
 		}
 
 		/* Update the SRAM controller state */
@@ -556,8 +544,7 @@ HAL_StatusTypeDef HAL_SRAM_Write_16b(SRAM_HandleTypeDef *hsram,
  * @param  BufferSize Size of the buffer to read from memory
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SRAM_Read_32b(SRAM_HandleTypeDef *hsram,
-				    uint32_t *pAddress, uint32_t *pDstBuffer,
+HAL_StatusTypeDef HAL_SRAM_Read_32b(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint32_t *pDstBuffer,
 				    uint32_t BufferSize)
 {
 	uint32_t size;
@@ -566,8 +553,7 @@ HAL_StatusTypeDef HAL_SRAM_Read_32b(SRAM_HandleTypeDef *hsram,
 	HAL_SRAM_StateTypeDef state = hsram->State;
 
 	/* Check the SRAM controller state */
-	if ((state == HAL_SRAM_STATE_READY) ||
-	    (state == HAL_SRAM_STATE_PROTECTED)) {
+	if ((state == HAL_SRAM_STATE_READY) || (state == HAL_SRAM_STATE_PROTECTED)) {
 		/* Process Locked */
 		__HAL_LOCK(hsram);
 
@@ -602,8 +588,7 @@ HAL_StatusTypeDef HAL_SRAM_Read_32b(SRAM_HandleTypeDef *hsram,
  * @param  BufferSize Size of the buffer to write to memory
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SRAM_Write_32b(SRAM_HandleTypeDef *hsram,
-				     uint32_t *pAddress, uint32_t *pSrcBuffer,
+HAL_StatusTypeDef HAL_SRAM_Write_32b(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint32_t *pSrcBuffer,
 				     uint32_t BufferSize)
 {
 	uint32_t size;
@@ -646,16 +631,14 @@ HAL_StatusTypeDef HAL_SRAM_Write_32b(SRAM_HandleTypeDef *hsram,
  * @param  BufferSize Size of the buffer to read from memory
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SRAM_Read_DMA(SRAM_HandleTypeDef *hsram,
-				    uint32_t *pAddress, uint32_t *pDstBuffer,
+HAL_StatusTypeDef HAL_SRAM_Read_DMA(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint32_t *pDstBuffer,
 				    uint32_t BufferSize)
 {
 	HAL_StatusTypeDef status;
 	HAL_SRAM_StateTypeDef state = hsram->State;
 
 	/* Check the SRAM controller state */
-	if ((state == HAL_SRAM_STATE_READY) ||
-	    (state == HAL_SRAM_STATE_PROTECTED)) {
+	if ((state == HAL_SRAM_STATE_READY) || (state == HAL_SRAM_STATE_PROTECTED)) {
 		/* Process Locked */
 		__HAL_LOCK(hsram);
 
@@ -671,9 +654,7 @@ HAL_StatusTypeDef HAL_SRAM_Read_DMA(SRAM_HandleTypeDef *hsram,
 		hsram->hdma->XferErrorCallback = SRAM_DMAError;
 
 		/* Enable the DMA Stream */
-		status = HAL_DMA_Start_IT(hsram->hdma, (uint32_t)pAddress,
-					  (uint32_t)pDstBuffer,
-					  (uint32_t)BufferSize);
+		status = HAL_DMA_Start_IT(hsram->hdma, (uint32_t)pAddress, (uint32_t)pDstBuffer, (uint32_t)BufferSize);
 
 		/* Process unlocked */
 		__HAL_UNLOCK(hsram);
@@ -693,8 +674,7 @@ HAL_StatusTypeDef HAL_SRAM_Read_DMA(SRAM_HandleTypeDef *hsram,
  * @param  BufferSize Size of the buffer to write to memory
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SRAM_Write_DMA(SRAM_HandleTypeDef *hsram,
-				     uint32_t *pAddress, uint32_t *pSrcBuffer,
+HAL_StatusTypeDef HAL_SRAM_Write_DMA(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint32_t *pSrcBuffer,
 				     uint32_t BufferSize)
 {
 	HAL_StatusTypeDef status;
@@ -712,9 +692,7 @@ HAL_StatusTypeDef HAL_SRAM_Write_DMA(SRAM_HandleTypeDef *hsram,
 		hsram->hdma->XferErrorCallback = SRAM_DMAError;
 
 		/* Enable the DMA Stream */
-		status =
-		    HAL_DMA_Start_IT(hsram->hdma, (uint32_t)pSrcBuffer,
-				     (uint32_t)pAddress, (uint32_t)BufferSize);
+		status = HAL_DMA_Start_IT(hsram->hdma, (uint32_t)pSrcBuffer, (uint32_t)pAddress, (uint32_t)BufferSize);
 
 		/* Process unlocked */
 		__HAL_UNLOCK(hsram);
@@ -737,10 +715,8 @@ HAL_StatusTypeDef HAL_SRAM_Write_DMA(SRAM_HandleTypeDef *hsram,
  * @param pCallback : pointer to the Callback function
  * @retval status
  */
-HAL_StatusTypeDef
-HAL_SRAM_RegisterCallback(SRAM_HandleTypeDef *hsram,
-			  HAL_SRAM_CallbackIDTypeDef CallbackId,
-			  pSRAM_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_SRAM_RegisterCallback(SRAM_HandleTypeDef *hsram, HAL_SRAM_CallbackIDTypeDef CallbackId,
+					    pSRAM_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 	HAL_SRAM_StateTypeDef state;
@@ -750,9 +726,7 @@ HAL_SRAM_RegisterCallback(SRAM_HandleTypeDef *hsram,
 	}
 
 	state = hsram->State;
-	if ((state == HAL_SRAM_STATE_READY) ||
-	    (state == HAL_SRAM_STATE_RESET) ||
-	    (state == HAL_SRAM_STATE_PROTECTED)) {
+	if ((state == HAL_SRAM_STATE_READY) || (state == HAL_SRAM_STATE_RESET) || (state == HAL_SRAM_STATE_PROTECTED)) {
 		switch (CallbackId) {
 			case HAL_SRAM_MSP_INIT_CB_ID:
 				hsram->MspInitCallback = pCallback;
@@ -787,16 +761,13 @@ HAL_SRAM_RegisterCallback(SRAM_HandleTypeDef *hsram,
  * ID
  * @retval status
  */
-HAL_StatusTypeDef
-HAL_SRAM_UnRegisterCallback(SRAM_HandleTypeDef *hsram,
-			    HAL_SRAM_CallbackIDTypeDef CallbackId)
+HAL_StatusTypeDef HAL_SRAM_UnRegisterCallback(SRAM_HandleTypeDef *hsram, HAL_SRAM_CallbackIDTypeDef CallbackId)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 	HAL_SRAM_StateTypeDef state;
 
 	state = hsram->State;
-	if ((state == HAL_SRAM_STATE_READY) ||
-	    (state == HAL_SRAM_STATE_PROTECTED)) {
+	if ((state == HAL_SRAM_STATE_READY) || (state == HAL_SRAM_STATE_PROTECTED)) {
 		switch (CallbackId) {
 			case HAL_SRAM_MSP_INIT_CB_ID:
 				hsram->MspInitCallback = HAL_SRAM_MspInit;
@@ -805,12 +776,10 @@ HAL_SRAM_UnRegisterCallback(SRAM_HandleTypeDef *hsram,
 				hsram->MspDeInitCallback = HAL_SRAM_MspDeInit;
 				break;
 			case HAL_SRAM_DMA_XFER_CPLT_CB_ID:
-				hsram->DmaXferCpltCallback =
-				    HAL_SRAM_DMA_XferCpltCallback;
+				hsram->DmaXferCpltCallback = HAL_SRAM_DMA_XferCpltCallback;
 				break;
 			case HAL_SRAM_DMA_XFER_ERR_CB_ID:
-				hsram->DmaXferErrorCallback =
-				    HAL_SRAM_DMA_XferErrorCallback;
+				hsram->DmaXferErrorCallback = HAL_SRAM_DMA_XferErrorCallback;
 				break;
 			default:
 				/* update return status */
@@ -851,10 +820,8 @@ HAL_SRAM_UnRegisterCallback(SRAM_HandleTypeDef *hsram,
  * @param pCallback : pointer to the Callback function
  * @retval status
  */
-HAL_StatusTypeDef
-HAL_SRAM_RegisterDmaCallback(SRAM_HandleTypeDef *hsram,
-			     HAL_SRAM_CallbackIDTypeDef CallbackId,
-			     pSRAM_DmaCallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_SRAM_RegisterDmaCallback(SRAM_HandleTypeDef *hsram, HAL_SRAM_CallbackIDTypeDef CallbackId,
+					       pSRAM_DmaCallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 	HAL_SRAM_StateTypeDef state;
@@ -867,8 +834,7 @@ HAL_SRAM_RegisterDmaCallback(SRAM_HandleTypeDef *hsram,
 	__HAL_LOCK(hsram);
 
 	state = hsram->State;
-	if ((state == HAL_SRAM_STATE_READY) ||
-	    (state == HAL_SRAM_STATE_PROTECTED)) {
+	if ((state == HAL_SRAM_STATE_READY) || (state == HAL_SRAM_STATE_PROTECTED)) {
 		switch (CallbackId) {
 			case HAL_SRAM_DMA_XFER_CPLT_CB_ID:
 				hsram->DmaXferCpltCallback = pCallback;
@@ -928,8 +894,7 @@ HAL_StatusTypeDef HAL_SRAM_WriteOperation_Enable(SRAM_HandleTypeDef *hsram)
 		hsram->State = HAL_SRAM_STATE_BUSY;
 
 		/* Enable write operation */
-		(void)FMC_NORSRAM_WriteOperation_Enable(hsram->Instance,
-							hsram->Init.NSBank);
+		(void)FMC_NORSRAM_WriteOperation_Enable(hsram->Instance, hsram->Init.NSBank);
 
 		/* Update the SRAM controller state */
 		hsram->State = HAL_SRAM_STATE_READY;
@@ -960,8 +925,7 @@ HAL_StatusTypeDef HAL_SRAM_WriteOperation_Disable(SRAM_HandleTypeDef *hsram)
 		hsram->State = HAL_SRAM_STATE_BUSY;
 
 		/* Disable write operation */
-		(void)FMC_NORSRAM_WriteOperation_Disable(hsram->Instance,
-							 hsram->Init.NSBank);
+		(void)FMC_NORSRAM_WriteOperation_Disable(hsram->Instance, hsram->Init.NSBank);
 
 		/* Update the SRAM controller state */
 		hsram->State = HAL_SRAM_STATE_PROTECTED;
@@ -1000,10 +964,7 @@ HAL_StatusTypeDef HAL_SRAM_WriteOperation_Disable(SRAM_HandleTypeDef *hsram)
  *                the configuration information for SRAM module.
  * @retval HAL state
  */
-HAL_SRAM_StateTypeDef HAL_SRAM_GetState(const SRAM_HandleTypeDef *hsram)
-{
-	return hsram->State;
-}
+HAL_SRAM_StateTypeDef HAL_SRAM_GetState(const SRAM_HandleTypeDef *hsram) { return hsram->State; }
 
 /**
  * @}

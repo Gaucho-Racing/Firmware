@@ -52,18 +52,16 @@ typedef struct {
 				CMYK This parameter can be a value of @ref
 				JPEG_ColorSpace */
 
-	uint32_t
-	    ChromaSubsampling; /*!< Chroma Subsampling in case of YCBCR or CMYK
-				  color space, 0-> 4:4:4 , 1-> 4:2:2, 2 ->
-				  4:1:1, 3 -> 4:2:0 This parameter can be a
-				  value of @ref JPEG_ChromaSubsampling */
+	uint32_t ChromaSubsampling; /*!< Chroma Subsampling in case of YCBCR or CMYK
+				       color space, 0-> 4:4:4 , 1-> 4:2:2, 2 ->
+				       4:1:1, 3 -> 4:2:0 This parameter can be a
+				       value of @ref JPEG_ChromaSubsampling */
 
 	uint32_t ImageHeight; /*!< Image height : number of lines */
 
 	uint32_t ImageWidth; /*!< Image width : number of pixels per line */
 
-	uint32_t
-	    ImageQuality; /*!< Quality of the JPEG encoding : from 1 to 100 */
+	uint32_t ImageQuality; /*!< Quality of the JPEG encoding : from 1 to 100 */
 
 } JPEG_ConfTypeDef;
 /**
@@ -76,16 +74,13 @@ typedef struct {
  * @{
  */
 typedef enum {
-	HAL_JPEG_STATE_RESET =
-	    0x00U, /*!< JPEG not yet initialized or disabled  */
-	HAL_JPEG_STATE_READY = 0x01U, /*!< JPEG initialized and ready for use */
-	HAL_JPEG_STATE_BUSY = 0x02U, /*!< JPEG internal processing is ongoing */
-	HAL_JPEG_STATE_BUSY_ENCODING =
-	    0x03U, /*!< JPEG encoding processing is ongoing   */
-	HAL_JPEG_STATE_BUSY_DECODING =
-	    0x04U, /*!< JPEG decoding processing is ongoing   */
-	HAL_JPEG_STATE_TIMEOUT = 0x05U, /*!< JPEG timeout state */
-	HAL_JPEG_STATE_ERROR = 0x06U	/*!< JPEG error state    */
+	HAL_JPEG_STATE_RESET = 0x00U,	      /*!< JPEG not yet initialized or disabled  */
+	HAL_JPEG_STATE_READY = 0x01U,	      /*!< JPEG initialized and ready for use */
+	HAL_JPEG_STATE_BUSY = 0x02U,	      /*!< JPEG internal processing is ongoing */
+	HAL_JPEG_STATE_BUSY_ENCODING = 0x03U, /*!< JPEG encoding processing is ongoing   */
+	HAL_JPEG_STATE_BUSY_DECODING = 0x04U, /*!< JPEG decoding processing is ongoing   */
+	HAL_JPEG_STATE_TIMEOUT = 0x05U,	      /*!< JPEG timeout state */
+	HAL_JPEG_STATE_ERROR = 0x06U	      /*!< JPEG error state    */
 } HAL_JPEG_STATETypeDef;
 
 /**
@@ -144,28 +139,18 @@ typedef struct
 	__IO uint32_t Context; /*!< JPEG Internal context */
 
 #if (USE_HAL_JPEG_REGISTER_CALLBACKS == 1)
-	void (*InfoReadyCallback)(
-	    struct __JPEG_HandleTypeDef *hjpeg,
-	    JPEG_ConfTypeDef *pInfo); /*!< JPEG Info ready callback      */
-	void (*EncodeCpltCallback)(
-	    struct __JPEG_HandleTypeDef
-		*hjpeg); /*!< JPEG Encode complete callback */
-	void (*DecodeCpltCallback)(
-	    struct __JPEG_HandleTypeDef
-		*hjpeg); /*!< JPEG Decode complete callback */
-	void (*ErrorCallback)(
-	    struct __JPEG_HandleTypeDef *hjpeg); /*!< JPEG Error callback */
-	void (*GetDataCallback)(
-	    struct __JPEG_HandleTypeDef *hjpeg,
-	    uint32_t NbDecodedData); /*!< JPEG Get Data callback        */
-	void (*DataReadyCallback)(
-	    struct __JPEG_HandleTypeDef *hjpeg, uint8_t *pDataOut,
-	    uint32_t OutDataLength); /*!< JPEG Data ready callback */
+	void (*InfoReadyCallback)(struct __JPEG_HandleTypeDef *hjpeg,
+				  JPEG_ConfTypeDef *pInfo);		/*!< JPEG Info ready callback      */
+	void (*EncodeCpltCallback)(struct __JPEG_HandleTypeDef *hjpeg); /*!< JPEG Encode complete callback */
+	void (*DecodeCpltCallback)(struct __JPEG_HandleTypeDef *hjpeg); /*!< JPEG Decode complete callback */
+	void (*ErrorCallback)(struct __JPEG_HandleTypeDef *hjpeg);	/*!< JPEG Error callback */
+	void (*GetDataCallback)(struct __JPEG_HandleTypeDef *hjpeg,
+				uint32_t NbDecodedData); /*!< JPEG Get Data callback        */
+	void (*DataReadyCallback)(struct __JPEG_HandleTypeDef *hjpeg, uint8_t *pDataOut,
+				  uint32_t OutDataLength); /*!< JPEG Data ready callback */
 
-	void (*MspInitCallback)(
-	    struct __JPEG_HandleTypeDef *hjpeg); /*!< JPEG Msp Init callback  */
-	void (*MspDeInitCallback)(struct __JPEG_HandleTypeDef
-				      *hjpeg); /*!< JPEG Msp DeInit callback  */
+	void (*MspInitCallback)(struct __JPEG_HandleTypeDef *hjpeg);   /*!< JPEG Msp Init callback  */
+	void (*MspDeInitCallback)(struct __JPEG_HandleTypeDef *hjpeg); /*!< JPEG Msp DeInit callback  */
 
 #endif /* (USE_HAL_JPEG_REGISTER_CALLBACKS) */
 
@@ -181,13 +166,11 @@ typedef struct
  * @{
  */
 typedef enum {
-	HAL_JPEG_ENCODE_CPLT_CB_ID =
-	    0x01U, /*!< JPEG Encode Complete callback ID */
-	HAL_JPEG_DECODE_CPLT_CB_ID =
-	    0x02U,		      /*!< JPEG Decode Complete callback ID */
-	HAL_JPEG_ERROR_CB_ID = 0x03U, /*!< JPEG Error callback ID           */
+	HAL_JPEG_ENCODE_CPLT_CB_ID = 0x01U, /*!< JPEG Encode Complete callback ID */
+	HAL_JPEG_DECODE_CPLT_CB_ID = 0x02U, /*!< JPEG Decode Complete callback ID */
+	HAL_JPEG_ERROR_CB_ID = 0x03U,	    /*!< JPEG Error callback ID           */
 
-	HAL_JPEG_MSPINIT_CB_ID = 0x04U, /*!< JPEG MspInit callback ID         */
+	HAL_JPEG_MSPINIT_CB_ID = 0x04U,	 /*!< JPEG MspInit callback ID         */
 	HAL_JPEG_MSPDEINIT_CB_ID = 0x05U /*!< JPEG MspDeInit callback ID */
 
 } HAL_JPEG_CallbackIDTypeDef;
@@ -200,21 +183,14 @@ typedef enum {
  * @brief  HAL JPEG Callback pointer definition
  * @{
  */
-typedef void (*pJPEG_CallbackTypeDef)(
-    JPEG_HandleTypeDef
-	*hjpeg); /*!< pointer to a common JPEG callback function */
+typedef void (*pJPEG_CallbackTypeDef)(JPEG_HandleTypeDef *hjpeg); /*!< pointer to a common JPEG callback function */
 typedef void (*pJPEG_InfoReadyCallbackTypeDef)(
-    JPEG_HandleTypeDef *hjpeg,
-    JPEG_ConfTypeDef
-	*pInfo); /*!< pointer to an Info ready JPEG callback function */
+    JPEG_HandleTypeDef *hjpeg, JPEG_ConfTypeDef *pInfo); /*!< pointer to an Info ready JPEG callback function */
 typedef void (*pJPEG_GetDataCallbackTypeDef)(
-    JPEG_HandleTypeDef *hjpeg,
-    uint32_t
-	NbDecodedData); /*!< pointer to a Get data JPEG callback function */
+    JPEG_HandleTypeDef *hjpeg, uint32_t NbDecodedData); /*!< pointer to a Get data JPEG callback function */
 typedef void (*pJPEG_DataReadyCallbackTypeDef)(
     JPEG_HandleTypeDef *hjpeg, uint8_t *pDataOut,
-    uint32_t
-	OutDataLength); /*!< pointer to a Data ready JPEG callback function */
+    uint32_t OutDataLength); /*!< pointer to a Data ready JPEG callback function */
 /**
  * @}
  */
@@ -236,18 +212,14 @@ typedef void (*pJPEG_DataReadyCallbackTypeDef)(
  * @{
  */
 
-#define HAL_JPEG_ERROR_NONE ((uint32_t)0x00000000U) /*!< No error */
-#define HAL_JPEG_ERROR_HUFF_TABLE                                              \
-	((uint32_t)0x00000001U) /*!< HUffman Table programming error */
-#define HAL_JPEG_ERROR_QUANT_TABLE                                             \
-	((uint32_t)0x00000002U) /*!< Quantization Table programming error */
-#define HAL_JPEG_ERROR_DMA ((uint32_t)0x00000004U) /*!< DMA transfer error */
-#define HAL_JPEG_ERROR_TIMEOUT                                                 \
-	((uint32_t)0x00000008U) /*!< Timeout error        */
+#define HAL_JPEG_ERROR_NONE ((uint32_t)0x00000000U)	   /*!< No error */
+#define HAL_JPEG_ERROR_HUFF_TABLE ((uint32_t)0x00000001U)  /*!< HUffman Table programming error */
+#define HAL_JPEG_ERROR_QUANT_TABLE ((uint32_t)0x00000002U) /*!< Quantization Table programming error */
+#define HAL_JPEG_ERROR_DMA ((uint32_t)0x00000004U)	   /*!< DMA transfer error */
+#define HAL_JPEG_ERROR_TIMEOUT ((uint32_t)0x00000008U)	   /*!< Timeout error        */
 #if (USE_HAL_JPEG_REGISTER_CALLBACKS == 1)
-#define HAL_JPEG_ERROR_INVALID_CALLBACK                                        \
-	((uint32_t)0x00000010U) /*!< Invalid Callback error  */
-#endif				/* USE_HAL_JPEG_REGISTER_CALLBACKS */
+#define HAL_JPEG_ERROR_INVALID_CALLBACK ((uint32_t)0x00000010U) /*!< Invalid Callback error  */
+#endif								/* USE_HAL_JPEG_REGISTER_CALLBACKS */
 /**
  * @}
  */
@@ -256,8 +228,7 @@ typedef void (*pJPEG_DataReadyCallbackTypeDef)(
  * @brief  JPEG Quantization Table Size
  * @{
  */
-#define JPEG_QUANT_TABLE_SIZE                                                  \
-	((uint32_t)64U) /*!< JPEG Quantization Table Size in bytes  */
+#define JPEG_QUANT_TABLE_SIZE ((uint32_t)64U) /*!< JPEG Quantization Table Size in bytes  */
 /**
  * @}
  */
@@ -278,12 +249,9 @@ typedef void (*pJPEG_DataReadyCallbackTypeDef)(
  * @brief  JPEG Chrominance Sampling
  * @{
  */
-#define JPEG_444_SUBSAMPLING                                                   \
-	((uint32_t)0x00000000U) /*!< Chroma Subsampling 4:4:4 */
-#define JPEG_420_SUBSAMPLING                                                   \
-	((uint32_t)0x00000001U) /*!< Chroma Subsampling 4:2:0 */
-#define JPEG_422_SUBSAMPLING                                                   \
-	((uint32_t)0x00000002U) /*!< Chroma Subsampling 4:2:2 */
+#define JPEG_444_SUBSAMPLING ((uint32_t)0x00000000U) /*!< Chroma Subsampling 4:4:4 */
+#define JPEG_420_SUBSAMPLING ((uint32_t)0x00000001U) /*!< Chroma Subsampling 4:2:0 */
+#define JPEG_422_SUBSAMPLING ((uint32_t)0x00000002U) /*!< Chroma Subsampling 4:2:2 */
 
 /**
  * @}
@@ -305,18 +273,12 @@ typedef void (*pJPEG_DataReadyCallbackTypeDef)(
  * @brief JPEG Interrupt definition
  * @{
  */
-#define JPEG_IT_IFT                                                            \
-	((uint32_t)JPEG_CR_IFTIE) /*!< Input FIFO Threshold Interrupt */
-#define JPEG_IT_IFNF                                                           \
-	((uint32_t)JPEG_CR_IFNFIE) /*!< Input FIFO Not Full Interrupt */
-#define JPEG_IT_OFT                                                            \
-	((uint32_t)JPEG_CR_OFTIE) /*!< Output FIFO Threshold Interrupt */
-#define JPEG_IT_OFNE                                                           \
-	((uint32_t)JPEG_CR_OFTIE) /*!< Output FIFO Not Empty Interrupt */
-#define JPEG_IT_EOC                                                            \
-	((uint32_t)JPEG_CR_EOCIE) /*!< End of Conversion Interrupt */
-#define JPEG_IT_HPD                                                            \
-	((uint32_t)JPEG_CR_HPDIE) /*!< Header Parsing Done Interrupt */
+#define JPEG_IT_IFT ((uint32_t)JPEG_CR_IFTIE)	/*!< Input FIFO Threshold Interrupt */
+#define JPEG_IT_IFNF ((uint32_t)JPEG_CR_IFNFIE) /*!< Input FIFO Not Full Interrupt */
+#define JPEG_IT_OFT ((uint32_t)JPEG_CR_OFTIE)	/*!< Output FIFO Threshold Interrupt */
+#define JPEG_IT_OFNE ((uint32_t)JPEG_CR_OFTIE)	/*!< Output FIFO Not Empty Interrupt */
+#define JPEG_IT_EOC ((uint32_t)JPEG_CR_EOCIE)	/*!< End of Conversion Interrupt */
+#define JPEG_IT_HPD ((uint32_t)JPEG_CR_HPDIE)	/*!< Header Parsing Done Interrupt */
 /**
  * @}
  */
@@ -325,32 +287,29 @@ typedef void (*pJPEG_DataReadyCallbackTypeDef)(
  * @brief JPEG Flags definition
  * @{
  */
-#define JPEG_FLAG_IFTF                                                         \
-	((uint32_t)JPEG_SR_IFTF) /*!< Input FIFO is not full and is below its  \
+#define JPEG_FLAG_IFTF                                                                                                 \
+	((uint32_t)JPEG_SR_IFTF) /*!< Input FIFO is not full and is below its                                          \
 				    threshold flag */
-#define JPEG_FLAG_IFNFF                                                        \
-	((uint32_t)JPEG_SR_IFNFF) /*!< Input FIFO Not Full Flag, a data can be \
+#define JPEG_FLAG_IFNFF                                                                                                \
+	((uint32_t)JPEG_SR_IFNFF) /*!< Input FIFO Not Full Flag, a data can be                                         \
 				     written */
-#define JPEG_FLAG_OFTF                                                         \
-	((uint32_t)JPEG_SR_OFTF) /*!< Output FIFO is not empty and has reach   \
+#define JPEG_FLAG_OFTF                                                                                                 \
+	((uint32_t)JPEG_SR_OFTF) /*!< Output FIFO is not empty and has reach                                           \
 				    its threshold */
-#define JPEG_FLAG_OFNEF                                                        \
-	((uint32_t)JPEG_SR_OFNEF) /*!< Output FIFO is not empty, a data is     \
+#define JPEG_FLAG_OFNEF                                                                                                \
+	((uint32_t)JPEG_SR_OFNEF) /*!< Output FIFO is not empty, a data is                                             \
 				     available  */
-#define JPEG_FLAG_EOCF                                                         \
-	((uint32_t)                                                            \
-	     JPEG_SR_EOCF) /*!< JPEG Codec core has finished the encoding or   \
-			      the decoding process and than last data has been \
-			      sent to the output FIFO  */
-#define JPEG_FLAG_HPDF                                                         \
-	((uint32_t)JPEG_SR_HPDF) /*!< JPEG Codec has finished the parsing of   \
-				    the headers and the internal registers     \
-				    have been updated  */
-#define JPEG_FLAG_COF                                                          \
-	((uint32_t)JPEG_SR_COF) /*!< JPEG Codec operation on going  flag*/
+#define JPEG_FLAG_EOCF                                                                                                 \
+	((uint32_t)JPEG_SR_EOCF) /*!< JPEG Codec core has finished the encoding or                                     \
+				    the decoding process and than last data has been                                   \
+				    sent to the output FIFO  */
+#define JPEG_FLAG_HPDF                                                                                                 \
+	((uint32_t)JPEG_SR_HPDF)	      /*!< JPEG Codec has finished the parsing of                              \
+						 the headers and the internal registers                                \
+						 have been updated  */
+#define JPEG_FLAG_COF ((uint32_t)JPEG_SR_COF) /*!< JPEG Codec operation on going  flag*/
 
-#define JPEG_FLAG_ALL                                                          \
-	((uint32_t)0x000000FEU) /*!< JPEG Codec All previous flag*/
+#define JPEG_FLAG_ALL ((uint32_t)0x000000FEU) /*!< JPEG Codec All previous flag*/
 /**
  * @}
  */
@@ -360,12 +319,9 @@ typedef void (*pJPEG_DataReadyCallbackTypeDef)(
  * @brief JPEG process pause, resume definition
  * @{
  */
-#define JPEG_PAUSE_RESUME_INPUT                                                \
-	((uint32_t)0x00000001U) /*!< Pause/Resume Input FIFO Xfer*/
-#define JPEG_PAUSE_RESUME_OUTPUT                                               \
-	((uint32_t)0x00000002U) /*!< Pause/Resume Output FIFO Xfer*/
-#define JPEG_PAUSE_RESUME_INPUT_OUTPUT                                         \
-	((uint32_t)0x00000003U) /*!< Pause/Resume Input and Output FIFO Xfer*/
+#define JPEG_PAUSE_RESUME_INPUT ((uint32_t)0x00000001U)	       /*!< Pause/Resume Input FIFO Xfer*/
+#define JPEG_PAUSE_RESUME_OUTPUT ((uint32_t)0x00000002U)       /*!< Pause/Resume Output FIFO Xfer*/
+#define JPEG_PAUSE_RESUME_INPUT_OUTPUT ((uint32_t)0x00000003U) /*!< Pause/Resume Input and Output FIFO Xfer*/
 /**
  * @}
  */
@@ -384,15 +340,14 @@ typedef void (*pJPEG_DataReadyCallbackTypeDef)(
  * @retval None
  */
 #if (USE_HAL_JPEG_REGISTER_CALLBACKS == 1)
-#define __HAL_JPEG_RESET_HANDLE_STATE(__HANDLE__)                              \
-	do {                                                                   \
-		(__HANDLE__)->State = HAL_JPEG_STATE_RESET;                    \
-		(__HANDLE__)->MspInitCallback = NULL;                          \
-		(__HANDLE__)->MspDeInitCallback = NULL;                        \
+#define __HAL_JPEG_RESET_HANDLE_STATE(__HANDLE__)                                                                      \
+	do {                                                                                                           \
+		(__HANDLE__)->State = HAL_JPEG_STATE_RESET;                                                            \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
 	} while (0)
 #else
-#define __HAL_JPEG_RESET_HANDLE_STATE(__HANDLE__)                              \
-	((__HANDLE__)->State = HAL_JPEG_STATE_RESET)
+#define __HAL_JPEG_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_JPEG_STATE_RESET)
 #endif /* USE_HAL_JPEG_REGISTER_CALLBACKS */
 
 /**
@@ -400,16 +355,14 @@ typedef void (*pJPEG_DataReadyCallbackTypeDef)(
  * @param  __HANDLE__ specifies the JPEG handle.
  * @retval None
  */
-#define __HAL_JPEG_ENABLE(__HANDLE__)                                          \
-	((__HANDLE__)->Instance->CR |= JPEG_CR_JCEN)
+#define __HAL_JPEG_ENABLE(__HANDLE__) ((__HANDLE__)->Instance->CR |= JPEG_CR_JCEN)
 
 /**
  * @brief Disable the JPEG peripheral.
  * @param  __HANDLE__ specifies the JPEG handle.
  * @retval None
  */
-#define __HAL_JPEG_DISABLE(__HANDLE__)                                         \
-	((__HANDLE__)->Instance->CR &= ~JPEG_CR_JCEN)
+#define __HAL_JPEG_DISABLE(__HANDLE__) ((__HANDLE__)->Instance->CR &= ~JPEG_CR_JCEN)
 
 /**
  * @brief  Check the specified JPEG status flag.
@@ -434,8 +387,7 @@ typedef void (*pJPEG_DataReadyCallbackTypeDef)(
  * FALSE)
  */
 
-#define __HAL_JPEG_GET_FLAG(__HANDLE__, __FLAG__)                              \
-	(((__HANDLE__)->Instance->SR & (__FLAG__)))
+#define __HAL_JPEG_GET_FLAG(__HANDLE__, __FLAG__) (((__HANDLE__)->Instance->SR & (__FLAG__)))
 
 /**
  * @brief  Clear the specified JPEG status flag.
@@ -449,9 +401,8 @@ typedef void (*pJPEG_DataReadyCallbackTypeDef)(
  * @retval None
  */
 
-#define __HAL_JPEG_CLEAR_FLAG(__HANDLE__, __FLAG__)                            \
-	(((__HANDLE__)->Instance->CFR |=                                       \
-	  ((__FLAG__) & (JPEG_FLAG_EOCF | JPEG_FLAG_HPDF))))
+#define __HAL_JPEG_CLEAR_FLAG(__HANDLE__, __FLAG__)                                                                    \
+	(((__HANDLE__)->Instance->CFR |= ((__FLAG__) & (JPEG_FLAG_EOCF | JPEG_FLAG_HPDF))))
 
 /**
  * @brief  Enable Interrupt.
@@ -467,8 +418,7 @@ typedef void (*pJPEG_DataReadyCallbackTypeDef)(
  *
  * @retval No return
  */
-#define __HAL_JPEG_ENABLE_IT(__HANDLE__, __INTERRUPT__)                        \
-	((__HANDLE__)->Instance->CR |= (__INTERRUPT__))
+#define __HAL_JPEG_ENABLE_IT(__HANDLE__, __INTERRUPT__) ((__HANDLE__)->Instance->CR |= (__INTERRUPT__))
 
 /**
  * @brief  Disable Interrupt.
@@ -486,8 +436,7 @@ typedef void (*pJPEG_DataReadyCallbackTypeDef)(
  * to the FIFO flush bits located in the same IT enable register (CR register).
  * @retval  No return
  */
-#define __HAL_JPEG_DISABLE_IT(__HANDLE__, __INTERRUPT__)                       \
-	MODIFY_REG((__HANDLE__)->Instance->CR, (__INTERRUPT__), 0UL)
+#define __HAL_JPEG_DISABLE_IT(__HANDLE__, __INTERRUPT__) MODIFY_REG((__HANDLE__)->Instance->CR, (__INTERRUPT__), 0UL)
 
 /**
  * @brief  Get Interrupt state.
@@ -503,8 +452,7 @@ typedef void (*pJPEG_DataReadyCallbackTypeDef)(
  *
  * @retval returns The new state of __INTERRUPT__ (Enabled or disabled)
  */
-#define __HAL_JPEG_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)                    \
-	((__HANDLE__)->Instance->CR & (__INTERRUPT__))
+#define __HAL_JPEG_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__) ((__HANDLE__)->Instance->CR & (__INTERRUPT__))
 
 /**
  * @}
@@ -525,30 +473,20 @@ void HAL_JPEG_MspInit(JPEG_HandleTypeDef *hjpeg);
 void HAL_JPEG_MspDeInit(JPEG_HandleTypeDef *hjpeg);
 
 #if (USE_HAL_JPEG_REGISTER_CALLBACKS == 1)
-HAL_StatusTypeDef
-HAL_JPEG_RegisterCallback(JPEG_HandleTypeDef *hjpeg,
-			  HAL_JPEG_CallbackIDTypeDef CallbackID,
-			  pJPEG_CallbackTypeDef pCallback);
-HAL_StatusTypeDef
-HAL_JPEG_UnRegisterCallback(JPEG_HandleTypeDef *hjpeg,
-			    HAL_JPEG_CallbackIDTypeDef CallbackID);
+HAL_StatusTypeDef HAL_JPEG_RegisterCallback(JPEG_HandleTypeDef *hjpeg, HAL_JPEG_CallbackIDTypeDef CallbackID,
+					    pJPEG_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_JPEG_UnRegisterCallback(JPEG_HandleTypeDef *hjpeg, HAL_JPEG_CallbackIDTypeDef CallbackID);
 
-HAL_StatusTypeDef
-HAL_JPEG_RegisterInfoReadyCallback(JPEG_HandleTypeDef *hjpeg,
-				   pJPEG_InfoReadyCallbackTypeDef pCallback);
-HAL_StatusTypeDef
-HAL_JPEG_UnRegisterInfoReadyCallback(JPEG_HandleTypeDef *hjpeg);
+HAL_StatusTypeDef HAL_JPEG_RegisterInfoReadyCallback(JPEG_HandleTypeDef *hjpeg,
+						     pJPEG_InfoReadyCallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_JPEG_UnRegisterInfoReadyCallback(JPEG_HandleTypeDef *hjpeg);
 
-HAL_StatusTypeDef
-HAL_JPEG_RegisterGetDataCallback(JPEG_HandleTypeDef *hjpeg,
-				 pJPEG_GetDataCallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_JPEG_RegisterGetDataCallback(JPEG_HandleTypeDef *hjpeg, pJPEG_GetDataCallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_JPEG_UnRegisterGetDataCallback(JPEG_HandleTypeDef *hjpeg);
 
-HAL_StatusTypeDef
-HAL_JPEG_RegisterDataReadyCallback(JPEG_HandleTypeDef *hjpeg,
-				   pJPEG_DataReadyCallbackTypeDef pCallback);
-HAL_StatusTypeDef
-HAL_JPEG_UnRegisterDataReadyCallback(JPEG_HandleTypeDef *hjpeg);
+HAL_StatusTypeDef HAL_JPEG_RegisterDataReadyCallback(JPEG_HandleTypeDef *hjpeg,
+						     pJPEG_DataReadyCallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_JPEG_UnRegisterDataReadyCallback(JPEG_HandleTypeDef *hjpeg);
 
 #endif /* USE_HAL_JPEG_REGISTER_CALLBACKS */
 
@@ -560,17 +498,12 @@ HAL_JPEG_UnRegisterDataReadyCallback(JPEG_HandleTypeDef *hjpeg);
  * @{
  */
 /* Encoding/Decoding Configuration functions  ********************************/
-HAL_StatusTypeDef HAL_JPEG_ConfigEncoding(JPEG_HandleTypeDef *hjpeg,
-					  const JPEG_ConfTypeDef *pConf);
-HAL_StatusTypeDef HAL_JPEG_GetInfo(JPEG_HandleTypeDef *hjpeg,
-				   JPEG_ConfTypeDef *pInfo);
+HAL_StatusTypeDef HAL_JPEG_ConfigEncoding(JPEG_HandleTypeDef *hjpeg, const JPEG_ConfTypeDef *pConf);
+HAL_StatusTypeDef HAL_JPEG_GetInfo(JPEG_HandleTypeDef *hjpeg, JPEG_ConfTypeDef *pInfo);
 HAL_StatusTypeDef HAL_JPEG_EnableHeaderParsing(JPEG_HandleTypeDef *hjpeg);
 HAL_StatusTypeDef HAL_JPEG_DisableHeaderParsing(JPEG_HandleTypeDef *hjpeg);
-HAL_StatusTypeDef HAL_JPEG_SetUserQuantTables(JPEG_HandleTypeDef *hjpeg,
-					      uint8_t *QTable0,
-					      uint8_t *QTable1,
-					      uint8_t *QTable2,
-					      uint8_t *QTable3);
+HAL_StatusTypeDef HAL_JPEG_SetUserQuantTables(JPEG_HandleTypeDef *hjpeg, uint8_t *QTable0, uint8_t *QTable1,
+					      uint8_t *QTable2, uint8_t *QTable3);
 
 /**
  * @}
@@ -580,38 +513,22 @@ HAL_StatusTypeDef HAL_JPEG_SetUserQuantTables(JPEG_HandleTypeDef *hjpeg,
  * @{
  */
 /* JPEG processing functions  **************************************/
-HAL_StatusTypeDef HAL_JPEG_Encode(JPEG_HandleTypeDef *hjpeg,
-				  uint8_t *pDataInMCU, uint32_t InDataLength,
-				  uint8_t *pDataOut, uint32_t OutDataLength,
-				  uint32_t Timeout);
-HAL_StatusTypeDef HAL_JPEG_Decode(JPEG_HandleTypeDef *hjpeg, uint8_t *pDataIn,
-				  uint32_t InDataLength, uint8_t *pDataOutMCU,
-				  uint32_t OutDataLength, uint32_t Timeout);
-HAL_StatusTypeDef HAL_JPEG_Encode_IT(JPEG_HandleTypeDef *hjpeg,
-				     uint8_t *pDataInMCU, uint32_t InDataLength,
+HAL_StatusTypeDef HAL_JPEG_Encode(JPEG_HandleTypeDef *hjpeg, uint8_t *pDataInMCU, uint32_t InDataLength,
+				  uint8_t *pDataOut, uint32_t OutDataLength, uint32_t Timeout);
+HAL_StatusTypeDef HAL_JPEG_Decode(JPEG_HandleTypeDef *hjpeg, uint8_t *pDataIn, uint32_t InDataLength,
+				  uint8_t *pDataOutMCU, uint32_t OutDataLength, uint32_t Timeout);
+HAL_StatusTypeDef HAL_JPEG_Encode_IT(JPEG_HandleTypeDef *hjpeg, uint8_t *pDataInMCU, uint32_t InDataLength,
 				     uint8_t *pDataOut, uint32_t OutDataLength);
-HAL_StatusTypeDef HAL_JPEG_Decode_IT(JPEG_HandleTypeDef *hjpeg,
-				     uint8_t *pDataIn, uint32_t InDataLength,
-				     uint8_t *pDataOutMCU,
-				     uint32_t OutDataLength);
-HAL_StatusTypeDef HAL_JPEG_Encode_DMA(JPEG_HandleTypeDef *hjpeg,
-				      uint8_t *pDataInMCU,
-				      uint32_t InDataLength, uint8_t *pDataOut,
-				      uint32_t OutDataLength);
-HAL_StatusTypeDef HAL_JPEG_Decode_DMA(JPEG_HandleTypeDef *hjpeg,
-				      uint8_t *pDataIn, uint32_t InDataLength,
-				      uint8_t *pDataOutMCU,
-				      uint32_t OutDataLength);
-HAL_StatusTypeDef HAL_JPEG_Pause(JPEG_HandleTypeDef *hjpeg,
-				 uint32_t XferSelection);
-HAL_StatusTypeDef HAL_JPEG_Resume(JPEG_HandleTypeDef *hjpeg,
-				  uint32_t XferSelection);
-void HAL_JPEG_ConfigInputBuffer(JPEG_HandleTypeDef *hjpeg,
-				uint8_t *pNewInputBuffer,
-				uint32_t InDataLength);
-void HAL_JPEG_ConfigOutputBuffer(JPEG_HandleTypeDef *hjpeg,
-				 uint8_t *pNewOutputBuffer,
-				 uint32_t OutDataLength);
+HAL_StatusTypeDef HAL_JPEG_Decode_IT(JPEG_HandleTypeDef *hjpeg, uint8_t *pDataIn, uint32_t InDataLength,
+				     uint8_t *pDataOutMCU, uint32_t OutDataLength);
+HAL_StatusTypeDef HAL_JPEG_Encode_DMA(JPEG_HandleTypeDef *hjpeg, uint8_t *pDataInMCU, uint32_t InDataLength,
+				      uint8_t *pDataOut, uint32_t OutDataLength);
+HAL_StatusTypeDef HAL_JPEG_Decode_DMA(JPEG_HandleTypeDef *hjpeg, uint8_t *pDataIn, uint32_t InDataLength,
+				      uint8_t *pDataOutMCU, uint32_t OutDataLength);
+HAL_StatusTypeDef HAL_JPEG_Pause(JPEG_HandleTypeDef *hjpeg, uint32_t XferSelection);
+HAL_StatusTypeDef HAL_JPEG_Resume(JPEG_HandleTypeDef *hjpeg, uint32_t XferSelection);
+void HAL_JPEG_ConfigInputBuffer(JPEG_HandleTypeDef *hjpeg, uint8_t *pNewInputBuffer, uint32_t InDataLength);
+void HAL_JPEG_ConfigOutputBuffer(JPEG_HandleTypeDef *hjpeg, uint8_t *pNewOutputBuffer, uint32_t OutDataLength);
 HAL_StatusTypeDef HAL_JPEG_Abort(JPEG_HandleTypeDef *hjpeg);
 
 /**
@@ -623,15 +540,12 @@ HAL_StatusTypeDef HAL_JPEG_Abort(JPEG_HandleTypeDef *hjpeg);
  */
 /* JPEG Decode/Encode callback functions
  * ********************************************************/
-void HAL_JPEG_InfoReadyCallback(JPEG_HandleTypeDef *hjpeg,
-				JPEG_ConfTypeDef *pInfo);
+void HAL_JPEG_InfoReadyCallback(JPEG_HandleTypeDef *hjpeg, JPEG_ConfTypeDef *pInfo);
 void HAL_JPEG_EncodeCpltCallback(JPEG_HandleTypeDef *hjpeg);
 void HAL_JPEG_DecodeCpltCallback(JPEG_HandleTypeDef *hjpeg);
 void HAL_JPEG_ErrorCallback(JPEG_HandleTypeDef *hjpeg);
-void HAL_JPEG_GetDataCallback(JPEG_HandleTypeDef *hjpeg,
-			      uint32_t NbDecodedData);
-void HAL_JPEG_DataReadyCallback(JPEG_HandleTypeDef *hjpeg, uint8_t *pDataOut,
-				uint32_t OutDataLength);
+void HAL_JPEG_GetDataCallback(JPEG_HandleTypeDef *hjpeg, uint32_t NbDecodedData);
+void HAL_JPEG_DataReadyCallback(JPEG_HandleTypeDef *hjpeg, uint8_t *pDataOut, uint32_t OutDataLength);
 
 /**
  * @}
@@ -705,23 +619,18 @@ uint32_t HAL_JPEG_GetError(const JPEG_HandleTypeDef *hjpeg);
  * @{
  */
 
-#define IS_JPEG_CHROMASUBSAMPLING(SUBSAMPLING)                                 \
-	(((SUBSAMPLING) == JPEG_444_SUBSAMPLING) ||                            \
-	 ((SUBSAMPLING) == JPEG_420_SUBSAMPLING) ||                            \
+#define IS_JPEG_CHROMASUBSAMPLING(SUBSAMPLING)                                                                         \
+	(((SUBSAMPLING) == JPEG_444_SUBSAMPLING) || ((SUBSAMPLING) == JPEG_420_SUBSAMPLING) ||                         \
 	 ((SUBSAMPLING) == JPEG_422_SUBSAMPLING))
 
-#define IS_JPEG_IMAGE_QUALITY(NUMBER)                                          \
-	(((NUMBER) >= JPEG_IMAGE_QUALITY_MIN) &&                               \
-	 ((NUMBER) <= JPEG_IMAGE_QUALITY_MAX))
+#define IS_JPEG_IMAGE_QUALITY(NUMBER) (((NUMBER) >= JPEG_IMAGE_QUALITY_MIN) && ((NUMBER) <= JPEG_IMAGE_QUALITY_MAX))
 
-#define IS_JPEG_COLORSPACE(COLORSPACE)                                         \
-	(((COLORSPACE) == JPEG_GRAYSCALE_COLORSPACE) ||                        \
-	 ((COLORSPACE) == JPEG_YCBCR_COLORSPACE) ||                            \
+#define IS_JPEG_COLORSPACE(COLORSPACE)                                                                                 \
+	(((COLORSPACE) == JPEG_GRAYSCALE_COLORSPACE) || ((COLORSPACE) == JPEG_YCBCR_COLORSPACE) ||                     \
 	 ((COLORSPACE) == JPEG_CMYK_COLORSPACE))
 
-#define IS_JPEG_PAUSE_RESUME_STATE(VALUE)                                      \
-	(((VALUE) == JPEG_PAUSE_RESUME_INPUT) ||                               \
-	 ((VALUE) == JPEG_PAUSE_RESUME_OUTPUT) ||                              \
+#define IS_JPEG_PAUSE_RESUME_STATE(VALUE)                                                                              \
+	(((VALUE) == JPEG_PAUSE_RESUME_INPUT) || ((VALUE) == JPEG_PAUSE_RESUME_OUTPUT) ||                              \
 	 ((VALUE) == JPEG_PAUSE_RESUME_INPUT_OUTPUT))
 
 /**

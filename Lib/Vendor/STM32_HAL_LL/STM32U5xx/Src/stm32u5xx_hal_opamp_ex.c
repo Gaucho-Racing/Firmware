@@ -80,8 +80,7 @@
  * @retval HAL status
  */
 
-HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1,
-					       OPAMP_HandleTypeDef *hopamp2)
+HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1, OPAMP_HandleTypeDef *hopamp2)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -117,35 +116,27 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1,
 
 		/* Save OPAMP mode as in */
 		/* the calibration is not working in PGA mode */
-		opampmode1 =
-		    READ_BIT(hopamp1->Instance->CSR, OPAMP_CSR_OPAMODE);
-		opampmode2 =
-		    READ_BIT(hopamp2->Instance->CSR, OPAMP_CSR_OPAMODE);
+		opampmode1 = READ_BIT(hopamp1->Instance->CSR, OPAMP_CSR_OPAMODE);
+		opampmode2 = READ_BIT(hopamp2->Instance->CSR, OPAMP_CSR_OPAMODE);
 
 		/* Use of standalone mode */
-		MODIFY_REG(hopamp1->Instance->CSR, OPAMP_CSR_OPAMODE,
-			   OPAMP_STANDALONE_MODE);
-		MODIFY_REG(hopamp2->Instance->CSR, OPAMP_CSR_OPAMODE,
-			   OPAMP_STANDALONE_MODE);
+		MODIFY_REG(hopamp1->Instance->CSR, OPAMP_CSR_OPAMODE, OPAMP_STANDALONE_MODE);
+		MODIFY_REG(hopamp2->Instance->CSR, OPAMP_CSR_OPAMODE, OPAMP_STANDALONE_MODE);
 
 		/*  user trimming values are used for offset calibration */
 		SET_BIT(hopamp1->Instance->CSR, OPAMP_CSR_USERTRIM);
 		SET_BIT(hopamp2->Instance->CSR, OPAMP_CSR_USERTRIM);
 
 		/* Select trimming settings depending on power mode */
-		if ((hopamp1->Init.PowerMode ==
-		     OPAMP_POWERMODE_NORMALPOWER_NORMALSPEED) ||
-		    (hopamp1->Init.PowerMode ==
-		     OPAMP_POWERMODE_NORMALPOWER_HIGHSPEED)) {
+		if ((hopamp1->Init.PowerMode == OPAMP_POWERMODE_NORMALPOWER_NORMALSPEED) ||
+		    (hopamp1->Init.PowerMode == OPAMP_POWERMODE_NORMALPOWER_HIGHSPEED)) {
 			tmp_opamp1_reg_trimming = &OPAMP1->OTR;
 		} else {
 			tmp_opamp1_reg_trimming = &OPAMP1->LPOTR;
 		}
 
-		if ((hopamp2->Init.PowerMode ==
-		     OPAMP_POWERMODE_NORMALPOWER_NORMALSPEED) ||
-		    (hopamp2->Init.PowerMode ==
-		     OPAMP_POWERMODE_NORMALPOWER_HIGHSPEED)) {
+		if ((hopamp2->Init.PowerMode == OPAMP_POWERMODE_NORMALPOWER_NORMALSPEED) ||
+		    (hopamp2->Init.PowerMode == OPAMP_POWERMODE_NORMALPOWER_HIGHSPEED)) {
 			tmp_opamp2_reg_trimming = &OPAMP2->OTR;
 		} else {
 			tmp_opamp2_reg_trimming = &OPAMP2->LPOTR;
@@ -173,10 +164,8 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1,
 			/* Set candidate trimming */
 			/* OPAMP_POWERMODE_NORMALPOWER_HIGHSPEED or
 			 * OPAMP_POWERMODE_NORMALPOWER_NORMALSPEED*/
-			MODIFY_REG(*tmp_opamp1_reg_trimming,
-				   OPAMP_OTR_TRIMOFFSETN, trimmingvaluen1);
-			MODIFY_REG(*tmp_opamp2_reg_trimming,
-				   OPAMP_OTR_TRIMOFFSETN, trimmingvaluen2);
+			MODIFY_REG(*tmp_opamp1_reg_trimming, OPAMP_OTR_TRIMOFFSETN, trimmingvaluen1);
+			MODIFY_REG(*tmp_opamp2_reg_trimming, OPAMP_OTR_TRIMOFFSETN, trimmingvaluen2);
 
 			/* OFFTRIMmax delay 1 ms as per datasheet (electrical
 			 * characteristics */
@@ -185,8 +174,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1,
 			/* two steps to have 1 mV accuracy */
 			HAL_Delay(OPAMP_TRIMMING_DELAY);
 
-			if (READ_BIT(hopamp1->Instance->CSR,
-				     OPAMP_CSR_CALOUT) != 0U) {
+			if (READ_BIT(hopamp1->Instance->CSR, OPAMP_CSR_CALOUT) != 0U) {
 				/* OPAMP_CSR_CALOUT is HIGH try lower trimming
 				 */
 				trimmingvaluen1 -= delta;
@@ -196,8 +184,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1,
 				trimmingvaluen1 += delta;
 			}
 
-			if (READ_BIT(hopamp2->Instance->CSR,
-				     OPAMP_CSR_CALOUT) != 0U) {
+			if (READ_BIT(hopamp2->Instance->CSR, OPAMP_CSR_CALOUT) != 0U) {
 				/* OPAMP_CSR_CALOUT is HIGH try lower trimming
 				 */
 				trimmingvaluen2 -= delta;
@@ -215,10 +202,8 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1,
 		/* Indeed the first value that causes the OUTCAL bit to change
 		 * from 0 to 1  */
 		/* Set candidate trimming */
-		MODIFY_REG(*tmp_opamp1_reg_trimming, OPAMP_OTR_TRIMOFFSETN,
-			   trimmingvaluen1);
-		MODIFY_REG(*tmp_opamp2_reg_trimming, OPAMP_OTR_TRIMOFFSETN,
-			   trimmingvaluen2);
+		MODIFY_REG(*tmp_opamp1_reg_trimming, OPAMP_OTR_TRIMOFFSETN, trimmingvaluen1);
+		MODIFY_REG(*tmp_opamp2_reg_trimming, OPAMP_OTR_TRIMOFFSETN, trimmingvaluen2);
 
 		/* OFFTRIMmax delay 1 ms as per datasheet (electrical
 		 * characteristics */
@@ -227,20 +212,16 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1,
 		/* two steps to have 1 mV accuracy */
 		HAL_Delay(OPAMP_TRIMMING_DELAY);
 
-		if ((READ_BIT(hopamp1->Instance->CSR, OPAMP_CSR_CALOUT)) ==
-		    0U) {
+		if ((READ_BIT(hopamp1->Instance->CSR, OPAMP_CSR_CALOUT)) == 0U) {
 			/* Trimming value is actually one value more */
 			trimmingvaluen1++;
-			MODIFY_REG(*tmp_opamp1_reg_trimming,
-				   OPAMP_OTR_TRIMOFFSETN, trimmingvaluen1);
+			MODIFY_REG(*tmp_opamp1_reg_trimming, OPAMP_OTR_TRIMOFFSETN, trimmingvaluen1);
 		}
 
-		if ((READ_BIT(hopamp2->Instance->CSR, OPAMP_CSR_CALOUT)) ==
-		    0U) {
+		if ((READ_BIT(hopamp2->Instance->CSR, OPAMP_CSR_CALOUT)) == 0U) {
 			/* Trimming value is actually one value more */
 			trimmingvaluen2++;
-			MODIFY_REG(*tmp_opamp2_reg_trimming,
-				   OPAMP_OTR_TRIMOFFSETN, trimmingvaluen2);
+			MODIFY_REG(*tmp_opamp2_reg_trimming, OPAMP_OTR_TRIMOFFSETN, trimmingvaluen2);
 		}
 
 		/* 2nd calibration - P */
@@ -257,12 +238,10 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1,
 			/* Set candidate trimming */
 			/* OPAMP_POWERMODE_NORMALPOWER_HIGHSPEED or
 			 * OPAMP_POWERMODE_NORMALPOWER_NORMALSPEED*/
-			MODIFY_REG(
-			    *tmp_opamp1_reg_trimming, OPAMP_OTR_TRIMOFFSETP,
-			    (trimmingvaluep1 << OPAMP_INPUT_NONINVERTING));
-			MODIFY_REG(
-			    *tmp_opamp2_reg_trimming, OPAMP_OTR_TRIMOFFSETP,
-			    (trimmingvaluep2 << OPAMP_INPUT_NONINVERTING));
+			MODIFY_REG(*tmp_opamp1_reg_trimming, OPAMP_OTR_TRIMOFFSETP,
+				   (trimmingvaluep1 << OPAMP_INPUT_NONINVERTING));
+			MODIFY_REG(*tmp_opamp2_reg_trimming, OPAMP_OTR_TRIMOFFSETP,
+				   (trimmingvaluep2 << OPAMP_INPUT_NONINVERTING));
 
 			/* OFFTRIMmax delay 1 ms as per datasheet (electrical
 			 * characteristics */
@@ -271,8 +250,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1,
 			/* two steps to have 1 mV accuracy */
 			HAL_Delay(OPAMP_TRIMMING_DELAY);
 
-			if (READ_BIT(hopamp1->Instance->CSR,
-				     OPAMP_CSR_CALOUT) != 0U) {
+			if (READ_BIT(hopamp1->Instance->CSR, OPAMP_CSR_CALOUT) != 0U) {
 				/* OPAMP_CSR_CALOUT is HIGH try higher trimming
 				 */
 				trimmingvaluep1 -= delta;
@@ -282,8 +260,7 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1,
 				trimmingvaluep1 += delta;
 			}
 
-			if (READ_BIT(hopamp2->Instance->CSR,
-				     OPAMP_CSR_CALOUT) != 0U) {
+			if (READ_BIT(hopamp2->Instance->CSR, OPAMP_CSR_CALOUT) != 0U) {
 				/* OPAMP_CSR_CALOUT is HIGH try higher trimming
 				 */
 				trimmingvaluep2 -= delta;
@@ -315,17 +292,15 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1,
 		if (READ_BIT(hopamp1->Instance->CSR, OPAMP_CSR_CALOUT) != 0U) {
 			/* Trimming value is actually one value more */
 			trimmingvaluep1++;
-			MODIFY_REG(
-			    *tmp_opamp1_reg_trimming, OPAMP_OTR_TRIMOFFSETP,
-			    (trimmingvaluep1 << OPAMP_INPUT_NONINVERTING));
+			MODIFY_REG(*tmp_opamp1_reg_trimming, OPAMP_OTR_TRIMOFFSETP,
+				   (trimmingvaluep1 << OPAMP_INPUT_NONINVERTING));
 		}
 
 		if (READ_BIT(hopamp2->Instance->CSR, OPAMP_CSR_CALOUT) != 0U) {
 			/* Trimming value is actually one value more */
 			trimmingvaluep2++;
-			MODIFY_REG(
-			    *tmp_opamp2_reg_trimming, OPAMP_OTR_TRIMOFFSETP,
-			    (trimmingvaluep2 << OPAMP_INPUT_NONINVERTING));
+			MODIFY_REG(*tmp_opamp2_reg_trimming, OPAMP_OTR_TRIMOFFSETP,
+				   (trimmingvaluep2 << OPAMP_INPUT_NONINVERTING));
 		}
 
 		/* Disable the OPAMPs */
@@ -346,10 +321,8 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1,
 
 		/* Affect calibration parameters depending on mode normal/low
 		 * power */
-		if ((hopamp1->Init.PowerMode !=
-		     OPAMP_POWERMODE_LOWPOWER_NORMALSPEED) &&
-		    (hopamp1->Init.PowerMode !=
-		     OPAMP_POWERMODE_LOWPOWER_HIGHSPEED)) {
+		if ((hopamp1->Init.PowerMode != OPAMP_POWERMODE_LOWPOWER_NORMALSPEED) &&
+		    (hopamp1->Init.PowerMode != OPAMP_POWERMODE_LOWPOWER_HIGHSPEED)) {
 			/* Write calibration result N */
 			hopamp1->Init.TrimmingValueN = trimmingvaluen1;
 			/* Write calibration result P */
@@ -361,10 +334,8 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1,
 			hopamp1->Init.TrimmingValuePLowPower = trimmingvaluep1;
 		}
 
-		if ((hopamp2->Init.PowerMode !=
-		     OPAMP_POWERMODE_LOWPOWER_NORMALSPEED) &&
-		    (hopamp2->Init.PowerMode !=
-		     OPAMP_POWERMODE_LOWPOWER_HIGHSPEED)) {
+		if ((hopamp2->Init.PowerMode != OPAMP_POWERMODE_LOWPOWER_NORMALSPEED) &&
+		    (hopamp2->Init.PowerMode != OPAMP_POWERMODE_LOWPOWER_HIGHSPEED)) {
 			/* Write calibration result N */
 			hopamp2->Init.TrimmingValueN = trimmingvaluen2;
 			/* Write calibration result P */
@@ -381,10 +352,8 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1,
 		hopamp2->State = HAL_OPAMP_STATE_READY;
 
 		/* Restore OPAMP mode after calibration */
-		MODIFY_REG(hopamp1->Instance->CSR, OPAMP_CSR_OPAMODE,
-			   opampmode1);
-		MODIFY_REG(hopamp2->Instance->CSR, OPAMP_CSR_OPAMODE,
-			   opampmode2);
+		MODIFY_REG(hopamp1->Instance->CSR, OPAMP_CSR_OPAMODE, opampmode1);
+		MODIFY_REG(hopamp2->Instance->CSR, OPAMP_CSR_OPAMODE, opampmode2);
 	}
 	return status;
 }

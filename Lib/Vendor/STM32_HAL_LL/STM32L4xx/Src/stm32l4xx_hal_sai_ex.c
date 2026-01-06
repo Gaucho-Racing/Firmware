@@ -27,9 +27,8 @@
  * @{
  */
 #ifdef HAL_SAI_MODULE_ENABLED
-#if defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) ||    \
-    defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx) ||    \
-    defined(STM32L4P5xx) || defined(STM32L4Q5xx)
+#if defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||                    \
+    defined(STM32L4S7xx) || defined(STM32L4S9xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx)
 
 /** @defgroup SAIEx SAIEx
  * @brief SAI Extended HAL module driver
@@ -76,9 +75,8 @@
  * @param  pdmMicDelay Microphone delays configuration.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_SAIEx_ConfigPdmMicDelay(const SAI_HandleTypeDef *hsai,
-			    const SAIEx_PdmMicDelayParamTypeDef *pdmMicDelay)
+HAL_StatusTypeDef HAL_SAIEx_ConfigPdmMicDelay(const SAI_HandleTypeDef *hsai,
+					      const SAIEx_PdmMicDelayParamTypeDef *pdmMicDelay)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 	uint32_t offset;
@@ -102,10 +100,9 @@ HAL_SAIEx_ConfigPdmMicDelay(const SAI_HandleTypeDef *hsai,
 			SAI1->PDMDLY &= ~(SAI_PDM_DELAY_MASK << offset);
 
 			/* Apply new microphone delays */
-			SAI1->PDMDLY |= (((pdmMicDelay->RightDelay
-					   << SAI_PDM_RIGHT_DELAY_OFFSET) |
-					  pdmMicDelay->LeftDelay)
-					 << offset);
+			SAI1->PDMDLY |=
+			    (((pdmMicDelay->RightDelay << SAI_PDM_RIGHT_DELAY_OFFSET) | pdmMicDelay->LeftDelay)
+			     << offset);
 		} else {
 			status = HAL_ERROR;
 		}
@@ -125,7 +122,7 @@ HAL_SAIEx_ConfigPdmMicDelay(const SAI_HandleTypeDef *hsai,
  * @}
  */
 
-#endif /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||          \
+#endif /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||                                                  \
 	  STM32L4S7xx || STM32L4S9xx || */
 /* STM32L4P5xx || STM32L4Q5xx */
 #endif /* HAL_SAI_MODULE_ENABLED */

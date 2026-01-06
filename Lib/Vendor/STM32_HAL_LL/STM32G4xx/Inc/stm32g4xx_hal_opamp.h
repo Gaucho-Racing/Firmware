@@ -31,8 +31,7 @@ extern "C" {
  * @{
  */
 
-#if defined(OPAMP1) || defined(OPAMP2) || defined(OPAMP3) ||                   \
-    defined(OPAMP4) || defined(OPAMP5) || defined(OPAMP6)
+#if defined(OPAMP1) || defined(OPAMP2) || defined(OPAMP3) || defined(OPAMP4) || defined(OPAMP5) || defined(OPAMP6)
 
 /** @addtogroup OPAMP
  * @{
@@ -67,17 +66,15 @@ typedef struct {
 				    when mode is OPAMP_FOLLOWER_MODE This
 				    parameter is Not Applicable */
 
-	uint32_t
-	    NonInvertingInput; /*!< Specifies the non inverting input of the
-				  opamp: This parameter must be a value of @ref
-				  OPAMP_NonInvertingInput NonInvertingInput is
-				  either VINP0, VINP1, VINP2 or VINP3 */
+	uint32_t NonInvertingInput; /*!< Specifies the non inverting input of the
+				       opamp: This parameter must be a value of @ref
+				       OPAMP_NonInvertingInput NonInvertingInput is
+				       either VINP0, VINP1, VINP2 or VINP3 */
 
-	FunctionalState
-	    InternalOutput; /*!< Specifies the configuration of the internal
-			       output from OPAMP to ADC. This parameter can be
-			       ENABLE or DISABLE Note: When this output is
-			       enabled, regular output to I/O is disabled */
+	FunctionalState InternalOutput; /*!< Specifies the configuration of the internal
+					   output from OPAMP to ADC. This parameter can be
+					   ENABLE or DISABLE Note: When this output is
+					   enabled, regular output to I/O is disabled */
 
 	uint32_t TimerControlledMuxmode; /*!< Specifies if the Timer controlled
 					    Mux mode is enabled or disabled This
@@ -87,37 +84,35 @@ typedef struct {
 					    more complex switch scheme by using
 					    different timers */
 
-	uint32_t
-	    InvertingInputSecondary; /*!< Specifies the inverting input
-					(secondary) of the opamp when
-					  TimerControlledMuxmode is enabled
-					  i.e. when TimerControlledMuxmode is
-					OPAMP_TIMERCONTROLLEDMUXMODE_ENABLE
-					    - In Standalone mode:   i.e when
-					mode is OPAMP_STANDALONE_MODE This
-					parameter must be a value of @ref
-					OPAMP_InvertingInputSecondary
-					      InvertingInputSecondary is either
-					VINM0 or VINM1
-					    - In PGA mode:          i.e when
-					mode is OPAMP_PGA_MODE & in Follower
-					mode    i.e when mode is
-					OPAMP_FOLLOWER_MODE This parameter must
-					be a value of @ref
-					OPAMP_InvertingInputSecondary and is
-					used to choose secondary mode (PGA or
-					follower) */
+	uint32_t InvertingInputSecondary; /*!< Specifies the inverting input
+					     (secondary) of the opamp when
+					       TimerControlledMuxmode is enabled
+					       i.e. when TimerControlledMuxmode is
+					     OPAMP_TIMERCONTROLLEDMUXMODE_ENABLE
+						 - In Standalone mode:   i.e when
+					     mode is OPAMP_STANDALONE_MODE This
+					     parameter must be a value of @ref
+					     OPAMP_InvertingInputSecondary
+						   InvertingInputSecondary is either
+					     VINM0 or VINM1
+						 - In PGA mode:          i.e when
+					     mode is OPAMP_PGA_MODE & in Follower
+					     mode    i.e when mode is
+					     OPAMP_FOLLOWER_MODE This parameter must
+					     be a value of @ref
+					     OPAMP_InvertingInputSecondary and is
+					     used to choose secondary mode (PGA or
+					     follower) */
 
-	uint32_t
-	    NonInvertingInputSecondary; /*!< Specifies the non inverting input
-					   (secondary) of the opamp when
-					     TimerControlledMuxmode is enabled
-					     i.e. when TimerControlledMuxmode is
-					   OPAMP_TIMERCONTROLLEDMUXMODE_ENABLE
-					     This parameter must be a value of
-					   @ref OPAMP_NonInvertingInputSecondary
-					     NonInvertingInput is either VINP0,
-					   VINP1, VINP2 or VINP3 */
+	uint32_t NonInvertingInputSecondary; /*!< Specifies the non inverting input
+						(secondary) of the opamp when
+						  TimerControlledMuxmode is enabled
+						  i.e. when TimerControlledMuxmode is
+						OPAMP_TIMERCONTROLLEDMUXMODE_ENABLE
+						  This parameter must be a value of
+						@ref OPAMP_NonInvertingInputSecondary
+						  NonInvertingInput is either VINP0,
+						VINP1, VINP2 or VINP3 */
 
 	uint32_t PgaConnect; /*!< Specifies the inverting pin in PGA mode
 				  i.e. when mode is OPAMP_PGA_MODE
@@ -128,29 +123,26 @@ typedef struct {
 				  with or without bias on VINPx) or to input
 				bias (positive gain case with bias) */
 
-	uint32_t
-	    PgaGain; /*!< Specifies the gain in PGA mode
-			  i.e. when mode is OPAMP_PGA_MODE.
-			  This parameter must be a value of @ref OPAMP_PgaGain
-			  (2, 4, 8, 16, 32 or 64) for positive gain & (-1, -3
-			,-7, -15, -31 or -63) for negative gain */
+	uint32_t PgaGain; /*!< Specifies the gain in PGA mode
+			       i.e. when mode is OPAMP_PGA_MODE.
+			       This parameter must be a value of @ref OPAMP_PgaGain
+			       (2, 4, 8, 16, 32 or 64) for positive gain & (-1, -3
+			     ,-7, -15, -31 or -63) for negative gain */
 
 	uint32_t UserTrimming; /*!< Specifies the trimming mode
 				    This parameter must be a value of @ref
 				  OPAMP_UserTrimming UserTrimming is either
 				  factory or user trimming */
 
-	uint32_t
-	    TrimmingValueP; /*!< Specifies the offset trimming value (PMOS)
-				 i.e. when UserTrimming is OPAMP_TRIMMING_USER.
-				 This parameter must be a number between
-			       Min_Data = 1 and Max_Data = 31 */
+	uint32_t TrimmingValueP; /*!< Specifies the offset trimming value (PMOS)
+				      i.e. when UserTrimming is OPAMP_TRIMMING_USER.
+				      This parameter must be a number between
+				    Min_Data = 1 and Max_Data = 31 */
 
-	uint32_t
-	    TrimmingValueN; /*!< Specifies the offset trimming value (NMOS)
-				 i.e. when UserTrimming is OPAMP_TRIMMING_USER.
-				 This parameter must be a number between
-			       Min_Data = 1 and Max_Data = 31 */
+	uint32_t TrimmingValueN; /*!< Specifies the offset trimming value (NMOS)
+				      i.e. when UserTrimming is OPAMP_TRIMMING_USER.
+				      This parameter must be a number between
+				    Min_Data = 1 and Max_Data = 31 */
 
 } OPAMP_InitTypeDef;
 
@@ -159,20 +151,15 @@ typedef struct {
  */
 
 typedef enum {
-	HAL_OPAMP_STATE_RESET =
-	    0x00000000UL, /*!< OPAMP is not yet Initialized          */
+	HAL_OPAMP_STATE_RESET = 0x00000000UL, /*!< OPAMP is not yet Initialized          */
 
-	HAL_OPAMP_STATE_READY =
-	    0x00000001UL, /*!< OPAMP is initialized and ready for use */
-	HAL_OPAMP_STATE_CALIBBUSY =
-	    0x00000002UL, /*!< OPAMP is enabled in auto calibration mode */
+	HAL_OPAMP_STATE_READY = 0x00000001UL,	  /*!< OPAMP is initialized and ready for use */
+	HAL_OPAMP_STATE_CALIBBUSY = 0x00000002UL, /*!< OPAMP is enabled in auto calibration mode */
 
-	HAL_OPAMP_STATE_BUSY =
-	    0x00000004UL, /*!< OPAMP is enabled and running in normal mode */
-	HAL_OPAMP_STATE_BUSYLOCKED =
-	    0x00000005UL, /*!< OPAMP control register is locked
-			     only system reset allows reconfiguring the opamp.
-			   */
+	HAL_OPAMP_STATE_BUSY = 0x00000004UL,	   /*!< OPAMP is enabled and running in normal mode */
+	HAL_OPAMP_STATE_BUSYLOCKED = 0x00000005UL, /*!< OPAMP control register is locked
+						      only system reset allows reconfiguring the opamp.
+						    */
 
 } HAL_OPAMP_StateTypeDef;
 
@@ -185,8 +172,8 @@ typedef struct __OPAMP_HandleTypeDef
 typedef struct
 #endif
 {
-	OPAMP_TypeDef *Instance; /*!< OPAMP instance's registers base address */
-	OPAMP_InitTypeDef Init;	 /*!< OPAMP required parameters */
+	OPAMP_TypeDef *Instance;	   /*!< OPAMP instance's registers base address */
+	OPAMP_InitTypeDef Init;		   /*!< OPAMP required parameters */
 	HAL_StatusTypeDef Status;	   /*!< OPAMP peripheral status   */
 	HAL_LockTypeDef Lock;		   /*!< Locking object          */
 	__IO HAL_OPAMP_StateTypeDef State; /*!< OPAMP communication state */
@@ -214,7 +201,7 @@ typedef uint32_t OPAMP_TrimmingValueTypeDef;
 typedef enum {
 	HAL_OPAMP_MSPINIT_CB_ID = 0x01UL,   /*!< OPAMP MspInit Callback ID   */
 	HAL_OPAMP_MSPDEINIT_CB_ID = 0x02UL, /*!< OPAMP MspDeInit Callback ID */
-	HAL_OPAMP_ALL_CB_ID = 0x03UL /*!< OPAMP All ID                        */
+	HAL_OPAMP_ALL_CB_ID = 0x03UL	    /*!< OPAMP All ID                        */
 } HAL_OPAMP_CallbackIDTypeDef;
 
 /**
@@ -240,36 +227,36 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
 /** @defgroup OPAMP_NonInvertingInput OPAMP Non Inverting Input
  * @{
  */
-#define OPAMP_NONINVERTINGINPUT_IO0                                            \
-	(0x00000000UL) /*!< Non inverting input connected to I/O VINP0         \
-			    (PA1  for OPAMP1, PA7  for OPAMP2, PB0  for        \
-			  OPAMP3, PB13 for OPAMP4, PB14 for OPAMP5, PB12 for   \
-			  OPAMP6) Note: On this STM32 series, all OPAMPx are   \
-			  not available on all devices. Refer to device        \
+#define OPAMP_NONINVERTINGINPUT_IO0                                                                                    \
+	(0x00000000UL) /*!< Non inverting input connected to I/O VINP0                                                 \
+			    (PA1  for OPAMP1, PA7  for OPAMP2, PB0  for                                                \
+			  OPAMP3, PB13 for OPAMP4, PB14 for OPAMP5, PB12 for                                           \
+			  OPAMP6) Note: On this STM32 series, all OPAMPx are                                           \
+			  not available on all devices. Refer to device                                                \
 			  datasheet for more details */
-#define OPAMP_NONINVERTINGINPUT_IO1                                            \
-	OPAMP_CSR_VPSEL_0 /*!< Non inverting input connected to I/O VINP1      \
-			       (PA3  for OPAMP1, PB14 for OPAMP2, PB13 for     \
-			     OPAMP3, PD11 for OPAMP4, PD12 for OPAMP5, PD9 for \
-			     OPAMP6) Note: On this STM32 series, all OPAMPx    \
-			     are not available on all devices. Refer to device \
+#define OPAMP_NONINVERTINGINPUT_IO1                                                                                    \
+	OPAMP_CSR_VPSEL_0 /*!< Non inverting input connected to I/O VINP1                                              \
+			       (PA3  for OPAMP1, PB14 for OPAMP2, PB13 for                                             \
+			     OPAMP3, PD11 for OPAMP4, PD12 for OPAMP5, PD9 for                                         \
+			     OPAMP6) Note: On this STM32 series, all OPAMPx                                            \
+			     are not available on all devices. Refer to device                                         \
 			     datasheet for more details */
-#define OPAMP_NONINVERTINGINPUT_IO2                                            \
-	OPAMP_CSR_VPSEL_1 /*!< Non inverting input connected to I/O VINP2      \
-			       (PA7  for OPAMP1, PB0  for OPAMP2, PA1  for     \
-			     OPAMP3, PB11 for OPAMP4, PC3  for OPAMP5, PB13    \
-			     for OPAMP6) Note: On this STM32 series, all       \
-			     OPAMPx are not available on all devices. Refer to \
+#define OPAMP_NONINVERTINGINPUT_IO2                                                                                    \
+	OPAMP_CSR_VPSEL_1 /*!< Non inverting input connected to I/O VINP2                                              \
+			       (PA7  for OPAMP1, PB0  for OPAMP2, PA1  for                                             \
+			     OPAMP3, PB11 for OPAMP4, PC3  for OPAMP5, PB13                                            \
+			     for OPAMP6) Note: On this STM32 series, all                                               \
+			     OPAMPx are not available on all devices. Refer to                                         \
 			     device datasheet for more details */
-#define OPAMP_NONINVERTINGINPUT_IO3                                            \
-	OPAMP_CSR_VPSEL /*!< Non inverting input connected to I/O VINP3        \
+#define OPAMP_NONINVERTINGINPUT_IO3                                                                                    \
+	OPAMP_CSR_VPSEL /*!< Non inverting input connected to I/O VINP3                                                \
 			     (PD14 for OPAMP2) */
-#define OPAMP_NONINVERTINGINPUT_DAC                                            \
-	OPAMP_CSR_VPSEL /*!< Non inverting input connected internally to DAC   \
-			   channel (DAC3_CH1 for OPAMP1, DAC3_CH2  for OPAMP3, \
-			   DAC4_CH1 for OPAMP4, DAC4_CH2 for OPAMP5, DAC3_CH1  \
-			   for OPAMP6) Note: On this STM32 series, all OPAMPx  \
-			   are not available on all devices. Refer to device   \
+#define OPAMP_NONINVERTINGINPUT_DAC                                                                                    \
+	OPAMP_CSR_VPSEL /*!< Non inverting input connected internally to DAC                                           \
+			   channel (DAC3_CH1 for OPAMP1, DAC3_CH2  for OPAMP3,                                         \
+			   DAC4_CH1 for OPAMP4, DAC4_CH2 for OPAMP5, DAC3_CH1                                          \
+			   for OPAMP6) Note: On this STM32 series, all OPAMPx                                          \
+			   are not available on all devices. Refer to device                                           \
 			   datasheet for more details */
 /**
  * @}
@@ -278,19 +265,19 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
 /** @defgroup OPAMP_InvertingInput OPAMP Inverting Input
  * @{
  */
-#define OPAMP_INVERTINGINPUT_IO0                                               \
-	(0x00000000UL) /*!< Inverting input connected to I/O VINM0             \
-			   (PA3  for OPAMP1, PA5  for OPAMP2, PB2  for OPAMP3, \
-			  PB10 for OPAMP4, PB15 for OPAMP5, PA1  for OPAMP6)   \
-			   Note: On this STM32 series, all OPAMPx are not      \
-			  available on all devices. Refer to device datasheet  \
+#define OPAMP_INVERTINGINPUT_IO0                                                                                       \
+	(0x00000000UL) /*!< Inverting input connected to I/O VINM0                                                     \
+			   (PA3  for OPAMP1, PA5  for OPAMP2, PB2  for OPAMP3,                                         \
+			  PB10 for OPAMP4, PB15 for OPAMP5, PA1  for OPAMP6)                                           \
+			   Note: On this STM32 series, all OPAMPx are not                                              \
+			  available on all devices. Refer to device datasheet                                          \
 			  for more details */
-#define OPAMP_INVERTINGINPUT_IO1                                               \
-	OPAMP_CSR_VMSEL_0 /*!< Inverting input connected to I/0 VINM1          \
-			      (PC5  for OPAMP1, PC5  for OPAMP2, PB10 for      \
-			     OPAMP3, PB8  for OPAMP4, PA3  for OPAMP5, PB1 for \
-			     OPAMP6) Note: On this STM32 series, all OPAMPx    \
-			     are not available on all devices. Refer to device \
+#define OPAMP_INVERTINGINPUT_IO1                                                                                       \
+	OPAMP_CSR_VMSEL_0 /*!< Inverting input connected to I/0 VINM1                                                  \
+			      (PC5  for OPAMP1, PC5  for OPAMP2, PB10 for                                              \
+			     OPAMP3, PB8  for OPAMP4, PA3  for OPAMP5, PB1 for                                         \
+			     OPAMP6) Note: On this STM32 series, all OPAMPx                                            \
+			     are not available on all devices. Refer to device                                         \
 			     datasheet for more details */
 /**
  * @}
@@ -303,19 +290,18 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
  * OPAMP_TIMERCONTROLLEDMUXMODE_TIM20_CH6
  * @{
  */
-#define OPAMP_TIMERCONTROLLEDMUXMODE_DISABLE                                   \
-	(0x00000000UL) /*!< Timer controlled Mux mode disabled */
-#define OPAMP_TIMERCONTROLLEDMUXMODE_TIM1_CH6                                  \
-	OPAMP_TCMR_T1CMEN /*!< Timer controlled Mux mode enabled using TIM1    \
+#define OPAMP_TIMERCONTROLLEDMUXMODE_DISABLE (0x00000000UL) /*!< Timer controlled Mux mode disabled */
+#define OPAMP_TIMERCONTROLLEDMUXMODE_TIM1_CH6                                                                          \
+	OPAMP_TCMR_T1CMEN /*!< Timer controlled Mux mode enabled using TIM1                                            \
 			     OC6 */
-#define OPAMP_TIMERCONTROLLEDMUXMODE_TIM8_CH6                                  \
-	OPAMP_TCMR_T8CMEN /*!< Timer controlled Mux mode enabled using TIM8    \
+#define OPAMP_TIMERCONTROLLEDMUXMODE_TIM8_CH6                                                                          \
+	OPAMP_TCMR_T8CMEN /*!< Timer controlled Mux mode enabled using TIM8                                            \
 			     OC6 */
 #if defined(TIM20)
-#define OPAMP_TIMERCONTROLLEDMUXMODE_TIM20_CH6                                 \
-	OPAMP_TCMR_T20CMEN /*!< Timer controlled Mux mode enabled using TIM20  \
-			      OC6 Note: On this STM32 series, TIM20 is not     \
-			      available on all devices. Refer to device        \
+#define OPAMP_TIMERCONTROLLEDMUXMODE_TIM20_CH6                                                                         \
+	OPAMP_TCMR_T20CMEN /*!< Timer controlled Mux mode enabled using TIM20                                          \
+			      OC6 Note: On this STM32 series, TIM20 is not                                             \
+			      available on all devices. Refer to device                                                \
 			      datasheet for more details */
 #endif
 /**
@@ -326,39 +312,39 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
  * Secondary
  * @{
  */
-#define OPAMP_SEC_NONINVERTINGINPUT_IO0                                        \
-	(0x00000000UL) /*!< Secondary non inverting input connected to I/O     \
-			  VINP0 (PA1  for OPAMP1, PA7  for OPAMP2, PB0  for    \
-			  OPAMP3, PB13 for OPAMP4, PB14 for OPAMP5, PB12 for   \
-			  OPAMP6) Note: On this STM32 series, all OPAMPx are   \
-			  not available on all devices. Refer to device        \
+#define OPAMP_SEC_NONINVERTINGINPUT_IO0                                                                                \
+	(0x00000000UL) /*!< Secondary non inverting input connected to I/O                                             \
+			  VINP0 (PA1  for OPAMP1, PA7  for OPAMP2, PB0  for                                            \
+			  OPAMP3, PB13 for OPAMP4, PB14 for OPAMP5, PB12 for                                           \
+			  OPAMP6) Note: On this STM32 series, all OPAMPx are                                           \
+			  not available on all devices. Refer to device                                                \
 			  datasheet for more details */
-#define OPAMP_SEC_NONINVERTINGINPUT_IO1                                        \
-	OPAMP_TCMR_VPSSEL_0 /*!< Secondary non inverting input connected to    \
-			       I/O VINP1 (PA3  for OPAMP1, PB14 for OPAMP2,    \
-			       PB13 for OPAMP3, PD11 for OPAMP4, PD12 for      \
-			       OPAMP5, PD9  for OPAMP6) Note: On this STM32    \
-			       series, all OPAMPx are not available on all     \
-			       devices. Refer to device datasheet for more     \
+#define OPAMP_SEC_NONINVERTINGINPUT_IO1                                                                                \
+	OPAMP_TCMR_VPSSEL_0 /*!< Secondary non inverting input connected to                                            \
+			       I/O VINP1 (PA3  for OPAMP1, PB14 for OPAMP2,                                            \
+			       PB13 for OPAMP3, PD11 for OPAMP4, PD12 for                                              \
+			       OPAMP5, PD9  for OPAMP6) Note: On this STM32                                            \
+			       series, all OPAMPx are not available on all                                             \
+			       devices. Refer to device datasheet for more                                             \
 			       details */
-#define OPAMP_SEC_NONINVERTINGINPUT_IO2                                        \
-	OPAMP_TCMR_VPSSEL_1 /*!< Secondary non inverting input connected to    \
-			       I/O VINP2 (PA7  for OPAMP1, PB0  for OPAMP2,    \
-			       PA1  for OPAMP3, PB11 for OPAMP4, PC3  for      \
-			       OPAMP5, PB13 for OPAMP6) Note: On this STM32    \
-			       series, all OPAMPx are not available on all     \
-			       devices. Refer to device datasheet for more     \
+#define OPAMP_SEC_NONINVERTINGINPUT_IO2                                                                                \
+	OPAMP_TCMR_VPSSEL_1 /*!< Secondary non inverting input connected to                                            \
+			       I/O VINP2 (PA7  for OPAMP1, PB0  for OPAMP2,                                            \
+			       PA1  for OPAMP3, PB11 for OPAMP4, PC3  for                                              \
+			       OPAMP5, PB13 for OPAMP6) Note: On this STM32                                            \
+			       series, all OPAMPx are not available on all                                             \
+			       devices. Refer to device datasheet for more                                             \
 			       details */
-#define OPAMP_SEC_NONINVERTINGINPUT_IO3                                        \
-	OPAMP_TCMR_VPSSEL /*!< Secondary non inverting input connected to I/O  \
+#define OPAMP_SEC_NONINVERTINGINPUT_IO3                                                                                \
+	OPAMP_TCMR_VPSSEL /*!< Secondary non inverting input connected to I/O                                          \
 			     VINP3 (PD14 for OPAMP2) */
-#define OPAMP_SEC_NONINVERTINGINPUT_DAC                                        \
-	OPAMP_TCMR_VPSSEL /*!< Secondary non inverting input connected         \
-			     internally to DAC channel (DAC3_CH1 for OPAMP1,   \
-			     DAC3_CH2  for OPAMP3, DAC4_CH1 for OPAMP4,        \
-			     DAC4_CH2 for OPAMP5, DAC3_CH1 for OPAMP6) Note:   \
-			     On this STM32 series, all OPAMPx are not          \
-			     available on all devices. Refer to device         \
+#define OPAMP_SEC_NONINVERTINGINPUT_DAC                                                                                \
+	OPAMP_TCMR_VPSSEL /*!< Secondary non inverting input connected                                                 \
+			     internally to DAC channel (DAC3_CH1 for OPAMP1,                                           \
+			     DAC3_CH2  for OPAMP3, DAC4_CH1 for OPAMP4,                                                \
+			     DAC4_CH2 for OPAMP5, DAC3_CH1 for OPAMP6) Note:                                           \
+			     On this STM32 series, all OPAMPx are not                                                  \
+			     available on all devices. Refer to device                                                 \
 			     datasheet for more details */
 /**
  * @}
@@ -367,46 +353,46 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
 /** @defgroup OPAMP_InvertingInputSecondary OPAMP Inverting Input Secondary
  * @{
  */
-#define OPAMP_SEC_INVERTINGINPUT_IO0                                           \
-	(0x00000000UL) /*!< OPAMP secondary mode is standalone mode - Only     \
-			  applicable if @ref OPAMP_STANDALONE_MODE has been    \
-			  configured by call to @ref HAL_OPAMP_Init().         \
-			    Secondary inverting input connected to I/O VINM0   \
-			    (PA3  for OPAMP1, PA5  for OPAMP2, PB2  for        \
-			  OPAMP3, PB10 for OPAMP4, PB15 for OPAMP5, PA1  for   \
-			  OPAMP6) Note: On this STM32 series, all OPAMPx are   \
-			  not available on all devices. Refer to device        \
+#define OPAMP_SEC_INVERTINGINPUT_IO0                                                                                   \
+	(0x00000000UL) /*!< OPAMP secondary mode is standalone mode - Only                                             \
+			  applicable if @ref OPAMP_STANDALONE_MODE has been                                            \
+			  configured by call to @ref HAL_OPAMP_Init().                                                 \
+			    Secondary inverting input connected to I/O VINM0                                           \
+			    (PA3  for OPAMP1, PA5  for OPAMP2, PB2  for                                                \
+			  OPAMP3, PB10 for OPAMP4, PB15 for OPAMP5, PA1  for                                           \
+			  OPAMP6) Note: On this STM32 series, all OPAMPx are                                           \
+			  not available on all devices. Refer to device                                                \
 			  datasheet for more details */
-#define OPAMP_SEC_INVERTINGINPUT_IO1                                           \
-	OPAMP_TCMR_VMSSEL /*!< OPAMP secondary mode is standalone mode - Only  \
-			     applicable if @ref OPAMP_STANDALONE_MODE has been \
-			     configured by call to @ref HAL_OPAMP_Init().      \
-			       Secondary inverting input connected to I/0      \
-			     VINM1 (PC5  for OPAMP1, PC5  for OPAMP2, PB10 for \
-			     OPAMP3, PB8  for OPAMP4, PA3  for OPAMP5, PB1 for \
-			     OPAMP6) Note: On this STM32 series, all OPAMPx    \
-			     are not available on all devices. Refer to device \
+#define OPAMP_SEC_INVERTINGINPUT_IO1                                                                                   \
+	OPAMP_TCMR_VMSSEL /*!< OPAMP secondary mode is standalone mode - Only                                          \
+			     applicable if @ref OPAMP_STANDALONE_MODE has been                                         \
+			     configured by call to @ref HAL_OPAMP_Init().                                              \
+			       Secondary inverting input connected to I/0                                              \
+			     VINM1 (PC5  for OPAMP1, PC5  for OPAMP2, PB10 for                                         \
+			     OPAMP3, PB8  for OPAMP4, PA3  for OPAMP5, PB1 for                                         \
+			     OPAMP6) Note: On this STM32 series, all OPAMPx                                            \
+			     are not available on all devices. Refer to device                                         \
 			     datasheet for more details */
-#define OPAMP_SEC_INVERTINGINPUT_PGA                                           \
-	(0x00000000UL) /*!< OPAMP secondary mode is PGA mode - Only applicable \
-			  if configured mode through call to @ref              \
-			  HAL_OPAMP_Init() is @ref OPAMP_PGA_MODE or @ref      \
-			  OPAMP_FOLLOWER_MODE. OPAMP secondary inverting input \
-			  is:                                                  \
-			     - Not connected if configured mode is @ref        \
-			  OPAMP_FOLLOWER_MODE                                  \
-			     - Not connected if configured mode is @ref        \
-			  OPAMP_PGA_MODE and PGA connect mode is @ref          \
-			  OPAMP_PGA_CONNECT_INVERTINGINPUT_NO                  \
-			     - Connected to VINM0 and possibly VINM1 if any of \
-			  the other modes as been configured (see @ref         \
-			  OPAMP_PgaConnect description for more details on PGA \
+#define OPAMP_SEC_INVERTINGINPUT_PGA                                                                                   \
+	(0x00000000UL) /*!< OPAMP secondary mode is PGA mode - Only applicable                                         \
+			  if configured mode through call to @ref                                                      \
+			  HAL_OPAMP_Init() is @ref OPAMP_PGA_MODE or @ref                                              \
+			  OPAMP_FOLLOWER_MODE. OPAMP secondary inverting input                                         \
+			  is:                                                                                          \
+			     - Not connected if configured mode is @ref                                                \
+			  OPAMP_FOLLOWER_MODE                                                                          \
+			     - Not connected if configured mode is @ref                                                \
+			  OPAMP_PGA_MODE and PGA connect mode is @ref                                                  \
+			  OPAMP_PGA_CONNECT_INVERTINGINPUT_NO                                                          \
+			     - Connected to VINM0 and possibly VINM1 if any of                                         \
+			  the other modes as been configured (see @ref                                                 \
+			  OPAMP_PgaConnect description for more details on PGA                                         \
 			  connection modes) */
-#define OPAMP_SEC_INVERTINGINPUT_FOLLOWER                                      \
-	OPAMP_TCMR_VMSSEL /*!< OPAMP secondary mode is Follower mode - Only    \
-			     applicable if configured mode through call to     \
-			     @ref HAL_OPAMP_Init() is @ref OPAMP_PGA_MODE or   \
-			     @ref OPAMP_FOLLOWER_MODE. OPAMP secondary         \
+#define OPAMP_SEC_INVERTINGINPUT_FOLLOWER                                                                              \
+	OPAMP_TCMR_VMSSEL /*!< OPAMP secondary mode is Follower mode - Only                                            \
+			     applicable if configured mode through call to                                             \
+			     @ref HAL_OPAMP_Init() is @ref OPAMP_PGA_MODE or                                           \
+			     @ref OPAMP_FOLLOWER_MODE. OPAMP secondary                                                 \
 			     inverting input is not connected. */
 /**
  * @}
@@ -415,28 +401,27 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
 /** @defgroup OPAMP_PgaConnect OPAMP Pga Connect
  * @{
  */
-#define OPAMP_PGA_CONNECT_INVERTINGINPUT_NO                                    \
-	(0x00000000UL) /*!< In PGA mode, the inverting input is not connected  \
+#define OPAMP_PGA_CONNECT_INVERTINGINPUT_NO                                                                            \
+	(0x00000000UL) /*!< In PGA mode, the inverting input is not connected                                          \
 			*/
-#define OPAMP_PGA_CONNECT_INVERTINGINPUT_IO0                                   \
-	OPAMP_CSR_PGGAIN_4 /*!< In PGA mode, the inverting input is connected  \
+#define OPAMP_PGA_CONNECT_INVERTINGINPUT_IO0                                                                           \
+	OPAMP_CSR_PGGAIN_4 /*!< In PGA mode, the inverting input is connected                                          \
 			      to VINM0 for filtering */
-#define OPAMP_PGA_CONNECT_INVERTINGINPUT_IO0_BIAS                              \
-	OPAMP_CSR_PGGAIN_3 /*!< In PGA mode, the inverting input is connected  \
-			     to VINM0                                          \
-			     - Input signal on VINM0, bias on VINPx: negative  \
-			     gain                                              \
-			     - Bias on VINM0, input signal on VINPx: positive  \
+#define OPAMP_PGA_CONNECT_INVERTINGINPUT_IO0_BIAS                                                                      \
+	OPAMP_CSR_PGGAIN_3 /*!< In PGA mode, the inverting input is connected                                          \
+			     to VINM0                                                                                  \
+			     - Input signal on VINM0, bias on VINPx: negative                                          \
+			     gain                                                                                      \
+			     - Bias on VINM0, input signal on VINPx: positive                                          \
 			     gain */
-#define OPAMP_PGA_CONNECT_INVERTINGINPUT_IO0_IO1_BIAS                          \
-	(OPAMP_CSR_PGGAIN_4 |                                                  \
-	 OPAMP_CSR_PGGAIN_3) /*!< In PGA mode, the inverting input is          \
-			       connected to VINM0                              \
-			       - Input signal on VINM0, bias on VINPx:         \
-			       negative gain                                   \
-			       - Bias on VINM0, input signal on VINPx:         \
-			       positive gain And VINM1 is connected too for    \
-			       filtering */
+#define OPAMP_PGA_CONNECT_INVERTINGINPUT_IO0_IO1_BIAS                                                                  \
+	(OPAMP_CSR_PGGAIN_4 | OPAMP_CSR_PGGAIN_3) /*!< In PGA mode, the inverting input is                             \
+						    connected to VINM0                                                 \
+						    - Input signal on VINM0, bias on VINPx:                            \
+						    negative gain                                                      \
+						    - Bias on VINM0, input signal on VINPx:                            \
+						    positive gain And VINM1 is connected too for                       \
+						    filtering */
 /**
  * @}
  */
@@ -453,20 +438,12 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
  * more details
  * @{
  */
-#define OPAMP_PGA_GAIN_2_OR_MINUS_1                                            \
-	(0x00000000UL) /*!< PGA gain could be 2  or -1  */
-#define OPAMP_PGA_GAIN_4_OR_MINUS_3                                            \
-	(OPAMP_CSR_PGGAIN_0) /*!< PGA gain could be 4  or -3  */
-#define OPAMP_PGA_GAIN_8_OR_MINUS_7                                            \
-	(OPAMP_CSR_PGGAIN_1) /*!< PGA gain could be 8  or -7  */
-#define OPAMP_PGA_GAIN_16_OR_MINUS_15                                          \
-	(OPAMP_CSR_PGGAIN_1 |                                                  \
-	 OPAMP_CSR_PGGAIN_0) /*!< PGA gain could be 16 or -15 */
-#define OPAMP_PGA_GAIN_32_OR_MINUS_31                                          \
-	(OPAMP_CSR_PGGAIN_2) /*!< PGA gain could be 32 or -31 */
-#define OPAMP_PGA_GAIN_64_OR_MINUS_63                                          \
-	(OPAMP_CSR_PGGAIN_2 |                                                  \
-	 OPAMP_CSR_PGGAIN_0) /*!< PGA gain could be 64 or -63 */
+#define OPAMP_PGA_GAIN_2_OR_MINUS_1 (0x00000000UL)				/*!< PGA gain could be 2  or -1  */
+#define OPAMP_PGA_GAIN_4_OR_MINUS_3 (OPAMP_CSR_PGGAIN_0)			/*!< PGA gain could be 4  or -3  */
+#define OPAMP_PGA_GAIN_8_OR_MINUS_7 (OPAMP_CSR_PGGAIN_1)			/*!< PGA gain could be 8  or -7  */
+#define OPAMP_PGA_GAIN_16_OR_MINUS_15 (OPAMP_CSR_PGGAIN_1 | OPAMP_CSR_PGGAIN_0) /*!< PGA gain could be 16 or -15 */
+#define OPAMP_PGA_GAIN_32_OR_MINUS_31 (OPAMP_CSR_PGGAIN_2)			/*!< PGA gain could be 32 or -31 */
+#define OPAMP_PGA_GAIN_64_OR_MINUS_63 (OPAMP_CSR_PGGAIN_2 | OPAMP_CSR_PGGAIN_0) /*!< PGA gain could be 64 or -63 */
 /**
  * @}
  */
@@ -474,11 +451,10 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
 /** @defgroup OPAMP_PowerMode OPAMP PowerMode
  * @{
  */
-#define OPAMP_POWERMODE_NORMALSPEED                                            \
-	(0x00000000UL) /*!< Output in normal mode                              \
-			*/
-#define OPAMP_POWERMODE_HIGHSPEED                                              \
-	OPAMP_CSR_HIGHSPEEDEN /*!< Output in highspeed mode */
+#define OPAMP_POWERMODE_NORMALSPEED                                                                                    \
+	(0x00000000UL)					/*!< Output in normal mode                                     \
+							 */
+#define OPAMP_POWERMODE_HIGHSPEED OPAMP_CSR_HIGHSPEEDEN /*!< Output in highspeed mode */
 /**
  * @}
  */
@@ -495,8 +471,8 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
 /** @defgroup OPAMP_FactoryTrimming OPAMP Factory Trimming
  * @{
  */
-#define OPAMP_FACTORYTRIMMING_DUMMY                                            \
-	(0xFFFFFFFFUL) /*!< Dummy trimming value                               \
+#define OPAMP_FACTORYTRIMMING_DUMMY                                                                                    \
+	(0xFFFFFFFFUL) /*!< Dummy trimming value                                                                       \
 			*/
 
 #define OPAMP_FACTORYTRIMMING_N (0x00000000UL) /*!< Offset trimming N */
@@ -531,9 +507,7 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
 #define OPAMP_INPUT_INVERTING (24UL)	/*!< Inverting input */
 #define OPAMP_INPUT_NONINVERTING (19UL) /*!< Non inverting input */
 
-#define IS_OPAMP_INPUT(INPUT)                                                  \
-	(((INPUT) == OPAMP_INPUT_INVERTING) ||                                 \
-	 ((INPUT) == OPAMP_INPUT_NONINVERTING))
+#define IS_OPAMP_INPUT(INPUT) (((INPUT) == OPAMP_INPUT_INVERTING) || ((INPUT) == OPAMP_INPUT_NONINVERTING))
 /**
  * @}
  */
@@ -548,76 +522,57 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
  * @{
  */
 
-#define IS_OPAMP_FUNCTIONAL_NORMALMODE(INPUT)                                  \
-	(((INPUT) == OPAMP_STANDALONE_MODE) || ((INPUT) == OPAMP_PGA_MODE) ||  \
-	 ((INPUT) == OPAMP_FOLLOWER_MODE))
+#define IS_OPAMP_FUNCTIONAL_NORMALMODE(INPUT)                                                                          \
+	(((INPUT) == OPAMP_STANDALONE_MODE) || ((INPUT) == OPAMP_PGA_MODE) || ((INPUT) == OPAMP_FOLLOWER_MODE))
 
-#define IS_OPAMP_NONINVERTING_INPUT(INPUT)                                     \
-	(((INPUT) == OPAMP_NONINVERTINGINPUT_IO0) ||                           \
-	 ((INPUT) == OPAMP_NONINVERTINGINPUT_IO1) ||                           \
-	 ((INPUT) == OPAMP_NONINVERTINGINPUT_IO2) ||                           \
-	 ((INPUT) == OPAMP_NONINVERTINGINPUT_IO3) ||                           \
+#define IS_OPAMP_NONINVERTING_INPUT(INPUT)                                                                             \
+	(((INPUT) == OPAMP_NONINVERTINGINPUT_IO0) || ((INPUT) == OPAMP_NONINVERTINGINPUT_IO1) ||                       \
+	 ((INPUT) == OPAMP_NONINVERTINGINPUT_IO2) || ((INPUT) == OPAMP_NONINVERTINGINPUT_IO3) ||                       \
 	 ((INPUT) == OPAMP_NONINVERTINGINPUT_DAC))
 
-#define IS_OPAMP_INVERTING_INPUT(INPUT)                                        \
-	(((INPUT) == OPAMP_INVERTINGINPUT_IO0) ||                              \
-	 ((INPUT) == OPAMP_INVERTINGINPUT_IO1))
+#define IS_OPAMP_INVERTING_INPUT(INPUT) (((INPUT) == OPAMP_INVERTINGINPUT_IO0) || ((INPUT) == OPAMP_INVERTINGINPUT_IO1))
 
 #if defined(TIM20)
-#define IS_OPAMP_TIMERCONTROLLED_MUXMODE(MUXMODE)                              \
-	((MUXMODE) <= (OPAMP_TIMERCONTROLLEDMUXMODE_TIM1_CH6 |                 \
-		       OPAMP_TIMERCONTROLLEDMUXMODE_TIM8_CH6 |                 \
+#define IS_OPAMP_TIMERCONTROLLED_MUXMODE(MUXMODE)                                                                      \
+	((MUXMODE) <= (OPAMP_TIMERCONTROLLEDMUXMODE_TIM1_CH6 | OPAMP_TIMERCONTROLLEDMUXMODE_TIM8_CH6 |                 \
 		       OPAMP_TIMERCONTROLLEDMUXMODE_TIM20_CH6))
 #else
-#define IS_OPAMP_TIMERCONTROLLED_MUXMODE(MUXMODE)                              \
-	((MUXMODE) <= (OPAMP_TIMERCONTROLLEDMUXMODE_TIM1_CH6 |                 \
-		       OPAMP_TIMERCONTROLLEDMUXMODE_TIM8_CH6))
+#define IS_OPAMP_TIMERCONTROLLED_MUXMODE(MUXMODE)                                                                      \
+	((MUXMODE) <= (OPAMP_TIMERCONTROLLEDMUXMODE_TIM1_CH6 | OPAMP_TIMERCONTROLLEDMUXMODE_TIM8_CH6))
 #endif
 
-#define IS_OPAMP_SEC_NONINVERTING_INPUT(INPUT)                                 \
-	(((INPUT) == OPAMP_SEC_NONINVERTINGINPUT_IO0) ||                       \
-	 ((INPUT) == OPAMP_SEC_NONINVERTINGINPUT_IO1) ||                       \
-	 ((INPUT) == OPAMP_SEC_NONINVERTINGINPUT_IO2) ||                       \
-	 ((INPUT) == OPAMP_SEC_NONINVERTINGINPUT_IO3) ||                       \
+#define IS_OPAMP_SEC_NONINVERTING_INPUT(INPUT)                                                                         \
+	(((INPUT) == OPAMP_SEC_NONINVERTINGINPUT_IO0) || ((INPUT) == OPAMP_SEC_NONINVERTINGINPUT_IO1) ||               \
+	 ((INPUT) == OPAMP_SEC_NONINVERTINGINPUT_IO2) || ((INPUT) == OPAMP_SEC_NONINVERTINGINPUT_IO3) ||               \
 	 ((INPUT) == OPAMP_SEC_NONINVERTINGINPUT_DAC))
 
-#define IS_OPAMP_SEC_INVERTING_INPUT(INPUT)                                    \
-	(((INPUT) == OPAMP_SEC_INVERTINGINPUT_IO0) ||                          \
-	 ((INPUT) == OPAMP_SEC_INVERTINGINPUT_IO1) ||                          \
-	 ((INPUT) == OPAMP_SEC_INVERTINGINPUT_PGA) ||                          \
-	 ((INPUT) == OPAMP_SEC_INVERTINGINPUT_FOLLOWER))
+#define IS_OPAMP_SEC_INVERTING_INPUT(INPUT)                                                                            \
+	(((INPUT) == OPAMP_SEC_INVERTINGINPUT_IO0) || ((INPUT) == OPAMP_SEC_INVERTINGINPUT_IO1) ||                     \
+	 ((INPUT) == OPAMP_SEC_INVERTINGINPUT_PGA) || ((INPUT) == OPAMP_SEC_INVERTINGINPUT_FOLLOWER))
 
-#define IS_OPAMP_PGACONNECT(CONNECT)                                           \
-	(((CONNECT) == OPAMP_PGA_CONNECT_INVERTINGINPUT_NO) ||                 \
-	 ((CONNECT) == OPAMP_PGA_CONNECT_INVERTINGINPUT_IO0) ||                \
-	 ((CONNECT) == OPAMP_PGA_CONNECT_INVERTINGINPUT_IO0_BIAS) ||           \
+#define IS_OPAMP_PGACONNECT(CONNECT)                                                                                   \
+	(((CONNECT) == OPAMP_PGA_CONNECT_INVERTINGINPUT_NO) || ((CONNECT) == OPAMP_PGA_CONNECT_INVERTINGINPUT_IO0) ||  \
+	 ((CONNECT) == OPAMP_PGA_CONNECT_INVERTINGINPUT_IO0_BIAS) ||                                                   \
 	 ((CONNECT) == OPAMP_PGA_CONNECT_INVERTINGINPUT_IO0_IO1_BIAS))
 
-#define IS_OPAMP_PGA_GAIN(GAIN)                                                \
-	(((GAIN) == OPAMP_PGA_GAIN_2_OR_MINUS_1) ||                            \
-	 ((GAIN) == OPAMP_PGA_GAIN_4_OR_MINUS_3) ||                            \
-	 ((GAIN) == OPAMP_PGA_GAIN_8_OR_MINUS_7) ||                            \
-	 ((GAIN) == OPAMP_PGA_GAIN_16_OR_MINUS_15) ||                          \
-	 ((GAIN) == OPAMP_PGA_GAIN_32_OR_MINUS_31) ||                          \
-	 ((GAIN) == OPAMP_PGA_GAIN_64_OR_MINUS_63))
+#define IS_OPAMP_PGA_GAIN(GAIN)                                                                                        \
+	(((GAIN) == OPAMP_PGA_GAIN_2_OR_MINUS_1) || ((GAIN) == OPAMP_PGA_GAIN_4_OR_MINUS_3) ||                         \
+	 ((GAIN) == OPAMP_PGA_GAIN_8_OR_MINUS_7) || ((GAIN) == OPAMP_PGA_GAIN_16_OR_MINUS_15) ||                       \
+	 ((GAIN) == OPAMP_PGA_GAIN_32_OR_MINUS_31) || ((GAIN) == OPAMP_PGA_GAIN_64_OR_MINUS_63))
 
-#define IS_OPAMP_POWERMODE(POWERMODE)                                          \
-	(((POWERMODE) == OPAMP_POWERMODE_NORMALSPEED) ||                       \
-	 ((POWERMODE) == OPAMP_POWERMODE_HIGHSPEED))
+#define IS_OPAMP_POWERMODE(POWERMODE)                                                                                  \
+	(((POWERMODE) == OPAMP_POWERMODE_NORMALSPEED) || ((POWERMODE) == OPAMP_POWERMODE_HIGHSPEED))
 
-#define IS_OPAMP_TRIMMING(TRIMMING)                                            \
-	(((TRIMMING) == OPAMP_TRIMMING_FACTORY) ||                             \
-	 ((TRIMMING) == OPAMP_TRIMMING_USER))
+#define IS_OPAMP_TRIMMING(TRIMMING) (((TRIMMING) == OPAMP_TRIMMING_FACTORY) || ((TRIMMING) == OPAMP_TRIMMING_USER))
 
-#define IS_OPAMP_FACTORYTRIMMING(TRIMMING)                                     \
-	(((TRIMMING) == OPAMP_FACTORYTRIMMING_N) ||                            \
-	 ((TRIMMING) == OPAMP_FACTORYTRIMMING_P))
+#define IS_OPAMP_FACTORYTRIMMING(TRIMMING)                                                                             \
+	(((TRIMMING) == OPAMP_FACTORYTRIMMING_N) || ((TRIMMING) == OPAMP_FACTORYTRIMMING_P))
 
 #define IS_OPAMP_TRIMMINGVALUE(TRIMMINGVALUE) ((TRIMMINGVALUE) <= 0x1FUL)
 
-#define IS_OPAMP_VREF(VREF)                                                    \
-	(((VREF) == OPAMP_VREF_3VDDA) || ((VREF) == OPAMP_VREF_10VDDA) ||      \
-	 ((VREF) == OPAMP_VREF_50VDDA) || ((VREF) == OPAMP_VREF_90VDDA))
+#define IS_OPAMP_VREF(VREF)                                                                                            \
+	(((VREF) == OPAMP_VREF_3VDDA) || ((VREF) == OPAMP_VREF_10VDDA) || ((VREF) == OPAMP_VREF_50VDDA) ||             \
+	 ((VREF) == OPAMP_VREF_90VDDA))
 /**
  * @}
  */
@@ -631,8 +586,7 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
  * @param  __HANDLE__ OPAMP handle.
  * @retval None
  */
-#define __HAL_OPAMP_RESET_HANDLE_STATE(__HANDLE__)                             \
-	((__HANDLE__)->State = HAL_OPAMP_STATE_RESET)
+#define __HAL_OPAMP_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_OPAMP_STATE_RESET)
 
 /**
  * @}
@@ -684,13 +638,9 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp);
  * ************************************************/
 #if (USE_HAL_OPAMP_REGISTER_CALLBACKS == 1)
 /* OPAMP callback registering/unregistering */
-HAL_StatusTypeDef
-HAL_OPAMP_RegisterCallback(OPAMP_HandleTypeDef *hopamp,
-			   HAL_OPAMP_CallbackIDTypeDef CallbackId,
-			   pOPAMP_CallbackTypeDef pCallback);
-HAL_StatusTypeDef
-HAL_OPAMP_UnRegisterCallback(OPAMP_HandleTypeDef *hopamp,
-			     HAL_OPAMP_CallbackIDTypeDef CallbackId);
+HAL_StatusTypeDef HAL_OPAMP_RegisterCallback(OPAMP_HandleTypeDef *hopamp, HAL_OPAMP_CallbackIDTypeDef CallbackId,
+					     pOPAMP_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_OPAMP_UnRegisterCallback(OPAMP_HandleTypeDef *hopamp, HAL_OPAMP_CallbackIDTypeDef CallbackId);
 #endif /* USE_HAL_OPAMP_REGISTER_CALLBACKS */
 
 HAL_StatusTypeDef HAL_OPAMP_Lock(OPAMP_HandleTypeDef *hopamp);
@@ -707,8 +657,7 @@ HAL_StatusTypeDef HAL_OPAMP_LockTimerMux(OPAMP_HandleTypeDef *hopamp);
 /* Peripheral State functions
  * **************************************************/
 HAL_OPAMP_StateTypeDef HAL_OPAMP_GetState(OPAMP_HandleTypeDef *hopamp);
-OPAMP_TrimmingValueTypeDef HAL_OPAMP_GetTrimOffset(OPAMP_HandleTypeDef *hopamp,
-						   uint32_t trimmingoffset);
+OPAMP_TrimmingValueTypeDef HAL_OPAMP_GetTrimOffset(OPAMP_HandleTypeDef *hopamp, uint32_t trimmingoffset);
 
 /**
  * @}

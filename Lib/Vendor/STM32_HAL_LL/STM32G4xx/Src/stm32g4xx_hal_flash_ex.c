@@ -95,23 +95,15 @@
  * @{
  */
 static void FLASH_MassErase(uint32_t Banks);
-static HAL_StatusTypeDef FLASH_OB_WRPConfig(uint32_t WRPArea,
-					    uint32_t WRPStartOffset,
-					    uint32_t WRDPEndOffset);
+static HAL_StatusTypeDef FLASH_OB_WRPConfig(uint32_t WRPArea, uint32_t WRPStartOffset, uint32_t WRDPEndOffset);
 static HAL_StatusTypeDef FLASH_OB_RDPConfig(uint32_t RDPLevel);
-static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType,
-					     uint32_t UserConfig);
-static HAL_StatusTypeDef FLASH_OB_PCROPConfig(uint32_t PCROPConfig,
-					      uint32_t PCROPStartAddr,
-					      uint32_t PCROPEndAddr);
-static void FLASH_OB_GetWRP(uint32_t WRPArea, uint32_t *WRPStartOffset,
-			    uint32_t *WRDPEndOffset);
+static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig);
+static HAL_StatusTypeDef FLASH_OB_PCROPConfig(uint32_t PCROPConfig, uint32_t PCROPStartAddr, uint32_t PCROPEndAddr);
+static void FLASH_OB_GetWRP(uint32_t WRPArea, uint32_t *WRPStartOffset, uint32_t *WRDPEndOffset);
 static uint32_t FLASH_OB_GetRDP(void);
 static uint32_t FLASH_OB_GetUser(void);
-static void FLASH_OB_GetPCROP(uint32_t *PCROPConfig, uint32_t *PCROPStartAddr,
-			      uint32_t *PCROPEndAddr);
-static HAL_StatusTypeDef FLASH_OB_SecMemConfig(uint32_t SecMemBank,
-					       uint32_t SecMemSize);
+static void FLASH_OB_GetPCROP(uint32_t *PCROPConfig, uint32_t *PCROPStartAddr, uint32_t *PCROPEndAddr);
+static HAL_StatusTypeDef FLASH_OB_SecMemConfig(uint32_t SecMemBank, uint32_t SecMemSize);
 static void FLASH_OB_GetSecMem(uint32_t SecMemBank, uint32_t *SecMemSize);
 static HAL_StatusTypeDef FLASH_OB_BootLockConfig(uint32_t BootLockConfig);
 static uint32_t FLASH_OB_GetBootLock(void);
@@ -148,8 +140,7 @@ FLASH programming operations Operations.
  * all the pages have been correctly erased).
  * @retval HAL_Status
  */
-HAL_StatusTypeDef HAL_FLASHEx_Erase(FLASH_EraseInitTypeDef *pEraseInit,
-				    uint32_t *PageError)
+HAL_StatusTypeDef HAL_FLASHEx_Erase(FLASH_EraseInitTypeDef *pEraseInit, uint32_t *PageError)
 {
 	HAL_StatusTypeDef status;
 	uint32_t page_index;
@@ -172,11 +163,9 @@ HAL_StatusTypeDef HAL_FLASHEx_Erase(FLASH_EraseInitTypeDef *pEraseInit,
 			if (READ_BIT(FLASH->ACR, FLASH_ACR_DCEN) != 0U) {
 				/* Disable data cache  */
 				__HAL_FLASH_DATA_CACHE_DISABLE();
-				pFlash.CacheToReactivate =
-				    FLASH_CACHE_ICACHE_DCACHE_ENABLED;
+				pFlash.CacheToReactivate = FLASH_CACHE_ICACHE_DCACHE_ENABLED;
 			} else {
-				pFlash.CacheToReactivate =
-				    FLASH_CACHE_ICACHE_ENABLED;
+				pFlash.CacheToReactivate = FLASH_CACHE_ICACHE_ENABLED;
 			}
 		} else if (READ_BIT(FLASH->ACR, FLASH_ACR_DCEN) != 0U) {
 			/* Disable data cache  */
@@ -191,8 +180,7 @@ HAL_StatusTypeDef HAL_FLASHEx_Erase(FLASH_EraseInitTypeDef *pEraseInit,
 			FLASH_MassErase(pEraseInit->Banks);
 
 			/* Wait for last operation to be completed */
-			status = FLASH_WaitForLastOperation(
-			    (uint32_t)FLASH_TIMEOUT_VALUE);
+			status = FLASH_WaitForLastOperation((uint32_t)FLASH_TIMEOUT_VALUE);
 
 #if defined(FLASH_OPTR_DBANK)
 			/* If the erase operation is completed, disable the MER1
@@ -207,20 +195,16 @@ HAL_StatusTypeDef HAL_FLASHEx_Erase(FLASH_EraseInitTypeDef *pEraseInit,
 			/*Initialization of PageError variable*/
 			*PageError = 0xFFFFFFFFU;
 
-			for (page_index = pEraseInit->Page;
-			     page_index <
-			     (pEraseInit->Page + pEraseInit->NbPages);
+			for (page_index = pEraseInit->Page; page_index < (pEraseInit->Page + pEraseInit->NbPages);
 			     page_index++) {
 				FLASH_PageErase(page_index, pEraseInit->Banks);
 
 				/* Wait for last operation to be completed */
-				status = FLASH_WaitForLastOperation(
-				    (uint32_t)FLASH_TIMEOUT_VALUE);
+				status = FLASH_WaitForLastOperation((uint32_t)FLASH_TIMEOUT_VALUE);
 
 				/* If the erase operation is completed, disable
 				 * the PER Bit */
-				CLEAR_BIT(FLASH->CR,
-					  (FLASH_CR_PER | FLASH_CR_PNB));
+				CLEAR_BIT(FLASH->CR, (FLASH_CR_PER | FLASH_CR_PNB));
 
 				if (status != HAL_OK) {
 					/* In case of error, stop erase
@@ -267,8 +251,7 @@ HAL_StatusTypeDef HAL_FLASHEx_Erase_IT(FLASH_EraseInitTypeDef *pEraseInit)
 		if (READ_BIT(FLASH->ACR, FLASH_ACR_DCEN) != 0U) {
 			/* Disable data cache  */
 			__HAL_FLASH_DATA_CACHE_DISABLE();
-			pFlash.CacheToReactivate =
-			    FLASH_CACHE_ICACHE_DCACHE_ENABLED;
+			pFlash.CacheToReactivate = FLASH_CACHE_ICACHE_DCACHE_ENABLED;
 		} else {
 			pFlash.CacheToReactivate = FLASH_CACHE_ICACHE_ENABLED;
 		}
@@ -330,9 +313,7 @@ HAL_StatusTypeDef HAL_FLASHEx_OBProgram(FLASH_OBProgramInitTypeDef *pOBInit)
 	/* Write protection configuration */
 	if ((pOBInit->OptionType & OPTIONBYTE_WRP) != 0U) {
 		/* Configure of Write protection on the selected area */
-		if (FLASH_OB_WRPConfig(pOBInit->WRPArea,
-				       pOBInit->WRPStartOffset,
-				       pOBInit->WRPEndOffset) != HAL_OK) {
+		if (FLASH_OB_WRPConfig(pOBInit->WRPArea, pOBInit->WRPStartOffset, pOBInit->WRPEndOffset) != HAL_OK) {
 			status = HAL_ERROR;
 		}
 	}
@@ -348,8 +329,7 @@ HAL_StatusTypeDef HAL_FLASHEx_OBProgram(FLASH_OBProgramInitTypeDef *pOBInit)
 	/* User Configuration */
 	if ((pOBInit->OptionType & OPTIONBYTE_USER) != 0U) {
 		/* Configure the user option bytes */
-		if (FLASH_OB_UserConfig(pOBInit->USERType,
-					pOBInit->USERConfig) != HAL_OK) {
+		if (FLASH_OB_UserConfig(pOBInit->USERType, pOBInit->USERConfig) != HAL_OK) {
 			status = HAL_ERROR;
 		}
 	}
@@ -358,9 +338,8 @@ HAL_StatusTypeDef HAL_FLASHEx_OBProgram(FLASH_OBProgramInitTypeDef *pOBInit)
 	if ((pOBInit->OptionType & OPTIONBYTE_PCROP) != 0U) {
 		if (pOBInit->PCROPStartAddr != pOBInit->PCROPEndAddr) {
 			/* Configure the Proprietary code readout protection */
-			if (FLASH_OB_PCROPConfig(
-				pOBInit->PCROPConfig, pOBInit->PCROPStartAddr,
-				pOBInit->PCROPEndAddr) != HAL_OK) {
+			if (FLASH_OB_PCROPConfig(pOBInit->PCROPConfig, pOBInit->PCROPStartAddr,
+						 pOBInit->PCROPEndAddr) != HAL_OK) {
 				status = HAL_ERROR;
 			}
 		}
@@ -369,8 +348,7 @@ HAL_StatusTypeDef HAL_FLASHEx_OBProgram(FLASH_OBProgramInitTypeDef *pOBInit)
 	/* Securable memory Configuration */
 	if ((pOBInit->OptionType & OPTIONBYTE_SEC) != 0U) {
 		/* Configure the securable memory area */
-		if (FLASH_OB_SecMemConfig(pOBInit->SecBank, pOBInit->SecSize) !=
-		    HAL_OK) {
+		if (FLASH_OB_SecMemConfig(pOBInit->SecBank, pOBInit->SecSize) != HAL_OK) {
 			status = HAL_ERROR;
 		}
 	}
@@ -378,8 +356,7 @@ HAL_StatusTypeDef HAL_FLASHEx_OBProgram(FLASH_OBProgramInitTypeDef *pOBInit)
 	/* Boot Entry Point Configuration */
 	if ((pOBInit->OptionType & OPTIONBYTE_BOOT_LOCK) != 0U) {
 		/* Configure the boot unique entry point option */
-		if (FLASH_OB_BootLockConfig(pOBInit->BootEntryPoint) !=
-		    HAL_OK) {
+		if (FLASH_OB_BootLockConfig(pOBInit->BootEntryPoint) != HAL_OK) {
 			status = HAL_ERROR;
 		}
 	}
@@ -404,19 +381,15 @@ void HAL_FLASHEx_OBGetConfig(FLASH_OBProgramInitTypeDef *pOBInit)
 	pOBInit->OptionType = (OPTIONBYTE_RDP | OPTIONBYTE_USER);
 
 #if defined(FLASH_OPTR_DBANK)
-	if ((pOBInit->WRPArea == OB_WRPAREA_BANK1_AREAA) ||
-	    (pOBInit->WRPArea == OB_WRPAREA_BANK1_AREAB) ||
-	    (pOBInit->WRPArea == OB_WRPAREA_BANK2_AREAA) ||
-	    (pOBInit->WRPArea == OB_WRPAREA_BANK2_AREAB))
+	if ((pOBInit->WRPArea == OB_WRPAREA_BANK1_AREAA) || (pOBInit->WRPArea == OB_WRPAREA_BANK1_AREAB) ||
+	    (pOBInit->WRPArea == OB_WRPAREA_BANK2_AREAA) || (pOBInit->WRPArea == OB_WRPAREA_BANK2_AREAB))
 #else
-	if ((pOBInit->WRPArea == OB_WRPAREA_BANK1_AREAA) ||
-	    (pOBInit->WRPArea == OB_WRPAREA_BANK1_AREAB))
+	if ((pOBInit->WRPArea == OB_WRPAREA_BANK1_AREAA) || (pOBInit->WRPArea == OB_WRPAREA_BANK1_AREAB))
 #endif
 	{
 		pOBInit->OptionType |= OPTIONBYTE_WRP;
 		/* Get write protection on the selected area */
-		FLASH_OB_GetWRP(pOBInit->WRPArea, &(pOBInit->WRPStartOffset),
-				&(pOBInit->WRPEndOffset));
+		FLASH_OB_GetWRP(pOBInit->WRPArea, &(pOBInit->WRPStartOffset), &(pOBInit->WRPEndOffset));
 	}
 
 	/* Get Read protection level */
@@ -426,17 +399,14 @@ void HAL_FLASHEx_OBGetConfig(FLASH_OBProgramInitTypeDef *pOBInit)
 	pOBInit->USERConfig = FLASH_OB_GetUser();
 
 #if defined(FLASH_OPTR_DBANK)
-	if ((pOBInit->PCROPConfig == FLASH_BANK_1) ||
-	    (pOBInit->PCROPConfig == FLASH_BANK_2))
+	if ((pOBInit->PCROPConfig == FLASH_BANK_1) || (pOBInit->PCROPConfig == FLASH_BANK_2))
 #else
 	if (pOBInit->PCROPConfig == FLASH_BANK_1)
 #endif
 	{
 		pOBInit->OptionType |= OPTIONBYTE_PCROP;
 		/* Get the Proprietary code readout protection */
-		FLASH_OB_GetPCROP(&(pOBInit->PCROPConfig),
-				  &(pOBInit->PCROPStartAddr),
-				  &(pOBInit->PCROPEndAddr));
+		FLASH_OB_GetPCROP(&(pOBInit->PCROPConfig), &(pOBInit->PCROPStartAddr), &(pOBInit->PCROPEndAddr));
 	}
 
 	pOBInit->OptionType |= OPTIONBYTE_BOOT_LOCK;
@@ -446,8 +416,7 @@ void HAL_FLASHEx_OBGetConfig(FLASH_OBProgramInitTypeDef *pOBInit)
 
 	/* Get the securable memory area configuration */
 #if defined(FLASH_OPTR_DBANK)
-	if ((pOBInit->SecBank == FLASH_BANK_1) ||
-	    (pOBInit->SecBank == FLASH_BANK_2))
+	if ((pOBInit->SecBank == FLASH_BANK_1) || (pOBInit->SecBank == FLASH_BANK_2))
 #else
 	if (pOBInit->SecBank == FLASH_BANK_1)
 #endif
@@ -601,8 +570,7 @@ void FLASH_PageErase(uint32_t Page, uint32_t Banks)
 #endif /* FLASH_OPTR_DBANK */
 
 	/* Proceed to erase the page */
-	MODIFY_REG(FLASH->CR, FLASH_CR_PNB,
-		   ((Page & 0xFFU) << FLASH_CR_PNB_Pos));
+	MODIFY_REG(FLASH->CR, FLASH_CR_PNB, ((Page & 0xFFU) << FLASH_CR_PNB_Pos));
 	SET_BIT(FLASH->CR, FLASH_CR_PER);
 	SET_BIT(FLASH->CR, FLASH_CR_STRT);
 }
@@ -616,8 +584,7 @@ void FLASH_FlushCaches(void)
 	FLASH_CacheTypeDef cache = pFlash.CacheToReactivate;
 
 	/* Flush instruction cache  */
-	if ((cache == FLASH_CACHE_ICACHE_ENABLED) ||
-	    (cache == FLASH_CACHE_ICACHE_DCACHE_ENABLED)) {
+	if ((cache == FLASH_CACHE_ICACHE_ENABLED) || (cache == FLASH_CACHE_ICACHE_DCACHE_ENABLED)) {
 		/* Disable instruction cache */
 		__HAL_FLASH_INSTRUCTION_CACHE_DISABLE();
 		/* Reset instruction cache */
@@ -627,8 +594,7 @@ void FLASH_FlushCaches(void)
 	}
 
 	/* Flush data cache */
-	if ((cache == FLASH_CACHE_DCACHE_ENABLED) ||
-	    (cache == FLASH_CACHE_ICACHE_DCACHE_ENABLED)) {
+	if ((cache == FLASH_CACHE_DCACHE_ENABLED) || (cache == FLASH_CACHE_ICACHE_DCACHE_ENABLED)) {
 		/* Reset data cache */
 		__HAL_FLASH_DATA_CACHE_RESET();
 		/* Enable data cache */
@@ -667,9 +633,7 @@ void FLASH_FlushCaches(void)
  * number of pages in the bank - 1).
  * @retval HAL_Status
  */
-static HAL_StatusTypeDef FLASH_OB_WRPConfig(uint32_t WRPArea,
-					    uint32_t WRPStartOffset,
-					    uint32_t WRDPEndOffset)
+static HAL_StatusTypeDef FLASH_OB_WRPConfig(uint32_t WRPArea, uint32_t WRPStartOffset, uint32_t WRDPEndOffset)
 {
 	HAL_StatusTypeDef status;
 
@@ -684,23 +648,15 @@ static HAL_StatusTypeDef FLASH_OB_WRPConfig(uint32_t WRPArea,
 	if (status == HAL_OK) {
 		/* Configure the write protected area */
 		if (WRPArea == OB_WRPAREA_BANK1_AREAA) {
-			FLASH->WRP1AR =
-			    ((WRDPEndOffset << FLASH_WRP1AR_WRP1A_END_Pos) |
-			     WRPStartOffset);
+			FLASH->WRP1AR = ((WRDPEndOffset << FLASH_WRP1AR_WRP1A_END_Pos) | WRPStartOffset);
 		} else if (WRPArea == OB_WRPAREA_BANK1_AREAB) {
-			FLASH->WRP1BR =
-			    ((WRDPEndOffset << FLASH_WRP1BR_WRP1B_END_Pos) |
-			     WRPStartOffset);
+			FLASH->WRP1BR = ((WRDPEndOffset << FLASH_WRP1BR_WRP1B_END_Pos) | WRPStartOffset);
 		}
 #if defined(FLASH_OPTR_DBANK)
 		else if (WRPArea == OB_WRPAREA_BANK2_AREAA) {
-			FLASH->WRP2AR =
-			    ((WRDPEndOffset << FLASH_WRP2AR_WRP2A_END_Pos) |
-			     WRPStartOffset);
+			FLASH->WRP2AR = ((WRDPEndOffset << FLASH_WRP2AR_WRP2A_END_Pos) | WRPStartOffset);
 		} else if (WRPArea == OB_WRPAREA_BANK2_AREAB) {
-			FLASH->WRP2BR =
-			    ((WRDPEndOffset << FLASH_WRP2BR_WRP2B_END_Pos) |
-			     WRPStartOffset);
+			FLASH->WRP2BR = ((WRDPEndOffset << FLASH_WRP2BR_WRP2B_END_Pos) | WRPStartOffset);
 		}
 #endif
 		else {
@@ -711,8 +667,7 @@ static HAL_StatusTypeDef FLASH_OB_WRPConfig(uint32_t WRPArea,
 		SET_BIT(FLASH->CR, FLASH_CR_OPTSTRT);
 
 		/* Wait for last operation to be completed */
-		status =
-		    FLASH_WaitForLastOperation((uint32_t)FLASH_TIMEOUT_VALUE);
+		status = FLASH_WaitForLastOperation((uint32_t)FLASH_TIMEOUT_VALUE);
 	}
 
 	return status;
@@ -755,8 +710,7 @@ static HAL_StatusTypeDef FLASH_OB_RDPConfig(uint32_t RDPLevel)
 		SET_BIT(FLASH->CR, FLASH_CR_OPTSTRT);
 
 		/* Wait for last operation to be completed */
-		status =
-		    FLASH_WaitForLastOperation((uint32_t)FLASH_TIMEOUT_VALUE);
+		status = FLASH_WaitForLastOperation((uint32_t)FLASH_TIMEOUT_VALUE);
 	}
 
 	return status;
@@ -787,8 +741,7 @@ static HAL_StatusTypeDef FLASH_OB_RDPConfig(uint32_t RDPLevel)
  * @note   (*) availability depends on devices
  * @retval HAL_Status
  */
-static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType,
-					     uint32_t UserConfig)
+static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig)
 {
 	uint32_t optr_reg_val = 0;
 	uint32_t optr_reg_mask = 0;
@@ -804,8 +757,7 @@ static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType,
 #if defined(FLASH_OPTR_PB4_PUPEN)
 		if ((UserType & OB_USER_PB4_PUPEN) != 0U) {
 			/* PB4_PUPEN option byte should be modified */
-			assert_param(IS_OB_USER_PB4_PUPEN(
-			    UserConfig & FLASH_OPTR_PB4_PUPEN));
+			assert_param(IS_OB_USER_PB4_PUPEN(UserConfig & FLASH_OPTR_PB4_PUPEN));
 
 			/* Set value and mask for PB4_PUPEN option byte */
 			optr_reg_val |= (UserConfig & FLASH_OPTR_PB4_PUPEN);
@@ -815,8 +767,7 @@ static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType,
 
 		if ((UserType & OB_USER_BOR_LEV) != 0U) {
 			/* BOR level option byte should be modified */
-			assert_param(IS_OB_USER_BOR_LEVEL(UserConfig &
-							  FLASH_OPTR_BOR_LEV));
+			assert_param(IS_OB_USER_BOR_LEVEL(UserConfig & FLASH_OPTR_BOR_LEV));
 
 			/* Set value and mask for BOR level option byte */
 			optr_reg_val |= (UserConfig & FLASH_OPTR_BOR_LEV);
@@ -825,8 +776,7 @@ static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType,
 
 		if ((UserType & OB_USER_nRST_STOP) != 0U) {
 			/* nRST_STOP option byte should be modified */
-			assert_param(
-			    IS_OB_USER_STOP(UserConfig & FLASH_OPTR_nRST_STOP));
+			assert_param(IS_OB_USER_STOP(UserConfig & FLASH_OPTR_nRST_STOP));
 
 			/* Set value and mask for nRST_STOP option byte */
 			optr_reg_val |= (UserConfig & FLASH_OPTR_nRST_STOP);
@@ -835,8 +785,7 @@ static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType,
 
 		if ((UserType & OB_USER_nRST_STDBY) != 0U) {
 			/* nRST_STDBY option byte should be modified */
-			assert_param(IS_OB_USER_STANDBY(UserConfig &
-							FLASH_OPTR_nRST_STDBY));
+			assert_param(IS_OB_USER_STANDBY(UserConfig & FLASH_OPTR_nRST_STDBY));
 
 			/* Set value and mask for nRST_STDBY option byte */
 			optr_reg_val |= (UserConfig & FLASH_OPTR_nRST_STDBY);
@@ -845,8 +794,7 @@ static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType,
 
 		if ((UserType & OB_USER_nRST_SHDW) != 0U) {
 			/* nRST_SHDW option byte should be modified */
-			assert_param(IS_OB_USER_SHUTDOWN(UserConfig &
-							 FLASH_OPTR_nRST_SHDW));
+			assert_param(IS_OB_USER_SHUTDOWN(UserConfig & FLASH_OPTR_nRST_SHDW));
 
 			/* Set value and mask for nRST_SHDW option byte */
 			optr_reg_val |= (UserConfig & FLASH_OPTR_nRST_SHDW);
@@ -855,8 +803,7 @@ static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType,
 
 		if ((UserType & OB_USER_IWDG_SW) != 0U) {
 			/* IWDG_SW option byte should be modified */
-			assert_param(
-			    IS_OB_USER_IWDG(UserConfig & FLASH_OPTR_IWDG_SW));
+			assert_param(IS_OB_USER_IWDG(UserConfig & FLASH_OPTR_IWDG_SW));
 
 			/* Set value and mask for IWDG_SW option byte */
 			optr_reg_val |= (UserConfig & FLASH_OPTR_IWDG_SW);
@@ -865,8 +812,7 @@ static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType,
 
 		if ((UserType & OB_USER_IWDG_STOP) != 0U) {
 			/* IWDG_STOP option byte should be modified */
-			assert_param(IS_OB_USER_IWDG_STOP(
-			    UserConfig & FLASH_OPTR_IWDG_STOP));
+			assert_param(IS_OB_USER_IWDG_STOP(UserConfig & FLASH_OPTR_IWDG_STOP));
 
 			/* Set value and mask for IWDG_STOP option byte */
 			optr_reg_val |= (UserConfig & FLASH_OPTR_IWDG_STOP);
@@ -875,8 +821,7 @@ static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType,
 
 		if ((UserType & OB_USER_IWDG_STDBY) != 0U) {
 			/* IWDG_STDBY option byte should be modified */
-			assert_param(IS_OB_USER_IWDG_STDBY(
-			    UserConfig & FLASH_OPTR_IWDG_STDBY));
+			assert_param(IS_OB_USER_IWDG_STDBY(UserConfig & FLASH_OPTR_IWDG_STDBY));
 
 			/* Set value and mask for IWDG_STDBY option byte */
 			optr_reg_val |= (UserConfig & FLASH_OPTR_IWDG_STDBY);
@@ -885,8 +830,7 @@ static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType,
 
 		if ((UserType & OB_USER_WWDG_SW) != 0U) {
 			/* WWDG_SW option byte should be modified */
-			assert_param(
-			    IS_OB_USER_WWDG(UserConfig & FLASH_OPTR_WWDG_SW));
+			assert_param(IS_OB_USER_WWDG(UserConfig & FLASH_OPTR_WWDG_SW));
 
 			/* Set value and mask for WWDG_SW option byte */
 			optr_reg_val |= (UserConfig & FLASH_OPTR_WWDG_SW);
@@ -896,8 +840,7 @@ static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType,
 #if defined(FLASH_OPTR_BFB2)
 		if ((UserType & OB_USER_BFB2) != 0U) {
 			/* BFB2 option byte should be modified */
-			assert_param(
-			    IS_OB_USER_BFB2(UserConfig & FLASH_OPTR_BFB2));
+			assert_param(IS_OB_USER_BFB2(UserConfig & FLASH_OPTR_BFB2));
 
 			/* Set value and mask for BFB2 option byte */
 			optr_reg_val |= (UserConfig & FLASH_OPTR_BFB2);
@@ -907,8 +850,7 @@ static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType,
 
 		if ((UserType & OB_USER_nBOOT1) != 0U) {
 			/* nBOOT1 option byte should be modified */
-			assert_param(
-			    IS_OB_USER_BOOT1(UserConfig & FLASH_OPTR_nBOOT1));
+			assert_param(IS_OB_USER_BOOT1(UserConfig & FLASH_OPTR_nBOOT1));
 
 			/* Set value and mask for nBOOT1 option byte */
 			optr_reg_val |= (UserConfig & FLASH_OPTR_nBOOT1);
@@ -917,8 +859,7 @@ static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType,
 
 		if ((UserType & OB_USER_SRAM_PE) != 0U) {
 			/* SRAM_PE option byte should be modified */
-			assert_param(IS_OB_USER_SRAM_PARITY(
-			    UserConfig & FLASH_OPTR_SRAM_PE));
+			assert_param(IS_OB_USER_SRAM_PARITY(UserConfig & FLASH_OPTR_SRAM_PE));
 
 			/* Set value and mask for SRAM_PE option byte */
 			optr_reg_val |= (UserConfig & FLASH_OPTR_SRAM_PE);
@@ -926,8 +867,7 @@ static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType,
 		}
 		if ((UserType & OB_USER_CCMSRAM_RST) != 0U) {
 			/* CCMSRAM_RST option byte should be modified */
-			assert_param(IS_OB_USER_CCMSRAM_RST(
-			    UserConfig & FLASH_OPTR_CCMSRAM_RST));
+			assert_param(IS_OB_USER_CCMSRAM_RST(UserConfig & FLASH_OPTR_CCMSRAM_RST));
 
 			/* Set value and mask for CCMSRAM_RST option byte */
 			optr_reg_val |= (UserConfig & FLASH_OPTR_CCMSRAM_RST);
@@ -935,8 +875,7 @@ static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType,
 		}
 		if ((UserType & OB_USER_nSWBOOT0) != 0U) {
 			/* nSWBOOT0 option byte should be modified */
-			assert_param(IS_OB_USER_SWBOOT0(UserConfig &
-							FLASH_OPTR_nSWBOOT0));
+			assert_param(IS_OB_USER_SWBOOT0(UserConfig & FLASH_OPTR_nSWBOOT0));
 
 			/* Set value and mask for nSWBOOT0 option byte */
 			optr_reg_val |= (UserConfig & FLASH_OPTR_nSWBOOT0);
@@ -945,8 +884,7 @@ static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType,
 
 		if ((UserType & OB_USER_nBOOT0) != 0U) {
 			/* nBOOT0 option byte should be modified */
-			assert_param(
-			    IS_OB_USER_BOOT0(UserConfig & FLASH_OPTR_nBOOT0));
+			assert_param(IS_OB_USER_BOOT0(UserConfig & FLASH_OPTR_nBOOT0));
 
 			/* Set value and mask for nBOOT0 option byte */
 			optr_reg_val |= (UserConfig & FLASH_OPTR_nBOOT0);
@@ -955,8 +893,7 @@ static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType,
 
 		if ((UserType & OB_USER_NRST_MODE) != 0U) {
 			/* Reset Configuration option byte should be modified */
-			assert_param(IS_OB_USER_NRST_MODE(
-			    UserConfig & FLASH_OPTR_NRST_MODE));
+			assert_param(IS_OB_USER_NRST_MODE(UserConfig & FLASH_OPTR_NRST_MODE));
 
 			/* Set value and mask for Reset Configuration option
 			 * byte */
@@ -966,8 +903,7 @@ static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType,
 
 		if ((UserType & OB_USER_IRHEN) != 0U) {
 			/* IRH option byte should be modified */
-			assert_param(
-			    IS_OB_USER_IRHEN(UserConfig & FLASH_OPTR_IRHEN));
+			assert_param(IS_OB_USER_IRHEN(UserConfig & FLASH_OPTR_IRHEN));
 
 			/* Set value and mask for IRH option byte */
 			optr_reg_val |= (UserConfig & FLASH_OPTR_IRHEN);
@@ -981,8 +917,7 @@ static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType,
 		SET_BIT(FLASH->CR, FLASH_CR_OPTSTRT);
 
 		/* Wait for last operation to be completed */
-		status =
-		    FLASH_WaitForLastOperation((uint32_t)FLASH_TIMEOUT_VALUE);
+		status = FLASH_WaitForLastOperation((uint32_t)FLASH_TIMEOUT_VALUE);
 	}
 
 	return status;
@@ -1010,9 +945,7 @@ static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType,
  * and end of the bank.
  * @retval HAL_Status
  */
-static HAL_StatusTypeDef FLASH_OB_PCROPConfig(uint32_t PCROPConfig,
-					      uint32_t PCROPStartAddr,
-					      uint32_t PCROPEndAddr)
+static HAL_StatusTypeDef FLASH_OB_PCROPConfig(uint32_t PCROPConfig, uint32_t PCROPStartAddr, uint32_t PCROPEndAddr)
 {
 	HAL_StatusTypeDef status;
 	uint32_t reg_value;
@@ -1048,28 +981,17 @@ static HAL_StatusTypeDef FLASH_OB_PCROPConfig(uint32_t PCROPConfig,
 		if (READ_BIT(FLASH->OPTR, FLASH_OPTR_DBANK) == 0U) {
 			/* Configure the Proprietary code readout protection */
 			if ((PCROPConfig & FLASH_BANK_BOTH) == FLASH_BANK_1) {
-				reg_value =
-				    ((PCROPStartAddr - FLASH_BASE) >> 4);
-				MODIFY_REG(FLASH->PCROP1SR,
-					   FLASH_PCROP1SR_PCROP1_STRT,
-					   reg_value);
+				reg_value = ((PCROPStartAddr - FLASH_BASE) >> 4);
+				MODIFY_REG(FLASH->PCROP1SR, FLASH_PCROP1SR_PCROP1_STRT, reg_value);
 
 				reg_value = ((PCROPEndAddr - FLASH_BASE) >> 4);
-				MODIFY_REG(FLASH->PCROP1ER,
-					   FLASH_PCROP1ER_PCROP1_END,
-					   reg_value);
-			} else if ((PCROPConfig & FLASH_BANK_BOTH) ==
-				   FLASH_BANK_2) {
-				reg_value =
-				    ((PCROPStartAddr - FLASH_BASE) >> 4);
-				MODIFY_REG(FLASH->PCROP2SR,
-					   FLASH_PCROP2SR_PCROP2_STRT,
-					   reg_value);
+				MODIFY_REG(FLASH->PCROP1ER, FLASH_PCROP1ER_PCROP1_END, reg_value);
+			} else if ((PCROPConfig & FLASH_BANK_BOTH) == FLASH_BANK_2) {
+				reg_value = ((PCROPStartAddr - FLASH_BASE) >> 4);
+				MODIFY_REG(FLASH->PCROP2SR, FLASH_PCROP2SR_PCROP2_STRT, reg_value);
 
 				reg_value = ((PCROPEndAddr - FLASH_BASE) >> 4);
-				MODIFY_REG(FLASH->PCROP2ER,
-					   FLASH_PCROP2ER_PCROP2_END,
-					   reg_value);
+				MODIFY_REG(FLASH->PCROP2ER, FLASH_PCROP2ER_PCROP2_END, reg_value);
 			} else {
 				/* Nothing to do */
 			}
@@ -1078,30 +1000,19 @@ static HAL_StatusTypeDef FLASH_OB_PCROPConfig(uint32_t PCROPConfig,
 		{
 			/* Configure the Proprietary code readout protection */
 			if ((PCROPConfig & FLASH_BANK_BOTH) == FLASH_BANK_1) {
-				reg_value =
-				    ((PCROPStartAddr - bank1_addr) >> 3);
-				MODIFY_REG(FLASH->PCROP1SR,
-					   FLASH_PCROP1SR_PCROP1_STRT,
-					   reg_value);
+				reg_value = ((PCROPStartAddr - bank1_addr) >> 3);
+				MODIFY_REG(FLASH->PCROP1SR, FLASH_PCROP1SR_PCROP1_STRT, reg_value);
 
 				reg_value = ((PCROPEndAddr - bank1_addr) >> 3);
-				MODIFY_REG(FLASH->PCROP1ER,
-					   FLASH_PCROP1ER_PCROP1_END,
-					   reg_value);
+				MODIFY_REG(FLASH->PCROP1ER, FLASH_PCROP1ER_PCROP1_END, reg_value);
 			}
 #if defined(FLASH_OPTR_DBANK)
-			else if ((PCROPConfig & FLASH_BANK_BOTH) ==
-				 FLASH_BANK_2) {
-				reg_value =
-				    ((PCROPStartAddr - bank2_addr) >> 3);
-				MODIFY_REG(FLASH->PCROP2SR,
-					   FLASH_PCROP2SR_PCROP2_STRT,
-					   reg_value);
+			else if ((PCROPConfig & FLASH_BANK_BOTH) == FLASH_BANK_2) {
+				reg_value = ((PCROPStartAddr - bank2_addr) >> 3);
+				MODIFY_REG(FLASH->PCROP2SR, FLASH_PCROP2SR_PCROP2_STRT, reg_value);
 
 				reg_value = ((PCROPEndAddr - bank2_addr) >> 3);
-				MODIFY_REG(FLASH->PCROP2ER,
-					   FLASH_PCROP2ER_PCROP2_END,
-					   reg_value);
+				MODIFY_REG(FLASH->PCROP2ER, FLASH_PCROP2ER_PCROP2_END, reg_value);
 			}
 #endif
 			else {
@@ -1109,15 +1020,13 @@ static HAL_StatusTypeDef FLASH_OB_PCROPConfig(uint32_t PCROPConfig,
 			}
 		}
 
-		MODIFY_REG(FLASH->PCROP1ER, FLASH_PCROP1ER_PCROP_RDP,
-			   (PCROPConfig & FLASH_PCROP1ER_PCROP_RDP));
+		MODIFY_REG(FLASH->PCROP1ER, FLASH_PCROP1ER_PCROP_RDP, (PCROPConfig & FLASH_PCROP1ER_PCROP_RDP));
 
 		/* Set OPTSTRT Bit */
 		SET_BIT(FLASH->CR, FLASH_CR_OPTSTRT);
 
 		/* Wait for last operation to be completed */
-		status =
-		    FLASH_WaitForLastOperation((uint32_t)FLASH_TIMEOUT_VALUE);
+		status = FLASH_WaitForLastOperation((uint32_t)FLASH_TIMEOUT_VALUE);
 	}
 
 	return status;
@@ -1143,8 +1052,7 @@ static HAL_StatusTypeDef FLASH_OB_PCROPConfig(uint32_t PCROPConfig,
  * in the bank - 1)
  * @retval HAL Status
  */
-static HAL_StatusTypeDef FLASH_OB_SecMemConfig(uint32_t SecBank,
-					       uint32_t SecSize)
+static HAL_StatusTypeDef FLASH_OB_SecMemConfig(uint32_t SecBank, uint32_t SecSize)
 {
 	HAL_StatusTypeDef status;
 
@@ -1158,13 +1066,11 @@ static HAL_StatusTypeDef FLASH_OB_SecMemConfig(uint32_t SecBank,
 	if (status == HAL_OK) {
 		/* Configure the write protected area */
 		if (SecBank == FLASH_BANK_1) {
-			MODIFY_REG(FLASH->SEC1R, FLASH_SEC1R_SEC_SIZE1,
-				   SecSize);
+			MODIFY_REG(FLASH->SEC1R, FLASH_SEC1R_SEC_SIZE1, SecSize);
 		}
 #if defined(FLASH_OPTR_DBANK)
 		else if (SecBank == FLASH_BANK_2) {
-			MODIFY_REG(FLASH->SEC2R, FLASH_SEC2R_SEC_SIZE2,
-				   SecSize);
+			MODIFY_REG(FLASH->SEC2R, FLASH_SEC2R_SEC_SIZE2, SecSize);
 		} else {
 			/* Nothing to do */
 		}
@@ -1174,8 +1080,7 @@ static HAL_StatusTypeDef FLASH_OB_SecMemConfig(uint32_t SecBank,
 		SET_BIT(FLASH->CR, FLASH_CR_OPTSTRT);
 
 		/* Wait for last operation to be completed */
-		status =
-		    FLASH_WaitForLastOperation((uint32_t)FLASH_TIMEOUT_VALUE);
+		status = FLASH_WaitForLastOperation((uint32_t)FLASH_TIMEOUT_VALUE);
 	}
 
 	return status;
@@ -1214,8 +1119,7 @@ static HAL_StatusTypeDef FLASH_OB_BootLockConfig(uint32_t BootLockConfig)
 		SET_BIT(FLASH->CR, FLASH_CR_OPTSTRT);
 
 		/* Wait for last operation to be completed */
-		status =
-		    FLASH_WaitForLastOperation((uint32_t)FLASH_TIMEOUT_VALUE);
+		status = FLASH_WaitForLastOperation((uint32_t)FLASH_TIMEOUT_VALUE);
 	}
 
 	return status;
@@ -1255,10 +1159,7 @@ static void FLASH_OB_GetSecMem(uint32_t SecBank, uint32_t *SecSize)
  *            @arg OB_BOOT_LOCK_ENABLE: Boot lock enabled
  *            @arg OB_BOOT_LOCK_DISABLE: Boot lock disabled
  */
-static uint32_t FLASH_OB_GetBootLock(void)
-{
-	return (READ_REG(FLASH->SEC1R) & FLASH_SEC1R_BOOT_LOCK);
-}
+static uint32_t FLASH_OB_GetBootLock(void) { return (READ_REG(FLASH->SEC1R) & FLASH_SEC1R_BOOT_LOCK); }
 
 /**
  * @brief  Return the Write Protection configuration into Option Bytes.
@@ -1276,36 +1177,23 @@ static uint32_t FLASH_OB_GetBootLock(void)
  * of the write protected area.
  * @retval None
  */
-static void FLASH_OB_GetWRP(uint32_t WRPArea, uint32_t *WRPStartOffset,
-			    uint32_t *WRDPEndOffset)
+static void FLASH_OB_GetWRP(uint32_t WRPArea, uint32_t *WRPStartOffset, uint32_t *WRDPEndOffset)
 {
 	/* Get the configuration of the write protected area */
 	if (WRPArea == OB_WRPAREA_BANK1_AREAA) {
-		*WRPStartOffset =
-		    READ_BIT(FLASH->WRP1AR, FLASH_WRP1AR_WRP1A_STRT);
-		*WRDPEndOffset =
-		    (READ_BIT(FLASH->WRP1AR, FLASH_WRP1AR_WRP1A_END) >>
-		     FLASH_WRP1AR_WRP1A_END_Pos);
+		*WRPStartOffset = READ_BIT(FLASH->WRP1AR, FLASH_WRP1AR_WRP1A_STRT);
+		*WRDPEndOffset = (READ_BIT(FLASH->WRP1AR, FLASH_WRP1AR_WRP1A_END) >> FLASH_WRP1AR_WRP1A_END_Pos);
 	} else if (WRPArea == OB_WRPAREA_BANK1_AREAB) {
-		*WRPStartOffset =
-		    READ_BIT(FLASH->WRP1BR, FLASH_WRP1BR_WRP1B_STRT);
-		*WRDPEndOffset =
-		    (READ_BIT(FLASH->WRP1BR, FLASH_WRP1BR_WRP1B_END) >>
-		     FLASH_WRP1BR_WRP1B_END_Pos);
+		*WRPStartOffset = READ_BIT(FLASH->WRP1BR, FLASH_WRP1BR_WRP1B_STRT);
+		*WRDPEndOffset = (READ_BIT(FLASH->WRP1BR, FLASH_WRP1BR_WRP1B_END) >> FLASH_WRP1BR_WRP1B_END_Pos);
 	}
 #if defined(FLASH_OPTR_DBANK)
 	else if (WRPArea == OB_WRPAREA_BANK2_AREAA) {
-		*WRPStartOffset =
-		    READ_BIT(FLASH->WRP2AR, FLASH_WRP2AR_WRP2A_STRT);
-		*WRDPEndOffset =
-		    (READ_BIT(FLASH->WRP2AR, FLASH_WRP2AR_WRP2A_END) >>
-		     FLASH_WRP2AR_WRP2A_END_Pos);
+		*WRPStartOffset = READ_BIT(FLASH->WRP2AR, FLASH_WRP2AR_WRP2A_STRT);
+		*WRDPEndOffset = (READ_BIT(FLASH->WRP2AR, FLASH_WRP2AR_WRP2A_END) >> FLASH_WRP2AR_WRP2A_END_Pos);
 	} else if (WRPArea == OB_WRPAREA_BANK2_AREAB) {
-		*WRPStartOffset =
-		    READ_BIT(FLASH->WRP2BR, FLASH_WRP2BR_WRP2B_STRT);
-		*WRDPEndOffset =
-		    (READ_BIT(FLASH->WRP2BR, FLASH_WRP2BR_WRP2B_END) >>
-		     FLASH_WRP2BR_WRP2B_END_Pos);
+		*WRPStartOffset = READ_BIT(FLASH->WRP2BR, FLASH_WRP2BR_WRP2B_STRT);
+		*WRDPEndOffset = (READ_BIT(FLASH->WRP2BR, FLASH_WRP2BR_WRP2B_END) >> FLASH_WRP2BR_WRP2B_END_Pos);
 	}
 #endif
 	else {
@@ -1367,8 +1255,7 @@ static uint32_t FLASH_OB_GetUser(void)
  * address of the Proprietary code readout protection.
  * @retval None
  */
-static void FLASH_OB_GetPCROP(uint32_t *PCROPConfig, uint32_t *PCROPStartAddr,
-			      uint32_t *PCROPEndAddr)
+static void FLASH_OB_GetPCROP(uint32_t *PCROPConfig, uint32_t *PCROPStartAddr, uint32_t *PCROPEndAddr)
 {
 	uint32_t reg_value;
 	uint32_t bank1_addr;
@@ -1390,20 +1277,16 @@ static void FLASH_OB_GetPCROP(uint32_t *PCROPConfig, uint32_t *PCROPStartAddr,
 #if defined(FLASH_OPTR_DBANK)
 	if (READ_BIT(FLASH->OPTR, FLASH_OPTR_DBANK) == 0U) {
 		if (((*PCROPConfig) & FLASH_BANK_BOTH) == FLASH_BANK_1) {
-			reg_value = (READ_REG(FLASH->PCROP1SR) &
-				     FLASH_PCROP1SR_PCROP1_STRT);
+			reg_value = (READ_REG(FLASH->PCROP1SR) & FLASH_PCROP1SR_PCROP1_STRT);
 			*PCROPStartAddr = (reg_value << 4) + FLASH_BASE;
 
-			reg_value = (READ_REG(FLASH->PCROP1ER) &
-				     FLASH_PCROP1ER_PCROP1_END);
+			reg_value = (READ_REG(FLASH->PCROP1ER) & FLASH_PCROP1ER_PCROP1_END);
 			*PCROPEndAddr = (reg_value << 4) + FLASH_BASE;
 		} else if (((*PCROPConfig) & FLASH_BANK_BOTH) == FLASH_BANK_2) {
-			reg_value = (READ_REG(FLASH->PCROP2SR) &
-				     FLASH_PCROP2SR_PCROP2_STRT);
+			reg_value = (READ_REG(FLASH->PCROP2SR) & FLASH_PCROP2SR_PCROP2_STRT);
 			*PCROPStartAddr = (reg_value << 4) + FLASH_BASE;
 
-			reg_value = (READ_REG(FLASH->PCROP2ER) &
-				     FLASH_PCROP2ER_PCROP2_END);
+			reg_value = (READ_REG(FLASH->PCROP2ER) & FLASH_PCROP2ER_PCROP2_END);
 			*PCROPEndAddr = (reg_value << 4) + FLASH_BASE;
 		} else {
 			/* Nothing to do */
@@ -1412,22 +1295,18 @@ static void FLASH_OB_GetPCROP(uint32_t *PCROPConfig, uint32_t *PCROPStartAddr,
 #endif
 	{
 		if (((*PCROPConfig) & FLASH_BANK_BOTH) == FLASH_BANK_1) {
-			reg_value = (READ_REG(FLASH->PCROP1SR) &
-				     FLASH_PCROP1SR_PCROP1_STRT);
+			reg_value = (READ_REG(FLASH->PCROP1SR) & FLASH_PCROP1SR_PCROP1_STRT);
 			*PCROPStartAddr = (reg_value << 3) + bank1_addr;
 
-			reg_value = (READ_REG(FLASH->PCROP1ER) &
-				     FLASH_PCROP1ER_PCROP1_END);
+			reg_value = (READ_REG(FLASH->PCROP1ER) & FLASH_PCROP1ER_PCROP1_END);
 			*PCROPEndAddr = (reg_value << 3) + bank1_addr;
 		}
 #if defined(FLASH_OPTR_DBANK)
 		else if (((*PCROPConfig) & FLASH_BANK_BOTH) == FLASH_BANK_2) {
-			reg_value = (READ_REG(FLASH->PCROP2SR) &
-				     FLASH_PCROP2SR_PCROP2_STRT);
+			reg_value = (READ_REG(FLASH->PCROP2SR) & FLASH_PCROP2SR_PCROP2_STRT);
 			*PCROPStartAddr = (reg_value << 3) + bank2_addr;
 
-			reg_value = (READ_REG(FLASH->PCROP2ER) &
-				     FLASH_PCROP2ER_PCROP2_END);
+			reg_value = (READ_REG(FLASH->PCROP2ER) & FLASH_PCROP2ER_PCROP2_END);
 			*PCROPEndAddr = (reg_value << 3) + bank2_addr;
 		}
 #endif

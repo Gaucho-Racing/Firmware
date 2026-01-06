@@ -88,8 +88,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l4xx_hal.h"
 
-#if defined(STM32L433xx) || defined(STM32L443xx) || defined(STM32L476xx) ||    \
-    defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx)
+#if defined(STM32L433xx) || defined(STM32L443xx) || defined(STM32L476xx) || defined(STM32L486xx) ||                    \
+    defined(STM32L496xx) || defined(STM32L4A6xx)
 
 /** @addtogroup STM32L4xx_HAL_Driver
  * @{
@@ -185,8 +185,7 @@ HAL_StatusTypeDef HAL_LCD_Init(LCD_HandleTypeDef *hlcd)
 
 	/* Clear the LCD_RAM registers and enable the display request by setting
 	   the UDR bit in the LCD_SR register */
-	for (counter = LCD_RAM_REGISTER0; counter <= LCD_RAM_REGISTER15;
-	     counter++) {
+	for (counter = LCD_RAM_REGISTER0; counter <= LCD_RAM_REGISTER15; counter++) {
 		hlcd->Instance->RAM[counter] = 0;
 	}
 	/* Enable the display request */
@@ -201,12 +200,10 @@ HAL_StatusTypeDef HAL_LCD_Init(LCD_HandleTypeDef *hlcd)
 	   Set CC[2:0] bits according to hlcd->Init.Contrast value
 	   Set HD bit according to hlcd->Init.HighDrive value */
 	MODIFY_REG(hlcd->Instance->FCR,
-		   (LCD_FCR_PS | LCD_FCR_DIV | LCD_FCR_BLINK | LCD_FCR_BLINKF |
-		    LCD_FCR_DEAD | LCD_FCR_PON | LCD_FCR_CC | LCD_FCR_HD),
-		   (hlcd->Init.Prescaler | hlcd->Init.Divider |
-		    hlcd->Init.BlinkMode | hlcd->Init.BlinkFrequency |
-		    hlcd->Init.DeadTime | hlcd->Init.PulseOnDuration |
-		    hlcd->Init.Contrast | hlcd->Init.HighDrive));
+		   (LCD_FCR_PS | LCD_FCR_DIV | LCD_FCR_BLINK | LCD_FCR_BLINKF | LCD_FCR_DEAD | LCD_FCR_PON |
+		    LCD_FCR_CC | LCD_FCR_HD),
+		   (hlcd->Init.Prescaler | hlcd->Init.Divider | hlcd->Init.BlinkMode | hlcd->Init.BlinkFrequency |
+		    hlcd->Init.DeadTime | hlcd->Init.PulseOnDuration | hlcd->Init.Contrast | hlcd->Init.HighDrive));
 
 	/* Wait until LCD Frame Control Register Synchronization flag (FCRSF) is
 	   set in the LCD_SR register This bit is set by hardware each time the
@@ -222,10 +219,8 @@ HAL_StatusTypeDef HAL_LCD_Init(LCD_HandleTypeDef *hlcd)
 	   hlcd->Init.Duty value Set BIAS[1:0] bits according to hlcd->Init.Bias
 	   value Set VSEL bit according to hlcd->Init.VoltageSource value Set
 	   MUX_SEG bit according to hlcd->Init.MuxSegment value */
-	MODIFY_REG(hlcd->Instance->CR,
-		   (LCD_CR_DUTY | LCD_CR_BIAS | LCD_CR_VSEL | LCD_CR_MUX_SEG),
-		   (hlcd->Init.Duty | hlcd->Init.Bias |
-		    hlcd->Init.VoltageSource | hlcd->Init.MuxSegment));
+	MODIFY_REG(hlcd->Instance->CR, (LCD_CR_DUTY | LCD_CR_BIAS | LCD_CR_VSEL | LCD_CR_MUX_SEG),
+		   (hlcd->Init.Duty | hlcd->Init.Bias | hlcd->Init.VoltageSource | hlcd->Init.MuxSegment));
 
 	/* Enable the peripheral */
 	__HAL_LCD_ENABLE(hlcd);
@@ -374,9 +369,8 @@ not occur (UDR = 1 and UDD = 0) until the display is enabled (LCDEN = 1).
  * @param Data specifies LCD Data Value to be written.
  * @retval None
  */
-HAL_StatusTypeDef HAL_LCD_Write(LCD_HandleTypeDef *hlcd,
-				uint32_t RAMRegisterIndex,
-				uint32_t RAMRegisterMask, uint32_t Data)
+HAL_StatusTypeDef HAL_LCD_Write(LCD_HandleTypeDef *hlcd, uint32_t RAMRegisterIndex, uint32_t RAMRegisterMask,
+				uint32_t Data)
 {
 	uint32_t tickstart;
 	HAL_LCD_StateTypeDef state = hlcd->State;
@@ -394,10 +388,8 @@ HAL_StatusTypeDef HAL_LCD_Write(LCD_HandleTypeDef *hlcd,
 			tickstart = HAL_GetTick();
 
 			/*!< Wait Until the LCD is ready */
-			while (__HAL_LCD_GET_FLAG(hlcd, LCD_FLAG_UDR) !=
-			       RESET) {
-				if ((HAL_GetTick() - tickstart) >
-				    LCD_TIMEOUT_VALUE) {
+			while (__HAL_LCD_GET_FLAG(hlcd, LCD_FLAG_UDR) != RESET) {
+				if ((HAL_GetTick() - tickstart) > LCD_TIMEOUT_VALUE) {
 					hlcd->ErrorCode = HAL_LCD_ERROR_UDR;
 
 					/* Process Unlocked */
@@ -409,8 +401,7 @@ HAL_StatusTypeDef HAL_LCD_Write(LCD_HandleTypeDef *hlcd,
 		}
 
 		/* Copy the new Data bytes to LCD RAM register */
-		MODIFY_REG(hlcd->Instance->RAM[RAMRegisterIndex],
-			   ~(RAMRegisterMask), Data);
+		MODIFY_REG(hlcd->Instance->RAM[RAMRegisterIndex], ~(RAMRegisterMask), Data);
 
 		return HAL_OK;
 	} else {
@@ -451,8 +442,7 @@ HAL_StatusTypeDef HAL_LCD_Clear(LCD_HandleTypeDef *hlcd)
 			}
 		}
 		/* Clear the LCD_RAM registers */
-		for (counter = LCD_RAM_REGISTER0; counter <= LCD_RAM_REGISTER15;
-		     counter++) {
+		for (counter = LCD_RAM_REGISTER0; counter <= LCD_RAM_REGISTER15; counter++) {
 			hlcd->Instance->RAM[counter] = 0;
 		}
 
@@ -597,5 +587,5 @@ HAL_StatusTypeDef LCD_WaitForSynchro(LCD_HandleTypeDef *hlcd)
  * @}
  */
 
-#endif /* STM32L433xx || STM32L443xx || STM32L476xx || STM32L486xx ||          \
+#endif /* STM32L433xx || STM32L443xx || STM32L476xx || STM32L486xx ||                                                  \
 	  STM32L496xx || STM32L4A6xx */

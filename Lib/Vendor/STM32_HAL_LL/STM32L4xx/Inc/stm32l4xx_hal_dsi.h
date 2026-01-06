@@ -46,10 +46,9 @@ extern "C" {
  * @brief  DSI Init Structure definition
  */
 typedef struct {
-	uint32_t
-	    AutomaticClockLaneControl; /*!< Automatic clock lane control
-					    This parameter can be any value of
-					  @ref DSI_Automatic_Clk_Lane_Control */
+	uint32_t AutomaticClockLaneControl; /*!< Automatic clock lane control
+						 This parameter can be any value of
+					       @ref DSI_Automatic_Clk_Lane_Control */
 
 	uint32_t TXEscapeCkdiv; /*!< TX Escape clock division
 				     The values 0 and 1 stop the TX_ESC clock
@@ -65,17 +64,14 @@ typedef struct {
  * @brief  DSI PLL Clock structure definition
  */
 typedef struct {
-	uint32_t
-	    PLLNDIV; /*!< PLL Loop Division Factor
-			  This parameter must be a value between 10 and 125 */
+	uint32_t PLLNDIV; /*!< PLL Loop Division Factor
+			       This parameter must be a value between 10 and 125 */
 
-	uint32_t
-	    PLLIDF; /*!< PLL Input Division Factor
-			 This parameter can be any value of @ref DSI_PLL_IDF */
+	uint32_t PLLIDF; /*!< PLL Input Division Factor
+			      This parameter can be any value of @ref DSI_PLL_IDF */
 
-	uint32_t
-	    PLLODF; /*!< PLL Output Division Factor
-			 This parameter can be any value of @ref DSI_PLL_ODF */
+	uint32_t PLLODF; /*!< PLL Output Division Factor
+			      This parameter can be any value of @ref DSI_PLL_ODF */
 
 } DSI_PLLInitTypeDef;
 
@@ -116,9 +112,8 @@ typedef struct {
 				  This parameter can be any value of @ref
 				DSI_DATA_ENABLE_Polarity   */
 
-	uint32_t
-	    HorizontalSyncActive; /*!< Horizontal synchronism active duration
-				     (in lane byte clock cycles) */
+	uint32_t HorizontalSyncActive; /*!< Horizontal synchronism active duration
+					  (in lane byte clock cycles) */
 
 	uint32_t HorizontalBackPorch; /*!< Horizontal back-porch duration (in
 					 lane byte clock cycles)         */
@@ -126,8 +121,7 @@ typedef struct {
 	uint32_t HorizontalLine; /*!< Horizontal line duration (in lane byte
 				    clock cycles)               */
 
-	uint32_t
-	    VerticalSyncActive; /*!< Vertical synchronism active duration */
+	uint32_t VerticalSyncActive; /*!< Vertical synchronism active duration */
 
 	uint32_t VerticalBackPorch; /*!< Vertical back-porch duration */
 
@@ -147,15 +141,13 @@ typedef struct {
 					     power largest packet that can fit
 					     in a line during VACT region */
 
-	uint32_t
-	    LPHorizontalFrontPorchEnable; /*!< Low-power horizontal front-porch
-					     enable This parameter can be any
-					     value of @ref DSI_LP_HFP */
+	uint32_t LPHorizontalFrontPorchEnable; /*!< Low-power horizontal front-porch
+						  enable This parameter can be any
+						  value of @ref DSI_LP_HFP */
 
-	uint32_t
-	    LPHorizontalBackPorchEnable; /*!< Low-power horizontal back-porch
-					    enable This parameter can be any
-					    value of @ref DSI_LP_HBP */
+	uint32_t LPHorizontalBackPorchEnable; /*!< Low-power horizontal back-porch
+						 enable This parameter can be any
+						 value of @ref DSI_LP_HBP */
 
 	uint32_t LPVerticalActiveEnable; /*!< Low-power vertical active enable
 					      This parameter can be any value of
@@ -173,10 +165,9 @@ typedef struct {
 						enable This parameter can be any
 						value of @ref DSI_LP_VSYNC */
 
-	uint32_t
-	    FrameBTAAcknowledgeEnable; /*!< Frame bus-turn-around acknowledge
-					  enable This parameter can be any value
-					  of @ref DSI_FBTA_acknowledge       */
+	uint32_t FrameBTAAcknowledgeEnable; /*!< Frame bus-turn-around acknowledge
+					       enable This parameter can be any value
+					       of @ref DSI_FBTA_acknowledge       */
 
 } DSI_VidCfgTypeDef;
 
@@ -232,48 +223,41 @@ typedef struct {
  * @brief  DSI command transmission mode configuration
  */
 typedef struct {
-	uint32_t
-	    LPGenShortWriteNoP; /*!< Generic Short Write Zero parameters
-				   Transmission This parameter can be any value
-				   of @ref DSI_LP_LPGenShortWriteNoP  */
+	uint32_t LPGenShortWriteNoP; /*!< Generic Short Write Zero parameters
+					Transmission This parameter can be any value
+					of @ref DSI_LP_LPGenShortWriteNoP  */
 
-	uint32_t
-	    LPGenShortWriteOneP; /*!< Generic Short Write One parameter
-				    Transmission This parameter can be any value
-				    of @ref DSI_LP_LPGenShortWriteOneP */
+	uint32_t LPGenShortWriteOneP; /*!< Generic Short Write One parameter
+					 Transmission This parameter can be any value
+					 of @ref DSI_LP_LPGenShortWriteOneP */
 
-	uint32_t
-	    LPGenShortWriteTwoP; /*!< Generic Short Write Two parameters
-				    Transmission This parameter can be any value
-				    of @ref DSI_LP_LPGenShortWriteTwoP */
+	uint32_t LPGenShortWriteTwoP; /*!< Generic Short Write Two parameters
+					 Transmission This parameter can be any value
+					 of @ref DSI_LP_LPGenShortWriteTwoP */
 
 	uint32_t LPGenShortReadNoP; /*!< Generic Short Read Zero parameters
 				       Transmission This parameter can be any
 				       value of @ref DSI_LP_LPGenShortReadNoP */
 
-	uint32_t
-	    LPGenShortReadOneP; /*!< Generic Short Read One parameter
-				   Transmission This parameter can be any value
-				   of @ref DSI_LP_LPGenShortReadOneP  */
+	uint32_t LPGenShortReadOneP; /*!< Generic Short Read One parameter
+					Transmission This parameter can be any value
+					of @ref DSI_LP_LPGenShortReadOneP  */
 
-	uint32_t
-	    LPGenShortReadTwoP; /*!< Generic Short Read Two parameters
-				   Transmission This parameter can be any value
-				   of @ref DSI_LP_LPGenShortReadTwoP  */
+	uint32_t LPGenShortReadTwoP; /*!< Generic Short Read Two parameters
+					Transmission This parameter can be any value
+					of @ref DSI_LP_LPGenShortReadTwoP  */
 
 	uint32_t LPGenLongWrite; /*!< Generic Long Write Transmission
 				      This parameter can be any value of @ref
 				    DSI_LP_LPGenLongWrite      */
 
-	uint32_t
-	    LPDcsShortWriteNoP; /*!< DCS Short Write Zero parameters
-				   Transmission This parameter can be any value
-				   of @ref DSI_LP_LPDcsShortWriteNoP  */
+	uint32_t LPDcsShortWriteNoP; /*!< DCS Short Write Zero parameters
+					Transmission This parameter can be any value
+					of @ref DSI_LP_LPDcsShortWriteNoP  */
 
-	uint32_t
-	    LPDcsShortWriteOneP; /*!< DCS Short Write One parameter Transmission
-				      This parameter can be any value of @ref
-				    DSI_LP_LPDcsShortWriteOneP */
+	uint32_t LPDcsShortWriteOneP; /*!< DCS Short Write One parameter Transmission
+					   This parameter can be any value of @ref
+					 DSI_LP_LPDcsShortWriteOneP */
 
 	uint32_t LPDcsShortReadNoP; /*!< DCS Short Read Zero parameters
 				       Transmission This parameter can be any
@@ -316,9 +300,8 @@ typedef struct {
 	uint32_t DataLaneMaxReadTime; /*!< The maximum time required to perform
 					 a read command */
 
-	uint32_t
-	    StopWaitTime; /*!< The minimum wait period to request a High-Speed
-			     transmission after the Stop state */
+	uint32_t StopWaitTime; /*!< The minimum wait period to request a High-Speed
+				  transmission after the Stop state */
 
 } DSI_PHY_TimerTypeDef;
 
@@ -377,19 +360,12 @@ typedef struct
 	uint32_t ErrorMsk;		 /*!< DSI Error monitoring mask  */
 
 #if (USE_HAL_DSI_REGISTER_CALLBACKS == 1)
-	void (*TearingEffectCallback)(
-	    struct __DSI_HandleTypeDef
-		*hdsi); /*!< DSI Tearing Effect Callback */
-	void (*EndOfRefreshCallback)(
-	    struct __DSI_HandleTypeDef
-		*hdsi); /*!< DSI End Of Refresh Callback */
-	void (*ErrorCallback)(
-	    struct __DSI_HandleTypeDef *hdsi); /*!< DSI Error Callback */
+	void (*TearingEffectCallback)(struct __DSI_HandleTypeDef *hdsi); /*!< DSI Tearing Effect Callback */
+	void (*EndOfRefreshCallback)(struct __DSI_HandleTypeDef *hdsi);	 /*!< DSI End Of Refresh Callback */
+	void (*ErrorCallback)(struct __DSI_HandleTypeDef *hdsi);	 /*!< DSI Error Callback */
 
-	void (*MspInitCallback)(
-	    struct __DSI_HandleTypeDef *hdsi); /*!< DSI Msp Init callback */
-	void (*MspDeInitCallback)(
-	    struct __DSI_HandleTypeDef *hdsi); /*!< DSI Msp DeInit callback */
+	void (*MspInitCallback)(struct __DSI_HandleTypeDef *hdsi);   /*!< DSI Msp Init callback */
+	void (*MspDeInitCallback)(struct __DSI_HandleTypeDef *hdsi); /*!< DSI Msp DeInit callback */
 
 #endif /* USE_HAL_DSI_REGISTER_CALLBACKS */
 
@@ -403,19 +379,16 @@ typedef enum {
 	HAL_DSI_MSPINIT_CB_ID = 0x00U,	 /*!< DSI MspInit callback ID        */
 	HAL_DSI_MSPDEINIT_CB_ID = 0x01U, /*!< DSI MspDeInit callback ID      */
 
-	HAL_DSI_TEARING_EFFECT_CB_ID =
-	    0x02U, /*!< DSI Tearing Effect Callback ID */
-	HAL_DSI_ENDOF_REFRESH_CB_ID =
-	    0x03U,		    /*!< DSI End Of Refresh Callback ID */
-	HAL_DSI_ERROR_CB_ID = 0x04U /*!< DSI Error Callback ID          */
+	HAL_DSI_TEARING_EFFECT_CB_ID = 0x02U, /*!< DSI Tearing Effect Callback ID */
+	HAL_DSI_ENDOF_REFRESH_CB_ID = 0x03U,  /*!< DSI End Of Refresh Callback ID */
+	HAL_DSI_ERROR_CB_ID = 0x04U	      /*!< DSI Error Callback ID          */
 
 } HAL_DSI_CallbackIDTypeDef;
 
 /**
  * @brief  HAL DSI Callback pointer definition
  */
-typedef void (*pDSI_CallbackTypeDef)(
-    DSI_HandleTypeDef *hdsi); /*!< pointer to an DSI callback function */
+typedef void (*pDSI_CallbackTypeDef)(DSI_HandleTypeDef *hdsi); /*!< pointer to an DSI callback function */
 
 #endif /* USE_HAL_DSI_REGISTER_CALLBACKS */
 /**
@@ -774,9 +747,8 @@ typedef void (*pDSI_CallbackTypeDef)(
 #define DSI_FLOW_CONTROL_BTA DSI_PCR_BTAE
 #define DSI_FLOW_CONTROL_EOTP_RX DSI_PCR_ETRXE
 #define DSI_FLOW_CONTROL_EOTP_TX DSI_PCR_ETTXE
-#define DSI_FLOW_CONTROL_ALL                                                   \
-	(DSI_FLOW_CONTROL_CRC_RX | DSI_FLOW_CONTROL_ECC_RX |                   \
-	 DSI_FLOW_CONTROL_BTA | DSI_FLOW_CONTROL_EOTP_RX |                     \
+#define DSI_FLOW_CONTROL_ALL                                                                                           \
+	(DSI_FLOW_CONTROL_CRC_RX | DSI_FLOW_CONTROL_ECC_RX | DSI_FLOW_CONTROL_BTA | DSI_FLOW_CONTROL_EOTP_RX |         \
 	 DSI_FLOW_CONTROL_EOTP_TX)
 /**
  * @}
@@ -785,11 +757,11 @@ typedef void (*pDSI_CallbackTypeDef)(
 /** @defgroup DSI_Color_Coding DSI Color Coding
  * @{
  */
-#define DSI_RGB565                                                             \
-	0x00000000U /*!< The values 0x00000001 and 0x00000002 can also be used \
+#define DSI_RGB565                                                                                                     \
+	0x00000000U /*!< The values 0x00000001 and 0x00000002 can also be used                                         \
 		       for the RGB565 color mode configuration */
-#define DSI_RGB666                                                             \
-	0x00000003U /*!< The value 0x00000004 can also be used for the RGB666  \
+#define DSI_RGB666                                                                                                     \
+	0x00000003U /*!< The value 0x00000004 can also be used for the RGB666                                          \
 		       color mode configuration                 */
 #define DSI_RGB888 0x00000005U
 /**
@@ -887,16 +859,11 @@ typedef void (*pDSI_CallbackTypeDef)(
 /** @defgroup DSI_SHORT_WRITE_PKT_Data_Type DSI SHORT WRITE PKT Data Type
  * @{
  */
-#define DSI_DCS_SHORT_PKT_WRITE_P0                                             \
-	0x00000005U /*!< DCS short write, no parameters      */
-#define DSI_DCS_SHORT_PKT_WRITE_P1                                             \
-	0x00000015U /*!< DCS short write, one parameter      */
-#define DSI_GEN_SHORT_PKT_WRITE_P0                                             \
-	0x00000003U /*!< Generic short write, no parameters  */
-#define DSI_GEN_SHORT_PKT_WRITE_P1                                             \
-	0x00000013U /*!< Generic short write, one parameter  */
-#define DSI_GEN_SHORT_PKT_WRITE_P2                                             \
-	0x00000023U /*!< Generic short write, two parameters */
+#define DSI_DCS_SHORT_PKT_WRITE_P0 0x00000005U /*!< DCS short write, no parameters      */
+#define DSI_DCS_SHORT_PKT_WRITE_P1 0x00000015U /*!< DCS short write, one parameter      */
+#define DSI_GEN_SHORT_PKT_WRITE_P0 0x00000003U /*!< Generic short write, no parameters  */
+#define DSI_GEN_SHORT_PKT_WRITE_P1 0x00000013U /*!< Generic short write, one parameter  */
+#define DSI_GEN_SHORT_PKT_WRITE_P2 0x00000023U /*!< Generic short write, two parameters */
 /**
  * @}
  */
@@ -913,14 +880,10 @@ typedef void (*pDSI_CallbackTypeDef)(
 /** @defgroup DSI_SHORT_READ_PKT_Data_Type DSI SHORT READ PKT Data Type
  * @{
  */
-#define DSI_DCS_SHORT_PKT_READ                                                 \
-	0x00000006U /*!< DCS short read                     */
-#define DSI_GEN_SHORT_PKT_READ_P0                                              \
-	0x00000004U /*!< Generic short read, no parameters  */
-#define DSI_GEN_SHORT_PKT_READ_P1                                              \
-	0x00000014U /*!< Generic short read, one parameter  */
-#define DSI_GEN_SHORT_PKT_READ_P2                                              \
-	0x00000024U /*!< Generic short read, two parameters */
+#define DSI_DCS_SHORT_PKT_READ 0x00000006U    /*!< DCS short read                     */
+#define DSI_GEN_SHORT_PKT_READ_P0 0x00000004U /*!< Generic short read, no parameters  */
+#define DSI_GEN_SHORT_PKT_READ_P1 0x00000014U /*!< Generic short read, one parameter  */
+#define DSI_GEN_SHORT_PKT_READ_P2 0x00000024U /*!< Generic short read, two parameters */
 /**
  * @}
  */
@@ -940,9 +903,8 @@ typedef void (*pDSI_CallbackTypeDef)(
 #define HAL_DSI_ERROR_OVF 0x00000100U /*!< FIFO overflow error            */
 #define HAL_DSI_ERROR_GEN 0x00000200U /*!< Generic FIFO related errors    */
 #if (USE_HAL_DSI_REGISTER_CALLBACKS == 1)
-#define HAL_DSI_ERROR_INVALID_CALLBACK                                         \
-	0x00000400U /*!< DSI Invalid Callback error      */
-#endif		    /* USE_HAL_DSI_REGISTER_CALLBACKS */
+#define HAL_DSI_ERROR_INVALID_CALLBACK 0x00000400U /*!< DSI Invalid Callback error      */
+#endif						   /* USE_HAL_DSI_REGISTER_CALLBACKS */
 /**
  * @}
  */
@@ -1016,15 +978,14 @@ typedef void (*pDSI_CallbackTypeDef)(
  * @retval None
  */
 #if (USE_HAL_DSI_REGISTER_CALLBACKS == 1)
-#define __HAL_DSI_RESET_HANDLE_STATE(__HANDLE__)                               \
-	do {                                                                   \
-		(__HANDLE__)->State = HAL_DSI_STATE_RESET;                     \
-		(__HANDLE__)->MspInitCallback = NULL;                          \
-		(__HANDLE__)->MspDeInitCallback = NULL;                        \
+#define __HAL_DSI_RESET_HANDLE_STATE(__HANDLE__)                                                                       \
+	do {                                                                                                           \
+		(__HANDLE__)->State = HAL_DSI_STATE_RESET;                                                             \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
 	} while (0)
 #else
-#define __HAL_DSI_RESET_HANDLE_STATE(__HANDLE__)                               \
-	((__HANDLE__)->State = HAL_DSI_STATE_RESET)
+#define __HAL_DSI_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_DSI_STATE_RESET)
 #endif /*USE_HAL_DSI_REGISTER_CALLBACKS */
 
 /**
@@ -1032,13 +993,13 @@ typedef void (*pDSI_CallbackTypeDef)(
  * @param  __HANDLE__  DSI handle
  * @retval None.
  */
-#define __HAL_DSI_ENABLE(__HANDLE__)                                           \
-	do {                                                                   \
-		__IO uint32_t tmpreg = 0x00U;                                  \
-		SET_BIT((__HANDLE__)->Instance->CR, DSI_CR_EN);                \
-		/* Delay after an DSI Host enabling */                         \
-		tmpreg = READ_BIT((__HANDLE__)->Instance->CR, DSI_CR_EN);      \
-		UNUSED(tmpreg);                                                \
+#define __HAL_DSI_ENABLE(__HANDLE__)                                                                                   \
+	do {                                                                                                           \
+		__IO uint32_t tmpreg = 0x00U;                                                                          \
+		SET_BIT((__HANDLE__)->Instance->CR, DSI_CR_EN);                                                        \
+		/* Delay after an DSI Host enabling */                                                                 \
+		tmpreg = READ_BIT((__HANDLE__)->Instance->CR, DSI_CR_EN);                                              \
+		UNUSED(tmpreg);                                                                                        \
 	} while (0U)
 
 /**
@@ -1046,13 +1007,13 @@ typedef void (*pDSI_CallbackTypeDef)(
  * @param  __HANDLE__  DSI handle
  * @retval None.
  */
-#define __HAL_DSI_DISABLE(__HANDLE__)                                          \
-	do {                                                                   \
-		__IO uint32_t tmpreg = 0x00U;                                  \
-		CLEAR_BIT((__HANDLE__)->Instance->CR, DSI_CR_EN);              \
-		/* Delay after an DSI Host disabling */                        \
-		tmpreg = READ_BIT((__HANDLE__)->Instance->CR, DSI_CR_EN);      \
-		UNUSED(tmpreg);                                                \
+#define __HAL_DSI_DISABLE(__HANDLE__)                                                                                  \
+	do {                                                                                                           \
+		__IO uint32_t tmpreg = 0x00U;                                                                          \
+		CLEAR_BIT((__HANDLE__)->Instance->CR, DSI_CR_EN);                                                      \
+		/* Delay after an DSI Host disabling */                                                                \
+		tmpreg = READ_BIT((__HANDLE__)->Instance->CR, DSI_CR_EN);                                              \
+		UNUSED(tmpreg);                                                                                        \
 	} while (0U)
 
 /**
@@ -1060,13 +1021,13 @@ typedef void (*pDSI_CallbackTypeDef)(
  * @param  __HANDLE__  DSI handle
  * @retval None.
  */
-#define __HAL_DSI_WRAPPER_ENABLE(__HANDLE__)                                   \
-	do {                                                                   \
-		__IO uint32_t tmpreg = 0x00U;                                  \
-		SET_BIT((__HANDLE__)->Instance->WCR, DSI_WCR_DSIEN);           \
-		/* Delay after an DSI wrapper enabling */                      \
-		tmpreg = READ_BIT((__HANDLE__)->Instance->WCR, DSI_WCR_DSIEN); \
-		UNUSED(tmpreg);                                                \
+#define __HAL_DSI_WRAPPER_ENABLE(__HANDLE__)                                                                           \
+	do {                                                                                                           \
+		__IO uint32_t tmpreg = 0x00U;                                                                          \
+		SET_BIT((__HANDLE__)->Instance->WCR, DSI_WCR_DSIEN);                                                   \
+		/* Delay after an DSI wrapper enabling */                                                              \
+		tmpreg = READ_BIT((__HANDLE__)->Instance->WCR, DSI_WCR_DSIEN);                                         \
+		UNUSED(tmpreg);                                                                                        \
 	} while (0U)
 
 /**
@@ -1074,13 +1035,13 @@ typedef void (*pDSI_CallbackTypeDef)(
  * @param  __HANDLE__  DSI handle
  * @retval None.
  */
-#define __HAL_DSI_WRAPPER_DISABLE(__HANDLE__)                                  \
-	do {                                                                   \
-		__IO uint32_t tmpreg = 0x00U;                                  \
-		CLEAR_BIT((__HANDLE__)->Instance->WCR, DSI_WCR_DSIEN);         \
-		/* Delay after an DSI wrapper disabling*/                      \
-		tmpreg = READ_BIT((__HANDLE__)->Instance->WCR, DSI_WCR_DSIEN); \
-		UNUSED(tmpreg);                                                \
+#define __HAL_DSI_WRAPPER_DISABLE(__HANDLE__)                                                                          \
+	do {                                                                                                           \
+		__IO uint32_t tmpreg = 0x00U;                                                                          \
+		CLEAR_BIT((__HANDLE__)->Instance->WCR, DSI_WCR_DSIEN);                                                 \
+		/* Delay after an DSI wrapper disabling*/                                                              \
+		tmpreg = READ_BIT((__HANDLE__)->Instance->WCR, DSI_WCR_DSIEN);                                         \
+		UNUSED(tmpreg);                                                                                        \
 	} while (0U)
 
 /**
@@ -1088,14 +1049,13 @@ typedef void (*pDSI_CallbackTypeDef)(
  * @param  __HANDLE__  DSI handle
  * @retval None.
  */
-#define __HAL_DSI_PLL_ENABLE(__HANDLE__)                                       \
-	do {                                                                   \
-		__IO uint32_t tmpreg = 0x00U;                                  \
-		SET_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_PLLEN);       \
-		/* Delay after an DSI PLL enabling */                          \
-		tmpreg =                                                       \
-		    READ_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_PLLEN);  \
-		UNUSED(tmpreg);                                                \
+#define __HAL_DSI_PLL_ENABLE(__HANDLE__)                                                                               \
+	do {                                                                                                           \
+		__IO uint32_t tmpreg = 0x00U;                                                                          \
+		SET_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_PLLEN);                                               \
+		/* Delay after an DSI PLL enabling */                                                                  \
+		tmpreg = READ_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_PLLEN);                                     \
+		UNUSED(tmpreg);                                                                                        \
 	} while (0U)
 
 /**
@@ -1103,14 +1063,13 @@ typedef void (*pDSI_CallbackTypeDef)(
  * @param  __HANDLE__  DSI handle
  * @retval None.
  */
-#define __HAL_DSI_PLL_DISABLE(__HANDLE__)                                      \
-	do {                                                                   \
-		__IO uint32_t tmpreg = 0x00U;                                  \
-		CLEAR_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_PLLEN);     \
-		/* Delay after an DSI PLL disabling */                         \
-		tmpreg =                                                       \
-		    READ_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_PLLEN);  \
-		UNUSED(tmpreg);                                                \
+#define __HAL_DSI_PLL_DISABLE(__HANDLE__)                                                                              \
+	do {                                                                                                           \
+		__IO uint32_t tmpreg = 0x00U;                                                                          \
+		CLEAR_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_PLLEN);                                             \
+		/* Delay after an DSI PLL disabling */                                                                 \
+		tmpreg = READ_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_PLLEN);                                     \
+		UNUSED(tmpreg);                                                                                        \
 	} while (0U)
 
 /**
@@ -1118,14 +1077,13 @@ typedef void (*pDSI_CallbackTypeDef)(
  * @param  __HANDLE__  DSI handle
  * @retval None.
  */
-#define __HAL_DSI_REG_ENABLE(__HANDLE__)                                       \
-	do {                                                                   \
-		__IO uint32_t tmpreg = 0x00U;                                  \
-		SET_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_REGEN);       \
-		/* Delay after an DSI regulator enabling */                    \
-		tmpreg =                                                       \
-		    READ_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_REGEN);  \
-		UNUSED(tmpreg);                                                \
+#define __HAL_DSI_REG_ENABLE(__HANDLE__)                                                                               \
+	do {                                                                                                           \
+		__IO uint32_t tmpreg = 0x00U;                                                                          \
+		SET_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_REGEN);                                               \
+		/* Delay after an DSI regulator enabling */                                                            \
+		tmpreg = READ_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_REGEN);                                     \
+		UNUSED(tmpreg);                                                                                        \
 	} while (0U)
 
 /**
@@ -1133,14 +1091,13 @@ typedef void (*pDSI_CallbackTypeDef)(
  * @param  __HANDLE__  DSI handle
  * @retval None.
  */
-#define __HAL_DSI_REG_DISABLE(__HANDLE__)                                      \
-	do {                                                                   \
-		__IO uint32_t tmpreg = 0x00U;                                  \
-		CLEAR_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_REGEN);     \
-		/* Delay after an DSI regulator disabling */                   \
-		tmpreg =                                                       \
-		    READ_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_REGEN);  \
-		UNUSED(tmpreg);                                                \
+#define __HAL_DSI_REG_DISABLE(__HANDLE__)                                                                              \
+	do {                                                                                                           \
+		__IO uint32_t tmpreg = 0x00U;                                                                          \
+		CLEAR_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_REGEN);                                             \
+		/* Delay after an DSI regulator disabling */                                                           \
+		tmpreg = READ_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_REGEN);                                     \
+		UNUSED(tmpreg);                                                                                        \
 	} while (0U)
 
 /**
@@ -1158,8 +1115,7 @@ typedef void (*pDSI_CallbackTypeDef)(
  *            @arg DSI_FLAG_RR   : Regulator Ready Interrupt Flag
  * @retval The state of FLAG (SET or RESET).
  */
-#define __HAL_DSI_GET_FLAG(__HANDLE__, __FLAG__)                               \
-	((__HANDLE__)->Instance->WISR & (__FLAG__))
+#define __HAL_DSI_GET_FLAG(__HANDLE__, __FLAG__) ((__HANDLE__)->Instance->WISR & (__FLAG__))
 
 /**
  * @brief  Clears the DSI pending flags.
@@ -1173,8 +1129,7 @@ typedef void (*pDSI_CallbackTypeDef)(
  *            @arg DSI_FLAG_RR   : Regulator Ready Interrupt Flag
  * @retval None
  */
-#define __HAL_DSI_CLEAR_FLAG(__HANDLE__, __FLAG__)                             \
-	((__HANDLE__)->Instance->WIFCR = (__FLAG__))
+#define __HAL_DSI_CLEAR_FLAG(__HANDLE__, __FLAG__) ((__HANDLE__)->Instance->WIFCR = (__FLAG__))
 
 /**
  * @brief  Enables the specified DSI interrupts.
@@ -1188,8 +1143,7 @@ typedef void (*pDSI_CallbackTypeDef)(
  *            @arg DSI_IT_RR  : Regulator Ready Interrupt
  * @retval None
  */
-#define __HAL_DSI_ENABLE_IT(__HANDLE__, __INTERRUPT__)                         \
-	((__HANDLE__)->Instance->WIER |= (__INTERRUPT__))
+#define __HAL_DSI_ENABLE_IT(__HANDLE__, __INTERRUPT__) ((__HANDLE__)->Instance->WIER |= (__INTERRUPT__))
 
 /**
  * @brief  Disables the specified DSI interrupts.
@@ -1203,8 +1157,7 @@ typedef void (*pDSI_CallbackTypeDef)(
  *            @arg DSI_IT_RR  : Regulator Ready Interrupt
  * @retval None
  */
-#define __HAL_DSI_DISABLE_IT(__HANDLE__, __INTERRUPT__)                        \
-	((__HANDLE__)->Instance->WIER &= ~(__INTERRUPT__))
+#define __HAL_DSI_DISABLE_IT(__HANDLE__, __INTERRUPT__) ((__HANDLE__)->Instance->WIER &= ~(__INTERRUPT__))
 
 /**
  * @brief  Checks whether the specified DSI interrupt source is enabled or not.
@@ -1218,8 +1171,7 @@ typedef void (*pDSI_CallbackTypeDef)(
  *            @arg DSI_IT_RR  : Regulator Ready Interrupt
  * @retval The state of INTERRUPT (SET or RESET).
  */
-#define __HAL_DSI_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)                     \
-	((__HANDLE__)->Instance->WIER & (__INTERRUPT__))
+#define __HAL_DSI_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__) ((__HANDLE__)->Instance->WIER & (__INTERRUPT__))
 
 /**
  * @}
@@ -1233,21 +1185,16 @@ typedef void (*pDSI_CallbackTypeDef)(
  *  @brief   Initialization and Configuration functions
  * @{
  */
-HAL_StatusTypeDef HAL_DSI_Init(DSI_HandleTypeDef *hdsi,
-			       DSI_PLLInitTypeDef *PLLInit);
+HAL_StatusTypeDef HAL_DSI_Init(DSI_HandleTypeDef *hdsi, DSI_PLLInitTypeDef *PLLInit);
 HAL_StatusTypeDef HAL_DSI_DeInit(DSI_HandleTypeDef *hdsi);
 void HAL_DSI_MspInit(DSI_HandleTypeDef *hdsi);
 void HAL_DSI_MspDeInit(DSI_HandleTypeDef *hdsi);
-HAL_StatusTypeDef HAL_DSI_ConfigErrorMonitor(DSI_HandleTypeDef *hdsi,
-					     uint32_t ActiveErrors);
+HAL_StatusTypeDef HAL_DSI_ConfigErrorMonitor(DSI_HandleTypeDef *hdsi, uint32_t ActiveErrors);
 /* Callbacks Register/UnRegister functions  ***********************************/
 #if (USE_HAL_DSI_REGISTER_CALLBACKS == 1)
-HAL_StatusTypeDef HAL_DSI_RegisterCallback(DSI_HandleTypeDef *hdsi,
-					   HAL_DSI_CallbackIDTypeDef CallbackID,
+HAL_StatusTypeDef HAL_DSI_RegisterCallback(DSI_HandleTypeDef *hdsi, HAL_DSI_CallbackIDTypeDef CallbackID,
 					   pDSI_CallbackTypeDef pCallback);
-HAL_StatusTypeDef
-HAL_DSI_UnRegisterCallback(DSI_HandleTypeDef *hdsi,
-			   HAL_DSI_CallbackIDTypeDef CallbackID);
+HAL_StatusTypeDef HAL_DSI_UnRegisterCallback(DSI_HandleTypeDef *hdsi, HAL_DSI_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_DSI_REGISTER_CALLBACKS */
 /**
  * @}
@@ -1269,72 +1216,45 @@ void HAL_DSI_ErrorCallback(DSI_HandleTypeDef *hdsi);
  *  @brief    Peripheral Control functions
  * @{
  */
-HAL_StatusTypeDef HAL_DSI_SetGenericVCID(DSI_HandleTypeDef *hdsi,
-					 uint32_t VirtualChannelID);
-HAL_StatusTypeDef HAL_DSI_ConfigVideoMode(DSI_HandleTypeDef *hdsi,
-					  DSI_VidCfgTypeDef *VidCfg);
-HAL_StatusTypeDef HAL_DSI_ConfigAdaptedCommandMode(DSI_HandleTypeDef *hdsi,
-						   DSI_CmdCfgTypeDef *CmdCfg);
-HAL_StatusTypeDef HAL_DSI_ConfigCommand(DSI_HandleTypeDef *hdsi,
-					DSI_LPCmdTypeDef *LPCmd);
-HAL_StatusTypeDef HAL_DSI_ConfigFlowControl(DSI_HandleTypeDef *hdsi,
-					    uint32_t FlowControl);
-HAL_StatusTypeDef HAL_DSI_ConfigPhyTimer(DSI_HandleTypeDef *hdsi,
-					 DSI_PHY_TimerTypeDef *PhyTimers);
-HAL_StatusTypeDef
-HAL_DSI_ConfigHostTimeouts(DSI_HandleTypeDef *hdsi,
-			   DSI_HOST_TimeoutTypeDef *HostTimeouts);
+HAL_StatusTypeDef HAL_DSI_SetGenericVCID(DSI_HandleTypeDef *hdsi, uint32_t VirtualChannelID);
+HAL_StatusTypeDef HAL_DSI_ConfigVideoMode(DSI_HandleTypeDef *hdsi, DSI_VidCfgTypeDef *VidCfg);
+HAL_StatusTypeDef HAL_DSI_ConfigAdaptedCommandMode(DSI_HandleTypeDef *hdsi, DSI_CmdCfgTypeDef *CmdCfg);
+HAL_StatusTypeDef HAL_DSI_ConfigCommand(DSI_HandleTypeDef *hdsi, DSI_LPCmdTypeDef *LPCmd);
+HAL_StatusTypeDef HAL_DSI_ConfigFlowControl(DSI_HandleTypeDef *hdsi, uint32_t FlowControl);
+HAL_StatusTypeDef HAL_DSI_ConfigPhyTimer(DSI_HandleTypeDef *hdsi, DSI_PHY_TimerTypeDef *PhyTimers);
+HAL_StatusTypeDef HAL_DSI_ConfigHostTimeouts(DSI_HandleTypeDef *hdsi, DSI_HOST_TimeoutTypeDef *HostTimeouts);
 HAL_StatusTypeDef HAL_DSI_Start(DSI_HandleTypeDef *hdsi);
 HAL_StatusTypeDef HAL_DSI_Stop(DSI_HandleTypeDef *hdsi);
 HAL_StatusTypeDef HAL_DSI_Refresh(DSI_HandleTypeDef *hdsi);
-HAL_StatusTypeDef HAL_DSI_ColorMode(DSI_HandleTypeDef *hdsi,
-				    uint32_t ColorMode);
+HAL_StatusTypeDef HAL_DSI_ColorMode(DSI_HandleTypeDef *hdsi, uint32_t ColorMode);
 HAL_StatusTypeDef HAL_DSI_Shutdown(DSI_HandleTypeDef *hdsi, uint32_t Shutdown);
-HAL_StatusTypeDef HAL_DSI_ShortWrite(DSI_HandleTypeDef *hdsi,
-				     uint32_t ChannelID, uint32_t Mode,
-				     uint32_t Param1, uint32_t Param2);
-HAL_StatusTypeDef HAL_DSI_LongWrite(DSI_HandleTypeDef *hdsi, uint32_t ChannelID,
-				    uint32_t Mode, uint32_t NbParams,
-				    uint32_t Param1,
-				    const uint8_t *ParametersTable);
-HAL_StatusTypeDef HAL_DSI_Read(DSI_HandleTypeDef *hdsi, uint32_t ChannelNbr,
-			       uint8_t *Array, uint32_t Size, uint32_t Mode,
-			       uint32_t DCSCmd, uint8_t *ParametersTable);
+HAL_StatusTypeDef HAL_DSI_ShortWrite(DSI_HandleTypeDef *hdsi, uint32_t ChannelID, uint32_t Mode, uint32_t Param1,
+				     uint32_t Param2);
+HAL_StatusTypeDef HAL_DSI_LongWrite(DSI_HandleTypeDef *hdsi, uint32_t ChannelID, uint32_t Mode, uint32_t NbParams,
+				    uint32_t Param1, const uint8_t *ParametersTable);
+HAL_StatusTypeDef HAL_DSI_Read(DSI_HandleTypeDef *hdsi, uint32_t ChannelNbr, uint8_t *Array, uint32_t Size,
+			       uint32_t Mode, uint32_t DCSCmd, uint8_t *ParametersTable);
 HAL_StatusTypeDef HAL_DSI_EnterULPMData(DSI_HandleTypeDef *hdsi);
 HAL_StatusTypeDef HAL_DSI_ExitULPMData(DSI_HandleTypeDef *hdsi);
 HAL_StatusTypeDef HAL_DSI_EnterULPM(DSI_HandleTypeDef *hdsi);
 HAL_StatusTypeDef HAL_DSI_ExitULPM(DSI_HandleTypeDef *hdsi);
 
-HAL_StatusTypeDef HAL_DSI_PatternGeneratorStart(DSI_HandleTypeDef *hdsi,
-						uint32_t Mode,
-						uint32_t Orientation);
+HAL_StatusTypeDef HAL_DSI_PatternGeneratorStart(DSI_HandleTypeDef *hdsi, uint32_t Mode, uint32_t Orientation);
 HAL_StatusTypeDef HAL_DSI_PatternGeneratorStop(DSI_HandleTypeDef *hdsi);
 
-HAL_StatusTypeDef HAL_DSI_SetSlewRateAndDelayTuning(DSI_HandleTypeDef *hdsi,
-						    uint32_t CommDelay,
-						    uint32_t Lane,
+HAL_StatusTypeDef HAL_DSI_SetSlewRateAndDelayTuning(DSI_HandleTypeDef *hdsi, uint32_t CommDelay, uint32_t Lane,
 						    uint32_t Value);
-HAL_StatusTypeDef HAL_DSI_SetLowPowerRXFilter(DSI_HandleTypeDef *hdsi,
-					      uint32_t Frequency);
-HAL_StatusTypeDef HAL_DSI_SetSDD(DSI_HandleTypeDef *hdsi,
-				 FunctionalState State);
-HAL_StatusTypeDef HAL_DSI_SetLanePinsConfiguration(DSI_HandleTypeDef *hdsi,
-						   uint32_t CustomLane,
-						   uint32_t Lane,
+HAL_StatusTypeDef HAL_DSI_SetLowPowerRXFilter(DSI_HandleTypeDef *hdsi, uint32_t Frequency);
+HAL_StatusTypeDef HAL_DSI_SetSDD(DSI_HandleTypeDef *hdsi, FunctionalState State);
+HAL_StatusTypeDef HAL_DSI_SetLanePinsConfiguration(DSI_HandleTypeDef *hdsi, uint32_t CustomLane, uint32_t Lane,
 						   FunctionalState State);
-HAL_StatusTypeDef HAL_DSI_SetPHYTimings(DSI_HandleTypeDef *hdsi,
-					uint32_t Timing, FunctionalState State,
+HAL_StatusTypeDef HAL_DSI_SetPHYTimings(DSI_HandleTypeDef *hdsi, uint32_t Timing, FunctionalState State,
 					uint32_t Value);
-HAL_StatusTypeDef HAL_DSI_ForceTXStopMode(DSI_HandleTypeDef *hdsi,
-					  uint32_t Lane, FunctionalState State);
-HAL_StatusTypeDef HAL_DSI_ForceRXLowPower(DSI_HandleTypeDef *hdsi,
-					  FunctionalState State);
-HAL_StatusTypeDef HAL_DSI_ForceDataLanesInRX(DSI_HandleTypeDef *hdsi,
-					     FunctionalState State);
-HAL_StatusTypeDef HAL_DSI_SetPullDown(DSI_HandleTypeDef *hdsi,
-				      FunctionalState State);
-HAL_StatusTypeDef HAL_DSI_SetContentionDetectionOff(DSI_HandleTypeDef *hdsi,
-						    FunctionalState State);
+HAL_StatusTypeDef HAL_DSI_ForceTXStopMode(DSI_HandleTypeDef *hdsi, uint32_t Lane, FunctionalState State);
+HAL_StatusTypeDef HAL_DSI_ForceRXLowPower(DSI_HandleTypeDef *hdsi, FunctionalState State);
+HAL_StatusTypeDef HAL_DSI_ForceDataLanesInRX(DSI_HandleTypeDef *hdsi, FunctionalState State);
+HAL_StatusTypeDef HAL_DSI_SetPullDown(DSI_HandleTypeDef *hdsi, FunctionalState State);
+HAL_StatusTypeDef HAL_DSI_SetContentionDetectionOff(DSI_HandleTypeDef *hdsi, FunctionalState State);
 
 /**
  * @}
@@ -1362,8 +1282,7 @@ HAL_DSI_StateTypeDef HAL_DSI_GetState(const DSI_HandleTypeDef *hdsi);
 /** @defgroup DSI_Private_Constants DSI Private Constants
  * @{
  */
-#define DSI_MAX_RETURN_PKT_SIZE                                                \
-	(0x00000037U) /*!< Maximum return packet configuration */
+#define DSI_MAX_RETURN_PKT_SIZE (0x00000037U) /*!< Maximum return packet configuration */
 /**
  * @}
  */
@@ -1373,146 +1292,78 @@ HAL_DSI_StateTypeDef HAL_DSI_GetState(const DSI_HandleTypeDef *hdsi);
  * @{
  */
 #define IS_DSI_PLL_NDIV(NDIV) ((10U <= (NDIV)) && ((NDIV) <= 125U))
-#define IS_DSI_PLL_IDF(IDF)                                                    \
-	(((IDF) == DSI_PLL_IN_DIV1) || ((IDF) == DSI_PLL_IN_DIV2) ||           \
-	 ((IDF) == DSI_PLL_IN_DIV3) || ((IDF) == DSI_PLL_IN_DIV4) ||           \
-	 ((IDF) == DSI_PLL_IN_DIV5) || ((IDF) == DSI_PLL_IN_DIV6) ||           \
+#define IS_DSI_PLL_IDF(IDF)                                                                                            \
+	(((IDF) == DSI_PLL_IN_DIV1) || ((IDF) == DSI_PLL_IN_DIV2) || ((IDF) == DSI_PLL_IN_DIV3) ||                     \
+	 ((IDF) == DSI_PLL_IN_DIV4) || ((IDF) == DSI_PLL_IN_DIV5) || ((IDF) == DSI_PLL_IN_DIV6) ||                     \
 	 ((IDF) == DSI_PLL_IN_DIV7))
-#define IS_DSI_PLL_ODF(ODF)                                                    \
-	(((ODF) == DSI_PLL_OUT_DIV1) || ((ODF) == DSI_PLL_OUT_DIV2) ||         \
-	 ((ODF) == DSI_PLL_OUT_DIV4) || ((ODF) == DSI_PLL_OUT_DIV8))
-#define IS_DSI_AUTO_CLKLANE_CONTROL(AutoClkLane)                               \
-	(((AutoClkLane) == DSI_AUTO_CLK_LANE_CTRL_DISABLE) ||                  \
-	 ((AutoClkLane) == DSI_AUTO_CLK_LANE_CTRL_ENABLE))
-#define IS_DSI_NUMBER_OF_LANES(NumberOfLanes)                                  \
-	(((NumberOfLanes) == DSI_ONE_DATA_LANE) ||                             \
-	 ((NumberOfLanes) == DSI_TWO_DATA_LANES))
-#define IS_DSI_FLOW_CONTROL(FlowControl)                                       \
-	(((FlowControl) | DSI_FLOW_CONTROL_ALL) == DSI_FLOW_CONTROL_ALL)
+#define IS_DSI_PLL_ODF(ODF)                                                                                            \
+	(((ODF) == DSI_PLL_OUT_DIV1) || ((ODF) == DSI_PLL_OUT_DIV2) || ((ODF) == DSI_PLL_OUT_DIV4) ||                  \
+	 ((ODF) == DSI_PLL_OUT_DIV8))
+#define IS_DSI_AUTO_CLKLANE_CONTROL(AutoClkLane)                                                                       \
+	(((AutoClkLane) == DSI_AUTO_CLK_LANE_CTRL_DISABLE) || ((AutoClkLane) == DSI_AUTO_CLK_LANE_CTRL_ENABLE))
+#define IS_DSI_NUMBER_OF_LANES(NumberOfLanes)                                                                          \
+	(((NumberOfLanes) == DSI_ONE_DATA_LANE) || ((NumberOfLanes) == DSI_TWO_DATA_LANES))
+#define IS_DSI_FLOW_CONTROL(FlowControl) (((FlowControl) | DSI_FLOW_CONTROL_ALL) == DSI_FLOW_CONTROL_ALL)
 #define IS_DSI_COLOR_CODING(ColorCoding) ((ColorCoding) <= 5U)
-#define IS_DSI_LOOSELY_PACKED(LooselyPacked)                                   \
-	(((LooselyPacked) == DSI_LOOSELY_PACKED_ENABLE) ||                     \
-	 ((LooselyPacked) == DSI_LOOSELY_PACKED_DISABLE))
-#define IS_DSI_DE_POLARITY(DataEnable)                                         \
-	(((DataEnable) == DSI_DATA_ENABLE_ACTIVE_HIGH) ||                      \
-	 ((DataEnable) == DSI_DATA_ENABLE_ACTIVE_LOW))
-#define IS_DSI_VSYNC_POLARITY(Vsync)                                           \
-	(((Vsync) == DSI_VSYNC_ACTIVE_HIGH) ||                                 \
-	 ((Vsync) == DSI_VSYNC_ACTIVE_LOW))
-#define IS_DSI_HSYNC_POLARITY(Hsync)                                           \
-	(((Hsync) == DSI_HSYNC_ACTIVE_HIGH) ||                                 \
-	 ((Hsync) == DSI_HSYNC_ACTIVE_LOW))
-#define IS_DSI_VIDEO_MODE_TYPE(VideoModeType)                                  \
-	(((VideoModeType) == DSI_VID_MODE_NB_PULSES) ||                        \
-	 ((VideoModeType) == DSI_VID_MODE_NB_EVENTS) ||                        \
+#define IS_DSI_LOOSELY_PACKED(LooselyPacked)                                                                           \
+	(((LooselyPacked) == DSI_LOOSELY_PACKED_ENABLE) || ((LooselyPacked) == DSI_LOOSELY_PACKED_DISABLE))
+#define IS_DSI_DE_POLARITY(DataEnable)                                                                                 \
+	(((DataEnable) == DSI_DATA_ENABLE_ACTIVE_HIGH) || ((DataEnable) == DSI_DATA_ENABLE_ACTIVE_LOW))
+#define IS_DSI_VSYNC_POLARITY(Vsync) (((Vsync) == DSI_VSYNC_ACTIVE_HIGH) || ((Vsync) == DSI_VSYNC_ACTIVE_LOW))
+#define IS_DSI_HSYNC_POLARITY(Hsync) (((Hsync) == DSI_HSYNC_ACTIVE_HIGH) || ((Hsync) == DSI_HSYNC_ACTIVE_LOW))
+#define IS_DSI_VIDEO_MODE_TYPE(VideoModeType)                                                                          \
+	(((VideoModeType) == DSI_VID_MODE_NB_PULSES) || ((VideoModeType) == DSI_VID_MODE_NB_EVENTS) ||                 \
 	 ((VideoModeType) == DSI_VID_MODE_BURST))
-#define IS_DSI_COLOR_MODE(ColorMode)                                           \
-	(((ColorMode) == DSI_COLOR_MODE_FULL) ||                               \
-	 ((ColorMode) == DSI_COLOR_MODE_EIGHT))
-#define IS_DSI_SHUT_DOWN(ShutDown)                                             \
-	(((ShutDown) == DSI_DISPLAY_ON) || ((ShutDown) == DSI_DISPLAY_OFF))
-#define IS_DSI_LP_COMMAND(LPCommand)                                           \
-	(((LPCommand) == DSI_LP_COMMAND_DISABLE) ||                            \
-	 ((LPCommand) == DSI_LP_COMMAND_ENABLE))
-#define IS_DSI_LP_HFP(LPHFP)                                                   \
-	(((LPHFP) == DSI_LP_HFP_DISABLE) || ((LPHFP) == DSI_LP_HFP_ENABLE))
-#define IS_DSI_LP_HBP(LPHBP)                                                   \
-	(((LPHBP) == DSI_LP_HBP_DISABLE) || ((LPHBP) == DSI_LP_HBP_ENABLE))
-#define IS_DSI_LP_VACTIVE(LPVActive)                                           \
-	(((LPVActive) == DSI_LP_VACT_DISABLE) ||                               \
-	 ((LPVActive) == DSI_LP_VACT_ENABLE))
-#define IS_DSI_LP_VFP(LPVFP)                                                   \
-	(((LPVFP) == DSI_LP_VFP_DISABLE) || ((LPVFP) == DSI_LP_VFP_ENABLE))
-#define IS_DSI_LP_VBP(LPVBP)                                                   \
-	(((LPVBP) == DSI_LP_VBP_DISABLE) || ((LPVBP) == DSI_LP_VBP_ENABLE))
-#define IS_DSI_LP_VSYNC(LPVSYNC)                                               \
-	(((LPVSYNC) == DSI_LP_VSYNC_DISABLE) ||                                \
-	 ((LPVSYNC) == DSI_LP_VSYNC_ENABLE))
-#define IS_DSI_FBTAA(FrameBTAAcknowledge)                                      \
-	(((FrameBTAAcknowledge) == DSI_FBTAA_DISABLE) ||                       \
-	 ((FrameBTAAcknowledge) == DSI_FBTAA_ENABLE))
-#define IS_DSI_TE_SOURCE(TESource)                                             \
-	(((TESource) == DSI_TE_DSILINK) || ((TESource) == DSI_TE_EXTERNAL))
-#define IS_DSI_TE_POLARITY(TEPolarity)                                         \
-	(((TEPolarity) == DSI_TE_RISING_EDGE) ||                               \
-	 ((TEPolarity) == DSI_TE_FALLING_EDGE))
-#define IS_DSI_AUTOMATIC_REFRESH(AutomaticRefresh)                             \
-	(((AutomaticRefresh) == DSI_AR_DISABLE) ||                             \
-	 ((AutomaticRefresh) == DSI_AR_ENABLE))
-#define IS_DSI_VS_POLARITY(VSPolarity)                                         \
-	(((VSPolarity) == DSI_VSYNC_FALLING) ||                                \
-	 ((VSPolarity) == DSI_VSYNC_RISING))
-#define IS_DSI_TE_ACK_REQUEST(TEAcknowledgeRequest)                            \
-	(((TEAcknowledgeRequest) == DSI_TE_ACKNOWLEDGE_DISABLE) ||             \
+#define IS_DSI_COLOR_MODE(ColorMode) (((ColorMode) == DSI_COLOR_MODE_FULL) || ((ColorMode) == DSI_COLOR_MODE_EIGHT))
+#define IS_DSI_SHUT_DOWN(ShutDown) (((ShutDown) == DSI_DISPLAY_ON) || ((ShutDown) == DSI_DISPLAY_OFF))
+#define IS_DSI_LP_COMMAND(LPCommand) (((LPCommand) == DSI_LP_COMMAND_DISABLE) || ((LPCommand) == DSI_LP_COMMAND_ENABLE))
+#define IS_DSI_LP_HFP(LPHFP) (((LPHFP) == DSI_LP_HFP_DISABLE) || ((LPHFP) == DSI_LP_HFP_ENABLE))
+#define IS_DSI_LP_HBP(LPHBP) (((LPHBP) == DSI_LP_HBP_DISABLE) || ((LPHBP) == DSI_LP_HBP_ENABLE))
+#define IS_DSI_LP_VACTIVE(LPVActive) (((LPVActive) == DSI_LP_VACT_DISABLE) || ((LPVActive) == DSI_LP_VACT_ENABLE))
+#define IS_DSI_LP_VFP(LPVFP) (((LPVFP) == DSI_LP_VFP_DISABLE) || ((LPVFP) == DSI_LP_VFP_ENABLE))
+#define IS_DSI_LP_VBP(LPVBP) (((LPVBP) == DSI_LP_VBP_DISABLE) || ((LPVBP) == DSI_LP_VBP_ENABLE))
+#define IS_DSI_LP_VSYNC(LPVSYNC) (((LPVSYNC) == DSI_LP_VSYNC_DISABLE) || ((LPVSYNC) == DSI_LP_VSYNC_ENABLE))
+#define IS_DSI_FBTAA(FrameBTAAcknowledge)                                                                              \
+	(((FrameBTAAcknowledge) == DSI_FBTAA_DISABLE) || ((FrameBTAAcknowledge) == DSI_FBTAA_ENABLE))
+#define IS_DSI_TE_SOURCE(TESource) (((TESource) == DSI_TE_DSILINK) || ((TESource) == DSI_TE_EXTERNAL))
+#define IS_DSI_TE_POLARITY(TEPolarity) (((TEPolarity) == DSI_TE_RISING_EDGE) || ((TEPolarity) == DSI_TE_FALLING_EDGE))
+#define IS_DSI_AUTOMATIC_REFRESH(AutomaticRefresh)                                                                     \
+	(((AutomaticRefresh) == DSI_AR_DISABLE) || ((AutomaticRefresh) == DSI_AR_ENABLE))
+#define IS_DSI_VS_POLARITY(VSPolarity) (((VSPolarity) == DSI_VSYNC_FALLING) || ((VSPolarity) == DSI_VSYNC_RISING))
+#define IS_DSI_TE_ACK_REQUEST(TEAcknowledgeRequest)                                                                    \
+	(((TEAcknowledgeRequest) == DSI_TE_ACKNOWLEDGE_DISABLE) ||                                                     \
 	 ((TEAcknowledgeRequest) == DSI_TE_ACKNOWLEDGE_ENABLE))
-#define IS_DSI_ACK_REQUEST(AcknowledgeRequest)                                 \
-	(((AcknowledgeRequest) == DSI_ACKNOWLEDGE_DISABLE) ||                  \
-	 ((AcknowledgeRequest) == DSI_ACKNOWLEDGE_ENABLE))
-#define IS_DSI_LP_GSW0P(LP_GSW0P)                                              \
-	(((LP_GSW0P) == DSI_LP_GSW0P_DISABLE) ||                               \
-	 ((LP_GSW0P) == DSI_LP_GSW0P_ENABLE))
-#define IS_DSI_LP_GSW1P(LP_GSW1P)                                              \
-	(((LP_GSW1P) == DSI_LP_GSW1P_DISABLE) ||                               \
-	 ((LP_GSW1P) == DSI_LP_GSW1P_ENABLE))
-#define IS_DSI_LP_GSW2P(LP_GSW2P)                                              \
-	(((LP_GSW2P) == DSI_LP_GSW2P_DISABLE) ||                               \
-	 ((LP_GSW2P) == DSI_LP_GSW2P_ENABLE))
-#define IS_DSI_LP_GSR0P(LP_GSR0P)                                              \
-	(((LP_GSR0P) == DSI_LP_GSR0P_DISABLE) ||                               \
-	 ((LP_GSR0P) == DSI_LP_GSR0P_ENABLE))
-#define IS_DSI_LP_GSR1P(LP_GSR1P)                                              \
-	(((LP_GSR1P) == DSI_LP_GSR1P_DISABLE) ||                               \
-	 ((LP_GSR1P) == DSI_LP_GSR1P_ENABLE))
-#define IS_DSI_LP_GSR2P(LP_GSR2P)                                              \
-	(((LP_GSR2P) == DSI_LP_GSR2P_DISABLE) ||                               \
-	 ((LP_GSR2P) == DSI_LP_GSR2P_ENABLE))
-#define IS_DSI_LP_GLW(LP_GLW)                                                  \
-	(((LP_GLW) == DSI_LP_GLW_DISABLE) || ((LP_GLW) == DSI_LP_GLW_ENABLE))
-#define IS_DSI_LP_DSW0P(LP_DSW0P)                                              \
-	(((LP_DSW0P) == DSI_LP_DSW0P_DISABLE) ||                               \
-	 ((LP_DSW0P) == DSI_LP_DSW0P_ENABLE))
-#define IS_DSI_LP_DSW1P(LP_DSW1P)                                              \
-	(((LP_DSW1P) == DSI_LP_DSW1P_DISABLE) ||                               \
-	 ((LP_DSW1P) == DSI_LP_DSW1P_ENABLE))
-#define IS_DSI_LP_DSR0P(LP_DSR0P)                                              \
-	(((LP_DSR0P) == DSI_LP_DSR0P_DISABLE) ||                               \
-	 ((LP_DSR0P) == DSI_LP_DSR0P_ENABLE))
-#define IS_DSI_LP_DLW(LP_DLW)                                                  \
-	(((LP_DLW) == DSI_LP_DLW_DISABLE) || ((LP_DLW) == DSI_LP_DLW_ENABLE))
-#define IS_DSI_LP_MRDP(LP_MRDP)                                                \
-	(((LP_MRDP) == DSI_LP_MRDP_DISABLE) ||                                 \
-	 ((LP_MRDP) == DSI_LP_MRDP_ENABLE))
-#define IS_DSI_SHORT_WRITE_PACKET_TYPE(MODE)                                   \
-	(((MODE) == DSI_DCS_SHORT_PKT_WRITE_P0) ||                             \
-	 ((MODE) == DSI_DCS_SHORT_PKT_WRITE_P1) ||                             \
-	 ((MODE) == DSI_GEN_SHORT_PKT_WRITE_P0) ||                             \
-	 ((MODE) == DSI_GEN_SHORT_PKT_WRITE_P1) ||                             \
+#define IS_DSI_ACK_REQUEST(AcknowledgeRequest)                                                                         \
+	(((AcknowledgeRequest) == DSI_ACKNOWLEDGE_DISABLE) || ((AcknowledgeRequest) == DSI_ACKNOWLEDGE_ENABLE))
+#define IS_DSI_LP_GSW0P(LP_GSW0P) (((LP_GSW0P) == DSI_LP_GSW0P_DISABLE) || ((LP_GSW0P) == DSI_LP_GSW0P_ENABLE))
+#define IS_DSI_LP_GSW1P(LP_GSW1P) (((LP_GSW1P) == DSI_LP_GSW1P_DISABLE) || ((LP_GSW1P) == DSI_LP_GSW1P_ENABLE))
+#define IS_DSI_LP_GSW2P(LP_GSW2P) (((LP_GSW2P) == DSI_LP_GSW2P_DISABLE) || ((LP_GSW2P) == DSI_LP_GSW2P_ENABLE))
+#define IS_DSI_LP_GSR0P(LP_GSR0P) (((LP_GSR0P) == DSI_LP_GSR0P_DISABLE) || ((LP_GSR0P) == DSI_LP_GSR0P_ENABLE))
+#define IS_DSI_LP_GSR1P(LP_GSR1P) (((LP_GSR1P) == DSI_LP_GSR1P_DISABLE) || ((LP_GSR1P) == DSI_LP_GSR1P_ENABLE))
+#define IS_DSI_LP_GSR2P(LP_GSR2P) (((LP_GSR2P) == DSI_LP_GSR2P_DISABLE) || ((LP_GSR2P) == DSI_LP_GSR2P_ENABLE))
+#define IS_DSI_LP_GLW(LP_GLW) (((LP_GLW) == DSI_LP_GLW_DISABLE) || ((LP_GLW) == DSI_LP_GLW_ENABLE))
+#define IS_DSI_LP_DSW0P(LP_DSW0P) (((LP_DSW0P) == DSI_LP_DSW0P_DISABLE) || ((LP_DSW0P) == DSI_LP_DSW0P_ENABLE))
+#define IS_DSI_LP_DSW1P(LP_DSW1P) (((LP_DSW1P) == DSI_LP_DSW1P_DISABLE) || ((LP_DSW1P) == DSI_LP_DSW1P_ENABLE))
+#define IS_DSI_LP_DSR0P(LP_DSR0P) (((LP_DSR0P) == DSI_LP_DSR0P_DISABLE) || ((LP_DSR0P) == DSI_LP_DSR0P_ENABLE))
+#define IS_DSI_LP_DLW(LP_DLW) (((LP_DLW) == DSI_LP_DLW_DISABLE) || ((LP_DLW) == DSI_LP_DLW_ENABLE))
+#define IS_DSI_LP_MRDP(LP_MRDP) (((LP_MRDP) == DSI_LP_MRDP_DISABLE) || ((LP_MRDP) == DSI_LP_MRDP_ENABLE))
+#define IS_DSI_SHORT_WRITE_PACKET_TYPE(MODE)                                                                           \
+	(((MODE) == DSI_DCS_SHORT_PKT_WRITE_P0) || ((MODE) == DSI_DCS_SHORT_PKT_WRITE_P1) ||                           \
+	 ((MODE) == DSI_GEN_SHORT_PKT_WRITE_P0) || ((MODE) == DSI_GEN_SHORT_PKT_WRITE_P1) ||                           \
 	 ((MODE) == DSI_GEN_SHORT_PKT_WRITE_P2))
-#define IS_DSI_LONG_WRITE_PACKET_TYPE(MODE)                                    \
-	(((MODE) == DSI_DCS_LONG_PKT_WRITE) ||                                 \
-	 ((MODE) == DSI_GEN_LONG_PKT_WRITE))
-#define IS_DSI_READ_PACKET_TYPE(MODE)                                          \
-	(((MODE) == DSI_DCS_SHORT_PKT_READ) ||                                 \
-	 ((MODE) == DSI_GEN_SHORT_PKT_READ_P0) ||                              \
-	 ((MODE) == DSI_GEN_SHORT_PKT_READ_P1) ||                              \
-	 ((MODE) == DSI_GEN_SHORT_PKT_READ_P2))
-#define IS_DSI_COMMUNICATION_DELAY(CommDelay)                                  \
-	(((CommDelay) == DSI_SLEW_RATE_HSTX) ||                                \
-	 ((CommDelay) == DSI_SLEW_RATE_LPTX) || ((CommDelay) == DSI_HS_DELAY))
-#define IS_DSI_LANE_GROUP(Lane)                                                \
-	(((Lane) == DSI_CLOCK_LANE) || ((Lane) == DSI_DATA_LANES))
-#define IS_DSI_CUSTOM_LANE(CustomLane)                                         \
-	(((CustomLane) == DSI_SWAP_LANE_PINS) ||                               \
-	 ((CustomLane) == DSI_INVERT_HS_SIGNAL))
-#define IS_DSI_LANE(Lane)                                                      \
-	(((Lane) == DSI_CLOCK_LANE) || ((Lane) == DSI_DATA_LANE0) ||           \
-	 ((Lane) == DSI_DATA_LANE1))
-#define IS_DSI_PHY_TIMING(Timing)                                              \
-	(((Timing) == DSI_TCLK_POST) || ((Timing) == DSI_TLPX_CLK) ||          \
-	 ((Timing) == DSI_THS_EXIT) || ((Timing) == DSI_TLPX_DATA) ||          \
-	 ((Timing) == DSI_THS_ZERO) || ((Timing) == DSI_THS_TRAIL) ||          \
-	 ((Timing) == DSI_THS_PREPARE) || ((Timing) == DSI_TCLK_ZERO) ||       \
-	 ((Timing) == DSI_TCLK_PREPARE))
+#define IS_DSI_LONG_WRITE_PACKET_TYPE(MODE) (((MODE) == DSI_DCS_LONG_PKT_WRITE) || ((MODE) == DSI_GEN_LONG_PKT_WRITE))
+#define IS_DSI_READ_PACKET_TYPE(MODE)                                                                                  \
+	(((MODE) == DSI_DCS_SHORT_PKT_READ) || ((MODE) == DSI_GEN_SHORT_PKT_READ_P0) ||                                \
+	 ((MODE) == DSI_GEN_SHORT_PKT_READ_P1) || ((MODE) == DSI_GEN_SHORT_PKT_READ_P2))
+#define IS_DSI_COMMUNICATION_DELAY(CommDelay)                                                                          \
+	(((CommDelay) == DSI_SLEW_RATE_HSTX) || ((CommDelay) == DSI_SLEW_RATE_LPTX) || ((CommDelay) == DSI_HS_DELAY))
+#define IS_DSI_LANE_GROUP(Lane) (((Lane) == DSI_CLOCK_LANE) || ((Lane) == DSI_DATA_LANES))
+#define IS_DSI_CUSTOM_LANE(CustomLane) (((CustomLane) == DSI_SWAP_LANE_PINS) || ((CustomLane) == DSI_INVERT_HS_SIGNAL))
+#define IS_DSI_LANE(Lane) (((Lane) == DSI_CLOCK_LANE) || ((Lane) == DSI_DATA_LANE0) || ((Lane) == DSI_DATA_LANE1))
+#define IS_DSI_PHY_TIMING(Timing)                                                                                      \
+	(((Timing) == DSI_TCLK_POST) || ((Timing) == DSI_TLPX_CLK) || ((Timing) == DSI_THS_EXIT) ||                    \
+	 ((Timing) == DSI_TLPX_DATA) || ((Timing) == DSI_THS_ZERO) || ((Timing) == DSI_THS_TRAIL) ||                   \
+	 ((Timing) == DSI_THS_PREPARE) || ((Timing) == DSI_TCLK_ZERO) || ((Timing) == DSI_TCLK_PREPARE))
 
 /**
  * @}

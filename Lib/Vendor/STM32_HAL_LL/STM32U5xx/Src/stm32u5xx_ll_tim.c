@@ -32,9 +32,8 @@
  * @{
  */
 
-#if defined(TIM1) || defined(TIM2) || defined(TIM3) || defined(TIM4) ||        \
-    defined(TIM5) || defined(TIM6) || defined(TIM7) || defined(TIM8) ||        \
-    defined(TIM15) || defined(TIM16) || defined(TIM17) || defined(TIM20)
+#if defined(TIM1) || defined(TIM2) || defined(TIM3) || defined(TIM4) || defined(TIM5) || defined(TIM6) ||              \
+    defined(TIM7) || defined(TIM8) || defined(TIM15) || defined(TIM16) || defined(TIM17) || defined(TIM20)
 
 /** @addtogroup TIM_LL
  * @{
@@ -47,174 +46,113 @@
 /** @addtogroup TIM_LL_Private_Macros
  * @{
  */
-#define IS_LL_TIM_COUNTERMODE(__VALUE__)                                       \
-	(((__VALUE__) == LL_TIM_COUNTERMODE_UP) ||                             \
-	 ((__VALUE__) == LL_TIM_COUNTERMODE_DOWN) ||                           \
-	 ((__VALUE__) == LL_TIM_COUNTERMODE_CENTER_UP) ||                      \
-	 ((__VALUE__) == LL_TIM_COUNTERMODE_CENTER_DOWN) ||                    \
+#define IS_LL_TIM_COUNTERMODE(__VALUE__)                                                                               \
+	(((__VALUE__) == LL_TIM_COUNTERMODE_UP) || ((__VALUE__) == LL_TIM_COUNTERMODE_DOWN) ||                         \
+	 ((__VALUE__) == LL_TIM_COUNTERMODE_CENTER_UP) || ((__VALUE__) == LL_TIM_COUNTERMODE_CENTER_DOWN) ||           \
 	 ((__VALUE__) == LL_TIM_COUNTERMODE_CENTER_UP_DOWN))
 
-#define IS_LL_TIM_CLOCKDIVISION(__VALUE__)                                     \
-	(((__VALUE__) == LL_TIM_CLOCKDIVISION_DIV1) ||                         \
-	 ((__VALUE__) == LL_TIM_CLOCKDIVISION_DIV2) ||                         \
+#define IS_LL_TIM_CLOCKDIVISION(__VALUE__)                                                                             \
+	(((__VALUE__) == LL_TIM_CLOCKDIVISION_DIV1) || ((__VALUE__) == LL_TIM_CLOCKDIVISION_DIV2) ||                   \
 	 ((__VALUE__) == LL_TIM_CLOCKDIVISION_DIV4))
 
-#define IS_LL_TIM_OCMODE(__VALUE__)                                            \
-	(((__VALUE__) == LL_TIM_OCMODE_FROZEN) ||                              \
-	 ((__VALUE__) == LL_TIM_OCMODE_ACTIVE) ||                              \
-	 ((__VALUE__) == LL_TIM_OCMODE_INACTIVE) ||                            \
-	 ((__VALUE__) == LL_TIM_OCMODE_TOGGLE) ||                              \
-	 ((__VALUE__) == LL_TIM_OCMODE_FORCED_INACTIVE) ||                     \
-	 ((__VALUE__) == LL_TIM_OCMODE_FORCED_ACTIVE) ||                       \
-	 ((__VALUE__) == LL_TIM_OCMODE_PWM1) ||                                \
-	 ((__VALUE__) == LL_TIM_OCMODE_PWM2) ||                                \
-	 ((__VALUE__) == LL_TIM_OCMODE_RETRIG_OPM1) ||                         \
-	 ((__VALUE__) == LL_TIM_OCMODE_RETRIG_OPM2) ||                         \
-	 ((__VALUE__) == LL_TIM_OCMODE_COMBINED_PWM1) ||                       \
-	 ((__VALUE__) == LL_TIM_OCMODE_COMBINED_PWM2) ||                       \
-	 ((__VALUE__) == LL_TIM_OCMODE_ASYMMETRIC_PWM1) ||                     \
-	 ((__VALUE__) == LL_TIM_OCMODE_ASYMMETRIC_PWM2) ||                     \
-	 ((__VALUE__) == LL_TIM_OCMODE_PULSE_ON_COMPARE) ||                    \
-	 ((__VALUE__) == LL_TIM_OCMODE_DIRECTION_OUTPUT))
+#define IS_LL_TIM_OCMODE(__VALUE__)                                                                                    \
+	(((__VALUE__) == LL_TIM_OCMODE_FROZEN) || ((__VALUE__) == LL_TIM_OCMODE_ACTIVE) ||                             \
+	 ((__VALUE__) == LL_TIM_OCMODE_INACTIVE) || ((__VALUE__) == LL_TIM_OCMODE_TOGGLE) ||                           \
+	 ((__VALUE__) == LL_TIM_OCMODE_FORCED_INACTIVE) || ((__VALUE__) == LL_TIM_OCMODE_FORCED_ACTIVE) ||             \
+	 ((__VALUE__) == LL_TIM_OCMODE_PWM1) || ((__VALUE__) == LL_TIM_OCMODE_PWM2) ||                                 \
+	 ((__VALUE__) == LL_TIM_OCMODE_RETRIG_OPM1) || ((__VALUE__) == LL_TIM_OCMODE_RETRIG_OPM2) ||                   \
+	 ((__VALUE__) == LL_TIM_OCMODE_COMBINED_PWM1) || ((__VALUE__) == LL_TIM_OCMODE_COMBINED_PWM2) ||               \
+	 ((__VALUE__) == LL_TIM_OCMODE_ASYMMETRIC_PWM1) || ((__VALUE__) == LL_TIM_OCMODE_ASYMMETRIC_PWM2) ||           \
+	 ((__VALUE__) == LL_TIM_OCMODE_PULSE_ON_COMPARE) || ((__VALUE__) == LL_TIM_OCMODE_DIRECTION_OUTPUT))
 
-#define IS_LL_TIM_OCSTATE(__VALUE__)                                           \
-	(((__VALUE__) == LL_TIM_OCSTATE_DISABLE) ||                            \
-	 ((__VALUE__) == LL_TIM_OCSTATE_ENABLE))
+#define IS_LL_TIM_OCSTATE(__VALUE__) (((__VALUE__) == LL_TIM_OCSTATE_DISABLE) || ((__VALUE__) == LL_TIM_OCSTATE_ENABLE))
 
-#define IS_LL_TIM_OCPOLARITY(__VALUE__)                                        \
-	(((__VALUE__) == LL_TIM_OCPOLARITY_HIGH) ||                            \
-	 ((__VALUE__) == LL_TIM_OCPOLARITY_LOW))
+#define IS_LL_TIM_OCPOLARITY(__VALUE__)                                                                                \
+	(((__VALUE__) == LL_TIM_OCPOLARITY_HIGH) || ((__VALUE__) == LL_TIM_OCPOLARITY_LOW))
 
-#define IS_LL_TIM_OCIDLESTATE(__VALUE__)                                       \
-	(((__VALUE__) == LL_TIM_OCIDLESTATE_LOW) ||                            \
-	 ((__VALUE__) == LL_TIM_OCIDLESTATE_HIGH))
+#define IS_LL_TIM_OCIDLESTATE(__VALUE__)                                                                               \
+	(((__VALUE__) == LL_TIM_OCIDLESTATE_LOW) || ((__VALUE__) == LL_TIM_OCIDLESTATE_HIGH))
 
-#define IS_LL_TIM_ACTIVEINPUT(__VALUE__)                                       \
-	(((__VALUE__) == LL_TIM_ACTIVEINPUT_DIRECTTI) ||                       \
-	 ((__VALUE__) == LL_TIM_ACTIVEINPUT_INDIRECTTI) ||                     \
+#define IS_LL_TIM_ACTIVEINPUT(__VALUE__)                                                                               \
+	(((__VALUE__) == LL_TIM_ACTIVEINPUT_DIRECTTI) || ((__VALUE__) == LL_TIM_ACTIVEINPUT_INDIRECTTI) ||             \
 	 ((__VALUE__) == LL_TIM_ACTIVEINPUT_TRC))
 
-#define IS_LL_TIM_ICPSC(__VALUE__)                                             \
-	(((__VALUE__) == LL_TIM_ICPSC_DIV1) ||                                 \
-	 ((__VALUE__) == LL_TIM_ICPSC_DIV2) ||                                 \
-	 ((__VALUE__) == LL_TIM_ICPSC_DIV4) ||                                 \
-	 ((__VALUE__) == LL_TIM_ICPSC_DIV8))
+#define IS_LL_TIM_ICPSC(__VALUE__)                                                                                     \
+	(((__VALUE__) == LL_TIM_ICPSC_DIV1) || ((__VALUE__) == LL_TIM_ICPSC_DIV2) ||                                   \
+	 ((__VALUE__) == LL_TIM_ICPSC_DIV4) || ((__VALUE__) == LL_TIM_ICPSC_DIV8))
 
-#define IS_LL_TIM_IC_FILTER(__VALUE__)                                         \
-	(((__VALUE__) == LL_TIM_IC_FILTER_FDIV1) ||                            \
-	 ((__VALUE__) == LL_TIM_IC_FILTER_FDIV1_N2) ||                         \
-	 ((__VALUE__) == LL_TIM_IC_FILTER_FDIV1_N4) ||                         \
-	 ((__VALUE__) == LL_TIM_IC_FILTER_FDIV1_N8) ||                         \
-	 ((__VALUE__) == LL_TIM_IC_FILTER_FDIV2_N6) ||                         \
-	 ((__VALUE__) == LL_TIM_IC_FILTER_FDIV2_N8) ||                         \
-	 ((__VALUE__) == LL_TIM_IC_FILTER_FDIV4_N6) ||                         \
-	 ((__VALUE__) == LL_TIM_IC_FILTER_FDIV4_N8) ||                         \
-	 ((__VALUE__) == LL_TIM_IC_FILTER_FDIV8_N6) ||                         \
-	 ((__VALUE__) == LL_TIM_IC_FILTER_FDIV8_N8) ||                         \
-	 ((__VALUE__) == LL_TIM_IC_FILTER_FDIV16_N5) ||                        \
-	 ((__VALUE__) == LL_TIM_IC_FILTER_FDIV16_N6) ||                        \
-	 ((__VALUE__) == LL_TIM_IC_FILTER_FDIV16_N8) ||                        \
-	 ((__VALUE__) == LL_TIM_IC_FILTER_FDIV32_N5) ||                        \
-	 ((__VALUE__) == LL_TIM_IC_FILTER_FDIV32_N6) ||                        \
-	 ((__VALUE__) == LL_TIM_IC_FILTER_FDIV32_N8))
+#define IS_LL_TIM_IC_FILTER(__VALUE__)                                                                                 \
+	(((__VALUE__) == LL_TIM_IC_FILTER_FDIV1) || ((__VALUE__) == LL_TIM_IC_FILTER_FDIV1_N2) ||                      \
+	 ((__VALUE__) == LL_TIM_IC_FILTER_FDIV1_N4) || ((__VALUE__) == LL_TIM_IC_FILTER_FDIV1_N8) ||                   \
+	 ((__VALUE__) == LL_TIM_IC_FILTER_FDIV2_N6) || ((__VALUE__) == LL_TIM_IC_FILTER_FDIV2_N8) ||                   \
+	 ((__VALUE__) == LL_TIM_IC_FILTER_FDIV4_N6) || ((__VALUE__) == LL_TIM_IC_FILTER_FDIV4_N8) ||                   \
+	 ((__VALUE__) == LL_TIM_IC_FILTER_FDIV8_N6) || ((__VALUE__) == LL_TIM_IC_FILTER_FDIV8_N8) ||                   \
+	 ((__VALUE__) == LL_TIM_IC_FILTER_FDIV16_N5) || ((__VALUE__) == LL_TIM_IC_FILTER_FDIV16_N6) ||                 \
+	 ((__VALUE__) == LL_TIM_IC_FILTER_FDIV16_N8) || ((__VALUE__) == LL_TIM_IC_FILTER_FDIV32_N5) ||                 \
+	 ((__VALUE__) == LL_TIM_IC_FILTER_FDIV32_N6) || ((__VALUE__) == LL_TIM_IC_FILTER_FDIV32_N8))
 
-#define IS_LL_TIM_IC_POLARITY(__VALUE__)                                       \
-	(((__VALUE__) == LL_TIM_IC_POLARITY_RISING) ||                         \
-	 ((__VALUE__) == LL_TIM_IC_POLARITY_FALLING) ||                        \
+#define IS_LL_TIM_IC_POLARITY(__VALUE__)                                                                               \
+	(((__VALUE__) == LL_TIM_IC_POLARITY_RISING) || ((__VALUE__) == LL_TIM_IC_POLARITY_FALLING) ||                  \
 	 ((__VALUE__) == LL_TIM_IC_POLARITY_BOTHEDGE))
 
-#define IS_LL_TIM_ENCODERMODE(__VALUE__)                                       \
-	(((__VALUE__) == LL_TIM_ENCODERMODE_X2_TI1) ||                         \
-	 ((__VALUE__) == LL_TIM_ENCODERMODE_X2_TI2) ||                         \
-	 ((__VALUE__) == LL_TIM_ENCODERMODE_X4_TI12) ||                        \
-	 ((__VALUE__) == LL_TIM_ENCODERMODE_CLOCKPLUSDIRECTION_X2) ||          \
-	 ((__VALUE__) == LL_TIM_ENCODERMODE_CLOCKPLUSDIRECTION_X1) ||          \
-	 ((__VALUE__) == LL_TIM_ENCODERMODE_DIRECTIONALCLOCK_X2) ||            \
-	 ((__VALUE__) == LL_TIM_ENCODERMODE_DIRECTIONALCLOCK_X1_TI12) ||       \
-	 ((__VALUE__) == LL_TIM_ENCODERMODE_X1_TI1) ||                         \
+#define IS_LL_TIM_ENCODERMODE(__VALUE__)                                                                               \
+	(((__VALUE__) == LL_TIM_ENCODERMODE_X2_TI1) || ((__VALUE__) == LL_TIM_ENCODERMODE_X2_TI2) ||                   \
+	 ((__VALUE__) == LL_TIM_ENCODERMODE_X4_TI12) || ((__VALUE__) == LL_TIM_ENCODERMODE_CLOCKPLUSDIRECTION_X2) ||   \
+	 ((__VALUE__) == LL_TIM_ENCODERMODE_CLOCKPLUSDIRECTION_X1) ||                                                  \
+	 ((__VALUE__) == LL_TIM_ENCODERMODE_DIRECTIONALCLOCK_X2) ||                                                    \
+	 ((__VALUE__) == LL_TIM_ENCODERMODE_DIRECTIONALCLOCK_X1_TI12) || ((__VALUE__) == LL_TIM_ENCODERMODE_X1_TI1) || \
 	 ((__VALUE__) == LL_TIM_ENCODERMODE_X1_TI2))
 
-#define IS_LL_TIM_IC_POLARITY_ENCODER(__VALUE__)                               \
-	(((__VALUE__) == LL_TIM_IC_POLARITY_RISING) ||                         \
-	 ((__VALUE__) == LL_TIM_IC_POLARITY_FALLING))
+#define IS_LL_TIM_IC_POLARITY_ENCODER(__VALUE__)                                                                       \
+	(((__VALUE__) == LL_TIM_IC_POLARITY_RISING) || ((__VALUE__) == LL_TIM_IC_POLARITY_FALLING))
 
-#define IS_LL_TIM_OSSR_STATE(__VALUE__)                                        \
-	(((__VALUE__) == LL_TIM_OSSR_DISABLE) ||                               \
-	 ((__VALUE__) == LL_TIM_OSSR_ENABLE))
+#define IS_LL_TIM_OSSR_STATE(__VALUE__) (((__VALUE__) == LL_TIM_OSSR_DISABLE) || ((__VALUE__) == LL_TIM_OSSR_ENABLE))
 
-#define IS_LL_TIM_OSSI_STATE(__VALUE__)                                        \
-	(((__VALUE__) == LL_TIM_OSSI_DISABLE) ||                               \
-	 ((__VALUE__) == LL_TIM_OSSI_ENABLE))
+#define IS_LL_TIM_OSSI_STATE(__VALUE__) (((__VALUE__) == LL_TIM_OSSI_DISABLE) || ((__VALUE__) == LL_TIM_OSSI_ENABLE))
 
-#define IS_LL_TIM_LOCK_LEVEL(__VALUE__)                                        \
-	(((__VALUE__) == LL_TIM_LOCKLEVEL_OFF) ||                              \
-	 ((__VALUE__) == LL_TIM_LOCKLEVEL_1) ||                                \
-	 ((__VALUE__) == LL_TIM_LOCKLEVEL_2) ||                                \
-	 ((__VALUE__) == LL_TIM_LOCKLEVEL_3))
+#define IS_LL_TIM_LOCK_LEVEL(__VALUE__)                                                                                \
+	(((__VALUE__) == LL_TIM_LOCKLEVEL_OFF) || ((__VALUE__) == LL_TIM_LOCKLEVEL_1) ||                               \
+	 ((__VALUE__) == LL_TIM_LOCKLEVEL_2) || ((__VALUE__) == LL_TIM_LOCKLEVEL_3))
 
-#define IS_LL_TIM_BREAK_STATE(__VALUE__)                                       \
-	(((__VALUE__) == LL_TIM_BREAK_DISABLE) ||                              \
-	 ((__VALUE__) == LL_TIM_BREAK_ENABLE))
+#define IS_LL_TIM_BREAK_STATE(__VALUE__) (((__VALUE__) == LL_TIM_BREAK_DISABLE) || ((__VALUE__) == LL_TIM_BREAK_ENABLE))
 
-#define IS_LL_TIM_BREAK_POLARITY(__VALUE__)                                    \
-	(((__VALUE__) == LL_TIM_BREAK_POLARITY_LOW) ||                         \
-	 ((__VALUE__) == LL_TIM_BREAK_POLARITY_HIGH))
+#define IS_LL_TIM_BREAK_POLARITY(__VALUE__)                                                                            \
+	(((__VALUE__) == LL_TIM_BREAK_POLARITY_LOW) || ((__VALUE__) == LL_TIM_BREAK_POLARITY_HIGH))
 
-#define IS_LL_TIM_BREAK_FILTER(__VALUE__)                                      \
-	(((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV1) ||                         \
-	 ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV1_N2) ||                      \
-	 ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV1_N4) ||                      \
-	 ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV1_N8) ||                      \
-	 ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV2_N6) ||                      \
-	 ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV2_N8) ||                      \
-	 ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV4_N6) ||                      \
-	 ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV4_N8) ||                      \
-	 ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV8_N6) ||                      \
-	 ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV8_N8) ||                      \
-	 ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV16_N5) ||                     \
-	 ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV16_N6) ||                     \
-	 ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV16_N8) ||                     \
-	 ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV32_N5) ||                     \
-	 ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV32_N6) ||                     \
-	 ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV32_N8))
+#define IS_LL_TIM_BREAK_FILTER(__VALUE__)                                                                              \
+	(((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV1) || ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV1_N2) ||                \
+	 ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV1_N4) || ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV1_N8) ||             \
+	 ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV2_N6) || ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV2_N8) ||             \
+	 ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV4_N6) || ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV4_N8) ||             \
+	 ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV8_N6) || ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV8_N8) ||             \
+	 ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV16_N5) || ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV16_N6) ||           \
+	 ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV16_N8) || ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV32_N5) ||           \
+	 ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV32_N6) || ((__VALUE__) == LL_TIM_BREAK_FILTER_FDIV32_N8))
 
-#define IS_LL_TIM_BREAK_AFMODE(__VALUE__)                                      \
-	(((__VALUE__) == LL_TIM_BREAK_AFMODE_INPUT) ||                         \
-	 ((__VALUE__) == LL_TIM_BREAK_AFMODE_BIDIRECTIONAL))
+#define IS_LL_TIM_BREAK_AFMODE(__VALUE__)                                                                              \
+	(((__VALUE__) == LL_TIM_BREAK_AFMODE_INPUT) || ((__VALUE__) == LL_TIM_BREAK_AFMODE_BIDIRECTIONAL))
 
-#define IS_LL_TIM_BREAK2_STATE(__VALUE__)                                      \
-	(((__VALUE__) == LL_TIM_BREAK2_DISABLE) ||                             \
-	 ((__VALUE__) == LL_TIM_BREAK2_ENABLE))
+#define IS_LL_TIM_BREAK2_STATE(__VALUE__)                                                                              \
+	(((__VALUE__) == LL_TIM_BREAK2_DISABLE) || ((__VALUE__) == LL_TIM_BREAK2_ENABLE))
 
-#define IS_LL_TIM_BREAK2_POLARITY(__VALUE__)                                   \
-	(((__VALUE__) == LL_TIM_BREAK2_POLARITY_LOW) ||                        \
-	 ((__VALUE__) == LL_TIM_BREAK2_POLARITY_HIGH))
+#define IS_LL_TIM_BREAK2_POLARITY(__VALUE__)                                                                           \
+	(((__VALUE__) == LL_TIM_BREAK2_POLARITY_LOW) || ((__VALUE__) == LL_TIM_BREAK2_POLARITY_HIGH))
 
-#define IS_LL_TIM_BREAK2_FILTER(__VALUE__)                                     \
-	(((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV1) ||                        \
-	 ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV1_N2) ||                     \
-	 ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV1_N4) ||                     \
-	 ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV1_N8) ||                     \
-	 ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV2_N6) ||                     \
-	 ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV2_N8) ||                     \
-	 ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV4_N6) ||                     \
-	 ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV4_N8) ||                     \
-	 ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV8_N6) ||                     \
-	 ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV8_N8) ||                     \
-	 ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV16_N5) ||                    \
-	 ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV16_N6) ||                    \
-	 ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV16_N8) ||                    \
-	 ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV32_N5) ||                    \
-	 ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV32_N6) ||                    \
-	 ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV32_N8))
+#define IS_LL_TIM_BREAK2_FILTER(__VALUE__)                                                                             \
+	(((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV1) || ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV1_N2) ||              \
+	 ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV1_N4) || ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV1_N8) ||           \
+	 ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV2_N6) || ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV2_N8) ||           \
+	 ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV4_N6) || ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV4_N8) ||           \
+	 ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV8_N6) || ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV8_N8) ||           \
+	 ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV16_N5) || ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV16_N6) ||         \
+	 ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV16_N8) || ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV32_N5) ||         \
+	 ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV32_N6) || ((__VALUE__) == LL_TIM_BREAK2_FILTER_FDIV32_N8))
 
-#define IS_LL_TIM_BREAK2_AFMODE(__VALUE__)                                     \
-	(((__VALUE__) == LL_TIM_BREAK2_AFMODE_INPUT) ||                        \
-	 ((__VALUE__) == LL_TIM_BREAK2_AFMODE_BIDIRECTIONAL))
+#define IS_LL_TIM_BREAK2_AFMODE(__VALUE__)                                                                             \
+	(((__VALUE__) == LL_TIM_BREAK2_AFMODE_INPUT) || ((__VALUE__) == LL_TIM_BREAK2_AFMODE_BIDIRECTIONAL))
 
-#define IS_LL_TIM_AUTOMATIC_OUTPUT_STATE(__VALUE__)                            \
-	(((__VALUE__) == LL_TIM_AUTOMATICOUTPUT_DISABLE) ||                    \
-	 ((__VALUE__) == LL_TIM_AUTOMATICOUTPUT_ENABLE))
+#define IS_LL_TIM_AUTOMATIC_OUTPUT_STATE(__VALUE__)                                                                    \
+	(((__VALUE__) == LL_TIM_AUTOMATICOUTPUT_DISABLE) || ((__VALUE__) == LL_TIM_AUTOMATICOUTPUT_ENABLE))
 /**
  * @}
  */
@@ -223,26 +161,16 @@
 /** @defgroup TIM_LL_Private_Functions TIM Private Functions
  * @{
  */
-static ErrorStatus OC1Config(TIM_TypeDef *TIMx,
-			     const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct);
-static ErrorStatus OC2Config(TIM_TypeDef *TIMx,
-			     const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct);
-static ErrorStatus OC3Config(TIM_TypeDef *TIMx,
-			     const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct);
-static ErrorStatus OC4Config(TIM_TypeDef *TIMx,
-			     const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct);
-static ErrorStatus OC5Config(TIM_TypeDef *TIMx,
-			     const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct);
-static ErrorStatus OC6Config(TIM_TypeDef *TIMx,
-			     const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct);
-static ErrorStatus IC1Config(TIM_TypeDef *TIMx,
-			     const LL_TIM_IC_InitTypeDef *TIM_ICInitStruct);
-static ErrorStatus IC2Config(TIM_TypeDef *TIMx,
-			     const LL_TIM_IC_InitTypeDef *TIM_ICInitStruct);
-static ErrorStatus IC3Config(TIM_TypeDef *TIMx,
-			     const LL_TIM_IC_InitTypeDef *TIM_ICInitStruct);
-static ErrorStatus IC4Config(TIM_TypeDef *TIMx,
-			     const LL_TIM_IC_InitTypeDef *TIM_ICInitStruct);
+static ErrorStatus OC1Config(TIM_TypeDef *TIMx, const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct);
+static ErrorStatus OC2Config(TIM_TypeDef *TIMx, const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct);
+static ErrorStatus OC3Config(TIM_TypeDef *TIMx, const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct);
+static ErrorStatus OC4Config(TIM_TypeDef *TIMx, const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct);
+static ErrorStatus OC5Config(TIM_TypeDef *TIMx, const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct);
+static ErrorStatus OC6Config(TIM_TypeDef *TIMx, const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct);
+static ErrorStatus IC1Config(TIM_TypeDef *TIMx, const LL_TIM_IC_InitTypeDef *TIM_ICInitStruct);
+static ErrorStatus IC2Config(TIM_TypeDef *TIMx, const LL_TIM_IC_InitTypeDef *TIM_ICInitStruct);
+static ErrorStatus IC3Config(TIM_TypeDef *TIMx, const LL_TIM_IC_InitTypeDef *TIM_ICInitStruct);
+static ErrorStatus IC4Config(TIM_TypeDef *TIMx, const LL_TIM_IC_InitTypeDef *TIM_ICInitStruct);
 /**
  * @}
  */
@@ -336,8 +264,7 @@ void LL_TIM_StructInit(LL_TIM_InitTypeDef *TIM_InitStruct)
  *          - SUCCESS: TIMx registers are de-initialized
  *          - ERROR: not applicable
  */
-ErrorStatus LL_TIM_Init(TIM_TypeDef *TIMx,
-			const LL_TIM_InitTypeDef *TIM_InitStruct)
+ErrorStatus LL_TIM_Init(TIM_TypeDef *TIMx, const LL_TIM_InitTypeDef *TIM_InitStruct)
 {
 	uint32_t tmpcr1;
 
@@ -350,8 +277,7 @@ ErrorStatus LL_TIM_Init(TIM_TypeDef *TIMx,
 
 	if (IS_TIM_COUNTER_MODE_SELECT_INSTANCE(TIMx)) {
 		/* Select the Counter Mode */
-		MODIFY_REG(tmpcr1, (TIM_CR1_DIR | TIM_CR1_CMS),
-			   TIM_InitStruct->CounterMode);
+		MODIFY_REG(tmpcr1, (TIM_CR1_DIR | TIM_CR1_CMS), TIM_InitStruct->CounterMode);
 	}
 
 	if (IS_TIM_CLOCK_DIVISION_INSTANCE(TIMx)) {
@@ -370,8 +296,7 @@ ErrorStatus LL_TIM_Init(TIM_TypeDef *TIMx,
 
 	if (IS_TIM_REPETITION_COUNTER_INSTANCE(TIMx)) {
 		/* Set the Repetition Counter value */
-		LL_TIM_SetRepetitionCounter(TIMx,
-					    TIM_InitStruct->RepetitionCounter);
+		LL_TIM_SetRepetitionCounter(TIMx, TIM_InitStruct->RepetitionCounter);
 	}
 
 	/* Generate an update event to reload the Prescaler
@@ -417,8 +342,7 @@ void LL_TIM_OC_StructInit(LL_TIM_OC_InitTypeDef *TIM_OC_InitStruct)
  *          - SUCCESS: TIMx output channel is initialized
  *          - ERROR: TIMx output channel is not initialized
  */
-ErrorStatus LL_TIM_OC_Init(TIM_TypeDef *TIMx, uint32_t Channel,
-			   const LL_TIM_OC_InitTypeDef *TIM_OC_InitStruct)
+ErrorStatus LL_TIM_OC_Init(TIM_TypeDef *TIMx, uint32_t Channel, const LL_TIM_OC_InitTypeDef *TIM_OC_InitStruct)
 {
 	ErrorStatus result = ERROR;
 
@@ -478,8 +402,7 @@ void LL_TIM_IC_StructInit(LL_TIM_IC_InitTypeDef *TIM_ICInitStruct)
  *          - SUCCESS: TIMx output channel is initialized
  *          - ERROR: TIMx output channel is not initialized
  */
-ErrorStatus LL_TIM_IC_Init(TIM_TypeDef *TIMx, uint32_t Channel,
-			   const LL_TIM_IC_InitTypeDef *TIM_IC_InitStruct)
+ErrorStatus LL_TIM_IC_Init(TIM_TypeDef *TIMx, uint32_t Channel, const LL_TIM_IC_InitTypeDef *TIM_IC_InitStruct)
 {
 	ErrorStatus result = ERROR;
 
@@ -509,8 +432,7 @@ ErrorStatus LL_TIM_IC_Init(TIM_TypeDef *TIMx, uint32_t Channel,
  * structure (encoder interface configuration data structure)
  * @retval None
  */
-void LL_TIM_ENCODER_StructInit(
-    LL_TIM_ENCODER_InitTypeDef *TIM_EncoderInitStruct)
+void LL_TIM_ENCODER_StructInit(LL_TIM_ENCODER_InitTypeDef *TIM_EncoderInitStruct)
 {
 	/* Set the default configuration */
 	TIM_EncoderInitStruct->EncoderMode = LL_TIM_ENCODERMODE_X2_TI1;
@@ -533,9 +455,7 @@ void LL_TIM_ENCODER_StructInit(
  *          - SUCCESS: TIMx registers are de-initialized
  *          - ERROR: not applicable
  */
-ErrorStatus
-LL_TIM_ENCODER_Init(TIM_TypeDef *TIMx,
-		    const LL_TIM_ENCODER_InitTypeDef *TIM_EncoderInitStruct)
+ErrorStatus LL_TIM_ENCODER_Init(TIM_TypeDef *TIMx, const LL_TIM_ENCODER_InitTypeDef *TIM_EncoderInitStruct)
 {
 	uint32_t tmpccmr1;
 	uint32_t tmpccer;
@@ -543,16 +463,12 @@ LL_TIM_ENCODER_Init(TIM_TypeDef *TIMx,
 	/* Check the parameters */
 	assert_param(IS_TIM_ENCODER_INTERFACE_INSTANCE(TIMx));
 	assert_param(IS_LL_TIM_ENCODERMODE(TIM_EncoderInitStruct->EncoderMode));
-	assert_param(
-	    IS_LL_TIM_IC_POLARITY_ENCODER(TIM_EncoderInitStruct->IC1Polarity));
-	assert_param(
-	    IS_LL_TIM_ACTIVEINPUT(TIM_EncoderInitStruct->IC1ActiveInput));
+	assert_param(IS_LL_TIM_IC_POLARITY_ENCODER(TIM_EncoderInitStruct->IC1Polarity));
+	assert_param(IS_LL_TIM_ACTIVEINPUT(TIM_EncoderInitStruct->IC1ActiveInput));
 	assert_param(IS_LL_TIM_ICPSC(TIM_EncoderInitStruct->IC1Prescaler));
 	assert_param(IS_LL_TIM_IC_FILTER(TIM_EncoderInitStruct->IC1Filter));
-	assert_param(
-	    IS_LL_TIM_IC_POLARITY_ENCODER(TIM_EncoderInitStruct->IC2Polarity));
-	assert_param(
-	    IS_LL_TIM_ACTIVEINPUT(TIM_EncoderInitStruct->IC2ActiveInput));
+	assert_param(IS_LL_TIM_IC_POLARITY_ENCODER(TIM_EncoderInitStruct->IC2Polarity));
+	assert_param(IS_LL_TIM_ACTIVEINPUT(TIM_EncoderInitStruct->IC2ActiveInput));
 	assert_param(IS_LL_TIM_ICPSC(TIM_EncoderInitStruct->IC2Prescaler));
 	assert_param(IS_LL_TIM_IC_FILTER(TIM_EncoderInitStruct->IC2Filter));
 
@@ -566,22 +482,19 @@ LL_TIM_ENCODER_Init(TIM_TypeDef *TIMx,
 	tmpccer = LL_TIM_ReadReg(TIMx, CCER);
 
 	/* Configure TI1 */
-	tmpccmr1 &=
-	    (uint32_t) ~(TIM_CCMR1_CC1S | TIM_CCMR1_IC1F | TIM_CCMR1_IC1PSC);
+	tmpccmr1 &= (uint32_t) ~(TIM_CCMR1_CC1S | TIM_CCMR1_IC1F | TIM_CCMR1_IC1PSC);
 	tmpccmr1 |= (uint32_t)(TIM_EncoderInitStruct->IC1ActiveInput >> 16U);
 	tmpccmr1 |= (uint32_t)(TIM_EncoderInitStruct->IC1Filter >> 16U);
 	tmpccmr1 |= (uint32_t)(TIM_EncoderInitStruct->IC1Prescaler >> 16U);
 
 	/* Configure TI2 */
-	tmpccmr1 &=
-	    (uint32_t) ~(TIM_CCMR1_CC2S | TIM_CCMR1_IC2F | TIM_CCMR1_IC2PSC);
+	tmpccmr1 &= (uint32_t) ~(TIM_CCMR1_CC2S | TIM_CCMR1_IC2F | TIM_CCMR1_IC2PSC);
 	tmpccmr1 |= (uint32_t)(TIM_EncoderInitStruct->IC2ActiveInput >> 8U);
 	tmpccmr1 |= (uint32_t)(TIM_EncoderInitStruct->IC2Filter >> 8U);
 	tmpccmr1 |= (uint32_t)(TIM_EncoderInitStruct->IC2Prescaler >> 8U);
 
 	/* Set TI1 and TI2 polarity and enable TI1 and TI2 */
-	tmpccer &= (uint32_t) ~(TIM_CCER_CC1P | TIM_CCER_CC1NP | TIM_CCER_CC2P |
-				TIM_CCER_CC2NP);
+	tmpccer &= (uint32_t) ~(TIM_CCER_CC1P | TIM_CCER_CC1NP | TIM_CCER_CC2P | TIM_CCER_CC2NP);
 	tmpccer |= (uint32_t)(TIM_EncoderInitStruct->IC1Polarity);
 	tmpccer |= (uint32_t)(TIM_EncoderInitStruct->IC2Polarity << 4U);
 	tmpccer |= (uint32_t)(TIM_CCER_CC1E | TIM_CCER_CC2E);
@@ -606,8 +519,7 @@ LL_TIM_ENCODER_Init(TIM_TypeDef *TIMx,
  * data structure)
  * @retval None
  */
-void LL_TIM_HALLSENSOR_StructInit(
-    LL_TIM_HALLSENSOR_InitTypeDef *TIM_HallSensorInitStruct)
+void LL_TIM_HALLSENSOR_StructInit(LL_TIM_HALLSENSOR_InitTypeDef *TIM_HallSensorInitStruct)
 {
 	/* Set the default configuration */
 	TIM_HallSensorInitStruct->IC1Polarity = LL_TIM_IC_POLARITY_RISING;
@@ -640,9 +552,7 @@ void LL_TIM_HALLSENSOR_StructInit(
   *          - SUCCESS: TIMx registers are de-initialized
   *          - ERROR: not applicable
   */
-ErrorStatus LL_TIM_HALLSENSOR_Init(
-    TIM_TypeDef *TIMx,
-    const LL_TIM_HALLSENSOR_InitTypeDef *TIM_HallSensorInitStruct)
+ErrorStatus LL_TIM_HALLSENSOR_Init(TIM_TypeDef *TIMx, const LL_TIM_HALLSENSOR_InitTypeDef *TIM_HallSensorInitStruct)
 {
 	uint32_t tmpcr2;
 	uint32_t tmpccmr1;
@@ -651,8 +561,7 @@ ErrorStatus LL_TIM_HALLSENSOR_Init(
 
 	/* Check the parameters */
 	assert_param(IS_TIM_HALL_SENSOR_INTERFACE_INSTANCE(TIMx));
-	assert_param(IS_LL_TIM_IC_POLARITY_ENCODER(
-	    TIM_HallSensorInitStruct->IC1Polarity));
+	assert_param(IS_LL_TIM_IC_POLARITY_ENCODER(TIM_HallSensorInitStruct->IC1Polarity));
 	assert_param(IS_LL_TIM_ICPSC(TIM_HallSensorInitStruct->IC1Prescaler));
 	assert_param(IS_LL_TIM_IC_FILTER(TIM_HallSensorInitStruct->IC1Filter));
 
@@ -683,20 +592,17 @@ ErrorStatus LL_TIM_HALLSENSOR_Init(
 	tmpsmcr |= LL_TIM_SLAVEMODE_RESET;
 
 	/* Configure input channel 1 */
-	tmpccmr1 &=
-	    (uint32_t) ~(TIM_CCMR1_CC1S | TIM_CCMR1_IC1F | TIM_CCMR1_IC1PSC);
+	tmpccmr1 &= (uint32_t) ~(TIM_CCMR1_CC1S | TIM_CCMR1_IC1F | TIM_CCMR1_IC1PSC);
 	tmpccmr1 |= (uint32_t)(LL_TIM_ACTIVEINPUT_TRC >> 16U);
 	tmpccmr1 |= (uint32_t)(TIM_HallSensorInitStruct->IC1Filter >> 16U);
 	tmpccmr1 |= (uint32_t)(TIM_HallSensorInitStruct->IC1Prescaler >> 16U);
 
 	/* Configure input channel 2 */
-	tmpccmr1 &= (uint32_t) ~(TIM_CCMR1_OC2M | TIM_CCMR1_OC2FE |
-				 TIM_CCMR1_OC2PE | TIM_CCMR1_OC2CE);
+	tmpccmr1 &= (uint32_t) ~(TIM_CCMR1_OC2M | TIM_CCMR1_OC2FE | TIM_CCMR1_OC2PE | TIM_CCMR1_OC2CE);
 	tmpccmr1 |= (uint32_t)(LL_TIM_OCMODE_PWM2 << 8U);
 
 	/* Set Channel 1 polarity and enable Channel 1 and Channel2 */
-	tmpccer &= (uint32_t) ~(TIM_CCER_CC1P | TIM_CCER_CC1NP | TIM_CCER_CC2P |
-				TIM_CCER_CC2NP);
+	tmpccer &= (uint32_t) ~(TIM_CCER_CC1P | TIM_CCER_CC1NP | TIM_CCER_CC2P | TIM_CCER_CC2NP);
 	tmpccer |= (uint32_t)(TIM_HallSensorInitStruct->IC1Polarity);
 	tmpccer |= (uint32_t)(TIM_CCER_CC1E | TIM_CCER_CC2E);
 
@@ -713,8 +619,7 @@ ErrorStatus LL_TIM_HALLSENSOR_Init(
 	LL_TIM_WriteReg(TIMx, CCER, tmpccer);
 
 	/* Write to TIMx CCR2 */
-	LL_TIM_OC_SetCompareCH2(TIMx,
-				TIM_HallSensorInitStruct->CommutationDelay);
+	LL_TIM_OC_SetCompareCH2(TIMx, TIM_HallSensorInitStruct->CommutationDelay);
 
 	return SUCCESS;
 }
@@ -761,8 +666,7 @@ void LL_TIM_BDTR_StructInit(LL_TIM_BDTR_InitTypeDef *TIM_BDTRInitStruct)
  *          - SUCCESS: Break and Dead Time is initialized
  *          - ERROR: not applicable
  */
-ErrorStatus LL_TIM_BDTR_Init(TIM_TypeDef *TIMx,
-			     const LL_TIM_BDTR_InitTypeDef *TIM_BDTRInitStruct)
+ErrorStatus LL_TIM_BDTR_Init(TIM_TypeDef *TIMx, const LL_TIM_BDTR_InitTypeDef *TIM_BDTRInitStruct)
 {
 	uint32_t tmpbdtr = 0;
 
@@ -772,10 +676,8 @@ ErrorStatus LL_TIM_BDTR_Init(TIM_TypeDef *TIMx,
 	assert_param(IS_LL_TIM_OSSI_STATE(TIM_BDTRInitStruct->OSSIState));
 	assert_param(IS_LL_TIM_LOCK_LEVEL(TIM_BDTRInitStruct->LockLevel));
 	assert_param(IS_LL_TIM_BREAK_STATE(TIM_BDTRInitStruct->BreakState));
-	assert_param(
-	    IS_LL_TIM_BREAK_POLARITY(TIM_BDTRInitStruct->BreakPolarity));
-	assert_param(IS_LL_TIM_AUTOMATIC_OUTPUT_STATE(
-	    TIM_BDTRInitStruct->AutomaticOutput));
+	assert_param(IS_LL_TIM_BREAK_POLARITY(TIM_BDTRInitStruct->BreakPolarity));
+	assert_param(IS_LL_TIM_AUTOMATIC_OUTPUT_STATE(TIM_BDTRInitStruct->AutomaticOutput));
 	assert_param(IS_LL_TIM_BREAK_FILTER(TIM_BDTRInitStruct->BreakFilter));
 	assert_param(IS_LL_TIM_BREAK_AFMODE(TIM_BDTRInitStruct->BreakAFMode));
 
@@ -795,24 +697,16 @@ ErrorStatus LL_TIM_BDTR_Init(TIM_TypeDef *TIMx,
 	MODIFY_REG(tmpbdtr, TIM_BDTR_BKBID, TIM_BDTRInitStruct->BreakAFMode);
 
 	if (IS_TIM_BKIN2_INSTANCE(TIMx)) {
-		assert_param(
-		    IS_LL_TIM_BREAK2_STATE(TIM_BDTRInitStruct->Break2State));
-		assert_param(IS_LL_TIM_BREAK2_POLARITY(
-		    TIM_BDTRInitStruct->Break2Polarity));
-		assert_param(
-		    IS_LL_TIM_BREAK2_FILTER(TIM_BDTRInitStruct->Break2Filter));
-		assert_param(
-		    IS_LL_TIM_BREAK2_AFMODE(TIM_BDTRInitStruct->Break2AFMode));
+		assert_param(IS_LL_TIM_BREAK2_STATE(TIM_BDTRInitStruct->Break2State));
+		assert_param(IS_LL_TIM_BREAK2_POLARITY(TIM_BDTRInitStruct->Break2Polarity));
+		assert_param(IS_LL_TIM_BREAK2_FILTER(TIM_BDTRInitStruct->Break2Filter));
+		assert_param(IS_LL_TIM_BREAK2_AFMODE(TIM_BDTRInitStruct->Break2AFMode));
 
 		/* Set the BREAK2 input related BDTR bit-fields */
-		MODIFY_REG(tmpbdtr, TIM_BDTR_BK2F,
-			   (TIM_BDTRInitStruct->Break2Filter));
-		MODIFY_REG(tmpbdtr, TIM_BDTR_BK2E,
-			   TIM_BDTRInitStruct->Break2State);
-		MODIFY_REG(tmpbdtr, TIM_BDTR_BK2P,
-			   TIM_BDTRInitStruct->Break2Polarity);
-		MODIFY_REG(tmpbdtr, TIM_BDTR_BK2BID,
-			   TIM_BDTRInitStruct->Break2AFMode);
+		MODIFY_REG(tmpbdtr, TIM_BDTR_BK2F, (TIM_BDTRInitStruct->Break2Filter));
+		MODIFY_REG(tmpbdtr, TIM_BDTR_BK2E, TIM_BDTRInitStruct->Break2State);
+		MODIFY_REG(tmpbdtr, TIM_BDTR_BK2P, TIM_BDTRInitStruct->Break2Polarity);
+		MODIFY_REG(tmpbdtr, TIM_BDTR_BK2BID, TIM_BDTRInitStruct->Break2AFMode);
 	}
 
 	/* Set TIMx_BDTR */
@@ -841,8 +735,7 @@ ErrorStatus LL_TIM_BDTR_Init(TIM_TypeDef *TIMx,
  *          - SUCCESS: TIMx registers are de-initialized
  *          - ERROR: not applicable
  */
-static ErrorStatus OC1Config(TIM_TypeDef *TIMx,
-			     const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct)
+static ErrorStatus OC1Config(TIM_TypeDef *TIMx, const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct)
 {
 	uint32_t tmpccmr1;
 	uint32_t tmpccer;
@@ -879,28 +772,22 @@ static ErrorStatus OC1Config(TIM_TypeDef *TIMx,
 	MODIFY_REG(tmpccer, TIM_CCER_CC1E, TIM_OCInitStruct->OCState);
 
 	if (IS_TIM_BREAK_INSTANCE(TIMx)) {
-		assert_param(
-		    IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCIdleState));
+		assert_param(IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCIdleState));
 		assert_param(IS_LL_TIM_OCSTATE(TIM_OCInitStruct->OCNState));
-		assert_param(
-		    IS_LL_TIM_OCPOLARITY(TIM_OCInitStruct->OCNPolarity));
-		assert_param(
-		    IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCNIdleState));
+		assert_param(IS_LL_TIM_OCPOLARITY(TIM_OCInitStruct->OCNPolarity));
+		assert_param(IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCNIdleState));
 
 		/* Set the complementary output Polarity */
-		MODIFY_REG(tmpccer, TIM_CCER_CC1NP,
-			   TIM_OCInitStruct->OCNPolarity << 2U);
+		MODIFY_REG(tmpccer, TIM_CCER_CC1NP, TIM_OCInitStruct->OCNPolarity << 2U);
 
 		/* Set the complementary output State */
-		MODIFY_REG(tmpccer, TIM_CCER_CC1NE,
-			   TIM_OCInitStruct->OCNState << 2U);
+		MODIFY_REG(tmpccer, TIM_CCER_CC1NE, TIM_OCInitStruct->OCNState << 2U);
 
 		/* Set the Output Idle state */
 		MODIFY_REG(tmpcr2, TIM_CR2_OIS1, TIM_OCInitStruct->OCIdleState);
 
 		/* Set the complementary output Idle state */
-		MODIFY_REG(tmpcr2, TIM_CR2_OIS1N,
-			   TIM_OCInitStruct->OCNIdleState << 1U);
+		MODIFY_REG(tmpcr2, TIM_CR2_OIS1N, TIM_OCInitStruct->OCNIdleState << 1U);
 	}
 
 	/* Write to TIMx CR2 */
@@ -927,8 +814,7 @@ static ErrorStatus OC1Config(TIM_TypeDef *TIMx,
  *          - SUCCESS: TIMx registers are de-initialized
  *          - ERROR: not applicable
  */
-static ErrorStatus OC2Config(TIM_TypeDef *TIMx,
-			     const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct)
+static ErrorStatus OC2Config(TIM_TypeDef *TIMx, const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct)
 {
 	uint32_t tmpccmr1;
 	uint32_t tmpccer;
@@ -965,29 +851,22 @@ static ErrorStatus OC2Config(TIM_TypeDef *TIMx,
 	MODIFY_REG(tmpccer, TIM_CCER_CC2E, TIM_OCInitStruct->OCState << 4U);
 
 	if (IS_TIM_BREAK_INSTANCE(TIMx)) {
-		assert_param(
-		    IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCIdleState));
+		assert_param(IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCIdleState));
 		assert_param(IS_LL_TIM_OCSTATE(TIM_OCInitStruct->OCNState));
-		assert_param(
-		    IS_LL_TIM_OCPOLARITY(TIM_OCInitStruct->OCNPolarity));
-		assert_param(
-		    IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCNIdleState));
+		assert_param(IS_LL_TIM_OCPOLARITY(TIM_OCInitStruct->OCNPolarity));
+		assert_param(IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCNIdleState));
 
 		/* Set the complementary output Polarity */
-		MODIFY_REG(tmpccer, TIM_CCER_CC2NP,
-			   TIM_OCInitStruct->OCNPolarity << 6U);
+		MODIFY_REG(tmpccer, TIM_CCER_CC2NP, TIM_OCInitStruct->OCNPolarity << 6U);
 
 		/* Set the complementary output State */
-		MODIFY_REG(tmpccer, TIM_CCER_CC2NE,
-			   TIM_OCInitStruct->OCNState << 6U);
+		MODIFY_REG(tmpccer, TIM_CCER_CC2NE, TIM_OCInitStruct->OCNState << 6U);
 
 		/* Set the Output Idle state */
-		MODIFY_REG(tmpcr2, TIM_CR2_OIS2,
-			   TIM_OCInitStruct->OCIdleState << 2U);
+		MODIFY_REG(tmpcr2, TIM_CR2_OIS2, TIM_OCInitStruct->OCIdleState << 2U);
 
 		/* Set the complementary output Idle state */
-		MODIFY_REG(tmpcr2, TIM_CR2_OIS2N,
-			   TIM_OCInitStruct->OCNIdleState << 3U);
+		MODIFY_REG(tmpcr2, TIM_CR2_OIS2N, TIM_OCInitStruct->OCNIdleState << 3U);
 	}
 
 	/* Write to TIMx CR2 */
@@ -1014,8 +893,7 @@ static ErrorStatus OC2Config(TIM_TypeDef *TIMx,
  *          - SUCCESS: TIMx registers are de-initialized
  *          - ERROR: not applicable
  */
-static ErrorStatus OC3Config(TIM_TypeDef *TIMx,
-			     const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct)
+static ErrorStatus OC3Config(TIM_TypeDef *TIMx, const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct)
 {
 	uint32_t tmpccmr2;
 	uint32_t tmpccer;
@@ -1052,29 +930,22 @@ static ErrorStatus OC3Config(TIM_TypeDef *TIMx,
 	MODIFY_REG(tmpccer, TIM_CCER_CC3E, TIM_OCInitStruct->OCState << 8U);
 
 	if (IS_TIM_BREAK_INSTANCE(TIMx)) {
-		assert_param(
-		    IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCIdleState));
+		assert_param(IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCIdleState));
 		assert_param(IS_LL_TIM_OCSTATE(TIM_OCInitStruct->OCNState));
-		assert_param(
-		    IS_LL_TIM_OCPOLARITY(TIM_OCInitStruct->OCNPolarity));
-		assert_param(
-		    IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCNIdleState));
+		assert_param(IS_LL_TIM_OCPOLARITY(TIM_OCInitStruct->OCNPolarity));
+		assert_param(IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCNIdleState));
 
 		/* Set the complementary output Polarity */
-		MODIFY_REG(tmpccer, TIM_CCER_CC3NP,
-			   TIM_OCInitStruct->OCNPolarity << 10U);
+		MODIFY_REG(tmpccer, TIM_CCER_CC3NP, TIM_OCInitStruct->OCNPolarity << 10U);
 
 		/* Set the complementary output State */
-		MODIFY_REG(tmpccer, TIM_CCER_CC3NE,
-			   TIM_OCInitStruct->OCNState << 10U);
+		MODIFY_REG(tmpccer, TIM_CCER_CC3NE, TIM_OCInitStruct->OCNState << 10U);
 
 		/* Set the Output Idle state */
-		MODIFY_REG(tmpcr2, TIM_CR2_OIS3,
-			   TIM_OCInitStruct->OCIdleState << 4U);
+		MODIFY_REG(tmpcr2, TIM_CR2_OIS3, TIM_OCInitStruct->OCIdleState << 4U);
 
 		/* Set the complementary output Idle state */
-		MODIFY_REG(tmpcr2, TIM_CR2_OIS3N,
-			   TIM_OCInitStruct->OCNIdleState << 5U);
+		MODIFY_REG(tmpcr2, TIM_CR2_OIS3N, TIM_OCInitStruct->OCNIdleState << 5U);
 	}
 
 	/* Write to TIMx CR2 */
@@ -1101,8 +972,7 @@ static ErrorStatus OC3Config(TIM_TypeDef *TIMx,
  *          - SUCCESS: TIMx registers are de-initialized
  *          - ERROR: not applicable
  */
-static ErrorStatus OC4Config(TIM_TypeDef *TIMx,
-			     const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct)
+static ErrorStatus OC4Config(TIM_TypeDef *TIMx, const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct)
 {
 	uint32_t tmpccmr2;
 	uint32_t tmpccer;
@@ -1139,29 +1009,22 @@ static ErrorStatus OC4Config(TIM_TypeDef *TIMx,
 	MODIFY_REG(tmpccer, TIM_CCER_CC4E, TIM_OCInitStruct->OCState << 12U);
 
 	if (IS_TIM_BREAK_INSTANCE(TIMx)) {
-		assert_param(
-		    IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCIdleState));
-		assert_param(
-		    IS_LL_TIM_OCPOLARITY(TIM_OCInitStruct->OCNPolarity));
+		assert_param(IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCIdleState));
+		assert_param(IS_LL_TIM_OCPOLARITY(TIM_OCInitStruct->OCNPolarity));
 		assert_param(IS_LL_TIM_OCSTATE(TIM_OCInitStruct->OCNState));
-		assert_param(
-		    IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCNIdleState));
+		assert_param(IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCNIdleState));
 
 		/* Set the complementary output Polarity */
-		MODIFY_REG(tmpccer, TIM_CCER_CC4NP,
-			   TIM_OCInitStruct->OCNPolarity << 14U);
+		MODIFY_REG(tmpccer, TIM_CCER_CC4NP, TIM_OCInitStruct->OCNPolarity << 14U);
 
 		/* Set the complementary output State */
-		MODIFY_REG(tmpccer, TIM_CCER_CC4NE,
-			   TIM_OCInitStruct->OCNState << 14U);
+		MODIFY_REG(tmpccer, TIM_CCER_CC4NE, TIM_OCInitStruct->OCNState << 14U);
 
 		/* Set the Output Idle state */
-		MODIFY_REG(tmpcr2, TIM_CR2_OIS4,
-			   TIM_OCInitStruct->OCIdleState << 6U);
+		MODIFY_REG(tmpcr2, TIM_CR2_OIS4, TIM_OCInitStruct->OCIdleState << 6U);
 
 		/* Set the complementary output Idle state */
-		MODIFY_REG(tmpcr2, TIM_CR2_OIS4N,
-			   TIM_OCInitStruct->OCNIdleState << 7U);
+		MODIFY_REG(tmpcr2, TIM_CR2_OIS4N, TIM_OCInitStruct->OCNIdleState << 7U);
 	}
 
 	/* Write to TIMx CR2 */
@@ -1188,8 +1051,7 @@ static ErrorStatus OC4Config(TIM_TypeDef *TIMx,
  *          - SUCCESS: TIMx registers are de-initialized
  *          - ERROR: not applicable
  */
-static ErrorStatus OC5Config(TIM_TypeDef *TIMx,
-			     const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct)
+static ErrorStatus OC5Config(TIM_TypeDef *TIMx, const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct)
 {
 	uint32_t tmpccmr3;
 	uint32_t tmpccer;
@@ -1221,14 +1083,11 @@ static ErrorStatus OC5Config(TIM_TypeDef *TIMx,
 	MODIFY_REG(tmpccer, TIM_CCER_CC5E, TIM_OCInitStruct->OCState << 16U);
 
 	if (IS_TIM_BREAK_INSTANCE(TIMx)) {
-		assert_param(
-		    IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCNIdleState));
-		assert_param(
-		    IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCIdleState));
+		assert_param(IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCNIdleState));
+		assert_param(IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCIdleState));
 
 		/* Set the Output Idle state */
-		MODIFY_REG(TIMx->CR2, TIM_CR2_OIS5,
-			   TIM_OCInitStruct->OCIdleState << 8U);
+		MODIFY_REG(TIMx->CR2, TIM_CR2_OIS5, TIM_OCInitStruct->OCIdleState << 8U);
 	}
 
 	/* Write to TIMx CCMR3 */
@@ -1252,8 +1111,7 @@ static ErrorStatus OC5Config(TIM_TypeDef *TIMx,
  *          - SUCCESS: TIMx registers are de-initialized
  *          - ERROR: not applicable
  */
-static ErrorStatus OC6Config(TIM_TypeDef *TIMx,
-			     const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct)
+static ErrorStatus OC6Config(TIM_TypeDef *TIMx, const LL_TIM_OC_InitTypeDef *TIM_OCInitStruct)
 {
 	uint32_t tmpccmr3;
 	uint32_t tmpccer;
@@ -1285,14 +1143,11 @@ static ErrorStatus OC6Config(TIM_TypeDef *TIMx,
 	MODIFY_REG(tmpccer, TIM_CCER_CC6E, TIM_OCInitStruct->OCState << 20U);
 
 	if (IS_TIM_BREAK_INSTANCE(TIMx)) {
-		assert_param(
-		    IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCNIdleState));
-		assert_param(
-		    IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCIdleState));
+		assert_param(IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCNIdleState));
+		assert_param(IS_LL_TIM_OCIDLESTATE(TIM_OCInitStruct->OCIdleState));
 
 		/* Set the Output Idle state */
-		MODIFY_REG(TIMx->CR2, TIM_CR2_OIS6,
-			   TIM_OCInitStruct->OCIdleState << 10U);
+		MODIFY_REG(TIMx->CR2, TIM_CR2_OIS6, TIM_OCInitStruct->OCIdleState << 10U);
 	}
 
 	/* Write to TIMx CCMR3 */
@@ -1316,8 +1171,7 @@ static ErrorStatus OC6Config(TIM_TypeDef *TIMx,
  *          - SUCCESS: TIMx registers are de-initialized
  *          - ERROR: not applicable
  */
-static ErrorStatus IC1Config(TIM_TypeDef *TIMx,
-			     const LL_TIM_IC_InitTypeDef *TIM_ICInitStruct)
+static ErrorStatus IC1Config(TIM_TypeDef *TIMx, const LL_TIM_IC_InitTypeDef *TIM_ICInitStruct)
 {
 	/* Check the parameters */
 	assert_param(IS_TIM_CC1_INSTANCE(TIMx));
@@ -1330,15 +1184,12 @@ static ErrorStatus IC1Config(TIM_TypeDef *TIMx,
 	TIMx->CCER &= (uint32_t)~TIM_CCER_CC1E;
 
 	/* Select the Input and set the filter and the prescaler value */
-	MODIFY_REG(
-	    TIMx->CCMR1, (TIM_CCMR1_CC1S | TIM_CCMR1_IC1F | TIM_CCMR1_IC1PSC),
-	    (TIM_ICInitStruct->ICActiveInput | TIM_ICInitStruct->ICFilter |
-	     TIM_ICInitStruct->ICPrescaler) >>
-		16U);
+	MODIFY_REG(TIMx->CCMR1, (TIM_CCMR1_CC1S | TIM_CCMR1_IC1F | TIM_CCMR1_IC1PSC),
+		   (TIM_ICInitStruct->ICActiveInput | TIM_ICInitStruct->ICFilter | TIM_ICInitStruct->ICPrescaler) >>
+		       16U);
 
 	/* Select the Polarity and set the CC1E Bit */
-	MODIFY_REG(TIMx->CCER, (TIM_CCER_CC1P | TIM_CCER_CC1NP),
-		   (TIM_ICInitStruct->ICPolarity | TIM_CCER_CC1E));
+	MODIFY_REG(TIMx->CCER, (TIM_CCER_CC1P | TIM_CCER_CC1NP), (TIM_ICInitStruct->ICPolarity | TIM_CCER_CC1E));
 
 	return SUCCESS;
 }
@@ -1352,8 +1203,7 @@ static ErrorStatus IC1Config(TIM_TypeDef *TIMx,
  *          - SUCCESS: TIMx registers are de-initialized
  *          - ERROR: not applicable
  */
-static ErrorStatus IC2Config(TIM_TypeDef *TIMx,
-			     const LL_TIM_IC_InitTypeDef *TIM_ICInitStruct)
+static ErrorStatus IC2Config(TIM_TypeDef *TIMx, const LL_TIM_IC_InitTypeDef *TIM_ICInitStruct)
 {
 	/* Check the parameters */
 	assert_param(IS_TIM_CC2_INSTANCE(TIMx));
@@ -1366,11 +1216,9 @@ static ErrorStatus IC2Config(TIM_TypeDef *TIMx,
 	TIMx->CCER &= (uint32_t)~TIM_CCER_CC2E;
 
 	/* Select the Input and set the filter and the prescaler value */
-	MODIFY_REG(
-	    TIMx->CCMR1, (TIM_CCMR1_CC2S | TIM_CCMR1_IC2F | TIM_CCMR1_IC2PSC),
-	    (TIM_ICInitStruct->ICActiveInput | TIM_ICInitStruct->ICFilter |
-	     TIM_ICInitStruct->ICPrescaler) >>
-		8U);
+	MODIFY_REG(TIMx->CCMR1, (TIM_CCMR1_CC2S | TIM_CCMR1_IC2F | TIM_CCMR1_IC2PSC),
+		   (TIM_ICInitStruct->ICActiveInput | TIM_ICInitStruct->ICFilter | TIM_ICInitStruct->ICPrescaler) >>
+		       8U);
 
 	/* Select the Polarity and set the CC2E Bit */
 	MODIFY_REG(TIMx->CCER, (TIM_CCER_CC2P | TIM_CCER_CC2NP),
@@ -1388,8 +1236,7 @@ static ErrorStatus IC2Config(TIM_TypeDef *TIMx,
  *          - SUCCESS: TIMx registers are de-initialized
  *          - ERROR: not applicable
  */
-static ErrorStatus IC3Config(TIM_TypeDef *TIMx,
-			     const LL_TIM_IC_InitTypeDef *TIM_ICInitStruct)
+static ErrorStatus IC3Config(TIM_TypeDef *TIMx, const LL_TIM_IC_InitTypeDef *TIM_ICInitStruct)
 {
 	/* Check the parameters */
 	assert_param(IS_TIM_CC3_INSTANCE(TIMx));
@@ -1402,11 +1249,9 @@ static ErrorStatus IC3Config(TIM_TypeDef *TIMx,
 	TIMx->CCER &= (uint32_t)~TIM_CCER_CC3E;
 
 	/* Select the Input and set the filter and the prescaler value */
-	MODIFY_REG(
-	    TIMx->CCMR2, (TIM_CCMR2_CC3S | TIM_CCMR2_IC3F | TIM_CCMR2_IC3PSC),
-	    (TIM_ICInitStruct->ICActiveInput | TIM_ICInitStruct->ICFilter |
-	     TIM_ICInitStruct->ICPrescaler) >>
-		16U);
+	MODIFY_REG(TIMx->CCMR2, (TIM_CCMR2_CC3S | TIM_CCMR2_IC3F | TIM_CCMR2_IC3PSC),
+		   (TIM_ICInitStruct->ICActiveInput | TIM_ICInitStruct->ICFilter | TIM_ICInitStruct->ICPrescaler) >>
+		       16U);
 
 	/* Select the Polarity and set the CC3E Bit */
 	MODIFY_REG(TIMx->CCER, (TIM_CCER_CC3P | TIM_CCER_CC3NP),
@@ -1424,8 +1269,7 @@ static ErrorStatus IC3Config(TIM_TypeDef *TIMx,
  *          - SUCCESS: TIMx registers are de-initialized
  *          - ERROR: not applicable
  */
-static ErrorStatus IC4Config(TIM_TypeDef *TIMx,
-			     const LL_TIM_IC_InitTypeDef *TIM_ICInitStruct)
+static ErrorStatus IC4Config(TIM_TypeDef *TIMx, const LL_TIM_IC_InitTypeDef *TIM_ICInitStruct)
 {
 	/* Check the parameters */
 	assert_param(IS_TIM_CC4_INSTANCE(TIMx));
@@ -1438,11 +1282,9 @@ static ErrorStatus IC4Config(TIM_TypeDef *TIMx,
 	TIMx->CCER &= (uint32_t)~TIM_CCER_CC4E;
 
 	/* Select the Input and set the filter and the prescaler value */
-	MODIFY_REG(
-	    TIMx->CCMR2, (TIM_CCMR2_CC4S | TIM_CCMR2_IC4F | TIM_CCMR2_IC4PSC),
-	    (TIM_ICInitStruct->ICActiveInput | TIM_ICInitStruct->ICFilter |
-	     TIM_ICInitStruct->ICPrescaler) >>
-		8U);
+	MODIFY_REG(TIMx->CCMR2, (TIM_CCMR2_CC4S | TIM_CCMR2_IC4F | TIM_CCMR2_IC4PSC),
+		   (TIM_ICInitStruct->ICActiveInput | TIM_ICInitStruct->ICFilter | TIM_ICInitStruct->ICPrescaler) >>
+		       8U);
 
 	/* Select the Polarity and set the CC4E Bit */
 	MODIFY_REG(TIMx->CCER, (TIM_CCER_CC4P | TIM_CCER_CC4NP),
@@ -1459,7 +1301,7 @@ static ErrorStatus IC4Config(TIM_TypeDef *TIMx,
  * @}
  */
 
-#endif /* TIM1 || TIM2 || TIM3 || TIM4 || TIM5 || TIM6 || TIM7 || TIM8 ||      \
+#endif /* TIM1 || TIM2 || TIM3 || TIM4 || TIM5 || TIM6 || TIM7 || TIM8 ||                                              \
 	  TIM15 || TIM16 || TIM17 || TIM20 */
 
 /**

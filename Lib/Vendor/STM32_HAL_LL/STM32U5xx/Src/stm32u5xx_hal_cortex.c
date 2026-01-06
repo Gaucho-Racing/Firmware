@@ -159,12 +159,8 @@ subpriority
 /** @defgroup CORTEX_Private_Functions CORTEX Private Functions
  * @{
  */
-static void
-MPU_ConfigRegion(MPU_Type *MPUx,
-		 const MPU_Region_InitTypeDef *const pMPU_RegionInit);
-static void MPU_ConfigMemoryAttributes(
-    MPU_Type *MPUx,
-    const MPU_Attributes_InitTypeDef *const pMPU_AttributesInit);
+static void MPU_ConfigRegion(MPU_Type *MPUx, const MPU_Region_InitTypeDef *const pMPU_RegionInit);
+static void MPU_ConfigMemoryAttributes(MPU_Type *MPUx, const MPU_Attributes_InitTypeDef *const pMPU_AttributesInit);
 /**
  * @}
  */
@@ -232,8 +228,7 @@ void HAL_NVIC_SetPriorityGrouping(uint32_t PriorityGroup)
  *         A lower priority value indicates a higher priority.
  * @retval None
  */
-void HAL_NVIC_SetPriority(IRQn_Type IRQn, uint32_t PreemptPriority,
-			  uint32_t SubPriority)
+void HAL_NVIC_SetPriority(IRQn_Type IRQn, uint32_t PreemptPriority, uint32_t SubPriority)
 {
 	uint32_t prioritygroup;
 
@@ -243,9 +238,7 @@ void HAL_NVIC_SetPriority(IRQn_Type IRQn, uint32_t PreemptPriority,
 
 	prioritygroup = NVIC_GetPriorityGrouping();
 
-	NVIC_SetPriority(
-	    IRQn,
-	    NVIC_EncodePriority(prioritygroup, PreemptPriority, SubPriority));
+	NVIC_SetPriority(IRQn, NVIC_EncodePriority(prioritygroup, PreemptPriority, SubPriority));
 }
 
 /**
@@ -317,8 +310,7 @@ uint32_t HAL_SYSTICK_Config(uint32_t TicksNumb)
 	WRITE_REG(SysTick->VAL, 0UL);
 
 	/* Enable SysTick IRQ and SysTick Timer */
-	SET_BIT(SysTick->CTRL,
-		(SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk));
+	SET_BIT(SysTick->CTRL, (SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk));
 
 	/* Function successful */
 	return (0UL);
@@ -376,15 +368,13 @@ uint32_t HAL_NVIC_GetPriorityGrouping(void)
  * @param  pSubPriority: Pointer on the Subpriority value (starting from 0).
  * @retval None
  */
-void HAL_NVIC_GetPriority(IRQn_Type IRQn, uint32_t PriorityGroup,
-			  uint32_t *const pPreemptPriority,
+void HAL_NVIC_GetPriority(IRQn_Type IRQn, uint32_t PriorityGroup, uint32_t *const pPreemptPriority,
 			  uint32_t *const pSubPriority)
 {
 	/* Check the parameters */
 	assert_param(IS_NVIC_PRIORITY_GROUP(PriorityGroup));
 	/* Get priority for Cortex-M system or device specific interrupts */
-	NVIC_DecodePriority(NVIC_GetPriority(IRQn), PriorityGroup,
-			    pPreemptPriority, pSubPriority);
+	NVIC_DecodePriority(NVIC_GetPriority(IRQn), PriorityGroup, pPreemptPriority, pSubPriority);
 }
 
 /**
@@ -473,20 +463,17 @@ void HAL_SYSTICK_CLKSourceConfig(uint32_t CLKSource)
 		/* Select HCLK_DIV8 as Systick clock source */
 		case SYSTICK_CLKSOURCE_HCLK_DIV8:
 			CLEAR_BIT(SysTick->CTRL, SysTick_CTRL_CLKSOURCE_Msk);
-			MODIFY_REG(RCC->CCIPR1, RCC_CCIPR1_SYSTICKSEL,
-				   (0x00000000U));
+			MODIFY_REG(RCC->CCIPR1, RCC_CCIPR1_SYSTICKSEL, (0x00000000U));
 			break;
 		/* Select LSI as Systick clock source */
 		case SYSTICK_CLKSOURCE_LSI:
 			CLEAR_BIT(SysTick->CTRL, SysTick_CTRL_CLKSOURCE_Msk);
-			MODIFY_REG(RCC->CCIPR1, RCC_CCIPR1_SYSTICKSEL,
-				   RCC_CCIPR1_SYSTICKSEL_0);
+			MODIFY_REG(RCC->CCIPR1, RCC_CCIPR1_SYSTICKSEL, RCC_CCIPR1_SYSTICKSEL_0);
 			break;
 		/* Select LSE as Systick clock source */
 		case SYSTICK_CLKSOURCE_LSE:
 			CLEAR_BIT(SysTick->CTRL, SysTick_CTRL_CLKSOURCE_Msk);
-			MODIFY_REG(RCC->CCIPR1, RCC_CCIPR1_SYSTICKSEL,
-				   RCC_CCIPR1_SYSTICKSEL_1);
+			MODIFY_REG(RCC->CCIPR1, RCC_CCIPR1_SYSTICKSEL, RCC_CCIPR1_SYSTICKSEL_1);
 			break;
 		default:
 			/* Nothing to do */
@@ -517,8 +504,7 @@ uint32_t HAL_SYSTICK_GetCLKSourceConfig(void)
 		systick_source = SYSTICK_CLKSOURCE_HCLK;
 	} else {
 		/* External clock source, check the selected one in RCC */
-		systick_rcc_source =
-		    READ_BIT(RCC->CCIPR1, RCC_CCIPR1_SYSTICKSEL);
+		systick_rcc_source = READ_BIT(RCC->CCIPR1, RCC_CCIPR1_SYSTICKSEL);
 
 		switch (systick_rcc_source) {
 			case (0x00000000U):
@@ -768,8 +754,7 @@ void HAL_MPU_ConfigRegion(const MPU_Region_InitTypeDef *const pMPU_RegionInit)
  * contains the initialization and configuration information.
  * @retval None
  */
-void HAL_MPU_ConfigRegion_NS(
-    const MPU_Region_InitTypeDef *const pMPU_RegionInit)
+void HAL_MPU_ConfigRegion_NS(const MPU_Region_InitTypeDef *const pMPU_RegionInit)
 {
 	MPU_ConfigRegion(MPU_NS, pMPU_RegionInit);
 }
@@ -781,8 +766,7 @@ void HAL_MPU_ConfigRegion_NS(
  * structure that contains the initialization and configuration information.
  * @retval None
  */
-void HAL_MPU_ConfigMemoryAttributes(
-    const MPU_Attributes_InitTypeDef *const pMPU_AttributesInit)
+void HAL_MPU_ConfigMemoryAttributes(const MPU_Attributes_InitTypeDef *const pMPU_AttributesInit)
 {
 	MPU_ConfigMemoryAttributes(MPU, pMPU_AttributesInit);
 }
@@ -794,8 +778,7 @@ void HAL_MPU_ConfigMemoryAttributes(
  * structure that contains the initialization and configuration information.
  * @retval None
  */
-void HAL_MPU_ConfigMemoryAttributes_NS(
-    const MPU_Attributes_InitTypeDef *const pMPU_AttributesInit)
+void HAL_MPU_ConfigMemoryAttributes_NS(const MPU_Attributes_InitTypeDef *const pMPU_AttributesInit)
 {
 	MPU_ConfigMemoryAttributes(MPU_NS, pMPU_AttributesInit);
 }
@@ -812,9 +795,7 @@ void HAL_MPU_ConfigMemoryAttributes_NS(
 /** @addtogroup CORTEX_Private_Functions
  * @{
  */
-static void
-MPU_ConfigRegion(MPU_Type *MPUx,
-		 const MPU_Region_InitTypeDef *const pMPU_RegionInit)
+static void MPU_ConfigRegion(MPU_Type *MPUx, const MPU_Region_InitTypeDef *const pMPU_RegionInit)
 {
 	/* Check the parameters */
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
@@ -823,8 +804,7 @@ MPU_ConfigRegion(MPU_Type *MPUx,
 	assert_param(IS_MPU_REGION_NUMBER(pMPU_RegionInit->Number));
 	assert_param(IS_MPU_REGION_ENABLE(pMPU_RegionInit->Enable));
 	assert_param(IS_MPU_INSTRUCTION_ACCESS(pMPU_RegionInit->DisableExec));
-	assert_param(IS_MPU_REGION_PERMISSION_ATTRIBUTE(
-	    pMPU_RegionInit->AccessPermission));
+	assert_param(IS_MPU_REGION_PERMISSION_ATTRIBUTE(pMPU_RegionInit->AccessPermission));
 	assert_param(IS_MPU_ACCESS_SHAREABLE(pMPU_RegionInit->IsShareable));
 
 	/* Follow ARM recommendation with Data Memory Barrier prior to MPU
@@ -837,20 +817,17 @@ MPU_ConfigRegion(MPU_Type *MPUx,
 	/* Disable the Region */
 	CLEAR_BIT(MPUx->RLAR, MPU_RLAR_EN_Msk);
 
-	MPUx->RBAR =
-	    (((uint32_t)pMPU_RegionInit->BaseAddress & 0xFFFFFFE0UL) |
-	     ((uint32_t)pMPU_RegionInit->IsShareable << MPU_RBAR_SH_Pos) |
-	     ((uint32_t)pMPU_RegionInit->AccessPermission << MPU_RBAR_AP_Pos) |
-	     ((uint32_t)pMPU_RegionInit->DisableExec << MPU_RBAR_XN_Pos));
+	MPUx->RBAR = (((uint32_t)pMPU_RegionInit->BaseAddress & 0xFFFFFFE0UL) |
+		      ((uint32_t)pMPU_RegionInit->IsShareable << MPU_RBAR_SH_Pos) |
+		      ((uint32_t)pMPU_RegionInit->AccessPermission << MPU_RBAR_AP_Pos) |
+		      ((uint32_t)pMPU_RegionInit->DisableExec << MPU_RBAR_XN_Pos));
 
 	MPUx->RLAR = (((uint32_t)pMPU_RegionInit->LimitAddress & 0xFFFFFFE0UL) |
-		      ((uint32_t)pMPU_RegionInit->AttributesIndex
-		       << MPU_RLAR_AttrIndx_Pos) |
+		      ((uint32_t)pMPU_RegionInit->AttributesIndex << MPU_RLAR_AttrIndx_Pos) |
 		      ((uint32_t)pMPU_RegionInit->Enable << MPU_RLAR_EN_Pos));
 }
 
-static void MPU_ConfigMemoryAttributes(
-    MPU_Type *MPUx, const MPU_Attributes_InitTypeDef *const pMPU_AttributesInit)
+static void MPU_ConfigMemoryAttributes(MPU_Type *MPUx, const MPU_Attributes_InitTypeDef *const pMPU_AttributesInit)
 {
 	__IO uint32_t *p_mair;
 	uint32_t attr_values;
@@ -879,8 +856,7 @@ static void MPU_ConfigMemoryAttributes(
 
 	attr_values = *(p_mair);
 	attr_values &= ~(0xFFUL << (attr_number * 8U));
-	*(p_mair) = attr_values | ((uint32_t)pMPU_AttributesInit->Attributes
-				   << (attr_number * 8U));
+	*(p_mair) = attr_values | ((uint32_t)pMPU_AttributesInit->Attributes << (attr_number * 8U));
 }
 /**
  * @}

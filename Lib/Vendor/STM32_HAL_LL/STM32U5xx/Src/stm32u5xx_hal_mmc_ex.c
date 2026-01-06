@@ -82,13 +82,11 @@ functions.
  * @param  pNodeConf: Pointer to configuration parameters for new node to add.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_MMCEx_DMALinkedList_BuildNode(MMC_DMALinkNodeTypeDef *pNode,
-				  MMC_DMALinkNodeConfTypeDef *pNodeConf)
+HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_BuildNode(MMC_DMALinkNodeTypeDef *pNode,
+						    MMC_DMALinkNodeConfTypeDef *pNodeConf)
 {
 
-	if (SDMMC_DMALinkedList_BuildNode(pNode, pNodeConf) !=
-	    SDMMC_ERROR_NONE) {
+	if (SDMMC_DMALinkedList_BuildNode(pNode, pNodeConf) != SDMMC_ERROR_NONE) {
 		return (HAL_ERROR);
 	} else {
 		return (HAL_OK);
@@ -101,14 +99,12 @@ HAL_MMCEx_DMALinkedList_BuildNode(MMC_DMALinkNodeTypeDef *pNode,
  * @param  pNewNode: Pointer to new node to insert.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_MMCEx_DMALinkedList_InsertNode(MMC_DMALinkedListTypeDef *pLinkedList,
-				   MMC_DMALinkNodeTypeDef *pPrevNode,
-				   MMC_DMALinkNodeTypeDef *pNewNode)
+HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_InsertNode(MMC_DMALinkedListTypeDef *pLinkedList,
+						     MMC_DMALinkNodeTypeDef *pPrevNode,
+						     MMC_DMALinkNodeTypeDef *pNewNode)
 {
 
-	if (SDMMC_DMALinkedList_InsertNode(pLinkedList, pPrevNode, pNewNode) !=
-	    SDMMC_ERROR_NONE) {
+	if (SDMMC_DMALinkedList_InsertNode(pLinkedList, pPrevNode, pNewNode) != SDMMC_ERROR_NONE) {
 		return (HAL_ERROR);
 	} else {
 		return (HAL_OK);
@@ -120,13 +116,11 @@ HAL_MMCEx_DMALinkedList_InsertNode(MMC_DMALinkedListTypeDef *pLinkedList,
  * @param  pNode: Pointer to node to remove.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_MMCEx_DMALinkedList_RemoveNode(MMC_DMALinkedListTypeDef *pLinkedList,
-				   MMC_DMALinkNodeTypeDef *pNode)
+HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_RemoveNode(MMC_DMALinkedListTypeDef *pLinkedList,
+						     MMC_DMALinkNodeTypeDef *pNode)
 {
 
-	if (SDMMC_DMALinkedList_RemoveNode(pLinkedList, pNode) !=
-	    SDMMC_ERROR_NONE) {
+	if (SDMMC_DMALinkedList_RemoveNode(pLinkedList, pNode) != SDMMC_ERROR_NONE) {
 		return (HAL_ERROR);
 	} else {
 		return (HAL_OK);
@@ -138,8 +132,7 @@ HAL_MMCEx_DMALinkedList_RemoveNode(MMC_DMALinkedListTypeDef *pLinkedList,
  * @param  pNode: Pointer to node to remove.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_MMCEx_DMALinkedList_LockNode(MMC_DMALinkNodeTypeDef *pNode)
+HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_LockNode(MMC_DMALinkNodeTypeDef *pNode)
 {
 
 	if (SDMMC_DMALinkedList_LockNode(pNode) != SDMMC_ERROR_NONE) {
@@ -154,8 +147,7 @@ HAL_MMCEx_DMALinkedList_LockNode(MMC_DMALinkNodeTypeDef *pNode)
  * @param  pNode: Pointer to node to remove.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_MMCEx_DMALinkedList_UnlockNode(MMC_DMALinkNodeTypeDef *pNode)
+HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_UnlockNode(MMC_DMALinkNodeTypeDef *pNode)
 {
 
 	if (SDMMC_DMALinkedList_UnlockNode(pNode) != SDMMC_ERROR_NONE) {
@@ -170,12 +162,10 @@ HAL_MMCEx_DMALinkedList_UnlockNode(MMC_DMALinkNodeTypeDef *pNode)
  * @param  pLinkedList: Pointer to the linkedlist that contains transfer nodes
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_EnableCircularMode(
-    MMC_DMALinkedListTypeDef *pLinkedList)
+HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_EnableCircularMode(MMC_DMALinkedListTypeDef *pLinkedList)
 {
 
-	if (SDMMC_DMALinkedList_EnableCircularMode(pLinkedList) !=
-	    SDMMC_ERROR_NONE) {
+	if (SDMMC_DMALinkedList_EnableCircularMode(pLinkedList) != SDMMC_ERROR_NONE) {
 		return HAL_ERROR;
 	} else {
 		return HAL_OK;
@@ -186,12 +176,10 @@ HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_EnableCircularMode(
  * @param  pLinkedList: Pointer to the linkedlist that contains transfer nodes
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_DisableCircularMode(
-    MMC_DMALinkedListTypeDef *pLinkedList)
+HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_DisableCircularMode(MMC_DMALinkedListTypeDef *pLinkedList)
 {
 
-	if (SDMMC_DMALinkedList_DisableCircularMode(pLinkedList) !=
-	    SDMMC_ERROR_NONE) {
+	if (SDMMC_DMALinkedList_DisableCircularMode(pLinkedList) != SDMMC_ERROR_NONE) {
 		return HAL_ERROR;
 	} else {
 		return HAL_OK;
@@ -208,10 +196,9 @@ HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_DisableCircularMode(
  * @param  NumberOfBlocks: Total number of blocks to read
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_MMCEx_DMALinkedList_ReadBlocks(MMC_HandleTypeDef *hmmc,
-				   const MMC_DMALinkedListTypeDef *pLinkedList,
-				   uint32_t BlockAdd, uint32_t NumberOfBlocks)
+HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_ReadBlocks(MMC_HandleTypeDef *hmmc,
+						     const MMC_DMALinkedListTypeDef *pLinkedList, uint32_t BlockAdd,
+						     uint32_t NumberOfBlocks)
 {
 	SDMMC_DataInitTypeDef config;
 	uint32_t DmaBase0_reg;
@@ -227,8 +214,7 @@ HAL_MMCEx_DMALinkedList_ReadBlocks(MMC_HandleTypeDef *hmmc,
 
 		/* Check the case of 4kB blocks (field DATA SECTOR SIZE of
 		 * extended CSD register) */
-		if (((hmmc->Ext_CSD[(MMC_EXT_CSD_DATA_SEC_SIZE_INDEX / 4)] >>
-		      MMC_EXT_CSD_DATA_SEC_SIZE_POS) &
+		if (((hmmc->Ext_CSD[(MMC_EXT_CSD_DATA_SEC_SIZE_INDEX / 4)] >> MMC_EXT_CSD_DATA_SEC_SIZE_POS) &
 		     0x000000FFU) != 0x0U) {
 			if ((NumberOfBlocks % 8U) != 0U) {
 				/* The number of blocks should be a multiple of
@@ -240,28 +226,21 @@ HAL_MMCEx_DMALinkedList_ReadBlocks(MMC_HandleTypeDef *hmmc,
 			if ((BlockAdd % 8U) != 0U) {
 				/* The address should be aligned to 8
 				 * (corresponding to 4 KBytes blocks) */
-				hmmc->ErrorCode |=
-				    HAL_MMC_ERROR_ADDR_MISALIGNED;
+				hmmc->ErrorCode |= HAL_MMC_ERROR_ADDR_MISALIGNED;
 				return HAL_ERROR;
 			}
 		}
 
-		hmmc->Instance->IDMABASER =
-		    (uint32_t)pLinkedList->pHeadNode->IDMABASER;
-		hmmc->Instance->IDMABSIZE =
-		    (uint32_t)pLinkedList->pHeadNode->IDMABSIZE;
+		hmmc->Instance->IDMABASER = (uint32_t)pLinkedList->pHeadNode->IDMABASER;
+		hmmc->Instance->IDMABSIZE = (uint32_t)pLinkedList->pHeadNode->IDMABSIZE;
 		hmmc->Instance->IDMABAR = (uint32_t)pLinkedList->pHeadNode;
-		hmmc->Instance->IDMALAR =
-		    (uint32_t)SDMMC_IDMALAR_ABR | SDMMC_IDMALAR_ULS |
-		    SDMMC_IDMALAR_ULA |
-		    sizeof(
-			SDMMC_DMALinkNodeTypeDef); /* Initial configuration */
+		hmmc->Instance->IDMALAR = (uint32_t)SDMMC_IDMALAR_ABR | SDMMC_IDMALAR_ULS | SDMMC_IDMALAR_ULA |
+					  sizeof(SDMMC_DMALinkNodeTypeDef); /* Initial configuration */
 
 		DmaBase0_reg = hmmc->Instance->IDMABASER;
 		DmaBase1_reg = hmmc->Instance->IDMABAR;
 
-		if ((hmmc->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) ||
-		    (DmaBase1_reg == 0U)) {
+		if ((hmmc->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) || (DmaBase1_reg == 0U)) {
 			hmmc->ErrorCode = HAL_MMC_ERROR_ADDR_OUT_OF_RANGE;
 			return HAL_ERROR;
 		}
@@ -292,8 +271,7 @@ HAL_MMCEx_DMALinkedList_ReadBlocks(MMC_HandleTypeDef *hmmc,
 		hmmc->Instance->IDMACTRL = SDMMC_ENABLE_IDMA_DOUBLE_BUFF0;
 
 		/* Read Blocks in DMA mode */
-		hmmc->Context =
-		    (MMC_CONTEXT_READ_MULTIPLE_BLOCK | MMC_CONTEXT_DMA);
+		hmmc->Context = (MMC_CONTEXT_READ_MULTIPLE_BLOCK | MMC_CONTEXT_DMA);
 
 		/* Read Multi Block command */
 		errorstate = SDMMC_CmdReadMultiBlock(hmmc->Instance, add);
@@ -303,10 +281,8 @@ HAL_MMCEx_DMALinkedList_ReadBlocks(MMC_HandleTypeDef *hmmc,
 			return HAL_ERROR;
 		}
 
-		__HAL_MMC_ENABLE_IT(hmmc,
-				    (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT |
-				     SDMMC_IT_RXOVERR | SDMMC_IT_DATAEND |
-				     SDMMC_FLAG_IDMATE | SDMMC_FLAG_IDMABTC));
+		__HAL_MMC_ENABLE_IT(hmmc, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_RXOVERR | SDMMC_IT_DATAEND |
+					   SDMMC_FLAG_IDMATE | SDMMC_FLAG_IDMABTC));
 
 		return HAL_OK;
 	} else {
@@ -324,10 +300,9 @@ HAL_MMCEx_DMALinkedList_ReadBlocks(MMC_HandleTypeDef *hmmc,
  * @param  NumberOfBlocks: Total number of blocks to read
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_MMCEx_DMALinkedList_WriteBlocks(MMC_HandleTypeDef *hmmc,
-				    const MMC_DMALinkedListTypeDef *pLinkedList,
-				    uint32_t BlockAdd, uint32_t NumberOfBlocks)
+HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_WriteBlocks(MMC_HandleTypeDef *hmmc,
+						      const MMC_DMALinkedListTypeDef *pLinkedList, uint32_t BlockAdd,
+						      uint32_t NumberOfBlocks)
 {
 	SDMMC_DataInitTypeDef config;
 	uint32_t errorstate;
@@ -343,8 +318,7 @@ HAL_MMCEx_DMALinkedList_WriteBlocks(MMC_HandleTypeDef *hmmc,
 
 		/* Check the case of 4kB blocks (field DATA SECTOR SIZE of
 		 * extended CSD register) */
-		if (((hmmc->Ext_CSD[(MMC_EXT_CSD_DATA_SEC_SIZE_INDEX / 4)] >>
-		      MMC_EXT_CSD_DATA_SEC_SIZE_POS) &
+		if (((hmmc->Ext_CSD[(MMC_EXT_CSD_DATA_SEC_SIZE_INDEX / 4)] >> MMC_EXT_CSD_DATA_SEC_SIZE_POS) &
 		     0x000000FFU) != 0x0U) {
 			if ((NumberOfBlocks % 8U) != 0U) {
 				/* The number of blocks should be a multiple of
@@ -356,29 +330,22 @@ HAL_MMCEx_DMALinkedList_WriteBlocks(MMC_HandleTypeDef *hmmc,
 			if ((BlockAdd % 8U) != 0U) {
 				/* The address should be aligned to 8
 				 * (corresponding to 4 KBytes blocks) */
-				hmmc->ErrorCode |=
-				    HAL_MMC_ERROR_ADDR_MISALIGNED;
+				hmmc->ErrorCode |= HAL_MMC_ERROR_ADDR_MISALIGNED;
 				return HAL_ERROR;
 			}
 		}
 
-		hmmc->Instance->IDMABASER =
-		    (uint32_t)pLinkedList->pHeadNode->IDMABASER;
-		hmmc->Instance->IDMABSIZE =
-		    (uint32_t)pLinkedList->pHeadNode->IDMABSIZE;
+		hmmc->Instance->IDMABASER = (uint32_t)pLinkedList->pHeadNode->IDMABASER;
+		hmmc->Instance->IDMABSIZE = (uint32_t)pLinkedList->pHeadNode->IDMABSIZE;
 
 		hmmc->Instance->IDMABAR = (uint32_t)pLinkedList->pHeadNode;
-		hmmc->Instance->IDMALAR =
-		    (uint32_t)SDMMC_IDMALAR_ABR | SDMMC_IDMALAR_ULS |
-		    SDMMC_IDMALAR_ULA |
-		    sizeof(
-			SDMMC_DMALinkNodeTypeDef); /* Initial configuration */
+		hmmc->Instance->IDMALAR = (uint32_t)SDMMC_IDMALAR_ABR | SDMMC_IDMALAR_ULS | SDMMC_IDMALAR_ULA |
+					  sizeof(SDMMC_DMALinkNodeTypeDef); /* Initial configuration */
 
 		DmaBase0_reg = hmmc->Instance->IDMABASER;
 		DmaBase1_reg = hmmc->Instance->IDMABAR;
 
-		if ((hmmc->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) ||
-		    (DmaBase1_reg == 0U)) {
+		if ((hmmc->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) || (DmaBase1_reg == 0U)) {
 			hmmc->ErrorCode = HAL_MMC_ERROR_ADDR_OUT_OF_RANGE;
 			return HAL_ERROR;
 		}
@@ -408,8 +375,7 @@ HAL_MMCEx_DMALinkedList_WriteBlocks(MMC_HandleTypeDef *hmmc,
 		hmmc->Instance->IDMACTRL = SDMMC_ENABLE_IDMA_DOUBLE_BUFF0;
 
 		/* Write Blocks in DMA mode */
-		hmmc->Context =
-		    (MMC_CONTEXT_WRITE_MULTIPLE_BLOCK | MMC_CONTEXT_DMA);
+		hmmc->Context = (MMC_CONTEXT_WRITE_MULTIPLE_BLOCK | MMC_CONTEXT_DMA);
 
 		/* Write Multi Block command */
 		errorstate = SDMMC_CmdWriteMultiBlock(hmmc->Instance, add);
@@ -419,10 +385,8 @@ HAL_MMCEx_DMALinkedList_WriteBlocks(MMC_HandleTypeDef *hmmc,
 			return HAL_ERROR;
 		}
 
-		__HAL_MMC_ENABLE_IT(hmmc,
-				    (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT |
-				     SDMMC_IT_TXUNDERR | SDMMC_IT_DATAEND |
-				     SDMMC_FLAG_IDMATE | SDMMC_FLAG_IDMABTC));
+		__HAL_MMC_ENABLE_IT(hmmc, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_TXUNDERR |
+					   SDMMC_IT_DATAEND | SDMMC_FLAG_IDMATE | SDMMC_FLAG_IDMABTC));
 
 		return HAL_OK;
 	} else {

@@ -228,11 +228,10 @@ HAL_StatusTypeDef SDMMC_Init(SDMMC_TypeDef *SDMMCx, SDMMC_InitTypeDef Init)
 	/* Check the parameters */
 	assert_param(IS_SDMMC_ALL_INSTANCE(SDMMCx));
 	assert_param(IS_SDMMC_CLOCK_EDGE(Init.ClockEdge));
-#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && \
-    !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && \
-    !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
+#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) &&                \
+    !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 	assert_param(IS_SDMMC_CLOCK_BYPASS(Init.ClockBypass));
-#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&      \
+#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&                                              \
 	  !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
 	assert_param(IS_SDMMC_CLOCK_POWER_SAVE(Init.ClockPowerSave));
 	assert_param(IS_SDMMC_BUS_WIDE(Init.BusWide));
@@ -240,13 +239,11 @@ HAL_StatusTypeDef SDMMC_Init(SDMMC_TypeDef *SDMMCx, SDMMC_InitTypeDef Init)
 	assert_param(IS_SDMMC_CLKDIV(Init.ClockDiv));
 
 	/* Set SDMMC configuration parameters */
-#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && \
-    !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && \
-    !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
+#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) &&                \
+    !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 	tmpreg |= Init.ClockBypass;
 #endif
-	tmpreg |= (Init.ClockEdge | Init.ClockPowerSave | Init.BusWide |
-		   Init.HardwareFlowControl | Init.ClockDiv);
+	tmpreg |= (Init.ClockEdge | Init.ClockPowerSave | Init.BusWide | Init.HardwareFlowControl | Init.ClockDiv);
 
 	/* Write to SDMMC CLKCR */
 	MODIFY_REG(SDMMCx->CLKCR, CLKCR_CLEAR_MASK, tmpreg);
@@ -325,13 +322,12 @@ data transfers.
 HAL_StatusTypeDef SDMMC_PowerState_ON(SDMMC_TypeDef *SDMMCx)
 {
 	/* Set power state to ON */
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	SDMMCx->POWER |= SDMMC_POWER_PWRCTRL;
 #else
 	SDMMCx->POWER = SDMMC_POWER_PWRCTRL;
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 	/* 1ms: required power up waiting time before starting the SD
@@ -341,9 +337,8 @@ HAL_StatusTypeDef SDMMC_PowerState_ON(SDMMC_TypeDef *SDMMCx)
 	return HAL_OK;
 }
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 /**
  * @brief  Set SDMMC Power state to Power-Cycle.
  * @param  SDMMCx Pointer to SDMMC register base
@@ -356,7 +351,7 @@ HAL_StatusTypeDef SDMMC_PowerState_Cycle(SDMMC_TypeDef *SDMMCx)
 
 	return HAL_OK;
 }
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 /**
@@ -367,13 +362,12 @@ HAL_StatusTypeDef SDMMC_PowerState_Cycle(SDMMC_TypeDef *SDMMCx)
 HAL_StatusTypeDef SDMMC_PowerState_OFF(SDMMC_TypeDef *SDMMCx)
 {
 	/* Set power state to OFF */
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	SDMMCx->POWER &= ~(SDMMC_POWER_PWRCTRL);
 #else
 	SDMMCx->POWER = (uint32_t)0x00000000;
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 	return HAL_OK;
@@ -388,10 +382,7 @@ HAL_StatusTypeDef SDMMC_PowerState_OFF(SDMMC_TypeDef *SDMMCx)
  *            - 0x02: Power UP
  *            - 0x03: Power ON
  */
-uint32_t SDMMC_GetPowerState(SDMMC_TypeDef *SDMMCx)
-{
-	return (SDMMCx->POWER & SDMMC_POWER_PWRCTRL);
-}
+uint32_t SDMMC_GetPowerState(SDMMC_TypeDef *SDMMCx) { return (SDMMCx->POWER & SDMMC_POWER_PWRCTRL); }
 
 /**
  * @brief  Configure the SDMMC command path according to the specified
@@ -401,8 +392,7 @@ uint32_t SDMMC_GetPowerState(SDMMC_TypeDef *SDMMCx)
  *         the configuration information for the SDMMC command
  * @retval HAL status
  */
-HAL_StatusTypeDef SDMMC_SendCommand(SDMMC_TypeDef *SDMMCx,
-				    SDMMC_CmdInitTypeDef *Command)
+HAL_StatusTypeDef SDMMC_SendCommand(SDMMC_TypeDef *SDMMCx, SDMMC_CmdInitTypeDef *Command)
 {
 	uint32_t tmpreg = 0;
 
@@ -416,8 +406,7 @@ HAL_StatusTypeDef SDMMC_SendCommand(SDMMC_TypeDef *SDMMCx,
 	SDMMCx->ARG = Command->Argument;
 
 	/* Set SDMMC command parameters */
-	tmpreg |= (uint32_t)(Command->CmdIndex | Command->Response |
-			     Command->WaitForInterrupt | Command->CPSM);
+	tmpreg |= (uint32_t)(Command->CmdIndex | Command->Response | Command->WaitForInterrupt | Command->CPSM);
 
 	/* Write to SDMMC CMD register */
 	MODIFY_REG(SDMMCx->CMD, CMD_CLEAR_MASK, tmpreg);
@@ -430,10 +419,7 @@ HAL_StatusTypeDef SDMMC_SendCommand(SDMMC_TypeDef *SDMMCx,
  * @param  SDMMCx Pointer to SDMMC register base
  * @retval Command index of the last command response received
  */
-uint8_t SDMMC_GetCommandResponse(SDMMC_TypeDef *SDMMCx)
-{
-	return (uint8_t)(SDMMCx->RESPCMD);
-}
+uint8_t SDMMC_GetCommandResponse(SDMMC_TypeDef *SDMMCx) { return (uint8_t)(SDMMCx->RESPCMD); }
 
 /**
  * @brief  Return the response received from the card for the last command
@@ -467,8 +453,7 @@ uint32_t SDMMC_GetResponse(SDMMC_TypeDef *SDMMCx, uint32_t Response)
  *         that contains the configuration information for the SDMMC data.
  * @retval HAL status
  */
-HAL_StatusTypeDef SDMMC_ConfigData(SDMMC_TypeDef *SDMMCx,
-				   SDMMC_DataInitTypeDef *Data)
+HAL_StatusTypeDef SDMMC_ConfigData(SDMMC_TypeDef *SDMMCx, SDMMC_DataInitTypeDef *Data)
 {
 	uint32_t tmpreg = 0;
 
@@ -486,8 +471,7 @@ HAL_StatusTypeDef SDMMC_ConfigData(SDMMC_TypeDef *SDMMCx,
 	SDMMCx->DLEN = Data->DataLength;
 
 	/* Set the SDMMC data configuration parameters */
-	tmpreg |= (uint32_t)(Data->DataBlockSize | Data->TransferDir |
-			     Data->TransferMode | Data->DPSM);
+	tmpreg |= (uint32_t)(Data->DataBlockSize | Data->TransferDir | Data->TransferMode | Data->DPSM);
 
 	/* Write to SDMMC DCTRL */
 	MODIFY_REG(SDMMCx->DCTRL, DCTRL_CLEAR_MASK, tmpreg);
@@ -500,10 +484,7 @@ HAL_StatusTypeDef SDMMC_ConfigData(SDMMC_TypeDef *SDMMCx,
  * @param  SDMMCx Pointer to SDMMC register base
  * @retval Number of remaining data bytes to be transferred
  */
-uint32_t SDMMC_GetDataCounter(SDMMC_TypeDef *SDMMCx)
-{
-	return (SDMMCx->DCOUNT);
-}
+uint32_t SDMMC_GetDataCounter(SDMMC_TypeDef *SDMMCx) { return (SDMMCx->DCOUNT); }
 
 /**
  * @brief  Get the FIFO data
@@ -523,8 +504,7 @@ uint32_t SDMMC_GetFIFOCount(SDMMC_TypeDef *SDMMCx) { return (SDMMCx->FIFO); }
  * SDMMC_DATA2
  * @retval None
  */
-HAL_StatusTypeDef SDMMC_SetSDMMCReadWaitMode(SDMMC_TypeDef *SDMMCx,
-					     uint32_t SDMMC_ReadWaitMode)
+HAL_StatusTypeDef SDMMC_SetSDMMCReadWaitMode(SDMMC_TypeDef *SDMMCx, uint32_t SDMMC_ReadWaitMode)
 {
 	/* Check the parameters */
 	assert_param(IS_SDMMC_READWAIT_MODE(SDMMC_ReadWaitMode));
@@ -573,8 +553,7 @@ uint32_t SDMMC_CmdBlockLength(SDMMC_TypeDef *SDMMCx, uint32_t BlockSize)
 	(void)SDMMC_SendCommand(SDMMCx, &sdmmc_cmdinit);
 
 	/* Check for error conditions */
-	errorstate =
-	    SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_SET_BLOCKLEN, SDMMC_CMDTIMEOUT);
+	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_SET_BLOCKLEN, SDMMC_CMDTIMEOUT);
 
 	return errorstate;
 }
@@ -598,8 +577,7 @@ uint32_t SDMMC_CmdReadSingleBlock(SDMMC_TypeDef *SDMMCx, uint32_t ReadAdd)
 	(void)SDMMC_SendCommand(SDMMCx, &sdmmc_cmdinit);
 
 	/* Check for error conditions */
-	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_READ_SINGLE_BLOCK,
-				       SDMMC_CMDTIMEOUT);
+	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_READ_SINGLE_BLOCK, SDMMC_CMDTIMEOUT);
 
 	return errorstate;
 }
@@ -623,8 +601,7 @@ uint32_t SDMMC_CmdReadMultiBlock(SDMMC_TypeDef *SDMMCx, uint32_t ReadAdd)
 	(void)SDMMC_SendCommand(SDMMCx, &sdmmc_cmdinit);
 
 	/* Check for error conditions */
-	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_READ_MULT_BLOCK,
-				       SDMMC_CMDTIMEOUT);
+	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_READ_MULT_BLOCK, SDMMC_CMDTIMEOUT);
 
 	return errorstate;
 }
@@ -648,8 +625,7 @@ uint32_t SDMMC_CmdWriteSingleBlock(SDMMC_TypeDef *SDMMCx, uint32_t WriteAdd)
 	(void)SDMMC_SendCommand(SDMMCx, &sdmmc_cmdinit);
 
 	/* Check for error conditions */
-	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_WRITE_SINGLE_BLOCK,
-				       SDMMC_CMDTIMEOUT);
+	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_WRITE_SINGLE_BLOCK, SDMMC_CMDTIMEOUT);
 
 	return errorstate;
 }
@@ -673,8 +649,7 @@ uint32_t SDMMC_CmdWriteMultiBlock(SDMMC_TypeDef *SDMMCx, uint32_t WriteAdd)
 	(void)SDMMC_SendCommand(SDMMCx, &sdmmc_cmdinit);
 
 	/* Check for error conditions */
-	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_WRITE_MULT_BLOCK,
-				       SDMMC_CMDTIMEOUT);
+	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_WRITE_MULT_BLOCK, SDMMC_CMDTIMEOUT);
 
 	return errorstate;
 }
@@ -698,8 +673,7 @@ uint32_t SDMMC_CmdSDEraseStartAdd(SDMMC_TypeDef *SDMMCx, uint32_t StartAdd)
 	(void)SDMMC_SendCommand(SDMMCx, &sdmmc_cmdinit);
 
 	/* Check for error conditions */
-	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_SD_ERASE_GRP_START,
-				       SDMMC_CMDTIMEOUT);
+	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_SD_ERASE_GRP_START, SDMMC_CMDTIMEOUT);
 
 	return errorstate;
 }
@@ -723,8 +697,7 @@ uint32_t SDMMC_CmdSDEraseEndAdd(SDMMC_TypeDef *SDMMCx, uint32_t EndAdd)
 	(void)SDMMC_SendCommand(SDMMCx, &sdmmc_cmdinit);
 
 	/* Check for error conditions */
-	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_SD_ERASE_GRP_END,
-				       SDMMC_CMDTIMEOUT);
+	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_SD_ERASE_GRP_END, SDMMC_CMDTIMEOUT);
 
 	return errorstate;
 }
@@ -748,8 +721,7 @@ uint32_t SDMMC_CmdEraseStartAdd(SDMMC_TypeDef *SDMMCx, uint32_t StartAdd)
 	(void)SDMMC_SendCommand(SDMMCx, &sdmmc_cmdinit);
 
 	/* Check for error conditions */
-	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_ERASE_GRP_START,
-				       SDMMC_CMDTIMEOUT);
+	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_ERASE_GRP_START, SDMMC_CMDTIMEOUT);
 
 	return errorstate;
 }
@@ -773,8 +745,7 @@ uint32_t SDMMC_CmdEraseEndAdd(SDMMC_TypeDef *SDMMCx, uint32_t EndAdd)
 	(void)SDMMC_SendCommand(SDMMCx, &sdmmc_cmdinit);
 
 	/* Check for error conditions */
-	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_ERASE_GRP_END,
-				       SDMMC_CMDTIMEOUT);
+	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_ERASE_GRP_END, SDMMC_CMDTIMEOUT);
 
 	return errorstate;
 }
@@ -799,8 +770,7 @@ uint32_t SDMMC_CmdErase(SDMMC_TypeDef *SDMMCx, uint32_t EraseType)
 	(void)SDMMC_SendCommand(SDMMCx, &sdmmc_cmdinit);
 
 	/* Check for error conditions */
-	errorstate =
-	    SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_ERASE, SDMMC_MAXERASETIMEOUT);
+	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_ERASE, SDMMC_MAXERASETIMEOUT);
 
 	return errorstate;
 }
@@ -822,25 +792,22 @@ uint32_t SDMMC_CmdStopTransfer(SDMMC_TypeDef *SDMMCx)
 	sdmmc_cmdinit.WaitForInterrupt = SDMMC_WAIT_NO;
 	sdmmc_cmdinit.CPSM = SDMMC_CPSM_ENABLE;
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	__SDMMC_CMDSTOP_ENABLE(SDMMCx);
 	__SDMMC_CMDTRANS_DISABLE(SDMMCx);
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 	(void)SDMMC_SendCommand(SDMMCx, &sdmmc_cmdinit);
 
 	/* Check for error conditions */
-	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_STOP_TRANSMISSION,
-				       SDMMC_STOPTRANSFERTIMEOUT);
+	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_STOP_TRANSMISSION, SDMMC_STOPTRANSFERTIMEOUT);
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	__SDMMC_CMDSTOP_DISABLE(SDMMCx);
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 	return errorstate;
@@ -866,8 +833,7 @@ uint32_t SDMMC_CmdSelDesel(SDMMC_TypeDef *SDMMCx, uint64_t Addr)
 	(void)SDMMC_SendCommand(SDMMCx, &sdmmc_cmdinit);
 
 	/* Check for error conditions */
-	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_SEL_DESEL_CARD,
-				       SDMMC_CMDTIMEOUT);
+	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_SEL_DESEL_CARD, SDMMC_CMDTIMEOUT);
 
 	return errorstate;
 }
@@ -947,8 +913,7 @@ uint32_t SDMMC_CmdAppCommand(SDMMC_TypeDef *SDMMCx, uint32_t Argument)
 	/* If there is a HAL_ERROR, it is a MMC card, else
 	it is a SD card: SD card 2.0 (voltage range mismatch)
 	   or SD card 1.x */
-	errorstate =
-	    SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_APP_CMD, SDMMC_CMDTIMEOUT);
+	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_APP_CMD, SDMMC_CMDTIMEOUT);
 
 	return errorstate;
 }
@@ -965,13 +930,12 @@ uint32_t SDMMC_CmdAppOperCommand(SDMMC_TypeDef *SDMMCx, uint32_t Argument)
 	SDMMC_CmdInitTypeDef sdmmc_cmdinit;
 	uint32_t errorstate;
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	sdmmc_cmdinit.Argument = Argument;
 #else
 	sdmmc_cmdinit.Argument = SDMMC_VOLTAGE_WINDOW_SD | Argument;
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 	sdmmc_cmdinit.CmdIndex = SDMMC_CMD_SD_APP_OP_COND;
 	sdmmc_cmdinit.Response = SDMMC_RESPONSE_SHORT;
@@ -1004,8 +968,7 @@ uint32_t SDMMC_CmdBusWidth(SDMMC_TypeDef *SDMMCx, uint32_t BusWidth)
 	(void)SDMMC_SendCommand(SDMMCx, &sdmmc_cmdinit);
 
 	/* Check for error conditions */
-	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_APP_SD_SET_BUSWIDTH,
-				       SDMMC_CMDTIMEOUT);
+	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_APP_SD_SET_BUSWIDTH, SDMMC_CMDTIMEOUT);
 
 	return errorstate;
 }
@@ -1029,8 +992,7 @@ uint32_t SDMMC_CmdSendSCR(SDMMC_TypeDef *SDMMCx)
 	(void)SDMMC_SendCommand(SDMMCx, &sdmmc_cmdinit);
 
 	/* Check for error conditions */
-	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_SD_APP_SEND_SCR,
-				       SDMMC_CMDTIMEOUT);
+	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_SD_APP_SEND_SCR, SDMMC_CMDTIMEOUT);
 
 	return errorstate;
 }
@@ -1129,8 +1091,7 @@ uint32_t SDMMC_CmdSetRelAddMmc(SDMMC_TypeDef *SDMMCx, uint16_t RCA)
 	(void)SDMMC_SendCommand(SDMMCx, &sdmmc_cmdinit);
 
 	/* Check for error conditions */
-	errorstate =
-	    SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_SET_REL_ADDR, SDMMC_CMDTIMEOUT);
+	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_SET_REL_ADDR, SDMMC_CMDTIMEOUT);
 
 	return errorstate;
 }
@@ -1155,8 +1116,7 @@ uint32_t SDMMC_CmdSleepMmc(SDMMC_TypeDef *SDMMCx, uint32_t Argument)
 	(void)SDMMC_SendCommand(SDMMCx, &sdmmc_cmdinit);
 
 	/* Check for error conditions */
-	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_MMC_SLEEP_AWAKE,
-				       SDMMC_CMDTIMEOUT);
+	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_MMC_SLEEP_AWAKE, SDMMC_CMDTIMEOUT);
 
 	return errorstate;
 }
@@ -1180,8 +1140,7 @@ uint32_t SDMMC_CmdSendStatus(SDMMC_TypeDef *SDMMCx, uint32_t Argument)
 	(void)SDMMC_SendCommand(SDMMCx, &sdmmc_cmdinit);
 
 	/* Check for error conditions */
-	errorstate =
-	    SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_SEND_STATUS, SDMMC_CMDTIMEOUT);
+	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_SEND_STATUS, SDMMC_CMDTIMEOUT);
 
 	return errorstate;
 }
@@ -1204,8 +1163,7 @@ uint32_t SDMMC_CmdStatusRegister(SDMMC_TypeDef *SDMMCx)
 	(void)SDMMC_SendCommand(SDMMCx, &sdmmc_cmdinit);
 
 	/* Check for error conditions */
-	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_SD_APP_STATUS,
-				       SDMMC_CMDTIMEOUT);
+	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_SD_APP_STATUS, SDMMC_CMDTIMEOUT);
 
 	return errorstate;
 }
@@ -1257,15 +1215,13 @@ uint32_t SDMMC_CmdSwitch(SDMMC_TypeDef *SDMMCx, uint32_t Argument)
 	(void)SDMMC_SendCommand(SDMMCx, &sdmmc_cmdinit);
 
 	/* Check for error conditions */
-	errorstate =
-	    SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_HS_SWITCH, SDMMC_CMDTIMEOUT);
+	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_HS_SWITCH, SDMMC_CMDTIMEOUT);
 
 	return errorstate;
 }
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 /**
  * @brief  Send the command asking the accessed card to send its operating
  *         condition register (OCR)
@@ -1285,12 +1241,11 @@ uint32_t SDMMC_CmdVoltageSwitch(SDMMC_TypeDef *SDMMCx)
 	(void)SDMMC_SendCommand(SDMMCx, &sdmmc_cmdinit);
 
 	/* Check for error conditions */
-	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_VOLTAGE_SWITCH,
-				       SDMMC_CMDTIMEOUT);
+	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_VOLTAGE_SWITCH, SDMMC_CMDTIMEOUT);
 
 	return errorstate;
 }
-#endif /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||          \
+#endif /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||                                                  \
 	  STM32L4S7xx || STM32L4S9xx */
 
 /**
@@ -1313,8 +1268,7 @@ uint32_t SDMMC_CmdSendEXTCSD(SDMMC_TypeDef *SDMMCx, uint32_t Argument)
 	(void)SDMMC_SendCommand(SDMMCx, &sdmmc_cmdinit);
 
 	/* Check for error conditions */
-	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_HS_SEND_EXT_CSD,
-				       SDMMC_CMDTIMEOUT);
+	errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_HS_SEND_EXT_CSD, SDMMC_CMDTIMEOUT);
 
 	return errorstate;
 }
@@ -1343,8 +1297,7 @@ responses.
  * @param  SD_CMD The sent command index
  * @retval SD Card error state
  */
-uint32_t SDMMC_GetCmdResp1(SDMMC_TypeDef *SDMMCx, uint8_t SD_CMD,
-			   uint32_t Timeout)
+uint32_t SDMMC_GetCmdResp1(SDMMC_TypeDef *SDMMCx, uint8_t SD_CMD, uint32_t Timeout)
 {
 	uint32_t response_r1;
 	uint32_t sta_reg;
@@ -1358,18 +1311,15 @@ uint32_t SDMMC_GetCmdResp1(SDMMC_TypeDef *SDMMCx, uint8_t SD_CMD,
 			return SDMMC_ERROR_TIMEOUT;
 		}
 		sta_reg = SDMMCx->STA;
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
-	} while (
-	    ((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND |
-			 SDMMC_FLAG_CTIMEOUT | SDMMC_FLAG_BUSYD0END)) == 0U) ||
-	    ((sta_reg & SDMMC_FLAG_CMDACT) != 0U));
-#else
-	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND |
-			      SDMMC_FLAG_CTIMEOUT)) == 0U) ||
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
+	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND | SDMMC_FLAG_CTIMEOUT | SDMMC_FLAG_BUSYD0END)) ==
+		  0U) ||
 		 ((sta_reg & SDMMC_FLAG_CMDACT) != 0U));
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#else
+	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND | SDMMC_FLAG_CTIMEOUT)) == 0U) ||
+		 ((sta_reg & SDMMC_FLAG_CMDACT) != 0U));
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 	if (__SDMMC_GET_FLAG(SDMMCx, SDMMC_FLAG_CTIMEOUT)) {
@@ -1397,58 +1347,41 @@ uint32_t SDMMC_GetCmdResp1(SDMMC_TypeDef *SDMMCx, uint8_t SD_CMD,
 
 	if ((response_r1 & SDMMC_OCR_ERRORBITS) == SDMMC_ALLZERO) {
 		return SDMMC_ERROR_NONE;
-	} else if ((response_r1 & SDMMC_OCR_ADDR_OUT_OF_RANGE) ==
-		   SDMMC_OCR_ADDR_OUT_OF_RANGE) {
+	} else if ((response_r1 & SDMMC_OCR_ADDR_OUT_OF_RANGE) == SDMMC_OCR_ADDR_OUT_OF_RANGE) {
 		return SDMMC_ERROR_ADDR_OUT_OF_RANGE;
-	} else if ((response_r1 & SDMMC_OCR_ADDR_MISALIGNED) ==
-		   SDMMC_OCR_ADDR_MISALIGNED) {
+	} else if ((response_r1 & SDMMC_OCR_ADDR_MISALIGNED) == SDMMC_OCR_ADDR_MISALIGNED) {
 		return SDMMC_ERROR_ADDR_MISALIGNED;
-	} else if ((response_r1 & SDMMC_OCR_BLOCK_LEN_ERR) ==
-		   SDMMC_OCR_BLOCK_LEN_ERR) {
+	} else if ((response_r1 & SDMMC_OCR_BLOCK_LEN_ERR) == SDMMC_OCR_BLOCK_LEN_ERR) {
 		return SDMMC_ERROR_BLOCK_LEN_ERR;
-	} else if ((response_r1 & SDMMC_OCR_ERASE_SEQ_ERR) ==
-		   SDMMC_OCR_ERASE_SEQ_ERR) {
+	} else if ((response_r1 & SDMMC_OCR_ERASE_SEQ_ERR) == SDMMC_OCR_ERASE_SEQ_ERR) {
 		return SDMMC_ERROR_ERASE_SEQ_ERR;
-	} else if ((response_r1 & SDMMC_OCR_BAD_ERASE_PARAM) ==
-		   SDMMC_OCR_BAD_ERASE_PARAM) {
+	} else if ((response_r1 & SDMMC_OCR_BAD_ERASE_PARAM) == SDMMC_OCR_BAD_ERASE_PARAM) {
 		return SDMMC_ERROR_BAD_ERASE_PARAM;
-	} else if ((response_r1 & SDMMC_OCR_WRITE_PROT_VIOLATION) ==
-		   SDMMC_OCR_WRITE_PROT_VIOLATION) {
+	} else if ((response_r1 & SDMMC_OCR_WRITE_PROT_VIOLATION) == SDMMC_OCR_WRITE_PROT_VIOLATION) {
 		return SDMMC_ERROR_WRITE_PROT_VIOLATION;
-	} else if ((response_r1 & SDMMC_OCR_LOCK_UNLOCK_FAILED) ==
-		   SDMMC_OCR_LOCK_UNLOCK_FAILED) {
+	} else if ((response_r1 & SDMMC_OCR_LOCK_UNLOCK_FAILED) == SDMMC_OCR_LOCK_UNLOCK_FAILED) {
 		return SDMMC_ERROR_LOCK_UNLOCK_FAILED;
-	} else if ((response_r1 & SDMMC_OCR_COM_CRC_FAILED) ==
-		   SDMMC_OCR_COM_CRC_FAILED) {
+	} else if ((response_r1 & SDMMC_OCR_COM_CRC_FAILED) == SDMMC_OCR_COM_CRC_FAILED) {
 		return SDMMC_ERROR_COM_CRC_FAILED;
-	} else if ((response_r1 & SDMMC_OCR_ILLEGAL_CMD) ==
-		   SDMMC_OCR_ILLEGAL_CMD) {
+	} else if ((response_r1 & SDMMC_OCR_ILLEGAL_CMD) == SDMMC_OCR_ILLEGAL_CMD) {
 		return SDMMC_ERROR_ILLEGAL_CMD;
-	} else if ((response_r1 & SDMMC_OCR_CARD_ECC_FAILED) ==
-		   SDMMC_OCR_CARD_ECC_FAILED) {
+	} else if ((response_r1 & SDMMC_OCR_CARD_ECC_FAILED) == SDMMC_OCR_CARD_ECC_FAILED) {
 		return SDMMC_ERROR_CARD_ECC_FAILED;
 	} else if ((response_r1 & SDMMC_OCR_CC_ERROR) == SDMMC_OCR_CC_ERROR) {
 		return SDMMC_ERROR_CC_ERR;
-	} else if ((response_r1 & SDMMC_OCR_STREAM_READ_UNDERRUN) ==
-		   SDMMC_OCR_STREAM_READ_UNDERRUN) {
+	} else if ((response_r1 & SDMMC_OCR_STREAM_READ_UNDERRUN) == SDMMC_OCR_STREAM_READ_UNDERRUN) {
 		return SDMMC_ERROR_STREAM_READ_UNDERRUN;
-	} else if ((response_r1 & SDMMC_OCR_STREAM_WRITE_OVERRUN) ==
-		   SDMMC_OCR_STREAM_WRITE_OVERRUN) {
+	} else if ((response_r1 & SDMMC_OCR_STREAM_WRITE_OVERRUN) == SDMMC_OCR_STREAM_WRITE_OVERRUN) {
 		return SDMMC_ERROR_STREAM_WRITE_OVERRUN;
-	} else if ((response_r1 & SDMMC_OCR_CID_CSD_OVERWRITE) ==
-		   SDMMC_OCR_CID_CSD_OVERWRITE) {
+	} else if ((response_r1 & SDMMC_OCR_CID_CSD_OVERWRITE) == SDMMC_OCR_CID_CSD_OVERWRITE) {
 		return SDMMC_ERROR_CID_CSD_OVERWRITE;
-	} else if ((response_r1 & SDMMC_OCR_WP_ERASE_SKIP) ==
-		   SDMMC_OCR_WP_ERASE_SKIP) {
+	} else if ((response_r1 & SDMMC_OCR_WP_ERASE_SKIP) == SDMMC_OCR_WP_ERASE_SKIP) {
 		return SDMMC_ERROR_WP_ERASE_SKIP;
-	} else if ((response_r1 & SDMMC_OCR_CARD_ECC_DISABLED) ==
-		   SDMMC_OCR_CARD_ECC_DISABLED) {
+	} else if ((response_r1 & SDMMC_OCR_CARD_ECC_DISABLED) == SDMMC_OCR_CARD_ECC_DISABLED) {
 		return SDMMC_ERROR_CARD_ECC_DISABLED;
-	} else if ((response_r1 & SDMMC_OCR_ERASE_RESET) ==
-		   SDMMC_OCR_ERASE_RESET) {
+	} else if ((response_r1 & SDMMC_OCR_ERASE_RESET) == SDMMC_OCR_ERASE_RESET) {
 		return SDMMC_ERROR_ERASE_RESET;
-	} else if ((response_r1 & SDMMC_OCR_AKE_SEQ_ERROR) ==
-		   SDMMC_OCR_AKE_SEQ_ERROR) {
+	} else if ((response_r1 & SDMMC_OCR_AKE_SEQ_ERROR) == SDMMC_OCR_AKE_SEQ_ERROR) {
 		return SDMMC_ERROR_AKE_SEQ_ERR;
 	} else {
 		return SDMMC_ERROR_GENERAL_UNKNOWN_ERR;
@@ -1472,8 +1405,7 @@ uint32_t SDMMC_GetCmdResp2(SDMMC_TypeDef *SDMMCx)
 			return SDMMC_ERROR_TIMEOUT;
 		}
 		sta_reg = SDMMCx->STA;
-	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND |
-			      SDMMC_FLAG_CTIMEOUT)) == 0U) ||
+	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND | SDMMC_FLAG_CTIMEOUT)) == 0U) ||
 		 ((sta_reg & SDMMC_FLAG_CMDACT) != 0U));
 
 	if (__SDMMC_GET_FLAG(SDMMCx, SDMMC_FLAG_CTIMEOUT)) {
@@ -1510,8 +1442,7 @@ uint32_t SDMMC_GetCmdResp3(SDMMC_TypeDef *SDMMCx)
 			return SDMMC_ERROR_TIMEOUT;
 		}
 		sta_reg = SDMMCx->STA;
-	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND |
-			      SDMMC_FLAG_CTIMEOUT)) == 0U) ||
+	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND | SDMMC_FLAG_CTIMEOUT)) == 0U) ||
 		 ((sta_reg & SDMMC_FLAG_CMDACT) != 0U));
 
 	if (__SDMMC_GET_FLAG(SDMMCx, SDMMC_FLAG_CTIMEOUT)) {
@@ -1534,8 +1465,7 @@ uint32_t SDMMC_GetCmdResp3(SDMMC_TypeDef *SDMMCx)
  *         address RCA
  * @retval SD Card error state
  */
-uint32_t SDMMC_GetCmdResp6(SDMMC_TypeDef *SDMMCx, uint8_t SD_CMD,
-			   uint16_t *pRCA)
+uint32_t SDMMC_GetCmdResp6(SDMMC_TypeDef *SDMMCx, uint8_t SD_CMD, uint16_t *pRCA)
 {
 	uint32_t response_r1;
 	uint32_t sta_reg;
@@ -1549,8 +1479,7 @@ uint32_t SDMMC_GetCmdResp6(SDMMC_TypeDef *SDMMCx, uint8_t SD_CMD,
 			return SDMMC_ERROR_TIMEOUT;
 		}
 		sta_reg = SDMMCx->STA;
-	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND |
-			      SDMMC_FLAG_CTIMEOUT)) == 0U) ||
+	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND | SDMMC_FLAG_CTIMEOUT)) == 0U) ||
 		 ((sta_reg & SDMMC_FLAG_CMDACT) != 0U));
 
 	if (__SDMMC_GET_FLAG(SDMMCx, SDMMC_FLAG_CTIMEOUT)) {
@@ -1576,17 +1505,14 @@ uint32_t SDMMC_GetCmdResp6(SDMMC_TypeDef *SDMMCx, uint8_t SD_CMD,
 	/* We have received response, retrieve it.  */
 	response_r1 = SDMMC_GetResponse(SDMMCx, SDMMC_RESP1);
 
-	if ((response_r1 & (SDMMC_R6_GENERAL_UNKNOWN_ERROR |
-			    SDMMC_R6_ILLEGAL_CMD | SDMMC_R6_COM_CRC_FAILED)) ==
+	if ((response_r1 & (SDMMC_R6_GENERAL_UNKNOWN_ERROR | SDMMC_R6_ILLEGAL_CMD | SDMMC_R6_COM_CRC_FAILED)) ==
 	    SDMMC_ALLZERO) {
 		*pRCA = (uint16_t)(response_r1 >> 16);
 
 		return SDMMC_ERROR_NONE;
-	} else if ((response_r1 & SDMMC_R6_ILLEGAL_CMD) ==
-		   SDMMC_R6_ILLEGAL_CMD) {
+	} else if ((response_r1 & SDMMC_R6_ILLEGAL_CMD) == SDMMC_R6_ILLEGAL_CMD) {
 		return SDMMC_ERROR_ILLEGAL_CMD;
-	} else if ((response_r1 & SDMMC_R6_COM_CRC_FAILED) ==
-		   SDMMC_R6_COM_CRC_FAILED) {
+	} else if ((response_r1 & SDMMC_R6_COM_CRC_FAILED) == SDMMC_R6_COM_CRC_FAILED) {
 		return SDMMC_ERROR_COM_CRC_FAILED;
 	} else {
 		return SDMMC_ERROR_GENERAL_UNKNOWN_ERR;
@@ -1610,8 +1536,7 @@ uint32_t SDMMC_GetCmdResp7(SDMMC_TypeDef *SDMMCx)
 			return SDMMC_ERROR_TIMEOUT;
 		}
 		sta_reg = SDMMCx->STA;
-	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND |
-			      SDMMC_FLAG_CTIMEOUT)) == 0U) ||
+	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND | SDMMC_FLAG_CTIMEOUT)) == 0U) ||
 		 ((sta_reg & SDMMC_FLAG_CMDACT) != 0U));
 
 	if (__SDMMC_GET_FLAG(SDMMCx, SDMMC_FLAG_CTIMEOUT)) {

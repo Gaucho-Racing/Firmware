@@ -47,8 +47,8 @@ extern "C" {
  * @brief    Flag defines which can be used with LL_FMAC_ReadReg function
  * @{
  */
-#define LL_FMAC_SR_SAT                                                         \
-	FMAC_SR_SAT			 /*!< Saturation Error Flag            \
+#define LL_FMAC_SR_SAT                                                                                                 \
+	FMAC_SR_SAT			 /*!< Saturation Error Flag                                                    \
 					      (this helps in debugging a filter) */
 #define LL_FMAC_SR_UNFL FMAC_SR_UNFL	 /*!< Underflow Error Flag */
 #define LL_FMAC_SR_OVFL FMAC_SR_OVFL	 /*!< Overflow Error Flag */
@@ -63,15 +63,13 @@ extern "C" {
  * LL_FMAC_WriteReg functions
  * @{
  */
-#define LL_FMAC_CR_SATIEN                                                      \
-	FMAC_CR_SATIEN /*!< Saturation Error Interrupt Enable                  \
-			    (this helps in debugging a filter) */
-#define LL_FMAC_CR_UNFLIEN                                                     \
-	FMAC_CR_UNFLIEN /*!< Underflow Error Interrupt Enable */
-#define LL_FMAC_CR_OVFLIEN                                                     \
-	FMAC_CR_OVFLIEN		     /*!< Overflow Error Interrupt Enable */
-#define LL_FMAC_CR_WIEN FMAC_CR_WIEN /*!< Write Interrupt Enable */
-#define LL_FMAC_CR_RIEN FMAC_CR_RIEN /*!< Read Interrupt Enable */
+#define LL_FMAC_CR_SATIEN                                                                                              \
+	FMAC_CR_SATIEN			   /*!< Saturation Error Interrupt Enable                                      \
+						(this helps in debugging a filter) */
+#define LL_FMAC_CR_UNFLIEN FMAC_CR_UNFLIEN /*!< Underflow Error Interrupt Enable */
+#define LL_FMAC_CR_OVFLIEN FMAC_CR_OVFLIEN /*!< Overflow Error Interrupt Enable */
+#define LL_FMAC_CR_WIEN FMAC_CR_WIEN	   /*!< Write Interrupt Enable */
+#define LL_FMAC_CR_RIEN FMAC_CR_RIEN	   /*!< Read Interrupt Enable */
 /**
  * @}
  */
@@ -81,17 +79,17 @@ extern "C" {
  * buffer empty (output)
  * @{
  */
-#define LL_FMAC_WM_0_THRESHOLD_1                                               \
-	0x00000000U /*!< Buffer full/empty flag set if there                   \
+#define LL_FMAC_WM_0_THRESHOLD_1                                                                                       \
+	0x00000000U /*!< Buffer full/empty flag set if there                                                           \
 			 is less than 1 free/unread space. */
-#define LL_FMAC_WM_1_THRESHOLD_2                                               \
-	0x01000000U /*!< Buffer full/empty flag set if there                   \
+#define LL_FMAC_WM_1_THRESHOLD_2                                                                                       \
+	0x01000000U /*!< Buffer full/empty flag set if there                                                           \
 			 are less than 2 free/unread spaces. */
-#define LL_FMAC_WM_2_THRESHOLD_4                                               \
-	0x02000000U /*!< Buffer full/empty flag set if there                   \
+#define LL_FMAC_WM_2_THRESHOLD_4                                                                                       \
+	0x02000000U /*!< Buffer full/empty flag set if there                                                           \
 			 are less than 4 free/unread spaces. */
-#define LL_FMAC_WM_3_THRESHOLD_8                                               \
-	0x03000000U /*!< Buffer full/empty flag set if there                   \
+#define LL_FMAC_WM_3_THRESHOLD_8                                                                                       \
+	0x03000000U /*!< Buffer full/empty flag set if there                                                           \
 			 are less than 8 free/empty spaces. */
 /**
  * @}
@@ -100,17 +98,11 @@ extern "C" {
 /** @defgroup FMAC_LL_EC_FUNC FMAC functions
  * @{
  */
-#define LL_FMAC_FUNC_LOAD_X1                                                   \
-	(FMAC_PARAM_FUNC_0) /*!< Load X1 buffer             */
-#define LL_FMAC_FUNC_LOAD_X2                                                   \
-	(FMAC_PARAM_FUNC_1) /*!< Load X2 buffer             */
-#define LL_FMAC_FUNC_LOAD_Y                                                    \
-	(FMAC_PARAM_FUNC_1 | FMAC_PARAM_FUNC_0) /*!< Load Y buffer */
-#define LL_FMAC_FUNC_CONVO_FIR                                                 \
-	(FMAC_PARAM_FUNC_3) /*!< Convolution (FIR filter)   */
-#define LL_FMAC_FUNC_IIR_DIRECT_FORM_1                                         \
-	(FMAC_PARAM_FUNC_3 |                                                   \
-	 FMAC_PARAM_FUNC_0) /*!< IIR filter (direct form 1) */
+#define LL_FMAC_FUNC_LOAD_X1 (FMAC_PARAM_FUNC_0)			       /*!< Load X1 buffer             */
+#define LL_FMAC_FUNC_LOAD_X2 (FMAC_PARAM_FUNC_1)			       /*!< Load X2 buffer             */
+#define LL_FMAC_FUNC_LOAD_Y (FMAC_PARAM_FUNC_1 | FMAC_PARAM_FUNC_0)	       /*!< Load Y buffer */
+#define LL_FMAC_FUNC_CONVO_FIR (FMAC_PARAM_FUNC_3)			       /*!< Convolution (FIR filter)   */
+#define LL_FMAC_FUNC_IIR_DIRECT_FORM_1 (FMAC_PARAM_FUNC_3 | FMAC_PARAM_FUNC_0) /*!< IIR filter (direct form 1) */
 /**
  * @}
  */
@@ -145,8 +137,7 @@ extern "C" {
  * @param  __VALUE__ Value to be written in the register
  * @retval None
  */
-#define LL_FMAC_WriteReg(__INSTANCE__, __REG__, __VALUE__)                     \
-	WRITE_REG(__INSTANCE__->__REG__, (__VALUE__))
+#define LL_FMAC_WriteReg(__INSTANCE__, __REG__, __VALUE__) WRITE_REG(__INSTANCE__->__REG__, (__VALUE__))
 
 /**
  * @brief  Read a value in FMAC register
@@ -183,8 +174,7 @@ extern "C" {
  *         @arg @ref LL_FMAC_WM_3_THRESHOLD_8
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_SetX1FullWatermark(FMAC_TypeDef *FMACx,
-						uint32_t Watermark)
+__STATIC_INLINE void LL_FMAC_SetX1FullWatermark(FMAC_TypeDef *FMACx, uint32_t Watermark)
 {
 	MODIFY_REG(FMACx->X1BUFCFG, FMAC_X1BUFCFG_FULL_WM, Watermark);
 }
@@ -213,11 +203,9 @@ __STATIC_INLINE uint32_t LL_FMAC_GetX1FullWatermark(const FMAC_TypeDef *FMACx)
  * Min_Data=0x01 and Max_Data=0xFF.
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_SetX1BufferSize(FMAC_TypeDef *FMACx,
-					     uint8_t BufferSize)
+__STATIC_INLINE void LL_FMAC_SetX1BufferSize(FMAC_TypeDef *FMACx, uint8_t BufferSize)
 {
-	MODIFY_REG(FMACx->X1BUFCFG, FMAC_X1BUFCFG_X1_BUF_SIZE,
-		   ((uint32_t)BufferSize) << FMAC_X1BUFCFG_X1_BUF_SIZE_Pos);
+	MODIFY_REG(FMACx->X1BUFCFG, FMAC_X1BUFCFG_X1_BUF_SIZE, ((uint32_t)BufferSize) << FMAC_X1BUFCFG_X1_BUF_SIZE_Pos);
 }
 
 /**
@@ -230,8 +218,7 @@ __STATIC_INLINE void LL_FMAC_SetX1BufferSize(FMAC_TypeDef *FMACx,
  */
 __STATIC_INLINE uint8_t LL_FMAC_GetX1BufferSize(const FMAC_TypeDef *FMACx)
 {
-	return (uint8_t)(READ_BIT(FMACx->X1BUFCFG, FMAC_X1BUFCFG_X1_BUF_SIZE) >>
-			 FMAC_X1BUFCFG_X1_BUF_SIZE_Pos);
+	return (uint8_t)(READ_BIT(FMACx->X1BUFCFG, FMAC_X1BUFCFG_X1_BUF_SIZE) >> FMAC_X1BUFCFG_X1_BUF_SIZE_Pos);
 }
 
 /**
@@ -245,8 +232,7 @@ __STATIC_INLINE uint8_t LL_FMAC_GetX1BufferSize(const FMAC_TypeDef *FMACx)
  */
 __STATIC_INLINE void LL_FMAC_SetX1Base(FMAC_TypeDef *FMACx, uint8_t Base)
 {
-	MODIFY_REG(FMACx->X1BUFCFG, FMAC_X1BUFCFG_X1_BASE,
-		   ((uint32_t)Base) << FMAC_X1BUFCFG_X1_BASE_Pos);
+	MODIFY_REG(FMACx->X1BUFCFG, FMAC_X1BUFCFG_X1_BASE, ((uint32_t)Base) << FMAC_X1BUFCFG_X1_BASE_Pos);
 }
 
 /**
@@ -258,8 +244,7 @@ __STATIC_INLINE void LL_FMAC_SetX1Base(FMAC_TypeDef *FMACx, uint8_t Base)
  */
 __STATIC_INLINE uint8_t LL_FMAC_GetX1Base(const FMAC_TypeDef *FMACx)
 {
-	return (uint8_t)(READ_BIT(FMACx->X1BUFCFG, FMAC_X1BUFCFG_X1_BASE) >>
-			 FMAC_X1BUFCFG_X1_BASE_Pos);
+	return (uint8_t)(READ_BIT(FMACx->X1BUFCFG, FMAC_X1BUFCFG_X1_BASE) >> FMAC_X1BUFCFG_X1_BASE_Pos);
 }
 
 /**
@@ -271,11 +256,9 @@ __STATIC_INLINE uint8_t LL_FMAC_GetX1Base(const FMAC_TypeDef *FMACx)
  * Max_Data=0xFF.
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_SetX2BufferSize(FMAC_TypeDef *FMACx,
-					     uint8_t BufferSize)
+__STATIC_INLINE void LL_FMAC_SetX2BufferSize(FMAC_TypeDef *FMACx, uint8_t BufferSize)
 {
-	MODIFY_REG(FMACx->X2BUFCFG, FMAC_X2BUFCFG_X2_BUF_SIZE,
-		   ((uint32_t)BufferSize) << FMAC_X2BUFCFG_X2_BUF_SIZE_Pos);
+	MODIFY_REG(FMACx->X2BUFCFG, FMAC_X2BUFCFG_X2_BUF_SIZE, ((uint32_t)BufferSize) << FMAC_X2BUFCFG_X2_BUF_SIZE_Pos);
 }
 
 /**
@@ -287,8 +270,7 @@ __STATIC_INLINE void LL_FMAC_SetX2BufferSize(FMAC_TypeDef *FMACx,
  */
 __STATIC_INLINE uint8_t LL_FMAC_GetX2BufferSize(const FMAC_TypeDef *FMACx)
 {
-	return (uint8_t)(READ_BIT(FMACx->X2BUFCFG, FMAC_X2BUFCFG_X2_BUF_SIZE) >>
-			 FMAC_X2BUFCFG_X2_BUF_SIZE_Pos);
+	return (uint8_t)(READ_BIT(FMACx->X2BUFCFG, FMAC_X2BUFCFG_X2_BUF_SIZE) >> FMAC_X2BUFCFG_X2_BUF_SIZE_Pos);
 }
 
 /**
@@ -302,8 +284,7 @@ __STATIC_INLINE uint8_t LL_FMAC_GetX2BufferSize(const FMAC_TypeDef *FMACx)
  */
 __STATIC_INLINE void LL_FMAC_SetX2Base(FMAC_TypeDef *FMACx, uint8_t Base)
 {
-	MODIFY_REG(FMACx->X2BUFCFG, FMAC_X2BUFCFG_X2_BASE,
-		   ((uint32_t)Base) << FMAC_X2BUFCFG_X2_BASE_Pos);
+	MODIFY_REG(FMACx->X2BUFCFG, FMAC_X2BUFCFG_X2_BASE, ((uint32_t)Base) << FMAC_X2BUFCFG_X2_BASE_Pos);
 }
 
 /**
@@ -315,8 +296,7 @@ __STATIC_INLINE void LL_FMAC_SetX2Base(FMAC_TypeDef *FMACx, uint8_t Base)
  */
 __STATIC_INLINE uint8_t LL_FMAC_GetX2Base(const FMAC_TypeDef *FMACx)
 {
-	return (uint8_t)(READ_BIT(FMACx->X2BUFCFG, FMAC_X2BUFCFG_X2_BASE) >>
-			 FMAC_X2BUFCFG_X2_BASE_Pos);
+	return (uint8_t)(READ_BIT(FMACx->X2BUFCFG, FMAC_X2BUFCFG_X2_BASE) >> FMAC_X2BUFCFG_X2_BASE_Pos);
 }
 
 /**
@@ -330,8 +310,7 @@ __STATIC_INLINE uint8_t LL_FMAC_GetX2Base(const FMAC_TypeDef *FMACx)
  *         @arg @ref LL_FMAC_WM_3_THRESHOLD_8
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_SetYEmptyWatermark(FMAC_TypeDef *FMACx,
-						uint32_t Watermark)
+__STATIC_INLINE void LL_FMAC_SetYEmptyWatermark(FMAC_TypeDef *FMACx, uint32_t Watermark)
 {
 	MODIFY_REG(FMACx->YBUFCFG, FMAC_YBUFCFG_EMPTY_WM, Watermark);
 }
@@ -360,11 +339,9 @@ __STATIC_INLINE uint32_t LL_FMAC_GetYEmptyWatermark(const FMAC_TypeDef *FMACx)
  * Min_Data=0x01 and Max_Data=0xFF.
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_SetYBufferSize(FMAC_TypeDef *FMACx,
-					    uint8_t BufferSize)
+__STATIC_INLINE void LL_FMAC_SetYBufferSize(FMAC_TypeDef *FMACx, uint8_t BufferSize)
 {
-	MODIFY_REG(FMACx->YBUFCFG, FMAC_YBUFCFG_Y_BUF_SIZE,
-		   ((uint32_t)BufferSize) << FMAC_YBUFCFG_Y_BUF_SIZE_Pos);
+	MODIFY_REG(FMACx->YBUFCFG, FMAC_YBUFCFG_Y_BUF_SIZE, ((uint32_t)BufferSize) << FMAC_YBUFCFG_Y_BUF_SIZE_Pos);
 }
 
 /**
@@ -377,8 +354,7 @@ __STATIC_INLINE void LL_FMAC_SetYBufferSize(FMAC_TypeDef *FMACx,
  */
 __STATIC_INLINE uint8_t LL_FMAC_GetYBufferSize(const FMAC_TypeDef *FMACx)
 {
-	return (uint8_t)(READ_BIT(FMACx->YBUFCFG, FMAC_YBUFCFG_Y_BUF_SIZE) >>
-			 FMAC_YBUFCFG_Y_BUF_SIZE_Pos);
+	return (uint8_t)(READ_BIT(FMACx->YBUFCFG, FMAC_YBUFCFG_Y_BUF_SIZE) >> FMAC_YBUFCFG_Y_BUF_SIZE_Pos);
 }
 
 /**
@@ -392,8 +368,7 @@ __STATIC_INLINE uint8_t LL_FMAC_GetYBufferSize(const FMAC_TypeDef *FMACx)
  */
 __STATIC_INLINE void LL_FMAC_SetYBase(FMAC_TypeDef *FMACx, uint8_t Base)
 {
-	MODIFY_REG(FMACx->YBUFCFG, FMAC_YBUFCFG_Y_BASE,
-		   ((uint32_t)Base) << FMAC_YBUFCFG_Y_BASE_Pos);
+	MODIFY_REG(FMACx->YBUFCFG, FMAC_YBUFCFG_Y_BASE, ((uint32_t)Base) << FMAC_YBUFCFG_Y_BASE_Pos);
 }
 
 /**
@@ -405,8 +380,7 @@ __STATIC_INLINE void LL_FMAC_SetYBase(FMAC_TypeDef *FMACx, uint8_t Base)
  */
 __STATIC_INLINE uint8_t LL_FMAC_GetYBase(const FMAC_TypeDef *FMACx)
 {
-	return (uint8_t)(READ_BIT(FMACx->YBUFCFG, FMAC_YBUFCFG_Y_BASE) >>
-			 FMAC_YBUFCFG_Y_BASE_Pos);
+	return (uint8_t)(READ_BIT(FMACx->YBUFCFG, FMAC_YBUFCFG_Y_BASE) >> FMAC_YBUFCFG_Y_BASE_Pos);
 }
 
 /**
@@ -415,10 +389,7 @@ __STATIC_INLINE uint8_t LL_FMAC_GetYBase(const FMAC_TypeDef *FMACx)
  * @param  FMACx FMAC instance
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_EnableStart(FMAC_TypeDef *FMACx)
-{
-	SET_BIT(FMACx->PARAM, FMAC_PARAM_START);
-}
+__STATIC_INLINE void LL_FMAC_EnableStart(FMAC_TypeDef *FMACx) { SET_BIT(FMACx->PARAM, FMAC_PARAM_START); }
 
 /**
  * @brief  Stop FMAC processing.
@@ -426,10 +397,7 @@ __STATIC_INLINE void LL_FMAC_EnableStart(FMAC_TypeDef *FMACx)
  * @param  FMACx FMAC instance
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_DisableStart(FMAC_TypeDef *FMACx)
-{
-	CLEAR_BIT(FMACx->PARAM, FMAC_PARAM_START);
-}
+__STATIC_INLINE void LL_FMAC_DisableStart(FMAC_TypeDef *FMACx) { CLEAR_BIT(FMACx->PARAM, FMAC_PARAM_START); }
 
 /**
  * @brief  Check the state of FMAC processing.
@@ -439,9 +407,7 @@ __STATIC_INLINE void LL_FMAC_DisableStart(FMAC_TypeDef *FMACx)
  */
 __STATIC_INLINE uint32_t LL_FMAC_IsEnabledStart(const FMAC_TypeDef *FMACx)
 {
-	return ((READ_BIT(FMACx->PARAM, FMAC_PARAM_START) == (FMAC_PARAM_START))
-		    ? 1UL
-		    : 0UL);
+	return ((READ_BIT(FMACx->PARAM, FMAC_PARAM_START) == (FMAC_PARAM_START)) ? 1UL : 0UL);
 }
 
 /**
@@ -488,8 +454,7 @@ __STATIC_INLINE uint32_t LL_FMAC_GetFunction(const FMAC_TypeDef *FMACx)
  */
 __STATIC_INLINE void LL_FMAC_SetParamR(FMAC_TypeDef *FMACx, uint8_t Param)
 {
-	MODIFY_REG(FMACx->PARAM, FMAC_PARAM_R,
-		   ((uint32_t)Param) << FMAC_PARAM_R_Pos);
+	MODIFY_REG(FMACx->PARAM, FMAC_PARAM_R, ((uint32_t)Param) << FMAC_PARAM_R_Pos);
 }
 
 /**
@@ -501,8 +466,7 @@ __STATIC_INLINE void LL_FMAC_SetParamR(FMAC_TypeDef *FMACx, uint8_t Param)
  */
 __STATIC_INLINE uint8_t LL_FMAC_GetParamR(const FMAC_TypeDef *FMACx)
 {
-	return (uint8_t)(READ_BIT(FMACx->PARAM, FMAC_PARAM_R) >>
-			 FMAC_PARAM_R_Pos);
+	return (uint8_t)(READ_BIT(FMACx->PARAM, FMAC_PARAM_R) >> FMAC_PARAM_R_Pos);
 }
 
 /**
@@ -516,8 +480,7 @@ __STATIC_INLINE uint8_t LL_FMAC_GetParamR(const FMAC_TypeDef *FMACx)
  */
 __STATIC_INLINE void LL_FMAC_SetParamQ(FMAC_TypeDef *FMACx, uint8_t Param)
 {
-	MODIFY_REG(FMACx->PARAM, FMAC_PARAM_Q,
-		   ((uint32_t)Param) << FMAC_PARAM_Q_Pos);
+	MODIFY_REG(FMACx->PARAM, FMAC_PARAM_Q, ((uint32_t)Param) << FMAC_PARAM_Q_Pos);
 }
 
 /**
@@ -529,8 +492,7 @@ __STATIC_INLINE void LL_FMAC_SetParamQ(FMAC_TypeDef *FMACx, uint8_t Param)
  */
 __STATIC_INLINE uint8_t LL_FMAC_GetParamQ(const FMAC_TypeDef *FMACx)
 {
-	return (uint8_t)(READ_BIT(FMACx->PARAM, FMAC_PARAM_Q) >>
-			 FMAC_PARAM_Q_Pos);
+	return (uint8_t)(READ_BIT(FMACx->PARAM, FMAC_PARAM_Q) >> FMAC_PARAM_Q_Pos);
 }
 
 /**
@@ -573,10 +535,7 @@ __STATIC_INLINE uint8_t LL_FMAC_GetParamP(const FMAC_TypeDef *FMACx)
  * @param  FMACx FMAC instance
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_EnableReset(FMAC_TypeDef *FMACx)
-{
-	SET_BIT(FMACx->CR, FMAC_CR_RESET);
-}
+__STATIC_INLINE void LL_FMAC_EnableReset(FMAC_TypeDef *FMACx) { SET_BIT(FMACx->CR, FMAC_CR_RESET); }
 
 /**
  * @brief  Check the state of the FMAC reset.
@@ -586,8 +545,7 @@ __STATIC_INLINE void LL_FMAC_EnableReset(FMAC_TypeDef *FMACx)
  */
 __STATIC_INLINE uint32_t LL_FMAC_IsEnabledReset(const FMAC_TypeDef *FMACx)
 {
-	return ((READ_BIT(FMACx->CR, FMAC_CR_RESET) == (FMAC_CR_RESET)) ? 1UL
-									: 0UL);
+	return ((READ_BIT(FMACx->CR, FMAC_CR_RESET) == (FMAC_CR_RESET)) ? 1UL : 0UL);
 }
 
 /**
@@ -604,10 +562,7 @@ __STATIC_INLINE uint32_t LL_FMAC_IsEnabledReset(const FMAC_TypeDef *FMACx)
  * @param  FMACx FMAC instance
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_EnableClipping(FMAC_TypeDef *FMACx)
-{
-	SET_BIT(FMACx->CR, FMAC_CR_CLIPEN);
-}
+__STATIC_INLINE void LL_FMAC_EnableClipping(FMAC_TypeDef *FMACx) { SET_BIT(FMACx->CR, FMAC_CR_CLIPEN); }
 
 /**
  * @brief  Disable Clipping.
@@ -615,10 +570,7 @@ __STATIC_INLINE void LL_FMAC_EnableClipping(FMAC_TypeDef *FMACx)
  * @param  FMACx FMAC instance
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_DisableClipping(FMAC_TypeDef *FMACx)
-{
-	CLEAR_BIT(FMACx->CR, FMAC_CR_CLIPEN);
-}
+__STATIC_INLINE void LL_FMAC_DisableClipping(FMAC_TypeDef *FMACx) { CLEAR_BIT(FMACx->CR, FMAC_CR_CLIPEN); }
 
 /**
  * @brief  Check Clipping State.
@@ -628,9 +580,7 @@ __STATIC_INLINE void LL_FMAC_DisableClipping(FMAC_TypeDef *FMACx)
  */
 __STATIC_INLINE uint32_t LL_FMAC_IsEnabledClipping(const FMAC_TypeDef *FMACx)
 {
-	return ((READ_BIT(FMACx->CR, FMAC_CR_CLIPEN) == (FMAC_CR_CLIPEN))
-		    ? 1UL
-		    : 0UL);
+	return ((READ_BIT(FMACx->CR, FMAC_CR_CLIPEN) == (FMAC_CR_CLIPEN)) ? 1UL : 0UL);
 }
 
 /**
@@ -647,10 +597,7 @@ __STATIC_INLINE uint32_t LL_FMAC_IsEnabledClipping(const FMAC_TypeDef *FMACx)
  * @param  FMACx FMAC instance
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_EnableDMAReq_WRITE(FMAC_TypeDef *FMACx)
-{
-	SET_BIT(FMACx->CR, FMAC_CR_DMAWEN);
-}
+__STATIC_INLINE void LL_FMAC_EnableDMAReq_WRITE(FMAC_TypeDef *FMACx) { SET_BIT(FMACx->CR, FMAC_CR_DMAWEN); }
 
 /**
  * @brief  Disable FMAC DMA write channel request.
@@ -658,10 +605,7 @@ __STATIC_INLINE void LL_FMAC_EnableDMAReq_WRITE(FMAC_TypeDef *FMACx)
  * @param  FMACx FMAC instance
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_DisableDMAReq_WRITE(FMAC_TypeDef *FMACx)
-{
-	CLEAR_BIT(FMACx->CR, FMAC_CR_DMAWEN);
-}
+__STATIC_INLINE void LL_FMAC_DisableDMAReq_WRITE(FMAC_TypeDef *FMACx) { CLEAR_BIT(FMACx->CR, FMAC_CR_DMAWEN); }
 
 /**
  * @brief  Check FMAC DMA write channel request state.
@@ -669,12 +613,9 @@ __STATIC_INLINE void LL_FMAC_DisableDMAReq_WRITE(FMAC_TypeDef *FMACx)
  * @param  FMACx FMAC instance
  * @retval uint32_t State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t
-LL_FMAC_IsEnabledDMAReq_WRITE(const FMAC_TypeDef *FMACx)
+__STATIC_INLINE uint32_t LL_FMAC_IsEnabledDMAReq_WRITE(const FMAC_TypeDef *FMACx)
 {
-	return ((READ_BIT(FMACx->CR, FMAC_CR_DMAWEN) == (FMAC_CR_DMAWEN))
-		    ? 1UL
-		    : 0UL);
+	return ((READ_BIT(FMACx->CR, FMAC_CR_DMAWEN) == (FMAC_CR_DMAWEN)) ? 1UL : 0UL);
 }
 
 /**
@@ -683,10 +624,7 @@ LL_FMAC_IsEnabledDMAReq_WRITE(const FMAC_TypeDef *FMACx)
  * @param  FMACx FMAC instance
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_EnableDMAReq_READ(FMAC_TypeDef *FMACx)
-{
-	SET_BIT(FMACx->CR, FMAC_CR_DMAREN);
-}
+__STATIC_INLINE void LL_FMAC_EnableDMAReq_READ(FMAC_TypeDef *FMACx) { SET_BIT(FMACx->CR, FMAC_CR_DMAREN); }
 
 /**
  * @brief  Disable FMAC DMA read channel request.
@@ -694,10 +632,7 @@ __STATIC_INLINE void LL_FMAC_EnableDMAReq_READ(FMAC_TypeDef *FMACx)
  * @param  FMACx FMAC instance
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_DisableDMAReq_READ(FMAC_TypeDef *FMACx)
-{
-	CLEAR_BIT(FMACx->CR, FMAC_CR_DMAREN);
-}
+__STATIC_INLINE void LL_FMAC_DisableDMAReq_READ(FMAC_TypeDef *FMACx) { CLEAR_BIT(FMACx->CR, FMAC_CR_DMAREN); }
 
 /**
  * @brief  Check FMAC DMA read channel request state.
@@ -707,9 +642,7 @@ __STATIC_INLINE void LL_FMAC_DisableDMAReq_READ(FMAC_TypeDef *FMACx)
  */
 __STATIC_INLINE uint32_t LL_FMAC_IsEnabledDMAReq_READ(const FMAC_TypeDef *FMACx)
 {
-	return ((READ_BIT(FMACx->CR, FMAC_CR_DMAREN) == (FMAC_CR_DMAREN))
-		    ? 1UL
-		    : 0UL);
+	return ((READ_BIT(FMACx->CR, FMAC_CR_DMAREN) == (FMAC_CR_DMAREN)) ? 1UL : 0UL);
 }
 
 /**
@@ -726,10 +659,7 @@ __STATIC_INLINE uint32_t LL_FMAC_IsEnabledDMAReq_READ(const FMAC_TypeDef *FMACx)
  * @param  FMACx FMAC instance
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_EnableIT_SAT(FMAC_TypeDef *FMACx)
-{
-	SET_BIT(FMACx->CR, FMAC_CR_SATIEN);
-}
+__STATIC_INLINE void LL_FMAC_EnableIT_SAT(FMAC_TypeDef *FMACx) { SET_BIT(FMACx->CR, FMAC_CR_SATIEN); }
 
 /**
  * @brief  Disable FMAC saturation error interrupt.
@@ -737,10 +667,7 @@ __STATIC_INLINE void LL_FMAC_EnableIT_SAT(FMAC_TypeDef *FMACx)
  * @param  FMACx FMAC instance
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_DisableIT_SAT(FMAC_TypeDef *FMACx)
-{
-	CLEAR_BIT(FMACx->CR, FMAC_CR_SATIEN);
-}
+__STATIC_INLINE void LL_FMAC_DisableIT_SAT(FMAC_TypeDef *FMACx) { CLEAR_BIT(FMACx->CR, FMAC_CR_SATIEN); }
 
 /**
  * @brief  Check FMAC saturation error interrupt state.
@@ -750,9 +677,7 @@ __STATIC_INLINE void LL_FMAC_DisableIT_SAT(FMAC_TypeDef *FMACx)
  */
 __STATIC_INLINE uint32_t LL_FMAC_IsEnabledIT_SAT(const FMAC_TypeDef *FMACx)
 {
-	return ((READ_BIT(FMACx->CR, FMAC_CR_SATIEN) == (FMAC_CR_SATIEN))
-		    ? 1UL
-		    : 0UL);
+	return ((READ_BIT(FMACx->CR, FMAC_CR_SATIEN) == (FMAC_CR_SATIEN)) ? 1UL : 0UL);
 }
 
 /**
@@ -761,10 +686,7 @@ __STATIC_INLINE uint32_t LL_FMAC_IsEnabledIT_SAT(const FMAC_TypeDef *FMACx)
  * @param  FMACx FMAC instance
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_EnableIT_UNFL(FMAC_TypeDef *FMACx)
-{
-	SET_BIT(FMACx->CR, FMAC_CR_UNFLIEN);
-}
+__STATIC_INLINE void LL_FMAC_EnableIT_UNFL(FMAC_TypeDef *FMACx) { SET_BIT(FMACx->CR, FMAC_CR_UNFLIEN); }
 
 /**
  * @brief  Disable FMAC underflow error interrupt.
@@ -772,10 +694,7 @@ __STATIC_INLINE void LL_FMAC_EnableIT_UNFL(FMAC_TypeDef *FMACx)
  * @param  FMACx FMAC instance
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_DisableIT_UNFL(FMAC_TypeDef *FMACx)
-{
-	CLEAR_BIT(FMACx->CR, FMAC_CR_UNFLIEN);
-}
+__STATIC_INLINE void LL_FMAC_DisableIT_UNFL(FMAC_TypeDef *FMACx) { CLEAR_BIT(FMACx->CR, FMAC_CR_UNFLIEN); }
 
 /**
  * @brief  Check FMAC underflow error interrupt state.
@@ -785,9 +704,7 @@ __STATIC_INLINE void LL_FMAC_DisableIT_UNFL(FMAC_TypeDef *FMACx)
  */
 __STATIC_INLINE uint32_t LL_FMAC_IsEnabledIT_UNFL(const FMAC_TypeDef *FMACx)
 {
-	return ((READ_BIT(FMACx->CR, FMAC_CR_UNFLIEN) == (FMAC_CR_UNFLIEN))
-		    ? 1UL
-		    : 0UL);
+	return ((READ_BIT(FMACx->CR, FMAC_CR_UNFLIEN) == (FMAC_CR_UNFLIEN)) ? 1UL : 0UL);
 }
 
 /**
@@ -796,10 +713,7 @@ __STATIC_INLINE uint32_t LL_FMAC_IsEnabledIT_UNFL(const FMAC_TypeDef *FMACx)
  * @param  FMACx FMAC instance
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_EnableIT_OVFL(FMAC_TypeDef *FMACx)
-{
-	SET_BIT(FMACx->CR, FMAC_CR_OVFLIEN);
-}
+__STATIC_INLINE void LL_FMAC_EnableIT_OVFL(FMAC_TypeDef *FMACx) { SET_BIT(FMACx->CR, FMAC_CR_OVFLIEN); }
 
 /**
  * @brief  Disable FMAC overflow error interrupt.
@@ -807,10 +721,7 @@ __STATIC_INLINE void LL_FMAC_EnableIT_OVFL(FMAC_TypeDef *FMACx)
  * @param  FMACx FMAC instance
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_DisableIT_OVFL(FMAC_TypeDef *FMACx)
-{
-	CLEAR_BIT(FMACx->CR, FMAC_CR_OVFLIEN);
-}
+__STATIC_INLINE void LL_FMAC_DisableIT_OVFL(FMAC_TypeDef *FMACx) { CLEAR_BIT(FMACx->CR, FMAC_CR_OVFLIEN); }
 
 /**
  * @brief  Check FMAC overflow error interrupt state.
@@ -820,9 +731,7 @@ __STATIC_INLINE void LL_FMAC_DisableIT_OVFL(FMAC_TypeDef *FMACx)
  */
 __STATIC_INLINE uint32_t LL_FMAC_IsEnabledIT_OVFL(const FMAC_TypeDef *FMACx)
 {
-	return ((READ_BIT(FMACx->CR, FMAC_CR_OVFLIEN) == (FMAC_CR_OVFLIEN))
-		    ? 1UL
-		    : 0UL);
+	return ((READ_BIT(FMACx->CR, FMAC_CR_OVFLIEN) == (FMAC_CR_OVFLIEN)) ? 1UL : 0UL);
 }
 
 /**
@@ -831,10 +740,7 @@ __STATIC_INLINE uint32_t LL_FMAC_IsEnabledIT_OVFL(const FMAC_TypeDef *FMACx)
  * @param  FMACx FMAC instance
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_EnableIT_WR(FMAC_TypeDef *FMACx)
-{
-	SET_BIT(FMACx->CR, FMAC_CR_WIEN);
-}
+__STATIC_INLINE void LL_FMAC_EnableIT_WR(FMAC_TypeDef *FMACx) { SET_BIT(FMACx->CR, FMAC_CR_WIEN); }
 
 /**
  * @brief  Disable FMAC write interrupt.
@@ -842,10 +748,7 @@ __STATIC_INLINE void LL_FMAC_EnableIT_WR(FMAC_TypeDef *FMACx)
  * @param  FMACx FMAC instance
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_DisableIT_WR(FMAC_TypeDef *FMACx)
-{
-	CLEAR_BIT(FMACx->CR, FMAC_CR_WIEN);
-}
+__STATIC_INLINE void LL_FMAC_DisableIT_WR(FMAC_TypeDef *FMACx) { CLEAR_BIT(FMACx->CR, FMAC_CR_WIEN); }
 
 /**
  * @brief  Check FMAC write interrupt state.
@@ -855,8 +758,7 @@ __STATIC_INLINE void LL_FMAC_DisableIT_WR(FMAC_TypeDef *FMACx)
  */
 __STATIC_INLINE uint32_t LL_FMAC_IsEnabledIT_WR(const FMAC_TypeDef *FMACx)
 {
-	return ((READ_BIT(FMACx->CR, FMAC_CR_WIEN) == (FMAC_CR_WIEN)) ? 1UL
-								      : 0UL);
+	return ((READ_BIT(FMACx->CR, FMAC_CR_WIEN) == (FMAC_CR_WIEN)) ? 1UL : 0UL);
 }
 
 /**
@@ -865,10 +767,7 @@ __STATIC_INLINE uint32_t LL_FMAC_IsEnabledIT_WR(const FMAC_TypeDef *FMACx)
  * @param  FMACx FMAC instance
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_EnableIT_RD(FMAC_TypeDef *FMACx)
-{
-	SET_BIT(FMACx->CR, FMAC_CR_RIEN);
-}
+__STATIC_INLINE void LL_FMAC_EnableIT_RD(FMAC_TypeDef *FMACx) { SET_BIT(FMACx->CR, FMAC_CR_RIEN); }
 
 /**
  * @brief  Disable FMAC read interrupt.
@@ -876,10 +775,7 @@ __STATIC_INLINE void LL_FMAC_EnableIT_RD(FMAC_TypeDef *FMACx)
  * @param  FMACx FMAC instance
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_DisableIT_RD(FMAC_TypeDef *FMACx)
-{
-	CLEAR_BIT(FMACx->CR, FMAC_CR_RIEN);
-}
+__STATIC_INLINE void LL_FMAC_DisableIT_RD(FMAC_TypeDef *FMACx) { CLEAR_BIT(FMACx->CR, FMAC_CR_RIEN); }
 
 /**
  * @brief  Check FMAC read interrupt state.
@@ -889,8 +785,7 @@ __STATIC_INLINE void LL_FMAC_DisableIT_RD(FMAC_TypeDef *FMACx)
  */
 __STATIC_INLINE uint32_t LL_FMAC_IsEnabledIT_RD(const FMAC_TypeDef *FMACx)
 {
-	return ((READ_BIT(FMACx->CR, FMAC_CR_RIEN) == (FMAC_CR_RIEN)) ? 1UL
-								      : 0UL);
+	return ((READ_BIT(FMACx->CR, FMAC_CR_RIEN) == (FMAC_CR_RIEN)) ? 1UL : 0UL);
 }
 
 /**
@@ -909,8 +804,7 @@ __STATIC_INLINE uint32_t LL_FMAC_IsEnabledIT_RD(const FMAC_TypeDef *FMACx)
  */
 __STATIC_INLINE uint32_t LL_FMAC_IsActiveFlag_SAT(const FMAC_TypeDef *FMACx)
 {
-	return ((READ_BIT(FMACx->SR, FMAC_SR_SAT) == (FMAC_SR_SAT)) ? 1UL
-								    : 0UL);
+	return ((READ_BIT(FMACx->SR, FMAC_SR_SAT) == (FMAC_SR_SAT)) ? 1UL : 0UL);
 }
 
 /**
@@ -921,8 +815,7 @@ __STATIC_INLINE uint32_t LL_FMAC_IsActiveFlag_SAT(const FMAC_TypeDef *FMACx)
  */
 __STATIC_INLINE uint32_t LL_FMAC_IsActiveFlag_UNFL(const FMAC_TypeDef *FMACx)
 {
-	return ((READ_BIT(FMACx->SR, FMAC_SR_UNFL) == (FMAC_SR_UNFL)) ? 1UL
-								      : 0UL);
+	return ((READ_BIT(FMACx->SR, FMAC_SR_UNFL) == (FMAC_SR_UNFL)) ? 1UL : 0UL);
 }
 
 /**
@@ -933,8 +826,7 @@ __STATIC_INLINE uint32_t LL_FMAC_IsActiveFlag_UNFL(const FMAC_TypeDef *FMACx)
  */
 __STATIC_INLINE uint32_t LL_FMAC_IsActiveFlag_OVFL(const FMAC_TypeDef *FMACx)
 {
-	return ((READ_BIT(FMACx->SR, FMAC_SR_OVFL) == (FMAC_SR_OVFL)) ? 1UL
-								      : 0UL);
+	return ((READ_BIT(FMACx->SR, FMAC_SR_OVFL) == (FMAC_SR_OVFL)) ? 1UL : 0UL);
 }
 
 /**
@@ -945,9 +837,7 @@ __STATIC_INLINE uint32_t LL_FMAC_IsActiveFlag_OVFL(const FMAC_TypeDef *FMACx)
  */
 __STATIC_INLINE uint32_t LL_FMAC_IsActiveFlag_X1FULL(const FMAC_TypeDef *FMACx)
 {
-	return ((READ_BIT(FMACx->SR, FMAC_SR_X1FULL) == (FMAC_SR_X1FULL))
-		    ? 1UL
-		    : 0UL);
+	return ((READ_BIT(FMACx->SR, FMAC_SR_X1FULL) == (FMAC_SR_X1FULL)) ? 1UL : 0UL);
 }
 
 /**
@@ -958,9 +848,7 @@ __STATIC_INLINE uint32_t LL_FMAC_IsActiveFlag_X1FULL(const FMAC_TypeDef *FMACx)
  */
 __STATIC_INLINE uint32_t LL_FMAC_IsActiveFlag_YEMPTY(const FMAC_TypeDef *FMACx)
 {
-	return ((READ_BIT(FMACx->SR, FMAC_SR_YEMPTY) == (FMAC_SR_YEMPTY))
-		    ? 1UL
-		    : 0UL);
+	return ((READ_BIT(FMACx->SR, FMAC_SR_YEMPTY) == (FMAC_SR_YEMPTY)) ? 1UL : 0UL);
 }
 
 /**
@@ -980,10 +868,7 @@ __STATIC_INLINE uint32_t LL_FMAC_IsActiveFlag_YEMPTY(const FMAC_TypeDef *FMACx)
  * Max_Data=0xFFFF.
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_WriteData(FMAC_TypeDef *FMACx, uint16_t InData)
-{
-	WRITE_REG(FMACx->WDATA, InData);
-}
+__STATIC_INLINE void LL_FMAC_WriteData(FMAC_TypeDef *FMACx, uint16_t InData) { WRITE_REG(FMACx->WDATA, InData); }
 
 /**
  * @brief  Return 16-bit output data of FMAC processing.
@@ -992,10 +877,7 @@ __STATIC_INLINE void LL_FMAC_WriteData(FMAC_TypeDef *FMACx, uint16_t InData)
  * @retval uint16_t 16-bit output data of FMAC processing (value between
  * Min_Data=0x0000 and Max_Data=0xFFFF).
  */
-__STATIC_INLINE uint16_t LL_FMAC_ReadData(const FMAC_TypeDef *FMACx)
-{
-	return (uint16_t)(READ_REG(FMACx->RDATA));
-}
+__STATIC_INLINE uint16_t LL_FMAC_ReadData(const FMAC_TypeDef *FMACx) { return (uint16_t)(READ_REG(FMACx->RDATA)); }
 
 /**
  * @}
@@ -1024,15 +906,11 @@ __STATIC_INLINE uint16_t LL_FMAC_ReadData(const FMAC_TypeDef *FMACx)
  * Min_Data=0x01 and Max_Data=0xFF.
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_ConfigX1(FMAC_TypeDef *FMACx, uint32_t Watermark,
-				      uint8_t Base, uint8_t BufferSize)
+__STATIC_INLINE void LL_FMAC_ConfigX1(FMAC_TypeDef *FMACx, uint32_t Watermark, uint8_t Base, uint8_t BufferSize)
 {
-	MODIFY_REG(
-	    FMACx->X1BUFCFG,
-	    FMAC_X1BUFCFG_FULL_WM | FMAC_X1BUFCFG_X1_BASE |
-		FMAC_X1BUFCFG_X1_BUF_SIZE,
-	    Watermark | (((uint32_t)Base) << FMAC_X1BUFCFG_X1_BASE_Pos) |
-		(((uint32_t)BufferSize) << FMAC_X1BUFCFG_X1_BUF_SIZE_Pos));
+	MODIFY_REG(FMACx->X1BUFCFG, FMAC_X1BUFCFG_FULL_WM | FMAC_X1BUFCFG_X1_BASE | FMAC_X1BUFCFG_X1_BUF_SIZE,
+		   Watermark | (((uint32_t)Base) << FMAC_X1BUFCFG_X1_BASE_Pos) |
+		       (((uint32_t)BufferSize) << FMAC_X1BUFCFG_X1_BUF_SIZE_Pos));
 }
 
 /**
@@ -1048,13 +926,11 @@ __STATIC_INLINE void LL_FMAC_ConfigX1(FMAC_TypeDef *FMACx, uint32_t Watermark,
  * Max_Data=0xFF.
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_ConfigX2(FMAC_TypeDef *FMACx, uint8_t Base,
-				      uint8_t BufferSize)
+__STATIC_INLINE void LL_FMAC_ConfigX2(FMAC_TypeDef *FMACx, uint8_t Base, uint8_t BufferSize)
 {
-	MODIFY_REG(
-	    FMACx->X2BUFCFG, FMAC_X2BUFCFG_X2_BASE | FMAC_X2BUFCFG_X2_BUF_SIZE,
-	    (((uint32_t)Base) << FMAC_X2BUFCFG_X2_BASE_Pos) |
-		(((uint32_t)BufferSize) << FMAC_X2BUFCFG_X2_BUF_SIZE_Pos));
+	MODIFY_REG(FMACx->X2BUFCFG, FMAC_X2BUFCFG_X2_BASE | FMAC_X2BUFCFG_X2_BUF_SIZE,
+		   (((uint32_t)Base) << FMAC_X2BUFCFG_X2_BASE_Pos) |
+		       (((uint32_t)BufferSize) << FMAC_X2BUFCFG_X2_BUF_SIZE_Pos));
 }
 
 /**
@@ -1076,12 +952,9 @@ __STATIC_INLINE void LL_FMAC_ConfigX2(FMAC_TypeDef *FMACx, uint8_t Base,
  * Min_Data=0x01 and Max_Data=0xFF.
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_ConfigY(FMAC_TypeDef *FMACx, uint32_t Watermark,
-				     uint8_t Base, uint8_t BufferSize)
+__STATIC_INLINE void LL_FMAC_ConfigY(FMAC_TypeDef *FMACx, uint32_t Watermark, uint8_t Base, uint8_t BufferSize)
 {
-	MODIFY_REG(FMACx->YBUFCFG,
-		   FMAC_YBUFCFG_EMPTY_WM | FMAC_YBUFCFG_Y_BASE |
-		       FMAC_YBUFCFG_Y_BUF_SIZE,
+	MODIFY_REG(FMACx->YBUFCFG, FMAC_YBUFCFG_EMPTY_WM | FMAC_YBUFCFG_Y_BASE | FMAC_YBUFCFG_Y_BUF_SIZE,
 		   Watermark | (((uint32_t)Base) << FMAC_YBUFCFG_Y_BASE_Pos) |
 		       (((uint32_t)BufferSize) << FMAC_YBUFCFG_Y_BUF_SIZE_Pos));
 }
@@ -1114,17 +987,12 @@ __STATIC_INLINE void LL_FMAC_ConfigY(FMAC_TypeDef *FMACx, uint32_t Watermark,
  * Max_Data=0xFF.
  * @retval None
  */
-__STATIC_INLINE void LL_FMAC_ConfigFunc(FMAC_TypeDef *FMACx, uint8_t Start,
-					uint32_t Function, uint8_t ParamP,
+__STATIC_INLINE void LL_FMAC_ConfigFunc(FMAC_TypeDef *FMACx, uint8_t Start, uint32_t Function, uint8_t ParamP,
 					uint8_t ParamQ, uint8_t ParamR)
 {
-	MODIFY_REG(FMACx->PARAM,
-		   FMAC_PARAM_START | FMAC_PARAM_FUNC | FMAC_PARAM_P |
-		       FMAC_PARAM_Q | FMAC_PARAM_R,
-		   (((uint32_t)Start) << FMAC_PARAM_START_Pos) | Function |
-		       (((uint32_t)ParamP) << FMAC_PARAM_P_Pos) |
-		       (((uint32_t)ParamQ) << FMAC_PARAM_Q_Pos) |
-		       (((uint32_t)ParamR) << FMAC_PARAM_R_Pos));
+	MODIFY_REG(FMACx->PARAM, FMAC_PARAM_START | FMAC_PARAM_FUNC | FMAC_PARAM_P | FMAC_PARAM_Q | FMAC_PARAM_R,
+		   (((uint32_t)Start) << FMAC_PARAM_START_Pos) | Function | (((uint32_t)ParamP) << FMAC_PARAM_P_Pos) |
+		       (((uint32_t)ParamQ) << FMAC_PARAM_Q_Pos) | (((uint32_t)ParamR) << FMAC_PARAM_R_Pos));
 }
 
 /**

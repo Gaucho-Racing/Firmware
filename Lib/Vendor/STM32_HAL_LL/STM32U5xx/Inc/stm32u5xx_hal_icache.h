@@ -75,9 +75,8 @@ typedef struct {
 /** @defgroup ICACHE_WaysSelection Ways selection
  * @{
  */
-#define ICACHE_1WAY 0UL /*!< 1-way cache (direct mapped cache) */
-#define ICACHE_2WAYS                                                           \
-	ICACHE_CR_WAYSEL /*!< 2-ways set associative cache (default) */
+#define ICACHE_1WAY 0UL		      /*!< 1-way cache (direct mapped cache) */
+#define ICACHE_2WAYS ICACHE_CR_WAYSEL /*!< 2-ways set associative cache (default) */
 /**
  * @}
  */
@@ -85,10 +84,9 @@ typedef struct {
 /** @defgroup ICACHE_Monitor_Type Monitor type
  * @{
  */
-#define ICACHE_MONITOR_HIT_MISS                                                \
-	(ICACHE_CR_HITMEN | ICACHE_CR_MISSMEN) /*!< Hit & Miss monitoring */
-#define ICACHE_MONITOR_HIT ICACHE_CR_HITMEN    /*!< Hit monitoring */
-#define ICACHE_MONITOR_MISS ICACHE_CR_MISSMEN  /*!< Miss monitoring */
+#define ICACHE_MONITOR_HIT_MISS (ICACHE_CR_HITMEN | ICACHE_CR_MISSMEN) /*!< Hit & Miss monitoring */
+#define ICACHE_MONITOR_HIT ICACHE_CR_HITMEN			       /*!< Hit monitoring */
+#define ICACHE_MONITOR_MISS ICACHE_CR_MISSMEN			       /*!< Miss monitoring */
 /**
  * @}
  */
@@ -175,8 +173,7 @@ typedef struct {
  *            @arg @ref ICACHE_IT_BUSYEND  Busy end interrupt
  *            @arg @ref ICACHE_IT_ERROR  Cache error interrupt
  */
-#define __HAL_ICACHE_ENABLE_IT(__INTERRUPT__)                                  \
-	SET_BIT(ICACHE->IER, (__INTERRUPT__))
+#define __HAL_ICACHE_ENABLE_IT(__INTERRUPT__) SET_BIT(ICACHE->IER, (__INTERRUPT__))
 
 /** @brief  Disable ICACHE interrupts.
  * @param  __INTERRUPT__ specifies the ICACHE interrupt sources to be disabled.
@@ -184,8 +181,7 @@ typedef struct {
  *            @arg @ref ICACHE_IT_BUSYEND  Busy end interrupt
  *            @arg @ref ICACHE_IT_ERROR  Cache error interrupt
  */
-#define __HAL_ICACHE_DISABLE_IT(__INTERRUPT__)                                 \
-	CLEAR_BIT(ICACHE->IER, (__INTERRUPT__))
+#define __HAL_ICACHE_DISABLE_IT(__INTERRUPT__) CLEAR_BIT(ICACHE->IER, (__INTERRUPT__))
 
 /** @brief  Check whether the specified ICACHE interrupt source is enabled or
  * not.
@@ -195,7 +191,7 @@ typedef struct {
  *            @arg @ref ICACHE_IT_ERROR  Cache error interrupt
  * @retval The state of __INTERRUPT__ (0 or 1).
  */
-#define __HAL_ICACHE_GET_IT_SOURCE(__INTERRUPT__)                              \
+#define __HAL_ICACHE_GET_IT_SOURCE(__INTERRUPT__)                                                                      \
 	((READ_BIT(ICACHE->IER, (__INTERRUPT__)) == (__INTERRUPT__)) ? 1U : 0U)
 
 /** @brief  Check whether the selected ICACHE flag is set or not.
@@ -206,8 +202,7 @@ typedef struct {
  *            @arg @ref ICACHE_FLAG_ERROR  Cache error flag
  * @retval The state of __FLAG__ (0 or 1).
  */
-#define __HAL_ICACHE_GET_FLAG(__FLAG__)                                        \
-	((READ_BIT(ICACHE->SR, (__FLAG__)) != 0U) ? 1U : 0U)
+#define __HAL_ICACHE_GET_FLAG(__FLAG__) ((READ_BIT(ICACHE->SR, (__FLAG__)) != 0U) ? 1U : 0U)
 
 /** @brief  Clear the selected ICACHE flags.
  * @param  __FLAG__ specifies the ICACHE flags to clear.
@@ -238,8 +233,7 @@ typedef struct {
 HAL_StatusTypeDef HAL_ICACHE_Enable(void);
 HAL_StatusTypeDef HAL_ICACHE_Disable(void);
 uint32_t HAL_ICACHE_IsEnabled(void);
-HAL_StatusTypeDef
-HAL_ICACHE_ConfigAssociativityMode(uint32_t AssociativityMode);
+HAL_StatusTypeDef HAL_ICACHE_ConfigAssociativityMode(uint32_t AssociativityMode);
 HAL_StatusTypeDef HAL_ICACHE_DeInit(void);
 
 /******* Invalidate in blocking mode (Polling) */
@@ -278,8 +272,7 @@ void HAL_ICACHE_ErrorCallback(void);
  * @{
  */
 /******* Memory remapped regions functions */
-HAL_StatusTypeDef HAL_ICACHE_EnableRemapRegion(
-    uint32_t Region, const ICACHE_RegionConfigTypeDef *const pRegionConfig);
+HAL_StatusTypeDef HAL_ICACHE_EnableRemapRegion(uint32_t Region, const ICACHE_RegionConfigTypeDef *const pRegionConfig);
 HAL_StatusTypeDef HAL_ICACHE_DisableRemapRegion(uint32_t Region);
 
 /**

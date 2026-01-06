@@ -69,33 +69,24 @@ extern "C" {
 /** @defgroup MMCEx_Exported_Functions_Group1 MultiBuffer functions
  * @{
  */
-HAL_StatusTypeDef
-HAL_MMCEx_DMALinkedList_ReadBlocks(MMC_HandleTypeDef *hmmc,
-				   const MMC_DMALinkedListTypeDef *pLinkedList,
-				   uint32_t BlockAdd, uint32_t NumberOfBlocks);
-HAL_StatusTypeDef
-HAL_MMCEx_DMALinkedList_WriteBlocks(MMC_HandleTypeDef *hmmc,
-				    const MMC_DMALinkedListTypeDef *pLinkedList,
-				    uint32_t BlockAdd, uint32_t NumberOfBlocks);
+HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_ReadBlocks(MMC_HandleTypeDef *hmmc,
+						     const MMC_DMALinkedListTypeDef *pLinkedList, uint32_t BlockAdd,
+						     uint32_t NumberOfBlocks);
+HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_WriteBlocks(MMC_HandleTypeDef *hmmc,
+						      const MMC_DMALinkedListTypeDef *pLinkedList, uint32_t BlockAdd,
+						      uint32_t NumberOfBlocks);
 
-HAL_StatusTypeDef
-HAL_MMCEx_DMALinkedList_BuildNode(MMC_DMALinkNodeTypeDef *pNode,
-				  MMC_DMALinkNodeConfTypeDef *pNodeConf);
-HAL_StatusTypeDef
-HAL_MMCEx_DMALinkedList_InsertNode(MMC_DMALinkedListTypeDef *pLinkedList,
-				   MMC_DMALinkNodeTypeDef *pPrevNode,
-				   MMC_DMALinkNodeTypeDef *pNewNode);
-HAL_StatusTypeDef
-HAL_MMCEx_DMALinkedList_RemoveNode(MMC_DMALinkedListTypeDef *pLinkedList,
-				   MMC_DMALinkNodeTypeDef *pNode);
-HAL_StatusTypeDef
-HAL_MMCEx_DMALinkedList_LockNode(MMC_DMALinkNodeTypeDef *pNode);
-HAL_StatusTypeDef
-HAL_MMCEx_DMALinkedList_UnlockNode(MMC_DMALinkNodeTypeDef *pNode);
-HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_EnableCircularMode(
-    SDMMC_DMALinkedListTypeDef *pLinkedList);
-HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_DisableCircularMode(
-    SDMMC_DMALinkedListTypeDef *pLinkedList);
+HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_BuildNode(MMC_DMALinkNodeTypeDef *pNode,
+						    MMC_DMALinkNodeConfTypeDef *pNodeConf);
+HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_InsertNode(MMC_DMALinkedListTypeDef *pLinkedList,
+						     MMC_DMALinkNodeTypeDef *pPrevNode,
+						     MMC_DMALinkNodeTypeDef *pNewNode);
+HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_RemoveNode(MMC_DMALinkedListTypeDef *pLinkedList,
+						     MMC_DMALinkNodeTypeDef *pNode);
+HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_LockNode(MMC_DMALinkNodeTypeDef *pNode);
+HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_UnlockNode(MMC_DMALinkNodeTypeDef *pNode);
+HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_EnableCircularMode(SDMMC_DMALinkedListTypeDef *pLinkedList);
+HAL_StatusTypeDef HAL_MMCEx_DMALinkedList_DisableCircularMode(SDMMC_DMALinkedListTypeDef *pLinkedList);
 
 void HAL_MMCEx_Read_DMALnkLstBufCpltCallback(MMC_HandleTypeDef *hmmc);
 void HAL_MMCEx_Write_DMALnkLstBufCpltCallback(MMC_HandleTypeDef *hmmc);

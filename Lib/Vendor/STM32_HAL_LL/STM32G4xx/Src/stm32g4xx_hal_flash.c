@@ -173,8 +173,7 @@ static void FLASH_Program_Fast(uint32_t Address, uint32_t DataAddress);
  *
  * @retval HAL_Status
  */
-HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address,
-				    uint64_t Data)
+HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address, uint64_t Data)
 {
 	HAL_StatusTypeDef status;
 	uint32_t prog_bit = 0;
@@ -221,8 +220,7 @@ HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address,
 		}
 
 		/* Wait for last operation to be completed */
-		status =
-		    FLASH_WaitForLastOperation((uint32_t)FLASH_TIMEOUT_VALUE);
+		status = FLASH_WaitForLastOperation((uint32_t)FLASH_TIMEOUT_VALUE);
 
 		/* If the program operation is completed, disable the PG or
 		 * FSTPG Bit */
@@ -253,8 +251,7 @@ HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address,
  *
  * @retval HAL_Status
  */
-HAL_StatusTypeDef HAL_FLASH_Program_IT(uint32_t TypeProgram, uint32_t Address,
-				       uint64_t Data)
+HAL_StatusTypeDef HAL_FLASH_Program_IT(uint32_t TypeProgram, uint32_t Address, uint64_t Data)
 {
 	HAL_StatusTypeDef status;
 
@@ -324,8 +321,7 @@ void HAL_FLASH_IRQHandler(void)
 
 	/* If the operation is completed, disable the PG, PNB, MER1, MER2 and
 	 * PER Bit */
-	CLEAR_BIT(FLASH->CR,
-		  (FLASH_CR_PG | FLASH_CR_MER1 | FLASH_CR_PER | FLASH_CR_PNB));
+	CLEAR_BIT(FLASH->CR, (FLASH_CR_PG | FLASH_CR_MER1 | FLASH_CR_PER | FLASH_CR_PNB));
 #if defined(FLASH_OPTR_DBANK)
 	CLEAR_BIT(FLASH->CR, FLASH_CR_MER2);
 #endif
@@ -354,8 +350,7 @@ void HAL_FLASH_IRQHandler(void)
 			HAL_FLASH_OperationErrorCallback(pFlash.Page);
 		} else if (procedure == FLASH_PROC_MASS_ERASE) {
 			HAL_FLASH_OperationErrorCallback(pFlash.Bank);
-		} else if ((procedure == FLASH_PROC_PROGRAM) ||
-			   (procedure == FLASH_PROC_PROGRAM_LAST)) {
+		} else if ((procedure == FLASH_PROC_PROGRAM) || (procedure == FLASH_PROC_PROGRAM_LAST)) {
 			HAL_FLASH_OperationErrorCallback(pFlash.Address);
 		} else {
 			/* Nothing to do */
@@ -407,12 +402,10 @@ void HAL_FLASH_IRQHandler(void)
 				/* MassErase ended. Return the selected bank */
 				/* FLASH EOP interrupt user callback */
 				HAL_FLASH_EndOfOperationCallback(pFlash.Bank);
-			} else if ((procedure == FLASH_PROC_PROGRAM) ||
-				   (procedure == FLASH_PROC_PROGRAM_LAST)) {
+			} else if ((procedure == FLASH_PROC_PROGRAM) || (procedure == FLASH_PROC_PROGRAM_LAST)) {
 				/* Program ended. Return the selected address */
 				/* FLASH EOP interrupt user callback */
-				HAL_FLASH_EndOfOperationCallback(
-				    pFlash.Address);
+				HAL_FLASH_EndOfOperationCallback(pFlash.Address);
 			} else {
 				/* Nothing to do */
 			}

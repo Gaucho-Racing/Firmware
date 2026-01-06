@@ -128,9 +128,9 @@ extern "C" {
  * default frequency which is subject to manufacturing process variations.
  */
 #if !defined(HSI48_VALUE)
-#define HSI48_VALUE                                                            \
-	48000000U /*!< Value of the Internal High Speed oscillator for USB     \
-		   FS/SDMMC/RNG in Hz. The real value my vary depending on     \
+#define HSI48_VALUE                                                                                                    \
+	48000000U /*!< Value of the Internal High Speed oscillator for USB                                             \
+		   FS/SDMMC/RNG in Hz. The real value my vary depending on                                             \
 		   manufacturing process variations.*/
 #endif		  /* HSI48_VALUE */
 
@@ -139,8 +139,8 @@ extern "C" {
  */
 #if !defined(LSI_VALUE)
 #define LSI_VALUE 32000U /*!< LSI Typical Value in Hz*/
-#endif /* LSI_VALUE */	 /*!< Value of the Internal Low Speed oscillator in Hz \
-			   The real value may vary depending on the variations \
+#endif /* LSI_VALUE */	 /*!< Value of the Internal Low Speed oscillator in Hz                                         \
+			   The real value may vary depending on the variations                                         \
 			   in voltage and temperature.*/
 /**
  * @brief External Low Speed oscillator (LSE) value.
@@ -161,9 +161,8 @@ extern "C" {
  * clock source frequency.
  */
 #if !defined(EXTERNAL_SAI1_CLOCK_VALUE)
-#define EXTERNAL_SAI1_CLOCK_VALUE                                              \
-	48000U /*!< Value of the SAI1 External clock source in Hz*/
-#endif	       /* EXTERNAL_SAI1_CLOCK_VALUE */
+#define EXTERNAL_SAI1_CLOCK_VALUE 48000U /*!< Value of the SAI1 External clock source in Hz*/
+#endif					 /* EXTERNAL_SAI1_CLOCK_VALUE */
 
 /**
  * @brief External clock source for SAI2 peripheral
@@ -171,9 +170,8 @@ extern "C" {
  * clock source frequency.
  */
 #if !defined(EXTERNAL_SAI2_CLOCK_VALUE)
-#define EXTERNAL_SAI2_CLOCK_VALUE                                              \
-	48000U /*!< Value of the SAI2 External clock source in Hz*/
-#endif	       /* EXTERNAL_SAI2_CLOCK_VALUE */
+#define EXTERNAL_SAI2_CLOCK_VALUE 48000U /*!< Value of the SAI2 External clock source in Hz*/
+#endif					 /* EXTERNAL_SAI2_CLOCK_VALUE */
 
 /* Tip: To avoid modifying this file each time you need to use different HSE,
    ===  you can define the HSE value in your toolchain compiler preprocessor. */
@@ -469,8 +467,7 @@ extern "C" {
  *         If expr is true, it returns no value.
  * @retval None
  */
-#define assert_param(expr)                                                     \
-	((expr) ? (void)0U : assert_failed((uint8_t *)__FILE__, __LINE__))
+#define assert_param(expr) ((expr) ? (void)0U : assert_failed((uint8_t *)__FILE__, __LINE__))
 /* Exported functions ------------------------------------------------------- */
 void assert_failed(uint8_t *file, uint32_t line);
 #else

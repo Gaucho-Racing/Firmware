@@ -33,8 +33,7 @@
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Reg_ReadTpl(bcc_drv_config_t *const drvConfig,
-			     const bcc_cid_t cid, const uint8_t regAddr,
+bcc_status_t BCC_Reg_ReadTpl(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t regAddr,
 			     const uint8_t regCnt, uint16_t *regVal);
 
 /*!
@@ -54,8 +53,7 @@ bcc_status_t BCC_Reg_ReadTpl(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Reg_ReadSpi(bcc_drv_config_t *const drvConfig,
-			     const bcc_cid_t cid, uint8_t regAddr,
+bcc_status_t BCC_Reg_ReadSpi(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, uint8_t regAddr,
 			     const uint8_t regCnt, uint16_t *regVal);
 
 /*!
@@ -70,8 +68,7 @@ bcc_status_t BCC_Reg_ReadSpi(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Reg_WriteTpl(bcc_drv_config_t *const drvConfig,
-			      const bcc_cid_t cid, const uint8_t regAddr,
+bcc_status_t BCC_Reg_WriteTpl(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t regAddr,
 			      const uint16_t regVal);
 
 /*!
@@ -86,8 +83,7 @@ bcc_status_t BCC_Reg_WriteTpl(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Reg_WriteSpi(bcc_drv_config_t *const drvConfig,
-			      const bcc_cid_t cid, const uint8_t regAddr,
+bcc_status_t BCC_Reg_WriteSpi(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t regAddr,
 			      const uint16_t regVal);
 
 /*!
@@ -101,9 +97,7 @@ bcc_status_t BCC_Reg_WriteSpi(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Reg_WriteGlobalTpl(bcc_drv_config_t *const drvConfig,
-				    const uint8_t regAddr,
-				    const uint16_t regVal);
+bcc_status_t BCC_Reg_WriteGlobalTpl(bcc_drv_config_t *const drvConfig, const uint8_t regAddr, const uint16_t regVal);
 
 /*!
  * @brief This function sends a No Operation command to the BCC device.
@@ -114,8 +108,7 @@ bcc_status_t BCC_Reg_WriteGlobalTpl(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_SendNopTpl(bcc_drv_config_t *const drvConfig,
-			    const bcc_cid_t cid);
+bcc_status_t BCC_SendNopTpl(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid);
 
 /*!
  * @brief This function sends a No Operation command to the BCC device.
@@ -126,8 +119,7 @@ bcc_status_t BCC_SendNopTpl(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_SendNopSpi(bcc_drv_config_t *const drvConfig,
-			    const bcc_cid_t cid);
+bcc_status_t BCC_SendNopSpi(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid);
 
 /*! @} */
 

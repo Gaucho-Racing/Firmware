@@ -31,8 +31,7 @@ extern "C" {
  * @{
  */
 
-#if defined(OPAMP1) || defined(OPAMP2) || defined(OPAMP3) ||                   \
-    defined(OPAMP4) || defined(OPAMP5) || defined(OPAMP6)
+#if defined(OPAMP1) || defined(OPAMP2) || defined(OPAMP3) || defined(OPAMP4) || defined(OPAMP5) || defined(OPAMP6)
 
 /** @addtogroup OPAMPEx OPAMPEx
  * @{
@@ -53,24 +52,16 @@ extern "C" {
 /* I/O operation functions
  * *****************************************************/
 
-#if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) ||    \
-    defined(STM32G484xx)
-HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1,
-					       OPAMP_HandleTypeDef *hopamp2,
-					       OPAMP_HandleTypeDef *hopamp3,
-					       OPAMP_HandleTypeDef *hopamp4,
-					       OPAMP_HandleTypeDef *hopamp5,
-					       OPAMP_HandleTypeDef *hopamp6);
-#elif defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx) ||  \
-    defined(STM32G471xx)
-HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1,
-					       OPAMP_HandleTypeDef *hopamp2,
+#if defined(STM32G473xx) || defined(STM32G474xx) || defined(STM32G483xx) || defined(STM32G484xx)
+HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1, OPAMP_HandleTypeDef *hopamp2,
+					       OPAMP_HandleTypeDef *hopamp3, OPAMP_HandleTypeDef *hopamp4,
+					       OPAMP_HandleTypeDef *hopamp5, OPAMP_HandleTypeDef *hopamp6);
+#elif defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx) || defined(STM32G471xx)
+HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1, OPAMP_HandleTypeDef *hopamp2,
 					       OPAMP_HandleTypeDef *hopamp3);
 #elif defined(STM32G491xx) || defined(STM32G4A1xx)
-HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1,
-					       OPAMP_HandleTypeDef *hopamp2,
-					       OPAMP_HandleTypeDef *hopamp3,
-					       OPAMP_HandleTypeDef *hopamp6);
+HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1, OPAMP_HandleTypeDef *hopamp2,
+					       OPAMP_HandleTypeDef *hopamp3, OPAMP_HandleTypeDef *hopamp6);
 #elif defined(STM32G411xB) || defined(STM32G411xC)
 HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1);
 #endif /* STM32G473xx || STM32G474xx || STM32G483xx || STM32G484xx */

@@ -149,13 +149,10 @@ computation by a call to HAL_HASHEx_xxx_Accumulate_End().
  * @param  Timeout Timeout value
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASHEx_SHA224_Start(HASH_HandleTypeDef *hhash,
-					  const uint8_t *const pInBuffer,
-					  uint32_t Size, uint8_t *pOutBuffer,
-					  uint32_t Timeout)
+HAL_StatusTypeDef HAL_HASHEx_SHA224_Start(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size,
+					  uint8_t *pOutBuffer, uint32_t Timeout)
 {
-	return HASH_Start(hhash, pInBuffer, Size, pOutBuffer, Timeout,
-			  HASH_ALGOSELECTION_SHA224);
+	return HASH_Start(hhash, pInBuffer, Size, pOutBuffer, Timeout, HASH_ALGOSELECTION_SHA224);
 }
 
 /**
@@ -180,12 +177,9 @@ HAL_StatusTypeDef HAL_HASHEx_SHA224_Start(HASH_HandleTypeDef *hhash,
  * @param  Size length of the input buffer in bytes, must be a multiple of 4.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASHEx_SHA224_Accmlt(HASH_HandleTypeDef *hhash,
-					   const uint8_t *const pInBuffer,
-					   uint32_t Size)
+HAL_StatusTypeDef HAL_HASHEx_SHA224_Accmlt(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
 {
-	return HASH_Accumulate(hhash, pInBuffer, Size,
-			       HASH_ALGOSELECTION_SHA224);
+	return HASH_Accumulate(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA224);
 }
 
 /**
@@ -199,14 +193,10 @@ HAL_StatusTypeDef HAL_HASHEx_SHA224_Accmlt(HASH_HandleTypeDef *hhash,
  * @param  Timeout Timeout value
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASHEx_SHA224_Accmlt_End(HASH_HandleTypeDef *hhash,
-					       const uint8_t *const pInBuffer,
-					       uint32_t Size,
-					       uint8_t *pOutBuffer,
-					       uint32_t Timeout)
+HAL_StatusTypeDef HAL_HASHEx_SHA224_Accmlt_End(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size,
+					       uint8_t *pOutBuffer, uint32_t Timeout)
 {
-	return HASH_Start(hhash, pInBuffer, Size, pOutBuffer, Timeout,
-			  HASH_ALGOSELECTION_SHA224);
+	return HASH_Start(hhash, pInBuffer, Size, pOutBuffer, Timeout, HASH_ALGOSELECTION_SHA224);
 }
 
 /**
@@ -220,13 +210,10 @@ HAL_StatusTypeDef HAL_HASHEx_SHA224_Accmlt_End(HASH_HandleTypeDef *hhash,
  * @param  Timeout Timeout value
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASHEx_SHA256_Start(HASH_HandleTypeDef *hhash,
-					  const uint8_t *const pInBuffer,
-					  uint32_t Size, uint8_t *pOutBuffer,
-					  uint32_t Timeout)
+HAL_StatusTypeDef HAL_HASHEx_SHA256_Start(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size,
+					  uint8_t *pOutBuffer, uint32_t Timeout)
 {
-	return HASH_Start(hhash, pInBuffer, Size, pOutBuffer, Timeout,
-			  HASH_ALGOSELECTION_SHA256);
+	return HASH_Start(hhash, pInBuffer, Size, pOutBuffer, Timeout, HASH_ALGOSELECTION_SHA256);
 }
 
 /**
@@ -251,12 +238,9 @@ HAL_StatusTypeDef HAL_HASHEx_SHA256_Start(HASH_HandleTypeDef *hhash,
  * @param  Size length of the input buffer in bytes, must be a multiple of 4.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASHEx_SHA256_Accmlt(HASH_HandleTypeDef *hhash,
-					   const uint8_t *const pInBuffer,
-					   uint32_t Size)
+HAL_StatusTypeDef HAL_HASHEx_SHA256_Accmlt(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
 {
-	return HASH_Accumulate(hhash, pInBuffer, Size,
-			       HASH_ALGOSELECTION_SHA256);
+	return HASH_Accumulate(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA256);
 }
 
 /**
@@ -270,14 +254,10 @@ HAL_StatusTypeDef HAL_HASHEx_SHA256_Accmlt(HASH_HandleTypeDef *hhash,
  * @param  Timeout Timeout value
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASHEx_SHA256_Accmlt_End(HASH_HandleTypeDef *hhash,
-					       const uint8_t *const pInBuffer,
-					       uint32_t Size,
-					       uint8_t *pOutBuffer,
-					       uint32_t Timeout)
+HAL_StatusTypeDef HAL_HASHEx_SHA256_Accmlt_End(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size,
+					       uint8_t *pOutBuffer, uint32_t Timeout)
 {
-	return HASH_Start(hhash, pInBuffer, Size, pOutBuffer, Timeout,
-			  HASH_ALGOSELECTION_SHA256);
+	return HASH_Start(hhash, pInBuffer, Size, pOutBuffer, Timeout, HASH_ALGOSELECTION_SHA256);
 }
 
 /**
@@ -317,12 +297,10 @@ mode the hash value using one of the following algorithms:
  * @param  pOutBuffer pointer to the computed digest. Digest size is 28 bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASHEx_SHA224_Start_IT(HASH_HandleTypeDef *hhash,
-					     const uint8_t *const pInBuffer,
-					     uint32_t Size, uint8_t *pOutBuffer)
+HAL_StatusTypeDef HAL_HASHEx_SHA224_Start_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size,
+					     uint8_t *pOutBuffer)
 {
-	return HASH_Start_IT(hhash, pInBuffer, Size, pOutBuffer,
-			     HASH_ALGOSELECTION_SHA224);
+	return HASH_Start_IT(hhash, pInBuffer, Size, pOutBuffer, HASH_ALGOSELECTION_SHA224);
 }
 
 /**
@@ -344,12 +322,9 @@ HAL_StatusTypeDef HAL_HASHEx_SHA224_Start_IT(HASH_HandleTypeDef *hhash,
  * @param  Size length of the input buffer in bytes, must be a multiple of 4.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASHEx_SHA224_Accmlt_IT(HASH_HandleTypeDef *hhash,
-					      const uint8_t *const pInBuffer,
-					      uint32_t Size)
+HAL_StatusTypeDef HAL_HASHEx_SHA224_Accmlt_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
 {
-	return HASH_Accumulate_IT(hhash, pInBuffer, Size,
-				  HASH_ALGOSELECTION_SHA224);
+	return HASH_Accumulate_IT(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA224);
 }
 
 /**
@@ -362,13 +337,10 @@ HAL_StatusTypeDef HAL_HASHEx_SHA224_Accmlt_IT(HASH_HandleTypeDef *hhash,
  * @param  pOutBuffer pointer to the computed digest. Digest size is 28 bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_HASHEx_SHA224_Accmlt_End_IT(HASH_HandleTypeDef *hhash,
-				const uint8_t *const pInBuffer, uint32_t Size,
-				uint8_t *pOutBuffer)
+HAL_StatusTypeDef HAL_HASHEx_SHA224_Accmlt_End_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer,
+						  uint32_t Size, uint8_t *pOutBuffer)
 {
-	return HASH_Start_IT(hhash, pInBuffer, Size, pOutBuffer,
-			     HASH_ALGOSELECTION_SHA224);
+	return HASH_Start_IT(hhash, pInBuffer, Size, pOutBuffer, HASH_ALGOSELECTION_SHA224);
 }
 
 /**
@@ -381,12 +353,10 @@ HAL_HASHEx_SHA224_Accmlt_End_IT(HASH_HandleTypeDef *hhash,
  * @param  pOutBuffer pointer to the computed digest. Digest size is 32 bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASHEx_SHA256_Start_IT(HASH_HandleTypeDef *hhash,
-					     const uint8_t *const pInBuffer,
-					     uint32_t Size, uint8_t *pOutBuffer)
+HAL_StatusTypeDef HAL_HASHEx_SHA256_Start_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size,
+					     uint8_t *pOutBuffer)
 {
-	return HASH_Start_IT(hhash, pInBuffer, Size, pOutBuffer,
-			     HASH_ALGOSELECTION_SHA256);
+	return HASH_Start_IT(hhash, pInBuffer, Size, pOutBuffer, HASH_ALGOSELECTION_SHA256);
 }
 
 /**
@@ -408,12 +378,9 @@ HAL_StatusTypeDef HAL_HASHEx_SHA256_Start_IT(HASH_HandleTypeDef *hhash,
  * @param  Size length of the input buffer in bytes, must be a multiple of 4.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASHEx_SHA256_Accmlt_IT(HASH_HandleTypeDef *hhash,
-					      const uint8_t *const pInBuffer,
-					      uint32_t Size)
+HAL_StatusTypeDef HAL_HASHEx_SHA256_Accmlt_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
 {
-	return HASH_Accumulate_IT(hhash, pInBuffer, Size,
-				  HASH_ALGOSELECTION_SHA256);
+	return HASH_Accumulate_IT(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA256);
 }
 
 /**
@@ -426,13 +393,10 @@ HAL_StatusTypeDef HAL_HASHEx_SHA256_Accmlt_IT(HASH_HandleTypeDef *hhash,
  * @param  pOutBuffer pointer to the computed digest. Digest size is 32 bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_HASHEx_SHA256_Accmlt_End_IT(HASH_HandleTypeDef *hhash,
-				const uint8_t *const pInBuffer, uint32_t Size,
-				uint8_t *pOutBuffer)
+HAL_StatusTypeDef HAL_HASHEx_SHA256_Accmlt_End_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer,
+						  uint32_t Size, uint8_t *pOutBuffer)
 {
-	return HASH_Start_IT(hhash, pInBuffer, Size, pOutBuffer,
-			     HASH_ALGOSELECTION_SHA256);
+	return HASH_Start_IT(hhash, pInBuffer, Size, pOutBuffer, HASH_ALGOSELECTION_SHA256);
 }
 
 /**
@@ -479,12 +443,9 @@ finally retrieved thanks to HAL_HASHEx_xxx_Finish().
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASHEx_SHA224_Start_DMA(HASH_HandleTypeDef *hhash,
-					      const uint8_t *const pInBuffer,
-					      uint32_t Size)
+HAL_StatusTypeDef HAL_HASHEx_SHA224_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
 {
-	return HASH_Start_DMA(hhash, pInBuffer, Size,
-			      HASH_ALGOSELECTION_SHA224);
+	return HASH_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA224);
 }
 
 /**
@@ -497,9 +458,7 @@ HAL_StatusTypeDef HAL_HASHEx_SHA224_Start_DMA(HASH_HandleTypeDef *hhash,
  * @param  Timeout Timeout value.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASHEx_SHA224_Finish(HASH_HandleTypeDef *hhash,
-					   uint8_t *pOutBuffer,
-					   uint32_t Timeout)
+HAL_StatusTypeDef HAL_HASHEx_SHA224_Finish(HASH_HandleTypeDef *hhash, uint8_t *pOutBuffer, uint32_t Timeout)
 {
 	return HASH_Finish(hhash, pOutBuffer, Timeout);
 }
@@ -514,12 +473,9 @@ HAL_StatusTypeDef HAL_HASHEx_SHA224_Finish(HASH_HandleTypeDef *hhash,
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASHEx_SHA256_Start_DMA(HASH_HandleTypeDef *hhash,
-					      const uint8_t *const pInBuffer,
-					      uint32_t Size)
+HAL_StatusTypeDef HAL_HASHEx_SHA256_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
 {
-	return HASH_Start_DMA(hhash, pInBuffer, Size,
-			      HASH_ALGOSELECTION_SHA256);
+	return HASH_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA256);
 }
 
 /**
@@ -532,9 +488,7 @@ HAL_StatusTypeDef HAL_HASHEx_SHA256_Start_DMA(HASH_HandleTypeDef *hhash,
  * @param  Timeout Timeout value.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASHEx_SHA256_Finish(HASH_HandleTypeDef *hhash,
-					   uint8_t *pOutBuffer,
-					   uint32_t Timeout)
+HAL_StatusTypeDef HAL_HASHEx_SHA256_Finish(HASH_HandleTypeDef *hhash, uint8_t *pOutBuffer, uint32_t Timeout)
 {
 	return HASH_Finish(hhash, pOutBuffer, Timeout);
 }
@@ -576,13 +530,10 @@ functions in polling mode
  * @param  Timeout Timeout value.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMACEx_SHA224_Start(HASH_HandleTypeDef *hhash,
-					  const uint8_t *const pInBuffer,
-					  uint32_t Size, uint8_t *pOutBuffer,
-					  uint32_t Timeout)
+HAL_StatusTypeDef HAL_HMACEx_SHA224_Start(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size,
+					  uint8_t *pOutBuffer, uint32_t Timeout)
 {
-	return HMAC_Start(hhash, pInBuffer, Size, pOutBuffer, Timeout,
-			  HASH_ALGOSELECTION_SHA224);
+	return HMAC_Start(hhash, pInBuffer, Size, pOutBuffer, Timeout, HASH_ALGOSELECTION_SHA224);
 }
 
 /**
@@ -599,13 +550,10 @@ HAL_StatusTypeDef HAL_HMACEx_SHA224_Start(HASH_HandleTypeDef *hhash,
  * @param  Timeout Timeout value.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMACEx_SHA256_Start(HASH_HandleTypeDef *hhash,
-					  const uint8_t *const pInBuffer,
-					  uint32_t Size, uint8_t *pOutBuffer,
-					  uint32_t Timeout)
+HAL_StatusTypeDef HAL_HMACEx_SHA256_Start(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size,
+					  uint8_t *pOutBuffer, uint32_t Timeout)
 {
-	return HMAC_Start(hhash, pInBuffer, Size, pOutBuffer, Timeout,
-			  HASH_ALGOSELECTION_SHA256);
+	return HMAC_Start(hhash, pInBuffer, Size, pOutBuffer, Timeout, HASH_ALGOSELECTION_SHA256);
 }
 
 /**
@@ -644,12 +592,10 @@ mode the HMAC value using one of the following algorithms:
  * @param  pOutBuffer pointer to the computed digest. Digest size is 28 bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMACEx_SHA224_Start_IT(HASH_HandleTypeDef *hhash,
-					     const uint8_t *const pInBuffer,
-					     uint32_t Size, uint8_t *pOutBuffer)
+HAL_StatusTypeDef HAL_HMACEx_SHA224_Start_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size,
+					     uint8_t *pOutBuffer)
 {
-	return HMAC_Start_IT(hhash, pInBuffer, Size, pOutBuffer,
-			     HASH_ALGOSELECTION_SHA224);
+	return HMAC_Start_IT(hhash, pInBuffer, Size, pOutBuffer, HASH_ALGOSELECTION_SHA224);
 }
 
 /**
@@ -665,12 +611,10 @@ HAL_StatusTypeDef HAL_HMACEx_SHA224_Start_IT(HASH_HandleTypeDef *hhash,
  * @param  pOutBuffer pointer to the computed digest. Digest size is 32 bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMACEx_SHA256_Start_IT(HASH_HandleTypeDef *hhash,
-					     const uint8_t *const pInBuffer,
-					     uint32_t Size, uint8_t *pOutBuffer)
+HAL_StatusTypeDef HAL_HMACEx_SHA256_Start_IT(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size,
+					     uint8_t *pOutBuffer)
 {
-	return HMAC_Start_IT(hhash, pInBuffer, Size, pOutBuffer,
-			     HASH_ALGOSELECTION_SHA256);
+	return HMAC_Start_IT(hhash, pInBuffer, Size, pOutBuffer, HASH_ALGOSELECTION_SHA256);
 }
 
 /**
@@ -722,12 +666,9 @@ resulting digest with HAL_HASHEx_xxx_Finish().
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMACEx_SHA224_Start_DMA(HASH_HandleTypeDef *hhash,
-					      const uint8_t *const pInBuffer,
-					      uint32_t Size)
+HAL_StatusTypeDef HAL_HMACEx_SHA224_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
 {
-	return HMAC_Start_DMA(hhash, pInBuffer, Size,
-			      HASH_ALGOSELECTION_SHA224);
+	return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA224);
 }
 
 /**
@@ -751,12 +692,9 @@ HAL_StatusTypeDef HAL_HMACEx_SHA224_Start_DMA(HASH_HandleTypeDef *hhash,
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMACEx_SHA256_Start_DMA(HASH_HandleTypeDef *hhash,
-					      const uint8_t *const pInBuffer,
-					      uint32_t Size)
+HAL_StatusTypeDef HAL_HMACEx_SHA256_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
 {
-	return HMAC_Start_DMA(hhash, pInBuffer, Size,
-			      HASH_ALGOSELECTION_SHA256);
+	return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA256);
 }
 
 /**
@@ -832,9 +770,7 @@ HAL_HMACEx_xxx_Step2_3_DMA() is sufficient.
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMACEx_MD5_Step1_2_DMA(HASH_HandleTypeDef *hhash,
-					     const uint8_t *const pInBuffer,
-					     uint32_t Size)
+HAL_StatusTypeDef HAL_HMACEx_MD5_Step1_2_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
 {
 	hhash->DigestCalculationDisable = SET;
 	return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_MD5);
@@ -856,9 +792,7 @@ HAL_StatusTypeDef HAL_HMACEx_MD5_Step1_2_DMA(HASH_HandleTypeDef *hhash,
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMACEx_MD5_Step2_DMA(HASH_HandleTypeDef *hhash,
-					   const uint8_t *const pInBuffer,
-					   uint32_t Size)
+HAL_StatusTypeDef HAL_HMACEx_MD5_Step2_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
 {
 	if (hhash->DigestCalculationDisable != SET) {
 		return HAL_ERROR;
@@ -885,9 +819,7 @@ HAL_StatusTypeDef HAL_HMACEx_MD5_Step2_DMA(HASH_HandleTypeDef *hhash,
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMACEx_MD5_Step2_3_DMA(HASH_HandleTypeDef *hhash,
-					     const uint8_t *const pInBuffer,
-					     uint32_t Size)
+HAL_StatusTypeDef HAL_HMACEx_MD5_Step2_3_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
 {
 	hhash->DigestCalculationDisable = RESET;
 	return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_MD5);
@@ -912,9 +844,7 @@ HAL_StatusTypeDef HAL_HMACEx_MD5_Step2_3_DMA(HASH_HandleTypeDef *hhash,
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMACEx_SHA1_Step1_2_DMA(HASH_HandleTypeDef *hhash,
-					      const uint8_t *const pInBuffer,
-					      uint32_t Size)
+HAL_StatusTypeDef HAL_HMACEx_SHA1_Step1_2_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
 {
 	hhash->DigestCalculationDisable = SET;
 	return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA1);
@@ -936,9 +866,7 @@ HAL_StatusTypeDef HAL_HMACEx_SHA1_Step1_2_DMA(HASH_HandleTypeDef *hhash,
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMACEx_SHA1_Step2_DMA(HASH_HandleTypeDef *hhash,
-					    const uint8_t *const pInBuffer,
-					    uint32_t Size)
+HAL_StatusTypeDef HAL_HMACEx_SHA1_Step2_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
 {
 	if (hhash->DigestCalculationDisable != SET) {
 		return HAL_ERROR;
@@ -965,9 +893,7 @@ HAL_StatusTypeDef HAL_HMACEx_SHA1_Step2_DMA(HASH_HandleTypeDef *hhash,
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMACEx_SHA1_Step2_3_DMA(HASH_HandleTypeDef *hhash,
-					      const uint8_t *const pInBuffer,
-					      uint32_t Size)
+HAL_StatusTypeDef HAL_HMACEx_SHA1_Step2_3_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
 {
 	hhash->DigestCalculationDisable = RESET;
 	return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA1);
@@ -992,13 +918,11 @@ HAL_StatusTypeDef HAL_HMACEx_SHA1_Step2_3_DMA(HASH_HandleTypeDef *hhash,
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMACEx_SHA224_Step1_2_DMA(HASH_HandleTypeDef *hhash,
-						const uint8_t *const pInBuffer,
+HAL_StatusTypeDef HAL_HMACEx_SHA224_Step1_2_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer,
 						uint32_t Size)
 {
 	hhash->DigestCalculationDisable = SET;
-	return HMAC_Start_DMA(hhash, pInBuffer, Size,
-			      HASH_ALGOSELECTION_SHA224);
+	return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA224);
 }
 
 /**
@@ -1017,15 +941,12 @@ HAL_StatusTypeDef HAL_HMACEx_SHA224_Step1_2_DMA(HASH_HandleTypeDef *hhash,
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMACEx_SHA224_Step2_DMA(HASH_HandleTypeDef *hhash,
-					      const uint8_t *const pInBuffer,
-					      uint32_t Size)
+HAL_StatusTypeDef HAL_HMACEx_SHA224_Step2_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
 {
 	if (hhash->DigestCalculationDisable != SET) {
 		return HAL_ERROR;
 	}
-	return HMAC_Start_DMA(hhash, pInBuffer, Size,
-			      HASH_ALGOSELECTION_SHA224);
+	return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA224);
 }
 
 /**
@@ -1047,13 +968,11 @@ HAL_StatusTypeDef HAL_HMACEx_SHA224_Step2_DMA(HASH_HandleTypeDef *hhash,
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMACEx_SHA224_Step2_3_DMA(HASH_HandleTypeDef *hhash,
-						const uint8_t *const pInBuffer,
+HAL_StatusTypeDef HAL_HMACEx_SHA224_Step2_3_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer,
 						uint32_t Size)
 {
 	hhash->DigestCalculationDisable = RESET;
-	return HMAC_Start_DMA(hhash, pInBuffer, Size,
-			      HASH_ALGOSELECTION_SHA224);
+	return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA224);
 }
 
 /**
@@ -1075,13 +994,11 @@ HAL_StatusTypeDef HAL_HMACEx_SHA224_Step2_3_DMA(HASH_HandleTypeDef *hhash,
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMACEx_SHA256_Step1_2_DMA(HASH_HandleTypeDef *hhash,
-						const uint8_t *const pInBuffer,
+HAL_StatusTypeDef HAL_HMACEx_SHA256_Step1_2_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer,
 						uint32_t Size)
 {
 	hhash->DigestCalculationDisable = SET;
-	return HMAC_Start_DMA(hhash, pInBuffer, Size,
-			      HASH_ALGOSELECTION_SHA256);
+	return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA256);
 }
 
 /**
@@ -1100,15 +1017,12 @@ HAL_StatusTypeDef HAL_HMACEx_SHA256_Step1_2_DMA(HASH_HandleTypeDef *hhash,
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMACEx_SHA256_Step2_DMA(HASH_HandleTypeDef *hhash,
-					      const uint8_t *const pInBuffer,
-					      uint32_t Size)
+HAL_StatusTypeDef HAL_HMACEx_SHA256_Step2_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
 {
 	if (hhash->DigestCalculationDisable != SET) {
 		return HAL_ERROR;
 	}
-	return HMAC_Start_DMA(hhash, pInBuffer, Size,
-			      HASH_ALGOSELECTION_SHA256);
+	return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA256);
 }
 
 /**
@@ -1130,13 +1044,11 @@ HAL_StatusTypeDef HAL_HMACEx_SHA256_Step2_DMA(HASH_HandleTypeDef *hhash,
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMACEx_SHA256_Step2_3_DMA(HASH_HandleTypeDef *hhash,
-						const uint8_t *const pInBuffer,
+HAL_StatusTypeDef HAL_HMACEx_SHA256_Step2_3_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer,
 						uint32_t Size)
 {
 	hhash->DigestCalculationDisable = RESET;
-	return HMAC_Start_DMA(hhash, pInBuffer, Size,
-			      HASH_ALGOSELECTION_SHA256);
+	return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA256);
 }
 
 /**

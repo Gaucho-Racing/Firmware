@@ -337,9 +337,8 @@ static uint32_t SD_FindSCR(SD_HandleTypeDef *hsd, uint32_t *pSCR);
 static void SD_PowerOFF(SD_HandleTypeDef *hsd);
 static void SD_Write_IT(SD_HandleTypeDef *hsd);
 static void SD_Read_IT(SD_HandleTypeDef *hsd);
-#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && \
-    !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && \
-    !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
+#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) &&                \
+    !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 static void SD_DMATransmitCplt(DMA_HandleTypeDef *hdma);
 static void SD_DMAReceiveCplt(DMA_HandleTypeDef *hdma);
 static void SD_DMAError(DMA_HandleTypeDef *hdma);
@@ -348,7 +347,7 @@ static void SD_DMARxAbort(DMA_HandleTypeDef *hdma);
 #else
 static uint32_t SD_UltraHighSpeed(SD_HandleTypeDef *hsd);
 static uint32_t SD_DDR_Mode(SD_HandleTypeDef *hsd);
-#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&      \
+#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&                                              \
 	  !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
 /**
  * @}
@@ -382,9 +381,8 @@ static uint32_t SD_DDR_Mode(SD_HandleTypeDef *hsd);
   */
 HAL_StatusTypeDef HAL_SD_Init(SD_HandleTypeDef *hsd)
 {
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	HAL_SD_CardStatusTypeDef CardStatus;
 	uint32_t speedgrade, unitsize;
 	uint32_t tickstart;
@@ -398,41 +396,32 @@ HAL_StatusTypeDef HAL_SD_Init(SD_HandleTypeDef *hsd)
 	/* Check the parameters */
 	assert_param(IS_SDMMC_ALL_INSTANCE(hsd->Instance));
 	assert_param(IS_SDMMC_CLOCK_EDGE(hsd->Init.ClockEdge));
-#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && \
-    !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && \
-    !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
+#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) &&                \
+    !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 	assert_param(IS_SDMMC_CLOCK_BYPASS(hsd->Init.ClockBypass));
-#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&      \
+#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&                                              \
 	  !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
 	assert_param(IS_SDMMC_CLOCK_POWER_SAVE(hsd->Init.ClockPowerSave));
 	assert_param(IS_SDMMC_BUS_WIDE(hsd->Init.BusWide));
-	assert_param(
-	    IS_SDMMC_HARDWARE_FLOW_CONTROL(hsd->Init.HardwareFlowControl));
+	assert_param(IS_SDMMC_HARDWARE_FLOW_CONTROL(hsd->Init.HardwareFlowControl));
 	assert_param(IS_SDMMC_CLKDIV(hsd->Init.ClockDiv));
 
 	if (hsd->State == HAL_SD_STATE_RESET) {
 		/* Allocate lock resource and initialize it */
 		hsd->Lock = HAL_UNLOCKED;
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 		/* Reset Callback pointers in HAL_SD_STATE_RESET only */
 		hsd->TxCpltCallback = HAL_SD_TxCpltCallback;
 		hsd->RxCpltCallback = HAL_SD_RxCpltCallback;
 		hsd->ErrorCallback = HAL_SD_ErrorCallback;
 		hsd->AbortCpltCallback = HAL_SD_AbortCallback;
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
-		hsd->Read_DMADblBuf0CpltCallback =
-		    HAL_SDEx_Read_DMADoubleBuffer0CpltCallback;
-		hsd->Read_DMADblBuf1CpltCallback =
-		    HAL_SDEx_Read_DMADoubleBuffer1CpltCallback;
-		hsd->Write_DMADblBuf0CpltCallback =
-		    HAL_SDEx_Write_DMADoubleBuffer0CpltCallback;
-		hsd->Write_DMADblBuf1CpltCallback =
-		    HAL_SDEx_Write_DMADoubleBuffer1CpltCallback;
-		hsd->DriveTransceiver_1_8V_Callback =
-		    HAL_SDEx_DriveTransceiver_1_8V_Callback;
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
+		hsd->Read_DMADblBuf0CpltCallback = HAL_SDEx_Read_DMADoubleBuffer0CpltCallback;
+		hsd->Read_DMADblBuf1CpltCallback = HAL_SDEx_Read_DMADoubleBuffer1CpltCallback;
+		hsd->Write_DMADblBuf0CpltCallback = HAL_SDEx_Write_DMADoubleBuffer0CpltCallback;
+		hsd->Write_DMADblBuf1CpltCallback = HAL_SDEx_Write_DMADoubleBuffer1CpltCallback;
+		hsd->DriveTransceiver_1_8V_Callback = HAL_SDEx_DriveTransceiver_1_8V_Callback;
 #endif
 
 		if (hsd->MspInitCallback == NULL) {
@@ -454,17 +443,15 @@ HAL_StatusTypeDef HAL_SD_Init(SD_HandleTypeDef *hsd)
 		return HAL_ERROR;
 	}
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	if (HAL_SD_GetCardStatus(hsd, &CardStatus) != HAL_OK) {
 		return HAL_ERROR;
 	}
 	/* Get Initial Card Speed from Card Status*/
 	speedgrade = CardStatus.UhsSpeedGrade;
 	unitsize = CardStatus.UhsAllocationUnitSize;
-	if ((hsd->SdCard.CardType == CARD_SDHC_SDXC) &&
-	    ((speedgrade != 0U) || (unitsize != 0U))) {
+	if ((hsd->SdCard.CardType == CARD_SDHC_SDXC) && ((speedgrade != 0U) || (unitsize != 0U))) {
 		hsd->SdCard.CardSpeed = CARD_ULTRA_HIGH_SPEED;
 	} else {
 		if (hsd->SdCard.CardType == CARD_SDHC_SDXC) {
@@ -488,7 +475,7 @@ HAL_StatusTypeDef HAL_SD_Init(SD_HandleTypeDef *hsd)
 			return HAL_TIMEOUT;
 		}
 	}
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 	/* Configure the bus wide with the specified value in the
@@ -524,11 +511,10 @@ HAL_StatusTypeDef HAL_SD_InitCard(SD_HandleTypeDef *hsd)
 
 	/* Default SDMMC peripheral configuration for SD card initialization */
 	Init.ClockEdge = SDMMC_CLOCK_EDGE_RISING;
-#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && \
-    !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && \
-    !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
+#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) &&                \
+    !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 	Init.ClockBypass = SDMMC_CLOCK_BYPASS_DISABLE;
-#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&      \
+#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&                                              \
 	  !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
 	Init.ClockPowerSave = SDMMC_CLOCK_POWER_SAVE_DISABLE;
 	Init.BusWide = SDMMC_BUS_WIDE_1B;
@@ -541,52 +527,47 @@ HAL_StatusTypeDef HAL_SD_InitCard(SD_HandleTypeDef *hsd)
 		hsd->ErrorCode = SDMMC_ERROR_INVALID_PARAMETER;
 		return HAL_ERROR;
 	}
-#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && \
-    !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && \
-    !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
+#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) &&                \
+    !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 	Init.ClockDiv = ((sdmmc_clk / SD_INIT_FREQ) - 2U);
 #else
 	Init.ClockDiv = sdmmc_clk / (2U * SD_INIT_FREQ);
 #endif
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	Init.Transceiver = hsd->Init.Transceiver;
 	if (hsd->Init.Transceiver == SDMMC_TRANSCEIVER_ENABLE) {
 		/* Set Transceiver polarity */
 		hsd->Instance->POWER |= SDMMC_POWER_DIRPOL;
 	}
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 	/* Initialize SDMMC peripheral interface with default configuration */
 	(void)SDMMC_Init(hsd->Instance, Init);
 
-#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && \
-    !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && \
-    !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
+#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) &&                \
+    !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 	/* Disable SDMMC Clock */
 	__HAL_SD_DISABLE(hsd);
-#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&      \
+#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&                                              \
 	  !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
 
 	/* Set Power State to ON */
 	(void)SDMMC_PowerState_ON(hsd->Instance);
 
-#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && \
-    !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && \
-    !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
+#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) &&                \
+    !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 	/* Enable SDMMC Clock */
 	__HAL_SD_ENABLE(hsd);
-#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&      \
+#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&                                              \
 	  !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
 
 	/* wait 74 Cycles: required power up waiting time before starting
 	   the SD initialization sequence */
-#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && \
-    !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && \
-    !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
+#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) &&                \
+    !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 	sdmmc_clk = sdmmc_clk / (Init.ClockDiv + 2U);
 #else
 	sdmmc_clk = sdmmc_clk / (2U * Init.ClockDiv);
@@ -639,16 +620,13 @@ HAL_StatusTypeDef HAL_SD_DeInit(SD_HandleTypeDef *hsd)
 
 	hsd->State = HAL_SD_STATE_BUSY;
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	/* Deactivate the 1.8V Mode */
 	if (hsd->Init.Transceiver == SDMMC_TRANSCEIVER_ENABLE) {
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 		if (hsd->DriveTransceiver_1_8V_Callback == NULL) {
-			hsd->DriveTransceiver_1_8V_Callback =
-			    HAL_SDEx_DriveTransceiver_1_8V_Callback;
+			hsd->DriveTransceiver_1_8V_Callback = HAL_SDEx_DriveTransceiver_1_8V_Callback;
 		}
 		hsd->DriveTransceiver_1_8V_Callback(RESET);
 #else
@@ -660,8 +638,7 @@ HAL_StatusTypeDef HAL_SD_DeInit(SD_HandleTypeDef *hsd)
 	/* Set SD power state to off */
 	SD_PowerOFF(hsd);
 
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 	if (hsd->MspDeInitCallback == NULL) {
 		hsd->MspDeInitCallback = HAL_SD_MspDeInit;
 	}
@@ -740,8 +717,7 @@ __weak void HAL_SD_MspDeInit(SD_HandleTypeDef *hsd)
  * @param  Timeout Specify timeout value
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SD_ReadBlocks(SD_HandleTypeDef *hsd, uint8_t *pData,
-				    uint32_t BlockAdd, uint32_t NumberOfBlocks,
+HAL_StatusTypeDef HAL_SD_ReadBlocks(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks,
 				    uint32_t Timeout)
 {
 	SDMMC_DataInitTypeDef config;
@@ -779,20 +755,18 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks(SD_HandleTypeDef *hsd, uint8_t *pData,
 		config.DataBlockSize = SDMMC_DATABLOCK_SIZE_512B;
 		config.TransferDir = SDMMC_TRANSFER_DIR_TO_SDMMC;
 		config.TransferMode = SDMMC_TRANSFER_MODE_BLOCK;
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 		config.DPSM = SDMMC_DPSM_DISABLE;
 #else
 		config.DPSM = SDMMC_DPSM_ENABLE;
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 		(void)SDMMC_ConfigData(hsd->Instance, &config);
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 		__SDMMC_CMDTRANS_ENABLE(hsd->Instance);
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 		/* Read block(s) in polling mode */
@@ -800,14 +774,12 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks(SD_HandleTypeDef *hsd, uint8_t *pData,
 			hsd->Context = SD_CONTEXT_READ_MULTIPLE_BLOCK;
 
 			/* Read Multi Block command */
-			errorstate =
-			    SDMMC_CmdReadMultiBlock(hsd->Instance, add);
+			errorstate = SDMMC_CmdReadMultiBlock(hsd->Instance, add);
 		} else {
 			hsd->Context = SD_CONTEXT_READ_SINGLE_BLOCK;
 
 			/* Read Single Block command */
-			errorstate =
-			    SDMMC_CmdReadSingleBlock(hsd->Instance, add);
+			errorstate = SDMMC_CmdReadSingleBlock(hsd->Instance, add);
 		}
 		if (errorstate != HAL_SD_ERROR_NONE) {
 			/* Clear all the static flags */
@@ -820,34 +792,28 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks(SD_HandleTypeDef *hsd, uint8_t *pData,
 
 		/* Poll on SDMMC flags */
 		dataremaining = config.DataLength;
-		while (!__HAL_SD_GET_FLAG(
-		    hsd, SDMMC_FLAG_RXOVERR | SDMMC_FLAG_DCRCFAIL |
-			     SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_DATAEND)) {
-			if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXFIFOHF) &&
-			    (dataremaining > 0U)) {
+		while (!__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXOVERR | SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT |
+						   SDMMC_FLAG_DATAEND)) {
+			if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXFIFOHF) && (dataremaining > 0U)) {
 				/* Read data from SDMMC Rx FIFO */
 				for (count = 0U; count < 8U; count++) {
 					data = SDMMC_ReadFIFO(hsd->Instance);
 					*tempbuff = (uint8_t)(data & 0xFFU);
 					tempbuff++;
 					dataremaining--;
-					*tempbuff =
-					    (uint8_t)((data >> 8U) & 0xFFU);
+					*tempbuff = (uint8_t)((data >> 8U) & 0xFFU);
 					tempbuff++;
 					dataremaining--;
-					*tempbuff =
-					    (uint8_t)((data >> 16U) & 0xFFU);
+					*tempbuff = (uint8_t)((data >> 16U) & 0xFFU);
 					tempbuff++;
 					dataremaining--;
-					*tempbuff =
-					    (uint8_t)((data >> 24U) & 0xFFU);
+					*tempbuff = (uint8_t)((data >> 24U) & 0xFFU);
 					tempbuff++;
 					dataremaining--;
 				}
 			}
 
-			if (((HAL_GetTick() - tickstart) >= Timeout) ||
-			    (Timeout == 0U)) {
+			if (((HAL_GetTick() - tickstart) >= Timeout) || (Timeout == 0U)) {
 				/* Clear all the static flags */
 				__HAL_SD_CLEAR_FLAG(hsd, SDMMC_STATIC_FLAGS);
 				hsd->ErrorCode |= HAL_SD_ERROR_TIMEOUT;
@@ -856,24 +822,20 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks(SD_HandleTypeDef *hsd, uint8_t *pData,
 				return HAL_TIMEOUT;
 			}
 		}
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 		__SDMMC_CMDTRANS_DISABLE(hsd->Instance);
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 		/* Send stop transmission command in case of multiblock read */
-		if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_DATAEND) &&
-		    (NumberOfBlocks > 1U)) {
+		if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_DATAEND) && (NumberOfBlocks > 1U)) {
 			if (hsd->SdCard.CardType != CARD_SECURED) {
 				/* Send stop transmission command */
-				errorstate =
-				    SDMMC_CmdStopTransfer(hsd->Instance);
+				errorstate = SDMMC_CmdStopTransfer(hsd->Instance);
 				if (errorstate != HAL_SD_ERROR_NONE) {
 					/* Clear all the static flags */
-					__HAL_SD_CLEAR_FLAG(hsd,
-							    SDMMC_STATIC_FLAGS);
+					__HAL_SD_CLEAR_FLAG(hsd, SDMMC_STATIC_FLAGS);
 					hsd->ErrorCode |= errorstate;
 					hsd->State = HAL_SD_STATE_READY;
 					hsd->Context = SD_CONTEXT_NONE;
@@ -908,12 +870,10 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks(SD_HandleTypeDef *hsd, uint8_t *pData,
 			/* Nothing to do */
 		}
 
-#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && \
-    !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && \
-    !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
+#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) &&                \
+    !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 		/* Empty FIFO if there is still any data */
-		while ((__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXDAVL)) &&
-		       (dataremaining > 0U)) {
+		while ((__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXDAVL)) && (dataremaining > 0U)) {
 			data = SDMMC_ReadFIFO(hsd->Instance);
 			*tempbuff = (uint8_t)(data & 0xFFU);
 			tempbuff++;
@@ -928,8 +888,7 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks(SD_HandleTypeDef *hsd, uint8_t *pData,
 			tempbuff++;
 			dataremaining--;
 
-			if (((HAL_GetTick() - tickstart) >= Timeout) ||
-			    (Timeout == 0U)) {
+			if (((HAL_GetTick() - tickstart) >= Timeout) || (Timeout == 0U)) {
 				/* Clear all the static flags */
 				__HAL_SD_CLEAR_FLAG(hsd, SDMMC_STATIC_FLAGS);
 				hsd->ErrorCode |= HAL_SD_ERROR_TIMEOUT;
@@ -938,7 +897,7 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks(SD_HandleTypeDef *hsd, uint8_t *pData,
 				return HAL_ERROR;
 			}
 		}
-#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&      \
+#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&                                              \
 	  !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
 
 		/* Clear all the static flags */
@@ -965,8 +924,7 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks(SD_HandleTypeDef *hsd, uint8_t *pData,
  * @param  Timeout Specify timeout value
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SD_WriteBlocks(SD_HandleTypeDef *hsd, uint8_t *pData,
-				     uint32_t BlockAdd, uint32_t NumberOfBlocks,
+HAL_StatusTypeDef HAL_SD_WriteBlocks(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks,
 				     uint32_t Timeout)
 {
 	SDMMC_DataInitTypeDef config;
@@ -1004,20 +962,18 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks(SD_HandleTypeDef *hsd, uint8_t *pData,
 		config.DataBlockSize = SDMMC_DATABLOCK_SIZE_512B;
 		config.TransferDir = SDMMC_TRANSFER_DIR_TO_CARD;
 		config.TransferMode = SDMMC_TRANSFER_MODE_BLOCK;
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 		config.DPSM = SDMMC_DPSM_DISABLE;
 #else
 		config.DPSM = SDMMC_DPSM_ENABLE;
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 		(void)SDMMC_ConfigData(hsd->Instance, &config);
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 		__SDMMC_CMDTRANS_ENABLE(hsd->Instance);
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 		/* Write Blocks in Polling mode */
@@ -1025,14 +981,12 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks(SD_HandleTypeDef *hsd, uint8_t *pData,
 			hsd->Context = SD_CONTEXT_WRITE_MULTIPLE_BLOCK;
 
 			/* Write Multi Block command */
-			errorstate =
-			    SDMMC_CmdWriteMultiBlock(hsd->Instance, add);
+			errorstate = SDMMC_CmdWriteMultiBlock(hsd->Instance, add);
 		} else {
 			hsd->Context = SD_CONTEXT_WRITE_SINGLE_BLOCK;
 
 			/* Write Single Block command */
-			errorstate =
-			    SDMMC_CmdWriteSingleBlock(hsd->Instance, add);
+			errorstate = SDMMC_CmdWriteSingleBlock(hsd->Instance, add);
 		}
 		if (errorstate != HAL_SD_ERROR_NONE) {
 			/* Clear all the static flags */
@@ -1045,11 +999,9 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks(SD_HandleTypeDef *hsd, uint8_t *pData,
 
 		/* Write block(s) in polling mode */
 		dataremaining = config.DataLength;
-		while (!__HAL_SD_GET_FLAG(
-		    hsd, SDMMC_FLAG_TXUNDERR | SDMMC_FLAG_DCRCFAIL |
-			     SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_DATAEND)) {
-			if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_TXFIFOHE) &&
-			    (dataremaining > 0U)) {
+		while (!__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_TXUNDERR | SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT |
+						   SDMMC_FLAG_DATAEND)) {
+			if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_TXFIFOHE) && (dataremaining > 0U)) {
 				/* Write data to SDMMC Tx FIFO */
 				for (count = 0U; count < 8U; count++) {
 					data = (uint32_t)(*tempbuff);
@@ -1064,13 +1016,11 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks(SD_HandleTypeDef *hsd, uint8_t *pData,
 					data |= ((uint32_t)(*tempbuff) << 24U);
 					tempbuff++;
 					dataremaining--;
-					(void)SDMMC_WriteFIFO(hsd->Instance,
-							      &data);
+					(void)SDMMC_WriteFIFO(hsd->Instance, &data);
 				}
 			}
 
-			if (((HAL_GetTick() - tickstart) >= Timeout) ||
-			    (Timeout == 0U)) {
+			if (((HAL_GetTick() - tickstart) >= Timeout) || (Timeout == 0U)) {
 				/* Clear all the static flags */
 				__HAL_SD_CLEAR_FLAG(hsd, SDMMC_STATIC_FLAGS);
 				hsd->ErrorCode |= errorstate;
@@ -1079,24 +1029,20 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks(SD_HandleTypeDef *hsd, uint8_t *pData,
 				return HAL_TIMEOUT;
 			}
 		}
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 		__SDMMC_CMDTRANS_DISABLE(hsd->Instance);
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 		/* Send stop transmission command in case of multiblock write */
-		if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_DATAEND) &&
-		    (NumberOfBlocks > 1U)) {
+		if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_DATAEND) && (NumberOfBlocks > 1U)) {
 			if (hsd->SdCard.CardType != CARD_SECURED) {
 				/* Send stop transmission command */
-				errorstate =
-				    SDMMC_CmdStopTransfer(hsd->Instance);
+				errorstate = SDMMC_CmdStopTransfer(hsd->Instance);
 				if (errorstate != HAL_SD_ERROR_NONE) {
 					/* Clear all the static flags */
-					__HAL_SD_CLEAR_FLAG(hsd,
-							    SDMMC_STATIC_FLAGS);
+					__HAL_SD_CLEAR_FLAG(hsd, SDMMC_STATIC_FLAGS);
 					hsd->ErrorCode |= errorstate;
 					hsd->State = HAL_SD_STATE_READY;
 					hsd->Context = SD_CONTEXT_NONE;
@@ -1156,8 +1102,7 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks(SD_HandleTypeDef *hsd, uint8_t *pData,
  * @param  NumberOfBlocks Number of blocks to read.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SD_ReadBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData,
-				       uint32_t BlockAdd,
+HAL_StatusTypeDef HAL_SD_ReadBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd,
 				       uint32_t NumberOfBlocks)
 {
 	SDMMC_DataInitTypeDef config;
@@ -1195,37 +1140,31 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData,
 		config.DataBlockSize = SDMMC_DATABLOCK_SIZE_512B;
 		config.TransferDir = SDMMC_TRANSFER_DIR_TO_SDMMC;
 		config.TransferMode = SDMMC_TRANSFER_MODE_BLOCK;
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 		config.DPSM = SDMMC_DPSM_DISABLE;
 #else
 		config.DPSM = SDMMC_DPSM_ENABLE;
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 		(void)SDMMC_ConfigData(hsd->Instance, &config);
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 		__SDMMC_CMDTRANS_ENABLE(hsd->Instance);
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 		/* Read Blocks in IT mode */
 		if (NumberOfBlocks > 1U) {
-			hsd->Context =
-			    (SD_CONTEXT_READ_MULTIPLE_BLOCK | SD_CONTEXT_IT);
+			hsd->Context = (SD_CONTEXT_READ_MULTIPLE_BLOCK | SD_CONTEXT_IT);
 
 			/* Read Multi Block command */
-			errorstate =
-			    SDMMC_CmdReadMultiBlock(hsd->Instance, add);
+			errorstate = SDMMC_CmdReadMultiBlock(hsd->Instance, add);
 		} else {
-			hsd->Context =
-			    (SD_CONTEXT_READ_SINGLE_BLOCK | SD_CONTEXT_IT);
+			hsd->Context = (SD_CONTEXT_READ_SINGLE_BLOCK | SD_CONTEXT_IT);
 
 			/* Read Single Block command */
-			errorstate =
-			    SDMMC_CmdReadSingleBlock(hsd->Instance, add);
+			errorstate = SDMMC_CmdReadSingleBlock(hsd->Instance, add);
 		}
 		if (errorstate != HAL_SD_ERROR_NONE) {
 			/* Clear all the static flags */
@@ -1236,8 +1175,7 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData,
 			return HAL_ERROR;
 		}
 
-		__HAL_SD_ENABLE_IT(hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT |
-					 SDMMC_IT_RXOVERR | SDMMC_IT_DATAEND |
+		__HAL_SD_ENABLE_IT(hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_RXOVERR | SDMMC_IT_DATAEND |
 					 SDMMC_FLAG_RXFIFOHF));
 
 		return HAL_OK;
@@ -1259,8 +1197,7 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData,
  * @param  NumberOfBlocks Number of blocks to write
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SD_WriteBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData,
-					uint32_t BlockAdd,
+HAL_StatusTypeDef HAL_SD_WriteBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd,
 					uint32_t NumberOfBlocks)
 {
 	SDMMC_DataInitTypeDef config;
@@ -1292,9 +1229,8 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData,
 			add *= 512U;
 		}
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 		/* Configure the SD DPSM (Data Path State Machine) */
 		config.DataTimeOut = SDMMC_DATATIMEOUT;
 		config.DataLength = BLOCKSIZE * NumberOfBlocks;
@@ -1305,24 +1241,20 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData,
 		(void)SDMMC_ConfigData(hsd->Instance, &config);
 
 		__SDMMC_CMDTRANS_ENABLE(hsd->Instance);
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 		/* Write Blocks in Polling mode */
 		if (NumberOfBlocks > 1U) {
-			hsd->Context =
-			    (SD_CONTEXT_WRITE_MULTIPLE_BLOCK | SD_CONTEXT_IT);
+			hsd->Context = (SD_CONTEXT_WRITE_MULTIPLE_BLOCK | SD_CONTEXT_IT);
 
 			/* Write Multi Block command */
-			errorstate =
-			    SDMMC_CmdWriteMultiBlock(hsd->Instance, add);
+			errorstate = SDMMC_CmdWriteMultiBlock(hsd->Instance, add);
 		} else {
-			hsd->Context =
-			    (SD_CONTEXT_WRITE_SINGLE_BLOCK | SD_CONTEXT_IT);
+			hsd->Context = (SD_CONTEXT_WRITE_SINGLE_BLOCK | SD_CONTEXT_IT);
 
 			/* Write Single Block command */
-			errorstate =
-			    SDMMC_CmdWriteSingleBlock(hsd->Instance, add);
+			errorstate = SDMMC_CmdWriteSingleBlock(hsd->Instance, add);
 		}
 		if (errorstate != HAL_SD_ERROR_NONE) {
 			/* Clear all the static flags */
@@ -1333,9 +1265,8 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData,
 			return HAL_ERROR;
 		}
 
-#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && \
-    !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && \
-    !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
+#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) &&                \
+    !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 		/* Configure the SD DPSM (Data Path State Machine) */
 		config.DataTimeOut = SDMMC_DATATIMEOUT;
 		config.DataLength = BLOCKSIZE * NumberOfBlocks;
@@ -1344,12 +1275,11 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData,
 		config.TransferMode = SDMMC_TRANSFER_MODE_BLOCK;
 		config.DPSM = SDMMC_DPSM_ENABLE;
 		(void)SDMMC_ConfigData(hsd->Instance, &config);
-#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&      \
+#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&                                              \
 	  !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
 
 		/* Enable transfer interrupts */
-		__HAL_SD_ENABLE_IT(hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT |
-					 SDMMC_IT_TXUNDERR | SDMMC_IT_DATAEND |
+		__HAL_SD_ENABLE_IT(hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_TXUNDERR | SDMMC_IT_DATAEND |
 					 SDMMC_FLAG_TXFIFOHE));
 
 		return HAL_OK;
@@ -1371,8 +1301,7 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData,
  * @param  NumberOfBlocks Number of blocks to read.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SD_ReadBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData,
-					uint32_t BlockAdd,
+HAL_StatusTypeDef HAL_SD_ReadBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd,
 					uint32_t NumberOfBlocks)
 {
 	SDMMC_DataInitTypeDef config;
@@ -1397,9 +1326,8 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData,
 		/* Initialize data control register */
 		hsd->Instance->DCTRL = 0U;
 
-#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && \
-    !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && \
-    !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
+#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) &&                \
+    !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 		/* Set the DMA transfer complete callback */
 		hsd->hdmarx->XferCpltCallback = SD_DMAReceiveCplt;
 
@@ -1410,11 +1338,8 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData,
 		hsd->hdmarx->XferAbortCallback = NULL;
 
 		/* Enable the DMA Channel */
-		if (HAL_DMA_Start_IT(hsd->hdmarx,
-				     (uint32_t)&hsd->Instance->FIFO,
-				     (uint32_t)pData,
-				     (uint32_t)(BLOCKSIZE * NumberOfBlocks) /
-					 4U) != HAL_OK) {
+		if (HAL_DMA_Start_IT(hsd->hdmarx, (uint32_t)&hsd->Instance->FIFO, (uint32_t)pData,
+				     (uint32_t)(BLOCKSIZE * NumberOfBlocks) / 4U) != HAL_OK) {
 			__HAL_SD_CLEAR_FLAG(hsd, SDMMC_STATIC_FLAGS);
 			hsd->ErrorCode |= HAL_SD_ERROR_DMA;
 			hsd->State = HAL_SD_STATE_READY;
@@ -1425,7 +1350,7 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData,
 #else
 		hsd->pRxBuffPtr = pData;
 		hsd->RxXferSize = BLOCKSIZE * NumberOfBlocks;
-#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&      \
+#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&                                              \
 	  !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
 
 			if (hsd->SdCard.CardType != CARD_SDHC_SDXC) {
@@ -1438,41 +1363,35 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData,
 			config.DataBlockSize = SDMMC_DATABLOCK_SIZE_512B;
 			config.TransferDir = SDMMC_TRANSFER_DIR_TO_SDMMC;
 			config.TransferMode = SDMMC_TRANSFER_MODE_BLOCK;
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 			config.DPSM = SDMMC_DPSM_DISABLE;
 #else
 		config.DPSM = SDMMC_DPSM_ENABLE;
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 			(void)SDMMC_ConfigData(hsd->Instance, &config);
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 
 			__SDMMC_CMDTRANS_ENABLE(hsd->Instance);
 			hsd->Instance->IDMABASE0 = (uint32_t)pData;
 			hsd->Instance->IDMACTRL = SDMMC_ENABLE_IDMA_SINGLE_BUFF;
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 			/* Read Blocks in DMA mode */
 			if (NumberOfBlocks > 1U) {
-				hsd->Context = (SD_CONTEXT_READ_MULTIPLE_BLOCK |
-						SD_CONTEXT_DMA);
+				hsd->Context = (SD_CONTEXT_READ_MULTIPLE_BLOCK | SD_CONTEXT_DMA);
 
 				/* Read Multi Block command */
-				errorstate =
-				    SDMMC_CmdReadMultiBlock(hsd->Instance, add);
+				errorstate = SDMMC_CmdReadMultiBlock(hsd->Instance, add);
 			} else {
-				hsd->Context = (SD_CONTEXT_READ_SINGLE_BLOCK |
-						SD_CONTEXT_DMA);
+				hsd->Context = (SD_CONTEXT_READ_SINGLE_BLOCK | SD_CONTEXT_DMA);
 
 				/* Read Single Block command */
-				errorstate = SDMMC_CmdReadSingleBlock(
-				    hsd->Instance, add);
+				errorstate = SDMMC_CmdReadSingleBlock(hsd->Instance, add);
 			}
 			if (errorstate != HAL_SD_ERROR_NONE) {
 				/* Clear all the static flags */
@@ -1485,13 +1404,11 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData,
 
 			/* Enable transfer interrupts */
 			__HAL_SD_ENABLE_IT(
-			    hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT |
-				  SDMMC_IT_RXOVERR | SDMMC_IT_DATAEND));
+			    hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_RXOVERR | SDMMC_IT_DATAEND));
 
 			return HAL_OK;
-#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && \
-    !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && \
-    !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
+#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) &&                \
+    !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 		}
 #endif
 	} else {
@@ -1512,8 +1429,7 @@ HAL_StatusTypeDef HAL_SD_ReadBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData,
  * @param  NumberOfBlocks Number of blocks to write
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SD_WriteBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData,
-					 uint32_t BlockAdd,
+HAL_StatusTypeDef HAL_SD_WriteBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd,
 					 uint32_t NumberOfBlocks)
 {
 	SDMMC_DataInitTypeDef config;
@@ -1538,9 +1454,8 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData,
 		/* Initialize data control register */
 		hsd->Instance->DCTRL = 0U;
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 		hsd->pTxBuffPtr = pData;
 		hsd->TxXferSize = BLOCKSIZE * NumberOfBlocks;
 #else
@@ -1552,16 +1467,15 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData,
 
 		/* Set the DMA Abort callback */
 		hsd->hdmatx->XferAbortCallback = NULL;
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 		if (hsd->SdCard.CardType != CARD_SDHC_SDXC) {
 			add *= 512U;
 		}
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 		/* Configure the SD DPSM (Data Path State Machine) */
 		config.DataTimeOut = SDMMC_DATATIMEOUT;
 		config.DataLength = BLOCKSIZE * NumberOfBlocks;
@@ -1575,24 +1489,20 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData,
 
 		hsd->Instance->IDMABASE0 = (uint32_t)pData;
 		hsd->Instance->IDMACTRL = SDMMC_ENABLE_IDMA_SINGLE_BUFF;
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 		/* Write Blocks in Polling mode */
 		if (NumberOfBlocks > 1U) {
-			hsd->Context =
-			    (SD_CONTEXT_WRITE_MULTIPLE_BLOCK | SD_CONTEXT_DMA);
+			hsd->Context = (SD_CONTEXT_WRITE_MULTIPLE_BLOCK | SD_CONTEXT_DMA);
 
 			/* Write Multi Block command */
-			errorstate =
-			    SDMMC_CmdWriteMultiBlock(hsd->Instance, add);
+			errorstate = SDMMC_CmdWriteMultiBlock(hsd->Instance, add);
 		} else {
-			hsd->Context =
-			    (SD_CONTEXT_WRITE_SINGLE_BLOCK | SD_CONTEXT_DMA);
+			hsd->Context = (SD_CONTEXT_WRITE_SINGLE_BLOCK | SD_CONTEXT_DMA);
 
 			/* Write Single Block command */
-			errorstate =
-			    SDMMC_CmdWriteSingleBlock(hsd->Instance, add);
+			errorstate = SDMMC_CmdWriteSingleBlock(hsd->Instance, add);
 		}
 		if (errorstate != HAL_SD_ERROR_NONE) {
 			/* Clear all the static flags */
@@ -1603,17 +1513,14 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData,
 			return HAL_ERROR;
 		}
 
-#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && \
-    !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && \
-    !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
+#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) &&                \
+    !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 		/* Enable SDMMC DMA transfer */
 		__HAL_SD_DMA_ENABLE(hsd);
 
 		/* Enable the DMA Channel */
-		if (HAL_DMA_Start_IT(hsd->hdmatx, (uint32_t)pData,
-				     (uint32_t)&hsd->Instance->FIFO,
-				     (uint32_t)(BLOCKSIZE * NumberOfBlocks) /
-					 4U) != HAL_OK) {
+		if (HAL_DMA_Start_IT(hsd->hdmatx, (uint32_t)pData, (uint32_t)&hsd->Instance->FIFO,
+				     (uint32_t)(BLOCKSIZE * NumberOfBlocks) / 4U) != HAL_OK) {
 			__HAL_SD_CLEAR_FLAG(hsd, SDMMC_STATIC_FLAGS);
 			hsd->ErrorCode |= HAL_SD_ERROR_DMA;
 			hsd->State = HAL_SD_STATE_READY;
@@ -1630,20 +1537,16 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData,
 			(void)SDMMC_ConfigData(hsd->Instance, &config);
 
 			/* Enable SD Error interrupts */
-			__HAL_SD_ENABLE_IT(hsd, (SDMMC_IT_DCRCFAIL |
-						 SDMMC_IT_DTIMEOUT |
-						 SDMMC_IT_TXUNDERR));
+			__HAL_SD_ENABLE_IT(hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_TXUNDERR));
 #else
 		/* Enable transfer interrupts */
-		__HAL_SD_ENABLE_IT(hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT |
-					 SDMMC_IT_TXUNDERR | SDMMC_IT_DATAEND));
-#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&      \
+		__HAL_SD_ENABLE_IT(hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_TXUNDERR | SDMMC_IT_DATAEND));
+#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&                                              \
 	  !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
 
 			return HAL_OK;
-#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && \
-    !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && \
-    !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
+#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) &&                \
+    !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 		}
 #endif
 	} else {
@@ -1660,8 +1563,7 @@ HAL_StatusTypeDef HAL_SD_WriteBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData,
  * @param  BlockEndAdd End Block address
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SD_Erase(SD_HandleTypeDef *hsd, uint32_t BlockStartAdd,
-			       uint32_t BlockEndAdd)
+HAL_StatusTypeDef HAL_SD_Erase(SD_HandleTypeDef *hsd, uint32_t BlockStartAdd, uint32_t BlockEndAdd)
 {
 	uint32_t errorstate;
 	uint32_t start_add = BlockStartAdd;
@@ -1691,8 +1593,7 @@ HAL_StatusTypeDef HAL_SD_Erase(SD_HandleTypeDef *hsd, uint32_t BlockStartAdd,
 			return HAL_ERROR;
 		}
 
-		if ((SDMMC_GetResponse(hsd->Instance, SDMMC_RESP1) &
-		     SDMMC_CARD_LOCKED) == SDMMC_CARD_LOCKED) {
+		if ((SDMMC_GetResponse(hsd->Instance, SDMMC_RESP1) & SDMMC_CARD_LOCKED) == SDMMC_CARD_LOCKED) {
 			/* Clear all the static flags */
 			__HAL_SD_CLEAR_FLAG(hsd, SDMMC_STATIC_FLAGS);
 			hsd->ErrorCode |= HAL_SD_ERROR_LOCK_UNLOCK_FAILED;
@@ -1711,8 +1612,7 @@ HAL_StatusTypeDef HAL_SD_Erase(SD_HandleTypeDef *hsd, uint32_t BlockStartAdd,
 		if (hsd->SdCard.CardType != CARD_SECURED) {
 			/* Send CMD32 SD_ERASE_GRP_START with argument as addr
 			 */
-			errorstate =
-			    SDMMC_CmdSDEraseStartAdd(hsd->Instance, start_add);
+			errorstate = SDMMC_CmdSDEraseStartAdd(hsd->Instance, start_add);
 			if (errorstate != HAL_SD_ERROR_NONE) {
 				/* Clear all the static flags */
 				__HAL_SD_CLEAR_FLAG(hsd, SDMMC_STATIC_FLAGS);
@@ -1722,8 +1622,7 @@ HAL_StatusTypeDef HAL_SD_Erase(SD_HandleTypeDef *hsd, uint32_t BlockStartAdd,
 			}
 
 			/* Send CMD33 SD_ERASE_GRP_END with argument as addr  */
-			errorstate =
-			    SDMMC_CmdSDEraseEndAdd(hsd->Instance, end_add);
+			errorstate = SDMMC_CmdSDEraseEndAdd(hsd->Instance, end_add);
 			if (errorstate != HAL_SD_ERROR_NONE) {
 				/* Clear all the static flags */
 				__HAL_SD_CLEAR_FLAG(hsd, SDMMC_STATIC_FLAGS);
@@ -1762,41 +1661,32 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 	uint32_t context = hsd->Context;
 
 	/* Check for SDMMC interrupt flags */
-	if ((__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXFIFOHF) != RESET) &&
-	    ((context & SD_CONTEXT_IT) != 0U)) {
+	if ((__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXFIFOHF) != RESET) && ((context & SD_CONTEXT_IT) != 0U)) {
 		SD_Read_IT(hsd);
 	}
 
 	else if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_DATAEND) != RESET) {
 		__HAL_SD_CLEAR_FLAG(hsd, SDMMC_FLAG_DATAEND);
 
-		__HAL_SD_DISABLE_IT(hsd,
-				    SDMMC_IT_DATAEND | SDMMC_IT_DCRCFAIL |
-					SDMMC_IT_DTIMEOUT | SDMMC_IT_TXUNDERR |
-					SDMMC_IT_RXOVERR | SDMMC_IT_TXFIFOHE |
-					SDMMC_IT_RXFIFOHF);
+		__HAL_SD_DISABLE_IT(hsd, SDMMC_IT_DATAEND | SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_TXUNDERR |
+					     SDMMC_IT_RXOVERR | SDMMC_IT_TXFIFOHE | SDMMC_IT_RXFIFOHF);
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 		__HAL_SD_DISABLE_IT(hsd, SDMMC_IT_IDMABTC);
 		__SDMMC_CMDTRANS_DISABLE(hsd->Instance);
 #else
 		hsd->Instance->DCTRL &= ~(SDMMC_DCTRL_DTEN);
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 		if ((context & SD_CONTEXT_IT) != 0U) {
-			if (((context & SD_CONTEXT_READ_MULTIPLE_BLOCK) !=
-			     0U) ||
-			    ((context & SD_CONTEXT_WRITE_MULTIPLE_BLOCK) !=
-			     0U)) {
-				errorstate =
-				    SDMMC_CmdStopTransfer(hsd->Instance);
+			if (((context & SD_CONTEXT_READ_MULTIPLE_BLOCK) != 0U) ||
+			    ((context & SD_CONTEXT_WRITE_MULTIPLE_BLOCK) != 0U)) {
+				errorstate = SDMMC_CmdStopTransfer(hsd->Instance);
 				if (errorstate != HAL_SD_ERROR_NONE) {
 					hsd->ErrorCode |= errorstate;
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 					hsd->ErrorCallback(hsd);
 #else
 					HAL_SD_ErrorCallback(hsd);
@@ -1810,42 +1700,34 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 			hsd->State = HAL_SD_STATE_READY;
 			hsd->Context = SD_CONTEXT_NONE;
 			if (((context & SD_CONTEXT_READ_SINGLE_BLOCK) != 0U) ||
-			    ((context & SD_CONTEXT_READ_MULTIPLE_BLOCK) !=
-			     0U)) {
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+			    ((context & SD_CONTEXT_READ_MULTIPLE_BLOCK) != 0U)) {
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 				hsd->RxCpltCallback(hsd);
 #else
 				HAL_SD_RxCpltCallback(hsd);
 #endif /* USE_HAL_SD_REGISTER_CALLBACKS */
 			} else {
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 				hsd->TxCpltCallback(hsd);
 #else
 				HAL_SD_TxCpltCallback(hsd);
 #endif /* USE_HAL_SD_REGISTER_CALLBACKS */
 			}
 		} else if ((context & SD_CONTEXT_DMA) != 0U) {
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 			hsd->Instance->DLEN = 0;
 			hsd->Instance->DCTRL = 0;
 			hsd->Instance->IDMACTRL = SDMMC_DISABLE_IDMA;
 
 			/* Stop Transfer for Write Multi blocks or Read Multi
 			 * blocks */
-			if (((context & SD_CONTEXT_READ_MULTIPLE_BLOCK) !=
-			     0U) ||
-			    ((context & SD_CONTEXT_WRITE_MULTIPLE_BLOCK) !=
-			     0U)) {
-				errorstate =
-				    SDMMC_CmdStopTransfer(hsd->Instance);
+			if (((context & SD_CONTEXT_READ_MULTIPLE_BLOCK) != 0U) ||
+			    ((context & SD_CONTEXT_WRITE_MULTIPLE_BLOCK) != 0U)) {
+				errorstate = SDMMC_CmdStopTransfer(hsd->Instance);
 				if (errorstate != HAL_SD_ERROR_NONE) {
 					hsd->ErrorCode |= errorstate;
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 					hsd->ErrorCallback(hsd);
 #else
 					HAL_SD_ErrorCallback(hsd);
@@ -1856,20 +1738,16 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 			hsd->State = HAL_SD_STATE_READY;
 			hsd->Context = SD_CONTEXT_NONE;
 			if (((context & SD_CONTEXT_WRITE_SINGLE_BLOCK) != 0U) ||
-			    ((context & SD_CONTEXT_WRITE_MULTIPLE_BLOCK) !=
-			     0U)) {
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+			    ((context & SD_CONTEXT_WRITE_MULTIPLE_BLOCK) != 0U)) {
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 				hsd->TxCpltCallback(hsd);
 #else
 				HAL_SD_TxCpltCallback(hsd);
 #endif /* USE_HAL_SD_REGISTER_CALLBACKS */
 			}
 			if (((context & SD_CONTEXT_READ_SINGLE_BLOCK) != 0U) ||
-			    ((context & SD_CONTEXT_READ_MULTIPLE_BLOCK) !=
-			     0U)) {
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+			    ((context & SD_CONTEXT_READ_MULTIPLE_BLOCK) != 0U)) {
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 				hsd->RxCpltCallback(hsd);
 #else
 				HAL_SD_RxCpltCallback(hsd);
@@ -1877,12 +1755,10 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 			}
 #else
 			if ((context & SD_CONTEXT_WRITE_MULTIPLE_BLOCK) != 0U) {
-				errorstate =
-				    SDMMC_CmdStopTransfer(hsd->Instance);
+				errorstate = SDMMC_CmdStopTransfer(hsd->Instance);
 				if (errorstate != HAL_SD_ERROR_NONE) {
 					hsd->ErrorCode |= errorstate;
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 					hsd->ErrorCallback(hsd);
 #else
 					HAL_SD_ErrorCallback(hsd);
@@ -1890,38 +1766,32 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 				}
 			}
 			if (((context & SD_CONTEXT_READ_SINGLE_BLOCK) == 0U) &&
-			    ((context & SD_CONTEXT_READ_MULTIPLE_BLOCK) ==
-			     0U)) {
+			    ((context & SD_CONTEXT_READ_MULTIPLE_BLOCK) == 0U)) {
 				/* Disable the DMA transfer for transmit request
 				by setting the DMAEN bit in the SD DCTRL
 				register */
-				hsd->Instance->DCTRL &=
-				    (uint32_t) ~((uint32_t)SDMMC_DCTRL_DMAEN);
+				hsd->Instance->DCTRL &= (uint32_t) ~((uint32_t)SDMMC_DCTRL_DMAEN);
 
 				hsd->State = HAL_SD_STATE_READY;
 
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 				hsd->TxCpltCallback(hsd);
 #else
 				HAL_SD_TxCpltCallback(hsd);
 #endif /* USE_HAL_SD_REGISTER_CALLBACKS */
 			}
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 		} else {
 			/* Nothing to do */
 		}
 	}
 
-	else if ((__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_TXFIFOHE) != RESET) &&
-		 ((context & SD_CONTEXT_IT) != 0U)) {
+	else if ((__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_TXFIFOHE) != RESET) && ((context & SD_CONTEXT_IT) != 0U)) {
 		SD_Write_IT(hsd);
 	}
 
-	else if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_DCRCFAIL |
-					    SDMMC_FLAG_DTIMEOUT |
-					    SDMMC_FLAG_RXOVERR |
+	else if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_RXOVERR |
 					    SDMMC_FLAG_TXUNDERR) != RESET) {
 		/* Set Error code */
 		if (__HAL_SD_GET_FLAG(hsd, SDMMC_IT_DCRCFAIL) != RESET) {
@@ -1941,26 +1811,22 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 		__HAL_SD_CLEAR_FLAG(hsd, SDMMC_STATIC_DATA_FLAGS);
 
 		/* Disable all interrupts */
-		__HAL_SD_DISABLE_IT(hsd, SDMMC_IT_DATAEND | SDMMC_IT_DCRCFAIL |
-					     SDMMC_IT_DTIMEOUT |
-					     SDMMC_IT_TXUNDERR |
+		__HAL_SD_DISABLE_IT(hsd, SDMMC_IT_DATAEND | SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_TXUNDERR |
 					     SDMMC_IT_RXOVERR);
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 		__SDMMC_CMDTRANS_DISABLE(hsd->Instance);
 		hsd->Instance->DCTRL |= SDMMC_DCTRL_FIFORST;
 		hsd->Instance->CMD |= SDMMC_CMD_CMDSTOP;
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 		hsd->ErrorCode |= SDMMC_CmdStopTransfer(hsd->Instance);
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 		hsd->Instance->CMD &= ~(SDMMC_CMD_CMDSTOP);
 		__HAL_SD_CLEAR_FLAG(hsd, SDMMC_FLAG_DABORT);
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 		if ((context & SD_CONTEXT_IT) != 0U) {
@@ -1968,16 +1834,14 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 			 * the process */
 			hsd->State = HAL_SD_STATE_READY;
 			hsd->Context = SD_CONTEXT_NONE;
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 			hsd->ErrorCallback(hsd);
 #else
 			HAL_SD_ErrorCallback(hsd);
 #endif /* USE_HAL_SD_REGISTER_CALLBACKS */
 		} else if ((context & SD_CONTEXT_DMA) != 0U) {
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 			if (hsd->ErrorCode != HAL_SD_ERROR_NONE) {
 				/* Disable Internal DMA */
 				__HAL_SD_DISABLE_IT(hsd, SDMMC_IT_IDMABTC);
@@ -1986,8 +1850,7 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 				/* Set the SD state to ready to be able to start
 				 * again the process */
 				hsd->State = HAL_SD_STATE_READY;
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 				hsd->ErrorCallback(hsd);
 #else
 				HAL_SD_ErrorCallback(hsd);
@@ -1996,18 +1859,15 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 #else
 			/* Abort the SD DMA channel */
 			if (((context & SD_CONTEXT_WRITE_SINGLE_BLOCK) != 0U) ||
-			    ((context & SD_CONTEXT_WRITE_MULTIPLE_BLOCK) !=
-			     0U)) {
+			    ((context & SD_CONTEXT_WRITE_MULTIPLE_BLOCK) != 0U)) {
 				/* Set the DMA Tx abort callback */
 				hsd->hdmatx->XferAbortCallback = SD_DMATxAbort;
 				/* Abort DMA in IT mode */
 				if (HAL_DMA_Abort_IT(hsd->hdmatx) != HAL_OK) {
 					SD_DMATxAbort(hsd->hdmatx);
 				}
-			} else if (((context & SD_CONTEXT_READ_SINGLE_BLOCK) !=
-				    0U) ||
-				   ((context &
-				     SD_CONTEXT_READ_MULTIPLE_BLOCK) != 0U)) {
+			} else if (((context & SD_CONTEXT_READ_SINGLE_BLOCK) != 0U) ||
+				   ((context & SD_CONTEXT_READ_MULTIPLE_BLOCK) != 0U)) {
 				/* Set the DMA Rx abort callback */
 				hsd->hdmarx->XferAbortCallback = SD_DMARxAbort;
 				/* Abort DMA in IT mode */
@@ -2018,41 +1878,35 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 				hsd->ErrorCode = HAL_SD_ERROR_NONE;
 				hsd->State = HAL_SD_STATE_READY;
 				hsd->Context = SD_CONTEXT_NONE;
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 				hsd->AbortCpltCallback(hsd);
 #else
 				HAL_SD_AbortCallback(hsd);
 #endif /* USE_HAL_SD_REGISTER_CALLBACKS */
 			}
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 		} else {
 			/* Nothing to do */
 		}
 	}
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	else if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_IDMABTC) != RESET) {
 		__HAL_SD_CLEAR_FLAG(hsd, SDMMC_FLAG_IDMABTC);
-		if (READ_BIT(hsd->Instance->IDMACTRL, SDMMC_IDMA_IDMABACT) ==
-		    0U) {
+		if (READ_BIT(hsd->Instance->IDMACTRL, SDMMC_IDMA_IDMABACT) == 0U) {
 			/* Current buffer is buffer0, Transfer complete for
 			 * buffer1 */
 			if ((context & SD_CONTEXT_WRITE_MULTIPLE_BLOCK) != 0U) {
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 				hsd->Write_DMADblBuf1CpltCallback(hsd);
 #else
-				HAL_SDEx_Write_DMADoubleBuffer1CpltCallback(
-				    hsd);
+				HAL_SDEx_Write_DMADoubleBuffer1CpltCallback(hsd);
 #endif			       /* USE_HAL_SD_REGISTER_CALLBACKS */
 			} else /* SD_CONTEXT_READ_MULTIPLE_BLOCK */
 			{
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 				hsd->Read_DMADblBuf1CpltCallback(hsd);
 #else
 				HAL_SDEx_Read_DMADoubleBuffer1CpltCallback(hsd);
@@ -2063,17 +1917,14 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 			/* Current buffer is buffer1, Transfer complete for
 			 * buffer0 */
 			if ((context & SD_CONTEXT_WRITE_MULTIPLE_BLOCK) != 0U) {
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 				hsd->Write_DMADblBuf0CpltCallback(hsd);
 #else
-				HAL_SDEx_Write_DMADoubleBuffer0CpltCallback(
-				    hsd);
+				HAL_SDEx_Write_DMADoubleBuffer0CpltCallback(hsd);
 #endif			       /* USE_HAL_SD_REGISTER_CALLBACKS */
 			} else /* SD_CONTEXT_READ_MULTIPLE_BLOCK */
 			{
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 				hsd->Read_DMADblBuf0CpltCallback(hsd);
 #else
 				HAL_SDEx_Read_DMADoubleBuffer0CpltCallback(hsd);
@@ -2081,7 +1932,7 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 			}
 		}
 	}
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 	else {
 		/* Nothing to do */
@@ -2093,10 +1944,7 @@ void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
  * @param hsd Pointer to sd handle
  * @retval HAL state
  */
-HAL_SD_StateTypeDef HAL_SD_GetState(SD_HandleTypeDef *hsd)
-{
-	return hsd->State;
-}
+HAL_SD_StateTypeDef HAL_SD_GetState(SD_HandleTypeDef *hsd) { return hsd->State; }
 
 /**
  * @brief  Return the SD error code
@@ -2166,8 +2014,7 @@ __weak void HAL_SD_AbortCallback(SD_HandleTypeDef *hsd)
 	 */
 }
 
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 /**
  * @brief  Register a User SD Callback
  *         To be used instead of the weak (surcharged) predefined callback
@@ -2195,8 +2042,7 @@ __weak void HAL_SD_AbortCallback(SD_HandleTypeDef *hsd)
  * @param pCallback : pointer to the Callback function
  * @retval status
  */
-HAL_StatusTypeDef HAL_SD_RegisterCallback(SD_HandleTypeDef *hsd,
-					  HAL_SD_CallbackIDTypeDef CallbackID,
+HAL_StatusTypeDef HAL_SD_RegisterCallback(SD_HandleTypeDef *hsd, HAL_SD_CallbackIDTypeDef CallbackID,
 					  pSD_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
@@ -2224,9 +2070,8 @@ HAL_StatusTypeDef HAL_SD_RegisterCallback(SD_HandleTypeDef *hsd,
 			case HAL_SD_ABORT_CB_ID:
 				hsd->AbortCpltCallback = pCallback;
 				break;
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 			case HAL_SD_READ_DMA_DBL_BUF0_CPLT_CB_ID:
 				hsd->Read_DMADblBuf0CpltCallback = pCallback;
 				break;
@@ -2307,8 +2152,7 @@ HAL_StatusTypeDef HAL_SD_RegisterCallback(SD_HandleTypeDef *hsd,
  * ID
  * @retval status
  */
-HAL_StatusTypeDef HAL_SD_UnRegisterCallback(SD_HandleTypeDef *hsd,
-					    HAL_SD_CallbackIDTypeDef CallbackID)
+HAL_StatusTypeDef HAL_SD_UnRegisterCallback(SD_HandleTypeDef *hsd, HAL_SD_CallbackIDTypeDef CallbackID)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -2329,24 +2173,19 @@ HAL_StatusTypeDef HAL_SD_UnRegisterCallback(SD_HandleTypeDef *hsd,
 			case HAL_SD_ABORT_CB_ID:
 				hsd->AbortCpltCallback = HAL_SD_AbortCallback;
 				break;
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 			case HAL_SD_READ_DMA_DBL_BUF0_CPLT_CB_ID:
-				hsd->Read_DMADblBuf0CpltCallback =
-				    HAL_SDEx_Read_DMADoubleBuffer0CpltCallback;
+				hsd->Read_DMADblBuf0CpltCallback = HAL_SDEx_Read_DMADoubleBuffer0CpltCallback;
 				break;
 			case HAL_SD_READ_DMA_DBL_BUF1_CPLT_CB_ID:
-				hsd->Read_DMADblBuf1CpltCallback =
-				    HAL_SDEx_Read_DMADoubleBuffer1CpltCallback;
+				hsd->Read_DMADblBuf1CpltCallback = HAL_SDEx_Read_DMADoubleBuffer1CpltCallback;
 				break;
 			case HAL_SD_WRITE_DMA_DBL_BUF0_CPLT_CB_ID:
-				hsd->Write_DMADblBuf0CpltCallback =
-				    HAL_SDEx_Write_DMADoubleBuffer0CpltCallback;
+				hsd->Write_DMADblBuf0CpltCallback = HAL_SDEx_Write_DMADoubleBuffer0CpltCallback;
 				break;
 			case HAL_SD_WRITE_DMA_DBL_BUF1_CPLT_CB_ID:
-				hsd->Write_DMADblBuf1CpltCallback =
-				    HAL_SDEx_Write_DMADoubleBuffer1CpltCallback;
+				hsd->Write_DMADblBuf1CpltCallback = HAL_SDEx_Write_DMADoubleBuffer1CpltCallback;
 				break;
 #endif
 			case HAL_SD_MSP_INIT_CB_ID:
@@ -2389,9 +2228,8 @@ HAL_StatusTypeDef HAL_SD_UnRegisterCallback(SD_HandleTypeDef *hsd,
 	return status;
 }
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 /**
  * @brief  Register a User SD Transceiver Callback
  *         To be used instead of the weak (surcharged) predefined callback
@@ -2399,9 +2237,7 @@ HAL_StatusTypeDef HAL_SD_UnRegisterCallback(SD_HandleTypeDef *hsd,
  * @param pCallback : pointer to the Callback function
  * @retval status
  */
-HAL_StatusTypeDef
-HAL_SD_RegisterTransceiverCallback(SD_HandleTypeDef *hsd,
-				   pSD_TransceiverCallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_SD_RegisterTransceiverCallback(SD_HandleTypeDef *hsd, pSD_TransceiverCallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -2443,8 +2279,7 @@ HAL_StatusTypeDef HAL_SD_UnRegisterTransceiverCallback(SD_HandleTypeDef *hsd)
 	__HAL_LOCK(hsd);
 
 	if (hsd->State == HAL_SD_STATE_READY) {
-		hsd->DriveTransceiver_1_8V_Callback =
-		    HAL_SDEx_DriveTransceiver_1_8V_Callback;
+		hsd->DriveTransceiver_1_8V_Callback = HAL_SDEx_DriveTransceiver_1_8V_Callback;
 	} else {
 		/* Update the error code */
 		hsd->ErrorCode |= HAL_SD_ERROR_INVALID_CALLBACK;
@@ -2486,22 +2321,19 @@ HAL_StatusTypeDef HAL_SD_UnRegisterTransceiverCallback(SD_HandleTypeDef *hsd)
  *         contains all CID register parameters
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SD_GetCardCID(SD_HandleTypeDef *hsd,
-				    HAL_SD_CardCIDTypeDef *pCID)
+HAL_StatusTypeDef HAL_SD_GetCardCID(SD_HandleTypeDef *hsd, HAL_SD_CardCIDTypeDef *pCID)
 {
 	pCID->ManufacturerID = (uint8_t)((hsd->CID[0] & 0xFF000000U) >> 24U);
 
 	pCID->OEM_AppliID = (uint16_t)((hsd->CID[0] & 0x00FFFF00U) >> 8U);
 
-	pCID->ProdName1 = (((hsd->CID[0] & 0x000000FFU) << 24U) |
-			   ((hsd->CID[1] & 0xFFFFFF00U) >> 8U));
+	pCID->ProdName1 = (((hsd->CID[0] & 0x000000FFU) << 24U) | ((hsd->CID[1] & 0xFFFFFF00U) >> 8U));
 
 	pCID->ProdName2 = (uint8_t)(hsd->CID[1] & 0x000000FFU);
 
 	pCID->ProdRev = (uint8_t)((hsd->CID[2] & 0xFF000000U) >> 24U);
 
-	pCID->ProdSN = (((hsd->CID[2] & 0x00FFFFFFU) << 8U) |
-			((hsd->CID[3] & 0xFF000000U) >> 24U));
+	pCID->ProdSN = (((hsd->CID[2] & 0x00FFFFFFU) << 8U) | ((hsd->CID[3] & 0xFF000000U) >> 24U));
 
 	pCID->Reserved1 = (uint8_t)((hsd->CID[3] & 0x00F00000U) >> 20U);
 
@@ -2522,8 +2354,7 @@ HAL_StatusTypeDef HAL_SD_GetCardCID(SD_HandleTypeDef *hsd,
  *         contains all CSD register parameters
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SD_GetCardCSD(SD_HandleTypeDef *hsd,
-				    HAL_SD_CardCSDTypeDef *pCSD)
+HAL_StatusTypeDef HAL_SD_GetCardCSD(SD_HandleTypeDef *hsd, HAL_SD_CardCSDTypeDef *pCSD)
 {
 	pCSD->CSDStruct = (uint8_t)((hsd->CSD[0] & 0xC0000000U) >> 30U);
 
@@ -2552,36 +2383,27 @@ HAL_StatusTypeDef HAL_SD_GetCardCSD(SD_HandleTypeDef *hsd,
 	pCSD->Reserved2 = 0U; /*!< Reserved */
 
 	if (hsd->SdCard.CardType == CARD_SDSC) {
-		pCSD->DeviceSize = (((hsd->CSD[1] & 0x000003FFU) << 2U) |
-				    ((hsd->CSD[2] & 0xC0000000U) >> 30U));
+		pCSD->DeviceSize = (((hsd->CSD[1] & 0x000003FFU) << 2U) | ((hsd->CSD[2] & 0xC0000000U) >> 30U));
 
-		pCSD->MaxRdCurrentVDDMin =
-		    (uint8_t)((hsd->CSD[2] & 0x38000000U) >> 27U);
+		pCSD->MaxRdCurrentVDDMin = (uint8_t)((hsd->CSD[2] & 0x38000000U) >> 27U);
 
-		pCSD->MaxRdCurrentVDDMax =
-		    (uint8_t)((hsd->CSD[2] & 0x07000000U) >> 24U);
+		pCSD->MaxRdCurrentVDDMax = (uint8_t)((hsd->CSD[2] & 0x07000000U) >> 24U);
 
-		pCSD->MaxWrCurrentVDDMin =
-		    (uint8_t)((hsd->CSD[2] & 0x00E00000U) >> 21U);
+		pCSD->MaxWrCurrentVDDMin = (uint8_t)((hsd->CSD[2] & 0x00E00000U) >> 21U);
 
-		pCSD->MaxWrCurrentVDDMax =
-		    (uint8_t)((hsd->CSD[2] & 0x001C0000U) >> 18U);
+		pCSD->MaxWrCurrentVDDMax = (uint8_t)((hsd->CSD[2] & 0x001C0000U) >> 18U);
 
-		pCSD->DeviceSizeMul =
-		    (uint8_t)((hsd->CSD[2] & 0x00038000U) >> 15U);
+		pCSD->DeviceSizeMul = (uint8_t)((hsd->CSD[2] & 0x00038000U) >> 15U);
 
 		hsd->SdCard.BlockNbr = (pCSD->DeviceSize + 1U);
-		hsd->SdCard.BlockNbr *=
-		    (1UL << ((pCSD->DeviceSizeMul & 0x07U) + 2U));
+		hsd->SdCard.BlockNbr *= (1UL << ((pCSD->DeviceSizeMul & 0x07U) + 2U));
 		hsd->SdCard.BlockSize = (1UL << (pCSD->RdBlockLen & 0x0FU));
 
-		hsd->SdCard.LogBlockNbr =
-		    (hsd->SdCard.BlockNbr) * ((hsd->SdCard.BlockSize) / 512U);
+		hsd->SdCard.LogBlockNbr = (hsd->SdCard.BlockNbr) * ((hsd->SdCard.BlockSize) / 512U);
 		hsd->SdCard.LogBlockSize = 512U;
 	} else if (hsd->SdCard.CardType == CARD_SDHC_SDXC) {
 		/* Byte 7 */
-		pCSD->DeviceSize = (((hsd->CSD[1] & 0x0000003FU) << 16U) |
-				    ((hsd->CSD[2] & 0xFFFF0000U) >> 16U));
+		pCSD->DeviceSize = (((hsd->CSD[1] & 0x0000003FU) << 16U) | ((hsd->CSD[2] & 0xFFFF0000U) >> 16U));
 
 		hsd->SdCard.BlockNbr = ((pCSD->DeviceSize + 1U) * 1024U);
 		hsd->SdCard.LogBlockNbr = hsd->SdCard.BlockNbr;
@@ -2609,13 +2431,11 @@ HAL_StatusTypeDef HAL_SD_GetCardCSD(SD_HandleTypeDef *hsd,
 
 	pCSD->MaxWrBlockLen = (uint8_t)((hsd->CSD[3] & 0x03C00000U) >> 22U);
 
-	pCSD->WriteBlockPaPartial =
-	    (uint8_t)((hsd->CSD[3] & 0x00200000U) >> 21U);
+	pCSD->WriteBlockPaPartial = (uint8_t)((hsd->CSD[3] & 0x00200000U) >> 21U);
 
 	pCSD->Reserved3 = 0;
 
-	pCSD->ContentProtectAppli =
-	    (uint8_t)((hsd->CSD[3] & 0x00010000U) >> 16U);
+	pCSD->ContentProtectAppli = (uint8_t)((hsd->CSD[3] & 0x00010000U) >> 16U);
 
 	pCSD->FileFormatGroup = (uint8_t)((hsd->CSD[3] & 0x00008000U) >> 15U);
 
@@ -2643,8 +2463,7 @@ HAL_StatusTypeDef HAL_SD_GetCardCSD(SD_HandleTypeDef *hsd,
  *         will contain the SD card status information
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SD_GetCardStatus(SD_HandleTypeDef *hsd,
-				       HAL_SD_CardStatusTypeDef *pStatus)
+HAL_StatusTypeDef HAL_SD_GetCardStatus(SD_HandleTypeDef *hsd, HAL_SD_CardStatusTypeDef *pStatus)
 {
 	uint32_t sd_status[16];
 	uint32_t errorstate;
@@ -2663,42 +2482,29 @@ HAL_StatusTypeDef HAL_SD_GetCardStatus(SD_HandleTypeDef *hsd,
 		pStatus->SecuredMode = (uint8_t)((sd_status[0] & 0x20U) >> 5U);
 
 		pStatus->CardType =
-		    (uint16_t)(((sd_status[0] & 0x00FF0000U) >> 8U) |
-			       ((sd_status[0] & 0xFF000000U) >> 24U));
+		    (uint16_t)(((sd_status[0] & 0x00FF0000U) >> 8U) | ((sd_status[0] & 0xFF000000U) >> 24U));
 
 		pStatus->ProtectedAreaSize =
-		    (((sd_status[1] & 0xFFU) << 24U) |
-		     ((sd_status[1] & 0xFF00U) << 8U) |
-		     ((sd_status[1] & 0xFF0000U) >> 8U) |
-		     ((sd_status[1] & 0xFF000000U) >> 24U));
+		    (((sd_status[1] & 0xFFU) << 24U) | ((sd_status[1] & 0xFF00U) << 8U) |
+		     ((sd_status[1] & 0xFF0000U) >> 8U) | ((sd_status[1] & 0xFF000000U) >> 24U));
 
 		pStatus->SpeedClass = (uint8_t)(sd_status[2] & 0xFFU);
 
-		pStatus->PerformanceMove =
-		    (uint8_t)((sd_status[2] & 0xFF00U) >> 8U);
+		pStatus->PerformanceMove = (uint8_t)((sd_status[2] & 0xFF00U) >> 8U);
 
-		pStatus->AllocationUnitSize =
-		    (uint8_t)((sd_status[2] & 0xF00000U) >> 20U);
+		pStatus->AllocationUnitSize = (uint8_t)((sd_status[2] & 0xF00000U) >> 20U);
 
-		pStatus->EraseSize =
-		    (uint16_t)(((sd_status[2] & 0xFF000000U) >> 16U) |
-			       (sd_status[3] & 0xFFU));
+		pStatus->EraseSize = (uint16_t)(((sd_status[2] & 0xFF000000U) >> 16U) | (sd_status[3] & 0xFFU));
 
-		pStatus->EraseTimeout =
-		    (uint8_t)((sd_status[3] & 0xFC00U) >> 10U);
+		pStatus->EraseTimeout = (uint8_t)((sd_status[3] & 0xFC00U) >> 10U);
 
-		pStatus->EraseOffset =
-		    (uint8_t)((sd_status[3] & 0x0300U) >> 8U);
+		pStatus->EraseOffset = (uint8_t)((sd_status[3] & 0x0300U) >> 8U);
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
-		pStatus->UhsSpeedGrade =
-		    (uint8_t)((sd_status[3] & 0x00F0U) >> 4U);
-		pStatus->UhsAllocationUnitSize =
-		    (uint8_t)(sd_status[3] & 0x000FU);
-		pStatus->VideoSpeedClass =
-		    (uint8_t)((sd_status[4] & 0xFF000000U) >> 24U);
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
+		pStatus->UhsSpeedGrade = (uint8_t)((sd_status[3] & 0x00F0U) >> 4U);
+		pStatus->UhsAllocationUnitSize = (uint8_t)(sd_status[3] & 0x000FU);
+		pStatus->VideoSpeedClass = (uint8_t)((sd_status[4] & 0xFF000000U) >> 24U);
 #endif
 	}
 
@@ -2722,8 +2528,7 @@ HAL_StatusTypeDef HAL_SD_GetCardStatus(SD_HandleTypeDef *hsd,
  *         will contain the SD card status information
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SD_GetCardInfo(SD_HandleTypeDef *hsd,
-				     HAL_SD_CardInfoTypeDef *pCardInfo)
+HAL_StatusTypeDef HAL_SD_GetCardInfo(SD_HandleTypeDef *hsd, HAL_SD_CardInfoTypeDef *pCardInfo)
 {
 	pCardInfo->CardType = (uint32_t)(hsd->SdCard.CardType);
 	pCardInfo->CardVersion = (uint32_t)(hsd->SdCard.CardVersion);
@@ -2748,8 +2553,7 @@ HAL_StatusTypeDef HAL_SD_GetCardInfo(SD_HandleTypeDef *hsd,
  *            @arg SDMMC_BUS_WIDE_1B: 1-bit data transfer
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SD_ConfigWideBusOperation(SD_HandleTypeDef *hsd,
-						uint32_t WideMode)
+HAL_StatusTypeDef HAL_SD_ConfigWideBusOperation(SD_HandleTypeDef *hsd, uint32_t WideMode)
 {
 	SDMMC_InitTypeDef Init;
 	uint32_t errorstate;
@@ -2791,50 +2595,37 @@ HAL_StatusTypeDef HAL_SD_ConfigWideBusOperation(SD_HandleTypeDef *hsd,
 		if (sdmmc_clk != 0U) {
 			/* Configure the SDMMC peripheral */
 			Init.ClockEdge = hsd->Init.ClockEdge;
-#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && \
-    !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && \
-    !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
+#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) &&                \
+    !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 			Init.ClockBypass = hsd->Init.ClockBypass;
-#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&      \
+#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&                                              \
 	  !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
 			Init.ClockPowerSave = hsd->Init.ClockPowerSave;
 			Init.BusWide = WideMode;
-			Init.HardwareFlowControl =
-			    hsd->Init.HardwareFlowControl;
+			Init.HardwareFlowControl = hsd->Init.HardwareFlowControl;
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 			/* Check if user Clock div < Normal speed 25Mhz, no
 			 * change in Clockdiv */
-			if (hsd->Init.ClockDiv >=
-			    (sdmmc_clk / (2U * SD_NORMAL_SPEED_FREQ))) {
+			if (hsd->Init.ClockDiv >= (sdmmc_clk / (2U * SD_NORMAL_SPEED_FREQ))) {
 				Init.ClockDiv = hsd->Init.ClockDiv;
-			} else if (hsd->SdCard.CardSpeed ==
-				   CARD_ULTRA_HIGH_SPEED) {
+			} else if (hsd->SdCard.CardSpeed == CARD_ULTRA_HIGH_SPEED) {
 				/* UltraHigh speed SD card,user Clock div */
 				Init.ClockDiv = hsd->Init.ClockDiv;
 			} else if (hsd->SdCard.CardSpeed == CARD_HIGH_SPEED) {
 				/* High speed SD card, Max Frequency = 50Mhz */
 				if (hsd->Init.ClockDiv == 0U) {
 					if (sdmmc_clk > SD_HIGH_SPEED_FREQ) {
-						Init.ClockDiv =
-						    sdmmc_clk /
-						    (2U * SD_HIGH_SPEED_FREQ);
+						Init.ClockDiv = sdmmc_clk / (2U * SD_HIGH_SPEED_FREQ);
 					} else {
-						Init.ClockDiv =
-						    hsd->Init.ClockDiv;
+						Init.ClockDiv = hsd->Init.ClockDiv;
 					}
 				} else {
-					if ((sdmmc_clk /
-					     (2U * hsd->Init.ClockDiv)) >
-					    SD_HIGH_SPEED_FREQ) {
-						Init.ClockDiv =
-						    sdmmc_clk /
-						    (2U * SD_HIGH_SPEED_FREQ);
+					if ((sdmmc_clk / (2U * hsd->Init.ClockDiv)) > SD_HIGH_SPEED_FREQ) {
+						Init.ClockDiv = sdmmc_clk / (2U * SD_HIGH_SPEED_FREQ);
 					} else {
-						Init.ClockDiv =
-						    hsd->Init.ClockDiv;
+						Init.ClockDiv = hsd->Init.ClockDiv;
 					}
 				}
 			} else {
@@ -2842,37 +2633,27 @@ HAL_StatusTypeDef HAL_SD_ConfigWideBusOperation(SD_HandleTypeDef *hsd,
 				 */
 				if (hsd->Init.ClockDiv == 0U) {
 					if (sdmmc_clk > SD_NORMAL_SPEED_FREQ) {
-						Init.ClockDiv =
-						    sdmmc_clk /
-						    (2U * SD_NORMAL_SPEED_FREQ);
+						Init.ClockDiv = sdmmc_clk / (2U * SD_NORMAL_SPEED_FREQ);
 					} else {
-						Init.ClockDiv =
-						    hsd->Init.ClockDiv;
+						Init.ClockDiv = hsd->Init.ClockDiv;
 					}
 				} else {
-					if ((sdmmc_clk /
-					     (2U * hsd->Init.ClockDiv)) >
-					    SD_NORMAL_SPEED_FREQ) {
-						Init.ClockDiv =
-						    sdmmc_clk /
-						    (2U * SD_NORMAL_SPEED_FREQ);
+					if ((sdmmc_clk / (2U * hsd->Init.ClockDiv)) > SD_NORMAL_SPEED_FREQ) {
+						Init.ClockDiv = sdmmc_clk / (2U * SD_NORMAL_SPEED_FREQ);
 					} else {
-						Init.ClockDiv =
-						    hsd->Init.ClockDiv;
+						Init.ClockDiv = hsd->Init.ClockDiv;
 					}
 				}
 			}
 
 			Init.Transceiver = hsd->Init.Transceiver;
 #else
-			if ((sdmmc_clk / (hsd->Init.ClockDiv + 2U)) >
-			    SD_NORMAL_SPEED_FREQ) {
-				Init.ClockDiv =
-				    ((sdmmc_clk / SD_NORMAL_SPEED_FREQ) - 2U);
+			if ((sdmmc_clk / (hsd->Init.ClockDiv + 2U)) > SD_NORMAL_SPEED_FREQ) {
+				Init.ClockDiv = ((sdmmc_clk / SD_NORMAL_SPEED_FREQ) - 2U);
 			} else {
 				Init.ClockDiv = hsd->Init.ClockDiv;
 			}
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 			(void)SDMMC_Init(hsd->Instance, Init);
@@ -2897,9 +2678,8 @@ HAL_StatusTypeDef HAL_SD_ConfigWideBusOperation(SD_HandleTypeDef *hsd,
 	return status;
 }
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 /**
  * @brief  Configure the speed bus mode
  * @param  hsd Pointer to the SD handle
@@ -2912,8 +2692,7 @@ HAL_StatusTypeDef HAL_SD_ConfigWideBusOperation(SD_HandleTypeDef *hsd,
  * @retval HAL status
  */
 
-HAL_StatusTypeDef HAL_SD_ConfigSpeedBusOperation(SD_HandleTypeDef *hsd,
-						 uint32_t SpeedMode)
+HAL_StatusTypeDef HAL_SD_ConfigSpeedBusOperation(SD_HandleTypeDef *hsd, uint32_t SpeedMode)
 {
 	uint32_t tickstart;
 	uint32_t errorstate;
@@ -2927,27 +2706,20 @@ HAL_StatusTypeDef HAL_SD_ConfigSpeedBusOperation(SD_HandleTypeDef *hsd,
 	if (hsd->Init.Transceiver == SDMMC_TRANSCEIVER_ENABLE) {
 		switch (SpeedMode) {
 			case SDMMC_SPEED_MODE_AUTO: {
-				if ((hsd->SdCard.CardSpeed ==
-				     CARD_ULTRA_HIGH_SPEED) ||
+				if ((hsd->SdCard.CardSpeed == CARD_ULTRA_HIGH_SPEED) ||
 				    (hsd->SdCard.CardType == CARD_SDHC_SDXC)) {
 					hsd->Instance->CLKCR |= 0x00100000U;
 					/* Enable Ultra High Speed */
-					if (SD_UltraHighSpeed(hsd) !=
-					    HAL_SD_ERROR_NONE) {
-						if (SD_HighSpeed(hsd) !=
-						    HAL_SD_ERROR_NONE) {
-							hsd->ErrorCode |=
-							    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+					if (SD_UltraHighSpeed(hsd) != HAL_SD_ERROR_NONE) {
+						if (SD_HighSpeed(hsd) != HAL_SD_ERROR_NONE) {
+							hsd->ErrorCode |= HAL_SD_ERROR_UNSUPPORTED_FEATURE;
 							status = HAL_ERROR;
 						}
 					}
-				} else if (hsd->SdCard.CardSpeed ==
-					   CARD_HIGH_SPEED) {
+				} else if (hsd->SdCard.CardSpeed == CARD_HIGH_SPEED) {
 					/* Enable High Speed */
-					if (SD_HighSpeed(hsd) !=
-					    HAL_SD_ERROR_NONE) {
-						hsd->ErrorCode |=
-						    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+					if (SD_HighSpeed(hsd) != HAL_SD_ERROR_NONE) {
+						hsd->ErrorCode |= HAL_SD_ERROR_UNSUPPORTED_FEATURE;
 						status = HAL_ERROR;
 					}
 				} else {
@@ -2957,61 +2729,48 @@ HAL_StatusTypeDef HAL_SD_ConfigSpeedBusOperation(SD_HandleTypeDef *hsd,
 			}
 
 			case SDMMC_SPEED_MODE_ULTRA: {
-				if ((hsd->SdCard.CardSpeed ==
-				     CARD_ULTRA_HIGH_SPEED) ||
+				if ((hsd->SdCard.CardSpeed == CARD_ULTRA_HIGH_SPEED) ||
 				    (hsd->SdCard.CardType == CARD_SDHC_SDXC)) {
 					hsd->Instance->CLKCR |= 0x00100000U;
 					/* Enable UltraHigh Speed */
-					if (SD_UltraHighSpeed(hsd) !=
-					    HAL_SD_ERROR_NONE) {
-						hsd->ErrorCode |=
-						    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+					if (SD_UltraHighSpeed(hsd) != HAL_SD_ERROR_NONE) {
+						hsd->ErrorCode |= HAL_SD_ERROR_UNSUPPORTED_FEATURE;
 						status = HAL_ERROR;
 					}
 				} else {
-					hsd->ErrorCode |=
-					    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+					hsd->ErrorCode |= HAL_SD_ERROR_UNSUPPORTED_FEATURE;
 					status = HAL_ERROR;
 				}
 				break;
 			}
 
 			case SDMMC_SPEED_MODE_DDR: {
-				if ((hsd->SdCard.CardSpeed ==
-				     CARD_ULTRA_HIGH_SPEED) ||
+				if ((hsd->SdCard.CardSpeed == CARD_ULTRA_HIGH_SPEED) ||
 				    (hsd->SdCard.CardType == CARD_SDHC_SDXC)) {
 					hsd->Instance->CLKCR |= 0x00100000U;
 					/* Enable DDR Mode*/
-					if (SD_DDR_Mode(hsd) !=
-					    HAL_SD_ERROR_NONE) {
-						hsd->ErrorCode |=
-						    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+					if (SD_DDR_Mode(hsd) != HAL_SD_ERROR_NONE) {
+						hsd->ErrorCode |= HAL_SD_ERROR_UNSUPPORTED_FEATURE;
 						status = HAL_ERROR;
 					}
 				} else {
-					hsd->ErrorCode |=
-					    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+					hsd->ErrorCode |= HAL_SD_ERROR_UNSUPPORTED_FEATURE;
 					status = HAL_ERROR;
 				}
 				break;
 			}
 
 			case SDMMC_SPEED_MODE_HIGH: {
-				if ((hsd->SdCard.CardSpeed ==
-				     CARD_ULTRA_HIGH_SPEED) ||
-				    (hsd->SdCard.CardSpeed ==
-				     CARD_HIGH_SPEED) ||
+				if ((hsd->SdCard.CardSpeed == CARD_ULTRA_HIGH_SPEED) ||
+				    (hsd->SdCard.CardSpeed == CARD_HIGH_SPEED) ||
 				    (hsd->SdCard.CardType == CARD_SDHC_SDXC)) {
 					/* Enable High Speed */
-					if (SD_HighSpeed(hsd) !=
-					    HAL_SD_ERROR_NONE) {
-						hsd->ErrorCode |=
-						    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+					if (SD_HighSpeed(hsd) != HAL_SD_ERROR_NONE) {
+						hsd->ErrorCode |= HAL_SD_ERROR_UNSUPPORTED_FEATURE;
 						status = HAL_ERROR;
 					}
 				} else {
-					hsd->ErrorCode |=
-					    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+					hsd->ErrorCode |= HAL_SD_ERROR_UNSUPPORTED_FEATURE;
 					status = HAL_ERROR;
 				}
 				break;
@@ -3028,16 +2787,12 @@ HAL_StatusTypeDef HAL_SD_ConfigSpeedBusOperation(SD_HandleTypeDef *hsd,
 	} else {
 		switch (SpeedMode) {
 			case SDMMC_SPEED_MODE_AUTO: {
-				if ((hsd->SdCard.CardSpeed ==
-				     CARD_ULTRA_HIGH_SPEED) ||
-				    (hsd->SdCard.CardSpeed ==
-				     CARD_HIGH_SPEED) ||
+				if ((hsd->SdCard.CardSpeed == CARD_ULTRA_HIGH_SPEED) ||
+				    (hsd->SdCard.CardSpeed == CARD_HIGH_SPEED) ||
 				    (hsd->SdCard.CardType == CARD_SDHC_SDXC)) {
 					/* Enable High Speed */
-					if (SD_HighSpeed(hsd) !=
-					    HAL_SD_ERROR_NONE) {
-						hsd->ErrorCode |=
-						    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+					if (SD_HighSpeed(hsd) != HAL_SD_ERROR_NONE) {
+						hsd->ErrorCode |= HAL_SD_ERROR_UNSUPPORTED_FEATURE;
 						status = HAL_ERROR;
 					}
 				} else {
@@ -3047,21 +2802,16 @@ HAL_StatusTypeDef HAL_SD_ConfigSpeedBusOperation(SD_HandleTypeDef *hsd,
 			}
 
 			case SDMMC_SPEED_MODE_HIGH: {
-				if ((hsd->SdCard.CardSpeed ==
-				     CARD_ULTRA_HIGH_SPEED) ||
-				    (hsd->SdCard.CardSpeed ==
-				     CARD_HIGH_SPEED) ||
+				if ((hsd->SdCard.CardSpeed == CARD_ULTRA_HIGH_SPEED) ||
+				    (hsd->SdCard.CardSpeed == CARD_HIGH_SPEED) ||
 				    (hsd->SdCard.CardType == CARD_SDHC_SDXC)) {
 					/* Enable High Speed */
-					if (SD_HighSpeed(hsd) !=
-					    HAL_SD_ERROR_NONE) {
-						hsd->ErrorCode |=
-						    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+					if (SD_HighSpeed(hsd) != HAL_SD_ERROR_NONE) {
+						hsd->ErrorCode |= HAL_SD_ERROR_UNSUPPORTED_FEATURE;
 						status = HAL_ERROR;
 					}
 				} else {
-					hsd->ErrorCode |=
-					    HAL_SD_ERROR_UNSUPPORTED_FEATURE;
+					hsd->ErrorCode |= HAL_SD_ERROR_UNSUPPORTED_FEATURE;
 					status = HAL_ERROR;
 				}
 				break;
@@ -3102,7 +2852,7 @@ HAL_StatusTypeDef HAL_SD_ConfigSpeedBusOperation(SD_HandleTypeDef *hsd,
 	hsd->State = HAL_SD_STATE_READY;
 	return status;
 }
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 /**
@@ -3135,23 +2885,20 @@ HAL_SD_CardStateTypeDef HAL_SD_GetCardState(SD_HandleTypeDef *hsd)
 HAL_StatusTypeDef HAL_SD_Abort(SD_HandleTypeDef *hsd)
 {
 	HAL_SD_CardStateTypeDef CardState;
-#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && \
-    !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && \
-    !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
+#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) &&                \
+    !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 	uint32_t context = hsd->Context;
 #endif
 
 	/* DIsable All interrupts */
-	__HAL_SD_DISABLE_IT(hsd, SDMMC_IT_DATAEND | SDMMC_IT_DCRCFAIL |
-				     SDMMC_IT_DTIMEOUT | SDMMC_IT_TXUNDERR |
+	__HAL_SD_DISABLE_IT(hsd, SDMMC_IT_DATAEND | SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_TXUNDERR |
 				     SDMMC_IT_RXOVERR);
 
 	/* Clear All flags */
 	__HAL_SD_CLEAR_FLAG(hsd, SDMMC_STATIC_DATA_FLAGS);
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	/* If IDMA Context, disable Internal DMA */
 	hsd->Instance->IDMACTRL = SDMMC_DISABLE_IDMA;
 #else
@@ -3159,8 +2906,7 @@ HAL_StatusTypeDef HAL_SD_Abort(SD_HandleTypeDef *hsd)
 
 	if ((context & SD_CONTEXT_DMA) != 0U) {
 		/* Disable the SD DMA request */
-		hsd->Instance->DCTRL &=
-		    (uint32_t) ~((uint32_t)SDMMC_DCTRL_DMAEN);
+		hsd->Instance->DCTRL &= (uint32_t) ~((uint32_t)SDMMC_DCTRL_DMAEN);
 
 		/* Abort the SD DMA Tx channel */
 		if (((context & SD_CONTEXT_WRITE_SINGLE_BLOCK) != 0U) ||
@@ -3179,7 +2925,7 @@ HAL_StatusTypeDef HAL_SD_Abort(SD_HandleTypeDef *hsd)
 			/* Nothing to do */
 		}
 	}
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 	hsd->State = HAL_SD_STATE_READY;
@@ -3188,8 +2934,7 @@ HAL_StatusTypeDef HAL_SD_Abort(SD_HandleTypeDef *hsd)
 	hsd->Context = SD_CONTEXT_NONE;
 
 	CardState = HAL_SD_GetCardState(hsd);
-	if ((CardState == HAL_SD_CARD_RECEIVING) ||
-	    (CardState == HAL_SD_CARD_SENDING)) {
+	if ((CardState == HAL_SD_CARD_RECEIVING) || (CardState == HAL_SD_CARD_SENDING)) {
 		hsd->ErrorCode = SDMMC_CmdStopTransfer(hsd->Instance);
 	}
 	if (hsd->ErrorCode != HAL_SD_ERROR_NONE) {
@@ -3207,20 +2952,17 @@ HAL_StatusTypeDef HAL_SD_Abort(SD_HandleTypeDef *hsd)
 HAL_StatusTypeDef HAL_SD_Abort_IT(SD_HandleTypeDef *hsd)
 {
 	HAL_SD_CardStateTypeDef CardState;
-#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && \
-    !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && \
-    !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
+#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) &&                \
+    !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 	uint32_t context = hsd->Context;
 #endif
 
 	/* Disable All interrupts */
-	__HAL_SD_DISABLE_IT(hsd, SDMMC_IT_DATAEND | SDMMC_IT_DCRCFAIL |
-				     SDMMC_IT_DTIMEOUT | SDMMC_IT_TXUNDERR |
+	__HAL_SD_DISABLE_IT(hsd, SDMMC_IT_DATAEND | SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_TXUNDERR |
 				     SDMMC_IT_RXOVERR);
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	/* If IDMA Context, disable Internal DMA */
 	hsd->Instance->IDMACTRL = SDMMC_DISABLE_IDMA;
 
@@ -3230,16 +2972,14 @@ HAL_StatusTypeDef HAL_SD_Abort_IT(SD_HandleTypeDef *hsd)
 	CardState = HAL_SD_GetCardState(hsd);
 	hsd->State = HAL_SD_STATE_READY;
 
-	if ((CardState == HAL_SD_CARD_RECEIVING) ||
-	    (CardState == HAL_SD_CARD_SENDING)) {
+	if ((CardState == HAL_SD_CARD_RECEIVING) || (CardState == HAL_SD_CARD_SENDING)) {
 		hsd->ErrorCode = SDMMC_CmdStopTransfer(hsd->Instance);
 	}
 
 	if (hsd->ErrorCode != HAL_SD_ERROR_NONE) {
 		return HAL_ERROR;
 	} else {
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 		hsd->AbortCpltCallback(hsd);
 #else
 		HAL_SD_AbortCallback(hsd);
@@ -3250,8 +2990,7 @@ HAL_StatusTypeDef HAL_SD_Abort_IT(SD_HandleTypeDef *hsd)
 
 	if ((context & SD_CONTEXT_DMA) != 0U) {
 		/* Disable the SD DMA request */
-		hsd->Instance->DCTRL &=
-		    (uint32_t) ~((uint32_t)SDMMC_DCTRL_DMAEN);
+		hsd->Instance->DCTRL &= (uint32_t) ~((uint32_t)SDMMC_DCTRL_DMAEN);
 
 		/* Abort the SD DMA Tx channel */
 		if (((context & SD_CONTEXT_WRITE_SINGLE_BLOCK) != 0U) ||
@@ -3280,22 +3019,20 @@ HAL_StatusTypeDef HAL_SD_Abort_IT(SD_HandleTypeDef *hsd)
 		CardState = HAL_SD_GetCardState(hsd);
 		hsd->State = HAL_SD_STATE_READY;
 		hsd->Context = SD_CONTEXT_NONE;
-		if ((CardState == HAL_SD_CARD_RECEIVING) ||
-		    (CardState == HAL_SD_CARD_SENDING)) {
+		if ((CardState == HAL_SD_CARD_RECEIVING) || (CardState == HAL_SD_CARD_SENDING)) {
 			hsd->ErrorCode = SDMMC_CmdStopTransfer(hsd->Instance);
 		}
 		if (hsd->ErrorCode != HAL_SD_ERROR_NONE) {
 			return HAL_ERROR;
 		} else {
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 			hsd->AbortCpltCallback(hsd);
 #else
 			HAL_SD_AbortCallback(hsd);
 #endif /* USE_HAL_SD_REGISTER_CALLBACKS */
 		}
 	}
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 	return HAL_OK;
@@ -3314,9 +3051,8 @@ HAL_StatusTypeDef HAL_SD_Abort_IT(SD_HandleTypeDef *hsd)
  * @{
  */
 
-#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && \
-    !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && \
-    !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
+#if !defined(STM32L4P5xx) && !defined(STM32L4Q5xx) && !defined(STM32L4R5xx) && !defined(STM32L4R7xx) &&                \
+    !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 /**
  * @brief  DMA SD transmit process complete callback
  * @param  hdma DMA handle
@@ -3383,21 +3119,17 @@ static void SD_DMAError(DMA_HandleTypeDef *hdma)
 
 	RxErrorCode = hsd->hdmarx->ErrorCode;
 	TxErrorCode = hsd->hdmatx->ErrorCode;
-	if ((RxErrorCode == HAL_DMA_ERROR_TE) ||
-	    (TxErrorCode == HAL_DMA_ERROR_TE)) {
+	if ((RxErrorCode == HAL_DMA_ERROR_TE) || (TxErrorCode == HAL_DMA_ERROR_TE)) {
 		/* Clear All flags */
 		__HAL_SD_CLEAR_FLAG(hsd, SDMMC_STATIC_FLAGS);
 
 		/* Disable All interrupts */
-		__HAL_SD_DISABLE_IT(hsd, SDMMC_IT_DATAEND | SDMMC_IT_DCRCFAIL |
-					     SDMMC_IT_DTIMEOUT |
-					     SDMMC_IT_TXUNDERR |
+		__HAL_SD_DISABLE_IT(hsd, SDMMC_IT_DATAEND | SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_TXUNDERR |
 					     SDMMC_IT_RXOVERR);
 
 		hsd->ErrorCode |= HAL_SD_ERROR_DMA;
 		CardState = HAL_SD_GetCardState(hsd);
-		if ((CardState == HAL_SD_CARD_RECEIVING) ||
-		    (CardState == HAL_SD_CARD_SENDING)) {
+		if ((CardState == HAL_SD_CARD_RECEIVING) || (CardState == HAL_SD_CARD_SENDING)) {
 			hsd->ErrorCode |= SDMMC_CmdStopTransfer(hsd->Instance);
 		}
 
@@ -3428,8 +3160,7 @@ static void SD_DMATxAbort(DMA_HandleTypeDef *hdma)
 	CardState = HAL_SD_GetCardState(hsd);
 	hsd->State = HAL_SD_STATE_READY;
 	hsd->Context = SD_CONTEXT_NONE;
-	if ((CardState == HAL_SD_CARD_RECEIVING) ||
-	    (CardState == HAL_SD_CARD_SENDING)) {
+	if ((CardState == HAL_SD_CARD_RECEIVING) || (CardState == HAL_SD_CARD_SENDING)) {
 		hsd->ErrorCode |= SDMMC_CmdStopTransfer(hsd->Instance);
 	}
 
@@ -3464,8 +3195,7 @@ static void SD_DMARxAbort(DMA_HandleTypeDef *hdma)
 	CardState = HAL_SD_GetCardState(hsd);
 	hsd->State = HAL_SD_STATE_READY;
 	hsd->Context = SD_CONTEXT_NONE;
-	if ((CardState == HAL_SD_CARD_RECEIVING) ||
-	    (CardState == HAL_SD_CARD_SENDING)) {
+	if ((CardState == HAL_SD_CARD_RECEIVING) || (CardState == HAL_SD_CARD_SENDING)) {
 		hsd->ErrorCode |= SDMMC_CmdStopTransfer(hsd->Instance);
 	}
 
@@ -3483,7 +3213,7 @@ static void SD_DMARxAbort(DMA_HandleTypeDef *hdma)
 #endif
 	}
 }
-#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&      \
+#endif /* !STM32L4P5xx && !STM32L4Q5xx && !STM32L4R5xx && !STM32L4R7xx &&                                              \
 	  !STM32L4R9xx && !STM32L4S5xx && !STM32L4S7xx && !STM32L4S9xx */
 
 /**
@@ -3510,14 +3240,10 @@ static uint32_t SD_InitCard(SD_HandleTypeDef *hsd)
 			return errorstate;
 		} else {
 			/* Get Card identification number data */
-			hsd->CID[0U] =
-			    SDMMC_GetResponse(hsd->Instance, SDMMC_RESP1);
-			hsd->CID[1U] =
-			    SDMMC_GetResponse(hsd->Instance, SDMMC_RESP2);
-			hsd->CID[2U] =
-			    SDMMC_GetResponse(hsd->Instance, SDMMC_RESP3);
-			hsd->CID[3U] =
-			    SDMMC_GetResponse(hsd->Instance, SDMMC_RESP4);
+			hsd->CID[0U] = SDMMC_GetResponse(hsd->Instance, SDMMC_RESP1);
+			hsd->CID[1U] = SDMMC_GetResponse(hsd->Instance, SDMMC_RESP2);
+			hsd->CID[2U] = SDMMC_GetResponse(hsd->Instance, SDMMC_RESP3);
+			hsd->CID[3U] = SDMMC_GetResponse(hsd->Instance, SDMMC_RESP4);
 		}
 	}
 
@@ -3534,26 +3260,20 @@ static uint32_t SD_InitCard(SD_HandleTypeDef *hsd)
 		hsd->SdCard.RelCardAdd = sd_rca;
 
 		/* Send CMD9 SEND_CSD with argument as card's RCA */
-		errorstate = SDMMC_CmdSendCSD(
-		    hsd->Instance, (uint32_t)(hsd->SdCard.RelCardAdd << 16U));
+		errorstate = SDMMC_CmdSendCSD(hsd->Instance, (uint32_t)(hsd->SdCard.RelCardAdd << 16U));
 		if (errorstate != HAL_SD_ERROR_NONE) {
 			return errorstate;
 		} else {
 			/* Get Card Specific Data */
-			hsd->CSD[0U] =
-			    SDMMC_GetResponse(hsd->Instance, SDMMC_RESP1);
-			hsd->CSD[1U] =
-			    SDMMC_GetResponse(hsd->Instance, SDMMC_RESP2);
-			hsd->CSD[2U] =
-			    SDMMC_GetResponse(hsd->Instance, SDMMC_RESP3);
-			hsd->CSD[3U] =
-			    SDMMC_GetResponse(hsd->Instance, SDMMC_RESP4);
+			hsd->CSD[0U] = SDMMC_GetResponse(hsd->Instance, SDMMC_RESP1);
+			hsd->CSD[1U] = SDMMC_GetResponse(hsd->Instance, SDMMC_RESP2);
+			hsd->CSD[2U] = SDMMC_GetResponse(hsd->Instance, SDMMC_RESP3);
+			hsd->CSD[3U] = SDMMC_GetResponse(hsd->Instance, SDMMC_RESP4);
 		}
 	}
 
 	/* Get the Card Class */
-	hsd->SdCard.Class =
-	    (SDMMC_GetResponse(hsd->Instance, SDMMC_RESP2) >> 20U);
+	hsd->SdCard.Class = (SDMMC_GetResponse(hsd->Instance, SDMMC_RESP2) >> 20U);
 
 	/* Get CSD parameters */
 	if (HAL_SD_GetCardCSD(hsd, &CSD) != HAL_OK) {
@@ -3561,9 +3281,7 @@ static uint32_t SD_InitCard(SD_HandleTypeDef *hsd)
 	}
 
 	/* Select the Card */
-	errorstate = SDMMC_CmdSelDesel(
-	    hsd->Instance,
-	    (uint32_t)(((uint32_t)hsd->SdCard.RelCardAdd) << 16U));
+	errorstate = SDMMC_CmdSelDesel(hsd->Instance, (uint32_t)(((uint32_t)hsd->SdCard.RelCardAdd) << 16U));
 	if (errorstate != HAL_SD_ERROR_NONE) {
 		return errorstate;
 	}
@@ -3584,11 +3302,10 @@ static uint32_t SD_PowerON(SD_HandleTypeDef *hsd)
 	__IO uint32_t count = 0U;
 	uint32_t response = 0U, validvoltage = 0U;
 	uint32_t errorstate;
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	uint32_t tickstart = HAL_GetTick();
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 	/* CMD0: GO_IDLE_STATE */
@@ -3628,10 +3345,8 @@ static uint32_t SD_PowerON(SD_HandleTypeDef *hsd)
 		}
 
 		/* Send CMD41 */
-		errorstate = SDMMC_CmdAppOperCommand(
-		    hsd->Instance, SDMMC_VOLTAGE_WINDOW_SD |
-				       SDMMC_HIGH_CAPACITY |
-				       SD_SWITCH_1_8V_CAPACITY);
+		errorstate = SDMMC_CmdAppOperCommand(hsd->Instance, SDMMC_VOLTAGE_WINDOW_SD | SDMMC_HIGH_CAPACITY |
+									SD_SWITCH_1_8V_CAPACITY);
 		if (errorstate != HAL_SD_ERROR_NONE) {
 			return HAL_SD_ERROR_UNSUPPORTED_FEATURE;
 		}
@@ -3649,34 +3364,27 @@ static uint32_t SD_PowerON(SD_HandleTypeDef *hsd)
 		return HAL_SD_ERROR_INVALID_VOLTRANGE;
 	}
 
-	if ((response & SDMMC_HIGH_CAPACITY) ==
-	    SDMMC_HIGH_CAPACITY) /* (response &= SD_HIGH_CAPACITY) */
+	if ((response & SDMMC_HIGH_CAPACITY) == SDMMC_HIGH_CAPACITY) /* (response &= SD_HIGH_CAPACITY) */
 	{
 		hsd->SdCard.CardType = CARD_SDHC_SDXC;
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 		if (hsd->Init.Transceiver == SDMMC_TRANSCEIVER_ENABLE) {
-			if ((response & SD_SWITCH_1_8V_CAPACITY) ==
-			    SD_SWITCH_1_8V_CAPACITY) {
+			if ((response & SD_SWITCH_1_8V_CAPACITY) == SD_SWITCH_1_8V_CAPACITY) {
 				hsd->SdCard.CardSpeed = CARD_ULTRA_HIGH_SPEED;
 
 				/* Start switching procedue */
 				hsd->Instance->POWER |= SDMMC_POWER_VSWITCHEN;
 
 				/* Send CMD11 to switch 1.8V mode */
-				errorstate =
-				    SDMMC_CmdVoltageSwitch(hsd->Instance);
+				errorstate = SDMMC_CmdVoltageSwitch(hsd->Instance);
 				if (errorstate != HAL_SD_ERROR_NONE) {
 					return errorstate;
 				}
 
 				/* Check to CKSTOP */
-				while (
-				    (hsd->Instance->STA & SDMMC_FLAG_CKSTOP) !=
-				    SDMMC_FLAG_CKSTOP) {
-					if ((HAL_GetTick() - tickstart) >=
-					    SDMMC_DATATIMEOUT) {
+				while ((hsd->Instance->STA & SDMMC_FLAG_CKSTOP) != SDMMC_FLAG_CKSTOP) {
+					if ((HAL_GetTick() - tickstart) >= SDMMC_DATATIMEOUT) {
 						return HAL_SD_ERROR_TIMEOUT;
 					}
 				}
@@ -3685,33 +3393,24 @@ static uint32_t SD_PowerON(SD_HandleTypeDef *hsd)
 				hsd->Instance->ICR = SDMMC_FLAG_CKSTOP;
 
 				/* Check to BusyD0 */
-				if ((hsd->Instance->STA & SDMMC_FLAG_BUSYD0) !=
-				    SDMMC_FLAG_BUSYD0) {
+				if ((hsd->Instance->STA & SDMMC_FLAG_BUSYD0) != SDMMC_FLAG_BUSYD0) {
 					/* Error when activate Voltage Switch in
 					 * SDMMC Peripheral */
 					return SDMMC_ERROR_UNSUPPORTED_FEATURE;
 				} else {
 					/* Enable Transceiver Switch PIN */
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
-					hsd->DriveTransceiver_1_8V_Callback(
-					    SET);
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+					hsd->DriveTransceiver_1_8V_Callback(SET);
 #else
-					HAL_SDEx_DriveTransceiver_1_8V_Callback(
-					    SET);
+					HAL_SDEx_DriveTransceiver_1_8V_Callback(SET);
 #endif
 
 					/* Switch ready */
-					hsd->Instance->POWER |=
-					    SDMMC_POWER_VSWITCH;
+					hsd->Instance->POWER |= SDMMC_POWER_VSWITCH;
 
 					/* Check VSWEND Flag */
-					while ((hsd->Instance->STA &
-						SDMMC_FLAG_VSWEND) !=
-					       SDMMC_FLAG_VSWEND) {
-						if ((HAL_GetTick() -
-						     tickstart) >=
-						    SDMMC_DATATIMEOUT) {
+					while ((hsd->Instance->STA & SDMMC_FLAG_VSWEND) != SDMMC_FLAG_VSWEND) {
+						if ((HAL_GetTick() - tickstart) >= SDMMC_DATATIMEOUT) {
 							return HAL_SD_ERROR_TIMEOUT;
 						}
 					}
@@ -3720,9 +3419,7 @@ static uint32_t SD_PowerON(SD_HandleTypeDef *hsd)
 					hsd->Instance->ICR = SDMMC_FLAG_VSWEND;
 
 					/* Check BusyD0 status */
-					if ((hsd->Instance->STA &
-					     SDMMC_FLAG_BUSYD0) ==
-					    SDMMC_FLAG_BUSYD0) {
+					if ((hsd->Instance->STA & SDMMC_FLAG_BUSYD0) == SDMMC_FLAG_BUSYD0) {
 						/* Error when enabling 1.8V mode
 						 */
 						return HAL_SD_ERROR_INVALID_VOLTRANGE;
@@ -3738,7 +3435,7 @@ static uint32_t SD_PowerON(SD_HandleTypeDef *hsd)
 				}
 			}
 		}
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 	} else {
 		hsd->SdCard.CardType = CARD_SDSC;
@@ -3774,8 +3471,7 @@ static uint32_t SD_SendSDStatus(SD_HandleTypeDef *hsd, uint32_t *pSDstatus)
 	uint32_t *pData = pSDstatus;
 
 	/* Check SD response */
-	if ((SDMMC_GetResponse(hsd->Instance, SDMMC_RESP1) &
-	     SDMMC_CARD_LOCKED) == SDMMC_CARD_LOCKED) {
+	if ((SDMMC_GetResponse(hsd->Instance, SDMMC_RESP1) & SDMMC_CARD_LOCKED) == SDMMC_CARD_LOCKED) {
 		return HAL_SD_ERROR_LOCK_UNLOCK_FAILED;
 	}
 
@@ -3788,8 +3484,7 @@ static uint32_t SD_SendSDStatus(SD_HandleTypeDef *hsd, uint32_t *pSDstatus)
 	}
 
 	/* Send CMD55 */
-	errorstate = SDMMC_CmdAppCommand(
-	    hsd->Instance, (uint32_t)(hsd->SdCard.RelCardAdd << 16U));
+	errorstate = SDMMC_CmdAppCommand(hsd->Instance, (uint32_t)(hsd->SdCard.RelCardAdd << 16U));
 	if (errorstate != HAL_SD_ERROR_NONE) {
 		hsd->ErrorCode |= HAL_SD_ERROR_NONE;
 		return errorstate;
@@ -3812,17 +3507,14 @@ static uint32_t SD_SendSDStatus(SD_HandleTypeDef *hsd, uint32_t *pSDstatus)
 	}
 
 	/* Get status data */
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	while (!__HAL_SD_GET_FLAG(hsd,
-				  SDMMC_FLAG_RXOVERR | SDMMC_FLAG_DCRCFAIL |
-				      SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_DATAEND))
+				  SDMMC_FLAG_RXOVERR | SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_DATAEND))
 #else
 	while (!__HAL_SD_GET_FLAG(hsd,
-				  SDMMC_FLAG_RXOVERR | SDMMC_FLAG_DCRCFAIL |
-				      SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_DBCKEND))
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+				  SDMMC_FLAG_RXOVERR | SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_DBCKEND))
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 	{
 		if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXFIFOHF)) {
@@ -3847,13 +3539,12 @@ static uint32_t SD_SendSDStatus(SD_HandleTypeDef *hsd, uint32_t *pSDstatus)
 		/* Nothing to do */
 	}
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	while ((__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_DPSMACT)))
 #else
 	while ((__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXDAVL)))
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 	{
 		*pData = SDMMC_ReadFIFO(hsd->Instance);
@@ -3886,8 +3577,7 @@ static uint32_t SD_SendStatus(SD_HandleTypeDef *hsd, uint32_t *pCardStatus)
 	}
 
 	/* Send Status command */
-	errorstate = SDMMC_CmdSendStatus(
-	    hsd->Instance, (uint32_t)(hsd->SdCard.RelCardAdd << 16U));
+	errorstate = SDMMC_CmdSendStatus(hsd->Instance, (uint32_t)(hsd->SdCard.RelCardAdd << 16U));
 	if (errorstate != HAL_SD_ERROR_NONE) {
 		return errorstate;
 	}
@@ -3908,8 +3598,7 @@ static uint32_t SD_WideBus_Enable(SD_HandleTypeDef *hsd)
 	uint32_t scr[2U] = {0UL, 0UL};
 	uint32_t errorstate;
 
-	if ((SDMMC_GetResponse(hsd->Instance, SDMMC_RESP1) &
-	     SDMMC_CARD_LOCKED) == SDMMC_CARD_LOCKED) {
+	if ((SDMMC_GetResponse(hsd->Instance, SDMMC_RESP1) & SDMMC_CARD_LOCKED) == SDMMC_CARD_LOCKED) {
 		return HAL_SD_ERROR_LOCK_UNLOCK_FAILED;
 	}
 
@@ -3922,8 +3611,7 @@ static uint32_t SD_WideBus_Enable(SD_HandleTypeDef *hsd)
 	/* If requested card supports wide bus operation */
 	if ((scr[1U] & SDMMC_WIDE_BUS_SUPPORT) != SDMMC_ALLZERO) {
 		/* Send CMD55 APP_CMD with argument as card's RCA.*/
-		errorstate = SDMMC_CmdAppCommand(
-		    hsd->Instance, (uint32_t)(hsd->SdCard.RelCardAdd << 16U));
+		errorstate = SDMMC_CmdAppCommand(hsd->Instance, (uint32_t)(hsd->SdCard.RelCardAdd << 16U));
 		if (errorstate != HAL_SD_ERROR_NONE) {
 			return errorstate;
 		}
@@ -3950,8 +3638,7 @@ static uint32_t SD_WideBus_Disable(SD_HandleTypeDef *hsd)
 	uint32_t scr[2U] = {0UL, 0UL};
 	uint32_t errorstate;
 
-	if ((SDMMC_GetResponse(hsd->Instance, SDMMC_RESP1) &
-	     SDMMC_CARD_LOCKED) == SDMMC_CARD_LOCKED) {
+	if ((SDMMC_GetResponse(hsd->Instance, SDMMC_RESP1) & SDMMC_CARD_LOCKED) == SDMMC_CARD_LOCKED) {
 		return HAL_SD_ERROR_LOCK_UNLOCK_FAILED;
 	}
 
@@ -3964,8 +3651,7 @@ static uint32_t SD_WideBus_Disable(SD_HandleTypeDef *hsd)
 	/* If requested card supports 1 bit mode operation */
 	if ((scr[1U] & SDMMC_SINGLE_BUS_SUPPORT) != SDMMC_ALLZERO) {
 		/* Send CMD55 APP_CMD with argument as card's RCA */
-		errorstate = SDMMC_CmdAppCommand(
-		    hsd->Instance, (uint32_t)(hsd->SdCard.RelCardAdd << 16U));
+		errorstate = SDMMC_CmdAppCommand(hsd->Instance, (uint32_t)(hsd->SdCard.RelCardAdd << 16U));
 		if (errorstate != HAL_SD_ERROR_NONE) {
 			return errorstate;
 		}
@@ -4004,8 +3690,7 @@ static uint32_t SD_FindSCR(SD_HandleTypeDef *hsd, uint32_t *pSCR)
 	}
 
 	/* Send CMD55 APP_CMD with argument as card's RCA */
-	errorstate = SDMMC_CmdAppCommand(
-	    hsd->Instance, (uint32_t)((hsd->SdCard.RelCardAdd) << 16U));
+	errorstate = SDMMC_CmdAppCommand(hsd->Instance, (uint32_t)((hsd->SdCard.RelCardAdd) << 16U));
 	if (errorstate != HAL_SD_ERROR_NONE) {
 		return errorstate;
 	}
@@ -4024,15 +3709,11 @@ static uint32_t SD_FindSCR(SD_HandleTypeDef *hsd, uint32_t *pSCR)
 		return errorstate;
 	}
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
-	while (!__HAL_SD_GET_FLAG(hsd,
-				  SDMMC_FLAG_RXOVERR | SDMMC_FLAG_DCRCFAIL |
-				      SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_DBCKEND |
-				      SDMMC_FLAG_DATAEND)) {
-		if ((!__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXFIFOE)) &&
-		    (index == 0U)) {
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
+	while (!__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXOVERR | SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT |
+					   SDMMC_FLAG_DBCKEND | SDMMC_FLAG_DATAEND)) {
+		if ((!__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXFIFOE)) && (index == 0U)) {
 			tempscr[0] = SDMMC_ReadFIFO(hsd->Instance);
 			tempscr[1] = SDMMC_ReadFIFO(hsd->Instance);
 			index++;
@@ -4043,9 +3724,8 @@ static uint32_t SD_FindSCR(SD_HandleTypeDef *hsd, uint32_t *pSCR)
 		}
 	}
 #else
-	while (!__HAL_SD_GET_FLAG(
-	    hsd, SDMMC_FLAG_RXOVERR | SDMMC_FLAG_DCRCFAIL |
-		     SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_DBCKEND)) {
+	while (!__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXOVERR | SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT |
+					   SDMMC_FLAG_DBCKEND)) {
 		if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXDAVL)) {
 			*(tempscr + index) = SDMMC_ReadFIFO(hsd->Instance);
 			index++;
@@ -4055,7 +3735,7 @@ static uint32_t SD_FindSCR(SD_HandleTypeDef *hsd, uint32_t *pSCR)
 			return HAL_SD_ERROR_TIMEOUT;
 		}
 	}
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 	if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_DTIMEOUT)) {
@@ -4075,15 +3755,11 @@ static uint32_t SD_FindSCR(SD_HandleTypeDef *hsd, uint32_t *pSCR)
 		/* Clear all the static flags */
 		__HAL_SD_CLEAR_FLAG(hsd, SDMMC_STATIC_DATA_FLAGS);
 
-		*scr = (((tempscr[1] & SDMMC_0TO7BITS) << 24) |
-			((tempscr[1] & SDMMC_8TO15BITS) << 8) |
-			((tempscr[1] & SDMMC_16TO23BITS) >> 8) |
-			((tempscr[1] & SDMMC_24TO31BITS) >> 24));
+		*scr = (((tempscr[1] & SDMMC_0TO7BITS) << 24) | ((tempscr[1] & SDMMC_8TO15BITS) << 8) |
+			((tempscr[1] & SDMMC_16TO23BITS) >> 8) | ((tempscr[1] & SDMMC_24TO31BITS) >> 24));
 		scr++;
-		*scr = (((tempscr[0] & SDMMC_0TO7BITS) << 24) |
-			((tempscr[0] & SDMMC_8TO15BITS) << 8) |
-			((tempscr[0] & SDMMC_16TO23BITS) >> 8) |
-			((tempscr[0] & SDMMC_24TO31BITS) >> 24));
+		*scr = (((tempscr[0] & SDMMC_0TO7BITS) << 24) | ((tempscr[0] & SDMMC_8TO15BITS) << 8) |
+			((tempscr[0] & SDMMC_16TO23BITS) >> 8) | ((tempscr[0] & SDMMC_24TO31BITS) >> 24));
 	}
 
 	return HAL_SD_ERROR_NONE;
@@ -4163,9 +3839,8 @@ static void SD_Write_IT(SD_HandleTypeDef *hsd)
 	}
 }
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 /**
  * @brief  Switches the SD card to High Speed mode.
  *         This API must be used after "Transfer State"
@@ -4199,30 +3874,23 @@ uint32_t SD_HighSpeed(SD_HandleTypeDef *hsd)
 		/* Configure the SD DPSM (Data Path State Machine) */
 		sdmmc_datainitstructure.DataTimeOut = SDMMC_DATATIMEOUT;
 		sdmmc_datainitstructure.DataLength = 64U;
-		sdmmc_datainitstructure.DataBlockSize =
-		    SDMMC_DATABLOCK_SIZE_64B;
-		sdmmc_datainitstructure.TransferDir =
-		    SDMMC_TRANSFER_DIR_TO_SDMMC;
-		sdmmc_datainitstructure.TransferMode =
-		    SDMMC_TRANSFER_MODE_BLOCK;
+		sdmmc_datainitstructure.DataBlockSize = SDMMC_DATABLOCK_SIZE_64B;
+		sdmmc_datainitstructure.TransferDir = SDMMC_TRANSFER_DIR_TO_SDMMC;
+		sdmmc_datainitstructure.TransferMode = SDMMC_TRANSFER_MODE_BLOCK;
 		sdmmc_datainitstructure.DPSM = SDMMC_DPSM_ENABLE;
 
 		(void)SDMMC_ConfigData(hsd->Instance, &sdmmc_datainitstructure);
 
-		errorstate =
-		    SDMMC_CmdSwitch(hsd->Instance, SDMMC_SDR25_SWITCH_PATTERN);
+		errorstate = SDMMC_CmdSwitch(hsd->Instance, SDMMC_SDR25_SWITCH_PATTERN);
 		if (errorstate != HAL_SD_ERROR_NONE) {
 			return errorstate;
 		}
 
-		while (!__HAL_SD_GET_FLAG(
-		    hsd, SDMMC_FLAG_RXOVERR | SDMMC_FLAG_DCRCFAIL |
-			     SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_DBCKEND |
-			     SDMMC_FLAG_DATAEND)) {
+		while (!__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXOVERR | SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT |
+						   SDMMC_FLAG_DBCKEND | SDMMC_FLAG_DATAEND)) {
 			if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXFIFOHF)) {
 				for (count = 0U; count < 8U; count++) {
-					SD_hs[(8U * loop) + count] =
-					    SDMMC_ReadFIFO(hsd->Instance);
+					SD_hs[(8U * loop) + count] = SDMMC_ReadFIFO(hsd->Instance);
 				}
 				loop++;
 			}
@@ -4287,8 +3955,7 @@ static uint32_t SD_UltraHighSpeed(SD_HandleTypeDef *hsd)
 		return HAL_SD_ERROR_REQUEST_NOT_APPLICABLE;
 	}
 
-	if ((hsd->SdCard.CardSpeed == CARD_ULTRA_HIGH_SPEED) &&
-	    (hsd->Init.Transceiver == SDMMC_TRANSCEIVER_ENABLE)) {
+	if ((hsd->SdCard.CardSpeed == CARD_ULTRA_HIGH_SPEED) && (hsd->Init.Transceiver == SDMMC_TRANSCEIVER_ENABLE)) {
 		/* Initialize the Data control register */
 		hsd->Instance->DCTRL = 0;
 		errorstate = SDMMC_CmdBlockLength(hsd->Instance, 64U);
@@ -4300,30 +3967,23 @@ static uint32_t SD_UltraHighSpeed(SD_HandleTypeDef *hsd)
 		/* Configure the SD DPSM (Data Path State Machine) */
 		sdmmc_datainitstructure.DataTimeOut = SDMMC_DATATIMEOUT;
 		sdmmc_datainitstructure.DataLength = 64U;
-		sdmmc_datainitstructure.DataBlockSize =
-		    SDMMC_DATABLOCK_SIZE_64B;
-		sdmmc_datainitstructure.TransferDir =
-		    SDMMC_TRANSFER_DIR_TO_SDMMC;
-		sdmmc_datainitstructure.TransferMode =
-		    SDMMC_TRANSFER_MODE_BLOCK;
+		sdmmc_datainitstructure.DataBlockSize = SDMMC_DATABLOCK_SIZE_64B;
+		sdmmc_datainitstructure.TransferDir = SDMMC_TRANSFER_DIR_TO_SDMMC;
+		sdmmc_datainitstructure.TransferMode = SDMMC_TRANSFER_MODE_BLOCK;
 		sdmmc_datainitstructure.DPSM = SDMMC_DPSM_ENABLE;
 
 		(void)SDMMC_ConfigData(hsd->Instance, &sdmmc_datainitstructure);
 
-		errorstate =
-		    SDMMC_CmdSwitch(hsd->Instance, SDMMC_SDR104_SWITCH_PATTERN);
+		errorstate = SDMMC_CmdSwitch(hsd->Instance, SDMMC_SDR104_SWITCH_PATTERN);
 		if (errorstate != HAL_SD_ERROR_NONE) {
 			return errorstate;
 		}
 
-		while (!__HAL_SD_GET_FLAG(
-		    hsd, SDMMC_FLAG_RXOVERR | SDMMC_FLAG_DCRCFAIL |
-			     SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_DBCKEND |
-			     SDMMC_FLAG_DATAEND)) {
+		while (!__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXOVERR | SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT |
+						   SDMMC_FLAG_DBCKEND | SDMMC_FLAG_DATAEND)) {
 			if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXFIFOHF)) {
 				for (count = 0U; count < 8U; count++) {
-					SD_hs[(8U * loop) + count] =
-					    SDMMC_ReadFIFO(hsd->Instance);
+					SD_hs[(8U * loop) + count] = SDMMC_ReadFIFO(hsd->Instance);
 				}
 				loop++;
 			}
@@ -4362,8 +4022,7 @@ static uint32_t SD_UltraHighSpeed(SD_HandleTypeDef *hsd)
 		if ((((uint8_t *)SD_hs)[13] & 2U) != 2U) {
 			errorstate = SDMMC_ERROR_UNSUPPORTED_FEATURE;
 		} else {
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 			hsd->DriveTransceiver_1_8V_Callback(SET);
 #else
 			HAL_SDEx_DriveTransceiver_1_8V_Callback(SET);
@@ -4372,10 +4031,8 @@ static uint32_t SD_UltraHighSpeed(SD_HandleTypeDef *hsd)
 			/* Enable DelayBlock Peripheral */
 			/* SDMMC_FB_CLK tuned feedback clock selected as receive
 			 * clock, for SDR104 */
-			MODIFY_REG(hsd->Instance->CLKCR, SDMMC_CLKCR_SELCLKRX,
-				   SDMMC_CLKCR_SELCLKRX_1);
-			if (DelayBlock_Enable(SD_GET_DLYB_INSTANCE(
-				hsd->Instance)) != HAL_OK) {
+			MODIFY_REG(hsd->Instance->CLKCR, SDMMC_CLKCR_SELCLKRX, SDMMC_CLKCR_SELCLKRX_1);
+			if (DelayBlock_Enable(SD_GET_DLYB_INSTANCE(hsd->Instance)) != HAL_OK) {
 				return (HAL_SD_ERROR_GENERAL_UNKNOWN_ERR);
 			}
 #endif /* (DLYB_SDMMC1) || (DLYB_SDMMC2) */
@@ -4406,8 +4063,7 @@ static uint32_t SD_DDR_Mode(SD_HandleTypeDef *hsd)
 		return HAL_SD_ERROR_REQUEST_NOT_APPLICABLE;
 	}
 
-	if ((hsd->SdCard.CardSpeed == CARD_ULTRA_HIGH_SPEED) &&
-	    (hsd->Init.Transceiver == SDMMC_TRANSCEIVER_ENABLE)) {
+	if ((hsd->SdCard.CardSpeed == CARD_ULTRA_HIGH_SPEED) && (hsd->Init.Transceiver == SDMMC_TRANSCEIVER_ENABLE)) {
 		/* Initialize the Data control register */
 		hsd->Instance->DCTRL = 0;
 		errorstate = SDMMC_CmdBlockLength(hsd->Instance, 64U);
@@ -4419,30 +4075,23 @@ static uint32_t SD_DDR_Mode(SD_HandleTypeDef *hsd)
 		/* Configure the SD DPSM (Data Path State Machine) */
 		sdmmc_datainitstructure.DataTimeOut = SDMMC_DATATIMEOUT;
 		sdmmc_datainitstructure.DataLength = 64U;
-		sdmmc_datainitstructure.DataBlockSize =
-		    SDMMC_DATABLOCK_SIZE_64B;
-		sdmmc_datainitstructure.TransferDir =
-		    SDMMC_TRANSFER_DIR_TO_SDMMC;
-		sdmmc_datainitstructure.TransferMode =
-		    SDMMC_TRANSFER_MODE_BLOCK;
+		sdmmc_datainitstructure.DataBlockSize = SDMMC_DATABLOCK_SIZE_64B;
+		sdmmc_datainitstructure.TransferDir = SDMMC_TRANSFER_DIR_TO_SDMMC;
+		sdmmc_datainitstructure.TransferMode = SDMMC_TRANSFER_MODE_BLOCK;
 		sdmmc_datainitstructure.DPSM = SDMMC_DPSM_ENABLE;
 
 		(void)SDMMC_ConfigData(hsd->Instance, &sdmmc_datainitstructure);
 
-		errorstate =
-		    SDMMC_CmdSwitch(hsd->Instance, SDMMC_DDR50_SWITCH_PATTERN);
+		errorstate = SDMMC_CmdSwitch(hsd->Instance, SDMMC_DDR50_SWITCH_PATTERN);
 		if (errorstate != HAL_SD_ERROR_NONE) {
 			return errorstate;
 		}
 
-		while (!__HAL_SD_GET_FLAG(
-		    hsd, SDMMC_FLAG_RXOVERR | SDMMC_FLAG_DCRCFAIL |
-			     SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_DBCKEND |
-			     SDMMC_FLAG_DATAEND)) {
+		while (!__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXOVERR | SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT |
+						   SDMMC_FLAG_DBCKEND | SDMMC_FLAG_DATAEND)) {
 			if (__HAL_SD_GET_FLAG(hsd, SDMMC_FLAG_RXFIFOHF)) {
 				for (count = 0U; count < 8U; count++) {
-					SD_hs[(8U * loop) + count] =
-					    SDMMC_ReadFIFO(hsd->Instance);
+					SD_hs[(8U * loop) + count] = SDMMC_ReadFIFO(hsd->Instance);
 				}
 				loop++;
 			}
@@ -4481,8 +4130,7 @@ static uint32_t SD_DDR_Mode(SD_HandleTypeDef *hsd)
 		if ((((uint8_t *)SD_hs)[13] & 2U) != 2U) {
 			errorstate = SDMMC_ERROR_UNSUPPORTED_FEATURE;
 		} else {
-#if defined(USE_HAL_SD_REGISTER_CALLBACKS) &&                                  \
-    (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
+#if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 			hsd->DriveTransceiver_1_8V_Callback(SET);
 #else
 			HAL_SDEx_DriveTransceiver_1_8V_Callback(SET);
@@ -4491,10 +4139,8 @@ static uint32_t SD_DDR_Mode(SD_HandleTypeDef *hsd)
 			/* Enable DelayBlock Peripheral */
 			/* SDMMC_FB_CLK tuned feedback clock selected as receive
 			 * clock, for SDR104 */
-			MODIFY_REG(hsd->Instance->CLKCR, SDMMC_CLKCR_SELCLKRX,
-				   SDMMC_CLKCR_SELCLKRX_1);
-			if (DelayBlock_Enable(SD_GET_DLYB_INSTANCE(
-				hsd->Instance)) != HAL_OK) {
+			MODIFY_REG(hsd->Instance->CLKCR, SDMMC_CLKCR_SELCLKRX, SDMMC_CLKCR_SELCLKRX_1);
+			if (DelayBlock_Enable(SD_GET_DLYB_INSTANCE(hsd->Instance)) != HAL_OK) {
 				return (HAL_SD_ERROR_GENERAL_UNKNOWN_ERR);
 			}
 #endif /* (DLYB_SDMMC1) || (DLYB_SDMMC2) */
@@ -4504,7 +4150,7 @@ static uint32_t SD_DDR_Mode(SD_HandleTypeDef *hsd)
 	return errorstate;
 }
 
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||          \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 /**
  * @}

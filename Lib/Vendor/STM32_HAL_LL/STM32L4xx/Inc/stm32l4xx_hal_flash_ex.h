@@ -44,10 +44,9 @@ extern "C" {
 /** @defgroup FLASHEx_LVE_PIN_CFG FLASHEx LVE pin configuration
  * @{
  */
-#define FLASH_LVE_PIN_CTRL                                                     \
-	0x00000000U /*!< LVE FLASH pin controlled by power controller       */
-#define FLASH_LVE_PIN_FORCED                                                   \
-	FLASH_CFGR_LVEN /*!< LVE FLASH pin enforced to low (external SMPS      \
+#define FLASH_LVE_PIN_CTRL 0x00000000U /*!< LVE FLASH pin controlled by power controller       */
+#define FLASH_LVE_PIN_FORCED                                                                                           \
+	FLASH_CFGR_LVEN /*!< LVE FLASH pin enforced to low (external SMPS                                              \
 			   used) */
 /**
  * @}
@@ -69,8 +68,7 @@ extern "C" {
 /** @addtogroup FLASHEx_Exported_Functions_Group1
  * @{
  */
-HAL_StatusTypeDef HAL_FLASHEx_Erase(FLASH_EraseInitTypeDef *pEraseInit,
-				    uint32_t *PageError);
+HAL_StatusTypeDef HAL_FLASHEx_Erase(FLASH_EraseInitTypeDef *pEraseInit, uint32_t *PageError);
 HAL_StatusTypeDef HAL_FLASHEx_Erase_IT(FLASH_EraseInitTypeDef *pEraseInit);
 HAL_StatusTypeDef HAL_FLASHEx_OBProgram(FLASH_OBProgramInitTypeDef *pOBInit);
 void HAL_FLASHEx_OBGetConfig(FLASH_OBProgramInitTypeDef *pOBInit);
@@ -107,8 +105,7 @@ void FLASH_FlushCaches(void);
   @cond 0
   */
 #if defined(FLASH_CFGR_LVEN)
-#define IS_FLASH_LVE_PIN(CFG)                                                  \
-	(((CFG) == FLASH_LVE_PIN_CTRL) || ((CFG) == FLASH_LVE_PIN_FORCED))
+#define IS_FLASH_LVE_PIN(CFG) (((CFG) == FLASH_LVE_PIN_CTRL) || ((CFG) == FLASH_LVE_PIN_FORCED))
 #endif /* FLASH_CFGR_LVEN */
 /**
   @endcond
