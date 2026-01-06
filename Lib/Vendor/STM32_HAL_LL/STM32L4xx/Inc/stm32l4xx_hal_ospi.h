@@ -419,9 +419,10 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
     !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 #define HAL_OSPI_MEMTYPE_APMEMORY ((uint32_t)OCTOSPI_DCR1_MTYP_1) /*!< AP Memory mode    */
 #endif
-#define HAL_OSPI_MEMTYPE_MACRONIX_RAM ((uint32_t)(OCTOSPI_DCR1_MTYP_1 | OCTOSPI_DCR1_MTYP_0)) /*!< Macronix RAM mode   \
-											       */
-#define HAL_OSPI_MEMTYPE_HYPERBUS ((uint32_t)OCTOSPI_DCR1_MTYP_2)			      /*!< Hyperbus mode     */
+#define HAL_OSPI_MEMTYPE_MACRONIX_RAM                                                                                  \
+	((uint32_t)(OCTOSPI_DCR1_MTYP_1 | OCTOSPI_DCR1_MTYP_0))	  /*!< Macronix RAM mode                               \
+								   */
+#define HAL_OSPI_MEMTYPE_HYPERBUS ((uint32_t)OCTOSPI_DCR1_MTYP_2) /*!< Hyperbus mode     */
 /**
  * @}
  */

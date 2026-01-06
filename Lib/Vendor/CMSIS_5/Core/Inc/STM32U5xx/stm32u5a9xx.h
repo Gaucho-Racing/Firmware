@@ -2463,30 +2463,30 @@ typedef struct {
 	__IO uint32_t CFGR2; /*!< ADC Configuration register 2, Address offset: 0x10 */
 	__IO uint32_t SMPR1; /*!< ADC sample time register 1, Address offset: 0x14 */
 	__IO uint32_t SMPR2;
-	    /*!< ADC sample time register 2,                        Address offset: 0x18 */ /* Specific to ADC 14Bits*/
+	/*!< ADC sample time register 2,                        Address offset: 0x18 */ /* Specific to ADC 14Bits*/
 	__IO uint32_t PCSEL; /*!< ADC pre-channel selection, Address offset: 0x1C */
 	__IO uint32_t AWD1TR;
-	    /*!< ADC watchdog threshold register,                   Address offset: 0x20 */ /* Specific to ADC 12Bits*/
+	/*!< ADC watchdog threshold register,                   Address offset: 0x20 */ /* Specific to ADC 12Bits*/
 	__IO uint32_t AWD2TR;
-	    /*!< ADC watchdog threshold register,                   Address offset: 0x24 */ /* Specific to ADC 12Bits*/
+	/*!< ADC watchdog threshold register,                   Address offset: 0x24 */ /* Specific to ADC 12Bits*/
 	__IO uint32_t CHSELR;
-	    /*!< ADC channel select register,                       Address offset: 0x28 */ /* Specific to ADC 12Bits*/
+	/*!< ADC channel select register,                       Address offset: 0x28 */ /* Specific to ADC 12Bits*/
 	__IO uint32_t AWD3TR;
-	    /*!< ADC watchdog threshold register,                   Address offset: 0x2C */ /* Specific to ADC 12Bits*/
+	/*!< ADC watchdog threshold register,                   Address offset: 0x2C */ /* Specific to ADC 12Bits*/
 	__IO uint32_t SQR1;
-	    /*!< ADC regular sequence register 1,                   Address offset: 0x30 */ /* Specific to ADC 14Bits*/
+	/*!< ADC regular sequence register 1,                   Address offset: 0x30 */ /* Specific to ADC 14Bits*/
 	__IO uint32_t SQR2;
-	    /*!< ADC regular sequence register 2,                   Address offset: 0x34 */ /* Specific to ADC 14Bits*/
+	/*!< ADC regular sequence register 2,                   Address offset: 0x34 */ /* Specific to ADC 14Bits*/
 	__IO uint32_t SQR3;
-	    /*!< ADC regular sequence register 3,                   Address offset: 0x38 */ /* Specific to ADC 14Bits*/
+	/*!< ADC regular sequence register 3,                   Address offset: 0x38 */ /* Specific to ADC 14Bits*/
 	__IO uint32_t SQR4;
-	    /*!< ADC regular sequence register 4,                   Address offset: 0x3C */ /* Specific to ADC 14Bits*/
+	/*!< ADC regular sequence register 4,                   Address offset: 0x3C */ /* Specific to ADC 14Bits*/
 	__IO uint32_t DR;   /*!< ADC regular data register, Address offset: 0x40 */
 	__IO uint32_t PWRR; /*!< ADC power register, Address offset: 0x44 */
 	uint32_t RESERVED1; /*!< Reserved, 0x048 */
 	__IO uint32_t JSQR;
-	    /*!< ADC injected sequence register,                    Address offset: 0x4C */ /* Specific to ADC 14Bits*/
-	uint32_t RESERVED2[4]; /*!< Reserved, 0x050 - 0x05C */
+	/*!< ADC injected sequence register,                    Address offset: 0x4C */ /* Specific to ADC 14Bits*/
+	uint32_t RESERVED2[4];								/*!< Reserved, 0x050 - 0x05C */
 	__IO uint32_t OFR1;
 	/*!< ADC offset register 1, Address offset: 0x60 */ /* Specific to
 							       ADC 14Bits*/
@@ -2500,39 +2500,39 @@ typedef struct {
 	/*!< ADC offset register 4, Address offset: 0x6C */ /* Specific to
 							       ADC 14Bits*/
 	__IO uint32_t GCOMP;
-	    /*!< ADC gain compensation register,                    Address offset: 0x70 */ /* Specific to ADC 14Bits*/
-	uint32_t RESERVED3[3]; /*!< Reserved, 0x074 - 0x07C */
+	/*!< ADC gain compensation register,                    Address offset: 0x70 */ /* Specific to ADC 14Bits*/
+	uint32_t RESERVED3[3];								/*!< Reserved, 0x074 - 0x07C */
 	__IO uint32_t JDR1;
-	    /*!< ADC injected data register 1,                      Address offset: 0x80 */ /* Specific to ADC 14Bits*/
+	/*!< ADC injected data register 1,                      Address offset: 0x80 */ /* Specific to ADC 14Bits*/
 	__IO uint32_t JDR2;
-	    /*!< ADC injected data register 2,                      Address offset: 0x84 */ /* Specific to ADC 14Bits*/
+	/*!< ADC injected data register 2,                      Address offset: 0x84 */ /* Specific to ADC 14Bits*/
 	__IO uint32_t JDR3;
-	    /*!< ADC injected data register 3,                      Address offset: 0x88 */ /* Specific to ADC 14Bits*/
+	/*!< ADC injected data register 3,                      Address offset: 0x88 */ /* Specific to ADC 14Bits*/
 	__IO uint32_t JDR4;
-	    /*!< ADC injected data register 4,                      Address offset: 0x8C */ /* Specific to ADC 14Bits*/
-	uint32_t RESERVED4[4]; /*!< Reserved, 0x090 - 0x09C */
-	__IO uint32_t AWD2CR;  /*!< ADC  Analog Watchdog 2 Configuration
-				  Register,     Address offset: 0xA0 */
-	__IO uint32_t AWD3CR;  /*!< ADC  Analog Watchdog 3 Configuration
-				  Register,     Address offset: 0xA4 */
+	/*!< ADC injected data register 4,                      Address offset: 0x8C */ /* Specific to ADC 14Bits*/
+	uint32_t RESERVED4[4];								/*!< Reserved, 0x090 - 0x09C */
+	__IO uint32_t AWD2CR; /*!< ADC  Analog Watchdog 2 Configuration
+				 Register,     Address offset: 0xA0 */
+	__IO uint32_t AWD3CR; /*!< ADC  Analog Watchdog 3 Configuration
+				 Register,     Address offset: 0xA4 */
 	__IO uint32_t LTR1;
-	    /*!< ADC watchdog Lower threshold register 1,           Address offset: 0xA8 */ /* Specific to ADC 14Bits*/
+	/*!< ADC watchdog Lower threshold register 1,           Address offset: 0xA8 */ /* Specific to ADC 14Bits*/
 	__IO uint32_t HTR1;
-	    /*!< ADC watchdog higher threshold register 1,          Address offset: 0xAC */ /* Specific to ADC 14Bits*/
+	/*!< ADC watchdog higher threshold register 1,          Address offset: 0xAC */ /* Specific to ADC 14Bits*/
 	__IO uint32_t LTR2;
-	    /*!< ADC watchdog Lower threshold register 2,           Address offset: 0xB0 */ /* Specific to ADC 14Bits*/
+	/*!< ADC watchdog Lower threshold register 2,           Address offset: 0xB0 */ /* Specific to ADC 14Bits*/
 	__IO uint32_t HTR2;
-	    /*!< ADC watchdog Higher threshold register 2,          Address offset: 0xB4 */ /* Specific to ADC 14Bits*/
+	/*!< ADC watchdog Higher threshold register 2,          Address offset: 0xB4 */ /* Specific to ADC 14Bits*/
 	__IO uint32_t LTR3;
-	    /*!< ADC watchdog Lower threshold register 3,           Address offset: 0xB8 */ /* Specific to ADC 14Bits*/
+	/*!< ADC watchdog Lower threshold register 3,           Address offset: 0xB8 */ /* Specific to ADC 14Bits*/
 	__IO uint32_t HTR3;
-	    /*!< ADC watchdog Higher threshold register 3,          Address offset: 0xBC */ /* Specific to ADC 14Bits*/
+	/*!< ADC watchdog Higher threshold register 3,          Address offset: 0xBC */ /* Specific to ADC 14Bits*/
 	__IO uint32_t DIFSEL;
-	    /*!< ADC  Differential Mode Selection Register,         Address offset: 0xC0 */ /* Specific to ADC 14Bits*/
+	/*!< ADC  Differential Mode Selection Register,         Address offset: 0xC0 */ /* Specific to ADC 14Bits*/
 	__IO uint32_t CALFACT; /*!< ADC  Calibration Factors, Address offset: 0xC4 */
 	__IO uint32_t CALFACT2;
-	    /*!< ADC  Linearity Calibration Factors,                Address offset: 0xC8 */ /* Specific to ADC 14Bits*/
-	uint32_t RESERVED5;								    /*!< Reserved, 0x0CC */
+	/*!< ADC  Linearity Calibration Factors,                Address offset: 0xC8 */ /* Specific to ADC 14Bits*/
+	uint32_t RESERVED5;								/*!< Reserved, 0x0CC */
 	__IO uint32_t OR;
 	/*!< ADC  Option Register,   Address offset: 0xD0 */ /* Specific to
 								ADC 12Bits*/
@@ -34533,14 +34533,15 @@ typedef struct {
 #define PKA_ECC_SCALAR_MUL_IN_EXP_NB_BITS                                                                              \
 	((0x0400UL - PKA_RAM_OFFSET) >> 2) /*!< Input curve prime order n number of bits */
 #define PKA_ECC_SCALAR_MUL_IN_OP_NB_BITS                                                                               \
-	((0x0408UL - PKA_RAM_OFFSET) >> 2)				      /*!< Input modulus number of bits        \
-									       */
-#define PKA_ECC_SCALAR_MUL_IN_A_COEFF_SIGN ((0x0410UL - PKA_RAM_OFFSET) >> 2) /*!< Input sign of the 'a' coefficient   \
-									       */
-#define PKA_ECC_SCALAR_MUL_IN_A_COEFF ((0x0418UL - PKA_RAM_OFFSET) >> 2)      /*!< Input ECC curve 'a' coefficient */
-#define PKA_ECC_SCALAR_MUL_IN_B_COEFF ((0x0520UL - PKA_RAM_OFFSET) >> 2)      /*!< Input ECC curve 'b' coefficient */
-#define PKA_ECC_SCALAR_MUL_IN_MOD_GF ((0x1088UL - PKA_RAM_OFFSET) >> 2)	      /*!< Input modulus GF(p) */
-#define PKA_ECC_SCALAR_MUL_IN_K ((0x12A0UL - PKA_RAM_OFFSET) >> 2)	      /*!< Input 'k' of KP */
+	((0x0408UL - PKA_RAM_OFFSET) >> 2) /*!< Input modulus number of bits                                           \
+					    */
+#define PKA_ECC_SCALAR_MUL_IN_A_COEFF_SIGN                                                                             \
+	((0x0410UL - PKA_RAM_OFFSET) >> 2)				 /*!< Input sign of the 'a' coefficient        \
+									  */
+#define PKA_ECC_SCALAR_MUL_IN_A_COEFF ((0x0418UL - PKA_RAM_OFFSET) >> 2) /*!< Input ECC curve 'a' coefficient */
+#define PKA_ECC_SCALAR_MUL_IN_B_COEFF ((0x0520UL - PKA_RAM_OFFSET) >> 2) /*!< Input ECC curve 'b' coefficient */
+#define PKA_ECC_SCALAR_MUL_IN_MOD_GF ((0x1088UL - PKA_RAM_OFFSET) >> 2)	 /*!< Input modulus GF(p) */
+#define PKA_ECC_SCALAR_MUL_IN_K ((0x12A0UL - PKA_RAM_OFFSET) >> 2)	 /*!< Input 'k' of KP */
 #define PKA_ECC_SCALAR_MUL_IN_INITIAL_POINT_X                                                                          \
 	((0x0578UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point P X coordinate */
 #define PKA_ECC_SCALAR_MUL_IN_INITIAL_POINT_Y                                                                          \
@@ -34554,16 +34555,18 @@ typedef struct {
 
 /* Point check input data */
 #define PKA_POINT_CHECK_IN_MOD_NB_BITS                                                                                 \
-	((0x0408UL - PKA_RAM_OFFSET) >> 2)				      /*!< Input modulus number of bits        \
-									       */
-#define PKA_POINT_CHECK_IN_A_COEFF_SIGN ((0x0410UL - PKA_RAM_OFFSET) >> 2)    /*!< Input sign of the 'a' coefficient */
-#define PKA_POINT_CHECK_IN_A_COEFF ((0x0418UL - PKA_RAM_OFFSET) >> 2)	      /*!< Input ECC curve 'a' coefficient */
-#define PKA_POINT_CHECK_IN_B_COEFF ((0x0520UL - PKA_RAM_OFFSET) >> 2)	      /*!< Input ECC curve 'b' coefficient */
-#define PKA_POINT_CHECK_IN_MOD_GF ((0x0470UL - PKA_RAM_OFFSET) >> 2)	      /*!< Input modulus GF(p) */
-#define PKA_POINT_CHECK_IN_INITIAL_POINT_X ((0x0578UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point P X coordinate  \
-									       */
-#define PKA_POINT_CHECK_IN_INITIAL_POINT_Y ((0x05D0UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point P Y coordinate  \
-									       */
+	((0x0408UL - PKA_RAM_OFFSET) >> 2)				   /*!< Input modulus number of bits           \
+									    */
+#define PKA_POINT_CHECK_IN_A_COEFF_SIGN ((0x0410UL - PKA_RAM_OFFSET) >> 2) /*!< Input sign of the 'a' coefficient */
+#define PKA_POINT_CHECK_IN_A_COEFF ((0x0418UL - PKA_RAM_OFFSET) >> 2)	   /*!< Input ECC curve 'a' coefficient */
+#define PKA_POINT_CHECK_IN_B_COEFF ((0x0520UL - PKA_RAM_OFFSET) >> 2)	   /*!< Input ECC curve 'b' coefficient */
+#define PKA_POINT_CHECK_IN_MOD_GF ((0x0470UL - PKA_RAM_OFFSET) >> 2)	   /*!< Input modulus GF(p) */
+#define PKA_POINT_CHECK_IN_INITIAL_POINT_X                                                                             \
+	((0x0578UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point P X coordinate                                     \
+					    */
+#define PKA_POINT_CHECK_IN_INITIAL_POINT_Y                                                                             \
+	((0x05D0UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point P Y coordinate                                     \
+					    */
 #define PKA_POINT_CHECK_IN_MONTGOMERY_PARAM                                                                            \
 	((0x04C8UL - PKA_RAM_OFFSET) >> 2) /*!< Input storage area for Montgomery parameter */
 
@@ -34573,17 +34576,19 @@ typedef struct {
 /* ECDSA signature input data */
 #define PKA_ECDSA_SIGN_IN_ORDER_NB_BITS ((0x0400UL - PKA_RAM_OFFSET) >> 2) /*!< Input order number of bits */
 #define PKA_ECDSA_SIGN_IN_MOD_NB_BITS                                                                                  \
-	((0x0408UL - PKA_RAM_OFFSET) >> 2)				     /*!< Input modulus number of bits         \
-									      */
-#define PKA_ECDSA_SIGN_IN_A_COEFF_SIGN ((0x0410UL - PKA_RAM_OFFSET) >> 2)    /*!< Input sign of the 'a' coefficient */
-#define PKA_ECDSA_SIGN_IN_A_COEFF ((0x0418UL - PKA_RAM_OFFSET) >> 2)	     /*!< Input ECC curve 'a' coefficient */
-#define PKA_ECDSA_SIGN_IN_B_COEFF ((0x0520UL - PKA_RAM_OFFSET) >> 2)	     /*!< Input ECC curve 'b' coefficient */
-#define PKA_ECDSA_SIGN_IN_MOD_GF ((0x1088UL - PKA_RAM_OFFSET) >> 2)	     /*!< Input modulus GF(p) */
-#define PKA_ECDSA_SIGN_IN_K ((0x12A0UL - PKA_RAM_OFFSET) >> 2)		     /*!< Input k value of the ECDSA */
-#define PKA_ECDSA_SIGN_IN_INITIAL_POINT_X ((0x0578UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point P X coordinate   \
-									      */
-#define PKA_ECDSA_SIGN_IN_INITIAL_POINT_Y ((0x0470UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point P Y coordinate   \
-									      */
+	((0x0408UL - PKA_RAM_OFFSET) >> 2)				  /*!< Input modulus number of bits            \
+									   */
+#define PKA_ECDSA_SIGN_IN_A_COEFF_SIGN ((0x0410UL - PKA_RAM_OFFSET) >> 2) /*!< Input sign of the 'a' coefficient */
+#define PKA_ECDSA_SIGN_IN_A_COEFF ((0x0418UL - PKA_RAM_OFFSET) >> 2)	  /*!< Input ECC curve 'a' coefficient */
+#define PKA_ECDSA_SIGN_IN_B_COEFF ((0x0520UL - PKA_RAM_OFFSET) >> 2)	  /*!< Input ECC curve 'b' coefficient */
+#define PKA_ECDSA_SIGN_IN_MOD_GF ((0x1088UL - PKA_RAM_OFFSET) >> 2)	  /*!< Input modulus GF(p) */
+#define PKA_ECDSA_SIGN_IN_K ((0x12A0UL - PKA_RAM_OFFSET) >> 2)		  /*!< Input k value of the ECDSA */
+#define PKA_ECDSA_SIGN_IN_INITIAL_POINT_X                                                                              \
+	((0x0578UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point P X coordinate                                     \
+					    */
+#define PKA_ECDSA_SIGN_IN_INITIAL_POINT_Y                                                                              \
+	((0x0470UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point P Y coordinate                                     \
+					    */
 #define PKA_ECDSA_SIGN_IN_HASH_E                                                                                       \
 	((0x0FE8UL - PKA_RAM_OFFSET) >> 2)				   /*!< Input e, hash of the message           \
 									    */
@@ -34602,15 +34607,17 @@ typedef struct {
 /* ECDSA verification input data */
 #define PKA_ECDSA_VERIF_IN_ORDER_NB_BITS ((0x0408UL - PKA_RAM_OFFSET) >> 2) /*!< Input order number of bits */
 #define PKA_ECDSA_VERIF_IN_MOD_NB_BITS                                                                                 \
-	((0x04C8UL - PKA_RAM_OFFSET) >> 2)				      /*!< Input modulus number of bits        \
-									       */
-#define PKA_ECDSA_VERIF_IN_A_COEFF_SIGN ((0x0468UL - PKA_RAM_OFFSET) >> 2)    /*!< Input sign of the 'a' coefficient */
-#define PKA_ECDSA_VERIF_IN_A_COEFF ((0x0470UL - PKA_RAM_OFFSET) >> 2)	      /*!< Input ECC curve 'a' coefficient */
-#define PKA_ECDSA_VERIF_IN_MOD_GF ((0x04D0UL - PKA_RAM_OFFSET) >> 2)	      /*!< Input modulus GF(p) */
-#define PKA_ECDSA_VERIF_IN_INITIAL_POINT_X ((0x0678UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point P X coordinate  \
-									       */
-#define PKA_ECDSA_VERIF_IN_INITIAL_POINT_Y ((0x06D0UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point P Y coordinate  \
-									       */
+	((0x04C8UL - PKA_RAM_OFFSET) >> 2)				   /*!< Input modulus number of bits           \
+									    */
+#define PKA_ECDSA_VERIF_IN_A_COEFF_SIGN ((0x0468UL - PKA_RAM_OFFSET) >> 2) /*!< Input sign of the 'a' coefficient */
+#define PKA_ECDSA_VERIF_IN_A_COEFF ((0x0470UL - PKA_RAM_OFFSET) >> 2)	   /*!< Input ECC curve 'a' coefficient */
+#define PKA_ECDSA_VERIF_IN_MOD_GF ((0x04D0UL - PKA_RAM_OFFSET) >> 2)	   /*!< Input modulus GF(p) */
+#define PKA_ECDSA_VERIF_IN_INITIAL_POINT_X                                                                             \
+	((0x0678UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point P X coordinate                                     \
+					    */
+#define PKA_ECDSA_VERIF_IN_INITIAL_POINT_Y                                                                             \
+	((0x06D0UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point P Y coordinate                                     \
+					    */
 #define PKA_ECDSA_VERIF_IN_PUBLIC_KEY_POINT_X                                                                          \
 	((0x12F8UL - PKA_RAM_OFFSET) >> 2) /*!< Input public key point X coordinate */
 #define PKA_ECDSA_VERIF_IN_PUBLIC_KEY_POINT_Y                                                                          \
@@ -34777,20 +34784,26 @@ typedef struct {
 	((0x0520UL - PKA_RAM_OFFSET) >> 2) /*!< Input 'k' integer coefficient                                          \
 					    */
 #define PKA_ECC_DOUBLE_LADDER_IN_M_INTEGER                                                                             \
-	((0x0578UL - PKA_RAM_OFFSET) >> 2)				     /*!< Input 'm' integer coefficient        \
-									      */
-#define PKA_ECC_DOUBLE_LADDER_IN_POINT1_X ((0x0628UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point P X coordinate   \
-									      */
-#define PKA_ECC_DOUBLE_LADDER_IN_POINT1_Y ((0x0680UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point P Y coordinate   \
-									      */
-#define PKA_ECC_DOUBLE_LADDER_IN_POINT1_Z ((0x06D8UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point P Z coordinate   \
-									      */
-#define PKA_ECC_DOUBLE_LADDER_IN_POINT2_X ((0x0730UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point Q X coordinate   \
-									      */
-#define PKA_ECC_DOUBLE_LADDER_IN_POINT2_Y ((0x0788UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point Q Y coordinate   \
-									      */
-#define PKA_ECC_DOUBLE_LADDER_IN_POINT2_Z ((0x07E0UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point Q Z coordinate   \
-									      */
+	((0x0578UL - PKA_RAM_OFFSET) >> 2) /*!< Input 'm' integer coefficient                                          \
+					    */
+#define PKA_ECC_DOUBLE_LADDER_IN_POINT1_X                                                                              \
+	((0x0628UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point P X coordinate                                     \
+					    */
+#define PKA_ECC_DOUBLE_LADDER_IN_POINT1_Y                                                                              \
+	((0x0680UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point P Y coordinate                                     \
+					    */
+#define PKA_ECC_DOUBLE_LADDER_IN_POINT1_Z                                                                              \
+	((0x06D8UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point P Z coordinate                                     \
+					    */
+#define PKA_ECC_DOUBLE_LADDER_IN_POINT2_X                                                                              \
+	((0x0730UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point Q X coordinate                                     \
+					    */
+#define PKA_ECC_DOUBLE_LADDER_IN_POINT2_Y                                                                              \
+	((0x0788UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point Q Y coordinate                                     \
+					    */
+#define PKA_ECC_DOUBLE_LADDER_IN_POINT2_Z                                                                              \
+	((0x07E0UL - PKA_RAM_OFFSET) >> 2) /*!< Input initial point Q Z coordinate                                     \
+					    */
 
 /* Compute ECC double base ladder output data */
 #define PKA_ECC_DOUBLE_LADDER_OUT_RESULT_X                                                                             \
@@ -34814,11 +34827,13 @@ typedef struct {
 	((0x04C8UL - PKA_RAM_OFFSET) >> 2) /*!< Input storage area for Montgomery parameter */
 
 /* Compute ECC projective to affine conversion output data */
-#define PKA_ECC_PROJECTIVE_AFF_OUT_RESULT_X ((0x0578UL - PKA_RAM_OFFSET) >> 2) /*!< Output result x affine coordinate  \
-										*/
-#define PKA_ECC_PROJECTIVE_AFF_OUT_RESULT_Y ((0x05D0UL - PKA_RAM_OFFSET) >> 2) /*!< Output result y affine coordinate  \
-										*/
-#define PKA_ECC_PROJECTIVE_AFF_OUT_ERROR ((0x0680UL - PKA_RAM_OFFSET) >> 2)    /*!< Output result error */
+#define PKA_ECC_PROJECTIVE_AFF_OUT_RESULT_X                                                                            \
+	((0x0578UL - PKA_RAM_OFFSET) >> 2) /*!< Output result x affine coordinate                                      \
+					    */
+#define PKA_ECC_PROJECTIVE_AFF_OUT_RESULT_Y                                                                            \
+	((0x05D0UL - PKA_RAM_OFFSET) >> 2)				    /*!< Output result y affine coordinate     \
+									     */
+#define PKA_ECC_PROJECTIVE_AFF_OUT_ERROR ((0x0680UL - PKA_RAM_OFFSET) >> 2) /*!< Output result error */
 
 /** @addtogroup STM32U5xx_Peripheral_Exported_macros
  * @{

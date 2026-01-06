@@ -409,21 +409,26 @@ typedef struct {
  * @{
  */
 #define MDF_CLOCK_TRIG_TRGO 0x00000000U
-#define MDF_CLOCK_TRIG_TIM1_TRGO MDF_CKGCR_TRGSRC_1			    /*!< @note Not available for ADF instance */
-#define MDF_CLOCK_TRIG_TIM1_TRGO2 (MDF_CKGCR_TRGSRC_0 | MDF_CKGCR_TRGSRC_1) /*!< @note Not available for ADF instance  \
-									     */
-#define MDF_CLOCK_TRIG_TIM8_TRGO MDF_CKGCR_TRGSRC_2			    /*!< @note Not available for ADF instance */
-#define MDF_CLOCK_TRIG_TIM8_TRGO2 (MDF_CKGCR_TRGSRC_0 | MDF_CKGCR_TRGSRC_2) /*!< @note Not available for ADF instance  \
-									     */
-#define MDF_CLOCK_TRIG_TIM3_TRGO (MDF_CKGCR_TRGSRC_1 | MDF_CKGCR_TRGSRC_2)  /*!< @note Not available for ADF instance  \
-									     */
+#define MDF_CLOCK_TRIG_TIM1_TRGO MDF_CKGCR_TRGSRC_1 /*!< @note Not available for ADF instance */
+#define MDF_CLOCK_TRIG_TIM1_TRGO2                                                                                      \
+	(MDF_CKGCR_TRGSRC_0 | MDF_CKGCR_TRGSRC_1)   /*!< @note Not available for ADF instance                          \
+						     */
+#define MDF_CLOCK_TRIG_TIM8_TRGO MDF_CKGCR_TRGSRC_2 /*!< @note Not available for ADF instance */
+#define MDF_CLOCK_TRIG_TIM8_TRGO2                                                                                      \
+	(MDF_CKGCR_TRGSRC_0 | MDF_CKGCR_TRGSRC_2) /*!< @note Not available for ADF instance                            \
+						   */
+#define MDF_CLOCK_TRIG_TIM3_TRGO                                                                                       \
+	(MDF_CKGCR_TRGSRC_1 | MDF_CKGCR_TRGSRC_2) /*!< @note Not available for ADF instance                            \
+						   */
 #define MDF_CLOCK_TRIG_TIM4_TRGO                                                                                       \
-	(MDF_CKGCR_TRGSRC_0 | MDF_CKGCR_TRGSRC_1 | MDF_CKGCR_TRGSRC_2)	   /*!< @note Not available for ADF instance */
-#define MDF_CLOCK_TRIG_TIM16_OC1 MDF_CKGCR_TRGSRC_3			   /*!< @note Not available for ADF instance */
-#define MDF_CLOCK_TRIG_TIM6_TRGO (MDF_CKGCR_TRGSRC_0 | MDF_CKGCR_TRGSRC_3) /*!< @note Not available for ADF instance   \
-									    */
-#define MDF_CLOCK_TRIG_TIM7_TRGO (MDF_CKGCR_TRGSRC_1 | MDF_CKGCR_TRGSRC_3) /*!< @note Not available for ADF instance   \
-									    */
+	(MDF_CKGCR_TRGSRC_0 | MDF_CKGCR_TRGSRC_1 | MDF_CKGCR_TRGSRC_2) /*!< @note Not available for ADF instance */
+#define MDF_CLOCK_TRIG_TIM16_OC1 MDF_CKGCR_TRGSRC_3		       /*!< @note Not available for ADF instance */
+#define MDF_CLOCK_TRIG_TIM6_TRGO                                                                                       \
+	(MDF_CKGCR_TRGSRC_0 | MDF_CKGCR_TRGSRC_3) /*!< @note Not available for ADF instance                            \
+						   */
+#define MDF_CLOCK_TRIG_TIM7_TRGO                                                                                       \
+	(MDF_CKGCR_TRGSRC_1 | MDF_CKGCR_TRGSRC_3) /*!< @note Not available for ADF instance                            \
+						   */
 #define MDF_CLOCK_TRIG_SAD_DET                                                                                         \
 	(MDF_CKGCR_TRGSRC_0 | MDF_CKGCR_TRGSRC_1 | MDF_CKGCR_TRGSRC_3)	/*!< @note Not available for ADF instance */
 #define MDF_CLOCK_TRIG_EXTI11 (MDF_CKGCR_TRGSRC_2 | MDF_CKGCR_TRGSRC_3) /*!< @note Not available for ADF instance */
@@ -623,14 +628,16 @@ typedef struct {
  * signal to noise threshold
  * @{
  */
-#define MDF_SAD_SIGNAL_NOISE_3_5DB 0x00000000U				      /*!< Signal to noise threshold is 3.5dB */
-#define MDF_SAD_SIGNAL_NOISE_6DB MDF_SADCFGR_SNTHR_0			      /*!< Signal to noise threshold is 6dB */
-#define MDF_SAD_SIGNAL_NOISE_9_5DB MDF_SADCFGR_SNTHR_1			      /*!< Signal to noise threshold is 9.5dB */
-#define MDF_SAD_SIGNAL_NOISE_12DB (MDF_SADCFGR_SNTHR_0 | MDF_SADCFGR_SNTHR_1) /*!< Signal to noise threshold is 12dB   \
-									       */
+#define MDF_SAD_SIGNAL_NOISE_3_5DB 0x00000000U	       /*!< Signal to noise threshold is 3.5dB */
+#define MDF_SAD_SIGNAL_NOISE_6DB MDF_SADCFGR_SNTHR_0   /*!< Signal to noise threshold is 6dB */
+#define MDF_SAD_SIGNAL_NOISE_9_5DB MDF_SADCFGR_SNTHR_1 /*!< Signal to noise threshold is 9.5dB */
+#define MDF_SAD_SIGNAL_NOISE_12DB                                                                                      \
+	(MDF_SADCFGR_SNTHR_0 | MDF_SADCFGR_SNTHR_1)	/*!< Signal to noise threshold is 12dB                         \
+							 */
 #define MDF_SAD_SIGNAL_NOISE_15_6DB MDF_SADCFGR_SNTHR_2 /*!< Signal to noise threshold is 15.6dB */
-#define MDF_SAD_SIGNAL_NOISE_18DB (MDF_SADCFGR_SNTHR_0 | MDF_SADCFGR_SNTHR_2) /*!< Signal to noise threshold is 18dB   \
-									       */
+#define MDF_SAD_SIGNAL_NOISE_18DB                                                                                      \
+	(MDF_SADCFGR_SNTHR_0 | MDF_SADCFGR_SNTHR_2) /*!< Signal to noise threshold is 18dB                             \
+						     */
 #define MDF_SAD_SIGNAL_NOISE_21_6DB                                                                                    \
 	(MDF_SADCFGR_SNTHR_1 | MDF_SADCFGR_SNTHR_2) /*!< Signal to noise threshold is 21.6dB */
 #define MDF_SAD_SIGNAL_NOISE_24_1DB                                                                                    \
@@ -663,9 +670,10 @@ typedef struct {
 #define MDF_FILTER_TRIG_TIM7_TRGO                                                                                      \
 	(MDF_DFLTCR_TRGSRC_1 | MDF_DFLTCR_TRGSRC_3) /*!< @note Not available for ADF instance */
 #define MDF_FILTER_TRIG_ADF_SAD_DET                                                                                    \
-	(MDF_DFLTCR_TRGSRC_0 | MDF_DFLTCR_TRGSRC_1 | MDF_DFLTCR_TRGSRC_3)  /*!< @note Not available for ADF instance */
-#define MDF_FILTER_TRIG_EXTI11 (MDF_DFLTCR_TRGSRC_2 | MDF_DFLTCR_TRGSRC_3) /*!< @note Not available for ADF instance   \
-									    */
+	(MDF_DFLTCR_TRGSRC_0 | MDF_DFLTCR_TRGSRC_1 | MDF_DFLTCR_TRGSRC_3) /*!< @note Not available for ADF instance */
+#define MDF_FILTER_TRIG_EXTI11                                                                                         \
+	(MDF_DFLTCR_TRGSRC_2 | MDF_DFLTCR_TRGSRC_3) /*!< @note Not available for ADF instance                          \
+						     */
 #define MDF_FILTER_TRIG_EXTI15 (MDF_DFLTCR_TRGSRC_0 | MDF_DFLTCR_TRGSRC_2 | MDF_DFLTCR_TRGSRC_3)
 #define MDF_FILTER_TRIG_LPTIM1_OUT                                                                                     \
 	(MDF_DFLTCR_TRGSRC_1 | MDF_DFLTCR_TRGSRC_2 | MDF_DFLTCR_TRGSRC_3) /*!< @note Not available for ADF instance */

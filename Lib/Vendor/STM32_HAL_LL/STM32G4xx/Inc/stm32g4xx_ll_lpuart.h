@@ -292,21 +292,24 @@ typedef struct {
 /** @defgroup LPUART_LL_EC_PRESCALER Clock Source Prescaler
  * @{
  */
-#define LL_LPUART_PRESCALER_DIV1 0x00000000U					      /*!< Input clock not divided   */
-#define LL_LPUART_PRESCALER_DIV2 (USART_PRESC_PRESCALER_0)			      /*!< Input clock divided by 2  */
-#define LL_LPUART_PRESCALER_DIV4 (USART_PRESC_PRESCALER_1)			      /*!< Input clock divided by 4  */
-#define LL_LPUART_PRESCALER_DIV6 (USART_PRESC_PRESCALER_1 | USART_PRESC_PRESCALER_0)  /*!< Input clock divided by 6  */
-#define LL_LPUART_PRESCALER_DIV8 (USART_PRESC_PRESCALER_2)			      /*!< Input clock divided by 8  */
-#define LL_LPUART_PRESCALER_DIV10 (USART_PRESC_PRESCALER_2 | USART_PRESC_PRESCALER_0) /*!< Input clock divided by 10   \
-										       */
-#define LL_LPUART_PRESCALER_DIV12 (USART_PRESC_PRESCALER_2 | USART_PRESC_PRESCALER_1) /*!< Input clock divided by 12   \
-										       */
+#define LL_LPUART_PRESCALER_DIV1 0x00000000U					     /*!< Input clock not divided   */
+#define LL_LPUART_PRESCALER_DIV2 (USART_PRESC_PRESCALER_0)			     /*!< Input clock divided by 2  */
+#define LL_LPUART_PRESCALER_DIV4 (USART_PRESC_PRESCALER_1)			     /*!< Input clock divided by 4  */
+#define LL_LPUART_PRESCALER_DIV6 (USART_PRESC_PRESCALER_1 | USART_PRESC_PRESCALER_0) /*!< Input clock divided by 6  */
+#define LL_LPUART_PRESCALER_DIV8 (USART_PRESC_PRESCALER_2)			     /*!< Input clock divided by 8  */
+#define LL_LPUART_PRESCALER_DIV10                                                                                      \
+	(USART_PRESC_PRESCALER_2 | USART_PRESC_PRESCALER_0) /*!< Input clock divided by 10                             \
+							     */
+#define LL_LPUART_PRESCALER_DIV12                                                                                      \
+	(USART_PRESC_PRESCALER_2 | USART_PRESC_PRESCALER_1) /*!< Input clock divided by 12                             \
+							     */
 #define LL_LPUART_PRESCALER_DIV16                                                                                      \
 	(USART_PRESC_PRESCALER_2 | USART_PRESC_PRESCALER_1 | USART_PRESC_PRESCALER_0) /*!< Input clock divided by 16   \
 										       */
 #define LL_LPUART_PRESCALER_DIV32 (USART_PRESC_PRESCALER_3)			      /*!< Input clock divided by 32 */
-#define LL_LPUART_PRESCALER_DIV64 (USART_PRESC_PRESCALER_3 | USART_PRESC_PRESCALER_0) /*!< Input clock divided by 64   \
-										       */
+#define LL_LPUART_PRESCALER_DIV64                                                                                      \
+	(USART_PRESC_PRESCALER_3 | USART_PRESC_PRESCALER_0) /*!< Input clock divided by 64                             \
+							     */
 #define LL_LPUART_PRESCALER_DIV128                                                                                     \
 	(USART_PRESC_PRESCALER_3 | USART_PRESC_PRESCALER_1) /*!< Input clock divided by 128 */
 #define LL_LPUART_PRESCALER_DIV256                                                                                     \
@@ -402,10 +405,11 @@ typedef struct {
 	USART_CR3_RTSE /*!< RTS output enabled, data is only requested                                                 \
 			    when there is space in the receive buffer  */
 #define LL_LPUART_HWCONTROL_CTS                                                                                        \
-	USART_CR3_CTSE						      /*!< CTS mode enabled, data is only transmitted  \
-									   when the nCTS input is asserted (tied to 0)*/
-#define LL_LPUART_HWCONTROL_RTS_CTS (USART_CR3_RTSE | USART_CR3_CTSE) /*!< CTS and RTS hardware flow control enabled   \
-								       */
+	USART_CR3_CTSE /*!< CTS mode enabled, data is only transmitted                                                 \
+			    when the nCTS input is asserted (tied to 0)*/
+#define LL_LPUART_HWCONTROL_RTS_CTS                                                                                    \
+	(USART_CR3_RTSE | USART_CR3_CTSE) /*!< CTS and RTS hardware flow control enabled                               \
+					   */
 /**
  * @}
  */

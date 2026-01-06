@@ -450,16 +450,19 @@ typedef void (*pDFSDM_Filter_AwdCallbackTypeDef)(DFSDM_Filter_HandleTypeDef *hdf
 #define DFSDM_FILTER_EXT_TRIG_EXTI15 DFSDM_FLTCR1_JEXTSEL /*!< For DFSDM filter 0, 1, 2 and 3 */
 #elif defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||                  \
     defined(STM32L4S7xx) || defined(STM32L4S9xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx)
-#define DFSDM_FILTER_EXT_TRIG_TIM1_TRGO 0x00000000U					   /*!< For all DFSDM filters */
-#define DFSDM_FILTER_EXT_TRIG_TIM1_TRGO2 DFSDM_FLTCR1_JEXTSEL_0				   /*!< For all DFSDM filters */
-#define DFSDM_FILTER_EXT_TRIG_TIM8_TRGO DFSDM_FLTCR1_JEXTSEL_1				   /*!< For all DFSDM filters */
-#define DFSDM_FILTER_EXT_TRIG_TIM8_TRGO2 (DFSDM_FLTCR1_JEXTSEL_0 | DFSDM_FLTCR1_JEXTSEL_1) /*!< For all DFSDM filters  \
-											    */
-#define DFSDM_FILTER_EXT_TRIG_TIM3_TRGO DFSDM_FLTCR1_JEXTSEL_2				   /*!< For all DFSDM filters */
-#define DFSDM_FILTER_EXT_TRIG_TIM4_TRGO (DFSDM_FLTCR1_JEXTSEL_0 | DFSDM_FLTCR1_JEXTSEL_2)  /*!< For all DFSDM filters  \
-											    */
-#define DFSDM_FILTER_EXT_TRIG_TIM16_OC1 (DFSDM_FLTCR1_JEXTSEL_1 | DFSDM_FLTCR1_JEXTSEL_2)  /*!< For all DFSDM filters  \
-											    */
+#define DFSDM_FILTER_EXT_TRIG_TIM1_TRGO 0x00000000U		/*!< For all DFSDM filters */
+#define DFSDM_FILTER_EXT_TRIG_TIM1_TRGO2 DFSDM_FLTCR1_JEXTSEL_0 /*!< For all DFSDM filters */
+#define DFSDM_FILTER_EXT_TRIG_TIM8_TRGO DFSDM_FLTCR1_JEXTSEL_1	/*!< For all DFSDM filters */
+#define DFSDM_FILTER_EXT_TRIG_TIM8_TRGO2                                                                               \
+	(DFSDM_FLTCR1_JEXTSEL_0 | DFSDM_FLTCR1_JEXTSEL_1)      /*!< For all DFSDM filters                              \
+								*/
+#define DFSDM_FILTER_EXT_TRIG_TIM3_TRGO DFSDM_FLTCR1_JEXTSEL_2 /*!< For all DFSDM filters */
+#define DFSDM_FILTER_EXT_TRIG_TIM4_TRGO                                                                                \
+	(DFSDM_FLTCR1_JEXTSEL_0 | DFSDM_FLTCR1_JEXTSEL_2) /*!< For all DFSDM filters                                   \
+							   */
+#define DFSDM_FILTER_EXT_TRIG_TIM16_OC1                                                                                \
+	(DFSDM_FLTCR1_JEXTSEL_1 | DFSDM_FLTCR1_JEXTSEL_2) /*!< For all DFSDM filters                                   \
+							   */
 #define DFSDM_FILTER_EXT_TRIG_TIM6_TRGO                                                                                \
 	(DFSDM_FLTCR1_JEXTSEL_0 | DFSDM_FLTCR1_JEXTSEL_1 | DFSDM_FLTCR1_JEXTSEL_2)     /*!< For all DFSDM filters */
 #define DFSDM_FILTER_EXT_TRIG_TIM7_TRGO DFSDM_FLTCR1_JEXTSEL_3			       /*!< For all DFSDM filters */

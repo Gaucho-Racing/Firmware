@@ -414,12 +414,13 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_MemoryType OSPI Memory Type
  * @{
  */
-#define HAL_OSPI_MEMTYPE_MICRON ((uint32_t)0x00000000U)					      /*!< Micron mode       */
-#define HAL_OSPI_MEMTYPE_MACRONIX ((uint32_t)OCTOSPI_DCR1_MTYP_0)			      /*!< Macronix mode     */
-#define HAL_OSPI_MEMTYPE_APMEMORY ((uint32_t)OCTOSPI_DCR1_MTYP_1)			      /*!< AP Memory mode    */
-#define HAL_OSPI_MEMTYPE_MACRONIX_RAM ((uint32_t)(OCTOSPI_DCR1_MTYP_1 | OCTOSPI_DCR1_MTYP_0)) /*!< Macronix RAM mode   \
-											       */
-#define HAL_OSPI_MEMTYPE_HYPERBUS ((uint32_t)OCTOSPI_DCR1_MTYP_2)			      /*!< Hyperbus mode     */
+#define HAL_OSPI_MEMTYPE_MICRON ((uint32_t)0x00000000U)		  /*!< Micron mode       */
+#define HAL_OSPI_MEMTYPE_MACRONIX ((uint32_t)OCTOSPI_DCR1_MTYP_0) /*!< Macronix mode     */
+#define HAL_OSPI_MEMTYPE_APMEMORY ((uint32_t)OCTOSPI_DCR1_MTYP_1) /*!< AP Memory mode    */
+#define HAL_OSPI_MEMTYPE_MACRONIX_RAM                                                                                  \
+	((uint32_t)(OCTOSPI_DCR1_MTYP_1 | OCTOSPI_DCR1_MTYP_0))	  /*!< Macronix RAM mode                               \
+								   */
+#define HAL_OSPI_MEMTYPE_HYPERBUS ((uint32_t)OCTOSPI_DCR1_MTYP_2) /*!< Hyperbus mode     */
 /**
  * @}
  */

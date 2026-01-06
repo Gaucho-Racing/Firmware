@@ -233,9 +233,9 @@ typedef struct
 	__IO HAL_LPTIM_ChannelStateTypeDef ChannelState[2]; /*!< LPTIM channel operation state */
 
 #if (USE_HAL_LPTIM_REGISTER_CALLBACKS == 1)
-	void (*MspInitCallback)(struct __LPTIM_HandleTypeDef *hlptim);	       /*!< LPTIM Base Msp Init Callback	 */
-	void (*MspDeInitCallback)(struct __LPTIM_HandleTypeDef *hlptim);       /*!< LPTIM Base Msp DeInit Callback       */
-	void (*CompareMatchCallback)(struct __LPTIM_HandleTypeDef *hlptim);    /*!< Compare match Callback */
+	void (*MspInitCallback)(struct __LPTIM_HandleTypeDef *hlptim);	    /*!< LPTIM Base Msp Init Callback	 */
+	void (*MspDeInitCallback)(struct __LPTIM_HandleTypeDef *hlptim);    /*!< LPTIM Base Msp DeInit Callback       */
+	void (*CompareMatchCallback)(struct __LPTIM_HandleTypeDef *hlptim); /*!< Compare match Callback */
 	void (*AutoReloadMatchCallback)(struct __LPTIM_HandleTypeDef *hlptim); /*!< Auto-reload match Callback */
 	void (*TriggerCallback)(struct __LPTIM_HandleTypeDef *hlptim); /*!< External trigger event detection Callback */
 	void (*CompareWriteCallback)(
@@ -245,7 +245,7 @@ typedef struct
 	void (*DirectionUpCallback)(struct __LPTIM_HandleTypeDef *hlptim); /*!< Up-counting direction change Callback */
 	void (*DirectionDownCallback)(
 	    struct __LPTIM_HandleTypeDef *hlptim); /*!< Down-counting direction change Callback      */
-	void (*UpdateEventCallback)(struct __LPTIM_HandleTypeDef *hlptim);     /*!< Update event detection Callback     */
+	void (*UpdateEventCallback)(struct __LPTIM_HandleTypeDef *hlptim); /*!< Update event detection Callback     */
 	void (*RepCounterWriteCallback)(struct __LPTIM_HandleTypeDef *hlptim); /*!< Repetition counter register write
 										  complete Callback */
 	void (*UpdateEventHalfCpltCallback)(

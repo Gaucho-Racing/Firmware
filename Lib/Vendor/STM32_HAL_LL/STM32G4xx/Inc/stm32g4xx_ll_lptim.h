@@ -199,16 +199,18 @@ typedef struct {
 /** @defgroup LPTIM_LL_EC_PRESCALER Prescaler Value
  * @{
  */
-#define LL_LPTIM_PRESCALER_DIV1 0x00000000U				   /*!<Prescaler division factor is set to 1*/
-#define LL_LPTIM_PRESCALER_DIV2 LPTIM_CFGR_PRESC_0			   /*!<Prescaler division factor is set to 2*/
-#define LL_LPTIM_PRESCALER_DIV4 LPTIM_CFGR_PRESC_1			   /*!<Prescaler division factor is set to 4*/
-#define LL_LPTIM_PRESCALER_DIV8 (LPTIM_CFGR_PRESC_1 | LPTIM_CFGR_PRESC_0)  /*!<Prescaler division factor is set to 8*/
-#define LL_LPTIM_PRESCALER_DIV16 LPTIM_CFGR_PRESC_2			   /*!<Prescaler division factor is set to 16*/
-#define LL_LPTIM_PRESCALER_DIV32 (LPTIM_CFGR_PRESC_2 | LPTIM_CFGR_PRESC_0) /*!<Prescaler division factor is set to     \
-									      32*/
-#define LL_LPTIM_PRESCALER_DIV64 (LPTIM_CFGR_PRESC_2 | LPTIM_CFGR_PRESC_1) /*!<Prescaler division factor is set to     \
-									      64*/
-#define LL_LPTIM_PRESCALER_DIV128 LPTIM_CFGR_PRESC			   /*!<Prescaler division factor is set to 128*/
+#define LL_LPTIM_PRESCALER_DIV1 0x00000000U				  /*!<Prescaler division factor is set to 1*/
+#define LL_LPTIM_PRESCALER_DIV2 LPTIM_CFGR_PRESC_0			  /*!<Prescaler division factor is set to 2*/
+#define LL_LPTIM_PRESCALER_DIV4 LPTIM_CFGR_PRESC_1			  /*!<Prescaler division factor is set to 4*/
+#define LL_LPTIM_PRESCALER_DIV8 (LPTIM_CFGR_PRESC_1 | LPTIM_CFGR_PRESC_0) /*!<Prescaler division factor is set to 8*/
+#define LL_LPTIM_PRESCALER_DIV16 LPTIM_CFGR_PRESC_2			  /*!<Prescaler division factor is set to 16*/
+#define LL_LPTIM_PRESCALER_DIV32                                                                                       \
+	(LPTIM_CFGR_PRESC_2 | LPTIM_CFGR_PRESC_0) /*!<Prescaler division factor is set to                              \
+						     32*/
+#define LL_LPTIM_PRESCALER_DIV64                                                                                       \
+	(LPTIM_CFGR_PRESC_2 | LPTIM_CFGR_PRESC_1)  /*!<Prescaler division factor is set to                             \
+						      64*/
+#define LL_LPTIM_PRESCALER_DIV128 LPTIM_CFGR_PRESC /*!<Prescaler division factor is set to 128*/
 /**
  * @}
  */

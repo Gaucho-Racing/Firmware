@@ -1981,8 +1981,8 @@ voltage through a divider ladder of factor 1/3 to have channel voltage          
 always below Vdda, converted by group injected only */
 #define LL_ADC_AWD_CH_VBAT_REG_INJ                                                                                     \
 	((LL_ADC_CHANNEL_VBAT & ADC_CHANNEL_ID_MASK) | ADC_CFGR_JAWD1EN | ADC_CFGR_AWD1EN | ADC_CFGR_AWD1SGL) /*!< ADC \
-								 analog of ADC internal channel connected to Vbat/3:                                                                          \
-								 Vbat voltage through a divider ladder of factor 1/3                                                                        \
+								 analog of ADC internal channel connected to Vbat/3:   \
+								 Vbat voltage through a divider ladder of factor 1/3   \
 								 to have channel voltage always below Vdda */
 #if defined(ADC1) && !defined(ADC2)
 #define LL_ADC_AWD_CH_DAC1CH1_REG                                                                                      \

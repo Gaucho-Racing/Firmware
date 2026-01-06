@@ -1305,20 +1305,23 @@ typedef struct {
 /** @defgroup TIM_LL_EC_TIM1_ETRSOURCE External Trigger Source TIM1
  * @{
  */
-#define LL_TIM_TIM1_ETRSOURCE_GPIO 0x00000000U				    /*!< ETR input is connected to GPIO */
-#define LL_TIM_TIM1_ETRSOURCE_COMP1 TIM1_AF1_ETRSEL_0			    /*!< ETR input is connected to COMP1_OUT */
-#define LL_TIM_TIM1_ETRSOURCE_COMP2 TIM1_AF1_ETRSEL_1			    /*!< ETR input is connected to COMP2_OUT */
-#define LL_TIM_TIM1_ETRSOURCE_COMP3 (TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP3_OUT   \
-									     */
-#define LL_TIM_TIM1_ETRSOURCE_COMP4 TIM1_AF1_ETRSEL_2			    /*!< ETR input is connected to COMP4_OUT */
+#define LL_TIM_TIM1_ETRSOURCE_GPIO 0x00000000U	      /*!< ETR input is connected to GPIO */
+#define LL_TIM_TIM1_ETRSOURCE_COMP1 TIM1_AF1_ETRSEL_0 /*!< ETR input is connected to COMP1_OUT */
+#define LL_TIM_TIM1_ETRSOURCE_COMP2 TIM1_AF1_ETRSEL_1 /*!< ETR input is connected to COMP2_OUT */
+#define LL_TIM_TIM1_ETRSOURCE_COMP3                                                                                    \
+	(TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0)	      /*!< ETR input is connected to COMP3_OUT                         \
+						       */
+#define LL_TIM_TIM1_ETRSOURCE_COMP4 TIM1_AF1_ETRSEL_2 /*!< ETR input is connected to COMP4_OUT */
 #if defined(COMP5)
-#define LL_TIM_TIM1_ETRSOURCE_COMP5 (TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP5_OUT   \
-									     */
-#endif									    /* COMP5 */
+#define LL_TIM_TIM1_ETRSOURCE_COMP5                                                                                    \
+	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP5_OUT                               \
+						 */
+#endif						/* COMP5 */
 #if defined(COMP6)
-#define LL_TIM_TIM1_ETRSOURCE_COMP6 (TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1) /*!< ETR input is connected to COMP6_OUT   \
-									     */
-#endif									    /* COMP6 */
+#define LL_TIM_TIM1_ETRSOURCE_COMP6                                                                                    \
+	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1) /*!< ETR input is connected to COMP6_OUT                               \
+						 */
+#endif						/* COMP6 */
 #if defined(COMP7)
 #define LL_TIM_TIM1_ETRSOURCE_COMP7                                                                                    \
 	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP7_OUT */
@@ -1340,20 +1343,23 @@ typedef struct {
 /** @defgroup TIM_LL_EC_TIM2_ETRSOURCE External Trigger Source TIM2
  * @{
  */
-#define LL_TIM_TIM2_ETRSOURCE_GPIO 0x00000000U				    /*!< ETR input is connected to GPIO */
-#define LL_TIM_TIM2_ETRSOURCE_COMP1 TIM1_AF1_ETRSEL_0			    /*!< ETR input is connected to COMP1_OUT */
-#define LL_TIM_TIM2_ETRSOURCE_COMP2 TIM1_AF1_ETRSEL_1			    /*!< ETR input is connected to COMP2_OUT */
-#define LL_TIM_TIM2_ETRSOURCE_COMP3 (TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP3_OUT   \
-									     */
-#define LL_TIM_TIM2_ETRSOURCE_COMP4 TIM1_AF1_ETRSEL_2			    /*!< ETR input is connected to COMP4_OUT */
+#define LL_TIM_TIM2_ETRSOURCE_GPIO 0x00000000U	      /*!< ETR input is connected to GPIO */
+#define LL_TIM_TIM2_ETRSOURCE_COMP1 TIM1_AF1_ETRSEL_0 /*!< ETR input is connected to COMP1_OUT */
+#define LL_TIM_TIM2_ETRSOURCE_COMP2 TIM1_AF1_ETRSEL_1 /*!< ETR input is connected to COMP2_OUT */
+#define LL_TIM_TIM2_ETRSOURCE_COMP3                                                                                    \
+	(TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0)	      /*!< ETR input is connected to COMP3_OUT                         \
+						       */
+#define LL_TIM_TIM2_ETRSOURCE_COMP4 TIM1_AF1_ETRSEL_2 /*!< ETR input is connected to COMP4_OUT */
 #if defined(COMP5)
-#define LL_TIM_TIM2_ETRSOURCE_COMP5 (TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP5_OUT   \
-									     */
-#endif									    /* COMP5 */
+#define LL_TIM_TIM2_ETRSOURCE_COMP5                                                                                    \
+	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP5_OUT                               \
+						 */
+#endif						/* COMP5 */
 #if defined(COMP6)
-#define LL_TIM_TIM2_ETRSOURCE_COMP6 (TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1) /*!< ETR input is connected to COMP6_OUT   \
-									     */
-#endif									    /* COMP6 */
+#define LL_TIM_TIM2_ETRSOURCE_COMP6                                                                                    \
+	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1) /*!< ETR input is connected to COMP6_OUT                               \
+						 */
+#endif						/* COMP6 */
 #if defined(COMP7)
 #define LL_TIM_TIM2_ETRSOURCE_COMP7                                                                                    \
 	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP7_OUT */
@@ -1374,20 +1380,23 @@ typedef struct {
 /** @defgroup TIM_LL_EC_TIM3_ETRSOURCE External Trigger Source TIM3
  * @{
  */
-#define LL_TIM_TIM3_ETRSOURCE_GPIO 0x00000000U				    /*!< ETR input is connected to GPIO */
-#define LL_TIM_TIM3_ETRSOURCE_COMP1 TIM1_AF1_ETRSEL_0			    /*!< ETR input is connected to COMP1_OUT */
-#define LL_TIM_TIM3_ETRSOURCE_COMP2 TIM1_AF1_ETRSEL_1			    /*!< ETR input is connected to COMP2_OUT */
-#define LL_TIM_TIM3_ETRSOURCE_COMP3 (TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP3_OUT   \
-									     */
-#define LL_TIM_TIM3_ETRSOURCE_COMP4 TIM1_AF1_ETRSEL_2			    /*!< ETR input is connected to COMP4_OUT */
+#define LL_TIM_TIM3_ETRSOURCE_GPIO 0x00000000U	      /*!< ETR input is connected to GPIO */
+#define LL_TIM_TIM3_ETRSOURCE_COMP1 TIM1_AF1_ETRSEL_0 /*!< ETR input is connected to COMP1_OUT */
+#define LL_TIM_TIM3_ETRSOURCE_COMP2 TIM1_AF1_ETRSEL_1 /*!< ETR input is connected to COMP2_OUT */
+#define LL_TIM_TIM3_ETRSOURCE_COMP3                                                                                    \
+	(TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0)	      /*!< ETR input is connected to COMP3_OUT                         \
+						       */
+#define LL_TIM_TIM3_ETRSOURCE_COMP4 TIM1_AF1_ETRSEL_2 /*!< ETR input is connected to COMP4_OUT */
 #if defined(COMP5)
-#define LL_TIM_TIM3_ETRSOURCE_COMP5 (TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP5_OUT   \
-									     */
-#endif									    /* COMP5 */
+#define LL_TIM_TIM3_ETRSOURCE_COMP5                                                                                    \
+	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP5_OUT                               \
+						 */
+#endif						/* COMP5 */
 #if defined(COMP6)
-#define LL_TIM_TIM3_ETRSOURCE_COMP6 (TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1) /*!< ETR input is connected to COMP6_OUT   \
-									     */
-#endif									    /* COMP6 */
+#define LL_TIM_TIM3_ETRSOURCE_COMP6                                                                                    \
+	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1) /*!< ETR input is connected to COMP6_OUT                               \
+						 */
+#endif						/* COMP6 */
 #if defined(COMP7)
 #define LL_TIM_TIM3_ETRSOURCE_COMP7                                                                                    \
 	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP7_OUT */
@@ -1407,20 +1416,23 @@ typedef struct {
 /** @defgroup TIM_LL_EC_TIM4_ETRSOURCE External Trigger Source TIM4
  * @{
  */
-#define LL_TIM_TIM4_ETRSOURCE_GPIO 0x00000000U				    /*!< ETR input is connected to GPIO */
-#define LL_TIM_TIM4_ETRSOURCE_COMP1 TIM1_AF1_ETRSEL_0			    /*!< ETR input is connected to COMP1_OUT */
-#define LL_TIM_TIM4_ETRSOURCE_COMP2 TIM1_AF1_ETRSEL_1			    /*!< ETR input is connected to COMP2_OUT */
-#define LL_TIM_TIM4_ETRSOURCE_COMP3 (TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP3_OUT   \
-									     */
-#define LL_TIM_TIM4_ETRSOURCE_COMP4 TIM1_AF1_ETRSEL_2			    /*!< ETR input is connected to COMP4_OUT */
+#define LL_TIM_TIM4_ETRSOURCE_GPIO 0x00000000U	      /*!< ETR input is connected to GPIO */
+#define LL_TIM_TIM4_ETRSOURCE_COMP1 TIM1_AF1_ETRSEL_0 /*!< ETR input is connected to COMP1_OUT */
+#define LL_TIM_TIM4_ETRSOURCE_COMP2 TIM1_AF1_ETRSEL_1 /*!< ETR input is connected to COMP2_OUT */
+#define LL_TIM_TIM4_ETRSOURCE_COMP3                                                                                    \
+	(TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0)	      /*!< ETR input is connected to COMP3_OUT                         \
+						       */
+#define LL_TIM_TIM4_ETRSOURCE_COMP4 TIM1_AF1_ETRSEL_2 /*!< ETR input is connected to COMP4_OUT */
 #if defined(COMP5)
-#define LL_TIM_TIM4_ETRSOURCE_COMP5 (TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP5_OUT   \
-									     */
-#endif									    /* COMP5 */
+#define LL_TIM_TIM4_ETRSOURCE_COMP5                                                                                    \
+	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP5_OUT                               \
+						 */
+#endif						/* COMP5 */
 #if defined(COMP6)
-#define LL_TIM_TIM4_ETRSOURCE_COMP6 (TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1) /*!< ETR input is connected to COMP6_OUT   \
-									     */
-#endif									    /* COMP6 */
+#define LL_TIM_TIM4_ETRSOURCE_COMP6                                                                                    \
+	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1) /*!< ETR input is connected to COMP6_OUT                               \
+						 */
+#endif						/* COMP6 */
 #if defined(COMP7)
 #define LL_TIM_TIM4_ETRSOURCE_COMP7                                                                                    \
 	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP7_OUT */
@@ -1438,20 +1450,23 @@ typedef struct {
 /** @defgroup TIM_LL_EC_TIM5_ETRSOURCE External Trigger Source TIM5
  * @{
  */
-#define LL_TIM_TIM5_ETRSOURCE_GPIO 0x00000000U				    /*!< ETR input is connected to GPIO */
-#define LL_TIM_TIM5_ETRSOURCE_COMP1 TIM1_AF1_ETRSEL_0			    /*!< ETR input is connected to COMP1_OUT */
-#define LL_TIM_TIM5_ETRSOURCE_COMP2 TIM1_AF1_ETRSEL_1			    /*!< ETR input is connected to COMP2_OUT */
-#define LL_TIM_TIM5_ETRSOURCE_COMP3 (TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP3_OUT   \
-									     */
-#define LL_TIM_TIM5_ETRSOURCE_COMP4 TIM1_AF1_ETRSEL_2			    /*!< ETR input is connected to COMP4_OUT */
+#define LL_TIM_TIM5_ETRSOURCE_GPIO 0x00000000U	      /*!< ETR input is connected to GPIO */
+#define LL_TIM_TIM5_ETRSOURCE_COMP1 TIM1_AF1_ETRSEL_0 /*!< ETR input is connected to COMP1_OUT */
+#define LL_TIM_TIM5_ETRSOURCE_COMP2 TIM1_AF1_ETRSEL_1 /*!< ETR input is connected to COMP2_OUT */
+#define LL_TIM_TIM5_ETRSOURCE_COMP3                                                                                    \
+	(TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0)	      /*!< ETR input is connected to COMP3_OUT                         \
+						       */
+#define LL_TIM_TIM5_ETRSOURCE_COMP4 TIM1_AF1_ETRSEL_2 /*!< ETR input is connected to COMP4_OUT */
 #if defined(COMP5)
-#define LL_TIM_TIM5_ETRSOURCE_COMP5 (TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP5_OUT   \
-									     */
-#endif									    /* COMP5 */
+#define LL_TIM_TIM5_ETRSOURCE_COMP5                                                                                    \
+	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP5_OUT                               \
+						 */
+#endif						/* COMP5 */
 #if defined(COMP6)
-#define LL_TIM_TIM5_ETRSOURCE_COMP6 (TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1) /*!< ETR input is connected to COMP6_OUT   \
-									     */
-#endif									    /* COMP6 */
+#define LL_TIM_TIM5_ETRSOURCE_COMP6                                                                                    \
+	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1) /*!< ETR input is connected to COMP6_OUT                               \
+						 */
+#endif						/* COMP6 */
 #if defined(COMP7)
 #define LL_TIM_TIM5_ETRSOURCE_COMP7                                                                                    \
 	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP7_OUT */
@@ -1467,20 +1482,23 @@ typedef struct {
 /** @defgroup TIM_LL_EC_TIM8_ETRSOURCE External Trigger Source TIM8
  * @{
  */
-#define LL_TIM_TIM8_ETRSOURCE_GPIO 0x00000000U				    /*!< ETR input is connected to GPIO */
-#define LL_TIM_TIM8_ETRSOURCE_COMP1 TIM1_AF1_ETRSEL_0			    /*!< ETR input is connected to COMP1_OUT */
-#define LL_TIM_TIM8_ETRSOURCE_COMP2 TIM1_AF1_ETRSEL_1			    /*!< ETR input is connected to COMP2_OUT */
-#define LL_TIM_TIM8_ETRSOURCE_COMP3 (TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP3_OUT   \
-									     */
-#define LL_TIM_TIM8_ETRSOURCE_COMP4 TIM1_AF1_ETRSEL_2			    /*!< ETR input is connected to COMP4_OUT */
+#define LL_TIM_TIM8_ETRSOURCE_GPIO 0x00000000U	      /*!< ETR input is connected to GPIO */
+#define LL_TIM_TIM8_ETRSOURCE_COMP1 TIM1_AF1_ETRSEL_0 /*!< ETR input is connected to COMP1_OUT */
+#define LL_TIM_TIM8_ETRSOURCE_COMP2 TIM1_AF1_ETRSEL_1 /*!< ETR input is connected to COMP2_OUT */
+#define LL_TIM_TIM8_ETRSOURCE_COMP3                                                                                    \
+	(TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0)	      /*!< ETR input is connected to COMP3_OUT                         \
+						       */
+#define LL_TIM_TIM8_ETRSOURCE_COMP4 TIM1_AF1_ETRSEL_2 /*!< ETR input is connected to COMP4_OUT */
 #if defined(COMP5)
-#define LL_TIM_TIM8_ETRSOURCE_COMP5 (TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP5_OUT   \
-									     */
-#endif									    /* COMP5 */
+#define LL_TIM_TIM8_ETRSOURCE_COMP5                                                                                    \
+	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP5_OUT                               \
+						 */
+#endif						/* COMP5 */
 #if defined(COMP6)
-#define LL_TIM_TIM8_ETRSOURCE_COMP6 (TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1) /*!< ETR input is connected to COMP6_OUT   \
-									     */
-#endif									    /* COMP6 */
+#define LL_TIM_TIM8_ETRSOURCE_COMP6                                                                                    \
+	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1) /*!< ETR input is connected to COMP6_OUT                               \
+						 */
+#endif						/* COMP6 */
 #if defined(COMP7)
 #define LL_TIM_TIM8_ETRSOURCE_COMP7                                                                                    \
 	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP7_OUT */
@@ -1503,20 +1521,23 @@ typedef struct {
 /** @defgroup TIM_LL_EC_TIM20_ETRSOURCE External Trigger Source TIM20
  * @{
  */
-#define LL_TIM_TIM20_ETRSOURCE_GPIO 0x00000000U				     /*!< ETR input is connected to GPIO */
-#define LL_TIM_TIM20_ETRSOURCE_COMP1 TIM1_AF1_ETRSEL_0			     /*!< ETR input is connected to COMP1_OUT */
-#define LL_TIM_TIM20_ETRSOURCE_COMP2 TIM1_AF1_ETRSEL_1			     /*!< ETR input is connected to COMP2_OUT */
-#define LL_TIM_TIM20_ETRSOURCE_COMP3 (TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP3_OUT  \
-									      */
-#define LL_TIM_TIM20_ETRSOURCE_COMP4 TIM1_AF1_ETRSEL_2			     /*!< ETR input is connected to COMP4_OUT */
+#define LL_TIM_TIM20_ETRSOURCE_GPIO 0x00000000U	       /*!< ETR input is connected to GPIO */
+#define LL_TIM_TIM20_ETRSOURCE_COMP1 TIM1_AF1_ETRSEL_0 /*!< ETR input is connected to COMP1_OUT */
+#define LL_TIM_TIM20_ETRSOURCE_COMP2 TIM1_AF1_ETRSEL_1 /*!< ETR input is connected to COMP2_OUT */
+#define LL_TIM_TIM20_ETRSOURCE_COMP3                                                                                   \
+	(TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0)	       /*!< ETR input is connected to COMP3_OUT                        \
+							*/
+#define LL_TIM_TIM20_ETRSOURCE_COMP4 TIM1_AF1_ETRSEL_2 /*!< ETR input is connected to COMP4_OUT */
 #if defined(COMP5)
-#define LL_TIM_TIM20_ETRSOURCE_COMP5 (TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP5_OUT  \
-									      */
-#endif									     /* COMP5 */
+#define LL_TIM_TIM20_ETRSOURCE_COMP5                                                                                   \
+	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP5_OUT                               \
+						 */
+#endif						/* COMP5 */
 #if defined(COMP6)
-#define LL_TIM_TIM20_ETRSOURCE_COMP6 (TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1) /*!< ETR input is connected to COMP6_OUT  \
-									      */
-#endif									     /* COMP6 */
+#define LL_TIM_TIM20_ETRSOURCE_COMP6                                                                                   \
+	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1) /*!< ETR input is connected to COMP6_OUT                               \
+						 */
+#endif						/* COMP6 */
 #if defined(COMP7)
 #define LL_TIM_TIM20_ETRSOURCE_COMP7                                                                                   \
 	(TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_1 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to COMP7_OUT */

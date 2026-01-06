@@ -260,15 +260,16 @@ typedef struct {
 /** @defgroup SPI_LL_EC_DATAWIDTH Datawidth
  * @{
  */
-#define LL_SPI_DATAWIDTH_4BIT (SPI_CR2_DS_0 | SPI_CR2_DS_1)		   /*!< Data length for SPI transfer:  4 bits */
-#define LL_SPI_DATAWIDTH_5BIT (SPI_CR2_DS_2)				   /*!< Data length for SPI transfer:  5 bits */
-#define LL_SPI_DATAWIDTH_6BIT (SPI_CR2_DS_2 | SPI_CR2_DS_0)		   /*!< Data length for SPI transfer:  6 bits */
-#define LL_SPI_DATAWIDTH_7BIT (SPI_CR2_DS_2 | SPI_CR2_DS_1)		   /*!< Data length for SPI transfer:  7 bits */
-#define LL_SPI_DATAWIDTH_8BIT (SPI_CR2_DS_2 | SPI_CR2_DS_1 | SPI_CR2_DS_0) /*!< Data length for SPI transfer:  8 bits  \
-									    */
-#define LL_SPI_DATAWIDTH_9BIT (SPI_CR2_DS_3)				   /*!< Data length for SPI transfer:  9 bits */
-#define LL_SPI_DATAWIDTH_10BIT (SPI_CR2_DS_3 | SPI_CR2_DS_0)		   /*!< Data length for SPI transfer: 10 bits */
-#define LL_SPI_DATAWIDTH_11BIT (SPI_CR2_DS_3 | SPI_CR2_DS_1)		   /*!< Data length for SPI transfer: 11 bits */
+#define LL_SPI_DATAWIDTH_4BIT (SPI_CR2_DS_0 | SPI_CR2_DS_1) /*!< Data length for SPI transfer:  4 bits */
+#define LL_SPI_DATAWIDTH_5BIT (SPI_CR2_DS_2)		    /*!< Data length for SPI transfer:  5 bits */
+#define LL_SPI_DATAWIDTH_6BIT (SPI_CR2_DS_2 | SPI_CR2_DS_0) /*!< Data length for SPI transfer:  6 bits */
+#define LL_SPI_DATAWIDTH_7BIT (SPI_CR2_DS_2 | SPI_CR2_DS_1) /*!< Data length for SPI transfer:  7 bits */
+#define LL_SPI_DATAWIDTH_8BIT                                                                                          \
+	(SPI_CR2_DS_2 | SPI_CR2_DS_1 | SPI_CR2_DS_0)	     /*!< Data length for SPI transfer:  8 bits                \
+							      */
+#define LL_SPI_DATAWIDTH_9BIT (SPI_CR2_DS_3)		     /*!< Data length for SPI transfer:  9 bits */
+#define LL_SPI_DATAWIDTH_10BIT (SPI_CR2_DS_3 | SPI_CR2_DS_0) /*!< Data length for SPI transfer: 10 bits */
+#define LL_SPI_DATAWIDTH_11BIT (SPI_CR2_DS_3 | SPI_CR2_DS_1) /*!< Data length for SPI transfer: 11 bits */
 #define LL_SPI_DATAWIDTH_12BIT                                                                                         \
 	(SPI_CR2_DS_3 | SPI_CR2_DS_1 | SPI_CR2_DS_0)	     /*!< Data length for SPI transfer: 12 bits */
 #define LL_SPI_DATAWIDTH_13BIT (SPI_CR2_DS_3 | SPI_CR2_DS_2) /*!< Data length for SPI transfer: 13 bits */

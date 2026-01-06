@@ -2254,7 +2254,7 @@ typedef struct {
 	(ADC_JSQR_JEXTSEL_2 | ADC_JSQR_JEXTSEL_1 | ADC_INJ_TRIG_EXT_EDGE_DEFAULT) /*!< ADC group injected conversion   \
 										     trigger from external peripheral: \
 										     external interrupt line 15.       \
-										     Trigger edge set to rising edge                                                                                               \
+										     Trigger edge set to rising edge   \
 										     (default setting). */
 #define LL_ADC_INJ_TRIG_EXT_TIM8_CH4                                                                                   \
 	(ADC_JSQR_JEXTSEL_2 | ADC_JSQR_JEXTSEL_1 | ADC_JSQR_JEXTSEL_0 |                                                \
@@ -2470,14 +2470,15 @@ typedef struct {
 /** @defgroup ADC_LL_EC_CHANNEL_SAMPLINGTIME  Channel - Sampling time
  * @{
  */
-#define LL_ADC_SAMPLINGTIME_5CYCLES (0x00000000UL)			      /*!< Sampling time 5 ADC clock cycles */
-#define LL_ADC_SAMPLINGTIME_6CYCLES (ADC_SMPR2_SMP10_0)			      /*!< Sampling time 6 ADC clock cycles */
-#define LL_ADC_SAMPLINGTIME_12CYCLES (ADC_SMPR2_SMP10_1)		      /*!< Sampling time 12 ADC clock cycles */
-#define LL_ADC_SAMPLINGTIME_20CYCLES (ADC_SMPR2_SMP10_1 | ADC_SMPR2_SMP10_0)  /*!< Sampling time 20 ADC clock cycles */
-#define LL_ADC_SAMPLINGTIME_36CYCLES (ADC_SMPR2_SMP10_2)		      /*!< Sampling time 36 ADC clock cycles */
-#define LL_ADC_SAMPLINGTIME_68CYCLES (ADC_SMPR2_SMP10_2 | ADC_SMPR2_SMP10_0)  /*!< Sampling time 68 ADC clock cycles */
-#define LL_ADC_SAMPLINGTIME_391CYCLES (ADC_SMPR2_SMP10_2 | ADC_SMPR2_SMP10_1) /*!< Sampling time 391 ADC clock cycles  \
-									       */
+#define LL_ADC_SAMPLINGTIME_5CYCLES (0x00000000UL)			     /*!< Sampling time 5 ADC clock cycles */
+#define LL_ADC_SAMPLINGTIME_6CYCLES (ADC_SMPR2_SMP10_0)			     /*!< Sampling time 6 ADC clock cycles */
+#define LL_ADC_SAMPLINGTIME_12CYCLES (ADC_SMPR2_SMP10_1)		     /*!< Sampling time 12 ADC clock cycles */
+#define LL_ADC_SAMPLINGTIME_20CYCLES (ADC_SMPR2_SMP10_1 | ADC_SMPR2_SMP10_0) /*!< Sampling time 20 ADC clock cycles */
+#define LL_ADC_SAMPLINGTIME_36CYCLES (ADC_SMPR2_SMP10_2)		     /*!< Sampling time 36 ADC clock cycles */
+#define LL_ADC_SAMPLINGTIME_68CYCLES (ADC_SMPR2_SMP10_2 | ADC_SMPR2_SMP10_0) /*!< Sampling time 68 ADC clock cycles */
+#define LL_ADC_SAMPLINGTIME_391CYCLES                                                                                  \
+	(ADC_SMPR2_SMP10_2 | ADC_SMPR2_SMP10_1) /*!< Sampling time 391 ADC clock cycles                                \
+						 */
 #define LL_ADC_SAMPLINGTIME_814CYCLES                                                                                  \
 	(ADC_SMPR2_SMP10_2 | ADC_SMPR2_SMP10_1 | ADC_SMPR2_SMP10_0) /*!< Sampling time 814 ADC clock cycles */
 
@@ -3405,7 +3406,7 @@ typedef struct {
 								 phases: 15 ADC clock cycles for all resolution */
 #define LL_ADC_MULTI_TWOSMP_DELAY_15CYCLES_10_BITS                                                                     \
 	(ADC_CCR_DELAY_3 | ADC_CCR_DELAY_2 | ADC_CCR_DELAY_1 | ADC_CCR_DELAY_0) /*!< ADC multimode delay between two   \
-										   sampling phases: 15 ADC clock                                                                                                  \
+										   sampling phases: 15 ADC clock       \
 										   cycles for 10 bits resolution */
 #define LL_ADC_MULTI_TWOSMP_DELAY_16CYCLES                                                                             \
 	(ADC_CCR_DELAY_3 | ADC_CCR_DELAY_2 | ADC_CCR_DELAY_1 |                                                         \

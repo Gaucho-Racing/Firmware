@@ -434,8 +434,9 @@ typedef struct {
 										       */
 #define LL_USART_PRESCALER_DIV32 (USART_PRESC_PRESCALER_3)			      /*!< Input clock divided by 32 */
 #define LL_USART_PRESCALER_DIV64 (USART_PRESC_PRESCALER_3 | USART_PRESC_PRESCALER_0)  /*!< Input clock divided by 64 */
-#define LL_USART_PRESCALER_DIV128 (USART_PRESC_PRESCALER_3 | USART_PRESC_PRESCALER_1) /*!< Input clock divided by 128  \
-										       */
+#define LL_USART_PRESCALER_DIV128                                                                                      \
+	(USART_PRESC_PRESCALER_3 | USART_PRESC_PRESCALER_1) /*!< Input clock divided by 128                            \
+							     */
 #define LL_USART_PRESCALER_DIV256                                                                                      \
 	(USART_PRESC_PRESCALER_3 | USART_PRESC_PRESCALER_1 | USART_PRESC_PRESCALER_0) /*!< Input clock divided by 256  \
 										       */

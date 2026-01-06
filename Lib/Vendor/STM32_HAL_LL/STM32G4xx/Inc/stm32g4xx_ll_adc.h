@@ -1072,11 +1072,11 @@ prescaler division by 32 */
 		    On this STM32 series, ADC channel available only on ADC1 instance. */
 #define LL_ADC_CHANNEL_VOPAMP2                                                                                         \
 	(LL_ADC_CHANNEL_16 | ADC_CHANNEL_ID_INTERNAL_CH | ADC_CHANNEL_ID_INTERNAL_CH_2) /*!< ADC internal channel      \
-							  connected to OPAMP2 output. On this STM32 series, ADC                                                                              \
+							  connected to OPAMP2 output. On this STM32 series, ADC        \
 							  channel available only on ADC2 instance. */
 #define LL_ADC_CHANNEL_VOPAMP3_ADC2                                                                                    \
 	(LL_ADC_CHANNEL_18 | ADC_CHANNEL_ID_INTERNAL_CH | ADC_CHANNEL_ID_INTERNAL_CH_2) /*!< ADC internal channel      \
-							  connected to OPAMP3 output. On this STM32 series, ADC                                                                              \
+							  connected to OPAMP3 output. On this STM32 series, ADC        \
 							  channel available only on ADC2 instance. */
 #define LL_ADC_CHANNEL_VOPAMP3_ADC3                                                                                    \
 	(LL_ADC_CHANNEL_13 | ADC_CHANNEL_ID_INTERNAL_CH |                                                              \

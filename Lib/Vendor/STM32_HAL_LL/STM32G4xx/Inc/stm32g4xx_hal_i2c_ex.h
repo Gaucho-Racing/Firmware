@@ -63,15 +63,17 @@ extern "C" {
 #if defined(SYSCFG_CFGR1_I2C3_FMP)
 #define I2C_FASTMODEPLUS_I2C3 SYSCFG_CFGR1_I2C3_FMP /*!< Enable Fast Mode Plus on I2C3 pins */
 #else
-#define I2C_FASTMODEPLUS_I2C3 (uint32_t)(0x00000400U | I2C_FMP_NOT_SUPPORTED) /*!< Fast Mode Plus I2C3 not supported   \
-									       */
-#endif									      /* SYSCFG_CFGR1_I2C3_FMP */
+#define I2C_FASTMODEPLUS_I2C3                                                                                          \
+	(uint32_t)(0x00000400U | I2C_FMP_NOT_SUPPORTED) /*!< Fast Mode Plus I2C3 not supported                         \
+							 */
+#endif							/* SYSCFG_CFGR1_I2C3_FMP */
 #if defined(SYSCFG_CFGR1_I2C4_FMP)
 #define I2C_FASTMODEPLUS_I2C4 SYSCFG_CFGR1_I2C4_FMP /*!< Enable Fast Mode Plus on I2C4 pins */
 #else
-#define I2C_FASTMODEPLUS_I2C4 (uint32_t)(0x00000800U | I2C_FMP_NOT_SUPPORTED) /*!< Fast Mode Plus I2C4 not supported   \
-									       */
-#endif									      /* SYSCFG_CFGR1_I2C4_FMP */
+#define I2C_FASTMODEPLUS_I2C4                                                                                          \
+	(uint32_t)(0x00000800U | I2C_FMP_NOT_SUPPORTED) /*!< Fast Mode Plus I2C4 not supported                         \
+							 */
+#endif							/* SYSCFG_CFGR1_I2C4_FMP */
 /**
  * @}
  */

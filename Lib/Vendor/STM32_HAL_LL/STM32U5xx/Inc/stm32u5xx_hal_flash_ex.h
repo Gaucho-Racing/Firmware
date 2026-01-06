@@ -131,14 +131,15 @@ typedef struct {
 /** @defgroup FLASH_Operation_Type FLASH Operation Type
  * @{
  */
-#define FLASH_OPERATION_TYPE_NONE 00000000U						/*!< No Flash operation      */
-#define FLASH_OPERATION_TYPE_QUADWORD FLASH_OPSR_CODE_OP_0				/*!< Single write operation  */
-#define FLASH_OPERATION_TYPE_BURST FLASH_OPSR_CODE_OP_1					/*!< Burst write operation   */
-#define FLASH_OPERATION_TYPE_PAGEERASE (FLASH_OPSR_CODE_OP_1 | FLASH_OPSR_CODE_OP_0)	/*!< Page erase operation    */
-#define FLASH_OPERATION_TYPE_BANKERASE FLASH_OPSR_CODE_OP_2				/*!< Bank erase operation    */
-#define FLASH_OPERATION_TYPE_MASSERASE (FLASH_OPSR_CODE_OP_2 | FLASH_OPSR_CODE_OP_0)	/*!< Mass erase operation    */
-#define FLASH_OPERATION_TYPE_OPTIONCHANGE (FLASH_OPSR_CODE_OP_2 | FLASH_OPSR_CODE_OP_1) /*!< Option change operation   \
-											 */
+#define FLASH_OPERATION_TYPE_NONE 00000000U					     /*!< No Flash operation      */
+#define FLASH_OPERATION_TYPE_QUADWORD FLASH_OPSR_CODE_OP_0			     /*!< Single write operation  */
+#define FLASH_OPERATION_TYPE_BURST FLASH_OPSR_CODE_OP_1				     /*!< Burst write operation   */
+#define FLASH_OPERATION_TYPE_PAGEERASE (FLASH_OPSR_CODE_OP_1 | FLASH_OPSR_CODE_OP_0) /*!< Page erase operation    */
+#define FLASH_OPERATION_TYPE_BANKERASE FLASH_OPSR_CODE_OP_2			     /*!< Bank erase operation    */
+#define FLASH_OPERATION_TYPE_MASSERASE (FLASH_OPSR_CODE_OP_2 | FLASH_OPSR_CODE_OP_0) /*!< Mass erase operation    */
+#define FLASH_OPERATION_TYPE_OPTIONCHANGE                                                                              \
+	(FLASH_OPSR_CODE_OP_2 | FLASH_OPSR_CODE_OP_1) /*!< Option change operation                                     \
+						       */
 /**
  * @}
  */

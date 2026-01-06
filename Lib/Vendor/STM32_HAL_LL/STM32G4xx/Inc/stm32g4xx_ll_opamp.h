@@ -173,7 +173,7 @@ typedef struct {
 						    positive gain */
 #define LL_OPAMP_MODE_PGA_IO0_IO1_BIAS                                                                                 \
 	(OPAMP_CSR_PGGAIN_4 | OPAMP_CSR_PGGAIN_3 | OPAMP_CSR_VMSEL_1) /*!< In PGA mode, the inverting input is         \
-									 connected to VINM0                                                                                                              \
+									 connected to VINM0                            \
 									  - Input signal on VINM0, bias on VINPx:      \
 									 negative gain                                 \
 									  - Bias on VINM0, input signal on VINPx:      \

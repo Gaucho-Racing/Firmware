@@ -2063,8 +2063,9 @@ typedef struct {
 #define LL_TIM_TIM16_TI1_RMP_MSIS_1024                                                                                 \
 	(TIM_TISEL_TI1SEL_2 | TIM_TISEL_TI1SEL_1 | TIM_TISEL_TI1SEL_0) /*!< TIM16 TI1 is connected to MSIS/1024 */
 #define LL_TIM_TIM16_TI1_RMP_MSIS_4 TIM_TISEL_TI1SEL_3		       /*!< TIM16 TI1 is connected to MSIS/4 */
-#define LL_TIM_TIM16_TI1_RMP_HSI_256 (TIM_TISEL_TI1SEL_3 | TIM_TISEL_TI1SEL_0) /*!< TIM16 TI1 is connected to HSI/256  \
-										*/
+#define LL_TIM_TIM16_TI1_RMP_HSI_256                                                                                   \
+	(TIM_TISEL_TI1SEL_3 | TIM_TISEL_TI1SEL_0) /*!< TIM16 TI1 is connected to HSI/256                               \
+						   */
 /**
  * @}
  */
@@ -2082,8 +2083,9 @@ typedef struct {
 #define LL_TIM_TIM17_TI1_RMP_MSIS_1024                                                                                 \
 	(TIM_TISEL_TI1SEL_2 | TIM_TISEL_TI1SEL_1 | TIM_TISEL_TI1SEL_0) /*!< TIM17 TI1 is connected to MSIS/1024 */
 #define LL_TIM_TIM17_TI1_RMP_MSIS_4 TIM_TISEL_TI1SEL_3		       /*!< TIM17 TI1 is connected to MSIS/4 */
-#define LL_TIM_TIM17_TI1_RMP_HSI_256 (TIM_TISEL_TI1SEL_3 | TIM_TISEL_TI1SEL_0) /*!< TIM17 TI1 is connected to HSI/256  \
-										*/
+#define LL_TIM_TIM17_TI1_RMP_HSI_256                                                                                   \
+	(TIM_TISEL_TI1SEL_3 | TIM_TISEL_TI1SEL_0) /*!< TIM17 TI1 is connected to HSI/256                               \
+						   */
 /**
  * @}
  */

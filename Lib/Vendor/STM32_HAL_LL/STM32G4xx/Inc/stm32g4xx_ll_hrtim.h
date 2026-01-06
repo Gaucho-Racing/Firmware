@@ -1064,7 +1064,7 @@ static const uint32_t REG_MASK_TAB_CPT[] = {
 							 HRTIM update enable input 1 */
 #define LL_HRTIM_UPDATEGATING_UPDEN2_UPDATE                                                                            \
 	(HRTIM_TIMCR_UPDGAT_2 | HRTIM_TIMCR_UPDGAT_1 | HRTIM_TIMCR_UPDGAT_0) /*!< Slave timer only - Update done on    \
-										the update event following a rising                                                                                       \
+										the update event following a rising    \
 										edge of HRTIM update enable input 2 */
 #define LL_HRTIM_UPDATEGATING_UPDEN3_UPDATE                                                                            \
 	(HRTIM_TIMCR_UPDGAT_3) /*!< Slave timer only - Update done on the                                              \

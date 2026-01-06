@@ -162,9 +162,9 @@ typedef struct
 	__IO HAL_LPTIM_StateTypeDef State; /*!< LPTIM peripheral state    */
 
 #if (USE_HAL_LPTIM_REGISTER_CALLBACKS == 1)
-	void (*MspInitCallback)(struct __LPTIM_HandleTypeDef *hlptim);	       /*!< LPTIM Base Msp Init Callback	 */
-	void (*MspDeInitCallback)(struct __LPTIM_HandleTypeDef *hlptim);       /*!< LPTIM Base Msp DeInit Callback       */
-	void (*CompareMatchCallback)(struct __LPTIM_HandleTypeDef *hlptim);    /*!< Compare match Callback */
+	void (*MspInitCallback)(struct __LPTIM_HandleTypeDef *hlptim);	    /*!< LPTIM Base Msp Init Callback	 */
+	void (*MspDeInitCallback)(struct __LPTIM_HandleTypeDef *hlptim);    /*!< LPTIM Base Msp DeInit Callback       */
+	void (*CompareMatchCallback)(struct __LPTIM_HandleTypeDef *hlptim); /*!< Compare match Callback */
 	void (*AutoReloadMatchCallback)(struct __LPTIM_HandleTypeDef *hlptim); /*!< Auto-reload match Callback */
 	void (*TriggerCallback)(struct __LPTIM_HandleTypeDef *hlptim); /*!< External trigger event detection Callback */
 	void (*CompareWriteCallback)(
