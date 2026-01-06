@@ -82,3 +82,4 @@ float CalcPedalTravel(const ECU_StateData *stateData)
 	       (THROTTLE_MAX_1 + THROTTLE_MAX_2 - THROTTLE_MIN_1 -
 		THROTTLE_MIN_2);
 }
+

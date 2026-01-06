@@ -59,39 +59,37 @@ void ECU_GLV_On(ECU_StateData *stateData)
 {
 	UNUSED(stateData);
 	/*
-	if(stateData->TractiveSystemVoltage >= 60){
+	if(stateData->TractiveSystemVoltage >= 60){ // should never happen but has to be accounted for
 		stateData->currentState = GR_TS_DISCHARGE_OFF;
+		emit an error
+		break;
 	}
 	*/
 
 	// TODO Implement functionality
-	/*if(TS Active is pressed){
+	/*if(TS Active){
 	* 	stateData->currentState = GR_PRECHARGE_ENGAGED
 	}*/
-	/*
-	if(TS voltage >= 60) {
-		Go to TS discharge
-		Emit an error
-	}
-	*/
 }
 
 void ECU_Precharge_Engaged(ECU_StateData *stateData)
 {
 	UNUSED(stateData);
-	// TODO Implement functionality
-	/*if(TS Active is pressed || Communication Error (CAN)){
-		stateData->currentState = GR_TS_DISCHARGE_OFF
-	}*/
-	/*if(1 Isolation relay close && second isolation relay close){
-		stateData->currentState = GR_PRECHARGE_COMPLETE
-	}*/
 	/*
 	if(TS voltage >= 60) {
 		Go to TS discharge
 		Emit an error
+		break;
 	}
 	*/
+	// TODO Implement functionality
+	/*if(not TS Active || Communication Error (CAN)){
+		stateData->currentState = GR_TS_DISCHARGE_OFF
+		break;
+	}*/
+	/*if(1 Isolation relay close && second isolation relay close){
+		stateData->currentState = GR_PRECHARGE_COMPLETE
+	}*/
 }
 
 void ECU_Precharge_Complete(ECU_StateData *stateData)
@@ -102,23 +100,22 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 		On but idle
 
 		If Tractive System (TS) active/Critical Error --> Tractive
-	   System Discharge If Brake & RTD (Ready to Drive) --> Drive Active
+	    System Discharge If Brake & RTD (Ready to Drive) --> Drive Active
 	*/
 	/*
-	if(pressingBrake() && stateData->RTD){
+	if (TS pressed or critical error) {
+		stateData->currentState = GR_TS_DISCHARGE_OFF
+		emit error
+		break;
+	}
+	*/
+	/*
+	if(PressingBrake(stateData) && stateData->RTD){
 		stateData->currentState = GR_DRIVE_ACTIVE;
 	}
 	*/
 
 	// Pseudocode
-	/*
-		if (stateData->brake >= 5% && RTD pressed) {
-			stateData->currentState = GR_DRIVE_ACTIVE
-		}
-		if (TS pressed or critical error) {
-			stateData->currentState = GR_TS_DISCHARGE_OFF
-		}
-	*/
 }
 
 void ECU_Drive_Active(ECU_StateData *stateData)
@@ -126,22 +123,28 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	UNUSED(stateData);
 	// TODO Implement functionality
 	/*
-		If RTD (Ready to Drive) --> Precharge Complete
 		If APPS/BSE Violation --> Don't drive until resolved (no state
-	   change) If Tractive System (TS) active/Critical Error --> Tractive
-	   System Discharge
+	   	change) If Tractive System (TS) active/Critical Error --> Tractive
+	   	System Discharge
 			--> pressed again
+		If RTD (Ready to Drive) --> Precharge Complete
 	*/
 
 	// Pseudocode
 	/*
-		if (TSActive pressed again OR criticalError(stateData)) {
+		if (!TSActive || criticalError(stateData)) {
 			stateData->currentState = GR_TS_DISCHARGE_OFF
 			emit an error
+			break
 		}
-		if (RTD pressed again) {
+		if (!RTD) {
 			stateData->currentState = GR_PRECHARGE_COMPLETE
 			emit a warning if not moving
+			break
+		}
+		and then we drive the car
+		 - calcPedalTravel func :p
+		 - make tuna-ble function
 	*/
 }
 
