@@ -41,15 +41,14 @@ void ADC_Init(unsigned long ADC, Resolution res, Alignment align)
 	LL_ADC_Init(GetADC(ADC), &ADC_InitStruct);
 }
 
-void ADC_Regular_Group_Init(unsigned long ADC, NumRanks ranks)
-{
-	LL_ADC_REG_InitTypeDef ADC_REG_InitStruct = {0};
-	ADC_REG_InitStruct.TriggerSource = LL_ADC_REG_TRIG_SOFTWARE;
-	ADC_REG_InitStruct.SequencerLength = rank;
-	ADC_REG_InitStruct.SequencerDiscont = LL_ADC_REG_SEQ_DISCONT_DISABLE;
-	ADC_REG_InitStruct.ContinuousMode = LL_ADC_REG_CONV_CONTINUOUS;
-	ADC_REG_InitStruct.DMATransfer = LL_ADC_REG_DMA_TRANSFER_UNLIMITED;
-	ADC_REG_InitStruct.Overrun = LL_ADC_REG_OVR_DATA_PRESERVED;
+void ADC_Regular_Group_Init(unsigned long ADC, unsigned long Sequence_Length){
+    LL_ADC_REG_InitTypeDef ADC_REG_InitStruct = {0};
+	ADC_REG_InitStruct.TriggerSource = LL_ADC_REG_TRIG_SOFTWARE; // Default value
+	ADC_REG_InitStruct.SequencerLength = Sequence_Length;
+	ADC_REG_InitStruct.SequencerDiscont = LL_ADC_REG_SEQ_DISCONT_DISABLE; // Default isn't discontinuous
+	ADC_REG_InitStruct.ContinuousMode = LL_ADC_REG_CONV_CONTINUOUS; // Default continuous
+	ADC_REG_InitStruct.DMATransfer = LL_ADC_REG_DMA_TRANSFER_UNLIMITED; // Default unlimited transfer of DMA
+	ADC_REG_InitStruct.Overrun = LL_ADC_REG_OVR_DATA_PRESERVED; // 
 	LL_ADC_REG_Init(ADC, &ADC_REG_InitStruct);
 }
 
