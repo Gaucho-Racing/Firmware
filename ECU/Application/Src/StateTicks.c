@@ -48,6 +48,14 @@ void ECU_State_Tick(void)
 	}
 }
 
+
+/*
+
+TODO: implement state functionality when loading INTO the state, not just transitioning state
+
+*/
+
+
 void ECU_GLV_Off(ECU_StateData *stateData)
 {
 	UNUSED(stateData);
@@ -67,27 +75,26 @@ void ECU_GLV_On(ECU_StateData *stateData)
 	*/
 
 	// TODO Implement functionality
-	/*if(TS Active){
-	* 	stateData->currentState = GR_PRECHARGE_ENGAGED
-	}*/
+	if(stateData->ts_active_button_engaged) {
+		stateData->ecuStatus1.ecu_status = GR_PRECHARGE_ENGAGED;
+	}
 }
 
 void ECU_Precharge_Engaged(ECU_StateData *stateData)
 {
 	UNUSED(stateData);
-	/*
-	if(TS voltage >= 60) {
-		Go to TS discharge
-		Emit an error
-		break;
+	if(stateData->ecuStatus2.ts_voltage > 60) {
+		// Go to TS discharge
+		stateData->ecuStatus1.ecu_status = GR_TS_DISCHARGE_OFF;
+		// Emit an error
+		return;
 	}
-	*/
 	// TODO Implement functionality
 	/*if(not TS Active || Communication Error (CAN)){
 		stateData->currentState = GR_TS_DISCHARGE_OFF
 		break;
 	}*/
-	/*if(1 Isolation relay close && second isolation relay close){
+	/*if(1 Isolation relay close && second isolation relay close){ --> CAN!
 		stateData->currentState = GR_PRECHARGE_COMPLETE
 	}*/
 }
@@ -151,11 +158,14 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 {
 	UNUSED(stateData);
-	// TODO Implement functionality
+	// TODO Implement functionality of state itself
 	/*
 		Discharge the tractive system to below 60 volts
-		If TS voltage < 60 --> GLV_ON
+		If TS voltage < 60 --> stateData->GLV_ON
 	*/
+	if(stateData->ecuStatus2.ts_voltage < 60){
+		stateData->ecuStatus1.ecu_status = GR_GLV_ON;
+	}
 	/*
 		If TS fails to discharge over time then stay and emit a warning,
 	   see #129
