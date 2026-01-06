@@ -36,7 +36,7 @@ void ECU_State_Tick(void)
 		case GR_DRIVE_ACTIVE:
 			ECU_Drive_Active(&stateLump);
 			break;
-		case GR_TS_DISCHARGE_OFF:
+		case GR_TS_DISCHARGE:
 			ECU_Tractive_System_Discharge(&stateLump);
 			break;
 		default:
