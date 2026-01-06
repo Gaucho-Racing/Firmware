@@ -82,7 +82,7 @@ Message ID:
       units: "%"
 
 Custom CAN ID:
-  DTI Control 1:
+   DTI Control 1:
     CAN ID: 116
     Length: 2
     Bit Start: 0
@@ -93,7 +93,7 @@ Custom CAN ID:
     #This is a signed parameter, and the sign represents the direction of the torque which correlates with the motor AC current. 
     #(For the correlation, please refer to the motor parameters)
     
-  DTI Control 7:
+   DTI Control 7:
     CAN ID: 716
     Length: 1
     #Bit Start 0
@@ -105,7 +105,7 @@ Custom CAN ID:
     #Bit Start 3
     Data Name: Digital Output 4 #Sets the digital output 1 to HIGH (1) or LOW (0) state 
     
-  DTI Data 5:
+   DTI Data 5:
     CAN ID: 2416
     Length: 8 
     Byte 0:
