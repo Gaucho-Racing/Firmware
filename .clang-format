@@ -8,6 +8,7 @@ InsertBraces: true
 LineEnding: LF
 SortIncludes: CaseSensitive
 IncludeBlocks: Regroup
+ColumnLimit: 120
 IncludeCategories:
   - Regex:           '<[^>]*>'
     Priority:        1
