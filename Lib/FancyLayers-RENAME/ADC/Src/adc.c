@@ -69,7 +69,6 @@ void ADC_Regular_Group_Init(unsigned long ADC, unsigned long Sequence_Length)
 	LL_ADC_REG_Init(ADC, &ADC_REG_InitStruct);
 }
 
-
 void ADC_Init_Pins(Pin_Ports *input)
 {
 	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -98,6 +97,7 @@ CommonClock ADC_Get_Common_Clock(ADC_Common_TypeDef *ADC_Common)
 	return LL_ADC_GetCommonClock(ADC_Common);
 }
 
-void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, LL_DMA_InitTypeDef *config) {
-	LL_DMA_Init (DMA, channel, config);
+void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, LL_DMA_InitTypeDef *config)
+{
+	LL_DMA_Init(DMA, channel, config);
 }
