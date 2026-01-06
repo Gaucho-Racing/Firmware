@@ -18,9 +18,9 @@ ECU_StateData stateLump = {0};
 void ECU_State_Tick(void)
 {
 	LOGOMATIC("ECU_State_Tick: Current State: %d\n",
-		  stateLump.currentState);
+		  stateLump.ecuStatus1.ecu_status);
 
-	switch (stateLump.currentState) {
+	switch (stateLump.ecuStatus1.ecu_status) {
 		case GR_GLV_OFF:
 			ECU_GLV_Off(&stateLump);
 			break;
@@ -36,14 +36,14 @@ void ECU_State_Tick(void)
 		case GR_DRIVE_ACTIVE:
 			ECU_Drive_Active(&stateLump);
 			break;
-		case GR_TS_DISCHARGE_OFF:
+		case GR_TS_DISCHARGE:
 			ECU_Tractive_System_Discharge(&stateLump);
 			break;
 		default:
 			LOGOMATIC("ECU_State_Tick: Unknown State %d\n",
-				  stateLump.currentState);
+				  stateLump.ecuStatus1.ecu_status);
 			LOGOMATIC("ECU_State_Tick: Resetting to GR_GLV_ON\n");
-			stateLump.currentState = GR_GLV_ON;
+			stateLump.ecuStatus1.ecu_status = GR_GLV_ON;
 			break;
 	}
 }

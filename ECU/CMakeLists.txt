@@ -55,6 +55,7 @@ add_library(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
 target_sources(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
+		# Core
 		Core/Src/adc.c
 		Core/Src/dma.c
 		Core/Src/fdcan.c
@@ -68,6 +69,7 @@ target_sources(
 		Core/Src/usart.c
 		# Application
 		Application/Src/StateTicks.c
+		Application/Src/CANdler.c
 )
 
 target_link_libraries(
