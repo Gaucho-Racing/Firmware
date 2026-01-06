@@ -172,4 +172,10 @@ typedef enum {
 void ADC_Set_Common_Clock(ADC_Common_TypeDef *ADC_Common,
 			  CommonClock commonClock);
 CommonClock ADC_Get_Common_Clock(ADC_Common_TypeDef *ADC_Common);
+
+void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, LL_DMA_InitTypeDef *config);
+
+// TODO:
+void ADC_UpdateSmooth();
+
 #endif

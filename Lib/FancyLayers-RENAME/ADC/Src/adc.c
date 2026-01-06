@@ -1,3 +1,14 @@
+/* USER CODE BEGIN Header */
+/**
+ ******************************************************************************
+ * @file    adc.c
+ * @brief   This file provides code for the configuration
+ *          of the ADC instances.
+ ******************************************************************************
+ */
+/* USER CODE END Header */
+/* Includes ------------------------------------------------------------------*/
+
 #include "adc.h"
 
 #include "main.h"
@@ -53,6 +64,7 @@ void ADC_Regular_Group_Init(unsigned long ADC, NumRanks ranks)
 	LL_ADC_REG_Init(ADC, &ADC_REG_InitStruct);
 }
 
+
 void ADC_Init_Pins(Pin_Ports *input)
 {
 	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -79,4 +91,8 @@ void ADC_Set_Common_Clock(ADC_Common_TypeDef *ADC_Common,
 CommonClock ADC_Get_Common_Clock(ADC_Common_TypeDef *ADC_Common)
 {
 	return LL_ADC_GetCommonClock(ADC_Common);
+}
+
+void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, LL_DMA_InitTypeDef *config) {
+	LL_DMA_Init (DMA, channel, config);
 }
