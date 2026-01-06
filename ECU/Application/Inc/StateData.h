@@ -23,7 +23,7 @@ typedef struct ECU_StateData {
 	GR_OLD_ECU_STATUS_1_MSG ecuStatus1;
 	GR_OLD_ECU_STATUS_2_MSG ecuStatus2;
 	GR_OLD_ECU_STATUS_3_MSG ecuStatus3;
-	
+
 	int32_t dischargeStartMillis;
 	uint32_t lastECUStatusMsgTick;
 	uint32_t lastTSSIFlash;

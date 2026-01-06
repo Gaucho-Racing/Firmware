@@ -59,8 +59,8 @@ void ECU_GLV_On(ECU_StateData *stateData)
 {
 	UNUSED(stateData);
 	/*
-	if(stateData->TractiveSystemVoltage >= 60){ // should never happen but has to be accounted for
-		stateData->currentState = GR_TS_DISCHARGE_OFF;
+	if(stateData->TractiveSystemVoltage >= 60){ // should never happen but
+	has to be accounted for stateData->currentState = GR_TS_DISCHARGE_OFF;
 		emit an error
 		break;
 	}
@@ -124,8 +124,8 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	// TODO Implement functionality
 	/*
 		If APPS/BSE Violation --> Don't drive until resolved (no state
-	   	change) If Tractive System (TS) active/Critical Error --> Tractive
-	   	System Discharge
+		change) If Tractive System (TS) active/Critical Error -->
+	   Tractive System Discharge
 			--> pressed again
 		If RTD (Ready to Drive) --> Precharge Complete
 	*/
