@@ -3,17 +3,11 @@
 #ifndef STATE_MACHINE_H
 #define STATE_MACHINE_H
 /**
- * @brief Represents the various states of the ECU state machine.
- *
+ * Enum representing the various states of the ECU state machine.
  * Each state corresponds to a specific operational mode of the ECU.
  * See the state diagram in the documentation for more details.
- *
- * Maps to the enum `GR_ECU_State` with the same name, used for `uint8_t`
- * backing.
  */
-typedef uint8_t GR_ECU_State;
-
-enum GR_ECU_State {
+typedef enum {
 	/**
 	 * The GLV is off and not operational (not possible if ECU is running)
 	 */
@@ -38,5 +32,5 @@ enum GR_ECU_State {
 	 * The HV system is in the process of discharging, TS Voltage >60V.
 	 */
 	GR_TS_DISCHARGE_OFF = 5,
-};
+} GR_ECU_State;
 #endif

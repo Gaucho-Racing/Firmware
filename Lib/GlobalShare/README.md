@@ -8,7 +8,7 @@ Please do not add source files to this directory, this is intended for only head
 
 **Important**: All files in this directory are **manually maintained and hand-written**. Nothing here is auto-generated. For auto-generated files please see [Autogen](../../Autogen/).
 
-Please ensure everything is clearly doc-commented and a markdown page is present for each section as relevant.
+Please ensure everything is clearly doc-commented.
 
 ## Adding New Shared Definitions
 
