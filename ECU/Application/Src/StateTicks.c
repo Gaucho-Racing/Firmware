@@ -67,7 +67,7 @@ void ECU_GLV_On(ECU_StateData *stateData)
 	UNUSED(stateData);
 	/*
 	if(stateData->TractiveSystemVoltage >= 60){ // should never happen but
-	has to be accounted for stateData->currentState = GR_TS_DISCHARGE_OFF;
+	has to be accounted for stateData->currentState = GR_TS_DISCHARGE;
 		emit an error
 		break;
 	}
@@ -84,13 +84,13 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 	UNUSED(stateData);
 	if (stateData->ecuStatus2.ts_voltage > 60) {
 		// Go to TS discharge
-		stateData->ecuStatus1.ecu_status = GR_TS_DISCHARGE_OFF;
+		stateData->ecuStatus1.ecu_status = GR_TS_DISCHARGE;
 		// Emit an error
 		return;
 	}
 	// TODO Implement functionality
 	/*if(not TS Active || Communication Error (CAN)){
-		stateData->currentState = GR_TS_DISCHARGE_OFF
+		stateData->currentState = GR_TS_DISCHARGE
 		break;
 	}*/
 	/*if(1 Isolation relay close && second isolation relay close){ --> CAN!
@@ -110,7 +110,7 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 	*/
 	/*
 	if (TS pressed or critical error) {
-		stateData->currentState = GR_TS_DISCHARGE_OFF
+		stateData->currentState = GR_TS_DISCHARGE
 		emit error
 		break;
 	}
@@ -139,7 +139,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	// Pseudocode
 	/*
 		if (!TSActive || criticalError(stateData)) {
-			stateData->currentState = GR_TS_DISCHARGE_OFF
+			stateData->currentState = GR_TS_DISCHARGE
 			emit an error
 			break
 		}
