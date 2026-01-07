@@ -1,0 +1,22 @@
+---
+Checks: 'clang-diagnostic-*, clang-analyzer-*, cppcoreguidelines-*, modernize-*, -modernize-use-trailing-return-type, readability-*, bug-prone-*, misc-*, performance-*'
+WarningsAsErrors: bugprone-*
+HeaderFilterRegex: '.*'
+AnalyzeTemporaryDtors: false
+FormatStyle: file
+CheckOptions:
+  - key: readability-header-guard.HeaderGuardStyle
+    value: LLVM
+  - key: readability-header-guard.IncludeGuards
+    value: 1
+
+  - key: modernize-use-nullptr.NullMacros
+    value: 'NULL'
+
+  - key: readability-identifier-naming.IgnoreMainLikeFunctions
+    value: 1
+  - key: readability-identifier-naming.IgnoreOverriddenFunctions
+    value: 1
+
+  - key: performance-for-range-copy.WarnOnAllAutoCopies
+    value: 1
