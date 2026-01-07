@@ -216,8 +216,8 @@ typedef void (*HAL_SDIO_IOFunction_CallbackTypeDef)(SDIO_HandleTypeDef *hsdio, u
  * @{
  */
 #define HAL_SDIO_ERROR_NONE SDMMC_ERROR_NONE /*!< No error                                    */
-#define HAL_SDIO_ERROR_DATA_CRC_FAIL                                                                                   \
-	SDMMC_ERROR_DATA_CRC_FAIL				      /*!< Data block sent/received (CRC check         \
+#define HAL_SDIO_ERROR_DATA_CRC_FAIL                                                                                                                                                                   \
+	SDMMC_ERROR_DATA_CRC_FAIL				      /*!< Data block sent/received (CRC check                                                                                         \
 									 failed) */
 #define HAL_SDIO_ERROR_DATA_TIMEOUT SDMMC_ERROR_DATA_TIMEOUT	      /*!< Data timeout */
 #define HAL_SDIO_ERROR_TX_UNDERRUN SDMMC_ERROR_TX_UNDERRUN	      /*!< Transmit FIFO underrun */
@@ -397,8 +397,7 @@ typedef void (*HAL_SDIO_IOFunction_CallbackTypeDef)(SDIO_HandleTypeDef *hsdio, u
  * @param  __INTERRUPT__ : specifies the SDMMC interrupt source to check.
  * @retval The state of SDIO IT (SET or RESET).
  */
-#define __HAL_SDIO_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)                                                            \
-	__SDMMC_GET_IT_SOURCE((__HANDLE__)->Instance, (__INTERRUPT__))
+#define __HAL_SDIO_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__) __SDMMC_GET_IT_SOURCE((__HANDLE__)->Instance, (__INTERRUPT__))
 /**
  * @}
  */
@@ -440,22 +439,16 @@ HAL_StatusTypeDef HAL_SDIO_GetCardFBRRegister(SDIO_HandleTypeDef *hsdio, HAL_SDI
 /** @defgroup SDIO_Exported_Functions_Group3 Process functions
  * @{
  */
-HAL_StatusTypeDef HAL_SDIO_ReadDirect(SDIO_HandleTypeDef *hsdio, const HAL_SDIO_DirectCmd_TypeDef *Argument,
-				      uint8_t *pData);
-HAL_StatusTypeDef HAL_SDIO_WriteDirect(SDIO_HandleTypeDef *hsdio, const HAL_SDIO_DirectCmd_TypeDef *Argument,
-				       uint8_t Data);
+HAL_StatusTypeDef HAL_SDIO_ReadDirect(SDIO_HandleTypeDef *hsdio, const HAL_SDIO_DirectCmd_TypeDef *Argument, uint8_t *pData);
+HAL_StatusTypeDef HAL_SDIO_WriteDirect(SDIO_HandleTypeDef *hsdio, const HAL_SDIO_DirectCmd_TypeDef *Argument, uint8_t Data);
 
-HAL_StatusTypeDef HAL_SDIO_ReadExtended(SDIO_HandleTypeDef *hsdio, const HAL_SDIO_ExtendedCmd_TypeDef *Argument,
-					uint8_t *pData, uint32_t Size_byte, uint32_t Timeout_Ms);
+HAL_StatusTypeDef HAL_SDIO_ReadExtended(SDIO_HandleTypeDef *hsdio, const HAL_SDIO_ExtendedCmd_TypeDef *Argument, uint8_t *pData, uint32_t Size_byte, uint32_t Timeout_Ms);
 
-HAL_StatusTypeDef HAL_SDIO_WriteExtended(SDIO_HandleTypeDef *hsdio, const HAL_SDIO_ExtendedCmd_TypeDef *Argument,
-					 uint8_t *pData, uint32_t Size_byte, uint32_t Timeout_Ms);
+HAL_StatusTypeDef HAL_SDIO_WriteExtended(SDIO_HandleTypeDef *hsdio, const HAL_SDIO_ExtendedCmd_TypeDef *Argument, uint8_t *pData, uint32_t Size_byte, uint32_t Timeout_Ms);
 
-HAL_StatusTypeDef HAL_SDIO_ReadExtended_DMA(SDIO_HandleTypeDef *hsdio, const HAL_SDIO_ExtendedCmd_TypeDef *Argument,
-					    uint8_t *pData, uint32_t Size_byte);
+HAL_StatusTypeDef HAL_SDIO_ReadExtended_DMA(SDIO_HandleTypeDef *hsdio, const HAL_SDIO_ExtendedCmd_TypeDef *Argument, uint8_t *pData, uint32_t Size_byte);
 
-HAL_StatusTypeDef HAL_SDIO_WriteExtended_DMA(SDIO_HandleTypeDef *hsdio, const HAL_SDIO_ExtendedCmd_TypeDef *Argument,
-					     uint8_t *pData, uint32_t Size_byte);
+HAL_StatusTypeDef HAL_SDIO_WriteExtended_DMA(SDIO_HandleTypeDef *hsdio, const HAL_SDIO_ExtendedCmd_TypeDef *Argument, uint8_t *pData, uint32_t Size_byte);
 /**
  * @}
  */
@@ -475,23 +468,19 @@ void HAL_SDIO_DriveTransceiver_1_8V_Callback(SDIO_HandleTypeDef *hsdio, FlagStat
 #endif /* USE_SDIO_TRANSCEIVER */
 
 #if defined(USE_HAL_SDIO_REGISTER_CALLBACKS) && (USE_HAL_SDIO_REGISTER_CALLBACKS == 1U)
-HAL_StatusTypeDef HAL_SDIO_RegisterCallback(SDIO_HandleTypeDef *hsdio, HAL_SDIO_CallbackIDTypeDef CallbackID,
-					    pSDIO_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_SDIO_RegisterCallback(SDIO_HandleTypeDef *hsdio, HAL_SDIO_CallbackIDTypeDef CallbackID, pSDIO_CallbackTypeDef pCallback);
 
 HAL_StatusTypeDef HAL_SDIO_UnRegisterCallback(SDIO_HandleTypeDef *hsdio, HAL_SDIO_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_SDIO_REGISTER_CALLBACKS */
 
 #if (USE_SDIO_TRANSCEIVER != 0U)
-HAL_StatusTypeDef HAL_SDIO_RegisterTransceiverCallback(SDIO_HandleTypeDef *hsdio,
-						       pSDIO_TransceiverCallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_SDIO_RegisterTransceiverCallback(SDIO_HandleTypeDef *hsdio, pSDIO_TransceiverCallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_SDIO_UnRegisterTransceiverCallback(SDIO_HandleTypeDef *hsdio);
 #endif /* USE_SDIO_TRANSCEIVER */
 
-HAL_StatusTypeDef HAL_SDIO_RegisterIOFunctionCallback(SDIO_HandleTypeDef *hsdio, uint32_t IOFunction,
-						      HAL_SDIO_IOFunction_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_SDIO_RegisterIOFunctionCallback(SDIO_HandleTypeDef *hsdio, uint32_t IOFunction, HAL_SDIO_IOFunction_CallbackTypeDef pCallback);
 
-HAL_StatusTypeDef HAL_SDIO_RegisterIdentifyCardCallback(SDIO_HandleTypeDef *hsdio,
-							pSDIO_IdentifyCardCallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_SDIO_RegisterIdentifyCardCallback(SDIO_HandleTypeDef *hsdio, pSDIO_IdentifyCardCallbackTypeDef pCallback);
 /**
  * @}
  */

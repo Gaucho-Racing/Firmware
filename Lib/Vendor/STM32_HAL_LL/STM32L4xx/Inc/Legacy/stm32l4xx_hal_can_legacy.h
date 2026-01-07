@@ -451,8 +451,8 @@ typedef struct {
 
 /* Operating Mode Interrupts */
 #define CAN_IT_WKU ((uint32_t)CAN_IER_WKUIE) /*!< Wake-up interrupt */
-#define CAN_IT_SLK                                                                                                     \
-	((uint32_t)CAN_IER_SLKIE) /*!< Sleep acknowledge interrupt                                                     \
+#define CAN_IT_SLK                                                                                                                                                                                     \
+	((uint32_t)CAN_IER_SLKIE) /*!< Sleep acknowledge interrupt                                                                                                                                     \
 				   */
 
 /* Error Interrupts */
@@ -508,9 +508,8 @@ typedef struct {
  * @param  __FIFONUMBER__: Receive FIFO number, CAN_FIFO0 or CAN_FIFO1.
  * @retval The number of pending message.
  */
-#define __HAL_CAN_MSG_PENDING(__HANDLE__, __FIFONUMBER__)                                                              \
-	(((__FIFONUMBER__) == CAN_FIFO0) ? ((uint8_t)((__HANDLE__)->Instance->RF0R & (uint32_t)0x03))                  \
-					 : ((uint8_t)((__HANDLE__)->Instance->RF1R & (uint32_t)0x03)))
+#define __HAL_CAN_MSG_PENDING(__HANDLE__, __FIFONUMBER__)                                                                                                                                              \
+	(((__FIFONUMBER__) == CAN_FIFO0) ? ((uint8_t)((__HANDLE__)->Instance->RF0R & (uint32_t)0x03)) : ((uint8_t)((__HANDLE__)->Instance->RF1R & (uint32_t)0x03)))
 
 /** @brief  Check whether the specified CAN flag is set or not.
  * @param  __HANDLE__: specifies the CAN Handle.
@@ -539,17 +538,12 @@ typedef struct {
  *            @arg CAN_FLAG_BOF: Bus-Off Flag
  * @retval The new state of __FLAG__ (TRUE or FALSE).
  */
-#define __HAL_CAN_GET_FLAG(__HANDLE__, __FLAG__)                                                                       \
-	((((__FLAG__) >> 8) == 5)   ? ((((__HANDLE__)->Instance->TSR) & (1U << ((__FLAG__) & CAN_FLAG_MASK))) ==       \
-				       (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                           \
-	 : (((__FLAG__) >> 8) == 2) ? ((((__HANDLE__)->Instance->RF0R) & (1U << ((__FLAG__) & CAN_FLAG_MASK))) ==      \
-				       (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                           \
-	 : (((__FLAG__) >> 8) == 4) ? ((((__HANDLE__)->Instance->RF1R) & (1U << ((__FLAG__) & CAN_FLAG_MASK))) ==      \
-				       (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                           \
-	 : (((__FLAG__) >> 8) == 1) ? ((((__HANDLE__)->Instance->MSR) & (1U << ((__FLAG__) & CAN_FLAG_MASK))) ==       \
-				       (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                           \
-				    : ((((__HANDLE__)->Instance->ESR) & (1U << ((__FLAG__) & CAN_FLAG_MASK))) ==       \
-				       (1U << ((__FLAG__) & CAN_FLAG_MASK))))
+#define __HAL_CAN_GET_FLAG(__HANDLE__, __FLAG__)                                                                                                                                                       \
+	((((__FLAG__) >> 8) == 5)   ? ((((__HANDLE__)->Instance->TSR) & (1U << ((__FLAG__) & CAN_FLAG_MASK))) == (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                                 \
+	 : (((__FLAG__) >> 8) == 2) ? ((((__HANDLE__)->Instance->RF0R) & (1U << ((__FLAG__) & CAN_FLAG_MASK))) == (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                                \
+	 : (((__FLAG__) >> 8) == 4) ? ((((__HANDLE__)->Instance->RF1R) & (1U << ((__FLAG__) & CAN_FLAG_MASK))) == (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                                \
+	 : (((__FLAG__) >> 8) == 1) ? ((((__HANDLE__)->Instance->MSR) & (1U << ((__FLAG__) & CAN_FLAG_MASK))) == (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                                 \
+				    : ((((__HANDLE__)->Instance->ESR) & (1U << ((__FLAG__) & CAN_FLAG_MASK))) == (1U << ((__FLAG__) & CAN_FLAG_MASK))))
 
 /** @brief  Clear the specified CAN pending flag.
  * @param  __HANDLE__: specifies the CAN Handle.
@@ -574,11 +568,11 @@ typedef struct {
  *            @arg CAN_FLAG_SLAKI: Sleep acknowledge Flag
  * @retval The new state of __FLAG__ (TRUE or FALSE).
  */
-#define __HAL_CAN_CLEAR_FLAG(__HANDLE__, __FLAG__)                                                                     \
-	((((__FLAG__) >> 8U) == 5)   ? (((__HANDLE__)->Instance->TSR) = (1U << ((__FLAG__) & CAN_FLAG_MASK)))          \
-	 : (((__FLAG__) >> 8U) == 2) ? (((__HANDLE__)->Instance->RF0R) = (1U << ((__FLAG__) & CAN_FLAG_MASK)))         \
-	 : (((__FLAG__) >> 8U) == 4) ? (((__HANDLE__)->Instance->RF1R) = (1U << ((__FLAG__) & CAN_FLAG_MASK)))         \
-	 : (((__FLAG__) >> 8U) == 1) ? (((__HANDLE__)->Instance->MSR) = (1U << ((__FLAG__) & CAN_FLAG_MASK)))          \
+#define __HAL_CAN_CLEAR_FLAG(__HANDLE__, __FLAG__)                                                                                                                                                     \
+	((((__FLAG__) >> 8U) == 5)   ? (((__HANDLE__)->Instance->TSR) = (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                                                                          \
+	 : (((__FLAG__) >> 8U) == 2) ? (((__HANDLE__)->Instance->RF0R) = (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                                                                         \
+	 : (((__FLAG__) >> 8U) == 4) ? (((__HANDLE__)->Instance->RF1R) = (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                                                                         \
+	 : (((__FLAG__) >> 8U) == 1) ? (((__HANDLE__)->Instance->MSR) = (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                                                                          \
 				     : 0)
 
 /** @brief  Check whether the specified CAN interrupt source is enabled or not.
@@ -590,8 +584,7 @@ typedef struct {
  *            @arg CAN_IT_FMP1: FIFO1 message pending interrupt enable
  * @retval The new state of __IT__ (TRUE or FALSE).
  */
-#define __HAL_CAN_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)                                                             \
-	((((__HANDLE__)->Instance->IER & (__INTERRUPT__)) == (__INTERRUPT__)) ? SET : RESET)
+#define __HAL_CAN_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__) ((((__HANDLE__)->Instance->IER & (__INTERRUPT__)) == (__INTERRUPT__)) ? SET : RESET)
 
 /**
  * @brief  Check the transmission status of a CAN Frame.
@@ -600,15 +593,10 @@ typedef struct {
  * transmission.
  * @retval The new status of transmission  (TRUE or FALSE).
  */
-#define __HAL_CAN_TRANSMIT_STATUS(__HANDLE__, __TRANSMITMAILBOX__)                                                     \
-	(((__TRANSMITMAILBOX__) == CAN_TXMAILBOX_0)                                                                    \
-	     ? ((((__HANDLE__)->Instance->TSR) & (CAN_TSR_RQCP0 | CAN_TSR_TXOK0 | CAN_TSR_TME0)) ==                    \
-		(CAN_TSR_RQCP0 | CAN_TSR_TXOK0 | CAN_TSR_TME0))                                                        \
-	 : ((__TRANSMITMAILBOX__) == CAN_TXMAILBOX_1)                                                                  \
-	     ? ((((__HANDLE__)->Instance->TSR) & (CAN_TSR_RQCP1 | CAN_TSR_TXOK1 | CAN_TSR_TME1)) ==                    \
-		(CAN_TSR_RQCP1 | CAN_TSR_TXOK1 | CAN_TSR_TME1))                                                        \
-	     : ((((__HANDLE__)->Instance->TSR) & (CAN_TSR_RQCP2 | CAN_TSR_TXOK2 | CAN_TSR_TME2)) ==                    \
-		(CAN_TSR_RQCP2 | CAN_TSR_TXOK2 | CAN_TSR_TME2)))
+#define __HAL_CAN_TRANSMIT_STATUS(__HANDLE__, __TRANSMITMAILBOX__)                                                                                                                                     \
+	(((__TRANSMITMAILBOX__) == CAN_TXMAILBOX_0)   ? ((((__HANDLE__)->Instance->TSR) & (CAN_TSR_RQCP0 | CAN_TSR_TXOK0 | CAN_TSR_TME0)) == (CAN_TSR_RQCP0 | CAN_TSR_TXOK0 | CAN_TSR_TME0))           \
+	 : ((__TRANSMITMAILBOX__) == CAN_TXMAILBOX_1) ? ((((__HANDLE__)->Instance->TSR) & (CAN_TSR_RQCP1 | CAN_TSR_TXOK1 | CAN_TSR_TME1)) == (CAN_TSR_RQCP1 | CAN_TSR_TXOK1 | CAN_TSR_TME1))           \
+						      : ((((__HANDLE__)->Instance->TSR) & (CAN_TSR_RQCP2 | CAN_TSR_TXOK2 | CAN_TSR_TME2)) == (CAN_TSR_RQCP2 | CAN_TSR_TXOK2 | CAN_TSR_TME2)))
 
 /**
  * @brief  Release the specified receive FIFO.
@@ -616,9 +604,7 @@ typedef struct {
  * @param  __FIFONUMBER__: Receive FIFO number, CAN_FIFO0 or CAN_FIFO1.
  * @retval None
  */
-#define __HAL_CAN_FIFO_RELEASE(__HANDLE__, __FIFONUMBER__)                                                             \
-	(((__FIFONUMBER__) == CAN_FIFO0) ? ((__HANDLE__)->Instance->RF0R |= CAN_RF0R_RFOM0)                            \
-					 : ((__HANDLE__)->Instance->RF1R |= CAN_RF1R_RFOM1))
+#define __HAL_CAN_FIFO_RELEASE(__HANDLE__, __FIFONUMBER__) (((__FIFONUMBER__) == CAN_FIFO0) ? ((__HANDLE__)->Instance->RF0R |= CAN_RF0R_RFOM0) : ((__HANDLE__)->Instance->RF1R |= CAN_RF1R_RFOM1))
 
 /**
  * @brief  Cancel a transmit request.
@@ -627,9 +613,9 @@ typedef struct {
  * transmission.
  * @retval None
  */
-#define __HAL_CAN_CANCEL_TRANSMIT(__HANDLE__, __TRANSMITMAILBOX__)                                                     \
-	(((__TRANSMITMAILBOX__) == CAN_TXMAILBOX_0)   ? ((__HANDLE__)->Instance->TSR |= CAN_TSR_ABRQ0)                 \
-	 : ((__TRANSMITMAILBOX__) == CAN_TXMAILBOX_1) ? ((__HANDLE__)->Instance->TSR |= CAN_TSR_ABRQ1)                 \
+#define __HAL_CAN_CANCEL_TRANSMIT(__HANDLE__, __TRANSMITMAILBOX__)                                                                                                                                     \
+	(((__TRANSMITMAILBOX__) == CAN_TXMAILBOX_0)   ? ((__HANDLE__)->Instance->TSR |= CAN_TSR_ABRQ0)                                                                                                 \
+	 : ((__TRANSMITMAILBOX__) == CAN_TXMAILBOX_1) ? ((__HANDLE__)->Instance->TSR |= CAN_TSR_ABRQ1)                                                                                                 \
 						      : ((__HANDLE__)->Instance->TSR |= CAN_TSR_ABRQ2))
 
 /**
@@ -641,9 +627,7 @@ typedef struct {
  * normally) or DISABLE (CAN is working during debug).
  * @retval None
  */
-#define __HAL_CAN_DBG_FREEZE(__HANDLE__, __NEWSTATE__)                                                                 \
-	(((__NEWSTATE__) == ENABLE) ? ((__HANDLE__)->Instance->MCR |= CAN_MCR_DBF)                                     \
-				    : ((__HANDLE__)->Instance->MCR &= ~CAN_MCR_DBF))
+#define __HAL_CAN_DBG_FREEZE(__HANDLE__, __NEWSTATE__) (((__NEWSTATE__) == ENABLE) ? ((__HANDLE__)->Instance->MCR |= CAN_MCR_DBF) : ((__HANDLE__)->Instance->MCR &= ~CAN_MCR_DBF))
 
 /**
  * @}
@@ -713,8 +697,8 @@ HAL_CAN_StateTypeDef HAL_CAN_GetState(CAN_HandleTypeDef *hcan);
 /** @defgroup CAN_transmit_constants CAN Transmit Constants
  * @{
  */
-#define CAN_TXSTATUS_NOMAILBOX                                                                                         \
-	((uint8_t)0x04) /*!< CAN cell did not provide CAN_TxStatus_NoMailBox                                           \
+#define CAN_TXSTATUS_NOMAILBOX                                                                                                                                                                         \
+	((uint8_t)0x04) /*!< CAN cell did not provide CAN_TxStatus_NoMailBox                                                                                                                           \
 			 */
 /**
  * @}
@@ -730,12 +714,9 @@ HAL_CAN_StateTypeDef HAL_CAN_GetState(CAN_HandleTypeDef *hcan);
  * @{
  */
 
-#define IS_CAN_MODE(MODE)                                                                                              \
-	(((MODE) == CAN_MODE_NORMAL) || ((MODE) == CAN_MODE_LOOPBACK) || ((MODE) == CAN_MODE_SILENT) ||                \
-	 ((MODE) == CAN_MODE_SILENT_LOOPBACK))
+#define IS_CAN_MODE(MODE) (((MODE) == CAN_MODE_NORMAL) || ((MODE) == CAN_MODE_LOOPBACK) || ((MODE) == CAN_MODE_SILENT) || ((MODE) == CAN_MODE_SILENT_LOOPBACK))
 
-#define IS_CAN_SJW(SJW)                                                                                                \
-	(((SJW) == CAN_SJW_1TQ) || ((SJW) == CAN_SJW_2TQ) || ((SJW) == CAN_SJW_3TQ) || ((SJW) == CAN_SJW_4TQ))
+#define IS_CAN_SJW(SJW) (((SJW) == CAN_SJW_1TQ) || ((SJW) == CAN_SJW_2TQ) || ((SJW) == CAN_SJW_3TQ) || ((SJW) == CAN_SJW_4TQ))
 
 #define IS_CAN_BS1(BS1) ((BS1) <= CAN_BS1_16TQ)
 

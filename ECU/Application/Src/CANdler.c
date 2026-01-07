@@ -21,8 +21,7 @@ void ReportUnhandledMessage(GR_OLD_BUS_ID bus_id, GR_OLD_MSG_ID msg_id, GR_OLD_N
 	LOGOMATIC("Unhandled ECU CAN Rx msg! Bus: %d, Msg: %X, Sender: %X\n", bus_id, msg_id, sender_id);
 }
 
-void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id, GR_OLD_MSG_ID msg_id,
-			    GR_OLD_NODE_ID sender_id, uint8_t *data, uint32_t data_length)
+void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id, GR_OLD_MSG_ID msg_id, GR_OLD_NODE_ID sender_id, uint8_t *data, uint32_t data_length)
 {
 	switch (msg_id) {
 		case MSG_DEBUG_2_0:

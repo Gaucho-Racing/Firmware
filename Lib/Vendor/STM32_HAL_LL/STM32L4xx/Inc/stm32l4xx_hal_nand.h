@@ -168,11 +168,11 @@ typedef void (*pNAND_CallbackTypeDef)(NAND_HandleTypeDef *hnand);
  * @retval None
  */
 #if (USE_HAL_NAND_REGISTER_CALLBACKS == 1)
-#define __HAL_NAND_RESET_HANDLE_STATE(__HANDLE__)                                                                      \
-	do {                                                                                                           \
-		(__HANDLE__)->State = HAL_NAND_STATE_RESET;                                                            \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define __HAL_NAND_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_NAND_STATE_RESET;                                                                                                                                            \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0)
 #else
 #define __HAL_NAND_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_NAND_STATE_RESET)
@@ -193,8 +193,7 @@ typedef void (*pNAND_CallbackTypeDef)(NAND_HandleTypeDef *hnand);
  */
 
 /* Initialization/de-initialization functions  ********************************/
-HAL_StatusTypeDef HAL_NAND_Init(NAND_HandleTypeDef *hnand, FMC_NAND_PCC_TimingTypeDef *ComSpace_Timing,
-				FMC_NAND_PCC_TimingTypeDef *AttSpace_Timing);
+HAL_StatusTypeDef HAL_NAND_Init(NAND_HandleTypeDef *hnand, FMC_NAND_PCC_TimingTypeDef *ComSpace_Timing, FMC_NAND_PCC_TimingTypeDef *AttSpace_Timing);
 HAL_StatusTypeDef HAL_NAND_DeInit(NAND_HandleTypeDef *hnand);
 
 HAL_StatusTypeDef HAL_NAND_ConfigDevice(NAND_HandleTypeDef *hnand, const NAND_DeviceConfigTypeDef *pDeviceConfig);
@@ -217,23 +216,15 @@ void HAL_NAND_ITCallback(NAND_HandleTypeDef *hnand);
 /* IO operation functions  ****************************************************/
 HAL_StatusTypeDef HAL_NAND_Reset(NAND_HandleTypeDef *hnand);
 
-HAL_StatusTypeDef HAL_NAND_Read_Page_8b(NAND_HandleTypeDef *hnand, const NAND_AddressTypeDef *pAddress,
-					uint8_t *pBuffer, uint32_t NumPageToRead);
-HAL_StatusTypeDef HAL_NAND_Write_Page_8b(NAND_HandleTypeDef *hnand, const NAND_AddressTypeDef *pAddress,
-					 const uint8_t *pBuffer, uint32_t NumPageToWrite);
-HAL_StatusTypeDef HAL_NAND_Read_SpareArea_8b(NAND_HandleTypeDef *hnand, const NAND_AddressTypeDef *pAddress,
-					     uint8_t *pBuffer, uint32_t NumSpareAreaToRead);
-HAL_StatusTypeDef HAL_NAND_Write_SpareArea_8b(NAND_HandleTypeDef *hnand, const NAND_AddressTypeDef *pAddress,
-					      const uint8_t *pBuffer, uint32_t NumSpareAreaTowrite);
+HAL_StatusTypeDef HAL_NAND_Read_Page_8b(NAND_HandleTypeDef *hnand, const NAND_AddressTypeDef *pAddress, uint8_t *pBuffer, uint32_t NumPageToRead);
+HAL_StatusTypeDef HAL_NAND_Write_Page_8b(NAND_HandleTypeDef *hnand, const NAND_AddressTypeDef *pAddress, const uint8_t *pBuffer, uint32_t NumPageToWrite);
+HAL_StatusTypeDef HAL_NAND_Read_SpareArea_8b(NAND_HandleTypeDef *hnand, const NAND_AddressTypeDef *pAddress, uint8_t *pBuffer, uint32_t NumSpareAreaToRead);
+HAL_StatusTypeDef HAL_NAND_Write_SpareArea_8b(NAND_HandleTypeDef *hnand, const NAND_AddressTypeDef *pAddress, const uint8_t *pBuffer, uint32_t NumSpareAreaTowrite);
 
-HAL_StatusTypeDef HAL_NAND_Read_Page_16b(NAND_HandleTypeDef *hnand, const NAND_AddressTypeDef *pAddress,
-					 uint16_t *pBuffer, uint32_t NumPageToRead);
-HAL_StatusTypeDef HAL_NAND_Write_Page_16b(NAND_HandleTypeDef *hnand, const NAND_AddressTypeDef *pAddress,
-					  const uint16_t *pBuffer, uint32_t NumPageToWrite);
-HAL_StatusTypeDef HAL_NAND_Read_SpareArea_16b(NAND_HandleTypeDef *hnand, const NAND_AddressTypeDef *pAddress,
-					      uint16_t *pBuffer, uint32_t NumSpareAreaToRead);
-HAL_StatusTypeDef HAL_NAND_Write_SpareArea_16b(NAND_HandleTypeDef *hnand, const NAND_AddressTypeDef *pAddress,
-					       const uint16_t *pBuffer, uint32_t NumSpareAreaTowrite);
+HAL_StatusTypeDef HAL_NAND_Read_Page_16b(NAND_HandleTypeDef *hnand, const NAND_AddressTypeDef *pAddress, uint16_t *pBuffer, uint32_t NumPageToRead);
+HAL_StatusTypeDef HAL_NAND_Write_Page_16b(NAND_HandleTypeDef *hnand, const NAND_AddressTypeDef *pAddress, const uint16_t *pBuffer, uint32_t NumPageToWrite);
+HAL_StatusTypeDef HAL_NAND_Read_SpareArea_16b(NAND_HandleTypeDef *hnand, const NAND_AddressTypeDef *pAddress, uint16_t *pBuffer, uint32_t NumSpareAreaToRead);
+HAL_StatusTypeDef HAL_NAND_Write_SpareArea_16b(NAND_HandleTypeDef *hnand, const NAND_AddressTypeDef *pAddress, const uint16_t *pBuffer, uint32_t NumSpareAreaTowrite);
 
 HAL_StatusTypeDef HAL_NAND_Erase_Block(NAND_HandleTypeDef *hnand, const NAND_AddressTypeDef *pAddress);
 
@@ -241,8 +232,7 @@ uint32_t HAL_NAND_Address_Inc(const NAND_HandleTypeDef *hnand, NAND_AddressTypeD
 
 #if (USE_HAL_NAND_REGISTER_CALLBACKS == 1)
 /* NAND callback registering/unregistering */
-HAL_StatusTypeDef HAL_NAND_RegisterCallback(NAND_HandleTypeDef *hnand, HAL_NAND_CallbackIDTypeDef CallbackId,
-					    pNAND_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_NAND_RegisterCallback(NAND_HandleTypeDef *hnand, HAL_NAND_CallbackIDTypeDef CallbackId, pNAND_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_NAND_UnRegisterCallback(NAND_HandleTypeDef *hnand, HAL_NAND_CallbackIDTypeDef CallbackId);
 #endif /* USE_HAL_NAND_REGISTER_CALLBACKS */
 
@@ -325,9 +315,7 @@ uint32_t HAL_NAND_Read_Status(const NAND_HandleTypeDef *hnand);
  * @param  __HANDLE__  NAND handle.
  * @retval NAND Raw address value
  */
-#define ARRAY_ADDRESS(__ADDRESS__, __HANDLE__)                                                                         \
-	((__ADDRESS__)->Page + (((__ADDRESS__)->Block + (((__ADDRESS__)->Plane) * ((__HANDLE__)->Config.PlaneSize))) * \
-				((__HANDLE__)->Config.BlockSize)))
+#define ARRAY_ADDRESS(__ADDRESS__, __HANDLE__) ((__ADDRESS__)->Page + (((__ADDRESS__)->Block + (((__ADDRESS__)->Plane) * ((__HANDLE__)->Config.PlaneSize))) * ((__HANDLE__)->Config.BlockSize)))
 
 /**
  * @brief  NAND memory Column address computation.

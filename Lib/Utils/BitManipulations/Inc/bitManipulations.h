@@ -68,8 +68,7 @@
  *   GETBITS(data, 2, 4);  // 0b1101 (bits 2..5 by MSB index)
  *   GETBITS(data, 5, 3);  // 0b100 (bits 5..7 by MSB index)
  */
-#define GETBITS(value, bit_index, length)                                                                              \
-	(((value) >> ((sizeof(value) * 8) - (bit_index) - (length))) & ((1uLL << (length)) - 1))
+#define GETBITS(value, bit_index, length) (((value) >> ((sizeof(value) * 8) - (bit_index) - (length))) & ((1uLL << (length)) - 1))
 
 /**
  * @brief Set or clear a single bit within a byte (MSB-first indexing).

@@ -44,20 +44,15 @@
 /** @addtogroup LPTIM_LL_Private_Macros
  * @{
  */
-#define IS_LL_LPTIM_CLOCK_SOURCE(__VALUE__)                                                                            \
-	(((__VALUE__) == LL_LPTIM_CLK_SOURCE_INTERNAL) || ((__VALUE__) == LL_LPTIM_CLK_SOURCE_EXTERNAL))
+#define IS_LL_LPTIM_CLOCK_SOURCE(__VALUE__) (((__VALUE__) == LL_LPTIM_CLK_SOURCE_INTERNAL) || ((__VALUE__) == LL_LPTIM_CLK_SOURCE_EXTERNAL))
 
-#define IS_LL_LPTIM_CLOCK_PRESCALER(__VALUE__)                                                                         \
-	(((__VALUE__) == LL_LPTIM_PRESCALER_DIV1) || ((__VALUE__) == LL_LPTIM_PRESCALER_DIV2) ||                       \
-	 ((__VALUE__) == LL_LPTIM_PRESCALER_DIV4) || ((__VALUE__) == LL_LPTIM_PRESCALER_DIV8) ||                       \
-	 ((__VALUE__) == LL_LPTIM_PRESCALER_DIV16) || ((__VALUE__) == LL_LPTIM_PRESCALER_DIV32) ||                     \
-	 ((__VALUE__) == LL_LPTIM_PRESCALER_DIV64) || ((__VALUE__) == LL_LPTIM_PRESCALER_DIV128))
+#define IS_LL_LPTIM_CLOCK_PRESCALER(__VALUE__)                                                                                                                                                         \
+	(((__VALUE__) == LL_LPTIM_PRESCALER_DIV1) || ((__VALUE__) == LL_LPTIM_PRESCALER_DIV2) || ((__VALUE__) == LL_LPTIM_PRESCALER_DIV4) || ((__VALUE__) == LL_LPTIM_PRESCALER_DIV8) ||               \
+	 ((__VALUE__) == LL_LPTIM_PRESCALER_DIV16) || ((__VALUE__) == LL_LPTIM_PRESCALER_DIV32) || ((__VALUE__) == LL_LPTIM_PRESCALER_DIV64) || ((__VALUE__) == LL_LPTIM_PRESCALER_DIV128))
 
-#define IS_LL_LPTIM_WAVEFORM(__VALUE__)                                                                                \
-	(((__VALUE__) == LL_LPTIM_OUTPUT_WAVEFORM_PWM) || ((__VALUE__) == LL_LPTIM_OUTPUT_WAVEFORM_SETONCE))
+#define IS_LL_LPTIM_WAVEFORM(__VALUE__) (((__VALUE__) == LL_LPTIM_OUTPUT_WAVEFORM_PWM) || ((__VALUE__) == LL_LPTIM_OUTPUT_WAVEFORM_SETONCE))
 
-#define IS_LL_LPTIM_OUTPUT_POLARITY(__VALUE__)                                                                         \
-	(((__VALUE__) == LL_LPTIM_OUTPUT_POLARITY_REGULAR) || ((__VALUE__) == LL_LPTIM_OUTPUT_POLARITY_INVERSE))
+#define IS_LL_LPTIM_OUTPUT_POLARITY(__VALUE__) (((__VALUE__) == LL_LPTIM_OUTPUT_POLARITY_REGULAR) || ((__VALUE__) == LL_LPTIM_OUTPUT_POLARITY_INVERSE))
 /**
  * @}
  */
@@ -150,8 +145,7 @@ ErrorStatus LL_LPTIM_Init(LPTIM_TypeDef *LPTIMx, const LL_LPTIM_InitTypeDef *LPT
 		/* Set WAVE bitfield according to Waveform value */
 		/* Set WAVEPOL bitfield according to Polarity value */
 		MODIFY_REG(LPTIMx->CFGR, (LPTIM_CFGR_CKSEL | LPTIM_CFGR_PRESC | LPTIM_CFGR_WAVE | LPTIM_CFGR_WAVPOL),
-			   LPTIM_InitStruct->ClockSource | LPTIM_InitStruct->Prescaler | LPTIM_InitStruct->Waveform |
-			       LPTIM_InitStruct->Polarity);
+			   LPTIM_InitStruct->ClockSource | LPTIM_InitStruct->Prescaler | LPTIM_InitStruct->Waveform | LPTIM_InitStruct->Polarity);
 	}
 
 	return result;
@@ -227,8 +221,7 @@ void LL_LPTIM_Disable(LPTIM_TypeDef *LPTIMx)
 			 * operation */
 			do {
 				rcc_clock.SYSCLK_Frequency--; /* Used for timeout */
-			} while (((LL_LPTIM_IsActiveFlag_CMPOK(LPTIMx) != 1UL)) &&
-				 ((rcc_clock.SYSCLK_Frequency) > 0UL));
+			} while (((LL_LPTIM_IsActiveFlag_CMPOK(LPTIMx) != 1UL)) && ((rcc_clock.SYSCLK_Frequency) > 0UL));
 
 			LL_LPTIM_ClearFlag_CMPOK(LPTIMx);
 		}
@@ -242,8 +235,7 @@ void LL_LPTIM_Disable(LPTIM_TypeDef *LPTIMx)
 			 * operation */
 			do {
 				rcc_clock.SYSCLK_Frequency--; /* Used for timeout */
-			} while (((LL_LPTIM_IsActiveFlag_ARROK(LPTIMx) != 1UL)) &&
-				 ((rcc_clock.SYSCLK_Frequency) > 0UL));
+			} while (((LL_LPTIM_IsActiveFlag_ARROK(LPTIMx) != 1UL)) && ((rcc_clock.SYSCLK_Frequency) > 0UL));
 
 			LL_LPTIM_ClearFlag_ARROK(LPTIMx);
 		}

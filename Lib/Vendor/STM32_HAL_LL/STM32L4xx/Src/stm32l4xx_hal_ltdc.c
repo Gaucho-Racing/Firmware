@@ -285,8 +285,7 @@ HAL_StatusTypeDef HAL_LTDC_Init(LTDC_HandleTypeDef *hltdc)
 
 	/* Configure the HS, VS, DE and PC polarity */
 	hltdc->Instance->GCR &= ~(LTDC_GCR_HSPOL | LTDC_GCR_VSPOL | LTDC_GCR_DEPOL | LTDC_GCR_PCPOL);
-	hltdc->Instance->GCR |= (uint32_t)(hltdc->Init.HSPolarity | hltdc->Init.VSPolarity | hltdc->Init.DEPolarity |
-					   hltdc->Init.PCPolarity);
+	hltdc->Instance->GCR |= (uint32_t)(hltdc->Init.HSPolarity | hltdc->Init.VSPolarity | hltdc->Init.DEPolarity | hltdc->Init.PCPolarity);
 
 	/* Set Synchronization size */
 	tmp = (hltdc->Init.HorizontalSync << 16U);
@@ -439,8 +438,7 @@ __weak void HAL_LTDC_MspDeInit(LTDC_HandleTypeDef *hltdc)
  * @param pCallback pointer to the Callback function
  * @retval status
  */
-HAL_StatusTypeDef HAL_LTDC_RegisterCallback(LTDC_HandleTypeDef *hltdc, HAL_LTDC_CallbackIDTypeDef CallbackID,
-					    pLTDC_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_LTDC_RegisterCallback(LTDC_HandleTypeDef *hltdc, HAL_LTDC_CallbackIDTypeDef CallbackID, pLTDC_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -916,8 +914,7 @@ HAL_StatusTypeDef HAL_LTDC_ConfigColorKeying(LTDC_HandleTypeDef *hltdc, uint32_t
  *                   LTDC_LAYER_1 (0) or LTDC_LAYER_2 (1)
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_LTDC_ConfigCLUT(LTDC_HandleTypeDef *hltdc, const uint32_t *pCLUT, uint32_t CLUTSize,
-				      uint32_t LayerIdx)
+HAL_StatusTypeDef HAL_LTDC_ConfigCLUT(LTDC_HandleTypeDef *hltdc, const uint32_t *pCLUT, uint32_t CLUTSize, uint32_t LayerIdx)
 {
 	uint32_t tmp;
 	uint32_t counter;
@@ -933,11 +930,9 @@ HAL_StatusTypeDef HAL_LTDC_ConfigCLUT(LTDC_HandleTypeDef *hltdc, const uint32_t 
 
 	for (counter = 0U; (counter < CLUTSize); counter++) {
 		if (hltdc->LayerCfg[LayerIdx].PixelFormat == LTDC_PIXEL_FORMAT_AL44) {
-			tmp = (((counter + (16U * counter)) << 24U) | ((uint32_t)(*pcolorlut) & 0xFFU) |
-			       ((uint32_t)(*pcolorlut) & 0xFF00U) | ((uint32_t)(*pcolorlut) & 0xFF0000U));
+			tmp = (((counter + (16U * counter)) << 24U) | ((uint32_t)(*pcolorlut) & 0xFFU) | ((uint32_t)(*pcolorlut) & 0xFF00U) | ((uint32_t)(*pcolorlut) & 0xFF0000U));
 		} else {
-			tmp = ((counter << 24U) | ((uint32_t)(*pcolorlut) & 0xFFU) |
-			       ((uint32_t)(*pcolorlut) & 0xFF00U) | ((uint32_t)(*pcolorlut) & 0xFF0000U));
+			tmp = ((counter << 24U) | ((uint32_t)(*pcolorlut) & 0xFFU) | ((uint32_t)(*pcolorlut) & 0xFF00U) | ((uint32_t)(*pcolorlut) & 0xFF0000U));
 		}
 
 		pcolorlut++;
@@ -1431,8 +1426,7 @@ HAL_StatusTypeDef HAL_LTDC_SetPitch(LTDC_HandleTypeDef *hltdc, uint32_t LinePitc
 		tmp = 4U;
 	} else if (pixelFormat == LTDC_PIXEL_FORMAT_RGB888) {
 		tmp = 3U;
-	} else if ((pixelFormat == LTDC_PIXEL_FORMAT_ARGB4444) || (pixelFormat == LTDC_PIXEL_FORMAT_RGB565) ||
-		   (pixelFormat == LTDC_PIXEL_FORMAT_ARGB1555) || (pixelFormat == LTDC_PIXEL_FORMAT_AL88)) {
+	} else if ((pixelFormat == LTDC_PIXEL_FORMAT_ARGB4444) || (pixelFormat == LTDC_PIXEL_FORMAT_RGB565) || (pixelFormat == LTDC_PIXEL_FORMAT_ARGB1555) || (pixelFormat == LTDC_PIXEL_FORMAT_AL88)) {
 		tmp = 2U;
 	} else {
 		tmp = 1U;
@@ -1553,8 +1547,7 @@ HAL_StatusTypeDef HAL_LTDC_Reload(LTDC_HandleTypeDef *hltdc, uint32_t ReloadType
  *                    LTDC_LAYER_1 (0) or LTDC_LAYER_2 (1)
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_LTDC_ConfigLayer_NoReload(LTDC_HandleTypeDef *hltdc, LTDC_LayerCfgTypeDef *pLayerCfg,
-						uint32_t LayerIdx)
+HAL_StatusTypeDef HAL_LTDC_ConfigLayer_NoReload(LTDC_HandleTypeDef *hltdc, LTDC_LayerCfgTypeDef *pLayerCfg, uint32_t LayerIdx)
 {
 	/* Check the parameters */
 	assert_param(IS_LTDC_LAYER(LayerIdx));
@@ -1604,8 +1597,7 @@ HAL_StatusTypeDef HAL_LTDC_ConfigLayer_NoReload(LTDC_HandleTypeDef *hltdc, LTDC_
  *                   LTDC_LAYER_1 (0) or LTDC_LAYER_2 (1)
  * @retval  HAL status
  */
-HAL_StatusTypeDef HAL_LTDC_SetWindowSize_NoReload(LTDC_HandleTypeDef *hltdc, uint32_t XSize, uint32_t YSize,
-						  uint32_t LayerIdx)
+HAL_StatusTypeDef HAL_LTDC_SetWindowSize_NoReload(LTDC_HandleTypeDef *hltdc, uint32_t XSize, uint32_t YSize, uint32_t LayerIdx)
 {
 	LTDC_LayerCfgTypeDef *pLayerCfg;
 
@@ -1660,8 +1652,7 @@ HAL_StatusTypeDef HAL_LTDC_SetWindowSize_NoReload(LTDC_HandleTypeDef *hltdc, uin
  *                         LTDC_LAYER_1 (0) or LTDC_LAYER_2 (1)
  * @retval  HAL status
  */
-HAL_StatusTypeDef HAL_LTDC_SetWindowPosition_NoReload(LTDC_HandleTypeDef *hltdc, uint32_t X0, uint32_t Y0,
-						      uint32_t LayerIdx)
+HAL_StatusTypeDef HAL_LTDC_SetWindowPosition_NoReload(LTDC_HandleTypeDef *hltdc, uint32_t X0, uint32_t Y0, uint32_t LayerIdx)
 {
 	LTDC_LayerCfgTypeDef *pLayerCfg;
 
@@ -1870,8 +1861,7 @@ HAL_StatusTypeDef HAL_LTDC_SetPitch_NoReload(LTDC_HandleTypeDef *hltdc, uint32_t
 		tmp = 4U;
 	} else if (pixelFormat == LTDC_PIXEL_FORMAT_RGB888) {
 		tmp = 3U;
-	} else if ((pixelFormat == LTDC_PIXEL_FORMAT_ARGB4444) || (pixelFormat == LTDC_PIXEL_FORMAT_RGB565) ||
-		   (pixelFormat == LTDC_PIXEL_FORMAT_ARGB1555) || (pixelFormat == LTDC_PIXEL_FORMAT_AL88)) {
+	} else if ((pixelFormat == LTDC_PIXEL_FORMAT_ARGB4444) || (pixelFormat == LTDC_PIXEL_FORMAT_RGB565) || (pixelFormat == LTDC_PIXEL_FORMAT_ARGB1555) || (pixelFormat == LTDC_PIXEL_FORMAT_AL88)) {
 		tmp = 2U;
 	} else {
 		tmp = 1U;
@@ -2133,14 +2123,12 @@ static void LTDC_SetConfig(LTDC_HandleTypeDef *hltdc, LTDC_LayerCfgTypeDef *pLay
 	/* Configure the horizontal start and stop position */
 	tmp = ((pLayerCfg->WindowX1 + ((hltdc->Instance->BPCR & LTDC_BPCR_AHBP) >> 16U)) << 16U);
 	LTDC_LAYER(hltdc, LayerIdx)->WHPCR &= ~(LTDC_LxWHPCR_WHSTPOS | LTDC_LxWHPCR_WHSPPOS);
-	LTDC_LAYER(hltdc, LayerIdx)->WHPCR =
-	    ((pLayerCfg->WindowX0 + ((hltdc->Instance->BPCR & LTDC_BPCR_AHBP) >> 16U) + 1U) | tmp);
+	LTDC_LAYER(hltdc, LayerIdx)->WHPCR = ((pLayerCfg->WindowX0 + ((hltdc->Instance->BPCR & LTDC_BPCR_AHBP) >> 16U) + 1U) | tmp);
 
 	/* Configure the vertical start and stop position */
 	tmp = ((pLayerCfg->WindowY1 + (hltdc->Instance->BPCR & LTDC_BPCR_AVBP)) << 16U);
 	LTDC_LAYER(hltdc, LayerIdx)->WVPCR &= ~(LTDC_LxWVPCR_WVSTPOS | LTDC_LxWVPCR_WVSPPOS);
-	LTDC_LAYER(hltdc, LayerIdx)->WVPCR =
-	    ((pLayerCfg->WindowY0 + (hltdc->Instance->BPCR & LTDC_BPCR_AVBP) + 1U) | tmp);
+	LTDC_LAYER(hltdc, LayerIdx)->WVPCR = ((pLayerCfg->WindowY0 + (hltdc->Instance->BPCR & LTDC_BPCR_AVBP) + 1U) | tmp);
 
 	/* Specifies the pixel format */
 	LTDC_LAYER(hltdc, LayerIdx)->PFCR &= ~(LTDC_LxPFCR_PF);
@@ -2167,9 +2155,7 @@ static void LTDC_SetConfig(LTDC_HandleTypeDef *hltdc, LTDC_LayerCfgTypeDef *pLay
 		tmp = 4U;
 	} else if (pLayerCfg->PixelFormat == LTDC_PIXEL_FORMAT_RGB888) {
 		tmp = 3U;
-	} else if ((pLayerCfg->PixelFormat == LTDC_PIXEL_FORMAT_ARGB4444) ||
-		   (pLayerCfg->PixelFormat == LTDC_PIXEL_FORMAT_RGB565) ||
-		   (pLayerCfg->PixelFormat == LTDC_PIXEL_FORMAT_ARGB1555) ||
+	} else if ((pLayerCfg->PixelFormat == LTDC_PIXEL_FORMAT_ARGB4444) || (pLayerCfg->PixelFormat == LTDC_PIXEL_FORMAT_RGB565) || (pLayerCfg->PixelFormat == LTDC_PIXEL_FORMAT_ARGB1555) ||
 		   (pLayerCfg->PixelFormat == LTDC_PIXEL_FORMAT_AL88)) {
 		tmp = 2U;
 	} else {
@@ -2178,8 +2164,7 @@ static void LTDC_SetConfig(LTDC_HandleTypeDef *hltdc, LTDC_LayerCfgTypeDef *pLay
 
 	/* Configure the color frame buffer pitch in byte */
 	LTDC_LAYER(hltdc, LayerIdx)->CFBLR &= ~(LTDC_LxCFBLR_CFBLL | LTDC_LxCFBLR_CFBP);
-	LTDC_LAYER(hltdc, LayerIdx)->CFBLR =
-	    (((pLayerCfg->ImageWidth * tmp) << 16U) | (((pLayerCfg->WindowX1 - pLayerCfg->WindowX0) * tmp) + 3U));
+	LTDC_LAYER(hltdc, LayerIdx)->CFBLR = (((pLayerCfg->ImageWidth * tmp) << 16U) | (((pLayerCfg->WindowX1 - pLayerCfg->WindowX0) * tmp) + 3U));
 	/* Configure the frame buffer line number */
 	LTDC_LAYER(hltdc, LayerIdx)->CFBLNR &= ~(LTDC_LxCFBLNR_CFBLNBR);
 	LTDC_LAYER(hltdc, LayerIdx)->CFBLNR = (pLayerCfg->ImageHeight);

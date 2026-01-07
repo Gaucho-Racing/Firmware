@@ -487,8 +487,7 @@ HAL_StatusTypeDef HAL_USARTEx_SetRxFifoThreshold(USART_HandleTypeDef *husart, ui
  * @param sConfig   Autonomous mode structure parameters.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_USARTEx_SetConfigAutonomousMode(USART_HandleTypeDef *husart,
-						      const USART_AutonomousModeConfTypeDef *sConfig)
+HAL_StatusTypeDef HAL_USARTEx_SetConfigAutonomousMode(USART_HandleTypeDef *husart, const USART_AutonomousModeConfTypeDef *sConfig)
 {
 	uint32_t tmpreg;
 
@@ -514,8 +513,7 @@ HAL_StatusTypeDef HAL_USARTEx_SetConfigAutonomousMode(USART_HandleTypeDef *husar
 		CLEAR_REG(husart->Instance->AUTOCR);
 
 		/* USART AUTOCR Configuration */
-		tmpreg = ((sConfig->DataSize << USART_AUTOCR_TDN_Pos) | (sConfig->TriggerPolarity) |
-			  (sConfig->AutonomousModeState) | (sConfig->IdleFrame) |
+		tmpreg = ((sConfig->DataSize << USART_AUTOCR_TDN_Pos) | (sConfig->TriggerPolarity) | (sConfig->AutonomousModeState) | (sConfig->IdleFrame) |
 			  (sConfig->TriggerSelection << USART_AUTOCR_TRIGSEL_Pos));
 
 		WRITE_REG(husart->Instance->AUTOCR, tmpreg);
@@ -540,8 +538,7 @@ HAL_StatusTypeDef HAL_USARTEx_SetConfigAutonomousMode(USART_HandleTypeDef *husar
  * @param sConfig   Autonomous mode structure parameters.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_USARTEx_GetConfigAutonomousMode(const USART_HandleTypeDef *husart,
-						      USART_AutonomousModeConfTypeDef *sConfig)
+HAL_StatusTypeDef HAL_USARTEx_GetConfigAutonomousMode(const USART_HandleTypeDef *husart, USART_AutonomousModeConfTypeDef *sConfig)
 {
 	uint32_t tmpreg;
 
@@ -627,14 +624,10 @@ static void USARTEx_SetNbDataToProcess(USART_HandleTypeDef *husart)
 	} else {
 		rx_fifo_depth = RX_FIFO_DEPTH;
 		tx_fifo_depth = TX_FIFO_DEPTH;
-		rx_fifo_threshold =
-		    (uint8_t)((READ_BIT(husart->Instance->CR3, USART_CR3_RXFTCFG) >> USART_CR3_RXFTCFG_Pos) & 0xFFU);
-		tx_fifo_threshold =
-		    (uint8_t)((READ_BIT(husart->Instance->CR3, USART_CR3_TXFTCFG) >> USART_CR3_TXFTCFG_Pos) & 0xFFU);
-		husart->NbTxDataToProcess =
-		    ((uint16_t)tx_fifo_depth * numerator[tx_fifo_threshold]) / (uint16_t)denominator[tx_fifo_threshold];
-		husart->NbRxDataToProcess =
-		    ((uint16_t)rx_fifo_depth * numerator[rx_fifo_threshold]) / (uint16_t)denominator[rx_fifo_threshold];
+		rx_fifo_threshold = (uint8_t)((READ_BIT(husart->Instance->CR3, USART_CR3_RXFTCFG) >> USART_CR3_RXFTCFG_Pos) & 0xFFU);
+		tx_fifo_threshold = (uint8_t)((READ_BIT(husart->Instance->CR3, USART_CR3_TXFTCFG) >> USART_CR3_TXFTCFG_Pos) & 0xFFU);
+		husart->NbTxDataToProcess = ((uint16_t)tx_fifo_depth * numerator[tx_fifo_threshold]) / (uint16_t)denominator[tx_fifo_threshold];
+		husart->NbRxDataToProcess = ((uint16_t)rx_fifo_depth * numerator[rx_fifo_threshold]) / (uint16_t)denominator[rx_fifo_threshold];
 	}
 }
 /**

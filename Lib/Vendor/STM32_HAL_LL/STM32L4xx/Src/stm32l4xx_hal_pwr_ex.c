@@ -38,22 +38,18 @@
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 
-#if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L431xx) || defined(STM32L432xx) ||                    \
-    defined(STM32L433xx) || defined(STM32L442xx) || defined(STM32L443xx)
+#if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L431xx) || defined(STM32L432xx) || defined(STM32L433xx) || defined(STM32L442xx) || defined(STM32L443xx)
 #define PWR_PORTH_AVAILABLE_PINS ((uint32_t)0x0000000B) /* PH0/PH1/PH3 */
 #elif defined(STM32L451xx) || defined(STM32L452xx) || defined(STM32L462xx)
 #define PWR_PORTH_AVAILABLE_PINS ((uint32_t)0x0000000B) /* PH0/PH1/PH3 */
-#elif defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) ||                  \
-    defined(STM32L486xx)
+#elif defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) || defined(STM32L486xx)
 #define PWR_PORTH_AVAILABLE_PINS ((uint32_t)0x00000003) /* PH0/PH1 */
-#elif defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx) ||                  \
-    defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||                    \
+#elif defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||  \
     defined(STM32L4S7xx) || defined(STM32L4S9xx)
 #define PWR_PORTH_AVAILABLE_PINS ((uint32_t)0x0000FFFF) /* PH0..PH15 */
 #endif
 
-#if defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx) ||                    \
-    defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||                    \
+#if defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
     defined(STM32L4S7xx) || defined(STM32L4S9xx)
 #define PWR_PORTI_AVAILABLE_PINS ((uint32_t)0x00000FFF) /* PI0..PI11 */
 #endif
@@ -65,15 +61,15 @@
 /** @defgroup PWREx_PVM_Mode_Mask PWR PVM Mode Mask
  * @{
  */
-#define PVM_MODE_IT                                                                                                    \
-	((uint32_t)0x00010000) /*!< Mask for interruption yielded by PVM                                               \
+#define PVM_MODE_IT                                                                                                                                                                                    \
+	((uint32_t)0x00010000) /*!< Mask for interruption yielded by PVM                                                                                                                               \
 				  threshold crossing */
-#define PVM_MODE_EVT                                                                                                   \
-	((uint32_t)0x00020000)		       /*!< Mask for event yielded by PVM threshold                            \
+#define PVM_MODE_EVT                                                                                                                                                                                   \
+	((uint32_t)0x00020000)		       /*!< Mask for event yielded by PVM threshold                                                                                                            \
 						  crossing        */
 #define PVM_RISING_EDGE ((uint32_t)0x00000001) /*!< Mask for rising edge set as PVM trigger */
-#define PVM_FALLING_EDGE                                                                                               \
-	((uint32_t)0x00000002) /*!< Mask for falling edge set as PVM trigger                                           \
+#define PVM_FALLING_EDGE                                                                                                                                                                               \
+	((uint32_t)0x00000002) /*!< Mask for falling edge set as PVM trigger                                                                                                                           \
 				*/
 /**
  * @}

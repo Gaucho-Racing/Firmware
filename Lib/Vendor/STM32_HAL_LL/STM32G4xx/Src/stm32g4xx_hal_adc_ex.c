@@ -50,10 +50,9 @@
  * @{
  */
 
-#define ADC_JSQR_FIELDS                                                                                                \
-	((ADC_JSQR_JL | ADC_JSQR_JEXTSEL | ADC_JSQR_JEXTEN | ADC_JSQR_JSQ1 | ADC_JSQR_JSQ2 | ADC_JSQR_JSQ3 |           \
-	  ADC_JSQR_JSQ4)) /*!< ADC_JSQR fields of parameters that can                                                  \
-be updated anytime once the ADC is enabled */
+#define ADC_JSQR_FIELDS                                                                                                                                                                                \
+	((ADC_JSQR_JL | ADC_JSQR_JEXTSEL | ADC_JSQR_JEXTEN | ADC_JSQR_JSQ1 | ADC_JSQR_JSQ2 | ADC_JSQR_JSQ3 | ADC_JSQR_JSQ4)) /*!< ADC_JSQR fields of parameters that can                               \
+												   be updated anytime once the ADC is enabled */
 
 /* Fixed timeout value for ADC calibration.                                   */
 /* Values defined to be higher than worst cases: low clock frequency,         */
@@ -146,8 +145,7 @@ HAL_StatusTypeDef HAL_ADCEx_Calibration_Start(ADC_HandleTypeDef *hadc, uint32_t 
 	/* Check if ADC is effectively disabled */
 	if (tmp_hal_status == HAL_OK) {
 		/* Set ADC state */
-		ADC_STATE_CLR_SET(hadc->State, HAL_ADC_STATE_REG_BUSY | HAL_ADC_STATE_INJ_BUSY,
-				  HAL_ADC_STATE_BUSY_INTERNAL);
+		ADC_STATE_CLR_SET(hadc->State, HAL_ADC_STATE_REG_BUSY | HAL_ADC_STATE_INJ_BUSY, HAL_ADC_STATE_BUSY_INTERNAL);
 
 		/* Start ADC calibration in mode single-ended or differential */
 		LL_ADC_StartCalibration(hadc->Instance, SingleDiff);
@@ -157,8 +155,7 @@ HAL_StatusTypeDef HAL_ADCEx_Calibration_Start(ADC_HandleTypeDef *hadc, uint32_t 
 			wait_loop_index++;
 			if (wait_loop_index >= ADC_CALIBRATION_TIMEOUT) {
 				/* Update ADC state machine to error */
-				ADC_STATE_CLR_SET(hadc->State, HAL_ADC_STATE_BUSY_INTERNAL,
-						  HAL_ADC_STATE_ERROR_INTERNAL);
+				ADC_STATE_CLR_SET(hadc->State, HAL_ADC_STATE_BUSY_INTERNAL, HAL_ADC_STATE_ERROR_INTERNAL);
 
 				/* Process unlocked */
 				__HAL_UNLOCK(hadc);
@@ -214,8 +211,7 @@ uint32_t HAL_ADCEx_Calibration_GetValue(const ADC_HandleTypeDef *hadc, uint32_t 
  * @param CalibrationFactor Calibration factor (coded on 7 bits maximum)
  * @retval HAL state
  */
-HAL_StatusTypeDef HAL_ADCEx_Calibration_SetValue(ADC_HandleTypeDef *hadc, uint32_t SingleDiff,
-						 uint32_t CalibrationFactor)
+HAL_StatusTypeDef HAL_ADCEx_Calibration_SetValue(ADC_HandleTypeDef *hadc, uint32_t SingleDiff, uint32_t CalibrationFactor)
 {
 	HAL_StatusTypeDef tmp_hal_status = HAL_OK;
 	uint32_t tmp_adc_is_conversion_on_going_regular;
@@ -235,8 +231,7 @@ HAL_StatusTypeDef HAL_ADCEx_Calibration_SetValue(ADC_HandleTypeDef *hadc, uint32
 	tmp_adc_is_conversion_on_going_regular = LL_ADC_REG_IsConversionOngoing(hadc->Instance);
 	tmp_adc_is_conversion_on_going_injected = LL_ADC_INJ_IsConversionOngoing(hadc->Instance);
 
-	if ((LL_ADC_IsEnabled(hadc->Instance) != 0UL) && (tmp_adc_is_conversion_on_going_regular == 0UL) &&
-	    (tmp_adc_is_conversion_on_going_injected == 0UL)) {
+	if ((LL_ADC_IsEnabled(hadc->Instance) != 0UL) && (tmp_adc_is_conversion_on_going_regular == 0UL) && (tmp_adc_is_conversion_on_going_injected == 0UL)) {
 		/* Set the selected ADC calibration value */
 		LL_ADC_SetCalibrationFactor(hadc->Instance, SingleDiff, CalibrationFactor);
 	} else {
@@ -317,8 +312,7 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedStart(ADC_HandleTypeDef *hadc)
 			/* - Clear state bitfield related to injected group
 			 * conversion results  */
 			/* - Set state bitfield related to injected operation */
-			ADC_STATE_CLR_SET(hadc->State, HAL_ADC_STATE_READY | HAL_ADC_STATE_INJ_EOC,
-					  HAL_ADC_STATE_INJ_BUSY);
+			ADC_STATE_CLR_SET(hadc->State, HAL_ADC_STATE_READY | HAL_ADC_STATE_INJ_EOC, HAL_ADC_STATE_INJ_BUSY);
 
 #if defined(ADC_MULTIMODE_SUPPORT)
 			/* Reset HAL_ADC_STATE_MULTIMODE_SLAVE bit
@@ -326,8 +320,7 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedStart(ADC_HandleTypeDef *hadc)
 			  not available
 			  - if multimode setting is disabled (ADC instance slave
 			  in independent mode) */
-			if ((__LL_ADC_MULTI_INSTANCE_MASTER(hadc->Instance) == hadc->Instance) ||
-			    (tmp_multimode_config == LL_ADC_MULTI_INDEPENDENT)) {
+			if ((__LL_ADC_MULTI_INSTANCE_MASTER(hadc->Instance) == hadc->Instance) || (tmp_multimode_config == LL_ADC_MULTI_INDEPENDENT)) {
 				CLEAR_BIT(hadc->State, HAL_ADC_STATE_MULTIMODE_SLAVE);
 			}
 #endif /* ADC_MULTIMODE_SUPPORT */
@@ -363,10 +356,8 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedStart(ADC_HandleTypeDef *hadc)
 			/* If ADC is master or independent, */
 			/*    - ADC is enabled and conversion is started. */
 #if defined(ADC_MULTIMODE_SUPPORT)
-			if ((__LL_ADC_MULTI_INSTANCE_MASTER(hadc->Instance) == hadc->Instance) ||
-			    (tmp_multimode_config == LL_ADC_MULTI_INDEPENDENT) ||
-			    (tmp_multimode_config == LL_ADC_MULTI_DUAL_REG_SIMULT) ||
-			    (tmp_multimode_config == LL_ADC_MULTI_DUAL_REG_INTERL)) {
+			if ((__LL_ADC_MULTI_INSTANCE_MASTER(hadc->Instance) == hadc->Instance) || (tmp_multimode_config == LL_ADC_MULTI_INDEPENDENT) ||
+			    (tmp_multimode_config == LL_ADC_MULTI_DUAL_REG_SIMULT) || (tmp_multimode_config == LL_ADC_MULTI_DUAL_REG_INTERL)) {
 				/* ADC instance is not a multimode slave
 				 * instance with multimode injected conversions
 				 * enabled */
@@ -436,8 +427,7 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedStop(ADC_HandleTypeDef *hadc)
 			/* Check if ADC is effectively disabled */
 			if (tmp_hal_status == HAL_OK) {
 				/* Set ADC state */
-				ADC_STATE_CLR_SET(hadc->State, HAL_ADC_STATE_REG_BUSY | HAL_ADC_STATE_INJ_BUSY,
-						  HAL_ADC_STATE_READY);
+				ADC_STATE_CLR_SET(hadc->State, HAL_ADC_STATE_REG_BUSY | HAL_ADC_STATE_INJ_BUSY, HAL_ADC_STATE_READY);
 			}
 		}
 		/* Conversion on injected group is stopped, but ADC not disabled
@@ -518,9 +508,7 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedPollForConversion(ADC_HandleTypeDef *hadc, u
 	/* in function of multimode state (for devices with multimode         */
 	/* available).                                                        */
 #if defined(ADC_MULTIMODE_SUPPORT)
-	if ((__LL_ADC_MULTI_INSTANCE_MASTER(hadc->Instance) == hadc->Instance) ||
-	    (tmp_multimode_config == LL_ADC_MULTI_INDEPENDENT) ||
-	    (tmp_multimode_config == LL_ADC_MULTI_DUAL_REG_SIMULT) ||
+	if ((__LL_ADC_MULTI_INSTANCE_MASTER(hadc->Instance) == hadc->Instance) || (tmp_multimode_config == LL_ADC_MULTI_INDEPENDENT) || (tmp_multimode_config == LL_ADC_MULTI_DUAL_REG_SIMULT) ||
 	    (tmp_multimode_config == LL_ADC_MULTI_DUAL_REG_INTERL)) {
 		tmp_cfgr = READ_REG(hadc->Instance->CFGR);
 	} else {
@@ -539,8 +527,7 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedPollForConversion(ADC_HandleTypeDef *hadc, u
 	/* by external trigger or by automatic injected conversion */
 	/* from group regular. */
 	if ((tmp_adc_inj_is_trigger_source_sw_start != 0UL) ||
-	    ((READ_BIT(tmp_cfgr, ADC_CFGR_JAUTO) == 0UL) &&
-	     ((tmp_adc_reg_is_trigger_source_sw_start != 0UL) && (READ_BIT(tmp_cfgr, ADC_CFGR_CONT) == 0UL)))) {
+	    ((READ_BIT(tmp_cfgr, ADC_CFGR_JAUTO) == 0UL) && ((tmp_adc_reg_is_trigger_source_sw_start != 0UL) && (READ_BIT(tmp_cfgr, ADC_CFGR_CONT) == 0UL)))) {
 		/* Check whether end of sequence is reached */
 		if (__HAL_ADC_GET_FLAG(hadc, ADC_FLAG_JEOS)) {
 			/* Particular case if injected contexts queue is
@@ -648,8 +635,7 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedStart_IT(ADC_HandleTypeDef *hadc)
 			/* - Clear state bitfield related to injected group
 			 * conversion results  */
 			/* - Set state bitfield related to injected operation */
-			ADC_STATE_CLR_SET(hadc->State, HAL_ADC_STATE_READY | HAL_ADC_STATE_INJ_EOC,
-					  HAL_ADC_STATE_INJ_BUSY);
+			ADC_STATE_CLR_SET(hadc->State, HAL_ADC_STATE_READY | HAL_ADC_STATE_INJ_EOC, HAL_ADC_STATE_INJ_BUSY);
 
 #if defined(ADC_MULTIMODE_SUPPORT)
 			/* Reset HAL_ADC_STATE_MULTIMODE_SLAVE bit
@@ -657,8 +643,7 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedStart_IT(ADC_HandleTypeDef *hadc)
 			  not available
 			  - if multimode setting is disabled (ADC instance slave
 			  in independent mode) */
-			if ((__LL_ADC_MULTI_INSTANCE_MASTER(hadc->Instance) == hadc->Instance) ||
-			    (tmp_multimode_config == LL_ADC_MULTI_INDEPENDENT)) {
+			if ((__LL_ADC_MULTI_INSTANCE_MASTER(hadc->Instance) == hadc->Instance) || (tmp_multimode_config == LL_ADC_MULTI_INDEPENDENT)) {
 				CLEAR_BIT(hadc->State, HAL_ADC_STATE_MULTIMODE_SLAVE);
 			}
 #endif /* ADC_MULTIMODE_SUPPORT */
@@ -716,10 +701,8 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedStart_IT(ADC_HandleTypeDef *hadc)
 				/*    - ADC is enabled and conversion is
 				 * started. */
 #if defined(ADC_MULTIMODE_SUPPORT)
-			if ((__LL_ADC_MULTI_INSTANCE_MASTER(hadc->Instance) == hadc->Instance) ||
-			    (tmp_multimode_config == LL_ADC_MULTI_INDEPENDENT) ||
-			    (tmp_multimode_config == LL_ADC_MULTI_DUAL_REG_SIMULT) ||
-			    (tmp_multimode_config == LL_ADC_MULTI_DUAL_REG_INTERL)) {
+			if ((__LL_ADC_MULTI_INSTANCE_MASTER(hadc->Instance) == hadc->Instance) || (tmp_multimode_config == LL_ADC_MULTI_INDEPENDENT) ||
+			    (tmp_multimode_config == LL_ADC_MULTI_DUAL_REG_SIMULT) || (tmp_multimode_config == LL_ADC_MULTI_DUAL_REG_INTERL)) {
 				/* ADC instance is not a multimode slave
 				 * instance with multimode injected conversions
 				 * enabled */
@@ -798,8 +781,7 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedStop_IT(ADC_HandleTypeDef *hadc)
 			/* Check if ADC is effectively disabled */
 			if (tmp_hal_status == HAL_OK) {
 				/* Set ADC state */
-				ADC_STATE_CLR_SET(hadc->State, HAL_ADC_STATE_REG_BUSY | HAL_ADC_STATE_INJ_BUSY,
-						  HAL_ADC_STATE_READY);
+				ADC_STATE_CLR_SET(hadc->State, HAL_ADC_STATE_REG_BUSY | HAL_ADC_STATE_INJ_BUSY, HAL_ADC_STATE_READY);
 			}
 		}
 		/* Conversion on injected group is stopped, but ADC not disabled
@@ -882,10 +864,7 @@ HAL_StatusTypeDef HAL_ADCEx_MultiModeStart_DMA(ADC_HandleTypeDef *hadc, uint32_t
 		/* Start multimode conversion of ADCs pair */
 		if (tmp_hal_status == HAL_OK) {
 			/* Set ADC state */
-			ADC_STATE_CLR_SET(hadc->State,
-					  (HAL_ADC_STATE_READY | HAL_ADC_STATE_REG_EOC | HAL_ADC_STATE_REG_OVR |
-					   HAL_ADC_STATE_REG_EOSMP),
-					  HAL_ADC_STATE_REG_BUSY);
+			ADC_STATE_CLR_SET(hadc->State, (HAL_ADC_STATE_READY | HAL_ADC_STATE_REG_EOC | HAL_ADC_STATE_REG_OVR | HAL_ADC_STATE_REG_EOSMP), HAL_ADC_STATE_REG_BUSY);
 
 			/* Set ADC error code to none */
 			ADC_CLEAR_ERRORCODE(hadc);
@@ -923,8 +902,7 @@ HAL_StatusTypeDef HAL_ADCEx_MultiModeStart_DMA(ADC_HandleTypeDef *hadc, uint32_t
 			__HAL_ADC_ENABLE_IT(hadc, ADC_IT_OVR);
 
 			/* Start the DMA channel */
-			tmp_hal_status =
-			    HAL_DMA_Start_IT(hadc->DMA_Handle, (uint32_t)&tmpADC_Common->CDR, (uint32_t)pData, Length);
+			tmp_hal_status = HAL_DMA_Start_IT(hadc->DMA_Handle, (uint32_t)&tmpADC_Common->CDR, (uint32_t)pData, Length);
 
 			/* Enable conversion of regular group. */
 			/* If software start has been selected, conversion
@@ -1006,15 +984,12 @@ HAL_StatusTypeDef HAL_ADCEx_MultiModeStop_DMA(ADC_HandleTypeDef *hadc)
 		tickstart = HAL_GetTick();
 
 		tmp_hadc_slave_conversion_on_going = LL_ADC_REG_IsConversionOngoing((&tmp_hadc_slave)->Instance);
-		while ((LL_ADC_REG_IsConversionOngoing(hadc->Instance) == 1UL) ||
-		       (tmp_hadc_slave_conversion_on_going == 1UL)) {
+		while ((LL_ADC_REG_IsConversionOngoing(hadc->Instance) == 1UL) || (tmp_hadc_slave_conversion_on_going == 1UL)) {
 			if ((HAL_GetTick() - tickstart) > ADC_STOP_CONVERSION_TIMEOUT) {
 				/* New check to avoid false timeout detection in
 				 * case of preemption */
-				tmp_hadc_slave_conversion_on_going =
-				    LL_ADC_REG_IsConversionOngoing((&tmp_hadc_slave)->Instance);
-				if ((LL_ADC_REG_IsConversionOngoing(hadc->Instance) == 1UL) ||
-				    (tmp_hadc_slave_conversion_on_going == 1UL)) {
+				tmp_hadc_slave_conversion_on_going = LL_ADC_REG_IsConversionOngoing((&tmp_hadc_slave)->Instance);
+				if ((LL_ADC_REG_IsConversionOngoing(hadc->Instance) == 1UL) || (tmp_hadc_slave_conversion_on_going == 1UL)) {
 					/* Update ADC state machine to error */
 					SET_BIT(hadc->State, HAL_ADC_STATE_ERROR_INTERNAL);
 
@@ -1025,8 +1000,7 @@ HAL_StatusTypeDef HAL_ADCEx_MultiModeStop_DMA(ADC_HandleTypeDef *hadc)
 				}
 			}
 
-			tmp_hadc_slave_conversion_on_going =
-			    LL_ADC_REG_IsConversionOngoing((&tmp_hadc_slave)->Instance);
+			tmp_hadc_slave_conversion_on_going = LL_ADC_REG_IsConversionOngoing((&tmp_hadc_slave)->Instance);
 		}
 
 		/* Disable the DMA channel (in case of DMA in circular mode or
@@ -1482,15 +1456,12 @@ HAL_StatusTypeDef HAL_ADCEx_RegularMultiModeStop_DMA(ADC_HandleTypeDef *hadc)
 		tickstart = HAL_GetTick();
 
 		tmp_hadc_slave_conversion_on_going = LL_ADC_REG_IsConversionOngoing((&tmp_hadc_slave)->Instance);
-		while ((LL_ADC_REG_IsConversionOngoing(hadc->Instance) == 1UL) ||
-		       (tmp_hadc_slave_conversion_on_going == 1UL)) {
+		while ((LL_ADC_REG_IsConversionOngoing(hadc->Instance) == 1UL) || (tmp_hadc_slave_conversion_on_going == 1UL)) {
 			if ((HAL_GetTick() - tickstart) > ADC_STOP_CONVERSION_TIMEOUT) {
 				/* New check to avoid false timeout detection in
 				 * case of preemption */
-				tmp_hadc_slave_conversion_on_going =
-				    LL_ADC_REG_IsConversionOngoing((&tmp_hadc_slave)->Instance);
-				if ((LL_ADC_REG_IsConversionOngoing(hadc->Instance) == 1UL) ||
-				    (tmp_hadc_slave_conversion_on_going == 1UL)) {
+				tmp_hadc_slave_conversion_on_going = LL_ADC_REG_IsConversionOngoing((&tmp_hadc_slave)->Instance);
+				if ((LL_ADC_REG_IsConversionOngoing(hadc->Instance) == 1UL) || (tmp_hadc_slave_conversion_on_going == 1UL)) {
 					/* Update ADC state machine to error */
 					SET_BIT(hadc->State, HAL_ADC_STATE_ERROR_INTERNAL);
 
@@ -1501,8 +1472,7 @@ HAL_StatusTypeDef HAL_ADCEx_RegularMultiModeStop_DMA(ADC_HandleTypeDef *hadc)
 				}
 			}
 
-			tmp_hadc_slave_conversion_on_going =
-			    LL_ADC_REG_IsConversionOngoing((&tmp_hadc_slave)->Instance);
+			tmp_hadc_slave_conversion_on_going = LL_ADC_REG_IsConversionOngoing((&tmp_hadc_slave)->Instance);
 		}
 
 		/* Disable the DMA channel (in case of DMA in circular mode or
@@ -1617,8 +1587,7 @@ functions
  *         injected group.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc,
-						  const ADC_InjectionConfTypeDef *pConfigInjected)
+HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc, const ADC_InjectionConfTypeDef *pConfigInjected)
 {
 	HAL_StatusTypeDef tmp_hal_status = HAL_OK;
 	uint32_t tmp_offset_shifted;
@@ -1651,12 +1620,10 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc,
 
 	/* if JOVSE is set, the value of the OFFSETy_EN bit in ADCx_OFRy
 	   register is ignored (considered as reset) */
-	assert_param(!((pConfigInjected->InjectedOffsetNumber != ADC_OFFSET_NONE) &&
-		       (pConfigInjected->InjecOversamplingMode == ENABLE)));
+	assert_param(!((pConfigInjected->InjectedOffsetNumber != ADC_OFFSET_NONE) && (pConfigInjected->InjecOversamplingMode == ENABLE)));
 
 	/* JDISCEN and JAUTO bits can't be set at the same time  */
-	assert_param(!((pConfigInjected->InjectedDiscontinuousConvMode == ENABLE) &&
-		       (pConfigInjected->AutoInjectedConv == ENABLE)));
+	assert_param(!((pConfigInjected->InjectedDiscontinuousConvMode == ENABLE) && (pConfigInjected->AutoInjectedConv == ENABLE)));
 
 	/*  DISCEN and JAUTO bits can't be set at the same time */
 	assert_param(!((hadc->Init.DiscontinuousConvMode == ENABLE) && (pConfigInjected->AutoInjectedConv == ENABLE)));
@@ -1718,13 +1685,10 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc,
 			 * equivalent to    */
 			/*       software start. */
 			if (pConfigInjected->ExternalTrigInjecConv != ADC_INJECTED_SOFTWARE_START) {
-				tmp_jsqr_context_queue_being_built =
-				    (ADC_JSQR_RK(pConfigInjected->InjectedChannel, ADC_INJECTED_RANK_1) |
-				     (pConfigInjected->ExternalTrigInjecConv & ADC_JSQR_JEXTSEL) |
-				     pConfigInjected->ExternalTrigInjecConvEdge);
+				tmp_jsqr_context_queue_being_built = (ADC_JSQR_RK(pConfigInjected->InjectedChannel, ADC_INJECTED_RANK_1) | (pConfigInjected->ExternalTrigInjecConv & ADC_JSQR_JEXTSEL) |
+								      pConfigInjected->ExternalTrigInjecConvEdge);
 			} else {
-				tmp_jsqr_context_queue_being_built =
-				    (ADC_JSQR_RK(pConfigInjected->InjectedChannel, ADC_INJECTED_RANK_1));
+				tmp_jsqr_context_queue_being_built = (ADC_JSQR_RK(pConfigInjected->InjectedChannel, ADC_INJECTED_RANK_1));
 			}
 
 			MODIFY_REG(hadc->Instance->JSQR, ADC_JSQR_FIELDS, tmp_jsqr_context_queue_being_built);
@@ -1773,9 +1737,7 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc,
 			/*       software start. */
 			if (pConfigInjected->ExternalTrigInjecConv != ADC_INJECTED_SOFTWARE_START) {
 				tmp_jsqr_context_queue_being_built =
-				    ((pConfigInjected->InjectedNbrOfConversion - 1U) |
-				     (pConfigInjected->ExternalTrigInjecConv & ADC_JSQR_JEXTSEL) |
-				     pConfigInjected->ExternalTrigInjecConvEdge);
+				    ((pConfigInjected->InjectedNbrOfConversion - 1U) | (pConfigInjected->ExternalTrigInjecConv & ADC_JSQR_JEXTSEL) | pConfigInjected->ExternalTrigInjecConvEdge);
 			} else {
 				tmp_jsqr_context_queue_being_built = ((pConfigInjected->InjectedNbrOfConversion - 1U));
 			}
@@ -1788,8 +1750,7 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc,
 		tmp_jsqr_context_queue_being_built &= ~ADC_JSQR_RK(ADC_SQR3_SQ10, pConfigInjected->InjectedRank);
 
 		/* Set the JSQx bits for the selected rank */
-		tmp_jsqr_context_queue_being_built |=
-		    ADC_JSQR_RK(pConfigInjected->InjectedChannel, pConfigInjected->InjectedRank);
+		tmp_jsqr_context_queue_being_built |= ADC_JSQR_RK(pConfigInjected->InjectedChannel, pConfigInjected->InjectedRank);
 
 		/* Decrease channel count  */
 		hadc->InjectionConfig.ChannelCount--;
@@ -1824,15 +1785,13 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc,
 		if (pConfigInjected->AutoInjectedConv == DISABLE) {
 			MODIFY_REG(hadc->Instance->CFGR, ADC_CFGR_JQM | ADC_CFGR_JDISCEN,
 				   ADC_CFGR_INJECT_CONTEXT_QUEUE((uint32_t)pConfigInjected->QueueInjectedContext) |
-				       ADC_CFGR_INJECT_DISCCONTINUOUS(
-					   (uint32_t)pConfigInjected->InjectedDiscontinuousConvMode));
+				       ADC_CFGR_INJECT_DISCCONTINUOUS((uint32_t)pConfigInjected->InjectedDiscontinuousConvMode));
 		}
 		/* If auto-injected mode is enabled: Injected discontinuous
 		   setting is    */
 		/* discarded. */
 		else {
-			MODIFY_REG(hadc->Instance->CFGR, ADC_CFGR_JQM | ADC_CFGR_JDISCEN,
-				   ADC_CFGR_INJECT_CONTEXT_QUEUE((uint32_t)pConfigInjected->QueueInjectedContext));
+			MODIFY_REG(hadc->Instance->CFGR, ADC_CFGR_JQM | ADC_CFGR_JDISCEN, ADC_CFGR_INJECT_CONTEXT_QUEUE((uint32_t)pConfigInjected->QueueInjectedContext));
 		}
 	}
 
@@ -1851,8 +1810,7 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc,
 		/* If injected group external triggers are disabled (set to
 		 * injected      */
 		/* software start): no constraint */
-		if ((pConfigInjected->ExternalTrigInjecConv == ADC_INJECTED_SOFTWARE_START) ||
-		    (pConfigInjected->ExternalTrigInjecConvEdge == ADC_EXTERNALTRIGINJECCONV_EDGE_NONE)) {
+		if ((pConfigInjected->ExternalTrigInjecConv == ADC_INJECTED_SOFTWARE_START) || (pConfigInjected->ExternalTrigInjecConvEdge == ADC_EXTERNALTRIGINJECCONV_EDGE_NONE)) {
 			if (pConfigInjected->AutoInjectedConv == ENABLE) {
 				SET_BIT(hadc->Instance->CFGR, ADC_CFGR_JAUTO);
 			} else {
@@ -1880,8 +1838,7 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc,
 
 			/*  JOVSE must be reset in case of triggered regular
 			 * mode  */
-			assert_param(!(READ_BIT(hadc->Instance->CFGR2, ADC_CFGR2_ROVSE | ADC_CFGR2_TROVS) ==
-				       (ADC_CFGR2_ROVSE | ADC_CFGR2_TROVS)));
+			assert_param(!(READ_BIT(hadc->Instance->CFGR2, ADC_CFGR2_ROVSE | ADC_CFGR2_TROVS) == (ADC_CFGR2_ROVSE | ADC_CFGR2_TROVS)));
 
 			/* Configuration of Injected Oversampler: */
 			/*  - Oversampling Ratio */
@@ -1889,8 +1846,7 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc,
 
 			/* Enable OverSampling mode */
 			MODIFY_REG(hadc->Instance->CFGR2, ADC_CFGR2_JOVSE | ADC_CFGR2_OVSR | ADC_CFGR2_OVSS,
-				   ADC_CFGR2_JOVSE | pConfigInjected->InjecOversampling.Ratio |
-				       pConfigInjected->InjecOversampling.RightBitShift);
+				   ADC_CFGR2_JOVSE | pConfigInjected->InjecOversampling.Ratio | pConfigInjected->InjecOversampling.RightBitShift);
 		} else {
 			/* Disable Regular OverSampling */
 			CLEAR_BIT(hadc->Instance->CFGR2, ADC_CFGR2_JOVSE);
@@ -1900,15 +1856,13 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc,
 		 * replacing 2.5 cyles */
 		if (pConfigInjected->InjectedSamplingTime == ADC_SAMPLETIME_3CYCLES_5) {
 			/* Set sampling time of the selected ADC channel */
-			LL_ADC_SetChannelSamplingTime(hadc->Instance, pConfigInjected->InjectedChannel,
-						      LL_ADC_SAMPLINGTIME_2CYCLES_5);
+			LL_ADC_SetChannelSamplingTime(hadc->Instance, pConfigInjected->InjectedChannel, LL_ADC_SAMPLINGTIME_2CYCLES_5);
 
 			/* Set ADC sampling time common configuration */
 			LL_ADC_SetSamplingTimeCommonConfig(hadc->Instance, LL_ADC_SAMPLINGTIME_COMMON_3C5_REPL_2C5);
 		} else {
 			/* Set sampling time of the selected ADC channel */
-			LL_ADC_SetChannelSamplingTime(hadc->Instance, pConfigInjected->InjectedChannel,
-						      pConfigInjected->InjectedSamplingTime);
+			LL_ADC_SetChannelSamplingTime(hadc->Instance, pConfigInjected->InjectedChannel, pConfigInjected->InjectedSamplingTime);
 
 			/* Set ADC sampling time common configuration */
 			LL_ADC_SetSamplingTimeCommonConfig(hadc->Instance, LL_ADC_SAMPLINGTIME_COMMON_DEFAULT);
@@ -1925,35 +1879,27 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc,
 
 		if (pConfigInjected->InjectedOffsetNumber != ADC_OFFSET_NONE) {
 			/* Set ADC selected offset number */
-			LL_ADC_SetOffset(hadc->Instance, pConfigInjected->InjectedOffsetNumber,
-					 pConfigInjected->InjectedChannel, tmp_offset_shifted);
+			LL_ADC_SetOffset(hadc->Instance, pConfigInjected->InjectedOffsetNumber, pConfigInjected->InjectedChannel, tmp_offset_shifted);
 
 			/* Set ADC selected offset sign & saturation */
-			LL_ADC_SetOffsetSign(hadc->Instance, pConfigInjected->InjectedOffsetNumber,
-					     pConfigInjected->InjectedOffsetSign);
+			LL_ADC_SetOffsetSign(hadc->Instance, pConfigInjected->InjectedOffsetNumber, pConfigInjected->InjectedOffsetSign);
 			LL_ADC_SetOffsetSaturation(hadc->Instance, pConfigInjected->InjectedOffsetNumber,
-						   (pConfigInjected->InjectedOffsetSaturation == ENABLE)
-						       ? LL_ADC_OFFSET_SATURATION_ENABLE
-						       : LL_ADC_OFFSET_SATURATION_DISABLE);
+						   (pConfigInjected->InjectedOffsetSaturation == ENABLE) ? LL_ADC_OFFSET_SATURATION_ENABLE : LL_ADC_OFFSET_SATURATION_DISABLE);
 		} else {
 			/* Scan each offset register to check if the selected
 			 * channel is targeted. */
 			/* If this is the case, the corresponding offset number
 			 * is disabled.       */
-			if (__LL_ADC_CHANNEL_TO_DECIMAL_NB(LL_ADC_GetOffsetChannel(hadc->Instance, LL_ADC_OFFSET_1)) ==
-			    __LL_ADC_CHANNEL_TO_DECIMAL_NB(pConfigInjected->InjectedChannel)) {
+			if (__LL_ADC_CHANNEL_TO_DECIMAL_NB(LL_ADC_GetOffsetChannel(hadc->Instance, LL_ADC_OFFSET_1)) == __LL_ADC_CHANNEL_TO_DECIMAL_NB(pConfigInjected->InjectedChannel)) {
 				LL_ADC_SetOffsetState(hadc->Instance, LL_ADC_OFFSET_1, LL_ADC_OFFSET_DISABLE);
 			}
-			if (__LL_ADC_CHANNEL_TO_DECIMAL_NB(LL_ADC_GetOffsetChannel(hadc->Instance, LL_ADC_OFFSET_2)) ==
-			    __LL_ADC_CHANNEL_TO_DECIMAL_NB(pConfigInjected->InjectedChannel)) {
+			if (__LL_ADC_CHANNEL_TO_DECIMAL_NB(LL_ADC_GetOffsetChannel(hadc->Instance, LL_ADC_OFFSET_2)) == __LL_ADC_CHANNEL_TO_DECIMAL_NB(pConfigInjected->InjectedChannel)) {
 				LL_ADC_SetOffsetState(hadc->Instance, LL_ADC_OFFSET_2, LL_ADC_OFFSET_DISABLE);
 			}
-			if (__LL_ADC_CHANNEL_TO_DECIMAL_NB(LL_ADC_GetOffsetChannel(hadc->Instance, LL_ADC_OFFSET_3)) ==
-			    __LL_ADC_CHANNEL_TO_DECIMAL_NB(pConfigInjected->InjectedChannel)) {
+			if (__LL_ADC_CHANNEL_TO_DECIMAL_NB(LL_ADC_GetOffsetChannel(hadc->Instance, LL_ADC_OFFSET_3)) == __LL_ADC_CHANNEL_TO_DECIMAL_NB(pConfigInjected->InjectedChannel)) {
 				LL_ADC_SetOffsetState(hadc->Instance, LL_ADC_OFFSET_3, LL_ADC_OFFSET_DISABLE);
 			}
-			if (__LL_ADC_CHANNEL_TO_DECIMAL_NB(LL_ADC_GetOffsetChannel(hadc->Instance, LL_ADC_OFFSET_4)) ==
-			    __LL_ADC_CHANNEL_TO_DECIMAL_NB(pConfigInjected->InjectedChannel)) {
+			if (__LL_ADC_CHANNEL_TO_DECIMAL_NB(LL_ADC_GetOffsetChannel(hadc->Instance, LL_ADC_OFFSET_4)) == __LL_ADC_CHANNEL_TO_DECIMAL_NB(pConfigInjected->InjectedChannel)) {
 				LL_ADC_SetOffsetState(hadc->Instance, LL_ADC_OFFSET_4, LL_ADC_OFFSET_DISABLE);
 			}
 		}
@@ -1965,20 +1911,16 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc,
 	if (LL_ADC_IsEnabled(hadc->Instance) == 0UL) {
 		/* Set mode single-ended or differential input of the selected
 		 * ADC channel */
-		LL_ADC_SetChannelSingleDiff(hadc->Instance, pConfigInjected->InjectedChannel,
-					    pConfigInjected->InjectedSingleDiff);
+		LL_ADC_SetChannelSingleDiff(hadc->Instance, pConfigInjected->InjectedChannel, pConfigInjected->InjectedSingleDiff);
 
 		/* Configuration of differential mode */
 		/* Note: ADC channel number masked with value "0x1F" to ensure
 		 * shift value within 32 bits range */
 		if (pConfigInjected->InjectedSingleDiff == ADC_DIFFERENTIAL_ENDED) {
 			/* Set sampling time of the selected ADC channel */
-			LL_ADC_SetChannelSamplingTime(
-			    hadc->Instance,
-			    (uint32_t)(__LL_ADC_DECIMAL_NB_TO_CHANNEL(
-				(__LL_ADC_CHANNEL_TO_DECIMAL_NB((uint32_t)pConfigInjected->InjectedChannel) + 1UL) &
-				0x1FUL)),
-			    pConfigInjected->InjectedSamplingTime);
+			LL_ADC_SetChannelSamplingTime(hadc->Instance,
+						      (uint32_t)(__LL_ADC_DECIMAL_NB_TO_CHANNEL((__LL_ADC_CHANNEL_TO_DECIMAL_NB((uint32_t)pConfigInjected->InjectedChannel) + 1UL) & 0x1FUL)),
+						      pConfigInjected->InjectedSamplingTime);
 		}
 	}
 
@@ -1995,13 +1937,10 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc,
 		/* If the requested internal measurement path has already been
 		 * enabled,   */
 		/* bypass the configuration processing. */
-		if (((pConfigInjected->InjectedChannel == ADC_CHANNEL_TEMPSENSOR_ADC1) ||
-		     (pConfigInjected->InjectedChannel == ADC_CHANNEL_TEMPSENSOR_ADC5)) &&
+		if (((pConfigInjected->InjectedChannel == ADC_CHANNEL_TEMPSENSOR_ADC1) || (pConfigInjected->InjectedChannel == ADC_CHANNEL_TEMPSENSOR_ADC5)) &&
 		    ((tmp_config_internal_channel & LL_ADC_PATH_INTERNAL_TEMPSENSOR) == 0UL)) {
 			if (ADC_TEMPERATURE_SENSOR_INSTANCE(hadc)) {
-				LL_ADC_SetCommonPathInternalCh(__LL_ADC_COMMON_INSTANCE(hadc->Instance),
-							       LL_ADC_PATH_INTERNAL_TEMPSENSOR |
-								   tmp_config_internal_channel);
+				LL_ADC_SetCommonPathInternalCh(__LL_ADC_COMMON_INSTANCE(hadc->Instance), LL_ADC_PATH_INTERNAL_TEMPSENSOR | tmp_config_internal_channel);
 
 				/* Delay for temperature sensor stabilization
 				 * time */
@@ -2012,24 +1951,18 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc,
 				 * split to not          */
 				/*       exceed 32 bits register capacity and
 				 * handle low frequency. */
-				wait_loop_index = ((LL_ADC_DELAY_TEMPSENSOR_STAB_US / 10UL) *
-						   (((SystemCoreClock / (100000UL * 2UL)) + 1UL) + 1UL));
+				wait_loop_index = ((LL_ADC_DELAY_TEMPSENSOR_STAB_US / 10UL) * (((SystemCoreClock / (100000UL * 2UL)) + 1UL) + 1UL));
 				while (wait_loop_index != 0UL) {
 					wait_loop_index--;
 				}
 			}
-		} else if ((pConfigInjected->InjectedChannel == ADC_CHANNEL_VBAT) &&
-			   ((tmp_config_internal_channel & LL_ADC_PATH_INTERNAL_VBAT) == 0UL)) {
+		} else if ((pConfigInjected->InjectedChannel == ADC_CHANNEL_VBAT) && ((tmp_config_internal_channel & LL_ADC_PATH_INTERNAL_VBAT) == 0UL)) {
 			if (ADC_BATTERY_VOLTAGE_INSTANCE(hadc)) {
-				LL_ADC_SetCommonPathInternalCh(__LL_ADC_COMMON_INSTANCE(hadc->Instance),
-							       LL_ADC_PATH_INTERNAL_VBAT | tmp_config_internal_channel);
+				LL_ADC_SetCommonPathInternalCh(__LL_ADC_COMMON_INSTANCE(hadc->Instance), LL_ADC_PATH_INTERNAL_VBAT | tmp_config_internal_channel);
 			}
-		} else if ((pConfigInjected->InjectedChannel == ADC_CHANNEL_VREFINT) &&
-			   ((tmp_config_internal_channel & LL_ADC_PATH_INTERNAL_VREFINT) == 0UL)) {
+		} else if ((pConfigInjected->InjectedChannel == ADC_CHANNEL_VREFINT) && ((tmp_config_internal_channel & LL_ADC_PATH_INTERNAL_VREFINT) == 0UL)) {
 			if (ADC_VREFINT_INSTANCE(hadc)) {
-				LL_ADC_SetCommonPathInternalCh(__LL_ADC_COMMON_INSTANCE(hadc->Instance),
-							       LL_ADC_PATH_INTERNAL_VREFINT |
-								   tmp_config_internal_channel);
+				LL_ADC_SetCommonPathInternalCh(__LL_ADC_COMMON_INSTANCE(hadc->Instance), LL_ADC_PATH_INTERNAL_VREFINT | tmp_config_internal_channel);
 			}
 		} else {
 			/* nothing to do */
@@ -2111,9 +2044,7 @@ HAL_StatusTypeDef HAL_ADCEx_MultiModeConfigChannel(ADC_HandleTypeDef *hadc, cons
 		 */
 		/* transition from multimode to independent mode). */
 		if (pMultimode->Mode != ADC_MODE_INDEPENDENT) {
-			MODIFY_REG(tmpADC_Common->CCR, ADC_CCR_MDMA | ADC_CCR_DMACFG,
-				   pMultimode->DMAAccessMode |
-				       ADC_CCR_MULTI_DMACONTREQ((uint32_t)hadc->Init.DMAContinuousRequests));
+			MODIFY_REG(tmpADC_Common->CCR, ADC_CCR_MDMA | ADC_CCR_DMACFG, pMultimode->DMAAccessMode | ADC_CCR_MULTI_DMACONTREQ((uint32_t)hadc->Init.DMAContinuousRequests));
 
 			/* Parameters that can be updated only when ADC is
 			 * disabled:                */
@@ -2129,8 +2060,7 @@ HAL_StatusTypeDef HAL_ADCEx_MultiModeConfigChannel(ADC_HandleTypeDef *hadc, cons
 			 * to maximum delay    */
 			/*    range */
 			if (__LL_ADC_IS_ENABLED_ALL_COMMON_INSTANCE(__LL_ADC_COMMON_INSTANCE(hadc->Instance)) == 0UL) {
-				MODIFY_REG(tmpADC_Common->CCR, ADC_CCR_DUAL | ADC_CCR_DELAY,
-					   pMultimode->Mode | pMultimode->TwoSamplingDelay);
+				MODIFY_REG(tmpADC_Common->CCR, ADC_CCR_DUAL | ADC_CCR_DELAY, pMultimode->Mode | pMultimode->TwoSamplingDelay);
 			}
 		} else /* ADC_MODE_INDEPENDENT */
 		{

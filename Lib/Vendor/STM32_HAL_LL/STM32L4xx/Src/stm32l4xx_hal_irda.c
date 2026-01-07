@@ -230,10 +230,9 @@
  */
 #define IRDA_TEACK_REACK_TIMEOUT 1000U /*!< IRDA TX or RX enable acknowledge time-out value  */
 
-#define IRDA_CR1_FIELDS                                                                                                \
-	((uint32_t)(USART_CR1_M | USART_CR1_PCE | USART_CR1_PS | USART_CR1_TE |                                        \
-		    USART_CR1_RE)) /*!< UART or USART CR1 fields of parameters                                         \
-				      set by IRDA_SetConfig API */
+#define IRDA_CR1_FIELDS                                                                                                                                                                                \
+	((uint32_t)(USART_CR1_M | USART_CR1_PCE | USART_CR1_PS | USART_CR1_TE | USART_CR1_RE)) /*!< UART or USART CR1 fields of parameters                                                             \
+												  set by IRDA_SetConfig API */
 
 #define USART_BRR_MIN 0x10U /*!< USART BRR minimum authorized value */
 
@@ -254,8 +253,7 @@
  * @param  __PRESCALER__ IRDA clock prescaler value.
  * @retval Division result
  */
-#define IRDA_DIV_SAMPLING16(__PCLK__, __BAUD__, __PRESCALER__)                                                         \
-	((((__PCLK__) / IRDAPrescTable[(__PRESCALER__)]) + ((__BAUD__) / 2U)) / (__BAUD__))
+#define IRDA_DIV_SAMPLING16(__PCLK__, __BAUD__, __PRESCALER__) ((((__PCLK__) / IRDAPrescTable[(__PRESCALER__)]) + ((__BAUD__) / 2U)) / (__BAUD__))
 #else
 /** @brief  BRR division operation to set BRR register in 16-bit oversampling
  * mode.
@@ -279,8 +277,7 @@ void IRDA_InitCallbacksToDefault(IRDA_HandleTypeDef *hirda);
 #endif /* USE_HAL_IRDA_REGISTER_CALLBACKS */
 static HAL_StatusTypeDef IRDA_SetConfig(IRDA_HandleTypeDef *hirda);
 static HAL_StatusTypeDef IRDA_CheckIdleState(IRDA_HandleTypeDef *hirda);
-static HAL_StatusTypeDef IRDA_WaitOnFlagUntilTimeout(IRDA_HandleTypeDef *hirda, uint32_t Flag, FlagStatus Status,
-						     uint32_t Tickstart, uint32_t Timeout);
+static HAL_StatusTypeDef IRDA_WaitOnFlagUntilTimeout(IRDA_HandleTypeDef *hirda, uint32_t Flag, FlagStatus Status, uint32_t Tickstart, uint32_t Timeout);
 static void IRDA_EndTxTransfer(IRDA_HandleTypeDef *hirda);
 static void IRDA_EndRxTransfer(IRDA_HandleTypeDef *hirda);
 static void IRDA_DMATransmitCplt(DMA_HandleTypeDef *hdma);
@@ -520,8 +517,7 @@ __weak void HAL_IRDA_MspDeInit(IRDA_HandleTypeDef *hirda)
  * @param  pCallback pointer to the Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_IRDA_RegisterCallback(IRDA_HandleTypeDef *hirda, HAL_IRDA_CallbackIDTypeDef CallbackID,
-					    pIRDA_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_IRDA_RegisterCallback(IRDA_HandleTypeDef *hirda, HAL_IRDA_CallbackIDTypeDef CallbackID, pIRDA_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -679,19 +675,17 @@ HAL_StatusTypeDef HAL_IRDA_UnRegisterCallback(IRDA_HandleTypeDef *hirda, HAL_IRD
 				break;
 
 			case HAL_IRDA_ABORT_TRANSMIT_COMPLETE_CB_ID:
-				hirda->AbortTransmitCpltCallback =
-				    HAL_IRDA_AbortTransmitCpltCallback; /* Legacy
-									   weak
-									   AbortTransmitCpltCallback
-									 */
+				hirda->AbortTransmitCpltCallback = HAL_IRDA_AbortTransmitCpltCallback; /* Legacy
+													  weak
+													  AbortTransmitCpltCallback
+													*/
 				break;
 
 			case HAL_IRDA_ABORT_RECEIVE_COMPLETE_CB_ID:
-				hirda->AbortReceiveCpltCallback =
-				    HAL_IRDA_AbortReceiveCpltCallback; /* Legacy
-									  weak
-									  AbortReceiveCpltCallback
-									*/
+				hirda->AbortReceiveCpltCallback = HAL_IRDA_AbortReceiveCpltCallback; /* Legacy
+													weak
+													AbortReceiveCpltCallback
+												      */
 				break;
 
 			case HAL_IRDA_MSPINIT_CB_ID:
@@ -1147,8 +1141,7 @@ HAL_StatusTypeDef HAL_IRDA_Transmit_DMA(IRDA_HandleTypeDef *hirda, const uint8_t
 		hirda->hdmatx->XferAbortCallback = NULL;
 
 		/* Enable the IRDA transmit DMA channel */
-		if (HAL_DMA_Start_IT(hirda->hdmatx, (uint32_t)hirda->pTxBuffPtr, (uint32_t)&hirda->Instance->TDR,
-				     Size) == HAL_OK) {
+		if (HAL_DMA_Start_IT(hirda->hdmatx, (uint32_t)hirda->pTxBuffPtr, (uint32_t)&hirda->Instance->TDR, Size) == HAL_OK) {
 			/* Clear the TC flag in the ICR register */
 			__HAL_IRDA_CLEAR_FLAG(hirda, IRDA_CLEAR_TCF);
 
@@ -1221,8 +1214,7 @@ HAL_StatusTypeDef HAL_IRDA_Receive_DMA(IRDA_HandleTypeDef *hirda, uint8_t *pData
 		hirda->hdmarx->XferAbortCallback = NULL;
 
 		/* Enable the DMA channel */
-		if (HAL_DMA_Start_IT(hirda->hdmarx, (uint32_t)&hirda->Instance->RDR, (uint32_t)hirda->pRxBuffPtr,
-				     Size) == HAL_OK) {
+		if (HAL_DMA_Start_IT(hirda->hdmarx, (uint32_t)&hirda->Instance->RDR, (uint32_t)hirda->pRxBuffPtr, Size) == HAL_OK) {
 			/* Process Unlocked */
 			__HAL_UNLOCK(hirda);
 
@@ -1410,8 +1402,7 @@ HAL_StatusTypeDef HAL_IRDA_Abort(IRDA_HandleTypeDef *hirda)
 	/* Disable TXEIE, TCIE, RXNE, PE and ERR (Frame error, noise error,
 	 * overrun error) interrupts */
 #if defined(USART_CR1_FIFOEN)
-	CLEAR_BIT(hirda->Instance->CR1,
-		  (USART_CR1_RXNEIE_RXFNEIE | USART_CR1_PEIE | USART_CR1_TXEIE_TXFNFIE | USART_CR1_TCIE));
+	CLEAR_BIT(hirda->Instance->CR1, (USART_CR1_RXNEIE_RXFNEIE | USART_CR1_PEIE | USART_CR1_TXEIE_TXFNFIE | USART_CR1_TCIE));
 #else
 	CLEAR_BIT(hirda->Instance->CR1, (USART_CR1_RXNEIE | USART_CR1_PEIE | USART_CR1_TXEIE | USART_CR1_TCIE));
 #endif /* USART_CR1_FIFOEN */
@@ -1624,8 +1615,7 @@ HAL_StatusTypeDef HAL_IRDA_Abort_IT(IRDA_HandleTypeDef *hirda)
 	/* Disable TXEIE, TCIE, RXNE, PE and ERR (Frame error, noise error,
 	 * overrun error) interrupts */
 #if defined(USART_CR1_FIFOEN)
-	CLEAR_BIT(hirda->Instance->CR1,
-		  (USART_CR1_RXNEIE_RXFNEIE | USART_CR1_PEIE | USART_CR1_TXEIE_TXFNFIE | USART_CR1_TCIE));
+	CLEAR_BIT(hirda->Instance->CR1, (USART_CR1_RXNEIE_RXFNEIE | USART_CR1_PEIE | USART_CR1_TXEIE_TXFNFIE | USART_CR1_TCIE));
 #else
 	CLEAR_BIT(hirda->Instance->CR1, (USART_CR1_RXNEIE | USART_CR1_PEIE | USART_CR1_TXEIE | USART_CR1_TCIE));
 #endif /* USART_CR1_FIFOEN */
@@ -1867,8 +1857,7 @@ HAL_StatusTypeDef HAL_IRDA_AbortReceive_IT(IRDA_HandleTypeDef *hirda)
 			hirda->RxXferCount = 0U;
 
 			/* Clear the Error flags in the ICR register */
-			__HAL_IRDA_CLEAR_FLAG(hirda,
-					      IRDA_CLEAR_OREF | IRDA_CLEAR_NEF | IRDA_CLEAR_PEF | IRDA_CLEAR_FEF);
+			__HAL_IRDA_CLEAR_FLAG(hirda, IRDA_CLEAR_OREF | IRDA_CLEAR_NEF | IRDA_CLEAR_PEF | IRDA_CLEAR_FEF);
 
 			/* Restore hirda->RxState to Ready */
 			hirda->RxState = HAL_IRDA_STATE_READY;
@@ -2001,8 +1990,7 @@ void HAL_IRDA_IRQHandler(IRDA_HandleTypeDef *hirda)
 			/* If Overrun error occurs, or if any error occurs in
 			   DMA mode reception, consider error as blocking */
 			errorcode = hirda->ErrorCode;
-			if ((HAL_IS_BIT_SET(hirda->Instance->CR3, USART_CR3_DMAR)) ||
-			    ((errorcode & HAL_IRDA_ERROR_ORE) != 0U)) {
+			if ((HAL_IS_BIT_SET(hirda->Instance->CR3, USART_CR3_DMAR)) || ((errorcode & HAL_IRDA_ERROR_ORE) != 0U)) {
 				/* Blocking error : transfer is aborted
 				   Set the IRDA state ready to be able to start
 				   again the process, Disable Rx Interrupts, and
@@ -2296,12 +2284,12 @@ uint32_t HAL_IRDA_GetError(const IRDA_HandleTypeDef *hirda) { return hirda->Erro
 void IRDA_InitCallbacksToDefault(IRDA_HandleTypeDef *hirda)
 {
 	/* Init the IRDA Callback settings */
-	hirda->TxHalfCpltCallback = HAL_IRDA_TxHalfCpltCallback; /* Legacy weak TxHalfCpltCallback */
-	hirda->TxCpltCallback = HAL_IRDA_TxCpltCallback;	 /* Legacy weak TxCpltCallback            */
-	hirda->RxHalfCpltCallback = HAL_IRDA_RxHalfCpltCallback; /* Legacy weak RxHalfCpltCallback */
-	hirda->RxCpltCallback = HAL_IRDA_RxCpltCallback;	 /* Legacy weak RxCpltCallback            */
-	hirda->ErrorCallback = HAL_IRDA_ErrorCallback;		 /* Legacy weak ErrorCallback             */
-	hirda->AbortCpltCallback = HAL_IRDA_AbortCpltCallback;	 /* Legacy weak AbortCpltCallback */
+	hirda->TxHalfCpltCallback = HAL_IRDA_TxHalfCpltCallback;	       /* Legacy weak TxHalfCpltCallback */
+	hirda->TxCpltCallback = HAL_IRDA_TxCpltCallback;		       /* Legacy weak TxCpltCallback            */
+	hirda->RxHalfCpltCallback = HAL_IRDA_RxHalfCpltCallback;	       /* Legacy weak RxHalfCpltCallback */
+	hirda->RxCpltCallback = HAL_IRDA_RxCpltCallback;		       /* Legacy weak RxCpltCallback            */
+	hirda->ErrorCallback = HAL_IRDA_ErrorCallback;			       /* Legacy weak ErrorCallback             */
+	hirda->AbortCpltCallback = HAL_IRDA_AbortCpltCallback;		       /* Legacy weak AbortCpltCallback */
 	hirda->AbortTransmitCpltCallback = HAL_IRDA_AbortTransmitCpltCallback; /* Legacy weak
 										  AbortTransmitCpltCallback */
 	hirda->AbortReceiveCpltCallback = HAL_IRDA_AbortReceiveCpltCallback;   /* Legacy weak
@@ -2371,8 +2359,7 @@ static HAL_StatusTypeDef IRDA_SetConfig(IRDA_HandleTypeDef *hirda)
 		case IRDA_CLOCKSOURCE_PCLK1:
 			pclk = HAL_RCC_GetPCLK1Freq();
 #if defined(USART_PRESC_PRESCALER)
-			tmpreg =
-			    (uint32_t)(IRDA_DIV_SAMPLING16(pclk, hirda->Init.BaudRate, hirda->Init.ClockPrescaler));
+			tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(pclk, hirda->Init.BaudRate, hirda->Init.ClockPrescaler));
 #else
 			tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(pclk, hirda->Init.BaudRate));
 #endif /* USART_PRESC_PRESCALER */
@@ -2380,16 +2367,14 @@ static HAL_StatusTypeDef IRDA_SetConfig(IRDA_HandleTypeDef *hirda)
 		case IRDA_CLOCKSOURCE_PCLK2:
 			pclk = HAL_RCC_GetPCLK2Freq();
 #if defined(USART_PRESC_PRESCALER)
-			tmpreg =
-			    (uint32_t)(IRDA_DIV_SAMPLING16(pclk, hirda->Init.BaudRate, hirda->Init.ClockPrescaler));
+			tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(pclk, hirda->Init.BaudRate, hirda->Init.ClockPrescaler));
 #else
 			tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(pclk, hirda->Init.BaudRate));
 #endif /* USART_PRESC_PRESCALER */
 			break;
 		case IRDA_CLOCKSOURCE_HSI:
 #if defined(USART_PRESC_PRESCALER)
-			tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(HSI_VALUE, hirda->Init.BaudRate,
-								hirda->Init.ClockPrescaler));
+			tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(HSI_VALUE, hirda->Init.BaudRate, hirda->Init.ClockPrescaler));
 #else
 			tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(HSI_VALUE, hirda->Init.BaudRate));
 #endif /* USART_PRESC_PRESCALER */
@@ -2397,16 +2382,14 @@ static HAL_StatusTypeDef IRDA_SetConfig(IRDA_HandleTypeDef *hirda)
 		case IRDA_CLOCKSOURCE_SYSCLK:
 			pclk = HAL_RCC_GetSysClockFreq();
 #if defined(USART_PRESC_PRESCALER)
-			tmpreg =
-			    (uint32_t)(IRDA_DIV_SAMPLING16(pclk, hirda->Init.BaudRate, hirda->Init.ClockPrescaler));
+			tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(pclk, hirda->Init.BaudRate, hirda->Init.ClockPrescaler));
 #else
 			tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16(pclk, hirda->Init.BaudRate));
 #endif /* USART_PRESC_PRESCALER */
 			break;
 		case IRDA_CLOCKSOURCE_LSE:
 #if defined(USART_PRESC_PRESCALER)
-			tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16((uint32_t)LSE_VALUE, hirda->Init.BaudRate,
-								hirda->Init.ClockPrescaler));
+			tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16((uint32_t)LSE_VALUE, hirda->Init.BaudRate, hirda->Init.ClockPrescaler));
 #else
 			tmpreg = (uint32_t)(IRDA_DIV_SAMPLING16((uint32_t)LSE_VALUE, hirda->Init.BaudRate));
 #endif /* USART_PRESC_PRESCALER */
@@ -2445,8 +2428,7 @@ static HAL_StatusTypeDef IRDA_CheckIdleState(IRDA_HandleTypeDef *hirda)
 	/* Check if the Transmitter is enabled */
 	if ((hirda->Instance->CR1 & USART_CR1_TE) == USART_CR1_TE) {
 		/* Wait until TEACK flag is set */
-		if (IRDA_WaitOnFlagUntilTimeout(hirda, USART_ISR_TEACK, RESET, tickstart, IRDA_TEACK_REACK_TIMEOUT) !=
-		    HAL_OK) {
+		if (IRDA_WaitOnFlagUntilTimeout(hirda, USART_ISR_TEACK, RESET, tickstart, IRDA_TEACK_REACK_TIMEOUT) != HAL_OK) {
 			/* Timeout occurred */
 			return HAL_TIMEOUT;
 		}
@@ -2454,8 +2436,7 @@ static HAL_StatusTypeDef IRDA_CheckIdleState(IRDA_HandleTypeDef *hirda)
 	/* Check if the Receiver is enabled */
 	if ((hirda->Instance->CR1 & USART_CR1_RE) == USART_CR1_RE) {
 		/* Wait until REACK flag is set */
-		if (IRDA_WaitOnFlagUntilTimeout(hirda, USART_ISR_REACK, RESET, tickstart, IRDA_TEACK_REACK_TIMEOUT) !=
-		    HAL_OK) {
+		if (IRDA_WaitOnFlagUntilTimeout(hirda, USART_ISR_REACK, RESET, tickstart, IRDA_TEACK_REACK_TIMEOUT) != HAL_OK) {
 			/* Timeout occurred */
 			return HAL_TIMEOUT;
 		}
@@ -2482,8 +2463,7 @@ static HAL_StatusTypeDef IRDA_CheckIdleState(IRDA_HandleTypeDef *hirda)
  * @param  Timeout Timeout duration
  * @retval HAL status
  */
-static HAL_StatusTypeDef IRDA_WaitOnFlagUntilTimeout(IRDA_HandleTypeDef *hirda, uint32_t Flag, FlagStatus Status,
-						     uint32_t Tickstart, uint32_t Timeout)
+static HAL_StatusTypeDef IRDA_WaitOnFlagUntilTimeout(IRDA_HandleTypeDef *hirda, uint32_t Flag, FlagStatus Status, uint32_t Tickstart, uint32_t Timeout)
 {
 	/* Wait until flag is set */
 	while ((__HAL_IRDA_GET_FLAG(hirda, Flag) ? SET : RESET) == Status) {
@@ -2494,8 +2474,7 @@ static HAL_StatusTypeDef IRDA_WaitOnFlagUntilTimeout(IRDA_HandleTypeDef *hirda, 
 				   noise error, overrun error) interrupts for
 				   the interrupt process */
 #if defined(USART_CR1_FIFOEN)
-				CLEAR_BIT(hirda->Instance->CR1,
-					  (USART_CR1_RXNEIE_RXFNEIE | USART_CR1_PEIE | USART_CR1_TXEIE_TXFNFIE));
+				CLEAR_BIT(hirda->Instance->CR1, (USART_CR1_RXNEIE_RXFNEIE | USART_CR1_PEIE | USART_CR1_TXEIE_TXFNFIE));
 #else
 				CLEAR_BIT(hirda->Instance->CR1, (USART_CR1_RXNEIE | USART_CR1_PEIE | USART_CR1_TXEIE));
 #endif /* USART_CR1_FIFOEN */
@@ -2897,8 +2876,7 @@ static void IRDA_Transmit_IT(IRDA_HandleTypeDef *hirda)
 			/* Enable the IRDA Transmit Complete Interrupt */
 			SET_BIT(hirda->Instance->CR1, USART_CR1_TCIE);
 		} else {
-			if ((hirda->Init.WordLength == IRDA_WORDLENGTH_9B) &&
-			    (hirda->Init.Parity == IRDA_PARITY_NONE)) {
+			if ((hirda->Init.WordLength == IRDA_WORDLENGTH_9B) && (hirda->Init.Parity == IRDA_PARITY_NONE)) {
 				tmp = (const uint16_t *)hirda->pTxBuffPtr; /* Derogation R.11.3 */
 				hirda->Instance->TDR = (uint16_t)(*tmp & 0x01FFU);
 				hirda->pTxBuffPtr += 2U;

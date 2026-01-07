@@ -235,8 +235,8 @@ typedef struct __DMA_HandleTypeDef {
 #define DMA_IT_TC DMA_CCR_TCIE	 /*!< Transfer complete interrupt             */
 #define DMA_IT_HT DMA_CCR_HTIE	 /*!< Half transfer complete interrupt        */
 #define DMA_IT_DTE DMA_CCR_DTEIE /*!< Data transfer error interrupt */
-#define DMA_IT_ULE                                                                                                     \
-	DMA_CCR_ULEIE		   /*!< Update linked-list item error interrupt                                        \
+#define DMA_IT_ULE                                                                                                                                                                                     \
+	DMA_CCR_ULEIE		   /*!< Update linked-list item error interrupt                                                                                                                        \
 				    */
 #define DMA_IT_USE DMA_CCR_USEIE   /*!< User eetting error interrupt */
 #define DMA_IT_SUSP DMA_CCR_SUSPIE /*!< Completed suspension interrupt          */
@@ -442,8 +442,8 @@ typedef struct __DMA_HandleTypeDef {
  * @brief    DMA Block Request
  * @{
  */
-#define DMA_BREQ_SINGLE_BURST                                                                                          \
-	0x00000000U		     /*!< Hardware request protocol at a single / burst level                          \
+#define DMA_BREQ_SINGLE_BURST                                                                                                                                                                          \
+	0x00000000U		     /*!< Hardware request protocol at a single / burst level                                                                                                          \
 				      */
 #define DMA_BREQ_BLOCK DMA_CTR2_BREQ /*!< Hardware request protocol at a block level */
 /**
@@ -454,8 +454,8 @@ typedef struct __DMA_HandleTypeDef {
  * @brief    DMA transfer direction
  * @{
  */
-#define DMA_PERIPH_TO_MEMORY                                                                                           \
-	0x00000000U			    /*!< Peripheral to memory direction                                        \
+#define DMA_PERIPH_TO_MEMORY                                                                                                                                                                           \
+	0x00000000U			    /*!< Peripheral to memory direction                                                                                                                        \
 					     */
 #define DMA_MEMORY_TO_PERIPH DMA_CTR2_DREQ  /*!< Memory to peripheral direction */
 #define DMA_MEMORY_TO_MEMORY DMA_CTR2_SWREQ /*!< Memory to memory direction     */
@@ -534,21 +534,21 @@ typedef struct __DMA_HandleTypeDef {
  * @brief    DMA Transfer Event Mode
  * @{
  */
-#define DMA_TCEM_BLOCK_TRANSFER                                                                                        \
-	0x00000000U /*!< The TC event is generated at the end of each block                                            \
-		       and the HT event is generated at the half of each block                                         \
+#define DMA_TCEM_BLOCK_TRANSFER                                                                                                                                                                        \
+	0x00000000U /*!< The TC event is generated at the end of each block                                                                                                                            \
+		       and the HT event is generated at the half of each block                                                                                                                         \
 		     */
-#define DMA_TCEM_REPEATED_BLOCK_TRANSFER                                                                               \
-	DMA_CTR2_TCEM_0 /*!< The TC event is generated at the end of the                                               \
-			   repeated block and the HT event is generated at the                                         \
+#define DMA_TCEM_REPEATED_BLOCK_TRANSFER                                                                                                                                                               \
+	DMA_CTR2_TCEM_0 /*!< The TC event is generated at the end of the                                                                                                                               \
+			   repeated block and the HT event is generated at the                                                                                                                         \
 			   half of the repeated block */
-#define DMA_TCEM_EACH_LL_ITEM_TRANSFER                                                                                 \
-	DMA_CTR2_TCEM_1 /*!< The TC event is generated at the end of each                                              \
-			   linked-list item and the HT event is generated at                                           \
+#define DMA_TCEM_EACH_LL_ITEM_TRANSFER                                                                                                                                                                 \
+	DMA_CTR2_TCEM_1 /*!< The TC event is generated at the end of each                                                                                                                              \
+			   linked-list item and the HT event is generated at                                                                                                                           \
 			   the half of each linked-list item */
-#define DMA_TCEM_LAST_LL_ITEM_TRANSFER                                                                                 \
-	DMA_CTR2_TCEM /*!< The TC event is generated at the end of the last                                            \
-			   linked-list item and the HT event is generated at                                           \
+#define DMA_TCEM_LAST_LL_ITEM_TRANSFER                                                                                                                                                                 \
+	DMA_CTR2_TCEM /*!< The TC event is generated at the end of the last                                                                                                                            \
+			   linked-list item and the HT event is generated at                                                                                                                           \
 			 the half of the last linked-list item */
 /**
  * @}
@@ -577,8 +577,8 @@ typedef struct __DMA_HandleTypeDef {
 #define DMA_CHANNEL_SRC_SEC (DMA_CHANNEL_ATTR_SEC_SRC_MASK | 0x04U)   /*!< Channel source is secure          */
 #define DMA_CHANNEL_SRC_NSEC (DMA_CHANNEL_ATTR_SEC_SRC_MASK)	      /*!< Channel source is non-secure */
 #define DMA_CHANNEL_DEST_SEC (DMA_CHANNEL_ATTR_SEC_DEST_MASK | 0x08U) /*!< Channel destination is secure     */
-#define DMA_CHANNEL_DEST_NSEC                                                                                          \
-	(DMA_CHANNEL_ATTR_SEC_DEST_MASK) /*!< Channel destination is                                                   \
+#define DMA_CHANNEL_DEST_NSEC                                                                                                                                                                          \
+	(DMA_CHANNEL_ATTR_SEC_DEST_MASK) /*!< Channel destination is                                                                                                                                   \
 					    non-secure */
 
 #define DMA_CHANNEL_ATTRIBUTE_UNLOCKED (0x00U) /*!< Channel attribute is unlocked     */
@@ -705,8 +705,7 @@ typedef struct __DMA_HandleTypeDef {
  * @param  __COUNTER__ : Number of data bytes to be transferred from the source
  * (from 0 to 65535).
  */
-#define __HAL_DMA_SET_COUNTER(__HANDLE__, __COUNTER__)                                                                 \
-	MODIFY_REG((__HANDLE__)->Instance->CBR1, DMA_CBR1_BNDT, (__COUNTER__))
+#define __HAL_DMA_SET_COUNTER(__HANDLE__, __COUNTER__) MODIFY_REG((__HANDLE__)->Instance->CBR1, DMA_CBR1_BNDT, (__COUNTER__))
 
 /**
  * @brief  Returns the number of remaining data bytes in the current DMA Channel
@@ -745,17 +744,13 @@ HAL_StatusTypeDef HAL_DMA_DeInit(DMA_HandleTypeDef *const hdma);
  * @brief    I/O Operation Functions
  * @{
  */
-HAL_StatusTypeDef HAL_DMA_Start(DMA_HandleTypeDef *const hdma, uint32_t SrcAddress, uint32_t DstAddress,
-				uint32_t SrcDataSize);
-HAL_StatusTypeDef HAL_DMA_Start_IT(DMA_HandleTypeDef *const hdma, uint32_t SrcAddress, uint32_t DstAddress,
-				   uint32_t SrcDataSize);
+HAL_StatusTypeDef HAL_DMA_Start(DMA_HandleTypeDef *const hdma, uint32_t SrcAddress, uint32_t DstAddress, uint32_t SrcDataSize);
+HAL_StatusTypeDef HAL_DMA_Start_IT(DMA_HandleTypeDef *const hdma, uint32_t SrcAddress, uint32_t DstAddress, uint32_t SrcDataSize);
 HAL_StatusTypeDef HAL_DMA_Abort(DMA_HandleTypeDef *const hdma);
 HAL_StatusTypeDef HAL_DMA_Abort_IT(DMA_HandleTypeDef *const hdma);
-HAL_StatusTypeDef HAL_DMA_PollForTransfer(DMA_HandleTypeDef *const hdma, HAL_DMA_LevelCompleteTypeDef CompleteLevel,
-					  uint32_t Timeout);
+HAL_StatusTypeDef HAL_DMA_PollForTransfer(DMA_HandleTypeDef *const hdma, HAL_DMA_LevelCompleteTypeDef CompleteLevel, uint32_t Timeout);
 void HAL_DMA_IRQHandler(DMA_HandleTypeDef *const hdma);
-HAL_StatusTypeDef HAL_DMA_RegisterCallback(DMA_HandleTypeDef *const hdma, HAL_DMA_CallbackIDTypeDef CallbackID,
-					   void (*const pCallback)(DMA_HandleTypeDef *const _hdma));
+HAL_StatusTypeDef HAL_DMA_RegisterCallback(DMA_HandleTypeDef *const hdma, HAL_DMA_CallbackIDTypeDef CallbackID, void (*const pCallback)(DMA_HandleTypeDef *const _hdma));
 HAL_StatusTypeDef HAL_DMA_UnRegisterCallback(DMA_HandleTypeDef *const hdma, HAL_DMA_CallbackIDTypeDef CallbackID);
 /**
  * @}
@@ -777,8 +772,7 @@ uint32_t HAL_DMA_GetError(DMA_HandleTypeDef const *const hdma);
  */
 
 HAL_StatusTypeDef HAL_DMA_ConfigChannelAttributes(DMA_HandleTypeDef *const hdma, uint32_t ChannelAttributes);
-HAL_StatusTypeDef HAL_DMA_GetConfigChannelAttributes(DMA_HandleTypeDef const *const hdma,
-						     uint32_t *const pChannelAttributes);
+HAL_StatusTypeDef HAL_DMA_GetConfigChannelAttributes(DMA_HandleTypeDef const *const hdma, uint32_t *const pChannelAttributes);
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 HAL_StatusTypeDef HAL_DMA_LockChannelAttributes(DMA_HandleTypeDef const *const hdma);
@@ -823,14 +817,11 @@ HAL_StatusTypeDef HAL_DMA_GetLockChannelAttributes(DMA_HandleTypeDef const *cons
  */
 #define GET_DMA_INSTANCE(__HANDLE__) ((DMA_TypeDef *)((uint32_t)((__HANDLE__)->Instance) & (~HAL_DMA_OFFSET_MASK)))
 
-#define GET_DMA_CHANNEL(__HANDLE__)                                                                                    \
-	((((uint32_t)((__HANDLE__)->Instance) & HAL_DMA_OFFSET_MASK) - HAL_DMA_CHANNEL_START) / HAL_DMA_CHANNEL_SIZE)
+#define GET_DMA_CHANNEL(__HANDLE__) ((((uint32_t)((__HANDLE__)->Instance) & HAL_DMA_OFFSET_MASK) - HAL_DMA_CHANNEL_START) / HAL_DMA_CHANNEL_SIZE)
 
 #define IS_DMA_MODE(MODE) ((MODE) == DMA_NORMAL)
 
-#define IS_DMA_DIRECTION(DIRECTION)                                                                                    \
-	(((DIRECTION) == DMA_PERIPH_TO_MEMORY) || ((DIRECTION) == DMA_MEMORY_TO_PERIPH) ||                             \
-	 ((DIRECTION) == DMA_MEMORY_TO_MEMORY))
+#define IS_DMA_DIRECTION(DIRECTION) (((DIRECTION) == DMA_PERIPH_TO_MEMORY) || ((DIRECTION) == DMA_MEMORY_TO_PERIPH) || ((DIRECTION) == DMA_MEMORY_TO_MEMORY))
 
 #define IS_DMA_LEVEL_COMPLETE(LEVEL) (((LEVEL) == HAL_DMA_FULL_TRANSFER) || ((LEVEL) == HAL_DMA_HALF_TRANSFER))
 
@@ -838,19 +829,14 @@ HAL_StatusTypeDef HAL_DMA_GetLockChannelAttributes(DMA_HandleTypeDef const *cons
 
 #define IS_DMA_DESTINATION_INC(INC) (((INC) == DMA_DINC_FIXED) || ((INC) == DMA_DINC_INCREMENTED))
 
-#define IS_DMA_SOURCE_DATA_WIDTH(WIDTH)                                                                                \
-	(((WIDTH) == DMA_SRC_DATAWIDTH_BYTE) || ((WIDTH) == DMA_SRC_DATAWIDTH_HALFWORD) ||                             \
-	 ((WIDTH) == DMA_SRC_DATAWIDTH_WORD))
+#define IS_DMA_SOURCE_DATA_WIDTH(WIDTH) (((WIDTH) == DMA_SRC_DATAWIDTH_BYTE) || ((WIDTH) == DMA_SRC_DATAWIDTH_HALFWORD) || ((WIDTH) == DMA_SRC_DATAWIDTH_WORD))
 
-#define IS_DMA_DESTINATION_DATA_WIDTH(WIDTH)                                                                           \
-	(((WIDTH) == DMA_DEST_DATAWIDTH_BYTE) || ((WIDTH) == DMA_DEST_DATAWIDTH_HALFWORD) ||                           \
-	 ((WIDTH) == DMA_DEST_DATAWIDTH_WORD))
+#define IS_DMA_DESTINATION_DATA_WIDTH(WIDTH) (((WIDTH) == DMA_DEST_DATAWIDTH_BYTE) || ((WIDTH) == DMA_DEST_DATAWIDTH_HALFWORD) || ((WIDTH) == DMA_DEST_DATAWIDTH_WORD))
 
 #define IS_DMA_BURST_LENGTH(LENGTH) (((LENGTH) >= DMA_CHANNEL_BURST_MIN) && ((LENGTH) <= DMA_CHANNEL_BURST_MAX))
 
-#define IS_DMA_PRIORITY(PRIORITY)                                                                                      \
-	(((PRIORITY) == DMA_LOW_PRIORITY_LOW_WEIGHT) || ((PRIORITY) == DMA_LOW_PRIORITY_MID_WEIGHT) ||                 \
-	 ((PRIORITY) == DMA_LOW_PRIORITY_HIGH_WEIGHT) || ((PRIORITY) == DMA_HIGH_PRIORITY))
+#define IS_DMA_PRIORITY(PRIORITY)                                                                                                                                                                      \
+	(((PRIORITY) == DMA_LOW_PRIORITY_LOW_WEIGHT) || ((PRIORITY) == DMA_LOW_PRIORITY_MID_WEIGHT) || ((PRIORITY) == DMA_LOW_PRIORITY_HIGH_WEIGHT) || ((PRIORITY) == DMA_HIGH_PRIORITY))
 
 #define IS_DMA_TRANSFER_ALLOCATED_PORT(ALLOCATED_PORT) (((ALLOCATED_PORT) & (~(DMA_CTR1_SAP | DMA_CTR1_DAP))) == 0U)
 
@@ -864,18 +850,15 @@ HAL_StatusTypeDef HAL_DMA_GetLockChannelAttributes(DMA_HandleTypeDef const *cons
 
 #define IS_DMA_BLOCK_HW_REQUEST(MODE) (((MODE) == DMA_BREQ_SINGLE_BURST) || ((MODE) == DMA_BREQ_BLOCK))
 
-#define IS_DMA_TCEM_EVENT_MODE(MODE)                                                                                   \
-	(((MODE) == DMA_TCEM_BLOCK_TRANSFER) || ((MODE) == DMA_TCEM_REPEATED_BLOCK_TRANSFER) ||                        \
-	 ((MODE) == DMA_TCEM_EACH_LL_ITEM_TRANSFER) || ((MODE) == DMA_TCEM_LAST_LL_ITEM_TRANSFER))
+#define IS_DMA_TCEM_EVENT_MODE(MODE)                                                                                                                                                                   \
+	(((MODE) == DMA_TCEM_BLOCK_TRANSFER) || ((MODE) == DMA_TCEM_REPEATED_BLOCK_TRANSFER) || ((MODE) == DMA_TCEM_EACH_LL_ITEM_TRANSFER) || ((MODE) == DMA_TCEM_LAST_LL_ITEM_TRANSFER))
 
 #define IS_DMA_BLOCK_SIZE(SIZE) (((SIZE) > 0U) && ((SIZE) <= DMA_CBR1_BNDT))
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-#define IS_DMA_ATTRIBUTES(ATTRIBUTE)                                                                                   \
-	(((ATTRIBUTE) != 0U) &&                                                                                        \
-	 (((ATTRIBUTE) & (~(DMA_CHANNEL_ATTR_VALUE_MASK | DMA_CHANNEL_ATTR_ITEM_MASK))) == 0U) &&                      \
-	 (((((ATTRIBUTE) & DMA_CHANNEL_ATTR_ITEM_MASK) >> 4U) | ((ATTRIBUTE) & DMA_CHANNEL_ATTR_VALUE_MASK)) ==        \
-	  (((ATTRIBUTE) & DMA_CHANNEL_ATTR_ITEM_MASK) >> 4U)))
+#define IS_DMA_ATTRIBUTES(ATTRIBUTE)                                                                                                                                                                   \
+	(((ATTRIBUTE) != 0U) && (((ATTRIBUTE) & (~(DMA_CHANNEL_ATTR_VALUE_MASK | DMA_CHANNEL_ATTR_ITEM_MASK))) == 0U) &&                                                                               \
+	 (((((ATTRIBUTE) & DMA_CHANNEL_ATTR_ITEM_MASK) >> 4U) | ((ATTRIBUTE) & DMA_CHANNEL_ATTR_VALUE_MASK)) == (((ATTRIBUTE) & DMA_CHANNEL_ATTR_ITEM_MASK) >> 4U)))
 #else
 #define IS_DMA_ATTRIBUTES(ATTRIBUTE) (((ATTRIBUTE) == DMA_CHANNEL_PRIV) || ((ATTRIBUTE) == DMA_CHANNEL_NPRIV))
 #endif /* (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */

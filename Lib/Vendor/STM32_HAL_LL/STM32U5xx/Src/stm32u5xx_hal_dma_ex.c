@@ -634,29 +634,20 @@ static void DMA_List_Init(DMA_HandleTypeDef const *const hdma);
 static void DMA_List_BuildNode(DMA_NodeConfTypeDef const *const pNodeConfig, DMA_NodeTypeDef *const pNode);
 static void DMA_List_GetNodeConfig(DMA_NodeConfTypeDef *const pNodeConfig, DMA_NodeTypeDef const *const pNode);
 #if defined(__GNUC__) && !defined(__CC_ARM)
-static __attribute__((noinline)) uint32_t DMA_List_CheckNodesBaseAddresses(DMA_NodeTypeDef const *const pNode1,
-									   DMA_NodeTypeDef const *const pNode2,
-									   DMA_NodeTypeDef const *const pNode3);
+static __attribute__((noinline)) uint32_t DMA_List_CheckNodesBaseAddresses(DMA_NodeTypeDef const *const pNode1, DMA_NodeTypeDef const *const pNode2, DMA_NodeTypeDef const *const pNode3);
 #else
-static uint32_t DMA_List_CheckNodesBaseAddresses(DMA_NodeTypeDef const *const pNode1,
-						 DMA_NodeTypeDef const *const pNode2,
-						 DMA_NodeTypeDef const *const pNode3);
+static uint32_t DMA_List_CheckNodesBaseAddresses(DMA_NodeTypeDef const *const pNode1, DMA_NodeTypeDef const *const pNode2, DMA_NodeTypeDef const *const pNode3);
 #endif /* __GNUC__ && !__CC_ARM */
-static uint32_t DMA_List_CheckNodesTypes(DMA_NodeTypeDef const *const pNode1, DMA_NodeTypeDef const *const pNode2,
-					 DMA_NodeTypeDef const *const pNode3);
-static void DMA_List_GetCLLRNodeInfo(DMA_NodeTypeDef const *const pNode, uint32_t *const cllr_mask,
-				     uint32_t *const cllr_offset);
-static uint32_t DMA_List_FindNode(DMA_QListTypeDef const *const pQList, DMA_NodeTypeDef const *const pNode,
-				  DMA_NodeInQInfoTypeDef *const NodeInfo);
-static void DMA_List_ResetQueueNodes(DMA_QListTypeDef const *const pQList,
-				     DMA_NodeInQInfoTypeDef const *const NodeInfo);
+static uint32_t DMA_List_CheckNodesTypes(DMA_NodeTypeDef const *const pNode1, DMA_NodeTypeDef const *const pNode2, DMA_NodeTypeDef const *const pNode3);
+static void DMA_List_GetCLLRNodeInfo(DMA_NodeTypeDef const *const pNode, uint32_t *const cllr_mask, uint32_t *const cllr_offset);
+static uint32_t DMA_List_FindNode(DMA_QListTypeDef const *const pQList, DMA_NodeTypeDef const *const pNode, DMA_NodeInQInfoTypeDef *const NodeInfo);
+static void DMA_List_ResetQueueNodes(DMA_QListTypeDef const *const pQList, DMA_NodeInQInfoTypeDef const *const NodeInfo);
 static void DMA_List_FillNode(DMA_NodeTypeDef const *const pSrcNode, DMA_NodeTypeDef *const pDestNode);
 static void DMA_List_ConvertNodeToDynamic(uint32_t ContextNodeAddr, uint32_t CurrentNodeAddr, uint32_t RegisterNumber);
 static void DMA_List_ConvertNodeToStatic(uint32_t ContextNodeAddr, uint32_t CurrentNodeAddr, uint32_t RegisterNumber);
 static void DMA_List_UpdateDynamicQueueNodesCLLR(DMA_QListTypeDef const *const pQList, uint32_t LastNode_IsCircular);
 static void DMA_List_UpdateStaticQueueNodesCLLR(DMA_QListTypeDef const *const pQList, uint32_t operation);
-static void DMA_List_FormatNode(DMA_NodeTypeDef *const pNode, uint32_t RegisterIdx, uint32_t RegisterNumber,
-				uint32_t Format);
+static void DMA_List_FormatNode(DMA_NodeTypeDef *const pNode, uint32_t RegisterIdx, uint32_t RegisterNumber, uint32_t Format);
 static void DMA_List_ClearUnusedFields(DMA_NodeTypeDef *const pNode, uint32_t FirstUnusedField);
 static void DMA_List_CleanQueue(DMA_QListTypeDef *const pQList);
 
@@ -823,8 +814,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_DeInit(DMA_HandleTypeDef *const hdma)
 #endif /* (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
 	/* Clear all flags */
-	__HAL_DMA_CLEAR_FLAG(hdma, (DMA_FLAG_TC | DMA_FLAG_HT | DMA_FLAG_DTE | DMA_FLAG_ULE | DMA_FLAG_USE |
-				    DMA_FLAG_SUSP | DMA_FLAG_TO));
+	__HAL_DMA_CLEAR_FLAG(hdma, (DMA_FLAG_TC | DMA_FLAG_HT | DMA_FLAG_DTE | DMA_FLAG_ULE | DMA_FLAG_USE | DMA_FLAG_SUSP | DMA_FLAG_TO));
 
 	/* Clean all callbacks */
 	hdma->XferCpltCallback = NULL;
@@ -1195,8 +1185,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_BuildNode(DMA_NodeConfTypeDef const *const pNod
  * linked-list node registers configurations.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_DMAEx_List_GetNodeConfig(DMA_NodeConfTypeDef *const pNodeConfig,
-					       DMA_NodeTypeDef const *const pNode)
+HAL_StatusTypeDef HAL_DMAEx_List_GetNodeConfig(DMA_NodeConfTypeDef *const pNodeConfig, DMA_NodeTypeDef const *const pNode)
 {
 	/* Check the node configuration and physical node parameters */
 	if ((pNodeConfig == NULL) || (pNode == NULL)) {
@@ -1220,8 +1209,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_GetNodeConfig(DMA_NodeConfTypeDef *const pNodeC
  * linked-list new node registers configurations.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_DMAEx_List_InsertNode(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pPrevNode,
-					    DMA_NodeTypeDef *const pNewNode)
+HAL_StatusTypeDef HAL_DMAEx_List_InsertNode(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pPrevNode, DMA_NodeTypeDef *const pNewNode)
 {
 	uint32_t cllr_mask;
 	uint32_t cllr_offset;
@@ -1295,18 +1283,15 @@ HAL_StatusTypeDef HAL_DMAEx_List_InsertNode(DMA_QListTypeDef *const pQList, DMA_
 				if (node_info.currentnode_pos == pQList->NodeNumber) {
 					/* Check if queue is circular */
 					if (pQList->FirstCircularNode != NULL) {
-						pNewNode->LinkRegisters[cllr_offset] =
-						    ((uint32_t)pQList->FirstCircularNode & DMA_CLLR_LA) | cllr_mask;
+						pNewNode->LinkRegisters[cllr_offset] = ((uint32_t)pQList->FirstCircularNode & DMA_CLLR_LA) | cllr_mask;
 					}
 
-					pPrevNode->LinkRegisters[cllr_offset] =
-					    ((uint32_t)pNewNode & DMA_CLLR_LA) | cllr_mask;
+					pPrevNode->LinkRegisters[cllr_offset] = ((uint32_t)pNewNode & DMA_CLLR_LA) | cllr_mask;
 				}
 				/* Selected node is not the last queue node */
 				else {
 					pNewNode->LinkRegisters[cllr_offset] = pPrevNode->LinkRegisters[cllr_offset];
-					pPrevNode->LinkRegisters[cllr_offset] =
-					    ((uint32_t)pNewNode & DMA_CLLR_LA) | cllr_mask;
+					pPrevNode->LinkRegisters[cllr_offset] = ((uint32_t)pNewNode & DMA_CLLR_LA) | cllr_mask;
 				}
 			} else {
 				/* Update the queue error code */
@@ -1460,12 +1445,10 @@ HAL_StatusTypeDef HAL_DMAEx_List_InsertNode_Tail(DMA_QListTypeDef *const pQList,
 
 		/* Check if queue is circular */
 		if (pQList->FirstCircularNode != NULL) {
-			pNewNode->LinkRegisters[cllr_offset] =
-			    ((uint32_t)pQList->FirstCircularNode & DMA_CLLR_LA) | cllr_mask;
+			pNewNode->LinkRegisters[cllr_offset] = ((uint32_t)pQList->FirstCircularNode & DMA_CLLR_LA) | cllr_mask;
 		}
 
-		((DMA_NodeTypeDef *)node_info.currentnode_addr)->LinkRegisters[cllr_offset] =
-		    ((uint32_t)pNewNode & DMA_CLLR_LA) | cllr_mask;
+		((DMA_NodeTypeDef *)node_info.currentnode_addr)->LinkRegisters[cllr_offset] = ((uint32_t)pNewNode & DMA_CLLR_LA) | cllr_mask;
 	}
 
 	/* Increment queue node number */
@@ -1546,8 +1529,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_RemoveNode(DMA_QListTypeDef *const pQList, DMA_
 			}
 
 			/* Update the queue head node */
-			pQList->Head = (DMA_NodeTypeDef *)(((uint32_t)pQList->Head & DMA_CLBAR_LBA) +
-							   (pNode->LinkRegisters[cllr_offset] & DMA_CLLR_LA));
+			pQList->Head = (DMA_NodeTypeDef *)(((uint32_t)pQList->Head & DMA_CLBAR_LBA) + (pNode->LinkRegisters[cllr_offset] & DMA_CLLR_LA));
 			/* Unlink node to be removed */
 			pNode->LinkRegisters[cllr_offset] = 0U;
 		}
@@ -1581,8 +1563,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_RemoveNode(DMA_QListTypeDef *const pQList, DMA_
 			}
 
 			/* Link previous node */
-			((DMA_NodeTypeDef *)(previousnode_addr))->LinkRegisters[cllr_offset] =
-			    pNode->LinkRegisters[cllr_offset];
+			((DMA_NodeTypeDef *)(previousnode_addr))->LinkRegisters[cllr_offset] = pNode->LinkRegisters[cllr_offset];
 
 			/* Unlink node to be removed */
 			pNode->LinkRegisters[cllr_offset] = 0U;
@@ -1798,8 +1779,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_RemoveNode_Tail(DMA_QListTypeDef *const pQList)
  * linked-list new node registers configurations.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_DMAEx_List_ReplaceNode(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pOldNode,
-					     DMA_NodeTypeDef *const pNewNode)
+HAL_StatusTypeDef HAL_DMAEx_List_ReplaceNode(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pOldNode, DMA_NodeTypeDef *const pNewNode)
 {
 	uint32_t cllr_mask;
 	uint32_t cllr_offset;
@@ -1856,8 +1836,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_ReplaceNode(DMA_QListTypeDef *const pQList, DMA
 	if (DMA_List_FindNode(pQList, pOldNode, &node_info) == 0U) {
 		/* Replaced node is the head node */
 		if (node_info.currentnode_pos == 1U) {
-			pNewNode->LinkRegisters[cllr_offset] =
-			    ((DMA_NodeTypeDef *)(node_info.currentnode_addr))->LinkRegisters[cllr_offset];
+			pNewNode->LinkRegisters[cllr_offset] = ((DMA_NodeTypeDef *)(node_info.currentnode_addr))->LinkRegisters[cllr_offset];
 			pQList->Head = pNewNode;
 			((DMA_NodeTypeDef *)(node_info.currentnode_addr))->LinkRegisters[cllr_offset] = 0U;
 
@@ -1868,8 +1847,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_ReplaceNode(DMA_QListTypeDef *const pQList, DMA
 				(void)DMA_List_FindNode(pQList, NULL, &node_info);
 
 				/* Clear last node link */
-				((DMA_NodeTypeDef *)(node_info.currentnode_addr))->LinkRegisters[cllr_offset] =
-				    ((uint32_t)pNewNode & DMA_CLLR_LA) | cllr_mask;
+				((DMA_NodeTypeDef *)(node_info.currentnode_addr))->LinkRegisters[cllr_offset] = ((uint32_t)pNewNode & DMA_CLLR_LA) | cllr_mask;
 
 				/* Set new node as first circular node */
 				pQList->FirstCircularNode = pNewNode;
@@ -1877,8 +1855,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_ReplaceNode(DMA_QListTypeDef *const pQList, DMA
 		}
 		/* Replaced node is the last */
 		else if (node_info.currentnode_pos == pQList->NodeNumber) {
-			((DMA_NodeTypeDef *)(node_info.previousnode_addr))->LinkRegisters[cllr_offset] =
-			    ((uint32_t)pNewNode & DMA_CLLR_LA) | cllr_mask;
+			((DMA_NodeTypeDef *)(node_info.previousnode_addr))->LinkRegisters[cllr_offset] = ((uint32_t)pNewNode & DMA_CLLR_LA) | cllr_mask;
 			((DMA_NodeTypeDef *)(node_info.currentnode_addr))->LinkRegisters[cllr_offset] = 0U;
 
 			/* Check if first circular node queue is the last node
@@ -1894,18 +1871,15 @@ HAL_StatusTypeDef HAL_DMAEx_List_ReplaceNode(DMA_QListTypeDef *const pQList, DMA
 			   node */
 			else if (pQList->FirstCircularNode != NULL) {
 				/* Link first circular node to new node */
-				pNewNode->LinkRegisters[cllr_offset] =
-				    ((uint32_t)pQList->FirstCircularNode & DMA_CLLR_LA) | cllr_mask;
+				pNewNode->LinkRegisters[cllr_offset] = ((uint32_t)pQList->FirstCircularNode & DMA_CLLR_LA) | cllr_mask;
 			} else {
 				/* Prevent MISRA-C2012-Rule-15.7 */
 			}
 		}
 		/* Replaced node is in the middle */
 		else {
-			((DMA_NodeTypeDef *)(node_info.previousnode_addr))->LinkRegisters[cllr_offset] =
-			    ((uint32_t)pNewNode & DMA_CLLR_LA) | cllr_mask;
-			pNewNode->LinkRegisters[cllr_offset] =
-			    ((DMA_NodeTypeDef *)(node_info.currentnode_addr))->LinkRegisters[cllr_offset];
+			((DMA_NodeTypeDef *)(node_info.previousnode_addr))->LinkRegisters[cllr_offset] = ((uint32_t)pNewNode & DMA_CLLR_LA) | cllr_mask;
+			pNewNode->LinkRegisters[cllr_offset] = ((DMA_NodeTypeDef *)(node_info.currentnode_addr))->LinkRegisters[cllr_offset];
 			((DMA_NodeTypeDef *)(node_info.currentnode_addr))->LinkRegisters[cllr_offset] = 0U;
 
 			/* Check if first circular node queue is the current
@@ -1916,8 +1890,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_ReplaceNode(DMA_QListTypeDef *const pQList, DMA
 				(void)DMA_List_FindNode(pQList, NULL, &node_info);
 
 				/* Link last queue node to new node */
-				((DMA_NodeTypeDef *)(node_info.currentnode_addr))->LinkRegisters[cllr_offset] =
-				    ((uint32_t)pNewNode & DMA_CLLR_LA) | cllr_mask;
+				((DMA_NodeTypeDef *)(node_info.currentnode_addr))->LinkRegisters[cllr_offset] = ((uint32_t)pNewNode & DMA_CLLR_LA) | cllr_mask;
 
 				/* Set new node as first circular node */
 				pQList->FirstCircularNode = pNewNode;
@@ -2009,8 +1982,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_ReplaceNode_Head(DMA_QListTypeDef *const pQList
 		(void)DMA_List_FindNode(pQList, NULL, &node_info);
 
 		/* Clear last node link */
-		((DMA_NodeTypeDef *)(node_info.currentnode_addr))->LinkRegisters[cllr_offset] =
-		    ((uint32_t)pNewNode & DMA_CLLR_LA) | cllr_mask;
+		((DMA_NodeTypeDef *)(node_info.currentnode_addr))->LinkRegisters[cllr_offset] = ((uint32_t)pNewNode & DMA_CLLR_LA) | cllr_mask;
 
 		/* Set new node as first circular node */
 		pQList->FirstCircularNode = pNewNode;
@@ -2082,8 +2054,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_ReplaceNode_Tail(DMA_QListTypeDef *const pQList
 	(void)DMA_List_FindNode(pQList, NULL, &node_info);
 
 	/* Link previous node to new node */
-	((DMA_NodeTypeDef *)(node_info.previousnode_addr))->LinkRegisters[cllr_offset] =
-	    ((uint32_t)pNewNode & DMA_CLLR_LA) | cllr_mask;
+	((DMA_NodeTypeDef *)(node_info.previousnode_addr))->LinkRegisters[cllr_offset] = ((uint32_t)pNewNode & DMA_CLLR_LA) | cllr_mask;
 
 	/* Clear CLLR for current node */
 	((DMA_NodeTypeDef *)(node_info.currentnode_addr))->LinkRegisters[cllr_offset] = 0U;
@@ -2195,8 +2166,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_ResetQ(DMA_QListTypeDef *const pQList)
  * destination queue information.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_DMAEx_List_InsertQ(DMA_QListTypeDef *const pSrcQList, DMA_NodeTypeDef const *const pPrevNode,
-					 DMA_QListTypeDef *const pDestQList)
+HAL_StatusTypeDef HAL_DMAEx_List_InsertQ(DMA_QListTypeDef *const pSrcQList, DMA_NodeTypeDef const *const pPrevNode, DMA_QListTypeDef *const pDestQList)
 {
 	uint32_t cllr_mask;
 	uint32_t cllr_offset;
@@ -2301,8 +2271,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_InsertQ(DMA_QListTypeDef *const pSrcQList, DMA_
 
 				/* Link destination queue tail node to new first
 				 * circular node */
-				((DMA_NodeTypeDef *)dest_q_node_info.currentnode_addr)->LinkRegisters[cllr_offset] =
-				    ((uint32_t)pSrcQList->Head & DMA_CLLR_LA) | cllr_mask;
+				((DMA_NodeTypeDef *)dest_q_node_info.currentnode_addr)->LinkRegisters[cllr_offset] = ((uint32_t)pSrcQList->Head & DMA_CLLR_LA) | cllr_mask;
 
 				/* Set the head node of source queue as the
 				 * first circular node */
@@ -2311,8 +2280,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_InsertQ(DMA_QListTypeDef *const pSrcQList, DMA_
 
 			/* Link the last node of source queue to the fist node
 			 * of destination queue */
-			((DMA_NodeTypeDef *)(src_q_node_info.currentnode_addr))->LinkRegisters[cllr_offset] =
-			    ((uint32_t)pDestQList->Head & DMA_CLLR_LA) | cllr_mask;
+			((DMA_NodeTypeDef *)(src_q_node_info.currentnode_addr))->LinkRegisters[cllr_offset] = ((uint32_t)pDestQList->Head & DMA_CLLR_LA) | cllr_mask;
 			pDestQList->Head = pSrcQList->Head;
 			pDestQList->NodeNumber += pSrcQList->NodeNumber;
 		}
@@ -2327,9 +2295,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_InsertQ(DMA_QListTypeDef *const pSrcQList, DMA_
 					/* Link the first node of source queue
 					 * to the last node of destination queue
 					 */
-					((DMA_NodeTypeDef *)(dest_q_node_info.currentnode_addr))
-					    ->LinkRegisters[cllr_offset] =
-					    ((uint32_t)pSrcQList->Head & DMA_CLLR_LA) | cllr_mask;
+					((DMA_NodeTypeDef *)(dest_q_node_info.currentnode_addr))->LinkRegisters[cllr_offset] = ((uint32_t)pSrcQList->Head & DMA_CLLR_LA) | cllr_mask;
 					pDestQList->NodeNumber += pSrcQList->NodeNumber;
 
 					/* Check if first circular node queue is
@@ -2341,14 +2307,11 @@ HAL_StatusTypeDef HAL_DMAEx_List_InsertQ(DMA_QListTypeDef *const pSrcQList, DMA_
 						(void)DMA_List_FindNode(pSrcQList, NULL, &src_q_node_info);
 
 						/* Find first circular node */
-						(void)DMA_List_FindNode(pDestQList, pDestQList->FirstCircularNode,
-									&dest_q_node_info);
+						(void)DMA_List_FindNode(pDestQList, pDestQList->FirstCircularNode, &dest_q_node_info);
 
 						/* Link last source queue node
 						 * to first destination queue */
-						((DMA_NodeTypeDef *)src_q_node_info.currentnode_addr)
-						    ->LinkRegisters[cllr_offset] =
-						    (dest_q_node_info.currentnode_addr & DMA_CLLR_LA) | cllr_mask;
+						((DMA_NodeTypeDef *)src_q_node_info.currentnode_addr)->LinkRegisters[cllr_offset] = (dest_q_node_info.currentnode_addr & DMA_CLLR_LA) | cllr_mask;
 					}
 				}
 				/* Selected node is not the last destination
@@ -2357,9 +2320,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_InsertQ(DMA_QListTypeDef *const pSrcQList, DMA_
 					/* Link the first node of source queue
 					 * to the previous node of destination
 					 * queue */
-					((DMA_NodeTypeDef *)(dest_q_node_info.currentnode_addr))
-					    ->LinkRegisters[cllr_offset] =
-					    ((uint32_t)pSrcQList->Head & DMA_CLLR_LA) | cllr_mask;
+					((DMA_NodeTypeDef *)(dest_q_node_info.currentnode_addr))->LinkRegisters[cllr_offset] = ((uint32_t)pSrcQList->Head & DMA_CLLR_LA) | cllr_mask;
 
 					/* Find node and get its position in
 					 * selected queue */
@@ -2368,9 +2329,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_InsertQ(DMA_QListTypeDef *const pSrcQList, DMA_
 
 					/* Link the last node of source queue to
 					 * the next node of destination queue */
-					((DMA_NodeTypeDef *)(src_q_node_info.currentnode_addr))
-					    ->LinkRegisters[cllr_offset] =
-					    (dest_q_node_info.nextnode_addr & DMA_CLLR_LA) | cllr_mask;
+					((DMA_NodeTypeDef *)(src_q_node_info.currentnode_addr))->LinkRegisters[cllr_offset] = (dest_q_node_info.nextnode_addr & DMA_CLLR_LA) | cllr_mask;
 
 					/* Update queues counter */
 					pDestQList->NodeNumber += pSrcQList->NodeNumber;
@@ -2501,8 +2460,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_InsertQ_Head(DMA_QListTypeDef *const pSrcQList,
 
 			/* Link destination queue tail node to new first
 			 * circular node */
-			((DMA_NodeTypeDef *)dest_q_node_info.currentnode_addr)->LinkRegisters[cllr_offset] =
-			    ((uint32_t)pSrcQList->Head & DMA_CLLR_LA) | cllr_mask;
+			((DMA_NodeTypeDef *)dest_q_node_info.currentnode_addr)->LinkRegisters[cllr_offset] = ((uint32_t)pSrcQList->Head & DMA_CLLR_LA) | cllr_mask;
 
 			/* Set the head node of source queue as the first
 			 * circular node */
@@ -2511,8 +2469,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_InsertQ_Head(DMA_QListTypeDef *const pSrcQList,
 
 		/* Link the last node of source queue to the fist node of
 		 * destination queue */
-		((DMA_NodeTypeDef *)(src_q_node_info.currentnode_addr))->LinkRegisters[cllr_offset] =
-		    ((uint32_t)pDestQList->Head & DMA_CLLR_LA) | cllr_mask;
+		((DMA_NodeTypeDef *)(src_q_node_info.currentnode_addr))->LinkRegisters[cllr_offset] = ((uint32_t)pDestQList->Head & DMA_CLLR_LA) | cllr_mask;
 		pDestQList->Head = pSrcQList->Head;
 		pDestQList->NodeNumber += pSrcQList->NodeNumber;
 	}
@@ -2628,8 +2585,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_InsertQ_Tail(DMA_QListTypeDef *const pSrcQList,
 
 		/* Update source queue last node CLLR to link it with
 		 * destination first node */
-		((DMA_NodeTypeDef *)(dest_q_node_info.currentnode_addr))->LinkRegisters[cllr_offset] =
-		    ((uint32_t)pSrcQList->Head & DMA_CLLR_LA) | cllr_mask;
+		((DMA_NodeTypeDef *)(dest_q_node_info.currentnode_addr))->LinkRegisters[cllr_offset] = ((uint32_t)pSrcQList->Head & DMA_CLLR_LA) | cllr_mask;
 		pDestQList->NodeNumber += pSrcQList->NodeNumber;
 
 		/* Check if first circular node queue is not empty */
@@ -2643,8 +2599,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_InsertQ_Tail(DMA_QListTypeDef *const pSrcQList,
 
 			/* Link last source queue node to first destination
 			 * queue */
-			((DMA_NodeTypeDef *)src_q_node_info.currentnode_addr)->LinkRegisters[cllr_offset] =
-			    (dest_q_node_info.currentnode_addr & DMA_CLLR_LA) | cllr_mask;
+			((DMA_NodeTypeDef *)src_q_node_info.currentnode_addr)->LinkRegisters[cllr_offset] = (dest_q_node_info.currentnode_addr & DMA_CLLR_LA) | cllr_mask;
 		}
 	}
 
@@ -2671,8 +2626,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_InsertQ_Tail(DMA_QListTypeDef *const pSrcQList,
  * contains linked-list first circular node registers configurations.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_DMAEx_List_SetCircularModeConfig(DMA_QListTypeDef *const pQList,
-						       DMA_NodeTypeDef *const pFirstCircularNode)
+HAL_StatusTypeDef HAL_DMAEx_List_SetCircularModeConfig(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pFirstCircularNode)
 {
 	uint32_t cllr_mask;
 	uint32_t cllr_offset;
@@ -2729,8 +2683,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_SetCircularModeConfig(DMA_QListTypeDef *const p
 		(void)DMA_List_FindNode(pQList, NULL, &node_info);
 
 		/* Set circular mode */
-		((DMA_NodeTypeDef *)(node_info.currentnode_addr))->LinkRegisters[cllr_offset] =
-		    ((uint32_t)pFirstCircularNode & DMA_CLLR_LA) | cllr_mask;
+		((DMA_NodeTypeDef *)(node_info.currentnode_addr))->LinkRegisters[cllr_offset] = ((uint32_t)pFirstCircularNode & DMA_CLLR_LA) | cllr_mask;
 
 		/* Update first circular node in queue */
 		pQList->FirstCircularNode = pFirstCircularNode;
@@ -2812,8 +2765,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_SetCircularMode(DMA_QListTypeDef *const pQList)
 	(void)DMA_List_FindNode(pQList, NULL, &node_info);
 
 	/* Set circular mode */
-	((DMA_NodeTypeDef *)(node_info.currentnode_addr))->LinkRegisters[cllr_offset] =
-	    ((uint32_t)pQList->Head & DMA_CLLR_LA) | cllr_mask;
+	((DMA_NodeTypeDef *)(node_info.currentnode_addr))->LinkRegisters[cllr_offset] = ((uint32_t)pQList->Head & DMA_CLLR_LA) | cllr_mask;
 
 	/* Update linked-list circular state */
 	pQList->FirstCircularNode = pQList->Head;
@@ -2960,9 +2912,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_ConvertQToDynamic(DMA_QListTypeDef *const pQLis
 
 		/* Bypass the first circular node when first circular node isn't
 		 * the last queue node */
-		if (((uint32_t)pQList->FirstCircularNode != 0U) &&
-		    ((uint32_t)pQList->FirstCircularNode != node_info.currentnode_addr) &&
-		    ((uint32_t)pQList->FirstCircularNode == currentnode_addr)) {
+		if (((uint32_t)pQList->FirstCircularNode != 0U) && ((uint32_t)pQList->FirstCircularNode != node_info.currentnode_addr) && ((uint32_t)pQList->FirstCircularNode == currentnode_addr)) {
 			/* Copy first circular node to context node */
 			DMA_List_FillNode(pQList->FirstCircularNode, &context_node);
 		} else {
@@ -2972,8 +2922,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_ConvertQToDynamic(DMA_QListTypeDef *const pQLis
 	}
 
 	/* Check if first circular node is the last node queue */
-	if (((uint32_t)pQList->FirstCircularNode != 0U) &&
-	    ((uint32_t)pQList->FirstCircularNode != node_info.currentnode_addr)) {
+	if (((uint32_t)pQList->FirstCircularNode != 0U) && ((uint32_t)pQList->FirstCircularNode != node_info.currentnode_addr)) {
 		/* Update all queue nodes CLLR */
 		DMA_List_UpdateDynamicQueueNodesCLLR(pQList, LASTNODE_ISNOT_CIRCULAR);
 	} else {
@@ -3106,8 +3055,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_LinkQ(DMA_HandleTypeDef *const hdma, DMA_QListT
 	}
 
 	/* Check linearity compatibility */
-	if ((IS_DMA_2D_ADDRESSING_INSTANCE(hdma->Instance) == 0U) &&
-	    ((pQList->Head->NodeInfo & DMA_CHANNEL_TYPE_2D_ADDR) == DMA_CHANNEL_TYPE_2D_ADDR)) {
+	if ((IS_DMA_2D_ADDRESSING_INSTANCE(hdma->Instance) == 0U) && ((pQList->Head->NodeInfo & DMA_CHANNEL_TYPE_2D_ADDR) == DMA_CHANNEL_TYPE_2D_ADDR)) {
 		/* Update the queue error code */
 		pQList->ErrorCode = HAL_DMA_QUEUE_ERROR_UNSUPPORTED;
 
@@ -3219,8 +3167,7 @@ dimensions addressing capability.
  * structure that contains the data handling configuration.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_DMAEx_ConfigDataHandling(DMA_HandleTypeDef *const hdma,
-					       DMA_DataHandlingConfTypeDef const *const pConfigDataHandling)
+HAL_StatusTypeDef HAL_DMAEx_ConfigDataHandling(DMA_HandleTypeDef *const hdma, DMA_DataHandlingConfTypeDef const *const pConfigDataHandling)
 {
 	/* Check the DMA peripheral handle and data handling parameters */
 	if ((hdma == NULL) || (pConfigDataHandling == NULL)) {
@@ -3233,8 +3180,7 @@ HAL_StatusTypeDef HAL_DMAEx_ConfigDataHandling(DMA_HandleTypeDef *const hdma,
 
 	/* Check DMA channel state */
 	if (hdma->State == HAL_DMA_STATE_READY) {
-		MODIFY_REG(hdma->Instance->CTR1, (DMA_CTR1_DHX | DMA_CTR1_DBX | DMA_CTR1_SBX | DMA_CTR1_PAM),
-			   (pConfigDataHandling->DataAlignment | pConfigDataHandling->DataExchange));
+		MODIFY_REG(hdma->Instance->CTR1, (DMA_CTR1_DHX | DMA_CTR1_DBX | DMA_CTR1_SBX | DMA_CTR1_PAM), (pConfigDataHandling->DataAlignment | pConfigDataHandling->DataExchange));
 	} else {
 		/* Update the DMA channel error code */
 		hdma->ErrorCode = HAL_DMA_ERROR_BUSY;
@@ -3257,8 +3203,7 @@ HAL_StatusTypeDef HAL_DMAEx_ConfigDataHandling(DMA_HandleTypeDef *const hdma,
  * contains the trigger configuration.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_DMAEx_ConfigTrigger(DMA_HandleTypeDef *const hdma,
-					  DMA_TriggerConfTypeDef const *const pConfigTrigger)
+HAL_StatusTypeDef HAL_DMAEx_ConfigTrigger(DMA_HandleTypeDef *const hdma, DMA_TriggerConfTypeDef const *const pConfigTrigger)
 {
 	/* Check the DMA peripheral handle and trigger parameters */
 	if ((hdma == NULL) || (pConfigTrigger == NULL)) {
@@ -3274,8 +3219,7 @@ HAL_StatusTypeDef HAL_DMAEx_ConfigTrigger(DMA_HandleTypeDef *const hdma,
 	/* Check DMA channel state */
 	if (hdma->State == HAL_DMA_STATE_READY) {
 		MODIFY_REG(hdma->Instance->CTR2, (DMA_CTR2_TRIGPOL | DMA_CTR2_TRIGSEL | DMA_CTR2_TRIGM),
-			   (pConfigTrigger->TriggerPolarity | pConfigTrigger->TriggerMode |
-			    (pConfigTrigger->TriggerSelection << DMA_CTR2_TRIGSEL_Pos)));
+			   (pConfigTrigger->TriggerPolarity | pConfigTrigger->TriggerMode | (pConfigTrigger->TriggerSelection << DMA_CTR2_TRIGSEL_Pos)));
 	} else {
 		/* Update the DMA channel error code */
 		hdma->ErrorCode = HAL_DMA_ERROR_BUSY;
@@ -3298,8 +3242,7 @@ HAL_StatusTypeDef HAL_DMAEx_ConfigTrigger(DMA_HandleTypeDef *const hdma,
  * structure that contains the repeated block configuration.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_DMAEx_ConfigRepeatBlock(DMA_HandleTypeDef *const hdma,
-					      DMA_RepeatBlockConfTypeDef const *const pConfigRepeatBlock)
+HAL_StatusTypeDef HAL_DMAEx_ConfigRepeatBlock(DMA_HandleTypeDef *const hdma, DMA_RepeatBlockConfTypeDef const *const pConfigRepeatBlock)
 {
 	uint32_t tmpreg1;
 	uint32_t tmpreg2;
@@ -3576,10 +3519,7 @@ FIFO.
  * configuration information for the specified DMA Channel.
  * @retval Returns the number of available beats in FIFO.
  */
-uint32_t HAL_DMAEx_GetFifoLevel(DMA_HandleTypeDef const *const hdma)
-{
-	return ((hdma->Instance->CSR & DMA_CSR_FIFOL) >> DMA_CSR_FIFOL_Pos);
-}
+uint32_t HAL_DMAEx_GetFifoLevel(DMA_HandleTypeDef const *const hdma) { return ((hdma->Instance->CSR & DMA_CSR_FIFOL) >> DMA_CSR_FIFOL_Pos); }
 /**
  * @}
  */
@@ -3662,9 +3602,8 @@ static void DMA_List_BuildNode(DMA_NodeConfTypeDef const *const pNodeConfig, DMA
 	/* Update CTR1 register value
 	 * ***************************************************************************************/
 	/* Prepare DMA channel transfer register (CTR1) value */
-	pNode->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET] = pNodeConfig->Init.DestInc | pNodeConfig->Init.DestDataWidth |
-							 pNodeConfig->DataHandlingConfig.DataAlignment |
-							 pNodeConfig->Init.SrcInc | pNodeConfig->Init.SrcDataWidth;
+	pNode->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET] =
+	    pNodeConfig->Init.DestInc | pNodeConfig->Init.DestDataWidth | pNodeConfig->DataHandlingConfig.DataAlignment | pNodeConfig->Init.SrcInc | pNodeConfig->Init.SrcDataWidth;
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 	/* set source channel security attribute */
@@ -3682,8 +3621,7 @@ static void DMA_List_BuildNode(DMA_NodeConfTypeDef const *const pNodeConfig, DMA
 	if ((pNodeConfig->NodeType & DMA_CHANNEL_TYPE_GPDMA) == DMA_CHANNEL_TYPE_GPDMA) {
 		/* Prepare DMA channel transfer register (CTR1) value */
 		pNode->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET] |=
-		    (pNodeConfig->Init.TransferAllocatedPort | pNodeConfig->DataHandlingConfig.DataExchange |
-		     (((pNodeConfig->Init.DestBurstLength - 1U) << DMA_CTR1_DBL_1_Pos) & DMA_CTR1_DBL_1) |
+		    (pNodeConfig->Init.TransferAllocatedPort | pNodeConfig->DataHandlingConfig.DataExchange | (((pNodeConfig->Init.DestBurstLength - 1U) << DMA_CTR1_DBL_1_Pos) & DMA_CTR1_DBL_1) |
 		     (((pNodeConfig->Init.SrcBurstLength - 1U) << DMA_CTR1_SBL_1_Pos) & DMA_CTR1_SBL_1));
 	}
 	/***********************************************************************************
@@ -3692,8 +3630,7 @@ static void DMA_List_BuildNode(DMA_NodeConfTypeDef const *const pNodeConfig, DMA
 	/* Update CTR2 register value
 	 * ***************************************************************************************/
 	/* Prepare DMA channel transfer register 2 (CTR2) value */
-	pNode->LinkRegisters[NODE_CTR2_DEFAULT_OFFSET] =
-	    pNodeConfig->Init.TransferEventMode | (pNodeConfig->Init.Request & (DMA_CTR2_REQSEL | DMA_CTR2_SWREQ));
+	pNode->LinkRegisters[NODE_CTR2_DEFAULT_OFFSET] = pNodeConfig->Init.TransferEventMode | (pNodeConfig->Init.Request & (DMA_CTR2_REQSEL | DMA_CTR2_SWREQ));
 
 	/* Check for memory to peripheral transfer */
 	if ((pNodeConfig->Init.Direction) == DMA_MEMORY_TO_PERIPH) {
@@ -3713,8 +3650,7 @@ static void DMA_List_BuildNode(DMA_NodeConfTypeDef const *const pNodeConfig, DMA
 	if (pNodeConfig->TriggerConfig.TriggerPolarity != DMA_TRIG_POLARITY_MASKED) {
 		/* Prepare DMA channel transfer register 2 (CTR2) value */
 		pNode->LinkRegisters[NODE_CTR2_DEFAULT_OFFSET] |=
-		    pNodeConfig->TriggerConfig.TriggerMode | pNodeConfig->TriggerConfig.TriggerPolarity |
-		    ((pNodeConfig->TriggerConfig.TriggerSelection << DMA_CTR2_TRIGSEL_Pos) & DMA_CTR2_TRIGSEL);
+		    pNodeConfig->TriggerConfig.TriggerMode | pNodeConfig->TriggerConfig.TriggerPolarity | ((pNodeConfig->TriggerConfig.TriggerSelection << DMA_CTR2_TRIGSEL_Pos) & DMA_CTR2_TRIGSEL);
 	}
 	/***********************************************************************************
 	 * CTR2 register value is updated */
@@ -3727,8 +3663,7 @@ static void DMA_List_BuildNode(DMA_NodeConfTypeDef const *const pNodeConfig, DMA
 	/* If 2D addressing is supported by the selected DMA channel */
 	if ((pNodeConfig->NodeType & DMA_CHANNEL_TYPE_2D_ADDR) == DMA_CHANNEL_TYPE_2D_ADDR) {
 		/* Set the new CBR1 Register value */
-		pNode->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] |=
-		    (((pNodeConfig->RepeatBlockConfig.RepeatCount - 1U) << DMA_CBR1_BRC_Pos) & DMA_CBR1_BRC);
+		pNode->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] |= (((pNodeConfig->RepeatBlockConfig.RepeatCount - 1U) << DMA_CBR1_BRC_Pos) & DMA_CBR1_BRC);
 
 		/* If the source address offset is negative, set SDEC bit */
 		if (pNodeConfig->RepeatBlockConfig.SrcAddrOffset < 0) {
@@ -3785,19 +3720,15 @@ static void DMA_List_BuildNode(DMA_NodeConfTypeDef const *const pNodeConfig, DMA
 			blockoffset = (-pNodeConfig->RepeatBlockConfig.SrcAddrOffset);
 			pNode->LinkRegisters[NODE_CTR3_DEFAULT_OFFSET] = ((uint32_t)blockoffset & DMA_CTR3_SAO);
 		} else {
-			pNode->LinkRegisters[NODE_CTR3_DEFAULT_OFFSET] =
-			    ((uint32_t)pNodeConfig->RepeatBlockConfig.SrcAddrOffset & DMA_CTR3_SAO);
+			pNode->LinkRegisters[NODE_CTR3_DEFAULT_OFFSET] = ((uint32_t)pNodeConfig->RepeatBlockConfig.SrcAddrOffset & DMA_CTR3_SAO);
 		}
 
 		/* Write new CTR3 Register value : destination address offset */
 		if (pNodeConfig->RepeatBlockConfig.DestAddrOffset < 0) {
 			blockoffset = (-pNodeConfig->RepeatBlockConfig.DestAddrOffset);
-			pNode->LinkRegisters[NODE_CTR3_DEFAULT_OFFSET] |=
-			    (((uint32_t)blockoffset << DMA_CTR3_DAO_Pos) & DMA_CTR3_DAO);
+			pNode->LinkRegisters[NODE_CTR3_DEFAULT_OFFSET] |= (((uint32_t)blockoffset << DMA_CTR3_DAO_Pos) & DMA_CTR3_DAO);
 		} else {
-			pNode->LinkRegisters[NODE_CTR3_DEFAULT_OFFSET] |=
-			    (((uint32_t)pNodeConfig->RepeatBlockConfig.DestAddrOffset << DMA_CTR3_DAO_Pos) &
-			     DMA_CTR3_DAO);
+			pNode->LinkRegisters[NODE_CTR3_DEFAULT_OFFSET] |= (((uint32_t)pNodeConfig->RepeatBlockConfig.DestAddrOffset << DMA_CTR3_DAO_Pos) & DMA_CTR3_DAO);
 		}
 		/*********************************************************************************
 		 * CTR3 register value is updated */
@@ -3810,20 +3741,16 @@ static void DMA_List_BuildNode(DMA_NodeConfTypeDef const *const pNodeConfig, DMA
 			blockoffset = (-pNodeConfig->RepeatBlockConfig.BlkSrcAddrOffset);
 			pNode->LinkRegisters[NODE_CBR2_DEFAULT_OFFSET] = ((uint32_t)blockoffset & DMA_CBR2_BRSAO);
 		} else {
-			pNode->LinkRegisters[NODE_CBR2_DEFAULT_OFFSET] =
-			    ((uint32_t)pNodeConfig->RepeatBlockConfig.BlkSrcAddrOffset & DMA_CBR2_BRSAO);
+			pNode->LinkRegisters[NODE_CBR2_DEFAULT_OFFSET] = ((uint32_t)pNodeConfig->RepeatBlockConfig.BlkSrcAddrOffset & DMA_CBR2_BRSAO);
 		}
 
 		/* Write new CBR2 Register value : repeated block destination
 		 * address offset */
 		if (pNodeConfig->RepeatBlockConfig.BlkDestAddrOffset < 0) {
 			blockoffset = (-pNodeConfig->RepeatBlockConfig.BlkDestAddrOffset);
-			pNode->LinkRegisters[NODE_CBR2_DEFAULT_OFFSET] |=
-			    (((uint32_t)blockoffset & DMA_CBR2_BRSAO) << DMA_CBR2_BRDAO_Pos);
+			pNode->LinkRegisters[NODE_CBR2_DEFAULT_OFFSET] |= (((uint32_t)blockoffset & DMA_CBR2_BRSAO) << DMA_CBR2_BRDAO_Pos);
 		} else {
-			pNode->LinkRegisters[NODE_CBR2_DEFAULT_OFFSET] |=
-			    (((uint32_t)pNodeConfig->RepeatBlockConfig.BlkDestAddrOffset << DMA_CBR2_BRDAO_Pos) &
-			     DMA_CBR2_BRDAO);
+			pNode->LinkRegisters[NODE_CBR2_DEFAULT_OFFSET] |= (((uint32_t)pNodeConfig->RepeatBlockConfig.BlkDestAddrOffset << DMA_CBR2_BRDAO_Pos) & DMA_CBR2_BRDAO);
 		}
 		/*********************************************************************************
 		 * CBR2 register value is updated */
@@ -3867,14 +3794,10 @@ static void DMA_List_GetNodeConfig(DMA_NodeConfTypeDef *const pNodeConfig, DMA_N
 	pNodeConfig->Init.DestInc = pNode->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET] & DMA_CTR1_DINC;
 	pNodeConfig->Init.SrcDataWidth = pNode->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET] & DMA_CTR1_SDW_LOG2;
 	pNodeConfig->Init.DestDataWidth = pNode->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET] & DMA_CTR1_DDW_LOG2;
-	pNodeConfig->Init.SrcBurstLength =
-	    ((pNode->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET] & DMA_CTR1_SBL_1) >> DMA_CTR1_SBL_1_Pos) + 1U;
-	pNodeConfig->Init.DestBurstLength =
-	    ((pNode->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET] & DMA_CTR1_DBL_1) >> DMA_CTR1_DBL_1_Pos) + 1U;
-	pNodeConfig->Init.TransferAllocatedPort =
-	    pNode->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET] & (DMA_CTR1_SAP | DMA_CTR1_DAP);
-	pNodeConfig->DataHandlingConfig.DataExchange =
-	    pNode->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET] & (DMA_CTR1_SBX | DMA_CTR1_DBX | DMA_CTR1_DHX);
+	pNodeConfig->Init.SrcBurstLength = ((pNode->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET] & DMA_CTR1_SBL_1) >> DMA_CTR1_SBL_1_Pos) + 1U;
+	pNodeConfig->Init.DestBurstLength = ((pNode->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET] & DMA_CTR1_DBL_1) >> DMA_CTR1_DBL_1_Pos) + 1U;
+	pNodeConfig->Init.TransferAllocatedPort = pNode->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET] & (DMA_CTR1_SAP | DMA_CTR1_DAP);
+	pNodeConfig->DataHandlingConfig.DataExchange = pNode->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET] & (DMA_CTR1_SBX | DMA_CTR1_DBX | DMA_CTR1_DHX);
 	pNodeConfig->DataHandlingConfig.DataAlignment = pNode->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET] & DMA_CTR1_PAM;
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 	if ((pNode->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET] & DMA_CTR1_SSEC) != 0U) {
@@ -3910,8 +3833,7 @@ static void DMA_List_GetNodeConfig(DMA_NodeConfTypeDef *const pNodeConfig, DMA_N
 	pNodeConfig->Init.BlkHWRequest = (pNode->LinkRegisters[NODE_CTR2_DEFAULT_OFFSET] & DMA_CTR2_BREQ);
 	pNodeConfig->TriggerConfig.TriggerMode = pNode->LinkRegisters[NODE_CTR2_DEFAULT_OFFSET] & DMA_CTR2_TRIGM;
 	pNodeConfig->TriggerConfig.TriggerPolarity = pNode->LinkRegisters[NODE_CTR2_DEFAULT_OFFSET] & DMA_CTR2_TRIGPOL;
-	pNodeConfig->TriggerConfig.TriggerSelection =
-	    (pNode->LinkRegisters[NODE_CTR2_DEFAULT_OFFSET] & DMA_CTR2_TRIGSEL) >> DMA_CTR2_TRIGSEL_Pos;
+	pNodeConfig->TriggerConfig.TriggerSelection = (pNode->LinkRegisters[NODE_CTR2_DEFAULT_OFFSET] & DMA_CTR2_TRIGSEL) >> DMA_CTR2_TRIGSEL_Pos;
 	pNodeConfig->Init.TransferEventMode = pNode->LinkRegisters[NODE_CTR2_DEFAULT_OFFSET] & DMA_CTR2_TCEM;
 	/***********************************************************************************
 	 * CTR2 fields values are updated */
@@ -3921,8 +3843,7 @@ static void DMA_List_GetNodeConfig(DMA_NodeConfTypeDef *const pNodeConfig, DMA_N
 	pNodeConfig->DataSize = pNode->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] & DMA_CBR1_BNDT;
 
 	if ((pNodeConfig->NodeType & DMA_CHANNEL_TYPE_2D_ADDR) == DMA_CHANNEL_TYPE_2D_ADDR) {
-		pNodeConfig->RepeatBlockConfig.RepeatCount =
-		    ((pNode->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] & DMA_CBR1_BRC) >> DMA_CBR1_BRC_Pos) + 1U;
+		pNodeConfig->RepeatBlockConfig.RepeatCount = ((pNode->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] & DMA_CBR1_BRC) >> DMA_CBR1_BRC_Pos) + 1U;
 	} else {
 		pNodeConfig->RepeatBlockConfig.RepeatCount = 1U;
 	}
@@ -3948,8 +3869,7 @@ static void DMA_List_GetNodeConfig(DMA_NodeConfTypeDef *const pNodeConfig, DMA_N
 		offset = (uint16_t)(pNode->LinkRegisters[NODE_CTR3_DEFAULT_OFFSET] & DMA_CTR3_SAO);
 		pNodeConfig->RepeatBlockConfig.SrcAddrOffset = (int32_t)offset;
 
-		offset =
-		    (uint16_t)((pNode->LinkRegisters[NODE_CTR3_DEFAULT_OFFSET] & DMA_CTR3_DAO) >> DMA_CTR3_DAO_Pos);
+		offset = (uint16_t)((pNode->LinkRegisters[NODE_CTR3_DEFAULT_OFFSET] & DMA_CTR3_DAO) >> DMA_CTR3_DAO_Pos);
 		pNodeConfig->RepeatBlockConfig.DestAddrOffset = (int32_t)offset;
 
 		if ((pNode->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] & DMA_CBR1_SDEC) != 0U) {
@@ -3967,8 +3887,7 @@ static void DMA_List_GetNodeConfig(DMA_NodeConfTypeDef *const pNodeConfig, DMA_N
 		offset = (uint16_t)(pNode->LinkRegisters[NODE_CBR2_DEFAULT_OFFSET] & DMA_CBR2_BRSAO);
 		pNodeConfig->RepeatBlockConfig.BlkSrcAddrOffset = (int32_t)offset;
 
-		offset =
-		    (uint16_t)((pNode->LinkRegisters[NODE_CBR2_DEFAULT_OFFSET] & DMA_CBR2_BRDAO) >> DMA_CBR2_BRDAO_Pos);
+		offset = (uint16_t)((pNode->LinkRegisters[NODE_CBR2_DEFAULT_OFFSET] & DMA_CBR2_BRDAO) >> DMA_CBR2_BRDAO_Pos);
 		pNodeConfig->RepeatBlockConfig.BlkDestAddrOffset = (int32_t)offset;
 
 		if ((pNode->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] & DMA_CBR1_BRSDEC) != 0U) {
@@ -4008,13 +3927,9 @@ static void DMA_List_GetNodeConfig(DMA_NodeConfTypeDef *const pNodeConfig, DMA_N
  * @retval Return 0 when nodes addresses are compatible, 1 otherwise.
  */
 #if defined(__GNUC__) && !defined(__CC_ARM)
-static __attribute__((noinline)) uint32_t DMA_List_CheckNodesBaseAddresses(DMA_NodeTypeDef const *const pNode1,
-									   DMA_NodeTypeDef const *const pNode2,
-									   DMA_NodeTypeDef const *const pNode3)
+static __attribute__((noinline)) uint32_t DMA_List_CheckNodesBaseAddresses(DMA_NodeTypeDef const *const pNode1, DMA_NodeTypeDef const *const pNode2, DMA_NodeTypeDef const *const pNode3)
 #else
-static uint32_t DMA_List_CheckNodesBaseAddresses(DMA_NodeTypeDef const *const pNode1,
-						 DMA_NodeTypeDef const *const pNode2,
-						 DMA_NodeTypeDef const *const pNode3)
+static uint32_t DMA_List_CheckNodesBaseAddresses(DMA_NodeTypeDef const *const pNode1, DMA_NodeTypeDef const *const pNode2, DMA_NodeTypeDef const *const pNode3)
 #endif /* __GNUC__ && !__CC_ARM */
 {
 	uint32_t temp = (((uint32_t)pNode1 | (uint32_t)pNode2 | (uint32_t)pNode3) & DMA_CLBAR_LBA);
@@ -4054,8 +3969,7 @@ static uint32_t DMA_List_CheckNodesBaseAddresses(DMA_NodeTypeDef const *const pN
  * @retval Return 0 when nodes types are compatible, otherwise nodes types are
  * not compatible.
  */
-static uint32_t DMA_List_CheckNodesTypes(DMA_NodeTypeDef const *const pNode1, DMA_NodeTypeDef const *const pNode2,
-					 DMA_NodeTypeDef const *const pNode3)
+static uint32_t DMA_List_CheckNodesTypes(DMA_NodeTypeDef const *const pNode1, DMA_NodeTypeDef const *const pNode2, DMA_NodeTypeDef const *const pNode3)
 {
 	uint32_t ref = 0U;
 
@@ -4101,15 +4015,13 @@ static uint32_t DMA_List_CheckNodesTypes(DMA_NodeTypeDef const *const pNode1, DM
  * @param  cllr_offset : Pointer to CLLR register offset value.
  * @retval None.
  */
-static void DMA_List_GetCLLRNodeInfo(DMA_NodeTypeDef const *const pNode, uint32_t *const cllr_mask,
-				     uint32_t *const cllr_offset)
+static void DMA_List_GetCLLRNodeInfo(DMA_NodeTypeDef const *const pNode, uint32_t *const cllr_mask, uint32_t *const cllr_offset)
 {
 	/* Check node type */
 	if ((pNode->NodeInfo & DMA_CHANNEL_TYPE_2D_ADDR) == DMA_CHANNEL_TYPE_2D_ADDR) {
 		/* Update CLLR register mask value */
 		if (cllr_mask != NULL) {
-			*cllr_mask = DMA_CLLR_UT1 | DMA_CLLR_UT2 | DMA_CLLR_UB1 | DMA_CLLR_USA | DMA_CLLR_UDA |
-				     DMA_CLLR_UT3 | DMA_CLLR_UB2 | DMA_CLLR_ULL;
+			*cllr_mask = DMA_CLLR_UT1 | DMA_CLLR_UT2 | DMA_CLLR_UB1 | DMA_CLLR_USA | DMA_CLLR_UDA | DMA_CLLR_UT3 | DMA_CLLR_UB2 | DMA_CLLR_ULL;
 		}
 
 		/* Update CLLR register offset */
@@ -4121,8 +4033,7 @@ static void DMA_List_GetCLLRNodeInfo(DMA_NodeTypeDef const *const pNode, uint32_
 	else {
 		/* Update CLLR register mask value */
 		if (cllr_mask != NULL) {
-			*cllr_mask =
-			    DMA_CLLR_UT1 | DMA_CLLR_UT2 | DMA_CLLR_UB1 | DMA_CLLR_USA | DMA_CLLR_UDA | DMA_CLLR_ULL;
+			*cllr_mask = DMA_CLLR_UT1 | DMA_CLLR_UT2 | DMA_CLLR_UB1 | DMA_CLLR_USA | DMA_CLLR_UDA | DMA_CLLR_ULL;
 		}
 
 		/* Update CLLR register offset */
@@ -4143,8 +4054,7 @@ static void DMA_List_GetCLLRNodeInfo(DMA_NodeTypeDef const *const pNode, uint32_
  * @retval Return 0 when node is found in selected queue, otherwise node is not
  * found.
  */
-static uint32_t DMA_List_FindNode(DMA_QListTypeDef const *const pQList, DMA_NodeTypeDef const *const pNode,
-				  DMA_NodeInQInfoTypeDef *const NodeInfo)
+static uint32_t DMA_List_FindNode(DMA_QListTypeDef const *const pQList, DMA_NodeTypeDef const *const pNode, DMA_NodeInQInfoTypeDef *const NodeInfo)
 {
 	uint32_t node_idx = 0U;
 	uint32_t currentnode_address = 0U;
@@ -4162,10 +4072,7 @@ static uint32_t DMA_List_FindNode(DMA_QListTypeDef const *const pQList, DMA_Node
 			/* Calculate nodes addresses */
 			else {
 				previousnode_address = currentnode_address;
-				currentnode_address = ((DMA_NodeTypeDef *)(currentnode_address +
-									   ((uint32_t)pQList->Head & DMA_CLBAR_LBA)))
-							  ->LinkRegisters[cllr_offset] &
-						      DMA_CLLR_LA;
+				currentnode_address = ((DMA_NodeTypeDef *)(currentnode_address + ((uint32_t)pQList->Head & DMA_CLBAR_LBA)))->LinkRegisters[cllr_offset] & DMA_CLLR_LA;
 			}
 
 			/* Increment node index */
@@ -4183,10 +4090,7 @@ static uint32_t DMA_List_FindNode(DMA_QListTypeDef const *const pQList, DMA_Node
 			/* Calculate nodes addresses */
 			else {
 				previousnode_address = currentnode_address;
-				currentnode_address = ((DMA_NodeTypeDef *)(currentnode_address +
-									   ((uint32_t)pQList->Head & DMA_CLBAR_LBA)))
-							  ->LinkRegisters[cllr_offset] &
-						      DMA_CLLR_LA;
+				currentnode_address = ((DMA_NodeTypeDef *)(currentnode_address + ((uint32_t)pQList->Head & DMA_CLBAR_LBA)))->LinkRegisters[cllr_offset] & DMA_CLLR_LA;
 			}
 
 			/* Increment node index */
@@ -4212,9 +4116,7 @@ static uint32_t DMA_List_FindNode(DMA_QListTypeDef const *const pQList, DMA_Node
 
 	/* Update next node address */
 	if (((DMA_NodeTypeDef *)NodeInfo->currentnode_addr)->LinkRegisters[cllr_offset] != 0U) {
-		NodeInfo->nextnode_addr =
-		    (((DMA_NodeTypeDef *)NodeInfo->currentnode_addr)->LinkRegisters[cllr_offset] & DMA_CLLR_LA) |
-		    ((uint32_t)pQList->Head & DMA_CLBAR_LBA);
+		NodeInfo->nextnode_addr = (((DMA_NodeTypeDef *)NodeInfo->currentnode_addr)->LinkRegisters[cllr_offset] & DMA_CLLR_LA) | ((uint32_t)pQList->Head & DMA_CLBAR_LBA);
 	}
 
 	return 0U;
@@ -4245,15 +4147,11 @@ static void DMA_List_ResetQueueNodes(DMA_QListTypeDef const *const pQList, DMA_N
 		/* Calculate nodes addresses */
 		else {
 			previousnode_address = currentnode_address;
-			currentnode_address =
-			    ((DMA_NodeTypeDef *)(currentnode_address + ((uint32_t)pQList->Head & DMA_CLBAR_LBA)))
-				->LinkRegisters[cllr_offset] &
-			    DMA_CLLR_LA;
+			currentnode_address = ((DMA_NodeTypeDef *)(currentnode_address + ((uint32_t)pQList->Head & DMA_CLBAR_LBA)))->LinkRegisters[cllr_offset] & DMA_CLLR_LA;
 		}
 
 		/* Reset node */
-		((DMA_NodeTypeDef *)(previousnode_address + ((uint32_t)pQList->Head & DMA_CLBAR_LBA)))
-		    ->LinkRegisters[cllr_offset] = 0U;
+		((DMA_NodeTypeDef *)(previousnode_address + ((uint32_t)pQList->Head & DMA_CLBAR_LBA)))->LinkRegisters[cllr_offset] = 0U;
 
 		/* Increment node index */
 		node_idx++;
@@ -4294,8 +4192,7 @@ static void DMA_List_ConvertNodeToDynamic(uint32_t ContextNodeAddr, uint32_t Cur
 	uint32_t cllr_idx = RegisterNumber - 1U;
 	DMA_NodeTypeDef *context_node = (DMA_NodeTypeDef *)ContextNodeAddr;
 	DMA_NodeTypeDef *current_node = (DMA_NodeTypeDef *)CurrentNodeAddr;
-	uint32_t update_link[NODE_MAXIMUM_SIZE] = {DMA_CLLR_UT1, DMA_CLLR_UT2, DMA_CLLR_UB1, DMA_CLLR_USA,
-						   DMA_CLLR_UDA, DMA_CLLR_UT3, DMA_CLLR_UB2, DMA_CLLR_ULL};
+	uint32_t update_link[NODE_MAXIMUM_SIZE] = {DMA_CLLR_UT1, DMA_CLLR_UT2, DMA_CLLR_UB1, DMA_CLLR_USA, DMA_CLLR_UDA, DMA_CLLR_UT3, DMA_CLLR_UB2, DMA_CLLR_ULL};
 
 	/* Update ULL position according to register number */
 	update_link[cllr_idx] = update_link[NODE_MAXIMUM_SIZE - 1U];
@@ -4304,11 +4201,8 @@ static void DMA_List_ConvertNodeToDynamic(uint32_t ContextNodeAddr, uint32_t Cur
 	while (contextnode_reg_counter != RegisterNumber) {
 		/* Check if register values are equal (exception for CSAR, CDAR
 		 * and CLLR registers) */
-		if ((context_node->LinkRegisters[contextnode_reg_counter] ==
-		     current_node->LinkRegisters[currentnode_reg_counter]) &&
-		    (contextnode_reg_counter != NODE_CSAR_DEFAULT_OFFSET) &&
-		    (contextnode_reg_counter != NODE_CDAR_DEFAULT_OFFSET) &&
-		    (contextnode_reg_counter != (RegisterNumber - 1U))) {
+		if ((context_node->LinkRegisters[contextnode_reg_counter] == current_node->LinkRegisters[currentnode_reg_counter]) && (contextnode_reg_counter != NODE_CSAR_DEFAULT_OFFSET) &&
+		    (contextnode_reg_counter != NODE_CDAR_DEFAULT_OFFSET) && (contextnode_reg_counter != (RegisterNumber - 1U))) {
 			/* Format the node according to unused registers */
 			DMA_List_FormatNode(current_node, currentnode_reg_counter, RegisterNumber, NODE_DYNAMIC_FORMAT);
 
@@ -4320,8 +4214,7 @@ static void DMA_List_ConvertNodeToDynamic(uint32_t ContextNodeAddr, uint32_t Cur
 		} else {
 			/* Update context node register fields with new values
 			 */
-			context_node->LinkRegisters[contextnode_reg_counter] =
-			    current_node->LinkRegisters[currentnode_reg_counter];
+			context_node->LinkRegisters[contextnode_reg_counter] = current_node->LinkRegisters[currentnode_reg_counter];
 
 			/* Update CLLR fields */
 			current_node->LinkRegisters[cllr_idx] |= update_link[contextnode_reg_counter];
@@ -4355,8 +4248,7 @@ static void DMA_List_ConvertNodeToStatic(uint32_t ContextNodeAddr, uint32_t Curr
 	uint32_t cllr_mask;
 	const DMA_NodeTypeDef *context_node = (DMA_NodeTypeDef *)ContextNodeAddr;
 	DMA_NodeTypeDef *current_node = (DMA_NodeTypeDef *)CurrentNodeAddr;
-	uint32_t update_link[NODE_MAXIMUM_SIZE] = {DMA_CLLR_UT1, DMA_CLLR_UT2, DMA_CLLR_UB1, DMA_CLLR_USA,
-						   DMA_CLLR_UDA, DMA_CLLR_UT3, DMA_CLLR_UB2, DMA_CLLR_ULL};
+	uint32_t update_link[NODE_MAXIMUM_SIZE] = {DMA_CLLR_UT1, DMA_CLLR_UT2, DMA_CLLR_UB1, DMA_CLLR_USA, DMA_CLLR_UDA, DMA_CLLR_UT3, DMA_CLLR_UB2, DMA_CLLR_ULL};
 
 	/* Update ULL position according to register number */
 	update_link[RegisterNumber - 1U] = update_link[NODE_MAXIMUM_SIZE - 1U];
@@ -4373,8 +4265,7 @@ static void DMA_List_ConvertNodeToStatic(uint32_t ContextNodeAddr, uint32_t Curr
 			DMA_List_FormatNode(current_node, contextnode_reg_counter, RegisterNumber, NODE_STATIC_FORMAT);
 
 			/* Update node field */
-			current_node->LinkRegisters[contextnode_reg_counter] =
-			    context_node->LinkRegisters[contextnode_reg_counter];
+			current_node->LinkRegisters[contextnode_reg_counter] = context_node->LinkRegisters[contextnode_reg_counter];
 		}
 
 		/* Increment context node number register counter */
@@ -4394,8 +4285,7 @@ static void DMA_List_ConvertNodeToStatic(uint32_t ContextNodeAddr, uint32_t Curr
  * @param  Format          : The format type.
  * @retval None.
  */
-static void DMA_List_FormatNode(DMA_NodeTypeDef *const pNode, uint32_t RegisterIdx, uint32_t RegisterNumber,
-				uint32_t Format)
+static void DMA_List_FormatNode(DMA_NodeTypeDef *const pNode, uint32_t RegisterIdx, uint32_t RegisterNumber, uint32_t Format)
 {
 	if (Format == NODE_DYNAMIC_FORMAT) {
 		/* Repeat for all registers to be formatted */
@@ -4447,8 +4337,7 @@ static void DMA_List_UpdateDynamicQueueNodesCLLR(DMA_QListTypeDef const *const p
 		/* Get head node address */
 		if (node_idx == 0U) {
 			/* Get current node information */
-			current_cllr_offset =
-			    (((DMA_NodeTypeDef *)currentnode_addr)->NodeInfo & NODE_CLLR_IDX) >> NODE_CLLR_IDX_POS;
+			current_cllr_offset = (((DMA_NodeTypeDef *)currentnode_addr)->NodeInfo & NODE_CLLR_IDX) >> NODE_CLLR_IDX_POS;
 		}
 		/* Calculate nodes addresses */
 		else {
@@ -4457,18 +4346,12 @@ static void DMA_List_UpdateDynamicQueueNodesCLLR(DMA_QListTypeDef const *const p
 			previous_cllr_offset = current_cllr_offset;
 
 			/* Get current node information */
-			currentnode_addr =
-			    (((DMA_NodeTypeDef *)(previousnode_addr))->LinkRegisters[previous_cllr_offset] &
-			     DMA_CLLR_LA) +
-			    ((uint32_t)pQList->Head & DMA_CLBAR_LBA);
-			current_cllr_offset =
-			    (((DMA_NodeTypeDef *)currentnode_addr)->NodeInfo & NODE_CLLR_IDX) >> NODE_CLLR_IDX_POS;
+			currentnode_addr = (((DMA_NodeTypeDef *)(previousnode_addr))->LinkRegisters[previous_cllr_offset] & DMA_CLLR_LA) + ((uint32_t)pQList->Head & DMA_CLBAR_LBA);
+			current_cllr_offset = (((DMA_NodeTypeDef *)currentnode_addr)->NodeInfo & NODE_CLLR_IDX) >> NODE_CLLR_IDX_POS;
 
 			/* Calculate CLLR register value to be updated */
-			cllr_mask =
-			    (((DMA_NodeTypeDef *)currentnode_addr)->LinkRegisters[current_cllr_offset] & ~DMA_CLLR_LA) |
-			    (((DMA_NodeTypeDef *)(previousnode_addr))->LinkRegisters[previous_cllr_offset] &
-			     DMA_CLLR_LA);
+			cllr_mask = (((DMA_NodeTypeDef *)currentnode_addr)->LinkRegisters[current_cllr_offset] & ~DMA_CLLR_LA) |
+				    (((DMA_NodeTypeDef *)(previousnode_addr))->LinkRegisters[previous_cllr_offset] & DMA_CLLR_LA);
 
 			/* Set new CLLR value to previous node */
 			((DMA_NodeTypeDef *)(previousnode_addr))->LinkRegisters[previous_cllr_offset] = cllr_mask;
@@ -4486,8 +4369,7 @@ static void DMA_List_UpdateDynamicQueueNodesCLLR(DMA_QListTypeDef const *const p
 			DMA_List_GetCLLRNodeInfo(((DMA_NodeTypeDef *)currentnode_addr), &cllr_mask, NULL);
 
 			/* Update CLLR register for last circular node */
-			((DMA_NodeTypeDef *)currentnode_addr)->LinkRegisters[current_cllr_offset] =
-			    ((uint32_t)pQList->Head & DMA_CLLR_LA) | cllr_mask;
+			((DMA_NodeTypeDef *)currentnode_addr)->LinkRegisters[current_cllr_offset] = ((uint32_t)pQList->Head & DMA_CLLR_LA) | cllr_mask;
 		}
 		/* First circular queue is last queue node */
 		else {
@@ -4526,9 +4408,7 @@ static void DMA_List_UpdateStaticQueueNodesCLLR(DMA_QListTypeDef const *const pQ
 			cllr_mask = ((DMA_NodeTypeDef *)currentnode_addr)->LinkRegisters[current_cllr_offset];
 		} else {
 			/* Calculate CLLR value */
-			cllr_mask =
-			    (((DMA_NodeTypeDef *)currentnode_addr)->LinkRegisters[current_cllr_offset] & DMA_CLLR_LA) |
-			    cllr_default_mask;
+			cllr_mask = (((DMA_NodeTypeDef *)currentnode_addr)->LinkRegisters[current_cllr_offset] & DMA_CLLR_LA) | cllr_default_mask;
 		}
 
 		/* Set new CLLR value to default position */
@@ -4542,8 +4422,7 @@ static void DMA_List_UpdateStaticQueueNodesCLLR(DMA_QListTypeDef const *const pQ
 		currentnode_addr = (currentnode_addr & DMA_CLBAR_LBA) | (cllr_mask & DMA_CLLR_LA);
 
 		/* Update current CLLR offset with next CLLR offset */
-		current_cllr_offset =
-		    (((DMA_NodeTypeDef *)currentnode_addr)->NodeInfo & NODE_CLLR_IDX) >> NODE_CLLR_IDX_POS;
+		current_cllr_offset = (((DMA_NodeTypeDef *)currentnode_addr)->NodeInfo & NODE_CLLR_IDX) >> NODE_CLLR_IDX_POS;
 
 		/* Increment node index */
 		node_idx++;

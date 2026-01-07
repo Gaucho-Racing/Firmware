@@ -119,10 +119,8 @@ HAL_StatusTypeDef HAL_DMAEx_ConfigMuxSync(DMA_HandleTypeDef *hdma, HAL_DMA_MuxSy
 		/* Set the new synchronization parameters (and keep the request
 		 * ID filled during the Init)*/
 		MODIFY_REG(hdma->DMAmuxChannel->CCR, (~DMAMUX_CxCR_DMAREQ_ID),
-			   ((pSyncConfig->SyncSignalID) << DMAMUX_CxCR_SYNC_ID_Pos) |
-			       ((pSyncConfig->RequestNumber - 1U) << DMAMUX_CxCR_NBREQ_Pos) |
-			       pSyncConfig->SyncPolarity | ((uint32_t)pSyncConfig->SyncEnable << DMAMUX_CxCR_SE_Pos) |
-			       ((uint32_t)pSyncConfig->EventEnable << DMAMUX_CxCR_EGE_Pos));
+			   ((pSyncConfig->SyncSignalID) << DMAMUX_CxCR_SYNC_ID_Pos) | ((pSyncConfig->RequestNumber - 1U) << DMAMUX_CxCR_NBREQ_Pos) | pSyncConfig->SyncPolarity |
+			       ((uint32_t)pSyncConfig->SyncEnable << DMAMUX_CxCR_SE_Pos) | ((uint32_t)pSyncConfig->EventEnable << DMAMUX_CxCR_EGE_Pos));
 
 		/* Process UnLocked */
 		__HAL_UNLOCK(hdma);
@@ -146,8 +144,7 @@ HAL_StatusTypeDef HAL_DMAEx_ConfigMuxSync(DMA_HandleTypeDef *hdma, HAL_DMA_MuxSy
  *
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DMAEx_ConfigMuxRequestGenerator(DMA_HandleTypeDef *hdma,
-						      HAL_DMA_MuxRequestGeneratorConfigTypeDef *pRequestGeneratorConfig)
+HAL_StatusTypeDef HAL_DMAEx_ConfigMuxRequestGenerator(DMA_HandleTypeDef *hdma, HAL_DMA_MuxRequestGeneratorConfigTypeDef *pRequestGeneratorConfig)
 {
 	/* Check the parameters */
 	assert_param(IS_DMA_ALL_INSTANCE(hdma->Instance));
@@ -166,9 +163,7 @@ HAL_StatusTypeDef HAL_DMAEx_ConfigMuxRequestGenerator(DMA_HandleTypeDef *hdma,
 
 		/* Set the request generator new parameters */
 		hdma->DMAmuxRequestGen->RGCR =
-		    pRequestGeneratorConfig->SignalID |
-		    ((pRequestGeneratorConfig->RequestNumber - 1U) << (POSITION_VAL(DMAMUX_RGxCR_GNBREQ) & 0x1FU)) |
-		    pRequestGeneratorConfig->Polarity;
+		    pRequestGeneratorConfig->SignalID | ((pRequestGeneratorConfig->RequestNumber - 1U) << (POSITION_VAL(DMAMUX_RGxCR_GNBREQ) & 0x1FU)) | pRequestGeneratorConfig->Polarity;
 		/* Process UnLocked */
 		__HAL_UNLOCK(hdma);
 

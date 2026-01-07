@@ -239,8 +239,7 @@ HAL_StatusTypeDef HAL_LPTIM_Init(LPTIM_HandleTypeDef *hlptim)
 
 	assert_param(IS_LPTIM_CLOCK_SOURCE(hlptim->Init.Clock.Source));
 	assert_param(IS_LPTIM_CLOCK_PRESCALER(hlptim->Init.Clock.Prescaler));
-	if ((hlptim->Init.Clock.Source == LPTIM_CLOCKSOURCE_ULPTIM) ||
-	    (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL)) {
+	if ((hlptim->Init.Clock.Source == LPTIM_CLOCKSOURCE_ULPTIM) || (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL)) {
 		assert_param(IS_LPTIM_CLOCK_POLARITY(hlptim->Init.UltraLowPowerClock.Polarity));
 		assert_param(IS_LPTIM_CLOCK_SAMPLE_TIME(hlptim->Init.UltraLowPowerClock.SampleTime));
 	}
@@ -279,8 +278,7 @@ HAL_StatusTypeDef HAL_LPTIM_Init(LPTIM_HandleTypeDef *hlptim)
 	/* Get the LPTIMx CFGR value */
 	tmpcfgr = hlptim->Instance->CFGR;
 
-	if ((hlptim->Init.Clock.Source == LPTIM_CLOCKSOURCE_ULPTIM) ||
-	    (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL)) {
+	if ((hlptim->Init.Clock.Source == LPTIM_CLOCKSOURCE_ULPTIM) || (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL)) {
 		tmpcfgr &= (uint32_t)(~(LPTIM_CFGR_CKPOL | LPTIM_CFGR_CKFLT));
 	}
 	if (hlptim->Init.Trigger.Source != LPTIM_TRIGSOURCE_SOFTWARE) {
@@ -289,12 +287,10 @@ HAL_StatusTypeDef HAL_LPTIM_Init(LPTIM_HandleTypeDef *hlptim)
 
 	/* Clear CKSEL, PRESC, TRIGEN, TRGFLT, WAVPOL, PRELOAD & COUNTMODE bits
 	 */
-	tmpcfgr &= (uint32_t)(~(LPTIM_CFGR_CKSEL | LPTIM_CFGR_TRIGEN | LPTIM_CFGR_PRELOAD | LPTIM_CFGR_WAVPOL |
-				LPTIM_CFGR_PRESC | LPTIM_CFGR_COUNTMODE));
+	tmpcfgr &= (uint32_t)(~(LPTIM_CFGR_CKSEL | LPTIM_CFGR_TRIGEN | LPTIM_CFGR_PRELOAD | LPTIM_CFGR_WAVPOL | LPTIM_CFGR_PRESC | LPTIM_CFGR_COUNTMODE));
 
 	/* Set initialization parameters */
-	tmpcfgr |= (hlptim->Init.Clock.Source | hlptim->Init.Clock.Prescaler | hlptim->Init.OutputPolarity |
-		    hlptim->Init.UpdateMode | hlptim->Init.CounterSource);
+	tmpcfgr |= (hlptim->Init.Clock.Source | hlptim->Init.Clock.Prescaler | hlptim->Init.OutputPolarity | hlptim->Init.UpdateMode | hlptim->Init.CounterSource);
 
 	/* Glitch filters for internal triggers and  external inputs are
 	 * configured only if an internal clock source is provided to the LPTIM
@@ -304,16 +300,14 @@ HAL_StatusTypeDef HAL_LPTIM_Init(LPTIM_HandleTypeDef *hlptim)
 	}
 
 	/* Configure LPTIM external clock polarity and digital filter */
-	if ((hlptim->Init.Clock.Source == LPTIM_CLOCKSOURCE_ULPTIM) ||
-	    (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL)) {
+	if ((hlptim->Init.Clock.Source == LPTIM_CLOCKSOURCE_ULPTIM) || (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL)) {
 		tmpcfgr |= (hlptim->Init.UltraLowPowerClock.Polarity | hlptim->Init.UltraLowPowerClock.SampleTime);
 	}
 
 	/* Configure LPTIM external trigger */
 	if (hlptim->Init.Trigger.Source != LPTIM_TRIGSOURCE_SOFTWARE) {
 		/* Enable External trigger and set the trigger source */
-		tmpcfgr |=
-		    (hlptim->Init.Trigger.Source | hlptim->Init.Trigger.ActiveEdge | hlptim->Init.Trigger.SampleTime);
+		tmpcfgr |= (hlptim->Init.Trigger.Source | hlptim->Init.Trigger.ActiveEdge | hlptim->Init.Trigger.SampleTime);
 	}
 
 	/* Write to LPTIMx CFGR */
@@ -1528,8 +1522,7 @@ HAL_StatusTypeDef HAL_LPTIM_Counter_Start(LPTIM_HandleTypeDef *hlptim, uint32_t 
 
 	/* If clock source is not ULPTIM clock and counter source is external,
 	 * then it must not be prescaled */
-	if ((hlptim->Init.Clock.Source != LPTIM_CLOCKSOURCE_ULPTIM) &&
-	    (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL)) {
+	if ((hlptim->Init.Clock.Source != LPTIM_CLOCKSOURCE_ULPTIM) && (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL)) {
 		/* Check if clock is prescaled */
 		assert_param(IS_LPTIM_CLOCK_PRESCALERDIV1(hlptim->Init.Clock.Prescaler));
 		/* Set clock prescaler to 0 */
@@ -1609,8 +1602,7 @@ HAL_StatusTypeDef HAL_LPTIM_Counter_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32
 
 	/* If clock source is not ULPTIM clock and counter source is external,
 	 * then it must not be prescaled */
-	if ((hlptim->Init.Clock.Source != LPTIM_CLOCKSOURCE_ULPTIM) &&
-	    (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL)) {
+	if ((hlptim->Init.Clock.Source != LPTIM_CLOCKSOURCE_ULPTIM) && (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL)) {
 		/* Check if clock is prescaled */
 		assert_param(IS_LPTIM_CLOCK_PRESCALERDIV1(hlptim->Init.Clock.Prescaler));
 		/* Set clock prescaler to 0 */
@@ -2033,8 +2025,7 @@ __weak void HAL_LPTIM_DirectionDownCallback(LPTIM_HandleTypeDef *hlptim)
  * @param pCallback pointer to the callback function
  * @retval status
  */
-HAL_StatusTypeDef HAL_LPTIM_RegisterCallback(LPTIM_HandleTypeDef *hlptim, HAL_LPTIM_CallbackIDTypeDef CallbackID,
-					     pLPTIM_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_LPTIM_RegisterCallback(LPTIM_HandleTypeDef *hlptim, HAL_LPTIM_CallbackIDTypeDef CallbackID, pLPTIM_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 

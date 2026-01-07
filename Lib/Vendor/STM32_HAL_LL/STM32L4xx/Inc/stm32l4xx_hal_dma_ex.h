@@ -129,11 +129,10 @@ typedef struct {
 #define HAL_DMAMUX1_SYNC_DMAMUX1_CH3_EVT 19U /*!<  Synchronization Signal is DMAMUX1 Channel3 Event  */
 #define HAL_DMAMUX1_SYNC_LPTIM1_OUT 20U	     /*!<  Synchronization Signal is LPTIM1 OUT */
 #define HAL_DMAMUX1_SYNC_LPTIM2_OUT 21U	     /*!<  Synchronization Signal is LPTIM2 OUT */
-#if defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||                    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 #define HAL_DMAMUX1_SYNC_DSI_TE 22U    /*!<  Synchronization Signal is DSI Tearing Effect      */
 #define HAL_DMAMUX1_SYNC_DSI_EOT 23U   /*!<  Synchronization Signal is DSI End of refresh      */
-#endif				       /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||                  \
+#endif				       /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||                                                                                                  \
 					  STM32L4S7xx || STM32L4S9xx */
 #define HAL_DMAMUX1_SYNC_DMA2D_EOT 24U /*!<  Synchronization Signal is DMA2D End of Transfer   */
 #define HAL_DMAMUX1_SYNC_LDTC_IT 25U   /*!<  Synchronization Signal is LDTC IT    */
@@ -148,8 +147,8 @@ typedef struct {
 #define HAL_DMAMUX_SYNC_NO_EVENT 0U		   /*!< block synchronization events */
 #define HAL_DMAMUX_SYNC_RISING DMAMUX_CxCR_SPOL_0  /*!< synchronize with rising edge events */
 #define HAL_DMAMUX_SYNC_FALLING DMAMUX_CxCR_SPOL_1 /*!< synchronize with falling edge events */
-#define HAL_DMAMUX_SYNC_RISING_FALLING                                                                                 \
-	DMAMUX_CxCR_SPOL /*!< synchronize with rising and falling edge events                                          \
+#define HAL_DMAMUX_SYNC_RISING_FALLING                                                                                                                                                                 \
+	DMAMUX_CxCR_SPOL /*!< synchronize with rising and falling edge events                                                                                                                          \
 			  */
 
 /**
@@ -183,11 +182,10 @@ typedef struct {
 #define HAL_DMAMUX1_REQ_GEN_DMAMUX1_CH3_EVT 19U /*!< Request generator Signal is DMAMUX1 Channel3 Event */
 #define HAL_DMAMUX1_REQ_GEN_LPTIM1_OUT 20U	/*!< Request generator Signal is LPTIM1 OUT  */
 #define HAL_DMAMUX1_REQ_GEN_LPTIM2_OUT 21U	/*!< Request generator Signal is LPTIM2 OUT  */
-#if defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||                    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 #define HAL_DMAMUX1_REQ_GEN_DSI_TE 22U	  /*!< Request generator Signal is DSI Tearing Effect      */
 #define HAL_DMAMUX1_REQ_GEN_DSI_EOT 23U	  /*!< Request generator Signal is DSI End of refresh      */
-#endif					  /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||               \
+#endif					  /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||                                                                                               \
 					     STM32L4S7xx || STM32L4S9xx */
 #define HAL_DMAMUX1_REQ_GEN_DMA2D_EOT 24U /*!< Request generator Signal is DMA2D End of Transfer   */
 #define HAL_DMAMUX1_REQ_GEN_LTDC_IT 25U	  /*!< Request generator Signal is LTDC IT     */
@@ -203,8 +201,8 @@ typedef struct {
 #define HAL_DMAMUX_REQ_GEN_NO_EVENT 0U		       /*!< block request generator events        */
 #define HAL_DMAMUX_REQ_GEN_RISING DMAMUX_RGxCR_GPOL_0  /*!< generate request on rising edge events */
 #define HAL_DMAMUX_REQ_GEN_FALLING DMAMUX_RGxCR_GPOL_1 /*!< generate request on falling edge events */
-#define HAL_DMAMUX_REQ_GEN_RISING_FALLING                                                                              \
-	DMAMUX_RGxCR_GPOL /*!< generate request on rising and falling edge                                             \
+#define HAL_DMAMUX_REQ_GEN_RISING_FALLING                                                                                                                                                              \
+	DMAMUX_RGxCR_GPOL /*!< generate request on rising and falling edge                                                                                                                             \
 			     events */
 
 /**
@@ -228,9 +226,7 @@ typedef struct {
  */
 
 /* ------------------------- REQUEST -----------------------------------------*/
-HAL_StatusTypeDef
-HAL_DMAEx_ConfigMuxRequestGenerator(DMA_HandleTypeDef *hdma,
-				    HAL_DMA_MuxRequestGeneratorConfigTypeDef *pRequestGeneratorConfig);
+HAL_StatusTypeDef HAL_DMAEx_ConfigMuxRequestGenerator(DMA_HandleTypeDef *hdma, HAL_DMA_MuxRequestGeneratorConfigTypeDef *pRequestGeneratorConfig);
 HAL_StatusTypeDef HAL_DMAEx_EnableMuxRequestGenerator(DMA_HandleTypeDef *hdma);
 HAL_StatusTypeDef HAL_DMAEx_DisableMuxRequestGenerator(DMA_HandleTypeDef *hdma);
 /* -------------------------------------------------------------------------- */
@@ -260,9 +256,8 @@ void HAL_DMAEx_MUX_IRQHandler(DMA_HandleTypeDef *hdma);
 
 #define IS_DMAMUX_SYNC_REQUEST_NUMBER(REQUEST_NUMBER) (((REQUEST_NUMBER) > 0U) && ((REQUEST_NUMBER) <= 32U))
 
-#define IS_DMAMUX_SYNC_POLARITY(POLARITY)                                                                              \
-	(((POLARITY) == HAL_DMAMUX_SYNC_NO_EVENT) || ((POLARITY) == HAL_DMAMUX_SYNC_RISING) ||                         \
-	 ((POLARITY) == HAL_DMAMUX_SYNC_FALLING) || ((POLARITY) == HAL_DMAMUX_SYNC_RISING_FALLING))
+#define IS_DMAMUX_SYNC_POLARITY(POLARITY)                                                                                                                                                              \
+	(((POLARITY) == HAL_DMAMUX_SYNC_NO_EVENT) || ((POLARITY) == HAL_DMAMUX_SYNC_RISING) || ((POLARITY) == HAL_DMAMUX_SYNC_FALLING) || ((POLARITY) == HAL_DMAMUX_SYNC_RISING_FALLING))
 
 #define IS_DMAMUX_SYNC_STATE(SYNC) (((SYNC) == DISABLE) || ((SYNC) == ENABLE))
 
@@ -272,9 +267,8 @@ void HAL_DMAEx_MUX_IRQHandler(DMA_HandleTypeDef *hdma);
 
 #define IS_DMAMUX_REQUEST_GEN_REQUEST_NUMBER(REQUEST_NUMBER) (((REQUEST_NUMBER) > 0U) && ((REQUEST_NUMBER) <= 32U))
 
-#define IS_DMAMUX_REQUEST_GEN_POLARITY(POLARITY)                                                                       \
-	(((POLARITY) == HAL_DMAMUX_REQ_GEN_NO_EVENT) || ((POLARITY) == HAL_DMAMUX_REQ_GEN_RISING) ||                   \
-	 ((POLARITY) == HAL_DMAMUX_REQ_GEN_FALLING) || ((POLARITY) == HAL_DMAMUX_REQ_GEN_RISING_FALLING))
+#define IS_DMAMUX_REQUEST_GEN_POLARITY(POLARITY)                                                                                                                                                       \
+	(((POLARITY) == HAL_DMAMUX_REQ_GEN_NO_EVENT) || ((POLARITY) == HAL_DMAMUX_REQ_GEN_RISING) || ((POLARITY) == HAL_DMAMUX_REQ_GEN_FALLING) || ((POLARITY) == HAL_DMAMUX_REQ_GEN_RISING_FALLING))
 
 /**
  * @}

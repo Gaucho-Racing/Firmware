@@ -368,8 +368,7 @@ uint32_t HAL_NVIC_GetPriorityGrouping(void)
  * @param  pSubPriority: Pointer on the Subpriority value (starting from 0).
  * @retval None
  */
-void HAL_NVIC_GetPriority(IRQn_Type IRQn, uint32_t PriorityGroup, uint32_t *const pPreemptPriority,
-			  uint32_t *const pSubPriority)
+void HAL_NVIC_GetPriority(IRQn_Type IRQn, uint32_t PriorityGroup, uint32_t *const pPreemptPriority, uint32_t *const pSubPriority)
 {
 	/* Check the parameters */
 	assert_param(IS_NVIC_PRIORITY_GROUP(PriorityGroup));
@@ -741,10 +740,7 @@ void HAL_MPU_DisableRegion_NS(uint32_t RegionNumber)
  * contains the initialization and configuration information.
  * @retval None
  */
-void HAL_MPU_ConfigRegion(const MPU_Region_InitTypeDef *const pMPU_RegionInit)
-{
-	MPU_ConfigRegion(MPU, pMPU_RegionInit);
-}
+void HAL_MPU_ConfigRegion(const MPU_Region_InitTypeDef *const pMPU_RegionInit) { MPU_ConfigRegion(MPU, pMPU_RegionInit); }
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /**
@@ -754,10 +750,7 @@ void HAL_MPU_ConfigRegion(const MPU_Region_InitTypeDef *const pMPU_RegionInit)
  * contains the initialization and configuration information.
  * @retval None
  */
-void HAL_MPU_ConfigRegion_NS(const MPU_Region_InitTypeDef *const pMPU_RegionInit)
-{
-	MPU_ConfigRegion(MPU_NS, pMPU_RegionInit);
-}
+void HAL_MPU_ConfigRegion_NS(const MPU_Region_InitTypeDef *const pMPU_RegionInit) { MPU_ConfigRegion(MPU_NS, pMPU_RegionInit); }
 #endif /* __ARM_FEATURE_CMSE */
 
 /**
@@ -766,10 +759,7 @@ void HAL_MPU_ConfigRegion_NS(const MPU_Region_InitTypeDef *const pMPU_RegionInit
  * structure that contains the initialization and configuration information.
  * @retval None
  */
-void HAL_MPU_ConfigMemoryAttributes(const MPU_Attributes_InitTypeDef *const pMPU_AttributesInit)
-{
-	MPU_ConfigMemoryAttributes(MPU, pMPU_AttributesInit);
-}
+void HAL_MPU_ConfigMemoryAttributes(const MPU_Attributes_InitTypeDef *const pMPU_AttributesInit) { MPU_ConfigMemoryAttributes(MPU, pMPU_AttributesInit); }
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /**
@@ -778,10 +768,7 @@ void HAL_MPU_ConfigMemoryAttributes(const MPU_Attributes_InitTypeDef *const pMPU
  * structure that contains the initialization and configuration information.
  * @retval None
  */
-void HAL_MPU_ConfigMemoryAttributes_NS(const MPU_Attributes_InitTypeDef *const pMPU_AttributesInit)
-{
-	MPU_ConfigMemoryAttributes(MPU_NS, pMPU_AttributesInit);
-}
+void HAL_MPU_ConfigMemoryAttributes_NS(const MPU_Attributes_InitTypeDef *const pMPU_AttributesInit) { MPU_ConfigMemoryAttributes(MPU_NS, pMPU_AttributesInit); }
 #endif /* __ARM_FEATURE_CMSE */
 
 /**
@@ -817,14 +804,11 @@ static void MPU_ConfigRegion(MPU_Type *MPUx, const MPU_Region_InitTypeDef *const
 	/* Disable the Region */
 	CLEAR_BIT(MPUx->RLAR, MPU_RLAR_EN_Msk);
 
-	MPUx->RBAR = (((uint32_t)pMPU_RegionInit->BaseAddress & 0xFFFFFFE0UL) |
-		      ((uint32_t)pMPU_RegionInit->IsShareable << MPU_RBAR_SH_Pos) |
-		      ((uint32_t)pMPU_RegionInit->AccessPermission << MPU_RBAR_AP_Pos) |
-		      ((uint32_t)pMPU_RegionInit->DisableExec << MPU_RBAR_XN_Pos));
+	MPUx->RBAR = (((uint32_t)pMPU_RegionInit->BaseAddress & 0xFFFFFFE0UL) | ((uint32_t)pMPU_RegionInit->IsShareable << MPU_RBAR_SH_Pos) |
+		      ((uint32_t)pMPU_RegionInit->AccessPermission << MPU_RBAR_AP_Pos) | ((uint32_t)pMPU_RegionInit->DisableExec << MPU_RBAR_XN_Pos));
 
-	MPUx->RLAR = (((uint32_t)pMPU_RegionInit->LimitAddress & 0xFFFFFFE0UL) |
-		      ((uint32_t)pMPU_RegionInit->AttributesIndex << MPU_RLAR_AttrIndx_Pos) |
-		      ((uint32_t)pMPU_RegionInit->Enable << MPU_RLAR_EN_Pos));
+	MPUx->RLAR =
+	    (((uint32_t)pMPU_RegionInit->LimitAddress & 0xFFFFFFE0UL) | ((uint32_t)pMPU_RegionInit->AttributesIndex << MPU_RLAR_AttrIndx_Pos) | ((uint32_t)pMPU_RegionInit->Enable << MPU_RLAR_EN_Pos));
 }
 
 static void MPU_ConfigMemoryAttributes(MPU_Type *MPUx, const MPU_Attributes_InitTypeDef *const pMPU_AttributesInit)

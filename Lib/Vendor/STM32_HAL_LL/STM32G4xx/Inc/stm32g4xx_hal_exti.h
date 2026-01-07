@@ -221,31 +221,24 @@ typedef struct {
 /** @defgroup EXTI_Private_Macros EXTI Private Macros
  * @{
  */
-#define IS_EXTI_LINE(__EXTI_LINE__)                                                                                    \
-	((((__EXTI_LINE__) & ~(EXTI_PROPERTY_MASK | EXTI_REG_MASK | EXTI_PIN_MASK)) == 0x00U) &&                       \
-	 ((((__EXTI_LINE__) & EXTI_PROPERTY_MASK) == EXTI_DIRECT) ||                                                   \
-	  (((__EXTI_LINE__) & EXTI_PROPERTY_MASK) == EXTI_CONFIG) ||                                                   \
-	  (((__EXTI_LINE__) & EXTI_PROPERTY_MASK) == EXTI_GPIO)) &&                                                    \
-	 (((__EXTI_LINE__) & (EXTI_REG_MASK | EXTI_PIN_MASK)) <                                                        \
-	  (((EXTI_LINE_NB / 32u) << EXTI_REG_SHIFT) | (EXTI_LINE_NB % 32u))))
+#define IS_EXTI_LINE(__EXTI_LINE__)                                                                                                                                                                    \
+	((((__EXTI_LINE__) & ~(EXTI_PROPERTY_MASK | EXTI_REG_MASK | EXTI_PIN_MASK)) == 0x00U) &&                                                                                                       \
+	 ((((__EXTI_LINE__) & EXTI_PROPERTY_MASK) == EXTI_DIRECT) || (((__EXTI_LINE__) & EXTI_PROPERTY_MASK) == EXTI_CONFIG) || (((__EXTI_LINE__) & EXTI_PROPERTY_MASK) == EXTI_GPIO)) &&              \
+	 (((__EXTI_LINE__) & (EXTI_REG_MASK | EXTI_PIN_MASK)) < (((EXTI_LINE_NB / 32u) << EXTI_REG_SHIFT) | (EXTI_LINE_NB % 32u))))
 
-#define IS_EXTI_MODE(__EXTI_LINE__)                                                                                    \
-	((((__EXTI_LINE__) & EXTI_MODE_MASK) != 0x00U) && (((__EXTI_LINE__) & ~EXTI_MODE_MASK) == 0x00U))
+#define IS_EXTI_MODE(__EXTI_LINE__) ((((__EXTI_LINE__) & EXTI_MODE_MASK) != 0x00U) && (((__EXTI_LINE__) & ~EXTI_MODE_MASK) == 0x00U))
 
 #define IS_EXTI_TRIGGER(__EXTI_LINE__) (((__EXTI_LINE__) & ~EXTI_TRIGGER_MASK) == 0x00U)
 
 #define IS_EXTI_CONFIG_LINE(__EXTI_LINE__) (((__EXTI_LINE__) & EXTI_CONFIG) != 0x00U)
 
-#define IS_EXTI_GPIO_PORT(__PORT__)                                                                                    \
-	(((__PORT__) == EXTI_GPIOA) || ((__PORT__) == EXTI_GPIOB) || ((__PORT__) == EXTI_GPIOC) ||                     \
-	 ((__PORT__) == EXTI_GPIOD) || ((__PORT__) == EXTI_GPIOE) || ((__PORT__) == EXTI_GPIOF) ||                     \
+#define IS_EXTI_GPIO_PORT(__PORT__)                                                                                                                                                                    \
+	(((__PORT__) == EXTI_GPIOA) || ((__PORT__) == EXTI_GPIOB) || ((__PORT__) == EXTI_GPIOC) || ((__PORT__) == EXTI_GPIOD) || ((__PORT__) == EXTI_GPIOE) || ((__PORT__) == EXTI_GPIOF) ||           \
 	 ((__PORT__) == EXTI_GPIOG))
 
 #define IS_EXTI_GPIO_PIN(__PIN__) ((__PIN__) < 16u)
 
-#define IS_EXTI_PENDING_EDGE(__EDGE__)                                                                                 \
-	(((__EDGE__) == EXTI_TRIGGER_RISING) || ((__EDGE__) == EXTI_TRIGGER_FALLING) ||                                \
-	 ((__EDGE__) == EXTI_TRIGGER_RISING_FALLING))
+#define IS_EXTI_PENDING_EDGE(__EDGE__) (((__EDGE__) == EXTI_TRIGGER_RISING) || ((__EDGE__) == EXTI_TRIGGER_FALLING) || ((__EDGE__) == EXTI_TRIGGER_RISING_FALLING))
 
 #define IS_EXTI_CB(__CB__) ((__CB__) == HAL_EXTI_COMMON_CB_ID)
 /**
@@ -266,8 +259,7 @@ typedef struct {
 HAL_StatusTypeDef HAL_EXTI_SetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigTypeDef *pExtiConfig);
 HAL_StatusTypeDef HAL_EXTI_GetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigTypeDef *pExtiConfig);
 HAL_StatusTypeDef HAL_EXTI_ClearConfigLine(EXTI_HandleTypeDef *hexti);
-HAL_StatusTypeDef HAL_EXTI_RegisterCallback(EXTI_HandleTypeDef *hexti, EXTI_CallbackIDTypeDef CallbackID,
-					    void (*pPendingCbfn)(void));
+HAL_StatusTypeDef HAL_EXTI_RegisterCallback(EXTI_HandleTypeDef *hexti, EXTI_CallbackIDTypeDef CallbackID, void (*pPendingCbfn)(void));
 HAL_StatusTypeDef HAL_EXTI_GetHandle(EXTI_HandleTypeDef *hexti, uint32_t ExtiLine);
 /**
  * @}

@@ -318,8 +318,7 @@ HAL_StatusTypeDef HAL_EXTI_GetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigT
 			assert_param(IS_EXTI_GPIO_PIN(linepos));
 
 			regval = EXTI->EXTICR[(linepos >> 2U) & 0x03UL];
-			pExtiConfig->GPIOSel =
-			    (regval >> (EXTI_EXTICR1_EXTI1_Pos * (linepos & 0x03U))) & EXTI_EXTICR1_EXTI0;
+			pExtiConfig->GPIOSel = (regval >> (EXTI_EXTICR1_EXTI1_Pos * (linepos & 0x03U))) & EXTI_EXTICR1_EXTI0;
 		}
 	}
 
@@ -393,8 +392,7 @@ HAL_StatusTypeDef HAL_EXTI_ClearConfigLine(const EXTI_HandleTypeDef *hexti)
  * @param  pPendingCbfn function pointer to be stored as callback.
  * @retval HAL Status.
  */
-HAL_StatusTypeDef HAL_EXTI_RegisterCallback(EXTI_HandleTypeDef *hexti, EXTI_CallbackIDTypeDef CallbackID,
-					    void (*pPendingCbfn)(void))
+HAL_StatusTypeDef HAL_EXTI_RegisterCallback(EXTI_HandleTypeDef *hexti, EXTI_CallbackIDTypeDef CallbackID, void (*pPendingCbfn)(void))
 {
 	HAL_StatusTypeDef status = HAL_OK;
 

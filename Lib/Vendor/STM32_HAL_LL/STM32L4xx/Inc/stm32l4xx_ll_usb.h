@@ -59,18 +59,7 @@ typedef enum { URB_IDLE = 0, URB_DONE, URB_NOTREADY, URB_NYET, URB_ERROR, URB_ST
 /**
  * @brief  Host channel States  definition
  */
-typedef enum {
-	HC_IDLE = 0,
-	HC_XFRC,
-	HC_HALTED,
-	HC_ACK,
-	HC_NAK,
-	HC_NYET,
-	HC_STALL,
-	HC_XACTERR,
-	HC_BBLERR,
-	HC_DATATGLERR
-} USB_HCStateTypeDef;
+typedef enum { HC_IDLE = 0, HC_XFRC, HC_HALTED, HC_ACK, HC_NAK, HC_NYET, HC_STALL, HC_XACTERR, HC_BBLERR, HC_DATATGLERR } USB_HCStateTypeDef;
 
 /**
  * @brief  USB Instance Initialization Structure definition
@@ -477,14 +466,12 @@ typedef USB_HCTypeDef USB_OTG_HCTypeDef;
 #define USBx_DEVICE ((USB_OTG_DeviceTypeDef *)(USBx_BASE + USB_OTG_DEVICE_BASE))
 #define USBx_INEP(i) ((USB_OTG_INEndpointTypeDef *)(USBx_BASE + USB_OTG_IN_ENDPOINT_BASE + ((i) * USB_OTG_EP_REG_SIZE)))
 
-#define USBx_OUTEP(i)                                                                                                  \
-	((USB_OTG_OUTEndpointTypeDef *)(USBx_BASE + USB_OTG_OUT_ENDPOINT_BASE + ((i) * USB_OTG_EP_REG_SIZE)))
+#define USBx_OUTEP(i) ((USB_OTG_OUTEndpointTypeDef *)(USBx_BASE + USB_OTG_OUT_ENDPOINT_BASE + ((i) * USB_OTG_EP_REG_SIZE)))
 
 #define USBx_DFIFO(i) *(__IO uint32_t *)(USBx_BASE + USB_OTG_FIFO_BASE + ((i) * USB_OTG_FIFO_SIZE))
 
 #define USBx_HOST ((USB_OTG_HostTypeDef *)(USBx_BASE + USB_OTG_HOST_BASE))
-#define USBx_HC(i)                                                                                                     \
-	((USB_OTG_HostChannelTypeDef *)(USBx_BASE + USB_OTG_HOST_CHANNEL_BASE + ((i) * USB_OTG_HOST_CHANNEL_SIZE)))
+#define USBx_HC(i) ((USB_OTG_HostChannelTypeDef *)(USBx_BASE + USB_OTG_HOST_CHANNEL_BASE + ((i) * USB_OTG_HOST_CHANNEL_SIZE)))
 
 #define EP_ADDR_MSK 0xFU
 #endif /* defined (USB_OTG_FS) */
@@ -570,8 +557,7 @@ HAL_StatusTypeDef USB_ResetPort(const USB_OTG_GlobalTypeDef *USBx);
 HAL_StatusTypeDef USB_DriveVbus(const USB_OTG_GlobalTypeDef *USBx, uint8_t state);
 uint32_t USB_GetHostSpeed(USB_OTG_GlobalTypeDef const *USBx);
 uint32_t USB_GetCurrentFrame(USB_OTG_GlobalTypeDef const *USBx);
-HAL_StatusTypeDef USB_HC_Init(USB_OTG_GlobalTypeDef *USBx, uint8_t ch_num, uint8_t epnum, uint8_t dev_address,
-			      uint8_t speed, uint8_t ep_type, uint16_t mps);
+HAL_StatusTypeDef USB_HC_Init(USB_OTG_GlobalTypeDef *USBx, uint8_t ch_num, uint8_t epnum, uint8_t dev_address, uint8_t speed, uint8_t ep_type, uint16_t mps);
 HAL_StatusTypeDef USB_HC_StartXfer(USB_OTG_GlobalTypeDef *USBx, USB_OTG_HCTypeDef *hc);
 
 uint32_t USB_HC_ReadInterrupt(const USB_OTG_GlobalTypeDef *USBx);

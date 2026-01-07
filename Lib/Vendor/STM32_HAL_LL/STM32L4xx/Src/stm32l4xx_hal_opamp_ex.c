@@ -47,10 +47,8 @@
  * @{
  */
 
-#if defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) ||                    \
-    defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) ||                    \
-    defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) ||                    \
-    defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) || defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) ||    \
+    defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 
 /** @addtogroup OPAMPEx_Exported_Functions_Group1
   * @brief    Extended operation functions
@@ -242,10 +240,8 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1, OPA
 		while (delta != 0U) {
 			/* Set candidate trimming */
 			/* OPAMP_POWERMODE_NORMALPOWER */
-			MODIFY_REG(*tmp_opamp1_reg_trimming, OPAMP_OTR_TRIMOFFSETP,
-				   (trimmingvaluep1 << OPAMP_INPUT_NONINVERTING));
-			MODIFY_REG(*tmp_opamp2_reg_trimming, OPAMP_OTR_TRIMOFFSETP,
-				   (trimmingvaluep2 << OPAMP_INPUT_NONINVERTING));
+			MODIFY_REG(*tmp_opamp1_reg_trimming, OPAMP_OTR_TRIMOFFSETP, (trimmingvaluep1 << OPAMP_INPUT_NONINVERTING));
+			MODIFY_REG(*tmp_opamp2_reg_trimming, OPAMP_OTR_TRIMOFFSETP, (trimmingvaluep2 << OPAMP_INPUT_NONINVERTING));
 
 			/* OFFTRIMmax delay 1 ms as per datasheet (electrical
 			 * characteristics */
@@ -281,10 +277,8 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1, OPA
 		/* Indeed the first value that causes the OUTCAL bit to change
 		 * from 1 to 0  */
 		/* Set candidate trimming */
-		MODIFY_REG(*tmp_opamp1_reg_trimming, OPAMP_OTR_TRIMOFFSETP,
-			   (trimmingvaluep1 << OPAMP_INPUT_NONINVERTING));
-		MODIFY_REG(*tmp_opamp2_reg_trimming, OPAMP_OTR_TRIMOFFSETP,
-			   (trimmingvaluep2 << OPAMP_INPUT_NONINVERTING));
+		MODIFY_REG(*tmp_opamp1_reg_trimming, OPAMP_OTR_TRIMOFFSETP, (trimmingvaluep1 << OPAMP_INPUT_NONINVERTING));
+		MODIFY_REG(*tmp_opamp2_reg_trimming, OPAMP_OTR_TRIMOFFSETP, (trimmingvaluep2 << OPAMP_INPUT_NONINVERTING));
 
 		/* OFFTRIMmax delay 1 ms as per datasheet (electrical
 		 * characteristics */
@@ -296,15 +290,13 @@ HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1, OPA
 		if (READ_BIT(hopamp1->Instance->CSR, OPAMP_CSR_CALOUT) != 0U) {
 			/* Trimming value is actually one value more */
 			trimmingvaluep1++;
-			MODIFY_REG(*tmp_opamp1_reg_trimming, OPAMP_OTR_TRIMOFFSETP,
-				   (trimmingvaluep1 << OPAMP_INPUT_NONINVERTING));
+			MODIFY_REG(*tmp_opamp1_reg_trimming, OPAMP_OTR_TRIMOFFSETP, (trimmingvaluep1 << OPAMP_INPUT_NONINVERTING));
 		}
 
 		if (READ_BIT(hopamp2->Instance->CSR, OPAMP_CSR_CALOUT) != 0U) {
 			/* Trimming value is actually one value more */
 			trimmingvaluep2++;
-			MODIFY_REG(*tmp_opamp2_reg_trimming, OPAMP_OTR_TRIMOFFSETP,
-				   (trimmingvaluep2 << OPAMP_INPUT_NONINVERTING));
+			MODIFY_REG(*tmp_opamp2_reg_trimming, OPAMP_OTR_TRIMOFFSETP, (trimmingvaluep2 << OPAMP_INPUT_NONINVERTING));
 		}
 
 		/* Disable the OPAMPs */

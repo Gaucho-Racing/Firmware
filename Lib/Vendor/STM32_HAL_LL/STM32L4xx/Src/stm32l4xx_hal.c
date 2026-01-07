@@ -55,9 +55,7 @@
 #define STM32L4XX_HAL_VERSION_SUB1 (0x0DU) /*!< [23:16] sub1 version */
 #define STM32L4XX_HAL_VERSION_SUB2 (0x05U) /*!< [15:8]  sub2 version */
 #define STM32L4XX_HAL_VERSION_RC (0x00U)   /*!< [7:0]  release candidate */
-#define STM32L4XX_HAL_VERSION                                                                                          \
-	((STM32L4XX_HAL_VERSION_MAIN << 24U) | (STM32L4XX_HAL_VERSION_SUB1 << 16U) |                                   \
-	 (STM32L4XX_HAL_VERSION_SUB2 << 8U) | (STM32L4XX_HAL_VERSION_RC))
+#define STM32L4XX_HAL_VERSION ((STM32L4XX_HAL_VERSION_MAIN << 24U) | (STM32L4XX_HAL_VERSION_SUB1 << 16U) | (STM32L4XX_HAL_VERSION_SUB2 << 8U) | (STM32L4XX_HAL_VERSION_RC))
 
 #if defined(VREFBUF)
 #define VREFBUF_TIMEOUT_VALUE 10U /* 10 ms (to be confirmed) */

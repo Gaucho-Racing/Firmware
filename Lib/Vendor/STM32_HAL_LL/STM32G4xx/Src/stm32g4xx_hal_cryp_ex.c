@@ -46,17 +46,17 @@
 #define CRYP_PHASE_FINAL AES_CR_GCMPH	  /*!< GCM/GMAC or CCM  final phase  */
 
 #define CRYP_OPERATINGMODE_ENCRYPT 0x00000000U /*!< Encryption mode   */
-#define CRYP_OPERATINGMODE_KEYDERIVATION                                                                               \
-	AES_CR_MODE_0				 /*!< Key derivation mode  only used when performing ECB               \
+#define CRYP_OPERATINGMODE_KEYDERIVATION                                                                                                                                                               \
+	AES_CR_MODE_0				 /*!< Key derivation mode  only used when performing ECB                                                                                               \
 						    and CBC decryptions  */
 #define CRYP_OPERATINGMODE_DECRYPT AES_CR_MODE_1 /*!< Decryption       */
-#define CRYP_OPERATINGMODE_KEYDERIVATION_DECRYPT                                                                       \
-	AES_CR_MODE /*!< Key derivation and decryption only used when                                                  \
+#define CRYP_OPERATINGMODE_KEYDERIVATION_DECRYPT                                                                                                                                                       \
+	AES_CR_MODE /*!< Key derivation and decryption only used when                                                                                                                                  \
 		       performing ECB and CBC decryptions  */
 
 #define CRYPEx_PHASE_PROCESS 0x02U /*!< CRYP peripheral is in processing phase */
-#define CRYPEx_PHASE_FINAL                                                                                             \
-	0x03U /*!< CRYP peripheral is in final phase this is relevant only                                             \
+#define CRYPEx_PHASE_FINAL                                                                                                                                                                             \
+	0x03U /*!< CRYP peripheral is in final phase this is relevant only                                                                                                                             \
 		 with CCM and GCM modes */
 
 /*  CTR0 information to use in CCM algorithm */

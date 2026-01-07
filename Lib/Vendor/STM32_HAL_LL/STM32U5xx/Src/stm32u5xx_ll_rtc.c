@@ -59,8 +59,7 @@
  * @{
  */
 
-#define IS_LL_RTC_HOURFORMAT(__VALUE__)                                                                                \
-	(((__VALUE__) == LL_RTC_HOURFORMAT_24HOUR) || ((__VALUE__) == LL_RTC_HOURFORMAT_AMPM))
+#define IS_LL_RTC_HOURFORMAT(__VALUE__) (((__VALUE__) == LL_RTC_HOURFORMAT_24HOUR) || ((__VALUE__) == LL_RTC_HOURFORMAT_AMPM))
 
 #define IS_LL_RTC_ASYNCH_PREDIV(__VALUE__) ((__VALUE__) <= 0x7FU)
 
@@ -68,47 +67,37 @@
 
 #define IS_LL_RTC_FORMAT(__VALUE__) (((__VALUE__) == LL_RTC_FORMAT_BIN) || ((__VALUE__) == LL_RTC_FORMAT_BCD))
 
-#define IS_LL_RTC_TIME_FORMAT(__VALUE__)                                                                               \
-	(((__VALUE__) == LL_RTC_TIME_FORMAT_AM_OR_24) || ((__VALUE__) == LL_RTC_TIME_FORMAT_PM))
+#define IS_LL_RTC_TIME_FORMAT(__VALUE__) (((__VALUE__) == LL_RTC_TIME_FORMAT_AM_OR_24) || ((__VALUE__) == LL_RTC_TIME_FORMAT_PM))
 
 #define IS_LL_RTC_HOUR12(__HOUR__) (((__HOUR__) > 0U) && ((__HOUR__) <= 12U))
 #define IS_LL_RTC_HOUR24(__HOUR__) ((__HOUR__) <= 23U)
 #define IS_LL_RTC_MINUTES(__MINUTES__) ((__MINUTES__) <= 59U)
 #define IS_LL_RTC_SECONDS(__SECONDS__) ((__SECONDS__) <= 59U)
 
-#define IS_LL_RTC_WEEKDAY(__VALUE__)                                                                                   \
-	(((__VALUE__) == LL_RTC_WEEKDAY_MONDAY) || ((__VALUE__) == LL_RTC_WEEKDAY_TUESDAY) ||                          \
-	 ((__VALUE__) == LL_RTC_WEEKDAY_WEDNESDAY) || ((__VALUE__) == LL_RTC_WEEKDAY_THURSDAY) ||                      \
-	 ((__VALUE__) == LL_RTC_WEEKDAY_FRIDAY) || ((__VALUE__) == LL_RTC_WEEKDAY_SATURDAY) ||                         \
-	 ((__VALUE__) == LL_RTC_WEEKDAY_SUNDAY))
+#define IS_LL_RTC_WEEKDAY(__VALUE__)                                                                                                                                                                   \
+	(((__VALUE__) == LL_RTC_WEEKDAY_MONDAY) || ((__VALUE__) == LL_RTC_WEEKDAY_TUESDAY) || ((__VALUE__) == LL_RTC_WEEKDAY_WEDNESDAY) || ((__VALUE__) == LL_RTC_WEEKDAY_THURSDAY) ||                 \
+	 ((__VALUE__) == LL_RTC_WEEKDAY_FRIDAY) || ((__VALUE__) == LL_RTC_WEEKDAY_SATURDAY) || ((__VALUE__) == LL_RTC_WEEKDAY_SUNDAY))
 
 #define IS_LL_RTC_DAY(__DAY__) (((__DAY__) >= (uint32_t)1U) && ((__DAY__) <= (uint32_t)31U))
 
-#define IS_LL_RTC_MONTH(__VALUE__)                                                                                     \
-	(((__VALUE__) == LL_RTC_MONTH_JANUARY) || ((__VALUE__) == LL_RTC_MONTH_FEBRUARY) ||                            \
-	 ((__VALUE__) == LL_RTC_MONTH_MARCH) || ((__VALUE__) == LL_RTC_MONTH_APRIL) ||                                 \
-	 ((__VALUE__) == LL_RTC_MONTH_MAY) || ((__VALUE__) == LL_RTC_MONTH_JUNE) ||                                    \
-	 ((__VALUE__) == LL_RTC_MONTH_JULY) || ((__VALUE__) == LL_RTC_MONTH_AUGUST) ||                                 \
-	 ((__VALUE__) == LL_RTC_MONTH_SEPTEMBER) || ((__VALUE__) == LL_RTC_MONTH_OCTOBER) ||                           \
-	 ((__VALUE__) == LL_RTC_MONTH_NOVEMBER) || ((__VALUE__) == LL_RTC_MONTH_DECEMBER))
+#define IS_LL_RTC_MONTH(__VALUE__)                                                                                                                                                                     \
+	(((__VALUE__) == LL_RTC_MONTH_JANUARY) || ((__VALUE__) == LL_RTC_MONTH_FEBRUARY) || ((__VALUE__) == LL_RTC_MONTH_MARCH) || ((__VALUE__) == LL_RTC_MONTH_APRIL) ||                              \
+	 ((__VALUE__) == LL_RTC_MONTH_MAY) || ((__VALUE__) == LL_RTC_MONTH_JUNE) || ((__VALUE__) == LL_RTC_MONTH_JULY) || ((__VALUE__) == LL_RTC_MONTH_AUGUST) ||                                      \
+	 ((__VALUE__) == LL_RTC_MONTH_SEPTEMBER) || ((__VALUE__) == LL_RTC_MONTH_OCTOBER) || ((__VALUE__) == LL_RTC_MONTH_NOVEMBER) || ((__VALUE__) == LL_RTC_MONTH_DECEMBER))
 
 #define IS_LL_RTC_YEAR(__YEAR__) ((__YEAR__) <= 99U)
 
-#define IS_LL_RTC_ALMA_MASK(__VALUE__)                                                                                 \
-	(((__VALUE__) == LL_RTC_ALMA_MASK_NONE) || ((__VALUE__) == LL_RTC_ALMA_MASK_DATEWEEKDAY) ||                    \
-	 ((__VALUE__) == LL_RTC_ALMA_MASK_HOURS) || ((__VALUE__) == LL_RTC_ALMA_MASK_MINUTES) ||                       \
+#define IS_LL_RTC_ALMA_MASK(__VALUE__)                                                                                                                                                                 \
+	(((__VALUE__) == LL_RTC_ALMA_MASK_NONE) || ((__VALUE__) == LL_RTC_ALMA_MASK_DATEWEEKDAY) || ((__VALUE__) == LL_RTC_ALMA_MASK_HOURS) || ((__VALUE__) == LL_RTC_ALMA_MASK_MINUTES) ||            \
 	 ((__VALUE__) == LL_RTC_ALMA_MASK_SECONDS) || ((__VALUE__) == LL_RTC_ALMA_MASK_ALL))
 
-#define IS_LL_RTC_ALMB_MASK(__VALUE__)                                                                                 \
-	(((__VALUE__) == LL_RTC_ALMB_MASK_NONE) || ((__VALUE__) == LL_RTC_ALMB_MASK_DATEWEEKDAY) ||                    \
-	 ((__VALUE__) == LL_RTC_ALMB_MASK_HOURS) || ((__VALUE__) == LL_RTC_ALMB_MASK_MINUTES) ||                       \
+#define IS_LL_RTC_ALMB_MASK(__VALUE__)                                                                                                                                                                 \
+	(((__VALUE__) == LL_RTC_ALMB_MASK_NONE) || ((__VALUE__) == LL_RTC_ALMB_MASK_DATEWEEKDAY) || ((__VALUE__) == LL_RTC_ALMB_MASK_HOURS) || ((__VALUE__) == LL_RTC_ALMB_MASK_MINUTES) ||            \
 	 ((__VALUE__) == LL_RTC_ALMB_MASK_SECONDS) || ((__VALUE__) == LL_RTC_ALMB_MASK_ALL))
 
-#define IS_LL_RTC_ALMA_DATE_WEEKDAY_SEL(__SEL__)                                                                       \
-	(((__SEL__) == LL_RTC_ALMA_DATEWEEKDAYSEL_DATE) || ((__SEL__) == LL_RTC_ALMA_DATEWEEKDAYSEL_WEEKDAY))
+#define IS_LL_RTC_ALMA_DATE_WEEKDAY_SEL(__SEL__) (((__SEL__) == LL_RTC_ALMA_DATEWEEKDAYSEL_DATE) || ((__SEL__) == LL_RTC_ALMA_DATEWEEKDAYSEL_WEEKDAY))
 
-#define IS_LL_RTC_ALMB_DATE_WEEKDAY_SEL(__SEL__)                                                                       \
-	(((__SEL__) == LL_RTC_ALMB_DATEWEEKDAYSEL_DATE) || ((__SEL__) == LL_RTC_ALMB_DATEWEEKDAYSEL_WEEKDAY))
+#define IS_LL_RTC_ALMB_DATE_WEEKDAY_SEL(__SEL__) (((__SEL__) == LL_RTC_ALMB_DATEWEEKDAYSEL_DATE) || ((__SEL__) == LL_RTC_ALMB_DATEWEEKDAYSEL_WEEKDAY))
 
 /**
  * @}
@@ -295,12 +284,9 @@ ErrorStatus LL_RTC_TIME_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Time
 	if (LL_RTC_EnterInitMode(RTCx) != ERROR) {
 		/* Check the input parameters format */
 		if (RTC_Format != LL_RTC_FORMAT_BIN) {
-			LL_RTC_TIME_Config(RTCx, RTC_TimeStruct->TimeFormat, RTC_TimeStruct->Hours,
-					   RTC_TimeStruct->Minutes, RTC_TimeStruct->Seconds);
+			LL_RTC_TIME_Config(RTCx, RTC_TimeStruct->TimeFormat, RTC_TimeStruct->Hours, RTC_TimeStruct->Minutes, RTC_TimeStruct->Seconds);
 		} else {
-			LL_RTC_TIME_Config(RTCx, RTC_TimeStruct->TimeFormat,
-					   __LL_RTC_CONVERT_BIN2BCD(RTC_TimeStruct->Hours),
-					   __LL_RTC_CONVERT_BIN2BCD(RTC_TimeStruct->Minutes),
+			LL_RTC_TIME_Config(RTCx, RTC_TimeStruct->TimeFormat, __LL_RTC_CONVERT_BIN2BCD(RTC_TimeStruct->Hours), __LL_RTC_CONVERT_BIN2BCD(RTC_TimeStruct->Minutes),
 					   __LL_RTC_CONVERT_BIN2BCD(RTC_TimeStruct->Seconds));
 		}
 
@@ -378,11 +364,9 @@ ErrorStatus LL_RTC_DATE_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Date
 	if (LL_RTC_EnterInitMode(RTCx) != ERROR) {
 		/* Check the input parameters format */
 		if (RTC_Format != LL_RTC_FORMAT_BIN) {
-			LL_RTC_DATE_Config(RTCx, RTC_DateStruct->WeekDay, RTC_DateStruct->Day, RTC_DateStruct->Month,
-					   RTC_DateStruct->Year);
+			LL_RTC_DATE_Config(RTCx, RTC_DateStruct->WeekDay, RTC_DateStruct->Day, RTC_DateStruct->Month, RTC_DateStruct->Year);
 		} else {
-			LL_RTC_DATE_Config(RTCx, RTC_DateStruct->WeekDay, __LL_RTC_CONVERT_BIN2BCD(RTC_DateStruct->Day),
-					   __LL_RTC_CONVERT_BIN2BCD(RTC_DateStruct->Month),
+			LL_RTC_DATE_Config(RTCx, RTC_DateStruct->WeekDay, __LL_RTC_CONVERT_BIN2BCD(RTC_DateStruct->Day), __LL_RTC_CONVERT_BIN2BCD(RTC_DateStruct->Month),
 					   __LL_RTC_CONVERT_BIN2BCD(RTC_DateStruct->Year));
 		}
 
@@ -496,13 +480,10 @@ ErrorStatus LL_RTC_ALMA_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Alar
 
 	/* Configure the Alarm register */
 	if (RTC_Format != LL_RTC_FORMAT_BIN) {
-		LL_RTC_ALMA_ConfigTime(RTCx, RTC_AlarmStruct->AlarmTime.TimeFormat, RTC_AlarmStruct->AlarmTime.Hours,
-				       RTC_AlarmStruct->AlarmTime.Minutes, RTC_AlarmStruct->AlarmTime.Seconds);
+		LL_RTC_ALMA_ConfigTime(RTCx, RTC_AlarmStruct->AlarmTime.TimeFormat, RTC_AlarmStruct->AlarmTime.Hours, RTC_AlarmStruct->AlarmTime.Minutes, RTC_AlarmStruct->AlarmTime.Seconds);
 	} else {
-		LL_RTC_ALMA_ConfigTime(RTCx, RTC_AlarmStruct->AlarmTime.TimeFormat,
-				       __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Hours),
-				       __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Minutes),
-				       __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Seconds));
+		LL_RTC_ALMA_ConfigTime(RTCx, RTC_AlarmStruct->AlarmTime.TimeFormat, __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Hours),
+				       __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Minutes), __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Seconds));
 	}
 	/* Set ALARM mask */
 	LL_RTC_ALMA_SetMask(RTCx, RTC_AlarmStruct->AlarmMask);
@@ -590,13 +571,10 @@ ErrorStatus LL_RTC_ALMB_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Alar
 
 	/* Configure the Alarm register */
 	if (RTC_Format != LL_RTC_FORMAT_BIN) {
-		LL_RTC_ALMB_ConfigTime(RTCx, RTC_AlarmStruct->AlarmTime.TimeFormat, RTC_AlarmStruct->AlarmTime.Hours,
-				       RTC_AlarmStruct->AlarmTime.Minutes, RTC_AlarmStruct->AlarmTime.Seconds);
+		LL_RTC_ALMB_ConfigTime(RTCx, RTC_AlarmStruct->AlarmTime.TimeFormat, RTC_AlarmStruct->AlarmTime.Hours, RTC_AlarmStruct->AlarmTime.Minutes, RTC_AlarmStruct->AlarmTime.Seconds);
 	} else {
-		LL_RTC_ALMB_ConfigTime(RTCx, RTC_AlarmStruct->AlarmTime.TimeFormat,
-				       __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Hours),
-				       __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Minutes),
-				       __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Seconds));
+		LL_RTC_ALMB_ConfigTime(RTCx, RTC_AlarmStruct->AlarmTime.TimeFormat, __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Hours),
+				       __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Minutes), __LL_RTC_CONVERT_BIN2BCD(RTC_AlarmStruct->AlarmTime.Seconds));
 	}
 	/* Set ALARM mask */
 	LL_RTC_ALMB_SetMask(RTCx, RTC_AlarmStruct->AlarmMask);

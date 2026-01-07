@@ -142,12 +142,11 @@ typedef void (*pOTFDEC_CallbackTypeDef)(OTFDEC_HandleTypeDef *hotfdec); /*!< poi
 #define OTFDEC_SEC_ERROR_INT (OTFDEC_IER_SEIE)	 /*!< OTFDEC security error interrupt */
 #define OTFDEC_EXE_ERROR_INT (OTFDEC_IER_XONEIE) /*!< OTFDEC execution error interrupt */
 #define OTFDEC_KEY_ERROR_INT (OTFDEC_IER_KEIE)	 /*!< OTFDEC key error interrupt */
-#define OTFDEC_SEC_EXE_ERROR_INT                                                                                       \
-	(OTFDEC_IER_SEIE | OTFDEC_IER_XONEIE)			     /*!< OTFDEC security and execution errors         \
-									interrupts  */
-#define OTFDEC_SEC_KEY_ERROR_INT (OTFDEC_IER_SEIE | OTFDEC_IER_KEIE) /*!< OTFDEC security and key errors interrupts */
-#define OTFDEC_EXE_KEY_ERROR_INT                                                                                       \
-	(OTFDEC_IER_XONEIE | OTFDEC_IER_KEIE) /*!< OTFDEC execution and key errors interrupts */
+#define OTFDEC_SEC_EXE_ERROR_INT                                                                                                                                                                       \
+	(OTFDEC_IER_SEIE | OTFDEC_IER_XONEIE)				       /*!< OTFDEC security and execution errors                                                                               \
+										  interrupts  */
+#define OTFDEC_SEC_KEY_ERROR_INT (OTFDEC_IER_SEIE | OTFDEC_IER_KEIE)	       /*!< OTFDEC security and key errors interrupts */
+#define OTFDEC_EXE_KEY_ERROR_INT (OTFDEC_IER_XONEIE | OTFDEC_IER_KEIE)	       /*!< OTFDEC execution and key errors interrupts */
 #define OTFDEC_ALL_INT (OTFDEC_IER_SEIE | OTFDEC_IER_XONEIE | OTFDEC_IER_KEIE) /*!< OTFDEC all interrupts */
 /**
  * @}
@@ -156,11 +155,11 @@ typedef void (*pOTFDEC_CallbackTypeDef)(OTFDEC_HandleTypeDef *hotfdec); /*!< poi
 /** @defgroup OTFDEC_Region_Enable   OTFDEC Region Enable
  * @{
  */
-#define OTFDEC_REG_CONFIGR_REG_DISABLE                                                                                 \
-	0x00000000U /*!< OTFDEC region encryption or on-the-fly decryption                                             \
+#define OTFDEC_REG_CONFIGR_REG_DISABLE                                                                                                                                                                 \
+	0x00000000U /*!< OTFDEC region encryption or on-the-fly decryption                                                                                                                             \
 		       disable */
-#define OTFDEC_REG_CONFIGR_REG_ENABLE                                                                                  \
-	OTFDEC_REG_CONFIGR_REG_EN /*!< OTFDEC region encryption or on-the-fly                                          \
+#define OTFDEC_REG_CONFIGR_REG_ENABLE                                                                                                                                                                  \
+	OTFDEC_REG_CONFIGR_REG_EN /*!< OTFDEC region encryption or on-the-fly                                                                                                                          \
 				     decryption enable  */
 /**
  * @}
@@ -171,8 +170,8 @@ typedef void (*pOTFDEC_CallbackTypeDef)(OTFDEC_HandleTypeDef *hotfdec); /*!< poi
  * @{
  */
 #define OTFDEC_REG_CONFIGR_LOCK_DISABLE 0x00000000U /*!< OTFDEC region configuration lock disable */
-#define OTFDEC_REG_CONFIGR_LOCK_ENABLE                                                                                 \
-	OTFDEC_REG_CONFIGR_CONFIGLOCK /*!< OTFDEC region configuration lock                                            \
+#define OTFDEC_REG_CONFIGR_LOCK_ENABLE                                                                                                                                                                 \
+	OTFDEC_REG_CONFIGR_CONFIGLOCK /*!< OTFDEC region configuration lock                                                                                                                            \
 					 enable  */
 /**
  * @}
@@ -182,8 +181,8 @@ typedef void (*pOTFDEC_CallbackTypeDef)(OTFDEC_HandleTypeDef *hotfdec); /*!< poi
  * @{
  */
 #define OTFDEC_REG_MODE_INSTRUCTION_OR_DATA_ACCESSES OTFDEC_REG_CONFIGR_MODE_1 /*!< All read accesses are decrypted */
-#define OTFDEC_REG_MODE_INSTRUCTION_ACCESSES_ONLY_WITH_CIPHER                                                          \
-	OTFDEC_REG_CONFIGR_MODE /*!< Only instruction accesses are decrypted                                           \
+#define OTFDEC_REG_MODE_INSTRUCTION_ACCESSES_ONLY_WITH_CIPHER                                                                                                                                          \
+	OTFDEC_REG_CONFIGR_MODE /*!< Only instruction accesses are decrypted                                                                                                                           \
 				   with proprietary cipher activated */
 /**
  * @}
@@ -238,11 +237,11 @@ typedef void (*pOTFDEC_CallbackTypeDef)(OTFDEC_HandleTypeDef *hotfdec); /*!< poi
  * @retval None
  */
 #if (USE_HAL_OTFDEC_REGISTER_CALLBACKS == 1)
-#define __HAL_OTFDEC_RESET_HANDLE_STATE(__HANDLE__)                                                                    \
-	do {                                                                                                           \
-		(__HANDLE__)->State = HAL_OTFDEC_STATE_RESET;                                                          \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define __HAL_OTFDEC_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                    \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_OTFDEC_STATE_RESET;                                                                                                                                          \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0)
 #else
 #define __HAL_OTFDEC_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_OTFDEC_STATE_RESET)
@@ -357,8 +356,7 @@ void HAL_OTFDEC_MspDeInit(OTFDEC_HandleTypeDef *hotfdec);
 
 #if (USE_HAL_OTFDEC_REGISTER_CALLBACKS == 1)
 /* Callbacks Register/UnRegister functions  ***********************************/
-HAL_StatusTypeDef HAL_OTFDEC_RegisterCallback(OTFDEC_HandleTypeDef *hotfdec, HAL_OTFDEC_CallbackIDTypeDef CallbackID,
-					      pOTFDEC_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_OTFDEC_RegisterCallback(OTFDEC_HandleTypeDef *hotfdec, HAL_OTFDEC_CallbackIDTypeDef CallbackID, pOTFDEC_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_OTFDEC_UnRegisterCallback(OTFDEC_HandleTypeDef *hotfdec, HAL_OTFDEC_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_OTFDEC_REGISTER_CALLBACKS */
 /**
@@ -380,16 +378,14 @@ void HAL_OTFDEC_ErrorCallback(OTFDEC_HandleTypeDef *hotfdec);
 HAL_StatusTypeDef HAL_OTFDEC_RegionKeyLock(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex);
 HAL_StatusTypeDef HAL_OTFDEC_RegionSetKey(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex, uint32_t *pKey);
 HAL_StatusTypeDef HAL_OTFDEC_RegionSetMode(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex, uint32_t mode);
-HAL_StatusTypeDef HAL_OTFDEC_RegionConfig(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex,
-					  const OTFDEC_RegionConfigTypeDef *Config, uint32_t lock);
+HAL_StatusTypeDef HAL_OTFDEC_RegionConfig(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex, const OTFDEC_RegionConfigTypeDef *Config, uint32_t lock);
 uint32_t HAL_OTFDEC_KeyCRCComputation(const uint32_t *pKey);
 HAL_StatusTypeDef HAL_OTFDEC_RegionEnable(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex);
 HAL_StatusTypeDef HAL_OTFDEC_RegionDisable(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex);
 HAL_StatusTypeDef HAL_OTFDEC_ConfigAttributes(OTFDEC_HandleTypeDef *hotfdec, uint32_t Attributes);
 HAL_StatusTypeDef HAL_OTFDEC_EnableEnciphering(OTFDEC_HandleTypeDef *hotfdec);
 HAL_StatusTypeDef HAL_OTFDEC_DisableEnciphering(OTFDEC_HandleTypeDef *hotfdec);
-HAL_StatusTypeDef HAL_OTFDEC_Cipher(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex, const uint32_t *input,
-				    uint32_t *output, uint32_t size, uint32_t start_address);
+HAL_StatusTypeDef HAL_OTFDEC_Cipher(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex, const uint32_t *input, uint32_t *output, uint32_t size, uint32_t start_address);
 /**
  * @}
  */
@@ -401,8 +397,7 @@ HAL_StatusTypeDef HAL_OTFDEC_Cipher(OTFDEC_HandleTypeDef *hotfdec, uint32_t Regi
 HAL_OTFDEC_StateTypeDef HAL_OTFDEC_GetState(const OTFDEC_HandleTypeDef *hotfdec);
 HAL_StatusTypeDef HAL_OTFDEC_GetConfigAttributes(OTFDEC_HandleTypeDef *hotfdec, uint32_t *Attributes);
 uint32_t HAL_OTFDEC_RegionGetKeyCRC(const OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex);
-HAL_StatusTypeDef HAL_OTFDEC_RegionGetConfig(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex,
-					     OTFDEC_RegionConfigTypeDef *Config);
+HAL_StatusTypeDef HAL_OTFDEC_RegionGetConfig(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex, OTFDEC_RegionConfigTypeDef *Config);
 /**
  * @}
  */
@@ -447,45 +442,37 @@ HAL_StatusTypeDef HAL_OTFDEC_RegionGetConfig(OTFDEC_HandleTypeDef *hotfdec, uint
  * @param __INT__ OTFDEC peripheral set of interrupts parameter
  * @retval SET (__INT__ is valid) or RESET (__INT__ is invalid)
  */
-#define IS_OTFDEC_INTERRUPTS(__INT__)                                                                                  \
-	(((__INT__) == OTFDEC_SEC_ERROR_INT) || ((__INT__) == OTFDEC_EXE_ERROR_INT) ||                                 \
-	 ((__INT__) == OTFDEC_KEY_ERROR_INT) || ((__INT__) == OTFDEC_SEC_EXE_ERROR_INT) ||                             \
-	 ((__INT__) == OTFDEC_SEC_KEY_ERROR_INT) || ((__INT__) == OTFDEC_EXE_KEY_ERROR_INT) ||                         \
-	 ((__INT__) == OTFDEC_ALL_INT))
+#define IS_OTFDEC_INTERRUPTS(__INT__)                                                                                                                                                                  \
+	(((__INT__) == OTFDEC_SEC_ERROR_INT) || ((__INT__) == OTFDEC_EXE_ERROR_INT) || ((__INT__) == OTFDEC_KEY_ERROR_INT) || ((__INT__) == OTFDEC_SEC_EXE_ERROR_INT) ||                               \
+	 ((__INT__) == OTFDEC_SEC_KEY_ERROR_INT) || ((__INT__) == OTFDEC_EXE_KEY_ERROR_INT) || ((__INT__) == OTFDEC_ALL_INT))
 
 /**
  * @brief Verify the OTFDEC region configuration lock parameter.
  * @param __LOCK__ OTFDEC region lock parameter.
  * @retval SET (__LOCK__ is valid) or RESET (__LOCK__ is invalid)
  */
-#define IS_OTFDEC_REGION_CONFIG_LOCK(__LOCK__)                                                                         \
-	(((__LOCK__) == OTFDEC_REG_CONFIGR_LOCK_DISABLE) || ((__LOCK__) == OTFDEC_REG_CONFIGR_LOCK_ENABLE))
+#define IS_OTFDEC_REGION_CONFIG_LOCK(__LOCK__) (((__LOCK__) == OTFDEC_REG_CONFIGR_LOCK_DISABLE) || ((__LOCK__) == OTFDEC_REG_CONFIGR_LOCK_ENABLE))
 
 /**
  * @brief Verify the OTFDEC region operating mode.
  * @param __MODE__ OTFDEC region operating mode parameter.
  * @retval SET (__MODE__ is valid) or RESET (__MODE__ is invalid)
  */
-#define IS_OTFDEC_REGION_OPERATING_MODE(__MODE__)                                                                      \
-	(((__MODE__) == OTFDEC_REG_MODE_INSTRUCTION_OR_DATA_ACCESSES) ||                                               \
-	 ((__MODE__) == OTFDEC_REG_MODE_INSTRUCTION_ACCESSES_ONLY_WITH_CIPHER))
+#define IS_OTFDEC_REGION_OPERATING_MODE(__MODE__) (((__MODE__) == OTFDEC_REG_MODE_INSTRUCTION_OR_DATA_ACCESSES) || ((__MODE__) == OTFDEC_REG_MODE_INSTRUCTION_ACCESSES_ONLY_WITH_CIPHER))
 
 /**
  * @brief Verify the OTFDEC region index.
  * @param __INDEX__ OTFDEC region index
  * @retval SET (__INDEX__ is valid) or RESET (__INDEX__ is invalid)
  */
-#define IS_OTFDEC_REGIONINDEX(__INDEX__)                                                                               \
-	(((__INDEX__) == OTFDEC_REGION1) || ((__INDEX__) == OTFDEC_REGION2) || ((__INDEX__) == OTFDEC_REGION3) ||      \
-	 ((__INDEX__) == OTFDEC_REGION4))
+#define IS_OTFDEC_REGIONINDEX(__INDEX__) (((__INDEX__) == OTFDEC_REGION1) || ((__INDEX__) == OTFDEC_REGION2) || ((__INDEX__) == OTFDEC_REGION3) || ((__INDEX__) == OTFDEC_REGION4))
 
 /**
  * @brief Verify the OTFDEC configuration attributes.
  * @param __ATTRIBUTE__ OTFDEC region index
  * @retval SET (__ATTRIBUTE__ is valid) or RESET (__ATTRIBUTE__ is invalid)
  */
-#define IS_OTFDEC_ATTRIBUTE(__ATTRIBUTE__)                                                                             \
-	(((__ATTRIBUTE__) == OTFDEC_ATTRIBUTE_PRIV) || ((__ATTRIBUTE__) == OTFDEC_ATTRIBUTE_NPRIV))
+#define IS_OTFDEC_ATTRIBUTE(__ATTRIBUTE__) (((__ATTRIBUTE__) == OTFDEC_ATTRIBUTE_PRIV) || ((__ATTRIBUTE__) == OTFDEC_ATTRIBUTE_NPRIV))
 
 /**
  * @}

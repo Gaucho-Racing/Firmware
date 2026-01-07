@@ -96,8 +96,8 @@ typedef struct {
  * Mode Trigger Selection
  * @{
  */
-#define SMBUS_TRIG_GRP1                                                                                                \
-	(0x10000000U)		      /*!< Trigger Group for I2C1, I2C2, I2C4, I2C5, I2C6                              \
+#define SMBUS_TRIG_GRP1                                                                                                                                                                                \
+	(0x10000000U)		      /*!< Trigger Group for I2C1, I2C2, I2C4, I2C5, I2C6                                                                                                              \
 					 (depends on Product) */
 #define SMBUS_TRIG_GRP2 (0x20000000U) /*!< Trigger Group for I2C3 */
 
@@ -204,10 +204,8 @@ HAL_StatusTypeDef HAL_SMBUSEx_ConfigFastModePlus(SMBUS_HandleTypeDef *hsmbus, ui
 /** @addtogroup SMBUSEx_Exported_Functions_Group4 Autonomous Mode Functions
  * @{
  */
-HAL_StatusTypeDef HAL_SMBUSEx_SetConfigAutonomousMode(SMBUS_HandleTypeDef *hsmbus,
-						      const SMBUS_AutonomousModeConfTypeDef *sConfig);
-HAL_StatusTypeDef HAL_SMBUSEx_GetConfigAutonomousMode(const SMBUS_HandleTypeDef *hsmbus,
-						      SMBUS_AutonomousModeConfTypeDef *sConfig);
+HAL_StatusTypeDef HAL_SMBUSEx_SetConfigAutonomousMode(SMBUS_HandleTypeDef *hsmbus, const SMBUS_AutonomousModeConfTypeDef *sConfig);
+HAL_StatusTypeDef HAL_SMBUSEx_GetConfigAutonomousMode(const SMBUS_HandleTypeDef *hsmbus, SMBUS_AutonomousModeConfTypeDef *sConfig);
 HAL_StatusTypeDef HAL_SMBUSEx_ClearConfigAutonomousMode(SMBUS_HandleTypeDef *hsmbus);
 /**
  * @}
@@ -230,35 +228,27 @@ HAL_StatusTypeDef HAL_SMBUSEx_ClearConfigAutonomousMode(SMBUS_HandleTypeDef *hsm
 /** @defgroup SMBUSEx_Private_Macro SMBUS Extended Private Macros
  * @{
  */
-#define IS_SMBUS_FASTMODEPLUS(__CONFIG__)                                                                              \
-	(((__CONFIG__) == (SMBUS_FASTMODEPLUS_ENABLE)) || ((__CONFIG__) == (SMBUS_FASTMODEPLUS_DISABLE)))
+#define IS_SMBUS_FASTMODEPLUS(__CONFIG__) (((__CONFIG__) == (SMBUS_FASTMODEPLUS_ENABLE)) || ((__CONFIG__) == (SMBUS_FASTMODEPLUS_DISABLE)))
 
 #define IS_SMBUS_AUTO_MODE(__MODE__) (((__MODE__) == SMBUS_AUTO_MODE_DISABLE) || ((__MODE__) == SMBUS_AUTO_MODE_ENABLE))
 
-#define IS_SMBUS_TRIG_SOURCE(__INSTANCE__, __SOURCE__)                                                                 \
-	(((__INSTANCE__) == I2C3) ? IS_SMBUS_GRP2_TRIG_SOURCE(__SOURCE__) : IS_SMBUS_GRP1_TRIG_SOURCE(__SOURCE__))
+#define IS_SMBUS_TRIG_SOURCE(__INSTANCE__, __SOURCE__) (((__INSTANCE__) == I2C3) ? IS_SMBUS_GRP2_TRIG_SOURCE(__SOURCE__) : IS_SMBUS_GRP1_TRIG_SOURCE(__SOURCE__))
 
-#define IS_SMBUS_GRP1_TRIG_SOURCE(__SOURCE__)                                                                          \
-	(((__SOURCE__) == SMBUS_GRP1_GPDMA_CH0_TCF_TRG) || ((__SOURCE__) == SMBUS_GRP1_GPDMA_CH1_TCF_TRG) ||           \
-	 ((__SOURCE__) == SMBUS_GRP1_GPDMA_CH2_TCF_TRG) || ((__SOURCE__) == SMBUS_GRP1_GPDMA_CH3_TCF_TRG) ||           \
-	 ((__SOURCE__) == SMBUS_GRP1_EXTI5_TRG) || ((__SOURCE__) == SMBUS_GRP1_EXTI9_TRG) ||                           \
-	 ((__SOURCE__) == SMBUS_GRP1_LPTIM1_CH1_TRG) || ((__SOURCE__) == SMBUS_GRP1_LPTIM2_CH1_TRG) ||                 \
-	 ((__SOURCE__) == SMBUS_GRP1_COMP1_TRG) || ((__SOURCE__) == SMBUS_GRP1_COMP2_TRG) ||                           \
-	 ((__SOURCE__) == SMBUS_GRP1_RTC_ALRA_TRG) || ((__SOURCE__) == SMBUS_GRP1_RTC_WUT_TRG))
+#define IS_SMBUS_GRP1_TRIG_SOURCE(__SOURCE__)                                                                                                                                                          \
+	(((__SOURCE__) == SMBUS_GRP1_GPDMA_CH0_TCF_TRG) || ((__SOURCE__) == SMBUS_GRP1_GPDMA_CH1_TCF_TRG) || ((__SOURCE__) == SMBUS_GRP1_GPDMA_CH2_TCF_TRG) ||                                         \
+	 ((__SOURCE__) == SMBUS_GRP1_GPDMA_CH3_TCF_TRG) || ((__SOURCE__) == SMBUS_GRP1_EXTI5_TRG) || ((__SOURCE__) == SMBUS_GRP1_EXTI9_TRG) || ((__SOURCE__) == SMBUS_GRP1_LPTIM1_CH1_TRG) ||          \
+	 ((__SOURCE__) == SMBUS_GRP1_LPTIM2_CH1_TRG) || ((__SOURCE__) == SMBUS_GRP1_COMP1_TRG) || ((__SOURCE__) == SMBUS_GRP1_COMP2_TRG) || ((__SOURCE__) == SMBUS_GRP1_RTC_ALRA_TRG) ||               \
+	 ((__SOURCE__) == SMBUS_GRP1_RTC_WUT_TRG))
 
-#define IS_SMBUS_GRP2_TRIG_SOURCE(__SOURCE__)                                                                          \
-	(((__SOURCE__) == SMBUS_GRP2_LPDMA_CH0_TCF_TRG) || ((__SOURCE__) == SMBUS_GRP2_LPDMA_CH1_TCF_TRG) ||           \
-	 ((__SOURCE__) == SMBUS_GRP2_LPDMA_CH2_TCF_TRG) || ((__SOURCE__) == SMBUS_GRP2_LPDMA_CH3_TCF_TRG) ||           \
-	 ((__SOURCE__) == SMBUS_GRP2_EXTI5_TRG) || ((__SOURCE__) == SMBUS_GRP2_EXTI8_TRG) ||                           \
-	 ((__SOURCE__) == SMBUS_GRP2_LPTIM1_CH1_TRG) || ((__SOURCE__) == SMBUS_GRP2_LPTIM3_CH1_TRG) ||                 \
-	 ((__SOURCE__) == SMBUS_GRP2_COMP1_TRG) || ((__SOURCE__) == SMBUS_GRP2_COMP2_TRG) ||                           \
-	 ((__SOURCE__) == SMBUS_GRP2_RTC_ALRA_TRG) || ((__SOURCE__) == SMBUS_GRP2_RTC_WUT_TRG))
+#define IS_SMBUS_GRP2_TRIG_SOURCE(__SOURCE__)                                                                                                                                                          \
+	(((__SOURCE__) == SMBUS_GRP2_LPDMA_CH0_TCF_TRG) || ((__SOURCE__) == SMBUS_GRP2_LPDMA_CH1_TCF_TRG) || ((__SOURCE__) == SMBUS_GRP2_LPDMA_CH2_TCF_TRG) ||                                         \
+	 ((__SOURCE__) == SMBUS_GRP2_LPDMA_CH3_TCF_TRG) || ((__SOURCE__) == SMBUS_GRP2_EXTI5_TRG) || ((__SOURCE__) == SMBUS_GRP2_EXTI8_TRG) || ((__SOURCE__) == SMBUS_GRP2_LPTIM1_CH1_TRG) ||          \
+	 ((__SOURCE__) == SMBUS_GRP2_LPTIM3_CH1_TRG) || ((__SOURCE__) == SMBUS_GRP2_COMP1_TRG) || ((__SOURCE__) == SMBUS_GRP2_COMP2_TRG) || ((__SOURCE__) == SMBUS_GRP2_RTC_ALRA_TRG) ||               \
+	 ((__SOURCE__) == SMBUS_GRP2_RTC_WUT_TRG))
 
-#define IS_SMBUS_TRIG_INPUT_INSTANCE(__INSTANCE__)                                                                     \
-	(IS_SMBUS_GRP1_INSTANCE(__INSTANCE__) || IS_SMBUS_GRP2_INSTANCE(__INSTANCE__))
+#define IS_SMBUS_TRIG_INPUT_INSTANCE(__INSTANCE__) (IS_SMBUS_GRP1_INSTANCE(__INSTANCE__) || IS_SMBUS_GRP2_INSTANCE(__INSTANCE__))
 
-#define IS_SMBUS_AUTO_MODE_TRG_POL(__POLARITY__)                                                                       \
-	(((__POLARITY__) == SMBUS_TRIG_POLARITY_RISING) || ((__POLARITY__) == SMBUS_TRIG_POLARITY_FALLING))
+#define IS_SMBUS_AUTO_MODE_TRG_POL(__POLARITY__) (((__POLARITY__) == SMBUS_TRIG_POLARITY_RISING) || ((__POLARITY__) == SMBUS_TRIG_POLARITY_FALLING))
 /**
  * @}
  */

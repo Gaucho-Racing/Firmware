@@ -39,17 +39,13 @@
  * @{
  */
 #if defined(RCC_CCIPR_USART3SEL)
-#define IS_LL_RCC_USART_CLKSOURCE(__VALUE__)                                                                           \
-	(((__VALUE__) == LL_RCC_USART1_CLKSOURCE) || ((__VALUE__) == LL_RCC_USART2_CLKSOURCE) ||                       \
-	 ((__VALUE__) == LL_RCC_USART3_CLKSOURCE))
+#define IS_LL_RCC_USART_CLKSOURCE(__VALUE__) (((__VALUE__) == LL_RCC_USART1_CLKSOURCE) || ((__VALUE__) == LL_RCC_USART2_CLKSOURCE) || ((__VALUE__) == LL_RCC_USART3_CLKSOURCE))
 #else
-#define IS_LL_RCC_USART_CLKSOURCE(__VALUE__)                                                                           \
-	(((__VALUE__) == LL_RCC_USART1_CLKSOURCE) || ((__VALUE__) == LL_RCC_USART2_CLKSOURCE))
+#define IS_LL_RCC_USART_CLKSOURCE(__VALUE__) (((__VALUE__) == LL_RCC_USART1_CLKSOURCE) || ((__VALUE__) == LL_RCC_USART2_CLKSOURCE))
 #endif /* RCC_CCIPR_USART3SEL*/
 
 #if defined(RCC_CCIPR_UART5SEL)
-#define IS_LL_RCC_UART_CLKSOURCE(__VALUE__)                                                                            \
-	(((__VALUE__) == LL_RCC_UART4_CLKSOURCE) || ((__VALUE__) == LL_RCC_UART5_CLKSOURCE))
+#define IS_LL_RCC_UART_CLKSOURCE(__VALUE__) (((__VALUE__) == LL_RCC_UART4_CLKSOURCE) || ((__VALUE__) == LL_RCC_UART5_CLKSOURCE))
 #elif defined(RCC_CCIPR_UART4SEL)
 #define IS_LL_RCC_UART_CLKSOURCE(__VALUE__) ((__VALUE__) == LL_RCC_UART4_CLKSOURCE)
 #endif /* RCC_CCIPR_UART5SEL*/
@@ -57,16 +53,12 @@
 #define IS_LL_RCC_LPUART_CLKSOURCE(__VALUE__) (((__VALUE__) == LL_RCC_LPUART1_CLKSOURCE))
 
 #if defined(RCC_CCIPR2_I2C4SEL)
-#define IS_LL_RCC_I2C_CLKSOURCE(__VALUE__)                                                                             \
-	(((__VALUE__) == LL_RCC_I2C1_CLKSOURCE) || ((__VALUE__) == LL_RCC_I2C2_CLKSOURCE) ||                           \
-	 ((__VALUE__) == LL_RCC_I2C3_CLKSOURCE) || ((__VALUE__) == LL_RCC_I2C4_CLKSOURCE))
+#define IS_LL_RCC_I2C_CLKSOURCE(__VALUE__)                                                                                                                                                             \
+	(((__VALUE__) == LL_RCC_I2C1_CLKSOURCE) || ((__VALUE__) == LL_RCC_I2C2_CLKSOURCE) || ((__VALUE__) == LL_RCC_I2C3_CLKSOURCE) || ((__VALUE__) == LL_RCC_I2C4_CLKSOURCE))
 #elif defined(RCC_CCIPR_I2C3SEL)
-#define IS_LL_RCC_I2C_CLKSOURCE(__VALUE__)                                                                             \
-	(((__VALUE__) == LL_RCC_I2C1_CLKSOURCE) || ((__VALUE__) == LL_RCC_I2C2_CLKSOURCE) ||                           \
-	 ((__VALUE__) == LL_RCC_I2C3_CLKSOURCE))
+#define IS_LL_RCC_I2C_CLKSOURCE(__VALUE__) (((__VALUE__) == LL_RCC_I2C1_CLKSOURCE) || ((__VALUE__) == LL_RCC_I2C2_CLKSOURCE) || ((__VALUE__) == LL_RCC_I2C3_CLKSOURCE))
 #else
-#define IS_LL_RCC_I2C_CLKSOURCE(__VALUE__)                                                                             \
-	(((__VALUE__) == LL_RCC_I2C1_CLKSOURCE) || ((__VALUE__) == LL_RCC_I2C2_CLKSOURCE))
+#define IS_LL_RCC_I2C_CLKSOURCE(__VALUE__) (((__VALUE__) == LL_RCC_I2C1_CLKSOURCE) || ((__VALUE__) == LL_RCC_I2C2_CLKSOURCE))
 
 #endif /* RCC_CCIPR2_I2C4SEL */
 #define IS_LL_RCC_LPTIM_CLKSOURCE(__VALUE__) (((__VALUE__) == LL_RCC_LPTIM1_CLKSOURCE))
@@ -82,8 +74,7 @@
 #define IS_LL_RCC_USB_CLKSOURCE(__VALUE__) (((__VALUE__) == LL_RCC_USB_CLKSOURCE))
 
 #if defined(ADC345_COMMON)
-#define IS_LL_RCC_ADC_CLKSOURCE(__VALUE__)                                                                             \
-	(((__VALUE__) == LL_RCC_ADC12_CLKSOURCE) || ((__VALUE__) == LL_RCC_ADC345_CLKSOURCE))
+#define IS_LL_RCC_ADC_CLKSOURCE(__VALUE__) (((__VALUE__) == LL_RCC_ADC12_CLKSOURCE) || ((__VALUE__) == LL_RCC_ADC345_CLKSOURCE))
 #else
 #define IS_LL_RCC_ADC_CLKSOURCE(__VALUE__) (((__VALUE__) == LL_RCC_ADC12_CLKSOURCE))
 #endif /* ADC345_COMMON */
@@ -171,8 +162,7 @@ ErrorStatus LL_RCC_DeInit(void)
 	LL_RCC_WriteReg(CIER, 0x00000000U);
 
 	/* Clear all interrupt flags */
-	vl_mask = RCC_CICR_LSIRDYC | RCC_CICR_LSERDYC | RCC_CICR_HSIRDYC | RCC_CICR_HSERDYC | RCC_CICR_PLLRDYC |
-		  RCC_CICR_HSI48RDYC | RCC_CICR_CSSC | RCC_CICR_LSECSSC;
+	vl_mask = RCC_CICR_LSIRDYC | RCC_CICR_LSERDYC | RCC_CICR_HSIRDYC | RCC_CICR_HSERDYC | RCC_CICR_PLLRDYC | RCC_CICR_HSI48RDYC | RCC_CICR_CSSC | RCC_CICR_LSECSSC;
 
 	LL_RCC_WriteReg(CICR, vl_mask);
 
@@ -342,8 +332,7 @@ uint32_t LL_RCC_GetUSARTClockFreq(uint32_t USARTxSource)
 								       Clock is
 								       PCLK1 */
 				default:
-					usart_frequency =
-					    RCC_GetPCLK1ClockFreq(RCC_GetHCLKClockFreq(RCC_GetSystemClockFreq()));
+					usart_frequency = RCC_GetPCLK1ClockFreq(RCC_GetHCLKClockFreq(RCC_GetSystemClockFreq()));
 					break;
 			}
 		}
@@ -523,8 +512,7 @@ uint32_t LL_RCC_GetI2CClockFreq(uint32_t I2CxSource)
 								   * is PCLK1
 								   */
 				default:
-					i2c_frequency =
-					    RCC_GetPCLK1ClockFreq(RCC_GetHCLKClockFreq(RCC_GetSystemClockFreq()));
+					i2c_frequency = RCC_GetPCLK1ClockFreq(RCC_GetHCLKClockFreq(RCC_GetSystemClockFreq()));
 					break;
 			}
 		}
@@ -560,8 +548,7 @@ uint32_t LL_RCC_GetI2CClockFreq(uint32_t I2CxSource)
 									     PCLK1
 									   */
 					default:
-						i2c_frequency = RCC_GetPCLK1ClockFreq(
-						    RCC_GetHCLKClockFreq(RCC_GetSystemClockFreq()));
+						i2c_frequency = RCC_GetPCLK1ClockFreq(RCC_GetHCLKClockFreq(RCC_GetSystemClockFreq()));
 						break;
 				}
 			}
@@ -1180,8 +1167,7 @@ static uint32_t RCC_PLL_GetFreqDomain_ADC(void)
 			pllinputfreq = HSI_VALUE;
 			break;
 	}
-	return __LL_RCC_CALC_PLLCLK_ADC_FREQ(pllinputfreq, LL_RCC_PLL_GetDivider(), LL_RCC_PLL_GetN(),
-					     LL_RCC_PLL_GetP());
+	return __LL_RCC_CALC_PLLCLK_ADC_FREQ(pllinputfreq, LL_RCC_PLL_GetDivider(), LL_RCC_PLL_GetN(), LL_RCC_PLL_GetP());
 }
 
 /**
@@ -1210,8 +1196,7 @@ static uint32_t RCC_PLL_GetFreqDomain_48M(void)
 			pllinputfreq = HSI_VALUE;
 			break;
 	}
-	return __LL_RCC_CALC_PLLCLK_48M_FREQ(pllinputfreq, LL_RCC_PLL_GetDivider(), LL_RCC_PLL_GetN(),
-					     LL_RCC_PLL_GetQ());
+	return __LL_RCC_CALC_PLLCLK_48M_FREQ(pllinputfreq, LL_RCC_PLL_GetDivider(), LL_RCC_PLL_GetN(), LL_RCC_PLL_GetQ());
 }
 
 /**

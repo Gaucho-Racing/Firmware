@@ -237,8 +237,7 @@
  * -------------------------------------------------------------------------------------------------*/
 /* Private function prototypes
  * ---------------------------------------------------------------------------------------*/
-static void DMA_SetConfig(DMA_HandleTypeDef const *const hdma, uint32_t SrcAddress, uint32_t DstAddress,
-			  uint32_t SrcDataSize);
+static void DMA_SetConfig(DMA_HandleTypeDef const *const hdma, uint32_t SrcAddress, uint32_t DstAddress, uint32_t SrcDataSize);
 static void DMA_Init(DMA_HandleTypeDef const *const hdma);
 
 /* Exported functions
@@ -420,8 +419,7 @@ HAL_StatusTypeDef HAL_DMA_DeInit(DMA_HandleTypeDef *const hdma)
 #endif /* (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
 	/* Clear all flags */
-	__HAL_DMA_CLEAR_FLAG(hdma, (DMA_FLAG_TC | DMA_FLAG_HT | DMA_FLAG_DTE | DMA_FLAG_ULE | DMA_FLAG_USE |
-				    DMA_FLAG_SUSP | DMA_FLAG_TO));
+	__HAL_DMA_CLEAR_FLAG(hdma, (DMA_FLAG_TC | DMA_FLAG_HT | DMA_FLAG_DTE | DMA_FLAG_ULE | DMA_FLAG_USE | DMA_FLAG_SUSP | DMA_FLAG_TO));
 
 	/* Clean all callbacks */
 	hdma->XferCpltCallback = NULL;
@@ -503,8 +501,7 @@ callbacks. User callbacks are called under HAL_DMA_IRQHandler().
  * destination in bytes.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_DMA_Start(DMA_HandleTypeDef *const hdma, uint32_t SrcAddress, uint32_t DstAddress,
-				uint32_t SrcDataSize)
+HAL_StatusTypeDef HAL_DMA_Start(DMA_HandleTypeDef *const hdma, uint32_t SrcAddress, uint32_t DstAddress, uint32_t SrcDataSize)
 {
 	/* Check the DMA peripheral handle parameter */
 	if (hdma == NULL) {
@@ -555,8 +552,7 @@ HAL_StatusTypeDef HAL_DMA_Start(DMA_HandleTypeDef *const hdma, uint32_t SrcAddre
  * destination in bytes.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_DMA_Start_IT(DMA_HandleTypeDef *const hdma, uint32_t SrcAddress, uint32_t DstAddress,
-				   uint32_t SrcDataSize)
+HAL_StatusTypeDef HAL_DMA_Start_IT(DMA_HandleTypeDef *const hdma, uint32_t SrcAddress, uint32_t DstAddress, uint32_t SrcDataSize)
 {
 	/* Check the DMA peripheral handle parameter */
 	if (hdma == NULL) {
@@ -681,8 +677,7 @@ HAL_StatusTypeDef HAL_DMA_Abort(DMA_HandleTypeDef *const hdma)
 		hdma->State = HAL_DMA_STATE_ABORT;
 
 		/* Clear all status flags */
-		__HAL_DMA_CLEAR_FLAG(hdma, (DMA_FLAG_TC | DMA_FLAG_HT | DMA_FLAG_DTE | DMA_FLAG_ULE | DMA_FLAG_USE |
-					    DMA_FLAG_SUSP | DMA_FLAG_TO));
+		__HAL_DMA_CLEAR_FLAG(hdma, (DMA_FLAG_TC | DMA_FLAG_HT | DMA_FLAG_DTE | DMA_FLAG_ULE | DMA_FLAG_USE | DMA_FLAG_SUSP | DMA_FLAG_TO));
 
 		/* Update the DMA channel state */
 		hdma->State = HAL_DMA_STATE_READY;
@@ -743,8 +738,7 @@ HAL_StatusTypeDef HAL_DMA_Abort_IT(DMA_HandleTypeDef *const hdma)
  * @param  Timeout       : Timeout duration.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DMA_PollForTransfer(DMA_HandleTypeDef *const hdma, HAL_DMA_LevelCompleteTypeDef CompleteLevel,
-					  uint32_t Timeout)
+HAL_StatusTypeDef HAL_DMA_PollForTransfer(DMA_HandleTypeDef *const hdma, HAL_DMA_LevelCompleteTypeDef CompleteLevel, uint32_t Timeout)
 {
 	/* Get tick number */
 	uint32_t tickstart = HAL_GetTick();
@@ -1118,8 +1112,7 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *const hdma)
  * @param  pCallback  : Pointer to private callback function.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_DMA_RegisterCallback(DMA_HandleTypeDef *const hdma, HAL_DMA_CallbackIDTypeDef CallbackID,
-					   void (*const pCallback)(DMA_HandleTypeDef *const _hdma))
+HAL_StatusTypeDef HAL_DMA_RegisterCallback(DMA_HandleTypeDef *const hdma, HAL_DMA_CallbackIDTypeDef CallbackID, void (*const pCallback)(DMA_HandleTypeDef *const _hdma))
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -1414,8 +1407,7 @@ HAL_StatusTypeDef HAL_DMA_ConfigChannelAttributes(DMA_HandleTypeDef *const hdma,
  * @param  pChannelAttributes : Pointer to the returned attributes.
  * @retval HAL Status.
  */
-HAL_StatusTypeDef HAL_DMA_GetConfigChannelAttributes(DMA_HandleTypeDef const *const hdma,
-						     uint32_t *const pChannelAttributes)
+HAL_StatusTypeDef HAL_DMA_GetConfigChannelAttributes(DMA_HandleTypeDef const *const hdma, uint32_t *const pChannelAttributes)
 {
 	const DMA_TypeDef *p_dma_instance;
 	uint32_t attributes;
@@ -1505,8 +1497,7 @@ HAL_StatusTypeDef HAL_DMA_GetLockChannelAttributes(DMA_HandleTypeDef const *cons
 	channel_idx = 1UL << (GET_DMA_CHANNEL(hdma) & 0x1FU);
 
 	/* Get channel lock attribute state */
-	*pLockState = ((p_dma_instance->RCFGLOCKR & channel_idx) == 0U) ? DMA_CHANNEL_ATTRIBUTE_UNLOCKED
-									: DMA_CHANNEL_ATTRIBUTE_LOCKED;
+	*pLockState = ((p_dma_instance->RCFGLOCKR & channel_idx) == 0U) ? DMA_CHANNEL_ATTRIBUTE_UNLOCKED : DMA_CHANNEL_ATTRIBUTE_LOCKED;
 
 	return HAL_OK;
 }
@@ -1535,15 +1526,13 @@ HAL_StatusTypeDef HAL_DMA_GetLockChannelAttributes(DMA_HandleTypeDef const *cons
  * destination in bytes.
  * @retval None.
  */
-static void DMA_SetConfig(DMA_HandleTypeDef const *const hdma, uint32_t SrcAddress, uint32_t DstAddress,
-			  uint32_t SrcDataSize)
+static void DMA_SetConfig(DMA_HandleTypeDef const *const hdma, uint32_t SrcAddress, uint32_t DstAddress, uint32_t SrcDataSize)
 {
 	/* Configure the DMA channel data size */
 	MODIFY_REG(hdma->Instance->CBR1, DMA_CBR1_BNDT, (SrcDataSize & DMA_CBR1_BNDT));
 
 	/* Clear all interrupt flags */
-	__HAL_DMA_CLEAR_FLAG(hdma, DMA_FLAG_TC | DMA_FLAG_HT | DMA_FLAG_DTE | DMA_FLAG_ULE | DMA_FLAG_USE |
-				       DMA_FLAG_SUSP | DMA_FLAG_TO);
+	__HAL_DMA_CLEAR_FLAG(hdma, DMA_FLAG_TC | DMA_FLAG_HT | DMA_FLAG_DTE | DMA_FLAG_ULE | DMA_FLAG_USE | DMA_FLAG_SUSP | DMA_FLAG_TO);
 
 	/* Configure DMA channel source address */
 	hdma->Instance->CSAR = SrcAddress;
@@ -1576,8 +1565,7 @@ static void DMA_Init(DMA_HandleTypeDef const *const hdma)
 
 	/* Add parameters specific to GPDMA */
 	if (IS_GPDMA_INSTANCE(hdma->Instance) != 0U) {
-		tmpreg |= (hdma->Init.TransferAllocatedPort |
-			   (((hdma->Init.DestBurstLength - 1U) << DMA_CTR1_DBL_1_Pos) & DMA_CTR1_DBL_1) |
+		tmpreg |= (hdma->Init.TransferAllocatedPort | (((hdma->Init.DestBurstLength - 1U) << DMA_CTR1_DBL_1_Pos) & DMA_CTR1_DBL_1) |
 			   (((hdma->Init.SrcBurstLength - 1U) << DMA_CTR1_SBL_1_Pos) & DMA_CTR1_SBL_1));
 	}
 
@@ -1602,10 +1590,7 @@ static void DMA_Init(DMA_HandleTypeDef const *const hdma)
 	}
 
 	/* Write DMA Channel Transfer Register 2 (CTR2) */
-	MODIFY_REG(hdma->Instance->CTR2,
-		   (DMA_CTR2_TCEM | DMA_CTR2_TRIGPOL | DMA_CTR2_TRIGSEL | DMA_CTR2_TRIGM | DMA_CTR2_BREQ |
-		    DMA_CTR2_DREQ | DMA_CTR2_SWREQ | DMA_CTR2_REQSEL),
-		   tmpreg);
+	MODIFY_REG(hdma->Instance->CTR2, (DMA_CTR2_TCEM | DMA_CTR2_TRIGPOL | DMA_CTR2_TRIGSEL | DMA_CTR2_TRIGM | DMA_CTR2_BREQ | DMA_CTR2_DREQ | DMA_CTR2_SWREQ | DMA_CTR2_REQSEL), tmpreg);
 
 	/* Write DMA Channel Block Register 1 (CBR1)
 	 * ************************************************************************/

@@ -33,8 +33,7 @@
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Reg_ReadTpl(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t regAddr,
-			     const uint8_t regCnt, uint16_t *regVal);
+bcc_status_t BCC_Reg_ReadTpl(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t regAddr, const uint8_t regCnt, uint16_t *regVal);
 
 /*!
  * @brief This function reads desired number of registers of the BCC device.
@@ -53,8 +52,7 @@ bcc_status_t BCC_Reg_ReadTpl(bcc_drv_config_t *const drvConfig, const bcc_cid_t 
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Reg_ReadSpi(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, uint8_t regAddr,
-			     const uint8_t regCnt, uint16_t *regVal);
+bcc_status_t BCC_Reg_ReadSpi(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, uint8_t regAddr, const uint8_t regCnt, uint16_t *regVal);
 
 /*!
  * @brief This function writes a value to addressed register of the BCC device.
@@ -68,8 +66,7 @@ bcc_status_t BCC_Reg_ReadSpi(bcc_drv_config_t *const drvConfig, const bcc_cid_t 
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Reg_WriteTpl(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t regAddr,
-			      const uint16_t regVal);
+bcc_status_t BCC_Reg_WriteTpl(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t regAddr, const uint16_t regVal);
 
 /*!
  * @brief This function writes a value to addressed register of the BCC device.
@@ -83,8 +80,7 @@ bcc_status_t BCC_Reg_WriteTpl(bcc_drv_config_t *const drvConfig, const bcc_cid_t
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Reg_WriteSpi(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t regAddr,
-			      const uint16_t regVal);
+bcc_status_t BCC_Reg_WriteSpi(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t regAddr, const uint16_t regVal);
 
 /*!
  * @brief This function writes a value to addressed register of all configured

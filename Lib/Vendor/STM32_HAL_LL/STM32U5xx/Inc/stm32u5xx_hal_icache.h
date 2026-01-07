@@ -191,8 +191,7 @@ typedef struct {
  *            @arg @ref ICACHE_IT_ERROR  Cache error interrupt
  * @retval The state of __INTERRUPT__ (0 or 1).
  */
-#define __HAL_ICACHE_GET_IT_SOURCE(__INTERRUPT__)                                                                      \
-	((READ_BIT(ICACHE->IER, (__INTERRUPT__)) == (__INTERRUPT__)) ? 1U : 0U)
+#define __HAL_ICACHE_GET_IT_SOURCE(__INTERRUPT__) ((READ_BIT(ICACHE->IER, (__INTERRUPT__)) == (__INTERRUPT__)) ? 1U : 0U)
 
 /** @brief  Check whether the selected ICACHE flag is set or not.
  * @param  __FLAG__ specifies the flag to check.

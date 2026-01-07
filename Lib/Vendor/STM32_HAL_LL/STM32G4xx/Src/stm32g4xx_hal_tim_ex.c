@@ -352,8 +352,7 @@ HAL_StatusTypeDef HAL_TIMEx_HallSensor_Start(TIM_HandleTypeDef *htim)
 	assert_param(IS_TIM_HALL_SENSOR_INTERFACE_INSTANCE(htim->Instance));
 
 	/* Check the TIM channels state */
-	if ((channel_1_state != HAL_TIM_CHANNEL_STATE_READY) || (channel_2_state != HAL_TIM_CHANNEL_STATE_READY) ||
-	    (complementary_channel_1_state != HAL_TIM_CHANNEL_STATE_READY) ||
+	if ((channel_1_state != HAL_TIM_CHANNEL_STATE_READY) || (channel_2_state != HAL_TIM_CHANNEL_STATE_READY) || (complementary_channel_1_state != HAL_TIM_CHANNEL_STATE_READY) ||
 	    (complementary_channel_2_state != HAL_TIM_CHANNEL_STATE_READY)) {
 		return HAL_ERROR;
 	}
@@ -429,8 +428,7 @@ HAL_StatusTypeDef HAL_TIMEx_HallSensor_Start_IT(TIM_HandleTypeDef *htim)
 	assert_param(IS_TIM_HALL_SENSOR_INTERFACE_INSTANCE(htim->Instance));
 
 	/* Check the TIM channels state */
-	if ((channel_1_state != HAL_TIM_CHANNEL_STATE_READY) || (channel_2_state != HAL_TIM_CHANNEL_STATE_READY) ||
-	    (complementary_channel_1_state != HAL_TIM_CHANNEL_STATE_READY) ||
+	if ((channel_1_state != HAL_TIM_CHANNEL_STATE_READY) || (channel_2_state != HAL_TIM_CHANNEL_STATE_READY) || (complementary_channel_1_state != HAL_TIM_CHANNEL_STATE_READY) ||
 	    (complementary_channel_2_state != HAL_TIM_CHANNEL_STATE_READY)) {
 		return HAL_ERROR;
 	}
@@ -513,11 +511,9 @@ HAL_StatusTypeDef HAL_TIMEx_HallSensor_Start_DMA(TIM_HandleTypeDef *htim, uint32
 	assert_param(IS_TIM_HALL_SENSOR_INTERFACE_INSTANCE(htim->Instance));
 
 	/* Set the TIM channel state */
-	if ((channel_1_state == HAL_TIM_CHANNEL_STATE_BUSY) ||
-	    (complementary_channel_1_state == HAL_TIM_CHANNEL_STATE_BUSY)) {
+	if ((channel_1_state == HAL_TIM_CHANNEL_STATE_BUSY) || (complementary_channel_1_state == HAL_TIM_CHANNEL_STATE_BUSY)) {
 		return HAL_BUSY;
-	} else if ((channel_1_state == HAL_TIM_CHANNEL_STATE_READY) &&
-		   (complementary_channel_1_state == HAL_TIM_CHANNEL_STATE_READY)) {
+	} else if ((channel_1_state == HAL_TIM_CHANNEL_STATE_READY) && (complementary_channel_1_state == HAL_TIM_CHANNEL_STATE_READY)) {
 		if ((pData == NULL) || (Length == 0U)) {
 			return HAL_ERROR;
 		} else {
@@ -540,8 +536,7 @@ HAL_StatusTypeDef HAL_TIMEx_HallSensor_Start_DMA(TIM_HandleTypeDef *htim, uint32
 	htim->hdma[TIM_DMA_ID_CC1]->XferErrorCallback = TIM_DMAError;
 
 	/* Enable the DMA channel for Capture 1*/
-	if (HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_CC1], (uint32_t)&htim->Instance->CCR1, (uint32_t)pData, Length) !=
-	    HAL_OK) {
+	if (HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_CC1], (uint32_t)&htim->Instance->CCR1, (uint32_t)pData, Length) != HAL_OK) {
 		/* Return error status */
 		return HAL_ERROR;
 	}
@@ -874,8 +869,7 @@ HAL_StatusTypeDef HAL_TIMEx_OCN_Stop_IT(TIM_HandleTypeDef *htim, uint32_t Channe
  * peripheral
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_TIMEx_OCN_Start_DMA(TIM_HandleTypeDef *htim, uint32_t Channel, const uint32_t *pData,
-					  uint16_t Length)
+HAL_StatusTypeDef HAL_TIMEx_OCN_Start_DMA(TIM_HandleTypeDef *htim, uint32_t Channel, const uint32_t *pData, uint16_t Length)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 	uint32_t tmpsmcr;
@@ -906,8 +900,7 @@ HAL_StatusTypeDef HAL_TIMEx_OCN_Start_DMA(TIM_HandleTypeDef *htim, uint32_t Chan
 			htim->hdma[TIM_DMA_ID_CC1]->XferErrorCallback = TIM_DMAErrorCCxN;
 
 			/* Enable the DMA channel */
-			if (HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_CC1], (uint32_t)pData,
-					     (uint32_t)&htim->Instance->CCR1, Length) != HAL_OK) {
+			if (HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_CC1], (uint32_t)pData, (uint32_t)&htim->Instance->CCR1, Length) != HAL_OK) {
 				/* Return error status */
 				return HAL_ERROR;
 			}
@@ -925,8 +918,7 @@ HAL_StatusTypeDef HAL_TIMEx_OCN_Start_DMA(TIM_HandleTypeDef *htim, uint32_t Chan
 			htim->hdma[TIM_DMA_ID_CC2]->XferErrorCallback = TIM_DMAErrorCCxN;
 
 			/* Enable the DMA channel */
-			if (HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_CC2], (uint32_t)pData,
-					     (uint32_t)&htim->Instance->CCR2, Length) != HAL_OK) {
+			if (HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_CC2], (uint32_t)pData, (uint32_t)&htim->Instance->CCR2, Length) != HAL_OK) {
 				/* Return error status */
 				return HAL_ERROR;
 			}
@@ -944,8 +936,7 @@ HAL_StatusTypeDef HAL_TIMEx_OCN_Start_DMA(TIM_HandleTypeDef *htim, uint32_t Chan
 			htim->hdma[TIM_DMA_ID_CC3]->XferErrorCallback = TIM_DMAErrorCCxN;
 
 			/* Enable the DMA channel */
-			if (HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_CC3], (uint32_t)pData,
-					     (uint32_t)&htim->Instance->CCR3, Length) != HAL_OK) {
+			if (HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_CC3], (uint32_t)pData, (uint32_t)&htim->Instance->CCR3, Length) != HAL_OK) {
 				/* Return error status */
 				return HAL_ERROR;
 			}
@@ -963,8 +954,7 @@ HAL_StatusTypeDef HAL_TIMEx_OCN_Start_DMA(TIM_HandleTypeDef *htim, uint32_t Chan
 			htim->hdma[TIM_DMA_ID_CC4]->XferErrorCallback = TIM_DMAErrorCCxN;
 
 			/* Enable the DMA channel */
-			if (HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_CC4], (uint32_t)pData,
-					     (uint32_t)&htim->Instance->CCR4, Length) != HAL_OK) {
+			if (HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_CC4], (uint32_t)pData, (uint32_t)&htim->Instance->CCR4, Length) != HAL_OK) {
 				/* Return error status */
 				return HAL_ERROR;
 			}
@@ -1349,8 +1339,7 @@ HAL_StatusTypeDef HAL_TIMEx_PWMN_Stop_IT(TIM_HandleTypeDef *htim, uint32_t Chann
  * peripheral
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_TIMEx_PWMN_Start_DMA(TIM_HandleTypeDef *htim, uint32_t Channel, const uint32_t *pData,
-					   uint16_t Length)
+HAL_StatusTypeDef HAL_TIMEx_PWMN_Start_DMA(TIM_HandleTypeDef *htim, uint32_t Channel, const uint32_t *pData, uint16_t Length)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 	uint32_t tmpsmcr;
@@ -1381,8 +1370,7 @@ HAL_StatusTypeDef HAL_TIMEx_PWMN_Start_DMA(TIM_HandleTypeDef *htim, uint32_t Cha
 			htim->hdma[TIM_DMA_ID_CC1]->XferErrorCallback = TIM_DMAErrorCCxN;
 
 			/* Enable the DMA channel */
-			if (HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_CC1], (uint32_t)pData,
-					     (uint32_t)&htim->Instance->CCR1, Length) != HAL_OK) {
+			if (HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_CC1], (uint32_t)pData, (uint32_t)&htim->Instance->CCR1, Length) != HAL_OK) {
 				/* Return error status */
 				return HAL_ERROR;
 			}
@@ -1400,8 +1388,7 @@ HAL_StatusTypeDef HAL_TIMEx_PWMN_Start_DMA(TIM_HandleTypeDef *htim, uint32_t Cha
 			htim->hdma[TIM_DMA_ID_CC2]->XferErrorCallback = TIM_DMAErrorCCxN;
 
 			/* Enable the DMA channel */
-			if (HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_CC2], (uint32_t)pData,
-					     (uint32_t)&htim->Instance->CCR2, Length) != HAL_OK) {
+			if (HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_CC2], (uint32_t)pData, (uint32_t)&htim->Instance->CCR2, Length) != HAL_OK) {
 				/* Return error status */
 				return HAL_ERROR;
 			}
@@ -1419,8 +1406,7 @@ HAL_StatusTypeDef HAL_TIMEx_PWMN_Start_DMA(TIM_HandleTypeDef *htim, uint32_t Cha
 			htim->hdma[TIM_DMA_ID_CC3]->XferErrorCallback = TIM_DMAErrorCCxN;
 
 			/* Enable the DMA channel */
-			if (HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_CC3], (uint32_t)pData,
-					     (uint32_t)&htim->Instance->CCR3, Length) != HAL_OK) {
+			if (HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_CC3], (uint32_t)pData, (uint32_t)&htim->Instance->CCR3, Length) != HAL_OK) {
 				/* Return error status */
 				return HAL_ERROR;
 			}
@@ -1438,8 +1424,7 @@ HAL_StatusTypeDef HAL_TIMEx_PWMN_Start_DMA(TIM_HandleTypeDef *htim, uint32_t Cha
 			htim->hdma[TIM_DMA_ID_CC4]->XferErrorCallback = TIM_DMAErrorCCxN;
 
 			/* Enable the DMA channel */
-			if (HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_CC4], (uint32_t)pData,
-					     (uint32_t)&htim->Instance->CCR4, Length) != HAL_OK) {
+			if (HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_CC4], (uint32_t)pData, (uint32_t)&htim->Instance->CCR4, Length) != HAL_OK) {
 				/* Return error status */
 				return HAL_ERROR;
 			}
@@ -1594,8 +1579,7 @@ HAL_StatusTypeDef HAL_TIMEx_OnePulseN_Start(TIM_HandleTypeDef *htim, uint32_t Ou
 	assert_param(IS_TIM_CCXN_INSTANCE(htim->Instance, OutputChannel));
 
 	/* Check the TIM channels state */
-	if ((channel_1_state != HAL_TIM_CHANNEL_STATE_READY) || (channel_2_state != HAL_TIM_CHANNEL_STATE_READY) ||
-	    (complementary_channel_1_state != HAL_TIM_CHANNEL_STATE_READY) ||
+	if ((channel_1_state != HAL_TIM_CHANNEL_STATE_READY) || (channel_2_state != HAL_TIM_CHANNEL_STATE_READY) || (complementary_channel_1_state != HAL_TIM_CHANNEL_STATE_READY) ||
 	    (complementary_channel_2_state != HAL_TIM_CHANNEL_STATE_READY)) {
 		return HAL_ERROR;
 	}
@@ -1682,8 +1666,7 @@ HAL_StatusTypeDef HAL_TIMEx_OnePulseN_Start_IT(TIM_HandleTypeDef *htim, uint32_t
 	assert_param(IS_TIM_CCXN_INSTANCE(htim->Instance, OutputChannel));
 
 	/* Check the TIM channels state */
-	if ((channel_1_state != HAL_TIM_CHANNEL_STATE_READY) || (channel_2_state != HAL_TIM_CHANNEL_STATE_READY) ||
-	    (complementary_channel_1_state != HAL_TIM_CHANNEL_STATE_READY) ||
+	if ((channel_1_state != HAL_TIM_CHANNEL_STATE_READY) || (channel_2_state != HAL_TIM_CHANNEL_STATE_READY) || (complementary_channel_1_state != HAL_TIM_CHANNEL_STATE_READY) ||
 	    (complementary_channel_2_state != HAL_TIM_CHANNEL_STATE_READY)) {
 		return HAL_ERROR;
 	}
@@ -1825,8 +1808,7 @@ interface.
  * software using the COMG bit
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_TIMEx_ConfigCommutEvent(TIM_HandleTypeDef *htim, uint32_t InputTrigger,
-					      uint32_t CommutationSource)
+HAL_StatusTypeDef HAL_TIMEx_ConfigCommutEvent(TIM_HandleTypeDef *htim, uint32_t InputTrigger, uint32_t CommutationSource)
 {
 	/* Check the parameters */
 	assert_param(IS_TIM_COMMUTATION_EVENT_INSTANCE(htim->Instance));
@@ -1835,24 +1817,18 @@ HAL_StatusTypeDef HAL_TIMEx_ConfigCommutEvent(TIM_HandleTypeDef *htim, uint32_t 
 	__HAL_LOCK(htim);
 
 #if defined(TIM5) && defined(TIM20)
-	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) ||
-	    (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR4) || (InputTrigger == TIM_TS_ITR5) ||
-	    (InputTrigger == TIM_TS_ITR6) || (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) ||
-	    (InputTrigger == TIM_TS_ITR9) || (InputTrigger == TIM_TS_ITR10) || (InputTrigger == TIM_TS_ITR11))
+	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) || (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR4) ||
+	    (InputTrigger == TIM_TS_ITR5) || (InputTrigger == TIM_TS_ITR6) || (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) || (InputTrigger == TIM_TS_ITR9) ||
+	    (InputTrigger == TIM_TS_ITR10) || (InputTrigger == TIM_TS_ITR11))
 #elif defined(TIM5)
-	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) ||
-	    (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR4) || (InputTrigger == TIM_TS_ITR5) ||
-	    (InputTrigger == TIM_TS_ITR6) || (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) ||
-	    (InputTrigger == TIM_TS_ITR11))
+	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) || (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR4) ||
+	    (InputTrigger == TIM_TS_ITR5) || (InputTrigger == TIM_TS_ITR6) || (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) || (InputTrigger == TIM_TS_ITR11))
 #elif defined(TIM20)
-	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) ||
-	    (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR5) || (InputTrigger == TIM_TS_ITR6) ||
-	    (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) || (InputTrigger == TIM_TS_ITR9) ||
-	    (InputTrigger == TIM_TS_ITR11))
+	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) || (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR5) ||
+	    (InputTrigger == TIM_TS_ITR6) || (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) || (InputTrigger == TIM_TS_ITR9) || (InputTrigger == TIM_TS_ITR11))
 #else
-	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) ||
-	    (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR5) || (InputTrigger == TIM_TS_ITR6) ||
-	    (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) || (InputTrigger == TIM_TS_ITR11))
+	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) || (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR5) ||
+	    (InputTrigger == TIM_TS_ITR6) || (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) || (InputTrigger == TIM_TS_ITR11))
 #endif /* TIM5 && TIM20 */
 	{
 		/* Select the Input trigger */
@@ -1914,8 +1890,7 @@ HAL_StatusTypeDef HAL_TIMEx_ConfigCommutEvent(TIM_HandleTypeDef *htim, uint32_t 
  * software using the COMG bit
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_TIMEx_ConfigCommutEvent_IT(TIM_HandleTypeDef *htim, uint32_t InputTrigger,
-						 uint32_t CommutationSource)
+HAL_StatusTypeDef HAL_TIMEx_ConfigCommutEvent_IT(TIM_HandleTypeDef *htim, uint32_t InputTrigger, uint32_t CommutationSource)
 {
 	/* Check the parameters */
 	assert_param(IS_TIM_COMMUTATION_EVENT_INSTANCE(htim->Instance));
@@ -1924,24 +1899,18 @@ HAL_StatusTypeDef HAL_TIMEx_ConfigCommutEvent_IT(TIM_HandleTypeDef *htim, uint32
 	__HAL_LOCK(htim);
 
 #if defined(TIM5) && defined(TIM20)
-	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) ||
-	    (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR4) || (InputTrigger == TIM_TS_ITR5) ||
-	    (InputTrigger == TIM_TS_ITR6) || (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) ||
-	    (InputTrigger == TIM_TS_ITR9) || (InputTrigger == TIM_TS_ITR10) || (InputTrigger == TIM_TS_ITR11))
+	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) || (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR4) ||
+	    (InputTrigger == TIM_TS_ITR5) || (InputTrigger == TIM_TS_ITR6) || (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) || (InputTrigger == TIM_TS_ITR9) ||
+	    (InputTrigger == TIM_TS_ITR10) || (InputTrigger == TIM_TS_ITR11))
 #elif defined(TIM5)
-	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) ||
-	    (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR4) || (InputTrigger == TIM_TS_ITR5) ||
-	    (InputTrigger == TIM_TS_ITR6) || (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) ||
-	    (InputTrigger == TIM_TS_ITR11))
+	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) || (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR4) ||
+	    (InputTrigger == TIM_TS_ITR5) || (InputTrigger == TIM_TS_ITR6) || (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) || (InputTrigger == TIM_TS_ITR11))
 #elif defined(TIM20)
-	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) ||
-	    (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR5) || (InputTrigger == TIM_TS_ITR6) ||
-	    (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) || (InputTrigger == TIM_TS_ITR9) ||
-	    (InputTrigger == TIM_TS_ITR11))
+	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) || (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR5) ||
+	    (InputTrigger == TIM_TS_ITR6) || (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) || (InputTrigger == TIM_TS_ITR9) || (InputTrigger == TIM_TS_ITR11))
 #else
-	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) ||
-	    (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR5) || (InputTrigger == TIM_TS_ITR6) ||
-	    (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) || (InputTrigger == TIM_TS_ITR11))
+	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) || (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR5) ||
+	    (InputTrigger == TIM_TS_ITR6) || (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) || (InputTrigger == TIM_TS_ITR11))
 #endif /* TIM5 && TIM20 */
 	{
 		/* Select the Input trigger */
@@ -2005,8 +1974,7 @@ HAL_StatusTypeDef HAL_TIMEx_ConfigCommutEvent_IT(TIM_HandleTypeDef *htim, uint32
  * software using the COMG bit
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_TIMEx_ConfigCommutEvent_DMA(TIM_HandleTypeDef *htim, uint32_t InputTrigger,
-						  uint32_t CommutationSource)
+HAL_StatusTypeDef HAL_TIMEx_ConfigCommutEvent_DMA(TIM_HandleTypeDef *htim, uint32_t InputTrigger, uint32_t CommutationSource)
 {
 	/* Check the parameters */
 	assert_param(IS_TIM_COMMUTATION_EVENT_INSTANCE(htim->Instance));
@@ -2015,24 +1983,18 @@ HAL_StatusTypeDef HAL_TIMEx_ConfigCommutEvent_DMA(TIM_HandleTypeDef *htim, uint3
 	__HAL_LOCK(htim);
 
 #if defined(TIM5) && defined(TIM20)
-	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) ||
-	    (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR4) || (InputTrigger == TIM_TS_ITR5) ||
-	    (InputTrigger == TIM_TS_ITR6) || (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) ||
-	    (InputTrigger == TIM_TS_ITR9) || (InputTrigger == TIM_TS_ITR10) || (InputTrigger == TIM_TS_ITR11))
+	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) || (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR4) ||
+	    (InputTrigger == TIM_TS_ITR5) || (InputTrigger == TIM_TS_ITR6) || (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) || (InputTrigger == TIM_TS_ITR9) ||
+	    (InputTrigger == TIM_TS_ITR10) || (InputTrigger == TIM_TS_ITR11))
 #elif defined(TIM5)
-	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) ||
-	    (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR4) || (InputTrigger == TIM_TS_ITR5) ||
-	    (InputTrigger == TIM_TS_ITR6) || (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) ||
-	    (InputTrigger == TIM_TS_ITR11))
+	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) || (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR4) ||
+	    (InputTrigger == TIM_TS_ITR5) || (InputTrigger == TIM_TS_ITR6) || (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) || (InputTrigger == TIM_TS_ITR11))
 #elif defined(TIM20)
-	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) ||
-	    (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR5) || (InputTrigger == TIM_TS_ITR6) ||
-	    (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) || (InputTrigger == TIM_TS_ITR9) ||
-	    (InputTrigger == TIM_TS_ITR11))
+	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) || (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR5) ||
+	    (InputTrigger == TIM_TS_ITR6) || (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) || (InputTrigger == TIM_TS_ITR9) || (InputTrigger == TIM_TS_ITR11))
 #else
-	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) ||
-	    (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR5) || (InputTrigger == TIM_TS_ITR6) ||
-	    (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) || (InputTrigger == TIM_TS_ITR11))
+	if ((InputTrigger == TIM_TS_ITR0) || (InputTrigger == TIM_TS_ITR1) || (InputTrigger == TIM_TS_ITR2) || (InputTrigger == TIM_TS_ITR3) || (InputTrigger == TIM_TS_ITR5) ||
+	    (InputTrigger == TIM_TS_ITR6) || (InputTrigger == TIM_TS_ITR7) || (InputTrigger == TIM_TS_ITR8) || (InputTrigger == TIM_TS_ITR11))
 #endif /* TIM5 && TIM20 */
 	{
 		/* Select the Input trigger */
@@ -2072,8 +2034,7 @@ HAL_StatusTypeDef HAL_TIMEx_ConfigCommutEvent_DMA(TIM_HandleTypeDef *htim, uint3
  *         mode.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_TIMEx_MasterConfigSynchronization(TIM_HandleTypeDef *htim,
-							const TIM_MasterConfigTypeDef *sMasterConfig)
+HAL_StatusTypeDef HAL_TIMEx_MasterConfigSynchronization(TIM_HandleTypeDef *htim, const TIM_MasterConfigTypeDef *sMasterConfig)
 {
 	uint32_t tmpcr2;
 	uint32_t tmpsmcr;
@@ -2146,8 +2107,7 @@ HAL_StatusTypeDef HAL_TIMEx_MasterConfigSynchronization(TIM_HandleTypeDef *htim,
  * macro.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_TIMEx_ConfigBreakDeadTime(TIM_HandleTypeDef *htim,
-						const TIM_BreakDeadTimeConfigTypeDef *sBreakDeadTimeConfig)
+HAL_StatusTypeDef HAL_TIMEx_ConfigBreakDeadTime(TIM_HandleTypeDef *htim, const TIM_BreakDeadTimeConfigTypeDef *sBreakDeadTimeConfig)
 {
 	/* Keep this variable initialized to 0 as it is used to configure BDTR
 	 * register */
@@ -2215,8 +2175,7 @@ HAL_StatusTypeDef HAL_TIMEx_ConfigBreakDeadTime(TIM_HandleTypeDef *htim,
  * @param  sBreakInputConfig Break input source configuration
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_TIMEx_ConfigBreakInput(TIM_HandleTypeDef *htim, uint32_t BreakInput,
-					     const TIMEx_BreakInputConfigTypeDef *sBreakInputConfig)
+HAL_StatusTypeDef HAL_TIMEx_ConfigBreakInput(TIM_HandleTypeDef *htim, uint32_t BreakInput, const TIMEx_BreakInputConfigTypeDef *sBreakInputConfig)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 	uint32_t tmporx;
@@ -2942,8 +2901,7 @@ HAL_StatusTypeDef HAL_TIMEx_DisarmBreakInput(TIM_HandleTypeDef *htim, uint32_t B
 		case TIM_BREAKINPUT_BRK: {
 			/* Check initial conditions */
 			tmpbdtr = READ_REG(htim->Instance->BDTR);
-			if ((READ_BIT(tmpbdtr, TIM_BDTR_BKBID) == TIM_BDTR_BKBID) &&
-			    (READ_BIT(tmpbdtr, TIM_BDTR_MOE) == 0U)) {
+			if ((READ_BIT(tmpbdtr, TIM_BDTR_BKBID) == TIM_BDTR_BKBID) && (READ_BIT(tmpbdtr, TIM_BDTR_MOE) == 0U)) {
 				/* Break input BRK is disarmed */
 				SET_BIT(htim->Instance->BDTR, TIM_BDTR_BKDSRM);
 			}
@@ -2952,8 +2910,7 @@ HAL_StatusTypeDef HAL_TIMEx_DisarmBreakInput(TIM_HandleTypeDef *htim, uint32_t B
 		case TIM_BREAKINPUT_BRK2: {
 			/* Check initial conditions */
 			tmpbdtr = READ_REG(htim->Instance->BDTR);
-			if ((READ_BIT(tmpbdtr, TIM_BDTR_BK2BID) == TIM_BDTR_BK2BID) &&
-			    (READ_BIT(tmpbdtr, TIM_BDTR_MOE) == 0U)) {
+			if ((READ_BIT(tmpbdtr, TIM_BDTR_BK2BID) == TIM_BDTR_BK2BID) && (READ_BIT(tmpbdtr, TIM_BDTR_MOE) == 0U)) {
 				/* Break input BRK is disarmed */
 				SET_BIT(htim->Instance->BDTR, TIM_BDTR_BK2DSRM);
 			}
@@ -3121,8 +3078,7 @@ HAL_StatusTypeDef HAL_TIMEx_DitheringDisable(TIM_HandleTypeDef *htim)
  * 0xFF
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_TIMEx_OC_ConfigPulseOnCompare(TIM_HandleTypeDef *htim, uint32_t PulseWidthPrescaler,
-						    uint32_t PulseWidth)
+HAL_StatusTypeDef HAL_TIMEx_OC_ConfigPulseOnCompare(TIM_HandleTypeDef *htim, uint32_t PulseWidthPrescaler, uint32_t PulseWidth)
 {
 	uint32_t tmpecr;
 
@@ -3310,8 +3266,7 @@ HAL_StatusTypeDef HAL_TIMEx_DisableAsymmetricalDeadTime(TIM_HandleTypeDef *htim)
  * @param  sEncoderIndexConfig Encoder index configuration
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_TIMEx_ConfigEncoderIndex(TIM_HandleTypeDef *htim,
-					       TIMEx_EncoderIndexConfigTypeDef *sEncoderIndexConfig)
+HAL_StatusTypeDef HAL_TIMEx_ConfigEncoderIndex(TIM_HandleTypeDef *htim, TIMEx_EncoderIndexConfigTypeDef *sEncoderIndexConfig)
 {
 	/* Check the parameters */
 	assert_param(IS_TIM_ENCODER_INTERFACE_INSTANCE(htim->Instance));
@@ -3327,14 +3282,11 @@ HAL_StatusTypeDef HAL_TIMEx_ConfigEncoderIndex(TIM_HandleTypeDef *htim,
 
 	/* Configures the TIMx External Trigger (ETR) which is used as Index
 	 * input */
-	TIM_ETR_SetConfig(htim->Instance, sEncoderIndexConfig->Prescaler, sEncoderIndexConfig->Polarity,
-			  sEncoderIndexConfig->Filter);
+	TIM_ETR_SetConfig(htim->Instance, sEncoderIndexConfig->Prescaler, sEncoderIndexConfig->Polarity, sEncoderIndexConfig->Filter);
 
 	/* Configures the encoder index */
 	MODIFY_REG(htim->Instance->ECR, TIM_ECR_IDIR_Msk | TIM_ECR_FIDX_Msk | TIM_ECR_IPOS_Msk,
-		   (sEncoderIndexConfig->Direction |
-		    ((sEncoderIndexConfig->FirstIndexEnable == ENABLE) ? (0x1U << TIM_ECR_FIDX_Pos) : 0U) |
-		    sEncoderIndexConfig->Position | TIM_ECR_IE));
+		   (sEncoderIndexConfig->Direction | ((sEncoderIndexConfig->FirstIndexEnable == ENABLE) ? (0x1U << TIM_ECR_FIDX_Pos) : 0U) | sEncoderIndexConfig->Position | TIM_ECR_IE));
 
 	__HAL_UNLOCK(htim);
 

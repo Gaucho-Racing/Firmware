@@ -103,20 +103,20 @@ typedef struct {
 /** @defgroup CORTEX_Preemption_Priority_Group CORTEX Preemption Priority Group
  * @{
  */
-#define NVIC_PRIORITYGROUP_0                                                                                           \
-	0x7U /*!< 0 bit  for pre-emption priority,                                                                     \
+#define NVIC_PRIORITYGROUP_0                                                                                                                                                                           \
+	0x7U /*!< 0 bit  for pre-emption priority,                                                                                                                                                     \
 				 4 bits for subpriority */
-#define NVIC_PRIORITYGROUP_1                                                                                           \
-	0x6U /*!< 1 bit  for pre-emption priority,                                                                     \
+#define NVIC_PRIORITYGROUP_1                                                                                                                                                                           \
+	0x6U /*!< 1 bit  for pre-emption priority,                                                                                                                                                     \
 				 3 bits for subpriority */
-#define NVIC_PRIORITYGROUP_2                                                                                           \
-	0x5U /*!< 2 bits for pre-emption priority,                                                                     \
+#define NVIC_PRIORITYGROUP_2                                                                                                                                                                           \
+	0x5U /*!< 2 bits for pre-emption priority,                                                                                                                                                     \
 				 2 bits for subpriority */
-#define NVIC_PRIORITYGROUP_3                                                                                           \
-	0x4U /*!< 3 bits for pre-emption priority,                                                                     \
+#define NVIC_PRIORITYGROUP_3                                                                                                                                                                           \
+	0x4U /*!< 3 bits for pre-emption priority,                                                                                                                                                     \
 				 1 bit  for subpriority */
-#define NVIC_PRIORITYGROUP_4                                                                                           \
-	0x3U /*!< 4 bits for pre-emption priority,                                                                     \
+#define NVIC_PRIORITYGROUP_4                                                                                                                                                                           \
+	0x3U /*!< 4 bits for pre-emption priority,                                                                                                                                                     \
 				 0 bit  for subpriority */
 /**
  * @}
@@ -137,17 +137,17 @@ typedef struct {
  * Access control
  * @{
  */
-#define MPU_HFNMI_PRIVDEF_NONE                                                                                         \
-	0U /*!< Background region access not allowed, MPU disabled for                                                 \
+#define MPU_HFNMI_PRIVDEF_NONE                                                                                                                                                                         \
+	0U /*!< Background region access not allowed, MPU disabled for                                                                                                                                 \
 	      Hardfaults, NMIs, and exception handlers when FAULTMASK=1 */
-#define MPU_HARDFAULT_NMI                                                                                              \
-	2U /*!< Background region access not allowed, MPU enabled for                                                  \
+#define MPU_HARDFAULT_NMI                                                                                                                                                                              \
+	2U /*!< Background region access not allowed, MPU enabled for                                                                                                                                  \
 	      Hardfaults, NMIs, and exception handlers when FAULTMASK=1 */
-#define MPU_PRIVILEGED_DEFAULT                                                                                         \
-	4U /*!< Background region privileged-only access allowed, MPU disabled                                         \
+#define MPU_PRIVILEGED_DEFAULT                                                                                                                                                                         \
+	4U /*!< Background region privileged-only access allowed, MPU disabled                                                                                                                         \
 	      for Hardfaults, NMIs, and exception handlers when FAULTMASK=1 */
-#define MPU_HFNMI_PRIVDEF                                                                                              \
-	6U /*!< Background region privileged-only access allowed, MPU enabled                                          \
+#define MPU_HFNMI_PRIVDEF                                                                                                                                                                              \
+	6U /*!< Background region privileged-only access allowed, MPU enabled                                                                                                                          \
 	      for Hardfaults, NMIs, and exception handlers when FAULTMASK=1 */
 /**
  * @}
@@ -189,8 +189,8 @@ typedef struct {
 #define MPU_REGION_PRIV_RW 0U /*!< Read/write privileged-only attribute */
 #define MPU_REGION_ALL_RW 1U  /*!< Read/write privileged/unprivileged attribute */
 #define MPU_REGION_PRIV_RO 2U /*!< Read-only privileged-only attribute */
-#define MPU_REGION_ALL_RO                                                                                              \
-	3U /*!< Read-only privileged/unprivileged attribute                                                            \
+#define MPU_REGION_ALL_RO                                                                                                                                                                              \
+	3U /*!< Read-only privileged/unprivileged attribute                                                                                                                                            \
 	    */
 /**
  * @}
@@ -230,14 +230,14 @@ typedef struct {
  * @{
  */
 /* Device memory attributes */
-#define MPU_DEVICE_NGNRNE                                                                                              \
-	0x0U /*!< Device non-Gathering, non-Reordering, no Early write                                                 \
+#define MPU_DEVICE_NGNRNE                                                                                                                                                                              \
+	0x0U /*!< Device non-Gathering, non-Reordering, no Early write                                                                                                                                 \
 		acknowledgement */
-#define MPU_DEVICE_NGNRE                                                                                               \
-	0x4U /*!< Device non-Gathering, non-Reordering, Early write                                                    \
+#define MPU_DEVICE_NGNRE                                                                                                                                                                               \
+	0x4U /*!< Device non-Gathering, non-Reordering, Early write                                                                                                                                    \
 		acknowledgement */
-#define MPU_DEVICE_NGRE                                                                                                \
-	0x8U		    /*!< Device non-Gathering, Reordering, Early write                                         \
+#define MPU_DEVICE_NGRE                                                                                                                                                                                \
+	0x8U		    /*!< Device non-Gathering, Reordering, Early write                                                                                                                         \
 			       acknowledgement */
 #define MPU_DEVICE_GRE 0xCU /*!< Device Gathering, Reordering, Early write acknowledgement */
 
@@ -307,8 +307,7 @@ uint32_t HAL_SYSTICK_Config(uint32_t TicksNumb);
  */
 /* Peripheral Control functions ***********************************************/
 uint32_t HAL_NVIC_GetPriorityGrouping(void);
-void HAL_NVIC_GetPriority(IRQn_Type IRQn, uint32_t PriorityGroup, uint32_t *const pPreemptPriority,
-			  uint32_t *const pSubPriority);
+void HAL_NVIC_GetPriority(IRQn_Type IRQn, uint32_t PriorityGroup, uint32_t *const pPreemptPriority, uint32_t *const pSubPriority);
 uint32_t HAL_NVIC_GetPendingIRQ(IRQn_Type IRQn);
 void HAL_NVIC_SetPendingIRQ(IRQn_Type IRQn);
 void HAL_NVIC_ClearPendingIRQ(IRQn_Type IRQn);
@@ -348,9 +347,8 @@ void HAL_MPU_ConfigMemoryAttributes_NS(const MPU_Attributes_InitTypeDef *const p
 /** @defgroup CORTEX_Private_Macros CORTEX Private Macros
  * @{
  */
-#define IS_NVIC_PRIORITY_GROUP(GROUP)                                                                                  \
-	(((GROUP) == NVIC_PRIORITYGROUP_0) || ((GROUP) == NVIC_PRIORITYGROUP_1) ||                                     \
-	 ((GROUP) == NVIC_PRIORITYGROUP_2) || ((GROUP) == NVIC_PRIORITYGROUP_3) || ((GROUP) == NVIC_PRIORITYGROUP_4))
+#define IS_NVIC_PRIORITY_GROUP(GROUP)                                                                                                                                                                  \
+	(((GROUP) == NVIC_PRIORITYGROUP_0) || ((GROUP) == NVIC_PRIORITYGROUP_1) || ((GROUP) == NVIC_PRIORITYGROUP_2) || ((GROUP) == NVIC_PRIORITYGROUP_3) || ((GROUP) == NVIC_PRIORITYGROUP_4))
 
 #define IS_NVIC_PREEMPTION_PRIORITY(PRIORITY) ((PRIORITY) < (1UL << __NVIC_PRIO_BITS))
 
@@ -358,9 +356,7 @@ void HAL_MPU_ConfigMemoryAttributes_NS(const MPU_Attributes_InitTypeDef *const p
 
 #define IS_NVIC_DEVICE_IRQ(IRQ) ((IRQ) > SysTick_IRQn)
 
-#define IS_SYSTICK_CLK_SOURCE(SOURCE)                                                                                  \
-	(((SOURCE) == SYSTICK_CLKSOURCE_LSI) || ((SOURCE) == SYSTICK_CLKSOURCE_LSE) ||                                 \
-	 ((SOURCE) == SYSTICK_CLKSOURCE_HCLK) || ((SOURCE) == SYSTICK_CLKSOURCE_HCLK_DIV8))
+#define IS_SYSTICK_CLK_SOURCE(SOURCE) (((SOURCE) == SYSTICK_CLKSOURCE_LSI) || ((SOURCE) == SYSTICK_CLKSOURCE_LSE) || ((SOURCE) == SYSTICK_CLKSOURCE_HCLK) || ((SOURCE) == SYSTICK_CLKSOURCE_HCLK_DIV8))
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 #define IS_MPU_INSTANCE(INSTANCE) (((INSTANCE) == MPU) || ((INSTANCE) == MPU_NS))
@@ -368,27 +364,19 @@ void HAL_MPU_ConfigMemoryAttributes_NS(const MPU_Attributes_InitTypeDef *const p
 
 #define IS_MPU_REGION_ENABLE(STATE) (((STATE) == MPU_REGION_ENABLE) || ((STATE) == MPU_REGION_DISABLE))
 
-#define IS_MPU_INSTRUCTION_ACCESS(STATE)                                                                               \
-	(((STATE) == MPU_INSTRUCTION_ACCESS_ENABLE) || ((STATE) == MPU_INSTRUCTION_ACCESS_DISABLE))
+#define IS_MPU_INSTRUCTION_ACCESS(STATE) (((STATE) == MPU_INSTRUCTION_ACCESS_ENABLE) || ((STATE) == MPU_INSTRUCTION_ACCESS_DISABLE))
 
-#define IS_MPU_ACCESS_SHAREABLE(STATE)                                                                                 \
-	(((STATE) == MPU_ACCESS_OUTER_SHAREABLE) || ((STATE) == MPU_ACCESS_INNER_SHAREABLE) ||                         \
-	 ((STATE) == MPU_ACCESS_NOT_SHAREABLE))
+#define IS_MPU_ACCESS_SHAREABLE(STATE) (((STATE) == MPU_ACCESS_OUTER_SHAREABLE) || ((STATE) == MPU_ACCESS_INNER_SHAREABLE) || ((STATE) == MPU_ACCESS_NOT_SHAREABLE))
 
-#define IS_MPU_REGION_PERMISSION_ATTRIBUTE(TYPE)                                                                       \
-	(((TYPE) == MPU_REGION_PRIV_RW) || ((TYPE) == MPU_REGION_ALL_RW) || ((TYPE) == MPU_REGION_PRIV_RO) ||          \
-	 ((TYPE) == MPU_REGION_ALL_RO))
+#define IS_MPU_REGION_PERMISSION_ATTRIBUTE(TYPE) (((TYPE) == MPU_REGION_PRIV_RW) || ((TYPE) == MPU_REGION_ALL_RW) || ((TYPE) == MPU_REGION_PRIV_RO) || ((TYPE) == MPU_REGION_ALL_RO))
 
-#define IS_MPU_REGION_NUMBER(NUMBER)                                                                                   \
-	(((NUMBER) == MPU_REGION_NUMBER0) || ((NUMBER) == MPU_REGION_NUMBER1) || ((NUMBER) == MPU_REGION_NUMBER2) ||   \
-	 ((NUMBER) == MPU_REGION_NUMBER3) || ((NUMBER) == MPU_REGION_NUMBER4) || ((NUMBER) == MPU_REGION_NUMBER5) ||   \
-	 ((NUMBER) == MPU_REGION_NUMBER6) || ((NUMBER) == MPU_REGION_NUMBER7))
+#define IS_MPU_REGION_NUMBER(NUMBER)                                                                                                                                                                   \
+	(((NUMBER) == MPU_REGION_NUMBER0) || ((NUMBER) == MPU_REGION_NUMBER1) || ((NUMBER) == MPU_REGION_NUMBER2) || ((NUMBER) == MPU_REGION_NUMBER3) || ((NUMBER) == MPU_REGION_NUMBER4) ||           \
+	 ((NUMBER) == MPU_REGION_NUMBER5) || ((NUMBER) == MPU_REGION_NUMBER6) || ((NUMBER) == MPU_REGION_NUMBER7))
 
-#define IS_MPU_ATTRIBUTES_NUMBER(NUMBER)                                                                               \
-	(((NUMBER) == MPU_ATTRIBUTES_NUMBER0) || ((NUMBER) == MPU_ATTRIBUTES_NUMBER1) ||                               \
-	 ((NUMBER) == MPU_ATTRIBUTES_NUMBER2) || ((NUMBER) == MPU_ATTRIBUTES_NUMBER3) ||                               \
-	 ((NUMBER) == MPU_ATTRIBUTES_NUMBER4) || ((NUMBER) == MPU_ATTRIBUTES_NUMBER5) ||                               \
-	 ((NUMBER) == MPU_ATTRIBUTES_NUMBER6) || ((NUMBER) == MPU_ATTRIBUTES_NUMBER7))
+#define IS_MPU_ATTRIBUTES_NUMBER(NUMBER)                                                                                                                                                               \
+	(((NUMBER) == MPU_ATTRIBUTES_NUMBER0) || ((NUMBER) == MPU_ATTRIBUTES_NUMBER1) || ((NUMBER) == MPU_ATTRIBUTES_NUMBER2) || ((NUMBER) == MPU_ATTRIBUTES_NUMBER3) ||                               \
+	 ((NUMBER) == MPU_ATTRIBUTES_NUMBER4) || ((NUMBER) == MPU_ATTRIBUTES_NUMBER5) || ((NUMBER) == MPU_ATTRIBUTES_NUMBER6) || ((NUMBER) == MPU_ATTRIBUTES_NUMBER7))
 
 /**
  * @}

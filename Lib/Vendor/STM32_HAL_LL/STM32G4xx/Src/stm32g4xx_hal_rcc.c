@@ -91,8 +91,7 @@
 
 #define RCC_GET_MCO_GPIO_PORT(__RCC_MCOx__) (AHB2PERIPH_BASE + ((0x00000400UL) * RCC_GET_MCO_GPIO_INDEX(__RCC_MCOx__)))
 
-#define RCC_PLL_OSCSOURCE_CONFIG(__HAL_RCC_PLLSOURCE__)                                                                \
-	(MODIFY_REG(RCC->PLLCFGR, RCC_PLLCFGR_PLLSRC, (__HAL_RCC_PLLSOURCE__)))
+#define RCC_PLL_OSCSOURCE_CONFIG(__HAL_RCC_PLLSOURCE__) (MODIFY_REG(RCC->PLLCFGR, RCC_PLLCFGR_PLLSRC, (__HAL_RCC_PLLSOURCE__)))
 /**
  * @}
  */
@@ -342,8 +341,7 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(const RCC_OscInitTypeDef *RCC_OscInitStruct)
 
 		/* When the HSE is used as system clock or clock source for PLL
 		 * in these cases it is not allowed to be disabled */
-		if (((temp_sysclksrc == RCC_CFGR_SWS_PLL) && (temp_pllckcfg == RCC_PLLSOURCE_HSE)) ||
-		    (temp_sysclksrc == RCC_CFGR_SWS_HSE)) {
+		if (((temp_sysclksrc == RCC_CFGR_SWS_PLL) && (temp_pllckcfg == RCC_PLLSOURCE_HSE)) || (temp_sysclksrc == RCC_CFGR_SWS_HSE)) {
 			if ((READ_BIT(RCC->CR, RCC_CR_HSERDY) != 0U) && (RCC_OscInitStruct->HSEState == RCC_HSE_OFF)) {
 				return HAL_ERROR;
 			}
@@ -387,8 +385,7 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(const RCC_OscInitTypeDef *RCC_OscInitStruct)
 		 * PLL is selected as system clock */
 		temp_sysclksrc = __HAL_RCC_GET_SYSCLK_SOURCE();
 		temp_pllckcfg = __HAL_RCC_GET_PLL_OSCSOURCE();
-		if (((temp_sysclksrc == RCC_CFGR_SWS_PLL) && (temp_pllckcfg == RCC_PLLSOURCE_HSI)) ||
-		    (temp_sysclksrc == RCC_CFGR_SWS_HSI)) {
+		if (((temp_sysclksrc == RCC_CFGR_SWS_PLL) && (temp_pllckcfg == RCC_PLLSOURCE_HSI)) || (temp_sysclksrc == RCC_CFGR_SWS_HSI)) {
 			/* When HSI is used as system clock it will not be
 			 * disabled */
 			if ((READ_BIT(RCC->CR, RCC_CR_HSIRDY) != 0U) && (RCC_OscInitStruct->HSIState == RCC_HSI_OFF)) {
@@ -608,8 +605,7 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(const RCC_OscInitTypeDef *RCC_OscInitStruct)
 
 				/* Configure the main PLL clock source,
 				 * multiplication and division factors. */
-				__HAL_RCC_PLL_CONFIG(RCC_OscInitStruct->PLL.PLLSource, RCC_OscInitStruct->PLL.PLLM,
-						     RCC_OscInitStruct->PLL.PLLN, RCC_OscInitStruct->PLL.PLLP,
+				__HAL_RCC_PLL_CONFIG(RCC_OscInitStruct->PLL.PLLSource, RCC_OscInitStruct->PLL.PLLM, RCC_OscInitStruct->PLL.PLLN, RCC_OscInitStruct->PLL.PLLP,
 						     RCC_OscInitStruct->PLL.PLLQ, RCC_OscInitStruct->PLL.PLLR);
 
 				/* Enable the main PLL. */
@@ -643,8 +639,7 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(const RCC_OscInitTypeDef *RCC_OscInitStruct)
 
 				/* Unselect PLL clock source and disable outputs
 				 * to save power */
-				RCC->PLLCFGR &=
-				    ~(RCC_PLLCFGR_PLLSRC | RCC_PLL_SYSCLK | RCC_PLL_48M1CLK | RCC_PLL_ADCCLK);
+				RCC->PLLCFGR &= ~(RCC_PLLCFGR_PLLSRC | RCC_PLL_SYSCLK | RCC_PLL_48M1CLK | RCC_PLL_ADCCLK);
 			}
 		} else {
 			/* Check if there is a request to disable the PLL used
@@ -656,16 +651,11 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(const RCC_OscInitTypeDef *RCC_OscInitStruct)
 				 * the current configuration */
 				temp_pllckcfg = RCC->PLLCFGR;
 				if ((READ_BIT(temp_pllckcfg, RCC_PLLCFGR_PLLSRC) != RCC_OscInitStruct->PLL.PLLSource) ||
-				    (READ_BIT(temp_pllckcfg, RCC_PLLCFGR_PLLM) !=
-				     (((RCC_OscInitStruct->PLL.PLLM) - 1U) << RCC_PLLCFGR_PLLM_Pos)) ||
-				    (READ_BIT(temp_pllckcfg, RCC_PLLCFGR_PLLN) !=
-				     ((RCC_OscInitStruct->PLL.PLLN) << RCC_PLLCFGR_PLLN_Pos)) ||
-				    (READ_BIT(temp_pllckcfg, RCC_PLLCFGR_PLLPDIV) !=
-				     ((RCC_OscInitStruct->PLL.PLLP) << RCC_PLLCFGR_PLLPDIV_Pos)) ||
-				    (READ_BIT(temp_pllckcfg, RCC_PLLCFGR_PLLQ) !=
-				     ((((RCC_OscInitStruct->PLL.PLLQ) >> 1U) - 1U) << RCC_PLLCFGR_PLLQ_Pos)) ||
-				    (READ_BIT(temp_pllckcfg, RCC_PLLCFGR_PLLR) !=
-				     ((((RCC_OscInitStruct->PLL.PLLR) >> 1U) - 1U) << RCC_PLLCFGR_PLLR_Pos))) {
+				    (READ_BIT(temp_pllckcfg, RCC_PLLCFGR_PLLM) != (((RCC_OscInitStruct->PLL.PLLM) - 1U) << RCC_PLLCFGR_PLLM_Pos)) ||
+				    (READ_BIT(temp_pllckcfg, RCC_PLLCFGR_PLLN) != ((RCC_OscInitStruct->PLL.PLLN) << RCC_PLLCFGR_PLLN_Pos)) ||
+				    (READ_BIT(temp_pllckcfg, RCC_PLLCFGR_PLLPDIV) != ((RCC_OscInitStruct->PLL.PLLP) << RCC_PLLCFGR_PLLPDIV_Pos)) ||
+				    (READ_BIT(temp_pllckcfg, RCC_PLLCFGR_PLLQ) != ((((RCC_OscInitStruct->PLL.PLLQ) >> 1U) - 1U) << RCC_PLLCFGR_PLLQ_Pos)) ||
+				    (READ_BIT(temp_pllckcfg, RCC_PLLCFGR_PLLR) != ((((RCC_OscInitStruct->PLL.PLLR) >> 1U) - 1U) << RCC_PLLCFGR_PLLR_Pos))) {
 					return HAL_ERROR;
 				}
 			}
@@ -779,8 +769,7 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(const RCC_ClkInitTypeDef *RCC_ClkInitStruc
 			 * before to go over 80Mhz */
 			if (pllfreq > 80000000U) {
 				if (((READ_BIT(RCC->CFGR, RCC_CFGR_HPRE) == RCC_SYSCLK_DIV1)) ||
-				    (((((RCC_ClkInitStruct->ClockType) & RCC_CLOCKTYPE_HCLK) == RCC_CLOCKTYPE_HCLK) &&
-				      (RCC_ClkInitStruct->AHBCLKDivider == RCC_SYSCLK_DIV1)))) {
+				    (((((RCC_ClkInitStruct->ClockType) & RCC_CLOCKTYPE_HCLK) == RCC_CLOCKTYPE_HCLK) && (RCC_ClkInitStruct->AHBCLKDivider == RCC_SYSCLK_DIV1)))) {
 					MODIFY_REG(RCC->CFGR, RCC_CFGR_HPRE, RCC_SYSCLK_DIV2);
 					hpre = RCC_SYSCLK_DIV2;
 				}
@@ -882,8 +871,7 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(const RCC_ClkInitTypeDef *RCC_ClkInitStruc
 	}
 
 	/* Update the SystemCoreClock global variable */
-	SystemCoreClock = HAL_RCC_GetSysClockFreq() >>
-			  (AHBPrescTable[READ_BIT(RCC->CFGR, RCC_CFGR_HPRE) >> RCC_CFGR_HPRE_Pos] & 0x1FU);
+	SystemCoreClock = HAL_RCC_GetSysClockFreq() >> (AHBPrescTable[READ_BIT(RCC->CFGR, RCC_CFGR_HPRE) >> RCC_CFGR_HPRE_Pos] & 0x1FU);
 
 	/* Configure the source of time base considering new system clocks
 	 * settings*/
@@ -1042,15 +1030,13 @@ uint32_t HAL_RCC_GetSysClockFreq(void)
 		switch (pllsource) {
 			case RCC_PLLSOURCE_HSE: /* HSE used as PLL clock source
 						 */
-				pllvco = (HSE_VALUE / pllm) *
-					 (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos);
+				pllvco = (HSE_VALUE / pllm) * (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos);
 				break;
 
 			case RCC_PLLSOURCE_HSI: /* HSI used as PLL clock source
 						 */
 			default:
-				pllvco = (HSI_VALUE / pllm) *
-					 (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos);
+				pllvco = (HSI_VALUE / pllm) * (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos);
 				break;
 		}
 		pllr = ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLR) >> RCC_PLLCFGR_PLLR_Pos) + 1U) * 2U;
@@ -1085,8 +1071,7 @@ uint32_t HAL_RCC_GetPCLK1Freq(void)
 {
 	/* Get HCLK source and Compute PCLK1 frequency
 	 * ---------------------------*/
-	return (HAL_RCC_GetHCLKFreq() >>
-		(APBPrescTable[READ_BIT(RCC->CFGR, RCC_CFGR_PPRE1) >> RCC_CFGR_PPRE1_Pos] & 0x1FU));
+	return (HAL_RCC_GetHCLKFreq() >> (APBPrescTable[READ_BIT(RCC->CFGR, RCC_CFGR_PPRE1) >> RCC_CFGR_PPRE1_Pos] & 0x1FU));
 }
 
 /**
@@ -1100,8 +1085,7 @@ uint32_t HAL_RCC_GetPCLK2Freq(void)
 {
 	/* Get HCLK source and Compute PCLK2 frequency
 	 * ---------------------------*/
-	return (HAL_RCC_GetHCLKFreq() >>
-		(APBPrescTable[READ_BIT(RCC->CFGR, RCC_CFGR_PPRE2) >> RCC_CFGR_PPRE2_Pos] & 0x1FU));
+	return (HAL_RCC_GetHCLKFreq() >> (APBPrescTable[READ_BIT(RCC->CFGR, RCC_CFGR_PPRE2) >> RCC_CFGR_PPRE2_Pos] & 0x1FU));
 }
 
 /**
@@ -1118,8 +1102,7 @@ void HAL_RCC_GetOscConfig(RCC_OscInitTypeDef *RCC_OscInitStruct)
 
 	/* Set all possible values for the Oscillator type parameter
 	 * ---------------*/
-	RCC_OscInitStruct->OscillatorType = RCC_OSCILLATORTYPE_HSE | RCC_OSCILLATORTYPE_HSI | RCC_OSCILLATORTYPE_LSE |
-					    RCC_OSCILLATORTYPE_LSI | RCC_OSCILLATORTYPE_HSI48;
+	RCC_OscInitStruct->OscillatorType = RCC_OSCILLATORTYPE_HSE | RCC_OSCILLATORTYPE_HSI | RCC_OSCILLATORTYPE_LSE | RCC_OSCILLATORTYPE_LSI | RCC_OSCILLATORTYPE_HSI48;
 
 	/* Get the HSE configuration
 	 * -----------------------------------------------*/
@@ -1198,8 +1181,7 @@ void HAL_RCC_GetClockConfig(RCC_ClkInitTypeDef *RCC_ClkInitStruct, uint32_t *pFL
 
 	/* Set all possible values for the Clock type parameter
 	 * --------------------*/
-	RCC_ClkInitStruct->ClockType =
-	    RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+	RCC_ClkInitStruct->ClockType = RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
 
 	/* Get the SYSCLK configuration
 	 * --------------------------------------------*/
@@ -1313,14 +1295,12 @@ static uint32_t RCC_GetSysClockFreqFromPLLSource(void)
 
 	switch (pllsource) {
 		case RCC_PLLSOURCE_HSE: /* HSE used as PLL clock source */
-			pllvco =
-			    (HSE_VALUE / pllm) * (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos);
+			pllvco = (HSE_VALUE / pllm) * (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos);
 			break;
 
 		case RCC_PLLSOURCE_HSI: /* HSI used as PLL clock source */
 		default:
-			pllvco =
-			    (HSI_VALUE / pllm) * (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos);
+			pllvco = (HSI_VALUE / pllm) * (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos);
 			break;
 	}
 

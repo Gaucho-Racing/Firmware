@@ -117,8 +117,8 @@ typedef struct {
 #define LL_PKA_MODE_ARITHMETIC_MUL ((uint32_t)0x0000000BU)	/*!< Arithmetic multiplication */
 #define LL_PKA_MODE_COMPARISON ((uint32_t)0x0000000CU)		/*!< Comparison */
 #define LL_PKA_MODE_MODULAR_REDUC ((uint32_t)0x0000000DU)	/*!< Modular reduction */
-#define LL_PKA_MODE_MODULAR_ADD                                                                                        \
-	((uint32_t)0x0000000EU)				       /*!< Modular addition                                   \
+#define LL_PKA_MODE_MODULAR_ADD                                                                                                                                                                        \
+	((uint32_t)0x0000000EU)				       /*!< Modular addition                                                                                                                   \
 								*/
 #define LL_PKA_MODE_MODULAR_SUB ((uint32_t)0x0000000FU)	       /*!< Modular subtraction */
 #define LL_PKA_MODE_MONTGOMERY_MUL ((uint32_t)0x00000010U)     /*!< Montgomery multiplication */
@@ -203,10 +203,7 @@ typedef struct {
  *         @arg @ref LL_PKA_MODE_ECC_MUL
  *         @arg @ref LL_PKA_MODE_MODULAR_EXP_FAST
  */
-__STATIC_INLINE void LL_PKA_Config(PKA_TypeDef *PKAx, uint32_t Mode)
-{
-	MODIFY_REG(PKAx->CR, (PKA_CR_MODE), (Mode << PKA_CR_MODE_Pos));
-}
+__STATIC_INLINE void LL_PKA_Config(PKA_TypeDef *PKAx, uint32_t Mode) { MODIFY_REG(PKAx->CR, (PKA_CR_MODE), (Mode << PKA_CR_MODE_Pos)); }
 
 /**
  * @brief  Enable PKA peripheral.
@@ -230,10 +227,7 @@ __STATIC_INLINE void LL_PKA_Disable(PKA_TypeDef *PKAx) { CLEAR_BIT(PKAx->CR, PKA
  * @param  PKAx PKA Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_PKA_IsEnabled(const PKA_TypeDef *PKAx)
-{
-	return ((READ_BIT(PKAx->CR, PKA_CR_EN) == (PKA_CR_EN)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_PKA_IsEnabled(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->CR, PKA_CR_EN) == (PKA_CR_EN)) ? 1UL : 0UL); }
 
 /**
  * @brief  Set PKA operating mode.
@@ -263,10 +257,7 @@ __STATIC_INLINE uint32_t LL_PKA_IsEnabled(const PKA_TypeDef *PKAx)
  *         @arg @ref LL_PKA_MODE_MODULAR_EXP_FAST
  * @retval None
  */
-__STATIC_INLINE void LL_PKA_SetMode(PKA_TypeDef *PKAx, uint32_t Mode)
-{
-	MODIFY_REG(PKAx->CR, PKA_CR_MODE, Mode << PKA_CR_MODE_Pos);
-}
+__STATIC_INLINE void LL_PKA_SetMode(PKA_TypeDef *PKAx, uint32_t Mode) { MODIFY_REG(PKAx->CR, PKA_CR_MODE, Mode << PKA_CR_MODE_Pos); }
 
 /**
  * @brief  Get PKA operating mode.
@@ -295,10 +286,7 @@ __STATIC_INLINE void LL_PKA_SetMode(PKA_TypeDef *PKAx, uint32_t Mode)
  *         @arg @ref LL_PKA_MODE_ECC_MUL
  *         @arg @ref LL_PKA_MODE_MODULAR_EXP_FAST
  */
-__STATIC_INLINE uint32_t LL_PKA_GetMode(const PKA_TypeDef *PKAx)
-{
-	return (uint32_t)(READ_BIT(PKAx->CR, PKA_CR_MODE) >> PKA_CR_MODE_Pos);
-}
+__STATIC_INLINE uint32_t LL_PKA_GetMode(const PKA_TypeDef *PKAx) { return (uint32_t)(READ_BIT(PKAx->CR, PKA_CR_MODE) >> PKA_CR_MODE_Pos); }
 
 /**
  * @brief  Start the operation selected using LL_PKA_SetMode.
@@ -386,10 +374,7 @@ __STATIC_INLINE void LL_PKA_DisableIT_OPERR(PKA_TypeDef *PKAx) { CLEAR_BIT(PKAx-
  * @param  PKAx PKA Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_PKA_IsEnabledIT_ADDRERR(const PKA_TypeDef *PKAx)
-{
-	return ((READ_BIT(PKAx->CR, PKA_CR_ADDRERRIE) == (PKA_CR_ADDRERRIE)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_PKA_IsEnabledIT_ADDRERR(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->CR, PKA_CR_ADDRERRIE) == (PKA_CR_ADDRERRIE)) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if RAM error interrupt is enabled.
@@ -397,10 +382,7 @@ __STATIC_INLINE uint32_t LL_PKA_IsEnabledIT_ADDRERR(const PKA_TypeDef *PKAx)
  * @param  PKAx PKA Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_PKA_IsEnabledIT_RAMERR(const PKA_TypeDef *PKAx)
-{
-	return ((READ_BIT(PKAx->CR, PKA_CR_RAMERRIE) == (PKA_CR_RAMERRIE)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_PKA_IsEnabledIT_RAMERR(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->CR, PKA_CR_RAMERRIE) == (PKA_CR_RAMERRIE)) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if OPERATION error interrupt is enabled.
@@ -408,10 +390,7 @@ __STATIC_INLINE uint32_t LL_PKA_IsEnabledIT_RAMERR(const PKA_TypeDef *PKAx)
  * @param  PKAx PKA Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_PKA_IsEnabledIT_OPERR(const PKA_TypeDef *PKAx)
-{
-	return ((READ_BIT(PKAx->CR, PKA_CR_OPERRIE) == (PKA_CR_OPERRIE)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_PKA_IsEnabledIT_OPERR(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->CR, PKA_CR_OPERRIE) == (PKA_CR_OPERRIE)) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if end of operation interrupt is enabled.
@@ -419,10 +398,7 @@ __STATIC_INLINE uint32_t LL_PKA_IsEnabledIT_OPERR(const PKA_TypeDef *PKAx)
  * @param  PKAx PKA Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_PKA_IsEnabledIT_PROCEND(const PKA_TypeDef *PKAx)
-{
-	return ((READ_BIT(PKAx->CR, PKA_CR_PROCENDIE) == (PKA_CR_PROCENDIE)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_PKA_IsEnabledIT_PROCEND(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->CR, PKA_CR_PROCENDIE) == (PKA_CR_PROCENDIE)) ? 1UL : 0UL); }
 
 /**
  * @}
@@ -438,10 +414,7 @@ __STATIC_INLINE uint32_t LL_PKA_IsEnabledIT_PROCEND(const PKA_TypeDef *PKAx)
  * @param  PKAx PKA Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_ADDRERR(const PKA_TypeDef *PKAx)
-{
-	return ((READ_BIT(PKAx->SR, PKA_SR_ADDRERRF) == (PKA_SR_ADDRERRF)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_ADDRERR(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->SR, PKA_SR_ADDRERRF) == (PKA_SR_ADDRERRF)) ? 1UL : 0UL); }
 
 /**
  * @brief  Get PKA RAM error flag.
@@ -449,10 +422,7 @@ __STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_ADDRERR(const PKA_TypeDef *PKAx)
  * @param  PKAx PKA Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_RAMERR(const PKA_TypeDef *PKAx)
-{
-	return ((READ_BIT(PKAx->SR, PKA_SR_RAMERRF) == (PKA_SR_RAMERRF)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_RAMERR(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->SR, PKA_SR_RAMERRF) == (PKA_SR_RAMERRF)) ? 1UL : 0UL); }
 
 /**
  * @brief  Get PKA OPERATION error flag.
@@ -460,10 +430,7 @@ __STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_RAMERR(const PKA_TypeDef *PKAx)
  * @param  PKAx PKA Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_OPERR(const PKA_TypeDef *PKAx)
-{
-	return ((READ_BIT(PKAx->SR, PKA_SR_OPERRF) == (PKA_SR_OPERRF)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_OPERR(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->SR, PKA_SR_OPERRF) == (PKA_SR_OPERRF)) ? 1UL : 0UL); }
 
 /**
  * @brief  Get PKA end of operation flag.
@@ -471,10 +438,7 @@ __STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_OPERR(const PKA_TypeDef *PKAx)
  * @param  PKAx PKA Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_PROCEND(const PKA_TypeDef *PKAx)
-{
-	return ((READ_BIT(PKAx->SR, PKA_SR_PROCENDF) == (PKA_SR_PROCENDF)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_PROCEND(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->SR, PKA_SR_PROCENDF) == (PKA_SR_PROCENDF)) ? 1UL : 0UL); }
 
 /**
  * @brief  Get PKA busy flag.
@@ -482,10 +446,7 @@ __STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_PROCEND(const PKA_TypeDef *PKAx)
  * @param  PKAx PKA Instance.
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_BUSY(const PKA_TypeDef *PKAx)
-{
-	return ((READ_BIT(PKAx->SR, PKA_SR_BUSY) == (PKA_SR_BUSY)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_BUSY(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->SR, PKA_SR_BUSY) == (PKA_SR_BUSY)) ? 1UL : 0UL); }
 
 /**
  * @brief  Clear PKA address error flag.

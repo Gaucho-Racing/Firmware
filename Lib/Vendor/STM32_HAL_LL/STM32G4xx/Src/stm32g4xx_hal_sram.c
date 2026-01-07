@@ -176,8 +176,7 @@ de-initialization functions
  * @param  ExtTiming Pointer to SRAM extended mode timing structure
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SRAM_Init(SRAM_HandleTypeDef *hsram, FMC_NORSRAM_TimingTypeDef *Timing,
-				FMC_NORSRAM_TimingTypeDef *ExtTiming)
+HAL_StatusTypeDef HAL_SRAM_Init(SRAM_HandleTypeDef *hsram, FMC_NORSRAM_TimingTypeDef *Timing, FMC_NORSRAM_TimingTypeDef *ExtTiming)
 {
 	/* Check the SRAM handle parameter */
 	if (hsram == NULL) {
@@ -210,8 +209,7 @@ HAL_StatusTypeDef HAL_SRAM_Init(SRAM_HandleTypeDef *hsram, FMC_NORSRAM_TimingTyp
 	(void)FMC_NORSRAM_Timing_Init(hsram->Instance, Timing, hsram->Init.NSBank);
 
 	/* Initialize SRAM extended mode timing Interface */
-	(void)FMC_NORSRAM_Extended_Timing_Init(hsram->Extended, ExtTiming, hsram->Init.NSBank,
-					       hsram->Init.ExtendedMode);
+	(void)FMC_NORSRAM_Extended_Timing_Init(hsram->Extended, ExtTiming, hsram->Init.NSBank, hsram->Init.ExtendedMode);
 
 	/* Enable the NORSRAM device */
 	__FMC_NORSRAM_ENABLE(hsram->Instance, hsram->Init.NSBank);
@@ -348,8 +346,7 @@ functions
  * @param  BufferSize Size of the buffer to read from memory
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SRAM_Read_8b(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint8_t *pDstBuffer,
-				   uint32_t BufferSize)
+HAL_StatusTypeDef HAL_SRAM_Read_8b(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint8_t *pDstBuffer, uint32_t BufferSize)
 {
 	uint32_t size;
 	__IO uint8_t *psramaddress = (uint8_t *)pAddress;
@@ -392,8 +389,7 @@ HAL_StatusTypeDef HAL_SRAM_Read_8b(SRAM_HandleTypeDef *hsram, uint32_t *pAddress
  * @param  BufferSize Size of the buffer to write to memory
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SRAM_Write_8b(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint8_t *pSrcBuffer,
-				    uint32_t BufferSize)
+HAL_StatusTypeDef HAL_SRAM_Write_8b(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint8_t *pSrcBuffer, uint32_t BufferSize)
 {
 	uint32_t size;
 	__IO uint8_t *psramaddress = (uint8_t *)pAddress;
@@ -435,8 +431,7 @@ HAL_StatusTypeDef HAL_SRAM_Write_8b(SRAM_HandleTypeDef *hsram, uint32_t *pAddres
  * @param  BufferSize Size of the buffer to read from memory
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SRAM_Read_16b(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint16_t *pDstBuffer,
-				    uint32_t BufferSize)
+HAL_StatusTypeDef HAL_SRAM_Read_16b(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint16_t *pDstBuffer, uint32_t BufferSize)
 {
 	uint32_t size;
 	__IO uint32_t *psramaddress = pAddress;
@@ -490,8 +485,7 @@ HAL_StatusTypeDef HAL_SRAM_Read_16b(SRAM_HandleTypeDef *hsram, uint32_t *pAddres
  * @param  BufferSize Size of the buffer to write to memory
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SRAM_Write_16b(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint16_t *pSrcBuffer,
-				     uint32_t BufferSize)
+HAL_StatusTypeDef HAL_SRAM_Write_16b(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint16_t *pSrcBuffer, uint32_t BufferSize)
 {
 	uint32_t size;
 	__IO uint32_t *psramaddress = pAddress;
@@ -544,8 +538,7 @@ HAL_StatusTypeDef HAL_SRAM_Write_16b(SRAM_HandleTypeDef *hsram, uint32_t *pAddre
  * @param  BufferSize Size of the buffer to read from memory
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SRAM_Read_32b(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint32_t *pDstBuffer,
-				    uint32_t BufferSize)
+HAL_StatusTypeDef HAL_SRAM_Read_32b(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint32_t *pDstBuffer, uint32_t BufferSize)
 {
 	uint32_t size;
 	__IO uint32_t *psramaddress = pAddress;
@@ -588,8 +581,7 @@ HAL_StatusTypeDef HAL_SRAM_Read_32b(SRAM_HandleTypeDef *hsram, uint32_t *pAddres
  * @param  BufferSize Size of the buffer to write to memory
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SRAM_Write_32b(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint32_t *pSrcBuffer,
-				     uint32_t BufferSize)
+HAL_StatusTypeDef HAL_SRAM_Write_32b(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint32_t *pSrcBuffer, uint32_t BufferSize)
 {
 	uint32_t size;
 	__IO uint32_t *psramaddress = pAddress;
@@ -631,8 +623,7 @@ HAL_StatusTypeDef HAL_SRAM_Write_32b(SRAM_HandleTypeDef *hsram, uint32_t *pAddre
  * @param  BufferSize Size of the buffer to read from memory
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SRAM_Read_DMA(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint32_t *pDstBuffer,
-				    uint32_t BufferSize)
+HAL_StatusTypeDef HAL_SRAM_Read_DMA(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint32_t *pDstBuffer, uint32_t BufferSize)
 {
 	HAL_StatusTypeDef status;
 	HAL_SRAM_StateTypeDef state = hsram->State;
@@ -674,8 +665,7 @@ HAL_StatusTypeDef HAL_SRAM_Read_DMA(SRAM_HandleTypeDef *hsram, uint32_t *pAddres
  * @param  BufferSize Size of the buffer to write to memory
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SRAM_Write_DMA(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint32_t *pSrcBuffer,
-				     uint32_t BufferSize)
+HAL_StatusTypeDef HAL_SRAM_Write_DMA(SRAM_HandleTypeDef *hsram, uint32_t *pAddress, uint32_t *pSrcBuffer, uint32_t BufferSize)
 {
 	HAL_StatusTypeDef status;
 
@@ -715,8 +705,7 @@ HAL_StatusTypeDef HAL_SRAM_Write_DMA(SRAM_HandleTypeDef *hsram, uint32_t *pAddre
  * @param pCallback : pointer to the Callback function
  * @retval status
  */
-HAL_StatusTypeDef HAL_SRAM_RegisterCallback(SRAM_HandleTypeDef *hsram, HAL_SRAM_CallbackIDTypeDef CallbackId,
-					    pSRAM_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_SRAM_RegisterCallback(SRAM_HandleTypeDef *hsram, HAL_SRAM_CallbackIDTypeDef CallbackId, pSRAM_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 	HAL_SRAM_StateTypeDef state;
@@ -820,8 +809,7 @@ HAL_StatusTypeDef HAL_SRAM_UnRegisterCallback(SRAM_HandleTypeDef *hsram, HAL_SRA
  * @param pCallback : pointer to the Callback function
  * @retval status
  */
-HAL_StatusTypeDef HAL_SRAM_RegisterDmaCallback(SRAM_HandleTypeDef *hsram, HAL_SRAM_CallbackIDTypeDef CallbackId,
-					       pSRAM_DmaCallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_SRAM_RegisterDmaCallback(SRAM_HandleTypeDef *hsram, HAL_SRAM_CallbackIDTypeDef CallbackId, pSRAM_DmaCallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 	HAL_SRAM_StateTypeDef state;

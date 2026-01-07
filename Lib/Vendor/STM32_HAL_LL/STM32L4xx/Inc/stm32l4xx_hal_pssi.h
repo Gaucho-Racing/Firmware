@@ -157,8 +157,8 @@ typedef enum {
  * @{
  */
 #define HAL_PSSI_ERROR_NONE 0x00000000U /*!< No error                */
-#define HAL_PSSI_ERROR_NOT_SUPPORTED                                                                                   \
-	0x00000001U			     /*!< Not supported operation                                              \
+#define HAL_PSSI_ERROR_NOT_SUPPORTED                                                                                                                                                                   \
+	0x00000001U			     /*!< Not supported operation                                                                                                                              \
 					      */
 #define HAL_PSSI_ERROR_UNDER_RUN 0x00000002U /*!< FIFO Under-run error    */
 #define HAL_PSSI_ERROR_OVER_RUN 0x00000004U  /*!< FIFO Over-run  error    */
@@ -207,8 +207,8 @@ typedef enum {
 #define HAL_PSSI_DE_RDY_DISABLE (0x0U << PSSI_CR_DERDYCFG_Pos) /*!< Neither DE nor RDY are enabled */
 #define HAL_PSSI_RDY_ENABLE (0x1U << PSSI_CR_DERDYCFG_Pos)     /*!< Only RDY enabled */
 #define HAL_PSSI_DE_ENABLE (0x2U << PSSI_CR_DERDYCFG_Pos)      /*!< Only DE enabled */
-#define HAL_PSSI_DE_RDY_ALT_ENABLE                                                                                     \
-	(0x3U << PSSI_CR_DERDYCFG_Pos)				     /*!< Both RDY and DE alternate                    \
+#define HAL_PSSI_DE_RDY_ALT_ENABLE                                                                                                                                                                     \
+	(0x3U << PSSI_CR_DERDYCFG_Pos)				     /*!< Both RDY and DE alternate                                                                                                    \
 									functions enabled */
 #define HAL_PSSI_MAP_RDY_BIDIR_ENABLE (0x4U << PSSI_CR_DERDYCFG_Pos) /*!< Bi-directional on RDY pin */
 #define HAL_PSSI_RDY_MAP_ENABLE (0x5U << PSSI_CR_DERDYCFG_Pos)	     /*!< Only RDY enabled, mapped to DE pin */
@@ -272,8 +272,8 @@ typedef enum {
  * @{
  */
 
-#define PSSI_FLAG_OVR_RIS                                                                                              \
-	PSSI_RIS_OVR_RIS		    /*!< Overrun, Underrun errors flag                                         \
+#define PSSI_FLAG_OVR_RIS                                                                                                                                                                              \
+	PSSI_RIS_OVR_RIS		    /*!< Overrun, Underrun errors flag                                                                                                                         \
 					     */
 #define PSSI_FLAG_MASK PSSI_RIS_OVR_RIS_Msk /*!< Overrun, Underrun errors Mask */
 #define PSSI_FLAG_OVR_MIS PSSI_MIS_OVR_MIS  /*!< Overrun, Underrun masked errors flag */
@@ -295,11 +295,11 @@ typedef enum {
  * @retval None
  */
 #if (USE_HAL_PSSI_REGISTER_CALLBACKS == 1)
-#define HAL_PSSI_RESET_HANDLE_STATE(__HANDLE__)                                                                        \
-	do {                                                                                                           \
-		(__HANDLE__)->State = HAL_PSSI_STATE_RESET;                                                            \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define HAL_PSSI_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                        \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_PSSI_STATE_RESET;                                                                                                                                            \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0)
 #else
 #define HAL_PSSI_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_PSSI_STATE_RESET)
@@ -389,11 +389,10 @@ typedef enum {
  * @retval Valid or not.
  */
 
-#define IS_PSSI_CONTROL_SIGNAL(__CONTROL__)                                                                            \
-	(((__CONTROL__) == HAL_PSSI_DE_RDY_DISABLE) || ((__CONTROL__) == HAL_PSSI_RDY_ENABLE) ||                       \
-	 ((__CONTROL__) == HAL_PSSI_DE_ENABLE) || ((__CONTROL__) == HAL_PSSI_DE_RDY_ALT_ENABLE) ||                     \
-	 ((__CONTROL__) == HAL_PSSI_MAP_RDY_BIDIR_ENABLE) || ((__CONTROL__) == HAL_PSSI_RDY_MAP_ENABLE) ||             \
-	 ((__CONTROL__) == HAL_PSSI_DE_MAP_ENABLE) || ((__CONTROL__) == HAL_PSSI_MAP_DE_BIDIR_ENABLE))
+#define IS_PSSI_CONTROL_SIGNAL(__CONTROL__)                                                                                                                                                            \
+	(((__CONTROL__) == HAL_PSSI_DE_RDY_DISABLE) || ((__CONTROL__) == HAL_PSSI_RDY_ENABLE) || ((__CONTROL__) == HAL_PSSI_DE_ENABLE) || ((__CONTROL__) == HAL_PSSI_DE_RDY_ALT_ENABLE) ||             \
+	 ((__CONTROL__) == HAL_PSSI_MAP_RDY_BIDIR_ENABLE) || ((__CONTROL__) == HAL_PSSI_RDY_MAP_ENABLE) || ((__CONTROL__) == HAL_PSSI_DE_MAP_ENABLE) ||                                                \
+	 ((__CONTROL__) == HAL_PSSI_MAP_DE_BIDIR_ENABLE))
 
 /**
  * @brief  Check whether the PSSI Bus Width is valid.
@@ -410,8 +409,7 @@ typedef enum {
   * @retval Valid or not.
   */
 
-#define IS_PSSI_CLOCK_POLARITY(__CLOCKPOL__)                                                                           \
-	(((__CLOCKPOL__) == HAL_PSSI_FALLING_EDGE) || ((__CLOCKPOL__) == HAL_PSSI_RISING_EDGE))
+#define IS_PSSI_CLOCK_POLARITY(__CLOCKPOL__) (((__CLOCKPOL__) == HAL_PSSI_FALLING_EDGE) || ((__CLOCKPOL__) == HAL_PSSI_RISING_EDGE))
 
 /**
  * @brief  Check whether the PSSI Data Enable Polarity is valid.
@@ -419,8 +417,7 @@ typedef enum {
  * @retval Valid or not.
  */
 
-#define IS_PSSI_DE_POLARITY(__DEPOL__)                                                                                 \
-	(((__DEPOL__) == HAL_PSSI_DEPOL_ACTIVE_LOW) || ((__DEPOL__) == HAL_PSSI_DEPOL_ACTIVE_HIGH))
+#define IS_PSSI_DE_POLARITY(__DEPOL__) (((__DEPOL__) == HAL_PSSI_DEPOL_ACTIVE_LOW) || ((__DEPOL__) == HAL_PSSI_DEPOL_ACTIVE_HIGH))
 
 /**
  * @brief  Check whether the PSSI Ready Polarity is valid.
@@ -428,8 +425,7 @@ typedef enum {
  * @retval Valid or not.
  */
 
-#define IS_PSSI_RDY_POLARITY(__RDYPOL__)                                                                               \
-	(((__RDYPOL__) == HAL_PSSI_RDYPOL_ACTIVE_LOW) || ((__RDYPOL__) == HAL_PSSI_RDYPOL_ACTIVE_HIGH))
+#define IS_PSSI_RDY_POLARITY(__RDYPOL__) (((__RDYPOL__) == HAL_PSSI_RDYPOL_ACTIVE_LOW) || ((__RDYPOL__) == HAL_PSSI_RDYPOL_ACTIVE_HIGH))
 
 /**
  * @}
@@ -453,8 +449,7 @@ void HAL_PSSI_MspInit(PSSI_HandleTypeDef *hpssi);
 void HAL_PSSI_MspDeInit(PSSI_HandleTypeDef *hpssi);
 /* Callbacks Register/UnRegister functions  ***********************************/
 #if (USE_HAL_PSSI_REGISTER_CALLBACKS == 1)
-HAL_StatusTypeDef HAL_PSSI_RegisterCallback(PSSI_HandleTypeDef *hpssi, HAL_PSSI_CallbackIDTypeDef CallbackID,
-					    pPSSI_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_PSSI_RegisterCallback(PSSI_HandleTypeDef *hpssi, HAL_PSSI_CallbackIDTypeDef CallbackID, pPSSI_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_PSSI_UnRegisterCallback(PSSI_HandleTypeDef *hpssi, HAL_PSSI_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_PSSI_REGISTER_CALLBACKS */
 

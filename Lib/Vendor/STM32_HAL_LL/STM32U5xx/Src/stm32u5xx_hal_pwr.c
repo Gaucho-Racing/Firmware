@@ -147,12 +147,12 @@
 /** @defgroup PWR_PVD_Mode_Mask PWR PVD Mode Mask
  * @{
  */
-#define PVD_RISING_EDGE                                                                                                \
-	(0x01U)			 /*!< Mask for rising edge set as PVD trigger                                          \
+#define PVD_RISING_EDGE                                                                                                                                                                                \
+	(0x01U)			 /*!< Mask for rising edge set as PVD trigger                                                                                                                          \
 				  */
 #define PVD_FALLING_EDGE (0x02U) /*!< Mask for falling edge set as PVD trigger */
-#define PVD_MODE_IT                                                                                                    \
-	(0x04U)		     /*!< Mask for interruption yielded by PVD threshold crossing                              \
+#define PVD_MODE_IT                                                                                                                                                                                    \
+	(0x04U)		     /*!< Mask for interruption yielded by PVD threshold crossing                                                                                                              \
 			      */
 #define PVD_MODE_EVT (0x08U) /*!< Mask for event yielded by PVD threshold crossing */
 /**
@@ -469,8 +469,7 @@ void HAL_PWR_EnableWakeUpPin(uint32_t WakeUpPin)
 	MODIFY_REG(PWR->WUCR2, (PWR_EWUP_MASK & WakeUpPin), (WakeUpPin >> PWR_WUP_POLARITY_SHIFT));
 
 	/* Specifies the wake up line I/O selection */
-	MODIFY_REG(PWR->WUCR3, (3UL << (POSITION_VAL(PWR_EWUP_MASK & WakeUpPin) * 2U)),
-		   (WakeUpPin >> PWR_WUP_SELECT_SIGNAL_SHIFT));
+	MODIFY_REG(PWR->WUCR3, (3UL << (POSITION_VAL(PWR_EWUP_MASK & WakeUpPin) * 2U)), (WakeUpPin >> PWR_WUP_SELECT_SIGNAL_SHIFT));
 
 	/* Enable wake-up line */
 	SET_BIT(PWR->WUCR1, (PWR_EWUP_MASK & WakeUpPin));

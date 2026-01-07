@@ -165,8 +165,7 @@ typedef struct __DMA2D_HandleTypeDef {
 #if (USE_HAL_DMA2D_REGISTER_CALLBACKS == 1)
 	void (*LineEventCallback)(struct __DMA2D_HandleTypeDef *hdma2d); /*!< DMA2D line event callback.             */
 
-	void (*CLUTLoadingCpltCallback)(
-	    struct __DMA2D_HandleTypeDef *hdma2d); /*!< DMA2D CLUT loading completion callback */
+	void (*CLUTLoadingCpltCallback)(struct __DMA2D_HandleTypeDef *hdma2d); /*!< DMA2D CLUT loading completion callback */
 
 	void (*MspInitCallback)(struct __DMA2D_HandleTypeDef *hdma2d); /*!< DMA2D Msp Init callback. */
 
@@ -218,18 +217,18 @@ typedef void (*pDMA2D_CallbackTypeDef)(DMA2D_HandleTypeDef *hdma2d); /*!< Pointe
  * @{
  */
 #define DMA2D_M2M 0x00000000U /*!< DMA2D memory to memory transfer mode */
-#define DMA2D_M2M_PFC                                                                                                  \
-	DMA2D_CR_MODE_0 /*!< DMA2D memory to memory with pixel format                                                  \
+#define DMA2D_M2M_PFC                                                                                                                                                                                  \
+	DMA2D_CR_MODE_0 /*!< DMA2D memory to memory with pixel format                                                                                                                                  \
 			   conversion transfer mode */
-#define DMA2D_M2M_BLEND                                                                                                \
-	DMA2D_CR_MODE_1				      /*!< DMA2D memory to memory with blending transfer               \
+#define DMA2D_M2M_BLEND                                                                                                                                                                                \
+	DMA2D_CR_MODE_1				      /*!< DMA2D memory to memory with blending transfer                                                                                               \
 							 mode */
 #define DMA2D_R2M (DMA2D_CR_MODE_1 | DMA2D_CR_MODE_0) /*!< DMA2D register to memory transfer mode */
-#define DMA2D_M2M_BLEND_FG                                                                                             \
-	DMA2D_CR_MODE_2 /*!< DMA2D memory to memory with blending transfer                                             \
+#define DMA2D_M2M_BLEND_FG                                                                                                                                                                             \
+	DMA2D_CR_MODE_2 /*!< DMA2D memory to memory with blending transfer                                                                                                                             \
 			   mode and fixed color FG */
-#define DMA2D_M2M_BLEND_BG                                                                                             \
-	(DMA2D_CR_MODE_2 | DMA2D_CR_MODE_0) /*!< DMA2D memory to memory with blending transfer                         \
+#define DMA2D_M2M_BLEND_BG                                                                                                                                                                             \
+	(DMA2D_CR_MODE_2 | DMA2D_CR_MODE_0) /*!< DMA2D memory to memory with blending transfer                                                                                                         \
 					       mode and fixed color BG */
 /**
  * @}
@@ -272,11 +271,11 @@ typedef void (*pDMA2D_CallbackTypeDef)(DMA2D_HandleTypeDef *hdma2d); /*!< Pointe
  * @{
  */
 #define DMA2D_NO_MODIF_ALPHA 0x00000000U /*!< No modification of the alpha channel value */
-#define DMA2D_REPLACE_ALPHA                                                                                            \
-	0x00000001U /*!< Replace original alpha channel value by programmed                                            \
+#define DMA2D_REPLACE_ALPHA                                                                                                                                                                            \
+	0x00000001U /*!< Replace original alpha channel value by programmed                                                                                                                            \
 		       alpha value */
-#define DMA2D_COMBINE_ALPHA                                                                                            \
-	0x00000002U /*!< Replace original alpha channel value by programmed                                            \
+#define DMA2D_COMBINE_ALPHA                                                                                                                                                                            \
+	0x00000002U /*!< Replace original alpha channel value by programmed                                                                                                                            \
 		       alpha value with original alpha channel value */
 /**
  * @}
@@ -286,8 +285,8 @@ typedef void (*pDMA2D_CallbackTypeDef)(DMA2D_HandleTypeDef *hdma2d); /*!< Pointe
  * @{
  */
 #define DMA2D_REGULAR_ALPHA 0x00000000U /*!< No modification of the alpha channel value */
-#define DMA2D_INVERTED_ALPHA                                                                                           \
-	0x00000001U /*!< Invert the alpha channel value                                                                \
+#define DMA2D_INVERTED_ALPHA                                                                                                                                                                           \
+	0x00000001U /*!< Invert the alpha channel value                                                                                                                                                \
 		     */
 /**
  * @}
@@ -357,12 +356,12 @@ typedef void (*pDMA2D_CallbackTypeDef)(DMA2D_HandleTypeDef *hdma2d); /*!< Pointe
 /** @defgroup DMA2D_Flags DMA2D Flags
  * @{
  */
-#define DMA2D_FLAG_CE                                                                                                  \
-	DMA2D_ISR_CEIF		       /*!< Configuration Error Interrupt Flag                                         \
+#define DMA2D_FLAG_CE                                                                                                                                                                                  \
+	DMA2D_ISR_CEIF		       /*!< Configuration Error Interrupt Flag                                                                                                                         \
 					*/
 #define DMA2D_FLAG_CTC DMA2D_ISR_CTCIF /*!< CLUT Transfer Complete Interrupt Flag */
-#define DMA2D_FLAG_CAE                                                                                                 \
-	DMA2D_ISR_CAEIF		     /*!< CLUT Access Error Interrupt Flag                                             \
+#define DMA2D_FLAG_CAE                                                                                                                                                                                 \
+	DMA2D_ISR_CAEIF		     /*!< CLUT Access Error Interrupt Flag                                                                                                                             \
 				      */
 #define DMA2D_FLAG_TW DMA2D_ISR_TWIF /*!< Transfer Watermark Interrupt Flag */
 #define DMA2D_FLAG_TC DMA2D_ISR_TCIF /*!< Transfer Complete Interrupt Flag */
@@ -399,11 +398,11 @@ typedef enum {
  * @retval None
  */
 #if (USE_HAL_DMA2D_REGISTER_CALLBACKS == 1)
-#define __HAL_DMA2D_RESET_HANDLE_STATE(__HANDLE__)                                                                     \
-	do {                                                                                                           \
-		(__HANDLE__)->State = HAL_DMA2D_STATE_RESET;                                                           \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define __HAL_DMA2D_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                     \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_DMA2D_STATE_RESET;                                                                                                                                           \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0)
 #else
 #define __HAL_DMA2D_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_DMA2D_STATE_RESET)
@@ -514,8 +513,7 @@ void HAL_DMA2D_MspInit(DMA2D_HandleTypeDef *hdma2d);
 void HAL_DMA2D_MspDeInit(DMA2D_HandleTypeDef *hdma2d);
 /* Callbacks Register/UnRegister functions  ***********************************/
 #if (USE_HAL_DMA2D_REGISTER_CALLBACKS == 1)
-HAL_StatusTypeDef HAL_DMA2D_RegisterCallback(DMA2D_HandleTypeDef *hdma2d, HAL_DMA2D_CallbackIDTypeDef CallbackID,
-					     pDMA2D_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_DMA2D_RegisterCallback(DMA2D_HandleTypeDef *hdma2d, HAL_DMA2D_CallbackIDTypeDef CallbackID, pDMA2D_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_DMA2D_UnRegisterCallback(DMA2D_HandleTypeDef *hdma2d, HAL_DMA2D_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_DMA2D_REGISTER_CALLBACKS */
 
@@ -529,22 +527,16 @@ HAL_StatusTypeDef HAL_DMA2D_UnRegisterCallback(DMA2D_HandleTypeDef *hdma2d, HAL_
 
 /* IO operation functions
  * *******************************************************/
-HAL_StatusTypeDef HAL_DMA2D_Start(DMA2D_HandleTypeDef *hdma2d, uint32_t pdata, uint32_t DstAddress, uint32_t Width,
-				  uint32_t Height);
-HAL_StatusTypeDef HAL_DMA2D_BlendingStart(DMA2D_HandleTypeDef *hdma2d, uint32_t SrcAddress1, uint32_t SrcAddress2,
-					  uint32_t DstAddress, uint32_t Width, uint32_t Height);
-HAL_StatusTypeDef HAL_DMA2D_Start_IT(DMA2D_HandleTypeDef *hdma2d, uint32_t pdata, uint32_t DstAddress, uint32_t Width,
-				     uint32_t Height);
-HAL_StatusTypeDef HAL_DMA2D_BlendingStart_IT(DMA2D_HandleTypeDef *hdma2d, uint32_t SrcAddress1, uint32_t SrcAddress2,
-					     uint32_t DstAddress, uint32_t Width, uint32_t Height);
+HAL_StatusTypeDef HAL_DMA2D_Start(DMA2D_HandleTypeDef *hdma2d, uint32_t pdata, uint32_t DstAddress, uint32_t Width, uint32_t Height);
+HAL_StatusTypeDef HAL_DMA2D_BlendingStart(DMA2D_HandleTypeDef *hdma2d, uint32_t SrcAddress1, uint32_t SrcAddress2, uint32_t DstAddress, uint32_t Width, uint32_t Height);
+HAL_StatusTypeDef HAL_DMA2D_Start_IT(DMA2D_HandleTypeDef *hdma2d, uint32_t pdata, uint32_t DstAddress, uint32_t Width, uint32_t Height);
+HAL_StatusTypeDef HAL_DMA2D_BlendingStart_IT(DMA2D_HandleTypeDef *hdma2d, uint32_t SrcAddress1, uint32_t SrcAddress2, uint32_t DstAddress, uint32_t Width, uint32_t Height);
 HAL_StatusTypeDef HAL_DMA2D_Suspend(DMA2D_HandleTypeDef *hdma2d);
 HAL_StatusTypeDef HAL_DMA2D_Resume(DMA2D_HandleTypeDef *hdma2d);
 HAL_StatusTypeDef HAL_DMA2D_Abort(DMA2D_HandleTypeDef *hdma2d);
 HAL_StatusTypeDef HAL_DMA2D_EnableCLUT(DMA2D_HandleTypeDef *hdma2d, uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_DMA2D_CLUTStartLoad(DMA2D_HandleTypeDef *hdma2d, const DMA2D_CLUTCfgTypeDef *CLUTCfg,
-					  uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_DMA2D_CLUTStartLoad_IT(DMA2D_HandleTypeDef *hdma2d, const DMA2D_CLUTCfgTypeDef *CLUTCfg,
-					     uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_DMA2D_CLUTStartLoad(DMA2D_HandleTypeDef *hdma2d, const DMA2D_CLUTCfgTypeDef *CLUTCfg, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_DMA2D_CLUTStartLoad_IT(DMA2D_HandleTypeDef *hdma2d, const DMA2D_CLUTCfgTypeDef *CLUTCfg, uint32_t LayerIdx);
 HAL_StatusTypeDef HAL_DMA2D_CLUTLoad(DMA2D_HandleTypeDef *hdma2d, DMA2D_CLUTCfgTypeDef CLUTCfg, uint32_t LayerIdx);
 HAL_StatusTypeDef HAL_DMA2D_CLUTLoad_IT(DMA2D_HandleTypeDef *hdma2d, DMA2D_CLUTCfgTypeDef CLUTCfg, uint32_t LayerIdx);
 HAL_StatusTypeDef HAL_DMA2D_CLUTLoading_Abort(DMA2D_HandleTypeDef *hdma2d, uint32_t LayerIdx);
@@ -653,8 +645,8 @@ uint32_t HAL_DMA2D_GetError(const DMA2D_HandleTypeDef *hdma2d);
 /** @defgroup DMA2D_CLUT_Size DMA2D CLUT Size
  * @{
  */
-#define DMA2D_CLUT_SIZE                                                                                                \
-	(DMA2D_FGPFCCR_CS >> 8U) /*!< DMA2D maximum CLUT size                                                          \
+#define DMA2D_CLUT_SIZE                                                                                                                                                                                \
+	(DMA2D_FGPFCCR_CS >> 8U) /*!< DMA2D maximum CLUT size                                                                                                                                          \
 				  */
 /**
  * @}
@@ -670,13 +662,11 @@ uint32_t HAL_DMA2D_GetError(const DMA2D_HandleTypeDef *hdma2d);
  */
 #define IS_DMA2D_LAYER(LAYER) (((LAYER) == DMA2D_BACKGROUND_LAYER) || ((LAYER) == DMA2D_FOREGROUND_LAYER))
 
-#define IS_DMA2D_MODE(MODE)                                                                                            \
-	(((MODE) == DMA2D_M2M) || ((MODE) == DMA2D_M2M_PFC) || ((MODE) == DMA2D_M2M_BLEND) || ((MODE) == DMA2D_R2M) || \
-	 ((MODE) == DMA2D_M2M_BLEND_FG) || ((MODE) == DMA2D_M2M_BLEND_BG))
+#define IS_DMA2D_MODE(MODE)                                                                                                                                                                            \
+	(((MODE) == DMA2D_M2M) || ((MODE) == DMA2D_M2M_PFC) || ((MODE) == DMA2D_M2M_BLEND) || ((MODE) == DMA2D_R2M) || ((MODE) == DMA2D_M2M_BLEND_FG) || ((MODE) == DMA2D_M2M_BLEND_BG))
 
-#define IS_DMA2D_CMODE(MODE_ARGB)                                                                                      \
-	(((MODE_ARGB) == DMA2D_OUTPUT_ARGB8888) || ((MODE_ARGB) == DMA2D_OUTPUT_RGB888) ||                             \
-	 ((MODE_ARGB) == DMA2D_OUTPUT_RGB565) || ((MODE_ARGB) == DMA2D_OUTPUT_ARGB1555) ||                             \
+#define IS_DMA2D_CMODE(MODE_ARGB)                                                                                                                                                                      \
+	(((MODE_ARGB) == DMA2D_OUTPUT_ARGB8888) || ((MODE_ARGB) == DMA2D_OUTPUT_RGB888) || ((MODE_ARGB) == DMA2D_OUTPUT_RGB565) || ((MODE_ARGB) == DMA2D_OUTPUT_ARGB1555) ||                           \
 	 ((MODE_ARGB) == DMA2D_OUTPUT_ARGB4444))
 
 #define IS_DMA2D_COLOR(COLOR) ((COLOR) <= DMA2D_COLOR_VALUE)
@@ -685,27 +675,20 @@ uint32_t HAL_DMA2D_GetError(const DMA2D_HandleTypeDef *hdma2d);
 #define IS_DMA2D_OFFSET(OOFFSET) ((OOFFSET) <= DMA2D_OFFSET)
 
 #if defined(DMA2D_FGPFCCR_CSS)
-#define IS_DMA2D_INPUT_COLOR_MODE(INPUT_CM)                                                                            \
-	(((INPUT_CM) == DMA2D_INPUT_ARGB8888) || ((INPUT_CM) == DMA2D_INPUT_RGB888) ||                                 \
-	 ((INPUT_CM) == DMA2D_INPUT_RGB565) || ((INPUT_CM) == DMA2D_INPUT_ARGB1555) ||                                 \
-	 ((INPUT_CM) == DMA2D_INPUT_ARGB4444) || ((INPUT_CM) == DMA2D_INPUT_L8) || ((INPUT_CM) == DMA2D_INPUT_AL44) || \
-	 ((INPUT_CM) == DMA2D_INPUT_AL88) || ((INPUT_CM) == DMA2D_INPUT_L4) || ((INPUT_CM) == DMA2D_INPUT_A8) ||       \
-	 ((INPUT_CM) == DMA2D_INPUT_A4) || ((INPUT_CM) == DMA2D_INPUT_YCBCR))
+#define IS_DMA2D_INPUT_COLOR_MODE(INPUT_CM)                                                                                                                                                            \
+	(((INPUT_CM) == DMA2D_INPUT_ARGB8888) || ((INPUT_CM) == DMA2D_INPUT_RGB888) || ((INPUT_CM) == DMA2D_INPUT_RGB565) || ((INPUT_CM) == DMA2D_INPUT_ARGB1555) ||                                   \
+	 ((INPUT_CM) == DMA2D_INPUT_ARGB4444) || ((INPUT_CM) == DMA2D_INPUT_L8) || ((INPUT_CM) == DMA2D_INPUT_AL44) || ((INPUT_CM) == DMA2D_INPUT_AL88) || ((INPUT_CM) == DMA2D_INPUT_L4) ||           \
+	 ((INPUT_CM) == DMA2D_INPUT_A8) || ((INPUT_CM) == DMA2D_INPUT_A4) || ((INPUT_CM) == DMA2D_INPUT_YCBCR))
 #else
-#define IS_DMA2D_INPUT_COLOR_MODE(INPUT_CM)                                                                            \
-	(((INPUT_CM) == DMA2D_INPUT_ARGB8888) || ((INPUT_CM) == DMA2D_INPUT_RGB888) ||                                 \
-	 ((INPUT_CM) == DMA2D_INPUT_RGB565) || ((INPUT_CM) == DMA2D_INPUT_ARGB1555) ||                                 \
-	 ((INPUT_CM) == DMA2D_INPUT_ARGB4444) || ((INPUT_CM) == DMA2D_INPUT_L8) || ((INPUT_CM) == DMA2D_INPUT_AL44) || \
-	 ((INPUT_CM) == DMA2D_INPUT_AL88) || ((INPUT_CM) == DMA2D_INPUT_L4) || ((INPUT_CM) == DMA2D_INPUT_A8) ||       \
-	 ((INPUT_CM) == DMA2D_INPUT_A4))
+#define IS_DMA2D_INPUT_COLOR_MODE(INPUT_CM)                                                                                                                                                            \
+	(((INPUT_CM) == DMA2D_INPUT_ARGB8888) || ((INPUT_CM) == DMA2D_INPUT_RGB888) || ((INPUT_CM) == DMA2D_INPUT_RGB565) || ((INPUT_CM) == DMA2D_INPUT_ARGB1555) ||                                   \
+	 ((INPUT_CM) == DMA2D_INPUT_ARGB4444) || ((INPUT_CM) == DMA2D_INPUT_L8) || ((INPUT_CM) == DMA2D_INPUT_AL44) || ((INPUT_CM) == DMA2D_INPUT_AL88) || ((INPUT_CM) == DMA2D_INPUT_L4) ||           \
+	 ((INPUT_CM) == DMA2D_INPUT_A8) || ((INPUT_CM) == DMA2D_INPUT_A4))
 #endif /* DMA2D_FGPFCCR_CSS */
 
-#define IS_DMA2D_ALPHA_MODE(AlphaMode)                                                                                 \
-	(((AlphaMode) == DMA2D_NO_MODIF_ALPHA) || ((AlphaMode) == DMA2D_REPLACE_ALPHA) ||                              \
-	 ((AlphaMode) == DMA2D_COMBINE_ALPHA))
+#define IS_DMA2D_ALPHA_MODE(AlphaMode) (((AlphaMode) == DMA2D_NO_MODIF_ALPHA) || ((AlphaMode) == DMA2D_REPLACE_ALPHA) || ((AlphaMode) == DMA2D_COMBINE_ALPHA))
 
-#define IS_DMA2D_ALPHA_INVERTED(Alpha_Inverted)                                                                        \
-	(((Alpha_Inverted) == DMA2D_REGULAR_ALPHA) || ((Alpha_Inverted) == DMA2D_INVERTED_ALPHA))
+#define IS_DMA2D_ALPHA_INVERTED(Alpha_Inverted) (((Alpha_Inverted) == DMA2D_REGULAR_ALPHA) || ((Alpha_Inverted) == DMA2D_INVERTED_ALPHA))
 
 #define IS_DMA2D_RB_SWAP(RB_Swap) (((RB_Swap) == DMA2D_RB_REGULAR) || ((RB_Swap) == DMA2D_RB_SWAP))
 
@@ -714,19 +697,15 @@ uint32_t HAL_DMA2D_GetError(const DMA2D_HandleTypeDef *hdma2d);
 #define IS_DMA2D_BYTES_SWAP(BYTES_SWAP) (((BYTES_SWAP) == DMA2D_BYTES_REGULAR) || ((BYTES_SWAP) == DMA2D_BYTES_SWAP))
 
 #if defined(DMA2D_FGPFCCR_CSS)
-#define IS_DMA2D_CHROMA_SUB_SAMPLING(CSS)                                                                              \
-	(((CSS) == DMA2D_NO_CSS) || ((CSS) == DMA2D_CSS_422) || ((CSS) == DMA2D_CSS_420))
+#define IS_DMA2D_CHROMA_SUB_SAMPLING(CSS) (((CSS) == DMA2D_NO_CSS) || ((CSS) == DMA2D_CSS_422) || ((CSS) == DMA2D_CSS_420))
 #endif /* DMA2D_FGPFCCR_CSS */
 
 #define IS_DMA2D_CLUT_CM(CLUT_CM) (((CLUT_CM) == DMA2D_CCM_ARGB8888) || ((CLUT_CM) == DMA2D_CCM_RGB888))
 #define IS_DMA2D_CLUT_SIZE(CLUT_SIZE) ((CLUT_SIZE) <= DMA2D_CLUT_SIZE)
 #define IS_DMA2D_LINEWATERMARK(LineWatermark) ((LineWatermark) <= DMA2D_LINE_WATERMARK_MAX)
-#define IS_DMA2D_IT(IT)                                                                                                \
-	(((IT) == DMA2D_IT_CTC) || ((IT) == DMA2D_IT_CAE) || ((IT) == DMA2D_IT_TW) || ((IT) == DMA2D_IT_TC) ||         \
-	 ((IT) == DMA2D_IT_TE) || ((IT) == DMA2D_IT_CE))
-#define IS_DMA2D_GET_FLAG(FLAG)                                                                                        \
-	(((FLAG) == DMA2D_FLAG_CTC) || ((FLAG) == DMA2D_FLAG_CAE) || ((FLAG) == DMA2D_FLAG_TW) ||                      \
-	 ((FLAG) == DMA2D_FLAG_TC) || ((FLAG) == DMA2D_FLAG_TE) || ((FLAG) == DMA2D_FLAG_CE))
+#define IS_DMA2D_IT(IT) (((IT) == DMA2D_IT_CTC) || ((IT) == DMA2D_IT_CAE) || ((IT) == DMA2D_IT_TW) || ((IT) == DMA2D_IT_TC) || ((IT) == DMA2D_IT_TE) || ((IT) == DMA2D_IT_CE))
+#define IS_DMA2D_GET_FLAG(FLAG)                                                                                                                                                                        \
+	(((FLAG) == DMA2D_FLAG_CTC) || ((FLAG) == DMA2D_FLAG_CAE) || ((FLAG) == DMA2D_FLAG_TW) || ((FLAG) == DMA2D_FLAG_TC) || ((FLAG) == DMA2D_FLAG_TE) || ((FLAG) == DMA2D_FLAG_CE))
 /**
  * @}
  */

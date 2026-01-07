@@ -366,8 +366,7 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateInternalTimeStamp(RTC_HandleTypeDef *hrtc)
  *             @arg RTC_FORMAT_BCD: BCD data format
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_GetTimeStamp(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTimeStamp,
-					 RTC_DateTypeDef *sTimeStampDate, uint32_t Format)
+HAL_StatusTypeDef HAL_RTCEx_GetTimeStamp(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTimeStamp, RTC_DateTypeDef *sTimeStampDate, uint32_t Format)
 {
 	uint32_t tmptime, tmpdate;
 
@@ -863,8 +862,7 @@ HAL_StatusTypeDef HAL_RTCEx_PollForWakeUpTimerEvent(RTC_HandleTypeDef *hrtc, uin
  *          This parameter can be one any value from 0 to 0x000001FF.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_SetSmoothCalib(RTC_HandleTypeDef *hrtc, uint32_t SmoothCalibPeriod,
-					   uint32_t SmoothCalibPlusPulses, uint32_t SmoothCalibMinusPulsesValue)
+HAL_StatusTypeDef HAL_RTCEx_SetSmoothCalib(RTC_HandleTypeDef *hrtc, uint32_t SmoothCalibPeriod, uint32_t SmoothCalibPlusPulses, uint32_t SmoothCalibMinusPulsesValue)
 {
 	uint32_t tickstart;
 
@@ -904,8 +902,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetSmoothCalib(RTC_HandleTypeDef *hrtc, uint32_t Smo
 	}
 
 	/* Configure the Smooth calibration settings */
-	MODIFY_REG(hrtc->Instance->CALR, (RTC_CALR_CALP | RTC_CALR_CALW8 | RTC_CALR_CALW16 | RTC_CALR_CALM),
-		   (uint32_t)(SmoothCalibPeriod | SmoothCalibPlusPulses | SmoothCalibMinusPulsesValue));
+	MODIFY_REG(hrtc->Instance->CALR, (RTC_CALR_CALP | RTC_CALR_CALW8 | RTC_CALR_CALW16 | RTC_CALR_CALM), (uint32_t)(SmoothCalibPeriod | SmoothCalibPlusPulses | SmoothCalibMinusPulsesValue));
 
 	/* Enable the write protection for RTC registers */
 	__HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
@@ -1348,16 +1345,12 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper(RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef
 	assert_param(IS_RTC_TAMPER_PULLUP_STATE(sTamper->TamperPullUp));
 	assert_param(IS_RTC_TAMPER_TIMESTAMPONTAMPER_DETECTION(sTamper->TimeStampOnTamperDetection));
 	/* Trigger and Filter have exclusive configurations */
-	assert_param(
-	    ((sTamper->Filter != RTC_TAMPERFILTER_DISABLE) &&
-	     ((sTamper->Trigger == RTC_TAMPERTRIGGER_LOWLEVEL) || (sTamper->Trigger == RTC_TAMPERTRIGGER_HIGHLEVEL))) ||
-	    ((sTamper->Filter == RTC_TAMPERFILTER_DISABLE) && ((sTamper->Trigger == RTC_TAMPERTRIGGER_RISINGEDGE) ||
-							       (sTamper->Trigger == RTC_TAMPERTRIGGER_FALLINGEDGE))));
+	assert_param(((sTamper->Filter != RTC_TAMPERFILTER_DISABLE) && ((sTamper->Trigger == RTC_TAMPERTRIGGER_LOWLEVEL) || (sTamper->Trigger == RTC_TAMPERTRIGGER_HIGHLEVEL))) ||
+		     ((sTamper->Filter == RTC_TAMPERFILTER_DISABLE) && ((sTamper->Trigger == RTC_TAMPERTRIGGER_RISINGEDGE) || (sTamper->Trigger == RTC_TAMPERTRIGGER_FALLINGEDGE))));
 
 	/* Configuration register 2 */
 	tmpreg = READ_REG(TAMP->CR2);
-	tmpreg &= ~((sTamper->Tamper << TAMP_CR2_TAMP1TRG_Pos) | (sTamper->Tamper << TAMP_CR2_TAMP1MSK_Pos) |
-		    (sTamper->Tamper << TAMP_CR2_TAMP1NOERASE_Pos));
+	tmpreg &= ~((sTamper->Tamper << TAMP_CR2_TAMP1TRG_Pos) | (sTamper->Tamper << TAMP_CR2_TAMP1MSK_Pos) | (sTamper->Tamper << TAMP_CR2_TAMP1NOERASE_Pos));
 
 	if ((sTamper->Trigger == RTC_TAMPERTRIGGER_HIGHLEVEL) || (sTamper->Trigger == RTC_TAMPERTRIGGER_FALLINGEDGE)) {
 		tmpreg |= (sTamper->Tamper << TAMP_CR2_TAMP1TRG_Pos);
@@ -1373,8 +1366,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper(RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef
 	WRITE_REG(TAMP->CR2, tmpreg);
 
 	/* Filter control register */
-	WRITE_REG(TAMP->FLTCR,
-		  (sTamper->Filter | sTamper->SamplingFrequency | sTamper->PrechargeDuration | sTamper->TamperPullUp));
+	WRITE_REG(TAMP->FLTCR, (sTamper->Filter | sTamper->SamplingFrequency | sTamper->PrechargeDuration | sTamper->TamperPullUp));
 
 	/* timestamp on tamper */
 	if (READ_BIT(hrtc->Instance->CR, RTC_CR_TAMPTS) != (sTamper->TimeStampOnTamperDetection)) {
@@ -1412,8 +1404,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper_IT(RTC_HandleTypeDef *hrtc, RTC_TamperType
 
 	/* Configuration register 2 */
 	tmpreg = READ_REG(TAMP->CR2);
-	tmpreg &= ~((sTamper->Tamper << TAMP_CR2_TAMP1TRG_Pos) | (sTamper->Tamper << TAMP_CR2_TAMP1MSK_Pos) |
-		    (sTamper->Tamper << TAMP_CR2_TAMP1NOERASE_Pos));
+	tmpreg &= ~((sTamper->Tamper << TAMP_CR2_TAMP1TRG_Pos) | (sTamper->Tamper << TAMP_CR2_TAMP1MSK_Pos) | (sTamper->Tamper << TAMP_CR2_TAMP1NOERASE_Pos));
 
 	if ((sTamper->Trigger == RTC_TAMPERTRIGGER_HIGHLEVEL) || (sTamper->Trigger == RTC_TAMPERTRIGGER_FALLINGEDGE)) {
 		tmpreg |= (sTamper->Tamper << TAMP_CR2_TAMP1TRG_Pos);
@@ -1429,8 +1420,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper_IT(RTC_HandleTypeDef *hrtc, RTC_TamperType
 	WRITE_REG(TAMP->CR2, tmpreg);
 
 	/* Filter control register */
-	WRITE_REG(TAMP->FLTCR,
-		  (sTamper->Filter | sTamper->SamplingFrequency | sTamper->PrechargeDuration | sTamper->TamperPullUp));
+	WRITE_REG(TAMP->FLTCR, (sTamper->Filter | sTamper->SamplingFrequency | sTamper->PrechargeDuration | sTamper->TamperPullUp));
 
 	/* timestamp on tamper */
 	if (READ_BIT(hrtc->Instance->CR, RTC_CR_TAMPTS) != sTamper->TimeStampOnTamperDetection) {
@@ -1472,8 +1462,7 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateTamper(RTC_HandleTypeDef *hrtc, uint32_t T
 	CLEAR_BIT(TAMP->CR1, Tamper);
 
 	/* Clear tamper mask/noerase/trigger configuration */
-	CLEAR_BIT(TAMP->CR2, ((Tamper << TAMP_CR2_TAMP1TRG_Pos) | (Tamper << TAMP_CR2_TAMP1MSK_Pos) |
-			      (Tamper << TAMP_CR2_TAMP1NOERASE_Pos)));
+	CLEAR_BIT(TAMP->CR2, ((Tamper << TAMP_CR2_TAMP1TRG_Pos) | (Tamper << TAMP_CR2_TAMP1MSK_Pos) | (Tamper << TAMP_CR2_TAMP1NOERASE_Pos)));
 
 	/* Clear tamper interrupt mode configuration */
 	CLEAR_BIT(TAMP->IER, Tamper);

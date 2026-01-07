@@ -137,8 +137,8 @@ typedef struct {
 #define HAL_DMAMUX_SYNC_NO_EVENT 0U			       /*!< block synchronization events */
 #define HAL_DMAMUX_SYNC_RISING ((uint32_t)DMAMUX_CxCR_SPOL_0)  /*!< synchronize with rising edge events */
 #define HAL_DMAMUX_SYNC_FALLING ((uint32_t)DMAMUX_CxCR_SPOL_1) /*!< synchronize with falling edge events */
-#define HAL_DMAMUX_SYNC_RISING_FALLING                                                                                 \
-	((uint32_t)DMAMUX_CxCR_SPOL) /*!< synchronize with rising and falling                                          \
+#define HAL_DMAMUX_SYNC_RISING_FALLING                                                                                                                                                                 \
+	((uint32_t)DMAMUX_CxCR_SPOL) /*!< synchronize with rising and falling                                                                                                                          \
 					edge events */
 
 /**
@@ -182,8 +182,8 @@ typedef struct {
 #define HAL_DMAMUX_REQ_GEN_NO_EVENT 0x00000000U	       /*!< block request generator events        */
 #define HAL_DMAMUX_REQ_GEN_RISING DMAMUX_RGxCR_GPOL_0  /*!< generate request on rising edge events */
 #define HAL_DMAMUX_REQ_GEN_FALLING DMAMUX_RGxCR_GPOL_1 /*!< generate request on falling edge events */
-#define HAL_DMAMUX_REQ_GEN_RISING_FALLING                                                                              \
-	DMAMUX_RGxCR_GPOL /*!< generate request on rising and falling edge                                             \
+#define HAL_DMAMUX_REQ_GEN_RISING_FALLING                                                                                                                                                              \
+	DMAMUX_RGxCR_GPOL /*!< generate request on rising and falling edge                                                                                                                             \
 			     events */
 
 /**
@@ -207,9 +207,7 @@ typedef struct {
  */
 
 /* ------------------------- REQUEST -----------------------------------------*/
-HAL_StatusTypeDef
-HAL_DMAEx_ConfigMuxRequestGenerator(DMA_HandleTypeDef *hdma,
-				    HAL_DMA_MuxRequestGeneratorConfigTypeDef *pRequestGeneratorConfig);
+HAL_StatusTypeDef HAL_DMAEx_ConfigMuxRequestGenerator(DMA_HandleTypeDef *hdma, HAL_DMA_MuxRequestGeneratorConfigTypeDef *pRequestGeneratorConfig);
 HAL_StatusTypeDef HAL_DMAEx_EnableMuxRequestGenerator(DMA_HandleTypeDef *hdma);
 HAL_StatusTypeDef HAL_DMAEx_DisableMuxRequestGenerator(DMA_HandleTypeDef *hdma);
 /* -------------------------------------------------------------------------- */
@@ -238,9 +236,8 @@ void HAL_DMAEx_MUX_IRQHandler(DMA_HandleTypeDef *hdma);
 
 #define IS_DMAMUX_SYNC_REQUEST_NUMBER(REQUEST_NUMBER) (((REQUEST_NUMBER) > 0U) && ((REQUEST_NUMBER) <= 32U))
 
-#define IS_DMAMUX_SYNC_POLARITY(POLARITY)                                                                              \
-	(((POLARITY) == HAL_DMAMUX_SYNC_NO_EVENT) || ((POLARITY) == HAL_DMAMUX_SYNC_RISING) ||                         \
-	 ((POLARITY) == HAL_DMAMUX_SYNC_FALLING) || ((POLARITY) == HAL_DMAMUX_SYNC_RISING_FALLING))
+#define IS_DMAMUX_SYNC_POLARITY(POLARITY)                                                                                                                                                              \
+	(((POLARITY) == HAL_DMAMUX_SYNC_NO_EVENT) || ((POLARITY) == HAL_DMAMUX_SYNC_RISING) || ((POLARITY) == HAL_DMAMUX_SYNC_FALLING) || ((POLARITY) == HAL_DMAMUX_SYNC_RISING_FALLING))
 
 #define IS_DMAMUX_SYNC_STATE(SYNC) (((SYNC) == DISABLE) || ((SYNC) == ENABLE))
 
@@ -250,9 +247,8 @@ void HAL_DMAEx_MUX_IRQHandler(DMA_HandleTypeDef *hdma);
 
 #define IS_DMAMUX_REQUEST_GEN_REQUEST_NUMBER(REQUEST_NUMBER) (((REQUEST_NUMBER) > 0U) && ((REQUEST_NUMBER) <= 32U))
 
-#define IS_DMAMUX_REQUEST_GEN_POLARITY(POLARITY)                                                                       \
-	(((POLARITY) == HAL_DMAMUX_REQ_GEN_NO_EVENT) || ((POLARITY) == HAL_DMAMUX_REQ_GEN_RISING) ||                   \
-	 ((POLARITY) == HAL_DMAMUX_REQ_GEN_FALLING) || ((POLARITY) == HAL_DMAMUX_REQ_GEN_RISING_FALLING))
+#define IS_DMAMUX_REQUEST_GEN_POLARITY(POLARITY)                                                                                                                                                       \
+	(((POLARITY) == HAL_DMAMUX_REQ_GEN_NO_EVENT) || ((POLARITY) == HAL_DMAMUX_REQ_GEN_RISING) || ((POLARITY) == HAL_DMAMUX_REQ_GEN_FALLING) || ((POLARITY) == HAL_DMAMUX_REQ_GEN_RISING_FALLING))
 
 /**
  * @}

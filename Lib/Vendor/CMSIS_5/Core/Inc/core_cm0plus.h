@@ -63,14 +63,14 @@ extern "C" {
 #include "cmsis_version.h"
 
 /*  CMSIS CM0+ definitions */
-#define __CM0PLUS_CMSIS_VERSION_MAIN                                                                                   \
-	(__CM_CMSIS_VERSION_MAIN) /*!< \deprecated [31:16] CMSIS HAL main                                              \
+#define __CM0PLUS_CMSIS_VERSION_MAIN                                                                                                                                                                   \
+	(__CM_CMSIS_VERSION_MAIN) /*!< \deprecated [31:16] CMSIS HAL main                                                                                                                              \
 				     version */
-#define __CM0PLUS_CMSIS_VERSION_SUB                                                                                    \
-	(__CM_CMSIS_VERSION_SUB) /*!< \deprecated [15:0]  CMSIS HAL sub                                                \
+#define __CM0PLUS_CMSIS_VERSION_SUB                                                                                                                                                                    \
+	(__CM_CMSIS_VERSION_SUB) /*!< \deprecated [15:0]  CMSIS HAL sub                                                                                                                                \
 				    version */
-#define __CM0PLUS_CMSIS_VERSION                                                                                        \
-	((__CM0PLUS_CMSIS_VERSION_MAIN << 16U) | __CM0PLUS_CMSIS_VERSION_SUB) /*!< \deprecated CMSIS HAL version       \
+#define __CM0PLUS_CMSIS_VERSION                                                                                                                                                                        \
+	((__CM0PLUS_CMSIS_VERSION_MAIN << 16U) | __CM0PLUS_CMSIS_VERSION_SUB) /*!< \deprecated CMSIS HAL version                                                                                       \
 										 number */
 
 #define __CORTEX_M (0U) /*!< Cortex-M Core */
@@ -300,8 +300,8 @@ typedef union {
 
 /* CONTROL Register Definitions */
 #define CONTROL_SPSEL_Pos 1U /*!< CONTROL: SPSEL Position */
-#define CONTROL_SPSEL_Msk                                                                                              \
-	(1UL << CONTROL_SPSEL_Pos) /*!< CONTROL: SPSEL Mask                                                            \
+#define CONTROL_SPSEL_Msk                                                                                                                                                                              \
+	(1UL << CONTROL_SPSEL_Pos) /*!< CONTROL: SPSEL Mask                                                                                                                                            \
 				    */
 
 #define CONTROL_nPRIV_Pos 0U				 /*!< CONTROL: nPRIV Position */
@@ -375,8 +375,8 @@ typedef struct {
 #define SCB_CPUID_VARIANT_Pos 20U			       /*!< SCB CPUID: VARIANT Position */
 #define SCB_CPUID_VARIANT_Msk (0xFUL << SCB_CPUID_VARIANT_Pos) /*!< SCB CPUID: VARIANT Mask */
 
-#define SCB_CPUID_ARCHITECTURE_Pos                                                                                     \
-	16U								 /*!< SCB CPUID: ARCHITECTURE Position         \
+#define SCB_CPUID_ARCHITECTURE_Pos                                                                                                                                                                     \
+	16U								 /*!< SCB CPUID: ARCHITECTURE Position                                                                                         \
 									  */
 #define SCB_CPUID_ARCHITECTURE_Msk (0xFUL << SCB_CPUID_ARCHITECTURE_Pos) /*!< SCB CPUID: ARCHITECTURE Mask */
 
@@ -409,13 +409,13 @@ typedef struct {
 #define SCB_ICSR_ISRPENDING_Msk (1UL << SCB_ICSR_ISRPENDING_Pos) /*!< SCB ICSR: ISRPENDING Mask */
 
 #define SCB_ICSR_VECTPENDING_Pos 12U /*!< SCB ICSR: VECTPENDING Position */
-#define SCB_ICSR_VECTPENDING_Msk                                                                                       \
-	(0x1FFUL << SCB_ICSR_VECTPENDING_Pos) /*!< SCB ICSR: VECTPENDING Mask                                          \
+#define SCB_ICSR_VECTPENDING_Msk                                                                                                                                                                       \
+	(0x1FFUL << SCB_ICSR_VECTPENDING_Pos) /*!< SCB ICSR: VECTPENDING Mask                                                                                                                          \
 					       */
 
 #define SCB_ICSR_VECTACTIVE_Pos 0U /*!< SCB ICSR: VECTACTIVE Position */
-#define SCB_ICSR_VECTACTIVE_Msk                                                                                        \
-	(0x1FFUL /*<< SCB_ICSR_VECTACTIVE_Pos*/) /*!< SCB ICSR: VECTACTIVE                                             \
+#define SCB_ICSR_VECTACTIVE_Msk                                                                                                                                                                        \
+	(0x1FFUL /*<< SCB_ICSR_VECTACTIVE_Pos*/) /*!< SCB ICSR: VECTACTIVE                                                                                                                             \
 						    Mask */
 
 #if defined(__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
@@ -437,8 +437,8 @@ typedef struct {
 #define SCB_AIRCR_SYSRESETREQ_Pos 2U				     /*!< SCB AIRCR: SYSRESETREQ Position */
 #define SCB_AIRCR_SYSRESETREQ_Msk (1UL << SCB_AIRCR_SYSRESETREQ_Pos) /*!< SCB AIRCR: SYSRESETREQ Mask */
 
-#define SCB_AIRCR_VECTCLRACTIVE_Pos                                                                                    \
-	1U								 /*!< SCB AIRCR: VECTCLRACTIVE Position        \
+#define SCB_AIRCR_VECTCLRACTIVE_Pos                                                                                                                                                                    \
+	1U								 /*!< SCB AIRCR: VECTCLRACTIVE Position                                                                                        \
 									  */
 #define SCB_AIRCR_VECTCLRACTIVE_Msk (1UL << SCB_AIRCR_VECTCLRACTIVE_Pos) /*!< SCB AIRCR: VECTCLRACTIVE Mask */
 
@@ -460,11 +460,11 @@ typedef struct {
 #define SCB_CCR_UNALIGN_TRP_Msk (1UL << SCB_CCR_UNALIGN_TRP_Pos) /*!< SCB CCR: UNALIGN_TRP Mask */
 
 /* SCB System Handler Control and State Register Definitions */
-#define SCB_SHCSR_SVCALLPENDED_Pos                                                                                     \
-	15U /*!< SCB SHCSR: SVCALLPENDED Position                                                                      \
+#define SCB_SHCSR_SVCALLPENDED_Pos                                                                                                                                                                     \
+	15U /*!< SCB SHCSR: SVCALLPENDED Position                                                                                                                                                      \
 	     */
-#define SCB_SHCSR_SVCALLPENDED_Msk                                                                                     \
-	(1UL << SCB_SHCSR_SVCALLPENDED_Pos) /*!< SCB SHCSR: SVCALLPENDED Mask                                          \
+#define SCB_SHCSR_SVCALLPENDED_Msk                                                                                                                                                                     \
+	(1UL << SCB_SHCSR_SVCALLPENDED_Pos) /*!< SCB SHCSR: SVCALLPENDED Mask                                                                                                                          \
 					     */
 
 /*@} end of group CMSIS_SCB */
@@ -488,16 +488,16 @@ typedef struct {
 } SysTick_Type;
 
 /* SysTick Control / Status Register Definitions */
-#define SysTick_CTRL_COUNTFLAG_Pos                                                                                     \
-	16U /*!< SysTick CTRL: COUNTFLAG Position                                                                      \
+#define SysTick_CTRL_COUNTFLAG_Pos                                                                                                                                                                     \
+	16U /*!< SysTick CTRL: COUNTFLAG Position                                                                                                                                                      \
 	     */
-#define SysTick_CTRL_COUNTFLAG_Msk                                                                                     \
-	(1UL << SysTick_CTRL_COUNTFLAG_Pos) /*!< SysTick CTRL: COUNTFLAG Mask                                          \
+#define SysTick_CTRL_COUNTFLAG_Msk                                                                                                                                                                     \
+	(1UL << SysTick_CTRL_COUNTFLAG_Pos) /*!< SysTick CTRL: COUNTFLAG Mask                                                                                                                          \
 					     */
 
 #define SysTick_CTRL_CLKSOURCE_Pos 2U /*!< SysTick CTRL: CLKSOURCE Position */
-#define SysTick_CTRL_CLKSOURCE_Msk                                                                                     \
-	(1UL << SysTick_CTRL_CLKSOURCE_Pos) /*!< SysTick CTRL: CLKSOURCE Mask                                          \
+#define SysTick_CTRL_CLKSOURCE_Msk                                                                                                                                                                     \
+	(1UL << SysTick_CTRL_CLKSOURCE_Pos) /*!< SysTick CTRL: CLKSOURCE Mask                                                                                                                          \
 					     */
 
 #define SysTick_CTRL_TICKINT_Pos 1U				   /*!< SysTick CTRL: TICKINT Position */
@@ -508,14 +508,14 @@ typedef struct {
 
 /* SysTick Reload Register Definitions */
 #define SysTick_LOAD_RELOAD_Pos 0U /*!< SysTick LOAD: RELOAD Position */
-#define SysTick_LOAD_RELOAD_Msk                                                                                        \
-	(0xFFFFFFUL /*<< SysTick_LOAD_RELOAD_Pos*/) /*!< SysTick LOAD: RELOAD                                          \
+#define SysTick_LOAD_RELOAD_Msk                                                                                                                                                                        \
+	(0xFFFFFFUL /*<< SysTick_LOAD_RELOAD_Pos*/) /*!< SysTick LOAD: RELOAD                                                                                                                          \
 						       Mask */
 
 /* SysTick Current Register Definitions */
 #define SysTick_VAL_CURRENT_Pos 0U /*!< SysTick VAL: CURRENT Position */
-#define SysTick_VAL_CURRENT_Msk                                                                                        \
-	(0xFFFFFFUL /*<< SysTick_VAL_CURRENT_Pos*/) /*!< SysTick VAL: CURRENT                                          \
+#define SysTick_VAL_CURRENT_Msk                                                                                                                                                                        \
+	(0xFFFFFFUL /*<< SysTick_VAL_CURRENT_Pos*/) /*!< SysTick VAL: CURRENT                                                                                                                          \
 						       Mask */
 
 /* SysTick Calibration Register Definitions */
@@ -526,8 +526,8 @@ typedef struct {
 #define SysTick_CALIB_SKEW_Msk (1UL << SysTick_CALIB_SKEW_Pos) /*!< SysTick CALIB: SKEW Mask */
 
 #define SysTick_CALIB_TENMS_Pos 0U /*!< SysTick CALIB: TENMS Position */
-#define SysTick_CALIB_TENMS_Msk                                                                                        \
-	(0xFFFFFFUL /*<< SysTick_CALIB_TENMS_Pos*/) /*!< SysTick CALIB: TENMS                                          \
+#define SysTick_CALIB_TENMS_Msk                                                                                                                                                                        \
+	(0xFFFFFFUL /*<< SysTick_CALIB_TENMS_Pos*/) /*!< SysTick CALIB: TENMS                                                                                                                          \
 						       Mask */
 
 /*@} end of group CMSIS_SysTick */
@@ -590,13 +590,13 @@ typedef struct {
 
 /* MPU Region Attribute and Size Register Definitions */
 #define MPU_RASR_ATTRS_Pos 16U /*!< MPU RASR: MPU Region Attribute field Position */
-#define MPU_RASR_ATTRS_Msk                                                                                             \
-	(0xFFFFUL << MPU_RASR_ATTRS_Pos) /*!< MPU RASR: MPU Region Attribute                                           \
+#define MPU_RASR_ATTRS_Msk                                                                                                                                                                             \
+	(0xFFFFUL << MPU_RASR_ATTRS_Pos) /*!< MPU RASR: MPU Region Attribute                                                                                                                           \
 					    field Mask */
 
 #define MPU_RASR_XN_Pos 28U /*!< MPU RASR: ATTRS.XN Position */
-#define MPU_RASR_XN_Msk                                                                                                \
-	(1UL << MPU_RASR_XN_Pos) /*!< MPU RASR: ATTRS.XN Mask                                                          \
+#define MPU_RASR_XN_Msk                                                                                                                                                                                \
+	(1UL << MPU_RASR_XN_Pos) /*!< MPU RASR: ATTRS.XN Mask                                                                                                                                          \
 				  */
 
 #define MPU_RASR_AP_Pos 24U			   /*!< MPU RASR: ATTRS.AP Position */
@@ -621,8 +621,8 @@ typedef struct {
 #define MPU_RASR_SIZE_Msk (0x1FUL << MPU_RASR_SIZE_Pos) /*!< MPU RASR: Region Size Field Mask */
 
 #define MPU_RASR_ENABLE_Pos 0U /*!< MPU RASR: Region enable bit Position */
-#define MPU_RASR_ENABLE_Msk                                                                                            \
-	(1UL /*<< MPU_RASR_ENABLE_Pos*/) /*!< MPU RASR: Region enable bit                                              \
+#define MPU_RASR_ENABLE_Msk                                                                                                                                                                            \
+	(1UL /*<< MPU_RASR_ENABLE_Pos*/) /*!< MPU RASR: Region enable bit                                                                                                                              \
 					    Disable Mask */
 
 /*@} end of group CMSIS_MPU */
@@ -674,8 +674,8 @@ typedef struct {
 #define SCS_BASE (0xE000E000UL)		   /*!< System Control Space Base Address */
 #define SysTick_BASE (SCS_BASE + 0x0010UL) /*!< SysTick Base Address */
 #define NVIC_BASE (SCS_BASE + 0x0100UL)	   /*!< NVIC Base Address */
-#define SCB_BASE                                                                                                       \
-	(SCS_BASE + 0x0D00UL) /*!< System Control Block Base Address                                                   \
+#define SCB_BASE                                                                                                                                                                                       \
+	(SCS_BASE + 0x0D00UL) /*!< System Control Block Base Address                                                                                                                                   \
 			       */
 
 #define SCB ((SCB_Type *)SCB_BASE)	       /*!< SCB configuration struct */
@@ -858,13 +858,9 @@ __STATIC_INLINE void __NVIC_ClearPendingIRQ(IRQn_Type IRQn)
 __STATIC_INLINE void __NVIC_SetPriority(IRQn_Type IRQn, uint32_t priority)
 {
 	if ((int32_t)(IRQn) >= 0) {
-		NVIC->IP[_IP_IDX(IRQn)] =
-		    ((uint32_t)(NVIC->IP[_IP_IDX(IRQn)] & ~(0xFFUL << _BIT_SHIFT(IRQn))) |
-		     (((priority << (8U - __NVIC_PRIO_BITS)) & (uint32_t)0xFFUL) << _BIT_SHIFT(IRQn)));
+		NVIC->IP[_IP_IDX(IRQn)] = ((uint32_t)(NVIC->IP[_IP_IDX(IRQn)] & ~(0xFFUL << _BIT_SHIFT(IRQn))) | (((priority << (8U - __NVIC_PRIO_BITS)) & (uint32_t)0xFFUL) << _BIT_SHIFT(IRQn)));
 	} else {
-		SCB->SHP[_SHP_IDX(IRQn)] =
-		    ((uint32_t)(SCB->SHP[_SHP_IDX(IRQn)] & ~(0xFFUL << _BIT_SHIFT(IRQn))) |
-		     (((priority << (8U - __NVIC_PRIO_BITS)) & (uint32_t)0xFFUL) << _BIT_SHIFT(IRQn)));
+		SCB->SHP[_SHP_IDX(IRQn)] = ((uint32_t)(SCB->SHP[_SHP_IDX(IRQn)] & ~(0xFFUL << _BIT_SHIFT(IRQn))) | (((priority << (8U - __NVIC_PRIO_BITS)) & (uint32_t)0xFFUL) << _BIT_SHIFT(IRQn)));
 	}
 }
 
@@ -880,11 +876,9 @@ __STATIC_INLINE uint32_t __NVIC_GetPriority(IRQn_Type IRQn)
 {
 
 	if ((int32_t)(IRQn) >= 0) {
-		return ((uint32_t)(((NVIC->IP[_IP_IDX(IRQn)] >> _BIT_SHIFT(IRQn)) & (uint32_t)0xFFUL) >>
-				   (8U - __NVIC_PRIO_BITS)));
+		return ((uint32_t)(((NVIC->IP[_IP_IDX(IRQn)] >> _BIT_SHIFT(IRQn)) & (uint32_t)0xFFUL) >> (8U - __NVIC_PRIO_BITS)));
 	} else {
-		return ((uint32_t)(((SCB->SHP[_SHP_IDX(IRQn)] >> _BIT_SHIFT(IRQn)) & (uint32_t)0xFFUL) >>
-				   (8U - __NVIC_PRIO_BITS)));
+		return ((uint32_t)(((SCB->SHP[_SHP_IDX(IRQn)] >> _BIT_SHIFT(IRQn)) & (uint32_t)0xFFUL) >> (8U - __NVIC_PRIO_BITS)));
 	}
 }
 
@@ -905,15 +899,10 @@ __STATIC_INLINE uint32_t NVIC_EncodePriority(uint32_t PriorityGroup, uint32_t Pr
 	uint32_t PreemptPriorityBits;
 	uint32_t SubPriorityBits;
 
-	PreemptPriorityBits = ((7UL - PriorityGroupTmp) > (uint32_t)(__NVIC_PRIO_BITS))
-				  ? (uint32_t)(__NVIC_PRIO_BITS)
-				  : (uint32_t)(7UL - PriorityGroupTmp);
-	SubPriorityBits = ((PriorityGroupTmp + (uint32_t)(__NVIC_PRIO_BITS)) < (uint32_t)7UL)
-			      ? (uint32_t)0UL
-			      : (uint32_t)((PriorityGroupTmp - 7UL) + (uint32_t)(__NVIC_PRIO_BITS));
+	PreemptPriorityBits = ((7UL - PriorityGroupTmp) > (uint32_t)(__NVIC_PRIO_BITS)) ? (uint32_t)(__NVIC_PRIO_BITS) : (uint32_t)(7UL - PriorityGroupTmp);
+	SubPriorityBits = ((PriorityGroupTmp + (uint32_t)(__NVIC_PRIO_BITS)) < (uint32_t)7UL) ? (uint32_t)0UL : (uint32_t)((PriorityGroupTmp - 7UL) + (uint32_t)(__NVIC_PRIO_BITS));
 
-	return (((PreemptPriority & (uint32_t)((1UL << (PreemptPriorityBits)) - 1UL)) << SubPriorityBits) |
-		((SubPriority & (uint32_t)((1UL << (SubPriorityBits)) - 1UL))));
+	return (((PreemptPriority & (uint32_t)((1UL << (PreemptPriorityBits)) - 1UL)) << SubPriorityBits) | ((SubPriority & (uint32_t)((1UL << (SubPriorityBits)) - 1UL))));
 }
 
 /**
@@ -928,19 +917,14 @@ __STATIC_INLINE uint32_t NVIC_EncodePriority(uint32_t PriorityGroup, uint32_t Pr
   (starting from 0). \param [out]     pSubPriority  Subpriority value (starting
   from 0).
  */
-__STATIC_INLINE void NVIC_DecodePriority(uint32_t Priority, uint32_t PriorityGroup, uint32_t *const pPreemptPriority,
-					 uint32_t *const pSubPriority)
+__STATIC_INLINE void NVIC_DecodePriority(uint32_t Priority, uint32_t PriorityGroup, uint32_t *const pPreemptPriority, uint32_t *const pSubPriority)
 {
 	uint32_t PriorityGroupTmp = (PriorityGroup & (uint32_t)0x07UL); /* only values 0..7 are used */
 	uint32_t PreemptPriorityBits;
 	uint32_t SubPriorityBits;
 
-	PreemptPriorityBits = ((7UL - PriorityGroupTmp) > (uint32_t)(__NVIC_PRIO_BITS))
-				  ? (uint32_t)(__NVIC_PRIO_BITS)
-				  : (uint32_t)(7UL - PriorityGroupTmp);
-	SubPriorityBits = ((PriorityGroupTmp + (uint32_t)(__NVIC_PRIO_BITS)) < (uint32_t)7UL)
-			      ? (uint32_t)0UL
-			      : (uint32_t)((PriorityGroupTmp - 7UL) + (uint32_t)(__NVIC_PRIO_BITS));
+	PreemptPriorityBits = ((7UL - PriorityGroupTmp) > (uint32_t)(__NVIC_PRIO_BITS)) ? (uint32_t)(__NVIC_PRIO_BITS) : (uint32_t)(7UL - PriorityGroupTmp);
+	SubPriorityBits = ((PriorityGroupTmp + (uint32_t)(__NVIC_PRIO_BITS)) < (uint32_t)7UL) ? (uint32_t)0UL : (uint32_t)((PriorityGroupTmp - 7UL) + (uint32_t)(__NVIC_PRIO_BITS));
 
 	*pPreemptPriority = (Priority >> SubPriorityBits) & (uint32_t)((1UL << (PreemptPriorityBits)) - 1UL);
 	*pSubPriority = (Priority) & (uint32_t)((1UL << (SubPriorityBits)) - 1UL);
@@ -1065,12 +1049,11 @@ __STATIC_INLINE uint32_t SysTick_Config(uint32_t ticks)
 		return (1UL); /* Reload value impossible */
 	}
 
-	SysTick->LOAD = (uint32_t)(ticks - 1UL);			 /* set reload register */
-	NVIC_SetPriority(SysTick_IRQn, (1UL << __NVIC_PRIO_BITS) - 1UL); /* set Priority for Systick Interrupt */
-	SysTick->VAL = 0UL;						 /* Load the SysTick Counter Value */
-	SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_TICKINT_Msk |
-			SysTick_CTRL_ENABLE_Msk; /* Enable SysTick IRQ and SysTick Timer */
-	return (0UL);				 /* Function successful */
+	SysTick->LOAD = (uint32_t)(ticks - 1UL);							 /* set reload register */
+	NVIC_SetPriority(SysTick_IRQn, (1UL << __NVIC_PRIO_BITS) - 1UL);				 /* set Priority for Systick Interrupt */
+	SysTick->VAL = 0UL;										 /* Load the SysTick Counter Value */
+	SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk; /* Enable SysTick IRQ and SysTick Timer */
+	return (0UL);											 /* Function successful */
 }
 
 #endif

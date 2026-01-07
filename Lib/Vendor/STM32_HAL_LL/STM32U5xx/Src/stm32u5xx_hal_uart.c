@@ -184,17 +184,15 @@
 /** @defgroup UART_Private_Constants UART Private Constants
  * @{
  */
-#define USART_CR1_FIELDS                                                                                               \
-	((uint32_t)(USART_CR1_M | USART_CR1_PCE | USART_CR1_PS | USART_CR1_TE | USART_CR1_RE | USART_CR1_OVER8 |       \
-		    USART_CR1_FIFOEN)) /*!< UART or USART CR1 fields of                                                \
-					  parameters set by UART_SetConfig API                                         \
-					*/
+#define USART_CR1_FIELDS                                                                                                                                                                               \
+	((uint32_t)(USART_CR1_M | USART_CR1_PCE | USART_CR1_PS | USART_CR1_TE | USART_CR1_RE | USART_CR1_OVER8 | USART_CR1_FIFOEN)) /*!< UART or USART CR1 fields of                                   \
+																       parameters set by UART_SetConfig API                            \
+																     */
 
-#define USART_CR3_FIELDS                                                                                               \
-	((uint32_t)(USART_CR3_RTSE | USART_CR3_CTSE | USART_CR3_ONEBIT | USART_CR3_TXFTCFG |                           \
-		    USART_CR3_RXFTCFG)) /*!< UART or USART CR3 fields of                                               \
-					   parameters set by UART_SetConfig                                            \
-					   API */
+#define USART_CR3_FIELDS                                                                                                                                                                               \
+	((uint32_t)(USART_CR3_RTSE | USART_CR3_CTSE | USART_CR3_ONEBIT | USART_CR3_TXFTCFG | USART_CR3_RXFTCFG)) /*!< UART or USART CR3 fields of                                                      \
+														    parameters set by UART_SetConfig                                                   \
+														    API */
 
 #define LPUART_BRR_MIN 0x00000300U /* LPUART BRR minimum authorized value */
 #define LPUART_BRR_MAX 0x000FFFFFU /* LPUART BRR maximum authorized value */
@@ -730,8 +728,7 @@ __weak void HAL_UART_MspDeInit(UART_HandleTypeDef *huart)
  * @param  pCallback pointer to the Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_UART_RegisterCallback(UART_HandleTypeDef *huart, HAL_UART_CallbackIDTypeDef CallbackID,
-					    pUART_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_UART_RegisterCallback(UART_HandleTypeDef *huart, HAL_UART_CallbackIDTypeDef CallbackID, pUART_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -893,19 +890,17 @@ HAL_StatusTypeDef HAL_UART_UnRegisterCallback(UART_HandleTypeDef *huart, HAL_UAR
 				break;
 
 			case HAL_UART_ABORT_TRANSMIT_COMPLETE_CB_ID:
-				huart->AbortTransmitCpltCallback =
-				    HAL_UART_AbortTransmitCpltCallback; /* Legacy
-									   weak
-									   AbortTransmitCpltCallback
-									 */
+				huart->AbortTransmitCpltCallback = HAL_UART_AbortTransmitCpltCallback; /* Legacy
+													  weak
+													  AbortTransmitCpltCallback
+													*/
 				break;
 
 			case HAL_UART_ABORT_RECEIVE_COMPLETE_CB_ID:
-				huart->AbortReceiveCpltCallback =
-				    HAL_UART_AbortReceiveCpltCallback; /* Legacy
-									  weak
-									  AbortReceiveCpltCallback
-									*/
+				huart->AbortReceiveCpltCallback = HAL_UART_AbortReceiveCpltCallback; /* Legacy
+													weak
+													AbortReceiveCpltCallback
+												      */
 				break;
 
 			case HAL_UART_RX_FIFO_FULL_CB_ID:
@@ -1317,8 +1312,7 @@ HAL_StatusTypeDef HAL_UART_Transmit_IT(UART_HandleTypeDef *huart, const uint8_t 
 		if (huart->FifoMode == UART_FIFOMODE_ENABLE) {
 			/* Set the Tx ISR function pointer according to the data
 			 * word length */
-			if ((huart->Init.WordLength == UART_WORDLENGTH_9B) &&
-			    (huart->Init.Parity == UART_PARITY_NONE)) {
+			if ((huart->Init.WordLength == UART_WORDLENGTH_9B) && (huart->Init.Parity == UART_PARITY_NONE)) {
 				huart->TxISR = UART_TxISR_16BIT_FIFOEN;
 			} else {
 				huart->TxISR = UART_TxISR_8BIT_FIFOEN;
@@ -1329,8 +1323,7 @@ HAL_StatusTypeDef HAL_UART_Transmit_IT(UART_HandleTypeDef *huart, const uint8_t 
 		} else {
 			/* Set the Tx ISR function pointer according to the data
 			 * word length */
-			if ((huart->Init.WordLength == UART_WORDLENGTH_9B) &&
-			    (huart->Init.Parity == UART_PARITY_NONE)) {
+			if ((huart->Init.WordLength == UART_WORDLENGTH_9B) && (huart->Init.Parity == UART_PARITY_NONE)) {
 				huart->TxISR = UART_TxISR_16BIT;
 			} else {
 				huart->TxISR = UART_TxISR_8BIT;
@@ -1440,26 +1433,21 @@ HAL_StatusTypeDef HAL_UART_Transmit_DMA(UART_HandleTypeDef *huart, const uint8_t
 			   provided as input parameter should be aligned on a
 			   u16 frontier, so nbByte should be equal to Size * 2
 			 */
-			if ((huart->Init.WordLength == UART_WORDLENGTH_9B) &&
-			    (huart->Init.Parity == UART_PARITY_NONE)) {
+			if ((huart->Init.WordLength == UART_WORDLENGTH_9B) && (huart->Init.Parity == UART_PARITY_NONE)) {
 				nbByte = Size * 2U;
 			}
 
 			/* Check linked list mode */
 			if ((huart->hdmatx->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
-				if ((huart->hdmatx->LinkedListQueue != NULL) &&
-				    (huart->hdmatx->LinkedListQueue->Head != NULL)) {
+				if ((huart->hdmatx->LinkedListQueue != NULL) && (huart->hdmatx->LinkedListQueue->Head != NULL)) {
 					/* Set DMA data size */
-					huart->hdmatx->LinkedListQueue->Head->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] =
-					    nbByte;
+					huart->hdmatx->LinkedListQueue->Head->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] = nbByte;
 
 					/* Set DMA source address */
-					huart->hdmatx->LinkedListQueue->Head->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] =
-					    (uint32_t)huart->pTxBuffPtr;
+					huart->hdmatx->LinkedListQueue->Head->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] = (uint32_t)huart->pTxBuffPtr;
 
 					/* Set DMA destination address */
-					huart->hdmatx->LinkedListQueue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] =
-					    (uint32_t)&huart->Instance->TDR;
+					huart->hdmatx->LinkedListQueue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] = (uint32_t)&huart->Instance->TDR;
 
 					/* Enable the UART transmit DMA channel
 					 */
@@ -1470,8 +1458,7 @@ HAL_StatusTypeDef HAL_UART_Transmit_DMA(UART_HandleTypeDef *huart, const uint8_t
 				}
 			} else {
 				/* Enable the UART transmit DMA channel */
-				status = HAL_DMA_Start_IT(huart->hdmatx, (uint32_t)huart->pTxBuffPtr,
-							  (uint32_t)&huart->Instance->TDR, nbByte);
+				status = HAL_DMA_Start_IT(huart->hdmatx, (uint32_t)huart->pTxBuffPtr, (uint32_t)&huart->Instance->TDR, nbByte);
 			}
 
 			if (status != HAL_OK) {
@@ -1716,8 +1703,7 @@ HAL_StatusTypeDef HAL_UART_Abort(UART_HandleTypeDef *huart)
 {
 	/* Disable TXE, TC, RXNE, PE, RXFT, TXFT and ERR (Frame error, noise
 	 * error, overrun error) interrupts */
-	ATOMIC_CLEAR_BIT(huart->Instance->CR1,
-			 (USART_CR1_RXNEIE_RXFNEIE | USART_CR1_PEIE | USART_CR1_TXEIE_TXFNFIE | USART_CR1_TCIE));
+	ATOMIC_CLEAR_BIT(huart->Instance->CR1, (USART_CR1_RXNEIE_RXFNEIE | USART_CR1_PEIE | USART_CR1_TXEIE_TXFNFIE | USART_CR1_TCIE));
 	ATOMIC_CLEAR_BIT(huart->Instance->CR3, USART_CR3_EIE | USART_CR3_RXFTIE | USART_CR3_TXFTIE);
 
 	/* If Reception till IDLE event was ongoing, disable IDLEIE interrupt */
@@ -1959,8 +1945,7 @@ HAL_StatusTypeDef HAL_UART_Abort_IT(UART_HandleTypeDef *huart)
 	uint32_t abortcplt = 1U;
 
 	/* Disable interrupts */
-	ATOMIC_CLEAR_BIT(huart->Instance->CR1,
-			 (USART_CR1_PEIE | USART_CR1_TCIE | USART_CR1_RXNEIE_RXFNEIE | USART_CR1_TXEIE_TXFNFIE));
+	ATOMIC_CLEAR_BIT(huart->Instance->CR1, (USART_CR1_PEIE | USART_CR1_TCIE | USART_CR1_RXNEIE_RXFNEIE | USART_CR1_TXEIE_TXFNFIE));
 	ATOMIC_CLEAR_BIT(huart->Instance->CR3, (USART_CR3_EIE | USART_CR3_RXFTIE | USART_CR3_TXFTIE));
 
 	/* If Reception till IDLE event was ongoing, disable IDLEIE interrupt */
@@ -2244,8 +2229,7 @@ HAL_StatusTypeDef HAL_UART_AbortReceive_IT(UART_HandleTypeDef *huart)
 			huart->pRxBuffPtr = NULL;
 
 			/* Clear the Error flags in the ICR register */
-			__HAL_UART_CLEAR_FLAG(huart,
-					      UART_CLEAR_OREF | UART_CLEAR_NEF | UART_CLEAR_PEF | UART_CLEAR_FEF);
+			__HAL_UART_CLEAR_FLAG(huart, UART_CLEAR_OREF | UART_CLEAR_NEF | UART_CLEAR_PEF | UART_CLEAR_FEF);
 
 			/* Discard the received data */
 			__HAL_UART_SEND_REQ(huart, UART_RXDATA_FLUSH_REQUEST);
@@ -2309,13 +2293,11 @@ void HAL_UART_IRQHandler(UART_HandleTypeDef *huart)
 	uint32_t errorcode;
 
 	/* If no error occurs */
-	errorflags =
-	    (isrflags & (uint32_t)(USART_ISR_PE | USART_ISR_FE | USART_ISR_ORE | USART_ISR_NE | USART_ISR_RTOF));
+	errorflags = (isrflags & (uint32_t)(USART_ISR_PE | USART_ISR_FE | USART_ISR_ORE | USART_ISR_NE | USART_ISR_RTOF));
 	if (errorflags == 0U) {
 		/* UART in mode Receiver
 		 * ---------------------------------------------------*/
-		if (((isrflags & USART_ISR_RXNE_RXFNE) != 0U) &&
-		    (((cr1its & USART_CR1_RXNEIE_RXFNEIE) != 0U) || ((cr3its & USART_CR3_RXFTIE) != 0U))) {
+		if (((isrflags & USART_ISR_RXNE_RXFNE) != 0U) && (((cr1its & USART_CR1_RXNEIE_RXFNEIE) != 0U) || ((cr3its & USART_CR3_RXFTIE) != 0U))) {
 			if (huart->RxISR != NULL) {
 				huart->RxISR(huart);
 			}
@@ -2324,9 +2306,7 @@ void HAL_UART_IRQHandler(UART_HandleTypeDef *huart)
 	}
 
 	/* If some errors occur */
-	if ((errorflags != 0U) &&
-	    ((((cr3its & (USART_CR3_RXFTIE | USART_CR3_EIE)) != 0U) ||
-	      ((cr1its & (USART_CR1_RXNEIE_RXFNEIE | USART_CR1_PEIE | USART_CR1_RTOIE)) != 0U)))) {
+	if ((errorflags != 0U) && ((((cr3its & (USART_CR3_RXFTIE | USART_CR3_EIE)) != 0U) || ((cr1its & (USART_CR1_RXNEIE_RXFNEIE | USART_CR1_PEIE | USART_CR1_RTOIE)) != 0U)))) {
 		/* UART parity error interrupt occurred
 		 * -------------------------------------*/
 		if (((isrflags & USART_ISR_PE) != 0U) && ((cr1its & USART_CR1_PEIE) != 0U)) {
@@ -2353,8 +2333,7 @@ void HAL_UART_IRQHandler(UART_HandleTypeDef *huart)
 
 		/* UART Over-Run interrupt occurred
 		 * -----------------------------------------*/
-		if (((isrflags & USART_ISR_ORE) != 0U) && (((cr1its & USART_CR1_RXNEIE_RXFNEIE) != 0U) ||
-							   ((cr3its & (USART_CR3_RXFTIE | USART_CR3_EIE)) != 0U))) {
+		if (((isrflags & USART_ISR_ORE) != 0U) && (((cr1its & USART_CR1_RXNEIE_RXFNEIE) != 0U) || ((cr3its & (USART_CR3_RXFTIE | USART_CR3_EIE)) != 0U))) {
 			__HAL_UART_CLEAR_FLAG(huart, UART_CLEAR_OREF);
 
 			huart->ErrorCode |= HAL_UART_ERROR_ORE;
@@ -2373,8 +2352,7 @@ void HAL_UART_IRQHandler(UART_HandleTypeDef *huart)
 		if (huart->ErrorCode != HAL_UART_ERROR_NONE) {
 			/* UART in mode Receiver
 			 * --------------------------------------------------*/
-			if (((isrflags & USART_ISR_RXNE_RXFNE) != 0U) &&
-			    (((cr1its & USART_CR1_RXNEIE_RXFNEIE) != 0U) || ((cr3its & USART_CR3_RXFTIE) != 0U))) {
+			if (((isrflags & USART_ISR_RXNE_RXFNE) != 0U) && (((cr1its & USART_CR1_RXNEIE_RXFNEIE) != 0U) || ((cr3its & USART_CR3_RXFTIE) != 0U))) {
 				if (huart->RxISR != NULL) {
 					huart->RxISR(huart);
 				}
@@ -2386,8 +2364,7 @@ void HAL_UART_IRQHandler(UART_HandleTypeDef *huart)
 			    - any error occurs in DMA mode reception
 			*/
 			errorcode = huart->ErrorCode;
-			if ((HAL_IS_BIT_SET(huart->Instance->CR3, USART_CR3_DMAR)) ||
-			    ((errorcode & (HAL_UART_ERROR_RTO | HAL_UART_ERROR_ORE)) != 0U)) {
+			if ((HAL_IS_BIT_SET(huart->Instance->CR3, USART_CR3_DMAR)) || ((errorcode & (HAL_UART_ERROR_RTO | HAL_UART_ERROR_ORE)) != 0U)) {
 				/* Blocking error : transfer is aborted
 				   Set the UART state ready to be able to start
 				   again the process, Disable Rx Interrupts, and
@@ -2463,8 +2440,7 @@ void HAL_UART_IRQHandler(UART_HandleTypeDef *huart)
 
 	/* Check current reception Mode :
 	   If Reception till IDLE event has been selected : */
-	if ((huart->ReceptionType == HAL_UART_RECEPTION_TOIDLE) && ((isrflags & USART_ISR_IDLE) != 0U) &&
-	    ((cr1its & USART_ISR_IDLE) != 0U)) {
+	if ((huart->ReceptionType == HAL_UART_RECEPTION_TOIDLE) && ((isrflags & USART_ISR_IDLE) != 0U) && ((cr1its & USART_ISR_IDLE) != 0U)) {
 		__HAL_UART_CLEAR_FLAG(huart, UART_CLEAR_IDLEF);
 
 #if defined(HAL_DMA_MODULE_ENABLED)
@@ -2596,8 +2572,7 @@ void HAL_UART_IRQHandler(UART_HandleTypeDef *huart)
 
 	/* UART in mode Transmitter
 	 * ------------------------------------------------*/
-	if (((isrflags & USART_ISR_TXE_TXFNF) != 0U) &&
-	    (((cr1its & USART_CR1_TXEIE_TXFNFIE) != 0U) || ((cr3its & USART_CR3_TXFTIE) != 0U))) {
+	if (((isrflags & USART_ISR_TXE_TXFNF) != 0U) && (((cr1its & USART_CR1_TXEIE_TXFNFIE) != 0U) || ((cr3its & USART_CR3_TXFTIE) != 0U))) {
 		if (huart->TxISR != NULL) {
 			huart->TxISR(huart);
 		}
@@ -3093,12 +3068,12 @@ uint32_t HAL_UART_GetError(const UART_HandleTypeDef *huart) { return huart->Erro
 void UART_InitCallbacksToDefault(UART_HandleTypeDef *huart)
 {
 	/* Init the UART Callback settings */
-	huart->TxHalfCpltCallback = HAL_UART_TxHalfCpltCallback; /* Legacy weak TxHalfCpltCallback */
-	huart->TxCpltCallback = HAL_UART_TxCpltCallback;	 /* Legacy weak TxCpltCallback            */
-	huart->RxHalfCpltCallback = HAL_UART_RxHalfCpltCallback; /* Legacy weak RxHalfCpltCallback */
-	huart->RxCpltCallback = HAL_UART_RxCpltCallback;	 /* Legacy weak RxCpltCallback            */
-	huart->ErrorCallback = HAL_UART_ErrorCallback;		 /* Legacy weak ErrorCallback             */
-	huart->AbortCpltCallback = HAL_UART_AbortCpltCallback;	 /* Legacy weak AbortCpltCallback */
+	huart->TxHalfCpltCallback = HAL_UART_TxHalfCpltCallback;	       /* Legacy weak TxHalfCpltCallback */
+	huart->TxCpltCallback = HAL_UART_TxCpltCallback;		       /* Legacy weak TxCpltCallback            */
+	huart->RxHalfCpltCallback = HAL_UART_RxHalfCpltCallback;	       /* Legacy weak RxHalfCpltCallback */
+	huart->RxCpltCallback = HAL_UART_RxCpltCallback;		       /* Legacy weak RxCpltCallback            */
+	huart->ErrorCallback = HAL_UART_ErrorCallback;			       /* Legacy weak ErrorCallback             */
+	huart->AbortCpltCallback = HAL_UART_AbortCpltCallback;		       /* Legacy weak AbortCpltCallback */
 	huart->AbortTransmitCpltCallback = HAL_UART_AbortTransmitCpltCallback; /* Legacy weak
 										  AbortTransmitCpltCallback */
 	huart->AbortReceiveCpltCallback = HAL_UART_AbortReceiveCpltCallback;   /* Legacy weak
@@ -3195,15 +3170,13 @@ HAL_StatusTypeDef UART_SetConfig(UART_HandleTypeDef *huart)
 
 			/* Ensure that Frequency clock is in the range [3 *
 			 * baudrate, 4096 * baudrate] */
-			if ((lpuart_ker_ck_pres < (3U * huart->Init.BaudRate)) ||
-			    (lpuart_ker_ck_pres > (4096U * huart->Init.BaudRate))) {
+			if ((lpuart_ker_ck_pres < (3U * huart->Init.BaudRate)) || (lpuart_ker_ck_pres > (4096U * huart->Init.BaudRate))) {
 				ret = HAL_ERROR;
 			} else {
 				/* Check computed UsartDiv value is in allocated
 				   range (it is forbidden to write values lower
 				   than 0x300 in the LPUART_BRR register) */
-				usartdiv =
-				    (uint32_t)(UART_DIV_LPUART(pclk, huart->Init.BaudRate, huart->Init.ClockPrescaler));
+				usartdiv = (uint32_t)(UART_DIV_LPUART(pclk, huart->Init.BaudRate, huart->Init.ClockPrescaler));
 				if ((usartdiv >= LPUART_BRR_MIN) && (usartdiv <= LPUART_BRR_MAX)) {
 					huart->Instance->BRR = usartdiv;
 				} else {
@@ -3220,8 +3193,7 @@ HAL_StatusTypeDef UART_SetConfig(UART_HandleTypeDef *huart)
 
 		/* USARTDIV must be greater than or equal to 0d16 */
 		if (pclk != 0U) {
-			usartdiv =
-			    (uint32_t)(UART_DIV_SAMPLING8(pclk, huart->Init.BaudRate, huart->Init.ClockPrescaler));
+			usartdiv = (uint32_t)(UART_DIV_SAMPLING8(pclk, huart->Init.BaudRate, huart->Init.ClockPrescaler));
 			if ((usartdiv >= UART_BRR_MIN) && (usartdiv <= UART_BRR_MAX)) {
 				brrtemp = (uint16_t)(usartdiv & 0xFFF0U);
 				brrtemp |= (uint16_t)((usartdiv & (uint16_t)0x000FU) >> 1U);
@@ -3235,8 +3207,7 @@ HAL_StatusTypeDef UART_SetConfig(UART_HandleTypeDef *huart)
 
 		if (pclk != 0U) {
 			/* USARTDIV must be greater than or equal to 0d16 */
-			usartdiv =
-			    (uint32_t)(UART_DIV_SAMPLING16(pclk, huart->Init.BaudRate, huart->Init.ClockPrescaler));
+			usartdiv = (uint32_t)(UART_DIV_SAMPLING16(pclk, huart->Init.BaudRate, huart->Init.ClockPrescaler));
 			if ((usartdiv >= UART_BRR_MIN) && (usartdiv <= UART_BRR_MAX)) {
 				huart->Instance->BRR = (uint16_t)usartdiv;
 			} else {
@@ -3344,8 +3315,7 @@ HAL_StatusTypeDef UART_CheckIdleState(UART_HandleTypeDef *huart)
 	/* Check if the Transmitter is enabled */
 	if ((huart->Instance->CR1 & USART_CR1_TE) == USART_CR1_TE) {
 		/* Wait until TEACK flag is set */
-		if (UART_WaitOnFlagUntilTimeout(huart, USART_ISR_TEACK, RESET, tickstart, HAL_UART_TIMEOUT_VALUE) !=
-		    HAL_OK) {
+		if (UART_WaitOnFlagUntilTimeout(huart, USART_ISR_TEACK, RESET, tickstart, HAL_UART_TIMEOUT_VALUE) != HAL_OK) {
 			/* Disable TXE interrupt for the interrupt process */
 			ATOMIC_CLEAR_BIT(huart->Instance->CR1, (USART_CR1_TXEIE_TXFNFIE));
 
@@ -3361,8 +3331,7 @@ HAL_StatusTypeDef UART_CheckIdleState(UART_HandleTypeDef *huart)
 	/* Check if the Receiver is enabled */
 	if ((huart->Instance->CR1 & USART_CR1_RE) == USART_CR1_RE) {
 		/* Wait until REACK flag is set */
-		if (UART_WaitOnFlagUntilTimeout(huart, USART_ISR_REACK, RESET, tickstart, HAL_UART_TIMEOUT_VALUE) !=
-		    HAL_OK) {
+		if (UART_WaitOnFlagUntilTimeout(huart, USART_ISR_REACK, RESET, tickstart, HAL_UART_TIMEOUT_VALUE) != HAL_OK) {
 			/* Disable RXNE, PE and ERR (Frame error, noise error,
 			overrun error) interrupts for the interrupt process */
 			ATOMIC_CLEAR_BIT(huart->Instance->CR1, (USART_CR1_RXNEIE_RXFNEIE | USART_CR1_PEIE));
@@ -3398,8 +3367,7 @@ HAL_StatusTypeDef UART_CheckIdleState(UART_HandleTypeDef *huart)
  * @param Timeout   Timeout duration
  * @retval HAL status
  */
-HAL_StatusTypeDef UART_WaitOnFlagUntilTimeout(UART_HandleTypeDef *huart, uint32_t Flag, FlagStatus Status,
-					      uint32_t Tickstart, uint32_t Timeout)
+HAL_StatusTypeDef UART_WaitOnFlagUntilTimeout(UART_HandleTypeDef *huart, uint32_t Flag, FlagStatus Status, uint32_t Tickstart, uint32_t Timeout)
 {
 	/* Wait until flag is set */
 	while ((__HAL_UART_GET_FLAG(huart, Flag) ? SET : RESET) == Status) {
@@ -3410,8 +3378,7 @@ HAL_StatusTypeDef UART_WaitOnFlagUntilTimeout(UART_HandleTypeDef *huart, uint32_
 				return HAL_TIMEOUT;
 			}
 
-			if ((READ_BIT(huart->Instance->CR1, USART_CR1_RE) != 0U) && (Flag != UART_FLAG_TXE) &&
-			    (Flag != UART_FLAG_TC)) {
+			if ((READ_BIT(huart->Instance->CR1, USART_CR1_RE) != 0U) && (Flag != UART_FLAG_TXE) && (Flag != UART_FLAG_TC)) {
 				if (__HAL_UART_GET_FLAG(huart, UART_FLAG_ORE) == SET) {
 					/* Clear Overrun Error flag*/
 					__HAL_UART_CLEAR_FLAG(huart, UART_CLEAR_OREF);
@@ -3563,18 +3530,15 @@ HAL_StatusTypeDef UART_Start_Receive_DMA(UART_HandleTypeDef *huart, uint8_t *pDa
 
 		/* Check linked list mode */
 		if ((huart->hdmarx->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
-			if ((huart->hdmarx->LinkedListQueue != NULL) &&
-			    (huart->hdmarx->LinkedListQueue->Head != NULL)) {
+			if ((huart->hdmarx->LinkedListQueue != NULL) && (huart->hdmarx->LinkedListQueue->Head != NULL)) {
 				/* Set DMA data size */
 				huart->hdmarx->LinkedListQueue->Head->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] = nbByte;
 
 				/* Set DMA source address */
-				huart->hdmarx->LinkedListQueue->Head->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] =
-				    (uint32_t)&huart->Instance->RDR;
+				huart->hdmarx->LinkedListQueue->Head->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] = (uint32_t)&huart->Instance->RDR;
 
 				/* Set DMA destination address */
-				huart->hdmarx->LinkedListQueue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] =
-				    (uint32_t)huart->pRxBuffPtr;
+				huart->hdmarx->LinkedListQueue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] = (uint32_t)huart->pRxBuffPtr;
 
 				/* Enable the UART receive DMA channel */
 				status = HAL_DMAEx_List_Start_IT(huart->hdmarx);
@@ -3584,8 +3548,7 @@ HAL_StatusTypeDef UART_Start_Receive_DMA(UART_HandleTypeDef *huart, uint8_t *pDa
 			}
 		} else {
 			/* Enable the UART receive DMA channel */
-			status = HAL_DMA_Start_IT(huart->hdmarx, (uint32_t)&huart->Instance->RDR,
-						  (uint32_t)huart->pRxBuffPtr, nbByte);
+			status = HAL_DMA_Start_IT(huart->hdmarx, (uint32_t)&huart->Instance->RDR, (uint32_t)huart->pRxBuffPtr, nbByte);
 		}
 
 		if (status != HAL_OK) {

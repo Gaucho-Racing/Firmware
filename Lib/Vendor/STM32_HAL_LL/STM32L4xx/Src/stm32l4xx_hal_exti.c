@@ -112,11 +112,11 @@
 /** @defgroup EXTI_Private_Constants EXTI Private Constants
  * @{
  */
-#define EXTI_MODE_OFFSET                                                                                               \
-	0x08u /* 0x20: offset between MCU IMR/EMR registers                                                            \
+#define EXTI_MODE_OFFSET                                                                                                                                                                               \
+	0x08u /* 0x20: offset between MCU IMR/EMR registers                                                                                                                                            \
 	       */
-#define EXTI_CONFIG_OFFSET                                                                                             \
-	0x08u /* 0x20: offset between MCU Rising/Falling configuration                                                 \
+#define EXTI_CONFIG_OFFSET                                                                                                                                                                             \
+	0x08u /* 0x20: offset between MCU Rising/Falling configuration                                                                                                                                 \
 		 registers */
 /**
  * @}
@@ -234,8 +234,7 @@ HAL_StatusTypeDef HAL_EXTI_SetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigT
 
 	/* The event mode cannot be configured if the line does not support it
 	 */
-	assert_param(((pExtiConfig->Line & EXTI_EVENT) == EXTI_EVENT) ||
-		     ((pExtiConfig->Mode & EXTI_MODE_EVENT) != EXTI_MODE_EVENT));
+	assert_param(((pExtiConfig->Line & EXTI_EVENT) == EXTI_EVENT) || ((pExtiConfig->Mode & EXTI_MODE_EVENT) != EXTI_MODE_EVENT));
 
 	/* Configure event mode : read current mode */
 	regaddr = (&EXTI->EMR1 + (EXTI_MODE_OFFSET * offset));
@@ -332,8 +331,7 @@ HAL_StatusTypeDef HAL_EXTI_GetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigT
 			assert_param(IS_EXTI_GPIO_PIN(linepos));
 
 			regval = SYSCFG->EXTICR[linepos >> 2u];
-			pExtiConfig->GPIOSel =
-			    (regval >> (SYSCFG_EXTICR1_EXTI1_Pos * (linepos & 0x03u))) & SYSCFG_EXTICR1_EXTI0;
+			pExtiConfig->GPIOSel = (regval >> (SYSCFG_EXTICR1_EXTI1_Pos * (linepos & 0x03u))) & SYSCFG_EXTICR1_EXTI0;
 		}
 	}
 
@@ -407,8 +405,7 @@ HAL_StatusTypeDef HAL_EXTI_ClearConfigLine(EXTI_HandleTypeDef *hexti)
  * @param  pPendingCbfn function pointer to be stored as callback.
  * @retval HAL Status.
  */
-HAL_StatusTypeDef HAL_EXTI_RegisterCallback(EXTI_HandleTypeDef *hexti, EXTI_CallbackIDTypeDef CallbackID,
-					    void (*pPendingCbfn)(void))
+HAL_StatusTypeDef HAL_EXTI_RegisterCallback(EXTI_HandleTypeDef *hexti, EXTI_CallbackIDTypeDef CallbackID, void (*pPendingCbfn)(void))
 {
 	HAL_StatusTypeDef status = HAL_OK;
 

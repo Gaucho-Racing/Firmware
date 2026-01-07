@@ -284,11 +284,10 @@ HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef *PeriphClkI
 
 			case RCC_SAI1CLKSOURCE_PIN: /* External clock is used as
 						       source of SAI1 clock*/
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
-    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 			case RCC_SAI1CLKSOURCE_HSI: /* HSI is used as source of
 						       SAI1 clock*/
-#endif						    /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||     \
+#endif						    /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                     \
 						       STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 				/* SAI1 clock source config set later after
 				 * clock selection check */
@@ -353,11 +352,10 @@ HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef *PeriphClkI
 
 			case RCC_SAI2CLKSOURCE_PIN: /* External clock is used as
 						       source of SAI2 clock*/
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
-    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 			case RCC_SAI2CLKSOURCE_HSI: /* HSI is used as source of
 						       SAI2 clock*/
-#endif						    /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||     \
+#endif						    /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                     \
 						       STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 				/* SAI2 clock source config set later after
 				 * clock selection check */
@@ -410,8 +408,7 @@ HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef *PeriphClkI
 			 * selection is modified from default */
 			tmpregister = READ_BIT(RCC->BDCR, RCC_BDCR_RTCSEL);
 
-			if ((tmpregister != RCC_RTCCLKSOURCE_NONE) &&
-			    (tmpregister != PeriphClkInit->RTCClockSelection)) {
+			if ((tmpregister != RCC_RTCCLKSOURCE_NONE) && (tmpregister != PeriphClkInit->RTCClockSelection)) {
 				/* Store the content of BDCR register before the
 				 * reset of Backup Domain */
 				tmpregister = READ_BIT(RCC->BDCR, ~(RCC_BDCR_RTCSEL));
@@ -706,8 +703,7 @@ HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef *PeriphClkI
 		}
 #endif /* RCC_PLLSAI1_SUPPORT */
 
-#if defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) ||                    \
-    defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx)
+#if defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) || defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx)
 
 		else if (PeriphClkInit->AdcClockSelection == RCC_ADCCLKSOURCE_PLLSAI2) {
 			/* PLLSAI2 input clock, parameters M, N & R
@@ -722,7 +718,7 @@ HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef *PeriphClkI
 			/* nothing to do */
 		}
 
-#endif /* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx ||                                                  \
+#endif /* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx ||                                                                                                                                  \
 	  STM32L486xx || STM32L496xx || STM32L4A6xx */
 	}
 #endif /* !STM32L412xx && !STM32L422xx */
@@ -753,8 +749,7 @@ HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef *PeriphClkI
 		__HAL_RCC_DFSDM1_CONFIG(PeriphClkInit->Dfsdm1ClockSelection);
 	}
 
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
-    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	/*-------------------------- DFSDM1 audio clock source configuration
 	 * -------------*/
 	if (((PeriphClkInit->PeriphClockSelection) & RCC_PERIPHCLK_DFSDM1AUDIO) == RCC_PERIPHCLK_DFSDM1AUDIO) {
@@ -765,7 +760,7 @@ HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef *PeriphClkI
 		__HAL_RCC_DFSDM1AUDIO_CONFIG(PeriphClkInit->Dfsdm1AudioClockSelection);
 	}
 
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 #endif /* DFSDM1_Filter0 */
@@ -873,103 +868,77 @@ void HAL_RCCEx_GetPeriphCLKConfig(RCC_PeriphCLKInitTypeDef *PeriphClkInit)
 
 #if defined(STM32L412xx) || defined(STM32L422xx)
 
-	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 |
-					      RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 |
-					      RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM2 |
-					      RCC_PERIPHCLK_USB | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_RTC;
+	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 |
+					      RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_USB | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_RTC;
 
 #elif defined(STM32L431xx)
 
-	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 |
-					      RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 |
-					      RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM2 |
-					      RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SDMMC1 | RCC_PERIPHCLK_RNG |
-					      RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_SWPMI1 | RCC_PERIPHCLK_RTC;
+	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 |
+					      RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SDMMC1 | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC |
+					      RCC_PERIPHCLK_SWPMI1 | RCC_PERIPHCLK_RTC;
 
 #elif defined(STM32L432xx) || defined(STM32L442xx)
 
-	PeriphClkInit->PeriphClockSelection =
-	    RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 |
-	    RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_USB |
-	    RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_SWPMI1 | RCC_PERIPHCLK_RTC;
+	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_LPTIM1 |
+					      RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_USB | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_SWPMI1 | RCC_PERIPHCLK_RTC;
 
 #elif defined(STM32L433xx) || defined(STM32L443xx)
 
-	PeriphClkInit->PeriphClockSelection =
-	    RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_LPUART1 |
-	    RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM2 |
-	    RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_USB | RCC_PERIPHCLK_SDMMC1 | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC |
-	    RCC_PERIPHCLK_SWPMI1 | RCC_PERIPHCLK_RTC;
+	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 |
+					      RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_USB | RCC_PERIPHCLK_SDMMC1 | RCC_PERIPHCLK_RNG |
+					      RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_SWPMI1 | RCC_PERIPHCLK_RTC;
 
 #elif defined(STM32L451xx)
 
-	PeriphClkInit->PeriphClockSelection =
-	    RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 |
-	    RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_I2C4 |
-	    RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SDMMC1 |
-	    RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_DFSDM1 | RCC_PERIPHCLK_RTC;
+	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 |
+					      RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SDMMC1 |
+					      RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_DFSDM1 | RCC_PERIPHCLK_RTC;
 
 #elif defined(STM32L452xx) || defined(STM32L462xx)
 
-	PeriphClkInit->PeriphClockSelection =
-	    RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 |
-	    RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_I2C4 |
-	    RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_USB |
-	    RCC_PERIPHCLK_SDMMC1 | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_DFSDM1 | RCC_PERIPHCLK_RTC;
+	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 |
+					      RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_USB |
+					      RCC_PERIPHCLK_SDMMC1 | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_DFSDM1 | RCC_PERIPHCLK_RTC;
 
 #elif defined(STM32L471xx)
 
-	PeriphClkInit->PeriphClockSelection =
-	    RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 |
-	    RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 |
-	    RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SAI2 |
-	    RCC_PERIPHCLK_SDMMC1 | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_SWPMI1 | RCC_PERIPHCLK_DFSDM1 |
-	    RCC_PERIPHCLK_RTC;
+	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 | RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPUART1 |
+					      RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SAI2 |
+					      RCC_PERIPHCLK_SDMMC1 | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_SWPMI1 | RCC_PERIPHCLK_DFSDM1 | RCC_PERIPHCLK_RTC;
 
 #elif defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) || defined(STM32L486xx)
 
-	PeriphClkInit->PeriphClockSelection =
-	    RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 |
-	    RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 |
-	    RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SAI2 | RCC_PERIPHCLK_USB |
-	    RCC_PERIPHCLK_SDMMC1 | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_SWPMI1 | RCC_PERIPHCLK_DFSDM1 |
-	    RCC_PERIPHCLK_RTC;
+	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 | RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPUART1 |
+					      RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SAI2 |
+					      RCC_PERIPHCLK_USB | RCC_PERIPHCLK_SDMMC1 | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_SWPMI1 | RCC_PERIPHCLK_DFSDM1 | RCC_PERIPHCLK_RTC;
 
 #elif defined(STM32L496xx) || defined(STM32L4A6xx)
 
-	PeriphClkInit->PeriphClockSelection =
-	    RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 |
-	    RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 |
-	    RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SAI2 |
-	    RCC_PERIPHCLK_USB | RCC_PERIPHCLK_SDMMC1 | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_SWPMI1 |
-	    RCC_PERIPHCLK_DFSDM1 | RCC_PERIPHCLK_RTC;
+	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 | RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPUART1 |
+					      RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 |
+					      RCC_PERIPHCLK_SAI2 | RCC_PERIPHCLK_USB | RCC_PERIPHCLK_SDMMC1 | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_SWPMI1 | RCC_PERIPHCLK_DFSDM1 |
+					      RCC_PERIPHCLK_RTC;
 
 #elif defined(STM32L4R5xx) || defined(STM32L4S5xx)
 
-	PeriphClkInit->PeriphClockSelection =
-	    RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 |
-	    RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 |
-	    RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SAI2 |
-	    RCC_PERIPHCLK_USB | RCC_PERIPHCLK_SDMMC1 | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_DFSDM1 |
-	    RCC_PERIPHCLK_DFSDM1AUDIO | RCC_PERIPHCLK_RTC | RCC_PERIPHCLK_OSPI;
+	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 | RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPUART1 |
+					      RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 |
+					      RCC_PERIPHCLK_SAI2 | RCC_PERIPHCLK_USB | RCC_PERIPHCLK_SDMMC1 | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_DFSDM1 | RCC_PERIPHCLK_DFSDM1AUDIO |
+					      RCC_PERIPHCLK_RTC | RCC_PERIPHCLK_OSPI;
 
 #elif defined(STM32L4R7xx) || defined(STM32L4S7xx) || defined(STM32L4Q5xx)
 
-	PeriphClkInit->PeriphClockSelection =
-	    RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 |
-	    RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 |
-	    RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SAI2 |
-	    RCC_PERIPHCLK_USB | RCC_PERIPHCLK_SDMMC1 | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_DFSDM1 |
-	    RCC_PERIPHCLK_DFSDM1AUDIO | RCC_PERIPHCLK_RTC | RCC_PERIPHCLK_OSPI | RCC_PERIPHCLK_LTDC;
+	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 | RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPUART1 |
+					      RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 |
+					      RCC_PERIPHCLK_SAI2 | RCC_PERIPHCLK_USB | RCC_PERIPHCLK_SDMMC1 | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_DFSDM1 | RCC_PERIPHCLK_DFSDM1AUDIO |
+					      RCC_PERIPHCLK_RTC | RCC_PERIPHCLK_OSPI | RCC_PERIPHCLK_LTDC;
 
 #elif defined(STM32L4R9xx) || defined(STM32L4S9xx)
 
-	PeriphClkInit->PeriphClockSelection =
-	    RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 |
-	    RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 |
-	    RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SAI2 |
-	    RCC_PERIPHCLK_USB | RCC_PERIPHCLK_SDMMC1 | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_DFSDM1 |
-	    RCC_PERIPHCLK_DFSDM1AUDIO | RCC_PERIPHCLK_RTC | RCC_PERIPHCLK_OSPI | RCC_PERIPHCLK_LTDC | RCC_PERIPHCLK_DSI;
+	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 | RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPUART1 |
+					      RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 |
+					      RCC_PERIPHCLK_SAI2 | RCC_PERIPHCLK_USB | RCC_PERIPHCLK_SDMMC1 | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_DFSDM1 | RCC_PERIPHCLK_DFSDM1AUDIO |
+					      RCC_PERIPHCLK_RTC | RCC_PERIPHCLK_OSPI | RCC_PERIPHCLK_LTDC | RCC_PERIPHCLK_DSI;
 
 #endif /* STM32L431xx */
 
@@ -980,19 +949,14 @@ void HAL_RCCEx_GetPeriphCLKConfig(RCC_PeriphCLKInitTypeDef *PeriphClkInit)
 
 	PeriphClkInit->PLLSAI1.PLLSAI1Source = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLSRC) >> RCC_PLLCFGR_PLLSRC_Pos;
 #if defined(RCC_PLLSAI1M_DIV_1_16_SUPPORT)
-	PeriphClkInit->PLLSAI1.PLLSAI1M =
-	    (READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1M) >> RCC_PLLSAI1CFGR_PLLSAI1M_Pos) + 1U;
+	PeriphClkInit->PLLSAI1.PLLSAI1M = (READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1M) >> RCC_PLLSAI1CFGR_PLLSAI1M_Pos) + 1U;
 #else
 	PeriphClkInit->PLLSAI1.PLLSAI1M = (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >> RCC_PLLCFGR_PLLM_Pos) + 1U;
 #endif /* RCC_PLLSAI1M_DIV_1_16_SUPPORT */
-	PeriphClkInit->PLLSAI1.PLLSAI1N =
-	    READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1N) >> RCC_PLLSAI1CFGR_PLLSAI1N_Pos;
-	PeriphClkInit->PLLSAI1.PLLSAI1P =
-	    ((READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1P) >> RCC_PLLSAI1CFGR_PLLSAI1P_Pos) << 4U) + 7U;
-	PeriphClkInit->PLLSAI1.PLLSAI1Q =
-	    ((READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1Q) >> RCC_PLLSAI1CFGR_PLLSAI1Q_Pos) + 1U) * 2U;
-	PeriphClkInit->PLLSAI1.PLLSAI1R =
-	    ((READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1R) >> RCC_PLLSAI1CFGR_PLLSAI1R_Pos) + 1U) * 2U;
+	PeriphClkInit->PLLSAI1.PLLSAI1N = READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1N) >> RCC_PLLSAI1CFGR_PLLSAI1N_Pos;
+	PeriphClkInit->PLLSAI1.PLLSAI1P = ((READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1P) >> RCC_PLLSAI1CFGR_PLLSAI1P_Pos) << 4U) + 7U;
+	PeriphClkInit->PLLSAI1.PLLSAI1Q = ((READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1Q) >> RCC_PLLSAI1CFGR_PLLSAI1Q_Pos) + 1U) * 2U;
+	PeriphClkInit->PLLSAI1.PLLSAI1R = ((READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1R) >> RCC_PLLSAI1CFGR_PLLSAI1R_Pos) + 1U) * 2U;
 
 #endif /* RCC_PLLSAI1_SUPPORT */
 
@@ -1003,21 +967,16 @@ void HAL_RCCEx_GetPeriphCLKConfig(RCC_PeriphCLKInitTypeDef *PeriphClkInit)
 
 	PeriphClkInit->PLLSAI2.PLLSAI2Source = PeriphClkInit->PLLSAI1.PLLSAI1Source;
 #if defined(RCC_PLLSAI2M_DIV_1_16_SUPPORT)
-	PeriphClkInit->PLLSAI2.PLLSAI2M =
-	    (READ_BIT(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2M) >> RCC_PLLSAI2CFGR_PLLSAI2M_Pos) + 1U;
+	PeriphClkInit->PLLSAI2.PLLSAI2M = (READ_BIT(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2M) >> RCC_PLLSAI2CFGR_PLLSAI2M_Pos) + 1U;
 #else
 	PeriphClkInit->PLLSAI2.PLLSAI2M = PeriphClkInit->PLLSAI1.PLLSAI1M;
 #endif /* RCC_PLLSAI2M_DIV_1_16_SUPPORT */
-	PeriphClkInit->PLLSAI2.PLLSAI2N =
-	    READ_BIT(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2N) >> RCC_PLLSAI2CFGR_PLLSAI2N_Pos;
-	PeriphClkInit->PLLSAI2.PLLSAI2P =
-	    ((READ_BIT(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2P) >> RCC_PLLSAI2CFGR_PLLSAI2P_Pos) << 4U) + 7U;
+	PeriphClkInit->PLLSAI2.PLLSAI2N = READ_BIT(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2N) >> RCC_PLLSAI2CFGR_PLLSAI2N_Pos;
+	PeriphClkInit->PLLSAI2.PLLSAI2P = ((READ_BIT(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2P) >> RCC_PLLSAI2CFGR_PLLSAI2P_Pos) << 4U) + 7U;
 #if defined(RCC_PLLSAI2Q_DIV_SUPPORT)
-	PeriphClkInit->PLLSAI2.PLLSAI2Q =
-	    ((READ_BIT(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2Q) >> RCC_PLLSAI2CFGR_PLLSAI2Q_Pos) + 1U) * 2U;
+	PeriphClkInit->PLLSAI2.PLLSAI2Q = ((READ_BIT(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2Q) >> RCC_PLLSAI2CFGR_PLLSAI2Q_Pos) + 1U) * 2U;
 #endif /* RCC_PLLSAI2Q_DIV_SUPPORT */
-	PeriphClkInit->PLLSAI2.PLLSAI2R =
-	    ((READ_BIT(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2R) >> RCC_PLLSAI2CFGR_PLLSAI2R_Pos) + 1U) * 2U;
+	PeriphClkInit->PLLSAI2.PLLSAI2R = ((READ_BIT(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2R) >> RCC_PLLSAI2CFGR_PLLSAI2R_Pos) + 1U) * 2U;
 
 #endif /* RCC_PLLSAI2_SUPPORT */
 
@@ -1127,12 +1086,11 @@ void HAL_RCCEx_GetPeriphCLKConfig(RCC_PeriphCLKInitTypeDef *PeriphClkInit)
 	 * ---------------------------------------------*/
 	PeriphClkInit->Dfsdm1ClockSelection = __HAL_RCC_GET_DFSDM1_SOURCE();
 
-#if defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||                    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	/* Get the DFSDM1 audio clock source
 	 * ---------------------------------------*/
 	PeriphClkInit->Dfsdm1AudioClockSelection = __HAL_RCC_GET_DFSDM1AUDIO_SOURCE();
-#endif /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||                                                  \
+#endif /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||                                                                                                                                  \
 	  STM32L4S7xx || STM32L4S9xx */
 #endif /* DFSDM1_Filter0 */
 
@@ -1393,22 +1351,13 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 								/* f(PLL Source)
 								 * * PLLN / PLLM
 								 */
-								plln = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >>
-								       RCC_PLLCFGR_PLLN_Pos;
-								pllvco = ((pllvco * plln) /
-									  ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >>
-									    RCC_PLLCFGR_PLLM_Pos) +
-									   1U));
+								plln = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos;
+								pllvco = ((pllvco * plln) / ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >> RCC_PLLCFGR_PLLM_Pos) + 1U));
 								/* f(PLL48M1CLK)
 								 * = f(VCO
 								 * input) / PLLQ
 								 */
-								frequency =
-								    (pllvco /
-								     (((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLQ) >>
-									RCC_PLLCFGR_PLLQ_Pos) +
-								       1U)
-								      << 1U));
+								frequency = (pllvco / (((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLQ) >> RCC_PLLCFGR_PLLQ_Pos) + 1U) << 1U));
 							}
 						}
 						break;
@@ -1416,11 +1365,8 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 					case RCC_CCIPR_CLK48SEL_0: /* PLLSAI1 ?
 								    */
 						if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_PLLSAI1RDY)) {
-							if (HAL_IS_BIT_SET(RCC->PLLSAI1CFGR,
-									   RCC_PLLSAI1CFGR_PLLSAI1QEN)) {
-								plln = READ_BIT(RCC->PLLSAI1CFGR,
-										RCC_PLLSAI1CFGR_PLLSAI1N) >>
-								       RCC_PLLSAI1CFGR_PLLSAI1N_Pos;
+							if (HAL_IS_BIT_SET(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1QEN)) {
+								plln = READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1N) >> RCC_PLLSAI1CFGR_PLLSAI1N_Pos;
 #if defined(RCC_PLLSAI1M_DIV_1_16_SUPPORT)
 								/* PLLSAI1M
 								 * exists: apply
@@ -1434,30 +1380,18 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 								 * Source) *
 								 * PLLSAI1N /
 								 * PLLSAI1M */
-								pllvco = ((pllvco * plln) /
-									  ((READ_BIT(RCC->PLLSAI1CFGR,
-										     RCC_PLLSAI1CFGR_PLLSAI1M) >>
-									    RCC_PLLSAI1CFGR_PLLSAI1M_Pos) +
-									   1U));
+								pllvco = ((pllvco * plln) / ((READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1M) >> RCC_PLLSAI1CFGR_PLLSAI1M_Pos) + 1U));
 #else
 								/* f(PLL Source)
 								 * * PLLSAI1N /
 								 * PLLM */
-								pllvco = ((pllvco * plln) /
-									  ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >>
-									    RCC_PLLCFGR_PLLM_Pos) +
-									   1U));
+								pllvco = ((pllvco * plln) / ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >> RCC_PLLCFGR_PLLM_Pos) + 1U));
 #endif
 								/* f(PLL48M2CLK)
 								 * = f(VCOSAI1
 								 * input) /
 								 * PLLSAI1Q */
-								frequency =
-								    (pllvco / (((READ_BIT(RCC->PLLSAI1CFGR,
-											  RCC_PLLSAI1CFGR_PLLSAI1Q) >>
-										 RCC_PLLSAI1CFGR_PLLSAI1Q_Pos) +
-										1U)
-									       << 1U));
+								frequency = (pllvco / (((READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1Q) >> RCC_PLLSAI1CFGR_PLLSAI1Q_Pos) + 1U) << 1U));
 							}
 						}
 						break;
@@ -1490,16 +1424,11 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 							/* f(PLL Source) * PLLN
 							 * / PLLM
 							 */
-							plln = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >>
-							       RCC_PLLCFGR_PLLN_Pos;
-							pllvco = ((pllvco * plln) /
-								  ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >>
-								    RCC_PLLCFGR_PLLM_Pos) +
-								   1U));
+							plln = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos;
+							pllvco = ((pllvco * plln) / ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >> RCC_PLLCFGR_PLLM_Pos) + 1U));
 							/* f(PLLSAI3CLK) = f(VCO
 							 * input) / PLLP */
-							pllp = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLPDIV) >>
-							       RCC_PLLCFGR_PLLPDIV_Pos;
+							pllp = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLPDIV) >> RCC_PLLCFGR_PLLPDIV_Pos;
 							if (pllp == 0U) {
 								if (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLP) != 0U) {
 									pllp = 17U;
@@ -1522,8 +1451,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 							if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_MSIRDY)) {
 								/*MSI frequency
 								 * range in HZ*/
-								frequency =
-								    MSIRangeTable[(__HAL_RCC_GET_MSI_RANGE() >> 4U)];
+								frequency = MSIRangeTable[(__HAL_RCC_GET_MSI_RANGE() >> 4U)];
 							}
 							break;
 						case RCC_CCIPR_CLK48SEL_1: /* PLL
@@ -1538,14 +1466,8 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 									 * /
 									 * PLLM
 									 */
-									plln =
-									    READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >>
-									    RCC_PLLCFGR_PLLN_Pos;
-									pllvco = ((pllvco * plln) /
-										  ((READ_BIT(RCC->PLLCFGR,
-											     RCC_PLLCFGR_PLLM) >>
-										    RCC_PLLCFGR_PLLM_Pos) +
-										   1U));
+									plln = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos;
+									pllvco = ((pllvco * plln) / ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >> RCC_PLLCFGR_PLLM_Pos) + 1U));
 									/* f(PLL48M1CLK)
 									 * =
 									 * f(VCO
@@ -1553,12 +1475,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 									 * /
 									 * PLLQ
 									 */
-									frequency =
-									    (pllvco / (((READ_BIT(RCC->PLLCFGR,
-												  RCC_PLLCFGR_PLLQ) >>
-											 RCC_PLLCFGR_PLLQ_Pos) +
-											1U)
-										       << 1U));
+									frequency = (pllvco / (((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLQ) >> RCC_PLLCFGR_PLLQ_Pos) + 1U) << 1U));
 								}
 							}
 							break;
@@ -1566,8 +1483,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 									      ?
 									    */
 							if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_PLLSAI1RDY)) {
-								if (HAL_IS_BIT_SET(RCC->PLLSAI1CFGR,
-										   RCC_PLLSAI1CFGR_PLLSAI1QEN)) {
+								if (HAL_IS_BIT_SET(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1QEN)) {
 									/* f(PLLSAI1
 									 * Source)
 									 * *
@@ -1575,15 +1491,8 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 									 * /
 									 * PLLSAI1M
 									 */
-									plln = READ_BIT(RCC->PLLSAI1CFGR,
-											RCC_PLLSAI1CFGR_PLLSAI1N) >>
-									       RCC_PLLSAI1CFGR_PLLSAI1N_Pos;
-									pllvco =
-									    ((pllvco * plln) /
-									     ((READ_BIT(RCC->PLLSAI1CFGR,
-											RCC_PLLSAI1CFGR_PLLSAI1M) >>
-									       RCC_PLLSAI1CFGR_PLLSAI1M_Pos) +
-									      1U));
+									plln = READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1N) >> RCC_PLLSAI1CFGR_PLLSAI1N_Pos;
+									pllvco = ((pllvco * plln) / ((READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1M) >> RCC_PLLSAI1CFGR_PLLSAI1M_Pos) + 1U));
 									/* f(PLL48M2CLK)
 									 * =
 									 * f(VCOSAI1
@@ -1591,13 +1500,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 									 * /
 									 * PLLSAI1Q
 									 */
-									frequency =
-									    (pllvco /
-									     (((READ_BIT(RCC->PLLSAI1CFGR,
-											 RCC_PLLSAI1CFGR_PLLSAI1Q) >>
-										RCC_PLLSAI1CFGR_PLLSAI1Q_Pos) +
-									       1U)
-									      << 1U));
+									frequency = (pllvco / (((READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1Q) >> RCC_PLLSAI1CFGR_PLLSAI1Q_Pos) + 1U) << 1U));
 								}
 							}
 							break;
@@ -1826,10 +1729,8 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 						break;
 #if defined(RCC_PLLSAI1_SUPPORT)
 					case RCC_ADCCLKSOURCE_PLLSAI1:
-						if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_PLLSAI1RDY) &&
-						    (__HAL_RCC_GET_PLLSAI1CLKOUT_CONFIG(RCC_PLLSAI1_ADC1CLK) != 0U)) {
-							plln = READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1N) >>
-							       RCC_PLLSAI1CFGR_PLLSAI1N_Pos;
+						if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_PLLSAI1RDY) && (__HAL_RCC_GET_PLLSAI1CLKOUT_CONFIG(RCC_PLLSAI1_ADC1CLK) != 0U)) {
+							plln = READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1N) >> RCC_PLLSAI1CFGR_PLLSAI1N_Pos;
 #if defined(RCC_PLLSAI1M_DIV_1_16_SUPPORT)
 							/* PLLSAI1M exists:
 							 * apply PLLSAI1M
@@ -1838,38 +1739,23 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 							/* f(PLLSAI1 Source) *
 							 * PLLSAI1N / PLLSAI1M
 							 */
-							pllvco =
-							    ((pllvco * plln) /
-							     ((READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1M) >>
-							       RCC_PLLSAI1CFGR_PLLSAI1M_Pos) +
-							      1U));
+							pllvco = ((pllvco * plln) / ((READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1M) >> RCC_PLLSAI1CFGR_PLLSAI1M_Pos) + 1U));
 #else
 							/* f(PLL Source) *
 							 * PLLSAI1N / PLLM */
-							pllvco = ((pllvco * plln) /
-								  ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >>
-								    RCC_PLLCFGR_PLLM_Pos) +
-								   1U));
+							pllvco = ((pllvco * plln) / ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >> RCC_PLLCFGR_PLLM_Pos) + 1U));
 #endif
 							/* f(PLLADC1CLK) =
 							 * f(VCOSAI1 input) /
 							 * PLLSAI1R */
-							frequency =
-							    (pllvco /
-							     (((READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1R) >>
-								RCC_PLLSAI1CFGR_PLLSAI1R_Pos) +
-							       1U)
-							      << 1U));
+							frequency = (pllvco / (((READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1R) >> RCC_PLLSAI1CFGR_PLLSAI1R_Pos) + 1U) << 1U));
 						}
 						break;
 #endif /* RCC_PLLSAI1_SUPPORT */
-#if defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) ||                    \
-    defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx)
+#if defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) || defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx)
 					case RCC_ADCCLKSOURCE_PLLSAI2:
-						if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_PLLSAI2RDY) &&
-						    (__HAL_RCC_GET_PLLSAI2CLKOUT_CONFIG(RCC_PLLSAI2_ADC2CLK) != 0U)) {
-							plln = READ_BIT(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2N) >>
-							       RCC_PLLSAI2CFGR_PLLSAI2N_Pos;
+						if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_PLLSAI2RDY) && (__HAL_RCC_GET_PLLSAI2CLKOUT_CONFIG(RCC_PLLSAI2_ADC2CLK) != 0U)) {
+							plln = READ_BIT(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2N) >> RCC_PLLSAI2CFGR_PLLSAI2N_Pos;
 #if defined(RCC_PLLSAI2M_DIV_1_16_SUPPORT)
 							/* PLLSAI2M exists:
 							 * apply PLLSAI2M
@@ -1878,31 +1764,19 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 							/* f(PLLSAI2 Source) *
 							 * PLLSAI2N / PLLSAI2M
 							 */
-							pllvco =
-							    ((pllvco * plln) /
-							     ((READ_BIT(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2M) >>
-							       RCC_PLLSAI2CFGR_PLLSAI2M_Pos) +
-							      1U));
+							pllvco = ((pllvco * plln) / ((READ_BIT(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2M) >> RCC_PLLSAI2CFGR_PLLSAI2M_Pos) + 1U));
 #else
 							/* f(PLL Source) *
 							 * PLLSAI2N / PLLM */
-							pllvco = ((pllvco * plln) /
-								  ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >>
-								    RCC_PLLCFGR_PLLM_Pos) +
-								   1U));
+							pllvco = ((pllvco * plln) / ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >> RCC_PLLCFGR_PLLM_Pos) + 1U));
 #endif
 							/* f(PLLADC2CLK) =
 							 * f(VCOSAI2 input) /
 							 * PLLSAI2R */
-							frequency =
-							    (pllvco /
-							     (((READ_BIT(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2R) >>
-								RCC_PLLSAI2CFGR_PLLSAI2R_Pos) +
-							       1U)
-							      << 1U));
+							frequency = (pllvco / (((READ_BIT(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2R) >> RCC_PLLSAI2CFGR_PLLSAI2R_Pos) + 1U) << 1U));
 						}
 						break;
-#endif /* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx ||                                                  \
+#endif /* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx ||                                                                                                                                  \
 	  STM32L486xx || STM32L496xx || STM32L4A6xx */
 					default:
 						/* No clock source, frequency
@@ -1929,8 +1803,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 				break;
 			}
 
-#if defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||                    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 
 			case RCC_PERIPHCLK_DFSDM1AUDIO: {
 				/* Get the current DFSDM1 audio source */
@@ -1962,7 +1835,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 				break;
 			}
 
-#endif /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||                                                  \
+#endif /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||                                                                                                                                  \
 	  STM32L4S7xx || STM32L4S9xx */
 
 #endif /* DFSDM1_Filter0 */
@@ -2209,22 +2082,13 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 								/* f(PLL Source)
 								 * * PLLN / PLLM
 								 */
-								plln = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >>
-								       RCC_PLLCFGR_PLLN_Pos;
-								pllvco = ((pllvco * plln) /
-									  ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >>
-									    RCC_PLLCFGR_PLLM_Pos) +
-									   1U));
+								plln = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos;
+								pllvco = ((pllvco * plln) / ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >> RCC_PLLCFGR_PLLM_Pos) + 1U));
 								/* f(PLL48M1CLK)
 								 * = f(VCO
 								 * input) / PLLQ
 								 */
-								frequency =
-								    (pllvco /
-								     (((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLQ) >>
-									RCC_PLLCFGR_PLLQ_Pos) +
-								       1U)
-								      << 1U));
+								frequency = (pllvco / (((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLQ) >> RCC_PLLCFGR_PLLQ_Pos) + 1U) << 1U));
 							}
 						}
 						break;
@@ -2308,13 +2172,11 @@ HAL_StatusTypeDef HAL_RCCEx_EnablePLLSAI1(RCC_PLLSAI1InitTypeDef *PLLSAI1Init)
 #if defined(RCC_PLLSAI1M_DIV_1_16_SUPPORT)
 		/* Configure the PLLSAI1 Multiplication factor N */
 		/* Configure the PLLSAI1 Division factors M, P, Q and R */
-		__HAL_RCC_PLLSAI1_CONFIG(PLLSAI1Init->PLLSAI1M, PLLSAI1Init->PLLSAI1N, PLLSAI1Init->PLLSAI1P,
-					 PLLSAI1Init->PLLSAI1Q, PLLSAI1Init->PLLSAI1R);
+		__HAL_RCC_PLLSAI1_CONFIG(PLLSAI1Init->PLLSAI1M, PLLSAI1Init->PLLSAI1N, PLLSAI1Init->PLLSAI1P, PLLSAI1Init->PLLSAI1Q, PLLSAI1Init->PLLSAI1R);
 #else
 		/* Configure the PLLSAI1 Multiplication factor N */
 		/* Configure the PLLSAI1 Division factors P, Q and R */
-		__HAL_RCC_PLLSAI1_CONFIG(PLLSAI1Init->PLLSAI1N, PLLSAI1Init->PLLSAI1P, PLLSAI1Init->PLLSAI1Q,
-					 PLLSAI1Init->PLLSAI1R);
+		__HAL_RCC_PLLSAI1_CONFIG(PLLSAI1Init->PLLSAI1N, PLLSAI1Init->PLLSAI1P, PLLSAI1Init->PLLSAI1Q, PLLSAI1Init->PLLSAI1R);
 #endif /* RCC_PLLSAI1M_DIV_1_16_SUPPORT */
 		/* Configure the PLLSAI1 Clock output(s) */
 		__HAL_RCC_PLLSAI1CLKOUT_ENABLE(PLLSAI1Init->PLLSAI1ClockOut);
@@ -2361,8 +2223,7 @@ HAL_StatusTypeDef HAL_RCCEx_DisablePLLSAI1(void)
 	}
 
 	/* Disable the PLLSAI1 Clock outputs */
-	__HAL_RCC_PLLSAI1CLKOUT_DISABLE(RCC_PLLSAI1CFGR_PLLSAI1PEN | RCC_PLLSAI1CFGR_PLLSAI1QEN |
-					RCC_PLLSAI1CFGR_PLLSAI1REN);
+	__HAL_RCC_PLLSAI1CLKOUT_DISABLE(RCC_PLLSAI1CFGR_PLLSAI1PEN | RCC_PLLSAI1CFGR_PLLSAI1QEN | RCC_PLLSAI1CFGR_PLLSAI1REN);
 
 	/* Reset PLL source to save power if no PLLs on */
 #if defined(RCC_PLLSAI2_SUPPORT)
@@ -2422,18 +2283,15 @@ HAL_StatusTypeDef HAL_RCCEx_EnablePLLSAI2(RCC_PLLSAI2InitTypeDef *PLLSAI2Init)
 #if defined(RCC_PLLSAI2M_DIV_1_16_SUPPORT) && defined(RCC_PLLSAI2Q_DIV_SUPPORT)
 		/* Configure the PLLSAI2 Multiplication factor N */
 		/* Configure the PLLSAI2 Division factors M, P, Q and R */
-		__HAL_RCC_PLLSAI2_CONFIG(PLLSAI2Init->PLLSAI2M, PLLSAI2Init->PLLSAI2N, PLLSAI2Init->PLLSAI2P,
-					 PLLSAI2Init->PLLSAI2Q, PLLSAI2Init->PLLSAI2R);
+		__HAL_RCC_PLLSAI2_CONFIG(PLLSAI2Init->PLLSAI2M, PLLSAI2Init->PLLSAI2N, PLLSAI2Init->PLLSAI2P, PLLSAI2Init->PLLSAI2Q, PLLSAI2Init->PLLSAI2R);
 #elif defined(RCC_PLLSAI2M_DIV_1_16_SUPPORT)
 		/* Configure the PLLSAI2 Multiplication factor N */
 		/* Configure the PLLSAI2 Division factors M, P and R */
-		__HAL_RCC_PLLSAI2_CONFIG(PLLSAI2Init->PLLSAI2M, PLLSAI2Init->PLLSAI2N, PLLSAI2Init->PLLSAI2P,
-					 PLLSAI2Init->PLLSAI2R);
+		__HAL_RCC_PLLSAI2_CONFIG(PLLSAI2Init->PLLSAI2M, PLLSAI2Init->PLLSAI2N, PLLSAI2Init->PLLSAI2P, PLLSAI2Init->PLLSAI2R);
 #elif defined(RCC_PLLSAI2Q_DIV_SUPPORT)
 		/* Configure the PLLSAI2 Multiplication factor N */
 		/* Configure the PLLSAI2 Division factors P, Q and R */
-		__HAL_RCC_PLLSAI2_CONFIG(PLLSAI2Init->PLLSAI2N, PLLSAI2Init->PLLSAI2P, PLLSAI2Init->PLLSAI2Q,
-					 PLLSAI2Init->PLLSAI2R);
+		__HAL_RCC_PLLSAI2_CONFIG(PLLSAI2Init->PLLSAI2N, PLLSAI2Init->PLLSAI2P, PLLSAI2Init->PLLSAI2Q, PLLSAI2Init->PLLSAI2R);
 #else
 		/* Configure the PLLSAI2 Multiplication factor N */
 		/* Configure the PLLSAI2 Division factors P and R */
@@ -2485,8 +2343,7 @@ HAL_StatusTypeDef HAL_RCCEx_DisablePLLSAI2(void)
 
 	/* Disable the PLLSAI2 Clock outputs */
 #if defined(RCC_PLLSAI2Q_DIV_SUPPORT)
-	__HAL_RCC_PLLSAI2CLKOUT_DISABLE(RCC_PLLSAI2CFGR_PLLSAI2PEN | RCC_PLLSAI2CFGR_PLLSAI2QEN |
-					RCC_PLLSAI2CFGR_PLLSAI2REN);
+	__HAL_RCC_PLLSAI2CLKOUT_DISABLE(RCC_PLLSAI2CFGR_PLLSAI2PEN | RCC_PLLSAI2CFGR_PLLSAI2QEN | RCC_PLLSAI2CFGR_PLLSAI2REN);
 #else
 	__HAL_RCC_PLLSAI2CLKOUT_DISABLE(RCC_PLLSAI2CFGR_PLLSAI2PEN | RCC_PLLSAI2CFGR_PLLSAI2REN);
 #endif /* RCC_PLLSAI2M_DIV_1_16_SUPPORT && RCC_PLLSAI2Q_DIV_SUPPORT */
@@ -2717,8 +2574,7 @@ void HAL_RCCEx_OCTOSPIDelayConfig(uint32_t Delay1, uint32_t Delay2)
 	assert_param(IS_RCC_OCTOSPIDELAY(Delay1));
 	assert_param(IS_RCC_OCTOSPIDELAY(Delay2));
 
-	MODIFY_REG(RCC->DLYCFGR, RCC_DLYCFGR_OCTOSPI1_DLY | RCC_DLYCFGR_OCTOSPI2_DLY,
-		   (Delay1 | (Delay2 << RCC_DLYCFGR_OCTOSPI2_DLY_Pos)));
+	MODIFY_REG(RCC->DLYCFGR, RCC_DLYCFGR_OCTOSPI1_DLY | RCC_DLYCFGR_OCTOSPI2_DLY, (Delay1 | (Delay2 << RCC_DLYCFGR_OCTOSPI2_DLY_Pos)));
 }
 #endif /* OCTOSPI1 && OCTOSPI2 */
 
@@ -3117,8 +2973,7 @@ static HAL_StatusTypeDef RCCEx_PLLSAI1_Config(RCC_PLLSAI1InitTypeDef *PllSai1, u
 	if (__HAL_RCC_GET_PLL_OSCSOURCE() != RCC_PLLSOURCE_NONE) {
 		/* PLL clock source and divider M already set, check that no
 		 * request for change  */
-		if ((__HAL_RCC_GET_PLL_OSCSOURCE() != PllSai1->PLLSAI1Source) ||
-		    (PllSai1->PLLSAI1Source == RCC_PLLSOURCE_NONE)
+		if ((__HAL_RCC_GET_PLL_OSCSOURCE() != PllSai1->PLLSAI1Source) || (PllSai1->PLLSAI1Source == RCC_PLLSOURCE_NONE)
 #if !defined(RCC_PLLSAI1M_DIV_1_16_SUPPORT)
 		    || (((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >> RCC_PLLCFGR_PLLM_Pos) + 1U) != PllSai1->PLLSAI1M)
 #endif
@@ -3156,8 +3011,7 @@ static HAL_StatusTypeDef RCCEx_PLLSAI1_Config(RCC_PLLSAI1InitTypeDef *PllSai1, u
 			MODIFY_REG(RCC->PLLCFGR, RCC_PLLCFGR_PLLSRC, PllSai1->PLLSAI1Source);
 #else
 			/* Set PLLSAI1 clock source and divider M */
-			MODIFY_REG(RCC->PLLCFGR, RCC_PLLCFGR_PLLSRC | RCC_PLLCFGR_PLLM,
-				   PllSai1->PLLSAI1Source | (PllSai1->PLLSAI1M - 1U) << RCC_PLLCFGR_PLLM_Pos);
+			MODIFY_REG(RCC->PLLCFGR, RCC_PLLCFGR_PLLSRC | RCC_PLLCFGR_PLLM, PllSai1->PLLSAI1Source | (PllSai1->PLLSAI1M - 1U) << RCC_PLLCFGR_PLLM_Pos);
 #endif
 		}
 	}
@@ -3185,18 +3039,12 @@ static HAL_StatusTypeDef RCCEx_PLLSAI1_Config(RCC_PLLSAI1InitTypeDef *PllSai1, u
 				/* Configure the PLLSAI1 Division factor M, P
 				 * and Multiplication factor N*/
 #if defined(RCC_PLLSAI1P_DIV_2_31_SUPPORT)
-				MODIFY_REG(RCC->PLLSAI1CFGR,
-					   RCC_PLLSAI1CFGR_PLLSAI1N | RCC_PLLSAI1CFGR_PLLSAI1PDIV |
-					       RCC_PLLSAI1CFGR_PLLSAI1M,
-					   (PllSai1->PLLSAI1N << RCC_PLLSAI1CFGR_PLLSAI1N_Pos) |
-					       (PllSai1->PLLSAI1P << RCC_PLLSAI1CFGR_PLLSAI1PDIV_Pos) |
+				MODIFY_REG(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1N | RCC_PLLSAI1CFGR_PLLSAI1PDIV | RCC_PLLSAI1CFGR_PLLSAI1M,
+					   (PllSai1->PLLSAI1N << RCC_PLLSAI1CFGR_PLLSAI1N_Pos) | (PllSai1->PLLSAI1P << RCC_PLLSAI1CFGR_PLLSAI1PDIV_Pos) |
 					       ((PllSai1->PLLSAI1M - 1U) << RCC_PLLSAI1CFGR_PLLSAI1M_Pos));
 #else
-				MODIFY_REG(RCC->PLLSAI1CFGR,
-					   RCC_PLLSAI1CFGR_PLLSAI1N | RCC_PLLSAI1CFGR_PLLSAI1P |
-					       RCC_PLLSAI1CFGR_PLLSAI1M,
-					   (PllSai1->PLLSAI1N << RCC_PLLSAI1CFGR_PLLSAI1N_Pos) |
-					       ((PllSai1->PLLSAI1P >> 4U) << RCC_PLLSAI1CFGR_PLLSAI1P_Pos) |
+				MODIFY_REG(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1N | RCC_PLLSAI1CFGR_PLLSAI1P | RCC_PLLSAI1CFGR_PLLSAI1M,
+					   (PllSai1->PLLSAI1N << RCC_PLLSAI1CFGR_PLLSAI1N_Pos) | ((PllSai1->PLLSAI1P >> 4U) << RCC_PLLSAI1CFGR_PLLSAI1P_Pos) |
 					       ((PllSai1->PLLSAI1M - 1U) << RCC_PLLSAI1CFGR_PLLSAI1M_Pos));
 #endif /* RCC_PLLSAI1P_DIV_2_31_SUPPORT */
 
@@ -3205,12 +3053,10 @@ static HAL_StatusTypeDef RCCEx_PLLSAI1_Config(RCC_PLLSAI1InitTypeDef *PllSai1, u
 				 * Multiplication factor N*/
 #if defined(RCC_PLLSAI1P_DIV_2_31_SUPPORT)
 				MODIFY_REG(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1N | RCC_PLLSAI1CFGR_PLLSAI1PDIV,
-					   (PllSai1->PLLSAI1N << RCC_PLLSAI1CFGR_PLLSAI1N_Pos) |
-					       (PllSai1->PLLSAI1P << RCC_PLLSAI1CFGR_PLLSAI1PDIV_Pos));
+					   (PllSai1->PLLSAI1N << RCC_PLLSAI1CFGR_PLLSAI1N_Pos) | (PllSai1->PLLSAI1P << RCC_PLLSAI1CFGR_PLLSAI1PDIV_Pos));
 #else
 				MODIFY_REG(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1N | RCC_PLLSAI1CFGR_PLLSAI1P,
-					   (PllSai1->PLLSAI1N << RCC_PLLSAI1CFGR_PLLSAI1N_Pos) |
-					       ((PllSai1->PLLSAI1P >> 4U) << RCC_PLLSAI1CFGR_PLLSAI1P_Pos));
+					   (PllSai1->PLLSAI1N << RCC_PLLSAI1CFGR_PLLSAI1N_Pos) | ((PllSai1->PLLSAI1P >> 4U) << RCC_PLLSAI1CFGR_PLLSAI1P_Pos));
 #endif /* RCC_PLLSAI1P_DIV_2_31_SUPPORT */
 
 #endif /* RCC_PLLSAI1M_DIV_1_16_SUPPORT */
@@ -3219,36 +3065,28 @@ static HAL_StatusTypeDef RCCEx_PLLSAI1_Config(RCC_PLLSAI1InitTypeDef *PllSai1, u
 #if defined(RCC_PLLSAI1M_DIV_1_16_SUPPORT)
 				/* Configure the PLLSAI1 Division factor M, Q
 				 * and Multiplication factor N*/
-				MODIFY_REG(RCC->PLLSAI1CFGR,
-					   RCC_PLLSAI1CFGR_PLLSAI1N | RCC_PLLSAI1CFGR_PLLSAI1Q |
-					       RCC_PLLSAI1CFGR_PLLSAI1M,
-					   (PllSai1->PLLSAI1N << RCC_PLLSAI1CFGR_PLLSAI1N_Pos) |
-					       (((PllSai1->PLLSAI1Q >> 1U) - 1U) << RCC_PLLSAI1CFGR_PLLSAI1Q_Pos) |
+				MODIFY_REG(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1N | RCC_PLLSAI1CFGR_PLLSAI1Q | RCC_PLLSAI1CFGR_PLLSAI1M,
+					   (PllSai1->PLLSAI1N << RCC_PLLSAI1CFGR_PLLSAI1N_Pos) | (((PllSai1->PLLSAI1Q >> 1U) - 1U) << RCC_PLLSAI1CFGR_PLLSAI1Q_Pos) |
 					       ((PllSai1->PLLSAI1M - 1U) << RCC_PLLSAI1CFGR_PLLSAI1M_Pos));
 #else
 				/* Configure the PLLSAI1 Division factor Q and
 				 * Multiplication factor N*/
 				MODIFY_REG(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1N | RCC_PLLSAI1CFGR_PLLSAI1Q,
-					   (PllSai1->PLLSAI1N << RCC_PLLSAI1CFGR_PLLSAI1N_Pos) |
-					       (((PllSai1->PLLSAI1Q >> 1U) - 1U) << RCC_PLLSAI1CFGR_PLLSAI1Q_Pos));
+					   (PllSai1->PLLSAI1N << RCC_PLLSAI1CFGR_PLLSAI1N_Pos) | (((PllSai1->PLLSAI1Q >> 1U) - 1U) << RCC_PLLSAI1CFGR_PLLSAI1Q_Pos));
 #endif /* RCC_PLLSAI1M_DIV_1_16_SUPPORT */
 			} else {
 				assert_param(IS_RCC_PLLSAI1R_VALUE(PllSai1->PLLSAI1R));
 #if defined(RCC_PLLSAI1M_DIV_1_16_SUPPORT)
 				/* Configure the PLLSAI1 Division factor M, R
 				 * and Multiplication factor N*/
-				MODIFY_REG(RCC->PLLSAI1CFGR,
-					   RCC_PLLSAI1CFGR_PLLSAI1N | RCC_PLLSAI1CFGR_PLLSAI1R |
-					       RCC_PLLSAI1CFGR_PLLSAI1M,
-					   (PllSai1->PLLSAI1N << RCC_PLLSAI1CFGR_PLLSAI1N_Pos) |
-					       (((PllSai1->PLLSAI1R >> 1U) - 1U) << RCC_PLLSAI1CFGR_PLLSAI1R_Pos) |
+				MODIFY_REG(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1N | RCC_PLLSAI1CFGR_PLLSAI1R | RCC_PLLSAI1CFGR_PLLSAI1M,
+					   (PllSai1->PLLSAI1N << RCC_PLLSAI1CFGR_PLLSAI1N_Pos) | (((PllSai1->PLLSAI1R >> 1U) - 1U) << RCC_PLLSAI1CFGR_PLLSAI1R_Pos) |
 					       ((PllSai1->PLLSAI1M - 1U) << RCC_PLLSAI1CFGR_PLLSAI1M_Pos));
 #else
 				/* Configure the PLLSAI1 Division factor R and
 				 * Multiplication factor N*/
 				MODIFY_REG(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1N | RCC_PLLSAI1CFGR_PLLSAI1R,
-					   (PllSai1->PLLSAI1N << RCC_PLLSAI1CFGR_PLLSAI1N_Pos) |
-					       (((PllSai1->PLLSAI1R >> 1U) - 1U) << RCC_PLLSAI1CFGR_PLLSAI1R_Pos));
+					   (PllSai1->PLLSAI1N << RCC_PLLSAI1CFGR_PLLSAI1N_Pos) | (((PllSai1->PLLSAI1R >> 1U) - 1U) << RCC_PLLSAI1CFGR_PLLSAI1R_Pos));
 #endif /* RCC_PLLSAI1M_DIV_1_16_SUPPORT */
 			}
 
@@ -3309,8 +3147,7 @@ static HAL_StatusTypeDef RCCEx_PLLSAI2_Config(RCC_PLLSAI2InitTypeDef *PllSai2, u
 	if (__HAL_RCC_GET_PLL_OSCSOURCE() != RCC_PLLSOURCE_NONE) {
 		/* PLL clock source and divider M already set, check that no
 		 * request for change  */
-		if ((__HAL_RCC_GET_PLL_OSCSOURCE() != PllSai2->PLLSAI2Source) ||
-		    (PllSai2->PLLSAI2Source == RCC_PLLSOURCE_NONE)
+		if ((__HAL_RCC_GET_PLL_OSCSOURCE() != PllSai2->PLLSAI2Source) || (PllSai2->PLLSAI2Source == RCC_PLLSOURCE_NONE)
 #if !defined(RCC_PLLSAI2M_DIV_1_16_SUPPORT)
 		    || (((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >> RCC_PLLCFGR_PLLM_Pos) + 1U) != PllSai2->PLLSAI2M)
 #endif
@@ -3348,8 +3185,7 @@ static HAL_StatusTypeDef RCCEx_PLLSAI2_Config(RCC_PLLSAI2InitTypeDef *PllSai2, u
 			MODIFY_REG(RCC->PLLCFGR, RCC_PLLCFGR_PLLSRC, PllSai2->PLLSAI2Source);
 #else
 			/* Set PLLSAI2 clock source and divider M */
-			MODIFY_REG(RCC->PLLCFGR, RCC_PLLCFGR_PLLSRC | RCC_PLLCFGR_PLLM,
-				   PllSai2->PLLSAI2Source | (PllSai2->PLLSAI2M - 1U) << RCC_PLLCFGR_PLLM_Pos);
+			MODIFY_REG(RCC->PLLCFGR, RCC_PLLCFGR_PLLSRC | RCC_PLLCFGR_PLLM, PllSai2->PLLSAI2Source | (PllSai2->PLLSAI2M - 1U) << RCC_PLLCFGR_PLLM_Pos);
 #endif
 		}
 	}
@@ -3377,18 +3213,12 @@ static HAL_StatusTypeDef RCCEx_PLLSAI2_Config(RCC_PLLSAI2InitTypeDef *PllSai2, u
 				/* Configure the PLLSAI2 Division factor M, P
 				 * and Multiplication factor N*/
 #if defined(RCC_PLLSAI2P_DIV_2_31_SUPPORT)
-				MODIFY_REG(RCC->PLLSAI2CFGR,
-					   RCC_PLLSAI2CFGR_PLLSAI2N | RCC_PLLSAI2CFGR_PLLSAI2PDIV |
-					       RCC_PLLSAI2CFGR_PLLSAI2M,
-					   (PllSai2->PLLSAI2N << RCC_PLLSAI2CFGR_PLLSAI2N_Pos) |
-					       (PllSai2->PLLSAI2P << RCC_PLLSAI2CFGR_PLLSAI2PDIV_Pos) |
+				MODIFY_REG(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2N | RCC_PLLSAI2CFGR_PLLSAI2PDIV | RCC_PLLSAI2CFGR_PLLSAI2M,
+					   (PllSai2->PLLSAI2N << RCC_PLLSAI2CFGR_PLLSAI2N_Pos) | (PllSai2->PLLSAI2P << RCC_PLLSAI2CFGR_PLLSAI2PDIV_Pos) |
 					       ((PllSai2->PLLSAI2M - 1U) << RCC_PLLSAI2CFGR_PLLSAI2M_Pos));
 #else
-				MODIFY_REG(RCC->PLLSAI2CFGR,
-					   RCC_PLLSAI2CFGR_PLLSAI2N | RCC_PLLSAI2CFGR_PLLSAI2P |
-					       RCC_PLLSAI2CFGR_PLLSAI2M,
-					   (PllSai2->PLLSAI2N << RCC_PLLSAI2CFGR_PLLSAI2N_Pos) |
-					       ((PllSai2->PLLSAI2P >> 4U) << RCC_PLLSAI2CFGR_PLLSAI2P_Pos) |
+				MODIFY_REG(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2N | RCC_PLLSAI2CFGR_PLLSAI2P | RCC_PLLSAI2CFGR_PLLSAI2M,
+					   (PllSai2->PLLSAI2N << RCC_PLLSAI2CFGR_PLLSAI2N_Pos) | ((PllSai2->PLLSAI2P >> 4U) << RCC_PLLSAI2CFGR_PLLSAI2P_Pos) |
 					       ((PllSai2->PLLSAI2M - 1U) << RCC_PLLSAI2CFGR_PLLSAI2M_Pos));
 #endif /* RCC_PLLSAI2P_DIV_2_31_SUPPORT */
 
@@ -3397,12 +3227,10 @@ static HAL_StatusTypeDef RCCEx_PLLSAI2_Config(RCC_PLLSAI2InitTypeDef *PllSai2, u
 				 * Multiplication factor N*/
 #if defined(RCC_PLLSAI2P_DIV_2_31_SUPPORT)
 				MODIFY_REG(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2N | RCC_PLLSAI2CFGR_PLLSAI2PDIV,
-					   (PllSai2->PLLSAI2N << RCC_PLLSAI2CFGR_PLLSAI2N_Pos) |
-					       (PllSai2->PLLSAI2P << RCC_PLLSAI2CFGR_PLLSAI2PDIV_Pos));
+					   (PllSai2->PLLSAI2N << RCC_PLLSAI2CFGR_PLLSAI2N_Pos) | (PllSai2->PLLSAI2P << RCC_PLLSAI2CFGR_PLLSAI2PDIV_Pos));
 #else
 				MODIFY_REG(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2N | RCC_PLLSAI2CFGR_PLLSAI2P,
-					   (PllSai2->PLLSAI2N << RCC_PLLSAI2CFGR_PLLSAI2N_Pos) |
-					       ((PllSai2->PLLSAI2P >> 4U) << RCC_PLLSAI2CFGR_PLLSAI2P_Pos));
+					   (PllSai2->PLLSAI2N << RCC_PLLSAI2CFGR_PLLSAI2N_Pos) | ((PllSai2->PLLSAI2P >> 4U) << RCC_PLLSAI2CFGR_PLLSAI2P_Pos));
 #endif /* RCC_PLLSAI2P_DIV_2_31_SUPPORT */
 
 #endif /* RCC_PLLSAI2M_DIV_1_16_SUPPORT */
@@ -3413,18 +3241,14 @@ static HAL_StatusTypeDef RCCEx_PLLSAI2_Config(RCC_PLLSAI2InitTypeDef *PllSai2, u
 #if defined(RCC_PLLSAI2M_DIV_1_16_SUPPORT)
 				/* Configure the PLLSAI2 Division factor M, Q
 				 * and Multiplication factor N*/
-				MODIFY_REG(RCC->PLLSAI2CFGR,
-					   RCC_PLLSAI2CFGR_PLLSAI2N | RCC_PLLSAI2CFGR_PLLSAI2Q |
-					       RCC_PLLSAI2CFGR_PLLSAI2M,
-					   (PllSai2->PLLSAI2N << RCC_PLLSAI2CFGR_PLLSAI2N_Pos) |
-					       (((PllSai2->PLLSAI2Q >> 1U) - 1U) << RCC_PLLSAI2CFGR_PLLSAI2Q_Pos) |
+				MODIFY_REG(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2N | RCC_PLLSAI2CFGR_PLLSAI2Q | RCC_PLLSAI2CFGR_PLLSAI2M,
+					   (PllSai2->PLLSAI2N << RCC_PLLSAI2CFGR_PLLSAI2N_Pos) | (((PllSai2->PLLSAI2Q >> 1U) - 1U) << RCC_PLLSAI2CFGR_PLLSAI2Q_Pos) |
 					       ((PllSai2->PLLSAI2M - 1U) << RCC_PLLSAI2CFGR_PLLSAI2M_Pos));
 #else
 				/* Configure the PLLSAI2 Division factor Q and
 				 * Multiplication factor N*/
 				MODIFY_REG(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2N | RCC_PLLSAI2CFGR_PLLSAI2Q,
-					   (PllSai2->PLLSAI2N << RCC_PLLSAI2CFGR_PLLSAI2N_Pos) |
-					       (((PllSai2->PLLSAI2Q >> 1U) - 1U) << RCC_PLLSAI2CFGR_PLLSAI2Q_Pos));
+					   (PllSai2->PLLSAI2N << RCC_PLLSAI2CFGR_PLLSAI2N_Pos) | (((PllSai2->PLLSAI2Q >> 1U) - 1U) << RCC_PLLSAI2CFGR_PLLSAI2Q_Pos));
 #endif /* RCC_PLLSAI2M_DIV_1_16_SUPPORT */
 			}
 #endif /* RCC_PLLSAI2Q_DIV_SUPPORT */
@@ -3433,18 +3257,14 @@ static HAL_StatusTypeDef RCCEx_PLLSAI2_Config(RCC_PLLSAI2InitTypeDef *PllSai2, u
 #if defined(RCC_PLLSAI2M_DIV_1_16_SUPPORT)
 				/* Configure the PLLSAI2 Division factor M, R
 				 * and Multiplication factor N*/
-				MODIFY_REG(RCC->PLLSAI2CFGR,
-					   RCC_PLLSAI2CFGR_PLLSAI2N | RCC_PLLSAI2CFGR_PLLSAI2R |
-					       RCC_PLLSAI2CFGR_PLLSAI2M,
-					   (PllSai2->PLLSAI2N << RCC_PLLSAI2CFGR_PLLSAI2N_Pos) |
-					       (((PllSai2->PLLSAI2R >> 1U) - 1U) << RCC_PLLSAI2CFGR_PLLSAI2R_Pos) |
+				MODIFY_REG(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2N | RCC_PLLSAI2CFGR_PLLSAI2R | RCC_PLLSAI2CFGR_PLLSAI2M,
+					   (PllSai2->PLLSAI2N << RCC_PLLSAI2CFGR_PLLSAI2N_Pos) | (((PllSai2->PLLSAI2R >> 1U) - 1U) << RCC_PLLSAI2CFGR_PLLSAI2R_Pos) |
 					       ((PllSai2->PLLSAI2M - 1U) << RCC_PLLSAI2CFGR_PLLSAI2M_Pos));
 #else
 				/* Configure the PLLSAI2 Division factor R and
 				 * Multiplication factor N*/
 				MODIFY_REG(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2N | RCC_PLLSAI2CFGR_PLLSAI2R,
-					   (PllSai2->PLLSAI2N << RCC_PLLSAI2CFGR_PLLSAI2N_Pos) |
-					       (((PllSai2->PLLSAI2R >> 1U) - 1U) << RCC_PLLSAI2CFGR_PLLSAI2R_Pos));
+					   (PllSai2->PLLSAI2N << RCC_PLLSAI2CFGR_PLLSAI2N_Pos) | (((PllSai2->PLLSAI2R >> 1U) - 1U) << RCC_PLLSAI2CFGR_PLLSAI2R_Pos));
 #endif /* RCC_PLLSAI2M_DIV_1_16_SUPPORT */
 			}
 
@@ -3510,11 +3330,9 @@ static uint32_t RCCEx_GetSAIxPeriphCLKFreq(uint32_t PeriphClk, uint32_t InputFre
 
 #if defined(SAI2)
 		if ((srcclk == RCC_SAI1CLKSOURCE_PLL) || (srcclk == RCC_SAI2CLKSOURCE_PLL)) {
-			if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_PLLRDY) &&
-			    (__HAL_RCC_GET_PLLCLKOUT_CONFIG(RCC_PLL_SAI3CLK) != 0U)) {
+			if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_PLLRDY) && (__HAL_RCC_GET_PLLCLKOUT_CONFIG(RCC_PLL_SAI3CLK) != 0U)) {
 				/* f(PLL Source) / PLLM */
-				pllvco = (pllvco /
-					  ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >> RCC_PLLCFGR_PLLM_Pos) + 1U));
+				pllvco = (pllvco / ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >> RCC_PLLCFGR_PLLM_Pos) + 1U));
 				/* f(PLLSAI3CLK) = f(VCO input) * PLLN / PLLP */
 				plln = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos;
 #if defined(RCC_PLLP_DIV_2_31_SUPPORT)
@@ -3532,27 +3350,21 @@ static uint32_t RCCEx_GetSAIxPeriphCLKFreq(uint32_t PeriphClk, uint32_t InputFre
 		} else if (srcclk == 0U) /* RCC_SAI1CLKSOURCE_PLLSAI1 ||
 					    RCC_SAI2CLKSOURCE_PLLSAI1 */
 		{
-			if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_PLLSAI1RDY) &&
-			    (__HAL_RCC_GET_PLLSAI1CLKOUT_CONFIG(RCC_PLLSAI1_SAI1CLK) != 0U)) {
+			if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_PLLSAI1RDY) && (__HAL_RCC_GET_PLLSAI1CLKOUT_CONFIG(RCC_PLLSAI1_SAI1CLK) != 0U)) {
 #if defined(RCC_PLLSAI1M_DIV_1_16_SUPPORT)
 				/* PLLSAI1M exists: apply PLLSAI1M divider for
 				 * PLLSAI1 output computation */
 				/* f(PLLSAI1 Source) / PLLSAI1M */
-				pllvco = (pllvco / ((READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1M) >>
-						     RCC_PLLSAI1CFGR_PLLSAI1M_Pos) +
-						    1U));
+				pllvco = (pllvco / ((READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1M) >> RCC_PLLSAI1CFGR_PLLSAI1M_Pos) + 1U));
 #else
 				/* f(PLL Source) / PLLM */
-				pllvco = (pllvco /
-					  ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >> RCC_PLLCFGR_PLLM_Pos) + 1U));
+				pllvco = (pllvco / ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >> RCC_PLLCFGR_PLLM_Pos) + 1U));
 #endif
 				/* f(PLLSAI1CLK) = f(VCOSAI1 input) * PLLSAI1N /
 				 * PLLSAI1P */
-				plln = READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1N) >>
-				       RCC_PLLSAI1CFGR_PLLSAI1N_Pos;
+				plln = READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1N) >> RCC_PLLSAI1CFGR_PLLSAI1N_Pos;
 #if defined(RCC_PLLSAI1P_DIV_2_31_SUPPORT)
-				pllp = READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1PDIV) >>
-				       RCC_PLLSAI1CFGR_PLLSAI1PDIV_Pos;
+				pllp = READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1PDIV) >> RCC_PLLSAI1CFGR_PLLSAI1PDIV_Pos;
 #endif
 				if (pllp == 0U) {
 					if (READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1P) != 0U) {
@@ -3564,23 +3376,20 @@ static uint32_t RCCEx_GetSAIxPeriphCLKFreq(uint32_t PeriphClk, uint32_t InputFre
 				frequency = (pllvco * plln) / pllp;
 			}
 		}
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
-    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 		else if ((srcclk == RCC_SAI1CLKSOURCE_HSI) || (srcclk == RCC_SAI2CLKSOURCE_HSI)) {
 			if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) {
 				frequency = HSI_VALUE;
 			}
 		}
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                  \
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 
 #else
 		if (srcclk == RCC_SAI1CLKSOURCE_PLL) {
-			if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_PLLRDY) &&
-			    (__HAL_RCC_GET_PLLCLKOUT_CONFIG(RCC_PLL_SAI2CLK) != 0U)) {
+			if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_PLLRDY) && (__HAL_RCC_GET_PLLCLKOUT_CONFIG(RCC_PLL_SAI2CLK) != 0U)) {
 				/* f(PLL Source) / PLLM */
-				pllvco = (pllvco /
-					  ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >> RCC_PLLCFGR_PLLM_Pos) + 1U));
+				pllvco = (pllvco / ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >> RCC_PLLCFGR_PLLM_Pos) + 1U));
 				/* f(PLLSAI2CLK) = f(VCO input) * PLLN / PLLP */
 				plln = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos;
 #if defined(RCC_PLLP_DIV_2_31_SUPPORT)
@@ -3603,27 +3412,21 @@ static uint32_t RCCEx_GetSAIxPeriphCLKFreq(uint32_t PeriphClk, uint32_t InputFre
 				 */
 			}
 		} else if (srcclk == RCC_SAI1CLKSOURCE_PLLSAI1) {
-			if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_PLLSAI1RDY) &&
-			    (__HAL_RCC_GET_PLLSAI1CLKOUT_CONFIG(RCC_PLLSAI1_SAI1CLK) != 0U)) {
+			if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_PLLSAI1RDY) && (__HAL_RCC_GET_PLLSAI1CLKOUT_CONFIG(RCC_PLLSAI1_SAI1CLK) != 0U)) {
 #if defined(RCC_PLLSAI1M_DIV_1_16_SUPPORT)
 				/* PLLSAI1M exists: apply PLLSAI1M divider for
 				 * PLLSAI1 output computation */
 				/* f(PLLSAI1 Source) / PLLSAI1M */
-				pllvco = (pllvco / ((READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1M) >>
-						     RCC_PLLSAI1CFGR_PLLSAI1M_Pos) +
-						    1U));
+				pllvco = (pllvco / ((READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1M) >> RCC_PLLSAI1CFGR_PLLSAI1M_Pos) + 1U));
 #else
 				/* f(PLL Source) / PLLM */
-				pllvco = (pllvco /
-					  ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >> RCC_PLLCFGR_PLLM_Pos) + 1U));
+				pllvco = (pllvco / ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >> RCC_PLLCFGR_PLLM_Pos) + 1U));
 #endif
 				/* f(PLLSAI1CLK) = f(VCOSAI1 input) * PLLSAI1N /
 				 * PLLSAI1P */
-				plln = READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1N) >>
-				       RCC_PLLSAI1CFGR_PLLSAI1N_Pos;
+				plln = READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1N) >> RCC_PLLSAI1CFGR_PLLSAI1N_Pos;
 #if defined(RCC_PLLSAI1P_DIV_2_31_SUPPORT)
-				pllp = READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1PDIV) >>
-				       RCC_PLLSAI1CFGR_PLLSAI1PDIV_Pos;
+				pllp = READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1PDIV) >> RCC_PLLSAI1CFGR_PLLSAI1PDIV_Pos;
 #endif
 				if (pllp == 0U) {
 					if (READ_BIT(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1P) != 0U) {
@@ -3647,27 +3450,21 @@ static uint32_t RCCEx_GetSAIxPeriphCLKFreq(uint32_t PeriphClk, uint32_t InputFre
 #if defined(RCC_PLLSAI2_SUPPORT)
 
 		else if ((srcclk == RCC_SAI1CLKSOURCE_PLLSAI2) || (srcclk == RCC_SAI2CLKSOURCE_PLLSAI2)) {
-			if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_PLLSAI2RDY) &&
-			    (__HAL_RCC_GET_PLLSAI2CLKOUT_CONFIG(RCC_PLLSAI2_SAI2CLK) != 0U)) {
+			if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_PLLSAI2RDY) && (__HAL_RCC_GET_PLLSAI2CLKOUT_CONFIG(RCC_PLLSAI2_SAI2CLK) != 0U)) {
 #if defined(RCC_PLLSAI2M_DIV_1_16_SUPPORT)
 				/* PLLSAI2M exists: apply PLLSAI2M divider for
 				 * PLLSAI2 output computation */
 				/* f(PLLSAI2 Source) / PLLSAI2M */
-				pllvco = (pllvco / ((READ_BIT(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2M) >>
-						     RCC_PLLSAI2CFGR_PLLSAI2M_Pos) +
-						    1U));
+				pllvco = (pllvco / ((READ_BIT(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2M) >> RCC_PLLSAI2CFGR_PLLSAI2M_Pos) + 1U));
 #else
 				/* f(PLL Source) / PLLM */
-				pllvco = (pllvco /
-					  ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >> RCC_PLLCFGR_PLLM_Pos) + 1U));
+				pllvco = (pllvco / ((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLM) >> RCC_PLLCFGR_PLLM_Pos) + 1U));
 #endif
 				/* f(PLLSAI2CLK) = f(VCOSAI2 input) * PLLSAI2N /
 				 * PLLSAI2P */
-				plln = READ_BIT(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2N) >>
-				       RCC_PLLSAI2CFGR_PLLSAI2N_Pos;
+				plln = READ_BIT(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2N) >> RCC_PLLSAI2CFGR_PLLSAI2N_Pos;
 #if defined(RCC_PLLSAI2P_DIV_2_31_SUPPORT)
-				pllp = READ_BIT(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2PDIV) >>
-				       RCC_PLLSAI2CFGR_PLLSAI2PDIV_Pos;
+				pllp = READ_BIT(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2PDIV) >> RCC_PLLSAI2CFGR_PLLSAI2PDIV_Pos;
 #endif
 				if (pllp == 0U) {
 					if (READ_BIT(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2P) != 0U) {

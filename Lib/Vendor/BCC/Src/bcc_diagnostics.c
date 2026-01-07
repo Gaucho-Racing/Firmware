@@ -31,36 +31,31 @@
 #define BCC_DIAG_TCT_SETTLE_OV_US 100U
 
 /*! @brief Bit map of odd cells (differs according to number of used cells) */
-#define BCC_ODD_CELL_MASK(drvConfig, cid)                                                                              \
-	(((drvConfig->device[(uint8_t)(cid) - 1] == BCC_DEVICE_MC33771C)                                               \
-	      ? ((drvConfig->cellCnt[(uint8_t)(cid) - 1] % 2) ? 0x2AA5 : 0x1555)                                       \
-	      : ((drvConfig->cellCnt[(uint8_t)(cid) - 1] % 2) ? 0x0029 : 0x0015)) &                                    \
+#define BCC_ODD_CELL_MASK(drvConfig, cid)                                                                                                                                                              \
+	(((drvConfig->device[(uint8_t)(cid) - 1] == BCC_DEVICE_MC33771C) ? ((drvConfig->cellCnt[(uint8_t)(cid) - 1] % 2) ? 0x2AA5 : 0x1555)                                                            \
+									 : ((drvConfig->cellCnt[(uint8_t)(cid) - 1] % 2) ? 0x0029 : 0x0015)) &                                                         \
 	 drvConfig->drvData.cellMap[(uint8_t)(cid) - 1])
 
 /*! @brief Bit map of even cells (differs according to number of used cells) */
-#define BCC_EVEN_CELL_MASK(drvConfig, cid)                                                                             \
-	(((drvConfig->device[(uint8_t)(cid) - 1] == BCC_DEVICE_MC33771C)                                               \
-	      ? ((drvConfig->cellCnt[(uint8_t)(cid) - 1] % 2) ? 0x155A : 0x2AAA)                                       \
-	      : ((drvConfig->cellCnt[(uint8_t)(cid) - 1] % 2) ? 0x0016 : 0x002A)) &                                    \
+#define BCC_EVEN_CELL_MASK(drvConfig, cid)                                                                                                                                                             \
+	(((drvConfig->device[(uint8_t)(cid) - 1] == BCC_DEVICE_MC33771C) ? ((drvConfig->cellCnt[(uint8_t)(cid) - 1] % 2) ? 0x155A : 0x2AAA)                                                            \
+									 : ((drvConfig->cellCnt[(uint8_t)(cid) - 1] % 2) ? 0x0016 : 0x002A)) &                                                         \
 	 drvConfig->drvData.cellMap[(uint8_t)(cid) - 1])
 
 /*! @brief Bit mask of all ANx UT bits in AN_OT_UT_FLT register. */
-#define BCC_AN_UT_ALL_MASK                                                                                             \
-	(MC33771C_AN_OT_UT_FLT_AN0_UT_MASK | MC33771C_AN_OT_UT_FLT_AN1_UT_MASK | MC33771C_AN_OT_UT_FLT_AN2_UT_MASK |   \
-	 MC33771C_AN_OT_UT_FLT_AN3_UT_MASK | MC33771C_AN_OT_UT_FLT_AN4_UT_MASK | MC33771C_AN_OT_UT_FLT_AN5_UT_MASK |   \
-	 MC33771C_AN_OT_UT_FLT_AN6_UT_MASK)
+#define BCC_AN_UT_ALL_MASK                                                                                                                                                                             \
+	(MC33771C_AN_OT_UT_FLT_AN0_UT_MASK | MC33771C_AN_OT_UT_FLT_AN1_UT_MASK | MC33771C_AN_OT_UT_FLT_AN2_UT_MASK | MC33771C_AN_OT_UT_FLT_AN3_UT_MASK | MC33771C_AN_OT_UT_FLT_AN4_UT_MASK |           \
+	 MC33771C_AN_OT_UT_FLT_AN5_UT_MASK | MC33771C_AN_OT_UT_FLT_AN6_UT_MASK)
 
 /*! @brief Bit mask of all ANx OT bits in AN_OT_UT_FLT register. */
-#define BCC_AN_OT_ALL_MASK                                                                                             \
-	(MC33771C_AN_OT_UT_FLT_AN0_OT_MASK | MC33771C_AN_OT_UT_FLT_AN1_OT_MASK | MC33771C_AN_OT_UT_FLT_AN2_OT_MASK |   \
-	 MC33771C_AN_OT_UT_FLT_AN3_OT_MASK | MC33771C_AN_OT_UT_FLT_AN4_OT_MASK | MC33771C_AN_OT_UT_FLT_AN5_OT_MASK |   \
-	 MC33771C_AN_OT_UT_FLT_AN6_OT_MASK)
+#define BCC_AN_OT_ALL_MASK                                                                                                                                                                             \
+	(MC33771C_AN_OT_UT_FLT_AN0_OT_MASK | MC33771C_AN_OT_UT_FLT_AN1_OT_MASK | MC33771C_AN_OT_UT_FLT_AN2_OT_MASK | MC33771C_AN_OT_UT_FLT_AN3_OT_MASK | MC33771C_AN_OT_UT_FLT_AN4_OT_MASK |           \
+	 MC33771C_AN_OT_UT_FLT_AN5_OT_MASK | MC33771C_AN_OT_UT_FLT_AN6_OT_MASK)
 
 /*! @brief Bit mask of all ANx OPEN bits in GPIO_SHORT_ANX_OPEN_STS register. */
-#define BCC_AN_OPEN_STS_ALL_MASK                                                                                       \
-	(MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN0_OPEN_MASK | MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN1_OPEN_MASK |             \
-	 MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN2_OPEN_MASK | MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN3_OPEN_MASK |             \
-	 MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN4_OPEN_MASK | MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN5_OPEN_MASK |             \
+#define BCC_AN_OPEN_STS_ALL_MASK                                                                                                                                                                       \
+	(MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN0_OPEN_MASK | MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN1_OPEN_MASK | MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN2_OPEN_MASK |                                            \
+	 MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN3_OPEN_MASK | MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN4_OPEN_MASK | MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN5_OPEN_MASK |                                            \
 	 MC33771C_GPIO_SHORT_ANX_OPEN_STS_AN6_OPEN_MASK)
 
 /*******************************************************************************
@@ -109,8 +104,7 @@ static bcc_status_t BCC_ExitDiagnostics(bcc_drv_config_t *const drvConfig, const
  *
  * @return bcc_status_t Error code.
  */
-static bcc_status_t BCC_CommandSwitches(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-					const bcc_diag_switch_sel_t switches, const bcc_diag_switch_pos_t odd,
+static bcc_status_t BCC_CommandSwitches(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const bcc_diag_switch_sel_t switches, const bcc_diag_switch_pos_t odd,
 					const bcc_diag_switch_pos_t even);
 
 /*!
@@ -129,9 +123,8 @@ static bcc_status_t BCC_CommandSwitches(bcc_drv_config_t *const drvConfig, const
  *
  * @return bcc_status_t Error code.
  */
-static bcc_status_t BCC_DiagOvuvPart(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-				     const bcc_diag_switch_pos_t odd, const bcc_diag_switch_pos_t even,
-				     const uint32_t sm01twait, uint16_t *const fltOvrv, uint16_t *const fltUndv);
+static bcc_status_t BCC_DiagOvuvPart(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const bcc_diag_switch_pos_t odd, const bcc_diag_switch_pos_t even, const uint32_t sm01twait,
+				     uint16_t *const fltOvrv, uint16_t *const fltUndv);
 
 /*!
  * @brief This function is part of the CTx open detect verification. It clear
@@ -148,8 +141,7 @@ static bcc_status_t BCC_DiagOvuvPart(bcc_drv_config_t *const drvConfig, const bc
  *
  * @return bcc_status_t Error code.
  */
-static bcc_status_t BCC_DiagCtxopenPart(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-					const bcc_diag_switch_pos_t odd, const bcc_diag_switch_pos_t even,
+static bcc_status_t BCC_DiagCtxopenPart(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const bcc_diag_switch_pos_t odd, const bcc_diag_switch_pos_t even,
 					const bcc_diag_const_t *const diagTimeConst, uint32_t *const measVal);
 
 /*!
@@ -166,8 +158,7 @@ static bcc_status_t BCC_DiagCtxopenPart(bcc_drv_config_t *const drvConfig, const
  *
  * @return bcc_status_t Error code.
  */
-static bcc_status_t BCC_GpioOtUtPart(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint16_t gpioCfg2Val,
-				     uint16_t *const otUtStat);
+static bcc_status_t BCC_GpioOtUtPart(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint16_t gpioCfg2Val, uint16_t *const otUtStat);
 
 /*******************************************************************************
  * Internal function
@@ -185,9 +176,8 @@ static bcc_status_t BCC_SetNumbOdd(bcc_drv_config_t *const drvConfig, const bcc_
 	/* If the number of cells on the cluster is odd, then write the bit
 	 * SYS_CFG2[NUMB_ODD] to logic 1, else write it to logic 0. */
 	return BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_CFG2_OFFSET, MC33771C_SYS_CFG2_NUMB_ODD_MASK,
-			      (drvConfig->cellCnt[(uint8_t)cid - 1] & 0x01U)
-				  ? MC33771C_SYS_CFG2_NUMB_ODD(MC33771C_SYS_CFG2_NUMB_ODD_ODD_ENUM_VAL)
-				  : MC33771C_SYS_CFG2_NUMB_ODD(MC33771C_SYS_CFG2_NUMB_ODD_EVEN_ENUM_VAL));
+			      (drvConfig->cellCnt[(uint8_t)cid - 1] & 0x01U) ? MC33771C_SYS_CFG2_NUMB_ODD(MC33771C_SYS_CFG2_NUMB_ODD_ODD_ENUM_VAL)
+									     : MC33771C_SYS_CFG2_NUMB_ODD(MC33771C_SYS_CFG2_NUMB_ODD_EVEN_ENUM_VAL));
 }
 
 /*FUNCTION**********************************************************************
@@ -201,8 +191,7 @@ static bcc_status_t BCC_EnterDiagnostics(bcc_drv_config_t *const drvConfig, cons
 	uint16_t sysCfg1Val;
 	bcc_status_t status;
 
-	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_CFG1_OFFSET, MC33771C_SYS_CFG1_GO2DIAG_MASK,
-				MC33771C_SYS_CFG1_GO2DIAG(MC33771C_SYS_CFG1_GO2DIAG_ENTER_ENUM_VAL));
+	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_CFG1_OFFSET, MC33771C_SYS_CFG1_GO2DIAG_MASK, MC33771C_SYS_CFG1_GO2DIAG(MC33771C_SYS_CFG1_GO2DIAG_ENTER_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -228,8 +217,7 @@ static bcc_status_t BCC_EnterDiagnostics(bcc_drv_config_t *const drvConfig, cons
  *END**************************************************************************/
 static bcc_status_t BCC_ExitDiagnostics(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid)
 {
-	return BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_CFG1_OFFSET, MC33771C_SYS_CFG1_GO2DIAG_MASK,
-			      MC33771C_SYS_CFG1_GO2DIAG(MC33771C_SYS_CFG1_GO2DIAG_EXIT_ENUM_VAL));
+	return BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_CFG1_OFFSET, MC33771C_SYS_CFG1_GO2DIAG_MASK, MC33771C_SYS_CFG1_GO2DIAG(MC33771C_SYS_CFG1_GO2DIAG_EXIT_ENUM_VAL));
 }
 
 /*FUNCTION**********************************************************************
@@ -238,9 +226,7 @@ static bcc_status_t BCC_ExitDiagnostics(bcc_drv_config_t *const drvConfig, const
  * Description   : This function commands CT or CB diagnostic switches.
  *
  *END**************************************************************************/
-static bcc_status_t BCC_CommandSwitches(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-					const bcc_diag_switch_sel_t switches, const bcc_diag_switch_pos_t odd,
-					const bcc_diag_switch_pos_t even)
+static bcc_status_t BCC_CommandSwitches(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const bcc_diag_switch_sel_t switches, const bcc_diag_switch_pos_t odd, const bcc_diag_switch_pos_t even)
 {
 	uint16_t mask;	/* SYS_DIAG register mask. */
 	uint16_t value; /* New value. */
@@ -248,20 +234,16 @@ static bcc_status_t BCC_CommandSwitches(bcc_drv_config_t *const drvConfig, const
 	/* Create content of a frame to command CB outputs */
 	if (switches == BCC_SWITCH_SEL_CT) {
 		mask = MC33771C_SYS_DIAG_CT_OL_ODD_MASK | MC33771C_SYS_DIAG_CT_OL_EVEN_MASK;
-		value = (even == BCC_SWITCH_POS_OPEN)
-			    ? MC33771C_SYS_DIAG_CT_OL_EVEN(MC33771C_SYS_DIAG_CT_OL_EVEN_OPEN_ENUM_VAL)
-			    : MC33771C_SYS_DIAG_CT_OL_EVEN(MC33771C_SYS_DIAG_CT_OL_EVEN_CLOSED_ENUM_VAL);
-		value |= (odd == BCC_SWITCH_POS_OPEN)
-			     ? MC33771C_SYS_DIAG_CT_OL_ODD(MC33771C_SYS_DIAG_CT_OL_ODD_OPEN_ENUM_VAL)
-			     : MC33771C_SYS_DIAG_CT_OL_ODD(MC33771C_SYS_DIAG_CT_OL_ODD_CLOSED_ENUM_VAL);
+		value = (even == BCC_SWITCH_POS_OPEN) ? MC33771C_SYS_DIAG_CT_OL_EVEN(MC33771C_SYS_DIAG_CT_OL_EVEN_OPEN_ENUM_VAL)
+						      : MC33771C_SYS_DIAG_CT_OL_EVEN(MC33771C_SYS_DIAG_CT_OL_EVEN_CLOSED_ENUM_VAL);
+		value |=
+		    (odd == BCC_SWITCH_POS_OPEN) ? MC33771C_SYS_DIAG_CT_OL_ODD(MC33771C_SYS_DIAG_CT_OL_ODD_OPEN_ENUM_VAL) : MC33771C_SYS_DIAG_CT_OL_ODD(MC33771C_SYS_DIAG_CT_OL_ODD_CLOSED_ENUM_VAL);
 	} else {
 		mask = MC33771C_SYS_DIAG_CB_OL_ODD_MASK | MC33771C_SYS_DIAG_CB_OL_EVEN_MASK;
-		value = (even == BCC_SWITCH_POS_OPEN)
-			    ? MC33771C_SYS_DIAG_CB_OL_EVEN(MC33771C_SYS_DIAG_CB_OL_EVEN_OPEN_ENUM_VAL)
-			    : MC33771C_SYS_DIAG_CB_OL_EVEN(MC33771C_SYS_DIAG_CB_OL_EVEN_CLOSED_ENUM_VAL);
-		value |= (odd == BCC_SWITCH_POS_OPEN)
-			     ? MC33771C_SYS_DIAG_CB_OL_ODD(MC33771C_SYS_DIAG_CB_OL_ODD_OPEN_ENUM_VAL)
-			     : MC33771C_SYS_DIAG_CB_OL_ODD(MC33771C_SYS_DIAG_CB_OL_ODD_CLOSED_ENUM_VAL);
+		value = (even == BCC_SWITCH_POS_OPEN) ? MC33771C_SYS_DIAG_CB_OL_EVEN(MC33771C_SYS_DIAG_CB_OL_EVEN_OPEN_ENUM_VAL)
+						      : MC33771C_SYS_DIAG_CB_OL_EVEN(MC33771C_SYS_DIAG_CB_OL_EVEN_CLOSED_ENUM_VAL);
+		value |=
+		    (odd == BCC_SWITCH_POS_OPEN) ? MC33771C_SYS_DIAG_CB_OL_ODD(MC33771C_SYS_DIAG_CB_OL_ODD_OPEN_ENUM_VAL) : MC33771C_SYS_DIAG_CB_OL_ODD(MC33771C_SYS_DIAG_CB_OL_ODD_CLOSED_ENUM_VAL);
 	}
 
 	return BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET, mask, value);
@@ -275,9 +257,8 @@ static bcc_status_t BCC_CommandSwitches(bcc_drv_config_t *const drvConfig, const
  *                 cell voltages.
  *
  *END**************************************************************************/
-static bcc_status_t BCC_DiagOvuvPart(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-				     const bcc_diag_switch_pos_t odd, const bcc_diag_switch_pos_t even,
-				     const uint32_t sm01twait, uint16_t *const fltOvrv, uint16_t *const fltUndv)
+static bcc_status_t BCC_DiagOvuvPart(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const bcc_diag_switch_pos_t odd, const bcc_diag_switch_pos_t even, const uint32_t sm01twait,
+				     uint16_t *const fltOvrv, uint16_t *const fltUndv)
 {
 	uint16_t fault[2]; /* Value of OV and UV fault registers. */
 	bcc_status_t status;
@@ -329,8 +310,7 @@ static bcc_status_t BCC_DiagOvuvPart(bcc_drv_config_t *const drvConfig, const bc
  *                 time.
  *
  *END**************************************************************************/
-static bcc_status_t BCC_DiagCtxopenPart(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-					const bcc_diag_switch_pos_t odd, const bcc_diag_switch_pos_t even,
+static bcc_status_t BCC_DiagCtxopenPart(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const bcc_diag_switch_pos_t odd, const bcc_diag_switch_pos_t even,
 					const bcc_diag_const_t *const diagTimeConst, uint32_t *const measVal)
 {
 	bcc_status_t status;
@@ -386,8 +366,7 @@ static bcc_status_t BCC_DiagCtxopenPart(bcc_drv_config_t *const drvConfig, const
  *                 verification.
  *
  *END**************************************************************************/
-static bcc_status_t BCC_GpioOtUtPart(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint16_t gpioCfg2Val,
-				     uint16_t *const otUtStat)
+static bcc_status_t BCC_GpioOtUtPart(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint16_t gpioCfg2Val, uint16_t *const otUtStat)
 {
 	bcc_status_t status;
 
@@ -459,11 +438,9 @@ bcc_status_t BCC_Diag_ADC1(bcc_drv_config_t *const drvConfig, const bcc_cid_t ci
 		return status;
 	}
 
-	status = BCC_Reg_Write(
-	    drvConfig, cid, MC33771C_FAULT_MASK2_OFFSET,
-	    fault2MaskVal |
-		MC33771C_FAULT_MASK2_ADC1_A_FLT_MASK_10_F(MC33771C_FAULT_MASK2_ADC1_A_FLT_MASK_10_F_MASKED_ENUM_VAL) |
-		MC33771C_FAULT_MASK2_ADC1_B_FLT_MASK_11_F(MC33771C_FAULT_MASK2_ADC1_B_FLT_MASK_11_F_MASKED_ENUM_VAL));
+	status = BCC_Reg_Write(drvConfig, cid, MC33771C_FAULT_MASK2_OFFSET,
+			       fault2MaskVal | MC33771C_FAULT_MASK2_ADC1_A_FLT_MASK_10_F(MC33771C_FAULT_MASK2_ADC1_A_FLT_MASK_10_F_MASKED_ENUM_VAL) |
+				   MC33771C_FAULT_MASK2_ADC1_B_FLT_MASK_11_F(MC33771C_FAULT_MASK2_ADC1_B_FLT_MASK_11_F_MASKED_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -475,11 +452,9 @@ bcc_status_t BCC_Diag_ADC1(bcc_drv_config_t *const drvConfig, const bcc_cid_t ci
 		return status;
 	}
 
-	status = BCC_Reg_Write(
-	    drvConfig, cid, MC33771C_WAKEUP_MASK2_OFFSET,
-	    wakeUp2MaskVal |
-		MC33771C_WAKEUP_MASK2_ADC1_A_FLT_MASK_10_F(MC33771C_WAKEUP_MASK2_ADC1_A_FLT_MASK_10_F_MASKED_ENUM_VAL) |
-		MC33771C_WAKEUP_MASK2_ADC1_B_FLT_MASK_11_F(MC33771C_WAKEUP_MASK2_ADC1_B_FLT_MASK_11_F_MASKED_ENUM_VAL));
+	status = BCC_Reg_Write(drvConfig, cid, MC33771C_WAKEUP_MASK2_OFFSET,
+			       wakeUp2MaskVal | MC33771C_WAKEUP_MASK2_ADC1_A_FLT_MASK_10_F(MC33771C_WAKEUP_MASK2_ADC1_A_FLT_MASK_10_F_MASKED_ENUM_VAL) |
+				   MC33771C_WAKEUP_MASK2_ADC1_B_FLT_MASK_11_F(MC33771C_WAKEUP_MASK2_ADC1_B_FLT_MASK_11_F_MASKED_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -492,8 +467,7 @@ bcc_status_t BCC_Diag_ADC1(bcc_drv_config_t *const drvConfig, const bcc_cid_t ci
 	}
 
 	status = BCC_Reg_Write(drvConfig, cid, MC33771C_ADC_CFG_OFFSET,
-			       (adcCfgVal & ~(MC33771C_ADC_CFG_ADC1_A_DEF_MASK | MC33771C_ADC_CFG_ADC1_B_DEF_MASK)) |
-				   MC33771C_ADC_CFG_ADC1_A_DEF(MC33771C_ADC_CFG_ADC1_A_DEF_16_BIT_ENUM_VAL) |
+			       (adcCfgVal & ~(MC33771C_ADC_CFG_ADC1_A_DEF_MASK | MC33771C_ADC_CFG_ADC1_B_DEF_MASK)) | MC33771C_ADC_CFG_ADC1_A_DEF(MC33771C_ADC_CFG_ADC1_A_DEF_16_BIT_ENUM_VAL) |
 				   MC33771C_ADC_CFG_ADC1_B_DEF(MC33771C_ADC_CFG_ADC1_B_DEF_16_BIT_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
@@ -536,8 +510,7 @@ bcc_status_t BCC_Diag_ADC1(bcc_drv_config_t *const drvConfig, const bcc_cid_t ci
 	results->adc1aAvg = BCC_GET_VOLT(regVal[0]);
 	results->adc1bAvg = BCC_GET_VOLT(regVal[1]);
 
-	if (BCC_IS_IN_RANGE(results->adc1aAvg, thMinUv, thMaxUv) &&
-	    BCC_IS_IN_RANGE(results->adc1bAvg, thMinUv, thMaxUv)) {
+	if (BCC_IS_IN_RANGE(results->adc1aAvg, thMinUv, thMaxUv) && BCC_IS_IN_RANGE(results->adc1bAvg, thMinUv, thMaxUv)) {
 		results->error = false;
 	} else {
 		results->error = true;
@@ -553,8 +526,7 @@ bcc_status_t BCC_Diag_ADC1(bcc_drv_config_t *const drvConfig, const bcc_cid_t ci
  *                 (SM01).
  *
  *END**************************************************************************/
-bcc_status_t BCC_Diag_OvUvVer(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-			      const bcc_diag_const_t *const diagConst, bcc_diag_ov_uv_ver_res_t *const results)
+bcc_status_t BCC_Diag_OvUvVer(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const bcc_diag_const_t *const diagConst, bcc_diag_ov_uv_ver_res_t *const results)
 {
 	uint16_t fault1MaskVal; /* Original value of FAULT_MASK1 register. */
 	uint16_t ovUvEnVal;	/* Original value of OV_UV_EN register. */
@@ -584,11 +556,9 @@ bcc_status_t BCC_Diag_OvUvVer(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 		return status;
 	}
 
-	status = BCC_Reg_Write(
-	    drvConfig, cid, MC33771C_FAULT_MASK1_OFFSET,
-	    fault1MaskVal |
-		MC33771C_FAULT_MASK1_CT_UV_FLT_MASK_0_F(MC33771C_FAULT_MASK1_CT_UV_FLT_MASK_0_F_MASKED_ENUM_VAL) |
-		MC33771C_FAULT_MASK1_CT_OV_FLT_MASK_1_F(MC33771C_FAULT_MASK1_CT_OV_FLT_MASK_1_F_MASKED_ENUM_VAL));
+	status = BCC_Reg_Write(drvConfig, cid, MC33771C_FAULT_MASK1_OFFSET,
+			       fault1MaskVal | MC33771C_FAULT_MASK1_CT_UV_FLT_MASK_0_F(MC33771C_FAULT_MASK1_CT_UV_FLT_MASK_0_F_MASKED_ENUM_VAL) |
+				   MC33771C_FAULT_MASK1_CT_OV_FLT_MASK_1_F(MC33771C_FAULT_MASK1_CT_OV_FLT_MASK_1_F_MASKED_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -605,8 +575,7 @@ bcc_status_t BCC_Diag_OvUvVer(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 		return status;
 	}
 
-	status = BCC_Reg_Write(drvConfig, cid, MC33771C_OV_UV_EN_OFFSET,
-			       (drvConfig->device[(uint8_t)cid - 1] == BCC_DEVICE_MC33771C) ? 0xFFFFU : 0xC03FU);
+	status = BCC_Reg_Write(drvConfig, cid, MC33771C_OV_UV_EN_OFFSET, (drvConfig->device[(uint8_t)cid - 1] == BCC_DEVICE_MC33771C) ? 0xFFFFU : 0xC03FU);
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -618,32 +587,28 @@ bcc_status_t BCC_Diag_OvUvVer(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 		return status;
 	}
 
-	regVal = MC33771C_TH_ALL_CT_ALL_CT_OV_TH(BCC_GET_TH_CTX(diagConst->sm01ovTh)) |
-		 MC33771C_TH_ALL_CT_ALL_CT_UV_TH(BCC_GET_TH_CTX(diagConst->sm01uvTh));
+	regVal = MC33771C_TH_ALL_CT_ALL_CT_OV_TH(BCC_GET_TH_CTX(diagConst->sm01ovTh)) | MC33771C_TH_ALL_CT_ALL_CT_UV_TH(BCC_GET_TH_CTX(diagConst->sm01uvTh));
 	status = BCC_Reg_Write(drvConfig, cid, MC33771C_TH_ALL_CT_OFFSET, regVal);
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
 	/* 4. Enter OV and UV functional verification. */
-	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET, MC33771C_SYS_DIAG_CT_OV_UV_MASK,
-				MC33771C_SYS_DIAG_CT_OV_UV(MC33771C_SYS_DIAG_CT_OV_UV_ENABLED_ENUM_VAL));
+	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET, MC33771C_SYS_DIAG_CT_OV_UV_MASK, MC33771C_SYS_DIAG_CT_OV_UV(MC33771C_SYS_DIAG_CT_OV_UV_ENABLED_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
 	/* 5. - 10. Command switches, run measurement and read results (odd
 	 * switches opened, even closed). */
-	status = BCC_DiagOvuvPart(drvConfig, cid, BCC_SWITCH_POS_OPEN, BCC_SWITCH_POS_CLOSED, diagConst->sm01twait,
-				  &(results->ovOdd), &(results->uvEven));
+	status = BCC_DiagOvuvPart(drvConfig, cid, BCC_SWITCH_POS_OPEN, BCC_SWITCH_POS_CLOSED, diagConst->sm01twait, &(results->ovOdd), &(results->uvEven));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
 	/* 11. - 16. Command switches, run measurement and read results (odd
 	 * switches closed, even opened). */
-	status = BCC_DiagOvuvPart(drvConfig, cid, BCC_SWITCH_POS_CLOSED, BCC_SWITCH_POS_OPEN, diagConst->sm01twait,
-				  &(results->ovEven), &(results->uvOdd));
+	status = BCC_DiagOvuvPart(drvConfig, cid, BCC_SWITCH_POS_CLOSED, BCC_SWITCH_POS_OPEN, diagConst->sm01twait, &(results->ovEven), &(results->uvOdd));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -652,11 +617,8 @@ bcc_status_t BCC_Diag_OvUvVer(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 	 * (Write to SYS_DIAG[CT_OL_ODD,CT_OL_EVEN] field to the 00
 	 * configuration and write SYS_DIAG[CT_OV_UV] bit to logic 0 to exit OV
 	 * and UV functional verification.) */
-	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET,
-				MC33771C_SYS_DIAG_CT_OL_ODD_MASK | MC33771C_SYS_DIAG_CT_OL_EVEN_MASK |
-				    MC33771C_SYS_DIAG_CT_OV_UV_MASK,
-				MC33771C_SYS_DIAG_CT_OL_ODD(MC33771C_SYS_DIAG_CT_OL_ODD_OPEN_ENUM_VAL) |
-				    MC33771C_SYS_DIAG_CT_OL_EVEN(MC33771C_SYS_DIAG_CT_OL_EVEN_OPEN_ENUM_VAL) |
+	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET, MC33771C_SYS_DIAG_CT_OL_ODD_MASK | MC33771C_SYS_DIAG_CT_OL_EVEN_MASK | MC33771C_SYS_DIAG_CT_OV_UV_MASK,
+				MC33771C_SYS_DIAG_CT_OL_ODD(MC33771C_SYS_DIAG_CT_OL_ODD_OPEN_ENUM_VAL) | MC33771C_SYS_DIAG_CT_OL_EVEN(MC33771C_SYS_DIAG_CT_OL_EVEN_OPEN_ENUM_VAL) |
 				    MC33771C_SYS_DIAG_CT_OV_UV(MC33771C_SYS_DIAG_CT_OV_UV_DISABLED_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
@@ -693,11 +655,9 @@ bcc_status_t BCC_Diag_OvUvVer(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 		return status;
 	}
 
-	status = BCC_Reg_Update(
-	    drvConfig, cid, MC33771C_FAULT1_STATUS_OFFSET,
-	    MC33771C_FAULT1_STATUS_CT_OV_FLT_MASK | MC33771C_FAULT1_STATUS_CT_UV_FLT_MASK,
-	    MC33771C_FAULT1_STATUS_CT_OV_FLT(MC33771C_FAULT1_STATUS_CT_OV_FLT_NO_OVERVOLTAGE_ENUM_VAL) |
-		MC33771C_FAULT1_STATUS_CT_UV_FLT(MC33771C_FAULT1_STATUS_CT_UV_FLT_NO_UNDERVOLTAGE_ENUM_VAL));
+	status = BCC_Reg_Update(drvConfig, cid, MC33771C_FAULT1_STATUS_OFFSET, MC33771C_FAULT1_STATUS_CT_OV_FLT_MASK | MC33771C_FAULT1_STATUS_CT_UV_FLT_MASK,
+				MC33771C_FAULT1_STATUS_CT_OV_FLT(MC33771C_FAULT1_STATUS_CT_OV_FLT_NO_OVERVOLTAGE_ENUM_VAL) |
+				    MC33771C_FAULT1_STATUS_CT_UV_FLT(MC33771C_FAULT1_STATUS_CT_UV_FLT_NO_UNDERVOLTAGE_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -711,14 +671,11 @@ bcc_status_t BCC_Diag_OvUvVer(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 	/* Evaluate diagnostics. */
 	if ((results->ovOdd & drvConfig->drvData.cellMap[(uint8_t)cid - 1]) != BCC_ODD_CELL_MASK(drvConfig, cid)) {
 		results->error = true;
-	} else if ((results->ovEven & drvConfig->drvData.cellMap[(uint8_t)cid - 1]) !=
-		   BCC_EVEN_CELL_MASK(drvConfig, cid)) {
+	} else if ((results->ovEven & drvConfig->drvData.cellMap[(uint8_t)cid - 1]) != BCC_EVEN_CELL_MASK(drvConfig, cid)) {
 		results->error = true;
-	} else if ((results->uvOdd & drvConfig->drvData.cellMap[(uint8_t)cid - 1]) !=
-		   BCC_ODD_CELL_MASK(drvConfig, cid)) {
+	} else if ((results->uvOdd & drvConfig->drvData.cellMap[(uint8_t)cid - 1]) != BCC_ODD_CELL_MASK(drvConfig, cid)) {
 		results->error = true;
-	} else if ((results->uvEven & drvConfig->drvData.cellMap[(uint8_t)cid - 1]) !=
-		   BCC_EVEN_CELL_MASK(drvConfig, cid)) {
+	} else if ((results->uvEven & drvConfig->drvData.cellMap[(uint8_t)cid - 1]) != BCC_EVEN_CELL_MASK(drvConfig, cid)) {
 		results->error = true;
 	} else {
 		results->error = false;
@@ -734,8 +691,7 @@ bcc_status_t BCC_Diag_OvUvVer(bcc_drv_config_t *const drvConfig, const bcc_cid_t
  *                 controller (SM34).
  *
  *END**************************************************************************/
-bcc_status_t BCC_Diag_OvUvDet(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-			      const bcc_diag_const_t *const diagConst, bcc_diag_ov_uv_det_res_t *const results)
+bcc_status_t BCC_Diag_OvUvDet(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const bcc_diag_const_t *const diagConst, bcc_diag_ov_uv_det_res_t *const results)
 {
 	uint16_t cbxCfgRegs[BCC_MAX_CELLS]; /* Array for read registers. */
 	bool cbOn[BCC_MAX_CELLS];	    /* State of CB (true: on). */
@@ -794,8 +750,7 @@ bcc_status_t BCC_Diag_OvUvDet(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 	results->error = false;
 	for (i = 0; i < BCC_MAX_CELLS_DEV(deviceType); i++) {
 		if (BCC_IS_CELL_CONN(drvConfig, (uint8_t)cid, i + 1)) {
-			if ((results->cellVoltCbOff[i] < diagConst->sm34uvTh) ||
-			    (results->cellVoltCbOff[i] > diagConst->sm34ovTh)) {
+			if ((results->cellVoltCbOff[i] < diagConst->sm34uvTh) || (results->cellVoltCbOff[i] > diagConst->sm34ovTh)) {
 				results->error = true;
 				break;
 			}
@@ -856,8 +811,7 @@ bcc_status_t BCC_Diag_OvUvDet(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 	 * threshold, then an error is detected. */
 	for (i = 0; i < BCC_MAX_CELLS_DEV(deviceType); i++) {
 		if (BCC_IS_CELL_CONN(drvConfig, (uint8_t)cid, i + 1)) {
-			if ((results->cellVoltCbOn[i] < diagConst->sm34uvTh) ||
-			    (results->cellVoltCbOn[i] > diagConst->sm34ovTh)) {
+			if ((results->cellVoltCbOn[i] < diagConst->sm34uvTh) || (results->cellVoltCbOn[i] > diagConst->sm34ovTh)) {
 				results->error = true;
 				break;
 			}
@@ -891,8 +845,7 @@ bcc_status_t BCC_Diag_OvUvDet(bcc_drv_config_t *const drvConfig, const bcc_cid_t
  *                 verification (SM02).
  *
  *END**************************************************************************/
-bcc_status_t BCC_Diag_CTxOpen(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-			      const bcc_diag_const_t *const diagConst, bcc_diag_ctx_open_res_t *const results)
+bcc_status_t BCC_Diag_CTxOpen(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const bcc_diag_const_t *const diagConst, bcc_diag_ctx_open_res_t *const results)
 {
 	uint32_t vSwOpen, vSwShort;
 	uint16_t faultMask1Val; /* Value of FAULT_MASK1 register. */
@@ -924,11 +877,9 @@ bcc_status_t BCC_Diag_CTxOpen(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 		return status;
 	}
 
-	status = BCC_Reg_Write(
-	    drvConfig, cid, MC33771C_FAULT_MASK1_OFFSET,
-	    faultMask1Val |
-		MC33771C_FAULT_MASK1_CT_UV_FLT_MASK_0_F(MC33771C_FAULT_MASK1_CT_UV_FLT_MASK_0_F_MASKED_ENUM_VAL) |
-		MC33771C_FAULT_MASK1_CT_OV_FLT_MASK_1_F(MC33771C_FAULT_MASK1_CT_OV_FLT_MASK_1_F_MASKED_ENUM_VAL));
+	status = BCC_Reg_Write(drvConfig, cid, MC33771C_FAULT_MASK1_OFFSET,
+			       faultMask1Val | MC33771C_FAULT_MASK1_CT_UV_FLT_MASK_0_F(MC33771C_FAULT_MASK1_CT_UV_FLT_MASK_0_F_MASKED_ENUM_VAL) |
+				   MC33771C_FAULT_MASK1_CT_OV_FLT_MASK_1_F(MC33771C_FAULT_MASK1_CT_OV_FLT_MASK_1_F_MASKED_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -942,8 +893,7 @@ bcc_status_t BCC_Diag_CTxOpen(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 	/* 2. - 6., 8., 10. Command switches, run measurement, read results and
 	 * open switches with SYS_DIAG[CT_OL_ODD,CT_OL_EVEN] = 10 (ODD fault
 	 * detect switches closed). */
-	status = BCC_DiagCtxopenPart(drvConfig, cid, BCC_SWITCH_POS_CLOSED, BCC_SWITCH_POS_OPEN, diagConst,
-				     results->measOddClosed);
+	status = BCC_DiagCtxopenPart(drvConfig, cid, BCC_SWITCH_POS_CLOSED, BCC_SWITCH_POS_OPEN, diagConst, results->measOddClosed);
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -951,8 +901,7 @@ bcc_status_t BCC_Diag_CTxOpen(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 	/* 2. - 6., 8., 10. Command switches, run measurement, read results and
 	 * open switches with SYS_DIAG[CT_OL_ODD,CT_OL_EVEN] = 01 (EVEN fault
 	 * detect switches closed). */
-	status = BCC_DiagCtxopenPart(drvConfig, cid, BCC_SWITCH_POS_OPEN, BCC_SWITCH_POS_CLOSED, diagConst,
-				     results->measEvenClosed);
+	status = BCC_DiagCtxopenPart(drvConfig, cid, BCC_SWITCH_POS_OPEN, BCC_SWITCH_POS_CLOSED, diagConst, results->measEvenClosed);
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -1003,11 +952,9 @@ bcc_status_t BCC_Diag_CTxOpen(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 		return status;
 	}
 
-	status = BCC_Reg_Update(
-	    drvConfig, cid, MC33771C_FAULT1_STATUS_OFFSET,
-	    MC33771C_FAULT1_STATUS_CT_OV_FLT_MASK | MC33771C_FAULT1_STATUS_CT_UV_FLT_MASK,
-	    MC33771C_FAULT1_STATUS_CT_OV_FLT(MC33771C_FAULT1_STATUS_CT_OV_FLT_NO_OVERVOLTAGE_ENUM_VAL) |
-		MC33771C_FAULT1_STATUS_CT_UV_FLT(MC33771C_FAULT1_STATUS_CT_UV_FLT_NO_UNDERVOLTAGE_ENUM_VAL));
+	status = BCC_Reg_Update(drvConfig, cid, MC33771C_FAULT1_STATUS_OFFSET, MC33771C_FAULT1_STATUS_CT_OV_FLT_MASK | MC33771C_FAULT1_STATUS_CT_UV_FLT_MASK,
+				MC33771C_FAULT1_STATUS_CT_OV_FLT(MC33771C_FAULT1_STATUS_CT_OV_FLT_NO_OVERVOLTAGE_ENUM_VAL) |
+				    MC33771C_FAULT1_STATUS_CT_UV_FLT(MC33771C_FAULT1_STATUS_CT_UV_FLT_NO_UNDERVOLTAGE_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -1029,8 +976,7 @@ bcc_status_t BCC_Diag_CTxOpen(bcc_drv_config_t *const drvConfig, const bcc_cid_t
  *                 verification (SM03).
  *
  *END**************************************************************************/
-bcc_status_t BCC_Diag_CellVolt(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-			       bcc_diag_cell_volt_res_t *const results)
+bcc_status_t BCC_Diag_CellVolt(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, bcc_diag_cell_volt_res_t *const results)
 {
 	uint16_t adcCfgVal;		    /* Original value of ADC_CFG register. */
 	uint16_t regVal;		    /* Value of ADC_CFG register. */
@@ -1062,8 +1008,7 @@ bcc_status_t BCC_Diag_CellVolt(bcc_drv_config_t *const drvConfig, const bcc_cid_
 	}
 
 	regVal = adcCfgVal & ~(MC33771C_ADC_CFG_ADC1_A_DEF_MASK | MC33771C_ADC_CFG_ADC1_B_DEF_MASK);
-	regVal |= MC33771C_ADC_CFG_ADC1_A_DEF(MC33771C_ADC_CFG_ADC1_A_DEF_16_BIT_ENUM_VAL) |
-		  MC33771C_ADC_CFG_ADC1_B_DEF(MC33771C_ADC_CFG_ADC1_B_DEF_16_BIT_ENUM_VAL);
+	regVal |= MC33771C_ADC_CFG_ADC1_A_DEF(MC33771C_ADC_CFG_ADC1_A_DEF_16_BIT_ENUM_VAL) | MC33771C_ADC_CFG_ADC1_B_DEF(MC33771C_ADC_CFG_ADC1_B_DEF_16_BIT_ENUM_VAL);
 
 	status = BCC_Reg_Write(drvConfig, cid, MC33771C_ADC_CFG_OFFSET, regVal);
 	if (status != BCC_STATUS_SUCCESS) {
@@ -1071,8 +1016,7 @@ bcc_status_t BCC_Diag_CellVolt(bcc_drv_config_t *const drvConfig, const bcc_cid_
 	}
 
 	/* 2. Isolate CTx inputs and places reference at amplifier input. */
-	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET, MC33771C_SYS_DIAG_DA_DIAG_MASK,
-				MC33771C_SYS_DIAG_DA_DIAG(MC33771C_SYS_DIAG_DA_DIAG_ENABLED_ENUM_VAL));
+	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET, MC33771C_SYS_DIAG_DA_DIAG_MASK, MC33771C_SYS_DIAG_DA_DIAG(MC33771C_SYS_DIAG_DA_DIAG_ENABLED_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -1103,8 +1047,7 @@ bcc_status_t BCC_Diag_CellVolt(bcc_drv_config_t *const drvConfig, const bcc_cid_
 			 * necessary only if all 14 cells are used; otherwise,
 			 * unused cell voltage channels may be skipped. */
 			if (BCC_IS_CELL_CONN(drvConfig, (uint8_t)cid, i + 1U)) {
-				if ((results->vErrX[i] < BCC_DIAG_VCVFV_MIN) ||
-				    (results->vErrX[i] > BCC_DIAG_VCVFV_MAX)) {
+				if ((results->vErrX[i] < BCC_DIAG_VCVFV_MIN) || (results->vErrX[i] > BCC_DIAG_VCVFV_MAX)) {
 					results->result |= (uint16_t)(1U << i);
 				}
 			}
@@ -1126,9 +1069,7 @@ bcc_status_t BCC_Diag_CellVolt(bcc_drv_config_t *const drvConfig, const bcc_cid_
 		} else {
 			/* V_err_3 = (MEAS_CELL3 + MEAS_CELL4)/2 - (MEAS_CELL1 +
 			 * MEAS_CELL2)/2 */
-			results->vErrX[0] =
-			    (((int32_t)(measVoltUv[2] + measVoltUv[3])) - ((int32_t)(measVoltUv[0] + measVoltUv[1]))) /
-			    2;
+			results->vErrX[0] = (((int32_t)(measVoltUv[2] + measVoltUv[3])) - ((int32_t)(measVoltUv[0] + measVoltUv[1]))) / 2;
 		}
 
 		if (drvConfig->cellCnt[(uint8_t)cid - 1] == 3U) {
@@ -1138,9 +1079,7 @@ bcc_status_t BCC_Diag_CellVolt(bcc_drv_config_t *const drvConfig, const bcc_cid_
 		} else {
 			/* V_err_5 = (MEAS_CELL5 + MEAS_CELL6)/2 - (MEAS_CELL1 +
 			 * MEAS_CELL2)/2 */
-			results->vErrX[1] =
-			    (((int32_t)(measVoltUv[4] + measVoltUv[5])) - ((int32_t)(measVoltUv[0] + measVoltUv[1]))) /
-			    2;
+			results->vErrX[1] = (((int32_t)(measVoltUv[4] + measVoltUv[5])) - ((int32_t)(measVoltUv[0] + measVoltUv[1]))) / 2;
 		}
 
 		/* 6. The system controller checks, for any x = {3,5},
@@ -1222,8 +1161,7 @@ bcc_status_t BCC_Diag_CellVolt(bcc_drv_config_t *const drvConfig, const bcc_cid_
  *
  *
  *END**************************************************************************/
-bcc_status_t BCC_Diag_ConnResistance(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-				     bcc_diag_conn_res_res_t *const result)
+bcc_status_t BCC_Diag_ConnResistance(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, bcc_diag_conn_res_res_t *const result)
 {
 	uint16_t measRaw[3][BCC_MAX_CELLS]; /* Measured voltages for three
 					       configurations (raw values). */
@@ -1349,8 +1287,7 @@ bcc_status_t BCC_Diag_ConnResistance(bcc_drv_config_t *const drvConfig, const bc
 	for (i = 0; i < deviceCellsMax; i++) {
 		/* For odd cells, measRaw[1] is used. For even cells, measRaw[2]
 		 * is used. */
-		result->diff[i] = ((int32_t)(BCC_GET_VOLT(measRaw[1 + (i % 2)][deviceCellsMax - (i + 1)]))) -
-				  ((int32_t)(BCC_GET_VOLT(measRaw[0][deviceCellsMax - (i + 1)])));
+		result->diff[i] = ((int32_t)(BCC_GET_VOLT(measRaw[1 + (i % 2)][deviceCellsMax - (i + 1)]))) - ((int32_t)(BCC_GET_VOLT(measRaw[0][deviceCellsMax - (i + 1)])));
 
 		if (!BCC_IS_IN_RANGE(result->diff[i], -dvThUv, dvThUv)) {
 			result->result |= (uint16_t)(1U << i);
@@ -1368,8 +1305,7 @@ bcc_status_t BCC_Diag_ConnResistance(bcc_drv_config_t *const drvConfig, const bc
  *                 (SM04).
  *
  *END**************************************************************************/
-bcc_status_t BCC_Diag_CTxLeak(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-			      bcc_diag_ctx_leak_res_t *const result)
+bcc_status_t BCC_Diag_CTxLeak(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, bcc_diag_ctx_leak_res_t *const result)
 {
 	uint32_t measUv[2][BCC_MAX_CELLS + 1]; /* Measured voltages in [uV] for
 						  two configurations. */
@@ -1406,10 +1342,8 @@ bcc_status_t BCC_Diag_CTxLeak(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 
 	/* 3. Write SYS_DIAG[CT_LEAK_DIAG,POLARITY] = 10 to route cell terminal
 	 * and balancing pins according to the logic of the routing table. */
-	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET,
-				MC33771C_SYS_DIAG_CT_LEAK_DIAG_MASK | MC33771C_SYS_DIAG_POLARITY_MASK,
-				MC33771C_SYS_DIAG_CT_LEAK_DIAG(MC33771C_SYS_DIAG_CT_LEAK_DIAG_DIFF_ENUM_VAL) |
-				    MC33771C_SYS_DIAG_POLARITY(MC33771C_SYS_DIAG_POLARITY_NONINVERTED_ENUM_VAL));
+	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET, MC33771C_SYS_DIAG_CT_LEAK_DIAG_MASK | MC33771C_SYS_DIAG_POLARITY_MASK,
+				MC33771C_SYS_DIAG_CT_LEAK_DIAG(MC33771C_SYS_DIAG_CT_LEAK_DIAG_DIFF_ENUM_VAL) | MC33771C_SYS_DIAG_POLARITY(MC33771C_SYS_DIAG_POLARITY_NONINVERTED_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -1438,10 +1372,8 @@ bcc_status_t BCC_Diag_CTxLeak(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 
 	/* 9. Write SYS_DIAG[CT_LEAK_DIAG,POLARITY] = 11 to route cell terminal
 	 * and balancing pins according to the logic of the routing table. */
-	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET,
-				MC33771C_SYS_DIAG_CT_LEAK_DIAG_MASK | MC33771C_SYS_DIAG_POLARITY_MASK,
-				MC33771C_SYS_DIAG_CT_LEAK_DIAG(MC33771C_SYS_DIAG_CT_LEAK_DIAG_DIFF_ENUM_VAL) |
-				    MC33771C_SYS_DIAG_POLARITY(MC33771C_SYS_DIAG_POLARITY_INVERTED_ENUM_VAL));
+	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET, MC33771C_SYS_DIAG_CT_LEAK_DIAG_MASK | MC33771C_SYS_DIAG_POLARITY_MASK,
+				MC33771C_SYS_DIAG_CT_LEAK_DIAG(MC33771C_SYS_DIAG_CT_LEAK_DIAG_DIFF_ENUM_VAL) | MC33771C_SYS_DIAG_POLARITY(MC33771C_SYS_DIAG_POLARITY_INVERTED_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -1495,10 +1427,8 @@ bcc_status_t BCC_Diag_CTxLeak(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 	}
 
 	/* 18. Clear SYS_DIAG[CT_LEAK_DIAG, POLARITY]. */
-	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET,
-				MC33771C_SYS_DIAG_CT_LEAK_DIAG_MASK | MC33771C_SYS_DIAG_POLARITY_MASK,
-				MC33771C_SYS_DIAG_CT_LEAK_DIAG(MC33771C_SYS_DIAG_CT_LEAK_DIAG_NORMAL_ENUM_VAL) |
-				    MC33771C_SYS_DIAG_POLARITY(MC33771C_SYS_DIAG_POLARITY_NONINVERTED_ENUM_VAL));
+	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET, MC33771C_SYS_DIAG_CT_LEAK_DIAG_MASK | MC33771C_SYS_DIAG_POLARITY_MASK,
+				MC33771C_SYS_DIAG_CT_LEAK_DIAG(MC33771C_SYS_DIAG_CT_LEAK_DIAG_NORMAL_ENUM_VAL) | MC33771C_SYS_DIAG_POLARITY(MC33771C_SYS_DIAG_POLARITY_NONINVERTED_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -1520,17 +1450,14 @@ bcc_status_t BCC_Diag_CTxLeak(bcc_drv_config_t *const drvConfig, const bcc_cid_t
  *                 for current measurement (SM37, SM38).
  *
  *END**************************************************************************/
-bcc_status_t BCC_Diag_CurrentMeas(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-				  const bcc_diag_current_meas_t sel, int32_t *const current, bool *const fault)
+bcc_status_t BCC_Diag_CurrentMeas(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const bcc_diag_current_meas_t sel, int32_t *const current, bool *const fault)
 {
 	uint16_t measCurrentRaw[2]; /* Value of MEAS_ISENSE 1 and 2 registers. */
 	uint16_t regVal[4];	    /* Original value of $03 - $06 registers. */
 	/* PGA gain and ADC2 resolution for each bcc_diag_current_meas_t
 	 * diagnostic measurement. */
-	const uint16_t adcCfg[2] = {MC33771C_ADC_CFG_ADC2_DEF(MC33771C_ADC_CFG_ADC2_DEF_16_BIT_ENUM_VAL) |
-					MC33771C_ADC_CFG_PGA_GAIN(MC33771C_ADC_CFG_PGA_GAIN_256_ENUM_VAL),
-				    MC33771C_ADC_CFG_ADC2_DEF(MC33771C_ADC_CFG_ADC2_DEF_16_BIT_ENUM_VAL) |
-					MC33771C_ADC_CFG_PGA_GAIN(MC33771C_ADC_CFG_PGA_GAIN_4_ENUM_VAL)};
+	const uint16_t adcCfg[2] = {MC33771C_ADC_CFG_ADC2_DEF(MC33771C_ADC_CFG_ADC2_DEF_16_BIT_ENUM_VAL) | MC33771C_ADC_CFG_PGA_GAIN(MC33771C_ADC_CFG_PGA_GAIN_256_ENUM_VAL),
+				    MC33771C_ADC_CFG_ADC2_DEF(MC33771C_ADC_CFG_ADC2_DEF_16_BIT_ENUM_VAL) | MC33771C_ADC_CFG_PGA_GAIN(MC33771C_ADC_CFG_PGA_GAIN_4_ENUM_VAL)};
 	/* Inputs to PGA for each bcc_diag_current_meas_t diagnostic
 	 * measurement. */
 	const uint16_t adcMux[2] = {
@@ -1563,9 +1490,8 @@ bcc_status_t BCC_Diag_CurrentMeas(bcc_drv_config_t *const drvConfig, const bcc_c
 
 	/* 1. Disable the current measurement by setting SYS_CFG1[I_MEAS_EN] =
 	 * 0. */
-	status = BCC_Reg_Write(drvConfig, cid, MC33771C_SYS_CFG1_OFFSET,
-			       (regVal[0] & ~(MC33771C_SYS_CFG1_I_MEAS_EN_MASK)) |
-				   MC33771C_SYS_CFG1_I_MEAS_EN(MC33771C_SYS_CFG1_I_MEAS_EN_DISABLED_ENUM_VAL));
+	status =
+	    BCC_Reg_Write(drvConfig, cid, MC33771C_SYS_CFG1_OFFSET, (regVal[0] & ~(MC33771C_SYS_CFG1_I_MEAS_EN_MASK)) | MC33771C_SYS_CFG1_I_MEAS_EN(MC33771C_SYS_CFG1_I_MEAS_EN_DISABLED_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -1581,17 +1507,14 @@ bcc_status_t BCC_Diag_CurrentMeas(bcc_drv_config_t *const drvConfig, const bcc_c
 	}
 
 	/* Set ADC2 measurement resolution and PGA gain */
-	status = BCC_Reg_Write(drvConfig, cid, MC33771C_ADC_CFG_OFFSET,
-			       (regVal[3] & ~(MC33771C_ADC_CFG_ADC2_DEF_MASK | MC33771C_ADC_CFG_PGA_GAIN_MASK)) |
-				   adcCfg[sel]);
+	status = BCC_Reg_Write(drvConfig, cid, MC33771C_ADC_CFG_OFFSET, (regVal[3] & ~(MC33771C_ADC_CFG_ADC2_DEF_MASK | MC33771C_ADC_CFG_PGA_GAIN_MASK)) | adcCfg[sel]);
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
 	/* 4. Configure the current measurement chain for the specific
 	 * diagnostic source by writing to the SYS_DIAG[I_MUX] bits. */
-	status = BCC_Reg_Write(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET,
-			       (regVal[2] & ~(MC33771C_SYS_DIAG_I_MUX_MASK)) | adcMux[sel]);
+	status = BCC_Reg_Write(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET, (regVal[2] & ~(MC33771C_SYS_DIAG_I_MUX_MASK)) | adcMux[sel]);
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -1602,8 +1525,7 @@ bcc_status_t BCC_Diag_CurrentMeas(bcc_drv_config_t *const drvConfig, const bcc_c
 	 * register besides the I_MEAS_ENABLED bit also in DIAG_MODE bit, which
 	 * was earlier set by the BCC_EnterDiagnostics function! */
 	status = BCC_Reg_Write(drvConfig, cid, MC33771C_SYS_CFG1_OFFSET,
-			       (regVal[0] & ~(MC33771C_SYS_CFG1_I_MEAS_EN_MASK | MC33771C_SYS_CFG1_GO2DIAG_MASK)) |
-				   MC33771C_SYS_CFG1_I_MEAS_EN(MC33771C_SYS_CFG1_I_MEAS_EN_ENABLED_ENUM_VAL) |
+			       (regVal[0] & ~(MC33771C_SYS_CFG1_I_MEAS_EN_MASK | MC33771C_SYS_CFG1_GO2DIAG_MASK)) | MC33771C_SYS_CFG1_I_MEAS_EN(MC33771C_SYS_CFG1_I_MEAS_EN_ENABLED_ENUM_VAL) |
 				   MC33771C_SYS_CFG1_GO2DIAG(MC33771C_SYS_CFG1_GO2DIAG_ENTER_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
@@ -1673,8 +1595,7 @@ bcc_status_t BCC_Diag_CurrentMeas(bcc_drv_config_t *const drvConfig, const bcc_c
 	}
 
 	/* 12. Reset Coulomb counter and restore previous ADC2 settings. */
-	return BCC_Reg_Write(drvConfig, cid, MC33771C_ADC_CFG_OFFSET,
-			     regVal[3] | MC33771C_ADC_CFG_CC_RST(MC33771C_ADC_CFG_CC_RST_RESET_ENUM_VAL));
+	return BCC_Reg_Write(drvConfig, cid, MC33771C_ADC_CFG_OFFSET, regVal[3] | MC33771C_ADC_CFG_CC_RST(MC33771C_ADC_CFG_CC_RST_RESET_ENUM_VAL));
 }
 
 /*FUNCTION**********************************************************************
@@ -1684,8 +1605,7 @@ bcc_status_t BCC_Diag_CurrentMeas(bcc_drv_config_t *const drvConfig, const bcc_c
  *                 connected to the current channel low-pass filter (SM36).
  *
  *END**************************************************************************/
-bcc_status_t BCC_Diag_ShuntConn(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-				const bcc_diag_const_t *const diagTimeConst, bool *const shuntConn)
+bcc_status_t BCC_Diag_ShuntConn(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const bcc_diag_const_t *const diagTimeConst, bool *const shuntConn)
 {
 	uint16_t fault1stVal; /* Read value of FAULT1_STATUS register. */
 	uint16_t sysCfg1Val;
@@ -1705,9 +1625,8 @@ bcc_status_t BCC_Diag_ShuntConn(bcc_drv_config_t *const drvConfig, const bcc_cid
 		return status;
 	}
 
-	status = BCC_Reg_Write(drvConfig, cid, MC33771C_SYS_CFG1_OFFSET,
-			       (sysCfg1Val & ~(MC33771C_SYS_CFG1_I_MEAS_EN_MASK)) |
-				   MC33771C_SYS_CFG1_I_MEAS_EN(MC33771C_SYS_CFG1_I_MEAS_EN_DISABLED_ENUM_VAL));
+	status =
+	    BCC_Reg_Write(drvConfig, cid, MC33771C_SYS_CFG1_OFFSET, (sysCfg1Val & ~(MC33771C_SYS_CFG1_I_MEAS_EN_MASK)) | MC33771C_SYS_CFG1_I_MEAS_EN(MC33771C_SYS_CFG1_I_MEAS_EN_DISABLED_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -1729,8 +1648,7 @@ bcc_status_t BCC_Diag_ShuntConn(bcc_drv_config_t *const drvConfig, const bcc_cid
 
 	/* 4. Configure current measurement chain for the open detection check.
 	 */
-	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET, MC33771C_SYS_DIAG_ISENSE_OL_DIAG_MASK,
-				MC33771C_SYS_DIAG_ISENSE_OL_DIAG(MC33771C_SYS_DIAG_ISENSE_OL_DIAG_ENABLED_ENUM_VAL));
+	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET, MC33771C_SYS_DIAG_ISENSE_OL_DIAG_MASK, MC33771C_SYS_DIAG_ISENSE_OL_DIAG(MC33771C_SYS_DIAG_ISENSE_OL_DIAG_ENABLED_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -1746,8 +1664,7 @@ bcc_status_t BCC_Diag_ShuntConn(bcc_drv_config_t *const drvConfig, const bcc_cid
 
 	/* 7. Configure current measurement chain for the open detection check
 	 * by setting SYS_DIAG[I_SENSE_OL_DIAG] to logic 0. */
-	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET, MC33771C_SYS_DIAG_ISENSE_OL_DIAG_MASK,
-				MC33771C_SYS_DIAG_ISENSE_OL_DIAG(MC33771C_SYS_DIAG_ISENSE_OL_DIAG_DISABLED_ENUM_VAL));
+	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET, MC33771C_SYS_DIAG_ISENSE_OL_DIAG_MASK, MC33771C_SYS_DIAG_ISENSE_OL_DIAG(MC33771C_SYS_DIAG_ISENSE_OL_DIAG_DISABLED_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -1758,23 +1675,19 @@ bcc_status_t BCC_Diag_ShuntConn(bcc_drv_config_t *const drvConfig, const bcc_cid
 	/* 9. Return state of the current measurement (enabled/disabled) to the
 	 * previous state and exit diagnostic mode by setting SYS_CFG1[GO2DIAG]
 	 * to logic 0. */
-	status = BCC_Reg_Write(drvConfig, cid, MC33771C_SYS_CFG1_OFFSET,
-			       (sysCfg1Val & ~(MC33771C_SYS_CFG1_GO2DIAG_MASK)) |
-				   MC33771C_SYS_CFG1_GO2DIAG(MC33771C_SYS_CFG1_GO2DIAG_EXIT_ENUM_VAL));
+	status = BCC_Reg_Write(drvConfig, cid, MC33771C_SYS_CFG1_OFFSET, (sysCfg1Val & ~(MC33771C_SYS_CFG1_GO2DIAG_MASK)) | MC33771C_SYS_CFG1_GO2DIAG(MC33771C_SYS_CFG1_GO2DIAG_EXIT_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
 	/* 10. Reset Coulomb counter. */
-	status = BCC_Reg_Update(drvConfig, cid, MC33771C_ADC_CFG_OFFSET, MC33771C_ADC_CFG_CC_RST_MASK,
-				MC33771C_ADC_CFG_CC_RST(MC33771C_ADC_CFG_CC_RST_RESET_ENUM_VAL));
+	status = BCC_Reg_Update(drvConfig, cid, MC33771C_ADC_CFG_OFFSET, MC33771C_ADC_CFG_CC_RST_MASK, MC33771C_ADC_CFG_CC_RST(MC33771C_ADC_CFG_CC_RST_RESET_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
 	/* Evaluate / Publish results. */
-	(*shuntConn) = ((fault1stVal & MC33771C_FAULT1_STATUS_IS_OL_FLT_MASK) ==
-			MC33771C_FAULT1_STATUS_IS_OL_FLT(MC33771C_FAULT1_STATUS_IS_OL_FLT_NO_OPEN_LOAD_ENUM_VAL));
+	(*shuntConn) = ((fault1stVal & MC33771C_FAULT1_STATUS_IS_OL_FLT_MASK) == MC33771C_FAULT1_STATUS_IS_OL_FLT(MC33771C_FAULT1_STATUS_IS_OL_FLT_NO_OPEN_LOAD_ENUM_VAL));
 
 	/* Clear faults. */
 	return BCC_Reg_Write(drvConfig, cid, MC33771C_FAULT1_STATUS_OFFSET, 0U);
@@ -1787,8 +1700,7 @@ bcc_status_t BCC_Diag_ShuntConn(bcc_drv_config_t *const drvConfig, const bcc_cid
  *                 (SM05).
  *
  *END**************************************************************************/
-bcc_status_t BCC_Diag_GPIOxOtUt(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-				bcc_diag_gpiox_otut_res_t *const results)
+bcc_status_t BCC_Diag_GPIOxOtUt(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, bcc_diag_gpiox_otut_res_t *const results)
 {
 	uint16_t regVal;	/* Read value of a GPIO_CFGx register. */
 	uint16_t gpioCfgVal[2]; /* Original value of GPIO_CFG1 and GPIO_CFG2
@@ -1824,12 +1736,9 @@ bcc_status_t BCC_Diag_GPIOxOtUt(bcc_drv_config_t *const drvConfig, const bcc_cid
 	 * GPIO_CFG1[GPIOx_CFG] register. Only the GPIOx configured as analog
 	 * inputs have buffers than activated in diagnostic mode by the
 	 * ANx_TEMP_DIAG bit. */
-	regVal = MC33771C_GPIO_CFG1_GPIO0_CFG(MC33771C_GPIO_CFG1_GPIO0_CFG_ANALOG_RATIO_ENUM_VAL) |
-		 MC33771C_GPIO_CFG1_GPIO1_CFG(MC33771C_GPIO_CFG1_GPIO1_CFG_ANALOG_RATIO_ENUM_VAL) |
-		 MC33771C_GPIO_CFG1_GPIO2_CFG(MC33771C_GPIO_CFG1_GPIO2_CFG_ANALOG_RATIO_ENUM_VAL) |
-		 MC33771C_GPIO_CFG1_GPIO3_CFG(MC33771C_GPIO_CFG1_GPIO3_CFG_ANALOG_RATIO_ENUM_VAL) |
-		 MC33771C_GPIO_CFG1_GPIO4_CFG(MC33771C_GPIO_CFG1_GPIO4_CFG_ANALOG_RATIO_ENUM_VAL) |
-		 MC33771C_GPIO_CFG1_GPIO5_CFG(MC33771C_GPIO_CFG1_GPIO5_CFG_ANALOG_RATIO_ENUM_VAL) |
+	regVal = MC33771C_GPIO_CFG1_GPIO0_CFG(MC33771C_GPIO_CFG1_GPIO0_CFG_ANALOG_RATIO_ENUM_VAL) | MC33771C_GPIO_CFG1_GPIO1_CFG(MC33771C_GPIO_CFG1_GPIO1_CFG_ANALOG_RATIO_ENUM_VAL) |
+		 MC33771C_GPIO_CFG1_GPIO2_CFG(MC33771C_GPIO_CFG1_GPIO2_CFG_ANALOG_RATIO_ENUM_VAL) | MC33771C_GPIO_CFG1_GPIO3_CFG(MC33771C_GPIO_CFG1_GPIO3_CFG_ANALOG_RATIO_ENUM_VAL) |
+		 MC33771C_GPIO_CFG1_GPIO4_CFG(MC33771C_GPIO_CFG1_GPIO4_CFG_ANALOG_RATIO_ENUM_VAL) | MC33771C_GPIO_CFG1_GPIO5_CFG(MC33771C_GPIO_CFG1_GPIO5_CFG_ANALOG_RATIO_ENUM_VAL) |
 		 MC33771C_GPIO_CFG1_GPIO6_CFG(MC33771C_GPIO_CFG1_GPIO6_CFG_ANALOG_RATIO_ENUM_VAL);
 	status = BCC_Reg_Write(drvConfig, cid, MC33771C_GPIO_CFG1_OFFSET, regVal);
 	if (status != BCC_STATUS_SUCCESS) {
@@ -1838,8 +1747,7 @@ bcc_status_t BCC_Diag_GPIOxOtUt(bcc_drv_config_t *const drvConfig, const bcc_cid
 
 	/* 4. Enable the GPIOx output buffer through the
 	 * SYS_DIAG[ANx_TEMP_DIAG]. */
-	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET, MC33771C_SYS_DIAG_ANX_TEMP_DIAG_MASK,
-				MC33771C_SYS_DIAG_ANX_TEMP_DIAG(MC33771C_SYS_DIAG_ANX_TEMP_DIAG_ENABLED_ENUM_VAL));
+	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET, MC33771C_SYS_DIAG_ANX_TEMP_DIAG_MASK, MC33771C_SYS_DIAG_ANX_TEMP_DIAG(MC33771C_SYS_DIAG_ANX_TEMP_DIAG_ENABLED_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -1851,12 +1759,9 @@ bcc_status_t BCC_Diag_GPIOxOtUt(bcc_drv_config_t *const drvConfig, const bcc_cid
 	/* 6. Conversions below the TH_ANx_OT threshold trigger the ANx_OT fault
 	 * bit. Conversions above the TH_ANx_UT threshold trigger the ANx_UT
 	 * fault bit. */
-	regVal = MC33771C_GPIO_CFG2_GPIO0_DR(MC33771C_GPIO_CFG2_GPIO0_DR_HIGH_ENUM_VAL) |
-		 MC33771C_GPIO_CFG2_GPIO1_DR(MC33771C_GPIO_CFG2_GPIO1_DR_HIGH_ENUM_VAL) |
-		 MC33771C_GPIO_CFG2_GPIO2_DR(MC33771C_GPIO_CFG2_GPIO2_DR_HIGH_ENUM_VAL) |
-		 MC33771C_GPIO_CFG2_GPIO3_DR(MC33771C_GPIO_CFG2_GPIO3_DR_HIGH_ENUM_VAL) |
-		 MC33771C_GPIO_CFG2_GPIO4_DR(MC33771C_GPIO_CFG2_GPIO4_DR_HIGH_ENUM_VAL) |
-		 MC33771C_GPIO_CFG2_GPIO5_DR(MC33771C_GPIO_CFG2_GPIO5_DR_HIGH_ENUM_VAL) |
+	regVal = MC33771C_GPIO_CFG2_GPIO0_DR(MC33771C_GPIO_CFG2_GPIO0_DR_HIGH_ENUM_VAL) | MC33771C_GPIO_CFG2_GPIO1_DR(MC33771C_GPIO_CFG2_GPIO1_DR_HIGH_ENUM_VAL) |
+		 MC33771C_GPIO_CFG2_GPIO2_DR(MC33771C_GPIO_CFG2_GPIO2_DR_HIGH_ENUM_VAL) | MC33771C_GPIO_CFG2_GPIO3_DR(MC33771C_GPIO_CFG2_GPIO3_DR_HIGH_ENUM_VAL) |
+		 MC33771C_GPIO_CFG2_GPIO4_DR(MC33771C_GPIO_CFG2_GPIO4_DR_HIGH_ENUM_VAL) | MC33771C_GPIO_CFG2_GPIO5_DR(MC33771C_GPIO_CFG2_GPIO5_DR_HIGH_ENUM_VAL) |
 		 MC33771C_GPIO_CFG2_GPIO6_DR(MC33771C_GPIO_CFG2_GPIO6_DR_HIGH_ENUM_VAL);
 
 	status = BCC_GpioOtUtPart(drvConfig, cid, regVal, &(results->untStat));
@@ -1871,12 +1776,9 @@ bcc_status_t BCC_Diag_GPIOxOtUt(bcc_drv_config_t *const drvConfig, const bcc_cid
 	/* 6. Conversions below the TH_ANx_OT threshold trigger the ANx_OT fault
 	 * bit. Conversions above the TH_ANx_UT threshold trigger the ANx_UT
 	 * fault bit. */
-	regVal = MC33771C_GPIO_CFG2_GPIO0_DR(MC33771C_GPIO_CFG2_GPIO0_DR_LOW_ENUM_VAL) |
-		 MC33771C_GPIO_CFG2_GPIO1_DR(MC33771C_GPIO_CFG2_GPIO1_DR_LOW_ENUM_VAL) |
-		 MC33771C_GPIO_CFG2_GPIO2_DR(MC33771C_GPIO_CFG2_GPIO2_DR_LOW_ENUM_VAL) |
-		 MC33771C_GPIO_CFG2_GPIO3_DR(MC33771C_GPIO_CFG2_GPIO3_DR_LOW_ENUM_VAL) |
-		 MC33771C_GPIO_CFG2_GPIO4_DR(MC33771C_GPIO_CFG2_GPIO4_DR_LOW_ENUM_VAL) |
-		 MC33771C_GPIO_CFG2_GPIO5_DR(MC33771C_GPIO_CFG2_GPIO5_DR_LOW_ENUM_VAL) |
+	regVal = MC33771C_GPIO_CFG2_GPIO0_DR(MC33771C_GPIO_CFG2_GPIO0_DR_LOW_ENUM_VAL) | MC33771C_GPIO_CFG2_GPIO1_DR(MC33771C_GPIO_CFG2_GPIO1_DR_LOW_ENUM_VAL) |
+		 MC33771C_GPIO_CFG2_GPIO2_DR(MC33771C_GPIO_CFG2_GPIO2_DR_LOW_ENUM_VAL) | MC33771C_GPIO_CFG2_GPIO3_DR(MC33771C_GPIO_CFG2_GPIO3_DR_LOW_ENUM_VAL) |
+		 MC33771C_GPIO_CFG2_GPIO4_DR(MC33771C_GPIO_CFG2_GPIO4_DR_LOW_ENUM_VAL) | MC33771C_GPIO_CFG2_GPIO5_DR(MC33771C_GPIO_CFG2_GPIO5_DR_LOW_ENUM_VAL) |
 		 MC33771C_GPIO_CFG2_GPIO6_DR(MC33771C_GPIO_CFG2_GPIO6_DR_LOW_ENUM_VAL);
 
 	status = BCC_GpioOtUtPart(drvConfig, cid, regVal, &(results->ovtStat));
@@ -1885,8 +1787,7 @@ bcc_status_t BCC_Diag_GPIOxOtUt(bcc_drv_config_t *const drvConfig, const bcc_cid
 	}
 
 	/* Disable GPIOx output buffer. */
-	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET, MC33771C_SYS_DIAG_ANX_TEMP_DIAG_MASK,
-				MC33771C_SYS_DIAG_ANX_TEMP_DIAG(MC33771C_SYS_DIAG_ANX_TEMP_DIAG_DISABLED_ENUM_VAL));
+	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET, MC33771C_SYS_DIAG_ANX_TEMP_DIAG_MASK, MC33771C_SYS_DIAG_ANX_TEMP_DIAG(MC33771C_SYS_DIAG_ANX_TEMP_DIAG_DISABLED_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -1905,8 +1806,7 @@ bcc_status_t BCC_Diag_GPIOxOtUt(bcc_drv_config_t *const drvConfig, const bcc_cid
 	/* Clear FAULT1_STATUS[AN_OT_FLT, AN_UT_FLT] bits.
 	 * Note: All the AN_OT_UT[Anx_OT, Anx_UT] bits were cleared already in
 	 * the BCC_GpioOtUtPart function. */
-	status = BCC_Reg_Update(drvConfig, cid, MC33771C_FAULT1_STATUS_OFFSET,
-				MC33771C_FAULT1_STATUS_AN_UT_FLT_MASK | MC33771C_FAULT1_STATUS_AN_OT_FLT_MASK, 0U);
+	status = BCC_Reg_Update(drvConfig, cid, MC33771C_FAULT1_STATUS_OFFSET, MC33771C_FAULT1_STATUS_AN_UT_FLT_MASK | MC33771C_FAULT1_STATUS_AN_OT_FLT_MASK, 0U);
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -1968,12 +1868,9 @@ bcc_status_t BCC_Diag_GPIOxOpen(bcc_drv_config_t *const drvConfig, const bcc_cid
 	}
 
 	/* 2. Program GPIOx to be tested as analog input. */
-	regVal = MC33771C_GPIO_CFG1_GPIO0_CFG(MC33771C_GPIO_CFG1_GPIO0_CFG_ANALOG_ABS_ENUM_VAL) |
-		 MC33771C_GPIO_CFG1_GPIO1_CFG(MC33771C_GPIO_CFG1_GPIO1_CFG_ANALOG_ABS_ENUM_VAL) |
-		 MC33771C_GPIO_CFG1_GPIO2_CFG(MC33771C_GPIO_CFG1_GPIO2_CFG_ANALOG_ABS_ENUM_VAL) |
-		 MC33771C_GPIO_CFG1_GPIO3_CFG(MC33771C_GPIO_CFG1_GPIO3_CFG_ANALOG_ABS_ENUM_VAL) |
-		 MC33771C_GPIO_CFG1_GPIO4_CFG(MC33771C_GPIO_CFG1_GPIO4_CFG_ANALOG_ABS_ENUM_VAL) |
-		 MC33771C_GPIO_CFG1_GPIO5_CFG(MC33771C_GPIO_CFG1_GPIO5_CFG_ANALOG_ABS_ENUM_VAL) |
+	regVal = MC33771C_GPIO_CFG1_GPIO0_CFG(MC33771C_GPIO_CFG1_GPIO0_CFG_ANALOG_ABS_ENUM_VAL) | MC33771C_GPIO_CFG1_GPIO1_CFG(MC33771C_GPIO_CFG1_GPIO1_CFG_ANALOG_ABS_ENUM_VAL) |
+		 MC33771C_GPIO_CFG1_GPIO2_CFG(MC33771C_GPIO_CFG1_GPIO2_CFG_ANALOG_ABS_ENUM_VAL) | MC33771C_GPIO_CFG1_GPIO3_CFG(MC33771C_GPIO_CFG1_GPIO3_CFG_ANALOG_ABS_ENUM_VAL) |
+		 MC33771C_GPIO_CFG1_GPIO4_CFG(MC33771C_GPIO_CFG1_GPIO4_CFG_ANALOG_ABS_ENUM_VAL) | MC33771C_GPIO_CFG1_GPIO5_CFG(MC33771C_GPIO_CFG1_GPIO5_CFG_ANALOG_ABS_ENUM_VAL) |
 		 MC33771C_GPIO_CFG1_GPIO6_CFG(MC33771C_GPIO_CFG1_GPIO6_CFG_ANALOG_ABS_ENUM_VAL);
 	status = BCC_Reg_Write(drvConfig, cid, MC33771C_GPIO_CFG1_OFFSET, regVal);
 	if (status != BCC_STATUS_SUCCESS) {
@@ -1983,8 +1880,7 @@ bcc_status_t BCC_Diag_GPIOxOpen(bcc_drv_config_t *const drvConfig, const bcc_cid
 	/* 3. Activate GPIOx weak pull-down.
 	 * Note: In Diagnostic mode, only GPIOx configured analog have a weak
 	 * pull-down activated by the ANx_OL_DIAG bit. */
-	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET, MC33771C_SYS_DIAG_ANX_OL_DIAG_MASK,
-				MC33771C_SYS_DIAG_ANX_OL_DIAG(MC33771C_SYS_DIAG_ANX_OL_DIAG_ENABLED_ENUM_VAL));
+	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET, MC33771C_SYS_DIAG_ANX_OL_DIAG_MASK, MC33771C_SYS_DIAG_ANX_OL_DIAG(MC33771C_SYS_DIAG_ANX_OL_DIAG_ENABLED_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -2000,8 +1896,7 @@ bcc_status_t BCC_Diag_GPIOxOpen(bcc_drv_config_t *const drvConfig, const bcc_cid
 
 	/* 5. Deactivate GPIOx weak pull down through the SYS_DIAG[ANx_OL_DIAG].
 	 */
-	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET, MC33771C_SYS_DIAG_ANX_OL_DIAG_MASK,
-				MC33771C_SYS_DIAG_ANX_OL_DIAG(MC33771C_SYS_DIAG_ANX_OL_DIAG_DISABLED_ENUM_VAL));
+	status = BCC_Reg_Update(drvConfig, cid, MC33771C_SYS_DIAG_OFFSET, MC33771C_SYS_DIAG_ANX_OL_DIAG_MASK, MC33771C_SYS_DIAG_ANX_OL_DIAG(MC33771C_SYS_DIAG_ANX_OL_DIAG_DISABLED_ENUM_VAL));
 	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
@@ -2029,8 +1924,7 @@ bcc_status_t BCC_Diag_GPIOxOpen(bcc_drv_config_t *const drvConfig, const bcc_cid
  *                 (SM40).
  *
  *END**************************************************************************/
-bcc_status_t BCC_Diag_CBxOpen(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-			      bcc_diag_cbx_open_res_t *const results)
+bcc_status_t BCC_Diag_CBxOpen(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, bcc_diag_cbx_open_res_t *const results)
 {
 	bcc_status_t status;
 
@@ -2121,8 +2015,7 @@ bcc_status_t BCC_Diag_CBxOpen(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 	}
 
 	/* Evaluate the diagnostics. */
-	if ((results->cbxOpenStatusEven & drvConfig->drvData.cellMap[(uint8_t)cid - 1]) ||
-	    (results->cbxOpenStatusOdd & drvConfig->drvData.cellMap[(uint8_t)cid - 1])) {
+	if ((results->cbxOpenStatusEven & drvConfig->drvData.cellMap[(uint8_t)cid - 1]) || (results->cbxOpenStatusOdd & drvConfig->drvData.cellMap[(uint8_t)cid - 1])) {
 		results->error = true;
 	} else {
 		results->error = false;

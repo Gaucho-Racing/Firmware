@@ -93,9 +93,8 @@ typedef struct
 	uint32_t RandomNumber; /*!< Last Generated RNG Data */
 
 #if (USE_HAL_RNG_REGISTER_CALLBACKS == 1)
-	void (*ReadyDataCallback)(struct __RNG_HandleTypeDef *hrng,
-				  uint32_t random32bit);	 /*!< RNG Data Ready Callback    */
-	void (*ErrorCallback)(struct __RNG_HandleTypeDef *hrng); /*!< RNG Error Callback */
+	void (*ReadyDataCallback)(struct __RNG_HandleTypeDef *hrng, uint32_t random32bit); /*!< RNG Data Ready Callback    */
+	void (*ErrorCallback)(struct __RNG_HandleTypeDef *hrng);			   /*!< RNG Error Callback */
 
 	void (*MspInitCallback)(struct __RNG_HandleTypeDef *hrng);   /*!< RNG Msp Init callback */
 	void (*MspDeInitCallback)(struct __RNG_HandleTypeDef *hrng); /*!< RNG Msp DeInit callback */
@@ -118,10 +117,9 @@ typedef enum {
 /**
  * @brief  HAL RNG Callback pointer definition
  */
-typedef void (*pRNG_CallbackTypeDef)(RNG_HandleTypeDef *hrng); /*!< pointer to a common RNG callback function */
-typedef void (*pRNG_ReadyDataCallbackTypeDef)(RNG_HandleTypeDef *hrng,
-					      uint32_t random32bit); /*!< pointer to an RNG Data Ready specific callback
-									function */
+typedef void (*pRNG_CallbackTypeDef)(RNG_HandleTypeDef *hrng);				      /*!< pointer to a common RNG callback function */
+typedef void (*pRNG_ReadyDataCallbackTypeDef)(RNG_HandleTypeDef *hrng, uint32_t random32bit); /*!< pointer to an RNG Data Ready specific callback
+												 function */
 
 #endif /* USE_HAL_RNG_REGISTER_CALLBACKS */
 
@@ -197,11 +195,11 @@ typedef void (*pRNG_ReadyDataCallbackTypeDef)(RNG_HandleTypeDef *hrng,
  * @retval None
  */
 #if (USE_HAL_RNG_REGISTER_CALLBACKS == 1)
-#define __HAL_RNG_RESET_HANDLE_STATE(__HANDLE__)                                                                       \
-	do {                                                                                                           \
-		(__HANDLE__)->State = HAL_RNG_STATE_RESET;                                                             \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define __HAL_RNG_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                       \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_RNG_STATE_RESET;                                                                                                                                             \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0U)
 #else
 #define __HAL_RNG_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_RNG_STATE_RESET)
@@ -304,8 +302,7 @@ void HAL_RNG_MspDeInit(RNG_HandleTypeDef *hrng);
 
 /* Callbacks Register/UnRegister functions  ***********************************/
 #if (USE_HAL_RNG_REGISTER_CALLBACKS == 1)
-HAL_StatusTypeDef HAL_RNG_RegisterCallback(RNG_HandleTypeDef *hrng, HAL_RNG_CallbackIDTypeDef CallbackID,
-					   pRNG_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_RNG_RegisterCallback(RNG_HandleTypeDef *hrng, HAL_RNG_CallbackIDTypeDef CallbackID, pRNG_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_RNG_UnRegisterCallback(RNG_HandleTypeDef *hrng, HAL_RNG_CallbackIDTypeDef CallbackID);
 
 HAL_StatusTypeDef HAL_RNG_RegisterReadyDataCallback(RNG_HandleTypeDef *hrng, pRNG_ReadyDataCallbackTypeDef pCallback);

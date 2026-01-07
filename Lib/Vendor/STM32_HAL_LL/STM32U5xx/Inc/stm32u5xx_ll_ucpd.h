@@ -128,19 +128,19 @@ typedef struct {
  * @{
  */
 #define LL_UCPD_IMR_TXIS UCPD_IMR_TXISIE /*!< Enable transmit interrupt status */
-#define LL_UCPD_IMR_TXMSGDISC                                                                                          \
-	UCPD_IMR_TXMSGDISCIE			   /*!< Enable transmit message discarded interrupt                    \
+#define LL_UCPD_IMR_TXMSGDISC                                                                                                                                                                          \
+	UCPD_IMR_TXMSGDISCIE			   /*!< Enable transmit message discarded interrupt                                                                                                    \
 						    */
 #define LL_UCPD_IMR_TXMSGSENT UCPD_IMR_TXMSGSENTIE /*!< Enable transmit message sent interrupt */
 #define LL_UCPD_IMR_TXMSGABT UCPD_IMR_TXMSGABTIE   /*!< Enable transmit message abort interrupt */
 #define LL_UCPD_IMR_HRSTDISC UCPD_IMR_HRSTDISCIE   /*!< Enable HRST discarded interrupt */
 #define LL_UCPD_IMR_HRSTSENT UCPD_IMR_HRSTSENTIE   /*!< Enable HRST sent interrupt */
 #define LL_UCPD_IMR_TXUND UCPD_IMR_TXUNDIE	   /*!< Enable tx data underrun condition interrupt */
-#define LL_UCPD_IMR_RXNE                                                                                               \
-	UCPD_IMR_RXNEIE /*!< Enable Receive data register not empty interrupt                                          \
+#define LL_UCPD_IMR_RXNE                                                                                                                                                                               \
+	UCPD_IMR_RXNEIE /*!< Enable Receive data register not empty interrupt                                                                                                                          \
 			 */
-#define LL_UCPD_IMR_RXORDDET                                                                                           \
-	UCPD_IMR_RXORDDETIE			   /*!< Enable Rx ordered set (4 K-codes) detected                     \
+#define LL_UCPD_IMR_RXORDDET                                                                                                                                                                           \
+	UCPD_IMR_RXORDDETIE			   /*!< Enable Rx ordered set (4 K-codes) detected                                                                                                     \
 						      interrupt */
 #define LL_UCPD_IMR_RXHRSTDET UCPD_IMR_RXHRSTDETIE /*!< Enable Rx Hard Reset detect interrupt */
 #define LL_UCPD_IMR_RXOVR UCPD_IMR_RXOVRIE	   /*!< Enable Rx data overflow interrupt */
@@ -164,27 +164,13 @@ typedef struct {
 #define LL_UCPD_RST2 0x19u  /*!< K-code for Hard Reset #2                             */
 #define LL_UCPD_EOP 0x0Du   /*!< K-code for EOP End of Packet                         */
 
-#define LL_UCPD_ORDERED_SET_SOP                                                                                        \
-	(LL_UCPD_SYNC1 | (LL_UCPD_SYNC1 << 5u) | (LL_UCPD_SYNC1 << 10u) |                                              \
-	 (LL_UCPD_SYNC2 << 15u)) /*!< SOP Ordered set coding         */
-#define LL_UCPD_ORDERED_SET_SOP1                                                                                       \
-	(LL_UCPD_SYNC1 | (LL_UCPD_SYNC1 << 5u) | (LL_UCPD_SYNC3 << 10u) |                                              \
-	 (LL_UCPD_SYNC3 << 15u)) /*!< SOP' Ordered set coding        */
-#define LL_UCPD_ORDERED_SET_SOP2                                                                                       \
-	(LL_UCPD_SYNC1 | (LL_UCPD_SYNC3 << 5u) | (LL_UCPD_SYNC1 << 10u) |                                              \
-	 (LL_UCPD_SYNC3 << 15u)) /*!< SOP'' Ordered set coding       */
-#define LL_UCPD_ORDERED_SET_HARD_RESET                                                                                 \
-	(LL_UCPD_RST1 | (LL_UCPD_RST1 << 5u) | (LL_UCPD_RST1 << 10u) |                                                 \
-	 (LL_UCPD_RST2 << 15u)) /*!< Hard Reset Ordered set coding  */
-#define LL_UCPD_ORDERED_SET_CABLE_RESET                                                                                \
-	(LL_UCPD_RST1 | (LL_UCPD_SYNC1 << 5u) | (LL_UCPD_RST1 << 10u) |                                                \
-	 (LL_UCPD_SYNC3 << 15u)) /*!< Cable Reset Ordered set coding */
-#define LL_UCPD_ORDERED_SET_SOP1_DEBUG                                                                                 \
-	(LL_UCPD_SYNC1 | (LL_UCPD_RST2 << 5u) | (LL_UCPD_RST2 << 10u) |                                                \
-	 (LL_UCPD_SYNC3 << 15u)) /*!< SOP' Debug Ordered set coding  */
-#define LL_UCPD_ORDERED_SET_SOP2_DEBUG                                                                                 \
-	(LL_UCPD_SYNC1 | (LL_UCPD_RST2 << 5u) | (LL_UCPD_SYNC3 << 10u) |                                               \
-	 (LL_UCPD_SYNC2 << 15u)) /*!< SOP'' Debug Ordered set coding */
+#define LL_UCPD_ORDERED_SET_SOP (LL_UCPD_SYNC1 | (LL_UCPD_SYNC1 << 5u) | (LL_UCPD_SYNC1 << 10u) | (LL_UCPD_SYNC2 << 15u))	/*!< SOP Ordered set coding         */
+#define LL_UCPD_ORDERED_SET_SOP1 (LL_UCPD_SYNC1 | (LL_UCPD_SYNC1 << 5u) | (LL_UCPD_SYNC3 << 10u) | (LL_UCPD_SYNC3 << 15u))	/*!< SOP' Ordered set coding        */
+#define LL_UCPD_ORDERED_SET_SOP2 (LL_UCPD_SYNC1 | (LL_UCPD_SYNC3 << 5u) | (LL_UCPD_SYNC1 << 10u) | (LL_UCPD_SYNC3 << 15u))	/*!< SOP'' Ordered set coding       */
+#define LL_UCPD_ORDERED_SET_HARD_RESET (LL_UCPD_RST1 | (LL_UCPD_RST1 << 5u) | (LL_UCPD_RST1 << 10u) | (LL_UCPD_RST2 << 15u))	/*!< Hard Reset Ordered set coding  */
+#define LL_UCPD_ORDERED_SET_CABLE_RESET (LL_UCPD_RST1 | (LL_UCPD_SYNC1 << 5u) | (LL_UCPD_RST1 << 10u) | (LL_UCPD_SYNC3 << 15u)) /*!< Cable Reset Ordered set coding */
+#define LL_UCPD_ORDERED_SET_SOP1_DEBUG (LL_UCPD_SYNC1 | (LL_UCPD_RST2 << 5u) | (LL_UCPD_RST2 << 10u) | (LL_UCPD_SYNC3 << 15u))	/*!< SOP' Debug Ordered set coding  */
+#define LL_UCPD_ORDERED_SET_SOP2_DEBUG (LL_UCPD_SYNC1 | (LL_UCPD_RST2 << 5u) | (LL_UCPD_SYNC3 << 10u) | (LL_UCPD_SYNC2 << 15u)) /*!< SOP'' Debug Ordered set coding */
 /**
  * @}
  */
@@ -215,23 +201,23 @@ typedef struct {
 #define LL_UCPD_ORDERSET_SOP UCPD_CFG1_RXORDSETEN_0  /*!< SOP Ordered set detection enabled */
 #define LL_UCPD_ORDERSET_SOP1 UCPD_CFG1_RXORDSETEN_1 /*!< SOP' Ordered set detection enabled */
 #define LL_UCPD_ORDERSET_SOP2 UCPD_CFG1_RXORDSETEN_2 /*!< SOP'' Ordered set detection enabled */
-#define LL_UCPD_ORDERSET_HARDRST                                                                                       \
-	UCPD_CFG1_RXORDSETEN_3 /*!< Hard Reset Ordered set detection enabled                                           \
+#define LL_UCPD_ORDERSET_HARDRST                                                                                                                                                                       \
+	UCPD_CFG1_RXORDSETEN_3 /*!< Hard Reset Ordered set detection enabled                                                                                                                           \
 				*/
-#define LL_UCPD_ORDERSET_CABLERST                                                                                      \
-	UCPD_CFG1_RXORDSETEN_4 /*!< Cable Reset Ordered set detection enabled                                          \
+#define LL_UCPD_ORDERSET_CABLERST                                                                                                                                                                      \
+	UCPD_CFG1_RXORDSETEN_4 /*!< Cable Reset Ordered set detection enabled                                                                                                                          \
 				*/
-#define LL_UCPD_ORDERSET_SOP1_DEBUG                                                                                    \
-	UCPD_CFG1_RXORDSETEN_5 /*!< SOP' Debug Ordered set detection enabled                                           \
+#define LL_UCPD_ORDERSET_SOP1_DEBUG                                                                                                                                                                    \
+	UCPD_CFG1_RXORDSETEN_5 /*!< SOP' Debug Ordered set detection enabled                                                                                                                           \
 				*/
-#define LL_UCPD_ORDERSET_SOP2_DEBUG                                                                                    \
-	UCPD_CFG1_RXORDSETEN_6 /*!< SOP'' Debug Ordered set detection enabled                                          \
+#define LL_UCPD_ORDERSET_SOP2_DEBUG                                                                                                                                                                    \
+	UCPD_CFG1_RXORDSETEN_6 /*!< SOP'' Debug Ordered set detection enabled                                                                                                                          \
 				*/
-#define LL_UCPD_ORDERSET_SOP_EXT1                                                                                      \
-	UCPD_CFG1_RXORDSETEN_7 /*!< SOP extension#1 Ordered set detection                                              \
+#define LL_UCPD_ORDERSET_SOP_EXT1                                                                                                                                                                      \
+	UCPD_CFG1_RXORDSETEN_7 /*!< SOP extension#1 Ordered set detection                                                                                                                              \
 				  enabled  */
-#define LL_UCPD_ORDERSET_SOP_EXT2                                                                                      \
-	UCPD_CFG1_RXORDSETEN_8 /*!< SOP extension#2 Ordered set detection                                              \
+#define LL_UCPD_ORDERSET_SOP_EXT2                                                                                                                                                                      \
+	UCPD_CFG1_RXORDSETEN_8 /*!< SOP extension#2 Ordered set detection                                                                                                                              \
 				  enabled  */
 /**
  * @}
@@ -240,17 +226,15 @@ typedef struct {
 /** @defgroup UCPD_LL_EC_CCxEVT  CCx event
  * @{
  */
-#define LL_UCPD_SNK_CC1_VOPEN 0x00u			  /*!< CC1 Sink Open state              */
-#define LL_UCPD_SNK_CC1_VRP UCPD_SR_TYPEC_VSTATE_CC1_0	  /*!< CC1 Sink vRP default state       */
-#define LL_UCPD_SNK_CC1_VRP15A UCPD_SR_TYPEC_VSTATE_CC1_1 /*!< CC1 Sink vRP 1.5A state          */
-#define LL_UCPD_SNK_CC1_VRP30A                                                                                         \
-	(UCPD_SR_TYPEC_VSTATE_CC1_0 | UCPD_SR_TYPEC_VSTATE_CC1_1) /*!< CC1 Sink vRP 3.0A state          */
+#define LL_UCPD_SNK_CC1_VOPEN 0x00u							 /*!< CC1 Sink Open state              */
+#define LL_UCPD_SNK_CC1_VRP UCPD_SR_TYPEC_VSTATE_CC1_0					 /*!< CC1 Sink vRP default state       */
+#define LL_UCPD_SNK_CC1_VRP15A UCPD_SR_TYPEC_VSTATE_CC1_1				 /*!< CC1 Sink vRP 1.5A state          */
+#define LL_UCPD_SNK_CC1_VRP30A (UCPD_SR_TYPEC_VSTATE_CC1_0 | UCPD_SR_TYPEC_VSTATE_CC1_1) /*!< CC1 Sink vRP 3.0A state          */
 
-#define LL_UCPD_SNK_CC2_VOPEN 0x00u			  /*!< CC2 Sink Open state              */
-#define LL_UCPD_SNK_CC2_VRP UCPD_SR_TYPEC_VSTATE_CC2_0	  /*!< CC2 Sink vRP default state       */
-#define LL_UCPD_SNK_CC2_VRP15A UCPD_SR_TYPEC_VSTATE_CC2_1 /*!< CC2 Sink vRP 1.5A state          */
-#define LL_UCPD_SNK_CC2_VRP30A                                                                                         \
-	(UCPD_SR_TYPEC_VSTATE_CC2_0 | UCPD_SR_TYPEC_VSTATE_CC2_1) /*!< CC2 Sink vRP 3.0A state          */
+#define LL_UCPD_SNK_CC2_VOPEN 0x00u							 /*!< CC2 Sink Open state              */
+#define LL_UCPD_SNK_CC2_VRP UCPD_SR_TYPEC_VSTATE_CC2_0					 /*!< CC2 Sink vRP default state       */
+#define LL_UCPD_SNK_CC2_VRP15A UCPD_SR_TYPEC_VSTATE_CC2_1				 /*!< CC2 Sink vRP 1.5A state          */
+#define LL_UCPD_SNK_CC2_VRP30A (UCPD_SR_TYPEC_VSTATE_CC2_0 | UCPD_SR_TYPEC_VSTATE_CC2_1) /*!< CC2 Sink vRP 3.0A state          */
 
 #define LL_UCPD_SRC_CC1_VRA 0x0U			/*!< CC1 Source vRA state              */
 #define LL_UCPD_SRC_CC1_VRD UCPD_SR_TYPEC_VSTATE_CC1_0	/*!< CC1 Source vRD state              */
@@ -281,8 +265,8 @@ typedef struct {
 #define LL_UCPD_CCENABLE_NONE 0x0U		/*!< Neither PHY is activated (e.g. disabled state of source) */
 #define LL_UCPD_CCENABLE_CC1 UCPD_CR_CCENABLE_0 /*!< Controls apply to only CC1 */
 #define LL_UCPD_CCENABLE_CC2 UCPD_CR_CCENABLE_1 /*!< Controls apply to only CC1 */
-#define LL_UCPD_CCENABLE_CC1CC2                                                                                        \
-	(UCPD_CR_CCENABLE_0 | UCPD_CR_CCENABLE_1) /*!< Controls apply to both CC1 and CC2 (normal                      \
+#define LL_UCPD_CCENABLE_CC1CC2                                                                                                                                                                        \
+	(UCPD_CR_CCENABLE_0 | UCPD_CR_CCENABLE_1) /*!< Controls apply to both CC1 and CC2 (normal                                                                                                      \
 						     usage for sink/source) */
 /**
  * @}
@@ -310,11 +294,11 @@ typedef struct {
  * @{
  */
 #define LL_UCPD_TXMODE_NORMAL 0x0U /*!< Initiate the transfer of a Tx message                    */
-#define LL_UCPD_TXMODE_CABLE_RESET                                                                                     \
-	UCPD_CR_TXMODE_0 /*!< Trigger a the transfer of a Cable Reset sequence                                         \
+#define LL_UCPD_TXMODE_CABLE_RESET                                                                                                                                                                     \
+	UCPD_CR_TXMODE_0 /*!< Trigger a the transfer of a Cable Reset sequence                                                                                                                         \
 			  */
-#define LL_UCPD_TXMODE_BIST_CARRIER2                                                                                   \
-	UCPD_CR_TXMODE_1 /*!< Trigger a BIST test sequence send (BIST Carrier                                          \
+#define LL_UCPD_TXMODE_BIST_CARRIER2                                                                                                                                                                   \
+	UCPD_CR_TXMODE_1 /*!< Trigger a BIST test sequence send (BIST Carrier                                                                                                                          \
 			    Mode 2)  */
 /**
  * @}
@@ -326,20 +310,20 @@ typedef struct {
 #define LL_UCPD_RXORDSET_SOP 0x0U			/*!< SOP code detected in receiver              */
 #define LL_UCPD_RXORDSET_SOP1 UCPD_RX_ORDSET_RXORDSET_0 /*!< SOP' code detected in receiver */
 #define LL_UCPD_RXORDSET_SOP2 UCPD_RX_ORDSET_RXORDSET_1 /*!< SOP'' code detected in receiver */
-#define LL_UCPD_RXORDSET_SOP1_DEBUG                                                                                    \
-	(UCPD_RX_ORDSET_RXORDSET_0 | UCPD_RX_ORDSET_RXORDSET_1) /*!< SOP' Debug code detected in receiver              \
+#define LL_UCPD_RXORDSET_SOP1_DEBUG                                                                                                                                                                    \
+	(UCPD_RX_ORDSET_RXORDSET_0 | UCPD_RX_ORDSET_RXORDSET_1) /*!< SOP' Debug code detected in receiver                                                                                              \
 								 */
-#define LL_UCPD_RXORDSET_SOP2_DEBUG                                                                                    \
-	UCPD_RX_ORDSET_RXORDSET_2 /*!< SOP'' Debug code detected in receiver                                           \
+#define LL_UCPD_RXORDSET_SOP2_DEBUG                                                                                                                                                                    \
+	UCPD_RX_ORDSET_RXORDSET_2 /*!< SOP'' Debug code detected in receiver                                                                                                                           \
 				   */
-#define LL_UCPD_RXORDSET_CABLE_RESET                                                                                   \
-	(UCPD_RX_ORDSET_RXORDSET_2 | UCPD_RX_ORDSET_RXORDSET_0) /*!< Cable Reset code detected in receiver             \
+#define LL_UCPD_RXORDSET_CABLE_RESET                                                                                                                                                                   \
+	(UCPD_RX_ORDSET_RXORDSET_2 | UCPD_RX_ORDSET_RXORDSET_0) /*!< Cable Reset code detected in receiver                                                                                             \
 								 */
-#define LL_UCPD_RXORDSET_SOPEXT1                                                                                       \
-	(UCPD_RX_ORDSET_RXORDSET_2 | UCPD_RX_ORDSET_RXORDSET_1) /*!< SOP extension#1 code detected in                  \
+#define LL_UCPD_RXORDSET_SOPEXT1                                                                                                                                                                       \
+	(UCPD_RX_ORDSET_RXORDSET_2 | UCPD_RX_ORDSET_RXORDSET_1) /*!< SOP extension#1 code detected in                                                                                                  \
 								   receiver  */
-#define LL_UCPD_RXORDSET_SOPEXT2                                                                                       \
-	(UCPD_RX_ORDSET_RXORDSET_2 | UCPD_RX_ORDSET_RXORDSET_1 | UCPD_RX_ORDSET_RXORDSET_0) /*!< SOP extension#2 code  \
+#define LL_UCPD_RXORDSET_SOPEXT2                                                                                                                                                                       \
+	(UCPD_RX_ORDSET_RXORDSET_2 | UCPD_RX_ORDSET_RXORDSET_1 | UCPD_RX_ORDSET_RXORDSET_0) /*!< SOP extension#2 code                                                                                  \
 											       detected in receiver */
 /**
  * @}
@@ -418,10 +402,7 @@ __STATIC_INLINE void LL_UCPD_Disable(UCPD_TypeDef *UCPDx) { CLEAR_BIT(UCPDx->CFG
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsEnabled(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->CFG1, UCPD_CFG1_UCPDEN) == (UCPD_CFG1_UCPDEN)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsEnabled(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->CFG1, UCPD_CFG1_UCPDEN) == (UCPD_CFG1_UCPDEN)) ? 1UL : 0UL); }
 
 /**
  * @brief  Set the receiver ordered set detection enable
@@ -439,10 +420,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsEnabled(UCPD_TypeDef const *const UCPDx)
  *         @arg @ref LL_UCPD_ORDERSET_SOP_EXT2
  * @retval None
  */
-__STATIC_INLINE void LL_UCPD_SetRxOrderSet(UCPD_TypeDef *UCPDx, uint32_t OrderSet)
-{
-	MODIFY_REG(UCPDx->CFG1, UCPD_CFG1_RXORDSETEN, OrderSet);
-}
+__STATIC_INLINE void LL_UCPD_SetRxOrderSet(UCPD_TypeDef *UCPDx, uint32_t OrderSet) { MODIFY_REG(UCPDx->CFG1, UCPD_CFG1_RXORDSETEN, OrderSet); }
 
 /**
  * @brief  Set the prescaler for ucpd clock
@@ -456,10 +434,7 @@ __STATIC_INLINE void LL_UCPD_SetRxOrderSet(UCPD_TypeDef *UCPDx, uint32_t OrderSe
  *         @arg @ref LL_UCPD_PSC_DIV16
  * @retval None
  */
-__STATIC_INLINE void LL_UCPD_SetPSCClk(UCPD_TypeDef *UCPDx, uint32_t Psc)
-{
-	MODIFY_REG(UCPDx->CFG1, UCPD_CFG1_PSC_UCPDCLK, Psc);
-}
+__STATIC_INLINE void LL_UCPD_SetPSCClk(UCPD_TypeDef *UCPDx, uint32_t Psc) { MODIFY_REG(UCPDx->CFG1, UCPD_CFG1_PSC_UCPDCLK, Psc); }
 
 /**
  * @brief  Set the number of cycles (minus 1) of the half bit clock
@@ -468,10 +443,7 @@ __STATIC_INLINE void LL_UCPD_SetPSCClk(UCPD_TypeDef *UCPDx, uint32_t Psc)
  * @param  TransWin a value between Min_Data=0x1 and Max_Data=0x1F
  * @retval None
  */
-__STATIC_INLINE void LL_UCPD_SetTransWin(UCPD_TypeDef *UCPDx, uint32_t TransWin)
-{
-	MODIFY_REG(UCPDx->CFG1, UCPD_CFG1_TRANSWIN, TransWin << UCPD_CFG1_TRANSWIN_Pos);
-}
+__STATIC_INLINE void LL_UCPD_SetTransWin(UCPD_TypeDef *UCPDx, uint32_t TransWin) { MODIFY_REG(UCPDx->CFG1, UCPD_CFG1_TRANSWIN, TransWin << UCPD_CFG1_TRANSWIN_Pos); }
 
 /**
  * @brief  Set the clock divider value to generate an interframe gap
@@ -480,10 +452,7 @@ __STATIC_INLINE void LL_UCPD_SetTransWin(UCPD_TypeDef *UCPDx, uint32_t TransWin)
  * @param  IfrGap a value between Min_Data=0x1 and Max_Data=0x1F
  * @retval None
  */
-__STATIC_INLINE void LL_UCPD_SetIfrGap(UCPD_TypeDef *UCPDx, uint32_t IfrGap)
-{
-	MODIFY_REG(UCPDx->CFG1, UCPD_CFG1_IFRGAP, IfrGap << UCPD_CFG1_IFRGAP_Pos);
-}
+__STATIC_INLINE void LL_UCPD_SetIfrGap(UCPD_TypeDef *UCPDx, uint32_t IfrGap) { MODIFY_REG(UCPDx->CFG1, UCPD_CFG1_IFRGAP, IfrGap << UCPD_CFG1_IFRGAP_Pos); }
 
 /**
  * @brief  Set the clock divider value to generate an interframe gap
@@ -492,10 +461,7 @@ __STATIC_INLINE void LL_UCPD_SetIfrGap(UCPD_TypeDef *UCPDx, uint32_t IfrGap)
  * @param  HbitClock a value between Min_Data=0x0 and Max_Data=0x3F
  * @retval None
  */
-__STATIC_INLINE void LL_UCPD_SetHbitClockDiv(UCPD_TypeDef *UCPDx, uint32_t HbitClock)
-{
-	MODIFY_REG(UCPDx->CFG1, UCPD_CFG1_HBITCLKDIV, HbitClock << UCPD_CFG1_HBITCLKDIV_Pos);
-}
+__STATIC_INLINE void LL_UCPD_SetHbitClockDiv(UCPD_TypeDef *UCPDx, uint32_t HbitClock) { MODIFY_REG(UCPDx->CFG1, UCPD_CFG1_HBITCLKDIV, HbitClock << UCPD_CFG1_HBITCLKDIV_Pos); }
 
 /**
  * @}
@@ -663,10 +629,7 @@ __STATIC_INLINE void LL_UCPD_FRSDetectionDisable(UCPD_TypeDef *UCPDx) { CLEAR_BI
  *         @arg @ref LL_UCPD_CCENABLE_CC1CC2
  * @retval None
  */
-__STATIC_INLINE void LL_UCPD_SetccEnable(UCPD_TypeDef *UCPDx, uint32_t CCEnable)
-{
-	MODIFY_REG(UCPDx->CR, UCPD_CR_CCENABLE, CCEnable);
-}
+__STATIC_INLINE void LL_UCPD_SetccEnable(UCPD_TypeDef *UCPDx, uint32_t CCEnable) { MODIFY_REG(UCPDx->CR, UCPD_CR_CCENABLE, CCEnable); }
 
 /**
  * @brief  Set UCPD SNK role
@@ -692,10 +655,7 @@ __STATIC_INLINE void LL_UCPD_SetSRCRole(UCPD_TypeDef *UCPDx) { CLEAR_BIT(UCPDx->
  *         @arg @ref LL_UCPD_ROLE_SNK
  *         @arg @ref LL_UCPD_ROLE_SRC
  */
-__STATIC_INLINE uint32_t LL_UCPD_GetRole(UCPD_TypeDef const *const UCPDx)
-{
-	return (uint32_t)(READ_BIT(UCPDx->CR, UCPD_CR_ANAMODE));
-}
+__STATIC_INLINE uint32_t LL_UCPD_GetRole(UCPD_TypeDef const *const UCPDx) { return (uint32_t)(READ_BIT(UCPDx->CR, UCPD_CR_ANAMODE)); }
 
 /**
  * @brief  Set Rp resistor
@@ -708,10 +668,7 @@ __STATIC_INLINE uint32_t LL_UCPD_GetRole(UCPD_TypeDef const *const UCPDx)
  *         @arg @ref LL_UCPD_RESISTOR_NONE
  * @retval None
  */
-__STATIC_INLINE void LL_UCPD_SetRpResistor(UCPD_TypeDef *UCPDx, uint32_t Resistor)
-{
-	MODIFY_REG(UCPDx->CR, UCPD_CR_ANASUBMODE, Resistor);
-}
+__STATIC_INLINE void LL_UCPD_SetRpResistor(UCPD_TypeDef *UCPDx, uint32_t Resistor) { MODIFY_REG(UCPDx->CR, UCPD_CR_ANASUBMODE, Resistor); }
 
 /**
  * @brief  Set CC pin
@@ -722,10 +679,7 @@ __STATIC_INLINE void LL_UCPD_SetRpResistor(UCPD_TypeDef *UCPDx, uint32_t Resisto
  *         @arg @ref LL_UCPD_CCPIN_CC2
  * @retval None
  */
-__STATIC_INLINE void LL_UCPD_SetCCPin(UCPD_TypeDef *UCPDx, uint32_t CCPin)
-{
-	MODIFY_REG(UCPDx->CR, UCPD_CR_PHYCCSEL, CCPin);
-}
+__STATIC_INLINE void LL_UCPD_SetCCPin(UCPD_TypeDef *UCPDx, uint32_t CCPin) { MODIFY_REG(UCPDx->CR, UCPD_CR_PHYCCSEL, CCPin); }
 
 /**
  * @brief  Rx enable
@@ -752,10 +706,7 @@ __STATIC_INLINE void LL_UCPD_RxDisable(UCPD_TypeDef *UCPDx) { CLEAR_BIT(UCPDx->C
  *         @arg @ref LL_UCPD_RXMODE_BIST_TEST_DATA
  * @retval None
  */
-__STATIC_INLINE void LL_UCPD_SetRxMode(UCPD_TypeDef *UCPDx, uint32_t RxMode)
-{
-	MODIFY_REG(UCPDx->CR, UCPD_CR_RXMODE, RxMode);
-}
+__STATIC_INLINE void LL_UCPD_SetRxMode(UCPD_TypeDef *UCPDx, uint32_t RxMode) { MODIFY_REG(UCPDx->CR, UCPD_CR_RXMODE, RxMode); }
 
 /**
  * @brief  Send Hard Reset
@@ -783,10 +734,7 @@ __STATIC_INLINE void LL_UCPD_SendMessage(UCPD_TypeDef *UCPDx) { SET_BIT(UCPDx->C
  *         @arg @ref LL_UCPD_TXMODE_BIST_CARRIER2
  * @retval None
  */
-__STATIC_INLINE void LL_UCPD_SetTxMode(UCPD_TypeDef *UCPDx, uint32_t TxMode)
-{
-	MODIFY_REG(UCPDx->CR, UCPD_CR_TXMODE, TxMode);
-}
+__STATIC_INLINE void LL_UCPD_SetTxMode(UCPD_TypeDef *UCPDx, uint32_t TxMode) { MODIFY_REG(UCPDx->CR, UCPD_CR_TXMODE, TxMode); }
 
 /**
  * @}
@@ -930,10 +878,7 @@ __STATIC_INLINE void LL_UCPD_DisableIT_FRS(UCPD_TypeDef *UCPDx) { CLEAR_BIT(UCPD
  * @param  UCPDx UCPD Instance
  * @retval None
  */
-__STATIC_INLINE void LL_UCPD_DisableIT_TypeCEventCC2(UCPD_TypeDef *UCPDx)
-{
-	CLEAR_BIT(UCPDx->IMR, UCPD_IMR_TYPECEVT2IE);
-}
+__STATIC_INLINE void LL_UCPD_DisableIT_TypeCEventCC2(UCPD_TypeDef *UCPDx) { CLEAR_BIT(UCPDx->IMR, UCPD_IMR_TYPECEVT2IE); }
 
 /**
  * @brief  Disable type c event on CC1
@@ -941,10 +886,7 @@ __STATIC_INLINE void LL_UCPD_DisableIT_TypeCEventCC2(UCPD_TypeDef *UCPDx)
  * @param  UCPDx UCPD Instance
  * @retval None
  */
-__STATIC_INLINE void LL_UCPD_DisableIT_TypeCEventCC1(UCPD_TypeDef *UCPDx)
-{
-	CLEAR_BIT(UCPDx->IMR, UCPD_IMR_TYPECEVT1IE);
-}
+__STATIC_INLINE void LL_UCPD_DisableIT_TypeCEventCC1(UCPD_TypeDef *UCPDx) { CLEAR_BIT(UCPDx->IMR, UCPD_IMR_TYPECEVT1IE); }
 
 /**
  * @brief  Disable Rx message end interrupt
@@ -1048,10 +990,7 @@ __STATIC_INLINE void LL_UCPD_DisableIT_TxIS(UCPD_TypeDef *UCPDx) { CLEAR_BIT(UCP
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_FRS(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->IMR, UCPD_IMR_FRSEVTIE) == UCPD_IMR_FRSEVTIE) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_FRS(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->IMR, UCPD_IMR_FRSEVTIE) == UCPD_IMR_FRSEVTIE) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if type c event on CC2 enabled
@@ -1059,10 +998,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_FRS(UCPD_TypeDef const *const UCPDx)
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TypeCEventCC2(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->IMR, UCPD_IMR_TYPECEVT2IE) == UCPD_IMR_TYPECEVT2IE) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TypeCEventCC2(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->IMR, UCPD_IMR_TYPECEVT2IE) == UCPD_IMR_TYPECEVT2IE) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if type c event on CC1 enabled
@@ -1070,10 +1006,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TypeCEventCC2(UCPD_TypeDef const *co
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TypeCEventCC1(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->IMR, UCPD_IMR_TYPECEVT1IE) == UCPD_IMR_TYPECEVT1IE) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TypeCEventCC1(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->IMR, UCPD_IMR_TYPECEVT1IE) == UCPD_IMR_TYPECEVT1IE) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if Rx message end interrupt enabled
@@ -1081,10 +1014,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TypeCEventCC1(UCPD_TypeDef const *co
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_RxMsgEnd(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->IMR, UCPD_IMR_RXMSGENDIE) == UCPD_IMR_RXMSGENDIE) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_RxMsgEnd(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->IMR, UCPD_IMR_RXMSGENDIE) == UCPD_IMR_RXMSGENDIE) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if Rx overrun interrupt enabled
@@ -1092,10 +1022,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_RxMsgEnd(UCPD_TypeDef const *const U
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_RxOvr(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->IMR, UCPD_IMR_RXOVRIE) == UCPD_IMR_RXOVRIE) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_RxOvr(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->IMR, UCPD_IMR_RXOVRIE) == UCPD_IMR_RXOVRIE) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if Rx hard reset interrupt enabled
@@ -1103,10 +1030,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_RxOvr(UCPD_TypeDef const *const UCPD
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_RxHRST(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->IMR, UCPD_IMR_RXHRSTDETIE) == UCPD_IMR_RXHRSTDETIE) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_RxHRST(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->IMR, UCPD_IMR_RXHRSTDETIE) == UCPD_IMR_RXHRSTDETIE) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if Rx orderset interrupt enabled
@@ -1114,10 +1038,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_RxHRST(UCPD_TypeDef const *const UCP
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_RxOrderSet(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->IMR, UCPD_IMR_RXORDDETIE) == UCPD_IMR_RXORDDETIE) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_RxOrderSet(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->IMR, UCPD_IMR_RXORDDETIE) == UCPD_IMR_RXORDDETIE) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if Rx non empty interrupt enabled
@@ -1125,10 +1046,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_RxOrderSet(UCPD_TypeDef const *const
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_RxNE(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->IMR, UCPD_IMR_RXNEIE) == UCPD_IMR_RXNEIE) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_RxNE(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->IMR, UCPD_IMR_RXNEIE) == UCPD_IMR_RXNEIE) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if TX underrun interrupt enabled
@@ -1136,10 +1054,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_RxNE(UCPD_TypeDef const *const UCPDx
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TxUND(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->IMR, UCPD_IMR_TXUNDIE) == UCPD_IMR_TXUNDIE) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TxUND(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->IMR, UCPD_IMR_TXUNDIE) == UCPD_IMR_TXUNDIE) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if hard reset sent interrupt enabled
@@ -1147,10 +1062,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TxUND(UCPD_TypeDef const *const UCPD
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TxHRSTSENT(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->IMR, UCPD_IMR_HRSTSENTIE) == UCPD_IMR_HRSTSENTIE) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TxHRSTSENT(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->IMR, UCPD_IMR_HRSTSENTIE) == UCPD_IMR_HRSTSENTIE) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if hard reset discard interrupt enabled
@@ -1158,10 +1070,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TxHRSTSENT(UCPD_TypeDef const *const
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TxHRSTDISC(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->IMR, UCPD_IMR_HRSTDISCIE) == UCPD_IMR_HRSTDISCIE) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TxHRSTDISC(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->IMR, UCPD_IMR_HRSTDISCIE) == UCPD_IMR_HRSTDISCIE) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if Tx message abort interrupt enabled
@@ -1169,10 +1078,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TxHRSTDISC(UCPD_TypeDef const *const
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TxMSGABT(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->IMR, UCPD_IMR_TXMSGABTIE) == UCPD_IMR_TXMSGABTIE) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TxMSGABT(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->IMR, UCPD_IMR_TXMSGABTIE) == UCPD_IMR_TXMSGABTIE) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if Tx message sent interrupt enabled
@@ -1180,10 +1086,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TxMSGABT(UCPD_TypeDef const *const U
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TxMSGSENT(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->IMR, UCPD_IMR_TXMSGSENTIE) == UCPD_IMR_TXMSGSENTIE) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TxMSGSENT(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->IMR, UCPD_IMR_TXMSGSENTIE) == UCPD_IMR_TXMSGSENTIE) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if Tx message discarded interrupt enabled
@@ -1191,10 +1094,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TxMSGSENT(UCPD_TypeDef const *const 
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TxMSGDISC(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->IMR, UCPD_IMR_TXMSGDISCIE) == UCPD_IMR_TXMSGDISCIE) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TxMSGDISC(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->IMR, UCPD_IMR_TXMSGDISCIE) == UCPD_IMR_TXMSGDISCIE) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if Tx data receive interrupt enabled
@@ -1202,10 +1102,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TxMSGDISC(UCPD_TypeDef const *const 
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TxIS(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->IMR, UCPD_IMR_TXISIE) == UCPD_IMR_TXISIE) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsEnableIT_TxIS(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->IMR, UCPD_IMR_TXISIE) == UCPD_IMR_TXISIE) ? 1UL : 0UL); }
 
 /**
  * @}
@@ -1333,10 +1230,7 @@ __STATIC_INLINE void LL_UCPD_ClearFlag_TxMSGDISC(UCPD_TypeDef *UCPDx) { SET_BIT(
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_FRS(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->SR, UCPD_SR_FRSEVT) == UCPD_SR_FRSEVT) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_FRS(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->SR, UCPD_SR_FRSEVT) == UCPD_SR_FRSEVT) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if type c event on CC2
@@ -1344,10 +1238,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_FRS(UCPD_TypeDef const *const UCPD
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TypeCEventCC2(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->SR, UCPD_SR_TYPECEVT2) == UCPD_SR_TYPECEVT2) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TypeCEventCC2(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->SR, UCPD_SR_TYPECEVT2) == UCPD_SR_TYPECEVT2) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if type c event on CC1
@@ -1355,10 +1246,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TypeCEventCC2(UCPD_TypeDef const *
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TypeCEventCC1(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->SR, UCPD_SR_TYPECEVT1) == UCPD_SR_TYPECEVT1) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TypeCEventCC1(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->SR, UCPD_SR_TYPECEVT1) == UCPD_SR_TYPECEVT1) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if Rx error flag is active
@@ -1366,10 +1254,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TypeCEventCC1(UCPD_TypeDef const *
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_RxErr(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->SR, UCPD_SR_RXERR) == UCPD_SR_RXERR) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_RxErr(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->SR, UCPD_SR_RXERR) == UCPD_SR_RXERR) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if Rx message end flag is active
@@ -1377,10 +1262,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_RxErr(UCPD_TypeDef const *const UC
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_RxMsgEnd(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->SR, UCPD_SR_RXMSGEND) == UCPD_SR_RXMSGEND) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_RxMsgEnd(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->SR, UCPD_SR_RXMSGEND) == UCPD_SR_RXMSGEND) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if Rx overrun flag is active
@@ -1388,10 +1270,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_RxMsgEnd(UCPD_TypeDef const *const
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_RxOvr(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->SR, UCPD_SR_RXOVR) == UCPD_SR_RXOVR) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_RxOvr(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->SR, UCPD_SR_RXOVR) == UCPD_SR_RXOVR) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if Rx hard reset flag is active
@@ -1399,10 +1278,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_RxOvr(UCPD_TypeDef const *const UC
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_RxHRST(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->SR, UCPD_SR_RXHRSTDET) == UCPD_SR_RXHRSTDET) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_RxHRST(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->SR, UCPD_SR_RXHRSTDET) == UCPD_SR_RXHRSTDET) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if Rx orderset flag is active
@@ -1410,10 +1286,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_RxHRST(UCPD_TypeDef const *const U
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_RxOrderSet(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->SR, UCPD_SR_RXORDDET) == UCPD_SR_RXORDDET) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_RxOrderSet(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->SR, UCPD_SR_RXORDDET) == UCPD_SR_RXORDDET) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if Rx non empty flag is active
@@ -1421,10 +1294,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_RxOrderSet(UCPD_TypeDef const *con
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_RxNE(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->SR, UCPD_SR_RXNE) == UCPD_SR_RXNE) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_RxNE(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->SR, UCPD_SR_RXNE) == UCPD_SR_RXNE) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if TX underrun flag is active
@@ -1432,10 +1302,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_RxNE(UCPD_TypeDef const *const UCP
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TxUND(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->SR, UCPD_SR_TXUND) == UCPD_SR_TXUND) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TxUND(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->SR, UCPD_SR_TXUND) == UCPD_SR_TXUND) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if hard reset sent flag is active
@@ -1443,10 +1310,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TxUND(UCPD_TypeDef const *const UC
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TxHRSTSENT(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->SR, UCPD_SR_HRSTSENT) == UCPD_SR_HRSTSENT) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TxHRSTSENT(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->SR, UCPD_SR_HRSTSENT) == UCPD_SR_HRSTSENT) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if hard reset discard flag is active
@@ -1454,10 +1318,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TxHRSTSENT(UCPD_TypeDef const *con
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TxHRSTDISC(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->SR, UCPD_SR_HRSTDISC) == UCPD_SR_HRSTDISC) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TxHRSTDISC(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->SR, UCPD_SR_HRSTDISC) == UCPD_SR_HRSTDISC) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if Tx message abort flag is active
@@ -1465,10 +1326,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TxHRSTDISC(UCPD_TypeDef const *con
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TxMSGABT(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->SR, UCPD_SR_TXMSGABT) == UCPD_SR_TXMSGABT) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TxMSGABT(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->SR, UCPD_SR_TXMSGABT) == UCPD_SR_TXMSGABT) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if Tx message sent flag is active
@@ -1476,10 +1334,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TxMSGABT(UCPD_TypeDef const *const
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TxMSGSENT(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->SR, UCPD_SR_TXMSGSENT) == UCPD_SR_TXMSGSENT) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TxMSGSENT(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->SR, UCPD_SR_TXMSGSENT) == UCPD_SR_TXMSGSENT) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if Tx message discarded flag is active
@@ -1487,10 +1342,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TxMSGSENT(UCPD_TypeDef const *cons
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TxMSGDISC(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->SR, UCPD_SR_TXMSGDISC) == UCPD_SR_TXMSGDISC) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TxMSGDISC(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->SR, UCPD_SR_TXMSGDISC) == UCPD_SR_TXMSGDISC) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if Tx data interrupt flag is active
@@ -1498,10 +1350,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TxMSGDISC(UCPD_TypeDef const *cons
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TxIS(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->SR, UCPD_SR_TXIS) == UCPD_SR_TXIS) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TxIS(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->SR, UCPD_SR_TXIS) == UCPD_SR_TXIS) ? 1UL : 0UL); }
 
 /**
  * @brief  return the vstate value for CC2
@@ -1509,10 +1358,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsActiveFlag_TxIS(UCPD_TypeDef const *const UCP
  * @param  UCPDx UCPD Instance
  * @retval val
  */
-__STATIC_INLINE uint32_t LL_UCPD_GetTypeCVstateCC2(UCPD_TypeDef const *const UCPDx)
-{
-	return UCPDx->SR & UCPD_SR_TYPEC_VSTATE_CC2;
-}
+__STATIC_INLINE uint32_t LL_UCPD_GetTypeCVstateCC2(UCPD_TypeDef const *const UCPDx) { return UCPDx->SR & UCPD_SR_TYPEC_VSTATE_CC2; }
 
 /**
  * @brief  return the vstate value for CC1
@@ -1520,10 +1366,7 @@ __STATIC_INLINE uint32_t LL_UCPD_GetTypeCVstateCC2(UCPD_TypeDef const *const UCP
  * @param  UCPDx UCPD Instance
  * @retval val
  */
-__STATIC_INLINE uint32_t LL_UCPD_GetTypeCVstateCC1(UCPD_TypeDef const *const UCPDx)
-{
-	return UCPDx->SR & UCPD_SR_TYPEC_VSTATE_CC1;
-}
+__STATIC_INLINE uint32_t LL_UCPD_GetTypeCVstateCC1(UCPD_TypeDef const *const UCPDx) { return UCPDx->SR & UCPD_SR_TYPEC_VSTATE_CC1; }
 
 /**
  * @}
@@ -1571,10 +1414,7 @@ __STATIC_INLINE void LL_UCPD_TxDMADisable(UCPD_TypeDef *UCPDx) { CLEAR_BIT(UCPDx
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsEnabledTxDMA(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->CFG1, UCPD_CFG1_TXDMAEN) == (UCPD_CFG1_TXDMAEN)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsEnabledTxDMA(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->CFG1, UCPD_CFG1_TXDMAEN) == (UCPD_CFG1_TXDMAEN)) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if DMA Rx is enabled
@@ -1582,10 +1422,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsEnabledTxDMA(UCPD_TypeDef const *const UCPDx)
  * @param  UCPDx UCPD Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_UCPD_IsEnabledRxDMA(UCPD_TypeDef const *const UCPDx)
-{
-	return ((READ_BIT(UCPDx->CFG1, UCPD_CFG1_RXDMAEN) == (UCPD_CFG1_RXDMAEN)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_UCPD_IsEnabledRxDMA(UCPD_TypeDef const *const UCPDx) { return ((READ_BIT(UCPDx->CFG1, UCPD_CFG1_RXDMAEN) == (UCPD_CFG1_RXDMAEN)) ? 1UL : 0UL); }
 
 /**
  * @}
@@ -1609,10 +1446,7 @@ __STATIC_INLINE uint32_t LL_UCPD_IsEnabledRxDMA(UCPD_TypeDef const *const UCPDx)
  *         @arg @ref LL_UCPD_ORDERED_SET_SOP2_DEBUG
  * @retval None
  */
-__STATIC_INLINE void LL_UCPD_WriteTxOrderSet(UCPD_TypeDef *UCPDx, uint32_t TxOrderSet)
-{
-	WRITE_REG(UCPDx->TX_ORDSET, TxOrderSet);
-}
+__STATIC_INLINE void LL_UCPD_WriteTxOrderSet(UCPD_TypeDef *UCPDx, uint32_t TxOrderSet) { WRITE_REG(UCPDx->TX_ORDSET, TxOrderSet); }
 
 /**
  * @brief  write the Tx paysize
@@ -1621,10 +1455,7 @@ __STATIC_INLINE void LL_UCPD_WriteTxOrderSet(UCPD_TypeDef *UCPDx, uint32_t TxOrd
  * @param  TxPaySize
  * @retval None.
  */
-__STATIC_INLINE void LL_UCPD_WriteTxPaySize(UCPD_TypeDef *UCPDx, uint32_t TxPaySize)
-{
-	WRITE_REG(UCPDx->TX_PAYSZ, TxPaySize);
-}
+__STATIC_INLINE void LL_UCPD_WriteTxPaySize(UCPD_TypeDef *UCPDx, uint32_t TxPaySize) { WRITE_REG(UCPDx->TX_PAYSZ, TxPaySize); }
 
 /**
  * @brief  Write data
@@ -1649,10 +1480,7 @@ __STATIC_INLINE void LL_UCPD_WriteData(UCPD_TypeDef *UCPDx, uint8_t Data) { WRIT
  *         @arg @ref LL_UCPD_RXORDSET_SOPEXT1
  *         @arg @ref LL_UCPD_RXORDSET_SOPEXT2
  */
-__STATIC_INLINE uint32_t LL_UCPD_ReadRxOrderSet(UCPD_TypeDef const *const UCPDx)
-{
-	return READ_BIT(UCPDx->RX_ORDSET, UCPD_RX_ORDSET_RXORDSET);
-}
+__STATIC_INLINE uint32_t LL_UCPD_ReadRxOrderSet(UCPD_TypeDef const *const UCPDx) { return READ_BIT(UCPDx->RX_ORDSET, UCPD_RX_ORDSET_RXORDSET); }
 
 /**
  * @brief  Read the Rx paysize
@@ -1660,10 +1488,7 @@ __STATIC_INLINE uint32_t LL_UCPD_ReadRxOrderSet(UCPD_TypeDef const *const UCPDx)
  * @param  UCPDx UCPD Instance
  * @retval RXPaysize.
  */
-__STATIC_INLINE uint32_t LL_UCPD_ReadRxPaySize(UCPD_TypeDef const *const UCPDx)
-{
-	return READ_BIT(UCPDx->RX_PAYSZ, UCPD_RX_PAYSZ_RXPAYSZ);
-}
+__STATIC_INLINE uint32_t LL_UCPD_ReadRxPaySize(UCPD_TypeDef const *const UCPDx) { return READ_BIT(UCPDx->RX_PAYSZ, UCPD_RX_PAYSZ_RXPAYSZ); }
 
 /**
  * @brief  Read data
@@ -1680,10 +1505,7 @@ __STATIC_INLINE uint32_t LL_UCPD_ReadData(UCPD_TypeDef const *const UCPDx) { ret
  * @param  SOPExt Value between Min_Data=0x00000 and Max_Data=0xFFFFF
  * @retval None
  */
-__STATIC_INLINE void LL_UCPD_SetRxOrdExt1(UCPD_TypeDef *UCPDx, uint32_t SOPExt)
-{
-	WRITE_REG(UCPDx->RX_ORDEXT1, SOPExt);
-}
+__STATIC_INLINE void LL_UCPD_SetRxOrdExt1(UCPD_TypeDef *UCPDx, uint32_t SOPExt) { WRITE_REG(UCPDx->RX_ORDEXT1, SOPExt); }
 
 /**
  * @brief  Set Rx OrderSet Ext2
@@ -1692,10 +1514,7 @@ __STATIC_INLINE void LL_UCPD_SetRxOrdExt1(UCPD_TypeDef *UCPDx, uint32_t SOPExt)
  * @param  SOPExt Value between Min_Data=0x00000 and Max_Data=0xFFFFF
  * @retval None
  */
-__STATIC_INLINE void LL_UCPD_SetRxOrdExt2(UCPD_TypeDef *UCPDx, uint32_t SOPExt)
-{
-	WRITE_REG(UCPDx->RX_ORDEXT2, SOPExt);
-}
+__STATIC_INLINE void LL_UCPD_SetRxOrdExt2(UCPD_TypeDef *UCPDx, uint32_t SOPExt) { WRITE_REG(UCPDx->RX_ORDEXT2, SOPExt); }
 
 /**
  * @}

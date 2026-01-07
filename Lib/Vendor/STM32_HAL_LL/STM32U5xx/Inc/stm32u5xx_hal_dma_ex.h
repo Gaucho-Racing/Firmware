@@ -223,8 +223,8 @@ typedef struct __DMA_QListTypeDef {
 #define HAL_DMA_QUEUE_ERROR_BUSY (0x01U)	/*!< Error busy */
 #define HAL_DMA_QUEUE_ERROR_EMPTY (0x02U)	/*!< Error unallowed operation for empty queue */
 #define HAL_DMA_QUEUE_ERROR_UNSUPPORTED (0x03U) /*!< Error unsupported feature */
-#define HAL_DMA_QUEUE_ERROR_INVALIDTYPE                                                                                \
-	(0x04U)				       /*!< Error incompatible node type or circular initialization            \
+#define HAL_DMA_QUEUE_ERROR_INVALIDTYPE                                                                                                                                                                \
+	(0x04U)				       /*!< Error incompatible node type or circular initialization                                                                                            \
 						    and queue circular types are incompatible */
 #define HAL_DMA_QUEUE_ERROR_OUTOFRANGE (0x05U) /*!< Error out of range node memory */
 #define HAL_DMA_QUEUE_ERROR_NOTFOUND (0x06U)   /*!< Error node not found in queue */
@@ -246,29 +246,29 @@ typedef struct __DMA_QListTypeDef {
  * @brief    DMAEx Data Alignment
  * @{
  */
-#define DMA_DATA_RIGHTALIGN_ZEROPADDED                                                                                 \
-	0x00000000U /*!< If source data width < destination data width                                                 \
-			 => Right aligned padded with 0 up to destination data                                         \
+#define DMA_DATA_RIGHTALIGN_ZEROPADDED                                                                                                                                                                 \
+	0x00000000U /*!< If source data width < destination data width                                                                                                                                 \
+			 => Right aligned padded with 0 up to destination data                                                                                                                         \
 			    width */
-#define DMA_DATA_RIGHTALIGN_LEFTTRUNC                                                                                  \
-	0x00000000U /*!< If source data width > destination data width                                                 \
-			 => Right aligned left Truncated down to destination                                           \
+#define DMA_DATA_RIGHTALIGN_LEFTTRUNC                                                                                                                                                                  \
+	0x00000000U /*!< If source data width > destination data width                                                                                                                                 \
+			 => Right aligned left Truncated down to destination                                                                                                                           \
 			    data width */
-#define DMA_DATA_RIGHTALIGN_SIGNEXT                                                                                    \
-	DMA_CTR1_PAM_0 /*!< If source data width < destination data width                                              \
-			    => Right Aligned padded with sign extended up to                                           \
+#define DMA_DATA_RIGHTALIGN_SIGNEXT                                                                                                                                                                    \
+	DMA_CTR1_PAM_0 /*!< If source data width < destination data width                                                                                                                              \
+			    => Right Aligned padded with sign extended up to                                                                                                                           \
 			       destination data width */
-#define DMA_DATA_LEFTALIGN_RIGHTTRUNC                                                                                  \
-	DMA_CTR1_PAM_0 /*!< If source data width > destination data width                                              \
-			    => Left Aligned Right Truncated down to the                                                \
+#define DMA_DATA_LEFTALIGN_RIGHTTRUNC                                                                                                                                                                  \
+	DMA_CTR1_PAM_0 /*!< If source data width > destination data width                                                                                                                              \
+			    => Left Aligned Right Truncated down to the                                                                                                                                \
 			       destination data width */
-#define DMA_DATA_PACK                                                                                                  \
-	DMA_CTR1_PAM_1 /*!< If source data width < destination data width                                              \
-			    => Packed at the destination data width                                                    \
+#define DMA_DATA_PACK                                                                                                                                                                                  \
+	DMA_CTR1_PAM_1 /*!< If source data width < destination data width                                                                                                                              \
+			    => Packed at the destination data width                                                                                                                                    \
 			       (Not available on LPDMA) */
-#define DMA_DATA_UNPACK                                                                                                \
-	DMA_CTR1_PAM_1 /*!< If source data width > destination data width                                              \
-			    => Unpacked at the destination data width                                                  \
+#define DMA_DATA_UNPACK                                                                                                                                                                                \
+	DMA_CTR1_PAM_1 /*!< If source data width > destination data width                                                                                                                              \
+			    => Unpacked at the destination data width                                                                                                                                  \
 			       (Not available on LPDMA) */
 /**
  * @}
@@ -279,14 +279,14 @@ typedef struct __DMA_QListTypeDef {
  * @{
  */
 #define DMA_EXCHANGE_NONE 0x00000000U /*!< No data exchange */
-#define DMA_EXCHANGE_DEST_BYTE                                                                                         \
-	DMA_CTR1_DBX /*!< Destination Byte exchange when destination data                                              \
+#define DMA_EXCHANGE_DEST_BYTE                                                                                                                                                                         \
+	DMA_CTR1_DBX /*!< Destination Byte exchange when destination data                                                                                                                              \
 			width is > Byte           */
-#define DMA_EXCHANGE_DEST_HALFWORD                                                                                     \
-	DMA_CTR1_DHX /*!< Destination Half-Word exchange when destination data                                         \
+#define DMA_EXCHANGE_DEST_HALFWORD                                                                                                                                                                     \
+	DMA_CTR1_DHX /*!< Destination Half-Word exchange when destination data                                                                                                                         \
 			width is > Half-Word */
-#define DMA_EXCHANGE_SRC_BYTE                                                                                          \
-	DMA_CTR1_SBX /*!< Source Byte endianness exchange when source data                                             \
+#define DMA_EXCHANGE_SRC_BYTE                                                                                                                                                                          \
+	DMA_CTR1_SBX /*!< Source Byte endianness exchange when source data                                                                                                                             \
 			width is word            */
 /**
  * @}
@@ -296,16 +296,16 @@ typedef struct __DMA_QListTypeDef {
  * @brief    DMAEx Trigger Polarity
  * @{
  */
-#define DMA_TRIG_POLARITY_MASKED                                                                                       \
-	0x00000000U /*!< No trigger of the selected DMA request. Masked                                                \
+#define DMA_TRIG_POLARITY_MASKED                                                                                                                                                                       \
+	0x00000000U /*!< No trigger of the selected DMA request. Masked                                                                                                                                \
 		       trigger event                                */
-#define DMA_TRIG_POLARITY_RISING                                                                                       \
-	DMA_CTR2_TRIGPOL_0 /*!< Trigger of the selected DMA request on the                                             \
-			      rising edge of the selected trigger event input                                          \
+#define DMA_TRIG_POLARITY_RISING                                                                                                                                                                       \
+	DMA_CTR2_TRIGPOL_0 /*!< Trigger of the selected DMA request on the                                                                                                                             \
+			      rising edge of the selected trigger event input                                                                                                                          \
 			    */
-#define DMA_TRIG_POLARITY_FALLING                                                                                      \
-	DMA_CTR2_TRIGPOL_1 /*!< Trigger of the selected DMA request on the                                             \
-			      falling edge of the selected trigger event input                                         \
+#define DMA_TRIG_POLARITY_FALLING                                                                                                                                                                      \
+	DMA_CTR2_TRIGPOL_1 /*!< Trigger of the selected DMA request on the                                                                                                                             \
+			      falling edge of the selected trigger event input                                                                                                                         \
 			    */
 /**
  * @}
@@ -315,17 +315,17 @@ typedef struct __DMA_QListTypeDef {
  * @brief    DMAEx Trigger Mode
  * @{
  */
-#define DMA_TRIGM_BLOCK_TRANSFER                                                                                       \
-	0x00000000U /*!< A block transfer is conditioned by (at least) one hit                                         \
+#define DMA_TRIGM_BLOCK_TRANSFER                                                                                                                                                                       \
+	0x00000000U /*!< A block transfer is conditioned by (at least) one hit                                                                                                                         \
 		       trigger          */
-#define DMA_TRIGM_REPEATED_BLOCK_TRANSFER                                                                              \
-	DMA_CTR2_TRIGM_0 /*!< A repeated block transfer is conditioned by (at                                          \
+#define DMA_TRIGM_REPEATED_BLOCK_TRANSFER                                                                                                                                                              \
+	DMA_CTR2_TRIGM_0 /*!< A repeated block transfer is conditioned by (at                                                                                                                          \
 			    least) one hit trigger */
-#define DMA_TRIGM_LLI_LINK_TRANSFER                                                                                    \
-	DMA_CTR2_TRIGM_1 /*!< A LLI link transfer is conditioned by (at least)                                         \
+#define DMA_TRIGM_LLI_LINK_TRANSFER                                                                                                                                                                    \
+	DMA_CTR2_TRIGM_1 /*!< A LLI link transfer is conditioned by (at least)                                                                                                                         \
 			    one hit trigger       */
-#define DMA_TRIGM_SINGLE_BURST_TRANSFER                                                                                \
-	DMA_CTR2_TRIGM /*!< A single/burst transfer is conditioned by (at                                              \
+#define DMA_TRIGM_SINGLE_BURST_TRANSFER                                                                                                                                                                \
+	DMA_CTR2_TRIGM /*!< A single/burst transfer is conditioned by (at                                                                                                                              \
 			  least) one hit trigger   */
 /**
  * @}
@@ -467,14 +467,14 @@ typedef struct __DMA_QListTypeDef {
  * @brief    DMAEx Node Type
  * @{
  */
-#define DMA_LPDMA_LINEAR_NODE                                                                                          \
-	(DMA_CHANNEL_TYPE_LPDMA | DMA_CHANNEL_TYPE_LINEAR_ADDR) /*!< Defines the LPDMA linear                          \
+#define DMA_LPDMA_LINEAR_NODE                                                                                                                                                                          \
+	(DMA_CHANNEL_TYPE_LPDMA | DMA_CHANNEL_TYPE_LINEAR_ADDR) /*!< Defines the LPDMA linear                                                                                                          \
 								   addressing node type      */
-#define DMA_GPDMA_LINEAR_NODE                                                                                          \
-	(DMA_CHANNEL_TYPE_GPDMA | DMA_CHANNEL_TYPE_LINEAR_ADDR) /*!< Defines the GPDMA linear                          \
+#define DMA_GPDMA_LINEAR_NODE                                                                                                                                                                          \
+	(DMA_CHANNEL_TYPE_GPDMA | DMA_CHANNEL_TYPE_LINEAR_ADDR) /*!< Defines the GPDMA linear                                                                                                          \
 								   addressing node type      */
-#define DMA_GPDMA_2D_NODE                                                                                              \
-	(DMA_CHANNEL_TYPE_GPDMA | DMA_CHANNEL_TYPE_2D_ADDR) /*!< Defines the GPDMA 2 dimension                         \
+#define DMA_GPDMA_2D_NODE                                                                                                                                                                              \
+	(DMA_CHANNEL_TYPE_GPDMA | DMA_CHANNEL_TYPE_2D_ADDR) /*!< Defines the GPDMA 2 dimension                                                                                                         \
 							       addressing node type */
 /**
  * @}
@@ -537,11 +537,9 @@ HAL_StatusTypeDef HAL_DMAEx_List_Start_IT(DMA_HandleTypeDef *const hdma);
  * @{
  */
 HAL_StatusTypeDef HAL_DMAEx_List_BuildNode(DMA_NodeConfTypeDef const *const pNodeConfig, DMA_NodeTypeDef *const pNode);
-HAL_StatusTypeDef HAL_DMAEx_List_GetNodeConfig(DMA_NodeConfTypeDef *const pNodeConfig,
-					       DMA_NodeTypeDef const *const pNode);
+HAL_StatusTypeDef HAL_DMAEx_List_GetNodeConfig(DMA_NodeConfTypeDef *const pNodeConfig, DMA_NodeTypeDef const *const pNode);
 
-HAL_StatusTypeDef HAL_DMAEx_List_InsertNode(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pPrevNode,
-					    DMA_NodeTypeDef *const pNewNode);
+HAL_StatusTypeDef HAL_DMAEx_List_InsertNode(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pPrevNode, DMA_NodeTypeDef *const pNewNode);
 HAL_StatusTypeDef HAL_DMAEx_List_InsertNode_Head(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pNewNode);
 HAL_StatusTypeDef HAL_DMAEx_List_InsertNode_Tail(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pNewNode);
 
@@ -549,20 +547,17 @@ HAL_StatusTypeDef HAL_DMAEx_List_RemoveNode(DMA_QListTypeDef *const pQList, DMA_
 HAL_StatusTypeDef HAL_DMAEx_List_RemoveNode_Head(DMA_QListTypeDef *const pQList);
 HAL_StatusTypeDef HAL_DMAEx_List_RemoveNode_Tail(DMA_QListTypeDef *const pQList);
 
-HAL_StatusTypeDef HAL_DMAEx_List_ReplaceNode(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pOldNode,
-					     DMA_NodeTypeDef *const pNewNode);
+HAL_StatusTypeDef HAL_DMAEx_List_ReplaceNode(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pOldNode, DMA_NodeTypeDef *const pNewNode);
 HAL_StatusTypeDef HAL_DMAEx_List_ReplaceNode_Head(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pNewNode);
 HAL_StatusTypeDef HAL_DMAEx_List_ReplaceNode_Tail(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pNewNode);
 
 HAL_StatusTypeDef HAL_DMAEx_List_ResetQ(DMA_QListTypeDef *const pQList);
 
-HAL_StatusTypeDef HAL_DMAEx_List_InsertQ(DMA_QListTypeDef *const pSrcQList, DMA_NodeTypeDef const *const pPrevNode,
-					 DMA_QListTypeDef *const pDestQList);
+HAL_StatusTypeDef HAL_DMAEx_List_InsertQ(DMA_QListTypeDef *const pSrcQList, DMA_NodeTypeDef const *const pPrevNode, DMA_QListTypeDef *const pDestQList);
 HAL_StatusTypeDef HAL_DMAEx_List_InsertQ_Head(DMA_QListTypeDef *const pSrcQList, DMA_QListTypeDef *const pDestQList);
 HAL_StatusTypeDef HAL_DMAEx_List_InsertQ_Tail(DMA_QListTypeDef *const pSrcQList, DMA_QListTypeDef *const pDestQList);
 
-HAL_StatusTypeDef HAL_DMAEx_List_SetCircularModeConfig(DMA_QListTypeDef *const pQList,
-						       DMA_NodeTypeDef *const pFirstCircularNode);
+HAL_StatusTypeDef HAL_DMAEx_List_SetCircularModeConfig(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pFirstCircularNode);
 HAL_StatusTypeDef HAL_DMAEx_List_SetCircularMode(DMA_QListTypeDef *const pQList);
 HAL_StatusTypeDef HAL_DMAEx_List_ClearCircularMode(DMA_QListTypeDef *const pQList);
 
@@ -580,12 +575,9 @@ HAL_StatusTypeDef HAL_DMAEx_List_UnLinkQ(DMA_HandleTypeDef *const hdma);
  * @brief    Data Handling, Repeated Block and Trigger Configuration Functions
  * @{
  */
-HAL_StatusTypeDef HAL_DMAEx_ConfigDataHandling(DMA_HandleTypeDef *const hdma,
-					       DMA_DataHandlingConfTypeDef const *const pConfigDataHandling);
-HAL_StatusTypeDef HAL_DMAEx_ConfigTrigger(DMA_HandleTypeDef *const hdma,
-					  DMA_TriggerConfTypeDef const *const pConfigTrigger);
-HAL_StatusTypeDef HAL_DMAEx_ConfigRepeatBlock(DMA_HandleTypeDef *const hdma,
-					      DMA_RepeatBlockConfTypeDef const *const pConfigRepeatBlock);
+HAL_StatusTypeDef HAL_DMAEx_ConfigDataHandling(DMA_HandleTypeDef *const hdma, DMA_DataHandlingConfTypeDef const *const pConfigDataHandling);
+HAL_StatusTypeDef HAL_DMAEx_ConfigTrigger(DMA_HandleTypeDef *const hdma, DMA_TriggerConfTypeDef const *const pConfigTrigger);
+HAL_StatusTypeDef HAL_DMAEx_ConfigRepeatBlock(DMA_HandleTypeDef *const hdma, DMA_RepeatBlockConfTypeDef const *const pConfigRepeatBlock);
 /**
  * @}
  */
@@ -656,8 +648,8 @@ typedef struct {
 
 #define NODE_TYPE_MASK (0x00FFUL) /* DMA channel node type                 */
 #define NODE_CLLR_IDX (0x0700UL)  /* DMA channel node CLLR index mask      */
-#define NODE_CLLR_IDX_POS                                                                                              \
-	(0x0008UL) /* DMA channel node CLLR index position                                                             \
+#define NODE_CLLR_IDX_POS                                                                                                                                                                              \
+	(0x0008UL) /* DMA channel node CLLR index position                                                                                                                                             \
 		    */
 
 #define NODE_MAXIMUM_SIZE (0x0008UL) /* Amount of registers of the node */
@@ -698,38 +690,29 @@ typedef struct {
  * @brief    DMAEx Private Macros
  * @{
  */
-#define IS_DMA_DATA_ALIGNMENT(ALIGNMENT)                                                                               \
-	(((ALIGNMENT) == DMA_DATA_RIGHTALIGN_ZEROPADDED) || ((ALIGNMENT) == DMA_DATA_RIGHTALIGN_SIGNEXT) ||            \
-	 ((ALIGNMENT) == DMA_DATA_PACK))
+#define IS_DMA_DATA_ALIGNMENT(ALIGNMENT) (((ALIGNMENT) == DMA_DATA_RIGHTALIGN_ZEROPADDED) || ((ALIGNMENT) == DMA_DATA_RIGHTALIGN_SIGNEXT) || ((ALIGNMENT) == DMA_DATA_PACK))
 
-#define IS_DMA_DATA_EXCHANGE(EXCHANGE)                                                                                 \
-	(((EXCHANGE) & (~(DMA_EXCHANGE_SRC_BYTE | DMA_EXCHANGE_DEST_BYTE | DMA_EXCHANGE_DEST_HALFWORD))) == 0U)
+#define IS_DMA_DATA_EXCHANGE(EXCHANGE) (((EXCHANGE) & (~(DMA_EXCHANGE_SRC_BYTE | DMA_EXCHANGE_DEST_BYTE | DMA_EXCHANGE_DEST_HALFWORD))) == 0U)
 
 #define IS_DMA_REPEAT_COUNT(COUNT) (((COUNT) > 0U) && ((COUNT) <= (DMA_CBR1_BRC >> DMA_CBR1_BRC_Pos)))
 
-#define IS_DMA_BURST_ADDR_OFFSET(BURST_ADDR_OFFSET)                                                                    \
-	(((BURST_ADDR_OFFSET) > DMA_BURST_ADDR_OFFSET_MIN) && ((BURST_ADDR_OFFSET) < DMA_BURST_ADDR_OFFSET_MAX))
+#define IS_DMA_BURST_ADDR_OFFSET(BURST_ADDR_OFFSET) (((BURST_ADDR_OFFSET) > DMA_BURST_ADDR_OFFSET_MIN) && ((BURST_ADDR_OFFSET) < DMA_BURST_ADDR_OFFSET_MAX))
 
-#define IS_DMA_BLOCK_ADDR_OFFSET(BLOCK_ADDR_OFFSET)                                                                    \
-	(((BLOCK_ADDR_OFFSET) > DMA_BLOCK_ADDR_OFFSET_MIN) && ((BLOCK_ADDR_OFFSET) < DMA_BLOCK_ADDR_OFFSET_MAX))
+#define IS_DMA_BLOCK_ADDR_OFFSET(BLOCK_ADDR_OFFSET) (((BLOCK_ADDR_OFFSET) > DMA_BLOCK_ADDR_OFFSET_MIN) && ((BLOCK_ADDR_OFFSET) < DMA_BLOCK_ADDR_OFFSET_MAX))
 
 #define IS_DMA_LINK_ALLOCATED_PORT(LINK_ALLOCATED_PORT) (((LINK_ALLOCATED_PORT) & (~(DMA_CCR_LAP))) == 0U)
 
 #define IS_DMA_LINK_STEP_MODE(MODE) (((MODE) == DMA_LSM_FULL_EXECUTION) || ((MODE) == DMA_LSM_1LINK_EXECUTION))
 
-#define IS_DMA_TRIGGER_MODE(MODE)                                                                                      \
-	(((MODE) == DMA_TRIGM_BLOCK_TRANSFER) || ((MODE) == DMA_TRIGM_REPEATED_BLOCK_TRANSFER) ||                      \
-	 ((MODE) == DMA_TRIGM_LLI_LINK_TRANSFER) || ((MODE) == DMA_TRIGM_SINGLE_BURST_TRANSFER))
+#define IS_DMA_TRIGGER_MODE(MODE)                                                                                                                                                                      \
+	(((MODE) == DMA_TRIGM_BLOCK_TRANSFER) || ((MODE) == DMA_TRIGM_REPEATED_BLOCK_TRANSFER) || ((MODE) == DMA_TRIGM_LLI_LINK_TRANSFER) || ((MODE) == DMA_TRIGM_SINGLE_BURST_TRANSFER))
 
-#define IS_DMA_TCEM_LINKEDLIST_EVENT_MODE(MODE)                                                                        \
-	(((MODE) == DMA_TCEM_BLOCK_TRANSFER) || ((MODE) == DMA_TCEM_REPEATED_BLOCK_TRANSFER) ||                        \
-	 ((MODE) == DMA_TCEM_EACH_LL_ITEM_TRANSFER) || ((MODE) == DMA_TCEM_LAST_LL_ITEM_TRANSFER))
+#define IS_DMA_TCEM_LINKEDLIST_EVENT_MODE(MODE)                                                                                                                                                        \
+	(((MODE) == DMA_TCEM_BLOCK_TRANSFER) || ((MODE) == DMA_TCEM_REPEATED_BLOCK_TRANSFER) || ((MODE) == DMA_TCEM_EACH_LL_ITEM_TRANSFER) || ((MODE) == DMA_TCEM_LAST_LL_ITEM_TRANSFER))
 
 #define IS_DMA_LINKEDLIST_MODE(MODE) (((MODE) == DMA_LINKEDLIST_NORMAL) || ((MODE) == DMA_LINKEDLIST_CIRCULAR))
 
-#define IS_DMA_TRIGGER_POLARITY(POLARITY)                                                                              \
-	(((POLARITY) == DMA_TRIG_POLARITY_MASKED) || ((POLARITY) == DMA_TRIG_POLARITY_RISING) ||                       \
-	 ((POLARITY) == DMA_TRIG_POLARITY_FALLING))
+#define IS_DMA_TRIGGER_POLARITY(POLARITY) (((POLARITY) == DMA_TRIG_POLARITY_MASKED) || ((POLARITY) == DMA_TRIG_POLARITY_RISING) || ((POLARITY) == DMA_TRIG_POLARITY_FALLING))
 
 #if defined(GPDMA1_TRIGGER_JPEG_OFT)
 #define IS_DMA_TRIGGER_SELECTION(TRIGGER) ((TRIGGER) <= GPDMA1_TRIGGER_JPEG_OFT)
@@ -737,8 +720,7 @@ typedef struct {
 #define IS_DMA_TRIGGER_SELECTION(TRIGGER) ((TRIGGER) <= GPDMA1_TRIGGER_ADC1_AWD1)
 #endif /* GPDMA1_TRIGGER_JPEG_OFT */
 
-#define IS_DMA_NODE_TYPE(TYPE)                                                                                         \
-	(((TYPE) == DMA_LPDMA_LINEAR_NODE) || ((TYPE) == DMA_GPDMA_LINEAR_NODE) || ((TYPE) == DMA_GPDMA_2D_NODE))
+#define IS_DMA_NODE_TYPE(TYPE) (((TYPE) == DMA_LPDMA_LINEAR_NODE) || ((TYPE) == DMA_GPDMA_LINEAR_NODE) || ((TYPE) == DMA_GPDMA_2D_NODE))
 /**
  * @}
  */

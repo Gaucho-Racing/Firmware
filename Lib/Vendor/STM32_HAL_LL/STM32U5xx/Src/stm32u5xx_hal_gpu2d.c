@@ -149,8 +149,7 @@
  * @param  __VALUE__ Value to be written in the register
  * @retval None
  */
-#define GPU2D_WriteReg(__INSTANCE__, __REG__, __VALUE__)                                                               \
-	WRITE_REG(*(__IO uint32_t *)(__INSTANCE__ + __REG__), __VALUE__)
+#define GPU2D_WriteReg(__INSTANCE__, __REG__, __VALUE__) WRITE_REG(*(__IO uint32_t *)(__INSTANCE__ + __REG__), __VALUE__)
 
 /**
  * @brief  Read a value in GPU2D register
@@ -343,8 +342,7 @@ __weak void HAL_GPU2D_MspDeInit(GPU2D_HandleTypeDef *hgpu2d)
  * HAL_GPU2D_MSPDEINIT_CB_ID
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_GPU2D_RegisterCallback(GPU2D_HandleTypeDef *hgpu2d, HAL_GPU2D_CallbackIDTypeDef CallbackID,
-					     pGPU2D_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_GPU2D_RegisterCallback(GPU2D_HandleTypeDef *hgpu2d, HAL_GPU2D_CallbackIDTypeDef CallbackID, pGPU2D_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -450,8 +448,7 @@ HAL_StatusTypeDef HAL_GPU2D_UnRegisterCallback(GPU2D_HandleTypeDef *hgpu2d, HAL_
  * @note Weak predefined callback is defined for Command List Complete
  * @retval status
  */
-HAL_StatusTypeDef HAL_GPU2D_RegisterCommandListCpltCallback(GPU2D_HandleTypeDef *hgpu2d,
-							    pGPU2D_CommandListCpltCallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_GPU2D_RegisterCommandListCpltCallback(GPU2D_HandleTypeDef *hgpu2d, pGPU2D_CommandListCpltCallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 

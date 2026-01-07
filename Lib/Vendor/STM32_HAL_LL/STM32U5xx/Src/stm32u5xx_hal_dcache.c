@@ -119,12 +119,10 @@
 
 #define IS_DCACHE_MONITOR_TYPE(__TYPE__) (((__TYPE__) & ~DCACHE_MONITOR_ALL) == 0U)
 
-#define IS_DCACHE_SINGLE_MONITOR_TYPE(__TYPE__)                                                                        \
-	(((__TYPE__) == DCACHE_MONITOR_READ_HIT) || ((__TYPE__) == DCACHE_MONITOR_READ_MISS) ||                        \
-	 ((__TYPE__) == DCACHE_MONITOR_WRITE_HIT) || ((__TYPE__) == DCACHE_MONITOR_WRITE_MISS))
+#define IS_DCACHE_SINGLE_MONITOR_TYPE(__TYPE__)                                                                                                                                                        \
+	(((__TYPE__) == DCACHE_MONITOR_READ_HIT) || ((__TYPE__) == DCACHE_MONITOR_READ_MISS) || ((__TYPE__) == DCACHE_MONITOR_WRITE_HIT) || ((__TYPE__) == DCACHE_MONITOR_WRITE_MISS))
 
-#define IS_DCACHE_READ_BURST_TYPE(__OUTPUTBURSTTYPE__)                                                                 \
-	(((__OUTPUTBURSTTYPE__) == DCACHE_READ_BURST_WRAP) || ((__OUTPUTBURSTTYPE__) == DCACHE_READ_BURST_INCR))
+#define IS_DCACHE_READ_BURST_TYPE(__OUTPUTBURSTTYPE__) (((__OUTPUTBURSTTYPE__) == DCACHE_READ_BURST_WRAP) || ((__OUTPUTBURSTTYPE__) == DCACHE_READ_BURST_INCR))
 
 /**
  * @}
@@ -151,8 +149,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
-static HAL_StatusTypeDef DCACHE_CommandByAddr(DCACHE_HandleTypeDef *hdcache, uint32_t Command,
-					      const uint32_t *const pAddr, uint32_t dSize, uint32_t mode);
+static HAL_StatusTypeDef DCACHE_CommandByAddr(DCACHE_HandleTypeDef *hdcache, uint32_t Command, const uint32_t *const pAddr, uint32_t dSize, uint32_t mode);
 
 /* Exported functions --------------------------------------------------------*/
 /** @addtogroup DCACHE_Exported_Functions DCACHE Exported Functions
@@ -442,10 +439,7 @@ HAL_StatusTypeDef HAL_DCACHE_Disable(DCACHE_HandleTypeDef *hdcache)
  * peripheral.
  * @retval Status (0: disabled, 1: enabled)
  */
-uint32_t HAL_DCACHE_IsEnabled(const DCACHE_HandleTypeDef *hdcache)
-{
-	return ((READ_BIT(hdcache->Instance->CR, DCACHE_CR_EN) != 0U) ? 1UL : 0UL);
-}
+uint32_t HAL_DCACHE_IsEnabled(const DCACHE_HandleTypeDef *hdcache) { return ((READ_BIT(hdcache->Instance->CR, DCACHE_CR_EN) != 0U) ? 1UL : 0UL); }
 
 /**
  * @brief  Set Read Burst Type.
@@ -559,8 +553,7 @@ HAL_StatusTypeDef HAL_DCACHE_Invalidate(DCACHE_HandleTypeDef *hdcache)
  * @note   This function waits for end of cache Invalidation
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DCACHE_InvalidateByAddr(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr,
-					      uint32_t dSize)
+HAL_StatusTypeDef HAL_DCACHE_InvalidateByAddr(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr, uint32_t dSize)
 {
 	HAL_StatusTypeDef status;
 
@@ -616,8 +609,7 @@ HAL_StatusTypeDef HAL_DCACHE_CleanByAddr(DCACHE_HandleTypeDef *hdcache, const ui
  * @note   This function waits for end of cache Clean and Invalidation
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DCACHE_CleanInvalidByAddr(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr,
-						uint32_t dSize)
+HAL_StatusTypeDef HAL_DCACHE_CleanInvalidByAddr(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr, uint32_t dSize)
 {
 	HAL_StatusTypeDef status;
 
@@ -697,8 +689,7 @@ HAL_StatusTypeDef HAL_DCACHE_Invalidate_IT(DCACHE_HandleTypeDef *hdcache)
  *         the end of operation.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DCACHE_InvalidateByAddr_IT(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr,
-						 uint32_t dSize)
+HAL_StatusTypeDef HAL_DCACHE_InvalidateByAddr_IT(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr, uint32_t dSize)
 {
 	HAL_StatusTypeDef status;
 
@@ -758,8 +749,7 @@ HAL_StatusTypeDef HAL_DCACHE_CleanByAddr_IT(DCACHE_HandleTypeDef *hdcache, const
  *         the end of operation.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DCACHE_CleanInvalidByAddr_IT(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr,
-						   uint32_t dSize)
+HAL_StatusTypeDef HAL_DCACHE_CleanInvalidByAddr_IT(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr, uint32_t dSize)
 {
 	HAL_StatusTypeDef status;
 
@@ -997,8 +987,7 @@ void HAL_DCACHE_IRQHandler(DCACHE_HandleTypeDef *hdcache)
 	}
 
 	/* Check for end of clean and invalidate by address operation */
-	else if (READ_BIT(hdcache->Instance->CR, DCACHE_COMMAND_CLEAN_INVALIDATE) ==
-		 (DCACHE_COMMAND_CLEAN_INVALIDATE)) {
+	else if (READ_BIT(hdcache->Instance->CR, DCACHE_COMMAND_CLEAN_INVALIDATE) == (DCACHE_COMMAND_CLEAN_INVALIDATE)) {
 		/* Clear DCACHE cmdend pending flag */
 		__HAL_DCACHE_CLEAR_FLAG(hdcache, DCACHE_FLAG_CMDEND);
 
@@ -1048,8 +1037,7 @@ void HAL_DCACHE_IRQHandler(DCACHE_HandleTypeDef *hdcache)
  * @param  pCallback pointer to the Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DCACHE_RegisterCallback(DCACHE_HandleTypeDef *hdcache, HAL_DCACHE_CallbackIDTypeDef CallbackID,
-					      pDCACHE_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_DCACHE_RegisterCallback(DCACHE_HandleTypeDef *hdcache, HAL_DCACHE_CallbackIDTypeDef CallbackID, pDCACHE_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -1405,8 +1393,7 @@ uint32_t HAL_DCACHE_GetError(const DCACHE_HandleTypeDef *hdcache)
  *                       DCACHE_IT_MODE, DCACHE_POLLING_MODE.
  * @retval HAL status
  */
-static HAL_StatusTypeDef DCACHE_CommandByAddr(DCACHE_HandleTypeDef *hdcache, uint32_t Command,
-					      const uint32_t *const pAddr, uint32_t dSize, uint32_t mode)
+static HAL_StatusTypeDef DCACHE_CommandByAddr(DCACHE_HandleTypeDef *hdcache, uint32_t Command, const uint32_t *const pAddr, uint32_t dSize, uint32_t mode)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 	uint32_t op_addr = (uint32_t)pAddr;

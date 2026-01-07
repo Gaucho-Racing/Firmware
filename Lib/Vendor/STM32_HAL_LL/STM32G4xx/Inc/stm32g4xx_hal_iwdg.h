@@ -194,11 +194,9 @@ HAL_StatusTypeDef HAL_IWDG_Refresh(IWDG_HandleTypeDef *hiwdg);
  * @param  __PRESCALER__  IWDG prescaler value
  * @retval None
  */
-#define IS_IWDG_PRESCALER(__PRESCALER__)                                                                               \
-	(((__PRESCALER__) == IWDG_PRESCALER_4) || ((__PRESCALER__) == IWDG_PRESCALER_8) ||                             \
-	 ((__PRESCALER__) == IWDG_PRESCALER_16) || ((__PRESCALER__) == IWDG_PRESCALER_32) ||                           \
-	 ((__PRESCALER__) == IWDG_PRESCALER_64) || ((__PRESCALER__) == IWDG_PRESCALER_128) ||                          \
-	 ((__PRESCALER__) == IWDG_PRESCALER_256))
+#define IS_IWDG_PRESCALER(__PRESCALER__)                                                                                                                                                               \
+	(((__PRESCALER__) == IWDG_PRESCALER_4) || ((__PRESCALER__) == IWDG_PRESCALER_8) || ((__PRESCALER__) == IWDG_PRESCALER_16) || ((__PRESCALER__) == IWDG_PRESCALER_32) ||                         \
+	 ((__PRESCALER__) == IWDG_PRESCALER_64) || ((__PRESCALER__) == IWDG_PRESCALER_128) || ((__PRESCALER__) == IWDG_PRESCALER_256))
 
 /**
  * @brief  Check IWDG reload value.

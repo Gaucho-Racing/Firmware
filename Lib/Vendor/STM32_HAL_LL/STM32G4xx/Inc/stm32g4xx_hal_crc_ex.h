@@ -101,12 +101,10 @@ extern "C" {
  * @{
  */
 
-#define IS_CRC_INPUTDATA_INVERSION_MODE(MODE)                                                                          \
-	(((MODE) == CRC_INPUTDATA_INVERSION_NONE) || ((MODE) == CRC_INPUTDATA_INVERSION_BYTE) ||                       \
-	 ((MODE) == CRC_INPUTDATA_INVERSION_HALFWORD) || ((MODE) == CRC_INPUTDATA_INVERSION_WORD))
+#define IS_CRC_INPUTDATA_INVERSION_MODE(MODE)                                                                                                                                                          \
+	(((MODE) == CRC_INPUTDATA_INVERSION_NONE) || ((MODE) == CRC_INPUTDATA_INVERSION_BYTE) || ((MODE) == CRC_INPUTDATA_INVERSION_HALFWORD) || ((MODE) == CRC_INPUTDATA_INVERSION_WORD))
 
-#define IS_CRC_OUTPUTDATA_INVERSION_MODE(MODE)                                                                         \
-	(((MODE) == CRC_OUTPUTDATA_INVERSION_DISABLE) || ((MODE) == CRC_OUTPUTDATA_INVERSION_ENABLE))
+#define IS_CRC_OUTPUTDATA_INVERSION_MODE(MODE) (((MODE) == CRC_OUTPUTDATA_INVERSION_DISABLE) || ((MODE) == CRC_OUTPUTDATA_INVERSION_ENABLE))
 
 /**
  * @}

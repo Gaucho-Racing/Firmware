@@ -305,20 +305,15 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 		}
 
 		/* Memorize voltage scaler state before initialization */
-		comp_voltage_scaler_initialized =
-		    READ_BIT(hcomp->Instance->CSR, (COMP_CSR_INMSEL_1 | COMP_CSR_INMSEL_0));
+		comp_voltage_scaler_initialized = READ_BIT(hcomp->Instance->CSR, (COMP_CSR_INMSEL_1 | COMP_CSR_INMSEL_0));
 
 		/* Set COMP parameters */
-		tmp_csr = (hcomp->Init.InputMinus | hcomp->Init.InputPlus | hcomp->Init.BlankingSrce |
-			   hcomp->Init.Hysteresis | hcomp->Init.OutputPol | hcomp->Init.Mode);
+		tmp_csr = (hcomp->Init.InputMinus | hcomp->Init.InputPlus | hcomp->Init.BlankingSrce | hcomp->Init.Hysteresis | hcomp->Init.OutputPol | hcomp->Init.Mode);
 
 		/* Set parameters in COMP register */
 		/* Note: Update all bits except read-only, lock and enable bits
 		 */
-		MODIFY_REG(hcomp->Instance->CSR,
-			   COMP_CSR_PWRMODE | COMP_CSR_INMSEL | COMP_CSR_INPSEL | COMP_CSR_WINMODE | COMP_CSR_POLARITY |
-			       COMP_CSR_HYST | COMP_CSR_BLANKSEL,
-			   tmp_csr);
+		MODIFY_REG(hcomp->Instance->CSR, COMP_CSR_PWRMODE | COMP_CSR_INMSEL | COMP_CSR_INPSEL | COMP_CSR_WINMODE | COMP_CSR_POLARITY | COMP_CSR_HYST | COMP_CSR_BLANKSEL, tmp_csr);
 
 #if defined(COMP_WINDOW_MODE_SUPPORT)
 		/* Set window mode */
@@ -371,8 +366,7 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 		/* Delay for COMP scaler bridge voltage stabilization */
 		/* Apply the delay if voltage scaler bridge is required and not
 		 * already enabled */
-		if ((READ_BIT(hcomp->Instance->CSR, (COMP_CSR_INMSEL_1 | COMP_CSR_INMSEL_0)) != 0UL) &&
-		    (comp_voltage_scaler_initialized == 0UL)) {
+		if ((READ_BIT(hcomp->Instance->CSR, (COMP_CSR_INMSEL_1 | COMP_CSR_INMSEL_0)) != 0UL) && (comp_voltage_scaler_initialized == 0UL)) {
 			/* Wait loop initialization and execution */
 			/* Note: Variable divided by 2 to compensate partially
 			 */
@@ -380,8 +374,7 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 			 * not          */
 			/*       exceed 32 bits register capacity and handle low
 			 * frequency. */
-			wait_loop_index =
-			    ((COMP_DELAY_VOLTAGE_SCALER_STAB_US / 10UL) * ((SystemCoreClock / (100000UL * 2UL)) + 1UL));
+			wait_loop_index = ((COMP_DELAY_VOLTAGE_SCALER_STAB_US / 10UL) * ((SystemCoreClock / (100000UL * 2UL)) + 1UL));
 			while (wait_loop_index != 0UL) {
 				wait_loop_index--;
 			}
@@ -533,8 +526,7 @@ __weak void HAL_COMP_MspDeInit(COMP_HandleTypeDef *hcomp)
  * @param  pCallback pointer to the Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_COMP_RegisterCallback(COMP_HandleTypeDef *hcomp, HAL_COMP_CallbackIDTypeDef CallbackID,
-					    pCOMP_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_COMP_RegisterCallback(COMP_HandleTypeDef *hcomp, HAL_COMP_CallbackIDTypeDef CallbackID, pCOMP_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -721,8 +713,7 @@ HAL_StatusTypeDef HAL_COMP_Start(COMP_HandleTypeDef *hcomp)
 			 * not          */
 			/*       exceed 32 bits register capacity and handle low
 			 * frequency. */
-			wait_loop_index =
-			    ((COMP_DELAY_STARTUP_US / 10UL) * ((SystemCoreClock / (100000UL * 2UL)) + 1UL));
+			wait_loop_index = ((COMP_DELAY_STARTUP_US / 10UL) * ((SystemCoreClock / (100000UL * 2UL)) + 1UL));
 			while (wait_loop_index != 0UL) {
 				wait_loop_index--;
 			}

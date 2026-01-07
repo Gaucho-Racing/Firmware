@@ -60,18 +60,7 @@ typedef enum { URB_IDLE = 0, URB_DONE, URB_NOTREADY, URB_NYET, URB_ERROR, URB_ST
 /**
  * @brief  Host channel States  definition
  */
-typedef enum {
-	HC_IDLE = 0,
-	HC_XFRC,
-	HC_HALTED,
-	HC_ACK,
-	HC_NAK,
-	HC_NYET,
-	HC_STALL,
-	HC_XACTERR,
-	HC_BBLERR,
-	HC_DATATGLERR
-} USB_HCStateTypeDef;
+typedef enum { HC_IDLE = 0, HC_XFRC, HC_HALTED, HC_ACK, HC_NAK, HC_NYET, HC_STALL, HC_XACTERR, HC_BBLERR, HC_DATATGLERR } USB_HCStateTypeDef;
 #endif /* defined (HAL_HCD_MODULE_ENABLED) */
 
 /**
@@ -580,14 +569,12 @@ typedef USB_HCTypeDef USB_DRD_HCTypeDef;
 #define USBx_DEVICE ((USB_OTG_DeviceTypeDef *)(USBx_BASE + USB_OTG_DEVICE_BASE))
 #define USBx_INEP(i) ((USB_OTG_INEndpointTypeDef *)(USBx_BASE + USB_OTG_IN_ENDPOINT_BASE + ((i) * USB_OTG_EP_REG_SIZE)))
 
-#define USBx_OUTEP(i)                                                                                                  \
-	((USB_OTG_OUTEndpointTypeDef *)(USBx_BASE + USB_OTG_OUT_ENDPOINT_BASE + ((i) * USB_OTG_EP_REG_SIZE)))
+#define USBx_OUTEP(i) ((USB_OTG_OUTEndpointTypeDef *)(USBx_BASE + USB_OTG_OUT_ENDPOINT_BASE + ((i) * USB_OTG_EP_REG_SIZE)))
 
 #define USBx_DFIFO(i) *(__IO uint32_t *)(USBx_BASE + USB_OTG_FIFO_BASE + ((i) * USB_OTG_FIFO_SIZE))
 
 #define USBx_HOST ((USB_OTG_HostTypeDef *)(USBx_BASE + USB_OTG_HOST_BASE))
-#define USBx_HC(i)                                                                                                     \
-	((USB_OTG_HostChannelTypeDef *)(USBx_BASE + USB_OTG_HOST_CHANNEL_BASE + ((i) * USB_OTG_HOST_CHANNEL_SIZE)))
+#define USBx_HC(i) ((USB_OTG_HostChannelTypeDef *)(USBx_BASE + USB_OTG_HOST_CHANNEL_BASE + ((i) * USB_OTG_HOST_CHANNEL_SIZE)))
 
 #define EP_ADDR_MSK 0xFU
 #endif /* defined (USB_OTG_FS) || defined (USB_OTG_HS) */
@@ -635,8 +622,7 @@ typedef USB_HCTypeDef USB_DRD_HCTypeDef;
 #define USB_CNTRX_BLSIZE (0x1UL << 31)
 
 /*Set Channel/Endpoint to the USB Register */
-#define USB_DRD_SET_CHEP(USBx, bEpChNum, wRegValue)                                                                    \
-	(*(__IO uint32_t *)(&(USBx)->CHEP0R + (bEpChNum)) = (uint32_t)(wRegValue))
+#define USB_DRD_SET_CHEP(USBx, bEpChNum, wRegValue) (*(__IO uint32_t *)(&(USBx)->CHEP0R + (bEpChNum)) = (uint32_t)(wRegValue))
 
 /*Get Channel/Endpoint from the USB Register */
 #define USB_DRD_GET_CHEP(USBx, bEpChNum) (*(__IO uint32_t *)(&(USBx)->CHEP0R + (bEpChNum)))
@@ -648,15 +634,15 @@ typedef USB_HCTypeDef USB_DRD_HCTypeDef;
  * @param   bEpChNum, bDir
  * @retval None
  */
-#define USB_DRD_FREE_USER_BUFFER(USBx, bEpChNum, bDir)                                                                 \
-	do {                                                                                                           \
-		if ((bDir) == 0U) {                                                                                    \
-			/* OUT double buffered endpoint */                                                             \
-			USB_DRD_TX_DTOG((USBx), (bEpChNum));                                                           \
-		} else if ((bDir) == 1U) {                                                                             \
-			/* IN double buffered endpoint */                                                              \
-			USB_DRD_RX_DTOG((USBx), (bEpChNum));                                                           \
-		}                                                                                                      \
+#define USB_DRD_FREE_USER_BUFFER(USBx, bEpChNum, bDir)                                                                                                                                                 \
+	do {                                                                                                                                                                                           \
+		if ((bDir) == 0U) {                                                                                                                                                                    \
+			/* OUT double buffered endpoint */                                                                                                                                             \
+			USB_DRD_TX_DTOG((USBx), (bEpChNum));                                                                                                                                           \
+		} else if ((bDir) == 1U) {                                                                                                                                                             \
+			/* IN double buffered endpoint */                                                                                                                                              \
+			USB_DRD_RX_DTOG((USBx), (bEpChNum));                                                                                                                                           \
+		}                                                                                                                                                                                      \
 	} while (0)
 
 /**
@@ -666,14 +652,14 @@ typedef USB_HCTypeDef USB_DRD_HCTypeDef;
   * @param   bEpChNum
   * @retval None
   */
-#define USB_DRD_CHEP_TX_SETUP(USBx, bEpChNum)                                                                          \
-	do {                                                                                                           \
-		uint32_t _wRegVal;                                                                                     \
-                                                                                                                       \
-		_wRegVal = USB_DRD_GET_CHEP((USBx), (bEpChNum));                                                       \
-                                                                                                                       \
-		/* Set Setup bit */                                                                                    \
-		USB_DRD_SET_CHEP((USBx), (bEpChNum), (_wRegVal | USB_CHEP_SETUP));                                     \
+#define USB_DRD_CHEP_TX_SETUP(USBx, bEpChNum)                                                                                                                                                          \
+	do {                                                                                                                                                                                           \
+		uint32_t _wRegVal;                                                                                                                                                                     \
+                                                                                                                                                                                                       \
+		_wRegVal = USB_DRD_GET_CHEP((USBx), (bEpChNum));                                                                                                                                       \
+                                                                                                                                                                                                       \
+		/* Set Setup bit */                                                                                                                                                                    \
+		USB_DRD_SET_CHEP((USBx), (bEpChNum), (_wRegVal | USB_CHEP_SETUP));                                                                                                                     \
 	} while (0)
 
 /**
@@ -682,15 +668,14 @@ typedef USB_HCTypeDef USB_DRD_HCTypeDef;
  * @param  bChNum Endpoint Number.
  * @retval None
  */
-#define USB_DRD_CLEAR_CHEP_RX_ERR(USBx, bChNum)                                                                        \
-	do {                                                                                                           \
-		uint32_t _wRegVal;                                                                                     \
-                                                                                                                       \
-		_wRegVal = USB_DRD_GET_CHEP((USBx), (bChNum));                                                         \
-		_wRegVal = (_wRegVal & USB_CHEP_REG_MASK & (~USB_CHEP_ERRRX) & (~USB_CHEP_VTRX)) |                     \
-			   (USB_CHEP_VTTX | USB_CHEP_ERRTX);                                                           \
-                                                                                                                       \
-		USB_DRD_SET_CHEP((USBx), (bChNum), _wRegVal);                                                          \
+#define USB_DRD_CLEAR_CHEP_RX_ERR(USBx, bChNum)                                                                                                                                                        \
+	do {                                                                                                                                                                                           \
+		uint32_t _wRegVal;                                                                                                                                                                     \
+                                                                                                                                                                                                       \
+		_wRegVal = USB_DRD_GET_CHEP((USBx), (bChNum));                                                                                                                                         \
+		_wRegVal = (_wRegVal & USB_CHEP_REG_MASK & (~USB_CHEP_ERRRX) & (~USB_CHEP_VTRX)) | (USB_CHEP_VTTX | USB_CHEP_ERRTX);                                                                   \
+                                                                                                                                                                                                       \
+		USB_DRD_SET_CHEP((USBx), (bChNum), _wRegVal);                                                                                                                                          \
 	} while (0) /* USB_DRD_CLEAR_CHEP_RX_ERR */
 
 /**
@@ -699,15 +684,14 @@ typedef USB_HCTypeDef USB_DRD_HCTypeDef;
  * @param  bChNum Endpoint Number.
  * @retval None
  */
-#define USB_DRD_CLEAR_CHEP_TX_ERR(USBx, bChNum)                                                                        \
-	do {                                                                                                           \
-		uint32_t _wRegVal;                                                                                     \
-                                                                                                                       \
-		_wRegVal = USB_DRD_GET_CHEP((USBx), (bChNum));                                                         \
-		_wRegVal = (_wRegVal & USB_CHEP_REG_MASK & (~USB_CHEP_ERRTX) & (~USB_CHEP_VTTX)) |                     \
-			   (USB_CHEP_VTRX | USB_CHEP_ERRRX);                                                           \
-                                                                                                                       \
-		USB_DRD_SET_CHEP((USBx), (bChNum), _wRegVal);                                                          \
+#define USB_DRD_CLEAR_CHEP_TX_ERR(USBx, bChNum)                                                                                                                                                        \
+	do {                                                                                                                                                                                           \
+		uint32_t _wRegVal;                                                                                                                                                                     \
+                                                                                                                                                                                                       \
+		_wRegVal = USB_DRD_GET_CHEP((USBx), (bChNum));                                                                                                                                         \
+		_wRegVal = (_wRegVal & USB_CHEP_REG_MASK & (~USB_CHEP_ERRTX) & (~USB_CHEP_VTTX)) | (USB_CHEP_VTRX | USB_CHEP_ERRRX);                                                                   \
+                                                                                                                                                                                                       \
+		USB_DRD_SET_CHEP((USBx), (bChNum), _wRegVal);                                                                                                                                          \
 	} while (0) /* USB_DRD_CLEAR_CHEP_TX_ERR */
 
 /**
@@ -717,20 +701,20 @@ typedef USB_HCTypeDef USB_DRD_HCTypeDef;
  * @param  wState new state
  * @retval None
  */
-#define USB_DRD_SET_CHEP_TX_STATUS(USBx, bEpChNum, wState)                                                             \
-	do {                                                                                                           \
-		uint32_t _wRegVal;                                                                                     \
-                                                                                                                       \
-		_wRegVal = USB_DRD_GET_CHEP((USBx), (bEpChNum)) & USB_CHEP_TX_DTOGMASK;                                \
-		/* toggle first bit ? */                                                                               \
-		if ((USB_CHEP_TX_DTOG1 & (wState)) != 0U) {                                                            \
-			_wRegVal ^= USB_CHEP_TX_DTOG1;                                                                 \
-		}                                                                                                      \
-		/* toggle second bit ?  */                                                                             \
-		if ((USB_CHEP_TX_DTOG2 & (wState)) != 0U) {                                                            \
-			_wRegVal ^= USB_CHEP_TX_DTOG2;                                                                 \
-		}                                                                                                      \
-		USB_DRD_SET_CHEP((USBx), (bEpChNum), (_wRegVal | USB_CHEP_VTRX | USB_CHEP_VTTX));                      \
+#define USB_DRD_SET_CHEP_TX_STATUS(USBx, bEpChNum, wState)                                                                                                                                             \
+	do {                                                                                                                                                                                           \
+		uint32_t _wRegVal;                                                                                                                                                                     \
+                                                                                                                                                                                                       \
+		_wRegVal = USB_DRD_GET_CHEP((USBx), (bEpChNum)) & USB_CHEP_TX_DTOGMASK;                                                                                                                \
+		/* toggle first bit ? */                                                                                                                                                               \
+		if ((USB_CHEP_TX_DTOG1 & (wState)) != 0U) {                                                                                                                                            \
+			_wRegVal ^= USB_CHEP_TX_DTOG1;                                                                                                                                                 \
+		}                                                                                                                                                                                      \
+		/* toggle second bit ?  */                                                                                                                                                             \
+		if ((USB_CHEP_TX_DTOG2 & (wState)) != 0U) {                                                                                                                                            \
+			_wRegVal ^= USB_CHEP_TX_DTOG2;                                                                                                                                                 \
+		}                                                                                                                                                                                      \
+		USB_DRD_SET_CHEP((USBx), (bEpChNum), (_wRegVal | USB_CHEP_VTRX | USB_CHEP_VTTX));                                                                                                      \
 	} while (0) /* USB_DRD_SET_CHEP_TX_STATUS */
 
 /**
@@ -740,20 +724,20 @@ typedef USB_HCTypeDef USB_DRD_HCTypeDef;
  * @param  wState new state
  * @retval None
  */
-#define USB_DRD_SET_CHEP_RX_STATUS(USBx, bEpChNum, wState)                                                             \
-	do {                                                                                                           \
-		uint32_t _wRegVal;                                                                                     \
-                                                                                                                       \
-		_wRegVal = USB_DRD_GET_CHEP((USBx), (bEpChNum)) & USB_CHEP_RX_DTOGMASK;                                \
-		/* toggle first bit ? */                                                                               \
-		if ((USB_CHEP_RX_DTOG1 & (wState)) != 0U) {                                                            \
-			_wRegVal ^= USB_CHEP_RX_DTOG1;                                                                 \
-		}                                                                                                      \
-		/* toggle second bit ? */                                                                              \
-		if ((USB_CHEP_RX_DTOG2 & (wState)) != 0U) {                                                            \
-			_wRegVal ^= USB_CHEP_RX_DTOG2;                                                                 \
-		}                                                                                                      \
-		USB_DRD_SET_CHEP((USBx), (bEpChNum), (_wRegVal | USB_CHEP_VTRX | USB_CHEP_VTTX));                      \
+#define USB_DRD_SET_CHEP_RX_STATUS(USBx, bEpChNum, wState)                                                                                                                                             \
+	do {                                                                                                                                                                                           \
+		uint32_t _wRegVal;                                                                                                                                                                     \
+                                                                                                                                                                                                       \
+		_wRegVal = USB_DRD_GET_CHEP((USBx), (bEpChNum)) & USB_CHEP_RX_DTOGMASK;                                                                                                                \
+		/* toggle first bit ? */                                                                                                                                                               \
+		if ((USB_CHEP_RX_DTOG1 & (wState)) != 0U) {                                                                                                                                            \
+			_wRegVal ^= USB_CHEP_RX_DTOG1;                                                                                                                                                 \
+		}                                                                                                                                                                                      \
+		/* toggle second bit ? */                                                                                                                                                              \
+		if ((USB_CHEP_RX_DTOG2 & (wState)) != 0U) {                                                                                                                                            \
+			_wRegVal ^= USB_CHEP_RX_DTOG2;                                                                                                                                                 \
+		}                                                                                                                                                                                      \
+		USB_DRD_SET_CHEP((USBx), (bEpChNum), (_wRegVal | USB_CHEP_VTRX | USB_CHEP_VTTX));                                                                                                      \
 	} while (0) /* USB_DRD_SET_CHEP_RX_STATUS */
 
 /**
@@ -763,11 +747,9 @@ typedef USB_HCTypeDef USB_DRD_HCTypeDef;
  * @param  bEpChNum Endpoint Number.
  * @retval status
  */
-#define USB_DRD_GET_CHEP_TX_STATUS(USBx, bEpChNum)                                                                     \
-	((uint16_t)USB_DRD_GET_CHEP((USBx), (bEpChNum)) & USB_DRD_CHEP_TX_STTX)
+#define USB_DRD_GET_CHEP_TX_STATUS(USBx, bEpChNum) ((uint16_t)USB_DRD_GET_CHEP((USBx), (bEpChNum)) & USB_DRD_CHEP_TX_STTX)
 
-#define USB_DRD_GET_CHEP_RX_STATUS(USBx, bEpChNum)                                                                     \
-	((uint16_t)USB_DRD_GET_CHEP((USBx), (bEpChNum)) & USB_DRD_CHEP_RX_STRX)
+#define USB_DRD_GET_CHEP_RX_STATUS(USBx, bEpChNum) ((uint16_t)USB_DRD_GET_CHEP((USBx), (bEpChNum)) & USB_DRD_CHEP_RX_STRX)
 
 /**
  * @brief  set  EP_KIND bit.
@@ -775,13 +757,13 @@ typedef USB_HCTypeDef USB_DRD_HCTypeDef;
  * @param  bEpChNum Endpoint Number.
  * @retval None
  */
-#define USB_DRD_SET_CHEP_KIND(USBx, bEpChNum)                                                                          \
-	do {                                                                                                           \
-		uint32_t _wRegVal;                                                                                     \
-                                                                                                                       \
-		_wRegVal = USB_DRD_GET_CHEP((USBx), (bEpChNum)) & USB_CHEP_REG_MASK;                                   \
-                                                                                                                       \
-		USB_DRD_SET_CHEP((USBx), (bEpChNum), (_wRegVal | USB_CHEP_VTRX | USB_CHEP_VTTX | USB_CHEP_KIND));      \
+#define USB_DRD_SET_CHEP_KIND(USBx, bEpChNum)                                                                                                                                                          \
+	do {                                                                                                                                                                                           \
+		uint32_t _wRegVal;                                                                                                                                                                     \
+                                                                                                                                                                                                       \
+		_wRegVal = USB_DRD_GET_CHEP((USBx), (bEpChNum)) & USB_CHEP_REG_MASK;                                                                                                                   \
+                                                                                                                                                                                                       \
+		USB_DRD_SET_CHEP((USBx), (bEpChNum), (_wRegVal | USB_CHEP_VTRX | USB_CHEP_VTTX | USB_CHEP_KIND));                                                                                      \
 	} while (0) /* USB_DRD_SET_CHEP_KIND */
 
 /**
@@ -790,13 +772,13 @@ typedef USB_HCTypeDef USB_DRD_HCTypeDef;
  * @param  bEpChNum Endpoint Number.
  * @retval None
  */
-#define USB_DRD_CLEAR_CHEP_KIND(USBx, bEpChNum)                                                                        \
-	do {                                                                                                           \
-		uint32_t _wRegVal;                                                                                     \
-                                                                                                                       \
-		_wRegVal = USB_DRD_GET_CHEP((USBx), (bEpChNum)) & USB_EP_KIND_MASK;                                    \
-                                                                                                                       \
-		USB_DRD_SET_CHEP((USBx), (bEpChNum), (_wRegVal | USB_CHEP_VTRX | USB_CHEP_VTTX));                      \
+#define USB_DRD_CLEAR_CHEP_KIND(USBx, bEpChNum)                                                                                                                                                        \
+	do {                                                                                                                                                                                           \
+		uint32_t _wRegVal;                                                                                                                                                                     \
+                                                                                                                                                                                                       \
+		_wRegVal = USB_DRD_GET_CHEP((USBx), (bEpChNum)) & USB_EP_KIND_MASK;                                                                                                                    \
+                                                                                                                                                                                                       \
+		USB_DRD_SET_CHEP((USBx), (bEpChNum), (_wRegVal | USB_CHEP_VTRX | USB_CHEP_VTTX));                                                                                                      \
 	} while (0) /* USB_DRD_CLEAR_CHEP_KIND */
 
 /**
@@ -805,22 +787,22 @@ typedef USB_HCTypeDef USB_DRD_HCTypeDef;
  * @param  bEpChNum Endpoint Number.
  * @retval None
  */
-#define USB_DRD_CLEAR_RX_CHEP_CTR(USBx, bEpChNum)                                                                      \
-	do {                                                                                                           \
-		uint32_t _wRegVal;                                                                                     \
-                                                                                                                       \
-		_wRegVal = USB_DRD_GET_CHEP((USBx), (bEpChNum)) & (0xFFFF7FFFU & USB_CHEP_REG_MASK);                   \
-                                                                                                                       \
-		USB_DRD_SET_CHEP((USBx), (bEpChNum), (_wRegVal | USB_CHEP_VTTX));                                      \
+#define USB_DRD_CLEAR_RX_CHEP_CTR(USBx, bEpChNum)                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		uint32_t _wRegVal;                                                                                                                                                                     \
+                                                                                                                                                                                                       \
+		_wRegVal = USB_DRD_GET_CHEP((USBx), (bEpChNum)) & (0xFFFF7FFFU & USB_CHEP_REG_MASK);                                                                                                   \
+                                                                                                                                                                                                       \
+		USB_DRD_SET_CHEP((USBx), (bEpChNum), (_wRegVal | USB_CHEP_VTTX));                                                                                                                      \
 	} while (0) /* USB_CLEAR_RX_CHEP_CTR */
 
-#define USB_DRD_CLEAR_TX_CHEP_CTR(USBx, bEpChNum)                                                                      \
-	do {                                                                                                           \
-		uint32_t _wRegVal;                                                                                     \
-                                                                                                                       \
-		_wRegVal = USB_DRD_GET_CHEP((USBx), (bEpChNum)) & (0xFFFFFF7FU & USB_CHEP_REG_MASK);                   \
-                                                                                                                       \
-		USB_DRD_SET_CHEP((USBx), (bEpChNum), (_wRegVal | USB_CHEP_VTRX));                                      \
+#define USB_DRD_CLEAR_TX_CHEP_CTR(USBx, bEpChNum)                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		uint32_t _wRegVal;                                                                                                                                                                     \
+                                                                                                                                                                                                       \
+		_wRegVal = USB_DRD_GET_CHEP((USBx), (bEpChNum)) & (0xFFFFFF7FU & USB_CHEP_REG_MASK);                                                                                                   \
+                                                                                                                                                                                                       \
+		USB_DRD_SET_CHEP((USBx), (bEpChNum), (_wRegVal | USB_CHEP_VTRX));                                                                                                                      \
 	} while (0) /* USB_CLEAR_TX_CHEP_CTR */
 
 /**
@@ -829,22 +811,22 @@ typedef USB_HCTypeDef USB_DRD_HCTypeDef;
  * @param  bEpChNum Endpoint Number.
  * @retval None
  */
-#define USB_DRD_RX_DTOG(USBx, bEpChNum)                                                                                \
-	do {                                                                                                           \
-		uint32_t _wEPVal;                                                                                      \
-                                                                                                                       \
-		_wEPVal = USB_DRD_GET_CHEP((USBx), (bEpChNum)) & USB_CHEP_REG_MASK;                                    \
-                                                                                                                       \
-		USB_DRD_SET_CHEP((USBx), (bEpChNum), (_wEPVal | USB_CHEP_VTRX | USB_CHEP_VTTX | USB_CHEP_DTOG_RX));    \
+#define USB_DRD_RX_DTOG(USBx, bEpChNum)                                                                                                                                                                \
+	do {                                                                                                                                                                                           \
+		uint32_t _wEPVal;                                                                                                                                                                      \
+                                                                                                                                                                                                       \
+		_wEPVal = USB_DRD_GET_CHEP((USBx), (bEpChNum)) & USB_CHEP_REG_MASK;                                                                                                                    \
+                                                                                                                                                                                                       \
+		USB_DRD_SET_CHEP((USBx), (bEpChNum), (_wEPVal | USB_CHEP_VTRX | USB_CHEP_VTTX | USB_CHEP_DTOG_RX));                                                                                    \
 	} while (0) /* USB_DRD_RX_DTOG */
 
-#define USB_DRD_TX_DTOG(USBx, bEpChNum)                                                                                \
-	do {                                                                                                           \
-		uint32_t _wEPVal;                                                                                      \
-                                                                                                                       \
-		_wEPVal = USB_DRD_GET_CHEP((USBx), (bEpChNum)) & USB_CHEP_REG_MASK;                                    \
-                                                                                                                       \
-		USB_DRD_SET_CHEP((USBx), (bEpChNum), (_wEPVal | USB_CHEP_VTRX | USB_CHEP_VTTX | USB_CHEP_DTOG_TX));    \
+#define USB_DRD_TX_DTOG(USBx, bEpChNum)                                                                                                                                                                \
+	do {                                                                                                                                                                                           \
+		uint32_t _wEPVal;                                                                                                                                                                      \
+                                                                                                                                                                                                       \
+		_wEPVal = USB_DRD_GET_CHEP((USBx), (bEpChNum)) & USB_CHEP_REG_MASK;                                                                                                                    \
+                                                                                                                                                                                                       \
+		USB_DRD_SET_CHEP((USBx), (bEpChNum), (_wEPVal | USB_CHEP_VTRX | USB_CHEP_VTTX | USB_CHEP_DTOG_TX));                                                                                    \
 	} while (0) /* USB_TX_DTOG */
 
 /**
@@ -853,26 +835,26 @@ typedef USB_HCTypeDef USB_DRD_HCTypeDef;
  * @param  bEpChNum Endpoint Number.
  * @retval None
  */
-#define USB_DRD_CLEAR_RX_DTOG(USBx, bEpChNum)                                                                          \
-	do {                                                                                                           \
-		uint32_t _wRegVal;                                                                                     \
-                                                                                                                       \
-		_wRegVal = USB_DRD_GET_CHEP((USBx), (bEpChNum));                                                       \
-                                                                                                                       \
-		if ((_wRegVal & USB_CHEP_DTOG_RX) != 0U) {                                                             \
-			USB_DRD_RX_DTOG((USBx), (bEpChNum));                                                           \
-		}                                                                                                      \
+#define USB_DRD_CLEAR_RX_DTOG(USBx, bEpChNum)                                                                                                                                                          \
+	do {                                                                                                                                                                                           \
+		uint32_t _wRegVal;                                                                                                                                                                     \
+                                                                                                                                                                                                       \
+		_wRegVal = USB_DRD_GET_CHEP((USBx), (bEpChNum));                                                                                                                                       \
+                                                                                                                                                                                                       \
+		if ((_wRegVal & USB_CHEP_DTOG_RX) != 0U) {                                                                                                                                             \
+			USB_DRD_RX_DTOG((USBx), (bEpChNum));                                                                                                                                           \
+		}                                                                                                                                                                                      \
 	} while (0) /* USB_DRD_CLEAR_RX_DTOG */
 
-#define USB_DRD_CLEAR_TX_DTOG(USBx, bEpChNum)                                                                          \
-	do {                                                                                                           \
-		uint32_t _wRegVal;                                                                                     \
-                                                                                                                       \
-		_wRegVal = USB_DRD_GET_CHEP((USBx), (bEpChNum));                                                       \
-                                                                                                                       \
-		if ((_wRegVal & USB_CHEP_DTOG_TX) != 0U) {                                                             \
-			USB_DRD_TX_DTOG((USBx), (bEpChNum));                                                           \
-		}                                                                                                      \
+#define USB_DRD_CLEAR_TX_DTOG(USBx, bEpChNum)                                                                                                                                                          \
+	do {                                                                                                                                                                                           \
+		uint32_t _wRegVal;                                                                                                                                                                     \
+                                                                                                                                                                                                       \
+		_wRegVal = USB_DRD_GET_CHEP((USBx), (bEpChNum));                                                                                                                                       \
+                                                                                                                                                                                                       \
+		if ((_wRegVal & USB_CHEP_DTOG_TX) != 0U) {                                                                                                                                             \
+			USB_DRD_TX_DTOG((USBx), (bEpChNum));                                                                                                                                           \
+		}                                                                                                                                                                                      \
 	} while (0) /* USB_DRD_CLEAR_TX_DTOG */
 
 /**
@@ -882,17 +864,17 @@ typedef USB_HCTypeDef USB_DRD_HCTypeDef;
  * @param  bAddr Address.
  * @retval None
  */
-#define USB_DRD_SET_CHEP_ADDRESS(USBx, bEpChNum, bAddr)                                                                \
-	do {                                                                                                           \
-		uint32_t _wRegVal;                                                                                     \
-                                                                                                                       \
-		/*Read the USB->CHEPx into _wRegVal,                                                                   \
-		 * Reset(DTOGRX/STRX/DTOGTX/STTX) and set the EpAddress*/                                              \
-		_wRegVal = (USB_DRD_GET_CHEP((USBx), (bEpChNum)) & USB_CHEP_REG_MASK) | (bAddr);                       \
-                                                                                                                       \
-		/*Set _wRegVal in USB->CHEPx and set Transmit/Receive Valid                                            \
-		 * Transfer  (x=bEpChNum)*/                                                                            \
-		USB_DRD_SET_CHEP((USBx), (bEpChNum), (_wRegVal | USB_CHEP_VTRX | USB_CHEP_VTTX));                      \
+#define USB_DRD_SET_CHEP_ADDRESS(USBx, bEpChNum, bAddr)                                                                                                                                                \
+	do {                                                                                                                                                                                           \
+		uint32_t _wRegVal;                                                                                                                                                                     \
+                                                                                                                                                                                                       \
+		/*Read the USB->CHEPx into _wRegVal,                                                                                                                                                   \
+		 * Reset(DTOGRX/STRX/DTOGTX/STTX) and set the EpAddress*/                                                                                                                              \
+		_wRegVal = (USB_DRD_GET_CHEP((USBx), (bEpChNum)) & USB_CHEP_REG_MASK) | (bAddr);                                                                                                       \
+                                                                                                                                                                                                       \
+		/*Set _wRegVal in USB->CHEPx and set Transmit/Receive Valid                                                                                                                            \
+		 * Transfer  (x=bEpChNum)*/                                                                                                                                                            \
+		USB_DRD_SET_CHEP((USBx), (bEpChNum), (_wRegVal | USB_CHEP_VTRX | USB_CHEP_VTTX));                                                                                                      \
 	} while (0) /* USB_DRD_SET_CHEP_ADDRESS */
 
 /* PMA API Buffer Descriptor Management
@@ -903,23 +885,23 @@ typedef USB_HCTypeDef USB_DRD_HCTypeDef;
  * [BLSIEZ|NUM_Block |CounRx| Address_Rx] */
 
 /* Set TX Buffer Descriptor Address Field */
-#define USB_DRD_SET_CHEP_TX_ADDRESS(USBx, bEpChNum, wAddr)                                                             \
-	do {                                                                                                           \
-		/* Reset old Address */                                                                                \
-		(USB_DRD_PMA_BUFF + (bEpChNum))->TXBD &= USB_PMA_TXBD_ADDMSK;                                          \
-                                                                                                                       \
-		/* Bit0 & Bit1 should be =0 PMA must be Word aligned */                                                \
-		(USB_DRD_PMA_BUFF + (bEpChNum))->TXBD |= (uint32_t)(((uint32_t)(wAddr) >> 2U) << 2U);                  \
+#define USB_DRD_SET_CHEP_TX_ADDRESS(USBx, bEpChNum, wAddr)                                                                                                                                             \
+	do {                                                                                                                                                                                           \
+		/* Reset old Address */                                                                                                                                                                \
+		(USB_DRD_PMA_BUFF + (bEpChNum))->TXBD &= USB_PMA_TXBD_ADDMSK;                                                                                                                          \
+                                                                                                                                                                                                       \
+		/* Bit0 & Bit1 should be =0 PMA must be Word aligned */                                                                                                                                \
+		(USB_DRD_PMA_BUFF + (bEpChNum))->TXBD |= (uint32_t)(((uint32_t)(wAddr) >> 2U) << 2U);                                                                                                  \
 	} while (0) /* USB_DRD_SET_CHEP_TX_ADDRESS */
 
 /* Set RX Buffer Descriptor Address Field */
-#define USB_DRD_SET_CHEP_RX_ADDRESS(USBx, bEpChNum, wAddr)                                                             \
-	do {                                                                                                           \
-		/* Reset old Address */                                                                                \
-		(USB_DRD_PMA_BUFF + (bEpChNum))->RXBD &= USB_PMA_RXBD_ADDMSK;                                          \
-                                                                                                                       \
-		/* Bit0 & Bit1 should be =0 PMA must be Word aligned */                                                \
-		(USB_DRD_PMA_BUFF + (bEpChNum))->RXBD |= (uint32_t)(((uint32_t)(wAddr) >> 2U) << 2U);                  \
+#define USB_DRD_SET_CHEP_RX_ADDRESS(USBx, bEpChNum, wAddr)                                                                                                                                             \
+	do {                                                                                                                                                                                           \
+		/* Reset old Address */                                                                                                                                                                \
+		(USB_DRD_PMA_BUFF + (bEpChNum))->RXBD &= USB_PMA_RXBD_ADDMSK;                                                                                                                          \
+                                                                                                                                                                                                       \
+		/* Bit0 & Bit1 should be =0 PMA must be Word aligned */                                                                                                                                \
+		(USB_DRD_PMA_BUFF + (bEpChNum))->RXBD |= (uint32_t)(((uint32_t)(wAddr) >> 2U) << 2U);                                                                                                  \
 	} while (0) /* USB_SET_CHEP_RX_ADDRESS */
 
 /**
@@ -929,40 +911,40 @@ typedef USB_HCTypeDef USB_DRD_HCTypeDef;
  * @param  wNBlocks no. of Blocks.
  * @retval None
  */
-#define USB_DRD_CALC_BLK32(pdwReg, wCount, wNBlocks)                                                                   \
-	do {                                                                                                           \
-		/* Divide PacketSize by 32 to calculate the Nb of Block32 */                                           \
-		(wNBlocks) = ((uint32_t)(wCount) >> 5U);                                                               \
-		if (((uint32_t)(wCount) % 32U) == 0U) {                                                                \
-			(wNBlocks)--;                                                                                  \
-		}                                                                                                      \
-                                                                                                                       \
-		(pdwReg) |= (uint32_t)((((wNBlocks) << 26U)) | USB_CNTRX_BLSIZE);                                      \
+#define USB_DRD_CALC_BLK32(pdwReg, wCount, wNBlocks)                                                                                                                                                   \
+	do {                                                                                                                                                                                           \
+		/* Divide PacketSize by 32 to calculate the Nb of Block32 */                                                                                                                           \
+		(wNBlocks) = ((uint32_t)(wCount) >> 5U);                                                                                                                                               \
+		if (((uint32_t)(wCount) % 32U) == 0U) {                                                                                                                                                \
+			(wNBlocks)--;                                                                                                                                                                  \
+		}                                                                                                                                                                                      \
+                                                                                                                                                                                                       \
+		(pdwReg) |= (uint32_t)((((wNBlocks) << 26U)) | USB_CNTRX_BLSIZE);                                                                                                                      \
 	} while (0) /* USB_DRD_CALC_BLK32 */
 
-#define USB_DRD_CALC_BLK2(pdwReg, wCount, wNBlocks)                                                                    \
-	do {                                                                                                           \
-		/* Divide PacketSize by 32 to calculate the Nb of Block32 */                                           \
-		(wNBlocks) = (uint32_t)((uint32_t)(wCount) >> 1U);                                                     \
-		if (((wCount) & 0x1U) != 0U) {                                                                         \
-			(wNBlocks)++;                                                                                  \
-		}                                                                                                      \
-		(pdwReg) |= (uint32_t)((wNBlocks) << 26U);                                                             \
+#define USB_DRD_CALC_BLK2(pdwReg, wCount, wNBlocks)                                                                                                                                                    \
+	do {                                                                                                                                                                                           \
+		/* Divide PacketSize by 32 to calculate the Nb of Block32 */                                                                                                                           \
+		(wNBlocks) = (uint32_t)((uint32_t)(wCount) >> 1U);                                                                                                                                     \
+		if (((wCount) & 0x1U) != 0U) {                                                                                                                                                         \
+			(wNBlocks)++;                                                                                                                                                                  \
+		}                                                                                                                                                                                      \
+		(pdwReg) |= (uint32_t)((wNBlocks) << 26U);                                                                                                                                             \
 	} while (0) /* USB_DRD_CALC_BLK2 */
 
-#define USB_DRD_SET_CHEP_CNT_RX_REG(pdwReg, wCount)                                                                    \
-	do {                                                                                                           \
-		uint32_t wNBlocks;                                                                                     \
-                                                                                                                       \
-		(pdwReg) &= ~(USB_CNTRX_BLSIZE | USB_CNTRX_NBLK_MSK);                                                  \
-                                                                                                                       \
-		if ((wCount) == 0U) {                                                                                  \
-			(pdwReg) |= USB_CNTRX_BLSIZE;                                                                  \
-		} else if ((wCount) <= 62U) {                                                                          \
-			USB_DRD_CALC_BLK2((pdwReg), (wCount), wNBlocks);                                               \
-		} else {                                                                                               \
-			USB_DRD_CALC_BLK32((pdwReg), (wCount), wNBlocks);                                              \
-		}                                                                                                      \
+#define USB_DRD_SET_CHEP_CNT_RX_REG(pdwReg, wCount)                                                                                                                                                    \
+	do {                                                                                                                                                                                           \
+		uint32_t wNBlocks;                                                                                                                                                                     \
+                                                                                                                                                                                                       \
+		(pdwReg) &= ~(USB_CNTRX_BLSIZE | USB_CNTRX_NBLK_MSK);                                                                                                                                  \
+                                                                                                                                                                                                       \
+		if ((wCount) == 0U) {                                                                                                                                                                  \
+			(pdwReg) |= USB_CNTRX_BLSIZE;                                                                                                                                                  \
+		} else if ((wCount) <= 62U) {                                                                                                                                                          \
+			USB_DRD_CALC_BLK2((pdwReg), (wCount), wNBlocks);                                                                                                                               \
+		} else {                                                                                                                                                                               \
+			USB_DRD_CALC_BLK32((pdwReg), (wCount), wNBlocks);                                                                                                                              \
+		}                                                                                                                                                                                      \
 	} while (0) /* USB_DRD_SET_CHEP_CNT_RX_REG */
 
 /**
@@ -972,20 +954,18 @@ typedef USB_HCTypeDef USB_DRD_HCTypeDef;
  * @param  wCount Counter value.
  * @retval None
  */
-#define USB_DRD_SET_CHEP_TX_CNT(USBx, bEpChNum, wCount)                                                                \
-	do {                                                                                                           \
-		/* Reset old TX_Count value */                                                                         \
-		(USB_DRD_PMA_BUFF + (bEpChNum))->TXBD &= USB_PMA_TXBD_COUNTMSK;                                        \
-                                                                                                                       \
-		/* Set the wCount in the dedicated EP_TXBuffer */                                                      \
-		(USB_DRD_PMA_BUFF + (bEpChNum))->TXBD |= (uint32_t)((uint32_t)(wCount) << 16U);                        \
+#define USB_DRD_SET_CHEP_TX_CNT(USBx, bEpChNum, wCount)                                                                                                                                                \
+	do {                                                                                                                                                                                           \
+		/* Reset old TX_Count value */                                                                                                                                                         \
+		(USB_DRD_PMA_BUFF + (bEpChNum))->TXBD &= USB_PMA_TXBD_COUNTMSK;                                                                                                                        \
+                                                                                                                                                                                                       \
+		/* Set the wCount in the dedicated EP_TXBuffer */                                                                                                                                      \
+		(USB_DRD_PMA_BUFF + (bEpChNum))->TXBD |= (uint32_t)((uint32_t)(wCount) << 16U);                                                                                                        \
 	} while (0)
 
-#define USB_DRD_SET_CHEP_RX_DBUF0_CNT(USBx, bEpChNum, wCount)                                                          \
-	USB_DRD_SET_CHEP_CNT_RX_REG(((USB_DRD_PMA_BUFF + (bEpChNum))->TXBD), (wCount))
+#define USB_DRD_SET_CHEP_RX_DBUF0_CNT(USBx, bEpChNum, wCount) USB_DRD_SET_CHEP_CNT_RX_REG(((USB_DRD_PMA_BUFF + (bEpChNum))->TXBD), (wCount))
 
-#define USB_DRD_SET_CHEP_RX_CNT(USBx, bEpChNum, wCount)                                                                \
-	USB_DRD_SET_CHEP_CNT_RX_REG(((USB_DRD_PMA_BUFF + (bEpChNum))->RXBD), (wCount))
+#define USB_DRD_SET_CHEP_RX_CNT(USBx, bEpChNum, wCount) USB_DRD_SET_CHEP_CNT_RX_REG(((USB_DRD_PMA_BUFF + (bEpChNum))->RXBD), (wCount))
 
 /**
  * @brief  gets counter of the tx buffer.
@@ -1008,11 +988,9 @@ typedef USB_HCTypeDef USB_DRD_HCTypeDef;
  * @param  wBuf0Addr buffer 0 address.
  * @retval Counter value
  */
-#define USB_DRD_SET_CHEP_DBUF0_ADDR(USBx, bEpChNum, wBuf0Addr)                                                         \
-	USB_DRD_SET_CHEP_TX_ADDRESS((USBx), (bEpChNum), (wBuf0Addr))
+#define USB_DRD_SET_CHEP_DBUF0_ADDR(USBx, bEpChNum, wBuf0Addr) USB_DRD_SET_CHEP_TX_ADDRESS((USBx), (bEpChNum), (wBuf0Addr))
 
-#define USB_DRD_SET_CHEP_DBUF1_ADDR(USBx, bEpChNum, wBuf1Addr)                                                         \
-	USB_DRD_SET_CHEP_RX_ADDRESS((USBx), (bEpChNum), (wBuf1Addr))
+#define USB_DRD_SET_CHEP_DBUF1_ADDR(USBx, bEpChNum, wBuf1Addr) USB_DRD_SET_CHEP_RX_ADDRESS((USBx), (bEpChNum), (wBuf1Addr))
 
 /**
  * @brief  Sets addresses in a double buffer endpoint.
@@ -1022,10 +1000,10 @@ typedef USB_HCTypeDef USB_DRD_HCTypeDef;
  * @param  wBuf1Addr = buffer 1 address.
  * @retval None
  */
-#define USB_DRD_SET_CHEP_DBUF_ADDR(USBx, bEpChNum, wBuf0Addr, wBuf1Addr)                                               \
-	do {                                                                                                           \
-		USB_DRD_SET_CHEP_DBUF0_ADDR((USBx), (bEpChNum), (wBuf0Addr));                                          \
-		USB_DRD_SET_CHEP_DBUF1_ADDR((USBx), (bEpChNum), (wBuf1Addr));                                          \
+#define USB_DRD_SET_CHEP_DBUF_ADDR(USBx, bEpChNum, wBuf0Addr, wBuf1Addr)                                                                                                                               \
+	do {                                                                                                                                                                                           \
+		USB_DRD_SET_CHEP_DBUF0_ADDR((USBx), (bEpChNum), (wBuf0Addr));                                                                                                                          \
+		USB_DRD_SET_CHEP_DBUF1_ADDR((USBx), (bEpChNum), (wBuf1Addr));                                                                                                                          \
 	} while (0) /* USB_DRD_SET_CHEP_DBUF_ADDR */
 
 /**
@@ -1037,37 +1015,37 @@ typedef USB_HCTypeDef USB_DRD_HCTypeDef;
  * @param  wCount: Counter value
  * @retval None
  */
-#define USB_DRD_SET_CHEP_DBUF0_CNT(USBx, bEpChNum, bDir, wCount)                                                       \
-	do {                                                                                                           \
-		if ((bDir) == 0U) {                                                                                    \
-			/* OUT endpoint */                                                                             \
-			USB_DRD_SET_CHEP_RX_DBUF0_CNT((USBx), (bEpChNum), (wCount));                                   \
-		} else {                                                                                               \
-			if ((bDir) == 1U) {                                                                            \
-				/* IN endpoint */                                                                      \
-				USB_DRD_SET_CHEP_TX_CNT((USBx), (bEpChNum), (wCount));                                 \
-			}                                                                                              \
-		}                                                                                                      \
+#define USB_DRD_SET_CHEP_DBUF0_CNT(USBx, bEpChNum, bDir, wCount)                                                                                                                                       \
+	do {                                                                                                                                                                                           \
+		if ((bDir) == 0U) {                                                                                                                                                                    \
+			/* OUT endpoint */                                                                                                                                                             \
+			USB_DRD_SET_CHEP_RX_DBUF0_CNT((USBx), (bEpChNum), (wCount));                                                                                                                   \
+		} else {                                                                                                                                                                               \
+			if ((bDir) == 1U) {                                                                                                                                                            \
+				/* IN endpoint */                                                                                                                                                      \
+				USB_DRD_SET_CHEP_TX_CNT((USBx), (bEpChNum), (wCount));                                                                                                                 \
+			}                                                                                                                                                                              \
+		}                                                                                                                                                                                      \
 	} while (0) /* USB_DRD_SET_CHEP_DBUF0_CNT */
 
-#define USB_DRD_SET_CHEP_DBUF1_CNT(USBx, bEpChNum, bDir, wCount)                                                       \
-	do {                                                                                                           \
-		if ((bDir) == 0U) {                                                                                    \
-			/* OUT endpoint */                                                                             \
-			USB_DRD_SET_CHEP_RX_CNT((USBx), (bEpChNum), (wCount));                                         \
-		} else {                                                                                               \
-			if ((bDir) == 1U) {                                                                            \
-				/* IN endpoint */                                                                      \
-				(USB_DRD_PMA_BUFF + (bEpChNum))->RXBD &= USB_PMA_TXBD_COUNTMSK;                        \
-				(USB_DRD_PMA_BUFF + (bEpChNum))->RXBD |= (uint32_t)((uint32_t)(wCount) << 16U);        \
-			}                                                                                              \
-		}                                                                                                      \
+#define USB_DRD_SET_CHEP_DBUF1_CNT(USBx, bEpChNum, bDir, wCount)                                                                                                                                       \
+	do {                                                                                                                                                                                           \
+		if ((bDir) == 0U) {                                                                                                                                                                    \
+			/* OUT endpoint */                                                                                                                                                             \
+			USB_DRD_SET_CHEP_RX_CNT((USBx), (bEpChNum), (wCount));                                                                                                                         \
+		} else {                                                                                                                                                                               \
+			if ((bDir) == 1U) {                                                                                                                                                            \
+				/* IN endpoint */                                                                                                                                                      \
+				(USB_DRD_PMA_BUFF + (bEpChNum))->RXBD &= USB_PMA_TXBD_COUNTMSK;                                                                                                        \
+				(USB_DRD_PMA_BUFF + (bEpChNum))->RXBD |= (uint32_t)((uint32_t)(wCount) << 16U);                                                                                        \
+			}                                                                                                                                                                              \
+		}                                                                                                                                                                                      \
 	} while (0) /* USB_DRD_SET_CHEP_DBUF1_CNT */
 
-#define USB_DRD_SET_CHEP_DBUF_CNT(USBx, bEpChNum, bDir, wCount)                                                        \
-	do {                                                                                                           \
-		USB_DRD_SET_CHEP_DBUF0_CNT((USBx), (bEpChNum), (bDir), (wCount));                                      \
-		USB_DRD_SET_CHEP_DBUF1_CNT((USBx), (bEpChNum), (bDir), (wCount));                                      \
+#define USB_DRD_SET_CHEP_DBUF_CNT(USBx, bEpChNum, bDir, wCount)                                                                                                                                        \
+	do {                                                                                                                                                                                           \
+		USB_DRD_SET_CHEP_DBUF0_CNT((USBx), (bEpChNum), (bDir), (wCount));                                                                                                                      \
+		USB_DRD_SET_CHEP_DBUF1_CNT((USBx), (bEpChNum), (bDir), (wCount));                                                                                                                      \
 	} while (0) /* USB_DRD_SET_EPCH_DBUF_CNT  */
 
 /**
@@ -1124,8 +1102,7 @@ HAL_StatusTypeDef USB_EPStartXfer(USB_OTG_GlobalTypeDef *USBx, USB_OTG_EPTypeDef
 HAL_StatusTypeDef USB_EPStopXfer(USB_OTG_GlobalTypeDef *USBx, USB_OTG_EPTypeDef *ep);
 #endif /* defined (HAL_PCD_MODULE_ENABLED) */
 
-HAL_StatusTypeDef USB_WritePacket(const USB_OTG_GlobalTypeDef *USBx, uint8_t *src, uint8_t ch_ep_num, uint16_t len,
-				  uint8_t dma);
+HAL_StatusTypeDef USB_WritePacket(const USB_OTG_GlobalTypeDef *USBx, uint8_t *src, uint8_t ch_ep_num, uint16_t len, uint8_t dma);
 
 void *USB_ReadPacket(const USB_OTG_GlobalTypeDef *USBx, uint8_t *dest, uint16_t len);
 
@@ -1155,8 +1132,7 @@ HAL_StatusTypeDef USB_DoPing(const USB_OTG_GlobalTypeDef *USBx, uint8_t ch_num);
 HAL_StatusTypeDef USB_StopHost(USB_OTG_GlobalTypeDef *USBx);
 
 #if defined(HAL_HCD_MODULE_ENABLED)
-HAL_StatusTypeDef USB_HC_Init(USB_OTG_GlobalTypeDef *USBx, uint8_t ch_num, uint8_t epnum, uint8_t dev_address,
-			      uint8_t speed, uint8_t ep_type, uint16_t mps);
+HAL_StatusTypeDef USB_HC_Init(USB_OTG_GlobalTypeDef *USBx, uint8_t ch_num, uint8_t epnum, uint8_t dev_address, uint8_t speed, uint8_t ep_type, uint16_t mps);
 HAL_StatusTypeDef USB_HC_StartXfer(USB_OTG_GlobalTypeDef *USBx, USB_OTG_HCTypeDef *hc, uint8_t dma);
 
 uint32_t USB_HC_ReadInterrupt(const USB_OTG_GlobalTypeDef *USBx);
@@ -1201,8 +1177,7 @@ HAL_StatusTypeDef USB_HC_IN_Halt(USB_DRD_TypeDef *USBx, uint8_t phy_ch_num);
 HAL_StatusTypeDef USB_HC_OUT_Halt(USB_DRD_TypeDef *USBx, uint8_t phy_ch_num);
 HAL_StatusTypeDef USB_HC_StartXfer(USB_DRD_TypeDef *USBx, USB_DRD_HCTypeDef *hc);
 HAL_StatusTypeDef USB_HC_DoubleBuffer(USB_DRD_TypeDef *USBx, uint8_t phy_ch_num, uint8_t db_state);
-HAL_StatusTypeDef USB_HC_Init(USB_DRD_TypeDef *USBx, uint8_t phy_ch_num, uint8_t epnum, uint8_t dev_address,
-			      uint8_t speed, uint8_t ep_type, uint16_t mps);
+HAL_StatusTypeDef USB_HC_Init(USB_DRD_TypeDef *USBx, uint8_t phy_ch_num, uint8_t epnum, uint8_t dev_address, uint8_t speed, uint8_t ep_type, uint16_t mps);
 
 HAL_StatusTypeDef USB_HC_Activate(USB_DRD_TypeDef *USBx, uint8_t phy_ch_num, uint8_t ch_dir);
 #endif /* defined (HAL_HCD_MODULE_ENABLED) */
@@ -1233,7 +1208,7 @@ void USB_ReadPMA(USB_DRD_TypeDef const *USBx, uint8_t *pbUsrBuf, uint16_t wPMABu
 /**
  * @}
  */
-#endif /* defined (USB_OTG_FS) || defined (USB_OTG_HS) || defined (USB_DRD_FS)                                         \
+#endif /* defined (USB_OTG_FS) || defined (USB_OTG_HS) || defined (USB_DRD_FS)                                                                                                                         \
 	*/
 
 #ifdef __cplusplus

@@ -185,10 +185,9 @@ typedef struct
 			      several messages processing */
 
 #if (USE_HAL_CRYP_REGISTER_CALLBACKS == 1U)
-	void (*InCpltCallback)(struct __CRYP_HandleTypeDef *hcryp); /*!< CRYP Input FIFO transfer completed callback  */
-	void (*OutCpltCallback)(
-	    struct __CRYP_HandleTypeDef *hcryp);		   /*!< CRYP Output FIFO transfer completed callback */
-	void (*ErrorCallback)(struct __CRYP_HandleTypeDef *hcryp); /*!< CRYP Error callback */
+	void (*InCpltCallback)(struct __CRYP_HandleTypeDef *hcryp);  /*!< CRYP Input FIFO transfer completed callback  */
+	void (*OutCpltCallback)(struct __CRYP_HandleTypeDef *hcryp); /*!< CRYP Output FIFO transfer completed callback */
+	void (*ErrorCallback)(struct __CRYP_HandleTypeDef *hcryp);   /*!< CRYP Error callback */
 
 	void (*MspInitCallback)(struct __CRYP_HandleTypeDef *hcryp);   /*!< CRYP Msp Init callback  */
 	void (*MspDeInitCallback)(struct __CRYP_HandleTypeDef *hcryp); /*!< CRYP Msp DeInit callback  */
@@ -318,13 +317,13 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  * @{
  */
 
-#define CRYP_AES_ECB                                                                                                   \
-	0x00000000U		    /*!< Electronic codebook chaining algorithm                                        \
+#define CRYP_AES_ECB                                                                                                                                                                                   \
+	0x00000000U		    /*!< Electronic codebook chaining algorithm                                                                                                                        \
 				     */
 #define CRYP_AES_CBC AES_CR_CHMOD_0 /*!< Cipher block chaining algorithm */
 #define CRYP_AES_CTR AES_CR_CHMOD_1 /*!< Counter mode chaining algorithm */
-#define CRYP_AES_GCM_GMAC                                                                                              \
-	(AES_CR_CHMOD_0 | AES_CR_CHMOD_1) /*!< Galois counter mode - Galois                                            \
+#define CRYP_AES_GCM_GMAC                                                                                                                                                                              \
+	(AES_CR_CHMOD_0 | AES_CR_CHMOD_1) /*!< Galois counter mode - Galois                                                                                                                            \
 					     message authentication code */
 #define CRYP_AES_CCM AES_CR_CHMOD_2	  /*!< Counter with Cipher Mode */
 
@@ -349,8 +348,8 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
 
 #define CRYP_KEYMODE_NORMAL 0x00000000U	  /*!< Normal key usage, Key registers are freely usable */
 #define CRYP_KEYMODE_SHARED AES_CR_KMOD_1 /*!< Shared key */
-#define CRYP_KEYMODE_WRAPPED                                                                                           \
-	AES_CR_KMOD_0 /*!< Only for SAES, Wrapped key: to encrypt or decrypt                                           \
+#define CRYP_KEYMODE_WRAPPED                                                                                                                                                                           \
+	AES_CR_KMOD_0 /*!< Only for SAES, Wrapped key: to encrypt or decrypt                                                                                                                           \
 			 AES keys */
 
 /**
@@ -362,14 +361,14 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  */
 
 #define CRYP_KEYSEL_NORMAL 0x00000000U /*!< Normal key, key registers SAES_KEYx or CRYP_KEYx */
-#define CRYP_KEYSEL_HW                                                                                                 \
-	AES_CR_KEYSEL_0 /*!< Only for SAES, Hardware key : derived hardware                                            \
+#define CRYP_KEYSEL_HW                                                                                                                                                                                 \
+	AES_CR_KEYSEL_0 /*!< Only for SAES, Hardware key : derived hardware                                                                                                                            \
 			   unique key (DHUK 256-bit) */
-#define CRYP_KEYSEL_SW                                                                                                 \
-	AES_CR_KEYSEL_1 /*!< Only for SAES, Software key : boot hardware key                                           \
+#define CRYP_KEYSEL_SW                                                                                                                                                                                 \
+	AES_CR_KEYSEL_1 /*!< Only for SAES, Software key : boot hardware key                                                                                                                           \
 			   BHK (256-bit) */
-#define CRYP_KEYSEL_HSW                                                                                                \
-	AES_CR_KEYSEL_2 /*!< Only for SAES, DHUK XOR BHK Hardware unique key                                           \
+#define CRYP_KEYSEL_HSW                                                                                                                                                                                \
+	AES_CR_KEYSEL_2 /*!< Only for SAES, DHUK XOR BHK Hardware unique key                                                                                                                           \
 			   XOR software key */
 
 /**
@@ -380,8 +379,8 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  * @{
  */
 
-#define CRYP_KSHAREID_AES                                                                                              \
-	0x00000000U /*!< Share SAES Key with AES peripheral                                                            \
+#define CRYP_KSHAREID_AES                                                                                                                                                                              \
+	0x00000000U /*!< Share SAES Key with AES peripheral                                                                                                                                            \
 		     */
 
 /**
@@ -392,11 +391,11 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  * @{
  */
 
-#define CRYP_KEYPROT_ENABLE                                                                                            \
-	AES_CR_KEYPROT /*!< Only for SAES, Key protection between 2                                                    \
+#define CRYP_KEYPROT_ENABLE                                                                                                                                                                            \
+	AES_CR_KEYPROT /*!< Only for SAES, Key protection between 2                                                                                                                                    \
 			  applications with different security contexts */
-#define CRYP_KEYPROT_DISABLE                                                                                           \
-	0x00000000U /*!< Only for SAES, Key not protected between 2                                                    \
+#define CRYP_KEYPROT_DISABLE                                                                                                                                                                           \
+	0x00000000U /*!< Only for SAES, Key not protected between 2                                                                                                                                    \
 		       applications with different security contexts */
 /**
  * @}
@@ -436,16 +435,16 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  * @{
  */
 
-#define CRYP_FLAG_BUSY                                                                                                 \
-	AES_SR_BUSY				     /*!< GCM process suspension forbidden also set when               \
+#define CRYP_FLAG_BUSY                                                                                                                                                                                 \
+	AES_SR_BUSY				     /*!< GCM process suspension forbidden also set when                                                                                               \
 						       transferring a shared key from SAES peripheral  */
 #define CRYP_FLAG_WRERR (AES_SR_WRERR | 0x80000000U) /*!< Write Error flag  */
 #define CRYP_FLAG_RDERR (AES_SR_RDERR | 0x80000000U) /*!< Read error  flag  */
 #define CRYP_FLAG_CCF AES_ISR_CCF		     /*!< Computation completed flag as  AES_ISR_CCF    */
 #define CRYP_FLAG_KEYVALID AES_SR_KEYVALID	     /*!< Key Valid flag          */
 #define CRYP_FLAG_KEIF AES_ISR_KEIF		     /*!<Key error interrupt flag */
-#define CRYP_FLAG_RWEIF                                                                                                \
-	AES_ISR_RWEIF			/*!<Read or write error Interrupt flag                                         \
+#define CRYP_FLAG_RWEIF                                                                                                                                                                                \
+	AES_ISR_RWEIF			/*!<Read or write error Interrupt flag                                                                                                                         \
 					 */
 #define CRYP_FLAG_RNGEIF AES_ISR_RNGEIF /*!<RNG error interrupt flag           */
 
@@ -458,8 +457,8 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  */
 
 #define CRYP_CLEAR_CCF AES_ICR_CCF /*!< Computation Complete Flag Clear */
-#define CRYP_CLEAR_RWEIF                                                                                               \
-	AES_ICR_RWEIF			 /*!< Clear Error Flag : RWEIF in AES_ISR and                                  \
+#define CRYP_CLEAR_RWEIF                                                                                                                                                                               \
+	AES_ICR_RWEIF			 /*!< Clear Error Flag : RWEIF in AES_ISR and                                                                                                                  \
 					    both RDERR and WRERR flags in AES_SR */
 #define CRYP_CLEAR_KEIF AES_ICR_KEIF	 /*!< Clear Key Error Flag: KEIF in AES_ISR */
 #define CRYP_CLEAR_RNGEIF AES_ICR_RNGEIF /*!< Clear rng Error Flag: RNGEIF in AES_ISR */
@@ -472,15 +471,15 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  * @{
  */
 
-#define CRYP_KEYIVCONFIG_ALWAYS                                                                                        \
-	0x00000000U /*!< Peripheral Key and IV configuration to do                                                     \
+#define CRYP_KEYIVCONFIG_ALWAYS                                                                                                                                                                        \
+	0x00000000U /*!< Peripheral Key and IV configuration to do                                                                                                                                     \
 		       systematically */
-#define CRYP_KEYIVCONFIG_ONCE                                                                                          \
-	0x00000001U		     /*!< Peripheral Key and IV configuration to do only once                          \
+#define CRYP_KEYIVCONFIG_ONCE                                                                                                                                                                          \
+	0x00000001U		     /*!< Peripheral Key and IV configuration to do only once                                                                                                          \
 				      */
 #define CRYP_KEYNOCONFIG 0x00000002U /*!< Peripheral Key configuration to not do */
-#define CRYP_IVCONFIG_ONCE                                                                                             \
-	0x00000004U /*!< Peripheral IV configuration do once for interleave                                            \
+#define CRYP_IVCONFIG_ONCE                                                                                                                                                                             \
+	0x00000004U /*!< Peripheral IV configuration do once for interleave                                                                                                                            \
 		       mode */
 
 /**
@@ -501,11 +500,11 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  * @retval None
  */
 #if (USE_HAL_CRYP_REGISTER_CALLBACKS == 1U)
-#define __HAL_CRYP_RESET_HANDLE_STATE(__HANDLE__)                                                                      \
-	do {                                                                                                           \
-		(__HANDLE__)->State = HAL_CRYP_STATE_RESET;                                                            \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define __HAL_CRYP_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_CRYP_STATE_RESET;                                                                                                                                            \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0U)
 #else
 #define __HAL_CRYP_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_CRYP_STATE_RESET)
@@ -536,24 +535,14 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
   * @retval The state of __FLAG__ (FlagStatus).
   */
 
-#define __HAL_CRYP_GET_FLAG(__HANDLE__, __FLAG__)                                                                      \
-	(((__FLAG__) == CRYP_FLAG_KEYVALID)                                                                            \
-	     ? ((((__HANDLE__)->Instance->SR & (CRYP_FLAG_KEYVALID)) == (CRYP_FLAG_KEYVALID)) ? SET : RESET)           \
-	 : ((__FLAG__) == CRYP_FLAG_BUSY)                                                                              \
-	     ? ((((__HANDLE__)->Instance->SR & (CRYP_FLAG_BUSY)) == (CRYP_FLAG_BUSY)) ? SET : RESET)                   \
-	 : ((__FLAG__) == CRYP_FLAG_WRERR)                                                                             \
-	     ? ((((__HANDLE__)->Instance->SR & (CRYP_FLAG_WRERR & 0x7FFFFFFFU)) == (CRYP_FLAG_WRERR & 0x7FFFFFFFU))    \
-		    ? SET                                                                                              \
-		    : RESET)                                                                                           \
-	 : ((__FLAG__) == CRYP_FLAG_RDERR)                                                                             \
-	     ? ((((__HANDLE__)->Instance->SR & (CRYP_FLAG_RDERR & 0x7FFFFFFFU)) == (CRYP_FLAG_RDERR & 0x7FFFFFFFU))    \
-		    ? SET                                                                                              \
-		    : RESET)                                                                                           \
-	 : ((__FLAG__) == CRYP_FLAG_KEIF)                                                                              \
-	     ? ((((__HANDLE__)->Instance->ISR & (CRYP_FLAG_KEIF)) == (CRYP_FLAG_KEIF)) ? SET : RESET)                  \
-	 : ((__FLAG__) == CRYP_FLAG_RWEIF)                                                                             \
-	     ? ((((__HANDLE__)->Instance->ISR & (CRYP_FLAG_RWEIF)) == (CRYP_FLAG_RWEIF)) ? SET : RESET)                \
-	 : ((((__HANDLE__)->Instance->ISR & (CRYP_FLAG_CCF)) == (CRYP_FLAG_CCF))) ? SET                                \
+#define __HAL_CRYP_GET_FLAG(__HANDLE__, __FLAG__)                                                                                                                                                       \
+	(((__FLAG__) == CRYP_FLAG_KEYVALID)					  ? ((((__HANDLE__)->Instance->SR & (CRYP_FLAG_KEYVALID)) == (CRYP_FLAG_KEYVALID)) ? SET : RESET)                       \
+	 : ((__FLAG__) == CRYP_FLAG_BUSY)					  ? ((((__HANDLE__)->Instance->SR & (CRYP_FLAG_BUSY)) == (CRYP_FLAG_BUSY)) ? SET : RESET)                               \
+	 : ((__FLAG__) == CRYP_FLAG_WRERR)					  ? ((((__HANDLE__)->Instance->SR & (CRYP_FLAG_WRERR & 0x7FFFFFFFU)) == (CRYP_FLAG_WRERR & 0x7FFFFFFFU)) ? SET : RESET) \
+	 : ((__FLAG__) == CRYP_FLAG_RDERR)					  ? ((((__HANDLE__)->Instance->SR & (CRYP_FLAG_RDERR & 0x7FFFFFFFU)) == (CRYP_FLAG_RDERR & 0x7FFFFFFFU)) ? SET : RESET) \
+	 : ((__FLAG__) == CRYP_FLAG_KEIF)					  ? ((((__HANDLE__)->Instance->ISR & (CRYP_FLAG_KEIF)) == (CRYP_FLAG_KEIF)) ? SET : RESET)                              \
+	 : ((__FLAG__) == CRYP_FLAG_RWEIF)					  ? ((((__HANDLE__)->Instance->ISR & (CRYP_FLAG_RWEIF)) == (CRYP_FLAG_RWEIF)) ? SET : RESET)                            \
+	 : ((((__HANDLE__)->Instance->ISR & (CRYP_FLAG_CCF)) == (CRYP_FLAG_CCF))) ? SET                                                                                                                 \
 										  : RESET)
 
 /** @brief  Clear the CRYP pending status flag.
@@ -579,8 +568,7 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  * @retval State of interruption (TRUE or FALSE).
  */
 
-#define __HAL_CRYP_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)                                                            \
-	(((__HANDLE__)->Instance->IER & (__INTERRUPT__)) == (__INTERRUPT__))
+#define __HAL_CRYP_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__) (((__HANDLE__)->Instance->IER & (__INTERRUPT__)) == (__INTERRUPT__))
 
 /**
  * @brief  Enable the CRYP interrupt.
@@ -630,8 +618,7 @@ void HAL_CRYP_MspDeInit(CRYP_HandleTypeDef *hcryp);
 HAL_StatusTypeDef HAL_CRYP_SetConfig(CRYP_HandleTypeDef *hcryp, CRYP_ConfigTypeDef *pConf);
 HAL_StatusTypeDef HAL_CRYP_GetConfig(CRYP_HandleTypeDef *hcryp, CRYP_ConfigTypeDef *pConf);
 #if (USE_HAL_CRYP_REGISTER_CALLBACKS == 1U)
-HAL_StatusTypeDef HAL_CRYP_RegisterCallback(CRYP_HandleTypeDef *hcryp, HAL_CRYP_CallbackIDTypeDef CallbackID,
-					    pCRYP_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_CRYP_RegisterCallback(CRYP_HandleTypeDef *hcryp, HAL_CRYP_CallbackIDTypeDef CallbackID, pCRYP_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_CRYP_UnRegisterCallback(CRYP_HandleTypeDef *hcryp, HAL_CRYP_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_CRYP_REGISTER_CALLBACKS */
 #if (USE_HAL_CRYP_SUSPEND_RESUME == 1U)
@@ -651,10 +638,8 @@ HAL_StatusTypeDef HAL_CRYP_RestoreContext(CRYP_HandleTypeDef *hcryp, CRYP_Contex
  */
 
 /* encryption/decryption ***********************************/
-HAL_StatusTypeDef HAL_CRYP_Encrypt(CRYP_HandleTypeDef *hcryp, uint32_t *pInput, uint16_t Size, uint32_t *pOutput,
-				   uint32_t Timeout);
-HAL_StatusTypeDef HAL_CRYP_Decrypt(CRYP_HandleTypeDef *hcryp, uint32_t *pInput, uint16_t Size, uint32_t *pOutput,
-				   uint32_t Timeout);
+HAL_StatusTypeDef HAL_CRYP_Encrypt(CRYP_HandleTypeDef *hcryp, uint32_t *pInput, uint16_t Size, uint32_t *pOutput, uint32_t Timeout);
+HAL_StatusTypeDef HAL_CRYP_Decrypt(CRYP_HandleTypeDef *hcryp, uint32_t *pInput, uint16_t Size, uint32_t *pOutput, uint32_t Timeout);
 HAL_StatusTypeDef HAL_CRYP_Encrypt_IT(CRYP_HandleTypeDef *hcryp, uint32_t *pInput, uint16_t Size, uint32_t *pOutput);
 HAL_StatusTypeDef HAL_CRYP_Decrypt_IT(CRYP_HandleTypeDef *hcryp, uint32_t *pInput, uint16_t Size, uint32_t *pOutput);
 HAL_StatusTypeDef HAL_CRYP_Encrypt_DMA(CRYP_HandleTypeDef *hcryp, uint32_t *pInput, uint16_t Size, uint32_t *pOutput);
@@ -690,25 +675,18 @@ uint32_t HAL_CRYP_GetError(const CRYP_HandleTypeDef *hcryp);
 
 #define IS_CRYP_INSTANCE(INSTANCE) (((INSTANCE) == AES) || ((INSTANCE) == SAES))
 
-#define IS_CRYP_ALGORITHM(ALGORITHM)                                                                                   \
-	(((ALGORITHM) == CRYP_AES_ECB) || ((ALGORITHM) == CRYP_AES_CBC) || ((ALGORITHM) == CRYP_AES_CTR) ||            \
-	 ((ALGORITHM) == CRYP_AES_GCM_GMAC) || ((ALGORITHM) == CRYP_AES_CCM))
+#define IS_CRYP_ALGORITHM(ALGORITHM)                                                                                                                                                                   \
+	(((ALGORITHM) == CRYP_AES_ECB) || ((ALGORITHM) == CRYP_AES_CBC) || ((ALGORITHM) == CRYP_AES_CTR) || ((ALGORITHM) == CRYP_AES_GCM_GMAC) || ((ALGORITHM) == CRYP_AES_CCM))
 
 #define IS_CRYP_KEYSIZE(KEYSIZE) (((KEYSIZE) == CRYP_KEYSIZE_128B) || ((KEYSIZE) == CRYP_KEYSIZE_256B))
 
-#define IS_CRYP_DATATYPE(DATATYPE)                                                                                     \
-	(((DATATYPE) == CRYP_NO_SWAP) || ((DATATYPE) == CRYP_HALFWORD_SWAP) || ((DATATYPE) == CRYP_BYTE_SWAP) ||       \
-	 ((DATATYPE) == CRYP_BIT_SWAP))
+#define IS_CRYP_DATATYPE(DATATYPE) (((DATATYPE) == CRYP_NO_SWAP) || ((DATATYPE) == CRYP_HALFWORD_SWAP) || ((DATATYPE) == CRYP_BYTE_SWAP) || ((DATATYPE) == CRYP_BIT_SWAP))
 
-#define IS_CRYP_INIT(CONFIG)                                                                                           \
-	(((CONFIG) == CRYP_KEYIVCONFIG_ALWAYS) || ((CONFIG) == CRYP_KEYNOCONFIG) ||                                    \
-	 ((CONFIG) == CRYP_IVCONFIG_ONCE) || ((CONFIG) == CRYP_KEYIVCONFIG_ONCE))
+#define IS_CRYP_INIT(CONFIG) (((CONFIG) == CRYP_KEYIVCONFIG_ALWAYS) || ((CONFIG) == CRYP_KEYNOCONFIG) || ((CONFIG) == CRYP_IVCONFIG_ONCE) || ((CONFIG) == CRYP_KEYIVCONFIG_ONCE))
 
-#define IS_CRYP_BUFFERSIZE(ALGO, DATAWIDTH, SIZE)                                                                      \
-	(((((ALGO) == CRYP_AES_CTR)) && ((((DATAWIDTH) == CRYP_DATAWIDTHUNIT_WORD) && (((SIZE) % 4U) == 0U)) ||        \
-					 (((DATAWIDTH) == CRYP_DATAWIDTHUNIT_BYTE) && (((SIZE) % 16U) == 0U)))) ||     \
-	 (((ALGO) == CRYP_AES_ECB) || ((ALGO) == CRYP_AES_CBC) || ((ALGO) == CRYP_AES_GCM_GMAC) ||                     \
-	  ((ALGO) == CRYP_AES_CCM)))
+#define IS_CRYP_BUFFERSIZE(ALGO, DATAWIDTH, SIZE)                                                                                                                                                      \
+	(((((ALGO) == CRYP_AES_CTR)) && ((((DATAWIDTH) == CRYP_DATAWIDTHUNIT_WORD) && (((SIZE) % 4U) == 0U)) || (((DATAWIDTH) == CRYP_DATAWIDTHUNIT_BYTE) && (((SIZE) % 16U) == 0U)))) ||              \
+	 (((ALGO) == CRYP_AES_ECB) || ((ALGO) == CRYP_AES_CBC) || ((ALGO) == CRYP_AES_GCM_GMAC) || ((ALGO) == CRYP_AES_CCM)))
 
 /**
  * @}

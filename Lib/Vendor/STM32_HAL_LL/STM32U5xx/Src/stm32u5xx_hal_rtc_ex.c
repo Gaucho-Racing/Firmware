@@ -125,9 +125,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
-#define TAMP_ALL                                                                                                       \
-	(TAMP_CR1_TAMP1E | TAMP_CR1_TAMP2E | TAMP_CR1_TAMP3E | TAMP_CR1_TAMP4E | TAMP_CR1_TAMP5E | TAMP_CR1_TAMP6E |   \
-	 TAMP_CR1_TAMP7E | TAMP_CR1_TAMP8E)
+#define TAMP_ALL (TAMP_CR1_TAMP1E | TAMP_CR1_TAMP2E | TAMP_CR1_TAMP3E | TAMP_CR1_TAMP4E | TAMP_CR1_TAMP5E | TAMP_CR1_TAMP6E | TAMP_CR1_TAMP7E | TAMP_CR1_TAMP8E)
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
@@ -330,8 +328,7 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateInternalTimeStamp(RTC_HandleTypeDef *hrtc)
  *             @arg RTC_FORMAT_BCD: BCD data format
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_GetTimeStamp(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTimeStamp,
-					 RTC_DateTypeDef *sTimeStampDate, uint32_t Format)
+HAL_StatusTypeDef HAL_RTCEx_GetTimeStamp(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTimeStamp, RTC_DateTypeDef *sTimeStampDate, uint32_t Format)
 {
 	uint32_t tmptime;
 	uint32_t tmpdate;
@@ -559,8 +556,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer(RTC_HandleTypeDef *hrtc, uint32_t Wak
  * to avoid any RTC software execution after Wake Up.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer_IT(RTC_HandleTypeDef *hrtc, uint32_t WakeUpCounter, uint32_t WakeUpClock,
-					      uint32_t WakeUpAutoClr)
+HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer_IT(RTC_HandleTypeDef *hrtc, uint32_t WakeUpCounter, uint32_t WakeUpClock, uint32_t WakeUpAutoClr)
 {
 	uint32_t tickstart;
 
@@ -808,8 +804,7 @@ HAL_StatusTypeDef HAL_RTCEx_PollForWakeUpTimerEvent(RTC_HandleTypeDef *hrtc, uin
  *          This parameter can be one any value from 0 to 0x000001FF.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_SetSmoothCalib(RTC_HandleTypeDef *hrtc, uint32_t SmoothCalibPeriod,
-					   uint32_t SmoothCalibPlusPulses, uint32_t SmoothCalibMinusPulsesValue)
+HAL_StatusTypeDef HAL_RTCEx_SetSmoothCalib(RTC_HandleTypeDef *hrtc, uint32_t SmoothCalibPeriod, uint32_t SmoothCalibPlusPulses, uint32_t SmoothCalibMinusPulsesValue)
 {
 	uint32_t tickstart;
 
@@ -849,8 +844,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetSmoothCalib(RTC_HandleTypeDef *hrtc, uint32_t Smo
 	__HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
 
 	/* Configure the Smooth calibration settings */
-	MODIFY_REG(RTC->CALR, (RTC_CALR_CALP | RTC_CALR_CALW8 | RTC_CALR_CALW16 | RTC_CALR_CALM),
-		   (uint32_t)(SmoothCalibPeriod | SmoothCalibPlusPulses | SmoothCalibMinusPulsesValue));
+	MODIFY_REG(RTC->CALR, (RTC_CALR_CALP | RTC_CALR_CALW8 | RTC_CALR_CALW16 | RTC_CALR_CALM), (uint32_t)(SmoothCalibPeriod | SmoothCalibPlusPulses | SmoothCalibMinusPulsesValue));
 
 	/* Enable the write protection for RTC registers */
 	__HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
@@ -1469,16 +1463,12 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper(RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef
 	assert_param(IS_RTC_TAMPER_PRECHARGE_DURATION(sTamper->PrechargeDuration));
 	assert_param(IS_RTC_TAMPER_PULLUP_STATE(sTamper->TamperPullUp));
 	/* Trigger and Filter have exclusive configurations */
-	assert_param(
-	    ((sTamper->Filter != RTC_TAMPERFILTER_DISABLE) &&
-	     ((sTamper->Trigger == RTC_TAMPERTRIGGER_LOWLEVEL) || (sTamper->Trigger == RTC_TAMPERTRIGGER_HIGHLEVEL))) ||
-	    ((sTamper->Filter == RTC_TAMPERFILTER_DISABLE) && ((sTamper->Trigger == RTC_TAMPERTRIGGER_RISINGEDGE) ||
-							       (sTamper->Trigger == RTC_TAMPERTRIGGER_FALLINGEDGE))));
+	assert_param(((sTamper->Filter != RTC_TAMPERFILTER_DISABLE) && ((sTamper->Trigger == RTC_TAMPERTRIGGER_LOWLEVEL) || (sTamper->Trigger == RTC_TAMPERTRIGGER_HIGHLEVEL))) ||
+		     ((sTamper->Filter == RTC_TAMPERFILTER_DISABLE) && ((sTamper->Trigger == RTC_TAMPERTRIGGER_RISINGEDGE) || (sTamper->Trigger == RTC_TAMPERTRIGGER_FALLINGEDGE))));
 
 	/* Configuration register 2 */
 	tmpreg = READ_REG(TAMP->CR2);
-	tmpreg &= ~((sTamper->Tamper << TAMP_CR2_TAMP1TRG_Pos) | (sTamper->Tamper << TAMP_CR2_TAMP1MSK_Pos) |
-		    (sTamper->Tamper << TAMP_CR2_TAMP1NOERASE_Pos));
+	tmpreg &= ~((sTamper->Tamper << TAMP_CR2_TAMP1TRG_Pos) | (sTamper->Tamper << TAMP_CR2_TAMP1MSK_Pos) | (sTamper->Tamper << TAMP_CR2_TAMP1NOERASE_Pos));
 
 	if ((sTamper->Trigger == RTC_TAMPERTRIGGER_HIGHLEVEL) || (sTamper->Trigger == RTC_TAMPERTRIGGER_FALLINGEDGE)) {
 		tmpreg |= (sTamper->Tamper << TAMP_CR2_TAMP1TRG_Pos);
@@ -1494,8 +1484,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper(RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef
 	WRITE_REG(TAMP->CR2, tmpreg);
 
 	/* Filter control register */
-	WRITE_REG(TAMP->FLTCR,
-		  sTamper->Filter | sTamper->SamplingFrequency | sTamper->PrechargeDuration | sTamper->TamperPullUp);
+	WRITE_REG(TAMP->FLTCR, sTamper->Filter | sTamper->SamplingFrequency | sTamper->PrechargeDuration | sTamper->TamperPullUp);
 
 	/* Timestamp on tamper */
 	if (READ_BIT(RTC->CR, RTC_CR_TAMPTS) != sTamper->TimeStampOnTamperDetection) {
@@ -1534,8 +1523,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper_IT(RTC_HandleTypeDef *hrtc, RTC_TamperType
 
 	/* Configuration register 2 */
 	tmpreg = READ_REG(TAMP->CR2);
-	tmpreg &= ~((sTamper->Tamper << TAMP_CR2_TAMP1TRG_Pos) | (sTamper->Tamper << TAMP_CR2_TAMP1MSK_Pos) |
-		    (sTamper->Tamper << TAMP_CR2_TAMP1NOERASE_Pos));
+	tmpreg &= ~((sTamper->Tamper << TAMP_CR2_TAMP1TRG_Pos) | (sTamper->Tamper << TAMP_CR2_TAMP1MSK_Pos) | (sTamper->Tamper << TAMP_CR2_TAMP1NOERASE_Pos));
 
 	if ((sTamper->Trigger == RTC_TAMPERTRIGGER_HIGHLEVEL) || (sTamper->Trigger == RTC_TAMPERTRIGGER_FALLINGEDGE)) {
 		tmpreg |= (sTamper->Tamper << TAMP_CR2_TAMP1TRG_Pos);
@@ -1556,8 +1544,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper_IT(RTC_HandleTypeDef *hrtc, RTC_TamperType
 	WRITE_REG(TAMP->CR2, tmpreg);
 
 	/* Filter control register */
-	WRITE_REG(TAMP->FLTCR,
-		  sTamper->Filter | sTamper->SamplingFrequency | sTamper->PrechargeDuration | sTamper->TamperPullUp);
+	WRITE_REG(TAMP->FLTCR, sTamper->Filter | sTamper->SamplingFrequency | sTamper->PrechargeDuration | sTamper->TamperPullUp);
 
 	/* Timestamp on tamper */
 	if (READ_BIT(RTC->CR, RTC_CR_TAMPTS) != sTamper->TimeStampOnTamperDetection) {
@@ -1597,8 +1584,7 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateTamper(RTC_HandleTypeDef *hrtc, uint32_t T
 	CLEAR_BIT(TAMP->CR1, Tamper);
 
 	/* Clear tamper mask/noerase/trigger configuration */
-	CLEAR_BIT(TAMP->CR2, (Tamper << TAMP_CR2_TAMP1TRG_Pos) | (Tamper << TAMP_CR2_TAMP1MSK_Pos) |
-				 (Tamper << TAMP_CR2_TAMP1NOERASE_Pos));
+	CLEAR_BIT(TAMP->CR2, (Tamper << TAMP_CR2_TAMP1TRG_Pos) | (Tamper << TAMP_CR2_TAMP1MSK_Pos) | (Tamper << TAMP_CR2_TAMP1NOERASE_Pos));
 
 	/* Clear tamper interrupt mode configuration */
 	CLEAR_BIT(TAMP->IER, Tamper);
@@ -1631,8 +1617,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetActiveTampers(RTC_HandleTypeDef *hrtc, RTC_Active
 		assert_param(IS_RTC_TAMPER_ERASE_MODE(sAllTamper->TampInput[i].NoErase));
 		assert_param(IS_RTC_TAMPER_MASKFLAG_STATE(sAllTamper->TampInput[i].MaskFlag));
 		/* Mask flag only supported by TAMPER 1, 2 and 3 */
-		assert_param(
-		    !((sAllTamper->TampInput[i].MaskFlag != RTC_TAMPERMASK_FLAG_DISABLE) && (i > RTC_TAMPER_3)));
+		assert_param(!((sAllTamper->TampInput[i].MaskFlag != RTC_TAMPERMASK_FLAG_DISABLE) && (i > RTC_TAMPER_3)));
 	}
 	assert_param(IS_RTC_TAMPER_TIMESTAMPONTAMPER_DETECTION(sAllTamper->TimeStampOnTamperDetection));
 #endif /* USE_FULL_ASSERT */
@@ -1657,8 +1642,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetActiveTampers(RTC_HandleTypeDef *hrtc, RTC_Active
 	IER = READ_REG(TAMP->IER);
 
 	/* Set common parameters */
-	ATCR1 = (sAllTamper->ActiveFilter | (sAllTamper->ActiveOutputChangePeriod << TAMP_ATCR1_ATPER_Pos) |
-		 sAllTamper->ActiveAsyncPrescaler);
+	ATCR1 = (sAllTamper->ActiveFilter | (sAllTamper->ActiveOutputChangePeriod << TAMP_ATCR1_ATPER_Pos) | sAllTamper->ActiveAsyncPrescaler);
 
 	/* Set specific parameters for each active tamper inputs if enable */
 	for (i = 0; i < RTC_TAMP_NB; i++) {
@@ -1739,8 +1723,7 @@ void HAL_RTCEx_GetActiveTampers(RTC_ActiveTampersTypeDef *sAllTamper)
 		sAllTamper->TampInput[i].Interrupt = (uint32_t)(((TAMP->IER & (TAMP_IER_TAMP1IE << i))) >> i);
 		sAllTamper->TampInput[i].MaskFlag = (uint32_t)(((TAMP->CR2 & (TAMP_CR2_TAMP1MSK << i))) >> i);
 		sAllTamper->TampInput[i].NoErase = (uint32_t)(((TAMP->CR2 & (TAMP_CR2_TAMP1NOERASE << i))) >> i);
-		sAllTamper->TampInput[i].Output = (uint32_t)(((TAMP->ATCR2 & (TAMP_ATCR2_ATOSEL1 << ((3u * i)))) >>
-							      ((3u * i) + TAMP_ATCR2_ATOSEL1_Pos)));
+		sAllTamper->TampInput[i].Output = (uint32_t)(((TAMP->ATCR2 & (TAMP_ATCR2_ATOSEL1 << ((3u * i)))) >> ((3u * i) + TAMP_ATCR2_ATOSEL1_Pos)));
 	}
 }
 
@@ -1815,9 +1798,7 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateActiveTampers(RTC_HandleTypeDef *hrtc)
 	/* Disable all actives tampers but not passives tampers */
 	CLEAR_BIT(TAMP->CR1, ATamp_mask);
 	/* Disable no erase and mask */
-	CLEAR_BIT(TAMP->CR2,
-		  (ATamp_mask | ((ATamp_mask & (TAMP_ATCR1_TAMP1AM | TAMP_ATCR1_TAMP2AM | TAMP_ATCR1_TAMP3AM))
-				 << TAMP_CR2_TAMP1MSK_Pos)));
+	CLEAR_BIT(TAMP->CR2, (ATamp_mask | ((ATamp_mask & (TAMP_ATCR1_TAMP1AM | TAMP_ATCR1_TAMP2AM | TAMP_ATCR1_TAMP3AM)) << TAMP_CR2_TAMP1MSK_Pos)));
 
 	/* Clear tamper interrupt and event flags (WO register) of all actives
 	 * tampers but not passives tampers */
@@ -1827,11 +1808,9 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateActiveTampers(RTC_HandleTypeDef *hrtc)
 	 * passives tampers */
 	CLEAR_BIT(TAMP->IER, ATamp_mask);
 
-	CLEAR_BIT(TAMP->ATCR1,
-		  TAMP_ALL | TAMP_ATCR1_ATCKSEL | TAMP_ATCR1_ATPER | TAMP_ATCR1_ATOSHARE | TAMP_ATCR1_FLTEN);
+	CLEAR_BIT(TAMP->ATCR1, TAMP_ALL | TAMP_ATCR1_ATCKSEL | TAMP_ATCR1_ATPER | TAMP_ATCR1_ATOSHARE | TAMP_ATCR1_FLTEN);
 
-	CLEAR_BIT(TAMP->ATCR2, TAMP_ATCR2_ATOSEL1 | TAMP_ATCR2_ATOSEL2 | TAMP_ATCR2_ATOSEL3 | TAMP_ATCR2_ATOSEL4 |
-				   TAMP_ATCR2_ATOSEL5 | TAMP_ATCR2_ATOSEL6 | TAMP_ATCR2_ATOSEL7 | TAMP_ATCR2_ATOSEL8);
+	CLEAR_BIT(TAMP->ATCR2, TAMP_ATCR2_ATOSEL1 | TAMP_ATCR2_ATOSEL2 | TAMP_ATCR2_ATOSEL3 | TAMP_ATCR2_ATOSEL4 | TAMP_ATCR2_ATOSEL5 | TAMP_ATCR2_ATOSEL6 | TAMP_ATCR2_ATOSEL7 | TAMP_ATCR2_ATOSEL8);
 
 	return HAL_OK;
 }
@@ -2754,10 +2733,8 @@ HAL_StatusTypeDef HAL_RTCEx_SecureModeGet(RTC_HandleTypeDef *hrtc, RTC_SecureSta
 	/* Backup register start zones
 	   Warning : Backup register start zones are shared with privilege
 	   configuration */
-	secureState->backupRegisterStartZone2 =
-	    READ_BIT(tamp_seccfgr, TAMP_SECCFGR_BKPRWSEC) >> TAMP_SECCFGR_BKPRWSEC_Pos;
-	secureState->backupRegisterStartZone3 =
-	    READ_BIT(tamp_seccfgr, TAMP_SECCFGR_BKPWSEC) >> TAMP_SECCFGR_BKPWSEC_Pos;
+	secureState->backupRegisterStartZone2 = READ_BIT(tamp_seccfgr, TAMP_SECCFGR_BKPRWSEC) >> TAMP_SECCFGR_BKPRWSEC_Pos;
+	secureState->backupRegisterStartZone3 = READ_BIT(tamp_seccfgr, TAMP_SECCFGR_BKPWSEC) >> TAMP_SECCFGR_BKPWSEC_Pos;
 
 	return HAL_OK;
 }
@@ -2788,10 +2765,8 @@ HAL_StatusTypeDef HAL_RTCEx_SecureModeSet(RTC_HandleTypeDef *hrtc, RTC_SecureSta
 	/* Tamper + Backup register + Monotonic counter
 	   Warning : Backup register start zone are Shared with privilege
 	   configuration */
-	WRITE_REG(TAMP->SECCFGR,
-		  secureState->tampSecureFull | secureState->MonotonicCounterSecure |
-		      (TAMP_SECCFGR_BKPRWSEC & (secureState->backupRegisterStartZone2 << TAMP_SECCFGR_BKPRWSEC_Pos)) |
-		      (TAMP_SECCFGR_BKPWSEC & (secureState->backupRegisterStartZone3 << TAMP_SECCFGR_BKPWSEC_Pos)));
+	WRITE_REG(TAMP->SECCFGR, secureState->tampSecureFull | secureState->MonotonicCounterSecure | (TAMP_SECCFGR_BKPRWSEC & (secureState->backupRegisterStartZone2 << TAMP_SECCFGR_BKPRWSEC_Pos)) |
+				     (TAMP_SECCFGR_BKPWSEC & (secureState->backupRegisterStartZone3 << TAMP_SECCFGR_BKPWSEC_Pos)));
 
 	return HAL_OK;
 }
@@ -2843,8 +2818,7 @@ HAL_StatusTypeDef HAL_RTCEx_PrivilegeModeSet(RTC_HandleTypeDef *hrtc, RTC_Privil
 	   secure mode or if trustzone is disabled. In non secure mode, a
 	   notification is generated through a flag/interrupt in the TZIC
 	       (TrustZone interrupt controller). The bits are not written. */
-	WRITE_REG(TAMP->PRIVCFGR, privilegeState->tampPrivilegeFull | privilegeState->backupRegisterPrivZone |
-				      privilegeState->MonotonicCounterPrivilege);
+	WRITE_REG(TAMP->PRIVCFGR, privilegeState->tampPrivilegeFull | privilegeState->backupRegisterPrivZone | privilegeState->MonotonicCounterPrivilege);
 
 	/* Backup register start zone
 	   Warning : This parameter is only writable in secure mode or if
@@ -2853,8 +2827,7 @@ HAL_StatusTypeDef HAL_RTCEx_PrivilegeModeSet(RTC_HandleTypeDef *hrtc, RTC_Privil
 	   controller). The bits are not written. Warning : Backup register
 	   start zones are shared with secure configuration */
 	MODIFY_REG(TAMP->SECCFGR, (TAMP_SECCFGR_BKPRWSEC | TAMP_SECCFGR_BKPWSEC),
-		   ((privilegeState->backupRegisterStartZone2 << TAMP_SECCFGR_BKPRWSEC_Pos) |
-		    (privilegeState->backupRegisterStartZone3 << TAMP_SECCFGR_BKPWSEC_Pos)));
+		   ((privilegeState->backupRegisterStartZone2 << TAMP_SECCFGR_BKPRWSEC_Pos) | (privilegeState->backupRegisterStartZone3 << TAMP_SECCFGR_BKPWSEC_Pos)));
 
 	return HAL_OK;
 }
@@ -2890,15 +2863,12 @@ HAL_StatusTypeDef HAL_RTCEx_PrivilegeModeGet(RTC_HandleTypeDef *hrtc, RTC_Privil
 	privilegeState->MonotonicCounterPrivilege = READ_BIT(tamp_privcfgr, TAMP_PRIVCFGR_CNT1PRIV);
 
 	/* Backup registers Zones */
-	privilegeState->backupRegisterPrivZone =
-	    READ_BIT(tamp_privcfgr, (TAMP_PRIVCFGR_BKPWPRIV | TAMP_PRIVCFGR_BKPRWPRIV));
+	privilegeState->backupRegisterPrivZone = READ_BIT(tamp_privcfgr, (TAMP_PRIVCFGR_BKPWPRIV | TAMP_PRIVCFGR_BKPRWPRIV));
 
 	/* Backup register start zones
 	   Warning : Shared with secure configuration */
-	privilegeState->backupRegisterStartZone2 =
-	    READ_BIT(tamp_seccfgr, TAMP_SECCFGR_BKPRWSEC) >> TAMP_SECCFGR_BKPRWSEC_Pos;
-	privilegeState->backupRegisterStartZone3 =
-	    READ_BIT(tamp_seccfgr, TAMP_SECCFGR_BKPWSEC) >> TAMP_SECCFGR_BKPWSEC_Pos;
+	privilegeState->backupRegisterStartZone2 = READ_BIT(tamp_seccfgr, TAMP_SECCFGR_BKPRWSEC) >> TAMP_SECCFGR_BKPRWSEC_Pos;
+	privilegeState->backupRegisterStartZone3 = READ_BIT(tamp_seccfgr, TAMP_SECCFGR_BKPWSEC) >> TAMP_SECCFGR_BKPWSEC_Pos;
 
 	return HAL_OK;
 }

@@ -291,11 +291,11 @@ typedef void (*pI2S_CallbackTypeDef)(I2S_HandleTypeDef *hi2s); /*!< pointer to a
  * @retval None
  */
 #if (USE_HAL_I2S_REGISTER_CALLBACKS == 1U)
-#define __HAL_I2S_RESET_HANDLE_STATE(__HANDLE__)                                                                       \
-	do {                                                                                                           \
-		(__HANDLE__)->State = HAL_I2S_STATE_RESET;                                                             \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define __HAL_I2S_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                       \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_I2S_STATE_RESET;                                                                                                                                             \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0)
 #else
 #define __HAL_I2S_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_I2S_STATE_RESET)
@@ -346,8 +346,7 @@ typedef void (*pI2S_CallbackTypeDef)(I2S_HandleTypeDef *hi2s); /*!< pointer to a
  *            @arg I2S_IT_ERR: Error interrupt enable
  * @retval The new state of __IT__ (TRUE or FALSE).
  */
-#define __HAL_I2S_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)                                                             \
-	((((__HANDLE__)->Instance->CR2 & (__INTERRUPT__)) == (__INTERRUPT__)) ? SET : RESET)
+#define __HAL_I2S_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__) ((((__HANDLE__)->Instance->CR2 & (__INTERRUPT__)) == (__INTERRUPT__)) ? SET : RESET)
 
 /** @brief  Checks whether the specified I2S flag is set or not.
  * @param  __HANDLE__ specifies the I2S Handle.
@@ -368,32 +367,32 @@ typedef void (*pI2S_CallbackTypeDef)(I2S_HandleTypeDef *hi2s); /*!< pointer to a
  * @param  __HANDLE__ specifies the I2S Handle.
  * @retval None
  */
-#define __HAL_I2S_CLEAR_OVRFLAG(__HANDLE__)                                                                            \
-	do {                                                                                                           \
-		__IO uint32_t tmpreg_ovr = 0x00U;                                                                      \
-		tmpreg_ovr = (__HANDLE__)->Instance->DR;                                                               \
-		tmpreg_ovr = (__HANDLE__)->Instance->SR;                                                               \
-		UNUSED(tmpreg_ovr);                                                                                    \
+#define __HAL_I2S_CLEAR_OVRFLAG(__HANDLE__)                                                                                                                                                            \
+	do {                                                                                                                                                                                           \
+		__IO uint32_t tmpreg_ovr = 0x00U;                                                                                                                                                      \
+		tmpreg_ovr = (__HANDLE__)->Instance->DR;                                                                                                                                               \
+		tmpreg_ovr = (__HANDLE__)->Instance->SR;                                                                                                                                               \
+		UNUSED(tmpreg_ovr);                                                                                                                                                                    \
 	} while (0U)
 /** @brief Clears the I2S UDR pending flag.
  * @param  __HANDLE__ specifies the I2S Handle.
  * @retval None
  */
-#define __HAL_I2S_CLEAR_UDRFLAG(__HANDLE__)                                                                            \
-	do {                                                                                                           \
-		__IO uint32_t tmpreg_udr = 0x00U;                                                                      \
-		tmpreg_udr = ((__HANDLE__)->Instance->SR);                                                             \
-		UNUSED(tmpreg_udr);                                                                                    \
+#define __HAL_I2S_CLEAR_UDRFLAG(__HANDLE__)                                                                                                                                                            \
+	do {                                                                                                                                                                                           \
+		__IO uint32_t tmpreg_udr = 0x00U;                                                                                                                                                      \
+		tmpreg_udr = ((__HANDLE__)->Instance->SR);                                                                                                                                             \
+		UNUSED(tmpreg_udr);                                                                                                                                                                    \
 	} while (0U)
 /** @brief Flush the I2S DR Register.
  * @param  __HANDLE__ specifies the I2S Handle.
  * @retval None
  */
-#define __HAL_I2S_FLUSH_RX_DR(__HANDLE__)                                                                              \
-	do {                                                                                                           \
-		__IO uint32_t tmpreg_dr = 0x00U;                                                                       \
-		tmpreg_dr = ((__HANDLE__)->Instance->DR);                                                              \
-		UNUSED(tmpreg_dr);                                                                                     \
+#define __HAL_I2S_FLUSH_RX_DR(__HANDLE__)                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
+		__IO uint32_t tmpreg_dr = 0x00U;                                                                                                                                                       \
+		tmpreg_dr = ((__HANDLE__)->Instance->DR);                                                                                                                                              \
+		UNUSED(tmpreg_dr);                                                                                                                                                                     \
 	} while (0U)
 /**
  * @}
@@ -415,8 +414,7 @@ void HAL_I2S_MspDeInit(I2S_HandleTypeDef *hi2s);
 
 /* Callbacks Register/UnRegister functions  ***********************************/
 #if (USE_HAL_I2S_REGISTER_CALLBACKS == 1U)
-HAL_StatusTypeDef HAL_I2S_RegisterCallback(I2S_HandleTypeDef *hi2s, HAL_I2S_CallbackIDTypeDef CallbackID,
-					   pI2S_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_I2S_RegisterCallback(I2S_HandleTypeDef *hi2s, HAL_I2S_CallbackIDTypeDef CallbackID, pI2S_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_I2S_UnRegisterCallback(I2S_HandleTypeDef *hi2s, HAL_I2S_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_I2S_REGISTER_CALLBACKS */
 /**
@@ -488,8 +486,7 @@ uint32_t HAL_I2S_GetError(I2S_HandleTypeDef *hi2s);
  *            @arg I2S_FLAG_BSY: Busy flag
  * @retval SET or RESET.
  */
-#define I2S_CHECK_FLAG(__SR__, __FLAG__)                                                                               \
-	((((__SR__) & ((__FLAG__) & I2S_FLAG_MASK)) == ((__FLAG__) & I2S_FLAG_MASK)) ? SET : RESET)
+#define I2S_CHECK_FLAG(__SR__, __FLAG__) ((((__SR__) & ((__FLAG__) & I2S_FLAG_MASK)) == ((__FLAG__) & I2S_FLAG_MASK)) ? SET : RESET)
 
 /** @brief  Check whether the specified SPI Interrupt is set or not.
  * @param  __CR2__  copy of I2S CR2 register.
@@ -507,25 +504,18 @@ uint32_t HAL_I2S_GetError(I2S_HandleTypeDef *hi2s);
  *         This parameter can be a value of @ref I2S_Mode
  * @retval None
  */
-#define IS_I2S_MODE(__MODE__)                                                                                          \
-	(((__MODE__) == I2S_MODE_SLAVE_TX) || ((__MODE__) == I2S_MODE_SLAVE_RX) ||                                     \
-	 ((__MODE__) == I2S_MODE_MASTER_TX) || ((__MODE__) == I2S_MODE_MASTER_RX))
+#define IS_I2S_MODE(__MODE__) (((__MODE__) == I2S_MODE_SLAVE_TX) || ((__MODE__) == I2S_MODE_SLAVE_RX) || ((__MODE__) == I2S_MODE_MASTER_TX) || ((__MODE__) == I2S_MODE_MASTER_RX))
 
-#define IS_I2S_STANDARD(__STANDARD__)                                                                                  \
-	(((__STANDARD__) == I2S_STANDARD_PHILIPS) || ((__STANDARD__) == I2S_STANDARD_MSB) ||                           \
-	 ((__STANDARD__) == I2S_STANDARD_LSB) || ((__STANDARD__) == I2S_STANDARD_PCM_SHORT) ||                         \
+#define IS_I2S_STANDARD(__STANDARD__)                                                                                                                                                                  \
+	(((__STANDARD__) == I2S_STANDARD_PHILIPS) || ((__STANDARD__) == I2S_STANDARD_MSB) || ((__STANDARD__) == I2S_STANDARD_LSB) || ((__STANDARD__) == I2S_STANDARD_PCM_SHORT) ||                     \
 	 ((__STANDARD__) == I2S_STANDARD_PCM_LONG))
 
-#define IS_I2S_DATA_FORMAT(__FORMAT__)                                                                                 \
-	(((__FORMAT__) == I2S_DATAFORMAT_16B) || ((__FORMAT__) == I2S_DATAFORMAT_16B_EXTENDED) ||                      \
-	 ((__FORMAT__) == I2S_DATAFORMAT_24B) || ((__FORMAT__) == I2S_DATAFORMAT_32B))
+#define IS_I2S_DATA_FORMAT(__FORMAT__)                                                                                                                                                                 \
+	(((__FORMAT__) == I2S_DATAFORMAT_16B) || ((__FORMAT__) == I2S_DATAFORMAT_16B_EXTENDED) || ((__FORMAT__) == I2S_DATAFORMAT_24B) || ((__FORMAT__) == I2S_DATAFORMAT_32B))
 
-#define IS_I2S_MCLK_OUTPUT(__OUTPUT__)                                                                                 \
-	(((__OUTPUT__) == I2S_MCLKOUTPUT_ENABLE) || ((__OUTPUT__) == I2S_MCLKOUTPUT_DISABLE))
+#define IS_I2S_MCLK_OUTPUT(__OUTPUT__) (((__OUTPUT__) == I2S_MCLKOUTPUT_ENABLE) || ((__OUTPUT__) == I2S_MCLKOUTPUT_DISABLE))
 
-#define IS_I2S_AUDIO_FREQ(__FREQ__)                                                                                    \
-	((((__FREQ__) >= I2S_AUDIOFREQ_8K) && ((__FREQ__) <= I2S_AUDIOFREQ_192K)) ||                                   \
-	 ((__FREQ__) == I2S_AUDIOFREQ_DEFAULT))
+#define IS_I2S_AUDIO_FREQ(__FREQ__) ((((__FREQ__) >= I2S_AUDIOFREQ_8K) && ((__FREQ__) <= I2S_AUDIOFREQ_192K)) || ((__FREQ__) == I2S_AUDIOFREQ_DEFAULT))
 
 /** @brief  Checks if I2S Serial clock steady state parameter is in allowed
  * range.

@@ -307,8 +307,7 @@ __weak void HAL_OTFDEC_MspDeInit(OTFDEC_HandleTypeDef *hotfdec)
  * @param  pCallback pointer to the Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_OTFDEC_RegisterCallback(OTFDEC_HandleTypeDef *hotfdec, HAL_OTFDEC_CallbackIDTypeDef CallbackID,
-					      pOTFDEC_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_OTFDEC_RegisterCallback(OTFDEC_HandleTypeDef *hotfdec, HAL_OTFDEC_CallbackIDTypeDef CallbackID, pOTFDEC_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -678,8 +677,7 @@ HAL_StatusTypeDef HAL_OTFDEC_RegionSetMode(OTFDEC_HandleTypeDef *hotfdec, uint32
  * configuration is locked
  * @retval HAL state
  */
-HAL_StatusTypeDef HAL_OTFDEC_RegionConfig(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex,
-					  const OTFDEC_RegionConfigTypeDef *Config, uint32_t lock)
+HAL_StatusTypeDef HAL_OTFDEC_RegionConfig(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex, const OTFDEC_RegionConfigTypeDef *Config, uint32_t lock)
 {
 	OTFDEC_Region_TypeDef *region;
 	uint32_t address;
@@ -710,8 +708,7 @@ HAL_StatusTypeDef HAL_OTFDEC_RegionConfig(OTFDEC_HandleTypeDef *hotfdec, uint32_
 		WRITE_REG(region->REG_END_ADDR, Config->EndAddress);
 
 		/* Write Version */
-		MODIFY_REG(region->REG_CONFIGR, OTFDEC_REG_CONFIGR_VERSION,
-			   (uint32_t)(Config->Version) << OTFDEC_REG_CONFIGR_VERSION_Pos);
+		MODIFY_REG(region->REG_CONFIGR, OTFDEC_REG_CONFIGR_VERSION, (uint32_t)(Config->Version) << OTFDEC_REG_CONFIGR_VERSION_Pos);
 
 		/* Enable region deciphering or enciphering (depending of
 		 * OTFDEC_CR ENC bit setting) */
@@ -859,8 +856,7 @@ HAL_StatusTypeDef HAL_OTFDEC_DisableEnciphering(OTFDEC_HandleTypeDef *hotfdec)
   process is over.
   * @retval HAL state
   */
-HAL_StatusTypeDef HAL_OTFDEC_Cipher(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex, const uint32_t *input,
-				    uint32_t *output, uint32_t size, uint32_t start_address)
+HAL_StatusTypeDef HAL_OTFDEC_Cipher(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex, const uint32_t *input, uint32_t *output, uint32_t size, uint32_t start_address)
 {
 	uint32_t j;
 	__IO uint32_t *extMem_ptr = (uint32_t *)start_address;
@@ -1067,8 +1063,7 @@ uint32_t HAL_OTFDEC_RegionGetKeyCRC(const OTFDEC_HandleTypeDef *hotfdec, uint32_
  * configuration parameters
  * @retval HAL state
  */
-HAL_StatusTypeDef HAL_OTFDEC_RegionGetConfig(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex,
-					     OTFDEC_RegionConfigTypeDef *Config)
+HAL_StatusTypeDef HAL_OTFDEC_RegionGetConfig(OTFDEC_HandleTypeDef *hotfdec, uint32_t RegionIndex, OTFDEC_RegionConfigTypeDef *Config)
 {
 	OTFDEC_Region_TypeDef *region;
 	uint32_t address;
@@ -1095,8 +1090,7 @@ HAL_StatusTypeDef HAL_OTFDEC_RegionGetConfig(OTFDEC_HandleTypeDef *hotfdec, uint
 		Config->EndAddress = READ_REG(region->REG_END_ADDR);
 
 		/* Read Version */
-		Config->Version =
-		    (READ_REG(region->REG_CONFIGR) & OTFDEC_REG_CONFIGR_VERSION) >> OTFDEC_REG_CONFIGR_VERSION_Pos;
+		Config->Version = (READ_REG(region->REG_CONFIGR) & OTFDEC_REG_CONFIGR_VERSION) >> OTFDEC_REG_CONFIGR_VERSION_Pos;
 
 		/* Release Lock */
 		__HAL_UNLOCK(hotfdec);

@@ -26,9 +26,8 @@
  * @param coulombCnt1 Content of register COULOMB_CNT1.
  * @param coulombCnt2 Content of register COULOMB_CNT2.
  */
-#define BCC_GET_COULOMB_CNT(coulombCnt1, coulombCnt2)                                                                  \
-	((int32_t)(((uint32_t)((coulombCnt1) & MC33771C_TH_COULOMB_CNT_MSB_TH_COULOMB_CNT_MSB_MASK) << 16U) |          \
-		   ((uint32_t)(coulombCnt2) & MC33771C_TH_COULOMB_CNT_LSB_TH_COULOMB_CNT_LSB_MASK)))
+#define BCC_GET_COULOMB_CNT(coulombCnt1, coulombCnt2)                                                                                                                                                  \
+	((int32_t)(((uint32_t)((coulombCnt1) & MC33771C_TH_COULOMB_CNT_MSB_TH_COULOMB_CNT_MSB_MASK) << 16U) | ((uint32_t)(coulombCnt2) & MC33771C_TH_COULOMB_CNT_LSB_TH_COULOMB_CNT_LSB_MASK)))
 
 /*!
  * @brief Returns a raw value of ISENSE measurement composed from values
@@ -37,9 +36,7 @@
  * @param measISense1 Content of register MEAS_ISENSE1.
  * @param measISense2 Content of register MEAS_ISENSE2.
  */
-#define BCC_GET_ISENSE_RAW(measISense1, measISense2)                                                                   \
-	((((uint32_t)(measISense1) & MC33771C_MEAS_ISENSE1_MEAS_I_MSB_MASK) << 4U) |                                   \
-	 ((uint32_t)(measISense2) & MC33771C_MEAS_ISENSE2_MEAS_I_LSB_MASK))
+#define BCC_GET_ISENSE_RAW(measISense1, measISense2) ((((uint32_t)(measISense1) & MC33771C_MEAS_ISENSE1_MEAS_I_MSB_MASK) << 4U) | ((uint32_t)(measISense2) & MC33771C_MEAS_ISENSE2_MEAS_I_LSB_MASK))
 
 /*!
  * @brief Performed a sign extension on the raw value of ISENSE measurement
@@ -48,8 +45,7 @@
  * @param iSenseRaw Raw value of measured current (result of
  *                  BCC_GET_ISENSE_RAW macro).
  */
-#define BCC_GET_ISENSE_RAW_SIGN(iSenseRaw)                                                                             \
-	((int32_t)(((iSenseRaw) & 0x040000U) ? ((iSenseRaw) | 0xFFF80000U) : (iSenseRaw)))
+#define BCC_GET_ISENSE_RAW_SIGN(iSenseRaw) ((int32_t)(((iSenseRaw) & 0x040000U) ? ((iSenseRaw) | 0xFFF80000U) : (iSenseRaw)))
 
 /*!
  * @brief This macro calculates ISENSE value (in [uV]) from the content of
@@ -79,8 +75,7 @@
  *
  * @return ISENSE current in [mA]; int32_t type.
  */
-#define BCC_GET_ISENSE_AMP(rShunt, iSense1, iSense2)                                                                   \
-	((BCC_GET_ISENSE_RAW_SIGN(BCC_GET_ISENSE_RAW(iSense1, iSense2)) * 600) / (int32_t)(rShunt))
+#define BCC_GET_ISENSE_AMP(rShunt, iSense1, iSense2) ((BCC_GET_ISENSE_RAW_SIGN(BCC_GET_ISENSE_RAW(iSense1, iSense2)) * 600) / (int32_t)(rShunt))
 
 /*!
  * @brief Masks a register value and returns a raw measured value.
@@ -231,8 +226,7 @@
  *
  * @param threshold Threshold value in [mV].
  */
-#define BCC_GET_TH_CTX(threshold)                                                                                      \
-	(uint16_t)(((((threshold) * 10U) / 195U) > 0xFF) ? 0xFF : (((threshold) * 10U) / 195U))
+#define BCC_GET_TH_CTX(threshold) (uint16_t)(((((threshold) * 10U) / 195U) > 0xFF) ? 0xFF : (((threshold) * 10U) / 195U))
 
 /*!
  * @brief Converts an analog input OV/UV (UT/OT) threshold voltage to a raw
@@ -240,9 +234,7 @@
  *
  * @param threshold Threshold value in [mV].
  */
-#define BCC_GET_TH_ANX(threshold)                                                                                      \
-	(uint16_t)((((((uint32_t)(threshold)) * 100U) / 488U) > 0x3FFU) ? 0x3FFU                                       \
-									: ((((uint32_t)(threshold)) * 100U) / 488U))
+#define BCC_GET_TH_ANX(threshold) (uint16_t)((((((uint32_t)(threshold)) * 100U) / 488U) > 0x3FFU) ? 0x3FFU : ((((uint32_t)(threshold)) * 100U) / 488U))
 
 /*******************************************************************************
  * Macros for other configuration
@@ -255,10 +247,7 @@
  *
  * @param offset Offset value in [uV] as 2's complement in int16_t.
  */
-#define BCC_GET_ADC2_OFFSET(offset)                                                                                    \
-	((uint16_t)((((((int16_t)(offset)) * 10) / 6) > 127)                                                           \
-			? 127                                                                                          \
-			: ((((((int16_t)(offset)) * 10) / 6) < -128) ? -128 : ((((int16_t)(offset)) * 10) / 6))))
+#define BCC_GET_ADC2_OFFSET(offset) ((uint16_t)((((((int16_t)(offset)) * 10) / 6) > 127) ? 127 : ((((((int16_t)(offset)) * 10) / 6) < -128) ? -128 : ((((int16_t)(offset)) * 10) / 6))))
 
 #endif /* __BCC_UTILS_H__ */
 /*******************************************************************************

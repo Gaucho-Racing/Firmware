@@ -119,7 +119,7 @@ typedef struct {
 typedef struct __XSPI_HandleTypeDef
 #else
 typedef struct
-#endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) &&                                                                         \
+#endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
 {
 	XSPI_TypeDef *Instance;	   /*!< XSPI registers base address  */
@@ -146,7 +146,7 @@ typedef struct
 
 	void (*MspInitCallback)(struct __XSPI_HandleTypeDef *hxspi);
 	void (*MspDeInitCallback)(struct __XSPI_HandleTypeDef *hxspi);
-#endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) &&                                                                         \
+#endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
 } XSPI_HandleTypeDef;
 
@@ -354,7 +354,7 @@ typedef enum {
  */
 typedef void (*pXSPI_CallbackTypeDef)(XSPI_HandleTypeDef *hxspi);
 
-#endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) &&                                                                         \
+#endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
 #if defined(HSPI_CALFCR_FINE)
 /**
@@ -392,17 +392,17 @@ typedef struct {
  */
 #define HAL_XSPI_STATE_RESET (0x00000000U) /*!< Initial state */
 #define HAL_XSPI_STATE_READY (0x00000002U) /*!< Driver ready to be used */
-#define HAL_XSPI_STATE_HYPERBUS_INIT                                                                                   \
-	(0x00000001U) /*!< Initialization done in hyperbus mode but timing                                             \
+#define HAL_XSPI_STATE_HYPERBUS_INIT                                                                                                                                                                   \
+	(0x00000001U) /*!< Initialization done in hyperbus mode but timing                                                                                                                             \
 			 configuration not done */
-#define HAL_XSPI_STATE_CMD_CFG                                                                                         \
-	(0x00000004U) /*!< Command (regular or hyperbus) configured, ready for                                         \
+#define HAL_XSPI_STATE_CMD_CFG                                                                                                                                                                         \
+	(0x00000004U) /*!< Command (regular or hyperbus) configured, ready for                                                                                                                         \
 			 an action          */
-#define HAL_XSPI_STATE_READ_CMD_CFG                                                                                    \
-	(0x00000014U) /*!< Read command configuration done, not the write                                              \
+#define HAL_XSPI_STATE_READ_CMD_CFG                                                                                                                                                                    \
+	(0x00000014U) /*!< Read command configuration done, not the write                                                                                                                              \
 			 command configuration   */
-#define HAL_XSPI_STATE_WRITE_CMD_CFG                                                                                   \
-	(0x00000024U)				       /*!< Write command configuration done, not the read             \
+#define HAL_XSPI_STATE_WRITE_CMD_CFG                                                                                                                                                                   \
+	(0x00000024U)				       /*!< Write command configuration done, not the read                                                                                             \
 							  command configuration   */
 #define HAL_XSPI_STATE_BUSY_CMD (0x00000008U)	       /*!< Command without data on-going */
 #define HAL_XSPI_STATE_BUSY_TX (0x00000018U)	       /*!< Indirect Tx on-going */
@@ -426,7 +426,7 @@ typedef struct {
 #define HAL_XSPI_ERROR_INVALID_SEQUENCE (0x00000010U) /*!< Sequence is incorrect            */
 #if defined(USE_HAL_XSPI_REGISTER_CALLBACKS) && (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U)
 #define HAL_XSPI_ERROR_INVALID_CALLBACK (0x00000020U) /*!< Invalid callback error           */
-#endif						      /* (USE_HAL_XSPI_REGISTER_CALLBACKS) &&                          \
+#endif						      /* (USE_HAL_XSPI_REGISTER_CALLBACKS) &&                                                                                                          \
 							 (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
 /**
  * @}
@@ -517,17 +517,17 @@ typedef struct {
  * @{
  */
 #define HAL_XSPI_WRAP_NOT_SUPPORTED (0x00000000U) /*!< wrapped reads are not supported by the memory   */
-#define HAL_XSPI_WRAP_16_BYTES                                                                                         \
-	((uint32_t)XSPI_DCR2_WRAPSIZE_1) /*!< external memory supports wrap                                            \
+#define HAL_XSPI_WRAP_16_BYTES                                                                                                                                                                         \
+	((uint32_t)XSPI_DCR2_WRAPSIZE_1) /*!< external memory supports wrap                                                                                                                            \
 					    size of 16 bytes  */
-#define HAL_XSPI_WRAP_32_BYTES                                                                                         \
-	((uint32_t)(XSPI_DCR2_WRAPSIZE_0 | XSPI_DCR2_WRAPSIZE_1)) /*!< external memory supports wrap                   \
+#define HAL_XSPI_WRAP_32_BYTES                                                                                                                                                                         \
+	((uint32_t)(XSPI_DCR2_WRAPSIZE_0 | XSPI_DCR2_WRAPSIZE_1)) /*!< external memory supports wrap                                                                                                   \
 								     size of 32 bytes  */
-#define HAL_XSPI_WRAP_64_BYTES                                                                                         \
-	((uint32_t)XSPI_DCR2_WRAPSIZE_2) /*!< external memory supports wrap                                            \
+#define HAL_XSPI_WRAP_64_BYTES                                                                                                                                                                         \
+	((uint32_t)XSPI_DCR2_WRAPSIZE_2) /*!< external memory supports wrap                                                                                                                            \
 					    size of 64 bytes  */
-#define HAL_XSPI_WRAP_128_BYTES                                                                                        \
-	((uint32_t)(XSPI_DCR2_WRAPSIZE_0 | XSPI_DCR2_WRAPSIZE_2)) /*!< external memory supports wrap                   \
+#define HAL_XSPI_WRAP_128_BYTES                                                                                                                                                                        \
+	((uint32_t)(XSPI_DCR2_WRAPSIZE_0 | XSPI_DCR2_WRAPSIZE_2)) /*!< external memory supports wrap                                                                                                   \
 								     size of 128 bytes */
 /**
  * @}
@@ -602,8 +602,8 @@ typedef struct {
 /** @defgroup XSPI_OperationType XSPI Operation Type
  * @{
  */
-#define HAL_XSPI_OPTYPE_COMMON_CFG                                                                                     \
-	(0x00000000U)				/*!< Common configuration (indirect or auto-polling                    \
+#define HAL_XSPI_OPTYPE_COMMON_CFG                                                                                                                                                                     \
+	(0x00000000U)				/*!< Common configuration (indirect or auto-polling                                                                                                    \
 						   mode) */
 #define HAL_XSPI_OPTYPE_READ_CFG (0x00000001U)	/*!< Read configuration (memory-mapped mode) */
 #define HAL_XSPI_OPTYPE_WRITE_CFG (0x00000002U) /*!< Write configuration (memory-mapped mode) */
@@ -634,12 +634,11 @@ typedef struct {
 /** @defgroup XSPI_InstructionMode XSPI Instruction Mode
  * @{
  */
-#define HAL_XSPI_INSTRUCTION_NONE (0x00000000U)			  /*!< No instruction               */
-#define HAL_XSPI_INSTRUCTION_1_LINE ((uint32_t)XSPI_CCR_IMODE_0)  /*!< Instruction on a single line */
-#define HAL_XSPI_INSTRUCTION_2_LINES ((uint32_t)XSPI_CCR_IMODE_1) /*!< Instruction on two lines     */
-#define HAL_XSPI_INSTRUCTION_4_LINES                                                                                   \
-	((uint32_t)(XSPI_CCR_IMODE_0 | XSPI_CCR_IMODE_1))	  /*!< Instruction on four lines    */
-#define HAL_XSPI_INSTRUCTION_8_LINES ((uint32_t)XSPI_CCR_IMODE_2) /*!< Instruction on eight lines   */
+#define HAL_XSPI_INSTRUCTION_NONE (0x00000000U)					       /*!< No instruction               */
+#define HAL_XSPI_INSTRUCTION_1_LINE ((uint32_t)XSPI_CCR_IMODE_0)		       /*!< Instruction on a single line */
+#define HAL_XSPI_INSTRUCTION_2_LINES ((uint32_t)XSPI_CCR_IMODE_1)		       /*!< Instruction on two lines     */
+#define HAL_XSPI_INSTRUCTION_4_LINES ((uint32_t)(XSPI_CCR_IMODE_0 | XSPI_CCR_IMODE_1)) /*!< Instruction on four lines    */
+#define HAL_XSPI_INSTRUCTION_8_LINES ((uint32_t)XSPI_CCR_IMODE_2)		       /*!< Instruction on eight lines   */
 /**
  * @}
  */
@@ -699,12 +698,11 @@ typedef struct {
 /** @defgroup XSPI_AlternateBytesMode XSPI Alternate Bytes Mode
  * @{
  */
-#define HAL_XSPI_ALT_BYTES_NONE (0x00000000U)			 /*!< No alternate bytes               */
-#define HAL_XSPI_ALT_BYTES_1_LINE ((uint32_t)XSPI_CCR_ABMODE_0)	 /*!< Alternate bytes on a single line */
-#define HAL_XSPI_ALT_BYTES_2_LINES ((uint32_t)XSPI_CCR_ABMODE_1) /*!< Alternate bytes on two lines     */
-#define HAL_XSPI_ALT_BYTES_4_LINES                                                                                     \
-	((uint32_t)(XSPI_CCR_ABMODE_0 | XSPI_CCR_ABMODE_1))	 /*!< Alternate bytes on four lines */
-#define HAL_XSPI_ALT_BYTES_8_LINES ((uint32_t)XSPI_CCR_ABMODE_2) /*!< Alternate bytes on eight lines   */
+#define HAL_XSPI_ALT_BYTES_NONE (0x00000000U)					       /*!< No alternate bytes               */
+#define HAL_XSPI_ALT_BYTES_1_LINE ((uint32_t)XSPI_CCR_ABMODE_0)			       /*!< Alternate bytes on a single line */
+#define HAL_XSPI_ALT_BYTES_2_LINES ((uint32_t)XSPI_CCR_ABMODE_1)		       /*!< Alternate bytes on two lines     */
+#define HAL_XSPI_ALT_BYTES_4_LINES ((uint32_t)(XSPI_CCR_ABMODE_0 | XSPI_CCR_ABMODE_1)) /*!< Alternate bytes on four lines */
+#define HAL_XSPI_ALT_BYTES_8_LINES ((uint32_t)XSPI_CCR_ABMODE_2)		       /*!< Alternate bytes on eight lines   */
 /**
  * @}
  */
@@ -724,8 +722,8 @@ typedef struct {
  * @{
  */
 #define HAL_XSPI_ALT_BYTES_DTR_DISABLE (0x00000000U) /*!< DTR mode disabled for alternate bytes phase */
-#define HAL_XSPI_ALT_BYTES_DTR_ENABLE                                                                                  \
-	((uint32_t)XSPI_CCR_ABDTR) /*!< DTR mode enabled for alternate bytes                                           \
+#define HAL_XSPI_ALT_BYTES_DTR_ENABLE                                                                                                                                                                  \
+	((uint32_t)XSPI_CCR_ABDTR) /*!< DTR mode enabled for alternate bytes                                                                                                                           \
 				      phase  */
 /**
  * @}
@@ -734,14 +732,14 @@ typedef struct {
 /** @defgroup XSPI_DataMode XSPI Data Mode
  * @{
  */
-#define HAL_XSPI_DATA_NONE (0x00000000U)		   /*!< No data                                   */
-#define HAL_XSPI_DATA_1_LINE ((uint32_t)XSPI_CCR_DMODE_0)  /*!< Data on a single line */
-#define HAL_XSPI_DATA_2_LINES ((uint32_t)XSPI_CCR_DMODE_1) /*!< Data on two lines */
+#define HAL_XSPI_DATA_NONE (0x00000000U)					/*!< No data                                   */
+#define HAL_XSPI_DATA_1_LINE ((uint32_t)XSPI_CCR_DMODE_0)			/*!< Data on a single line */
+#define HAL_XSPI_DATA_2_LINES ((uint32_t)XSPI_CCR_DMODE_1)			/*!< Data on two lines */
 #define HAL_XSPI_DATA_4_LINES ((uint32_t)(XSPI_CCR_DMODE_0 | XSPI_CCR_DMODE_1)) /*!< Data on four lines */
 #define HAL_XSPI_DATA_8_LINES ((uint32_t)XSPI_CCR_DMODE_2)			/*!< Data on eight lines */
 #if defined(HSPI_CR_MSEL)
-#define HAL_XSPI_DATA_16_LINES                                                                                         \
-	((uint32_t)(XSPI_CCR_DMODE_0 | XSPI_CCR_DMODE_2)) /*!< Data on sixteen lines valid for                         \
+#define HAL_XSPI_DATA_16_LINES                                                                                                                                                                         \
+	((uint32_t)(XSPI_CCR_DMODE_0 | XSPI_CCR_DMODE_2)) /*!< Data on sixteen lines valid for                                                                                                         \
 							     HSPI only */
 #endif							  /* 16BITS_AVAILABILITY */
 /**
@@ -770,8 +768,8 @@ typedef struct {
  * @{
  */
 #define HAL_XSPI_SIOO_INST_EVERY_CMD (0x00000000U) /*!< Send instruction on every transaction       */
-#define HAL_XSPI_SIOO_INST_ONLY_FIRST_CMD                                                                              \
-	((uint32_t)XSPI_CCR_SIOO) /*!< Send instruction only for the first                                             \
+#define HAL_XSPI_SIOO_INST_ONLY_FIRST_CMD                                                                                                                                                              \
+	((uint32_t)XSPI_CCR_SIOO) /*!< Send instruction only for the first                                                                                                                             \
 				     command */
 /**
  * @}
@@ -789,8 +787,8 @@ typedef struct {
 /** @defgroup XSPI_LatencyMode XSPI Hyperbus Latency Mode
  * @{
  */
-#define HAL_XSPI_VARIABLE_LATENCY                                                                                      \
-	(0x00000000U)					/*!< Variable initial latency                                  \
+#define HAL_XSPI_VARIABLE_LATENCY                                                                                                                                                                      \
+	(0x00000000U)					/*!< Variable initial latency                                                                                                                  \
 							 */
 #define HAL_XSPI_FIXED_LATENCY ((uint32_t)XSPI_HLCR_LM) /*!< Fixed latency            */
 /**
@@ -818,11 +816,11 @@ typedef struct {
 /** @defgroup XSPI_AutomaticStop XSPI Automatic Stop
  * @{
  */
-#define HAL_XSPI_AUTOMATIC_STOP_DISABLE                                                                                \
-	(0x00000000U) /*!< AutoPolling stops only with abort or XSPI disabling                                         \
+#define HAL_XSPI_AUTOMATIC_STOP_DISABLE                                                                                                                                                                \
+	(0x00000000U) /*!< AutoPolling stops only with abort or XSPI disabling                                                                                                                         \
 		       */
-#define HAL_XSPI_AUTOMATIC_STOP_ENABLE                                                                                 \
-	((uint32_t)XSPI_CR_APMS) /*!< AutoPolling stops as soon as there is a                                          \
+#define HAL_XSPI_AUTOMATIC_STOP_ENABLE                                                                                                                                                                 \
+	((uint32_t)XSPI_CR_APMS) /*!< AutoPolling stops as soon as there is a                                                                                                                          \
 				    match       */
 /**
  * @}
@@ -832,8 +830,8 @@ typedef struct {
  * @{
  */
 #define HAL_XSPI_TIMEOUT_COUNTER_DISABLE (0x00000000U) /*!< Timeout counter disabled, nCS remains active */
-#define HAL_XSPI_TIMEOUT_COUNTER_ENABLE                                                                                \
-	((uint32_t)XSPI_CR_TCEN) /*!< Timeout counter enabled, nCS released                                            \
+#define HAL_XSPI_TIMEOUT_COUNTER_ENABLE                                                                                                                                                                \
+	((uint32_t)XSPI_CR_TCEN) /*!< Timeout counter enabled, nCS released                                                                                                                            \
 				    when timeout expires */
 /**
  * @}
@@ -842,22 +840,22 @@ typedef struct {
 /** @defgroup XSPI_Flags XSPI Flags
  * @{
  */
-#define HAL_XSPI_FLAG_BUSY                                                                                             \
-	XSPI_SR_BUSY		     /*!< Busy flag: operation is ongoing                                              \
+#define HAL_XSPI_FLAG_BUSY                                                                                                                                                                             \
+	XSPI_SR_BUSY		     /*!< Busy flag: operation is ongoing                                                                                                                              \
 				      */
 #define HAL_XSPI_FLAG_TO XSPI_SR_TOF /*!< Timeout flag: timeout occurs in memory-mapped mode */
-#define HAL_XSPI_FLAG_SM                                                                                               \
-	XSPI_SR_SMF /*!< Status match flag: received data matches in                                                   \
+#define HAL_XSPI_FLAG_SM                                                                                                                                                                               \
+	XSPI_SR_SMF /*!< Status match flag: received data matches in                                                                                                                                   \
 		       autopolling mode */
-#define HAL_XSPI_FLAG_FT                                                                                               \
-	XSPI_SR_FTF /*!< Fifo threshold flag: Fifo threshold reached or data                                           \
+#define HAL_XSPI_FLAG_FT                                                                                                                                                                               \
+	XSPI_SR_FTF /*!< Fifo threshold flag: Fifo threshold reached or data                                                                                                                           \
 		       left after read from memory is complete              */
-#define HAL_XSPI_FLAG_TC                                                                                               \
-	XSPI_SR_TCF /*!< Transfer complete flag: programmed number of data                                             \
-		       have been transferred or the transfer has been aborted                                          \
+#define HAL_XSPI_FLAG_TC                                                                                                                                                                               \
+	XSPI_SR_TCF /*!< Transfer complete flag: programmed number of data                                                                                                                             \
+		       have been transferred or the transfer has been aborted                                                                                                                          \
 		     */
-#define HAL_XSPI_FLAG_TE                                                                                               \
-	XSPI_SR_TEF /*!< Transfer error flag: invalid address is being                                                 \
+#define HAL_XSPI_FLAG_TE                                                                                                                                                                               \
+	XSPI_SR_TEF /*!< Transfer error flag: invalid address is being                                                                                                                                 \
 		       accessed */
 /**
  * @}
@@ -914,17 +912,17 @@ typedef struct {
 /** @defgroup XSPI_DelayType XSPI Calibration Delay Type
  * @{
  */
-#define HAL_XSPI_CAL_FULL_CYCLE_DELAY                                                                                  \
-	(0x00000000U) /*!< Delay value equivalent to full memory-clock cycle                                           \
+#define HAL_XSPI_CAL_FULL_CYCLE_DELAY                                                                                                                                                                  \
+	(0x00000000U) /*!< Delay value equivalent to full memory-clock cycle                                                                                                                           \
 		       */
-#define HAL_XSPI_CAL_FEEDBACK_CLK_DELAY                                                                                \
-	(0x00000001U) /*!< Delay value for the feedback clock when reading                                             \
+#define HAL_XSPI_CAL_FEEDBACK_CLK_DELAY                                                                                                                                                                \
+	(0x00000001U) /*!< Delay value for the feedback clock when reading                                                                                                                             \
 			 without DQS      */
-#define HAL_XSPI_CAL_DATA_OUTPUT_DELAY                                                                                 \
-	(0x00000002U) /*!< Delay value for output data in DDR mode for write                                           \
+#define HAL_XSPI_CAL_DATA_OUTPUT_DELAY                                                                                                                                                                 \
+	(0x00000002U) /*!< Delay value for output data in DDR mode for write                                                                                                                           \
 			 operations     */
-#define HAL_XSPI_CAL_DQS_INPUT_DELAY                                                                                   \
-	(0x00000003U) /*!< Delay value for DQS input when sampling data for                                            \
+#define HAL_XSPI_CAL_DQS_INPUT_DELAY                                                                                                                                                                   \
+	(0x00000003U) /*!< Delay value for DQS input when sampling data for                                                                                                                            \
 			 read operations */
 /**
  * @}
@@ -933,11 +931,11 @@ typedef struct {
 /** @defgroup XSPI_MaxCal XSPI Calibration Maximal Value
  * @{
  */
-#define HAL_XSPI_MAXCAL_NOT_REACHED                                                                                    \
-	(0x00000000U) /*!< Memory-clock perido inside the range of DLL master                                          \
+#define HAL_XSPI_MAXCAL_NOT_REACHED                                                                                                                                                                    \
+	(0x00000000U) /*!< Memory-clock perido inside the range of DLL master                                                                                                                          \
 		       */
-#define HAL_XSPI_MAXCAL_REACHED                                                                                        \
-	((uint32_t)HSPI_CALFCR_CALMAX) /*!< Memory-clock period outside the range of                                   \
+#define HAL_XSPI_MAXCAL_REACHED                                                                                                                                                                        \
+	((uint32_t)HSPI_CALFCR_CALMAX) /*!< Memory-clock period outside the range of                                                                                                                   \
 					  DLL master (max delay values used) */
 /**
  * @}
@@ -957,15 +955,15 @@ typedef struct {
  * @retval None
  */
 #if defined(USE_HAL_XSPI_REGISTER_CALLBACKS) && (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U)
-#define HAL_XSPI_RESET_HANDLE_STATE(__HANDLE__)                                                                        \
-	do {                                                                                                           \
-		(__HANDLE__)->State = HAL_XSPI_STATE_RESET;                                                            \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define HAL_XSPI_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                        \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_XSPI_STATE_RESET;                                                                                                                                            \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0)
 #else
 #define HAL_XSPI_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_XSPI_STATE_RESET)
-#endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) &&                                                                         \
+#endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
 
 /** @brief  Enable the XSPI peripheral.
@@ -1017,8 +1015,7 @@ typedef struct {
  *            @arg HAL_XSPI_IT_TE: XSPI Transfer error interrupt
  * @retval The new state of __INTERRUPT__ (TRUE or FALSE).
  */
-#define HAL_XSPI_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)                                                              \
-	(READ_BIT((__HANDLE__)->Instance->CR, (__INTERRUPT__)) == (__INTERRUPT__))
+#define HAL_XSPI_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__) (READ_BIT((__HANDLE__)->Instance->CR, (__INTERRUPT__)) == (__INTERRUPT__))
 
 /**
  * @brief  Check whether the selected XSPI flag is set or not.
@@ -1081,10 +1078,8 @@ void HAL_XSPI_IRQHandler(XSPI_HandleTypeDef *hxspi);
 /* XSPI command configuration functions */
 HAL_StatusTypeDef HAL_XSPI_Command(XSPI_HandleTypeDef *hxspi, const XSPI_RegularCmdTypeDef *pCmd, uint32_t Timeout);
 HAL_StatusTypeDef HAL_XSPI_Command_IT(XSPI_HandleTypeDef *hxspi, const XSPI_RegularCmdTypeDef *pCmd);
-HAL_StatusTypeDef HAL_XSPI_HyperbusCfg(XSPI_HandleTypeDef *hxspi, const XSPI_HyperbusCfgTypeDef *pCfg,
-				       uint32_t Timeout);
-HAL_StatusTypeDef HAL_XSPI_HyperbusCmd(XSPI_HandleTypeDef *hxspi, const XSPI_HyperbusCmdTypeDef *pCmd,
-				       uint32_t Timeout);
+HAL_StatusTypeDef HAL_XSPI_HyperbusCfg(XSPI_HandleTypeDef *hxspi, const XSPI_HyperbusCfgTypeDef *pCfg, uint32_t Timeout);
+HAL_StatusTypeDef HAL_XSPI_HyperbusCmd(XSPI_HandleTypeDef *hxspi, const XSPI_HyperbusCmdTypeDef *pCmd, uint32_t Timeout);
 
 /* XSPI indirect mode functions */
 HAL_StatusTypeDef HAL_XSPI_Transmit(XSPI_HandleTypeDef *hxspi, const uint8_t *pData, uint32_t Timeout);
@@ -1095,8 +1090,7 @@ HAL_StatusTypeDef HAL_XSPI_Transmit_DMA(XSPI_HandleTypeDef *hxspi, const uint8_t
 HAL_StatusTypeDef HAL_XSPI_Receive_DMA(XSPI_HandleTypeDef *hxspi, uint8_t *pData);
 
 /* XSPI status flag polling mode functions */
-HAL_StatusTypeDef HAL_XSPI_AutoPolling(XSPI_HandleTypeDef *hxspi, const XSPI_AutoPollingTypeDef *pCfg,
-				       uint32_t Timeout);
+HAL_StatusTypeDef HAL_XSPI_AutoPolling(XSPI_HandleTypeDef *hxspi, const XSPI_AutoPollingTypeDef *pCfg, uint32_t Timeout);
 HAL_StatusTypeDef HAL_XSPI_AutoPolling_IT(XSPI_HandleTypeDef *hxspi, const XSPI_AutoPollingTypeDef *pCfg);
 
 /* XSPI memory-mapped mode functions */
@@ -1123,10 +1117,9 @@ void HAL_XSPI_TimeOutCallback(XSPI_HandleTypeDef *hxspi);
 
 #if defined(USE_HAL_XSPI_REGISTER_CALLBACKS) && (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U)
 /* XSPI callback registering/unregistering */
-HAL_StatusTypeDef HAL_XSPI_RegisterCallback(XSPI_HandleTypeDef *hxspi, HAL_XSPI_CallbackIDTypeDef CallbackID,
-					    pXSPI_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_XSPI_RegisterCallback(XSPI_HandleTypeDef *hxspi, HAL_XSPI_CallbackIDTypeDef CallbackID, pXSPI_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_XSPI_UnRegisterCallback(XSPI_HandleTypeDef *hxspi, HAL_XSPI_CallbackIDTypeDef CallbackID);
-#endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) &&                                                                         \
+#endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
 
 /**
@@ -1202,31 +1195,24 @@ HAL_StatusTypeDef HAL_XSPI_SetDelayValue(XSPI_HandleTypeDef *hxspi, const XSPI_H
 /**
   @cond 0
   */
-#define IS_OCTOSPI_FIFO_THRESHOLD_BYTE(THRESHOLD)                                                                      \
-	(((THRESHOLD) >= 1U) && ((THRESHOLD) <= ((OCTOSPI_CR_FTHRES >> OCTOSPI_CR_FTHRES_Pos) + 1U)))
+#define IS_OCTOSPI_FIFO_THRESHOLD_BYTE(THRESHOLD) (((THRESHOLD) >= 1U) && ((THRESHOLD) <= ((OCTOSPI_CR_FTHRES >> OCTOSPI_CR_FTHRES_Pos) + 1U)))
 
 #if defined(HSPI1)
-#define IS_HSPI_FIFO_THRESHOLD_BYTE(THRESHOLD)                                                                         \
-	(((THRESHOLD) >= 1U) && ((THRESHOLD) <= ((HSPI_CR_FTHRES >> HSPI_CR_FTHRES_Pos) + 1U)))
+#define IS_HSPI_FIFO_THRESHOLD_BYTE(THRESHOLD) (((THRESHOLD) >= 1U) && ((THRESHOLD) <= ((HSPI_CR_FTHRES >> HSPI_CR_FTHRES_Pos) + 1U)))
 #endif /* HSPI1 */
 #define IS_XSPI_MEMORY_MODE(MODE) (((MODE) == HAL_XSPI_SINGLE_MEM) || ((MODE) == HAL_XSPI_DUAL_MEM))
 
-#define IS_XSPI_MEMORY_TYPE(TYPE)                                                                                      \
-	(((TYPE) == HAL_XSPI_MEMTYPE_MICRON) || ((TYPE) == HAL_XSPI_MEMTYPE_MACRONIX) ||                               \
-	 ((TYPE) == HAL_XSPI_MEMTYPE_APMEM) || ((TYPE) == HAL_XSPI_MEMTYPE_MACRONIX_RAM) ||                            \
+#define IS_XSPI_MEMORY_TYPE(TYPE)                                                                                                                                                                      \
+	(((TYPE) == HAL_XSPI_MEMTYPE_MICRON) || ((TYPE) == HAL_XSPI_MEMTYPE_MACRONIX) || ((TYPE) == HAL_XSPI_MEMTYPE_APMEM) || ((TYPE) == HAL_XSPI_MEMTYPE_MACRONIX_RAM) ||                            \
 	 ((TYPE) == HAL_XSPI_MEMTYPE_HYPERBUS) || ((TYPE) == HAL_XSPI_MEMTYPE_APMEM_16BITS))
 
-#define IS_XSPI_MEMORY_SIZE(SIZE)                                                                                      \
-	(((SIZE) == HAL_XSPI_SIZE_16B) || ((SIZE) == HAL_XSPI_SIZE_32B) || ((SIZE) == HAL_XSPI_SIZE_64B) ||            \
-	 ((SIZE) == HAL_XSPI_SIZE_128B) || ((SIZE) == HAL_XSPI_SIZE_256B) || ((SIZE) == HAL_XSPI_SIZE_512B) ||         \
-	 ((SIZE) == HAL_XSPI_SIZE_1KB) || ((SIZE) == HAL_XSPI_SIZE_2KB) || ((SIZE) == HAL_XSPI_SIZE_4KB) ||            \
-	 ((SIZE) == HAL_XSPI_SIZE_8KB) || ((SIZE) == HAL_XSPI_SIZE_16KB) || ((SIZE) == HAL_XSPI_SIZE_32KB) ||          \
-	 ((SIZE) == HAL_XSPI_SIZE_64KB) || ((SIZE) == HAL_XSPI_SIZE_128KB) || ((SIZE) == HAL_XSPI_SIZE_256KB) ||       \
-	 ((SIZE) == HAL_XSPI_SIZE_512KB) || ((SIZE) == HAL_XSPI_SIZE_1MB) || ((SIZE) == HAL_XSPI_SIZE_2MB) ||          \
-	 ((SIZE) == HAL_XSPI_SIZE_4MB) || ((SIZE) == HAL_XSPI_SIZE_8MB) || ((SIZE) == HAL_XSPI_SIZE_16MB) ||           \
-	 ((SIZE) == HAL_XSPI_SIZE_32MB) || ((SIZE) == HAL_XSPI_SIZE_64MB) || ((SIZE) == HAL_XSPI_SIZE_128MB) ||        \
-	 ((SIZE) == HAL_XSPI_SIZE_256MB) || ((SIZE) == HAL_XSPI_SIZE_512MB) || ((SIZE) == HAL_XSPI_SIZE_1GB) ||        \
-	 ((SIZE) == HAL_XSPI_SIZE_2GB) || ((SIZE) == HAL_XSPI_SIZE_4GB) || ((SIZE) == HAL_XSPI_SIZE_8GB) ||            \
+#define IS_XSPI_MEMORY_SIZE(SIZE)                                                                                                                                                                      \
+	(((SIZE) == HAL_XSPI_SIZE_16B) || ((SIZE) == HAL_XSPI_SIZE_32B) || ((SIZE) == HAL_XSPI_SIZE_64B) || ((SIZE) == HAL_XSPI_SIZE_128B) || ((SIZE) == HAL_XSPI_SIZE_256B) ||                        \
+	 ((SIZE) == HAL_XSPI_SIZE_512B) || ((SIZE) == HAL_XSPI_SIZE_1KB) || ((SIZE) == HAL_XSPI_SIZE_2KB) || ((SIZE) == HAL_XSPI_SIZE_4KB) || ((SIZE) == HAL_XSPI_SIZE_8KB) ||                         \
+	 ((SIZE) == HAL_XSPI_SIZE_16KB) || ((SIZE) == HAL_XSPI_SIZE_32KB) || ((SIZE) == HAL_XSPI_SIZE_64KB) || ((SIZE) == HAL_XSPI_SIZE_128KB) || ((SIZE) == HAL_XSPI_SIZE_256KB) ||                   \
+	 ((SIZE) == HAL_XSPI_SIZE_512KB) || ((SIZE) == HAL_XSPI_SIZE_1MB) || ((SIZE) == HAL_XSPI_SIZE_2MB) || ((SIZE) == HAL_XSPI_SIZE_4MB) || ((SIZE) == HAL_XSPI_SIZE_8MB) ||                        \
+	 ((SIZE) == HAL_XSPI_SIZE_16MB) || ((SIZE) == HAL_XSPI_SIZE_32MB) || ((SIZE) == HAL_XSPI_SIZE_64MB) || ((SIZE) == HAL_XSPI_SIZE_128MB) || ((SIZE) == HAL_XSPI_SIZE_256MB) ||                   \
+	 ((SIZE) == HAL_XSPI_SIZE_512MB) || ((SIZE) == HAL_XSPI_SIZE_1GB) || ((SIZE) == HAL_XSPI_SIZE_2GB) || ((SIZE) == HAL_XSPI_SIZE_4GB) || ((SIZE) == HAL_XSPI_SIZE_8GB) ||                        \
 	 ((SIZE) == HAL_XSPI_SIZE_16GB) || ((SIZE) == HAL_XSPI_SIZE_32GB))
 
 #define IS_XSPI_CS_HIGH_TIME_CYCLE(TIME) (((TIME) >= 1U) && ((TIME) <= 64U))
@@ -1235,105 +1221,76 @@ HAL_StatusTypeDef HAL_XSPI_SetDelayValue(XSPI_HandleTypeDef *hxspi, const XSPI_H
 
 #define IS_XSPI_CLOCK_MODE(MODE) (((MODE) == HAL_XSPI_CLOCK_MODE_0) || ((MODE) == HAL_XSPI_CLOCK_MODE_3))
 
-#define IS_XSPI_WRAP_SIZE(SIZE)                                                                                        \
-	(((SIZE) == HAL_XSPI_WRAP_NOT_SUPPORTED) || ((SIZE) == HAL_XSPI_WRAP_16_BYTES) ||                              \
-	 ((SIZE) == HAL_XSPI_WRAP_32_BYTES) || ((SIZE) == HAL_XSPI_WRAP_64_BYTES) ||                                   \
+#define IS_XSPI_WRAP_SIZE(SIZE)                                                                                                                                                                        \
+	(((SIZE) == HAL_XSPI_WRAP_NOT_SUPPORTED) || ((SIZE) == HAL_XSPI_WRAP_16_BYTES) || ((SIZE) == HAL_XSPI_WRAP_32_BYTES) || ((SIZE) == HAL_XSPI_WRAP_64_BYTES) ||                                  \
 	 ((SIZE) == HAL_XSPI_WRAP_128_BYTES))
 
 #define IS_XSPI_CLK_PRESCALER(PRESCALER) ((PRESCALER) <= 255U)
 
-#define IS_XSPI_SAMPLE_SHIFTING(CYCLE)                                                                                 \
-	(((CYCLE) == HAL_XSPI_SAMPLE_SHIFT_NONE) || ((CYCLE) == HAL_XSPI_SAMPLE_SHIFT_HALFCYCLE))
+#define IS_XSPI_SAMPLE_SHIFTING(CYCLE) (((CYCLE) == HAL_XSPI_SAMPLE_SHIFT_NONE) || ((CYCLE) == HAL_XSPI_SAMPLE_SHIFT_HALFCYCLE))
 
 #define IS_XSPI_DHQC(CYCLE) (((CYCLE) == HAL_XSPI_DHQC_DISABLE) || ((CYCLE) == HAL_XSPI_DHQC_ENABLE))
 
-#define IS_XSPI_CS_BOUND(SIZE)                                                                                         \
-	(((SIZE) == HAL_XSPI_BONDARYOF_NONE) || ((SIZE) == HAL_XSPI_BONDARYOF_16B) ||                                  \
-	 ((SIZE) == HAL_XSPI_BONDARYOF_32B) || ((SIZE) == HAL_XSPI_BONDARYOF_64B) ||                                   \
-	 ((SIZE) == HAL_XSPI_BONDARYOF_128B) || ((SIZE) == HAL_XSPI_BONDARYOF_256B) ||                                 \
-	 ((SIZE) == HAL_XSPI_BONDARYOF_512B) || ((SIZE) == HAL_XSPI_BONDARYOF_1KB) ||                                  \
-	 ((SIZE) == HAL_XSPI_BONDARYOF_2KB) || ((SIZE) == HAL_XSPI_BONDARYOF_4KB) ||                                   \
-	 ((SIZE) == HAL_XSPI_BONDARYOF_8KB) || ((SIZE) == HAL_XSPI_BONDARYOF_16KB) ||                                  \
-	 ((SIZE) == HAL_XSPI_BONDARYOF_32KB) || ((SIZE) == HAL_XSPI_BONDARYOF_64KB) ||                                 \
-	 ((SIZE) == HAL_XSPI_BONDARYOF_128KB) || ((SIZE) == HAL_XSPI_BONDARYOF_256KB) ||                               \
-	 ((SIZE) == HAL_XSPI_BONDARYOF_512KB) || ((SIZE) == HAL_XSPI_BONDARYOF_1MB) ||                                 \
-	 ((SIZE) == HAL_XSPI_BONDARYOF_2MB) || ((SIZE) == HAL_XSPI_BONDARYOF_4MB) ||                                   \
-	 ((SIZE) == HAL_XSPI_BONDARYOF_8MB) || ((SIZE) == HAL_XSPI_BONDARYOF_16MB) ||                                  \
-	 ((SIZE) == HAL_XSPI_BONDARYOF_32MB) || ((SIZE) == HAL_XSPI_BONDARYOF_64MB) ||                                 \
-	 ((SIZE) == HAL_XSPI_BONDARYOF_128MB) || ((SIZE) == HAL_XSPI_BONDARYOF_256MB) ||                               \
-	 ((SIZE) == HAL_XSPI_BONDARYOF_512MB) || ((SIZE) == HAL_XSPI_BONDARYOF_1GB) ||                                 \
-	 ((SIZE) == HAL_XSPI_BONDARYOF_2GB) || ((SIZE) == HAL_XSPI_BONDARYOF_4GB) ||                                   \
-	 ((SIZE) == HAL_XSPI_BONDARYOF_8GB) || ((SIZE) == HAL_XSPI_BONDARYOF_16GB))
+#define IS_XSPI_CS_BOUND(SIZE)                                                                                                                                                                         \
+	(((SIZE) == HAL_XSPI_BONDARYOF_NONE) || ((SIZE) == HAL_XSPI_BONDARYOF_16B) || ((SIZE) == HAL_XSPI_BONDARYOF_32B) || ((SIZE) == HAL_XSPI_BONDARYOF_64B) ||                                      \
+	 ((SIZE) == HAL_XSPI_BONDARYOF_128B) || ((SIZE) == HAL_XSPI_BONDARYOF_256B) || ((SIZE) == HAL_XSPI_BONDARYOF_512B) || ((SIZE) == HAL_XSPI_BONDARYOF_1KB) ||                                    \
+	 ((SIZE) == HAL_XSPI_BONDARYOF_2KB) || ((SIZE) == HAL_XSPI_BONDARYOF_4KB) || ((SIZE) == HAL_XSPI_BONDARYOF_8KB) || ((SIZE) == HAL_XSPI_BONDARYOF_16KB) ||                                      \
+	 ((SIZE) == HAL_XSPI_BONDARYOF_32KB) || ((SIZE) == HAL_XSPI_BONDARYOF_64KB) || ((SIZE) == HAL_XSPI_BONDARYOF_128KB) || ((SIZE) == HAL_XSPI_BONDARYOF_256KB) ||                                 \
+	 ((SIZE) == HAL_XSPI_BONDARYOF_512KB) || ((SIZE) == HAL_XSPI_BONDARYOF_1MB) || ((SIZE) == HAL_XSPI_BONDARYOF_2MB) || ((SIZE) == HAL_XSPI_BONDARYOF_4MB) ||                                     \
+	 ((SIZE) == HAL_XSPI_BONDARYOF_8MB) || ((SIZE) == HAL_XSPI_BONDARYOF_16MB) || ((SIZE) == HAL_XSPI_BONDARYOF_32MB) || ((SIZE) == HAL_XSPI_BONDARYOF_64MB) ||                                    \
+	 ((SIZE) == HAL_XSPI_BONDARYOF_128MB) || ((SIZE) == HAL_XSPI_BONDARYOF_256MB) || ((SIZE) == HAL_XSPI_BONDARYOF_512MB) || ((SIZE) == HAL_XSPI_BONDARYOF_1GB) ||                                 \
+	 ((SIZE) == HAL_XSPI_BONDARYOF_2GB) || ((SIZE) == HAL_XSPI_BONDARYOF_4GB) || ((SIZE) == HAL_XSPI_BONDARYOF_8GB) || ((SIZE) == HAL_XSPI_BONDARYOF_16GB))
 
 #define IS_XSPI_DLYB_BYPASS(DLYB) (((DLYB) == HAL_XSPI_DELAY_BLOCK_ON) || ((DLYB) == HAL_XSPI_DELAY_BLOCK_BYPASS))
 
 #define IS_XSPI_MAXTRAN(NB_BYTES) ((NB_BYTES) <= 255U)
 
-#define IS_XSPI_OPERATION_TYPE(TYPE)                                                                                   \
-	(((TYPE) == HAL_XSPI_OPTYPE_COMMON_CFG) || ((TYPE) == HAL_XSPI_OPTYPE_READ_CFG) ||                             \
-	 ((TYPE) == HAL_XSPI_OPTYPE_WRITE_CFG) || ((TYPE) == HAL_XSPI_OPTYPE_WRAP_CFG))
+#define IS_XSPI_OPERATION_TYPE(TYPE) (((TYPE) == HAL_XSPI_OPTYPE_COMMON_CFG) || ((TYPE) == HAL_XSPI_OPTYPE_READ_CFG) || ((TYPE) == HAL_XSPI_OPTYPE_WRITE_CFG) || ((TYPE) == HAL_XSPI_OPTYPE_WRAP_CFG))
 
-#define IS_OCTOSPI_IO_SELECT(MEMSEL)                                                                                   \
-	(((MEMSEL) == HAL_XSPI_SELECT_IO_3_0) || ((MEMSEL) == HAL_XSPI_SELECT_IO_7_4) ||                               \
-	 ((MEMSEL) == HAL_XSPI_SELECT_IO_7_0))
+#define IS_OCTOSPI_IO_SELECT(MEMSEL) (((MEMSEL) == HAL_XSPI_SELECT_IO_3_0) || ((MEMSEL) == HAL_XSPI_SELECT_IO_7_4) || ((MEMSEL) == HAL_XSPI_SELECT_IO_7_0))
 
 #if defined(HSPI1)
-#define IS_HSPI_IO_SELECT(MEMSEL)                                                                                      \
-	(((MEMSEL) == HAL_XSPI_SELECT_IO_3_0) || ((MEMSEL) == HAL_XSPI_SELECT_IO_7_4) ||                               \
-	 ((MEMSEL) == HAL_XSPI_SELECT_IO_11_8) || ((MEMSEL) == HAL_XSPI_SELECT_IO_15_12) ||                            \
+#define IS_HSPI_IO_SELECT(MEMSEL)                                                                                                                                                                      \
+	(((MEMSEL) == HAL_XSPI_SELECT_IO_3_0) || ((MEMSEL) == HAL_XSPI_SELECT_IO_7_4) || ((MEMSEL) == HAL_XSPI_SELECT_IO_11_8) || ((MEMSEL) == HAL_XSPI_SELECT_IO_15_12) ||                            \
 	 ((MEMSEL) == HAL_XSPI_SELECT_IO_7_0) || ((MEMSEL) == HAL_XSPI_SELECT_IO_15_8))
 
 #endif /* HSPI1 */
 #define IS_XSPI_INSTRUCTION(OPCODE) ((OPCODE) <= 0xFFFFFFFFU)
 
-#define IS_XSPI_INSTRUCTION_MODE(MODE)                                                                                 \
-	(((MODE) == HAL_XSPI_INSTRUCTION_NONE) || ((MODE) == HAL_XSPI_INSTRUCTION_1_LINE) ||                           \
-	 ((MODE) == HAL_XSPI_INSTRUCTION_2_LINES) || ((MODE) == HAL_XSPI_INSTRUCTION_4_LINES) ||                       \
+#define IS_XSPI_INSTRUCTION_MODE(MODE)                                                                                                                                                                 \
+	(((MODE) == HAL_XSPI_INSTRUCTION_NONE) || ((MODE) == HAL_XSPI_INSTRUCTION_1_LINE) || ((MODE) == HAL_XSPI_INSTRUCTION_2_LINES) || ((MODE) == HAL_XSPI_INSTRUCTION_4_LINES) ||                   \
 	 ((MODE) == HAL_XSPI_INSTRUCTION_8_LINES))
 
-#define IS_XSPI_INSTRUCTION_WIDTH(WIDTH)                                                                               \
-	(((WIDTH) == HAL_XSPI_INSTRUCTION_8_BITS) || ((WIDTH) == HAL_XSPI_INSTRUCTION_16_BITS) ||                      \
-	 ((WIDTH) == HAL_XSPI_INSTRUCTION_24_BITS) || ((WIDTH) == HAL_XSPI_INSTRUCTION_32_BITS))
+#define IS_XSPI_INSTRUCTION_WIDTH(WIDTH)                                                                                                                                                               \
+	(((WIDTH) == HAL_XSPI_INSTRUCTION_8_BITS) || ((WIDTH) == HAL_XSPI_INSTRUCTION_16_BITS) || ((WIDTH) == HAL_XSPI_INSTRUCTION_24_BITS) || ((WIDTH) == HAL_XSPI_INSTRUCTION_32_BITS))
 
-#define IS_XSPI_INSTRUCTION_DTR_MODE(MODE)                                                                             \
-	(((MODE) == HAL_XSPI_INSTRUCTION_DTR_DISABLE) || ((MODE) == HAL_XSPI_INSTRUCTION_DTR_ENABLE))
+#define IS_XSPI_INSTRUCTION_DTR_MODE(MODE) (((MODE) == HAL_XSPI_INSTRUCTION_DTR_DISABLE) || ((MODE) == HAL_XSPI_INSTRUCTION_DTR_ENABLE))
 
-#define IS_XSPI_ADDRESS_MODE(MODE)                                                                                     \
-	(((MODE) == HAL_XSPI_ADDRESS_NONE) || ((MODE) == HAL_XSPI_ADDRESS_1_LINE) ||                                   \
-	 ((MODE) == HAL_XSPI_ADDRESS_2_LINES) || ((MODE) == HAL_XSPI_ADDRESS_4_LINES) ||                               \
+#define IS_XSPI_ADDRESS_MODE(MODE)                                                                                                                                                                     \
+	(((MODE) == HAL_XSPI_ADDRESS_NONE) || ((MODE) == HAL_XSPI_ADDRESS_1_LINE) || ((MODE) == HAL_XSPI_ADDRESS_2_LINES) || ((MODE) == HAL_XSPI_ADDRESS_4_LINES) ||                                   \
 	 ((MODE) == HAL_XSPI_ADDRESS_8_LINES))
 
-#define IS_XSPI_ADDRESS_WIDTH(WIDTH)                                                                                   \
-	(((WIDTH) == HAL_XSPI_ADDRESS_8_BITS) || ((WIDTH) == HAL_XSPI_ADDRESS_16_BITS) ||                              \
-	 ((WIDTH) == HAL_XSPI_ADDRESS_24_BITS) || ((WIDTH) == HAL_XSPI_ADDRESS_32_BITS))
+#define IS_XSPI_ADDRESS_WIDTH(WIDTH) (((WIDTH) == HAL_XSPI_ADDRESS_8_BITS) || ((WIDTH) == HAL_XSPI_ADDRESS_16_BITS) || ((WIDTH) == HAL_XSPI_ADDRESS_24_BITS) || ((WIDTH) == HAL_XSPI_ADDRESS_32_BITS))
 
-#define IS_XSPI_ADDRESS_DTR_MODE(MODE)                                                                                 \
-	(((MODE) == HAL_XSPI_ADDRESS_DTR_DISABLE) || ((MODE) == HAL_XSPI_ADDRESS_DTR_ENABLE))
+#define IS_XSPI_ADDRESS_DTR_MODE(MODE) (((MODE) == HAL_XSPI_ADDRESS_DTR_DISABLE) || ((MODE) == HAL_XSPI_ADDRESS_DTR_ENABLE))
 
-#define IS_XSPI_ALT_BYTES_MODE(MODE)                                                                                   \
-	(((MODE) == HAL_XSPI_ALT_BYTES_NONE) || ((MODE) == HAL_XSPI_ALT_BYTES_1_LINE) ||                               \
-	 ((MODE) == HAL_XSPI_ALT_BYTES_2_LINES) || ((MODE) == HAL_XSPI_ALT_BYTES_4_LINES) ||                           \
+#define IS_XSPI_ALT_BYTES_MODE(MODE)                                                                                                                                                                   \
+	(((MODE) == HAL_XSPI_ALT_BYTES_NONE) || ((MODE) == HAL_XSPI_ALT_BYTES_1_LINE) || ((MODE) == HAL_XSPI_ALT_BYTES_2_LINES) || ((MODE) == HAL_XSPI_ALT_BYTES_4_LINES) ||                           \
 	 ((MODE) == HAL_XSPI_ALT_BYTES_8_LINES))
 
-#define IS_XSPI_ALT_BYTES_WIDTH(WIDTH)                                                                                 \
-	(((WIDTH) == HAL_XSPI_ALT_BYTES_8_BITS) || ((WIDTH) == HAL_XSPI_ALT_BYTES_16_BITS) ||                          \
-	 ((WIDTH) == HAL_XSPI_ALT_BYTES_24_BITS) || ((WIDTH) == HAL_XSPI_ALT_BYTES_32_BITS))
+#define IS_XSPI_ALT_BYTES_WIDTH(WIDTH)                                                                                                                                                                 \
+	(((WIDTH) == HAL_XSPI_ALT_BYTES_8_BITS) || ((WIDTH) == HAL_XSPI_ALT_BYTES_16_BITS) || ((WIDTH) == HAL_XSPI_ALT_BYTES_24_BITS) || ((WIDTH) == HAL_XSPI_ALT_BYTES_32_BITS))
 
-#define IS_XSPI_ALT_BYTES_DTR_MODE(MODE)                                                                               \
-	(((MODE) == HAL_XSPI_ALT_BYTES_DTR_DISABLE) || ((MODE) == HAL_XSPI_ALT_BYTES_DTR_ENABLE))
+#define IS_XSPI_ALT_BYTES_DTR_MODE(MODE) (((MODE) == HAL_XSPI_ALT_BYTES_DTR_DISABLE) || ((MODE) == HAL_XSPI_ALT_BYTES_DTR_ENABLE))
 
-#define IS_OCTOSPI_DATA_MODE(MODE)                                                                                     \
-	(((MODE) == HAL_XSPI_DATA_NONE) || ((MODE) == HAL_XSPI_DATA_1_LINE) || ((MODE) == HAL_XSPI_DATA_2_LINES) ||    \
-	 ((MODE) == HAL_XSPI_DATA_4_LINES) || ((MODE) == HAL_XSPI_DATA_8_LINES))
+#define IS_OCTOSPI_DATA_MODE(MODE)                                                                                                                                                                     \
+	(((MODE) == HAL_XSPI_DATA_NONE) || ((MODE) == HAL_XSPI_DATA_1_LINE) || ((MODE) == HAL_XSPI_DATA_2_LINES) || ((MODE) == HAL_XSPI_DATA_4_LINES) || ((MODE) == HAL_XSPI_DATA_8_LINES))
 
 #if defined(HSPI1)
-#define IS_HSPI_DATA_MODE(TYPE, MODE)                                                                                  \
-	(((TYPE) == (HAL_XSPI_MEMTYPE_HYPERBUS))                                                                       \
-	     ? (((MODE) == HAL_XSPI_DATA_NONE) || ((MODE) == HAL_XSPI_DATA_8_LINES) ||                                 \
-		((MODE) == HAL_XSPI_DATA_16_LINES))                                                                    \
-	     : (((MODE) == HAL_XSPI_DATA_NONE) || ((MODE) == HAL_XSPI_DATA_1_LINE) ||                                  \
-		((MODE) == HAL_XSPI_DATA_2_LINES) || ((MODE) == HAL_XSPI_DATA_4_LINES) ||                              \
-		((MODE) == HAL_XSPI_DATA_8_LINES) || ((MODE) == HAL_XSPI_DATA_16_LINES)))
+#define IS_HSPI_DATA_MODE(TYPE, MODE)                                                                                                                                                                  \
+	(((TYPE) == (HAL_XSPI_MEMTYPE_HYPERBUS)) ? (((MODE) == HAL_XSPI_DATA_NONE) || ((MODE) == HAL_XSPI_DATA_8_LINES) || ((MODE) == HAL_XSPI_DATA_16_LINES))                                         \
+						 : (((MODE) == HAL_XSPI_DATA_NONE) || ((MODE) == HAL_XSPI_DATA_1_LINE) || ((MODE) == HAL_XSPI_DATA_2_LINES) || ((MODE) == HAL_XSPI_DATA_4_LINES) ||    \
+						    ((MODE) == HAL_XSPI_DATA_8_LINES) || ((MODE) == HAL_XSPI_DATA_16_LINES)))
 
 #endif /* HSPI1 */
 #define IS_XSPI_DATA_LENGTH(NUMBER) ((NUMBER) >= 1U)
@@ -1344,32 +1301,27 @@ HAL_StatusTypeDef HAL_XSPI_SetDelayValue(XSPI_HandleTypeDef *hxspi, const XSPI_H
 
 #define IS_XSPI_DQS_MODE(MODE) (((MODE) == HAL_XSPI_DQS_DISABLE) || ((MODE) == HAL_XSPI_DQS_ENABLE))
 
-#define IS_XSPI_SIOO_MODE(MODE)                                                                                        \
-	(((MODE) == HAL_XSPI_SIOO_INST_EVERY_CMD) || ((MODE) == HAL_XSPI_SIOO_INST_ONLY_FIRST_CMD))
+#define IS_XSPI_SIOO_MODE(MODE) (((MODE) == HAL_XSPI_SIOO_INST_EVERY_CMD) || ((MODE) == HAL_XSPI_SIOO_INST_ONLY_FIRST_CMD))
 
 #define IS_XSPI_RW_RECOVERY_TIME_CYCLE(CYCLE) ((CYCLE) <= 255U)
 
 #define IS_XSPI_ACCESS_TIME_CYCLE(CYCLE) ((CYCLE) <= 255U)
 
-#define IS_XSPI_WRITE_ZERO_LATENCY(MODE)                                                                               \
-	(((MODE) == HAL_XSPI_LATENCY_ON_WRITE) || ((MODE) == HAL_XSPI_NO_LATENCY_ON_WRITE))
+#define IS_XSPI_WRITE_ZERO_LATENCY(MODE) (((MODE) == HAL_XSPI_LATENCY_ON_WRITE) || ((MODE) == HAL_XSPI_NO_LATENCY_ON_WRITE))
 
 #define IS_XSPI_LATENCY_MODE(MODE) (((MODE) == HAL_XSPI_VARIABLE_LATENCY) || ((MODE) == HAL_XSPI_FIXED_LATENCY))
 
-#define IS_XSPI_ADDRESS_SPACE(SPACE)                                                                                   \
-	(((SPACE) == HAL_XSPI_MEMORY_ADDRESS_SPACE) || ((SPACE) == HAL_XSPI_REGISTER_ADDRESS_SPACE))
+#define IS_XSPI_ADDRESS_SPACE(SPACE) (((SPACE) == HAL_XSPI_MEMORY_ADDRESS_SPACE) || ((SPACE) == HAL_XSPI_REGISTER_ADDRESS_SPACE))
 
 #define IS_XSPI_MATCH_MODE(MODE) (((MODE) == HAL_XSPI_MATCH_MODE_AND) || ((MODE) == HAL_XSPI_MATCH_MODE_OR))
 
-#define IS_XSPI_AUTOMATIC_STOP(MODE)                                                                                   \
-	(((MODE) == HAL_XSPI_AUTOMATIC_STOP_ENABLE) || ((MODE) == HAL_XSPI_AUTOMATIC_STOP_DISABLE))
+#define IS_XSPI_AUTOMATIC_STOP(MODE) (((MODE) == HAL_XSPI_AUTOMATIC_STOP_ENABLE) || ((MODE) == HAL_XSPI_AUTOMATIC_STOP_DISABLE))
 
 #define IS_XSPI_INTERVAL(INTERVAL) ((INTERVAL) <= 0xFFFFU)
 
 #define IS_XSPI_STATUS_BYTES_SIZE(SIZE) (((SIZE) >= 1U) && ((SIZE) <= 4U))
 
-#define IS_XSPI_TIMEOUT_ACTIVATION(MODE)                                                                               \
-	(((MODE) == HAL_XSPI_TIMEOUT_COUNTER_DISABLE) || ((MODE) == HAL_XSPI_TIMEOUT_COUNTER_ENABLE))
+#define IS_XSPI_TIMEOUT_ACTIVATION(MODE) (((MODE) == HAL_XSPI_TIMEOUT_COUNTER_DISABLE) || ((MODE) == HAL_XSPI_TIMEOUT_COUNTER_ENABLE))
 
 #define IS_XSPI_TIMEOUT_PERIOD(PERIOD) ((PERIOD) <= 0xFFFFU)
 
@@ -1382,22 +1334,17 @@ HAL_StatusTypeDef HAL_XSPI_SetDelayValue(XSPI_HandleTypeDef *hxspi, const XSPI_H
 
 #define IS_XSPIM_DQS_PORT(NUMBER) ((NUMBER) <= 8U)
 
-#define IS_XSPIM_IO_PORT(PORT)                                                                                         \
-	(((PORT) == HAL_XSPIM_IOPORT_1_LOW) || ((PORT) == HAL_XSPIM_IOPORT_1_HIGH) ||                                  \
-	 ((PORT) == HAL_XSPIM_IOPORT_2_LOW) || ((PORT) == HAL_XSPIM_IOPORT_2_HIGH) ||                                  \
-	 ((PORT) == HAL_XSPIM_IOPORT_3_LOW) || ((PORT) == HAL_XSPIM_IOPORT_3_HIGH) ||                                  \
-	 ((PORT) == HAL_XSPIM_IOPORT_4_LOW) || ((PORT) == HAL_XSPIM_IOPORT_4_HIGH) ||                                  \
-	 ((PORT) == HAL_XSPIM_IOPORT_5_LOW) || ((PORT) == HAL_XSPIM_IOPORT_5_HIGH) ||                                  \
-	 ((PORT) == HAL_XSPIM_IOPORT_6_LOW) || ((PORT) == HAL_XSPIM_IOPORT_6_HIGH) ||                                  \
-	 ((PORT) == HAL_XSPIM_IOPORT_7_LOW) || ((PORT) == HAL_XSPIM_IOPORT_7_HIGH) ||                                  \
-	 ((PORT) == HAL_XSPIM_IOPORT_8_LOW) || ((PORT) == HAL_XSPIM_IOPORT_8_HIGH))
+#define IS_XSPIM_IO_PORT(PORT)                                                                                                                                                                         \
+	(((PORT) == HAL_XSPIM_IOPORT_1_LOW) || ((PORT) == HAL_XSPIM_IOPORT_1_HIGH) || ((PORT) == HAL_XSPIM_IOPORT_2_LOW) || ((PORT) == HAL_XSPIM_IOPORT_2_HIGH) ||                                     \
+	 ((PORT) == HAL_XSPIM_IOPORT_3_LOW) || ((PORT) == HAL_XSPIM_IOPORT_3_HIGH) || ((PORT) == HAL_XSPIM_IOPORT_4_LOW) || ((PORT) == HAL_XSPIM_IOPORT_4_HIGH) ||                                     \
+	 ((PORT) == HAL_XSPIM_IOPORT_5_LOW) || ((PORT) == HAL_XSPIM_IOPORT_5_HIGH) || ((PORT) == HAL_XSPIM_IOPORT_6_LOW) || ((PORT) == HAL_XSPIM_IOPORT_6_HIGH) ||                                     \
+	 ((PORT) == HAL_XSPIM_IOPORT_7_LOW) || ((PORT) == HAL_XSPIM_IOPORT_7_HIGH) || ((PORT) == HAL_XSPIM_IOPORT_8_LOW) || ((PORT) == HAL_XSPIM_IOPORT_8_HIGH))
 
 #define IS_XSPIM_REQ2ACKTIME(TIME) (((TIME) >= 1U) && ((TIME) <= 256U))
 
 #endif /* OCTOSPIM */
-#define IS_XSPI_DELAY_TYPE(TYPE)                                                                                       \
-	(((TYPE) == HAL_XSPI_CAL_FULL_CYCLE_DELAY) || ((TYPE) == HAL_XSPI_CAL_FEEDBACK_CLK_DELAY) ||                   \
-	 ((TYPE) == HAL_XSPI_CAL_DATA_OUTPUT_DELAY) || ((TYPE) == HAL_XSPI_CAL_DQS_INPUT_DELAY))
+#define IS_XSPI_DELAY_TYPE(TYPE)                                                                                                                                                                       \
+	(((TYPE) == HAL_XSPI_CAL_FULL_CYCLE_DELAY) || ((TYPE) == HAL_XSPI_CAL_FEEDBACK_CLK_DELAY) || ((TYPE) == HAL_XSPI_CAL_DATA_OUTPUT_DELAY) || ((TYPE) == HAL_XSPI_CAL_DQS_INPUT_DELAY))
 
 #define IS_XSPI_FINECAL_VALUE(VALUE) ((VALUE) <= 0x7FU)
 

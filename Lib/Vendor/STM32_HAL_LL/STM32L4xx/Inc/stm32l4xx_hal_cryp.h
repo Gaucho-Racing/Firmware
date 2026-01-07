@@ -192,8 +192,7 @@ typedef struct
 #if (USE_HAL_CRYP_REGISTER_CALLBACKS == 1)
 	void (*InCpltCallback)(struct __CRYP_HandleTypeDef *hcryp); /*!< CRYP input DMA transfer completion callback */
 
-	void (*OutCpltCallback)(
-	    struct __CRYP_HandleTypeDef *hcryp); /*!< CRYP output DMA transfer completion callback */
+	void (*OutCpltCallback)(struct __CRYP_HandleTypeDef *hcryp); /*!< CRYP output DMA transfer completion callback */
 
 	void (*CompCpltCallback)(struct __CRYP_HandleTypeDef *hcryp); /*!< CRYP computation completion callback */
 
@@ -257,8 +256,8 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
 #define CRYP_ALGOMODE_KEYDERIVATION AES_CR_MODE_0	/*!< Key derivation mode */
 #define CRYP_ALGOMODE_DECRYPT AES_CR_MODE_1		/*!< Decryption */
 #define CRYP_ALGOMODE_KEYDERIVATION_DECRYPT AES_CR_MODE /*!< Key derivation and decryption */
-#define CRYP_ALGOMODE_TAG_GENERATION                                                                                   \
-	((uint32_t)0x00000000) /*!< GMAC or CMAC (when applicable)                                                     \
+#define CRYP_ALGOMODE_TAG_GENERATION                                                                                                                                                                   \
+	((uint32_t)0x00000000) /*!< GMAC or CMAC (when applicable)                                                                                                                                     \
 				  authentication tag generation */
 /**
  * @}
@@ -270,8 +269,8 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
 #define CRYP_CHAINMODE_AES_ECB ((uint32_t)0x00000000) /*!< Electronic codebook chaining algorithm */
 #define CRYP_CHAINMODE_AES_CBC AES_CR_CHMOD_0	      /*!< Cipher block chaining algorithm */
 #define CRYP_CHAINMODE_AES_CTR AES_CR_CHMOD_1	      /*!< Counter mode chaining algorithm */
-#define CRYP_CHAINMODE_AES_GCM_GMAC                                                                                    \
-	(AES_CR_CHMOD_0 | AES_CR_CHMOD_1) /*!< Galois counter mode - Galois                                            \
+#define CRYP_CHAINMODE_AES_GCM_GMAC                                                                                                                                                                    \
+	(AES_CR_CHMOD_0 | AES_CR_CHMOD_1) /*!< Galois counter mode - Galois                                                                                                                            \
 					     message authentication code */
 #if defined(AES_CR_NPBLB)
 #define CRYP_CHAINMODE_AES_CCM AES_CR_CHMOD_2 /*!< Counter with Cipher Mode */
@@ -352,8 +351,8 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
 /** @defgroup AES_Interrupts_Enable AES Interrupts Enable bits
  * @{
  */
-#define CRYP_IT_CCFIE                                                                                                  \
-	AES_CR_CCFIE		   /*!< Computation Complete interrupt enable                                          \
+#define CRYP_IT_CCFIE                                                                                                                                                                                  \
+	AES_CR_CCFIE		   /*!< Computation Complete interrupt enable                                                                                                                          \
 				    */
 #define CRYP_IT_ERRIE AES_CR_ERRIE /*!< Error interrupt enable */
 /**
@@ -384,11 +383,11 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  * @retval None
  */
 #if (USE_HAL_CRYP_REGISTER_CALLBACKS == 1)
-#define __HAL_CRYP_RESET_HANDLE_STATE(__HANDLE__)                                                                      \
-	do {                                                                                                           \
-		(__HANDLE__)->State = HAL_CRYP_STATE_RESET;                                                            \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define __HAL_CRYP_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_CRYP_STATE_RESET;                                                                                                                                            \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0)
 #else
 #define __HAL_CRYP_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_CRYP_STATE_RESET)
@@ -420,8 +419,7 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  * decryption
  * @retval None
  */
-#define __HAL_CRYP_SET_OPERATINGMODE(__HANDLE__, __OPERATING_MODE__)                                                   \
-	MODIFY_REG((__HANDLE__)->Instance->CR, AES_CR_MODE, (__OPERATING_MODE__))
+#define __HAL_CRYP_SET_OPERATINGMODE(__HANDLE__, __OPERATING_MODE__) MODIFY_REG((__HANDLE__)->Instance->CR, AES_CR_MODE, (__OPERATING_MODE__))
 
 /**
  * @brief  Set the algorithm chaining mode.
@@ -437,8 +435,7 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  * Code (or Counter with Cipher Mode when applicable)
  * @retval None
  */
-#define __HAL_CRYP_SET_CHAININGMODE(__HANDLE__, __CHAINING_MODE__)                                                     \
-	MODIFY_REG((__HANDLE__)->Instance->CR, AES_CR_CHMOD, (__CHAINING_MODE__))
+#define __HAL_CRYP_SET_CHAININGMODE(__HANDLE__, __CHAINING_MODE__) MODIFY_REG((__HANDLE__)->Instance->CR, AES_CR_CHMOD, (__CHAINING_MODE__))
 
 /** @brief  Check whether the specified CRYP status flag is set or not.
  * @param  __HANDLE__ specifies the CRYP handle.
@@ -471,8 +468,7 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  *            @arg @ref CRYP_IT_CCFIE Computation Complete interrupt
  * @retval State of interruption (TRUE or FALSE).
  */
-#define __HAL_CRYP_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)                                                            \
-	(((__HANDLE__)->Instance->CR & (__INTERRUPT__)) == (__INTERRUPT__))
+#define __HAL_CRYP_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__) (((__HANDLE__)->Instance->CR & (__INTERRUPT__)) == (__INTERRUPT__))
 
 /** @brief  Check whether the specified CRYP interrupt is set or not.
  * @param  __HANDLE__ specifies the CRYP handle.
@@ -539,9 +535,7 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  * @param __DATATYPE__ Ciphering/deciphering algorithm input data type.
  * @retval SET (__DATATYPE__ is valid) or RESET (__DATATYPE__ is invalid)
  */
-#define IS_CRYP_DATATYPE(__DATATYPE__)                                                                                 \
-	(((__DATATYPE__) == CRYP_DATATYPE_32B) || ((__DATATYPE__) == CRYP_DATATYPE_16B) ||                             \
-	 ((__DATATYPE__) == CRYP_DATATYPE_8B) || ((__DATATYPE__) == CRYP_DATATYPE_1B))
+#define IS_CRYP_DATATYPE(__DATATYPE__) (((__DATATYPE__) == CRYP_DATATYPE_32B) || ((__DATATYPE__) == CRYP_DATATYPE_16B) || ((__DATATYPE__) == CRYP_DATATYPE_8B) || ((__DATATYPE__) == CRYP_DATATYPE_1B))
 
 /**
  * @brief Verify the CRYP AES IP running mode.
@@ -556,10 +550,9 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  * derivation or a combination of the latter).
  * @retval SET (__ALGOMODE__ is valid) or RESET (__ALGOMODE__ is invalid)
  */
-#define IS_CRYP_ALGOMODE(__ALGOMODE__)                                                                                 \
-	(((__ALGOMODE__) == CRYP_ALGOMODE_ENCRYPT) || ((__ALGOMODE__) == CRYP_ALGOMODE_KEYDERIVATION) ||               \
-	 ((__ALGOMODE__) == CRYP_ALGOMODE_DECRYPT) || ((__ALGOMODE__) == CRYP_ALGOMODE_TAG_GENERATION) ||              \
-	 ((__ALGOMODE__) == CRYP_ALGOMODE_KEYDERIVATION_DECRYPT))
+#define IS_CRYP_ALGOMODE(__ALGOMODE__)                                                                                                                                                                 \
+	(((__ALGOMODE__) == CRYP_ALGOMODE_ENCRYPT) || ((__ALGOMODE__) == CRYP_ALGOMODE_KEYDERIVATION) || ((__ALGOMODE__) == CRYP_ALGOMODE_DECRYPT) ||                                                  \
+	 ((__ALGOMODE__) == CRYP_ALGOMODE_TAG_GENERATION) || ((__ALGOMODE__) == CRYP_ALGOMODE_KEYDERIVATION_DECRYPT))
 
 /**
  * @brief Verify the selected CRYP chaining algorithm.
@@ -567,15 +560,13 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  * @retval SET (__CHAINMODE__ is valid) or RESET (__CHAINMODE__ is invalid)
  */
 #if defined(AES_CR_NPBLB)
-#define IS_CRYP_CHAINMODE(__CHAINMODE__)                                                                               \
-	(((__CHAINMODE__) == CRYP_CHAINMODE_AES_ECB) || ((__CHAINMODE__) == CRYP_CHAINMODE_AES_CBC) ||                 \
-	 ((__CHAINMODE__) == CRYP_CHAINMODE_AES_CTR) || ((__CHAINMODE__) == CRYP_CHAINMODE_AES_GCM_GMAC) ||            \
-	 ((__CHAINMODE__) == CRYP_CHAINMODE_AES_CCM))
+#define IS_CRYP_CHAINMODE(__CHAINMODE__)                                                                                                                                                               \
+	(((__CHAINMODE__) == CRYP_CHAINMODE_AES_ECB) || ((__CHAINMODE__) == CRYP_CHAINMODE_AES_CBC) || ((__CHAINMODE__) == CRYP_CHAINMODE_AES_CTR) ||                                                  \
+	 ((__CHAINMODE__) == CRYP_CHAINMODE_AES_GCM_GMAC) || ((__CHAINMODE__) == CRYP_CHAINMODE_AES_CCM))
 #else
-#define IS_CRYP_CHAINMODE(__CHAINMODE__)                                                                               \
-	(((__CHAINMODE__) == CRYP_CHAINMODE_AES_ECB) || ((__CHAINMODE__) == CRYP_CHAINMODE_AES_CBC) ||                 \
-	 ((__CHAINMODE__) == CRYP_CHAINMODE_AES_CTR) || ((__CHAINMODE__) == CRYP_CHAINMODE_AES_GCM_GMAC) ||            \
-	 ((__CHAINMODE__) == CRYP_CHAINMODE_AES_CMAC))
+#define IS_CRYP_CHAINMODE(__CHAINMODE__)                                                                                                                                                               \
+	(((__CHAINMODE__) == CRYP_CHAINMODE_AES_ECB) || ((__CHAINMODE__) == CRYP_CHAINMODE_AES_CBC) || ((__CHAINMODE__) == CRYP_CHAINMODE_AES_CTR) ||                                                  \
+	 ((__CHAINMODE__) == CRYP_CHAINMODE_AES_GCM_GMAC) || ((__CHAINMODE__) == CRYP_CHAINMODE_AES_CMAC))
 #endif
 
 /**
@@ -606,9 +597,7 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
  * phase.
  * @retval SET (__PHASE__ is valid) or RESET (__PHASE__ is invalid)
  */
-#define IS_CRYP_GCMCMAC_PHASE(__PHASE__)                                                                               \
-	(((__PHASE__) == CRYP_INIT_PHASE) || ((__PHASE__) == CRYP_HEADER_PHASE) ||                                     \
-	 ((__PHASE__) == CRYP_PAYLOAD_PHASE) || ((__PHASE__) == CRYP_FINAL_PHASE))
+#define IS_CRYP_GCMCMAC_PHASE(__PHASE__) (((__PHASE__) == CRYP_INIT_PHASE) || ((__PHASE__) == CRYP_HEADER_PHASE) || ((__PHASE__) == CRYP_PAYLOAD_PHASE) || ((__PHASE__) == CRYP_FINAL_PHASE))
 
 /**
  * @}
@@ -646,46 +635,28 @@ void HAL_CRYP_MspDeInit(CRYP_HandleTypeDef *hcryp);
 /* AES encryption/decryption processing functions  ****************************/
 
 /* AES encryption/decryption using polling  ***********************************/
-HAL_StatusTypeDef HAL_CRYP_AESECB_Encrypt(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size,
-					  uint8_t *pCypherData, uint32_t Timeout);
-HAL_StatusTypeDef HAL_CRYP_AESECB_Decrypt(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size,
-					  uint8_t *pPlainData, uint32_t Timeout);
-HAL_StatusTypeDef HAL_CRYP_AESCBC_Encrypt(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size,
-					  uint8_t *pCypherData, uint32_t Timeout);
-HAL_StatusTypeDef HAL_CRYP_AESCBC_Decrypt(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size,
-					  uint8_t *pPlainData, uint32_t Timeout);
-HAL_StatusTypeDef HAL_CRYP_AESCTR_Encrypt(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size,
-					  uint8_t *pCypherData, uint32_t Timeout);
-HAL_StatusTypeDef HAL_CRYP_AESCTR_Decrypt(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size,
-					  uint8_t *pPlainData, uint32_t Timeout);
+HAL_StatusTypeDef HAL_CRYP_AESECB_Encrypt(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size, uint8_t *pCypherData, uint32_t Timeout);
+HAL_StatusTypeDef HAL_CRYP_AESECB_Decrypt(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size, uint8_t *pPlainData, uint32_t Timeout);
+HAL_StatusTypeDef HAL_CRYP_AESCBC_Encrypt(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size, uint8_t *pCypherData, uint32_t Timeout);
+HAL_StatusTypeDef HAL_CRYP_AESCBC_Decrypt(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size, uint8_t *pPlainData, uint32_t Timeout);
+HAL_StatusTypeDef HAL_CRYP_AESCTR_Encrypt(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size, uint8_t *pCypherData, uint32_t Timeout);
+HAL_StatusTypeDef HAL_CRYP_AESCTR_Decrypt(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size, uint8_t *pPlainData, uint32_t Timeout);
 
 /* AES encryption/decryption using interrupt  *********************************/
-HAL_StatusTypeDef HAL_CRYP_AESECB_Encrypt_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size,
-					     uint8_t *pCypherData);
-HAL_StatusTypeDef HAL_CRYP_AESCBC_Encrypt_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size,
-					     uint8_t *pCypherData);
-HAL_StatusTypeDef HAL_CRYP_AESCTR_Encrypt_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size,
-					     uint8_t *pCypherData);
-HAL_StatusTypeDef HAL_CRYP_AESECB_Decrypt_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size,
-					     uint8_t *pPlainData);
-HAL_StatusTypeDef HAL_CRYP_AESCTR_Decrypt_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size,
-					     uint8_t *pPlainData);
-HAL_StatusTypeDef HAL_CRYP_AESCBC_Decrypt_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size,
-					     uint8_t *pPlainData);
+HAL_StatusTypeDef HAL_CRYP_AESECB_Encrypt_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size, uint8_t *pCypherData);
+HAL_StatusTypeDef HAL_CRYP_AESCBC_Encrypt_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size, uint8_t *pCypherData);
+HAL_StatusTypeDef HAL_CRYP_AESCTR_Encrypt_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size, uint8_t *pCypherData);
+HAL_StatusTypeDef HAL_CRYP_AESECB_Decrypt_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size, uint8_t *pPlainData);
+HAL_StatusTypeDef HAL_CRYP_AESCTR_Decrypt_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size, uint8_t *pPlainData);
+HAL_StatusTypeDef HAL_CRYP_AESCBC_Decrypt_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size, uint8_t *pPlainData);
 
 /* AES encryption/decryption using DMA  ***************************************/
-HAL_StatusTypeDef HAL_CRYP_AESECB_Encrypt_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size,
-					      uint8_t *pCypherData);
-HAL_StatusTypeDef HAL_CRYP_AESECB_Decrypt_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size,
-					      uint8_t *pPlainData);
-HAL_StatusTypeDef HAL_CRYP_AESCBC_Encrypt_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size,
-					      uint8_t *pCypherData);
-HAL_StatusTypeDef HAL_CRYP_AESCBC_Decrypt_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size,
-					      uint8_t *pPlainData);
-HAL_StatusTypeDef HAL_CRYP_AESCTR_Encrypt_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size,
-					      uint8_t *pCypherData);
-HAL_StatusTypeDef HAL_CRYP_AESCTR_Decrypt_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size,
-					      uint8_t *pPlainData);
+HAL_StatusTypeDef HAL_CRYP_AESECB_Encrypt_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size, uint8_t *pCypherData);
+HAL_StatusTypeDef HAL_CRYP_AESECB_Decrypt_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size, uint8_t *pPlainData);
+HAL_StatusTypeDef HAL_CRYP_AESCBC_Encrypt_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size, uint8_t *pCypherData);
+HAL_StatusTypeDef HAL_CRYP_AESCBC_Decrypt_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size, uint8_t *pPlainData);
+HAL_StatusTypeDef HAL_CRYP_AESCTR_Encrypt_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size, uint8_t *pCypherData);
+HAL_StatusTypeDef HAL_CRYP_AESCTR_Decrypt_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size, uint8_t *pPlainData);
 
 /**
  * @}
@@ -700,8 +671,7 @@ void HAL_CRYP_OutCpltCallback(CRYP_HandleTypeDef *hcryp);
 void HAL_CRYP_ErrorCallback(CRYP_HandleTypeDef *hcryp);
 /* Callbacks Register/UnRegister functions  ***********************************/
 #if (USE_HAL_CRYP_REGISTER_CALLBACKS == 1)
-HAL_StatusTypeDef HAL_CRYP_RegisterCallback(CRYP_HandleTypeDef *hcryp, HAL_CRYP_CallbackIDTypeDef CallbackID,
-					    pCRYP_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_CRYP_RegisterCallback(CRYP_HandleTypeDef *hcryp, HAL_CRYP_CallbackIDTypeDef CallbackID, pCRYP_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_CRYP_UnRegisterCallback(CRYP_HandleTypeDef *hcryp, HAL_CRYP_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_CRYP_REGISTER_CALLBACKS */
 

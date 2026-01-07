@@ -304,8 +304,7 @@ uint32_t HAL_CRC_Accumulate(CRC_HandleTypeDef *hcrc, uint32_t pBuffer[], uint32_
 			break;
 
 		case CRC_INPUTDATA_FORMAT_HALFWORDS:
-			temp = CRC_Handle_16(hcrc, (uint16_t *)(void *)pBuffer,
-					     BufferLength); /* Derogation MisraC2012 R.11.5 */
+			temp = CRC_Handle_16(hcrc, (uint16_t *)(void *)pBuffer, BufferLength); /* Derogation MisraC2012 R.11.5 */
 			break;
 		default:
 			break;
@@ -361,8 +360,7 @@ uint32_t HAL_CRC_Calculate(CRC_HandleTypeDef *hcrc, uint32_t pBuffer[], uint32_t
 
 		case CRC_INPUTDATA_FORMAT_HALFWORDS:
 			/* Specific 16-bit input data handling  */
-			temp = CRC_Handle_16(hcrc, (uint16_t *)(void *)pBuffer,
-					     BufferLength); /* Derogation MisraC2012 R.11.5 */
+			temp = CRC_Handle_16(hcrc, (uint16_t *)(void *)pBuffer, BufferLength); /* Derogation MisraC2012 R.11.5 */
 			break;
 
 		default:
@@ -435,14 +433,12 @@ static uint32_t CRC_Handle_8(CRC_HandleTypeDef *hcrc, uint8_t pBuffer[], uint32_
 	 * single word write, last bytes must be carefully fed to the CRC
 	 * calculator to ensure a correct type handling by the peripheral */
 	for (i = 0U; i < (BufferLength / 4U); i++) {
-		hcrc->Instance->DR = ((uint32_t)pBuffer[4U * i] << 24U) | ((uint32_t)pBuffer[(4U * i) + 1U] << 16U) |
-				     ((uint32_t)pBuffer[(4U * i) + 2U] << 8U) | (uint32_t)pBuffer[(4U * i) + 3U];
+		hcrc->Instance->DR = ((uint32_t)pBuffer[4U * i] << 24U) | ((uint32_t)pBuffer[(4U * i) + 1U] << 16U) | ((uint32_t)pBuffer[(4U * i) + 2U] << 8U) | (uint32_t)pBuffer[(4U * i) + 3U];
 	}
 	/* last bytes specific handling */
 	if ((BufferLength % 4U) != 0U) {
 		if ((BufferLength % 4U) == 1U) {
-			*(__IO uint8_t *)(__IO void *)(&hcrc->Instance->DR) =
-			    pBuffer[4U * i]; /* Derogation MisraC2012 R.11.5 */
+			*(__IO uint8_t *)(__IO void *)(&hcrc->Instance->DR) = pBuffer[4U * i]; /* Derogation MisraC2012 R.11.5 */
 		}
 		if ((BufferLength % 4U) == 2U) {
 			data = ((uint16_t)(pBuffer[4U * i]) << 8U) | (uint16_t)pBuffer[(4U * i) + 1U];
@@ -456,8 +452,7 @@ static uint32_t CRC_Handle_8(CRC_HandleTypeDef *hcrc, uint8_t pBuffer[], uint32_
 										       R.11.5 */
 			*pReg = data;
 
-			*(__IO uint8_t *)(__IO void *)(&hcrc->Instance->DR) =
-			    pBuffer[(4U * i) + 2U]; /* Derogation MisraC2012 R.11.5 */
+			*(__IO uint8_t *)(__IO void *)(&hcrc->Instance->DR) = pBuffer[(4U * i) + 2U]; /* Derogation MisraC2012 R.11.5 */
 		}
 	}
 

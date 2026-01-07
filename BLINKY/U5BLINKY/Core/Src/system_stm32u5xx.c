@@ -136,8 +136,8 @@
 /*!< Uncomment the following line if you need to relocate your vector Table in
      Internal SRAM. */
 /* #define VECT_TAB_SRAM */
-#define VECT_TAB_OFFSET                                                                                                \
-	0x00000000UL /*!< Vector Table base offset field.                                                              \
+#define VECT_TAB_OFFSET                                                                                                                                                                                \
+	0x00000000UL /*!< Vector Table base offset field.                                                                                                                                              \
 		  This value must be a multiple of 0x200. */
 /******************************************************************************/
 
@@ -168,8 +168,7 @@ uint32_t SystemCoreClock = 4000000U;
 
 const uint8_t AHBPrescTable[16] = {0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 1U, 2U, 3U, 4U, 6U, 7U, 8U, 9U};
 const uint8_t APBPrescTable[8] = {0U, 0U, 0U, 0U, 1U, 2U, 3U, 4U};
-const uint32_t MSIRangeTable[16] = {48000000U, 24000000U, 16000000U, 12000000U, 4000000U, 2000000U, 1330000U, 1000000U,
-				    3072000U,  1536000U,  1024000U,  768000U,	400000U,  200000U,  133000U,  100000U};
+const uint32_t MSIRangeTable[16] = {48000000U, 24000000U, 16000000U, 12000000U, 4000000U, 2000000U, 1330000U, 1000000U, 3072000U, 1536000U, 1024000U, 768000U, 400000U, 200000U, 133000U, 100000U};
 /**
  * @}
  */
@@ -315,8 +314,7 @@ void SystemCoreClockUpdate(void)
 			pllsource = (RCC->PLL1CFGR & RCC_PLL1CFGR_PLL1SRC);
 			pllm = ((RCC->PLL1CFGR & RCC_PLL1CFGR_PLL1M) >> RCC_PLL1CFGR_PLL1M_Pos) + 1U;
 			pllfracen = ((RCC->PLL1CFGR & RCC_PLL1CFGR_PLL1FRACEN) >> RCC_PLL1CFGR_PLL1FRACEN_Pos);
-			fracn1 = (float_t)(uint32_t)(pllfracen * ((RCC->PLL1FRACR & RCC_PLL1FRACR_PLL1FRACN) >>
-								  RCC_PLL1FRACR_PLL1FRACN_Pos));
+			fracn1 = (float_t)(uint32_t)(pllfracen * ((RCC->PLL1FRACR & RCC_PLL1FRACR_PLL1FRACN) >> RCC_PLL1FRACR_PLL1FRACN_Pos));
 
 			switch (pllsource) {
 				case 0x00: /* No clock sent to PLL*/
@@ -336,8 +334,7 @@ void SystemCoreClockUpdate(void)
 					break;
 			}
 
-			pllvco = pllvco * ((float_t)(uint32_t)(RCC->PLL1DIVR & RCC_PLL1DIVR_PLL1N) +
-					   (fracn1 / (float_t)0x2000) + (float_t)1U);
+			pllvco = pllvco * ((float_t)(uint32_t)(RCC->PLL1DIVR & RCC_PLL1DIVR_PLL1N) + (fracn1 / (float_t)0x2000) + (float_t)1U);
 			pllr = (((RCC->PLL1DIVR & RCC_PLL1DIVR_PLL1R) >> RCC_PLL1DIVR_PLL1R_Pos) + 1U);
 			SystemCoreClock = (uint32_t)((uint32_t)pllvco / pllr);
 			break;

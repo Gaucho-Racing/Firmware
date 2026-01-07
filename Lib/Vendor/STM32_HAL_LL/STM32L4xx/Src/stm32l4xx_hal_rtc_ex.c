@@ -393,8 +393,7 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateInternalTimeStamp(RTC_HandleTypeDef *hrtc)
  *             @arg RTC_FORMAT_BCD: BCD data format
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_GetTimeStamp(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTimeStamp,
-					 RTC_DateTypeDef *sTimeStampDate, uint32_t Format)
+HAL_StatusTypeDef HAL_RTCEx_GetTimeStamp(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTimeStamp, RTC_DateTypeDef *sTimeStampDate, uint32_t Format)
 {
 	uint32_t tmptime, tmpdate;
 	UNUSED(hrtc);
@@ -455,8 +454,7 @@ HAL_StatusTypeDef HAL_RTCEx_GetTimeStamp(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDe
  *             @arg RTC_FORMAT_BCD: BCD data format
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_GetTimeStamp(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTimeStamp,
-					 RTC_DateTypeDef *sTimeStampDate, uint32_t Format)
+HAL_StatusTypeDef HAL_RTCEx_GetTimeStamp(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTimeStamp, RTC_DateTypeDef *sTimeStampDate, uint32_t Format)
 {
 	uint32_t tmptime, tmpdate;
 
@@ -579,7 +577,7 @@ void HAL_RTCEx_TamperTimeStampIRQHandler(RTC_HandleTypeDef *hrtc)
 	hrtc->State = HAL_RTC_STATE_READY;
 }
 
-#else /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                   \
+#else /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                                                                                                   \
 	 (STM32L4P5xx) || defined (STM32L4Q5xx) */
 
 void HAL_RTCEx_TamperTimeStampIRQHandler(RTC_HandleTypeDef *hrtc)
@@ -658,7 +656,7 @@ void HAL_RTCEx_TamperTimeStampIRQHandler(RTC_HandleTypeDef *hrtc)
 	/* Change RTC state */
 	hrtc->State = HAL_RTC_STATE_READY;
 }
-#endif /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                  \
+#endif /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                                                                                                  \
 	  (STM32L4P5xx) || defined (STM32L4Q5xx) */
 
 /**
@@ -823,8 +821,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer(RTC_HandleTypeDef *hrtc, uint32_t Wak
  * @retval HAL status
  */
 #if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx)
-HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer_IT(RTC_HandleTypeDef *hrtc, uint32_t WakeUpCounter, uint32_t WakeUpClock,
-					      uint32_t WakeUpAutoClr)
+HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer_IT(RTC_HandleTypeDef *hrtc, uint32_t WakeUpCounter, uint32_t WakeUpClock, uint32_t WakeUpAutoClr)
 #else
 HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer_IT(RTC_HandleTypeDef *hrtc, uint32_t WakeUpCounter, uint32_t WakeUpClock)
 #endif
@@ -905,10 +902,10 @@ HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer_IT(RTC_HandleTypeDef *hrtc, uint32_t 
 		 */
 		__HAL_RTC_WAKEUPTIMER_EXTI_ENABLE_IT();
 	}
-#else  /* defined(STM32L412xx) || defined(STM32L422xx) || defined (STM32L4P5xx)                                        \
+#else  /* defined(STM32L412xx) || defined(STM32L422xx) || defined (STM32L4P5xx)                                                                                                                        \
 	  || defined (STM32L4Q5xx) */
 	__HAL_RTC_WAKEUPTIMER_EXTI_ENABLE_IT();
-#endif /* defined(STM32L412xx) || defined(STM32L422xx) || defined                                                      \
+#endif /* defined(STM32L412xx) || defined(STM32L422xx) || defined                                                                                                                                      \
 	  (STM32L4P5xx) || defined (STM32L4Q5xx) */
 
 	__HAL_RTC_WAKEUPTIMER_EXTI_ENABLE_RISING_EDGE();
@@ -1127,8 +1124,7 @@ parameter.
  *         SmoothCalibMinusPulsesValue must be equal to 0.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTCEx_SetSmoothCalib(RTC_HandleTypeDef *hrtc, uint32_t SmoothCalibPeriod,
-					   uint32_t SmoothCalibPlusPulses, uint32_t SmoothCalibMinusPulsesValue)
+HAL_StatusTypeDef HAL_RTCEx_SetSmoothCalib(RTC_HandleTypeDef *hrtc, uint32_t SmoothCalibPeriod, uint32_t SmoothCalibPlusPulses, uint32_t SmoothCalibMinusPulsesValue)
 {
 	uint32_t tickstart;
 
@@ -1178,8 +1174,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetSmoothCalib(RTC_HandleTypeDef *hrtc, uint32_t Smo
 	}
 
 	/* Configure the Smooth calibration settings */
-	MODIFY_REG(hrtc->Instance->CALR, (RTC_CALR_CALP | RTC_CALR_CALW8 | RTC_CALR_CALW16 | RTC_CALR_CALM),
-		   (uint32_t)(SmoothCalibPeriod | SmoothCalibPlusPulses | SmoothCalibMinusPulsesValue));
+	MODIFY_REG(hrtc->Instance->CALR, (RTC_CALR_CALP | RTC_CALR_CALW8 | RTC_CALR_CALW16 | RTC_CALR_CALM), (uint32_t)(SmoothCalibPeriod | SmoothCalibPlusPulses | SmoothCalibMinusPulsesValue));
 
 	/* Enable the write protection for RTC registers */
 	__HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
@@ -1230,7 +1225,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetLowPowerCalib(RTC_HandleTypeDef *hrtc, uint32_t L
 
 	return HAL_OK;
 }
-#endif /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                  \
+#endif /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                                                                                                  \
 	  (STM32L4P5xx) || defined (STM32L4Q5xx) */
 
 /**
@@ -1770,16 +1765,12 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper(RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef
 	assert_param(IS_RTC_TAMPER_PRECHARGE_DURATION(sTamper->PrechargeDuration));
 	assert_param(IS_RTC_TAMPER_PULLUP_STATE(sTamper->TamperPullUp));
 	/* Trigger and Filter have exclusive configurations */
-	assert_param(
-	    ((sTamper->Filter != RTC_TAMPERFILTER_DISABLE) &&
-	     ((sTamper->Trigger == RTC_TAMPERTRIGGER_LOWLEVEL) || (sTamper->Trigger == RTC_TAMPERTRIGGER_HIGHLEVEL))) ||
-	    ((sTamper->Filter == RTC_TAMPERFILTER_DISABLE) && ((sTamper->Trigger == RTC_TAMPERTRIGGER_RISINGEDGE) ||
-							       (sTamper->Trigger == RTC_TAMPERTRIGGER_FALLINGEDGE))));
+	assert_param(((sTamper->Filter != RTC_TAMPERFILTER_DISABLE) && ((sTamper->Trigger == RTC_TAMPERTRIGGER_LOWLEVEL) || (sTamper->Trigger == RTC_TAMPERTRIGGER_HIGHLEVEL))) ||
+		     ((sTamper->Filter == RTC_TAMPERFILTER_DISABLE) && ((sTamper->Trigger == RTC_TAMPERTRIGGER_RISINGEDGE) || (sTamper->Trigger == RTC_TAMPERTRIGGER_FALLINGEDGE))));
 
 	/* Configuration register 2 */
 	tmpreg = tamp->CR2;
-	tmpreg &= ~((sTamper->Tamper << TAMP_CR2_TAMP1TRG_Pos) | (sTamper->Tamper << TAMP_CR2_TAMP1MSK_Pos) |
-		    (sTamper->Tamper << TAMP_CR2_TAMP1NOERASE_Pos));
+	tmpreg &= ~((sTamper->Tamper << TAMP_CR2_TAMP1TRG_Pos) | (sTamper->Tamper << TAMP_CR2_TAMP1MSK_Pos) | (sTamper->Tamper << TAMP_CR2_TAMP1NOERASE_Pos));
 
 	/* Configure the tamper trigger bit */
 	if ((sTamper->Trigger == RTC_TAMPERTRIGGER_HIGHLEVEL) || (sTamper->Trigger == RTC_TAMPERTRIGGER_FALLINGEDGE)) {
@@ -1798,8 +1789,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper(RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef
 	tamp->CR2 = tmpreg;
 
 	/* Configure filtering parameters */
-	tamp->FLTCR =
-	    (sTamper->Filter) | (sTamper->SamplingFrequency) | (sTamper->PrechargeDuration) | (sTamper->TamperPullUp);
+	tamp->FLTCR = (sTamper->Filter) | (sTamper->SamplingFrequency) | (sTamper->PrechargeDuration) | (sTamper->TamperPullUp);
 
 	/* Configure Timestamp saving on tamper detection */
 	if ((hrtc->Instance->CR & RTC_CR_TAMPTS) != (sTamper->TimeStampOnTamperDetection)) {
@@ -1814,7 +1804,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper(RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef
 
 	return HAL_OK;
 }
-#else /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                   \
+#else /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                                                                                                   \
 	 (STM32L4P5xx) || defined (STM32L4Q5xx) */
 /**
  * @brief  Set Tamper.
@@ -1848,46 +1838,31 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper(RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef
 
 #if defined(RTC_TAMPER1_SUPPORT)
 	if ((sTamper->Tamper & RTC_TAMPER_1) != 0) {
-		MODIFY_REG(tmpreg,
-			   (RTC_TAMPCR_TAMP1E | RTC_TAMPCR_TAMP1TRG | RTC_TAMPCR_TAMPIE | RTC_TAMPCR_TAMP1IE |
-			    RTC_TAMPCR_TAMP1NOERASE | RTC_TAMPCR_TAMP1MF),
-			   sTamper->Tamper |
-			       (sTamper->Trigger == RTC_TAMPERTRIGGER_RISINGEDGE ? 0U : RTC_TAMPCR_TAMP1TRG) |
-			       (sTamper->NoErase == RTC_TAMPER_ERASE_BACKUP_ENABLE ? 0U : RTC_TAMPCR_TAMP1NOERASE) |
-			       (sTamper->MaskFlag == RTC_TAMPERMASK_FLAG_ENABLE ? RTC_TAMPCR_TAMP1MF : 0U));
+		MODIFY_REG(tmpreg, (RTC_TAMPCR_TAMP1E | RTC_TAMPCR_TAMP1TRG | RTC_TAMPCR_TAMPIE | RTC_TAMPCR_TAMP1IE | RTC_TAMPCR_TAMP1NOERASE | RTC_TAMPCR_TAMP1MF),
+			   sTamper->Tamper | (sTamper->Trigger == RTC_TAMPERTRIGGER_RISINGEDGE ? 0U : RTC_TAMPCR_TAMP1TRG) |
+			       (sTamper->NoErase == RTC_TAMPER_ERASE_BACKUP_ENABLE ? 0U : RTC_TAMPCR_TAMP1NOERASE) | (sTamper->MaskFlag == RTC_TAMPERMASK_FLAG_ENABLE ? RTC_TAMPCR_TAMP1MF : 0U));
 	}
 #endif /* RTC_TAMPER1_SUPPORT */
 
 #if defined(RTC_TAMPER2_SUPPORT)
 	if ((sTamper->Tamper & RTC_TAMPER_2) != 0) {
-		MODIFY_REG(tmpreg,
-			   (RTC_TAMPCR_TAMP2E | RTC_TAMPCR_TAMP2TRG | RTC_TAMPCR_TAMPIE | RTC_TAMPCR_TAMP2IE |
-			    RTC_TAMPCR_TAMP2NOERASE | RTC_TAMPCR_TAMP2MF),
-			   sTamper->Tamper |
-			       (sTamper->Trigger == RTC_TAMPERTRIGGER_RISINGEDGE ? 0U : RTC_TAMPCR_TAMP2TRG) |
-			       (sTamper->NoErase == RTC_TAMPER_ERASE_BACKUP_ENABLE ? 0U : RTC_TAMPCR_TAMP2NOERASE) |
-			       (sTamper->MaskFlag == RTC_TAMPERMASK_FLAG_ENABLE ? RTC_TAMPCR_TAMP2MF : 0U));
+		MODIFY_REG(tmpreg, (RTC_TAMPCR_TAMP2E | RTC_TAMPCR_TAMP2TRG | RTC_TAMPCR_TAMPIE | RTC_TAMPCR_TAMP2IE | RTC_TAMPCR_TAMP2NOERASE | RTC_TAMPCR_TAMP2MF),
+			   sTamper->Tamper | (sTamper->Trigger == RTC_TAMPERTRIGGER_RISINGEDGE ? 0U : RTC_TAMPCR_TAMP2TRG) |
+			       (sTamper->NoErase == RTC_TAMPER_ERASE_BACKUP_ENABLE ? 0U : RTC_TAMPCR_TAMP2NOERASE) | (sTamper->MaskFlag == RTC_TAMPERMASK_FLAG_ENABLE ? RTC_TAMPCR_TAMP2MF : 0U));
 	}
 #endif /* RTC_TAMPER2_SUPPORT */
 
 #if defined(RTC_TAMPER3_SUPPORT)
 	if ((sTamper->Tamper & RTC_TAMPER_3) != 0) {
-		MODIFY_REG(tmpreg,
-			   (RTC_TAMPCR_TAMP3E | RTC_TAMPCR_TAMP3TRG | RTC_TAMPCR_TAMPIE | RTC_TAMPCR_TAMP3IE |
-			    RTC_TAMPCR_TAMP3NOERASE | RTC_TAMPCR_TAMP3MF),
-			   sTamper->Tamper |
-			       (sTamper->Trigger == RTC_TAMPERTRIGGER_RISINGEDGE ? 0U : RTC_TAMPCR_TAMP3TRG) |
-			       (sTamper->NoErase == RTC_TAMPER_ERASE_BACKUP_ENABLE ? 0U : RTC_TAMPCR_TAMP3NOERASE) |
-			       (sTamper->MaskFlag == RTC_TAMPERMASK_FLAG_ENABLE ? RTC_TAMPCR_TAMP3MF : 0U));
+		MODIFY_REG(tmpreg, (RTC_TAMPCR_TAMP3E | RTC_TAMPCR_TAMP3TRG | RTC_TAMPCR_TAMPIE | RTC_TAMPCR_TAMP3IE | RTC_TAMPCR_TAMP3NOERASE | RTC_TAMPCR_TAMP3MF),
+			   sTamper->Tamper | (sTamper->Trigger == RTC_TAMPERTRIGGER_RISINGEDGE ? 0U : RTC_TAMPCR_TAMP3TRG) |
+			       (sTamper->NoErase == RTC_TAMPER_ERASE_BACKUP_ENABLE ? 0U : RTC_TAMPCR_TAMP3NOERASE) | (sTamper->MaskFlag == RTC_TAMPERMASK_FLAG_ENABLE ? RTC_TAMPCR_TAMP3MF : 0U));
 	}
 #endif /* RTC_TAMPER3_SUPPORT */
 
 	/* Update common parameters */
-	MODIFY_REG(
-	    tmpreg,
-	    (RTC_TAMPCR_TAMPTS | RTC_TAMPCR_TAMPFREQ | RTC_TAMPCR_TAMPFLT | RTC_TAMPCR_TAMPPRCH | RTC_TAMPCR_TAMPPUDIS),
-	    sTamper->Filter | sTamper->SamplingFrequency | sTamper->PrechargeDuration | sTamper->TamperPullUp |
-		sTamper->TimeStampOnTamperDetection);
+	MODIFY_REG(tmpreg, (RTC_TAMPCR_TAMPTS | RTC_TAMPCR_TAMPFREQ | RTC_TAMPCR_TAMPFLT | RTC_TAMPCR_TAMPPRCH | RTC_TAMPCR_TAMPPUDIS),
+		   sTamper->Filter | sTamper->SamplingFrequency | sTamper->PrechargeDuration | sTamper->TamperPullUp | sTamper->TimeStampOnTamperDetection);
 
 	/* Set register */
 	WRITE_REG(hrtc->Instance->TAMPCR, tmpreg);
@@ -1899,7 +1874,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper(RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef
 
 	return HAL_OK;
 }
-#endif /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                  \
+#endif /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                                                                                                  \
 	  (STM32L4P5xx) || defined (STM32L4Q5xx) */
 
 #if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx)
@@ -1931,8 +1906,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper_IT(RTC_HandleTypeDef *hrtc, RTC_TamperType
 
 	/* Clear the bits that are going to be configured and leave the others
 	 * unchanged */
-	tmpreg &= ~((sTamper->Tamper << TAMP_CR2_TAMP1TRG_Pos) | (sTamper->Tamper << TAMP_CR2_TAMP1MSK_Pos) |
-		    (sTamper->Tamper << TAMP_CR2_TAMP1NOERASE_Pos));
+	tmpreg &= ~((sTamper->Tamper << TAMP_CR2_TAMP1TRG_Pos) | (sTamper->Tamper << TAMP_CR2_TAMP1MSK_Pos) | (sTamper->Tamper << TAMP_CR2_TAMP1NOERASE_Pos));
 
 	if ((sTamper->Trigger == RTC_TAMPERTRIGGER_HIGHLEVEL) || (sTamper->Trigger == RTC_TAMPERTRIGGER_FALLINGEDGE)) {
 		tmpreg |= (sTamper->Tamper << TAMP_CR2_TAMP1TRG_Pos);
@@ -1950,8 +1924,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper_IT(RTC_HandleTypeDef *hrtc, RTC_TamperType
 	tamp->CR2 = tmpreg;
 
 	/* Configure filtering parameters */
-	tamp->FLTCR =
-	    (sTamper->Filter) | (sTamper->SamplingFrequency) | (sTamper->PrechargeDuration) | (sTamper->TamperPullUp);
+	tamp->FLTCR = (sTamper->Filter) | (sTamper->SamplingFrequency) | (sTamper->PrechargeDuration) | (sTamper->TamperPullUp);
 
 	/* Configure Timestamp saving on tamper detection */
 	if ((hrtc->Instance->CR & RTC_CR_TAMPTS) != (sTamper->TimeStampOnTamperDetection)) {
@@ -1973,7 +1946,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper_IT(RTC_HandleTypeDef *hrtc, RTC_TamperType
 
 	return HAL_OK;
 }
-#else /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                   \
+#else /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                                                                                                   \
 	 (STM32L4P5xx) || defined (STM32L4Q5xx) */
 
 /**
@@ -2008,46 +1981,31 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper_IT(RTC_HandleTypeDef *hrtc, RTC_TamperType
 
 #if defined(RTC_TAMPER1_SUPPORT)
 	if ((sTamper->Tamper & RTC_TAMPER_1) != 0) {
-		MODIFY_REG(tmpreg,
-			   (RTC_TAMPCR_TAMP1E | RTC_TAMPCR_TAMP1TRG | RTC_TAMPCR_TAMPIE | RTC_TAMPCR_TAMP1IE |
-			    RTC_TAMPCR_TAMP1NOERASE | RTC_TAMPCR_TAMP1MF),
-			   sTamper->Tamper | sTamper->Interrupt |
-			       (sTamper->Trigger == RTC_TAMPERTRIGGER_RISINGEDGE ? 0U : RTC_TAMPCR_TAMP1TRG) |
-			       (sTamper->NoErase == RTC_TAMPER_ERASE_BACKUP_ENABLE ? 0U : RTC_TAMPCR_TAMP1NOERASE) |
-			       (sTamper->MaskFlag == RTC_TAMPERMASK_FLAG_ENABLE ? RTC_TAMPCR_TAMP1MF : 0U));
+		MODIFY_REG(tmpreg, (RTC_TAMPCR_TAMP1E | RTC_TAMPCR_TAMP1TRG | RTC_TAMPCR_TAMPIE | RTC_TAMPCR_TAMP1IE | RTC_TAMPCR_TAMP1NOERASE | RTC_TAMPCR_TAMP1MF),
+			   sTamper->Tamper | sTamper->Interrupt | (sTamper->Trigger == RTC_TAMPERTRIGGER_RISINGEDGE ? 0U : RTC_TAMPCR_TAMP1TRG) |
+			       (sTamper->NoErase == RTC_TAMPER_ERASE_BACKUP_ENABLE ? 0U : RTC_TAMPCR_TAMP1NOERASE) | (sTamper->MaskFlag == RTC_TAMPERMASK_FLAG_ENABLE ? RTC_TAMPCR_TAMP1MF : 0U));
 	}
 #endif /* RTC_TAMPER1_SUPPORT */
 
 #if defined(RTC_TAMPER2_SUPPORT)
 	if ((sTamper->Tamper & RTC_TAMPER_2) != 0) {
-		MODIFY_REG(tmpreg,
-			   (RTC_TAMPCR_TAMP2E | RTC_TAMPCR_TAMP2TRG | RTC_TAMPCR_TAMPIE | RTC_TAMPCR_TAMP2IE |
-			    RTC_TAMPCR_TAMP2NOERASE | RTC_TAMPCR_TAMP2MF),
-			   sTamper->Tamper | sTamper->Interrupt |
-			       (sTamper->Trigger == RTC_TAMPERTRIGGER_RISINGEDGE ? 0U : RTC_TAMPCR_TAMP2TRG) |
-			       (sTamper->NoErase == RTC_TAMPER_ERASE_BACKUP_ENABLE ? 0U : RTC_TAMPCR_TAMP2NOERASE) |
-			       (sTamper->MaskFlag == RTC_TAMPERMASK_FLAG_ENABLE ? RTC_TAMPCR_TAMP2MF : 0U));
+		MODIFY_REG(tmpreg, (RTC_TAMPCR_TAMP2E | RTC_TAMPCR_TAMP2TRG | RTC_TAMPCR_TAMPIE | RTC_TAMPCR_TAMP2IE | RTC_TAMPCR_TAMP2NOERASE | RTC_TAMPCR_TAMP2MF),
+			   sTamper->Tamper | sTamper->Interrupt | (sTamper->Trigger == RTC_TAMPERTRIGGER_RISINGEDGE ? 0U : RTC_TAMPCR_TAMP2TRG) |
+			       (sTamper->NoErase == RTC_TAMPER_ERASE_BACKUP_ENABLE ? 0U : RTC_TAMPCR_TAMP2NOERASE) | (sTamper->MaskFlag == RTC_TAMPERMASK_FLAG_ENABLE ? RTC_TAMPCR_TAMP2MF : 0U));
 	}
 #endif /* RTC_TAMPER2_SUPPORT */
 
 #if defined(RTC_TAMPER3_SUPPORT)
 	if ((sTamper->Tamper & RTC_TAMPER_3) != 0) {
-		MODIFY_REG(tmpreg,
-			   (RTC_TAMPCR_TAMP3E | RTC_TAMPCR_TAMP3TRG | RTC_TAMPCR_TAMPIE | RTC_TAMPCR_TAMP3IE |
-			    RTC_TAMPCR_TAMP3NOERASE | RTC_TAMPCR_TAMP3MF),
-			   sTamper->Tamper | sTamper->Interrupt |
-			       (sTamper->Trigger == RTC_TAMPERTRIGGER_RISINGEDGE ? 0U : RTC_TAMPCR_TAMP3TRG) |
-			       (sTamper->NoErase == RTC_TAMPER_ERASE_BACKUP_ENABLE ? 0U : RTC_TAMPCR_TAMP3NOERASE) |
-			       (sTamper->MaskFlag == RTC_TAMPERMASK_FLAG_ENABLE ? RTC_TAMPCR_TAMP3MF : 0U));
+		MODIFY_REG(tmpreg, (RTC_TAMPCR_TAMP3E | RTC_TAMPCR_TAMP3TRG | RTC_TAMPCR_TAMPIE | RTC_TAMPCR_TAMP3IE | RTC_TAMPCR_TAMP3NOERASE | RTC_TAMPCR_TAMP3MF),
+			   sTamper->Tamper | sTamper->Interrupt | (sTamper->Trigger == RTC_TAMPERTRIGGER_RISINGEDGE ? 0U : RTC_TAMPCR_TAMP3TRG) |
+			       (sTamper->NoErase == RTC_TAMPER_ERASE_BACKUP_ENABLE ? 0U : RTC_TAMPCR_TAMP3NOERASE) | (sTamper->MaskFlag == RTC_TAMPERMASK_FLAG_ENABLE ? RTC_TAMPCR_TAMP3MF : 0U));
 	}
 #endif /* RTC_TAMPER3_SUPPORT */
 
 	/* Update common parameters */
-	MODIFY_REG(
-	    tmpreg,
-	    (RTC_TAMPCR_TAMPTS | RTC_TAMPCR_TAMPFREQ | RTC_TAMPCR_TAMPFLT | RTC_TAMPCR_TAMPPRCH | RTC_TAMPCR_TAMPPUDIS),
-	    sTamper->Filter | sTamper->SamplingFrequency | sTamper->PrechargeDuration | sTamper->TamperPullUp |
-		sTamper->TimeStampOnTamperDetection);
+	MODIFY_REG(tmpreg, (RTC_TAMPCR_TAMPTS | RTC_TAMPCR_TAMPFREQ | RTC_TAMPCR_TAMPFLT | RTC_TAMPCR_TAMPPRCH | RTC_TAMPCR_TAMPPUDIS),
+		   sTamper->Filter | sTamper->SamplingFrequency | sTamper->PrechargeDuration | sTamper->TamperPullUp | sTamper->TimeStampOnTamperDetection);
 
 	/* Set register */
 	WRITE_REG(hrtc->Instance->TAMPCR, tmpreg);
@@ -2063,7 +2021,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetTamper_IT(RTC_HandleTypeDef *hrtc, RTC_TamperType
 
 	return HAL_OK;
 }
-#endif /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                  \
+#endif /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                                                                                                  \
 	  (STM32L4P5xx) || defined (STM32L4Q5xx) */
 
 #if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx)
@@ -2097,7 +2055,7 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateTamper(RTC_HandleTypeDef *hrtc, uint32_t T
 
 	return HAL_OK;
 }
-#else /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                   \
+#else /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                                                                                                   \
 	 (STM32L4P5xx) || defined (STM32L4Q5xx) */
 /**
  * @brief  Deactivate Tamper.
@@ -2145,7 +2103,7 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateTamper(RTC_HandleTypeDef *hrtc, uint32_t T
 
 	return HAL_OK;
 }
-#endif /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                  \
+#endif /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                                                                                                  \
 	  (STM32L4P5xx) || defined (STM32L4Q5xx) */
 
 #if defined(RTC_TAMPER1_SUPPORT)
@@ -2334,13 +2292,13 @@ void HAL_RTCEx_BKUPWrite(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister, uint3
 	assert_param(IS_RTC_BKP(BackupRegister));
 
 	tmp = (uint32_t) & (tamp->BKP0R);
-#else  /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                  \
+#else  /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                                                                                                  \
 	  (STM32L4P5xx) || defined (STM32L4Q5xx) */
 	/* Check the parameters */
 	assert_param(IS_RTC_BKP(BackupRegister));
 
 	tmp = (uint32_t) & (hrtc->Instance->BKP0R);
-#endif /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                  \
+#endif /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                                                                                                  \
 	  (STM32L4P5xx) || defined (STM32L4Q5xx) */
 
 	tmp += (BackupRegister * 4U);
@@ -2368,13 +2326,13 @@ uint32_t HAL_RTCEx_BKUPRead(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister)
 	assert_param(IS_RTC_BKP(BackupRegister));
 
 	tmp = (uint32_t) & (tamp->BKP0R);
-#else  /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                  \
+#else  /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                                                                                                  \
 	  (STM32L4P5xx) || defined (STM32L4Q5xx) */
 	/* Check the parameters */
 	assert_param(IS_RTC_BKP(BackupRegister));
 
 	tmp = (uint32_t) & (hrtc->Instance->BKP0R);
-#endif /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                  \
+#endif /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                                                                                                  \
 	  (STM32L4P5xx) || defined (STM32L4Q5xx) */
 
 	tmp += (BackupRegister * 4U);

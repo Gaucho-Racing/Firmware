@@ -159,8 +159,8 @@ typedef void (*pGFXMMU_CallbackTypeDef)(GFXMMU_HandleTypeDef *hgfxmmu);
  * @{
  */
 #define GFXMMU_256BLOCKS 0x00000000U /*!< 256 blocks of 16 bytes per line */
-#define GFXMMU_192BLOCKS                                                                                               \
-	GFXMMU_CR_192BM /*!< 192 blocks of 16 bytes per line                                                           \
+#define GFXMMU_192BLOCKS                                                                                                                                                                               \
+	GFXMMU_CR_192BM /*!< 192 blocks of 16 bytes per line                                                                                                                                           \
 			 */
 /**
  * @}
@@ -188,8 +188,8 @@ typedef void (*pGFXMMU_CallbackTypeDef)(GFXMMU_HandleTypeDef *hgfxmmu);
 #define GFXMMU_ERROR_BUFFER3_OVERFLOW GFXMMU_SR_B3OF /*!< Buffer 3 overflow */
 #define GFXMMU_ERROR_AHB_MASTER GFXMMU_SR_AMEF	     /*!< AHB master error */
 #if (USE_HAL_GFXMMU_REGISTER_CALLBACKS == 1)
-#define GFXMMU_ERROR_INVALID_CALLBACK                                                                                  \
-	0x00000100U /*!< Invalid callback error                                                                        \
+#define GFXMMU_ERROR_INVALID_CALLBACK                                                                                                                                                                  \
+	0x00000100U /*!< Invalid callback error                                                                                                                                                        \
 		     */
 #endif
 /**
@@ -220,11 +220,11 @@ typedef void (*pGFXMMU_CallbackTypeDef)(GFXMMU_HandleTypeDef *hgfxmmu);
  * @retval None
  */
 #if (USE_HAL_GFXMMU_REGISTER_CALLBACKS == 1)
-#define __HAL_GFXMMU_RESET_HANDLE_STATE(__HANDLE__)                                                                    \
-	do {                                                                                                           \
-		(__HANDLE__)->State = HAL_GFXMMU_STATE_RESET;                                                          \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define __HAL_GFXMMU_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                    \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_GFXMMU_STATE_RESET;                                                                                                                                          \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0)
 #else
 #define __HAL_GFXMMU_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_GFXMMU_STATE_RESET)
@@ -251,8 +251,7 @@ void HAL_GFXMMU_MspInit(GFXMMU_HandleTypeDef *hgfxmmu);
 void HAL_GFXMMU_MspDeInit(GFXMMU_HandleTypeDef *hgfxmmu);
 #if (USE_HAL_GFXMMU_REGISTER_CALLBACKS == 1)
 /* GFXMMU callbacks register/unregister functions *****************************/
-HAL_StatusTypeDef HAL_GFXMMU_RegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu, HAL_GFXMMU_CallbackIDTypeDef CallbackID,
-					      pGFXMMU_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_GFXMMU_RegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu, HAL_GFXMMU_CallbackIDTypeDef CallbackID, pGFXMMU_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_GFXMMU_UnRegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu, HAL_GFXMMU_CallbackIDTypeDef CallbackID);
 #endif
 /**
@@ -263,8 +262,7 @@ HAL_StatusTypeDef HAL_GFXMMU_UnRegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu, H
  * @{
  */
 /* Operation functions ********************************************************/
-HAL_StatusTypeDef HAL_GFXMMU_ConfigLut(GFXMMU_HandleTypeDef *hgfxmmu, uint32_t FirstLine, uint32_t LinesNumber,
-				       uint32_t Address);
+HAL_StatusTypeDef HAL_GFXMMU_ConfigLut(GFXMMU_HandleTypeDef *hgfxmmu, uint32_t FirstLine, uint32_t LinesNumber, uint32_t Address);
 
 HAL_StatusTypeDef HAL_GFXMMU_DisableLutLines(GFXMMU_HandleTypeDef *hgfxmmu, uint32_t FirstLine, uint32_t LinesNumber);
 

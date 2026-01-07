@@ -118,24 +118,24 @@ typedef enum { GPIO_PIN_RESET = 0U, GPIO_PIN_SET } GPIO_PinState;
 
 #define GPIO_MODE_ANALOG MODE_ANALOG /*!< Analog Mode  */
 
-#define GPIO_MODE_IT_RISING                                                                                            \
-	(MODE_INPUT | EXTI_IT | TRIGGER_RISING) /*!< External Interrupt Mode with Rising edge trigger                  \
+#define GPIO_MODE_IT_RISING                                                                                                                                                                            \
+	(MODE_INPUT | EXTI_IT | TRIGGER_RISING) /*!< External Interrupt Mode with Rising edge trigger                                                                                                  \
 						   detection          */
-#define GPIO_MODE_IT_FALLING                                                                                           \
-	(MODE_INPUT | EXTI_IT | TRIGGER_FALLING) /*!< External Interrupt Mode with Falling edge                        \
+#define GPIO_MODE_IT_FALLING                                                                                                                                                                           \
+	(MODE_INPUT | EXTI_IT | TRIGGER_FALLING) /*!< External Interrupt Mode with Falling edge                                                                                                        \
 						    trigger detection         */
-#define GPIO_MODE_IT_RISING_FALLING                                                                                    \
-	(MODE_INPUT | EXTI_IT | TRIGGER_RISING | TRIGGER_FALLING) /*!< External Interrupt Mode with Rising/Falling     \
+#define GPIO_MODE_IT_RISING_FALLING                                                                                                                                                                    \
+	(MODE_INPUT | EXTI_IT | TRIGGER_RISING | TRIGGER_FALLING) /*!< External Interrupt Mode with Rising/Falling                                                                                     \
 								     edge trigger detection  */
 
-#define GPIO_MODE_EVT_RISING                                                                                           \
-	(MODE_INPUT | EXTI_EVT | TRIGGER_RISING) /*!< External Event Mode with Rising edge trigger                     \
+#define GPIO_MODE_EVT_RISING                                                                                                                                                                           \
+	(MODE_INPUT | EXTI_EVT | TRIGGER_RISING) /*!< External Event Mode with Rising edge trigger                                                                                                     \
 						    detection             */
-#define GPIO_MODE_EVT_FALLING                                                                                          \
-	(MODE_INPUT | EXTI_EVT | TRIGGER_FALLING) /*!< External Event Mode with Falling edge trigger                   \
+#define GPIO_MODE_EVT_FALLING                                                                                                                                                                          \
+	(MODE_INPUT | EXTI_EVT | TRIGGER_FALLING) /*!< External Event Mode with Falling edge trigger                                                                                                   \
 						     detection            */
-#define GPIO_MODE_EVT_RISING_FALLING                                                                                   \
-	(MODE_INPUT | EXTI_EVT | TRIGGER_RISING | TRIGGER_FALLING) /*!< External Event Mode with Rising/Falling edge   \
+#define GPIO_MODE_EVT_RISING_FALLING                                                                                                                                                                   \
+	(MODE_INPUT | EXTI_EVT | TRIGGER_RISING | TRIGGER_FALLING) /*!< External Event Mode with Rising/Falling edge                                                                                   \
 								      trigger detection     */
 /**
  * @}
@@ -145,17 +145,17 @@ typedef enum { GPIO_PIN_RESET = 0U, GPIO_PIN_SET } GPIO_PinState;
  * @brief GPIO Output Maximum frequency
  * @{
  */
-#define GPIO_SPEED_FREQ_LOW                                                                                            \
-	(0x00000000U) /*!< range up to 5 MHz, please refer to the product                                              \
+#define GPIO_SPEED_FREQ_LOW                                                                                                                                                                            \
+	(0x00000000U) /*!< range up to 5 MHz, please refer to the product                                                                                                                              \
 			 datasheet */
-#define GPIO_SPEED_FREQ_MEDIUM                                                                                         \
-	(0x00000001U) /*!< range  5 MHz to 25 MHz, please refer to the product                                         \
+#define GPIO_SPEED_FREQ_MEDIUM                                                                                                                                                                         \
+	(0x00000001U) /*!< range  5 MHz to 25 MHz, please refer to the product                                                                                                                         \
 			 datasheet */
-#define GPIO_SPEED_FREQ_HIGH                                                                                           \
-	(0x00000002U) /*!< range 25 MHz to 50 MHz, please refer to the product                                         \
+#define GPIO_SPEED_FREQ_HIGH                                                                                                                                                                           \
+	(0x00000002U) /*!< range 25 MHz to 50 MHz, please refer to the product                                                                                                                         \
 			 datasheet */
-#define GPIO_SPEED_FREQ_VERY_HIGH                                                                                      \
-	(0x00000003U) /*!< range 50 MHz to 120 MHz, please refer to the                                                \
+#define GPIO_SPEED_FREQ_VERY_HIGH                                                                                                                                                                      \
+	(0x00000003U) /*!< range 50 MHz to 120 MHz, please refer to the                                                                                                                                \
 			 product datasheet */
 /**
  * @}
@@ -258,23 +258,17 @@ typedef enum { GPIO_PIN_RESET = 0U, GPIO_PIN_SET } GPIO_PinState;
  */
 #define IS_GPIO_PIN_ACTION(ACTION) (((ACTION) == GPIO_PIN_RESET) || ((ACTION) == GPIO_PIN_SET))
 
-#define IS_GPIO_PIN(__PIN__)                                                                                           \
-	((((uint32_t)(__PIN__) & GPIO_PIN_MASK) != 0x00U) && (((uint32_t)(__PIN__) & ~GPIO_PIN_MASK) == 0x00U))
+#define IS_GPIO_PIN(__PIN__) ((((uint32_t)(__PIN__) & GPIO_PIN_MASK) != 0x00U) && (((uint32_t)(__PIN__) & ~GPIO_PIN_MASK) == 0x00U))
 
-#define IS_GPIO_MODE(__MODE__)                                                                                         \
-	(((__MODE__) == GPIO_MODE_INPUT) || ((__MODE__) == GPIO_MODE_OUTPUT_PP) ||                                     \
-	 ((__MODE__) == GPIO_MODE_OUTPUT_OD) || ((__MODE__) == GPIO_MODE_AF_PP) || ((__MODE__) == GPIO_MODE_AF_OD) ||  \
-	 ((__MODE__) == GPIO_MODE_IT_RISING) || ((__MODE__) == GPIO_MODE_IT_FALLING) ||                                \
-	 ((__MODE__) == GPIO_MODE_IT_RISING_FALLING) || ((__MODE__) == GPIO_MODE_EVT_RISING) ||                        \
-	 ((__MODE__) == GPIO_MODE_EVT_FALLING) || ((__MODE__) == GPIO_MODE_EVT_RISING_FALLING) ||                      \
-	 ((__MODE__) == GPIO_MODE_ANALOG))
+#define IS_GPIO_MODE(__MODE__)                                                                                                                                                                         \
+	(((__MODE__) == GPIO_MODE_INPUT) || ((__MODE__) == GPIO_MODE_OUTPUT_PP) || ((__MODE__) == GPIO_MODE_OUTPUT_OD) || ((__MODE__) == GPIO_MODE_AF_PP) || ((__MODE__) == GPIO_MODE_AF_OD) ||        \
+	 ((__MODE__) == GPIO_MODE_IT_RISING) || ((__MODE__) == GPIO_MODE_IT_FALLING) || ((__MODE__) == GPIO_MODE_IT_RISING_FALLING) || ((__MODE__) == GPIO_MODE_EVT_RISING) ||                         \
+	 ((__MODE__) == GPIO_MODE_EVT_FALLING) || ((__MODE__) == GPIO_MODE_EVT_RISING_FALLING) || ((__MODE__) == GPIO_MODE_ANALOG))
 
-#define IS_GPIO_SPEED(__SPEED__)                                                                                       \
-	(((__SPEED__) == GPIO_SPEED_FREQ_LOW) || ((__SPEED__) == GPIO_SPEED_FREQ_MEDIUM) ||                            \
-	 ((__SPEED__) == GPIO_SPEED_FREQ_HIGH) || ((__SPEED__) == GPIO_SPEED_FREQ_VERY_HIGH))
+#define IS_GPIO_SPEED(__SPEED__)                                                                                                                                                                       \
+	(((__SPEED__) == GPIO_SPEED_FREQ_LOW) || ((__SPEED__) == GPIO_SPEED_FREQ_MEDIUM) || ((__SPEED__) == GPIO_SPEED_FREQ_HIGH) || ((__SPEED__) == GPIO_SPEED_FREQ_VERY_HIGH))
 
-#define IS_GPIO_PULL(__PULL__)                                                                                         \
-	(((__PULL__) == GPIO_NOPULL) || ((__PULL__) == GPIO_PULLUP) || ((__PULL__) == GPIO_PULLDOWN))
+#define IS_GPIO_PULL(__PULL__) (((__PULL__) == GPIO_NOPULL) || ((__PULL__) == GPIO_PULLUP) || ((__PULL__) == GPIO_PULLDOWN))
 /**
  * @}
  */

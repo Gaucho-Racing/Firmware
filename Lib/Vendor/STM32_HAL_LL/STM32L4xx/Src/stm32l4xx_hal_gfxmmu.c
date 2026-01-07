@@ -200,8 +200,7 @@ HAL_StatusTypeDef HAL_GFXMMU_Init(GFXMMU_HandleTypeDef *hgfxmmu)
 
 		/* Configure blocks per line and interrupts parameters on
 		 * GFXMMU_CR register */
-		hgfxmmu->Instance->CR &= ~(GFXMMU_CR_B0OIE | GFXMMU_CR_B1OIE | GFXMMU_CR_B2OIE | GFXMMU_CR_B3OIE |
-					   GFXMMU_CR_AMEIE | GFXMMU_CR_192BM);
+		hgfxmmu->Instance->CR &= ~(GFXMMU_CR_B0OIE | GFXMMU_CR_B1OIE | GFXMMU_CR_B2OIE | GFXMMU_CR_B3OIE | GFXMMU_CR_AMEIE | GFXMMU_CR_192BM);
 		hgfxmmu->Instance->CR |= (hgfxmmu->Init.BlocksPerLine);
 		if (hgfxmmu->Init.Interrupts.Activation == ENABLE) {
 			assert_param(IS_GFXMMU_INTERRUPTS(hgfxmmu->Init.Interrupts.UsedInterrupts));
@@ -245,8 +244,7 @@ HAL_StatusTypeDef HAL_GFXMMU_DeInit(GFXMMU_HandleTypeDef *hgfxmmu)
 		assert_param(IS_GFXMMU_ALL_INSTANCE(hgfxmmu->Instance));
 
 		/* Disable all interrupts on GFXMMU_CR register */
-		hgfxmmu->Instance->CR &=
-		    ~(GFXMMU_CR_B0OIE | GFXMMU_CR_B1OIE | GFXMMU_CR_B2OIE | GFXMMU_CR_B3OIE | GFXMMU_CR_AMEIE);
+		hgfxmmu->Instance->CR &= ~(GFXMMU_CR_B0OIE | GFXMMU_CR_B1OIE | GFXMMU_CR_B2OIE | GFXMMU_CR_B3OIE | GFXMMU_CR_AMEIE);
 
 		/* Call GFXMMU MSP de-init function */
 #if (USE_HAL_GFXMMU_REGISTER_CALLBACKS == 1)
@@ -309,8 +307,7 @@ __weak void HAL_GFXMMU_MspDeInit(GFXMMU_HandleTypeDef *hgfxmmu)
  * @param  pCallback pointer to the callback function.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_GFXMMU_RegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu, HAL_GFXMMU_CallbackIDTypeDef CallbackID,
-					      pGFXMMU_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_GFXMMU_RegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu, HAL_GFXMMU_CallbackIDTypeDef CallbackID, pGFXMMU_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -452,8 +449,7 @@ HAL_StatusTypeDef HAL_GFXMMU_UnRegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu, H
  * @param  Address Start address of LUT in flash.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_GFXMMU_ConfigLut(GFXMMU_HandleTypeDef *hgfxmmu, uint32_t FirstLine, uint32_t LinesNumber,
-				       uint32_t Address)
+HAL_StatusTypeDef HAL_GFXMMU_ConfigLut(GFXMMU_HandleTypeDef *hgfxmmu, uint32_t FirstLine, uint32_t LinesNumber, uint32_t Address)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -564,9 +560,7 @@ HAL_StatusTypeDef HAL_GFXMMU_ConfigLutLine(GFXMMU_HandleTypeDef *hgfxmmu, GFXMMU
 		/* Configure LUT line */
 		if (lutLine->LineStatus == GFXMMU_LUT_LINE_ENABLE) {
 			/* Enable and configure LUT line */
-			*((uint32_t *)lutxl_address) =
-			    (lutLine->LineStatus | (lutLine->FirstVisibleBlock << GFXMMU_LUTXL_FVB_OFFSET) |
-			     (lutLine->LastVisibleBlock << GFXMMU_LUTXL_LVB_OFFSET));
+			*((uint32_t *)lutxl_address) = (lutLine->LineStatus | (lutLine->FirstVisibleBlock << GFXMMU_LUTXL_FVB_OFFSET) | (lutLine->LastVisibleBlock << GFXMMU_LUTXL_LVB_OFFSET));
 			*((uint32_t *)lutxh_address) = (uint32_t)lutLine->LineOffset;
 		} else {
 			/* Disable LUT line */

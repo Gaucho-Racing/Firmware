@@ -306,10 +306,8 @@ HAL_StatusTypeDef HAL_TSC_Init(TSC_HandleTypeDef *htsc)
 	htsc->Instance->CR = TSC_CR_TSCE;
 
 	/* Set all functions */
-	htsc->Instance->CR |= (htsc->Init.CTPulseHighLength | htsc->Init.CTPulseLowLength |
-			       (htsc->Init.SpreadSpectrumDeviation << TSC_CR_SSD_Pos) |
-			       htsc->Init.SpreadSpectrumPrescaler | htsc->Init.PulseGeneratorPrescaler |
-			       htsc->Init.MaxCountValue | htsc->Init.SynchroPinPolarity | htsc->Init.AcquisitionMode);
+	htsc->Instance->CR |= (htsc->Init.CTPulseHighLength | htsc->Init.CTPulseLowLength | (htsc->Init.SpreadSpectrumDeviation << TSC_CR_SSD_Pos) | htsc->Init.SpreadSpectrumPrescaler |
+			       htsc->Init.PulseGeneratorPrescaler | htsc->Init.MaxCountValue | htsc->Init.SynchroPinPolarity | htsc->Init.AcquisitionMode);
 
 	/* Spread spectrum */
 	if (htsc->Init.SpreadSpectrum == ENABLE) {
@@ -432,8 +430,7 @@ __weak void HAL_TSC_MspDeInit(TSC_HandleTypeDef *htsc)
  * @param  pCallback pointer to the Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_TSC_RegisterCallback(TSC_HandleTypeDef *htsc, HAL_TSC_CallbackIDTypeDef CallbackID,
-					   pTSC_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_TSC_RegisterCallback(TSC_HandleTypeDef *htsc, HAL_TSC_CallbackIDTypeDef CallbackID, pTSC_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 

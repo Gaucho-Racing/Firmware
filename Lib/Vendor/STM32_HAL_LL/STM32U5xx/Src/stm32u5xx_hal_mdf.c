@@ -360,8 +360,7 @@ HAL_StatusTypeDef HAL_MDF_Init(MDF_HandleTypeDef *hmdf)
 
 			/* Configure common parameters only for first MDF or ADF
 			 * instance */
-			if (((v_mdf1InstanceCounter == 0U) && IS_MDF_INSTANCE(hmdf->Instance)) ||
-			    ((v_adf1InstanceCounter == 0U) && IS_ADF_INSTANCE(hmdf->Instance))) {
+			if (((v_mdf1InstanceCounter == 0U) && IS_MDF_INSTANCE(hmdf->Instance)) || ((v_adf1InstanceCounter == 0U) && IS_ADF_INSTANCE(hmdf->Instance))) {
 				MDF_TypeDef *mdfBase;
 				/* Get MDF base according instance */
 				mdfBase = (IS_ADF_INSTANCE(hmdf->Instance)) ? ADF1 : MDF1;
@@ -373,51 +372,35 @@ HAL_StatusTypeDef HAL_MDF_Init(MDF_HandleTypeDef *hmdf)
 					/* Configure number of interleaved
 					 * filters for MDF instance */
 					if (IS_MDF_INSTANCE(hmdf->Instance)) {
-						assert_param(IS_MDF_INTERLEAVED_FILTERS(
-						    hmdf->Init.CommonParam.InterleavedFilters));
+						assert_param(IS_MDF_INTERLEAVED_FILTERS(hmdf->Init.CommonParam.InterleavedFilters));
 						mdfBase->GCR &= ~(MDF_GCR_ILVNB);
-						mdfBase->GCR |=
-						    (hmdf->Init.CommonParam.InterleavedFilters << MDF_GCR_ILVNB_Pos);
+						mdfBase->GCR |= (hmdf->Init.CommonParam.InterleavedFilters << MDF_GCR_ILVNB_Pos);
 					}
 
 					/* Configure processing clock divider,
 					   output clock divider, output clock
 					   pins and output clock generation
 					   trigger */
-					assert_param(
-					    IS_MDF_PROC_CLOCK_DIVIDER(hmdf->Init.CommonParam.ProcClockDivider));
-					assert_param(
-					    IS_FUNCTIONAL_STATE(hmdf->Init.CommonParam.OutputClock.Activation));
+					assert_param(IS_MDF_PROC_CLOCK_DIVIDER(hmdf->Init.CommonParam.ProcClockDivider));
+					assert_param(IS_FUNCTIONAL_STATE(hmdf->Init.CommonParam.OutputClock.Activation));
 					mdfBase->CKGCR = 0U;
-					mdfBase->CKGCR |=
-					    ((hmdf->Init.CommonParam.ProcClockDivider - 1U) << MDF_CKGCR_PROCDIV_Pos);
+					mdfBase->CKGCR |= ((hmdf->Init.CommonParam.ProcClockDivider - 1U) << MDF_CKGCR_PROCDIV_Pos);
 					if (hmdf->Init.CommonParam.OutputClock.Activation == ENABLE) {
-						assert_param(
-						    IS_MDF_OUTPUT_CLOCK_PINS(hmdf->Init.CommonParam.OutputClock.Pins));
-						assert_param(IS_MDF_OUTPUT_CLOCK_DIVIDER(
-						    hmdf->Init.CommonParam.OutputClock.Divider));
-						assert_param(IS_FUNCTIONAL_STATE(
-						    hmdf->Init.CommonParam.OutputClock.Trigger.Activation));
-						mdfBase->CKGCR |= (((hmdf->Init.CommonParam.OutputClock.Divider - 1U)
-								    << MDF_CKGCR_CCKDIV_Pos) |
-								   hmdf->Init.CommonParam.OutputClock.Pins |
+						assert_param(IS_MDF_OUTPUT_CLOCK_PINS(hmdf->Init.CommonParam.OutputClock.Pins));
+						assert_param(IS_MDF_OUTPUT_CLOCK_DIVIDER(hmdf->Init.CommonParam.OutputClock.Divider));
+						assert_param(IS_FUNCTIONAL_STATE(hmdf->Init.CommonParam.OutputClock.Trigger.Activation));
+						mdfBase->CKGCR |= (((hmdf->Init.CommonParam.OutputClock.Divider - 1U) << MDF_CKGCR_CCKDIV_Pos) | hmdf->Init.CommonParam.OutputClock.Pins |
 								   (hmdf->Init.CommonParam.OutputClock.Pins >> 4U));
 						if (hmdf->Init.CommonParam.OutputClock.Trigger.Activation == ENABLE) {
 							if (IS_MDF_INSTANCE(hmdf->Instance)) {
-								assert_param(IS_MDF_OUTPUT_CLOCK_TRIGGER_SOURCE(
-								    hmdf->Init.CommonParam.OutputClock.Trigger.Source));
+								assert_param(IS_MDF_OUTPUT_CLOCK_TRIGGER_SOURCE(hmdf->Init.CommonParam.OutputClock.Trigger.Source));
 							} else /* ADF instance
 								*/
 							{
-								assert_param(IS_ADF_OUTPUT_CLOCK_TRIGGER_SOURCE(
-								    hmdf->Init.CommonParam.OutputClock.Trigger.Source));
+								assert_param(IS_ADF_OUTPUT_CLOCK_TRIGGER_SOURCE(hmdf->Init.CommonParam.OutputClock.Trigger.Source));
 							}
-							assert_param(IS_MDF_OUTPUT_CLOCK_TRIGGER_EDGE(
-							    hmdf->Init.CommonParam.OutputClock.Trigger.Edge));
-							mdfBase->CKGCR |=
-							    (hmdf->Init.CommonParam.OutputClock.Trigger.Source |
-							     hmdf->Init.CommonParam.OutputClock.Trigger.Edge |
-							     MDF_CKGCR_CKGMOD);
+							assert_param(IS_MDF_OUTPUT_CLOCK_TRIGGER_EDGE(hmdf->Init.CommonParam.OutputClock.Trigger.Edge));
+							mdfBase->CKGCR |= (hmdf->Init.CommonParam.OutputClock.Trigger.Source | hmdf->Init.CommonParam.OutputClock.Trigger.Edge | MDF_CKGCR_CKGMOD);
 						}
 					}
 
@@ -439,8 +422,7 @@ HAL_StatusTypeDef HAL_MDF_Init(MDF_HandleTypeDef *hmdf)
 					assert_param(IS_MDF_SITF_THRESHOLD(hmdf->Init.SerialInterface.Threshold));
 					hmdf->Instance->SITFCR = 0U;
 					hmdf->Instance->SITFCR |=
-					    ((hmdf->Init.SerialInterface.Threshold << MDF_SITFCR_STH_Pos) |
-					     hmdf->Init.SerialInterface.Mode | hmdf->Init.SerialInterface.ClockSource);
+					    ((hmdf->Init.SerialInterface.Threshold << MDF_SITFCR_STH_Pos) | hmdf->Init.SerialInterface.Mode | hmdf->Init.SerialInterface.ClockSource);
 
 					/* Activate serial interface */
 					hmdf->Instance->SITFCR |= MDF_SITFCR_SITFEN;
@@ -527,8 +509,7 @@ HAL_StatusTypeDef HAL_MDF_DeInit(MDF_HandleTypeDef *hmdf)
 
 			/* Disable clock generator only for last MDF or ADF
 			 * instance deinitialization */
-			if (((v_mdf1InstanceCounter == 1U) && IS_MDF_INSTANCE(hmdf->Instance)) ||
-			    ((v_adf1InstanceCounter == 1U) && IS_ADF_INSTANCE(hmdf->Instance))) {
+			if (((v_mdf1InstanceCounter == 1U) && IS_MDF_INSTANCE(hmdf->Instance)) || ((v_adf1InstanceCounter == 1U) && IS_ADF_INSTANCE(hmdf->Instance))) {
 				MDF_TypeDef *p_mdf_base;
 				/* Get MDF base according instance */
 				p_mdf_base = (IS_ADF_INSTANCE(hmdf->Instance)) ? ADF1 : MDF1;
@@ -613,8 +594,7 @@ __weak void HAL_MDF_MspDeInit(MDF_HandleTypeDef *hmdf)
  * @param  pCallback pointer to the callback function.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_MDF_RegisterCallback(MDF_HandleTypeDef *hmdf, HAL_MDF_CallbackIDTypeDef CallbackID,
-					   pMDF_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_MDF_RegisterCallback(MDF_HandleTypeDef *hmdf, HAL_MDF_CallbackIDTypeDef CallbackID, pMDF_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -900,8 +880,7 @@ HAL_StatusTypeDef HAL_MDF_AcqStart(MDF_HandleTypeDef *hmdf, const MDF_FilterConf
 			assert_param(IS_MDF_ACQUISITION_MODE(pFilterConfig->AcquisitionMode));
 		}
 		if ((IS_ADF_INSTANCE(hmdf->Instance)) && (pFilterConfig->SoundActivity.Activation == ENABLE) &&
-		    ((pFilterConfig->AcquisitionMode == MDF_MODE_ASYNC_SINGLE) ||
-		     (pFilterConfig->AcquisitionMode == MDF_MODE_SYNC_SINGLE) ||
+		    ((pFilterConfig->AcquisitionMode == MDF_MODE_ASYNC_SINGLE) || (pFilterConfig->AcquisitionMode == MDF_MODE_SYNC_SINGLE) ||
 		     (pFilterConfig->AcquisitionMode == MDF_MODE_WINDOW_CONT))) {
 			status = HAL_ERROR;
 		}
@@ -926,8 +905,7 @@ HAL_StatusTypeDef HAL_MDF_AcqStart(MDF_HandleTypeDef *hmdf, const MDF_FilterConf
 			 * order */
 			assert_param(IS_MDF_CIC_MODE(pFilterConfig->CicMode));
 			if (IS_MDF_INSTANCE(hmdf->Instance)) {
-				if (((hmdf->Instance->OLDCR & MDF_OLDCR_OLDACTIVE) != 0U) &&
-				    (pFilterConfig->CicMode >= MDF_ONE_FILTER_SINC4)) {
+				if (((hmdf->Instance->OLDCR & MDF_OLDCR_OLDACTIVE) != 0U) && (pFilterConfig->CicMode >= MDF_ONE_FILTER_SINC4)) {
 					status = HAL_ERROR;
 				}
 			}
@@ -972,8 +950,7 @@ HAL_StatusTypeDef HAL_MDF_PollForAcq(MDF_HandleTypeDef *hmdf, uint32_t Timeout)
 
 		/* Check if data overflow, saturation or reshape filter occurs
 		 */
-		uint32_t error_flags =
-		    (hmdf->Instance->DFLTISR & (MDF_DFLTISR_DOVRF | MDF_DFLTISR_SATF | MDF_DFLTISR_RFOVRF));
+		uint32_t error_flags = (hmdf->Instance->DFLTISR & (MDF_DFLTISR_DOVRF | MDF_DFLTISR_SATF | MDF_DFLTISR_RFOVRF));
 		if (error_flags != 0U) {
 			/* Update error code */
 			if ((error_flags & MDF_DFLTISR_DOVRF) == MDF_DFLTISR_DOVRF) {
@@ -1039,8 +1016,7 @@ HAL_StatusTypeDef HAL_MDF_PollForSnapshotAcq(MDF_HandleTypeDef *hmdf, uint32_t T
 
 		/* Check if snapshot overrun, saturation or reshape filter
 		 * occurs */
-		uint32_t error_flags =
-		    (hmdf->Instance->DFLTISR & (MDF_DFLTISR_SSOVRF | MDF_DFLTISR_SATF | MDF_DFLTISR_RFOVRF));
+		uint32_t error_flags = (hmdf->Instance->DFLTISR & (MDF_DFLTISR_SSOVRF | MDF_DFLTISR_SATF | MDF_DFLTISR_RFOVRF));
 		if (error_flags != 0U) {
 			/* Update error code */
 			if ((error_flags & MDF_DFLTISR_SSOVRF) == MDF_DFLTISR_SSOVRF) {
@@ -1135,8 +1111,7 @@ HAL_StatusTypeDef HAL_MDF_GetSnapshotAcqValue(MDF_HandleTypeDef *hmdf, MDF_Snaps
 		if ((hmdf->Instance->DFLTCR & MDF_SNAPSHOT_16BITS) == MDF_SNAPSHOT_16BITS) {
 			/* Store value of integrator counter in snapshot
 			 * parameter structure */
-			pSnapshotParam->IntegratorCounter =
-			    ((snpsdr_value & MDF_SNPSDR_EXTSDR) >> MDF_SNPSDR_EXTSDR_Pos);
+			pSnapshotParam->IntegratorCounter = ((snpsdr_value & MDF_SNPSDR_EXTSDR) >> MDF_SNPSDR_EXTSDR_Pos);
 
 			/* Store snapshot acquisition value (16MSB) in snapshot
 			 * parameter structure */
@@ -1188,11 +1163,9 @@ HAL_StatusTypeDef HAL_MDF_AcqStop(MDF_HandleTypeDef *hmdf)
 
 		/* Clear all potential pending flags */
 		if (IS_ADF_INSTANCE(hmdf->Instance)) {
-			hmdf->Instance->DFLTISR |= (MDF_DFLTISR_DOVRF | MDF_DFLTISR_SATF | MDF_DFLTISR_RFOVRF |
-						    MDF_DFLTISR_SDDETF | MDF_DFLTISR_SDLVLF);
+			hmdf->Instance->DFLTISR |= (MDF_DFLTISR_DOVRF | MDF_DFLTISR_SATF | MDF_DFLTISR_RFOVRF | MDF_DFLTISR_SDDETF | MDF_DFLTISR_SDLVLF);
 		} else {
-			hmdf->Instance->DFLTISR |= (MDF_DFLTISR_DOVRF | MDF_DFLTISR_SSDRF | MDF_DFLTISR_SSOVRF |
-						    MDF_DFLTISR_SATF | MDF_DFLTISR_RFOVRF);
+			hmdf->Instance->DFLTISR |= (MDF_DFLTISR_DOVRF | MDF_DFLTISR_SSDRF | MDF_DFLTISR_SSOVRF | MDF_DFLTISR_SATF | MDF_DFLTISR_RFOVRF);
 		}
 
 		/* Update state */
@@ -1224,8 +1197,7 @@ HAL_StatusTypeDef HAL_MDF_AcqStart_IT(MDF_HandleTypeDef *hmdf, const MDF_FilterC
 			assert_param(IS_MDF_ACQUISITION_MODE(pFilterConfig->AcquisitionMode));
 		}
 		if ((IS_ADF_INSTANCE(hmdf->Instance)) && (pFilterConfig->SoundActivity.Activation == ENABLE) &&
-		    ((pFilterConfig->AcquisitionMode == MDF_MODE_ASYNC_SINGLE) ||
-		     (pFilterConfig->AcquisitionMode == MDF_MODE_SYNC_SINGLE) ||
+		    ((pFilterConfig->AcquisitionMode == MDF_MODE_ASYNC_SINGLE) || (pFilterConfig->AcquisitionMode == MDF_MODE_SYNC_SINGLE) ||
 		     (pFilterConfig->AcquisitionMode == MDF_MODE_WINDOW_CONT))) {
 			status = HAL_ERROR;
 		}
@@ -1250,8 +1222,7 @@ HAL_StatusTypeDef HAL_MDF_AcqStart_IT(MDF_HandleTypeDef *hmdf, const MDF_FilterC
 			 * order */
 			assert_param(IS_MDF_CIC_MODE(pFilterConfig->CicMode));
 			if (IS_MDF_INSTANCE(hmdf->Instance)) {
-				if (((hmdf->Instance->OLDCR & MDF_OLDCR_OLDACTIVE) != 0U) &&
-				    (pFilterConfig->CicMode >= MDF_ONE_FILTER_SINC4)) {
+				if (((hmdf->Instance->OLDCR & MDF_OLDCR_OLDACTIVE) != 0U) && (pFilterConfig->CicMode >= MDF_ONE_FILTER_SINC4)) {
 					status = HAL_ERROR;
 				}
 			}
@@ -1262,10 +1233,8 @@ HAL_StatusTypeDef HAL_MDF_AcqStart_IT(MDF_HandleTypeDef *hmdf, const MDF_FilterC
 					 * ready interrupts */
 					hmdf->Instance->DFLTIER |= (MDF_DFLTIER_SSOVRIE | MDF_DFLTIER_SSDRIE);
 				} else {
-					if ((IS_MDF_INSTANCE(hmdf->Instance)) ||
-					    (pFilterConfig->SoundActivity.Activation == DISABLE) ||
-					    (pFilterConfig->SoundActivity.DataMemoryTransfer !=
-					     MDF_SAD_NO_MEMORY_TRANSFER)) {
+					if ((IS_MDF_INSTANCE(hmdf->Instance)) || (pFilterConfig->SoundActivity.Activation == DISABLE) ||
+					    (pFilterConfig->SoundActivity.DataMemoryTransfer != MDF_SAD_NO_MEMORY_TRANSFER)) {
 						/* Enable data overflow and fifo
 						 * threshold interrupts */
 						hmdf->Instance->DFLTIER |= (MDF_DFLTIER_DOVRIE | MDF_DFLTIER_FTHIE);
@@ -1281,17 +1250,12 @@ HAL_StatusTypeDef HAL_MDF_AcqStart_IT(MDF_HandleTypeDef *hmdf, const MDF_FilterC
 				/* Enable saturation interrupt */
 				hmdf->Instance->DFLTIER |= MDF_DFLTIER_SATIE;
 
-				if ((IS_ADF_INSTANCE(hmdf->Instance)) &&
-				    (pFilterConfig->SoundActivity.Activation == ENABLE)) {
+				if ((IS_ADF_INSTANCE(hmdf->Instance)) && (pFilterConfig->SoundActivity.Activation == ENABLE)) {
 					/* Enable sound level value ready and
 					 * sound activity detection interrupts
 					 */
-					assert_param(
-					    IS_FUNCTIONAL_STATE(pFilterConfig->SoundActivity.SoundLevelInterrupt));
-					hmdf->Instance->DFLTIER |=
-					    (pFilterConfig->SoundActivity.SoundLevelInterrupt == ENABLE)
-						? (MDF_DFLTIER_SDLVLIE | MDF_DFLTIER_SDDETIE)
-						: MDF_DFLTIER_SDDETIE;
+					assert_param(IS_FUNCTIONAL_STATE(pFilterConfig->SoundActivity.SoundLevelInterrupt));
+					hmdf->Instance->DFLTIER |= (pFilterConfig->SoundActivity.SoundLevelInterrupt == ENABLE) ? (MDF_DFLTIER_SDLVLIE | MDF_DFLTIER_SDDETIE) : MDF_DFLTIER_SDDETIE;
 				}
 
 				/* Configure filter and start acquisition */
@@ -1339,15 +1303,11 @@ HAL_StatusTypeDef HAL_MDF_AcqStop_IT(MDF_HandleTypeDef *hmdf)
 
 		/* Disable interrupts and clear all potential pending flags */
 		if (IS_ADF_INSTANCE(hmdf->Instance)) {
-			hmdf->Instance->DFLTIER &= ~(MDF_DFLTIER_FTHIE | MDF_DFLTIER_DOVRIE | MDF_DFLTIER_SATIE |
-						     MDF_DFLTIER_RFOVRIE | MDF_DFLTIER_SDDETIE | MDF_DFLTIER_SDLVLIE);
-			hmdf->Instance->DFLTISR |= (MDF_DFLTISR_DOVRF | MDF_DFLTISR_SATF | MDF_DFLTISR_RFOVRF |
-						    MDF_DFLTISR_SDDETF | MDF_DFLTISR_SDLVLF);
+			hmdf->Instance->DFLTIER &= ~(MDF_DFLTIER_FTHIE | MDF_DFLTIER_DOVRIE | MDF_DFLTIER_SATIE | MDF_DFLTIER_RFOVRIE | MDF_DFLTIER_SDDETIE | MDF_DFLTIER_SDLVLIE);
+			hmdf->Instance->DFLTISR |= (MDF_DFLTISR_DOVRF | MDF_DFLTISR_SATF | MDF_DFLTISR_RFOVRF | MDF_DFLTISR_SDDETF | MDF_DFLTISR_SDLVLF);
 		} else {
-			hmdf->Instance->DFLTIER &= ~(MDF_DFLTIER_FTHIE | MDF_DFLTIER_DOVRIE | MDF_DFLTIER_SSDRIE |
-						     MDF_DFLTIER_SSOVRIE | MDF_DFLTIER_SATIE | MDF_DFLTIER_RFOVRIE);
-			hmdf->Instance->DFLTISR |= (MDF_DFLTISR_DOVRF | MDF_DFLTISR_SSDRF | MDF_DFLTISR_SSOVRF |
-						    MDF_DFLTISR_SATF | MDF_DFLTISR_RFOVRF);
+			hmdf->Instance->DFLTIER &= ~(MDF_DFLTIER_FTHIE | MDF_DFLTIER_DOVRIE | MDF_DFLTIER_SSDRIE | MDF_DFLTIER_SSOVRIE | MDF_DFLTIER_SATIE | MDF_DFLTIER_RFOVRIE);
+			hmdf->Instance->DFLTISR |= (MDF_DFLTISR_DOVRF | MDF_DFLTISR_SSDRF | MDF_DFLTISR_SSOVRF | MDF_DFLTISR_SATF | MDF_DFLTISR_RFOVRF);
 		}
 
 		/* Update state */
@@ -1365,8 +1325,7 @@ HAL_StatusTypeDef HAL_MDF_AcqStop_IT(MDF_HandleTypeDef *hmdf)
  * @param  pDmaConfig DMA configuration parameters.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_MDF_AcqStart_DMA(MDF_HandleTypeDef *hmdf, const MDF_FilterConfigTypeDef *pFilterConfig,
-				       const MDF_DmaConfigTypeDef *pDmaConfig)
+HAL_StatusTypeDef HAL_MDF_AcqStart_DMA(MDF_HandleTypeDef *hmdf, const MDF_FilterConfigTypeDef *pFilterConfig, const MDF_DmaConfigTypeDef *pDmaConfig)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -1382,8 +1341,7 @@ HAL_StatusTypeDef HAL_MDF_AcqStart_DMA(MDF_HandleTypeDef *hmdf, const MDF_Filter
 			assert_param(IS_MDF_ACQUISITION_MODE(pFilterConfig->AcquisitionMode));
 		}
 		if ((IS_ADF_INSTANCE(hmdf->Instance)) && (pFilterConfig->SoundActivity.Activation == ENABLE) &&
-		    ((pFilterConfig->AcquisitionMode == MDF_MODE_ASYNC_SINGLE) ||
-		     (pFilterConfig->AcquisitionMode == MDF_MODE_SYNC_SINGLE) ||
+		    ((pFilterConfig->AcquisitionMode == MDF_MODE_ASYNC_SINGLE) || (pFilterConfig->AcquisitionMode == MDF_MODE_SYNC_SINGLE) ||
 		     (pFilterConfig->AcquisitionMode == MDF_MODE_WINDOW_CONT))) {
 			status = HAL_ERROR;
 		} else if (pFilterConfig->AcquisitionMode == MDF_MODE_SYNC_SNAPSHOT) {
@@ -1410,8 +1368,7 @@ HAL_StatusTypeDef HAL_MDF_AcqStart_DMA(MDF_HandleTypeDef *hmdf, const MDF_Filter
 			 * order */
 			assert_param(IS_MDF_CIC_MODE(pFilterConfig->CicMode));
 			if (IS_MDF_INSTANCE(hmdf->Instance)) {
-				if (((hmdf->Instance->OLDCR & MDF_OLDCR_OLDACTIVE) != 0U) &&
-				    (pFilterConfig->CicMode >= MDF_ONE_FILTER_SINC4)) {
+				if (((hmdf->Instance->OLDCR & MDF_OLDCR_OLDACTIVE) != 0U) && (pFilterConfig->CicMode >= MDF_ONE_FILTER_SINC4)) {
 					status = HAL_ERROR;
 				}
 			}
@@ -1428,17 +1385,12 @@ HAL_StatusTypeDef HAL_MDF_AcqStart_DMA(MDF_HandleTypeDef *hmdf, const MDF_Filter
 				/* Enable saturation interrupt */
 				hmdf->Instance->DFLTIER |= MDF_DFLTIER_SATIE;
 
-				if ((IS_ADF_INSTANCE(hmdf->Instance)) &&
-				    (pFilterConfig->SoundActivity.Activation == ENABLE)) {
+				if ((IS_ADF_INSTANCE(hmdf->Instance)) && (pFilterConfig->SoundActivity.Activation == ENABLE)) {
 					/* Enable sound level value ready and
 					 * sound activity detection interrupts
 					 */
-					assert_param(
-					    IS_FUNCTIONAL_STATE(pFilterConfig->SoundActivity.SoundLevelInterrupt));
-					hmdf->Instance->DFLTIER |=
-					    (pFilterConfig->SoundActivity.SoundLevelInterrupt == ENABLE)
-						? (MDF_DFLTIER_SDLVLIE | MDF_DFLTIER_SDDETIE)
-						: MDF_DFLTIER_SDDETIE;
+					assert_param(IS_FUNCTIONAL_STATE(pFilterConfig->SoundActivity.SoundLevelInterrupt));
+					hmdf->Instance->DFLTIER |= (pFilterConfig->SoundActivity.SoundLevelInterrupt == ENABLE) ? (MDF_DFLTIER_SDLVLIE | MDF_DFLTIER_SDDETIE) : MDF_DFLTIER_SDDETIE;
 				}
 
 				/* Enable MDF DMA requests */
@@ -1448,25 +1400,19 @@ HAL_StatusTypeDef HAL_MDF_AcqStart_DMA(MDF_HandleTypeDef *hmdf, const MDF_Filter
 				hmdf->hdma->XferCpltCallback = MDF_DmaXferCpltCallback;
 				hmdf->hdma->XferHalfCpltCallback = MDF_DmaXferHalfCpltCallback;
 				hmdf->hdma->XferErrorCallback = MDF_DmaErrorCallback;
-				SrcAddress = (pDmaConfig->MsbOnly == ENABLE)
-						 ? (((uint32_t)&hmdf->Instance->DFLTDR) + 2U)
-						 : (uint32_t)&hmdf->Instance->DFLTDR;
+				SrcAddress = (pDmaConfig->MsbOnly == ENABLE) ? (((uint32_t)&hmdf->Instance->DFLTDR) + 2U) : (uint32_t)&hmdf->Instance->DFLTDR;
 				if ((hmdf->hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
 					if (hmdf->hdma->LinkedListQueue != NULL) {
-						hmdf->hdma->LinkedListQueue->Head
-						    ->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] = pDmaConfig->DataLength;
-						hmdf->hdma->LinkedListQueue->Head
-						    ->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] = SrcAddress;
-						hmdf->hdma->LinkedListQueue->Head
-						    ->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] = pDmaConfig->Address;
+						hmdf->hdma->LinkedListQueue->Head->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] = pDmaConfig->DataLength;
+						hmdf->hdma->LinkedListQueue->Head->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] = SrcAddress;
+						hmdf->hdma->LinkedListQueue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] = pDmaConfig->Address;
 
 						status = HAL_DMAEx_List_Start_IT(hmdf->hdma);
 					} else {
 						status = HAL_ERROR;
 					}
 				} else {
-					status = HAL_DMA_Start_IT(hmdf->hdma, SrcAddress, pDmaConfig->Address,
-								  pDmaConfig->DataLength);
+					status = HAL_DMA_Start_IT(hmdf->hdma, SrcAddress, pDmaConfig->Address, pDmaConfig->DataLength);
 				}
 				if (status != HAL_OK) {
 					/* Update state */
@@ -1526,10 +1472,8 @@ HAL_StatusTypeDef HAL_MDF_AcqStop_DMA(MDF_HandleTypeDef *hmdf)
 
 		/* Disable interrupts and clear all potential pending flags */
 		if (IS_ADF_INSTANCE(hmdf->Instance)) {
-			hmdf->Instance->DFLTIER &=
-			    ~(MDF_DFLTIER_SATIE | MDF_DFLTIER_RFOVRIE | MDF_DFLTIER_SDDETIE | MDF_DFLTIER_SDLVLIE);
-			hmdf->Instance->DFLTISR |=
-			    (MDF_DFLTISR_SATF | MDF_DFLTISR_RFOVRF | MDF_DFLTISR_SDDETF | MDF_DFLTISR_SDLVLF);
+			hmdf->Instance->DFLTIER &= ~(MDF_DFLTIER_SATIE | MDF_DFLTIER_RFOVRIE | MDF_DFLTIER_SDDETIE | MDF_DFLTIER_SDLVLIE);
+			hmdf->Instance->DFLTISR |= (MDF_DFLTISR_SATF | MDF_DFLTISR_RFOVRF | MDF_DFLTISR_SDDETF | MDF_DFLTISR_SDLVLF);
 		} else {
 			hmdf->Instance->DFLTIER &= ~(MDF_DFLTIER_SATIE | MDF_DFLTIER_RFOVRIE);
 			hmdf->Instance->DFLTISR |= (MDF_DFLTISR_SATF | MDF_DFLTISR_RFOVRF);
@@ -1803,8 +1747,7 @@ HAL_StatusTypeDef HAL_MDF_GetOffset(const MDF_HandleTypeDef *hmdf, int32_t *pOff
   * @retval HAL status.
   * @note   This function must not be used with MDF instance.
   */
-HAL_StatusTypeDef HAL_MDF_PollForSndLvl(MDF_HandleTypeDef *hmdf, uint32_t Timeout, uint32_t *pSoundLevel,
-					uint32_t *pAmbientNoise)
+HAL_StatusTypeDef HAL_MDF_PollForSndLvl(MDF_HandleTypeDef *hmdf, uint32_t Timeout, uint32_t *pSoundLevel, uint32_t *pAmbientNoise)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -2167,8 +2110,7 @@ HAL_StatusTypeDef HAL_MDF_ScdStart(MDF_HandleTypeDef *hmdf, const MDF_ScdConfigT
 				status = HAL_ERROR;
 			} else {
 				/* Configure threshold and break signal */
-				hmdf->Instance->SCDCR = (((pScdConfig->Threshold - 1U) << MDF_SCDCR_SCDT_Pos) |
-							 (pScdConfig->BreakSignal << MDF_SCDCR_BKSCD_Pos));
+				hmdf->Instance->SCDCR = (((pScdConfig->Threshold - 1U) << MDF_SCDCR_SCDT_Pos) | (pScdConfig->BreakSignal << MDF_SCDCR_BKSCD_Pos));
 
 				/* Enable short-circuit detector */
 				hmdf->Instance->SCDCR |= MDF_SCDCR_SCDEN;
@@ -2209,8 +2151,7 @@ HAL_StatusTypeDef HAL_MDF_PollForScd(MDF_HandleTypeDef *hmdf, uint32_t Timeout)
 			uint32_t tickstart = HAL_GetTick();
 
 			/* Wait for short-circuit detection */
-			while (((hmdf->Instance->DFLTISR & MDF_DFLTISR_SCDF) != MDF_DFLTISR_SCDF) &&
-			       (status == HAL_OK)) {
+			while (((hmdf->Instance->DFLTISR & MDF_DFLTISR_SCDF) != MDF_DFLTISR_SCDF) && (status == HAL_OK)) {
 				/* Check the timeout */
 				if (Timeout != HAL_MAX_DELAY) {
 					if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
@@ -2301,8 +2242,7 @@ HAL_StatusTypeDef HAL_MDF_ScdStart_IT(MDF_HandleTypeDef *hmdf, const MDF_ScdConf
 				status = HAL_ERROR;
 			} else {
 				/* Configure threshold and break signal */
-				hmdf->Instance->SCDCR = (((pScdConfig->Threshold - 1U) << MDF_SCDCR_SCDT_Pos) |
-							 (pScdConfig->BreakSignal << MDF_SCDCR_BKSCD_Pos));
+				hmdf->Instance->SCDCR = (((pScdConfig->Threshold - 1U) << MDF_SCDCR_SCDT_Pos) | (pScdConfig->BreakSignal << MDF_SCDCR_BKSCD_Pos));
 
 				/* Enable short-circuit detector interrupt */
 				hmdf->Instance->DFLTIER |= MDF_DFLTIER_SCDIE;
@@ -2431,10 +2371,8 @@ HAL_StatusTypeDef HAL_MDF_OldStart(MDF_HandleTypeDef *hmdf, const MDF_OldConfigT
 				if (status == HAL_OK) {
 					/* Configure OLD CIC mode, decimation
 					 * ratio, event and break signal */
-					hmdf->Instance->OLDCR =
-					    (pOldConfig->OldCicMode | pOldConfig->OldEventConfig |
-					     ((pOldConfig->OldDecimationRatio - 1U) << MDF_OLDCR_ACICD_Pos) |
-					     (pOldConfig->BreakSignal << MDF_OLDCR_BKOLD_Pos));
+					hmdf->Instance->OLDCR = (pOldConfig->OldCicMode | pOldConfig->OldEventConfig | ((pOldConfig->OldDecimationRatio - 1U) << MDF_OLDCR_ACICD_Pos) |
+								 (pOldConfig->BreakSignal << MDF_OLDCR_BKOLD_Pos));
 
 					/* Configure low and high thresholds */
 					hmdf->Instance->OLDTHLR = (uint32_t)pOldConfig->LowThreshold;
@@ -2485,8 +2423,7 @@ HAL_StatusTypeDef HAL_MDF_PollForOld(MDF_HandleTypeDef *hmdf, uint32_t Timeout, 
 			uint32_t tickstart = HAL_GetTick();
 
 			/* Wait for out-off limit detection */
-			while (((hmdf->Instance->DFLTISR & MDF_DFLTISR_OLDF) != MDF_DFLTISR_OLDF) &&
-			       (status == HAL_OK)) {
+			while (((hmdf->Instance->DFLTISR & MDF_DFLTISR_OLDF) != MDF_DFLTISR_OLDF) && (status == HAL_OK)) {
 				/* Check the timeout */
 				if (Timeout != HAL_MAX_DELAY) {
 					if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
@@ -2606,10 +2543,8 @@ HAL_StatusTypeDef HAL_MDF_OldStart_IT(MDF_HandleTypeDef *hmdf, const MDF_OldConf
 				if (status == HAL_OK) {
 					/* Configure OLD CIC mode, decimation
 					 * ratio, event and break signal */
-					hmdf->Instance->OLDCR =
-					    (pOldConfig->OldCicMode | pOldConfig->OldEventConfig |
-					     ((pOldConfig->OldDecimationRatio - 1U) << MDF_OLDCR_ACICD_Pos) |
-					     (pOldConfig->BreakSignal << MDF_OLDCR_BKOLD_Pos));
+					hmdf->Instance->OLDCR = (pOldConfig->OldCicMode | pOldConfig->OldEventConfig | ((pOldConfig->OldDecimationRatio - 1U) << MDF_OLDCR_ACICD_Pos) |
+								 (pOldConfig->BreakSignal << MDF_OLDCR_BKOLD_Pos));
 
 					/* Configure low and high thresholds */
 					hmdf->Instance->OLDTHLR = (uint32_t)pOldConfig->LowThreshold;
@@ -3006,11 +2941,9 @@ static void MDF_AcqStart(MDF_HandleTypeDef *const hmdf, const MDF_FilterConfigTy
 	 * threshold */
 	assert_param(IS_MDF_DISCARD_SAMPLES(pFilterConfig->DiscardSamples));
 	assert_param(IS_MDF_FIFO_THRESHOLD(pFilterConfig->FifoThreshold));
-	if ((pFilterConfig->AcquisitionMode == MDF_MODE_ASYNC_CONT) ||
-	    (pFilterConfig->AcquisitionMode == MDF_MODE_ASYNC_SINGLE)) {
+	if ((pFilterConfig->AcquisitionMode == MDF_MODE_ASYNC_CONT) || (pFilterConfig->AcquisitionMode == MDF_MODE_ASYNC_SINGLE)) {
 		/* Trigger parameters are not used */
-		hmdf->Instance->DFLTCR |= (pFilterConfig->AcquisitionMode | pFilterConfig->FifoThreshold |
-					   (pFilterConfig->DiscardSamples << MDF_DFLTCR_NBDIS_Pos));
+		hmdf->Instance->DFLTCR |= (pFilterConfig->AcquisitionMode | pFilterConfig->FifoThreshold | (pFilterConfig->DiscardSamples << MDF_DFLTCR_NBDIS_Pos));
 	} else {
 		/* Trigger parameters are used */
 		if (IS_ADF_INSTANCE(hmdf->Instance)) {
@@ -3019,9 +2952,8 @@ static void MDF_AcqStart(MDF_HandleTypeDef *const hmdf, const MDF_FilterConfigTy
 			assert_param(IS_MDF_TRIGGER_SOURCE(pFilterConfig->Trigger.Source));
 		}
 		assert_param(IS_MDF_TRIGGER_EDGE(pFilterConfig->Trigger.Edge));
-		hmdf->Instance->DFLTCR |=
-		    (pFilterConfig->AcquisitionMode | pFilterConfig->FifoThreshold | pFilterConfig->Trigger.Source |
-		     pFilterConfig->Trigger.Edge | (pFilterConfig->DiscardSamples << MDF_DFLTCR_NBDIS_Pos));
+		hmdf->Instance->DFLTCR |= (pFilterConfig->AcquisitionMode | pFilterConfig->FifoThreshold | pFilterConfig->Trigger.Source | pFilterConfig->Trigger.Edge |
+					   (pFilterConfig->DiscardSamples << MDF_DFLTCR_NBDIS_Pos));
 	}
 
 	/* Configure if needed snapshot format only for MDF instance */
@@ -3050,9 +2982,8 @@ static void MDF_AcqStart(MDF_HandleTypeDef *const hmdf, const MDF_FilterConfigTy
 		/* for positive value, no offset to apply */
 		register_gain_value = (uint32_t)pFilterConfig->Gain;
 	}
-	hmdf->Instance->DFLTCICR = (pFilterConfig->DataSource | pFilterConfig->CicMode |
-				    ((pFilterConfig->DecimationRatio - 1U) << MDF_DFLTCICR_MCICD_Pos) |
-				    (register_gain_value << MDF_DFLTCICR_SCALE_Pos));
+	hmdf->Instance->DFLTCICR =
+	    (pFilterConfig->DataSource | pFilterConfig->CicMode | ((pFilterConfig->DecimationRatio - 1U) << MDF_DFLTCICR_MCICD_Pos) | (register_gain_value << MDF_DFLTCICR_SCALE_Pos));
 
 	/* Configure bitstream delay */
 	assert_param(IS_MDF_DELAY(pFilterConfig->Delay));
@@ -3094,9 +3025,7 @@ static void MDF_AcqStart(MDF_HandleTypeDef *const hmdf, const MDF_FilterConfigTy
 			/* Configure integrator value and output division */
 			assert_param(IS_MDF_INTEGRATOR_VALUE(pFilterConfig->Integrator.Value));
 			assert_param(IS_MDF_INTEGRATOR_OUTPUT_DIV(pFilterConfig->Integrator.OutputDivision));
-			hmdf->Instance->DFLTINTR =
-			    (((pFilterConfig->Integrator.Value - 1U) << MDF_DFLTINTR_INTVAL_Pos) |
-			     pFilterConfig->Integrator.OutputDivision);
+			hmdf->Instance->DFLTINTR = (((pFilterConfig->Integrator.Value - 1U) << MDF_DFLTINTR_INTVAL_Pos) | pFilterConfig->Integrator.OutputDivision);
 		} else {
 			/* Bypass integrator */
 			hmdf->Instance->DFLTINTR = 0U;
@@ -3116,17 +3045,12 @@ static void MDF_AcqStart(MDF_HandleTypeDef *const hmdf, const MDF_FilterConfigTy
 			}
 			assert_param(IS_MDF_SAD_SOUND_TRIGGER(pFilterConfig->SoundActivity.SoundTriggerEvent));
 			assert_param(IS_MDF_SAD_DATA_MEMORY_TRANSFER(pFilterConfig->SoundActivity.DataMemoryTransfer));
-			if ((pFilterConfig->SoundActivity.Mode != MDF_SAD_AMBIENT_NOISE_DETECTOR) &&
-			    (pFilterConfig->SoundActivity.Hysteresis == ENABLE)) {
-				hmdf->Instance->SADCR =
-				    (pFilterConfig->SoundActivity.Mode | pFilterConfig->SoundActivity.FrameSize |
-				     MDF_SADCR_HYSTEN | pFilterConfig->SoundActivity.SoundTriggerEvent |
-				     pFilterConfig->SoundActivity.DataMemoryTransfer);
+			if ((pFilterConfig->SoundActivity.Mode != MDF_SAD_AMBIENT_NOISE_DETECTOR) && (pFilterConfig->SoundActivity.Hysteresis == ENABLE)) {
+				hmdf->Instance->SADCR = (pFilterConfig->SoundActivity.Mode | pFilterConfig->SoundActivity.FrameSize | MDF_SADCR_HYSTEN |
+							 pFilterConfig->SoundActivity.SoundTriggerEvent | pFilterConfig->SoundActivity.DataMemoryTransfer);
 			} else {
-				hmdf->Instance->SADCR =
-				    (pFilterConfig->SoundActivity.Mode | pFilterConfig->SoundActivity.FrameSize |
-				     pFilterConfig->SoundActivity.SoundTriggerEvent |
-				     pFilterConfig->SoundActivity.DataMemoryTransfer);
+				hmdf->Instance->SADCR = (pFilterConfig->SoundActivity.Mode | pFilterConfig->SoundActivity.FrameSize | pFilterConfig->SoundActivity.SoundTriggerEvent |
+							 pFilterConfig->SoundActivity.DataMemoryTransfer);
 			}
 
 			/* Configure SAD minimum noise level, hangover window,
@@ -3135,23 +3059,15 @@ static void MDF_AcqStart(MDF_HandleTypeDef *const hmdf, const MDF_FilterConfigTy
 			assert_param(IS_MDF_SAD_MIN_NOISE_LEVEL(pFilterConfig->SoundActivity.MinNoiseLevel));
 			assert_param(IS_MDF_SAD_HANGOVER_WINDOW(pFilterConfig->SoundActivity.HangoverWindow));
 			assert_param(IS_MDF_SAD_LEARNING_FRAMES(pFilterConfig->SoundActivity.LearningFrames));
-			assert_param(
-			    IS_MDF_SAD_SIGNAL_NOISE_THRESHOLD(pFilterConfig->SoundActivity.SignalNoiseThreshold));
+			assert_param(IS_MDF_SAD_SIGNAL_NOISE_THRESHOLD(pFilterConfig->SoundActivity.SignalNoiseThreshold));
 			if (pFilterConfig->SoundActivity.Mode != MDF_SAD_SOUND_DETECTOR) {
-				assert_param(
-				    IS_MDF_SAD_AMBIENT_NOISE_SLOPE(pFilterConfig->SoundActivity.AmbientNoiseSlope));
+				assert_param(IS_MDF_SAD_AMBIENT_NOISE_SLOPE(pFilterConfig->SoundActivity.AmbientNoiseSlope));
 				hmdf->Instance->SADCFGR =
-				    ((pFilterConfig->SoundActivity.MinNoiseLevel << MDF_SADCFGR_ANMIN_Pos) |
-				     pFilterConfig->SoundActivity.HangoverWindow |
-				     pFilterConfig->SoundActivity.LearningFrames |
-				     (pFilterConfig->SoundActivity.AmbientNoiseSlope << MDF_SADCFGR_ANSLP_Pos) |
-				     pFilterConfig->SoundActivity.SignalNoiseThreshold);
+				    ((pFilterConfig->SoundActivity.MinNoiseLevel << MDF_SADCFGR_ANMIN_Pos) | pFilterConfig->SoundActivity.HangoverWindow | pFilterConfig->SoundActivity.LearningFrames |
+				     (pFilterConfig->SoundActivity.AmbientNoiseSlope << MDF_SADCFGR_ANSLP_Pos) | pFilterConfig->SoundActivity.SignalNoiseThreshold);
 			} else {
-				hmdf->Instance->SADCFGR =
-				    ((pFilterConfig->SoundActivity.MinNoiseLevel << MDF_SADCFGR_ANMIN_Pos) |
-				     pFilterConfig->SoundActivity.HangoverWindow |
-				     pFilterConfig->SoundActivity.LearningFrames |
-				     pFilterConfig->SoundActivity.SignalNoiseThreshold);
+				hmdf->Instance->SADCFGR = ((pFilterConfig->SoundActivity.MinNoiseLevel << MDF_SADCFGR_ANMIN_Pos) | pFilterConfig->SoundActivity.HangoverWindow |
+							   pFilterConfig->SoundActivity.LearningFrames | pFilterConfig->SoundActivity.SignalNoiseThreshold);
 			}
 		} else {
 			/* SAD is not used */

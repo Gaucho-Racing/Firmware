@@ -66,8 +66,8 @@ extern "C" {
  * @brief Power-down in Run mode Flash key
  */
 #define FLASH_PDKEY1 0x04152637U /*!< Flash power down key1 */
-#define FLASH_PDKEY2                                                                                                   \
-	0xFAFBFCFDU /*!< Flash power down key2: used with FLASH_PDKEY1                                                 \
+#define FLASH_PDKEY2                                                                                                                                                                                   \
+	0xFAFBFCFDU /*!< Flash power down key2: used with FLASH_PDKEY1                                                                                                                                 \
 			 to unlock the RUN_PD bit in FLASH_ACR */
 
 /**
@@ -86,17 +86,16 @@ extern "C" {
  * @{
  */
 #define LL_SYSCFG_REMAP_FLASH 0x00000000U /*!< Main Flash memory mapped at 0x00000000 */
-#define LL_SYSCFG_REMAP_SYSTEMFLASH                                                                                    \
-	SYSCFG_MEMRMP_MEM_MODE_0 /*!< System Flash memory mapped at 0x00000000                                         \
-				  */
+#define LL_SYSCFG_REMAP_SYSTEMFLASH                                                                                                                                                                    \
+	SYSCFG_MEMRMP_MEM_MODE_0						   /*!< System Flash memory mapped at 0x00000000                                                                       \
+										    */
 #define LL_SYSCFG_REMAP_SRAM (SYSCFG_MEMRMP_MEM_MODE_1 | SYSCFG_MEMRMP_MEM_MODE_0) /*!< SRAM1 mapped at 0x00000000 */
 #if defined(FMC_Bank1_R)
-#define LL_SYSCFG_REMAP_FMC                                                                                            \
-	SYSCFG_MEMRMP_MEM_MODE_1 /*!< FMC bank 1 (NOR/PSRAM 1 and 2) mapped at                                         \
-				    0x00000000 */
-#endif				 /* FMC_Bank1_R */
-#define LL_SYSCFG_REMAP_QUADSPI                                                                                        \
-	(SYSCFG_MEMRMP_MEM_MODE_2 | SYSCFG_MEMRMP_MEM_MODE_1) /*!< QUADSPI memory mapped at 0x00000000 */
+#define LL_SYSCFG_REMAP_FMC                                                                                                                                                                            \
+	SYSCFG_MEMRMP_MEM_MODE_1						      /*!< FMC bank 1 (NOR/PSRAM 1 and 2) mapped at                                                                    \
+											 0x00000000 */
+#endif										      /* FMC_Bank1_R */
+#define LL_SYSCFG_REMAP_QUADSPI (SYSCFG_MEMRMP_MEM_MODE_2 | SYSCFG_MEMRMP_MEM_MODE_1) /*!< QUADSPI memory mapped at 0x00000000 */
 /**
  * @}
  */
@@ -105,13 +104,13 @@ extern "C" {
 /** @defgroup SYSTEM_LL_EC_BANKMODE SYSCFG BANK MODE
  * @{
  */
-#define LL_SYSCFG_BANKMODE_BANK1                                                                                       \
-	0x00000000U /*!< Flash Bank1 mapped at 0x08000000 (and aliased                                                 \
-		     @0x00000000) and Flash Bank2 mapped at 0x08080000 (and                                            \
+#define LL_SYSCFG_BANKMODE_BANK1                                                                                                                                                                       \
+	0x00000000U /*!< Flash Bank1 mapped at 0x08000000 (and aliased                                                                                                                                 \
+		     @0x00000000) and Flash Bank2 mapped at 0x08080000 (and                                                                                                                            \
 		     aliased at 0x00080000) */
-#define LL_SYSCFG_BANKMODE_BANK2                                                                                       \
-	SYSCFG_MEMRMP_FB_MODE /*!< Flash Bank2 mapped at 0x08000000 (and                                               \
-			       aliased @0x00000000) and Flash Bank1 mapped at                                          \
+#define LL_SYSCFG_BANKMODE_BANK2                                                                                                                                                                       \
+	SYSCFG_MEMRMP_FB_MODE /*!< Flash Bank2 mapped at 0x08000000 (and                                                                                                                               \
+			       aliased @0x00000000) and Flash Bank1 mapped at                                                                                                                          \
 			       0x08080000 (and aliased at 0x00080000) */
 /**
  * @}
@@ -166,38 +165,22 @@ extern "C" {
 /** @defgroup SYSTEM_LL_EC_EXTI_LINE SYSCFG EXTI LINE
  * @{
  */
-#define LL_SYSCFG_EXTI_LINE0                                                                                           \
-	(uint32_t)((0x000FU << LL_EXTI_REGISTER_PINPOS_SHFT) | 0U) /* !< EXTI_POSITION_0  | EXTICR[0] */
-#define LL_SYSCFG_EXTI_LINE1                                                                                           \
-	(uint32_t)((0x00F0U << LL_EXTI_REGISTER_PINPOS_SHFT) | 0U) /* !< EXTI_POSITION_4  | EXTICR[0] */
-#define LL_SYSCFG_EXTI_LINE2                                                                                           \
-	(uint32_t)((0x0F00U << LL_EXTI_REGISTER_PINPOS_SHFT) | 0U) /* !< EXTI_POSITION_8  | EXTICR[0] */
-#define LL_SYSCFG_EXTI_LINE3                                                                                           \
-	(uint32_t)((0xF000U << LL_EXTI_REGISTER_PINPOS_SHFT) | 0U) /* !< EXTI_POSITION_12 | EXTICR[0] */
-#define LL_SYSCFG_EXTI_LINE4                                                                                           \
-	(uint32_t)((0x000FU << LL_EXTI_REGISTER_PINPOS_SHFT) | 1U) /* !< EXTI_POSITION_0  | EXTICR[1] */
-#define LL_SYSCFG_EXTI_LINE5                                                                                           \
-	(uint32_t)((0x00F0U << LL_EXTI_REGISTER_PINPOS_SHFT) | 1U) /* !< EXTI_POSITION_4  | EXTICR[1] */
-#define LL_SYSCFG_EXTI_LINE6                                                                                           \
-	(uint32_t)((0x0F00U << LL_EXTI_REGISTER_PINPOS_SHFT) | 1U) /* !< EXTI_POSITION_8  | EXTICR[1] */
-#define LL_SYSCFG_EXTI_LINE7                                                                                           \
-	(uint32_t)((0xF000U << LL_EXTI_REGISTER_PINPOS_SHFT) | 1U) /* !< EXTI_POSITION_12 | EXTICR[1] */
-#define LL_SYSCFG_EXTI_LINE8                                                                                           \
-	(uint32_t)((0x000FU << LL_EXTI_REGISTER_PINPOS_SHFT) | 2U) /* !< EXTI_POSITION_0  | EXTICR[2] */
-#define LL_SYSCFG_EXTI_LINE9                                                                                           \
-	(uint32_t)((0x00F0U << LL_EXTI_REGISTER_PINPOS_SHFT) | 2U) /* !< EXTI_POSITION_4  | EXTICR[2] */
-#define LL_SYSCFG_EXTI_LINE10                                                                                          \
-	(uint32_t)((0x0F00U << LL_EXTI_REGISTER_PINPOS_SHFT) | 2U) /* !< EXTI_POSITION_8  | EXTICR[2] */
-#define LL_SYSCFG_EXTI_LINE11                                                                                          \
-	(uint32_t)((0xF000U << LL_EXTI_REGISTER_PINPOS_SHFT) | 2U) /* !< EXTI_POSITION_12 | EXTICR[2] */
-#define LL_SYSCFG_EXTI_LINE12                                                                                          \
-	(uint32_t)((0x000FU << LL_EXTI_REGISTER_PINPOS_SHFT) | 3U) /* !< EXTI_POSITION_0  | EXTICR[3] */
-#define LL_SYSCFG_EXTI_LINE13                                                                                          \
-	(uint32_t)((0x00F0U << LL_EXTI_REGISTER_PINPOS_SHFT) | 3U) /* !< EXTI_POSITION_4  | EXTICR[3] */
-#define LL_SYSCFG_EXTI_LINE14                                                                                          \
-	(uint32_t)((0x0F00U << LL_EXTI_REGISTER_PINPOS_SHFT) | 3U) /* !< EXTI_POSITION_8  | EXTICR[3] */
-#define LL_SYSCFG_EXTI_LINE15                                                                                          \
-	(uint32_t)((0xF000U << LL_EXTI_REGISTER_PINPOS_SHFT) | 3U) /* !< EXTI_POSITION_12 | EXTICR[3] */
+#define LL_SYSCFG_EXTI_LINE0 (uint32_t)((0x000FU << LL_EXTI_REGISTER_PINPOS_SHFT) | 0U)	 /* !< EXTI_POSITION_0  | EXTICR[0] */
+#define LL_SYSCFG_EXTI_LINE1 (uint32_t)((0x00F0U << LL_EXTI_REGISTER_PINPOS_SHFT) | 0U)	 /* !< EXTI_POSITION_4  | EXTICR[0] */
+#define LL_SYSCFG_EXTI_LINE2 (uint32_t)((0x0F00U << LL_EXTI_REGISTER_PINPOS_SHFT) | 0U)	 /* !< EXTI_POSITION_8  | EXTICR[0] */
+#define LL_SYSCFG_EXTI_LINE3 (uint32_t)((0xF000U << LL_EXTI_REGISTER_PINPOS_SHFT) | 0U)	 /* !< EXTI_POSITION_12 | EXTICR[0] */
+#define LL_SYSCFG_EXTI_LINE4 (uint32_t)((0x000FU << LL_EXTI_REGISTER_PINPOS_SHFT) | 1U)	 /* !< EXTI_POSITION_0  | EXTICR[1] */
+#define LL_SYSCFG_EXTI_LINE5 (uint32_t)((0x00F0U << LL_EXTI_REGISTER_PINPOS_SHFT) | 1U)	 /* !< EXTI_POSITION_4  | EXTICR[1] */
+#define LL_SYSCFG_EXTI_LINE6 (uint32_t)((0x0F00U << LL_EXTI_REGISTER_PINPOS_SHFT) | 1U)	 /* !< EXTI_POSITION_8  | EXTICR[1] */
+#define LL_SYSCFG_EXTI_LINE7 (uint32_t)((0xF000U << LL_EXTI_REGISTER_PINPOS_SHFT) | 1U)	 /* !< EXTI_POSITION_12 | EXTICR[1] */
+#define LL_SYSCFG_EXTI_LINE8 (uint32_t)((0x000FU << LL_EXTI_REGISTER_PINPOS_SHFT) | 2U)	 /* !< EXTI_POSITION_0  | EXTICR[2] */
+#define LL_SYSCFG_EXTI_LINE9 (uint32_t)((0x00F0U << LL_EXTI_REGISTER_PINPOS_SHFT) | 2U)	 /* !< EXTI_POSITION_4  | EXTICR[2] */
+#define LL_SYSCFG_EXTI_LINE10 (uint32_t)((0x0F00U << LL_EXTI_REGISTER_PINPOS_SHFT) | 2U) /* !< EXTI_POSITION_8  | EXTICR[2] */
+#define LL_SYSCFG_EXTI_LINE11 (uint32_t)((0xF000U << LL_EXTI_REGISTER_PINPOS_SHFT) | 2U) /* !< EXTI_POSITION_12 | EXTICR[2] */
+#define LL_SYSCFG_EXTI_LINE12 (uint32_t)((0x000FU << LL_EXTI_REGISTER_PINPOS_SHFT) | 3U) /* !< EXTI_POSITION_0  | EXTICR[3] */
+#define LL_SYSCFG_EXTI_LINE13 (uint32_t)((0x00F0U << LL_EXTI_REGISTER_PINPOS_SHFT) | 3U) /* !< EXTI_POSITION_4  | EXTICR[3] */
+#define LL_SYSCFG_EXTI_LINE14 (uint32_t)((0x0F00U << LL_EXTI_REGISTER_PINPOS_SHFT) | 3U) /* !< EXTI_POSITION_8  | EXTICR[3] */
+#define LL_SYSCFG_EXTI_LINE15 (uint32_t)((0xF000U << LL_EXTI_REGISTER_PINPOS_SHFT) | 3U) /* !< EXTI_POSITION_12 | EXTICR[3] */
 /**
  * @}
  */
@@ -205,19 +188,19 @@ extern "C" {
 /** @defgroup SYSTEM_LL_EC_TIMBREAK SYSCFG TIMER BREAK
  * @{
  */
-#define LL_SYSCFG_TIMBREAK_ECC                                                                                         \
-	SYSCFG_CFGR2_ECCL /*!< Enables and locks the ECC error signal                                                  \
+#define LL_SYSCFG_TIMBREAK_ECC                                                                                                                                                                         \
+	SYSCFG_CFGR2_ECCL /*!< Enables and locks the ECC error signal                                                                                                                                  \
 			       with Break Input of TIM1/8/15/16/17 */
-#define LL_SYSCFG_TIMBREAK_PVD                                                                                         \
-	SYSCFG_CFGR2_PVDL /*!< Enables and locks the PVD connection                                                    \
-			       with TIM1/8/15/16/17 Break Input                                                        \
-			       and also the PVDE and PLS bits of the Power                                             \
+#define LL_SYSCFG_TIMBREAK_PVD                                                                                                                                                                         \
+	SYSCFG_CFGR2_PVDL /*!< Enables and locks the PVD connection                                                                                                                                    \
+			       with TIM1/8/15/16/17 Break Input                                                                                                                                        \
+			       and also the PVDE and PLS bits of the Power                                                                                                                             \
 			     Control Interface */
-#define LL_SYSCFG_TIMBREAK_SRAM2_PARITY                                                                                \
-	SYSCFG_CFGR2_SPL /*!< Enables and locks the SRAM2_PARITY error signal                                          \
+#define LL_SYSCFG_TIMBREAK_SRAM2_PARITY                                                                                                                                                                \
+	SYSCFG_CFGR2_SPL /*!< Enables and locks the SRAM2_PARITY error signal                                                                                                                          \
 			      with Break Input of TIM1/8/15/16/17 */
-#define LL_SYSCFG_TIMBREAK_LOCKUP                                                                                      \
-	SYSCFG_CFGR2_CLL /*!< Enables and locks the LOCKUP output of CortexM4                                          \
+#define LL_SYSCFG_TIMBREAK_LOCKUP                                                                                                                                                                      \
+	SYSCFG_CFGR2_CLL /*!< Enables and locks the LOCKUP output of CortexM4                                                                                                                          \
 			      with Break Input of TIM1/15/16/17 */
 /**
  * @}
@@ -302,17 +285,17 @@ extern "C" {
  * @{
  */
 #define LL_DBGMCU_TRACE_NONE 0x00000000U /*!< TRACE pins not assigned (default state) */
-#define LL_DBGMCU_TRACE_ASYNCH                                                                                         \
-	DBGMCU_CR_TRACE_IOEN /*!< TRACE pin assignment for Asynchronous Mode                                           \
+#define LL_DBGMCU_TRACE_ASYNCH                                                                                                                                                                         \
+	DBGMCU_CR_TRACE_IOEN /*!< TRACE pin assignment for Asynchronous Mode                                                                                                                           \
 			      */
-#define LL_DBGMCU_TRACE_SYNCH_SIZE1                                                                                    \
-	(DBGMCU_CR_TRACE_IOEN | DBGMCU_CR_TRACE_MODE_0) /*!< TRACE pin assignment for Synchronous                      \
+#define LL_DBGMCU_TRACE_SYNCH_SIZE1                                                                                                                                                                    \
+	(DBGMCU_CR_TRACE_IOEN | DBGMCU_CR_TRACE_MODE_0) /*!< TRACE pin assignment for Synchronous                                                                                                      \
 							   Mode with a TRACEDATA size of 1 */
-#define LL_DBGMCU_TRACE_SYNCH_SIZE2                                                                                    \
-	(DBGMCU_CR_TRACE_IOEN | DBGMCU_CR_TRACE_MODE_1) /*!< TRACE pin assignment for Synchronous                      \
+#define LL_DBGMCU_TRACE_SYNCH_SIZE2                                                                                                                                                                    \
+	(DBGMCU_CR_TRACE_IOEN | DBGMCU_CR_TRACE_MODE_1) /*!< TRACE pin assignment for Synchronous                                                                                                      \
 							   Mode with a TRACEDATA size of 2 */
-#define LL_DBGMCU_TRACE_SYNCH_SIZE4                                                                                    \
-	(DBGMCU_CR_TRACE_IOEN | DBGMCU_CR_TRACE_MODE) /*!< TRACE pin assignment for Synchronous Mode                   \
+#define LL_DBGMCU_TRACE_SYNCH_SIZE4                                                                                                                                                                    \
+	(DBGMCU_CR_TRACE_IOEN | DBGMCU_CR_TRACE_MODE) /*!< TRACE pin assignment for Synchronous Mode                                                                                                   \
 							 with a TRACEDATA size of 4 */
 /**
  * @}
@@ -321,57 +304,57 @@ extern "C" {
 /** @defgroup SYSTEM_LL_EC_APB1_GRP1_STOP_IP DBGMCU APB1 GRP1 STOP IP
  * @{
  */
-#define LL_DBGMCU_APB1_GRP1_TIM2_STOP                                                                                  \
-	DBGMCU_APB1FZR1_DBG_TIM2_STOP /*!< The counter clock of TIM2 is                                                \
+#define LL_DBGMCU_APB1_GRP1_TIM2_STOP                                                                                                                                                                  \
+	DBGMCU_APB1FZR1_DBG_TIM2_STOP /*!< The counter clock of TIM2 is                                                                                                                                \
 					 stopped when the core is halted*/
 #if defined(TIM3)
-#define LL_DBGMCU_APB1_GRP1_TIM3_STOP                                                                                  \
-	DBGMCU_APB1FZR1_DBG_TIM3_STOP /*!< The counter clock of TIM3 is                                                \
+#define LL_DBGMCU_APB1_GRP1_TIM3_STOP                                                                                                                                                                  \
+	DBGMCU_APB1FZR1_DBG_TIM3_STOP /*!< The counter clock of TIM3 is                                                                                                                                \
 					 stopped when the core is halted*/
 #endif				      /* TIM3 */
 #if defined(TIM4)
-#define LL_DBGMCU_APB1_GRP1_TIM4_STOP                                                                                  \
-	DBGMCU_APB1FZR1_DBG_TIM4_STOP /*!< The counter clock of TIM4 is                                                \
+#define LL_DBGMCU_APB1_GRP1_TIM4_STOP                                                                                                                                                                  \
+	DBGMCU_APB1FZR1_DBG_TIM4_STOP /*!< The counter clock of TIM4 is                                                                                                                                \
 					 stopped when the core is halted*/
 #endif				      /* TIM4 */
 #if defined(TIM5)
-#define LL_DBGMCU_APB1_GRP1_TIM5_STOP                                                                                  \
-	DBGMCU_APB1FZR1_DBG_TIM5_STOP /*!< The counter clock of TIM5 is                                                \
+#define LL_DBGMCU_APB1_GRP1_TIM5_STOP                                                                                                                                                                  \
+	DBGMCU_APB1FZR1_DBG_TIM5_STOP /*!< The counter clock of TIM5 is                                                                                                                                \
 					 stopped when the core is halted*/
 #endif				      /* TIM5 */
-#define LL_DBGMCU_APB1_GRP1_TIM6_STOP                                                                                  \
-	DBGMCU_APB1FZR1_DBG_TIM6_STOP /*!< The counter clock of TIM6 is                                                \
+#define LL_DBGMCU_APB1_GRP1_TIM6_STOP                                                                                                                                                                  \
+	DBGMCU_APB1FZR1_DBG_TIM6_STOP /*!< The counter clock of TIM6 is                                                                                                                                \
 					 stopped when the core is halted*/
 #if defined(TIM7)
-#define LL_DBGMCU_APB1_GRP1_TIM7_STOP                                                                                  \
-	DBGMCU_APB1FZR1_DBG_TIM7_STOP /*!< The counter clock of TIM7 is                                                \
+#define LL_DBGMCU_APB1_GRP1_TIM7_STOP                                                                                                                                                                  \
+	DBGMCU_APB1FZR1_DBG_TIM7_STOP /*!< The counter clock of TIM7 is                                                                                                                                \
 					 stopped when the core is halted*/
 #endif				      /* TIM7 */
-#define LL_DBGMCU_APB1_GRP1_RTC_STOP                                                                                   \
-	DBGMCU_APB1FZR1_DBG_RTC_STOP /*!< The clock of the RTC counter is                                              \
+#define LL_DBGMCU_APB1_GRP1_RTC_STOP                                                                                                                                                                   \
+	DBGMCU_APB1FZR1_DBG_RTC_STOP /*!< The clock of the RTC counter is                                                                                                                              \
 					stopped when the core is halted*/
-#define LL_DBGMCU_APB1_GRP1_WWDG_STOP                                                                                  \
-	DBGMCU_APB1FZR1_DBG_WWDG_STOP /*!< The window watchdog counter clock                                           \
+#define LL_DBGMCU_APB1_GRP1_WWDG_STOP                                                                                                                                                                  \
+	DBGMCU_APB1FZR1_DBG_WWDG_STOP /*!< The window watchdog counter clock                                                                                                                           \
 					 is stopped when the core is halted*/
-#define LL_DBGMCU_APB1_GRP1_IWDG_STOP                                                                                  \
-	DBGMCU_APB1FZR1_DBG_IWDG_STOP				    /*!< The independent watchdog counter              \
-								       clock is stopped when the core is               \
+#define LL_DBGMCU_APB1_GRP1_IWDG_STOP                                                                                                                                                                  \
+	DBGMCU_APB1FZR1_DBG_IWDG_STOP				    /*!< The independent watchdog counter                                                                                              \
+								       clock is stopped when the core is                                                                                               \
 								       halted*/
 #define LL_DBGMCU_APB1_GRP1_I2C1_STOP DBGMCU_APB1FZR1_DBG_I2C1_STOP /*!< The I2C1 SMBus timeout is frozen*/
 #if defined(I2C2)
 #define LL_DBGMCU_APB1_GRP1_I2C2_STOP DBGMCU_APB1FZR1_DBG_I2C2_STOP /*!< The I2C2 SMBus timeout is frozen*/
 #endif								    /* I2C2 */
 #define LL_DBGMCU_APB1_GRP1_I2C3_STOP DBGMCU_APB1FZR1_DBG_I2C3_STOP /*!< The I2C3 SMBus timeout is frozen*/
-#define LL_DBGMCU_APB1_GRP1_CAN_STOP                                                                                   \
-	DBGMCU_APB1FZR1_DBG_CAN_STOP /*!< The bxCAN receive registers are                                              \
+#define LL_DBGMCU_APB1_GRP1_CAN_STOP                                                                                                                                                                   \
+	DBGMCU_APB1FZR1_DBG_CAN_STOP /*!< The bxCAN receive registers are                                                                                                                              \
 					frozen*/
 #if defined(CAN2)
-#define LL_DBGMCU_APB1_GRP1_CAN2_STOP                                                                                  \
-	DBGMCU_APB1FZR1_DBG_CAN2_STOP /*!< The bxCAN2 receive registers are                                            \
+#define LL_DBGMCU_APB1_GRP1_CAN2_STOP                                                                                                                                                                  \
+	DBGMCU_APB1FZR1_DBG_CAN2_STOP /*!< The bxCAN2 receive registers are                                                                                                                            \
 					 frozen*/
 #endif				      /* CAN2 */
-#define LL_DBGMCU_APB1_GRP1_LPTIM1_STOP                                                                                \
-	DBGMCU_APB1FZR1_DBG_LPTIM1_STOP /*!< The counter clock of LPTIM1 is                                            \
+#define LL_DBGMCU_APB1_GRP1_LPTIM1_STOP                                                                                                                                                                \
+	DBGMCU_APB1FZR1_DBG_LPTIM1_STOP /*!< The counter clock of LPTIM1 is                                                                                                                            \
 					   stopped when the core is halted*/
 /**
  * @}
@@ -383,8 +366,8 @@ extern "C" {
 #if defined(I2C4)
 #define LL_DBGMCU_APB1_GRP2_I2C4_STOP DBGMCU_APB1FZR2_DBG_I2C4_STOP /*!< The I2C4 SMBus timeout is frozen*/
 #endif								    /* I2C4 */
-#define LL_DBGMCU_APB1_GRP2_LPTIM2_STOP                                                                                \
-	DBGMCU_APB1FZR2_DBG_LPTIM2_STOP /*!< The counter clock of LPTIM2 is                                            \
+#define LL_DBGMCU_APB1_GRP2_LPTIM2_STOP                                                                                                                                                                \
+	DBGMCU_APB1FZR2_DBG_LPTIM2_STOP /*!< The counter clock of LPTIM2 is                                                                                                                            \
 					   stopped when the core is halted*/
 /**
  * @}
@@ -393,23 +376,23 @@ extern "C" {
 /** @defgroup SYSTEM_LL_EC_APB2_GRP1_STOP_IP DBGMCU APB2 GRP1 STOP IP
  * @{
  */
-#define LL_DBGMCU_APB2_GRP1_TIM1_STOP                                                                                  \
-	DBGMCU_APB2FZ_DBG_TIM1_STOP /*!< The counter clock of TIM1 is stopped                                          \
+#define LL_DBGMCU_APB2_GRP1_TIM1_STOP                                                                                                                                                                  \
+	DBGMCU_APB2FZ_DBG_TIM1_STOP /*!< The counter clock of TIM1 is stopped                                                                                                                          \
 				       when the core is halted*/
 #if defined(TIM8)
-#define LL_DBGMCU_APB2_GRP1_TIM8_STOP                                                                                  \
-	DBGMCU_APB2FZ_DBG_TIM8_STOP /*!< The counter clock of TIM8 is stopped                                          \
+#define LL_DBGMCU_APB2_GRP1_TIM8_STOP                                                                                                                                                                  \
+	DBGMCU_APB2FZ_DBG_TIM8_STOP /*!< The counter clock of TIM8 is stopped                                                                                                                          \
 				       when the core is halted*/
 #endif				    /* TIM8 */
-#define LL_DBGMCU_APB2_GRP1_TIM15_STOP                                                                                 \
-	DBGMCU_APB2FZ_DBG_TIM15_STOP /*!< The counter clock of TIM15 is                                                \
+#define LL_DBGMCU_APB2_GRP1_TIM15_STOP                                                                                                                                                                 \
+	DBGMCU_APB2FZ_DBG_TIM15_STOP /*!< The counter clock of TIM15 is                                                                                                                                \
 					stopped when the core is halted*/
-#define LL_DBGMCU_APB2_GRP1_TIM16_STOP                                                                                 \
-	DBGMCU_APB2FZ_DBG_TIM16_STOP /*!< The counter clock of TIM16 is                                                \
+#define LL_DBGMCU_APB2_GRP1_TIM16_STOP                                                                                                                                                                 \
+	DBGMCU_APB2FZ_DBG_TIM16_STOP /*!< The counter clock of TIM16 is                                                                                                                                \
 					stopped when the core is halted*/
 #if defined(TIM17)
-#define LL_DBGMCU_APB2_GRP1_TIM17_STOP                                                                                 \
-	DBGMCU_APB2FZ_DBG_TIM17_STOP /*!< The counter clock of TIM17 is                                                \
+#define LL_DBGMCU_APB2_GRP1_TIM17_STOP                                                                                                                                                                 \
+	DBGMCU_APB2FZ_DBG_TIM17_STOP /*!< The counter clock of TIM17 is                                                                                                                                \
 					stopped when the core is halted*/
 #endif				     /* TIM17 */
 /**
@@ -433,26 +416,26 @@ extern "C" {
 #define LL_FLASH_LATENCY_0 FLASH_ACR_LATENCY_0WS /*!< FLASH Zero wait state */
 #define LL_FLASH_LATENCY_1 FLASH_ACR_LATENCY_1WS /*!< FLASH One wait state */
 #define LL_FLASH_LATENCY_2 FLASH_ACR_LATENCY_2WS /*!< FLASH Two wait states */
-#define LL_FLASH_LATENCY_3                                                                                             \
-	FLASH_ACR_LATENCY_3WS /*!< FLASH Three wait states                                                             \
+#define LL_FLASH_LATENCY_3                                                                                                                                                                             \
+	FLASH_ACR_LATENCY_3WS /*!< FLASH Three wait states                                                                                                                                             \
 			       */
-#define LL_FLASH_LATENCY_4                                                                                             \
-	FLASH_ACR_LATENCY_4WS /*!< FLASH Four wait states                                                              \
+#define LL_FLASH_LATENCY_4                                                                                                                                                                             \
+	FLASH_ACR_LATENCY_4WS /*!< FLASH Four wait states                                                                                                                                              \
 			       */
 #if defined(FLASH_ACR_LATENCY_5WS)
 #define LL_FLASH_LATENCY_5 FLASH_ACR_LATENCY_5WS /*!< FLASH five wait state */
 #define LL_FLASH_LATENCY_6 FLASH_ACR_LATENCY_6WS /*!< FLASH six wait state */
-#define LL_FLASH_LATENCY_7                                                                                             \
-	FLASH_ACR_LATENCY_7WS /*!< FLASH seven wait states                                                             \
+#define LL_FLASH_LATENCY_7                                                                                                                                                                             \
+	FLASH_ACR_LATENCY_7WS /*!< FLASH seven wait states                                                                                                                                             \
 			       */
-#define LL_FLASH_LATENCY_8                                                                                             \
-	FLASH_ACR_LATENCY_8WS /*!< FLASH eight wait states                                                             \
+#define LL_FLASH_LATENCY_8                                                                                                                                                                             \
+	FLASH_ACR_LATENCY_8WS /*!< FLASH eight wait states                                                                                                                                             \
 			       */
-#define LL_FLASH_LATENCY_9                                                                                             \
-	FLASH_ACR_LATENCY_9WS /*!< FLASH nine wait states                                                              \
+#define LL_FLASH_LATENCY_9                                                                                                                                                                             \
+	FLASH_ACR_LATENCY_9WS /*!< FLASH nine wait states                                                                                                                                              \
 			       */
-#define LL_FLASH_LATENCY_10                                                                                            \
-	FLASH_ACR_LATENCY_10WS			   /*!< FLASH ten wait states                                          \
+#define LL_FLASH_LATENCY_10                                                                                                                                                                            \
+	FLASH_ACR_LATENCY_10WS			   /*!< FLASH ten wait states                                                                                                                          \
 						    */
 #define LL_FLASH_LATENCY_11 FLASH_ACR_LATENCY_11WS /*!< FLASH eleven wait states */
 #define LL_FLASH_LATENCY_12 FLASH_ACR_LATENCY_12WS /*!< FLASH twelve wait states */
@@ -492,10 +475,7 @@ extern "C" {
  *         (*) value not defined in all devices
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetRemapMemory(uint32_t Memory)
-{
-	MODIFY_REG(SYSCFG->MEMRMP, SYSCFG_MEMRMP_MEM_MODE, Memory);
-}
+__STATIC_INLINE void LL_SYSCFG_SetRemapMemory(uint32_t Memory) { MODIFY_REG(SYSCFG->MEMRMP, SYSCFG_MEMRMP_MEM_MODE, Memory); }
 
 /**
  * @brief  Get memory mapping at address 0x00000000
@@ -509,10 +489,7 @@ __STATIC_INLINE void LL_SYSCFG_SetRemapMemory(uint32_t Memory)
  *
  *         (*) value not defined in all devices
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetRemapMemory(void)
-{
-	return (uint32_t)(READ_BIT(SYSCFG->MEMRMP, SYSCFG_MEMRMP_MEM_MODE));
-}
+__STATIC_INLINE uint32_t LL_SYSCFG_GetRemapMemory(void) { return (uint32_t)(READ_BIT(SYSCFG->MEMRMP, SYSCFG_MEMRMP_MEM_MODE)); }
 
 #if defined(SYSCFG_MEMRMP_FB_MODE)
 /**
@@ -523,10 +500,7 @@ __STATIC_INLINE uint32_t LL_SYSCFG_GetRemapMemory(void)
  *         @arg @ref LL_SYSCFG_BANKMODE_BANK2
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetFlashBankMode(uint32_t Bank)
-{
-	MODIFY_REG(SYSCFG->MEMRMP, SYSCFG_MEMRMP_FB_MODE, Bank);
-}
+__STATIC_INLINE void LL_SYSCFG_SetFlashBankMode(uint32_t Bank) { MODIFY_REG(SYSCFG->MEMRMP, SYSCFG_MEMRMP_FB_MODE, Bank); }
 
 /**
  * @brief  Get Flash bank mode (Bank flashed at 0x08000000)
@@ -535,10 +509,7 @@ __STATIC_INLINE void LL_SYSCFG_SetFlashBankMode(uint32_t Bank)
  *         @arg @ref LL_SYSCFG_BANKMODE_BANK1
  *         @arg @ref LL_SYSCFG_BANKMODE_BANK2
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetFlashBankMode(void)
-{
-	return (uint32_t)(READ_BIT(SYSCFG->MEMRMP, SYSCFG_MEMRMP_FB_MODE));
-}
+__STATIC_INLINE uint32_t LL_SYSCFG_GetFlashBankMode(void) { return (uint32_t)(READ_BIT(SYSCFG->MEMRMP, SYSCFG_MEMRMP_FB_MODE)); }
 #endif /* SYSCFG_MEMRMP_FB_MODE */
 
 /**
@@ -553,10 +524,7 @@ __STATIC_INLINE void LL_SYSCFG_EnableFirewall(void) { CLEAR_BIT(SYSCFG->CFGR1, S
  * @rmtoll SYSCFG_CFGR1 FWDIS         LL_SYSCFG_IsEnabledFirewall
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledFirewall(void)
-{
-	return !(READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FWDIS) == SYSCFG_CFGR1_FWDIS);
-}
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledFirewall(void) { return !(READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FWDIS) == SYSCFG_CFGR1_FWDIS); }
 
 /**
  * @brief  Enable I/O analog switch voltage booster.
@@ -608,10 +576,7 @@ __STATIC_INLINE void LL_SYSCFG_DisableAnalogBooster(void) { CLEAR_BIT(SYSCFG->CF
  *         (*) value not defined in all devices
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_EnableFastModePlus(uint32_t ConfigFastModePlus)
-{
-	SET_BIT(SYSCFG->CFGR1, ConfigFastModePlus);
-}
+__STATIC_INLINE void LL_SYSCFG_EnableFastModePlus(uint32_t ConfigFastModePlus) { SET_BIT(SYSCFG->CFGR1, ConfigFastModePlus); }
 
 /**
  * @brief  Disable the I2C fast mode plus driving capability.
@@ -631,10 +596,7 @@ __STATIC_INLINE void LL_SYSCFG_EnableFastModePlus(uint32_t ConfigFastModePlus)
  *         (*) value not defined in all devices
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_DisableFastModePlus(uint32_t ConfigFastModePlus)
-{
-	CLEAR_BIT(SYSCFG->CFGR1, ConfigFastModePlus);
-}
+__STATIC_INLINE void LL_SYSCFG_DisableFastModePlus(uint32_t ConfigFastModePlus) { CLEAR_BIT(SYSCFG->CFGR1, ConfigFastModePlus); }
 
 /**
  * @brief  Enable Floating Point Unit Invalid operation Interrupt
@@ -726,10 +688,7 @@ __STATIC_INLINE void LL_SYSCFG_DisableIT_FPU_IXC(void) { CLEAR_BIT(SYSCFG->CFGR1
  * @rmtoll SYSCFG_CFGR1 FPU_IE_0      LL_SYSCFG_IsEnabledIT_FPU_IOC
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IOC(void)
-{
-	return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_0) == (SYSCFG_CFGR1_FPU_IE_0));
-}
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IOC(void) { return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_0) == (SYSCFG_CFGR1_FPU_IE_0)); }
 
 /**
  * @brief  Check if Floating Point Unit Divide-by-zero Interrupt source is
@@ -737,10 +696,7 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IOC(void)
  * @rmtoll SYSCFG_CFGR1 FPU_IE_1      LL_SYSCFG_IsEnabledIT_FPU_DZC
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_DZC(void)
-{
-	return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_1) == (SYSCFG_CFGR1_FPU_IE_1));
-}
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_DZC(void) { return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_1) == (SYSCFG_CFGR1_FPU_IE_1)); }
 
 /**
  * @brief  Check if Floating Point Unit Underflow Interrupt source is enabled or
@@ -748,10 +704,7 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_DZC(void)
  * @rmtoll SYSCFG_CFGR1 FPU_IE_2      LL_SYSCFG_IsEnabledIT_FPU_UFC
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_UFC(void)
-{
-	return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_2) == (SYSCFG_CFGR1_FPU_IE_2));
-}
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_UFC(void) { return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_2) == (SYSCFG_CFGR1_FPU_IE_2)); }
 
 /**
  * @brief  Check if Floating Point Unit Overflow Interrupt source is enabled or
@@ -759,10 +712,7 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_UFC(void)
  * @rmtoll SYSCFG_CFGR1 FPU_IE_3      LL_SYSCFG_IsEnabledIT_FPU_OFC
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_OFC(void)
-{
-	return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_3) == (SYSCFG_CFGR1_FPU_IE_3));
-}
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_OFC(void) { return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_3) == (SYSCFG_CFGR1_FPU_IE_3)); }
 
 /**
  * @brief  Check if Floating Point Unit Input denormal Interrupt source is
@@ -770,10 +720,7 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_OFC(void)
  * @rmtoll SYSCFG_CFGR1 FPU_IE_4      LL_SYSCFG_IsEnabledIT_FPU_IDC
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IDC(void)
-{
-	return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_4) == (SYSCFG_CFGR1_FPU_IE_4));
-}
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IDC(void) { return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_4) == (SYSCFG_CFGR1_FPU_IE_4)); }
 
 /**
  * @brief  Check if Floating Point Unit Inexact Interrupt source is enabled or
@@ -781,10 +728,7 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IDC(void)
  * @rmtoll SYSCFG_CFGR1 FPU_IE_5      LL_SYSCFG_IsEnabledIT_FPU_IXC
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IXC(void)
-{
-	return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_5) == (SYSCFG_CFGR1_FPU_IE_5));
-}
+__STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IXC(void) { return (READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_FPU_IE_5) == (SYSCFG_CFGR1_FPU_IE_5)); }
 
 /**
  * @brief  Configure source input for the EXTI external interrupt.
@@ -825,8 +769,7 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsEnabledIT_FPU_IXC(void)
  */
 __STATIC_INLINE void LL_SYSCFG_SetEXTISource(uint32_t Port, uint32_t Line)
 {
-	MODIFY_REG(SYSCFG->EXTICR[Line & 0x03U], (Line >> LL_EXTI_REGISTER_PINPOS_SHFT),
-		   Port << POSITION_VAL((Line >> LL_EXTI_REGISTER_PINPOS_SHFT)));
+	MODIFY_REG(SYSCFG->EXTICR[Line & 0x03U], (Line >> LL_EXTI_REGISTER_PINPOS_SHFT), Port << POSITION_VAL((Line >> LL_EXTI_REGISTER_PINPOS_SHFT)));
 }
 
 /**
@@ -867,8 +810,7 @@ __STATIC_INLINE void LL_SYSCFG_SetEXTISource(uint32_t Port, uint32_t Line)
  */
 __STATIC_INLINE uint32_t LL_SYSCFG_GetEXTISource(uint32_t Line)
 {
-	return (uint32_t)(READ_BIT(SYSCFG->EXTICR[Line & 0x03U], (Line >> LL_EXTI_REGISTER_PINPOS_SHFT)) >>
-			  POSITION_VAL(Line >> LL_EXTI_REGISTER_PINPOS_SHFT));
+	return (uint32_t)(READ_BIT(SYSCFG->EXTICR[Line & 0x03U], (Line >> LL_EXTI_REGISTER_PINPOS_SHFT)) >> POSITION_VAL(Line >> LL_EXTI_REGISTER_PINPOS_SHFT));
 }
 
 /**
@@ -891,10 +833,7 @@ __STATIC_INLINE void LL_SYSCFG_EnableSRAM2Erase(void)
  * @rmtoll SYSCFG_SCSR  SRAM2BSY      LL_SYSCFG_IsSRAM2EraseOngoing
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsSRAM2EraseOngoing(void)
-{
-	return (READ_BIT(SYSCFG->SCSR, SYSCFG_SCSR_SRAM2BSY) == (SYSCFG_SCSR_SRAM2BSY));
-}
+__STATIC_INLINE uint32_t LL_SYSCFG_IsSRAM2EraseOngoing(void) { return (READ_BIT(SYSCFG->SCSR, SYSCFG_SCSR_SRAM2BSY) == (SYSCFG_SCSR_SRAM2BSY)); }
 
 /**
  * @brief  Set connections to TIM1/8/15/16/17 Break inputs
@@ -909,10 +848,7 @@ __STATIC_INLINE uint32_t LL_SYSCFG_IsSRAM2EraseOngoing(void)
  *         @arg @ref LL_SYSCFG_TIMBREAK_LOCKUP
  * @retval None
  */
-__STATIC_INLINE void LL_SYSCFG_SetTIMBreakInputs(uint32_t Break)
-{
-	MODIFY_REG(SYSCFG->CFGR2, SYSCFG_CFGR2_CLL | SYSCFG_CFGR2_SPL | SYSCFG_CFGR2_PVDL | SYSCFG_CFGR2_ECCL, Break);
-}
+__STATIC_INLINE void LL_SYSCFG_SetTIMBreakInputs(uint32_t Break) { MODIFY_REG(SYSCFG->CFGR2, SYSCFG_CFGR2_CLL | SYSCFG_CFGR2_SPL | SYSCFG_CFGR2_PVDL | SYSCFG_CFGR2_ECCL, Break); }
 
 /**
  * @brief  Get connections to TIM1/8/15/16/17 Break inputs
@@ -926,21 +862,14 @@ __STATIC_INLINE void LL_SYSCFG_SetTIMBreakInputs(uint32_t Break)
  *         @arg @ref LL_SYSCFG_TIMBREAK_SRAM2_PARITY
  *         @arg @ref LL_SYSCFG_TIMBREAK_LOCKUP
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_GetTIMBreakInputs(void)
-{
-	return (uint32_t)(READ_BIT(SYSCFG->CFGR2,
-				   SYSCFG_CFGR2_CLL | SYSCFG_CFGR2_SPL | SYSCFG_CFGR2_PVDL | SYSCFG_CFGR2_ECCL));
-}
+__STATIC_INLINE uint32_t LL_SYSCFG_GetTIMBreakInputs(void) { return (uint32_t)(READ_BIT(SYSCFG->CFGR2, SYSCFG_CFGR2_CLL | SYSCFG_CFGR2_SPL | SYSCFG_CFGR2_PVDL | SYSCFG_CFGR2_ECCL)); }
 
 /**
  * @brief  Check if SRAM2 parity error detected
  * @rmtoll SYSCFG_CFGR2 SPF           LL_SYSCFG_IsActiveFlag_SP
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSCFG_IsActiveFlag_SP(void)
-{
-	return (READ_BIT(SYSCFG->CFGR2, SYSCFG_CFGR2_SPF) == (SYSCFG_CFGR2_SPF));
-}
+__STATIC_INLINE uint32_t LL_SYSCFG_IsActiveFlag_SP(void) { return (READ_BIT(SYSCFG->CFGR2, SYSCFG_CFGR2_SPF) == (SYSCFG_CFGR2_SPF)); }
 
 /**
  * @brief  Clear SRAM2 parity error flag
@@ -1076,10 +1005,7 @@ __STATIC_INLINE void LL_SYSCFG_UnlockSRAM2WRP(void)
  * @retval Values between Min_Data=0x00 and Max_Data=0xFFFF (ex: device ID is
  * 0x6415)
  */
-__STATIC_INLINE uint32_t LL_DBGMCU_GetDeviceID(void)
-{
-	return (uint32_t)(READ_BIT(DBGMCU->IDCODE, DBGMCU_IDCODE_DEV_ID));
-}
+__STATIC_INLINE uint32_t LL_DBGMCU_GetDeviceID(void) { return (uint32_t)(READ_BIT(DBGMCU->IDCODE, DBGMCU_IDCODE_DEV_ID)); }
 
 /**
  * @brief  Return the device revision identifier
@@ -1087,10 +1013,7 @@ __STATIC_INLINE uint32_t LL_DBGMCU_GetDeviceID(void)
  * @rmtoll DBGMCU_IDCODE REV_ID        LL_DBGMCU_GetRevisionID
  * @retval Values between Min_Data=0x00 and Max_Data=0xFFFF
  */
-__STATIC_INLINE uint32_t LL_DBGMCU_GetRevisionID(void)
-{
-	return (uint32_t)(READ_BIT(DBGMCU->IDCODE, DBGMCU_IDCODE_REV_ID) >> DBGMCU_IDCODE_REV_ID_Pos);
-}
+__STATIC_INLINE uint32_t LL_DBGMCU_GetRevisionID(void) { return (uint32_t)(READ_BIT(DBGMCU->IDCODE, DBGMCU_IDCODE_REV_ID) >> DBGMCU_IDCODE_REV_ID_Pos); }
 
 /**
  * @brief  Enable the Debug Module during SLEEP mode
@@ -1146,10 +1069,7 @@ __STATIC_INLINE void LL_DBGMCU_DisableDBGStandbyMode(void) { CLEAR_BIT(DBGMCU->C
  *         @arg @ref LL_DBGMCU_TRACE_SYNCH_SIZE4
  * @retval None
  */
-__STATIC_INLINE void LL_DBGMCU_SetTracePinAssignment(uint32_t PinAssignment)
-{
-	MODIFY_REG(DBGMCU->CR, DBGMCU_CR_TRACE_IOEN | DBGMCU_CR_TRACE_MODE, PinAssignment);
-}
+__STATIC_INLINE void LL_DBGMCU_SetTracePinAssignment(uint32_t PinAssignment) { MODIFY_REG(DBGMCU->CR, DBGMCU_CR_TRACE_IOEN | DBGMCU_CR_TRACE_MODE, PinAssignment); }
 
 /**
  * @brief  Get Trace pin assignment control
@@ -1162,10 +1082,7 @@ __STATIC_INLINE void LL_DBGMCU_SetTracePinAssignment(uint32_t PinAssignment)
  *         @arg @ref LL_DBGMCU_TRACE_SYNCH_SIZE2
  *         @arg @ref LL_DBGMCU_TRACE_SYNCH_SIZE4
  */
-__STATIC_INLINE uint32_t LL_DBGMCU_GetTracePinAssignment(void)
-{
-	return (uint32_t)(READ_BIT(DBGMCU->CR, DBGMCU_CR_TRACE_IOEN | DBGMCU_CR_TRACE_MODE));
-}
+__STATIC_INLINE uint32_t LL_DBGMCU_GetTracePinAssignment(void) { return (uint32_t)(READ_BIT(DBGMCU->CR, DBGMCU_CR_TRACE_IOEN | DBGMCU_CR_TRACE_MODE)); }
 
 /**
  * @brief  Freeze APB1 peripherals (group1 peripherals)
@@ -1326,20 +1243,14 @@ __STATIC_INLINE void LL_VREFBUF_SetVoltageScaling(uint32_t Scale) { MODIFY_REG(V
  *         @arg @ref LL_VREFBUF_VOLTAGE_SCALE0
  *         @arg @ref LL_VREFBUF_VOLTAGE_SCALE1
  */
-__STATIC_INLINE uint32_t LL_VREFBUF_GetVoltageScaling(void)
-{
-	return (uint32_t)(READ_BIT(VREFBUF->CSR, VREFBUF_CSR_VRS));
-}
+__STATIC_INLINE uint32_t LL_VREFBUF_GetVoltageScaling(void) { return (uint32_t)(READ_BIT(VREFBUF->CSR, VREFBUF_CSR_VRS)); }
 
 /**
  * @brief  Check if Voltage reference buffer is ready
  * @rmtoll VREFBUF_CSR  VRR           LL_VREFBUF_IsVREFReady
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_VREFBUF_IsVREFReady(void)
-{
-	return (READ_BIT(VREFBUF->CSR, VREFBUF_CSR_VRR) == (VREFBUF_CSR_VRR));
-}
+__STATIC_INLINE uint32_t LL_VREFBUF_IsVREFReady(void) { return (READ_BIT(VREFBUF->CSR, VREFBUF_CSR_VRR) == (VREFBUF_CSR_VRR)); }
 
 /**
  * @brief  Get the trimming code for VREFBUF calibration
@@ -1436,10 +1347,7 @@ __STATIC_INLINE void LL_FLASH_DisablePrefetch(void) { CLEAR_BIT(FLASH->ACR, FLAS
  * @rmtoll FLASH_ACR    PRFTEN        LL_FLASH_IsPrefetchEnabled
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_FLASH_IsPrefetchEnabled(void)
-{
-	return (READ_BIT(FLASH->ACR, FLASH_ACR_PRFTEN) == (FLASH_ACR_PRFTEN));
-}
+__STATIC_INLINE uint32_t LL_FLASH_IsPrefetchEnabled(void) { return (READ_BIT(FLASH->ACR, FLASH_ACR_PRFTEN) == (FLASH_ACR_PRFTEN)); }
 
 /**
  * @brief  Enable Instruction cache
@@ -1564,7 +1472,7 @@ __STATIC_INLINE void LL_FLASH_DisableSleepPowerDown(void) { CLEAR_BIT(FLASH->ACR
  * @}
  */
 
-#endif /* defined (FLASH) || defined (SYSCFG) || defined (DBGMCU) || defined                                           \
+#endif /* defined (FLASH) || defined (SYSCFG) || defined (DBGMCU) || defined                                                                                                                           \
 	  (VREFBUF) */
 
 /**

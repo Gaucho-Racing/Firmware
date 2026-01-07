@@ -261,12 +261,10 @@ mode alone.
  * register check */
 #define OPAMP_CSR_RESET_CHECK_MASK (~(OPAMP_CSR_TRIMOFFSETN | OPAMP_CSR_TRIMOFFSETP))
 /* CSR init register Mask */
-#define OPAMP_CSR_UPDATE_PARAMETERS_INIT_MASK                                                                          \
-	(OPAMP_CSR_TRIMOFFSETN | OPAMP_CSR_TRIMOFFSETP | OPAMP_CSR_HIGHSPEEDEN | OPAMP_CSR_OPAMPINTEN |                \
-	 OPAMP_CSR_PGGAIN | OPAMP_CSR_VPSEL | OPAMP_CSR_VMSEL | OPAMP_CSR_FORCEVP)
+#define OPAMP_CSR_UPDATE_PARAMETERS_INIT_MASK                                                                                                                                                          \
+	(OPAMP_CSR_TRIMOFFSETN | OPAMP_CSR_TRIMOFFSETP | OPAMP_CSR_HIGHSPEEDEN | OPAMP_CSR_OPAMPINTEN | OPAMP_CSR_PGGAIN | OPAMP_CSR_VPSEL | OPAMP_CSR_VMSEL | OPAMP_CSR_FORCEVP)
 /* TCMR init register Mask */
-#define OPAMP_TCMR_UPDATE_PARAMETERS_INIT_MASK                                                                         \
-	(OPAMP_TCMR_T20CMEN | OPAMP_TCMR_T8CMEN | OPAMP_TCMR_T1CMEN | OPAMP_TCMR_VPSSEL | OPAMP_TCMR_VMSSEL)
+#define OPAMP_TCMR_UPDATE_PARAMETERS_INIT_MASK (OPAMP_TCMR_T20CMEN | OPAMP_TCMR_T8CMEN | OPAMP_TCMR_T1CMEN | OPAMP_TCMR_VPSSEL | OPAMP_TCMR_VMSSEL)
 /**
  * @}
  */
@@ -406,10 +404,8 @@ HAL_StatusTypeDef HAL_OPAMP_Init(OPAMP_HandleTypeDef *hopamp)
 			 * trimming value afterwards */
 			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_USERTRIM, hopamp->Init.UserTrimming);
 			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_UPDATE_PARAMETERS_INIT_MASK,
-				   hopamp->Init.PowerMode | hopamp->Init.Mode | hopamp->Init.NonInvertingInput |
-				       ((hopamp->Init.InternalOutput == ENABLE) ? OPAMP_CSR_OPAMPINTEN : 0UL) |
-				       hopamp->Init.PgaConnect | hopamp->Init.PgaGain |
-				       (hopamp->Init.TrimmingValueP << OPAMP_INPUT_NONINVERTING) |
+				   hopamp->Init.PowerMode | hopamp->Init.Mode | hopamp->Init.NonInvertingInput | ((hopamp->Init.InternalOutput == ENABLE) ? OPAMP_CSR_OPAMPINTEN : 0UL) |
+				       hopamp->Init.PgaConnect | hopamp->Init.PgaGain | (hopamp->Init.TrimmingValueP << OPAMP_INPUT_NONINVERTING) |
 				       (hopamp->Init.TrimmingValueN << OPAMP_INPUT_INVERTING));
 		} else /* OPAMP_STANDALONE_MODE */
 		{
@@ -417,18 +413,14 @@ HAL_StatusTypeDef HAL_OPAMP_Init(OPAMP_HandleTypeDef *hopamp)
 			 * trimming value afterwards */
 			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_USERTRIM, hopamp->Init.UserTrimming);
 			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_UPDATE_PARAMETERS_INIT_MASK,
-				   hopamp->Init.PowerMode | hopamp->Init.Mode | hopamp->Init.InvertingInput |
-				       hopamp->Init.NonInvertingInput |
-				       ((hopamp->Init.InternalOutput == ENABLE) ? OPAMP_CSR_OPAMPINTEN : 0UL) |
-				       hopamp->Init.PgaConnect | hopamp->Init.PgaGain |
-				       (hopamp->Init.TrimmingValueP << OPAMP_INPUT_NONINVERTING) |
-				       (hopamp->Init.TrimmingValueN << OPAMP_INPUT_INVERTING));
+				   hopamp->Init.PowerMode | hopamp->Init.Mode | hopamp->Init.InvertingInput | hopamp->Init.NonInvertingInput |
+				       ((hopamp->Init.InternalOutput == ENABLE) ? OPAMP_CSR_OPAMPINTEN : 0UL) | hopamp->Init.PgaConnect | hopamp->Init.PgaGain |
+				       (hopamp->Init.TrimmingValueP << OPAMP_INPUT_NONINVERTING) | (hopamp->Init.TrimmingValueN << OPAMP_INPUT_INVERTING));
 		}
 
 		if ((READ_BIT(hopamp->Instance->TCMR, OPAMP_TCMR_LOCK)) == 0UL) {
 			MODIFY_REG(hopamp->Instance->TCMR, OPAMP_TCMR_UPDATE_PARAMETERS_INIT_MASK,
-				   hopamp->Init.TimerControlledMuxmode | hopamp->Init.InvertingInputSecondary |
-				       hopamp->Init.NonInvertingInputSecondary);
+				   hopamp->Init.TimerControlledMuxmode | hopamp->Init.InvertingInputSecondary | hopamp->Init.NonInvertingInputSecondary);
 		}
 
 		/* Update the OPAMP state*/
@@ -657,8 +649,7 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
 
 		/* Check if OPAMP is in calibration mode, calibration is not yet
 		 * enabled and the OPAINTOEN bit is not set */
-		if (hopamp->State == HAL_OPAMP_STATE_READY &&
-		    (READ_BIT(hopamp->Instance->CSR, OPAMP_CSR_OPAMPINTEN) == 0UL)) {
+		if (hopamp->State == HAL_OPAMP_STATE_READY && (READ_BIT(hopamp->Instance->CSR, OPAMP_CSR_OPAMPINTEN) == 0UL)) {
 			/* Check the parameter */
 			assert_param(IS_OPAMP_ALL_INSTANCE(hopamp->Instance));
 
@@ -688,8 +679,7 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
 
 			while (delta != 0UL) {
 				/* Set candidate trimming */
-				MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETN,
-					   trimmingvaluen << OPAMP_INPUT_INVERTING);
+				MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETN, trimmingvaluen << OPAMP_INPUT_INVERTING);
 
 				/* OFFTRIMmax delay 2 ms as per datasheet
 				 * (electrical characteristics */
@@ -715,8 +705,7 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
 			 * value or un step below */
 			/* Indeed the first value that causes the OUTCAL bit to
 			 * change from 1 to 0  */
-			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETN,
-				   trimmingvaluen << OPAMP_INPUT_INVERTING);
+			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETN, trimmingvaluen << OPAMP_INPUT_INVERTING);
 
 			/* OFFTRIMmax delay 2 ms as per datasheet (electrical
 			 * characteristics */
@@ -730,8 +719,7 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
 				 */
 				trimmingvaluen++;
 				/* Set right trimming */
-				MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETN,
-					   trimmingvaluen << OPAMP_INPUT_INVERTING);
+				MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETN, trimmingvaluen << OPAMP_INPUT_INVERTING);
 			}
 
 			/* 2nd calibration - P */
@@ -745,8 +733,7 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
 
 			while (delta != 0UL) {
 				/* Set candidate trimming */
-				MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETP,
-					   trimmingvaluep << OPAMP_INPUT_NONINVERTING);
+				MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETP, trimmingvaluep << OPAMP_INPUT_NONINVERTING);
 
 				/* OFFTRIMmax delay 2 ms as per datasheet
 				 * (electrical characteristics */
@@ -771,8 +758,7 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
 			/* Indeed the first value that causes the OUTCAL bit to
 			 * change from 1 to 0U */
 			/* Set candidate trimming */
-			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETP,
-				   trimmingvaluep << OPAMP_INPUT_NONINVERTING);
+			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETP, trimmingvaluep << OPAMP_INPUT_NONINVERTING);
 
 			/* OFFTRIMmax delay 2 ms as per datasheet (electrical
 			 * characteristics */
@@ -786,8 +772,7 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
 				 */
 				trimmingvaluep++;
 				/* Set right trimming */
-				MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETP,
-					   trimmingvaluep << OPAMP_INPUT_NONINVERTING);
+				MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETP, trimmingvaluep << OPAMP_INPUT_NONINVERTING);
 			}
 
 			/* Disable calibration */
@@ -814,10 +799,8 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
 			/* Select user timing mode */
 			/* And updated with calibrated settings */
 			hopamp->Init.UserTrimming = OPAMP_TRIMMING_USER;
-			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETP,
-				   trimmingvaluep << OPAMP_INPUT_NONINVERTING);
-			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETN,
-				   trimmingvaluen << OPAMP_INPUT_INVERTING);
+			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETP, trimmingvaluep << OPAMP_INPUT_NONINVERTING);
+			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETN, trimmingvaluen << OPAMP_INPUT_INVERTING);
 		}
 
 		else {
@@ -999,10 +982,8 @@ OPAMP_TrimmingValueTypeDef HAL_OPAMP_GetTrimOffset(OPAMP_HandleTypeDef *hopamp, 
 		if (oldusertrimming == OPAMP_TRIMMING_USER) {
 			/* Restore user trimming */
 			SET_BIT(hopamp->Instance->CSR, OPAMP_CSR_USERTRIM);
-			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETP,
-				   oldtrimmingvaluep << OPAMP_INPUT_NONINVERTING);
-			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETN,
-				   oldtrimmingvaluen << OPAMP_INPUT_INVERTING);
+			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETP, oldtrimmingvaluep << OPAMP_INPUT_NONINVERTING);
+			MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETN, oldtrimmingvaluen << OPAMP_INPUT_INVERTING);
 		}
 	}
 	return trimmingvalue;
@@ -1023,8 +1004,7 @@ OPAMP_TrimmingValueTypeDef HAL_OPAMP_GetTrimOffset(OPAMP_HandleTypeDef *hopamp, 
  * @param pCallback : pointer to the Callback function
  * @retval status
  */
-HAL_StatusTypeDef HAL_OPAMP_RegisterCallback(OPAMP_HandleTypeDef *hopamp, HAL_OPAMP_CallbackIDTypeDef CallbackId,
-					     pOPAMP_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_OPAMP_RegisterCallback(OPAMP_HandleTypeDef *hopamp, HAL_OPAMP_CallbackIDTypeDef CallbackId, pOPAMP_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 

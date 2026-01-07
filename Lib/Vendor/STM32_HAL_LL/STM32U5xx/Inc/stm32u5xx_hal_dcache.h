@@ -94,12 +94,11 @@ typedef void (*pDCACHE_CallbackTypeDef)(DCACHE_HandleTypeDef *hdcache);
  * @brief  HAL DCACHE Callback ID enumeration definition
  */
 typedef enum {
-	HAL_DCACHE_CLEAN_BY_ADDRESS_CB_ID = 0x00U,	/*!< DCACHE Clean By Address callback ID                */
-	HAL_DCACHE_INVALIDATE_BY_ADDRESS_CB_ID = 0x01U, /*!< DCACHE Invalidate By Address callback ID           */
-	HAL_DCACHE_CLEAN_AND_INVALIDATE_BY_ADDRESS_CB_ID =
-	    0x02U,				      /*!< DCACHE Clean And Invalidate By Address callback ID */
-	HAL_DCACHE_INVALIDATE_COMPLETE_CB_ID = 0x03U, /*!< DCACHE Invalidate Complete ID                      */
-	HAL_DCACHE_ERROR_CB_ID = 0x04U,		      /*!< DCACHE Error callback ID */
+	HAL_DCACHE_CLEAN_BY_ADDRESS_CB_ID = 0x00U,		  /*!< DCACHE Clean By Address callback ID                */
+	HAL_DCACHE_INVALIDATE_BY_ADDRESS_CB_ID = 0x01U,		  /*!< DCACHE Invalidate By Address callback ID           */
+	HAL_DCACHE_CLEAN_AND_INVALIDATE_BY_ADDRESS_CB_ID = 0x02U, /*!< DCACHE Clean And Invalidate By Address callback ID */
+	HAL_DCACHE_INVALIDATE_COMPLETE_CB_ID = 0x03U,		  /*!< DCACHE Invalidate Complete ID                      */
+	HAL_DCACHE_ERROR_CB_ID = 0x04U,				  /*!< DCACHE Error callback ID */
 
 	HAL_DCACHE_MSPINIT_CB_ID = 0x05U,  /*!< DCACHE Msp Init callback ID  */
 	HAL_DCACHE_MSPDEINIT_CB_ID = 0x06U /*!< DCACHE Msp DeInit callback ID */
@@ -135,11 +134,11 @@ typedef enum {
  * @{
  */
 #define DCACHE_MONITOR_READ_HIT DCACHE_CR_RHITMEN /*!< Read Hit monitoring */
-#define DCACHE_MONITOR_READ_MISS                                                                                       \
-	DCACHE_CR_RMISSMEN /*!< Read Miss monitoring                                                                   \
+#define DCACHE_MONITOR_READ_MISS                                                                                                                                                                       \
+	DCACHE_CR_RMISSMEN /*!< Read Miss monitoring                                                                                                                                                   \
 			    */
-#define DCACHE_MONITOR_WRITE_HIT                                                                                       \
-	DCACHE_CR_WHITMEN			     /*!< Write Hit monitoring                                         \
+#define DCACHE_MONITOR_WRITE_HIT                                                                                                                                                                       \
+	DCACHE_CR_WHITMEN			     /*!< Write Hit monitoring                                                                                                                         \
 						      */
 #define DCACHE_MONITOR_WRITE_MISS DCACHE_CR_WMISSMEN /*!< Write Miss monitoring */
 #define DCACHE_MONITOR_ALL (DCACHE_CR_RHITMEN | DCACHE_CR_RMISSMEN | DCACHE_CR_WHITMEN | DCACHE_CR_WMISSMEN)
@@ -220,8 +219,7 @@ typedef enum {
  *
  * @retval The state of __INTERRUPT__ (SET or RESET).
  */
-#define __HAL_DCACHE_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)                                                          \
-	((READ_BIT((__HANDLE__)->Instance->IER, (__INTERRUPT__)) == (__INTERRUPT__)) ? SET : RESET)
+#define __HAL_DCACHE_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__) ((READ_BIT((__HANDLE__)->Instance->IER, (__INTERRUPT__)) == (__INTERRUPT__)) ? SET : RESET)
 
 /** @brief  Check whether the selected DCACHE flag is set or not.
  * @param  __HANDLE__ specifies the DCACHE handle.
@@ -281,19 +279,15 @@ HAL_StatusTypeDef HAL_DCACHE_SetReadBurstType(DCACHE_HandleTypeDef *hdcache, uin
 
 /*** Cache maintenance in blocking mode (Polling) ***/
 HAL_StatusTypeDef HAL_DCACHE_Invalidate(DCACHE_HandleTypeDef *hdcache);
-HAL_StatusTypeDef HAL_DCACHE_InvalidateByAddr(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr,
-					      uint32_t dSize);
+HAL_StatusTypeDef HAL_DCACHE_InvalidateByAddr(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr, uint32_t dSize);
 HAL_StatusTypeDef HAL_DCACHE_CleanByAddr(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr, uint32_t dSize);
-HAL_StatusTypeDef HAL_DCACHE_CleanInvalidByAddr(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr,
-						uint32_t dSize);
+HAL_StatusTypeDef HAL_DCACHE_CleanInvalidByAddr(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr, uint32_t dSize);
 
 /*** Cache maintenance in non-blocking mode (Interrupt) ***/
 HAL_StatusTypeDef HAL_DCACHE_Invalidate_IT(DCACHE_HandleTypeDef *hdcache);
-HAL_StatusTypeDef HAL_DCACHE_InvalidateByAddr_IT(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr,
-						 uint32_t dSize);
+HAL_StatusTypeDef HAL_DCACHE_InvalidateByAddr_IT(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr, uint32_t dSize);
 HAL_StatusTypeDef HAL_DCACHE_CleanByAddr_IT(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr, uint32_t dSize);
-HAL_StatusTypeDef HAL_DCACHE_CleanInvalidByAddr_IT(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr,
-						   uint32_t dSize);
+HAL_StatusTypeDef HAL_DCACHE_CleanInvalidByAddr_IT(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr, uint32_t dSize);
 
 /*** IRQHandler and Callbacks ***/
 void HAL_DCACHE_IRQHandler(DCACHE_HandleTypeDef *hdcache);
@@ -304,8 +298,7 @@ void HAL_DCACHE_InvalidateCompleteCallback(DCACHE_HandleTypeDef *hdcache);
 void HAL_DCACHE_CleanAndInvalidateByAddrCallback(DCACHE_HandleTypeDef *hdcache);
 
 /* Callbacks Register/UnRegister functions ***/
-HAL_StatusTypeDef HAL_DCACHE_RegisterCallback(DCACHE_HandleTypeDef *hdcache, HAL_DCACHE_CallbackIDTypeDef CallbackID,
-					      pDCACHE_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_DCACHE_RegisterCallback(DCACHE_HandleTypeDef *hdcache, HAL_DCACHE_CallbackIDTypeDef CallbackID, pDCACHE_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_DCACHE_UnRegisterCallback(DCACHE_HandleTypeDef *hdcache, HAL_DCACHE_CallbackIDTypeDef CallbackID);
 
 /*** Performance instruction cache monitoring functions ***/

@@ -23,8 +23,7 @@
 extern "C" {
 #endif
 
-#if defined(STM32L433xx) || defined(STM32L443xx) || defined(STM32L476xx) || defined(STM32L486xx) ||                    \
-    defined(STM32L496xx) || defined(STM32L4A6xx)
+#if defined(STM32L433xx) || defined(STM32L443xx) || defined(STM32L476xx) || defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx)
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l4xx_hal_def.h"
@@ -125,8 +124,8 @@ typedef struct {
 #define HAL_LCD_ERROR_UDR (0x00000002U)	  /*!< Update display request flag timeout error */
 #define HAL_LCD_ERROR_UDD (0x00000004U)	  /*!< Update display done flag timeout error */
 #define HAL_LCD_ERROR_ENS (0x00000008U)	  /*!< LCD enabled status flag timeout error */
-#define HAL_LCD_ERROR_RDY                                                                                              \
-	(0x00000010U) /*!< LCD Booster ready timeout error                                                             \
+#define HAL_LCD_ERROR_RDY                                                                                                                                                                              \
+	(0x00000010U) /*!< LCD Booster ready timeout error                                                                                                                                             \
 		       */
 /**
  * @}
@@ -221,8 +220,8 @@ typedef struct {
 /** @defgroup LCD_PulseOnDuration LCD Pulse On Duration
  * @{
  */
-#define LCD_PULSEONDURATION_0                                                                                          \
-	(0x00000000U)					      /*!< Pulse ON duration = 0 pulse                         \
+#define LCD_PULSEONDURATION_0                                                                                                                                                                          \
+	(0x00000000U)					      /*!< Pulse ON duration = 0 pulse                                                                                                         \
 							       */
 #define LCD_PULSEONDURATION_1 (LCD_FCR_PON_0)		      /*!< Pulse ON duration = 1/CK_PS  */
 #define LCD_PULSEONDURATION_2 (LCD_FCR_PON_1)		      /*!< Pulse ON duration = 2/CK_PS  */
@@ -230,8 +229,8 @@ typedef struct {
 #define LCD_PULSEONDURATION_4 (LCD_FCR_PON_2)		      /*!< Pulse ON duration = 4/CK_PS  */
 #define LCD_PULSEONDURATION_5 (LCD_FCR_PON_2 | LCD_FCR_PON_0) /*!< Pulse ON duration = 5/CK_PS  */
 #define LCD_PULSEONDURATION_6 (LCD_FCR_PON_2 | LCD_FCR_PON_1) /*!< Pulse ON duration = 6/CK_PS  */
-#define LCD_PULSEONDURATION_7                                                                                          \
-	(LCD_FCR_PON) /*!< Pulse ON duration = 7/CK_PS                                                                 \
+#define LCD_PULSEONDURATION_7                                                                                                                                                                          \
+	(LCD_FCR_PON) /*!< Pulse ON duration = 7/CK_PS                                                                                                                                                 \
 		       */
 /**
  * @}
@@ -257,11 +256,11 @@ typedef struct {
  */
 #define LCD_BLINKMODE_OFF (0x00000000U)		  /*!< Blink disabled */
 #define LCD_BLINKMODE_SEG0_COM0 (LCD_FCR_BLINK_0) /*!< Blink enabled on SEG[0], COM[0] (1 pixel) */
-#define LCD_BLINKMODE_SEG0_ALLCOM                                                                                      \
-	(LCD_FCR_BLINK_1) /*!< Blink enabled on SEG[0], all COM (up to                                                 \
+#define LCD_BLINKMODE_SEG0_ALLCOM                                                                                                                                                                      \
+	(LCD_FCR_BLINK_1) /*!< Blink enabled on SEG[0], all COM (up to                                                                                                                                 \
 			      8 pixels according to the programmed duty) */
-#define LCD_BLINKMODE_ALLSEG_ALLCOM                                                                                    \
-	(LCD_FCR_BLINK) /*!< Blink enabled on all SEG and all COM (all pixels)                                         \
+#define LCD_BLINKMODE_ALLSEG_ALLCOM                                                                                                                                                                    \
+	(LCD_FCR_BLINK) /*!< Blink enabled on all SEG and all COM (all pixels)                                                                                                                         \
 			 */
 /**
  * @}
@@ -324,8 +323,8 @@ typedef struct {
  * @{
  */
 
-#define LCD_HIGHDRIVE_DISABLE                                                                                          \
-	((uint32_t)0x00000000)		  /*!< High drive disabled                                                     \
+#define LCD_HIGHDRIVE_DISABLE                                                                                                                                                                          \
+	((uint32_t)0x00000000)		  /*!< High drive disabled                                                                                                                                     \
 					   */
 #define LCD_HIGHDRIVE_ENABLE (LCD_FCR_HD) /*!< High drive enabled  */
 /**
@@ -391,20 +390,20 @@ typedef struct {
  *         programmed to 1/CK_PS (LCD_PULSEONDURATION_1).
  * @retval None
  */
-#define __HAL_LCD_HIGHDRIVER_ENABLE(__HANDLE__)                                                                        \
-	do {                                                                                                           \
-		SET_BIT((__HANDLE__)->Instance->FCR, LCD_FCR_HD);                                                      \
-		LCD_WaitForSynchro(__HANDLE__);                                                                        \
+#define __HAL_LCD_HIGHDRIVER_ENABLE(__HANDLE__)                                                                                                                                                        \
+	do {                                                                                                                                                                                           \
+		SET_BIT((__HANDLE__)->Instance->FCR, LCD_FCR_HD);                                                                                                                                      \
+		LCD_WaitForSynchro(__HANDLE__);                                                                                                                                                        \
 	} while (0)
 
 /** @brief  Disable the low resistance divider.
  * @param __HANDLE__ specifies the LCD Handle.
  * @retval None
  */
-#define __HAL_LCD_HIGHDRIVER_DISABLE(__HANDLE__)                                                                       \
-	do {                                                                                                           \
-		CLEAR_BIT((__HANDLE__)->Instance->FCR, LCD_FCR_HD);                                                    \
-		LCD_WaitForSynchro(__HANDLE__);                                                                        \
+#define __HAL_LCD_HIGHDRIVER_DISABLE(__HANDLE__)                                                                                                                                                       \
+	do {                                                                                                                                                                                           \
+		CLEAR_BIT((__HANDLE__)->Instance->FCR, LCD_FCR_HD);                                                                                                                                    \
+		LCD_WaitForSynchro(__HANDLE__);                                                                                                                                                        \
 	} while (0)
 
 /** @brief  Enable the voltage output buffer for higher driving capability.
@@ -435,10 +434,10 @@ typedef struct {
  *     @arg LCD_PULSEONDURATION_7: Pulse ON duration = 7/CK_PS
  * @retval None
  */
-#define __HAL_LCD_PULSEONDURATION_CONFIG(__HANDLE__, __DURATION__)                                                     \
-	do {                                                                                                           \
-		MODIFY_REG((__HANDLE__)->Instance->FCR, LCD_FCR_PON, (__DURATION__));                                  \
-		LCD_WaitForSynchro(__HANDLE__);                                                                        \
+#define __HAL_LCD_PULSEONDURATION_CONFIG(__HANDLE__, __DURATION__)                                                                                                                                     \
+	do {                                                                                                                                                                                           \
+		MODIFY_REG((__HANDLE__)->Instance->FCR, LCD_FCR_PON, (__DURATION__));                                                                                                                  \
+		LCD_WaitForSynchro(__HANDLE__);                                                                                                                                                        \
 	} while (0)
 
 /**
@@ -456,10 +455,10 @@ typedef struct {
  *     @arg LCD_DEADTIME_7: Seven Phase between different couple of Frame
  * @retval None
  */
-#define __HAL_LCD_DEADTIME_CONFIG(__HANDLE__, __DEADTIME__)                                                            \
-	do {                                                                                                           \
-		MODIFY_REG((__HANDLE__)->Instance->FCR, LCD_FCR_DEAD, (__DEADTIME__));                                 \
-		LCD_WaitForSynchro(__HANDLE__);                                                                        \
+#define __HAL_LCD_DEADTIME_CONFIG(__HANDLE__, __DEADTIME__)                                                                                                                                            \
+	do {                                                                                                                                                                                           \
+		MODIFY_REG((__HANDLE__)->Instance->FCR, LCD_FCR_DEAD, (__DEADTIME__));                                                                                                                 \
+		LCD_WaitForSynchro(__HANDLE__);                                                                                                                                                        \
 	} while (0)
 
 /**
@@ -477,10 +476,10 @@ typedef struct {
  *     @arg LCD_CONTRASTLEVEL_7: Maximum Voltage = 3.51V
  * @retval None
  */
-#define __HAL_LCD_CONTRAST_CONFIG(__HANDLE__, __CONTRAST__)                                                            \
-	do {                                                                                                           \
-		MODIFY_REG((__HANDLE__)->Instance->FCR, LCD_FCR_CC, (__CONTRAST__));                                   \
-		LCD_WaitForSynchro(__HANDLE__);                                                                        \
+#define __HAL_LCD_CONTRAST_CONFIG(__HANDLE__, __CONTRAST__)                                                                                                                                            \
+	do {                                                                                                                                                                                           \
+		MODIFY_REG((__HANDLE__)->Instance->FCR, LCD_FCR_CC, (__CONTRAST__));                                                                                                                   \
+		LCD_WaitForSynchro(__HANDLE__);                                                                                                                                                        \
 	} while (0)
 
 /**
@@ -506,11 +505,10 @@ typedef struct {
  *     @arg LCD_BLINKFREQUENCY_DIV1024: The Blink frequency = fLcd/1024
  * @retval None
  */
-#define __HAL_LCD_BLINK_CONFIG(__HANDLE__, __BLINKMODE__, __BLINKFREQUENCY__)                                          \
-	do {                                                                                                           \
-		MODIFY_REG((__HANDLE__)->Instance->FCR, (LCD_FCR_BLINKF | LCD_FCR_BLINK),                              \
-			   ((__BLINKMODE__) | (__BLINKFREQUENCY__)));                                                  \
-		LCD_WaitForSynchro(__HANDLE__);                                                                        \
+#define __HAL_LCD_BLINK_CONFIG(__HANDLE__, __BLINKMODE__, __BLINKFREQUENCY__)                                                                                                                          \
+	do {                                                                                                                                                                                           \
+		MODIFY_REG((__HANDLE__)->Instance->FCR, (LCD_FCR_BLINKF | LCD_FCR_BLINK), ((__BLINKMODE__) | (__BLINKFREQUENCY__)));                                                                   \
+		LCD_WaitForSynchro(__HANDLE__);                                                                                                                                                        \
 	} while (0)
 
 /** @brief  Enable the specified LCD interrupt.
@@ -521,10 +519,10 @@ typedef struct {
  *     @arg LCD_IT_UDD: Update Display Done Interrupt
  * @retval None
  */
-#define __HAL_LCD_ENABLE_IT(__HANDLE__, __INTERRUPT__)                                                                 \
-	do {                                                                                                           \
-		SET_BIT((__HANDLE__)->Instance->FCR, (__INTERRUPT__));                                                 \
-		LCD_WaitForSynchro(__HANDLE__);                                                                        \
+#define __HAL_LCD_ENABLE_IT(__HANDLE__, __INTERRUPT__)                                                                                                                                                 \
+	do {                                                                                                                                                                                           \
+		SET_BIT((__HANDLE__)->Instance->FCR, (__INTERRUPT__));                                                                                                                                 \
+		LCD_WaitForSynchro(__HANDLE__);                                                                                                                                                        \
 	} while (0)
 
 /** @brief  Disable the specified LCD interrupt.
@@ -535,10 +533,10 @@ typedef struct {
  *     @arg LCD_IT_UDD: Update Display Done Interrupt
  * @retval None
  */
-#define __HAL_LCD_DISABLE_IT(__HANDLE__, __INTERRUPT__)                                                                \
-	do {                                                                                                           \
-		CLEAR_BIT((__HANDLE__)->Instance->FCR, (__INTERRUPT__));                                               \
-		LCD_WaitForSynchro(__HANDLE__);                                                                        \
+#define __HAL_LCD_DISABLE_IT(__HANDLE__, __INTERRUPT__)                                                                                                                                                \
+	do {                                                                                                                                                                                           \
+		CLEAR_BIT((__HANDLE__)->Instance->FCR, (__INTERRUPT__));                                                                                                                               \
+		LCD_WaitForSynchro(__HANDLE__);                                                                                                                                                        \
 	} while (0)
 
 /** @brief  Check whether the specified LCD interrupt source is enabled or not.
@@ -612,8 +610,7 @@ void HAL_LCD_MspDeInit(LCD_HandleTypeDef *hlcd);
 /** @addtogroup LCD_Exported_Functions_Group2
  * @{
  */
-HAL_StatusTypeDef HAL_LCD_Write(LCD_HandleTypeDef *hlcd, uint32_t RAMRegisterIndex, uint32_t RAMRegisterMask,
-				uint32_t Data);
+HAL_StatusTypeDef HAL_LCD_Write(LCD_HandleTypeDef *hlcd, uint32_t RAMRegisterIndex, uint32_t RAMRegisterMask, uint32_t Data);
 HAL_StatusTypeDef HAL_LCD_Clear(LCD_HandleTypeDef *hlcd);
 HAL_StatusTypeDef HAL_LCD_UpdateDisplayRequest(LCD_HandleTypeDef *hlcd);
 /**
@@ -642,77 +639,53 @@ uint32_t HAL_LCD_GetError(LCD_HandleTypeDef *hlcd);
  * @{
  */
 
-#define IS_LCD_PRESCALER(__PRESCALER__)                                                                                \
-	(((__PRESCALER__) == LCD_PRESCALER_1) || ((__PRESCALER__) == LCD_PRESCALER_2) ||                               \
-	 ((__PRESCALER__) == LCD_PRESCALER_4) || ((__PRESCALER__) == LCD_PRESCALER_8) ||                               \
-	 ((__PRESCALER__) == LCD_PRESCALER_16) || ((__PRESCALER__) == LCD_PRESCALER_32) ||                             \
-	 ((__PRESCALER__) == LCD_PRESCALER_64) || ((__PRESCALER__) == LCD_PRESCALER_128) ||                            \
-	 ((__PRESCALER__) == LCD_PRESCALER_256) || ((__PRESCALER__) == LCD_PRESCALER_512) ||                           \
-	 ((__PRESCALER__) == LCD_PRESCALER_1024) || ((__PRESCALER__) == LCD_PRESCALER_2048) ||                         \
-	 ((__PRESCALER__) == LCD_PRESCALER_4096) || ((__PRESCALER__) == LCD_PRESCALER_8192) ||                         \
-	 ((__PRESCALER__) == LCD_PRESCALER_16384) || ((__PRESCALER__) == LCD_PRESCALER_32768))
+#define IS_LCD_PRESCALER(__PRESCALER__)                                                                                                                                                                \
+	(((__PRESCALER__) == LCD_PRESCALER_1) || ((__PRESCALER__) == LCD_PRESCALER_2) || ((__PRESCALER__) == LCD_PRESCALER_4) || ((__PRESCALER__) == LCD_PRESCALER_8) ||                               \
+	 ((__PRESCALER__) == LCD_PRESCALER_16) || ((__PRESCALER__) == LCD_PRESCALER_32) || ((__PRESCALER__) == LCD_PRESCALER_64) || ((__PRESCALER__) == LCD_PRESCALER_128) ||                          \
+	 ((__PRESCALER__) == LCD_PRESCALER_256) || ((__PRESCALER__) == LCD_PRESCALER_512) || ((__PRESCALER__) == LCD_PRESCALER_1024) || ((__PRESCALER__) == LCD_PRESCALER_2048) ||                     \
+	 ((__PRESCALER__) == LCD_PRESCALER_4096) || ((__PRESCALER__) == LCD_PRESCALER_8192) || ((__PRESCALER__) == LCD_PRESCALER_16384) || ((__PRESCALER__) == LCD_PRESCALER_32768))
 
-#define IS_LCD_DIVIDER(__DIVIDER__)                                                                                    \
-	(((__DIVIDER__) == LCD_DIVIDER_16) || ((__DIVIDER__) == LCD_DIVIDER_17) ||                                     \
-	 ((__DIVIDER__) == LCD_DIVIDER_18) || ((__DIVIDER__) == LCD_DIVIDER_19) ||                                     \
-	 ((__DIVIDER__) == LCD_DIVIDER_20) || ((__DIVIDER__) == LCD_DIVIDER_21) ||                                     \
-	 ((__DIVIDER__) == LCD_DIVIDER_22) || ((__DIVIDER__) == LCD_DIVIDER_23) ||                                     \
-	 ((__DIVIDER__) == LCD_DIVIDER_24) || ((__DIVIDER__) == LCD_DIVIDER_25) ||                                     \
-	 ((__DIVIDER__) == LCD_DIVIDER_26) || ((__DIVIDER__) == LCD_DIVIDER_27) ||                                     \
-	 ((__DIVIDER__) == LCD_DIVIDER_28) || ((__DIVIDER__) == LCD_DIVIDER_29) ||                                     \
-	 ((__DIVIDER__) == LCD_DIVIDER_30) || ((__DIVIDER__) == LCD_DIVIDER_31))
+#define IS_LCD_DIVIDER(__DIVIDER__)                                                                                                                                                                    \
+	(((__DIVIDER__) == LCD_DIVIDER_16) || ((__DIVIDER__) == LCD_DIVIDER_17) || ((__DIVIDER__) == LCD_DIVIDER_18) || ((__DIVIDER__) == LCD_DIVIDER_19) || ((__DIVIDER__) == LCD_DIVIDER_20) ||      \
+	 ((__DIVIDER__) == LCD_DIVIDER_21) || ((__DIVIDER__) == LCD_DIVIDER_22) || ((__DIVIDER__) == LCD_DIVIDER_23) || ((__DIVIDER__) == LCD_DIVIDER_24) || ((__DIVIDER__) == LCD_DIVIDER_25) ||      \
+	 ((__DIVIDER__) == LCD_DIVIDER_26) || ((__DIVIDER__) == LCD_DIVIDER_27) || ((__DIVIDER__) == LCD_DIVIDER_28) || ((__DIVIDER__) == LCD_DIVIDER_29) || ((__DIVIDER__) == LCD_DIVIDER_30) ||      \
+	 ((__DIVIDER__) == LCD_DIVIDER_31))
 
-#define IS_LCD_DUTY(__DUTY__)                                                                                          \
-	(((__DUTY__) == LCD_DUTY_STATIC) || ((__DUTY__) == LCD_DUTY_1_2) || ((__DUTY__) == LCD_DUTY_1_3) ||            \
-	 ((__DUTY__) == LCD_DUTY_1_4) || ((__DUTY__) == LCD_DUTY_1_8))
+#define IS_LCD_DUTY(__DUTY__) (((__DUTY__) == LCD_DUTY_STATIC) || ((__DUTY__) == LCD_DUTY_1_2) || ((__DUTY__) == LCD_DUTY_1_3) || ((__DUTY__) == LCD_DUTY_1_4) || ((__DUTY__) == LCD_DUTY_1_8))
 
-#define IS_LCD_BIAS(__BIAS__)                                                                                          \
-	(((__BIAS__) == LCD_BIAS_1_4) || ((__BIAS__) == LCD_BIAS_1_2) || ((__BIAS__) == LCD_BIAS_1_3))
+#define IS_LCD_BIAS(__BIAS__) (((__BIAS__) == LCD_BIAS_1_4) || ((__BIAS__) == LCD_BIAS_1_2) || ((__BIAS__) == LCD_BIAS_1_3))
 
-#define IS_LCD_VOLTAGE_SOURCE(SOURCE)                                                                                  \
-	(((SOURCE) == LCD_VOLTAGESOURCE_INTERNAL) || ((SOURCE) == LCD_VOLTAGESOURCE_EXTERNAL))
+#define IS_LCD_VOLTAGE_SOURCE(SOURCE) (((SOURCE) == LCD_VOLTAGESOURCE_INTERNAL) || ((SOURCE) == LCD_VOLTAGESOURCE_EXTERNAL))
 
-#define IS_LCD_PULSE_ON_DURATION(__DURATION__)                                                                         \
-	(((__DURATION__) == LCD_PULSEONDURATION_0) || ((__DURATION__) == LCD_PULSEONDURATION_1) ||                     \
-	 ((__DURATION__) == LCD_PULSEONDURATION_2) || ((__DURATION__) == LCD_PULSEONDURATION_3) ||                     \
-	 ((__DURATION__) == LCD_PULSEONDURATION_4) || ((__DURATION__) == LCD_PULSEONDURATION_5) ||                     \
-	 ((__DURATION__) == LCD_PULSEONDURATION_6) || ((__DURATION__) == LCD_PULSEONDURATION_7))
+#define IS_LCD_PULSE_ON_DURATION(__DURATION__)                                                                                                                                                         \
+	(((__DURATION__) == LCD_PULSEONDURATION_0) || ((__DURATION__) == LCD_PULSEONDURATION_1) || ((__DURATION__) == LCD_PULSEONDURATION_2) || ((__DURATION__) == LCD_PULSEONDURATION_3) ||           \
+	 ((__DURATION__) == LCD_PULSEONDURATION_4) || ((__DURATION__) == LCD_PULSEONDURATION_5) || ((__DURATION__) == LCD_PULSEONDURATION_6) || ((__DURATION__) == LCD_PULSEONDURATION_7))
 
-#define IS_LCD_DEAD_TIME(__TIME__)                                                                                     \
-	(((__TIME__) == LCD_DEADTIME_0) || ((__TIME__) == LCD_DEADTIME_1) || ((__TIME__) == LCD_DEADTIME_2) ||         \
-	 ((__TIME__) == LCD_DEADTIME_3) || ((__TIME__) == LCD_DEADTIME_4) || ((__TIME__) == LCD_DEADTIME_5) ||         \
-	 ((__TIME__) == LCD_DEADTIME_6) || ((__TIME__) == LCD_DEADTIME_7))
+#define IS_LCD_DEAD_TIME(__TIME__)                                                                                                                                                                     \
+	(((__TIME__) == LCD_DEADTIME_0) || ((__TIME__) == LCD_DEADTIME_1) || ((__TIME__) == LCD_DEADTIME_2) || ((__TIME__) == LCD_DEADTIME_3) || ((__TIME__) == LCD_DEADTIME_4) ||                     \
+	 ((__TIME__) == LCD_DEADTIME_5) || ((__TIME__) == LCD_DEADTIME_6) || ((__TIME__) == LCD_DEADTIME_7))
 
-#define IS_LCD_BLINK_MODE(__MODE__)                                                                                    \
-	(((__MODE__) == LCD_BLINKMODE_OFF) || ((__MODE__) == LCD_BLINKMODE_SEG0_COM0) ||                               \
-	 ((__MODE__) == LCD_BLINKMODE_SEG0_ALLCOM) || ((__MODE__) == LCD_BLINKMODE_ALLSEG_ALLCOM))
+#define IS_LCD_BLINK_MODE(__MODE__)                                                                                                                                                                    \
+	(((__MODE__) == LCD_BLINKMODE_OFF) || ((__MODE__) == LCD_BLINKMODE_SEG0_COM0) || ((__MODE__) == LCD_BLINKMODE_SEG0_ALLCOM) || ((__MODE__) == LCD_BLINKMODE_ALLSEG_ALLCOM))
 
-#define IS_LCD_BLINK_FREQUENCY(__FREQUENCY__)                                                                          \
-	(((__FREQUENCY__) == LCD_BLINKFREQUENCY_DIV8) || ((__FREQUENCY__) == LCD_BLINKFREQUENCY_DIV16) ||              \
-	 ((__FREQUENCY__) == LCD_BLINKFREQUENCY_DIV32) || ((__FREQUENCY__) == LCD_BLINKFREQUENCY_DIV64) ||             \
-	 ((__FREQUENCY__) == LCD_BLINKFREQUENCY_DIV128) || ((__FREQUENCY__) == LCD_BLINKFREQUENCY_DIV256) ||           \
+#define IS_LCD_BLINK_FREQUENCY(__FREQUENCY__)                                                                                                                                                          \
+	(((__FREQUENCY__) == LCD_BLINKFREQUENCY_DIV8) || ((__FREQUENCY__) == LCD_BLINKFREQUENCY_DIV16) || ((__FREQUENCY__) == LCD_BLINKFREQUENCY_DIV32) ||                                             \
+	 ((__FREQUENCY__) == LCD_BLINKFREQUENCY_DIV64) || ((__FREQUENCY__) == LCD_BLINKFREQUENCY_DIV128) || ((__FREQUENCY__) == LCD_BLINKFREQUENCY_DIV256) ||                                          \
 	 ((__FREQUENCY__) == LCD_BLINKFREQUENCY_DIV512) || ((__FREQUENCY__) == LCD_BLINKFREQUENCY_DIV1024))
 
-#define IS_LCD_CONTRAST(__CONTRAST__)                                                                                  \
-	(((__CONTRAST__) == LCD_CONTRASTLEVEL_0) || ((__CONTRAST__) == LCD_CONTRASTLEVEL_1) ||                         \
-	 ((__CONTRAST__) == LCD_CONTRASTLEVEL_2) || ((__CONTRAST__) == LCD_CONTRASTLEVEL_3) ||                         \
-	 ((__CONTRAST__) == LCD_CONTRASTLEVEL_4) || ((__CONTRAST__) == LCD_CONTRASTLEVEL_5) ||                         \
-	 ((__CONTRAST__) == LCD_CONTRASTLEVEL_6) || ((__CONTRAST__) == LCD_CONTRASTLEVEL_7))
+#define IS_LCD_CONTRAST(__CONTRAST__)                                                                                                                                                                  \
+	(((__CONTRAST__) == LCD_CONTRASTLEVEL_0) || ((__CONTRAST__) == LCD_CONTRASTLEVEL_1) || ((__CONTRAST__) == LCD_CONTRASTLEVEL_2) || ((__CONTRAST__) == LCD_CONTRASTLEVEL_3) ||                   \
+	 ((__CONTRAST__) == LCD_CONTRASTLEVEL_4) || ((__CONTRAST__) == LCD_CONTRASTLEVEL_5) || ((__CONTRAST__) == LCD_CONTRASTLEVEL_6) || ((__CONTRAST__) == LCD_CONTRASTLEVEL_7))
 
-#define IS_LCD_RAM_REGISTER(__REGISTER__)                                                                              \
-	(((__REGISTER__) == LCD_RAM_REGISTER0) || ((__REGISTER__) == LCD_RAM_REGISTER1) ||                             \
-	 ((__REGISTER__) == LCD_RAM_REGISTER2) || ((__REGISTER__) == LCD_RAM_REGISTER3) ||                             \
-	 ((__REGISTER__) == LCD_RAM_REGISTER4) || ((__REGISTER__) == LCD_RAM_REGISTER5) ||                             \
-	 ((__REGISTER__) == LCD_RAM_REGISTER6) || ((__REGISTER__) == LCD_RAM_REGISTER7) ||                             \
-	 ((__REGISTER__) == LCD_RAM_REGISTER8) || ((__REGISTER__) == LCD_RAM_REGISTER9) ||                             \
-	 ((__REGISTER__) == LCD_RAM_REGISTER10) || ((__REGISTER__) == LCD_RAM_REGISTER11) ||                           \
-	 ((__REGISTER__) == LCD_RAM_REGISTER12) || ((__REGISTER__) == LCD_RAM_REGISTER13) ||                           \
-	 ((__REGISTER__) == LCD_RAM_REGISTER14) || ((__REGISTER__) == LCD_RAM_REGISTER15))
+#define IS_LCD_RAM_REGISTER(__REGISTER__)                                                                                                                                                              \
+	(((__REGISTER__) == LCD_RAM_REGISTER0) || ((__REGISTER__) == LCD_RAM_REGISTER1) || ((__REGISTER__) == LCD_RAM_REGISTER2) || ((__REGISTER__) == LCD_RAM_REGISTER3) ||                           \
+	 ((__REGISTER__) == LCD_RAM_REGISTER4) || ((__REGISTER__) == LCD_RAM_REGISTER5) || ((__REGISTER__) == LCD_RAM_REGISTER6) || ((__REGISTER__) == LCD_RAM_REGISTER7) ||                           \
+	 ((__REGISTER__) == LCD_RAM_REGISTER8) || ((__REGISTER__) == LCD_RAM_REGISTER9) || ((__REGISTER__) == LCD_RAM_REGISTER10) || ((__REGISTER__) == LCD_RAM_REGISTER11) ||                         \
+	 ((__REGISTER__) == LCD_RAM_REGISTER12) || ((__REGISTER__) == LCD_RAM_REGISTER13) || ((__REGISTER__) == LCD_RAM_REGISTER14) || ((__REGISTER__) == LCD_RAM_REGISTER15))
 
 #define IS_LCD_HIGH_DRIVE(__VALUE__) (((__VALUE__) == LCD_HIGHDRIVE_DISABLE) || ((__VALUE__) == LCD_HIGHDRIVE_ENABLE))
 
-#define IS_LCD_MUX_SEGMENT(__VALUE__)                                                                                  \
-	(((__VALUE__) == LCD_MUXSEGMENT_ENABLE) || ((__VALUE__) == LCD_MUXSEGMENT_DISABLE))
+#define IS_LCD_MUX_SEGMENT(__VALUE__) (((__VALUE__) == LCD_MUXSEGMENT_ENABLE) || ((__VALUE__) == LCD_MUXSEGMENT_DISABLE))
 
 /**
  * @}
@@ -737,7 +710,7 @@ HAL_StatusTypeDef LCD_WaitForSynchro(LCD_HandleTypeDef *hlcd);
  * @}
  */
 
-#endif /* STM32L433xx || STM32L443xx || STM32L476xx || STM32L486xx ||                                                  \
+#endif /* STM32L433xx || STM32L443xx || STM32L476xx || STM32L486xx ||                                                                                                                                  \
 	  STM32L496xx || STM32L4A6xx */
 
 #ifdef __cplusplus

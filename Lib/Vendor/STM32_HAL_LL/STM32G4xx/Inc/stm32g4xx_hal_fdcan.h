@@ -499,25 +499,17 @@ typedef struct
 	__IO uint32_t ErrorCode; /*!< FDCAN Error code          */
 
 #if USE_HAL_FDCAN_REGISTER_CALLBACKS == 1
-	void (*TxEventFifoCallback)(struct __FDCAN_HandleTypeDef *hfdcan,
-				    uint32_t TxEventFifoITs); /*!< FDCAN Tx Event Fifo callback */
-	void (*RxFifo0Callback)(struct __FDCAN_HandleTypeDef *hfdcan,
-				uint32_t RxFifo0ITs); /*!< FDCAN Rx Fifo 0 callback             */
-	void (*RxFifo1Callback)(struct __FDCAN_HandleTypeDef *hfdcan,
-				uint32_t RxFifo1ITs);			   /*!< FDCAN Rx Fifo 1 callback             */
-	void (*TxFifoEmptyCallback)(struct __FDCAN_HandleTypeDef *hfdcan); /*!< FDCAN Tx Fifo Empty callback         */
-	void (*TxBufferCompleteCallback)(struct __FDCAN_HandleTypeDef *hfdcan,
-					 uint32_t BufferIndexes); /*!< FDCAN Tx Buffer complete callback */
-	void (*TxBufferAbortCallback)(struct __FDCAN_HandleTypeDef *hfdcan,
-				      uint32_t BufferIndexes); /*!< FDCAN Tx Buffer abort callback */
-	void (*HighPriorityMessageCallback)(
-	    struct __FDCAN_HandleTypeDef *hfdcan); /*!< FDCAN High priority message callback */
-	void (*TimestampWraparoundCallback)(
-	    struct __FDCAN_HandleTypeDef *hfdcan); /*!< FDCAN Timestamp wraparound callback  */
-	void (*TimeoutOccurredCallback)(struct __FDCAN_HandleTypeDef *hfdcan); /*!< FDCAN Timeout occurred callback */
-	void (*ErrorCallback)(struct __FDCAN_HandleTypeDef *hfdcan);	       /*!< FDCAN Error callback */
-	void (*ErrorStatusCallback)(struct __FDCAN_HandleTypeDef *hfdcan,
-				    uint32_t ErrorStatusITs); /*!< FDCAN Error status callback */
+	void (*TxEventFifoCallback)(struct __FDCAN_HandleTypeDef *hfdcan, uint32_t TxEventFifoITs);	/*!< FDCAN Tx Event Fifo callback */
+	void (*RxFifo0Callback)(struct __FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs);		/*!< FDCAN Rx Fifo 0 callback             */
+	void (*RxFifo1Callback)(struct __FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo1ITs);		/*!< FDCAN Rx Fifo 1 callback             */
+	void (*TxFifoEmptyCallback)(struct __FDCAN_HandleTypeDef *hfdcan);				/*!< FDCAN Tx Fifo Empty callback         */
+	void (*TxBufferCompleteCallback)(struct __FDCAN_HandleTypeDef *hfdcan, uint32_t BufferIndexes); /*!< FDCAN Tx Buffer complete callback */
+	void (*TxBufferAbortCallback)(struct __FDCAN_HandleTypeDef *hfdcan, uint32_t BufferIndexes);	/*!< FDCAN Tx Buffer abort callback */
+	void (*HighPriorityMessageCallback)(struct __FDCAN_HandleTypeDef *hfdcan);			/*!< FDCAN High priority message callback */
+	void (*TimestampWraparoundCallback)(struct __FDCAN_HandleTypeDef *hfdcan);			/*!< FDCAN Timestamp wraparound callback  */
+	void (*TimeoutOccurredCallback)(struct __FDCAN_HandleTypeDef *hfdcan);				/*!< FDCAN Timeout occurred callback */
+	void (*ErrorCallback)(struct __FDCAN_HandleTypeDef *hfdcan);					/*!< FDCAN Error callback */
+	void (*ErrorStatusCallback)(struct __FDCAN_HandleTypeDef *hfdcan, uint32_t ErrorStatusITs);	/*!< FDCAN Error status callback */
 
 	void (*MspInitCallback)(struct __FDCAN_HandleTypeDef *hfdcan);	 /*!< FDCAN Msp Init callback */
 	void (*MspDeInitCallback)(struct __FDCAN_HandleTypeDef *hfdcan); /*!< FDCAN Msp DeInit callback */
@@ -545,22 +537,16 @@ typedef enum {
 /**
  * @brief  HAL FDCAN Callback pointer definition
  */
-typedef void (*pFDCAN_CallbackTypeDef)(FDCAN_HandleTypeDef *hfdcan); /*!< pointer to a common FDCAN callback function */
-typedef void (*pFDCAN_TxEventFifoCallbackTypeDef)(FDCAN_HandleTypeDef *hfdcan,
-						  uint32_t TxEventFifoITs); /*!< pointer to Tx event Fifo FDCAN callback
-									       function      */
-typedef void (*pFDCAN_RxFifo0CallbackTypeDef)(FDCAN_HandleTypeDef *hfdcan,
-					      uint32_t RxFifo0ITs); /*!< pointer to Rx Fifo 0 FDCAN callback function */
-typedef void (*pFDCAN_RxFifo1CallbackTypeDef)(FDCAN_HandleTypeDef *hfdcan,
-					      uint32_t RxFifo1ITs); /*!< pointer to Rx Fifo 1 FDCAN callback function */
-typedef void (*pFDCAN_TxBufferCompleteCallbackTypeDef)(FDCAN_HandleTypeDef *hfdcan,
-						       uint32_t BufferIndexes); /*!< pointer to Tx Buffer complete FDCAN
-										   callback function */
-typedef void (*pFDCAN_TxBufferAbortCallbackTypeDef)(FDCAN_HandleTypeDef *hfdcan,
-						    uint32_t BufferIndexes); /*!< pointer to Tx Buffer abort FDCAN
-										callback function    */
-typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(
-    FDCAN_HandleTypeDef *hfdcan, uint32_t ErrorStatusITs); /*!< pointer to Error Status callback function */
+typedef void (*pFDCAN_CallbackTypeDef)(FDCAN_HandleTypeDef *hfdcan);					     /*!< pointer to a common FDCAN callback function */
+typedef void (*pFDCAN_TxEventFifoCallbackTypeDef)(FDCAN_HandleTypeDef *hfdcan, uint32_t TxEventFifoITs);     /*!< pointer to Tx event Fifo FDCAN callback
+														function      */
+typedef void (*pFDCAN_RxFifo0CallbackTypeDef)(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs);	     /*!< pointer to Rx Fifo 0 FDCAN callback function */
+typedef void (*pFDCAN_RxFifo1CallbackTypeDef)(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo1ITs);	     /*!< pointer to Rx Fifo 1 FDCAN callback function */
+typedef void (*pFDCAN_TxBufferCompleteCallbackTypeDef)(FDCAN_HandleTypeDef *hfdcan, uint32_t BufferIndexes); /*!< pointer to Tx Buffer complete FDCAN
+														callback function */
+typedef void (*pFDCAN_TxBufferAbortCallbackTypeDef)(FDCAN_HandleTypeDef *hfdcan, uint32_t BufferIndexes);    /*!< pointer to Tx Buffer abort FDCAN
+														callback function    */
+typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(FDCAN_HandleTypeDef *hfdcan, uint32_t ErrorStatusITs);     /*!< pointer to Error Status callback function */
 
 #endif /* USE_HAL_FDCAN_REGISTER_CALLBACKS */
 
@@ -589,11 +575,11 @@ typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(
 #define HAL_FDCAN_ERROR_FIFO_FULL ((uint32_t)0x00000200U)	/*!< Put element in full FIFO */
 #define HAL_FDCAN_ERROR_LOG_OVERFLOW FDCAN_IR_ELO		/*!< Overflow of CAN Error Logging Counter */
 #define HAL_FDCAN_ERROR_RAM_WDG FDCAN_IR_WDI			/*!< Message RAM Watchdog event occurred */
-#define HAL_FDCAN_ERROR_PROTOCOL_ARBT                                                                                  \
-	FDCAN_IR_PEA /*!< Protocol Error in Arbitration Phase (Nominal Bit                                             \
+#define HAL_FDCAN_ERROR_PROTOCOL_ARBT                                                                                                                                                                  \
+	FDCAN_IR_PEA /*!< Protocol Error in Arbitration Phase (Nominal Bit                                                                                                                             \
 			Time is used)         */
-#define HAL_FDCAN_ERROR_PROTOCOL_DATA                                                                                  \
-	FDCAN_IR_PED				   /*!< Protocol Error in Data Phase (Data Bit Time is used)           \
+#define HAL_FDCAN_ERROR_PROTOCOL_DATA                                                                                                                                                                  \
+	FDCAN_IR_PED				   /*!< Protocol Error in Data Phase (Data Bit Time is used)                                                                                           \
 						    */
 #define HAL_FDCAN_ERROR_RESERVED_AREA FDCAN_IR_ARA /*!< Access to Reserved Address */
 
@@ -653,8 +639,8 @@ typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(
  * @{
  */
 #define FDCAN_TX_FIFO_OPERATION ((uint32_t)0x00000000U) /*!< FIFO mode  */
-#define FDCAN_TX_QUEUE_OPERATION                                                                                       \
-	((uint32_t)FDCAN_TXBC_TFQM) /*!< Queue mode                                                                    \
+#define FDCAN_TX_QUEUE_OPERATION                                                                                                                                                                       \
+	((uint32_t)FDCAN_TXBC_TFQM) /*!< Queue mode                                                                                                                                                    \
 				     */
 /**
  * @}
@@ -713,11 +699,11 @@ typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(
 /** @defgroup FDCAN_bit_rate_switching FDCAN Bit Rate Switching
  * @{
  */
-#define FDCAN_BRS_OFF                                                                                                  \
-	((uint32_t)0x00000000U) /*!< FDCAN frames transmitted/received without                                         \
+#define FDCAN_BRS_OFF                                                                                                                                                                                  \
+	((uint32_t)0x00000000U) /*!< FDCAN frames transmitted/received without                                                                                                                         \
 				   bit rate switching */
-#define FDCAN_BRS_ON                                                                                                   \
-	((uint32_t)0x00100000U) /*!< FDCAN frames transmitted/received with                                            \
+#define FDCAN_BRS_ON                                                                                                                                                                                   \
+	((uint32_t)0x00100000U) /*!< FDCAN frames transmitted/received with                                                                                                                            \
 				   bit rate switching    */
 /**
  * @}
@@ -726,11 +712,11 @@ typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(
 /** @defgroup FDCAN_format FDCAN format
  * @{
  */
-#define FDCAN_CLASSIC_CAN                                                                                              \
-	((uint32_t)0x00000000U) /*!< Frame transmitted/received in Classic CAN                                         \
+#define FDCAN_CLASSIC_CAN                                                                                                                                                                              \
+	((uint32_t)0x00000000U) /*!< Frame transmitted/received in Classic CAN                                                                                                                         \
 				   format */
-#define FDCAN_FD_CAN                                                                                                   \
-	((uint32_t)0x00200000U) /*!< Frame transmitted/received in FDCAN                                               \
+#define FDCAN_FD_CAN                                                                                                                                                                                   \
+	((uint32_t)0x00200000U) /*!< Frame transmitted/received in FDCAN                                                                                                                               \
 				   format       */
 /**
  * @}
@@ -748,17 +734,17 @@ typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(
 /** @defgroup FDCAN_filter_type FDCAN Filter Type
  * @{
  */
-#define FDCAN_FILTER_RANGE                                                                                             \
-	((uint32_t)0x00000000U) /*!< Range filter from FilterID1 to FilterID2                                          \
+#define FDCAN_FILTER_RANGE                                                                                                                                                                             \
+	((uint32_t)0x00000000U) /*!< Range filter from FilterID1 to FilterID2                                                                                                                          \
 				 */
-#define FDCAN_FILTER_DUAL                                                                                              \
-	((uint32_t)0x00000001U) /*!< Dual ID filter for FilterID1 or FilterID2                                         \
+#define FDCAN_FILTER_DUAL                                                                                                                                                                              \
+	((uint32_t)0x00000001U) /*!< Dual ID filter for FilterID1 or FilterID2                                                                                                                         \
 				 */
-#define FDCAN_FILTER_MASK                                                                                              \
-	((uint32_t)0x00000002U) /*!< Classic filter: FilterID1 = filter,                                               \
+#define FDCAN_FILTER_MASK                                                                                                                                                                              \
+	((uint32_t)0x00000002U) /*!< Classic filter: FilterID1 = filter,                                                                                                                               \
 				   FilterID2 = mask            */
-#define FDCAN_FILTER_RANGE_NO_EIDM                                                                                     \
-	((uint32_t)0x00000003U) /*!< Range filter from FilterID1 to FilterID2,                                         \
+#define FDCAN_FILTER_RANGE_NO_EIDM                                                                                                                                                                     \
+	((uint32_t)0x00000003U) /*!< Range filter from FilterID1 to FilterID2,                                                                                                                         \
 				   EIDM mask not applied */
 /**
  * @}
@@ -772,11 +758,11 @@ typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(
 #define FDCAN_FILTER_TO_RXFIFO1 ((uint32_t)0x00000002U) /*!< Store in Rx FIFO 1 if filter matches */
 #define FDCAN_FILTER_REJECT ((uint32_t)0x00000003U)	/*!< Reject ID if filter matches */
 #define FDCAN_FILTER_HP ((uint32_t)0x00000004U)		/*!< Set high priority if filter matches */
-#define FDCAN_FILTER_TO_RXFIFO0_HP                                                                                     \
-	((uint32_t)0x00000005U) /*!< Set high priority and store in FIFO 0 if                                          \
+#define FDCAN_FILTER_TO_RXFIFO0_HP                                                                                                                                                                     \
+	((uint32_t)0x00000005U) /*!< Set high priority and store in FIFO 0 if                                                                                                                          \
 				   filter matches   */
-#define FDCAN_FILTER_TO_RXFIFO1_HP                                                                                     \
-	((uint32_t)0x00000006U) /*!< Set high priority and store in FIFO 1 if                                          \
+#define FDCAN_FILTER_TO_RXFIFO1_HP                                                                                                                                                                     \
+	((uint32_t)0x00000006U) /*!< Set high priority and store in FIFO 1 if                                                                                                                          \
 				   filter matches   */
 /**
  * @}
@@ -839,11 +825,11 @@ typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(
 /** @defgroup FDCAN_communication_state FDCAN communication state
  * @{
  */
-#define FDCAN_COM_STATE_SYNC                                                                                           \
-	((uint32_t)0x00000000U) /*!< Node is synchronizing on CAN                                                      \
+#define FDCAN_COM_STATE_SYNC                                                                                                                                                                           \
+	((uint32_t)0x00000000U) /*!< Node is synchronizing on CAN                                                                                                                                      \
 				   communication */
-#define FDCAN_COM_STATE_IDLE                                                                                           \
-	((uint32_t)0x00000008U)			   /*!< Node is neither receiver nor transmitter                       \
+#define FDCAN_COM_STATE_IDLE                                                                                                                                                                           \
+	((uint32_t)0x00000008U)			   /*!< Node is neither receiver nor transmitter                                                                                                       \
 						    */
 #define FDCAN_COM_STATE_RX ((uint32_t)0x00000010U) /*!< Node is operating as receiver */
 #define FDCAN_COM_STATE_TX ((uint32_t)0x00000018U) /*!< Node is operating as transmitter */
@@ -873,8 +859,8 @@ typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(
 /** @defgroup FDCAN_Reject_Remote_Frames FDCAN reject remote frames
  * @{
  */
-#define FDCAN_FILTER_REMOTE                                                                                            \
-	((uint32_t)0x00000000U)			    /*!< Filter remote frames                                          \
+#define FDCAN_FILTER_REMOTE                                                                                                                                                                            \
+	((uint32_t)0x00000000U)			    /*!< Filter remote frames                                                                                                                          \
 						     */
 #define FDCAN_REJECT_REMOTE ((uint32_t)0x00000001U) /*!< Reject all remote frames */
 /**
@@ -893,8 +879,8 @@ typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(
 /** @defgroup FDCAN_Timestamp FDCAN timestamp
  * @{
  */
-#define FDCAN_TIMESTAMP_INTERNAL                                                                                       \
-	((uint32_t)0x00000001U)				 /*!< Timestamp counter value incremented                      \
+#define FDCAN_TIMESTAMP_INTERNAL                                                                                                                                                                       \
+	((uint32_t)0x00000001U)				 /*!< Timestamp counter value incremented                                                                                                      \
 							    according to TCP */
 #define FDCAN_TIMESTAMP_EXTERNAL ((uint32_t)0x00000002U) /*!< External timestamp counter value used */
 /**
@@ -904,53 +890,53 @@ typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(
 /** @defgroup FDCAN_Timestamp_Prescaler FDCAN timestamp prescaler
  * @{
  */
-#define FDCAN_TIMESTAMP_PRESC_1                                                                                        \
-	((uint32_t)0x00000000U) /*!< Timestamp counter time unit in equal to                                           \
+#define FDCAN_TIMESTAMP_PRESC_1                                                                                                                                                                        \
+	((uint32_t)0x00000000U) /*!< Timestamp counter time unit in equal to                                                                                                                           \
 				   CAN bit time                 */
-#define FDCAN_TIMESTAMP_PRESC_2                                                                                        \
-	((uint32_t)0x00010000U) /*!< Timestamp counter time unit in equal to                                           \
+#define FDCAN_TIMESTAMP_PRESC_2                                                                                                                                                                        \
+	((uint32_t)0x00010000U) /*!< Timestamp counter time unit in equal to                                                                                                                           \
 				   CAN bit time multiplied by 2  */
-#define FDCAN_TIMESTAMP_PRESC_3                                                                                        \
-	((uint32_t)0x00020000U) /*!< Timestamp counter time unit in equal to                                           \
+#define FDCAN_TIMESTAMP_PRESC_3                                                                                                                                                                        \
+	((uint32_t)0x00020000U) /*!< Timestamp counter time unit in equal to                                                                                                                           \
 				   CAN bit time multiplied by 3  */
-#define FDCAN_TIMESTAMP_PRESC_4                                                                                        \
-	((uint32_t)0x00030000U) /*!< Timestamp counter time unit in equal to                                           \
+#define FDCAN_TIMESTAMP_PRESC_4                                                                                                                                                                        \
+	((uint32_t)0x00030000U) /*!< Timestamp counter time unit in equal to                                                                                                                           \
 				   CAN bit time multiplied by 4  */
-#define FDCAN_TIMESTAMP_PRESC_5                                                                                        \
-	((uint32_t)0x00040000U) /*!< Timestamp counter time unit in equal to                                           \
+#define FDCAN_TIMESTAMP_PRESC_5                                                                                                                                                                        \
+	((uint32_t)0x00040000U) /*!< Timestamp counter time unit in equal to                                                                                                                           \
 				   CAN bit time multiplied by 5  */
-#define FDCAN_TIMESTAMP_PRESC_6                                                                                        \
-	((uint32_t)0x00050000U) /*!< Timestamp counter time unit in equal to                                           \
+#define FDCAN_TIMESTAMP_PRESC_6                                                                                                                                                                        \
+	((uint32_t)0x00050000U) /*!< Timestamp counter time unit in equal to                                                                                                                           \
 				   CAN bit time multiplied by 6  */
-#define FDCAN_TIMESTAMP_PRESC_7                                                                                        \
-	((uint32_t)0x00060000U) /*!< Timestamp counter time unit in equal to                                           \
+#define FDCAN_TIMESTAMP_PRESC_7                                                                                                                                                                        \
+	((uint32_t)0x00060000U) /*!< Timestamp counter time unit in equal to                                                                                                                           \
 				   CAN bit time multiplied by 7  */
-#define FDCAN_TIMESTAMP_PRESC_8                                                                                        \
-	((uint32_t)0x00070000U) /*!< Timestamp counter time unit in equal to                                           \
+#define FDCAN_TIMESTAMP_PRESC_8                                                                                                                                                                        \
+	((uint32_t)0x00070000U) /*!< Timestamp counter time unit in equal to                                                                                                                           \
 				   CAN bit time multiplied by 8  */
-#define FDCAN_TIMESTAMP_PRESC_9                                                                                        \
-	((uint32_t)0x00080000U) /*!< Timestamp counter time unit in equal to                                           \
+#define FDCAN_TIMESTAMP_PRESC_9                                                                                                                                                                        \
+	((uint32_t)0x00080000U) /*!< Timestamp counter time unit in equal to                                                                                                                           \
 				   CAN bit time multiplied by 9  */
-#define FDCAN_TIMESTAMP_PRESC_10                                                                                       \
-	((uint32_t)0x00090000U) /*!< Timestamp counter time unit in equal to                                           \
+#define FDCAN_TIMESTAMP_PRESC_10                                                                                                                                                                       \
+	((uint32_t)0x00090000U) /*!< Timestamp counter time unit in equal to                                                                                                                           \
 				   CAN bit time multiplied by 10 */
-#define FDCAN_TIMESTAMP_PRESC_11                                                                                       \
-	((uint32_t)0x000A0000U) /*!< Timestamp counter time unit in equal to                                           \
+#define FDCAN_TIMESTAMP_PRESC_11                                                                                                                                                                       \
+	((uint32_t)0x000A0000U) /*!< Timestamp counter time unit in equal to                                                                                                                           \
 				   CAN bit time multiplied by 11 */
-#define FDCAN_TIMESTAMP_PRESC_12                                                                                       \
-	((uint32_t)0x000B0000U) /*!< Timestamp counter time unit in equal to                                           \
+#define FDCAN_TIMESTAMP_PRESC_12                                                                                                                                                                       \
+	((uint32_t)0x000B0000U) /*!< Timestamp counter time unit in equal to                                                                                                                           \
 				   CAN bit time multiplied by 12 */
-#define FDCAN_TIMESTAMP_PRESC_13                                                                                       \
-	((uint32_t)0x000C0000U) /*!< Timestamp counter time unit in equal to                                           \
+#define FDCAN_TIMESTAMP_PRESC_13                                                                                                                                                                       \
+	((uint32_t)0x000C0000U) /*!< Timestamp counter time unit in equal to                                                                                                                           \
 				   CAN bit time multiplied by 13 */
-#define FDCAN_TIMESTAMP_PRESC_14                                                                                       \
-	((uint32_t)0x000D0000U) /*!< Timestamp counter time unit in equal to                                           \
+#define FDCAN_TIMESTAMP_PRESC_14                                                                                                                                                                       \
+	((uint32_t)0x000D0000U) /*!< Timestamp counter time unit in equal to                                                                                                                           \
 				   CAN bit time multiplied by 14 */
-#define FDCAN_TIMESTAMP_PRESC_15                                                                                       \
-	((uint32_t)0x000E0000U) /*!< Timestamp counter time unit in equal to                                           \
+#define FDCAN_TIMESTAMP_PRESC_15                                                                                                                                                                       \
+	((uint32_t)0x000E0000U) /*!< Timestamp counter time unit in equal to                                                                                                                           \
 				   CAN bit time multiplied by 15 */
-#define FDCAN_TIMESTAMP_PRESC_16                                                                                       \
-	((uint32_t)0x000F0000U) /*!< Timestamp counter time unit in equal to                                           \
+#define FDCAN_TIMESTAMP_PRESC_16                                                                                                                                                                       \
+	((uint32_t)0x000F0000U) /*!< Timestamp counter time unit in equal to                                                                                                                           \
 				   CAN bit time multiplied by 16 */
 /**
  * @}
@@ -1098,27 +1084,17 @@ typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(
 /** @defgroup FDCAN_Interrupts_List FDCAN Interrupts List
  * @{
  */
-#define FDCAN_IT_LIST_RX_FIFO0                                                                                         \
-	(FDCAN_IT_RX_FIFO0_MESSAGE_LOST | FDCAN_IT_RX_FIFO0_FULL |                                                     \
-	 FDCAN_IT_RX_FIFO0_NEW_MESSAGE) /*!< RX FIFO 0 Interrupts List */
-#define FDCAN_IT_LIST_RX_FIFO1                                                                                         \
-	(FDCAN_IT_RX_FIFO1_MESSAGE_LOST | FDCAN_IT_RX_FIFO1_FULL |                                                     \
-	 FDCAN_IT_RX_FIFO1_NEW_MESSAGE) /*!< RX FIFO 1 Interrupts List */
-#define FDCAN_IT_LIST_SMSG                                                                                             \
-	(FDCAN_IT_TX_ABORT_COMPLETE | FDCAN_IT_TX_COMPLETE |                                                           \
-	 FDCAN_IT_RX_HIGH_PRIORITY_MSG) /*!< Status Message Interrupts List */
-#define FDCAN_IT_LIST_TX_FIFO_ERROR                                                                                    \
-	(FDCAN_IT_TX_EVT_FIFO_ELT_LOST | FDCAN_IT_TX_EVT_FIFO_FULL | FDCAN_IT_TX_EVT_FIFO_NEW_DATA |                   \
-	 FDCAN_IT_TX_FIFO_EMPTY) /*!< TX FIFO Error Interrupts List      */
-#define FDCAN_IT_LIST_MISC                                                                                             \
-	(FDCAN_IT_TIMEOUT_OCCURRED | FDCAN_IT_RAM_ACCESS_FAILURE |                                                     \
-	 FDCAN_IT_TIMESTAMP_WRAPAROUND) /*!< Misc. Interrupts List */
-#define FDCAN_IT_LIST_BIT_LINE_ERROR                                                                                   \
-	(FDCAN_IT_ERROR_PASSIVE | FDCAN_IT_ERROR_LOGGING_OVERFLOW) /*!< Bit and Line Error Interrupts                  \
+#define FDCAN_IT_LIST_RX_FIFO0 (FDCAN_IT_RX_FIFO0_MESSAGE_LOST | FDCAN_IT_RX_FIFO0_FULL | FDCAN_IT_RX_FIFO0_NEW_MESSAGE)				 /*!< RX FIFO 0 Interrupts List */
+#define FDCAN_IT_LIST_RX_FIFO1 (FDCAN_IT_RX_FIFO1_MESSAGE_LOST | FDCAN_IT_RX_FIFO1_FULL | FDCAN_IT_RX_FIFO1_NEW_MESSAGE)				 /*!< RX FIFO 1 Interrupts List */
+#define FDCAN_IT_LIST_SMSG (FDCAN_IT_TX_ABORT_COMPLETE | FDCAN_IT_TX_COMPLETE | FDCAN_IT_RX_HIGH_PRIORITY_MSG)						 /*!< Status Message Interrupts List */
+#define FDCAN_IT_LIST_TX_FIFO_ERROR (FDCAN_IT_TX_EVT_FIFO_ELT_LOST | FDCAN_IT_TX_EVT_FIFO_FULL | FDCAN_IT_TX_EVT_FIFO_NEW_DATA | FDCAN_IT_TX_FIFO_EMPTY) /*!< TX FIFO Error Interrupts List      */
+#define FDCAN_IT_LIST_MISC (FDCAN_IT_TIMEOUT_OCCURRED | FDCAN_IT_RAM_ACCESS_FAILURE | FDCAN_IT_TIMESTAMP_WRAPAROUND)					 /*!< Misc. Interrupts List */
+#define FDCAN_IT_LIST_BIT_LINE_ERROR                                                                                                                                                                   \
+	(FDCAN_IT_ERROR_PASSIVE | FDCAN_IT_ERROR_LOGGING_OVERFLOW) /*!< Bit and Line Error Interrupts                                                                                                  \
 								      List */
-#define FDCAN_IT_LIST_PROTOCOL_ERROR                                                                                   \
-	(FDCAN_IT_RESERVED_ADDRESS_ACCESS | FDCAN_IT_DATA_PROTOCOL_ERROR | FDCAN_IT_ARB_PROTOCOL_ERROR |               \
-	 FDCAN_IT_RAM_WATCHDOG | FDCAN_IT_BUS_OFF | FDCAN_IT_ERROR_WARNING) /*!< Protocol Error Interrupts List     */
+#define FDCAN_IT_LIST_PROTOCOL_ERROR                                                                                                                                                                   \
+	(FDCAN_IT_RESERVED_ADDRESS_ACCESS | FDCAN_IT_DATA_PROTOCOL_ERROR | FDCAN_IT_ARB_PROTOCOL_ERROR | FDCAN_IT_RAM_WATCHDOG | FDCAN_IT_BUS_OFF |                                                    \
+	 FDCAN_IT_ERROR_WARNING) /*!< Protocol Error Interrupts List     */
 /**
  * @}
  */
@@ -1126,43 +1102,43 @@ typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(
 /** @defgroup FDCAN_Interrupts_Group FDCAN Interrupts Group
  * @{
  */
-#define FDCAN_IT_GROUP_RX_FIFO0                                                                                        \
-	FDCAN_ILS_RXFIFO0 /*!< RX FIFO 0 Interrupts Group:                                                             \
-				 RF0LL: Rx FIFO 0 Message Lost                                                         \
-				 RF0FL: Rx FIFO 0 is Full                                                              \
+#define FDCAN_IT_GROUP_RX_FIFO0                                                                                                                                                                        \
+	FDCAN_ILS_RXFIFO0 /*!< RX FIFO 0 Interrupts Group:                                                                                                                                             \
+				 RF0LL: Rx FIFO 0 Message Lost                                                                                                                                         \
+				 RF0FL: Rx FIFO 0 is Full                                                                                                                                              \
 				 RF0NL: Rx FIFO 0 Has New Message */
-#define FDCAN_IT_GROUP_RX_FIFO1                                                                                        \
-	FDCAN_ILS_RXFIFO1 /*!< RX FIFO 1 Interrupts Group:                                                             \
-				 RF1LL: Rx FIFO 1 Message Lost                                                         \
-				 RF1FL: Rx FIFO 1 is Full                                                              \
+#define FDCAN_IT_GROUP_RX_FIFO1                                                                                                                                                                        \
+	FDCAN_ILS_RXFIFO1 /*!< RX FIFO 1 Interrupts Group:                                                                                                                                             \
+				 RF1LL: Rx FIFO 1 Message Lost                                                                                                                                         \
+				 RF1FL: Rx FIFO 1 is Full                                                                                                                                              \
 				 RF1NL: Rx FIFO 1 Has New Message */
-#define FDCAN_IT_GROUP_SMSG                                                                                            \
-	FDCAN_ILS_SMSG /*!< Status Message Interrupts Group:                                                           \
-			      TCFL: Transmission Cancellation Finished                                                 \
-			      TCL: Transmission Completed                                                              \
+#define FDCAN_IT_GROUP_SMSG                                                                                                                                                                            \
+	FDCAN_ILS_SMSG /*!< Status Message Interrupts Group:                                                                                                                                           \
+			      TCFL: Transmission Cancellation Finished                                                                                                                                 \
+			      TCL: Transmission Completed                                                                                                                                              \
 			      HPML: High Priority Message                 */
-#define FDCAN_IT_GROUP_TX_FIFO_ERROR                                                                                   \
-	FDCAN_ILS_TFERR /*!< TX FIFO Error Interrupts Group:                                                           \
-			       TEFLL: Tx Event FIFO Element Lost                                                       \
-			       TEFFL: Tx Event FIFO Full                                                               \
-			       TEFNL: Tx Event FIFO New Entry                                                          \
+#define FDCAN_IT_GROUP_TX_FIFO_ERROR                                                                                                                                                                   \
+	FDCAN_ILS_TFERR /*!< TX FIFO Error Interrupts Group:                                                                                                                                           \
+			       TEFLL: Tx Event FIFO Element Lost                                                                                                                                       \
+			       TEFFL: Tx Event FIFO Full                                                                                                                                               \
+			       TEFNL: Tx Event FIFO New Entry                                                                                                                                          \
 			       TFEL: Tx FIFO Empty Interrupt Line          */
-#define FDCAN_IT_GROUP_MISC                                                                                            \
-	FDCAN_ILS_MISC /*!< Misc. Interrupts Group:                                                                    \
-			      TOOL: Timeout Occurred                                                                   \
-			      MRAFL: Message RAM Access Failure                                                        \
+#define FDCAN_IT_GROUP_MISC                                                                                                                                                                            \
+	FDCAN_ILS_MISC /*!< Misc. Interrupts Group:                                                                                                                                                    \
+			      TOOL: Timeout Occurred                                                                                                                                                   \
+			      MRAFL: Message RAM Access Failure                                                                                                                                        \
 			      TSWL: Timestamp Wraparound                  */
-#define FDCAN_IT_GROUP_BIT_LINE_ERROR                                                                                  \
-	FDCAN_ILS_BERR /*!< Bit and Line Error Interrupts Group:                                                       \
-			      EPL: Error Passive                                                                       \
+#define FDCAN_IT_GROUP_BIT_LINE_ERROR                                                                                                                                                                  \
+	FDCAN_ILS_BERR /*!< Bit and Line Error Interrupts Group:                                                                                                                                       \
+			      EPL: Error Passive                                                                                                                                                       \
 			      ELOL: Error Logging Overflow                */
-#define FDCAN_IT_GROUP_PROTOCOL_ERROR                                                                                  \
-	FDCAN_ILS_PERR /*!< Protocol Error Group:                                                                      \
-			      ARAL: Access to Reserved Address Line                                                    \
-			      PEDL: Protocol Error in Data Phase Line                                                  \
-			      PEAL: Protocol Error in Arbitration Phase Line                                           \
-			      WDIL: Watchdog Interrupt Line                                                            \
-			      BOL: Bus_Off Status                                                                      \
+#define FDCAN_IT_GROUP_PROTOCOL_ERROR                                                                                                                                                                  \
+	FDCAN_ILS_PERR /*!< Protocol Error Group:                                                                                                                                                      \
+			      ARAL: Access to Reserved Address Line                                                                                                                                    \
+			      PEDL: Protocol Error in Data Phase Line                                                                                                                                  \
+			      PEAL: Protocol Error in Arbitration Phase Line                                                                                                                           \
+			      WDIL: Watchdog Interrupt Line                                                                                                                                            \
+			      BOL: Bus_Off Status                                                                                                                                                      \
 			      EWL: Warning Status                         */
 /**
  * @}
@@ -1182,11 +1158,11 @@ typedef void (*pFDCAN_ErrorStatusCallbackTypeDef)(
  * @retval None
  */
 #if USE_HAL_FDCAN_REGISTER_CALLBACKS == 1
-#define __HAL_FDCAN_RESET_HANDLE_STATE(__HANDLE__)                                                                     \
-	do {                                                                                                           \
-		(__HANDLE__)->State = HAL_FDCAN_STATE_RESET;                                                           \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define __HAL_FDCAN_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                     \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_FDCAN_STATE_RESET;                                                                                                                                           \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0)
 #else
 #define __HAL_FDCAN_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_FDCAN_STATE_RESET)
@@ -1277,26 +1253,19 @@ HAL_StatusTypeDef HAL_FDCAN_ExitPowerDownMode(FDCAN_HandleTypeDef *hfdcan);
 
 #if USE_HAL_FDCAN_REGISTER_CALLBACKS == 1
 /* Callbacks Register/UnRegister functions  ***********************************/
-HAL_StatusTypeDef HAL_FDCAN_RegisterCallback(FDCAN_HandleTypeDef *hfdcan, HAL_FDCAN_CallbackIDTypeDef CallbackID,
-					     pFDCAN_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_FDCAN_RegisterCallback(FDCAN_HandleTypeDef *hfdcan, HAL_FDCAN_CallbackIDTypeDef CallbackID, pFDCAN_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_FDCAN_UnRegisterCallback(FDCAN_HandleTypeDef *hfdcan, HAL_FDCAN_CallbackIDTypeDef CallbackID);
-HAL_StatusTypeDef HAL_FDCAN_RegisterTxEventFifoCallback(FDCAN_HandleTypeDef *hfdcan,
-							pFDCAN_TxEventFifoCallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_FDCAN_RegisterTxEventFifoCallback(FDCAN_HandleTypeDef *hfdcan, pFDCAN_TxEventFifoCallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_FDCAN_UnRegisterTxEventFifoCallback(FDCAN_HandleTypeDef *hfdcan);
-HAL_StatusTypeDef HAL_FDCAN_RegisterRxFifo0Callback(FDCAN_HandleTypeDef *hfdcan,
-						    pFDCAN_RxFifo0CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_FDCAN_RegisterRxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, pFDCAN_RxFifo0CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_FDCAN_UnRegisterRxFifo0Callback(FDCAN_HandleTypeDef *hfdcan);
-HAL_StatusTypeDef HAL_FDCAN_RegisterRxFifo1Callback(FDCAN_HandleTypeDef *hfdcan,
-						    pFDCAN_RxFifo1CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_FDCAN_RegisterRxFifo1Callback(FDCAN_HandleTypeDef *hfdcan, pFDCAN_RxFifo1CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_FDCAN_UnRegisterRxFifo1Callback(FDCAN_HandleTypeDef *hfdcan);
-HAL_StatusTypeDef HAL_FDCAN_RegisterTxBufferCompleteCallback(FDCAN_HandleTypeDef *hfdcan,
-							     pFDCAN_TxBufferCompleteCallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_FDCAN_RegisterTxBufferCompleteCallback(FDCAN_HandleTypeDef *hfdcan, pFDCAN_TxBufferCompleteCallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_FDCAN_UnRegisterTxBufferCompleteCallback(FDCAN_HandleTypeDef *hfdcan);
-HAL_StatusTypeDef HAL_FDCAN_RegisterTxBufferAbortCallback(FDCAN_HandleTypeDef *hfdcan,
-							  pFDCAN_TxBufferAbortCallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_FDCAN_RegisterTxBufferAbortCallback(FDCAN_HandleTypeDef *hfdcan, pFDCAN_TxBufferAbortCallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_FDCAN_UnRegisterTxBufferAbortCallback(FDCAN_HandleTypeDef *hfdcan);
-HAL_StatusTypeDef HAL_FDCAN_RegisterErrorStatusCallback(FDCAN_HandleTypeDef *hfdcan,
-							pFDCAN_ErrorStatusCallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_FDCAN_RegisterErrorStatusCallback(FDCAN_HandleTypeDef *hfdcan, pFDCAN_ErrorStatusCallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_FDCAN_UnRegisterErrorStatusCallback(FDCAN_HandleTypeDef *hfdcan);
 #endif /* USE_HAL_FDCAN_REGISTER_CALLBACKS */
 /**
@@ -1308,9 +1277,7 @@ HAL_StatusTypeDef HAL_FDCAN_UnRegisterErrorStatusCallback(FDCAN_HandleTypeDef *h
  */
 /* Configuration functions ****************************************************/
 HAL_StatusTypeDef HAL_FDCAN_ConfigFilter(FDCAN_HandleTypeDef *hfdcan, const FDCAN_FilterTypeDef *sFilterConfig);
-HAL_StatusTypeDef HAL_FDCAN_ConfigGlobalFilter(FDCAN_HandleTypeDef *hfdcan, uint32_t NonMatchingStd,
-					       uint32_t NonMatchingExt, uint32_t RejectRemoteStd,
-					       uint32_t RejectRemoteExt);
+HAL_StatusTypeDef HAL_FDCAN_ConfigGlobalFilter(FDCAN_HandleTypeDef *hfdcan, uint32_t NonMatchingStd, uint32_t NonMatchingExt, uint32_t RejectRemoteStd, uint32_t RejectRemoteExt);
 HAL_StatusTypeDef HAL_FDCAN_ConfigExtendedIdMask(FDCAN_HandleTypeDef *hfdcan, uint32_t Mask);
 HAL_StatusTypeDef HAL_FDCAN_ConfigRxFifoOverwrite(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo, uint32_t OperationMode);
 HAL_StatusTypeDef HAL_FDCAN_ConfigRamWatchdog(FDCAN_HandleTypeDef *hfdcan, uint32_t CounterStartValue);
@@ -1319,14 +1286,12 @@ HAL_StatusTypeDef HAL_FDCAN_EnableTimestampCounter(FDCAN_HandleTypeDef *hfdcan, 
 HAL_StatusTypeDef HAL_FDCAN_DisableTimestampCounter(FDCAN_HandleTypeDef *hfdcan);
 uint16_t HAL_FDCAN_GetTimestampCounter(const FDCAN_HandleTypeDef *hfdcan);
 HAL_StatusTypeDef HAL_FDCAN_ResetTimestampCounter(FDCAN_HandleTypeDef *hfdcan);
-HAL_StatusTypeDef HAL_FDCAN_ConfigTimeoutCounter(FDCAN_HandleTypeDef *hfdcan, uint32_t TimeoutOperation,
-						 uint32_t TimeoutPeriod);
+HAL_StatusTypeDef HAL_FDCAN_ConfigTimeoutCounter(FDCAN_HandleTypeDef *hfdcan, uint32_t TimeoutOperation, uint32_t TimeoutPeriod);
 HAL_StatusTypeDef HAL_FDCAN_EnableTimeoutCounter(FDCAN_HandleTypeDef *hfdcan);
 HAL_StatusTypeDef HAL_FDCAN_DisableTimeoutCounter(FDCAN_HandleTypeDef *hfdcan);
 uint16_t HAL_FDCAN_GetTimeoutCounter(const FDCAN_HandleTypeDef *hfdcan);
 HAL_StatusTypeDef HAL_FDCAN_ResetTimeoutCounter(FDCAN_HandleTypeDef *hfdcan);
-HAL_StatusTypeDef HAL_FDCAN_ConfigTxDelayCompensation(FDCAN_HandleTypeDef *hfdcan, uint32_t TdcOffset,
-						      uint32_t TdcFilter);
+HAL_StatusTypeDef HAL_FDCAN_ConfigTxDelayCompensation(FDCAN_HandleTypeDef *hfdcan, uint32_t TdcOffset, uint32_t TdcFilter);
 HAL_StatusTypeDef HAL_FDCAN_EnableTxDelayCompensation(FDCAN_HandleTypeDef *hfdcan);
 HAL_StatusTypeDef HAL_FDCAN_DisableTxDelayCompensation(FDCAN_HandleTypeDef *hfdcan);
 HAL_StatusTypeDef HAL_FDCAN_EnableISOMode(FDCAN_HandleTypeDef *hfdcan);
@@ -1343,19 +1308,14 @@ HAL_StatusTypeDef HAL_FDCAN_DisableEdgeFiltering(FDCAN_HandleTypeDef *hfdcan);
 /* Control functions **********************************************************/
 HAL_StatusTypeDef HAL_FDCAN_Start(FDCAN_HandleTypeDef *hfdcan);
 HAL_StatusTypeDef HAL_FDCAN_Stop(FDCAN_HandleTypeDef *hfdcan);
-HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
-						const uint8_t *pTxData);
+HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader, const uint8_t *pTxData);
 uint32_t HAL_FDCAN_GetLatestTxFifoQRequestBuffer(const FDCAN_HandleTypeDef *hfdcan);
 HAL_StatusTypeDef HAL_FDCAN_AbortTxRequest(FDCAN_HandleTypeDef *hfdcan, uint32_t BufferIndex);
-HAL_StatusTypeDef HAL_FDCAN_GetRxMessage(FDCAN_HandleTypeDef *hfdcan, uint32_t RxLocation,
-					 FDCAN_RxHeaderTypeDef *pRxHeader, uint8_t *pRxData);
+HAL_StatusTypeDef HAL_FDCAN_GetRxMessage(FDCAN_HandleTypeDef *hfdcan, uint32_t RxLocation, FDCAN_RxHeaderTypeDef *pRxHeader, uint8_t *pRxData);
 HAL_StatusTypeDef HAL_FDCAN_GetTxEvent(FDCAN_HandleTypeDef *hfdcan, FDCAN_TxEventFifoTypeDef *pTxEvent);
-HAL_StatusTypeDef HAL_FDCAN_GetHighPriorityMessageStatus(const FDCAN_HandleTypeDef *hfdcan,
-							 FDCAN_HpMsgStatusTypeDef *HpMsgStatus);
-HAL_StatusTypeDef HAL_FDCAN_GetProtocolStatus(const FDCAN_HandleTypeDef *hfdcan,
-					      FDCAN_ProtocolStatusTypeDef *ProtocolStatus);
-HAL_StatusTypeDef HAL_FDCAN_GetErrorCounters(const FDCAN_HandleTypeDef *hfdcan,
-					     FDCAN_ErrorCountersTypeDef *ErrorCounters);
+HAL_StatusTypeDef HAL_FDCAN_GetHighPriorityMessageStatus(const FDCAN_HandleTypeDef *hfdcan, FDCAN_HpMsgStatusTypeDef *HpMsgStatus);
+HAL_StatusTypeDef HAL_FDCAN_GetProtocolStatus(const FDCAN_HandleTypeDef *hfdcan, FDCAN_ProtocolStatusTypeDef *ProtocolStatus);
+HAL_StatusTypeDef HAL_FDCAN_GetErrorCounters(const FDCAN_HandleTypeDef *hfdcan, FDCAN_ErrorCountersTypeDef *ErrorCounters);
 uint32_t HAL_FDCAN_IsTxBufferMessagePending(const FDCAN_HandleTypeDef *hfdcan, uint32_t TxBufferIndex);
 uint32_t HAL_FDCAN_GetRxFifoFillLevel(const FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo);
 uint32_t HAL_FDCAN_GetTxFifoFreeLevel(const FDCAN_HandleTypeDef *hfdcan);
@@ -1370,8 +1330,7 @@ HAL_StatusTypeDef HAL_FDCAN_ExitRestrictedOperationMode(FDCAN_HandleTypeDef *hfd
  */
 /* Interrupts management ******************************************************/
 HAL_StatusTypeDef HAL_FDCAN_ConfigInterruptLines(FDCAN_HandleTypeDef *hfdcan, uint32_t ITList, uint32_t InterruptLine);
-HAL_StatusTypeDef HAL_FDCAN_ActivateNotification(FDCAN_HandleTypeDef *hfdcan, uint32_t ActiveITs,
-						 uint32_t BufferIndexes);
+HAL_StatusTypeDef HAL_FDCAN_ActivateNotification(FDCAN_HandleTypeDef *hfdcan, uint32_t ActiveITs, uint32_t BufferIndexes);
 HAL_StatusTypeDef HAL_FDCAN_DeactivateNotification(FDCAN_HandleTypeDef *hfdcan, uint32_t InactiveITs);
 void HAL_FDCAN_IRQHandler(FDCAN_HandleTypeDef *hfdcan);
 /**
@@ -1434,18 +1393,14 @@ HAL_FDCAN_StateTypeDef HAL_FDCAN_GetState(const FDCAN_HandleTypeDef *hfdcan);
 /** @defgroup FDCAN_Private_Macros FDCAN Private Macros
  * @{
  */
-#define IS_FDCAN_FRAME_FORMAT(FORMAT)                                                                                  \
-	(((FORMAT) == FDCAN_FRAME_CLASSIC) || ((FORMAT) == FDCAN_FRAME_FD_NO_BRS) || ((FORMAT) == FDCAN_FRAME_FD_BRS))
-#define IS_FDCAN_MODE(MODE)                                                                                            \
-	(((MODE) == FDCAN_MODE_NORMAL) || ((MODE) == FDCAN_MODE_RESTRICTED_OPERATION) ||                               \
-	 ((MODE) == FDCAN_MODE_BUS_MONITORING) || ((MODE) == FDCAN_MODE_INTERNAL_LOOPBACK) ||                          \
+#define IS_FDCAN_FRAME_FORMAT(FORMAT) (((FORMAT) == FDCAN_FRAME_CLASSIC) || ((FORMAT) == FDCAN_FRAME_FD_NO_BRS) || ((FORMAT) == FDCAN_FRAME_FD_BRS))
+#define IS_FDCAN_MODE(MODE)                                                                                                                                                                            \
+	(((MODE) == FDCAN_MODE_NORMAL) || ((MODE) == FDCAN_MODE_RESTRICTED_OPERATION) || ((MODE) == FDCAN_MODE_BUS_MONITORING) || ((MODE) == FDCAN_MODE_INTERNAL_LOOPBACK) ||                          \
 	 ((MODE) == FDCAN_MODE_EXTERNAL_LOOPBACK))
-#define IS_FDCAN_CKDIV(CKDIV)                                                                                          \
-	(((CKDIV) == FDCAN_CLOCK_DIV1) || ((CKDIV) == FDCAN_CLOCK_DIV2) || ((CKDIV) == FDCAN_CLOCK_DIV4) ||            \
-	 ((CKDIV) == FDCAN_CLOCK_DIV6) || ((CKDIV) == FDCAN_CLOCK_DIV8) || ((CKDIV) == FDCAN_CLOCK_DIV10) ||           \
-	 ((CKDIV) == FDCAN_CLOCK_DIV12) || ((CKDIV) == FDCAN_CLOCK_DIV14) || ((CKDIV) == FDCAN_CLOCK_DIV16) ||         \
-	 ((CKDIV) == FDCAN_CLOCK_DIV18) || ((CKDIV) == FDCAN_CLOCK_DIV20) || ((CKDIV) == FDCAN_CLOCK_DIV22) ||         \
-	 ((CKDIV) == FDCAN_CLOCK_DIV24) || ((CKDIV) == FDCAN_CLOCK_DIV26) || ((CKDIV) == FDCAN_CLOCK_DIV28) ||         \
+#define IS_FDCAN_CKDIV(CKDIV)                                                                                                                                                                          \
+	(((CKDIV) == FDCAN_CLOCK_DIV1) || ((CKDIV) == FDCAN_CLOCK_DIV2) || ((CKDIV) == FDCAN_CLOCK_DIV4) || ((CKDIV) == FDCAN_CLOCK_DIV6) || ((CKDIV) == FDCAN_CLOCK_DIV8) ||                          \
+	 ((CKDIV) == FDCAN_CLOCK_DIV10) || ((CKDIV) == FDCAN_CLOCK_DIV12) || ((CKDIV) == FDCAN_CLOCK_DIV14) || ((CKDIV) == FDCAN_CLOCK_DIV16) || ((CKDIV) == FDCAN_CLOCK_DIV18) ||                     \
+	 ((CKDIV) == FDCAN_CLOCK_DIV20) || ((CKDIV) == FDCAN_CLOCK_DIV22) || ((CKDIV) == FDCAN_CLOCK_DIV24) || ((CKDIV) == FDCAN_CLOCK_DIV26) || ((CKDIV) == FDCAN_CLOCK_DIV28) ||                     \
 	 ((CKDIV) == FDCAN_CLOCK_DIV30))
 #define IS_FDCAN_NOMINAL_PRESCALER(PRESCALER) (((PRESCALER) >= 1U) && ((PRESCALER) <= 512U))
 #define IS_FDCAN_NOMINAL_SJW(SJW) (((SJW) >= 1U) && ((SJW) <= 128U))
@@ -1459,29 +1414,20 @@ HAL_FDCAN_StateTypeDef HAL_FDCAN_GetState(const FDCAN_HandleTypeDef *hfdcan);
 #define IS_FDCAN_MIN_VALUE(VALUE, _MIN_) ((VALUE) >= (_MIN_))
 #define IS_FDCAN_TX_FIFO_QUEUE_MODE(MODE) (((MODE) == FDCAN_TX_FIFO_OPERATION) || ((MODE) == FDCAN_TX_QUEUE_OPERATION))
 #define IS_FDCAN_ID_TYPE(ID_TYPE) (((ID_TYPE) == FDCAN_STANDARD_ID) || ((ID_TYPE) == FDCAN_EXTENDED_ID))
-#define IS_FDCAN_FILTER_CFG(CONFIG)                                                                                    \
-	(((CONFIG) == FDCAN_FILTER_DISABLE) || ((CONFIG) == FDCAN_FILTER_TO_RXFIFO0) ||                                \
-	 ((CONFIG) == FDCAN_FILTER_TO_RXFIFO1) || ((CONFIG) == FDCAN_FILTER_REJECT) ||                                 \
-	 ((CONFIG) == FDCAN_FILTER_HP) || ((CONFIG) == FDCAN_FILTER_TO_RXFIFO0_HP) ||                                  \
-	 ((CONFIG) == FDCAN_FILTER_TO_RXFIFO1_HP))
-#define IS_FDCAN_TX_LOCATION(LOCATION)                                                                                 \
-	(((LOCATION) == FDCAN_TX_BUFFER0) || ((LOCATION) == FDCAN_TX_BUFFER1) || ((LOCATION) == FDCAN_TX_BUFFER2))
-#define IS_FDCAN_TX_LOCATION_LIST(LOCATION)                                                                            \
-	(((LOCATION) >= FDCAN_TX_BUFFER0) && ((LOCATION) <= (FDCAN_TX_BUFFER0 | FDCAN_TX_BUFFER1 | FDCAN_TX_BUFFER2)))
+#define IS_FDCAN_FILTER_CFG(CONFIG)                                                                                                                                                                    \
+	(((CONFIG) == FDCAN_FILTER_DISABLE) || ((CONFIG) == FDCAN_FILTER_TO_RXFIFO0) || ((CONFIG) == FDCAN_FILTER_TO_RXFIFO1) || ((CONFIG) == FDCAN_FILTER_REJECT) || ((CONFIG) == FDCAN_FILTER_HP) || \
+	 ((CONFIG) == FDCAN_FILTER_TO_RXFIFO0_HP) || ((CONFIG) == FDCAN_FILTER_TO_RXFIFO1_HP))
+#define IS_FDCAN_TX_LOCATION(LOCATION) (((LOCATION) == FDCAN_TX_BUFFER0) || ((LOCATION) == FDCAN_TX_BUFFER1) || ((LOCATION) == FDCAN_TX_BUFFER2))
+#define IS_FDCAN_TX_LOCATION_LIST(LOCATION) (((LOCATION) >= FDCAN_TX_BUFFER0) && ((LOCATION) <= (FDCAN_TX_BUFFER0 | FDCAN_TX_BUFFER1 | FDCAN_TX_BUFFER2)))
 #define IS_FDCAN_RX_FIFO(FIFO) (((FIFO) == FDCAN_RX_FIFO0) || ((FIFO) == FDCAN_RX_FIFO1))
 #define IS_FDCAN_RX_FIFO_MODE(MODE) (((MODE) == FDCAN_RX_FIFO_BLOCKING) || ((MODE) == FDCAN_RX_FIFO_OVERWRITE))
-#define IS_FDCAN_STD_FILTER_TYPE(TYPE)                                                                                 \
-	(((TYPE) == FDCAN_FILTER_RANGE) || ((TYPE) == FDCAN_FILTER_DUAL) || ((TYPE) == FDCAN_FILTER_MASK))
-#define IS_FDCAN_EXT_FILTER_TYPE(TYPE)                                                                                 \
-	(((TYPE) == FDCAN_FILTER_RANGE) || ((TYPE) == FDCAN_FILTER_DUAL) || ((TYPE) == FDCAN_FILTER_MASK) ||           \
-	 ((TYPE) == FDCAN_FILTER_RANGE_NO_EIDM))
+#define IS_FDCAN_STD_FILTER_TYPE(TYPE) (((TYPE) == FDCAN_FILTER_RANGE) || ((TYPE) == FDCAN_FILTER_DUAL) || ((TYPE) == FDCAN_FILTER_MASK))
+#define IS_FDCAN_EXT_FILTER_TYPE(TYPE) (((TYPE) == FDCAN_FILTER_RANGE) || ((TYPE) == FDCAN_FILTER_DUAL) || ((TYPE) == FDCAN_FILTER_MASK) || ((TYPE) == FDCAN_FILTER_RANGE_NO_EIDM))
 #define IS_FDCAN_FRAME_TYPE(TYPE) (((TYPE) == FDCAN_DATA_FRAME) || ((TYPE) == FDCAN_REMOTE_FRAME))
-#define IS_FDCAN_DLC(DLC)                                                                                              \
-	(((DLC) == FDCAN_DLC_BYTES_0) || ((DLC) == FDCAN_DLC_BYTES_1) || ((DLC) == FDCAN_DLC_BYTES_2) ||               \
-	 ((DLC) == FDCAN_DLC_BYTES_3) || ((DLC) == FDCAN_DLC_BYTES_4) || ((DLC) == FDCAN_DLC_BYTES_5) ||               \
-	 ((DLC) == FDCAN_DLC_BYTES_6) || ((DLC) == FDCAN_DLC_BYTES_7) || ((DLC) == FDCAN_DLC_BYTES_8) ||               \
-	 ((DLC) == FDCAN_DLC_BYTES_12) || ((DLC) == FDCAN_DLC_BYTES_16) || ((DLC) == FDCAN_DLC_BYTES_20) ||            \
-	 ((DLC) == FDCAN_DLC_BYTES_24) || ((DLC) == FDCAN_DLC_BYTES_32) || ((DLC) == FDCAN_DLC_BYTES_48) ||            \
+#define IS_FDCAN_DLC(DLC)                                                                                                                                                                              \
+	(((DLC) == FDCAN_DLC_BYTES_0) || ((DLC) == FDCAN_DLC_BYTES_1) || ((DLC) == FDCAN_DLC_BYTES_2) || ((DLC) == FDCAN_DLC_BYTES_3) || ((DLC) == FDCAN_DLC_BYTES_4) ||                               \
+	 ((DLC) == FDCAN_DLC_BYTES_5) || ((DLC) == FDCAN_DLC_BYTES_6) || ((DLC) == FDCAN_DLC_BYTES_7) || ((DLC) == FDCAN_DLC_BYTES_8) || ((DLC) == FDCAN_DLC_BYTES_12) ||                              \
+	 ((DLC) == FDCAN_DLC_BYTES_16) || ((DLC) == FDCAN_DLC_BYTES_20) || ((DLC) == FDCAN_DLC_BYTES_24) || ((DLC) == FDCAN_DLC_BYTES_32) || ((DLC) == FDCAN_DLC_BYTES_48) ||                          \
 	 ((DLC) == FDCAN_DLC_BYTES_64))
 #define IS_FDCAN_ESI(ESI) (((ESI) == FDCAN_ESI_ACTIVE) || ((ESI) == FDCAN_ESI_PASSIVE))
 #define IS_FDCAN_BRS(BRS) (((BRS) == FDCAN_BRS_OFF) || ((BRS) == FDCAN_BRS_ON))
@@ -1489,26 +1435,17 @@ HAL_FDCAN_StateTypeDef HAL_FDCAN_GetState(const FDCAN_HandleTypeDef *hfdcan);
 #define IS_FDCAN_EFC(EFC) (((EFC) == FDCAN_NO_TX_EVENTS) || ((EFC) == FDCAN_STORE_TX_EVENTS))
 #define IS_FDCAN_IT(IT) (((IT) & ~(FDCAN_IR_MASK)) == 0U)
 #define IS_FDCAN_IT_GROUP(IT_GROUP) (((IT_GROUP) & ~(FDCAN_ILS_MASK)) == 0U)
-#define IS_FDCAN_NON_MATCHING(DESTINATION)                                                                             \
-	(((DESTINATION) == FDCAN_ACCEPT_IN_RX_FIFO0) || ((DESTINATION) == FDCAN_ACCEPT_IN_RX_FIFO1) ||                 \
-	 ((DESTINATION) == FDCAN_REJECT))
-#define IS_FDCAN_REJECT_REMOTE(DESTINATION)                                                                            \
-	(((DESTINATION) == FDCAN_FILTER_REMOTE) || ((DESTINATION) == FDCAN_REJECT_REMOTE))
+#define IS_FDCAN_NON_MATCHING(DESTINATION) (((DESTINATION) == FDCAN_ACCEPT_IN_RX_FIFO0) || ((DESTINATION) == FDCAN_ACCEPT_IN_RX_FIFO1) || ((DESTINATION) == FDCAN_REJECT))
+#define IS_FDCAN_REJECT_REMOTE(DESTINATION) (((DESTINATION) == FDCAN_FILTER_REMOTE) || ((DESTINATION) == FDCAN_REJECT_REMOTE))
 #define IS_FDCAN_IT_LINE(IT_LINE) (((IT_LINE) == FDCAN_INTERRUPT_LINE0) || ((IT_LINE) == FDCAN_INTERRUPT_LINE1))
-#define IS_FDCAN_TIMESTAMP(OPERATION)                                                                                  \
-	(((OPERATION) == FDCAN_TIMESTAMP_INTERNAL) || ((OPERATION) == FDCAN_TIMESTAMP_EXTERNAL))
-#define IS_FDCAN_TIMESTAMP_PRESCALER(PRESCALER)                                                                        \
-	(((PRESCALER) == FDCAN_TIMESTAMP_PRESC_1) || ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_2) ||                       \
-	 ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_3) || ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_4) ||                       \
-	 ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_5) || ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_6) ||                       \
-	 ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_7) || ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_8) ||                       \
-	 ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_9) || ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_10) ||                      \
-	 ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_11) || ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_12) ||                     \
-	 ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_13) || ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_14) ||                     \
-	 ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_15) || ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_16))
-#define IS_FDCAN_TIMEOUT(OPERATION)                                                                                    \
-	(((OPERATION) == FDCAN_TIMEOUT_CONTINUOUS) || ((OPERATION) == FDCAN_TIMEOUT_TX_EVENT_FIFO) ||                  \
-	 ((OPERATION) == FDCAN_TIMEOUT_RX_FIFO0) || ((OPERATION) == FDCAN_TIMEOUT_RX_FIFO1))
+#define IS_FDCAN_TIMESTAMP(OPERATION) (((OPERATION) == FDCAN_TIMESTAMP_INTERNAL) || ((OPERATION) == FDCAN_TIMESTAMP_EXTERNAL))
+#define IS_FDCAN_TIMESTAMP_PRESCALER(PRESCALER)                                                                                                                                                        \
+	(((PRESCALER) == FDCAN_TIMESTAMP_PRESC_1) || ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_2) || ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_3) || ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_4) ||               \
+	 ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_5) || ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_6) || ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_7) || ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_8) ||               \
+	 ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_9) || ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_10) || ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_11) || ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_12) ||            \
+	 ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_13) || ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_14) || ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_15) || ((PRESCALER) == FDCAN_TIMESTAMP_PRESC_16))
+#define IS_FDCAN_TIMEOUT(OPERATION)                                                                                                                                                                    \
+	(((OPERATION) == FDCAN_TIMEOUT_CONTINUOUS) || ((OPERATION) == FDCAN_TIMEOUT_TX_EVENT_FIFO) || ((OPERATION) == FDCAN_TIMEOUT_RX_FIFO0) || ((OPERATION) == FDCAN_TIMEOUT_RX_FIFO1))
 
 #define FDCAN_CHECK_IT_SOURCE(__IE__, __IT__) ((((__IE__) & (__IT__)) == (__IT__)) ? SET : RESET)
 

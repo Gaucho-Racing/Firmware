@@ -185,15 +185,11 @@ HAL_StatusTypeDef HAL_DMA_Init(DMA_HandleTypeDef *hdma)
 	/* Compute the channel index */
 	if ((uint32_t)(hdma->Instance) < (uint32_t)(DMA2_Channel1)) {
 		/* DMA1 */
-		hdma->ChannelIndex = (((uint32_t)hdma->Instance - (uint32_t)DMA1_Channel1) /
-				      ((uint32_t)DMA1_Channel2 - (uint32_t)DMA1_Channel1))
-				     << 2U;
+		hdma->ChannelIndex = (((uint32_t)hdma->Instance - (uint32_t)DMA1_Channel1) / ((uint32_t)DMA1_Channel2 - (uint32_t)DMA1_Channel1)) << 2U;
 		hdma->DmaBaseAddress = DMA1;
 	} else {
 		/* DMA2 */
-		hdma->ChannelIndex = (((uint32_t)hdma->Instance - (uint32_t)DMA2_Channel1) /
-				      ((uint32_t)DMA2_Channel2 - (uint32_t)DMA2_Channel1))
-				     << 2U;
+		hdma->ChannelIndex = (((uint32_t)hdma->Instance - (uint32_t)DMA2_Channel1) / ((uint32_t)DMA2_Channel2 - (uint32_t)DMA2_Channel1)) << 2U;
 		hdma->DmaBaseAddress = DMA2;
 	}
 
@@ -204,12 +200,10 @@ HAL_StatusTypeDef HAL_DMA_Init(DMA_HandleTypeDef *hdma)
 	tmp = hdma->Instance->CCR;
 
 	/* Clear PL, MSIZE, PSIZE, MINC, PINC, CIRC, DIR and MEM2MEM bits */
-	tmp &= ((uint32_t) ~(DMA_CCR_PL | DMA_CCR_MSIZE | DMA_CCR_PSIZE | DMA_CCR_MINC | DMA_CCR_PINC | DMA_CCR_CIRC |
-			     DMA_CCR_DIR | DMA_CCR_MEM2MEM));
+	tmp &= ((uint32_t) ~(DMA_CCR_PL | DMA_CCR_MSIZE | DMA_CCR_PSIZE | DMA_CCR_MINC | DMA_CCR_PINC | DMA_CCR_CIRC | DMA_CCR_DIR | DMA_CCR_MEM2MEM));
 
 	/* Prepare the DMA Channel configuration */
-	tmp |= hdma->Init.Direction | hdma->Init.PeriphInc | hdma->Init.MemInc | hdma->Init.PeriphDataAlignment |
-	       hdma->Init.MemDataAlignment | hdma->Init.Mode | hdma->Init.Priority;
+	tmp |= hdma->Init.Direction | hdma->Init.PeriphInc | hdma->Init.MemInc | hdma->Init.PeriphDataAlignment | hdma->Init.MemDataAlignment | hdma->Init.Mode | hdma->Init.Priority;
 
 	/* Write to DMA Channel CR register */
 	hdma->Instance->CCR = tmp;
@@ -271,7 +265,7 @@ HAL_StatusTypeDef HAL_DMA_Init(DMA_HandleTypeDef *hdma)
 		}
 	}
 
-#endif /* STM32L431xx || STM32L432xx || STM32L433xx || STM32L442xx ||                                                  \
+#endif /* STM32L431xx || STM32L432xx || STM32L433xx || STM32L442xx ||                                                                                                                                  \
 	  STM32L443xx */
 	/* STM32L471xx || STM32L475xx || STM32L476xx || STM32L442xx ||
 	 * STM32L486xx */
@@ -312,15 +306,11 @@ HAL_StatusTypeDef HAL_DMA_DeInit(DMA_HandleTypeDef *hdma)
 	/* Compute the channel index */
 	if ((uint32_t)(hdma->Instance) < (uint32_t)(DMA2_Channel1)) {
 		/* DMA1 */
-		hdma->ChannelIndex = (((uint32_t)hdma->Instance - (uint32_t)DMA1_Channel1) /
-				      ((uint32_t)DMA1_Channel2 - (uint32_t)DMA1_Channel1))
-				     << 2U;
+		hdma->ChannelIndex = (((uint32_t)hdma->Instance - (uint32_t)DMA1_Channel1) / ((uint32_t)DMA1_Channel2 - (uint32_t)DMA1_Channel1)) << 2U;
 		hdma->DmaBaseAddress = DMA1;
 	} else {
 		/* DMA2 */
-		hdma->ChannelIndex = (((uint32_t)hdma->Instance - (uint32_t)DMA2_Channel1) /
-				      ((uint32_t)DMA2_Channel2 - (uint32_t)DMA2_Channel1))
-				     << 2U;
+		hdma->ChannelIndex = (((uint32_t)hdma->Instance - (uint32_t)DMA2_Channel1) / ((uint32_t)DMA2_Channel2 - (uint32_t)DMA2_Channel1)) << 2U;
 		hdma->DmaBaseAddress = DMA2;
 	}
 
@@ -340,7 +330,7 @@ HAL_StatusTypeDef HAL_DMA_DeInit(DMA_HandleTypeDef *hdma)
 		/* DMA2 */
 		DMA2_CSELR->CSELR &= ~(DMA_CSELR_C1S << (hdma->ChannelIndex & 0x1cU));
 	}
-#endif	/* STM32L431xx || STM32L432xx || STM32L433xx || STM32L442xx ||                                                 \
+#endif	/* STM32L431xx || STM32L432xx || STM32L433xx || STM32L442xx ||                                                                                                                                 \
 	   STM32L443xx */
 	/* STM32L471xx || STM32L475xx || STM32L476xx || STM32L442xx ||
 	 * STM32L486xx */
@@ -474,8 +464,7 @@ HAL_StatusTypeDef HAL_DMA_Start(DMA_HandleTypeDef *hdma, uint32_t SrcAddress, ui
  * destination
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DMA_Start_IT(DMA_HandleTypeDef *hdma, uint32_t SrcAddress, uint32_t DstAddress,
-				   uint32_t DataLength)
+HAL_StatusTypeDef HAL_DMA_Start_IT(DMA_HandleTypeDef *hdma, uint32_t SrcAddress, uint32_t DstAddress, uint32_t DataLength)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -665,8 +654,7 @@ HAL_StatusTypeDef HAL_DMA_Abort_IT(DMA_HandleTypeDef *hdma)
  * @param  Timeout       Timeout duration.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DMA_PollForTransfer(DMA_HandleTypeDef *hdma, HAL_DMA_LevelCompleteTypeDef CompleteLevel,
-					  uint32_t Timeout)
+HAL_StatusTypeDef HAL_DMA_PollForTransfer(DMA_HandleTypeDef *hdma, HAL_DMA_LevelCompleteTypeDef CompleteLevel, uint32_t Timeout)
 {
 	uint32_t temp;
 	uint32_t tickstart;
@@ -810,8 +798,7 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *hdma)
 
 	/* Transfer Complete Interrupt management
 	 ***********************************/
-	else if (((flag_it & (DMA_FLAG_TC1 << (hdma->ChannelIndex & 0x1CU))) != 0U) &&
-		 ((source_it & DMA_IT_TC) != 0U)) {
+	else if (((flag_it & (DMA_FLAG_TC1 << (hdma->ChannelIndex & 0x1CU))) != 0U) && ((source_it & DMA_IT_TC) != 0U)) {
 		if ((hdma->Instance->CCR & DMA_CCR_CIRC) == 0U) {
 			/* Disable the transfer complete interrupt if the DMA
 			 * mode is not CIRCULAR */
@@ -836,8 +823,7 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *hdma)
 
 	/* Transfer Error Interrupt management
 	 **************************************/
-	else if (((flag_it & (DMA_FLAG_TE1 << (hdma->ChannelIndex & 0x1CU))) != 0U) &&
-		 ((source_it & DMA_IT_TE) != 0U)) {
+	else if (((flag_it & (DMA_FLAG_TE1 << (hdma->ChannelIndex & 0x1CU))) != 0U) && ((source_it & DMA_IT_TE) != 0U)) {
 		/* When a DMA transfer error occurs */
 		/* A hardware clear of its EN bits is performed */
 		/* Disable ALL DMA IT */
@@ -875,8 +861,7 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *hdma)
  * pointer to a DMA_HandleTypeDef structure as parameter.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DMA_RegisterCallback(DMA_HandleTypeDef *hdma, HAL_DMA_CallbackIDTypeDef CallbackID,
-					   void (*pCallback)(DMA_HandleTypeDef *_hdma))
+HAL_StatusTypeDef HAL_DMA_RegisterCallback(DMA_HandleTypeDef *hdma, HAL_DMA_CallbackIDTypeDef CallbackID, void (*pCallback)(DMA_HandleTypeDef *_hdma))
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -1110,8 +1095,7 @@ static void DMA_CalcDMAMUXRequestGenBaseAndMask(DMA_HandleTypeDef *hdma)
 	uint32_t request = hdma->Init.Request & DMAMUX_CxCR_DMAREQ_ID;
 
 	/* DMA Channels are connected to DMAMUX1 request generator blocks*/
-	hdma->DMAmuxRequestGen =
-	    (DMAMUX_RequestGen_TypeDef *)((uint32_t)(((uint32_t)DMAMUX1_RequestGenerator0) + ((request - 1U) * 4U)));
+	hdma->DMAmuxRequestGen = (DMAMUX_RequestGen_TypeDef *)((uint32_t)(((uint32_t)DMAMUX1_RequestGenerator0) + ((request - 1U) * 4U)));
 
 	hdma->DMAmuxRequestGenStatus = DMAMUX1_RequestGenStatus;
 

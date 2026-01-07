@@ -83,17 +83,17 @@ typedef struct {
 /** @defgroup PRIV_MODE_CFG FLASH privilege mode configuration
  * @{
  */
-#define FLASH_NSPRIV_GRANTED                                                                                           \
-	0x00000000U /*!< access to non-secure Flash registers is granted                                               \
+#define FLASH_NSPRIV_GRANTED                                                                                                                                                                           \
+	0x00000000U /*!< access to non-secure Flash registers is granted                                                                                                                               \
 			 to privileged or unprivileged access */
-#define FLASH_NSPRIV_DENIED                                                                                            \
-	FLASH_PRIVCFGR_NSPRIV /*!< access to non-secure Flash registers is                                             \
+#define FLASH_NSPRIV_DENIED                                                                                                                                                                            \
+	FLASH_PRIVCFGR_NSPRIV /*!< access to non-secure Flash registers is                                                                                                                             \
 				 denied to non-privilege access */
-#define FLASH_SPRIV_GRANTED                                                                                            \
-	0x00000000U /*!< access to secure Flash registers is granted to                                                \
+#define FLASH_SPRIV_GRANTED                                                                                                                                                                            \
+	0x00000000U /*!< access to secure Flash registers is granted to                                                                                                                                \
 		       privileged or unprivileged access */
-#define FLASH_SPRIV_DENIED                                                                                             \
-	FLASH_PRIVCFGR_SPRIV /*!< access to secure Flash registers is denied                                           \
+#define FLASH_SPRIV_DENIED                                                                                                                                                                             \
+	FLASH_PRIVCFGR_SPRIV /*!< access to secure Flash registers is denied                                                                                                                           \
 				  to non-privilege access */
 /**
  * @}
@@ -137,8 +137,8 @@ typedef struct {
 #define FLASH_OPERATION_TYPE_PAGEERASE (FLASH_OPSR_CODE_OP_1 | FLASH_OPSR_CODE_OP_0) /*!< Page erase operation    */
 #define FLASH_OPERATION_TYPE_BANKERASE FLASH_OPSR_CODE_OP_2			     /*!< Bank erase operation    */
 #define FLASH_OPERATION_TYPE_MASSERASE (FLASH_OPSR_CODE_OP_2 | FLASH_OPSR_CODE_OP_0) /*!< Mass erase operation    */
-#define FLASH_OPERATION_TYPE_OPTIONCHANGE                                                                              \
-	(FLASH_OPSR_CODE_OP_2 | FLASH_OPSR_CODE_OP_1) /*!< Option change operation                                     \
+#define FLASH_OPERATION_TYPE_OPTIONCHANGE                                                                                                                                                              \
+	(FLASH_OPSR_CODE_OP_2 | FLASH_OPSR_CODE_OP_1) /*!< Option change operation                                                                                                                     \
 						       */
 /**
  * @}

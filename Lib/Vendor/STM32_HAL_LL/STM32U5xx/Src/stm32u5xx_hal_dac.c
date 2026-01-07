@@ -596,8 +596,7 @@ HAL_StatusTypeDef HAL_DAC_Start(DAC_HandleTypeDef *hdac, uint32_t Channel)
 
 	else {
 		/* Check if software trigger enabled */
-		if ((hdac->Instance->CR & (DAC_CR_TEN2 | DAC_CR_TSEL2)) ==
-		    (DAC_TRIGGER_SOFTWARE << (Channel & 0x10UL))) {
+		if ((hdac->Instance->CR & (DAC_CR_TEN2 | DAC_CR_TSEL2)) == (DAC_TRIGGER_SOFTWARE << (Channel & 0x10UL))) {
 			/* Enable the selected DAC software conversion*/
 			SET_BIT(hdac->Instance->SWTRIGR, DAC_SWTRIGR_SWTRIG2);
 		}
@@ -661,8 +660,7 @@ HAL_StatusTypeDef HAL_DAC_Stop(DAC_HandleTypeDef *hdac, uint32_t Channel)
  *            @arg DAC_ALIGN_12B_R: 12bit right data alignment selected
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DAC_Start_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel, const uint32_t *pData, uint32_t Length,
-				    uint32_t Alignment)
+HAL_StatusTypeDef HAL_DAC_Start_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel, const uint32_t *pData, uint32_t Length, uint32_t Alignment)
 {
 	HAL_StatusTypeDef status;
 	uint32_t tmpreg;
@@ -752,12 +750,10 @@ HAL_StatusTypeDef HAL_DAC_Start_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel, c
 		/* Enable the DMA channel */
 		/* Check linkedlist mode */
 		if ((hdac->DMA_Handle1->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
-			if ((hdac->DMA_Handle1->LinkedListQueue != NULL) &&
-			    (hdac->DMA_Handle1->LinkedListQueue->Head != NULL)) {
+			if ((hdac->DMA_Handle1->LinkedListQueue != NULL) && (hdac->DMA_Handle1->LinkedListQueue->Head != NULL)) {
 				/* Length should be converted to number of bytes
 				 */
-				if (HAL_DMAEx_List_GetNodeConfig(&node_conf,
-								 hdac->DMA_Handle1->LinkedListQueue->Head) != HAL_OK) {
+				if (HAL_DMAEx_List_GetNodeConfig(&node_conf, hdac->DMA_Handle1->LinkedListQueue->Head) != HAL_OK) {
 					return HAL_ERROR;
 				}
 
@@ -777,16 +773,13 @@ HAL_StatusTypeDef HAL_DAC_Start_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel, c
 				}
 
 				/* Set DMA data size */
-				hdac->DMA_Handle1->LinkedListQueue->Head->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] =
-				    LengthInBytes;
+				hdac->DMA_Handle1->LinkedListQueue->Head->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] = LengthInBytes;
 
 				/* Set DMA source address */
-				hdac->DMA_Handle1->LinkedListQueue->Head->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] =
-				    (uint32_t)pData;
+				hdac->DMA_Handle1->LinkedListQueue->Head->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] = (uint32_t)pData;
 
 				/* Set DMA destination address */
-				hdac->DMA_Handle1->LinkedListQueue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] =
-				    tmpreg;
+				hdac->DMA_Handle1->LinkedListQueue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] = tmpreg;
 
 				/* Enable the DMA channel */
 				status = HAL_DMAEx_List_Start_IT(hdac->DMA_Handle1);
@@ -820,12 +813,10 @@ HAL_StatusTypeDef HAL_DAC_Start_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel, c
 		/* Enable the DMA channel */
 		/* Check linkedlist mode */
 		if ((hdac->DMA_Handle2->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
-			if ((hdac->DMA_Handle2->LinkedListQueue != NULL) &&
-			    (hdac->DMA_Handle2->LinkedListQueue->Head != NULL)) {
+			if ((hdac->DMA_Handle2->LinkedListQueue != NULL) && (hdac->DMA_Handle2->LinkedListQueue->Head != NULL)) {
 				/* Length should be converted to number of bytes
 				 */
-				if (HAL_DMAEx_List_GetNodeConfig(&node_conf,
-								 hdac->DMA_Handle2->LinkedListQueue->Head) != HAL_OK) {
+				if (HAL_DMAEx_List_GetNodeConfig(&node_conf, hdac->DMA_Handle2->LinkedListQueue->Head) != HAL_OK) {
 					return HAL_ERROR;
 				}
 
@@ -845,16 +836,13 @@ HAL_StatusTypeDef HAL_DAC_Start_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel, c
 				}
 
 				/* Set DMA data size */
-				hdac->DMA_Handle2->LinkedListQueue->Head->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] =
-				    LengthInBytes;
+				hdac->DMA_Handle2->LinkedListQueue->Head->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] = LengthInBytes;
 
 				/* Set DMA source address */
-				hdac->DMA_Handle2->LinkedListQueue->Head->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] =
-				    (uint32_t)pData;
+				hdac->DMA_Handle2->LinkedListQueue->Head->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] = (uint32_t)pData;
 
 				/* Set DMA destination address */
-				hdac->DMA_Handle2->LinkedListQueue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] =
-				    tmpreg;
+				hdac->DMA_Handle2->LinkedListQueue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] = tmpreg;
 
 				/* Enable the DMA channel */
 				status = HAL_DMAEx_List_Start_IT(hdac->DMA_Handle2);
@@ -1215,8 +1203,7 @@ uint32_t HAL_DAC_GetValue(const DAC_HandleTypeDef *hdac, uint32_t Channel)
  *            @arg DAC_CHANNEL_2: DAC Channel2 selected
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DAC_ConfigChannel(DAC_HandleTypeDef *hdac, const DAC_ChannelConfTypeDef *sConfig,
-					uint32_t Channel)
+HAL_StatusTypeDef HAL_DAC_ConfigChannel(DAC_HandleTypeDef *hdac, const DAC_ChannelConfTypeDef *sConfig, uint32_t Channel)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 	uint32_t tmpreg1;
@@ -1311,11 +1298,9 @@ HAL_StatusTypeDef HAL_DAC_ConfigChannel(DAC_HandleTypeDef *hdac, const DAC_Chann
 		}
 
 		/* HoldTime */
-		MODIFY_REG(hdac->Instance->SHHR, DAC_SHHR_THOLD1 << (Channel & 0x10UL),
-			   (sConfig->DAC_SampleAndHoldConfig.DAC_HoldTime) << (Channel & 0x10UL));
+		MODIFY_REG(hdac->Instance->SHHR, DAC_SHHR_THOLD1 << (Channel & 0x10UL), (sConfig->DAC_SampleAndHoldConfig.DAC_HoldTime) << (Channel & 0x10UL));
 		/* RefreshTime */
-		MODIFY_REG(hdac->Instance->SHRR, DAC_SHRR_TREFRESH1 << (Channel & 0x10UL),
-			   (sConfig->DAC_SampleAndHoldConfig.DAC_RefreshTime) << (Channel & 0x10UL));
+		MODIFY_REG(hdac->Instance->SHRR, DAC_SHRR_TREFRESH1 << (Channel & 0x10UL), (sConfig->DAC_SampleAndHoldConfig.DAC_RefreshTime) << (Channel & 0x10UL));
 	}
 
 	/* Autonomous mode configuration */
@@ -1503,8 +1488,7 @@ uint32_t HAL_DAC_GetError(const DAC_HandleTypeDef *hdac) { return hdac->ErrorCod
  * @param  pCallback pointer to the Callback function
  * @retval status
  */
-HAL_StatusTypeDef HAL_DAC_RegisterCallback(DAC_HandleTypeDef *hdac, HAL_DAC_CallbackIDTypeDef CallbackID,
-					   pDAC_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_DAC_RegisterCallback(DAC_HandleTypeDef *hdac, HAL_DAC_CallbackIDTypeDef CallbackID, pDAC_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 

@@ -54,10 +54,10 @@ typedef enum { HAL_UNLOCKED = 0x00, HAL_LOCKED = 0x01 } HAL_LockTypeDef;
 #define HAL_IS_BIT_SET(REG, BIT) (((REG) & (BIT)) == (BIT))
 #define HAL_IS_BIT_CLR(REG, BIT) (((REG) & (BIT)) == 0U)
 
-#define __HAL_LINKDMA(__HANDLE__, __PPP_DMA_FIELD__, __DMA_HANDLE__)                                                   \
-	do {                                                                                                           \
-		(__HANDLE__)->__PPP_DMA_FIELD__ = &(__DMA_HANDLE__);                                                   \
-		(__DMA_HANDLE__).Parent = (__HANDLE__);                                                                \
+#define __HAL_LINKDMA(__HANDLE__, __PPP_DMA_FIELD__, __DMA_HANDLE__)                                                                                                                                   \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->__PPP_DMA_FIELD__ = &(__DMA_HANDLE__);                                                                                                                                   \
+		(__DMA_HANDLE__).Parent = (__HANDLE__);                                                                                                                                                \
 	} while (0)
 
 /** @brief Reset the Handle's State field.
@@ -82,18 +82,18 @@ typedef enum { HAL_UNLOCKED = 0x00, HAL_LOCKED = 0x01 } HAL_LockTypeDef;
 /* Reserved for future use */
 #error " USE_RTOS should be 0 in the current HAL release "
 #else
-#define __HAL_LOCK(__HANDLE__)                                                                                         \
-	do {                                                                                                           \
-		if ((__HANDLE__)->Lock == HAL_LOCKED) {                                                                \
-			return HAL_BUSY;                                                                               \
-		} else {                                                                                               \
-			(__HANDLE__)->Lock = HAL_LOCKED;                                                               \
-		}                                                                                                      \
+#define __HAL_LOCK(__HANDLE__)                                                                                                                                                                         \
+	do {                                                                                                                                                                                           \
+		if ((__HANDLE__)->Lock == HAL_LOCKED) {                                                                                                                                                \
+			return HAL_BUSY;                                                                                                                                                               \
+		} else {                                                                                                                                                                               \
+			(__HANDLE__)->Lock = HAL_LOCKED;                                                                                                                                               \
+		}                                                                                                                                                                                      \
 	} while (0)
 
-#define __HAL_UNLOCK(__HANDLE__)                                                                                       \
-	do {                                                                                                           \
-		(__HANDLE__)->Lock = HAL_UNLOCKED;                                                                     \
+#define __HAL_UNLOCK(__HANDLE__)                                                                                                                                                                       \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->Lock = HAL_UNLOCKED;                                                                                                                                                     \
 	} while (0)
 #endif /* USE_RTOS */
 

@@ -57,9 +57,8 @@ extern "C" {
    application
   */
 
-#if !defined(STM32U575xx) && !defined(STM32U585xx) && !defined(STM32U595xx) && !defined(STM32U599xx) &&                \
-    !defined(STM32U5A5xx) && !defined(STM32U5A9xx) && !defined(STM32U5F7xx) && !defined(STM32U5G7xx) &&                \
-    !defined(STM32U5F9xx) && !defined(STM32U5G9xx) && !defined(STM32U535xx) && !defined(STM32U545xx)
+#if !defined(STM32U575xx) && !defined(STM32U585xx) && !defined(STM32U595xx) && !defined(STM32U599xx) && !defined(STM32U5A5xx) && !defined(STM32U5A9xx) && !defined(STM32U5F7xx) &&                     \
+    !defined(STM32U5G7xx) && !defined(STM32U5F9xx) && !defined(STM32U5G9xx) && !defined(STM32U535xx) && !defined(STM32U545xx)
 /* #define STM32U575xx */ /*!< STM32U575CIU6 STM32U575CIT6 STM32U575RIT6
 			     STM32U575VIT6 STM32U575ZIT6 STM32U575QII6
 			     STM32U575AII6 STM32U575CIU6Q STM32U575CIT6Q
@@ -135,9 +134,7 @@ extern "C" {
 #define __STM32U5_CMSIS_VERSION_SUB1 (0x04U) /*!< [23:16] sub1 version */
 #define __STM32U5_CMSIS_VERSION_SUB2 (0x01U) /*!< [15:8]  sub2 version */
 #define __STM32U5_CMSIS_VERSION_RC (0x00U)   /*!< [7:0]  release candidate */
-#define __STM32U5_CMSIS_VERSION                                                                                        \
-	((__STM32U5_CMSIS_VERSION_MAIN << 24U) | (__STM32U5_CMSIS_VERSION_SUB1 << 16U) |                               \
-	 (__STM32U5_CMSIS_VERSION_SUB2 << 8U) | (__STM32U5_CMSIS_VERSION_RC))
+#define __STM32U5_CMSIS_VERSION ((__STM32U5_CMSIS_VERSION_MAIN << 24U) | (__STM32U5_CMSIS_VERSION_SUB1 << 16U) | (__STM32U5_CMSIS_VERSION_SUB2 << 8U) | (__STM32U5_CMSIS_VERSION_RC))
 
 /**
  * @}
@@ -212,57 +209,57 @@ typedef enum { SUCCESS = 0, ERROR = !SUCCESS } ErrorStatus;
 
 /* Use of CMSIS compiler intrinsics for register exclusive access */
 /* Atomic 32-bit register access macro to set one or several bits */
-#define ATOMIC_SET_BIT(REG, BIT)                                                                                       \
-	do {                                                                                                           \
-		uint32_t val;                                                                                          \
-		do {                                                                                                   \
-			val = __LDREXW((__IO uint32_t *)&(REG)) | (BIT);                                               \
-		} while ((__STREXW(val, (__IO uint32_t *)&(REG))) != 0U);                                              \
+#define ATOMIC_SET_BIT(REG, BIT)                                                                                                                                                                       \
+	do {                                                                                                                                                                                           \
+		uint32_t val;                                                                                                                                                                          \
+		do {                                                                                                                                                                                   \
+			val = __LDREXW((__IO uint32_t *)&(REG)) | (BIT);                                                                                                                               \
+		} while ((__STREXW(val, (__IO uint32_t *)&(REG))) != 0U);                                                                                                                              \
 	} while (0)
 
 /* Atomic 32-bit register access macro to clear one or several bits */
-#define ATOMIC_CLEAR_BIT(REG, BIT)                                                                                     \
-	do {                                                                                                           \
-		uint32_t val;                                                                                          \
-		do {                                                                                                   \
-			val = __LDREXW((__IO uint32_t *)&(REG)) & ~(BIT);                                              \
-		} while ((__STREXW(val, (__IO uint32_t *)&(REG))) != 0U);                                              \
+#define ATOMIC_CLEAR_BIT(REG, BIT)                                                                                                                                                                     \
+	do {                                                                                                                                                                                           \
+		uint32_t val;                                                                                                                                                                          \
+		do {                                                                                                                                                                                   \
+			val = __LDREXW((__IO uint32_t *)&(REG)) & ~(BIT);                                                                                                                              \
+		} while ((__STREXW(val, (__IO uint32_t *)&(REG))) != 0U);                                                                                                                              \
 	} while (0)
 
 /* Atomic 32-bit register access macro to clear and set one or several bits */
-#define ATOMIC_MODIFY_REG(REG, CLEARMSK, SETMASK)                                                                      \
-	do {                                                                                                           \
-		uint32_t val;                                                                                          \
-		do {                                                                                                   \
-			val = (__LDREXW((__IO uint32_t *)&(REG)) & ~(CLEARMSK)) | (SETMASK);                           \
-		} while ((__STREXW(val, (__IO uint32_t *)&(REG))) != 0U);                                              \
+#define ATOMIC_MODIFY_REG(REG, CLEARMSK, SETMASK)                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		uint32_t val;                                                                                                                                                                          \
+		do {                                                                                                                                                                                   \
+			val = (__LDREXW((__IO uint32_t *)&(REG)) & ~(CLEARMSK)) | (SETMASK);                                                                                                           \
+		} while ((__STREXW(val, (__IO uint32_t *)&(REG))) != 0U);                                                                                                                              \
 	} while (0)
 
 /* Atomic 16-bit register access macro to set one or several bits */
-#define ATOMIC_SETH_BIT(REG, BIT)                                                                                      \
-	do {                                                                                                           \
-		uint16_t val;                                                                                          \
-		do {                                                                                                   \
-			val = __LDREXH((__IO uint16_t *)&(REG)) | (BIT);                                               \
-		} while ((__STREXH(val, (__IO uint16_t *)&(REG))) != 0U);                                              \
+#define ATOMIC_SETH_BIT(REG, BIT)                                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		uint16_t val;                                                                                                                                                                          \
+		do {                                                                                                                                                                                   \
+			val = __LDREXH((__IO uint16_t *)&(REG)) | (BIT);                                                                                                                               \
+		} while ((__STREXH(val, (__IO uint16_t *)&(REG))) != 0U);                                                                                                                              \
 	} while (0)
 
 /* Atomic 16-bit register access macro to clear one or several bits */
-#define ATOMIC_CLEARH_BIT(REG, BIT)                                                                                    \
-	do {                                                                                                           \
-		uint16_t val;                                                                                          \
-		do {                                                                                                   \
-			val = __LDREXH((__IO uint16_t *)&(REG)) & ~(BIT);                                              \
-		} while ((__STREXH(val, (__IO uint16_t *)&(REG))) != 0U);                                              \
+#define ATOMIC_CLEARH_BIT(REG, BIT)                                                                                                                                                                    \
+	do {                                                                                                                                                                                           \
+		uint16_t val;                                                                                                                                                                          \
+		do {                                                                                                                                                                                   \
+			val = __LDREXH((__IO uint16_t *)&(REG)) & ~(BIT);                                                                                                                              \
+		} while ((__STREXH(val, (__IO uint16_t *)&(REG))) != 0U);                                                                                                                              \
 	} while (0)
 
 /* Atomic 16-bit register access macro to clear and set one or several bits */
-#define ATOMIC_MODIFYH_REG(REG, CLEARMSK, SETMASK)                                                                     \
-	do {                                                                                                           \
-		uint16_t val;                                                                                          \
-		do {                                                                                                   \
-			val = (__LDREXH((__IO uint16_t *)&(REG)) & ~(CLEARMSK)) | (SETMASK);                           \
-		} while ((__STREXH(val, (__IO uint16_t *)&(REG))) != 0U);                                              \
+#define ATOMIC_MODIFYH_REG(REG, CLEARMSK, SETMASK)                                                                                                                                                     \
+	do {                                                                                                                                                                                           \
+		uint16_t val;                                                                                                                                                                          \
+		do {                                                                                                                                                                                   \
+			val = (__LDREXH((__IO uint16_t *)&(REG)) & ~(CLEARMSK)) | (SETMASK);                                                                                                           \
+		} while ((__STREXH(val, (__IO uint16_t *)&(REG))) != 0U);                                                                                                                              \
 	} while (0)
 
 #define POSITION_VAL(VAL) (__CLZ(__RBIT(VAL)))

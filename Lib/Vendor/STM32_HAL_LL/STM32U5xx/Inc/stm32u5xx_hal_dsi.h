@@ -354,13 +354,7 @@ typedef struct {
 /**
  * @brief  DSI States Structure definition
  */
-typedef enum {
-	HAL_DSI_STATE_RESET = 0x00U,
-	HAL_DSI_STATE_READY = 0x01U,
-	HAL_DSI_STATE_ERROR = 0x02U,
-	HAL_DSI_STATE_BUSY = 0x03U,
-	HAL_DSI_STATE_TIMEOUT = 0x04U
-} HAL_DSI_StateTypeDef;
+typedef enum { HAL_DSI_STATE_RESET = 0x00U, HAL_DSI_STATE_READY = 0x01U, HAL_DSI_STATE_ERROR = 0x02U, HAL_DSI_STATE_BUSY = 0x03U, HAL_DSI_STATE_TIMEOUT = 0x04U } HAL_DSI_StateTypeDef;
 
 /**
  * @brief  DSI Handle Structure definition
@@ -767,9 +761,7 @@ typedef void (*pDSI_CallbackTypeDef)(DSI_HandleTypeDef *hdsi); /*!< pointer to a
 #define DSI_FLOW_CONTROL_BTA DSI_PCR_BTAE
 #define DSI_FLOW_CONTROL_EOTP_RX DSI_PCR_ETRXE
 #define DSI_FLOW_CONTROL_EOTP_TX DSI_PCR_ETTXE
-#define DSI_FLOW_CONTROL_ALL                                                                                           \
-	(DSI_FLOW_CONTROL_CRC_RX | DSI_FLOW_CONTROL_ECC_RX | DSI_FLOW_CONTROL_BTA | DSI_FLOW_CONTROL_EOTP_RX |         \
-	 DSI_FLOW_CONTROL_EOTP_TX | DSI_FLOW_CONTROL_EOTP_TX_LP)
+#define DSI_FLOW_CONTROL_ALL (DSI_FLOW_CONTROL_CRC_RX | DSI_FLOW_CONTROL_ECC_RX | DSI_FLOW_CONTROL_BTA | DSI_FLOW_CONTROL_EOTP_RX | DSI_FLOW_CONTROL_EOTP_TX | DSI_FLOW_CONTROL_EOTP_TX_LP)
 /**
  * @}
  */
@@ -777,11 +769,11 @@ typedef void (*pDSI_CallbackTypeDef)(DSI_HandleTypeDef *hdsi); /*!< pointer to a
 /** @defgroup DSI_Color_Coding DSI Color Coding
  * @{
  */
-#define DSI_RGB565                                                                                                     \
-	0x00000000U /*!< The values 0x00000001 and 0x00000002 can also be used                                         \
+#define DSI_RGB565                                                                                                                                                                                     \
+	0x00000000U /*!< The values 0x00000001 and 0x00000002 can also be used                                                                                                                         \
 		       for the RGB565 color mode configuration */
-#define DSI_RGB666                                                                                                     \
-	0x00000003U /*!< The value 0x00000004 can also be used for the RGB666                                          \
+#define DSI_RGB666                                                                                                                                                                                     \
+	0x00000003U /*!< The value 0x00000004 can also be used for the RGB666                                                                                                                          \
 		       color mode configuration                 */
 #define DSI_RGB888 0x00000005U
 /**
@@ -1031,8 +1023,8 @@ typedef void (*pDSI_CallbackTypeDef)(DSI_HandleTypeDef *hdsi); /*!< pointer to a
  */
 #define DSI_PLL_LOOP_FILTER_2000HZ_4400HZ 0x00000000U  /*!< 2.0 to 4.4 MHz  */
 #define DSI_PLL_LOOP_FILTER_4400HZ_30900HZ 0x00000001U /*!< 4.4 to 30.9 MHz */
-#define DSI_PLL_LOOP_FILTER_30900HZ_50000HZ                                                                            \
-	0x00000002U /*!< 30.9 to 50  MHz                                                                               \
+#define DSI_PLL_LOOP_FILTER_30900HZ_50000HZ                                                                                                                                                            \
+	0x00000002U /*!< 30.9 to 50  MHz                                                                                                                                                               \
 		     */
 
 /**
@@ -1044,11 +1036,11 @@ typedef void (*pDSI_CallbackTypeDef)(DSI_HandleTypeDef *hdsi); /*!< pointer to a
  */
 #define DSI_PLL_CHARGE_PUMP_2000HZ_4400HZ 0x00000000U  /*!< 2.0 to 4.4 MHz   */
 #define DSI_PLL_CHARGE_PUMP_4400HZ_14100HZ 0x00000001U /*!< 4.4 to 14.1 MHz */
-#define DSI_PLL_CHARGE_PUMP_14100HZ_30900HZ                                                                            \
-	0x00000000U /*!< 14.1 to 30.9 MHz                                                                              \
+#define DSI_PLL_CHARGE_PUMP_14100HZ_30900HZ                                                                                                                                                            \
+	0x00000000U /*!< 14.1 to 30.9 MHz                                                                                                                                                              \
 		     */
-#define DSI_PLL_CHARGE_PUMP_30900HZ_45700HZ                                                                            \
-	0x00000003U					/*!< 30.9 to 45.7 MHz                                          \
+#define DSI_PLL_CHARGE_PUMP_30900HZ_45700HZ                                                                                                                                                            \
+	0x00000003U					/*!< 30.9 to 45.7 MHz                                                                                                                          \
 							 */
 #define DSI_PLL_CHARGE_PUMP_45700HZ_50000HZ 0x00000002U /*!< 45.7 to 50 MHz */
 /**
@@ -1070,11 +1062,11 @@ typedef void (*pDSI_CallbackTypeDef)(DSI_HandleTypeDef *hdsi); /*!< pointer to a
  * @retval None
  */
 #if (USE_HAL_DSI_REGISTER_CALLBACKS == 1)
-#define __HAL_DSI_RESET_HANDLE_STATE(__HANDLE__)                                                                       \
-	do {                                                                                                           \
-		(__HANDLE__)->State = HAL_DSI_STATE_RESET;                                                             \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define __HAL_DSI_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                       \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_DSI_STATE_RESET;                                                                                                                                             \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0)
 #else
 #define __HAL_DSI_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_DSI_STATE_RESET)
@@ -1085,13 +1077,13 @@ typedef void (*pDSI_CallbackTypeDef)(DSI_HandleTypeDef *hdsi); /*!< pointer to a
  * @param  __HANDLE__  DSI handle
  * @retval None.
  */
-#define __HAL_DSI_ENABLE(__HANDLE__)                                                                                   \
-	do {                                                                                                           \
-		__IO uint32_t tmpreg = 0x00U;                                                                          \
-		SET_BIT((__HANDLE__)->Instance->CR, DSI_CR_EN);                                                        \
-		/* Delay after an DSI Host enabling */                                                                 \
-		tmpreg = READ_BIT((__HANDLE__)->Instance->CR, DSI_CR_EN);                                              \
-		UNUSED(tmpreg);                                                                                        \
+#define __HAL_DSI_ENABLE(__HANDLE__)                                                                                                                                                                   \
+	do {                                                                                                                                                                                           \
+		__IO uint32_t tmpreg = 0x00U;                                                                                                                                                          \
+		SET_BIT((__HANDLE__)->Instance->CR, DSI_CR_EN);                                                                                                                                        \
+		/* Delay after an DSI Host enabling */                                                                                                                                                 \
+		tmpreg = READ_BIT((__HANDLE__)->Instance->CR, DSI_CR_EN);                                                                                                                              \
+		UNUSED(tmpreg);                                                                                                                                                                        \
 	} while (0U)
 
 /**
@@ -1099,13 +1091,13 @@ typedef void (*pDSI_CallbackTypeDef)(DSI_HandleTypeDef *hdsi); /*!< pointer to a
  * @param  __HANDLE__  DSI handle
  * @retval None.
  */
-#define __HAL_DSI_DISABLE(__HANDLE__)                                                                                  \
-	do {                                                                                                           \
-		__IO uint32_t tmpreg = 0x00U;                                                                          \
-		CLEAR_BIT((__HANDLE__)->Instance->CR, DSI_CR_EN);                                                      \
-		/* Delay after an DSI Host disabling */                                                                \
-		tmpreg = READ_BIT((__HANDLE__)->Instance->CR, DSI_CR_EN);                                              \
-		UNUSED(tmpreg);                                                                                        \
+#define __HAL_DSI_DISABLE(__HANDLE__)                                                                                                                                                                  \
+	do {                                                                                                                                                                                           \
+		__IO uint32_t tmpreg = 0x00U;                                                                                                                                                          \
+		CLEAR_BIT((__HANDLE__)->Instance->CR, DSI_CR_EN);                                                                                                                                      \
+		/* Delay after an DSI Host disabling */                                                                                                                                                \
+		tmpreg = READ_BIT((__HANDLE__)->Instance->CR, DSI_CR_EN);                                                                                                                              \
+		UNUSED(tmpreg);                                                                                                                                                                        \
 	} while (0U)
 
 /**
@@ -1113,13 +1105,13 @@ typedef void (*pDSI_CallbackTypeDef)(DSI_HandleTypeDef *hdsi); /*!< pointer to a
  * @param  __HANDLE__  DSI handle
  * @retval None.
  */
-#define __HAL_DSI_WRAPPER_ENABLE(__HANDLE__)                                                                           \
-	do {                                                                                                           \
-		__IO uint32_t tmpreg = 0x00U;                                                                          \
-		SET_BIT((__HANDLE__)->Instance->WCR, DSI_WCR_DSIEN);                                                   \
-		/* Delay after an DSI wrapper enabling */                                                              \
-		tmpreg = READ_BIT((__HANDLE__)->Instance->WCR, DSI_WCR_DSIEN);                                         \
-		UNUSED(tmpreg);                                                                                        \
+#define __HAL_DSI_WRAPPER_ENABLE(__HANDLE__)                                                                                                                                                           \
+	do {                                                                                                                                                                                           \
+		__IO uint32_t tmpreg = 0x00U;                                                                                                                                                          \
+		SET_BIT((__HANDLE__)->Instance->WCR, DSI_WCR_DSIEN);                                                                                                                                   \
+		/* Delay after an DSI wrapper enabling */                                                                                                                                              \
+		tmpreg = READ_BIT((__HANDLE__)->Instance->WCR, DSI_WCR_DSIEN);                                                                                                                         \
+		UNUSED(tmpreg);                                                                                                                                                                        \
 	} while (0U)
 
 /**
@@ -1127,13 +1119,13 @@ typedef void (*pDSI_CallbackTypeDef)(DSI_HandleTypeDef *hdsi); /*!< pointer to a
  * @param  __HANDLE__  DSI handle
  * @retval None.
  */
-#define __HAL_DSI_WRAPPER_DISABLE(__HANDLE__)                                                                          \
-	do {                                                                                                           \
-		__IO uint32_t tmpreg = 0x00U;                                                                          \
-		CLEAR_BIT((__HANDLE__)->Instance->WCR, DSI_WCR_DSIEN);                                                 \
-		/* Delay after an DSI wrapper disabling*/                                                              \
-		tmpreg = READ_BIT((__HANDLE__)->Instance->WCR, DSI_WCR_DSIEN);                                         \
-		UNUSED(tmpreg);                                                                                        \
+#define __HAL_DSI_WRAPPER_DISABLE(__HANDLE__)                                                                                                                                                          \
+	do {                                                                                                                                                                                           \
+		__IO uint32_t tmpreg = 0x00U;                                                                                                                                                          \
+		CLEAR_BIT((__HANDLE__)->Instance->WCR, DSI_WCR_DSIEN);                                                                                                                                 \
+		/* Delay after an DSI wrapper disabling*/                                                                                                                                              \
+		tmpreg = READ_BIT((__HANDLE__)->Instance->WCR, DSI_WCR_DSIEN);                                                                                                                         \
+		UNUSED(tmpreg);                                                                                                                                                                        \
 	} while (0U)
 
 /**
@@ -1141,13 +1133,13 @@ typedef void (*pDSI_CallbackTypeDef)(DSI_HandleTypeDef *hdsi); /*!< pointer to a
  * @param  __HANDLE__  DSI handle
  * @retval None.
  */
-#define __HAL_DSI_PLL_ENABLE(__HANDLE__)                                                                               \
-	do {                                                                                                           \
-		__IO uint32_t tmpreg = 0x00U;                                                                          \
-		SET_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_PLLEN);                                               \
-		/* Delay after an DSI PLL enabling */                                                                  \
-		tmpreg = READ_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_PLLEN);                                     \
-		UNUSED(tmpreg);                                                                                        \
+#define __HAL_DSI_PLL_ENABLE(__HANDLE__)                                                                                                                                                               \
+	do {                                                                                                                                                                                           \
+		__IO uint32_t tmpreg = 0x00U;                                                                                                                                                          \
+		SET_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_PLLEN);                                                                                                                               \
+		/* Delay after an DSI PLL enabling */                                                                                                                                                  \
+		tmpreg = READ_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_PLLEN);                                                                                                                     \
+		UNUSED(tmpreg);                                                                                                                                                                        \
 	} while (0U)
 
 /**
@@ -1155,13 +1147,13 @@ typedef void (*pDSI_CallbackTypeDef)(DSI_HandleTypeDef *hdsi); /*!< pointer to a
  * @param  __HANDLE__  DSI handle
  * @retval None.
  */
-#define __HAL_DSI_PLL_DISABLE(__HANDLE__)                                                                              \
-	do {                                                                                                           \
-		__IO uint32_t tmpreg = 0x00U;                                                                          \
-		CLEAR_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_PLLEN);                                             \
-		/* Delay after an DSI PLL disabling */                                                                 \
-		tmpreg = READ_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_PLLEN);                                     \
-		UNUSED(tmpreg);                                                                                        \
+#define __HAL_DSI_PLL_DISABLE(__HANDLE__)                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
+		__IO uint32_t tmpreg = 0x00U;                                                                                                                                                          \
+		CLEAR_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_PLLEN);                                                                                                                             \
+		/* Delay after an DSI PLL disabling */                                                                                                                                                 \
+		tmpreg = READ_BIT((__HANDLE__)->Instance->WRPCR, DSI_WRPCR_PLLEN);                                                                                                                     \
+		UNUSED(tmpreg);                                                                                                                                                                        \
 	} while (0U)
 
 /**
@@ -1256,8 +1248,7 @@ void HAL_DSI_MspDeInit(DSI_HandleTypeDef *hdsi);
 HAL_StatusTypeDef HAL_DSI_ConfigErrorMonitor(DSI_HandleTypeDef *hdsi, uint32_t ActiveErrors);
 /* Callbacks Register/UnRegister functions  ***********************************/
 #if (USE_HAL_DSI_REGISTER_CALLBACKS == 1)
-HAL_StatusTypeDef HAL_DSI_RegisterCallback(DSI_HandleTypeDef *hdsi, HAL_DSI_CallbackIDTypeDef CallbackID,
-					   pDSI_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_DSI_RegisterCallback(DSI_HandleTypeDef *hdsi, HAL_DSI_CallbackIDTypeDef CallbackID, pDSI_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_DSI_UnRegisterCallback(DSI_HandleTypeDef *hdsi, HAL_DSI_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_DSI_REGISTER_CALLBACKS */
 /**
@@ -1294,12 +1285,9 @@ HAL_StatusTypeDef HAL_DSI_Stop(DSI_HandleTypeDef *hdsi);
 HAL_StatusTypeDef HAL_DSI_Refresh(DSI_HandleTypeDef *hdsi);
 HAL_StatusTypeDef HAL_DSI_ColorMode(DSI_HandleTypeDef *hdsi, uint32_t ColorMode);
 HAL_StatusTypeDef HAL_DSI_Shutdown(DSI_HandleTypeDef *hdsi, uint32_t Shutdown);
-HAL_StatusTypeDef HAL_DSI_ShortWrite(DSI_HandleTypeDef *hdsi, uint32_t ChannelID, uint32_t Mode, uint32_t Param1,
-				     uint32_t Param2);
-HAL_StatusTypeDef HAL_DSI_LongWrite(DSI_HandleTypeDef *hdsi, uint32_t ChannelID, uint32_t Mode, uint32_t NbParams,
-				    uint32_t Param1, const uint8_t *ParametersTable);
-HAL_StatusTypeDef HAL_DSI_Read(DSI_HandleTypeDef *hdsi, uint32_t ChannelNbr, uint8_t *Array, uint32_t Size,
-			       uint32_t Mode, uint32_t DCSCmd, uint8_t *ParametersTable);
+HAL_StatusTypeDef HAL_DSI_ShortWrite(DSI_HandleTypeDef *hdsi, uint32_t ChannelID, uint32_t Mode, uint32_t Param1, uint32_t Param2);
+HAL_StatusTypeDef HAL_DSI_LongWrite(DSI_HandleTypeDef *hdsi, uint32_t ChannelID, uint32_t Mode, uint32_t NbParams, uint32_t Param1, const uint8_t *ParametersTable);
+HAL_StatusTypeDef HAL_DSI_Read(DSI_HandleTypeDef *hdsi, uint32_t ChannelNbr, uint8_t *Array, uint32_t Size, uint32_t Mode, uint32_t DCSCmd, uint8_t *ParametersTable);
 HAL_StatusTypeDef HAL_DSI_EnterULPMData(DSI_HandleTypeDef *hdsi);
 HAL_StatusTypeDef HAL_DSI_ExitULPMData(DSI_HandleTypeDef *hdsi);
 HAL_StatusTypeDef HAL_DSI_EnterULPM(DSI_HandleTypeDef *hdsi);
@@ -1308,8 +1296,7 @@ HAL_StatusTypeDef HAL_DSI_ExitULPM(DSI_HandleTypeDef *hdsi);
 HAL_StatusTypeDef HAL_DSI_PatternGeneratorStart(DSI_HandleTypeDef *hdsi, uint32_t Mode, uint32_t Orientation);
 HAL_StatusTypeDef HAL_DSI_PatternGeneratorStop(DSI_HandleTypeDef *hdsi);
 
-HAL_StatusTypeDef HAL_DSI_SetLanePinsConfiguration(DSI_HandleTypeDef *hdsi, uint32_t CustomLane, uint32_t Lane,
-						   FunctionalState State);
+HAL_StatusTypeDef HAL_DSI_SetLanePinsConfiguration(DSI_HandleTypeDef *hdsi, uint32_t CustomLane, uint32_t Lane, FunctionalState State);
 HAL_StatusTypeDef HAL_DSI_ForceTXStopMode(DSI_HandleTypeDef *hdsi, uint32_t Lane, FunctionalState State);
 
 /**
@@ -1350,21 +1337,15 @@ HAL_DSI_StateTypeDef HAL_DSI_GetState(const DSI_HandleTypeDef *hdsi);
 #define IS_DSI_PLL_NDIV(NDIV) ((NDIV) <= 511U)
 #define IS_DSI_PLL_IDF(IDF) ((IDF) <= 511U)
 #define IS_DSI_PLL_ODF(ODF) ((ODF) <= 511U)
-#define IS_DSI_AUTO_CLKLANE_CONTROL(AutoClkLane)                                                                       \
-	(((AutoClkLane) == DSI_AUTO_CLK_LANE_CTRL_DISABLE) || ((AutoClkLane) == DSI_AUTO_CLK_LANE_CTRL_ENABLE))
-#define IS_DSI_NUMBER_OF_LANES(NumberOfLanes)                                                                          \
-	(((NumberOfLanes) == DSI_ONE_DATA_LANE) || ((NumberOfLanes) == DSI_TWO_DATA_LANES))
+#define IS_DSI_AUTO_CLKLANE_CONTROL(AutoClkLane) (((AutoClkLane) == DSI_AUTO_CLK_LANE_CTRL_DISABLE) || ((AutoClkLane) == DSI_AUTO_CLK_LANE_CTRL_ENABLE))
+#define IS_DSI_NUMBER_OF_LANES(NumberOfLanes) (((NumberOfLanes) == DSI_ONE_DATA_LANE) || ((NumberOfLanes) == DSI_TWO_DATA_LANES))
 #define IS_DSI_FLOW_CONTROL(FlowControl) (((FlowControl) | DSI_FLOW_CONTROL_ALL) == DSI_FLOW_CONTROL_ALL)
 #define IS_DSI_COLOR_CODING(ColorCoding) ((ColorCoding) <= 5U)
-#define IS_DSI_LOOSELY_PACKED(LooselyPacked)                                                                           \
-	(((LooselyPacked) == DSI_LOOSELY_PACKED_ENABLE) || ((LooselyPacked) == DSI_LOOSELY_PACKED_DISABLE))
-#define IS_DSI_DE_POLARITY(DataEnable)                                                                                 \
-	(((DataEnable) == DSI_DATA_ENABLE_ACTIVE_HIGH) || ((DataEnable) == DSI_DATA_ENABLE_ACTIVE_LOW))
+#define IS_DSI_LOOSELY_PACKED(LooselyPacked) (((LooselyPacked) == DSI_LOOSELY_PACKED_ENABLE) || ((LooselyPacked) == DSI_LOOSELY_PACKED_DISABLE))
+#define IS_DSI_DE_POLARITY(DataEnable) (((DataEnable) == DSI_DATA_ENABLE_ACTIVE_HIGH) || ((DataEnable) == DSI_DATA_ENABLE_ACTIVE_LOW))
 #define IS_DSI_VSYNC_POLARITY(Vsync) (((Vsync) == DSI_VSYNC_ACTIVE_HIGH) || ((Vsync) == DSI_VSYNC_ACTIVE_LOW))
 #define IS_DSI_HSYNC_POLARITY(Hsync) (((Hsync) == DSI_HSYNC_ACTIVE_HIGH) || ((Hsync) == DSI_HSYNC_ACTIVE_LOW))
-#define IS_DSI_VIDEO_MODE_TYPE(VideoModeType)                                                                          \
-	(((VideoModeType) == DSI_VID_MODE_NB_PULSES) || ((VideoModeType) == DSI_VID_MODE_NB_EVENTS) ||                 \
-	 ((VideoModeType) == DSI_VID_MODE_BURST))
+#define IS_DSI_VIDEO_MODE_TYPE(VideoModeType) (((VideoModeType) == DSI_VID_MODE_NB_PULSES) || ((VideoModeType) == DSI_VID_MODE_NB_EVENTS) || ((VideoModeType) == DSI_VID_MODE_BURST))
 #define IS_DSI_COLOR_MODE(ColorMode) (((ColorMode) == DSI_COLOR_MODE_FULL) || ((ColorMode) == DSI_COLOR_MODE_EIGHT))
 #define IS_DSI_SHUT_DOWN(ShutDown) (((ShutDown) == DSI_DISPLAY_ON) || ((ShutDown) == DSI_DISPLAY_OFF))
 #define IS_DSI_LP_COMMAND(LPCommand) (((LPCommand) == DSI_LP_COMMAND_DISABLE) || ((LPCommand) == DSI_LP_COMMAND_ENABLE))
@@ -1374,18 +1355,13 @@ HAL_DSI_StateTypeDef HAL_DSI_GetState(const DSI_HandleTypeDef *hdsi);
 #define IS_DSI_LP_VFP(LPVFP) (((LPVFP) == DSI_LP_VFP_DISABLE) || ((LPVFP) == DSI_LP_VFP_ENABLE))
 #define IS_DSI_LP_VBP(LPVBP) (((LPVBP) == DSI_LP_VBP_DISABLE) || ((LPVBP) == DSI_LP_VBP_ENABLE))
 #define IS_DSI_LP_VSYNC(LPVSYNC) (((LPVSYNC) == DSI_LP_VSYNC_DISABLE) || ((LPVSYNC) == DSI_LP_VSYNC_ENABLE))
-#define IS_DSI_FBTAA(FrameBTAAcknowledge)                                                                              \
-	(((FrameBTAAcknowledge) == DSI_FBTAA_DISABLE) || ((FrameBTAAcknowledge) == DSI_FBTAA_ENABLE))
+#define IS_DSI_FBTAA(FrameBTAAcknowledge) (((FrameBTAAcknowledge) == DSI_FBTAA_DISABLE) || ((FrameBTAAcknowledge) == DSI_FBTAA_ENABLE))
 #define IS_DSI_TE_SOURCE(TESource) (((TESource) == DSI_TE_DSILINK) || ((TESource) == DSI_TE_EXTERNAL))
 #define IS_DSI_TE_POLARITY(TEPolarity) (((TEPolarity) == DSI_TE_RISING_EDGE) || ((TEPolarity) == DSI_TE_FALLING_EDGE))
-#define IS_DSI_AUTOMATIC_REFRESH(AutomaticRefresh)                                                                     \
-	(((AutomaticRefresh) == DSI_AR_DISABLE) || ((AutomaticRefresh) == DSI_AR_ENABLE))
+#define IS_DSI_AUTOMATIC_REFRESH(AutomaticRefresh) (((AutomaticRefresh) == DSI_AR_DISABLE) || ((AutomaticRefresh) == DSI_AR_ENABLE))
 #define IS_DSI_VS_POLARITY(VSPolarity) (((VSPolarity) == DSI_VSYNC_FALLING) || ((VSPolarity) == DSI_VSYNC_RISING))
-#define IS_DSI_TE_ACK_REQUEST(TEAcknowledgeRequest)                                                                    \
-	(((TEAcknowledgeRequest) == DSI_TE_ACKNOWLEDGE_DISABLE) ||                                                     \
-	 ((TEAcknowledgeRequest) == DSI_TE_ACKNOWLEDGE_ENABLE))
-#define IS_DSI_ACK_REQUEST(AcknowledgeRequest)                                                                         \
-	(((AcknowledgeRequest) == DSI_ACKNOWLEDGE_DISABLE) || ((AcknowledgeRequest) == DSI_ACKNOWLEDGE_ENABLE))
+#define IS_DSI_TE_ACK_REQUEST(TEAcknowledgeRequest) (((TEAcknowledgeRequest) == DSI_TE_ACKNOWLEDGE_DISABLE) || ((TEAcknowledgeRequest) == DSI_TE_ACKNOWLEDGE_ENABLE))
+#define IS_DSI_ACK_REQUEST(AcknowledgeRequest) (((AcknowledgeRequest) == DSI_ACKNOWLEDGE_DISABLE) || ((AcknowledgeRequest) == DSI_ACKNOWLEDGE_ENABLE))
 #define IS_DSI_LP_GSW0P(LP_GSW0P) (((LP_GSW0P) == DSI_LP_GSW0P_DISABLE) || ((LP_GSW0P) == DSI_LP_GSW0P_ENABLE))
 #define IS_DSI_LP_GSW1P(LP_GSW1P) (((LP_GSW1P) == DSI_LP_GSW1P_DISABLE) || ((LP_GSW1P) == DSI_LP_GSW1P_ENABLE))
 #define IS_DSI_LP_GSW2P(LP_GSW2P) (((LP_GSW2P) == DSI_LP_GSW2P_DISABLE) || ((LP_GSW2P) == DSI_LP_GSW2P_ENABLE))
@@ -1398,53 +1374,33 @@ HAL_DSI_StateTypeDef HAL_DSI_GetState(const DSI_HandleTypeDef *hdsi);
 #define IS_DSI_LP_DSR0P(LP_DSR0P) (((LP_DSR0P) == DSI_LP_DSR0P_DISABLE) || ((LP_DSR0P) == DSI_LP_DSR0P_ENABLE))
 #define IS_DSI_LP_DLW(LP_DLW) (((LP_DLW) == DSI_LP_DLW_DISABLE) || ((LP_DLW) == DSI_LP_DLW_ENABLE))
 #define IS_DSI_LP_MRDP(LP_MRDP) (((LP_MRDP) == DSI_LP_MRDP_DISABLE) || ((LP_MRDP) == DSI_LP_MRDP_ENABLE))
-#define IS_DSI_SHORT_WRITE_PACKET_TYPE(MODE)                                                                           \
-	(((MODE) == DSI_DCS_SHORT_PKT_WRITE_P0) || ((MODE) == DSI_DCS_SHORT_PKT_WRITE_P1) ||                           \
-	 ((MODE) == DSI_GEN_SHORT_PKT_WRITE_P0) || ((MODE) == DSI_GEN_SHORT_PKT_WRITE_P1) ||                           \
+#define IS_DSI_SHORT_WRITE_PACKET_TYPE(MODE)                                                                                                                                                           \
+	(((MODE) == DSI_DCS_SHORT_PKT_WRITE_P0) || ((MODE) == DSI_DCS_SHORT_PKT_WRITE_P1) || ((MODE) == DSI_GEN_SHORT_PKT_WRITE_P0) || ((MODE) == DSI_GEN_SHORT_PKT_WRITE_P1) ||                       \
 	 ((MODE) == DSI_GEN_SHORT_PKT_WRITE_P2))
 #define IS_DSI_LONG_WRITE_PACKET_TYPE(MODE) (((MODE) == DSI_DCS_LONG_PKT_WRITE) || ((MODE) == DSI_GEN_LONG_PKT_WRITE))
-#define IS_DSI_READ_PACKET_TYPE(MODE)                                                                                  \
-	(((MODE) == DSI_DCS_SHORT_PKT_READ) || ((MODE) == DSI_GEN_SHORT_PKT_READ_P0) ||                                \
-	 ((MODE) == DSI_GEN_SHORT_PKT_READ_P1) || ((MODE) == DSI_GEN_SHORT_PKT_READ_P2))
+#define IS_DSI_READ_PACKET_TYPE(MODE) (((MODE) == DSI_DCS_SHORT_PKT_READ) || ((MODE) == DSI_GEN_SHORT_PKT_READ_P0) || ((MODE) == DSI_GEN_SHORT_PKT_READ_P1) || ((MODE) == DSI_GEN_SHORT_PKT_READ_P2))
 #define IS_DSI_LANE_GROUP(Lane) (((Lane) == DSI_CLOCK_LANE) || ((Lane) == DSI_DATA_LANES))
 #define IS_DSI_CUSTOM_LANE(CustomLane) ((CustomLane) == DSI_SWAP_LANE_PINS)
 #define IS_DSI_LANE(Lane) (((Lane) == DSI_CLOCK_LANE) || ((Lane) == DSI_DATA_LANE0) || ((Lane) == DSI_DATA_LANE1))
 
-#define IS_DSI_DPHY_VCO_FREQUENCY_RANGE(VCOFreqRange)                                                                  \
-	(((VCOFreqRange) == DSI_DPHY_VCO_FRANGE_500MHZ_800MHZ) || ((VCOFreqRange) == DSI_DPHY_VCO_FRANGE_800MHZ_1GHZ))
+#define IS_DSI_DPHY_VCO_FREQUENCY_RANGE(VCOFreqRange) (((VCOFreqRange) == DSI_DPHY_VCO_FRANGE_500MHZ_800MHZ) || ((VCOFreqRange) == DSI_DPHY_VCO_FRANGE_800MHZ_1GHZ))
 
-#define IS_DSI_DPHY_BAND_CTL_FRANGE(PHYFrequencyRange)                                                                 \
-	(((PHYFrequencyRange) == DSI_DPHY_FRANGE_80MHZ_100MHZ) ||                                                      \
-	 ((PHYFrequencyRange) == DSI_DPHY_FRANGE_100MHZ_120MHZ) ||                                                     \
-	 ((PHYFrequencyRange) == DSI_DPHY_FRANGE_120MHZ_160MHZ) ||                                                     \
-	 ((PHYFrequencyRange) == DSI_DPHY_FRANGE_160MHZ_200MHZ) ||                                                     \
-	 ((PHYFrequencyRange) == DSI_DPHY_FRANGE_200MHZ_240MHZ) ||                                                     \
-	 ((PHYFrequencyRange) == DSI_DPHY_FRANGE_240MHZ_320MHZ) ||                                                     \
-	 ((PHYFrequencyRange) == DSI_DPHY_FRANGE_320MHZ_390MHZ) ||                                                     \
-	 ((PHYFrequencyRange) == DSI_DPHY_FRANGE_390MHZ_450MHZ) ||                                                     \
-	 ((PHYFrequencyRange) == DSI_DPHY_FRANGE_450MHZ_510MHZ))
-#define IS_DSI_DPHY_LOW_POWER_OFFSET(PHYLowPowerOffset)                                                                \
-	(((PHYLowPowerOffset) == PHY_LP_OFFSSET_0_CLKP) || ((PHYLowPowerOffset) == PHY_LP_OFFSSET_1_CLKP) ||           \
-	 ((PHYLowPowerOffset) == PHY_LP_OFFSSET_2_CLKP) || ((PHYLowPowerOffset) == PHY_LP_OFFSSET_3_CLKP) ||           \
-	 ((PHYLowPowerOffset) == PHY_LP_OFFSSET_4_CLKP) || ((PHYLowPowerOffset) == PHY_LP_OFFSSET_5_CLKP) ||           \
-	 ((PHYLowPowerOffset) == PHY_LP_OFFSSET_6_CLKP) || ((PHYLowPowerOffset) == PHY_LP_OFFSSET_7_CLKP) ||           \
-	 ((PHYLowPowerOffset) == PHY_LP_OFFSSET_MINUS_1_CLKP) ||                                                       \
-	 ((PHYLowPowerOffset) == PHY_LP_OFFSSET_MINUS_2_CLKP) ||                                                       \
-	 ((PHYLowPowerOffset) == PHY_LP_OFFSSET_MINUS_3_CLKP) ||                                                       \
-	 ((PHYLowPowerOffset) == PHY_LP_OFFSSET_MINUS_4_CLKP) ||                                                       \
-	 ((PHYLowPowerOffset) == PHY_LP_OFFSSET_MINUS_5_CLKP) ||                                                       \
-	 ((PHYLowPowerOffset) == PHY_LP_OFFSSET_MINUS_6_CLKP) ||                                                       \
-	 ((PHYLowPowerOffset) == PHY_LP_OFFSSET_MINUS_7_CLKP) || ((PHYLowPowerOffset) == PHY_LP_OFFSSET_MINUS_8_CLKP))
-#define IS_DSI_PLL_TUNING(PllTuning)                                                                                   \
-	(((PllTuning) == DSI_PLL_LOOP_FILTER_2000HZ_4400HZ) || ((PllTuning) == DSI_PLL_LOOP_FILTER_4400HZ_30900HZ) ||  \
-	 ((PllTuning) == DSI_PLL_LOOP_FILTER_30900HZ_50000HZ))
+#define IS_DSI_DPHY_BAND_CTL_FRANGE(PHYFrequencyRange)                                                                                                                                                 \
+	(((PHYFrequencyRange) == DSI_DPHY_FRANGE_80MHZ_100MHZ) || ((PHYFrequencyRange) == DSI_DPHY_FRANGE_100MHZ_120MHZ) || ((PHYFrequencyRange) == DSI_DPHY_FRANGE_120MHZ_160MHZ) ||                  \
+	 ((PHYFrequencyRange) == DSI_DPHY_FRANGE_160MHZ_200MHZ) || ((PHYFrequencyRange) == DSI_DPHY_FRANGE_200MHZ_240MHZ) || ((PHYFrequencyRange) == DSI_DPHY_FRANGE_240MHZ_320MHZ) ||                 \
+	 ((PHYFrequencyRange) == DSI_DPHY_FRANGE_320MHZ_390MHZ) || ((PHYFrequencyRange) == DSI_DPHY_FRANGE_390MHZ_450MHZ) || ((PHYFrequencyRange) == DSI_DPHY_FRANGE_450MHZ_510MHZ))
+#define IS_DSI_DPHY_LOW_POWER_OFFSET(PHYLowPowerOffset)                                                                                                                                                \
+	(((PHYLowPowerOffset) == PHY_LP_OFFSSET_0_CLKP) || ((PHYLowPowerOffset) == PHY_LP_OFFSSET_1_CLKP) || ((PHYLowPowerOffset) == PHY_LP_OFFSSET_2_CLKP) ||                                         \
+	 ((PHYLowPowerOffset) == PHY_LP_OFFSSET_3_CLKP) || ((PHYLowPowerOffset) == PHY_LP_OFFSSET_4_CLKP) || ((PHYLowPowerOffset) == PHY_LP_OFFSSET_5_CLKP) ||                                         \
+	 ((PHYLowPowerOffset) == PHY_LP_OFFSSET_6_CLKP) || ((PHYLowPowerOffset) == PHY_LP_OFFSSET_7_CLKP) || ((PHYLowPowerOffset) == PHY_LP_OFFSSET_MINUS_1_CLKP) ||                                   \
+	 ((PHYLowPowerOffset) == PHY_LP_OFFSSET_MINUS_2_CLKP) || ((PHYLowPowerOffset) == PHY_LP_OFFSSET_MINUS_3_CLKP) || ((PHYLowPowerOffset) == PHY_LP_OFFSSET_MINUS_4_CLKP) ||                       \
+	 ((PHYLowPowerOffset) == PHY_LP_OFFSSET_MINUS_5_CLKP) || ((PHYLowPowerOffset) == PHY_LP_OFFSSET_MINUS_6_CLKP) || ((PHYLowPowerOffset) == PHY_LP_OFFSSET_MINUS_7_CLKP) ||                       \
+	 ((PHYLowPowerOffset) == PHY_LP_OFFSSET_MINUS_8_CLKP))
+#define IS_DSI_PLL_TUNING(PllTuning) (((PllTuning) == DSI_PLL_LOOP_FILTER_2000HZ_4400HZ) || ((PllTuning) == DSI_PLL_LOOP_FILTER_4400HZ_30900HZ) || ((PllTuning) == DSI_PLL_LOOP_FILTER_30900HZ_50000HZ))
 
-#define IS_DSI_PLL_CHARGEPUMP(PllChargePump)                                                                           \
-	(((PllChargePump) == DSI_PLL_CHARGE_PUMP_2000HZ_4400HZ) ||                                                     \
-	 ((PllChargePump) == DSI_PLL_CHARGE_PUMP_4400HZ_14100HZ) ||                                                    \
-	 ((PllChargePump) == DSI_PLL_CHARGE_PUMP_14100HZ_30900HZ) ||                                                   \
-	 ((PllChargePump) == DSI_PLL_CHARGE_PUMP_30900HZ_45700HZ) ||                                                   \
-	 ((PllChargePump) == DSI_PLL_CHARGE_PUMP_45700HZ_50000HZ))
+#define IS_DSI_PLL_CHARGEPUMP(PllChargePump)                                                                                                                                                           \
+	(((PllChargePump) == DSI_PLL_CHARGE_PUMP_2000HZ_4400HZ) || ((PllChargePump) == DSI_PLL_CHARGE_PUMP_4400HZ_14100HZ) || ((PllChargePump) == DSI_PLL_CHARGE_PUMP_14100HZ_30900HZ) ||              \
+	 ((PllChargePump) == DSI_PLL_CHARGE_PUMP_30900HZ_45700HZ) || ((PllChargePump) == DSI_PLL_CHARGE_PUMP_45700HZ_50000HZ))
 /**
  * @}
  */

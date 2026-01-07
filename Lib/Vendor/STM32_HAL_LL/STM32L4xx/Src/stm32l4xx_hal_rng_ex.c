@@ -130,14 +130,10 @@ HAL_StatusTypeDef HAL_RNGEx_SetConfig(RNG_HandleTypeDef *hrng, const RNG_ConfigT
 		    - Clock divider value
 		    - CONFIG 1, CONFIG 2 and CONFIG 3 values */
 
-		cr_value =
-		    (uint32_t)(pConf->ClockDivider | pConf->NistCompliance |
-			       (pConf->Config1 << RNG_CR_RNG_CONFIG1_Pos) | (pConf->Config2 << RNG_CR_RNG_CONFIG2_Pos) |
-			       (pConf->Config3 << RNG_CR_RNG_CONFIG3_Pos));
+		cr_value = (uint32_t)(pConf->ClockDivider | pConf->NistCompliance | (pConf->Config1 << RNG_CR_RNG_CONFIG1_Pos) | (pConf->Config2 << RNG_CR_RNG_CONFIG2_Pos) |
+				      (pConf->Config3 << RNG_CR_RNG_CONFIG3_Pos));
 
-		MODIFY_REG(hrng->Instance->CR,
-			   RNG_CR_NISTC | RNG_CR_CLKDIV | RNG_CR_RNG_CONFIG1 | RNG_CR_RNG_CONFIG2 | RNG_CR_RNG_CONFIG3,
-			   (uint32_t)(RNG_CR_CONDRST | cr_value));
+		MODIFY_REG(hrng->Instance->CR, RNG_CR_NISTC | RNG_CR_CLKDIV | RNG_CR_RNG_CONFIG1 | RNG_CR_RNG_CONFIG2 | RNG_CR_RNG_CONFIG3, (uint32_t)(RNG_CR_CONDRST | cr_value));
 
 #if defined(RNG_VER_3_2) || defined(RNG_VER_3_1) || defined(RNG_VER_3_0)
 		/*!< magic number must be written immediately before to

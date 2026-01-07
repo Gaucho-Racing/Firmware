@@ -225,19 +225,19 @@
 #define SRAMCAN_TEF_SIZE (2U * 4U)  /* TX Event FIFO Elements Size in bytes  */
 #define SRAMCAN_TFQ_SIZE (18U * 4U) /* TX FIFO/Queue Elements Size in bytes */
 
-#define SRAMCAN_FLSSA                                                                                                  \
-	((uint32_t)0) /* Filter List Standard Start                                                                    \
+#define SRAMCAN_FLSSA                                                                                                                                                                                  \
+	((uint32_t)0) /* Filter List Standard Start                                                                                                                                                    \
 			 Address                  */
-#define SRAMCAN_FLESA                                                                                                  \
-	((uint32_t)(SRAMCAN_FLSSA + (SRAMCAN_FLS_NBR * SRAMCAN_FLS_SIZE)))		 /* Filter List Extended Start \
+#define SRAMCAN_FLESA                                                                                                                                                                                  \
+	((uint32_t)(SRAMCAN_FLSSA + (SRAMCAN_FLS_NBR * SRAMCAN_FLS_SIZE)))		 /* Filter List Extended Start                                                                                 \
 											    Address                  */
 #define SRAMCAN_RF0SA ((uint32_t)(SRAMCAN_FLESA + (SRAMCAN_FLE_NBR * SRAMCAN_FLE_SIZE))) /* Rx FIFO 0 Start Address */
 #define SRAMCAN_RF1SA ((uint32_t)(SRAMCAN_RF0SA + (SRAMCAN_RF0_NBR * SRAMCAN_RF0_SIZE))) /* Rx FIFO 1 Start Address */
-#define SRAMCAN_TEFSA                                                                                                  \
-	((uint32_t)(SRAMCAN_RF1SA + (SRAMCAN_RF1_NBR * SRAMCAN_RF1_SIZE))) /* Tx Event FIFO                            \
+#define SRAMCAN_TEFSA                                                                                                                                                                                  \
+	((uint32_t)(SRAMCAN_RF1SA + (SRAMCAN_RF1_NBR * SRAMCAN_RF1_SIZE))) /* Tx Event FIFO                                                                                                            \
 									      Start Address */
-#define SRAMCAN_TFQSA                                                                                                  \
-	((uint32_t)(SRAMCAN_TEFSA + (SRAMCAN_TEF_NBR * SRAMCAN_TEF_SIZE)))		/* Tx FIFO/Queue               \
+#define SRAMCAN_TFQSA                                                                                                                                                                                  \
+	((uint32_t)(SRAMCAN_TEFSA + (SRAMCAN_TEF_NBR * SRAMCAN_TEF_SIZE)))		/* Tx FIFO/Queue                                                                                               \
 											   Start Address */
 #define SRAMCAN_SIZE ((uint32_t)(SRAMCAN_TFQSA + (SRAMCAN_TFQ_NBR * SRAMCAN_TFQ_SIZE))) /* Message RAM size         */
 
@@ -260,8 +260,7 @@ static const uint8_t DLCtoBytes[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 12, 16, 20, 24, 
  * @{
  */
 static void FDCAN_CalcultateRamBlockAddresses(FDCAN_HandleTypeDef *hfdcan);
-static void FDCAN_CopyMessageToRAM(const FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
-				   const uint8_t *pTxData, uint32_t BufferIndex);
+static void FDCAN_CopyMessageToRAM(const FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader, const uint8_t *pTxData, uint32_t BufferIndex);
 /**
  * @}
  */
@@ -337,23 +336,21 @@ HAL_StatusTypeDef HAL_FDCAN_Init(FDCAN_HandleTypeDef *hfdcan)
 		hfdcan->Lock = HAL_UNLOCKED;
 
 		/* Reset callbacks to legacy functions */
-		hfdcan->TxEventFifoCallback = HAL_FDCAN_TxEventFifoCallback;	       /* TxEventFifoCallback */
-		hfdcan->RxFifo0Callback = HAL_FDCAN_RxFifo0Callback;		       /* RxFifo0Callback     */
-		hfdcan->RxFifo1Callback = HAL_FDCAN_RxFifo1Callback;		       /* RxFifo1Callback     */
-		hfdcan->TxFifoEmptyCallback = HAL_FDCAN_TxFifoEmptyCallback;	       /* TxFifoEmptyCallback */
-		hfdcan->TxBufferCompleteCallback = HAL_FDCAN_TxBufferCompleteCallback; /* TxBufferCompleteCallback
-											*/
-		hfdcan->TxBufferAbortCallback = HAL_FDCAN_TxBufferAbortCallback;       /* TxBufferAbortCallback */
-		hfdcan->HighPriorityMessageCallback =
-		    HAL_FDCAN_HighPriorityMessageCallback; /* HighPriorityMessageCallback
-							    */
-		hfdcan->TimestampWraparoundCallback =
-		    HAL_FDCAN_TimestampWraparoundCallback;			     /* TimestampWraparoundCallback
-										      */
-		hfdcan->TimeoutOccurredCallback = HAL_FDCAN_TimeoutOccurredCallback; /* TimeoutOccurredCallback
-										      */
-		hfdcan->ErrorCallback = HAL_FDCAN_ErrorCallback;		     /* ErrorCallback       */
-		hfdcan->ErrorStatusCallback = HAL_FDCAN_ErrorStatusCallback;	     /* ErrorStatusCallback */
+		hfdcan->TxEventFifoCallback = HAL_FDCAN_TxEventFifoCallback;		     /* TxEventFifoCallback */
+		hfdcan->RxFifo0Callback = HAL_FDCAN_RxFifo0Callback;			     /* RxFifo0Callback     */
+		hfdcan->RxFifo1Callback = HAL_FDCAN_RxFifo1Callback;			     /* RxFifo1Callback     */
+		hfdcan->TxFifoEmptyCallback = HAL_FDCAN_TxFifoEmptyCallback;		     /* TxFifoEmptyCallback */
+		hfdcan->TxBufferCompleteCallback = HAL_FDCAN_TxBufferCompleteCallback;	     /* TxBufferCompleteCallback
+											      */
+		hfdcan->TxBufferAbortCallback = HAL_FDCAN_TxBufferAbortCallback;	     /* TxBufferAbortCallback */
+		hfdcan->HighPriorityMessageCallback = HAL_FDCAN_HighPriorityMessageCallback; /* HighPriorityMessageCallback
+											      */
+		hfdcan->TimestampWraparoundCallback = HAL_FDCAN_TimestampWraparoundCallback; /* TimestampWraparoundCallback
+											      */
+		hfdcan->TimeoutOccurredCallback = HAL_FDCAN_TimeoutOccurredCallback;	     /* TimeoutOccurredCallback
+											      */
+		hfdcan->ErrorCallback = HAL_FDCAN_ErrorCallback;			     /* ErrorCallback       */
+		hfdcan->ErrorStatusCallback = HAL_FDCAN_ErrorStatusCallback;		     /* ErrorStatusCallback */
 
 		if (hfdcan->MspInitCallback == NULL) {
 			hfdcan->MspInitCallback = HAL_FDCAN_MspInit; /* Legacy weak MspInit */
@@ -479,18 +476,14 @@ HAL_StatusTypeDef HAL_FDCAN_Init(FDCAN_HandleTypeDef *hfdcan)
 	}
 
 	/* Set the nominal bit timing register */
-	hfdcan->Instance->NBTP = ((((uint32_t)hfdcan->Init.NominalSyncJumpWidth - 1U) << FDCAN_NBTP_NSJW_Pos) |
-				  (((uint32_t)hfdcan->Init.NominalTimeSeg1 - 1U) << FDCAN_NBTP_NTSEG1_Pos) |
-				  (((uint32_t)hfdcan->Init.NominalTimeSeg2 - 1U) << FDCAN_NBTP_NTSEG2_Pos) |
-				  (((uint32_t)hfdcan->Init.NominalPrescaler - 1U) << FDCAN_NBTP_NBRP_Pos));
+	hfdcan->Instance->NBTP = ((((uint32_t)hfdcan->Init.NominalSyncJumpWidth - 1U) << FDCAN_NBTP_NSJW_Pos) | (((uint32_t)hfdcan->Init.NominalTimeSeg1 - 1U) << FDCAN_NBTP_NTSEG1_Pos) |
+				  (((uint32_t)hfdcan->Init.NominalTimeSeg2 - 1U) << FDCAN_NBTP_NTSEG2_Pos) | (((uint32_t)hfdcan->Init.NominalPrescaler - 1U) << FDCAN_NBTP_NBRP_Pos));
 
 	/* If FD operation with BRS is selected, set the data bit timing
 	 * register */
 	if (hfdcan->Init.FrameFormat == FDCAN_FRAME_FD_BRS) {
-		hfdcan->Instance->DBTP = ((((uint32_t)hfdcan->Init.DataSyncJumpWidth - 1U) << FDCAN_DBTP_DSJW_Pos) |
-					  (((uint32_t)hfdcan->Init.DataTimeSeg1 - 1U) << FDCAN_DBTP_DTSEG1_Pos) |
-					  (((uint32_t)hfdcan->Init.DataTimeSeg2 - 1U) << FDCAN_DBTP_DTSEG2_Pos) |
-					  (((uint32_t)hfdcan->Init.DataPrescaler - 1U) << FDCAN_DBTP_DBRP_Pos));
+		hfdcan->Instance->DBTP = ((((uint32_t)hfdcan->Init.DataSyncJumpWidth - 1U) << FDCAN_DBTP_DSJW_Pos) | (((uint32_t)hfdcan->Init.DataTimeSeg1 - 1U) << FDCAN_DBTP_DTSEG1_Pos) |
+					  (((uint32_t)hfdcan->Init.DataTimeSeg2 - 1U) << FDCAN_DBTP_DTSEG2_Pos) | (((uint32_t)hfdcan->Init.DataPrescaler - 1U) << FDCAN_DBTP_DBRP_Pos));
 	}
 
 	/* Select between Tx FIFO and Tx Queue operation modes */
@@ -677,8 +670,7 @@ HAL_StatusTypeDef HAL_FDCAN_ExitPowerDownMode(FDCAN_HandleTypeDef *hfdcan)
  * @param  pCallback pointer to the Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_FDCAN_RegisterCallback(FDCAN_HandleTypeDef *hfdcan, HAL_FDCAN_CallbackIDTypeDef CallbackID,
-					     void (*pCallback)(FDCAN_HandleTypeDef *_hFDCAN))
+HAL_StatusTypeDef HAL_FDCAN_RegisterCallback(FDCAN_HandleTypeDef *hfdcan, HAL_FDCAN_CallbackIDTypeDef CallbackID, void (*pCallback)(FDCAN_HandleTypeDef *_hFDCAN))
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -854,8 +846,7 @@ HAL_StatusTypeDef HAL_FDCAN_UnRegisterCallback(FDCAN_HandleTypeDef *hfdcan, HAL_
  * @param  pCallback pointer to the Tx Event Fifo Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_FDCAN_RegisterTxEventFifoCallback(FDCAN_HandleTypeDef *hfdcan,
-							pFDCAN_TxEventFifoCallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_FDCAN_RegisterTxEventFifoCallback(FDCAN_HandleTypeDef *hfdcan, pFDCAN_TxEventFifoCallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -911,8 +902,7 @@ HAL_StatusTypeDef HAL_FDCAN_UnRegisterTxEventFifoCallback(FDCAN_HandleTypeDef *h
  * @param  pCallback pointer to the Rx Fifo 0 Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_FDCAN_RegisterRxFifo0Callback(FDCAN_HandleTypeDef *hfdcan,
-						    pFDCAN_RxFifo0CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_FDCAN_RegisterRxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, pFDCAN_RxFifo0CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -967,8 +957,7 @@ HAL_StatusTypeDef HAL_FDCAN_UnRegisterRxFifo0Callback(FDCAN_HandleTypeDef *hfdca
  * @param  pCallback pointer to the Rx Fifo 1 Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_FDCAN_RegisterRxFifo1Callback(FDCAN_HandleTypeDef *hfdcan,
-						    pFDCAN_RxFifo1CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_FDCAN_RegisterRxFifo1Callback(FDCAN_HandleTypeDef *hfdcan, pFDCAN_RxFifo1CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -1023,8 +1012,7 @@ HAL_StatusTypeDef HAL_FDCAN_UnRegisterRxFifo1Callback(FDCAN_HandleTypeDef *hfdca
  * @param  pCallback pointer to the Tx Buffer Complete Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_FDCAN_RegisterTxBufferCompleteCallback(FDCAN_HandleTypeDef *hfdcan,
-							     pFDCAN_TxBufferCompleteCallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_FDCAN_RegisterTxBufferCompleteCallback(FDCAN_HandleTypeDef *hfdcan, pFDCAN_TxBufferCompleteCallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -1081,8 +1069,7 @@ HAL_StatusTypeDef HAL_FDCAN_UnRegisterTxBufferCompleteCallback(FDCAN_HandleTypeD
  * @param  pCallback pointer to the Tx Buffer Abort Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_FDCAN_RegisterTxBufferAbortCallback(FDCAN_HandleTypeDef *hfdcan,
-							  pFDCAN_TxBufferAbortCallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_FDCAN_RegisterTxBufferAbortCallback(FDCAN_HandleTypeDef *hfdcan, pFDCAN_TxBufferAbortCallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -1138,8 +1125,7 @@ HAL_StatusTypeDef HAL_FDCAN_UnRegisterTxBufferAbortCallback(FDCAN_HandleTypeDef 
  * @param  pCallback pointer to the Error Status Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_FDCAN_RegisterErrorStatusCallback(FDCAN_HandleTypeDef *hfdcan,
-							pFDCAN_ErrorStatusCallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_FDCAN_RegisterErrorStatusCallback(FDCAN_HandleTypeDef *hfdcan, pFDCAN_ErrorStatusCallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -1277,12 +1263,10 @@ HAL_StatusTypeDef HAL_FDCAN_ConfigFilter(FDCAN_HandleTypeDef *hfdcan, const FDCA
 			assert_param(IS_FDCAN_STD_FILTER_TYPE(sFilterConfig->FilterType));
 
 			/* Build filter element */
-			FilterElementW1 = ((sFilterConfig->FilterType << 30U) | (sFilterConfig->FilterConfig << 27U) |
-					   (sFilterConfig->FilterID1 << 16U) | sFilterConfig->FilterID2);
+			FilterElementW1 = ((sFilterConfig->FilterType << 30U) | (sFilterConfig->FilterConfig << 27U) | (sFilterConfig->FilterID1 << 16U) | sFilterConfig->FilterID2);
 
 			/* Calculate filter address */
-			FilterAddress = (uint32_t *)(hfdcan->msgRam.StandardFilterSA +
-						     (sFilterConfig->FilterIndex * SRAMCAN_FLS_SIZE));
+			FilterAddress = (uint32_t *)(hfdcan->msgRam.StandardFilterSA + (sFilterConfig->FilterIndex * SRAMCAN_FLS_SIZE));
 
 			/* Write filter element to the message RAM */
 			*FilterAddress = FilterElementW1;
@@ -1301,8 +1285,7 @@ HAL_StatusTypeDef HAL_FDCAN_ConfigFilter(FDCAN_HandleTypeDef *hfdcan, const FDCA
 			FilterElementW2 = ((sFilterConfig->FilterType << 30U) | sFilterConfig->FilterID2);
 
 			/* Calculate filter address */
-			FilterAddress = (uint32_t *)(hfdcan->msgRam.ExtendedFilterSA +
-						     (sFilterConfig->FilterIndex * SRAMCAN_FLE_SIZE));
+			FilterAddress = (uint32_t *)(hfdcan->msgRam.ExtendedFilterSA + (sFilterConfig->FilterIndex * SRAMCAN_FLE_SIZE));
 
 			/* Write filter element to the message RAM */
 			*FilterAddress = FilterElementW1;
@@ -1336,9 +1319,7 @@ HAL_StatusTypeDef HAL_FDCAN_ConfigFilter(FDCAN_HandleTypeDef *hfdcan, const FDCA
  *         This parameter can be a value of @arg FDCAN_Reject_Remote_Frames.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_FDCAN_ConfigGlobalFilter(FDCAN_HandleTypeDef *hfdcan, uint32_t NonMatchingStd,
-					       uint32_t NonMatchingExt, uint32_t RejectRemoteStd,
-					       uint32_t RejectRemoteExt)
+HAL_StatusTypeDef HAL_FDCAN_ConfigGlobalFilter(FDCAN_HandleTypeDef *hfdcan, uint32_t NonMatchingStd, uint32_t NonMatchingExt, uint32_t RejectRemoteStd, uint32_t RejectRemoteExt)
 {
 	/* Check function parameters */
 	assert_param(IS_FDCAN_NON_MATCHING(NonMatchingStd));
@@ -1348,10 +1329,9 @@ HAL_StatusTypeDef HAL_FDCAN_ConfigGlobalFilter(FDCAN_HandleTypeDef *hfdcan, uint
 
 	if (hfdcan->State == HAL_FDCAN_STATE_READY) {
 		/* Configure global filter */
-		MODIFY_REG(hfdcan->Instance->RXGFC,
-			   (FDCAN_RXGFC_ANFS | FDCAN_RXGFC_ANFE | FDCAN_RXGFC_RRFS | FDCAN_RXGFC_RRFE),
-			   ((NonMatchingStd << FDCAN_RXGFC_ANFS_Pos) | (NonMatchingExt << FDCAN_RXGFC_ANFE_Pos) |
-			    (RejectRemoteStd << FDCAN_RXGFC_RRFS_Pos) | (RejectRemoteExt << FDCAN_RXGFC_RRFE_Pos)));
+		MODIFY_REG(
+		    hfdcan->Instance->RXGFC, (FDCAN_RXGFC_ANFS | FDCAN_RXGFC_ANFE | FDCAN_RXGFC_RRFS | FDCAN_RXGFC_RRFE),
+		    ((NonMatchingStd << FDCAN_RXGFC_ANFS_Pos) | (NonMatchingExt << FDCAN_RXGFC_ANFE_Pos) | (RejectRemoteStd << FDCAN_RXGFC_RRFS_Pos) | (RejectRemoteExt << FDCAN_RXGFC_RRFE_Pos)));
 
 		/* Return function status */
 		return HAL_OK;
@@ -1574,8 +1554,7 @@ HAL_StatusTypeDef HAL_FDCAN_ResetTimestampCounter(FDCAN_HandleTypeDef *hfdcan)
  *         This parameter must be a number between 0x0000 and 0xFFFF
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_FDCAN_ConfigTimeoutCounter(FDCAN_HandleTypeDef *hfdcan, uint32_t TimeoutOperation,
-						 uint32_t TimeoutPeriod)
+HAL_StatusTypeDef HAL_FDCAN_ConfigTimeoutCounter(FDCAN_HandleTypeDef *hfdcan, uint32_t TimeoutOperation, uint32_t TimeoutPeriod)
 {
 	/* Check function parameters */
 	assert_param(IS_FDCAN_TIMEOUT(TimeoutOperation));
@@ -1583,8 +1562,7 @@ HAL_StatusTypeDef HAL_FDCAN_ConfigTimeoutCounter(FDCAN_HandleTypeDef *hfdcan, ui
 
 	if (hfdcan->State == HAL_FDCAN_STATE_READY) {
 		/* Select timeout operation and configure period */
-		MODIFY_REG(hfdcan->Instance->TOCC, (FDCAN_TOCC_TOS | FDCAN_TOCC_TOP),
-			   (TimeoutOperation | (TimeoutPeriod << FDCAN_TOCC_TOP_Pos)));
+		MODIFY_REG(hfdcan->Instance->TOCC, (FDCAN_TOCC_TOS | FDCAN_TOCC_TOP), (TimeoutOperation | (TimeoutPeriod << FDCAN_TOCC_TOP_Pos)));
 
 		/* Return function status */
 		return HAL_OK;
@@ -1682,8 +1660,7 @@ HAL_StatusTypeDef HAL_FDCAN_ResetTimeoutCounter(FDCAN_HandleTypeDef *hfdcan)
  *         This parameter must be a number between 0x00 and 0x7F.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_FDCAN_ConfigTxDelayCompensation(FDCAN_HandleTypeDef *hfdcan, uint32_t TdcOffset,
-						      uint32_t TdcFilter)
+HAL_StatusTypeDef HAL_FDCAN_ConfigTxDelayCompensation(FDCAN_HandleTypeDef *hfdcan, uint32_t TdcOffset, uint32_t TdcFilter)
 {
 	/* Check function parameters */
 	assert_param(IS_FDCAN_MAX_VALUE(TdcOffset, 0x7FU));
@@ -1992,8 +1969,7 @@ HAL_StatusTypeDef HAL_FDCAN_Stop(FDCAN_HandleTypeDef *hfdcan)
  * @param  pTxData pointer to a buffer containing the payload of the Tx frame.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
-						const uint8_t *pTxData)
+HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader, const uint8_t *pTxData)
 {
 	uint32_t PutIndex;
 
@@ -2098,8 +2074,7 @@ HAL_StatusTypeDef HAL_FDCAN_AbortTxRequest(FDCAN_HandleTypeDef *hfdcan, uint32_t
  * stored.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_FDCAN_GetRxMessage(FDCAN_HandleTypeDef *hfdcan, uint32_t RxLocation,
-					 FDCAN_RxHeaderTypeDef *pRxHeader, uint8_t *pRxData)
+HAL_StatusTypeDef HAL_FDCAN_GetRxMessage(FDCAN_HandleTypeDef *hfdcan, uint32_t RxLocation, FDCAN_RxHeaderTypeDef *pRxHeader, uint8_t *pRxData)
 {
 	uint32_t *RxAddress;
 	uint8_t *pData;
@@ -2124,8 +2099,7 @@ HAL_StatusTypeDef HAL_FDCAN_GetRxMessage(FDCAN_HandleTypeDef *hfdcan, uint32_t R
 				/* Check that the Rx FIFO 0 is full & overwrite
 				 * mode is on */
 				if (((hfdcan->Instance->RXF0S & FDCAN_RXF0S_F0F) >> FDCAN_RXF0S_F0F_Pos) == 1U) {
-					if (((hfdcan->Instance->RXGFC & FDCAN_RXGFC_F0OM) >> FDCAN_RXGFC_F0OM_Pos) ==
-					    FDCAN_RX_FIFO_OVERWRITE) {
+					if (((hfdcan->Instance->RXGFC & FDCAN_RXGFC_F0OM) >> FDCAN_RXGFC_F0OM_Pos) == FDCAN_RX_FIFO_OVERWRITE) {
 						/* When overwrite status is on
 						 * discard first message in FIFO
 						 */
@@ -2151,8 +2125,7 @@ HAL_StatusTypeDef HAL_FDCAN_GetRxMessage(FDCAN_HandleTypeDef *hfdcan, uint32_t R
 				/* Check that the Rx FIFO 1 is full & overwrite
 				 * mode is on */
 				if (((hfdcan->Instance->RXF1S & FDCAN_RXF1S_F1F) >> FDCAN_RXF1S_F1F_Pos) == 1U) {
-					if (((hfdcan->Instance->RXGFC & FDCAN_RXGFC_F1OM) >> FDCAN_RXGFC_F1OM_Pos) ==
-					    FDCAN_RX_FIFO_OVERWRITE) {
+					if (((hfdcan->Instance->RXGFC & FDCAN_RXGFC_F1OM) >> FDCAN_RXGFC_F1OM_Pos) == FDCAN_RX_FIFO_OVERWRITE) {
 						/* When overwrite status is on
 						 * discard first message in FIFO
 						 */
@@ -2327,8 +2300,7 @@ HAL_StatusTypeDef HAL_FDCAN_GetTxEvent(FDCAN_HandleTypeDef *hfdcan, FDCAN_TxEven
  * @param  HpMsgStatus pointer to an FDCAN_HpMsgStatusTypeDef structure.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_FDCAN_GetHighPriorityMessageStatus(const FDCAN_HandleTypeDef *hfdcan,
-							 FDCAN_HpMsgStatusTypeDef *HpMsgStatus)
+HAL_StatusTypeDef HAL_FDCAN_GetHighPriorityMessageStatus(const FDCAN_HandleTypeDef *hfdcan, FDCAN_HpMsgStatusTypeDef *HpMsgStatus)
 {
 	HpMsgStatus->FilterList = ((hfdcan->Instance->HPMS & FDCAN_HPMS_FLST) >> FDCAN_HPMS_FLST_Pos);
 	HpMsgStatus->FilterIndex = ((hfdcan->Instance->HPMS & FDCAN_HPMS_FIDX) >> FDCAN_HPMS_FIDX_Pos);
@@ -2346,8 +2318,7 @@ HAL_StatusTypeDef HAL_FDCAN_GetHighPriorityMessageStatus(const FDCAN_HandleTypeD
  * @param  ProtocolStatus pointer to an FDCAN_ProtocolStatusTypeDef structure.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_FDCAN_GetProtocolStatus(const FDCAN_HandleTypeDef *hfdcan,
-					      FDCAN_ProtocolStatusTypeDef *ProtocolStatus)
+HAL_StatusTypeDef HAL_FDCAN_GetProtocolStatus(const FDCAN_HandleTypeDef *hfdcan, FDCAN_ProtocolStatusTypeDef *ProtocolStatus)
 {
 	uint32_t StatusReg;
 
@@ -2378,8 +2349,7 @@ HAL_StatusTypeDef HAL_FDCAN_GetProtocolStatus(const FDCAN_HandleTypeDef *hfdcan,
  * @param  ErrorCounters pointer to an FDCAN_ErrorCountersTypeDef structure.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_FDCAN_GetErrorCounters(const FDCAN_HandleTypeDef *hfdcan,
-					     FDCAN_ErrorCountersTypeDef *ErrorCounters)
+HAL_StatusTypeDef HAL_FDCAN_GetErrorCounters(const FDCAN_HandleTypeDef *hfdcan, FDCAN_ErrorCountersTypeDef *ErrorCounters)
 {
 	uint32_t CountersReg;
 
@@ -2579,8 +2549,7 @@ HAL_StatusTypeDef HAL_FDCAN_ConfigInterruptLines(FDCAN_HandleTypeDef *hfdcan, ui
  *           - FDCAN_IT_TX_ABORT_COMPLETE
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_FDCAN_ActivateNotification(FDCAN_HandleTypeDef *hfdcan, uint32_t ActiveITs,
-						 uint32_t BufferIndexes)
+HAL_StatusTypeDef HAL_FDCAN_ActivateNotification(FDCAN_HandleTypeDef *hfdcan, uint32_t ActiveITs, uint32_t BufferIndexes)
 {
 	HAL_FDCAN_StateTypeDef state = hfdcan->State;
 	uint32_t ITs_lines_selection;
@@ -2596,33 +2565,23 @@ HAL_StatusTypeDef HAL_FDCAN_ActivateNotification(FDCAN_HandleTypeDef *hfdcan, ui
 		ITs_lines_selection = hfdcan->Instance->ILS;
 
 		/* Enable Interrupt lines */
-		if ((((ActiveITs & FDCAN_IT_LIST_RX_FIFO0) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_RX_FIFO0) == 0U)) ||
-		    (((ActiveITs & FDCAN_IT_LIST_RX_FIFO1) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_RX_FIFO1) == 0U)) ||
+		if ((((ActiveITs & FDCAN_IT_LIST_RX_FIFO0) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_RX_FIFO0) == 0U)) ||
+		    (((ActiveITs & FDCAN_IT_LIST_RX_FIFO1) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_RX_FIFO1) == 0U)) ||
 		    (((ActiveITs & FDCAN_IT_LIST_SMSG) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_SMSG) == 0U)) ||
-		    (((ActiveITs & FDCAN_IT_LIST_TX_FIFO_ERROR) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_TX_FIFO_ERROR) == 0U)) ||
+		    (((ActiveITs & FDCAN_IT_LIST_TX_FIFO_ERROR) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_TX_FIFO_ERROR) == 0U)) ||
 		    (((ActiveITs & FDCAN_IT_LIST_MISC) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_MISC) == 0U)) ||
-		    (((ActiveITs & FDCAN_IT_LIST_BIT_LINE_ERROR) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_BIT_LINE_ERROR) == 0U)) ||
-		    (((ActiveITs & FDCAN_IT_LIST_PROTOCOL_ERROR) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_PROTOCOL_ERROR) == 0U))) {
+		    (((ActiveITs & FDCAN_IT_LIST_BIT_LINE_ERROR) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_BIT_LINE_ERROR) == 0U)) ||
+		    (((ActiveITs & FDCAN_IT_LIST_PROTOCOL_ERROR) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_PROTOCOL_ERROR) == 0U))) {
 			/* Enable Interrupt line 0 */
 			SET_BIT(hfdcan->Instance->ILE, FDCAN_INTERRUPT_LINE0);
 		}
-		if ((((ActiveITs & FDCAN_IT_LIST_RX_FIFO0) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_RX_FIFO0) != 0U)) ||
-		    (((ActiveITs & FDCAN_IT_LIST_RX_FIFO1) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_RX_FIFO1) != 0U)) ||
+		if ((((ActiveITs & FDCAN_IT_LIST_RX_FIFO0) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_RX_FIFO0) != 0U)) ||
+		    (((ActiveITs & FDCAN_IT_LIST_RX_FIFO1) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_RX_FIFO1) != 0U)) ||
 		    (((ActiveITs & FDCAN_IT_LIST_SMSG) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_SMSG) != 0U)) ||
-		    (((ActiveITs & FDCAN_IT_LIST_TX_FIFO_ERROR) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_TX_FIFO_ERROR) != 0U)) ||
+		    (((ActiveITs & FDCAN_IT_LIST_TX_FIFO_ERROR) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_TX_FIFO_ERROR) != 0U)) ||
 		    (((ActiveITs & FDCAN_IT_LIST_MISC) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_MISC) != 0U)) ||
-		    (((ActiveITs & FDCAN_IT_LIST_BIT_LINE_ERROR) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_BIT_LINE_ERROR) != 0U)) ||
-		    (((ActiveITs & FDCAN_IT_LIST_PROTOCOL_ERROR) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_PROTOCOL_ERROR) != 0U))) {
+		    (((ActiveITs & FDCAN_IT_LIST_BIT_LINE_ERROR) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_BIT_LINE_ERROR) != 0U)) ||
+		    (((ActiveITs & FDCAN_IT_LIST_PROTOCOL_ERROR) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_PROTOCOL_ERROR) != 0U))) {
 			/* Enable Interrupt line 1 */
 			SET_BIT(hfdcan->Instance->ILE, FDCAN_INTERRUPT_LINE1);
 		}
@@ -2691,20 +2650,13 @@ HAL_StatusTypeDef HAL_FDCAN_DeactivateNotification(FDCAN_HandleTypeDef *hfdcan, 
 
 		/* Check if some interrupts are still enabled on interrupt line
 		 * 0 */
-		if ((((ITs_enabled & FDCAN_IT_LIST_RX_FIFO0) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_RX_FIFO0) == 0U)) ||
-		    (((ITs_enabled & FDCAN_IT_LIST_RX_FIFO1) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_RX_FIFO1) == 0U)) ||
-		    (((ITs_enabled & FDCAN_IT_LIST_SMSG) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_SMSG) == 0U)) ||
-		    (((ITs_enabled & FDCAN_IT_LIST_TX_FIFO_ERROR) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_TX_FIFO_ERROR) == 0U)) ||
-		    (((ITs_enabled & FDCAN_IT_LIST_MISC) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_MISC) == 0U)) ||
-		    (((ITs_enabled & FDCAN_IT_LIST_BIT_LINE_ERROR) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_BIT_LINE_ERROR) == 0U)) ||
-		    (((ITs_enabled & FDCAN_IT_LIST_PROTOCOL_ERROR) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_PROTOCOL_ERROR) == 0U))) {
+		if ((((ITs_enabled & FDCAN_IT_LIST_RX_FIFO0) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_RX_FIFO0) == 0U)) ||
+		    (((ITs_enabled & FDCAN_IT_LIST_RX_FIFO1) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_RX_FIFO1) == 0U)) ||
+		    (((ITs_enabled & FDCAN_IT_LIST_SMSG) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_SMSG) == 0U)) ||
+		    (((ITs_enabled & FDCAN_IT_LIST_TX_FIFO_ERROR) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_TX_FIFO_ERROR) == 0U)) ||
+		    (((ITs_enabled & FDCAN_IT_LIST_MISC) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_MISC) == 0U)) ||
+		    (((ITs_enabled & FDCAN_IT_LIST_BIT_LINE_ERROR) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_BIT_LINE_ERROR) == 0U)) ||
+		    (((ITs_enabled & FDCAN_IT_LIST_PROTOCOL_ERROR) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_PROTOCOL_ERROR) == 0U))) {
 			/* Do nothing */
 		} else /* no more interrupts enabled on interrupt line 0 */
 		{
@@ -2714,20 +2666,13 @@ HAL_StatusTypeDef HAL_FDCAN_DeactivateNotification(FDCAN_HandleTypeDef *hfdcan, 
 
 		/* Check if some interrupts are still enabled on interrupt line
 		 * 1 */
-		if ((((ITs_enabled & FDCAN_IT_LIST_RX_FIFO0) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_RX_FIFO0) != 0U)) ||
-		    (((ITs_enabled & FDCAN_IT_LIST_RX_FIFO1) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_RX_FIFO1) != 0U)) ||
-		    (((ITs_enabled & FDCAN_IT_LIST_SMSG) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_SMSG) != 0U)) ||
-		    (((ITs_enabled & FDCAN_IT_LIST_TX_FIFO_ERROR) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_TX_FIFO_ERROR) != 0U)) ||
-		    (((ITs_enabled & FDCAN_IT_LIST_MISC) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_MISC) != 0U)) ||
-		    (((ITs_enabled & FDCAN_IT_LIST_BIT_LINE_ERROR) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_BIT_LINE_ERROR) != 0U)) ||
-		    (((ITs_enabled & FDCAN_IT_LIST_PROTOCOL_ERROR) != 0U) &&
-		     (((ITs_lines_selection)&FDCAN_IT_GROUP_PROTOCOL_ERROR) != 0U))) {
+		if ((((ITs_enabled & FDCAN_IT_LIST_RX_FIFO0) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_RX_FIFO0) != 0U)) ||
+		    (((ITs_enabled & FDCAN_IT_LIST_RX_FIFO1) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_RX_FIFO1) != 0U)) ||
+		    (((ITs_enabled & FDCAN_IT_LIST_SMSG) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_SMSG) != 0U)) ||
+		    (((ITs_enabled & FDCAN_IT_LIST_TX_FIFO_ERROR) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_TX_FIFO_ERROR) != 0U)) ||
+		    (((ITs_enabled & FDCAN_IT_LIST_MISC) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_MISC) != 0U)) ||
+		    (((ITs_enabled & FDCAN_IT_LIST_BIT_LINE_ERROR) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_BIT_LINE_ERROR) != 0U)) ||
+		    (((ITs_enabled & FDCAN_IT_LIST_PROTOCOL_ERROR) != 0U) && (((ITs_lines_selection)&FDCAN_IT_GROUP_PROTOCOL_ERROR) != 0U))) {
 			/* Do nothing */
 		} else /* no more interrupts enabled on interrupt line 1 */
 		{
@@ -3333,8 +3278,7 @@ static void FDCAN_CalcultateRamBlockAddresses(FDCAN_HandleTypeDef *hfdcan)
  * @param  BufferIndex index of the buffer to be configured.
  * @retval none
  */
-static void FDCAN_CopyMessageToRAM(const FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
-				   const uint8_t *pTxData, uint32_t BufferIndex)
+static void FDCAN_CopyMessageToRAM(const FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader, const uint8_t *pTxData, uint32_t BufferIndex)
 {
 	uint32_t TxElementW1;
 	uint32_t TxElementW2;
@@ -3343,17 +3287,14 @@ static void FDCAN_CopyMessageToRAM(const FDCAN_HandleTypeDef *hfdcan, const FDCA
 
 	/* Build first word of Tx header element */
 	if (pTxHeader->IdType == FDCAN_STANDARD_ID) {
-		TxElementW1 = (pTxHeader->ErrorStateIndicator | FDCAN_STANDARD_ID | pTxHeader->TxFrameType |
-			       (pTxHeader->Identifier << 18U));
+		TxElementW1 = (pTxHeader->ErrorStateIndicator | FDCAN_STANDARD_ID | pTxHeader->TxFrameType | (pTxHeader->Identifier << 18U));
 	} else /* pTxHeader->IdType == FDCAN_EXTENDED_ID */
 	{
-		TxElementW1 = (pTxHeader->ErrorStateIndicator | FDCAN_EXTENDED_ID | pTxHeader->TxFrameType |
-			       pTxHeader->Identifier);
+		TxElementW1 = (pTxHeader->ErrorStateIndicator | FDCAN_EXTENDED_ID | pTxHeader->TxFrameType | pTxHeader->Identifier);
 	}
 
 	/* Build second word of Tx header element */
-	TxElementW2 = ((pTxHeader->MessageMarker << 24U) | pTxHeader->TxEventFifoControl | pTxHeader->FDFormat |
-		       pTxHeader->BitRateSwitch | (pTxHeader->DataLength << 16U));
+	TxElementW2 = ((pTxHeader->MessageMarker << 24U) | pTxHeader->TxEventFifoControl | pTxHeader->FDFormat | pTxHeader->BitRateSwitch | (pTxHeader->DataLength << 16U));
 
 	/* Calculate Tx element address */
 	TxAddress = (uint32_t *)(hfdcan->msgRam.TxFIFOQSA + (BufferIndex * SRAMCAN_TFQ_SIZE));
@@ -3367,8 +3308,7 @@ static void FDCAN_CopyMessageToRAM(const FDCAN_HandleTypeDef *hfdcan, const FDCA
 	/* Write Tx payload to the message RAM */
 	for (ByteCounter = 0; ByteCounter < DLCtoBytes[pTxHeader->DataLength]; ByteCounter += 4U) {
 		*TxAddress =
-		    (((uint32_t)pTxData[ByteCounter + 3U] << 24U) | ((uint32_t)pTxData[ByteCounter + 2U] << 16U) |
-		     ((uint32_t)pTxData[ByteCounter + 1U] << 8U) | (uint32_t)pTxData[ByteCounter]);
+		    (((uint32_t)pTxData[ByteCounter + 3U] << 24U) | ((uint32_t)pTxData[ByteCounter + 2U] << 16U) | ((uint32_t)pTxData[ByteCounter + 1U] << 8U) | (uint32_t)pTxData[ByteCounter]);
 		TxAddress++;
 	}
 }

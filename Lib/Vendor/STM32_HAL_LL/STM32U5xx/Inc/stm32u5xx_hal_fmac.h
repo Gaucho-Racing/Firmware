@@ -109,8 +109,7 @@ typedef struct
 
 	void (*GetDataCallback)(struct __FMAC_HandleTypeDef *hfmac); /*!< FMAC get data callback */
 
-	void (*HalfOutputDataReadyCallback)(
-	    struct __FMAC_HandleTypeDef *hfmac); /*!< FMAC half output data ready callback */
+	void (*HalfOutputDataReadyCallback)(struct __FMAC_HandleTypeDef *hfmac); /*!< FMAC half output data ready callback */
 
 	void (*OutputDataReadyCallback)(struct __FMAC_HandleTypeDef *hfmac); /*!< FMAC output data ready callback */
 
@@ -298,28 +297,28 @@ typedef struct {
  * @note     This parameter sets a watermark for buffer full (input) or buffer
  * empty (output).
  */
-#define FMAC_THRESHOLD_1                                                                                               \
-	0x00000000U /*!< Input: Buffer full flag set if the number of free                                             \
-		       spaces in the buffer is less than 1. Output: Buffer                                             \
-		       empty flag set if the number of unread values in the                                            \
+#define FMAC_THRESHOLD_1                                                                                                                                                                               \
+	0x00000000U /*!< Input: Buffer full flag set if the number of free                                                                                                                             \
+		       spaces in the buffer is less than 1. Output: Buffer                                                                                                                             \
+		       empty flag set if the number of unread values in the                                                                                                                            \
 		       buffer is less than 1. */
-#define FMAC_THRESHOLD_2                                                                                               \
-	0x01000000U /*!< Input: Buffer full flag set if the number of free                                             \
-		       spaces in the buffer is less than 2. Output: Buffer                                             \
-		       empty flag set if the number of unread values in the                                            \
+#define FMAC_THRESHOLD_2                                                                                                                                                                               \
+	0x01000000U /*!< Input: Buffer full flag set if the number of free                                                                                                                             \
+		       spaces in the buffer is less than 2. Output: Buffer                                                                                                                             \
+		       empty flag set if the number of unread values in the                                                                                                                            \
 		       buffer is less than 2. */
-#define FMAC_THRESHOLD_4                                                                                               \
-	0x02000000U /*!< Input: Buffer full flag set if the number of free                                             \
-		       spaces in the buffer is less than 4. Output: Buffer                                             \
-		       empty flag set if the number of unread values in the                                            \
+#define FMAC_THRESHOLD_4                                                                                                                                                                               \
+	0x02000000U /*!< Input: Buffer full flag set if the number of free                                                                                                                             \
+		       spaces in the buffer is less than 4. Output: Buffer                                                                                                                             \
+		       empty flag set if the number of unread values in the                                                                                                                            \
 		       buffer is less than 4. */
-#define FMAC_THRESHOLD_8                                                                                               \
-	0x03000000U /*!< Input: Buffer full flag set if the number of free                                             \
-		       spaces in the buffer is less than 8. Output: Buffer                                             \
-		       empty flag set if the number of unread values in the                                            \
+#define FMAC_THRESHOLD_8                                                                                                                                                                               \
+	0x03000000U /*!< Input: Buffer full flag set if the number of free                                                                                                                             \
+		       spaces in the buffer is less than 8. Output: Buffer                                                                                                                             \
+		       empty flag set if the number of unread values in the                                                                                                                            \
 		       buffer is less than 8. */
-#define FMAC_THRESHOLD_NO_VALUE                                                                                        \
-	0xFFFFFFFFU /*!< The configured threshold value shouldn't be changed                                           \
+#define FMAC_THRESHOLD_NO_VALUE                                                                                                                                                                        \
+	0xFFFFFFFFU /*!< The configured threshold value shouldn't be changed                                                                                                                           \
 		     */
 /**
  * @}
@@ -330,8 +329,8 @@ typedef struct {
  */
 #define FMAC_BUFFER_ACCESS_NONE 0x00U /*!< Buffer handled by an external IP (ADC for instance) */
 #define FMAC_BUFFER_ACCESS_DMA 0x01U  /*!< Buffer accessed through DMA */
-#define FMAC_BUFFER_ACCESS_POLLING                                                                                     \
-	0x02U			    /*!< Buffer accessed through polling                                               \
+#define FMAC_BUFFER_ACCESS_POLLING                                                                                                                                                                     \
+	0x02U			    /*!< Buffer accessed through polling                                                                                                                               \
 				     */
 #define FMAC_BUFFER_ACCESS_IT 0x03U /*!< Buffer accessed through interruptions */
 /**
@@ -354,8 +353,8 @@ typedef struct {
 #define FMAC_FLAG_X1FULL FMAC_SR_X1FULL /*!< X1 Buffer Full Flag */
 #define FMAC_FLAG_OVFL FMAC_SR_OVFL	/*!< Overflow Error Flag */
 #define FMAC_FLAG_UNFL FMAC_SR_UNFL	/*!< Underflow Error Flag */
-#define FMAC_FLAG_SAT                                                                                                  \
-	FMAC_SR_SAT /*!< Saturation Error Flag                                                                         \
+#define FMAC_FLAG_SAT                                                                                                                                                                                  \
+	FMAC_SR_SAT /*!< Saturation Error Flag                                                                                                                                                         \
 			 (this helps in debugging a filter) */
 /**
  * @}
@@ -366,14 +365,14 @@ typedef struct {
  */
 #define FMAC_IT_RIEN FMAC_CR_RIEN /*!< Read Interrupt Enable */
 #define FMAC_IT_WIEN FMAC_CR_WIEN /*!< Write Interrupt Enable */
-#define FMAC_IT_OVFLIEN                                                                                                \
-	FMAC_CR_OVFLIEN /*!< Overflow Error Interrupt Enable                                                           \
+#define FMAC_IT_OVFLIEN                                                                                                                                                                                \
+	FMAC_CR_OVFLIEN /*!< Overflow Error Interrupt Enable                                                                                                                                           \
 			 */
-#define FMAC_IT_UNFLIEN                                                                                                \
-	FMAC_CR_UNFLIEN /*!< Underflow Error Interrupt Enable                                                          \
+#define FMAC_IT_UNFLIEN                                                                                                                                                                                \
+	FMAC_CR_UNFLIEN /*!< Underflow Error Interrupt Enable                                                                                                                                          \
 			 */
-#define FMAC_IT_SATIEN                                                                                                 \
-	FMAC_CR_SATIEN /*!< Saturation Error Interrupt Enable                                                          \
+#define FMAC_IT_SATIEN                                                                                                                                                                                 \
+	FMAC_CR_SATIEN /*!< Saturation Error Interrupt Enable                                                                                                                                          \
 			    (this helps in debugging a filter) */
 /**
  * @}
@@ -402,11 +401,11 @@ typedef struct {
  * @retval None
  */
 #if (USE_HAL_FMAC_REGISTER_CALLBACKS == 1)
-#define __HAL_FMAC_RESET_HANDLE_STATE(__HANDLE__)                                                                      \
-	do {                                                                                                           \
-		(__HANDLE__)->State = HAL_FMAC_STATE_RESET;                                                            \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define __HAL_FMAC_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_FMAC_STATE_RESET;                                                                                                                                            \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0U)
 #else
 #define __HAL_FMAC_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_FMAC_STATE_RESET)
@@ -513,8 +512,8 @@ typedef struct {
  */
 
 #define FMAC_PARAM_P_MAX_IIR 64U /*!< Maximum value of P parameter with IIR */
-#define FMAC_PARAM_P_MAX_FIR                                                                                           \
-	127U		     /*!< Maximum value of P parameter with FIR                                                \
+#define FMAC_PARAM_P_MAX_FIR                                                                                                                                                                           \
+	127U		     /*!< Maximum value of P parameter with FIR                                                                                                                                \
 			      */
 #define FMAC_PARAM_P_MIN 2U  /*!< Minimum value of P parameter */
 #define FMAC_PARAM_Q_MAX 63U /*!< Maximum value of Q parameter */
@@ -536,9 +535,8 @@ typedef struct {
  * @retval SET (__FUNCTION__ is a valid value) or RESET (__FUNCTION__ is
  * invalid)
  */
-#define IS_FMAC_FUNCTION(__FUNCTION__)                                                                                 \
-	(((__FUNCTION__) == FMAC_FUNC_LOAD_X1) || ((__FUNCTION__) == FMAC_FUNC_LOAD_X2) ||                             \
-	 ((__FUNCTION__) == FMAC_FUNC_LOAD_Y) || ((__FUNCTION__) == FMAC_FUNC_CONVO_FIR) ||                            \
+#define IS_FMAC_FUNCTION(__FUNCTION__)                                                                                                                                                                 \
+	(((__FUNCTION__) == FMAC_FUNC_LOAD_X1) || ((__FUNCTION__) == FMAC_FUNC_LOAD_X2) || ((__FUNCTION__) == FMAC_FUNC_LOAD_Y) || ((__FUNCTION__) == FMAC_FUNC_CONVO_FIR) ||                          \
 	 ((__FUNCTION__) == FMAC_FUNC_IIR_DIRECT_FORM_1))
 
 /**
@@ -548,9 +546,7 @@ typedef struct {
  * @retval SET (__FUNCTION__ is a valid value) or RESET (__FUNCTION__ is
  * invalid)
  */
-#define IS_FMAC_LOAD_FUNCTION(__FUNCTION__)                                                                            \
-	(((__FUNCTION__) == FMAC_FUNC_LOAD_X1) || ((__FUNCTION__) == FMAC_FUNC_LOAD_X2) ||                             \
-	 ((__FUNCTION__) == FMAC_FUNC_LOAD_Y))
+#define IS_FMAC_LOAD_FUNCTION(__FUNCTION__) (((__FUNCTION__) == FMAC_FUNC_LOAD_X1) || ((__FUNCTION__) == FMAC_FUNC_LOAD_X2) || ((__FUNCTION__) == FMAC_FUNC_LOAD_Y))
 
 /**
  * @brief  Verify the FMAC load function used with N values as input or output
@@ -559,8 +555,7 @@ typedef struct {
  * @retval SET (__FUNCTION__ is a valid value) or RESET (__FUNCTION__ is
  * invalid)
  */
-#define IS_FMAC_N_LOAD_FUNCTION(__FUNCTION__)                                                                          \
-	(((__FUNCTION__) == FMAC_FUNC_LOAD_X1) || ((__FUNCTION__) == FMAC_FUNC_LOAD_Y))
+#define IS_FMAC_N_LOAD_FUNCTION(__FUNCTION__) (((__FUNCTION__) == FMAC_FUNC_LOAD_X1) || ((__FUNCTION__) == FMAC_FUNC_LOAD_Y))
 
 /**
  * @brief  Verify the FMAC load function used with N + M values as coefficients.
@@ -576,8 +571,7 @@ typedef struct {
  * @retval SET (__FUNCTION__ is a valid value) or RESET (__FUNCTION__ is
  * invalid)
  */
-#define IS_FMAC_FILTER_FUNCTION(__FUNCTION__)                                                                          \
-	(((__FUNCTION__) == FMAC_FUNC_CONVO_FIR) || ((__FUNCTION__) == FMAC_FUNC_IIR_DIRECT_FORM_1))
+#define IS_FMAC_FILTER_FUNCTION(__FUNCTION__) (((__FUNCTION__) == FMAC_FUNC_CONVO_FIR) || ((__FUNCTION__) == FMAC_FUNC_IIR_DIRECT_FORM_1))
 
 /**
  * @brief  Verify the FMAC threshold.
@@ -585,9 +579,8 @@ typedef struct {
  * @retval SET (__THRESHOLD__ is a valid value) or RESET (__THRESHOLD__ is
  * invalid)
  */
-#define IS_FMAC_THRESHOLD(__THRESHOLD__)                                                                               \
-	(((__THRESHOLD__) == FMAC_THRESHOLD_1) || ((__THRESHOLD__) == FMAC_THRESHOLD_2) ||                             \
-	 ((__THRESHOLD__) == FMAC_THRESHOLD_4) || ((__THRESHOLD__) == FMAC_THRESHOLD_NO_VALUE) ||                      \
+#define IS_FMAC_THRESHOLD(__THRESHOLD__)                                                                                                                                                               \
+	(((__THRESHOLD__) == FMAC_THRESHOLD_1) || ((__THRESHOLD__) == FMAC_THRESHOLD_2) || ((__THRESHOLD__) == FMAC_THRESHOLD_4) || ((__THRESHOLD__) == FMAC_THRESHOLD_NO_VALUE) ||                    \
 	 ((__THRESHOLD__) == FMAC_THRESHOLD_8))
 
 /**
@@ -596,11 +589,9 @@ typedef struct {
  * @param  __FUNCTION__ ID of the filter function.
  * @retval SET (__P__ is a valid value) or RESET (__P__ is invalid)
  */
-#define IS_FMAC_PARAM_P(__FUNCTION__, __P__)                                                                           \
-	((((__FUNCTION__) == FMAC_FUNC_CONVO_FIR) &&                                                                   \
-	  (((__P__) >= FMAC_PARAM_P_MIN) && ((__P__) <= FMAC_PARAM_P_MAX_FIR))) ||                                     \
-	 (((__FUNCTION__) == FMAC_FUNC_IIR_DIRECT_FORM_1) &&                                                           \
-	  (((__P__) >= FMAC_PARAM_P_MIN) && ((__P__) <= FMAC_PARAM_P_MAX_IIR))))
+#define IS_FMAC_PARAM_P(__FUNCTION__, __P__)                                                                                                                                                           \
+	((((__FUNCTION__) == FMAC_FUNC_CONVO_FIR) && (((__P__) >= FMAC_PARAM_P_MIN) && ((__P__) <= FMAC_PARAM_P_MAX_FIR))) ||                                                                          \
+	 (((__FUNCTION__) == FMAC_FUNC_IIR_DIRECT_FORM_1) && (((__P__) >= FMAC_PARAM_P_MIN) && ((__P__) <= FMAC_PARAM_P_MAX_IIR))))
 
 /**
  * @brief  Verify the FMAC filter parameter Q.
@@ -608,10 +599,8 @@ typedef struct {
  * @param  __FUNCTION__ ID of the filter function.
  * @retval SET (__Q__ is a valid value) or RESET (__Q__ is invalid)
  */
-#define IS_FMAC_PARAM_Q(__FUNCTION__, __Q__)                                                                           \
-	(((__FUNCTION__) == FMAC_FUNC_CONVO_FIR) ||                                                                    \
-	 (((__FUNCTION__) == FMAC_FUNC_IIR_DIRECT_FORM_1) &&                                                           \
-	  (((__Q__) >= FMAC_PARAM_Q_MIN) && ((__Q__) <= FMAC_PARAM_Q_MAX))))
+#define IS_FMAC_PARAM_Q(__FUNCTION__, __Q__)                                                                                                                                                           \
+	(((__FUNCTION__) == FMAC_FUNC_CONVO_FIR) || (((__FUNCTION__) == FMAC_FUNC_IIR_DIRECT_FORM_1) && (((__Q__) >= FMAC_PARAM_Q_MIN) && ((__Q__) <= FMAC_PARAM_Q_MAX))))
 
 /**
  * @brief  Verify the FMAC filter parameter R.
@@ -619,9 +608,7 @@ typedef struct {
  * @param  __FUNCTION__ ID of the filter function.
  * @retval SET (__R__ is a valid value) or RESET (__R__ is invalid)
  */
-#define IS_FMAC_PARAM_R(__FUNCTION__, __R__)                                                                           \
-	((((__FUNCTION__) == FMAC_FUNC_CONVO_FIR) || ((__FUNCTION__) == FMAC_FUNC_IIR_DIRECT_FORM_1)) &&               \
-	 ((__R__) <= FMAC_PARAM_R_MAX))
+#define IS_FMAC_PARAM_R(__FUNCTION__, __R__) ((((__FUNCTION__) == FMAC_FUNC_CONVO_FIR) || ((__FUNCTION__) == FMAC_FUNC_IIR_DIRECT_FORM_1)) && ((__R__) <= FMAC_PARAM_R_MAX))
 
 /**
  * @brief  Verify the FMAC buffer access.
@@ -629,9 +616,9 @@ typedef struct {
  * @retval SET (__BUFFER_ACCESS__ is a valid value) or RESET (__BUFFER_ACCESS__
  * is invalid)
  */
-#define IS_FMAC_BUFFER_ACCESS(__BUFFER_ACCESS__)                                                                       \
-	(((__BUFFER_ACCESS__) == FMAC_BUFFER_ACCESS_NONE) || ((__BUFFER_ACCESS__) == FMAC_BUFFER_ACCESS_DMA) ||        \
-	 ((__BUFFER_ACCESS__) == FMAC_BUFFER_ACCESS_POLLING) || ((__BUFFER_ACCESS__) == FMAC_BUFFER_ACCESS_IT))
+#define IS_FMAC_BUFFER_ACCESS(__BUFFER_ACCESS__)                                                                                                                                                       \
+	(((__BUFFER_ACCESS__) == FMAC_BUFFER_ACCESS_NONE) || ((__BUFFER_ACCESS__) == FMAC_BUFFER_ACCESS_DMA) || ((__BUFFER_ACCESS__) == FMAC_BUFFER_ACCESS_POLLING) ||                                 \
+	 ((__BUFFER_ACCESS__) == FMAC_BUFFER_ACCESS_IT))
 
 /**
  * @brief  Verify the FMAC clip feature.
@@ -639,8 +626,7 @@ typedef struct {
  * @retval SET (__CLIP_STATE__ is a valid value) or RESET (__CLIP_STATE__ is
  * invalid)
  */
-#define IS_FMAC_CLIP_STATE(__CLIP_STATE__)                                                                             \
-	(((__CLIP_STATE__) == FMAC_CLIP_DISABLED) || ((__CLIP_STATE__) == FMAC_CLIP_ENABLED))
+#define IS_FMAC_CLIP_STATE(__CLIP_STATE__) (((__CLIP_STATE__) == FMAC_CLIP_DISABLED) || ((__CLIP_STATE__) == FMAC_CLIP_ENABLED))
 
 /**
  * @brief  Check whether the threshold is applicable.
@@ -649,13 +635,12 @@ typedef struct {
  * @param  __ACCESS__ Access to the buffer (polling, it, dma, none).
  * @retval THRESHOLD
  */
-#define IS_FMAC_THRESHOLD_APPLICABLE(__SIZE__, __WM__, __ACCESS__)                                                     \
-	(((__SIZE__) >= (((__WM__) == FMAC_THRESHOLD_1)	  ? 1U                                                         \
-			 : ((__WM__) == FMAC_THRESHOLD_2) ? 2U                                                         \
-			 : ((__WM__) == FMAC_THRESHOLD_4) ? 4U                                                         \
-							  : 8U)) &&                                                    \
-	 ((((__ACCESS__) == FMAC_BUFFER_ACCESS_DMA) && ((__WM__) == FMAC_THRESHOLD_1)) ||                              \
-	  ((__ACCESS__) != FMAC_BUFFER_ACCESS_DMA)))
+#define IS_FMAC_THRESHOLD_APPLICABLE(__SIZE__, __WM__, __ACCESS__)                                                                                                                                     \
+	(((__SIZE__) >= (((__WM__) == FMAC_THRESHOLD_1)	  ? 1U                                                                                                                                         \
+			 : ((__WM__) == FMAC_THRESHOLD_2) ? 2U                                                                                                                                         \
+			 : ((__WM__) == FMAC_THRESHOLD_4) ? 4U                                                                                                                                         \
+							  : 8U)) &&                                                                                                                                    \
+	 ((((__ACCESS__) == FMAC_BUFFER_ACCESS_DMA) && ((__WM__) == FMAC_THRESHOLD_1)) || ((__ACCESS__) != FMAC_BUFFER_ACCESS_DMA)))
 
 /**
  * @}
@@ -677,8 +662,7 @@ void HAL_FMAC_MspDeInit(FMAC_HandleTypeDef *hfmac);
 
 #if (USE_HAL_FMAC_REGISTER_CALLBACKS == 1)
 /* Callbacks Register/UnRegister functions  ***********************************/
-HAL_StatusTypeDef HAL_FMAC_RegisterCallback(FMAC_HandleTypeDef *hfmac, HAL_FMAC_CallbackIDTypeDef CallbackID,
-					    pFMAC_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_FMAC_RegisterCallback(FMAC_HandleTypeDef *hfmac, HAL_FMAC_CallbackIDTypeDef CallbackID, pFMAC_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_FMAC_UnRegisterCallback(FMAC_HandleTypeDef *hfmac, HAL_FMAC_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_FMAC_REGISTER_CALLBACKS */
 /**
@@ -691,10 +675,8 @@ HAL_StatusTypeDef HAL_FMAC_UnRegisterCallback(FMAC_HandleTypeDef *hfmac, HAL_FMA
 /* Peripheral Control functions ***********************************************/
 HAL_StatusTypeDef HAL_FMAC_FilterConfig(FMAC_HandleTypeDef *hfmac, FMAC_FilterConfigTypeDef *pConfig);
 HAL_StatusTypeDef HAL_FMAC_FilterConfig_DMA(FMAC_HandleTypeDef *hfmac, FMAC_FilterConfigTypeDef *pConfig);
-HAL_StatusTypeDef HAL_FMAC_FilterPreload(FMAC_HandleTypeDef *hfmac, int16_t *pInput, uint8_t InputSize,
-					 int16_t *pOutput, uint8_t OutputSize);
-HAL_StatusTypeDef HAL_FMAC_FilterPreload_DMA(FMAC_HandleTypeDef *hfmac, int16_t *pInput, uint8_t InputSize,
-					     int16_t *pOutput, uint8_t OutputSize);
+HAL_StatusTypeDef HAL_FMAC_FilterPreload(FMAC_HandleTypeDef *hfmac, int16_t *pInput, uint8_t InputSize, int16_t *pOutput, uint8_t OutputSize);
+HAL_StatusTypeDef HAL_FMAC_FilterPreload_DMA(FMAC_HandleTypeDef *hfmac, int16_t *pInput, uint8_t InputSize, int16_t *pOutput, uint8_t OutputSize);
 HAL_StatusTypeDef HAL_FMAC_FilterStart(FMAC_HandleTypeDef *hfmac, int16_t *pOutput, uint16_t *pOutputSize);
 HAL_StatusTypeDef HAL_FMAC_AppendFilterData(FMAC_HandleTypeDef *hfmac, int16_t *pInput, uint16_t *pInputSize);
 HAL_StatusTypeDef HAL_FMAC_ConfigFilterOutputBuffer(FMAC_HandleTypeDef *hfmac, int16_t *pOutput, uint16_t *pOutputSize);

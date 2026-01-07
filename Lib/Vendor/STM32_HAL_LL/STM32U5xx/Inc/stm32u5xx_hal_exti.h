@@ -246,39 +246,30 @@ typedef struct {
 /** @defgroup EXTI_Private_Macros EXTI Private Macros
  * @{
  */
-#define IS_EXTI_LINE(__EXTI_LINE__)                                                                                    \
-	((((__EXTI_LINE__) & ~(EXTI_PROPERTY_MASK | EXTI_REG_MASK | EXTI_PIN_MASK)) == 0x00U) &&                       \
-	 ((((__EXTI_LINE__) & EXTI_PROPERTY_MASK) == EXTI_DIRECT) ||                                                   \
-	  (((__EXTI_LINE__) & EXTI_PROPERTY_MASK) == EXTI_CONFIG) ||                                                   \
-	  (((__EXTI_LINE__) & EXTI_PROPERTY_MASK) == EXTI_GPIO)) &&                                                    \
-	 (((__EXTI_LINE__) & (EXTI_REG_MASK | EXTI_PIN_MASK)) <                                                        \
-	  (((EXTI_LINE_NB / 32U) << EXTI_REG_SHIFT) | (EXTI_LINE_NB % 32U))))
+#define IS_EXTI_LINE(__EXTI_LINE__)                                                                                                                                                                    \
+	((((__EXTI_LINE__) & ~(EXTI_PROPERTY_MASK | EXTI_REG_MASK | EXTI_PIN_MASK)) == 0x00U) &&                                                                                                       \
+	 ((((__EXTI_LINE__) & EXTI_PROPERTY_MASK) == EXTI_DIRECT) || (((__EXTI_LINE__) & EXTI_PROPERTY_MASK) == EXTI_CONFIG) || (((__EXTI_LINE__) & EXTI_PROPERTY_MASK) == EXTI_GPIO)) &&              \
+	 (((__EXTI_LINE__) & (EXTI_REG_MASK | EXTI_PIN_MASK)) < (((EXTI_LINE_NB / 32U) << EXTI_REG_SHIFT) | (EXTI_LINE_NB % 32U))))
 
-#define IS_EXTI_MODE(__EXTI_LINE__)                                                                                    \
-	((((__EXTI_LINE__) & EXTI_MODE_MASK) != 0x00U) && (((__EXTI_LINE__) & ~EXTI_MODE_MASK) == 0x00U))
+#define IS_EXTI_MODE(__EXTI_LINE__) ((((__EXTI_LINE__) & EXTI_MODE_MASK) != 0x00U) && (((__EXTI_LINE__) & ~EXTI_MODE_MASK) == 0x00U))
 
 #define IS_EXTI_TRIGGER(__EXTI_LINE__) (((__EXTI_LINE__) & ~EXTI_TRIGGER_MASK) == 0x00U)
 
-#define IS_EXTI_PENDING_EDGE(__EXTI_LINE__)                                                                            \
-	(((__EXTI_LINE__) == EXTI_TRIGGER_RISING) || ((__EXTI_LINE__) == EXTI_TRIGGER_FALLING))
+#define IS_EXTI_PENDING_EDGE(__EXTI_LINE__) (((__EXTI_LINE__) == EXTI_TRIGGER_RISING) || ((__EXTI_LINE__) == EXTI_TRIGGER_FALLING))
 
 #define IS_EXTI_CONFIG_LINE(__EXTI_LINE__) (((__EXTI_LINE__) & EXTI_CONFIG) != 0x00U)
 
 #if defined(GPIOJ)
-#define IS_EXTI_GPIO_PORT(__PORT__)                                                                                    \
-	(((__PORT__) == EXTI_GPIOA) || ((__PORT__) == EXTI_GPIOB) || ((__PORT__) == EXTI_GPIOC) ||                     \
-	 ((__PORT__) == EXTI_GPIOD) || ((__PORT__) == EXTI_GPIOE) || ((__PORT__) == EXTI_GPIOF) ||                     \
-	 ((__PORT__) == EXTI_GPIOG) || ((__PORT__) == EXTI_GPIOH) || ((__PORT__) == EXTI_GPIOI) ||                     \
-	 ((__PORT__) == EXTI_GPIOJ))
+#define IS_EXTI_GPIO_PORT(__PORT__)                                                                                                                                                                    \
+	(((__PORT__) == EXTI_GPIOA) || ((__PORT__) == EXTI_GPIOB) || ((__PORT__) == EXTI_GPIOC) || ((__PORT__) == EXTI_GPIOD) || ((__PORT__) == EXTI_GPIOE) || ((__PORT__) == EXTI_GPIOF) ||           \
+	 ((__PORT__) == EXTI_GPIOG) || ((__PORT__) == EXTI_GPIOH) || ((__PORT__) == EXTI_GPIOI) || ((__PORT__) == EXTI_GPIOJ))
 #elif defined(GPIOF) && defined(GPIOI)
-#define IS_EXTI_GPIO_PORT(__PORT__)                                                                                    \
-	(((__PORT__) == EXTI_GPIOA) || ((__PORT__) == EXTI_GPIOB) || ((__PORT__) == EXTI_GPIOC) ||                     \
-	 ((__PORT__) == EXTI_GPIOD) || ((__PORT__) == EXTI_GPIOE) || ((__PORT__) == EXTI_GPIOF) ||                     \
+#define IS_EXTI_GPIO_PORT(__PORT__)                                                                                                                                                                    \
+	(((__PORT__) == EXTI_GPIOA) || ((__PORT__) == EXTI_GPIOB) || ((__PORT__) == EXTI_GPIOC) || ((__PORT__) == EXTI_GPIOD) || ((__PORT__) == EXTI_GPIOE) || ((__PORT__) == EXTI_GPIOF) ||           \
 	 ((__PORT__) == EXTI_GPIOG) || ((__PORT__) == EXTI_GPIOH) || ((__PORT__) == EXTI_GPIOI))
 #else
-#define IS_EXTI_GPIO_PORT(__PORT__)                                                                                    \
-	(((__PORT__) == EXTI_GPIOA) || ((__PORT__) == EXTI_GPIOB) || ((__PORT__) == EXTI_GPIOC) ||                     \
-	 ((__PORT__) == EXTI_GPIOD) || ((__PORT__) == EXTI_GPIOE) || ((__PORT__) == EXTI_GPIOG) ||                     \
+#define IS_EXTI_GPIO_PORT(__PORT__)                                                                                                                                                                    \
+	(((__PORT__) == EXTI_GPIOA) || ((__PORT__) == EXTI_GPIOB) || ((__PORT__) == EXTI_GPIOC) || ((__PORT__) == EXTI_GPIOD) || ((__PORT__) == EXTI_GPIOE) || ((__PORT__) == EXTI_GPIOG) ||           \
 	 ((__PORT__) == EXTI_GPIOH))
 #endif /* GPIOJ */
 
@@ -286,19 +277,15 @@ typedef struct {
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 
-#define IS_EXTI_LINE_ATTRIBUTES(__ATTRIBUTES__)                                                                        \
-	(((((__ATTRIBUTES__) & EXTI_LINE_SEC) == EXTI_LINE_SEC) ||                                                     \
-	  (((__ATTRIBUTES__) & EXTI_LINE_NSEC) == EXTI_LINE_NSEC) ||                                                   \
-	  (((__ATTRIBUTES__) & EXTI_LINE_PRIV) == EXTI_LINE_PRIV) ||                                                   \
-	  (((__ATTRIBUTES__) & EXTI_LINE_NPRIV) == EXTI_LINE_NPRIV)) &&                                                \
+#define IS_EXTI_LINE_ATTRIBUTES(__ATTRIBUTES__)                                                                                                                                                        \
+	(((((__ATTRIBUTES__) & EXTI_LINE_SEC) == EXTI_LINE_SEC) || (((__ATTRIBUTES__) & EXTI_LINE_NSEC) == EXTI_LINE_NSEC) || (((__ATTRIBUTES__) & EXTI_LINE_PRIV) == EXTI_LINE_PRIV) ||               \
+	  (((__ATTRIBUTES__) & EXTI_LINE_NPRIV) == EXTI_LINE_NPRIV)) &&                                                                                                                                \
 	 (((__ATTRIBUTES__) & ~(EXTI_LINE_SEC | EXTI_LINE_NSEC | EXTI_LINE_PRIV | EXTI_LINE_NPRIV)) == 0U))
 
 #else
 
-#define IS_EXTI_LINE_ATTRIBUTES(__ATTRIBUTES__)                                                                        \
-	(((((__ATTRIBUTES__) & EXTI_LINE_PRIV) == EXTI_LINE_PRIV) ||                                                   \
-	  (((__ATTRIBUTES__) & EXTI_LINE_NPRIV) == EXTI_LINE_NPRIV)) &&                                                \
-	 (((__ATTRIBUTES__) & ~(EXTI_LINE_PRIV | EXTI_LINE_NPRIV)) == 0U))
+#define IS_EXTI_LINE_ATTRIBUTES(__ATTRIBUTES__)                                                                                                                                                        \
+	(((((__ATTRIBUTES__) & EXTI_LINE_PRIV) == EXTI_LINE_PRIV) || (((__ATTRIBUTES__) & EXTI_LINE_NPRIV) == EXTI_LINE_NPRIV)) && (((__ATTRIBUTES__) & ~(EXTI_LINE_PRIV | EXTI_LINE_NPRIV)) == 0U))
 
 #endif /* __ARM_FEATURE_CMSE */
 
@@ -320,8 +307,7 @@ typedef struct {
 HAL_StatusTypeDef HAL_EXTI_SetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigTypeDef *pExtiConfig);
 HAL_StatusTypeDef HAL_EXTI_GetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigTypeDef *pExtiConfig);
 HAL_StatusTypeDef HAL_EXTI_ClearConfigLine(const EXTI_HandleTypeDef *hexti);
-HAL_StatusTypeDef HAL_EXTI_RegisterCallback(EXTI_HandleTypeDef *hexti, EXTI_CallbackIDTypeDef CallbackID,
-					    void (*pPendingCbfn)(void));
+HAL_StatusTypeDef HAL_EXTI_RegisterCallback(EXTI_HandleTypeDef *hexti, EXTI_CallbackIDTypeDef CallbackID, void (*pPendingCbfn)(void));
 HAL_StatusTypeDef HAL_EXTI_GetHandle(EXTI_HandleTypeDef *hexti, uint32_t ExtiLine);
 /**
  * @}

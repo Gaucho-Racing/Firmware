@@ -56,12 +56,7 @@ typedef enum {
 /**
  * @brief  FMC NOR Status typedef
  */
-typedef enum {
-	HAL_NOR_STATUS_SUCCESS = 0U,
-	HAL_NOR_STATUS_ONGOING,
-	HAL_NOR_STATUS_ERROR,
-	HAL_NOR_STATUS_TIMEOUT
-} HAL_NOR_StatusTypeDef;
+typedef enum { HAL_NOR_STATUS_SUCCESS = 0U, HAL_NOR_STATUS_ONGOING, HAL_NOR_STATUS_ERROR, HAL_NOR_STATUS_TIMEOUT } HAL_NOR_StatusTypeDef;
 
 /**
  * @brief  FMC NOR ID typedef
@@ -155,11 +150,11 @@ typedef void (*pNOR_CallbackTypeDef)(NOR_HandleTypeDef *hnor);
  * @retval None
  */
 #if (USE_HAL_NOR_REGISTER_CALLBACKS == 1)
-#define __HAL_NOR_RESET_HANDLE_STATE(__HANDLE__)                                                                       \
-	do {                                                                                                           \
-		(__HANDLE__)->State = HAL_NOR_STATE_RESET;                                                             \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define __HAL_NOR_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                       \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_NOR_STATE_RESET;                                                                                                                                             \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0)
 #else
 #define __HAL_NOR_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_NOR_STATE_RESET)
@@ -179,8 +174,7 @@ typedef void (*pNOR_CallbackTypeDef)(NOR_HandleTypeDef *hnor);
  */
 
 /* Initialization/de-initialization functions  ********************************/
-HAL_StatusTypeDef HAL_NOR_Init(NOR_HandleTypeDef *hnor, FMC_NORSRAM_TimingTypeDef *Timing,
-			       FMC_NORSRAM_TimingTypeDef *ExtTiming);
+HAL_StatusTypeDef HAL_NOR_Init(NOR_HandleTypeDef *hnor, FMC_NORSRAM_TimingTypeDef *Timing, FMC_NORSRAM_TimingTypeDef *ExtTiming);
 HAL_StatusTypeDef HAL_NOR_DeInit(NOR_HandleTypeDef *hnor);
 void HAL_NOR_MspInit(NOR_HandleTypeDef *hnor);
 void HAL_NOR_MspDeInit(NOR_HandleTypeDef *hnor);
@@ -199,10 +193,8 @@ HAL_StatusTypeDef HAL_NOR_ReturnToReadMode(NOR_HandleTypeDef *hnor);
 HAL_StatusTypeDef HAL_NOR_Read(NOR_HandleTypeDef *hnor, uint32_t *pAddress, uint16_t *pData);
 HAL_StatusTypeDef HAL_NOR_Program(NOR_HandleTypeDef *hnor, uint32_t *pAddress, uint16_t *pData);
 
-HAL_StatusTypeDef HAL_NOR_ReadBuffer(NOR_HandleTypeDef *hnor, uint32_t uwAddress, uint16_t *pData,
-				     uint32_t uwBufferSize);
-HAL_StatusTypeDef HAL_NOR_ProgramBuffer(NOR_HandleTypeDef *hnor, uint32_t uwAddress, uint16_t *pData,
-					uint32_t uwBufferSize);
+HAL_StatusTypeDef HAL_NOR_ReadBuffer(NOR_HandleTypeDef *hnor, uint32_t uwAddress, uint16_t *pData, uint32_t uwBufferSize);
+HAL_StatusTypeDef HAL_NOR_ProgramBuffer(NOR_HandleTypeDef *hnor, uint32_t uwAddress, uint16_t *pData, uint32_t uwBufferSize);
 
 HAL_StatusTypeDef HAL_NOR_Erase_Block(NOR_HandleTypeDef *hnor, uint32_t BlockAddress, uint32_t Address);
 HAL_StatusTypeDef HAL_NOR_Erase_Chip(NOR_HandleTypeDef *hnor, uint32_t Address);
@@ -210,8 +202,7 @@ HAL_StatusTypeDef HAL_NOR_Read_CFI(NOR_HandleTypeDef *hnor, NOR_CFITypeDef *pNOR
 
 #if (USE_HAL_NOR_REGISTER_CALLBACKS == 1)
 /* NOR callback registering/unregistering */
-HAL_StatusTypeDef HAL_NOR_RegisterCallback(NOR_HandleTypeDef *hnor, HAL_NOR_CallbackIDTypeDef CallbackId,
-					   pNOR_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_NOR_RegisterCallback(NOR_HandleTypeDef *hnor, HAL_NOR_CallbackIDTypeDef CallbackId, pNOR_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_NOR_UnRegisterCallback(NOR_HandleTypeDef *hnor, HAL_NOR_CallbackIDTypeDef CallbackId);
 #endif /* USE_HAL_NOR_REGISTER_CALLBACKS */
 /**
@@ -289,9 +280,8 @@ HAL_NOR_StatusTypeDef HAL_NOR_GetStatus(NOR_HandleTypeDef *hnor, uint32_t Addres
  * @param  __ADDRESS__ NOR memory address
  * @retval NOR shifted address value
  */
-#define NOR_ADDR_SHIFT(__NOR_ADDRESS, __NOR_MEMORY_WIDTH_, __ADDRESS__)                                                \
-	((uint32_t)(((__NOR_MEMORY_WIDTH_) == NOR_MEMORY_16B) ? ((uint32_t)((__NOR_ADDRESS) + (2U * (__ADDRESS__))))   \
-							      : ((uint32_t)((__NOR_ADDRESS) + (__ADDRESS__)))))
+#define NOR_ADDR_SHIFT(__NOR_ADDRESS, __NOR_MEMORY_WIDTH_, __ADDRESS__)                                                                                                                                \
+	((uint32_t)(((__NOR_MEMORY_WIDTH_) == NOR_MEMORY_16B) ? ((uint32_t)((__NOR_ADDRESS) + (2U * (__ADDRESS__)))) : ((uint32_t)((__NOR_ADDRESS) + (__ADDRESS__)))))
 
 /**
  * @brief  NOR memory write data to specified address.
@@ -299,10 +289,10 @@ HAL_NOR_StatusTypeDef HAL_NOR_GetStatus(NOR_HandleTypeDef *hnor, uint32_t Addres
  * @param  __DATA__ Data to write
  * @retval None
  */
-#define NOR_WRITE(__ADDRESS__, __DATA__)                                                                               \
-	do {                                                                                                           \
-		(*(__IO uint16_t *)((uint32_t)(__ADDRESS__)) = (__DATA__));                                            \
-		__DSB();                                                                                               \
+#define NOR_WRITE(__ADDRESS__, __DATA__)                                                                                                                                                               \
+	do {                                                                                                                                                                                           \
+		(*(__IO uint16_t *)((uint32_t)(__ADDRESS__)) = (__DATA__));                                                                                                                            \
+		__DSB();                                                                                                                                                                               \
 	} while (0)
 
 /**

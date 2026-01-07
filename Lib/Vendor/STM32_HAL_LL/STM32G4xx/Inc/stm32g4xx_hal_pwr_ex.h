@@ -74,31 +74,21 @@ typedef struct {
 /** @defgroup PWREx_WakeUp_Pins  PWR wake-up pins
  * @{
  */
-#define PWR_WAKEUP_PIN1 PWR_CR3_EWUP1	   /*!< Wakeup pin 1 (with high level polarity) */
-#define PWR_WAKEUP_PIN2 PWR_CR3_EWUP2	   /*!< Wakeup pin 2 (with high level polarity) */
-#define PWR_WAKEUP_PIN3 PWR_CR3_EWUP3	   /*!< Wakeup pin 3 (with high level polarity) */
-#define PWR_WAKEUP_PIN4 PWR_CR3_EWUP4	   /*!< Wakeup pin 4 (with high level polarity) */
-#define PWR_WAKEUP_PIN5 PWR_CR3_EWUP5	   /*!< Wakeup pin 5 (with high level polarity) */
-#define PWR_WAKEUP_PIN1_HIGH PWR_CR3_EWUP1 /*!< Wakeup pin 1 (with high level polarity) */
-#define PWR_WAKEUP_PIN2_HIGH PWR_CR3_EWUP2 /*!< Wakeup pin 2 (with high level polarity) */
-#define PWR_WAKEUP_PIN3_HIGH PWR_CR3_EWUP3 /*!< Wakeup pin 3 (with high level polarity) */
-#define PWR_WAKEUP_PIN4_HIGH PWR_CR3_EWUP4 /*!< Wakeup pin 4 (with high level polarity) */
-#define PWR_WAKEUP_PIN5_HIGH PWR_CR3_EWUP5 /*!< Wakeup pin 5 (with high level polarity) */
-#define PWR_WAKEUP_PIN1_LOW                                                                                            \
-	(uint32_t)((PWR_CR4_WP1 << PWR_WUP_POLARITY_SHIFT) |                                                           \
-		   PWR_CR3_EWUP1) /*!< Wakeup pin 1 (with low level polarity) */
-#define PWR_WAKEUP_PIN2_LOW                                                                                            \
-	(uint32_t)((PWR_CR4_WP2 << PWR_WUP_POLARITY_SHIFT) |                                                           \
-		   PWR_CR3_EWUP2) /*!< Wakeup pin 2 (with low level polarity) */
-#define PWR_WAKEUP_PIN3_LOW                                                                                            \
-	(uint32_t)((PWR_CR4_WP3 << PWR_WUP_POLARITY_SHIFT) |                                                           \
-		   PWR_CR3_EWUP3) /*!< Wakeup pin 3 (with low level polarity) */
-#define PWR_WAKEUP_PIN4_LOW                                                                                            \
-	(uint32_t)((PWR_CR4_WP4 << PWR_WUP_POLARITY_SHIFT) |                                                           \
-		   PWR_CR3_EWUP4) /*!< Wakeup pin 4 (with low level polarity) */
-#define PWR_WAKEUP_PIN5_LOW                                                                                            \
-	(uint32_t)((PWR_CR4_WP5 << PWR_WUP_POLARITY_SHIFT) |                                                           \
-		   PWR_CR3_EWUP5) /*!< Wakeup pin 5 (with low level polarity) */
+#define PWR_WAKEUP_PIN1 PWR_CR3_EWUP1								/*!< Wakeup pin 1 (with high level polarity) */
+#define PWR_WAKEUP_PIN2 PWR_CR3_EWUP2								/*!< Wakeup pin 2 (with high level polarity) */
+#define PWR_WAKEUP_PIN3 PWR_CR3_EWUP3								/*!< Wakeup pin 3 (with high level polarity) */
+#define PWR_WAKEUP_PIN4 PWR_CR3_EWUP4								/*!< Wakeup pin 4 (with high level polarity) */
+#define PWR_WAKEUP_PIN5 PWR_CR3_EWUP5								/*!< Wakeup pin 5 (with high level polarity) */
+#define PWR_WAKEUP_PIN1_HIGH PWR_CR3_EWUP1							/*!< Wakeup pin 1 (with high level polarity) */
+#define PWR_WAKEUP_PIN2_HIGH PWR_CR3_EWUP2							/*!< Wakeup pin 2 (with high level polarity) */
+#define PWR_WAKEUP_PIN3_HIGH PWR_CR3_EWUP3							/*!< Wakeup pin 3 (with high level polarity) */
+#define PWR_WAKEUP_PIN4_HIGH PWR_CR3_EWUP4							/*!< Wakeup pin 4 (with high level polarity) */
+#define PWR_WAKEUP_PIN5_HIGH PWR_CR3_EWUP5							/*!< Wakeup pin 5 (with high level polarity) */
+#define PWR_WAKEUP_PIN1_LOW (uint32_t)((PWR_CR4_WP1 << PWR_WUP_POLARITY_SHIFT) | PWR_CR3_EWUP1) /*!< Wakeup pin 1 (with low level polarity) */
+#define PWR_WAKEUP_PIN2_LOW (uint32_t)((PWR_CR4_WP2 << PWR_WUP_POLARITY_SHIFT) | PWR_CR3_EWUP2) /*!< Wakeup pin 2 (with low level polarity) */
+#define PWR_WAKEUP_PIN3_LOW (uint32_t)((PWR_CR4_WP3 << PWR_WUP_POLARITY_SHIFT) | PWR_CR3_EWUP3) /*!< Wakeup pin 3 (with low level polarity) */
+#define PWR_WAKEUP_PIN4_LOW (uint32_t)((PWR_CR4_WP4 << PWR_WUP_POLARITY_SHIFT) | PWR_CR3_EWUP4) /*!< Wakeup pin 4 (with low level polarity) */
+#define PWR_WAKEUP_PIN5_LOW (uint32_t)((PWR_CR4_WP5 << PWR_WUP_POLARITY_SHIFT) | PWR_CR3_EWUP5) /*!< Wakeup pin 5 (with low level polarity) */
 /**
  * @}
  */
@@ -107,22 +97,22 @@ typedef struct {
  * @{
  */
 #if defined(PWR_CR2_PVME1)
-#define PWR_PVM_1                                                                                                      \
-	PWR_CR2_PVME1 /*!< Peripheral Voltage Monitoring 1 enable: VDDUSB                                              \
-			 versus 1.2 V (applicable when USB feature is                                                  \
+#define PWR_PVM_1                                                                                                                                                                                      \
+	PWR_CR2_PVME1 /*!< Peripheral Voltage Monitoring 1 enable: VDDUSB                                                                                                                              \
+			 versus 1.2 V (applicable when USB feature is                                                                                                                                  \
 			 supported) */
 #endif		      /* PWR_CR2_PVME1 */
 #if defined(PWR_CR2_PVME2)
-#define PWR_PVM_2                                                                                                      \
-	PWR_CR2_PVME2 /*!< Peripheral Voltage Monitoring 2 enable: VDDIO2                                              \
-			 versus 0.9 V (applicable when VDDIO2 is present on                                            \
+#define PWR_PVM_2                                                                                                                                                                                      \
+	PWR_CR2_PVME2 /*!< Peripheral Voltage Monitoring 2 enable: VDDIO2                                                                                                                              \
+			 versus 0.9 V (applicable when VDDIO2 is present on                                                                                                                            \
 			 device) */
 #endif		      /* PWR_CR2_PVME2 */
-#define PWR_PVM_3                                                                                                      \
-	PWR_CR2_PVME3 /*!< Peripheral Voltage Monitoring 3 enable: VDDA                                                \
+#define PWR_PVM_3                                                                                                                                                                                      \
+	PWR_CR2_PVME3 /*!< Peripheral Voltage Monitoring 3 enable: VDDA                                                                                                                                \
 			 versus 1.62 V */
-#define PWR_PVM_4                                                                                                      \
-	PWR_CR2_PVME4 /*!< Peripheral Voltage Monitoring 4 enable: VDDA                                                \
+#define PWR_PVM_4                                                                                                                                                                                      \
+	PWR_CR2_PVME4 /*!< Peripheral Voltage Monitoring 4 enable: VDDA                                                                                                                                \
 			 versus 2.2 V  */
 /**
  * @}
@@ -132,19 +122,19 @@ typedef struct {
  * @{
  */
 #define PWR_PVM_MODE_NORMAL 0x00000000U /*!< basic mode is used */
-#define PWR_PVM_MODE_IT_RISING                                                                                         \
-	0x00010001U /*!< External Interrupt Mode with Rising edge trigger                                              \
+#define PWR_PVM_MODE_IT_RISING                                                                                                                                                                         \
+	0x00010001U /*!< External Interrupt Mode with Rising edge trigger                                                                                                                              \
 		       detection */
-#define PWR_PVM_MODE_IT_FALLING                                                                                        \
-	0x00010002U /*!< External Interrupt Mode with Falling edge trigger                                             \
+#define PWR_PVM_MODE_IT_FALLING                                                                                                                                                                        \
+	0x00010002U /*!< External Interrupt Mode with Falling edge trigger                                                                                                                             \
 		       detection */
-#define PWR_PVM_MODE_IT_RISING_FALLING                                                                                 \
-	0x00010003U			       /*!< External Interrupt Mode with Rising/Falling edge                   \
+#define PWR_PVM_MODE_IT_RISING_FALLING                                                                                                                                                                 \
+	0x00010003U			       /*!< External Interrupt Mode with Rising/Falling edge                                                                                                   \
 						  trigger detection */
 #define PWR_PVM_MODE_EVENT_RISING 0x00020001U  /*!< Event Mode with Rising edge trigger detection */
 #define PWR_PVM_MODE_EVENT_FALLING 0x00020002U /*!< Event Mode with Falling edge trigger detection */
-#define PWR_PVM_MODE_EVENT_RISING_FALLING                                                                              \
-	0x00020003U /*!< Event Mode with Rising/Falling edge trigger detection                                         \
+#define PWR_PVM_MODE_EVENT_RISING_FALLING                                                                                                                                                              \
+	0x00020003U /*!< Event Mode with Rising/Falling edge trigger detection                                                                                                                         \
 		     */
 /**
  * @}
@@ -223,20 +213,20 @@ typedef struct {
  * @{
  */
 #if defined(PWR_CR2_PVME1)
-#define PWR_EXTI_LINE_PVM1                                                                                             \
-	0x00000008U /*!< External interrupt line 35 Connected to the PVM1 EXTI                                         \
+#define PWR_EXTI_LINE_PVM1                                                                                                                                                                             \
+	0x00000008U /*!< External interrupt line 35 Connected to the PVM1 EXTI                                                                                                                         \
 		       Line   */
 #endif		    /* PWR_CR2_PVME1 */
 #if defined(PWR_CR2_PVME2)
-#define PWR_EXTI_LINE_PVM2                                                                                             \
-	0x00000010U /*!< External interrupt line 36 Connected to the PVM2 EXTI                                         \
+#define PWR_EXTI_LINE_PVM2                                                                                                                                                                             \
+	0x00000010U /*!< External interrupt line 36 Connected to the PVM2 EXTI                                                                                                                         \
 		       Line   */
 #endif		    /* PWR_CR2_PVME2 */
-#define PWR_EXTI_LINE_PVM3                                                                                             \
-	0x00000020U /*!< External interrupt line 37 Connected to the PVM3 EXTI                                         \
+#define PWR_EXTI_LINE_PVM3                                                                                                                                                                             \
+	0x00000020U /*!< External interrupt line 37 Connected to the PVM3 EXTI                                                                                                                         \
 		       Line   */
-#define PWR_EXTI_LINE_PVM4                                                                                             \
-	0x00000040U /*!< External interrupt line 38 Connected to the PVM4 EXTI                                         \
+#define PWR_EXTI_LINE_PVM4                                                                                                                                                                             \
+	0x00000040U /*!< External interrupt line 38 Connected to the PVM4 EXTI                                                                                                                         \
 		       Line   */
 /**
  * @}
@@ -354,20 +344,20 @@ typedef struct {
  * @brief  PVM1 EXTI line configuration: set rising & falling edge trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM1_EXTI_ENABLE_RISING_FALLING_EDGE()                                                               \
-	do {                                                                                                           \
-		__HAL_PWR_PVM1_EXTI_ENABLE_RISING_EDGE();                                                              \
-		__HAL_PWR_PVM1_EXTI_ENABLE_FALLING_EDGE();                                                             \
+#define __HAL_PWR_PVM1_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                               \
+	do {                                                                                                                                                                                           \
+		__HAL_PWR_PVM1_EXTI_ENABLE_RISING_EDGE();                                                                                                                                              \
+		__HAL_PWR_PVM1_EXTI_ENABLE_FALLING_EDGE();                                                                                                                                             \
 	} while (0)
 
 /**
  * @brief Disable the PVM1 Extended Interrupt Rising & Falling Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM1_EXTI_DISABLE_RISING_FALLING_EDGE()                                                              \
-	do {                                                                                                           \
-		__HAL_PWR_PVM1_EXTI_DISABLE_RISING_EDGE();                                                             \
-		__HAL_PWR_PVM1_EXTI_DISABLE_FALLING_EDGE();                                                            \
+#define __HAL_PWR_PVM1_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                              \
+	do {                                                                                                                                                                                           \
+		__HAL_PWR_PVM1_EXTI_DISABLE_RISING_EDGE();                                                                                                                                             \
+		__HAL_PWR_PVM1_EXTI_DISABLE_FALLING_EDGE();                                                                                                                                            \
 	} while (0)
 
 /**
@@ -443,20 +433,20 @@ typedef struct {
  * @brief  PVM2 EXTI line configuration: set rising & falling edge trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM2_EXTI_ENABLE_RISING_FALLING_EDGE()                                                               \
-	do {                                                                                                           \
-		__HAL_PWR_PVM2_EXTI_ENABLE_RISING_EDGE();                                                              \
-		__HAL_PWR_PVM2_EXTI_ENABLE_FALLING_EDGE();                                                             \
+#define __HAL_PWR_PVM2_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                               \
+	do {                                                                                                                                                                                           \
+		__HAL_PWR_PVM2_EXTI_ENABLE_RISING_EDGE();                                                                                                                                              \
+		__HAL_PWR_PVM2_EXTI_ENABLE_FALLING_EDGE();                                                                                                                                             \
 	} while (0)
 
 /**
  * @brief Disable the PVM2 Extended Interrupt Rising & Falling Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM2_EXTI_DISABLE_RISING_FALLING_EDGE()                                                              \
-	do {                                                                                                           \
-		__HAL_PWR_PVM2_EXTI_DISABLE_RISING_EDGE();                                                             \
-		__HAL_PWR_PVM2_EXTI_DISABLE_FALLING_EDGE();                                                            \
+#define __HAL_PWR_PVM2_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                              \
+	do {                                                                                                                                                                                           \
+		__HAL_PWR_PVM2_EXTI_DISABLE_RISING_EDGE();                                                                                                                                             \
+		__HAL_PWR_PVM2_EXTI_DISABLE_FALLING_EDGE();                                                                                                                                            \
 	} while (0)
 
 /**
@@ -531,20 +521,20 @@ typedef struct {
  * @brief  PVM3 EXTI line configuration: set rising & falling edge trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM3_EXTI_ENABLE_RISING_FALLING_EDGE()                                                               \
-	do {                                                                                                           \
-		__HAL_PWR_PVM3_EXTI_ENABLE_RISING_EDGE();                                                              \
-		__HAL_PWR_PVM3_EXTI_ENABLE_FALLING_EDGE();                                                             \
+#define __HAL_PWR_PVM3_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                               \
+	do {                                                                                                                                                                                           \
+		__HAL_PWR_PVM3_EXTI_ENABLE_RISING_EDGE();                                                                                                                                              \
+		__HAL_PWR_PVM3_EXTI_ENABLE_FALLING_EDGE();                                                                                                                                             \
 	} while (0)
 
 /**
  * @brief Disable the PVM3 Extended Interrupt Rising & Falling Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM3_EXTI_DISABLE_RISING_FALLING_EDGE()                                                              \
-	do {                                                                                                           \
-		__HAL_PWR_PVM3_EXTI_DISABLE_RISING_EDGE();                                                             \
-		__HAL_PWR_PVM3_EXTI_DISABLE_FALLING_EDGE();                                                            \
+#define __HAL_PWR_PVM3_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                              \
+	do {                                                                                                                                                                                           \
+		__HAL_PWR_PVM3_EXTI_DISABLE_RISING_EDGE();                                                                                                                                             \
+		__HAL_PWR_PVM3_EXTI_DISABLE_FALLING_EDGE();                                                                                                                                            \
 	} while (0)
 
 /**
@@ -617,20 +607,20 @@ typedef struct {
  * @brief  PVM4 EXTI line configuration: set rising & falling edge trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM4_EXTI_ENABLE_RISING_FALLING_EDGE()                                                               \
-	do {                                                                                                           \
-		__HAL_PWR_PVM4_EXTI_ENABLE_RISING_EDGE();                                                              \
-		__HAL_PWR_PVM4_EXTI_ENABLE_FALLING_EDGE();                                                             \
+#define __HAL_PWR_PVM4_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                               \
+	do {                                                                                                                                                                                           \
+		__HAL_PWR_PVM4_EXTI_ENABLE_RISING_EDGE();                                                                                                                                              \
+		__HAL_PWR_PVM4_EXTI_ENABLE_FALLING_EDGE();                                                                                                                                             \
 	} while (0)
 
 /**
  * @brief Disable the PVM4 Extended Interrupt Rising & Falling Trigger.
  * @retval None
  */
-#define __HAL_PWR_PVM4_EXTI_DISABLE_RISING_FALLING_EDGE()                                                              \
-	do {                                                                                                           \
-		__HAL_PWR_PVM4_EXTI_DISABLE_RISING_EDGE();                                                             \
-		__HAL_PWR_PVM4_EXTI_DISABLE_FALLING_EDGE();                                                            \
+#define __HAL_PWR_PVM4_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                              \
+	do {                                                                                                                                                                                           \
+		__HAL_PWR_PVM4_EXTI_DISABLE_RISING_EDGE();                                                                                                                                             \
+		__HAL_PWR_PVM4_EXTI_DISABLE_FALLING_EDGE();                                                                                                                                            \
 	} while (0)
 
 /**
@@ -670,13 +660,13 @@ typedef struct {
  * resetting.
  * @retval None
  */
-#define __HAL_PWR_VOLTAGESCALING_CONFIG(__REGULATOR__)                                                                 \
-	do {                                                                                                           \
-		__IO uint32_t tmpreg;                                                                                  \
-		MODIFY_REG(PWR->CR1, PWR_CR1_VOS, (__REGULATOR__));                                                    \
-		/* Delay after an RCC peripheral clock enabling */                                                     \
-		tmpreg = READ_BIT(PWR->CR1, PWR_CR1_VOS);                                                              \
-		UNUSED(tmpreg);                                                                                        \
+#define __HAL_PWR_VOLTAGESCALING_CONFIG(__REGULATOR__)                                                                                                                                                 \
+	do {                                                                                                                                                                                           \
+		__IO uint32_t tmpreg;                                                                                                                                                                  \
+		MODIFY_REG(PWR->CR1, PWR_CR1_VOS, (__REGULATOR__));                                                                                                                                    \
+		/* Delay after an RCC peripheral clock enabling */                                                                                                                                     \
+		tmpreg = READ_BIT(PWR->CR1, PWR_CR1_VOS);                                                                                                                                              \
+		UNUSED(tmpreg);                                                                                                                                                                        \
 	} while (0)
 
 /**
@@ -688,41 +678,30 @@ typedef struct {
  * @{
  */
 
-#define IS_PWR_WAKEUP_PIN(PIN)                                                                                         \
-	(((PIN) == PWR_WAKEUP_PIN1) || ((PIN) == PWR_WAKEUP_PIN2) || ((PIN) == PWR_WAKEUP_PIN3) ||                     \
-	 ((PIN) == PWR_WAKEUP_PIN4) || ((PIN) == PWR_WAKEUP_PIN5) || ((PIN) == PWR_WAKEUP_PIN1_HIGH) ||                \
-	 ((PIN) == PWR_WAKEUP_PIN2_HIGH) || ((PIN) == PWR_WAKEUP_PIN3_HIGH) || ((PIN) == PWR_WAKEUP_PIN4_HIGH) ||      \
-	 ((PIN) == PWR_WAKEUP_PIN5_HIGH) || ((PIN) == PWR_WAKEUP_PIN1_LOW) || ((PIN) == PWR_WAKEUP_PIN2_LOW) ||        \
-	 ((PIN) == PWR_WAKEUP_PIN3_LOW) || ((PIN) == PWR_WAKEUP_PIN4_LOW) || ((PIN) == PWR_WAKEUP_PIN5_LOW))
+#define IS_PWR_WAKEUP_PIN(PIN)                                                                                                                                                                         \
+	(((PIN) == PWR_WAKEUP_PIN1) || ((PIN) == PWR_WAKEUP_PIN2) || ((PIN) == PWR_WAKEUP_PIN3) || ((PIN) == PWR_WAKEUP_PIN4) || ((PIN) == PWR_WAKEUP_PIN5) || ((PIN) == PWR_WAKEUP_PIN1_HIGH) ||      \
+	 ((PIN) == PWR_WAKEUP_PIN2_HIGH) || ((PIN) == PWR_WAKEUP_PIN3_HIGH) || ((PIN) == PWR_WAKEUP_PIN4_HIGH) || ((PIN) == PWR_WAKEUP_PIN5_HIGH) || ((PIN) == PWR_WAKEUP_PIN1_LOW) ||                 \
+	 ((PIN) == PWR_WAKEUP_PIN2_LOW) || ((PIN) == PWR_WAKEUP_PIN3_LOW) || ((PIN) == PWR_WAKEUP_PIN4_LOW) || ((PIN) == PWR_WAKEUP_PIN5_LOW))
 
-#define IS_PWR_PVM_TYPE(TYPE)                                                                                          \
-	(((TYPE) == PWR_PVM_1) || ((TYPE) == PWR_PVM_2) || ((TYPE) == PWR_PVM_3) || ((TYPE) == PWR_PVM_4))
+#define IS_PWR_PVM_TYPE(TYPE) (((TYPE) == PWR_PVM_1) || ((TYPE) == PWR_PVM_2) || ((TYPE) == PWR_PVM_3) || ((TYPE) == PWR_PVM_4))
 
-#define IS_PWR_PVM_MODE(MODE)                                                                                          \
-	(((MODE) == PWR_PVM_MODE_NORMAL) || ((MODE) == PWR_PVM_MODE_IT_RISING) ||                                      \
-	 ((MODE) == PWR_PVM_MODE_IT_FALLING) || ((MODE) == PWR_PVM_MODE_IT_RISING_FALLING) ||                          \
-	 ((MODE) == PWR_PVM_MODE_EVENT_RISING) || ((MODE) == PWR_PVM_MODE_EVENT_FALLING) ||                            \
-	 ((MODE) == PWR_PVM_MODE_EVENT_RISING_FALLING))
+#define IS_PWR_PVM_MODE(MODE)                                                                                                                                                                          \
+	(((MODE) == PWR_PVM_MODE_NORMAL) || ((MODE) == PWR_PVM_MODE_IT_RISING) || ((MODE) == PWR_PVM_MODE_IT_FALLING) || ((MODE) == PWR_PVM_MODE_IT_RISING_FALLING) ||                                 \
+	 ((MODE) == PWR_PVM_MODE_EVENT_RISING) || ((MODE) == PWR_PVM_MODE_EVENT_FALLING) || ((MODE) == PWR_PVM_MODE_EVENT_RISING_FALLING))
 
 #if defined(PWR_CR5_R1MODE)
-#define IS_PWR_VOLTAGE_SCALING_RANGE(RANGE)                                                                            \
-	(((RANGE) == PWR_REGULATOR_VOLTAGE_SCALE1_BOOST) || ((RANGE) == PWR_REGULATOR_VOLTAGE_SCALE1) ||               \
-	 ((RANGE) == PWR_REGULATOR_VOLTAGE_SCALE2))
+#define IS_PWR_VOLTAGE_SCALING_RANGE(RANGE) (((RANGE) == PWR_REGULATOR_VOLTAGE_SCALE1_BOOST) || ((RANGE) == PWR_REGULATOR_VOLTAGE_SCALE1) || ((RANGE) == PWR_REGULATOR_VOLTAGE_SCALE2))
 #else
-#define IS_PWR_VOLTAGE_SCALING_RANGE(RANGE)                                                                            \
-	(((RANGE) == PWR_REGULATOR_VOLTAGE_SCALE1) || ((RANGE) == PWR_REGULATOR_VOLTAGE_SCALE2))
+#define IS_PWR_VOLTAGE_SCALING_RANGE(RANGE) (((RANGE) == PWR_REGULATOR_VOLTAGE_SCALE1) || ((RANGE) == PWR_REGULATOR_VOLTAGE_SCALE2))
 #endif
 
-#define IS_PWR_BATTERY_RESISTOR_SELECT(RESISTOR)                                                                       \
-	(((RESISTOR) == PWR_BATTERY_CHARGING_RESISTOR_5) || ((RESISTOR) == PWR_BATTERY_CHARGING_RESISTOR_1_5))
+#define IS_PWR_BATTERY_RESISTOR_SELECT(RESISTOR) (((RESISTOR) == PWR_BATTERY_CHARGING_RESISTOR_5) || ((RESISTOR) == PWR_BATTERY_CHARGING_RESISTOR_1_5))
 
-#define IS_PWR_BATTERY_CHARGING(CHARGING)                                                                              \
-	(((CHARGING) == PWR_BATTERY_CHARGING_DISABLE) || ((CHARGING) == PWR_BATTERY_CHARGING_ENABLE))
+#define IS_PWR_BATTERY_CHARGING(CHARGING) (((CHARGING) == PWR_BATTERY_CHARGING_DISABLE) || ((CHARGING) == PWR_BATTERY_CHARGING_ENABLE))
 
 #define IS_PWR_GPIO_BIT_NUMBER(BIT_NUMBER) (((BIT_NUMBER) & GPIO_PIN_MASK) != (uint32_t)0x00U)
-#define IS_PWR_GPIO(GPIO)                                                                                              \
-	(((GPIO) == PWR_GPIO_A) || ((GPIO) == PWR_GPIO_B) || ((GPIO) == PWR_GPIO_C) || ((GPIO) == PWR_GPIO_D) ||       \
-	 ((GPIO) == PWR_GPIO_E) || ((GPIO) == PWR_GPIO_F) || ((GPIO) == PWR_GPIO_G))
+#define IS_PWR_GPIO(GPIO)                                                                                                                                                                              \
+	(((GPIO) == PWR_GPIO_A) || ((GPIO) == PWR_GPIO_B) || ((GPIO) == PWR_GPIO_C) || ((GPIO) == PWR_GPIO_D) || ((GPIO) == PWR_GPIO_E) || ((GPIO) == PWR_GPIO_F) || ((GPIO) == PWR_GPIO_G))
 
 /**
  * @}

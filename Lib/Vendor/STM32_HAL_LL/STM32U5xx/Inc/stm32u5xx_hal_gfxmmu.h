@@ -214,8 +214,8 @@ typedef void (*pGFXMMU_CallbackTypeDef)(GFXMMU_HandleTypeDef *hgfxmmu);
  * @{
  */
 #define GFXMMU_256BLOCKS 0x00000000U /*!< 256 blocks of 16 bytes per line */
-#define GFXMMU_192BLOCKS                                                                                               \
-	GFXMMU_CR_192BM /*!< 192 blocks of 16 bytes per line                                                           \
+#define GFXMMU_192BLOCKS                                                                                                                                                                               \
+	GFXMMU_CR_192BM /*!< 192 blocks of 16 bytes per line                                                                                                                                           \
 			 */
 /**
  * @}
@@ -236,8 +236,8 @@ typedef void (*pGFXMMU_CallbackTypeDef)(GFXMMU_HandleTypeDef *hgfxmmu);
 #define GFXMMU_CACHE_LOCK_BUFFER0 0x00000000U	  /*!< Cache locked to buffer 0 */
 #define GFXMMU_CACHE_LOCK_BUFFER1 GFXMMU_CR_CLB_0 /*!< Cache locked to buffer 1 */
 #define GFXMMU_CACHE_LOCK_BUFFER2 GFXMMU_CR_CLB_1 /*!< Cache locked to buffer 2 */
-#define GFXMMU_CACHE_LOCK_BUFFER3                                                                                      \
-	GFXMMU_CR_CLB /*!< Cache locked to buffer 3                                                                    \
+#define GFXMMU_CACHE_LOCK_BUFFER3                                                                                                                                                                      \
+	GFXMMU_CR_CLB /*!< Cache locked to buffer 3                                                                                                                                                    \
 		       */
 /**
  * @}
@@ -295,17 +295,17 @@ typedef void (*pGFXMMU_CallbackTypeDef)(GFXMMU_HandleTypeDef *hgfxmmu);
  * @{
  */
 #define GFXMMU_ERROR_NONE 0x00000000U /*!< No error. */
-#define GFXMMU_ERROR_BUFFER0_OVERFLOW                                                                                  \
-	GFXMMU_SR_B0OF /*!< Buffer 0 overflow.                                                                         \
+#define GFXMMU_ERROR_BUFFER0_OVERFLOW                                                                                                                                                                  \
+	GFXMMU_SR_B0OF /*!< Buffer 0 overflow.                                                                                                                                                         \
 			*/
-#define GFXMMU_ERROR_BUFFER1_OVERFLOW                                                                                  \
-	GFXMMU_SR_B1OF /*!< Buffer 1 overflow.                                                                         \
+#define GFXMMU_ERROR_BUFFER1_OVERFLOW                                                                                                                                                                  \
+	GFXMMU_SR_B1OF /*!< Buffer 1 overflow.                                                                                                                                                         \
 			*/
-#define GFXMMU_ERROR_BUFFER2_OVERFLOW                                                                                  \
-	GFXMMU_SR_B2OF /*!< Buffer 2 overflow.                                                                         \
+#define GFXMMU_ERROR_BUFFER2_OVERFLOW                                                                                                                                                                  \
+	GFXMMU_SR_B2OF /*!< Buffer 2 overflow.                                                                                                                                                         \
 			*/
-#define GFXMMU_ERROR_BUFFER3_OVERFLOW                                                                                  \
-	GFXMMU_SR_B3OF			       /*!< Buffer 3 overflow.                                                 \
+#define GFXMMU_ERROR_BUFFER3_OVERFLOW                                                                                                                                                                  \
+	GFXMMU_SR_B3OF			       /*!< Buffer 3 overflow.                                                                                                                                 \
 						*/
 #define GFXMMU_ERROR_AHB_MASTER GFXMMU_SR_AMEF /*!< AHB master error. */
 #if (USE_HAL_GFXMMU_REGISTER_CALLBACKS == 1)
@@ -360,11 +360,11 @@ typedef void (*pGFXMMU_CallbackTypeDef)(GFXMMU_HandleTypeDef *hgfxmmu);
  * @retval None
  */
 #if (USE_HAL_GFXMMU_REGISTER_CALLBACKS == 1)
-#define __HAL_GFXMMU_RESET_HANDLE_STATE(__HANDLE__)                                                                    \
-	do {                                                                                                           \
-		(__HANDLE__)->State = HAL_GFXMMU_STATE_RESET;                                                          \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define __HAL_GFXMMU_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                    \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_GFXMMU_STATE_RESET;                                                                                                                                          \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0)
 #else
 #define __HAL_GFXMMU_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_GFXMMU_STATE_RESET)
@@ -391,8 +391,7 @@ void HAL_GFXMMU_MspInit(GFXMMU_HandleTypeDef *hgfxmmu);
 void HAL_GFXMMU_MspDeInit(GFXMMU_HandleTypeDef *hgfxmmu);
 #if (USE_HAL_GFXMMU_REGISTER_CALLBACKS == 1)
 /* GFXMMU callbacks register/unregister functions *****************************/
-HAL_StatusTypeDef HAL_GFXMMU_RegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu, HAL_GFXMMU_CallbackIDTypeDef CallbackID,
-					      pGFXMMU_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_GFXMMU_RegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu, HAL_GFXMMU_CallbackIDTypeDef CallbackID, pGFXMMU_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_GFXMMU_UnRegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu, HAL_GFXMMU_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_GFXMMU_REGISTER_CALLBACKS */
 /**
@@ -403,25 +402,21 @@ HAL_StatusTypeDef HAL_GFXMMU_UnRegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu, H
  * @{
  */
 /* Operation functions ********************************************************/
-HAL_StatusTypeDef HAL_GFXMMU_ConfigLut(const GFXMMU_HandleTypeDef *hgfxmmu, uint32_t FirstLine, uint32_t LinesNumber,
-				       uint32_t Address);
+HAL_StatusTypeDef HAL_GFXMMU_ConfigLut(const GFXMMU_HandleTypeDef *hgfxmmu, uint32_t FirstLine, uint32_t LinesNumber, uint32_t Address);
 
-HAL_StatusTypeDef HAL_GFXMMU_DisableLutLines(const GFXMMU_HandleTypeDef *hgfxmmu, uint32_t FirstLine,
-					     uint32_t LinesNumber);
+HAL_StatusTypeDef HAL_GFXMMU_DisableLutLines(const GFXMMU_HandleTypeDef *hgfxmmu, uint32_t FirstLine, uint32_t LinesNumber);
 
 HAL_StatusTypeDef HAL_GFXMMU_ConfigLutLine(const GFXMMU_HandleTypeDef *hgfxmmu, const GFXMMU_LutLineTypeDef *lutLine);
 #if defined(GFXMMU_CR_CE)
 
 HAL_StatusTypeDef HAL_GFXMMU_ConfigForceCache(GFXMMU_HandleTypeDef *hgfxmmu, uint32_t ForceParam);
 
-HAL_StatusTypeDef HAL_GFXMMU_ModifyCachePrefetch(GFXMMU_HandleTypeDef *hgfxmmu,
-						 const GFXMMU_CachePrefetchTypeDef *CachePrefetch);
+HAL_StatusTypeDef HAL_GFXMMU_ModifyCachePrefetch(GFXMMU_HandleTypeDef *hgfxmmu, const GFXMMU_CachePrefetchTypeDef *CachePrefetch);
 #endif /* GFXMMU_CR_CE */
 
 HAL_StatusTypeDef HAL_GFXMMU_ModifyBuffers(GFXMMU_HandleTypeDef *hgfxmmu, const GFXMMU_BuffersTypeDef *Buffers);
 #if defined(GFXMMU_CR_ACE)
-HAL_StatusTypeDef HAL_GFXMMU_ModifyAddressCache(GFXMMU_HandleTypeDef *hgfxmmu,
-						const GFXMMU_AddressCacheTypeDef *AddressCache);
+HAL_StatusTypeDef HAL_GFXMMU_ModifyAddressCache(GFXMMU_HandleTypeDef *hgfxmmu, const GFXMMU_AddressCacheTypeDef *AddressCache);
 #endif /* GFXMMU_CR_ACE */
 
 void HAL_GFXMMU_IRQHandler(GFXMMU_HandleTypeDef *hgfxmmu);
@@ -459,29 +454,25 @@ uint32_t HAL_GFXMMU_GetError(GFXMMU_HandleTypeDef *hgfxmmu);
 
 #define IS_GFXMMU_CACHE_LOCK(VALUE) (((VALUE) == GFXMMU_CACHE_LOCK_DISABLE) || ((VALUE) == GFXMMU_CACHE_LOCK_ENABLE))
 
-#define IS_GFXMMU_CACHE_LOCK_BUFFER(VALUE)                                                                             \
-	(((VALUE) == GFXMMU_CACHE_LOCK_BUFFER0) || ((VALUE) == GFXMMU_CACHE_LOCK_BUFFER1) ||                           \
-	 ((VALUE) == GFXMMU_CACHE_LOCK_BUFFER2) || ((VALUE) == GFXMMU_CACHE_LOCK_BUFFER3))
+#define IS_GFXMMU_CACHE_LOCK_BUFFER(VALUE)                                                                                                                                                             \
+	(((VALUE) == GFXMMU_CACHE_LOCK_BUFFER0) || ((VALUE) == GFXMMU_CACHE_LOCK_BUFFER1) || ((VALUE) == GFXMMU_CACHE_LOCK_BUFFER2) || ((VALUE) == GFXMMU_CACHE_LOCK_BUFFER3))
 
 #define IS_GFXMMU_CACHE_FORCE(VALUE) (((VALUE) == GFXMMU_CACHE_FORCE_DISABLE) || ((VALUE) == GFXMMU_CACHE_FORCE_ENABLE))
 
-#define IS_GFXMMU_OUTTER_BUFFERABILITY(VALUE)                                                                          \
-	(((VALUE) == GFXMMU_OUTTER_BUFFERABILITY_DISABLE) || ((VALUE) == GFXMMU_OUTTER_BUFFERABILITY_ENABLE))
+#define IS_GFXMMU_OUTTER_BUFFERABILITY(VALUE) (((VALUE) == GFXMMU_OUTTER_BUFFERABILITY_DISABLE) || ((VALUE) == GFXMMU_OUTTER_BUFFERABILITY_ENABLE))
 
-#define IS_GFXMMU_OUTTER_CACHABILITY(VALUE)                                                                            \
-	(((VALUE) == GFXMMU_OUTTER_CACHABILITY_DISABLE) || ((VALUE) == GFXMMU_OUTTER_CACHABILITY_ENABLE))
+#define IS_GFXMMU_OUTTER_CACHABILITY(VALUE) (((VALUE) == GFXMMU_OUTTER_CACHABILITY_DISABLE) || ((VALUE) == GFXMMU_OUTTER_CACHABILITY_ENABLE))
 
 #define IS_GFXMMU_PREFETCH(VALUE) (((VALUE) == GFXMMU_PREFETCH_DISABLE) || ((VALUE) == GFXMMU_PREFETCH_ENABLE))
 
 #if defined(GFXMMU_CR_ACE)
-#define IS_GFXMMU_ADDRESSCACHE_LOCK_BUFFER(VALUE)                                                                      \
-	(((VALUE) == GFXMMU_ADDRESSCACHE_LOCK_BUFFER0) || ((VALUE) == GFXMMU_ADDRESSCACHE_LOCK_BUFFER1) ||             \
-	 ((VALUE) == GFXMMU_ADDRESSCACHE_LOCK_BUFFER2) || ((VALUE) == GFXMMU_ADDRESSCACHE_LOCK_BUFFER3))
+#define IS_GFXMMU_ADDRESSCACHE_LOCK_BUFFER(VALUE)                                                                                                                                                      \
+	(((VALUE) == GFXMMU_ADDRESSCACHE_LOCK_BUFFER0) || ((VALUE) == GFXMMU_ADDRESSCACHE_LOCK_BUFFER1) || ((VALUE) == GFXMMU_ADDRESSCACHE_LOCK_BUFFER2) ||                                            \
+	 ((VALUE) == GFXMMU_ADDRESSCACHE_LOCK_BUFFER3))
 #endif /* GFXMMU_CR_ACE */
 
-#define IS_GFXMMU_CACHE_FORCE_ACTION(VALUE)                                                                            \
-	(((VALUE) == GFXMMU_CACHE_FORCE_FLUSH) || ((VALUE) == GFXMMU_CACHE_FORCE_INVALIDATE) ||                        \
-	 ((VALUE) == (GFXMMU_CACHE_FORCE_FLUSH | GFXMMU_CACHE_FORCE_INVALIDATE)))
+#define IS_GFXMMU_CACHE_FORCE_ACTION(VALUE)                                                                                                                                                            \
+	(((VALUE) == GFXMMU_CACHE_FORCE_FLUSH) || ((VALUE) == GFXMMU_CACHE_FORCE_INVALIDATE) || ((VALUE) == (GFXMMU_CACHE_FORCE_FLUSH | GFXMMU_CACHE_FORCE_INVALIDATE)))
 
 #define IS_GFXMMU_INTERRUPTS(VALUE) (((VALUE) & 0x1FU) != 0U)
 

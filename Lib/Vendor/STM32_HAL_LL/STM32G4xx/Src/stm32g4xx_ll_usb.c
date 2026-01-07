@@ -95,8 +95,7 @@ HAL_StatusTypeDef USB_EnableGlobalInt(USB_TypeDef *USBx)
 	USBx->ISTR = 0U;
 
 	/* Set winterruptmask variable */
-	winterruptmask = USB_CNTR_CTRM | USB_CNTR_WKUPM | USB_CNTR_SUSPM | USB_CNTR_ERRM | USB_CNTR_SOFM |
-			 USB_CNTR_ESOFM | USB_CNTR_RESETM | USB_CNTR_L1REQM;
+	winterruptmask = USB_CNTR_CTRM | USB_CNTR_WKUPM | USB_CNTR_SUSPM | USB_CNTR_ERRM | USB_CNTR_SOFM | USB_CNTR_ESOFM | USB_CNTR_RESETM | USB_CNTR_L1REQM;
 
 	/* Set interrupt mask */
 	USBx->CNTR = (uint16_t)winterruptmask;
@@ -115,8 +114,7 @@ HAL_StatusTypeDef USB_DisableGlobalInt(USB_TypeDef *USBx)
 	uint32_t winterruptmask;
 
 	/* Set winterruptmask variable */
-	winterruptmask = USB_CNTR_CTRM | USB_CNTR_WKUPM | USB_CNTR_SUSPM | USB_CNTR_ERRM | USB_CNTR_SOFM |
-			 USB_CNTR_ESOFM | USB_CNTR_RESETM | USB_CNTR_L1REQM;
+	winterruptmask = USB_CNTR_CTRM | USB_CNTR_WKUPM | USB_CNTR_SUSPM | USB_CNTR_ERRM | USB_CNTR_SOFM | USB_CNTR_ESOFM | USB_CNTR_RESETM | USB_CNTR_L1REQM;
 
 	/* Clear interrupt mask */
 	USBx->CNTR &= (uint16_t)(~winterruptmask);
@@ -560,8 +558,7 @@ HAL_StatusTypeDef USB_EPStartXfer(USB_TypeDef *USBx, USB_EPTypeDef *ep)
 					wEPVal = PCD_GET_ENDPOINT(USBx, ep->num);
 
 					/* Blocking State */
-					if ((((wEPVal & USB_EP_DTOG_RX) != 0U) && ((wEPVal & USB_EP_DTOG_TX) != 0U)) ||
-					    (((wEPVal & USB_EP_DTOG_RX) == 0U) && ((wEPVal & USB_EP_DTOG_TX) == 0U))) {
+					if ((((wEPVal & USB_EP_DTOG_RX) != 0U) && ((wEPVal & USB_EP_DTOG_TX) != 0U)) || (((wEPVal & USB_EP_DTOG_RX) == 0U) && ((wEPVal & USB_EP_DTOG_TX) == 0U))) {
 						PCD_FREE_USER_BUFFER(USBx, ep->num, 0U);
 					}
 				}
@@ -844,7 +841,7 @@ void USB_ReadPMA(USB_TypeDef const *USBx, uint8_t *pbUsrBuf, uint16_t wPMABufAdd
  * @}
  */
 #endif /* defined (USB) */
-#endif /* defined (HAL_PCD_MODULE_ENABLED) || defined (HAL_HCD_MODULE_ENABLED)                                         \
+#endif /* defined (HAL_PCD_MODULE_ENABLED) || defined (HAL_HCD_MODULE_ENABLED)                                                                                                                         \
 	*/
 
 /**

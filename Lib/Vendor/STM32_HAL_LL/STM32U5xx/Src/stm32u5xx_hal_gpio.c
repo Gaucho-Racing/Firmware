@@ -266,8 +266,7 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, const GPIO_InitTypeDef *pGPIO_Init)
 				 * current IO */
 				tmp = GPIOx->AFR[position >> 3U];
 				tmp &= ~(0x0FUL << ((position & 0x07U) * GPIO_AFRL_AFSEL1_Pos));
-				tmp |=
-				    ((pGPIO_Init->Alternate & 0x0FUL) << ((position & 0x07U) * GPIO_AFRL_AFSEL1_Pos));
+				tmp |= ((pGPIO_Init->Alternate & 0x0FUL) << ((position & 0x07U) * GPIO_AFRL_AFSEL1_Pos));
 				GPIOx->AFR[position >> 3U] = tmp;
 
 				/* Configure IO Direction mode (Alternate) */
@@ -289,8 +288,7 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, const GPIO_InitTypeDef *pGPIO_Init)
 
 			/* In case of Output or Alternate function mode
 			 * selection */
-			if ((pGPIO_Init->Mode == GPIO_MODE_OUTPUT_PP) || (pGPIO_Init->Mode == GPIO_MODE_AF_PP) ||
-			    (pGPIO_Init->Mode == GPIO_MODE_OUTPUT_OD) || (pGPIO_Init->Mode == GPIO_MODE_AF_OD)) {
+			if ((pGPIO_Init->Mode == GPIO_MODE_OUTPUT_PP) || (pGPIO_Init->Mode == GPIO_MODE_AF_PP) || (pGPIO_Init->Mode == GPIO_MODE_OUTPUT_OD) || (pGPIO_Init->Mode == GPIO_MODE_AF_OD)) {
 				/* Check the Speed parameter */
 				assert_param(IS_GPIO_SPEED(pGPIO_Init->Speed));
 
@@ -307,8 +305,7 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, const GPIO_InitTypeDef *pGPIO_Init)
 				p_gpio->OTYPER = tmp;
 			}
 
-			if ((pGPIO_Init->Mode != GPIO_MODE_ANALOG) ||
-			    ((pGPIO_Init->Mode == GPIO_MODE_ANALOG) && (pGPIO_Init->Pull != GPIO_PULLUP))) {
+			if ((pGPIO_Init->Mode != GPIO_MODE_ANALOG) || ((pGPIO_Init->Mode == GPIO_MODE_ANALOG) && (pGPIO_Init->Pull != GPIO_PULLUP))) {
 				/* Check the Pull parameters */
 				assert_param(IS_GPIO_PULL(pGPIO_Init->Pull));
 
@@ -883,8 +880,7 @@ void HAL_GPIO_ConfigPinAttributes(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, uint32
 			}
 
 			/* Configure the IO secure attribute */
-			MODIFY_REG(p_gpio->SECCFGR, (GPIO_SECCFGR_SEC0 << pin_position),
-				   (PinAttributes << pin_position));
+			MODIFY_REG(p_gpio->SECCFGR, (GPIO_SECCFGR_SEC0 << pin_position), (PinAttributes << pin_position));
 		}
 		position++;
 	}
@@ -900,8 +896,7 @@ void HAL_GPIO_ConfigPinAttributes(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, uint32
  * @param  pPinAttributes: pointer to return the pin attributes.
  * @retval HAL Status.
  */
-HAL_StatusTypeDef HAL_GPIO_GetConfigPinAttributes(const GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin,
-						  uint32_t *pPinAttributes)
+HAL_StatusTypeDef HAL_GPIO_GetConfigPinAttributes(const GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, uint32_t *pPinAttributes)
 {
 	uint32_t iocurrent;
 	uint32_t pin_position;

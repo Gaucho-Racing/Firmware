@@ -308,77 +308,77 @@ typedef void (*pSD_TransceiverCallbackTypeDef)(FlagStatus status);
  * @{
  */
 #define HAL_SD_ERROR_NONE SDMMC_ERROR_NONE /*!< No error */
-#define HAL_SD_ERROR_CMD_CRC_FAIL                                                                                      \
-	SDMMC_ERROR_CMD_CRC_FAIL /*!< Command response received (but CRC check                                         \
+#define HAL_SD_ERROR_CMD_CRC_FAIL                                                                                                                                                                      \
+	SDMMC_ERROR_CMD_CRC_FAIL /*!< Command response received (but CRC check                                                                                                                         \
 				    failed)             */
-#define HAL_SD_ERROR_DATA_CRC_FAIL                                                                                     \
-	SDMMC_ERROR_DATA_CRC_FAIL				 /*!< Data block sent/received (CRC check              \
+#define HAL_SD_ERROR_DATA_CRC_FAIL                                                                                                                                                                     \
+	SDMMC_ERROR_DATA_CRC_FAIL				 /*!< Data block sent/received (CRC check                                                                                              \
 								    failed)                  */
 #define HAL_SD_ERROR_CMD_RSP_TIMEOUT SDMMC_ERROR_CMD_RSP_TIMEOUT /*!< Command response timeout */
-#define HAL_SD_ERROR_DATA_TIMEOUT                                                                                      \
-	SDMMC_ERROR_DATA_TIMEOUT				 /*!< Data timeout                                     \
+#define HAL_SD_ERROR_DATA_TIMEOUT                                                                                                                                                                      \
+	SDMMC_ERROR_DATA_TIMEOUT				 /*!< Data timeout                                                                                                                     \
 								  */
 #define HAL_SD_ERROR_TX_UNDERRUN SDMMC_ERROR_TX_UNDERRUN	 /*!< Transmit FIFO underrun */
 #define HAL_SD_ERROR_RX_OVERRUN SDMMC_ERROR_RX_OVERRUN		 /*!< Receive FIFO overrun */
 #define HAL_SD_ERROR_ADDR_MISALIGNED SDMMC_ERROR_ADDR_MISALIGNED /*!< Misaligned address */
-#define HAL_SD_ERROR_BLOCK_LEN_ERR                                                                                     \
-	SDMMC_ERROR_BLOCK_LEN_ERR /*!< Transferred block length is not allowed                                         \
+#define HAL_SD_ERROR_BLOCK_LEN_ERR                                                                                                                                                                     \
+	SDMMC_ERROR_BLOCK_LEN_ERR /*!< Transferred block length is not allowed                                                                                                                         \
 				     for the card or the  */
 /*!< number of transferred bytes does not match the block length  */
-#define HAL_SD_ERROR_ERASE_SEQ_ERR                                                                                     \
-	SDMMC_ERROR_ERASE_SEQ_ERR /*!< An error in the sequence of erase                                               \
+#define HAL_SD_ERROR_ERASE_SEQ_ERR                                                                                                                                                                     \
+	SDMMC_ERROR_ERASE_SEQ_ERR /*!< An error in the sequence of erase                                                                                                                               \
 				     command occurs             */
-#define HAL_SD_ERROR_BAD_ERASE_PARAM                                                                                   \
-	SDMMC_ERROR_BAD_ERASE_PARAM /*!< An invalid selection for erase groups                                         \
+#define HAL_SD_ERROR_BAD_ERASE_PARAM                                                                                                                                                                   \
+	SDMMC_ERROR_BAD_ERASE_PARAM /*!< An invalid selection for erase groups                                                                                                                         \
 				     */
-#define HAL_SD_ERROR_WRITE_PROT_VIOLATION                                                                              \
-	SDMMC_ERROR_WRITE_PROT_VIOLATION /*!< Attempt to program a write                                               \
+#define HAL_SD_ERROR_WRITE_PROT_VIOLATION                                                                                                                                                              \
+	SDMMC_ERROR_WRITE_PROT_VIOLATION /*!< Attempt to program a write                                                                                                                               \
 					    protect block */
-#define HAL_SD_ERROR_LOCK_UNLOCK_FAILED                                                                                \
-	SDMMC_ERROR_LOCK_UNLOCK_FAILED /*!< Sequence or password error has                                             \
+#define HAL_SD_ERROR_LOCK_UNLOCK_FAILED                                                                                                                                                                \
+	SDMMC_ERROR_LOCK_UNLOCK_FAILED /*!< Sequence or password error has                                                                                                                             \
 					  been detected in unlock       */
 /*!< command or if there was an attempt to access a locked card   */
-#define HAL_SD_ERROR_COM_CRC_FAILED                                                                                    \
-	SDMMC_ERROR_COM_CRC_FAILED /*!< CRC check of the previous command                                              \
+#define HAL_SD_ERROR_COM_CRC_FAILED                                                                                                                                                                    \
+	SDMMC_ERROR_COM_CRC_FAILED /*!< CRC check of the previous command                                                                                                                              \
 				      failed                     */
-#define HAL_SD_ERROR_ILLEGAL_CMD                                                                                       \
-	SDMMC_ERROR_ILLEGAL_CMD /*!< Command is not legal for the card state                                           \
+#define HAL_SD_ERROR_ILLEGAL_CMD                                                                                                                                                                       \
+	SDMMC_ERROR_ILLEGAL_CMD /*!< Command is not legal for the card state                                                                                                                           \
 				 */
-#define HAL_SD_ERROR_CARD_ECC_FAILED                                                                                   \
-	SDMMC_ERROR_CARD_ECC_FAILED					 /*!< Card internal ECC was applied but        \
+#define HAL_SD_ERROR_CARD_ECC_FAILED                                                                                                                                                                   \
+	SDMMC_ERROR_CARD_ECC_FAILED					 /*!< Card internal ECC was applied but                                                                                        \
 									    failed to correct the data */
 #define HAL_SD_ERROR_CC_ERR SDMMC_ERROR_CC_ERR				 /*!< Internal card controller error */
 #define HAL_SD_ERROR_GENERAL_UNKNOWN_ERR SDMMC_ERROR_GENERAL_UNKNOWN_ERR /*!< General or unknown error */
-#define HAL_SD_ERROR_STREAM_READ_UNDERRUN                                                                              \
-	SDMMC_ERROR_STREAM_READ_UNDERRUN /*!< The card could not sustain data                                          \
+#define HAL_SD_ERROR_STREAM_READ_UNDERRUN                                                                                                                                                              \
+	SDMMC_ERROR_STREAM_READ_UNDERRUN /*!< The card could not sustain data                                                                                                                          \
 					    reading in stream rmode      */
-#define HAL_SD_ERROR_STREAM_WRITE_OVERRUN                                                                              \
-	SDMMC_ERROR_STREAM_WRITE_OVERRUN			     /*!< The card could not sustain data              \
+#define HAL_SD_ERROR_STREAM_WRITE_OVERRUN                                                                                                                                                              \
+	SDMMC_ERROR_STREAM_WRITE_OVERRUN			     /*!< The card could not sustain data                                                                                              \
 									programming in stream mode   */
 #define HAL_SD_ERROR_CID_CSD_OVERWRITE SDMMC_ERROR_CID_CSD_OVERWRITE /*!< CID/CSD overwrite error */
-#define HAL_SD_ERROR_WP_ERASE_SKIP                                                                                     \
-	SDMMC_ERROR_WP_ERASE_SKIP /*!< Only partial address space was erased                                           \
+#define HAL_SD_ERROR_WP_ERASE_SKIP                                                                                                                                                                     \
+	SDMMC_ERROR_WP_ERASE_SKIP /*!< Only partial address space was erased                                                                                                                           \
 				   */
-#define HAL_SD_ERROR_CARD_ECC_DISABLED                                                                                 \
-	SDMMC_ERROR_CARD_ECC_DISABLED /*!< Command has been executed without                                           \
+#define HAL_SD_ERROR_CARD_ECC_DISABLED                                                                                                                                                                 \
+	SDMMC_ERROR_CARD_ECC_DISABLED /*!< Command has been executed without                                                                                                                           \
 					 using internal ECC         */
-#define HAL_SD_ERROR_ERASE_RESET                                                                                       \
-	SDMMC_ERROR_ERASE_RESET /*!< Erase sequence was cleared before                                                 \
+#define HAL_SD_ERROR_ERASE_RESET                                                                                                                                                                       \
+	SDMMC_ERROR_ERASE_RESET /*!< Erase sequence was cleared before                                                                                                                                 \
 				   executing because an out   */
 /*!< of erase sequence command was received                       */
 #define HAL_SD_ERROR_AKE_SEQ_ERR SDMMC_ERROR_AKE_SEQ_ERR /*!< Error in sequence of authentication */
-#define HAL_SD_ERROR_INVALID_VOLTRANGE                                                                                 \
-	SDMMC_ERROR_INVALID_VOLTRANGE /*!< Error in case of invalid voltage                                            \
+#define HAL_SD_ERROR_INVALID_VOLTRANGE                                                                                                                                                                 \
+	SDMMC_ERROR_INVALID_VOLTRANGE /*!< Error in case of invalid voltage                                                                                                                            \
 					 range                       */
-#define HAL_SD_ERROR_ADDR_OUT_OF_RANGE                                                                                 \
-	SDMMC_ERROR_ADDR_OUT_OF_RANGE /*!< Error when addressed block is out                                           \
+#define HAL_SD_ERROR_ADDR_OUT_OF_RANGE                                                                                                                                                                 \
+	SDMMC_ERROR_ADDR_OUT_OF_RANGE /*!< Error when addressed block is out                                                                                                                           \
 					 of range                   */
-#define HAL_SD_ERROR_REQUEST_NOT_APPLICABLE                                                                            \
-	SDMMC_ERROR_REQUEST_NOT_APPLICABLE		 /*!< Error when command request is                            \
+#define HAL_SD_ERROR_REQUEST_NOT_APPLICABLE                                                                                                                                                            \
+	SDMMC_ERROR_REQUEST_NOT_APPLICABLE		 /*!< Error when command request is                                                                                                            \
 							    not applicable */
 #define HAL_SD_ERROR_PARAM SDMMC_ERROR_INVALID_PARAMETER /*!< the used parameter is not valid */
-#define HAL_SD_ERROR_UNSUPPORTED_FEATURE                                                                               \
-	SDMMC_ERROR_UNSUPPORTED_FEATURE		 /*!< Error when feature is not                                        \
+#define HAL_SD_ERROR_UNSUPPORTED_FEATURE                                                                                                                                                               \
+	SDMMC_ERROR_UNSUPPORTED_FEATURE		 /*!< Error when feature is not                                                                                                                        \
 						    insupported */
 #define HAL_SD_ERROR_BUSY SDMMC_ERROR_BUSY	 /*!< Error when transfer process is busy */
 #define HAL_SD_ERROR_DMA SDMMC_ERROR_DMA	 /*!< Error while DMA transfer */
@@ -409,20 +409,20 @@ typedef void (*pSD_TransceiverCallbackTypeDef)(FlagStatus status);
 /** @defgroup SD_Exported_Constansts_Group3 SD Supported Memory Cards
  * @{
  */
-#define CARD_NORMAL_SPEED                                                                                              \
-	((uint32_t)0x00000000U) /*!< Normal Speed Card <12.5Mo/s , Spec                                                \
+#define CARD_NORMAL_SPEED                                                                                                                                                                              \
+	((uint32_t)0x00000000U) /*!< Normal Speed Card <12.5Mo/s , Spec                                                                                                                                \
 				   Version 1.01    */
-#define CARD_HIGH_SPEED                                                                                                \
-	((uint32_t)0x00000100U) /*!< High Speed Card <25Mo/s , Spec                                                    \
+#define CARD_HIGH_SPEED                                                                                                                                                                                \
+	((uint32_t)0x00000100U) /*!< High Speed Card <25Mo/s , Spec                                                                                                                                    \
 				   version 2.00        */
-#define CARD_ULTRA_HIGH_SPEED                                                                                          \
-	((uint32_t)0x00000200U) /*!< UHS-I SD Card <50Mo/s for SDR50, DDR5                                             \
-				   Cards and <104Mo/s for SDR104, Spec                                                 \
+#define CARD_ULTRA_HIGH_SPEED                                                                                                                                                                          \
+	((uint32_t)0x00000200U) /*!< UHS-I SD Card <50Mo/s for SDR50, DDR5                                                                                                                             \
+				   Cards and <104Mo/s for SDR104, Spec                                                                                                                                 \
 				   version 3.01          */
 
 #define CARD_SDSC ((uint32_t)0x00000000U) /*!< SD Standard Capacity <2Go */
-#define CARD_SDHC_SDXC                                                                                                 \
-	((uint32_t)0x00000001U) /*!< SD High Capacity <32Go, SD Extended                                               \
+#define CARD_SDHC_SDXC                                                                                                                                                                                 \
+	((uint32_t)0x00000001U) /*!< SD High Capacity <32Go, SD Extended                                                                                                                               \
 				   Capacity <2To  */
 #define CARD_SECURED ((uint32_t)0x00000003U)
 
@@ -453,11 +453,11 @@ typedef void (*pSD_TransceiverCallbackTypeDef)(FlagStatus status);
  * @retval None
  */
 #if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
-#define __HAL_SD_RESET_HANDLE_STATE(__HANDLE__)                                                                        \
-	do {                                                                                                           \
-		(__HANDLE__)->State = HAL_SD_STATE_RESET;                                                              \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define __HAL_SD_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                        \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_SD_STATE_RESET;                                                                                                                                              \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0)
 #else
 #define __HAL_SD_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_SD_STATE_RESET)
@@ -735,21 +735,15 @@ void HAL_SD_MspDeInit(SD_HandleTypeDef *hsd);
  * @{
  */
 /* Blocking mode: Polling */
-HAL_StatusTypeDef HAL_SD_ReadBlocks(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks,
-				    uint32_t Timeout);
-HAL_StatusTypeDef HAL_SD_WriteBlocks(SD_HandleTypeDef *hsd, const uint8_t *pData, uint32_t BlockAdd,
-				     uint32_t NumberOfBlocks, uint32_t Timeout);
+HAL_StatusTypeDef HAL_SD_ReadBlocks(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks, uint32_t Timeout);
+HAL_StatusTypeDef HAL_SD_WriteBlocks(SD_HandleTypeDef *hsd, const uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks, uint32_t Timeout);
 HAL_StatusTypeDef HAL_SD_Erase(SD_HandleTypeDef *hsd, uint32_t BlockStartAdd, uint32_t BlockEndAdd);
 /* Non-Blocking mode: IT */
-HAL_StatusTypeDef HAL_SD_ReadBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd,
-				       uint32_t NumberOfBlocks);
-HAL_StatusTypeDef HAL_SD_WriteBlocks_IT(SD_HandleTypeDef *hsd, const uint8_t *pData, uint32_t BlockAdd,
-					uint32_t NumberOfBlocks);
+HAL_StatusTypeDef HAL_SD_ReadBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks);
+HAL_StatusTypeDef HAL_SD_WriteBlocks_IT(SD_HandleTypeDef *hsd, const uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks);
 /* Non-Blocking mode: DMA */
-HAL_StatusTypeDef HAL_SD_ReadBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd,
-					uint32_t NumberOfBlocks);
-HAL_StatusTypeDef HAL_SD_WriteBlocks_DMA(SD_HandleTypeDef *hsd, const uint8_t *pData, uint32_t BlockAdd,
-					 uint32_t NumberOfBlocks);
+HAL_StatusTypeDef HAL_SD_ReadBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks);
+HAL_StatusTypeDef HAL_SD_WriteBlocks_DMA(SD_HandleTypeDef *hsd, const uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks);
 
 void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd);
 
@@ -766,8 +760,7 @@ void HAL_SD_DriveTransceiver_1_8V_Callback(FlagStatus status);
 
 #if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 /* SD callback registering/unregistering */
-HAL_StatusTypeDef HAL_SD_RegisterCallback(SD_HandleTypeDef *hsd, HAL_SD_CallbackIDTypeDef CallbackID,
-					  pSD_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_SD_RegisterCallback(SD_HandleTypeDef *hsd, HAL_SD_CallbackIDTypeDef CallbackID, pSD_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_SD_UnRegisterCallback(SD_HandleTypeDef *hsd, HAL_SD_CallbackIDTypeDef CallbackID);
 
 #if (USE_SD_TRANSCEIVER != 0U)

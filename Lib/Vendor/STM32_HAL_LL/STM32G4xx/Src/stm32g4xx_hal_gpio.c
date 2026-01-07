@@ -190,8 +190,7 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)
 			 * ------------------------*/
 			/* In case of Output or Alternate function mode
 			 * selection */
-			if (((GPIO_Init->Mode & GPIO_MODE) == MODE_OUTPUT) ||
-			    ((GPIO_Init->Mode & GPIO_MODE) == MODE_AF)) {
+			if (((GPIO_Init->Mode & GPIO_MODE) == MODE_OUTPUT) || ((GPIO_Init->Mode & GPIO_MODE) == MODE_AF)) {
 				/* Check the Speed parameter */
 				assert_param(IS_GPIO_SPEED(GPIO_Init->Speed));
 				/* Configure the IO Speed */
@@ -207,8 +206,7 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)
 				GPIOx->OTYPER = temp;
 			}
 
-			if (((GPIO_Init->Mode & GPIO_MODE) != MODE_ANALOG) ||
-			    (((GPIO_Init->Mode & GPIO_MODE) == MODE_ANALOG) && (GPIO_Init->Pull != GPIO_PULLUP))) {
+			if (((GPIO_Init->Mode & GPIO_MODE) != MODE_ANALOG) || (((GPIO_Init->Mode & GPIO_MODE) == MODE_ANALOG) && (GPIO_Init->Pull != GPIO_PULLUP))) {
 				/* Check the Pull parameter */
 				assert_param(IS_GPIO_PULL(GPIO_Init->Pull));
 

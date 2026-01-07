@@ -184,7 +184,7 @@ typedef struct __USART_HandleTypeDef {
 	void (*ErrorCallback)(struct __USART_HandleTypeDef *husart);	  /*!< USART Error Callback */
 	void (*AbortCpltCallback)(struct __USART_HandleTypeDef *husart);  /*!< USART Abort Complete Callback          */
 #if defined(USART_CR1_FIFOEN)
-	void (*RxFifoFullCallback)(struct __USART_HandleTypeDef *husart); /*!< USART Rx Fifo Full Callback            */
+	void (*RxFifoFullCallback)(struct __USART_HandleTypeDef *husart);  /*!< USART Rx Fifo Full Callback            */
 	void (*TxFifoEmptyCallback)(struct __USART_HandleTypeDef *husart); /*!< USART Tx Fifo Empty Callback */
 #endif									   /* USART_CR1_FIFOEN */
 
@@ -313,11 +313,11 @@ typedef void (*pUSART_CallbackTypeDef)(USART_HandleTypeDef *husart); /*!< pointe
 /** @defgroup USART_Last_Bit  USART Last Bit
  * @{
  */
-#define USART_LASTBIT_DISABLE                                                                                          \
-	0x00000000U /*!< USART frame last data bit clock pulse not output to                                           \
+#define USART_LASTBIT_DISABLE                                                                                                                                                                          \
+	0x00000000U /*!< USART frame last data bit clock pulse not output to                                                                                                                           \
 		       SCLK pin */
-#define USART_LASTBIT_ENABLE                                                                                           \
-	USART_CR2_LBCL /*!< USART frame last data bit clock pulse output to                                            \
+#define USART_LASTBIT_ENABLE                                                                                                                                                                           \
+	USART_CR2_LBCL /*!< USART frame last data bit clock pulse output to                                                                                                                            \
 			  SCLK pin     */
 /**
  * @}
@@ -477,11 +477,11 @@ typedef void (*pUSART_CallbackTypeDef)(USART_HandleTypeDef *husart); /*!< pointe
  * @retval None
  */
 #if (USE_HAL_USART_REGISTER_CALLBACKS == 1)
-#define __HAL_USART_RESET_HANDLE_STATE(__HANDLE__)                                                                     \
-	do {                                                                                                           \
-		(__HANDLE__)->State = HAL_USART_STATE_RESET;                                                           \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define __HAL_USART_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                     \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_USART_STATE_RESET;                                                                                                                                           \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0U)
 #else
 #define __HAL_USART_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_USART_STATE_RESET)
@@ -596,12 +596,10 @@ typedef void (*pUSART_CallbackTypeDef)(USART_HandleTypeDef *husart); /*!< pointe
  * overrun error)
  * @retval None
  */
-#define __HAL_USART_ENABLE_IT(__HANDLE__, __INTERRUPT__)                                                               \
-	(((((__INTERRUPT__) & USART_CR_MASK) >> USART_CR_POS) == 1U)                                                   \
-	     ? ((__HANDLE__)->Instance->CR1 |= (1U << ((__INTERRUPT__) & USART_IT_MASK)))                              \
-	 : ((((__INTERRUPT__) & USART_CR_MASK) >> USART_CR_POS) == 2U)                                                 \
-	     ? ((__HANDLE__)->Instance->CR2 |= (1U << ((__INTERRUPT__) & USART_IT_MASK)))                              \
-	     : ((__HANDLE__)->Instance->CR3 |= (1U << ((__INTERRUPT__) & USART_IT_MASK))))
+#define __HAL_USART_ENABLE_IT(__HANDLE__, __INTERRUPT__)                                                                                                                                               \
+	(((((__INTERRUPT__) & USART_CR_MASK) >> USART_CR_POS) == 1U)   ? ((__HANDLE__)->Instance->CR1 |= (1U << ((__INTERRUPT__) & USART_IT_MASK)))                                                    \
+	 : ((((__INTERRUPT__) & USART_CR_MASK) >> USART_CR_POS) == 2U) ? ((__HANDLE__)->Instance->CR2 |= (1U << ((__INTERRUPT__) & USART_IT_MASK)))                                                    \
+								       : ((__HANDLE__)->Instance->CR3 |= (1U << ((__INTERRUPT__) & USART_IT_MASK))))
 
 /** @brief  Disable the specified USART interrupt.
  * @param  __HANDLE__ specifies the USART Handle.
@@ -622,12 +620,10 @@ typedef void (*pUSART_CallbackTypeDef)(USART_HandleTypeDef *husart); /*!< pointe
  * overrun error)
  * @retval None
  */
-#define __HAL_USART_DISABLE_IT(__HANDLE__, __INTERRUPT__)                                                              \
-	(((((__INTERRUPT__) & USART_CR_MASK) >> USART_CR_POS) == 1U)                                                   \
-	     ? ((__HANDLE__)->Instance->CR1 &= ~(1U << ((__INTERRUPT__) & USART_IT_MASK)))                             \
-	 : ((((__INTERRUPT__) & USART_CR_MASK) >> USART_CR_POS) == 2U)                                                 \
-	     ? ((__HANDLE__)->Instance->CR2 &= ~(1U << ((__INTERRUPT__) & USART_IT_MASK)))                             \
-	     : ((__HANDLE__)->Instance->CR3 &= ~(1U << ((__INTERRUPT__) & USART_IT_MASK))))
+#define __HAL_USART_DISABLE_IT(__HANDLE__, __INTERRUPT__)                                                                                                                                              \
+	(((((__INTERRUPT__) & USART_CR_MASK) >> USART_CR_POS) == 1U)   ? ((__HANDLE__)->Instance->CR1 &= ~(1U << ((__INTERRUPT__) & USART_IT_MASK)))                                                   \
+	 : ((((__INTERRUPT__) & USART_CR_MASK) >> USART_CR_POS) == 2U) ? ((__HANDLE__)->Instance->CR2 &= ~(1U << ((__INTERRUPT__) & USART_IT_MASK)))                                                   \
+								       : ((__HANDLE__)->Instance->CR3 &= ~(1U << ((__INTERRUPT__) & USART_IT_MASK))))
 
 /** @brief  Check whether the specified USART interrupt has occurred or not.
  * @param  __HANDLE__ specifies the USART Handle.
@@ -649,10 +645,7 @@ typedef void (*pUSART_CallbackTypeDef)(USART_HandleTypeDef *husart); /*!< pointe
  *            @arg @ref USART_IT_PE    Parity Error interrupt
  * @retval The new state of __INTERRUPT__ (SET or RESET).
  */
-#define __HAL_USART_GET_IT(__HANDLE__, __INTERRUPT__)                                                                  \
-	((((__HANDLE__)->Instance->ISR & (0x01U << (((__INTERRUPT__) & USART_ISR_MASK) >> USART_ISR_POS))) != 0U)      \
-	     ? SET                                                                                                     \
-	     : RESET)
+#define __HAL_USART_GET_IT(__HANDLE__, __INTERRUPT__) ((((__HANDLE__)->Instance->ISR & (0x01U << (((__INTERRUPT__) & USART_ISR_MASK) >> USART_ISR_POS))) != 0U) ? SET : RESET)
 
 /** @brief  Check whether the specified USART interrupt source is enabled or
  * not.
@@ -675,13 +668,11 @@ typedef void (*pUSART_CallbackTypeDef)(USART_HandleTypeDef *husart); /*!< pointe
  *            @arg @ref USART_IT_PE    Parity Error interrupt
  * @retval The new state of __INTERRUPT__ (SET or RESET).
  */
-#define __HAL_USART_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)                                                           \
-	((((((((uint8_t)(__INTERRUPT__)) >> 0x05U) == 0x01U)                                                           \
-		? (__HANDLE__)->Instance->CR1                                                                          \
-		: (((((uint8_t)(__INTERRUPT__)) >> 0x05U) == 0x02U) ? (__HANDLE__)->Instance->CR2                      \
-								    : (__HANDLE__)->Instance->CR3)) &                  \
-	   (0x01U << (((uint16_t)(__INTERRUPT__)) & USART_IT_MASK))) != 0U)                                            \
-	     ? SET                                                                                                     \
+#define __HAL_USART_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)                                                                                                                                           \
+	((((((((uint8_t)(__INTERRUPT__)) >> 0x05U) == 0x01U) ? (__HANDLE__)->Instance->CR1                                                                                                             \
+							     : (((((uint8_t)(__INTERRUPT__)) >> 0x05U) == 0x02U) ? (__HANDLE__)->Instance->CR2 : (__HANDLE__)->Instance->CR3)) &                       \
+	   (0x01U << (((uint16_t)(__INTERRUPT__)) & USART_IT_MASK))) != 0U)                                                                                                                            \
+	     ? SET                                                                                                                                                                                     \
 	     : RESET)
 
 /** @brief  Clear the specified USART ISR flag, in setting the proper ICR
@@ -751,18 +742,18 @@ typedef void (*pUSART_CallbackTypeDef)(USART_HandleTypeDef *husart); /*!< pointe
  * @param  __CLOCKPRESCALER__ USART prescaler value.
  * @retval USART clock division factor
  */
-#define USART_GET_DIV_FACTOR(__CLOCKPRESCALER__)                                                                       \
-	(((__CLOCKPRESCALER__) == USART_PRESCALER_DIV1)	    ? 1U                                                       \
-	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV2)   ? 2U                                                       \
-	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV4)   ? 4U                                                       \
-	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV6)   ? 6U                                                       \
-	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV8)   ? 8U                                                       \
-	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV10)  ? 10U                                                      \
-	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV12)  ? 12U                                                      \
-	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV16)  ? 16U                                                      \
-	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV32)  ? 32U                                                      \
-	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV64)  ? 64U                                                      \
-	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV128) ? 128U                                                     \
+#define USART_GET_DIV_FACTOR(__CLOCKPRESCALER__)                                                                                                                                                       \
+	(((__CLOCKPRESCALER__) == USART_PRESCALER_DIV1)	    ? 1U                                                                                                                                       \
+	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV2)   ? 2U                                                                                                                                       \
+	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV4)   ? 4U                                                                                                                                       \
+	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV6)   ? 6U                                                                                                                                       \
+	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV8)   ? 8U                                                                                                                                       \
+	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV10)  ? 10U                                                                                                                                      \
+	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV12)  ? 12U                                                                                                                                      \
+	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV16)  ? 16U                                                                                                                                      \
+	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV32)  ? 32U                                                                                                                                      \
+	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV64)  ? 64U                                                                                                                                      \
+	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV128) ? 128U                                                                                                                                     \
 							    : 256U)
 
 /** @brief  BRR division operation to set BRR register in 8-bit oversampling
@@ -772,8 +763,7 @@ typedef void (*pUSART_CallbackTypeDef)(USART_HandleTypeDef *husart); /*!< pointe
  * @param  __CLOCKPRESCALER__ USART prescaler value.
  * @retval Division result
  */
-#define USART_DIV_SAMPLING8(__PCLK__, __BAUD__, __CLOCKPRESCALER__)                                                    \
-	(((((__PCLK__) / USART_GET_DIV_FACTOR(__CLOCKPRESCALER__)) * 2U) + ((__BAUD__) / 2U)) / (__BAUD__))
+#define USART_DIV_SAMPLING8(__PCLK__, __BAUD__, __CLOCKPRESCALER__) (((((__PCLK__) / USART_GET_DIV_FACTOR(__CLOCKPRESCALER__)) * 2U) + ((__BAUD__) / 2U)) / (__BAUD__))
 #else
 /** @brief  BRR division operation to set BRR register in 8-bit oversampling
  * mode.
@@ -791,12 +781,11 @@ typedef void (*pUSART_CallbackTypeDef)(USART_HandleTypeDef *husart); /*!< pointe
  *          (i.e. 120 MHz on STM32L4Rx/L4Sx, 80 Mhz otherwise)
  * @retval SET (__BAUDRATE__ is valid) or RESET (__BAUDRATE__ is invalid)
  */
-#if defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||                    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 #define IS_USART_BAUDRATE(__BAUDRATE__) ((__BAUDRATE__) <= 15000000U)
 #else
 #define IS_USART_BAUDRATE(__BAUDRATE__) ((__BAUDRATE__) <= 10000000U)
-#endif /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||                                                  \
+#endif /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||                                                                                                                                  \
 	  STM32L4S7xx || STM32L4S9xx */
 
 /**
@@ -804,18 +793,15 @@ typedef void (*pUSART_CallbackTypeDef)(USART_HandleTypeDef *husart); /*!< pointe
  * @param __STOPBITS__ USART frame number of stop bits.
  * @retval SET (__STOPBITS__ is valid) or RESET (__STOPBITS__ is invalid)
  */
-#define IS_USART_STOPBITS(__STOPBITS__)                                                                                \
-	(((__STOPBITS__) == USART_STOPBITS_0_5) || ((__STOPBITS__) == USART_STOPBITS_1) ||                             \
-	 ((__STOPBITS__) == USART_STOPBITS_1_5) || ((__STOPBITS__) == USART_STOPBITS_2))
+#define IS_USART_STOPBITS(__STOPBITS__)                                                                                                                                                                \
+	(((__STOPBITS__) == USART_STOPBITS_0_5) || ((__STOPBITS__) == USART_STOPBITS_1) || ((__STOPBITS__) == USART_STOPBITS_1_5) || ((__STOPBITS__) == USART_STOPBITS_2))
 
 /**
  * @brief Ensure that USART frame parity is valid.
  * @param __PARITY__ USART frame parity.
  * @retval SET (__PARITY__ is valid) or RESET (__PARITY__ is invalid)
  */
-#define IS_USART_PARITY(__PARITY__)                                                                                    \
-	(((__PARITY__) == USART_PARITY_NONE) || ((__PARITY__) == USART_PARITY_EVEN) ||                                 \
-	 ((__PARITY__) == USART_PARITY_ODD))
+#define IS_USART_PARITY(__PARITY__) (((__PARITY__) == USART_PARITY_NONE) || ((__PARITY__) == USART_PARITY_EVEN) || ((__PARITY__) == USART_PARITY_ODD))
 
 /**
  * @brief Ensure that USART communication mode is valid.
@@ -850,16 +836,14 @@ typedef void (*pUSART_CallbackTypeDef)(USART_HandleTypeDef *husart); /*!< pointe
  * @param __LASTBIT__ USART frame last bit clock pulse setting.
  * @retval SET (__LASTBIT__ is valid) or RESET (__LASTBIT__ is invalid)
  */
-#define IS_USART_LASTBIT(__LASTBIT__)                                                                                  \
-	(((__LASTBIT__) == USART_LASTBIT_DISABLE) || ((__LASTBIT__) == USART_LASTBIT_ENABLE))
+#define IS_USART_LASTBIT(__LASTBIT__) (((__LASTBIT__) == USART_LASTBIT_DISABLE) || ((__LASTBIT__) == USART_LASTBIT_ENABLE))
 
 /**
  * @brief Ensure that USART request parameter is valid.
  * @param __PARAM__ USART request parameter.
  * @retval SET (__PARAM__ is valid) or RESET (__PARAM__ is invalid)
  */
-#define IS_USART_REQUEST_PARAMETER(__PARAM__)                                                                          \
-	(((__PARAM__) == USART_RXDATA_FLUSH_REQUEST) || ((__PARAM__) == USART_TXDATA_FLUSH_REQUEST))
+#define IS_USART_REQUEST_PARAMETER(__PARAM__) (((__PARAM__) == USART_RXDATA_FLUSH_REQUEST) || ((__PARAM__) == USART_TXDATA_FLUSH_REQUEST))
 
 #if defined(USART_PRESC_PRESCALER)
 /**
@@ -868,13 +852,11 @@ typedef void (*pUSART_CallbackTypeDef)(USART_HandleTypeDef *husart); /*!< pointe
  * @retval SET (__CLOCKPRESCALER__ is valid) or RESET (__CLOCKPRESCALER__ is
  * invalid)
  */
-#define IS_USART_PRESCALER(__CLOCKPRESCALER__)                                                                         \
-	(((__CLOCKPRESCALER__) == USART_PRESCALER_DIV1) || ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV2) ||           \
-	 ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV4) || ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV6) ||           \
-	 ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV8) || ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV10) ||          \
-	 ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV12) || ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV16) ||         \
-	 ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV32) || ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV64) ||         \
-	 ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV128) || ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV256))
+#define IS_USART_PRESCALER(__CLOCKPRESCALER__)                                                                                                                                                         \
+	(((__CLOCKPRESCALER__) == USART_PRESCALER_DIV1) || ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV2) || ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV4) ||                                         \
+	 ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV6) || ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV8) || ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV10) ||                                        \
+	 ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV12) || ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV16) || ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV32) ||                                      \
+	 ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV64) || ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV128) || ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV256))
 
 #endif /* USART_PRESC_PRESCALER */
 /**
@@ -902,8 +884,7 @@ void HAL_USART_MspDeInit(USART_HandleTypeDef *husart);
 
 /* Callbacks Register/UnRegister functions  ***********************************/
 #if (USE_HAL_USART_REGISTER_CALLBACKS == 1)
-HAL_StatusTypeDef HAL_USART_RegisterCallback(USART_HandleTypeDef *husart, HAL_USART_CallbackIDTypeDef CallbackID,
-					     pUSART_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_USART_RegisterCallback(USART_HandleTypeDef *husart, HAL_USART_CallbackIDTypeDef CallbackID, pUSART_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_USART_UnRegisterCallback(USART_HandleTypeDef *husart, HAL_USART_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_USART_REGISTER_CALLBACKS */
 
@@ -916,19 +897,15 @@ HAL_StatusTypeDef HAL_USART_UnRegisterCallback(USART_HandleTypeDef *husart, HAL_
  */
 
 /* IO operation functions *****************************************************/
-HAL_StatusTypeDef HAL_USART_Transmit(USART_HandleTypeDef *husart, const uint8_t *pTxData, uint16_t Size,
-				     uint32_t Timeout);
+HAL_StatusTypeDef HAL_USART_Transmit(USART_HandleTypeDef *husart, const uint8_t *pTxData, uint16_t Size, uint32_t Timeout);
 HAL_StatusTypeDef HAL_USART_Receive(USART_HandleTypeDef *husart, uint8_t *pRxData, uint16_t Size, uint32_t Timeout);
-HAL_StatusTypeDef HAL_USART_TransmitReceive(USART_HandleTypeDef *husart, const uint8_t *pTxData, uint8_t *pRxData,
-					    uint16_t Size, uint32_t Timeout);
+HAL_StatusTypeDef HAL_USART_TransmitReceive(USART_HandleTypeDef *husart, const uint8_t *pTxData, uint8_t *pRxData, uint16_t Size, uint32_t Timeout);
 HAL_StatusTypeDef HAL_USART_Transmit_IT(USART_HandleTypeDef *husart, const uint8_t *pTxData, uint16_t Size);
 HAL_StatusTypeDef HAL_USART_Receive_IT(USART_HandleTypeDef *husart, uint8_t *pRxData, uint16_t Size);
-HAL_StatusTypeDef HAL_USART_TransmitReceive_IT(USART_HandleTypeDef *husart, const uint8_t *pTxData, uint8_t *pRxData,
-					       uint16_t Size);
+HAL_StatusTypeDef HAL_USART_TransmitReceive_IT(USART_HandleTypeDef *husart, const uint8_t *pTxData, uint8_t *pRxData, uint16_t Size);
 HAL_StatusTypeDef HAL_USART_Transmit_DMA(USART_HandleTypeDef *husart, const uint8_t *pTxData, uint16_t Size);
 HAL_StatusTypeDef HAL_USART_Receive_DMA(USART_HandleTypeDef *husart, uint8_t *pRxData, uint16_t Size);
-HAL_StatusTypeDef HAL_USART_TransmitReceive_DMA(USART_HandleTypeDef *husart, const uint8_t *pTxData, uint8_t *pRxData,
-						uint16_t Size);
+HAL_StatusTypeDef HAL_USART_TransmitReceive_DMA(USART_HandleTypeDef *husart, const uint8_t *pTxData, uint8_t *pRxData, uint16_t Size);
 HAL_StatusTypeDef HAL_USART_DMAPause(USART_HandleTypeDef *husart);
 HAL_StatusTypeDef HAL_USART_DMAResume(USART_HandleTypeDef *husart);
 HAL_StatusTypeDef HAL_USART_DMAStop(USART_HandleTypeDef *husart);

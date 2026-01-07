@@ -281,9 +281,9 @@
 /** @defgroup QSPI_Private_Macros QSPI Private Macros
  * @{
  */
-#define IS_QSPI_FUNCTIONAL_MODE(MODE)                                                                                  \
-	(((MODE) == QSPI_FUNCTIONAL_MODE_INDIRECT_WRITE) || ((MODE) == QSPI_FUNCTIONAL_MODE_INDIRECT_READ) ||          \
-	 ((MODE) == QSPI_FUNCTIONAL_MODE_AUTO_POLLING) || ((MODE) == QSPI_FUNCTIONAL_MODE_MEMORY_MAPPED))
+#define IS_QSPI_FUNCTIONAL_MODE(MODE)                                                                                                                                                                  \
+	(((MODE) == QSPI_FUNCTIONAL_MODE_INDIRECT_WRITE) || ((MODE) == QSPI_FUNCTIONAL_MODE_INDIRECT_READ) || ((MODE) == QSPI_FUNCTIONAL_MODE_AUTO_POLLING) ||                                         \
+	 ((MODE) == QSPI_FUNCTIONAL_MODE_MEMORY_MAPPED))
 /**
  * @}
  */
@@ -297,8 +297,7 @@ static void QSPI_DMARxHalfCplt(DMA_HandleTypeDef *hdma);
 static void QSPI_DMATxHalfCplt(DMA_HandleTypeDef *hdma);
 static void QSPI_DMAError(DMA_HandleTypeDef *hdma);
 static void QSPI_DMAAbortCplt(DMA_HandleTypeDef *hdma);
-static HAL_StatusTypeDef QSPI_WaitFlagStateUntilTimeout(QSPI_HandleTypeDef *hqspi, uint32_t Flag, FlagStatus State,
-							uint32_t Tickstart, uint32_t Timeout);
+static HAL_StatusTypeDef QSPI_WaitFlagStateUntilTimeout(QSPI_HandleTypeDef *hqspi, uint32_t Flag, FlagStatus State, uint32_t Tickstart, uint32_t Timeout);
 static void QSPI_Config(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, uint32_t FunctionalMode);
 
 /* Exported functions --------------------------------------------------------*/
@@ -394,15 +393,12 @@ HAL_StatusTypeDef HAL_QSPI_Init(QSPI_HandleTypeDef *hqspi)
 
 	if (status == HAL_OK) {
 		/* Configure QSPI Clock Prescaler and Sample Shift */
-		MODIFY_REG(hqspi->Instance->CR,
-			   (QUADSPI_CR_PRESCALER | QUADSPI_CR_SSHIFT | QUADSPI_CR_FSEL | QUADSPI_CR_DFM),
-			   ((hqspi->Init.ClockPrescaler << QUADSPI_CR_PRESCALER_Pos) | hqspi->Init.SampleShifting |
-			    hqspi->Init.FlashID | hqspi->Init.DualFlash));
+		MODIFY_REG(hqspi->Instance->CR, (QUADSPI_CR_PRESCALER | QUADSPI_CR_SSHIFT | QUADSPI_CR_FSEL | QUADSPI_CR_DFM),
+			   ((hqspi->Init.ClockPrescaler << QUADSPI_CR_PRESCALER_Pos) | hqspi->Init.SampleShifting | hqspi->Init.FlashID | hqspi->Init.DualFlash));
 
 		/* Configure QSPI Flash Size, CS High Time and Clock Mode */
 		MODIFY_REG(hqspi->Instance->DCR, (QUADSPI_DCR_FSIZE | QUADSPI_DCR_CSHT | QUADSPI_DCR_CKMODE),
-			   ((hqspi->Init.FlashSize << QUADSPI_DCR_FSIZE_Pos) | hqspi->Init.ChipSelectHighTime |
-			    hqspi->Init.ClockMode));
+			   ((hqspi->Init.FlashSize << QUADSPI_DCR_FSIZE_Pos) | hqspi->Init.ChipSelectHighTime | hqspi->Init.ClockMode));
 
 		/* Enable the QSPI peripheral */
 		__HAL_QSPI_ENABLE(hqspi);
@@ -1057,8 +1053,7 @@ HAL_StatusTypeDef HAL_QSPI_Receive(QSPI_HandleTypeDef *hqspi, uint8_t *pData, ui
 			while (hqspi->RxXferCount > 0U) {
 				/* Wait until FT or TC flag is set to read
 				 * received data */
-				status = QSPI_WaitFlagStateUntilTimeout(hqspi, (QSPI_FLAG_FT | QSPI_FLAG_TC), SET,
-									tickstart, Timeout);
+				status = QSPI_WaitFlagStateUntilTimeout(hqspi, (QSPI_FLAG_FT | QSPI_FLAG_TC), SET, tickstart, Timeout);
 
 				if (status != HAL_OK) {
 					break;
@@ -1286,8 +1281,7 @@ HAL_StatusTypeDef HAL_QSPI_Transmit_DMA(QSPI_HandleTypeDef *hqspi, uint8_t *pDat
 
 				/* Configure QSPI: CCR register with functional
 				 * mode as indirect write */
-				MODIFY_REG(hqspi->Instance->CCR, QUADSPI_CCR_FMODE,
-					   QSPI_FUNCTIONAL_MODE_INDIRECT_WRITE);
+				MODIFY_REG(hqspi->Instance->CCR, QUADSPI_CCR_FMODE, QSPI_FUNCTIONAL_MODE_INDIRECT_WRITE);
 
 				/* Set the QSPI DMA transfer complete callback
 				 */
@@ -1315,8 +1309,7 @@ HAL_StatusTypeDef HAL_QSPI_Transmit_DMA(QSPI_HandleTypeDef *hqspi, uint8_t *pDat
 				SET_BIT(hqspi->Instance->CR, QUADSPI_CR_DMAEN);
 
 				/* Enable the QSPI transmit DMA Channel */
-				if (HAL_DMA_Start_IT(hqspi->hdma, (uint32_t)pData, (uint32_t)&hqspi->Instance->DR,
-						     hqspi->TxXferSize) == HAL_OK) {
+				if (HAL_DMA_Start_IT(hqspi->hdma, (uint32_t)pData, (uint32_t)&hqspi->Instance->DR, hqspi->TxXferSize) == HAL_OK) {
 					/* Process unlocked */
 					__HAL_UNLOCK(hqspi);
 				} else {
@@ -1442,12 +1435,10 @@ HAL_StatusTypeDef HAL_QSPI_Receive_DMA(QSPI_HandleTypeDef *hqspi, uint8_t *pData
 				MODIFY_REG(hqspi->hdma->Instance->CCR, DMA_CCR_DIR, hqspi->hdma->Init.Direction);
 
 				/* Enable the DMA Channel */
-				if (HAL_DMA_Start_IT(hqspi->hdma, (uint32_t)&hqspi->Instance->DR, (uint32_t)pData,
-						     hqspi->RxXferSize) == HAL_OK) {
+				if (HAL_DMA_Start_IT(hqspi->hdma, (uint32_t)&hqspi->Instance->DR, (uint32_t)pData, hqspi->RxXferSize) == HAL_OK) {
 					/* Configure QSPI: CCR register with
 					 * functional as indirect read */
-					MODIFY_REG(hqspi->Instance->CCR, QUADSPI_CCR_FMODE,
-						   QSPI_FUNCTIONAL_MODE_INDIRECT_READ);
+					MODIFY_REG(hqspi->Instance->CCR, QUADSPI_CCR_FMODE, QSPI_FUNCTIONAL_MODE_INDIRECT_READ);
 
 					/* Start the transfer by re-writing the
 					 * address in AR register */
@@ -1504,8 +1495,7 @@ HAL_StatusTypeDef HAL_QSPI_Receive_DMA(QSPI_HandleTypeDef *hqspi, uint8_t *pData
  * @note   This function is used only in Automatic Polling Mode
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_QSPI_AutoPolling(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd,
-				       QSPI_AutoPollingTypeDef *cfg, uint32_t Timeout)
+HAL_StatusTypeDef HAL_QSPI_AutoPolling(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, QSPI_AutoPollingTypeDef *cfg, uint32_t Timeout)
 {
 	HAL_StatusTypeDef status;
 	uint32_t tickstart = HAL_GetTick();
@@ -1565,8 +1555,7 @@ HAL_StatusTypeDef HAL_QSPI_AutoPolling(QSPI_HandleTypeDef *hqspi, QSPI_CommandTy
 			/* Configure QSPI: CR register with Match mode and
 			Automatic stop enabled (otherwise there will be an
 			infinite loop in blocking mode) */
-			MODIFY_REG(hqspi->Instance->CR, (QUADSPI_CR_PMM | QUADSPI_CR_APMS),
-				   (cfg->MatchMode | QSPI_AUTOMATIC_STOP_ENABLE));
+			MODIFY_REG(hqspi->Instance->CR, (QUADSPI_CR_PMM | QUADSPI_CR_APMS), (cfg->MatchMode | QSPI_AUTOMATIC_STOP_ENABLE));
 
 			/* Call the configuration function */
 			cmd->NbData = cfg->StatusBytesSize;
@@ -1601,8 +1590,7 @@ HAL_StatusTypeDef HAL_QSPI_AutoPolling(QSPI_HandleTypeDef *hqspi, QSPI_CommandTy
  * @note   This function is used only in Automatic Polling Mode
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_QSPI_AutoPolling_IT(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd,
-					  QSPI_AutoPollingTypeDef *cfg)
+HAL_StatusTypeDef HAL_QSPI_AutoPolling_IT(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, QSPI_AutoPollingTypeDef *cfg)
 {
 	HAL_StatusTypeDef status;
 	uint32_t tickstart = HAL_GetTick();
@@ -1662,8 +1650,7 @@ HAL_StatusTypeDef HAL_QSPI_AutoPolling_IT(QSPI_HandleTypeDef *hqspi, QSPI_Comman
 
 			/* Configure QSPI: CR register with Match mode and
 			 * Automatic stop mode */
-			MODIFY_REG(hqspi->Instance->CR, (QUADSPI_CR_PMM | QUADSPI_CR_APMS),
-				   (cfg->MatchMode | cfg->AutomaticStop));
+			MODIFY_REG(hqspi->Instance->CR, (QUADSPI_CR_PMM | QUADSPI_CR_APMS), (cfg->MatchMode | cfg->AutomaticStop));
 
 			/* Clear interrupt */
 			__HAL_QSPI_CLEAR_FLAG(hqspi, QSPI_FLAG_TE | QSPI_FLAG_SM);
@@ -1703,8 +1690,7 @@ HAL_StatusTypeDef HAL_QSPI_AutoPolling_IT(QSPI_HandleTypeDef *hqspi, QSPI_Comman
  * @note   This function is used only in Memory mapped Mode
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_QSPI_MemoryMapped(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd,
-					QSPI_MemoryMappedTypeDef *cfg)
+HAL_StatusTypeDef HAL_QSPI_MemoryMapped(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, QSPI_MemoryMappedTypeDef *cfg)
 {
 	HAL_StatusTypeDef status;
 	uint32_t tickstart = HAL_GetTick();
@@ -1965,8 +1951,7 @@ __weak void HAL_QSPI_TimeOutCallback(QSPI_HandleTypeDef *hqspi)
  * @param pCallback pointer to the Callback function
  * @retval status
  */
-HAL_StatusTypeDef HAL_QSPI_RegisterCallback(QSPI_HandleTypeDef *hqspi, HAL_QSPI_CallbackIDTypeDef CallbackId,
-					    pQSPI_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_QSPI_RegisterCallback(QSPI_HandleTypeDef *hqspi, HAL_QSPI_CallbackIDTypeDef CallbackId, pQSPI_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -2235,8 +2220,7 @@ HAL_StatusTypeDef HAL_QSPI_Abort(QSPI_HandleTypeDef *hqspi)
 				__HAL_QSPI_CLEAR_FLAG(hqspi, QSPI_FLAG_TC);
 
 				/* Wait until BUSY flag is reset */
-				status = QSPI_WaitFlagStateUntilTimeout(hqspi, QSPI_FLAG_BUSY, RESET, tickstart,
-									hqspi->Timeout);
+				status = QSPI_WaitFlagStateUntilTimeout(hqspi, QSPI_FLAG_BUSY, RESET, tickstart, hqspi->Timeout);
 			}
 
 			if (status == HAL_OK) {
@@ -2339,8 +2323,7 @@ HAL_StatusTypeDef HAL_QSPI_SetFifoThreshold(QSPI_HandleTypeDef *hqspi, uint32_t 
 		hqspi->Init.FifoThreshold = Threshold;
 
 		/* Configure QSPI FIFO Threshold */
-		MODIFY_REG(hqspi->Instance->CR, QUADSPI_CR_FTHRES,
-			   ((hqspi->Init.FifoThreshold - 1U) << QUADSPI_CR_FTHRES_Pos));
+		MODIFY_REG(hqspi->Instance->CR, QUADSPI_CR_FTHRES, ((hqspi->Init.FifoThreshold - 1U) << QUADSPI_CR_FTHRES_Pos));
 	} else {
 		status = HAL_BUSY;
 	}
@@ -2356,10 +2339,7 @@ HAL_StatusTypeDef HAL_QSPI_SetFifoThreshold(QSPI_HandleTypeDef *hqspi, uint32_t 
  * @param  hqspi QSPI handle.
  * @retval Fifo threshold (value between 1 and 16)
  */
-uint32_t HAL_QSPI_GetFifoThreshold(const QSPI_HandleTypeDef *hqspi)
-{
-	return ((READ_BIT(hqspi->Instance->CR, QUADSPI_CR_FTHRES) >> QUADSPI_CR_FTHRES_Pos) + 1U);
-}
+uint32_t HAL_QSPI_GetFifoThreshold(const QSPI_HandleTypeDef *hqspi) { return ((READ_BIT(hqspi->Instance->CR, QUADSPI_CR_FTHRES) >> QUADSPI_CR_FTHRES_Pos) + 1U); }
 
 /** @brief  Set FlashID.
  * @param  hqspi QSPI handle.
@@ -2533,8 +2513,7 @@ static void QSPI_DMAAbortCplt(DMA_HandleTypeDef *hdma)
  * @param  Timeout Duration of the timeout
  * @retval HAL status
  */
-static HAL_StatusTypeDef QSPI_WaitFlagStateUntilTimeout(QSPI_HandleTypeDef *hqspi, uint32_t Flag, FlagStatus State,
-							uint32_t Tickstart, uint32_t Timeout)
+static HAL_StatusTypeDef QSPI_WaitFlagStateUntilTimeout(QSPI_HandleTypeDef *hqspi, uint32_t Flag, FlagStatus State, uint32_t Tickstart, uint32_t Timeout)
 {
 	/* Wait until flag is in expected state */
 	while ((__HAL_QSPI_GET_FLAG(hqspi, Flag)) != State) {
@@ -2585,10 +2564,8 @@ static void QSPI_Config(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, uin
 				/* Configure QSPI: CCR register with all
 				 * communications parameters */
 				WRITE_REG(hqspi->Instance->CCR,
-					  (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode |
-					   (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) | cmd->AlternateBytesSize |
-					   cmd->AlternateByteMode | cmd->AddressSize | cmd->AddressMode |
-					   cmd->InstructionMode | cmd->Instruction | FunctionalMode));
+					  (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode | (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) | cmd->AlternateBytesSize |
+					   cmd->AlternateByteMode | cmd->AddressSize | cmd->AddressMode | cmd->InstructionMode | cmd->Instruction | FunctionalMode));
 
 				if (FunctionalMode != QSPI_FUNCTIONAL_MODE_MEMORY_MAPPED) {
 					/* Configure QSPI: AR register with
@@ -2600,11 +2577,8 @@ static void QSPI_Config(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, uin
 				 * bytes ----*/
 				/* Configure QSPI: CCR register with all
 				 * communications parameters */
-				WRITE_REG(hqspi->Instance->CCR,
-					  (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode |
-					   (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) | cmd->AlternateBytesSize |
-					   cmd->AlternateByteMode | cmd->AddressMode | cmd->InstructionMode |
-					   cmd->Instruction | FunctionalMode));
+				WRITE_REG(hqspi->Instance->CCR, (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode | (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) |
+								 cmd->AlternateBytesSize | cmd->AlternateByteMode | cmd->AddressMode | cmd->InstructionMode | cmd->Instruction | FunctionalMode));
 
 				/* Clear AR register */
 				CLEAR_REG(hqspi->Instance->AR);
@@ -2615,11 +2589,8 @@ static void QSPI_Config(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, uin
 				 * ----*/
 				/* Configure QSPI: CCR register with all
 				 * communications parameters */
-				WRITE_REG(hqspi->Instance->CCR,
-					  (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode |
-					   (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) | cmd->AlternateByteMode |
-					   cmd->AddressSize | cmd->AddressMode | cmd->InstructionMode |
-					   cmd->Instruction | FunctionalMode));
+				WRITE_REG(hqspi->Instance->CCR, (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode | (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) |
+								 cmd->AlternateByteMode | cmd->AddressSize | cmd->AddressMode | cmd->InstructionMode | cmd->Instruction | FunctionalMode));
 
 				if (FunctionalMode != QSPI_FUNCTIONAL_MODE_MEMORY_MAPPED) {
 					/* Configure QSPI: AR register with
@@ -2630,11 +2601,8 @@ static void QSPI_Config(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, uin
 				/*---- Command with only instruction ----*/
 				/* Configure QSPI: CCR register with all
 				 * communications parameters */
-				WRITE_REG(hqspi->Instance->CCR,
-					  (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode |
-					   (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) | cmd->AlternateByteMode |
-					   cmd->AddressMode | cmd->InstructionMode | cmd->Instruction |
-					   FunctionalMode));
+				WRITE_REG(hqspi->Instance->CCR, (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode | (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) |
+								 cmd->AlternateByteMode | cmd->AddressMode | cmd->InstructionMode | cmd->Instruction | FunctionalMode));
 
 				/* Clear AR register */
 				CLEAR_REG(hqspi->Instance->AR);
@@ -2651,11 +2619,8 @@ static void QSPI_Config(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, uin
 				 * ----*/
 				/* Configure QSPI: CCR register with all
 				 * communications parameters */
-				WRITE_REG(hqspi->Instance->CCR,
-					  (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode |
-					   (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) | cmd->AlternateBytesSize |
-					   cmd->AlternateByteMode | cmd->AddressSize | cmd->AddressMode |
-					   cmd->InstructionMode | FunctionalMode));
+				WRITE_REG(hqspi->Instance->CCR, (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode | (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) |
+								 cmd->AlternateBytesSize | cmd->AlternateByteMode | cmd->AddressSize | cmd->AddressMode | cmd->InstructionMode | FunctionalMode));
 
 				if (FunctionalMode != QSPI_FUNCTIONAL_MODE_MEMORY_MAPPED) {
 					/* Configure QSPI: AR register with
@@ -2666,11 +2631,8 @@ static void QSPI_Config(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, uin
 				/*---- Command with only alternate bytes ----*/
 				/* Configure QSPI: CCR register with all
 				 * communications parameters */
-				WRITE_REG(hqspi->Instance->CCR,
-					  (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode |
-					   (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) | cmd->AlternateBytesSize |
-					   cmd->AlternateByteMode | cmd->AddressMode | cmd->InstructionMode |
-					   FunctionalMode));
+				WRITE_REG(hqspi->Instance->CCR, (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode | (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) |
+								 cmd->AlternateBytesSize | cmd->AlternateByteMode | cmd->AddressMode | cmd->InstructionMode | FunctionalMode));
 
 				/* Clear AR register */
 				CLEAR_REG(hqspi->Instance->AR);
@@ -2680,11 +2642,8 @@ static void QSPI_Config(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, uin
 				/*---- Command with only address ----*/
 				/* Configure QSPI: CCR register with all
 				 * communications parameters */
-				WRITE_REG(hqspi->Instance->CCR,
-					  (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode |
-					   (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) | cmd->AlternateByteMode |
-					   cmd->AddressSize | cmd->AddressMode | cmd->InstructionMode |
-					   FunctionalMode));
+				WRITE_REG(hqspi->Instance->CCR, (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode | (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) |
+								 cmd->AlternateByteMode | cmd->AddressSize | cmd->AddressMode | cmd->InstructionMode | FunctionalMode));
 
 				if (FunctionalMode != QSPI_FUNCTIONAL_MODE_MEMORY_MAPPED) {
 					/* Configure QSPI: AR register with
@@ -2696,11 +2655,8 @@ static void QSPI_Config(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, uin
 				if (cmd->DataMode != QSPI_DATA_NONE) {
 					/* Configure QSPI: CCR register with all
 					 * communications parameters */
-					WRITE_REG(hqspi->Instance->CCR,
-						  (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode |
-						   cmd->DataMode | (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) |
-						   cmd->AlternateByteMode | cmd->AddressMode | cmd->InstructionMode |
-						   FunctionalMode));
+					WRITE_REG(hqspi->Instance->CCR, (cmd->DdrMode | cmd->DdrHoldHalfCycle | cmd->SIOOMode | cmd->DataMode | (cmd->DummyCycles << QUADSPI_CCR_DCYC_Pos) |
+									 cmd->AlternateByteMode | cmd->AddressMode | cmd->InstructionMode | FunctionalMode));
 
 					/* Clear AR register */
 					CLEAR_REG(hqspi->Instance->AR);

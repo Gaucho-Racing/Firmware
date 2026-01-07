@@ -172,8 +172,7 @@ HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef *PeriphClkI
 			 * selection is modified from default */
 			tmpregister = READ_BIT(RCC->BDCR, RCC_BDCR_RTCSEL);
 
-			if ((tmpregister != RCC_RTCCLKSOURCE_NONE) &&
-			    (tmpregister != PeriphClkInit->RTCClockSelection)) {
+			if ((tmpregister != RCC_RTCCLKSOURCE_NONE) && (tmpregister != PeriphClkInit->RTCClockSelection)) {
 				/* Store the content of BDCR register before the
 				 * reset of Backup Domain */
 				tmpregister = READ_BIT(RCC->BDCR, ~(RCC_BDCR_RTCSEL));
@@ -495,65 +494,48 @@ void HAL_RCCEx_GetPeriphCLKConfig(RCC_PeriphCLKInitTypeDef *PeriphClkInit)
 
 #if defined(STM32G474xx) || defined(STM32G484xx)
 
-	PeriphClkInit->PeriphClockSelection =
-	    RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 |
-	    RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 |
-	    RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_I2S | RCC_PERIPHCLK_FDCAN |
-	    RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_USB | RCC_PERIPHCLK_ADC12 | RCC_PERIPHCLK_ADC345 | RCC_PERIPHCLK_QSPI |
-	    RCC_PERIPHCLK_RTC;
+	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 | RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPUART1 |
+					      RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_I2S |
+					      RCC_PERIPHCLK_FDCAN | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_USB | RCC_PERIPHCLK_ADC12 | RCC_PERIPHCLK_ADC345 | RCC_PERIPHCLK_QSPI | RCC_PERIPHCLK_RTC;
 
 #elif defined(STM32G414xx)
 
-	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_UART4 |
-					      RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_I2S |
-					      RCC_PERIPHCLK_FDCAN | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC12 |
-					      RCC_PERIPHCLK_RTC;
+	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_UART4 | RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_I2S | RCC_PERIPHCLK_FDCAN |
+					      RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC12 | RCC_PERIPHCLK_RTC;
 
 #elif defined(STM32G491xx) || defined(STM32G4A1xx)
 
-	PeriphClkInit->PeriphClockSelection =
-	    RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 |
-	    RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 |
-	    RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_I2S | RCC_PERIPHCLK_FDCAN | RCC_PERIPHCLK_RNG |
-	    RCC_PERIPHCLK_USB | RCC_PERIPHCLK_ADC12 | RCC_PERIPHCLK_ADC345 | RCC_PERIPHCLK_QSPI | RCC_PERIPHCLK_RTC;
+	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 | RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPUART1 |
+					      RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_I2S | RCC_PERIPHCLK_FDCAN |
+					      RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_USB | RCC_PERIPHCLK_ADC12 | RCC_PERIPHCLK_ADC345 | RCC_PERIPHCLK_QSPI | RCC_PERIPHCLK_RTC;
 
 #elif defined(STM32G473xx) || defined(STM32G483xx)
 
-	PeriphClkInit->PeriphClockSelection =
-	    RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 |
-	    RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 |
-	    RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_I2S | RCC_PERIPHCLK_RNG |
-	    RCC_PERIPHCLK_USB | RCC_PERIPHCLK_ADC12 | RCC_PERIPHCLK_ADC345 | RCC_PERIPHCLK_QSPI | RCC_PERIPHCLK_RTC;
+	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 | RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPUART1 |
+					      RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_I2S |
+					      RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_USB | RCC_PERIPHCLK_ADC12 | RCC_PERIPHCLK_ADC345 | RCC_PERIPHCLK_QSPI | RCC_PERIPHCLK_RTC;
 
 #elif defined(STM32G471xx)
 
-	PeriphClkInit->PeriphClockSelection =
-	    RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 |
-	    RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 |
-	    RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_I2S | RCC_PERIPHCLK_RNG |
-	    RCC_PERIPHCLK_USB | RCC_PERIPHCLK_ADC12 | RCC_PERIPHCLK_RTC;
+	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 | RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPUART1 |
+					      RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_I2S |
+					      RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_USB | RCC_PERIPHCLK_ADC12 | RCC_PERIPHCLK_RTC;
 
 #elif defined(STM32G431xx) || defined(STM32G441xx)
 
-	PeriphClkInit->PeriphClockSelection =
-	    RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 |
-	    RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 |
-	    RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_I2S | RCC_PERIPHCLK_FDCAN | RCC_PERIPHCLK_RNG |
-	    RCC_PERIPHCLK_USB | RCC_PERIPHCLK_ADC12 | RCC_PERIPHCLK_RTC;
+	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 |
+					      RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_I2S | RCC_PERIPHCLK_FDCAN | RCC_PERIPHCLK_RNG |
+					      RCC_PERIPHCLK_USB | RCC_PERIPHCLK_ADC12 | RCC_PERIPHCLK_RTC;
 #elif defined(STM32G411xB) || defined(STM32G411xC)
 
-	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_UART4 |
-					      RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 |
-					      RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_I2S | RCC_PERIPHCLK_FDCAN |
-					      RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC12 | RCC_PERIPHCLK_RTC;
+	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_UART4 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 |
+					      RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_I2S | RCC_PERIPHCLK_FDCAN | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_ADC12 | RCC_PERIPHCLK_RTC;
 
 #elif defined(STM32GBK1CB)
 
-	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 |
-					      RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 |
-					      RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_SAI1 |
-					      RCC_PERIPHCLK_I2S | RCC_PERIPHCLK_FDCAN | RCC_PERIPHCLK_RNG |
-					      RCC_PERIPHCLK_USB | RCC_PERIPHCLK_ADC12 | RCC_PERIPHCLK_RTC;
+	PeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 |
+					      RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_I2S | RCC_PERIPHCLK_FDCAN | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_USB |
+					      RCC_PERIPHCLK_ADC12 | RCC_PERIPHCLK_RTC;
 
 #endif /* STM32G474xx || STM32G484xx */
 
@@ -760,11 +742,9 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 					frequency = HAL_RCC_GetPCLK2Freq();
 				} else if (srcclk == RCC_USART1CLKSOURCE_SYSCLK) {
 					frequency = HAL_RCC_GetSysClockFreq();
-				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-					   (srcclk == RCC_USART1CLKSOURCE_HSI)) {
+				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) && (srcclk == RCC_USART1CLKSOURCE_HSI)) {
 					frequency = HSI_VALUE;
-				} else if ((HAL_IS_BIT_SET(RCC->BDCR, RCC_BDCR_LSERDY)) &&
-					   (srcclk == RCC_USART1CLKSOURCE_LSE)) {
+				} else if ((HAL_IS_BIT_SET(RCC->BDCR, RCC_BDCR_LSERDY)) && (srcclk == RCC_USART1CLKSOURCE_LSE)) {
 					frequency = LSE_VALUE;
 				}
 				/* Clock not enabled for USART1 */
@@ -782,11 +762,9 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 					frequency = HAL_RCC_GetPCLK1Freq();
 				} else if (srcclk == RCC_USART2CLKSOURCE_SYSCLK) {
 					frequency = HAL_RCC_GetSysClockFreq();
-				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-					   (srcclk == RCC_USART2CLKSOURCE_HSI)) {
+				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) && (srcclk == RCC_USART2CLKSOURCE_HSI)) {
 					frequency = HSI_VALUE;
-				} else if ((HAL_IS_BIT_SET(RCC->BDCR, RCC_BDCR_LSERDY)) &&
-					   (srcclk == RCC_USART2CLKSOURCE_LSE)) {
+				} else if ((HAL_IS_BIT_SET(RCC->BDCR, RCC_BDCR_LSERDY)) && (srcclk == RCC_USART2CLKSOURCE_LSE)) {
 					frequency = LSE_VALUE;
 				}
 				/* Clock not enabled for USART2 */
@@ -805,11 +783,9 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 					frequency = HAL_RCC_GetPCLK1Freq();
 				} else if (srcclk == RCC_USART3CLKSOURCE_SYSCLK) {
 					frequency = HAL_RCC_GetSysClockFreq();
-				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-					   (srcclk == RCC_USART3CLKSOURCE_HSI)) {
+				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) && (srcclk == RCC_USART3CLKSOURCE_HSI)) {
 					frequency = HSI_VALUE;
-				} else if ((HAL_IS_BIT_SET(RCC->BDCR, RCC_BDCR_LSERDY)) &&
-					   (srcclk == RCC_USART3CLKSOURCE_LSE)) {
+				} else if ((HAL_IS_BIT_SET(RCC->BDCR, RCC_BDCR_LSERDY)) && (srcclk == RCC_USART3CLKSOURCE_LSE)) {
 					frequency = LSE_VALUE;
 				}
 				/* Clock not enabled for USART3 */
@@ -829,11 +805,9 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 					frequency = HAL_RCC_GetPCLK1Freq();
 				} else if (srcclk == RCC_UART4CLKSOURCE_SYSCLK) {
 					frequency = HAL_RCC_GetSysClockFreq();
-				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-					   (srcclk == RCC_UART4CLKSOURCE_HSI)) {
+				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) && (srcclk == RCC_UART4CLKSOURCE_HSI)) {
 					frequency = HSI_VALUE;
-				} else if ((HAL_IS_BIT_SET(RCC->BDCR, RCC_BDCR_LSERDY)) &&
-					   (srcclk == RCC_UART4CLKSOURCE_LSE)) {
+				} else if ((HAL_IS_BIT_SET(RCC->BDCR, RCC_BDCR_LSERDY)) && (srcclk == RCC_UART4CLKSOURCE_LSE)) {
 					frequency = LSE_VALUE;
 				}
 				/* Clock not enabled for UART4 */
@@ -853,11 +827,9 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 					frequency = HAL_RCC_GetPCLK1Freq();
 				} else if (srcclk == RCC_UART5CLKSOURCE_SYSCLK) {
 					frequency = HAL_RCC_GetSysClockFreq();
-				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-					   (srcclk == RCC_UART5CLKSOURCE_HSI)) {
+				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) && (srcclk == RCC_UART5CLKSOURCE_HSI)) {
 					frequency = HSI_VALUE;
-				} else if ((HAL_IS_BIT_SET(RCC->BDCR, RCC_BDCR_LSERDY)) &&
-					   (srcclk == RCC_UART5CLKSOURCE_LSE)) {
+				} else if ((HAL_IS_BIT_SET(RCC->BDCR, RCC_BDCR_LSERDY)) && (srcclk == RCC_UART5CLKSOURCE_LSE)) {
 					frequency = LSE_VALUE;
 				}
 				/* Clock not enabled for UART5 */
@@ -876,11 +848,9 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 					frequency = HAL_RCC_GetPCLK1Freq();
 				} else if (srcclk == RCC_LPUART1CLKSOURCE_SYSCLK) {
 					frequency = HAL_RCC_GetSysClockFreq();
-				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-					   (srcclk == RCC_LPUART1CLKSOURCE_HSI)) {
+				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) && (srcclk == RCC_LPUART1CLKSOURCE_HSI)) {
 					frequency = HSI_VALUE;
-				} else if ((HAL_IS_BIT_SET(RCC->BDCR, RCC_BDCR_LSERDY)) &&
-					   (srcclk == RCC_LPUART1CLKSOURCE_LSE)) {
+				} else if ((HAL_IS_BIT_SET(RCC->BDCR, RCC_BDCR_LSERDY)) && (srcclk == RCC_LPUART1CLKSOURCE_LSE)) {
 					frequency = LSE_VALUE;
 				}
 				/* Clock not enabled for LPUART1 */
@@ -898,8 +868,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 					frequency = HAL_RCC_GetPCLK1Freq();
 				} else if (srcclk == RCC_I2C1CLKSOURCE_SYSCLK) {
 					frequency = HAL_RCC_GetSysClockFreq();
-				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-					   (srcclk == RCC_I2C1CLKSOURCE_HSI)) {
+				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) && (srcclk == RCC_I2C1CLKSOURCE_HSI)) {
 					frequency = HSI_VALUE;
 				}
 				/* Clock not enabled for I2C1 */
@@ -917,8 +886,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 					frequency = HAL_RCC_GetPCLK1Freq();
 				} else if (srcclk == RCC_I2C2CLKSOURCE_SYSCLK) {
 					frequency = HAL_RCC_GetSysClockFreq();
-				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-					   (srcclk == RCC_I2C2CLKSOURCE_HSI)) {
+				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) && (srcclk == RCC_I2C2CLKSOURCE_HSI)) {
 					frequency = HSI_VALUE;
 				}
 				/* Clock not enabled for I2C2 */
@@ -938,8 +906,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 					frequency = HAL_RCC_GetPCLK1Freq();
 				} else if (srcclk == RCC_I2C3CLKSOURCE_SYSCLK) {
 					frequency = HAL_RCC_GetSysClockFreq();
-				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-					   (srcclk == RCC_I2C3CLKSOURCE_HSI)) {
+				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) && (srcclk == RCC_I2C3CLKSOURCE_HSI)) {
 					frequency = HSI_VALUE;
 				}
 				/* Clock not enabled for I2C3 */
@@ -961,8 +928,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 					frequency = HAL_RCC_GetPCLK1Freq();
 				} else if (srcclk == RCC_I2C4CLKSOURCE_SYSCLK) {
 					frequency = HAL_RCC_GetSysClockFreq();
-				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-					   (srcclk == RCC_I2C4CLKSOURCE_HSI)) {
+				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) && (srcclk == RCC_I2C4CLKSOURCE_HSI)) {
 					frequency = HSI_VALUE;
 				}
 				/* Clock not enabled for I2C4 */
@@ -980,14 +946,11 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 
 				if (srcclk == RCC_LPTIM1CLKSOURCE_PCLK1) {
 					frequency = HAL_RCC_GetPCLK1Freq();
-				} else if ((HAL_IS_BIT_SET(RCC->CSR, RCC_CSR_LSIRDY)) &&
-					   (srcclk == RCC_LPTIM1CLKSOURCE_LSI)) {
+				} else if ((HAL_IS_BIT_SET(RCC->CSR, RCC_CSR_LSIRDY)) && (srcclk == RCC_LPTIM1CLKSOURCE_LSI)) {
 					frequency = LSI_VALUE;
-				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-					   (srcclk == RCC_LPTIM1CLKSOURCE_HSI)) {
+				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) && (srcclk == RCC_LPTIM1CLKSOURCE_HSI)) {
 					frequency = HSI_VALUE;
-				} else if ((HAL_IS_BIT_SET(RCC->BDCR, RCC_BDCR_LSERDY)) &&
-					   (srcclk == RCC_LPTIM1CLKSOURCE_LSE)) {
+				} else if ((HAL_IS_BIT_SET(RCC->BDCR, RCC_BDCR_LSERDY)) && (srcclk == RCC_LPTIM1CLKSOURCE_LSE)) {
 					frequency = LSE_VALUE;
 				}
 				/* Clock not enabled for LPTIM1 */
@@ -1011,17 +974,12 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 						 * / PLLQ
 						 */
 						plln = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos;
-						frequency =
-						    (pllvco * plln) / (((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLQ) >>
-									 RCC_PLLCFGR_PLLQ_Pos) +
-									1U)
-								       << 1U);
+						frequency = (pllvco * plln) / (((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLQ) >> RCC_PLLCFGR_PLLQ_Pos) + 1U) << 1U);
 					}
 				} else if (srcclk == RCC_SAI1CLKSOURCE_EXT) {
 					/* External clock used.*/
 					frequency = EXTERNAL_CLOCK_VALUE;
-				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-					   (srcclk == RCC_SAI1CLKSOURCE_HSI)) {
+				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) && (srcclk == RCC_SAI1CLKSOURCE_HSI)) {
 					frequency = HSI_VALUE;
 				}
 				/* Clock not enabled for SAI1 */
@@ -1046,17 +1004,12 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 						 * / PLLQ
 						 */
 						plln = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos;
-						frequency =
-						    (pllvco * plln) / (((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLQ) >>
-									 RCC_PLLCFGR_PLLQ_Pos) +
-									1U)
-								       << 1U);
+						frequency = (pllvco * plln) / (((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLQ) >> RCC_PLLCFGR_PLLQ_Pos) + 1U) << 1U);
 					}
 				} else if (srcclk == RCC_I2SCLKSOURCE_EXT) {
 					/* External clock used.*/
 					frequency = EXTERNAL_CLOCK_VALUE;
-				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) &&
-					   (srcclk == RCC_I2SCLKSOURCE_HSI)) {
+				} else if ((HAL_IS_BIT_SET(RCC->CR, RCC_CR_HSIRDY)) && (srcclk == RCC_I2SCLKSOURCE_HSI)) {
 					frequency = HSI_VALUE;
 				}
 				/* Clock not enabled for I2S */
@@ -1082,11 +1035,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 						 * / PLLQ
 						 */
 						plln = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos;
-						frequency =
-						    (pllvco * plln) / (((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLQ) >>
-									 RCC_PLLCFGR_PLLQ_Pos) +
-									1U)
-								       << 1U);
+						frequency = (pllvco * plln) / (((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLQ) >> RCC_PLLCFGR_PLLQ_Pos) + 1U) << 1U);
 					}
 				}
 				/* Clock not enabled for FDCAN */
@@ -1108,13 +1057,9 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 					/* f(PLLQ) = f(VCO input) * PLLN / PLLQ
 					 */
 					plln = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos;
-					frequency =
-					    (pllvco * plln) /
-					    (((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLQ) >> RCC_PLLCFGR_PLLQ_Pos) + 1U)
-					     << 1U);
-				} else if ((HAL_IS_BIT_SET(RCC->CRRCR, RCC_CRRCR_HSI48RDY)) &&
-					   (srcclk == RCC_USBCLKSOURCE_HSI48)) /* HSI48 ?
-										*/
+					frequency = (pllvco * plln) / (((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLQ) >> RCC_PLLCFGR_PLLQ_Pos) + 1U) << 1U);
+				} else if ((HAL_IS_BIT_SET(RCC->CRRCR, RCC_CRRCR_HSI48RDY)) && (srcclk == RCC_USBCLKSOURCE_HSI48)) /* HSI48 ?
+																    */
 				{
 					frequency = HSI48_VALUE;
 				} else /* No clock source */
@@ -1135,13 +1080,9 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 					/* f(PLLQ) = f(VCO input) * PLLN / PLLQ
 					 */
 					plln = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos;
-					frequency =
-					    (pllvco * plln) /
-					    (((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLQ) >> RCC_PLLCFGR_PLLQ_Pos) + 1U)
-					     << 1U);
-				} else if ((HAL_IS_BIT_SET(RCC->CRRCR, RCC_CRRCR_HSI48RDY)) &&
-					   (srcclk == RCC_RNGCLKSOURCE_HSI48)) /* HSI48 ?
-										*/
+					frequency = (pllvco * plln) / (((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLQ) >> RCC_PLLCFGR_PLLQ_Pos) + 1U) << 1U);
+				} else if ((HAL_IS_BIT_SET(RCC->CRRCR, RCC_CRRCR_HSI48RDY)) && (srcclk == RCC_RNGCLKSOURCE_HSI48)) /* HSI48 ?
+																    */
 				{
 					frequency = HSI48_VALUE;
 				} else /* No clock source */
@@ -1161,8 +1102,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 						 * / PLLP
 						 */
 						plln = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos;
-						pllp = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLPDIV) >>
-						       RCC_PLLCFGR_PLLPDIV_Pos;
+						pllp = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLPDIV) >> RCC_PLLCFGR_PLLPDIV_Pos;
 						if (pllp == 0U) {
 							if (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLP) != 0U) {
 								pllp = 17U;
@@ -1193,8 +1133,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 						 * / PLLP
 						 */
 						plln = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos;
-						pllp = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLPDIV) >>
-						       RCC_PLLCFGR_PLLPDIV_Pos;
+						pllp = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLPDIV) >> RCC_PLLCFGR_PLLPDIV_Pos;
 						if (pllp == 0U) {
 							if (READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLP) != 0U) {
 								pllp = 17U;
@@ -1226,10 +1165,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
 					/* f(PLLQ) = f(VCO input) * PLLN / PLLQ
 					 */
 					plln = READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos;
-					frequency =
-					    (pllvco * plln) /
-					    (((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLQ) >> RCC_PLLCFGR_PLLQ_Pos) + 1U)
-					     << 1U);
+					frequency = (pllvco * plln) / (((READ_BIT(RCC->PLLCFGR, RCC_PLLCFGR_PLLQ) >> RCC_PLLCFGR_PLLQ_Pos) + 1U) << 1U);
 				} else if (srcclk == RCC_QSPICLKSOURCE_HSI) {
 					frequency = HSI_VALUE;
 				} else if (srcclk == RCC_QSPICLKSOURCE_SYSCLK) {

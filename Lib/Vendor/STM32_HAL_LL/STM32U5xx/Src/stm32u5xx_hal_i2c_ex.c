@@ -370,8 +370,7 @@ HAL_StatusTypeDef HAL_I2CEx_ConfigFastModePlus(I2C_HandleTypeDef *hi2c, uint32_t
  * specified I2Cx peripheral.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_I2CEx_SetConfigAutonomousMode(I2C_HandleTypeDef *hi2c,
-						    const I2C_AutonomousModeConfTypeDef *sConfig)
+HAL_StatusTypeDef HAL_I2CEx_SetConfigAutonomousMode(I2C_HandleTypeDef *hi2c, const I2C_AutonomousModeConfTypeDef *sConfig)
 {
 	if (hi2c->State == HAL_I2C_STATE_READY) {
 		/* Process Locked */
@@ -389,9 +388,7 @@ HAL_StatusTypeDef HAL_I2CEx_SetConfigAutonomousMode(I2C_HandleTypeDef *hi2c,
 		__HAL_I2C_DISABLE(hi2c);
 
 		/* I2Cx AUTOCR Configuration */
-		WRITE_REG(hi2c->Instance->AUTOCR,
-			  (sConfig->TriggerState | ((sConfig->TriggerSelection) & I2C_AUTOCR_TRIGSEL_Msk) |
-			   sConfig->TriggerPolarity));
+		WRITE_REG(hi2c->Instance->AUTOCR, (sConfig->TriggerState | ((sConfig->TriggerSelection) & I2C_AUTOCR_TRIGSEL_Msk) | sConfig->TriggerPolarity));
 
 		/* Enable the selected I2C peripheral */
 		__HAL_I2C_ENABLE(hi2c);
@@ -417,8 +414,7 @@ HAL_StatusTypeDef HAL_I2CEx_SetConfigAutonomousMode(I2C_HandleTypeDef *hi2c,
  * specified I2Cx peripheral.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_I2CEx_GetConfigAutonomousMode(const I2C_HandleTypeDef *hi2c,
-						    I2C_AutonomousModeConfTypeDef *sConfig)
+HAL_StatusTypeDef HAL_I2CEx_GetConfigAutonomousMode(const I2C_HandleTypeDef *hi2c, I2C_AutonomousModeConfTypeDef *sConfig)
 {
 	uint32_t autocr_tmp;
 

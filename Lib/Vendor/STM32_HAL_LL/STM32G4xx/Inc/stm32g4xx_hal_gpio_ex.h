@@ -66,8 +66,8 @@ extern "C" {
 #define GPIO_AF1_TIM17 ((uint8_t)0x01)	     /* TIM17 Alternate Function mapping  */
 #define GPIO_AF1_TIM17_COMP1 ((uint8_t)0x01) /* TIM17/COMP1 Break in Alternate Function mapping  */
 #define GPIO_AF1_TIM15 ((uint8_t)0x01)	     /* TIM15 Alternate Function mapping  */
-#define GPIO_AF1_LPTIM1                                                                                                \
-	((uint8_t)0x01)		    /* LPTIM1 Alternate Function mapping                                               \
+#define GPIO_AF1_LPTIM1                                                                                                                                                                                \
+	((uint8_t)0x01)		    /* LPTIM1 Alternate Function mapping                                                                                                                               \
 				     */
 #define GPIO_AF1_IR ((uint8_t)0x01) /* IR Alternate Function mapping     */
 
@@ -110,8 +110,8 @@ extern "C" {
 #define GPIO_AF3_I2C4 ((uint8_t)0x03) /* I2C4 Alternate Function mapping    */
 #endif				      /* I2C4 */
 #if defined(HRTIM1)
-#define GPIO_AF3_HRTIM1                                                                                                \
-	((uint8_t)0x03) /* HRTIM1 Alternate Function mapping                                                           \
+#define GPIO_AF3_HRTIM1                                                                                                                                                                                \
+	((uint8_t)0x03) /* HRTIM1 Alternate Function mapping                                                                                                                                           \
 			 */
 #endif			/* HRTIM1 */
 #if defined(QUADSPI)
@@ -175,14 +175,14 @@ extern "C" {
 /**
  * @brief   AF 7 selection
  */
-#define GPIO_AF7_USART1                                                                                                \
-	((uint8_t)0x07) /* USART1 Alternate Function mapping                                                           \
+#define GPIO_AF7_USART1                                                                                                                                                                                \
+	((uint8_t)0x07) /* USART1 Alternate Function mapping                                                                                                                                           \
 			 */
-#define GPIO_AF7_USART2                                                                                                \
-	((uint8_t)0x07) /* USART2 Alternate Function mapping                                                           \
+#define GPIO_AF7_USART2                                                                                                                                                                                \
+	((uint8_t)0x07) /* USART2 Alternate Function mapping                                                                                                                                           \
 			 */
-#define GPIO_AF7_USART3                                                                                                \
-	((uint8_t)0x07) /* USART3 Alternate Function mapping                                                           \
+#define GPIO_AF7_USART3                                                                                                                                                                                \
+	((uint8_t)0x07) /* USART3 Alternate Function mapping                                                                                                                                           \
 			 */
 #if defined(COMP5)
 #define GPIO_AF7_COMP5 ((uint8_t)0x07) /* COMP5 Alternate Function mapping */
@@ -229,12 +229,12 @@ extern "C" {
 #define GPIO_AF9_TIM1_COMP1 ((uint8_t)0x09)  /* TIM1/COMP1 Break in Alternate Function mapping   */
 #define GPIO_AF9_TIM8_COMP1 ((uint8_t)0x09)  /* TIM8/COMP1 Break in Alternate Function mapping   */
 #define GPIO_AF9_TIM15_COMP1 ((uint8_t)0x09) /* TIM15/COMP1 Break in Alternate Function mapping  */
-#define GPIO_AF9_FDCAN1                                                                                                \
-	((uint8_t)0x09) /* FDCAN1 Alternate Function mapping                                                           \
+#define GPIO_AF9_FDCAN1                                                                                                                                                                                \
+	((uint8_t)0x09) /* FDCAN1 Alternate Function mapping                                                                                                                                           \
 			 */
 #if defined(FDCAN2)
-#define GPIO_AF9_FDCAN2                                                                                                \
-	((uint8_t)0x09) /* FDCAN2 Alternate Function mapping                                                           \
+#define GPIO_AF9_FDCAN2                                                                                                                                                                                \
+	((uint8_t)0x09) /* FDCAN2 Alternate Function mapping                                                                                                                                           \
 			 */
 #endif			/* FDCAN2 */
 
@@ -249,8 +249,8 @@ extern "C" {
 #define GPIO_AF10_TIM8_COMP2 ((uint8_t)0x0A)  /* TIM8/COMP2 Break in Alternate Function mapping */
 #define GPIO_AF10_TIM17_COMP1 ((uint8_t)0x0A) /* TIM17/COMP1 Break in Alternate Function mapping */
 #if defined(QUADSPI)
-#define GPIO_AF10_QUADSPI                                                                                              \
-	((uint8_t)0x0A) /* OctoSPI Manager Port 1 Alternate Function mapping                                           \
+#define GPIO_AF10_QUADSPI                                                                                                                                                                              \
+	((uint8_t)0x0A) /* OctoSPI Manager Port 1 Alternate Function mapping                                                                                                                           \
 			 */
 #endif			/* QUADSPI */
 
@@ -324,13 +324,13 @@ extern "C" {
 /** @defgroup GPIOEx_Get_Port_Index GPIOEx Get Port Index
  * @{
  */
-#define GPIO_GET_INDEX(__GPIOx__)                                                                                      \
-	(((__GPIOx__) == (GPIOA))   ? 0UL                                                                              \
-	 : ((__GPIOx__) == (GPIOB)) ? 1UL                                                                              \
-	 : ((__GPIOx__) == (GPIOC)) ? 2UL                                                                              \
-	 : ((__GPIOx__) == (GPIOD)) ? 3UL                                                                              \
-	 : ((__GPIOx__) == (GPIOE)) ? 4UL                                                                              \
-	 : ((__GPIOx__) == (GPIOF)) ? 5UL                                                                              \
+#define GPIO_GET_INDEX(__GPIOx__)                                                                                                                                                                      \
+	(((__GPIOx__) == (GPIOA))   ? 0UL                                                                                                                                                              \
+	 : ((__GPIOx__) == (GPIOB)) ? 1UL                                                                                                                                                              \
+	 : ((__GPIOx__) == (GPIOC)) ? 2UL                                                                                                                                                              \
+	 : ((__GPIOx__) == (GPIOD)) ? 3UL                                                                                                                                                              \
+	 : ((__GPIOx__) == (GPIOE)) ? 4UL                                                                                                                                                              \
+	 : ((__GPIOx__) == (GPIOF)) ? 5UL                                                                                                                                                              \
 				    : 6UL)
 
 /**

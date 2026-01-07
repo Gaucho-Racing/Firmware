@@ -453,8 +453,8 @@ typedef struct {
 
 /* user-oriented definitions for MPCBB */
 #define GTZC_MPCBB_BLOCK_SIZE 0x200U /* 512 Bytes */
-#define GTZC_MPCBB_SUPERBLOCK_SIZE                                                                                     \
-	(GTZC_MPCBB_BLOCK_SIZE * 32U) /* 16 KBytes                                                                     \
+#define GTZC_MPCBB_SUPERBLOCK_SIZE                                                                                                                                                                     \
+	(GTZC_MPCBB_BLOCK_SIZE * 32U) /* 16 KBytes                                                                                                                                                     \
 				       */
 #define GTZC_MPCBB_SUPERBLOCK_UNLOCKED (0U)
 #define GTZC_MPCBB_SUPERBLOCK_LOCKED (1U)
@@ -496,15 +496,11 @@ typedef struct {
 
 /* retrieve information to access register for a specific PeriphId */
 #define GTZC_GET_REG_INDEX(periph_id) (((periph_id) & GTZC_PERIPH_REG) >> GTZC_PERIPH_REG_SHIFT)
-#define GTZC_GET_REG_INDEX_IN_INSTANCE(periph_id)                                                                      \
-	((((periph_id) & GTZC_PERIPH_REG) <= GTZC1_PERIPH_REG4)                                                        \
-	     ? (((periph_id) & GTZC_PERIPH_REG) >> GTZC_PERIPH_REG_SHIFT)                                              \
-	     : ((((periph_id) & GTZC_PERIPH_REG) >> GTZC_PERIPH_REG_SHIFT) - 4U))
+#define GTZC_GET_REG_INDEX_IN_INSTANCE(periph_id)                                                                                                                                                      \
+	((((periph_id) & GTZC_PERIPH_REG) <= GTZC1_PERIPH_REG4) ? (((periph_id) & GTZC_PERIPH_REG) >> GTZC_PERIPH_REG_SHIFT) : ((((periph_id) & GTZC_PERIPH_REG) >> GTZC_PERIPH_REG_SHIFT) - 4U))
 #define GTZC_GET_PERIPH_POS(periph_id) ((periph_id) & GTZC_PERIPH_BIT_POSITION)
 
-#define IS_GTZC_BASE_ADDRESS(mem, address)                                                                             \
-	(((uint32_t)(address) == (uint32_t)GTZC_BASE_ADDRESS_NS(mem)) ||                                               \
-	 ((uint32_t)(address) == (uint32_t)GTZC_BASE_ADDRESS_S(mem)))
+#define IS_GTZC_BASE_ADDRESS(mem, address) (((uint32_t)(address) == (uint32_t)GTZC_BASE_ADDRESS_NS(mem)) || ((uint32_t)(address) == (uint32_t)GTZC_BASE_ADDRESS_S(mem)))
 
 #define GTZC_MEM_SIZE(mem) (mem##_SIZE)
 
@@ -527,21 +523,17 @@ typedef struct {
  * HAL_GTZC_TZSC_ConfigPeriphAttributes() and
  * HAL_GTZC_TZSC_GetConfigPeriphAttributes()
  */
-#define HAL_GTZC_TZSC_GET_ARRAY_INDEX(periph_id)                                                                       \
-	(uint32_t)((HAL_GTZC_TZSC_GET_INSTANCE(periph_id) == GTZC_TZSC1)                                               \
-		       ? ((GTZC_GET_REG_INDEX(periph_id) * 32U) + GTZC_GET_PERIPH_POS(periph_id))                      \
-		       : (((GTZC_GET_REG_INDEX(periph_id) - 1U) * 32U) + GTZC_GET_PERIPH_POS(periph_id)))
+#define HAL_GTZC_TZSC_GET_ARRAY_INDEX(periph_id)                                                                                                                                                       \
+	(uint32_t)((HAL_GTZC_TZSC_GET_INSTANCE(periph_id) == GTZC_TZSC1) ? ((GTZC_GET_REG_INDEX(periph_id) * 32U) + GTZC_GET_PERIPH_POS(periph_id))                                                    \
+									 : (((GTZC_GET_REG_INDEX(periph_id) - 1U) * 32U) + GTZC_GET_PERIPH_POS(periph_id)))
 
-#define HAL_GTZC_TZIC_GET_ARRAY_INDEX(periph_id)                                                                       \
-	((GTZC_GET_REG_INDEX((periph_id)) * 32U) + GTZC_GET_PERIPH_POS((periph_id)))
+#define HAL_GTZC_TZIC_GET_ARRAY_INDEX(periph_id) ((GTZC_GET_REG_INDEX((periph_id)) * 32U) + GTZC_GET_PERIPH_POS((periph_id)))
 
 /* user-oriented macro to get TZSC instance of a specific PeriphId */
-#define HAL_GTZC_TZSC_GET_INSTANCE(periph_id)                                                                          \
-	((GTZC_GET_REG_INDEX(periph_id) <= (GTZC1_PERIPH_REG4 >> GTZC_PERIPH_REG_SHIFT)) ? GTZC_TZSC1 : GTZC_TZSC2)
+#define HAL_GTZC_TZSC_GET_INSTANCE(periph_id) ((GTZC_GET_REG_INDEX(periph_id) <= (GTZC1_PERIPH_REG4 >> GTZC_PERIPH_REG_SHIFT)) ? GTZC_TZSC1 : GTZC_TZSC2)
 
 /* user-oriented macro to get TZIC instance of a specific PeriphId */
-#define HAL_GTZC_TZIC_GET_INSTANCE(periph_id)                                                                          \
-	((GTZC_GET_REG_INDEX(periph_id) <= (GTZC1_PERIPH_REG4 >> GTZC_PERIPH_REG_SHIFT)) ? GTZC_TZIC1 : GTZC_TZIC2)
+#define HAL_GTZC_TZIC_GET_INSTANCE(periph_id) ((GTZC_GET_REG_INDEX(periph_id) <= (GTZC1_PERIPH_REG4 >> GTZC_PERIPH_REG_SHIFT)) ? GTZC_TZIC1 : GTZC_TZIC2)
 
 /**
  * @}
@@ -572,8 +564,7 @@ HAL_StatusTypeDef HAL_GTZC_TZSC_GetConfigPeriphAttributes(uint32_t PeriphId, uin
  * @{
  */
 
-HAL_StatusTypeDef HAL_GTZC_TZSC_MPCWM_ConfigMemAttributes(uint32_t MemBaseAddress,
-							  const MPCWM_ConfigTypeDef *pMPCWM_Desc);
+HAL_StatusTypeDef HAL_GTZC_TZSC_MPCWM_ConfigMemAttributes(uint32_t MemBaseAddress, const MPCWM_ConfigTypeDef *pMPCWM_Desc);
 HAL_StatusTypeDef HAL_GTZC_TZSC_MPCWM_GetConfigMemAttributes(uint32_t MemBaseAddress, MPCWM_ConfigTypeDef *pMPCWM_Desc);
 /**
  * @}
@@ -598,14 +589,11 @@ uint32_t HAL_GTZC_TZSC_GetLock(const GTZC_TZSC_TypeDef *TZSC_Instance);
 
 HAL_StatusTypeDef HAL_GTZC_MPCBB_ConfigMem(uint32_t MemBaseAddress, const MPCBB_ConfigTypeDef *pMPCBB_desc);
 HAL_StatusTypeDef HAL_GTZC_MPCBB_GetConfigMem(uint32_t MemBaseAddress, MPCBB_ConfigTypeDef *pMPCBB_desc);
-HAL_StatusTypeDef HAL_GTZC_MPCBB_ConfigMemAttributes(uint32_t MemAddress, uint32_t NbBlocks,
-						     const uint32_t *pMemAttributes);
-HAL_StatusTypeDef HAL_GTZC_MPCBB_GetConfigMemAttributes(uint32_t MemAddress, uint32_t NbBlocks,
-							uint32_t *pMemAttributes);
+HAL_StatusTypeDef HAL_GTZC_MPCBB_ConfigMemAttributes(uint32_t MemAddress, uint32_t NbBlocks, const uint32_t *pMemAttributes);
+HAL_StatusTypeDef HAL_GTZC_MPCBB_GetConfigMemAttributes(uint32_t MemAddress, uint32_t NbBlocks, uint32_t *pMemAttributes);
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-HAL_StatusTypeDef HAL_GTZC_MPCBB_LockConfig(uint32_t MemAddress, uint32_t NbSuperBlocks,
-					    const uint32_t *pLockAttributes);
+HAL_StatusTypeDef HAL_GTZC_MPCBB_LockConfig(uint32_t MemAddress, uint32_t NbSuperBlocks, const uint32_t *pLockAttributes);
 HAL_StatusTypeDef HAL_GTZC_MPCBB_GetLockConfig(uint32_t MemAddress, uint32_t NbSuperBlocks, uint32_t *pLockAttributes);
 HAL_StatusTypeDef HAL_GTZC_MPCBB_Lock(uint32_t MemBaseAddress);
 HAL_StatusTypeDef HAL_GTZC_MPCBB_GetLock(uint32_t MemBaseAddress, uint32_t *pLockState);

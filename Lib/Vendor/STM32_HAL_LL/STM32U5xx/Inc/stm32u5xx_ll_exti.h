@@ -363,10 +363,7 @@ __STATIC_INLINE void LL_EXTI_DisableIT_0_31(uint32_t ExtiLine) { CLEAR_BIT(EXTI-
  * @note   Please check each device line mapping for EXTI Line availability
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_EXTI_IsEnabledIT_0_31(uint32_t ExtiLine)
-{
-	return ((READ_BIT(EXTI->IMR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_EXTI_IsEnabledIT_0_31(uint32_t ExtiLine) { return ((READ_BIT(EXTI->IMR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL); }
 
 /**
  * @}
@@ -483,10 +480,7 @@ __STATIC_INLINE void LL_EXTI_DisableEvent_0_31(uint32_t ExtiLine) { CLEAR_BIT(EX
  * @note   Please check each device line mapping for EXTI Line availability
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_EXTI_IsEnabledEvent_0_31(uint32_t ExtiLine)
-{
-	return ((READ_BIT(EXTI->EMR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_EXTI_IsEnabledEvent_0_31(uint32_t ExtiLine) { return ((READ_BIT(EXTI->EMR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL); }
 
 /**
  * @}
@@ -613,10 +607,7 @@ __STATIC_INLINE void LL_EXTI_DisableRisingTrig_0_31(uint32_t ExtiLine) { CLEAR_B
  * @note   Please check each device line mapping for EXTI Line availability
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_EXTI_IsEnabledRisingTrig_0_31(uint32_t ExtiLine)
-{
-	return ((READ_BIT(EXTI->RTSR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_EXTI_IsEnabledRisingTrig_0_31(uint32_t ExtiLine) { return ((READ_BIT(EXTI->RTSR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL); }
 
 /**
  * @}
@@ -742,10 +733,7 @@ __STATIC_INLINE void LL_EXTI_DisableFallingTrig_0_31(uint32_t ExtiLine) { CLEAR_
  * @note   Please check each device line mapping for EXTI Line availability
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_EXTI_IsEnabledFallingTrig_0_31(uint32_t ExtiLine)
-{
-	return ((READ_BIT(EXTI->FTSR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_EXTI_IsEnabledFallingTrig_0_31(uint32_t ExtiLine) { return ((READ_BIT(EXTI->FTSR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL); }
 
 /**
  * @}
@@ -840,10 +828,7 @@ __STATIC_INLINE void LL_EXTI_GenerateSWI_0_31(uint32_t ExtiLine) { SET_BIT(EXTI-
  * @note   Please check each device line mapping for EXTI Line availability
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_EXTI_IsActiveFallingFlag_0_31(uint32_t ExtiLine)
-{
-	return ((READ_BIT(EXTI->FPR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_EXTI_IsActiveFallingFlag_0_31(uint32_t ExtiLine) { return ((READ_BIT(EXTI->FPR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL); }
 
 /**
  * @brief  Read ExtLine Combination Falling Flag for Lines in range 0 to 31
@@ -881,10 +866,7 @@ __STATIC_INLINE uint32_t LL_EXTI_IsActiveFallingFlag_0_31(uint32_t ExtiLine)
  * @retval @note This bit is set when the selected edge event arrives on the
  * interrupt
  */
-__STATIC_INLINE uint32_t LL_EXTI_ReadFallingFlag_0_31(uint32_t ExtiLine)
-{
-	return (uint32_t)(READ_BIT(EXTI->FPR1, ExtiLine));
-}
+__STATIC_INLINE uint32_t LL_EXTI_ReadFallingFlag_0_31(uint32_t ExtiLine) { return (uint32_t)(READ_BIT(EXTI->FPR1, ExtiLine)); }
 
 /**
  * @brief  Clear ExtLine Falling Flags  for Lines in range 0 to 31
@@ -959,10 +941,7 @@ __STATIC_INLINE void LL_EXTI_ClearFallingFlag_0_31(uint32_t ExtiLine) { WRITE_RE
  * @note   Please check each device line mapping for EXTI Line availability
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_EXTI_IsActiveRisingFlag_0_31(uint32_t ExtiLine)
-{
-	return ((READ_BIT(EXTI->RPR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_EXTI_IsActiveRisingFlag_0_31(uint32_t ExtiLine) { return ((READ_BIT(EXTI->RPR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL); }
 
 /**
  * @brief  Read ExtLine Combination Rising Flag for Lines in range 0 to 31
@@ -1000,10 +979,7 @@ __STATIC_INLINE uint32_t LL_EXTI_IsActiveRisingFlag_0_31(uint32_t ExtiLine)
  * @retval @note This bit is set when the selected edge event arrives on the
  * interrupt
  */
-__STATIC_INLINE uint32_t LL_EXTI_ReadRisingFlag_0_31(uint32_t ExtiLine)
-{
-	return (uint32_t)(READ_BIT(EXTI->RPR1, ExtiLine));
-}
+__STATIC_INLINE uint32_t LL_EXTI_ReadRisingFlag_0_31(uint32_t ExtiLine) { return (uint32_t)(READ_BIT(EXTI->RPR1, ExtiLine)); }
 
 /**
  * @brief  Clear ExtLine Rising Flags  for Lines in range 0 to 31
@@ -1101,8 +1077,7 @@ __STATIC_INLINE void LL_EXTI_ClearRisingFlag_0_31(uint32_t ExtiLine) { WRITE_REG
  */
 __STATIC_INLINE void LL_EXTI_SetEXTISource(uint32_t Port, uint32_t Line)
 {
-	MODIFY_REG(EXTI->EXTICR[Line & 0x03U], EXTI_EXTICR1_EXTI0 << (Line >> LL_EXTI_REGISTER_PINPOS_SHFT),
-		   Port << (Line >> LL_EXTI_REGISTER_PINPOS_SHFT));
+	MODIFY_REG(EXTI->EXTICR[Line & 0x03U], EXTI_EXTICR1_EXTI0 << (Line >> LL_EXTI_REGISTER_PINPOS_SHFT), Port << (Line >> LL_EXTI_REGISTER_PINPOS_SHFT));
 }
 
 /**
@@ -1156,9 +1131,7 @@ __STATIC_INLINE void LL_EXTI_SetEXTISource(uint32_t Port, uint32_t Line)
  */
 __STATIC_INLINE uint32_t LL_EXTI_GetEXTISource(uint32_t Line)
 {
-	return (uint32_t)(READ_BIT(EXTI->EXTICR[Line & 0x03U],
-				   (EXTI_EXTICR1_EXTI0 << (Line >> LL_EXTI_REGISTER_PINPOS_SHFT))) >>
-			  (Line >> LL_EXTI_REGISTER_PINPOS_SHFT));
+	return (uint32_t)(READ_BIT(EXTI->EXTICR[Line & 0x03U], (EXTI_EXTICR1_EXTI0 << (Line >> LL_EXTI_REGISTER_PINPOS_SHFT))) >> (Line >> LL_EXTI_REGISTER_PINPOS_SHFT));
 }
 /**
  * @}
@@ -1279,10 +1252,7 @@ __STATIC_INLINE void LL_EXTI_DisableSecure_0_31(uint32_t ExtiLine) { CLEAR_BIT(E
  * @note   Please check each device line mapping for EXTI Line availability
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_EXTI_IsEnabledSecure_0_31(uint32_t ExtiLine)
-{
-	return ((READ_BIT(EXTI->SECCFGR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_EXTI_IsEnabledSecure_0_31(uint32_t ExtiLine) { return ((READ_BIT(EXTI->SECCFGR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL); }
 
 /**
  * @}
@@ -1399,10 +1369,7 @@ __STATIC_INLINE void LL_EXTI_DisablePrivilege_0_31(uint32_t ExtiLine) { CLEAR_BI
  * @note   Please check each device line mapping for EXTI Line availability
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_EXTI_IsEnabledPrivilege_0_31(uint32_t ExtiLine)
-{
-	return ((READ_BIT(EXTI->PRIVCFGR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_EXTI_IsEnabledPrivilege_0_31(uint32_t ExtiLine) { return ((READ_BIT(EXTI->PRIVCFGR1, ExtiLine) == (ExtiLine)) ? 1UL : 0UL); }
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /**

@@ -58,9 +58,7 @@
 #define __STM32U5xx_HAL_VERSION_SUB1 (0x06UL) /*!< [23:16] sub1 version */
 #define __STM32U5xx_HAL_VERSION_SUB2 (0x02UL) /*!< [15:8]  sub2 version */
 #define __STM32U5xx_HAL_VERSION_RC (0x00UL)   /*!< [7:0]  release candidate */
-#define __STM32U5xx_HAL_VERSION                                                                                        \
-	((__STM32U5xx_HAL_VERSION_MAIN << 24U) | (__STM32U5xx_HAL_VERSION_SUB1 << 16U) |                               \
-	 (__STM32U5xx_HAL_VERSION_SUB2 << 8U) | (__STM32U5xx_HAL_VERSION_RC))
+#define __STM32U5xx_HAL_VERSION ((__STM32U5xx_HAL_VERSION_MAIN << 24U) | (__STM32U5xx_HAL_VERSION_SUB1 << 16U) | (__STM32U5xx_HAL_VERSION_SUB2 << 8U) | (__STM32U5xx_HAL_VERSION_RC))
 
 #define VREFBUF_TIMEOUT_VALUE 10U /* 10 ms (to be confirmed) */
 /**
@@ -150,8 +148,7 @@ HAL_StatusTypeDef HAL_Init(void)
 	HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
 	/* Update the SystemCoreClock global variable */
-	SystemCoreClock =
-	    HAL_RCC_GetSysClockFreq() >> AHBPrescTable[(RCC->CFGR2 & RCC_CFGR2_HPRE) >> RCC_CFGR2_HPRE_Pos];
+	SystemCoreClock = HAL_RCC_GetSysClockFreq() >> AHBPrescTable[(RCC->CFGR2 & RCC_CFGR2_HPRE) >> RCC_CFGR2_HPRE_Pos];
 
 	/* Select HCLK as SysTick clock source */
 	HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
@@ -680,10 +677,7 @@ void HAL_SYSCFG_SetHSPIDecouplingCapacitance(uint32_t Capacitance)
  *         @arg @ref SYSCFG_HSPI_CAPACITANCE_2_DIV_3
  *         @arg @ref SYSCFG_HSPI_CAPACITANCE_FULL
  */
-uint32_t HAL_SYSCFG_GetHSPIDecouplingCapacitance(void)
-{
-	return (uint32_t)(READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_ENDCAP));
-}
+uint32_t HAL_SYSCFG_GetHSPIDecouplingCapacitance(void) { return (uint32_t)(READ_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_ENDCAP)); }
 #endif /* SYSCFG_CFGR1_ENDCAP */
 
 #if defined(SYSCFG_CFGR1_SRAMCACHED)

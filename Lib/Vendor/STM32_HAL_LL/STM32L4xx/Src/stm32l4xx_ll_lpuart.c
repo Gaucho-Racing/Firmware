@@ -60,13 +60,10 @@
 /* Check of parameters for configuration of LPUART registers                  */
 
 #if defined(USART_PRESC_PRESCALER)
-#define IS_LL_LPUART_PRESCALER(__VALUE__)                                                                              \
-	(((__VALUE__) == LL_LPUART_PRESCALER_DIV1) || ((__VALUE__) == LL_LPUART_PRESCALER_DIV2) ||                     \
-	 ((__VALUE__) == LL_LPUART_PRESCALER_DIV4) || ((__VALUE__) == LL_LPUART_PRESCALER_DIV6) ||                     \
-	 ((__VALUE__) == LL_LPUART_PRESCALER_DIV8) || ((__VALUE__) == LL_LPUART_PRESCALER_DIV10) ||                    \
-	 ((__VALUE__) == LL_LPUART_PRESCALER_DIV12) || ((__VALUE__) == LL_LPUART_PRESCALER_DIV16) ||                   \
-	 ((__VALUE__) == LL_LPUART_PRESCALER_DIV32) || ((__VALUE__) == LL_LPUART_PRESCALER_DIV64) ||                   \
-	 ((__VALUE__) == LL_LPUART_PRESCALER_DIV128) || ((__VALUE__) == LL_LPUART_PRESCALER_DIV256))
+#define IS_LL_LPUART_PRESCALER(__VALUE__)                                                                                                                                                              \
+	(((__VALUE__) == LL_LPUART_PRESCALER_DIV1) || ((__VALUE__) == LL_LPUART_PRESCALER_DIV2) || ((__VALUE__) == LL_LPUART_PRESCALER_DIV4) || ((__VALUE__) == LL_LPUART_PRESCALER_DIV6) ||           \
+	 ((__VALUE__) == LL_LPUART_PRESCALER_DIV8) || ((__VALUE__) == LL_LPUART_PRESCALER_DIV10) || ((__VALUE__) == LL_LPUART_PRESCALER_DIV12) || ((__VALUE__) == LL_LPUART_PRESCALER_DIV16) ||        \
+	 ((__VALUE__) == LL_LPUART_PRESCALER_DIV32) || ((__VALUE__) == LL_LPUART_PRESCALER_DIV64) || ((__VALUE__) == LL_LPUART_PRESCALER_DIV128) || ((__VALUE__) == LL_LPUART_PRESCALER_DIV256))
 
 #endif /* USART_PRESC_PRESCALER */
 /* __BAUDRATE__ Depending on constraints applicable for LPUART BRR register   */
@@ -83,24 +80,17 @@
 /* __VALUE__ BRR content must be lower than or equal to 0xFFFFF. */
 #define IS_LL_LPUART_BRR_MAX(__VALUE__) ((__VALUE__) <= 0x000FFFFFU)
 
-#define IS_LL_LPUART_DIRECTION(__VALUE__)                                                                              \
-	(((__VALUE__) == LL_LPUART_DIRECTION_NONE) || ((__VALUE__) == LL_LPUART_DIRECTION_RX) ||                       \
-	 ((__VALUE__) == LL_LPUART_DIRECTION_TX) || ((__VALUE__) == LL_LPUART_DIRECTION_TX_RX))
+#define IS_LL_LPUART_DIRECTION(__VALUE__)                                                                                                                                                              \
+	(((__VALUE__) == LL_LPUART_DIRECTION_NONE) || ((__VALUE__) == LL_LPUART_DIRECTION_RX) || ((__VALUE__) == LL_LPUART_DIRECTION_TX) || ((__VALUE__) == LL_LPUART_DIRECTION_TX_RX))
 
-#define IS_LL_LPUART_PARITY(__VALUE__)                                                                                 \
-	(((__VALUE__) == LL_LPUART_PARITY_NONE) || ((__VALUE__) == LL_LPUART_PARITY_EVEN) ||                           \
-	 ((__VALUE__) == LL_LPUART_PARITY_ODD))
+#define IS_LL_LPUART_PARITY(__VALUE__) (((__VALUE__) == LL_LPUART_PARITY_NONE) || ((__VALUE__) == LL_LPUART_PARITY_EVEN) || ((__VALUE__) == LL_LPUART_PARITY_ODD))
 
-#define IS_LL_LPUART_DATAWIDTH(__VALUE__)                                                                              \
-	(((__VALUE__) == LL_LPUART_DATAWIDTH_7B) || ((__VALUE__) == LL_LPUART_DATAWIDTH_8B) ||                         \
-	 ((__VALUE__) == LL_LPUART_DATAWIDTH_9B))
+#define IS_LL_LPUART_DATAWIDTH(__VALUE__) (((__VALUE__) == LL_LPUART_DATAWIDTH_7B) || ((__VALUE__) == LL_LPUART_DATAWIDTH_8B) || ((__VALUE__) == LL_LPUART_DATAWIDTH_9B))
 
-#define IS_LL_LPUART_STOPBITS(__VALUE__)                                                                               \
-	(((__VALUE__) == LL_LPUART_STOPBITS_1) || ((__VALUE__) == LL_LPUART_STOPBITS_2))
+#define IS_LL_LPUART_STOPBITS(__VALUE__) (((__VALUE__) == LL_LPUART_STOPBITS_1) || ((__VALUE__) == LL_LPUART_STOPBITS_2))
 
-#define IS_LL_LPUART_HWCONTROL(__VALUE__)                                                                              \
-	(((__VALUE__) == LL_LPUART_HWCONTROL_NONE) || ((__VALUE__) == LL_LPUART_HWCONTROL_RTS) ||                      \
-	 ((__VALUE__) == LL_LPUART_HWCONTROL_CTS) || ((__VALUE__) == LL_LPUART_HWCONTROL_RTS_CTS))
+#define IS_LL_LPUART_HWCONTROL(__VALUE__)                                                                                                                                                              \
+	(((__VALUE__) == LL_LPUART_HWCONTROL_NONE) || ((__VALUE__) == LL_LPUART_HWCONTROL_RTS) || ((__VALUE__) == LL_LPUART_HWCONTROL_CTS) || ((__VALUE__) == LL_LPUART_HWCONTROL_RTS_CTS))
 
 /**
  * @}
@@ -194,9 +184,8 @@ ErrorStatus LL_LPUART_Init(USART_TypeDef *LPUARTx, const LL_LPUART_InitTypeDef *
 		 * - TransferDirection:  USART_CR1_TE, USART_CR1_RE bits
 		 * according to LPUART_InitStruct->TransferDirection value
 		 */
-		MODIFY_REG(
-		    LPUARTx->CR1, (USART_CR1_M | USART_CR1_PCE | USART_CR1_PS | USART_CR1_TE | USART_CR1_RE),
-		    (LPUART_InitStruct->DataWidth | LPUART_InitStruct->Parity | LPUART_InitStruct->TransferDirection));
+		MODIFY_REG(LPUARTx->CR1, (USART_CR1_M | USART_CR1_PCE | USART_CR1_PS | USART_CR1_TE | USART_CR1_RE),
+			   (LPUART_InitStruct->DataWidth | LPUART_InitStruct->Parity | LPUART_InitStruct->TransferDirection));
 
 		/*---------------------------- LPUART CR2 Configuration
 		 * ----------------------- Configure LPUARTx CR2 (Stop bits)

@@ -224,8 +224,7 @@ static void SWPMI_EndTransmit_IT(SWPMI_HandleTypeDef *hswpmi);
 static void SWPMI_Receive_IT(SWPMI_HandleTypeDef *hswpmi);
 static void SWPMI_EndReceive_IT(SWPMI_HandleTypeDef *hswpmi);
 static void SWPMI_EndTransmitReceive_IT(SWPMI_HandleTypeDef *hswpmi);
-static HAL_StatusTypeDef SWPMI_WaitOnFlagSetUntilTimeout(SWPMI_HandleTypeDef *hswpmi, uint32_t Flag, uint32_t Tickstart,
-							 uint32_t Timeout);
+static HAL_StatusTypeDef SWPMI_WaitOnFlagSetUntilTimeout(SWPMI_HandleTypeDef *hswpmi, uint32_t Flag, uint32_t Tickstart, uint32_t Timeout);
 
 /* Exported functions --------------------------------------------------------*/
 
@@ -323,8 +322,7 @@ HAL_StatusTypeDef HAL_SWPMI_Init(SWPMI_HandleTypeDef *hswpmi)
 		WRITE_REG(hswpmi->Instance->BRR, hswpmi->Init.BitRate);
 
 		/* Apply SWPMI CR configuration */
-		MODIFY_REG(hswpmi->Instance->CR, SWPMI_CR_RXDMA | SWPMI_CR_TXDMA | SWPMI_CR_RXMODE | SWPMI_CR_TXMODE,
-			   hswpmi->Init.TxBufferingMode | hswpmi->Init.RxBufferingMode);
+		MODIFY_REG(hswpmi->Instance->CR, SWPMI_CR_RXDMA | SWPMI_CR_TXDMA | SWPMI_CR_RXMODE | SWPMI_CR_TXMODE, hswpmi->Init.TxBufferingMode | hswpmi->Init.RxBufferingMode);
 
 		hswpmi->ErrorCode = HAL_SWPMI_ERROR_NONE;
 		hswpmi->State = HAL_SWPMI_STATE_READY;
@@ -430,8 +428,7 @@ __weak void HAL_SWPMI_MspDeInit(SWPMI_HandleTypeDef *hswpmi)
  * @param  pCallback pointer to the callback function.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_SWPMI_RegisterCallback(SWPMI_HandleTypeDef *hswpmi, HAL_SWPMI_CallbackIDTypeDef CallbackID,
-					     pSWPMI_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_SWPMI_RegisterCallback(SWPMI_HandleTypeDef *hswpmi, HAL_SWPMI_CallbackIDTypeDef CallbackID, pSWPMI_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -642,8 +639,7 @@ communication error is detected.
  * @param  Timeout Timeout duration
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SWPMI_Transmit(SWPMI_HandleTypeDef *hswpmi, const uint32_t *pData, uint16_t Size,
-				     uint32_t Timeout)
+HAL_StatusTypeDef HAL_SWPMI_Transmit(SWPMI_HandleTypeDef *hswpmi, const uint32_t *pData, uint16_t Size, uint32_t Timeout)
 {
 	uint32_t tickstart = HAL_GetTick();
 	HAL_StatusTypeDef status = HAL_OK;
@@ -665,8 +661,7 @@ HAL_StatusTypeDef HAL_SWPMI_Transmit(SWPMI_HandleTypeDef *hswpmi, const uint32_t
 				hswpmi->State = HAL_SWPMI_STATE_BUSY_TX;
 
 				/* Disable any transmitter interrupts */
-				__HAL_SWPMI_DISABLE_IT(hswpmi, SWPMI_IT_TCIE | SWPMI_IT_TIE | SWPMI_IT_TXUNRIE |
-								   SWPMI_IT_TXBEIE);
+				__HAL_SWPMI_DISABLE_IT(hswpmi, SWPMI_IT_TCIE | SWPMI_IT_TIE | SWPMI_IT_TXUNRIE | SWPMI_IT_TXBEIE);
 
 				/* Disable any transmitter flags */
 				__HAL_SWPMI_CLEAR_FLAG(hswpmi, SWPMI_FLAG_TXBEF | SWPMI_FLAG_TXUNRF | SWPMI_FLAG_TCF);
@@ -759,8 +754,7 @@ HAL_StatusTypeDef HAL_SWPMI_Receive(SWPMI_HandleTypeDef *hswpmi, uint32_t *pData
 				hswpmi->State = HAL_SWPMI_STATE_BUSY_RX;
 
 				/* Disable any receiver interrupts */
-				CLEAR_BIT(hswpmi->Instance->IER, SWPMI_IT_SRIE | SWPMI_IT_RIE | SWPMI_IT_RXBERIE |
-								     SWPMI_IT_RXOVRIE | SWPMI_IT_RXBFIE);
+				CLEAR_BIT(hswpmi->Instance->IER, SWPMI_IT_SRIE | SWPMI_IT_RIE | SWPMI_IT_RXBERIE | SWPMI_IT_RXOVRIE | SWPMI_IT_RXBFIE);
 
 				/* Enable SWPMI peripheral if not */
 				SET_BIT(hswpmi->Instance->CR, SWPMI_CR_SWPACT);
@@ -918,8 +912,7 @@ HAL_StatusTypeDef HAL_SWPMI_Receive_IT(SWPMI_HandleTypeDef *hswpmi, uint32_t *pD
 			 * receive CRC Error, receive overrun and RxBuf
 			 * Interrupt */
 			/*  Enable the SWPMI Transmit/Reception completion   */
-			__HAL_SWPMI_ENABLE_IT(hswpmi,
-					      SWPMI_IT_RIE | SWPMI_IT_RXBERIE | SWPMI_IT_RXOVRIE | SWPMI_IT_RXBFIE);
+			__HAL_SWPMI_ENABLE_IT(hswpmi, SWPMI_IT_RIE | SWPMI_IT_RXBERIE | SWPMI_IT_RXOVRIE | SWPMI_IT_RXBFIE);
 		} else {
 			status = HAL_BUSY;
 
@@ -977,8 +970,7 @@ HAL_StatusTypeDef HAL_SWPMI_Transmit_DMA(SWPMI_HandleTypeDef *hswpmi, const uint
 			hswpmi->hdmatx->XferErrorCallback = SWPMI_DMAError;
 
 			/* Enable the SWPMI transmit DMA channel */
-			if (HAL_DMA_Start_IT(hswpmi->hdmatx, (uint32_t)hswpmi->pTxBuffPtr,
-					     (uint32_t)&hswpmi->Instance->TDR, Size) != HAL_OK) {
+			if (HAL_DMA_Start_IT(hswpmi->hdmatx, (uint32_t)hswpmi->pTxBuffPtr, (uint32_t)&hswpmi->Instance->TDR, Size) != HAL_OK) {
 				hswpmi->State = tmp_state; /* Back to previous state */
 				hswpmi->ErrorCode = HAL_SWPMI_ERROR_DMA;
 				status = HAL_ERROR;
@@ -1053,8 +1045,7 @@ HAL_StatusTypeDef HAL_SWPMI_Receive_DMA(SWPMI_HandleTypeDef *hswpmi, uint32_t *p
 			hswpmi->hdmarx->XferErrorCallback = SWPMI_DMAError;
 
 			/* Enable the DMA request */
-			if (HAL_DMA_Start_IT(hswpmi->hdmarx, (uint32_t)&hswpmi->Instance->RDR,
-					     (uint32_t)hswpmi->pRxBuffPtr, Size) != HAL_OK) {
+			if (HAL_DMA_Start_IT(hswpmi->hdmarx, (uint32_t)&hswpmi->Instance->RDR, (uint32_t)hswpmi->pRxBuffPtr, Size) != HAL_OK) {
 				hswpmi->State = tmp_state; /* Back to previous state */
 				hswpmi->ErrorCode = HAL_SWPMI_ERROR_DMA;
 				status = HAL_ERROR;
@@ -1647,8 +1638,7 @@ static void SWPMI_DMATransmitCplt(DMA_HandleTypeDef *hdma)
 		tickstart = HAL_GetTick();
 
 		/* Wait the TXBEF */
-		if (SWPMI_WaitOnFlagSetUntilTimeout(hswpmi, SWPMI_FLAG_TXBEF, tickstart, SWPMI_TIMEOUT_VALUE) !=
-		    HAL_OK) {
+		if (SWPMI_WaitOnFlagSetUntilTimeout(hswpmi, SWPMI_FLAG_TXBEF, tickstart, SWPMI_TIMEOUT_VALUE) != HAL_OK) {
 			/* Timeout occurred */
 			hswpmi->ErrorCode |= HAL_SWPMI_ERROR_TXBEF_TIMEOUT;
 
@@ -1797,8 +1787,7 @@ static void SWPMI_DMAAbortOnError(DMA_HandleTypeDef *hdma)
  * @param  Timeout timeout duration.
  * @retval HAL status
  */
-static HAL_StatusTypeDef SWPMI_WaitOnFlagSetUntilTimeout(SWPMI_HandleTypeDef *hswpmi, uint32_t Flag, uint32_t Tickstart,
-							 uint32_t Timeout)
+static HAL_StatusTypeDef SWPMI_WaitOnFlagSetUntilTimeout(SWPMI_HandleTypeDef *hswpmi, uint32_t Flag, uint32_t Tickstart, uint32_t Timeout)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 

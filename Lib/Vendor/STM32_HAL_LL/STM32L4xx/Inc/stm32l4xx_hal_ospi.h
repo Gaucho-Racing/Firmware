@@ -114,7 +114,7 @@ typedef struct {
 typedef struct __OSPI_HandleTypeDef
 #else
 typedef struct
-#endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                         \
+#endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U) */
 {
 	OCTOSPI_TypeDef *Instance; /*!< OSPI registers base address */
@@ -140,7 +140,7 @@ typedef struct
 
 	void (*MspInitCallback)(struct __OSPI_HandleTypeDef *hospi);
 	void (*MspDeInitCallback)(struct __OSPI_HandleTypeDef *hospi);
-#endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                         \
+#endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U) */
 } OSPI_HandleTypeDef;
 
@@ -341,7 +341,7 @@ typedef enum {
  * @brief  HAL OSPI Callback pointer definition
  */
 typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
-#endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                         \
+#endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U) */
 /**
  * @}
@@ -356,18 +356,18 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
  * @{
  */
 #define HAL_OSPI_STATE_RESET ((uint32_t)0x00000000U) /*!< Initial state */
-#define HAL_OSPI_STATE_HYPERBUS_INIT                                                                                   \
-	((uint32_t)0x00000001U)			     /*!< Initialization done in hyperbus mode but                     \
+#define HAL_OSPI_STATE_HYPERBUS_INIT                                                                                                                                                                   \
+	((uint32_t)0x00000001U)			     /*!< Initialization done in hyperbus mode but                                                                                                     \
 							timing configuration not done */
 #define HAL_OSPI_STATE_READY ((uint32_t)0x00000002U) /*!< Driver ready to be used */
-#define HAL_OSPI_STATE_CMD_CFG                                                                                         \
-	((uint32_t)0x00000004U) /*!< Command (regular or hyperbus) configured,                                         \
+#define HAL_OSPI_STATE_CMD_CFG                                                                                                                                                                         \
+	((uint32_t)0x00000004U) /*!< Command (regular or hyperbus) configured,                                                                                                                         \
 				   ready for an action          */
-#define HAL_OSPI_STATE_READ_CMD_CFG                                                                                    \
-	((uint32_t)0x00000014U) /*!< Read command configuration done, not the                                          \
+#define HAL_OSPI_STATE_READ_CMD_CFG                                                                                                                                                                    \
+	((uint32_t)0x00000014U) /*!< Read command configuration done, not the                                                                                                                          \
 				   write command configuration   */
-#define HAL_OSPI_STATE_WRITE_CMD_CFG                                                                                   \
-	((uint32_t)0x00000024U)					 /*!< Write command configuration done, not the        \
+#define HAL_OSPI_STATE_WRITE_CMD_CFG                                                                                                                                                                   \
+	((uint32_t)0x00000024U)					 /*!< Write command configuration done, not the                                                                                        \
 								    read command configuration   */
 #define HAL_OSPI_STATE_BUSY_CMD ((uint32_t)0x00000008U)		 /*!< Command without data on-going */
 #define HAL_OSPI_STATE_BUSY_TX ((uint32_t)0x00000018U)		 /*!< Indirect Tx on-going */
@@ -375,8 +375,8 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 #define HAL_OSPI_STATE_BUSY_AUTO_POLLING ((uint32_t)0x00000048U) /*!< Auto-polling on-going */
 #define HAL_OSPI_STATE_BUSY_MEM_MAPPED ((uint32_t)0x00000088U)	 /*!< Memory-mapped on-going */
 #define HAL_OSPI_STATE_ABORT ((uint32_t)0x00000100U)		 /*!< Abort on-going */
-#define HAL_OSPI_STATE_ERROR                                                                                           \
-	((uint32_t)0x00000200U) /*!< Blocking error, driver should be                                                  \
+#define HAL_OSPI_STATE_ERROR                                                                                                                                                                           \
+	((uint32_t)0x00000200U) /*!< Blocking error, driver should be                                                                                                                                  \
 				   re-initialized                        */
 /**
  * @}
@@ -390,12 +390,12 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 #define HAL_OSPI_ERROR_TRANSFER ((uint32_t)0x00000002U)	     /*!< Transfer error */
 #define HAL_OSPI_ERROR_DMA ((uint32_t)0x00000004U)	     /*!< DMA transfer error */
 #define HAL_OSPI_ERROR_INVALID_PARAM ((uint32_t)0x00000008U) /*!< Invalid parameters error */
-#define HAL_OSPI_ERROR_INVALID_SEQUENCE                                                                                \
-	((uint32_t)0x00000010U) /*!< Sequence of the state machine is                                                  \
+#define HAL_OSPI_ERROR_INVALID_SEQUENCE                                                                                                                                                                \
+	((uint32_t)0x00000010U) /*!< Sequence of the state machine is                                                                                                                                  \
 				   incorrect */
 #if defined(USE_HAL_OSPI_REGISTER_CALLBACKS) && (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U)
 #define HAL_OSPI_ERROR_INVALID_CALLBACK ((uint32_t)0x00000020U) /*!< Invalid callback error */
-#endif								/* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                \
+#endif								/* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                                                \
 								   (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U)*/
 /**
  * @}
@@ -415,12 +415,11 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
  */
 #define HAL_OSPI_MEMTYPE_MICRON ((uint32_t)0x00000000U)		  /*!< Micron mode       */
 #define HAL_OSPI_MEMTYPE_MACRONIX ((uint32_t)OCTOSPI_DCR1_MTYP_0) /*!< Macronix mode     */
-#if !defined(STM32L4R5xx) && !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) &&                \
-    !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
+#if !defined(STM32L4R5xx) && !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && !defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx)
 #define HAL_OSPI_MEMTYPE_APMEMORY ((uint32_t)OCTOSPI_DCR1_MTYP_1) /*!< AP Memory mode    */
 #endif
-#define HAL_OSPI_MEMTYPE_MACRONIX_RAM                                                                                  \
-	((uint32_t)(OCTOSPI_DCR1_MTYP_1 | OCTOSPI_DCR1_MTYP_0))	  /*!< Macronix RAM mode                               \
+#define HAL_OSPI_MEMTYPE_MACRONIX_RAM                                                                                                                                                                  \
+	((uint32_t)(OCTOSPI_DCR1_MTYP_1 | OCTOSPI_DCR1_MTYP_0))	  /*!< Macronix RAM mode                                                                                                               \
 								   */
 #define HAL_OSPI_MEMTYPE_HYPERBUS ((uint32_t)OCTOSPI_DCR1_MTYP_2) /*!< Hyperbus mode     */
 /**
@@ -466,8 +465,8 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_DelayBlockBypass OSPI Delay Block Bypaas
  * @{
  */
-#define HAL_OSPI_DELAY_BLOCK_USED                                                                                      \
-	((uint32_t)0x00000000U)					      /*!< Sampling clock is delayed by the delay      \
+#define HAL_OSPI_DELAY_BLOCK_USED                                                                                                                                                                      \
+	((uint32_t)0x00000000U)					      /*!< Sampling clock is delayed by the delay                                                                                      \
 									 block */
 #define HAL_OSPI_DELAY_BLOCK_BYPASSED ((uint32_t)OCTOSPI_DCR1_DLYBYP) /*!< Delay block is bypassed */
 /**
@@ -477,14 +476,14 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_OperationType OSPI Operation Type
  * @{
  */
-#define HAL_OSPI_OPTYPE_COMMON_CFG                                                                                     \
-	((uint32_t)0x00000000U) /*!< Common configuration (indirect or                                                 \
+#define HAL_OSPI_OPTYPE_COMMON_CFG                                                                                                                                                                     \
+	((uint32_t)0x00000000U) /*!< Common configuration (indirect or                                                                                                                                 \
 				   auto-polling mode) */
-#define HAL_OSPI_OPTYPE_READ_CFG                                                                                       \
-	((uint32_t)0x00000001U) /*!< Read configuration (memory-mapped mode)                                           \
+#define HAL_OSPI_OPTYPE_READ_CFG                                                                                                                                                                       \
+	((uint32_t)0x00000001U) /*!< Read configuration (memory-mapped mode)                                                                                                                           \
 				 */
-#define HAL_OSPI_OPTYPE_WRITE_CFG                                                                                      \
-	((uint32_t)0x00000002U) /*!< Write configuration (memory-mapped mode)                                          \
+#define HAL_OSPI_OPTYPE_WRITE_CFG                                                                                                                                                                      \
+	((uint32_t)0x00000002U) /*!< Write configuration (memory-mapped mode)                                                                                                                          \
 				 */
 /**
  * @}
@@ -494,8 +493,8 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
  * @{
  */
 #define HAL_OSPI_FLASH_ID_1 ((uint32_t)0x00000000U) /*!< FLASH 1 selected */
-#define HAL_OSPI_FLASH_ID_2                                                                                            \
-	((uint32_t)OCTOSPI_CR_FSEL) /*!< FLASH 2 selected                                                              \
+#define HAL_OSPI_FLASH_ID_2                                                                                                                                                                            \
+	((uint32_t)OCTOSPI_CR_FSEL) /*!< FLASH 2 selected                                                                                                                                              \
 				     */
 /**
  * @}
@@ -504,12 +503,11 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_InstructionMode OSPI Instruction Mode
  * @{
  */
-#define HAL_OSPI_INSTRUCTION_NONE ((uint32_t)0x00000000U)	     /*!< No instruction               */
-#define HAL_OSPI_INSTRUCTION_1_LINE ((uint32_t)OCTOSPI_CCR_IMODE_0)  /*!< Instruction on a single line */
-#define HAL_OSPI_INSTRUCTION_2_LINES ((uint32_t)OCTOSPI_CCR_IMODE_1) /*!< Instruction on two lines     */
-#define HAL_OSPI_INSTRUCTION_4_LINES                                                                                   \
-	((uint32_t)(OCTOSPI_CCR_IMODE_0 | OCTOSPI_CCR_IMODE_1))	     /*!< Instruction on four lines    */
-#define HAL_OSPI_INSTRUCTION_8_LINES ((uint32_t)OCTOSPI_CCR_IMODE_2) /*!< Instruction on eight lines   */
+#define HAL_OSPI_INSTRUCTION_NONE ((uint32_t)0x00000000U)				     /*!< No instruction               */
+#define HAL_OSPI_INSTRUCTION_1_LINE ((uint32_t)OCTOSPI_CCR_IMODE_0)			     /*!< Instruction on a single line */
+#define HAL_OSPI_INSTRUCTION_2_LINES ((uint32_t)OCTOSPI_CCR_IMODE_1)			     /*!< Instruction on two lines     */
+#define HAL_OSPI_INSTRUCTION_4_LINES ((uint32_t)(OCTOSPI_CCR_IMODE_0 | OCTOSPI_CCR_IMODE_1)) /*!< Instruction on four lines    */
+#define HAL_OSPI_INSTRUCTION_8_LINES ((uint32_t)OCTOSPI_CCR_IMODE_2)			     /*!< Instruction on eight lines   */
 /**
  * @}
  */
@@ -528,8 +526,8 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_InstructionDtrMode OSPI Instruction DTR Mode
  * @{
  */
-#define HAL_OSPI_INSTRUCTION_DTR_DISABLE                                                                               \
-	((uint32_t)0x00000000U)					     /*!< DTR mode disabled for instruction phase      \
+#define HAL_OSPI_INSTRUCTION_DTR_DISABLE                                                                                                                                                               \
+	((uint32_t)0x00000000U)					     /*!< DTR mode disabled for instruction phase                                                                                      \
 								      */
 #define HAL_OSPI_INSTRUCTION_DTR_ENABLE ((uint32_t)OCTOSPI_CCR_IDTR) /*!< DTR mode enabled for instruction phase  */
 /**
@@ -539,12 +537,11 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_AddressMode OSPI Address Mode
  * @{
  */
-#define HAL_OSPI_ADDRESS_NONE ((uint32_t)0x00000000U)		  /*!< No address               */
-#define HAL_OSPI_ADDRESS_1_LINE ((uint32_t)OCTOSPI_CCR_ADMODE_0)  /*!< Address on a single line */
-#define HAL_OSPI_ADDRESS_2_LINES ((uint32_t)OCTOSPI_CCR_ADMODE_1) /*!< Address on two lines     */
-#define HAL_OSPI_ADDRESS_4_LINES                                                                                       \
-	((uint32_t)(OCTOSPI_CCR_ADMODE_0 | OCTOSPI_CCR_ADMODE_1)) /*!< Address on four lines    */
-#define HAL_OSPI_ADDRESS_8_LINES ((uint32_t)OCTOSPI_CCR_ADMODE_2) /*!< Address on eight lines   */
+#define HAL_OSPI_ADDRESS_NONE ((uint32_t)0x00000000U)					   /*!< No address               */
+#define HAL_OSPI_ADDRESS_1_LINE ((uint32_t)OCTOSPI_CCR_ADMODE_0)			   /*!< Address on a single line */
+#define HAL_OSPI_ADDRESS_2_LINES ((uint32_t)OCTOSPI_CCR_ADMODE_1)			   /*!< Address on two lines     */
+#define HAL_OSPI_ADDRESS_4_LINES ((uint32_t)(OCTOSPI_CCR_ADMODE_0 | OCTOSPI_CCR_ADMODE_1)) /*!< Address on four lines    */
+#define HAL_OSPI_ADDRESS_8_LINES ((uint32_t)OCTOSPI_CCR_ADMODE_2)			   /*!< Address on eight lines   */
 /**
  * @}
  */
@@ -575,8 +572,8 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 #define HAL_OSPI_ALTERNATE_BYTES_NONE ((uint32_t)0x00000000U)		  /*!< No alternate bytes               */
 #define HAL_OSPI_ALTERNATE_BYTES_1_LINE ((uint32_t)OCTOSPI_CCR_ABMODE_0)  /*!< Alternate bytes on a single line */
 #define HAL_OSPI_ALTERNATE_BYTES_2_LINES ((uint32_t)OCTOSPI_CCR_ABMODE_1) /*!< Alternate bytes on two lines */
-#define HAL_OSPI_ALTERNATE_BYTES_4_LINES                                                                               \
-	((uint32_t)(OCTOSPI_CCR_ABMODE_0 | OCTOSPI_CCR_ABMODE_1))	  /*!< Alternate bytes on four lines           \
+#define HAL_OSPI_ALTERNATE_BYTES_4_LINES                                                                                                                                                               \
+	((uint32_t)(OCTOSPI_CCR_ABMODE_0 | OCTOSPI_CCR_ABMODE_1))	  /*!< Alternate bytes on four lines                                                                                           \
 									   */
 #define HAL_OSPI_ALTERNATE_BYTES_8_LINES ((uint32_t)OCTOSPI_CCR_ABMODE_2) /*!< Alternate bytes on eight lines   */
 /**
@@ -597,11 +594,11 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_AlternateBytesDtrMode OSPI Alternate Bytes DTR Mode
  * @{
  */
-#define HAL_OSPI_ALTERNATE_BYTES_DTR_DISABLE                                                                           \
-	((uint32_t)0x00000000U) /*!< DTR mode disabled for alternate bytes                                             \
+#define HAL_OSPI_ALTERNATE_BYTES_DTR_DISABLE                                                                                                                                                           \
+	((uint32_t)0x00000000U) /*!< DTR mode disabled for alternate bytes                                                                                                                             \
 				   phase */
-#define HAL_OSPI_ALTERNATE_BYTES_DTR_ENABLE                                                                            \
-	((uint32_t)OCTOSPI_CCR_ABDTR) /*!< DTR mode enabled for alternate                                              \
+#define HAL_OSPI_ALTERNATE_BYTES_DTR_ENABLE                                                                                                                                                            \
+	((uint32_t)OCTOSPI_CCR_ABDTR) /*!< DTR mode enabled for alternate                                                                                                                              \
 					 bytes phase  */
 /**
  * @}
@@ -641,8 +638,8 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
  * @{
  */
 #define HAL_OSPI_SIOO_INST_EVERY_CMD ((uint32_t)0x00000000U) /*!< Send instruction on every transaction */
-#define HAL_OSPI_SIOO_INST_ONLY_FIRST_CMD                                                                              \
-	((uint32_t)OCTOSPI_CCR_SIOO) /*!< Send instruction only for the first                                          \
+#define HAL_OSPI_SIOO_INST_ONLY_FIRST_CMD                                                                                                                                                              \
+	((uint32_t)OCTOSPI_CCR_SIOO) /*!< Send instruction only for the first                                                                                                                          \
 					command */
 /**
  * @}
@@ -687,11 +684,11 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_AutomaticStop OSPI Automatic Stop
  * @{
  */
-#define HAL_OSPI_AUTOMATIC_STOP_DISABLE                                                                                \
-	((uint32_t)0x00000000U) /*!< AutoPolling stops only with abort or OSPI                                         \
+#define HAL_OSPI_AUTOMATIC_STOP_DISABLE                                                                                                                                                                \
+	((uint32_t)0x00000000U) /*!< AutoPolling stops only with abort or OSPI                                                                                                                         \
 				   disabling */
-#define HAL_OSPI_AUTOMATIC_STOP_ENABLE                                                                                 \
-	((uint32_t)OCTOSPI_CR_APMS) /*!< AutoPolling stops as soon as there is                                         \
+#define HAL_OSPI_AUTOMATIC_STOP_ENABLE                                                                                                                                                                 \
+	((uint32_t)OCTOSPI_CR_APMS) /*!< AutoPolling stops as soon as there is                                                                                                                         \
 				       a match       */
 /**
  * @}
@@ -700,11 +697,11 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
 /** @defgroup OSPI_TimeOutActivation OSPI Timeout Activation
  * @{
  */
-#define HAL_OSPI_TIMEOUT_COUNTER_DISABLE                                                                               \
-	((uint32_t)0x00000000U) /*!< Timeout counter disabled, nCS remains                                             \
+#define HAL_OSPI_TIMEOUT_COUNTER_DISABLE                                                                                                                                                               \
+	((uint32_t)0x00000000U) /*!< Timeout counter disabled, nCS remains                                                                                                                             \
 				   active               */
-#define HAL_OSPI_TIMEOUT_COUNTER_ENABLE                                                                                \
-	((uint32_t)OCTOSPI_CR_TCEN) /*!< Timeout counter enabled, nCS released                                         \
+#define HAL_OSPI_TIMEOUT_COUNTER_ENABLE                                                                                                                                                                \
+	((uint32_t)OCTOSPI_CR_TCEN) /*!< Timeout counter enabled, nCS released                                                                                                                         \
 				       when timeout expires */
 /**
  * @}
@@ -714,21 +711,21 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
  * @{
  */
 #define HAL_OSPI_FLAG_BUSY OCTOSPI_SR_BUSY /*!< Busy flag: operation is ongoing */
-#define HAL_OSPI_FLAG_TO                                                                                               \
-	OCTOSPI_SR_TOF /*!< Timeout flag: timeout occurs in memory-mapped mode                                         \
+#define HAL_OSPI_FLAG_TO                                                                                                                                                                               \
+	OCTOSPI_SR_TOF /*!< Timeout flag: timeout occurs in memory-mapped mode                                                                                                                         \
 			*/
-#define HAL_OSPI_FLAG_SM                                                                                               \
-	OCTOSPI_SR_SMF /*!< Status match flag: received data matches in                                                \
+#define HAL_OSPI_FLAG_SM                                                                                                                                                                               \
+	OCTOSPI_SR_SMF /*!< Status match flag: received data matches in                                                                                                                                \
 			  autopolling mode */
-#define HAL_OSPI_FLAG_FT                                                                                               \
-	OCTOSPI_SR_FTF /*!< Fifo threshold flag: Fifo threshold reached or                                             \
+#define HAL_OSPI_FLAG_FT                                                                                                                                                                               \
+	OCTOSPI_SR_FTF /*!< Fifo threshold flag: Fifo threshold reached or                                                                                                                             \
 			  data left after read from memory is complete */
-#define HAL_OSPI_FLAG_TC                                                                                               \
-	OCTOSPI_SR_TCF /*!< Transfer complete flag: programmed number of data                                          \
-			  have been transferred or the transfer has been                                               \
+#define HAL_OSPI_FLAG_TC                                                                                                                                                                               \
+	OCTOSPI_SR_TCF /*!< Transfer complete flag: programmed number of data                                                                                                                          \
+			  have been transferred or the transfer has been                                                                                                                               \
 			  aborted */
-#define HAL_OSPI_FLAG_TE                                                                                               \
-	OCTOSPI_SR_TEF /*!< Transfer error flag: invalid address is being                                              \
+#define HAL_OSPI_FLAG_TE                                                                                                                                                                               \
+	OCTOSPI_SR_TEF /*!< Transfer error flag: invalid address is being                                                                                                                              \
 			  accessed */
 /**
  * @}
@@ -778,15 +775,15 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
  * @retval None
  */
 #if defined(USE_HAL_OSPI_REGISTER_CALLBACKS) && (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U)
-#define __HAL_OSPI_RESET_HANDLE_STATE(__HANDLE__)                                                                      \
-	do {                                                                                                           \
-		(__HANDLE__)->State = HAL_OSPI_STATE_RESET;                                                            \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define __HAL_OSPI_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_OSPI_STATE_RESET;                                                                                                                                            \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0)
 #else
 #define __HAL_OSPI_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_OSPI_STATE_RESET)
-#endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                         \
+#endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U) */
 
 /** @brief  Enable the OSPI peripheral.
@@ -838,8 +835,7 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
  *            @arg HAL_OSPI_IT_TE: OSPI Transfer error interrupt
  * @retval The new state of __INTERRUPT__ (TRUE or FALSE).
  */
-#define __HAL_OSPI_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)                                                            \
-	(READ_BIT((__HANDLE__)->Instance->CR, (__INTERRUPT__)) == (__INTERRUPT__))
+#define __HAL_OSPI_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__) (READ_BIT((__HANDLE__)->Instance->CR, (__INTERRUPT__)) == (__INTERRUPT__))
 
 /**
  * @brief  Check whether the selected OSPI flag is set or not.
@@ -854,8 +850,7 @@ typedef void (*pOSPI_CallbackTypeDef)(OSPI_HandleTypeDef *hospi);
  *            @arg HAL_OSPI_FLAG_TE:   OSPI Transfer error flag
  * @retval None
  */
-#define __HAL_OSPI_GET_FLAG(__HANDLE__, __FLAG__)                                                                      \
-	((READ_BIT((__HANDLE__)->Instance->SR, (__FLAG__)) != 0U) ? SET : RESET)
+#define __HAL_OSPI_GET_FLAG(__HANDLE__, __FLAG__) ((READ_BIT((__HANDLE__)->Instance->SR, (__FLAG__)) != 0U) ? SET : RESET)
 
 /** @brief  Clears the specified OSPI's flag status.
  * @param  __HANDLE__ specifies the OSPI Handle.
@@ -939,10 +934,9 @@ void HAL_OSPI_TimeOutCallback(OSPI_HandleTypeDef *hospi);
 
 #if defined(USE_HAL_OSPI_REGISTER_CALLBACKS) && (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U)
 /* OSPI callback registering/unregistering */
-HAL_StatusTypeDef HAL_OSPI_RegisterCallback(OSPI_HandleTypeDef *hospi, HAL_OSPI_CallbackIDTypeDef CallbackID,
-					    pOSPI_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_OSPI_RegisterCallback(OSPI_HandleTypeDef *hospi, HAL_OSPI_CallbackIDTypeDef CallbackID, pOSPI_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_OSPI_UnRegisterCallback(OSPI_HandleTypeDef *hospi, HAL_OSPI_CallbackIDTypeDef CallbackID);
-#endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                         \
+#endif /* (USE_HAL_OSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_OSPI_REGISTER_CALLBACKS == 1U) */
 /**
  * @}
@@ -987,15 +981,11 @@ HAL_StatusTypeDef HAL_OSPIM_Config(OSPI_HandleTypeDef *hospi, OSPIM_CfgTypeDef *
 
 #define IS_OSPI_DUALQUAD_MODE(MODE) (((MODE) == HAL_OSPI_DUALQUAD_DISABLE) || ((MODE) == HAL_OSPI_DUALQUAD_ENABLE))
 
-#if defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||                    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
-#define IS_OSPI_MEMORY_TYPE(TYPE)                                                                                      \
-	(((TYPE) == HAL_OSPI_MEMTYPE_MICRON) || ((TYPE) == HAL_OSPI_MEMTYPE_MACRONIX) ||                               \
-	 ((TYPE) == HAL_OSPI_MEMTYPE_MACRONIX_RAM) || ((TYPE) == HAL_OSPI_MEMTYPE_HYPERBUS))
+#if defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#define IS_OSPI_MEMORY_TYPE(TYPE) (((TYPE) == HAL_OSPI_MEMTYPE_MICRON) || ((TYPE) == HAL_OSPI_MEMTYPE_MACRONIX) || ((TYPE) == HAL_OSPI_MEMTYPE_MACRONIX_RAM) || ((TYPE) == HAL_OSPI_MEMTYPE_HYPERBUS))
 #else
-#define IS_OSPI_MEMORY_TYPE(TYPE)                                                                                      \
-	(((TYPE) == HAL_OSPI_MEMTYPE_MICRON) || ((TYPE) == HAL_OSPI_MEMTYPE_MACRONIX) ||                               \
-	 ((TYPE) == HAL_OSPI_MEMTYPE_APMEMORY) || ((TYPE) == HAL_OSPI_MEMTYPE_MACRONIX_RAM) ||                         \
+#define IS_OSPI_MEMORY_TYPE(TYPE)                                                                                                                                                                      \
+	(((TYPE) == HAL_OSPI_MEMTYPE_MICRON) || ((TYPE) == HAL_OSPI_MEMTYPE_MACRONIX) || ((TYPE) == HAL_OSPI_MEMTYPE_APMEMORY) || ((TYPE) == HAL_OSPI_MEMTYPE_MACRONIX_RAM) ||                         \
 	 ((TYPE) == HAL_OSPI_MEMTYPE_HYPERBUS))
 #endif
 
@@ -1009,56 +999,42 @@ HAL_StatusTypeDef HAL_OSPIM_Config(OSPI_HandleTypeDef *hospi, OSPIM_CfgTypeDef *
 
 #define IS_OSPI_CLK_PRESCALER(PRESCALER) (((PRESCALER) >= 1U) && ((PRESCALER) <= 256U))
 
-#define IS_OSPI_SAMPLE_SHIFTING(CYCLE)                                                                                 \
-	(((CYCLE) == HAL_OSPI_SAMPLE_SHIFTING_NONE) || ((CYCLE) == HAL_OSPI_SAMPLE_SHIFTING_HALFCYCLE))
+#define IS_OSPI_SAMPLE_SHIFTING(CYCLE) (((CYCLE) == HAL_OSPI_SAMPLE_SHIFTING_NONE) || ((CYCLE) == HAL_OSPI_SAMPLE_SHIFTING_HALFCYCLE))
 
 #define IS_OSPI_DHQC(CYCLE) (((CYCLE) == HAL_OSPI_DHQC_DISABLE) || ((CYCLE) == HAL_OSPI_DHQC_ENABLE))
 
-#define IS_OSPI_OPERATION_TYPE(TYPE)                                                                                   \
-	(((TYPE) == HAL_OSPI_OPTYPE_COMMON_CFG) || ((TYPE) == HAL_OSPI_OPTYPE_READ_CFG) ||                             \
-	 ((TYPE) == HAL_OSPI_OPTYPE_WRITE_CFG))
+#define IS_OSPI_OPERATION_TYPE(TYPE) (((TYPE) == HAL_OSPI_OPTYPE_COMMON_CFG) || ((TYPE) == HAL_OSPI_OPTYPE_READ_CFG) || ((TYPE) == HAL_OSPI_OPTYPE_WRITE_CFG))
 
 #define IS_OSPI_FLASH_ID(FLASHID) (((FLASHID) == HAL_OSPI_FLASH_ID_1) || ((FLASHID) == HAL_OSPI_FLASH_ID_2))
 
-#define IS_OSPI_INSTRUCTION_MODE(MODE)                                                                                 \
-	(((MODE) == HAL_OSPI_INSTRUCTION_NONE) || ((MODE) == HAL_OSPI_INSTRUCTION_1_LINE) ||                           \
-	 ((MODE) == HAL_OSPI_INSTRUCTION_2_LINES) || ((MODE) == HAL_OSPI_INSTRUCTION_4_LINES) ||                       \
+#define IS_OSPI_INSTRUCTION_MODE(MODE)                                                                                                                                                                 \
+	(((MODE) == HAL_OSPI_INSTRUCTION_NONE) || ((MODE) == HAL_OSPI_INSTRUCTION_1_LINE) || ((MODE) == HAL_OSPI_INSTRUCTION_2_LINES) || ((MODE) == HAL_OSPI_INSTRUCTION_4_LINES) ||                   \
 	 ((MODE) == HAL_OSPI_INSTRUCTION_8_LINES))
 
-#define IS_OSPI_INSTRUCTION_SIZE(SIZE)                                                                                 \
-	(((SIZE) == HAL_OSPI_INSTRUCTION_8_BITS) || ((SIZE) == HAL_OSPI_INSTRUCTION_16_BITS) ||                        \
-	 ((SIZE) == HAL_OSPI_INSTRUCTION_24_BITS) || ((SIZE) == HAL_OSPI_INSTRUCTION_32_BITS))
+#define IS_OSPI_INSTRUCTION_SIZE(SIZE)                                                                                                                                                                 \
+	(((SIZE) == HAL_OSPI_INSTRUCTION_8_BITS) || ((SIZE) == HAL_OSPI_INSTRUCTION_16_BITS) || ((SIZE) == HAL_OSPI_INSTRUCTION_24_BITS) || ((SIZE) == HAL_OSPI_INSTRUCTION_32_BITS))
 
-#define IS_OSPI_INSTRUCTION_DTR_MODE(MODE)                                                                             \
-	(((MODE) == HAL_OSPI_INSTRUCTION_DTR_DISABLE) || ((MODE) == HAL_OSPI_INSTRUCTION_DTR_ENABLE))
+#define IS_OSPI_INSTRUCTION_DTR_MODE(MODE) (((MODE) == HAL_OSPI_INSTRUCTION_DTR_DISABLE) || ((MODE) == HAL_OSPI_INSTRUCTION_DTR_ENABLE))
 
-#define IS_OSPI_ADDRESS_MODE(MODE)                                                                                     \
-	(((MODE) == HAL_OSPI_ADDRESS_NONE) || ((MODE) == HAL_OSPI_ADDRESS_1_LINE) ||                                   \
-	 ((MODE) == HAL_OSPI_ADDRESS_2_LINES) || ((MODE) == HAL_OSPI_ADDRESS_4_LINES) ||                               \
+#define IS_OSPI_ADDRESS_MODE(MODE)                                                                                                                                                                     \
+	(((MODE) == HAL_OSPI_ADDRESS_NONE) || ((MODE) == HAL_OSPI_ADDRESS_1_LINE) || ((MODE) == HAL_OSPI_ADDRESS_2_LINES) || ((MODE) == HAL_OSPI_ADDRESS_4_LINES) ||                                   \
 	 ((MODE) == HAL_OSPI_ADDRESS_8_LINES))
 
-#define IS_OSPI_ADDRESS_SIZE(SIZE)                                                                                     \
-	(((SIZE) == HAL_OSPI_ADDRESS_8_BITS) || ((SIZE) == HAL_OSPI_ADDRESS_16_BITS) ||                                \
-	 ((SIZE) == HAL_OSPI_ADDRESS_24_BITS) || ((SIZE) == HAL_OSPI_ADDRESS_32_BITS))
+#define IS_OSPI_ADDRESS_SIZE(SIZE) (((SIZE) == HAL_OSPI_ADDRESS_8_BITS) || ((SIZE) == HAL_OSPI_ADDRESS_16_BITS) || ((SIZE) == HAL_OSPI_ADDRESS_24_BITS) || ((SIZE) == HAL_OSPI_ADDRESS_32_BITS))
 
-#define IS_OSPI_ADDRESS_DTR_MODE(MODE)                                                                                 \
-	(((MODE) == HAL_OSPI_ADDRESS_DTR_DISABLE) || ((MODE) == HAL_OSPI_ADDRESS_DTR_ENABLE))
+#define IS_OSPI_ADDRESS_DTR_MODE(MODE) (((MODE) == HAL_OSPI_ADDRESS_DTR_DISABLE) || ((MODE) == HAL_OSPI_ADDRESS_DTR_ENABLE))
 
-#define IS_OSPI_ALT_BYTES_MODE(MODE)                                                                                   \
-	(((MODE) == HAL_OSPI_ALTERNATE_BYTES_NONE) || ((MODE) == HAL_OSPI_ALTERNATE_BYTES_1_LINE) ||                   \
-	 ((MODE) == HAL_OSPI_ALTERNATE_BYTES_2_LINES) || ((MODE) == HAL_OSPI_ALTERNATE_BYTES_4_LINES) ||               \
+#define IS_OSPI_ALT_BYTES_MODE(MODE)                                                                                                                                                                   \
+	(((MODE) == HAL_OSPI_ALTERNATE_BYTES_NONE) || ((MODE) == HAL_OSPI_ALTERNATE_BYTES_1_LINE) || ((MODE) == HAL_OSPI_ALTERNATE_BYTES_2_LINES) || ((MODE) == HAL_OSPI_ALTERNATE_BYTES_4_LINES) ||   \
 	 ((MODE) == HAL_OSPI_ALTERNATE_BYTES_8_LINES))
 
-#define IS_OSPI_ALT_BYTES_SIZE(SIZE)                                                                                   \
-	(((SIZE) == HAL_OSPI_ALTERNATE_BYTES_8_BITS) || ((SIZE) == HAL_OSPI_ALTERNATE_BYTES_16_BITS) ||                \
-	 ((SIZE) == HAL_OSPI_ALTERNATE_BYTES_24_BITS) || ((SIZE) == HAL_OSPI_ALTERNATE_BYTES_32_BITS))
+#define IS_OSPI_ALT_BYTES_SIZE(SIZE)                                                                                                                                                                   \
+	(((SIZE) == HAL_OSPI_ALTERNATE_BYTES_8_BITS) || ((SIZE) == HAL_OSPI_ALTERNATE_BYTES_16_BITS) || ((SIZE) == HAL_OSPI_ALTERNATE_BYTES_24_BITS) || ((SIZE) == HAL_OSPI_ALTERNATE_BYTES_32_BITS))
 
-#define IS_OSPI_ALT_BYTES_DTR_MODE(MODE)                                                                               \
-	(((MODE) == HAL_OSPI_ALTERNATE_BYTES_DTR_DISABLE) || ((MODE) == HAL_OSPI_ALTERNATE_BYTES_DTR_ENABLE))
+#define IS_OSPI_ALT_BYTES_DTR_MODE(MODE) (((MODE) == HAL_OSPI_ALTERNATE_BYTES_DTR_DISABLE) || ((MODE) == HAL_OSPI_ALTERNATE_BYTES_DTR_ENABLE))
 
-#define IS_OSPI_DATA_MODE(MODE)                                                                                        \
-	(((MODE) == HAL_OSPI_DATA_NONE) || ((MODE) == HAL_OSPI_DATA_1_LINE) || ((MODE) == HAL_OSPI_DATA_2_LINES) ||    \
-	 ((MODE) == HAL_OSPI_DATA_4_LINES) || ((MODE) == HAL_OSPI_DATA_8_LINES))
+#define IS_OSPI_DATA_MODE(MODE)                                                                                                                                                                        \
+	(((MODE) == HAL_OSPI_DATA_NONE) || ((MODE) == HAL_OSPI_DATA_1_LINE) || ((MODE) == HAL_OSPI_DATA_2_LINES) || ((MODE) == HAL_OSPI_DATA_4_LINES) || ((MODE) == HAL_OSPI_DATA_8_LINES))
 
 #define IS_OSPI_NUMBER_DATA(NUMBER) ((NUMBER) >= 1U)
 
@@ -1068,32 +1044,27 @@ HAL_StatusTypeDef HAL_OSPIM_Config(OSPI_HandleTypeDef *hospi, OSPIM_CfgTypeDef *
 
 #define IS_OSPI_DQS_MODE(MODE) (((MODE) == HAL_OSPI_DQS_DISABLE) || ((MODE) == HAL_OSPI_DQS_ENABLE))
 
-#define IS_OSPI_SIOO_MODE(MODE)                                                                                        \
-	(((MODE) == HAL_OSPI_SIOO_INST_EVERY_CMD) || ((MODE) == HAL_OSPI_SIOO_INST_ONLY_FIRST_CMD))
+#define IS_OSPI_SIOO_MODE(MODE) (((MODE) == HAL_OSPI_SIOO_INST_EVERY_CMD) || ((MODE) == HAL_OSPI_SIOO_INST_ONLY_FIRST_CMD))
 
 #define IS_OSPI_RW_RECOVERY_TIME(NUMBER) ((NUMBER) <= 255U)
 
 #define IS_OSPI_ACCESS_TIME(NUMBER) ((NUMBER) <= 255U)
 
-#define IS_OSPI_WRITE_ZERO_LATENCY(MODE)                                                                               \
-	(((MODE) == HAL_OSPI_LATENCY_ON_WRITE) || ((MODE) == HAL_OSPI_NO_LATENCY_ON_WRITE))
+#define IS_OSPI_WRITE_ZERO_LATENCY(MODE) (((MODE) == HAL_OSPI_LATENCY_ON_WRITE) || ((MODE) == HAL_OSPI_NO_LATENCY_ON_WRITE))
 
 #define IS_OSPI_LATENCY_MODE(MODE) (((MODE) == HAL_OSPI_VARIABLE_LATENCY) || ((MODE) == HAL_OSPI_FIXED_LATENCY))
 
-#define IS_OSPI_ADDRESS_SPACE(SPACE)                                                                                   \
-	(((SPACE) == HAL_OSPI_MEMORY_ADDRESS_SPACE) || ((SPACE) == HAL_OSPI_REGISTER_ADDRESS_SPACE))
+#define IS_OSPI_ADDRESS_SPACE(SPACE) (((SPACE) == HAL_OSPI_MEMORY_ADDRESS_SPACE) || ((SPACE) == HAL_OSPI_REGISTER_ADDRESS_SPACE))
 
 #define IS_OSPI_MATCH_MODE(MODE) (((MODE) == HAL_OSPI_MATCH_MODE_AND) || ((MODE) == HAL_OSPI_MATCH_MODE_OR))
 
-#define IS_OSPI_AUTOMATIC_STOP(MODE)                                                                                   \
-	(((MODE) == HAL_OSPI_AUTOMATIC_STOP_ENABLE) || ((MODE) == HAL_OSPI_AUTOMATIC_STOP_DISABLE))
+#define IS_OSPI_AUTOMATIC_STOP(MODE) (((MODE) == HAL_OSPI_AUTOMATIC_STOP_ENABLE) || ((MODE) == HAL_OSPI_AUTOMATIC_STOP_DISABLE))
 
 #define IS_OSPI_INTERVAL(INTERVAL) ((INTERVAL) <= 0xFFFFU)
 
 #define IS_OSPI_STATUS_BYTES_SIZE(SIZE) (((SIZE) >= 1U) && ((SIZE) <= 4U))
 
-#define IS_OSPI_TIMEOUT_ACTIVATION(MODE)                                                                               \
-	(((MODE) == HAL_OSPI_TIMEOUT_COUNTER_DISABLE) || ((MODE) == HAL_OSPI_TIMEOUT_COUNTER_ENABLE))
+#define IS_OSPI_TIMEOUT_ACTIVATION(MODE) (((MODE) == HAL_OSPI_TIMEOUT_COUNTER_DISABLE) || ((MODE) == HAL_OSPI_TIMEOUT_COUNTER_ENABLE))
 
 #define IS_OSPI_TIMEOUT_PERIOD(PERIOD) ((PERIOD) <= 0xFFFFU)
 
@@ -1109,10 +1080,8 @@ HAL_StatusTypeDef HAL_OSPIM_Config(OSPI_HandleTypeDef *hospi, OSPIM_CfgTypeDef *
 
 #define IS_OSPIM_DQS_PORT(NUMBER) ((NUMBER) <= 2U)
 
-#define IS_OSPIM_IO_PORT(PORT)                                                                                         \
-	(((PORT) == HAL_OSPIM_IOPORT_NONE) || ((PORT) == HAL_OSPIM_IOPORT_1_LOW) ||                                    \
-	 ((PORT) == HAL_OSPIM_IOPORT_1_HIGH) || ((PORT) == HAL_OSPIM_IOPORT_2_LOW) ||                                  \
-	 ((PORT) == HAL_OSPIM_IOPORT_2_HIGH))
+#define IS_OSPIM_IO_PORT(PORT)                                                                                                                                                                         \
+	(((PORT) == HAL_OSPIM_IOPORT_NONE) || ((PORT) == HAL_OSPIM_IOPORT_1_LOW) || ((PORT) == HAL_OSPIM_IOPORT_1_HIGH) || ((PORT) == HAL_OSPIM_IOPORT_2_LOW) || ((PORT) == HAL_OSPIM_IOPORT_2_HIGH))
 
 #if defined(OCTOSPIM_CR_MUXEN)
 #define IS_OSPIM_REQ2ACKTIME(TIME) (((TIME) >= 1U) && ((TIME) <= 256U))

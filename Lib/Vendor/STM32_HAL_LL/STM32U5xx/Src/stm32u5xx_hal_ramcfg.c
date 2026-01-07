@@ -899,8 +899,7 @@ __weak void HAL_RAMCFG_DetectDoubleErrorCallback(RAMCFG_HandleTypeDef *hramcfg)
  * @param  pCallback     : Pointer to private callback function.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_RAMCFG_RegisterCallback(RAMCFG_HandleTypeDef *hramcfg, HAL_RAMCFG_CallbackIDTypeDef CallbackID,
-					      void (*pCallback)(RAMCFG_HandleTypeDef *_hramcfg))
+HAL_StatusTypeDef HAL_RAMCFG_RegisterCallback(RAMCFG_HandleTypeDef *hramcfg, HAL_RAMCFG_CallbackIDTypeDef CallbackID, void (*pCallback)(RAMCFG_HandleTypeDef *_hramcfg))
 {
 	HAL_StatusTypeDef status = HAL_OK;
 

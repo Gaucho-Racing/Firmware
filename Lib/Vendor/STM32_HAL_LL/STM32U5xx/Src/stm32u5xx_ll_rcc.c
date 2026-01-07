@@ -42,44 +42,32 @@
  * @{
  */
 #if defined(USART6)
-#define IS_LL_RCC_USART_CLKSOURCE(__VALUE__)                                                                           \
-	(((__VALUE__) == LL_RCC_USART1_CLKSOURCE) || ((__VALUE__) == LL_RCC_USART2_CLKSOURCE) ||                       \
-	 ((__VALUE__) == LL_RCC_USART3_CLKSOURCE) || ((__VALUE__) == LL_RCC_USART6_CLKSOURCE))
+#define IS_LL_RCC_USART_CLKSOURCE(__VALUE__)                                                                                                                                                           \
+	(((__VALUE__) == LL_RCC_USART1_CLKSOURCE) || ((__VALUE__) == LL_RCC_USART2_CLKSOURCE) || ((__VALUE__) == LL_RCC_USART3_CLKSOURCE) || ((__VALUE__) == LL_RCC_USART6_CLKSOURCE))
 #elif defined(USART2)
-#define IS_LL_RCC_USART_CLKSOURCE(__VALUE__)                                                                           \
-	(((__VALUE__) == LL_RCC_USART1_CLKSOURCE) || ((__VALUE__) == LL_RCC_USART2_CLKSOURCE) ||                       \
-	 ((__VALUE__) == LL_RCC_USART3_CLKSOURCE))
+#define IS_LL_RCC_USART_CLKSOURCE(__VALUE__) (((__VALUE__) == LL_RCC_USART1_CLKSOURCE) || ((__VALUE__) == LL_RCC_USART2_CLKSOURCE) || ((__VALUE__) == LL_RCC_USART3_CLKSOURCE))
 #else
-#define IS_LL_RCC_USART_CLKSOURCE(__VALUE__)                                                                           \
-	(((__VALUE__) == LL_RCC_USART1_CLKSOURCE) || ((__VALUE__) == LL_RCC_USART3_CLKSOURCE))
+#define IS_LL_RCC_USART_CLKSOURCE(__VALUE__) (((__VALUE__) == LL_RCC_USART1_CLKSOURCE) || ((__VALUE__) == LL_RCC_USART3_CLKSOURCE))
 #endif /* defined(USART6) */
 
-#define IS_LL_RCC_UART_CLKSOURCE(__VALUE__)                                                                            \
-	(((__VALUE__) == LL_RCC_UART4_CLKSOURCE) || ((__VALUE__) == LL_RCC_UART5_CLKSOURCE))
+#define IS_LL_RCC_UART_CLKSOURCE(__VALUE__) (((__VALUE__) == LL_RCC_UART4_CLKSOURCE) || ((__VALUE__) == LL_RCC_UART5_CLKSOURCE))
 
 #define IS_LL_RCC_LPUART_CLKSOURCE(__VALUE__) (((__VALUE__) == LL_RCC_LPUART1_CLKSOURCE))
 
 #if defined(I2C5) & defined(I2C6)
-#define IS_LL_RCC_I2C_CLKSOURCE(__VALUE__)                                                                             \
-	(((__VALUE__) == LL_RCC_I2C1_CLKSOURCE) || ((__VALUE__) == LL_RCC_I2C2_CLKSOURCE) ||                           \
-	 ((__VALUE__) == LL_RCC_I2C3_CLKSOURCE) || ((__VALUE__) == LL_RCC_I2C4_CLKSOURCE) ||                           \
+#define IS_LL_RCC_I2C_CLKSOURCE(__VALUE__)                                                                                                                                                             \
+	(((__VALUE__) == LL_RCC_I2C1_CLKSOURCE) || ((__VALUE__) == LL_RCC_I2C2_CLKSOURCE) || ((__VALUE__) == LL_RCC_I2C3_CLKSOURCE) || ((__VALUE__) == LL_RCC_I2C4_CLKSOURCE) ||                       \
 	 ((__VALUE__) == LL_RCC_I2C5_CLKSOURCE) || ((__VALUE__) == LL_RCC_I2C6_CLKSOURCE))
 #else
-#define IS_LL_RCC_I2C_CLKSOURCE(__VALUE__)                                                                             \
-	(((__VALUE__) == LL_RCC_I2C1_CLKSOURCE) || ((__VALUE__) == LL_RCC_I2C2_CLKSOURCE) ||                           \
-	 ((__VALUE__) == LL_RCC_I2C3_CLKSOURCE) || ((__VALUE__) == LL_RCC_I2C4_CLKSOURCE))
+#define IS_LL_RCC_I2C_CLKSOURCE(__VALUE__)                                                                                                                                                             \
+	(((__VALUE__) == LL_RCC_I2C1_CLKSOURCE) || ((__VALUE__) == LL_RCC_I2C2_CLKSOURCE) || ((__VALUE__) == LL_RCC_I2C3_CLKSOURCE) || ((__VALUE__) == LL_RCC_I2C4_CLKSOURCE))
 #endif /* defined(I2C5) & defined(I2C6) */
 
-#define IS_LL_RCC_SPI_CLKSOURCE(__VALUE__)                                                                             \
-	(((__VALUE__) == LL_RCC_SPI1_CLKSOURCE) || ((__VALUE__) == LL_RCC_SPI2_CLKSOURCE) ||                           \
-	 ((__VALUE__) == LL_RCC_SPI3_CLKSOURCE))
+#define IS_LL_RCC_SPI_CLKSOURCE(__VALUE__) (((__VALUE__) == LL_RCC_SPI1_CLKSOURCE) || ((__VALUE__) == LL_RCC_SPI2_CLKSOURCE) || ((__VALUE__) == LL_RCC_SPI3_CLKSOURCE))
 
-#define IS_LL_RCC_LPTIM_CLKSOURCE(__VALUE__)                                                                           \
-	(((__VALUE__) == LL_RCC_LPTIM1_CLKSOURCE) || ((__VALUE__) == LL_RCC_LPTIM2_CLKSOURCE) ||                       \
-	 ((__VALUE__) == LL_RCC_LPTIM34_CLKSOURCE))
+#define IS_LL_RCC_LPTIM_CLKSOURCE(__VALUE__) (((__VALUE__) == LL_RCC_LPTIM1_CLKSOURCE) || ((__VALUE__) == LL_RCC_LPTIM2_CLKSOURCE) || ((__VALUE__) == LL_RCC_LPTIM34_CLKSOURCE))
 #if defined(SAI2)
-#define IS_LL_RCC_SAI_CLKSOURCE(__VALUE__)                                                                             \
-	(((__VALUE__) == LL_RCC_SAI1_CLKSOURCE) || ((__VALUE__) == LL_RCC_SAI2_CLKSOURCE))
+#define IS_LL_RCC_SAI_CLKSOURCE(__VALUE__) (((__VALUE__) == LL_RCC_SAI1_CLKSOURCE) || ((__VALUE__) == LL_RCC_SAI2_CLKSOURCE))
 #else
 #define IS_LL_RCC_SAI_CLKSOURCE(__VALUE__) (((__VALUE__) == LL_RCC_SAI1_CLKSOURCE))
 #endif /* SAI2 */
@@ -199,8 +187,7 @@ ErrorStatus LL_RCC_DeInit(void)
 	vl_mask = LL_RCC_ReadReg(CR);
 
 	/* Reset HSION, HSIKERON, HSEON, PLL1ON, PLL2ON and PLL3ON bits */
-	CLEAR_BIT(vl_mask,
-		  (RCC_CR_HSION | RCC_CR_HSIKERON | RCC_CR_HSEON | RCC_CR_PLL1ON | RCC_CR_PLL2ON | RCC_CR_PLL3ON));
+	CLEAR_BIT(vl_mask, (RCC_CR_HSION | RCC_CR_HSIKERON | RCC_CR_HSEON | RCC_CR_PLL1ON | RCC_CR_PLL2ON | RCC_CR_PLL3ON));
 
 	/* Write new mask in CR register */
 	LL_RCC_WriteReg(CR, vl_mask);
@@ -225,9 +212,8 @@ ErrorStatus LL_RCC_DeInit(void)
 	LL_RCC_WriteReg(CIER, 0x00000000U);
 
 	/* Clear all interrupt flags */
-	vl_mask = RCC_CICR_LSIRDYC | RCC_CICR_LSERDYC | RCC_CICR_MSISRDYC | RCC_CICR_HSIRDYC | RCC_CICR_HSERDYC |
-		  RCC_CICR_PLL1RDYC | RCC_CICR_PLL2RDYC | RCC_CICR_PLL3RDYC | RCC_CICR_HSI48RDYC | RCC_CICR_CSSC |
-		  RCC_CICR_MSIKRDYC;
+	vl_mask = RCC_CICR_LSIRDYC | RCC_CICR_LSERDYC | RCC_CICR_MSISRDYC | RCC_CICR_HSIRDYC | RCC_CICR_HSERDYC | RCC_CICR_PLL1RDYC | RCC_CICR_PLL2RDYC | RCC_CICR_PLL3RDYC | RCC_CICR_HSI48RDYC |
+		  RCC_CICR_CSSC | RCC_CICR_MSIKRDYC;
 	LL_RCC_WriteReg(CICR, vl_mask);
 
 	/* Clear reset flags */
@@ -583,9 +569,7 @@ uint32_t LL_RCC_GetSPIClockFreq(uint32_t SPIxSource)
 			case LL_RCC_SPI1_CLKSOURCE_MSIK: /* SPI1 Clock is MSIK
 							    Osc.*/
 				SPI_frequency = __LL_RCC_CALC_MSIK_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-									((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-									     ? LL_RCC_MSIK_GetRange()
-									     : LL_RCC_MSIK_GetRangeAfterStandby()));
+									((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIK_GetRange() : LL_RCC_MSIK_GetRangeAfterStandby()));
 				break;
 
 			case LL_RCC_SPI1_CLKSOURCE_PCLK2: /* SPI1 Clock is PCLK2
@@ -616,9 +600,7 @@ uint32_t LL_RCC_GetSPIClockFreq(uint32_t SPIxSource)
 			case LL_RCC_SPI2_CLKSOURCE_MSIK: /* SPI2 Clock is MSIK
 							    Osc.*/
 				SPI_frequency = __LL_RCC_CALC_MSIK_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-									((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-									     ? LL_RCC_MSIK_GetRange()
-									     : LL_RCC_MSIK_GetRangeAfterStandby()));
+									((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIK_GetRange() : LL_RCC_MSIK_GetRangeAfterStandby()));
 				break;
 
 			case LL_RCC_SPI2_CLKSOURCE_PCLK1: /* SPI2 Clock is PCLK1
@@ -649,9 +631,7 @@ uint32_t LL_RCC_GetSPIClockFreq(uint32_t SPIxSource)
 			case LL_RCC_SPI3_CLKSOURCE_MSIK: /* SPI3 Clock is MSIK
 							    Osc. */
 				SPI_frequency = __LL_RCC_CALC_MSIK_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-									((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-									     ? LL_RCC_MSIK_GetRange()
-									     : LL_RCC_MSIK_GetRangeAfterStandby()));
+									((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIK_GetRange() : LL_RCC_MSIK_GetRangeAfterStandby()));
 				break;
 
 			case LL_RCC_SPI3_CLKSOURCE_PCLK3: /* SPI3 Clock is PCLK3
@@ -707,9 +687,7 @@ uint32_t LL_RCC_GetI2CClockFreq(uint32_t I2CxSource)
 			case LL_RCC_I2C1_CLKSOURCE_MSIK: /* I2C1 Clock is MSIK
 							    Osc.*/
 				i2c_frequency = __LL_RCC_CALC_MSIK_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-									((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-									     ? LL_RCC_MSIK_GetRange()
-									     : LL_RCC_MSIK_GetRangeAfterStandby()));
+									((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIK_GetRange() : LL_RCC_MSIK_GetRangeAfterStandby()));
 				break;
 
 			case LL_RCC_I2C1_CLKSOURCE_PCLK1: /* I2C1 Clock is PCLK1
@@ -740,9 +718,7 @@ uint32_t LL_RCC_GetI2CClockFreq(uint32_t I2CxSource)
 			case LL_RCC_I2C2_CLKSOURCE_MSIK: /* I2C2 Clock is MSIK
 							    Osc.*/
 				i2c_frequency = __LL_RCC_CALC_MSIK_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-									((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-									     ? LL_RCC_MSIK_GetRange()
-									     : LL_RCC_MSIK_GetRangeAfterStandby()));
+									((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIK_GetRange() : LL_RCC_MSIK_GetRangeAfterStandby()));
 				break;
 			case LL_RCC_I2C2_CLKSOURCE_PCLK1: /* I2C2 Clock is PCLK1
 							   */
@@ -772,9 +748,7 @@ uint32_t LL_RCC_GetI2CClockFreq(uint32_t I2CxSource)
 			case LL_RCC_I2C3_CLKSOURCE_MSIK: /* I2C3 Clock is MSIK
 							    Osc.*/
 				i2c_frequency = __LL_RCC_CALC_MSIK_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-									((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-									     ? LL_RCC_MSIK_GetRange()
-									     : LL_RCC_MSIK_GetRangeAfterStandby()));
+									((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIK_GetRange() : LL_RCC_MSIK_GetRangeAfterStandby()));
 				break;
 			case LL_RCC_I2C3_CLKSOURCE_PCLK3: /* I2C3 Clock is PCLK3
 							   */
@@ -804,9 +778,7 @@ uint32_t LL_RCC_GetI2CClockFreq(uint32_t I2CxSource)
 			case LL_RCC_I2C4_CLKSOURCE_MSIK: /* I2C4 Clock is MSIK
 							    Osc.*/
 				i2c_frequency = __LL_RCC_CALC_MSIK_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-									((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-									     ? LL_RCC_MSIK_GetRange()
-									     : LL_RCC_MSIK_GetRangeAfterStandby()));
+									((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIK_GetRange() : LL_RCC_MSIK_GetRangeAfterStandby()));
 				break;
 			case LL_RCC_I2C4_CLKSOURCE_PCLK1: /* I2C4 Clock is PCLK1
 							   */
@@ -838,9 +810,7 @@ uint32_t LL_RCC_GetI2CClockFreq(uint32_t I2CxSource)
 			case LL_RCC_I2C5_CLKSOURCE_MSIK: /* I2C5 Clock is MSIK
 							    Osc.*/
 				i2c_frequency = __LL_RCC_CALC_MSIK_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-									((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-									     ? LL_RCC_MSIK_GetRange()
-									     : LL_RCC_MSIK_GetRangeAfterStandby()));
+									((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIK_GetRange() : LL_RCC_MSIK_GetRangeAfterStandby()));
 				break;
 			case LL_RCC_I2C5_CLKSOURCE_PCLK1: /* I2C5 Clock is PCLK1
 							   */
@@ -873,9 +843,7 @@ uint32_t LL_RCC_GetI2CClockFreq(uint32_t I2CxSource)
 			case LL_RCC_I2C6_CLKSOURCE_MSIK: /* I2C6 Clock is MSIK
 							    Osc.*/
 				i2c_frequency = __LL_RCC_CALC_MSIK_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-									((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-									     ? LL_RCC_MSIK_GetRange()
-									     : LL_RCC_MSIK_GetRangeAfterStandby()));
+									((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIK_GetRange() : LL_RCC_MSIK_GetRangeAfterStandby()));
 				break;
 			case LL_RCC_I2C6_CLKSOURCE_PCLK1: /* I2C6 Clock is PCLK1
 							   */
@@ -993,9 +961,7 @@ uint32_t LL_RCC_GetLPTIMClockFreq(uint32_t LPTIMxSource)
 			case LL_RCC_LPTIM1_CLKSOURCE_MSIK: /* LPTIM1 Clock is
 							      MSIK Osc.*/
 				lptim_frequency = __LL_RCC_CALC_MSIK_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-									  ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-									       ? LL_RCC_MSIK_GetRange()
-									       : LL_RCC_MSIK_GetRangeAfterStandby()));
+									  ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIK_GetRange() : LL_RCC_MSIK_GetRangeAfterStandby()));
 				break;
 
 			default:
@@ -1073,9 +1039,7 @@ uint32_t LL_RCC_GetLPTIMClockFreq(uint32_t LPTIMxSource)
 			case LL_RCC_LPTIM34_CLKSOURCE_MSIK: /* LPTIM34 Clock is
 							       MSIK */
 				lptim_frequency = __LL_RCC_CALC_MSIK_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-									  ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-									       ? LL_RCC_MSIK_GetRange()
-									       : LL_RCC_MSIK_GetRangeAfterStandby()));
+									  ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIK_GetRange() : LL_RCC_MSIK_GetRangeAfterStandby()));
 				break;
 
 			default:
@@ -1278,9 +1242,7 @@ uint32_t LL_RCC_GetSDMMCClockFreq(uint32_t SDMMCxSource)
 						       SDMMC12 clock source */
 			if (LL_RCC_MSIS_IsReady() == 1U) {
 				sdmmc_frequency = __LL_RCC_CALC_MSIK_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-									  ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-									       ? LL_RCC_MSIK_GetRange()
-									       : LL_RCC_MSIK_GetRangeAfterStandby()));
+									  ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIK_GetRange() : LL_RCC_MSIK_GetRangeAfterStandby()));
 			}
 			break;
 
@@ -1388,9 +1350,7 @@ uint32_t LL_RCC_GetUSBClockFreq(uint32_t USBxSource)
 						 */
 			if (LL_RCC_MSIK_IsReady() == 1U) {
 				usb_frequency = __LL_RCC_CALC_MSIK_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-									((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-									     ? LL_RCC_MSIK_GetRange()
-									     : LL_RCC_MSIK_GetRangeAfterStandby()));
+									((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIK_GetRange() : LL_RCC_MSIK_GetRangeAfterStandby()));
 			}
 			break;
 
@@ -1463,9 +1423,7 @@ uint32_t LL_RCC_GetADCDACClockFreq(uint32_t ADCxSource)
 						      clock source */
 			if (LL_RCC_MSIK_IsReady() == 1U) {
 				adcdac_frequency = __LL_RCC_CALC_MSIK_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-									   ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-										? LL_RCC_MSIK_GetRange()
-										: LL_RCC_MSIK_GetRangeAfterStandby()));
+									   ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIK_GetRange() : LL_RCC_MSIK_GetRangeAfterStandby()));
 			}
 			break;
 
@@ -1520,10 +1478,8 @@ uint32_t LL_RCC_GetADF1ClockFreq(uint32_t ADF1Source)
 			break;
 
 		case LL_RCC_ADF1_CLKSOURCE_MSIK: /* ADF1 Clock is MSIK */
-			ADF1_frequency = __LL_RCC_CALC_MSIK_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-								 ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-								      ? LL_RCC_MSIK_GetRange()
-								      : LL_RCC_MSIK_GetRangeAfterStandby()));
+			ADF1_frequency =
+			    __LL_RCC_CALC_MSIK_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(), ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIK_GetRange() : LL_RCC_MSIK_GetRangeAfterStandby()));
 			break;
 
 		default:
@@ -1577,10 +1533,8 @@ uint32_t LL_RCC_GetMDF1ClockFreq(uint32_t MDF1Source)
 			break;
 
 		case LL_RCC_MDF1_CLKSOURCE_MSIK: /* MDF1 Clock is MSIK */
-			MDF1_frequency = __LL_RCC_CALC_MSIK_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-								 ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-								      ? LL_RCC_MSIK_GetRange()
-								      : LL_RCC_MSIK_GetRangeAfterStandby()));
+			MDF1_frequency =
+			    __LL_RCC_CALC_MSIK_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(), ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIK_GetRange() : LL_RCC_MSIK_GetRangeAfterStandby()));
 			break;
 
 		default:
@@ -1651,9 +1605,7 @@ uint32_t LL_RCC_GetOCTOSPIClockFreq(uint32_t OCTOSPIxSource)
 						     */
 			if (LL_RCC_MSIK_IsReady() == 1U) {
 				octospi_frequency = __LL_RCC_CALC_MSIK_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-									    ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-										 ? LL_RCC_MSIK_GetRange()
-										 : LL_RCC_MSIK_GetRangeAfterStandby()));
+									    ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIK_GetRange() : LL_RCC_MSIK_GetRangeAfterStandby()));
 			}
 			break;
 
@@ -1930,10 +1882,8 @@ static uint32_t RCC_GetSystemClockFreq(void)
 	switch (LL_RCC_GetSysClkSource()) {
 		case LL_RCC_SYS_CLKSOURCE_STATUS_MSIS: /* MSIS used as system
 							  clock source */
-			frequency = __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-							    ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-								 ? LL_RCC_MSIS_GetRange()
-								 : LL_RCC_MSIS_GetRangeAfterStandby()));
+			frequency =
+			    __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(), ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIS_GetRange() : LL_RCC_MSIS_GetRangeAfterStandby()));
 			break;
 
 		case LL_RCC_SYS_CLKSOURCE_STATUS_HSI: /* HSI used as system
@@ -1954,10 +1904,8 @@ static uint32_t RCC_GetSystemClockFreq(void)
 			break;
 
 		default:
-			frequency = __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-							    ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-								 ? LL_RCC_MSIS_GetRange()
-								 : LL_RCC_MSIS_GetRangeAfterStandby()));
+			frequency =
+			    __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(), ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIS_GetRange() : LL_RCC_MSIS_GetRangeAfterStandby()));
 			break;
 	}
 
@@ -2025,10 +1973,8 @@ static uint32_t RCC_PLL1_GetFreqDomain_SYS(void)
 	switch (pllsource) {
 		case LL_RCC_PLL1SOURCE_MSIS: /* MSIS used as PLL1 clock source
 					      */
-			pllinputfreq = __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-							       ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-								    ? LL_RCC_MSIS_GetRange()
-								    : LL_RCC_MSIS_GetRangeAfterStandby()));
+			pllinputfreq =
+			    __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(), ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIS_GetRange() : LL_RCC_MSIS_GetRangeAfterStandby()));
 			break;
 
 		case LL_RCC_PLL1SOURCE_HSI: /* HSI used as PLL1 clock source */
@@ -2040,14 +1986,11 @@ static uint32_t RCC_PLL1_GetFreqDomain_SYS(void)
 			break;
 
 		default:
-			pllinputfreq = __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-							       ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-								    ? LL_RCC_MSIS_GetRange()
-								    : LL_RCC_MSIS_GetRangeAfterStandby()));
+			pllinputfreq =
+			    __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(), ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIS_GetRange() : LL_RCC_MSIS_GetRangeAfterStandby()));
 			break;
 	}
-	return __LL_RCC_CALC_PLL1CLK_FREQ(pllinputfreq, LL_RCC_PLL1_GetDivider(), LL_RCC_PLL1_GetN(),
-					  LL_RCC_PLL1_GetR());
+	return __LL_RCC_CALC_PLL1CLK_FREQ(pllinputfreq, LL_RCC_PLL1_GetDivider(), LL_RCC_PLL1_GetN(), LL_RCC_PLL1_GetR());
 }
 /**
  * @brief  Return PLL1 clock frequency used for SAI domain
@@ -2068,10 +2011,8 @@ static uint32_t RCC_PLL1_GetFreqDomain_SAI(void)
 
 	switch (pll1source) {
 		case LL_RCC_PLL1SOURCE_MSIS: /* MSI used as PLL1 clock source */
-			pll1inputfreq = __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-								((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-								     ? LL_RCC_MSIS_GetRange()
-								     : LL_RCC_MSIS_GetRangeAfterStandby()));
+			pll1inputfreq =
+			    __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(), ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIS_GetRange() : LL_RCC_MSIS_GetRangeAfterStandby()));
 			break;
 
 		case LL_RCC_PLL1SOURCE_HSI: /* HSI used as PLL1 clock source */
@@ -2083,18 +2024,15 @@ static uint32_t RCC_PLL1_GetFreqDomain_SAI(void)
 			break;
 
 		default:
-			pll1inputfreq = __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-								((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-								     ? LL_RCC_MSIS_GetRange()
-								     : LL_RCC_MSIS_GetRangeAfterStandby()));
+			pll1inputfreq =
+			    __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(), ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIS_GetRange() : LL_RCC_MSIS_GetRangeAfterStandby()));
 			break;
 	}
 
 	pll1n = LL_RCC_PLL1_GetN();
 	pll1pdiv = LL_RCC_PLL1_GetP();
 	if ((pll1n >= 8U) && (pll1pdiv >= 2U)) {
-		pll1outputfreq =
-		    __LL_RCC_CALC_PLL1CLK_SAI_FREQ(pll1inputfreq, LL_RCC_PLL1_GetDivider(), pll1n, pll1pdiv);
+		pll1outputfreq = __LL_RCC_CALC_PLL1CLK_SAI_FREQ(pll1inputfreq, LL_RCC_PLL1_GetDivider(), pll1n, pll1pdiv);
 	} else {
 		pll1outputfreq = 0; /* Invalid PLL1N or PLL1PDIV value */
 	}
@@ -2117,10 +2055,8 @@ static uint32_t RCC_PLL1_GetFreqDomain_48M(void)
 
 	switch (pll1source) {
 		case LL_RCC_PLL1SOURCE_MSIS: /* MSI used as PLL1 clock source */
-			pll1inputfreq = __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-								((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-								     ? LL_RCC_MSIS_GetRange()
-								     : LL_RCC_MSIS_GetRangeAfterStandby()));
+			pll1inputfreq =
+			    __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(), ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIS_GetRange() : LL_RCC_MSIS_GetRangeAfterStandby()));
 			break;
 
 		case LL_RCC_PLL1SOURCE_HSI: /* HSI used as PLL1 clock source */
@@ -2132,14 +2068,11 @@ static uint32_t RCC_PLL1_GetFreqDomain_48M(void)
 			break;
 
 		default:
-			pll1inputfreq = __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-								((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-								     ? LL_RCC_MSIS_GetRange()
-								     : LL_RCC_MSIS_GetRangeAfterStandby()));
+			pll1inputfreq =
+			    __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(), ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIS_GetRange() : LL_RCC_MSIS_GetRangeAfterStandby()));
 			break;
 	}
-	return __LL_RCC_CALC_PLL1CLK_48M_FREQ(pll1inputfreq, LL_RCC_PLL1_GetDivider(), LL_RCC_PLL1_GetN(),
-					      LL_RCC_PLL1_GetQ());
+	return __LL_RCC_CALC_PLL1CLK_48M_FREQ(pll1inputfreq, LL_RCC_PLL1_GetDivider(), LL_RCC_PLL1_GetN(), LL_RCC_PLL1_GetQ());
 }
 
 /**
@@ -2161,10 +2094,8 @@ static uint32_t RCC_PLL2_GetFreqDomain_SAI(void)
 	switch (pll2source) {
 		case LL_RCC_PLL2SOURCE_MSIS: /* MSI used as PLLSAI1 clock source
 					      */
-			pll2inputfreq = __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-								((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-								     ? LL_RCC_MSIS_GetRange()
-								     : LL_RCC_MSIS_GetRangeAfterStandby()));
+			pll2inputfreq =
+			    __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(), ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIS_GetRange() : LL_RCC_MSIS_GetRangeAfterStandby()));
 			break;
 
 		case LL_RCC_PLL2SOURCE_HSI: /* HSI used as PLL2 clock source */
@@ -2176,18 +2107,15 @@ static uint32_t RCC_PLL2_GetFreqDomain_SAI(void)
 			break;
 
 		default:
-			pll2inputfreq = __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-								((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-								     ? LL_RCC_MSIS_GetRange()
-								     : LL_RCC_MSIS_GetRangeAfterStandby()));
+			pll2inputfreq =
+			    __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(), ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIS_GetRange() : LL_RCC_MSIS_GetRangeAfterStandby()));
 			break;
 	}
 
 	pll2n = LL_RCC_PLL2_GetN();
 	pll2pdiv = LL_RCC_PLL2_GetP();
 	if ((pll2n >= 8U) && (pll2pdiv >= 2U)) {
-		pll2outputfreq =
-		    __LL_RCC_CALC_PLL2CLK_SAI_FREQ(pll2inputfreq, LL_RCC_PLL2_GetDivider(), pll2n, pll2pdiv);
+		pll2outputfreq = __LL_RCC_CALC_PLL2CLK_SAI_FREQ(pll2inputfreq, LL_RCC_PLL2_GetDivider(), pll2n, pll2pdiv);
 	} else {
 		pll2outputfreq = 0; /* Invalid PLL2N or PLL2PDIV value */
 	}
@@ -2209,10 +2137,8 @@ static uint32_t RCC_PLL2_GetFreqDomain_48M(void)
 
 	switch (pll2source) {
 		case LL_RCC_PLL2SOURCE_MSIS: /* MSI used as PLL2 clock source */
-			pll2inputfreq = __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-								((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-								     ? LL_RCC_MSIS_GetRange()
-								     : LL_RCC_MSIS_GetRangeAfterStandby()));
+			pll2inputfreq =
+			    __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(), ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIS_GetRange() : LL_RCC_MSIS_GetRangeAfterStandby()));
 			break;
 
 		case LL_RCC_PLL2SOURCE_HSI: /* HSI used as PLL2 clock source */
@@ -2224,14 +2150,11 @@ static uint32_t RCC_PLL2_GetFreqDomain_48M(void)
 			break;
 
 		default:
-			pll2inputfreq = __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-								((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-								     ? LL_RCC_MSIS_GetRange()
-								     : LL_RCC_MSIS_GetRangeAfterStandby()));
+			pll2inputfreq =
+			    __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(), ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIS_GetRange() : LL_RCC_MSIS_GetRangeAfterStandby()));
 			break;
 	}
-	return __LL_RCC_CALC_PLL2CLK_48M_FREQ(pll2inputfreq, LL_RCC_PLL2_GetDivider(), LL_RCC_PLL2_GetN(),
-					      LL_RCC_PLL2_GetQ());
+	return __LL_RCC_CALC_PLL2CLK_48M_FREQ(pll2inputfreq, LL_RCC_PLL2_GetDivider(), LL_RCC_PLL2_GetN(), LL_RCC_PLL2_GetQ());
 }
 
 /**
@@ -2249,10 +2172,8 @@ static uint32_t RCC_PLL2_GetFreqDomain_ADC(void)
 
 	switch (pll2source) {
 		case LL_RCC_PLL2SOURCE_MSIS: /* MSI used as PLL2 clock source */
-			pll2inputfreq = __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-								((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-								     ? LL_RCC_MSIS_GetRange()
-								     : LL_RCC_MSIS_GetRangeAfterStandby()));
+			pll2inputfreq =
+			    __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(), ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIS_GetRange() : LL_RCC_MSIS_GetRangeAfterStandby()));
 			break;
 
 		case LL_RCC_PLL2SOURCE_HSI: /* HSI used as PLL2 clock source */
@@ -2264,14 +2185,11 @@ static uint32_t RCC_PLL2_GetFreqDomain_ADC(void)
 			break;
 
 		default:
-			pll2inputfreq = __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-								((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-								     ? LL_RCC_MSIS_GetRange()
-								     : LL_RCC_MSIS_GetRangeAfterStandby()));
+			pll2inputfreq =
+			    __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(), ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIS_GetRange() : LL_RCC_MSIS_GetRangeAfterStandby()));
 			break;
 	}
-	return __LL_RCC_CALC_PLL2CLK_ADC_FREQ(pll2inputfreq, LL_RCC_PLL2_GetDivider(), LL_RCC_PLL2_GetN(),
-					      LL_RCC_PLL2_GetR());
+	return __LL_RCC_CALC_PLL2CLK_ADC_FREQ(pll2inputfreq, LL_RCC_PLL2_GetDivider(), LL_RCC_PLL2_GetN(), LL_RCC_PLL2_GetR());
 }
 
 /**
@@ -2292,10 +2210,8 @@ static uint32_t RCC_PLL3_GetFreqDomain_SAI(void)
 
 	switch (pll3source) {
 		case LL_RCC_PLL3SOURCE_MSIS: /* MSI used as PLL3 clock source */
-			pll3inputfreq = __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-								((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-								     ? LL_RCC_MSIS_GetRange()
-								     : LL_RCC_MSIS_GetRangeAfterStandby()));
+			pll3inputfreq =
+			    __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(), ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIS_GetRange() : LL_RCC_MSIS_GetRangeAfterStandby()));
 			break;
 
 		case LL_RCC_PLL3SOURCE_HSI: /* HSI used as PLL3 clock source */
@@ -2307,18 +2223,15 @@ static uint32_t RCC_PLL3_GetFreqDomain_SAI(void)
 			break;
 
 		default:
-			pll3inputfreq = __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-								((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-								     ? LL_RCC_MSIS_GetRange()
-								     : LL_RCC_MSIS_GetRangeAfterStandby()));
+			pll3inputfreq =
+			    __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(), ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIS_GetRange() : LL_RCC_MSIS_GetRangeAfterStandby()));
 			break;
 	}
 
 	pll3n = LL_RCC_PLL3_GetN();
 	pll3pdiv = LL_RCC_PLL3_GetP();
 	if ((pll3n >= 8U) && (pll3pdiv >= 2U)) {
-		pll3outputfreq =
-		    __LL_RCC_CALC_PLL3CLK_SAI_FREQ(pll3inputfreq, LL_RCC_PLL3_GetDivider(), pll3n, pll3pdiv);
+		pll3outputfreq = __LL_RCC_CALC_PLL3CLK_SAI_FREQ(pll3inputfreq, LL_RCC_PLL3_GetDivider(), pll3n, pll3pdiv);
 	} else {
 		pll3outputfreq = 0; /* Invalid PLL3N or PLL3PDIV value */
 	}
@@ -2344,10 +2257,8 @@ static uint32_t RCC_PLL3_GetFreqDomain_48M(void)
 
 	switch (PLL3source) {
 		case LL_RCC_PLL3SOURCE_MSIS: /* MSI used as PLL3 clock source */
-			PLL3inputfreq = __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-								((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-								     ? LL_RCC_MSIS_GetRange()
-								     : LL_RCC_MSIS_GetRangeAfterStandby()));
+			PLL3inputfreq =
+			    __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(), ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIS_GetRange() : LL_RCC_MSIS_GetRangeAfterStandby()));
 			break;
 
 		case LL_RCC_PLL3SOURCE_HSI: /* HSI used as PLL3 clock source */
@@ -2359,14 +2270,11 @@ static uint32_t RCC_PLL3_GetFreqDomain_48M(void)
 			break;
 
 		default:
-			PLL3inputfreq = __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-								((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-								     ? LL_RCC_MSIS_GetRange()
-								     : LL_RCC_MSIS_GetRangeAfterStandby()));
+			PLL3inputfreq =
+			    __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(), ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIS_GetRange() : LL_RCC_MSIS_GetRangeAfterStandby()));
 			break;
 	}
-	return __LL_RCC_CALC_PLL3CLK_48M_FREQ(PLL3inputfreq, LL_RCC_PLL3_GetDivider(), LL_RCC_PLL3_GetN(),
-					      LL_RCC_PLL3_GetQ());
+	return __LL_RCC_CALC_PLL3CLK_48M_FREQ(PLL3inputfreq, LL_RCC_PLL3_GetDivider(), LL_RCC_PLL3_GetN(), LL_RCC_PLL3_GetQ());
 }
 #if defined(HSPI1) || defined(LTDC)
 /**
@@ -2384,10 +2292,8 @@ static uint32_t RCC_PLL3_GetFreqDomain_HSPI_LTDC(void)
 
 	switch (pll3source) {
 		case LL_RCC_PLL3SOURCE_MSIS: /* MSI used as PLL2 clock source */
-			pll3inputfreq = __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-								((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-								     ? LL_RCC_MSIS_GetRange()
-								     : LL_RCC_MSIS_GetRangeAfterStandby()));
+			pll3inputfreq =
+			    __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(), ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIS_GetRange() : LL_RCC_MSIS_GetRangeAfterStandby()));
 			break;
 
 		case LL_RCC_PLL3SOURCE_HSI: /* HSI used as PLL2 clock source */
@@ -2399,14 +2305,11 @@ static uint32_t RCC_PLL3_GetFreqDomain_HSPI_LTDC(void)
 			break;
 
 		default:
-			pll3inputfreq = __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(),
-								((LL_RCC_MSI_IsEnabledRangeSelect() == 1U)
-								     ? LL_RCC_MSIS_GetRange()
-								     : LL_RCC_MSIS_GetRangeAfterStandby()));
+			pll3inputfreq =
+			    __LL_RCC_CALC_MSIS_FREQ(LL_RCC_MSI_IsEnabledRangeSelect(), ((LL_RCC_MSI_IsEnabledRangeSelect() == 1U) ? LL_RCC_MSIS_GetRange() : LL_RCC_MSIS_GetRangeAfterStandby()));
 			break;
 	}
-	return __LL_RCC_CALC_PLL3CLK_HSPI_LTDC_FREQ(pll3inputfreq, LL_RCC_PLL3_GetDivider(), LL_RCC_PLL3_GetN(),
-						    LL_RCC_PLL3_GetR());
+	return __LL_RCC_CALC_PLL3CLK_HSPI_LTDC_FREQ(pll3inputfreq, LL_RCC_PLL3_GetDivider(), LL_RCC_PLL3_GetN(), LL_RCC_PLL3_GetR());
 }
 
 #endif /* HSPI1 || LTDC */

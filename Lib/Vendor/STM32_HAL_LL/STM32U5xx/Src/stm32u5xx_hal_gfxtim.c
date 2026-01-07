@@ -219,12 +219,10 @@ HAL_StatusTypeDef HAL_GFXTIM_Init(GFXTIM_HandleTypeDef *hgfxtim)
 			/* Set Synchronization signals sources (HSYNC and
 			 * VSYNC), Tearing Effect source and polarity,  */
 			MODIFY_REG(hgfxtim->Instance->CR, GFXTIM_CR_SYNCS | GFXTIM_CR_TES | GFXTIM_CR_TEPOL,
-				   hgfxtim->Init.SynchroSrc | hgfxtim->Init.TearingEffectSrc |
-				       hgfxtim->Init.TearingEffectPolarity);
+				   hgfxtim->Init.SynchroSrc | hgfxtim->Init.TearingEffectSrc | hgfxtim->Init.TearingEffectPolarity);
 
 			/* Set tearing effect interrupt */
-			MODIFY_REG(hgfxtim->Instance->IER, GFXTIM_IER_TEIE,
-				   (hgfxtim->Init.TearingEffectInterrupt << GFXTIM_IER_TEIE_Pos));
+			MODIFY_REG(hgfxtim->Instance->IER, GFXTIM_IER_TEIE, (hgfxtim->Init.TearingEffectInterrupt << GFXTIM_IER_TEIE_Pos));
 
 			/* Update error code and state */
 			hgfxtim->ErrorCode = GFXTIM_ERROR_NONE;
@@ -342,8 +340,7 @@ __weak void HAL_GFXTIM_MspDeInit(GFXTIM_HandleTypeDef *hgfxtim)
  * @param  pCallback pointer to the callback function.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_GFXTIM_RegisterCallback(GFXTIM_HandleTypeDef *hgfxtim, HAL_GFXTIM_CallbackIDTypeDef CallbackID,
-					      pGFXTIM_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_GFXTIM_RegisterCallback(GFXTIM_HandleTypeDef *hgfxtim, HAL_GFXTIM_CallbackIDTypeDef CallbackID, pGFXTIM_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -488,59 +485,46 @@ HAL_StatusTypeDef HAL_GFXTIM_UnRegisterCallback(GFXTIM_HandleTypeDef *hgfxtim, H
 		if (hgfxtim->State == HAL_GFXTIM_STATE_READY) {
 			switch (CallbackID) {
 				case HAL_GFXTIM_AFC_COMPARE1_CB_ID:
-					hgfxtim->HAL_GFXTIM_AbsoluteTimer_AFCC1Callback =
-					    HAL_GFXTIM_AbsoluteTimer_AFCC1Callback;
+					hgfxtim->HAL_GFXTIM_AbsoluteTimer_AFCC1Callback = HAL_GFXTIM_AbsoluteTimer_AFCC1Callback;
 					break;
 				case HAL_GFXTIM_AFC_OVERFLOW_CB_ID:
-					hgfxtim->HAL_GFXTIM_AbsoluteTimer_AFCOFCallback =
-					    HAL_GFXTIM_AbsoluteTimer_AFCOFCallback;
+					hgfxtim->HAL_GFXTIM_AbsoluteTimer_AFCOFCallback = HAL_GFXTIM_AbsoluteTimer_AFCOFCallback;
 					break;
 				case HAL_GFXTIM_ALC_COMPARE1_CB_ID:
-					hgfxtim->HAL_GFXTIM_AbsoluteTimer_ALCC1Callback =
-					    HAL_GFXTIM_AbsoluteTimer_ALCC1Callback;
+					hgfxtim->HAL_GFXTIM_AbsoluteTimer_ALCC1Callback = HAL_GFXTIM_AbsoluteTimer_ALCC1Callback;
 					break;
 				case HAL_GFXTIM_ALC_COMPARE2_CB_ID:
-					hgfxtim->HAL_GFXTIM_AbsoluteTimer_ALCC2Callback =
-					    HAL_GFXTIM_AbsoluteTimer_ALCC2Callback;
+					hgfxtim->HAL_GFXTIM_AbsoluteTimer_ALCC2Callback = HAL_GFXTIM_AbsoluteTimer_ALCC2Callback;
 					break;
 				case HAL_GFXTIM_ALC_OVERFLOW_CB_ID:
-					hgfxtim->HAL_GFXTIM_AbsoluteTimer_ALCOFCallback =
-					    HAL_GFXTIM_AbsoluteTimer_ALCOFCallback;
+					hgfxtim->HAL_GFXTIM_AbsoluteTimer_ALCOFCallback = HAL_GFXTIM_AbsoluteTimer_ALCOFCallback;
 					break;
 				case HAL_GFXTIM_RFC1_RELOAD_CB_ID:
-					hgfxtim->HAL_GFXTIM_RelativeTimer_RFC1RCallback =
-					    HAL_GFXTIM_RelativeTimer_RFC1RCallback;
+					hgfxtim->HAL_GFXTIM_RelativeTimer_RFC1RCallback = HAL_GFXTIM_RelativeTimer_RFC1RCallback;
 					break;
 				case HAL_GFXTIM_RFC2_RELOAD_CB_ID:
-					hgfxtim->HAL_GFXTIM_RelativeTimer_RFC2RCallback =
-					    HAL_GFXTIM_RelativeTimer_RFC2RCallback;
+					hgfxtim->HAL_GFXTIM_RelativeTimer_RFC2RCallback = HAL_GFXTIM_RelativeTimer_RFC2RCallback;
 					break;
 				case HAL_GFXTIM_TE_CB_ID:
 					hgfxtim->HAL_GFXTIM_TECallback = HAL_GFXTIM_TECallback;
 					break;
 				case HAL_GFXTIM_EVENT1_CB_ID:
-					hgfxtim->HAL_GFXTIM_EventGenerator_EV1Callback =
-					    HAL_GFXTIM_EventGenerator_EV1Callback;
+					hgfxtim->HAL_GFXTIM_EventGenerator_EV1Callback = HAL_GFXTIM_EventGenerator_EV1Callback;
 					break;
 				case HAL_GFXTIM_EVENT2_CB_ID:
-					hgfxtim->HAL_GFXTIM_EventGenerator_EV2Callback =
-					    HAL_GFXTIM_EventGenerator_EV2Callback;
+					hgfxtim->HAL_GFXTIM_EventGenerator_EV2Callback = HAL_GFXTIM_EventGenerator_EV2Callback;
 					break;
 				case HAL_GFXTIM_EVENT3_CB_ID:
-					hgfxtim->HAL_GFXTIM_EventGenerator_EV3Callback =
-					    HAL_GFXTIM_EventGenerator_EV3Callback;
+					hgfxtim->HAL_GFXTIM_EventGenerator_EV3Callback = HAL_GFXTIM_EventGenerator_EV3Callback;
 					break;
 				case HAL_GFXTIM_EVENT4_CB_ID:
-					hgfxtim->HAL_GFXTIM_EventGenerator_EV4Callback =
-					    HAL_GFXTIM_EventGenerator_EV4Callback;
+					hgfxtim->HAL_GFXTIM_EventGenerator_EV4Callback = HAL_GFXTIM_EventGenerator_EV4Callback;
 					break;
 				case HAL_GFXTIM_WDG_ALARM_CB_ID:
-					hgfxtim->HAL_GFXTIM_WatchdogTimer_AlarmCallback =
-					    HAL_GFXTIM_WatchdogTimer_AlarmCallback;
+					hgfxtim->HAL_GFXTIM_WatchdogTimer_AlarmCallback = HAL_GFXTIM_WatchdogTimer_AlarmCallback;
 					break;
 				case HAL_GFXTIM_WDG_PREALARM_CB_ID:
-					hgfxtim->HAL_GFXTIM_WatchdogTimer_PreAlarmCallback =
-					    HAL_GFXTIM_WatchdogTimer_PreAlarmCallback;
+					hgfxtim->HAL_GFXTIM_WatchdogTimer_PreAlarmCallback = HAL_GFXTIM_WatchdogTimer_PreAlarmCallback;
 					break;
 				case HAL_GFXTIM_ERROR_CB_ID:
 					hgfxtim->ErrorCallback = HAL_GFXTIM_ErrorCallback;
@@ -607,8 +591,7 @@ HAL_StatusTypeDef HAL_GFXTIM_UnRegisterCallback(GFXTIM_HandleTypeDef *hgfxtim, H
  * @param  pClockGeneratorConfig Clock Generator configuration parameters.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_GFXTIM_ClockGenerator_Config(GFXTIM_HandleTypeDef *hgfxtim,
-						   const GFXTIM_ClockGeneratorConfigTypeDef *pClockGeneratorConfig)
+HAL_StatusTypeDef HAL_GFXTIM_ClockGenerator_Config(GFXTIM_HandleTypeDef *hgfxtim, const GFXTIM_ClockGeneratorConfigTypeDef *pClockGeneratorConfig)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -634,25 +617,19 @@ HAL_StatusTypeDef HAL_GFXTIM_ClockGenerator_Config(GFXTIM_HandleTypeDef *hgfxtim
 
 			/* Set Line Clock Counter (LCC) reload value (22 bits)
 			 */
-			MODIFY_REG(hgfxtim->Instance->LCCRR, GFXTIM_LCCRR_RELOAD,
-				   (pClockGeneratorConfig->LCCReloadValue << GFXTIM_LCCRR_RELOAD_Pos));
+			MODIFY_REG(hgfxtim->Instance->LCCRR, GFXTIM_LCCRR_RELOAD, (pClockGeneratorConfig->LCCReloadValue << GFXTIM_LCCRR_RELOAD_Pos));
 
 			/* Set Frame Clock Counter (FCC) reload value (12 bits)
 			 */
-			MODIFY_REG(hgfxtim->Instance->FCCRR, GFXTIM_FCCRR_RELOAD,
-				   (pClockGeneratorConfig->FCCReloadValue << GFXTIM_FCCRR_RELOAD_Pos));
+			MODIFY_REG(hgfxtim->Instance->FCCRR, GFXTIM_FCCRR_RELOAD, (pClockGeneratorConfig->FCCReloadValue << GFXTIM_FCCRR_RELOAD_Pos));
 
 			/* Set line and frame config */
-			MODIFY_REG(hgfxtim->Instance->CGCR,
-				   GFXTIM_CGCR_LCCHRS | GFXTIM_CGCR_LCCCS | GFXTIM_CGCR_LCS | GFXTIM_CGCR_FCCHRS |
-				       GFXTIM_CGCR_FCCCS | GFXTIM_CGCR_FCS,
-				   pClockGeneratorConfig->LCCHwReloadSrc | pClockGeneratorConfig->LCCClockSrc |
-				       pClockGeneratorConfig->LineClockSrc | pClockGeneratorConfig->FCCHwReloadSrc |
+			MODIFY_REG(hgfxtim->Instance->CGCR, GFXTIM_CGCR_LCCHRS | GFXTIM_CGCR_LCCCS | GFXTIM_CGCR_LCS | GFXTIM_CGCR_FCCHRS | GFXTIM_CGCR_FCCCS | GFXTIM_CGCR_FCS,
+				   pClockGeneratorConfig->LCCHwReloadSrc | pClockGeneratorConfig->LCCClockSrc | pClockGeneratorConfig->LineClockSrc | pClockGeneratorConfig->FCCHwReloadSrc |
 				       pClockGeneratorConfig->FCCClockSrc | pClockGeneratorConfig->FrameClockSrc);
 
 			/* Set debug output config for Line and frame clocks */
-			MODIFY_REG(hgfxtim->Instance->CR, GFXTIM_CR_LCCOE | GFXTIM_CR_FCCOE,
-				   pClockGeneratorConfig->LineClockCalib | pClockGeneratorConfig->FrameClockCalib);
+			MODIFY_REG(hgfxtim->Instance->CR, GFXTIM_CR_LCCOE | GFXTIM_CR_FCCOE, pClockGeneratorConfig->LineClockCalib | pClockGeneratorConfig->FrameClockCalib);
 		} else {
 			status = HAL_ERROR;
 		}
@@ -734,8 +711,7 @@ __weak void HAL_GFXTIM_TECallback(GFXTIM_HandleTypeDef *hgfxtim)
  * structure that contains absoluite timer comparators and counters values.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_Config(GFXTIM_HandleTypeDef *hgfxtim,
-						  const GFXTIM_AbsoluteTimerConfigTypeDef *pAbsoluteTimerConfig)
+HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_Config(GFXTIM_HandleTypeDef *hgfxtim, const GFXTIM_AbsoluteTimerConfigTypeDef *pAbsoluteTimerConfig)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -758,34 +734,25 @@ HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_Config(GFXTIM_HandleTypeDef *hgfxtim,
 		if (hgfxtim->State == HAL_GFXTIM_STATE_READY) {
 
 			/* Set AFC compare 1 value */
-			MODIFY_REG(hgfxtim->Instance->AFCC1R, GFXTIM_AFCC1R_FRAME,
-				   (pAbsoluteTimerConfig->FrameCompare1Value << GFXTIM_AFCC1R_FRAME_Pos));
+			MODIFY_REG(hgfxtim->Instance->AFCC1R, GFXTIM_AFCC1R_FRAME, (pAbsoluteTimerConfig->FrameCompare1Value << GFXTIM_AFCC1R_FRAME_Pos));
 
 			/* Set AFC counter value */
-			MODIFY_REG(hgfxtim->Instance->AFCR, GFXTIM_AFCR_FRAME,
-				   (pAbsoluteTimerConfig->FrameCounterValue << GFXTIM_AFCR_FRAME_Pos));
+			MODIFY_REG(hgfxtim->Instance->AFCR, GFXTIM_AFCR_FRAME, (pAbsoluteTimerConfig->FrameCounterValue << GFXTIM_AFCR_FRAME_Pos));
 
 			/* Set ALC compare 1 value */
-			MODIFY_REG(hgfxtim->Instance->ALCC1R, GFXTIM_ALCC1R_LINE,
-				   (pAbsoluteTimerConfig->LineCompare1Value << GFXTIM_ALCC1R_LINE_Pos));
+			MODIFY_REG(hgfxtim->Instance->ALCC1R, GFXTIM_ALCC1R_LINE, (pAbsoluteTimerConfig->LineCompare1Value << GFXTIM_ALCC1R_LINE_Pos));
 
 			/* Set ALC compare 2 value */
-			MODIFY_REG(hgfxtim->Instance->ALCC2R, GFXTIM_ALCC2R_LINE,
-				   (pAbsoluteTimerConfig->LineCompare2Value << GFXTIM_ALCC2R_LINE_Pos));
+			MODIFY_REG(hgfxtim->Instance->ALCC2R, GFXTIM_ALCC2R_LINE, (pAbsoluteTimerConfig->LineCompare2Value << GFXTIM_ALCC2R_LINE_Pos));
 
 			/* Set ALC counter value */
-			MODIFY_REG(hgfxtim->Instance->ALCR, GFXTIM_ALCR_LINE,
-				   (pAbsoluteTimerConfig->LineCounterValue << GFXTIM_ALCR_LINE_Pos));
+			MODIFY_REG(hgfxtim->Instance->ALCR, GFXTIM_ALCR_LINE, (pAbsoluteTimerConfig->LineCounterValue << GFXTIM_ALCR_LINE_Pos));
 
 			/* Set ALC compare 1, compare 2, overflow interrupts,
 			 * AFC compare 1 and overflow interrupts */
-			MODIFY_REG(hgfxtim->Instance->IER,
-				   GFXTIM_IER_ALCC1IE | GFXTIM_IER_ALCC2IE | GFXTIM_IER_ALCOIE | GFXTIM_IER_AFCC1IE |
-				       GFXTIM_IER_AFCOIE,
-				   (pAbsoluteTimerConfig->FrameOverflowInterrupt << GFXTIM_IER_AFCOIE_Pos) |
-				       (pAbsoluteTimerConfig->FrameCompare1Interrupt << GFXTIM_IER_AFCC1IE_Pos) |
-				       (pAbsoluteTimerConfig->LineOverflowInterrupt << GFXTIM_IER_ALCOIE_Pos) |
-				       (pAbsoluteTimerConfig->LineCompare1Interrupt << GFXTIM_IER_ALCC1IE_Pos) |
+			MODIFY_REG(hgfxtim->Instance->IER, GFXTIM_IER_ALCC1IE | GFXTIM_IER_ALCC2IE | GFXTIM_IER_ALCOIE | GFXTIM_IER_AFCC1IE | GFXTIM_IER_AFCOIE,
+				   (pAbsoluteTimerConfig->FrameOverflowInterrupt << GFXTIM_IER_AFCOIE_Pos) | (pAbsoluteTimerConfig->FrameCompare1Interrupt << GFXTIM_IER_AFCC1IE_Pos) |
+				       (pAbsoluteTimerConfig->LineOverflowInterrupt << GFXTIM_IER_ALCOIE_Pos) | (pAbsoluteTimerConfig->LineCompare1Interrupt << GFXTIM_IER_ALCC1IE_Pos) |
 				       (pAbsoluteTimerConfig->LineCompare2Interrupt << GFXTIM_IER_ALCC2IE_Pos));
 		} else {
 			status = HAL_ERROR;
@@ -885,8 +852,7 @@ HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_Reset(GFXTIM_HandleTypeDef *hgfxtim)
  * @param  pValue Absolute time value
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_GetCounter(const GFXTIM_HandleTypeDef *hgfxtim, uint32_t AbsoluteTime,
-						      uint32_t *pValue)
+HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_GetCounter(const GFXTIM_HandleTypeDef *hgfxtim, uint32_t AbsoluteTime, uint32_t *pValue)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -957,8 +923,7 @@ HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_SetFrameCompare(GFXTIM_HandleTypeDef 
  * = 0xFFF
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_SetLineCompare(GFXTIM_HandleTypeDef *hgfxtim,
-							  uint32_t AbsoluteLineComparator, uint32_t Value)
+HAL_StatusTypeDef HAL_GFXTIM_AbsoluteTimer_SetLineCompare(GFXTIM_HandleTypeDef *hgfxtim, uint32_t AbsoluteLineComparator, uint32_t Value)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -1089,9 +1054,7 @@ __weak void HAL_GFXTIM_AbsoluteTimer_ALCOFCallback(GFXTIM_HandleTypeDef *hgfxtim
  *         This parameter can be a value of @ref GFXTIM_RelativeTimer.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_GFXTIM_RelativeTimer_Config(GFXTIM_HandleTypeDef *hgfxtim,
-						  const GFXTIM_RelativeTimerConfigTypeDef *pRelativeTimerConfig,
-						  uint32_t RelativeTimer)
+HAL_StatusTypeDef HAL_GFXTIM_RelativeTimer_Config(GFXTIM_HandleTypeDef *hgfxtim, const GFXTIM_RelativeTimerConfigTypeDef *pRelativeTimerConfig, uint32_t RelativeTimer)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -1108,28 +1071,22 @@ HAL_StatusTypeDef HAL_GFXTIM_RelativeTimer_Config(GFXTIM_HandleTypeDef *hgfxtim,
 		if (hgfxtim->State == HAL_GFXTIM_STATE_READY) {
 			if (RelativeTimer == GFXTIM_RELATIVE_TIMER1) {
 				/* Set RFC1 auto reload */
-				MODIFY_REG(hgfxtim->Instance->RFC1RR, GFXTIM_RFC1RR_FRAME,
-					   pRelativeTimerConfig->AutoReloadValue << GFXTIM_RFC1RR_FRAME_Pos);
+				MODIFY_REG(hgfxtim->Instance->RFC1RR, GFXTIM_RFC1RR_FRAME, pRelativeTimerConfig->AutoReloadValue << GFXTIM_RFC1RR_FRAME_Pos);
 
 				/* Set relative timer mode */
-				MODIFY_REG(hgfxtim->Instance->TCR, GFXTIM_TCR_RFC1CM,
-					   (pRelativeTimerConfig->CounterMode << GFXTIM_TCR_RFC1CM_Pos));
+				MODIFY_REG(hgfxtim->Instance->TCR, GFXTIM_TCR_RFC1CM, (pRelativeTimerConfig->CounterMode << GFXTIM_TCR_RFC1CM_Pos));
 
 				/* Set relative timer 1 interrupt */
-				MODIFY_REG(hgfxtim->Instance->IER, GFXTIM_IER_RFC1RIE_Msk,
-					   (pRelativeTimerConfig->ReloadInterrupt << GFXTIM_IER_RFC1RIE_Pos));
+				MODIFY_REG(hgfxtim->Instance->IER, GFXTIM_IER_RFC1RIE_Msk, (pRelativeTimerConfig->ReloadInterrupt << GFXTIM_IER_RFC1RIE_Pos));
 			} else {
 				/* Set RFC2 auto reload */
-				MODIFY_REG(hgfxtim->Instance->RFC2RR, GFXTIM_RFC2RR_FRAME,
-					   pRelativeTimerConfig->AutoReloadValue << GFXTIM_RFC2RR_FRAME_Pos);
+				MODIFY_REG(hgfxtim->Instance->RFC2RR, GFXTIM_RFC2RR_FRAME, pRelativeTimerConfig->AutoReloadValue << GFXTIM_RFC2RR_FRAME_Pos);
 
 				/* Set relative timer mode */
-				MODIFY_REG(hgfxtim->Instance->TCR, GFXTIM_TCR_RFC2CM,
-					   (pRelativeTimerConfig->CounterMode << GFXTIM_TCR_RFC2CM_Pos));
+				MODIFY_REG(hgfxtim->Instance->TCR, GFXTIM_TCR_RFC2CM, (pRelativeTimerConfig->CounterMode << GFXTIM_TCR_RFC2CM_Pos));
 
 				/* Set relative timer 2 interrupt */
-				MODIFY_REG(hgfxtim->Instance->IER, GFXTIM_IER_RFC2RIE_Msk,
-					   (pRelativeTimerConfig->ReloadInterrupt << GFXTIM_IER_RFC2RIE_Pos));
+				MODIFY_REG(hgfxtim->Instance->IER, GFXTIM_IER_RFC2RIE_Msk, (pRelativeTimerConfig->ReloadInterrupt << GFXTIM_IER_RFC2RIE_Pos));
 			}
 		} else {
 			status = HAL_ERROR;
@@ -1251,8 +1208,7 @@ HAL_StatusTypeDef HAL_GFXTIM_RelativeTimer_ForceReload(GFXTIM_HandleTypeDef *hgf
  * = 0xFFF
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_GFXTIM_RelativeTimer_SetReload(GFXTIM_HandleTypeDef *hgfxtim, uint32_t RelativeTimer,
-						     uint32_t Value)
+HAL_StatusTypeDef HAL_GFXTIM_RelativeTimer_SetReload(GFXTIM_HandleTypeDef *hgfxtim, uint32_t RelativeTimer, uint32_t Value)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -1288,8 +1244,7 @@ HAL_StatusTypeDef HAL_GFXTIM_RelativeTimer_SetReload(GFXTIM_HandleTypeDef *hgfxt
  * @param  pValue pointer to a relative frame counter value
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_GFXTIM_RelativeTimer_GetCounter(const GFXTIM_HandleTypeDef *hgfxtim, uint32_t RelativeTimer,
-						      uint32_t *pValue)
+HAL_StatusTypeDef HAL_GFXTIM_RelativeTimer_GetCounter(const GFXTIM_HandleTypeDef *hgfxtim, uint32_t RelativeTimer, uint32_t *pValue)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -1372,8 +1327,7 @@ __weak void HAL_GFXTIM_RelativeTimer_RFC2RCallback(GFXTIM_HandleTypeDef *hgfxtim
  * structure that contains Event Generator configuration parameters.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_GFXTIM_EventGenerator_Config(GFXTIM_HandleTypeDef *hgfxtim, uint32_t EventGenerator,
-						   const GFXTIM_EventGeneratorConfigTypeDef *pEventGeneratorConfig)
+HAL_StatusTypeDef HAL_GFXTIM_EventGenerator_Config(GFXTIM_HandleTypeDef *hgfxtim, uint32_t EventGenerator, const GFXTIM_EventGeneratorConfigTypeDef *pEventGeneratorConfig)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 	uint32_t shift;
@@ -1390,12 +1344,10 @@ HAL_StatusTypeDef HAL_GFXTIM_EventGenerator_Config(GFXTIM_HandleTypeDef *hgfxtim
 		if (hgfxtim->State == HAL_GFXTIM_STATE_READY) {
 			/* Select frame and line events */
 			shift = (EventGenerator) * 8U;
-			MODIFY_REG(hgfxtim->Instance->EVSR, ((GFXTIM_EVSR_LES1 | GFXTIM_EVSR_FES1) << shift),
-				   ((pEventGeneratorConfig->LineEvent | pEventGeneratorConfig->FrameEvent) << shift));
+			MODIFY_REG(hgfxtim->Instance->EVSR, ((GFXTIM_EVSR_LES1 | GFXTIM_EVSR_FES1) << shift), ((pEventGeneratorConfig->LineEvent | pEventGeneratorConfig->FrameEvent) << shift));
 
 			/* Event interrupt */
-			MODIFY_REG(hgfxtim->Instance->IER, (GFXTIM_IER_EV1IE << (EventGenerator)),
-				   (pEventGeneratorConfig->EventInterrupt << (EventGenerator + GFXTIM_IER_EV1IE_Pos)));
+			MODIFY_REG(hgfxtim->Instance->IER, (GFXTIM_IER_EV1IE << (EventGenerator)), (pEventGeneratorConfig->EventInterrupt << (EventGenerator + GFXTIM_IER_EV1IE_Pos)));
 		} else {
 			status = HAL_ERROR;
 		}
@@ -1542,8 +1494,7 @@ __weak void HAL_GFXTIM_EventGenerator_EV4Callback(GFXTIM_HandleTypeDef *hgfxtim)
  * @param  pWatchdogConfig Watchdog configuration parameters.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_GFXTIM_WatchdogTimer_Config(GFXTIM_HandleTypeDef *hgfxtim,
-						  const GFXTIM_WatchdogConfigTypeDef *pWatchdogConfig)
+HAL_StatusTypeDef HAL_GFXTIM_WatchdogTimer_Config(GFXTIM_HandleTypeDef *hgfxtim, const GFXTIM_WatchdogConfigTypeDef *pWatchdogConfig)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -1563,21 +1514,17 @@ HAL_StatusTypeDef HAL_GFXTIM_WatchdogTimer_Config(GFXTIM_HandleTypeDef *hgfxtim,
 
 		if (hgfxtim->State == HAL_GFXTIM_STATE_READY) {
 			/* Set watchdog auto reload value */
-			MODIFY_REG(hgfxtim->Instance->WDGRR, GFXTIM_WDGRR_RELOAD,
-				   (pWatchdogConfig->AutoReloadValue << GFXTIM_WDGRR_RELOAD_Pos));
+			MODIFY_REG(hgfxtim->Instance->WDGRR, GFXTIM_WDGRR_RELOAD, (pWatchdogConfig->AutoReloadValue << GFXTIM_WDGRR_RELOAD_Pos));
 
 			/* Set watchdog pre alarm value */
-			MODIFY_REG(hgfxtim->Instance->WDGPAR, GFXTIM_WDGPAR_PREALARM,
-				   pWatchdogConfig->PreAlarmValue << GFXTIM_WDGPAR_PREALARM_Pos);
+			MODIFY_REG(hgfxtim->Instance->WDGPAR, GFXTIM_WDGPAR_PREALARM, pWatchdogConfig->PreAlarmValue << GFXTIM_WDGPAR_PREALARM_Pos);
 
 			/* Set watchdog clock source and hardware reload */
-			MODIFY_REG(hgfxtim->Instance->WDGTCR, (GFXTIM_WDGTCR_WDGCS | GFXTIM_WDGTCR_WDGHRC),
-				   (pWatchdogConfig->ClockSrc | pWatchdogConfig->HwReloadConfig));
+			MODIFY_REG(hgfxtim->Instance->WDGTCR, (GFXTIM_WDGTCR_WDGCS | GFXTIM_WDGTCR_WDGHRC), (pWatchdogConfig->ClockSrc | pWatchdogConfig->HwReloadConfig));
 
 			/* Set watchdog interrupts */
 			MODIFY_REG(hgfxtim->Instance->IER, (GFXTIM_IER_WDGAIE | GFXTIM_IER_WDGPIE),
-				   ((pWatchdogConfig->AlarmInterrupt << GFXTIM_IER_WDGAIE_Pos) |
-				    (pWatchdogConfig->PreAlarmInterrupt << GFXTIM_IER_WDGPIE_Pos)));
+				   ((pWatchdogConfig->AlarmInterrupt << GFXTIM_IER_WDGAIE_Pos) | (pWatchdogConfig->PreAlarmInterrupt << GFXTIM_IER_WDGPIE_Pos)));
 		} else {
 			status = HAL_ERROR;
 		}

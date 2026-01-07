@@ -167,8 +167,7 @@ configured as well:
  * on the oversampling rate).
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RS485Ex_Init(UART_HandleTypeDef *huart, uint32_t Polarity, uint32_t AssertionTime,
-				   uint32_t DeassertionTime)
+HAL_StatusTypeDef HAL_RS485Ex_Init(UART_HandleTypeDef *huart, uint32_t Polarity, uint32_t AssertionTime, uint32_t DeassertionTime)
 {
 	uint32_t temp;
 
@@ -697,8 +696,7 @@ HAL_StatusTypeDef HAL_UARTEx_SetRxFifoThreshold(UART_HandleTypeDef *huart, uint3
  * sequence).
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint16_t *RxLen,
-					   uint32_t Timeout)
+HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint16_t *RxLen, uint32_t Timeout)
 {
 	uint8_t *pdata8bits;
 	uint16_t *pdata16bits;
@@ -962,8 +960,7 @@ HAL_UART_RxEventTypeTypeDef HAL_UARTEx_GetRxEventType(const UART_HandleTypeDef *
  * @param sConfig   Autonomous mode structure parameters.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_UARTEx_SetConfigAutonomousMode(UART_HandleTypeDef *huart,
-						     const UART_AutonomousModeConfTypeDef *sConfig)
+HAL_StatusTypeDef HAL_UARTEx_SetConfigAutonomousMode(UART_HandleTypeDef *huart, const UART_AutonomousModeConfTypeDef *sConfig)
 {
 	uint32_t tmpreg;
 
@@ -993,8 +990,7 @@ HAL_StatusTypeDef HAL_UARTEx_SetConfigAutonomousMode(UART_HandleTypeDef *huart,
 		CLEAR_REG(huart->Instance->AUTOCR);
 
 		/* UART AUTOCR Configuration */
-		tmpreg = ((sConfig->DataSize << USART_AUTOCR_TDN_Pos) | (sConfig->TriggerPolarity) |
-			  (sConfig->AutonomousModeState) | (sConfig->IdleFrame) |
+		tmpreg = ((sConfig->DataSize << USART_AUTOCR_TDN_Pos) | (sConfig->TriggerPolarity) | (sConfig->AutonomousModeState) | (sConfig->IdleFrame) |
 			  (sConfig->TriggerSelection << USART_AUTOCR_TRIGSEL_Pos));
 
 		WRITE_REG(huart->Instance->AUTOCR, tmpreg);
@@ -1019,8 +1015,7 @@ HAL_StatusTypeDef HAL_UARTEx_SetConfigAutonomousMode(UART_HandleTypeDef *huart,
  * @param sConfig   Autonomous mode structure parameters.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_UARTEx_GetConfigAutonomousMode(const UART_HandleTypeDef *huart,
-						     UART_AutonomousModeConfTypeDef *sConfig)
+HAL_StatusTypeDef HAL_UARTEx_GetConfigAutonomousMode(const UART_HandleTypeDef *huart, UART_AutonomousModeConfTypeDef *sConfig)
 {
 	uint32_t tmpreg;
 
@@ -1096,8 +1091,7 @@ static void UARTEx_Wakeup_AddressConfig(UART_HandleTypeDef *huart, UART_WakeUpTy
 	MODIFY_REG(huart->Instance->CR2, USART_CR2_ADDM7, WakeUpSelection.AddressLength);
 
 	/* Set the USART address node */
-	MODIFY_REG(huart->Instance->CR2, USART_CR2_ADD,
-		   ((uint32_t)WakeUpSelection.Address << UART_CR2_ADDRESS_LSB_POS));
+	MODIFY_REG(huart->Instance->CR2, USART_CR2_ADD, ((uint32_t)WakeUpSelection.Address << UART_CR2_ADDRESS_LSB_POS));
 }
 
 /**
@@ -1122,14 +1116,10 @@ static void UARTEx_SetNbDataToProcess(UART_HandleTypeDef *huart)
 	} else {
 		rx_fifo_depth = RX_FIFO_DEPTH;
 		tx_fifo_depth = TX_FIFO_DEPTH;
-		rx_fifo_threshold =
-		    (uint8_t)(READ_BIT(huart->Instance->CR3, USART_CR3_RXFTCFG) >> USART_CR3_RXFTCFG_Pos);
-		tx_fifo_threshold =
-		    (uint8_t)(READ_BIT(huart->Instance->CR3, USART_CR3_TXFTCFG) >> USART_CR3_TXFTCFG_Pos);
-		huart->NbTxDataToProcess =
-		    ((uint16_t)tx_fifo_depth * numerator[tx_fifo_threshold]) / (uint16_t)denominator[tx_fifo_threshold];
-		huart->NbRxDataToProcess =
-		    ((uint16_t)rx_fifo_depth * numerator[rx_fifo_threshold]) / (uint16_t)denominator[rx_fifo_threshold];
+		rx_fifo_threshold = (uint8_t)(READ_BIT(huart->Instance->CR3, USART_CR3_RXFTCFG) >> USART_CR3_RXFTCFG_Pos);
+		tx_fifo_threshold = (uint8_t)(READ_BIT(huart->Instance->CR3, USART_CR3_TXFTCFG) >> USART_CR3_TXFTCFG_Pos);
+		huart->NbTxDataToProcess = ((uint16_t)tx_fifo_depth * numerator[tx_fifo_threshold]) / (uint16_t)denominator[tx_fifo_threshold];
+		huart->NbRxDataToProcess = ((uint16_t)rx_fifo_depth * numerator[rx_fifo_threshold]) / (uint16_t)denominator[rx_fifo_threshold];
 	}
 }
 /**

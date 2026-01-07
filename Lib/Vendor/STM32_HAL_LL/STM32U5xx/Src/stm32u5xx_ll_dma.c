@@ -66,73 +66,53 @@
 /** @addtogroup DMA_LL_Private_Macros
  * @{
  */
-#define IS_LL_DMA_ALL_CHANNEL_INSTANCE(INSTANCE, Channel)                                                              \
-	((((INSTANCE) == GPDMA1) &&                                                                                    \
-	  (((Channel) == LL_DMA_CHANNEL_0) || ((Channel) == LL_DMA_CHANNEL_1) || ((Channel) == LL_DMA_CHANNEL_2) ||    \
-	   ((Channel) == LL_DMA_CHANNEL_3) || ((Channel) == LL_DMA_CHANNEL_4) || ((Channel) == LL_DMA_CHANNEL_5) ||    \
-	   ((Channel) == LL_DMA_CHANNEL_6) || ((Channel) == LL_DMA_CHANNEL_7) || ((Channel) == LL_DMA_CHANNEL_8) ||    \
-	   ((Channel) == LL_DMA_CHANNEL_9) || ((Channel) == LL_DMA_CHANNEL_10) || ((Channel) == LL_DMA_CHANNEL_11) ||  \
-	   ((Channel) == LL_DMA_CHANNEL_12) || ((Channel) == LL_DMA_CHANNEL_13) || ((Channel) == LL_DMA_CHANNEL_14) || \
-	   ((Channel) == LL_DMA_CHANNEL_15) || ((Channel) == LL_DMA_CHANNEL_ALL))) ||                                  \
-	 (((INSTANCE) == LPDMA1) &&                                                                                    \
-	  (((Channel) == LL_DMA_CHANNEL_0) || ((Channel) == LL_DMA_CHANNEL_1) || ((Channel) == LL_DMA_CHANNEL_2) ||    \
-	   ((Channel) == LL_DMA_CHANNEL_3) || ((Channel) == LL_DMA_CHANNEL_ALL))))
+#define IS_LL_DMA_ALL_CHANNEL_INSTANCE(INSTANCE, Channel)                                                                                                                                              \
+	((((INSTANCE) == GPDMA1) &&                                                                                                                                                                    \
+	  (((Channel) == LL_DMA_CHANNEL_0) || ((Channel) == LL_DMA_CHANNEL_1) || ((Channel) == LL_DMA_CHANNEL_2) || ((Channel) == LL_DMA_CHANNEL_3) || ((Channel) == LL_DMA_CHANNEL_4) ||              \
+	   ((Channel) == LL_DMA_CHANNEL_5) || ((Channel) == LL_DMA_CHANNEL_6) || ((Channel) == LL_DMA_CHANNEL_7) || ((Channel) == LL_DMA_CHANNEL_8) || ((Channel) == LL_DMA_CHANNEL_9) ||              \
+	   ((Channel) == LL_DMA_CHANNEL_10) || ((Channel) == LL_DMA_CHANNEL_11) || ((Channel) == LL_DMA_CHANNEL_12) || ((Channel) == LL_DMA_CHANNEL_13) || ((Channel) == LL_DMA_CHANNEL_14) ||         \
+	   ((Channel) == LL_DMA_CHANNEL_15) || ((Channel) == LL_DMA_CHANNEL_ALL))) ||                                                                                                                  \
+	 (((INSTANCE) == LPDMA1) &&                                                                                                                                                                    \
+	  (((Channel) == LL_DMA_CHANNEL_0) || ((Channel) == LL_DMA_CHANNEL_1) || ((Channel) == LL_DMA_CHANNEL_2) || ((Channel) == LL_DMA_CHANNEL_3) || ((Channel) == LL_DMA_CHANNEL_ALL))))
 
-#define IS_LL_GPDMA_CHANNEL_INSTANCE(INSTANCE, Channel)                                                                \
-	(((INSTANCE) == GPDMA1) &&                                                                                     \
-	 (((Channel) == LL_DMA_CHANNEL_0) || ((Channel) == LL_DMA_CHANNEL_1) || ((Channel) == LL_DMA_CHANNEL_2) ||     \
-	  ((Channel) == LL_DMA_CHANNEL_3) || ((Channel) == LL_DMA_CHANNEL_4) || ((Channel) == LL_DMA_CHANNEL_5) ||     \
-	  ((Channel) == LL_DMA_CHANNEL_6) || ((Channel) == LL_DMA_CHANNEL_7) || ((Channel) == LL_DMA_CHANNEL_8) ||     \
-	  ((Channel) == LL_DMA_CHANNEL_9) || ((Channel) == LL_DMA_CHANNEL_10) || ((Channel) == LL_DMA_CHANNEL_11) ||   \
-	  ((Channel) == LL_DMA_CHANNEL_12) || ((Channel) == LL_DMA_CHANNEL_13) || ((Channel) == LL_DMA_CHANNEL_14) ||  \
-	  ((Channel) == LL_DMA_CHANNEL_15)))
+#define IS_LL_GPDMA_CHANNEL_INSTANCE(INSTANCE, Channel)                                                                                                                                                \
+	(((INSTANCE) == GPDMA1) && (((Channel) == LL_DMA_CHANNEL_0) || ((Channel) == LL_DMA_CHANNEL_1) || ((Channel) == LL_DMA_CHANNEL_2) || ((Channel) == LL_DMA_CHANNEL_3) ||                        \
+				    ((Channel) == LL_DMA_CHANNEL_4) || ((Channel) == LL_DMA_CHANNEL_5) || ((Channel) == LL_DMA_CHANNEL_6) || ((Channel) == LL_DMA_CHANNEL_7) ||                        \
+				    ((Channel) == LL_DMA_CHANNEL_8) || ((Channel) == LL_DMA_CHANNEL_9) || ((Channel) == LL_DMA_CHANNEL_10) || ((Channel) == LL_DMA_CHANNEL_11) ||                      \
+				    ((Channel) == LL_DMA_CHANNEL_12) || ((Channel) == LL_DMA_CHANNEL_13) || ((Channel) == LL_DMA_CHANNEL_14) || ((Channel) == LL_DMA_CHANNEL_15)))
 
-#define IS_LL_DMA_2D_CHANNEL_INSTANCE(INSTANCE, Channel)                                                               \
-	(((INSTANCE) == GPDMA1) && (((Channel) == LL_DMA_CHANNEL_12) || ((Channel) == LL_DMA_CHANNEL_13) ||            \
-				    ((Channel) == LL_DMA_CHANNEL_14) || ((Channel) == LL_DMA_CHANNEL_15)))
+#define IS_LL_DMA_2D_CHANNEL_INSTANCE(INSTANCE, Channel)                                                                                                                                               \
+	(((INSTANCE) == GPDMA1) && (((Channel) == LL_DMA_CHANNEL_12) || ((Channel) == LL_DMA_CHANNEL_13) || ((Channel) == LL_DMA_CHANNEL_14) || ((Channel) == LL_DMA_CHANNEL_15)))
 
-#define IS_LL_DMA_DIRECTION(__VALUE__)                                                                                 \
-	(((__VALUE__) == LL_DMA_DIRECTION_MEMORY_TO_MEMORY) || ((__VALUE__) == LL_DMA_DIRECTION_PERIPH_TO_MEMORY) ||   \
-	 ((__VALUE__) == LL_DMA_DIRECTION_MEMORY_TO_PERIPH))
+#define IS_LL_DMA_DIRECTION(__VALUE__) (((__VALUE__) == LL_DMA_DIRECTION_MEMORY_TO_MEMORY) || ((__VALUE__) == LL_DMA_DIRECTION_PERIPH_TO_MEMORY) || ((__VALUE__) == LL_DMA_DIRECTION_MEMORY_TO_PERIPH))
 
-#define IS_LL_DMA_DATA_ALIGNMENT(__VALUE__)                                                                            \
-	(((__VALUE__) == LL_DMA_DATA_ALIGN_ZEROPADD) || ((__VALUE__) == LL_DMA_DATA_ALIGN_SIGNEXTPADD) ||              \
-	 ((__VALUE__) == LL_DMA_DATA_PACK_UNPACK))
+#define IS_LL_DMA_DATA_ALIGNMENT(__VALUE__) (((__VALUE__) == LL_DMA_DATA_ALIGN_ZEROPADD) || ((__VALUE__) == LL_DMA_DATA_ALIGN_SIGNEXTPADD) || ((__VALUE__) == LL_DMA_DATA_PACK_UNPACK))
 
 #define IS_LL_DMA_BURST_LENGTH(__VALUE__) (((__VALUE__) > 0U) && ((__VALUE__) <= 64U))
 
-#define IS_LL_DMA_SRC_DATA_WIDTH(__VALUE__)                                                                            \
-	(((__VALUE__) == LL_DMA_SRC_DATAWIDTH_BYTE) || ((__VALUE__) == LL_DMA_SRC_DATAWIDTH_HALFWORD) ||               \
-	 ((__VALUE__) == LL_DMA_SRC_DATAWIDTH_WORD))
+#define IS_LL_DMA_SRC_DATA_WIDTH(__VALUE__) (((__VALUE__) == LL_DMA_SRC_DATAWIDTH_BYTE) || ((__VALUE__) == LL_DMA_SRC_DATAWIDTH_HALFWORD) || ((__VALUE__) == LL_DMA_SRC_DATAWIDTH_WORD))
 
-#define IS_LL_DMA_DEST_DATA_WIDTH(__VALUE__)                                                                           \
-	(((__VALUE__) == LL_DMA_DEST_DATAWIDTH_BYTE) || ((__VALUE__) == LL_DMA_DEST_DATAWIDTH_HALFWORD) ||             \
-	 ((__VALUE__) == LL_DMA_DEST_DATAWIDTH_WORD))
+#define IS_LL_DMA_DEST_DATA_WIDTH(__VALUE__) (((__VALUE__) == LL_DMA_DEST_DATAWIDTH_BYTE) || ((__VALUE__) == LL_DMA_DEST_DATAWIDTH_HALFWORD) || ((__VALUE__) == LL_DMA_DEST_DATAWIDTH_WORD))
 
-#define IS_LL_DMA_SRC_INCREMENT_MODE(__VALUE__)                                                                        \
-	(((__VALUE__) == LL_DMA_SRC_FIXED) || ((__VALUE__) == LL_DMA_SRC_INCREMENT))
+#define IS_LL_DMA_SRC_INCREMENT_MODE(__VALUE__) (((__VALUE__) == LL_DMA_SRC_FIXED) || ((__VALUE__) == LL_DMA_SRC_INCREMENT))
 
-#define IS_LL_DMA_DEST_INCREMENT_MODE(__VALUE__)                                                                       \
-	(((__VALUE__) == LL_DMA_DEST_FIXED) || ((__VALUE__) == LL_DMA_DEST_INCREMENT))
+#define IS_LL_DMA_DEST_INCREMENT_MODE(__VALUE__) (((__VALUE__) == LL_DMA_DEST_FIXED) || ((__VALUE__) == LL_DMA_DEST_INCREMENT))
 
-#define IS_LL_DMA_PRIORITY(__VALUE__)                                                                                  \
-	(((__VALUE__) == LL_DMA_LOW_PRIORITY_LOW_WEIGHT) || ((__VALUE__) == LL_DMA_LOW_PRIORITY_MID_WEIGHT) ||         \
-	 ((__VALUE__) == LL_DMA_LOW_PRIORITY_HIGH_WEIGHT) || ((__VALUE__) == LL_DMA_HIGH_PRIORITY))
+#define IS_LL_DMA_PRIORITY(__VALUE__)                                                                                                                                                                  \
+	(((__VALUE__) == LL_DMA_LOW_PRIORITY_LOW_WEIGHT) || ((__VALUE__) == LL_DMA_LOW_PRIORITY_MID_WEIGHT) || ((__VALUE__) == LL_DMA_LOW_PRIORITY_HIGH_WEIGHT) ||                                     \
+	 ((__VALUE__) == LL_DMA_HIGH_PRIORITY))
 
 #define IS_LL_DMA_BLK_DATALENGTH(__VALUE__) ((__VALUE__) <= 0xFFFFU)
 
 #define IS_LL_DMA_BLK_REPEATCOUNT(__VALUE__) ((__VALUE__) <= 0x0EFFU)
 
-#define IS_LL_DMA_TRIGGER_MODE(__VALUE__)                                                                              \
-	(((__VALUE__) == LL_DMA_TRIGM_BLK_TRANSFER) || ((__VALUE__) == LL_DMA_TRIGM_RPT_BLK_TRANSFER) ||               \
-	 ((__VALUE__) == LL_DMA_TRIGM_LLI_LINK_TRANSFER) || ((__VALUE__) == LL_DMA_TRIGM_SINGLBURST_TRANSFER))
+#define IS_LL_DMA_TRIGGER_MODE(__VALUE__)                                                                                                                                                              \
+	(((__VALUE__) == LL_DMA_TRIGM_BLK_TRANSFER) || ((__VALUE__) == LL_DMA_TRIGM_RPT_BLK_TRANSFER) || ((__VALUE__) == LL_DMA_TRIGM_LLI_LINK_TRANSFER) ||                                            \
+	 ((__VALUE__) == LL_DMA_TRIGM_SINGLBURST_TRANSFER))
 
-#define IS_LL_DMA_TRIGGER_POLARITY(__VALUE__)                                                                          \
-	(((__VALUE__) == LL_DMA_TRIG_POLARITY_MASKED) || ((__VALUE__) == LL_DMA_TRIG_POLARITY_RISING) ||               \
-	 ((__VALUE__) == LL_DMA_TRIG_POLARITY_FALLING))
+#define IS_LL_DMA_TRIGGER_POLARITY(__VALUE__) (((__VALUE__) == LL_DMA_TRIG_POLARITY_MASKED) || ((__VALUE__) == LL_DMA_TRIG_POLARITY_RISING) || ((__VALUE__) == LL_DMA_TRIG_POLARITY_FALLING))
 
-#define IS_LL_DMA_BLKHW_REQUEST(__VALUE__)                                                                             \
-	(((__VALUE__) == LL_DMA_HWREQUEST_SINGLEBURST) || ((__VALUE__) == LL_DMA_HWREQUEST_BLK))
+#define IS_LL_DMA_BLKHW_REQUEST(__VALUE__) (((__VALUE__) == LL_DMA_HWREQUEST_SINGLEBURST) || ((__VALUE__) == LL_DMA_HWREQUEST_BLK))
 
 #if defined(LL_GPDMA1_TRIGGER_JPEG_OFT)
 #define IS_LL_DMA_TRIGGER_SELECTION(__VALUE__) ((__VALUE__) <= LL_GPDMA1_TRIGGER_JPEG_OFT)
@@ -148,44 +128,33 @@
 #define IS_LL_DMA_REQUEST_SELECTION(__VALUE__) ((__VALUE__) <= LL_GPDMA1_REQUEST_LPTIM3_UE)
 #endif /* LL_GPDMA1_REQUEST_JPEG_TX */
 
-#define IS_LL_DMA_TRANSFER_EVENT_MODE(__VALUE__)                                                                       \
-	(((__VALUE__) == LL_DMA_TCEM_BLK_TRANSFER) || ((__VALUE__) == LL_DMA_TCEM_RPT_BLK_TRANSFER) ||                 \
-	 ((__VALUE__) == LL_DMA_TCEM_EACH_LLITEM_TRANSFER) || ((__VALUE__) == LL_DMA_TCEM_LAST_LLITEM_TRANSFER))
+#define IS_LL_DMA_TRANSFER_EVENT_MODE(__VALUE__)                                                                                                                                                       \
+	(((__VALUE__) == LL_DMA_TCEM_BLK_TRANSFER) || ((__VALUE__) == LL_DMA_TCEM_RPT_BLK_TRANSFER) || ((__VALUE__) == LL_DMA_TCEM_EACH_LLITEM_TRANSFER) ||                                            \
+	 ((__VALUE__) == LL_DMA_TCEM_LAST_LLITEM_TRANSFER))
 
-#define IS_LL_DMA_DEST_HALFWORD_EXCHANGE(__VALUE__)                                                                    \
-	(((__VALUE__) == LL_DMA_DEST_HALFWORD_PRESERVE) || ((__VALUE__) == LL_DMA_DEST_HALFWORD_EXCHANGE))
+#define IS_LL_DMA_DEST_HALFWORD_EXCHANGE(__VALUE__) (((__VALUE__) == LL_DMA_DEST_HALFWORD_PRESERVE) || ((__VALUE__) == LL_DMA_DEST_HALFWORD_EXCHANGE))
 
-#define IS_LL_DMA_DEST_BYTE_EXCHANGE(__VALUE__)                                                                        \
-	(((__VALUE__) == LL_DMA_DEST_BYTE_PRESERVE) || ((__VALUE__) == LL_DMA_DEST_BYTE_EXCHANGE))
+#define IS_LL_DMA_DEST_BYTE_EXCHANGE(__VALUE__) (((__VALUE__) == LL_DMA_DEST_BYTE_PRESERVE) || ((__VALUE__) == LL_DMA_DEST_BYTE_EXCHANGE))
 
-#define IS_LL_DMA_SRC_BYTE_EXCHANGE(__VALUE__)                                                                         \
-	(((__VALUE__) == LL_DMA_SRC_BYTE_PRESERVE) || ((__VALUE__) == LL_DMA_SRC_BYTE_EXCHANGE))
+#define IS_LL_DMA_SRC_BYTE_EXCHANGE(__VALUE__) (((__VALUE__) == LL_DMA_SRC_BYTE_PRESERVE) || ((__VALUE__) == LL_DMA_SRC_BYTE_EXCHANGE))
 
-#define IS_LL_DMA_LINK_ALLOCATED_PORT(__VALUE__)                                                                       \
-	(((__VALUE__) == LL_DMA_LINK_ALLOCATED_PORT0) || ((__VALUE__) == LL_DMA_LINK_ALLOCATED_PORT1))
+#define IS_LL_DMA_LINK_ALLOCATED_PORT(__VALUE__) (((__VALUE__) == LL_DMA_LINK_ALLOCATED_PORT0) || ((__VALUE__) == LL_DMA_LINK_ALLOCATED_PORT1))
 
-#define IS_LL_DMA_SRC_ALLOCATED_PORT(__VALUE__)                                                                        \
-	(((__VALUE__) == LL_DMA_SRC_ALLOCATED_PORT0) || ((__VALUE__) == LL_DMA_SRC_ALLOCATED_PORT1))
+#define IS_LL_DMA_SRC_ALLOCATED_PORT(__VALUE__) (((__VALUE__) == LL_DMA_SRC_ALLOCATED_PORT0) || ((__VALUE__) == LL_DMA_SRC_ALLOCATED_PORT1))
 
-#define IS_LL_DMA_DEST_ALLOCATED_PORT(__VALUE__)                                                                       \
-	(((__VALUE__) == LL_DMA_DEST_ALLOCATED_PORT0) || ((__VALUE__) == LL_DMA_DEST_ALLOCATED_PORT1))
+#define IS_LL_DMA_DEST_ALLOCATED_PORT(__VALUE__) (((__VALUE__) == LL_DMA_DEST_ALLOCATED_PORT0) || ((__VALUE__) == LL_DMA_DEST_ALLOCATED_PORT1))
 
-#define IS_LL_DMA_LINK_STEP_MODE(__VALUE__)                                                                            \
-	(((__VALUE__) == LL_DMA_LSM_FULL_EXECUTION) || ((__VALUE__) == LL_DMA_LSM_1LINK_EXECUTION))
+#define IS_LL_DMA_LINK_STEP_MODE(__VALUE__) (((__VALUE__) == LL_DMA_LSM_FULL_EXECUTION) || ((__VALUE__) == LL_DMA_LSM_1LINK_EXECUTION))
 
-#define IS_LL_DMA_BURST_SRC_ADDR_UPDATE(__VALUE__)                                                                     \
-	(((__VALUE__) == LL_DMA_BURST_SRC_ADDR_INCREMENT) || ((__VALUE__) == LL_DMA_BURST_SRC_ADDR_DECREMENT))
+#define IS_LL_DMA_BURST_SRC_ADDR_UPDATE(__VALUE__) (((__VALUE__) == LL_DMA_BURST_SRC_ADDR_INCREMENT) || ((__VALUE__) == LL_DMA_BURST_SRC_ADDR_DECREMENT))
 
-#define IS_LL_DMA_BURST_DEST_ADDR_UPDATE(__VALUE__)                                                                    \
-	(((__VALUE__) == LL_DMA_BURST_DEST_ADDR_INCREMENT) || ((__VALUE__) == LL_DMA_BURST_DEST_ADDR_DECREMENT))
+#define IS_LL_DMA_BURST_DEST_ADDR_UPDATE(__VALUE__) (((__VALUE__) == LL_DMA_BURST_DEST_ADDR_INCREMENT) || ((__VALUE__) == LL_DMA_BURST_DEST_ADDR_DECREMENT))
 
 #define IS_LL_DMA_BURST_ADDR_UPDATE_VALUE(__VALUE__) ((__VALUE__) <= 0x1FFFU)
 
-#define IS_LL_DMA_BLKRPT_SRC_ADDR_UPDATE(__VALUE__)                                                                    \
-	(((__VALUE__) == LL_DMA_BLKRPT_SRC_ADDR_INCREMENT) || ((__VALUE__) == LL_DMA_BLKRPT_SRC_ADDR_DECREMENT))
+#define IS_LL_DMA_BLKRPT_SRC_ADDR_UPDATE(__VALUE__) (((__VALUE__) == LL_DMA_BLKRPT_SRC_ADDR_INCREMENT) || ((__VALUE__) == LL_DMA_BLKRPT_SRC_ADDR_DECREMENT))
 
-#define IS_LL_DMA_BLKRPT_DEST_ADDR_UPDATE(__VALUE__)                                                                   \
-	(((__VALUE__) == LL_DMA_BLKRPT_DEST_ADDR_INCREMENT) || ((__VALUE__) == LL_DMA_BLKRPT_DEST_ADDR_DECREMENT))
+#define IS_LL_DMA_BLKRPT_DEST_ADDR_UPDATE(__VALUE__) (((__VALUE__) == LL_DMA_BLKRPT_DEST_ADDR_INCREMENT) || ((__VALUE__) == LL_DMA_BLKRPT_DEST_ADDR_DECREMENT))
 
 #define IS_LL_DMA_BLKRPT_ADDR_UPDATE_VALUE(__VALUE__) ((__VALUE__) <= 0xFFFFU)
 
@@ -195,16 +164,12 @@
 
 #define IS_LL_DMA_LINK_UPDATE_REGISTERS(__VALUE__) ((((__VALUE__) & 0x01FE0000U) == 0U) && ((__VALUE__) != 0U))
 
-#define IS_LL_DMA_LINK_NODETYPE(__VALUE__)                                                                             \
-	(((__VALUE__) == LL_DMA_GPDMA_2D_NODE) || ((__VALUE__) == LL_DMA_GPDMA_LINEAR_NODE) ||                         \
-	 ((__VALUE__) == LL_DMA_LPDMA_LINEAR_NODE))
+#define IS_LL_DMA_LINK_NODETYPE(__VALUE__) (((__VALUE__) == LL_DMA_GPDMA_2D_NODE) || ((__VALUE__) == LL_DMA_GPDMA_LINEAR_NODE) || ((__VALUE__) == LL_DMA_LPDMA_LINEAR_NODE))
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-#define IS_LL_DMA_CHANNEL_SRC_SEC(__VALUE__)                                                                           \
-	(((__VALUE__) == LL_DMA_CHANNEL_SRC_NSEC) || ((__VALUE__) == LL_DMA_CHANNEL_SRC_SEC))
+#define IS_LL_DMA_CHANNEL_SRC_SEC(__VALUE__) (((__VALUE__) == LL_DMA_CHANNEL_SRC_NSEC) || ((__VALUE__) == LL_DMA_CHANNEL_SRC_SEC))
 
-#define IS_LL_DMA_CHANNEL_DEST_SEC(__VALUE__)                                                                          \
-	(((__VALUE__) == LL_DMA_CHANNEL_DEST_NSEC) || ((__VALUE__) == LL_DMA_CHANNEL_DEST_SEC))
+#define IS_LL_DMA_CHANNEL_DEST_SEC(__VALUE__) (((__VALUE__) == LL_DMA_CHANNEL_DEST_NSEC) || ((__VALUE__) == LL_DMA_CHANNEL_DEST_SEC))
 
 #endif /* (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 /**
@@ -436,8 +401,7 @@ uint32_t LL_DMA_Init(DMA_TypeDef *DMAx, uint32_t Channel, LL_DMA_InitTypeDef *DM
 	 * - Priority:                                       DMA_CCR_PRIO
 	 * [23:22] bits
 	 */
-	LL_DMA_ConfigControl(
-	    DMAx, Channel, DMA_InitStruct->Priority | DMA_InitStruct->LinkAllocatedPort | DMA_InitStruct->LinkStepMode);
+	LL_DMA_ConfigControl(DMAx, Channel, DMA_InitStruct->Priority | DMA_InitStruct->LinkAllocatedPort | DMA_InitStruct->LinkStepMode);
 
 	/*-------------------------- DMAx CTR1 Configuration
 	 * ------------------------- Configure the Data transfer  parameter :
@@ -465,15 +429,11 @@ uint32_t LL_DMA_Init(DMA_TypeDef *DMAx, uint32_t Channel, LL_DMA_InitTypeDef *DM
 	 * bits DestBurstLength field is not supported by LPDMA channels.
 	 */
 	LL_DMA_ConfigTransfer(DMAx, Channel,
-			      DMA_InitStruct->DestAllocatedPort | DMA_InitStruct->DestHWordExchange |
-				  DMA_InitStruct->DestByteExchange | DMA_InitStruct->DestIncMode |
-				  DMA_InitStruct->DestDataWidth | DMA_InitStruct->SrcAllocatedPort |
-				  DMA_InitStruct->SrcByteExchange | DMA_InitStruct->DataAlignment |
-				  DMA_InitStruct->SrcIncMode | DMA_InitStruct->SrcDataWidth);
+			      DMA_InitStruct->DestAllocatedPort | DMA_InitStruct->DestHWordExchange | DMA_InitStruct->DestByteExchange | DMA_InitStruct->DestIncMode | DMA_InitStruct->DestDataWidth |
+				  DMA_InitStruct->SrcAllocatedPort | DMA_InitStruct->SrcByteExchange | DMA_InitStruct->DataAlignment | DMA_InitStruct->SrcIncMode | DMA_InitStruct->SrcDataWidth);
 	/* Check DMA instance */
 	if (IS_LL_GPDMA_CHANNEL_INSTANCE(DMAx, Channel) != 0U) {
-		LL_DMA_ConfigBurstLength(DMAx, Channel, DMA_InitStruct->SrcBurstLength,
-					 DMA_InitStruct->DestBurstLength);
+		LL_DMA_ConfigBurstLength(DMAx, Channel, DMA_InitStruct->SrcBurstLength, DMA_InitStruct->DestBurstLength);
 	}
 
 	/*-------------------------- DMAx CTR2 Configuration
@@ -494,9 +454,7 @@ uint32_t LL_DMA_Init(DMA_TypeDef *DMAx, uint32_t Channel, LL_DMA_InitTypeDef *DM
 	 * - Request:                                    DMA_CTR2_REQSEL [6:0]
 	 * bits Request field is reduced to 5 bits for LPDMA channels.
 	 */
-	LL_DMA_ConfigChannelTransfer(DMAx, Channel,
-				     DMA_InitStruct->TransferEventMode | DMA_InitStruct->TriggerPolarity |
-					 DMA_InitStruct->BlkHWRequest | DMA_InitStruct->Direction);
+	LL_DMA_ConfigChannelTransfer(DMAx, Channel, DMA_InitStruct->TransferEventMode | DMA_InitStruct->TriggerPolarity | DMA_InitStruct->BlkHWRequest | DMA_InitStruct->Direction);
 
 	/* Check direction */
 	if (DMA_InitStruct->Direction != LL_DMA_DIRECTION_MEMORY_TO_MEMORY) {
@@ -532,9 +490,7 @@ uint32_t LL_DMA_Init(DMA_TypeDef *DMAx, uint32_t Channel, LL_DMA_InitTypeDef *DM
 	if (IS_LL_DMA_2D_CHANNEL_INSTANCE(DMAx, Channel) != 0U) {
 		LL_DMA_SetBlkRptCount(DMAx, Channel, DMA_InitStruct->BlkRptCount);
 		LL_DMA_ConfigBlkRptAddrUpdate(
-		    DMAx, Channel,
-		    DMA_InitStruct->BlkRptSrcAddrUpdateMode | DMA_InitStruct->BlkRptDestAddrUpdateMode |
-			DMA_InitStruct->SrcAddrUpdateMode | DMA_InitStruct->DestAddrUpdateMode);
+		    DMAx, Channel, DMA_InitStruct->BlkRptSrcAddrUpdateMode | DMA_InitStruct->BlkRptDestAddrUpdateMode | DMA_InitStruct->SrcAddrUpdateMode | DMA_InitStruct->DestAddrUpdateMode);
 	}
 
 	/*-------------------------- DMAx CSAR and CDAR Configuration
@@ -555,8 +511,7 @@ uint32_t LL_DMA_Init(DMA_TypeDef *DMAx, uint32_t Channel, LL_DMA_InitTypeDef *DM
 		 * - DestAddrOffset: DMA_CTR3_DAO[12:0] bits DestAddrOffset
 		 * field is supported only by 2D addressing channels.
 		 */
-		LL_DMA_ConfigAddrUpdateValue(DMAx, Channel, DMA_InitStruct->SrcAddrOffset,
-					     DMA_InitStruct->DestAddrOffset);
+		LL_DMA_ConfigAddrUpdateValue(DMAx, Channel, DMA_InitStruct->SrcAddrOffset, DMA_InitStruct->DestAddrOffset);
 
 		/*------------------------ DMAx CBR2 Configuration
 		 * ----------------------- Configure the Transfer Block counters
@@ -568,8 +523,7 @@ uint32_t LL_DMA_Init(DMA_TypeDef *DMAx, uint32_t Channel, LL_DMA_InitTypeDef *DM
 		 *   BlkRptDestAddrOffset field is supported only by 2D
 		 * addressing channels.
 		 */
-		LL_DMA_ConfigBlkRptAddrUpdateValue(DMAx, Channel, DMA_InitStruct->BlkRptSrcAddrOffset,
-						   DMA_InitStruct->BlkRptDestAddrOffset);
+		LL_DMA_ConfigBlkRptAddrUpdateValue(DMAx, Channel, DMA_InitStruct->BlkRptSrcAddrOffset, DMA_InitStruct->BlkRptDestAddrOffset);
 	}
 
 	/*-------------------------- DMAx CLLR Configuration
@@ -728,9 +682,7 @@ uint32_t LL_DMA_List_Init(DMA_TypeDef *DMAx, uint32_t Channel, LL_DMA_InitLinked
 	 * - Priority:                                       DMA_CCR_PRIO
 	 * [23:22] bits
 	 */
-	LL_DMA_ConfigControl(DMAx, Channel,
-			     DMA_InitLinkedListStruct->Priority | DMA_InitLinkedListStruct->LinkAllocatedPort |
-				 DMA_InitLinkedListStruct->LinkStepMode);
+	LL_DMA_ConfigControl(DMAx, Channel, DMA_InitLinkedListStruct->Priority | DMA_InitLinkedListStruct->LinkAllocatedPort | DMA_InitLinkedListStruct->LinkStepMode);
 
 	/*-------------------------- DMAx CTR2 Configuration
 	 * ------------------------- Configure the channel transfer parameter :
@@ -789,8 +741,7 @@ void LL_DMA_NodeStructInit(LL_DMA_InitNodeTypeDef *DMA_InitNodeStruct)
 	DMA_InitNodeStruct->BlkRptDestAddrOffset = 0x00000000U;
 	DMA_InitNodeStruct->BlkRptSrcAddrOffset = 0x00000000U;
 	DMA_InitNodeStruct->UpdateRegisters =
-	    (LL_DMA_UPDATE_CTR1 | LL_DMA_UPDATE_CTR2 | LL_DMA_UPDATE_CBR1 | LL_DMA_UPDATE_CSAR | LL_DMA_UPDATE_CDAR |
-	     LL_DMA_UPDATE_CTR3 | LL_DMA_UPDATE_CBR2 | LL_DMA_UPDATE_CLLR);
+	    (LL_DMA_UPDATE_CTR1 | LL_DMA_UPDATE_CTR2 | LL_DMA_UPDATE_CBR1 | LL_DMA_UPDATE_CSAR | LL_DMA_UPDATE_CDAR | LL_DMA_UPDATE_CTR3 | LL_DMA_UPDATE_CBR2 | LL_DMA_UPDATE_CLLR);
 	DMA_InitNodeStruct->NodeType = LL_DMA_GPDMA_LINEAR_NODE;
 }
 
@@ -898,9 +849,7 @@ uint32_t LL_DMA_CreateLinkNode(const LL_DMA_InitNodeTypeDef *DMA_InitNodeStruct,
 		 */
 
 		pNode->LinkRegisters[reg_counter] =
-		    (DMA_InitNodeStruct->DestIncMode | DMA_InitNodeStruct->DestDataWidth |
-		     DMA_InitNodeStruct->DataAlignment | DMA_InitNodeStruct->SrcIncMode |
-		     DMA_InitNodeStruct->SrcDataWidth);
+		    (DMA_InitNodeStruct->DestIncMode | DMA_InitNodeStruct->DestDataWidth | DMA_InitNodeStruct->DataAlignment | DMA_InitNodeStruct->SrcIncMode | DMA_InitNodeStruct->SrcDataWidth);
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 		pNode->LinkRegisters[reg_counter] |= (DMA_InitNodeStruct->DestSecure | DMA_InitNodeStruct->SrcSecure);
@@ -908,12 +857,9 @@ uint32_t LL_DMA_CreateLinkNode(const LL_DMA_InitNodeTypeDef *DMA_InitNodeStruct,
 
 		/* Update CTR1 register fields for not LPDMA channels */
 		if (DMA_InitNodeStruct->NodeType != LL_DMA_LPDMA_LINEAR_NODE) {
-			pNode->LinkRegisters[reg_counter] |=
-			    (DMA_InitNodeStruct->DestAllocatedPort | DMA_InitNodeStruct->DestHWordExchange |
-			     DMA_InitNodeStruct->DestByteExchange |
-			     ((DMA_InitNodeStruct->DestBurstLength - 1U) << DMA_CTR1_DBL_1_Pos) |
-			     DMA_InitNodeStruct->SrcAllocatedPort | DMA_InitNodeStruct->SrcByteExchange |
-			     ((DMA_InitNodeStruct->SrcBurstLength - 1U) << DMA_CTR1_SBL_1_Pos));
+			pNode->LinkRegisters[reg_counter] |= (DMA_InitNodeStruct->DestAllocatedPort | DMA_InitNodeStruct->DestHWordExchange | DMA_InitNodeStruct->DestByteExchange |
+							      ((DMA_InitNodeStruct->DestBurstLength - 1U) << DMA_CTR1_DBL_1_Pos) | DMA_InitNodeStruct->SrcAllocatedPort |
+							      DMA_InitNodeStruct->SrcByteExchange | ((DMA_InitNodeStruct->SrcBurstLength - 1U) << DMA_CTR1_SBL_1_Pos));
 		}
 
 		/* Increment counter for the next register */
@@ -943,9 +889,7 @@ uint32_t LL_DMA_CreateLinkNode(const LL_DMA_InitNodeTypeDef *DMA_InitNodeStruct,
 		 * [6:0] bits DataAlignment field is reduced to 5 bits for LPDMA
 		 * channels.
 		 */
-		pNode->LinkRegisters[reg_counter] =
-		    (DMA_InitNodeStruct->TransferEventMode | DMA_InitNodeStruct->TriggerPolarity |
-		     DMA_InitNodeStruct->BlkHWRequest | DMA_InitNodeStruct->Direction);
+		pNode->LinkRegisters[reg_counter] = (DMA_InitNodeStruct->TransferEventMode | DMA_InitNodeStruct->TriggerPolarity | DMA_InitNodeStruct->BlkHWRequest | DMA_InitNodeStruct->Direction);
 
 		/* Check direction */
 		if (DMA_InitNodeStruct->Direction != LL_DMA_DIRECTION_MEMORY_TO_MEMORY) {
@@ -954,9 +898,7 @@ uint32_t LL_DMA_CreateLinkNode(const LL_DMA_InitNodeTypeDef *DMA_InitNodeStruct,
 
 		/* Check trigger polarity */
 		if (DMA_InitNodeStruct->TriggerPolarity != LL_DMA_TRIG_POLARITY_MASKED) {
-			pNode->LinkRegisters[reg_counter] |=
-			    (((DMA_InitNodeStruct->TriggerSelection << DMA_CTR2_TRIGSEL_Pos) & DMA_CTR2_TRIGSEL) |
-			     DMA_InitNodeStruct->TriggerMode);
+			pNode->LinkRegisters[reg_counter] |= (((DMA_InitNodeStruct->TriggerSelection << DMA_CTR2_TRIGSEL_Pos) & DMA_CTR2_TRIGSEL) | DMA_InitNodeStruct->TriggerMode);
 		}
 
 		/* Update CTR2 register fields for LPDMA */
@@ -991,11 +933,8 @@ uint32_t LL_DMA_CreateLinkNode(const LL_DMA_InitNodeTypeDef *DMA_InitNodeStruct,
 
 		/* Update CBR1 register fields for 2D addressing channels */
 		if (DMA_InitNodeStruct->NodeType == LL_DMA_GPDMA_2D_NODE) {
-			pNode->LinkRegisters[reg_counter] |=
-			    (DMA_InitNodeStruct->BlkRptDestAddrUpdateMode |
-			     DMA_InitNodeStruct->BlkRptSrcAddrUpdateMode | DMA_InitNodeStruct->DestAddrUpdateMode |
-			     DMA_InitNodeStruct->SrcAddrUpdateMode |
-			     ((DMA_InitNodeStruct->BlkRptCount << DMA_CBR1_BRC_Pos) & DMA_CBR1_BRC));
+			pNode->LinkRegisters[reg_counter] |= (DMA_InitNodeStruct->BlkRptDestAddrUpdateMode | DMA_InitNodeStruct->BlkRptSrcAddrUpdateMode | DMA_InitNodeStruct->DestAddrUpdateMode |
+							      DMA_InitNodeStruct->SrcAddrUpdateMode | ((DMA_InitNodeStruct->BlkRptCount << DMA_CBR1_BRC_Pos) & DMA_CBR1_BRC));
 		}
 
 		/* Increment counter for the next register */
@@ -1042,9 +981,7 @@ uint32_t LL_DMA_CreateLinkNode(const LL_DMA_InitNodeTypeDef *DMA_InitNodeStruct,
 			 *   SrcAddressOffset field is supported only by 2D
 			 * addressing channels.
 			 */
-			pNode->LinkRegisters[reg_counter] =
-			    (DMA_InitNodeStruct->SrcAddrOffset |
-			     ((DMA_InitNodeStruct->DestAddrOffset << DMA_CTR3_DAO_Pos) & DMA_CTR3_DAO));
+			pNode->LinkRegisters[reg_counter] = (DMA_InitNodeStruct->SrcAddrOffset | ((DMA_InitNodeStruct->DestAddrOffset << DMA_CTR3_DAO_Pos) & DMA_CTR3_DAO));
 
 			/* Increment counter for the next register */
 			reg_counter++;
@@ -1065,9 +1002,7 @@ uint32_t LL_DMA_CreateLinkNode(const LL_DMA_InitNodeTypeDef *DMA_InitNodeStruct,
 			 *   BlkRptSrcAddrOffset field is supported only by 2D
 			 * addressing channels.
 			 */
-			pNode->LinkRegisters[reg_counter] =
-			    (DMA_InitNodeStruct->BlkRptSrcAddrOffset |
-			     ((DMA_InitNodeStruct->BlkRptDestAddrOffset << DMA_CBR2_BRDAO_Pos) & DMA_CBR2_BRDAO));
+			pNode->LinkRegisters[reg_counter] = (DMA_InitNodeStruct->BlkRptSrcAddrOffset | ((DMA_InitNodeStruct->BlkRptDestAddrOffset << DMA_CBR2_BRDAO_Pos) & DMA_CBR2_BRDAO));
 
 			/* Increment counter for the next register */
 			reg_counter++;
@@ -1090,14 +1025,11 @@ uint32_t LL_DMA_CreateLinkNode(const LL_DMA_InitNodeTypeDef *DMA_InitNodeStruct,
 		 * discarded for linear addressing channels.
 		 * - UpdateRegisters DMA_CLLR_ULL bit
 		 */
-		pNode->LinkRegisters[reg_counter] =
-		    ((DMA_InitNodeStruct->UpdateRegisters &
-		      (DMA_CLLR_UT1 | DMA_CLLR_UT2 | DMA_CLLR_UB1 | DMA_CLLR_USA | DMA_CLLR_UDA | DMA_CLLR_ULL)));
+		pNode->LinkRegisters[reg_counter] = ((DMA_InitNodeStruct->UpdateRegisters & (DMA_CLLR_UT1 | DMA_CLLR_UT2 | DMA_CLLR_UB1 | DMA_CLLR_USA | DMA_CLLR_UDA | DMA_CLLR_ULL)));
 
 		/* Update CLLR register fields for 2D addressing channels */
 		if (DMA_InitNodeStruct->NodeType == LL_DMA_GPDMA_2D_NODE) {
-			pNode->LinkRegisters[reg_counter] |=
-			    (DMA_InitNodeStruct->UpdateRegisters & (DMA_CLLR_UT3 | DMA_CLLR_UB2));
+			pNode->LinkRegisters[reg_counter] |= (DMA_InitNodeStruct->UpdateRegisters & (DMA_CLLR_UT3 | DMA_CLLR_UB2));
 		}
 	} else {
 		/* Reset of the CLLR of the node being created */
@@ -1118,13 +1050,11 @@ uint32_t LL_DMA_CreateLinkNode(const LL_DMA_InitNodeTypeDef *DMA_InitNodeStruct,
  *         This parameter can be a value of @ref DMA_LL_EC_CLLR_OFFSET.
  * @retval None
  */
-void LL_DMA_ConnectLinkNode(LL_DMA_LinkNodeTypeDef *pPrevLinkNode, uint32_t PrevNodeCLLRIdx,
-			    LL_DMA_LinkNodeTypeDef *pNewLinkNode, uint32_t NewNodeCLLRIdx)
+void LL_DMA_ConnectLinkNode(LL_DMA_LinkNodeTypeDef *pPrevLinkNode, uint32_t PrevNodeCLLRIdx, LL_DMA_LinkNodeTypeDef *pNewLinkNode, uint32_t NewNodeCLLRIdx)
 {
 	pPrevLinkNode->LinkRegisters[PrevNodeCLLRIdx] =
-	    (((uint32_t)pNewLinkNode & DMA_CLLR_LA) | (pNewLinkNode->LinkRegisters[NewNodeCLLRIdx] &
-						       (DMA_CLLR_UT1 | DMA_CLLR_UT2 | DMA_CLLR_UB1 | DMA_CLLR_USA |
-							DMA_CLLR_UDA | DMA_CLLR_UT3 | DMA_CLLR_UB2 | DMA_CLLR_ULL)));
+	    (((uint32_t)pNewLinkNode & DMA_CLLR_LA) |
+	     (pNewLinkNode->LinkRegisters[NewNodeCLLRIdx] & (DMA_CLLR_UT1 | DMA_CLLR_UT2 | DMA_CLLR_UB1 | DMA_CLLR_USA | DMA_CLLR_UDA | DMA_CLLR_UT3 | DMA_CLLR_UB2 | DMA_CLLR_ULL)));
 }
 
 /**
@@ -1134,10 +1064,7 @@ void LL_DMA_ConnectLinkNode(LL_DMA_LinkNodeTypeDef *pPrevLinkNode, uint32_t Prev
  * @param  LinkNodeCLLRIdx Offset of Link Node CLLR register.
  * @retval None.
  */
-void LL_DMA_DisconnectNextLinkNode(LL_DMA_LinkNodeTypeDef *pLinkNode, uint32_t LinkNodeCLLRIdx)
-{
-	pLinkNode->LinkRegisters[LinkNodeCLLRIdx] = 0;
-}
+void LL_DMA_DisconnectNextLinkNode(LL_DMA_LinkNodeTypeDef *pLinkNode, uint32_t LinkNodeCLLRIdx) { pLinkNode->LinkRegisters[LinkNodeCLLRIdx] = 0; }
 
 /**
  * @}

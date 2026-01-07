@@ -86,9 +86,8 @@ typedef struct
 				    CORDIC_Error_Code */
 
 #if USE_HAL_CORDIC_REGISTER_CALLBACKS == 1
-	void (*ErrorCallback)(struct __CORDIC_HandleTypeDef *hcordic); /*!< CORDIC error callback */
-	void (*CalculateCpltCallback)(
-	    struct __CORDIC_HandleTypeDef *hcordic); /*!< CORDIC calculate complete callback */
+	void (*ErrorCallback)(struct __CORDIC_HandleTypeDef *hcordic);	       /*!< CORDIC error callback */
+	void (*CalculateCpltCallback)(struct __CORDIC_HandleTypeDef *hcordic); /*!< CORDIC calculate complete callback */
 
 	void (*MspInitCallback)(struct __CORDIC_HandleTypeDef *hcordic);   /*!< CORDIC Msp Init callback */
 	void (*MspDeInitCallback)(struct __CORDIC_HandleTypeDef *hcordic); /*!< CORDIC Msp DeInit callback */
@@ -176,18 +175,17 @@ typedef void (*pCORDIC_CallbackTypeDef)(CORDIC_HandleTypeDef *hcordic); /*!< poi
 /** @defgroup CORDIC_Function CORDIC Function
  * @{
  */
-#define CORDIC_FUNCTION_COSINE (0x00000000U)					    /*!< Cosine */
-#define CORDIC_FUNCTION_SINE ((uint32_t)(CORDIC_CSR_FUNC_0))			    /*!< Sine */
-#define CORDIC_FUNCTION_PHASE ((uint32_t)(CORDIC_CSR_FUNC_1))			    /*!< Phase */
-#define CORDIC_FUNCTION_MODULUS ((uint32_t)(CORDIC_CSR_FUNC_1 | CORDIC_CSR_FUNC_0)) /*!< Modulus */
-#define CORDIC_FUNCTION_ARCTANGENT ((uint32_t)(CORDIC_CSR_FUNC_2))		    /*!< Arctangent */
-#define CORDIC_FUNCTION_HCOSINE ((uint32_t)(CORDIC_CSR_FUNC_2 | CORDIC_CSR_FUNC_0)) /*!< Hyperbolic Cosine */
-#define CORDIC_FUNCTION_HSINE ((uint32_t)(CORDIC_CSR_FUNC_2 | CORDIC_CSR_FUNC_1))   /*!< Hyperbolic Sine */
-#define CORDIC_FUNCTION_HARCTANGENT                                                                                    \
-	((uint32_t)(CORDIC_CSR_FUNC_2 | CORDIC_CSR_FUNC_1 | CORDIC_CSR_FUNC_0)) /*!< Hyperbolic Arctangent */
-#define CORDIC_FUNCTION_NATURALLOG ((uint32_t)(CORDIC_CSR_FUNC_3))		/*!< Natural Logarithm */
-#define CORDIC_FUNCTION_SQUAREROOT                                                                                     \
-	((uint32_t)(CORDIC_CSR_FUNC_3 | CORDIC_CSR_FUNC_0)) /*!< Square Root                                           \
+#define CORDIC_FUNCTION_COSINE (0x00000000U)								    /*!< Cosine */
+#define CORDIC_FUNCTION_SINE ((uint32_t)(CORDIC_CSR_FUNC_0))						    /*!< Sine */
+#define CORDIC_FUNCTION_PHASE ((uint32_t)(CORDIC_CSR_FUNC_1))						    /*!< Phase */
+#define CORDIC_FUNCTION_MODULUS ((uint32_t)(CORDIC_CSR_FUNC_1 | CORDIC_CSR_FUNC_0))			    /*!< Modulus */
+#define CORDIC_FUNCTION_ARCTANGENT ((uint32_t)(CORDIC_CSR_FUNC_2))					    /*!< Arctangent */
+#define CORDIC_FUNCTION_HCOSINE ((uint32_t)(CORDIC_CSR_FUNC_2 | CORDIC_CSR_FUNC_0))			    /*!< Hyperbolic Cosine */
+#define CORDIC_FUNCTION_HSINE ((uint32_t)(CORDIC_CSR_FUNC_2 | CORDIC_CSR_FUNC_1))			    /*!< Hyperbolic Sine */
+#define CORDIC_FUNCTION_HARCTANGENT ((uint32_t)(CORDIC_CSR_FUNC_2 | CORDIC_CSR_FUNC_1 | CORDIC_CSR_FUNC_0)) /*!< Hyperbolic Arctangent */
+#define CORDIC_FUNCTION_NATURALLOG ((uint32_t)(CORDIC_CSR_FUNC_3))					    /*!< Natural Logarithm */
+#define CORDIC_FUNCTION_SQUAREROOT                                                                                                                                                                     \
+	((uint32_t)(CORDIC_CSR_FUNC_3 | CORDIC_CSR_FUNC_0)) /*!< Square Root                                                                                                                           \
 							     */
 
 /**
@@ -213,8 +211,7 @@ typedef void (*pCORDIC_CallbackTypeDef)(CORDIC_HandleTypeDef *hcordic); /*!< poi
 #define CORDIC_PRECISION_12CYCLES ((uint32_t)(CORDIC_CSR_PRECISION_3 | CORDIC_CSR_PRECISION_2))
 #define CORDIC_PRECISION_13CYCLES ((uint32_t)(CORDIC_CSR_PRECISION_3 | CORDIC_CSR_PRECISION_2 | CORDIC_CSR_PRECISION_0))
 #define CORDIC_PRECISION_14CYCLES ((uint32_t)(CORDIC_CSR_PRECISION_3 | CORDIC_CSR_PRECISION_2 | CORDIC_CSR_PRECISION_1))
-#define CORDIC_PRECISION_15CYCLES                                                                                      \
-	((uint32_t)(CORDIC_CSR_PRECISION_3 | CORDIC_CSR_PRECISION_2 | CORDIC_CSR_PRECISION_1 | CORDIC_CSR_PRECISION_0))
+#define CORDIC_PRECISION_15CYCLES ((uint32_t)(CORDIC_CSR_PRECISION_3 | CORDIC_CSR_PRECISION_2 | CORDIC_CSR_PRECISION_1 | CORDIC_CSR_PRECISION_0))
 
 /**
  * @}
@@ -270,13 +267,13 @@ typedef void (*pCORDIC_CallbackTypeDef)(CORDIC_HandleTypeDef *hcordic); /*!< poi
  * calculation
  * @{
  */
-#define CORDIC_NBWRITE_1                                                                                               \
-	(0x00000000U) /*!< One 32-bits write containing either only one                                                \
-			   32-bit data input (Q1.31 format), or two 16-bit                                             \
-			   data input (Q1.15 format) packed in one 32 bits                                             \
+#define CORDIC_NBWRITE_1                                                                                                                                                                               \
+	(0x00000000U) /*!< One 32-bits write containing either only one                                                                                                                                \
+			   32-bit data input (Q1.31 format), or two 16-bit                                                                                                                             \
+			   data input (Q1.15 format) packed in one 32 bits                                                                                                                             \
 			   Data */
-#define CORDIC_NBWRITE_2                                                                                               \
-	CORDIC_CSR_NARGS /*!< Two 32-bit write containing two 32-bits data                                             \
+#define CORDIC_NBWRITE_2                                                                                                                                                                               \
+	CORDIC_CSR_NARGS /*!< Two 32-bit write containing two 32-bits data                                                                                                                             \
 			    input (Q1.31 format) */
 /**
  * @}
@@ -286,13 +283,13 @@ typedef void (*pCORDIC_CallbackTypeDef)(CORDIC_HandleTypeDef *hcordic); /*!< poi
  * calculation
  * @{
  */
-#define CORDIC_NBREAD_1                                                                                                \
-	(0x00000000U) /*!< One 32-bits read containing either only one                                                 \
-			   32-bit data output (Q1.31 format), or two 16-bit                                            \
-			   data output (Q1.15 format) packed in one 32 bits                                            \
+#define CORDIC_NBREAD_1                                                                                                                                                                                \
+	(0x00000000U) /*!< One 32-bits read containing either only one                                                                                                                                 \
+			   32-bit data output (Q1.31 format), or two 16-bit                                                                                                                            \
+			   data output (Q1.15 format) packed in one 32 bits                                                                                                                            \
 			   Data */
-#define CORDIC_NBREAD_2                                                                                                \
-	CORDIC_CSR_NRES /*!< Two 32-bit Data containing two 32-bits data                                               \
+#define CORDIC_NBREAD_2                                                                                                                                                                                \
+	CORDIC_CSR_NRES /*!< Two 32-bit Data containing two 32-bits data                                                                                                                               \
 			   output (Q1.31 format) */
 /**
  * @}
@@ -330,13 +327,13 @@ typedef void (*pCORDIC_CallbackTypeDef)(CORDIC_HandleTypeDef *hcordic); /*!< poi
 /** @defgroup CORDIC_DMA_Direction CORDIC DMA direction
  * @{
  */
-#define CORDIC_DMA_DIR_NONE                                                                                            \
-	((uint32_t)0x00000000U)			   /*!< DMA direction : none                                           \
+#define CORDIC_DMA_DIR_NONE                                                                                                                                                                            \
+	((uint32_t)0x00000000U)			   /*!< DMA direction : none                                                                                                                           \
 						    */
 #define CORDIC_DMA_DIR_IN ((uint32_t)0x00000001U)  /*!< DMA direction : Input of CORDIC */
 #define CORDIC_DMA_DIR_OUT ((uint32_t)0x00000002U) /*!< DMA direction : Output of CORDIC */
-#define CORDIC_DMA_DIR_IN_OUT                                                                                          \
-	((uint32_t)0x00000003U) /*!< DMA direction : Input and Output of                                               \
+#define CORDIC_DMA_DIR_IN_OUT                                                                                                                                                                          \
+	((uint32_t)0x00000003U) /*!< DMA direction : Input and Output of                                                                                                                               \
 				   CORDIC */
 
 /**
@@ -357,11 +354,11 @@ typedef void (*pCORDIC_CallbackTypeDef)(CORDIC_HandleTypeDef *hcordic); /*!< poi
  * @retval None
  */
 #if USE_HAL_CORDIC_REGISTER_CALLBACKS == 1
-#define __HAL_CORDIC_RESET_HANDLE_STATE(__HANDLE__)                                                                    \
-	do {                                                                                                           \
-		(__HANDLE__)->State = HAL_CORDIC_STATE_RESET;                                                          \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define __HAL_CORDIC_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                    \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_CORDIC_STATE_RESET;                                                                                                                                          \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0)
 #else
 #define __HAL_CORDIC_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_CORDIC_STATE_RESET)
@@ -446,12 +443,10 @@ typedef void (*pCORDIC_CallbackTypeDef)(CORDIC_HandleTypeDef *hcordic); /*!< poi
  * @retval SET (__FUNCTION__ is a valid value) or RESET (__FUNCTION__ is
  * invalid)
  */
-#define IS_CORDIC_FUNCTION(__FUNCTION__)                                                                               \
-	(((__FUNCTION__) == CORDIC_FUNCTION_COSINE) || ((__FUNCTION__) == CORDIC_FUNCTION_SINE) ||                     \
-	 ((__FUNCTION__) == CORDIC_FUNCTION_PHASE) || ((__FUNCTION__) == CORDIC_FUNCTION_MODULUS) ||                   \
-	 ((__FUNCTION__) == CORDIC_FUNCTION_ARCTANGENT) || ((__FUNCTION__) == CORDIC_FUNCTION_HCOSINE) ||              \
-	 ((__FUNCTION__) == CORDIC_FUNCTION_HSINE) || ((__FUNCTION__) == CORDIC_FUNCTION_HARCTANGENT) ||               \
-	 ((__FUNCTION__) == CORDIC_FUNCTION_NATURALLOG) || ((__FUNCTION__) == CORDIC_FUNCTION_SQUAREROOT))
+#define IS_CORDIC_FUNCTION(__FUNCTION__)                                                                                                                                                               \
+	(((__FUNCTION__) == CORDIC_FUNCTION_COSINE) || ((__FUNCTION__) == CORDIC_FUNCTION_SINE) || ((__FUNCTION__) == CORDIC_FUNCTION_PHASE) || ((__FUNCTION__) == CORDIC_FUNCTION_MODULUS) ||         \
+	 ((__FUNCTION__) == CORDIC_FUNCTION_ARCTANGENT) || ((__FUNCTION__) == CORDIC_FUNCTION_HCOSINE) || ((__FUNCTION__) == CORDIC_FUNCTION_HSINE) ||                                                 \
+	 ((__FUNCTION__) == CORDIC_FUNCTION_HARCTANGENT) || ((__FUNCTION__) == CORDIC_FUNCTION_NATURALLOG) || ((__FUNCTION__) == CORDIC_FUNCTION_SQUAREROOT))
 
 /**
  * @brief  Verify the CORDIC precision.
@@ -459,15 +454,12 @@ typedef void (*pCORDIC_CallbackTypeDef)(CORDIC_HandleTypeDef *hcordic); /*!< poi
  * @retval SET (__PRECISION__ is a valid value) or RESET (__PRECISION__ is
  * invalid)
  */
-#define IS_CORDIC_PRECISION(__PRECISION__)                                                                             \
-	(((__PRECISION__) == CORDIC_PRECISION_1CYCLE) || ((__PRECISION__) == CORDIC_PRECISION_2CYCLES) ||              \
-	 ((__PRECISION__) == CORDIC_PRECISION_3CYCLES) || ((__PRECISION__) == CORDIC_PRECISION_4CYCLES) ||             \
-	 ((__PRECISION__) == CORDIC_PRECISION_5CYCLES) || ((__PRECISION__) == CORDIC_PRECISION_6CYCLES) ||             \
-	 ((__PRECISION__) == CORDIC_PRECISION_7CYCLES) || ((__PRECISION__) == CORDIC_PRECISION_8CYCLES) ||             \
-	 ((__PRECISION__) == CORDIC_PRECISION_9CYCLES) || ((__PRECISION__) == CORDIC_PRECISION_10CYCLES) ||            \
-	 ((__PRECISION__) == CORDIC_PRECISION_11CYCLES) || ((__PRECISION__) == CORDIC_PRECISION_12CYCLES) ||           \
-	 ((__PRECISION__) == CORDIC_PRECISION_13CYCLES) || ((__PRECISION__) == CORDIC_PRECISION_14CYCLES) ||           \
-	 ((__PRECISION__) == CORDIC_PRECISION_15CYCLES))
+#define IS_CORDIC_PRECISION(__PRECISION__)                                                                                                                                                             \
+	(((__PRECISION__) == CORDIC_PRECISION_1CYCLE) || ((__PRECISION__) == CORDIC_PRECISION_2CYCLES) || ((__PRECISION__) == CORDIC_PRECISION_3CYCLES) ||                                             \
+	 ((__PRECISION__) == CORDIC_PRECISION_4CYCLES) || ((__PRECISION__) == CORDIC_PRECISION_5CYCLES) || ((__PRECISION__) == CORDIC_PRECISION_6CYCLES) ||                                            \
+	 ((__PRECISION__) == CORDIC_PRECISION_7CYCLES) || ((__PRECISION__) == CORDIC_PRECISION_8CYCLES) || ((__PRECISION__) == CORDIC_PRECISION_9CYCLES) ||                                            \
+	 ((__PRECISION__) == CORDIC_PRECISION_10CYCLES) || ((__PRECISION__) == CORDIC_PRECISION_11CYCLES) || ((__PRECISION__) == CORDIC_PRECISION_12CYCLES) ||                                         \
+	 ((__PRECISION__) == CORDIC_PRECISION_13CYCLES) || ((__PRECISION__) == CORDIC_PRECISION_14CYCLES) || ((__PRECISION__) == CORDIC_PRECISION_15CYCLES))
 
 /**
  * @brief  Verify the CORDIC scaling factor.
@@ -475,10 +467,9 @@ typedef void (*pCORDIC_CallbackTypeDef)(CORDIC_HandleTypeDef *hcordic); /*!< poi
  * 4 algorithm iterations.
  * @retval SET (__SCALE__ is a valid value) or RESET (__SCALE__ is invalid)
  */
-#define IS_CORDIC_SCALE(__SCALE__)                                                                                     \
-	(((__SCALE__) == CORDIC_SCALE_0) || ((__SCALE__) == CORDIC_SCALE_1) || ((__SCALE__) == CORDIC_SCALE_2) ||      \
-	 ((__SCALE__) == CORDIC_SCALE_3) || ((__SCALE__) == CORDIC_SCALE_4) || ((__SCALE__) == CORDIC_SCALE_5) ||      \
-	 ((__SCALE__) == CORDIC_SCALE_6) || ((__SCALE__) == CORDIC_SCALE_7))
+#define IS_CORDIC_SCALE(__SCALE__)                                                                                                                                                                     \
+	(((__SCALE__) == CORDIC_SCALE_0) || ((__SCALE__) == CORDIC_SCALE_1) || ((__SCALE__) == CORDIC_SCALE_2) || ((__SCALE__) == CORDIC_SCALE_3) || ((__SCALE__) == CORDIC_SCALE_4) ||                \
+	 ((__SCALE__) == CORDIC_SCALE_5) || ((__SCALE__) == CORDIC_SCALE_6) || ((__SCALE__) == CORDIC_SCALE_7))
 
 /**
  * @brief  Verify the CORDIC number of 32-bits write expected for one
@@ -508,17 +499,14 @@ typedef void (*pCORDIC_CallbackTypeDef)(CORDIC_HandleTypeDef *hcordic); /*!< poi
  * @param  __OUTSIZE__ output data size for one calculation.
  * @retval SET (__OUTSIZE__ is a valid value) or RESET (__OUTSIZE__ is invalid)
  */
-#define IS_CORDIC_OUTSIZE(__OUTSIZE__)                                                                                 \
-	(((__OUTSIZE__) == CORDIC_OUTSIZE_32BITS) || ((__OUTSIZE__) == CORDIC_OUTSIZE_16BITS))
+#define IS_CORDIC_OUTSIZE(__OUTSIZE__) (((__OUTSIZE__) == CORDIC_OUTSIZE_32BITS) || ((__OUTSIZE__) == CORDIC_OUTSIZE_16BITS))
 
 /**
  * @brief  Verify the CORDIC DMA transfer Direction.
  * @param  __DMADIR__ DMA transfer direction.
  * @retval SET (__DMADIR__ is a valid value) or RESET (__DMADIR__ is invalid)
  */
-#define IS_CORDIC_DMA_DIRECTION(__DMADIR__)                                                                            \
-	(((__DMADIR__) == CORDIC_DMA_DIR_IN) || ((__DMADIR__) == CORDIC_DMA_DIR_OUT) ||                                \
-	 ((__DMADIR__) == CORDIC_DMA_DIR_IN_OUT))
+#define IS_CORDIC_DMA_DIRECTION(__DMADIR__) (((__DMADIR__) == CORDIC_DMA_DIR_IN) || ((__DMADIR__) == CORDIC_DMA_DIR_OUT) || ((__DMADIR__) == CORDIC_DMA_DIR_IN_OUT))
 
 /**
  * @}
@@ -541,8 +529,7 @@ void HAL_CORDIC_MspDeInit(CORDIC_HandleTypeDef *hcordic);
 
 #if USE_HAL_CORDIC_REGISTER_CALLBACKS == 1
 /* Callbacks Register/UnRegister functions  ***********************************/
-HAL_StatusTypeDef HAL_CORDIC_RegisterCallback(CORDIC_HandleTypeDef *hcordic, HAL_CORDIC_CallbackIDTypeDef CallbackID,
-					      pCORDIC_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_CORDIC_RegisterCallback(CORDIC_HandleTypeDef *hcordic, HAL_CORDIC_CallbackIDTypeDef CallbackID, pCORDIC_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_CORDIC_UnRegisterCallback(CORDIC_HandleTypeDef *hcordic, HAL_CORDIC_CallbackIDTypeDef CallbackID);
 /**
  * @}
@@ -554,14 +541,10 @@ HAL_StatusTypeDef HAL_CORDIC_UnRegisterCallback(CORDIC_HandleTypeDef *hcordic, H
 #endif /* USE_HAL_CORDIC_REGISTER_CALLBACKS */
 /* Peripheral Control functions ***********************************************/
 HAL_StatusTypeDef HAL_CORDIC_Configure(CORDIC_HandleTypeDef *hcordic, const CORDIC_ConfigTypeDef *sConfig);
-HAL_StatusTypeDef HAL_CORDIC_Calculate(CORDIC_HandleTypeDef *hcordic, const int32_t *pInBuff, int32_t *pOutBuff,
-				       uint32_t NbCalc, uint32_t Timeout);
-HAL_StatusTypeDef HAL_CORDIC_CalculateZO(CORDIC_HandleTypeDef *hcordic, const int32_t *pInBuff, int32_t *pOutBuff,
-					 uint32_t NbCalc, uint32_t Timeout);
-HAL_StatusTypeDef HAL_CORDIC_Calculate_IT(CORDIC_HandleTypeDef *hcordic, const int32_t *pInBuff, int32_t *pOutBuff,
-					  uint32_t NbCalc);
-HAL_StatusTypeDef HAL_CORDIC_Calculate_DMA(CORDIC_HandleTypeDef *hcordic, const int32_t *pInBuff, int32_t *pOutBuff,
-					   uint32_t NbCalc, uint32_t DMADirection);
+HAL_StatusTypeDef HAL_CORDIC_Calculate(CORDIC_HandleTypeDef *hcordic, const int32_t *pInBuff, int32_t *pOutBuff, uint32_t NbCalc, uint32_t Timeout);
+HAL_StatusTypeDef HAL_CORDIC_CalculateZO(CORDIC_HandleTypeDef *hcordic, const int32_t *pInBuff, int32_t *pOutBuff, uint32_t NbCalc, uint32_t Timeout);
+HAL_StatusTypeDef HAL_CORDIC_Calculate_IT(CORDIC_HandleTypeDef *hcordic, const int32_t *pInBuff, int32_t *pOutBuff, uint32_t NbCalc);
+HAL_StatusTypeDef HAL_CORDIC_Calculate_DMA(CORDIC_HandleTypeDef *hcordic, const int32_t *pInBuff, int32_t *pOutBuff, uint32_t NbCalc, uint32_t DMADirection);
 /**
  * @}
  */

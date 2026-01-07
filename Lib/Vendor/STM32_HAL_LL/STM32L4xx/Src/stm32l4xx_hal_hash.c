@@ -241,11 +241,11 @@
 /** @defgroup HASH_Digest_Calculation_Status HASH Digest Calculation Status
  * @{
  */
-#define HASH_DIGEST_CALCULATION_NOT_STARTED                                                                            \
-	((uint32_t)0x00000000U) /*!< DCAL not set after input data written in                                          \
+#define HASH_DIGEST_CALCULATION_NOT_STARTED                                                                                                                                                            \
+	((uint32_t)0x00000000U) /*!< DCAL not set after input data written in                                                                                                                          \
 				   DIN register */
-#define HASH_DIGEST_CALCULATION_STARTED                                                                                \
-	((uint32_t)0x00000001U) /*!< DCAL set after input data written in DIN                                          \
+#define HASH_DIGEST_CALCULATION_STARTED                                                                                                                                                                \
+	((uint32_t)0x00000001U) /*!< DCAL set after input data written in DIN                                                                                                                          \
 				   register     */
 /**
  * @}
@@ -288,8 +288,7 @@
 static void HASH_DMAXferCplt(DMA_HandleTypeDef *hdma);
 static void HASH_DMAError(DMA_HandleTypeDef *hdma);
 static void HASH_GetDigest(uint8_t *pMsgDigest, uint8_t Size);
-static HAL_StatusTypeDef HASH_WaitOnFlagUntilTimeout(HASH_HandleTypeDef *hhash, uint32_t Flag, FlagStatus Status,
-						     uint32_t Timeout);
+static HAL_StatusTypeDef HASH_WaitOnFlagUntilTimeout(HASH_HandleTypeDef *hhash, uint32_t Flag, FlagStatus Status, uint32_t Timeout);
 static HAL_StatusTypeDef HASH_WriteData(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size);
 static HAL_StatusTypeDef HASH_IT(HASH_HandleTypeDef *hhash);
 static uint32_t HASH_Write_Block_Data(HASH_HandleTypeDef *hhash);
@@ -571,8 +570,7 @@ __weak void HAL_HASH_ErrorCallback(HASH_HandleTypeDef *hhash)
  * @param pCallback pointer to the Callback function
  * @retval status
  */
-HAL_StatusTypeDef HAL_HASH_RegisterCallback(HASH_HandleTypeDef *hhash, HAL_HASH_CallbackIDTypeDef CallbackID,
-					    pHASH_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_HASH_RegisterCallback(HASH_HandleTypeDef *hhash, HAL_HASH_CallbackIDTypeDef CallbackID, pHASH_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -787,8 +785,7 @@ by a call to HAL_HASH_xxx_Accumulate_End().
  * @param  Timeout Timeout value
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASH_MD5_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer,
-				     uint32_t Timeout)
+HAL_StatusTypeDef HAL_HASH_MD5_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout)
 {
 	return HASH_Start(hhash, pInBuffer, Size, pOutBuffer, Timeout, HASH_ALGOSELECTION_MD5);
 }
@@ -814,10 +811,7 @@ HAL_StatusTypeDef HAL_HASH_MD5_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuff
  * @param  Size length of the input buffer in bytes, must be a multiple of 4.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASH_MD5_Accmlt(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size)
-{
-	return HASH_Accumulate(hhash, pInBuffer, Size, HASH_ALGOSELECTION_MD5);
-}
+HAL_StatusTypeDef HAL_HASH_MD5_Accmlt(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size) { return HASH_Accumulate(hhash, pInBuffer, Size, HASH_ALGOSELECTION_MD5); }
 
 /**
  * @brief  End computation of a single HASH signature after several calls to
@@ -830,8 +824,7 @@ HAL_StatusTypeDef HAL_HASH_MD5_Accmlt(HASH_HandleTypeDef *hhash, uint8_t *pInBuf
  * @param  Timeout Timeout value
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASH_MD5_Accmlt_End(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size,
-					  uint8_t *pOutBuffer, uint32_t Timeout)
+HAL_StatusTypeDef HAL_HASH_MD5_Accmlt_End(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout)
 {
 	return HASH_Start(hhash, pInBuffer, Size, pOutBuffer, Timeout, HASH_ALGOSELECTION_MD5);
 }
@@ -847,8 +840,7 @@ HAL_StatusTypeDef HAL_HASH_MD5_Accmlt_End(HASH_HandleTypeDef *hhash, uint8_t *pI
  * @param  Timeout Timeout value
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASH_SHA1_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer,
-				      uint32_t Timeout)
+HAL_StatusTypeDef HAL_HASH_SHA1_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout)
 {
 	return HASH_Start(hhash, pInBuffer, Size, pOutBuffer, Timeout, HASH_ALGOSELECTION_SHA1);
 }
@@ -874,10 +866,7 @@ HAL_StatusTypeDef HAL_HASH_SHA1_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuf
  * @param  Size length of the input buffer in bytes, must be a multiple of 4.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASH_SHA1_Accmlt(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size)
-{
-	return HASH_Accumulate(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA1);
-}
+HAL_StatusTypeDef HAL_HASH_SHA1_Accmlt(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size) { return HASH_Accumulate(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA1); }
 
 /**
  * @brief  End computation of a single HASH signature after several calls to
@@ -890,8 +879,7 @@ HAL_StatusTypeDef HAL_HASH_SHA1_Accmlt(HASH_HandleTypeDef *hhash, uint8_t *pInBu
  * @param  Timeout Timeout value
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASH_SHA1_Accmlt_End(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size,
-					   uint8_t *pOutBuffer, uint32_t Timeout)
+HAL_StatusTypeDef HAL_HASH_SHA1_Accmlt_End(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout)
 {
 	return HASH_Start(hhash, pInBuffer, Size, pOutBuffer, Timeout, HASH_ALGOSELECTION_SHA1);
 }
@@ -939,8 +927,7 @@ interruptions when in HMAC processing mode.
  * @param  pOutBuffer pointer to the computed digest. Digest size is 16 bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASH_MD5_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size,
-					uint8_t *pOutBuffer)
+HAL_StatusTypeDef HAL_HASH_MD5_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer)
 {
 	return HASH_Start_IT(hhash, pInBuffer, Size, pOutBuffer, HASH_ALGOSELECTION_MD5);
 }
@@ -964,10 +951,7 @@ HAL_StatusTypeDef HAL_HASH_MD5_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInB
  * @param  Size length of the input buffer in bytes, must be a multiple of 4.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASH_MD5_Accmlt_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size)
-{
-	return HASH_Accumulate_IT(hhash, pInBuffer, Size, HASH_ALGOSELECTION_MD5);
-}
+HAL_StatusTypeDef HAL_HASH_MD5_Accmlt_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size) { return HASH_Accumulate_IT(hhash, pInBuffer, Size, HASH_ALGOSELECTION_MD5); }
 
 /**
  * @brief  End computation of a single HASH signature after several calls to
@@ -979,8 +963,7 @@ HAL_StatusTypeDef HAL_HASH_MD5_Accmlt_IT(HASH_HandleTypeDef *hhash, uint8_t *pIn
  * @param  pOutBuffer pointer to the computed digest. Digest size is 16 bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASH_MD5_Accmlt_End_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size,
-					     uint8_t *pOutBuffer)
+HAL_StatusTypeDef HAL_HASH_MD5_Accmlt_End_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer)
 {
 	return HASH_Start_IT(hhash, pInBuffer, Size, pOutBuffer, HASH_ALGOSELECTION_MD5);
 }
@@ -995,8 +978,7 @@ HAL_StatusTypeDef HAL_HASH_MD5_Accmlt_End_IT(HASH_HandleTypeDef *hhash, uint8_t 
  * @param  pOutBuffer pointer to the computed digest. Digest size is 20 bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASH_SHA1_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size,
-					 uint8_t *pOutBuffer)
+HAL_StatusTypeDef HAL_HASH_SHA1_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer)
 {
 	return HASH_Start_IT(hhash, pInBuffer, Size, pOutBuffer, HASH_ALGOSELECTION_SHA1);
 }
@@ -1020,10 +1002,7 @@ HAL_StatusTypeDef HAL_HASH_SHA1_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pIn
  * @param  Size length of the input buffer in bytes, must be a multiple of 4.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASH_SHA1_Accmlt_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size)
-{
-	return HASH_Accumulate_IT(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA1);
-}
+HAL_StatusTypeDef HAL_HASH_SHA1_Accmlt_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size) { return HASH_Accumulate_IT(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA1); }
 
 /**
  * @brief  End computation of a single HASH signature after several calls to
@@ -1035,8 +1014,7 @@ HAL_StatusTypeDef HAL_HASH_SHA1_Accmlt_IT(HASH_HandleTypeDef *hhash, uint8_t *pI
  * @param  pOutBuffer pointer to the computed digest. Digest size is 20 bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASH_SHA1_Accmlt_End_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size,
-					      uint8_t *pOutBuffer)
+HAL_StatusTypeDef HAL_HASH_SHA1_Accmlt_End_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer)
 {
 	return HASH_Start_IT(hhash, pInBuffer, Size, pOutBuffer, HASH_ALGOSELECTION_SHA1);
 }
@@ -1109,10 +1087,7 @@ to be reset before the last call to HAL_HASH_xxx_Start_DMA(). Digest is finally
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASH_MD5_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size)
-{
-	return HASH_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_MD5);
-}
+HAL_StatusTypeDef HAL_HASH_MD5_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size) { return HASH_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_MD5); }
 
 /**
  * @brief  Return the computed digest in MD5 mode.
@@ -1124,10 +1099,7 @@ HAL_StatusTypeDef HAL_HASH_MD5_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pIn
  * @param  Timeout Timeout value.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASH_MD5_Finish(HASH_HandleTypeDef *hhash, uint8_t *pOutBuffer, uint32_t Timeout)
-{
-	return HASH_Finish(hhash, pOutBuffer, Timeout);
-}
+HAL_StatusTypeDef HAL_HASH_MD5_Finish(HASH_HandleTypeDef *hhash, uint8_t *pOutBuffer, uint32_t Timeout) { return HASH_Finish(hhash, pOutBuffer, Timeout); }
 
 /**
  * @brief  Initialize the HASH peripheral in SHA1 mode then initiate a DMA
@@ -1139,10 +1111,7 @@ HAL_StatusTypeDef HAL_HASH_MD5_Finish(HASH_HandleTypeDef *hhash, uint8_t *pOutBu
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASH_SHA1_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size)
-{
-	return HASH_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA1);
-}
+HAL_StatusTypeDef HAL_HASH_SHA1_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size) { return HASH_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA1); }
 
 /**
  * @brief  Return the computed digest in SHA1 mode.
@@ -1154,10 +1123,7 @@ HAL_StatusTypeDef HAL_HASH_SHA1_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pI
  * @param  Timeout Timeout value.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HASH_SHA1_Finish(HASH_HandleTypeDef *hhash, uint8_t *pOutBuffer, uint32_t Timeout)
-{
-	return HASH_Finish(hhash, pOutBuffer, Timeout);
-}
+HAL_StatusTypeDef HAL_HASH_SHA1_Finish(HASH_HandleTypeDef *hhash, uint8_t *pOutBuffer, uint32_t Timeout) { return HASH_Finish(hhash, pOutBuffer, Timeout); }
 
 /**
  * @}
@@ -1197,8 +1163,7 @@ polling mode
  * @param  Timeout Timeout value.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMAC_MD5_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer,
-				     uint32_t Timeout)
+HAL_StatusTypeDef HAL_HMAC_MD5_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout)
 {
 	return HMAC_Start(hhash, pInBuffer, Size, pOutBuffer, Timeout, HASH_ALGOSELECTION_MD5);
 }
@@ -1217,8 +1182,7 @@ HAL_StatusTypeDef HAL_HMAC_MD5_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuff
  * @param  Timeout Timeout value.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMAC_SHA1_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer,
-				      uint32_t Timeout)
+HAL_StatusTypeDef HAL_HMAC_SHA1_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout)
 {
 	return HMAC_Start(hhash, pInBuffer, Size, pOutBuffer, Timeout, HASH_ALGOSELECTION_SHA1);
 }
@@ -1259,8 +1223,7 @@ mode the HMAC value using one of the following algorithms:
  * @param  pOutBuffer pointer to the computed digest. Digest size is 16 bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMAC_MD5_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size,
-					uint8_t *pOutBuffer)
+HAL_StatusTypeDef HAL_HMAC_MD5_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer)
 {
 	return HMAC_Start_IT(hhash, pInBuffer, Size, pOutBuffer, HASH_ALGOSELECTION_MD5);
 }
@@ -1278,8 +1241,7 @@ HAL_StatusTypeDef HAL_HMAC_MD5_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInB
  * @param  pOutBuffer pointer to the computed digest. Digest size is 20 bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMAC_SHA1_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size,
-					 uint8_t *pOutBuffer)
+HAL_StatusTypeDef HAL_HMAC_SHA1_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer)
 {
 	return HMAC_Start_IT(hhash, pInBuffer, Size, pOutBuffer, HASH_ALGOSELECTION_SHA1);
 }
@@ -1332,10 +1294,7 @@ resulting digest with HAL_HASH_xxx_Finish().
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMAC_MD5_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size)
-{
-	return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_MD5);
-}
+HAL_StatusTypeDef HAL_HMAC_MD5_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size) { return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_MD5); }
 
 /**
  * @brief  Initialize the HASH peripheral in HMAC SHA1 mode then initiate the
@@ -1358,10 +1317,7 @@ HAL_StatusTypeDef HAL_HMAC_MD5_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pIn
  * @param  Size length of the input buffer in bytes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HMAC_SHA1_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size)
-{
-	return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA1);
-}
+HAL_StatusTypeDef HAL_HMAC_SHA1_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size) { return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA1); }
 
 /**
  * @}
@@ -1446,8 +1402,7 @@ void HAL_HASH_ContextSaving(HASH_HandleTypeDef *hhash, uint8_t *pMemBuffer)
 	*(uint32_t *)(mem_ptr) = READ_BIT(HASH->STR, HASH_STR_NBLW);
 	mem_ptr += 4U;
 	/* Save CR register content */
-	*(uint32_t *)(mem_ptr) = READ_BIT(HASH->CR, HASH_CR_DMAE | HASH_CR_DATATYPE | HASH_CR_MODE | HASH_CR_ALGO |
-							HASH_CR_LKEY | HASH_CR_MDMAT);
+	*(uint32_t *)(mem_ptr) = READ_BIT(HASH->CR, HASH_CR_DMAE | HASH_CR_DATATYPE | HASH_CR_MODE | HASH_CR_ALGO | HASH_CR_LKEY | HASH_CR_MDMAT);
 	mem_ptr += 4U;
 	/* By default, save all CSRs registers */
 	for (i = HASH_NUMBER_OF_CSR_REGISTERS; i > 0U; i--) {
@@ -1605,9 +1560,7 @@ HAL_StatusTypeDef HAL_HASH_DMAFeed_ProcessSuspend(HASH_HandleTypeDef *hhash)
 
 			/* Compute how many words were supposed to be
 			 * transferred by DMA */
-			tmp_initial_DMATransferSize_inWords =
-			    (((hhash->HashInCount % 4U) != 0U) ? ((hhash->HashInCount + 3U) / 4U)
-							       : (hhash->HashInCount / 4U));
+			tmp_initial_DMATransferSize_inWords = (((hhash->HashInCount % 4U) != 0U) ? ((hhash->HashInCount + 3U) / 4U) : (hhash->HashInCount / 4U));
 
 			/* If discrepancy between the number of words reported
 			  by DMA Peripheral and the numbers of words entered as
@@ -1616,9 +1569,7 @@ HAL_StatusTypeDef HAL_HASH_DMAFeed_ProcessSuspend(HASH_HandleTypeDef *hhash)
 			   that were already pushed before the start of DMA
 			   transfer (multi-buffer processing case) */
 			tmp_words_already_pushed = hhash->NbWordsAlreadyPushed;
-			if (((tmp_words_already_pushed + tmp_initial_DMATransferSize_inWords -
-			      tmp_remaining_DMATransferSize_inWords) %
-			     16U) != HASH_NBW_PUSHED()) {
+			if (((tmp_words_already_pushed + tmp_initial_DMATransferSize_inWords - tmp_remaining_DMATransferSize_inWords) % 16U) != HASH_NBW_PUSHED()) {
 				tmp_remaining_DMATransferSize_inWords--; /* one
 									    less
 									    word
@@ -1632,8 +1583,7 @@ HAL_StatusTypeDef HAL_HASH_DMAFeed_ProcessSuspend(HASH_HandleTypeDef *hhash)
 			/* Accordingly, update the input pointer that points at
 			   the next word to be transferred to the Peripheral by
 			   DMA */
-			hhash->pHashInBuffPtr +=
-			    4U * (tmp_initial_DMATransferSize_inWords - tmp_remaining_DMATransferSize_inWords);
+			hhash->pHashInBuffPtr += 4U * (tmp_initial_DMATransferSize_inWords - tmp_remaining_DMATransferSize_inWords);
 
 			/* And store in HashInCount the remaining size to
 			 * transfer (in bytes) */
@@ -1809,10 +1759,7 @@ static void HASH_DMAXferCplt(DMA_HandleTypeDef *hdma)
 			hhash->hdmain->XferCpltCallback = HASH_DMAXferCplt;
 
 			/* Enable the DMA In DMA channel */
-			status =
-			    HAL_DMA_Start_IT(hhash->hdmain, inputaddr, (uint32_t)&HASH->DIN,
-					     (((buffersize % 4U) != 0U) ? ((buffersize + (4U - (buffersize % 4U))) / 4U)
-									: (buffersize / 4U)));
+			status = HAL_DMA_Start_IT(hhash->hdmain, inputaddr, (uint32_t)&HASH->DIN, (((buffersize % 4U) != 0U) ? ((buffersize + (4U - (buffersize % 4U))) / 4U) : (buffersize / 4U)));
 
 			/* Enable DMA requests */
 			SET_BIT(HASH->CR, HASH_CR_DMAE);
@@ -1888,8 +1835,7 @@ static HAL_StatusTypeDef HASH_WriteData(HASH_HandleTypeDef *hhash, uint8_t *pInB
 			/* wait for flag BUSY not set before  Wait for DINIS =
 			 * 1*/
 			if ((buffercounter * 4U) >= 64U) {
-				if (HASH_WaitOnFlagUntilTimeout(hhash, HASH_FLAG_BUSY, SET, HASH_TIMEOUTVALUE) !=
-				    HAL_OK) {
+				if (HASH_WaitOnFlagUntilTimeout(hhash, HASH_FLAG_BUSY, SET, HASH_TIMEOUTVALUE) != HAL_OK) {
 					return HAL_TIMEOUT;
 				}
 			}
@@ -1903,8 +1849,7 @@ static HAL_StatusTypeDef HASH_WriteData(HASH_HandleTypeDef *hhash, uint8_t *pInB
 				were fed to the Peripheral, the feeding point
 				reached at suspension time is not saved in the
 				same handle fields */
-				if ((hhash->Phase == HAL_HASH_PHASE_PROCESS) ||
-				    (hhash->Phase == HAL_HASH_PHASE_HMAC_STEP_2)) {
+				if ((hhash->Phase == HAL_HASH_PHASE_PROCESS) || (hhash->Phase == HAL_HASH_PHASE_HMAC_STEP_2)) {
 					/* Save current reading and writing
 					 * locations of Input and Output buffers
 					 */
@@ -1912,8 +1857,7 @@ static HAL_StatusTypeDef HASH_WriteData(HASH_HandleTypeDef *hhash, uint8_t *pInB
 					/* Save the number of bytes that remain
 					 * to be processed at this point */
 					hhash->HashInCount = Size - ((buffercounter * 4U) + 4U);
-				} else if ((hhash->Phase == HAL_HASH_PHASE_HMAC_STEP_1) ||
-					   (hhash->Phase == HAL_HASH_PHASE_HMAC_STEP_3)) {
+				} else if ((hhash->Phase == HAL_HASH_PHASE_HMAC_STEP_1) || (hhash->Phase == HAL_HASH_PHASE_HMAC_STEP_3)) {
 					/* Save current reading and writing
 					 * locations of Input and Output buffers
 					 */
@@ -1953,8 +1897,7 @@ static HAL_StatusTypeDef HASH_WriteData(HASH_HandleTypeDef *hhash, uint8_t *pInB
 				HASH->DIN = *(uint32_t *)inputaddr;
 			}
 
-		} else if ((hhash->Init.DataType == HASH_DATATYPE_8B) ||
-			   (hhash->Init.DataType == HASH_DATATYPE_1B)) /* byte swap or bit swap or */
+		} else if ((hhash->Init.DataType == HASH_DATATYPE_8B) || (hhash->Init.DataType == HASH_DATATYPE_1B)) /* byte swap or bit swap or */
 		{
 			/* Write remaining input data */
 			if ((Size % 4U) == 1U) {
@@ -2056,8 +1999,7 @@ static void HASH_GetDigest(uint8_t *pMsgDigest, uint8_t Size)
  * @param  Timeout Timeout duration.
  * @retval HAL status
  */
-static HAL_StatusTypeDef HASH_WaitOnFlagUntilTimeout(HASH_HandleTypeDef *hhash, uint32_t Flag, FlagStatus Status,
-						     uint32_t Timeout)
+static HAL_StatusTypeDef HASH_WaitOnFlagUntilTimeout(HASH_HandleTypeDef *hhash, uint32_t Flag, FlagStatus Status, uint32_t Timeout)
 {
 	uint32_t tickstart = HAL_GetTick();
 
@@ -2192,8 +2134,7 @@ static HAL_StatusTypeDef HASH_IT(HASH_HandleTypeDef *hhash)
 				if (hhash->Phase == HAL_HASH_PHASE_HMAC_STEP_1) {
 					/* Wait until Peripheral is not busy
 					 * anymore */
-					if (HASH_WaitOnFlagUntilTimeout(hhash, HASH_FLAG_BUSY, SET,
-									HASH_TIMEOUTVALUE) != HAL_OK) {
+					if (HASH_WaitOnFlagUntilTimeout(hhash, HASH_FLAG_BUSY, SET, HASH_TIMEOUTVALUE) != HAL_OK) {
 						/* Disable Interrupts */
 						__HAL_HASH_DISABLE_IT(HASH_IT_DINI | HASH_IT_DCI);
 						return HAL_TIMEOUT;
@@ -2216,17 +2157,16 @@ static HAL_StatusTypeDef HASH_IT(HASH_HandleTypeDef *hhash)
 					hhash->pHashInBuffPtr = hhash->pHashMsgBuffPtr;	 /* Set the
 											    input data
 											    address */
-					hhash->HashITCounter = 1;	    /* Set ITCounter to 1 to indicate
-									       the start of a new phase */
-					__HAL_HASH_ENABLE_IT(HASH_IT_DINI); /* Enable IT (was
-									       disabled in
-									       HASH_Write_Block_Data)
-									     */
+					hhash->HashITCounter = 1;			 /* Set ITCounter to 1 to indicate
+											    the start of a new phase */
+					__HAL_HASH_ENABLE_IT(HASH_IT_DINI);		 /* Enable IT (was
+											    disabled in
+											    HASH_Write_Block_Data)
+											  */
 				} else if (hhash->Phase == HAL_HASH_PHASE_HMAC_STEP_2) {
 					/* Wait until Peripheral is not busy
 					 * anymore */
-					if (HASH_WaitOnFlagUntilTimeout(hhash, HASH_FLAG_BUSY, SET,
-									HASH_TIMEOUTVALUE) != HAL_OK) {
+					if (HASH_WaitOnFlagUntilTimeout(hhash, HASH_FLAG_BUSY, SET, HASH_TIMEOUTVALUE) != HAL_OK) {
 						/* Disable Interrupts */
 						__HAL_HASH_DISABLE_IT(HASH_IT_DINI | HASH_IT_DCI);
 						return HAL_TIMEOUT;
@@ -2245,12 +2185,12 @@ static HAL_StatusTypeDef HASH_IT(HASH_HandleTypeDef *hhash)
 					hhash->HashInCount = hhash->Init.KeySize;	 /* Set the key size
 											    (in bytes) */
 					hhash->pHashInBuffPtr = hhash->Init.pKey;	 /* Set the key address */
-					hhash->HashITCounter = 1;	    /* Set ITCounter to 1 to indicate
-									       the start of a new phase */
-					__HAL_HASH_ENABLE_IT(HASH_IT_DINI); /* Enable IT (was
-									       disabled in
-									       HASH_Write_Block_Data)
-									     */
+					hhash->HashITCounter = 1;			 /* Set ITCounter to 1 to indicate
+											    the start of a new phase */
+					__HAL_HASH_ENABLE_IT(HASH_IT_DINI);		 /* Enable IT (was
+											    disabled in
+											    HASH_Write_Block_Data)
+											  */
 				} else {
 					/* Nothing to do */
 				}
@@ -2371,8 +2311,7 @@ static uint32_t HASH_Write_Block_Data(HASH_HandleTypeDef *hhash)
 static HAL_StatusTypeDef HMAC_Processing(HASH_HandleTypeDef *hhash, uint32_t Timeout)
 {
 	/* Ensure first that Phase is correct */
-	if ((hhash->Phase != HAL_HASH_PHASE_HMAC_STEP_1) && (hhash->Phase != HAL_HASH_PHASE_HMAC_STEP_2) &&
-	    (hhash->Phase != HAL_HASH_PHASE_HMAC_STEP_3)) {
+	if ((hhash->Phase != HAL_HASH_PHASE_HMAC_STEP_1) && (hhash->Phase != HAL_HASH_PHASE_HMAC_STEP_2) && (hhash->Phase != HAL_HASH_PHASE_HMAC_STEP_3)) {
 		/* Change the HASH state */
 		hhash->State = HAL_HASH_STATE_READY;
 
@@ -2530,8 +2469,7 @@ static HAL_StatusTypeDef HMAC_Processing(HASH_HandleTypeDef *hhash, uint32_t Tim
  * @param  Algorithm HASH algorithm.
  * @retval HAL status
  */
-HAL_StatusTypeDef HASH_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer,
-			     uint32_t Timeout, uint32_t Algorithm)
+HAL_StatusTypeDef HASH_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout, uint32_t Algorithm)
 {
 	uint8_t *pInBuffer_tmp; /* input data address, input parameter of
 				   HASH_WriteData()         */
@@ -2558,8 +2496,7 @@ HAL_StatusTypeDef HASH_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint
 
 			/* Select the HASH algorithm, clear HMAC mode and long
 			 * key selection bit, reset the HASH processor core */
-			MODIFY_REG(HASH->CR, HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT,
-				   Algorithm | HASH_CR_INIT);
+			MODIFY_REG(HASH->CR, HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT, Algorithm | HASH_CR_INIT);
 
 			/* Configure the number of valid bits in last word of
 			 * the message */
@@ -2718,8 +2655,7 @@ HAL_StatusTypeDef HASH_Accumulate(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer,
 				/* Select the HASH algorithm, clear HMAC mode
 				 * and long key selection bit, reset the HASH
 				 * processor core */
-				MODIFY_REG(HASH->CR, HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT,
-					   Algorithm | HASH_CR_INIT);
+				MODIFY_REG(HASH->CR, HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT, Algorithm | HASH_CR_INIT);
 			}
 
 			/* Set the phase */
@@ -2799,8 +2735,7 @@ HAL_StatusTypeDef HASH_Accumulate_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuff
 				/* Select the HASH algorithm, clear HMAC mode
 				 * and long key selection bit, reset the HASH
 				 * processor core */
-				MODIFY_REG(HASH->CR, HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT,
-					   Algorithm | HASH_CR_INIT);
+				MODIFY_REG(HASH->CR, HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT, Algorithm | HASH_CR_INIT);
 				hhash->HashITCounter = 1;
 			} else {
 				hhash->HashITCounter = 3; /* 'cruise-speed' reached during a
@@ -2877,8 +2812,7 @@ HAL_StatusTypeDef HASH_Accumulate_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuff
  * @param  Algorithm HASH algorithm.
  * @retval HAL status
  */
-HAL_StatusTypeDef HASH_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer,
-				uint32_t Algorithm)
+HAL_StatusTypeDef HASH_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Algorithm)
 {
 	HAL_HASH_StateTypeDef State_tmp = hhash->State;
 	__IO uint32_t inputaddr = (uint32_t)pInBuffer;
@@ -2908,8 +2842,7 @@ HAL_StatusTypeDef HASH_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, u
 		if (hhash->Phase == HAL_HASH_PHASE_READY) {
 			/* Select the HASH algorithm, clear HMAC mode and long
 			 * key selection bit, reset the HASH processor core */
-			MODIFY_REG(HASH->CR, HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT,
-				   Algorithm | HASH_CR_INIT);
+			MODIFY_REG(HASH->CR, HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT, Algorithm | HASH_CR_INIT);
 
 			/* Configure the number of valid bits in last word of
 			 * the message */
@@ -3074,8 +3007,7 @@ HAL_StatusTypeDef HASH_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, 
 				/* Select the HASH algorithm, clear HMAC mode
 				 * and long key selection bit, reset the HASH
 				 * processor core */
-				MODIFY_REG(HASH->CR, HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT,
-					   Algorithm | HASH_CR_INIT);
+				MODIFY_REG(HASH->CR, HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT, Algorithm | HASH_CR_INIT);
 
 				/* Set the phase */
 				hhash->Phase = HAL_HASH_PHASE_PROCESS;
@@ -3119,9 +3051,7 @@ HAL_StatusTypeDef HASH_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, 
 		hhash->NbWordsAlreadyPushed = HASH_NBW_PUSHED();
 
 		/* Enable the DMA In DMA channel */
-		status = HAL_DMA_Start_IT(
-		    hhash->hdmain, inputaddr, (uint32_t)&HASH->DIN,
-		    (((inputSize % 4U) != 0U) ? ((inputSize + (4U - (inputSize % 4U))) / 4U) : (inputSize / 4U)));
+		status = HAL_DMA_Start_IT(hhash->hdmain, inputaddr, (uint32_t)&HASH->DIN, (((inputSize % 4U) != 0U) ? ((inputSize + (4U - (inputSize % 4U))) / 4U) : (inputSize / 4U)));
 
 		/* Enable DMA requests */
 		SET_BIT(HASH->CR, HASH_CR_DMAE);
@@ -3204,8 +3134,7 @@ HAL_StatusTypeDef HASH_Finish(HASH_HandleTypeDef *hhash, uint8_t *pOutBuffer, ui
  * @param  Algorithm HASH algorithm.
  * @retval HAL status
  */
-HAL_StatusTypeDef HMAC_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer,
-			     uint32_t Timeout, uint32_t Algorithm)
+HAL_StatusTypeDef HMAC_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Timeout, uint32_t Algorithm)
 {
 	HAL_HASH_StateTypeDef State_tmp = hhash->State;
 
@@ -3213,8 +3142,7 @@ HAL_StatusTypeDef HMAC_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint
 	 * processing */
 	if ((State_tmp == HAL_HASH_STATE_READY) || (State_tmp == HAL_HASH_STATE_SUSPENDED)) {
 		/* Check input parameters */
-		if ((pInBuffer == NULL) || (Size == 0U) || (hhash->Init.pKey == NULL) || (hhash->Init.KeySize == 0U) ||
-		    (pOutBuffer == NULL)) {
+		if ((pInBuffer == NULL) || (Size == 0U) || (hhash->Init.pKey == NULL) || (hhash->Init.KeySize == 0U) || (pOutBuffer == NULL)) {
 			hhash->State = HAL_HASH_STATE_READY;
 			return HAL_ERROR;
 		}
@@ -3230,11 +3158,9 @@ HAL_StatusTypeDef HMAC_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint
 			/* Check if key size is larger than 64 bytes,
 			 * accordingly set LKEY and the other setting bits */
 			if (hhash->Init.KeySize > 64U) {
-				MODIFY_REG(HASH->CR, HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT,
-					   Algorithm | HASH_ALGOMODE_HMAC | HASH_HMAC_KEYTYPE_LONGKEY | HASH_CR_INIT);
+				MODIFY_REG(HASH->CR, HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT, Algorithm | HASH_ALGOMODE_HMAC | HASH_HMAC_KEYTYPE_LONGKEY | HASH_CR_INIT);
 			} else {
-				MODIFY_REG(HASH->CR, HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT,
-					   Algorithm | HASH_ALGOMODE_HMAC | HASH_CR_INIT);
+				MODIFY_REG(HASH->CR, HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT, Algorithm | HASH_ALGOMODE_HMAC | HASH_CR_INIT);
 			}
 			/* Set the phase to Step 1 */
 			hhash->Phase = HAL_HASH_PHASE_HMAC_STEP_1;
@@ -3277,8 +3203,7 @@ HAL_StatusTypeDef HMAC_Start(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint
  * @param  Algorithm HASH algorithm.
  * @retval HAL status
  */
-HAL_StatusTypeDef HMAC_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer,
-				uint32_t Algorithm)
+HAL_StatusTypeDef HMAC_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, uint32_t Size, uint8_t *pOutBuffer, uint32_t Algorithm)
 {
 	HAL_HASH_StateTypeDef State_tmp = hhash->State;
 
@@ -3286,8 +3211,7 @@ HAL_StatusTypeDef HMAC_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, u
 	 * processing */
 	if ((State_tmp == HAL_HASH_STATE_READY) || (State_tmp == HAL_HASH_STATE_SUSPENDED)) {
 		/* Check input parameters */
-		if ((pInBuffer == NULL) || (Size == 0U) || (hhash->Init.pKey == NULL) || (hhash->Init.KeySize == 0U) ||
-		    (pOutBuffer == NULL)) {
+		if ((pInBuffer == NULL) || (Size == 0U) || (hhash->Init.pKey == NULL) || (hhash->Init.KeySize == 0U) || (pOutBuffer == NULL)) {
 			hhash->State = HAL_HASH_STATE_READY;
 			return HAL_ERROR;
 		}
@@ -3306,11 +3230,9 @@ HAL_StatusTypeDef HMAC_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, u
 			/* Check if key size is larger than 64 bytes,
 			 * accordingly set LKEY and the other setting bits */
 			if (hhash->Init.KeySize > 64U) {
-				MODIFY_REG(HASH->CR, HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT,
-					   Algorithm | HASH_ALGOMODE_HMAC | HASH_HMAC_KEYTYPE_LONGKEY | HASH_CR_INIT);
+				MODIFY_REG(HASH->CR, HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT, Algorithm | HASH_ALGOMODE_HMAC | HASH_HMAC_KEYTYPE_LONGKEY | HASH_CR_INIT);
 			} else {
-				MODIFY_REG(HASH->CR, HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT,
-					   Algorithm | HASH_ALGOMODE_HMAC | HASH_CR_INIT);
+				MODIFY_REG(HASH->CR, HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT, Algorithm | HASH_ALGOMODE_HMAC | HASH_CR_INIT);
 			}
 
 			/* Resort to hhash internal fields hhash->pHashInBuffPtr
@@ -3334,8 +3256,7 @@ HAL_StatusTypeDef HMAC_Start_IT(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, u
 
 			/* Set the phase to Step 1 */
 			hhash->Phase = HAL_HASH_PHASE_HMAC_STEP_1;
-		} else if ((hhash->Phase == HAL_HASH_PHASE_HMAC_STEP_1) ||
-			   (hhash->Phase == HAL_HASH_PHASE_HMAC_STEP_3)) {
+		} else if ((hhash->Phase == HAL_HASH_PHASE_HMAC_STEP_1) || (hhash->Phase == HAL_HASH_PHASE_HMAC_STEP_3)) {
 			/* Restart IT-based HASH processing after Step 1 or Step
 			 * 3 suspension */
 
@@ -3420,15 +3341,10 @@ HAL_StatusTypeDef HMAC_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, 
 				   bits. At the same time, ensure MDMAT bit is
 				   cleared. */
 				if (hhash->Init.KeySize > 64U) {
-					MODIFY_REG(
-					    HASH->CR,
-					    HASH_CR_MDMAT | HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT,
-					    Algorithm | HASH_ALGOMODE_HMAC | HASH_HMAC_KEYTYPE_LONGKEY | HASH_CR_INIT);
+					MODIFY_REG(HASH->CR, HASH_CR_MDMAT | HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT,
+						   Algorithm | HASH_ALGOMODE_HMAC | HASH_HMAC_KEYTYPE_LONGKEY | HASH_CR_INIT);
 				} else {
-					MODIFY_REG(HASH->CR,
-						   HASH_CR_MDMAT | HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE |
-						       HASH_CR_INIT,
-						   Algorithm | HASH_ALGOMODE_HMAC | HASH_CR_INIT);
+					MODIFY_REG(HASH->CR, HASH_CR_MDMAT | HASH_CR_LKEY | HASH_CR_ALGO | HASH_CR_MODE | HASH_CR_INIT, Algorithm | HASH_ALGOMODE_HMAC | HASH_CR_INIT);
 				}
 				/* Store input aparameters in handle fields to
 				   manage steps transition or possible HMAC
@@ -3512,9 +3428,7 @@ HAL_StatusTypeDef HMAC_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, 
 		hhash->NbWordsAlreadyPushed = HASH_NBW_PUSHED();
 
 		/* Enable the DMA In DMA channel */
-		status = HAL_DMA_Start_IT(
-		    hhash->hdmain, inputaddr, (uint32_t)&HASH->DIN,
-		    (((inputSize % 4U) != 0U) ? ((inputSize + (4U - (inputSize % 4U))) / 4U) : (inputSize / 4U)));
+		status = HAL_DMA_Start_IT(hhash->hdmain, inputaddr, (uint32_t)&HASH->DIN, (((inputSize % 4U) != 0U) ? ((inputSize + (4U - (inputSize % 4U))) / 4U) : (inputSize / 4U)));
 
 		/* Enable DMA requests */
 		SET_BIT(HASH->CR, HASH_CR_DMAE);

@@ -154,18 +154,13 @@ typedef struct {
  * @{
  */
 
-#define IS_RNG_CLOCK_DIVIDER(__CLOCK_DIV__)                                                                            \
-	(((__CLOCK_DIV__) == RNG_CLKDIV_BY_1) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_2) ||                               \
-	 ((__CLOCK_DIV__) == RNG_CLKDIV_BY_4) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_8) ||                               \
-	 ((__CLOCK_DIV__) == RNG_CLKDIV_BY_16) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_32) ||                             \
-	 ((__CLOCK_DIV__) == RNG_CLKDIV_BY_64) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_128) ||                            \
-	 ((__CLOCK_DIV__) == RNG_CLKDIV_BY_256) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_512) ||                           \
-	 ((__CLOCK_DIV__) == RNG_CLKDIV_BY_1024) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_2048) ||                         \
-	 ((__CLOCK_DIV__) == RNG_CLKDIV_BY_4096) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_8192) ||                         \
-	 ((__CLOCK_DIV__) == RNG_CLKDIV_BY_16384) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_32768))
+#define IS_RNG_CLOCK_DIVIDER(__CLOCK_DIV__)                                                                                                                                                            \
+	(((__CLOCK_DIV__) == RNG_CLKDIV_BY_1) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_2) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_4) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_8) ||                               \
+	 ((__CLOCK_DIV__) == RNG_CLKDIV_BY_16) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_32) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_64) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_128) ||                          \
+	 ((__CLOCK_DIV__) == RNG_CLKDIV_BY_256) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_512) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_1024) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_2048) ||                     \
+	 ((__CLOCK_DIV__) == RNG_CLKDIV_BY_4096) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_8192) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_16384) || ((__CLOCK_DIV__) == RNG_CLKDIV_BY_32768))
 
-#define IS_RNG_NIST_COMPLIANCE(__NIST_COMPLIANCE__)                                                                    \
-	(((__NIST_COMPLIANCE__) == RNG_NIST_COMPLIANT) || ((__NIST_COMPLIANCE__) == RNG_CUSTOM_NIST))
+#define IS_RNG_NIST_COMPLIANCE(__NIST_COMPLIANCE__) (((__NIST_COMPLIANCE__) == RNG_NIST_COMPLIANT) || ((__NIST_COMPLIANCE__) == RNG_CUSTOM_NIST))
 
 #define IS_RNG_CONFIG1(__CONFIG1__) ((__CONFIG1__) <= 0x3FUL)
 

@@ -31,8 +31,7 @@
 #endif
 
 /* CMSIS compiler control architecture macros */
-#if ((defined(__TARGET_ARCH_6_M) && (__TARGET_ARCH_6_M == 1)) ||                                                       \
-     (defined(__TARGET_ARCH_6S_M) && (__TARGET_ARCH_6S_M == 1)))
+#if ((defined(__TARGET_ARCH_6_M) && (__TARGET_ARCH_6_M == 1)) || (defined(__TARGET_ARCH_6S_M) && (__TARGET_ARCH_6S_M == 1)))
 #define __ARM_ARCH_6M__ 1
 #endif
 
@@ -432,7 +431,7 @@ __attribute__((section(".rrx_text"))) __STATIC_INLINE __ASM uint32_t __RRX(uint3
  */
 #define __STRT(value, ptr) __strt(value, ptr)
 
-#else /* ((defined (__ARM_ARCH_7M__ ) && (__ARM_ARCH_7M__  == 1)) ||                                                   \
+#else /* ((defined (__ARM_ARCH_7M__ ) && (__ARM_ARCH_7M__  == 1)) ||                                                                                                                                   \
 	  (defined (__ARM_ARCH_7EM__) && (__ARM_ARCH_7EM__ == 1))     ) */
 
 /**
@@ -476,7 +475,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __USAT(int32_t val, uint
 	return (uint32_t)val;
 }
 
-#endif /* ((defined (__ARM_ARCH_7M__ ) && (__ARM_ARCH_7M__  == 1)) ||                                                  \
+#endif /* ((defined (__ARM_ARCH_7M__ ) && (__ARM_ARCH_7M__  == 1)) ||                                                                                                                                  \
 	   (defined (__ARM_ARCH_7EM__) && (__ARM_ARCH_7EM__ == 1))     ) */
 
 /*@}*/ /* end of group CMSIS_Core_InstructionInterface */
@@ -696,7 +695,7 @@ __STATIC_INLINE void __set_FAULTMASK(uint32_t faultMask)
 	__regFaultMask = (faultMask & (uint32_t)1U);
 }
 
-#endif /* ((defined (__ARM_ARCH_7M__ ) && (__ARM_ARCH_7M__  == 1)) ||                                                  \
+#endif /* ((defined (__ARM_ARCH_7M__ ) && (__ARM_ARCH_7M__  == 1)) ||                                                                                                                                  \
 	   (defined (__ARM_ARCH_7EM__) && (__ARM_ARCH_7EM__ == 1))     ) */
 
 /**
@@ -800,11 +799,9 @@ __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 #define __QADD __qadd
 #define __QSUB __qsub
 
-#define __PKHBT(ARG1, ARG2, ARG3)                                                                                      \
-	(((((uint32_t)(ARG1))) & 0x0000FFFFUL) | ((((uint32_t)(ARG2)) << (ARG3)) & 0xFFFF0000UL))
+#define __PKHBT(ARG1, ARG2, ARG3) (((((uint32_t)(ARG1))) & 0x0000FFFFUL) | ((((uint32_t)(ARG2)) << (ARG3)) & 0xFFFF0000UL))
 
-#define __PKHTB(ARG1, ARG2, ARG3)                                                                                      \
-	(((((uint32_t)(ARG1))) & 0xFFFF0000UL) | ((((uint32_t)(ARG2)) >> (ARG3)) & 0x0000FFFFUL))
+#define __PKHTB(ARG1, ARG2, ARG3) (((((uint32_t)(ARG1))) & 0xFFFF0000UL) | ((((uint32_t)(ARG2)) >> (ARG3)) & 0x0000FFFFUL))
 
 #define __SMMLA(ARG1, ARG2, ARG3) ((int32_t)((((int64_t)(ARG1) * (ARG2)) + ((int64_t)(ARG3) << 32U)) >> 32U))
 

@@ -107,13 +107,7 @@
 /**
  * @brief  Variable used for Program/Erase sectors under interruption
  */
-FLASH_ProcessTypeDef pFlash = {.Lock = HAL_UNLOCKED,
-			       .ErrorCode = HAL_FLASH_ERROR_NONE,
-			       .ProcedureOnGoing = 0U,
-			       .Address = 0U,
-			       .Bank = FLASH_BANK_1,
-			       .Page = 0U,
-			       .NbPagesToErase = 0U};
+FLASH_ProcessTypeDef pFlash = {.Lock = HAL_UNLOCKED, .ErrorCode = HAL_FLASH_ERROR_NONE, .ProcedureOnGoing = 0U, .Address = 0U, .Bank = FLASH_BANK_1, .Page = 0U, .NbPagesToErase = 0U};
 /**
  * @}
  */

@@ -65,11 +65,11 @@ extern "C" {
  * @{
  */
 #define LL_IWDG_SR_PVU IWDG_SR_PVU /*!< Watchdog prescaler value update */
-#define LL_IWDG_SR_RVU                                                                                                 \
-	IWDG_SR_RVU /*!< Watchdog counter reload value update                                                          \
+#define LL_IWDG_SR_RVU                                                                                                                                                                                 \
+	IWDG_SR_RVU /*!< Watchdog counter reload value update                                                                                                                                          \
 		     */
-#define LL_IWDG_SR_WVU                                                                                                 \
-	IWDG_SR_WVU /*!< Watchdog counter window value update                                                          \
+#define LL_IWDG_SR_WVU                                                                                                                                                                                 \
+	IWDG_SR_WVU /*!< Watchdog counter window value update                                                                                                                                          \
 		     */
 /**
  * @}
@@ -159,10 +159,7 @@ __STATIC_INLINE void LL_IWDG_ReloadCounter(IWDG_TypeDef *IWDGx) { WRITE_REG(IWDG
  * @param  IWDGx IWDG Instance
  * @retval None
  */
-__STATIC_INLINE void LL_IWDG_EnableWriteAccess(IWDG_TypeDef *IWDGx)
-{
-	WRITE_REG(IWDGx->KR, LL_IWDG_KEY_WR_ACCESS_ENABLE);
-}
+__STATIC_INLINE void LL_IWDG_EnableWriteAccess(IWDG_TypeDef *IWDGx) { WRITE_REG(IWDGx->KR, LL_IWDG_KEY_WR_ACCESS_ENABLE); }
 
 /**
  * @brief  Disable write access to IWDG_PR, IWDG_RLR and IWDG_WINR registers
@@ -170,10 +167,7 @@ __STATIC_INLINE void LL_IWDG_EnableWriteAccess(IWDG_TypeDef *IWDGx)
  * @param  IWDGx IWDG Instance
  * @retval None
  */
-__STATIC_INLINE void LL_IWDG_DisableWriteAccess(IWDG_TypeDef *IWDGx)
-{
-	WRITE_REG(IWDGx->KR, LL_IWDG_KEY_WR_ACCESS_DISABLE);
-}
+__STATIC_INLINE void LL_IWDG_DisableWriteAccess(IWDG_TypeDef *IWDGx) { WRITE_REG(IWDGx->KR, LL_IWDG_KEY_WR_ACCESS_DISABLE); }
 
 /**
  * @brief  Select the prescaler of the IWDG
@@ -191,10 +185,7 @@ __STATIC_INLINE void LL_IWDG_DisableWriteAccess(IWDG_TypeDef *IWDGx)
  *         @arg @ref LL_IWDG_PRESCALER_1024
  * @retval None
  */
-__STATIC_INLINE void LL_IWDG_SetPrescaler(IWDG_TypeDef *IWDGx, uint32_t Prescaler)
-{
-	WRITE_REG(IWDGx->PR, IWDG_PR_PR & Prescaler);
-}
+__STATIC_INLINE void LL_IWDG_SetPrescaler(IWDG_TypeDef *IWDGx, uint32_t Prescaler) { WRITE_REG(IWDGx->PR, IWDG_PR_PR & Prescaler); }
 
 /**
  * @brief  Get the selected prescaler of the IWDG
@@ -220,10 +211,7 @@ __STATIC_INLINE uint32_t LL_IWDG_GetPrescaler(const IWDG_TypeDef *IWDGx) { retur
  * @param  Counter Value between Min_Data=0 and Max_Data=0x0FFF
  * @retval None
  */
-__STATIC_INLINE void LL_IWDG_SetReloadCounter(IWDG_TypeDef *IWDGx, uint32_t Counter)
-{
-	WRITE_REG(IWDGx->RLR, IWDG_RLR_RL & Counter);
-}
+__STATIC_INLINE void LL_IWDG_SetReloadCounter(IWDG_TypeDef *IWDGx, uint32_t Counter) { WRITE_REG(IWDGx->RLR, IWDG_RLR_RL & Counter); }
 
 /**
  * @brief  Get the specified IWDG down-counter reload value
@@ -241,10 +229,7 @@ __STATIC_INLINE uint32_t LL_IWDG_GetReloadCounter(const IWDG_TypeDef *IWDGx) { r
  * @param  Window Value between Min_Data=0 and Max_Data=0x0FFF
  * @retval None
  */
-__STATIC_INLINE void LL_IWDG_SetWindow(IWDG_TypeDef *IWDGx, uint32_t Window)
-{
-	WRITE_REG(IWDGx->WINR, IWDG_WINR_WIN & Window);
-}
+__STATIC_INLINE void LL_IWDG_SetWindow(IWDG_TypeDef *IWDGx, uint32_t Window) { WRITE_REG(IWDGx->WINR, IWDG_WINR_WIN & Window); }
 
 /**
  * @brief  Get the high limit of the window value specified.
@@ -270,10 +255,7 @@ __STATIC_INLINE uint32_t LL_IWDG_GetWindow(const IWDG_TypeDef *IWDGx) { return (
  * @param  Time Value between Min_Data=0 and Max_Data=0x0FFF
  * @retval None
  */
-__STATIC_INLINE void LL_IWDG_SetEwiTime(IWDG_TypeDef *IWDGx, uint32_t Time)
-{
-	MODIFY_REG(IWDGx->EWCR, IWDG_EWCR_EWIT, Time);
-}
+__STATIC_INLINE void LL_IWDG_SetEwiTime(IWDG_TypeDef *IWDGx, uint32_t Time) { MODIFY_REG(IWDGx->EWCR, IWDG_EWCR_EWIT, Time); }
 
 /**
  * @brief  Get the Early Wakeup interrupt comparator value
@@ -281,10 +263,7 @@ __STATIC_INLINE void LL_IWDG_SetEwiTime(IWDG_TypeDef *IWDGx, uint32_t Time)
  * @param  IWDGx IWDG Instance
  * @retval Value between Min_Data=0 and Max_Data=0x0FFF
  */
-__STATIC_INLINE uint32_t LL_IWDG_GetEwiTime(const IWDG_TypeDef *IWDGx)
-{
-	return (READ_BIT(IWDGx->EWCR, IWDG_EWCR_EWIT));
-}
+__STATIC_INLINE uint32_t LL_IWDG_GetEwiTime(const IWDG_TypeDef *IWDGx) { return (READ_BIT(IWDGx->EWCR, IWDG_EWCR_EWIT)); }
 
 /**
  * @brief  Enable Early wakeup interrupt
@@ -308,10 +287,7 @@ __STATIC_INLINE void LL_IWDG_DisableIT_EWI(IWDG_TypeDef *IWDGx) { CLEAR_BIT(IWDG
  * @param  IWDGx IWDG Instance
  * @retval None
  */
-__STATIC_INLINE uint32_t LL_IWDG_IsEnabledIT_EWI(const IWDG_TypeDef *IWDGx)
-{
-	return ((READ_BIT(IWDGx->EWCR, IWDG_EWCR_EWIE) == (IWDG_EWCR_EWIE)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_IWDG_IsEnabledIT_EWI(const IWDG_TypeDef *IWDGx) { return ((READ_BIT(IWDGx->EWCR, IWDG_EWCR_EWIE) == (IWDG_EWCR_EWIE)) ? 1UL : 0UL); }
 
 /**
  * @}
@@ -327,10 +303,7 @@ __STATIC_INLINE uint32_t LL_IWDG_IsEnabledIT_EWI(const IWDG_TypeDef *IWDGx)
  * @param  IWDGx IWDG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_IWDG_IsActiveFlag_PVU(const IWDG_TypeDef *IWDGx)
-{
-	return ((READ_BIT(IWDGx->SR, IWDG_SR_PVU) == (IWDG_SR_PVU)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_IWDG_IsActiveFlag_PVU(const IWDG_TypeDef *IWDGx) { return ((READ_BIT(IWDGx->SR, IWDG_SR_PVU) == (IWDG_SR_PVU)) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if flag Reload Value Update is set or not
@@ -338,10 +311,7 @@ __STATIC_INLINE uint32_t LL_IWDG_IsActiveFlag_PVU(const IWDG_TypeDef *IWDGx)
  * @param  IWDGx IWDG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_IWDG_IsActiveFlag_RVU(const IWDG_TypeDef *IWDGx)
-{
-	return ((READ_BIT(IWDGx->SR, IWDG_SR_RVU) == (IWDG_SR_RVU)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_IWDG_IsActiveFlag_RVU(const IWDG_TypeDef *IWDGx) { return ((READ_BIT(IWDGx->SR, IWDG_SR_RVU) == (IWDG_SR_RVU)) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if flag Window Value Update is set or not
@@ -349,10 +319,7 @@ __STATIC_INLINE uint32_t LL_IWDG_IsActiveFlag_RVU(const IWDG_TypeDef *IWDGx)
  * @param  IWDGx IWDG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_IWDG_IsActiveFlag_WVU(const IWDG_TypeDef *IWDGx)
-{
-	return ((READ_BIT(IWDGx->SR, IWDG_SR_WVU) == (IWDG_SR_WVU)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_IWDG_IsActiveFlag_WVU(const IWDG_TypeDef *IWDGx) { return ((READ_BIT(IWDGx->SR, IWDG_SR_WVU) == (IWDG_SR_WVU)) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if flag EWI Value Update is set or not
@@ -360,10 +327,7 @@ __STATIC_INLINE uint32_t LL_IWDG_IsActiveFlag_WVU(const IWDG_TypeDef *IWDGx)
  * @param  IWDGx IWDG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_IWDG_IsActiveFlag_EWU(const IWDG_TypeDef *IWDGx)
-{
-	return ((READ_BIT(IWDGx->SR, IWDG_SR_EWU) == (IWDG_SR_EWU)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_IWDG_IsActiveFlag_EWU(const IWDG_TypeDef *IWDGx) { return ((READ_BIT(IWDGx->SR, IWDG_SR_EWU) == (IWDG_SR_EWU)) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if all flags Prescaler, Reload, Window & Early Interrupt Value
@@ -375,10 +339,7 @@ __STATIC_INLINE uint32_t LL_IWDG_IsActiveFlag_EWU(const IWDG_TypeDef *IWDGx)
  * @param  IWDGx IWDG Instance
  * @retval State of bits (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_IWDG_IsReady(const IWDG_TypeDef *IWDGx)
-{
-	return ((READ_BIT(IWDGx->SR, IWDG_SR_PVU | IWDG_SR_RVU | IWDG_SR_WVU | IWDG_SR_EWU) == 0U) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_IWDG_IsReady(const IWDG_TypeDef *IWDGx) { return ((READ_BIT(IWDGx->SR, IWDG_SR_PVU | IWDG_SR_RVU | IWDG_SR_WVU | IWDG_SR_EWU) == 0U) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if Early Wakeup interrupt flag is set or not
@@ -386,10 +347,7 @@ __STATIC_INLINE uint32_t LL_IWDG_IsReady(const IWDG_TypeDef *IWDGx)
  * @param  IWDGx IWDG Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_IWDG_IsActiveFlag_EWIF(const IWDG_TypeDef *IWDGx)
-{
-	return ((READ_BIT(IWDGx->SR, IWDG_SR_EWIF) == (IWDG_SR_EWIF)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_IWDG_IsActiveFlag_EWIF(const IWDG_TypeDef *IWDGx) { return ((READ_BIT(IWDGx->SR, IWDG_SR_EWIF) == (IWDG_SR_EWIF)) ? 1UL : 0UL); }
 
 /**
  * @brief  Clear the Early Wakeup interrupt flag

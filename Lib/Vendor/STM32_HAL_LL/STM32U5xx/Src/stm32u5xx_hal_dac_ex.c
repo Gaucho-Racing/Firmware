@@ -224,8 +224,7 @@ HAL_StatusTypeDef HAL_DACEx_DualStop(DAC_HandleTypeDef *hdac)
  *            @arg DAC_ALIGN_12B_R: 12bit right data alignment selected
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DACEx_DualStart_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel, const uint32_t *pData,
-					  uint32_t Length, uint32_t Alignment)
+HAL_StatusTypeDef HAL_DACEx_DualStart_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel, const uint32_t *pData, uint32_t Length, uint32_t Alignment)
 {
 	HAL_StatusTypeDef status;
 	uint32_t tmpreg = 0UL;
@@ -300,19 +299,15 @@ HAL_StatusTypeDef HAL_DACEx_DualStart_DMA(DAC_HandleTypeDef *hdac, uint32_t Chan
 
 		/* Check linkedlist mode */
 		if ((hdac->DMA_Handle1->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
-			if ((hdac->DMA_Handle1->LinkedListQueue != NULL) &&
-			    (hdac->DMA_Handle1->LinkedListQueue->Head != NULL)) {
+			if ((hdac->DMA_Handle1->LinkedListQueue != NULL) && (hdac->DMA_Handle1->LinkedListQueue->Head != NULL)) {
 				/* Set DMA data size */
-				hdac->DMA_Handle1->LinkedListQueue->Head->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] =
-				    LengthInBytes;
+				hdac->DMA_Handle1->LinkedListQueue->Head->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] = LengthInBytes;
 
 				/* Set DMA source address */
-				hdac->DMA_Handle1->LinkedListQueue->Head->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] =
-				    (uint32_t)pData;
+				hdac->DMA_Handle1->LinkedListQueue->Head->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] = (uint32_t)pData;
 
 				/* Set DMA destination address */
-				hdac->DMA_Handle1->LinkedListQueue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] =
-				    tmpreg;
+				hdac->DMA_Handle1->LinkedListQueue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] = tmpreg;
 
 				/* Enable the DMA channel */
 				status = HAL_DMAEx_List_Start_IT(hdac->DMA_Handle1);
@@ -333,19 +328,15 @@ HAL_StatusTypeDef HAL_DACEx_DualStart_DMA(DAC_HandleTypeDef *hdac, uint32_t Chan
 
 		/* Check linkedlist mode */
 		if ((hdac->DMA_Handle2->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
-			if ((hdac->DMA_Handle2->LinkedListQueue != NULL) &&
-			    (hdac->DMA_Handle2->LinkedListQueue->Head != NULL)) {
+			if ((hdac->DMA_Handle2->LinkedListQueue != NULL) && (hdac->DMA_Handle2->LinkedListQueue->Head != NULL)) {
 				/* Set DMA data size */
-				hdac->DMA_Handle2->LinkedListQueue->Head->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] =
-				    LengthInBytes;
+				hdac->DMA_Handle2->LinkedListQueue->Head->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] = LengthInBytes;
 
 				/* Set DMA source address */
-				hdac->DMA_Handle2->LinkedListQueue->Head->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] =
-				    (uint32_t)pData;
+				hdac->DMA_Handle2->LinkedListQueue->Head->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] = (uint32_t)pData;
 
 				/* Set DMA destination address */
-				hdac->DMA_Handle2->LinkedListQueue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] =
-				    tmpreg;
+				hdac->DMA_Handle2->LinkedListQueue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] = tmpreg;
 
 				/* Enable the DMA channel */
 				status = HAL_DMAEx_List_Start_IT(hdac->DMA_Handle2);
@@ -489,8 +480,7 @@ HAL_StatusTypeDef HAL_DACEx_TriangleWaveGenerate(DAC_HandleTypeDef *hdac, uint32
 	hdac->State = HAL_DAC_STATE_BUSY;
 
 	/* Enable the triangle wave generation for the selected DAC channel */
-	MODIFY_REG(hdac->Instance->CR, ((DAC_CR_WAVE1) | (DAC_CR_MAMP1)) << (Channel & 0x10UL),
-		   (DAC_CR_WAVE1_1 | Amplitude) << (Channel & 0x10UL));
+	MODIFY_REG(hdac->Instance->CR, ((DAC_CR_WAVE1) | (DAC_CR_MAMP1)) << (Channel & 0x10UL), (DAC_CR_WAVE1_1 | Amplitude) << (Channel & 0x10UL));
 
 	/* Change DAC state */
 	hdac->State = HAL_DAC_STATE_READY;
@@ -556,8 +546,7 @@ HAL_StatusTypeDef HAL_DACEx_NoiseWaveGenerate(DAC_HandleTypeDef *hdac, uint32_t 
 	hdac->State = HAL_DAC_STATE_BUSY;
 
 	/* Enable the noise wave generation for the selected DAC channel */
-	MODIFY_REG(hdac->Instance->CR, ((DAC_CR_WAVE1) | (DAC_CR_MAMP1)) << (Channel & 0x10UL),
-		   (DAC_CR_WAVE1_0 | Amplitude) << (Channel & 0x10UL));
+	MODIFY_REG(hdac->Instance->CR, ((DAC_CR_WAVE1) | (DAC_CR_MAMP1)) << (Channel & 0x10UL), (DAC_CR_WAVE1_0 | Amplitude) << (Channel & 0x10UL));
 
 	/* Change DAC state */
 	hdac->State = HAL_DAC_STATE_READY;
@@ -745,8 +734,7 @@ HAL_StatusTypeDef HAL_DACEx_SelfCalibrate(DAC_HandleTypeDef *hdac, DAC_ChannelCo
 		delta = 0x08UL;
 		while (delta != 0UL) {
 			/* Set candidate trimming */
-			MODIFY_REG(hdac->Instance->CCR, (DAC_CCR_OTRIM1 << (Channel & 0x10UL)),
-				   (trimmingvalue << (Channel & 0x10UL)));
+			MODIFY_REG(hdac->Instance->CCR, (DAC_CCR_OTRIM1 << (Channel & 0x10UL)), (trimmingvalue << (Channel & 0x10UL)));
 
 			/* Wait minimum time needed between two calibration
 			 * steps (OTRIM) */
@@ -761,8 +749,7 @@ HAL_StatusTypeDef HAL_DACEx_SelfCalibrate(DAC_HandleTypeDef *hdac, DAC_ChannelCo
 				wait_loop_index--;
 			}
 
-			if ((hdac->Instance->SR & (DAC_SR_CAL_FLAG1 << (Channel & 0x10UL))) ==
-			    (DAC_SR_CAL_FLAG1 << (Channel & 0x10UL))) {
+			if ((hdac->Instance->SR & (DAC_SR_CAL_FLAG1 << (Channel & 0x10UL))) == (DAC_SR_CAL_FLAG1 << (Channel & 0x10UL))) {
 				/* DAC_SR_CAL_FLAGx is HIGH try higher trimming
 				 */
 				trimmingvalue -= delta;
@@ -778,8 +765,7 @@ HAL_StatusTypeDef HAL_DACEx_SelfCalibrate(DAC_HandleTypeDef *hdac, DAC_ChannelCo
 		/* Indeed the first value that causes the DAC_SR_CAL_FLAGx bit
 		 * to change from 0 to 1  */
 		/* Set candidate trimming */
-		MODIFY_REG(hdac->Instance->CCR, (DAC_CCR_OTRIM1 << (Channel & 0x10UL)),
-			   (trimmingvalue << (Channel & 0x10UL)));
+		MODIFY_REG(hdac->Instance->CCR, (DAC_CCR_OTRIM1 << (Channel & 0x10UL)), (trimmingvalue << (Channel & 0x10UL)));
 
 		/* Wait minimum time needed between two calibration steps
 		 * (OTRIM) */
@@ -799,8 +785,7 @@ HAL_StatusTypeDef HAL_DACEx_SelfCalibrate(DAC_HandleTypeDef *hdac, DAC_ChannelCo
 				trimmingvalue++;
 			}
 			/* Set right trimming */
-			MODIFY_REG(hdac->Instance->CCR, (DAC_CCR_OTRIM1 << (Channel & 0x10UL)),
-				   (trimmingvalue << (Channel & 0x10UL)));
+			MODIFY_REG(hdac->Instance->CCR, (DAC_CCR_OTRIM1 << (Channel & 0x10UL)), (trimmingvalue << (Channel & 0x10UL)));
 		}
 
 		/* Disable the selected DAC channel calibration */
@@ -834,8 +819,7 @@ HAL_StatusTypeDef HAL_DACEx_SelfCalibrate(DAC_HandleTypeDef *hdac, DAC_ChannelCo
  * @param  NewTrimmingValue DAC new trimming value
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DACEx_SetUserTrimming(DAC_HandleTypeDef *hdac, DAC_ChannelConfTypeDef *sConfig, uint32_t Channel,
-					    uint32_t NewTrimmingValue)
+HAL_StatusTypeDef HAL_DACEx_SetUserTrimming(DAC_HandleTypeDef *hdac, DAC_ChannelConfTypeDef *sConfig, uint32_t Channel, uint32_t NewTrimmingValue)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -851,8 +835,7 @@ HAL_StatusTypeDef HAL_DACEx_SetUserTrimming(DAC_HandleTypeDef *hdac, DAC_Channel
 		__HAL_LOCK(hdac);
 
 		/* Set new trimming */
-		MODIFY_REG(hdac->Instance->CCR, (DAC_CCR_OTRIM1 << (Channel & 0x10UL)),
-			   (NewTrimmingValue << (Channel & 0x10UL)));
+		MODIFY_REG(hdac->Instance->CCR, (DAC_CCR_OTRIM1 << (Channel & 0x10UL)), (NewTrimmingValue << (Channel & 0x10UL)));
 
 		/* Update trimming mode */
 		sConfig->DAC_UserTrimming = DAC_TRIMMING_USER;
@@ -930,8 +913,7 @@ uint32_t HAL_DACEx_DualGetValue(const DAC_HandleTypeDef *hdac)
  * @param sConfig pointer to Autonomous mode structure parameters.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DACEx_SetConfigAutonomousMode(DAC_HandleTypeDef *hdac,
-						    const DAC_AutonomousModeConfTypeDef *sConfig)
+HAL_StatusTypeDef HAL_DACEx_SetConfigAutonomousMode(DAC_HandleTypeDef *hdac, const DAC_AutonomousModeConfTypeDef *sConfig)
 {
 	/* Check the DAC peripheral handle and autonomous mode configuration
 	 * struct */
@@ -972,8 +954,7 @@ HAL_StatusTypeDef HAL_DACEx_SetConfigAutonomousMode(DAC_HandleTypeDef *hdac,
  * @param sConfig pointer to Autonomous mode structure parameters.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DACEx_GetConfigAutonomousMode(const DAC_HandleTypeDef *hdac,
-						    DAC_AutonomousModeConfTypeDef *sConfig)
+HAL_StatusTypeDef HAL_DACEx_GetConfigAutonomousMode(const DAC_HandleTypeDef *hdac, DAC_AutonomousModeConfTypeDef *sConfig)
 {
 	/* Check the DAC peripheral handle and autonomous mode configuration
 	 * struct */

@@ -148,8 +148,7 @@ HAL_StatusTypeDef HAL_SPIEx_EnableLockConfiguration(SPI_HandleTypeDef *hspi)
  * condition This parameter can be a value of @ref SPI_Underrun_Behaviour.
  * @retval None
  */
-HAL_StatusTypeDef HAL_SPIEx_ConfigureUnderrun(SPI_HandleTypeDef *hspi, uint32_t UnderrunDetection,
-					      uint32_t UnderrunBehaviour)
+HAL_StatusTypeDef HAL_SPIEx_ConfigureUnderrun(SPI_HandleTypeDef *hspi, uint32_t UnderrunDetection, uint32_t UnderrunBehaviour)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(UnderrunDetection);
@@ -203,8 +202,7 @@ HAL_StatusTypeDef HAL_SPIEx_ConfigureUnderrun(SPI_HandleTypeDef *hspi, uint32_t 
  * specified SPIx peripheral.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SPIEx_SetConfigAutonomousMode(SPI_HandleTypeDef *hspi,
-						    const SPI_AutonomousModeConfTypeDef *sConfig)
+HAL_StatusTypeDef HAL_SPIEx_SetConfigAutonomousMode(SPI_HandleTypeDef *hspi, const SPI_AutonomousModeConfTypeDef *sConfig)
 {
 	if (hspi->State == HAL_SPI_STATE_READY) {
 		/* Process Locked */
@@ -222,9 +220,7 @@ HAL_StatusTypeDef HAL_SPIEx_SetConfigAutonomousMode(SPI_HandleTypeDef *hspi,
 		__HAL_SPI_DISABLE(hspi);
 
 		/* SPIx AUTOCR Configuration */
-		WRITE_REG(hspi->Instance->AUTOCR,
-			  (sConfig->TriggerState | ((sConfig->TriggerSelection) & SPI_AUTOCR_TRIGSEL_Msk) |
-			   sConfig->TriggerPolarity));
+		WRITE_REG(hspi->Instance->AUTOCR, (sConfig->TriggerState | ((sConfig->TriggerSelection) & SPI_AUTOCR_TRIGSEL_Msk) | sConfig->TriggerPolarity));
 
 		hspi->State = HAL_SPI_STATE_READY;
 
@@ -247,8 +243,7 @@ HAL_StatusTypeDef HAL_SPIEx_SetConfigAutonomousMode(SPI_HandleTypeDef *hspi,
  * specified SPIx peripheral.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SPIEx_GetConfigAutonomousMode(const SPI_HandleTypeDef *hspi,
-						    SPI_AutonomousModeConfTypeDef *sConfig)
+HAL_StatusTypeDef HAL_SPIEx_GetConfigAutonomousMode(const SPI_HandleTypeDef *hspi, SPI_AutonomousModeConfTypeDef *sConfig)
 {
 	uint32_t autocr_tmp;
 

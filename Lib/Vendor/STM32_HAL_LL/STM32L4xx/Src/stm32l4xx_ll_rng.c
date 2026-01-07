@@ -51,8 +51,7 @@
 #if defined(RNG_CR_CONDRST)
 #define IS_LL_RNG_CLOCK_DIVIDER(__CLOCK_DIV__) ((__CLOCK_DIV__) <= 0x0Fu)
 
-#define IS_LL_RNG_NIST_COMPLIANCE(__NIST_COMPLIANCE__)                                                                 \
-	(((__NIST_COMPLIANCE__) == LL_RNG_NIST_COMPLIANT) || ((__NIST_COMPLIANCE__) == LL_RNG_NOTNIST_COMPLIANT))
+#define IS_LL_RNG_NIST_COMPLIANCE(__NIST_COMPLIANCE__) (((__NIST_COMPLIANCE__) == LL_RNG_NIST_COMPLIANT) || ((__NIST_COMPLIANCE__) == LL_RNG_NOTNIST_COMPLIANT))
 
 #define IS_LL_RNG_CONFIG1 (__CONFIG1__)((__CONFIG1__) <= 0x3FUL)
 

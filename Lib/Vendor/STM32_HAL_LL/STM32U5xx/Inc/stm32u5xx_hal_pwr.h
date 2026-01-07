@@ -72,8 +72,8 @@ typedef struct {
 #define PWR_PVDLEVEL_4 (PWR_SVMCR_PVDLS_2)		       /*!< PVD threshold around 2.6 V       */
 #define PWR_PVDLEVEL_5 (PWR_SVMCR_PVDLS_0 | PWR_SVMCR_PVDLS_2) /*!< PVD threshold around 2.8 V       */
 #define PWR_PVDLEVEL_6 (PWR_SVMCR_PVDLS_1 | PWR_SVMCR_PVDLS_2) /*!< PVD threshold around 2.9 V       */
-#define PWR_PVDLEVEL_7                                                                                                 \
-	(PWR_SVMCR_PVDLS) /*!< External input analog voltage                                                           \
+#define PWR_PVDLEVEL_7                                                                                                                                                                                 \
+	(PWR_SVMCR_PVDLS) /*!< External input analog voltage                                                                                                                                           \
 			       (compared internally to VREFINT) */
 /**
  * @}
@@ -83,14 +83,14 @@ typedef struct {
  * @{
  */
 #define PWR_PVD_MODE_NORMAL (0x00U) /*!< Basic Mode is used */
-#define PWR_PVD_MODE_IT_RISING                                                                                         \
-	(0x05U) /*!< External Interrupt Mode with Rising edge trigger                                                  \
+#define PWR_PVD_MODE_IT_RISING                                                                                                                                                                         \
+	(0x05U) /*!< External Interrupt Mode with Rising edge trigger                                                                                                                                  \
 		   detection         */
-#define PWR_PVD_MODE_IT_FALLING                                                                                        \
-	(0x06U) /*!< External Interrupt Mode with Falling edge trigger                                                 \
+#define PWR_PVD_MODE_IT_FALLING                                                                                                                                                                        \
+	(0x06U) /*!< External Interrupt Mode with Falling edge trigger                                                                                                                                 \
 		   detection        */
-#define PWR_PVD_MODE_IT_RISING_FALLING                                                                                 \
-	(0x07U)					  /*!< External Interrupt Mode with Rising/Falling edge trigger        \
+#define PWR_PVD_MODE_IT_RISING_FALLING                                                                                                                                                                 \
+	(0x07U)					  /*!< External Interrupt Mode with Rising/Falling edge trigger                                                                                        \
 						     detection */
 #define PWR_PVD_MODE_EVENT_RISING (0x09U)	  /*!< Event Mode with Rising edge trigger detection */
 #define PWR_PVD_MODE_EVENT_FALLING (0x0AU)	  /*!< Event Mode with Falling edge trigger detection */
@@ -145,8 +145,8 @@ typedef struct {
 #define PWR_FLAG_REGS (0x0BU)	   /*!< Regulator selection flag */
 #define PWR_FLAG_TEMPH (0x0CU)	   /*!< Temperature level flag (versus high threshold) */
 #define PWR_FLAG_TEMPL (0x0DU)	   /*!< Temperature level flag (versus low threshold) */
-#define PWR_FLAG_VBATH                                                                                                 \
-	(0x0EU) /*!< Backup domain voltage level flag (versus high threshold)                                          \
+#define PWR_FLAG_VBATH                                                                                                                                                                                 \
+	(0x0EU) /*!< Backup domain voltage level flag (versus high threshold)                                                                                                                          \
 		 */
 #if defined(PWR_VOSR_USBBOOSTRDY)
 #define PWR_FLAG_USBBOOSTRDY (0x0FU) /*!< USB EPOD booster ready flag */
@@ -174,93 +174,93 @@ typedef struct {
 /** @defgroup PWR_WakeUp_Pin_High_Polarity PWR Wake Up Pins High Polarity
  * @{
  */
-#define PWR_WAKEUP_PIN1_HIGH_0                                                                                         \
-	(PWR_WUCR1_WUPEN1 | PWR_WAKEUP1_SOURCE_SELECTION_0) /*!< PA0  : Wakeup pin 1 (high                             \
+#define PWR_WAKEUP_PIN1_HIGH_0                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN1 | PWR_WAKEUP1_SOURCE_SELECTION_0) /*!< PA0  : Wakeup pin 1 (high                                                                                                             \
 							       polarity) */
-#define PWR_WAKEUP_PIN1_HIGH_1                                                                                         \
-	(PWR_WUCR1_WUPEN1 | PWR_WAKEUP1_SOURCE_SELECTION_1) /*!< PB2  : Wakeup pin 1 (high                             \
+#define PWR_WAKEUP_PIN1_HIGH_1                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN1 | PWR_WAKEUP1_SOURCE_SELECTION_1) /*!< PB2  : Wakeup pin 1 (high                                                                                                             \
 							       polarity) */
-#define PWR_WAKEUP_PIN1_HIGH_2                                                                                         \
-	(PWR_WUCR1_WUPEN1 | PWR_WAKEUP1_SOURCE_SELECTION_2) /*!< PE4  : Wakeup pin 1 (high                             \
-							       polarity) */
-
-#define PWR_WAKEUP_PIN2_HIGH_0                                                                                         \
-	(PWR_WUCR1_WUPEN2 | PWR_WAKEUP2_SOURCE_SELECTION_0) /*!< PA4  : Wakeup pin 2 (high                             \
-							       polarity) */
-#define PWR_WAKEUP_PIN2_HIGH_1                                                                                         \
-	(PWR_WUCR1_WUPEN2 | PWR_WAKEUP2_SOURCE_SELECTION_1) /*!< PC13 : Wakeup pin 2 (high                             \
-							       polarity) */
-#define PWR_WAKEUP_PIN2_HIGH_2                                                                                         \
-	(PWR_WUCR1_WUPEN2 | PWR_WAKEUP2_SOURCE_SELECTION_2) /*!< PE5  : Wakeup pin 2 (high                             \
+#define PWR_WAKEUP_PIN1_HIGH_2                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN1 | PWR_WAKEUP1_SOURCE_SELECTION_2) /*!< PE4  : Wakeup pin 1 (high                                                                                                             \
 							       polarity) */
 
-#define PWR_WAKEUP_PIN3_HIGH_0                                                                                         \
-	(PWR_WUCR1_WUPEN3 | PWR_WAKEUP3_SOURCE_SELECTION_0) /*!< PE6  : Wakeup pin 3 (high                             \
+#define PWR_WAKEUP_PIN2_HIGH_0                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN2 | PWR_WAKEUP2_SOURCE_SELECTION_0) /*!< PA4  : Wakeup pin 2 (high                                                                                                             \
 							       polarity) */
-#define PWR_WAKEUP_PIN3_HIGH_1                                                                                         \
-	(PWR_WUCR1_WUPEN3 | PWR_WAKEUP3_SOURCE_SELECTION_1) /*!< PA1  : Wakeup pin 3 (high                             \
+#define PWR_WAKEUP_PIN2_HIGH_1                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN2 | PWR_WAKEUP2_SOURCE_SELECTION_1) /*!< PC13 : Wakeup pin 2 (high                                                                                                             \
 							       polarity) */
-#define PWR_WAKEUP_PIN3_HIGH_2                                                                                         \
-	(PWR_WUCR1_WUPEN3 | PWR_WAKEUP3_SOURCE_SELECTION_2) /*!< PB6  : Wakeup pin 3 (high                             \
-							       polarity) */
-
-#define PWR_WAKEUP_PIN4_HIGH_0                                                                                         \
-	(PWR_WUCR1_WUPEN4 | PWR_WAKEUP4_SOURCE_SELECTION_0) /*!< PA2  : Wakeup pin 4 (high                             \
-							       polarity) */
-#define PWR_WAKEUP_PIN4_HIGH_1                                                                                         \
-	(PWR_WUCR1_WUPEN4 | PWR_WAKEUP4_SOURCE_SELECTION_1) /*!< PB1  : Wakeup pin 4 (high                             \
-							       polarity) */
-#define PWR_WAKEUP_PIN4_HIGH_2                                                                                         \
-	(PWR_WUCR1_WUPEN4 | PWR_WAKEUP4_SOURCE_SELECTION_2) /*!< PB7  : Wakeup pin 4 (high                             \
+#define PWR_WAKEUP_PIN2_HIGH_2                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN2 | PWR_WAKEUP2_SOURCE_SELECTION_2) /*!< PE5  : Wakeup pin 2 (high                                                                                                             \
 							       polarity) */
 
-#define PWR_WAKEUP_PIN5_HIGH_0                                                                                         \
-	(PWR_WUCR1_WUPEN5 | PWR_WAKEUP5_SOURCE_SELECTION_0) /*!< PC5  : Wakeup pin 5 (high                             \
+#define PWR_WAKEUP_PIN3_HIGH_0                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN3 | PWR_WAKEUP3_SOURCE_SELECTION_0) /*!< PE6  : Wakeup pin 3 (high                                                                                                             \
 							       polarity) */
-#define PWR_WAKEUP_PIN5_HIGH_1                                                                                         \
-	(PWR_WUCR1_WUPEN5 | PWR_WAKEUP5_SOURCE_SELECTION_1) /*!< PA3  : Wakeup pin 5 (high                             \
+#define PWR_WAKEUP_PIN3_HIGH_1                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN3 | PWR_WAKEUP3_SOURCE_SELECTION_1) /*!< PA1  : Wakeup pin 3 (high                                                                                                             \
 							       polarity) */
-#define PWR_WAKEUP_PIN5_HIGH_2                                                                                         \
-	(PWR_WUCR1_WUPEN5 | PWR_WAKEUP5_SOURCE_SELECTION_2) /*!< PB8  : Wakeup pin 5 (high                             \
-							       polarity) */
-
-#define PWR_WAKEUP_PIN6_HIGH_0                                                                                         \
-	(PWR_WUCR1_WUPEN6 | PWR_WAKEUP6_SOURCE_SELECTION_0) /*!< PB5  : Wakeup pin 6 (high                             \
-							       polarity) */
-#define PWR_WAKEUP_PIN6_HIGH_1                                                                                         \
-	(PWR_WUCR1_WUPEN6 | PWR_WAKEUP6_SOURCE_SELECTION_1) /*!< PA5  : Wakeup pin 6 (high                             \
-							       polarity) */
-#define PWR_WAKEUP_PIN6_HIGH_2                                                                                         \
-	(PWR_WUCR1_WUPEN6 | PWR_WAKEUP6_SOURCE_SELECTION_2) /*!< PE7  : Wakeup pin 6 (high                             \
-							       polarity) */
-#define PWR_WAKEUP_PIN6_HIGH_3                                                                                         \
-	(PWR_WUCR1_WUPEN6 | PWR_WAKEUP6_SOURCE_SELECTION_3) /*!< RTC  : Wakeup pin 6 (high                             \
+#define PWR_WAKEUP_PIN3_HIGH_2                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN3 | PWR_WAKEUP3_SOURCE_SELECTION_2) /*!< PB6  : Wakeup pin 3 (high                                                                                                             \
 							       polarity) */
 
-#define PWR_WAKEUP_PIN7_HIGH_0                                                                                         \
-	(PWR_WUCR1_WUPEN7 | PWR_WAKEUP7_SOURCE_SELECTION_0) /*!< PB15 : Wakeup pin 7 (high                             \
+#define PWR_WAKEUP_PIN4_HIGH_0                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN4 | PWR_WAKEUP4_SOURCE_SELECTION_0) /*!< PA2  : Wakeup pin 4 (high                                                                                                             \
 							       polarity) */
-#define PWR_WAKEUP_PIN7_HIGH_1                                                                                         \
-	(PWR_WUCR1_WUPEN7 | PWR_WAKEUP7_SOURCE_SELECTION_1) /*!< PA6  : Wakeup pin 7 (high                             \
+#define PWR_WAKEUP_PIN4_HIGH_1                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN4 | PWR_WAKEUP4_SOURCE_SELECTION_1) /*!< PB1  : Wakeup pin 4 (high                                                                                                             \
 							       polarity) */
-#define PWR_WAKEUP_PIN7_HIGH_2                                                                                         \
-	(PWR_WUCR1_WUPEN7 | PWR_WAKEUP7_SOURCE_SELECTION_2) /*!< PE8  : Wakeup pin 7 (high                             \
-							       polarity) */
-#define PWR_WAKEUP_PIN7_HIGH_3                                                                                         \
-	(PWR_WUCR1_WUPEN7 | PWR_WAKEUP7_SOURCE_SELECTION_3) /*!< RTC  : Wakeup pin 7 (high                             \
+#define PWR_WAKEUP_PIN4_HIGH_2                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN4 | PWR_WAKEUP4_SOURCE_SELECTION_2) /*!< PB7  : Wakeup pin 4 (high                                                                                                             \
 							       polarity) */
 
-#define PWR_WAKEUP_PIN8_HIGH_0                                                                                         \
-	(PWR_WUCR1_WUPEN8 | PWR_WAKEUP8_SOURCE_SELECTION_0) /*!< PF2  : Wakeup pin 8 (high                             \
+#define PWR_WAKEUP_PIN5_HIGH_0                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN5 | PWR_WAKEUP5_SOURCE_SELECTION_0) /*!< PC5  : Wakeup pin 5 (high                                                                                                             \
 							       polarity) */
-#define PWR_WAKEUP_PIN8_HIGH_1                                                                                         \
-	(PWR_WUCR1_WUPEN8 | PWR_WAKEUP8_SOURCE_SELECTION_1) /*!< PA7  : Wakeup pin 8 (high                             \
+#define PWR_WAKEUP_PIN5_HIGH_1                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN5 | PWR_WAKEUP5_SOURCE_SELECTION_1) /*!< PA3  : Wakeup pin 5 (high                                                                                                             \
 							       polarity) */
-#define PWR_WAKEUP_PIN8_HIGH_2                                                                                         \
-	(PWR_WUCR1_WUPEN8 | PWR_WAKEUP8_SOURCE_SELECTION_2) /*!< PB10 : Wakeup pin 8 (high                             \
+#define PWR_WAKEUP_PIN5_HIGH_2                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN5 | PWR_WAKEUP5_SOURCE_SELECTION_2) /*!< PB8  : Wakeup pin 5 (high                                                                                                             \
 							       polarity) */
-#define PWR_WAKEUP_PIN8_HIGH_3                                                                                         \
-	(PWR_WUCR1_WUPEN8 | PWR_WAKEUP8_SOURCE_SELECTION_3) /*!< RTC  : Wakeup pin 8 (high                             \
+
+#define PWR_WAKEUP_PIN6_HIGH_0                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN6 | PWR_WAKEUP6_SOURCE_SELECTION_0) /*!< PB5  : Wakeup pin 6 (high                                                                                                             \
+							       polarity) */
+#define PWR_WAKEUP_PIN6_HIGH_1                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN6 | PWR_WAKEUP6_SOURCE_SELECTION_1) /*!< PA5  : Wakeup pin 6 (high                                                                                                             \
+							       polarity) */
+#define PWR_WAKEUP_PIN6_HIGH_2                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN6 | PWR_WAKEUP6_SOURCE_SELECTION_2) /*!< PE7  : Wakeup pin 6 (high                                                                                                             \
+							       polarity) */
+#define PWR_WAKEUP_PIN6_HIGH_3                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN6 | PWR_WAKEUP6_SOURCE_SELECTION_3) /*!< RTC  : Wakeup pin 6 (high                                                                                                             \
+							       polarity) */
+
+#define PWR_WAKEUP_PIN7_HIGH_0                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN7 | PWR_WAKEUP7_SOURCE_SELECTION_0) /*!< PB15 : Wakeup pin 7 (high                                                                                                             \
+							       polarity) */
+#define PWR_WAKEUP_PIN7_HIGH_1                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN7 | PWR_WAKEUP7_SOURCE_SELECTION_1) /*!< PA6  : Wakeup pin 7 (high                                                                                                             \
+							       polarity) */
+#define PWR_WAKEUP_PIN7_HIGH_2                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN7 | PWR_WAKEUP7_SOURCE_SELECTION_2) /*!< PE8  : Wakeup pin 7 (high                                                                                                             \
+							       polarity) */
+#define PWR_WAKEUP_PIN7_HIGH_3                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN7 | PWR_WAKEUP7_SOURCE_SELECTION_3) /*!< RTC  : Wakeup pin 7 (high                                                                                                             \
+							       polarity) */
+
+#define PWR_WAKEUP_PIN8_HIGH_0                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN8 | PWR_WAKEUP8_SOURCE_SELECTION_0) /*!< PF2  : Wakeup pin 8 (high                                                                                                             \
+							       polarity) */
+#define PWR_WAKEUP_PIN8_HIGH_1                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN8 | PWR_WAKEUP8_SOURCE_SELECTION_1) /*!< PA7  : Wakeup pin 8 (high                                                                                                             \
+							       polarity) */
+#define PWR_WAKEUP_PIN8_HIGH_2                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN8 | PWR_WAKEUP8_SOURCE_SELECTION_2) /*!< PB10 : Wakeup pin 8 (high                                                                                                             \
+							       polarity) */
+#define PWR_WAKEUP_PIN8_HIGH_3                                                                                                                                                                         \
+	(PWR_WUCR1_WUPEN8 | PWR_WAKEUP8_SOURCE_SELECTION_3) /*!< RTC  : Wakeup pin 8 (high                                                                                                             \
 							       polarity) */
 /**
  * @}
@@ -269,93 +269,93 @@ typedef struct {
 /** @defgroup PWR_WakeUp_Pin_Low_Polarity PWR Wake Up Pins Low Polarity
  * @{
  */
-#define PWR_WAKEUP_PIN1_LOW_0                                                                                          \
-	(PWR_WUCR1_WUPEN1 | PWR_WAKEUP1_POLARITY_LOW | PWR_WAKEUP1_SOURCE_SELECTION_0) /*!< PA0  : Wakeup pin 1 (low   \
+#define PWR_WAKEUP_PIN1_LOW_0                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN1 | PWR_WAKEUP1_POLARITY_LOW | PWR_WAKEUP1_SOURCE_SELECTION_0) /*!< PA0  : Wakeup pin 1 (low                                                                                   \
 											  polarity) */
-#define PWR_WAKEUP_PIN1_LOW_1                                                                                          \
-	(PWR_WUCR1_WUPEN1 | PWR_WAKEUP1_POLARITY_LOW | PWR_WAKEUP1_SOURCE_SELECTION_1) /*!< PB2  : Wakeup pin 1 (low   \
+#define PWR_WAKEUP_PIN1_LOW_1                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN1 | PWR_WAKEUP1_POLARITY_LOW | PWR_WAKEUP1_SOURCE_SELECTION_1) /*!< PB2  : Wakeup pin 1 (low                                                                                   \
 											  polarity) */
-#define PWR_WAKEUP_PIN1_LOW_2                                                                                          \
-	(PWR_WUCR1_WUPEN1 | PWR_WAKEUP1_POLARITY_LOW | PWR_WAKEUP1_SOURCE_SELECTION_2) /*!< PE4  : Wakeup pin 1 (low   \
-											  polarity) */
-
-#define PWR_WAKEUP_PIN2_LOW_0                                                                                          \
-	(PWR_WUCR1_WUPEN2 | PWR_WAKEUP2_POLARITY_LOW | PWR_WAKEUP2_SOURCE_SELECTION_0) /*!< PA4  : Wakeup pin 2 (low   \
-											  polarity) */
-#define PWR_WAKEUP_PIN2_LOW_1                                                                                          \
-	(PWR_WUCR1_WUPEN2 | PWR_WAKEUP2_POLARITY_LOW | PWR_WAKEUP2_SOURCE_SELECTION_1) /*!< PC13 : Wakeup pin 2 (low   \
-											  polarity) */
-#define PWR_WAKEUP_PIN2_LOW_2                                                                                          \
-	(PWR_WUCR1_WUPEN2 | PWR_WAKEUP2_POLARITY_LOW | PWR_WAKEUP2_SOURCE_SELECTION_2) /*!< PE5  : Wakeup pin 2 (low   \
+#define PWR_WAKEUP_PIN1_LOW_2                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN1 | PWR_WAKEUP1_POLARITY_LOW | PWR_WAKEUP1_SOURCE_SELECTION_2) /*!< PE4  : Wakeup pin 1 (low                                                                                   \
 											  polarity) */
 
-#define PWR_WAKEUP_PIN3_LOW_0                                                                                          \
-	(PWR_WUCR1_WUPEN3 | PWR_WAKEUP3_POLARITY_LOW | PWR_WAKEUP3_SOURCE_SELECTION_0) /*!< PE6  : Wakeup pin 3 (low   \
+#define PWR_WAKEUP_PIN2_LOW_0                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN2 | PWR_WAKEUP2_POLARITY_LOW | PWR_WAKEUP2_SOURCE_SELECTION_0) /*!< PA4  : Wakeup pin 2 (low                                                                                   \
 											  polarity) */
-#define PWR_WAKEUP_PIN3_LOW_1                                                                                          \
-	(PWR_WUCR1_WUPEN3 | PWR_WAKEUP3_POLARITY_LOW | PWR_WAKEUP3_SOURCE_SELECTION_1) /*!< PA1  : Wakeup pin 3 (low   \
+#define PWR_WAKEUP_PIN2_LOW_1                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN2 | PWR_WAKEUP2_POLARITY_LOW | PWR_WAKEUP2_SOURCE_SELECTION_1) /*!< PC13 : Wakeup pin 2 (low                                                                                   \
 											  polarity) */
-#define PWR_WAKEUP_PIN3_LOW_2                                                                                          \
-	(PWR_WUCR1_WUPEN3 | PWR_WAKEUP3_POLARITY_LOW | PWR_WAKEUP3_SOURCE_SELECTION_2) /*!< PB6  : Wakeup pin 3 (low   \
-											  polarity) */
-
-#define PWR_WAKEUP_PIN4_LOW_0                                                                                          \
-	(PWR_WUCR1_WUPEN4 | PWR_WAKEUP4_POLARITY_LOW | PWR_WAKEUP4_SOURCE_SELECTION_0) /*!< PA2  : Wakeup pin 4 (low   \
-											  polarity) */
-#define PWR_WAKEUP_PIN4_LOW_1                                                                                          \
-	(PWR_WUCR1_WUPEN4 | PWR_WAKEUP4_POLARITY_LOW | PWR_WAKEUP4_SOURCE_SELECTION_1) /*!< PB1  : Wakeup pin 4 (low   \
-											  polarity) */
-#define PWR_WAKEUP_PIN4_LOW_2                                                                                          \
-	(PWR_WUCR1_WUPEN4 | PWR_WAKEUP4_POLARITY_LOW | PWR_WAKEUP4_SOURCE_SELECTION_2) /*!< PB7  : Wakeup pin 4 (low   \
+#define PWR_WAKEUP_PIN2_LOW_2                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN2 | PWR_WAKEUP2_POLARITY_LOW | PWR_WAKEUP2_SOURCE_SELECTION_2) /*!< PE5  : Wakeup pin 2 (low                                                                                   \
 											  polarity) */
 
-#define PWR_WAKEUP_PIN5_LOW_0                                                                                          \
-	(PWR_WUCR1_WUPEN5 | PWR_WAKEUP5_POLARITY_LOW | PWR_WAKEUP5_SOURCE_SELECTION_0) /*!< PC5  : Wakeup pin 5 (low   \
+#define PWR_WAKEUP_PIN3_LOW_0                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN3 | PWR_WAKEUP3_POLARITY_LOW | PWR_WAKEUP3_SOURCE_SELECTION_0) /*!< PE6  : Wakeup pin 3 (low                                                                                   \
 											  polarity) */
-#define PWR_WAKEUP_PIN5_LOW_1                                                                                          \
-	(PWR_WUCR1_WUPEN5 | PWR_WAKEUP5_POLARITY_LOW | PWR_WAKEUP5_SOURCE_SELECTION_1) /*!< PA3  : Wakeup pin 5 (low   \
+#define PWR_WAKEUP_PIN3_LOW_1                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN3 | PWR_WAKEUP3_POLARITY_LOW | PWR_WAKEUP3_SOURCE_SELECTION_1) /*!< PA1  : Wakeup pin 3 (low                                                                                   \
 											  polarity) */
-#define PWR_WAKEUP_PIN5_LOW_2                                                                                          \
-	(PWR_WUCR1_WUPEN5 | PWR_WAKEUP5_POLARITY_LOW | PWR_WAKEUP5_SOURCE_SELECTION_2) /*!< PB8  : Wakeup pin 5 (low   \
-											  polarity) */
-
-#define PWR_WAKEUP_PIN6_LOW_0                                                                                          \
-	(PWR_WUCR1_WUPEN6 | PWR_WAKEUP6_POLARITY_LOW | PWR_WAKEUP6_SOURCE_SELECTION_0) /*!< PB5  : Wakeup pin 6 (low   \
-											  polarity) */
-#define PWR_WAKEUP_PIN6_LOW_1                                                                                          \
-	(PWR_WUCR1_WUPEN6 | PWR_WAKEUP6_POLARITY_LOW | PWR_WAKEUP6_SOURCE_SELECTION_1) /*!< PA5  : Wakeup pin 6 (low   \
-											  polarity) */
-#define PWR_WAKEUP_PIN6_LOW_2                                                                                          \
-	(PWR_WUCR1_WUPEN6 | PWR_WAKEUP6_POLARITY_LOW | PWR_WAKEUP6_SOURCE_SELECTION_2) /*!< PE7  : Wakeup pin 6 (low   \
-											  polarity) */
-#define PWR_WAKEUP_PIN6_LOW_3                                                                                          \
-	(PWR_WUCR1_WUPEN6 | PWR_WAKEUP6_POLARITY_LOW | PWR_WAKEUP6_SOURCE_SELECTION_3) /*!< RTC  : Wakeup pin 6 (low   \
+#define PWR_WAKEUP_PIN3_LOW_2                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN3 | PWR_WAKEUP3_POLARITY_LOW | PWR_WAKEUP3_SOURCE_SELECTION_2) /*!< PB6  : Wakeup pin 3 (low                                                                                   \
 											  polarity) */
 
-#define PWR_WAKEUP_PIN7_LOW_0                                                                                          \
-	(PWR_WUCR1_WUPEN7 | PWR_WAKEUP7_POLARITY_LOW | PWR_WAKEUP7_SOURCE_SELECTION_0) /*!< PB15 : Wakeup pin 7 (low   \
+#define PWR_WAKEUP_PIN4_LOW_0                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN4 | PWR_WAKEUP4_POLARITY_LOW | PWR_WAKEUP4_SOURCE_SELECTION_0) /*!< PA2  : Wakeup pin 4 (low                                                                                   \
 											  polarity) */
-#define PWR_WAKEUP_PIN7_LOW_1                                                                                          \
-	(PWR_WUCR1_WUPEN7 | PWR_WAKEUP7_POLARITY_LOW | PWR_WAKEUP7_SOURCE_SELECTION_1) /*!< PA6  : Wakeup pin 7 (low   \
+#define PWR_WAKEUP_PIN4_LOW_1                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN4 | PWR_WAKEUP4_POLARITY_LOW | PWR_WAKEUP4_SOURCE_SELECTION_1) /*!< PB1  : Wakeup pin 4 (low                                                                                   \
 											  polarity) */
-#define PWR_WAKEUP_PIN7_LOW_2                                                                                          \
-	(PWR_WUCR1_WUPEN7 | PWR_WAKEUP7_POLARITY_LOW | PWR_WAKEUP7_SOURCE_SELECTION_2) /*!< PE8  : Wakeup pin 7 (low   \
-											  polarity) */
-#define PWR_WAKEUP_PIN7_LOW_3                                                                                          \
-	(PWR_WUCR1_WUPEN7 | PWR_WAKEUP7_POLARITY_LOW | PWR_WAKEUP7_SOURCE_SELECTION_3) /*!< RTC  : Wakeup pin 7 (low   \
+#define PWR_WAKEUP_PIN4_LOW_2                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN4 | PWR_WAKEUP4_POLARITY_LOW | PWR_WAKEUP4_SOURCE_SELECTION_2) /*!< PB7  : Wakeup pin 4 (low                                                                                   \
 											  polarity) */
 
-#define PWR_WAKEUP_PIN8_LOW_0                                                                                          \
-	(PWR_WUCR1_WUPEN8 | PWR_WAKEUP8_POLARITY_LOW | PWR_WAKEUP8_SOURCE_SELECTION_0) /*!< PF2  : Wakeup pin 8 (low   \
+#define PWR_WAKEUP_PIN5_LOW_0                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN5 | PWR_WAKEUP5_POLARITY_LOW | PWR_WAKEUP5_SOURCE_SELECTION_0) /*!< PC5  : Wakeup pin 5 (low                                                                                   \
 											  polarity) */
-#define PWR_WAKEUP_PIN8_LOW_1                                                                                          \
-	(PWR_WUCR1_WUPEN8 | PWR_WAKEUP8_POLARITY_LOW | PWR_WAKEUP8_SOURCE_SELECTION_1) /*!< PA7  : Wakeup pin 8 (low   \
+#define PWR_WAKEUP_PIN5_LOW_1                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN5 | PWR_WAKEUP5_POLARITY_LOW | PWR_WAKEUP5_SOURCE_SELECTION_1) /*!< PA3  : Wakeup pin 5 (low                                                                                   \
 											  polarity) */
-#define PWR_WAKEUP_PIN8_LOW_2                                                                                          \
-	(PWR_WUCR1_WUPEN8 | PWR_WAKEUP8_POLARITY_LOW | PWR_WAKEUP8_SOURCE_SELECTION_2) /*!< PB10 : Wakeup pin 8 (low   \
+#define PWR_WAKEUP_PIN5_LOW_2                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN5 | PWR_WAKEUP5_POLARITY_LOW | PWR_WAKEUP5_SOURCE_SELECTION_2) /*!< PB8  : Wakeup pin 5 (low                                                                                   \
 											  polarity) */
-#define PWR_WAKEUP_PIN8_LOW_3                                                                                          \
-	(PWR_WUCR1_WUPEN8 | PWR_WAKEUP8_POLARITY_LOW | PWR_WAKEUP8_SOURCE_SELECTION_3) /*!< RTC  : Wakeup pin 8 (low   \
+
+#define PWR_WAKEUP_PIN6_LOW_0                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN6 | PWR_WAKEUP6_POLARITY_LOW | PWR_WAKEUP6_SOURCE_SELECTION_0) /*!< PB5  : Wakeup pin 6 (low                                                                                   \
+											  polarity) */
+#define PWR_WAKEUP_PIN6_LOW_1                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN6 | PWR_WAKEUP6_POLARITY_LOW | PWR_WAKEUP6_SOURCE_SELECTION_1) /*!< PA5  : Wakeup pin 6 (low                                                                                   \
+											  polarity) */
+#define PWR_WAKEUP_PIN6_LOW_2                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN6 | PWR_WAKEUP6_POLARITY_LOW | PWR_WAKEUP6_SOURCE_SELECTION_2) /*!< PE7  : Wakeup pin 6 (low                                                                                   \
+											  polarity) */
+#define PWR_WAKEUP_PIN6_LOW_3                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN6 | PWR_WAKEUP6_POLARITY_LOW | PWR_WAKEUP6_SOURCE_SELECTION_3) /*!< RTC  : Wakeup pin 6 (low                                                                                   \
+											  polarity) */
+
+#define PWR_WAKEUP_PIN7_LOW_0                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN7 | PWR_WAKEUP7_POLARITY_LOW | PWR_WAKEUP7_SOURCE_SELECTION_0) /*!< PB15 : Wakeup pin 7 (low                                                                                   \
+											  polarity) */
+#define PWR_WAKEUP_PIN7_LOW_1                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN7 | PWR_WAKEUP7_POLARITY_LOW | PWR_WAKEUP7_SOURCE_SELECTION_1) /*!< PA6  : Wakeup pin 7 (low                                                                                   \
+											  polarity) */
+#define PWR_WAKEUP_PIN7_LOW_2                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN7 | PWR_WAKEUP7_POLARITY_LOW | PWR_WAKEUP7_SOURCE_SELECTION_2) /*!< PE8  : Wakeup pin 7 (low                                                                                   \
+											  polarity) */
+#define PWR_WAKEUP_PIN7_LOW_3                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN7 | PWR_WAKEUP7_POLARITY_LOW | PWR_WAKEUP7_SOURCE_SELECTION_3) /*!< RTC  : Wakeup pin 7 (low                                                                                   \
+											  polarity) */
+
+#define PWR_WAKEUP_PIN8_LOW_0                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN8 | PWR_WAKEUP8_POLARITY_LOW | PWR_WAKEUP8_SOURCE_SELECTION_0) /*!< PF2  : Wakeup pin 8 (low                                                                                   \
+											  polarity) */
+#define PWR_WAKEUP_PIN8_LOW_1                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN8 | PWR_WAKEUP8_POLARITY_LOW | PWR_WAKEUP8_SOURCE_SELECTION_1) /*!< PA7  : Wakeup pin 8 (low                                                                                   \
+											  polarity) */
+#define PWR_WAKEUP_PIN8_LOW_2                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN8 | PWR_WAKEUP8_POLARITY_LOW | PWR_WAKEUP8_SOURCE_SELECTION_2) /*!< PB10 : Wakeup pin 8 (low                                                                                   \
+											  polarity) */
+#define PWR_WAKEUP_PIN8_LOW_3                                                                                                                                                                          \
+	(PWR_WUCR1_WUPEN8 | PWR_WAKEUP8_POLARITY_LOW | PWR_WAKEUP8_SOURCE_SELECTION_3) /*!< RTC  : Wakeup pin 8 (low                                                                                   \
 											  polarity) */
 /**
  * @}
@@ -389,16 +389,14 @@ typedef struct {
 #define PWR_WKUP7 (PWR_SECCFGR_WUP7SEC) /*!< WUP7 secure protection */
 #define PWR_WKUP8 (PWR_SECCFGR_WUP8SEC) /*!< WUP8 secure protection */
 #define PWR_LPM (PWR_SECCFGR_LPMSEC)	/*!< Low power modes secure protection */
-#define PWR_VDM                                                                                                        \
-	(PWR_SECCFGR_VDMSEC)	   /*!< Voltage detection and monitoring secure                                        \
+#define PWR_VDM                                                                                                                                                                                        \
+	(PWR_SECCFGR_VDMSEC)	   /*!< Voltage detection and monitoring secure                                                                                                                        \
 				      protection */
 #define PWR_VB (PWR_SECCFGR_VBSEC) /*!< Backup domain secure protection */
-#define PWR_APC                                                                                                        \
-	(PWR_SECCFGR_APCSEC) /*!< Pull-up/pull-down secure protection                                                  \
+#define PWR_APC                                                                                                                                                                                        \
+	(PWR_SECCFGR_APCSEC) /*!< Pull-up/pull-down secure protection                                                                                                                                  \
 			      */
-#define PWR_ALL                                                                                                        \
-	(PWR_WKUP1 | PWR_WKUP2 | PWR_WKUP3 | PWR_WKUP4 | PWR_WKUP5 | PWR_WKUP7 | PWR_WKUP6 | PWR_WKUP8 | PWR_LPM |     \
-	 PWR_VDM | PWR_VB | PWR_APC)
+#define PWR_ALL (PWR_WKUP1 | PWR_WKUP2 | PWR_WKUP3 | PWR_WKUP4 | PWR_WKUP5 | PWR_WKUP7 | PWR_WKUP6 | PWR_WKUP8 | PWR_LPM | PWR_VDM | PWR_VB | PWR_APC)
 /**
  * @}
  */
@@ -408,8 +406,8 @@ typedef struct {
  * @{
  */
 #define PWR_NSEC_PRIV (PWR_ITEM_ATTR_NSEC_PRIV_MASK | 0x01U) /*!< NSecure and Privileged attribute  */
-#define PWR_NSEC_NPRIV                                                                                                 \
-	(PWR_ITEM_ATTR_NSEC_PRIV_MASK)			   /*!< NSecure and NPrivileged attribute                      \
+#define PWR_NSEC_NPRIV                                                                                                                                                                                 \
+	(PWR_ITEM_ATTR_NSEC_PRIV_MASK)			   /*!< NSecure and NPrivileged attribute                                                                                                      \
 							    */
 #define PWR_SEC_PRIV (PWR_ITEM_ATTR_SEC_PRIV_MASK | 0x02U) /*!< Secure and Privileged attribute   */
 #define PWR_SEC_NPRIV (PWR_ITEM_ATTR_SEC_PRIV_MASK)	   /*!< Secure and NPrivileged attribute */
@@ -503,53 +501,53 @@ typedef struct {
  * @retval The state of __FLAG__ (TRUE or FALSE).
  */
 #if defined(PWR_FLAG_USBBOOSTRDY)
-#define __HAL_PWR_GET_FLAG(__FLAG__)                                                                                   \
-	(((__FLAG__) == PWR_FLAG_VOSRDY)	? (READ_BIT(PWR->VOSR, PWR_VOSR_VOSRDY) == PWR_VOSR_VOSRDY)            \
-	 : ((__FLAG__) == PWR_FLAG_BOOSTRDY)	? (READ_BIT(PWR->VOSR, PWR_VOSR_BOOSTRDY) == PWR_VOSR_BOOSTRDY)        \
-	 : ((__FLAG__) == PWR_FLAG_USBBOOSTRDY) ? (READ_BIT(PWR->VOSR, PWR_VOSR_USBBOOSTRDY) == PWR_VOSR_USBBOOSTRDY)  \
-	 : ((__FLAG__) == PWR_FLAG_STOPF)	? (READ_BIT(PWR->SR, PWR_SR_STOPF) == PWR_SR_STOPF)                    \
-	 : ((__FLAG__) == PWR_FLAG_SBF)		? (READ_BIT(PWR->SR, PWR_SR_SBF) == PWR_SR_SBF)                        \
-	 : ((__FLAG__) == PWR_FLAG_VDDA2RDY)	? (READ_BIT(PWR->SVMSR, PWR_SVMSR_VDDA2RDY) == PWR_SVMSR_VDDA2RDY)     \
-	 : ((__FLAG__) == PWR_FLAG_VDDA1RDY)	? (READ_BIT(PWR->SVMSR, PWR_SVMSR_VDDA1RDY) == PWR_SVMSR_VDDA1RDY)     \
-	 : ((__FLAG__) == PWR_FLAG_VDDIO2RDY)	? (READ_BIT(PWR->SVMSR, PWR_SVMSR_VDDIO2RDY) == PWR_SVMSR_VDDIO2RDY)   \
-	 : ((__FLAG__) == PWR_FLAG_VDDUSBRDY)	? (READ_BIT(PWR->SVMSR, PWR_SVMSR_VDDUSBRDY) == PWR_SVMSR_VDDUSBRDY)   \
-	 : ((__FLAG__) == PWR_FLAG_ACTVOSRDY)	? (READ_BIT(PWR->SVMSR, PWR_SVMSR_ACTVOSRDY) == PWR_SVMSR_ACTVOSRDY)   \
-	 : ((__FLAG__) == PWR_FLAG_PVDO)	? (READ_BIT(PWR->SVMSR, PWR_SVMSR_PVDO) == PWR_SVMSR_PVDO)             \
-	 : ((__FLAG__) == PWR_FLAG_REGS)	? (READ_BIT(PWR->SVMSR, PWR_SVMSR_REGS) == PWR_SVMSR_REGS)             \
-	 : ((__FLAG__) == PWR_FLAG_TEMPH)	? (READ_BIT(PWR->BDSR, PWR_BDSR_TEMPH) == PWR_BDSR_TEMPH)              \
-	 : ((__FLAG__) == PWR_FLAG_TEMPL)	? (READ_BIT(PWR->BDSR, PWR_BDSR_TEMPL) == PWR_BDSR_TEMPL)              \
-	 : ((__FLAG__) == PWR_FLAG_VBATH)	? (READ_BIT(PWR->BDSR, PWR_BDSR_VBATH) == PWR_BDSR_VBATH)              \
-	 : ((__FLAG__) == PWR_WAKEUP_FLAG1)	? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF1) == PWR_WUSR_WUF1)                \
-	 : ((__FLAG__) == PWR_WAKEUP_FLAG2)	? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF2) == PWR_WUSR_WUF2)                \
-	 : ((__FLAG__) == PWR_WAKEUP_FLAG3)	? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF3) == PWR_WUSR_WUF3)                \
-	 : ((__FLAG__) == PWR_WAKEUP_FLAG4)	? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF4) == PWR_WUSR_WUF4)                \
-	 : ((__FLAG__) == PWR_WAKEUP_FLAG5)	? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF5) == PWR_WUSR_WUF5)                \
-	 : ((__FLAG__) == PWR_WAKEUP_FLAG6)	? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF6) == PWR_WUSR_WUF6)                \
-	 : ((__FLAG__) == PWR_WAKEUP_FLAG7)	? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF7) == PWR_WUSR_WUF7)                \
+#define __HAL_PWR_GET_FLAG(__FLAG__)                                                                                                                                                                   \
+	(((__FLAG__) == PWR_FLAG_VOSRDY)	? (READ_BIT(PWR->VOSR, PWR_VOSR_VOSRDY) == PWR_VOSR_VOSRDY)                                                                                            \
+	 : ((__FLAG__) == PWR_FLAG_BOOSTRDY)	? (READ_BIT(PWR->VOSR, PWR_VOSR_BOOSTRDY) == PWR_VOSR_BOOSTRDY)                                                                                        \
+	 : ((__FLAG__) == PWR_FLAG_USBBOOSTRDY) ? (READ_BIT(PWR->VOSR, PWR_VOSR_USBBOOSTRDY) == PWR_VOSR_USBBOOSTRDY)                                                                                  \
+	 : ((__FLAG__) == PWR_FLAG_STOPF)	? (READ_BIT(PWR->SR, PWR_SR_STOPF) == PWR_SR_STOPF)                                                                                                    \
+	 : ((__FLAG__) == PWR_FLAG_SBF)		? (READ_BIT(PWR->SR, PWR_SR_SBF) == PWR_SR_SBF)                                                                                                        \
+	 : ((__FLAG__) == PWR_FLAG_VDDA2RDY)	? (READ_BIT(PWR->SVMSR, PWR_SVMSR_VDDA2RDY) == PWR_SVMSR_VDDA2RDY)                                                                                     \
+	 : ((__FLAG__) == PWR_FLAG_VDDA1RDY)	? (READ_BIT(PWR->SVMSR, PWR_SVMSR_VDDA1RDY) == PWR_SVMSR_VDDA1RDY)                                                                                     \
+	 : ((__FLAG__) == PWR_FLAG_VDDIO2RDY)	? (READ_BIT(PWR->SVMSR, PWR_SVMSR_VDDIO2RDY) == PWR_SVMSR_VDDIO2RDY)                                                                                   \
+	 : ((__FLAG__) == PWR_FLAG_VDDUSBRDY)	? (READ_BIT(PWR->SVMSR, PWR_SVMSR_VDDUSBRDY) == PWR_SVMSR_VDDUSBRDY)                                                                                   \
+	 : ((__FLAG__) == PWR_FLAG_ACTVOSRDY)	? (READ_BIT(PWR->SVMSR, PWR_SVMSR_ACTVOSRDY) == PWR_SVMSR_ACTVOSRDY)                                                                                   \
+	 : ((__FLAG__) == PWR_FLAG_PVDO)	? (READ_BIT(PWR->SVMSR, PWR_SVMSR_PVDO) == PWR_SVMSR_PVDO)                                                                                             \
+	 : ((__FLAG__) == PWR_FLAG_REGS)	? (READ_BIT(PWR->SVMSR, PWR_SVMSR_REGS) == PWR_SVMSR_REGS)                                                                                             \
+	 : ((__FLAG__) == PWR_FLAG_TEMPH)	? (READ_BIT(PWR->BDSR, PWR_BDSR_TEMPH) == PWR_BDSR_TEMPH)                                                                                              \
+	 : ((__FLAG__) == PWR_FLAG_TEMPL)	? (READ_BIT(PWR->BDSR, PWR_BDSR_TEMPL) == PWR_BDSR_TEMPL)                                                                                              \
+	 : ((__FLAG__) == PWR_FLAG_VBATH)	? (READ_BIT(PWR->BDSR, PWR_BDSR_VBATH) == PWR_BDSR_VBATH)                                                                                              \
+	 : ((__FLAG__) == PWR_WAKEUP_FLAG1)	? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF1) == PWR_WUSR_WUF1)                                                                                                \
+	 : ((__FLAG__) == PWR_WAKEUP_FLAG2)	? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF2) == PWR_WUSR_WUF2)                                                                                                \
+	 : ((__FLAG__) == PWR_WAKEUP_FLAG3)	? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF3) == PWR_WUSR_WUF3)                                                                                                \
+	 : ((__FLAG__) == PWR_WAKEUP_FLAG4)	? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF4) == PWR_WUSR_WUF4)                                                                                                \
+	 : ((__FLAG__) == PWR_WAKEUP_FLAG5)	? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF5) == PWR_WUSR_WUF5)                                                                                                \
+	 : ((__FLAG__) == PWR_WAKEUP_FLAG6)	? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF6) == PWR_WUSR_WUF6)                                                                                                \
+	 : ((__FLAG__) == PWR_WAKEUP_FLAG7)	? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF7) == PWR_WUSR_WUF7)                                                                                                \
 						: (READ_BIT(PWR->WUSR, PWR_WUSR_WUF8) == PWR_WUSR_WUF8))
 #else
-#define __HAL_PWR_GET_FLAG(__FLAG__)                                                                                   \
-	(((__FLAG__) == PWR_FLAG_VOSRDY)      ? (READ_BIT(PWR->VOSR, PWR_VOSR_VOSRDY) == PWR_VOSR_VOSRDY)              \
-	 : ((__FLAG__) == PWR_FLAG_BOOSTRDY)  ? (READ_BIT(PWR->VOSR, PWR_VOSR_BOOSTRDY) == PWR_VOSR_BOOSTRDY)          \
-	 : ((__FLAG__) == PWR_FLAG_STOPF)     ? (READ_BIT(PWR->SR, PWR_SR_STOPF) == PWR_SR_STOPF)                      \
-	 : ((__FLAG__) == PWR_FLAG_SBF)	      ? (READ_BIT(PWR->SR, PWR_SR_SBF) == PWR_SR_SBF)                          \
-	 : ((__FLAG__) == PWR_FLAG_VDDA2RDY)  ? (READ_BIT(PWR->SVMSR, PWR_SVMSR_VDDA2RDY) == PWR_SVMSR_VDDA2RDY)       \
-	 : ((__FLAG__) == PWR_FLAG_VDDA1RDY)  ? (READ_BIT(PWR->SVMSR, PWR_SVMSR_VDDA1RDY) == PWR_SVMSR_VDDA1RDY)       \
-	 : ((__FLAG__) == PWR_FLAG_VDDIO2RDY) ? (READ_BIT(PWR->SVMSR, PWR_SVMSR_VDDIO2RDY) == PWR_SVMSR_VDDIO2RDY)     \
-	 : ((__FLAG__) == PWR_FLAG_VDDUSBRDY) ? (READ_BIT(PWR->SVMSR, PWR_SVMSR_VDDUSBRDY) == PWR_SVMSR_VDDUSBRDY)     \
-	 : ((__FLAG__) == PWR_FLAG_ACTVOSRDY) ? (READ_BIT(PWR->SVMSR, PWR_SVMSR_ACTVOSRDY) == PWR_SVMSR_ACTVOSRDY)     \
-	 : ((__FLAG__) == PWR_FLAG_PVDO)      ? (READ_BIT(PWR->SVMSR, PWR_SVMSR_PVDO) == PWR_SVMSR_PVDO)               \
-	 : ((__FLAG__) == PWR_FLAG_REGS)      ? (READ_BIT(PWR->SVMSR, PWR_SVMSR_REGS) == PWR_SVMSR_REGS)               \
-	 : ((__FLAG__) == PWR_FLAG_TEMPH)     ? (READ_BIT(PWR->BDSR, PWR_BDSR_TEMPH) == PWR_BDSR_TEMPH)                \
-	 : ((__FLAG__) == PWR_FLAG_TEMPL)     ? (READ_BIT(PWR->BDSR, PWR_BDSR_TEMPL) == PWR_BDSR_TEMPL)                \
-	 : ((__FLAG__) == PWR_FLAG_VBATH)     ? (READ_BIT(PWR->BDSR, PWR_BDSR_VBATH) == PWR_BDSR_VBATH)                \
-	 : ((__FLAG__) == PWR_WAKEUP_FLAG1)   ? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF1) == PWR_WUSR_WUF1)                  \
-	 : ((__FLAG__) == PWR_WAKEUP_FLAG2)   ? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF2) == PWR_WUSR_WUF2)                  \
-	 : ((__FLAG__) == PWR_WAKEUP_FLAG3)   ? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF3) == PWR_WUSR_WUF3)                  \
-	 : ((__FLAG__) == PWR_WAKEUP_FLAG4)   ? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF4) == PWR_WUSR_WUF4)                  \
-	 : ((__FLAG__) == PWR_WAKEUP_FLAG5)   ? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF5) == PWR_WUSR_WUF5)                  \
-	 : ((__FLAG__) == PWR_WAKEUP_FLAG6)   ? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF6) == PWR_WUSR_WUF6)                  \
-	 : ((__FLAG__) == PWR_WAKEUP_FLAG7)   ? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF7) == PWR_WUSR_WUF7)                  \
+#define __HAL_PWR_GET_FLAG(__FLAG__)                                                                                                                                                                   \
+	(((__FLAG__) == PWR_FLAG_VOSRDY)      ? (READ_BIT(PWR->VOSR, PWR_VOSR_VOSRDY) == PWR_VOSR_VOSRDY)                                                                                              \
+	 : ((__FLAG__) == PWR_FLAG_BOOSTRDY)  ? (READ_BIT(PWR->VOSR, PWR_VOSR_BOOSTRDY) == PWR_VOSR_BOOSTRDY)                                                                                          \
+	 : ((__FLAG__) == PWR_FLAG_STOPF)     ? (READ_BIT(PWR->SR, PWR_SR_STOPF) == PWR_SR_STOPF)                                                                                                      \
+	 : ((__FLAG__) == PWR_FLAG_SBF)	      ? (READ_BIT(PWR->SR, PWR_SR_SBF) == PWR_SR_SBF)                                                                                                          \
+	 : ((__FLAG__) == PWR_FLAG_VDDA2RDY)  ? (READ_BIT(PWR->SVMSR, PWR_SVMSR_VDDA2RDY) == PWR_SVMSR_VDDA2RDY)                                                                                       \
+	 : ((__FLAG__) == PWR_FLAG_VDDA1RDY)  ? (READ_BIT(PWR->SVMSR, PWR_SVMSR_VDDA1RDY) == PWR_SVMSR_VDDA1RDY)                                                                                       \
+	 : ((__FLAG__) == PWR_FLAG_VDDIO2RDY) ? (READ_BIT(PWR->SVMSR, PWR_SVMSR_VDDIO2RDY) == PWR_SVMSR_VDDIO2RDY)                                                                                     \
+	 : ((__FLAG__) == PWR_FLAG_VDDUSBRDY) ? (READ_BIT(PWR->SVMSR, PWR_SVMSR_VDDUSBRDY) == PWR_SVMSR_VDDUSBRDY)                                                                                     \
+	 : ((__FLAG__) == PWR_FLAG_ACTVOSRDY) ? (READ_BIT(PWR->SVMSR, PWR_SVMSR_ACTVOSRDY) == PWR_SVMSR_ACTVOSRDY)                                                                                     \
+	 : ((__FLAG__) == PWR_FLAG_PVDO)      ? (READ_BIT(PWR->SVMSR, PWR_SVMSR_PVDO) == PWR_SVMSR_PVDO)                                                                                               \
+	 : ((__FLAG__) == PWR_FLAG_REGS)      ? (READ_BIT(PWR->SVMSR, PWR_SVMSR_REGS) == PWR_SVMSR_REGS)                                                                                               \
+	 : ((__FLAG__) == PWR_FLAG_TEMPH)     ? (READ_BIT(PWR->BDSR, PWR_BDSR_TEMPH) == PWR_BDSR_TEMPH)                                                                                                \
+	 : ((__FLAG__) == PWR_FLAG_TEMPL)     ? (READ_BIT(PWR->BDSR, PWR_BDSR_TEMPL) == PWR_BDSR_TEMPL)                                                                                                \
+	 : ((__FLAG__) == PWR_FLAG_VBATH)     ? (READ_BIT(PWR->BDSR, PWR_BDSR_VBATH) == PWR_BDSR_VBATH)                                                                                                \
+	 : ((__FLAG__) == PWR_WAKEUP_FLAG1)   ? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF1) == PWR_WUSR_WUF1)                                                                                                  \
+	 : ((__FLAG__) == PWR_WAKEUP_FLAG2)   ? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF2) == PWR_WUSR_WUF2)                                                                                                  \
+	 : ((__FLAG__) == PWR_WAKEUP_FLAG3)   ? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF3) == PWR_WUSR_WUF3)                                                                                                  \
+	 : ((__FLAG__) == PWR_WAKEUP_FLAG4)   ? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF4) == PWR_WUSR_WUF4)                                                                                                  \
+	 : ((__FLAG__) == PWR_WAKEUP_FLAG5)   ? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF5) == PWR_WUSR_WUF5)                                                                                                  \
+	 : ((__FLAG__) == PWR_WAKEUP_FLAG6)   ? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF6) == PWR_WUSR_WUF6)                                                                                                  \
+	 : ((__FLAG__) == PWR_WAKEUP_FLAG7)   ? (READ_BIT(PWR->WUSR, PWR_WUSR_WUF7) == PWR_WUSR_WUF7)                                                                                                  \
 					      : (READ_BIT(PWR->WUSR, PWR_WUSR_WUF8) == PWR_WUSR_WUF8))
 #endif /* defined (PWR_FLAG_USBBOOSTRDY) */
 
@@ -588,17 +586,17 @@ typedef struct {
  * event was received from the WKUP line 8.
  * @retval None.
  */
-#define __HAL_PWR_CLEAR_FLAG(__FLAG__)                                                                                 \
-	(((__FLAG__) == PWR_FLAG_STOPF)	    ? (SET_BIT(PWR->SR, PWR_SR_CSSF))                                          \
-	 : ((__FLAG__) == PWR_FLAG_SBF)	    ? (SET_BIT(PWR->SR, PWR_SR_CSSF))                                          \
-	 : ((__FLAG__) == PWR_WAKEUP_FLAG1) ? (SET_BIT(PWR->WUSCR, PWR_WUSCR_CWUF1))                                   \
-	 : ((__FLAG__) == PWR_WAKEUP_FLAG2) ? (SET_BIT(PWR->WUSCR, PWR_WUSCR_CWUF2))                                   \
-	 : ((__FLAG__) == PWR_WAKEUP_FLAG3) ? (SET_BIT(PWR->WUSCR, PWR_WUSCR_CWUF3))                                   \
-	 : ((__FLAG__) == PWR_WAKEUP_FLAG4) ? (SET_BIT(PWR->WUSCR, PWR_WUSCR_CWUF4))                                   \
-	 : ((__FLAG__) == PWR_WAKEUP_FLAG5) ? (SET_BIT(PWR->WUSCR, PWR_WUSCR_CWUF5))                                   \
-	 : ((__FLAG__) == PWR_WAKEUP_FLAG6) ? (SET_BIT(PWR->WUSCR, PWR_WUSCR_CWUF6))                                   \
-	 : ((__FLAG__) == PWR_WAKEUP_FLAG7) ? (SET_BIT(PWR->WUSCR, PWR_WUSCR_CWUF7))                                   \
-	 : ((__FLAG__) == PWR_WAKEUP_FLAG8) ? (SET_BIT(PWR->WUSCR, PWR_WUSCR_CWUF8))                                   \
+#define __HAL_PWR_CLEAR_FLAG(__FLAG__)                                                                                                                                                                 \
+	(((__FLAG__) == PWR_FLAG_STOPF)	    ? (SET_BIT(PWR->SR, PWR_SR_CSSF))                                                                                                                          \
+	 : ((__FLAG__) == PWR_FLAG_SBF)	    ? (SET_BIT(PWR->SR, PWR_SR_CSSF))                                                                                                                          \
+	 : ((__FLAG__) == PWR_WAKEUP_FLAG1) ? (SET_BIT(PWR->WUSCR, PWR_WUSCR_CWUF1))                                                                                                                   \
+	 : ((__FLAG__) == PWR_WAKEUP_FLAG2) ? (SET_BIT(PWR->WUSCR, PWR_WUSCR_CWUF2))                                                                                                                   \
+	 : ((__FLAG__) == PWR_WAKEUP_FLAG3) ? (SET_BIT(PWR->WUSCR, PWR_WUSCR_CWUF3))                                                                                                                   \
+	 : ((__FLAG__) == PWR_WAKEUP_FLAG4) ? (SET_BIT(PWR->WUSCR, PWR_WUSCR_CWUF4))                                                                                                                   \
+	 : ((__FLAG__) == PWR_WAKEUP_FLAG5) ? (SET_BIT(PWR->WUSCR, PWR_WUSCR_CWUF5))                                                                                                                   \
+	 : ((__FLAG__) == PWR_WAKEUP_FLAG6) ? (SET_BIT(PWR->WUSCR, PWR_WUSCR_CWUF6))                                                                                                                   \
+	 : ((__FLAG__) == PWR_WAKEUP_FLAG7) ? (SET_BIT(PWR->WUSCR, PWR_WUSCR_CWUF7))                                                                                                                   \
+	 : ((__FLAG__) == PWR_WAKEUP_FLAG8) ? (SET_BIT(PWR->WUSCR, PWR_WUSCR_CWUF8))                                                                                                                   \
 					    : (SET_BIT(PWR->WUSCR, PWR_WUSCR_CWUF)))
 
 /**
@@ -653,20 +651,20 @@ typedef struct {
  * @brief  Enable the PVD Extended Interrupt Rising & Falling Trigger.
  * @retval None.
  */
-#define __HAL_PWR_PVD_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                \
-	do {                                                                                                           \
-		__HAL_PWR_PVD_EXTI_ENABLE_RISING_EDGE();                                                               \
-		__HAL_PWR_PVD_EXTI_ENABLE_FALLING_EDGE();                                                              \
+#define __HAL_PWR_PVD_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                                \
+	do {                                                                                                                                                                                           \
+		__HAL_PWR_PVD_EXTI_ENABLE_RISING_EDGE();                                                                                                                                               \
+		__HAL_PWR_PVD_EXTI_ENABLE_FALLING_EDGE();                                                                                                                                              \
 	} while (0)
 
 /**
  * @brief  Disable the PVD Extended Interrupt Rising & Falling Trigger.
  * @retval None.
  */
-#define __HAL_PWR_PVD_EXTI_DISABLE_RISING_FALLING_EDGE()                                                               \
-	do {                                                                                                           \
-		__HAL_PWR_PVD_EXTI_DISABLE_RISING_EDGE();                                                              \
-		__HAL_PWR_PVD_EXTI_DISABLE_FALLING_EDGE();                                                             \
+#define __HAL_PWR_PVD_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                               \
+	do {                                                                                                                                                                                           \
+		__HAL_PWR_PVD_EXTI_DISABLE_RISING_EDGE();                                                                                                                                              \
+		__HAL_PWR_PVD_EXTI_DISABLE_FALLING_EDGE();                                                                                                                                             \
 	} while (0)
 
 /**
@@ -685,10 +683,10 @@ typedef struct {
  * @brief  Clear the PVD EXTI Interrupt flag.
  * @retval None.
  */
-#define __HAL_PWR_PVD_EXTI_CLEAR_FLAG()                                                                                \
-	do {                                                                                                           \
-		WRITE_REG(EXTI->RPR1, PWR_EXTI_LINE_PVD);                                                              \
-		WRITE_REG(EXTI->FPR1, PWR_EXTI_LINE_PVD);                                                              \
+#define __HAL_PWR_PVD_EXTI_CLEAR_FLAG()                                                                                                                                                                \
+	do {                                                                                                                                                                                           \
+		WRITE_REG(EXTI->RPR1, PWR_EXTI_LINE_PVD);                                                                                                                                              \
+		WRITE_REG(EXTI->FPR1, PWR_EXTI_LINE_PVD);                                                                                                                                              \
 	} while (0)
 /**
  * @}
@@ -703,148 +701,148 @@ typedef struct {
 #define PWR_EXTI_LINE_PVD (0x00010000UL) /*!< PVD EXTI Line */
 
 /* Defines wake up lines shift */
-#define PWR_WUP_POLARITY_SHIFT                                                                                         \
-	(0x08U) /*!< Internal constant used to retrieve wakeup signal polarity                                         \
+#define PWR_WUP_POLARITY_SHIFT                                                                                                                                                                         \
+	(0x08U) /*!< Internal constant used to retrieve wakeup signal polarity                                                                                                                         \
 		 */
-#define PWR_WUP_SELECT_SIGNAL_SHIFT                                                                                    \
-	(0x10U) /*!< Internal constant used to retrieve wakeup signal                                                  \
+#define PWR_WUP_SELECT_SIGNAL_SHIFT                                                                                                                                                                    \
+	(0x10U) /*!< Internal constant used to retrieve wakeup signal                                                                                                                                  \
 		   selection */
 
 /* Defines wake up lines mask */
-#define PWR_EWUP_MASK                                                                                                  \
-	(0x000000FFUL) /*!< Internal constant used to retrieve wakeup signal                                           \
+#define PWR_EWUP_MASK                                                                                                                                                                                  \
+	(0x000000FFUL) /*!< Internal constant used to retrieve wakeup signal                                                                                                                           \
 			  enable    */
-#define PWR_WUP_POLARITY_MASK                                                                                          \
-	(0x0000FF00UL) /*!< Internal constant used to retrieve wakeup signal                                           \
+#define PWR_WUP_POLARITY_MASK                                                                                                                                                                          \
+	(0x0000FF00UL) /*!< Internal constant used to retrieve wakeup signal                                                                                                                           \
 			  polarity  */
-#define PWR_WUP_SELECT_MASK                                                                                            \
-	(0xFFFF0000UL) /*!< Internal constant used to retrieve wakeup signal                                           \
+#define PWR_WUP_SELECT_MASK                                                                                                                                                                            \
+	(0xFFFF0000UL) /*!< Internal constant used to retrieve wakeup signal                                                                                                                           \
 			  selection */
 
 /* Defines wake up lines selection */
 #define PWR_WAKEUP1_SOURCE_SELECTION_0 (0U)
-#define PWR_WAKEUP1_SOURCE_SELECTION_1                                                                                 \
-	(PWR_WUCR3_WUSEL1_0 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                             \
-							       retrieve wakeup signal selection                        \
+#define PWR_WAKEUP1_SOURCE_SELECTION_1                                                                                                                                                                 \
+	(PWR_WUCR3_WUSEL1_0 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                                                                                                             \
+							       retrieve wakeup signal selection                                                                                                        \
 							     */
-#define PWR_WAKEUP1_SOURCE_SELECTION_2                                                                                 \
-	(PWR_WUCR3_WUSEL1_1 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                             \
-							       retrieve wakeup signal selection                        \
+#define PWR_WAKEUP1_SOURCE_SELECTION_2                                                                                                                                                                 \
+	(PWR_WUCR3_WUSEL1_1 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                                                                                                             \
+							       retrieve wakeup signal selection                                                                                                        \
 							     */
-#define PWR_WAKEUP2_SOURCE_SELECTION_0                                                                                 \
-	(0U) /*!< Internal constant used to retrieve wakeup signal selection                                           \
+#define PWR_WAKEUP2_SOURCE_SELECTION_0                                                                                                                                                                 \
+	(0U) /*!< Internal constant used to retrieve wakeup signal selection                                                                                                                           \
 	      */
-#define PWR_WAKEUP2_SOURCE_SELECTION_1                                                                                 \
-	(PWR_WUCR3_WUSEL2_0 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                             \
-							       retrieve wakeup signal selection                        \
+#define PWR_WAKEUP2_SOURCE_SELECTION_1                                                                                                                                                                 \
+	(PWR_WUCR3_WUSEL2_0 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                                                                                                             \
+							       retrieve wakeup signal selection                                                                                                        \
 							     */
-#define PWR_WAKEUP2_SOURCE_SELECTION_2                                                                                 \
-	(PWR_WUCR3_WUSEL2_1 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                             \
-							       retrieve wakeup signal selection                        \
+#define PWR_WAKEUP2_SOURCE_SELECTION_2                                                                                                                                                                 \
+	(PWR_WUCR3_WUSEL2_1 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                                                                                                             \
+							       retrieve wakeup signal selection                                                                                                        \
 							     */
-#define PWR_WAKEUP3_SOURCE_SELECTION_0                                                                                 \
-	(0U) /*!< Internal constant used to retrieve wakeup signal selection                                           \
+#define PWR_WAKEUP3_SOURCE_SELECTION_0                                                                                                                                                                 \
+	(0U) /*!< Internal constant used to retrieve wakeup signal selection                                                                                                                           \
 	      */
-#define PWR_WAKEUP3_SOURCE_SELECTION_1                                                                                 \
-	(PWR_WUCR3_WUSEL3_0 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                             \
-							       retrieve wakeup signal selection                        \
+#define PWR_WAKEUP3_SOURCE_SELECTION_1                                                                                                                                                                 \
+	(PWR_WUCR3_WUSEL3_0 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                                                                                                             \
+							       retrieve wakeup signal selection                                                                                                        \
 							     */
-#define PWR_WAKEUP3_SOURCE_SELECTION_2                                                                                 \
-	(PWR_WUCR3_WUSEL3_1 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                             \
-							       retrieve wakeup signal selection                        \
+#define PWR_WAKEUP3_SOURCE_SELECTION_2                                                                                                                                                                 \
+	(PWR_WUCR3_WUSEL3_1 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                                                                                                             \
+							       retrieve wakeup signal selection                                                                                                        \
 							     */
-#define PWR_WAKEUP4_SOURCE_SELECTION_0                                                                                 \
-	(0U) /*!< Internal constant used to retrieve wakeup signal selection                                           \
+#define PWR_WAKEUP4_SOURCE_SELECTION_0                                                                                                                                                                 \
+	(0U) /*!< Internal constant used to retrieve wakeup signal selection                                                                                                                           \
 	      */
-#define PWR_WAKEUP4_SOURCE_SELECTION_1                                                                                 \
-	(PWR_WUCR3_WUSEL4_0 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                             \
-							       retrieve wakeup signal selection                        \
+#define PWR_WAKEUP4_SOURCE_SELECTION_1                                                                                                                                                                 \
+	(PWR_WUCR3_WUSEL4_0 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                                                                                                             \
+							       retrieve wakeup signal selection                                                                                                        \
 							     */
-#define PWR_WAKEUP4_SOURCE_SELECTION_2                                                                                 \
-	(PWR_WUCR3_WUSEL4_1 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                             \
-							       retrieve wakeup signal selection                        \
+#define PWR_WAKEUP4_SOURCE_SELECTION_2                                                                                                                                                                 \
+	(PWR_WUCR3_WUSEL4_1 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                                                                                                             \
+							       retrieve wakeup signal selection                                                                                                        \
 							     */
-#define PWR_WAKEUP5_SOURCE_SELECTION_0                                                                                 \
-	(0U) /*!< Internal constant used to retrieve wakeup signal selection                                           \
+#define PWR_WAKEUP5_SOURCE_SELECTION_0                                                                                                                                                                 \
+	(0U) /*!< Internal constant used to retrieve wakeup signal selection                                                                                                                           \
 	      */
-#define PWR_WAKEUP5_SOURCE_SELECTION_1                                                                                 \
-	(PWR_WUCR3_WUSEL5_0 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                             \
-							       retrieve wakeup signal selection                        \
+#define PWR_WAKEUP5_SOURCE_SELECTION_1                                                                                                                                                                 \
+	(PWR_WUCR3_WUSEL5_0 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                                                                                                             \
+							       retrieve wakeup signal selection                                                                                                        \
 							     */
-#define PWR_WAKEUP5_SOURCE_SELECTION_2                                                                                 \
-	(PWR_WUCR3_WUSEL5_1 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                             \
-							       retrieve wakeup signal selection                        \
+#define PWR_WAKEUP5_SOURCE_SELECTION_2                                                                                                                                                                 \
+	(PWR_WUCR3_WUSEL5_1 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                                                                                                             \
+							       retrieve wakeup signal selection                                                                                                        \
 							     */
-#define PWR_WAKEUP6_SOURCE_SELECTION_0                                                                                 \
-	(0U) /*!< Internal constant used to retrieve wakeup signal selection                                           \
+#define PWR_WAKEUP6_SOURCE_SELECTION_0                                                                                                                                                                 \
+	(0U) /*!< Internal constant used to retrieve wakeup signal selection                                                                                                                           \
 	      */
-#define PWR_WAKEUP6_SOURCE_SELECTION_1                                                                                 \
-	(PWR_WUCR3_WUSEL6_0 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                             \
-							       retrieve wakeup signal selection                        \
+#define PWR_WAKEUP6_SOURCE_SELECTION_1                                                                                                                                                                 \
+	(PWR_WUCR3_WUSEL6_0 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                                                                                                             \
+							       retrieve wakeup signal selection                                                                                                        \
 							     */
-#define PWR_WAKEUP6_SOURCE_SELECTION_2                                                                                 \
-	(PWR_WUCR3_WUSEL6_1 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                             \
-							       retrieve wakeup signal selection                        \
+#define PWR_WAKEUP6_SOURCE_SELECTION_2                                                                                                                                                                 \
+	(PWR_WUCR3_WUSEL6_1 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                                                                                                             \
+							       retrieve wakeup signal selection                                                                                                        \
 							     */
-#define PWR_WAKEUP6_SOURCE_SELECTION_3                                                                                 \
-	((PWR_WUCR3_WUSEL6_0 | PWR_WUCR3_WUSEL6_1) << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to      \
-										      retrieve wakeup signal selection \
+#define PWR_WAKEUP6_SOURCE_SELECTION_3                                                                                                                                                                 \
+	((PWR_WUCR3_WUSEL6_0 | PWR_WUCR3_WUSEL6_1) << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                                                                                      \
+										      retrieve wakeup signal selection                                                                                 \
 										    */
-#define PWR_WAKEUP7_SOURCE_SELECTION_0                                                                                 \
-	(0U) /*!< Internal constant used to retrieve wakeup signal selection                                           \
+#define PWR_WAKEUP7_SOURCE_SELECTION_0                                                                                                                                                                 \
+	(0U) /*!< Internal constant used to retrieve wakeup signal selection                                                                                                                           \
 	      */
-#define PWR_WAKEUP7_SOURCE_SELECTION_1                                                                                 \
-	(PWR_WUCR3_WUSEL7_0 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                             \
-							       retrieve wakeup signal selection                        \
+#define PWR_WAKEUP7_SOURCE_SELECTION_1                                                                                                                                                                 \
+	(PWR_WUCR3_WUSEL7_0 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                                                                                                             \
+							       retrieve wakeup signal selection                                                                                                        \
 							     */
-#define PWR_WAKEUP7_SOURCE_SELECTION_2                                                                                 \
-	(PWR_WUCR3_WUSEL7_1 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                             \
-							       retrieve wakeup signal selection                        \
+#define PWR_WAKEUP7_SOURCE_SELECTION_2                                                                                                                                                                 \
+	(PWR_WUCR3_WUSEL7_1 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                                                                                                             \
+							       retrieve wakeup signal selection                                                                                                        \
 							     */
-#define PWR_WAKEUP7_SOURCE_SELECTION_3                                                                                 \
-	((PWR_WUCR3_WUSEL7_0 | PWR_WUCR3_WUSEL7_1) << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to      \
-										      retrieve wakeup signal selection \
+#define PWR_WAKEUP7_SOURCE_SELECTION_3                                                                                                                                                                 \
+	((PWR_WUCR3_WUSEL7_0 | PWR_WUCR3_WUSEL7_1) << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                                                                                      \
+										      retrieve wakeup signal selection                                                                                 \
 										    */
-#define PWR_WAKEUP8_SOURCE_SELECTION_0                                                                                 \
-	(0U) /*!< Internal constant used to retrieve wakeup signal selection                                           \
+#define PWR_WAKEUP8_SOURCE_SELECTION_0                                                                                                                                                                 \
+	(0U) /*!< Internal constant used to retrieve wakeup signal selection                                                                                                                           \
 	      */
-#define PWR_WAKEUP8_SOURCE_SELECTION_1                                                                                 \
-	(PWR_WUCR3_WUSEL8_0 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                             \
-							       retrieve wakeup signal selection                        \
+#define PWR_WAKEUP8_SOURCE_SELECTION_1                                                                                                                                                                 \
+	(PWR_WUCR3_WUSEL8_0 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                                                                                                             \
+							       retrieve wakeup signal selection                                                                                                        \
 							     */
-#define PWR_WAKEUP8_SOURCE_SELECTION_2                                                                                 \
-	(PWR_WUCR3_WUSEL8_1 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                             \
-							       retrieve wakeup signal selection                        \
+#define PWR_WAKEUP8_SOURCE_SELECTION_2                                                                                                                                                                 \
+	(PWR_WUCR3_WUSEL8_1 << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                                                                                                             \
+							       retrieve wakeup signal selection                                                                                                        \
 							     */
-#define PWR_WAKEUP8_SOURCE_SELECTION_3                                                                                 \
-	((PWR_WUCR3_WUSEL8_0 | PWR_WUCR3_WUSEL8_1) << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to      \
-										      retrieve wakeup signal selection \
+#define PWR_WAKEUP8_SOURCE_SELECTION_3                                                                                                                                                                 \
+	((PWR_WUCR3_WUSEL8_0 | PWR_WUCR3_WUSEL8_1) << PWR_WUP_SELECT_SIGNAL_SHIFT) /*!< Internal constant used to                                                                                      \
+										      retrieve wakeup signal selection                                                                                 \
 										    */
 
 /* Defines wake up lines low polarity */
-#define PWR_WAKEUP1_POLARITY_LOW                                                                                       \
-	(PWR_WUCR2_WUPP1 << PWR_WUP_POLARITY_SHIFT) /*!< Internal constant used to retrieve                            \
+#define PWR_WAKEUP1_POLARITY_LOW                                                                                                                                                                       \
+	(PWR_WUCR2_WUPP1 << PWR_WUP_POLARITY_SHIFT) /*!< Internal constant used to retrieve                                                                                                            \
 						       wakeup signal selection */
-#define PWR_WAKEUP2_POLARITY_LOW                                                                                       \
-	(PWR_WUCR2_WUPP2 << PWR_WUP_POLARITY_SHIFT) /*!< Internal constant used to retrieve                            \
+#define PWR_WAKEUP2_POLARITY_LOW                                                                                                                                                                       \
+	(PWR_WUCR2_WUPP2 << PWR_WUP_POLARITY_SHIFT) /*!< Internal constant used to retrieve                                                                                                            \
 						       wakeup signal selection */
-#define PWR_WAKEUP3_POLARITY_LOW                                                                                       \
-	(PWR_WUCR2_WUPP3 << PWR_WUP_POLARITY_SHIFT) /*!< Internal constant used to retrieve                            \
+#define PWR_WAKEUP3_POLARITY_LOW                                                                                                                                                                       \
+	(PWR_WUCR2_WUPP3 << PWR_WUP_POLARITY_SHIFT) /*!< Internal constant used to retrieve                                                                                                            \
 						       wakeup signal selection */
-#define PWR_WAKEUP4_POLARITY_LOW                                                                                       \
-	(PWR_WUCR2_WUPP4 << PWR_WUP_POLARITY_SHIFT) /*!< Internal constant used to retrieve                            \
+#define PWR_WAKEUP4_POLARITY_LOW                                                                                                                                                                       \
+	(PWR_WUCR2_WUPP4 << PWR_WUP_POLARITY_SHIFT) /*!< Internal constant used to retrieve                                                                                                            \
 						       wakeup signal selection */
-#define PWR_WAKEUP5_POLARITY_LOW                                                                                       \
-	(PWR_WUCR2_WUPP5 << PWR_WUP_POLARITY_SHIFT) /*!< Internal constant used to retrieve                            \
+#define PWR_WAKEUP5_POLARITY_LOW                                                                                                                                                                       \
+	(PWR_WUCR2_WUPP5 << PWR_WUP_POLARITY_SHIFT) /*!< Internal constant used to retrieve                                                                                                            \
 						       wakeup signal selection */
-#define PWR_WAKEUP6_POLARITY_LOW                                                                                       \
-	(PWR_WUCR2_WUPP6 << PWR_WUP_POLARITY_SHIFT) /*!< Internal constant used to retrieve                            \
+#define PWR_WAKEUP6_POLARITY_LOW                                                                                                                                                                       \
+	(PWR_WUCR2_WUPP6 << PWR_WUP_POLARITY_SHIFT) /*!< Internal constant used to retrieve                                                                                                            \
 						       wakeup signal selection */
-#define PWR_WAKEUP7_POLARITY_LOW                                                                                       \
-	(PWR_WUCR2_WUPP7 << PWR_WUP_POLARITY_SHIFT) /*!< Internal constant used to retrieve                            \
+#define PWR_WAKEUP7_POLARITY_LOW                                                                                                                                                                       \
+	(PWR_WUCR2_WUPP7 << PWR_WUP_POLARITY_SHIFT) /*!< Internal constant used to retrieve                                                                                                            \
 						       wakeup signal selection */
-#define PWR_WAKEUP8_POLARITY_LOW                                                                                       \
-	(PWR_WUCR2_WUPP8 << PWR_WUP_POLARITY_SHIFT) /*!< Internal constant used to retrieve                            \
+#define PWR_WAKEUP8_POLARITY_LOW                                                                                                                                                                       \
+	(PWR_WUCR2_WUPP8 << PWR_WUP_POLARITY_SHIFT) /*!< Internal constant used to retrieve                                                                                                            \
 						       wakeup signal selection */
 
 /* Defines attribute */
@@ -860,63 +858,43 @@ typedef struct {
  * @{
  */
 /* Wake up pins check macro */
-#define IS_PWR_WAKEUP_PIN(PIN)                                                                                         \
-	(((PIN) == PWR_WAKEUP_PIN1_HIGH_0) || ((PIN) == PWR_WAKEUP_PIN1_HIGH_1) ||                                     \
-	 ((PIN) == PWR_WAKEUP_PIN1_HIGH_2) || ((PIN) == PWR_WAKEUP_PIN2_HIGH_0) ||                                     \
-	 ((PIN) == PWR_WAKEUP_PIN2_HIGH_1) || ((PIN) == PWR_WAKEUP_PIN2_HIGH_2) ||                                     \
-	 ((PIN) == PWR_WAKEUP_PIN3_HIGH_0) || ((PIN) == PWR_WAKEUP_PIN3_HIGH_1) ||                                     \
-	 ((PIN) == PWR_WAKEUP_PIN3_HIGH_2) || ((PIN) == PWR_WAKEUP_PIN4_HIGH_0) ||                                     \
-	 ((PIN) == PWR_WAKEUP_PIN4_HIGH_1) || ((PIN) == PWR_WAKEUP_PIN4_HIGH_2) ||                                     \
-	 ((PIN) == PWR_WAKEUP_PIN5_HIGH_0) || ((PIN) == PWR_WAKEUP_PIN5_HIGH_1) ||                                     \
-	 ((PIN) == PWR_WAKEUP_PIN5_HIGH_2) || ((PIN) == PWR_WAKEUP_PIN6_HIGH_0) ||                                     \
-	 ((PIN) == PWR_WAKEUP_PIN6_HIGH_1) || ((PIN) == PWR_WAKEUP_PIN6_HIGH_2) ||                                     \
-	 ((PIN) == PWR_WAKEUP_PIN6_HIGH_3) || ((PIN) == PWR_WAKEUP_PIN7_HIGH_0) ||                                     \
-	 ((PIN) == PWR_WAKEUP_PIN7_HIGH_1) || ((PIN) == PWR_WAKEUP_PIN7_HIGH_2) ||                                     \
-	 ((PIN) == PWR_WAKEUP_PIN7_HIGH_3) || ((PIN) == PWR_WAKEUP_PIN8_HIGH_0) ||                                     \
-	 ((PIN) == PWR_WAKEUP_PIN8_HIGH_1) || ((PIN) == PWR_WAKEUP_PIN8_HIGH_2) ||                                     \
-	 ((PIN) == PWR_WAKEUP_PIN8_HIGH_3) || ((PIN) == PWR_WAKEUP_PIN1_LOW_0) || ((PIN) == PWR_WAKEUP_PIN1_LOW_1) ||  \
-	 ((PIN) == PWR_WAKEUP_PIN1_LOW_2) || ((PIN) == PWR_WAKEUP_PIN2_LOW_0) || ((PIN) == PWR_WAKEUP_PIN2_LOW_1) ||   \
-	 ((PIN) == PWR_WAKEUP_PIN2_LOW_2) || ((PIN) == PWR_WAKEUP_PIN3_LOW_0) || ((PIN) == PWR_WAKEUP_PIN3_LOW_1) ||   \
-	 ((PIN) == PWR_WAKEUP_PIN3_LOW_2) || ((PIN) == PWR_WAKEUP_PIN4_LOW_0) || ((PIN) == PWR_WAKEUP_PIN4_LOW_1) ||   \
-	 ((PIN) == PWR_WAKEUP_PIN4_LOW_2) || ((PIN) == PWR_WAKEUP_PIN5_LOW_0) || ((PIN) == PWR_WAKEUP_PIN5_LOW_1) ||   \
-	 ((PIN) == PWR_WAKEUP_PIN5_LOW_2) || ((PIN) == PWR_WAKEUP_PIN6_LOW_0) || ((PIN) == PWR_WAKEUP_PIN6_LOW_1) ||   \
-	 ((PIN) == PWR_WAKEUP_PIN6_LOW_2) || ((PIN) == PWR_WAKEUP_PIN6_LOW_3) || ((PIN) == PWR_WAKEUP_PIN7_LOW_0) ||   \
-	 ((PIN) == PWR_WAKEUP_PIN7_LOW_1) || ((PIN) == PWR_WAKEUP_PIN7_LOW_2) || ((PIN) == PWR_WAKEUP_PIN7_LOW_3) ||   \
-	 ((PIN) == PWR_WAKEUP_PIN8_LOW_0) || ((PIN) == PWR_WAKEUP_PIN8_LOW_1) || ((PIN) == PWR_WAKEUP_PIN8_LOW_2) ||   \
-	 ((PIN) == PWR_WAKEUP_PIN8_LOW_3) || ((PIN) == PWR_WAKEUP_PIN1) || ((PIN) == PWR_WAKEUP_PIN2) ||               \
-	 ((PIN) == PWR_WAKEUP_PIN3) || ((PIN) == PWR_WAKEUP_PIN4) || ((PIN) == PWR_WAKEUP_PIN5) ||                     \
-	 ((PIN) == PWR_WAKEUP_PIN6) || ((PIN) == PWR_WAKEUP_PIN7) || ((PIN) == PWR_WAKEUP_PIN8))
+#define IS_PWR_WAKEUP_PIN(PIN)                                                                                                                                                                         \
+	(((PIN) == PWR_WAKEUP_PIN1_HIGH_0) || ((PIN) == PWR_WAKEUP_PIN1_HIGH_1) || ((PIN) == PWR_WAKEUP_PIN1_HIGH_2) || ((PIN) == PWR_WAKEUP_PIN2_HIGH_0) || ((PIN) == PWR_WAKEUP_PIN2_HIGH_1) ||      \
+	 ((PIN) == PWR_WAKEUP_PIN2_HIGH_2) || ((PIN) == PWR_WAKEUP_PIN3_HIGH_0) || ((PIN) == PWR_WAKEUP_PIN3_HIGH_1) || ((PIN) == PWR_WAKEUP_PIN3_HIGH_2) || ((PIN) == PWR_WAKEUP_PIN4_HIGH_0) ||      \
+	 ((PIN) == PWR_WAKEUP_PIN4_HIGH_1) || ((PIN) == PWR_WAKEUP_PIN4_HIGH_2) || ((PIN) == PWR_WAKEUP_PIN5_HIGH_0) || ((PIN) == PWR_WAKEUP_PIN5_HIGH_1) || ((PIN) == PWR_WAKEUP_PIN5_HIGH_2) ||      \
+	 ((PIN) == PWR_WAKEUP_PIN6_HIGH_0) || ((PIN) == PWR_WAKEUP_PIN6_HIGH_1) || ((PIN) == PWR_WAKEUP_PIN6_HIGH_2) || ((PIN) == PWR_WAKEUP_PIN6_HIGH_3) || ((PIN) == PWR_WAKEUP_PIN7_HIGH_0) ||      \
+	 ((PIN) == PWR_WAKEUP_PIN7_HIGH_1) || ((PIN) == PWR_WAKEUP_PIN7_HIGH_2) || ((PIN) == PWR_WAKEUP_PIN7_HIGH_3) || ((PIN) == PWR_WAKEUP_PIN8_HIGH_0) || ((PIN) == PWR_WAKEUP_PIN8_HIGH_1) ||      \
+	 ((PIN) == PWR_WAKEUP_PIN8_HIGH_2) || ((PIN) == PWR_WAKEUP_PIN8_HIGH_3) || ((PIN) == PWR_WAKEUP_PIN1_LOW_0) || ((PIN) == PWR_WAKEUP_PIN1_LOW_1) || ((PIN) == PWR_WAKEUP_PIN1_LOW_2) ||         \
+	 ((PIN) == PWR_WAKEUP_PIN2_LOW_0) || ((PIN) == PWR_WAKEUP_PIN2_LOW_1) || ((PIN) == PWR_WAKEUP_PIN2_LOW_2) || ((PIN) == PWR_WAKEUP_PIN3_LOW_0) || ((PIN) == PWR_WAKEUP_PIN3_LOW_1) ||           \
+	 ((PIN) == PWR_WAKEUP_PIN3_LOW_2) || ((PIN) == PWR_WAKEUP_PIN4_LOW_0) || ((PIN) == PWR_WAKEUP_PIN4_LOW_1) || ((PIN) == PWR_WAKEUP_PIN4_LOW_2) || ((PIN) == PWR_WAKEUP_PIN5_LOW_0) ||           \
+	 ((PIN) == PWR_WAKEUP_PIN5_LOW_1) || ((PIN) == PWR_WAKEUP_PIN5_LOW_2) || ((PIN) == PWR_WAKEUP_PIN6_LOW_0) || ((PIN) == PWR_WAKEUP_PIN6_LOW_1) || ((PIN) == PWR_WAKEUP_PIN6_LOW_2) ||           \
+	 ((PIN) == PWR_WAKEUP_PIN6_LOW_3) || ((PIN) == PWR_WAKEUP_PIN7_LOW_0) || ((PIN) == PWR_WAKEUP_PIN7_LOW_1) || ((PIN) == PWR_WAKEUP_PIN7_LOW_2) || ((PIN) == PWR_WAKEUP_PIN7_LOW_3) ||           \
+	 ((PIN) == PWR_WAKEUP_PIN8_LOW_0) || ((PIN) == PWR_WAKEUP_PIN8_LOW_1) || ((PIN) == PWR_WAKEUP_PIN8_LOW_2) || ((PIN) == PWR_WAKEUP_PIN8_LOW_3) || ((PIN) == PWR_WAKEUP_PIN1) ||                 \
+	 ((PIN) == PWR_WAKEUP_PIN2) || ((PIN) == PWR_WAKEUP_PIN3) || ((PIN) == PWR_WAKEUP_PIN4) || ((PIN) == PWR_WAKEUP_PIN5) || ((PIN) == PWR_WAKEUP_PIN6) || ((PIN) == PWR_WAKEUP_PIN7) ||           \
+	 ((PIN) == PWR_WAKEUP_PIN8))
 
 /* PVD level check macro */
-#define IS_PWR_PVD_LEVEL(LEVEL)                                                                                        \
-	(((LEVEL) == PWR_PVDLEVEL_0) || ((LEVEL) == PWR_PVDLEVEL_1) || ((LEVEL) == PWR_PVDLEVEL_2) ||                  \
-	 ((LEVEL) == PWR_PVDLEVEL_3) || ((LEVEL) == PWR_PVDLEVEL_4) || ((LEVEL) == PWR_PVDLEVEL_5) ||                  \
+#define IS_PWR_PVD_LEVEL(LEVEL)                                                                                                                                                                        \
+	(((LEVEL) == PWR_PVDLEVEL_0) || ((LEVEL) == PWR_PVDLEVEL_1) || ((LEVEL) == PWR_PVDLEVEL_2) || ((LEVEL) == PWR_PVDLEVEL_3) || ((LEVEL) == PWR_PVDLEVEL_4) || ((LEVEL) == PWR_PVDLEVEL_5) ||     \
 	 ((LEVEL) == PWR_PVDLEVEL_6) || ((LEVEL) == PWR_PVDLEVEL_7))
 
 /* PVD mode check macro */
-#define IS_PWR_PVD_MODE(MODE)                                                                                          \
-	(((MODE) == PWR_PVD_MODE_NORMAL) || ((MODE) == PWR_PVD_MODE_IT_RISING) ||                                      \
-	 ((MODE) == PWR_PVD_MODE_IT_FALLING) || ((MODE) == PWR_PVD_MODE_IT_RISING_FALLING) ||                          \
-	 ((MODE) == PWR_PVD_MODE_EVENT_RISING) || ((MODE) == PWR_PVD_MODE_EVENT_FALLING) ||                            \
-	 ((MODE) == PWR_PVD_MODE_EVENT_RISING_FALLING))
+#define IS_PWR_PVD_MODE(MODE)                                                                                                                                                                          \
+	(((MODE) == PWR_PVD_MODE_NORMAL) || ((MODE) == PWR_PVD_MODE_IT_RISING) || ((MODE) == PWR_PVD_MODE_IT_FALLING) || ((MODE) == PWR_PVD_MODE_IT_RISING_FALLING) ||                                 \
+	 ((MODE) == PWR_PVD_MODE_EVENT_RISING) || ((MODE) == PWR_PVD_MODE_EVENT_FALLING) || ((MODE) == PWR_PVD_MODE_EVENT_RISING_FALLING))
 
 /* Sleep mode entry check macro */
-#define IS_PWR_SLEEP_ENTRY(ENTRY)                                                                                      \
-	(((ENTRY) == PWR_SLEEPENTRY_WFI) || ((ENTRY) == PWR_SLEEPENTRY_WFE) ||                                         \
-	 ((ENTRY) == PWR_SLEEPENTRY_WFE_NO_EVT_CLEAR))
+#define IS_PWR_SLEEP_ENTRY(ENTRY) (((ENTRY) == PWR_SLEEPENTRY_WFI) || ((ENTRY) == PWR_SLEEPENTRY_WFE) || ((ENTRY) == PWR_SLEEPENTRY_WFE_NO_EVT_CLEAR))
 
 /* Stop mode entry check macro */
-#define IS_PWR_STOP_ENTRY(ENTRY)                                                                                       \
-	(((ENTRY) == PWR_STOPENTRY_WFI) || ((ENTRY) == PWR_STOPENTRY_WFE) ||                                           \
-	 ((ENTRY) == PWR_STOPENTRY_WFE_NO_EVT_CLEAR))
+#define IS_PWR_STOP_ENTRY(ENTRY) (((ENTRY) == PWR_STOPENTRY_WFI) || ((ENTRY) == PWR_STOPENTRY_WFE) || ((ENTRY) == PWR_STOPENTRY_WFE_NO_EVT_CLEAR))
 
 /* PWR items check macro */
 #define IS_PWR_ITEMS_ATTRIBUTES(ITEM) ((((ITEM) & (~PWR_ALL)) == 0U) && ((ITEM) != 0U))
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /* PWR attribute check macro (Secure) */
-#define IS_PWR_ATTRIBUTES(ATTRIBUTES)                                                                                  \
-	((((~(((ATTRIBUTES) & 0xF0U) >> 4U)) & ((ATTRIBUTES) & 0x0FU)) == 0U) && (((ATTRIBUTES) & 0xFFFFFFCCU) == 0U))
+#define IS_PWR_ATTRIBUTES(ATTRIBUTES) ((((~(((ATTRIBUTES) & 0xF0U) >> 4U)) & ((ATTRIBUTES) & 0x0FU)) == 0U) && (((ATTRIBUTES) & 0xFFFFFFCCU) == 0U))
 #else
 /* PWR attribute check macro (NSecure) */
 #define IS_PWR_ATTRIBUTES(ATTRIBUTES) (((ATTRIBUTES) == PWR_NSEC_NPRIV) || ((ATTRIBUTES) == PWR_NSEC_PRIV))

@@ -45,15 +45,15 @@
 /** @defgroup PWR_PVD_Mode_Mask PWR PVD Mode Mask
  * @{
  */
-#define PVD_MODE_IT                                                                                                    \
-	((uint32_t)0x00010000) /*!< Mask for interruption yielded by PVD                                               \
+#define PVD_MODE_IT                                                                                                                                                                                    \
+	((uint32_t)0x00010000) /*!< Mask for interruption yielded by PVD                                                                                                                               \
 				  threshold crossing */
-#define PVD_MODE_EVT                                                                                                   \
-	((uint32_t)0x00020000)		       /*!< Mask for event yielded by PVD threshold                            \
+#define PVD_MODE_EVT                                                                                                                                                                                   \
+	((uint32_t)0x00020000)		       /*!< Mask for event yielded by PVD threshold                                                                                                            \
 						  crossing        */
 #define PVD_RISING_EDGE ((uint32_t)0x00000001) /*!< Mask for rising edge set as PVD trigger */
-#define PVD_FALLING_EDGE                                                                                               \
-	((uint32_t)0x00000002) /*!< Mask for falling edge set as PVD trigger                                           \
+#define PVD_FALLING_EDGE                                                                                                                                                                               \
+	((uint32_t)0x00000002) /*!< Mask for falling edge set as PVD trigger                                                                                                                           \
 				*/
 /**
  * @}

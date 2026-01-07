@@ -230,10 +230,7 @@ __STATIC_INLINE uint32_t LL_GetUID_Word2(void) { return (uint32_t)(READ_REG(*((u
  * in Kbytes. As an example, 0x040 corresponds to 64 Kbytes.
  * @retval FLASH_SIZE[15:0]: Flash memory size
  */
-__STATIC_INLINE uint32_t LL_GetFlashSize(void)
-{
-	return (uint32_t)(READ_REG(*((uint32_t *)FLASHSIZE_BASE_ADDRESS)) & 0xFFFFU);
-}
+__STATIC_INLINE uint32_t LL_GetFlashSize(void) { return (uint32_t)(READ_REG(*((uint32_t *)FLASHSIZE_BASE_ADDRESS)) & 0xFFFFU); }
 
 /**
  * @brief  Get Package type
@@ -257,10 +254,7 @@ __STATIC_INLINE uint32_t LL_GetFlashSize(void)
  *
  *         (*) value not defined in all devices.
  */
-__STATIC_INLINE uint32_t LL_GetPackageType(void)
-{
-	return (uint32_t)(READ_REG(*((uint32_t *)PACKAGE_BASE_ADDRESS)) & 0x1FU);
-}
+__STATIC_INLINE uint32_t LL_GetPackageType(void) { return (uint32_t)(READ_REG(*((uint32_t *)PACKAGE_BASE_ADDRESS)) & 0x1FU); }
 
 /**
  * @}
@@ -302,13 +296,9 @@ void LL_mDelay(uint32_t Delay);
 
 void LL_SetSystemCoreClock(uint32_t HCLKFrequency);
 ErrorStatus LL_SetFlashLatency(uint32_t HCLKFrequency);
-ErrorStatus LL_PLL_ConfigSystemClock_MSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
-					 LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct);
-ErrorStatus LL_PLL_ConfigSystemClock_HSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
-					 LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct);
-ErrorStatus LL_PLL_ConfigSystemClock_HSE(uint32_t HSEFrequency, uint32_t HSEBypass,
-					 LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
-					 LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct);
+ErrorStatus LL_PLL_ConfigSystemClock_MSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct, LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct);
+ErrorStatus LL_PLL_ConfigSystemClock_HSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct, LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct);
+ErrorStatus LL_PLL_ConfigSystemClock_HSE(uint32_t HSEFrequency, uint32_t HSEBypass, LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct, LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct);
 
 /**
  * @}

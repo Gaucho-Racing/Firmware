@@ -633,8 +633,8 @@ typedef void (*pSPI_CallbackTypeDef)(SPI_HandleTypeDef *hspi); /*!< pointer to a
 /** @defgroup SPI_Flags_definition SPI Flags Definition
  * @{
  */
-#define SPI_FLAG_RXP                                                                                                   \
-	SPI_SR_RXP		     /* SPI status flag : Rx-Packet available flag                                     \
+#define SPI_FLAG_RXP                                                                                                                                                                                   \
+	SPI_SR_RXP		     /* SPI status flag : Rx-Packet available flag                                                                                                                     \
 				      */
 #define SPI_FLAG_TXP SPI_SR_TXP	     /* SPI status flag : Tx-Packet space available flag */
 #define SPI_FLAG_DXP SPI_SR_DXP	     /* SPI status flag : Duplex Packet flag */
@@ -656,8 +656,8 @@ typedef void (*pSPI_CallbackTypeDef)(SPI_HandleTypeDef *hspi); /*!< pointer to a
 /** @defgroup SPI_reception_fifo_status_level SPI Reception FIFO Status Level
  * @{
  */
-#define SPI_RX_FIFO_0PACKET                                                                                            \
-	(0x00000000UL) /* 0 or multiple of 4 packets available in the RxFIFO                                           \
+#define SPI_RX_FIFO_0PACKET                                                                                                                                                                            \
+	(0x00000000UL) /* 0 or multiple of 4 packets available in the RxFIFO                                                                                                                           \
 			*/
 #define SPI_RX_FIFO_1PACKET (SPI_SR_RXPLVL_0)
 #define SPI_RX_FIFO_2PACKET (SPI_SR_RXPLVL_1)
@@ -682,11 +682,11 @@ typedef void (*pSPI_CallbackTypeDef)(SPI_HandleTypeDef *hspi); /*!< pointer to a
  * @retval None
  */
 #if (USE_HAL_SPI_REGISTER_CALLBACKS == 1UL)
-#define __HAL_SPI_RESET_HANDLE_STATE(__HANDLE__)                                                                       \
-	do {                                                                                                           \
-		(__HANDLE__)->State = HAL_SPI_STATE_RESET;                                                             \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define __HAL_SPI_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                       \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_SPI_STATE_RESET;                                                                                                                                             \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0)
 #else
 #define __HAL_SPI_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_SPI_STATE_RESET)
@@ -753,8 +753,7 @@ typedef void (*pSPI_CallbackTypeDef)(SPI_HandleTypeDef *hspi); /*!< pointer to a
  *            @arg SPI_IT_ERR    : Error interrupt
  * @retval The new state of __IT__ (TRUE or FALSE).
  */
-#define __HAL_SPI_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)                                                             \
-	((((__HANDLE__)->Instance->IER & (__INTERRUPT__)) == (__INTERRUPT__)) ? SET : RESET)
+#define __HAL_SPI_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__) ((((__HANDLE__)->Instance->IER & (__INTERRUPT__)) == (__INTERRUPT__)) ? SET : RESET)
 
 /** @brief  Check whether the specified SPI flag is set or not.
  * @param  __HANDLE__: specifies the SPI Handle.
@@ -863,8 +862,7 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef *hspi);
 
 /* Callbacks Register/UnRegister functions  ***********************************/
 #if (USE_HAL_SPI_REGISTER_CALLBACKS == 1U)
-HAL_StatusTypeDef HAL_SPI_RegisterCallback(SPI_HandleTypeDef *hspi, HAL_SPI_CallbackIDTypeDef CallbackID,
-					   pSPI_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_SPI_RegisterCallback(SPI_HandleTypeDef *hspi, HAL_SPI_CallbackIDTypeDef CallbackID, pSPI_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_SPI_UnRegisterCallback(SPI_HandleTypeDef *hspi, HAL_SPI_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_SPI_REGISTER_CALLBACKS */
 /**
@@ -877,17 +875,14 @@ HAL_StatusTypeDef HAL_SPI_UnRegisterCallback(SPI_HandleTypeDef *hspi, HAL_SPI_Ca
 /* I/O operation functions  ***************************************************/
 HAL_StatusTypeDef HAL_SPI_Transmit(SPI_HandleTypeDef *hspi, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
 HAL_StatusTypeDef HAL_SPI_Receive(SPI_HandleTypeDef *hspi, uint8_t *pData, uint16_t Size, uint32_t Timeout);
-HAL_StatusTypeDef HAL_SPI_TransmitReceive(SPI_HandleTypeDef *hspi, const uint8_t *pTxData, uint8_t *pRxData,
-					  uint16_t Size, uint32_t Timeout);
+HAL_StatusTypeDef HAL_SPI_TransmitReceive(SPI_HandleTypeDef *hspi, const uint8_t *pTxData, uint8_t *pRxData, uint16_t Size, uint32_t Timeout);
 HAL_StatusTypeDef HAL_SPI_Transmit_IT(SPI_HandleTypeDef *hspi, const uint8_t *pData, uint16_t Size);
 HAL_StatusTypeDef HAL_SPI_Receive_IT(SPI_HandleTypeDef *hspi, uint8_t *pData, uint16_t Size);
-HAL_StatusTypeDef HAL_SPI_TransmitReceive_IT(SPI_HandleTypeDef *hspi, const uint8_t *pTxData, uint8_t *pRxData,
-					     uint16_t Size);
+HAL_StatusTypeDef HAL_SPI_TransmitReceive_IT(SPI_HandleTypeDef *hspi, const uint8_t *pTxData, uint8_t *pRxData, uint16_t Size);
 
 HAL_StatusTypeDef HAL_SPI_Transmit_DMA(SPI_HandleTypeDef *hspi, const uint8_t *pData, uint16_t Size);
 HAL_StatusTypeDef HAL_SPI_Receive_DMA(SPI_HandleTypeDef *hspi, uint8_t *pData, uint16_t Size);
-HAL_StatusTypeDef HAL_SPI_TransmitReceive_DMA(SPI_HandleTypeDef *hspi, const uint8_t *pTxData, uint8_t *pRxData,
-					      uint16_t Size);
+HAL_StatusTypeDef HAL_SPI_TransmitReceive_DMA(SPI_HandleTypeDef *hspi, const uint8_t *pTxData, uint8_t *pRxData, uint16_t Size);
 
 HAL_StatusTypeDef HAL_SPI_DMAPause(SPI_HandleTypeDef *hspi);
 HAL_StatusTypeDef HAL_SPI_DMAResume(SPI_HandleTypeDef *hspi);
@@ -974,58 +969,39 @@ uint32_t HAL_SPI_GetError(const SPI_HandleTypeDef *hspi);
 
 #define IS_SPI_MODE(MODE) (((MODE) == SPI_MODE_SLAVE) || ((MODE) == SPI_MODE_MASTER))
 
-#define IS_SPI_DIRECTION(MODE)                                                                                         \
-	(((MODE) == SPI_DIRECTION_2LINES) || ((MODE) == SPI_DIRECTION_2LINES_RXONLY) ||                                \
-	 ((MODE) == SPI_DIRECTION_1LINE) || ((MODE) == SPI_DIRECTION_2LINES_TXONLY))
+#define IS_SPI_DIRECTION(MODE) (((MODE) == SPI_DIRECTION_2LINES) || ((MODE) == SPI_DIRECTION_2LINES_RXONLY) || ((MODE) == SPI_DIRECTION_1LINE) || ((MODE) == SPI_DIRECTION_2LINES_TXONLY))
 
 #define IS_SPI_DIRECTION_2LINES(MODE) ((MODE) == SPI_DIRECTION_2LINES)
 
-#define IS_SPI_DIRECTION_2LINES_OR_1LINE_2LINES_TXONLY(MODE)                                                           \
-	(((MODE) == SPI_DIRECTION_2LINES) || ((MODE) == SPI_DIRECTION_1LINE) || ((MODE) == SPI_DIRECTION_2LINES_TXONLY))
+#define IS_SPI_DIRECTION_2LINES_OR_1LINE_2LINES_TXONLY(MODE) (((MODE) == SPI_DIRECTION_2LINES) || ((MODE) == SPI_DIRECTION_1LINE) || ((MODE) == SPI_DIRECTION_2LINES_TXONLY))
 
-#define IS_SPI_DIRECTION_2LINES_OR_1LINE_2LINES_RXONLY(MODE)                                                           \
-	(((MODE) == SPI_DIRECTION_2LINES) || ((MODE) == SPI_DIRECTION_1LINE) || ((MODE) == SPI_DIRECTION_2LINES_RXONLY))
+#define IS_SPI_DIRECTION_2LINES_OR_1LINE_2LINES_RXONLY(MODE) (((MODE) == SPI_DIRECTION_2LINES) || ((MODE) == SPI_DIRECTION_1LINE) || ((MODE) == SPI_DIRECTION_2LINES_RXONLY))
 
-#define IS_SPI_DATASIZE(DATASIZE)                                                                                      \
-	(((DATASIZE) == SPI_DATASIZE_32BIT) || ((DATASIZE) == SPI_DATASIZE_31BIT) ||                                   \
-	 ((DATASIZE) == SPI_DATASIZE_30BIT) || ((DATASIZE) == SPI_DATASIZE_29BIT) ||                                   \
-	 ((DATASIZE) == SPI_DATASIZE_28BIT) || ((DATASIZE) == SPI_DATASIZE_27BIT) ||                                   \
-	 ((DATASIZE) == SPI_DATASIZE_26BIT) || ((DATASIZE) == SPI_DATASIZE_25BIT) ||                                   \
-	 ((DATASIZE) == SPI_DATASIZE_24BIT) || ((DATASIZE) == SPI_DATASIZE_23BIT) ||                                   \
-	 ((DATASIZE) == SPI_DATASIZE_22BIT) || ((DATASIZE) == SPI_DATASIZE_21BIT) ||                                   \
-	 ((DATASIZE) == SPI_DATASIZE_20BIT) || ((DATASIZE) == SPI_DATASIZE_22BIT) ||                                   \
-	 ((DATASIZE) == SPI_DATASIZE_19BIT) || ((DATASIZE) == SPI_DATASIZE_18BIT) ||                                   \
-	 ((DATASIZE) == SPI_DATASIZE_17BIT) || ((DATASIZE) == SPI_DATASIZE_16BIT) ||                                   \
-	 ((DATASIZE) == SPI_DATASIZE_15BIT) || ((DATASIZE) == SPI_DATASIZE_14BIT) ||                                   \
-	 ((DATASIZE) == SPI_DATASIZE_13BIT) || ((DATASIZE) == SPI_DATASIZE_12BIT) ||                                   \
-	 ((DATASIZE) == SPI_DATASIZE_11BIT) || ((DATASIZE) == SPI_DATASIZE_10BIT) ||                                   \
-	 ((DATASIZE) == SPI_DATASIZE_9BIT) || ((DATASIZE) == SPI_DATASIZE_8BIT) ||                                     \
-	 ((DATASIZE) == SPI_DATASIZE_7BIT) || ((DATASIZE) == SPI_DATASIZE_6BIT) ||                                     \
-	 ((DATASIZE) == SPI_DATASIZE_5BIT) || ((DATASIZE) == SPI_DATASIZE_4BIT))
+#define IS_SPI_DATASIZE(DATASIZE)                                                                                                                                                                      \
+	(((DATASIZE) == SPI_DATASIZE_32BIT) || ((DATASIZE) == SPI_DATASIZE_31BIT) || ((DATASIZE) == SPI_DATASIZE_30BIT) || ((DATASIZE) == SPI_DATASIZE_29BIT) || ((DATASIZE) == SPI_DATASIZE_28BIT) || \
+	 ((DATASIZE) == SPI_DATASIZE_27BIT) || ((DATASIZE) == SPI_DATASIZE_26BIT) || ((DATASIZE) == SPI_DATASIZE_25BIT) || ((DATASIZE) == SPI_DATASIZE_24BIT) || ((DATASIZE) == SPI_DATASIZE_23BIT) || \
+	 ((DATASIZE) == SPI_DATASIZE_22BIT) || ((DATASIZE) == SPI_DATASIZE_21BIT) || ((DATASIZE) == SPI_DATASIZE_20BIT) || ((DATASIZE) == SPI_DATASIZE_22BIT) || ((DATASIZE) == SPI_DATASIZE_19BIT) || \
+	 ((DATASIZE) == SPI_DATASIZE_18BIT) || ((DATASIZE) == SPI_DATASIZE_17BIT) || ((DATASIZE) == SPI_DATASIZE_16BIT) || ((DATASIZE) == SPI_DATASIZE_15BIT) || ((DATASIZE) == SPI_DATASIZE_14BIT) || \
+	 ((DATASIZE) == SPI_DATASIZE_13BIT) || ((DATASIZE) == SPI_DATASIZE_12BIT) || ((DATASIZE) == SPI_DATASIZE_11BIT) || ((DATASIZE) == SPI_DATASIZE_10BIT) || ((DATASIZE) == SPI_DATASIZE_9BIT) ||  \
+	 ((DATASIZE) == SPI_DATASIZE_8BIT) || ((DATASIZE) == SPI_DATASIZE_7BIT) || ((DATASIZE) == SPI_DATASIZE_6BIT) || ((DATASIZE) == SPI_DATASIZE_5BIT) || ((DATASIZE) == SPI_DATASIZE_4BIT))
 
 /**
  * @brief  DataSize for limited instance
  */
 #define IS_SPI_LIMITED_DATASIZE(DATASIZE) (((DATASIZE) == SPI_DATASIZE_16BIT) || ((DATASIZE) == SPI_DATASIZE_8BIT))
 
-#define IS_SPI_FIFOTHRESHOLD(THRESHOLD)                                                                                \
-	(((THRESHOLD) == SPI_FIFO_THRESHOLD_01DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_02DATA) ||                   \
-	 ((THRESHOLD) == SPI_FIFO_THRESHOLD_03DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_04DATA) ||                   \
-	 ((THRESHOLD) == SPI_FIFO_THRESHOLD_05DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_06DATA) ||                   \
-	 ((THRESHOLD) == SPI_FIFO_THRESHOLD_07DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_08DATA) ||                   \
-	 ((THRESHOLD) == SPI_FIFO_THRESHOLD_09DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_10DATA) ||                   \
-	 ((THRESHOLD) == SPI_FIFO_THRESHOLD_11DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_12DATA) ||                   \
-	 ((THRESHOLD) == SPI_FIFO_THRESHOLD_13DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_14DATA) ||                   \
-	 ((THRESHOLD) == SPI_FIFO_THRESHOLD_15DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_16DATA))
+#define IS_SPI_FIFOTHRESHOLD(THRESHOLD)                                                                                                                                                                \
+	(((THRESHOLD) == SPI_FIFO_THRESHOLD_01DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_02DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_03DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_04DATA) ||       \
+	 ((THRESHOLD) == SPI_FIFO_THRESHOLD_05DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_06DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_07DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_08DATA) ||       \
+	 ((THRESHOLD) == SPI_FIFO_THRESHOLD_09DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_10DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_11DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_12DATA) ||       \
+	 ((THRESHOLD) == SPI_FIFO_THRESHOLD_13DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_14DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_15DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_16DATA))
 
 /**
  * @brief  FifoThreshold for limited instance
  */
-#define IS_SPI_LIMITED_FIFOTHRESHOLD(THRESHOLD)                                                                        \
-	(((THRESHOLD) == SPI_FIFO_THRESHOLD_01DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_02DATA) ||                   \
-	 ((THRESHOLD) == SPI_FIFO_THRESHOLD_03DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_04DATA) ||                   \
-	 ((THRESHOLD) == SPI_FIFO_THRESHOLD_05DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_06DATA) ||                   \
-	 ((THRESHOLD) == SPI_FIFO_THRESHOLD_07DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_08DATA))
+#define IS_SPI_LIMITED_FIFOTHRESHOLD(THRESHOLD)                                                                                                                                                        \
+	(((THRESHOLD) == SPI_FIFO_THRESHOLD_01DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_02DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_03DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_04DATA) ||       \
+	 ((THRESHOLD) == SPI_FIFO_THRESHOLD_05DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_06DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_07DATA) || ((THRESHOLD) == SPI_FIFO_THRESHOLD_08DATA))
 
 #define IS_SPI_CPOL(CPOL) (((CPOL) == SPI_POLARITY_LOW) || ((CPOL) == SPI_POLARITY_HIGH))
 
@@ -1035,40 +1011,27 @@ uint32_t HAL_SPI_GetError(const SPI_HandleTypeDef *hspi);
 
 #define IS_SPI_NSSP(NSSP) (((NSSP) == SPI_NSS_PULSE_ENABLE) || ((NSSP) == SPI_NSS_PULSE_DISABLE))
 
-#define IS_SPI_BAUDRATE_PRESCALER(PRESCALER)                                                                           \
-	(((PRESCALER) == SPI_BAUDRATEPRESCALER_BYPASS) || ((PRESCALER) == SPI_BAUDRATEPRESCALER_2) ||                  \
-	 ((PRESCALER) == SPI_BAUDRATEPRESCALER_4) || ((PRESCALER) == SPI_BAUDRATEPRESCALER_8) ||                       \
-	 ((PRESCALER) == SPI_BAUDRATEPRESCALER_16) || ((PRESCALER) == SPI_BAUDRATEPRESCALER_32) ||                     \
-	 ((PRESCALER) == SPI_BAUDRATEPRESCALER_64) || ((PRESCALER) == SPI_BAUDRATEPRESCALER_128) ||                    \
+#define IS_SPI_BAUDRATE_PRESCALER(PRESCALER)                                                                                                                                                           \
+	(((PRESCALER) == SPI_BAUDRATEPRESCALER_BYPASS) || ((PRESCALER) == SPI_BAUDRATEPRESCALER_2) || ((PRESCALER) == SPI_BAUDRATEPRESCALER_4) || ((PRESCALER) == SPI_BAUDRATEPRESCALER_8) ||          \
+	 ((PRESCALER) == SPI_BAUDRATEPRESCALER_16) || ((PRESCALER) == SPI_BAUDRATEPRESCALER_32) || ((PRESCALER) == SPI_BAUDRATEPRESCALER_64) || ((PRESCALER) == SPI_BAUDRATEPRESCALER_128) ||          \
 	 ((PRESCALER) == SPI_BAUDRATEPRESCALER_256))
 
 #define IS_SPI_FIRST_BIT(BIT) (((BIT) == SPI_FIRSTBIT_MSB) || ((BIT) == SPI_FIRSTBIT_LSB))
 
 #define IS_SPI_TIMODE(MODE) (((MODE) == SPI_TIMODE_DISABLE) || ((MODE) == SPI_TIMODE_ENABLE))
 
-#define IS_SPI_CRC_CALCULATION(CALCULATION)                                                                            \
-	(((CALCULATION) == SPI_CRCCALCULATION_DISABLE) || ((CALCULATION) == SPI_CRCCALCULATION_ENABLE))
+#define IS_SPI_CRC_CALCULATION(CALCULATION) (((CALCULATION) == SPI_CRCCALCULATION_DISABLE) || ((CALCULATION) == SPI_CRCCALCULATION_ENABLE))
 
-#define IS_SPI_CRC_INITIALIZATION_PATTERN(PATTERN)                                                                     \
-	(((PATTERN) == SPI_CRC_INITIALIZATION_ALL_ZERO_PATTERN) ||                                                     \
-	 ((PATTERN) == SPI_CRC_INITIALIZATION_ALL_ONE_PATTERN))
+#define IS_SPI_CRC_INITIALIZATION_PATTERN(PATTERN) (((PATTERN) == SPI_CRC_INITIALIZATION_ALL_ZERO_PATTERN) || ((PATTERN) == SPI_CRC_INITIALIZATION_ALL_ONE_PATTERN))
 
-#define IS_SPI_CRC_LENGTH(LENGTH)                                                                                      \
-	(((LENGTH) == SPI_CRC_LENGTH_DATASIZE) || ((LENGTH) == SPI_CRC_LENGTH_32BIT) ||                                \
-	 ((LENGTH) == SPI_CRC_LENGTH_31BIT) || ((LENGTH) == SPI_CRC_LENGTH_30BIT) ||                                   \
-	 ((LENGTH) == SPI_CRC_LENGTH_29BIT) || ((LENGTH) == SPI_CRC_LENGTH_28BIT) ||                                   \
-	 ((LENGTH) == SPI_CRC_LENGTH_27BIT) || ((LENGTH) == SPI_CRC_LENGTH_26BIT) ||                                   \
-	 ((LENGTH) == SPI_CRC_LENGTH_25BIT) || ((LENGTH) == SPI_CRC_LENGTH_24BIT) ||                                   \
-	 ((LENGTH) == SPI_CRC_LENGTH_23BIT) || ((LENGTH) == SPI_CRC_LENGTH_22BIT) ||                                   \
-	 ((LENGTH) == SPI_CRC_LENGTH_21BIT) || ((LENGTH) == SPI_CRC_LENGTH_20BIT) ||                                   \
-	 ((LENGTH) == SPI_CRC_LENGTH_19BIT) || ((LENGTH) == SPI_CRC_LENGTH_18BIT) ||                                   \
-	 ((LENGTH) == SPI_CRC_LENGTH_17BIT) || ((LENGTH) == SPI_CRC_LENGTH_16BIT) ||                                   \
-	 ((LENGTH) == SPI_CRC_LENGTH_15BIT) || ((LENGTH) == SPI_CRC_LENGTH_14BIT) ||                                   \
-	 ((LENGTH) == SPI_CRC_LENGTH_13BIT) || ((LENGTH) == SPI_CRC_LENGTH_12BIT) ||                                   \
-	 ((LENGTH) == SPI_CRC_LENGTH_11BIT) || ((LENGTH) == SPI_CRC_LENGTH_10BIT) ||                                   \
-	 ((LENGTH) == SPI_CRC_LENGTH_9BIT) || ((LENGTH) == SPI_CRC_LENGTH_8BIT) ||                                     \
-	 ((LENGTH) == SPI_CRC_LENGTH_7BIT) || ((LENGTH) == SPI_CRC_LENGTH_6BIT) ||                                     \
-	 ((LENGTH) == SPI_CRC_LENGTH_5BIT) || ((LENGTH) == SPI_CRC_LENGTH_4BIT))
+#define IS_SPI_CRC_LENGTH(LENGTH)                                                                                                                                                                      \
+	(((LENGTH) == SPI_CRC_LENGTH_DATASIZE) || ((LENGTH) == SPI_CRC_LENGTH_32BIT) || ((LENGTH) == SPI_CRC_LENGTH_31BIT) || ((LENGTH) == SPI_CRC_LENGTH_30BIT) ||                                    \
+	 ((LENGTH) == SPI_CRC_LENGTH_29BIT) || ((LENGTH) == SPI_CRC_LENGTH_28BIT) || ((LENGTH) == SPI_CRC_LENGTH_27BIT) || ((LENGTH) == SPI_CRC_LENGTH_26BIT) || ((LENGTH) == SPI_CRC_LENGTH_25BIT) || \
+	 ((LENGTH) == SPI_CRC_LENGTH_24BIT) || ((LENGTH) == SPI_CRC_LENGTH_23BIT) || ((LENGTH) == SPI_CRC_LENGTH_22BIT) || ((LENGTH) == SPI_CRC_LENGTH_21BIT) || ((LENGTH) == SPI_CRC_LENGTH_20BIT) || \
+	 ((LENGTH) == SPI_CRC_LENGTH_19BIT) || ((LENGTH) == SPI_CRC_LENGTH_18BIT) || ((LENGTH) == SPI_CRC_LENGTH_17BIT) || ((LENGTH) == SPI_CRC_LENGTH_16BIT) || ((LENGTH) == SPI_CRC_LENGTH_15BIT) || \
+	 ((LENGTH) == SPI_CRC_LENGTH_14BIT) || ((LENGTH) == SPI_CRC_LENGTH_13BIT) || ((LENGTH) == SPI_CRC_LENGTH_12BIT) || ((LENGTH) == SPI_CRC_LENGTH_11BIT) || ((LENGTH) == SPI_CRC_LENGTH_10BIT) || \
+	 ((LENGTH) == SPI_CRC_LENGTH_9BIT) || ((LENGTH) == SPI_CRC_LENGTH_8BIT) || ((LENGTH) == SPI_CRC_LENGTH_7BIT) || ((LENGTH) == SPI_CRC_LENGTH_6BIT) || ((LENGTH) == SPI_CRC_LENGTH_5BIT) ||      \
+	 ((LENGTH) == SPI_CRC_LENGTH_4BIT))
 
 #define IS_SPI_LIMITED_TRANSFER_SIZE(SIZE) (((SIZE) < 0x3FFU) && ((SIZE) != 0U))
 
@@ -1081,17 +1044,13 @@ uint32_t HAL_SPI_GetError(const SPI_HandleTypeDef *hspi);
 
 #define IS_SPI_CRC_POLYNOMIAL_SIZE(POLYNOM, LENGTH) (((POLYNOM) >> (((LENGTH) >> SPI_CFG1_CRCSIZE_Pos) + 1UL)) == 0UL)
 
-#define IS_SPI_UNDERRUN_BEHAVIOUR(MODE)                                                                                \
-	(((MODE) == SPI_UNDERRUN_BEHAV_REGISTER_PATTERN) || ((MODE) == SPI_UNDERRUN_BEHAV_LAST_RECEIVED))
+#define IS_SPI_UNDERRUN_BEHAVIOUR(MODE) (((MODE) == SPI_UNDERRUN_BEHAV_REGISTER_PATTERN) || ((MODE) == SPI_UNDERRUN_BEHAV_LAST_RECEIVED))
 
-#define IS_SPI_RDY_MASTER_MANAGEMENT(MANAGEMENT)                                                                       \
-	(((MANAGEMENT) == SPI_RDY_MASTER_MANAGEMENT_INTERNALLY) ||                                                     \
-	 ((MANAGEMENT) == SPI_RDY_MASTER_MANAGEMENT_EXTERNALLY))
+#define IS_SPI_RDY_MASTER_MANAGEMENT(MANAGEMENT) (((MANAGEMENT) == SPI_RDY_MASTER_MANAGEMENT_INTERNALLY) || ((MANAGEMENT) == SPI_RDY_MASTER_MANAGEMENT_EXTERNALLY))
 
 #define IS_SPI_RDY_POLARITY(POLARITY) (((POLARITY) == SPI_RDY_POLARITY_HIGH) || ((POLARITY) == SPI_RDY_POLARITY_LOW))
 
-#define IS_SPI_MASTER_RX_AUTOSUSP(MODE)                                                                                \
-	(((MODE) == SPI_MASTER_RX_AUTOSUSP_DISABLE) || ((MODE) == SPI_MASTER_RX_AUTOSUSP_ENABLE))
+#define IS_SPI_MASTER_RX_AUTOSUSP(MODE) (((MODE) == SPI_MASTER_RX_AUTOSUSP_DISABLE) || ((MODE) == SPI_MASTER_RX_AUTOSUSP_ENABLE))
 
 #define IS_SPI_TRANSFER_SIZE(SIZE) (((SIZE) < 0xFFFFU) && ((SIZE) != 0U))
 /**

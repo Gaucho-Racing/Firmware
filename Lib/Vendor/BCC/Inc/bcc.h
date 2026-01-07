@@ -558,8 +558,7 @@ void BCC_TPL_Disable(const uint8_t drvInstance);
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Reg_Read(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t regAddr,
-			  const uint8_t regCnt, uint16_t *regVal);
+bcc_status_t BCC_Reg_Read(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t regAddr, const uint8_t regCnt, uint16_t *regVal);
 
 /*!
  * @brief This function writes a value to addressed register of selected battery
@@ -573,8 +572,7 @@ bcc_status_t BCC_Reg_Read(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Reg_Write(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t regAddr,
-			   const uint16_t regVal);
+bcc_status_t BCC_Reg_Write(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t regAddr, const uint16_t regVal);
 
 /*!
  * @brief This function writes a value to addressed register of all configured
@@ -602,8 +600,7 @@ bcc_status_t BCC_Reg_WriteGlobal(bcc_drv_config_t *const drvConfig, const uint8_
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Reg_Update(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t regAddr,
-			    const uint16_t regMask, const uint16_t regVal);
+bcc_status_t BCC_Reg_Update(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t regAddr, const uint16_t regMask, const uint16_t regVal);
 
 /*!
  * @brief This function starts ADC conversion in selected BCC device. It sets
@@ -679,8 +676,7 @@ bcc_status_t BCC_Meas_StartAndWait(bcc_drv_config_t *const drvConfig, const bcc_
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Meas_GetRawValues(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-				   uint16_t *const measurements);
+bcc_status_t BCC_Meas_GetRawValues(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, uint16_t *const measurements);
 
 /*!
  * @brief This function reads the Coulomb counter registers.
@@ -693,8 +689,7 @@ bcc_status_t BCC_Meas_GetRawValues(bcc_drv_config_t *const drvConfig, const bcc_
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Meas_GetCoulombCounter(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-					bcc_cc_data_t *const cc);
+bcc_status_t BCC_Meas_GetCoulombCounter(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, bcc_cc_data_t *const cc);
 
 /*!
  * @brief This function reads the ISENSE measurement and converts it to [uV].
@@ -706,8 +701,7 @@ bcc_status_t BCC_Meas_GetCoulombCounter(bcc_drv_config_t *const drvConfig, const
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Meas_GetIsenseVoltage(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-				       int32_t *const isenseVolt);
+bcc_status_t BCC_Meas_GetIsenseVoltage(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, int32_t *const isenseVolt);
 
 /*!
  * @brief This function reads the stack measurement and converts it to [uV].
@@ -719,8 +713,7 @@ bcc_status_t BCC_Meas_GetIsenseVoltage(bcc_drv_config_t *const drvConfig, const 
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Meas_GetStackVoltage(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-				      uint32_t *const stackVolt);
+bcc_status_t BCC_Meas_GetStackVoltage(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, uint32_t *const stackVolt);
 
 /*!
  * @brief This function reads the cell measurements and converts them to [uV].
@@ -748,8 +741,7 @@ bcc_status_t BCC_Meas_GetCellVoltages(bcc_drv_config_t *const drvConfig, const b
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Meas_GetCellVoltage(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, uint8_t cellIndex,
-				     uint32_t *const cellVolt);
+bcc_status_t BCC_Meas_GetCellVoltage(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, uint8_t cellIndex, uint32_t *const cellVolt);
 
 /*!
  * @brief This function reads the voltage measurement for all ANx and converts
@@ -779,8 +771,7 @@ bcc_status_t BCC_Meas_GetAnVoltages(bcc_drv_config_t *const drvConfig, const bcc
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Meas_GetAnVoltage(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, uint8_t anIndex,
-				   uint32_t *const anVolt);
+bcc_status_t BCC_Meas_GetAnVoltage(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, uint8_t anIndex, uint32_t *const anVolt);
 
 /*!
  * @brief This function reads the BCC temperature and converts it to the
@@ -794,8 +785,7 @@ bcc_status_t BCC_Meas_GetAnVoltage(bcc_drv_config_t *const drvConfig, const bcc_
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Meas_GetIcTemperature(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, bcc_temp_unit_t unit,
-				       int16_t *const icTemp);
+bcc_status_t BCC_Meas_GetIcTemperature(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, bcc_temp_unit_t unit, int16_t *const icTemp);
 
 /*!
  * @brief This function reads the fault status registers of the BCC device.
@@ -821,8 +811,7 @@ bcc_status_t BCC_Fault_GetStatus(bcc_drv_config_t *const drvConfig, const bcc_ci
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Fault_ClearStatus(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-				   const bcc_fault_status_t statSel);
+bcc_status_t BCC_Fault_ClearStatus(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const bcc_fault_status_t statSel);
 
 /*!
  * @brief This function sets the mode of one BCC GPIOx/ANx pin.
@@ -834,8 +823,7 @@ bcc_status_t BCC_Fault_ClearStatus(bcc_drv_config_t *const drvConfig, const bcc_
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_GPIO_SetMode(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t gpioSel,
-			      const bcc_pin_mode_t mode);
+bcc_status_t BCC_GPIO_SetMode(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t gpioSel, const bcc_pin_mode_t mode);
 
 /*!
  * @brief This function reads a value of one BCC GPIO pin.
@@ -851,8 +839,7 @@ bcc_status_t BCC_GPIO_SetMode(bcc_drv_config_t *const drvConfig, const bcc_cid_t
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_GPIO_ReadPin(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t gpioSel,
-			      bool *const val);
+bcc_status_t BCC_GPIO_ReadPin(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t gpioSel, bool *const val);
 
 /*!
  * @brief This function sets output value of one BCC GPIO pin.
@@ -868,8 +855,7 @@ bcc_status_t BCC_GPIO_ReadPin(bcc_drv_config_t *const drvConfig, const bcc_cid_t
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_GPIO_SetOutput(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t gpioSel,
-				const bool val);
+bcc_status_t BCC_GPIO_SetOutput(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t gpioSel, const bool val);
 
 /*!
  * @brief This function enables or disables the cell balancing via
@@ -900,8 +886,7 @@ bcc_status_t BCC_CB_Enable(bcc_drv_config_t *const drvConfig, const bcc_cid_t ci
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_CB_SetIndividual(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t cellIndex,
-				  const bool enable, const uint16_t timer);
+bcc_status_t BCC_CB_SetIndividual(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t cellIndex, const bool enable, const uint16_t timer);
 
 /*!
  * @brief This function pauses cell balancing. It can be useful during an on
@@ -927,8 +912,7 @@ bcc_status_t BCC_CB_Pause(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_FuseMirror_Read(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t fuseAddr,
-				 uint16_t *const value);
+bcc_status_t BCC_FuseMirror_Read(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t fuseAddr, uint16_t *const value);
 
 /*!
  * @brief This function writes a fuse mirror register of selected BCC device.
@@ -940,8 +924,7 @@ bcc_status_t BCC_FuseMirror_Read(bcc_drv_config_t *const drvConfig, const bcc_ci
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_FuseMirror_Write(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t fuseAddr,
-				  const uint16_t value);
+bcc_status_t BCC_FuseMirror_Write(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t fuseAddr, const uint16_t value);
 
 /*!
  * @brief This function reads an unique serial number of the BCC device from the
@@ -977,8 +960,7 @@ bcc_status_t BCC_GUID_Read(bcc_drv_config_t *const drvConfig, const bcc_cid_t ci
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_EEPROM_Read(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t addr,
-			     uint8_t *const data);
+bcc_status_t BCC_EEPROM_Read(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t addr, uint8_t *const data);
 
 /*!
  * @brief This function writes a byte to specified address of EEPROM memory
@@ -997,8 +979,7 @@ bcc_status_t BCC_EEPROM_Read(bcc_drv_config_t *const drvConfig, const bcc_cid_t 
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_EEPROM_Write(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t addr,
-			      const uint8_t data);
+bcc_status_t BCC_EEPROM_Write(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t addr, const uint8_t data);
 
 /*******************************************************************************
  * Platform specific functions
@@ -1115,8 +1096,7 @@ extern bcc_status_t BCC_MCU_TransferSpi(const uint8_t drvInstance, uint8_t txBuf
  *
  * @return bcc_status_t Error code.
  */
-extern bcc_status_t BCC_MCU_TransferTpl(const uint8_t drvInstance, uint8_t txBuf[], uint8_t rxBuf[],
-					const uint16_t recvTrCnt);
+extern bcc_status_t BCC_MCU_TransferTpl(const uint8_t drvInstance, uint8_t txBuf[], uint8_t rxBuf[], const uint16_t recvTrCnt);
 
 /*!
  * @brief Writes logic 0 or 1 to the CSB (SPI mode) or CSB_TX pin (TPL mode).

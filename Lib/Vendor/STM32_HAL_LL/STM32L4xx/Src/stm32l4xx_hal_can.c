@@ -429,8 +429,7 @@ HAL_StatusTypeDef HAL_CAN_Init(CAN_HandleTypeDef *hcan)
 	}
 
 	/* Set the bit timing register */
-	WRITE_REG(hcan->Instance->BTR, (uint32_t)(hcan->Init.Mode | hcan->Init.SyncJumpWidth | hcan->Init.TimeSeg1 |
-						  hcan->Init.TimeSeg2 | (hcan->Init.Prescaler - 1U)));
+	WRITE_REG(hcan->Instance->BTR, (uint32_t)(hcan->Init.Mode | hcan->Init.SyncJumpWidth | hcan->Init.TimeSeg1 | hcan->Init.TimeSeg2 | (hcan->Init.Prescaler - 1U)));
 
 	/* Initialize the error code */
 	hcan->ErrorCode = HAL_CAN_ERROR_NONE;
@@ -555,8 +554,7 @@ __weak void HAL_CAN_MspDeInit(CAN_HandleTypeDef *hcan)
  * @param  pCallback pointer to the Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CAN_RegisterCallback(CAN_HandleTypeDef *hcan, HAL_CAN_CallbackIDTypeDef CallbackID,
-					   void (*pCallback)(CAN_HandleTypeDef *_hcan))
+HAL_StatusTypeDef HAL_CAN_RegisterCallback(CAN_HandleTypeDef *hcan, HAL_CAN_CallbackIDTypeDef CallbackID, void (*pCallback)(CAN_HandleTypeDef *_hcan))
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -887,15 +885,13 @@ HAL_StatusTypeDef HAL_CAN_ConfigFilter(CAN_HandleTypeDef *hcan, const CAN_Filter
 			/* Or First 16-bit identifier and Second 16-bit
 			 * identifier */
 			can_ip->sFilterRegister[sFilterConfig->FilterBank].FR1 =
-			    ((0x0000FFFFU & (uint32_t)sFilterConfig->FilterMaskIdLow) << 16U) |
-			    (0x0000FFFFU & (uint32_t)sFilterConfig->FilterIdLow);
+			    ((0x0000FFFFU & (uint32_t)sFilterConfig->FilterMaskIdLow) << 16U) | (0x0000FFFFU & (uint32_t)sFilterConfig->FilterIdLow);
 
 			/* Second 16-bit identifier and Second 16-bit mask */
 			/* Or Third 16-bit identifier and Fourth 16-bit
 			 * identifier */
 			can_ip->sFilterRegister[sFilterConfig->FilterBank].FR2 =
-			    ((0x0000FFFFU & (uint32_t)sFilterConfig->FilterMaskIdHigh) << 16U) |
-			    (0x0000FFFFU & (uint32_t)sFilterConfig->FilterIdHigh);
+			    ((0x0000FFFFU & (uint32_t)sFilterConfig->FilterMaskIdHigh) << 16U) | (0x0000FFFFU & (uint32_t)sFilterConfig->FilterIdHigh);
 		}
 
 		if (sFilterConfig->FilterScale == CAN_FILTERSCALE_32BIT) {
@@ -903,14 +899,11 @@ HAL_StatusTypeDef HAL_CAN_ConfigFilter(CAN_HandleTypeDef *hcan, const CAN_Filter
 			SET_BIT(can_ip->FS1R, filternbrbitpos);
 
 			/* 32-bit identifier or First 32-bit identifier */
-			can_ip->sFilterRegister[sFilterConfig->FilterBank].FR1 =
-			    ((0x0000FFFFU & (uint32_t)sFilterConfig->FilterIdHigh) << 16U) |
-			    (0x0000FFFFU & (uint32_t)sFilterConfig->FilterIdLow);
+			can_ip->sFilterRegister[sFilterConfig->FilterBank].FR1 = ((0x0000FFFFU & (uint32_t)sFilterConfig->FilterIdHigh) << 16U) | (0x0000FFFFU & (uint32_t)sFilterConfig->FilterIdLow);
 
 			/* 32-bit mask or Second 32-bit identifier */
 			can_ip->sFilterRegister[sFilterConfig->FilterBank].FR2 =
-			    ((0x0000FFFFU & (uint32_t)sFilterConfig->FilterMaskIdHigh) << 16U) |
-			    (0x0000FFFFU & (uint32_t)sFilterConfig->FilterMaskIdLow);
+			    ((0x0000FFFFU & (uint32_t)sFilterConfig->FilterMaskIdHigh) << 16U) | (0x0000FFFFU & (uint32_t)sFilterConfig->FilterMaskIdLow);
 		}
 
 		/* Filter Mode */
@@ -1181,8 +1174,7 @@ uint32_t HAL_CAN_IsSleepActive(const CAN_HandleTypeDef *hcan)
  *         This parameter can be a value of @arg CAN_Tx_Mailboxes.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CAN_AddTxMessage(CAN_HandleTypeDef *hcan, const CAN_TxHeaderTypeDef *pHeader,
-				       const uint8_t aData[], uint32_t *pTxMailbox)
+HAL_StatusTypeDef HAL_CAN_AddTxMessage(CAN_HandleTypeDef *hcan, const CAN_TxHeaderTypeDef *pHeader, const uint8_t aData[], uint32_t *pTxMailbox)
 {
 	uint32_t transmitmailbox;
 	HAL_CAN_StateTypeDef state = hcan->State;
@@ -1210,11 +1202,9 @@ HAL_StatusTypeDef HAL_CAN_AddTxMessage(CAN_HandleTypeDef *hcan, const CAN_TxHead
 
 			/* Set up the Id */
 			if (pHeader->IDE == CAN_ID_STD) {
-				hcan->Instance->sTxMailBox[transmitmailbox].TIR =
-				    ((pHeader->StdId << CAN_TI0R_STID_Pos) | pHeader->RTR);
+				hcan->Instance->sTxMailBox[transmitmailbox].TIR = ((pHeader->StdId << CAN_TI0R_STID_Pos) | pHeader->RTR);
 			} else {
-				hcan->Instance->sTxMailBox[transmitmailbox].TIR =
-				    ((pHeader->ExtId << CAN_TI0R_EXID_Pos) | pHeader->IDE | pHeader->RTR);
+				hcan->Instance->sTxMailBox[transmitmailbox].TIR = ((pHeader->ExtId << CAN_TI0R_EXID_Pos) | pHeader->IDE | pHeader->RTR);
 			}
 
 			/* Set up the DLC */
@@ -1226,16 +1216,10 @@ HAL_StatusTypeDef HAL_CAN_AddTxMessage(CAN_HandleTypeDef *hcan, const CAN_TxHead
 			}
 
 			/* Set up the data field */
-			WRITE_REG(hcan->Instance->sTxMailBox[transmitmailbox].TDHR,
-				  ((uint32_t)aData[7] << CAN_TDH0R_DATA7_Pos) |
-				      ((uint32_t)aData[6] << CAN_TDH0R_DATA6_Pos) |
-				      ((uint32_t)aData[5] << CAN_TDH0R_DATA5_Pos) |
-				      ((uint32_t)aData[4] << CAN_TDH0R_DATA4_Pos));
-			WRITE_REG(hcan->Instance->sTxMailBox[transmitmailbox].TDLR,
-				  ((uint32_t)aData[3] << CAN_TDL0R_DATA3_Pos) |
-				      ((uint32_t)aData[2] << CAN_TDL0R_DATA2_Pos) |
-				      ((uint32_t)aData[1] << CAN_TDL0R_DATA1_Pos) |
-				      ((uint32_t)aData[0] << CAN_TDL0R_DATA0_Pos));
+			WRITE_REG(hcan->Instance->sTxMailBox[transmitmailbox].TDHR, ((uint32_t)aData[7] << CAN_TDH0R_DATA7_Pos) | ((uint32_t)aData[6] << CAN_TDH0R_DATA6_Pos) |
+											((uint32_t)aData[5] << CAN_TDH0R_DATA5_Pos) | ((uint32_t)aData[4] << CAN_TDH0R_DATA4_Pos));
+			WRITE_REG(hcan->Instance->sTxMailBox[transmitmailbox].TDLR, ((uint32_t)aData[3] << CAN_TDL0R_DATA3_Pos) | ((uint32_t)aData[2] << CAN_TDL0R_DATA2_Pos) |
+											((uint32_t)aData[1] << CAN_TDL0R_DATA1_Pos) | ((uint32_t)aData[0] << CAN_TDL0R_DATA0_Pos));
 
 			/* Request transmission */
 			SET_BIT(hcan->Instance->sTxMailBox[transmitmailbox].TIR, CAN_TI0R_TXRQ);
@@ -1406,8 +1390,7 @@ uint32_t HAL_CAN_GetTxTimestamp(const CAN_HandleTypeDef *hcan, uint32_t TxMailbo
  * @param  aData array where the payload of the Rx frame will be stored.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CAN_GetRxMessage(CAN_HandleTypeDef *hcan, uint32_t RxFifo, CAN_RxHeaderTypeDef *pHeader,
-				       uint8_t aData[])
+HAL_StatusTypeDef HAL_CAN_GetRxMessage(CAN_HandleTypeDef *hcan, uint32_t RxFifo, CAN_RxHeaderTypeDef *pHeader, uint8_t aData[])
 {
 	HAL_CAN_StateTypeDef state = hcan->State;
 
@@ -1438,11 +1421,9 @@ HAL_StatusTypeDef HAL_CAN_GetRxMessage(CAN_HandleTypeDef *hcan, uint32_t RxFifo,
 		/* Get the header */
 		pHeader->IDE = CAN_RI0R_IDE & hcan->Instance->sFIFOMailBox[RxFifo].RIR;
 		if (pHeader->IDE == CAN_ID_STD) {
-			pHeader->StdId =
-			    (CAN_RI0R_STID & hcan->Instance->sFIFOMailBox[RxFifo].RIR) >> CAN_TI0R_STID_Pos;
+			pHeader->StdId = (CAN_RI0R_STID & hcan->Instance->sFIFOMailBox[RxFifo].RIR) >> CAN_TI0R_STID_Pos;
 		} else {
-			pHeader->ExtId = ((CAN_RI0R_EXID | CAN_RI0R_STID) & hcan->Instance->sFIFOMailBox[RxFifo].RIR) >>
-					 CAN_RI0R_EXID_Pos;
+			pHeader->ExtId = ((CAN_RI0R_EXID | CAN_RI0R_STID) & hcan->Instance->sFIFOMailBox[RxFifo].RIR) >> CAN_RI0R_EXID_Pos;
 		}
 		pHeader->RTR = (CAN_RI0R_RTR & hcan->Instance->sFIFOMailBox[RxFifo].RIR);
 		if (((CAN_RDT0R_DLC & hcan->Instance->sFIFOMailBox[RxFifo].RDTR) >> CAN_RDT0R_DLC_Pos) >= 8U) {
@@ -1451,27 +1432,18 @@ HAL_StatusTypeDef HAL_CAN_GetRxMessage(CAN_HandleTypeDef *hcan, uint32_t RxFifo,
 		} else {
 			pHeader->DLC = (CAN_RDT0R_DLC & hcan->Instance->sFIFOMailBox[RxFifo].RDTR) >> CAN_RDT0R_DLC_Pos;
 		}
-		pHeader->FilterMatchIndex =
-		    (CAN_RDT0R_FMI & hcan->Instance->sFIFOMailBox[RxFifo].RDTR) >> CAN_RDT0R_FMI_Pos;
+		pHeader->FilterMatchIndex = (CAN_RDT0R_FMI & hcan->Instance->sFIFOMailBox[RxFifo].RDTR) >> CAN_RDT0R_FMI_Pos;
 		pHeader->Timestamp = (CAN_RDT0R_TIME & hcan->Instance->sFIFOMailBox[RxFifo].RDTR) >> CAN_RDT0R_TIME_Pos;
 
 		/* Get the data */
-		aData[0] =
-		    (uint8_t)((CAN_RDL0R_DATA0 & hcan->Instance->sFIFOMailBox[RxFifo].RDLR) >> CAN_RDL0R_DATA0_Pos);
-		aData[1] =
-		    (uint8_t)((CAN_RDL0R_DATA1 & hcan->Instance->sFIFOMailBox[RxFifo].RDLR) >> CAN_RDL0R_DATA1_Pos);
-		aData[2] =
-		    (uint8_t)((CAN_RDL0R_DATA2 & hcan->Instance->sFIFOMailBox[RxFifo].RDLR) >> CAN_RDL0R_DATA2_Pos);
-		aData[3] =
-		    (uint8_t)((CAN_RDL0R_DATA3 & hcan->Instance->sFIFOMailBox[RxFifo].RDLR) >> CAN_RDL0R_DATA3_Pos);
-		aData[4] =
-		    (uint8_t)((CAN_RDH0R_DATA4 & hcan->Instance->sFIFOMailBox[RxFifo].RDHR) >> CAN_RDH0R_DATA4_Pos);
-		aData[5] =
-		    (uint8_t)((CAN_RDH0R_DATA5 & hcan->Instance->sFIFOMailBox[RxFifo].RDHR) >> CAN_RDH0R_DATA5_Pos);
-		aData[6] =
-		    (uint8_t)((CAN_RDH0R_DATA6 & hcan->Instance->sFIFOMailBox[RxFifo].RDHR) >> CAN_RDH0R_DATA6_Pos);
-		aData[7] =
-		    (uint8_t)((CAN_RDH0R_DATA7 & hcan->Instance->sFIFOMailBox[RxFifo].RDHR) >> CAN_RDH0R_DATA7_Pos);
+		aData[0] = (uint8_t)((CAN_RDL0R_DATA0 & hcan->Instance->sFIFOMailBox[RxFifo].RDLR) >> CAN_RDL0R_DATA0_Pos);
+		aData[1] = (uint8_t)((CAN_RDL0R_DATA1 & hcan->Instance->sFIFOMailBox[RxFifo].RDLR) >> CAN_RDL0R_DATA1_Pos);
+		aData[2] = (uint8_t)((CAN_RDL0R_DATA2 & hcan->Instance->sFIFOMailBox[RxFifo].RDLR) >> CAN_RDL0R_DATA2_Pos);
+		aData[3] = (uint8_t)((CAN_RDL0R_DATA3 & hcan->Instance->sFIFOMailBox[RxFifo].RDLR) >> CAN_RDL0R_DATA3_Pos);
+		aData[4] = (uint8_t)((CAN_RDH0R_DATA4 & hcan->Instance->sFIFOMailBox[RxFifo].RDHR) >> CAN_RDH0R_DATA4_Pos);
+		aData[5] = (uint8_t)((CAN_RDH0R_DATA5 & hcan->Instance->sFIFOMailBox[RxFifo].RDHR) >> CAN_RDH0R_DATA5_Pos);
+		aData[6] = (uint8_t)((CAN_RDH0R_DATA6 & hcan->Instance->sFIFOMailBox[RxFifo].RDHR) >> CAN_RDH0R_DATA6_Pos);
+		aData[7] = (uint8_t)((CAN_RDH0R_DATA7 & hcan->Instance->sFIFOMailBox[RxFifo].RDHR) >> CAN_RDH0R_DATA7_Pos);
 
 		/* Release the FIFO */
 		if (RxFifo == CAN_RX_FIFO0) /* Rx element is assigned to Rx FIFO 0 */

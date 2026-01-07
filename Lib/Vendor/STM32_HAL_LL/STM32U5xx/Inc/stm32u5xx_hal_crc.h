@@ -168,8 +168,8 @@ typedef struct {
 /** @defgroup CRC_Default_Polynomial_Value    Default CRC generating polynomial
  * @{
  */
-#define DEFAULT_CRC32_POLY                                                                                             \
-	0x04C11DB7U /*!<  X^32 + X^26 + X^23 + X^22 + X^16 + X^12 + X^11 +                                             \
+#define DEFAULT_CRC32_POLY                                                                                                                                                                             \
+	0x04C11DB7U /*!<  X^32 + X^26 + X^23 + X^22 + X^16 + X^12 + X^11 +                                                                                                                             \
 		       X^10 +X^8 + X^7 + X^5 + X^4 + X^2+ X +1 */
 /**
  * @}
@@ -188,11 +188,11 @@ typedef struct {
  * polynomial is used
  * @{
  */
-#define DEFAULT_POLYNOMIAL_ENABLE                                                                                      \
-	((uint8_t)0x00U) /*!< Enable default generating polynomial 0x04C11DB7                                          \
+#define DEFAULT_POLYNOMIAL_ENABLE                                                                                                                                                                      \
+	((uint8_t)0x00U) /*!< Enable default generating polynomial 0x04C11DB7                                                                                                                          \
 			  */
-#define DEFAULT_POLYNOMIAL_DISABLE                                                                                     \
-	((uint8_t)0x01U) /*!< Disable default generating polynomial 0x04C11DB7                                         \
+#define DEFAULT_POLYNOMIAL_DISABLE                                                                                                                                                                     \
+	((uint8_t)0x01U) /*!< Disable default generating polynomial 0x04C11DB7                                                                                                                         \
 			  */
 /**
  * @}
@@ -212,8 +212,8 @@ typedef struct {
  * @{
  */
 #define CRC_POLYLENGTH_32B 0x00000000U /*!< Resort to a 32-bit long generating polynomial */
-#define CRC_POLYLENGTH_16B                                                                                             \
-	CRC_CR_POLYSIZE_0		    /*!< Resort to a 16-bit long generating polynomial                         \
+#define CRC_POLYLENGTH_16B                                                                                                                                                                             \
+	CRC_CR_POLYSIZE_0		    /*!< Resort to a 16-bit long generating polynomial                                                                                                         \
 					     */
 #define CRC_POLYLENGTH_8B CRC_CR_POLYSIZE_1 /*!< Resort to a 8-bit long generating polynomial */
 #define CRC_POLYLENGTH_7B CRC_CR_POLYSIZE   /*!< Resort to a 7-bit long generating polynomial  */
@@ -305,18 +305,13 @@ typedef struct {
  * @{
  */
 
-#define IS_DEFAULT_POLYNOMIAL(DEFAULT)                                                                                 \
-	(((DEFAULT) == DEFAULT_POLYNOMIAL_ENABLE) || ((DEFAULT) == DEFAULT_POLYNOMIAL_DISABLE))
+#define IS_DEFAULT_POLYNOMIAL(DEFAULT) (((DEFAULT) == DEFAULT_POLYNOMIAL_ENABLE) || ((DEFAULT) == DEFAULT_POLYNOMIAL_DISABLE))
 
 #define IS_DEFAULT_INIT_VALUE(VALUE) (((VALUE) == DEFAULT_INIT_VALUE_ENABLE) || ((VALUE) == DEFAULT_INIT_VALUE_DISABLE))
 
-#define IS_CRC_POL_LENGTH(LENGTH)                                                                                      \
-	(((LENGTH) == CRC_POLYLENGTH_32B) || ((LENGTH) == CRC_POLYLENGTH_16B) || ((LENGTH) == CRC_POLYLENGTH_8B) ||    \
-	 ((LENGTH) == CRC_POLYLENGTH_7B))
+#define IS_CRC_POL_LENGTH(LENGTH) (((LENGTH) == CRC_POLYLENGTH_32B) || ((LENGTH) == CRC_POLYLENGTH_16B) || ((LENGTH) == CRC_POLYLENGTH_8B) || ((LENGTH) == CRC_POLYLENGTH_7B))
 
-#define IS_CRC_INPUTDATA_FORMAT(FORMAT)                                                                                \
-	(((FORMAT) == CRC_INPUTDATA_FORMAT_BYTES) || ((FORMAT) == CRC_INPUTDATA_FORMAT_HALFWORDS) ||                   \
-	 ((FORMAT) == CRC_INPUTDATA_FORMAT_WORDS))
+#define IS_CRC_INPUTDATA_FORMAT(FORMAT) (((FORMAT) == CRC_INPUTDATA_FORMAT_BYTES) || ((FORMAT) == CRC_INPUTDATA_FORMAT_HALFWORDS) || ((FORMAT) == CRC_INPUTDATA_FORMAT_WORDS))
 
 /**
  * @}

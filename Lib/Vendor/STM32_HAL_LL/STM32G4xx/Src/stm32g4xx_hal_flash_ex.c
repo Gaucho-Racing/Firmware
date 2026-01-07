@@ -195,8 +195,7 @@ HAL_StatusTypeDef HAL_FLASHEx_Erase(FLASH_EraseInitTypeDef *pEraseInit, uint32_t
 			/*Initialization of PageError variable*/
 			*PageError = 0xFFFFFFFFU;
 
-			for (page_index = pEraseInit->Page; page_index < (pEraseInit->Page + pEraseInit->NbPages);
-			     page_index++) {
+			for (page_index = pEraseInit->Page; page_index < (pEraseInit->Page + pEraseInit->NbPages); page_index++) {
 				FLASH_PageErase(page_index, pEraseInit->Banks);
 
 				/* Wait for last operation to be completed */
@@ -338,8 +337,7 @@ HAL_StatusTypeDef HAL_FLASHEx_OBProgram(FLASH_OBProgramInitTypeDef *pOBInit)
 	if ((pOBInit->OptionType & OPTIONBYTE_PCROP) != 0U) {
 		if (pOBInit->PCROPStartAddr != pOBInit->PCROPEndAddr) {
 			/* Configure the Proprietary code readout protection */
-			if (FLASH_OB_PCROPConfig(pOBInit->PCROPConfig, pOBInit->PCROPStartAddr,
-						 pOBInit->PCROPEndAddr) != HAL_OK) {
+			if (FLASH_OB_PCROPConfig(pOBInit->PCROPConfig, pOBInit->PCROPStartAddr, pOBInit->PCROPEndAddr) != HAL_OK) {
 				status = HAL_ERROR;
 			}
 		}
@@ -381,8 +379,8 @@ void HAL_FLASHEx_OBGetConfig(FLASH_OBProgramInitTypeDef *pOBInit)
 	pOBInit->OptionType = (OPTIONBYTE_RDP | OPTIONBYTE_USER);
 
 #if defined(FLASH_OPTR_DBANK)
-	if ((pOBInit->WRPArea == OB_WRPAREA_BANK1_AREAA) || (pOBInit->WRPArea == OB_WRPAREA_BANK1_AREAB) ||
-	    (pOBInit->WRPArea == OB_WRPAREA_BANK2_AREAA) || (pOBInit->WRPArea == OB_WRPAREA_BANK2_AREAB))
+	if ((pOBInit->WRPArea == OB_WRPAREA_BANK1_AREAA) || (pOBInit->WRPArea == OB_WRPAREA_BANK1_AREAB) || (pOBInit->WRPArea == OB_WRPAREA_BANK2_AREAA) ||
+	    (pOBInit->WRPArea == OB_WRPAREA_BANK2_AREAB))
 #else
 	if ((pOBInit->WRPArea == OB_WRPAREA_BANK1_AREAA) || (pOBInit->WRPArea == OB_WRPAREA_BANK1_AREAB))
 #endif

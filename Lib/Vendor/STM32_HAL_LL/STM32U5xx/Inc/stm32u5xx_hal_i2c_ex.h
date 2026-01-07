@@ -105,8 +105,8 @@ typedef struct {
  * Trigger Selection
  * @{
  */
-#define I2C_TRIG_GRP1                                                                                                  \
-	(0x10000000U)		    /*!< Trigger Group for I2C1, I2C2, I2C4, I2C5, I2C6                                \
+#define I2C_TRIG_GRP1                                                                                                                                                                                  \
+	(0x10000000U)		    /*!< Trigger Group for I2C1, I2C2, I2C4, I2C5, I2C6                                                                                                                \
 				       (depends on Product) */
 #define I2C_TRIG_GRP2 (0x20000000U) /*!< Trigger Group for I2C3 */
 
@@ -222,10 +222,8 @@ HAL_StatusTypeDef HAL_I2CEx_ConfigFastModePlus(I2C_HandleTypeDef *hi2c, uint32_t
 /** @addtogroup I2CEx_Exported_Functions_Group4 Autonomous Mode Functions
  * @{
  */
-HAL_StatusTypeDef HAL_I2CEx_SetConfigAutonomousMode(I2C_HandleTypeDef *hi2c,
-						    const I2C_AutonomousModeConfTypeDef *sConfig);
-HAL_StatusTypeDef HAL_I2CEx_GetConfigAutonomousMode(const I2C_HandleTypeDef *hi2c,
-						    I2C_AutonomousModeConfTypeDef *sConfig);
+HAL_StatusTypeDef HAL_I2CEx_SetConfigAutonomousMode(I2C_HandleTypeDef *hi2c, const I2C_AutonomousModeConfTypeDef *sConfig);
+HAL_StatusTypeDef HAL_I2CEx_GetConfigAutonomousMode(const I2C_HandleTypeDef *hi2c, I2C_AutonomousModeConfTypeDef *sConfig);
 HAL_StatusTypeDef HAL_I2CEx_ClearConfigAutonomousMode(I2C_HandleTypeDef *hi2c);
 /**
  * @}
@@ -252,35 +250,27 @@ HAL_StatusTypeDef HAL_I2CEx_ClearConfigAutonomousMode(I2C_HandleTypeDef *hi2c);
 
 #define IS_I2C_DIGITAL_FILTER(FILTER) ((FILTER) <= 0x0000000FU)
 
-#define IS_I2C_FASTMODEPLUS(__CONFIG__)                                                                                \
-	(((__CONFIG__) == (I2C_FASTMODEPLUS_ENABLE)) || ((__CONFIG__) == (I2C_FASTMODEPLUS_DISABLE)))
+#define IS_I2C_FASTMODEPLUS(__CONFIG__) (((__CONFIG__) == (I2C_FASTMODEPLUS_ENABLE)) || ((__CONFIG__) == (I2C_FASTMODEPLUS_DISABLE)))
 
 #define IS_I2C_AUTO_MODE(__MODE__) (((__MODE__) == I2C_AUTO_MODE_DISABLE) || ((__MODE__) == I2C_AUTO_MODE_ENABLE))
 
-#define IS_I2C_TRIG_SOURCE(__INSTANCE__, __SOURCE__)                                                                   \
-	(((__INSTANCE__) == I2C3) ? IS_I2C_GRP2_TRIG_SOURCE(__SOURCE__) : IS_I2C_GRP1_TRIG_SOURCE(__SOURCE__))
+#define IS_I2C_TRIG_SOURCE(__INSTANCE__, __SOURCE__) (((__INSTANCE__) == I2C3) ? IS_I2C_GRP2_TRIG_SOURCE(__SOURCE__) : IS_I2C_GRP1_TRIG_SOURCE(__SOURCE__))
 
-#define IS_I2C_GRP1_TRIG_SOURCE(__SOURCE__)                                                                            \
-	(((__SOURCE__) == I2C_GRP1_GPDMA_CH0_TCF_TRG) || ((__SOURCE__) == I2C_GRP1_GPDMA_CH1_TCF_TRG) ||               \
-	 ((__SOURCE__) == I2C_GRP1_GPDMA_CH2_TCF_TRG) || ((__SOURCE__) == I2C_GRP1_GPDMA_CH3_TCF_TRG) ||               \
-	 ((__SOURCE__) == I2C_GRP1_EXTI5_TRG) || ((__SOURCE__) == I2C_GRP1_EXTI9_TRG) ||                               \
-	 ((__SOURCE__) == I2C_GRP1_LPTIM1_CH1_TRG) || ((__SOURCE__) == I2C_GRP1_LPTIM2_CH1_TRG) ||                     \
-	 ((__SOURCE__) == I2C_GRP1_COMP1_TRG) || ((__SOURCE__) == I2C_GRP1_COMP2_TRG) ||                               \
-	 ((__SOURCE__) == I2C_GRP1_RTC_ALRA_TRG) || ((__SOURCE__) == I2C_GRP1_RTC_WUT_TRG))
+#define IS_I2C_GRP1_TRIG_SOURCE(__SOURCE__)                                                                                                                                                            \
+	(((__SOURCE__) == I2C_GRP1_GPDMA_CH0_TCF_TRG) || ((__SOURCE__) == I2C_GRP1_GPDMA_CH1_TCF_TRG) || ((__SOURCE__) == I2C_GRP1_GPDMA_CH2_TCF_TRG) ||                                               \
+	 ((__SOURCE__) == I2C_GRP1_GPDMA_CH3_TCF_TRG) || ((__SOURCE__) == I2C_GRP1_EXTI5_TRG) || ((__SOURCE__) == I2C_GRP1_EXTI9_TRG) || ((__SOURCE__) == I2C_GRP1_LPTIM1_CH1_TRG) ||                  \
+	 ((__SOURCE__) == I2C_GRP1_LPTIM2_CH1_TRG) || ((__SOURCE__) == I2C_GRP1_COMP1_TRG) || ((__SOURCE__) == I2C_GRP1_COMP2_TRG) || ((__SOURCE__) == I2C_GRP1_RTC_ALRA_TRG) ||                       \
+	 ((__SOURCE__) == I2C_GRP1_RTC_WUT_TRG))
 
-#define IS_I2C_GRP2_TRIG_SOURCE(__SOURCE__)                                                                            \
-	(((__SOURCE__) == I2C_GRP2_LPDMA_CH0_TCF_TRG) || ((__SOURCE__) == I2C_GRP2_LPDMA_CH1_TCF_TRG) ||               \
-	 ((__SOURCE__) == I2C_GRP2_LPDMA_CH2_TCF_TRG) || ((__SOURCE__) == I2C_GRP2_LPDMA_CH3_TCF_TRG) ||               \
-	 ((__SOURCE__) == I2C_GRP2_EXTI5_TRG) || ((__SOURCE__) == I2C_GRP2_EXTI8_TRG) ||                               \
-	 ((__SOURCE__) == I2C_GRP2_LPTIM1_CH1_TRG) || ((__SOURCE__) == I2C_GRP2_LPTIM3_CH1_TRG) ||                     \
-	 ((__SOURCE__) == I2C_GRP2_COMP1_TRG) || ((__SOURCE__) == I2C_GRP2_COMP2_TRG) ||                               \
-	 ((__SOURCE__) == I2C_GRP2_RTC_ALRA_TRG) || ((__SOURCE__) == I2C_GRP2_RTC_WUT_TRG))
+#define IS_I2C_GRP2_TRIG_SOURCE(__SOURCE__)                                                                                                                                                            \
+	(((__SOURCE__) == I2C_GRP2_LPDMA_CH0_TCF_TRG) || ((__SOURCE__) == I2C_GRP2_LPDMA_CH1_TCF_TRG) || ((__SOURCE__) == I2C_GRP2_LPDMA_CH2_TCF_TRG) ||                                               \
+	 ((__SOURCE__) == I2C_GRP2_LPDMA_CH3_TCF_TRG) || ((__SOURCE__) == I2C_GRP2_EXTI5_TRG) || ((__SOURCE__) == I2C_GRP2_EXTI8_TRG) || ((__SOURCE__) == I2C_GRP2_LPTIM1_CH1_TRG) ||                  \
+	 ((__SOURCE__) == I2C_GRP2_LPTIM3_CH1_TRG) || ((__SOURCE__) == I2C_GRP2_COMP1_TRG) || ((__SOURCE__) == I2C_GRP2_COMP2_TRG) || ((__SOURCE__) == I2C_GRP2_RTC_ALRA_TRG) ||                       \
+	 ((__SOURCE__) == I2C_GRP2_RTC_WUT_TRG))
 
-#define IS_I2C_TRIG_INPUT_INSTANCE(__INSTANCE__)                                                                       \
-	(IS_I2C_GRP1_INSTANCE(__INSTANCE__) || IS_I2C_GRP2_INSTANCE(__INSTANCE__))
+#define IS_I2C_TRIG_INPUT_INSTANCE(__INSTANCE__) (IS_I2C_GRP1_INSTANCE(__INSTANCE__) || IS_I2C_GRP2_INSTANCE(__INSTANCE__))
 
-#define IS_I2C_AUTO_MODE_TRG_POL(__POLARITY__)                                                                         \
-	(((__POLARITY__) == I2C_TRIG_POLARITY_RISING) || ((__POLARITY__) == I2C_TRIG_POLARITY_FALLING))
+#define IS_I2C_AUTO_MODE_TRG_POL(__POLARITY__) (((__POLARITY__) == I2C_TRIG_POLARITY_RISING) || ((__POLARITY__) == I2C_TRIG_POLARITY_FALLING))
 /**
  * @}
  */

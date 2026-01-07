@@ -268,10 +268,7 @@ __STATIC_INLINE void LL_AHB1_GRP1_EnableClock(uint32_t Periphs)
  *         @arg @ref LL_AHB1_GRP1_PERIPH_CRC
  * @retval State of Periphs (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_AHB1_GRP1_IsEnabledClock(uint32_t Periphs)
-{
-	return ((READ_BIT(RCC->AHB1ENR, Periphs) == Periphs) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_AHB1_GRP1_IsEnabledClock(uint32_t Periphs) { return ((READ_BIT(RCC->AHB1ENR, Periphs) == Periphs) ? 1UL : 0UL); }
 
 /**
  * @brief  Disable AHB1 peripherals clock.
@@ -482,10 +479,7 @@ __STATIC_INLINE void LL_AHB2_GRP1_EnableClock(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval State of Periphs (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_AHB2_GRP1_IsEnabledClock(uint32_t Periphs)
-{
-	return ((READ_BIT(RCC->AHB2ENR, Periphs) == Periphs) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_AHB2_GRP1_IsEnabledClock(uint32_t Periphs) { return ((READ_BIT(RCC->AHB2ENR, Periphs) == Periphs) ? 1UL : 0UL); }
 
 /**
  * @brief  Disable AHB2 peripherals clock.
@@ -736,10 +730,7 @@ __STATIC_INLINE void LL_AHB3_GRP1_EnableClock(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval State of Periphs (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_AHB3_GRP1_IsEnabledClock(uint32_t Periphs)
-{
-	return ((READ_BIT(RCC->AHB3ENR, Periphs) == Periphs) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_AHB3_GRP1_IsEnabledClock(uint32_t Periphs) { return ((READ_BIT(RCC->AHB3ENR, Periphs) == Periphs) ? 1UL : 0UL); }
 
 /**
  * @brief  Disable AHB3 peripherals clock.
@@ -956,10 +947,7 @@ __STATIC_INLINE void LL_APB1_GRP2_EnableClock(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval State of Periphs (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_APB1_GRP1_IsEnabledClock(uint32_t Periphs)
-{
-	return ((READ_BIT(RCC->APB1ENR1, Periphs) == Periphs) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_APB1_GRP1_IsEnabledClock(uint32_t Periphs) { return ((READ_BIT(RCC->APB1ENR1, Periphs) == Periphs) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if APB1 peripheral clock is enabled or not
@@ -974,10 +962,7 @@ __STATIC_INLINE uint32_t LL_APB1_GRP1_IsEnabledClock(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval State of Periphs (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_APB1_GRP2_IsEnabledClock(uint32_t Periphs)
-{
-	return ((READ_BIT(RCC->APB1ENR2, Periphs) == Periphs) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_APB1_GRP2_IsEnabledClock(uint32_t Periphs) { return ((READ_BIT(RCC->APB1ENR2, Periphs) == Periphs) ? 1UL : 0UL); }
 
 /**
  * @brief  Disable APB1 peripherals clock.
@@ -1404,10 +1389,7 @@ __STATIC_INLINE void LL_APB2_GRP1_EnableClock(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval State of Periphs (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_APB2_GRP1_IsEnabledClock(uint32_t Periphs)
-{
-	return ((READ_BIT(RCC->APB2ENR, Periphs) == Periphs) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_APB2_GRP1_IsEnabledClock(uint32_t Periphs) { return ((READ_BIT(RCC->APB2ENR, Periphs) == Periphs) ? 1UL : 0UL); }
 
 /**
  * @brief  Disable APB2 peripherals clock.

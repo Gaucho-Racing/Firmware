@@ -182,11 +182,9 @@ typedef struct
 
 	void (*AbortCpltCallback)(struct __IRDA_HandleTypeDef *hirda); /*!< IRDA Abort Complete Callback          */
 
-	void (*AbortTransmitCpltCallback)(
-	    struct __IRDA_HandleTypeDef *hirda); /*!< IRDA Abort Transmit Complete Callback */
+	void (*AbortTransmitCpltCallback)(struct __IRDA_HandleTypeDef *hirda); /*!< IRDA Abort Transmit Complete Callback */
 
-	void (*AbortReceiveCpltCallback)(
-	    struct __IRDA_HandleTypeDef *hirda); /*!< IRDA Abort Receive Complete Callback  */
+	void (*AbortReceiveCpltCallback)(struct __IRDA_HandleTypeDef *hirda); /*!< IRDA Abort Receive Complete Callback  */
 
 	void (*MspInitCallback)(struct __IRDA_HandleTypeDef *hirda); /*!< IRDA Msp Init callback */
 
@@ -233,31 +231,31 @@ typedef void (*pIRDA_CallbackTypeDef)(IRDA_HandleTypeDef *hirda); /*!< pointer t
 /** @defgroup IRDA_State_Definition IRDA State Code Definition
  * @{
  */
-#define HAL_IRDA_STATE_RESET                                                                                           \
-	0x00000000U /*!< Peripheral is not initialized                                                                 \
+#define HAL_IRDA_STATE_RESET                                                                                                                                                                           \
+	0x00000000U /*!< Peripheral is not initialized                                                                                                                                                 \
 			 Value is allowed for gState and RxState */
-#define HAL_IRDA_STATE_READY                                                                                           \
-	0x00000020U /*!< Peripheral Initialized and ready for use                                                      \
+#define HAL_IRDA_STATE_READY                                                                                                                                                                           \
+	0x00000020U /*!< Peripheral Initialized and ready for use                                                                                                                                      \
 			 Value is allowed for gState and RxState */
-#define HAL_IRDA_STATE_BUSY                                                                                            \
-	0x00000024U /*!< An internal process is ongoing                                                                \
+#define HAL_IRDA_STATE_BUSY                                                                                                                                                                            \
+	0x00000024U /*!< An internal process is ongoing                                                                                                                                                \
 			 Value is allowed for gState only */
-#define HAL_IRDA_STATE_BUSY_TX                                                                                         \
-	0x00000021U /*!< Data Transmission process is ongoing                                                          \
+#define HAL_IRDA_STATE_BUSY_TX                                                                                                                                                                         \
+	0x00000021U /*!< Data Transmission process is ongoing                                                                                                                                          \
 			 Value is allowed for gState only */
-#define HAL_IRDA_STATE_BUSY_RX                                                                                         \
-	0x00000022U /*!< Data Reception process is ongoing                                                             \
+#define HAL_IRDA_STATE_BUSY_RX                                                                                                                                                                         \
+	0x00000022U /*!< Data Reception process is ongoing                                                                                                                                             \
 			 Value is allowed for RxState only */
-#define HAL_IRDA_STATE_BUSY_TX_RX                                                                                      \
-	0x00000023U /*!< Data Transmission and Reception process is ongoing                                            \
-			 Not to be used for neither gState nor RxState.                                                \
-			 Value is result of combination (Or) between                                                   \
+#define HAL_IRDA_STATE_BUSY_TX_RX                                                                                                                                                                      \
+	0x00000023U /*!< Data Transmission and Reception process is ongoing                                                                                                                            \
+			 Not to be used for neither gState nor RxState.                                                                                                                                \
+			 Value is result of combination (Or) between                                                                                                                                   \
 			 gState and RxState values */
-#define HAL_IRDA_STATE_TIMEOUT                                                                                         \
-	0x000000A0U /*!< Timeout state                                                                                 \
+#define HAL_IRDA_STATE_TIMEOUT                                                                                                                                                                         \
+	0x000000A0U /*!< Timeout state                                                                                                                                                                 \
 			 Value is allowed for gState only */
-#define HAL_IRDA_STATE_ERROR                                                                                           \
-	0x000000E0U /*!< Error                                                                                         \
+#define HAL_IRDA_STATE_ERROR                                                                                                                                                                           \
+	0x000000E0U /*!< Error                                                                                                                                                                         \
 			 Value is allowed for gState only */
 /**
  * @}
@@ -486,18 +484,18 @@ typedef void (*pIRDA_CallbackTypeDef)(IRDA_HandleTypeDef *hirda); /*!< pointer t
  * @retval None
  */
 #if USE_HAL_IRDA_REGISTER_CALLBACKS == 1
-#define __HAL_IRDA_RESET_HANDLE_STATE(__HANDLE__)                                                                      \
-	do {                                                                                                           \
-		(__HANDLE__)->gState = HAL_IRDA_STATE_RESET;                                                           \
-		(__HANDLE__)->RxState = HAL_IRDA_STATE_RESET;                                                          \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define __HAL_IRDA_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->gState = HAL_IRDA_STATE_RESET;                                                                                                                                           \
+		(__HANDLE__)->RxState = HAL_IRDA_STATE_RESET;                                                                                                                                          \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0U)
 #else
-#define __HAL_IRDA_RESET_HANDLE_STATE(__HANDLE__)                                                                      \
-	do {                                                                                                           \
-		(__HANDLE__)->gState = HAL_IRDA_STATE_RESET;                                                           \
-		(__HANDLE__)->RxState = HAL_IRDA_STATE_RESET;                                                          \
+#define __HAL_IRDA_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->gState = HAL_IRDA_STATE_RESET;                                                                                                                                           \
+		(__HANDLE__)->RxState = HAL_IRDA_STATE_RESET;                                                                                                                                          \
 	} while (0U)
 #endif /*USE_HAL_IRDA_REGISTER_CALLBACKS  */
 
@@ -505,10 +503,10 @@ typedef void (*pIRDA_CallbackTypeDef)(IRDA_HandleTypeDef *hirda); /*!< pointer t
  * @param  __HANDLE__ specifies the IRDA Handle.
  * @retval None
  */
-#define __HAL_IRDA_FLUSH_DRREGISTER(__HANDLE__)                                                                        \
-	do {                                                                                                           \
-		SET_BIT((__HANDLE__)->Instance->RQR, IRDA_RXDATA_FLUSH_REQUEST);                                       \
-		SET_BIT((__HANDLE__)->Instance->RQR, IRDA_TXDATA_FLUSH_REQUEST);                                       \
+#define __HAL_IRDA_FLUSH_DRREGISTER(__HANDLE__)                                                                                                                                                        \
+	do {                                                                                                                                                                                           \
+		SET_BIT((__HANDLE__)->Instance->RQR, IRDA_RXDATA_FLUSH_REQUEST);                                                                                                                       \
+		SET_BIT((__HANDLE__)->Instance->RQR, IRDA_TXDATA_FLUSH_REQUEST);                                                                                                                       \
 	} while (0U)
 
 /** @brief  Clear the specified IRDA pending flag.
@@ -588,12 +586,10 @@ typedef void (*pIRDA_CallbackTypeDef)(IRDA_HandleTypeDef *hirda); /*!< pointer t
  * overrun error)
  * @retval None
  */
-#define __HAL_IRDA_ENABLE_IT(__HANDLE__, __INTERRUPT__)                                                                \
-	(((((__INTERRUPT__) & IRDA_CR_MASK) >> IRDA_CR_POS) == 1U)                                                     \
-	     ? ((__HANDLE__)->Instance->CR1 |= (1U << ((__INTERRUPT__) & IRDA_IT_MASK)))                               \
-	 : ((((__INTERRUPT__) & IRDA_CR_MASK) >> IRDA_CR_POS) == 2U)                                                   \
-	     ? ((__HANDLE__)->Instance->CR2 |= (1U << ((__INTERRUPT__) & IRDA_IT_MASK)))                               \
-	     : ((__HANDLE__)->Instance->CR3 |= (1U << ((__INTERRUPT__) & IRDA_IT_MASK))))
+#define __HAL_IRDA_ENABLE_IT(__HANDLE__, __INTERRUPT__)                                                                                                                                                \
+	(((((__INTERRUPT__) & IRDA_CR_MASK) >> IRDA_CR_POS) == 1U)   ? ((__HANDLE__)->Instance->CR1 |= (1U << ((__INTERRUPT__) & IRDA_IT_MASK)))                                                       \
+	 : ((((__INTERRUPT__) & IRDA_CR_MASK) >> IRDA_CR_POS) == 2U) ? ((__HANDLE__)->Instance->CR2 |= (1U << ((__INTERRUPT__) & IRDA_IT_MASK)))                                                       \
+								     : ((__HANDLE__)->Instance->CR3 |= (1U << ((__INTERRUPT__) & IRDA_IT_MASK))))
 
 /** @brief  Disable the specified IRDA interrupt.
  * @param  __HANDLE__ specifies the IRDA Handle.
@@ -608,12 +604,10 @@ typedef void (*pIRDA_CallbackTypeDef)(IRDA_HandleTypeDef *hirda); /*!< pointer t
  * overrun error)
  * @retval None
  */
-#define __HAL_IRDA_DISABLE_IT(__HANDLE__, __INTERRUPT__)                                                               \
-	(((((__INTERRUPT__) & IRDA_CR_MASK) >> IRDA_CR_POS) == 1U)                                                     \
-	     ? ((__HANDLE__)->Instance->CR1 &= ~(1U << ((__INTERRUPT__) & IRDA_IT_MASK)))                              \
-	 : ((((__INTERRUPT__) & IRDA_CR_MASK) >> IRDA_CR_POS) == 2U)                                                   \
-	     ? ((__HANDLE__)->Instance->CR2 &= ~(1U << ((__INTERRUPT__) & IRDA_IT_MASK)))                              \
-	     : ((__HANDLE__)->Instance->CR3 &= ~(1U << ((__INTERRUPT__) & IRDA_IT_MASK))))
+#define __HAL_IRDA_DISABLE_IT(__HANDLE__, __INTERRUPT__)                                                                                                                                               \
+	(((((__INTERRUPT__) & IRDA_CR_MASK) >> IRDA_CR_POS) == 1U)   ? ((__HANDLE__)->Instance->CR1 &= ~(1U << ((__INTERRUPT__) & IRDA_IT_MASK)))                                                      \
+	 : ((((__INTERRUPT__) & IRDA_CR_MASK) >> IRDA_CR_POS) == 2U) ? ((__HANDLE__)->Instance->CR2 &= ~(1U << ((__INTERRUPT__) & IRDA_IT_MASK)))                                                      \
+								     : ((__HANDLE__)->Instance->CR3 &= ~(1U << ((__INTERRUPT__) & IRDA_IT_MASK))))
 
 /** @brief  Check whether the specified IRDA interrupt has occurred or not.
  * @param  __HANDLE__ specifies the IRDA Handle.
@@ -629,10 +623,7 @@ typedef void (*pIRDA_CallbackTypeDef)(IRDA_HandleTypeDef *hirda); /*!< pointer t
  *            @arg @ref IRDA_IT_PE Parity Error interrupt
  * @retval The new state of __IT__ (SET or RESET).
  */
-#define __HAL_IRDA_GET_IT(__HANDLE__, __INTERRUPT__)                                                                   \
-	((((__HANDLE__)->Instance->ISR & (0x01U << (((__INTERRUPT__) & IRDA_ISR_MASK) >> IRDA_ISR_POS))) != 0U)        \
-	     ? SET                                                                                                     \
-	     : RESET)
+#define __HAL_IRDA_GET_IT(__HANDLE__, __INTERRUPT__) ((((__HANDLE__)->Instance->ISR & (0x01U << (((__INTERRUPT__) & IRDA_ISR_MASK) >> IRDA_ISR_POS))) != 0U) ? SET : RESET)
 
 /** @brief  Check whether the specified IRDA interrupt source is enabled or not.
  * @param  __HANDLE__ specifies the IRDA Handle.
@@ -646,13 +637,12 @@ typedef void (*pIRDA_CallbackTypeDef)(IRDA_HandleTypeDef *hirda); /*!< pointer t
  *            @arg @ref IRDA_IT_PE Parity Error interrupt
  * @retval The new state of __IT__ (SET or RESET).
  */
-#define __HAL_IRDA_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)                                                            \
-	((((((((__INTERRUPT__) & IRDA_CR_MASK) >> IRDA_CR_POS) == 0x01U)                                               \
-		? (__HANDLE__)->Instance->CR1                                                                          \
-		: (((((__INTERRUPT__) & IRDA_CR_MASK) >> IRDA_CR_POS) == 0x02U) ? (__HANDLE__)->Instance->CR2          \
-										: (__HANDLE__)->Instance->CR3)) &      \
-	   (0x01U << (((uint16_t)(__INTERRUPT__)) & IRDA_IT_MASK))) != 0U)                                             \
-	     ? SET                                                                                                     \
+#define __HAL_IRDA_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)                                                                                                                                            \
+	((((((((__INTERRUPT__) & IRDA_CR_MASK) >> IRDA_CR_POS) == 0x01U)                                                                                                                               \
+		? (__HANDLE__)->Instance->CR1                                                                                                                                                          \
+		: (((((__INTERRUPT__) & IRDA_CR_MASK) >> IRDA_CR_POS) == 0x02U) ? (__HANDLE__)->Instance->CR2 : (__HANDLE__)->Instance->CR3)) &                                                        \
+	   (0x01U << (((uint16_t)(__INTERRUPT__)) & IRDA_IT_MASK))) != 0U)                                                                                                                             \
+	     ? SET                                                                                                                                                                                     \
 	     : RESET)
 
 /** @brief  Clear the specified IRDA ISR flag, in setting the proper ICR
@@ -691,8 +681,7 @@ typedef void (*pIRDA_CallbackTypeDef)(IRDA_HandleTypeDef *hirda); /*!< pointer t
  * @param  __HANDLE__ specifies the IRDA Handle.
  * @retval None
  */
-#define __HAL_IRDA_ONE_BIT_SAMPLE_DISABLE(__HANDLE__)                                                                  \
-	((__HANDLE__)->Instance->CR3 &= (uint32_t) ~((uint32_t)USART_CR3_ONEBIT))
+#define __HAL_IRDA_ONE_BIT_SAMPLE_DISABLE(__HANDLE__) ((__HANDLE__)->Instance->CR3 &= (uint32_t) ~((uint32_t)USART_CR3_ONEBIT))
 
 /** @brief  Enable UART/USART associated to IRDA Handle.
  * @param  __HANDLE__ specifies the IRDA Handle.
@@ -731,15 +720,13 @@ typedef void (*pIRDA_CallbackTypeDef)(IRDA_HandleTypeDef *hirda); /*!< pointer t
  * @param __PARITY__ IRDA frame parity.
  * @retval SET (__PARITY__ is valid) or RESET (__PARITY__ is invalid)
  */
-#define IS_IRDA_PARITY(__PARITY__)                                                                                     \
-	(((__PARITY__) == IRDA_PARITY_NONE) || ((__PARITY__) == IRDA_PARITY_EVEN) || ((__PARITY__) == IRDA_PARITY_ODD))
+#define IS_IRDA_PARITY(__PARITY__) (((__PARITY__) == IRDA_PARITY_NONE) || ((__PARITY__) == IRDA_PARITY_EVEN) || ((__PARITY__) == IRDA_PARITY_ODD))
 
 /** @brief Ensure that IRDA communication mode is valid.
  * @param __MODE__ IRDA communication mode.
  * @retval SET (__MODE__ is valid) or RESET (__MODE__ is invalid)
  */
-#define IS_IRDA_TX_RX_MODE(__MODE__)                                                                                   \
-	((((__MODE__) & (~((uint32_t)(IRDA_MODE_TX_RX)))) == 0x00U) && ((__MODE__) != 0x00U))
+#define IS_IRDA_TX_RX_MODE(__MODE__) ((((__MODE__) & (~((uint32_t)(IRDA_MODE_TX_RX)))) == 0x00U) && ((__MODE__) != 0x00U))
 
 /** @brief Ensure that IRDA power mode is valid.
  * @param __MODE__ IRDA power mode.
@@ -753,13 +740,11 @@ typedef void (*pIRDA_CallbackTypeDef)(IRDA_HandleTypeDef *hirda); /*!< pointer t
  * @retval SET (__CLOCKPRESCALER__ is valid) or RESET (__CLOCKPRESCALER__ is
  * invalid)
  */
-#define IS_IRDA_CLOCKPRESCALER(__CLOCKPRESCALER__)                                                                     \
-	(((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV1) || ((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV2) ||             \
-	 ((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV4) || ((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV6) ||             \
-	 ((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV8) || ((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV10) ||            \
-	 ((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV12) || ((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV16) ||           \
-	 ((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV32) || ((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV64) ||           \
-	 ((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV128) || ((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV256))
+#define IS_IRDA_CLOCKPRESCALER(__CLOCKPRESCALER__)                                                                                                                                                     \
+	(((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV1) || ((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV2) || ((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV4) ||                                            \
+	 ((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV6) || ((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV8) || ((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV10) ||                                           \
+	 ((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV12) || ((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV16) || ((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV32) ||                                         \
+	 ((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV64) || ((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV128) || ((__CLOCKPRESCALER__) == IRDA_PRESCALER_DIV256))
 
 #endif /* USART_PRESC_PRESCALER */
 /** @brief Ensure that IRDA state is valid.
@@ -778,8 +763,7 @@ typedef void (*pIRDA_CallbackTypeDef)(IRDA_HandleTypeDef *hirda); /*!< pointer t
  * @param __ONEBIT__ IRDA sampling rate.
  * @retval SET (__ONEBIT__ is valid) or RESET (__ONEBIT__ is invalid)
  */
-#define IS_IRDA_ONE_BIT_SAMPLE(__ONEBIT__)                                                                             \
-	(((__ONEBIT__) == IRDA_ONE_BIT_SAMPLE_DISABLE) || ((__ONEBIT__) == IRDA_ONE_BIT_SAMPLE_ENABLE))
+#define IS_IRDA_ONE_BIT_SAMPLE(__ONEBIT__) (((__ONEBIT__) == IRDA_ONE_BIT_SAMPLE_DISABLE) || ((__ONEBIT__) == IRDA_ONE_BIT_SAMPLE_ENABLE))
 
 /** @brief Ensure that IRDA DMA TX mode is valid.
  * @param __DMATX__ IRDA DMA TX mode.
@@ -797,9 +781,7 @@ typedef void (*pIRDA_CallbackTypeDef)(IRDA_HandleTypeDef *hirda); /*!< pointer t
  * @param __PARAM__ IRDA request.
  * @retval SET (__PARAM__ is valid) or RESET (__PARAM__ is invalid)
  */
-#define IS_IRDA_REQUEST_PARAMETER(__PARAM__)                                                                           \
-	(((__PARAM__) == IRDA_AUTOBAUD_REQUEST) || ((__PARAM__) == IRDA_RXDATA_FLUSH_REQUEST) ||                       \
-	 ((__PARAM__) == IRDA_TXDATA_FLUSH_REQUEST))
+#define IS_IRDA_REQUEST_PARAMETER(__PARAM__) (((__PARAM__) == IRDA_AUTOBAUD_REQUEST) || ((__PARAM__) == IRDA_RXDATA_FLUSH_REQUEST) || ((__PARAM__) == IRDA_TXDATA_FLUSH_REQUEST))
 /**
  * @}
  */
@@ -825,8 +807,7 @@ void HAL_IRDA_MspDeInit(IRDA_HandleTypeDef *hirda);
 
 #if (USE_HAL_IRDA_REGISTER_CALLBACKS == 1)
 /* Callbacks Register/UnRegister functions  ***********************************/
-HAL_StatusTypeDef HAL_IRDA_RegisterCallback(IRDA_HandleTypeDef *hirda, HAL_IRDA_CallbackIDTypeDef CallbackID,
-					    pIRDA_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_IRDA_RegisterCallback(IRDA_HandleTypeDef *hirda, HAL_IRDA_CallbackIDTypeDef CallbackID, pIRDA_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_IRDA_UnRegisterCallback(IRDA_HandleTypeDef *hirda, HAL_IRDA_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_IRDA_REGISTER_CALLBACKS */
 

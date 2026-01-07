@@ -94,8 +94,8 @@ extern "C" {
  */
 #define LL_DCACHE_IER_BSYENDIE DCACHE_IER_BSYENDIE /*!< Busy end interrupt */
 #define LL_DCACHE_IER_ERRIE DCACHE_IER_ERRIE	   /*!< Cache error interrupt */
-#define LL_DCACHE_IER_CMDENDIE                                                                                         \
-	DCACHE_IER_CMDENDIE /*!< Command end interrupt                                                                 \
+#define LL_DCACHE_IER_CMDENDIE                                                                                                                                                                         \
+	DCACHE_IER_CMDENDIE /*!< Command end interrupt                                                                                                                                                 \
 			     */
 /**
  * @}
@@ -104,8 +104,8 @@ extern "C" {
 /** @defgroup DCACHE_Monitor_Type Monitor type
  * @{
  */
-#define LL_DCACHE_MONITOR_READ_HIT                                                                                     \
-	DCACHE_CR_RHITMEN				/*!< Read Hit monitoring                                       \
+#define LL_DCACHE_MONITOR_READ_HIT                                                                                                                                                                     \
+	DCACHE_CR_RHITMEN				/*!< Read Hit monitoring                                                                                                                       \
 							 */
 #define LL_DCACHE_MONITOR_READ_MISS DCACHE_CR_RMISSMEN	/*!< Read Miss monitoring */
 #define LL_DCACHE_MONITOR_WRITE_HIT DCACHE_CR_WHITMEN	/*!< Write Hit monitoring */
@@ -183,10 +183,7 @@ __STATIC_INLINE void LL_DCACHE_Disable(DCACHE_TypeDef *DCACHEx) { CLEAR_BIT(DCAC
  * @param  DCACHEx DCACHE instance
  * @retval 0: DCACHE is disabled, 1: DCACHE is enabled.
  */
-__STATIC_INLINE uint32_t LL_DCACHE_IsEnabled(const DCACHE_TypeDef *DCACHEx)
-{
-	return ((READ_BIT(DCACHEx->CR, DCACHE_CR_EN) == (DCACHE_CR_EN)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DCACHE_IsEnabled(const DCACHE_TypeDef *DCACHEx) { return ((READ_BIT(DCACHEx->CR, DCACHE_CR_EN) == (DCACHE_CR_EN)) ? 1UL : 0UL); }
 
 /**
  * @brief  Set the dcache instance start command address.
@@ -196,10 +193,7 @@ __STATIC_INLINE uint32_t LL_DCACHE_IsEnabled(const DCACHE_TypeDef *DCACHEx)
  * @param  DCACHEx DCACHE instance
  * @retval None
  */
-__STATIC_INLINE void LL_DCACHE_SetStartAddress(DCACHE_TypeDef *DCACHEx, uint32_t addr)
-{
-	WRITE_REG(DCACHEx->CMDRSADDRR, addr);
-}
+__STATIC_INLINE void LL_DCACHE_SetStartAddress(DCACHE_TypeDef *DCACHEx, uint32_t addr) { WRITE_REG(DCACHEx->CMDRSADDRR, addr); }
 
 /**
  * @brief  Get the dcache command start address.
@@ -207,10 +201,7 @@ __STATIC_INLINE void LL_DCACHE_SetStartAddress(DCACHE_TypeDef *DCACHEx, uint32_t
  * @param  DCACHEx DCACHE instance
  * @retval Start address of dcache command
  */
-__STATIC_INLINE uint32_t LL_DCACHE_GetStartAddress(const DCACHE_TypeDef *DCACHEx)
-{
-	return (uint32_t)(READ_REG(DCACHEx->CMDRSADDRR));
-}
+__STATIC_INLINE uint32_t LL_DCACHE_GetStartAddress(const DCACHE_TypeDef *DCACHEx) { return (uint32_t)(READ_REG(DCACHEx->CMDRSADDRR)); }
 
 /**
  * @brief  Set the dcache instance End command address.
@@ -220,10 +211,7 @@ __STATIC_INLINE uint32_t LL_DCACHE_GetStartAddress(const DCACHE_TypeDef *DCACHEx
  * Invalidate).
  * @retval None
  */
-__STATIC_INLINE void LL_DCACHE_SetEndAddress(DCACHE_TypeDef *DCACHEx, uint32_t addr)
-{
-	WRITE_REG(DCACHEx->CMDREADDRR, addr);
-}
+__STATIC_INLINE void LL_DCACHE_SetEndAddress(DCACHE_TypeDef *DCACHEx, uint32_t addr) { WRITE_REG(DCACHEx->CMDREADDRR, addr); }
 
 /**
  * @brief  Get the dcache command End address.
@@ -231,10 +219,7 @@ __STATIC_INLINE void LL_DCACHE_SetEndAddress(DCACHE_TypeDef *DCACHEx, uint32_t a
  * @param  DCACHEx DCACHE instance
  * @retval End address of dcache command
  */
-__STATIC_INLINE uint32_t LL_DCACHE_GetEndAddress(const DCACHE_TypeDef *DCACHEx)
-{
-	return (uint32_t)(READ_REG(DCACHEx->CMDREADDRR));
-}
+__STATIC_INLINE uint32_t LL_DCACHE_GetEndAddress(const DCACHE_TypeDef *DCACHEx) { return (uint32_t)(READ_REG(DCACHEx->CMDREADDRR)); }
 
 /**
  * @brief  Set Dcache command.
@@ -288,10 +273,7 @@ __STATIC_INLINE void LL_DCACHE_StartCommand(DCACHE_TypeDef *DCACHEx) { SET_BIT(D
  *         @arg @ref LL_DCACHE_READ_BURST_INCR
  * @retval None
  */
-__STATIC_INLINE void LL_DCACHE_SetReadBurstType(DCACHE_TypeDef *DCACHEx, uint32_t ReadBurstType)
-{
-	MODIFY_REG(DCACHEx->CR, DCACHE_CR_HBURST, ReadBurstType);
-}
+__STATIC_INLINE void LL_DCACHE_SetReadBurstType(DCACHE_TypeDef *DCACHEx, uint32_t ReadBurstType) { MODIFY_REG(DCACHEx->CR, DCACHE_CR_HBURST, ReadBurstType); }
 
 /**
  * @brief  Get requested read burst type.
@@ -301,10 +283,7 @@ __STATIC_INLINE void LL_DCACHE_SetReadBurstType(DCACHE_TypeDef *DCACHEx, uint32_
  *         @arg @ref LL_DCACHE_READ_BURST_WRAP
  *         @arg @ref LL_DCACHE_READ_BURST_INCR
  */
-__STATIC_INLINE uint32_t LL_DCACHE_GetReadBurstType(const DCACHE_TypeDef *DCACHEx)
-{
-	return (uint32_t)(READ_BIT(DCACHEx->CR, DCACHE_CR_HBURST));
-}
+__STATIC_INLINE uint32_t LL_DCACHE_GetReadBurstType(const DCACHE_TypeDef *DCACHEx) { return (uint32_t)(READ_BIT(DCACHEx->CR, DCACHE_CR_HBURST)); }
 
 /**
  * @brief  Invalidate the Data cache.
@@ -335,10 +314,7 @@ __STATIC_INLINE void LL_DCACHE_Invalidate(DCACHE_TypeDef *DCACHEx) { SET_BIT(DCA
  *            @arg LL_DCACHE_MONITOR_ALL
  * @retval None
  */
-__STATIC_INLINE void LL_DCACHE_EnableMonitors(DCACHE_TypeDef *DCACHEx, uint32_t Monitors)
-{
-	SET_BIT(DCACHEx->CR, Monitors);
-}
+__STATIC_INLINE void LL_DCACHE_EnableMonitors(DCACHE_TypeDef *DCACHEx, uint32_t Monitors) { SET_BIT(DCACHEx->CR, Monitors); }
 
 /**
  * @brief  Disable the hit/miss monitor(s).
@@ -353,10 +329,7 @@ __STATIC_INLINE void LL_DCACHE_EnableMonitors(DCACHE_TypeDef *DCACHEx, uint32_t 
  *            @arg LL_DCACHE_MONITOR_ALL
  * @retval None
  */
-__STATIC_INLINE void LL_DCACHE_DisableMonitors(DCACHE_TypeDef *DCACHEx, uint32_t Monitors)
-{
-	CLEAR_BIT(DCACHEx->CR, Monitors);
-}
+__STATIC_INLINE void LL_DCACHE_DisableMonitors(DCACHE_TypeDef *DCACHEx, uint32_t Monitors) { CLEAR_BIT(DCACHEx->CR, Monitors); }
 
 /**
  * @brief  Return the hit/miss monitor(s) enable state.
@@ -374,11 +347,7 @@ __STATIC_INLINE void LL_DCACHE_DisableMonitors(DCACHE_TypeDef *DCACHEx, uint32_t
  */
 __STATIC_INLINE uint32_t LL_DCACHE_IsEnabledMonitors(const DCACHE_TypeDef *DCACHEx, uint32_t Monitors)
 {
-	return (
-	    ((READ_BIT(DCACHEx->CR, (DCACHE_CR_WMISSMEN | DCACHE_CR_WHITMEN | DCACHE_CR_RMISSMEN | DCACHE_CR_RHITMEN)) &
-	      Monitors) == (Monitors))
-		? 1UL
-		: 0UL);
+	return (((READ_BIT(DCACHEx->CR, (DCACHE_CR_WMISSMEN | DCACHE_CR_WHITMEN | DCACHE_CR_RMISSMEN | DCACHE_CR_RHITMEN)) & Monitors) == (Monitors)) ? 1UL : 0UL);
 }
 
 /**
@@ -458,10 +427,7 @@ __STATIC_INLINE void LL_DCACHE_EnableIT_BSYEND(DCACHE_TypeDef *DCACHEx) { SET_BI
  * @param  DCACHEx DCACHE instance
  * @retval None
  */
-__STATIC_INLINE void LL_DCACHE_DisableIT_BSYEND(DCACHE_TypeDef *DCACHEx)
-{
-	CLEAR_BIT(DCACHEx->IER, DCACHE_IER_BSYENDIE);
-}
+__STATIC_INLINE void LL_DCACHE_DisableIT_BSYEND(DCACHE_TypeDef *DCACHEx) { CLEAR_BIT(DCACHEx->IER, DCACHE_IER_BSYENDIE); }
 
 /**
  * @brief  Indicates whether the Busyend interrupt is enabled.
@@ -469,10 +435,7 @@ __STATIC_INLINE void LL_DCACHE_DisableIT_BSYEND(DCACHE_TypeDef *DCACHEx)
  * @param  DCACHEx DCACHE instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DCACHE_IsEnabledIT_BSYEND(const DCACHE_TypeDef *DCACHEx)
-{
-	return ((READ_BIT(DCACHEx->IER, DCACHE_IER_BSYENDIE) == (DCACHE_IER_BSYENDIE)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DCACHE_IsEnabledIT_BSYEND(const DCACHE_TypeDef *DCACHEx) { return ((READ_BIT(DCACHEx->IER, DCACHE_IER_BSYENDIE) == (DCACHE_IER_BSYENDIE)) ? 1UL : 0UL); }
 
 /**
  * @brief  Enable Error interrupt.
@@ -496,10 +459,7 @@ __STATIC_INLINE void LL_DCACHE_DisableIT_ERR(DCACHE_TypeDef *DCACHEx) { CLEAR_BI
  * @param  DCACHEx DCACHE instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DCACHE_IsEnabledIT_ERR(const DCACHE_TypeDef *DCACHEx)
-{
-	return ((READ_BIT(DCACHEx->IER, DCACHE_IER_ERRIE) == (DCACHE_IER_ERRIE)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DCACHE_IsEnabledIT_ERR(const DCACHE_TypeDef *DCACHEx) { return ((READ_BIT(DCACHEx->IER, DCACHE_IER_ERRIE) == (DCACHE_IER_ERRIE)) ? 1UL : 0UL); }
 
 /**
  * @brief  Enable command end interrupt.
@@ -515,10 +475,7 @@ __STATIC_INLINE void LL_DCACHE_EnableIT_CMDEND(DCACHE_TypeDef *DCACHEx) { SET_BI
  * @param  DCACHEx DCACHE instance
  * @retval None
  */
-__STATIC_INLINE void LL_DCACHE_DisableIT_CMDEND(DCACHE_TypeDef *DCACHEx)
-{
-	CLEAR_BIT(DCACHEx->IER, DCACHE_IER_CMDENDIE);
-}
+__STATIC_INLINE void LL_DCACHE_DisableIT_CMDEND(DCACHE_TypeDef *DCACHEx) { CLEAR_BIT(DCACHEx->IER, DCACHE_IER_CMDENDIE); }
 
 /**
  * @brief  Indicates whether the command end interrupt is enabled.
@@ -526,10 +483,7 @@ __STATIC_INLINE void LL_DCACHE_DisableIT_CMDEND(DCACHE_TypeDef *DCACHEx)
  * @param  DCACHEx DCACHE instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DCACHE_IsEnabledIT_CMDEND(const DCACHE_TypeDef *DCACHEx)
-{
-	return ((READ_BIT(DCACHEx->IER, DCACHE_IER_CMDENDIE) == (DCACHE_IER_CMDENDIE)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DCACHE_IsEnabledIT_CMDEND(const DCACHE_TypeDef *DCACHEx) { return ((READ_BIT(DCACHEx->IER, DCACHE_IER_CMDENDIE) == (DCACHE_IER_CMDENDIE)) ? 1UL : 0UL); }
 
 /**
  * @brief  Clear full invalidate busy end flag.
@@ -537,10 +491,7 @@ __STATIC_INLINE uint32_t LL_DCACHE_IsEnabledIT_CMDEND(const DCACHE_TypeDef *DCAC
  * @param  DCACHEx DCACHE instance
  * @retval None
  */
-__STATIC_INLINE void LL_DCACHE_ClearFlag_BSYEND(DCACHE_TypeDef *DCACHEx)
-{
-	WRITE_REG(DCACHEx->FCR, DCACHE_FCR_CBSYENDF);
-}
+__STATIC_INLINE void LL_DCACHE_ClearFlag_BSYEND(DCACHE_TypeDef *DCACHEx) { WRITE_REG(DCACHEx->FCR, DCACHE_FCR_CBSYENDF); }
 
 /**
  * @brief  Clear cache error flag.
@@ -556,10 +507,7 @@ __STATIC_INLINE void LL_DCACHE_ClearFlag_ERR(DCACHE_TypeDef *DCACHEx) { WRITE_RE
  * @param  DCACHEx DCACHE instance
  * @retval None
  */
-__STATIC_INLINE void LL_DCACHE_ClearFlag_CMDEND(DCACHE_TypeDef *DCACHEx)
-{
-	WRITE_REG(DCACHEx->FCR, DCACHE_FCR_CCMDENDF);
-}
+__STATIC_INLINE void LL_DCACHE_ClearFlag_CMDEND(DCACHE_TypeDef *DCACHEx) { WRITE_REG(DCACHEx->FCR, DCACHE_FCR_CCMDENDF); }
 
 /**
  * @brief  Get flag Dcache BUSY.
@@ -567,10 +515,7 @@ __STATIC_INLINE void LL_DCACHE_ClearFlag_CMDEND(DCACHE_TypeDef *DCACHEx)
  * @param  DCACHEx DCACHE instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DCACHE_IsActiveFlag_BUSY(const DCACHE_TypeDef *DCACHEx)
-{
-	return ((READ_BIT(DCACHEx->SR, DCACHE_SR_BUSYF) == (DCACHE_SR_BUSYF)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DCACHE_IsActiveFlag_BUSY(const DCACHE_TypeDef *DCACHEx) { return ((READ_BIT(DCACHEx->SR, DCACHE_SR_BUSYF) == (DCACHE_SR_BUSYF)) ? 1UL : 0UL); }
 
 /**
  * @brief  Get flag Dcache Busyend.
@@ -578,10 +523,7 @@ __STATIC_INLINE uint32_t LL_DCACHE_IsActiveFlag_BUSY(const DCACHE_TypeDef *DCACH
  * @param  DCACHEx DCACHE instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DCACHE_IsActiveFlag_BSYEND(const DCACHE_TypeDef *DCACHEx)
-{
-	return ((READ_BIT(DCACHEx->SR, DCACHE_SR_BSYENDF) == (DCACHE_SR_BSYENDF)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DCACHE_IsActiveFlag_BSYEND(const DCACHE_TypeDef *DCACHEx) { return ((READ_BIT(DCACHEx->SR, DCACHE_SR_BSYENDF) == (DCACHE_SR_BSYENDF)) ? 1UL : 0UL); }
 
 /**
  * @brief  Get flag Dcache Error.
@@ -589,10 +531,7 @@ __STATIC_INLINE uint32_t LL_DCACHE_IsActiveFlag_BSYEND(const DCACHE_TypeDef *DCA
  * @param  DCACHEx DCACHE instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DCACHE_IsActiveFlag_ERR(const DCACHE_TypeDef *DCACHEx)
-{
-	return ((READ_BIT(DCACHEx->SR, DCACHE_SR_ERRF) == (DCACHE_SR_ERRF)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DCACHE_IsActiveFlag_ERR(const DCACHE_TypeDef *DCACHEx) { return ((READ_BIT(DCACHEx->SR, DCACHE_SR_ERRF) == (DCACHE_SR_ERRF)) ? 1UL : 0UL); }
 
 /**
  * @brief  Get flag Dcache Busy command.
@@ -600,10 +539,7 @@ __STATIC_INLINE uint32_t LL_DCACHE_IsActiveFlag_ERR(const DCACHE_TypeDef *DCACHE
  * @param  DCACHEx DCACHE instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DCACHE_IsActiveFlag_BUSYCMD(const DCACHE_TypeDef *DCACHEx)
-{
-	return ((READ_BIT(DCACHEx->SR, DCACHE_SR_BUSYCMDF) == (DCACHE_SR_BUSYCMDF)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DCACHE_IsActiveFlag_BUSYCMD(const DCACHE_TypeDef *DCACHEx) { return ((READ_BIT(DCACHEx->SR, DCACHE_SR_BUSYCMDF) == (DCACHE_SR_BUSYCMDF)) ? 1UL : 0UL); }
 
 /**
  * @brief  Get flag Dcache command end.
@@ -611,10 +547,7 @@ __STATIC_INLINE uint32_t LL_DCACHE_IsActiveFlag_BUSYCMD(const DCACHE_TypeDef *DC
  * @param  DCACHEx DCACHE instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DCACHE_IsActiveFlag_CMDEND(const DCACHE_TypeDef *DCACHEx)
-{
-	return ((READ_BIT(DCACHEx->SR, DCACHE_SR_CMDENDF) == (DCACHE_SR_CMDENDF)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DCACHE_IsActiveFlag_CMDEND(const DCACHE_TypeDef *DCACHEx) { return ((READ_BIT(DCACHEx->SR, DCACHE_SR_CMDENDF) == (DCACHE_SR_CMDENDF)) ? 1UL : 0UL); }
 
 /**
  * @}

@@ -179,8 +179,7 @@ HAL_StatusTypeDef HAL_IWDG_Init(IWDG_HandleTypeDef *hiwdg);
 void HAL_IWDG_MspInit(IWDG_HandleTypeDef *hiwdg);
 /* Callbacks Register/UnRegister functions  ***********************************/
 #if (USE_HAL_IWDG_REGISTER_CALLBACKS == 1)
-HAL_StatusTypeDef HAL_IWDG_RegisterCallback(IWDG_HandleTypeDef *hiwdg, HAL_IWDG_CallbackIDTypeDef CallbackID,
-					    pIWDG_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_IWDG_RegisterCallback(IWDG_HandleTypeDef *hiwdg, HAL_IWDG_CallbackIDTypeDef CallbackID, pIWDG_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_IWDG_UnRegisterCallback(IWDG_HandleTypeDef *hiwdg, HAL_IWDG_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_IWDG_REGISTER_CALLBACKS */
 /**
@@ -245,11 +244,9 @@ void HAL_IWDG_EarlyWakeupCallback(IWDG_HandleTypeDef *hiwdg);
  * @param  __PRESCALER__  IWDG prescaler value
  * @retval None
  */
-#define IS_IWDG_PRESCALER(__PRESCALER__)                                                                               \
-	(((__PRESCALER__) == IWDG_PRESCALER_4) || ((__PRESCALER__) == IWDG_PRESCALER_8) ||                             \
-	 ((__PRESCALER__) == IWDG_PRESCALER_16) || ((__PRESCALER__) == IWDG_PRESCALER_32) ||                           \
-	 ((__PRESCALER__) == IWDG_PRESCALER_64) || ((__PRESCALER__) == IWDG_PRESCALER_128) ||                          \
-	 ((__PRESCALER__) == IWDG_PRESCALER_256) || ((__PRESCALER__) == IWDG_PRESCALER_512) ||                         \
+#define IS_IWDG_PRESCALER(__PRESCALER__)                                                                                                                                                               \
+	(((__PRESCALER__) == IWDG_PRESCALER_4) || ((__PRESCALER__) == IWDG_PRESCALER_8) || ((__PRESCALER__) == IWDG_PRESCALER_16) || ((__PRESCALER__) == IWDG_PRESCALER_32) ||                         \
+	 ((__PRESCALER__) == IWDG_PRESCALER_64) || ((__PRESCALER__) == IWDG_PRESCALER_128) || ((__PRESCALER__) == IWDG_PRESCALER_256) || ((__PRESCALER__) == IWDG_PRESCALER_512) ||                    \
 	 ((__PRESCALER__) == IWDG_PRESCALER_1024))
 
 /**

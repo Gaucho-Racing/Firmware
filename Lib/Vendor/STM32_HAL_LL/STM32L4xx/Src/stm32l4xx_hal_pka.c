@@ -291,9 +291,9 @@
 #define PKA_RAM_ERASE_TIMEOUT 1000U
 
 /* Private macro -------------------------------------------------------------*/
-#define __PKA_RAM_PARAM_END(TAB, INDEX)                                                                                \
-	do {                                                                                                           \
-		TAB[INDEX] = 0UL;                                                                                      \
+#define __PKA_RAM_PARAM_END(TAB, INDEX)                                                                                                                                                                \
+	do {                                                                                                                                                                                           \
+		TAB[INDEX] = 0UL;                                                                                                                                                                      \
 	} while (0)
 /**
  * @}
@@ -327,8 +327,7 @@ void PKA_ECCMulFastMode_Set(PKA_HandleTypeDef *hpka, PKA_ECCMulFastModeInTypeDef
 void PKA_ModRed_Set(PKA_HandleTypeDef *hpka, PKA_ModRedInTypeDef *in);
 void PKA_ModInv_Set(PKA_HandleTypeDef *hpka, PKA_ModInvInTypeDef *in);
 void PKA_MontgomeryParam_Set(PKA_HandleTypeDef *hpka, const uint32_t size, const uint8_t *pOp1);
-void PKA_ARI_Set(PKA_HandleTypeDef *hpka, const uint32_t size, const uint32_t *pOp1, const uint32_t *pOp2,
-		 const uint8_t *pOp3);
+void PKA_ARI_Set(PKA_HandleTypeDef *hpka, const uint32_t size, const uint32_t *pOp1, const uint32_t *pOp2, const uint8_t *pOp3);
 /**
  * @}
  */
@@ -538,8 +537,7 @@ __weak void HAL_PKA_MspDeInit(PKA_HandleTypeDef *hpka)
  * @param  pCallback pointer to the Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_PKA_RegisterCallback(PKA_HandleTypeDef *hpka, HAL_PKA_CallbackIDTypeDef CallbackID,
-					   pPKA_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_PKA_RegisterCallback(PKA_HandleTypeDef *hpka, HAL_PKA_CallbackIDTypeDef CallbackID, pPKA_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -905,8 +903,7 @@ HAL_StatusTypeDef HAL_PKA_ECDSASign_IT(PKA_HandleTypeDef *hpka, PKA_ECDSASignInT
  * @param  out Output information
  * @param  outExt Additional Output information (facultative)
  */
-void HAL_PKA_ECDSASign_GetResult(PKA_HandleTypeDef *hpka, PKA_ECDSASignOutTypeDef *out,
-				 PKA_ECDSASignOutExtParamTypeDef *outExt)
+void HAL_PKA_ECDSASign_GetResult(PKA_HandleTypeDef *hpka, PKA_ECDSASignOutTypeDef *out, PKA_ECDSASignOutExtParamTypeDef *outExt)
 {
 	uint32_t size;
 
@@ -1475,8 +1472,7 @@ void HAL_PKA_Arithmetic_GetResult(PKA_HandleTypeDef *hpka, uint32_t *pRes)
 			case PKA_MODE_ARITHMETIC_ADD:
 			case PKA_MODE_COMPARISON:
 			case PKA_MODE_ARITHMETIC_MUL:
-				PKA_Memcpy_u32_to_u32(pRes, &hpka->Instance->RAM[PKA_ARITHMETIC_ALL_OPS_OUT_RESULT],
-						      size);
+				PKA_Memcpy_u32_to_u32(pRes, &hpka->Instance->RAM[PKA_ARITHMETIC_ALL_OPS_OUT_RESULT], size);
 				break;
 			default:
 				break;
@@ -1893,9 +1889,7 @@ void PKA_Memcpy_u8_to_u32(__IO uint32_t dst[], const uint8_t src[], size_t n)
 			for (; index < (n / 4UL); index++) {
 				/* Apply the equivalent of __REV from uint8_t to
 				 * uint32_t */
-				dst[index] = ((uint32_t)src[(n - (index * 4UL) - 1UL)]) |
-					     ((uint32_t)src[(n - (index * 4UL) - 2UL)] << 8UL) |
-					     ((uint32_t)src[(n - (index * 4UL) - 3UL)] << 16UL) |
+				dst[index] = ((uint32_t)src[(n - (index * 4UL) - 1UL)]) | ((uint32_t)src[(n - (index * 4UL) - 2UL)] << 8UL) | ((uint32_t)src[(n - (index * 4UL) - 3UL)] << 16UL) |
 					     ((uint32_t)src[(n - (index * 4UL) - 4UL)] << 24UL);
 			}
 
@@ -1903,12 +1897,9 @@ void PKA_Memcpy_u8_to_u32(__IO uint32_t dst[], const uint8_t src[], size_t n)
 			if ((n % 4UL) == 1UL) {
 				dst[index] = (uint32_t)src[(n - (index * 4UL) - 1UL)];
 			} else if ((n % 4UL) == 2UL) {
-				dst[index] = ((uint32_t)src[(n - (index * 4UL) - 1UL)]) |
-					     ((uint32_t)src[(n - (index * 4UL) - 2UL)] << 8UL);
+				dst[index] = ((uint32_t)src[(n - (index * 4UL) - 1UL)]) | ((uint32_t)src[(n - (index * 4UL) - 2UL)] << 8UL);
 			} else if ((n % 4UL) == 3UL) {
-				dst[index] = ((uint32_t)src[(n - (index * 4UL) - 1UL)]) |
-					     ((uint32_t)src[(n - (index * 4UL) - 2UL)] << 8UL) |
-					     ((uint32_t)src[(n - (index * 4UL) - 3UL)] << 16UL);
+				dst[index] = ((uint32_t)src[(n - (index * 4UL) - 1UL)]) | ((uint32_t)src[(n - (index * 4UL) - 2UL)] << 8UL) | ((uint32_t)src[(n - (index * 4UL) - 3UL)] << 16UL);
 			} else {
 				/* The last element is already handle in the
 				 * loop */
@@ -1962,8 +1953,7 @@ HAL_StatusTypeDef PKA_Process(PKA_HandleTypeDef *hpka, uint32_t mode, uint32_t T
 		tickstart = HAL_GetTick();
 
 		/* Set the mode and deactivate the interrupts */
-		MODIFY_REG(hpka->Instance->CR, PKA_CR_MODE | PKA_CR_PROCENDIE | PKA_CR_RAMERRIE | PKA_CR_ADDRERRIE,
-			   mode << PKA_CR_MODE_Pos);
+		MODIFY_REG(hpka->Instance->CR, PKA_CR_MODE | PKA_CR_PROCENDIE | PKA_CR_RAMERRIE | PKA_CR_ADDRERRIE, mode << PKA_CR_MODE_Pos);
 
 		/* Start the computation */
 		hpka->Instance->CR |= PKA_CR_START;
@@ -2017,8 +2007,7 @@ HAL_StatusTypeDef PKA_Process_IT(PKA_HandleTypeDef *hpka, uint32_t mode)
 		hpka->ErrorCode = HAL_PKA_ERROR_NONE;
 
 		/* Set the mode and activate interrupts */
-		MODIFY_REG(hpka->Instance->CR, PKA_CR_MODE | PKA_CR_PROCENDIE | PKA_CR_RAMERRIE | PKA_CR_ADDRERRIE,
-			   (mode << PKA_CR_MODE_Pos) | PKA_CR_PROCENDIE | PKA_CR_RAMERRIE | PKA_CR_ADDRERRIE);
+		MODIFY_REG(hpka->Instance->CR, PKA_CR_MODE | PKA_CR_PROCENDIE | PKA_CR_RAMERRIE | PKA_CR_ADDRERRIE, (mode << PKA_CR_MODE_Pos) | PKA_CR_PROCENDIE | PKA_CR_RAMERRIE | PKA_CR_ADDRERRIE);
 
 		/* Start the computation */
 		hpka->Instance->CR |= PKA_CR_START;
@@ -2080,8 +2069,7 @@ void PKA_ModExpFastMode_Set(PKA_HandleTypeDef *hpka, PKA_ModExpFastModeInTypeDef
 	__PKA_RAM_PARAM_END(hpka->Instance->RAM, PKA_MODULAR_EXP_IN_MODULUS + (in->OpSize / 4UL));
 
 	/* Move the Montgomery parameter to PKA RAM */
-	PKA_Memcpy_u32_to_u32(&hpka->Instance->RAM[PKA_MODULAR_EXP_IN_MONTGOMERY_PARAM], in->pMontgomeryParam,
-			      in->OpSize / 4UL);
+	PKA_Memcpy_u32_to_u32(&hpka->Instance->RAM[PKA_MODULAR_EXP_IN_MONTGOMERY_PARAM], in->pMontgomeryParam, in->OpSize / 4UL);
 	__PKA_RAM_PARAM_END(hpka->Instance->RAM, PKA_MODULAR_EXP_IN_MONTGOMERY_PARAM + (in->OpSize / 4UL));
 }
 
@@ -2096,8 +2084,7 @@ void PKA_ModExpFastMode_Set(PKA_HandleTypeDef *hpka, PKA_ModExpFastModeInTypeDef
 void PKA_ECDSASign_Set(PKA_HandleTypeDef *hpka, PKA_ECDSASignInTypeDef *in)
 {
 	/* Get the prime order n length */
-	hpka->Instance->RAM[PKA_ECDSA_SIGN_IN_ORDER_NB_BITS] =
-	    PKA_GetOptBitSize_u8(in->primeOrderSize, *(in->primeOrder));
+	hpka->Instance->RAM[PKA_ECDSA_SIGN_IN_ORDER_NB_BITS] = PKA_GetOptBitSize_u8(in->primeOrderSize, *(in->primeOrder));
 
 	/* Get the modulus p length */
 	hpka->Instance->RAM[PKA_ECDSA_SIGN_IN_MOD_NB_BITS] = PKA_GetOptBitSize_u8(in->modulusSize, *(in->modulus));
@@ -2146,8 +2133,7 @@ void PKA_ECDSASign_Set(PKA_HandleTypeDef *hpka, PKA_ECDSASignInTypeDef *in)
 void PKA_ECDSAVerif_Set(PKA_HandleTypeDef *hpka, PKA_ECDSAVerifInTypeDef *in)
 {
 	/* Get the prime order n length */
-	hpka->Instance->RAM[PKA_ECDSA_VERIF_IN_ORDER_NB_BITS] =
-	    PKA_GetOptBitSize_u8(in->primeOrderSize, *(in->primeOrder));
+	hpka->Instance->RAM[PKA_ECDSA_VERIF_IN_ORDER_NB_BITS] = PKA_GetOptBitSize_u8(in->primeOrderSize, *(in->primeOrder));
 
 	/* Get the modulus p length */
 	hpka->Instance->RAM[PKA_ECDSA_VERIF_IN_MOD_NB_BITS] = PKA_GetOptBitSize_u8(in->modulusSize, *(in->modulus));
@@ -2173,17 +2159,13 @@ void PKA_ECDSAVerif_Set(PKA_HandleTypeDef *hpka, PKA_ECDSAVerifInTypeDef *in)
 
 	/* Move the input parameters public-key curve point Q coordinate xQ to
 	 * PKA RAM */
-	PKA_Memcpy_u8_to_u32(&hpka->Instance->RAM[PKA_ECDSA_VERIF_IN_PUBLIC_KEY_POINT_X], in->pPubKeyCurvePtX,
-			     in->modulusSize);
-	__PKA_RAM_PARAM_END(hpka->Instance->RAM,
-			    PKA_ECDSA_VERIF_IN_PUBLIC_KEY_POINT_X + ((in->modulusSize + 3UL) / 4UL));
+	PKA_Memcpy_u8_to_u32(&hpka->Instance->RAM[PKA_ECDSA_VERIF_IN_PUBLIC_KEY_POINT_X], in->pPubKeyCurvePtX, in->modulusSize);
+	__PKA_RAM_PARAM_END(hpka->Instance->RAM, PKA_ECDSA_VERIF_IN_PUBLIC_KEY_POINT_X + ((in->modulusSize + 3UL) / 4UL));
 
 	/* Move the input parameters public-key curve point Q coordinate xQ to
 	 * PKA RAM */
-	PKA_Memcpy_u8_to_u32(&hpka->Instance->RAM[PKA_ECDSA_VERIF_IN_PUBLIC_KEY_POINT_Y], in->pPubKeyCurvePtY,
-			     in->modulusSize);
-	__PKA_RAM_PARAM_END(hpka->Instance->RAM,
-			    PKA_ECDSA_VERIF_IN_PUBLIC_KEY_POINT_Y + ((in->modulusSize + 3UL) / 4UL));
+	PKA_Memcpy_u8_to_u32(&hpka->Instance->RAM[PKA_ECDSA_VERIF_IN_PUBLIC_KEY_POINT_Y], in->pPubKeyCurvePtY, in->modulusSize);
+	__PKA_RAM_PARAM_END(hpka->Instance->RAM, PKA_ECDSA_VERIF_IN_PUBLIC_KEY_POINT_Y + ((in->modulusSize + 3UL) / 4UL));
 
 	/* Move the input parameters signature part r to PKA RAM */
 	PKA_Memcpy_u8_to_u32(&hpka->Instance->RAM[PKA_ECDSA_VERIF_IN_SIGNATURE_R], in->RSign, in->primeOrderSize);
@@ -2279,8 +2261,7 @@ void PKA_PointCheck_Set(PKA_HandleTypeDef *hpka, PKA_PointCheckInTypeDef *in)
 void PKA_ECCMul_Set(PKA_HandleTypeDef *hpka, PKA_ECCMulInTypeDef *in)
 {
 	/* Get the scalar multiplier k length */
-	hpka->Instance->RAM[PKA_ECC_SCALAR_MUL_IN_EXP_NB_BITS] =
-	    PKA_GetOptBitSize_u8(in->scalarMulSize, *(in->scalarMul));
+	hpka->Instance->RAM[PKA_ECC_SCALAR_MUL_IN_EXP_NB_BITS] = PKA_GetOptBitSize_u8(in->scalarMulSize, *(in->scalarMul));
 
 	/* Get the modulus length */
 	hpka->Instance->RAM[PKA_ECC_SCALAR_MUL_IN_OP_NB_BITS] = PKA_GetOptBitSize_u8(in->modulusSize, *(in->modulus));
@@ -2302,13 +2283,11 @@ void PKA_ECCMul_Set(PKA_HandleTypeDef *hpka, PKA_ECCMulInTypeDef *in)
 
 	/* Move the input parameters Point P coordinate x to PKA RAM */
 	PKA_Memcpy_u8_to_u32(&hpka->Instance->RAM[PKA_ECC_SCALAR_MUL_IN_INITIAL_POINT_X], in->pointX, in->modulusSize);
-	__PKA_RAM_PARAM_END(hpka->Instance->RAM,
-			    PKA_ECC_SCALAR_MUL_IN_INITIAL_POINT_X + ((in->modulusSize + 3UL) / 4UL));
+	__PKA_RAM_PARAM_END(hpka->Instance->RAM, PKA_ECC_SCALAR_MUL_IN_INITIAL_POINT_X + ((in->modulusSize + 3UL) / 4UL));
 
 	/* Move the input parameters Point P coordinate y to PKA RAM */
 	PKA_Memcpy_u8_to_u32(&hpka->Instance->RAM[PKA_ECC_SCALAR_MUL_IN_INITIAL_POINT_Y], in->pointY, in->modulusSize);
-	__PKA_RAM_PARAM_END(hpka->Instance->RAM,
-			    PKA_ECC_SCALAR_MUL_IN_INITIAL_POINT_Y + ((in->modulusSize + 3UL) / 4UL));
+	__PKA_RAM_PARAM_END(hpka->Instance->RAM, PKA_ECC_SCALAR_MUL_IN_INITIAL_POINT_Y + ((in->modulusSize + 3UL) / 4UL));
 }
 
 /**
@@ -2319,8 +2298,7 @@ void PKA_ECCMul_Set(PKA_HandleTypeDef *hpka, PKA_ECCMulInTypeDef *in)
 void PKA_ECCMulFastMode_Set(PKA_HandleTypeDef *hpka, PKA_ECCMulFastModeInTypeDef *in)
 {
 	/* Get the scalar multiplier k length */
-	hpka->Instance->RAM[PKA_ECC_SCALAR_MUL_IN_EXP_NB_BITS] =
-	    PKA_GetOptBitSize_u8(in->scalarMulSize, *(in->scalarMul));
+	hpka->Instance->RAM[PKA_ECC_SCALAR_MUL_IN_EXP_NB_BITS] = PKA_GetOptBitSize_u8(in->scalarMulSize, *(in->scalarMul));
 
 	/* Get the modulus length */
 	hpka->Instance->RAM[PKA_ECC_SCALAR_MUL_IN_OP_NB_BITS] = PKA_GetOptBitSize_u8(in->modulusSize, *(in->modulus));
@@ -2349,10 +2327,8 @@ void PKA_ECCMulFastMode_Set(PKA_HandleTypeDef *hpka, PKA_ECCMulFastModeInTypeDef
 	__PKA_RAM_PARAM_END(hpka->Instance->RAM, PKA_POINT_CHECK_IN_INITIAL_POINT_Y + ((in->modulusSize + 3UL) / 4UL));
 
 	/* Move the Montgomery parameter to PKA RAM */
-	PKA_Memcpy_u32_to_u32(&hpka->Instance->RAM[PKA_ECC_SCALAR_MUL_IN_MONTGOMERY_PARAM], in->pMontgomeryParam,
-			      (in->modulusSize + 3UL) / 4UL);
-	__PKA_RAM_PARAM_END(hpka->Instance->RAM,
-			    PKA_ECC_SCALAR_MUL_IN_MONTGOMERY_PARAM + ((in->modulusSize + 3UL) / 4UL));
+	PKA_Memcpy_u32_to_u32(&hpka->Instance->RAM[PKA_ECC_SCALAR_MUL_IN_MONTGOMERY_PARAM], in->pMontgomeryParam, (in->modulusSize + 3UL) / 4UL);
+	__PKA_RAM_PARAM_END(hpka->Instance->RAM, PKA_ECC_SCALAR_MUL_IN_MONTGOMERY_PARAM + ((in->modulusSize + 3UL) / 4UL));
 }
 /**
  * @brief  Set input parameters.
@@ -2416,8 +2392,7 @@ void PKA_MontgomeryParam_Set(PKA_HandleTypeDef *hpka, const uint32_t size, const
 		newSize = size - bytetoskip;
 
 		/* Get the number of bit per operand */
-		hpka->Instance->RAM[PKA_MONTGOMERY_PARAM_IN_MOD_NB_BITS] =
-		    PKA_GetOptBitSize_u8(newSize, pOp1[bytetoskip]);
+		hpka->Instance->RAM[PKA_MONTGOMERY_PARAM_IN_MOD_NB_BITS] = PKA_GetOptBitSize_u8(newSize, pOp1[bytetoskip]);
 
 		/* Move the input parameters pOp1 to PKA RAM */
 		PKA_Memcpy_u8_to_u32(&hpka->Instance->RAM[PKA_MONTGOMERY_PARAM_IN_MODULUS], pOp1, size);
@@ -2433,8 +2408,7 @@ void PKA_MontgomeryParam_Set(PKA_HandleTypeDef *hpka, const uint32_t size, const
  * @param  pOp2 Generic pointer to input data
  * @param  pOp3 Generic pointer to input data
  */
-void PKA_ARI_Set(PKA_HandleTypeDef *hpka, const uint32_t size, const uint32_t *pOp1, const uint32_t *pOp2,
-		 const uint8_t *pOp3)
+void PKA_ARI_Set(PKA_HandleTypeDef *hpka, const uint32_t size, const uint32_t *pOp1, const uint32_t *pOp2, const uint8_t *pOp3)
 {
 	/* Get the number of bit per operand */
 	hpka->Instance->RAM[PKA_ARITHMETIC_ALL_OPS_NB_BITS] = PKA_GetBitSize_u32(size);

@@ -45,8 +45,8 @@ extern "C" {
  * @{
  */
 #define FLASH_LVE_PIN_CTRL 0x00000000U /*!< LVE FLASH pin controlled by power controller       */
-#define FLASH_LVE_PIN_FORCED                                                                                           \
-	FLASH_CFGR_LVEN /*!< LVE FLASH pin enforced to low (external SMPS                                              \
+#define FLASH_LVE_PIN_FORCED                                                                                                                                                                           \
+	FLASH_CFGR_LVEN /*!< LVE FLASH pin enforced to low (external SMPS                                                                                                                              \
 			   used) */
 /**
  * @}

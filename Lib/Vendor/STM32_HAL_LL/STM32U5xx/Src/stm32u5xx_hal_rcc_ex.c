@@ -48,19 +48,19 @@
 /* Not available in STM32U575/585 rev. X and and STM32U59x/5Ax rev. B/Y devices.
  */
 #if defined(STM32U585xx) || defined(STM32U575xx)
-#define RCC_EXTI_LINE_LSECSS                                                                                           \
-	EXTI_IMR1_IM23 /*!< External interrupt line 23 connected to the LSE                                            \
+#define RCC_EXTI_LINE_LSECSS                                                                                                                                                                           \
+	EXTI_IMR1_IM23 /*!< External interrupt line 23 connected to the LSE                                                                                                                            \
 			  CSS interrupt Line */
 #else
-#define RCC_EXTI_LINE_LSECSS                                                                                           \
-	EXTI_IMR1_IM24 /*!< External interrupt line 24 connected to the LSE                                            \
+#define RCC_EXTI_LINE_LSECSS                                                                                                                                                                           \
+	EXTI_IMR1_IM24 /*!< External interrupt line 24 connected to the LSE                                                                                                                            \
 			  CSS interrupt Line */
 #endif		       /* STM32U585xx || STM32U575xx */
 
 /* Not available in STM32U575/585 rev. X and and STM32U59x/5Ax rev. B/Y devices.
  */
-#define RCC_EXTI_LINE_MSIPLLUNLCK                                                                                      \
-	EXTI_IMR1_IM23 /*!< External interrupt line 23 connected to the MSI                                            \
+#define RCC_EXTI_LINE_MSIPLLUNLCK                                                                                                                                                                      \
+	EXTI_IMR1_IM23 /*!< External interrupt line 23 connected to the MSI                                                                                                                            \
 			  PLL UNLOCK interrupt Line */
 
 /**
@@ -78,196 +78,152 @@
 
 #define IS_RCC_LSCOSOURCE(__SOURCE__) (((__SOURCE__) == RCC_LSCOSOURCE_LSI) || ((__SOURCE__) == RCC_LSCOSOURCE_LSE))
 
-#define IS_RCC_MSIPLLMODE_SELECT(__SOURCE__)                                                                           \
-	(((__SOURCE__) == RCC_MSISPLL_MODE_SEL) || ((__SOURCE__) == RCC_MSIKPLL_MODE_SEL))
+#define IS_RCC_MSIPLLMODE_SELECT(__SOURCE__) (((__SOURCE__) == RCC_MSISPLL_MODE_SEL) || ((__SOURCE__) == RCC_MSIKPLL_MODE_SEL))
 
-#define IS_RCC_PERIPHCLOCK(__SELECTION__)                                                                              \
-	((((__SELECTION__) & RCC_PERIPHCLOCK_ALL) != 0x00u) && (((__SELECTION__) & ~RCC_PERIPHCLOCK_ALL) == 0x00u))
+#define IS_RCC_PERIPHCLOCK(__SELECTION__) ((((__SELECTION__) & RCC_PERIPHCLOCK_ALL) != 0x00u) && (((__SELECTION__) & ~RCC_PERIPHCLOCK_ALL) == 0x00u))
 
-#define IS_RCC_USART1CLKSOURCE(__SOURCE__)                                                                             \
-	(((__SOURCE__) == RCC_USART1CLKSOURCE_PCLK2) || ((__SOURCE__) == RCC_USART1CLKSOURCE_SYSCLK) ||                \
-	 ((__SOURCE__) == RCC_USART1CLKSOURCE_HSI) || ((__SOURCE__) == RCC_USART1CLKSOURCE_LSE))
+#define IS_RCC_USART1CLKSOURCE(__SOURCE__)                                                                                                                                                             \
+	(((__SOURCE__) == RCC_USART1CLKSOURCE_PCLK2) || ((__SOURCE__) == RCC_USART1CLKSOURCE_SYSCLK) || ((__SOURCE__) == RCC_USART1CLKSOURCE_HSI) || ((__SOURCE__) == RCC_USART1CLKSOURCE_LSE))
 
 #if defined(USART2)
-#define IS_RCC_USART2CLKSOURCE(__SOURCE__)                                                                             \
-	(((__SOURCE__) == RCC_USART2CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_USART2CLKSOURCE_SYSCLK) ||                \
-	 ((__SOURCE__) == RCC_USART2CLKSOURCE_HSI) || ((__SOURCE__) == RCC_USART2CLKSOURCE_LSE))
+#define IS_RCC_USART2CLKSOURCE(__SOURCE__)                                                                                                                                                             \
+	(((__SOURCE__) == RCC_USART2CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_USART2CLKSOURCE_SYSCLK) || ((__SOURCE__) == RCC_USART2CLKSOURCE_HSI) || ((__SOURCE__) == RCC_USART2CLKSOURCE_LSE))
 #endif /* USART2 */
 
-#define IS_RCC_USART3CLKSOURCE(__SOURCE__)                                                                             \
-	(((__SOURCE__) == RCC_USART3CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_USART3CLKSOURCE_SYSCLK) ||                \
-	 ((__SOURCE__) == RCC_USART3CLKSOURCE_HSI) || ((__SOURCE__) == RCC_USART3CLKSOURCE_LSE))
+#define IS_RCC_USART3CLKSOURCE(__SOURCE__)                                                                                                                                                             \
+	(((__SOURCE__) == RCC_USART3CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_USART3CLKSOURCE_SYSCLK) || ((__SOURCE__) == RCC_USART3CLKSOURCE_HSI) || ((__SOURCE__) == RCC_USART3CLKSOURCE_LSE))
 
-#define IS_RCC_UART4CLKSOURCE(__SOURCE__)                                                                              \
-	(((__SOURCE__) == RCC_UART4CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_UART4CLKSOURCE_SYSCLK) ||                  \
-	 ((__SOURCE__) == RCC_UART4CLKSOURCE_HSI) || ((__SOURCE__) == RCC_UART4CLKSOURCE_LSE))
+#define IS_RCC_UART4CLKSOURCE(__SOURCE__)                                                                                                                                                              \
+	(((__SOURCE__) == RCC_UART4CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_UART4CLKSOURCE_SYSCLK) || ((__SOURCE__) == RCC_UART4CLKSOURCE_HSI) || ((__SOURCE__) == RCC_UART4CLKSOURCE_LSE))
 
-#define IS_RCC_UART5CLKSOURCE(__SOURCE__)                                                                              \
-	(((__SOURCE__) == RCC_UART5CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_UART5CLKSOURCE_SYSCLK) ||                  \
-	 ((__SOURCE__) == RCC_UART5CLKSOURCE_HSI) || ((__SOURCE__) == RCC_UART5CLKSOURCE_LSE))
+#define IS_RCC_UART5CLKSOURCE(__SOURCE__)                                                                                                                                                              \
+	(((__SOURCE__) == RCC_UART5CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_UART5CLKSOURCE_SYSCLK) || ((__SOURCE__) == RCC_UART5CLKSOURCE_HSI) || ((__SOURCE__) == RCC_UART5CLKSOURCE_LSE))
 
 #if defined(USART6)
-#define IS_RCC_USART6CLKSOURCE(__SOURCE__)                                                                             \
-	(((__SOURCE__) == RCC_USART6CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_USART6CLKSOURCE_SYSCLK) ||                \
-	 ((__SOURCE__) == RCC_USART6CLKSOURCE_HSI) || ((__SOURCE__) == RCC_USART6CLKSOURCE_LSE))
+#define IS_RCC_USART6CLKSOURCE(__SOURCE__)                                                                                                                                                             \
+	(((__SOURCE__) == RCC_USART6CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_USART6CLKSOURCE_SYSCLK) || ((__SOURCE__) == RCC_USART6CLKSOURCE_HSI) || ((__SOURCE__) == RCC_USART6CLKSOURCE_LSE))
 #endif /* USART6 */
 
-#define IS_RCC_LPUART1CLKSOURCE(__SOURCE__)                                                                            \
-	(((__SOURCE__) == RCC_LPUART1CLKSOURCE_PCLK3) || ((__SOURCE__) == RCC_LPUART1CLKSOURCE_SYSCLK) ||              \
-	 ((__SOURCE__) == RCC_LPUART1CLKSOURCE_HSI) || ((__SOURCE__) == RCC_LPUART1CLKSOURCE_LSE) ||                   \
+#define IS_RCC_LPUART1CLKSOURCE(__SOURCE__)                                                                                                                                                            \
+	(((__SOURCE__) == RCC_LPUART1CLKSOURCE_PCLK3) || ((__SOURCE__) == RCC_LPUART1CLKSOURCE_SYSCLK) || ((__SOURCE__) == RCC_LPUART1CLKSOURCE_HSI) || ((__SOURCE__) == RCC_LPUART1CLKSOURCE_LSE) ||  \
 	 ((__SOURCE__) == RCC_LPUART1CLKSOURCE_MSIK))
 
-#define IS_RCC_I2C1CLKSOURCE(__SOURCE__)                                                                               \
-	(((__SOURCE__) == RCC_I2C1CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_I2C1CLKSOURCE_SYSCLK) ||                    \
-	 ((__SOURCE__) == RCC_I2C1CLKSOURCE_HSI) || ((__SOURCE__) == RCC_I2C1CLKSOURCE_MSIK))
+#define IS_RCC_I2C1CLKSOURCE(__SOURCE__)                                                                                                                                                               \
+	(((__SOURCE__) == RCC_I2C1CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_I2C1CLKSOURCE_SYSCLK) || ((__SOURCE__) == RCC_I2C1CLKSOURCE_HSI) || ((__SOURCE__) == RCC_I2C1CLKSOURCE_MSIK))
 
-#define IS_RCC_I2C2CLKSOURCE(__SOURCE__)                                                                               \
-	(((__SOURCE__) == RCC_I2C2CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_I2C2CLKSOURCE_SYSCLK) ||                    \
-	 ((__SOURCE__) == RCC_I2C2CLKSOURCE_HSI) || ((__SOURCE__) == RCC_I2C2CLKSOURCE_MSIK))
+#define IS_RCC_I2C2CLKSOURCE(__SOURCE__)                                                                                                                                                               \
+	(((__SOURCE__) == RCC_I2C2CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_I2C2CLKSOURCE_SYSCLK) || ((__SOURCE__) == RCC_I2C2CLKSOURCE_HSI) || ((__SOURCE__) == RCC_I2C2CLKSOURCE_MSIK))
 
-#define IS_RCC_I2C3CLKSOURCE(__SOURCE__)                                                                               \
-	(((__SOURCE__) == RCC_I2C3CLKSOURCE_PCLK3) || ((__SOURCE__) == RCC_I2C3CLKSOURCE_SYSCLK) ||                    \
-	 ((__SOURCE__) == RCC_I2C3CLKSOURCE_HSI) || ((__SOURCE__) == RCC_I2C3CLKSOURCE_MSIK))
+#define IS_RCC_I2C3CLKSOURCE(__SOURCE__)                                                                                                                                                               \
+	(((__SOURCE__) == RCC_I2C3CLKSOURCE_PCLK3) || ((__SOURCE__) == RCC_I2C3CLKSOURCE_SYSCLK) || ((__SOURCE__) == RCC_I2C3CLKSOURCE_HSI) || ((__SOURCE__) == RCC_I2C3CLKSOURCE_MSIK))
 
-#define IS_RCC_I2C4CLKSOURCE(__SOURCE__)                                                                               \
-	(((__SOURCE__) == RCC_I2C4CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_I2C4CLKSOURCE_SYSCLK) ||                    \
-	 ((__SOURCE__) == RCC_I2C4CLKSOURCE_HSI) || ((__SOURCE__) == RCC_I2C4CLKSOURCE_MSIK))
+#define IS_RCC_I2C4CLKSOURCE(__SOURCE__)                                                                                                                                                               \
+	(((__SOURCE__) == RCC_I2C4CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_I2C4CLKSOURCE_SYSCLK) || ((__SOURCE__) == RCC_I2C4CLKSOURCE_HSI) || ((__SOURCE__) == RCC_I2C4CLKSOURCE_MSIK))
 
 #if defined(I2C5)
-#define IS_RCC_I2C5CLKSOURCE(__SOURCE__)                                                                               \
-	(((__SOURCE__) == RCC_I2C5CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_I2C5CLKSOURCE_SYSCLK) ||                    \
-	 ((__SOURCE__) == RCC_I2C5CLKSOURCE_HSI) || ((__SOURCE__) == RCC_I2C5CLKSOURCE_MSIK))
+#define IS_RCC_I2C5CLKSOURCE(__SOURCE__)                                                                                                                                                               \
+	(((__SOURCE__) == RCC_I2C5CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_I2C5CLKSOURCE_SYSCLK) || ((__SOURCE__) == RCC_I2C5CLKSOURCE_HSI) || ((__SOURCE__) == RCC_I2C5CLKSOURCE_MSIK))
 #endif /* I2C5 */
 
 #if defined(I2C6)
-#define IS_RCC_I2C6CLKSOURCE(__SOURCE__)                                                                               \
-	(((__SOURCE__) == RCC_I2C6CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_I2C6CLKSOURCE_SYSCLK) ||                    \
-	 ((__SOURCE__) == RCC_I2C6CLKSOURCE_HSI) || ((__SOURCE__) == RCC_I2C6CLKSOURCE_MSIK))
+#define IS_RCC_I2C6CLKSOURCE(__SOURCE__)                                                                                                                                                               \
+	(((__SOURCE__) == RCC_I2C6CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_I2C6CLKSOURCE_SYSCLK) || ((__SOURCE__) == RCC_I2C6CLKSOURCE_HSI) || ((__SOURCE__) == RCC_I2C6CLKSOURCE_MSIK))
 #endif /* I2C6 */
 
-#define IS_RCC_SAI1CLK(__SOURCE__)                                                                                     \
-	(((__SOURCE__) == RCC_SAI1CLKSOURCE_PLL2) || ((__SOURCE__) == RCC_SAI1CLKSOURCE_PLL3) ||                       \
-	 ((__SOURCE__) == RCC_SAI1CLKSOURCE_PLL1) || ((__SOURCE__) == RCC_SAI1CLKSOURCE_PIN) ||                        \
+#define IS_RCC_SAI1CLK(__SOURCE__)                                                                                                                                                                     \
+	(((__SOURCE__) == RCC_SAI1CLKSOURCE_PLL2) || ((__SOURCE__) == RCC_SAI1CLKSOURCE_PLL3) || ((__SOURCE__) == RCC_SAI1CLKSOURCE_PLL1) || ((__SOURCE__) == RCC_SAI1CLKSOURCE_PIN) ||                \
 	 ((__SOURCE__) == RCC_SAI1CLKSOURCE_HSI))
 
 #if defined(SAI2)
-#define IS_RCC_SAI2CLK(__SOURCE__)                                                                                     \
-	(((__SOURCE__) == RCC_SAI2CLKSOURCE_PLL2) || ((__SOURCE__) == RCC_SAI2CLKSOURCE_PLL3) ||                       \
-	 ((__SOURCE__) == RCC_SAI2CLKSOURCE_PLL1) || ((__SOURCE__) == RCC_SAI2CLKSOURCE_PIN) ||                        \
+#define IS_RCC_SAI2CLK(__SOURCE__)                                                                                                                                                                     \
+	(((__SOURCE__) == RCC_SAI2CLKSOURCE_PLL2) || ((__SOURCE__) == RCC_SAI2CLKSOURCE_PLL3) || ((__SOURCE__) == RCC_SAI2CLKSOURCE_PLL1) || ((__SOURCE__) == RCC_SAI2CLKSOURCE_PIN) ||                \
 	 ((__SOURCE__) == RCC_SAI2CLKSOURCE_HSI))
 #endif /* SAI2 */
 
-#define IS_RCC_LPTIM1CLK(__SOURCE__)                                                                                   \
-	(((__SOURCE__) == RCC_LPTIM1CLKSOURCE_MSIK) || ((__SOURCE__) == RCC_LPTIM1CLKSOURCE_LSI) ||                    \
-	 ((__SOURCE__) == RCC_LPTIM1CLKSOURCE_HSI) || ((__SOURCE__) == RCC_LPTIM1CLKSOURCE_LSE))
+#define IS_RCC_LPTIM1CLK(__SOURCE__)                                                                                                                                                                   \
+	(((__SOURCE__) == RCC_LPTIM1CLKSOURCE_MSIK) || ((__SOURCE__) == RCC_LPTIM1CLKSOURCE_LSI) || ((__SOURCE__) == RCC_LPTIM1CLKSOURCE_HSI) || ((__SOURCE__) == RCC_LPTIM1CLKSOURCE_LSE))
 
-#define IS_RCC_LPTIM2CLK(__SOURCE__)                                                                                   \
-	(((__SOURCE__) == RCC_LPTIM2CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_LPTIM2CLKSOURCE_LSI) ||                   \
-	 ((__SOURCE__) == RCC_LPTIM2CLKSOURCE_HSI) || ((__SOURCE__) == RCC_LPTIM2CLKSOURCE_LSE))
+#define IS_RCC_LPTIM2CLK(__SOURCE__)                                                                                                                                                                   \
+	(((__SOURCE__) == RCC_LPTIM2CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_LPTIM2CLKSOURCE_LSI) || ((__SOURCE__) == RCC_LPTIM2CLKSOURCE_HSI) || ((__SOURCE__) == RCC_LPTIM2CLKSOURCE_LSE))
 
-#define IS_RCC_LPTIM34CLK(__SOURCE__)                                                                                  \
-	(((__SOURCE__) == RCC_LPTIM34CLKSOURCE_MSIK) || ((__SOURCE__) == RCC_LPTIM34CLKSOURCE_LSI) ||                  \
-	 ((__SOURCE__) == RCC_LPTIM34CLKSOURCE_HSI) || ((__SOURCE__) == RCC_LPTIM34CLKSOURCE_LSE))
+#define IS_RCC_LPTIM34CLK(__SOURCE__)                                                                                                                                                                  \
+	(((__SOURCE__) == RCC_LPTIM34CLKSOURCE_MSIK) || ((__SOURCE__) == RCC_LPTIM34CLKSOURCE_LSI) || ((__SOURCE__) == RCC_LPTIM34CLKSOURCE_HSI) || ((__SOURCE__) == RCC_LPTIM34CLKSOURCE_LSE))
 
-#define IS_RCC_FDCAN1CLK(__SOURCE__)                                                                                   \
-	(((__SOURCE__) == RCC_FDCAN1CLKSOURCE_HSE) || ((__SOURCE__) == RCC_FDCAN1CLKSOURCE_PLL1) ||                    \
-	 ((__SOURCE__) == RCC_FDCAN1CLKSOURCE_PLL2))
+#define IS_RCC_FDCAN1CLK(__SOURCE__) (((__SOURCE__) == RCC_FDCAN1CLKSOURCE_HSE) || ((__SOURCE__) == RCC_FDCAN1CLKSOURCE_PLL1) || ((__SOURCE__) == RCC_FDCAN1CLKSOURCE_PLL2))
 
-#define IS_RCC_SDMMCCLKSOURCE(__SOURCE__)                                                                              \
-	(((__SOURCE__) == RCC_SDMMCCLKSOURCE_CLK48) || ((__SOURCE__) == RCC_SDMMCCLKSOURCE_PLL1))
+#define IS_RCC_SDMMCCLKSOURCE(__SOURCE__) (((__SOURCE__) == RCC_SDMMCCLKSOURCE_CLK48) || ((__SOURCE__) == RCC_SDMMCCLKSOURCE_PLL1))
 
-#define IS_RCC_RNGCLKSOURCE(__SOURCE__)                                                                                \
-	(((__SOURCE__) == RCC_RNGCLKSOURCE_HSI48) || ((__SOURCE__) == RCC_RNGCLKSOURCE_HSI48_DIV2) ||                  \
-	 ((__SOURCE__) == RCC_RNGCLKSOURCE_HSI))
+#define IS_RCC_RNGCLKSOURCE(__SOURCE__) (((__SOURCE__) == RCC_RNGCLKSOURCE_HSI48) || ((__SOURCE__) == RCC_RNGCLKSOURCE_HSI48_DIV2) || ((__SOURCE__) == RCC_RNGCLKSOURCE_HSI))
 
 #if defined(SAES)
-#define IS_RCC_SAESCLKSOURCE(__SOURCE__)                                                                               \
-	(((__SOURCE__) == RCC_SAESCLKSOURCE_SHSI) || ((__SOURCE__) == RCC_SAESCLKSOURCE_SHSI_DIV2))
+#define IS_RCC_SAESCLKSOURCE(__SOURCE__) (((__SOURCE__) == RCC_SAESCLKSOURCE_SHSI) || ((__SOURCE__) == RCC_SAESCLKSOURCE_SHSI_DIV2))
 #endif /* SAES */
 
-#define IS_RCC_ADCDACCLKSOURCE(__SOURCE__)                                                                             \
-	(((__SOURCE__) == RCC_ADCDACCLKSOURCE_HCLK) || ((__SOURCE__) == RCC_ADCDACCLKSOURCE_SYSCLK) ||                 \
-	 ((__SOURCE__) == RCC_ADCDACCLKSOURCE_PLL2) || ((__SOURCE__) == RCC_ADCDACCLKSOURCE_HSE) ||                    \
+#define IS_RCC_ADCDACCLKSOURCE(__SOURCE__)                                                                                                                                                             \
+	(((__SOURCE__) == RCC_ADCDACCLKSOURCE_HCLK) || ((__SOURCE__) == RCC_ADCDACCLKSOURCE_SYSCLK) || ((__SOURCE__) == RCC_ADCDACCLKSOURCE_PLL2) || ((__SOURCE__) == RCC_ADCDACCLKSOURCE_HSE) ||      \
 	 ((__SOURCE__) == RCC_ADCDACCLKSOURCE_HSI) || ((__SOURCE__) == RCC_ADCDACCLKSOURCE_MSIK))
 
-#define IS_RCC_MDF1CLKSOURCE(__SOURCE__)                                                                               \
-	(((__SOURCE__) == RCC_MDF1CLKSOURCE_HCLK) || ((__SOURCE__) == RCC_MDF1CLKSOURCE_PLL1) ||                       \
-	 ((__SOURCE__) == RCC_MDF1CLKSOURCE_PLL3) || ((__SOURCE__) == RCC_MDF1CLKSOURCE_PIN) ||                        \
+#define IS_RCC_MDF1CLKSOURCE(__SOURCE__)                                                                                                                                                               \
+	(((__SOURCE__) == RCC_MDF1CLKSOURCE_HCLK) || ((__SOURCE__) == RCC_MDF1CLKSOURCE_PLL1) || ((__SOURCE__) == RCC_MDF1CLKSOURCE_PLL3) || ((__SOURCE__) == RCC_MDF1CLKSOURCE_PIN) ||                \
 	 ((__SOURCE__) == RCC_MDF1CLKSOURCE_MSIK))
 
-#define IS_RCC_ADF1CLKSOURCE(__SOURCE__)                                                                               \
-	(((__SOURCE__) == RCC_ADF1CLKSOURCE_HCLK) || ((__SOURCE__) == RCC_ADF1CLKSOURCE_PLL1) ||                       \
-	 ((__SOURCE__) == RCC_ADF1CLKSOURCE_PLL3) || ((__SOURCE__) == RCC_ADF1CLKSOURCE_PIN) ||                        \
+#define IS_RCC_ADF1CLKSOURCE(__SOURCE__)                                                                                                                                                               \
+	(((__SOURCE__) == RCC_ADF1CLKSOURCE_HCLK) || ((__SOURCE__) == RCC_ADF1CLKSOURCE_PLL1) || ((__SOURCE__) == RCC_ADF1CLKSOURCE_PLL3) || ((__SOURCE__) == RCC_ADF1CLKSOURCE_PIN) ||                \
 	 ((__SOURCE__) == RCC_ADF1CLKSOURCE_MSIK))
 
-#define IS_RCC_OSPICLKSOURCE(__SOURCE__)                                                                               \
-	(((__SOURCE__) == RCC_OSPICLKSOURCE_SYSCLK) || ((__SOURCE__) == RCC_OSPICLKSOURCE_MSIK) ||                     \
-	 ((__SOURCE__) == RCC_OSPICLKSOURCE_PLL1) || ((__SOURCE__) == RCC_OSPICLKSOURCE_PLL2))
+#define IS_RCC_OSPICLKSOURCE(__SOURCE__)                                                                                                                                                               \
+	(((__SOURCE__) == RCC_OSPICLKSOURCE_SYSCLK) || ((__SOURCE__) == RCC_OSPICLKSOURCE_MSIK) || ((__SOURCE__) == RCC_OSPICLKSOURCE_PLL1) || ((__SOURCE__) == RCC_OSPICLKSOURCE_PLL2))
 
 #if defined(HSPI1)
-#define IS_RCC_HSPICLKSOURCE(__SOURCE__)                                                                               \
-	(((__SOURCE__) == RCC_HSPICLKSOURCE_SYSCLK) || ((__SOURCE__) == RCC_HSPICLKSOURCE_PLL1) ||                     \
-	 ((__SOURCE__) == RCC_HSPICLKSOURCE_PLL2) || ((__SOURCE__) == RCC_HSPICLKSOURCE_PLL3))
+#define IS_RCC_HSPICLKSOURCE(__SOURCE__)                                                                                                                                                               \
+	(((__SOURCE__) == RCC_HSPICLKSOURCE_SYSCLK) || ((__SOURCE__) == RCC_HSPICLKSOURCE_PLL1) || ((__SOURCE__) == RCC_HSPICLKSOURCE_PLL2) || ((__SOURCE__) == RCC_HSPICLKSOURCE_PLL3))
 #endif /* HSPI1 */
 
-#define IS_RCC_ICLKCLKSOURCE(__SOURCE__)                                                                               \
-	(((__SOURCE__) == RCC_ICLK_CLKSOURCE_HSI48) || ((__SOURCE__) == RCC_ICLK_CLKSOURCE_PLL2) ||                    \
-	 ((__SOURCE__) == RCC_ICLK_CLKSOURCE_PLL1) || ((__SOURCE__) == RCC_ICLK_CLKSOURCE_MSIK))
+#define IS_RCC_ICLKCLKSOURCE(__SOURCE__)                                                                                                                                                               \
+	(((__SOURCE__) == RCC_ICLK_CLKSOURCE_HSI48) || ((__SOURCE__) == RCC_ICLK_CLKSOURCE_PLL2) || ((__SOURCE__) == RCC_ICLK_CLKSOURCE_PLL1) || ((__SOURCE__) == RCC_ICLK_CLKSOURCE_MSIK))
 
-#define IS_RCC_SPI1CLKSOURCE(__SOURCE__)                                                                               \
-	(((__SOURCE__) == RCC_SPI1CLKSOURCE_PCLK2) || ((__SOURCE__) == RCC_SPI1CLKSOURCE_SYSCLK) ||                    \
-	 ((__SOURCE__) == RCC_SPI1CLKSOURCE_HSI) || ((__SOURCE__) == RCC_SPI1CLKSOURCE_MSIK))
+#define IS_RCC_SPI1CLKSOURCE(__SOURCE__)                                                                                                                                                               \
+	(((__SOURCE__) == RCC_SPI1CLKSOURCE_PCLK2) || ((__SOURCE__) == RCC_SPI1CLKSOURCE_SYSCLK) || ((__SOURCE__) == RCC_SPI1CLKSOURCE_HSI) || ((__SOURCE__) == RCC_SPI1CLKSOURCE_MSIK))
 
-#define IS_RCC_SPI2CLKSOURCE(__SOURCE__)                                                                               \
-	(((__SOURCE__) == RCC_SPI2CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_SPI2CLKSOURCE_SYSCLK) ||                    \
-	 ((__SOURCE__) == RCC_SPI2CLKSOURCE_HSI) || ((__SOURCE__) == RCC_SPI2CLKSOURCE_MSIK))
+#define IS_RCC_SPI2CLKSOURCE(__SOURCE__)                                                                                                                                                               \
+	(((__SOURCE__) == RCC_SPI2CLKSOURCE_PCLK1) || ((__SOURCE__) == RCC_SPI2CLKSOURCE_SYSCLK) || ((__SOURCE__) == RCC_SPI2CLKSOURCE_HSI) || ((__SOURCE__) == RCC_SPI2CLKSOURCE_MSIK))
 
-#define IS_RCC_SPI3CLKSOURCE(__SOURCE__)                                                                               \
-	(((__SOURCE__) == RCC_SPI3CLKSOURCE_PCLK3) || ((__SOURCE__) == RCC_SPI3CLKSOURCE_SYSCLK) ||                    \
-	 ((__SOURCE__) == RCC_SPI3CLKSOURCE_HSI) || ((__SOURCE__) == RCC_SPI3CLKSOURCE_MSIK))
+#define IS_RCC_SPI3CLKSOURCE(__SOURCE__)                                                                                                                                                               \
+	(((__SOURCE__) == RCC_SPI3CLKSOURCE_PCLK3) || ((__SOURCE__) == RCC_SPI3CLKSOURCE_SYSCLK) || ((__SOURCE__) == RCC_SPI3CLKSOURCE_HSI) || ((__SOURCE__) == RCC_SPI3CLKSOURCE_MSIK))
 
-#define IS_RCC_DAC1CLKSOURCE(__SOURCE__)                                                                               \
-	(((__SOURCE__) == RCC_DAC1CLKSOURCE_LSE) || ((__SOURCE__) == RCC_DAC1CLKSOURCE_LSI))
+#define IS_RCC_DAC1CLKSOURCE(__SOURCE__) (((__SOURCE__) == RCC_DAC1CLKSOURCE_LSE) || ((__SOURCE__) == RCC_DAC1CLKSOURCE_LSI))
 
-#define IS_RCC_RTCCLKSOURCE(__SOURCE__)                                                                                \
-	(((__SOURCE__) == RCC_RTCCLKSOURCE_NO_CLK) || ((__SOURCE__) == RCC_RTCCLKSOURCE_LSE) ||                        \
-	 ((__SOURCE__) == RCC_RTCCLKSOURCE_LSI) || ((__SOURCE__) == RCC_RTCCLKSOURCE_HSE_DIV32))
+#define IS_RCC_RTCCLKSOURCE(__SOURCE__)                                                                                                                                                                \
+	(((__SOURCE__) == RCC_RTCCLKSOURCE_NO_CLK) || ((__SOURCE__) == RCC_RTCCLKSOURCE_LSE) || ((__SOURCE__) == RCC_RTCCLKSOURCE_LSI) || ((__SOURCE__) == RCC_RTCCLKSOURCE_HSE_DIV32))
 
 #if defined(LTDC)
 
-#define IS_RCC_LTDCCLKSOURCE(__SOURCE__)                                                                               \
-	(((__SOURCE__) == RCC_LTDCCLKSOURCE_PLL3) || ((__SOURCE__) == RCC_LTDCCLKSOURCE_PLL2))
+#define IS_RCC_LTDCCLKSOURCE(__SOURCE__) (((__SOURCE__) == RCC_LTDCCLKSOURCE_PLL3) || ((__SOURCE__) == RCC_LTDCCLKSOURCE_PLL2))
 
 #endif /* LTDC */
 
 #if defined(DSI)
 
-#define IS_RCC_DSICLKSOURCE(__SOURCE__)                                                                                \
-	(((__SOURCE__) == RCC_DSICLKSOURCE_PLL3) || ((__SOURCE__) == RCC_DSICLKSOURCE_DSIPHY))
+#define IS_RCC_DSICLKSOURCE(__SOURCE__) (((__SOURCE__) == RCC_DSICLKSOURCE_PLL3) || ((__SOURCE__) == RCC_DSICLKSOURCE_DSIPHY))
 
 #endif /* DSI */
 
 #if defined(USB_OTG_HS)
 
-#define IS_RCC_USBPHYCLKSOURCE(__SOURCE__)                                                                             \
-	(((__SOURCE__) == RCC_USBPHYCLKSOURCE_HSE) || ((__SOURCE__) == RCC_USBPHYCLKSOURCE_HSE_DIV2) ||                \
-	 ((__SOURCE__) == RCC_USBPHYCLKSOURCE_PLL1) || ((__SOURCE__) == RCC_USBPHYCLKSOURCE_PLL1_DIV2))
+#define IS_RCC_USBPHYCLKSOURCE(__SOURCE__)                                                                                                                                                             \
+	(((__SOURCE__) == RCC_USBPHYCLKSOURCE_HSE) || ((__SOURCE__) == RCC_USBPHYCLKSOURCE_HSE_DIV2) || ((__SOURCE__) == RCC_USBPHYCLKSOURCE_PLL1) || ((__SOURCE__) == RCC_USBPHYCLKSOURCE_PLL1_DIV2))
 
 #endif /* USB_OTG_HS */
 
 #if defined(CRS)
 
-#define IS_RCC_CRS_SYNC_SOURCE(__SOURCE__)                                                                             \
-	(((__SOURCE__) == RCC_CRS_SYNC_SOURCE_GPIO) || ((__SOURCE__) == RCC_CRS_SYNC_SOURCE_LSE) ||                    \
-	 ((__SOURCE__) == RCC_CRS_SYNC_SOURCE_USB))
+#define IS_RCC_CRS_SYNC_SOURCE(__SOURCE__) (((__SOURCE__) == RCC_CRS_SYNC_SOURCE_GPIO) || ((__SOURCE__) == RCC_CRS_SYNC_SOURCE_LSE) || ((__SOURCE__) == RCC_CRS_SYNC_SOURCE_USB))
 
-#define IS_RCC_CRS_SYNC_DIV(__DIV__)                                                                                   \
-	(((__DIV__) == RCC_CRS_SYNC_DIV1) || ((__DIV__) == RCC_CRS_SYNC_DIV2) || ((__DIV__) == RCC_CRS_SYNC_DIV4) ||   \
-	 ((__DIV__) == RCC_CRS_SYNC_DIV8) || ((__DIV__) == RCC_CRS_SYNC_DIV16) || ((__DIV__) == RCC_CRS_SYNC_DIV32) || \
-	 ((__DIV__) == RCC_CRS_SYNC_DIV64) || ((__DIV__) == RCC_CRS_SYNC_DIV128))
+#define IS_RCC_CRS_SYNC_DIV(__DIV__)                                                                                                                                                                   \
+	(((__DIV__) == RCC_CRS_SYNC_DIV1) || ((__DIV__) == RCC_CRS_SYNC_DIV2) || ((__DIV__) == RCC_CRS_SYNC_DIV4) || ((__DIV__) == RCC_CRS_SYNC_DIV8) || ((__DIV__) == RCC_CRS_SYNC_DIV16) ||          \
+	 ((__DIV__) == RCC_CRS_SYNC_DIV32) || ((__DIV__) == RCC_CRS_SYNC_DIV64) || ((__DIV__) == RCC_CRS_SYNC_DIV128))
 
-#define IS_RCC_CRS_SYNC_POLARITY(__POLARITY__)                                                                         \
-	(((__POLARITY__) == RCC_CRS_SYNC_POLARITY_RISING) || ((__POLARITY__) == RCC_CRS_SYNC_POLARITY_FALLING))
+#define IS_RCC_CRS_SYNC_POLARITY(__POLARITY__) (((__POLARITY__) == RCC_CRS_SYNC_POLARITY_RISING) || ((__POLARITY__) == RCC_CRS_SYNC_POLARITY_FALLING))
 
 #define IS_RCC_CRS_RELOADVALUE(__VALUE__) (((__VALUE__) <= 0xFFFFU))
 
@@ -275,8 +231,7 @@
 
 #define IS_RCC_CRS_HSI48CALIBRATION(__VALUE__) (((__VALUE__) <= 0x7FU))
 
-#define IS_RCC_CRS_FREQERRORDIR(__DIR__)                                                                               \
-	(((__DIR__) == RCC_CRS_FREQERRORDIR_UP) || ((__DIR__) == RCC_CRS_FREQERRORDIR_DOWN))
+#define IS_RCC_CRS_FREQERRORDIR(__DIR__) (((__DIR__) == RCC_CRS_FREQERRORDIR_UP) || ((__DIR__) == RCC_CRS_FREQERRORDIR_DOWN))
 
 #endif /* CRS */
 
@@ -801,8 +756,7 @@ HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(const RCC_PeriphCLKInitTypeDef *pPer
 			 * selection is modified from default */
 			tmpregister = READ_BIT(RCC->BDCR, RCC_BDCR_RTCSEL);
 
-			if ((tmpregister != RCC_RTCCLKSOURCE_NO_CLK) &&
-			    (tmpregister != pPeriphClkInit->RTCClockSelection)) {
+			if ((tmpregister != RCC_RTCCLKSOURCE_NO_CLK) && (tmpregister != pPeriphClkInit->RTCClockSelection)) {
 				/* Store the content of BDCR register before the
 				 * reset of Backup Domain */
 				tmpregister = READ_BIT(RCC->BDCR, ~(RCC_BDCR_RTCSEL));
@@ -1262,43 +1216,31 @@ void HAL_RCCEx_GetPeriphCLKConfig(RCC_PeriphCLKInitTypeDef *pPeriphClkInit)
 	/* Set all possible values for the extended clock type
 	 * parameter------------*/
 #if (defined(STM32U599xx) || defined(STM32U5A9xx) || defined(STM32U5F9xx) || defined(STM32U5G9xx))
-	pPeriphClkInit->PeriphClockSelection =
-	    RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 |
-	    RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_USART6 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 |
-	    RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_I2C5 | RCC_PERIPHCLK_I2C6 | RCC_PERIPHCLK_LPTIM1 |
-	    RCC_PERIPHCLK_LPTIM34 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SAI2 |
-	    RCC_PERIPHCLK_ADCDAC | RCC_PERIPHCLK_MDF1 | RCC_PERIPHCLK_ADF1 | RCC_PERIPHCLK_RTC | RCC_PERIPHCLK_ICLK |
-	    RCC_PERIPHCLK_SDMMC | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_SPI1 | RCC_PERIPHCLK_SPI2 |
-	    RCC_PERIPHCLK_SPI3 | RCC_PERIPHCLK_OSPI | RCC_PERIPHCLK_FDCAN1 | RCC_PERIPHCLK_DAC1 | RCC_PERIPHCLK_HSPI |
-	    RCC_PERIPHCLK_LTDC | RCC_PERIPHCLK_DSI | RCC_PERIPHCLK_USBPHY;
+	pPeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 | RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_USART6 |
+					       RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_I2C5 | RCC_PERIPHCLK_I2C6 | RCC_PERIPHCLK_LPTIM1 |
+					       RCC_PERIPHCLK_LPTIM34 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SAI2 | RCC_PERIPHCLK_ADCDAC | RCC_PERIPHCLK_MDF1 | RCC_PERIPHCLK_ADF1 |
+					       RCC_PERIPHCLK_RTC | RCC_PERIPHCLK_ICLK | RCC_PERIPHCLK_SDMMC | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_SPI1 | RCC_PERIPHCLK_SPI2 |
+					       RCC_PERIPHCLK_SPI3 | RCC_PERIPHCLK_OSPI | RCC_PERIPHCLK_FDCAN1 | RCC_PERIPHCLK_DAC1 | RCC_PERIPHCLK_HSPI | RCC_PERIPHCLK_LTDC | RCC_PERIPHCLK_DSI |
+					       RCC_PERIPHCLK_USBPHY;
 #elif (defined(STM32U595xx) || defined(STM32U5A5xx))
-	pPeriphClkInit->PeriphClockSelection =
-	    RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 |
-	    RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_USART6 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 |
-	    RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_I2C5 | RCC_PERIPHCLK_I2C6 | RCC_PERIPHCLK_LPTIM1 |
-	    RCC_PERIPHCLK_LPTIM34 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SAI2 |
-	    RCC_PERIPHCLK_ADCDAC | RCC_PERIPHCLK_MDF1 | RCC_PERIPHCLK_ADF1 | RCC_PERIPHCLK_RTC | RCC_PERIPHCLK_ICLK |
-	    RCC_PERIPHCLK_SDMMC | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_SPI1 | RCC_PERIPHCLK_SPI2 |
-	    RCC_PERIPHCLK_SPI3 | RCC_PERIPHCLK_OSPI | RCC_PERIPHCLK_FDCAN1 | RCC_PERIPHCLK_DAC1 | RCC_PERIPHCLK_HSPI |
-	    RCC_PERIPHCLK_USBPHY;
+	pPeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 | RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_USART6 |
+					       RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_I2C5 | RCC_PERIPHCLK_I2C6 | RCC_PERIPHCLK_LPTIM1 |
+					       RCC_PERIPHCLK_LPTIM34 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SAI2 | RCC_PERIPHCLK_ADCDAC | RCC_PERIPHCLK_MDF1 | RCC_PERIPHCLK_ADF1 |
+					       RCC_PERIPHCLK_RTC | RCC_PERIPHCLK_ICLK | RCC_PERIPHCLK_SDMMC | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_SPI1 | RCC_PERIPHCLK_SPI2 |
+					       RCC_PERIPHCLK_SPI3 | RCC_PERIPHCLK_OSPI | RCC_PERIPHCLK_FDCAN1 | RCC_PERIPHCLK_DAC1 | RCC_PERIPHCLK_HSPI | RCC_PERIPHCLK_USBPHY;
 #elif (defined(STM32U585xx) || defined(STM32U575xx))
-	pPeriphClkInit->PeriphClockSelection =
-	    RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 |
-	    RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 |
-	    RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM34 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 |
-	    RCC_PERIPHCLK_SAI2 | RCC_PERIPHCLK_ADCDAC | RCC_PERIPHCLK_MDF1 | RCC_PERIPHCLK_ADF1 | RCC_PERIPHCLK_RTC |
-	    RCC_PERIPHCLK_ICLK | RCC_PERIPHCLK_SDMMC | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_SPI1 |
-	    RCC_PERIPHCLK_SPI2 | RCC_PERIPHCLK_SPI3 | RCC_PERIPHCLK_OSPI | RCC_PERIPHCLK_FDCAN1 | RCC_PERIPHCLK_DAC1;
+	pPeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 | RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPUART1 |
+					       RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM34 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 |
+					       RCC_PERIPHCLK_SAI2 | RCC_PERIPHCLK_ADCDAC | RCC_PERIPHCLK_MDF1 | RCC_PERIPHCLK_ADF1 | RCC_PERIPHCLK_RTC | RCC_PERIPHCLK_ICLK | RCC_PERIPHCLK_SDMMC |
+					       RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_SPI1 | RCC_PERIPHCLK_SPI2 | RCC_PERIPHCLK_SPI3 | RCC_PERIPHCLK_OSPI | RCC_PERIPHCLK_FDCAN1 |
+					       RCC_PERIPHCLK_DAC1;
 
 #else
-	pPeriphClkInit->PeriphClockSelection =
-	    RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 | RCC_PERIPHCLK_UART5 |
-	    RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 |
-	    RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM34 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 |
-	    RCC_PERIPHCLK_ADCDAC | RCC_PERIPHCLK_MDF1 | RCC_PERIPHCLK_ADF1 | RCC_PERIPHCLK_RTC | RCC_PERIPHCLK_ICLK |
-	    RCC_PERIPHCLK_SDMMC | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_SPI1 | RCC_PERIPHCLK_SPI2 |
-	    RCC_PERIPHCLK_SPI3 | RCC_PERIPHCLK_OSPI | RCC_PERIPHCLK_FDCAN1 | RCC_PERIPHCLK_DAC1;
-#endif /* (defined(STM32U599xx) || defined(STM32U5A9xx) || defined                                                     \
+	pPeriphClkInit->PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_UART4 | RCC_PERIPHCLK_UART5 | RCC_PERIPHCLK_LPUART1 | RCC_PERIPHCLK_I2C1 |
+					       RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_LPTIM1 | RCC_PERIPHCLK_LPTIM34 | RCC_PERIPHCLK_LPTIM2 | RCC_PERIPHCLK_SAI1 |
+					       RCC_PERIPHCLK_ADCDAC | RCC_PERIPHCLK_MDF1 | RCC_PERIPHCLK_ADF1 | RCC_PERIPHCLK_RTC | RCC_PERIPHCLK_ICLK | RCC_PERIPHCLK_SDMMC | RCC_PERIPHCLK_RNG |
+					       RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_SPI1 | RCC_PERIPHCLK_SPI2 | RCC_PERIPHCLK_SPI3 | RCC_PERIPHCLK_OSPI | RCC_PERIPHCLK_FDCAN1 | RCC_PERIPHCLK_DAC1;
+#endif /* (defined(STM32U599xx) || defined(STM32U5A9xx) || defined                                                                                                                                     \
 	  (STM32U5F9xx) || defined (STM32U5G9xx)) */
 
 #if defined(SAES)
@@ -1307,29 +1249,25 @@ void HAL_RCCEx_GetPeriphCLKConfig(RCC_PeriphCLKInitTypeDef *pPeriphClkInit)
 
 	/* Get the PLL2 Clock configuration
 	 * -----------------------------------------------*/
-	pPeriphClkInit->PLL2.PLL2Source =
-	    (uint32_t)((RCC->PLL2CFGR & RCC_PLL2CFGR_PLL2SRC) >> RCC_PLL2CFGR_PLL2SRC_Pos);
+	pPeriphClkInit->PLL2.PLL2Source = (uint32_t)((RCC->PLL2CFGR & RCC_PLL2CFGR_PLL2SRC) >> RCC_PLL2CFGR_PLL2SRC_Pos);
 	pPeriphClkInit->PLL2.PLL2M = (uint32_t)((RCC->PLL2CFGR & RCC_PLL2CFGR_PLL2M) >> RCC_PLL2CFGR_PLL2M_Pos) + 1U;
 	pPeriphClkInit->PLL2.PLL2N = (uint32_t)((RCC->PLL2DIVR & RCC_PLL2DIVR_PLL2N) >> RCC_PLL2DIVR_PLL2N_Pos) + 1U;
 	pPeriphClkInit->PLL2.PLL2P = (uint32_t)((RCC->PLL2DIVR & RCC_PLL2DIVR_PLL2P) >> RCC_PLL2DIVR_PLL2P_Pos) + 1U;
 	pPeriphClkInit->PLL2.PLL2Q = (uint32_t)((RCC->PLL2DIVR & RCC_PLL2DIVR_PLL2Q) >> RCC_PLL2DIVR_PLL2Q_Pos) + 1U;
 	pPeriphClkInit->PLL2.PLL2R = (uint32_t)((RCC->PLL2DIVR & RCC_PLL2DIVR_PLL2R) >> RCC_PLL2DIVR_PLL2R_Pos) + 1U;
 	pPeriphClkInit->PLL2.PLL2RGE = (uint32_t)((RCC->PLL2CFGR & RCC_PLL2CFGR_PLL2RGE) >> RCC_PLL2CFGR_PLL2RGE_Pos);
-	pPeriphClkInit->PLL2.PLL2FRACN =
-	    (uint32_t)((RCC->PLL2FRACR & RCC_PLL2FRACR_PLL2FRACN) >> RCC_PLL2FRACR_PLL2FRACN_Pos);
+	pPeriphClkInit->PLL2.PLL2FRACN = (uint32_t)((RCC->PLL2FRACR & RCC_PLL2FRACR_PLL2FRACN) >> RCC_PLL2FRACR_PLL2FRACN_Pos);
 
 	/* Get the PLL3 Clock configuration
 	 * -----------------------------------------------*/
-	pPeriphClkInit->PLL3.PLL3Source =
-	    (uint32_t)((RCC->PLL3CFGR & RCC_PLL3CFGR_PLL3SRC) >> RCC_PLL3CFGR_PLL3SRC_Pos);
+	pPeriphClkInit->PLL3.PLL3Source = (uint32_t)((RCC->PLL3CFGR & RCC_PLL3CFGR_PLL3SRC) >> RCC_PLL3CFGR_PLL3SRC_Pos);
 	pPeriphClkInit->PLL3.PLL3M = (uint32_t)((RCC->PLL3CFGR & RCC_PLL3CFGR_PLL3M) >> RCC_PLL3CFGR_PLL3M_Pos) + 1U;
 	pPeriphClkInit->PLL3.PLL3N = (uint32_t)((RCC->PLL3DIVR & RCC_PLL3DIVR_PLL3N) >> RCC_PLL3DIVR_PLL3N_Pos) + 1U;
 	pPeriphClkInit->PLL3.PLL3P = (uint32_t)((RCC->PLL3DIVR & RCC_PLL3DIVR_PLL3P) >> RCC_PLL3DIVR_PLL3P_Pos) + 1U;
 	pPeriphClkInit->PLL3.PLL3Q = (uint32_t)((RCC->PLL3DIVR & RCC_PLL3DIVR_PLL3Q) >> RCC_PLL3DIVR_PLL3Q_Pos) + 1U;
 	pPeriphClkInit->PLL3.PLL3R = (uint32_t)((RCC->PLL3DIVR & RCC_PLL3DIVR_PLL3R) >> RCC_PLL3DIVR_PLL3R_Pos) + 1U;
 	pPeriphClkInit->PLL3.PLL3RGE = (uint32_t)((RCC->PLL3CFGR & RCC_PLL3CFGR_PLL3RGE) >> RCC_PLL3CFGR_PLL3RGE_Pos);
-	pPeriphClkInit->PLL3.PLL3FRACN =
-	    (uint32_t)((RCC->PLL3FRACR & RCC_PLL3FRACR_PLL3FRACN) >> RCC_PLL3FRACR_PLL3FRACN_Pos);
+	pPeriphClkInit->PLL3.PLL3FRACN = (uint32_t)((RCC->PLL3FRACR & RCC_PLL3FRACR_PLL3FRACN) >> RCC_PLL3FRACR_PLL3FRACN_Pos);
 
 	/* Get the USART1 clock source
 	 * ---------------------------------------------*/
@@ -1525,56 +1463,38 @@ void HAL_RCCEx_GetPLL1ClockFreq(PLL1_ClocksTypeDef *PLL1_Clocks)
 	pll1source = (RCC->PLL1CFGR & RCC_PLL1CFGR_PLL1SRC);
 	pll1m = ((RCC->PLL1CFGR & RCC_PLL1CFGR_PLL1M) >> RCC_PLL1CFGR_PLL1M_Pos) + 1U;
 	pll1fracen = ((RCC->PLL1CFGR & RCC_PLL1CFGR_PLL1FRACEN) >> RCC_PLL1CFGR_PLL1FRACEN_Pos);
-	fracn1 = (float_t)(uint32_t)(pll1fracen *
-				     ((RCC->PLL1FRACR & RCC_PLL1FRACR_PLL1FRACN) >> RCC_PLL1FRACR_PLL1FRACN_Pos));
+	fracn1 = (float_t)(uint32_t)(pll1fracen * ((RCC->PLL1FRACR & RCC_PLL1FRACR_PLL1FRACN) >> RCC_PLL1FRACR_PLL1FRACN_Pos));
 
 	switch (pll1source) {
 
 		case RCC_PLLSOURCE_HSI: /* HSI used as PLL clock source */
-			pll1vco = ((float_t)HSI_VALUE / (float_t)pll1m) *
-				  ((float_t)(uint32_t)(RCC->PLL1DIVR & RCC_PLL1DIVR_PLL1N) +
-				   (fracn1 / (float_t)0x2000) + (float_t)1);
+			pll1vco = ((float_t)HSI_VALUE / (float_t)pll1m) * ((float_t)(uint32_t)(RCC->PLL1DIVR & RCC_PLL1DIVR_PLL1N) + (fracn1 / (float_t)0x2000) + (float_t)1);
 			break;
 		case RCC_PLLSOURCE_MSI: /* MSI used as PLL clock source */
-			pll1vco = ((float_t)MSIRangeTable[(__HAL_RCC_GET_MSI_RANGE() >> RCC_ICSCR1_MSISRANGE_Pos)] /
-				   (float_t)pll1m) *
-				  ((float_t)pll1n + (fracn1 / (float_t)0x2000) + (float_t)1);
+			pll1vco = ((float_t)MSIRangeTable[(__HAL_RCC_GET_MSI_RANGE() >> RCC_ICSCR1_MSISRANGE_Pos)] / (float_t)pll1m) * ((float_t)pll1n + (fracn1 / (float_t)0x2000) + (float_t)1);
 			break;
 		case RCC_PLLSOURCE_HSE: /* HSE used as PLL clock source */
-			pll1vco = ((float_t)HSE_VALUE / (float_t)pll1m) *
-				  ((float_t)(uint32_t)(RCC->PLL1DIVR & RCC_PLL1DIVR_PLL1N) +
-				   (fracn1 / (float_t)0x2000) + (float_t)1);
+			pll1vco = ((float_t)HSE_VALUE / (float_t)pll1m) * ((float_t)(uint32_t)(RCC->PLL1DIVR & RCC_PLL1DIVR_PLL1N) + (fracn1 / (float_t)0x2000) + (float_t)1);
 			break;
 		default:
-			pll1vco = ((float_t)MSIRangeTable[(__HAL_RCC_GET_MSI_RANGE() >> RCC_ICSCR1_MSISRANGE_Pos)] /
-				   (float_t)pll1m) *
-				  ((float_t)pll1n + (fracn1 / (float_t)0x2000) + (float_t)1);
+			pll1vco = ((float_t)MSIRangeTable[(__HAL_RCC_GET_MSI_RANGE() >> RCC_ICSCR1_MSISRANGE_Pos)] / (float_t)pll1m) * ((float_t)pll1n + (fracn1 / (float_t)0x2000) + (float_t)1);
 			break;
 	}
 
 	if (__HAL_RCC_GET_PLLCLKOUT_CONFIG(RCC_PLL1_DIVP) != 0U) {
-		PLL1_Clocks->PLL1_P_Frequency =
-		    (uint32_t)(float_t)(pll1vco / ((float_t)(uint32_t)((RCC->PLL1DIVR & RCC_PLL1DIVR_PLL1P) >>
-								       RCC_PLL1DIVR_PLL1P_Pos) +
-						   (float_t)1));
+		PLL1_Clocks->PLL1_P_Frequency = (uint32_t)(float_t)(pll1vco / ((float_t)(uint32_t)((RCC->PLL1DIVR & RCC_PLL1DIVR_PLL1P) >> RCC_PLL1DIVR_PLL1P_Pos) + (float_t)1));
 	} else {
 		PLL1_Clocks->PLL1_P_Frequency = 0U;
 	}
 
 	if (__HAL_RCC_GET_PLLCLKOUT_CONFIG(RCC_PLL1_DIVQ) != 0U) {
-		PLL1_Clocks->PLL1_Q_Frequency =
-		    (uint32_t)(float_t)(pll1vco / ((float_t)(uint32_t)((RCC->PLL1DIVR & RCC_PLL1DIVR_PLL1Q) >>
-								       RCC_PLL1DIVR_PLL1Q_Pos) +
-						   (float_t)1));
+		PLL1_Clocks->PLL1_Q_Frequency = (uint32_t)(float_t)(pll1vco / ((float_t)(uint32_t)((RCC->PLL1DIVR & RCC_PLL1DIVR_PLL1Q) >> RCC_PLL1DIVR_PLL1Q_Pos) + (float_t)1));
 	} else {
 		PLL1_Clocks->PLL1_Q_Frequency = 0U;
 	}
 
 	if (__HAL_RCC_GET_PLLCLKOUT_CONFIG(RCC_PLL1_DIVR) != 0U) {
-		PLL1_Clocks->PLL1_R_Frequency =
-		    (uint32_t)(float_t)(pll1vco / ((float_t)(uint32_t)((RCC->PLL1DIVR & RCC_PLL1DIVR_PLL1R) >>
-								       RCC_PLL1DIVR_PLL1R_Pos) +
-						   (float_t)1));
+		PLL1_Clocks->PLL1_R_Frequency = (uint32_t)(float_t)(pll1vco / ((float_t)(uint32_t)((RCC->PLL1DIVR & RCC_PLL1DIVR_PLL1R) >> RCC_PLL1DIVR_PLL1R_Pos) + (float_t)1));
 	} else {
 		PLL1_Clocks->PLL1_R_Frequency = 0U;
 	}
@@ -1613,55 +1533,37 @@ void HAL_RCCEx_GetPLL2ClockFreq(PLL2_ClocksTypeDef *PLL2_Clocks)
 	pll2source = (RCC->PLL2CFGR & RCC_PLL2CFGR_PLL2SRC);
 	pll2m = ((RCC->PLL2CFGR & RCC_PLL2CFGR_PLL2M) >> RCC_PLL2CFGR_PLL2M_Pos) + 1U;
 	pll2fracen = ((RCC->PLL2CFGR & RCC_PLL2CFGR_PLL2FRACEN) >> RCC_PLL2CFGR_PLL2FRACEN_Pos);
-	fracn2 = (float_t)(uint32_t)(pll2fracen *
-				     ((RCC->PLL2FRACR & RCC_PLL2FRACR_PLL2FRACN) >> RCC_PLL2FRACR_PLL2FRACN_Pos));
+	fracn2 = (float_t)(uint32_t)(pll2fracen * ((RCC->PLL2FRACR & RCC_PLL2FRACR_PLL2FRACN) >> RCC_PLL2FRACR_PLL2FRACN_Pos));
 
 	switch (pll2source) {
 		case RCC_PLLSOURCE_HSI: /* HSI used as PLL clock source */
-			pll2vco = ((float_t)HSI_VALUE / (float_t)pll2m) *
-				  ((float_t)(uint32_t)(RCC->PLL2DIVR & RCC_PLL2DIVR_PLL2N) +
-				   (fracn2 / (float_t)0x2000) + (float_t)1);
+			pll2vco = ((float_t)HSI_VALUE / (float_t)pll2m) * ((float_t)(uint32_t)(RCC->PLL2DIVR & RCC_PLL2DIVR_PLL2N) + (fracn2 / (float_t)0x2000) + (float_t)1);
 			break;
 
 		case RCC_PLLSOURCE_MSI: /* MSI used as PLL clock source */
-			pll2vco = ((float_t)MSIRangeTable[(__HAL_RCC_GET_MSI_RANGE() >> RCC_ICSCR1_MSISRANGE_Pos)] /
-				   (float_t)pll2m) *
-				  ((float_t)pll2n + (fracn2 / (float_t)0x2000) + (float_t)1);
+			pll2vco = ((float_t)MSIRangeTable[(__HAL_RCC_GET_MSI_RANGE() >> RCC_ICSCR1_MSISRANGE_Pos)] / (float_t)pll2m) * ((float_t)pll2n + (fracn2 / (float_t)0x2000) + (float_t)1);
 			break;
 
 		case RCC_PLLSOURCE_HSE: /* HSE used as PLL clock source */
-			pll2vco = ((float_t)HSE_VALUE / (float_t)pll2m) *
-				  ((float_t)(uint32_t)(RCC->PLL2DIVR & RCC_PLL2DIVR_PLL2N) +
-				   (fracn2 / (float_t)0x2000) + (float_t)1);
+			pll2vco = ((float_t)HSE_VALUE / (float_t)pll2m) * ((float_t)(uint32_t)(RCC->PLL2DIVR & RCC_PLL2DIVR_PLL2N) + (fracn2 / (float_t)0x2000) + (float_t)1);
 			break;
 
 		default:
-			pll2vco = ((float_t)MSIRangeTable[(__HAL_RCC_GET_MSI_RANGE() >> RCC_ICSCR1_MSISRANGE_Pos)] /
-				   (float_t)pll2m) *
-				  ((float_t)pll2n + (fracn2 / (float_t)0x2000) + (float_t)1);
+			pll2vco = ((float_t)MSIRangeTable[(__HAL_RCC_GET_MSI_RANGE() >> RCC_ICSCR1_MSISRANGE_Pos)] / (float_t)pll2m) * ((float_t)pll2n + (fracn2 / (float_t)0x2000) + (float_t)1);
 			break;
 	}
 	if (__HAL_RCC_GET_PLL2CLKOUT_CONFIG(RCC_PLL2_DIVP) != 0U) {
-		PLL2_Clocks->PLL2_P_Frequency =
-		    (uint32_t)(float_t)(pll2vco / ((float_t)(uint32_t)((RCC->PLL2DIVR & RCC_PLL2DIVR_PLL2P) >>
-								       RCC_PLL2DIVR_PLL2P_Pos) +
-						   (float_t)1));
+		PLL2_Clocks->PLL2_P_Frequency = (uint32_t)(float_t)(pll2vco / ((float_t)(uint32_t)((RCC->PLL2DIVR & RCC_PLL2DIVR_PLL2P) >> RCC_PLL2DIVR_PLL2P_Pos) + (float_t)1));
 	} else {
 		PLL2_Clocks->PLL2_P_Frequency = 0U;
 	}
 	if (__HAL_RCC_GET_PLL2CLKOUT_CONFIG(RCC_PLL2_DIVQ) != 0U) {
-		PLL2_Clocks->PLL2_Q_Frequency =
-		    (uint32_t)(float_t)(pll2vco / ((float_t)(uint32_t)((RCC->PLL2DIVR & RCC_PLL2DIVR_PLL2Q) >>
-								       RCC_PLL2DIVR_PLL2Q_Pos) +
-						   (float_t)1));
+		PLL2_Clocks->PLL2_Q_Frequency = (uint32_t)(float_t)(pll2vco / ((float_t)(uint32_t)((RCC->PLL2DIVR & RCC_PLL2DIVR_PLL2Q) >> RCC_PLL2DIVR_PLL2Q_Pos) + (float_t)1));
 	} else {
 		PLL2_Clocks->PLL2_Q_Frequency = 0U;
 	}
 	if (__HAL_RCC_GET_PLL2CLKOUT_CONFIG(RCC_PLL2_DIVR) != 0U) {
-		PLL2_Clocks->PLL2_R_Frequency =
-		    (uint32_t)(float_t)(pll2vco / ((float_t)(uint32_t)((RCC->PLL2DIVR & RCC_PLL2DIVR_PLL2R) >>
-								       RCC_PLL2DIVR_PLL2R_Pos) +
-						   (float_t)1));
+		PLL2_Clocks->PLL2_R_Frequency = (uint32_t)(float_t)(pll2vco / ((float_t)(uint32_t)((RCC->PLL2DIVR & RCC_PLL2DIVR_PLL2R) >> RCC_PLL2DIVR_PLL2R_Pos) + (float_t)1));
 	} else {
 		PLL2_Clocks->PLL2_R_Frequency = 0U;
 	}
@@ -1702,58 +1604,40 @@ void HAL_RCCEx_GetPLL3ClockFreq(PLL3_ClocksTypeDef *PLL3_Clocks)
 	pll3source = (RCC->PLL3CFGR & RCC_PLL3CFGR_PLL3SRC);
 	pll3m = ((RCC->PLL3CFGR & RCC_PLL3CFGR_PLL3M) >> RCC_PLL3CFGR_PLL3M_Pos) + 1U;
 	pll3fracen = ((RCC->PLL3CFGR & RCC_PLL3CFGR_PLL3FRACEN) >> RCC_PLL3CFGR_PLL3FRACEN_Pos);
-	fracn3 = (float_t)(uint32_t)(pll3fracen *
-				     ((RCC->PLL3FRACR & RCC_PLL3FRACR_PLL3FRACN) >> RCC_PLL3FRACR_PLL3FRACN_Pos));
+	fracn3 = (float_t)(uint32_t)(pll3fracen * ((RCC->PLL3FRACR & RCC_PLL3FRACR_PLL3FRACN) >> RCC_PLL3FRACR_PLL3FRACN_Pos));
 
 	switch (pll3source) {
 		case RCC_PLLSOURCE_HSI: /* HSI used as PLL clock source */
-			pll3vco = ((float_t)HSI_VALUE / (float_t)pll3m) *
-				  ((float_t)(uint32_t)(RCC->PLL3DIVR & RCC_PLL3DIVR_PLL3N) +
-				   (fracn3 / (float_t)0x2000) + (float_t)1);
+			pll3vco = ((float_t)HSI_VALUE / (float_t)pll3m) * ((float_t)(uint32_t)(RCC->PLL3DIVR & RCC_PLL3DIVR_PLL3N) + (fracn3 / (float_t)0x2000) + (float_t)1);
 
 			break;
 		case RCC_PLLSOURCE_MSI: /* MSI used as PLL clock source */
-			pll3vco = ((float_t)MSIRangeTable[(__HAL_RCC_GET_MSI_RANGE() >> RCC_ICSCR1_MSISRANGE_Pos)] /
-				   (float_t)pll3m) *
-				  ((float_t)pll3n + (fracn3 / (float_t)0x2000) + (float_t)1);
+			pll3vco = ((float_t)MSIRangeTable[(__HAL_RCC_GET_MSI_RANGE() >> RCC_ICSCR1_MSISRANGE_Pos)] / (float_t)pll3m) * ((float_t)pll3n + (fracn3 / (float_t)0x2000) + (float_t)1);
 			break;
 
 		case RCC_PLLSOURCE_HSE: /* HSE used as PLL clock source */
-			pll3vco = ((float_t)HSE_VALUE / (float_t)pll3m) *
-				  ((float_t)(uint32_t)(RCC->PLL3DIVR & RCC_PLL3DIVR_PLL3N) +
-				   (fracn3 / (float_t)0x2000) + (float_t)1);
+			pll3vco = ((float_t)HSE_VALUE / (float_t)pll3m) * ((float_t)(uint32_t)(RCC->PLL3DIVR & RCC_PLL3DIVR_PLL3N) + (fracn3 / (float_t)0x2000) + (float_t)1);
 			break;
 
 		default:
-			pll3vco = ((float_t)MSIRangeTable[(__HAL_RCC_GET_MSI_RANGE() >> RCC_ICSCR1_MSISRANGE_Pos)] /
-				   (float_t)pll3m) *
-				  ((float_t)pll3n + (fracn3 / (float_t)0x2000) + (float_t)1);
+			pll3vco = ((float_t)MSIRangeTable[(__HAL_RCC_GET_MSI_RANGE() >> RCC_ICSCR1_MSISRANGE_Pos)] / (float_t)pll3m) * ((float_t)pll3n + (fracn3 / (float_t)0x2000) + (float_t)1);
 			break;
 	}
 
 	if (__HAL_RCC_GET_PLL3CLKOUT_CONFIG(RCC_PLL3_DIVP) != 0U) {
-		PLL3_Clocks->PLL3_P_Frequency =
-		    (uint32_t)(float_t)(pll3vco / ((float_t)(uint32_t)((RCC->PLL3DIVR & RCC_PLL3DIVR_PLL3P) >>
-								       RCC_PLL3DIVR_PLL3P_Pos) +
-						   (float_t)1));
+		PLL3_Clocks->PLL3_P_Frequency = (uint32_t)(float_t)(pll3vco / ((float_t)(uint32_t)((RCC->PLL3DIVR & RCC_PLL3DIVR_PLL3P) >> RCC_PLL3DIVR_PLL3P_Pos) + (float_t)1));
 	} else {
 		PLL3_Clocks->PLL3_P_Frequency = 0U;
 	}
 
 	if (__HAL_RCC_GET_PLL3CLKOUT_CONFIG(RCC_PLL3_DIVQ) != 0U) {
-		PLL3_Clocks->PLL3_Q_Frequency =
-		    (uint32_t)(float_t)(pll3vco / ((float_t)(uint32_t)((RCC->PLL3DIVR & RCC_PLL3DIVR_PLL3Q) >>
-								       RCC_PLL3DIVR_PLL3Q_Pos) +
-						   (float_t)1));
+		PLL3_Clocks->PLL3_Q_Frequency = (uint32_t)(float_t)(pll3vco / ((float_t)(uint32_t)((RCC->PLL3DIVR & RCC_PLL3DIVR_PLL3Q) >> RCC_PLL3DIVR_PLL3Q_Pos) + (float_t)1));
 	} else {
 		PLL3_Clocks->PLL3_Q_Frequency = 0U;
 	}
 
 	if (__HAL_RCC_GET_PLL3CLKOUT_CONFIG(RCC_PLL3_DIVR) != 0U) {
-		PLL3_Clocks->PLL3_R_Frequency =
-		    (uint32_t)(float_t)(pll3vco / ((float_t)(uint32_t)((RCC->PLL3DIVR & RCC_PLL3DIVR_PLL3R) >>
-								       RCC_PLL3DIVR_PLL3R_Pos) +
-						   (float_t)1));
+		PLL3_Clocks->PLL3_R_Frequency = (uint32_t)(float_t)(pll3vco / ((float_t)(uint32_t)((RCC->PLL3DIVR & RCC_PLL3DIVR_PLL3R) >> RCC_PLL3DIVR_PLL3R_Pos) + (float_t)1));
 	} else {
 		PLL3_Clocks->PLL3_R_Frequency = 0U;
 	}
@@ -1982,8 +1866,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint64_t PeriphClk)
 							 HZ */
 
 				if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_MSIKRDY)) {
-					frequency =
-					    MSIRangeTable[(__HAL_RCC_GET_MSIK_RANGE() >> RCC_ICSCR1_MSIKRANGE_Pos)];
+					frequency = MSIRangeTable[(__HAL_RCC_GET_MSIK_RANGE() >> RCC_ICSCR1_MSIKRANGE_Pos)];
 				} else {
 					frequency = 0U;
 				}
@@ -2025,8 +1908,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint64_t PeriphClk)
 								 range in HZ */
 				{
 					if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_MSIKRDY)) {
-						frequency = MSIRangeTable[(__HAL_RCC_GET_MSIK_RANGE() >>
-									   RCC_ICSCR1_MSIKRANGE_Pos)];
+						frequency = MSIRangeTable[(__HAL_RCC_GET_MSIK_RANGE() >> RCC_ICSCR1_MSIKRANGE_Pos)];
 					} else {
 						frequency = 0U;
 					}
@@ -2227,8 +2109,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint64_t PeriphClk)
 			case RCC_MDF1CLKSOURCE_MSIK:
 
 				if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_MSIKRDY)) {
-					frequency =
-					    MSIRangeTable[(__HAL_RCC_GET_MSIK_RANGE() >> RCC_ICSCR1_MSIKRANGE_Pos)];
+					frequency = MSIRangeTable[(__HAL_RCC_GET_MSIK_RANGE() >> RCC_ICSCR1_MSIKRANGE_Pos)];
 				} else {
 					frequency = 0U;
 				}
@@ -2269,8 +2150,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint64_t PeriphClk)
 			case RCC_ADF1CLKSOURCE_MSIK:
 
 				if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_MSIKRDY)) {
-					frequency =
-					    MSIRangeTable[(__HAL_RCC_GET_MSIK_RANGE() >> RCC_ICSCR1_MSIKRANGE_Pos)];
+					frequency = MSIRangeTable[(__HAL_RCC_GET_MSIK_RANGE() >> RCC_ICSCR1_MSIKRANGE_Pos)];
 				} else {
 					frequency = 0U;
 				}
@@ -2338,8 +2218,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint64_t PeriphClk)
 			}
 			case RCC_I2C3CLKSOURCE_MSIK: {
 				if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_MSIKRDY)) {
-					frequency =
-					    MSIRangeTable[(__HAL_RCC_GET_MSIK_RANGE() >> RCC_ICSCR1_MSIKRANGE_Pos)];
+					frequency = MSIRangeTable[(__HAL_RCC_GET_MSIK_RANGE() >> RCC_ICSCR1_MSIKRANGE_Pos)];
 				} else {
 					frequency = 0U;
 				}
@@ -2524,8 +2403,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint64_t PeriphClk)
 			case RCC_SPI1CLKSOURCE_MSIK:
 
 				if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_MSIKRDY)) {
-					frequency =
-					    MSIRangeTable[(__HAL_RCC_GET_MSIK_RANGE() >> RCC_ICSCR1_MSIKRANGE_Pos)];
+					frequency = MSIRangeTable[(__HAL_RCC_GET_MSIK_RANGE() >> RCC_ICSCR1_MSIKRANGE_Pos)];
 				} else {
 					frequency = 0U;
 				}
@@ -2562,8 +2440,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint64_t PeriphClk)
 			case RCC_SPI2CLKSOURCE_MSIK:
 
 				if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_MSIKRDY)) {
-					frequency =
-					    MSIRangeTable[(__HAL_RCC_GET_MSIK_RANGE() >> RCC_ICSCR1_MSIKRANGE_Pos)];
+					frequency = MSIRangeTable[(__HAL_RCC_GET_MSIK_RANGE() >> RCC_ICSCR1_MSIKRANGE_Pos)];
 				} else {
 					frequency = 0U;
 				}
@@ -2600,8 +2477,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint64_t PeriphClk)
 			case RCC_SPI3CLKSOURCE_MSIK:
 
 				if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_MSIKRDY)) {
-					frequency =
-					    MSIRangeTable[(__HAL_RCC_GET_MSIK_RANGE() >> RCC_ICSCR1_MSIKRANGE_Pos)];
+					frequency = MSIRangeTable[(__HAL_RCC_GET_MSIK_RANGE() >> RCC_ICSCR1_MSIKRANGE_Pos)];
 				} else {
 					frequency = 0U;
 				}
@@ -2637,8 +2513,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint64_t PeriphClk)
 			case RCC_OSPICLKSOURCE_MSIK:
 
 				if (HAL_IS_BIT_SET(RCC->CR, RCC_CR_MSIKRDY)) {
-					frequency =
-					    MSIRangeTable[(__HAL_RCC_GET_MSIK_RANGE() >> RCC_ICSCR1_MSIKRANGE_Pos)];
+					frequency = MSIRangeTable[(__HAL_RCC_GET_MSIK_RANGE() >> RCC_ICSCR1_MSIKRANGE_Pos)];
 				} else {
 					frequency = 0U;
 				}
@@ -2850,8 +2725,7 @@ HAL_StatusTypeDef HAL_RCCEx_EnablePLL2(const RCC_PLL2InitTypeDef *PLL2Init)
 			/* Configure the PLL2 clock source, multiplication
 			 * factor N, */
 			/* and division factors M, P, Q and R */
-			__HAL_RCC_PLL2_CONFIG(PLL2Init->PLL2Source, PLL2Init->PLL2M, PLL2Init->PLL2N, PLL2Init->PLL2P,
-					      PLL2Init->PLL2Q, PLL2Init->PLL2R);
+			__HAL_RCC_PLL2_CONFIG(PLL2Init->PLL2Source, PLL2Init->PLL2M, PLL2Init->PLL2N, PLL2Init->PLL2P, PLL2Init->PLL2Q, PLL2Init->PLL2R);
 
 			/* Disable PLL2FRACN  */
 			__HAL_RCC_PLL2FRACN_DISABLE();
@@ -2911,8 +2785,7 @@ HAL_StatusTypeDef HAL_RCCEx_DisablePLL2(void)
 	}
 
 	/* To save power disable the PLL2 Source, FRACN and Clock outputs */
-	CLEAR_BIT(RCC->PLL2CFGR, RCC_PLL2CFGR_PLL2PEN | RCC_PLL2CFGR_PLL2QEN | RCC_PLL2CFGR_PLL2REN |
-				     RCC_PLL2CFGR_PLL2SRC | RCC_PLL2CFGR_PLL2FRACEN);
+	CLEAR_BIT(RCC->PLL2CFGR, RCC_PLL2CFGR_PLL2PEN | RCC_PLL2CFGR_PLL2QEN | RCC_PLL2CFGR_PLL2REN | RCC_PLL2CFGR_PLL2SRC | RCC_PLL2CFGR_PLL2FRACEN);
 
 	return status;
 }
@@ -2957,8 +2830,7 @@ HAL_StatusTypeDef HAL_RCCEx_EnablePLL3(const RCC_PLL3InitTypeDef *PLL3Init)
 			/* Configure the PLL3 clock source, multiplication
 			 * factor N, */
 			/* and division factors M and P */
-			__HAL_RCC_PLL3_CONFIG(PLL3Init->PLL3Source, PLL3Init->PLL3M, PLL3Init->PLL3N, PLL3Init->PLL3P,
-					      PLL3Init->PLL3Q, PLL3Init->PLL3R);
+			__HAL_RCC_PLL3_CONFIG(PLL3Init->PLL3Source, PLL3Init->PLL3M, PLL3Init->PLL3N, PLL3Init->PLL3P, PLL3Init->PLL3Q, PLL3Init->PLL3R);
 
 			/* Disable PLL3FRACN . */
 			__HAL_RCC_PLL3FRACN_DISABLE();
@@ -3018,8 +2890,7 @@ HAL_StatusTypeDef HAL_RCCEx_DisablePLL3(void)
 	}
 
 	/* To save power disable the PLL3 Source and Clock outputs */
-	CLEAR_BIT(RCC->PLL3CFGR, RCC_PLL3CFGR_PLL3PEN | RCC_PLL3CFGR_PLL3QEN | RCC_PLL3CFGR_PLL3REN |
-				     RCC_PLL3CFGR_PLL3SRC | RCC_PLL3CFGR_PLL3FRACEN);
+	CLEAR_BIT(RCC->PLL3CFGR, RCC_PLL3CFGR_PLL3PEN | RCC_PLL3CFGR_PLL3QEN | RCC_PLL3CFGR_PLL3REN | RCC_PLL3CFGR_PLL3SRC | RCC_PLL3CFGR_PLL3FRACEN);
 
 	return status;
 }

@@ -204,8 +204,7 @@ HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address, uint
 			 */
 			FLASH_Program_DoubleWord(Address, Data);
 			prog_bit = FLASH_CR_PG;
-		} else if ((TypeProgram == FLASH_TYPEPROGRAM_FAST) ||
-			   (TypeProgram == FLASH_TYPEPROGRAM_FAST_AND_LAST)) {
+		} else if ((TypeProgram == FLASH_TYPEPROGRAM_FAST) || (TypeProgram == FLASH_TYPEPROGRAM_FAST_AND_LAST)) {
 			/* Fast program a 32 row double-word (64-bit) at a
 			 * specified address */
 			FLASH_Program_Fast(Address, (uint32_t)Data);
@@ -296,8 +295,7 @@ HAL_StatusTypeDef HAL_FLASH_Program_IT(uint32_t TypeProgram, uint32_t Address, u
 			/* Program double-word (64-bit) at a specified address
 			 */
 			FLASH_Program_DoubleWord(Address, Data);
-		} else if ((TypeProgram == FLASH_TYPEPROGRAM_FAST) ||
-			   (TypeProgram == FLASH_TYPEPROGRAM_FAST_AND_LAST)) {
+		} else if ((TypeProgram == FLASH_TYPEPROGRAM_FAST) || (TypeProgram == FLASH_TYPEPROGRAM_FAST_AND_LAST)) {
 			/* Fast program a 32 row double-word (64-bit) at a
 			 * specified address */
 			FLASH_Program_Fast(Address, (uint32_t)Data);

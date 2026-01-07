@@ -111,23 +111,17 @@
 
 #define IS_ICACHE_ASSOCIATIVITY_MODE(__MODE__) (((__MODE__) == ICACHE_1WAY) || ((__MODE__) == ICACHE_2WAYS))
 
-#define IS_ICACHE_MONITOR_TYPE(__TYPE__)                                                                               \
-	(((__TYPE__) == ICACHE_MONITOR_HIT_MISS) || ((__TYPE__) == ICACHE_MONITOR_HIT) ||                              \
-	 ((__TYPE__) == ICACHE_MONITOR_MISS))
+#define IS_ICACHE_MONITOR_TYPE(__TYPE__) (((__TYPE__) == ICACHE_MONITOR_HIT_MISS) || ((__TYPE__) == ICACHE_MONITOR_HIT) || ((__TYPE__) == ICACHE_MONITOR_MISS))
 
 #define IS_ICACHE_REGION_NUMBER(__NUMBER__) ((__NUMBER__) < 4U)
 
-#define IS_ICACHE_REGION_SIZE(__SIZE__)                                                                                \
-	(((__SIZE__) == ICACHE_REGIONSIZE_2MB) || ((__SIZE__) == ICACHE_REGIONSIZE_4MB) ||                             \
-	 ((__SIZE__) == ICACHE_REGIONSIZE_8MB) || ((__SIZE__) == ICACHE_REGIONSIZE_16MB) ||                            \
-	 ((__SIZE__) == ICACHE_REGIONSIZE_32MB) || ((__SIZE__) == ICACHE_REGIONSIZE_64MB) ||                           \
-	 ((__SIZE__) == ICACHE_REGIONSIZE_128MB))
+#define IS_ICACHE_REGION_SIZE(__SIZE__)                                                                                                                                                                \
+	(((__SIZE__) == ICACHE_REGIONSIZE_2MB) || ((__SIZE__) == ICACHE_REGIONSIZE_4MB) || ((__SIZE__) == ICACHE_REGIONSIZE_8MB) || ((__SIZE__) == ICACHE_REGIONSIZE_16MB) ||                          \
+	 ((__SIZE__) == ICACHE_REGIONSIZE_32MB) || ((__SIZE__) == ICACHE_REGIONSIZE_64MB) || ((__SIZE__) == ICACHE_REGIONSIZE_128MB))
 
-#define IS_ICACHE_REGION_TRAFFIC_ROUTE(__TRAFFICROUTE__)                                                               \
-	(((__TRAFFICROUTE__) == ICACHE_MASTER1_PORT) || ((__TRAFFICROUTE__) == ICACHE_MASTER2_PORT))
+#define IS_ICACHE_REGION_TRAFFIC_ROUTE(__TRAFFICROUTE__) (((__TRAFFICROUTE__) == ICACHE_MASTER1_PORT) || ((__TRAFFICROUTE__) == ICACHE_MASTER2_PORT))
 
-#define IS_ICACHE_REGION_OUTPUT_BURST_TYPE(__OUTPUTBURSTTYPE_)                                                         \
-	(((__OUTPUTBURSTTYPE_) == ICACHE_OUTPUT_BURST_WRAP) || ((__OUTPUTBURSTTYPE_) == ICACHE_OUTPUT_BURST_INCR))
+#define IS_ICACHE_REGION_OUTPUT_BURST_TYPE(__OUTPUTBURSTTYPE_) (((__OUTPUTBURSTTYPE_) == ICACHE_OUTPUT_BURST_WRAP) || ((__OUTPUTBURSTTYPE_) == ICACHE_OUTPUT_BURST_INCR))
 
 /**
  * @}
@@ -568,12 +562,9 @@ HAL_StatusTypeDef HAL_ICACHE_EnableRemapRegion(uint32_t Region, const ICACHE_Reg
 			 * size 6 bits  */
 			/* Region 128MB: BaseAddress size 2 bits, RemapAddress
 			 * size 5 bits  */
-			value =
-			    ((pRegionConfig->BaseAddress & 0x1FFFFFFFU) >> 21U) & (0xFFU & ~(pRegionConfig->Size - 1U));
-			value |= ((pRegionConfig->RemapAddress >> 5U) &
-				  ((uint32_t)(0x7FFU & ~(pRegionConfig->Size - 1U)) << ICACHE_CRRx_REMAPADDR_Pos));
-			value |= (pRegionConfig->Size << ICACHE_CRRx_RSIZE_Pos) | pRegionConfig->TrafficRoute |
-				 pRegionConfig->OutputBurstType;
+			value = ((pRegionConfig->BaseAddress & 0x1FFFFFFFU) >> 21U) & (0xFFU & ~(pRegionConfig->Size - 1U));
+			value |= ((pRegionConfig->RemapAddress >> 5U) & ((uint32_t)(0x7FFU & ~(pRegionConfig->Size - 1U)) << ICACHE_CRRx_REMAPADDR_Pos));
+			value |= (pRegionConfig->Size << ICACHE_CRRx_RSIZE_Pos) | pRegionConfig->TrafficRoute | pRegionConfig->OutputBurstType;
 			*p_reg = (value | ICACHE_CRRx_REN);
 		}
 	}

@@ -170,20 +170,19 @@ typedef struct {
  */
 #define LL_UTILS_PACKAGETYPE_LQFP64 0x00000000U	 /*!< LQFP64 package type                      */
 #define LL_UTILS_PACKAGETYPE_WLCSP64 0x00000001U /*!< WLCSP64 package type                     */
-#if defined(STM32G411xB) || defined(STM32G411xC) || defined(STM32G431xx) || defined(STM32G414xx) ||                    \
-    defined(STM32G441xx) || defined(STM32G471xx) || defined(STM32G473xx) || defined(STM32G483xx) ||                    \
+#if defined(STM32G411xB) || defined(STM32G411xC) || defined(STM32G431xx) || defined(STM32G414xx) || defined(STM32G441xx) || defined(STM32G471xx) || defined(STM32G473xx) || defined(STM32G483xx) ||    \
     defined(STM32G474xx) || defined(STM32G484xx)
-#define LL_UTILS_PACKAGETYPE_LQFP100_LQFP80 0x00000002U /*!< LQFP100 \ LQFP80 package type             */
+#define LL_UTILS_PACKAGETYPE_LQFP100_LQFP80 0x00000002U			 /*!< LQFP100 \ LQFP80 package type             */
 #define LL_UTILS_PACKAGETYPE_LQFP100 LL_UTILS_PACKAGETYPE_LQFP100_LQFP80 /*!< For backward compatibility */
 #else
-#define LL_UTILS_PACKAGETYPE_LQFP100 0x00000002U /*!< LQFP100 package type                      */
-#endif						 /* STM32G411xB || STM32G411xC || STM32G431xx || STM32G414xx ||        \
-						    STM32G441xx || STM32G471xx || STM32G473xx || STM32G483xx ||        \
-						    STM32G474xx || STM32G484xx */
-#define LL_UTILS_PACKAGETYPE_WLCSP81 0x00000005U /*!< WLCSP81 package type                      */
+#define LL_UTILS_PACKAGETYPE_LQFP100 0x00000002U	  /*!< LQFP100 package type                      */
+#endif							  /* STM32G411xB || STM32G411xC || STM32G431xx || STM32G414xx ||                                                                               \
+							     STM32G441xx || STM32G471xx || STM32G473xx || STM32G483xx ||                                                                               \
+							     STM32G474xx || STM32G484xx */
+#define LL_UTILS_PACKAGETYPE_WLCSP81 0x00000005U	  /*!< WLCSP81 package type                      */
 #define LL_UTILS_PACKAGETYPE_LQFP128_UFBGA121 0x00000007U /*!< LQFP128 \ UFBGA121 package type           */
-#define LL_UTILS_PACKAGETYPE_LQFP128                                                                                   \
-	LL_UTILS_PACKAGETYPE_LQFP128_UFBGA121			    /*!< For backward compatibility                    \
+#define LL_UTILS_PACKAGETYPE_LQFP128                                                                                                                                                                   \
+	LL_UTILS_PACKAGETYPE_LQFP128_UFBGA121			    /*!< For backward compatibility                                                                                                    \
 								     */
 #define LL_UTILS_PACKAGETYPE_UFQFPN32 0x00000008U		    /*!< UFQFPN32 package type                     */
 #define LL_UTILS_PACKAGETYPE_LQFP32 0x00000009U			    /*!< LQFP32 package type                       */
@@ -241,10 +240,7 @@ __STATIC_INLINE uint32_t LL_GetUID_Word2(void) { return (uint32_t)(READ_REG(*((u
  * in Kbytes. As an example, 0x040 corresponds to 64 Kbytes.
  * @retval FLASH_SIZE[15:0]: Flash memory size
  */
-__STATIC_INLINE uint32_t LL_GetFlashSize(void)
-{
-	return (uint32_t)(READ_REG(*((uint32_t *)FLASHSIZE_BASE_ADDRESS)) & 0x0000FFFFUL);
-}
+__STATIC_INLINE uint32_t LL_GetFlashSize(void) { return (uint32_t)(READ_REG(*((uint32_t *)FLASHSIZE_BASE_ADDRESS)) & 0x0000FFFFUL); }
 
 /**
  * @brief  Get Package type
@@ -263,10 +259,7 @@ __STATIC_INLINE uint32_t LL_GetFlashSize(void)
  *         @arg @ref LL_UTILS_PACKAGETYPE_LQFP48_EBIKE
  *
  */
-__STATIC_INLINE uint32_t LL_GetPackageType(void)
-{
-	return (uint32_t)(READ_REG(*((uint32_t *)PACKAGE_BASE_ADDRESS)) & 0x1FU);
-}
+__STATIC_INLINE uint32_t LL_GetPackageType(void) { return (uint32_t)(READ_REG(*((uint32_t *)PACKAGE_BASE_ADDRESS)) & 0x1FU); }
 
 /**
  * @}
@@ -308,11 +301,8 @@ void LL_mDelay(uint32_t Delay);
 
 void LL_SetSystemCoreClock(uint32_t HCLKFrequency);
 ErrorStatus LL_SetFlashLatency(uint32_t HCLKFrequency);
-ErrorStatus LL_PLL_ConfigSystemClock_HSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
-					 LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct);
-ErrorStatus LL_PLL_ConfigSystemClock_HSE(uint32_t HSEFrequency, uint32_t HSEBypass,
-					 LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct,
-					 LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct);
+ErrorStatus LL_PLL_ConfigSystemClock_HSI(LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct, LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct);
+ErrorStatus LL_PLL_ConfigSystemClock_HSE(uint32_t HSEFrequency, uint32_t HSEBypass, LL_UTILS_PLLInitTypeDef *UTILS_PLLInitStruct, LL_UTILS_ClkInitTypeDef *UTILS_ClkInitStruct);
 
 /**
  * @}

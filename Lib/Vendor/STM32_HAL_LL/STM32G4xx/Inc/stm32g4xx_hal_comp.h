@@ -77,11 +77,10 @@ typedef struct {
  */
 #define COMP_STATE_BITFIELD_LOCK (0x10U)
 typedef enum {
-	HAL_COMP_STATE_RESET = 0x00U, /*!< COMP not yet initialized */
-	HAL_COMP_STATE_RESET_LOCKED =
-	    (HAL_COMP_STATE_RESET | COMP_STATE_BITFIELD_LOCK), /*!< COMP not yet initialized and
-								  configuration is locked */
-	HAL_COMP_STATE_READY = 0x01U,			       /*!< COMP initialized and ready for use */
+	HAL_COMP_STATE_RESET = 0x00U,							 /*!< COMP not yet initialized */
+	HAL_COMP_STATE_RESET_LOCKED = (HAL_COMP_STATE_RESET | COMP_STATE_BITFIELD_LOCK), /*!< COMP not yet initialized and
+											    configuration is locked */
+	HAL_COMP_STATE_READY = 0x01U,							 /*!< COMP initialized and ready for use */
 	HAL_COMP_STATE_READY_LOCKED = (HAL_COMP_STATE_READY | COMP_STATE_BITFIELD_LOCK), /*!< COMP initialized but
 											    configuration is locked */
 	HAL_COMP_STATE_BUSY = 0x02U,							 /*!< COMP is running    */
@@ -141,8 +140,8 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
  */
 #define HAL_COMP_ERROR_NONE (0x00UL) /*!< No error */
 #if (USE_HAL_COMP_REGISTER_CALLBACKS == 1)
-#define HAL_COMP_ERROR_INVALID_CALLBACK                                                                                \
-	(0x01UL) /*!< Invalid Callback error                                                                           \
+#define HAL_COMP_ERROR_INVALID_CALLBACK                                                                                                                                                                \
+	(0x01UL) /*!< Invalid Callback error                                                                                                                                                           \
 		  */
 #endif		 /* USE_HAL_COMP_REGISTER_CALLBACKS */
 /**
@@ -152,18 +151,18 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
 /** @defgroup COMP_InputPlus COMP input plus (non-inverting input)
  * @{
  */
-#define COMP_INPUT_PLUS_IO1                                                                                            \
-	(0x00000000UL) /*!< Comparator input plus connected to IO1 (pin PA1                                            \
-			  for COMP1, pin PA7 for COMP2, pin PA0 for COMP3, pin                                         \
-			  PB0 for COMP4, pin PB13 for COMP5, pin PB11 for                                              \
-			  COMP6, pin PB14 for COMP7). Note: For COMPx instance                                         \
+#define COMP_INPUT_PLUS_IO1                                                                                                                                                                            \
+	(0x00000000UL) /*!< Comparator input plus connected to IO1 (pin PA1                                                                                                                            \
+			  for COMP1, pin PA7 for COMP2, pin PA0 for COMP3, pin                                                                                                                         \
+			  PB0 for COMP4, pin PB13 for COMP5, pin PB11 for                                                                                                                              \
+			  COMP6, pin PB14 for COMP7). Note: For COMPx instance                                                                                                                         \
 			  availability, please refer to datasheet */
-#define COMP_INPUT_PLUS_IO2                                                                                            \
-	(COMP_CSR_INPSEL) /*!< Comparator input plus connected to IO2 (pin PB1                                         \
-			     for COMP1, pin PA3 for COMP2, pin PC1 for COMP3,                                          \
-			     pin PE7 for COMP4, pin PD12 for COMP5, pin PD11                                           \
-			     for COMP6, pin PD14 for COMP7). Note: For COMPx                                           \
-			     instance availability, please refer to datasheet                                          \
+#define COMP_INPUT_PLUS_IO2                                                                                                                                                                            \
+	(COMP_CSR_INPSEL) /*!< Comparator input plus connected to IO2 (pin PB1                                                                                                                         \
+			     for COMP1, pin PA3 for COMP2, pin PC1 for COMP3,                                                                                                                          \
+			     pin PE7 for COMP4, pin PD12 for COMP5, pin PD11                                                                                                                           \
+			     for COMP6, pin PD14 for COMP7). Note: For COMPx                                                                                                                           \
+			     instance availability, please refer to datasheet                                                                                                                          \
 			   */
 /**
  * @}
@@ -172,65 +171,64 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
 /** @defgroup COMP_InputMinus COMP input minus (inverting input)
  * @{
  */
-#define COMP_INPUT_MINUS_1_4VREFINT                                                                                    \
-	(COMP_CSR_SCALEN | COMP_CSR_BRGEN) /*!< Comparator input minus                                                 \
+#define COMP_INPUT_MINUS_1_4VREFINT                                                                                                                                                                    \
+	(COMP_CSR_SCALEN | COMP_CSR_BRGEN) /*!< Comparator input minus                                                                                                                                 \
 					      connected to 1/4 VrefInt */
-#define COMP_INPUT_MINUS_1_2VREFINT                                                                                    \
-	(COMP_CSR_INMSEL_0 | COMP_CSR_SCALEN | COMP_CSR_BRGEN) /*!< Comparator input minus connected to 1/2 VrefInt    \
+#define COMP_INPUT_MINUS_1_2VREFINT                                                                                                                                                                    \
+	(COMP_CSR_INMSEL_0 | COMP_CSR_SCALEN | COMP_CSR_BRGEN) /*!< Comparator input minus connected to 1/2 VrefInt                                                                                    \
 								*/
-#define COMP_INPUT_MINUS_3_4VREFINT                                                                                    \
-	(COMP_CSR_INMSEL_1 | COMP_CSR_SCALEN | COMP_CSR_BRGEN) /*!< Comparator input minus connected to 3/4 VrefInt    \
-								*/
-#define COMP_INPUT_MINUS_VREFINT                                                                                       \
-	(COMP_CSR_INMSEL_1 | COMP_CSR_INMSEL_0 | COMP_CSR_SCALEN) /*!< Comparator input minus connected to VrefInt */
-#define COMP_INPUT_MINUS_DAC1_CH1                                                                                      \
-	(COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_0) /*!< Comparator input minus connected to DAC1                          \
-						   Channel 1 for COMP1/3/4. Note: For COMPx & DACx                     \
-						   instances availability, please refer to                             \
+#define COMP_INPUT_MINUS_3_4VREFINT                                                                                                                                                                    \
+	(COMP_CSR_INMSEL_1 | COMP_CSR_SCALEN | COMP_CSR_BRGEN)				   /*!< Comparator input minus connected to 3/4 VrefInt                                                        \
+											    */
+#define COMP_INPUT_MINUS_VREFINT (COMP_CSR_INMSEL_1 | COMP_CSR_INMSEL_0 | COMP_CSR_SCALEN) /*!< Comparator input minus connected to VrefInt */
+#define COMP_INPUT_MINUS_DAC1_CH1                                                                                                                                                                      \
+	(COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_0) /*!< Comparator input minus connected to DAC1                                                                                                          \
+						   Channel 1 for COMP1/3/4. Note: For COMPx & DACx                                                                                                     \
+						   instances availability, please refer to                                                                                                             \
 						   datasheet */
-#define COMP_INPUT_MINUS_DAC1_CH2                                                                                      \
-	(COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_0) /*!< Comparator input minus connected to DAC1                          \
-						   Channel 2 for COMP2/5. Note: For COMPx & DACx                       \
-						   instances availability, please refer to                             \
+#define COMP_INPUT_MINUS_DAC1_CH2                                                                                                                                                                      \
+	(COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_0) /*!< Comparator input minus connected to DAC1                                                                                                          \
+						   Channel 2 for COMP2/5. Note: For COMPx & DACx                                                                                                       \
+						   instances availability, please refer to                                                                                                             \
 						   datasheet */
-#define COMP_INPUT_MINUS_DAC2_CH1                                                                                      \
-	(COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_0) /*!< Comparator input minus connected to DAC2                          \
-						   Channel 1 for COMP6/7. Note: For COMPx & DACx                       \
-						   instances availability, please refer to                             \
+#define COMP_INPUT_MINUS_DAC2_CH1                                                                                                                                                                      \
+	(COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_0) /*!< Comparator input minus connected to DAC2                                                                                                          \
+						   Channel 1 for COMP6/7. Note: For COMPx & DACx                                                                                                       \
+						   instances availability, please refer to                                                                                                             \
 						   datasheet */
-#define COMP_INPUT_MINUS_DAC3_CH1                                                                                      \
-	(COMP_CSR_INMSEL_2) /*!< Comparator input minus connected to DAC3                                              \
-			       Channel 1 for COMP1/3. Note: For COMPx & DACx                                           \
-			       instances availability, please refer to                                                 \
+#define COMP_INPUT_MINUS_DAC3_CH1                                                                                                                                                                      \
+	(COMP_CSR_INMSEL_2) /*!< Comparator input minus connected to DAC3                                                                                                                              \
+			       Channel 1 for COMP1/3. Note: For COMPx & DACx                                                                                                                           \
+			       instances availability, please refer to                                                                                                                                 \
 			       datasheet */
-#define COMP_INPUT_MINUS_DAC3_CH2                                                                                      \
-	(COMP_CSR_INMSEL_2) /*!< Comparator input minus connected to DAC3                                              \
-			       Channel 2 for COMP2/4. Note: For COMPx & DACx                                           \
-			       instances availability, please refer to                                                 \
+#define COMP_INPUT_MINUS_DAC3_CH2                                                                                                                                                                      \
+	(COMP_CSR_INMSEL_2) /*!< Comparator input minus connected to DAC3                                                                                                                              \
+			       Channel 2 for COMP2/4. Note: For COMPx & DACx                                                                                                                           \
+			       instances availability, please refer to                                                                                                                                 \
 			       datasheet */
-#define COMP_INPUT_MINUS_DAC4_CH1                                                                                      \
-	(COMP_CSR_INMSEL_2) /*!< Comparator input minus connected to DAC4                                              \
-			       Channel 1 for COMP5/7. Note: For COMPx & DACx                                           \
-			       instances availability, please refer to                                                 \
+#define COMP_INPUT_MINUS_DAC4_CH1                                                                                                                                                                      \
+	(COMP_CSR_INMSEL_2) /*!< Comparator input minus connected to DAC4                                                                                                                              \
+			       Channel 1 for COMP5/7. Note: For COMPx & DACx                                                                                                                           \
+			       instances availability, please refer to                                                                                                                                 \
 			       datasheet */
-#define COMP_INPUT_MINUS_DAC4_CH2                                                                                      \
-	(COMP_CSR_INMSEL_2) /*!< Comparator input minus connected to DAC4                                              \
-			       Channel 2 for COMP6. Note: For COMPx & DACx                                             \
-			       instances availability, please refer to                                                 \
+#define COMP_INPUT_MINUS_DAC4_CH2                                                                                                                                                                      \
+	(COMP_CSR_INMSEL_2) /*!< Comparator input minus connected to DAC4                                                                                                                              \
+			       Channel 2 for COMP6. Note: For COMPx & DACx                                                                                                                             \
+			       instances availability, please refer to                                                                                                                                 \
 			       datasheet */
-#define COMP_INPUT_MINUS_IO1                                                                                           \
-	(COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_1) /*!< Comparator input minus connected to IO1 (pin                      \
-						   PA4 for COMP1, pin PA5 for COMP2, pin PF1 for                       \
-						   COMP3, pin PE8 for COMP4, pin PB10 for COMP5,                       \
-						   pin PD10 for COMP6, pin PD15 for COMP7). Note:                      \
-						   For COMPx instance availability, please refer                       \
+#define COMP_INPUT_MINUS_IO1                                                                                                                                                                           \
+	(COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_1) /*!< Comparator input minus connected to IO1 (pin                                                                                                      \
+						   PA4 for COMP1, pin PA5 for COMP2, pin PF1 for                                                                                                       \
+						   COMP3, pin PE8 for COMP4, pin PB10 for COMP5,                                                                                                       \
+						   pin PD10 for COMP6, pin PD15 for COMP7). Note:                                                                                                      \
+						   For COMPx instance availability, please refer                                                                                                       \
 						   to datasheet */
-#define COMP_INPUT_MINUS_IO2                                                                                           \
-	(COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_1 | COMP_CSR_INMSEL_0) /*!< Comparator input minus connected to IO2 (pin  \
-								       PA0 for COMP1, pin PA2 for COMP2, pin PC0 for   \
-								       COMP3, pin PB2 for COMP4, pin PD13 for COMP5,   \
-								       pin PB15 for COMP6, pin PB12 for COMP7). Note:  \
-								       For COMPx instance availability, please refer   \
+#define COMP_INPUT_MINUS_IO2                                                                                                                                                                           \
+	(COMP_CSR_INMSEL_2 | COMP_CSR_INMSEL_1 | COMP_CSR_INMSEL_0) /*!< Comparator input minus connected to IO2 (pin                                                                                  \
+								       PA0 for COMP1, pin PA2 for COMP2, pin PC0 for                                                                                   \
+								       COMP3, pin PB2 for COMP4, pin PD13 for COMP5,                                                                                   \
+								       pin PB15 for COMP6, pin PB12 for COMP7). Note:                                                                                  \
+								       For COMPx instance availability, please refer                                                                                   \
 								       to datasheet */
 /**
  * @}
@@ -249,8 +247,8 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
 #define COMP_HYSTERESIS_70MV (COMP_CSR_HYST_2 | COMP_CSR_HYST_1 | COMP_CSR_HYST_0) /*!< Hysteresis level 70mV */
 #define COMP_HYSTERESIS_LOW COMP_HYSTERESIS_10MV				   /*!< Hysteresis level low */
 #define COMP_HYSTERESIS_MEDIUM COMP_HYSTERESIS_40MV				   /*!< Hysteresis level medium */
-#define COMP_HYSTERESIS_HIGH                                                                                           \
-	COMP_HYSTERESIS_70MV /*!< Hysteresis level high                                                                \
+#define COMP_HYSTERESIS_HIGH                                                                                                                                                                           \
+	COMP_HYSTERESIS_70MV /*!< Hysteresis level high                                                                                                                                                \
 			      */
 /**
  * @}
@@ -259,13 +257,13 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
 /** @defgroup COMP_OutputPolarity COMP output Polarity
  * @{
  */
-#define COMP_OUTPUTPOL_NONINVERTED                                                                                     \
-	(0x00000000UL) /*!< COMP output level is not inverted (comparator                                              \
-			  output is high when the input plus is at a higher                                            \
+#define COMP_OUTPUTPOL_NONINVERTED                                                                                                                                                                     \
+	(0x00000000UL) /*!< COMP output level is not inverted (comparator                                                                                                                              \
+			  output is high when the input plus is at a higher                                                                                                                            \
 			  voltage than the input minus) */
-#define COMP_OUTPUTPOL_INVERTED                                                                                        \
-	(COMP_CSR_POLARITY) /*!< COMP output level is inverted     (comparator                                         \
-			       output is low  when the input plus is at a                                              \
+#define COMP_OUTPUTPOL_INVERTED                                                                                                                                                                        \
+	(COMP_CSR_POLARITY) /*!< COMP output level is inverted     (comparator                                                                                                                         \
+			       output is low  when the input plus is at a                                                                                                                              \
 			       higher voltage than the input minus) */
 /**
  * @}
@@ -275,154 +273,154 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
  * @{
  */
 #define COMP_BLANKINGSRC_NONE (0x00000000UL) /*!<Comparator output without blanking */
-#define COMP_BLANKINGSRC_TIM1_OC5_COMP1                                                                                \
-	(COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM1 OC5                                          \
-				 (specific to COMP instance: COMP1). Note: For                                         \
-				 COMPx & TIMx instances availability, please                                           \
+#define COMP_BLANKINGSRC_TIM1_OC5_COMP1                                                                                                                                                                \
+	(COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM1 OC5                                                                                                                          \
+				 (specific to COMP instance: COMP1). Note: For                                                                                                                         \
+				 COMPx & TIMx instances availability, please                                                                                                                           \
 				 refer to datasheet */
-#define COMP_BLANKINGSRC_TIM1_OC5_COMP2                                                                                \
-	(COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM1 OC5                                          \
-				 (specific to COMP instance: COMP2). Note: For                                         \
-				 COMPx & TIMx instances availability, please                                           \
+#define COMP_BLANKINGSRC_TIM1_OC5_COMP2                                                                                                                                                                \
+	(COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM1 OC5                                                                                                                          \
+				 (specific to COMP instance: COMP2). Note: For                                                                                                                         \
+				 COMPx & TIMx instances availability, please                                                                                                                           \
 				 refer to datasheet */
-#define COMP_BLANKINGSRC_TIM1_OC5_COMP3                                                                                \
-	(COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM1 OC5                                          \
-				 (specific to COMP instance: COMP3). Note: For                                         \
-				 COMPx & TIMx instances availability, please                                           \
+#define COMP_BLANKINGSRC_TIM1_OC5_COMP3                                                                                                                                                                \
+	(COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM1 OC5                                                                                                                          \
+				 (specific to COMP instance: COMP3). Note: For                                                                                                                         \
+				 COMPx & TIMx instances availability, please                                                                                                                           \
 				 refer to datasheet */
-#define COMP_BLANKINGSRC_TIM1_OC5_COMP4                                                                                \
-	(COMP_CSR_BLANKING_2) /*!< Comparator output blanking source TIM1 OC5                                          \
-				 (specific to COMP instance: COMP4). Note: For                                         \
-				 COMPx & TIMx instances availability, please                                           \
+#define COMP_BLANKINGSRC_TIM1_OC5_COMP4                                                                                                                                                                \
+	(COMP_CSR_BLANKING_2) /*!< Comparator output blanking source TIM1 OC5                                                                                                                          \
+				 (specific to COMP instance: COMP4). Note: For                                                                                                                         \
+				 COMPx & TIMx instances availability, please                                                                                                                           \
 				 refer to datasheet */
-#define COMP_BLANKINGSRC_TIM1_OC5_COMP5                                                                                \
-	(COMP_CSR_BLANKING_2) /*!< Comparator output blanking source TIM1 OC5                                          \
-				 (specific to COMP instance: COMP5). Note: For                                         \
-				 COMPx & TIMx instances availability, please                                           \
+#define COMP_BLANKINGSRC_TIM1_OC5_COMP5                                                                                                                                                                \
+	(COMP_CSR_BLANKING_2) /*!< Comparator output blanking source TIM1 OC5                                                                                                                          \
+				 (specific to COMP instance: COMP5). Note: For                                                                                                                         \
+				 COMPx & TIMx instances availability, please                                                                                                                           \
 				 refer to datasheet */
-#define COMP_BLANKINGSRC_TIM1_OC5_COMP6                                                                                \
-	(COMP_CSR_BLANKING_2) /*!< Comparator output blanking source TIM1 OC5                                          \
-				 (specific to COMP instance: COMP6). Note: For                                         \
-				 COMPx & TIMx instances availability, please                                           \
+#define COMP_BLANKINGSRC_TIM1_OC5_COMP6                                                                                                                                                                \
+	(COMP_CSR_BLANKING_2) /*!< Comparator output blanking source TIM1 OC5                                                                                                                          \
+				 (specific to COMP instance: COMP6). Note: For                                                                                                                         \
+				 COMPx & TIMx instances availability, please                                                                                                                           \
 				 refer to datasheet */
-#define COMP_BLANKINGSRC_TIM1_OC5_COMP7                                                                                \
-	(COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM1 OC5                                          \
-				 (specific to COMP instance: COMP7). Note: For                                         \
-				 COMPx & TIMx instances availability, please                                           \
+#define COMP_BLANKINGSRC_TIM1_OC5_COMP7                                                                                                                                                                \
+	(COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM1 OC5                                                                                                                          \
+				 (specific to COMP instance: COMP7). Note: For                                                                                                                         \
+				 COMPx & TIMx instances availability, please                                                                                                                           \
 				 refer to datasheet */
-#define COMP_BLANKINGSRC_TIM2_OC3_COMP1                                                                                \
-	(COMP_CSR_BLANKING_1) /*!< Comparator output blanking source TIM2 OC3                                          \
-				 (specific to COMP instance: COMP1). Note: For                                         \
-				 COMPx & TIMx instances availability, please                                           \
+#define COMP_BLANKINGSRC_TIM2_OC3_COMP1                                                                                                                                                                \
+	(COMP_CSR_BLANKING_1) /*!< Comparator output blanking source TIM2 OC3                                                                                                                          \
+				 (specific to COMP instance: COMP1). Note: For                                                                                                                         \
+				 COMPx & TIMx instances availability, please                                                                                                                           \
 				 refer to datasheet */
-#define COMP_BLANKINGSRC_TIM2_OC3_COMP2                                                                                \
-	(COMP_CSR_BLANKING_1) /*!< Comparator output blanking source TIM2 OC3                                          \
-				 (specific to COMP instance: COMP2). Note: For                                         \
-				 COMPx & TIMx instances availability, please                                           \
+#define COMP_BLANKINGSRC_TIM2_OC3_COMP2                                                                                                                                                                \
+	(COMP_CSR_BLANKING_1) /*!< Comparator output blanking source TIM2 OC3                                                                                                                          \
+				 (specific to COMP instance: COMP2). Note: For                                                                                                                         \
+				 COMPx & TIMx instances availability, please                                                                                                                           \
 				 refer to datasheet */
-#define COMP_BLANKINGSRC_TIM2_OC3_COMP5                                                                                \
-	(COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM2 OC3                                          \
-				 (specific to COMP instance: COMP5). Note: For                                         \
-				 COMPx & TIMx instances availability, please                                           \
+#define COMP_BLANKINGSRC_TIM2_OC3_COMP5                                                                                                                                                                \
+	(COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM2 OC3                                                                                                                          \
+				 (specific to COMP instance: COMP5). Note: For                                                                                                                         \
+				 COMPx & TIMx instances availability, please                                                                                                                           \
 				 refer to datasheet */
-#define COMP_BLANKINGSRC_TIM2_OC4_COMP3                                                                                \
-	(COMP_CSR_BLANKING_1 | COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM2 OC4                    \
-						       (specific to COMP instance: COMP3). Note: For                   \
-						       COMPx & TIMx instances availability, please                     \
+#define COMP_BLANKINGSRC_TIM2_OC4_COMP3                                                                                                                                                                \
+	(COMP_CSR_BLANKING_1 | COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM2 OC4                                                                                                    \
+						       (specific to COMP instance: COMP3). Note: For                                                                                                   \
+						       COMPx & TIMx instances availability, please                                                                                                     \
 						       refer to datasheet */
-#define COMP_BLANKINGSRC_TIM2_OC4_COMP6                                                                                \
-	(COMP_CSR_BLANKING_1) /*!< Comparator output blanking source TIM2 OC4                                          \
-				 (specific to COMP instance: COMP6). Note: For                                         \
-				 COMPx & TIMx instances availability, please                                           \
+#define COMP_BLANKINGSRC_TIM2_OC4_COMP6                                                                                                                                                                \
+	(COMP_CSR_BLANKING_1) /*!< Comparator output blanking source TIM2 OC4                                                                                                                          \
+				 (specific to COMP instance: COMP6). Note: For                                                                                                                         \
+				 COMPx & TIMx instances availability, please                                                                                                                           \
 				 refer to datasheet */
-#define COMP_BLANKINGSRC_TIM3_OC3_COMP1                                                                                \
-	(COMP_CSR_BLANKING_1 | COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM3 OC3                    \
-						       (specific to COMP instance: COMP1). Note: For                   \
-						       COMPx & TIMx instances availability, please                     \
+#define COMP_BLANKINGSRC_TIM3_OC3_COMP1                                                                                                                                                                \
+	(COMP_CSR_BLANKING_1 | COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM3 OC3                                                                                                    \
+						       (specific to COMP instance: COMP1). Note: For                                                                                                   \
+						       COMPx & TIMx instances availability, please                                                                                                     \
 						       refer to datasheet */
-#define COMP_BLANKINGSRC_TIM3_OC3_COMP2                                                                                \
-	(COMP_CSR_BLANKING_1 | COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM3 OC3                    \
-						       (specific to COMP instance: COMP2). Note: For                   \
-						       COMPx & TIMx instances availability, please                     \
+#define COMP_BLANKINGSRC_TIM3_OC3_COMP2                                                                                                                                                                \
+	(COMP_CSR_BLANKING_1 | COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM3 OC3                                                                                                    \
+						       (specific to COMP instance: COMP2). Note: For                                                                                                   \
+						       COMPx & TIMx instances availability, please                                                                                                     \
 						       refer to datasheet */
-#define COMP_BLANKINGSRC_TIM3_OC3_COMP3                                                                                \
-	(COMP_CSR_BLANKING_1) /*!< Comparator output blanking source TIM3 OC3                                          \
-				 (specific to COMP instance: COMP3). Note: For                                         \
-				 COMPx & TIMx instances availability, please                                           \
+#define COMP_BLANKINGSRC_TIM3_OC3_COMP3                                                                                                                                                                \
+	(COMP_CSR_BLANKING_1) /*!< Comparator output blanking source TIM3 OC3                                                                                                                          \
+				 (specific to COMP instance: COMP3). Note: For                                                                                                                         \
+				 COMPx & TIMx instances availability, please                                                                                                                           \
 				 refer to datasheet */
-#define COMP_BLANKINGSRC_TIM3_OC3_COMP5                                                                                \
-	(COMP_CSR_BLANKING_1 | COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM3 OC3                    \
-						       (specific to COMP instance: COMP5). Note: For                   \
-						       COMPx & TIMx instances availability, please                     \
+#define COMP_BLANKINGSRC_TIM3_OC3_COMP5                                                                                                                                                                \
+	(COMP_CSR_BLANKING_1 | COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM3 OC3                                                                                                    \
+						       (specific to COMP instance: COMP5). Note: For                                                                                                   \
+						       COMPx & TIMx instances availability, please                                                                                                     \
 						       refer to datasheet */
-#define COMP_BLANKINGSRC_TIM3_OC3_COMP7                                                                                \
-	(COMP_CSR_BLANKING_1 | COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM3 OC3                    \
-						       (specific to COMP instance: COMP7). Note: For                   \
-						       COMPx & TIMx instances availability, please                     \
+#define COMP_BLANKINGSRC_TIM3_OC3_COMP7                                                                                                                                                                \
+	(COMP_CSR_BLANKING_1 | COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM3 OC3                                                                                                    \
+						       (specific to COMP instance: COMP7). Note: For                                                                                                   \
+						       COMPx & TIMx instances availability, please                                                                                                     \
 						       refer to datasheet */
-#define COMP_BLANKINGSRC_TIM3_OC4_COMP4                                                                                \
-	(COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM3 OC4                                          \
-				 (specific to COMP instance: COMP4). Note: For                                         \
-				 COMPx & TIMx instances availability, please                                           \
+#define COMP_BLANKINGSRC_TIM3_OC4_COMP4                                                                                                                                                                \
+	(COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM3 OC4                                                                                                                          \
+				 (specific to COMP instance: COMP4). Note: For                                                                                                                         \
+				 COMPx & TIMx instances availability, please                                                                                                                           \
 				 refer to datasheet */
-#define COMP_BLANKINGSRC_TIM8_OC5_COMP1                                                                                \
-	(COMP_CSR_BLANKING_2) /*!< Comparator output blanking source TIM8 OC5                                          \
-				 (specific to COMP instance: COMP1). Note: For                                         \
-				 COMPx & TIMx instances availability, please                                           \
+#define COMP_BLANKINGSRC_TIM8_OC5_COMP1                                                                                                                                                                \
+	(COMP_CSR_BLANKING_2) /*!< Comparator output blanking source TIM8 OC5                                                                                                                          \
+				 (specific to COMP instance: COMP1). Note: For                                                                                                                         \
+				 COMPx & TIMx instances availability, please                                                                                                                           \
 				 refer to datasheet */
-#define COMP_BLANKINGSRC_TIM8_OC5_COMP2                                                                                \
-	(COMP_CSR_BLANKING_2) /*!< Comparator output blanking source TIM8 OC5                                          \
-				 (specific to COMP instance: COMP2). Note: For                                         \
-				 COMPx & TIMx instances availability, please                                           \
+#define COMP_BLANKINGSRC_TIM8_OC5_COMP2                                                                                                                                                                \
+	(COMP_CSR_BLANKING_2) /*!< Comparator output blanking source TIM8 OC5                                                                                                                          \
+				 (specific to COMP instance: COMP2). Note: For                                                                                                                         \
+				 COMPx & TIMx instances availability, please                                                                                                                           \
 				 refer to datasheet */
-#define COMP_BLANKINGSRC_TIM8_OC5_COMP3                                                                                \
-	(COMP_CSR_BLANKING_2) /*!< Comparator output blanking source TIM8 OC5                                          \
-				 (specific to COMP instance: COMP3). Note: For                                         \
-				 COMPx & TIMx instances availability, please                                           \
+#define COMP_BLANKINGSRC_TIM8_OC5_COMP3                                                                                                                                                                \
+	(COMP_CSR_BLANKING_2) /*!< Comparator output blanking source TIM8 OC5                                                                                                                          \
+				 (specific to COMP instance: COMP3). Note: For                                                                                                                         \
+				 COMPx & TIMx instances availability, please                                                                                                                           \
 				 refer to datasheet */
-#define COMP_BLANKINGSRC_TIM8_OC5_COMP4                                                                                \
-	(COMP_CSR_BLANKING_1) /*!< Comparator output blanking source TIM8 OC5                                          \
-				 (specific to COMP instance: COMP4). Note: For                                         \
-				 COMPx & TIMx instances availability, please                                           \
+#define COMP_BLANKINGSRC_TIM8_OC5_COMP4                                                                                                                                                                \
+	(COMP_CSR_BLANKING_1) /*!< Comparator output blanking source TIM8 OC5                                                                                                                          \
+				 (specific to COMP instance: COMP4). Note: For                                                                                                                         \
+				 COMPx & TIMx instances availability, please                                                                                                                           \
 				 refer to datasheet */
-#define COMP_BLANKINGSRC_TIM8_OC5_COMP5                                                                                \
-	(COMP_CSR_BLANKING_1) /*!< Comparator output blanking source TIM8 OC5                                          \
-				 (specific to COMP instance: COMP5). Note: For                                         \
-				 COMPx & TIMx instances availability, please                                           \
+#define COMP_BLANKINGSRC_TIM8_OC5_COMP5                                                                                                                                                                \
+	(COMP_CSR_BLANKING_1) /*!< Comparator output blanking source TIM8 OC5                                                                                                                          \
+				 (specific to COMP instance: COMP5). Note: For                                                                                                                         \
+				 COMPx & TIMx instances availability, please                                                                                                                           \
 				 refer to datasheet */
-#define COMP_BLANKINGSRC_TIM8_OC5_COMP6                                                                                \
-	(COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM8 OC5                                          \
-				 (specific to COMP instance: COMP6). Note: For                                         \
-				 COMPx & TIMx instances availability, please                                           \
+#define COMP_BLANKINGSRC_TIM8_OC5_COMP6                                                                                                                                                                \
+	(COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM8 OC5                                                                                                                          \
+				 (specific to COMP instance: COMP6). Note: For                                                                                                                         \
+				 COMPx & TIMx instances availability, please                                                                                                                           \
 				 refer to datasheet */
-#define COMP_BLANKINGSRC_TIM8_OC5_COMP7                                                                                \
-	(COMP_CSR_BLANKING_1) /*!< Comparator output blanking source TIM8 OC5                                          \
-				 (specific to COMP instance: COMP7). Note: For                                         \
-				 COMPx & TIMx instances availability, please                                           \
+#define COMP_BLANKINGSRC_TIM8_OC5_COMP7                                                                                                                                                                \
+	(COMP_CSR_BLANKING_1) /*!< Comparator output blanking source TIM8 OC5                                                                                                                          \
+				 (specific to COMP instance: COMP7). Note: For                                                                                                                         \
+				 COMPx & TIMx instances availability, please                                                                                                                           \
 				 refer to datasheet */
-#define COMP_BLANKINGSRC_TIM15_OC1_COMP4                                                                               \
-	(COMP_CSR_BLANKING_1 | COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM15 OC1                   \
-						       (specific to COMP instance: COMP4). Note: For                   \
-						       COMPx & TIMx instances availability, please                     \
+#define COMP_BLANKINGSRC_TIM15_OC1_COMP4                                                                                                                                                               \
+	(COMP_CSR_BLANKING_1 | COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM15 OC1                                                                                                   \
+						       (specific to COMP instance: COMP4). Note: For                                                                                                   \
+						       COMPx & TIMx instances availability, please                                                                                                     \
 						       refer to datasheet */
-#define COMP_BLANKINGSRC_TIM15_OC2_COMP6                                                                               \
-	(COMP_CSR_BLANKING_1 | COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM15 OC2                   \
-						       (specific to COMP instance: COMP6). Note: For                   \
-						       COMPx & TIMx instances availability, please                     \
+#define COMP_BLANKINGSRC_TIM15_OC2_COMP6                                                                                                                                                               \
+	(COMP_CSR_BLANKING_1 | COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM15 OC2                                                                                                   \
+						       (specific to COMP instance: COMP6). Note: For                                                                                                   \
+						       COMPx & TIMx instances availability, please                                                                                                     \
 						       refer to datasheet */
-#define COMP_BLANKINGSRC_TIM15_OC2_COMP7                                                                               \
-	(COMP_CSR_BLANKING_2) /*!< Comparator output blanking source TIM15 OC3                                         \
-				 (specific to COMP instance: COMP7). Note: For                                         \
-				 COMPx & TIMx instances availability, please                                           \
+#define COMP_BLANKINGSRC_TIM15_OC2_COMP7                                                                                                                                                               \
+	(COMP_CSR_BLANKING_2) /*!< Comparator output blanking source TIM15 OC3                                                                                                                         \
+				 (specific to COMP instance: COMP7). Note: For                                                                                                                         \
+				 COMPx & TIMx instances availability, please                                                                                                                           \
 				 refer to datasheet */
-#define COMP_BLANKINGSRC_TIM20_OC5                                                                                     \
-	(COMP_CSR_BLANKING_2 | COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM20 OC5                   \
+#define COMP_BLANKINGSRC_TIM20_OC5                                                                                                                                                                     \
+	(COMP_CSR_BLANKING_2 | COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM20 OC5                                                                                                   \
 						       (Common to all COMP instances) */
-#define COMP_BLANKINGSRC_TIM15_OC1                                                                                     \
-	(COMP_CSR_BLANKING_2 | COMP_CSR_BLANKING_1) /*!< Comparator output blanking source TIM15 OC1                   \
+#define COMP_BLANKINGSRC_TIM15_OC1                                                                                                                                                                     \
+	(COMP_CSR_BLANKING_2 | COMP_CSR_BLANKING_1) /*!< Comparator output blanking source TIM15 OC1                                                                                                   \
 						       (Common to all COMP instances) */
-#define COMP_BLANKINGSRC_TIM4_OC3                                                                                      \
-	(COMP_CSR_BLANKING_2 | COMP_CSR_BLANKING_1 | COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM4  \
+#define COMP_BLANKINGSRC_TIM4_OC3                                                                                                                                                                      \
+	(COMP_CSR_BLANKING_2 | COMP_CSR_BLANKING_1 | COMP_CSR_BLANKING_0) /*!< Comparator output blanking source TIM4                                                                                  \
 									     OC3 (Common to all COMP instances) */
 
 /**
@@ -449,33 +447,33 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
 /** @defgroup COMP_EXTI_TriggerMode COMP output to EXTI
  * @{
  */
-#define COMP_TRIGGERMODE_NONE                                                                                          \
-	(0x00000000UL) /*!< Comparator output triggering no External Interrupt                                         \
+#define COMP_TRIGGERMODE_NONE                                                                                                                                                                          \
+	(0x00000000UL) /*!< Comparator output triggering no External Interrupt                                                                                                                         \
 			  Line */
-#define COMP_TRIGGERMODE_IT_RISING                                                                                     \
-	(COMP_EXTI_IT | COMP_EXTI_RISING) /*!< Comparator output triggering External                                   \
-					     Interrupt Line event with interruption, on                                \
+#define COMP_TRIGGERMODE_IT_RISING                                                                                                                                                                     \
+	(COMP_EXTI_IT | COMP_EXTI_RISING) /*!< Comparator output triggering External                                                                                                                   \
+					     Interrupt Line event with interruption, on                                                                                                                \
 					     rising edge */
-#define COMP_TRIGGERMODE_IT_FALLING                                                                                    \
-	(COMP_EXTI_IT | COMP_EXTI_FALLING) /*!< Comparator output triggering External                                  \
-					      Interrupt Line event with interruption, on                               \
+#define COMP_TRIGGERMODE_IT_FALLING                                                                                                                                                                    \
+	(COMP_EXTI_IT | COMP_EXTI_FALLING) /*!< Comparator output triggering External                                                                                                                  \
+					      Interrupt Line event with interruption, on                                                                                                               \
 					      falling edge */
-#define COMP_TRIGGERMODE_IT_RISING_FALLING                                                                             \
-	(COMP_EXTI_IT | COMP_EXTI_RISING | COMP_EXTI_FALLING) /*!< Comparator output triggering External               \
-								 Interrupt Line event with interruption, on both       \
+#define COMP_TRIGGERMODE_IT_RISING_FALLING                                                                                                                                                             \
+	(COMP_EXTI_IT | COMP_EXTI_RISING | COMP_EXTI_FALLING) /*!< Comparator output triggering External                                                                                               \
+								 Interrupt Line event with interruption, on both                                                                                       \
 								 rising and falling edges */
-#define COMP_TRIGGERMODE_EVENT_RISING                                                                                  \
-	(COMP_EXTI_EVENT | COMP_EXTI_RISING) /*!< Comparator output triggering External                                \
-						Interrupt Line event only (without                                     \
+#define COMP_TRIGGERMODE_EVENT_RISING                                                                                                                                                                  \
+	(COMP_EXTI_EVENT | COMP_EXTI_RISING) /*!< Comparator output triggering External                                                                                                                \
+						Interrupt Line event only (without                                                                                                                     \
 						interruption), on rising edge */
-#define COMP_TRIGGERMODE_EVENT_FALLING                                                                                 \
-	(COMP_EXTI_EVENT | COMP_EXTI_FALLING) /*!< Comparator output triggering External                               \
-						 Interrupt Line event only (without                                    \
+#define COMP_TRIGGERMODE_EVENT_FALLING                                                                                                                                                                 \
+	(COMP_EXTI_EVENT | COMP_EXTI_FALLING) /*!< Comparator output triggering External                                                                                                               \
+						 Interrupt Line event only (without                                                                                                                    \
 						 interruption), on falling edge */
-#define COMP_TRIGGERMODE_EVENT_RISING_FALLING                                                                          \
-	(COMP_EXTI_EVENT | COMP_EXTI_RISING | COMP_EXTI_FALLING) /*!< Comparator output triggering External            \
-								    Interrupt Line event only (without                 \
-								    interruption), on both rising and falling edges    \
+#define COMP_TRIGGERMODE_EVENT_RISING_FALLING                                                                                                                                                          \
+	(COMP_EXTI_EVENT | COMP_EXTI_RISING | COMP_EXTI_FALLING) /*!< Comparator output triggering External                                                                                            \
+								    Interrupt Line event only (without                                                                                                 \
+								    interruption), on both rising and falling edges                                                                                    \
 								  */
 /**
  * @}
@@ -499,11 +497,11 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
  * @retval None
  */
 #if (USE_HAL_COMP_REGISTER_CALLBACKS == 1)
-#define __HAL_COMP_RESET_HANDLE_STATE(__HANDLE__)                                                                      \
-	do {                                                                                                           \
-		(__HANDLE__)->State = HAL_COMP_STATE_RESET;                                                            \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define __HAL_COMP_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_COMP_STATE_RESET;                                                                                                                                            \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0)
 #else
 #define __HAL_COMP_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_COMP_STATE_RESET)
@@ -584,20 +582,20 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
  * @brief  Enable the COMP1 EXTI line rising & falling edge trigger.
  * @retval None
  */
-#define __HAL_COMP_COMP1_EXTI_ENABLE_RISING_FALLING_EDGE()                                                             \
-	do {                                                                                                           \
-		LL_EXTI_EnableRisingTrig_0_31(COMP_EXTI_LINE_COMP1);                                                   \
-		LL_EXTI_EnableFallingTrig_0_31(COMP_EXTI_LINE_COMP1);                                                  \
+#define __HAL_COMP_COMP1_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                             \
+	do {                                                                                                                                                                                           \
+		LL_EXTI_EnableRisingTrig_0_31(COMP_EXTI_LINE_COMP1);                                                                                                                                   \
+		LL_EXTI_EnableFallingTrig_0_31(COMP_EXTI_LINE_COMP1);                                                                                                                                  \
 	} while (0)
 
 /**
  * @brief  Disable the COMP1 EXTI line rising & falling edge trigger.
  * @retval None
  */
-#define __HAL_COMP_COMP1_EXTI_DISABLE_RISING_FALLING_EDGE()                                                            \
-	do {                                                                                                           \
-		LL_EXTI_DisableRisingTrig_0_31(COMP_EXTI_LINE_COMP1);                                                  \
-		LL_EXTI_DisableFallingTrig_0_31(COMP_EXTI_LINE_COMP1);                                                 \
+#define __HAL_COMP_COMP1_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                            \
+	do {                                                                                                                                                                                           \
+		LL_EXTI_DisableRisingTrig_0_31(COMP_EXTI_LINE_COMP1);                                                                                                                                  \
+		LL_EXTI_DisableFallingTrig_0_31(COMP_EXTI_LINE_COMP1);                                                                                                                                 \
 	} while (0)
 
 /**
@@ -670,20 +668,20 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
  * @brief  Enable the COMP2 EXTI line rising & falling edge trigger.
  * @retval None
  */
-#define __HAL_COMP_COMP2_EXTI_ENABLE_RISING_FALLING_EDGE()                                                             \
-	do {                                                                                                           \
-		LL_EXTI_EnableRisingTrig_0_31(COMP_EXTI_LINE_COMP2);                                                   \
-		LL_EXTI_EnableFallingTrig_0_31(COMP_EXTI_LINE_COMP2);                                                  \
+#define __HAL_COMP_COMP2_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                             \
+	do {                                                                                                                                                                                           \
+		LL_EXTI_EnableRisingTrig_0_31(COMP_EXTI_LINE_COMP2);                                                                                                                                   \
+		LL_EXTI_EnableFallingTrig_0_31(COMP_EXTI_LINE_COMP2);                                                                                                                                  \
 	} while (0)
 
 /**
  * @brief  Disable the COMP2 EXTI line rising & falling edge trigger.
  * @retval None
  */
-#define __HAL_COMP_COMP2_EXTI_DISABLE_RISING_FALLING_EDGE()                                                            \
-	do {                                                                                                           \
-		LL_EXTI_DisableRisingTrig_0_31(COMP_EXTI_LINE_COMP2);                                                  \
-		LL_EXTI_DisableFallingTrig_0_31(COMP_EXTI_LINE_COMP2);                                                 \
+#define __HAL_COMP_COMP2_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                            \
+	do {                                                                                                                                                                                           \
+		LL_EXTI_DisableRisingTrig_0_31(COMP_EXTI_LINE_COMP2);                                                                                                                                  \
+		LL_EXTI_DisableFallingTrig_0_31(COMP_EXTI_LINE_COMP2);                                                                                                                                 \
 	} while (0)
 
 /**
@@ -756,20 +754,20 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
  * @brief  Enable the COMP3 EXTI line rising & falling edge trigger.
  * @retval None
  */
-#define __HAL_COMP_COMP3_EXTI_ENABLE_RISING_FALLING_EDGE()                                                             \
-	do {                                                                                                           \
-		LL_EXTI_EnableRisingTrig_0_31(COMP_EXTI_LINE_COMP3);                                                   \
-		LL_EXTI_EnableFallingTrig_0_31(COMP_EXTI_LINE_COMP3);                                                  \
+#define __HAL_COMP_COMP3_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                             \
+	do {                                                                                                                                                                                           \
+		LL_EXTI_EnableRisingTrig_0_31(COMP_EXTI_LINE_COMP3);                                                                                                                                   \
+		LL_EXTI_EnableFallingTrig_0_31(COMP_EXTI_LINE_COMP3);                                                                                                                                  \
 	} while (0)
 
 /**
  * @brief  Disable the COMP3 EXTI line rising & falling edge trigger.
  * @retval None
  */
-#define __HAL_COMP_COMP3_EXTI_DISABLE_RISING_FALLING_EDGE()                                                            \
-	do {                                                                                                           \
-		LL_EXTI_DisableRisingTrig_0_31(COMP_EXTI_LINE_COMP3);                                                  \
-		LL_EXTI_DisableFallingTrig_0_31(COMP_EXTI_LINE_COMP3);                                                 \
+#define __HAL_COMP_COMP3_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                            \
+	do {                                                                                                                                                                                           \
+		LL_EXTI_DisableRisingTrig_0_31(COMP_EXTI_LINE_COMP3);                                                                                                                                  \
+		LL_EXTI_DisableFallingTrig_0_31(COMP_EXTI_LINE_COMP3);                                                                                                                                 \
 	} while (0)
 
 /**
@@ -842,20 +840,20 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
  * @brief  Enable the COMP4 EXTI line rising & falling edge trigger.
  * @retval None
  */
-#define __HAL_COMP_COMP4_EXTI_ENABLE_RISING_FALLING_EDGE()                                                             \
-	do {                                                                                                           \
-		LL_EXTI_EnableRisingTrig_0_31(COMP_EXTI_LINE_COMP4);                                                   \
-		LL_EXTI_EnableFallingTrig_0_31(COMP_EXTI_LINE_COMP4);                                                  \
+#define __HAL_COMP_COMP4_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                             \
+	do {                                                                                                                                                                                           \
+		LL_EXTI_EnableRisingTrig_0_31(COMP_EXTI_LINE_COMP4);                                                                                                                                   \
+		LL_EXTI_EnableFallingTrig_0_31(COMP_EXTI_LINE_COMP4);                                                                                                                                  \
 	} while (0)
 
 /**
  * @brief  Disable the COMP4 EXTI line rising & falling edge trigger.
  * @retval None
  */
-#define __HAL_COMP_COMP4_EXTI_DISABLE_RISING_FALLING_EDGE()                                                            \
-	do {                                                                                                           \
-		LL_EXTI_DisableRisingTrig_0_31(COMP_EXTI_LINE_COMP4);                                                  \
-		LL_EXTI_DisableFallingTrig_0_31(COMP_EXTI_LINE_COMP4);                                                 \
+#define __HAL_COMP_COMP4_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                            \
+	do {                                                                                                                                                                                           \
+		LL_EXTI_DisableRisingTrig_0_31(COMP_EXTI_LINE_COMP4);                                                                                                                                  \
+		LL_EXTI_DisableFallingTrig_0_31(COMP_EXTI_LINE_COMP4);                                                                                                                                 \
 	} while (0)
 
 /**
@@ -929,20 +927,20 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
  * @brief  Enable the COMP5 EXTI line rising & falling edge trigger.
  * @retval None
  */
-#define __HAL_COMP_COMP5_EXTI_ENABLE_RISING_FALLING_EDGE()                                                             \
-	do {                                                                                                           \
-		LL_EXTI_EnableRisingTrig_0_31(COMP_EXTI_LINE_COMP5);                                                   \
-		LL_EXTI_EnableFallingTrig_0_31(COMP_EXTI_LINE_COMP5);                                                  \
+#define __HAL_COMP_COMP5_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                             \
+	do {                                                                                                                                                                                           \
+		LL_EXTI_EnableRisingTrig_0_31(COMP_EXTI_LINE_COMP5);                                                                                                                                   \
+		LL_EXTI_EnableFallingTrig_0_31(COMP_EXTI_LINE_COMP5);                                                                                                                                  \
 	} while (0)
 
 /**
  * @brief  Disable the COMP5 EXTI line rising & falling edge trigger.
  * @retval None
  */
-#define __HAL_COMP_COMP5_EXTI_DISABLE_RISING_FALLING_EDGE()                                                            \
-	do {                                                                                                           \
-		LL_EXTI_DisableRisingTrig_0_31(COMP_EXTI_LINE_COMP5);                                                  \
-		LL_EXTI_DisableFallingTrig_0_31(COMP_EXTI_LINE_COMP5);                                                 \
+#define __HAL_COMP_COMP5_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                            \
+	do {                                                                                                                                                                                           \
+		LL_EXTI_DisableRisingTrig_0_31(COMP_EXTI_LINE_COMP5);                                                                                                                                  \
+		LL_EXTI_DisableFallingTrig_0_31(COMP_EXTI_LINE_COMP5);                                                                                                                                 \
 	} while (0)
 
 /**
@@ -987,7 +985,7 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
  */
 #define __HAL_COMP_COMP5_EXTI_CLEAR_FLAG() LL_EXTI_ClearFlag_0_31(COMP_EXTI_LINE_COMP5)
 
-#endif /* STM32G414xx || STM32G474xx || STM32G484xx || STM32G473xx ||                                                  \
+#endif /* STM32G414xx || STM32G474xx || STM32G484xx || STM32G473xx ||                                                                                                                                  \
 	  STM32G483xx*/
 #if defined(STM32G414xx) || defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
 /**
@@ -1018,20 +1016,20 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
  * @brief  Enable the COMP6 EXTI line rising & falling edge trigger.
  * @retval None
  */
-#define __HAL_COMP_COMP6_EXTI_ENABLE_RISING_FALLING_EDGE()                                                             \
-	do {                                                                                                           \
-		LL_EXTI_EnableRisingTrig_32_63(COMP_EXTI_LINE_COMP6);                                                  \
-		LL_EXTI_EnableFallingTrig_32_63(COMP_EXTI_LINE_COMP6);                                                 \
+#define __HAL_COMP_COMP6_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                             \
+	do {                                                                                                                                                                                           \
+		LL_EXTI_EnableRisingTrig_32_63(COMP_EXTI_LINE_COMP6);                                                                                                                                  \
+		LL_EXTI_EnableFallingTrig_32_63(COMP_EXTI_LINE_COMP6);                                                                                                                                 \
 	} while (0)
 
 /**
  * @brief  Disable the COMP6 EXTI line rising & falling edge trigger.
  * @retval None
  */
-#define __HAL_COMP_COMP6_EXTI_DISABLE_RISING_FALLING_EDGE()                                                            \
-	do {                                                                                                           \
-		LL_EXTI_DisableRisingTrig_32_63(COMP_EXTI_LINE_COMP6);                                                 \
-		LL_EXTI_DisableFallingTrig_32_63(COMP_EXTI_LINE_COMP6);                                                \
+#define __HAL_COMP_COMP6_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                            \
+	do {                                                                                                                                                                                           \
+		LL_EXTI_DisableRisingTrig_32_63(COMP_EXTI_LINE_COMP6);                                                                                                                                 \
+		LL_EXTI_DisableFallingTrig_32_63(COMP_EXTI_LINE_COMP6);                                                                                                                                \
 	} while (0)
 
 /**
@@ -1076,7 +1074,7 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
  */
 #define __HAL_COMP_COMP6_EXTI_CLEAR_FLAG() LL_EXTI_ClearFlag_32_63(COMP_EXTI_LINE_COMP6)
 
-#endif /* STM32G414xx || STM32G474xx || STM32G484xx || STM32G473xx ||                                                  \
+#endif /* STM32G414xx || STM32G474xx || STM32G484xx || STM32G473xx ||                                                                                                                                  \
 	  STM32G483xx*/
 #if defined(STM32G414xx) || defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
 /**
@@ -1107,20 +1105,20 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
  * @brief  Enable the COMP7 EXTI line rising & falling edge trigger.
  * @retval None
  */
-#define __HAL_COMP_COMP7_EXTI_ENABLE_RISING_FALLING_EDGE()                                                             \
-	do {                                                                                                           \
-		LL_EXTI_EnableRisingTrig_32_63(COMP_EXTI_LINE_COMP7);                                                  \
-		LL_EXTI_EnableFallingTrig_32_63(COMP_EXTI_LINE_COMP7);                                                 \
+#define __HAL_COMP_COMP7_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                             \
+	do {                                                                                                                                                                                           \
+		LL_EXTI_EnableRisingTrig_32_63(COMP_EXTI_LINE_COMP7);                                                                                                                                  \
+		LL_EXTI_EnableFallingTrig_32_63(COMP_EXTI_LINE_COMP7);                                                                                                                                 \
 	} while (0)
 
 /**
  * @brief  Disable the COMP7 EXTI line rising & falling edge trigger.
  * @retval None
  */
-#define __HAL_COMP_COMP7_EXTI_DISABLE_RISING_FALLING_EDGE()                                                            \
-	do {                                                                                                           \
-		LL_EXTI_DisableRisingTrig_32_63(COMP_EXTI_LINE_COMP7);                                                 \
-		LL_EXTI_DisableFallingTrig_32_63(COMP_EXTI_LINE_COMP7);                                                \
+#define __HAL_COMP_COMP7_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                            \
+	do {                                                                                                                                                                                           \
+		LL_EXTI_DisableRisingTrig_32_63(COMP_EXTI_LINE_COMP7);                                                                                                                                 \
+		LL_EXTI_DisableFallingTrig_32_63(COMP_EXTI_LINE_COMP7);                                                                                                                                \
 	} while (0)
 
 /**
@@ -1165,7 +1163,7 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
  */
 #define __HAL_COMP_COMP7_EXTI_CLEAR_FLAG() LL_EXTI_ClearFlag_32_63(COMP_EXTI_LINE_COMP7)
 
-#endif /* STM32G414xx ||  STM32G474xx || STM32G484xx || STM32G473xx ||                                                 \
+#endif /* STM32G414xx ||  STM32G474xx || STM32G484xx || STM32G473xx ||                                                                                                                                 \
 	  STM32G483xx */
 /**
  * @}
@@ -1184,55 +1182,54 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
 /** @defgroup COMP_ExtiLine COMP EXTI Lines
  * @{
  */
-#if defined(STM32G414xx) || defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) ||                    \
-    defined(STM32G483xx) || defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx) ||                    \
+#if defined(STM32G414xx) || defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx) || defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx) ||    \
     defined(STM32G471xx) || defined(STM32G491xx) || defined(STM32G4A1xx)
-#define COMP_EXTI_LINE_COMP1                                                                                           \
-	(LL_EXTI_LINE_21) /*!< EXTI line 21 connected to COMP1 output. Note:                                           \
-			     For COMPx instance availability, please refer to                                          \
+#define COMP_EXTI_LINE_COMP1                                                                                                                                                                           \
+	(LL_EXTI_LINE_21) /*!< EXTI line 21 connected to COMP1 output. Note:                                                                                                                           \
+			     For COMPx instance availability, please refer to                                                                                                                          \
 			     datasheet */
-#define COMP_EXTI_LINE_COMP2                                                                                           \
-	(LL_EXTI_LINE_22) /*!< EXTI line 22 connected to COMP2 output. Note:                                           \
-			     For COMPx instance availability, please refer to                                          \
+#define COMP_EXTI_LINE_COMP2                                                                                                                                                                           \
+	(LL_EXTI_LINE_22) /*!< EXTI line 22 connected to COMP2 output. Note:                                                                                                                           \
+			     For COMPx instance availability, please refer to                                                                                                                          \
 			     datasheet */
-#define COMP_EXTI_LINE_COMP3                                                                                           \
-	(LL_EXTI_LINE_29) /*!< EXTI line 29 connected to COMP3 output. Note:                                           \
-			     For COMPx instance availability, please refer to                                          \
+#define COMP_EXTI_LINE_COMP3                                                                                                                                                                           \
+	(LL_EXTI_LINE_29) /*!< EXTI line 29 connected to COMP3 output. Note:                                                                                                                           \
+			     For COMPx instance availability, please refer to                                                                                                                          \
 			     datasheet */
-#define COMP_EXTI_LINE_COMP4                                                                                           \
-	(LL_EXTI_LINE_30) /*!< EXTI line 30 connected to COMP4 output. Note:                                           \
-			     For COMPx instance availability, please refer to                                          \
+#define COMP_EXTI_LINE_COMP4                                                                                                                                                                           \
+	(LL_EXTI_LINE_30) /*!< EXTI line 30 connected to COMP4 output. Note:                                                                                                                           \
+			     For COMPx instance availability, please refer to                                                                                                                          \
 			     datasheet */
 #elif defined(STM32G411xB) || defined(STM32G411xC)
-#define COMP_EXTI_LINE_COMP1                                                                                           \
-	(LL_EXTI_LINE_21) /*!< EXTI line 21 connected to COMP1 output. Note:                                           \
-			     For COMPx instance availability, please refer to                                          \
+#define COMP_EXTI_LINE_COMP1                                                                                                                                                                           \
+	(LL_EXTI_LINE_21) /*!< EXTI line 21 connected to COMP1 output. Note:                                                                                                                           \
+			     For COMPx instance availability, please refer to                                                                                                                          \
 			     datasheet */
-#define COMP_EXTI_LINE_COMP2                                                                                           \
-	(LL_EXTI_LINE_22) /*!< EXTI line 22 connected to COMP2 output. Note:                                           \
-			     For COMPx instance availability, please refer to                                          \
+#define COMP_EXTI_LINE_COMP2                                                                                                                                                                           \
+	(LL_EXTI_LINE_22) /*!< EXTI line 22 connected to COMP2 output. Note:                                                                                                                           \
+			     For COMPx instance availability, please refer to                                                                                                                          \
 			     datasheet */
-#define COMP_EXTI_LINE_COMP3                                                                                           \
-	(LL_EXTI_LINE_29) /*!< EXTI line 29 connected to COMP3 output. Note:                                           \
-			     For COMPx instance availability, please refer to                                          \
+#define COMP_EXTI_LINE_COMP3                                                                                                                                                                           \
+	(LL_EXTI_LINE_29) /*!< EXTI line 29 connected to COMP3 output. Note:                                                                                                                           \
+			     For COMPx instance availability, please refer to                                                                                                                          \
 			     datasheet */
-#endif			  /* STM32G414xx || STM32G474xx || STM32G484xx || STM32G473xx ||                               \
-			     STM32G483xx || STM32GBK1CB || STM32G431xx || STM32G441xx ||                               \
+#endif			  /* STM32G414xx || STM32G474xx || STM32G484xx || STM32G473xx ||                                                                                                               \
+			     STM32G483xx || STM32GBK1CB || STM32G431xx || STM32G441xx ||                                                                                                               \
 			     STM32G471xx || STM32G491xx || STM32G4A1xx */
 #if defined(STM32G414xx) || defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
-#define COMP_EXTI_LINE_COMP5                                                                                           \
-	(LL_EXTI_LINE_31) /*!< EXTI line 31 connected to COMP5 output. Note:                                           \
-			     For COMPx instance availability, please refer to                                          \
+#define COMP_EXTI_LINE_COMP5                                                                                                                                                                           \
+	(LL_EXTI_LINE_31) /*!< EXTI line 31 connected to COMP5 output. Note:                                                                                                                           \
+			     For COMPx instance availability, please refer to                                                                                                                          \
 			     datasheet */
-#define COMP_EXTI_LINE_COMP6                                                                                           \
-	(LL_EXTI_LINE_32) /*!< EXTI line 32 connected to COMP6 output. Note:                                           \
-			     For COMPx instance availability, please refer to                                          \
+#define COMP_EXTI_LINE_COMP6                                                                                                                                                                           \
+	(LL_EXTI_LINE_32) /*!< EXTI line 32 connected to COMP6 output. Note:                                                                                                                           \
+			     For COMPx instance availability, please refer to                                                                                                                          \
 			     datasheet */
-#define COMP_EXTI_LINE_COMP7                                                                                           \
-	(LL_EXTI_LINE_33) /*!< EXTI line 33 connected to COMP7 output. Note:                                           \
-			     For COMPx instance availability, please refer to                                          \
+#define COMP_EXTI_LINE_COMP7                                                                                                                                                                           \
+	(LL_EXTI_LINE_33) /*!< EXTI line 33 connected to COMP7 output. Note:                                                                                                                           \
+			     For COMPx instance availability, please refer to                                                                                                                          \
 			     datasheet */
-#endif			  /* STM32G414xx || STM32G474xx || STM32G484xx || STM32G473xx ||                               \
+#endif			  /* STM32G414xx || STM32G474xx || STM32G484xx || STM32G473xx ||                                                                                                               \
 			     STM32G483xx */
 /**
  * @}
@@ -1244,8 +1241,8 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
 #define COMP_EXTI_IT (0x00000001UL)	/*!< EXTI line event with interruption */
 #define COMP_EXTI_EVENT (0x00000002UL)	/*!< EXTI line event only (without interruption) */
 #define COMP_EXTI_RISING (0x00000010UL) /*!< EXTI line event on rising edge */
-#define COMP_EXTI_FALLING                                                                                              \
-	(0x00000020UL) /*!< EXTI line event on falling edge                                                            \
+#define COMP_EXTI_FALLING                                                                                                                                                                              \
+	(0x00000020UL) /*!< EXTI line event on falling edge                                                                                                                                            \
 			*/
 /**
  * @}
@@ -1270,27 +1267,20 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
  * @retval value of @ref COMP_ExtiLine
  */
 #if defined(STM32G414xx) || defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
-#define COMP_GET_EXTI_LINE(__INSTANCE__)                                                                               \
-	(((__INSTANCE__) == COMP1)   ? COMP_EXTI_LINE_COMP1                                                            \
-	 : ((__INSTANCE__) == COMP2) ? COMP_EXTI_LINE_COMP2                                                            \
-	 : ((__INSTANCE__) == COMP3) ? COMP_EXTI_LINE_COMP3                                                            \
-	 : ((__INSTANCE__) == COMP4) ? COMP_EXTI_LINE_COMP4                                                            \
-	 : ((__INSTANCE__) == COMP5) ? COMP_EXTI_LINE_COMP5                                                            \
-	 : ((__INSTANCE__) == COMP6) ? COMP_EXTI_LINE_COMP6                                                            \
+#define COMP_GET_EXTI_LINE(__INSTANCE__)                                                                                                                                                               \
+	(((__INSTANCE__) == COMP1)   ? COMP_EXTI_LINE_COMP1                                                                                                                                            \
+	 : ((__INSTANCE__) == COMP2) ? COMP_EXTI_LINE_COMP2                                                                                                                                            \
+	 : ((__INSTANCE__) == COMP3) ? COMP_EXTI_LINE_COMP3                                                                                                                                            \
+	 : ((__INSTANCE__) == COMP4) ? COMP_EXTI_LINE_COMP4                                                                                                                                            \
+	 : ((__INSTANCE__) == COMP5) ? COMP_EXTI_LINE_COMP5                                                                                                                                            \
+	 : ((__INSTANCE__) == COMP6) ? COMP_EXTI_LINE_COMP6                                                                                                                                            \
 				     : COMP_EXTI_LINE_COMP7)
-#elif defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx) || defined(STM32G471xx) ||                  \
-    defined(STM32G491xx) || defined(STM32G4A1xx)
-#define COMP_GET_EXTI_LINE(__INSTANCE__)                                                                               \
-	(((__INSTANCE__) == COMP1)   ? COMP_EXTI_LINE_COMP1                                                            \
-	 : ((__INSTANCE__) == COMP2) ? COMP_EXTI_LINE_COMP2                                                            \
-	 : ((__INSTANCE__) == COMP3) ? COMP_EXTI_LINE_COMP3                                                            \
-				     : COMP_EXTI_LINE_COMP4)
+#elif defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx) || defined(STM32G471xx) || defined(STM32G491xx) || defined(STM32G4A1xx)
+#define COMP_GET_EXTI_LINE(__INSTANCE__)                                                                                                                                                               \
+	(((__INSTANCE__) == COMP1) ? COMP_EXTI_LINE_COMP1 : ((__INSTANCE__) == COMP2) ? COMP_EXTI_LINE_COMP2 : ((__INSTANCE__) == COMP3) ? COMP_EXTI_LINE_COMP3 : COMP_EXTI_LINE_COMP4)
 #elif defined(STM32G411xB) || defined(STM32G411xC)
-#define COMP_GET_EXTI_LINE(__INSTANCE__)                                                                               \
-	(((__INSTANCE__) == COMP1)   ? COMP_EXTI_LINE_COMP1                                                            \
-	 : ((__INSTANCE__) == COMP2) ? COMP_EXTI_LINE_COMP2                                                            \
-				     : COMP_EXTI_LINE_COMP3)
-#endif /* STM32G414xx || STM32G474xx || STM32G484xx || STM32G473xx ||                                                  \
+#define COMP_GET_EXTI_LINE(__INSTANCE__) (((__INSTANCE__) == COMP1) ? COMP_EXTI_LINE_COMP1 : ((__INSTANCE__) == COMP2) ? COMP_EXTI_LINE_COMP2 : COMP_EXTI_LINE_COMP3)
+#endif /* STM32G414xx || STM32G474xx || STM32G484xx || STM32G473xx ||                                                                                                                                  \
 	  STM32G483xx */
 /**
  * @}
@@ -1300,221 +1290,137 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
  * input parameters
  * @{
  */
-#define IS_COMP_INPUT_PLUS(__COMP_INSTANCE__, __INPUT_PLUS__)                                                          \
-	(((__INPUT_PLUS__) == COMP_INPUT_PLUS_IO1) || ((__INPUT_PLUS__) == COMP_INPUT_PLUS_IO2))
+#define IS_COMP_INPUT_PLUS(__COMP_INSTANCE__, __INPUT_PLUS__) (((__INPUT_PLUS__) == COMP_INPUT_PLUS_IO1) || ((__INPUT_PLUS__) == COMP_INPUT_PLUS_IO2))
 
 #if defined(STM32G414xx) || defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
-#define IS_COMP_INPUT_MINUS(__COMP_INSTANCE__, __INPUT_MINUS__)                                                        \
-	(((__INPUT_MINUS__) == COMP_INPUT_MINUS_1_4VREFINT) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_1_2VREFINT) ||   \
-	 ((__INPUT_MINUS__) == COMP_INPUT_MINUS_3_4VREFINT) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_VREFINT) ||      \
-	 ((__INPUT_MINUS__) == COMP_INPUT_MINUS_IO1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_IO2) ||                 \
-	 (((__COMP_INSTANCE__) == COMP1) &&                                                                            \
-	  (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC3_CH1))) ||   \
-	 (((__COMP_INSTANCE__) == COMP2) &&                                                                            \
-	  (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH2) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC3_CH2))) ||   \
-	 (((__COMP_INSTANCE__) == COMP3) &&                                                                            \
-	  (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC3_CH1))) ||   \
-	 (((__COMP_INSTANCE__) == COMP4) &&                                                                            \
-	  (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC3_CH2))) ||   \
-	 (((__COMP_INSTANCE__) == COMP5) &&                                                                            \
-	  (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH2) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC4_CH1))) ||   \
-	 (((__COMP_INSTANCE__) == COMP6) &&                                                                            \
-	  (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC2_CH1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC4_CH2))) ||   \
-	 (((__COMP_INSTANCE__) == COMP7) &&                                                                            \
-	  (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC2_CH1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC4_CH1))))
-#elif defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx) || defined(STM32G471xx) ||                  \
-    defined(STM32G491xx) || defined(STM32G4A1xx)
-#define IS_COMP_INPUT_MINUS(__COMP_INSTANCE__, __INPUT_MINUS__)                                                        \
-	(((__INPUT_MINUS__) == COMP_INPUT_MINUS_1_4VREFINT) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_1_2VREFINT) ||   \
-	 ((__INPUT_MINUS__) == COMP_INPUT_MINUS_3_4VREFINT) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_VREFINT) ||      \
-	 ((__INPUT_MINUS__) == COMP_INPUT_MINUS_IO1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_IO2) ||                 \
-	 (((__COMP_INSTANCE__) == COMP1) &&                                                                            \
-	  (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC3_CH1))) ||   \
-	 (((__COMP_INSTANCE__) == COMP2) &&                                                                            \
-	  (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH2) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC3_CH2))) ||   \
-	 (((__COMP_INSTANCE__) == COMP3) &&                                                                            \
-	  (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC3_CH1))) ||   \
-	 (((__COMP_INSTANCE__) == COMP4) &&                                                                            \
-	  (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC3_CH2))))
+#define IS_COMP_INPUT_MINUS(__COMP_INSTANCE__, __INPUT_MINUS__)                                                                                                                                        \
+	(((__INPUT_MINUS__) == COMP_INPUT_MINUS_1_4VREFINT) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_1_2VREFINT) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_3_4VREFINT) ||                             \
+	 ((__INPUT_MINUS__) == COMP_INPUT_MINUS_VREFINT) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_IO1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_IO2) ||                                              \
+	 (((__COMP_INSTANCE__) == COMP1) && (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC3_CH1))) ||                                                 \
+	 (((__COMP_INSTANCE__) == COMP2) && (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH2) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC3_CH2))) ||                                                 \
+	 (((__COMP_INSTANCE__) == COMP3) && (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC3_CH1))) ||                                                 \
+	 (((__COMP_INSTANCE__) == COMP4) && (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC3_CH2))) ||                                                 \
+	 (((__COMP_INSTANCE__) == COMP5) && (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH2) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC4_CH1))) ||                                                 \
+	 (((__COMP_INSTANCE__) == COMP6) && (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC2_CH1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC4_CH2))) ||                                                 \
+	 (((__COMP_INSTANCE__) == COMP7) && (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC2_CH1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC4_CH1))))
+#elif defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx) || defined(STM32G471xx) || defined(STM32G491xx) || defined(STM32G4A1xx)
+#define IS_COMP_INPUT_MINUS(__COMP_INSTANCE__, __INPUT_MINUS__)                                                                                                                                        \
+	(((__INPUT_MINUS__) == COMP_INPUT_MINUS_1_4VREFINT) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_1_2VREFINT) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_3_4VREFINT) ||                             \
+	 ((__INPUT_MINUS__) == COMP_INPUT_MINUS_VREFINT) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_IO1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_IO2) ||                                              \
+	 (((__COMP_INSTANCE__) == COMP1) && (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC3_CH1))) ||                                                 \
+	 (((__COMP_INSTANCE__) == COMP2) && (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH2) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC3_CH2))) ||                                                 \
+	 (((__COMP_INSTANCE__) == COMP3) && (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC3_CH1))) ||                                                 \
+	 (((__COMP_INSTANCE__) == COMP4) && (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC3_CH2))))
 #elif defined(STM32G411xB) || defined(STM32G411xC)
-#define IS_COMP_INPUT_MINUS(__COMP_INSTANCE__, __INPUT_MINUS__)                                                        \
-	(((__INPUT_MINUS__) == COMP_INPUT_MINUS_1_4VREFINT) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_1_2VREFINT) ||   \
-	 ((__INPUT_MINUS__) == COMP_INPUT_MINUS_3_4VREFINT) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_VREFINT) ||      \
-	 ((__INPUT_MINUS__) == COMP_INPUT_MINUS_IO1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_IO2) ||                 \
-	 (((__COMP_INSTANCE__) == COMP1) &&                                                                            \
-	  (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC3_CH1))) ||   \
-	 (((__COMP_INSTANCE__) == COMP2) &&                                                                            \
-	  (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH2) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC3_CH2))) ||   \
-	 (((__COMP_INSTANCE__) == COMP3) &&                                                                            \
-	  (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC3_CH1))))
+#define IS_COMP_INPUT_MINUS(__COMP_INSTANCE__, __INPUT_MINUS__)                                                                                                                                        \
+	(((__INPUT_MINUS__) == COMP_INPUT_MINUS_1_4VREFINT) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_1_2VREFINT) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_3_4VREFINT) ||                             \
+	 ((__INPUT_MINUS__) == COMP_INPUT_MINUS_VREFINT) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_IO1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_IO2) ||                                              \
+	 (((__COMP_INSTANCE__) == COMP1) && (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC3_CH1))) ||                                                 \
+	 (((__COMP_INSTANCE__) == COMP2) && (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH2) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC3_CH2))) ||                                                 \
+	 (((__COMP_INSTANCE__) == COMP3) && (((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC1_CH1) || ((__INPUT_MINUS__) == COMP_INPUT_MINUS_DAC3_CH1))))
 #endif
 
-#define IS_COMP_HYSTERESIS(__HYSTERESIS__)                                                                             \
-	(((__HYSTERESIS__) == COMP_HYSTERESIS_NONE) || ((__HYSTERESIS__) == COMP_HYSTERESIS_10MV) ||                   \
-	 ((__HYSTERESIS__) == COMP_HYSTERESIS_20MV) || ((__HYSTERESIS__) == COMP_HYSTERESIS_30MV) ||                   \
-	 ((__HYSTERESIS__) == COMP_HYSTERESIS_40MV) || ((__HYSTERESIS__) == COMP_HYSTERESIS_50MV) ||                   \
-	 ((__HYSTERESIS__) == COMP_HYSTERESIS_60MV) || ((__HYSTERESIS__) == COMP_HYSTERESIS_70MV) ||                   \
-	 ((__HYSTERESIS__) == COMP_HYSTERESIS_LOW) || ((__HYSTERESIS__) == COMP_HYSTERESIS_MEDIUM) ||                  \
-	 ((__HYSTERESIS__) == COMP_HYSTERESIS_HIGH))
+#define IS_COMP_HYSTERESIS(__HYSTERESIS__)                                                                                                                                                             \
+	(((__HYSTERESIS__) == COMP_HYSTERESIS_NONE) || ((__HYSTERESIS__) == COMP_HYSTERESIS_10MV) || ((__HYSTERESIS__) == COMP_HYSTERESIS_20MV) || ((__HYSTERESIS__) == COMP_HYSTERESIS_30MV) ||       \
+	 ((__HYSTERESIS__) == COMP_HYSTERESIS_40MV) || ((__HYSTERESIS__) == COMP_HYSTERESIS_50MV) || ((__HYSTERESIS__) == COMP_HYSTERESIS_60MV) || ((__HYSTERESIS__) == COMP_HYSTERESIS_70MV) ||       \
+	 ((__HYSTERESIS__) == COMP_HYSTERESIS_LOW) || ((__HYSTERESIS__) == COMP_HYSTERESIS_MEDIUM) || ((__HYSTERESIS__) == COMP_HYSTERESIS_HIGH))
 
 #define IS_COMP_OUTPUTPOL(__POL__) (((__POL__) == COMP_OUTPUTPOL_NONINVERTED) || ((__POL__) == COMP_OUTPUTPOL_INVERTED))
 
 /* Note: Output blanking source depends on COMP instances     */
 /*       Better use IS_COMP_BLANKINGSRC_INSTANCE instead      */
 /*       Macro kept for compatibility with other STM32 series */
-#define IS_COMP_BLANKINGSRCE(__OUTPUT_BLANKING_SOURCE__)                                                               \
-	(((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) ||                                                    \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP1) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP2) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP3) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP4) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP5) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP6) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP7) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP1) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP2) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP5) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC4_COMP3) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC4_COMP6) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP1) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP2) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP3) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP5) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP7) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC4_COMP4) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP1) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP2) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP3) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP4) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP5) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP6) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP7) ||                                          \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1_COMP4) ||                                         \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC2_COMP6) ||                                         \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC2_COMP7) ||                                         \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM20_OC5) ||                                               \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1) ||                                               \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM4_OC3))
+#define IS_COMP_BLANKINGSRCE(__OUTPUT_BLANKING_SOURCE__)                                                                                                                                               \
+	(((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP1) ||                                                               \
+	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP2) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP3) ||                                                     \
+	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP4) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP5) ||                                                     \
+	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP6) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP7) ||                                                     \
+	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP1) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP2) ||                                                     \
+	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP5) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC4_COMP3) ||                                                     \
+	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC4_COMP6) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP1) ||                                                     \
+	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP2) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP3) ||                                                     \
+	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP5) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP7) ||                                                     \
+	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC4_COMP4) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP1) ||                                                     \
+	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP2) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP3) ||                                                     \
+	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP4) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP5) ||                                                     \
+	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP6) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP7) ||                                                     \
+	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1_COMP4) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC2_COMP6) ||                                                   \
+	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC2_COMP7) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM20_OC5) ||                                                         \
+	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM4_OC3))
 #if defined(STM32G414xx) || defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
-#define IS_COMP_BLANKINGSRC_INSTANCE(__INSTANCE__, __OUTPUT_BLANKING_SOURCE__)                                         \
-	((((__INSTANCE__) == COMP1) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) ||                     \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP1) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP1) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP1) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP1))) ||         \
-	 (((__INSTANCE__) == COMP2) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) ||                     \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP2) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP2) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP2) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP2))) ||         \
-	 (((__INSTANCE__) == COMP3) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) ||                     \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP3) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC4_COMP3) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP3) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP3))) ||         \
-	 (((__INSTANCE__) == COMP4) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) ||                     \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP4) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC4_COMP4) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP4) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1_COMP4))) ||        \
-	 (((__INSTANCE__) == COMP5) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) ||                     \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP5) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP5) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP5) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP5))) ||         \
-	 (((__INSTANCE__) == COMP6) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) ||                     \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP6) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC4_COMP6) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP6) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC2_COMP6))) ||        \
-	 (((__INSTANCE__) == COMP7) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) ||                     \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP7) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP7) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP7) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC2_COMP7))) ||        \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM20_OC5) ||                                               \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1) ||                                               \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM4_OC3))
+#define IS_COMP_BLANKINGSRC_INSTANCE(__INSTANCE__, __OUTPUT_BLANKING_SOURCE__)                                                                                                                         \
+	((((__INSTANCE__) == COMP1) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP1) ||                                \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP1) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP1) ||                      \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP1))) ||                                                                                         \
+	 (((__INSTANCE__) == COMP2) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP2) ||                                \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP2) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP2) ||                      \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP2))) ||                                                                                         \
+	 (((__INSTANCE__) == COMP3) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP3) ||                                \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC4_COMP3) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP3) ||                      \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP3))) ||                                                                                         \
+	 (((__INSTANCE__) == COMP4) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP4) ||                                \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC4_COMP4) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP4) ||                      \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1_COMP4))) ||                                                                                        \
+	 (((__INSTANCE__) == COMP5) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP5) ||                                \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP5) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP5) ||                      \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP5))) ||                                                                                         \
+	 (((__INSTANCE__) == COMP6) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP6) ||                                \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC4_COMP6) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP6) ||                      \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC2_COMP6))) ||                                                                                        \
+	 (((__INSTANCE__) == COMP7) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP7) ||                                \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP7) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP7) ||                      \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC2_COMP7))) ||                                                                                        \
+	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM20_OC5) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM4_OC3))
 #elif defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx) || defined(STM32G471xx)
-#define IS_COMP_BLANKINGSRC_INSTANCE(__INSTANCE__, __OUTPUT_BLANKING_SOURCE__)                                         \
-	((((__INSTANCE__) == COMP1) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) ||                     \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP1) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP1) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP1) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP1))) ||         \
-	 (((__INSTANCE__) == COMP2) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) ||                     \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP2) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP2) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP2) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP2))) ||         \
-	 (((__INSTANCE__) == COMP3) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) ||                     \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP3) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC4_COMP3) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP3) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP3))) ||         \
-	 (((__INSTANCE__) == COMP4) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) ||                     \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP4) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC4_COMP4) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP4) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1_COMP4))) ||        \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1) ||                                               \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM4_OC3))
+#define IS_COMP_BLANKINGSRC_INSTANCE(__INSTANCE__, __OUTPUT_BLANKING_SOURCE__)                                                                                                                         \
+	((((__INSTANCE__) == COMP1) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP1) ||                                \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP1) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP1) ||                      \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP1))) ||                                                                                         \
+	 (((__INSTANCE__) == COMP2) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP2) ||                                \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP2) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP2) ||                      \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP2))) ||                                                                                         \
+	 (((__INSTANCE__) == COMP3) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP3) ||                                \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC4_COMP3) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP3) ||                      \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP3))) ||                                                                                         \
+	 (((__INSTANCE__) == COMP4) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP4) ||                                \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC4_COMP4) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP4) ||                      \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1_COMP4))) ||                                                                                        \
+	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM4_OC3))
 #elif defined(STM32G491xx) || defined(STM32G4A1xx)
-#define IS_COMP_BLANKINGSRC_INSTANCE(__INSTANCE__, __OUTPUT_BLANKING_SOURCE__)                                         \
-	((((__INSTANCE__) == COMP1) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) ||                     \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP1) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP1) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP1) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP1))) ||         \
-	 (((__INSTANCE__) == COMP2) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) ||                     \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP2) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP2) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP2) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP2))) ||         \
-	 (((__INSTANCE__) == COMP3) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) ||                     \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP3) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC4_COMP3) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP3) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP3))) ||         \
-	 (((__INSTANCE__) == COMP4) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) ||                     \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP4) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC4_COMP4) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP4) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1_COMP4))) ||        \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM20_OC5) ||                                               \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1) ||                                               \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM4_OC3))
+#define IS_COMP_BLANKINGSRC_INSTANCE(__INSTANCE__, __OUTPUT_BLANKING_SOURCE__)                                                                                                                         \
+	((((__INSTANCE__) == COMP1) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP1) ||                                \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP1) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP1) ||                      \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP1))) ||                                                                                         \
+	 (((__INSTANCE__) == COMP2) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP2) ||                                \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP2) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP2) ||                      \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP2))) ||                                                                                         \
+	 (((__INSTANCE__) == COMP3) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP3) ||                                \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC4_COMP3) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP3) ||                      \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP3))) ||                                                                                         \
+	 (((__INSTANCE__) == COMP4) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP4) ||                                \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC4_COMP4) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP4) ||                      \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1_COMP4))) ||                                                                                        \
+	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM20_OC5) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM4_OC3))
 #elif defined(STM32G411xB) || defined(STM32G411xC)
-#define IS_COMP_BLANKINGSRC_INSTANCE(__INSTANCE__, __OUTPUT_BLANKING_SOURCE__)                                         \
-	((((__INSTANCE__) == COMP1) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) ||                     \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP1) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP1) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP1) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP1))) ||         \
-	 (((__INSTANCE__) == COMP2) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) ||                     \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP2) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP2) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP2) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP2))) ||         \
-	 (((__INSTANCE__) == COMP3) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) ||                     \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP3) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC4_COMP3) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP3) ||           \
-					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP3))) ||         \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM20_OC5) ||                                               \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1) ||                                               \
-	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM4_OC3))
-#endif /* STM32G414xx || STM32G474xx || STM32G484xx || STM32G473xx ||                                                  \
+#define IS_COMP_BLANKINGSRC_INSTANCE(__INSTANCE__, __OUTPUT_BLANKING_SOURCE__)                                                                                                                         \
+	((((__INSTANCE__) == COMP1) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP1) ||                                \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP1) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP1) ||                      \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP1))) ||                                                                                         \
+	 (((__INSTANCE__) == COMP2) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP2) ||                                \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC3_COMP2) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP2) ||                      \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP2))) ||                                                                                         \
+	 (((__INSTANCE__) == COMP3) && (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM1_OC5_COMP3) ||                                \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM2_OC4_COMP3) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM3_OC3_COMP3) ||                      \
+					((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM8_OC5_COMP3))) ||                                                                                         \
+	 ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM20_OC5) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1) || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM4_OC3))
+#endif /* STM32G414xx || STM32G474xx || STM32G484xx || STM32G473xx ||                                                                                                                                  \
 	  STM32G483xx */
 
-#define IS_COMP_TRIGGERMODE(__MODE__)                                                                                  \
-	(((__MODE__) == COMP_TRIGGERMODE_NONE) || ((__MODE__) == COMP_TRIGGERMODE_IT_RISING) ||                        \
-	 ((__MODE__) == COMP_TRIGGERMODE_IT_FALLING) || ((__MODE__) == COMP_TRIGGERMODE_IT_RISING_FALLING) ||          \
-	 ((__MODE__) == COMP_TRIGGERMODE_EVENT_RISING) || ((__MODE__) == COMP_TRIGGERMODE_EVENT_FALLING) ||            \
-	 ((__MODE__) == COMP_TRIGGERMODE_EVENT_RISING_FALLING))
+#define IS_COMP_TRIGGERMODE(__MODE__)                                                                                                                                                                  \
+	(((__MODE__) == COMP_TRIGGERMODE_NONE) || ((__MODE__) == COMP_TRIGGERMODE_IT_RISING) || ((__MODE__) == COMP_TRIGGERMODE_IT_FALLING) || ((__MODE__) == COMP_TRIGGERMODE_IT_RISING_FALLING) ||   \
+	 ((__MODE__) == COMP_TRIGGERMODE_EVENT_RISING) || ((__MODE__) == COMP_TRIGGERMODE_EVENT_FALLING) || ((__MODE__) == COMP_TRIGGERMODE_EVENT_RISING_FALLING))
 
-#define IS_COMP_OUTPUT_LEVEL(__OUTPUT_LEVEL__)                                                                         \
-	(((__OUTPUT_LEVEL__) == COMP_OUTPUT_LEVEL_LOW) || ((__OUTPUT_LEVEL__) == COMP_OUTPUT_LEVEL_HIGH))
+#define IS_COMP_OUTPUT_LEVEL(__OUTPUT_LEVEL__) (((__OUTPUT_LEVEL__) == COMP_OUTPUT_LEVEL_LOW) || ((__OUTPUT_LEVEL__) == COMP_OUTPUT_LEVEL_HIGH))
 
 /**
  * @}
@@ -1542,8 +1448,7 @@ void HAL_COMP_MspDeInit(COMP_HandleTypeDef *hcomp);
 
 #if (USE_HAL_COMP_REGISTER_CALLBACKS == 1)
 /* Callbacks Register/UnRegister functions  ***********************************/
-HAL_StatusTypeDef HAL_COMP_RegisterCallback(COMP_HandleTypeDef *hcomp, HAL_COMP_CallbackIDTypeDef CallbackID,
-					    pCOMP_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_COMP_RegisterCallback(COMP_HandleTypeDef *hcomp, HAL_COMP_CallbackIDTypeDef CallbackID, pCOMP_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_COMP_UnRegisterCallback(COMP_HandleTypeDef *hcomp, HAL_COMP_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_COMP_REGISTER_CALLBACKS */
 /**

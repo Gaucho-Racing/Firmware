@@ -103,8 +103,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private defines -----------------------------------------------------------*/
-#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||                    \
-    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 #define FLASH_NB_DOUBLE_WORDS_IN_ROW 64
 #else
 #define FLASH_NB_DOUBLE_WORDS_IN_ROW 32
@@ -203,8 +202,7 @@ HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address, uint
 			 */
 			FLASH_Program_DoubleWord(Address, Data);
 			prog_bit = FLASH_CR_PG;
-		} else if ((TypeProgram == FLASH_TYPEPROGRAM_FAST) ||
-			   (TypeProgram == FLASH_TYPEPROGRAM_FAST_AND_LAST)) {
+		} else if ((TypeProgram == FLASH_TYPEPROGRAM_FAST) || (TypeProgram == FLASH_TYPEPROGRAM_FAST_AND_LAST)) {
 			/* Fast program a 32 row double-word (64-bit) at a
 			 * specified address */
 			FLASH_Program_Fast(Address, (uint32_t)Data);
@@ -310,10 +308,8 @@ void HAL_FLASH_IRQHandler(void)
 	/* If the operation is completed, disable the PG, PNB, MER1, MER2 and
 	 * PER Bit */
 	CLEAR_BIT(FLASH->CR, (FLASH_CR_PG | FLASH_CR_MER1 | FLASH_CR_PER | FLASH_CR_PNB));
-#if defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) ||                    \
-    defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) ||                    \
-    defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) ||                    \
-    defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) || defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) ||    \
+    defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 	CLEAR_BIT(FLASH->CR, FLASH_CR_MER2);
 #endif
 

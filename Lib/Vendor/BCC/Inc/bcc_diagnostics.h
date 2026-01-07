@@ -346,8 +346,7 @@ bcc_status_t BCC_Diag_ADC1(bcc_drv_config_t *const drvConfig, const bcc_cid_t ci
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Diag_OvUvVer(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-			      const bcc_diag_const_t *const diagConst, bcc_diag_ov_uv_ver_res_t *const results);
+bcc_status_t BCC_Diag_OvUvVer(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const bcc_diag_const_t *const diagConst, bcc_diag_ov_uv_ver_res_t *const results);
 
 /*!
  * @brief This function implements OV and UV detection in the pack controller
@@ -369,8 +368,7 @@ bcc_status_t BCC_Diag_OvUvVer(bcc_drv_config_t *const drvConfig, const bcc_cid_t
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Diag_OvUvDet(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-			      const bcc_diag_const_t *const diagConst, bcc_diag_ov_uv_det_res_t *const results);
+bcc_status_t BCC_Diag_OvUvDet(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const bcc_diag_const_t *const diagConst, bcc_diag_ov_uv_det_res_t *const results);
 
 /*!
  * @brief This function implements CTx open detection and functional
@@ -386,8 +384,7 @@ bcc_status_t BCC_Diag_OvUvDet(bcc_drv_config_t *const drvConfig, const bcc_cid_t
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Diag_CTxOpen(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-			      const bcc_diag_const_t *const diagConst, bcc_diag_ctx_open_res_t *const results);
+bcc_status_t BCC_Diag_CTxOpen(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const bcc_diag_const_t *const diagConst, bcc_diag_ctx_open_res_t *const results);
 
 /*!
  * @brief This function implements Cell Voltage Channel functional verification
@@ -409,8 +406,7 @@ bcc_status_t BCC_Diag_CTxOpen(bcc_drv_config_t *const drvConfig, const bcc_cid_t
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Diag_CellVolt(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-			       bcc_diag_cell_volt_res_t *const results);
+bcc_status_t BCC_Diag_CellVolt(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, bcc_diag_cell_volt_res_t *const results);
 
 /*!
  * @brief This function detects a connector having an abnormally high contact
@@ -426,8 +422,7 @@ bcc_status_t BCC_Diag_CellVolt(bcc_drv_config_t *const drvConfig, const bcc_cid_
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Diag_ConnResistance(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-				     bcc_diag_conn_res_res_t *const result);
+bcc_status_t BCC_Diag_ConnResistance(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, bcc_diag_conn_res_res_t *const result);
 
 /*!
  * @brief This function detects a leakage current. It is a part of cell
@@ -442,8 +437,7 @@ bcc_status_t BCC_Diag_ConnResistance(bcc_drv_config_t *const drvConfig, const bc
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Diag_CTxLeak(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-			      bcc_diag_ctx_leak_res_t *const result);
+bcc_status_t BCC_Diag_CTxLeak(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, bcc_diag_ctx_leak_res_t *const result);
 
 /*!
  * @brief This function implements diagnostics of IC internal resources for
@@ -466,8 +460,7 @@ bcc_status_t BCC_Diag_CTxLeak(bcc_drv_config_t *const drvConfig, const bcc_cid_t
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Diag_CurrentMeas(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-				  const bcc_diag_current_meas_t sel, int32_t *const current, bool *const fault);
+bcc_status_t BCC_Diag_CurrentMeas(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const bcc_diag_current_meas_t sel, int32_t *const current, bool *const fault);
 
 /*!
  * @brief This function verifies whether the shunt resistor is properly
@@ -484,8 +477,7 @@ bcc_status_t BCC_Diag_CurrentMeas(bcc_drv_config_t *const drvConfig, const bcc_c
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Diag_ShuntConn(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-				const bcc_diag_const_t *const diagTimeConst, bool *const shuntConn);
+bcc_status_t BCC_Diag_ShuntConn(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const bcc_diag_const_t *const diagTimeConst, bool *const shuntConn);
 
 /*!
  * @brief This function implements GPIOx OT/UT functional verification (SM05).
@@ -500,8 +492,7 @@ bcc_status_t BCC_Diag_ShuntConn(bcc_drv_config_t *const drvConfig, const bcc_cid
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Diag_GPIOxOtUt(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-				bcc_diag_gpiox_otut_res_t *const results);
+bcc_status_t BCC_Diag_GPIOxOtUt(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, bcc_diag_gpiox_otut_res_t *const results);
 
 /*!
  * @brief This function implements GPIOx open terminal diagnostics (SM06).
@@ -534,8 +525,7 @@ bcc_status_t BCC_Diag_GPIOxOpen(bcc_drv_config_t *const drvConfig, const bcc_cid
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Diag_CBxOpen(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid,
-			      bcc_diag_cbx_open_res_t *const results);
+bcc_status_t BCC_Diag_CBxOpen(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, bcc_diag_cbx_open_res_t *const results);
 
 /*! @} */
 

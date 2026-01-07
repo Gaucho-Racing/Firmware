@@ -65,14 +65,14 @@ extern "C" {
 #include "cmsis_version.h"
 
 /*  CMSIS CM55 definitions */
-#define __CM55_CMSIS_VERSION_MAIN                                                                                      \
-	(__CM_CMSIS_VERSION_MAIN) /*!< \deprecated [31:16] CMSIS HAL main                                              \
+#define __CM55_CMSIS_VERSION_MAIN                                                                                                                                                                      \
+	(__CM_CMSIS_VERSION_MAIN) /*!< \deprecated [31:16] CMSIS HAL main                                                                                                                              \
 				     version */
-#define __CM55_CMSIS_VERSION_SUB                                                                                       \
-	(__CM_CMSIS_VERSION_SUB) /*!< \deprecated [15:0]  CMSIS HAL sub                                                \
+#define __CM55_CMSIS_VERSION_SUB                                                                                                                                                                       \
+	(__CM_CMSIS_VERSION_SUB) /*!< \deprecated [15:0]  CMSIS HAL sub                                                                                                                                \
 				    version */
-#define __CM55_CMSIS_VERSION                                                                                           \
-	((__CM55_CMSIS_VERSION_MAIN << 16U) | __CM55_CMSIS_VERSION_SUB) /*!< \deprecated CMSIS HAL version number      \
+#define __CM55_CMSIS_VERSION                                                                                                                                                                           \
+	((__CM55_CMSIS_VERSION_MAIN << 16U) | __CM55_CMSIS_VERSION_SUB) /*!< \deprecated CMSIS HAL version number                                                                                      \
 									 */
 
 #define __CORTEX_M (55U) /*!< Cortex-M Core */
@@ -449,8 +449,8 @@ typedef union {
 #define CONTROL_FPCA_Msk (1UL << CONTROL_FPCA_Pos) /*!< CONTROL: FPCA Mask */
 
 #define CONTROL_SPSEL_Pos 1U /*!< CONTROL: SPSEL Position */
-#define CONTROL_SPSEL_Msk                                                                                              \
-	(1UL << CONTROL_SPSEL_Pos) /*!< CONTROL: SPSEL Mask                                                            \
+#define CONTROL_SPSEL_Msk                                                                                                                                                                              \
+	(1UL << CONTROL_SPSEL_Pos) /*!< CONTROL: SPSEL Mask                                                                                                                                            \
 				    */
 
 #define CONTROL_nPRIV_Pos 0U				 /*!< CONTROL: nPRIV Position */
@@ -582,8 +582,8 @@ typedef struct {
 #define SCB_CPUID_VARIANT_Pos 20U			       /*!< SCB CPUID: VARIANT Position */
 #define SCB_CPUID_VARIANT_Msk (0xFUL << SCB_CPUID_VARIANT_Pos) /*!< SCB CPUID: VARIANT Mask */
 
-#define SCB_CPUID_ARCHITECTURE_Pos                                                                                     \
-	16U								 /*!< SCB CPUID: ARCHITECTURE Position         \
+#define SCB_CPUID_ARCHITECTURE_Pos                                                                                                                                                                     \
+	16U								 /*!< SCB CPUID: ARCHITECTURE Position                                                                                         \
 									  */
 #define SCB_CPUID_ARCHITECTURE_Msk (0xFUL << SCB_CPUID_ARCHITECTURE_Pos) /*!< SCB CPUID: ARCHITECTURE Mask */
 
@@ -597,11 +597,11 @@ typedef struct {
 #define SCB_ICSR_PENDNMISET_Pos 31U				 /*!< SCB ICSR: PENDNMISET Position */
 #define SCB_ICSR_PENDNMISET_Msk (1UL << SCB_ICSR_PENDNMISET_Pos) /*!< SCB ICSR: PENDNMISET Mask */
 
-#define SCB_ICSR_NMIPENDSET_Pos                                                                                        \
-	SCB_ICSR_PENDNMISET_Pos /*!< SCB ICSR: NMIPENDSET Position, backward                                           \
+#define SCB_ICSR_NMIPENDSET_Pos                                                                                                                                                                        \
+	SCB_ICSR_PENDNMISET_Pos /*!< SCB ICSR: NMIPENDSET Position, backward                                                                                                                           \
 				   compatibility */
-#define SCB_ICSR_NMIPENDSET_Msk                                                                                        \
-	SCB_ICSR_PENDNMISET_Msk /*!< SCB ICSR: NMIPENDSET Mask, backward                                               \
+#define SCB_ICSR_NMIPENDSET_Msk                                                                                                                                                                        \
+	SCB_ICSR_PENDNMISET_Msk /*!< SCB ICSR: NMIPENDSET Mask, backward                                                                                                                               \
 				   compatibility */
 
 #define SCB_ICSR_PENDNMICLR_Pos 30U				 /*!< SCB ICSR: PENDNMICLR Position */
@@ -620,8 +620,8 @@ typedef struct {
 #define SCB_ICSR_PENDSTCLR_Msk (1UL << SCB_ICSR_PENDSTCLR_Pos) /*!< SCB ICSR: PENDSTCLR Mask */
 
 #define SCB_ICSR_STTNS_Pos 24U /*!< SCB ICSR: STTNS Position (Security Extension) */
-#define SCB_ICSR_STTNS_Msk                                                                                             \
-	(1UL << SCB_ICSR_STTNS_Pos) /*!< SCB ICSR: STTNS Mask (Security                                                \
+#define SCB_ICSR_STTNS_Msk                                                                                                                                                                             \
+	(1UL << SCB_ICSR_STTNS_Pos) /*!< SCB ICSR: STTNS Mask (Security                                                                                                                                \
 				       Extension) */
 
 #define SCB_ICSR_ISRPREEMPT_Pos 23U				 /*!< SCB ICSR: ISRPREEMPT Position */
@@ -631,16 +631,16 @@ typedef struct {
 #define SCB_ICSR_ISRPENDING_Msk (1UL << SCB_ICSR_ISRPENDING_Pos) /*!< SCB ICSR: ISRPENDING Mask */
 
 #define SCB_ICSR_VECTPENDING_Pos 12U /*!< SCB ICSR: VECTPENDING Position */
-#define SCB_ICSR_VECTPENDING_Msk                                                                                       \
-	(0x1FFUL << SCB_ICSR_VECTPENDING_Pos) /*!< SCB ICSR: VECTPENDING Mask                                          \
+#define SCB_ICSR_VECTPENDING_Msk                                                                                                                                                                       \
+	(0x1FFUL << SCB_ICSR_VECTPENDING_Pos) /*!< SCB ICSR: VECTPENDING Mask                                                                                                                          \
 					       */
 
 #define SCB_ICSR_RETTOBASE_Pos 11U			       /*!< SCB ICSR: RETTOBASE Position */
 #define SCB_ICSR_RETTOBASE_Msk (1UL << SCB_ICSR_RETTOBASE_Pos) /*!< SCB ICSR: RETTOBASE Mask */
 
 #define SCB_ICSR_VECTACTIVE_Pos 0U /*!< SCB ICSR: VECTACTIVE Position */
-#define SCB_ICSR_VECTACTIVE_Msk                                                                                        \
-	(0x1FFUL /*<< SCB_ICSR_VECTACTIVE_Pos*/) /*!< SCB ICSR: VECTACTIVE                                             \
+#define SCB_ICSR_VECTACTIVE_Msk                                                                                                                                                                        \
+	(0x1FFUL /*<< SCB_ICSR_VECTACTIVE_Pos*/) /*!< SCB ICSR: VECTACTIVE                                                                                                                             \
 						    Mask */
 
 /* SCB Vector Table Offset Register Definitions */
@@ -667,25 +667,25 @@ typedef struct {
 #define SCB_AIRCR_PRIGROUP_Msk (7UL << SCB_AIRCR_PRIGROUP_Pos) /*!< SCB AIRCR: PRIGROUP Mask */
 
 #define SCB_AIRCR_IESB_Pos 5U /*!< SCB AIRCR: Implicit ESB Enable Position */
-#define SCB_AIRCR_IESB_Msk                                                                                             \
-	(1UL << SCB_AIRCR_IESB_Pos) /*!< SCB AIRCR: Implicit ESB Enable Mask                                           \
+#define SCB_AIRCR_IESB_Msk                                                                                                                                                                             \
+	(1UL << SCB_AIRCR_IESB_Pos) /*!< SCB AIRCR: Implicit ESB Enable Mask                                                                                                                           \
 				     */
 
-#define SCB_AIRCR_DIT_Pos                                                                                              \
-	4U					     /*!< SCB AIRCR: Data Independent Timing Position                  \
+#define SCB_AIRCR_DIT_Pos                                                                                                                                                                              \
+	4U					     /*!< SCB AIRCR: Data Independent Timing Position                                                                                                  \
 						      */
 #define SCB_AIRCR_DIT_Msk (1UL << SCB_AIRCR_DIT_Pos) /*!< SCB AIRCR: Data Independent Timing Mask */
 
 #define SCB_AIRCR_SYSRESETREQS_Pos 3U /*!< SCB AIRCR: SYSRESETREQS Position */
-#define SCB_AIRCR_SYSRESETREQS_Msk                                                                                     \
-	(1UL << SCB_AIRCR_SYSRESETREQS_Pos) /*!< SCB AIRCR: SYSRESETREQS Mask                                          \
+#define SCB_AIRCR_SYSRESETREQS_Msk                                                                                                                                                                     \
+	(1UL << SCB_AIRCR_SYSRESETREQS_Pos) /*!< SCB AIRCR: SYSRESETREQS Mask                                                                                                                          \
 					     */
 
 #define SCB_AIRCR_SYSRESETREQ_Pos 2U				     /*!< SCB AIRCR: SYSRESETREQ Position */
 #define SCB_AIRCR_SYSRESETREQ_Msk (1UL << SCB_AIRCR_SYSRESETREQ_Pos) /*!< SCB AIRCR: SYSRESETREQ Mask */
 
-#define SCB_AIRCR_VECTCLRACTIVE_Pos                                                                                    \
-	1U								 /*!< SCB AIRCR: VECTCLRACTIVE Position        \
+#define SCB_AIRCR_VECTCLRACTIVE_Pos                                                                                                                                                                    \
+	1U								 /*!< SCB AIRCR: VECTCLRACTIVE Position                                                                                        \
 									  */
 #define SCB_AIRCR_VECTCLRACTIVE_Msk (1UL << SCB_AIRCR_VECTCLRACTIVE_Pos) /*!< SCB AIRCR: VECTCLRACTIVE Mask */
 
@@ -735,18 +735,18 @@ typedef struct {
 
 /* SCB System Handler Control and State Register Definitions */
 #define SCB_SHCSR_HARDFAULTPENDED_Pos 21U /*!< SCB SHCSR: HARDFAULTPENDED Position */
-#define SCB_SHCSR_HARDFAULTPENDED_Msk                                                                                  \
-	(1UL << SCB_SHCSR_HARDFAULTPENDED_Pos) /*!< SCB SHCSR: HARDFAULTPENDED                                         \
+#define SCB_SHCSR_HARDFAULTPENDED_Msk                                                                                                                                                                  \
+	(1UL << SCB_SHCSR_HARDFAULTPENDED_Pos) /*!< SCB SHCSR: HARDFAULTPENDED                                                                                                                         \
 						  Mask */
 
 #define SCB_SHCSR_SECUREFAULTPENDED_Pos 20U /*!< SCB SHCSR: SECUREFAULTPENDED Position */
-#define SCB_SHCSR_SECUREFAULTPENDED_Msk                                                                                \
-	(1UL << SCB_SHCSR_SECUREFAULTPENDED_Pos) /*!< SCB SHCSR:                                                       \
+#define SCB_SHCSR_SECUREFAULTPENDED_Msk                                                                                                                                                                \
+	(1UL << SCB_SHCSR_SECUREFAULTPENDED_Pos) /*!< SCB SHCSR:                                                                                                                                       \
 						    SECUREFAULTPENDED Mask */
 
 #define SCB_SHCSR_SECUREFAULTENA_Pos 19U /*!< SCB SHCSR: SECUREFAULTENA Position */
-#define SCB_SHCSR_SECUREFAULTENA_Msk                                                                                   \
-	(1UL << SCB_SHCSR_SECUREFAULTENA_Pos) /*!< SCB SHCSR: SECUREFAULTENA                                           \
+#define SCB_SHCSR_SECUREFAULTENA_Msk                                                                                                                                                                   \
+	(1UL << SCB_SHCSR_SECUREFAULTENA_Pos) /*!< SCB SHCSR: SECUREFAULTENA                                                                                                                           \
 						 Mask */
 
 #define SCB_SHCSR_USGFAULTENA_Pos 18U				     /*!< SCB SHCSR: USGFAULTENA Position */
@@ -758,26 +758,26 @@ typedef struct {
 #define SCB_SHCSR_MEMFAULTENA_Pos 16U				     /*!< SCB SHCSR: MEMFAULTENA Position */
 #define SCB_SHCSR_MEMFAULTENA_Msk (1UL << SCB_SHCSR_MEMFAULTENA_Pos) /*!< SCB SHCSR: MEMFAULTENA Mask */
 
-#define SCB_SHCSR_SVCALLPENDED_Pos                                                                                     \
-	15U /*!< SCB SHCSR: SVCALLPENDED Position                                                                      \
+#define SCB_SHCSR_SVCALLPENDED_Pos                                                                                                                                                                     \
+	15U /*!< SCB SHCSR: SVCALLPENDED Position                                                                                                                                                      \
 	     */
-#define SCB_SHCSR_SVCALLPENDED_Msk                                                                                     \
-	(1UL << SCB_SHCSR_SVCALLPENDED_Pos) /*!< SCB SHCSR: SVCALLPENDED Mask                                          \
+#define SCB_SHCSR_SVCALLPENDED_Msk                                                                                                                                                                     \
+	(1UL << SCB_SHCSR_SVCALLPENDED_Pos) /*!< SCB SHCSR: SVCALLPENDED Mask                                                                                                                          \
 					     */
 
 #define SCB_SHCSR_BUSFAULTPENDED_Pos 14U /*!< SCB SHCSR: BUSFAULTPENDED Position */
-#define SCB_SHCSR_BUSFAULTPENDED_Msk                                                                                   \
-	(1UL << SCB_SHCSR_BUSFAULTPENDED_Pos) /*!< SCB SHCSR: BUSFAULTPENDED                                           \
+#define SCB_SHCSR_BUSFAULTPENDED_Msk                                                                                                                                                                   \
+	(1UL << SCB_SHCSR_BUSFAULTPENDED_Pos) /*!< SCB SHCSR: BUSFAULTPENDED                                                                                                                           \
 						 Mask */
 
 #define SCB_SHCSR_MEMFAULTPENDED_Pos 13U /*!< SCB SHCSR: MEMFAULTPENDED Position */
-#define SCB_SHCSR_MEMFAULTPENDED_Msk                                                                                   \
-	(1UL << SCB_SHCSR_MEMFAULTPENDED_Pos) /*!< SCB SHCSR: MEMFAULTPENDED                                           \
+#define SCB_SHCSR_MEMFAULTPENDED_Msk                                                                                                                                                                   \
+	(1UL << SCB_SHCSR_MEMFAULTPENDED_Pos) /*!< SCB SHCSR: MEMFAULTPENDED                                                                                                                           \
 						 Mask */
 
 #define SCB_SHCSR_USGFAULTPENDED_Pos 12U /*!< SCB SHCSR: USGFAULTPENDED Position */
-#define SCB_SHCSR_USGFAULTPENDED_Msk                                                                                   \
-	(1UL << SCB_SHCSR_USGFAULTPENDED_Pos) /*!< SCB SHCSR: USGFAULTPENDED                                           \
+#define SCB_SHCSR_USGFAULTPENDED_Msk                                                                                                                                                                   \
+	(1UL << SCB_SHCSR_USGFAULTPENDED_Pos) /*!< SCB SHCSR: USGFAULTPENDED                                                                                                                           \
 						 Mask */
 
 #define SCB_SHCSR_SYSTICKACT_Pos 11U				   /*!< SCB SHCSR: SYSTICKACT Position */
@@ -796,48 +796,48 @@ typedef struct {
 #define SCB_SHCSR_NMIACT_Msk (1UL << SCB_SHCSR_NMIACT_Pos) /*!< SCB SHCSR: NMIACT Mask */
 
 #define SCB_SHCSR_SECUREFAULTACT_Pos 4U /*!< SCB SHCSR: SECUREFAULTACT Position */
-#define SCB_SHCSR_SECUREFAULTACT_Msk                                                                                   \
-	(1UL << SCB_SHCSR_SECUREFAULTACT_Pos) /*!< SCB SHCSR: SECUREFAULTACT                                           \
+#define SCB_SHCSR_SECUREFAULTACT_Msk                                                                                                                                                                   \
+	(1UL << SCB_SHCSR_SECUREFAULTACT_Pos) /*!< SCB SHCSR: SECUREFAULTACT                                                                                                                           \
 						 Mask */
 
 #define SCB_SHCSR_USGFAULTACT_Pos 3U				     /*!< SCB SHCSR: USGFAULTACT Position */
 #define SCB_SHCSR_USGFAULTACT_Msk (1UL << SCB_SHCSR_USGFAULTACT_Pos) /*!< SCB SHCSR: USGFAULTACT Mask */
 
 #define SCB_SHCSR_HARDFAULTACT_Pos 2U /*!< SCB SHCSR: HARDFAULTACT Position */
-#define SCB_SHCSR_HARDFAULTACT_Msk                                                                                     \
-	(1UL << SCB_SHCSR_HARDFAULTACT_Pos) /*!< SCB SHCSR: HARDFAULTACT Mask                                          \
+#define SCB_SHCSR_HARDFAULTACT_Msk                                                                                                                                                                     \
+	(1UL << SCB_SHCSR_HARDFAULTACT_Pos) /*!< SCB SHCSR: HARDFAULTACT Mask                                                                                                                          \
 					     */
 
 #define SCB_SHCSR_BUSFAULTACT_Pos 1U				     /*!< SCB SHCSR: BUSFAULTACT Position */
 #define SCB_SHCSR_BUSFAULTACT_Msk (1UL << SCB_SHCSR_BUSFAULTACT_Pos) /*!< SCB SHCSR: BUSFAULTACT Mask */
 
 #define SCB_SHCSR_MEMFAULTACT_Pos 0U /*!< SCB SHCSR: MEMFAULTACT Position */
-#define SCB_SHCSR_MEMFAULTACT_Msk                                                                                      \
-	(1UL /*<< SCB_SHCSR_MEMFAULTACT_Pos*/) /*!< SCB SHCSR: MEMFAULTACT                                             \
+#define SCB_SHCSR_MEMFAULTACT_Msk                                                                                                                                                                      \
+	(1UL /*<< SCB_SHCSR_MEMFAULTACT_Pos*/) /*!< SCB SHCSR: MEMFAULTACT                                                                                                                             \
 						  Mask */
 
 /* SCB Configurable Fault Status Register Definitions */
 #define SCB_CFSR_USGFAULTSR_Pos 16U /*!< SCB CFSR: Usage Fault Status Register Position */
-#define SCB_CFSR_USGFAULTSR_Msk                                                                                        \
-	(0xFFFFUL << SCB_CFSR_USGFAULTSR_Pos) /*!< SCB CFSR: Usage Fault                                               \
+#define SCB_CFSR_USGFAULTSR_Msk                                                                                                                                                                        \
+	(0xFFFFUL << SCB_CFSR_USGFAULTSR_Pos) /*!< SCB CFSR: Usage Fault                                                                                                                               \
 						 Status Register Mask */
 
 #define SCB_CFSR_BUSFAULTSR_Pos 8U /*!< SCB CFSR: Bus Fault Status Register Position */
-#define SCB_CFSR_BUSFAULTSR_Msk                                                                                        \
-	(0xFFUL << SCB_CFSR_BUSFAULTSR_Pos) /*!< SCB CFSR: Bus Fault Status                                            \
+#define SCB_CFSR_BUSFAULTSR_Msk                                                                                                                                                                        \
+	(0xFFUL << SCB_CFSR_BUSFAULTSR_Pos) /*!< SCB CFSR: Bus Fault Status                                                                                                                            \
 					       Register Mask */
 
 #define SCB_CFSR_MEMFAULTSR_Pos 0U /*!< SCB CFSR: Memory Manage Fault Status Register Position */
-#define SCB_CFSR_MEMFAULTSR_Msk                                                                                        \
-	(0xFFUL /*<< SCB_CFSR_MEMFAULTSR_Pos*/) /*!< SCB CFSR: Memory Manage                                           \
-						   Fault Status Register Mask                                          \
+#define SCB_CFSR_MEMFAULTSR_Msk                                                                                                                                                                        \
+	(0xFFUL /*<< SCB_CFSR_MEMFAULTSR_Pos*/) /*!< SCB CFSR: Memory Manage                                                                                                                           \
+						   Fault Status Register Mask                                                                                                                          \
 						 */
 
 /* MemManage Fault Status Register (part of SCB Configurable Fault Status
  * Register) */
 #define SCB_CFSR_MMARVALID_Pos (SCB_CFSR_MEMFAULTSR_Pos + 7U) /*!< SCB CFSR (MMFSR): MMARVALID Position */
-#define SCB_CFSR_MMARVALID_Msk                                                                                         \
-	(1UL << SCB_CFSR_MMARVALID_Pos) /*!< SCB CFSR (MMFSR): MMARVALID Mask                                          \
+#define SCB_CFSR_MMARVALID_Msk                                                                                                                                                                         \
+	(1UL << SCB_CFSR_MMARVALID_Pos) /*!< SCB CFSR (MMFSR): MMARVALID Mask                                                                                                                          \
 					 */
 
 #define SCB_CFSR_MLSPERR_Pos (SCB_CFSR_MEMFAULTSR_Pos + 5U) /*!< SCB CFSR (MMFSR): MLSPERR Position */
@@ -847,31 +847,31 @@ typedef struct {
 #define SCB_CFSR_MSTKERR_Msk (1UL << SCB_CFSR_MSTKERR_Pos)  /*!< SCB CFSR (MMFSR): MSTKERR Mask */
 
 #define SCB_CFSR_MUNSTKERR_Pos (SCB_CFSR_MEMFAULTSR_Pos + 3U) /*!< SCB CFSR (MMFSR): MUNSTKERR Position */
-#define SCB_CFSR_MUNSTKERR_Msk                                                                                         \
-	(1UL << SCB_CFSR_MUNSTKERR_Pos) /*!< SCB CFSR (MMFSR): MUNSTKERR Mask                                          \
+#define SCB_CFSR_MUNSTKERR_Msk                                                                                                                                                                         \
+	(1UL << SCB_CFSR_MUNSTKERR_Pos) /*!< SCB CFSR (MMFSR): MUNSTKERR Mask                                                                                                                          \
 					 */
 
 #define SCB_CFSR_DACCVIOL_Pos (SCB_CFSR_MEMFAULTSR_Pos + 1U) /*!< SCB CFSR (MMFSR): DACCVIOL Position */
 #define SCB_CFSR_DACCVIOL_Msk (1UL << SCB_CFSR_DACCVIOL_Pos) /*!< SCB CFSR (MMFSR): DACCVIOL Mask */
 
 #define SCB_CFSR_IACCVIOL_Pos (SCB_CFSR_MEMFAULTSR_Pos + 0U) /*!< SCB CFSR (MMFSR): IACCVIOL Position */
-#define SCB_CFSR_IACCVIOL_Msk                                                                                          \
-	(1UL /*<< SCB_CFSR_IACCVIOL_Pos*/) /*!< SCB CFSR (MMFSR): IACCVIOL                                             \
+#define SCB_CFSR_IACCVIOL_Msk                                                                                                                                                                          \
+	(1UL /*<< SCB_CFSR_IACCVIOL_Pos*/) /*!< SCB CFSR (MMFSR): IACCVIOL                                                                                                                             \
 					      Mask */
 
 /* BusFault Status Register (part of SCB Configurable Fault Status Register) */
 #define SCB_CFSR_BFARVALID_Pos (SCB_CFSR_BUSFAULTSR_Pos + 7U) /*!< SCB CFSR (BFSR): BFARVALID Position */
-#define SCB_CFSR_BFARVALID_Msk                                                                                         \
-	(1UL << SCB_CFSR_BFARVALID_Pos) /*!< SCB CFSR (BFSR): BFARVALID Mask                                           \
+#define SCB_CFSR_BFARVALID_Msk                                                                                                                                                                         \
+	(1UL << SCB_CFSR_BFARVALID_Pos) /*!< SCB CFSR (BFSR): BFARVALID Mask                                                                                                                           \
 					 */
 
-#define SCB_CFSR_LSPERR_Pos                                                                                            \
-	(SCB_CFSR_BUSFAULTSR_Pos + 5U)			 /*!< SCB CFSR (BFSR): LSPERR Position                         \
+#define SCB_CFSR_LSPERR_Pos                                                                                                                                                                            \
+	(SCB_CFSR_BUSFAULTSR_Pos + 5U)			 /*!< SCB CFSR (BFSR): LSPERR Position                                                                                                         \
 							  */
 #define SCB_CFSR_LSPERR_Msk (1UL << SCB_CFSR_LSPERR_Pos) /*!< SCB CFSR (BFSR): LSPERR Mask */
 
-#define SCB_CFSR_STKERR_Pos                                                                                            \
-	(SCB_CFSR_BUSFAULTSR_Pos + 4U)			 /*!< SCB CFSR (BFSR): STKERR Position                         \
+#define SCB_CFSR_STKERR_Pos                                                                                                                                                                            \
+	(SCB_CFSR_BUSFAULTSR_Pos + 4U)			 /*!< SCB CFSR (BFSR): STKERR Position                                                                                                         \
 							  */
 #define SCB_CFSR_STKERR_Msk (1UL << SCB_CFSR_STKERR_Pos) /*!< SCB CFSR (BFSR): STKERR Mask */
 
@@ -879,30 +879,30 @@ typedef struct {
 #define SCB_CFSR_UNSTKERR_Msk (1UL << SCB_CFSR_UNSTKERR_Pos) /*!< SCB CFSR (BFSR): UNSTKERR Mask */
 
 #define SCB_CFSR_IMPRECISERR_Pos (SCB_CFSR_BUSFAULTSR_Pos + 2U) /*!< SCB CFSR (BFSR): IMPRECISERR Position */
-#define SCB_CFSR_IMPRECISERR_Msk                                                                                       \
-	(1UL << SCB_CFSR_IMPRECISERR_Pos) /*!< SCB CFSR (BFSR): IMPRECISERR                                            \
+#define SCB_CFSR_IMPRECISERR_Msk                                                                                                                                                                       \
+	(1UL << SCB_CFSR_IMPRECISERR_Pos) /*!< SCB CFSR (BFSR): IMPRECISERR                                                                                                                            \
 					     Mask */
 
 #define SCB_CFSR_PRECISERR_Pos (SCB_CFSR_BUSFAULTSR_Pos + 1U) /*!< SCB CFSR (BFSR): PRECISERR Position */
-#define SCB_CFSR_PRECISERR_Msk                                                                                         \
-	(1UL << SCB_CFSR_PRECISERR_Pos) /*!< SCB CFSR (BFSR): PRECISERR Mask                                           \
+#define SCB_CFSR_PRECISERR_Msk                                                                                                                                                                         \
+	(1UL << SCB_CFSR_PRECISERR_Pos) /*!< SCB CFSR (BFSR): PRECISERR Mask                                                                                                                           \
 					 */
 
-#define SCB_CFSR_IBUSERR_Pos                                                                                           \
-	(SCB_CFSR_BUSFAULTSR_Pos + 0U)			   /*!< SCB CFSR (BFSR): IBUSERR Position                      \
+#define SCB_CFSR_IBUSERR_Pos                                                                                                                                                                           \
+	(SCB_CFSR_BUSFAULTSR_Pos + 0U)			   /*!< SCB CFSR (BFSR): IBUSERR Position                                                                                                      \
 							    */
 #define SCB_CFSR_IBUSERR_Msk (1UL << SCB_CFSR_IBUSERR_Pos) /*!< SCB CFSR (BFSR): IBUSERR Mask */
 
 /* UsageFault Status Register (part of SCB Configurable Fault Status Register)
  */
 #define SCB_CFSR_DIVBYZERO_Pos (SCB_CFSR_USGFAULTSR_Pos + 9U) /*!< SCB CFSR (UFSR): DIVBYZERO Position */
-#define SCB_CFSR_DIVBYZERO_Msk                                                                                         \
-	(1UL << SCB_CFSR_DIVBYZERO_Pos) /*!< SCB CFSR (UFSR): DIVBYZERO Mask                                           \
+#define SCB_CFSR_DIVBYZERO_Msk                                                                                                                                                                         \
+	(1UL << SCB_CFSR_DIVBYZERO_Pos) /*!< SCB CFSR (UFSR): DIVBYZERO Mask                                                                                                                           \
 					 */
 
 #define SCB_CFSR_UNALIGNED_Pos (SCB_CFSR_USGFAULTSR_Pos + 8U) /*!< SCB CFSR (UFSR): UNALIGNED Position */
-#define SCB_CFSR_UNALIGNED_Msk                                                                                         \
-	(1UL << SCB_CFSR_UNALIGNED_Pos) /*!< SCB CFSR (UFSR): UNALIGNED Mask                                           \
+#define SCB_CFSR_UNALIGNED_Msk                                                                                                                                                                         \
+	(1UL << SCB_CFSR_UNALIGNED_Pos) /*!< SCB CFSR (UFSR): UNALIGNED Mask                                                                                                                           \
 					 */
 
 #define SCB_CFSR_STKOF_Pos (SCB_CFSR_USGFAULTSR_Pos + 4U) /*!< SCB CFSR (UFSR): STKOF Position */
@@ -944,8 +944,8 @@ typedef struct {
 #define SCB_DFSR_DWTTRAP_Msk (1UL << SCB_DFSR_DWTTRAP_Pos) /*!< SCB DFSR: DWTTRAP Mask */
 
 #define SCB_DFSR_BKPT_Pos 1U /*!< SCB DFSR: BKPT Position */
-#define SCB_DFSR_BKPT_Msk                                                                                              \
-	(1UL << SCB_DFSR_BKPT_Pos) /*!< SCB DFSR: BKPT Mask                                                            \
+#define SCB_DFSR_BKPT_Msk                                                                                                                                                                              \
+	(1UL << SCB_DFSR_BKPT_Pos) /*!< SCB DFSR: BKPT Mask                                                                                                                                            \
 				    */
 
 #define SCB_DFSR_HALTED_Pos 0U				     /*!< SCB DFSR: HALTED Position */
@@ -959,38 +959,38 @@ typedef struct {
 #define SCB_NSACR_CP10_Msk (1UL << SCB_NSACR_CP10_Pos) /*!< SCB NSACR: CP10 Mask */
 
 #define SCB_NSACR_CP7_Pos 7U /*!< SCB NSACR: CP7 Position */
-#define SCB_NSACR_CP7_Msk                                                                                              \
-	(1UL << SCB_NSACR_CP7_Pos) /*!< SCB NSACR: CP7 Mask                                                            \
+#define SCB_NSACR_CP7_Msk                                                                                                                                                                              \
+	(1UL << SCB_NSACR_CP7_Pos) /*!< SCB NSACR: CP7 Mask                                                                                                                                            \
 				    */
 
 #define SCB_NSACR_CP6_Pos 6U /*!< SCB NSACR: CP6 Position */
-#define SCB_NSACR_CP6_Msk                                                                                              \
-	(1UL << SCB_NSACR_CP6_Pos) /*!< SCB NSACR: CP6 Mask                                                            \
+#define SCB_NSACR_CP6_Msk                                                                                                                                                                              \
+	(1UL << SCB_NSACR_CP6_Pos) /*!< SCB NSACR: CP6 Mask                                                                                                                                            \
 				    */
 
 #define SCB_NSACR_CP5_Pos 5U /*!< SCB NSACR: CP5 Position */
-#define SCB_NSACR_CP5_Msk                                                                                              \
-	(1UL << SCB_NSACR_CP5_Pos) /*!< SCB NSACR: CP5 Mask                                                            \
+#define SCB_NSACR_CP5_Msk                                                                                                                                                                              \
+	(1UL << SCB_NSACR_CP5_Pos) /*!< SCB NSACR: CP5 Mask                                                                                                                                            \
 				    */
 
 #define SCB_NSACR_CP4_Pos 4U /*!< SCB NSACR: CP4 Position */
-#define SCB_NSACR_CP4_Msk                                                                                              \
-	(1UL << SCB_NSACR_CP4_Pos) /*!< SCB NSACR: CP4 Mask                                                            \
+#define SCB_NSACR_CP4_Msk                                                                                                                                                                              \
+	(1UL << SCB_NSACR_CP4_Pos) /*!< SCB NSACR: CP4 Mask                                                                                                                                            \
 				    */
 
 #define SCB_NSACR_CP3_Pos 3U /*!< SCB NSACR: CP3 Position */
-#define SCB_NSACR_CP3_Msk                                                                                              \
-	(1UL << SCB_NSACR_CP3_Pos) /*!< SCB NSACR: CP3 Mask                                                            \
+#define SCB_NSACR_CP3_Msk                                                                                                                                                                              \
+	(1UL << SCB_NSACR_CP3_Pos) /*!< SCB NSACR: CP3 Mask                                                                                                                                            \
 				    */
 
 #define SCB_NSACR_CP2_Pos 2U /*!< SCB NSACR: CP2 Position */
-#define SCB_NSACR_CP2_Msk                                                                                              \
-	(1UL << SCB_NSACR_CP2_Pos) /*!< SCB NSACR: CP2 Mask                                                            \
+#define SCB_NSACR_CP2_Msk                                                                                                                                                                              \
+	(1UL << SCB_NSACR_CP2_Pos) /*!< SCB NSACR: CP2 Mask                                                                                                                                            \
 				    */
 
 #define SCB_NSACR_CP1_Pos 1U /*!< SCB NSACR: CP1 Position */
-#define SCB_NSACR_CP1_Msk                                                                                              \
-	(1UL << SCB_NSACR_CP1_Pos) /*!< SCB NSACR: CP1 Mask                                                            \
+#define SCB_NSACR_CP1_Msk                                                                                                                                                                              \
+	(1UL << SCB_NSACR_CP1_Pos) /*!< SCB NSACR: CP1 Mask                                                                                                                                            \
 				    */
 
 #define SCB_NSACR_CP0_Pos 0U				 /*!< SCB NSACR: CP0 Position */
@@ -1008,8 +1008,8 @@ typedef struct {
 #define SCB_CLIDR_LOUU_Msk (7UL << SCB_CLIDR_LOUU_Pos) /*!< SCB CLIDR: LoUU Mask */
 
 #define SCB_CLIDR_LOC_Pos 24U /*!< SCB CLIDR: LoC Position */
-#define SCB_CLIDR_LOC_Msk                                                                                              \
-	(7UL << SCB_CLIDR_LOC_Pos) /*!< SCB CLIDR: LoC Mask                                                            \
+#define SCB_CLIDR_LOC_Msk                                                                                                                                                                              \
+	(7UL << SCB_CLIDR_LOC_Pos) /*!< SCB CLIDR: LoC Mask                                                                                                                                            \
 				    */
 
 /* SCB Cache Type Register Definitions */
@@ -1030,31 +1030,31 @@ typedef struct {
 
 /* SCB Cache Size ID Register Definitions */
 #define SCB_CCSIDR_WT_Pos 31U /*!< SCB CCSIDR: WT Position */
-#define SCB_CCSIDR_WT_Msk                                                                                              \
-	(1UL << SCB_CCSIDR_WT_Pos) /*!< SCB CCSIDR: WT Mask                                                            \
+#define SCB_CCSIDR_WT_Msk                                                                                                                                                                              \
+	(1UL << SCB_CCSIDR_WT_Pos) /*!< SCB CCSIDR: WT Mask                                                                                                                                            \
 				    */
 
 #define SCB_CCSIDR_WB_Pos 30U /*!< SCB CCSIDR: WB Position */
-#define SCB_CCSIDR_WB_Msk                                                                                              \
-	(1UL << SCB_CCSIDR_WB_Pos) /*!< SCB CCSIDR: WB Mask                                                            \
+#define SCB_CCSIDR_WB_Msk                                                                                                                                                                              \
+	(1UL << SCB_CCSIDR_WB_Pos) /*!< SCB CCSIDR: WB Mask                                                                                                                                            \
 				    */
 
 #define SCB_CCSIDR_RA_Pos 29U /*!< SCB CCSIDR: RA Position */
-#define SCB_CCSIDR_RA_Msk                                                                                              \
-	(1UL << SCB_CCSIDR_RA_Pos) /*!< SCB CCSIDR: RA Mask                                                            \
+#define SCB_CCSIDR_RA_Msk                                                                                                                                                                              \
+	(1UL << SCB_CCSIDR_RA_Pos) /*!< SCB CCSIDR: RA Mask                                                                                                                                            \
 				    */
 
 #define SCB_CCSIDR_WA_Pos 28U /*!< SCB CCSIDR: WA Position */
-#define SCB_CCSIDR_WA_Msk                                                                                              \
-	(1UL << SCB_CCSIDR_WA_Pos) /*!< SCB CCSIDR: WA Mask                                                            \
+#define SCB_CCSIDR_WA_Msk                                                                                                                                                                              \
+	(1UL << SCB_CCSIDR_WA_Pos) /*!< SCB CCSIDR: WA Mask                                                                                                                                            \
 				    */
 
 #define SCB_CCSIDR_NUMSETS_Pos 13U				    /*!< SCB CCSIDR: NumSets Position */
 #define SCB_CCSIDR_NUMSETS_Msk (0x7FFFUL << SCB_CCSIDR_NUMSETS_Pos) /*!< SCB CCSIDR: NumSets Mask */
 
 #define SCB_CCSIDR_ASSOCIATIVITY_Pos 3U /*!< SCB CCSIDR: Associativity Position */
-#define SCB_CCSIDR_ASSOCIATIVITY_Msk                                                                                   \
-	(0x3FFUL << SCB_CCSIDR_ASSOCIATIVITY_Pos) /*!< SCB CCSIDR:                                                     \
+#define SCB_CCSIDR_ASSOCIATIVITY_Msk                                                                                                                                                                   \
+	(0x3FFUL << SCB_CCSIDR_ASSOCIATIVITY_Pos) /*!< SCB CCSIDR:                                                                                                                                     \
 						     Associativity Mask */
 
 #define SCB_CCSIDR_LINESIZE_Pos 0U				     /*!< SCB CCSIDR: LineSize Position */
@@ -1076,8 +1076,8 @@ typedef struct {
 #define SCB_RFSR_V_Msk (1UL << SCB_RFSR_V_Pos) /*!< SCB RFSR: V Mask */
 
 #define SCB_RFSR_IS_Pos 16U /*!< SCB RFSR: IS Position */
-#define SCB_RFSR_IS_Msk                                                                                                \
-	(0x7FFFUL << SCB_RFSR_IS_Pos) /*!< SCB RFSR: IS Mask                                                           \
+#define SCB_RFSR_IS_Msk                                                                                                                                                                                \
+	(0x7FFFUL << SCB_RFSR_IS_Pos) /*!< SCB RFSR: IS Mask                                                                                                                                           \
 				       */
 
 #define SCB_RFSR_UET_Pos 0U			       /*!< SCB RFSR: UET Position */
@@ -1085,8 +1085,8 @@ typedef struct {
 
 /* SCB D-Cache Invalidate by Set-way Register Definitions */
 #define SCB_DCISW_WAY_Pos 30U /*!< SCB DCISW: Way Position */
-#define SCB_DCISW_WAY_Msk                                                                                              \
-	(3UL << SCB_DCISW_WAY_Pos) /*!< SCB DCISW: Way Mask                                                            \
+#define SCB_DCISW_WAY_Msk                                                                                                                                                                              \
+	(3UL << SCB_DCISW_WAY_Pos) /*!< SCB DCISW: Way Mask                                                                                                                                            \
 				    */
 
 #define SCB_DCISW_SET_Pos 5U				 /*!< SCB DCISW: Set Position */
@@ -1094,8 +1094,8 @@ typedef struct {
 
 /* SCB D-Cache Clean by Set-way Register Definitions */
 #define SCB_DCCSW_WAY_Pos 30U /*!< SCB DCCSW: Way Position */
-#define SCB_DCCSW_WAY_Msk                                                                                              \
-	(3UL << SCB_DCCSW_WAY_Pos) /*!< SCB DCCSW: Way Mask                                                            \
+#define SCB_DCCSW_WAY_Msk                                                                                                                                                                              \
+	(3UL << SCB_DCCSW_WAY_Pos) /*!< SCB DCCSW: Way Mask                                                                                                                                            \
 				    */
 
 #define SCB_DCCSW_SET_Pos 5U				 /*!< SCB DCCSW: Set Position */
@@ -1145,11 +1145,11 @@ typedef struct {
 #define ICB_ACTLR_EVENTBUSEN_S_Pos 13U				       /*!< ACTLR: EVENTBUSEN_S Position */
 #define ICB_ACTLR_EVENTBUSEN_S_Msk (1UL << ICB_ACTLR_EVENTBUSEN_S_Pos) /*!< ACTLR: EVENTBUSEN_S Mask */
 
-#define ICB_ACTLR_DISITMATBFLUSH_Pos                                                                                   \
-	12U /*!< ACTLR: DISITMATBFLUSH Position                                                                        \
+#define ICB_ACTLR_DISITMATBFLUSH_Pos                                                                                                                                                                   \
+	12U /*!< ACTLR: DISITMATBFLUSH Position                                                                                                                                                        \
 	     */
-#define ICB_ACTLR_DISITMATBFLUSH_Msk                                                                                   \
-	(1UL << ICB_ACTLR_DISITMATBFLUSH_Pos) /*!< ACTLR: DISITMATBFLUSH Mask                                          \
+#define ICB_ACTLR_DISITMATBFLUSH_Msk                                                                                                                                                                   \
+	(1UL << ICB_ACTLR_DISITMATBFLUSH_Pos) /*!< ACTLR: DISITMATBFLUSH Mask                                                                                                                          \
 					       */
 
 #define ICB_ACTLR_DISNWAMODE_Pos 11U				   /*!< ACTLR: DISNWAMODE Position */
@@ -1201,16 +1201,16 @@ typedef struct {
 } SysTick_Type;
 
 /* SysTick Control / Status Register Definitions */
-#define SysTick_CTRL_COUNTFLAG_Pos                                                                                     \
-	16U /*!< SysTick CTRL: COUNTFLAG Position                                                                      \
+#define SysTick_CTRL_COUNTFLAG_Pos                                                                                                                                                                     \
+	16U /*!< SysTick CTRL: COUNTFLAG Position                                                                                                                                                      \
 	     */
-#define SysTick_CTRL_COUNTFLAG_Msk                                                                                     \
-	(1UL << SysTick_CTRL_COUNTFLAG_Pos) /*!< SysTick CTRL: COUNTFLAG Mask                                          \
+#define SysTick_CTRL_COUNTFLAG_Msk                                                                                                                                                                     \
+	(1UL << SysTick_CTRL_COUNTFLAG_Pos) /*!< SysTick CTRL: COUNTFLAG Mask                                                                                                                          \
 					     */
 
 #define SysTick_CTRL_CLKSOURCE_Pos 2U /*!< SysTick CTRL: CLKSOURCE Position */
-#define SysTick_CTRL_CLKSOURCE_Msk                                                                                     \
-	(1UL << SysTick_CTRL_CLKSOURCE_Pos) /*!< SysTick CTRL: CLKSOURCE Mask                                          \
+#define SysTick_CTRL_CLKSOURCE_Msk                                                                                                                                                                     \
+	(1UL << SysTick_CTRL_CLKSOURCE_Pos) /*!< SysTick CTRL: CLKSOURCE Mask                                                                                                                          \
 					     */
 
 #define SysTick_CTRL_TICKINT_Pos 1U				   /*!< SysTick CTRL: TICKINT Position */
@@ -1221,14 +1221,14 @@ typedef struct {
 
 /* SysTick Reload Register Definitions */
 #define SysTick_LOAD_RELOAD_Pos 0U /*!< SysTick LOAD: RELOAD Position */
-#define SysTick_LOAD_RELOAD_Msk                                                                                        \
-	(0xFFFFFFUL /*<< SysTick_LOAD_RELOAD_Pos*/) /*!< SysTick LOAD: RELOAD                                          \
+#define SysTick_LOAD_RELOAD_Msk                                                                                                                                                                        \
+	(0xFFFFFFUL /*<< SysTick_LOAD_RELOAD_Pos*/) /*!< SysTick LOAD: RELOAD                                                                                                                          \
 						       Mask */
 
 /* SysTick Current Register Definitions */
 #define SysTick_VAL_CURRENT_Pos 0U /*!< SysTick VAL: CURRENT Position */
-#define SysTick_VAL_CURRENT_Msk                                                                                        \
-	(0xFFFFFFUL /*<< SysTick_VAL_CURRENT_Pos*/) /*!< SysTick VAL: CURRENT                                          \
+#define SysTick_VAL_CURRENT_Msk                                                                                                                                                                        \
+	(0xFFFFFFUL /*<< SysTick_VAL_CURRENT_Pos*/) /*!< SysTick VAL: CURRENT                                                                                                                          \
 						       Mask */
 
 /* SysTick Calibration Register Definitions */
@@ -1239,8 +1239,8 @@ typedef struct {
 #define SysTick_CALIB_SKEW_Msk (1UL << SysTick_CALIB_SKEW_Pos) /*!< SysTick CALIB: SKEW Mask */
 
 #define SysTick_CALIB_TENMS_Pos 0U /*!< SysTick CALIB: TENMS Position */
-#define SysTick_CALIB_TENMS_Msk                                                                                        \
-	(0xFFFFFFUL /*<< SysTick_CALIB_TENMS_Pos*/) /*!< SysTick CALIB: TENMS                                          \
+#define SysTick_CALIB_TENMS_Msk                                                                                                                                                                        \
+	(0xFFFFFFUL /*<< SysTick_CALIB_TENMS_Pos*/) /*!< SysTick CALIB: TENMS                                                                                                                          \
 						       Mask */
 
 /*@} end of group CMSIS_SysTick */
@@ -1322,8 +1322,8 @@ typedef struct {
 #define ITM_TCR_TRACEBUSID_Msk (0x7FUL << ITM_TCR_TRACEBUSID_Pos) /*!< ITM TCR: ATBID Mask */
 
 #define ITM_TCR_GTSFREQ_Pos 10U /*!< ITM TCR: Global timestamp frequency Position */
-#define ITM_TCR_GTSFREQ_Msk                                                                                            \
-	(3UL << ITM_TCR_GTSFREQ_Pos) /*!< ITM TCR: Global timestamp frequency                                          \
+#define ITM_TCR_GTSFREQ_Msk                                                                                                                                                                            \
+	(3UL << ITM_TCR_GTSFREQ_Pos) /*!< ITM TCR: Global timestamp frequency                                                                                                                          \
 					Mask */
 
 #define ITM_TCR_TSPRESCALE_Pos 8U			       /*!< ITM TCR: TSPRESCALE Position */
@@ -1342,8 +1342,8 @@ typedef struct {
 #define ITM_TCR_SYNCENA_Msk (1UL << ITM_TCR_SYNCENA_Pos) /*!< ITM TCR: SYNCENA Mask */
 
 #define ITM_TCR_TSENA_Pos 1U /*!< ITM TCR: TSENA Position */
-#define ITM_TCR_TSENA_Msk                                                                                              \
-	(1UL << ITM_TCR_TSENA_Pos) /*!< ITM TCR: TSENA Mask                                                            \
+#define ITM_TCR_TSENA_Msk                                                                                                                                                                              \
+	(1UL << ITM_TCR_TSENA_Pos) /*!< ITM TCR: TSENA Mask                                                                                                                                            \
 				    */
 
 #define ITM_TCR_ITMENA_Pos 0U				   /*!< ITM TCR: ITM Enable bit Position */
@@ -1519,8 +1519,8 @@ typedef struct {
 
 /* DWT Sleep Count Register Definitions */
 #define DWT_SLEEPCNT_SLEEPCNT_Pos 0U /*!< DWT SLEEPCNT: SLEEPCNT Position */
-#define DWT_SLEEPCNT_SLEEPCNT_Msk                                                                                      \
-	(0xFFUL /*<< DWT_SLEEPCNT_SLEEPCNT_Pos*/) /*!< DWT SLEEPCNT: SLEEPCNT                                          \
+#define DWT_SLEEPCNT_SLEEPCNT_Msk                                                                                                                                                                      \
+	(0xFFUL /*<< DWT_SLEEPCNT_SLEEPCNT_Pos*/) /*!< DWT SLEEPCNT: SLEEPCNT                                                                                                                          \
 						     Mask */
 
 /* DWT LSU Count Register Definitions */
@@ -1529,8 +1529,8 @@ typedef struct {
 
 /* DWT Folded-instruction Count Register Definitions */
 #define DWT_FOLDCNT_FOLDCNT_Pos 0U /*!< DWT FOLDCNT: FOLDCNT Position */
-#define DWT_FOLDCNT_FOLDCNT_Msk                                                                                        \
-	(0xFFUL /*<< DWT_FOLDCNT_FOLDCNT_Pos*/) /*!< DWT FOLDCNT: FOLDCNT Mask                                         \
+#define DWT_FOLDCNT_FOLDCNT_Msk                                                                                                                                                                        \
+	(0xFFUL /*<< DWT_FOLDCNT_FOLDCNT_Pos*/) /*!< DWT FOLDCNT: FOLDCNT Mask                                                                                                                         \
 						 */
 
 /* DWT Comparator Function Register Definitions */
@@ -1540,8 +1540,8 @@ typedef struct {
 #define DWT_FUNCTION_MATCHED_Pos 24U				     /*!< DWT FUNCTION: MATCHED Position */
 #define DWT_FUNCTION_MATCHED_Msk (0x1UL << DWT_FUNCTION_MATCHED_Pos) /*!< DWT FUNCTION: MATCHED Mask */
 
-#define DWT_FUNCTION_DATAVSIZE_Pos                                                                                     \
-	10U								 /*!< DWT FUNCTION: DATAVSIZE Position         \
+#define DWT_FUNCTION_DATAVSIZE_Pos                                                                                                                                                                     \
+	10U								 /*!< DWT FUNCTION: DATAVSIZE Position                                                                                         \
 									  */
 #define DWT_FUNCTION_DATAVSIZE_Msk (0x3UL << DWT_FUNCTION_DATAVSIZE_Pos) /*!< DWT FUNCTION: DATAVSIZE Mask */
 
@@ -1588,12 +1588,12 @@ typedef struct {
 
 /* MEMSYSCTL Memory System Control Register (MSCR) Register Definitions */
 #define MEMSYSCTL_MSCR_CPWRDN_Pos 17U /*!< MEMSYSCTL MSCR: CPWRDN Position */
-#define MEMSYSCTL_MSCR_CPWRDN_Msk                                                                                      \
-	(0x1UL << MEMSYSCTL_MSCR_CPWRDN_Pos) /*!< MEMSYSCTL MSCR: CPWRDN Mask                                          \
+#define MEMSYSCTL_MSCR_CPWRDN_Msk                                                                                                                                                                      \
+	(0x1UL << MEMSYSCTL_MSCR_CPWRDN_Pos) /*!< MEMSYSCTL MSCR: CPWRDN Mask                                                                                                                          \
 					      */
 
-#define MEMSYSCTL_MSCR_DCCLEAN_Pos                                                                                     \
-	16U								 /*!< MEMSYSCTL MSCR: DCCLEAN Position         \
+#define MEMSYSCTL_MSCR_DCCLEAN_Pos                                                                                                                                                                     \
+	16U								 /*!< MEMSYSCTL MSCR: DCCLEAN Position                                                                                         \
 									  */
 #define MEMSYSCTL_MSCR_DCCLEAN_Msk (0x1UL << MEMSYSCTL_MSCR_DCCLEAN_Pos) /*!< MEMSYSCTL MSCR: DCCLEAN Mask */
 
@@ -1604,13 +1604,13 @@ typedef struct {
 #define MEMSYSCTL_MSCR_DCACTIVE_Msk (0x1UL << MEMSYSCTL_MSCR_DCACTIVE_Pos) /*!< MEMSYSCTL MSCR: DCACTIVE Mask */
 
 #define MEMSYSCTL_MSCR_TECCCHKDIS_Pos 4U /*!< MEMSYSCTL MSCR: TECCCHKDIS Position */
-#define MEMSYSCTL_MSCR_TECCCHKDIS_Msk                                                                                  \
-	(0x1UL << MEMSYSCTL_MSCR_TECCCHKDIS_Pos) /*!< MEMSYSCTL MSCR:                                                  \
+#define MEMSYSCTL_MSCR_TECCCHKDIS_Msk                                                                                                                                                                  \
+	(0x1UL << MEMSYSCTL_MSCR_TECCCHKDIS_Pos) /*!< MEMSYSCTL MSCR:                                                                                                                                  \
 						    TECCCHKDIS Mask */
 
 #define MEMSYSCTL_MSCR_EVECCFAULT_Pos 3U /*!< MEMSYSCTL MSCR: EVECCFAULT Position */
-#define MEMSYSCTL_MSCR_EVECCFAULT_Msk                                                                                  \
-	(0x1UL << MEMSYSCTL_MSCR_EVECCFAULT_Pos) /*!< MEMSYSCTL MSCR:                                                  \
+#define MEMSYSCTL_MSCR_EVECCFAULT_Msk                                                                                                                                                                  \
+	(0x1UL << MEMSYSCTL_MSCR_EVECCFAULT_Pos) /*!< MEMSYSCTL MSCR:                                                                                                                                  \
 						    EVECCFAULT Mask */
 
 #define MEMSYSCTL_MSCR_FORCEWT_Pos 2U					 /*!< MEMSYSCTL MSCR: FORCEWT Position */
@@ -1621,23 +1621,23 @@ typedef struct {
 
 /* MEMSYSCTL Prefetcher Control Register (PFCR) Register Definitions */
 #define MEMSYSCTL_PFCR_MAX_OS_Pos 7U /*!< MEMSYSCTL PFCR: MAX_OS Position */
-#define MEMSYSCTL_PFCR_MAX_OS_Msk                                                                                      \
-	(0x7UL << MEMSYSCTL_PFCR_MAX_OS_Pos) /*!< MEMSYSCTL PFCR: MAX_OS Mask                                          \
+#define MEMSYSCTL_PFCR_MAX_OS_Msk                                                                                                                                                                      \
+	(0x7UL << MEMSYSCTL_PFCR_MAX_OS_Pos) /*!< MEMSYSCTL PFCR: MAX_OS Mask                                                                                                                          \
 					      */
 
 #define MEMSYSCTL_PFCR_MAX_LA_Pos 4U /*!< MEMSYSCTL PFCR: MAX_LA Position */
-#define MEMSYSCTL_PFCR_MAX_LA_Msk                                                                                      \
-	(0x7UL << MEMSYSCTL_PFCR_MAX_LA_Pos) /*!< MEMSYSCTL PFCR: MAX_LA Mask                                          \
+#define MEMSYSCTL_PFCR_MAX_LA_Msk                                                                                                                                                                      \
+	(0x7UL << MEMSYSCTL_PFCR_MAX_LA_Pos) /*!< MEMSYSCTL PFCR: MAX_LA Mask                                                                                                                          \
 					      */
 
 #define MEMSYSCTL_PFCR_MIN_LA_Pos 1U /*!< MEMSYSCTL PFCR: MIN_LA Position */
-#define MEMSYSCTL_PFCR_MIN_LA_Msk                                                                                      \
-	(0x7UL << MEMSYSCTL_PFCR_MIN_LA_Pos) /*!< MEMSYSCTL PFCR: MIN_LA Mask                                          \
+#define MEMSYSCTL_PFCR_MIN_LA_Msk                                                                                                                                                                      \
+	(0x7UL << MEMSYSCTL_PFCR_MIN_LA_Pos) /*!< MEMSYSCTL PFCR: MIN_LA Mask                                                                                                                          \
 					      */
 
 #define MEMSYSCTL_PFCR_ENABLE_Pos 0U /*!< MEMSYSCTL PFCR: ENABLE Position */
-#define MEMSYSCTL_PFCR_ENABLE_Msk                                                                                      \
-	(0x1UL /*<< MEMSYSCTL_PFCR_ENABLE_Pos*/) /*!< MEMSYSCTL PFCR: ENABLE                                           \
+#define MEMSYSCTL_PFCR_ENABLE_Msk                                                                                                                                                                      \
+	(0x1UL /*<< MEMSYSCTL_PFCR_ENABLE_Pos*/) /*!< MEMSYSCTL PFCR: ENABLE                                                                                                                           \
 						    Mask */
 
 /* MEMSYSCTL ITCM Control Register (ITCMCR) Register Definitions */
@@ -1645,8 +1645,8 @@ typedef struct {
 #define MEMSYSCTL_ITCMCR_SZ_Msk (0xFUL << MEMSYSCTL_ITCMCR_SZ_Pos) /*!< MEMSYSCTL ITCMCR: SZ Mask */
 
 #define MEMSYSCTL_ITCMCR_EN_Pos 0U /*!< MEMSYSCTL ITCMCR: EN Position */
-#define MEMSYSCTL_ITCMCR_EN_Msk                                                                                        \
-	(0x1UL /*<< MEMSYSCTL_ITCMCR_EN_Pos*/) /*!< MEMSYSCTL ITCMCR: EN Mask                                          \
+#define MEMSYSCTL_ITCMCR_EN_Msk                                                                                                                                                                        \
+	(0x1UL /*<< MEMSYSCTL_ITCMCR_EN_Pos*/) /*!< MEMSYSCTL ITCMCR: EN Mask                                                                                                                          \
 						*/
 
 /* MEMSYSCTL DTCM Control Register (DTCMCR) Register Definitions */
@@ -1654,8 +1654,8 @@ typedef struct {
 #define MEMSYSCTL_DTCMCR_SZ_Msk (0xFUL << MEMSYSCTL_DTCMCR_SZ_Pos) /*!< MEMSYSCTL DTCMCR: SZ Mask */
 
 #define MEMSYSCTL_DTCMCR_EN_Pos 0U /*!< MEMSYSCTL DTCMCR: EN Position */
-#define MEMSYSCTL_DTCMCR_EN_Msk                                                                                        \
-	(0x1UL /*<< MEMSYSCTL_DTCMCR_EN_Pos*/) /*!< MEMSYSCTL DTCMCR: EN Mask                                          \
+#define MEMSYSCTL_DTCMCR_EN_Msk                                                                                                                                                                        \
+	(0x1UL /*<< MEMSYSCTL_DTCMCR_EN_Pos*/) /*!< MEMSYSCTL DTCMCR: EN Mask                                                                                                                          \
 						*/
 
 /* MEMSYSCTL P-AHB Control Register (PAHBCR) Register Definitions */
@@ -1663,62 +1663,62 @@ typedef struct {
 #define MEMSYSCTL_PAHBCR_SZ_Msk (0x7UL << MEMSYSCTL_PAHBCR_SZ_Pos) /*!< MEMSYSCTL PAHBCR: SZ Mask */
 
 #define MEMSYSCTL_PAHBCR_EN_Pos 0U /*!< MEMSYSCTL PAHBCR: EN Position */
-#define MEMSYSCTL_PAHBCR_EN_Msk                                                                                        \
-	(0x1UL /*<< MEMSYSCTL_PAHBCR_EN_Pos*/) /*!< MEMSYSCTL PAHBCR: EN Mask                                          \
+#define MEMSYSCTL_PAHBCR_EN_Msk                                                                                                                                                                        \
+	(0x1UL /*<< MEMSYSCTL_PAHBCR_EN_Pos*/) /*!< MEMSYSCTL PAHBCR: EN Mask                                                                                                                          \
 						*/
 
 /* MEMSYSCTL ITGU Control Register (ITGU_CTRL) Register Definitions */
 #define MEMSYSCTL_ITGU_CTRL_DEREN_Pos 1U /*!< MEMSYSCTL ITGU_CTRL: DEREN Position */
-#define MEMSYSCTL_ITGU_CTRL_DEREN_Msk                                                                                  \
-	(0x1UL << MEMSYSCTL_ITGU_CTRL_DEREN_Pos) /*!< MEMSYSCTL ITGU_CTRL:                                             \
+#define MEMSYSCTL_ITGU_CTRL_DEREN_Msk                                                                                                                                                                  \
+	(0x1UL << MEMSYSCTL_ITGU_CTRL_DEREN_Pos) /*!< MEMSYSCTL ITGU_CTRL:                                                                                                                             \
 						    DEREN Mask */
 
 #define MEMSYSCTL_ITGU_CTRL_DBFEN_Pos 0U /*!< MEMSYSCTL ITGU_CTRL: DBFEN Position */
-#define MEMSYSCTL_ITGU_CTRL_DBFEN_Msk                                                                                  \
-	(0x1UL /*<< MEMSYSCTL_ITGU_CTRL_DBFEN_Pos*/) /*!< MEMSYSCTL ITGU_CTRL:                                         \
+#define MEMSYSCTL_ITGU_CTRL_DBFEN_Msk                                                                                                                                                                  \
+	(0x1UL /*<< MEMSYSCTL_ITGU_CTRL_DBFEN_Pos*/) /*!< MEMSYSCTL ITGU_CTRL:                                                                                                                         \
 							DBFEN Mask */
 
 /* MEMSYSCTL ITGU Configuration Register (ITGU_CFG) Register Definitions */
 #define MEMSYSCTL_ITGU_CFG_PRESENT_Pos 31U /*!< MEMSYSCTL ITGU_CFG: PRESENT Position */
-#define MEMSYSCTL_ITGU_CFG_PRESENT_Msk                                                                                 \
-	(0x1UL << MEMSYSCTL_ITGU_CFG_PRESENT_Pos) /*!< MEMSYSCTL ITGU_CFG:                                             \
+#define MEMSYSCTL_ITGU_CFG_PRESENT_Msk                                                                                                                                                                 \
+	(0x1UL << MEMSYSCTL_ITGU_CFG_PRESENT_Pos) /*!< MEMSYSCTL ITGU_CFG:                                                                                                                             \
 						     PRESENT Mask */
 
 #define MEMSYSCTL_ITGU_CFG_NUMBLKS_Pos 8U /*!< MEMSYSCTL ITGU_CFG: NUMBLKS Position */
-#define MEMSYSCTL_ITGU_CFG_NUMBLKS_Msk                                                                                 \
-	(0xFUL << MEMSYSCTL_ITGU_CFG_NUMBLKS_Pos) /*!< MEMSYSCTL ITGU_CFG:                                             \
+#define MEMSYSCTL_ITGU_CFG_NUMBLKS_Msk                                                                                                                                                                 \
+	(0xFUL << MEMSYSCTL_ITGU_CFG_NUMBLKS_Pos) /*!< MEMSYSCTL ITGU_CFG:                                                                                                                             \
 						     NUMBLKS Mask */
 
 #define MEMSYSCTL_ITGU_CFG_BLKSZ_Pos 0U /*!< MEMSYSCTL ITGU_CFG: BLKSZ Position */
-#define MEMSYSCTL_ITGU_CFG_BLKSZ_Msk                                                                                   \
-	(0xFUL /*<< MEMSYSCTL_ITGU_CFG_BLKSZ_Pos*/) /*!< MEMSYSCTL ITGU_CFG:                                           \
+#define MEMSYSCTL_ITGU_CFG_BLKSZ_Msk                                                                                                                                                                   \
+	(0xFUL /*<< MEMSYSCTL_ITGU_CFG_BLKSZ_Pos*/) /*!< MEMSYSCTL ITGU_CFG:                                                                                                                           \
 						       BLKSZ Mask */
 
 /* MEMSYSCTL DTGU Control Registers (DTGU_CTRL) Register Definitions */
 #define MEMSYSCTL_DTGU_CTRL_DEREN_Pos 1U /*!< MEMSYSCTL DTGU_CTRL: DEREN Position */
-#define MEMSYSCTL_DTGU_CTRL_DEREN_Msk                                                                                  \
-	(0x1UL << MEMSYSCTL_DTGU_CTRL_DEREN_Pos) /*!< MEMSYSCTL DTGU_CTRL:                                             \
+#define MEMSYSCTL_DTGU_CTRL_DEREN_Msk                                                                                                                                                                  \
+	(0x1UL << MEMSYSCTL_DTGU_CTRL_DEREN_Pos) /*!< MEMSYSCTL DTGU_CTRL:                                                                                                                             \
 						    DEREN Mask */
 
 #define MEMSYSCTL_DTGU_CTRL_DBFEN_Pos 0U /*!< MEMSYSCTL DTGU_CTRL: DBFEN Position */
-#define MEMSYSCTL_DTGU_CTRL_DBFEN_Msk                                                                                  \
-	(0x1UL /*<< MEMSYSCTL_DTGU_CTRL_DBFEN_Pos*/) /*!< MEMSYSCTL DTGU_CTRL:                                         \
+#define MEMSYSCTL_DTGU_CTRL_DBFEN_Msk                                                                                                                                                                  \
+	(0x1UL /*<< MEMSYSCTL_DTGU_CTRL_DBFEN_Pos*/) /*!< MEMSYSCTL DTGU_CTRL:                                                                                                                         \
 							DBFEN Mask */
 
 /* MEMSYSCTL DTGU Configuration Register (DTGU_CFG) Register Definitions */
 #define MEMSYSCTL_DTGU_CFG_PRESENT_Pos 31U /*!< MEMSYSCTL DTGU_CFG: PRESENT Position */
-#define MEMSYSCTL_DTGU_CFG_PRESENT_Msk                                                                                 \
-	(0x1UL << MEMSYSCTL_DTGU_CFG_PRESENT_Pos) /*!< MEMSYSCTL DTGU_CFG:                                             \
+#define MEMSYSCTL_DTGU_CFG_PRESENT_Msk                                                                                                                                                                 \
+	(0x1UL << MEMSYSCTL_DTGU_CFG_PRESENT_Pos) /*!< MEMSYSCTL DTGU_CFG:                                                                                                                             \
 						     PRESENT Mask */
 
 #define MEMSYSCTL_DTGU_CFG_NUMBLKS_Pos 8U /*!< MEMSYSCTL DTGU_CFG: NUMBLKS Position */
-#define MEMSYSCTL_DTGU_CFG_NUMBLKS_Msk                                                                                 \
-	(0xFUL << MEMSYSCTL_DTGU_CFG_NUMBLKS_Pos) /*!< MEMSYSCTL DTGU_CFG:                                             \
+#define MEMSYSCTL_DTGU_CFG_NUMBLKS_Msk                                                                                                                                                                 \
+	(0xFUL << MEMSYSCTL_DTGU_CFG_NUMBLKS_Pos) /*!< MEMSYSCTL DTGU_CFG:                                                                                                                             \
 						     NUMBLKS Mask */
 
 #define MEMSYSCTL_DTGU_CFG_BLKSZ_Pos 0U /*!< MEMSYSCTL DTGU_CFG: BLKSZ Position */
-#define MEMSYSCTL_DTGU_CFG_BLKSZ_Msk                                                                                   \
-	(0xFUL /*<< MEMSYSCTL_DTGU_CFG_BLKSZ_Pos*/) /*!< MEMSYSCTL DTGU_CFG:                                           \
+#define MEMSYSCTL_DTGU_CFG_BLKSZ_Msk                                                                                                                                                                   \
+	(0xFUL /*<< MEMSYSCTL_DTGU_CFG_BLKSZ_Pos*/) /*!< MEMSYSCTL DTGU_CFG:                                                                                                                           \
 						       BLKSZ Mask */
 
 /*@}*/ /* end of group MemSysCtl_Type */
@@ -1743,27 +1743,27 @@ typedef struct {
 /* PWRMODCTL Core Power Domain Low Power State (CPDLPSTATE) Register Definitions
  */
 #define PWRMODCTL_CPDLPSTATE_RLPSTATE_Pos 8U /*!< PWRMODCTL CPDLPSTATE: RLPSTATE Position */
-#define PWRMODCTL_CPDLPSTATE_RLPSTATE_Msk                                                                              \
-	(0x3UL << PWRMODCTL_CPDLPSTATE_RLPSTATE_Pos) /*!< PWRMODCTL CPDLPSTATE:                                        \
+#define PWRMODCTL_CPDLPSTATE_RLPSTATE_Msk                                                                                                                                                              \
+	(0x3UL << PWRMODCTL_CPDLPSTATE_RLPSTATE_Pos) /*!< PWRMODCTL CPDLPSTATE:                                                                                                                        \
 							RLPSTATE Mask */
 
 #define PWRMODCTL_CPDLPSTATE_ELPSTATE_Pos 4U /*!< PWRMODCTL CPDLPSTATE: ELPSTATE Position */
-#define PWRMODCTL_CPDLPSTATE_ELPSTATE_Msk                                                                              \
-	(0x3UL << PWRMODCTL_CPDLPSTATE_ELPSTATE_Pos) /*!< PWRMODCTL CPDLPSTATE:                                        \
+#define PWRMODCTL_CPDLPSTATE_ELPSTATE_Msk                                                                                                                                                              \
+	(0x3UL << PWRMODCTL_CPDLPSTATE_ELPSTATE_Pos) /*!< PWRMODCTL CPDLPSTATE:                                                                                                                        \
 							ELPSTATE Mask */
 
 #define PWRMODCTL_CPDLPSTATE_CLPSTATE_Pos 0U /*!< PWRMODCTL CPDLPSTATE: CLPSTATE Position */
-#define PWRMODCTL_CPDLPSTATE_CLPSTATE_Msk                                                                              \
-	(0x3UL /*<< PWRMODCTL_CPDLPSTATE_CLPSTATE_Pos*/) /*!< PWRMODCTL                                                \
-							    CPDLPSTATE:                                                \
+#define PWRMODCTL_CPDLPSTATE_CLPSTATE_Msk                                                                                                                                                              \
+	(0x3UL /*<< PWRMODCTL_CPDLPSTATE_CLPSTATE_Pos*/) /*!< PWRMODCTL                                                                                                                                \
+							    CPDLPSTATE:                                                                                                                                \
 							    CLPSTATE Mask */
 
 /* PWRMODCTL Debug Power Domain Low Power State (DPDLPSTATE) Register
  * Definitions */
 #define PWRMODCTL_DPDLPSTATE_DLPSTATE_Pos 0U /*!< PWRMODCTL DPDLPSTATE: DLPSTATE Position */
-#define PWRMODCTL_DPDLPSTATE_DLPSTATE_Msk                                                                              \
-	(0x3UL /*<< PWRMODCTL_DPDLPSTATE_DLPSTATE_Pos*/) /*!< PWRMODCTL                                                \
-							    DPDLPSTATE:                                                \
+#define PWRMODCTL_DPDLPSTATE_DLPSTATE_Msk                                                                                                                                                              \
+	(0x3UL /*<< PWRMODCTL_DPDLPSTATE_DLPSTATE_Pos*/) /*!< PWRMODCTL                                                                                                                                \
+							    DPDLPSTATE:                                                                                                                                \
 							    DLPSTATE Mask */
 
 /*@}*/ /* end of group PwrModCtl_Type */
@@ -1789,22 +1789,22 @@ typedef struct {
 
 /* EWIC External Wakeup Interrupt Controller (EVENTSPR) Register Definitions */
 #define EWIC_EVENTSPR_EDBGREQ_Pos 2U /*!< EWIC EVENTSPR: EDBGREQ Position */
-#define EWIC_EVENTSPR_EDBGREQ_Msk                                                                                      \
-	(0x1UL << EWIC_EVENTSPR_EDBGREQ_Pos) /*!< EWIC EVENTSPR: EDBGREQ Mask                                          \
+#define EWIC_EVENTSPR_EDBGREQ_Msk                                                                                                                                                                      \
+	(0x1UL << EWIC_EVENTSPR_EDBGREQ_Pos) /*!< EWIC EVENTSPR: EDBGREQ Mask                                                                                                                          \
 					      */
 
 #define EWIC_EVENTSPR_NMI_Pos 1U			       /*!< EWIC EVENTSPR: NMI Position */
 #define EWIC_EVENTSPR_NMI_Msk (0x1UL << EWIC_EVENTSPR_NMI_Pos) /*!< EWIC EVENTSPR: NMI Mask */
 
 #define EWIC_EVENTSPR_EVENT_Pos 0U /*!< EWIC EVENTSPR: EVENT Position */
-#define EWIC_EVENTSPR_EVENT_Msk                                                                                        \
-	(0x1UL /*<< EWIC_EVENTSPR_EVENT_Pos*/) /*!< EWIC EVENTSPR: EVENT Mask                                          \
+#define EWIC_EVENTSPR_EVENT_Msk                                                                                                                                                                        \
+	(0x1UL /*<< EWIC_EVENTSPR_EVENT_Pos*/) /*!< EWIC EVENTSPR: EVENT Mask                                                                                                                          \
 						*/
 
 /* EWIC External Wakeup Interrupt Controller (EVENTMASKA) Register Definitions
  */
-#define EWIC_EVENTMASKA_EDBGREQ_Pos                                                                                    \
-	2U								   /*!< EWIC EVENTMASKA: EDBGREQ Position      \
+#define EWIC_EVENTMASKA_EDBGREQ_Pos                                                                                                                                                                    \
+	2U								   /*!< EWIC EVENTMASKA: EDBGREQ Position                                                                                      \
 									    */
 #define EWIC_EVENTMASKA_EDBGREQ_Msk (0x1UL << EWIC_EVENTMASKA_EDBGREQ_Pos) /*!< EWIC EVENTMASKA: EDBGREQ Mask */
 
@@ -1812,14 +1812,14 @@ typedef struct {
 #define EWIC_EVENTMASKA_NMI_Msk (0x1UL << EWIC_EVENTMASKA_NMI_Pos) /*!< EWIC EVENTMASKA: NMI Mask */
 
 #define EWIC_EVENTMASKA_EVENT_Pos 0U /*!< EWIC EVENTMASKA: EVENT Position */
-#define EWIC_EVENTMASKA_EVENT_Msk                                                                                      \
-	(0x1UL /*<< EWIC_EVENTMASKA_EVENT_Pos*/) /*!< EWIC EVENTMASKA: EVENT                                           \
+#define EWIC_EVENTMASKA_EVENT_Msk                                                                                                                                                                      \
+	(0x1UL /*<< EWIC_EVENTMASKA_EVENT_Pos*/) /*!< EWIC EVENTMASKA: EVENT                                                                                                                           \
 						    Mask */
 
 /* EWIC External Wakeup Interrupt Controller (EVENTMASK) Register Definitions */
 #define EWIC_EVENTMASK_IRQ_Pos 0U /*!< EWIC EVENTMASKA: IRQ Position */
-#define EWIC_EVENTMASK_IRQ_Msk                                                                                         \
-	(0xFFFFFFFFUL /*<< EWIC_EVENTMASKA_IRQ_Pos*/) /*!< EWIC EVENTMASKA:                                            \
+#define EWIC_EVENTMASK_IRQ_Msk                                                                                                                                                                         \
+	(0xFFFFFFFFUL /*<< EWIC_EVENTMASKA_IRQ_Pos*/) /*!< EWIC EVENTMASKA:                                                                                                                            \
 							 IRQ Mask */
 
 /*@}*/ /* end of group EWIC_Type */
@@ -2025,18 +2025,18 @@ typedef struct {
 #define STL_STLNVICPENDOR_VALID_Msk (0x1UL << STL_STLNVICPENDOR_VALID_Pos) /*!< STL STLNVICPENDOR: VALID Mask */
 
 #define STL_STLNVICPENDOR_TARGET_Pos 17U /*!< STL STLNVICPENDOR: TARGET Position */
-#define STL_STLNVICPENDOR_TARGET_Msk                                                                                   \
-	(0x1UL << STL_STLNVICPENDOR_TARGET_Pos) /*!< STL STLNVICPENDOR: TARGET                                         \
+#define STL_STLNVICPENDOR_TARGET_Msk                                                                                                                                                                   \
+	(0x1UL << STL_STLNVICPENDOR_TARGET_Pos) /*!< STL STLNVICPENDOR: TARGET                                                                                                                         \
 						   Mask */
 
 #define STL_STLNVICPENDOR_PRIORITY_Pos 9U /*!< STL STLNVICPENDOR: PRIORITY Position */
-#define STL_STLNVICPENDOR_PRIORITY_Msk                                                                                 \
-	(0xFFUL << STL_STLNVICPENDOR_PRIORITY_Pos) /*!< STL STLNVICPENDOR:                                             \
+#define STL_STLNVICPENDOR_PRIORITY_Msk                                                                                                                                                                 \
+	(0xFFUL << STL_STLNVICPENDOR_PRIORITY_Pos) /*!< STL STLNVICPENDOR:                                                                                                                             \
 						      PRIORITY Mask */
 
 #define STL_STLNVICPENDOR_INTNUM_Pos 0U /*!< STL STLNVICPENDOR: INTNUM Position */
-#define STL_STLNVICPENDOR_INTNUM_Msk                                                                                   \
-	(0x1FFUL /*<< STL_STLNVICPENDOR_INTNUM_Pos*/) /*!< STL STLNVICPENDOR:                                          \
+#define STL_STLNVICPENDOR_INTNUM_Msk                                                                                                                                                                   \
+	(0x1FFUL /*<< STL_STLNVICPENDOR_INTNUM_Pos*/) /*!< STL STLNVICPENDOR:                                                                                                                          \
 							 INTNUM Mask */
 
 /* STL Software Test Library Observation Register (STLNVICACTVOR) Definitions */
@@ -2044,18 +2044,18 @@ typedef struct {
 #define STL_STLNVICACTVOR_VALID_Msk (0x1UL << STL_STLNVICACTVOR_VALID_Pos) /*!< STL STLNVICACTVOR: VALID Mask */
 
 #define STL_STLNVICACTVOR_TARGET_Pos 17U /*!< STL STLNVICACTVOR: TARGET Position */
-#define STL_STLNVICACTVOR_TARGET_Msk                                                                                   \
-	(0x1UL << STL_STLNVICACTVOR_TARGET_Pos) /*!< STL STLNVICACTVOR: TARGET                                         \
+#define STL_STLNVICACTVOR_TARGET_Msk                                                                                                                                                                   \
+	(0x1UL << STL_STLNVICACTVOR_TARGET_Pos) /*!< STL STLNVICACTVOR: TARGET                                                                                                                         \
 						   Mask */
 
 #define STL_STLNVICACTVOR_PRIORITY_Pos 9U /*!< STL STLNVICACTVOR: PRIORITY Position */
-#define STL_STLNVICACTVOR_PRIORITY_Msk                                                                                 \
-	(0xFFUL << STL_STLNVICACTVOR_PRIORITY_Pos) /*!< STL STLNVICACTVOR:                                             \
+#define STL_STLNVICACTVOR_PRIORITY_Msk                                                                                                                                                                 \
+	(0xFFUL << STL_STLNVICACTVOR_PRIORITY_Pos) /*!< STL STLNVICACTVOR:                                                                                                                             \
 						      PRIORITY Mask */
 
 #define STL_STLNVICACTVOR_INTNUM_Pos 0U /*!< STL STLNVICACTVOR: INTNUM Position */
-#define STL_STLNVICACTVOR_INTNUM_Msk                                                                                   \
-	(0x1FFUL /*<< STL_STLNVICACTVOR_INTNUM_Pos*/) /*!< STL STLNVICACTVOR:                                          \
+#define STL_STLNVICACTVOR_INTNUM_Msk                                                                                                                                                                   \
+	(0x1FFUL /*<< STL_STLNVICACTVOR_INTNUM_Pos*/) /*!< STL STLNVICACTVOR:                                                                                                                          \
 							 INTNUM Mask */
 
 /* STL Software Test Library Observation Register (STLIDMPUSR) Definitions */
@@ -2069,36 +2069,36 @@ typedef struct {
 #define STL_STLIDMPUSR_DATA_Msk (0x1UL << STL_STLIDMPUSR_DATA_Pos) /*!< STL STLIDMPUSR: DATA Mask */
 
 /* STL Software Test Library Observation Register (STLIMPUOR) Definitions */
-#define STL_STLIMPUOR_HITREGION_Pos                                                                                    \
-	9U								    /*!< STL STLIMPUOR: HITREGION Position     \
+#define STL_STLIMPUOR_HITREGION_Pos                                                                                                                                                                    \
+	9U								    /*!< STL STLIMPUOR: HITREGION Position                                                                                     \
 									     */
 #define STL_STLIMPUOR_HITREGION_Msk (0xFFUL << STL_STLIMPUOR_HITREGION_Pos) /*!< STL STLIMPUOR: HITREGION Mask */
 
 #define STL_STLIMPUOR_ATTR_Pos 0U /*!< STL STLIMPUOR: ATTR Position */
-#define STL_STLIMPUOR_ATTR_Msk                                                                                         \
-	(0x1FFUL /*<< STL_STLIMPUOR_ATTR_Pos*/) /*!< STL STLIMPUOR: ATTR Mask                                          \
+#define STL_STLIMPUOR_ATTR_Msk                                                                                                                                                                         \
+	(0x1FFUL /*<< STL_STLIMPUOR_ATTR_Pos*/) /*!< STL STLIMPUOR: ATTR Mask                                                                                                                          \
 						 */
 
 /* STL Software Test Library Observation Register (STLD0MPUOR) Definitions */
 #define STL_STLD0MPUOR_HITREGION_Pos 9U /*!< STL STLD0MPUOR: HITREGION Position */
-#define STL_STLD0MPUOR_HITREGION_Msk                                                                                   \
-	(0xFFUL << STL_STLD0MPUOR_HITREGION_Pos) /*!< STL STLD0MPUOR:                                                  \
+#define STL_STLD0MPUOR_HITREGION_Msk                                                                                                                                                                   \
+	(0xFFUL << STL_STLD0MPUOR_HITREGION_Pos) /*!< STL STLD0MPUOR:                                                                                                                                  \
 						    HITREGION Mask */
 
 #define STL_STLD0MPUOR_ATTR_Pos 0U /*!< STL STLD0MPUOR: ATTR Position */
-#define STL_STLD0MPUOR_ATTR_Msk                                                                                        \
-	(0x1FFUL /*<< STL_STLD0MPUOR_ATTR_Pos*/) /*!< STL STLD0MPUOR: ATTR                                             \
+#define STL_STLD0MPUOR_ATTR_Msk                                                                                                                                                                        \
+	(0x1FFUL /*<< STL_STLD0MPUOR_ATTR_Pos*/) /*!< STL STLD0MPUOR: ATTR                                                                                                                             \
 						    Mask */
 
 /* STL Software Test Library Observation Register (STLD1MPUOR) Definitions */
 #define STL_STLD1MPUOR_HITREGION_Pos 9U /*!< STL STLD1MPUOR: HITREGION Position */
-#define STL_STLD1MPUOR_HITREGION_Msk                                                                                   \
-	(0xFFUL << STL_STLD1MPUOR_HITREGION_Pos) /*!< STL STLD1MPUOR:                                                  \
+#define STL_STLD1MPUOR_HITREGION_Msk                                                                                                                                                                   \
+	(0xFFUL << STL_STLD1MPUOR_HITREGION_Pos) /*!< STL STLD1MPUOR:                                                                                                                                  \
 						    HITREGION Mask */
 
 #define STL_STLD1MPUOR_ATTR_Pos 0U /*!< STL STLD1MPUOR: ATTR Position */
-#define STL_STLD1MPUOR_ATTR_Msk                                                                                        \
-	(0x1FFUL /*<< STL_STLD1MPUOR_ATTR_Pos*/) /*!< STL STLD1MPUOR: ATTR                                             \
+#define STL_STLD1MPUOR_ATTR_Msk                                                                                                                                                                        \
+	(0x1FFUL /*<< STL_STLD1MPUOR_ATTR_Pos*/) /*!< STL STLD1MPUOR: ATTR                                                                                                                             \
 						    Mask */
 
 /*@}*/ /* end of group STL_Type */
@@ -2140,8 +2140,8 @@ typedef struct {
 
 /* TPI Asynchronous Clock Prescaler Register Definitions */
 #define TPI_ACPR_SWOSCALER_Pos 0U /*!< TPI ACPR: SWOSCALER Position */
-#define TPI_ACPR_SWOSCALER_Msk                                                                                         \
-	(0xFFFFUL /*<< TPI_ACPR_SWOSCALER_Pos*/) /*!< TPI ACPR: SWOSCALER Mask                                         \
+#define TPI_ACPR_SWOSCALER_Msk                                                                                                                                                                         \
+	(0xFFFFUL /*<< TPI_ACPR_SWOSCALER_Pos*/) /*!< TPI ACPR: SWOSCALER Mask                                                                                                                         \
 						  */
 
 /* TPI Selected Pin Protocol Register Definitions */
@@ -2183,8 +2183,8 @@ typedef struct {
 #define TPI_LSR_SLK_Msk (0x1UL << TPI_LSR_SLK_Pos) /*!< TPI LSR: Software Lock status Mask */
 
 #define TPI_LSR_SLI_Pos 0U /*!< TPI LSR: Software Lock implemented Position */
-#define TPI_LSR_SLI_Msk                                                                                                \
-	(0x1UL /*<< TPI_LSR_SLI_Pos*/) /*!< TPI LSR: Software Lock implemented                                         \
+#define TPI_LSR_SLI_Msk                                                                                                                                                                                \
+	(0x1UL /*<< TPI_LSR_SLI_Pos*/) /*!< TPI LSR: Software Lock implemented                                                                                                                         \
 					  Mask */
 
 /* TPI DEVID Register Definitions */
@@ -2202,13 +2202,13 @@ typedef struct {
 
 /* TPI DEVTYPE Register Definitions */
 #define TPI_DEVTYPE_SubType_Pos 4U /*!< TPI DEVTYPE: SubType Position */
-#define TPI_DEVTYPE_SubType_Msk                                                                                        \
-	(0xFUL /*<< TPI_DEVTYPE_SubType_Pos*/) /*!< TPI DEVTYPE: SubType Mask                                          \
+#define TPI_DEVTYPE_SubType_Msk                                                                                                                                                                        \
+	(0xFUL /*<< TPI_DEVTYPE_SubType_Pos*/) /*!< TPI DEVTYPE: SubType Mask                                                                                                                          \
 						*/
 
 #define TPI_DEVTYPE_MajorType_Pos 0U /*!< TPI DEVTYPE: MajorType Position */
-#define TPI_DEVTYPE_MajorType_Msk                                                                                      \
-	(0xFUL << TPI_DEVTYPE_MajorType_Pos) /*!< TPI DEVTYPE: MajorType Mask                                          \
+#define TPI_DEVTYPE_MajorType_Msk                                                                                                                                                                      \
+	(0xFUL << TPI_DEVTYPE_MajorType_Pos) /*!< TPI DEVTYPE: MajorType Mask                                                                                                                          \
 					      */
 
 /*@}*/ /* end of group CMSIS_TPI */
@@ -2297,1247 +2297,1247 @@ typedef struct {
 /** \brief PMU Event Type and Filter Registers (0-30) Definitions  */
 
 #define PMU_EVTYPER_EVENTTOCNT_Pos 0U /*!< PMU EVTYPER: Event to Count Position */
-#define PMU_EVTYPER_EVENTTOCNT_Msk                                                                                     \
-	(0xFFFFUL /*<< EVTYPERx_EVENTTOCNT_Pos*/) /*!< PMU EVTYPER: Event to                                           \
+#define PMU_EVTYPER_EVENTTOCNT_Msk                                                                                                                                                                     \
+	(0xFFFFUL /*<< EVTYPERx_EVENTTOCNT_Pos*/) /*!< PMU EVTYPER: Event to                                                                                                                           \
 						     Count Mask */
 
 /** \brief PMU Count Enable Set Register Definitions */
 
 #define PMU_CNTENSET_CNT0_ENABLE_Pos 0U /*!< PMU CNTENSET: Event Counter 0 Enable Set Position */
-#define PMU_CNTENSET_CNT0_ENABLE_Msk                                                                                   \
-	(1UL /*<< PMU_CNTENSET_CNT0_ENABLE_Pos*/) /*!< PMU CNTENSET: Event                                             \
-						     Counter 0 Enable Set Mask                                         \
+#define PMU_CNTENSET_CNT0_ENABLE_Msk                                                                                                                                                                   \
+	(1UL /*<< PMU_CNTENSET_CNT0_ENABLE_Pos*/) /*!< PMU CNTENSET: Event                                                                                                                             \
+						     Counter 0 Enable Set Mask                                                                                                                         \
 						   */
 
 #define PMU_CNTENSET_CNT1_ENABLE_Pos 1U /*!< PMU CNTENSET: Event Counter 1 Enable Set Position */
-#define PMU_CNTENSET_CNT1_ENABLE_Msk                                                                                   \
-	(1UL << PMU_CNTENSET_CNT1_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter                                         \
+#define PMU_CNTENSET_CNT1_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_CNTENSET_CNT1_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter                                                                                                                         \
 						 1 Enable Set Mask */
 
 #define PMU_CNTENSET_CNT2_ENABLE_Pos 2U /*!< PMU CNTENSET: Event Counter 2 Enable Set Position */
-#define PMU_CNTENSET_CNT2_ENABLE_Msk                                                                                   \
-	(1UL << PMU_CNTENSET_CNT2_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter                                         \
+#define PMU_CNTENSET_CNT2_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_CNTENSET_CNT2_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter                                                                                                                         \
 						 2 Enable Set Mask */
 
 #define PMU_CNTENSET_CNT3_ENABLE_Pos 3U /*!< PMU CNTENSET: Event Counter 3 Enable Set Position */
-#define PMU_CNTENSET_CNT3_ENABLE_Msk                                                                                   \
-	(1UL << PMU_CNTENSET_CNT3_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter                                         \
+#define PMU_CNTENSET_CNT3_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_CNTENSET_CNT3_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter                                                                                                                         \
 						 3 Enable Set Mask */
 
 #define PMU_CNTENSET_CNT4_ENABLE_Pos 4U /*!< PMU CNTENSET: Event Counter 4 Enable Set Position */
-#define PMU_CNTENSET_CNT4_ENABLE_Msk                                                                                   \
-	(1UL << PMU_CNTENSET_CNT4_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter                                         \
+#define PMU_CNTENSET_CNT4_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_CNTENSET_CNT4_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter                                                                                                                         \
 						 4 Enable Set Mask */
 
 #define PMU_CNTENSET_CNT5_ENABLE_Pos 5U /*!< PMU CNTENSET: Event Counter 5 Enable Set Position */
-#define PMU_CNTENSET_CNT5_ENABLE_Msk                                                                                   \
-	(1UL << PMU_CNTENSET_CNT5_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter                                         \
+#define PMU_CNTENSET_CNT5_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_CNTENSET_CNT5_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter                                                                                                                         \
 						 5 Enable Set Mask */
 
 #define PMU_CNTENSET_CNT6_ENABLE_Pos 6U /*!< PMU CNTENSET: Event Counter 6 Enable Set Position */
-#define PMU_CNTENSET_CNT6_ENABLE_Msk                                                                                   \
-	(1UL << PMU_CNTENSET_CNT6_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter                                         \
+#define PMU_CNTENSET_CNT6_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_CNTENSET_CNT6_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter                                                                                                                         \
 						 6 Enable Set Mask */
 
 #define PMU_CNTENSET_CNT7_ENABLE_Pos 7U /*!< PMU CNTENSET: Event Counter 7 Enable Set Position */
-#define PMU_CNTENSET_CNT7_ENABLE_Msk                                                                                   \
-	(1UL << PMU_CNTENSET_CNT7_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter                                         \
+#define PMU_CNTENSET_CNT7_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_CNTENSET_CNT7_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter                                                                                                                         \
 						 7 Enable Set Mask */
 
 #define PMU_CNTENSET_CNT8_ENABLE_Pos 8U /*!< PMU CNTENSET: Event Counter 8 Enable Set Position */
-#define PMU_CNTENSET_CNT8_ENABLE_Msk                                                                                   \
-	(1UL << PMU_CNTENSET_CNT8_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter                                         \
+#define PMU_CNTENSET_CNT8_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_CNTENSET_CNT8_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter                                                                                                                         \
 						 8 Enable Set Mask */
 
 #define PMU_CNTENSET_CNT9_ENABLE_Pos 9U /*!< PMU CNTENSET: Event Counter 9 Enable Set Position */
-#define PMU_CNTENSET_CNT9_ENABLE_Msk                                                                                   \
-	(1UL << PMU_CNTENSET_CNT9_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter                                         \
+#define PMU_CNTENSET_CNT9_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_CNTENSET_CNT9_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter                                                                                                                         \
 						 9 Enable Set Mask */
 
 #define PMU_CNTENSET_CNT10_ENABLE_Pos 10U /*!< PMU CNTENSET: Event Counter 10 Enable Set Position */
-#define PMU_CNTENSET_CNT10_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENSET_CNT10_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 10                                     \
+#define PMU_CNTENSET_CNT10_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENSET_CNT10_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 10                                                                                                                     \
 						  Enable Set Mask */
 
 #define PMU_CNTENSET_CNT11_ENABLE_Pos 11U /*!< PMU CNTENSET: Event Counter 11 Enable Set Position */
-#define PMU_CNTENSET_CNT11_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENSET_CNT11_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 11                                     \
+#define PMU_CNTENSET_CNT11_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENSET_CNT11_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 11                                                                                                                     \
 						  Enable Set Mask */
 
 #define PMU_CNTENSET_CNT12_ENABLE_Pos 12U /*!< PMU CNTENSET: Event Counter 12 Enable Set Position */
-#define PMU_CNTENSET_CNT12_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENSET_CNT12_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 12                                     \
+#define PMU_CNTENSET_CNT12_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENSET_CNT12_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 12                                                                                                                     \
 						  Enable Set Mask */
 
 #define PMU_CNTENSET_CNT13_ENABLE_Pos 13U /*!< PMU CNTENSET: Event Counter 13 Enable Set Position */
-#define PMU_CNTENSET_CNT13_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENSET_CNT13_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 13                                     \
+#define PMU_CNTENSET_CNT13_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENSET_CNT13_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 13                                                                                                                     \
 						  Enable Set Mask */
 
 #define PMU_CNTENSET_CNT14_ENABLE_Pos 14U /*!< PMU CNTENSET: Event Counter 14 Enable Set Position */
-#define PMU_CNTENSET_CNT14_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENSET_CNT14_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 14                                     \
+#define PMU_CNTENSET_CNT14_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENSET_CNT14_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 14                                                                                                                     \
 						  Enable Set Mask */
 
 #define PMU_CNTENSET_CNT15_ENABLE_Pos 15U /*!< PMU CNTENSET: Event Counter 15 Enable Set Position */
-#define PMU_CNTENSET_CNT15_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENSET_CNT15_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 15                                     \
+#define PMU_CNTENSET_CNT15_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENSET_CNT15_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 15                                                                                                                     \
 						  Enable Set Mask */
 
 #define PMU_CNTENSET_CNT16_ENABLE_Pos 16U /*!< PMU CNTENSET: Event Counter 16 Enable Set Position */
-#define PMU_CNTENSET_CNT16_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENSET_CNT16_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 16                                     \
+#define PMU_CNTENSET_CNT16_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENSET_CNT16_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 16                                                                                                                     \
 						  Enable Set Mask */
 
 #define PMU_CNTENSET_CNT17_ENABLE_Pos 17U /*!< PMU CNTENSET: Event Counter 17 Enable Set Position */
-#define PMU_CNTENSET_CNT17_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENSET_CNT17_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 17                                     \
+#define PMU_CNTENSET_CNT17_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENSET_CNT17_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 17                                                                                                                     \
 						  Enable Set Mask */
 
 #define PMU_CNTENSET_CNT18_ENABLE_Pos 18U /*!< PMU CNTENSET: Event Counter 18 Enable Set Position */
-#define PMU_CNTENSET_CNT18_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENSET_CNT18_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 18                                     \
+#define PMU_CNTENSET_CNT18_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENSET_CNT18_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 18                                                                                                                     \
 						  Enable Set Mask */
 
 #define PMU_CNTENSET_CNT19_ENABLE_Pos 19U /*!< PMU CNTENSET: Event Counter 19 Enable Set Position */
-#define PMU_CNTENSET_CNT19_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENSET_CNT19_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 19                                     \
+#define PMU_CNTENSET_CNT19_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENSET_CNT19_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 19                                                                                                                     \
 						  Enable Set Mask */
 
 #define PMU_CNTENSET_CNT20_ENABLE_Pos 20U /*!< PMU CNTENSET: Event Counter 20 Enable Set Position */
-#define PMU_CNTENSET_CNT20_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENSET_CNT20_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 20                                     \
+#define PMU_CNTENSET_CNT20_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENSET_CNT20_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 20                                                                                                                     \
 						  Enable Set Mask */
 
 #define PMU_CNTENSET_CNT21_ENABLE_Pos 21U /*!< PMU CNTENSET: Event Counter 21 Enable Set Position */
-#define PMU_CNTENSET_CNT21_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENSET_CNT21_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 21                                     \
+#define PMU_CNTENSET_CNT21_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENSET_CNT21_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 21                                                                                                                     \
 						  Enable Set Mask */
 
 #define PMU_CNTENSET_CNT22_ENABLE_Pos 22U /*!< PMU CNTENSET: Event Counter 22 Enable Set Position */
-#define PMU_CNTENSET_CNT22_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENSET_CNT22_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 22                                     \
+#define PMU_CNTENSET_CNT22_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENSET_CNT22_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 22                                                                                                                     \
 						  Enable Set Mask */
 
 #define PMU_CNTENSET_CNT23_ENABLE_Pos 23U /*!< PMU CNTENSET: Event Counter 23 Enable Set Position */
-#define PMU_CNTENSET_CNT23_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENSET_CNT23_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 23                                     \
+#define PMU_CNTENSET_CNT23_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENSET_CNT23_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 23                                                                                                                     \
 						  Enable Set Mask */
 
 #define PMU_CNTENSET_CNT24_ENABLE_Pos 24U /*!< PMU CNTENSET: Event Counter 24 Enable Set Position */
-#define PMU_CNTENSET_CNT24_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENSET_CNT24_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 24                                     \
+#define PMU_CNTENSET_CNT24_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENSET_CNT24_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 24                                                                                                                     \
 						  Enable Set Mask */
 
 #define PMU_CNTENSET_CNT25_ENABLE_Pos 25U /*!< PMU CNTENSET: Event Counter 25 Enable Set Position */
-#define PMU_CNTENSET_CNT25_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENSET_CNT25_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 25                                     \
+#define PMU_CNTENSET_CNT25_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENSET_CNT25_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 25                                                                                                                     \
 						  Enable Set Mask */
 
 #define PMU_CNTENSET_CNT26_ENABLE_Pos 26U /*!< PMU CNTENSET: Event Counter 26 Enable Set Position */
-#define PMU_CNTENSET_CNT26_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENSET_CNT26_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 26                                     \
+#define PMU_CNTENSET_CNT26_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENSET_CNT26_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 26                                                                                                                     \
 						  Enable Set Mask */
 
 #define PMU_CNTENSET_CNT27_ENABLE_Pos 27U /*!< PMU CNTENSET: Event Counter 27 Enable Set Position */
-#define PMU_CNTENSET_CNT27_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENSET_CNT27_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 27                                     \
+#define PMU_CNTENSET_CNT27_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENSET_CNT27_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 27                                                                                                                     \
 						  Enable Set Mask */
 
 #define PMU_CNTENSET_CNT28_ENABLE_Pos 28U /*!< PMU CNTENSET: Event Counter 28 Enable Set Position */
-#define PMU_CNTENSET_CNT28_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENSET_CNT28_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 28                                     \
+#define PMU_CNTENSET_CNT28_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENSET_CNT28_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 28                                                                                                                     \
 						  Enable Set Mask */
 
 #define PMU_CNTENSET_CNT29_ENABLE_Pos 29U /*!< PMU CNTENSET: Event Counter 29 Enable Set Position */
-#define PMU_CNTENSET_CNT29_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENSET_CNT29_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 29                                     \
+#define PMU_CNTENSET_CNT29_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENSET_CNT29_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 29                                                                                                                     \
 						  Enable Set Mask */
 
 #define PMU_CNTENSET_CNT30_ENABLE_Pos 30U /*!< PMU CNTENSET: Event Counter 30 Enable Set Position */
-#define PMU_CNTENSET_CNT30_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENSET_CNT30_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 30                                     \
+#define PMU_CNTENSET_CNT30_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENSET_CNT30_ENABLE_Pos) /*!< PMU CNTENSET: Event Counter 30                                                                                                                     \
 						  Enable Set Mask */
 
 #define PMU_CNTENSET_CCNTR_ENABLE_Pos 31U /*!< PMU CNTENSET: Cycle Counter Enable Set Position */
-#define PMU_CNTENSET_CCNTR_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENSET_CCNTR_ENABLE_Pos) /*!< PMU CNTENSET: Cycle                                                \
+#define PMU_CNTENSET_CCNTR_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENSET_CCNTR_ENABLE_Pos) /*!< PMU CNTENSET: Cycle                                                                                                                                \
 						  Counter Enable Set Mask */
 
 /** \brief PMU Count Enable Clear Register Definitions */
 
 #define PMU_CNTENSET_CNT0_ENABLE_Pos 0U /*!< PMU CNTENCLR: Event Counter 0 Enable Clear Position */
-#define PMU_CNTENCLR_CNT0_ENABLE_Msk                                                                                   \
-	(1UL /*<< PMU_CNTENCLR_CNT0_ENABLE_Pos*/) /*!< PMU CNTENCLR: Event                                             \
-						     Counter 0 Enable Clear                                            \
+#define PMU_CNTENCLR_CNT0_ENABLE_Msk                                                                                                                                                                   \
+	(1UL /*<< PMU_CNTENCLR_CNT0_ENABLE_Pos*/) /*!< PMU CNTENCLR: Event                                                                                                                             \
+						     Counter 0 Enable Clear                                                                                                                            \
 						     Mask */
 
 #define PMU_CNTENCLR_CNT1_ENABLE_Pos 1U /*!< PMU CNTENCLR: Event Counter 1 Enable Clear Position */
-#define PMU_CNTENCLR_CNT1_ENABLE_Msk                                                                                   \
-	(1UL << PMU_CNTENCLR_CNT1_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter                                         \
+#define PMU_CNTENCLR_CNT1_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_CNTENCLR_CNT1_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter                                                                                                                         \
 						 1 Enable Clear */
 
 #define PMU_CNTENCLR_CNT2_ENABLE_Pos 2U /*!< PMU CNTENCLR: Event Counter 2 Enable Clear Position */
-#define PMU_CNTENCLR_CNT2_ENABLE_Msk                                                                                   \
-	(1UL << PMU_CNTENCLR_CNT2_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter                                         \
+#define PMU_CNTENCLR_CNT2_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_CNTENCLR_CNT2_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter                                                                                                                         \
 						 2 Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT3_ENABLE_Pos 3U /*!< PMU CNTENCLR: Event Counter 3 Enable Clear Position */
-#define PMU_CNTENCLR_CNT3_ENABLE_Msk                                                                                   \
-	(1UL << PMU_CNTENCLR_CNT3_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter                                         \
+#define PMU_CNTENCLR_CNT3_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_CNTENCLR_CNT3_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter                                                                                                                         \
 						 3 Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT4_ENABLE_Pos 4U /*!< PMU CNTENCLR: Event Counter 4 Enable Clear Position */
-#define PMU_CNTENCLR_CNT4_ENABLE_Msk                                                                                   \
-	(1UL << PMU_CNTENCLR_CNT4_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter                                         \
+#define PMU_CNTENCLR_CNT4_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_CNTENCLR_CNT4_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter                                                                                                                         \
 						 4 Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT5_ENABLE_Pos 5U /*!< PMU CNTENCLR: Event Counter 5 Enable Clear Position */
-#define PMU_CNTENCLR_CNT5_ENABLE_Msk                                                                                   \
-	(1UL << PMU_CNTENCLR_CNT5_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter                                         \
+#define PMU_CNTENCLR_CNT5_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_CNTENCLR_CNT5_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter                                                                                                                         \
 						 5 Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT6_ENABLE_Pos 6U /*!< PMU CNTENCLR: Event Counter 6 Enable Clear Position */
-#define PMU_CNTENCLR_CNT6_ENABLE_Msk                                                                                   \
-	(1UL << PMU_CNTENCLR_CNT6_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter                                         \
+#define PMU_CNTENCLR_CNT6_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_CNTENCLR_CNT6_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter                                                                                                                         \
 						 6 Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT7_ENABLE_Pos 7U /*!< PMU CNTENCLR: Event Counter 7 Enable Clear Position */
-#define PMU_CNTENCLR_CNT7_ENABLE_Msk                                                                                   \
-	(1UL << PMU_CNTENCLR_CNT7_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter                                         \
+#define PMU_CNTENCLR_CNT7_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_CNTENCLR_CNT7_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter                                                                                                                         \
 						 7 Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT8_ENABLE_Pos 8U /*!< PMU CNTENCLR: Event Counter 8 Enable Clear Position */
-#define PMU_CNTENCLR_CNT8_ENABLE_Msk                                                                                   \
-	(1UL << PMU_CNTENCLR_CNT8_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter                                         \
+#define PMU_CNTENCLR_CNT8_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_CNTENCLR_CNT8_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter                                                                                                                         \
 						 8 Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT9_ENABLE_Pos 9U /*!< PMU CNTENCLR: Event Counter 9 Enable Clear Position */
-#define PMU_CNTENCLR_CNT9_ENABLE_Msk                                                                                   \
-	(1UL << PMU_CNTENCLR_CNT9_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter                                         \
+#define PMU_CNTENCLR_CNT9_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_CNTENCLR_CNT9_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter                                                                                                                         \
 						 9 Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT10_ENABLE_Pos 10U /*!< PMU CNTENCLR: Event Counter 10 Enable Clear Position */
-#define PMU_CNTENCLR_CNT10_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENCLR_CNT10_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 10                                     \
+#define PMU_CNTENCLR_CNT10_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENCLR_CNT10_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 10                                                                                                                     \
 						  Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT11_ENABLE_Pos 11U /*!< PMU CNTENCLR: Event Counter 11 Enable Clear Position */
-#define PMU_CNTENCLR_CNT11_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENCLR_CNT11_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 11                                     \
+#define PMU_CNTENCLR_CNT11_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENCLR_CNT11_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 11                                                                                                                     \
 						  Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT12_ENABLE_Pos 12U /*!< PMU CNTENCLR: Event Counter 12 Enable Clear Position */
-#define PMU_CNTENCLR_CNT12_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENCLR_CNT12_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 12                                     \
+#define PMU_CNTENCLR_CNT12_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENCLR_CNT12_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 12                                                                                                                     \
 						  Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT13_ENABLE_Pos 13U /*!< PMU CNTENCLR: Event Counter 13 Enable Clear Position */
-#define PMU_CNTENCLR_CNT13_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENCLR_CNT13_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 13                                     \
+#define PMU_CNTENCLR_CNT13_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENCLR_CNT13_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 13                                                                                                                     \
 						  Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT14_ENABLE_Pos 14U /*!< PMU CNTENCLR: Event Counter 14 Enable Clear Position */
-#define PMU_CNTENCLR_CNT14_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENCLR_CNT14_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 14                                     \
+#define PMU_CNTENCLR_CNT14_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENCLR_CNT14_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 14                                                                                                                     \
 						  Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT15_ENABLE_Pos 15U /*!< PMU CNTENCLR: Event Counter 15 Enable Clear Position */
-#define PMU_CNTENCLR_CNT15_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENCLR_CNT15_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 15                                     \
+#define PMU_CNTENCLR_CNT15_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENCLR_CNT15_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 15                                                                                                                     \
 						  Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT16_ENABLE_Pos 16U /*!< PMU CNTENCLR: Event Counter 16 Enable Clear Position */
-#define PMU_CNTENCLR_CNT16_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENCLR_CNT16_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 16                                     \
+#define PMU_CNTENCLR_CNT16_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENCLR_CNT16_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 16                                                                                                                     \
 						  Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT17_ENABLE_Pos 17U /*!< PMU CNTENCLR: Event Counter 17 Enable Clear Position */
-#define PMU_CNTENCLR_CNT17_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENCLR_CNT17_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 17                                     \
+#define PMU_CNTENCLR_CNT17_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENCLR_CNT17_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 17                                                                                                                     \
 						  Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT18_ENABLE_Pos 18U /*!< PMU CNTENCLR: Event Counter 18 Enable Clear Position */
-#define PMU_CNTENCLR_CNT18_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENCLR_CNT18_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 18                                     \
+#define PMU_CNTENCLR_CNT18_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENCLR_CNT18_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 18                                                                                                                     \
 						  Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT19_ENABLE_Pos 19U /*!< PMU CNTENCLR: Event Counter 19 Enable Clear Position */
-#define PMU_CNTENCLR_CNT19_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENCLR_CNT19_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 19                                     \
+#define PMU_CNTENCLR_CNT19_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENCLR_CNT19_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 19                                                                                                                     \
 						  Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT20_ENABLE_Pos 20U /*!< PMU CNTENCLR: Event Counter 20 Enable Clear Position */
-#define PMU_CNTENCLR_CNT20_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENCLR_CNT20_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 20                                     \
+#define PMU_CNTENCLR_CNT20_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENCLR_CNT20_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 20                                                                                                                     \
 						  Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT21_ENABLE_Pos 21U /*!< PMU CNTENCLR: Event Counter 21 Enable Clear Position */
-#define PMU_CNTENCLR_CNT21_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENCLR_CNT21_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 21                                     \
+#define PMU_CNTENCLR_CNT21_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENCLR_CNT21_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 21                                                                                                                     \
 						  Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT22_ENABLE_Pos 22U /*!< PMU CNTENCLR: Event Counter 22 Enable Clear Position */
-#define PMU_CNTENCLR_CNT22_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENCLR_CNT22_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 22                                     \
+#define PMU_CNTENCLR_CNT22_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENCLR_CNT22_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 22                                                                                                                     \
 						  Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT23_ENABLE_Pos 23U /*!< PMU CNTENCLR: Event Counter 23 Enable Clear Position */
-#define PMU_CNTENCLR_CNT23_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENCLR_CNT23_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 23                                     \
+#define PMU_CNTENCLR_CNT23_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENCLR_CNT23_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 23                                                                                                                     \
 						  Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT24_ENABLE_Pos 24U /*!< PMU CNTENCLR: Event Counter 24 Enable Clear Position */
-#define PMU_CNTENCLR_CNT24_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENCLR_CNT24_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 24                                     \
+#define PMU_CNTENCLR_CNT24_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENCLR_CNT24_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 24                                                                                                                     \
 						  Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT25_ENABLE_Pos 25U /*!< PMU CNTENCLR: Event Counter 25 Enable Clear Position */
-#define PMU_CNTENCLR_CNT25_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENCLR_CNT25_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 25                                     \
+#define PMU_CNTENCLR_CNT25_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENCLR_CNT25_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 25                                                                                                                     \
 						  Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT26_ENABLE_Pos 26U /*!< PMU CNTENCLR: Event Counter 26 Enable Clear Position */
-#define PMU_CNTENCLR_CNT26_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENCLR_CNT26_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 26                                     \
+#define PMU_CNTENCLR_CNT26_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENCLR_CNT26_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 26                                                                                                                     \
 						  Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT27_ENABLE_Pos 27U /*!< PMU CNTENCLR: Event Counter 27 Enable Clear Position */
-#define PMU_CNTENCLR_CNT27_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENCLR_CNT27_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 27                                     \
+#define PMU_CNTENCLR_CNT27_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENCLR_CNT27_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 27                                                                                                                     \
 						  Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT28_ENABLE_Pos 28U /*!< PMU CNTENCLR: Event Counter 28 Enable Clear Position */
-#define PMU_CNTENCLR_CNT28_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENCLR_CNT28_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 28                                     \
+#define PMU_CNTENCLR_CNT28_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENCLR_CNT28_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 28                                                                                                                     \
 						  Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT29_ENABLE_Pos 29U /*!< PMU CNTENCLR: Event Counter 29 Enable Clear Position */
-#define PMU_CNTENCLR_CNT29_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENCLR_CNT29_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 29                                     \
+#define PMU_CNTENCLR_CNT29_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENCLR_CNT29_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 29                                                                                                                     \
 						  Enable Clear Mask */
 
 #define PMU_CNTENCLR_CNT30_ENABLE_Pos 30U /*!< PMU CNTENCLR: Event Counter 30 Enable Clear Position */
-#define PMU_CNTENCLR_CNT30_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENCLR_CNT30_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 30                                     \
+#define PMU_CNTENCLR_CNT30_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENCLR_CNT30_ENABLE_Pos) /*!< PMU CNTENCLR: Event Counter 30                                                                                                                     \
 						  Enable Clear Mask */
 
 #define PMU_CNTENCLR_CCNTR_ENABLE_Pos 31U /*!< PMU CNTENCLR: Cycle Counter Enable Clear Position */
-#define PMU_CNTENCLR_CCNTR_ENABLE_Msk                                                                                  \
-	(1UL << PMU_CNTENCLR_CCNTR_ENABLE_Pos) /*!< PMU CNTENCLR: Cycle                                                \
+#define PMU_CNTENCLR_CCNTR_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_CNTENCLR_CCNTR_ENABLE_Pos) /*!< PMU CNTENCLR: Cycle                                                                                                                                \
 						  Counter Enable Clear Mask */
 
 /** \brief PMU Interrupt Enable Set Register Definitions */
 
 #define PMU_INTENSET_CNT0_ENABLE_Pos 0U /*!< PMU INTENSET: Event Counter 0 Interrupt Enable Set Position */
-#define PMU_INTENSET_CNT0_ENABLE_Msk                                                                                   \
-	(1UL /*<< PMU_INTENSET_CNT0_ENABLE_Pos*/) /*!< PMU INTENSET: Event                                             \
-						     Counter 0 Interrupt                                               \
+#define PMU_INTENSET_CNT0_ENABLE_Msk                                                                                                                                                                   \
+	(1UL /*<< PMU_INTENSET_CNT0_ENABLE_Pos*/) /*!< PMU INTENSET: Event                                                                                                                             \
+						     Counter 0 Interrupt                                                                                                                               \
 						     Enable Set Mask */
 
 #define PMU_INTENSET_CNT1_ENABLE_Pos 1U /*!< PMU INTENSET: Event Counter 1 Interrupt Enable Set Position */
-#define PMU_INTENSET_CNT1_ENABLE_Msk                                                                                   \
-	(1UL << PMU_INTENSET_CNT1_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 1                                       \
+#define PMU_INTENSET_CNT1_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_INTENSET_CNT1_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 1                                                                                                                       \
 						 Interrupt Enable Set Mask */
 
 #define PMU_INTENSET_CNT2_ENABLE_Pos 2U /*!< PMU INTENSET: Event Counter 2 Interrupt Enable Set Position */
-#define PMU_INTENSET_CNT2_ENABLE_Msk                                                                                   \
-	(1UL << PMU_INTENSET_CNT2_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 2                                       \
+#define PMU_INTENSET_CNT2_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_INTENSET_CNT2_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 2                                                                                                                       \
 						 Interrupt Enable Set Mask */
 
 #define PMU_INTENSET_CNT3_ENABLE_Pos 3U /*!< PMU INTENSET: Event Counter 3 Interrupt Enable Set Position */
-#define PMU_INTENSET_CNT3_ENABLE_Msk                                                                                   \
-	(1UL << PMU_INTENSET_CNT3_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 3                                       \
+#define PMU_INTENSET_CNT3_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_INTENSET_CNT3_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 3                                                                                                                       \
 						 Interrupt Enable Set Mask */
 
 #define PMU_INTENSET_CNT4_ENABLE_Pos 4U /*!< PMU INTENSET: Event Counter 4 Interrupt Enable Set Position */
-#define PMU_INTENSET_CNT4_ENABLE_Msk                                                                                   \
-	(1UL << PMU_INTENSET_CNT4_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 4                                       \
+#define PMU_INTENSET_CNT4_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_INTENSET_CNT4_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 4                                                                                                                       \
 						 Interrupt Enable Set Mask */
 
 #define PMU_INTENSET_CNT5_ENABLE_Pos 5U /*!< PMU INTENSET: Event Counter 5 Interrupt Enable Set Position */
-#define PMU_INTENSET_CNT5_ENABLE_Msk                                                                                   \
-	(1UL << PMU_INTENSET_CNT5_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 5                                       \
+#define PMU_INTENSET_CNT5_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_INTENSET_CNT5_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 5                                                                                                                       \
 						 Interrupt Enable Set Mask */
 
 #define PMU_INTENSET_CNT6_ENABLE_Pos 6U /*!< PMU INTENSET: Event Counter 6 Interrupt Enable Set Position */
-#define PMU_INTENSET_CNT6_ENABLE_Msk                                                                                   \
-	(1UL << PMU_INTENSET_CNT6_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 6                                       \
+#define PMU_INTENSET_CNT6_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_INTENSET_CNT6_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 6                                                                                                                       \
 						 Interrupt Enable Set Mask */
 
 #define PMU_INTENSET_CNT7_ENABLE_Pos 7U /*!< PMU INTENSET: Event Counter 7 Interrupt Enable Set Position */
-#define PMU_INTENSET_CNT7_ENABLE_Msk                                                                                   \
-	(1UL << PMU_INTENSET_CNT7_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 7                                       \
+#define PMU_INTENSET_CNT7_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_INTENSET_CNT7_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 7                                                                                                                       \
 						 Interrupt Enable Set Mask */
 
 #define PMU_INTENSET_CNT8_ENABLE_Pos 8U /*!< PMU INTENSET: Event Counter 8 Interrupt Enable Set Position */
-#define PMU_INTENSET_CNT8_ENABLE_Msk                                                                                   \
-	(1UL << PMU_INTENSET_CNT8_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 8                                       \
+#define PMU_INTENSET_CNT8_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_INTENSET_CNT8_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 8                                                                                                                       \
 						 Interrupt Enable Set Mask */
 
 #define PMU_INTENSET_CNT9_ENABLE_Pos 9U /*!< PMU INTENSET: Event Counter 9 Interrupt Enable Set Position */
-#define PMU_INTENSET_CNT9_ENABLE_Msk                                                                                   \
-	(1UL << PMU_INTENSET_CNT9_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 9                                       \
+#define PMU_INTENSET_CNT9_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_INTENSET_CNT9_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 9                                                                                                                       \
 						 Interrupt Enable Set Mask */
 
-#define PMU_INTENSET_CNT10_ENABLE_Pos                                                                                  \
-	10U /*!< PMU INTENSET: Event Counter 10 Interrupt Enable Set Position                                          \
+#define PMU_INTENSET_CNT10_ENABLE_Pos                                                                                                                                                                  \
+	10U /*!< PMU INTENSET: Event Counter 10 Interrupt Enable Set Position                                                                                                                          \
 	     */
-#define PMU_INTENSET_CNT10_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENSET_CNT10_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 10                                     \
+#define PMU_INTENSET_CNT10_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENSET_CNT10_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 10                                                                                                                     \
 						  Interrupt Enable Set Mask */
 
-#define PMU_INTENSET_CNT11_ENABLE_Pos                                                                                  \
-	11U /*!< PMU INTENSET: Event Counter 11 Interrupt Enable Set Position                                          \
+#define PMU_INTENSET_CNT11_ENABLE_Pos                                                                                                                                                                  \
+	11U /*!< PMU INTENSET: Event Counter 11 Interrupt Enable Set Position                                                                                                                          \
 	     */
-#define PMU_INTENSET_CNT11_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENSET_CNT11_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 11                                     \
+#define PMU_INTENSET_CNT11_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENSET_CNT11_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 11                                                                                                                     \
 						  Interrupt Enable Set Mask */
 
-#define PMU_INTENSET_CNT12_ENABLE_Pos                                                                                  \
-	12U /*!< PMU INTENSET: Event Counter 12 Interrupt Enable Set Position                                          \
+#define PMU_INTENSET_CNT12_ENABLE_Pos                                                                                                                                                                  \
+	12U /*!< PMU INTENSET: Event Counter 12 Interrupt Enable Set Position                                                                                                                          \
 	     */
-#define PMU_INTENSET_CNT12_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENSET_CNT12_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 12                                     \
+#define PMU_INTENSET_CNT12_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENSET_CNT12_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 12                                                                                                                     \
 						  Interrupt Enable Set Mask */
 
-#define PMU_INTENSET_CNT13_ENABLE_Pos                                                                                  \
-	13U /*!< PMU INTENSET: Event Counter 13 Interrupt Enable Set Position                                          \
+#define PMU_INTENSET_CNT13_ENABLE_Pos                                                                                                                                                                  \
+	13U /*!< PMU INTENSET: Event Counter 13 Interrupt Enable Set Position                                                                                                                          \
 	     */
-#define PMU_INTENSET_CNT13_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENSET_CNT13_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 13                                     \
+#define PMU_INTENSET_CNT13_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENSET_CNT13_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 13                                                                                                                     \
 						  Interrupt Enable Set Mask */
 
-#define PMU_INTENSET_CNT14_ENABLE_Pos                                                                                  \
-	14U /*!< PMU INTENSET: Event Counter 14 Interrupt Enable Set Position                                          \
+#define PMU_INTENSET_CNT14_ENABLE_Pos                                                                                                                                                                  \
+	14U /*!< PMU INTENSET: Event Counter 14 Interrupt Enable Set Position                                                                                                                          \
 	     */
-#define PMU_INTENSET_CNT14_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENSET_CNT14_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 14                                     \
+#define PMU_INTENSET_CNT14_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENSET_CNT14_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 14                                                                                                                     \
 						  Interrupt Enable Set Mask */
 
-#define PMU_INTENSET_CNT15_ENABLE_Pos                                                                                  \
-	15U /*!< PMU INTENSET: Event Counter 15 Interrupt Enable Set Position                                          \
+#define PMU_INTENSET_CNT15_ENABLE_Pos                                                                                                                                                                  \
+	15U /*!< PMU INTENSET: Event Counter 15 Interrupt Enable Set Position                                                                                                                          \
 	     */
-#define PMU_INTENSET_CNT15_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENSET_CNT15_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 15                                     \
+#define PMU_INTENSET_CNT15_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENSET_CNT15_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 15                                                                                                                     \
 						  Interrupt Enable Set Mask */
 
-#define PMU_INTENSET_CNT16_ENABLE_Pos                                                                                  \
-	16U /*!< PMU INTENSET: Event Counter 16 Interrupt Enable Set Position                                          \
+#define PMU_INTENSET_CNT16_ENABLE_Pos                                                                                                                                                                  \
+	16U /*!< PMU INTENSET: Event Counter 16 Interrupt Enable Set Position                                                                                                                          \
 	     */
-#define PMU_INTENSET_CNT16_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENSET_CNT16_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 16                                     \
+#define PMU_INTENSET_CNT16_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENSET_CNT16_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 16                                                                                                                     \
 						  Interrupt Enable Set Mask */
 
-#define PMU_INTENSET_CNT17_ENABLE_Pos                                                                                  \
-	17U /*!< PMU INTENSET: Event Counter 17 Interrupt Enable Set Position                                          \
+#define PMU_INTENSET_CNT17_ENABLE_Pos                                                                                                                                                                  \
+	17U /*!< PMU INTENSET: Event Counter 17 Interrupt Enable Set Position                                                                                                                          \
 	     */
-#define PMU_INTENSET_CNT17_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENSET_CNT17_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 17                                     \
+#define PMU_INTENSET_CNT17_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENSET_CNT17_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 17                                                                                                                     \
 						  Interrupt Enable Set Mask */
 
-#define PMU_INTENSET_CNT18_ENABLE_Pos                                                                                  \
-	18U /*!< PMU INTENSET: Event Counter 18 Interrupt Enable Set Position                                          \
+#define PMU_INTENSET_CNT18_ENABLE_Pos                                                                                                                                                                  \
+	18U /*!< PMU INTENSET: Event Counter 18 Interrupt Enable Set Position                                                                                                                          \
 	     */
-#define PMU_INTENSET_CNT18_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENSET_CNT18_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 18                                     \
+#define PMU_INTENSET_CNT18_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENSET_CNT18_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 18                                                                                                                     \
 						  Interrupt Enable Set Mask */
 
-#define PMU_INTENSET_CNT19_ENABLE_Pos                                                                                  \
-	19U /*!< PMU INTENSET: Event Counter 19 Interrupt Enable Set Position                                          \
+#define PMU_INTENSET_CNT19_ENABLE_Pos                                                                                                                                                                  \
+	19U /*!< PMU INTENSET: Event Counter 19 Interrupt Enable Set Position                                                                                                                          \
 	     */
-#define PMU_INTENSET_CNT19_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENSET_CNT19_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 19                                     \
+#define PMU_INTENSET_CNT19_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENSET_CNT19_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 19                                                                                                                     \
 						  Interrupt Enable Set Mask */
 
-#define PMU_INTENSET_CNT20_ENABLE_Pos                                                                                  \
-	20U /*!< PMU INTENSET: Event Counter 20 Interrupt Enable Set Position                                          \
+#define PMU_INTENSET_CNT20_ENABLE_Pos                                                                                                                                                                  \
+	20U /*!< PMU INTENSET: Event Counter 20 Interrupt Enable Set Position                                                                                                                          \
 	     */
-#define PMU_INTENSET_CNT20_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENSET_CNT20_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 20                                     \
+#define PMU_INTENSET_CNT20_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENSET_CNT20_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 20                                                                                                                     \
 						  Interrupt Enable Set Mask */
 
-#define PMU_INTENSET_CNT21_ENABLE_Pos                                                                                  \
-	21U /*!< PMU INTENSET: Event Counter 21 Interrupt Enable Set Position                                          \
+#define PMU_INTENSET_CNT21_ENABLE_Pos                                                                                                                                                                  \
+	21U /*!< PMU INTENSET: Event Counter 21 Interrupt Enable Set Position                                                                                                                          \
 	     */
-#define PMU_INTENSET_CNT21_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENSET_CNT21_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 21                                     \
+#define PMU_INTENSET_CNT21_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENSET_CNT21_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 21                                                                                                                     \
 						  Interrupt Enable Set Mask */
 
-#define PMU_INTENSET_CNT22_ENABLE_Pos                                                                                  \
-	22U /*!< PMU INTENSET: Event Counter 22 Interrupt Enable Set Position                                          \
+#define PMU_INTENSET_CNT22_ENABLE_Pos                                                                                                                                                                  \
+	22U /*!< PMU INTENSET: Event Counter 22 Interrupt Enable Set Position                                                                                                                          \
 	     */
-#define PMU_INTENSET_CNT22_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENSET_CNT22_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 22                                     \
+#define PMU_INTENSET_CNT22_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENSET_CNT22_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 22                                                                                                                     \
 						  Interrupt Enable Set Mask */
 
-#define PMU_INTENSET_CNT23_ENABLE_Pos                                                                                  \
-	23U /*!< PMU INTENSET: Event Counter 23 Interrupt Enable Set Position                                          \
+#define PMU_INTENSET_CNT23_ENABLE_Pos                                                                                                                                                                  \
+	23U /*!< PMU INTENSET: Event Counter 23 Interrupt Enable Set Position                                                                                                                          \
 	     */
-#define PMU_INTENSET_CNT23_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENSET_CNT23_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 23                                     \
+#define PMU_INTENSET_CNT23_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENSET_CNT23_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 23                                                                                                                     \
 						  Interrupt Enable Set Mask */
 
-#define PMU_INTENSET_CNT24_ENABLE_Pos                                                                                  \
-	24U /*!< PMU INTENSET: Event Counter 24 Interrupt Enable Set Position                                          \
+#define PMU_INTENSET_CNT24_ENABLE_Pos                                                                                                                                                                  \
+	24U /*!< PMU INTENSET: Event Counter 24 Interrupt Enable Set Position                                                                                                                          \
 	     */
-#define PMU_INTENSET_CNT24_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENSET_CNT24_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 24                                     \
+#define PMU_INTENSET_CNT24_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENSET_CNT24_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 24                                                                                                                     \
 						  Interrupt Enable Set Mask */
 
-#define PMU_INTENSET_CNT25_ENABLE_Pos                                                                                  \
-	25U /*!< PMU INTENSET: Event Counter 25 Interrupt Enable Set Position                                          \
+#define PMU_INTENSET_CNT25_ENABLE_Pos                                                                                                                                                                  \
+	25U /*!< PMU INTENSET: Event Counter 25 Interrupt Enable Set Position                                                                                                                          \
 	     */
-#define PMU_INTENSET_CNT25_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENSET_CNT25_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 25                                     \
+#define PMU_INTENSET_CNT25_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENSET_CNT25_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 25                                                                                                                     \
 						  Interrupt Enable Set Mask */
 
-#define PMU_INTENSET_CNT26_ENABLE_Pos                                                                                  \
-	26U /*!< PMU INTENSET: Event Counter 26 Interrupt Enable Set Position                                          \
+#define PMU_INTENSET_CNT26_ENABLE_Pos                                                                                                                                                                  \
+	26U /*!< PMU INTENSET: Event Counter 26 Interrupt Enable Set Position                                                                                                                          \
 	     */
-#define PMU_INTENSET_CNT26_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENSET_CNT26_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 26                                     \
+#define PMU_INTENSET_CNT26_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENSET_CNT26_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 26                                                                                                                     \
 						  Interrupt Enable Set Mask */
 
-#define PMU_INTENSET_CNT27_ENABLE_Pos                                                                                  \
-	27U /*!< PMU INTENSET: Event Counter 27 Interrupt Enable Set Position                                          \
+#define PMU_INTENSET_CNT27_ENABLE_Pos                                                                                                                                                                  \
+	27U /*!< PMU INTENSET: Event Counter 27 Interrupt Enable Set Position                                                                                                                          \
 	     */
-#define PMU_INTENSET_CNT27_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENSET_CNT27_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 27                                     \
+#define PMU_INTENSET_CNT27_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENSET_CNT27_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 27                                                                                                                     \
 						  Interrupt Enable Set Mask */
 
-#define PMU_INTENSET_CNT28_ENABLE_Pos                                                                                  \
-	28U /*!< PMU INTENSET: Event Counter 28 Interrupt Enable Set Position                                          \
+#define PMU_INTENSET_CNT28_ENABLE_Pos                                                                                                                                                                  \
+	28U /*!< PMU INTENSET: Event Counter 28 Interrupt Enable Set Position                                                                                                                          \
 	     */
-#define PMU_INTENSET_CNT28_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENSET_CNT28_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 28                                     \
+#define PMU_INTENSET_CNT28_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENSET_CNT28_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 28                                                                                                                     \
 						  Interrupt Enable Set Mask */
 
-#define PMU_INTENSET_CNT29_ENABLE_Pos                                                                                  \
-	29U /*!< PMU INTENSET: Event Counter 29 Interrupt Enable Set Position                                          \
+#define PMU_INTENSET_CNT29_ENABLE_Pos                                                                                                                                                                  \
+	29U /*!< PMU INTENSET: Event Counter 29 Interrupt Enable Set Position                                                                                                                          \
 	     */
-#define PMU_INTENSET_CNT29_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENSET_CNT29_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 29                                     \
+#define PMU_INTENSET_CNT29_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENSET_CNT29_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 29                                                                                                                     \
 						  Interrupt Enable Set Mask */
 
-#define PMU_INTENSET_CNT30_ENABLE_Pos                                                                                  \
-	30U /*!< PMU INTENSET: Event Counter 30 Interrupt Enable Set Position                                          \
+#define PMU_INTENSET_CNT30_ENABLE_Pos                                                                                                                                                                  \
+	30U /*!< PMU INTENSET: Event Counter 30 Interrupt Enable Set Position                                                                                                                          \
 	     */
-#define PMU_INTENSET_CNT30_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENSET_CNT30_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 30                                     \
+#define PMU_INTENSET_CNT30_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENSET_CNT30_ENABLE_Pos) /*!< PMU INTENSET: Event Counter 30                                                                                                                     \
 						  Interrupt Enable Set Mask */
 
 #define PMU_INTENSET_CYCCNT_ENABLE_Pos 31U /*!< PMU INTENSET: Cycle Counter Interrupt Enable Set Position */
-#define PMU_INTENSET_CCYCNT_ENABLE_Msk                                                                                 \
-	(1UL << PMU_INTENSET_CYCCNT_ENABLE_Pos) /*!< PMU INTENSET: Cycle Counter                                       \
+#define PMU_INTENSET_CCYCNT_ENABLE_Msk                                                                                                                                                                 \
+	(1UL << PMU_INTENSET_CYCCNT_ENABLE_Pos) /*!< PMU INTENSET: Cycle Counter                                                                                                                       \
 						   Interrupt Enable Set Mask */
 
 /** \brief PMU Interrupt Enable Clear Register Definitions */
 
-#define PMU_INTENSET_CNT0_ENABLE_Pos                                                                                   \
-	0U /*!< PMU INTENCLR: Event Counter 0 Interrupt Enable Clear Position                                          \
+#define PMU_INTENSET_CNT0_ENABLE_Pos                                                                                                                                                                   \
+	0U /*!< PMU INTENCLR: Event Counter 0 Interrupt Enable Clear Position                                                                                                                          \
 	    */
-#define PMU_INTENCLR_CNT0_ENABLE_Msk                                                                                   \
-	(1UL /*<< PMU_INTENCLR_CNT0_ENABLE_Pos*/) /*!< PMU INTENCLR: Event                                             \
-						     Counter 0 Interrupt                                               \
+#define PMU_INTENCLR_CNT0_ENABLE_Msk                                                                                                                                                                   \
+	(1UL /*<< PMU_INTENCLR_CNT0_ENABLE_Pos*/) /*!< PMU INTENCLR: Event                                                                                                                             \
+						     Counter 0 Interrupt                                                                                                                               \
 						     Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT1_ENABLE_Pos                                                                                   \
-	1U /*!< PMU INTENCLR: Event Counter 1 Interrupt Enable Clear Position                                          \
+#define PMU_INTENCLR_CNT1_ENABLE_Pos                                                                                                                                                                   \
+	1U /*!< PMU INTENCLR: Event Counter 1 Interrupt Enable Clear Position                                                                                                                          \
 	    */
-#define PMU_INTENCLR_CNT1_ENABLE_Msk                                                                                   \
-	(1UL << PMU_INTENCLR_CNT1_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter                                         \
+#define PMU_INTENCLR_CNT1_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_INTENCLR_CNT1_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter                                                                                                                         \
 						 1 Interrupt Enable Clear */
 
-#define PMU_INTENCLR_CNT2_ENABLE_Pos                                                                                   \
-	2U /*!< PMU INTENCLR: Event Counter 2 Interrupt Enable Clear Position                                          \
+#define PMU_INTENCLR_CNT2_ENABLE_Pos                                                                                                                                                                   \
+	2U /*!< PMU INTENCLR: Event Counter 2 Interrupt Enable Clear Position                                                                                                                          \
 	    */
-#define PMU_INTENCLR_CNT2_ENABLE_Msk                                                                                   \
-	(1UL << PMU_INTENCLR_CNT2_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 2                                       \
+#define PMU_INTENCLR_CNT2_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_INTENCLR_CNT2_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 2                                                                                                                       \
 						 Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT3_ENABLE_Pos                                                                                   \
-	3U /*!< PMU INTENCLR: Event Counter 3 Interrupt Enable Clear Position                                          \
+#define PMU_INTENCLR_CNT3_ENABLE_Pos                                                                                                                                                                   \
+	3U /*!< PMU INTENCLR: Event Counter 3 Interrupt Enable Clear Position                                                                                                                          \
 	    */
-#define PMU_INTENCLR_CNT3_ENABLE_Msk                                                                                   \
-	(1UL << PMU_INTENCLR_CNT3_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 3                                       \
+#define PMU_INTENCLR_CNT3_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_INTENCLR_CNT3_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 3                                                                                                                       \
 						 Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT4_ENABLE_Pos                                                                                   \
-	4U /*!< PMU INTENCLR: Event Counter 4 Interrupt Enable Clear Position                                          \
+#define PMU_INTENCLR_CNT4_ENABLE_Pos                                                                                                                                                                   \
+	4U /*!< PMU INTENCLR: Event Counter 4 Interrupt Enable Clear Position                                                                                                                          \
 	    */
-#define PMU_INTENCLR_CNT4_ENABLE_Msk                                                                                   \
-	(1UL << PMU_INTENCLR_CNT4_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 4                                       \
+#define PMU_INTENCLR_CNT4_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_INTENCLR_CNT4_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 4                                                                                                                       \
 						 Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT5_ENABLE_Pos                                                                                   \
-	5U /*!< PMU INTENCLR: Event Counter 5 Interrupt Enable Clear Position                                          \
+#define PMU_INTENCLR_CNT5_ENABLE_Pos                                                                                                                                                                   \
+	5U /*!< PMU INTENCLR: Event Counter 5 Interrupt Enable Clear Position                                                                                                                          \
 	    */
-#define PMU_INTENCLR_CNT5_ENABLE_Msk                                                                                   \
-	(1UL << PMU_INTENCLR_CNT5_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 5                                       \
+#define PMU_INTENCLR_CNT5_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_INTENCLR_CNT5_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 5                                                                                                                       \
 						 Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT6_ENABLE_Pos                                                                                   \
-	6U /*!< PMU INTENCLR: Event Counter 6 Interrupt Enable Clear Position                                          \
+#define PMU_INTENCLR_CNT6_ENABLE_Pos                                                                                                                                                                   \
+	6U /*!< PMU INTENCLR: Event Counter 6 Interrupt Enable Clear Position                                                                                                                          \
 	    */
-#define PMU_INTENCLR_CNT6_ENABLE_Msk                                                                                   \
-	(1UL << PMU_INTENCLR_CNT6_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 6                                       \
+#define PMU_INTENCLR_CNT6_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_INTENCLR_CNT6_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 6                                                                                                                       \
 						 Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT7_ENABLE_Pos                                                                                   \
-	7U /*!< PMU INTENCLR: Event Counter 7 Interrupt Enable Clear Position                                          \
+#define PMU_INTENCLR_CNT7_ENABLE_Pos                                                                                                                                                                   \
+	7U /*!< PMU INTENCLR: Event Counter 7 Interrupt Enable Clear Position                                                                                                                          \
 	    */
-#define PMU_INTENCLR_CNT7_ENABLE_Msk                                                                                   \
-	(1UL << PMU_INTENCLR_CNT7_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 7                                       \
+#define PMU_INTENCLR_CNT7_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_INTENCLR_CNT7_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 7                                                                                                                       \
 						 Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT8_ENABLE_Pos                                                                                   \
-	8U /*!< PMU INTENCLR: Event Counter 8 Interrupt Enable Clear Position                                          \
+#define PMU_INTENCLR_CNT8_ENABLE_Pos                                                                                                                                                                   \
+	8U /*!< PMU INTENCLR: Event Counter 8 Interrupt Enable Clear Position                                                                                                                          \
 	    */
-#define PMU_INTENCLR_CNT8_ENABLE_Msk                                                                                   \
-	(1UL << PMU_INTENCLR_CNT8_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 8                                       \
+#define PMU_INTENCLR_CNT8_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_INTENCLR_CNT8_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 8                                                                                                                       \
 						 Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT9_ENABLE_Pos                                                                                   \
-	9U /*!< PMU INTENCLR: Event Counter 9 Interrupt Enable Clear Position                                          \
+#define PMU_INTENCLR_CNT9_ENABLE_Pos                                                                                                                                                                   \
+	9U /*!< PMU INTENCLR: Event Counter 9 Interrupt Enable Clear Position                                                                                                                          \
 	    */
-#define PMU_INTENCLR_CNT9_ENABLE_Msk                                                                                   \
-	(1UL << PMU_INTENCLR_CNT9_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 9                                       \
+#define PMU_INTENCLR_CNT9_ENABLE_Msk                                                                                                                                                                   \
+	(1UL << PMU_INTENCLR_CNT9_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 9                                                                                                                       \
 						 Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT10_ENABLE_Pos                                                                                  \
-	10U /*!< PMU INTENCLR: Event Counter 10 Interrupt Enable Clear                                                 \
+#define PMU_INTENCLR_CNT10_ENABLE_Pos                                                                                                                                                                  \
+	10U /*!< PMU INTENCLR: Event Counter 10 Interrupt Enable Clear                                                                                                                                 \
 	       Position */
-#define PMU_INTENCLR_CNT10_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENCLR_CNT10_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 10                                     \
+#define PMU_INTENCLR_CNT10_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENCLR_CNT10_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 10                                                                                                                     \
 						  Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT11_ENABLE_Pos                                                                                  \
-	11U /*!< PMU INTENCLR: Event Counter 11 Interrupt Enable Clear                                                 \
+#define PMU_INTENCLR_CNT11_ENABLE_Pos                                                                                                                                                                  \
+	11U /*!< PMU INTENCLR: Event Counter 11 Interrupt Enable Clear                                                                                                                                 \
 	       Position */
-#define PMU_INTENCLR_CNT11_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENCLR_CNT11_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 11                                     \
+#define PMU_INTENCLR_CNT11_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENCLR_CNT11_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 11                                                                                                                     \
 						  Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT12_ENABLE_Pos                                                                                  \
-	12U /*!< PMU INTENCLR: Event Counter 12 Interrupt Enable Clear                                                 \
+#define PMU_INTENCLR_CNT12_ENABLE_Pos                                                                                                                                                                  \
+	12U /*!< PMU INTENCLR: Event Counter 12 Interrupt Enable Clear                                                                                                                                 \
 	       Position */
-#define PMU_INTENCLR_CNT12_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENCLR_CNT12_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 12                                     \
+#define PMU_INTENCLR_CNT12_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENCLR_CNT12_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 12                                                                                                                     \
 						  Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT13_ENABLE_Pos                                                                                  \
-	13U /*!< PMU INTENCLR: Event Counter 13 Interrupt Enable Clear                                                 \
+#define PMU_INTENCLR_CNT13_ENABLE_Pos                                                                                                                                                                  \
+	13U /*!< PMU INTENCLR: Event Counter 13 Interrupt Enable Clear                                                                                                                                 \
 	       Position */
-#define PMU_INTENCLR_CNT13_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENCLR_CNT13_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 13                                     \
+#define PMU_INTENCLR_CNT13_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENCLR_CNT13_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 13                                                                                                                     \
 						  Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT14_ENABLE_Pos                                                                                  \
-	14U /*!< PMU INTENCLR: Event Counter 14 Interrupt Enable Clear                                                 \
+#define PMU_INTENCLR_CNT14_ENABLE_Pos                                                                                                                                                                  \
+	14U /*!< PMU INTENCLR: Event Counter 14 Interrupt Enable Clear                                                                                                                                 \
 	       Position */
-#define PMU_INTENCLR_CNT14_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENCLR_CNT14_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 14                                     \
+#define PMU_INTENCLR_CNT14_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENCLR_CNT14_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 14                                                                                                                     \
 						  Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT15_ENABLE_Pos                                                                                  \
-	15U /*!< PMU INTENCLR: Event Counter 15 Interrupt Enable Clear                                                 \
+#define PMU_INTENCLR_CNT15_ENABLE_Pos                                                                                                                                                                  \
+	15U /*!< PMU INTENCLR: Event Counter 15 Interrupt Enable Clear                                                                                                                                 \
 	       Position */
-#define PMU_INTENCLR_CNT15_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENCLR_CNT15_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 15                                     \
+#define PMU_INTENCLR_CNT15_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENCLR_CNT15_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 15                                                                                                                     \
 						  Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT16_ENABLE_Pos                                                                                  \
-	16U /*!< PMU INTENCLR: Event Counter 16 Interrupt Enable Clear                                                 \
+#define PMU_INTENCLR_CNT16_ENABLE_Pos                                                                                                                                                                  \
+	16U /*!< PMU INTENCLR: Event Counter 16 Interrupt Enable Clear                                                                                                                                 \
 	       Position */
-#define PMU_INTENCLR_CNT16_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENCLR_CNT16_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 16                                     \
+#define PMU_INTENCLR_CNT16_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENCLR_CNT16_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 16                                                                                                                     \
 						  Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT17_ENABLE_Pos                                                                                  \
-	17U /*!< PMU INTENCLR: Event Counter 17 Interrupt Enable Clear                                                 \
+#define PMU_INTENCLR_CNT17_ENABLE_Pos                                                                                                                                                                  \
+	17U /*!< PMU INTENCLR: Event Counter 17 Interrupt Enable Clear                                                                                                                                 \
 	       Position */
-#define PMU_INTENCLR_CNT17_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENCLR_CNT17_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 17                                     \
+#define PMU_INTENCLR_CNT17_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENCLR_CNT17_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 17                                                                                                                     \
 						  Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT18_ENABLE_Pos                                                                                  \
-	18U /*!< PMU INTENCLR: Event Counter 18 Interrupt Enable Clear                                                 \
+#define PMU_INTENCLR_CNT18_ENABLE_Pos                                                                                                                                                                  \
+	18U /*!< PMU INTENCLR: Event Counter 18 Interrupt Enable Clear                                                                                                                                 \
 	       Position */
-#define PMU_INTENCLR_CNT18_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENCLR_CNT18_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 18                                     \
+#define PMU_INTENCLR_CNT18_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENCLR_CNT18_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 18                                                                                                                     \
 						  Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT19_ENABLE_Pos                                                                                  \
-	19U /*!< PMU INTENCLR: Event Counter 19 Interrupt Enable Clear                                                 \
+#define PMU_INTENCLR_CNT19_ENABLE_Pos                                                                                                                                                                  \
+	19U /*!< PMU INTENCLR: Event Counter 19 Interrupt Enable Clear                                                                                                                                 \
 	       Position */
-#define PMU_INTENCLR_CNT19_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENCLR_CNT19_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 19                                     \
+#define PMU_INTENCLR_CNT19_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENCLR_CNT19_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 19                                                                                                                     \
 						  Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT20_ENABLE_Pos                                                                                  \
-	20U /*!< PMU INTENCLR: Event Counter 20 Interrupt Enable Clear                                                 \
+#define PMU_INTENCLR_CNT20_ENABLE_Pos                                                                                                                                                                  \
+	20U /*!< PMU INTENCLR: Event Counter 20 Interrupt Enable Clear                                                                                                                                 \
 	       Position */
-#define PMU_INTENCLR_CNT20_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENCLR_CNT20_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 20                                     \
+#define PMU_INTENCLR_CNT20_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENCLR_CNT20_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 20                                                                                                                     \
 						  Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT21_ENABLE_Pos                                                                                  \
-	21U /*!< PMU INTENCLR: Event Counter 21 Interrupt Enable Clear                                                 \
+#define PMU_INTENCLR_CNT21_ENABLE_Pos                                                                                                                                                                  \
+	21U /*!< PMU INTENCLR: Event Counter 21 Interrupt Enable Clear                                                                                                                                 \
 	       Position */
-#define PMU_INTENCLR_CNT21_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENCLR_CNT21_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 21                                     \
+#define PMU_INTENCLR_CNT21_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENCLR_CNT21_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 21                                                                                                                     \
 						  Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT22_ENABLE_Pos                                                                                  \
-	22U /*!< PMU INTENCLR: Event Counter 22 Interrupt Enable Clear                                                 \
+#define PMU_INTENCLR_CNT22_ENABLE_Pos                                                                                                                                                                  \
+	22U /*!< PMU INTENCLR: Event Counter 22 Interrupt Enable Clear                                                                                                                                 \
 	       Position */
-#define PMU_INTENCLR_CNT22_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENCLR_CNT22_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 22                                     \
+#define PMU_INTENCLR_CNT22_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENCLR_CNT22_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 22                                                                                                                     \
 						  Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT23_ENABLE_Pos                                                                                  \
-	23U /*!< PMU INTENCLR: Event Counter 23 Interrupt Enable Clear                                                 \
+#define PMU_INTENCLR_CNT23_ENABLE_Pos                                                                                                                                                                  \
+	23U /*!< PMU INTENCLR: Event Counter 23 Interrupt Enable Clear                                                                                                                                 \
 	       Position */
-#define PMU_INTENCLR_CNT23_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENCLR_CNT23_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 23                                     \
+#define PMU_INTENCLR_CNT23_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENCLR_CNT23_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 23                                                                                                                     \
 						  Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT24_ENABLE_Pos                                                                                  \
-	24U /*!< PMU INTENCLR: Event Counter 24 Interrupt Enable Clear                                                 \
+#define PMU_INTENCLR_CNT24_ENABLE_Pos                                                                                                                                                                  \
+	24U /*!< PMU INTENCLR: Event Counter 24 Interrupt Enable Clear                                                                                                                                 \
 	       Position */
-#define PMU_INTENCLR_CNT24_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENCLR_CNT24_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 24                                     \
+#define PMU_INTENCLR_CNT24_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENCLR_CNT24_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 24                                                                                                                     \
 						  Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT25_ENABLE_Pos                                                                                  \
-	25U /*!< PMU INTENCLR: Event Counter 25 Interrupt Enable Clear                                                 \
+#define PMU_INTENCLR_CNT25_ENABLE_Pos                                                                                                                                                                  \
+	25U /*!< PMU INTENCLR: Event Counter 25 Interrupt Enable Clear                                                                                                                                 \
 	       Position */
-#define PMU_INTENCLR_CNT25_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENCLR_CNT25_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 25                                     \
+#define PMU_INTENCLR_CNT25_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENCLR_CNT25_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 25                                                                                                                     \
 						  Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT26_ENABLE_Pos                                                                                  \
-	26U /*!< PMU INTENCLR: Event Counter 26 Interrupt Enable Clear                                                 \
+#define PMU_INTENCLR_CNT26_ENABLE_Pos                                                                                                                                                                  \
+	26U /*!< PMU INTENCLR: Event Counter 26 Interrupt Enable Clear                                                                                                                                 \
 	       Position */
-#define PMU_INTENCLR_CNT26_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENCLR_CNT26_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 26                                     \
+#define PMU_INTENCLR_CNT26_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENCLR_CNT26_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 26                                                                                                                     \
 						  Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT27_ENABLE_Pos                                                                                  \
-	27U /*!< PMU INTENCLR: Event Counter 27 Interrupt Enable Clear                                                 \
+#define PMU_INTENCLR_CNT27_ENABLE_Pos                                                                                                                                                                  \
+	27U /*!< PMU INTENCLR: Event Counter 27 Interrupt Enable Clear                                                                                                                                 \
 	       Position */
-#define PMU_INTENCLR_CNT27_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENCLR_CNT27_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 27                                     \
+#define PMU_INTENCLR_CNT27_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENCLR_CNT27_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 27                                                                                                                     \
 						  Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT28_ENABLE_Pos                                                                                  \
-	28U /*!< PMU INTENCLR: Event Counter 28 Interrupt Enable Clear                                                 \
+#define PMU_INTENCLR_CNT28_ENABLE_Pos                                                                                                                                                                  \
+	28U /*!< PMU INTENCLR: Event Counter 28 Interrupt Enable Clear                                                                                                                                 \
 	       Position */
-#define PMU_INTENCLR_CNT28_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENCLR_CNT28_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 28                                     \
+#define PMU_INTENCLR_CNT28_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENCLR_CNT28_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 28                                                                                                                     \
 						  Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT29_ENABLE_Pos                                                                                  \
-	29U /*!< PMU INTENCLR: Event Counter 29 Interrupt Enable Clear                                                 \
+#define PMU_INTENCLR_CNT29_ENABLE_Pos                                                                                                                                                                  \
+	29U /*!< PMU INTENCLR: Event Counter 29 Interrupt Enable Clear                                                                                                                                 \
 	       Position */
-#define PMU_INTENCLR_CNT29_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENCLR_CNT29_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 29                                     \
+#define PMU_INTENCLR_CNT29_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENCLR_CNT29_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 29                                                                                                                     \
 						  Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CNT30_ENABLE_Pos                                                                                  \
-	30U /*!< PMU INTENCLR: Event Counter 30 Interrupt Enable Clear                                                 \
+#define PMU_INTENCLR_CNT30_ENABLE_Pos                                                                                                                                                                  \
+	30U /*!< PMU INTENCLR: Event Counter 30 Interrupt Enable Clear                                                                                                                                 \
 	       Position */
-#define PMU_INTENCLR_CNT30_ENABLE_Msk                                                                                  \
-	(1UL << PMU_INTENCLR_CNT30_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 30                                     \
+#define PMU_INTENCLR_CNT30_ENABLE_Msk                                                                                                                                                                  \
+	(1UL << PMU_INTENCLR_CNT30_ENABLE_Pos) /*!< PMU INTENCLR: Event Counter 30                                                                                                                     \
 						  Interrupt Enable Clear Mask */
 
-#define PMU_INTENCLR_CYCCNT_ENABLE_Pos                                                                                 \
-	31U /*!< PMU INTENCLR: Cycle Counter Interrupt Enable Clear Position                                           \
+#define PMU_INTENCLR_CYCCNT_ENABLE_Pos                                                                                                                                                                 \
+	31U /*!< PMU INTENCLR: Cycle Counter Interrupt Enable Clear Position                                                                                                                           \
 	     */
-#define PMU_INTENCLR_CYCCNT_ENABLE_Msk                                                                                 \
-	(1UL << PMU_INTENCLR_CYCCNT_ENABLE_Pos) /*!< PMU INTENCLR: Cycle Counter                                       \
+#define PMU_INTENCLR_CYCCNT_ENABLE_Msk                                                                                                                                                                 \
+	(1UL << PMU_INTENCLR_CYCCNT_ENABLE_Pos) /*!< PMU INTENCLR: Cycle Counter                                                                                                                       \
 						   Interrupt Enable Clear Mask */
 
 /** \brief PMU Overflow Flag Status Set Register Definitions */
 
 #define PMU_OVSSET_CNT0_STATUS_Pos 0U /*!< PMU OVSSET: Event Counter 0 Overflow Set Position */
-#define PMU_OVSSET_CNT0_STATUS_Msk                                                                                     \
-	(1UL /*<< PMU_OVSSET_CNT0_STATUS_Pos*/) /*!< PMU OVSSET: Event Counter                                         \
+#define PMU_OVSSET_CNT0_STATUS_Msk                                                                                                                                                                     \
+	(1UL /*<< PMU_OVSSET_CNT0_STATUS_Pos*/) /*!< PMU OVSSET: Event Counter                                                                                                                         \
 						   0 Overflow Set Mask */
 
 #define PMU_OVSSET_CNT1_STATUS_Pos 1U /*!< PMU OVSSET: Event Counter 1 Overflow Set Position */
-#define PMU_OVSSET_CNT1_STATUS_Msk                                                                                     \
-	(1UL << PMU_OVSSET_CNT1_STATUS_Pos) /*!< PMU OVSSET: Event Counter 1                                           \
+#define PMU_OVSSET_CNT1_STATUS_Msk                                                                                                                                                                     \
+	(1UL << PMU_OVSSET_CNT1_STATUS_Pos) /*!< PMU OVSSET: Event Counter 1                                                                                                                           \
 					       Overflow Set Mask */
 
 #define PMU_OVSSET_CNT2_STATUS_Pos 2U /*!< PMU OVSSET: Event Counter 2 Overflow Set Position */
-#define PMU_OVSSET_CNT2_STATUS_Msk                                                                                     \
-	(1UL << PMU_OVSSET_CNT2_STATUS_Pos) /*!< PMU OVSSET: Event Counter 2                                           \
+#define PMU_OVSSET_CNT2_STATUS_Msk                                                                                                                                                                     \
+	(1UL << PMU_OVSSET_CNT2_STATUS_Pos) /*!< PMU OVSSET: Event Counter 2                                                                                                                           \
 					       Overflow Set Mask */
 
 #define PMU_OVSSET_CNT3_STATUS_Pos 3U /*!< PMU OVSSET: Event Counter 3 Overflow Set Position */
-#define PMU_OVSSET_CNT3_STATUS_Msk                                                                                     \
-	(1UL << PMU_OVSSET_CNT3_STATUS_Pos) /*!< PMU OVSSET: Event Counter 3                                           \
+#define PMU_OVSSET_CNT3_STATUS_Msk                                                                                                                                                                     \
+	(1UL << PMU_OVSSET_CNT3_STATUS_Pos) /*!< PMU OVSSET: Event Counter 3                                                                                                                           \
 					       Overflow Set Mask */
 
 #define PMU_OVSSET_CNT4_STATUS_Pos 4U /*!< PMU OVSSET: Event Counter 4 Overflow Set Position */
-#define PMU_OVSSET_CNT4_STATUS_Msk                                                                                     \
-	(1UL << PMU_OVSSET_CNT4_STATUS_Pos) /*!< PMU OVSSET: Event Counter 4                                           \
+#define PMU_OVSSET_CNT4_STATUS_Msk                                                                                                                                                                     \
+	(1UL << PMU_OVSSET_CNT4_STATUS_Pos) /*!< PMU OVSSET: Event Counter 4                                                                                                                           \
 					       Overflow Set Mask */
 
 #define PMU_OVSSET_CNT5_STATUS_Pos 5U /*!< PMU OVSSET: Event Counter 5 Overflow Set Position */
-#define PMU_OVSSET_CNT5_STATUS_Msk                                                                                     \
-	(1UL << PMU_OVSSET_CNT5_STATUS_Pos) /*!< PMU OVSSET: Event Counter 5                                           \
+#define PMU_OVSSET_CNT5_STATUS_Msk                                                                                                                                                                     \
+	(1UL << PMU_OVSSET_CNT5_STATUS_Pos) /*!< PMU OVSSET: Event Counter 5                                                                                                                           \
 					       Overflow Set Mask */
 
 #define PMU_OVSSET_CNT6_STATUS_Pos 6U /*!< PMU OVSSET: Event Counter 6 Overflow Set Position */
-#define PMU_OVSSET_CNT6_STATUS_Msk                                                                                     \
-	(1UL << PMU_OVSSET_CNT6_STATUS_Pos) /*!< PMU OVSSET: Event Counter 6                                           \
+#define PMU_OVSSET_CNT6_STATUS_Msk                                                                                                                                                                     \
+	(1UL << PMU_OVSSET_CNT6_STATUS_Pos) /*!< PMU OVSSET: Event Counter 6                                                                                                                           \
 					       Overflow Set Mask */
 
 #define PMU_OVSSET_CNT7_STATUS_Pos 7U /*!< PMU OVSSET: Event Counter 7 Overflow Set Position */
-#define PMU_OVSSET_CNT7_STATUS_Msk                                                                                     \
-	(1UL << PMU_OVSSET_CNT7_STATUS_Pos) /*!< PMU OVSSET: Event Counter 7                                           \
+#define PMU_OVSSET_CNT7_STATUS_Msk                                                                                                                                                                     \
+	(1UL << PMU_OVSSET_CNT7_STATUS_Pos) /*!< PMU OVSSET: Event Counter 7                                                                                                                           \
 					       Overflow Set Mask */
 
 #define PMU_OVSSET_CNT8_STATUS_Pos 8U /*!< PMU OVSSET: Event Counter 8 Overflow Set Position */
-#define PMU_OVSSET_CNT8_STATUS_Msk                                                                                     \
-	(1UL << PMU_OVSSET_CNT8_STATUS_Pos) /*!< PMU OVSSET: Event Counter 8                                           \
+#define PMU_OVSSET_CNT8_STATUS_Msk                                                                                                                                                                     \
+	(1UL << PMU_OVSSET_CNT8_STATUS_Pos) /*!< PMU OVSSET: Event Counter 8                                                                                                                           \
 					       Overflow Set Mask */
 
 #define PMU_OVSSET_CNT9_STATUS_Pos 9U /*!< PMU OVSSET: Event Counter 9 Overflow Set Position */
-#define PMU_OVSSET_CNT9_STATUS_Msk                                                                                     \
-	(1UL << PMU_OVSSET_CNT9_STATUS_Pos) /*!< PMU OVSSET: Event Counter 9                                           \
+#define PMU_OVSSET_CNT9_STATUS_Msk                                                                                                                                                                     \
+	(1UL << PMU_OVSSET_CNT9_STATUS_Pos) /*!< PMU OVSSET: Event Counter 9                                                                                                                           \
 					       Overflow Set Mask */
 
 #define PMU_OVSSET_CNT10_STATUS_Pos 10U /*!< PMU OVSSET: Event Counter 10 Overflow Set Position */
-#define PMU_OVSSET_CNT10_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSSET_CNT10_STATUS_Pos) /*!< PMU OVSSET: Event Counter 10                                         \
+#define PMU_OVSSET_CNT10_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSSET_CNT10_STATUS_Pos) /*!< PMU OVSSET: Event Counter 10                                                                                                                         \
 						Overflow Set Mask */
 
 #define PMU_OVSSET_CNT11_STATUS_Pos 11U /*!< PMU OVSSET: Event Counter 11 Overflow Set Position */
-#define PMU_OVSSET_CNT11_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSSET_CNT11_STATUS_Pos) /*!< PMU OVSSET: Event Counter 11                                         \
+#define PMU_OVSSET_CNT11_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSSET_CNT11_STATUS_Pos) /*!< PMU OVSSET: Event Counter 11                                                                                                                         \
 						Overflow Set Mask */
 
 #define PMU_OVSSET_CNT12_STATUS_Pos 12U /*!< PMU OVSSET: Event Counter 12 Overflow Set Position */
-#define PMU_OVSSET_CNT12_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSSET_CNT12_STATUS_Pos) /*!< PMU OVSSET: Event Counter 12                                         \
+#define PMU_OVSSET_CNT12_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSSET_CNT12_STATUS_Pos) /*!< PMU OVSSET: Event Counter 12                                                                                                                         \
 						Overflow Set Mask */
 
 #define PMU_OVSSET_CNT13_STATUS_Pos 13U /*!< PMU OVSSET: Event Counter 13 Overflow Set Position */
-#define PMU_OVSSET_CNT13_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSSET_CNT13_STATUS_Pos) /*!< PMU OVSSET: Event Counter 13                                         \
+#define PMU_OVSSET_CNT13_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSSET_CNT13_STATUS_Pos) /*!< PMU OVSSET: Event Counter 13                                                                                                                         \
 						Overflow Set Mask */
 
 #define PMU_OVSSET_CNT14_STATUS_Pos 14U /*!< PMU OVSSET: Event Counter 14 Overflow Set Position */
-#define PMU_OVSSET_CNT14_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSSET_CNT14_STATUS_Pos) /*!< PMU OVSSET: Event Counter 14                                         \
+#define PMU_OVSSET_CNT14_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSSET_CNT14_STATUS_Pos) /*!< PMU OVSSET: Event Counter 14                                                                                                                         \
 						Overflow Set Mask */
 
 #define PMU_OVSSET_CNT15_STATUS_Pos 15U /*!< PMU OVSSET: Event Counter 15 Overflow Set Position */
-#define PMU_OVSSET_CNT15_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSSET_CNT15_STATUS_Pos) /*!< PMU OVSSET: Event Counter 15                                         \
+#define PMU_OVSSET_CNT15_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSSET_CNT15_STATUS_Pos) /*!< PMU OVSSET: Event Counter 15                                                                                                                         \
 						Overflow Set Mask */
 
 #define PMU_OVSSET_CNT16_STATUS_Pos 16U /*!< PMU OVSSET: Event Counter 16 Overflow Set Position */
-#define PMU_OVSSET_CNT16_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSSET_CNT16_STATUS_Pos) /*!< PMU OVSSET: Event Counter 16                                         \
+#define PMU_OVSSET_CNT16_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSSET_CNT16_STATUS_Pos) /*!< PMU OVSSET: Event Counter 16                                                                                                                         \
 						Overflow Set Mask */
 
 #define PMU_OVSSET_CNT17_STATUS_Pos 17U /*!< PMU OVSSET: Event Counter 17 Overflow Set Position */
-#define PMU_OVSSET_CNT17_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSSET_CNT17_STATUS_Pos) /*!< PMU OVSSET: Event Counter 17                                         \
+#define PMU_OVSSET_CNT17_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSSET_CNT17_STATUS_Pos) /*!< PMU OVSSET: Event Counter 17                                                                                                                         \
 						Overflow Set Mask */
 
 #define PMU_OVSSET_CNT18_STATUS_Pos 18U /*!< PMU OVSSET: Event Counter 18 Overflow Set Position */
-#define PMU_OVSSET_CNT18_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSSET_CNT18_STATUS_Pos) /*!< PMU OVSSET: Event Counter 18                                         \
+#define PMU_OVSSET_CNT18_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSSET_CNT18_STATUS_Pos) /*!< PMU OVSSET: Event Counter 18                                                                                                                         \
 						Overflow Set Mask */
 
 #define PMU_OVSSET_CNT19_STATUS_Pos 19U /*!< PMU OVSSET: Event Counter 19 Overflow Set Position */
-#define PMU_OVSSET_CNT19_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSSET_CNT19_STATUS_Pos) /*!< PMU OVSSET: Event Counter 19                                         \
+#define PMU_OVSSET_CNT19_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSSET_CNT19_STATUS_Pos) /*!< PMU OVSSET: Event Counter 19                                                                                                                         \
 						Overflow Set Mask */
 
 #define PMU_OVSSET_CNT20_STATUS_Pos 20U /*!< PMU OVSSET: Event Counter 20 Overflow Set Position */
-#define PMU_OVSSET_CNT20_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSSET_CNT20_STATUS_Pos) /*!< PMU OVSSET: Event Counter 20                                         \
+#define PMU_OVSSET_CNT20_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSSET_CNT20_STATUS_Pos) /*!< PMU OVSSET: Event Counter 20                                                                                                                         \
 						Overflow Set Mask */
 
 #define PMU_OVSSET_CNT21_STATUS_Pos 21U /*!< PMU OVSSET: Event Counter 21 Overflow Set Position */
-#define PMU_OVSSET_CNT21_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSSET_CNT21_STATUS_Pos) /*!< PMU OVSSET: Event Counter 21                                         \
+#define PMU_OVSSET_CNT21_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSSET_CNT21_STATUS_Pos) /*!< PMU OVSSET: Event Counter 21                                                                                                                         \
 						Overflow Set Mask */
 
 #define PMU_OVSSET_CNT22_STATUS_Pos 22U /*!< PMU OVSSET: Event Counter 22 Overflow Set Position */
-#define PMU_OVSSET_CNT22_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSSET_CNT22_STATUS_Pos) /*!< PMU OVSSET: Event Counter 22                                         \
+#define PMU_OVSSET_CNT22_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSSET_CNT22_STATUS_Pos) /*!< PMU OVSSET: Event Counter 22                                                                                                                         \
 						Overflow Set Mask */
 
 #define PMU_OVSSET_CNT23_STATUS_Pos 23U /*!< PMU OVSSET: Event Counter 23 Overflow Set Position */
-#define PMU_OVSSET_CNT23_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSSET_CNT23_STATUS_Pos) /*!< PMU OVSSET: Event Counter 23                                         \
+#define PMU_OVSSET_CNT23_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSSET_CNT23_STATUS_Pos) /*!< PMU OVSSET: Event Counter 23                                                                                                                         \
 						Overflow Set Mask */
 
 #define PMU_OVSSET_CNT24_STATUS_Pos 24U /*!< PMU OVSSET: Event Counter 24 Overflow Set Position */
-#define PMU_OVSSET_CNT24_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSSET_CNT24_STATUS_Pos) /*!< PMU OVSSET: Event Counter 24                                         \
+#define PMU_OVSSET_CNT24_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSSET_CNT24_STATUS_Pos) /*!< PMU OVSSET: Event Counter 24                                                                                                                         \
 						Overflow Set Mask */
 
 #define PMU_OVSSET_CNT25_STATUS_Pos 25U /*!< PMU OVSSET: Event Counter 25 Overflow Set Position */
-#define PMU_OVSSET_CNT25_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSSET_CNT25_STATUS_Pos) /*!< PMU OVSSET: Event Counter 25                                         \
+#define PMU_OVSSET_CNT25_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSSET_CNT25_STATUS_Pos) /*!< PMU OVSSET: Event Counter 25                                                                                                                         \
 						Overflow Set Mask */
 
 #define PMU_OVSSET_CNT26_STATUS_Pos 26U /*!< PMU OVSSET: Event Counter 26 Overflow Set Position */
-#define PMU_OVSSET_CNT26_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSSET_CNT26_STATUS_Pos) /*!< PMU OVSSET: Event Counter 26                                         \
+#define PMU_OVSSET_CNT26_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSSET_CNT26_STATUS_Pos) /*!< PMU OVSSET: Event Counter 26                                                                                                                         \
 						Overflow Set Mask */
 
 #define PMU_OVSSET_CNT27_STATUS_Pos 27U /*!< PMU OVSSET: Event Counter 27 Overflow Set Position */
-#define PMU_OVSSET_CNT27_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSSET_CNT27_STATUS_Pos) /*!< PMU OVSSET: Event Counter 27                                         \
+#define PMU_OVSSET_CNT27_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSSET_CNT27_STATUS_Pos) /*!< PMU OVSSET: Event Counter 27                                                                                                                         \
 						Overflow Set Mask */
 
 #define PMU_OVSSET_CNT28_STATUS_Pos 28U /*!< PMU OVSSET: Event Counter 28 Overflow Set Position */
-#define PMU_OVSSET_CNT28_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSSET_CNT28_STATUS_Pos) /*!< PMU OVSSET: Event Counter 28                                         \
+#define PMU_OVSSET_CNT28_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSSET_CNT28_STATUS_Pos) /*!< PMU OVSSET: Event Counter 28                                                                                                                         \
 						Overflow Set Mask */
 
 #define PMU_OVSSET_CNT29_STATUS_Pos 29U /*!< PMU OVSSET: Event Counter 29 Overflow Set Position */
-#define PMU_OVSSET_CNT29_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSSET_CNT29_STATUS_Pos) /*!< PMU OVSSET: Event Counter 29                                         \
+#define PMU_OVSSET_CNT29_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSSET_CNT29_STATUS_Pos) /*!< PMU OVSSET: Event Counter 29                                                                                                                         \
 						Overflow Set Mask */
 
 #define PMU_OVSSET_CNT30_STATUS_Pos 30U /*!< PMU OVSSET: Event Counter 30 Overflow Set Position */
-#define PMU_OVSSET_CNT30_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSSET_CNT30_STATUS_Pos) /*!< PMU OVSSET: Event Counter 30                                         \
+#define PMU_OVSSET_CNT30_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSSET_CNT30_STATUS_Pos) /*!< PMU OVSSET: Event Counter 30                                                                                                                         \
 						Overflow Set Mask */
 
 #define PMU_OVSSET_CYCCNT_STATUS_Pos 31U /*!< PMU OVSSET: Cycle Counter Overflow Set Position */
-#define PMU_OVSSET_CYCCNT_STATUS_Msk                                                                                   \
-	(1UL << PMU_OVSSET_CYCCNT_STATUS_Pos) /*!< PMU OVSSET: Cycle Counter                                           \
+#define PMU_OVSSET_CYCCNT_STATUS_Msk                                                                                                                                                                   \
+	(1UL << PMU_OVSSET_CYCCNT_STATUS_Pos) /*!< PMU OVSSET: Cycle Counter                                                                                                                           \
 						 Overflow Set Mask */
 
 /** \brief PMU Overflow Flag Status Clear Register Definitions */
 
 #define PMU_OVSCLR_CNT0_STATUS_Pos 0U /*!< PMU OVSCLR: Event Counter 0 Overflow Clear Position */
-#define PMU_OVSCLR_CNT0_STATUS_Msk                                                                                     \
-	(1UL /*<< PMU_OVSCLR_CNT0_STATUS_Pos*/) /*!< PMU OVSCLR: Event Counter                                         \
+#define PMU_OVSCLR_CNT0_STATUS_Msk                                                                                                                                                                     \
+	(1UL /*<< PMU_OVSCLR_CNT0_STATUS_Pos*/) /*!< PMU OVSCLR: Event Counter                                                                                                                         \
 						   0 Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT1_STATUS_Pos 1U /*!< PMU OVSCLR: Event Counter 1 Overflow Clear Position */
-#define PMU_OVSCLR_CNT1_STATUS_Msk                                                                                     \
-	(1UL << PMU_OVSCLR_CNT1_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 1                                           \
+#define PMU_OVSCLR_CNT1_STATUS_Msk                                                                                                                                                                     \
+	(1UL << PMU_OVSCLR_CNT1_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 1                                                                                                                           \
 					       Overflow Clear */
 
 #define PMU_OVSCLR_CNT2_STATUS_Pos 2U /*!< PMU OVSCLR: Event Counter 2 Overflow Clear Position */
-#define PMU_OVSCLR_CNT2_STATUS_Msk                                                                                     \
-	(1UL << PMU_OVSCLR_CNT2_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 2                                           \
+#define PMU_OVSCLR_CNT2_STATUS_Msk                                                                                                                                                                     \
+	(1UL << PMU_OVSCLR_CNT2_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 2                                                                                                                           \
 					       Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT3_STATUS_Pos 3U /*!< PMU OVSCLR: Event Counter 3 Overflow Clear Position */
-#define PMU_OVSCLR_CNT3_STATUS_Msk                                                                                     \
-	(1UL << PMU_OVSCLR_CNT3_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 3                                           \
+#define PMU_OVSCLR_CNT3_STATUS_Msk                                                                                                                                                                     \
+	(1UL << PMU_OVSCLR_CNT3_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 3                                                                                                                           \
 					       Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT4_STATUS_Pos 4U /*!< PMU OVSCLR: Event Counter 4 Overflow Clear Position */
-#define PMU_OVSCLR_CNT4_STATUS_Msk                                                                                     \
-	(1UL << PMU_OVSCLR_CNT4_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 4                                           \
+#define PMU_OVSCLR_CNT4_STATUS_Msk                                                                                                                                                                     \
+	(1UL << PMU_OVSCLR_CNT4_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 4                                                                                                                           \
 					       Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT5_STATUS_Pos 5U /*!< PMU OVSCLR: Event Counter 5 Overflow Clear Position */
-#define PMU_OVSCLR_CNT5_STATUS_Msk                                                                                     \
-	(1UL << PMU_OVSCLR_CNT5_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 5                                           \
+#define PMU_OVSCLR_CNT5_STATUS_Msk                                                                                                                                                                     \
+	(1UL << PMU_OVSCLR_CNT5_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 5                                                                                                                           \
 					       Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT6_STATUS_Pos 6U /*!< PMU OVSCLR: Event Counter 6 Overflow Clear Position */
-#define PMU_OVSCLR_CNT6_STATUS_Msk                                                                                     \
-	(1UL << PMU_OVSCLR_CNT6_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 6                                           \
+#define PMU_OVSCLR_CNT6_STATUS_Msk                                                                                                                                                                     \
+	(1UL << PMU_OVSCLR_CNT6_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 6                                                                                                                           \
 					       Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT7_STATUS_Pos 7U /*!< PMU OVSCLR: Event Counter 7 Overflow Clear Position */
-#define PMU_OVSCLR_CNT7_STATUS_Msk                                                                                     \
-	(1UL << PMU_OVSCLR_CNT7_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 7                                           \
+#define PMU_OVSCLR_CNT7_STATUS_Msk                                                                                                                                                                     \
+	(1UL << PMU_OVSCLR_CNT7_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 7                                                                                                                           \
 					       Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT8_STATUS_Pos 8U /*!< PMU OVSCLR: Event Counter 8 Overflow Clear Position */
-#define PMU_OVSCLR_CNT8_STATUS_Msk                                                                                     \
-	(1UL << PMU_OVSCLR_CNT8_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 8                                           \
+#define PMU_OVSCLR_CNT8_STATUS_Msk                                                                                                                                                                     \
+	(1UL << PMU_OVSCLR_CNT8_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 8                                                                                                                           \
 					       Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT9_STATUS_Pos 9U /*!< PMU OVSCLR: Event Counter 9 Overflow Clear Position */
-#define PMU_OVSCLR_CNT9_STATUS_Msk                                                                                     \
-	(1UL << PMU_OVSCLR_CNT9_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 9                                           \
+#define PMU_OVSCLR_CNT9_STATUS_Msk                                                                                                                                                                     \
+	(1UL << PMU_OVSCLR_CNT9_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 9                                                                                                                           \
 					       Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT10_STATUS_Pos 10U /*!< PMU OVSCLR: Event Counter 10 Overflow Clear Position */
-#define PMU_OVSCLR_CNT10_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSCLR_CNT10_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 10                                         \
+#define PMU_OVSCLR_CNT10_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSCLR_CNT10_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 10                                                                                                                         \
 						Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT11_STATUS_Pos 11U /*!< PMU OVSCLR: Event Counter 11 Overflow Clear Position */
-#define PMU_OVSCLR_CNT11_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSCLR_CNT11_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 11                                         \
+#define PMU_OVSCLR_CNT11_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSCLR_CNT11_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 11                                                                                                                         \
 						Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT12_STATUS_Pos 12U /*!< PMU OVSCLR: Event Counter 12 Overflow Clear Position */
-#define PMU_OVSCLR_CNT12_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSCLR_CNT12_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 12                                         \
+#define PMU_OVSCLR_CNT12_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSCLR_CNT12_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 12                                                                                                                         \
 						Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT13_STATUS_Pos 13U /*!< PMU OVSCLR: Event Counter 13 Overflow Clear Position */
-#define PMU_OVSCLR_CNT13_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSCLR_CNT13_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 13                                         \
+#define PMU_OVSCLR_CNT13_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSCLR_CNT13_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 13                                                                                                                         \
 						Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT14_STATUS_Pos 14U /*!< PMU OVSCLR: Event Counter 14 Overflow Clear Position */
-#define PMU_OVSCLR_CNT14_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSCLR_CNT14_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 14                                         \
+#define PMU_OVSCLR_CNT14_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSCLR_CNT14_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 14                                                                                                                         \
 						Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT15_STATUS_Pos 15U /*!< PMU OVSCLR: Event Counter 15 Overflow Clear Position */
-#define PMU_OVSCLR_CNT15_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSCLR_CNT15_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 15                                         \
+#define PMU_OVSCLR_CNT15_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSCLR_CNT15_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 15                                                                                                                         \
 						Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT16_STATUS_Pos 16U /*!< PMU OVSCLR: Event Counter 16 Overflow Clear Position */
-#define PMU_OVSCLR_CNT16_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSCLR_CNT16_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 16                                         \
+#define PMU_OVSCLR_CNT16_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSCLR_CNT16_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 16                                                                                                                         \
 						Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT17_STATUS_Pos 17U /*!< PMU OVSCLR: Event Counter 17 Overflow Clear Position */
-#define PMU_OVSCLR_CNT17_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSCLR_CNT17_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 17                                         \
+#define PMU_OVSCLR_CNT17_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSCLR_CNT17_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 17                                                                                                                         \
 						Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT18_STATUS_Pos 18U /*!< PMU OVSCLR: Event Counter 18 Overflow Clear Position */
-#define PMU_OVSCLR_CNT18_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSCLR_CNT18_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 18                                         \
+#define PMU_OVSCLR_CNT18_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSCLR_CNT18_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 18                                                                                                                         \
 						Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT19_STATUS_Pos 19U /*!< PMU OVSCLR: Event Counter 19 Overflow Clear Position */
-#define PMU_OVSCLR_CNT19_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSCLR_CNT19_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 19                                         \
+#define PMU_OVSCLR_CNT19_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSCLR_CNT19_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 19                                                                                                                         \
 						Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT20_STATUS_Pos 20U /*!< PMU OVSCLR: Event Counter 20 Overflow Clear Position */
-#define PMU_OVSCLR_CNT20_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSCLR_CNT20_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 20                                         \
+#define PMU_OVSCLR_CNT20_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSCLR_CNT20_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 20                                                                                                                         \
 						Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT21_STATUS_Pos 21U /*!< PMU OVSCLR: Event Counter 21 Overflow Clear Position */
-#define PMU_OVSCLR_CNT21_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSCLR_CNT21_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 21                                         \
+#define PMU_OVSCLR_CNT21_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSCLR_CNT21_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 21                                                                                                                         \
 						Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT22_STATUS_Pos 22U /*!< PMU OVSCLR: Event Counter 22 Overflow Clear Position */
-#define PMU_OVSCLR_CNT22_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSCLR_CNT22_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 22                                         \
+#define PMU_OVSCLR_CNT22_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSCLR_CNT22_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 22                                                                                                                         \
 						Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT23_STATUS_Pos 23U /*!< PMU OVSCLR: Event Counter 23 Overflow Clear Position */
-#define PMU_OVSCLR_CNT23_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSCLR_CNT23_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 23                                         \
+#define PMU_OVSCLR_CNT23_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSCLR_CNT23_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 23                                                                                                                         \
 						Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT24_STATUS_Pos 24U /*!< PMU OVSCLR: Event Counter 24 Overflow Clear Position */
-#define PMU_OVSCLR_CNT24_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSCLR_CNT24_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 24                                         \
+#define PMU_OVSCLR_CNT24_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSCLR_CNT24_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 24                                                                                                                         \
 						Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT25_STATUS_Pos 25U /*!< PMU OVSCLR: Event Counter 25 Overflow Clear Position */
-#define PMU_OVSCLR_CNT25_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSCLR_CNT25_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 25                                         \
+#define PMU_OVSCLR_CNT25_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSCLR_CNT25_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 25                                                                                                                         \
 						Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT26_STATUS_Pos 26U /*!< PMU OVSCLR: Event Counter 26 Overflow Clear Position */
-#define PMU_OVSCLR_CNT26_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSCLR_CNT26_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 26                                         \
+#define PMU_OVSCLR_CNT26_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSCLR_CNT26_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 26                                                                                                                         \
 						Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT27_STATUS_Pos 27U /*!< PMU OVSCLR: Event Counter 27 Overflow Clear Position */
-#define PMU_OVSCLR_CNT27_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSCLR_CNT27_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 27                                         \
+#define PMU_OVSCLR_CNT27_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSCLR_CNT27_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 27                                                                                                                         \
 						Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT28_STATUS_Pos 28U /*!< PMU OVSCLR: Event Counter 28 Overflow Clear Position */
-#define PMU_OVSCLR_CNT28_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSCLR_CNT28_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 28                                         \
+#define PMU_OVSCLR_CNT28_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSCLR_CNT28_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 28                                                                                                                         \
 						Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT29_STATUS_Pos 29U /*!< PMU OVSCLR: Event Counter 29 Overflow Clear Position */
-#define PMU_OVSCLR_CNT29_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSCLR_CNT29_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 29                                         \
+#define PMU_OVSCLR_CNT29_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSCLR_CNT29_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 29                                                                                                                         \
 						Overflow Clear Mask */
 
 #define PMU_OVSCLR_CNT30_STATUS_Pos 30U /*!< PMU OVSCLR: Event Counter 30 Overflow Clear Position */
-#define PMU_OVSCLR_CNT30_STATUS_Msk                                                                                    \
-	(1UL << PMU_OVSCLR_CNT30_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 30                                         \
+#define PMU_OVSCLR_CNT30_STATUS_Msk                                                                                                                                                                    \
+	(1UL << PMU_OVSCLR_CNT30_STATUS_Pos) /*!< PMU OVSCLR: Event Counter 30                                                                                                                         \
 						Overflow Clear Mask */
 
 #define PMU_OVSCLR_CYCCNT_STATUS_Pos 31U /*!< PMU OVSCLR: Cycle Counter Overflow Clear Position */
-#define PMU_OVSCLR_CYCCNT_STATUS_Msk                                                                                   \
-	(1UL << PMU_OVSCLR_CYCCNT_STATUS_Pos) /*!< PMU OVSCLR: Cycle Counter                                           \
+#define PMU_OVSCLR_CYCCNT_STATUS_Msk                                                                                                                                                                   \
+	(1UL << PMU_OVSCLR_CYCCNT_STATUS_Pos) /*!< PMU OVSCLR: Cycle Counter                                                                                                                           \
 						 Overflow Clear Mask */
 
 /** \brief PMU Software Increment Counter */
 
 #define PMU_SWINC_CNT0_Pos 0U /*!< PMU SWINC: Event Counter 0 Software Increment Position */
-#define PMU_SWINC_CNT0_Msk                                                                                             \
-	(1UL /*<< PMU_SWINC_CNT0_Pos */) /*!< PMU SWINC: Event Counter 0                                               \
+#define PMU_SWINC_CNT0_Msk                                                                                                                                                                             \
+	(1UL /*<< PMU_SWINC_CNT0_Pos */) /*!< PMU SWINC: Event Counter 0                                                                                                                               \
 					    Software Increment Mask */
 
 #define PMU_SWINC_CNT1_Pos 1U /*!< PMU SWINC: Event Counter 1 Software Increment Position */
-#define PMU_SWINC_CNT1_Msk                                                                                             \
-	(1UL << PMU_SWINC_CNT1_Pos) /*!< PMU SWINC: Event Counter 1 Software                                           \
+#define PMU_SWINC_CNT1_Msk                                                                                                                                                                             \
+	(1UL << PMU_SWINC_CNT1_Pos) /*!< PMU SWINC: Event Counter 1 Software                                                                                                                           \
 				       Increment Mask */
 
 #define PMU_SWINC_CNT2_Pos 2U /*!< PMU SWINC: Event Counter 2 Software Increment Position */
-#define PMU_SWINC_CNT2_Msk                                                                                             \
-	(1UL << PMU_SWINC_CNT2_Pos) /*!< PMU SWINC: Event Counter 2 Software                                           \
+#define PMU_SWINC_CNT2_Msk                                                                                                                                                                             \
+	(1UL << PMU_SWINC_CNT2_Pos) /*!< PMU SWINC: Event Counter 2 Software                                                                                                                           \
 				       Increment Mask */
 
 #define PMU_SWINC_CNT3_Pos 3U /*!< PMU SWINC: Event Counter 3 Software Increment Position */
-#define PMU_SWINC_CNT3_Msk                                                                                             \
-	(1UL << PMU_SWINC_CNT3_Pos) /*!< PMU SWINC: Event Counter 3 Software                                           \
+#define PMU_SWINC_CNT3_Msk                                                                                                                                                                             \
+	(1UL << PMU_SWINC_CNT3_Pos) /*!< PMU SWINC: Event Counter 3 Software                                                                                                                           \
 				       Increment Mask */
 
 #define PMU_SWINC_CNT4_Pos 4U /*!< PMU SWINC: Event Counter 4 Software Increment Position */
-#define PMU_SWINC_CNT4_Msk                                                                                             \
-	(1UL << PMU_SWINC_CNT4_Pos) /*!< PMU SWINC: Event Counter 4 Software                                           \
+#define PMU_SWINC_CNT4_Msk                                                                                                                                                                             \
+	(1UL << PMU_SWINC_CNT4_Pos) /*!< PMU SWINC: Event Counter 4 Software                                                                                                                           \
 				       Increment Mask */
 
 #define PMU_SWINC_CNT5_Pos 5U /*!< PMU SWINC: Event Counter 5 Software Increment Position */
-#define PMU_SWINC_CNT5_Msk                                                                                             \
-	(1UL << PMU_SWINC_CNT5_Pos) /*!< PMU SWINC: Event Counter 5 Software                                           \
+#define PMU_SWINC_CNT5_Msk                                                                                                                                                                             \
+	(1UL << PMU_SWINC_CNT5_Pos) /*!< PMU SWINC: Event Counter 5 Software                                                                                                                           \
 				       Increment Mask */
 
 #define PMU_SWINC_CNT6_Pos 6U /*!< PMU SWINC: Event Counter 6 Software Increment Position */
-#define PMU_SWINC_CNT6_Msk                                                                                             \
-	(1UL << PMU_SWINC_CNT6_Pos) /*!< PMU SWINC: Event Counter 6 Software                                           \
+#define PMU_SWINC_CNT6_Msk                                                                                                                                                                             \
+	(1UL << PMU_SWINC_CNT6_Pos) /*!< PMU SWINC: Event Counter 6 Software                                                                                                                           \
 				       Increment Mask */
 
 #define PMU_SWINC_CNT7_Pos 7U /*!< PMU SWINC: Event Counter 7 Software Increment Position */
-#define PMU_SWINC_CNT7_Msk                                                                                             \
-	(1UL << PMU_SWINC_CNT7_Pos) /*!< PMU SWINC: Event Counter 7 Software                                           \
+#define PMU_SWINC_CNT7_Msk                                                                                                                                                                             \
+	(1UL << PMU_SWINC_CNT7_Pos) /*!< PMU SWINC: Event Counter 7 Software                                                                                                                           \
 				       Increment Mask */
 
 #define PMU_SWINC_CNT8_Pos 8U /*!< PMU SWINC: Event Counter 8 Software Increment Position */
-#define PMU_SWINC_CNT8_Msk                                                                                             \
-	(1UL << PMU_SWINC_CNT8_Pos) /*!< PMU SWINC: Event Counter 8 Software                                           \
+#define PMU_SWINC_CNT8_Msk                                                                                                                                                                             \
+	(1UL << PMU_SWINC_CNT8_Pos) /*!< PMU SWINC: Event Counter 8 Software                                                                                                                           \
 				       Increment Mask */
 
 #define PMU_SWINC_CNT9_Pos 9U /*!< PMU SWINC: Event Counter 9 Software Increment Position */
-#define PMU_SWINC_CNT9_Msk                                                                                             \
-	(1UL << PMU_SWINC_CNT9_Pos) /*!< PMU SWINC: Event Counter 9 Software                                           \
+#define PMU_SWINC_CNT9_Msk                                                                                                                                                                             \
+	(1UL << PMU_SWINC_CNT9_Pos) /*!< PMU SWINC: Event Counter 9 Software                                                                                                                           \
 				       Increment Mask */
 
 #define PMU_SWINC_CNT10_Pos 10U /*!< PMU SWINC: Event Counter 10 Software Increment Position */
-#define PMU_SWINC_CNT10_Msk                                                                                            \
-	(1UL << PMU_SWINC_CNT10_Pos) /*!< PMU SWINC: Event Counter 10 Software                                         \
+#define PMU_SWINC_CNT10_Msk                                                                                                                                                                            \
+	(1UL << PMU_SWINC_CNT10_Pos) /*!< PMU SWINC: Event Counter 10 Software                                                                                                                         \
 					Increment Mask */
 
 #define PMU_SWINC_CNT11_Pos 11U /*!< PMU SWINC: Event Counter 11 Software Increment Position */
-#define PMU_SWINC_CNT11_Msk                                                                                            \
-	(1UL << PMU_SWINC_CNT11_Pos) /*!< PMU SWINC: Event Counter 11 Software                                         \
+#define PMU_SWINC_CNT11_Msk                                                                                                                                                                            \
+	(1UL << PMU_SWINC_CNT11_Pos) /*!< PMU SWINC: Event Counter 11 Software                                                                                                                         \
 					Increment Mask */
 
 #define PMU_SWINC_CNT12_Pos 12U /*!< PMU SWINC: Event Counter 12 Software Increment Position */
-#define PMU_SWINC_CNT12_Msk                                                                                            \
-	(1UL << PMU_SWINC_CNT12_Pos) /*!< PMU SWINC: Event Counter 12 Software                                         \
+#define PMU_SWINC_CNT12_Msk                                                                                                                                                                            \
+	(1UL << PMU_SWINC_CNT12_Pos) /*!< PMU SWINC: Event Counter 12 Software                                                                                                                         \
 					Increment Mask */
 
 #define PMU_SWINC_CNT13_Pos 13U /*!< PMU SWINC: Event Counter 13 Software Increment Position */
-#define PMU_SWINC_CNT13_Msk                                                                                            \
-	(1UL << PMU_SWINC_CNT13_Pos) /*!< PMU SWINC: Event Counter 13 Software                                         \
+#define PMU_SWINC_CNT13_Msk                                                                                                                                                                            \
+	(1UL << PMU_SWINC_CNT13_Pos) /*!< PMU SWINC: Event Counter 13 Software                                                                                                                         \
 					Increment Mask */
 
 #define PMU_SWINC_CNT14_Pos 14U /*!< PMU SWINC: Event Counter 14 Software Increment Position */
-#define PMU_SWINC_CNT14_Msk                                                                                            \
-	(1UL << PMU_SWINC_CNT14_Pos) /*!< PMU SWINC: Event Counter 14 Software                                         \
+#define PMU_SWINC_CNT14_Msk                                                                                                                                                                            \
+	(1UL << PMU_SWINC_CNT14_Pos) /*!< PMU SWINC: Event Counter 14 Software                                                                                                                         \
 					Increment Mask */
 
 #define PMU_SWINC_CNT15_Pos 15U /*!< PMU SWINC: Event Counter 15 Software Increment Position */
-#define PMU_SWINC_CNT15_Msk                                                                                            \
-	(1UL << PMU_SWINC_CNT15_Pos) /*!< PMU SWINC: Event Counter 15 Software                                         \
+#define PMU_SWINC_CNT15_Msk                                                                                                                                                                            \
+	(1UL << PMU_SWINC_CNT15_Pos) /*!< PMU SWINC: Event Counter 15 Software                                                                                                                         \
 					Increment Mask */
 
 #define PMU_SWINC_CNT16_Pos 16U /*!< PMU SWINC: Event Counter 16 Software Increment Position */
-#define PMU_SWINC_CNT16_Msk                                                                                            \
-	(1UL << PMU_SWINC_CNT16_Pos) /*!< PMU SWINC: Event Counter 16 Software                                         \
+#define PMU_SWINC_CNT16_Msk                                                                                                                                                                            \
+	(1UL << PMU_SWINC_CNT16_Pos) /*!< PMU SWINC: Event Counter 16 Software                                                                                                                         \
 					Increment Mask */
 
 #define PMU_SWINC_CNT17_Pos 17U /*!< PMU SWINC: Event Counter 17 Software Increment Position */
-#define PMU_SWINC_CNT17_Msk                                                                                            \
-	(1UL << PMU_SWINC_CNT17_Pos) /*!< PMU SWINC: Event Counter 17 Software                                         \
+#define PMU_SWINC_CNT17_Msk                                                                                                                                                                            \
+	(1UL << PMU_SWINC_CNT17_Pos) /*!< PMU SWINC: Event Counter 17 Software                                                                                                                         \
 					Increment Mask */
 
 #define PMU_SWINC_CNT18_Pos 18U /*!< PMU SWINC: Event Counter 18 Software Increment Position */
-#define PMU_SWINC_CNT18_Msk                                                                                            \
-	(1UL << PMU_SWINC_CNT18_Pos) /*!< PMU SWINC: Event Counter 18 Software                                         \
+#define PMU_SWINC_CNT18_Msk                                                                                                                                                                            \
+	(1UL << PMU_SWINC_CNT18_Pos) /*!< PMU SWINC: Event Counter 18 Software                                                                                                                         \
 					Increment Mask */
 
 #define PMU_SWINC_CNT19_Pos 19U /*!< PMU SWINC: Event Counter 19 Software Increment Position */
-#define PMU_SWINC_CNT19_Msk                                                                                            \
-	(1UL << PMU_SWINC_CNT19_Pos) /*!< PMU SWINC: Event Counter 19 Software                                         \
+#define PMU_SWINC_CNT19_Msk                                                                                                                                                                            \
+	(1UL << PMU_SWINC_CNT19_Pos) /*!< PMU SWINC: Event Counter 19 Software                                                                                                                         \
 					Increment Mask */
 
 #define PMU_SWINC_CNT20_Pos 20U /*!< PMU SWINC: Event Counter 20 Software Increment Position */
-#define PMU_SWINC_CNT20_Msk                                                                                            \
-	(1UL << PMU_SWINC_CNT20_Pos) /*!< PMU SWINC: Event Counter 20 Software                                         \
+#define PMU_SWINC_CNT20_Msk                                                                                                                                                                            \
+	(1UL << PMU_SWINC_CNT20_Pos) /*!< PMU SWINC: Event Counter 20 Software                                                                                                                         \
 					Increment Mask */
 
 #define PMU_SWINC_CNT21_Pos 21U /*!< PMU SWINC: Event Counter 21 Software Increment Position */
-#define PMU_SWINC_CNT21_Msk                                                                                            \
-	(1UL << PMU_SWINC_CNT21_Pos) /*!< PMU SWINC: Event Counter 21 Software                                         \
+#define PMU_SWINC_CNT21_Msk                                                                                                                                                                            \
+	(1UL << PMU_SWINC_CNT21_Pos) /*!< PMU SWINC: Event Counter 21 Software                                                                                                                         \
 					Increment Mask */
 
 #define PMU_SWINC_CNT22_Pos 22U /*!< PMU SWINC: Event Counter 22 Software Increment Position */
-#define PMU_SWINC_CNT22_Msk                                                                                            \
-	(1UL << PMU_SWINC_CNT22_Pos) /*!< PMU SWINC: Event Counter 22 Software                                         \
+#define PMU_SWINC_CNT22_Msk                                                                                                                                                                            \
+	(1UL << PMU_SWINC_CNT22_Pos) /*!< PMU SWINC: Event Counter 22 Software                                                                                                                         \
 					Increment Mask */
 
 #define PMU_SWINC_CNT23_Pos 23U /*!< PMU SWINC: Event Counter 23 Software Increment Position */
-#define PMU_SWINC_CNT23_Msk                                                                                            \
-	(1UL << PMU_SWINC_CNT23_Pos) /*!< PMU SWINC: Event Counter 23 Software                                         \
+#define PMU_SWINC_CNT23_Msk                                                                                                                                                                            \
+	(1UL << PMU_SWINC_CNT23_Pos) /*!< PMU SWINC: Event Counter 23 Software                                                                                                                         \
 					Increment Mask */
 
 #define PMU_SWINC_CNT24_Pos 24U /*!< PMU SWINC: Event Counter 24 Software Increment Position */
-#define PMU_SWINC_CNT24_Msk                                                                                            \
-	(1UL << PMU_SWINC_CNT24_Pos) /*!< PMU SWINC: Event Counter 24 Software                                         \
+#define PMU_SWINC_CNT24_Msk                                                                                                                                                                            \
+	(1UL << PMU_SWINC_CNT24_Pos) /*!< PMU SWINC: Event Counter 24 Software                                                                                                                         \
 					Increment Mask */
 
 #define PMU_SWINC_CNT25_Pos 25U /*!< PMU SWINC: Event Counter 25 Software Increment Position */
-#define PMU_SWINC_CNT25_Msk                                                                                            \
-	(1UL << PMU_SWINC_CNT25_Pos) /*!< PMU SWINC: Event Counter 25 Software                                         \
+#define PMU_SWINC_CNT25_Msk                                                                                                                                                                            \
+	(1UL << PMU_SWINC_CNT25_Pos) /*!< PMU SWINC: Event Counter 25 Software                                                                                                                         \
 					Increment Mask */
 
 #define PMU_SWINC_CNT26_Pos 26U /*!< PMU SWINC: Event Counter 26 Software Increment Position */
-#define PMU_SWINC_CNT26_Msk                                                                                            \
-	(1UL << PMU_SWINC_CNT26_Pos) /*!< PMU SWINC: Event Counter 26 Software                                         \
+#define PMU_SWINC_CNT26_Msk                                                                                                                                                                            \
+	(1UL << PMU_SWINC_CNT26_Pos) /*!< PMU SWINC: Event Counter 26 Software                                                                                                                         \
 					Increment Mask */
 
 #define PMU_SWINC_CNT27_Pos 27U /*!< PMU SWINC: Event Counter 27 Software Increment Position */
-#define PMU_SWINC_CNT27_Msk                                                                                            \
-	(1UL << PMU_SWINC_CNT27_Pos) /*!< PMU SWINC: Event Counter 27 Software                                         \
+#define PMU_SWINC_CNT27_Msk                                                                                                                                                                            \
+	(1UL << PMU_SWINC_CNT27_Pos) /*!< PMU SWINC: Event Counter 27 Software                                                                                                                         \
 					Increment Mask */
 
 #define PMU_SWINC_CNT28_Pos 28U /*!< PMU SWINC: Event Counter 28 Software Increment Position */
-#define PMU_SWINC_CNT28_Msk                                                                                            \
-	(1UL << PMU_SWINC_CNT28_Pos) /*!< PMU SWINC: Event Counter 28 Software                                         \
+#define PMU_SWINC_CNT28_Msk                                                                                                                                                                            \
+	(1UL << PMU_SWINC_CNT28_Pos) /*!< PMU SWINC: Event Counter 28 Software                                                                                                                         \
 					Increment Mask */
 
 #define PMU_SWINC_CNT29_Pos 29U /*!< PMU SWINC: Event Counter 29 Software Increment Position */
-#define PMU_SWINC_CNT29_Msk                                                                                            \
-	(1UL << PMU_SWINC_CNT29_Pos) /*!< PMU SWINC: Event Counter 29 Software                                         \
+#define PMU_SWINC_CNT29_Msk                                                                                                                                                                            \
+	(1UL << PMU_SWINC_CNT29_Pos) /*!< PMU SWINC: Event Counter 29 Software                                                                                                                         \
 					Increment Mask */
 
 #define PMU_SWINC_CNT30_Pos 30U /*!< PMU SWINC: Event Counter 30 Software Increment Position */
-#define PMU_SWINC_CNT30_Msk                                                                                            \
-	(1UL << PMU_SWINC_CNT30_Pos) /*!< PMU SWINC: Event Counter 30 Software                                         \
+#define PMU_SWINC_CNT30_Msk                                                                                                                                                                            \
+	(1UL << PMU_SWINC_CNT30_Pos) /*!< PMU SWINC: Event Counter 30 Software                                                                                                                         \
 					Increment Mask */
 
 /** \brief PMU Control Register Definitions */
@@ -3546,106 +3546,106 @@ typedef struct {
 #define PMU_CTRL_ENABLE_Msk (1UL /*<< PMU_CTRL_ENABLE_Pos*/) /*!< PMU CTRL: ENABLE Mask */
 
 #define PMU_CTRL_EVENTCNT_RESET_Pos 1U /*!< PMU CTRL: Event Counter Reset Position */
-#define PMU_CTRL_EVENTCNT_RESET_Msk                                                                                    \
-	(1UL << PMU_CTRL_EVENTCNT_RESET_Pos) /*!< PMU CTRL: Event Counter                                              \
+#define PMU_CTRL_EVENTCNT_RESET_Msk                                                                                                                                                                    \
+	(1UL << PMU_CTRL_EVENTCNT_RESET_Pos) /*!< PMU CTRL: Event Counter                                                                                                                              \
 						Reset Mask */
 
 #define PMU_CTRL_CYCCNT_RESET_Pos 2U /*!< PMU CTRL: Cycle Counter Reset Position */
-#define PMU_CTRL_CYCCNT_RESET_Msk                                                                                      \
-	(1UL << PMU_CTRL_CYCCNT_RESET_Pos) /*!< PMU CTRL: Cycle Counter Reset                                          \
+#define PMU_CTRL_CYCCNT_RESET_Msk                                                                                                                                                                      \
+	(1UL << PMU_CTRL_CYCCNT_RESET_Pos) /*!< PMU CTRL: Cycle Counter Reset                                                                                                                          \
 					      Mask */
 
 #define PMU_CTRL_CYCCNT_DISABLE_Pos 5U /*!< PMU CTRL: Disable Cycle Counter Position */
-#define PMU_CTRL_CYCCNT_DISABLE_Msk                                                                                    \
-	(1UL << PMU_CTRL_CYCCNT_DISABLE_Pos) /*!< PMU CTRL: Disable Cycle                                              \
+#define PMU_CTRL_CYCCNT_DISABLE_Msk                                                                                                                                                                    \
+	(1UL << PMU_CTRL_CYCCNT_DISABLE_Pos) /*!< PMU CTRL: Disable Cycle                                                                                                                              \
 						Counter Mask */
 
-#define PMU_CTRL_FRZ_ON_OV_Pos                                                                                         \
-	9U /*!< PMU CTRL: Freeze-on-overflow Position                                                                  \
+#define PMU_CTRL_FRZ_ON_OV_Pos                                                                                                                                                                         \
+	9U /*!< PMU CTRL: Freeze-on-overflow Position                                                                                                                                                  \
 	    */
-#define PMU_CTRL_FRZ_ON_OV_Msk                                                                                         \
-	(1UL << PMU_CTRL_FRZ_ON_OVERFLOW_Pos) /*!< PMU CTRL:                                                           \
+#define PMU_CTRL_FRZ_ON_OV_Msk                                                                                                                                                                         \
+	(1UL << PMU_CTRL_FRZ_ON_OVERFLOW_Pos) /*!< PMU CTRL:                                                                                                                                           \
 						 Freeze-on-overflow Mask */
 
 #define PMU_CTRL_TRACE_ON_OV_Pos 11U /*!< PMU CTRL: Trace-on-overflow Position */
-#define PMU_CTRL_TRACE_ON_OV_Msk                                                                                       \
-	(1UL << PMU_CTRL_TRACE_ON_OVERFLOW_Pos) /*!< PMU CTRL:                                                         \
+#define PMU_CTRL_TRACE_ON_OV_Msk                                                                                                                                                                       \
+	(1UL << PMU_CTRL_TRACE_ON_OVERFLOW_Pos) /*!< PMU CTRL:                                                                                                                                         \
 						   Trace-on-overflow Mask */
 
 /** \brief PMU Type Register Definitions */
 
 #define PMU_TYPE_NUM_CNTS_Pos 0U /*!< PMU TYPE: Number of Counters Position */
-#define PMU_TYPE_NUM_CNTS_Msk                                                                                          \
-	(0xFFUL /*<< PMU_TYPE_NUM_CNTS_Pos*/) /*!< PMU TYPE: Number of                                                 \
+#define PMU_TYPE_NUM_CNTS_Msk                                                                                                                                                                          \
+	(0xFFUL /*<< PMU_TYPE_NUM_CNTS_Pos*/) /*!< PMU TYPE: Number of                                                                                                                                 \
 						 Counters Mask */
 
 #define PMU_TYPE_SIZE_CNTS_Pos 8U				  /*!< PMU TYPE: Size of Counters Position */
 #define PMU_TYPE_SIZE_CNTS_Msk (0x3FUL << PMU_TYPE_SIZE_CNTS_Pos) /*!< PMU TYPE: Size of Counters Mask */
 
 #define PMU_TYPE_CYCCNT_PRESENT_Pos 14U /*!< PMU TYPE: Cycle Counter Present Position */
-#define PMU_TYPE_CYCCNT_PRESENT_Msk                                                                                    \
-	(1UL << PMU_TYPE_CYCCNT_PRESENT_Pos) /*!< PMU TYPE: Cycle Counter                                              \
+#define PMU_TYPE_CYCCNT_PRESENT_Msk                                                                                                                                                                    \
+	(1UL << PMU_TYPE_CYCCNT_PRESENT_Pos) /*!< PMU TYPE: Cycle Counter                                                                                                                              \
 						Present Mask */
 
 #define PMU_TYPE_FRZ_OV_SUPPORT_Pos 21U /*!< PMU TYPE: Freeze-on-overflow Support Position */
-#define PMU_TYPE_FRZ_OV_SUPPORT_Msk                                                                                    \
-	(1UL << PMU_TYPE_FRZ_OV_SUPPORT_Pos) /*!< PMU TYPE: Freeze-on-overflow                                         \
+#define PMU_TYPE_FRZ_OV_SUPPORT_Msk                                                                                                                                                                    \
+	(1UL << PMU_TYPE_FRZ_OV_SUPPORT_Pos) /*!< PMU TYPE: Freeze-on-overflow                                                                                                                         \
 						Support Mask */
 
 #define PMU_TYPE_TRACE_ON_OV_SUPPORT_Pos 23U /*!< PMU TYPE: Trace-on-overflow Support Position */
-#define PMU_TYPE_TRACE_ON_OV_SUPPORT_Msk                                                                               \
-	(1UL << PMU_TYPE_FRZ_OV_SUPPORT_Pos) /*!< PMU TYPE: Trace-on-overflow                                          \
+#define PMU_TYPE_TRACE_ON_OV_SUPPORT_Msk                                                                                                                                                               \
+	(1UL << PMU_TYPE_FRZ_OV_SUPPORT_Pos) /*!< PMU TYPE: Trace-on-overflow                                                                                                                          \
 						Support Mask */
 
 /** \brief PMU Authentication Status Register Definitions */
 
 #define PMU_AUTHSTATUS_NSID_Pos 0U /*!< PMU AUTHSTATUS: Non-secure Invasive Debug Position */
-#define PMU_AUTHSTATUS_NSID_Msk                                                                                        \
-	(0x3UL /*<< PMU_AUTHSTATUS_NSID_Pos*/) /*!< PMU AUTHSTATUS: Non-secure                                         \
+#define PMU_AUTHSTATUS_NSID_Msk                                                                                                                                                                        \
+	(0x3UL /*<< PMU_AUTHSTATUS_NSID_Pos*/) /*!< PMU AUTHSTATUS: Non-secure                                                                                                                         \
 						  Invasive Debug Mask */
 
 #define PMU_AUTHSTATUS_NSNID_Pos 2U /*!< PMU AUTHSTATUS: Non-secure Non-invasive Debug Position */
-#define PMU_AUTHSTATUS_NSNID_Msk                                                                                       \
-	(0x3UL << PMU_AUTHSTATUS_NSNID_Pos) /*!< PMU AUTHSTATUS: Non-secure                                            \
+#define PMU_AUTHSTATUS_NSNID_Msk                                                                                                                                                                       \
+	(0x3UL << PMU_AUTHSTATUS_NSNID_Pos) /*!< PMU AUTHSTATUS: Non-secure                                                                                                                            \
 					       Non-invasive Debug Mask */
 
 #define PMU_AUTHSTATUS_SID_Pos 4U /*!< PMU AUTHSTATUS: Secure Invasive Debug Position */
-#define PMU_AUTHSTATUS_SID_Msk                                                                                         \
-	(0x3UL << PMU_AUTHSTATUS_SID_Pos) /*!< PMU AUTHSTATUS: Secure Invasive                                         \
+#define PMU_AUTHSTATUS_SID_Msk                                                                                                                                                                         \
+	(0x3UL << PMU_AUTHSTATUS_SID_Pos) /*!< PMU AUTHSTATUS: Secure Invasive                                                                                                                         \
 					     Debug Mask */
 
 #define PMU_AUTHSTATUS_SNID_Pos 6U /*!< PMU AUTHSTATUS: Secure Non-invasive Debug Position */
-#define PMU_AUTHSTATUS_SNID_Msk                                                                                        \
-	(0x3UL << PMU_AUTHSTATUS_SNID_Pos) /*!< PMU AUTHSTATUS: Secure                                                 \
+#define PMU_AUTHSTATUS_SNID_Msk                                                                                                                                                                        \
+	(0x3UL << PMU_AUTHSTATUS_SNID_Pos) /*!< PMU AUTHSTATUS: Secure                                                                                                                                 \
 					      Non-invasive Debug Mask */
 
-#define PMU_AUTHSTATUS_NSUID_Pos                                                                                       \
-	16U /*!< PMU AUTHSTATUS: Non-secure Unprivileged Invasive Debug                                                \
+#define PMU_AUTHSTATUS_NSUID_Pos                                                                                                                                                                       \
+	16U /*!< PMU AUTHSTATUS: Non-secure Unprivileged Invasive Debug                                                                                                                                \
 	       Position */
-#define PMU_AUTHSTATUS_NSUID_Msk                                                                                       \
-	(0x3UL << PMU_AUTHSTATUS_NSUID_Pos) /*!< PMU AUTHSTATUS: Non-secure                                            \
+#define PMU_AUTHSTATUS_NSUID_Msk                                                                                                                                                                       \
+	(0x3UL << PMU_AUTHSTATUS_NSUID_Pos) /*!< PMU AUTHSTATUS: Non-secure                                                                                                                            \
 					       Unprivileged Invasive Debug Mask */
 
-#define PMU_AUTHSTATUS_NSUNID_Pos                                                                                      \
-	18U /*!< PMU AUTHSTATUS: Non-secure Unprivileged Non-invasive Debug                                            \
+#define PMU_AUTHSTATUS_NSUNID_Pos                                                                                                                                                                      \
+	18U /*!< PMU AUTHSTATUS: Non-secure Unprivileged Non-invasive Debug                                                                                                                            \
 	       Position */
-#define PMU_AUTHSTATUS_NSUNID_Msk                                                                                      \
-	(0x3UL << PMU_AUTHSTATUS_NSUNID_Pos) /*!< PMU AUTHSTATUS: Non-secure                                           \
-						Unprivileged Non-invasive                                              \
+#define PMU_AUTHSTATUS_NSUNID_Msk                                                                                                                                                                      \
+	(0x3UL << PMU_AUTHSTATUS_NSUNID_Pos) /*!< PMU AUTHSTATUS: Non-secure                                                                                                                           \
+						Unprivileged Non-invasive                                                                                                                              \
 						Debug Mask */
 
-#define PMU_AUTHSTATUS_SUID_Pos                                                                                        \
-	20U /*!< PMU AUTHSTATUS: Secure Unprivileged Invasive Debug Position                                           \
+#define PMU_AUTHSTATUS_SUID_Pos                                                                                                                                                                        \
+	20U /*!< PMU AUTHSTATUS: Secure Unprivileged Invasive Debug Position                                                                                                                           \
 	     */
-#define PMU_AUTHSTATUS_SUID_Msk                                                                                        \
-	(0x3UL << PMU_AUTHSTATUS_SUID_Pos) /*!< PMU AUTHSTATUS: Secure Unprivileged                                    \
+#define PMU_AUTHSTATUS_SUID_Msk                                                                                                                                                                        \
+	(0x3UL << PMU_AUTHSTATUS_SUID_Pos) /*!< PMU AUTHSTATUS: Secure Unprivileged                                                                                                                    \
 					      Invasive Debug Mask */
 
-#define PMU_AUTHSTATUS_SUNID_Pos                                                                                       \
-	22U /*!< PMU AUTHSTATUS: Secure Unprivileged Non-invasive Debug                                                \
+#define PMU_AUTHSTATUS_SUNID_Pos                                                                                                                                                                       \
+	22U /*!< PMU AUTHSTATUS: Secure Unprivileged Non-invasive Debug                                                                                                                                \
 	       Position */
-#define PMU_AUTHSTATUS_SUNID_Msk                                                                                       \
-	(0x3UL << PMU_AUTHSTATUS_SUNID_Pos) /*!< PMU AUTHSTATUS: Secure Unprivileged                                   \
+#define PMU_AUTHSTATUS_SUNID_Msk                                                                                                                                                                       \
+	(0x3UL << PMU_AUTHSTATUS_SUNID_Pos) /*!< PMU AUTHSTATUS: Secure Unprivileged                                                                                                                   \
 					       Non-invasive Debug Mask */
 
 /*@} end of group CMSIS_PMU */
@@ -3729,8 +3729,8 @@ typedef struct {
 #define MPU_RBAR_AP_Msk (0x3UL << MPU_RBAR_AP_Pos) /*!< MPU RBAR: AP Mask */
 
 #define MPU_RBAR_XN_Pos 0U /*!< MPU RBAR: XN Position */
-#define MPU_RBAR_XN_Msk                                                                                                \
-	(01UL /*<< MPU_RBAR_XN_Pos*/) /*!< MPU RBAR: XN Mask                                                           \
+#define MPU_RBAR_XN_Msk                                                                                                                                                                                \
+	(01UL /*<< MPU_RBAR_XN_Pos*/) /*!< MPU RBAR: XN Mask                                                                                                                                           \
 				       */
 
 /* MPU Region Limit Address Register Definitions */
@@ -3744,8 +3744,8 @@ typedef struct {
 #define MPU_RLAR_AttrIndx_Msk (7UL << MPU_RLAR_AttrIndx_Pos) /*!< MPU RLAR: AttrIndx Mask */
 
 #define MPU_RLAR_EN_Pos 0U /*!< MPU RLAR: Region enable bit Position */
-#define MPU_RLAR_EN_Msk                                                                                                \
-	(1UL /*<< MPU_RLAR_EN_Pos*/) /*!< MPU RLAR: Region enable bit Disable                                          \
+#define MPU_RLAR_EN_Msk                                                                                                                                                                                \
+	(1UL /*<< MPU_RLAR_EN_Pos*/) /*!< MPU RLAR: Region enable bit Disable                                                                                                                          \
 					Mask */
 
 /* MPU Memory Attribute Indirection Register 0 Definitions */
@@ -3926,27 +3926,27 @@ typedef struct {
 #define FPU_FPCCR_HFRDY_Msk (1UL << FPU_FPCCR_HFRDY_Pos) /*!< FPCCR: HFRDY bit Mask */
 
 #define FPU_FPCCR_THREAD_Pos 3U /*!< FPCCR: processor mode bit Position */
-#define FPU_FPCCR_THREAD_Msk                                                                                           \
-	(1UL << FPU_FPCCR_THREAD_Pos) /*!< FPCCR: processor mode active bit                                            \
+#define FPU_FPCCR_THREAD_Msk                                                                                                                                                                           \
+	(1UL << FPU_FPCCR_THREAD_Pos) /*!< FPCCR: processor mode active bit                                                                                                                            \
 					 Mask */
 
 #define FPU_FPCCR_S_Pos 2U /*!< FPCCR: Security status of the FP context bit Position */
-#define FPU_FPCCR_S_Msk                                                                                                \
-	(1UL << FPU_FPCCR_S_Pos) /*!< FPCCR: Security status of the FP context                                         \
+#define FPU_FPCCR_S_Msk                                                                                                                                                                                \
+	(1UL << FPU_FPCCR_S_Pos) /*!< FPCCR: Security status of the FP context                                                                                                                         \
 				    bit Mask */
 
 #define FPU_FPCCR_USER_Pos 1U			       /*!< FPCCR: privilege level bit Position */
 #define FPU_FPCCR_USER_Msk (1UL << FPU_FPCCR_USER_Pos) /*!< FPCCR: privilege level bit Mask */
 
 #define FPU_FPCCR_LSPACT_Pos 0U /*!< FPCCR: Lazy state preservation active bit Position */
-#define FPU_FPCCR_LSPACT_Msk                                                                                           \
-	(1UL /*<< FPU_FPCCR_LSPACT_Pos*/) /*!< FPCCR: Lazy state preservation                                          \
+#define FPU_FPCCR_LSPACT_Msk                                                                                                                                                                           \
+	(1UL /*<< FPU_FPCCR_LSPACT_Pos*/) /*!< FPCCR: Lazy state preservation                                                                                                                          \
 					     active bit Mask */
 
 /* Floating-Point Context Address Register Definitions */
 #define FPU_FPCAR_ADDRESS_Pos 3U /*!< FPCAR: ADDRESS bit Position */
-#define FPU_FPCAR_ADDRESS_Msk                                                                                          \
-	(0x1FFFFFFFUL << FPU_FPCAR_ADDRESS_Pos) /*!< FPCAR: ADDRESS bit Mask                                           \
+#define FPU_FPCAR_ADDRESS_Msk                                                                                                                                                                          \
+	(0x1FFFFFFFUL << FPU_FPCAR_ADDRESS_Pos) /*!< FPCAR: ADDRESS bit Mask                                                                                                                           \
 						 */
 
 /* Floating-Point Default Status Control Register Definitions */
@@ -3954,13 +3954,13 @@ typedef struct {
 #define FPU_FPDSCR_AHP_Msk (1UL << FPU_FPDSCR_AHP_Pos) /*!< FPDSCR: AHP bit Mask */
 
 #define FPU_FPDSCR_DN_Pos 25U /*!< FPDSCR: DN bit Position */
-#define FPU_FPDSCR_DN_Msk                                                                                              \
-	(1UL << FPU_FPDSCR_DN_Pos) /*!< FPDSCR: DN bit Mask                                                            \
+#define FPU_FPDSCR_DN_Msk                                                                                                                                                                              \
+	(1UL << FPU_FPDSCR_DN_Pos) /*!< FPDSCR: DN bit Mask                                                                                                                                            \
 				    */
 
 #define FPU_FPDSCR_FZ_Pos 24U /*!< FPDSCR: FZ bit Position */
-#define FPU_FPDSCR_FZ_Msk                                                                                              \
-	(1UL << FPU_FPDSCR_FZ_Pos) /*!< FPDSCR: FZ bit Mask                                                            \
+#define FPU_FPDSCR_FZ_Msk                                                                                                                                                                              \
+	(1UL << FPU_FPDSCR_FZ_Pos) /*!< FPDSCR: FZ bit Mask                                                                                                                                            \
 				    */
 
 #define FPU_FPDSCR_RMode_Pos 22U			   /*!< FPDSCR: RMode bit Position */
@@ -4047,251 +4047,251 @@ typedef struct {
 
 /* Debug Halting Control and Status Register Definitions */
 #define CoreDebug_DHCSR_DBGKEY_Pos 16U /*!< \deprecated CoreDebug DHCSR: DBGKEY Position */
-#define CoreDebug_DHCSR_DBGKEY_Msk                                                                                     \
-	(0xFFFFUL << CoreDebug_DHCSR_DBGKEY_Pos) /*!< \deprecated CoreDebug                                            \
+#define CoreDebug_DHCSR_DBGKEY_Msk                                                                                                                                                                     \
+	(0xFFFFUL << CoreDebug_DHCSR_DBGKEY_Pos) /*!< \deprecated CoreDebug                                                                                                                            \
 						    DHCSR: DBGKEY Mask */
 
 #define CoreDebug_DHCSR_S_RESTART_ST_Pos 26U /*!< \deprecated CoreDebug DHCSR: S_RESTART_ST Position */
-#define CoreDebug_DHCSR_S_RESTART_ST_Msk                                                                               \
-	(1UL << CoreDebug_DHCSR_S_RESTART_ST_Pos) /*!< \deprecated CoreDebug                                           \
+#define CoreDebug_DHCSR_S_RESTART_ST_Msk                                                                                                                                                               \
+	(1UL << CoreDebug_DHCSR_S_RESTART_ST_Pos) /*!< \deprecated CoreDebug                                                                                                                           \
 						     DHCSR: S_RESTART_ST Mask */
 
 #define CoreDebug_DHCSR_S_RESET_ST_Pos 25U /*!< \deprecated CoreDebug DHCSR: S_RESET_ST Position */
-#define CoreDebug_DHCSR_S_RESET_ST_Msk                                                                                 \
-	(1UL << CoreDebug_DHCSR_S_RESET_ST_Pos) /*!< \deprecated CoreDebug                                             \
+#define CoreDebug_DHCSR_S_RESET_ST_Msk                                                                                                                                                                 \
+	(1UL << CoreDebug_DHCSR_S_RESET_ST_Pos) /*!< \deprecated CoreDebug                                                                                                                             \
 						   DHCSR: S_RESET_ST Mask */
 
 #define CoreDebug_DHCSR_S_RETIRE_ST_Pos 24U /*!< \deprecated CoreDebug DHCSR: S_RETIRE_ST Position */
-#define CoreDebug_DHCSR_S_RETIRE_ST_Msk                                                                                \
-	(1UL << CoreDebug_DHCSR_S_RETIRE_ST_Pos) /*!< \deprecated CoreDebug                                            \
+#define CoreDebug_DHCSR_S_RETIRE_ST_Msk                                                                                                                                                                \
+	(1UL << CoreDebug_DHCSR_S_RETIRE_ST_Pos) /*!< \deprecated CoreDebug                                                                                                                            \
 						    DHCSR: S_RETIRE_ST Mask */
 
 #define CoreDebug_DHCSR_S_FPD_Pos 23U /*!< \deprecated CoreDebug DHCSR: S_FPD Position */
-#define CoreDebug_DHCSR_S_FPD_Msk                                                                                      \
-	(1UL << CoreDebug_DHCSR_S_FPD_Pos) /*!< \deprecated CoreDebug DHCSR:                                           \
+#define CoreDebug_DHCSR_S_FPD_Msk                                                                                                                                                                      \
+	(1UL << CoreDebug_DHCSR_S_FPD_Pos) /*!< \deprecated CoreDebug DHCSR:                                                                                                                           \
 					      S_FPD Mask */
 
 #define CoreDebug_DHCSR_S_SUIDE_Pos 22U /*!< \deprecated CoreDebug DHCSR: S_SUIDE Position */
-#define CoreDebug_DHCSR_S_SUIDE_Msk                                                                                    \
-	(1UL << CoreDebug_DHCSR_S_SUIDE_Pos) /*!< \deprecated CoreDebug DHCSR:                                         \
+#define CoreDebug_DHCSR_S_SUIDE_Msk                                                                                                                                                                    \
+	(1UL << CoreDebug_DHCSR_S_SUIDE_Pos) /*!< \deprecated CoreDebug DHCSR:                                                                                                                         \
 						S_SUIDE Mask */
 
 #define CoreDebug_DHCSR_S_NSUIDE_Pos 21U /*!< \deprecated CoreDebug DHCSR: S_NSUIDE Position */
-#define CoreDebug_DHCSR_S_NSUIDE_Msk                                                                                   \
-	(1UL << CoreDebug_DHCSR_S_NSUIDE_Pos) /*!< \deprecated CoreDebug                                               \
+#define CoreDebug_DHCSR_S_NSUIDE_Msk                                                                                                                                                                   \
+	(1UL << CoreDebug_DHCSR_S_NSUIDE_Pos) /*!< \deprecated CoreDebug                                                                                                                               \
 						 DHCSR: S_NSUIDE Mask */
 
 #define CoreDebug_DHCSR_S_SDE_Pos 20U /*!< \deprecated CoreDebug DHCSR: S_SDE Position */
-#define CoreDebug_DHCSR_S_SDE_Msk                                                                                      \
-	(1UL << CoreDebug_DHCSR_S_SDE_Pos) /*!< \deprecated CoreDebug DHCSR:                                           \
+#define CoreDebug_DHCSR_S_SDE_Msk                                                                                                                                                                      \
+	(1UL << CoreDebug_DHCSR_S_SDE_Pos) /*!< \deprecated CoreDebug DHCSR:                                                                                                                           \
 					      S_SDE Mask */
 
 #define CoreDebug_DHCSR_S_LOCKUP_Pos 19U /*!< \deprecated CoreDebug DHCSR: S_LOCKUP Position */
-#define CoreDebug_DHCSR_S_LOCKUP_Msk                                                                                   \
-	(1UL << CoreDebug_DHCSR_S_LOCKUP_Pos) /*!< \deprecated CoreDebug                                               \
+#define CoreDebug_DHCSR_S_LOCKUP_Msk                                                                                                                                                                   \
+	(1UL << CoreDebug_DHCSR_S_LOCKUP_Pos) /*!< \deprecated CoreDebug                                                                                                                               \
 						 DHCSR: S_LOCKUP Mask */
 
 #define CoreDebug_DHCSR_S_SLEEP_Pos 18U /*!< \deprecated CoreDebug DHCSR: S_SLEEP Position */
-#define CoreDebug_DHCSR_S_SLEEP_Msk                                                                                    \
-	(1UL << CoreDebug_DHCSR_S_SLEEP_Pos) /*!< \deprecated CoreDebug DHCSR:                                         \
+#define CoreDebug_DHCSR_S_SLEEP_Msk                                                                                                                                                                    \
+	(1UL << CoreDebug_DHCSR_S_SLEEP_Pos) /*!< \deprecated CoreDebug DHCSR:                                                                                                                         \
 						S_SLEEP Mask */
 
 #define CoreDebug_DHCSR_S_HALT_Pos 17U /*!< \deprecated CoreDebug DHCSR: S_HALT Position */
-#define CoreDebug_DHCSR_S_HALT_Msk                                                                                     \
-	(1UL << CoreDebug_DHCSR_S_HALT_Pos) /*!< \deprecated CoreDebug DHCSR:                                          \
+#define CoreDebug_DHCSR_S_HALT_Msk                                                                                                                                                                     \
+	(1UL << CoreDebug_DHCSR_S_HALT_Pos) /*!< \deprecated CoreDebug DHCSR:                                                                                                                          \
 					       S_HALT Mask */
 
 #define CoreDebug_DHCSR_S_REGRDY_Pos 16U /*!< \deprecated CoreDebug DHCSR: S_REGRDY Position */
-#define CoreDebug_DHCSR_S_REGRDY_Msk                                                                                   \
-	(1UL << CoreDebug_DHCSR_S_REGRDY_Pos) /*!< \deprecated CoreDebug                                               \
+#define CoreDebug_DHCSR_S_REGRDY_Msk                                                                                                                                                                   \
+	(1UL << CoreDebug_DHCSR_S_REGRDY_Pos) /*!< \deprecated CoreDebug                                                                                                                               \
 						 DHCSR: S_REGRDY Mask */
 
 #define CoreDebug_DHCSR_C_PMOV_Pos 6U /*!< \deprecated CoreDebug DHCSR: C_PMOV Position */
-#define CoreDebug_DHCSR_C_PMOV_Msk                                                                                     \
-	(1UL << CoreDebug_DHCSR_C_PMOV_Pos) /*!< \deprecated CoreDebug DHCSR:                                          \
+#define CoreDebug_DHCSR_C_PMOV_Msk                                                                                                                                                                     \
+	(1UL << CoreDebug_DHCSR_C_PMOV_Pos) /*!< \deprecated CoreDebug DHCSR:                                                                                                                          \
 					       C_PMOV Mask */
 
 #define CoreDebug_DHCSR_C_SNAPSTALL_Pos 5U /*!< \deprecated CoreDebug DHCSR: C_SNAPSTALL Position */
-#define CoreDebug_DHCSR_C_SNAPSTALL_Msk                                                                                \
-	(1UL << CoreDebug_DHCSR_C_SNAPSTALL_Pos) /*!< \deprecated CoreDebug                                            \
+#define CoreDebug_DHCSR_C_SNAPSTALL_Msk                                                                                                                                                                \
+	(1UL << CoreDebug_DHCSR_C_SNAPSTALL_Pos) /*!< \deprecated CoreDebug                                                                                                                            \
 						    DHCSR: C_SNAPSTALL Mask */
 
 #define CoreDebug_DHCSR_C_MASKINTS_Pos 3U /*!< \deprecated CoreDebug DHCSR: C_MASKINTS Position */
-#define CoreDebug_DHCSR_C_MASKINTS_Msk                                                                                 \
-	(1UL << CoreDebug_DHCSR_C_MASKINTS_Pos) /*!< \deprecated CoreDebug                                             \
+#define CoreDebug_DHCSR_C_MASKINTS_Msk                                                                                                                                                                 \
+	(1UL << CoreDebug_DHCSR_C_MASKINTS_Pos) /*!< \deprecated CoreDebug                                                                                                                             \
 						   DHCSR: C_MASKINTS Mask */
 
 #define CoreDebug_DHCSR_C_STEP_Pos 2U /*!< \deprecated CoreDebug DHCSR: C_STEP Position */
-#define CoreDebug_DHCSR_C_STEP_Msk                                                                                     \
-	(1UL << CoreDebug_DHCSR_C_STEP_Pos) /*!< \deprecated CoreDebug DHCSR:                                          \
+#define CoreDebug_DHCSR_C_STEP_Msk                                                                                                                                                                     \
+	(1UL << CoreDebug_DHCSR_C_STEP_Pos) /*!< \deprecated CoreDebug DHCSR:                                                                                                                          \
 					       C_STEP Mask */
 
 #define CoreDebug_DHCSR_C_HALT_Pos 1U /*!< \deprecated CoreDebug DHCSR: C_HALT Position */
-#define CoreDebug_DHCSR_C_HALT_Msk                                                                                     \
-	(1UL << CoreDebug_DHCSR_C_HALT_Pos) /*!< \deprecated CoreDebug DHCSR:                                          \
+#define CoreDebug_DHCSR_C_HALT_Msk                                                                                                                                                                     \
+	(1UL << CoreDebug_DHCSR_C_HALT_Pos) /*!< \deprecated CoreDebug DHCSR:                                                                                                                          \
 					       C_HALT Mask */
 
 #define CoreDebug_DHCSR_C_DEBUGEN_Pos 0U /*!< \deprecated CoreDebug DHCSR: C_DEBUGEN Position */
-#define CoreDebug_DHCSR_C_DEBUGEN_Msk                                                                                  \
-	(1UL /*<< CoreDebug_DHCSR_C_DEBUGEN_Pos*/) /*!< \deprecated CoreDebug                                          \
+#define CoreDebug_DHCSR_C_DEBUGEN_Msk                                                                                                                                                                  \
+	(1UL /*<< CoreDebug_DHCSR_C_DEBUGEN_Pos*/) /*!< \deprecated CoreDebug                                                                                                                          \
 						      DHCSR: C_DEBUGEN Mask */
 
 /* Debug Core Register Selector Register Definitions */
 #define CoreDebug_DCRSR_REGWnR_Pos 16U /*!< \deprecated CoreDebug DCRSR: REGWnR Position */
-#define CoreDebug_DCRSR_REGWnR_Msk                                                                                     \
-	(1UL << CoreDebug_DCRSR_REGWnR_Pos) /*!< \deprecated CoreDebug DCRSR:                                          \
+#define CoreDebug_DCRSR_REGWnR_Msk                                                                                                                                                                     \
+	(1UL << CoreDebug_DCRSR_REGWnR_Pos) /*!< \deprecated CoreDebug DCRSR:                                                                                                                          \
 					       REGWnR Mask */
 
 #define CoreDebug_DCRSR_REGSEL_Pos 0U /*!< \deprecated CoreDebug DCRSR: REGSEL Position */
-#define CoreDebug_DCRSR_REGSEL_Msk                                                                                     \
-	(0x1FUL /*<< CoreDebug_DCRSR_REGSEL_Pos*/) /*!< \deprecated CoreDebug                                          \
+#define CoreDebug_DCRSR_REGSEL_Msk                                                                                                                                                                     \
+	(0x1FUL /*<< CoreDebug_DCRSR_REGSEL_Pos*/) /*!< \deprecated CoreDebug                                                                                                                          \
 						      DCRSR: REGSEL Mask */
 
 /* Debug Exception and Monitor Control Register Definitions */
 #define CoreDebug_DEMCR_TRCENA_Pos 24U /*!< \deprecated CoreDebug DEMCR: TRCENA Position */
-#define CoreDebug_DEMCR_TRCENA_Msk                                                                                     \
-	(1UL << CoreDebug_DEMCR_TRCENA_Pos) /*!< \deprecated CoreDebug DEMCR:                                          \
+#define CoreDebug_DEMCR_TRCENA_Msk                                                                                                                                                                     \
+	(1UL << CoreDebug_DEMCR_TRCENA_Pos) /*!< \deprecated CoreDebug DEMCR:                                                                                                                          \
 					       TRCENA Mask */
 
 #define CoreDebug_DEMCR_MON_REQ_Pos 19U /*!< \deprecated CoreDebug DEMCR: MON_REQ Position */
-#define CoreDebug_DEMCR_MON_REQ_Msk                                                                                    \
-	(1UL << CoreDebug_DEMCR_MON_REQ_Pos) /*!< \deprecated CoreDebug DEMCR:                                         \
+#define CoreDebug_DEMCR_MON_REQ_Msk                                                                                                                                                                    \
+	(1UL << CoreDebug_DEMCR_MON_REQ_Pos) /*!< \deprecated CoreDebug DEMCR:                                                                                                                         \
 						MON_REQ Mask */
 
 #define CoreDebug_DEMCR_MON_STEP_Pos 18U /*!< \deprecated CoreDebug DEMCR: MON_STEP Position */
-#define CoreDebug_DEMCR_MON_STEP_Msk                                                                                   \
-	(1UL << CoreDebug_DEMCR_MON_STEP_Pos) /*!< \deprecated CoreDebug                                               \
+#define CoreDebug_DEMCR_MON_STEP_Msk                                                                                                                                                                   \
+	(1UL << CoreDebug_DEMCR_MON_STEP_Pos) /*!< \deprecated CoreDebug                                                                                                                               \
 						 DEMCR: MON_STEP Mask */
 
 #define CoreDebug_DEMCR_MON_PEND_Pos 17U /*!< \deprecated CoreDebug DEMCR: MON_PEND Position */
-#define CoreDebug_DEMCR_MON_PEND_Msk                                                                                   \
-	(1UL << CoreDebug_DEMCR_MON_PEND_Pos) /*!< \deprecated CoreDebug                                               \
+#define CoreDebug_DEMCR_MON_PEND_Msk                                                                                                                                                                   \
+	(1UL << CoreDebug_DEMCR_MON_PEND_Pos) /*!< \deprecated CoreDebug                                                                                                                               \
 						 DEMCR: MON_PEND Mask */
 
 #define CoreDebug_DEMCR_MON_EN_Pos 16U /*!< \deprecated CoreDebug DEMCR: MON_EN Position */
-#define CoreDebug_DEMCR_MON_EN_Msk                                                                                     \
-	(1UL << CoreDebug_DEMCR_MON_EN_Pos) /*!< \deprecated CoreDebug DEMCR:                                          \
+#define CoreDebug_DEMCR_MON_EN_Msk                                                                                                                                                                     \
+	(1UL << CoreDebug_DEMCR_MON_EN_Pos) /*!< \deprecated CoreDebug DEMCR:                                                                                                                          \
 					       MON_EN Mask */
 
 #define CoreDebug_DEMCR_VC_HARDERR_Pos 10U /*!< \deprecated CoreDebug DEMCR: VC_HARDERR Position */
-#define CoreDebug_DEMCR_VC_HARDERR_Msk                                                                                 \
-	(1UL << CoreDebug_DEMCR_VC_HARDERR_Pos) /*!< \deprecated CoreDebug                                             \
+#define CoreDebug_DEMCR_VC_HARDERR_Msk                                                                                                                                                                 \
+	(1UL << CoreDebug_DEMCR_VC_HARDERR_Pos) /*!< \deprecated CoreDebug                                                                                                                             \
 						   DEMCR: VC_HARDERR Mask */
 
 #define CoreDebug_DEMCR_VC_INTERR_Pos 9U /*!< \deprecated CoreDebug DEMCR: VC_INTERR Position */
-#define CoreDebug_DEMCR_VC_INTERR_Msk                                                                                  \
-	(1UL << CoreDebug_DEMCR_VC_INTERR_Pos) /*!< \deprecated CoreDebug                                              \
+#define CoreDebug_DEMCR_VC_INTERR_Msk                                                                                                                                                                  \
+	(1UL << CoreDebug_DEMCR_VC_INTERR_Pos) /*!< \deprecated CoreDebug                                                                                                                              \
 						  DEMCR: VC_INTERR Mask */
 
 #define CoreDebug_DEMCR_VC_BUSERR_Pos 8U /*!< \deprecated CoreDebug DEMCR: VC_BUSERR Position */
-#define CoreDebug_DEMCR_VC_BUSERR_Msk                                                                                  \
-	(1UL << CoreDebug_DEMCR_VC_BUSERR_Pos) /*!< \deprecated CoreDebug                                              \
+#define CoreDebug_DEMCR_VC_BUSERR_Msk                                                                                                                                                                  \
+	(1UL << CoreDebug_DEMCR_VC_BUSERR_Pos) /*!< \deprecated CoreDebug                                                                                                                              \
 						  DEMCR: VC_BUSERR Mask */
 
 #define CoreDebug_DEMCR_VC_STATERR_Pos 7U /*!< \deprecated CoreDebug DEMCR: VC_STATERR Position */
-#define CoreDebug_DEMCR_VC_STATERR_Msk                                                                                 \
-	(1UL << CoreDebug_DEMCR_VC_STATERR_Pos) /*!< \deprecated CoreDebug                                             \
+#define CoreDebug_DEMCR_VC_STATERR_Msk                                                                                                                                                                 \
+	(1UL << CoreDebug_DEMCR_VC_STATERR_Pos) /*!< \deprecated CoreDebug                                                                                                                             \
 						   DEMCR: VC_STATERR Mask */
 
 #define CoreDebug_DEMCR_VC_CHKERR_Pos 6U /*!< \deprecated CoreDebug DEMCR: VC_CHKERR Position */
-#define CoreDebug_DEMCR_VC_CHKERR_Msk                                                                                  \
-	(1UL << CoreDebug_DEMCR_VC_CHKERR_Pos) /*!< \deprecated CoreDebug                                              \
+#define CoreDebug_DEMCR_VC_CHKERR_Msk                                                                                                                                                                  \
+	(1UL << CoreDebug_DEMCR_VC_CHKERR_Pos) /*!< \deprecated CoreDebug                                                                                                                              \
 						  DEMCR: VC_CHKERR Mask */
 
 #define CoreDebug_DEMCR_VC_NOCPERR_Pos 5U /*!< \deprecated CoreDebug DEMCR: VC_NOCPERR Position */
-#define CoreDebug_DEMCR_VC_NOCPERR_Msk                                                                                 \
-	(1UL << CoreDebug_DEMCR_VC_NOCPERR_Pos) /*!< \deprecated CoreDebug                                             \
+#define CoreDebug_DEMCR_VC_NOCPERR_Msk                                                                                                                                                                 \
+	(1UL << CoreDebug_DEMCR_VC_NOCPERR_Pos) /*!< \deprecated CoreDebug                                                                                                                             \
 						   DEMCR: VC_NOCPERR Mask */
 
 #define CoreDebug_DEMCR_VC_MMERR_Pos 4U /*!< \deprecated CoreDebug DEMCR: VC_MMERR Position */
-#define CoreDebug_DEMCR_VC_MMERR_Msk                                                                                   \
-	(1UL << CoreDebug_DEMCR_VC_MMERR_Pos) /*!< \deprecated CoreDebug                                               \
+#define CoreDebug_DEMCR_VC_MMERR_Msk                                                                                                                                                                   \
+	(1UL << CoreDebug_DEMCR_VC_MMERR_Pos) /*!< \deprecated CoreDebug                                                                                                                               \
 						 DEMCR: VC_MMERR Mask */
 
 #define CoreDebug_DEMCR_VC_CORERESET_Pos 0U /*!< \deprecated CoreDebug DEMCR: VC_CORERESET Position */
-#define CoreDebug_DEMCR_VC_CORERESET_Msk                                                                               \
-	(1UL /*<< CoreDebug_DEMCR_VC_CORERESET_Pos*/) /*!< \deprecated                                                 \
-							 CoreDebug DEMCR:                                              \
+#define CoreDebug_DEMCR_VC_CORERESET_Msk                                                                                                                                                               \
+	(1UL /*<< CoreDebug_DEMCR_VC_CORERESET_Pos*/) /*!< \deprecated                                                                                                                                 \
+							 CoreDebug DEMCR:                                                                                                                              \
 							 VC_CORERESET Mask */
 
 /* Debug Set Clear Exception and Monitor Control Register Definitions */
 #define CoreDebug_DSCEMCR_CLR_MON_REQ_Pos 19U /*!< \deprecated CoreDebug DSCEMCR: CLR_MON_REQ, Position */
-#define CoreDebug_DSCEMCR_CLR_MON_REQ_Msk                                                                              \
-	(1UL << CoreDebug_DSCEMCR_CLR_MON_REQ_Pos) /*!< \deprecated CoreDebug                                          \
-						      DSCEMCR: CLR_MON_REQ,                                            \
+#define CoreDebug_DSCEMCR_CLR_MON_REQ_Msk                                                                                                                                                              \
+	(1UL << CoreDebug_DSCEMCR_CLR_MON_REQ_Pos) /*!< \deprecated CoreDebug                                                                                                                          \
+						      DSCEMCR: CLR_MON_REQ,                                                                                                                            \
 						      Mask */
 
 #define CoreDebug_DSCEMCR_CLR_MON_PEND_Pos 17U /*!< \deprecated CoreDebug DSCEMCR: CLR_MON_PEND, Position */
-#define CoreDebug_DSCEMCR_CLR_MON_PEND_Msk                                                                             \
-	(1UL << CoreDebug_DSCEMCR_CLR_MON_PEND_Pos) /*!< \deprecated CoreDebug                                         \
-						       DSCEMCR: CLR_MON_PEND,                                          \
+#define CoreDebug_DSCEMCR_CLR_MON_PEND_Msk                                                                                                                                                             \
+	(1UL << CoreDebug_DSCEMCR_CLR_MON_PEND_Pos) /*!< \deprecated CoreDebug                                                                                                                         \
+						       DSCEMCR: CLR_MON_PEND,                                                                                                                          \
 						       Mask */
 
 #define CoreDebug_DSCEMCR_SET_MON_REQ_Pos 3U /*!< \deprecated CoreDebug DSCEMCR: SET_MON_REQ, Position */
-#define CoreDebug_DSCEMCR_SET_MON_REQ_Msk                                                                              \
-	(1UL << CoreDebug_DSCEMCR_SET_MON_REQ_Pos) /*!< \deprecated CoreDebug                                          \
-						      DSCEMCR: SET_MON_REQ,                                            \
+#define CoreDebug_DSCEMCR_SET_MON_REQ_Msk                                                                                                                                                              \
+	(1UL << CoreDebug_DSCEMCR_SET_MON_REQ_Pos) /*!< \deprecated CoreDebug                                                                                                                          \
+						      DSCEMCR: SET_MON_REQ,                                                                                                                            \
 						      Mask */
 
 #define CoreDebug_DSCEMCR_SET_MON_PEND_Pos 1U /*!< \deprecated CoreDebug DSCEMCR: SET_MON_PEND, Position */
-#define CoreDebug_DSCEMCR_SET_MON_PEND_Msk                                                                             \
-	(1UL << CoreDebug_DSCEMCR_SET_MON_PEND_Pos) /*!< \deprecated CoreDebug                                         \
-						       DSCEMCR: SET_MON_PEND,                                          \
+#define CoreDebug_DSCEMCR_SET_MON_PEND_Msk                                                                                                                                                             \
+	(1UL << CoreDebug_DSCEMCR_SET_MON_PEND_Pos) /*!< \deprecated CoreDebug                                                                                                                         \
+						       DSCEMCR: SET_MON_PEND,                                                                                                                          \
 						       Mask */
 
 /* Debug Authentication Control Register Definitions */
 #define CoreDebug_DAUTHCTRL_UIDEN_Pos 10U /*!< \deprecated CoreDebug DAUTHCTRL: UIDEN, Position */
-#define CoreDebug_DAUTHCTRL_UIDEN_Msk                                                                                  \
-	(1UL << CoreDebug_DAUTHCTRL_UIDEN_Pos) /*!< \deprecated CoreDebug                                              \
+#define CoreDebug_DAUTHCTRL_UIDEN_Msk                                                                                                                                                                  \
+	(1UL << CoreDebug_DAUTHCTRL_UIDEN_Pos) /*!< \deprecated CoreDebug                                                                                                                              \
 						  DAUTHCTRL: UIDEN, Mask */
 
 #define CoreDebug_DAUTHCTRL_UIDAPEN_Pos 9U /*!< \deprecated CoreDebug DAUTHCTRL: UIDAPEN, Position */
-#define CoreDebug_DAUTHCTRL_UIDAPEN_Msk                                                                                \
-	(1UL << CoreDebug_DAUTHCTRL_UIDAPEN_Pos) /*!< \deprecated CoreDebug                                            \
+#define CoreDebug_DAUTHCTRL_UIDAPEN_Msk                                                                                                                                                                \
+	(1UL << CoreDebug_DAUTHCTRL_UIDAPEN_Pos) /*!< \deprecated CoreDebug                                                                                                                            \
 						    DAUTHCTRL: UIDAPEN, Mask */
 
 #define CoreDebug_DAUTHCTRL_FSDMA_Pos 8U /*!< \deprecated CoreDebug DAUTHCTRL: FSDMA, Position */
-#define CoreDebug_DAUTHCTRL_FSDMA_Msk                                                                                  \
-	(1UL << CoreDebug_DAUTHCTRL_FSDMA_Pos) /*!< \deprecated CoreDebug                                              \
+#define CoreDebug_DAUTHCTRL_FSDMA_Msk                                                                                                                                                                  \
+	(1UL << CoreDebug_DAUTHCTRL_FSDMA_Pos) /*!< \deprecated CoreDebug                                                                                                                              \
 						  DAUTHCTRL: FSDMA, Mask */
 
 #define CoreDebug_DAUTHCTRL_INTSPNIDEN_Pos 3U /*!< \deprecated CoreDebug DAUTHCTRL: INTSPNIDEN, Position */
-#define CoreDebug_DAUTHCTRL_INTSPNIDEN_Msk                                                                             \
-	(1UL << CoreDebug_DAUTHCTRL_INTSPNIDEN_Pos) /*!< \deprecated CoreDebug                                         \
-						       DAUTHCTRL: INTSPNIDEN,                                          \
+#define CoreDebug_DAUTHCTRL_INTSPNIDEN_Msk                                                                                                                                                             \
+	(1UL << CoreDebug_DAUTHCTRL_INTSPNIDEN_Pos) /*!< \deprecated CoreDebug                                                                                                                         \
+						       DAUTHCTRL: INTSPNIDEN,                                                                                                                          \
 						       Mask */
 
 #define CoreDebug_DAUTHCTRL_SPNIDENSEL_Pos 2U /*!< \deprecated CoreDebug DAUTHCTRL: SPNIDENSEL Position */
-#define CoreDebug_DAUTHCTRL_SPNIDENSEL_Msk                                                                             \
-	(1UL << CoreDebug_DAUTHCTRL_SPNIDENSEL_Pos) /*!< \deprecated CoreDebug                                         \
-						       DAUTHCTRL: SPNIDENSEL                                           \
+#define CoreDebug_DAUTHCTRL_SPNIDENSEL_Msk                                                                                                                                                             \
+	(1UL << CoreDebug_DAUTHCTRL_SPNIDENSEL_Pos) /*!< \deprecated CoreDebug                                                                                                                         \
+						       DAUTHCTRL: SPNIDENSEL                                                                                                                           \
 						       Mask */
 
 #define CoreDebug_DAUTHCTRL_INTSPIDEN_Pos 1U /*!< \deprecated CoreDebug DAUTHCTRL: INTSPIDEN Position */
-#define CoreDebug_DAUTHCTRL_INTSPIDEN_Msk                                                                              \
-	(1UL << CoreDebug_DAUTHCTRL_INTSPIDEN_Pos) /*!< \deprecated CoreDebug                                          \
+#define CoreDebug_DAUTHCTRL_INTSPIDEN_Msk                                                                                                                                                              \
+	(1UL << CoreDebug_DAUTHCTRL_INTSPIDEN_Pos) /*!< \deprecated CoreDebug                                                                                                                          \
 						      DAUTHCTRL: INTSPIDEN Mask */
 
 #define CoreDebug_DAUTHCTRL_SPIDENSEL_Pos 0U /*!< \deprecated CoreDebug DAUTHCTRL: SPIDENSEL Position */
-#define CoreDebug_DAUTHCTRL_SPIDENSEL_Msk                                                                              \
-	(1UL /*<< CoreDebug_DAUTHCTRL_SPIDENSEL_Pos*/) /*!< \deprecated                                                \
-							  CoreDebug DAUTHCTRL:                                         \
+#define CoreDebug_DAUTHCTRL_SPIDENSEL_Msk                                                                                                                                                              \
+	(1UL /*<< CoreDebug_DAUTHCTRL_SPIDENSEL_Pos*/) /*!< \deprecated                                                                                                                                \
+							  CoreDebug DAUTHCTRL:                                                                                                                         \
 							  SPIDENSEL Mask */
 
 /* Debug Security Control and Status Register Definitions */
 #define CoreDebug_DSCSR_CDS_Pos 16U /*!< \deprecated CoreDebug DSCSR: CDS Position */
-#define CoreDebug_DSCSR_CDS_Msk                                                                                        \
-	(1UL << CoreDebug_DSCSR_CDS_Pos) /*!< \deprecated CoreDebug DSCSR: CDS                                         \
+#define CoreDebug_DSCSR_CDS_Msk                                                                                                                                                                        \
+	(1UL << CoreDebug_DSCSR_CDS_Pos) /*!< \deprecated CoreDebug DSCSR: CDS                                                                                                                         \
 					    Mask */
 
 #define CoreDebug_DSCSR_SBRSEL_Pos 1U /*!< \deprecated CoreDebug DSCSR: SBRSEL Position */
-#define CoreDebug_DSCSR_SBRSEL_Msk                                                                                     \
-	(1UL << CoreDebug_DSCSR_SBRSEL_Pos) /*!< \deprecated CoreDebug DSCSR:                                          \
+#define CoreDebug_DSCSR_SBRSEL_Msk                                                                                                                                                                     \
+	(1UL << CoreDebug_DSCSR_SBRSEL_Pos) /*!< \deprecated CoreDebug DSCSR:                                                                                                                          \
 					       SBRSEL Mask */
 
 #define CoreDebug_DSCSR_SBRSELEN_Pos 0U /*!< \deprecated CoreDebug DSCSR: SBRSELEN Position */
-#define CoreDebug_DSCSR_SBRSELEN_Msk                                                                                   \
-	(1UL /*<< CoreDebug_DSCSR_SBRSELEN_Pos*/) /*!< \deprecated CoreDebug                                           \
+#define CoreDebug_DSCSR_SBRSELEN_Msk                                                                                                                                                                   \
+	(1UL /*<< CoreDebug_DSCSR_SBRSELEN_Pos*/) /*!< \deprecated CoreDebug                                                                                                                           \
 						     DSCSR: SBRSELEN Mask */
 
 /*@} end of group CMSIS_CoreDebug */
@@ -4328,75 +4328,75 @@ typedef struct {
 #define DCB_DHCSR_DBGKEY_Msk (0xFFFFUL << DCB_DHCSR_DBGKEY_Pos) /*!< DCB DHCSR: Debug key Mask */
 
 #define DCB_DHCSR_S_RESTART_ST_Pos 26U /*!< DCB DHCSR: Restart sticky status Position */
-#define DCB_DHCSR_S_RESTART_ST_Msk                                                                                     \
-	(0x1UL << DCB_DHCSR_S_RESTART_ST_Pos) /*!< DCB DHCSR: Restart sticky                                           \
+#define DCB_DHCSR_S_RESTART_ST_Msk                                                                                                                                                                     \
+	(0x1UL << DCB_DHCSR_S_RESTART_ST_Pos) /*!< DCB DHCSR: Restart sticky                                                                                                                           \
 						 status Mask */
 
 #define DCB_DHCSR_S_RESET_ST_Pos 25U /*!< DCB DHCSR: Reset sticky status Position */
-#define DCB_DHCSR_S_RESET_ST_Msk                                                                                       \
-	(0x1UL << DCB_DHCSR_S_RESET_ST_Pos) /*!< DCB DHCSR: Reset sticky                                               \
+#define DCB_DHCSR_S_RESET_ST_Msk                                                                                                                                                                       \
+	(0x1UL << DCB_DHCSR_S_RESET_ST_Pos) /*!< DCB DHCSR: Reset sticky                                                                                                                               \
 					       status Mask */
 
 #define DCB_DHCSR_S_RETIRE_ST_Pos 24U /*!< DCB DHCSR: Retire sticky status Position */
-#define DCB_DHCSR_S_RETIRE_ST_Msk                                                                                      \
-	(0x1UL << DCB_DHCSR_S_RETIRE_ST_Pos) /*!< DCB DHCSR: Retire sticky                                             \
+#define DCB_DHCSR_S_RETIRE_ST_Msk                                                                                                                                                                      \
+	(0x1UL << DCB_DHCSR_S_RETIRE_ST_Pos) /*!< DCB DHCSR: Retire sticky                                                                                                                             \
 						status Mask */
 
 #define DCB_DHCSR_S_FPD_Pos 23U /*!< DCB DHCSR: Floating-point registers Debuggable Position */
-#define DCB_DHCSR_S_FPD_Msk                                                                                            \
-	(0x1UL << DCB_DHCSR_S_FPD_Pos) /*!< DCB DHCSR: Floating-point                                                  \
+#define DCB_DHCSR_S_FPD_Msk                                                                                                                                                                            \
+	(0x1UL << DCB_DHCSR_S_FPD_Pos) /*!< DCB DHCSR: Floating-point                                                                                                                                  \
 					  registers Debuggable Mask */
 
-#define DCB_DHCSR_S_SUIDE_Pos                                                                                          \
-	22U /*!< DCB DHCSR: Secure unprivileged halting debug enabled Position                                         \
+#define DCB_DHCSR_S_SUIDE_Pos                                                                                                                                                                          \
+	22U /*!< DCB DHCSR: Secure unprivileged halting debug enabled Position                                                                                                                         \
 	     */
-#define DCB_DHCSR_S_SUIDE_Msk                                                                                          \
-	(0x1UL << DCB_DHCSR_S_SUIDE_Pos) /*!< DCB DHCSR: Secure unprivileged                                           \
+#define DCB_DHCSR_S_SUIDE_Msk                                                                                                                                                                          \
+	(0x1UL << DCB_DHCSR_S_SUIDE_Pos) /*!< DCB DHCSR: Secure unprivileged                                                                                                                           \
 					    halting debug enabled Mask */
 
-#define DCB_DHCSR_S_NSUIDE_Pos                                                                                         \
-	21U /*!< DCB DHCSR: Non-secure unprivileged halting debug enabled                                              \
+#define DCB_DHCSR_S_NSUIDE_Pos                                                                                                                                                                         \
+	21U /*!< DCB DHCSR: Non-secure unprivileged halting debug enabled                                                                                                                              \
 	       Position */
-#define DCB_DHCSR_S_NSUIDE_Msk                                                                                         \
-	(0x1UL << DCB_DHCSR_S_NSUIDE_Pos) /*!< DCB DHCSR: Non-secure unprivileged                                      \
+#define DCB_DHCSR_S_NSUIDE_Msk                                                                                                                                                                         \
+	(0x1UL << DCB_DHCSR_S_NSUIDE_Pos) /*!< DCB DHCSR: Non-secure unprivileged                                                                                                                      \
 					     halting debug enabled Mask */
 
-#define DCB_DHCSR_S_SDE_Pos                                                                                            \
-	20U						   /*!< DCB DHCSR: Secure debug enabled Position               \
+#define DCB_DHCSR_S_SDE_Pos                                                                                                                                                                            \
+	20U						   /*!< DCB DHCSR: Secure debug enabled Position                                                                                               \
 							    */
 #define DCB_DHCSR_S_SDE_Msk (0x1UL << DCB_DHCSR_S_SDE_Pos) /*!< DCB DHCSR: Secure debug enabled Mask */
 
 #define DCB_DHCSR_S_LOCKUP_Pos 19U /*!< DCB DHCSR: Lockup status Position */
-#define DCB_DHCSR_S_LOCKUP_Msk                                                                                         \
-	(0x1UL << DCB_DHCSR_S_LOCKUP_Pos) /*!< DCB DHCSR: Lockup status Mask                                           \
+#define DCB_DHCSR_S_LOCKUP_Msk                                                                                                                                                                         \
+	(0x1UL << DCB_DHCSR_S_LOCKUP_Pos) /*!< DCB DHCSR: Lockup status Mask                                                                                                                           \
 					   */
 
 #define DCB_DHCSR_S_SLEEP_Pos 18U /*!< DCB DHCSR: Sleeping status Position */
-#define DCB_DHCSR_S_SLEEP_Msk                                                                                          \
-	(0x1UL << DCB_DHCSR_S_SLEEP_Pos) /*!< DCB DHCSR: Sleeping status Mask                                          \
+#define DCB_DHCSR_S_SLEEP_Msk                                                                                                                                                                          \
+	(0x1UL << DCB_DHCSR_S_SLEEP_Pos) /*!< DCB DHCSR: Sleeping status Mask                                                                                                                          \
 					  */
 
 #define DCB_DHCSR_S_HALT_Pos 17U			     /*!< DCB DHCSR: Halted status Position */
 #define DCB_DHCSR_S_HALT_Msk (0x1UL << DCB_DHCSR_S_HALT_Pos) /*!< DCB DHCSR: Halted status Mask */
 
 #define DCB_DHCSR_S_REGRDY_Pos 16U /*!< DCB DHCSR: Register ready status Position */
-#define DCB_DHCSR_S_REGRDY_Msk                                                                                         \
-	(0x1UL << DCB_DHCSR_S_REGRDY_Pos) /*!< DCB DHCSR: Register ready                                               \
+#define DCB_DHCSR_S_REGRDY_Msk                                                                                                                                                                         \
+	(0x1UL << DCB_DHCSR_S_REGRDY_Pos) /*!< DCB DHCSR: Register ready                                                                                                                               \
 					     status Mask */
 
 #define DCB_DHCSR_C_PMOV_Pos 6U /*!< DCB DHCSR: Halt on PMU overflow control Position */
-#define DCB_DHCSR_C_PMOV_Msk                                                                                           \
-	(0x1UL << DCB_DHCSR_C_PMOV_Pos) /*!< DCB DHCSR: Halt on PMU overflow                                           \
+#define DCB_DHCSR_C_PMOV_Msk                                                                                                                                                                           \
+	(0x1UL << DCB_DHCSR_C_PMOV_Pos) /*!< DCB DHCSR: Halt on PMU overflow                                                                                                                           \
 					   control Mask */
 
 #define DCB_DHCSR_C_SNAPSTALL_Pos 5U /*!< DCB DHCSR: Snap stall control Position */
-#define DCB_DHCSR_C_SNAPSTALL_Msk                                                                                      \
-	(0x1UL << DCB_DHCSR_C_SNAPSTALL_Pos) /*!< DCB DHCSR: Snap stall                                                \
+#define DCB_DHCSR_C_SNAPSTALL_Msk                                                                                                                                                                      \
+	(0x1UL << DCB_DHCSR_C_SNAPSTALL_Pos) /*!< DCB DHCSR: Snap stall                                                                                                                                \
 						control Mask */
 
 #define DCB_DHCSR_C_MASKINTS_Pos 3U /*!< DCB DHCSR: Mask interrupts control Position */
-#define DCB_DHCSR_C_MASKINTS_Msk                                                                                       \
-	(0x1UL << DCB_DHCSR_C_MASKINTS_Pos) /*!< DCB DHCSR: Mask interrupts                                            \
+#define DCB_DHCSR_C_MASKINTS_Msk                                                                                                                                                                       \
+	(0x1UL << DCB_DHCSR_C_MASKINTS_Pos) /*!< DCB DHCSR: Mask interrupts                                                                                                                            \
 					       control Mask */
 
 #define DCB_DHCSR_C_STEP_Pos 2U				     /*!< DCB DHCSR: Step control Position */
@@ -4406,25 +4406,25 @@ typedef struct {
 #define DCB_DHCSR_C_HALT_Msk (0x1UL << DCB_DHCSR_C_HALT_Pos) /*!< DCB DHCSR: Halt control Mask */
 
 #define DCB_DHCSR_C_DEBUGEN_Pos 0U /*!< DCB DHCSR: Debug enable control Position */
-#define DCB_DHCSR_C_DEBUGEN_Msk                                                                                        \
-	(0x1UL /*<< DCB_DHCSR_C_DEBUGEN_Pos*/) /*!< DCB DHCSR: Debug enable                                            \
+#define DCB_DHCSR_C_DEBUGEN_Msk                                                                                                                                                                        \
+	(0x1UL /*<< DCB_DHCSR_C_DEBUGEN_Pos*/) /*!< DCB DHCSR: Debug enable                                                                                                                            \
 						  control Mask */
 
 /* DCRSR, Debug Core Register Select Register Definitions */
 #define DCB_DCRSR_REGWnR_Pos 16U /*!< DCB DCRSR: Register write/not-read Position */
-#define DCB_DCRSR_REGWnR_Msk                                                                                           \
-	(0x1UL << DCB_DCRSR_REGWnR_Pos) /*!< DCB DCRSR: Register                                                       \
+#define DCB_DCRSR_REGWnR_Msk                                                                                                                                                                           \
+	(0x1UL << DCB_DCRSR_REGWnR_Pos) /*!< DCB DCRSR: Register                                                                                                                                       \
 					   write/not-read Mask */
 
 #define DCB_DCRSR_REGSEL_Pos 0U /*!< DCB DCRSR: Register selector Position */
-#define DCB_DCRSR_REGSEL_Msk                                                                                           \
-	(0x7FUL /*<< DCB_DCRSR_REGSEL_Pos*/) /*!< DCB DCRSR: Register selector                                         \
+#define DCB_DCRSR_REGSEL_Msk                                                                                                                                                                           \
+	(0x7FUL /*<< DCB_DCRSR_REGSEL_Pos*/) /*!< DCB DCRSR: Register selector                                                                                                                         \
 						Mask */
 
 /* DCRDR, Debug Core Register Data Register Definitions */
 #define DCB_DCRDR_DBGTMP_Pos 0U /*!< DCB DCRDR: Data temporary buffer Position */
-#define DCB_DCRDR_DBGTMP_Msk                                                                                           \
-	(0xFFFFFFFFUL /*<< DCB_DCRDR_DBGTMP_Pos*/) /*!< DCB DCRDR: Data                                                \
+#define DCB_DCRDR_DBGTMP_Msk                                                                                                                                                                           \
+	(0xFFFFFFFFUL /*<< DCB_DCRDR_DBGTMP_Pos*/) /*!< DCB DCRDR: Data                                                                                                                                \
 						      temporary buffer Mask */
 
 /* DEMCR, Debug Exception and Monitor Control Register Definitions */
@@ -4432,23 +4432,23 @@ typedef struct {
 #define DCB_DEMCR_TRCENA_Msk (0x1UL << DCB_DEMCR_TRCENA_Pos) /*!< DCB DEMCR: Trace enable Mask */
 
 #define DCB_DEMCR_MONPRKEY_Pos 23U /*!< DCB DEMCR: Monitor pend req key Position */
-#define DCB_DEMCR_MONPRKEY_Msk                                                                                         \
-	(0x1UL << DCB_DEMCR_MONPRKEY_Pos) /*!< DCB DEMCR: Monitor pend req key                                         \
+#define DCB_DEMCR_MONPRKEY_Msk                                                                                                                                                                         \
+	(0x1UL << DCB_DEMCR_MONPRKEY_Pos) /*!< DCB DEMCR: Monitor pend req key                                                                                                                         \
 					     Mask */
 
 #define DCB_DEMCR_UMON_EN_Pos 21U /*!< DCB DEMCR: Unprivileged monitor enable Position */
-#define DCB_DEMCR_UMON_EN_Msk                                                                                          \
-	(0x1UL << DCB_DEMCR_UMON_EN_Pos) /*!< DCB DEMCR: Unprivileged monitor                                          \
+#define DCB_DEMCR_UMON_EN_Msk                                                                                                                                                                          \
+	(0x1UL << DCB_DEMCR_UMON_EN_Pos) /*!< DCB DEMCR: Unprivileged monitor                                                                                                                          \
 					    enable Mask */
 
 #define DCB_DEMCR_SDME_Pos 20U /*!< DCB DEMCR: Secure DebugMonitor enable Position */
-#define DCB_DEMCR_SDME_Msk                                                                                             \
-	(0x1UL << DCB_DEMCR_SDME_Pos) /*!< DCB DEMCR: Secure DebugMonitor                                              \
+#define DCB_DEMCR_SDME_Msk                                                                                                                                                                             \
+	(0x1UL << DCB_DEMCR_SDME_Pos) /*!< DCB DEMCR: Secure DebugMonitor                                                                                                                              \
 					 enable Mask */
 
 #define DCB_DEMCR_MON_REQ_Pos 19U /*!< DCB DEMCR: Monitor request Position */
-#define DCB_DEMCR_MON_REQ_Msk                                                                                          \
-	(0x1UL << DCB_DEMCR_MON_REQ_Pos) /*!< DCB DEMCR: Monitor request Mask                                          \
+#define DCB_DEMCR_MON_REQ_Msk                                                                                                                                                                          \
+	(0x1UL << DCB_DEMCR_MON_REQ_Pos) /*!< DCB DEMCR: Monitor request Mask                                                                                                                          \
 					  */
 
 #define DCB_DEMCR_MON_STEP_Pos 18U				 /*!< DCB DEMCR: Monitor step Position */
@@ -4461,136 +4461,136 @@ typedef struct {
 #define DCB_DEMCR_MON_EN_Msk (0x1UL << DCB_DEMCR_MON_EN_Pos) /*!< DCB DEMCR: Monitor enable Mask */
 
 #define DCB_DEMCR_VC_SFERR_Pos 11U /*!< DCB DEMCR: Vector Catch SecureFault Position */
-#define DCB_DEMCR_VC_SFERR_Msk                                                                                         \
-	(0x1UL << DCB_DEMCR_VC_SFERR_Pos) /*!< DCB DEMCR: Vector Catch                                                 \
+#define DCB_DEMCR_VC_SFERR_Msk                                                                                                                                                                         \
+	(0x1UL << DCB_DEMCR_VC_SFERR_Pos) /*!< DCB DEMCR: Vector Catch                                                                                                                                 \
 					     SecureFault Mask */
 
 #define DCB_DEMCR_VC_HARDERR_Pos 10U /*!< DCB DEMCR: Vector Catch HardFault errors Position */
-#define DCB_DEMCR_VC_HARDERR_Msk                                                                                       \
-	(0x1UL << DCB_DEMCR_VC_HARDERR_Pos) /*!< DCB DEMCR: Vector Catch                                               \
+#define DCB_DEMCR_VC_HARDERR_Msk                                                                                                                                                                       \
+	(0x1UL << DCB_DEMCR_VC_HARDERR_Pos) /*!< DCB DEMCR: Vector Catch                                                                                                                               \
 					       HardFault errors Mask */
 
 #define DCB_DEMCR_VC_INTERR_Pos 9U /*!< DCB DEMCR: Vector Catch interrupt errors Position */
-#define DCB_DEMCR_VC_INTERR_Msk                                                                                        \
-	(0x1UL << DCB_DEMCR_VC_INTERR_Pos) /*!< DCB DEMCR: Vector Catch                                                \
+#define DCB_DEMCR_VC_INTERR_Msk                                                                                                                                                                        \
+	(0x1UL << DCB_DEMCR_VC_INTERR_Pos) /*!< DCB DEMCR: Vector Catch                                                                                                                                \
 					      interrupt errors Mask */
 
 #define DCB_DEMCR_VC_BUSERR_Pos 8U /*!< DCB DEMCR: Vector Catch BusFault errors Position */
-#define DCB_DEMCR_VC_BUSERR_Msk                                                                                        \
-	(0x1UL << DCB_DEMCR_VC_BUSERR_Pos) /*!< DCB DEMCR: Vector Catch                                                \
+#define DCB_DEMCR_VC_BUSERR_Msk                                                                                                                                                                        \
+	(0x1UL << DCB_DEMCR_VC_BUSERR_Pos) /*!< DCB DEMCR: Vector Catch                                                                                                                                \
 					      BusFault errors Mask */
 
 #define DCB_DEMCR_VC_STATERR_Pos 7U /*!< DCB DEMCR: Vector Catch state errors Position */
-#define DCB_DEMCR_VC_STATERR_Msk                                                                                       \
-	(0x1UL << DCB_DEMCR_VC_STATERR_Pos) /*!< DCB DEMCR: Vector Catch state                                         \
+#define DCB_DEMCR_VC_STATERR_Msk                                                                                                                                                                       \
+	(0x1UL << DCB_DEMCR_VC_STATERR_Pos) /*!< DCB DEMCR: Vector Catch state                                                                                                                         \
 					       errors Mask */
 
 #define DCB_DEMCR_VC_CHKERR_Pos 6U /*!< DCB DEMCR: Vector Catch check errors Position */
-#define DCB_DEMCR_VC_CHKERR_Msk                                                                                        \
-	(0x1UL << DCB_DEMCR_VC_CHKERR_Pos) /*!< DCB DEMCR: Vector Catch check                                          \
+#define DCB_DEMCR_VC_CHKERR_Msk                                                                                                                                                                        \
+	(0x1UL << DCB_DEMCR_VC_CHKERR_Pos) /*!< DCB DEMCR: Vector Catch check                                                                                                                          \
 					      errors Mask */
 
 #define DCB_DEMCR_VC_NOCPERR_Pos 5U /*!< DCB DEMCR: Vector Catch NOCP errors Position */
-#define DCB_DEMCR_VC_NOCPERR_Msk                                                                                       \
-	(0x1UL << DCB_DEMCR_VC_NOCPERR_Pos) /*!< DCB DEMCR: Vector Catch NOCP                                          \
+#define DCB_DEMCR_VC_NOCPERR_Msk                                                                                                                                                                       \
+	(0x1UL << DCB_DEMCR_VC_NOCPERR_Pos) /*!< DCB DEMCR: Vector Catch NOCP                                                                                                                          \
 					       errors Mask */
 
 #define DCB_DEMCR_VC_MMERR_Pos 4U /*!< DCB DEMCR: Vector Catch MemManage errors Position */
-#define DCB_DEMCR_VC_MMERR_Msk                                                                                         \
-	(0x1UL << DCB_DEMCR_VC_MMERR_Pos) /*!< DCB DEMCR: Vector Catch                                                 \
+#define DCB_DEMCR_VC_MMERR_Msk                                                                                                                                                                         \
+	(0x1UL << DCB_DEMCR_VC_MMERR_Pos) /*!< DCB DEMCR: Vector Catch                                                                                                                                 \
 					     MemManage errors Mask */
 
 #define DCB_DEMCR_VC_CORERESET_Pos 0U /*!< DCB DEMCR: Vector Catch Core reset Position */
-#define DCB_DEMCR_VC_CORERESET_Msk                                                                                     \
-	(0x1UL /*<< DCB_DEMCR_VC_CORERESET_Pos*/) /*!< DCB DEMCR: Vector Catch                                         \
+#define DCB_DEMCR_VC_CORERESET_Msk                                                                                                                                                                     \
+	(0x1UL /*<< DCB_DEMCR_VC_CORERESET_Pos*/) /*!< DCB DEMCR: Vector Catch                                                                                                                         \
 						     Core reset Mask */
 
 /* DSCEMCR, Debug Set Clear Exception and Monitor Control Register Definitions
  */
 #define DCB_DSCEMCR_CLR_MON_REQ_Pos 19U /*!< DCB DSCEMCR: Clear monitor request Position */
-#define DCB_DSCEMCR_CLR_MON_REQ_Msk                                                                                    \
-	(0x1UL << DCB_DSCEMCR_CLR_MON_REQ_Pos) /*!< DCB DSCEMCR: Clear monitor                                         \
+#define DCB_DSCEMCR_CLR_MON_REQ_Msk                                                                                                                                                                    \
+	(0x1UL << DCB_DSCEMCR_CLR_MON_REQ_Pos) /*!< DCB DSCEMCR: Clear monitor                                                                                                                         \
 						  request Mask */
 
 #define DCB_DSCEMCR_CLR_MON_PEND_Pos 17U /*!< DCB DSCEMCR: Clear monitor pend Position */
-#define DCB_DSCEMCR_CLR_MON_PEND_Msk                                                                                   \
-	(0x1UL << DCB_DSCEMCR_CLR_MON_PEND_Pos) /*!< DCB DSCEMCR: Clear                                                \
+#define DCB_DSCEMCR_CLR_MON_PEND_Msk                                                                                                                                                                   \
+	(0x1UL << DCB_DSCEMCR_CLR_MON_PEND_Pos) /*!< DCB DSCEMCR: Clear                                                                                                                                \
 						   monitor pend Mask */
 
 #define DCB_DSCEMCR_SET_MON_REQ_Pos 3U /*!< DCB DSCEMCR: Set monitor request Position */
-#define DCB_DSCEMCR_SET_MON_REQ_Msk                                                                                    \
-	(0x1UL << DCB_DSCEMCR_SET_MON_REQ_Pos) /*!< DCB DSCEMCR: Set monitor                                           \
+#define DCB_DSCEMCR_SET_MON_REQ_Msk                                                                                                                                                                    \
+	(0x1UL << DCB_DSCEMCR_SET_MON_REQ_Pos) /*!< DCB DSCEMCR: Set monitor                                                                                                                           \
 						  request Mask */
 
 #define DCB_DSCEMCR_SET_MON_PEND_Pos 1U /*!< DCB DSCEMCR: Set monitor pend Position */
-#define DCB_DSCEMCR_SET_MON_PEND_Msk                                                                                   \
-	(0x1UL << DCB_DSCEMCR_SET_MON_PEND_Pos) /*!< DCB DSCEMCR: Set monitor                                          \
+#define DCB_DSCEMCR_SET_MON_PEND_Msk                                                                                                                                                                   \
+	(0x1UL << DCB_DSCEMCR_SET_MON_PEND_Pos) /*!< DCB DSCEMCR: Set monitor                                                                                                                          \
 						   pend Mask */
 
 /* DAUTHCTRL, Debug Authentication Control Register Definitions */
 #define DCB_DAUTHCTRL_UIDEN_Pos 10U /*!< DCB DAUTHCTRL: Unprivileged Invasive Debug Enable Position */
-#define DCB_DAUTHCTRL_UIDEN_Msk                                                                                        \
-	(0x1UL << DCB_DAUTHCTRL_UIDEN_Pos) /*!< DCB DAUTHCTRL: Unprivileged                                            \
+#define DCB_DAUTHCTRL_UIDEN_Msk                                                                                                                                                                        \
+	(0x1UL << DCB_DAUTHCTRL_UIDEN_Pos) /*!< DCB DAUTHCTRL: Unprivileged                                                                                                                            \
 					      Invasive Debug Enable Mask */
 
-#define DCB_DAUTHCTRL_UIDAPEN_Pos                                                                                      \
-	9U /*!< DCB DAUTHCTRL: Unprivileged Invasive DAP Access Enable                                                 \
+#define DCB_DAUTHCTRL_UIDAPEN_Pos                                                                                                                                                                      \
+	9U /*!< DCB DAUTHCTRL: Unprivileged Invasive DAP Access Enable                                                                                                                                 \
 	      Position */
-#define DCB_DAUTHCTRL_UIDAPEN_Msk                                                                                      \
-	(0x1UL << DCB_DAUTHCTRL_UIDAPEN_Pos) /*!< DCB DAUTHCTRL: Unprivileged                                          \
+#define DCB_DAUTHCTRL_UIDAPEN_Msk                                                                                                                                                                      \
+	(0x1UL << DCB_DAUTHCTRL_UIDAPEN_Pos) /*!< DCB DAUTHCTRL: Unprivileged                                                                                                                          \
 						Invasive DAP Access Enable Mask */
 
 #define DCB_DAUTHCTRL_FSDMA_Pos 8U /*!< DCB DAUTHCTRL: Force Secure DebugMonitor Allowed Position */
-#define DCB_DAUTHCTRL_FSDMA_Msk                                                                                        \
-	(0x1UL << DCB_DAUTHCTRL_FSDMA_Pos) /*!< DCB DAUTHCTRL: Force Secure                                            \
+#define DCB_DAUTHCTRL_FSDMA_Msk                                                                                                                                                                        \
+	(0x1UL << DCB_DAUTHCTRL_FSDMA_Pos) /*!< DCB DAUTHCTRL: Force Secure                                                                                                                            \
 					      DebugMonitor Allowed Mask */
 
-#define DCB_DAUTHCTRL_INTSPNIDEN_Pos                                                                                   \
-	3U /*!< DCB DAUTHCTRL: Internal Secure non-invasive debug enable                                               \
+#define DCB_DAUTHCTRL_INTSPNIDEN_Pos                                                                                                                                                                   \
+	3U /*!< DCB DAUTHCTRL: Internal Secure non-invasive debug enable                                                                                                                               \
 	      Position */
-#define DCB_DAUTHCTRL_INTSPNIDEN_Msk                                                                                   \
-	(0x1UL << DCB_DAUTHCTRL_INTSPNIDEN_Pos) /*!< DCB DAUTHCTRL: Internal Secure                                    \
+#define DCB_DAUTHCTRL_INTSPNIDEN_Msk                                                                                                                                                                   \
+	(0x1UL << DCB_DAUTHCTRL_INTSPNIDEN_Pos) /*!< DCB DAUTHCTRL: Internal Secure                                                                                                                    \
 						   non-invasive debug enable Mask */
 
-#define DCB_DAUTHCTRL_SPNIDENSEL_Pos                                                                                   \
-	2U /*!< DCB DAUTHCTRL: Secure non-invasive debug enable select                                                 \
+#define DCB_DAUTHCTRL_SPNIDENSEL_Pos                                                                                                                                                                   \
+	2U /*!< DCB DAUTHCTRL: Secure non-invasive debug enable select                                                                                                                                 \
 	      Position */
-#define DCB_DAUTHCTRL_SPNIDENSEL_Msk                                                                                   \
-	(0x1UL << DCB_DAUTHCTRL_SPNIDENSEL_Pos) /*!< DCB DAUTHCTRL: Secure                                             \
-						   non-invasive debug enable                                           \
+#define DCB_DAUTHCTRL_SPNIDENSEL_Msk                                                                                                                                                                   \
+	(0x1UL << DCB_DAUTHCTRL_SPNIDENSEL_Pos) /*!< DCB DAUTHCTRL: Secure                                                                                                                             \
+						   non-invasive debug enable                                                                                                                           \
 						   select Mask */
 
-#define DCB_DAUTHCTRL_INTSPIDEN_Pos                                                                                    \
-	1U /*!< DCB DAUTHCTRL: Internal Secure invasive debug enable Position                                          \
+#define DCB_DAUTHCTRL_INTSPIDEN_Pos                                                                                                                                                                    \
+	1U /*!< DCB DAUTHCTRL: Internal Secure invasive debug enable Position                                                                                                                          \
 	    */
-#define DCB_DAUTHCTRL_INTSPIDEN_Msk                                                                                    \
-	(0x1UL << DCB_DAUTHCTRL_INTSPIDEN_Pos) /*!< DCB DAUTHCTRL: Internal Secure                                     \
+#define DCB_DAUTHCTRL_INTSPIDEN_Msk                                                                                                                                                                    \
+	(0x1UL << DCB_DAUTHCTRL_INTSPIDEN_Pos) /*!< DCB DAUTHCTRL: Internal Secure                                                                                                                     \
 						  invasive debug enable Mask */
 
 #define DCB_DAUTHCTRL_SPIDENSEL_Pos 0U /*!< DCB DAUTHCTRL: Secure invasive debug enable select Position */
-#define DCB_DAUTHCTRL_SPIDENSEL_Msk                                                                                    \
-	(0x1UL /*<< DCB_DAUTHCTRL_SPIDENSEL_Pos*/) /*!< DCB DAUTHCTRL: Secure                                          \
-						      invasive debug enable                                            \
+#define DCB_DAUTHCTRL_SPIDENSEL_Msk                                                                                                                                                                    \
+	(0x1UL /*<< DCB_DAUTHCTRL_SPIDENSEL_Pos*/) /*!< DCB DAUTHCTRL: Secure                                                                                                                          \
+						      invasive debug enable                                                                                                                            \
 						      select Mask */
 
 /* DSCSR, Debug Security Control and Status Register Definitions */
 #define DCB_DSCSR_CDSKEY_Pos 17U			     /*!< DCB DSCSR: CDS write-enable key Position */
 #define DCB_DSCSR_CDSKEY_Msk (0x1UL << DCB_DSCSR_CDSKEY_Pos) /*!< DCB DSCSR: CDS write-enable key Mask */
 
-#define DCB_DSCSR_CDS_Pos                                                                                              \
-	16U					       /*!< DCB DSCSR: Current domain Secure Position                  \
+#define DCB_DSCSR_CDS_Pos                                                                                                                                                                              \
+	16U					       /*!< DCB DSCSR: Current domain Secure Position                                                                                                  \
 							*/
 #define DCB_DSCSR_CDS_Msk (0x1UL << DCB_DSCSR_CDS_Pos) /*!< DCB DSCSR: Current domain Secure Mask */
 
 #define DCB_DSCSR_SBRSEL_Pos 1U /*!< DCB DSCSR: Secure banked register select Position */
-#define DCB_DSCSR_SBRSEL_Msk                                                                                           \
-	(0x1UL << DCB_DSCSR_SBRSEL_Pos) /*!< DCB DSCSR: Secure banked register                                         \
+#define DCB_DSCSR_SBRSEL_Msk                                                                                                                                                                           \
+	(0x1UL << DCB_DSCSR_SBRSEL_Pos) /*!< DCB DSCSR: Secure banked register                                                                                                                         \
 					   select Mask */
 
 #define DCB_DSCSR_SBRSELEN_Pos 0U /*!< DCB DSCSR: Secure banked register select enable Position */
-#define DCB_DSCSR_SBRSELEN_Msk                                                                                         \
-	(0x1UL /*<< DCB_DSCSR_SBRSELEN_Pos*/) /*!< DCB DSCSR: Secure banked                                            \
-						 register select enable Mask                                           \
+#define DCB_DSCSR_SBRSELEN_Msk                                                                                                                                                                         \
+	(0x1UL /*<< DCB_DSCSR_SBRSELEN_Pos*/) /*!< DCB DSCSR: Secure banked                                                                                                                            \
+						 register select enable Mask                                                                                                                           \
 					       */
 
 /*@} end of group CMSIS_DCB */
@@ -4625,96 +4625,96 @@ typedef struct {
 #define DIB_DLSR_nTT_Msk (0x1UL << DIB_DLSR_nTT_Pos) /*!< DIB DLSR: Not thirty-two bit Mask */
 
 #define DIB_DLSR_SLK_Pos 1U /*!< DIB DLSR: Software Lock status Position */
-#define DIB_DLSR_SLK_Msk                                                                                               \
-	(0x1UL << DIB_DLSR_SLK_Pos) /*!< DIB DLSR: Software Lock status Mask                                           \
+#define DIB_DLSR_SLK_Msk                                                                                                                                                                               \
+	(0x1UL << DIB_DLSR_SLK_Pos) /*!< DIB DLSR: Software Lock status Mask                                                                                                                           \
 				     */
 
-#define DIB_DLSR_SLI_Pos                                                                                               \
-	0U /*!< DIB DLSR: Software Lock implemented Position                                                           \
+#define DIB_DLSR_SLI_Pos                                                                                                                                                                               \
+	0U /*!< DIB DLSR: Software Lock implemented Position                                                                                                                                           \
 	    */
-#define DIB_DLSR_SLI_Msk                                                                                               \
-	(0x1UL /*<< DIB_DLSR_SLI_Pos*/) /*!< DIB DLSR: Software Lock                                                   \
+#define DIB_DLSR_SLI_Msk                                                                                                                                                                               \
+	(0x1UL /*<< DIB_DLSR_SLI_Pos*/) /*!< DIB DLSR: Software Lock                                                                                                                                   \
 					   implemented Mask */
 
 /* DAUTHSTATUS, Debug Authentication Status Register Definitions */
-#define DIB_DAUTHSTATUS_SUNID_Pos                                                                                      \
-	22U /*!< DIB DAUTHSTATUS: Secure Unprivileged Non-invasive Debug                                               \
+#define DIB_DAUTHSTATUS_SUNID_Pos                                                                                                                                                                      \
+	22U /*!< DIB DAUTHSTATUS: Secure Unprivileged Non-invasive Debug                                                                                                                               \
 	       Allowed Position */
-#define DIB_DAUTHSTATUS_SUNID_Msk                                                                                      \
-	(0x3UL << DIB_DAUTHSTATUS_SUNID_Pos) /*!< DIB DAUTHSTATUS: Secure                                              \
-						Unprivileged Non-invasive                                              \
+#define DIB_DAUTHSTATUS_SUNID_Msk                                                                                                                                                                      \
+	(0x3UL << DIB_DAUTHSTATUS_SUNID_Pos) /*!< DIB DAUTHSTATUS: Secure                                                                                                                              \
+						Unprivileged Non-invasive                                                                                                                              \
 						Debug Allowed Mask */
 
-#define DIB_DAUTHSTATUS_SUID_Pos                                                                                       \
-	20U /*!< DIB DAUTHSTATUS: Secure Unprivileged Invasive Debug Allowed                                           \
+#define DIB_DAUTHSTATUS_SUID_Pos                                                                                                                                                                       \
+	20U /*!< DIB DAUTHSTATUS: Secure Unprivileged Invasive Debug Allowed                                                                                                                           \
 	       Position */
-#define DIB_DAUTHSTATUS_SUID_Msk                                                                                       \
-	(0x3UL << DIB_DAUTHSTATUS_SUID_Pos) /*!< DIB DAUTHSTATUS: Secure                                               \
-					       Unprivileged Invasive Debug                                             \
+#define DIB_DAUTHSTATUS_SUID_Msk                                                                                                                                                                       \
+	(0x3UL << DIB_DAUTHSTATUS_SUID_Pos) /*!< DIB DAUTHSTATUS: Secure                                                                                                                               \
+					       Unprivileged Invasive Debug                                                                                                                             \
 					       Allowed Mask */
 
-#define DIB_DAUTHSTATUS_NSUNID_Pos                                                                                     \
-	18U /*!< DIB DAUTHSTATUS: Non-secure Unprivileged Non-invasive Debug                                           \
+#define DIB_DAUTHSTATUS_NSUNID_Pos                                                                                                                                                                     \
+	18U /*!< DIB DAUTHSTATUS: Non-secure Unprivileged Non-invasive Debug                                                                                                                           \
 	       Allo Position */
-#define DIB_DAUTHSTATUS_NSUNID_Msk                                                                                     \
-	(0x3UL << DIB_DAUTHSTATUS_NSUNID_Pos) /*!< DIB DAUTHSTATUS: Non-secure                                         \
-						 Unprivileged Non-invasive                                             \
+#define DIB_DAUTHSTATUS_NSUNID_Msk                                                                                                                                                                     \
+	(0x3UL << DIB_DAUTHSTATUS_NSUNID_Pos) /*!< DIB DAUTHSTATUS: Non-secure                                                                                                                         \
+						 Unprivileged Non-invasive                                                                                                                             \
 						 Debug Allo Mask */
 
-#define DIB_DAUTHSTATUS_NSUID_Pos                                                                                      \
-	16U /*!< DIB DAUTHSTATUS: Non-secure Unprivileged Invasive Debug                                               \
+#define DIB_DAUTHSTATUS_NSUID_Pos                                                                                                                                                                      \
+	16U /*!< DIB DAUTHSTATUS: Non-secure Unprivileged Invasive Debug                                                                                                                               \
 	       Allowed Position */
-#define DIB_DAUTHSTATUS_NSUID_Msk                                                                                      \
-	(0x3UL << DIB_DAUTHSTATUS_NSUID_Pos) /*!< DIB DAUTHSTATUS: Non-secure                                          \
-						Unprivileged Invasive Debug                                            \
+#define DIB_DAUTHSTATUS_NSUID_Msk                                                                                                                                                                      \
+	(0x3UL << DIB_DAUTHSTATUS_NSUID_Pos) /*!< DIB DAUTHSTATUS: Non-secure                                                                                                                          \
+						Unprivileged Invasive Debug                                                                                                                            \
 						Allowed Mask */
 
 #define DIB_DAUTHSTATUS_SNID_Pos 6U /*!< DIB DAUTHSTATUS: Secure Non-invasive Debug Position */
-#define DIB_DAUTHSTATUS_SNID_Msk                                                                                       \
-	(0x3UL << DIB_DAUTHSTATUS_SNID_Pos) /*!< DIB DAUTHSTATUS: Secure                                               \
+#define DIB_DAUTHSTATUS_SNID_Msk                                                                                                                                                                       \
+	(0x3UL << DIB_DAUTHSTATUS_SNID_Pos) /*!< DIB DAUTHSTATUS: Secure                                                                                                                               \
 					       Non-invasive Debug Mask */
 
 #define DIB_DAUTHSTATUS_SID_Pos 4U /*!< DIB DAUTHSTATUS: Secure Invasive Debug Position */
-#define DIB_DAUTHSTATUS_SID_Msk                                                                                        \
-	(0x3UL << DIB_DAUTHSTATUS_SID_Pos) /*!< DIB DAUTHSTATUS: Secure                                                \
+#define DIB_DAUTHSTATUS_SID_Msk                                                                                                                                                                        \
+	(0x3UL << DIB_DAUTHSTATUS_SID_Pos) /*!< DIB DAUTHSTATUS: Secure                                                                                                                                \
 					      Invasive Debug Mask */
 
 #define DIB_DAUTHSTATUS_NSNID_Pos 2U /*!< DIB DAUTHSTATUS: Non-secure Non-invasive Debug Position */
-#define DIB_DAUTHSTATUS_NSNID_Msk                                                                                      \
-	(0x3UL << DIB_DAUTHSTATUS_NSNID_Pos) /*!< DIB DAUTHSTATUS: Non-secure                                          \
+#define DIB_DAUTHSTATUS_NSNID_Msk                                                                                                                                                                      \
+	(0x3UL << DIB_DAUTHSTATUS_NSNID_Pos) /*!< DIB DAUTHSTATUS: Non-secure                                                                                                                          \
 						Non-invasive Debug Mask */
 
 #define DIB_DAUTHSTATUS_NSID_Pos 0U /*!< DIB DAUTHSTATUS: Non-secure Invasive Debug Position */
-#define DIB_DAUTHSTATUS_NSID_Msk                                                                                       \
-	(0x3UL /*<< DIB_DAUTHSTATUS_NSID_Pos*/) /*!< DIB DAUTHSTATUS:                                                  \
-						   Non-secure Invasive Debug                                           \
+#define DIB_DAUTHSTATUS_NSID_Msk                                                                                                                                                                       \
+	(0x3UL /*<< DIB_DAUTHSTATUS_NSID_Pos*/) /*!< DIB DAUTHSTATUS:                                                                                                                                  \
+						   Non-secure Invasive Debug                                                                                                                           \
 						   Mask */
 
 /* DDEVARCH, SCS Device Architecture Register Definitions */
-#define DIB_DDEVARCH_ARCHITECT_Pos                                                                                     \
-	21U								   /*!< DIB DDEVARCH: Architect Position       \
+#define DIB_DDEVARCH_ARCHITECT_Pos                                                                                                                                                                     \
+	21U								   /*!< DIB DDEVARCH: Architect Position                                                                                       \
 									    */
 #define DIB_DDEVARCH_ARCHITECT_Msk (0x7FFUL << DIB_DDEVARCH_ARCHITECT_Pos) /*!< DIB DDEVARCH: Architect Mask */
 
 #define DIB_DDEVARCH_PRESENT_Pos 20U /*!< DIB DDEVARCH: DEVARCH Present Position */
-#define DIB_DDEVARCH_PRESENT_Msk                                                                                       \
-	(0x1FUL << DIB_DDEVARCH_PRESENT_Pos) /*!< DIB DDEVARCH: DEVARCH                                                \
+#define DIB_DDEVARCH_PRESENT_Msk                                                                                                                                                                       \
+	(0x1FUL << DIB_DDEVARCH_PRESENT_Pos) /*!< DIB DDEVARCH: DEVARCH                                                                                                                                \
 						Present Mask */
 
 #define DIB_DDEVARCH_REVISION_Pos 16U /*!< DIB DDEVARCH: Revision Position */
-#define DIB_DDEVARCH_REVISION_Msk                                                                                      \
-	(0xFUL << DIB_DDEVARCH_REVISION_Pos) /*!< DIB DDEVARCH: Revision Mask                                          \
+#define DIB_DDEVARCH_REVISION_Msk                                                                                                                                                                      \
+	(0xFUL << DIB_DDEVARCH_REVISION_Pos) /*!< DIB DDEVARCH: Revision Mask                                                                                                                          \
 					      */
 
 #define DIB_DDEVARCH_ARCHVER_Pos 12U /*!< DIB DDEVARCH: Architecture Version Position */
-#define DIB_DDEVARCH_ARCHVER_Msk                                                                                       \
-	(0xFUL << DIB_DDEVARCH_ARCHVER_Pos) /*!< DIB DDEVARCH: Architecture                                            \
+#define DIB_DDEVARCH_ARCHVER_Msk                                                                                                                                                                       \
+	(0xFUL << DIB_DDEVARCH_ARCHVER_Pos) /*!< DIB DDEVARCH: Architecture                                                                                                                            \
 					       Version Mask */
 
 #define DIB_DDEVARCH_ARCHPART_Pos 0U /*!< DIB DDEVARCH: Architecture Part Position */
-#define DIB_DDEVARCH_ARCHPART_Msk                                                                                      \
-	(0xFFFUL /*<< DIB_DDEVARCH_ARCHPART_Pos*/) /*!< DIB DDEVARCH:                                                  \
-						      Architecture Part Mask                                           \
+#define DIB_DDEVARCH_ARCHPART_Msk                                                                                                                                                                      \
+	(0xFFFUL /*<< DIB_DDEVARCH_ARCHPART_Pos*/) /*!< DIB DDEVARCH:                                                                                                                                  \
+						      Architecture Part Mask                                                                                                                           \
 						    */
 
 /* DDEVTYPE, SCS Device Type Register Definitions */
@@ -4722,8 +4722,8 @@ typedef struct {
 #define DIB_DDEVTYPE_SUB_Msk (0xFUL << DIB_DDEVTYPE_SUB_Pos) /*!< DIB DDEVTYPE: Sub-type Mask */
 
 #define DIB_DDEVTYPE_MAJOR_Pos 0U /*!< DIB DDEVTYPE: Major type Position */
-#define DIB_DDEVTYPE_MAJOR_Msk                                                                                         \
-	(0xFUL /*<< DIB_DDEVTYPE_MAJOR_Pos*/) /*!< DIB DDEVTYPE: Major type                                            \
+#define DIB_DDEVTYPE_MAJOR_Msk                                                                                                                                                                         \
+	(0xFUL /*<< DIB_DDEVTYPE_MAJOR_Pos*/) /*!< DIB DDEVTYPE: Major type                                                                                                                            \
 						 Mask */
 
 /*@} end of group CMSIS_DIB */
@@ -4764,16 +4764,16 @@ typedef struct {
 #define SCS_BASE (0xE000E000UL) /*!< System Control Space Base Address */
 #define ITM_BASE (0xE0000000UL) /*!< ITM Base Address */
 #define DWT_BASE (0xE0001000UL) /*!< DWT Base Address */
-#define MEMSYSCTL_BASE                                                                                                 \
-	(0xE001E000UL)		      /*!< Memory System Control Base Address                                          \
+#define MEMSYSCTL_BASE                                                                                                                                                                                 \
+	(0xE001E000UL)		      /*!< Memory System Control Base Address                                                                                                                          \
 				       */
 #define ERRBNK_BASE (0xE001E100UL)    /*!< Error Banking Base Address */
 #define PWRMODCTL_BASE (0xE001E300UL) /*!< Power Mode Control Base Address */
-#define EWIC_BASE                                                                                                      \
-	(0xE001E400UL) /*!< External Wakeup Interrupt Controller Base Address                                          \
+#define EWIC_BASE                                                                                                                                                                                      \
+	(0xE001E400UL) /*!< External Wakeup Interrupt Controller Base Address                                                                                                                          \
 			*/
-#define PRCCFGINF_BASE                                                                                                 \
-	(0xE001E700UL)			   /*!< Processor Configuration Information Base Address                       \
+#define PRCCFGINF_BASE                                                                                                                                                                                 \
+	(0xE001E700UL)			   /*!< Processor Configuration Information Base Address                                                                                                       \
 					    */
 #define STL_BASE (0xE001E800UL)		   /*!< Software Test Library Base Address */
 #define TPI_BASE (0xE0040000UL)		   /*!< TPI Base Address */
@@ -4782,8 +4782,8 @@ typedef struct {
 #define DIB_BASE (0xE000EFB0UL)		   /*!< DIB Base Address */
 #define SysTick_BASE (SCS_BASE + 0x0010UL) /*!< SysTick Base Address */
 #define NVIC_BASE (SCS_BASE + 0x0100UL)	   /*!< NVIC Base Address */
-#define SCB_BASE                                                                                                       \
-	(SCS_BASE + 0x0D00UL) /*!< System Control Block Base Address                                                   \
+#define SCB_BASE                                                                                                                                                                                       \
+	(SCS_BASE + 0x0D00UL) /*!< System Control Block Base Address                                                                                                                                   \
 			       */
 
 #define ICB ((ICB_Type *)SCS_BASE)	       /*!< System control Register not in SCB */
@@ -4793,20 +4793,20 @@ typedef struct {
 #define ITM ((ITM_Type *)ITM_BASE)	       /*!< ITM configuration struct */
 #define DWT ((DWT_Type *)DWT_BASE)	       /*!< DWT configuration struct */
 #define TPI ((TPI_Type *)TPI_BASE)	       /*!< TPI configuration struct */
-#define MEMSYSCTL                                                                                                      \
-	((MemSysCtl_Type *)MEMSYSCTL_BASE) /*!< Memory System Control                                                  \
+#define MEMSYSCTL                                                                                                                                                                                      \
+	((MemSysCtl_Type *)MEMSYSCTL_BASE) /*!< Memory System Control                                                                                                                                  \
 					      configuration struct */
-#define ERRBNK                                                                                                         \
-	((ErrBnk_Type *)ERRBNK_BASE)		     /*!< Error Banking configuration struct                           \
+#define ERRBNK                                                                                                                                                                                         \
+	((ErrBnk_Type *)ERRBNK_BASE)		     /*!< Error Banking configuration struct                                                                                                           \
 						      */
 #define PWRMODCTL ((PwrModCtl_Type *)PWRMODCTL_BASE) /*!< Power Mode Control configuration struct */
 #define EWIC ((EWIC_Type *)EWIC_BASE)		     /*!< EWIC configuration struct */
-#define PRCCFGINF                                                                                                      \
-	((PrcCfgInf_Type *)PRCCFGINF_BASE) /*!< Processor Configuration Information                                    \
+#define PRCCFGINF                                                                                                                                                                                      \
+	((PrcCfgInf_Type *)PRCCFGINF_BASE) /*!< Processor Configuration Information                                                                                                                    \
 					      configuration struct */
 #define STL ((STL_Type *)STL_BASE)	   /*!< Software Test Library configuration struct */
-#define CoreDebug                                                                                                      \
-	((CoreDebug_Type *)CoreDebug_BASE) /*!< \deprecated Core Debug                                                 \
+#define CoreDebug                                                                                                                                                                                      \
+	((CoreDebug_Type *)CoreDebug_BASE) /*!< \deprecated Core Debug                                                                                                                                 \
 					      configuration struct */
 #define DCB ((DCB_Type *)DCB_BASE)	   /*!< DCB configuration struct */
 #define DIB ((DIB_Type *)DIB_BASE)	   /*!< DIB configuration struct */
@@ -4830,64 +4830,64 @@ typedef struct {
 #define FPU ((FPU_Type *)FPU_BASE)     /*!< Floating Point Unit */
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-#define SCS_BASE_NS                                                                                                    \
-	(0xE002E000UL) /*!< System Control Space Base Address (non-secure                                              \
+#define SCS_BASE_NS                                                                                                                                                                                    \
+	(0xE002E000UL) /*!< System Control Space Base Address (non-secure                                                                                                                              \
 			  address space) */
-#define CoreDebug_BASE_NS                                                                                              \
-	(0xE002EDF0UL) /*!< \deprecated Core Debug Base Address (non-secure                                            \
+#define CoreDebug_BASE_NS                                                                                                                                                                              \
+	(0xE002EDF0UL) /*!< \deprecated Core Debug Base Address (non-secure                                                                                                                            \
 			  address space) */
-#define DCB_BASE_NS                                                                                                    \
-	(0xE002EDF0UL) /*!< DCB Base Address                  (non-secure                                              \
+#define DCB_BASE_NS                                                                                                                                                                                    \
+	(0xE002EDF0UL) /*!< DCB Base Address                  (non-secure                                                                                                                              \
 			  address space) */
-#define DIB_BASE_NS                                                                                                    \
-	(0xE002EFB0UL) /*!< DIB Base Address                  (non-secure                                              \
+#define DIB_BASE_NS                                                                                                                                                                                    \
+	(0xE002EFB0UL) /*!< DIB Base Address                  (non-secure                                                                                                                              \
 			  address space) */
-#define SysTick_BASE_NS                                                                                                \
-	(SCS_BASE_NS + 0x0010UL) /*!< SysTick Base Address (non-secure address                                         \
+#define SysTick_BASE_NS                                                                                                                                                                                \
+	(SCS_BASE_NS + 0x0010UL) /*!< SysTick Base Address (non-secure address                                                                                                                         \
 				    space) */
-#define NVIC_BASE_NS                                                                                                   \
-	(SCS_BASE_NS + 0x0100UL) /*!< NVIC Base Address (non-secure address                                            \
+#define NVIC_BASE_NS                                                                                                                                                                                   \
+	(SCS_BASE_NS + 0x0100UL) /*!< NVIC Base Address (non-secure address                                                                                                                            \
 				    space) */
-#define SCB_BASE_NS                                                                                                    \
-	(SCS_BASE_NS + 0x0D00UL) /*!< System Control Block Base Address                                                \
+#define SCB_BASE_NS                                                                                                                                                                                    \
+	(SCS_BASE_NS + 0x0D00UL) /*!< System Control Block Base Address                                                                                                                                \
 				    (non-secure address space) */
 
-#define ICB_NS                                                                                                         \
-	((ICB_Type *)SCS_BASE_NS) /*!< System control Register not in                                                  \
+#define ICB_NS                                                                                                                                                                                         \
+	((ICB_Type *)SCS_BASE_NS) /*!< System control Register not in                                                                                                                                  \
 				     SCB(non-secure address space) */
-#define SCB_NS                                                                                                         \
-	((SCB_Type *)SCB_BASE_NS) /*!< SCB configuration struct (non-secure                                            \
+#define SCB_NS                                                                                                                                                                                         \
+	((SCB_Type *)SCB_BASE_NS) /*!< SCB configuration struct (non-secure                                                                                                                            \
 				     address space) */
-#define SysTick_NS                                                                                                     \
-	((SysTick_Type *)SysTick_BASE_NS) /*!< SysTick configuration struct                                            \
+#define SysTick_NS                                                                                                                                                                                     \
+	((SysTick_Type *)SysTick_BASE_NS) /*!< SysTick configuration struct                                                                                                                            \
 					     (non-secure address space) */
-#define NVIC_NS                                                                                                        \
-	((NVIC_Type *)NVIC_BASE_NS) /*!< NVIC configuration struct (non-secure                                         \
+#define NVIC_NS                                                                                                                                                                                        \
+	((NVIC_Type *)NVIC_BASE_NS) /*!< NVIC configuration struct (non-secure                                                                                                                         \
 				       address space) */
-#define CoreDebug_NS                                                                                                   \
-	((CoreDebug_Type *)CoreDebug_BASE_NS) /*!< \deprecated Core Debug configuration                                \
+#define CoreDebug_NS                                                                                                                                                                                   \
+	((CoreDebug_Type *)CoreDebug_BASE_NS) /*!< \deprecated Core Debug configuration                                                                                                                \
 						 struct   (non-secure address space) */
-#define DCB_NS                                                                                                         \
-	((DCB_Type *)DCB_BASE_NS) /*!< DCB configuration struct (non-secure                                            \
+#define DCB_NS                                                                                                                                                                                         \
+	((DCB_Type *)DCB_BASE_NS) /*!< DCB configuration struct (non-secure                                                                                                                            \
 				     address space) */
-#define DIB_NS                                                                                                         \
-	((DIB_Type *)DIB_BASE_NS) /*!< DIB configuration struct (non-secure                                            \
+#define DIB_NS                                                                                                                                                                                         \
+	((DIB_Type *)DIB_BASE_NS) /*!< DIB configuration struct (non-secure                                                                                                                            \
 				     address space) */
 
 #if defined(__MPU_PRESENT) && (__MPU_PRESENT == 1U)
-#define MPU_BASE_NS                                                                                                    \
-	(SCS_BASE_NS + 0x0D90UL) /*!< Memory Protection Unit (non-secure                                               \
+#define MPU_BASE_NS                                                                                                                                                                                    \
+	(SCS_BASE_NS + 0x0D90UL) /*!< Memory Protection Unit (non-secure                                                                                                                               \
 				    address space) */
-#define MPU_NS                                                                                                         \
-	((MPU_Type *)MPU_BASE_NS) /*!< Memory Protection Unit (non-secure                                              \
+#define MPU_NS                                                                                                                                                                                         \
+	((MPU_Type *)MPU_BASE_NS) /*!< Memory Protection Unit (non-secure                                                                                                                              \
 				     address space) */
 #endif
 
-#define FPU_BASE_NS                                                                                                    \
-	(SCS_BASE_NS + 0x0F30UL) /*!< Floating Point Unit (non-secure address                                          \
+#define FPU_BASE_NS                                                                                                                                                                                    \
+	(SCS_BASE_NS + 0x0F30UL) /*!< Floating Point Unit (non-secure address                                                                                                                          \
 				    space) */
-#define FPU_NS                                                                                                         \
-	((FPU_Type *)FPU_BASE_NS) /*!< Floating Point Unit (non-secure address                                         \
+#define FPU_NS                                                                                                                                                                                         \
+	((FPU_Type *)FPU_BASE_NS) /*!< Floating Point Unit (non-secure address                                                                                                                         \
 				     space) */
 
 #endif /* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
@@ -5014,41 +5014,41 @@ typedef ICB_Type SCnSCB_Type;
 
 /* Function Return Payload (from ARMv8-M Architecture Reference Manual) LR value
  * on entry from Secure BLXNS                   */
-#define FNC_RETURN                                                                                                     \
-	(0xFEFFFFFFUL) /* bit [0] ignored when processing a branch                                                     \
+#define FNC_RETURN                                                                                                                                                                                     \
+	(0xFEFFFFFFUL) /* bit [0] ignored when processing a branch                                                                                                                                     \
 			*/
 
 /* The following EXC_RETURN mask values are used to evaluate the LR on exception
  * entry */
 #define EXC_RETURN_PREFIX (0xFF000000UL) /* bits [31:24] set to indicate an EXC_RETURN value */
-#define EXC_RETURN_S                                                                                                   \
-	(0x00000040UL) /* bit [6] stack used to push registers: 0=Non-secure                                           \
+#define EXC_RETURN_S                                                                                                                                                                                   \
+	(0x00000040UL) /* bit [6] stack used to push registers: 0=Non-secure                                                                                                                           \
 			  1=Secure          */
-#define EXC_RETURN_DCRS                                                                                                \
-	(0x00000020UL) /* bit [5] stacking rules for called registers:                                                 \
+#define EXC_RETURN_DCRS                                                                                                                                                                                \
+	(0x00000020UL) /* bit [5] stacking rules for called registers:                                                                                                                                 \
 			  0=skipped 1=saved       */
-#define EXC_RETURN_FTYPE                                                                                               \
-	(0x00000010UL) /* bit [4] allocate stack for floating-point context:                                           \
+#define EXC_RETURN_FTYPE                                                                                                                                                                               \
+	(0x00000010UL) /* bit [4] allocate stack for floating-point context:                                                                                                                           \
 			  0=done 1=skipped  */
-#define EXC_RETURN_MODE                                                                                                \
-	(0x00000008UL) /* bit [3] processor mode for return: 0=Handler mode                                            \
+#define EXC_RETURN_MODE                                                                                                                                                                                \
+	(0x00000008UL) /* bit [3] processor mode for return: 0=Handler mode                                                                                                                            \
 			  1=Thread mode      */
-#define EXC_RETURN_SPSEL                                                                                               \
-	(0x00000004UL) /* bit [2] stack pointer used to restore context: 0=MSP                                         \
+#define EXC_RETURN_SPSEL                                                                                                                                                                               \
+	(0x00000004UL) /* bit [2] stack pointer used to restore context: 0=MSP                                                                                                                         \
 			  1=PSP           */
-#define EXC_RETURN_ES                                                                                                  \
-	(0x00000001UL) /* bit [0] security state exception was taken to:                                               \
+#define EXC_RETURN_ES                                                                                                                                                                                  \
+	(0x00000001UL) /* bit [0] security state exception was taken to:                                                                                                                               \
 			  0=Non-secure 1=Secure */
 
 /* Integrity Signature (from ARMv8-M Architecture Reference Manual) for
  * exception context stacking                            */
 #if defined(__FPU_PRESENT) && (__FPU_PRESENT == 1U) /* Value for processors with floating-point extension: */
-#define EXC_INTEGRITY_SIGNATURE                                                                                        \
-	(0xFEFA125AUL) /* bit [0] SFTC must match LR bit[4] EXC_RETURN_FTYPE                                           \
+#define EXC_INTEGRITY_SIGNATURE                                                                                                                                                                        \
+	(0xFEFA125AUL) /* bit [0] SFTC must match LR bit[4] EXC_RETURN_FTYPE                                                                                                                           \
 			*/
 #else
-#define EXC_INTEGRITY_SIGNATURE                                                                                        \
-	(0xFEFA125BUL) /* Value for processors without floating-point                                                  \
+#define EXC_INTEGRITY_SIGNATURE                                                                                                                                                                        \
+	(0xFEFA125BUL) /* Value for processors without floating-point                                                                                                                                  \
 			  extension                */
 #endif
 
@@ -5066,11 +5066,10 @@ __STATIC_INLINE void __NVIC_SetPriorityGrouping(uint32_t PriorityGroup)
 	uint32_t reg_value;
 	uint32_t PriorityGroupTmp = (PriorityGroup & (uint32_t)0x07UL); /* only values 0..7 are used */
 
-	reg_value = SCB->AIRCR; /* read old register configuration    */
-	reg_value &= ~((uint32_t)(SCB_AIRCR_VECTKEY_Msk | SCB_AIRCR_PRIGROUP_Msk)); /* clear bits to change */
-	reg_value = (reg_value | ((uint32_t)0x5FAUL << SCB_AIRCR_VECTKEY_Pos) |
-		     (PriorityGroupTmp << SCB_AIRCR_PRIGROUP_Pos)); /* Insert write key and
-								       priority group */
+	reg_value = SCB->AIRCR;												       /* read old register configuration    */
+	reg_value &= ~((uint32_t)(SCB_AIRCR_VECTKEY_Msk | SCB_AIRCR_PRIGROUP_Msk));					       /* clear bits to change */
+	reg_value = (reg_value | ((uint32_t)0x5FAUL << SCB_AIRCR_VECTKEY_Pos) | (PriorityGroupTmp << SCB_AIRCR_PRIGROUP_Pos)); /* Insert write key and
+																  priority group */
 	SCB->AIRCR = reg_value;
 }
 
@@ -5080,10 +5079,7 @@ __STATIC_INLINE void __NVIC_SetPriorityGrouping(uint32_t PriorityGroup)
   \return                Priority grouping field (SCB->AIRCR [10:8] PRIGROUP
   field).
  */
-__STATIC_INLINE uint32_t __NVIC_GetPriorityGrouping(void)
-{
-	return ((uint32_t)((SCB->AIRCR & SCB_AIRCR_PRIGROUP_Msk) >> SCB_AIRCR_PRIGROUP_Pos));
-}
+__STATIC_INLINE uint32_t __NVIC_GetPriorityGrouping(void) { return ((uint32_t)((SCB->AIRCR & SCB_AIRCR_PRIGROUP_Msk) >> SCB_AIRCR_PRIGROUP_Pos)); }
 
 /**
   \brief   Enable Interrupt
@@ -5111,10 +5107,7 @@ __STATIC_INLINE void __NVIC_EnableIRQ(IRQn_Type IRQn)
 __STATIC_INLINE uint32_t __NVIC_GetEnableIRQ(IRQn_Type IRQn)
 {
 	if ((int32_t)(IRQn) >= 0) {
-		return (
-		    (uint32_t)(((NVIC->ISER[(((uint32_t)IRQn) >> 5UL)] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL)
-				   ? 1UL
-				   : 0UL));
+		return ((uint32_t)(((NVIC->ISER[(((uint32_t)IRQn) >> 5UL)] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL) ? 1UL : 0UL));
 	} else {
 		return (0U);
 	}
@@ -5146,10 +5139,7 @@ __STATIC_INLINE void __NVIC_DisableIRQ(IRQn_Type IRQn)
 __STATIC_INLINE uint32_t __NVIC_GetPendingIRQ(IRQn_Type IRQn)
 {
 	if ((int32_t)(IRQn) >= 0) {
-		return (
-		    (uint32_t)(((NVIC->ISPR[(((uint32_t)IRQn) >> 5UL)] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL)
-				   ? 1UL
-				   : 0UL));
+		return ((uint32_t)(((NVIC->ISPR[(((uint32_t)IRQn) >> 5UL)] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL) ? 1UL : 0UL));
 	} else {
 		return (0U);
 	}
@@ -5192,10 +5182,7 @@ __STATIC_INLINE void __NVIC_ClearPendingIRQ(IRQn_Type IRQn)
 __STATIC_INLINE uint32_t __NVIC_GetActive(IRQn_Type IRQn)
 {
 	if ((int32_t)(IRQn) >= 0) {
-		return (
-		    (uint32_t)(((NVIC->IABR[(((uint32_t)IRQn) >> 5UL)] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL)
-				   ? 1UL
-				   : 0UL));
+		return ((uint32_t)(((NVIC->IABR[(((uint32_t)IRQn) >> 5UL)] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL) ? 1UL : 0UL));
 	} else {
 		return (0U);
 	}
@@ -5213,10 +5200,7 @@ __STATIC_INLINE uint32_t __NVIC_GetActive(IRQn_Type IRQn)
 __STATIC_INLINE uint32_t NVIC_GetTargetState(IRQn_Type IRQn)
 {
 	if ((int32_t)(IRQn) >= 0) {
-		return (
-		    (uint32_t)(((NVIC->ITNS[(((uint32_t)IRQn) >> 5UL)] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL)
-				   ? 1UL
-				   : 0UL));
+		return ((uint32_t)(((NVIC->ITNS[(((uint32_t)IRQn) >> 5UL)] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL) ? 1UL : 0UL));
 	} else {
 		return (0U);
 	}
@@ -5234,10 +5218,7 @@ __STATIC_INLINE uint32_t NVIC_SetTargetState(IRQn_Type IRQn)
 {
 	if ((int32_t)(IRQn) >= 0) {
 		NVIC->ITNS[(((uint32_t)IRQn) >> 5UL)] |= ((uint32_t)(1UL << (((uint32_t)IRQn) & 0x1FUL)));
-		return (
-		    (uint32_t)(((NVIC->ITNS[(((uint32_t)IRQn) >> 5UL)] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL)
-				   ? 1UL
-				   : 0UL));
+		return ((uint32_t)(((NVIC->ITNS[(((uint32_t)IRQn) >> 5UL)] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL) ? 1UL : 0UL));
 	} else {
 		return (0U);
 	}
@@ -5255,10 +5236,7 @@ __STATIC_INLINE uint32_t NVIC_ClearTargetState(IRQn_Type IRQn)
 {
 	if ((int32_t)(IRQn) >= 0) {
 		NVIC->ITNS[(((uint32_t)IRQn) >> 5UL)] &= ~((uint32_t)(1UL << (((uint32_t)IRQn) & 0x1FUL)));
-		return (
-		    (uint32_t)(((NVIC->ITNS[(((uint32_t)IRQn) >> 5UL)] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL)
-				   ? 1UL
-				   : 0UL));
+		return ((uint32_t)(((NVIC->ITNS[(((uint32_t)IRQn) >> 5UL)] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL) ? 1UL : 0UL));
 	} else {
 		return (0U);
 	}
@@ -5278,8 +5256,7 @@ __STATIC_INLINE void __NVIC_SetPriority(IRQn_Type IRQn, uint32_t priority)
 	if ((int32_t)(IRQn) >= 0) {
 		NVIC->IPR[((uint32_t)IRQn)] = (uint8_t)((priority << (8U - __NVIC_PRIO_BITS)) & (uint32_t)0xFFUL);
 	} else {
-		SCB->SHPR[(((uint32_t)IRQn) & 0xFUL) - 4UL] =
-		    (uint8_t)((priority << (8U - __NVIC_PRIO_BITS)) & (uint32_t)0xFFUL);
+		SCB->SHPR[(((uint32_t)IRQn) & 0xFUL) - 4UL] = (uint8_t)((priority << (8U - __NVIC_PRIO_BITS)) & (uint32_t)0xFFUL);
 	}
 }
 
@@ -5318,15 +5295,10 @@ __STATIC_INLINE uint32_t NVIC_EncodePriority(uint32_t PriorityGroup, uint32_t Pr
 	uint32_t PreemptPriorityBits;
 	uint32_t SubPriorityBits;
 
-	PreemptPriorityBits = ((7UL - PriorityGroupTmp) > (uint32_t)(__NVIC_PRIO_BITS))
-				  ? (uint32_t)(__NVIC_PRIO_BITS)
-				  : (uint32_t)(7UL - PriorityGroupTmp);
-	SubPriorityBits = ((PriorityGroupTmp + (uint32_t)(__NVIC_PRIO_BITS)) < (uint32_t)7UL)
-			      ? (uint32_t)0UL
-			      : (uint32_t)((PriorityGroupTmp - 7UL) + (uint32_t)(__NVIC_PRIO_BITS));
+	PreemptPriorityBits = ((7UL - PriorityGroupTmp) > (uint32_t)(__NVIC_PRIO_BITS)) ? (uint32_t)(__NVIC_PRIO_BITS) : (uint32_t)(7UL - PriorityGroupTmp);
+	SubPriorityBits = ((PriorityGroupTmp + (uint32_t)(__NVIC_PRIO_BITS)) < (uint32_t)7UL) ? (uint32_t)0UL : (uint32_t)((PriorityGroupTmp - 7UL) + (uint32_t)(__NVIC_PRIO_BITS));
 
-	return (((PreemptPriority & (uint32_t)((1UL << (PreemptPriorityBits)) - 1UL)) << SubPriorityBits) |
-		((SubPriority & (uint32_t)((1UL << (SubPriorityBits)) - 1UL))));
+	return (((PreemptPriority & (uint32_t)((1UL << (PreemptPriorityBits)) - 1UL)) << SubPriorityBits) | ((SubPriority & (uint32_t)((1UL << (SubPriorityBits)) - 1UL))));
 }
 
 /**
@@ -5341,19 +5313,14 @@ __STATIC_INLINE uint32_t NVIC_EncodePriority(uint32_t PriorityGroup, uint32_t Pr
   (starting from 0). \param [out]     pSubPriority  Subpriority value (starting
   from 0).
  */
-__STATIC_INLINE void NVIC_DecodePriority(uint32_t Priority, uint32_t PriorityGroup, uint32_t *const pPreemptPriority,
-					 uint32_t *const pSubPriority)
+__STATIC_INLINE void NVIC_DecodePriority(uint32_t Priority, uint32_t PriorityGroup, uint32_t *const pPreemptPriority, uint32_t *const pSubPriority)
 {
 	uint32_t PriorityGroupTmp = (PriorityGroup & (uint32_t)0x07UL); /* only values 0..7 are used */
 	uint32_t PreemptPriorityBits;
 	uint32_t SubPriorityBits;
 
-	PreemptPriorityBits = ((7UL - PriorityGroupTmp) > (uint32_t)(__NVIC_PRIO_BITS))
-				  ? (uint32_t)(__NVIC_PRIO_BITS)
-				  : (uint32_t)(7UL - PriorityGroupTmp);
-	SubPriorityBits = ((PriorityGroupTmp + (uint32_t)(__NVIC_PRIO_BITS)) < (uint32_t)7UL)
-			      ? (uint32_t)0UL
-			      : (uint32_t)((PriorityGroupTmp - 7UL) + (uint32_t)(__NVIC_PRIO_BITS));
+	PreemptPriorityBits = ((7UL - PriorityGroupTmp) > (uint32_t)(__NVIC_PRIO_BITS)) ? (uint32_t)(__NVIC_PRIO_BITS) : (uint32_t)(7UL - PriorityGroupTmp);
+	SubPriorityBits = ((PriorityGroupTmp + (uint32_t)(__NVIC_PRIO_BITS)) < (uint32_t)7UL) ? (uint32_t)0UL : (uint32_t)((PriorityGroupTmp - 7UL) + (uint32_t)(__NVIC_PRIO_BITS));
 
 	*pPreemptPriority = (Priority >> SubPriorityBits) & (uint32_t)((1UL << (PreemptPriorityBits)) - 1UL);
 	*pSubPriority = (Priority) & (uint32_t)((1UL << (SubPriorityBits)) - 1UL);
@@ -5394,12 +5361,11 @@ __STATIC_INLINE uint32_t __NVIC_GetVector(IRQn_Type IRQn)
  */
 __NO_RETURN __STATIC_INLINE void __NVIC_SystemReset(void)
 {
-	__DSB(); /* Ensure all outstanding memory accesses included
-		    buffered write are completed before reset */
-	SCB->AIRCR = (uint32_t)((0x5FAUL << SCB_AIRCR_VECTKEY_Pos) | (SCB->AIRCR & SCB_AIRCR_PRIGROUP_Msk) |
-				SCB_AIRCR_SYSRESETREQ_Msk); /* Keep priority group
-							       unchanged */
-	__DSB();					    /* Ensure completion of memory access */
+	__DSB();															 /* Ensure all outstanding memory accesses included
+																	    buffered write are completed before reset */
+	SCB->AIRCR = (uint32_t)((0x5FAUL << SCB_AIRCR_VECTKEY_Pos) | (SCB->AIRCR & SCB_AIRCR_PRIGROUP_Msk) | SCB_AIRCR_SYSRESETREQ_Msk); /* Keep priority group
+																	    unchanged */
+	__DSB();															 /* Ensure completion of memory access */
 
 	for (;;) /* wait until reset */
 	{
@@ -5422,11 +5388,10 @@ __STATIC_INLINE void TZ_NVIC_SetPriorityGrouping_NS(uint32_t PriorityGroup)
 	uint32_t reg_value;
 	uint32_t PriorityGroupTmp = (PriorityGroup & (uint32_t)0x07UL); /* only values 0..7 are used */
 
-	reg_value = SCB_NS->AIRCR; /* read old register configuration    */
-	reg_value &= ~((uint32_t)(SCB_AIRCR_VECTKEY_Msk | SCB_AIRCR_PRIGROUP_Msk)); /* clear bits to change */
-	reg_value = (reg_value | ((uint32_t)0x5FAUL << SCB_AIRCR_VECTKEY_Pos) |
-		     (PriorityGroupTmp << SCB_AIRCR_PRIGROUP_Pos)); /* Insert write key and
-								       priority group */
+	reg_value = SCB_NS->AIRCR;											       /* read old register configuration    */
+	reg_value &= ~((uint32_t)(SCB_AIRCR_VECTKEY_Msk | SCB_AIRCR_PRIGROUP_Msk));					       /* clear bits to change */
+	reg_value = (reg_value | ((uint32_t)0x5FAUL << SCB_AIRCR_VECTKEY_Pos) | (PriorityGroupTmp << SCB_AIRCR_PRIGROUP_Pos)); /* Insert write key and
+																  priority group */
 	SCB_NS->AIRCR = reg_value;
 }
 
@@ -5436,10 +5401,7 @@ __STATIC_INLINE void TZ_NVIC_SetPriorityGrouping_NS(uint32_t PriorityGroup)
   secure state. \return                Priority grouping field (SCB->AIRCR
   [10:8] PRIGROUP field).
  */
-__STATIC_INLINE uint32_t TZ_NVIC_GetPriorityGrouping_NS(void)
-{
-	return ((uint32_t)((SCB_NS->AIRCR & SCB_AIRCR_PRIGROUP_Msk) >> SCB_AIRCR_PRIGROUP_Pos));
-}
+__STATIC_INLINE uint32_t TZ_NVIC_GetPriorityGrouping_NS(void) { return ((uint32_t)((SCB_NS->AIRCR & SCB_AIRCR_PRIGROUP_Msk) >> SCB_AIRCR_PRIGROUP_Pos)); }
 
 /**
   \brief   Enable Interrupt (non-secure)
@@ -5465,10 +5427,7 @@ __STATIC_INLINE void TZ_NVIC_EnableIRQ_NS(IRQn_Type IRQn)
 __STATIC_INLINE uint32_t TZ_NVIC_GetEnableIRQ_NS(IRQn_Type IRQn)
 {
 	if ((int32_t)(IRQn) >= 0) {
-		return ((
-		    uint32_t)(((NVIC_NS->ISER[(((uint32_t)IRQn) >> 5UL)] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL)
-				  ? 1UL
-				  : 0UL));
+		return ((uint32_t)(((NVIC_NS->ISER[(((uint32_t)IRQn) >> 5UL)] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL) ? 1UL : 0UL));
 	} else {
 		return (0U);
 	}
@@ -5499,10 +5458,7 @@ __STATIC_INLINE void TZ_NVIC_DisableIRQ_NS(IRQn_Type IRQn)
 __STATIC_INLINE uint32_t TZ_NVIC_GetPendingIRQ_NS(IRQn_Type IRQn)
 {
 	if ((int32_t)(IRQn) >= 0) {
-		return ((
-		    uint32_t)(((NVIC_NS->ISPR[(((uint32_t)IRQn) >> 5UL)] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL)
-				  ? 1UL
-				  : 0UL));
+		return ((uint32_t)(((NVIC_NS->ISPR[(((uint32_t)IRQn) >> 5UL)] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL) ? 1UL : 0UL));
 	} else {
 		return (0U);
 	}
@@ -5545,10 +5501,7 @@ __STATIC_INLINE void TZ_NVIC_ClearPendingIRQ_NS(IRQn_Type IRQn)
 __STATIC_INLINE uint32_t TZ_NVIC_GetActive_NS(IRQn_Type IRQn)
 {
 	if ((int32_t)(IRQn) >= 0) {
-		return ((
-		    uint32_t)(((NVIC_NS->IABR[(((uint32_t)IRQn) >> 5UL)] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL)
-				  ? 1UL
-				  : 0UL));
+		return ((uint32_t)(((NVIC_NS->IABR[(((uint32_t)IRQn) >> 5UL)] & (1UL << (((uint32_t)IRQn) & 0x1FUL))) != 0UL) ? 1UL : 0UL));
 	} else {
 		return (0U);
 	}
@@ -5568,8 +5521,7 @@ __STATIC_INLINE void TZ_NVIC_SetPriority_NS(IRQn_Type IRQn, uint32_t priority)
 	if ((int32_t)(IRQn) >= 0) {
 		NVIC_NS->IPR[((uint32_t)IRQn)] = (uint8_t)((priority << (8U - __NVIC_PRIO_BITS)) & (uint32_t)0xFFUL);
 	} else {
-		SCB_NS->SHPR[(((uint32_t)IRQn) & 0xFUL) - 4UL] =
-		    (uint8_t)((priority << (8U - __NVIC_PRIO_BITS)) & (uint32_t)0xFFUL);
+		SCB_NS->SHPR[(((uint32_t)IRQn) & 0xFUL) - 4UL] = (uint8_t)((priority << (8U - __NVIC_PRIO_BITS)) & (uint32_t)0xFFUL);
 	}
 }
 
@@ -5628,22 +5580,22 @@ __STATIC_INLINE uint32_t TZ_NVIC_GetPriority_NS(IRQn_Type IRQn)
 #define ARMCM55_PMU_ECC_ERR_FATAL_ITCM 0xC023	/*!< Any fatal ECC error in the ITCM */
 #define ARMCM55_PMU_PF_LINEFILL 0xC100		/*!< A prefetcher starts a line-fill */
 #define ARMCM55_PMU_PF_CANCEL 0xC101		/*!< A prefetcher stops prefetching */
-#define ARMCM55_PMU_PF_DROP_LINEFILL                                                                                   \
-	0xC102				 /*!< A linefill triggered by a prefetcher has been dropped                    \
+#define ARMCM55_PMU_PF_DROP_LINEFILL                                                                                                                                                                   \
+	0xC102				 /*!< A linefill triggered by a prefetcher has been dropped                                                                                                    \
 					    because of lack of buffering */
 #define ARMCM55_PMU_NWAMODE_ENTER 0xC200 /*!< No write-allocate mode entry */
-#define ARMCM55_PMU_NWAMODE                                                                                            \
-	0xC201				    /*!< Write-allocate store is not allocated into the data cache             \
+#define ARMCM55_PMU_NWAMODE                                                                                                                                                                            \
+	0xC201				    /*!< Write-allocate store is not allocated into the data cache                                                                                             \
 					       due to no-write-allocate mode */
 #define ARMCM55_PMU_SAHB_ACCESS 0xC300	    /*!< Read or write access on the S-AHB interface to the TCM */
 #define ARMCM55_PMU_PAHB_ACCESS 0xC301	    /*!< Read or write access to the P-AHB write interface */
 #define ARMCM55_PMU_AXI_WRITE_ACCESS 0xC302 /*!< Any beat access to M-AXI write interface */
 #define ARMCM55_PMU_AXI_READ_ACCESS 0xC303  /*!< Any beat access to M-AXI read interface */
-#define ARMCM55_PMU_DOSTIMEOUT_DOUBLE                                                                                  \
-	0xC400 /*!< Denial of Service timeout has fired twice and caused                                               \
+#define ARMCM55_PMU_DOSTIMEOUT_DOUBLE                                                                                                                                                                  \
+	0xC400 /*!< Denial of Service timeout has fired twice and caused                                                                                                                               \
 		  buffers to drain to allow forward progress */
-#define ARMCM55_PMU_DOSTIMEOUT_TRIPLE                                                                                  \
-	0xC401 /*!< Denial of Service timeout has fired three times and                                                \
+#define ARMCM55_PMU_DOSTIMEOUT_TRIPLE                                                                                                                                                                  \
+	0xC401 /*!< Denial of Service timeout has fired three times and                                                                                                                                \
 		  blocked the LSU to force forward progress */
 
 #endif
@@ -5857,12 +5809,11 @@ __STATIC_INLINE uint32_t SysTick_Config(uint32_t ticks)
 		return (1UL); /* Reload value impossible */
 	}
 
-	SysTick->LOAD = (uint32_t)(ticks - 1UL);			 /* set reload register */
-	NVIC_SetPriority(SysTick_IRQn, (1UL << __NVIC_PRIO_BITS) - 1UL); /* set Priority for Systick Interrupt */
-	SysTick->VAL = 0UL;						 /* Load the SysTick Counter Value */
-	SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_TICKINT_Msk |
-			SysTick_CTRL_ENABLE_Msk; /* Enable SysTick IRQ and SysTick Timer */
-	return (0UL);				 /* Function successful */
+	SysTick->LOAD = (uint32_t)(ticks - 1UL);							 /* set reload register */
+	NVIC_SetPriority(SysTick_IRQn, (1UL << __NVIC_PRIO_BITS) - 1UL);				 /* set Priority for Systick Interrupt */
+	SysTick->VAL = 0UL;										 /* Load the SysTick Counter Value */
+	SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk; /* Enable SysTick IRQ and SysTick Timer */
+	return (0UL);											 /* Function successful */
 }
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
@@ -5884,12 +5835,11 @@ __STATIC_INLINE uint32_t TZ_SysTick_Config_NS(uint32_t ticks)
 		return (1UL); /* Reload value impossible */
 	}
 
-	SysTick_NS->LOAD = (uint32_t)(ticks - 1UL);			       /* set reload register */
-	TZ_NVIC_SetPriority_NS(SysTick_IRQn, (1UL << __NVIC_PRIO_BITS) - 1UL); /* set Priority for Systick Interrupt */
-	SysTick_NS->VAL = 0UL;						       /* Load the SysTick Counter Value */
-	SysTick_NS->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_TICKINT_Msk |
-			   SysTick_CTRL_ENABLE_Msk; /* Enable SysTick IRQ and SysTick Timer */
-	return (0UL);				    /* Function successful */
+	SysTick_NS->LOAD = (uint32_t)(ticks - 1UL);							    /* set reload register */
+	TZ_NVIC_SetPriority_NS(SysTick_IRQn, (1UL << __NVIC_PRIO_BITS) - 1UL);				    /* set Priority for Systick Interrupt */
+	SysTick_NS->VAL = 0UL;										    /* Load the SysTick Counter Value */
+	SysTick_NS->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk; /* Enable SysTick IRQ and SysTick Timer */
+	return (0UL);											    /* Function successful */
 }
 #endif /* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
@@ -5907,8 +5857,8 @@ __STATIC_INLINE uint32_t TZ_SysTick_Config_NS(uint32_t ticks)
  */
 
 extern volatile int32_t ITM_RxBuffer; /*!< External variable to receive characters. */
-#define ITM_RXBUFFER_EMPTY                                                                                             \
-	((int32_t)0x5AA55AA5U) /*!< Value identifying \ref ITM_RxBuffer is                                             \
+#define ITM_RXBUFFER_EMPTY                                                                                                                                                                             \
+	((int32_t)0x5AA55AA5U) /*!< Value identifying \ref ITM_RxBuffer is                                                                                                                             \
 				  ready for next character. */
 
 /**

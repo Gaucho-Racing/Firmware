@@ -1353,9 +1353,7 @@ uint32_t SDMMC_GetCmdResp1(SDMMC_TypeDef *SDMMCx, uint8_t SD_CMD, uint32_t Timeo
 			return SDMMC_ERROR_TIMEOUT;
 		}
 		sta_reg = SDMMCx->STA;
-	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND | SDMMC_FLAG_CTIMEOUT | SDMMC_FLAG_BUSYD0END)) ==
-		  0U) ||
-		 ((sta_reg & SDMMC_FLAG_CMDACT) != 0U));
+	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND | SDMMC_FLAG_CTIMEOUT | SDMMC_FLAG_BUSYD0END)) == 0U) || ((sta_reg & SDMMC_FLAG_CMDACT) != 0U));
 
 	if (__SDMMC_GET_FLAG(SDMMCx, SDMMC_FLAG_CTIMEOUT)) {
 		__SDMMC_CLEAR_FLAG(SDMMCx, SDMMC_FLAG_CTIMEOUT);
@@ -1440,8 +1438,7 @@ uint32_t SDMMC_GetCmdResp2(SDMMC_TypeDef *SDMMCx)
 			return SDMMC_ERROR_TIMEOUT;
 		}
 		sta_reg = SDMMCx->STA;
-	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND | SDMMC_FLAG_CTIMEOUT)) == 0U) ||
-		 ((sta_reg & SDMMC_FLAG_CMDACT) != 0U));
+	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND | SDMMC_FLAG_CTIMEOUT)) == 0U) || ((sta_reg & SDMMC_FLAG_CMDACT) != 0U));
 
 	if (__SDMMC_GET_FLAG(SDMMCx, SDMMC_FLAG_CTIMEOUT)) {
 		__SDMMC_CLEAR_FLAG(SDMMCx, SDMMC_FLAG_CTIMEOUT);
@@ -1477,8 +1474,7 @@ uint32_t SDMMC_GetCmdResp3(SDMMC_TypeDef *SDMMCx)
 			return SDMMC_ERROR_TIMEOUT;
 		}
 		sta_reg = SDMMCx->STA;
-	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND | SDMMC_FLAG_CTIMEOUT)) == 0U) ||
-		 ((sta_reg & SDMMC_FLAG_CMDACT) != 0U));
+	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND | SDMMC_FLAG_CTIMEOUT)) == 0U) || ((sta_reg & SDMMC_FLAG_CMDACT) != 0U));
 
 	if (__SDMMC_GET_FLAG(SDMMCx, SDMMC_FLAG_CTIMEOUT)) {
 		__SDMMC_CLEAR_FLAG(SDMMCx, SDMMC_FLAG_CTIMEOUT);
@@ -1511,8 +1507,7 @@ uint32_t SDMMC_GetCmdResp4(SDMMC_TypeDef *SDMMCx, uint32_t *pResp)
 			return SDMMC_ERROR_TIMEOUT;
 		}
 		sta_reg = SDMMCx->STA;
-	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND | SDMMC_FLAG_CTIMEOUT)) == 0U) ||
-		 ((sta_reg & SDMMC_FLAG_CMDACT) != 0U));
+	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND | SDMMC_FLAG_CTIMEOUT)) == 0U) || ((sta_reg & SDMMC_FLAG_CMDACT) != 0U));
 
 	if (__SDMMC_GET_FLAG(SDMMCx, SDMMC_FLAG_CTIMEOUT)) {
 		__SDMMC_CLEAR_FLAG(SDMMCx, SDMMC_FLAG_CTIMEOUT);
@@ -1553,8 +1548,7 @@ uint32_t SDMMC_GetCmdResp5(SDMMC_TypeDef *SDMMCx, uint8_t SDIO_CMD, uint8_t *pDa
 			return SDMMC_ERROR_TIMEOUT;
 		}
 		sta_reg = SDMMCx->STA;
-	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND | SDMMC_FLAG_CTIMEOUT)) == 0U) ||
-		 ((sta_reg & SDMMC_FLAG_CMDACT) != 0U));
+	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND | SDMMC_FLAG_CTIMEOUT)) == 0U) || ((sta_reg & SDMMC_FLAG_CMDACT) != 0U));
 
 	if (__SDMMC_GET_FLAG(SDMMCx, SDMMC_FLAG_CTIMEOUT)) {
 		__SDMMC_CLEAR_FLAG(SDMMCx, SDMMC_FLAG_CTIMEOUT);
@@ -1622,8 +1616,7 @@ uint32_t SDMMC_GetCmdResp6(SDMMC_TypeDef *SDMMCx, uint8_t SD_CMD, uint16_t *pRCA
 			return SDMMC_ERROR_TIMEOUT;
 		}
 		sta_reg = SDMMCx->STA;
-	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND | SDMMC_FLAG_CTIMEOUT)) == 0U) ||
-		 ((sta_reg & SDMMC_FLAG_CMDACT) != 0U));
+	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND | SDMMC_FLAG_CTIMEOUT)) == 0U) || ((sta_reg & SDMMC_FLAG_CMDACT) != 0U));
 
 	if (__SDMMC_GET_FLAG(SDMMCx, SDMMC_FLAG_CTIMEOUT)) {
 		__SDMMC_CLEAR_FLAG(SDMMCx, SDMMC_FLAG_CTIMEOUT);
@@ -1648,8 +1641,7 @@ uint32_t SDMMC_GetCmdResp6(SDMMC_TypeDef *SDMMCx, uint8_t SD_CMD, uint16_t *pRCA
 	/* We have received response, retrieve it.  */
 	response_r1 = SDMMC_GetResponse(SDMMCx, SDMMC_RESP1);
 
-	if ((response_r1 & (SDMMC_R6_GENERAL_UNKNOWN_ERROR | SDMMC_R6_ILLEGAL_CMD | SDMMC_R6_COM_CRC_FAILED)) ==
-	    SDMMC_ALLZERO) {
+	if ((response_r1 & (SDMMC_R6_GENERAL_UNKNOWN_ERROR | SDMMC_R6_ILLEGAL_CMD | SDMMC_R6_COM_CRC_FAILED)) == SDMMC_ALLZERO) {
 		*pRCA = (uint16_t)(response_r1 >> 16);
 
 		return SDMMC_ERROR_NONE;
@@ -1679,8 +1671,7 @@ uint32_t SDMMC_GetCmdResp7(SDMMC_TypeDef *SDMMCx)
 			return SDMMC_ERROR_TIMEOUT;
 		}
 		sta_reg = SDMMCx->STA;
-	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND | SDMMC_FLAG_CTIMEOUT)) == 0U) ||
-		 ((sta_reg & SDMMC_FLAG_CMDACT) != 0U));
+	} while (((sta_reg & (SDMMC_FLAG_CCRCFAIL | SDMMC_FLAG_CMDREND | SDMMC_FLAG_CTIMEOUT)) == 0U) || ((sta_reg & SDMMC_FLAG_CMDACT) != 0U));
 
 	if (__SDMMC_GET_FLAG(SDMMCx, SDMMC_FLAG_CTIMEOUT)) {
 		/* Card is not SD V2.0 compliant */
@@ -1752,8 +1743,7 @@ uint32_t SDMMC_DMALinkedList_BuildNode(SDMMC_DMALinkNodeTypeDef *pNode, const SD
  * @param  pNewNode: Pointer to new node to add.
  * @retval Error status
  */
-uint32_t SDMMC_DMALinkedList_InsertNode(SDMMC_DMALinkedListTypeDef *pLinkedList, SDMMC_DMALinkNodeTypeDef *pPrevNode,
-					SDMMC_DMALinkNodeTypeDef *pNode)
+uint32_t SDMMC_DMALinkedList_InsertNode(SDMMC_DMALinkedListTypeDef *pLinkedList, SDMMC_DMALinkNodeTypeDef *pPrevNode, SDMMC_DMALinkNodeTypeDef *pNode)
 {
 	uint32_t link_list_offset;
 	uint32_t node_address = (uint32_t)pNode;
@@ -1822,8 +1812,7 @@ uint32_t SDMMC_DMALinkedList_RemoveNode(SDMMC_DMALinkedListTypeDef *pLinkedList,
 		curr_node = pLinkedList->pHeadNode;
 		while ((curr_node != pNode) && (count <= pLinkedList->NodesCounter)) {
 			prev_node = curr_node;
-			curr_node = (SDMMC_DMALinkNodeTypeDef *)((prev_node->IDMALAR & SDMMC_IDMALAR_IDMALA) +
-								 (uint32_t)pLinkedList->pHeadNode);
+			curr_node = (SDMMC_DMALinkNodeTypeDef *)((prev_node->IDMALAR & SDMMC_IDMALAR_IDMALA) + (uint32_t)pLinkedList->pHeadNode);
 			count++;
 		}
 

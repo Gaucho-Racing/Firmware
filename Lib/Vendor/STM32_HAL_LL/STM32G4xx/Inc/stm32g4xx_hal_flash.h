@@ -130,23 +130,12 @@ typedef struct {
 /**
  * @brief  FLASH Procedure structure definition
  */
-typedef enum {
-	FLASH_PROC_NONE = 0,
-	FLASH_PROC_PAGE_ERASE,
-	FLASH_PROC_MASS_ERASE,
-	FLASH_PROC_PROGRAM,
-	FLASH_PROC_PROGRAM_LAST
-} FLASH_ProcedureTypeDef;
+typedef enum { FLASH_PROC_NONE = 0, FLASH_PROC_PAGE_ERASE, FLASH_PROC_MASS_ERASE, FLASH_PROC_PROGRAM, FLASH_PROC_PROGRAM_LAST } FLASH_ProcedureTypeDef;
 
 /**
  * @brief  FLASH Cache structure definition
  */
-typedef enum {
-	FLASH_CACHE_DISABLED = 0,
-	FLASH_CACHE_ICACHE_ENABLED,
-	FLASH_CACHE_DCACHE_ENABLED,
-	FLASH_CACHE_ICACHE_DCACHE_ENABLED
-} FLASH_CacheTypeDef;
+typedef enum { FLASH_CACHE_DISABLED = 0, FLASH_CACHE_ICACHE_ENABLED, FLASH_CACHE_DCACHE_ENABLED, FLASH_CACHE_ICACHE_DCACHE_ENABLED } FLASH_CacheTypeDef;
 
 /**
  * @brief  FLASH handle Structure definition
@@ -228,13 +217,13 @@ typedef struct {
  * @{
  */
 #define FLASH_TYPEPROGRAM_DOUBLEWORD 0x00U /*!< Program a double-word (64-bit) at a specified address.*/
-#define FLASH_TYPEPROGRAM_FAST                                                                                         \
-	0x01U /*!< Fast program a 32 row double-word (64-bit) at a specified                                           \
-		 address. And another 32 row double-word (64-bit) will be                                              \
+#define FLASH_TYPEPROGRAM_FAST                                                                                                                                                                         \
+	0x01U /*!< Fast program a 32 row double-word (64-bit) at a specified                                                                                                                           \
+		 address. And another 32 row double-word (64-bit) will be                                                                                                                              \
 		 programmed */
-#define FLASH_TYPEPROGRAM_FAST_AND_LAST                                                                                \
-	0x02U /*!< Fast program a 32 row double-word (64-bit) at a specified                                           \
-		 address. And this is the last 32 row double-word (64-bit)                                             \
+#define FLASH_TYPEPROGRAM_FAST_AND_LAST                                                                                                                                                                \
+	0x02U /*!< Fast program a 32 row double-word (64-bit) at a specified                                                                                                                           \
+		 address. And this is the last 32 row double-word (64-bit)                                                                                                                             \
 		 programmed */
 /**
  * @}
@@ -248,8 +237,8 @@ typedef struct {
 #define OPTIONBYTE_USER 0x04U	   /*!< USER option byte configuration */
 #define OPTIONBYTE_PCROP 0x08U	   /*!< PCROP option byte configuration */
 #define OPTIONBYTE_BOOT_LOCK 0x10U /*!< Boot lock option byte configuration */
-#define OPTIONBYTE_SEC                                                                                                 \
-	0x20U /*!< Securable memory option byte configuration                                                          \
+#define OPTIONBYTE_SEC                                                                                                                                                                                 \
+	0x20U /*!< Securable memory option byte configuration                                                                                                                                          \
 	       */
 /**
  * @}
@@ -282,8 +271,8 @@ typedef struct {
  */
 #define OB_RDP_LEVEL_0 0xAAU
 #define OB_RDP_LEVEL_1 0xBBU
-#define OB_RDP_LEVEL_2                                                                                                 \
-	0xCCU /*!< Warning: When enabling read protection level 2                                                      \
+#define OB_RDP_LEVEL_2                                                                                                                                                                                 \
+	0xCCU /*!< Warning: When enabling read protection level 2                                                                                                                                      \
 		   it's no more possible to go back to level 1 or 0 */
 /**
  * @}
@@ -297,25 +286,25 @@ typedef struct {
 #define OB_USER_nRST_STDBY 0x00000004U /*!< Reset generated when entering the standby mode */
 #define OB_USER_IWDG_SW 0x00000008U    /*!< Independent watchdog selection */
 #define OB_USER_IWDG_STOP 0x00000010U  /*!< Independent watchdog counter freeze in stop mode */
-#define OB_USER_IWDG_STDBY                                                                                             \
-	0x00000020U		    /*!< Independent watchdog counter freeze in standby mode                           \
+#define OB_USER_IWDG_STDBY                                                                                                                                                                             \
+	0x00000020U		    /*!< Independent watchdog counter freeze in standby mode                                                                                                           \
 				     */
 #define OB_USER_WWDG_SW 0x00000040U /*!< Window watchdog selection */
 #if defined(FLASH_OPTR_DBANK)
 #define OB_USER_BFB2 0x00000080U /*!< Dual-bank boot */
-#define OB_USER_DBANK                                                                                                  \
-	0x00000100U /*!< Single bank with 128-bits data or two banks with                                              \
+#define OB_USER_DBANK                                                                                                                                                                                  \
+	0x00000100U /*!< Single bank with 128-bits data or two banks with                                                                                                                              \
 		       64-bits data */
 #endif
 #if defined(FLASH_OPTR_PB4_PUPEN)
 #define OB_USER_PB4_PUPEN 0x00000100U /*!< USB power delivery dead-battery/TDI pull-up */
 #endif
 #define OB_USER_nBOOT1 0x00000200U /*!< Boot configuration */
-#define OB_USER_SRAM_PE                                                                                                \
-	0x00000400U /*!< SRAM parity check enable (first 32kB of SRAM1 + CCM                                           \
+#define OB_USER_SRAM_PE                                                                                                                                                                                \
+	0x00000400U /*!< SRAM parity check enable (first 32kB of SRAM1 + CCM                                                                                                                           \
 		       SRAM) */
-#define OB_USER_CCMSRAM_RST                                                                                            \
-	0x00000800U		      /*!< CCMSRAM Erase when system reset                                             \
+#define OB_USER_CCMSRAM_RST                                                                                                                                                                            \
+	0x00000800U		      /*!< CCMSRAM Erase when system reset                                                                                                                             \
 				       */
 #define OB_USER_nRST_SHDW 0x00001000U /*!< Reset generated when entering the shutdown mode */
 #define OB_USER_nSWBOOT0 0x00002000U  /*!< Software BOOT0 */
@@ -342,8 +331,8 @@ typedef struct {
  * @{
  */
 #define OB_STOP_RST 0x00000000U /*!< Reset generated when entering the stop mode */
-#define OB_STOP_NORST                                                                                                  \
-	FLASH_OPTR_nRST_STOP /*!< No reset generated when entering the stop                                            \
+#define OB_STOP_NORST                                                                                                                                                                                  \
+	FLASH_OPTR_nRST_STOP /*!< No reset generated when entering the stop                                                                                                                            \
 				mode */
 /**
  * @}
@@ -354,8 +343,8 @@ typedef struct {
  * @{
  */
 #define OB_STANDBY_RST 0x00000000U /*!< Reset generated when entering the standby mode */
-#define OB_STANDBY_NORST                                                                                               \
-	FLASH_OPTR_nRST_STDBY /*!< No reset generated when entering the                                                \
+#define OB_STANDBY_NORST                                                                                                                                                                               \
+	FLASH_OPTR_nRST_STDBY /*!< No reset generated when entering the                                                                                                                                \
 				 standby mode */
 /**
  * @}
@@ -366,8 +355,8 @@ typedef struct {
  * @{
  */
 #define OB_SHUTDOWN_RST 0x00000000U /*!< Reset generated when entering the shutdown mode */
-#define OB_SHUTDOWN_NORST                                                                                              \
-	FLASH_OPTR_nRST_SHDW /*!< No reset generated when entering the                                                 \
+#define OB_SHUTDOWN_NORST                                                                                                                                                                              \
+	FLASH_OPTR_nRST_SHDW /*!< No reset generated when entering the                                                                                                                                 \
 				shutdown mode */
 /**
  * @}
@@ -385,11 +374,11 @@ typedef struct {
 /** @defgroup FLASH_OB_USER_IWDG_STOP FLASH Option Bytes User IWDG Mode On Stop
  * @{
  */
-#define OB_IWDG_STOP_FREEZE                                                                                            \
-	0x00000000U /*!< Independent watchdog counter is frozen in Stop mode                                           \
+#define OB_IWDG_STOP_FREEZE                                                                                                                                                                            \
+	0x00000000U /*!< Independent watchdog counter is frozen in Stop mode                                                                                                                           \
 		     */
-#define OB_IWDG_STOP_RUN                                                                                               \
-	FLASH_OPTR_IWDG_STOP /*!< Independent watchdog counter is running in                                           \
+#define OB_IWDG_STOP_RUN                                                                                                                                                                               \
+	FLASH_OPTR_IWDG_STOP /*!< Independent watchdog counter is running in                                                                                                                           \
 				Stop mode */
 /**
  * @}
@@ -399,11 +388,11 @@ typedef struct {
  * Standby
  * @{
  */
-#define OB_IWDG_STDBY_FREEZE                                                                                           \
-	0x00000000U /*!< Independent watchdog counter is frozen in Standby                                             \
+#define OB_IWDG_STDBY_FREEZE                                                                                                                                                                           \
+	0x00000000U /*!< Independent watchdog counter is frozen in Standby                                                                                                                             \
 		       mode */
-#define OB_IWDG_STDBY_RUN                                                                                              \
-	FLASH_OPTR_IWDG_STDBY /*!< Independent watchdog counter is running in                                          \
+#define OB_IWDG_STDBY_RUN                                                                                                                                                                              \
+	FLASH_OPTR_IWDG_STDBY /*!< Independent watchdog counter is running in                                                                                                                          \
 				 Standby mode */
 /**
  * @}
@@ -442,11 +431,11 @@ typedef struct {
 /** @defgroup FLASH_OB_USER_PB4_PUPEN FLASH Option Bytes User PB4 PUPEN bit
  * @{
  */
-#define OB_PB4_PUPEN_DISABLE                                                                                           \
-	0x00000000U /*!< USB power delivery dead-battery enabled/ TDI pull-up                                          \
+#define OB_PB4_PUPEN_DISABLE                                                                                                                                                                           \
+	0x00000000U /*!< USB power delivery dead-battery enabled/ TDI pull-up                                                                                                                          \
 		       deactivated */
-#define OB_PB4_PUPEN_ENABLE                                                                                            \
-	FLASH_OPTR_PB4_PUPEN /*!< USB power delivery dead-battery disabled/                                            \
+#define OB_PB4_PUPEN_ENABLE                                                                                                                                                                            \
+	FLASH_OPTR_PB4_PUPEN /*!< USB power delivery dead-battery disabled/                                                                                                                            \
 				TDI pull-up activated */
 /**
  * @}
@@ -456,11 +445,11 @@ typedef struct {
 /** @defgroup FLASH_OB_USER_nBOOT1 FLASH Option Bytes User BOOT1 Type
  * @{
  */
-#define OB_BOOT1_SRAM                                                                                                  \
-	0x00000000U /*!< Embedded SRAM1 is selected as boot space (if BOOT0=1)                                         \
+#define OB_BOOT1_SRAM                                                                                                                                                                                  \
+	0x00000000U /*!< Embedded SRAM1 is selected as boot space (if BOOT0=1)                                                                                                                         \
 		     */
-#define OB_BOOT1_SYSTEM                                                                                                \
-	FLASH_OPTR_nBOOT1 /*!< System memory is selected as boot space (if                                             \
+#define OB_BOOT1_SYSTEM                                                                                                                                                                                \
+	FLASH_OPTR_nBOOT1 /*!< System memory is selected as boot space (if                                                                                                                             \
 			     BOOT0=1) */
 /**
  * @}
@@ -470,11 +459,11 @@ typedef struct {
  * Type
  * @{
  */
-#define OB_SRAM_PARITY_ENABLE                                                                                          \
-	0x00000000U /*!< SRAM parity check enable (first 32kB of SRAM1 + CCM                                           \
+#define OB_SRAM_PARITY_ENABLE                                                                                                                                                                          \
+	0x00000000U /*!< SRAM parity check enable (first 32kB of SRAM1 + CCM                                                                                                                           \
 		       SRAM) */
-#define OB_SRAM_PARITY_DISABLE                                                                                         \
-	FLASH_OPTR_SRAM_PE /*!< SRAM parity check disable (first 32kB of SRAM1                                         \
+#define OB_SRAM_PARITY_DISABLE                                                                                                                                                                         \
+	FLASH_OPTR_SRAM_PE /*!< SRAM parity check disable (first 32kB of SRAM1                                                                                                                         \
 			      + CCM SRAM) */
 /**
  * @}
@@ -484,8 +473,8 @@ typedef struct {
  * @{
  */
 #define OB_CCMSRAM_RST_ERASE 0x00000000U /*!< CCMSRAM erased when a system reset occurs */
-#define OB_CCMSRAM_RST_NOT_ERASE                                                                                       \
-	FLASH_OPTR_CCMSRAM_RST /*!< CCMSRAM is not erased when a system reset                                          \
+#define OB_CCMSRAM_RST_NOT_ERASE                                                                                                                                                                       \
+	FLASH_OPTR_CCMSRAM_RST /*!< CCMSRAM is not erased when a system reset                                                                                                                          \
 				  occurs */
 /**
  * @}
@@ -513,8 +502,8 @@ typedef struct {
  */
 #define OB_NRST_MODE_INPUT_ONLY FLASH_OPTR_NRST_MODE_0 /*!< Reset pin is in Reset input mode only */
 #define OB_NRST_MODE_GPIO FLASH_OPTR_NRST_MODE_1       /*!< Reset pin is in GPIO mode only */
-#define OB_NRST_MODE_INPUT_OUTPUT                                                                                      \
-	FLASH_OPTR_NRST_MODE /*!< Reset pin is in reset input and output mode                                          \
+#define OB_NRST_MODE_INPUT_OUTPUT                                                                                                                                                                      \
+	FLASH_OPTR_NRST_MODE /*!< Reset pin is in reset input and output mode                                                                                                                          \
 			      */
 /**
  * @}
@@ -533,12 +522,12 @@ typedef struct {
 /** @defgroup FLASH_OB_PCROP_RDP FLASH Option Bytes PCROP On RDP Level Type
  * @{
  */
-#define OB_PCROP_RDP_NOT_ERASE                                                                                         \
-	0x00000000U /*!< PCROP area is not erased when the RDP level                                                   \
+#define OB_PCROP_RDP_NOT_ERASE                                                                                                                                                                         \
+	0x00000000U /*!< PCROP area is not erased when the RDP level                                                                                                                                   \
 			 is decreased from Level 1 to Level 0 */
-#define OB_PCROP_RDP_ERASE                                                                                             \
-	FLASH_PCROP1ER_PCROP_RDP /*!< PCROP area is erased when the RDP level                                          \
-				    is decreased from Level 1 to Level 0 (full                                         \
+#define OB_PCROP_RDP_ERASE                                                                                                                                                                             \
+	FLASH_PCROP1ER_PCROP_RDP /*!< PCROP area is erased when the RDP level                                                                                                                          \
+				    is decreased from Level 1 to Level 0 (full                                                                                                                         \
 				    mass erase) */
 /**
  * @}
@@ -558,11 +547,11 @@ typedef struct {
 #define FLASH_LATENCY_8 FLASH_ACR_LATENCY_8WS	/*!< FLASH Eight wait states */
 #define FLASH_LATENCY_9 FLASH_ACR_LATENCY_9WS	/*!< FLASH Nine wait states */
 #define FLASH_LATENCY_10 FLASH_ACR_LATENCY_10WS /*!< FLASH Ten wait state */
-#define FLASH_LATENCY_11                                                                                               \
-	FLASH_ACR_LATENCY_11WS /*!< FLASH Eleven wait state                                                            \
+#define FLASH_LATENCY_11                                                                                                                                                                               \
+	FLASH_ACR_LATENCY_11WS /*!< FLASH Eleven wait state                                                                                                                                            \
 				*/
-#define FLASH_LATENCY_12                                                                                               \
-	FLASH_ACR_LATENCY_12WS			/*!< FLASH Twelve wait states                                          \
+#define FLASH_LATENCY_12                                                                                                                                                                               \
+	FLASH_ACR_LATENCY_12WS			/*!< FLASH Twelve wait states                                                                                                                          \
 						 */
 #define FLASH_LATENCY_13 FLASH_ACR_LATENCY_13WS /*!< FLASH Thirteen wait states */
 #define FLASH_LATENCY_14 FLASH_ACR_LATENCY_14WS /*!< FLASH Fourteen wait states */
@@ -575,18 +564,18 @@ typedef struct {
  * @{
  */
 #define FLASH_KEY1 0x45670123U /*!< Flash key1 */
-#define FLASH_KEY2                                                                                                     \
-	0xCDEF89ABU /*!< Flash key2: used with FLASH_KEY1                                                              \
+#define FLASH_KEY2                                                                                                                                                                                     \
+	0xCDEF89ABU /*!< Flash key2: used with FLASH_KEY1                                                                                                                                              \
 			 to unlock the FLASH registers access */
 
 #define FLASH_PDKEY1 0x04152637U /*!< Flash power down key1 */
-#define FLASH_PDKEY2                                                                                                   \
-	0xFAFBFCFDU /*!< Flash power down key2: used with FLASH_PDKEY1                                                 \
+#define FLASH_PDKEY2                                                                                                                                                                                   \
+	0xFAFBFCFDU /*!< Flash power down key2: used with FLASH_PDKEY1                                                                                                                                 \
 			 to unlock the RUN_PD bit in FLASH_ACR */
 
 #define FLASH_OPTKEY1 0x08192A3BU /*!< Flash option byte key1 */
-#define FLASH_OPTKEY2                                                                                                  \
-	0x4C5D6E7FU /*!< Flash option byte key2: used with FLASH_OPTKEY1                                               \
+#define FLASH_OPTKEY2                                                                                                                                                                                  \
+	0x4C5D6E7FU /*!< Flash option byte key2: used with FLASH_OPTKEY1                                                                                                                               \
 			 to allow option bytes operations */
 /**
  * @}
@@ -597,8 +586,8 @@ typedef struct {
  */
 #define FLASH_FLAG_EOP FLASH_SR_EOP	/*!< FLASH End of operation flag */
 #define FLASH_FLAG_OPERR FLASH_SR_OPERR /*!< FLASH Operation error flag */
-#define FLASH_FLAG_PROGERR                                                                                             \
-	FLASH_SR_PROGERR		    /*!< FLASH Programming error flag                                          \
+#define FLASH_FLAG_PROGERR                                                                                                                                                                             \
+	FLASH_SR_PROGERR		    /*!< FLASH Programming error flag                                                                                                                          \
 					     */
 #define FLASH_FLAG_WRPERR FLASH_SR_WRPERR   /*!< FLASH Write protection error flag */
 #define FLASH_FLAG_PGAERR FLASH_SR_PGAERR   /*!< FLASH Programming alignment error flag */
@@ -612,17 +601,17 @@ typedef struct {
 #define FLASH_FLAG_ECCC FLASH_ECCR_ECCC	    /*!< FLASH ECC correction in 64 LSB bits */
 #define FLASH_FLAG_ECCD FLASH_ECCR_ECCD	    /*!< FLASH ECC detection in 64 LSB bits */
 #if defined(FLASH_OPTR_DBANK)
-#define FLASH_FLAG_ECCC2                                                                                               \
-	FLASH_ECCR_ECCC2 /*!< FLASH ECC correction in 64 MSB bits (mode 128                                            \
+#define FLASH_FLAG_ECCC2                                                                                                                                                                               \
+	FLASH_ECCR_ECCC2 /*!< FLASH ECC correction in 64 MSB bits (mode 128                                                                                                                            \
 			    bits only) */
-#define FLASH_FLAG_ECCD2                                                                                               \
-	FLASH_ECCR_ECCD2 /*!< FLASH ECC detection in 64 MSB bits (mode 128                                             \
+#define FLASH_FLAG_ECCD2                                                                                                                                                                               \
+	FLASH_ECCR_ECCD2 /*!< FLASH ECC detection in 64 MSB bits (mode 128                                                                                                                             \
 			    bits only) */
 #endif
 
-#define FLASH_FLAG_SR_ERRORS                                                                                           \
-	(FLASH_FLAG_OPERR | FLASH_FLAG_PROGERR | FLASH_FLAG_WRPERR | FLASH_FLAG_PGAERR | FLASH_FLAG_SIZERR |           \
-	 FLASH_FLAG_PGSERR | FLASH_FLAG_MISERR | FLASH_FLAG_FASTERR | FLASH_FLAG_RDERR | FLASH_FLAG_OPTVERR)
+#define FLASH_FLAG_SR_ERRORS                                                                                                                                                                           \
+	(FLASH_FLAG_OPERR | FLASH_FLAG_PROGERR | FLASH_FLAG_WRPERR | FLASH_FLAG_PGAERR | FLASH_FLAG_SIZERR | FLASH_FLAG_PGSERR | FLASH_FLAG_MISERR | FLASH_FLAG_FASTERR | FLASH_FLAG_RDERR |           \
+	 FLASH_FLAG_OPTVERR)
 #if defined(FLASH_OPTR_DBANK)
 #define FLASH_FLAG_ECCR_ERRORS (FLASH_FLAG_ECCC | FLASH_FLAG_ECCD | FLASH_FLAG_ECCC2 | FLASH_FLAG_ECCD2)
 #else
@@ -639,8 +628,8 @@ typedef struct {
  */
 #define FLASH_IT_EOP FLASH_CR_EOPIE   /*!< End of FLASH Operation Interrupt source */
 #define FLASH_IT_OPERR FLASH_CR_ERRIE /*!< Error Interrupt source */
-#define FLASH_IT_RDERR                                                                                                 \
-	FLASH_CR_RDERRIE			/*!< PCROP Read Error Interrupt                                        \
+#define FLASH_IT_RDERR                                                                                                                                                                                 \
+	FLASH_CR_RDERRIE			/*!< PCROP Read Error Interrupt                                                                                                                        \
 						   source*/
 #define FLASH_IT_ECCC (FLASH_ECCR_ECCIE >> 24U) /*!< ECC Correction Interrupt source */
 /**
@@ -746,10 +735,10 @@ typedef struct {
  * disabled.
  * @retval None
  */
-#define __HAL_FLASH_INSTRUCTION_CACHE_RESET()                                                                          \
-	do {                                                                                                           \
-		SET_BIT(FLASH->ACR, FLASH_ACR_ICRST);                                                                  \
-		CLEAR_BIT(FLASH->ACR, FLASH_ACR_ICRST);                                                                \
+#define __HAL_FLASH_INSTRUCTION_CACHE_RESET()                                                                                                                                                          \
+	do {                                                                                                                                                                                           \
+		SET_BIT(FLASH->ACR, FLASH_ACR_ICRST);                                                                                                                                                  \
+		CLEAR_BIT(FLASH->ACR, FLASH_ACR_ICRST);                                                                                                                                                \
 	} while (0)
 
 /**
@@ -757,10 +746,10 @@ typedef struct {
  * @note   This function must be used only when the data Cache is disabled.
  * @retval None
  */
-#define __HAL_FLASH_DATA_CACHE_RESET()                                                                                 \
-	do {                                                                                                           \
-		SET_BIT(FLASH->ACR, FLASH_ACR_DCRST);                                                                  \
-		CLEAR_BIT(FLASH->ACR, FLASH_ACR_DCRST);                                                                \
+#define __HAL_FLASH_DATA_CACHE_RESET()                                                                                                                                                                 \
+	do {                                                                                                                                                                                           \
+		SET_BIT(FLASH->ACR, FLASH_ACR_DCRST);                                                                                                                                                  \
+		CLEAR_BIT(FLASH->ACR, FLASH_ACR_DCRST);                                                                                                                                                \
 	} while (0)
 
 /**
@@ -768,11 +757,11 @@ typedef struct {
  * @note   Writing this bit to 1, automatically the keys are
  *         lost and a new unlock sequence is necessary to re-write it to 0.
  */
-#define __HAL_FLASH_POWER_DOWN_ENABLE()                                                                                \
-	do {                                                                                                           \
-		WRITE_REG(FLASH->PDKEYR, FLASH_PDKEY1);                                                                \
-		WRITE_REG(FLASH->PDKEYR, FLASH_PDKEY2);                                                                \
-		SET_BIT(FLASH->ACR, FLASH_ACR_RUN_PD);                                                                 \
+#define __HAL_FLASH_POWER_DOWN_ENABLE()                                                                                                                                                                \
+	do {                                                                                                                                                                                           \
+		WRITE_REG(FLASH->PDKEYR, FLASH_PDKEY1);                                                                                                                                                \
+		WRITE_REG(FLASH->PDKEYR, FLASH_PDKEY2);                                                                                                                                                \
+		SET_BIT(FLASH->ACR, FLASH_ACR_RUN_PD);                                                                                                                                                 \
 	} while (0)
 
 /**
@@ -780,11 +769,11 @@ typedef struct {
  * @note   Writing this bit to 0, automatically the keys are
  *         lost and a new unlock sequence is necessary to re-write it to 1.
  */
-#define __HAL_FLASH_POWER_DOWN_DISABLE()                                                                               \
-	do {                                                                                                           \
-		WRITE_REG(FLASH->PDKEYR, FLASH_PDKEY1);                                                                \
-		WRITE_REG(FLASH->PDKEYR, FLASH_PDKEY2);                                                                \
-		CLEAR_BIT(FLASH->ACR, FLASH_ACR_RUN_PD);                                                               \
+#define __HAL_FLASH_POWER_DOWN_DISABLE()                                                                                                                                                               \
+	do {                                                                                                                                                                                           \
+		WRITE_REG(FLASH->PDKEYR, FLASH_PDKEY1);                                                                                                                                                \
+		WRITE_REG(FLASH->PDKEYR, FLASH_PDKEY2);                                                                                                                                                \
+		CLEAR_BIT(FLASH->ACR, FLASH_ACR_RUN_PD);                                                                                                                                               \
 	} while (0)
 
 /**
@@ -818,14 +807,14 @@ typedef struct {
  *     @arg FLASH_IT_ECCC: ECC Correction Interrupt
  * @retval none
  */
-#define __HAL_FLASH_ENABLE_IT(__INTERRUPT__)                                                                           \
-	do {                                                                                                           \
-		if (((__INTERRUPT__) & FLASH_IT_ECCC) != 0U) {                                                         \
-			SET_BIT(FLASH->ECCR, FLASH_ECCR_ECCIE);                                                        \
-		}                                                                                                      \
-		if (((__INTERRUPT__) & (~FLASH_IT_ECCC)) != 0U) {                                                      \
-			SET_BIT(FLASH->CR, ((__INTERRUPT__) & (~FLASH_IT_ECCC)));                                      \
-		}                                                                                                      \
+#define __HAL_FLASH_ENABLE_IT(__INTERRUPT__)                                                                                                                                                           \
+	do {                                                                                                                                                                                           \
+		if (((__INTERRUPT__) & FLASH_IT_ECCC) != 0U) {                                                                                                                                         \
+			SET_BIT(FLASH->ECCR, FLASH_ECCR_ECCIE);                                                                                                                                        \
+		}                                                                                                                                                                                      \
+		if (((__INTERRUPT__) & (~FLASH_IT_ECCC)) != 0U) {                                                                                                                                      \
+			SET_BIT(FLASH->CR, ((__INTERRUPT__) & (~FLASH_IT_ECCC)));                                                                                                                      \
+		}                                                                                                                                                                                      \
 	} while (0)
 
 /**
@@ -838,14 +827,14 @@ typedef struct {
  *     @arg FLASH_IT_ECCC: ECC Correction Interrupt
  * @retval none
  */
-#define __HAL_FLASH_DISABLE_IT(__INTERRUPT__)                                                                          \
-	do {                                                                                                           \
-		if (((__INTERRUPT__) & FLASH_IT_ECCC) != 0U) {                                                         \
-			CLEAR_BIT(FLASH->ECCR, FLASH_ECCR_ECCIE);                                                      \
-		}                                                                                                      \
-		if (((__INTERRUPT__) & (~FLASH_IT_ECCC)) != 0U) {                                                      \
-			CLEAR_BIT(FLASH->CR, ((__INTERRUPT__) & (~FLASH_IT_ECCC)));                                    \
-		}                                                                                                      \
+#define __HAL_FLASH_DISABLE_IT(__INTERRUPT__)                                                                                                                                                          \
+	do {                                                                                                                                                                                           \
+		if (((__INTERRUPT__) & FLASH_IT_ECCC) != 0U) {                                                                                                                                         \
+			CLEAR_BIT(FLASH->ECCR, FLASH_ECCR_ECCIE);                                                                                                                                      \
+		}                                                                                                                                                                                      \
+		if (((__INTERRUPT__) & (~FLASH_IT_ECCC)) != 0U) {                                                                                                                                      \
+			CLEAR_BIT(FLASH->CR, ((__INTERRUPT__) & (~FLASH_IT_ECCC)));                                                                                                                    \
+		}                                                                                                                                                                                      \
 	} while (0)
 
 /**
@@ -875,9 +864,7 @@ typedef struct {
  * @note  (*) availability depends on devices
  * @retval The new state of FLASH_FLAG (SET or RESET).
  */
-#define __HAL_FLASH_GET_FLAG(__FLAG__)                                                                                 \
-	((((__FLAG__) & FLASH_FLAG_ECCR_ERRORS) != 0U) ? (READ_BIT(FLASH->ECCR, (__FLAG__)) == (__FLAG__))             \
-						       : (READ_BIT(FLASH->SR, (__FLAG__)) == (__FLAG__)))
+#define __HAL_FLASH_GET_FLAG(__FLAG__) ((((__FLAG__) & FLASH_FLAG_ECCR_ERRORS) != 0U) ? (READ_BIT(FLASH->ECCR, (__FLAG__)) == (__FLAG__)) : (READ_BIT(FLASH->SR, (__FLAG__)) == (__FLAG__)))
 
 /**
  * @brief  Clear the FLASH's pending flags.
@@ -907,14 +894,14 @@ typedef struct {
  * @note  (*) availability depends on devices
  * @retval None
  */
-#define __HAL_FLASH_CLEAR_FLAG(__FLAG__)                                                                               \
-	do {                                                                                                           \
-		if (((__FLAG__) & FLASH_FLAG_ECCR_ERRORS) != 0U) {                                                     \
-			SET_BIT(FLASH->ECCR, ((__FLAG__) & FLASH_FLAG_ECCR_ERRORS));                                   \
-		}                                                                                                      \
-		if (((__FLAG__) & ~(FLASH_FLAG_ECCR_ERRORS)) != 0U) {                                                  \
-			WRITE_REG(FLASH->SR, ((__FLAG__) & ~(FLASH_FLAG_ECCR_ERRORS)));                                \
-		}                                                                                                      \
+#define __HAL_FLASH_CLEAR_FLAG(__FLAG__)                                                                                                                                                               \
+	do {                                                                                                                                                                                           \
+		if (((__FLAG__) & FLASH_FLAG_ECCR_ERRORS) != 0U) {                                                                                                                                     \
+			SET_BIT(FLASH->ECCR, ((__FLAG__) & FLASH_FLAG_ECCR_ERRORS));                                                                                                                   \
+		}                                                                                                                                                                                      \
+		if (((__FLAG__) & ~(FLASH_FLAG_ECCR_ERRORS)) != 0U) {                                                                                                                                  \
+			WRITE_REG(FLASH->SR, ((__FLAG__) & ~(FLASH_FLAG_ECCR_ERRORS)));                                                                                                                \
+		}                                                                                                                                                                                      \
 	} while (0)
 /**
  * @}
@@ -995,18 +982,12 @@ HAL_StatusTypeDef FLASH_WaitForLastOperation(uint32_t Timeout);
 #define FLASH_SIZE_DATA_REGISTER FLASHSIZE_BASE
 
 #if defined(FLASH_OPTR_DBANK)
-#define FLASH_SIZE                                                                                                     \
-	((((*((uint16_t *)FLASH_SIZE_DATA_REGISTER)) == 0xFFFFU))                                                      \
-	     ? (0x200UL << 10U)                                                                                        \
-	     : (((*((uint32_t *)FLASH_SIZE_DATA_REGISTER)) & 0xFFFFUL) << 10U))
+#define FLASH_SIZE ((((*((uint16_t *)FLASH_SIZE_DATA_REGISTER)) == 0xFFFFU)) ? (0x200UL << 10U) : (((*((uint32_t *)FLASH_SIZE_DATA_REGISTER)) & 0xFFFFUL) << 10U))
 #define FLASH_BANK_SIZE (FLASH_SIZE >> 1)
 #define FLASH_PAGE_NB ((FLASH_SIZE == 0x00080000U) ? 128U : ((FLASH_SIZE == 0x00040000U) ? 64U : 32U))
 #define FLASH_PAGE_SIZE_128_BITS 0x1000U /* 4 KB */
 #else
-#define FLASH_SIZE                                                                                                     \
-	((((*((uint16_t *)FLASH_SIZE_DATA_REGISTER)) == 0xFFFFU))                                                      \
-	     ? (0x80UL << 10U)                                                                                         \
-	     : (((*((uint32_t *)FLASH_SIZE_DATA_REGISTER)) & 0xFFFFUL) << 10U))
+#define FLASH_SIZE ((((*((uint16_t *)FLASH_SIZE_DATA_REGISTER)) == 0xFFFFU)) ? (0x80UL << 10U) : (((*((uint32_t *)FLASH_SIZE_DATA_REGISTER)) & 0xFFFFUL) << 10U))
 #define FLASH_BANK_SIZE (FLASH_SIZE)
 #define FLASH_PAGE_NB ((FLASH_SIZE == 0x00080000U) ? 256U : ((FLASH_SIZE == 0x00040000U) ? 128U : 64U))
 #endif
@@ -1036,9 +1017,7 @@ HAL_StatusTypeDef FLASH_WaitForLastOperation(uint32_t Timeout);
 #define IS_FLASH_BANK_EXCLUSIVE(BANK) ((BANK) == FLASH_BANK_1)
 #endif
 
-#define IS_FLASH_TYPEPROGRAM(VALUE)                                                                                    \
-	(((VALUE) == FLASH_TYPEPROGRAM_DOUBLEWORD) || ((VALUE) == FLASH_TYPEPROGRAM_FAST) ||                           \
-	 ((VALUE) == FLASH_TYPEPROGRAM_FAST_AND_LAST))
+#define IS_FLASH_TYPEPROGRAM(VALUE) (((VALUE) == FLASH_TYPEPROGRAM_DOUBLEWORD) || ((VALUE) == FLASH_TYPEPROGRAM_FAST) || ((VALUE) == FLASH_TYPEPROGRAM_FAST_AND_LAST))
 
 #define IS_FLASH_MAIN_MEM_ADDRESS(ADDRESS) (((ADDRESS) >= FLASH_BASE) && ((ADDRESS) < (FLASH_BASE + FLASH_SIZE)))
 
@@ -1048,28 +1027,21 @@ HAL_StatusTypeDef FLASH_WaitForLastOperation(uint32_t Timeout);
 
 #define IS_FLASH_PAGE(PAGE) ((PAGE) < FLASH_PAGE_NB)
 
-#define IS_OPTIONBYTE(VALUE)                                                                                           \
-	(((VALUE) <= (OPTIONBYTE_WRP | OPTIONBYTE_RDP | OPTIONBYTE_USER | OPTIONBYTE_PCROP | OPTIONBYTE_BOOT_LOCK |    \
-		      OPTIONBYTE_SEC)))
+#define IS_OPTIONBYTE(VALUE) (((VALUE) <= (OPTIONBYTE_WRP | OPTIONBYTE_RDP | OPTIONBYTE_USER | OPTIONBYTE_PCROP | OPTIONBYTE_BOOT_LOCK | OPTIONBYTE_SEC)))
 
 #if defined(FLASH_OPTR_DBANK)
-#define IS_OB_WRPAREA(VALUE)                                                                                           \
-	(((VALUE) == OB_WRPAREA_BANK1_AREAA) || ((VALUE) == OB_WRPAREA_BANK1_AREAB) ||                                 \
-	 ((VALUE) == OB_WRPAREA_BANK2_AREAA) || ((VALUE) == OB_WRPAREA_BANK2_AREAB))
+#define IS_OB_WRPAREA(VALUE) (((VALUE) == OB_WRPAREA_BANK1_AREAA) || ((VALUE) == OB_WRPAREA_BANK1_AREAB) || ((VALUE) == OB_WRPAREA_BANK2_AREAA) || ((VALUE) == OB_WRPAREA_BANK2_AREAB))
 #else
 #define IS_OB_WRPAREA(VALUE) (((VALUE) == OB_WRPAREA_BANK1_AREAA) || ((VALUE) == OB_WRPAREA_BANK1_AREAB))
 #endif
 
 #define IS_OB_BOOT_LOCK(VALUE) (((VALUE) == OB_BOOT_LOCK_ENABLE) || ((VALUE) == OB_BOOT_LOCK_DISABLE))
 
-#define IS_OB_RDP_LEVEL(LEVEL)                                                                                         \
-	(((LEVEL) == OB_RDP_LEVEL_0) || ((LEVEL) == OB_RDP_LEVEL_1) || ((LEVEL) == OB_RDP_LEVEL_2))
+#define IS_OB_RDP_LEVEL(LEVEL) (((LEVEL) == OB_RDP_LEVEL_0) || ((LEVEL) == OB_RDP_LEVEL_1) || ((LEVEL) == OB_RDP_LEVEL_2))
 
 #define IS_OB_USER_TYPE(TYPE) (((TYPE) <= 0x1FFFFU) && ((TYPE) != 0U))
 
-#define IS_OB_USER_BOR_LEVEL(LEVEL)                                                                                    \
-	(((LEVEL) == OB_BOR_LEVEL_0) || ((LEVEL) == OB_BOR_LEVEL_1) || ((LEVEL) == OB_BOR_LEVEL_2) ||                  \
-	 ((LEVEL) == OB_BOR_LEVEL_3) || ((LEVEL) == OB_BOR_LEVEL_4))
+#define IS_OB_USER_BOR_LEVEL(LEVEL) (((LEVEL) == OB_BOR_LEVEL_0) || ((LEVEL) == OB_BOR_LEVEL_1) || ((LEVEL) == OB_BOR_LEVEL_2) || ((LEVEL) == OB_BOR_LEVEL_3) || ((LEVEL) == OB_BOR_LEVEL_4))
 
 #define IS_OB_USER_STOP(VALUE) (((VALUE) == OB_STOP_RST) || ((VALUE) == OB_STOP_NORST))
 
@@ -1105,9 +1077,7 @@ HAL_StatusTypeDef FLASH_WaitForLastOperation(uint32_t Timeout);
 
 #define IS_OB_USER_BOOT0(VALUE) (((VALUE) == OB_nBOOT0_RESET) || ((VALUE) == OB_nBOOT0_SET))
 
-#define IS_OB_USER_NRST_MODE(VALUE)                                                                                    \
-	(((VALUE) == OB_NRST_MODE_GPIO) || ((VALUE) == OB_NRST_MODE_INPUT_ONLY) ||                                     \
-	 ((VALUE) == OB_NRST_MODE_INPUT_OUTPUT))
+#define IS_OB_USER_NRST_MODE(VALUE) (((VALUE) == OB_NRST_MODE_GPIO) || ((VALUE) == OB_NRST_MODE_INPUT_ONLY) || ((VALUE) == OB_NRST_MODE_INPUT_OUTPUT))
 
 #define IS_OB_USER_IRHEN(VALUE) (((VALUE) == OB_IRH_ENABLE) || ((VALUE) == OB_IRH_DISABLE))
 
@@ -1115,12 +1085,10 @@ HAL_StatusTypeDef FLASH_WaitForLastOperation(uint32_t Timeout);
 
 #define IS_OB_SECMEM_SIZE(VALUE) ((VALUE) <= FLASH_PAGE_NB)
 
-#define IS_FLASH_LATENCY(LATENCY)                                                                                      \
-	(((LATENCY) == FLASH_LATENCY_0) || ((LATENCY) == FLASH_LATENCY_1) || ((LATENCY) == FLASH_LATENCY_2) ||         \
-	 ((LATENCY) == FLASH_LATENCY_3) || ((LATENCY) == FLASH_LATENCY_4) || ((LATENCY) == FLASH_LATENCY_5) ||         \
-	 ((LATENCY) == FLASH_LATENCY_6) || ((LATENCY) == FLASH_LATENCY_7) || ((LATENCY) == FLASH_LATENCY_8) ||         \
-	 ((LATENCY) == FLASH_LATENCY_9) || ((LATENCY) == FLASH_LATENCY_10) || ((LATENCY) == FLASH_LATENCY_11) ||       \
-	 ((LATENCY) == FLASH_LATENCY_12) || ((LATENCY) == FLASH_LATENCY_13) || ((LATENCY) == FLASH_LATENCY_14) ||      \
+#define IS_FLASH_LATENCY(LATENCY)                                                                                                                                                                      \
+	(((LATENCY) == FLASH_LATENCY_0) || ((LATENCY) == FLASH_LATENCY_1) || ((LATENCY) == FLASH_LATENCY_2) || ((LATENCY) == FLASH_LATENCY_3) || ((LATENCY) == FLASH_LATENCY_4) ||                     \
+	 ((LATENCY) == FLASH_LATENCY_5) || ((LATENCY) == FLASH_LATENCY_6) || ((LATENCY) == FLASH_LATENCY_7) || ((LATENCY) == FLASH_LATENCY_8) || ((LATENCY) == FLASH_LATENCY_9) ||                     \
+	 ((LATENCY) == FLASH_LATENCY_10) || ((LATENCY) == FLASH_LATENCY_11) || ((LATENCY) == FLASH_LATENCY_12) || ((LATENCY) == FLASH_LATENCY_13) || ((LATENCY) == FLASH_LATENCY_14) ||                \
 	 ((LATENCY) == FLASH_LATENCY_15))
 /**
  * @}

@@ -137,23 +137,19 @@
  * @{
  */
 static void FLASH_MassErase(uint32_t Banks);
-static void FLASH_OB_WRPConfig(uint32_t WRPArea, uint32_t WRPStartOffset, uint32_t WRPEndOffset,
-			       FunctionalState WRPLock);
+static void FLASH_OB_WRPConfig(uint32_t WRPArea, uint32_t WRPStartOffset, uint32_t WRPEndOffset, FunctionalState WRPLock);
 static void FLASH_OB_RDPConfig(uint32_t RDPLevel);
 static void FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig);
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-static void FLASH_OB_WMSECConfig(uint32_t WMSecConfig, uint32_t WMSecStartPage, uint32_t WMSecEndPage,
-				 uint32_t WMHDPEndPage);
+static void FLASH_OB_WMSECConfig(uint32_t WMSecConfig, uint32_t WMSecStartPage, uint32_t WMSecEndPage, uint32_t WMHDPEndPage);
 static void FLASH_OB_BootLockConfig(uint32_t BootLockConfig);
 #endif /* __ARM_FEATURE_CMSE */
 static void FLASH_OB_BootAddrConfig(uint32_t BootAddrConfig, uint32_t BootAddr);
-static void FLASH_OB_GetWRP(uint32_t WRPArea, uint32_t *WRPStartOffset, uint32_t *WRPEndOffset,
-			    FunctionalState *WRPLock);
+static void FLASH_OB_GetWRP(uint32_t WRPArea, uint32_t *WRPStartOffset, uint32_t *WRPEndOffset, FunctionalState *WRPLock);
 static uint32_t FLASH_OB_GetRDP(void);
 static uint32_t FLASH_OB_GetUser(void);
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-static void FLASH_OB_GetWMSEC(uint32_t *WMSecConfig, uint32_t *WMSecStartPage, uint32_t *WMSecEndPage,
-			      uint32_t *WMHDPEndPage);
+static void FLASH_OB_GetWMSEC(uint32_t *WMSecConfig, uint32_t *WMSecStartPage, uint32_t *WMSecEndPage, uint32_t *WMHDPEndPage);
 static uint32_t FLASH_OB_GetBootLock(void);
 #endif /* __ARM_FEATURE_CMSE */
 static void FLASH_OB_GetBootAddr(uint32_t BootAddrConfig, uint32_t *BootAddr);
@@ -227,8 +223,7 @@ HAL_StatusTypeDef HAL_FLASHEx_Erase(FLASH_EraseInitTypeDef *pEraseInit, uint32_t
 			/*Initialization of PageError variable*/
 			*PageError = 0xFFFFFFFFU;
 
-			for (page_index = pEraseInit->Page; page_index < (pEraseInit->Page + pEraseInit->NbPages);
-			     page_index++) {
+			for (page_index = pEraseInit->Page; page_index < (pEraseInit->Page + pEraseInit->NbPages); page_index++) {
 				FLASH_PageErase(page_index, pEraseInit->Banks);
 
 				/* Wait for last operation to be completed */
@@ -345,8 +340,7 @@ HAL_StatusTypeDef HAL_FLASHEx_OBProgram(FLASH_OBProgramInitTypeDef *pOBInit)
 		/* Write protection configuration */
 		if ((pOBInit->OptionType & OPTIONBYTE_WRP) != 0U) {
 			/* Configure of Write protection on the selected area */
-			FLASH_OB_WRPConfig(pOBInit->WRPArea, pOBInit->WRPStartOffset, pOBInit->WRPEndOffset,
-					   pOBInit->WRPLock);
+			FLASH_OB_WRPConfig(pOBInit->WRPArea, pOBInit->WRPStartOffset, pOBInit->WRPEndOffset, pOBInit->WRPLock);
 		}
 
 		/* Read protection configuration */
@@ -371,8 +365,7 @@ HAL_StatusTypeDef HAL_FLASHEx_OBProgram(FLASH_OBProgramInitTypeDef *pOBInit)
 		/* Watermark secure configuration */
 		if ((pOBInit->OptionType & OPTIONBYTE_WMSEC) != 0U) {
 			/* Configure the watermark-based secure area */
-			FLASH_OB_WMSECConfig(pOBInit->WMSecConfig, pOBInit->WMSecStartPage, pOBInit->WMSecEndPage,
-					     pOBInit->WMHDPEndPage);
+			FLASH_OB_WMSECConfig(pOBInit->WMSecConfig, pOBInit->WMSecStartPage, pOBInit->WMSecEndPage, pOBInit->WMHDPEndPage);
 		}
 
 		/* Unique boot entry point configuration */
@@ -415,12 +408,11 @@ void HAL_FLASHEx_OBGetConfig(FLASH_OBProgramInitTypeDef *pOBInit)
 {
 	pOBInit->OptionType = (OPTIONBYTE_RDP | OPTIONBYTE_USER);
 
-	if ((pOBInit->WRPArea == OB_WRPAREA_BANK1_AREAA) || (pOBInit->WRPArea == OB_WRPAREA_BANK1_AREAB) ||
-	    (pOBInit->WRPArea == OB_WRPAREA_BANK2_AREAA) || (pOBInit->WRPArea == OB_WRPAREA_BANK2_AREAB)) {
+	if ((pOBInit->WRPArea == OB_WRPAREA_BANK1_AREAA) || (pOBInit->WRPArea == OB_WRPAREA_BANK1_AREAB) || (pOBInit->WRPArea == OB_WRPAREA_BANK2_AREAA) ||
+	    (pOBInit->WRPArea == OB_WRPAREA_BANK2_AREAB)) {
 		pOBInit->OptionType |= OPTIONBYTE_WRP;
 		/* Get write protection on the selected area */
-		FLASH_OB_GetWRP(pOBInit->WRPArea, &(pOBInit->WRPStartOffset), &(pOBInit->WRPEndOffset),
-				&(pOBInit->WRPLock));
+		FLASH_OB_GetWRP(pOBInit->WRPArea, &(pOBInit->WRPStartOffset), &(pOBInit->WRPEndOffset), &(pOBInit->WRPLock));
 	}
 
 	/* Get Read protection level */
@@ -434,8 +426,7 @@ void HAL_FLASHEx_OBGetConfig(FLASH_OBProgramInitTypeDef *pOBInit)
 	 * area */
 	if ((pOBInit->WMSecConfig == OB_WMSEC_AREA1) || (pOBInit->WMSecConfig == OB_WMSEC_AREA2)) {
 		pOBInit->OptionType |= OPTIONBYTE_WMSEC;
-		FLASH_OB_GetWMSEC(&(pOBInit->WMSecConfig), &(pOBInit->WMSecStartPage), &(pOBInit->WMSecEndPage),
-				  &(pOBInit->WMHDPEndPage));
+		FLASH_OB_GetWMSEC(&(pOBInit->WMSecConfig), &(pOBInit->WMSecStartPage), &(pOBInit->WMSecEndPage), &(pOBInit->WMHDPEndPage));
 	}
 
 	pOBInit->OptionType |= OPTIONBYTE_BOOT_LOCK;
@@ -446,8 +437,7 @@ void HAL_FLASHEx_OBGetConfig(FLASH_OBProgramInitTypeDef *pOBInit)
 
 	/* Get the value of the selected boot address */
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-	if ((pOBInit->BootAddrConfig == OB_BOOTADDR_NS0) || (pOBInit->BootAddrConfig == OB_BOOTADDR_NS1) ||
-	    (pOBInit->BootAddrConfig == OB_BOOTADDR_SEC0))
+	if ((pOBInit->BootAddrConfig == OB_BOOTADDR_NS0) || (pOBInit->BootAddrConfig == OB_BOOTADDR_NS1) || (pOBInit->BootAddrConfig == OB_BOOTADDR_SEC0))
 #else
 	if ((pOBInit->BootAddrConfig == OB_BOOTADDR_NS0) || (pOBInit->BootAddrConfig == OB_BOOTADDR_NS1))
 #endif /* __ARM_FEATURE_CMSE */
@@ -893,8 +883,7 @@ void FLASH_PageErase(uint32_t Page, uint32_t Banks)
 	}
 
 	/* Proceed to erase the page */
-	MODIFY_REG((*reg_cr), (FLASH_NSCR_PNB | FLASH_NSCR_PER | FLASH_NSCR_STRT),
-		   ((Page << FLASH_NSCR_PNB_Pos) | FLASH_NSCR_PER | FLASH_NSCR_STRT));
+	MODIFY_REG((*reg_cr), (FLASH_NSCR_PNB | FLASH_NSCR_PER | FLASH_NSCR_STRT), ((Page << FLASH_NSCR_PNB_Pos) | FLASH_NSCR_PER | FLASH_NSCR_STRT));
 }
 
 /**
@@ -929,8 +918,7 @@ void FLASH_PageErase(uint32_t Page, uint32_t Banks)
  *
  * @retval None
  */
-static void FLASH_OB_WRPConfig(uint32_t WRPArea, uint32_t WRPStartOffset, uint32_t WRPEndOffset,
-			       FunctionalState WRPLock)
+static void FLASH_OB_WRPConfig(uint32_t WRPArea, uint32_t WRPStartOffset, uint32_t WRPEndOffset, FunctionalState WRPLock)
 {
 	/* Check the parameters */
 	assert_param(IS_OB_WRPAREA(WRPArea));
@@ -940,17 +928,13 @@ static void FLASH_OB_WRPConfig(uint32_t WRPArea, uint32_t WRPStartOffset, uint32
 
 	/* Configure the write protected area */
 	if (WRPArea == OB_WRPAREA_BANK1_AREAA) {
-		FLASH->WRP1AR = (((uint32_t)(~WRPLock) << FLASH_WRP1AR_UNLOCK_Pos) |
-				 (WRPEndOffset << FLASH_WRP1AR_WRP1A_PEND_Pos) | WRPStartOffset);
+		FLASH->WRP1AR = (((uint32_t)(~WRPLock) << FLASH_WRP1AR_UNLOCK_Pos) | (WRPEndOffset << FLASH_WRP1AR_WRP1A_PEND_Pos) | WRPStartOffset);
 	} else if (WRPArea == OB_WRPAREA_BANK1_AREAB) {
-		FLASH->WRP1BR = (((uint32_t)(~WRPLock) << FLASH_WRP1BR_UNLOCK_Pos) |
-				 (WRPEndOffset << FLASH_WRP1BR_WRP1B_PEND_Pos) | WRPStartOffset);
+		FLASH->WRP1BR = (((uint32_t)(~WRPLock) << FLASH_WRP1BR_UNLOCK_Pos) | (WRPEndOffset << FLASH_WRP1BR_WRP1B_PEND_Pos) | WRPStartOffset);
 	} else if (WRPArea == OB_WRPAREA_BANK2_AREAA) {
-		FLASH->WRP2AR = (((uint32_t)(~WRPLock) << FLASH_WRP2AR_UNLOCK_Pos) |
-				 (WRPEndOffset << FLASH_WRP2AR_WRP2A_PEND_Pos) | WRPStartOffset);
+		FLASH->WRP2AR = (((uint32_t)(~WRPLock) << FLASH_WRP2AR_UNLOCK_Pos) | (WRPEndOffset << FLASH_WRP2AR_WRP2A_PEND_Pos) | WRPStartOffset);
 	} else if (WRPArea == OB_WRPAREA_BANK2_AREAB) {
-		FLASH->WRP2BR = (((uint32_t)(~WRPLock) << FLASH_WRP2BR_UNLOCK_Pos) |
-				 (WRPEndOffset << FLASH_WRP2BR_WRP2B_PEND_Pos) | WRPStartOffset);
+		FLASH->WRP2BR = (((uint32_t)(~WRPLock) << FLASH_WRP2BR_UNLOCK_Pos) | (WRPEndOffset << FLASH_WRP2BR_WRP2B_PEND_Pos) | WRPStartOffset);
 	} else {
 		/* Empty statement (to be compliant MISRA 15.7) */
 	}
@@ -1262,8 +1246,7 @@ static void FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserConfig)
  *
  * @retval None
  */
-static void FLASH_OB_WMSECConfig(uint32_t WMSecConfig, uint32_t WMSecStartPage, uint32_t WMSecEndPage,
-				 uint32_t WMHDPEndPage)
+static void FLASH_OB_WMSECConfig(uint32_t WMSecConfig, uint32_t WMSecStartPage, uint32_t WMSecEndPage, uint32_t WMHDPEndPage)
 {
 	uint32_t tmp_secwm1 = 0U;
 	uint32_t tmp_secwm2 = 0U;
@@ -1394,8 +1377,7 @@ static void FLASH_OB_BootAddrConfig(uint32_t BootAddrConfig, uint32_t BootAddr)
  *
  * @retval None
  */
-static void FLASH_OB_GetWRP(uint32_t WRPArea, uint32_t *WRPStartOffset, uint32_t *WRPEndOffset,
-			    FunctionalState *WRPLock)
+static void FLASH_OB_GetWRP(uint32_t WRPArea, uint32_t *WRPStartOffset, uint32_t *WRPEndOffset, FunctionalState *WRPLock)
 {
 	/* Get the configuration of the write protected area */
 	if (WRPArea == OB_WRPAREA_BANK1_AREAA) {
@@ -1489,8 +1471,7 @@ static uint32_t FLASH_OB_GetUser(void)
  *
  * @retval None
  */
-static void FLASH_OB_GetWMSEC(uint32_t *WMSecConfig, uint32_t *WMSecStartPage, uint32_t *WMSecEndPage,
-			      uint32_t *WMHDPEndPage)
+static void FLASH_OB_GetWMSEC(uint32_t *WMSecConfig, uint32_t *WMSecStartPage, uint32_t *WMSecEndPage, uint32_t *WMHDPEndPage)
 {
 	uint32_t tmp_secwm1 = 0U;
 	uint32_t tmp_secwm2 = 0U;

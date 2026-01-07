@@ -145,8 +145,8 @@ extern "C" {
 #define LL_PWR_PVDLEVEL_4 (PWR_CR2_PLS_LEV4) /* VPVD4 around 2.6 V */
 #define LL_PWR_PVDLEVEL_5 (PWR_CR2_PLS_LEV5) /* VPVD5 around 2.8 V */
 #define LL_PWR_PVDLEVEL_6 (PWR_CR2_PLS_LEV6) /* VPVD6 around 2.9 V */
-#define LL_PWR_PVDLEVEL_7                                                                                              \
-	(PWR_CR2_PLS_LEV7) /* External input analog voltage   (Compare                                                 \
+#define LL_PWR_PVDLEVEL_7                                                                                                                                                                              \
+	(PWR_CR2_PLS_LEV7) /* External input analog voltage   (Compare                                                                                                                                 \
 			      internally to VREFINT) */
 /**
  * @}
@@ -303,10 +303,7 @@ __STATIC_INLINE void LL_PWR_ExitLowPowerRunMode(void) { LL_PWR_DisableLowPowerRu
  *         @arg @ref LL_PWR_REGU_VOLTAGE_SCALE2
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_SetRegulVoltageScaling(uint32_t VoltageScaling)
-{
-	MODIFY_REG(PWR->CR1, PWR_CR1_VOS, VoltageScaling);
-}
+__STATIC_INLINE void LL_PWR_SetRegulVoltageScaling(uint32_t VoltageScaling) { MODIFY_REG(PWR->CR1, PWR_CR1_VOS, VoltageScaling); }
 
 /**
  * @brief  Get the main internal regulator output voltage
@@ -422,11 +419,7 @@ __STATIC_INLINE void LL_PWR_DisableUCPDStandbyMode(void) { CLEAR_BIT(PWR->CR3, P
  * @rmtoll CR3          UCPD_STDBY           LL_PWR_IsEnabledUCPDStandbyMode
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_PWR_IsEnabledUCPDStandbyMode(void)
-{
-
-	return ((READ_BIT(PWR->CR3, PWR_CR3_UCPD_STDBY) == (PWR_CR3_UCPD_STDBY)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_PWR_IsEnabledUCPDStandbyMode(void) { return ((READ_BIT(PWR->CR3, PWR_CR3_UCPD_STDBY) == (PWR_CR3_UCPD_STDBY)) ? 1UL : 0UL); }
 #endif /* PWR_CR3_UCPD_STDBY */
 
 #if defined(PWR_CR3_UCPD_DBDIS)
@@ -467,10 +460,7 @@ __STATIC_INLINE void LL_PWR_DisableUCPDDeadBattery(void) { SET_BIT(PWR->CR3, PWR
  * @rmtoll CR3          UCPD_DBDIS           LL_PWR_IsEnabledUCPDDeadBattery
  * @retval State of feature (1 : enabled; 0 : disabled).
  */
-__STATIC_INLINE uint32_t LL_PWR_IsEnabledUCPDDeadBattery(void)
-{
-	return ((READ_BIT(PWR->CR3, PWR_CR3_UCPD_DBDIS) == (PWR_CR3_UCPD_DBDIS)) ? 0UL : 1UL);
-}
+__STATIC_INLINE uint32_t LL_PWR_IsEnabledUCPDDeadBattery(void) { return ((READ_BIT(PWR->CR3, PWR_CR3_UCPD_DBDIS) == (PWR_CR3_UCPD_DBDIS)) ? 0UL : 1UL); }
 #endif /* PWR_CR3_UCPD_DBDIS */
 
 #if defined(PWR_CR2_USV)
@@ -666,10 +656,7 @@ __STATIC_INLINE void LL_PWR_DisableInternWU(void) { CLEAR_BIT(PWR->CR3, PWR_CR3_
  * @rmtoll CR3          EIWF          LL_PWR_IsEnabledInternWU
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_PWR_IsEnabledInternWU(void)
-{
-	return ((READ_BIT(PWR->CR3, PWR_CR3_EIWF) == (PWR_CR3_EIWF)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_PWR_IsEnabledInternWU(void) { return ((READ_BIT(PWR->CR3, PWR_CR3_EIWF) == (PWR_CR3_EIWF)) ? 1UL : 0UL); }
 
 /**
  * @brief  Enable pull-up and pull-down configuration
@@ -925,10 +912,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsWakeUpPinPolarityLow(uint32_t WakeUpPin)
  *         @arg @ref LL_PWR_GPIO_BIT_15
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_EnableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber)
-{
-	SET_BIT(*((__IO uint32_t *)GPIO), GPIONumber);
-}
+__STATIC_INLINE void LL_PWR_EnableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber) { SET_BIT(*((__IO uint32_t *)GPIO), GPIONumber); }
 
 /**
  * @brief  Disable GPIO pull-up state in Standby and Shutdown modes
@@ -968,10 +952,7 @@ __STATIC_INLINE void LL_PWR_EnableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber)
  *         @arg @ref LL_PWR_GPIO_BIT_15
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_DisableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber)
-{
-	CLEAR_BIT(*((__IO uint32_t *)GPIO), GPIONumber);
-}
+__STATIC_INLINE void LL_PWR_DisableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber) { CLEAR_BIT(*((__IO uint32_t *)GPIO), GPIONumber); }
 
 /**
  * @brief  Check if GPIO pull-up state is enabled
@@ -1011,10 +992,7 @@ __STATIC_INLINE void LL_PWR_DisableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber
  *         @arg @ref LL_PWR_GPIO_BIT_15
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_PWR_IsEnabledGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber)
-{
-	return ((READ_BIT(*((__IO uint32_t *)GPIO), GPIONumber) == (GPIONumber)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_PWR_IsEnabledGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber) { return ((READ_BIT(*((__IO uint32_t *)GPIO), GPIONumber) == (GPIONumber)) ? 1UL : 0UL); }
 
 /**
  * @brief  Enable GPIO pull-down state in Standby and Shutdown modes
@@ -1054,10 +1032,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledGPIOPullUp(uint32_t GPIO, uint32_t GPIO
  *         @arg @ref LL_PWR_GPIO_BIT_15
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_EnableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumber)
-{
-	SET_BIT(*((__IO uint32_t *)(GPIO + 4U)), GPIONumber);
-}
+__STATIC_INLINE void LL_PWR_EnableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumber) { SET_BIT(*((__IO uint32_t *)(GPIO + 4U)), GPIONumber); }
 
 /**
  * @brief  Disable GPIO pull-down state in Standby and Shutdown modes
@@ -1097,10 +1072,7 @@ __STATIC_INLINE void LL_PWR_EnableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumbe
  *         @arg @ref LL_PWR_GPIO_BIT_15
  * @retval None
  */
-__STATIC_INLINE void LL_PWR_DisableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumber)
-{
-	CLEAR_BIT(*((__IO uint32_t *)(GPIO + 4U)), GPIONumber);
-}
+__STATIC_INLINE void LL_PWR_DisableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumber) { CLEAR_BIT(*((__IO uint32_t *)(GPIO + 4U)), GPIONumber); }
 
 /**
  * @brief  Check if GPIO pull-down state is enabled
@@ -1140,10 +1112,7 @@ __STATIC_INLINE void LL_PWR_DisableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumb
  *         @arg @ref LL_PWR_GPIO_BIT_15
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_PWR_IsEnabledGPIOPullDown(uint32_t GPIO, uint32_t GPIONumber)
-{
-	return ((READ_BIT(*((__IO uint32_t *)(GPIO + 4U)), GPIONumber) == (GPIONumber)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_PWR_IsEnabledGPIOPullDown(uint32_t GPIO, uint32_t GPIONumber) { return ((READ_BIT(*((__IO uint32_t *)(GPIO + 4U)), GPIONumber) == (GPIONumber)) ? 1UL : 0UL); }
 
 /**
  * @}

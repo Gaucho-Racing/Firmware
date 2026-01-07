@@ -117,15 +117,10 @@ HAL_StatusTypeDef HAL_RNGEx_SetConfig(RNG_HandleTypeDef *hrng, const RNG_ConfigT
 		    - Clock divider value
 		    - Automatic reset to clear SECS bit
 		    - CONFIG 1, CONFIG 2 and CONFIG 3 values */
-		cr_value =
-		    (uint32_t)(pConf->ClockDivider | pConf->NistCompliance | pConf->AutoReset |
-			       (pConf->Config1 << RNG_CR_RNG_CONFIG1_Pos) | (pConf->Config2 << RNG_CR_RNG_CONFIG2_Pos) |
-			       (pConf->Config3 << RNG_CR_RNG_CONFIG3_Pos));
+		cr_value = (uint32_t)(pConf->ClockDivider | pConf->NistCompliance | pConf->AutoReset | (pConf->Config1 << RNG_CR_RNG_CONFIG1_Pos) | (pConf->Config2 << RNG_CR_RNG_CONFIG2_Pos) |
+				      (pConf->Config3 << RNG_CR_RNG_CONFIG3_Pos));
 
-		MODIFY_REG(hrng->Instance->CR,
-			   RNG_CR_NISTC | RNG_CR_CLKDIV | RNG_CR_RNG_CONFIG1 | RNG_CR_RNG_CONFIG2 | RNG_CR_RNG_CONFIG3 |
-			       RNG_CR_ARDIS,
-			   (uint32_t)(RNG_CR_CONDRST | cr_value));
+		MODIFY_REG(hrng->Instance->CR, RNG_CR_NISTC | RNG_CR_CLKDIV | RNG_CR_RNG_CONFIG1 | RNG_CR_RNG_CONFIG2 | RNG_CR_RNG_CONFIG3 | RNG_CR_ARDIS, (uint32_t)(RNG_CR_CONDRST | cr_value));
 
 		/* RNG health test control in accordance with NIST */
 		WRITE_REG(hrng->Instance->HTCR, pConf->HealthTest);

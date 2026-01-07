@@ -240,12 +240,12 @@
 /** @defgroup PWR_PVM_Mode_Mask PWR PVM Mode Mask
  * @{
  */
-#define PVM_RISING_EDGE                                                                                                \
-	(0x01U)			 /*!< Mask for rising edge set as PVM trigger                                          \
+#define PVM_RISING_EDGE                                                                                                                                                                                \
+	(0x01U)			 /*!< Mask for rising edge set as PVM trigger                                                                                                                          \
 				  */
 #define PVM_FALLING_EDGE (0x02U) /*!< Mask for falling edge set as PVM trigger */
-#define PVM_MODE_IT                                                                                                    \
-	(0x04U)		     /*!< Mask for interruption yielded by PVM threshold crossing                              \
+#define PVM_MODE_IT                                                                                                                                                                                    \
+	(0x04U)		     /*!< Mask for interruption yielded by PVM threshold crossing                                                                                                              \
 			      */
 #define PVM_MODE_EVT (0x08U) /*!< Mask for event yielded by PVM threshold crossing */
 /**
@@ -1667,15 +1667,12 @@ void HAL_PWREx_EnableRAMsContentStopRetention(uint32_t RAMSelection)
 			assert_param(IS_PWR_SRAM3_STOP_RETENTION(RAMSelection));
 
 			/* Calculate pages mask */
-			dummy = (RAMSelection & ~SRAM_ID_MASK) & (PAGE01_ID | PAGE02_ID | PAGE03_ID | PAGE04_ID |
-								  PAGE05_ID | PAGE06_ID | PAGE07_ID | PAGE08_ID);
+			dummy = (RAMSelection & ~SRAM_ID_MASK) & (PAGE01_ID | PAGE02_ID | PAGE03_ID | PAGE04_ID | PAGE05_ID | PAGE06_ID | PAGE07_ID | PAGE08_ID);
 			CLEAR_BIT(PWR->CR2, (dummy << PWR_CR2_SRAM3PDS1_Pos));
 
 #if defined(PWR_CR4_SRAM3PDS9)
 			/* Calculate pages mask */
-			dummy = ((RAMSelection & ~SRAM_ID_MASK) & ~(PAGE01_ID | PAGE02_ID | PAGE03_ID | PAGE04_ID |
-								    PAGE05_ID | PAGE06_ID | PAGE07_ID | PAGE08_ID)) >>
-				0x08U;
+			dummy = ((RAMSelection & ~SRAM_ID_MASK) & ~(PAGE01_ID | PAGE02_ID | PAGE03_ID | PAGE04_ID | PAGE05_ID | PAGE06_ID | PAGE07_ID | PAGE08_ID)) >> 0x08U;
 			CLEAR_BIT(PWR->CR4, (dummy << PWR_CR4_SRAM3PDS9_Pos));
 #endif /* defined (PWR_CR4_SRAM3PDS9) */
 
@@ -1901,15 +1898,12 @@ void HAL_PWREx_DisableRAMsContentStopRetention(uint32_t RAMSelection)
 			assert_param(IS_PWR_SRAM3_STOP_RETENTION(RAMSelection));
 
 			/* Calculate pages mask */
-			dummy = (RAMSelection & ~SRAM_ID_MASK) & (PAGE01_ID | PAGE02_ID | PAGE03_ID | PAGE04_ID |
-								  PAGE05_ID | PAGE06_ID | PAGE07_ID | PAGE08_ID);
+			dummy = (RAMSelection & ~SRAM_ID_MASK) & (PAGE01_ID | PAGE02_ID | PAGE03_ID | PAGE04_ID | PAGE05_ID | PAGE06_ID | PAGE07_ID | PAGE08_ID);
 			SET_BIT(PWR->CR2, (dummy << PWR_CR2_SRAM3PDS1_Pos));
 
 #if defined(PWR_CR4_SRAM3PDS9)
 			/* Calculate pages mask */
-			dummy = ((RAMSelection & ~SRAM_ID_MASK) & ~(PAGE01_ID | PAGE02_ID | PAGE03_ID | PAGE04_ID |
-								    PAGE05_ID | PAGE06_ID | PAGE07_ID | PAGE08_ID)) >>
-				0x08U;
+			dummy = ((RAMSelection & ~SRAM_ID_MASK) & ~(PAGE01_ID | PAGE02_ID | PAGE03_ID | PAGE04_ID | PAGE05_ID | PAGE06_ID | PAGE07_ID | PAGE08_ID)) >> 0x08U;
 			SET_BIT(PWR->CR4, (dummy << PWR_CR4_SRAM3PDS9_Pos));
 #endif /* defined (PWR_CR4_SRAM3PDS9) */
 

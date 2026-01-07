@@ -191,8 +191,7 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)
 			 * ------------------------*/
 			/* In case of Output or Alternate function mode
 			 * selection */
-			if (((GPIO_Init->Mode & GPIO_MODE) == MODE_OUTPUT) ||
-			    ((GPIO_Init->Mode & GPIO_MODE) == MODE_AF)) {
+			if (((GPIO_Init->Mode & GPIO_MODE) == MODE_OUTPUT) || ((GPIO_Init->Mode & GPIO_MODE) == MODE_AF)) {
 				/* Check the Speed parameter */
 				assert_param(IS_GPIO_SPEED(GPIO_Init->Speed));
 
@@ -221,7 +220,7 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)
 				GPIOx->ASCR = temp;
 			}
 
-#endif /* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx ||                                                  \
+#endif /* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx ||                                                                                                                                  \
 	  STM32L486xx */
 
 			/* Activate the Pull-up or Pull down resistor for the
@@ -375,7 +374,7 @@ void HAL_GPIO_DeInit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
 			/* Deactivate the Control bit of Analog mode for the
 			 * current IO */
 			GPIOx->ASCR &= ~(GPIO_ASCR_ASC0 << position);
-#endif /* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx ||                                                  \
+#endif /* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx ||                                                                                                                                  \
 	  STM32L486xx */
 		}
 

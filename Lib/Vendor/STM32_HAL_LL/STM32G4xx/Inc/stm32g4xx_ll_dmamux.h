@@ -80,35 +80,35 @@ extern "C" {
 #define LL_DMAMUX_CFR_CSOF7 DMAMUX_CFR_CSOF7 /*!< Synchronization Event Overrun Flag Channel 7  */
 #define LL_DMAMUX_CFR_CSOF8 DMAMUX_CFR_CSOF8 /*!< Synchronization Event Overrun Flag Channel 8  */
 #define LL_DMAMUX_CFR_CSOF9 DMAMUX_CFR_CSOF9 /*!< Synchronization Event Overrun Flag Channel 9  */
-#define LL_DMAMUX_CFR_CSOF10                                                                                           \
-	DMAMUX_CFR_CSOF10 /*!< Synchronization Event Overrun Flag Channel 10                                           \
+#define LL_DMAMUX_CFR_CSOF10                                                                                                                                                                           \
+	DMAMUX_CFR_CSOF10 /*!< Synchronization Event Overrun Flag Channel 10                                                                                                                           \
 			   */
-#define LL_DMAMUX_CFR_CSOF11                                                                                           \
-	DMAMUX_CFR_CSOF11 /*!< Synchronization Event Overrun Flag Channel 11                                           \
+#define LL_DMAMUX_CFR_CSOF11                                                                                                                                                                           \
+	DMAMUX_CFR_CSOF11 /*!< Synchronization Event Overrun Flag Channel 11                                                                                                                           \
 			   */
-#define LL_DMAMUX_CFR_CSOF12                                                                                           \
-	DMAMUX_CFR_CSOF12 /*!< Synchronization Event Overrun Flag Channel 12                                           \
+#define LL_DMAMUX_CFR_CSOF12                                                                                                                                                                           \
+	DMAMUX_CFR_CSOF12 /*!< Synchronization Event Overrun Flag Channel 12                                                                                                                           \
 			   */
-#define LL_DMAMUX_CFR_CSOF13                                                                                           \
-	DMAMUX_CFR_CSOF13 /*!< Synchronization Event Overrun Flag Channel 13                                           \
+#define LL_DMAMUX_CFR_CSOF13                                                                                                                                                                           \
+	DMAMUX_CFR_CSOF13 /*!< Synchronization Event Overrun Flag Channel 13                                                                                                                           \
 			   */
-#define LL_DMAMUX_CFR_CSOF14                                                                                           \
-	DMAMUX_CFR_CSOF14 /*!< Synchronization Event Overrun Flag Channel 14                                           \
+#define LL_DMAMUX_CFR_CSOF14                                                                                                                                                                           \
+	DMAMUX_CFR_CSOF14 /*!< Synchronization Event Overrun Flag Channel 14                                                                                                                           \
 			   */
-#define LL_DMAMUX_CFR_CSOF15                                                                                           \
-	DMAMUX_CFR_CSOF15 /*!< Synchronization Event Overrun Flag Channel 15                                           \
+#define LL_DMAMUX_CFR_CSOF15                                                                                                                                                                           \
+	DMAMUX_CFR_CSOF15 /*!< Synchronization Event Overrun Flag Channel 15                                                                                                                           \
 			   */
-#define LL_DMAMUX_RGCFR_RGCOF0                                                                                         \
-	DMAMUX_RGCFR_COF0 /*!< Request Generator 0 Trigger Event Overrun Flag                                          \
+#define LL_DMAMUX_RGCFR_RGCOF0                                                                                                                                                                         \
+	DMAMUX_RGCFR_COF0 /*!< Request Generator 0 Trigger Event Overrun Flag                                                                                                                          \
 			   */
-#define LL_DMAMUX_RGCFR_RGCOF1                                                                                         \
-	DMAMUX_RGCFR_COF1 /*!< Request Generator 1 Trigger Event Overrun Flag                                          \
+#define LL_DMAMUX_RGCFR_RGCOF1                                                                                                                                                                         \
+	DMAMUX_RGCFR_COF1 /*!< Request Generator 1 Trigger Event Overrun Flag                                                                                                                          \
 			   */
-#define LL_DMAMUX_RGCFR_RGCOF2                                                                                         \
-	DMAMUX_RGCFR_COF2 /*!< Request Generator 2 Trigger Event Overrun Flag                                          \
+#define LL_DMAMUX_RGCFR_RGCOF2                                                                                                                                                                         \
+	DMAMUX_RGCFR_COF2 /*!< Request Generator 2 Trigger Event Overrun Flag                                                                                                                          \
 			   */
-#define LL_DMAMUX_RGCFR_RGCOF3                                                                                         \
-	DMAMUX_RGCFR_COF3 /*!< Request Generator 3 Trigger Event Overrun Flag                                          \
+#define LL_DMAMUX_RGCFR_RGCOF3                                                                                                                                                                         \
+	DMAMUX_RGCFR_COF3 /*!< Request Generator 3 Trigger Event Overrun Flag                                                                                                                          \
 			   */
 /**
  * @}
@@ -148,8 +148,8 @@ extern "C" {
  * @{
  */
 #define LL_DMAMUX_CCR_SOIE DMAMUX_CxCR_SOIE /*!< Synchronization Event Overrun Interrupt */
-#define LL_DMAMUX_RGCR_RGOIE                                                                                           \
-	DMAMUX_RGxCR_OIE /*!< Request Generation Trigger Event Overrun                                                 \
+#define LL_DMAMUX_RGCR_RGOIE                                                                                                                                                                           \
+	DMAMUX_RGxCR_OIE /*!< Request Generation Trigger Event Overrun                                                                                                                                 \
 			    Interrupt    */
 /**
  * @}
@@ -159,17 +159,17 @@ extern "C" {
  * @{
  */
 #define LL_DMAMUX_REQ_MEM2MEM 0x00000000U /*!< Memory to memory transfer  */
-#define LL_DMAMUX_REQ_GENERATOR0                                                                                       \
-	0x00000001U /*!< DMAMUX request generator 0                                                                    \
+#define LL_DMAMUX_REQ_GENERATOR0                                                                                                                                                                       \
+	0x00000001U /*!< DMAMUX request generator 0                                                                                                                                                    \
 		     */
-#define LL_DMAMUX_REQ_GENERATOR1                                                                                       \
-	0x00000002U /*!< DMAMUX request generator 1                                                                    \
+#define LL_DMAMUX_REQ_GENERATOR1                                                                                                                                                                       \
+	0x00000002U /*!< DMAMUX request generator 1                                                                                                                                                    \
 		     */
-#define LL_DMAMUX_REQ_GENERATOR2                                                                                       \
-	0x00000003U /*!< DMAMUX request generator 2                                                                    \
+#define LL_DMAMUX_REQ_GENERATOR2                                                                                                                                                                       \
+	0x00000003U /*!< DMAMUX request generator 2                                                                                                                                                    \
 		     */
-#define LL_DMAMUX_REQ_GENERATOR3                                                                                       \
-	0x00000004U			     /*!< DMAMUX request generator 3                                           \
+#define LL_DMAMUX_REQ_GENERATOR3                                                                                                                                                                       \
+	0x00000004U			     /*!< DMAMUX request generator 3                                                                                                                           \
 					      */
 #define LL_DMAMUX_REQ_ADC1 0x00000005U	     /*!< DMAMUX ADC1 request        */
 #define LL_DMAMUX_REQ_DAC1_CH1 0x00000006U   /*!< DMAMUX DAC1 CH1 request    */
@@ -278,8 +278,8 @@ extern "C" {
 #define LL_DMAMUX_REQ_SAI1_B 0x0000006DU     /*!< DMAMUX SAI1 B request      */
 #define LL_DMAMUX_REQ_FMAC_READ 0x0000006EU  /*!< DMAMUX FMAC READ request   */
 #define LL_DMAMUX_REQ_FMAC_WRITE 0x0000006FU /*!< DMAMUX FMAC WRITE request */
-#define LL_DMAMUX_REQ_CORDIC_READ                                                                                      \
-	0x00000070U			       /*!< DMAMUX CORDIC READ request                                         \
+#define LL_DMAMUX_REQ_CORDIC_READ                                                                                                                                                                      \
+	0x00000070U			       /*!< DMAMUX CORDIC READ request                                                                                                                         \
 						*/
 #define LL_DMAMUX_REQ_CORDIC_WRITE 0x00000071U /*!< DMAMUX CORDIC WRITE request*/
 #define LL_DMAMUX_REQ_UCPD1_RX 0x00000072U     /*!< DMAMUX USBPD1_RX request   */
@@ -318,8 +318,8 @@ extern "C" {
 #define LL_DMAMUX_SYNC_NO_EVENT 0x00000000U	      /*!< All requests are blocked   */
 #define LL_DMAMUX_SYNC_POL_RISING DMAMUX_CxCR_SPOL_0  /*!< Synchronization on event on rising edge */
 #define LL_DMAMUX_SYNC_POL_FALLING DMAMUX_CxCR_SPOL_1 /*!< Synchronization on event on falling edge */
-#define LL_DMAMUX_SYNC_POL_RISING_FALLING                                                                              \
-	(DMAMUX_CxCR_SPOL_0 | DMAMUX_CxCR_SPOL_1) /*!< Synchronization on event on rising and                          \
+#define LL_DMAMUX_SYNC_POL_RISING_FALLING                                                                                                                                                              \
+	(DMAMUX_CxCR_SPOL_0 | DMAMUX_CxCR_SPOL_1) /*!< Synchronization on event on rising and                                                                                                          \
 						     falling edge */
 /**
  * @}
@@ -328,58 +328,48 @@ extern "C" {
 /** @defgroup DMAMUX_LL_EC_SYNC_EVT Synchronization Signal Event
  * @{
  */
-#define LL_DMAMUX_SYNC_EXTI_LINE0 0x00000000U		/*!< Synchronization signal from EXTI Line0  */
-#define LL_DMAMUX_SYNC_EXTI_LINE1 DMAMUX_CxCR_SYNC_ID_0 /*!< Synchronization signal from EXTI Line1  */
-#define LL_DMAMUX_SYNC_EXTI_LINE2 DMAMUX_CxCR_SYNC_ID_1 /*!< Synchronization signal from EXTI Line2  */
-#define LL_DMAMUX_SYNC_EXTI_LINE3                                                                                      \
-	(DMAMUX_CxCR_SYNC_ID_1 | DMAMUX_CxCR_SYNC_ID_0) /*!< Synchronization signal from EXTI Line3 */
-#define LL_DMAMUX_SYNC_EXTI_LINE4 DMAMUX_CxCR_SYNC_ID_2 /*!< Synchronization signal from EXTI Line4  */
-#define LL_DMAMUX_SYNC_EXTI_LINE5                                                                                      \
-	(DMAMUX_CxCR_SYNC_ID_2 | DMAMUX_CxCR_SYNC_ID_0) /*!< Synchronization signal from EXTI Line5 */
-#define LL_DMAMUX_SYNC_EXTI_LINE6                                                                                      \
-	(DMAMUX_CxCR_SYNC_ID_2 | DMAMUX_CxCR_SYNC_ID_1) /*!< Synchronization signal from EXTI Line6 */
-#define LL_DMAMUX_SYNC_EXTI_LINE7                                                                                      \
-	(DMAMUX_CxCR_SYNC_ID_2 | DMAMUX_CxCR_SYNC_ID_1 |                                                               \
-	 DMAMUX_CxCR_SYNC_ID_0)				/*!< Synchronization signal from EXTI Line7 */
-#define LL_DMAMUX_SYNC_EXTI_LINE8 DMAMUX_CxCR_SYNC_ID_3 /*!< Synchronization signal from EXTI Line8  */
-#define LL_DMAMUX_SYNC_EXTI_LINE9                                                                                      \
-	(DMAMUX_CxCR_SYNC_ID_3 | DMAMUX_CxCR_SYNC_ID_0) /*!< Synchronization signal from EXTI Line9 */
-#define LL_DMAMUX_SYNC_EXTI_LINE10                                                                                     \
-	(DMAMUX_CxCR_SYNC_ID_3 | DMAMUX_CxCR_SYNC_ID_1) /*!< Synchronization signal from EXTI Line10                   \
+#define LL_DMAMUX_SYNC_EXTI_LINE0 0x00000000U								  /*!< Synchronization signal from EXTI Line0  */
+#define LL_DMAMUX_SYNC_EXTI_LINE1 DMAMUX_CxCR_SYNC_ID_0							  /*!< Synchronization signal from EXTI Line1  */
+#define LL_DMAMUX_SYNC_EXTI_LINE2 DMAMUX_CxCR_SYNC_ID_1							  /*!< Synchronization signal from EXTI Line2  */
+#define LL_DMAMUX_SYNC_EXTI_LINE3 (DMAMUX_CxCR_SYNC_ID_1 | DMAMUX_CxCR_SYNC_ID_0)			  /*!< Synchronization signal from EXTI Line3 */
+#define LL_DMAMUX_SYNC_EXTI_LINE4 DMAMUX_CxCR_SYNC_ID_2							  /*!< Synchronization signal from EXTI Line4  */
+#define LL_DMAMUX_SYNC_EXTI_LINE5 (DMAMUX_CxCR_SYNC_ID_2 | DMAMUX_CxCR_SYNC_ID_0)			  /*!< Synchronization signal from EXTI Line5 */
+#define LL_DMAMUX_SYNC_EXTI_LINE6 (DMAMUX_CxCR_SYNC_ID_2 | DMAMUX_CxCR_SYNC_ID_1)			  /*!< Synchronization signal from EXTI Line6 */
+#define LL_DMAMUX_SYNC_EXTI_LINE7 (DMAMUX_CxCR_SYNC_ID_2 | DMAMUX_CxCR_SYNC_ID_1 | DMAMUX_CxCR_SYNC_ID_0) /*!< Synchronization signal from EXTI Line7 */
+#define LL_DMAMUX_SYNC_EXTI_LINE8 DMAMUX_CxCR_SYNC_ID_3							  /*!< Synchronization signal from EXTI Line8  */
+#define LL_DMAMUX_SYNC_EXTI_LINE9 (DMAMUX_CxCR_SYNC_ID_3 | DMAMUX_CxCR_SYNC_ID_0)			  /*!< Synchronization signal from EXTI Line9 */
+#define LL_DMAMUX_SYNC_EXTI_LINE10                                                                                                                                                                     \
+	(DMAMUX_CxCR_SYNC_ID_3 | DMAMUX_CxCR_SYNC_ID_1) /*!< Synchronization signal from EXTI Line10                                                                                                   \
 							 */
-#define LL_DMAMUX_SYNC_EXTI_LINE11                                                                                     \
-	(DMAMUX_CxCR_SYNC_ID_3 | DMAMUX_CxCR_SYNC_ID_1 |                                                               \
-	 DMAMUX_CxCR_SYNC_ID_0) /*!< Synchronization signal from EXTI Line11                                           \
-				 */
-#define LL_DMAMUX_SYNC_EXTI_LINE12                                                                                     \
-	(DMAMUX_CxCR_SYNC_ID_3 | DMAMUX_CxCR_SYNC_ID_2) /*!< Synchronization signal from EXTI Line12                   \
+#define LL_DMAMUX_SYNC_EXTI_LINE11                                                                                                                                                                     \
+	(DMAMUX_CxCR_SYNC_ID_3 | DMAMUX_CxCR_SYNC_ID_1 | DMAMUX_CxCR_SYNC_ID_0) /*!< Synchronization signal from EXTI Line11                                                                           \
+										 */
+#define LL_DMAMUX_SYNC_EXTI_LINE12                                                                                                                                                                     \
+	(DMAMUX_CxCR_SYNC_ID_3 | DMAMUX_CxCR_SYNC_ID_2) /*!< Synchronization signal from EXTI Line12                                                                                                   \
 							 */
-#define LL_DMAMUX_SYNC_EXTI_LINE13                                                                                     \
-	(DMAMUX_CxCR_SYNC_ID_3 | DMAMUX_CxCR_SYNC_ID_2 |                                                               \
-	 DMAMUX_CxCR_SYNC_ID_0) /*!< Synchronization signal from EXTI Line13                                           \
-				 */
-#define LL_DMAMUX_SYNC_EXTI_LINE14                                                                                     \
-	(DMAMUX_CxCR_SYNC_ID_3 | DMAMUX_CxCR_SYNC_ID_2 |                                                               \
-	 DMAMUX_CxCR_SYNC_ID_1) /*!< Synchronization signal from EXTI Line14                                           \
-				 */
-#define LL_DMAMUX_SYNC_EXTI_LINE15                                                                                     \
-	(DMAMUX_CxCR_SYNC_ID_3 | DMAMUX_CxCR_SYNC_ID_2 | DMAMUX_CxCR_SYNC_ID_1 |                                       \
-	 DMAMUX_CxCR_SYNC_ID_0) /*!< Synchronization signal from EXTI Line15                                           \
-				 */
-#define LL_DMAMUX_SYNC_DMAMUX_CH0                                                                                      \
-	DMAMUX_CxCR_SYNC_ID_4 /*!< Synchronization signal from DMAMUX channel0                                         \
+#define LL_DMAMUX_SYNC_EXTI_LINE13                                                                                                                                                                     \
+	(DMAMUX_CxCR_SYNC_ID_3 | DMAMUX_CxCR_SYNC_ID_2 | DMAMUX_CxCR_SYNC_ID_0) /*!< Synchronization signal from EXTI Line13                                                                           \
+										 */
+#define LL_DMAMUX_SYNC_EXTI_LINE14                                                                                                                                                                     \
+	(DMAMUX_CxCR_SYNC_ID_3 | DMAMUX_CxCR_SYNC_ID_2 | DMAMUX_CxCR_SYNC_ID_1) /*!< Synchronization signal from EXTI Line14                                                                           \
+										 */
+#define LL_DMAMUX_SYNC_EXTI_LINE15                                                                                                                                                                     \
+	(DMAMUX_CxCR_SYNC_ID_3 | DMAMUX_CxCR_SYNC_ID_2 | DMAMUX_CxCR_SYNC_ID_1 | DMAMUX_CxCR_SYNC_ID_0) /*!< Synchronization signal from EXTI Line15                                                   \
+													 */
+#define LL_DMAMUX_SYNC_DMAMUX_CH0                                                                                                                                                                      \
+	DMAMUX_CxCR_SYNC_ID_4 /*!< Synchronization signal from DMAMUX channel0                                                                                                                         \
 				 Event */
-#define LL_DMAMUX_SYNC_DMAMUX_CH1                                                                                      \
-	(DMAMUX_CxCR_SYNC_ID_4 | DMAMUX_CxCR_SYNC_ID_0) /*!< Synchronization signal from DMAMUX                        \
+#define LL_DMAMUX_SYNC_DMAMUX_CH1                                                                                                                                                                      \
+	(DMAMUX_CxCR_SYNC_ID_4 | DMAMUX_CxCR_SYNC_ID_0) /*!< Synchronization signal from DMAMUX                                                                                                        \
 							   channel1 Event */
-#define LL_DMAMUX_SYNC_DMAMUX_CH2                                                                                      \
-	(DMAMUX_CxCR_SYNC_ID_4 | DMAMUX_CxCR_SYNC_ID_1) /*!< Synchronization signal from DMAMUX                        \
+#define LL_DMAMUX_SYNC_DMAMUX_CH2                                                                                                                                                                      \
+	(DMAMUX_CxCR_SYNC_ID_4 | DMAMUX_CxCR_SYNC_ID_1) /*!< Synchronization signal from DMAMUX                                                                                                        \
 							   channel2 Event */
-#define LL_DMAMUX_SYNC_DMAMUX_CH3                                                                                      \
-	(DMAMUX_CxCR_SYNC_ID_4 | DMAMUX_CxCR_SYNC_ID_1 | DMAMUX_CxCR_SYNC_ID_0) /*!< Synchronization signal from       \
+#define LL_DMAMUX_SYNC_DMAMUX_CH3                                                                                                                                                                      \
+	(DMAMUX_CxCR_SYNC_ID_4 | DMAMUX_CxCR_SYNC_ID_1 | DMAMUX_CxCR_SYNC_ID_0) /*!< Synchronization signal from                                                                                       \
 										   DMAMUX channel3 Event */
-#define LL_DMAMUX_SYNC_LPTIM1_OUT                                                                                      \
-	(DMAMUX_CxCR_SYNC_ID_4 | DMAMUX_CxCR_SYNC_ID_2) /*!< Synchronization signal from LPTIM1 Output                 \
+#define LL_DMAMUX_SYNC_LPTIM1_OUT                                                                                                                                                                      \
+	(DMAMUX_CxCR_SYNC_ID_4 | DMAMUX_CxCR_SYNC_ID_2) /*!< Synchronization signal from LPTIM1 Output                                                                                                 \
 							 */
 /**
  * @}
@@ -401,14 +391,14 @@ extern "C" {
  * @{
  */
 #define LL_DMAMUX_REQ_GEN_NO_EVENT 0x00000000U /*!< No external DMA request  generation */
-#define LL_DMAMUX_REQ_GEN_POL_RISING                                                                                   \
-	DMAMUX_RGxCR_GPOL_0 /*!< External DMA request generation on event on                                           \
+#define LL_DMAMUX_REQ_GEN_POL_RISING                                                                                                                                                                   \
+	DMAMUX_RGxCR_GPOL_0 /*!< External DMA request generation on event on                                                                                                                           \
 			       rising edge */
-#define LL_DMAMUX_REQ_GEN_POL_FALLING                                                                                  \
-	DMAMUX_RGxCR_GPOL_1 /*!< External DMA request generation on event on                                           \
+#define LL_DMAMUX_REQ_GEN_POL_FALLING                                                                                                                                                                  \
+	DMAMUX_RGxCR_GPOL_1 /*!< External DMA request generation on event on                                                                                                                           \
 			       falling edge */
-#define LL_DMAMUX_REQ_GEN_POL_RISING_FALLING                                                                           \
-	(DMAMUX_RGxCR_GPOL_0 | DMAMUX_RGxCR_GPOL_1) /*!< External DMA request generation on rising                     \
+#define LL_DMAMUX_REQ_GEN_POL_RISING_FALLING                                                                                                                                                           \
+	(DMAMUX_RGxCR_GPOL_0 | DMAMUX_RGxCR_GPOL_1) /*!< External DMA request generation on rising                                                                                                     \
 						       and falling edge */
 /**
  * @}
@@ -418,67 +408,65 @@ extern "C" {
  * @{
  */
 #define LL_DMAMUX_REQ_GEN_EXTI_LINE0 0x00000000U /*!< Request signal generation from EXTI Line0  */
-#define LL_DMAMUX_REQ_GEN_EXTI_LINE1                                                                                   \
-	DMAMUX_RGxCR_SIG_ID_0 /*!< Request signal generation from EXTI Line1                                           \
+#define LL_DMAMUX_REQ_GEN_EXTI_LINE1                                                                                                                                                                   \
+	DMAMUX_RGxCR_SIG_ID_0 /*!< Request signal generation from EXTI Line1                                                                                                                           \
 			       */
-#define LL_DMAMUX_REQ_GEN_EXTI_LINE2                                                                                   \
-	DMAMUX_RGxCR_SIG_ID_1 /*!< Request signal generation from EXTI Line2                                           \
+#define LL_DMAMUX_REQ_GEN_EXTI_LINE2                                                                                                                                                                   \
+	DMAMUX_RGxCR_SIG_ID_1 /*!< Request signal generation from EXTI Line2                                                                                                                           \
 			       */
-#define LL_DMAMUX_REQ_GEN_EXTI_LINE3                                                                                   \
-	(DMAMUX_RGxCR_SIG_ID_1 | DMAMUX_RGxCR_SIG_ID_0) /*!< Request signal generation from EXTI Line3                 \
+#define LL_DMAMUX_REQ_GEN_EXTI_LINE3                                                                                                                                                                   \
+	(DMAMUX_RGxCR_SIG_ID_1 | DMAMUX_RGxCR_SIG_ID_0) /*!< Request signal generation from EXTI Line3                                                                                                 \
 							 */
-#define LL_DMAMUX_REQ_GEN_EXTI_LINE4                                                                                   \
-	DMAMUX_RGxCR_SIG_ID_2 /*!< Request signal generation from EXTI Line4                                           \
+#define LL_DMAMUX_REQ_GEN_EXTI_LINE4                                                                                                                                                                   \
+	DMAMUX_RGxCR_SIG_ID_2 /*!< Request signal generation from EXTI Line4                                                                                                                           \
 			       */
-#define LL_DMAMUX_REQ_GEN_EXTI_LINE5                                                                                   \
-	(DMAMUX_RGxCR_SIG_ID_2 | DMAMUX_RGxCR_SIG_ID_0) /*!< Request signal generation from EXTI Line5                 \
+#define LL_DMAMUX_REQ_GEN_EXTI_LINE5                                                                                                                                                                   \
+	(DMAMUX_RGxCR_SIG_ID_2 | DMAMUX_RGxCR_SIG_ID_0) /*!< Request signal generation from EXTI Line5                                                                                                 \
 							 */
-#define LL_DMAMUX_REQ_GEN_EXTI_LINE6                                                                                   \
-	(DMAMUX_RGxCR_SIG_ID_2 | DMAMUX_RGxCR_SIG_ID_1) /*!< Request signal generation from EXTI Line6                 \
+#define LL_DMAMUX_REQ_GEN_EXTI_LINE6                                                                                                                                                                   \
+	(DMAMUX_RGxCR_SIG_ID_2 | DMAMUX_RGxCR_SIG_ID_1) /*!< Request signal generation from EXTI Line6                                                                                                 \
 							 */
-#define LL_DMAMUX_REQ_GEN_EXTI_LINE7                                                                                   \
-	(DMAMUX_RGxCR_SIG_ID_2 | DMAMUX_RGxCR_SIG_ID_1 |                                                               \
-	 DMAMUX_RGxCR_SIG_ID_0) /*!< Request signal generation from EXTI Line7                                         \
-				 */
-#define LL_DMAMUX_REQ_GEN_EXTI_LINE8                                                                                   \
-	DMAMUX_RGxCR_SIG_ID_3 /*!< Request signal generation from EXTI Line8                                           \
+#define LL_DMAMUX_REQ_GEN_EXTI_LINE7                                                                                                                                                                   \
+	(DMAMUX_RGxCR_SIG_ID_2 | DMAMUX_RGxCR_SIG_ID_1 | DMAMUX_RGxCR_SIG_ID_0) /*!< Request signal generation from EXTI Line7                                                                         \
+										 */
+#define LL_DMAMUX_REQ_GEN_EXTI_LINE8                                                                                                                                                                   \
+	DMAMUX_RGxCR_SIG_ID_3 /*!< Request signal generation from EXTI Line8                                                                                                                           \
 			       */
-#define LL_DMAMUX_REQ_GEN_EXTI_LINE9                                                                                   \
-	(DMAMUX_RGxCR_SIG_ID_3 | DMAMUX_RGxCR_SIG_ID_0) /*!< Request signal generation from EXTI Line9                 \
+#define LL_DMAMUX_REQ_GEN_EXTI_LINE9                                                                                                                                                                   \
+	(DMAMUX_RGxCR_SIG_ID_3 | DMAMUX_RGxCR_SIG_ID_0) /*!< Request signal generation from EXTI Line9                                                                                                 \
 							 */
-#define LL_DMAMUX_REQ_GEN_EXTI_LINE10                                                                                  \
-	(DMAMUX_RGxCR_SIG_ID_3 | DMAMUX_RGxCR_SIG_ID_1) /*!< Request signal generation from EXTI                       \
+#define LL_DMAMUX_REQ_GEN_EXTI_LINE10                                                                                                                                                                  \
+	(DMAMUX_RGxCR_SIG_ID_3 | DMAMUX_RGxCR_SIG_ID_1) /*!< Request signal generation from EXTI                                                                                                       \
 							   Line10 */
-#define LL_DMAMUX_REQ_GEN_EXTI_LINE11                                                                                  \
-	(DMAMUX_RGxCR_SIG_ID_3 | DMAMUX_RGxCR_SIG_ID_1 | DMAMUX_RGxCR_SIG_ID_0) /*!< Request signal generation from    \
+#define LL_DMAMUX_REQ_GEN_EXTI_LINE11                                                                                                                                                                  \
+	(DMAMUX_RGxCR_SIG_ID_3 | DMAMUX_RGxCR_SIG_ID_1 | DMAMUX_RGxCR_SIG_ID_0) /*!< Request signal generation from                                                                                    \
 										   EXTI Line11 */
-#define LL_DMAMUX_REQ_GEN_EXTI_LINE12                                                                                  \
-	(DMAMUX_RGxCR_SIG_ID_3 | DMAMUX_RGxCR_SIG_ID_2) /*!< Request signal generation from EXTI                       \
+#define LL_DMAMUX_REQ_GEN_EXTI_LINE12                                                                                                                                                                  \
+	(DMAMUX_RGxCR_SIG_ID_3 | DMAMUX_RGxCR_SIG_ID_2) /*!< Request signal generation from EXTI                                                                                                       \
 							   Line12 */
-#define LL_DMAMUX_REQ_GEN_EXTI_LINE13                                                                                  \
-	(DMAMUX_RGxCR_SIG_ID_3 | DMAMUX_RGxCR_SIG_ID_2 | DMAMUX_RGxCR_SIG_ID_0) /*!< Request signal generation from    \
+#define LL_DMAMUX_REQ_GEN_EXTI_LINE13                                                                                                                                                                  \
+	(DMAMUX_RGxCR_SIG_ID_3 | DMAMUX_RGxCR_SIG_ID_2 | DMAMUX_RGxCR_SIG_ID_0) /*!< Request signal generation from                                                                                    \
 										   EXTI Line13 */
-#define LL_DMAMUX_REQ_GEN_EXTI_LINE14                                                                                  \
-	(DMAMUX_RGxCR_SIG_ID_3 | DMAMUX_RGxCR_SIG_ID_2 | DMAMUX_RGxCR_SIG_ID_1) /*!< Request signal generation from    \
+#define LL_DMAMUX_REQ_GEN_EXTI_LINE14                                                                                                                                                                  \
+	(DMAMUX_RGxCR_SIG_ID_3 | DMAMUX_RGxCR_SIG_ID_2 | DMAMUX_RGxCR_SIG_ID_1) /*!< Request signal generation from                                                                                    \
 										   EXTI Line14 */
-#define LL_DMAMUX_REQ_GEN_EXTI_LINE15                                                                                  \
-	(DMAMUX_RGxCR_SIG_ID_3 | DMAMUX_RGxCR_SIG_ID_2 | DMAMUX_RGxCR_SIG_ID_1 |                                       \
-	 DMAMUX_RGxCR_SIG_ID_0) /*!< Request signal generation from EXTI                                               \
-				   Line15 */
-#define LL_DMAMUX_REQ_GEN_DMAMUX_CH0                                                                                   \
-	DMAMUX_RGxCR_SIG_ID_4 /*!< Request signal generation from DMAMUX                                               \
+#define LL_DMAMUX_REQ_GEN_EXTI_LINE15                                                                                                                                                                  \
+	(DMAMUX_RGxCR_SIG_ID_3 | DMAMUX_RGxCR_SIG_ID_2 | DMAMUX_RGxCR_SIG_ID_1 | DMAMUX_RGxCR_SIG_ID_0) /*!< Request signal generation from EXTI                                                       \
+													   Line15 */
+#define LL_DMAMUX_REQ_GEN_DMAMUX_CH0                                                                                                                                                                   \
+	DMAMUX_RGxCR_SIG_ID_4 /*!< Request signal generation from DMAMUX                                                                                                                               \
 				 channel0 Event */
-#define LL_DMAMUX_REQ_GEN_DMAMUX_CH1                                                                                   \
-	(DMAMUX_RGxCR_SIG_ID_4 | DMAMUX_RGxCR_SIG_ID_0) /*!< Request signal generation from DMAMUX                     \
+#define LL_DMAMUX_REQ_GEN_DMAMUX_CH1                                                                                                                                                                   \
+	(DMAMUX_RGxCR_SIG_ID_4 | DMAMUX_RGxCR_SIG_ID_0) /*!< Request signal generation from DMAMUX                                                                                                     \
 							   channel1 Event */
-#define LL_DMAMUX_REQ_GEN_DMAMUX_CH2                                                                                   \
-	(DMAMUX_RGxCR_SIG_ID_4 | DMAMUX_RGxCR_SIG_ID_1) /*!< Request signal generation from DMAMUX                     \
+#define LL_DMAMUX_REQ_GEN_DMAMUX_CH2                                                                                                                                                                   \
+	(DMAMUX_RGxCR_SIG_ID_4 | DMAMUX_RGxCR_SIG_ID_1) /*!< Request signal generation from DMAMUX                                                                                                     \
 							   channel2 Event */
-#define LL_DMAMUX_REQ_GEN_DMAMUX_CH3                                                                                   \
-	(DMAMUX_RGxCR_SIG_ID_4 | DMAMUX_RGxCR_SIG_ID_1 | DMAMUX_RGxCR_SIG_ID_0) /*!< Request signal generation from    \
+#define LL_DMAMUX_REQ_GEN_DMAMUX_CH3                                                                                                                                                                   \
+	(DMAMUX_RGxCR_SIG_ID_4 | DMAMUX_RGxCR_SIG_ID_1 | DMAMUX_RGxCR_SIG_ID_0) /*!< Request signal generation from                                                                                    \
 										   DMAMUX channel3 Event */
-#define LL_DMAMUX_REQ_GEN_LPTIM1_OUT                                                                                   \
-	(DMAMUX_RGxCR_SIG_ID_4 | DMAMUX_RGxCR_SIG_ID_2) /*!< Request signal generation from LPTIM1                     \
+#define LL_DMAMUX_REQ_GEN_LPTIM1_OUT                                                                                                                                                                   \
+	(DMAMUX_RGxCR_SIG_ID_4 | DMAMUX_RGxCR_SIG_ID_2) /*!< Request signal generation from LPTIM1                                                                                                     \
 							   Output */
 /**
  * @}
@@ -887,8 +875,7 @@ __STATIC_INLINE void LL_DMAMUX_SetSyncRequestNb(DMAMUX_Channel_TypeDef *DMAMUXx,
 __STATIC_INLINE uint32_t LL_DMAMUX_GetSyncRequestNb(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t Channel)
 {
 	(void)(DMAMUXx);
-	return (uint32_t)(((READ_BIT((DMAMUX1_Channel0 + Channel)->CCR, DMAMUX_CxCR_NBREQ)) >> DMAMUX_CxCR_NBREQ_Pos) +
-			  1U);
+	return (uint32_t)(((READ_BIT((DMAMUX1_Channel0 + Channel)->CCR, DMAMUX_CxCR_NBREQ)) >> DMAMUX_CxCR_NBREQ_Pos) + 1U);
 }
 
 /**
@@ -1250,10 +1237,7 @@ __STATIC_INLINE uint32_t LL_DMAMUX_GetSyncID(DMAMUX_Channel_TypeDef *DMAMUXx, ui
 __STATIC_INLINE void LL_DMAMUX_EnableRequestGen(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel)
 {
 	(void)(DMAMUXx);
-	SET_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 +
-							  (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))
-		    ->RGCR,
-		DMAMUX_RGxCR_GE);
+	SET_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_GE);
 }
 
 /**
@@ -1270,10 +1254,7 @@ __STATIC_INLINE void LL_DMAMUX_EnableRequestGen(DMAMUX_Channel_TypeDef *DMAMUXx,
 __STATIC_INLINE void LL_DMAMUX_DisableRequestGen(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel)
 {
 	(void)(DMAMUXx);
-	CLEAR_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 +
-							    (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))
-		      ->RGCR,
-		  DMAMUX_RGxCR_GE);
+	CLEAR_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_GE);
 }
 
 /**
@@ -1290,10 +1271,7 @@ __STATIC_INLINE void LL_DMAMUX_DisableRequestGen(DMAMUX_Channel_TypeDef *DMAMUXx
 __STATIC_INLINE uint32_t LL_DMAMUX_IsEnabledRequestGen(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel)
 {
 	(void)(DMAMUXx);
-	return ((READ_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 +
-								    (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))
-			      ->RGCR,
-			  DMAMUX_RGxCR_GE) == (DMAMUX_RGxCR_GE))
+	return ((READ_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_GE) == (DMAMUX_RGxCR_GE))
 		    ? 1UL
 		    : 0UL);
 }
@@ -1314,14 +1292,10 @@ __STATIC_INLINE uint32_t LL_DMAMUX_IsEnabledRequestGen(DMAMUX_Channel_TypeDef *D
  *         @arg @ref LL_DMAMUX_REQ_GEN_POL_RISING_FALLING
  * @retval None
  */
-__STATIC_INLINE void LL_DMAMUX_SetRequestGenPolarity(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel,
-						     uint32_t Polarity)
+__STATIC_INLINE void LL_DMAMUX_SetRequestGenPolarity(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel, uint32_t Polarity)
 {
 	UNUSED(DMAMUXx);
-	MODIFY_REG(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 +
-							     (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))
-		       ->RGCR,
-		   DMAMUX_RGxCR_GPOL, Polarity);
+	MODIFY_REG(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_GPOL, Polarity);
 }
 
 /**
@@ -1342,10 +1316,7 @@ __STATIC_INLINE void LL_DMAMUX_SetRequestGenPolarity(DMAMUX_Channel_TypeDef *DMA
 __STATIC_INLINE uint32_t LL_DMAMUX_GetRequestGenPolarity(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel)
 {
 	UNUSED(DMAMUXx);
-	return (READ_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 +
-								   (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))
-			     ->RGCR,
-			 DMAMUX_RGxCR_GPOL));
+	return (READ_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_GPOL));
 }
 
 /**
@@ -1363,14 +1334,11 @@ __STATIC_INLINE uint32_t LL_DMAMUX_GetRequestGenPolarity(DMAMUX_Channel_TypeDef 
  * Max_Data = 32.
  * @retval None
  */
-__STATIC_INLINE void LL_DMAMUX_SetGenRequestNb(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel,
-					       uint32_t RequestNb)
+__STATIC_INLINE void LL_DMAMUX_SetGenRequestNb(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel, uint32_t RequestNb)
 {
 	UNUSED(DMAMUXx);
-	MODIFY_REG(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 +
-							     (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))
-		       ->RGCR,
-		   DMAMUX_RGxCR_GNBREQ, (RequestNb - 1U) << DMAMUX_RGxCR_GNBREQ_Pos);
+	MODIFY_REG(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_GNBREQ,
+		   (RequestNb - 1U) << DMAMUX_RGxCR_GNBREQ_Pos);
 }
 
 /**
@@ -1388,10 +1356,7 @@ __STATIC_INLINE void LL_DMAMUX_SetGenRequestNb(DMAMUX_Channel_TypeDef *DMAMUXx, 
 __STATIC_INLINE uint32_t LL_DMAMUX_GetGenRequestNb(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel)
 {
 	UNUSED(DMAMUXx);
-	return ((READ_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 +
-								    (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))
-			      ->RGCR,
-			  DMAMUX_RGxCR_GNBREQ) >>
+	return ((READ_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_GNBREQ) >>
 		 DMAMUX_RGxCR_GNBREQ_Pos) +
 		1U);
 }
@@ -1430,14 +1395,10 @@ __STATIC_INLINE uint32_t LL_DMAMUX_GetGenRequestNb(DMAMUX_Channel_TypeDef *DMAMU
  *         @arg @ref LL_DMAMUX_REQ_GEN_LPTIM1_OUT
  * @retval None
  */
-__STATIC_INLINE void LL_DMAMUX_SetRequestSignalID(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel,
-						  uint32_t RequestSignalID)
+__STATIC_INLINE void LL_DMAMUX_SetRequestSignalID(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel, uint32_t RequestSignalID)
 {
 	UNUSED(DMAMUXx);
-	MODIFY_REG(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 +
-							     (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))
-		       ->RGCR,
-		   DMAMUX_RGxCR_SIG_ID, RequestSignalID);
+	MODIFY_REG(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_SIG_ID, RequestSignalID);
 }
 
 /**
@@ -1475,10 +1436,7 @@ __STATIC_INLINE void LL_DMAMUX_SetRequestSignalID(DMAMUX_Channel_TypeDef *DMAMUX
 __STATIC_INLINE uint32_t LL_DMAMUX_GetRequestSignalID(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel)
 {
 	UNUSED(DMAMUXx);
-	return (READ_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 +
-								   (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))
-			     ->RGCR,
-			 DMAMUX_RGxCR_SIG_ID));
+	return (READ_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_SIG_ID));
 }
 
 /**
@@ -2098,10 +2056,7 @@ __STATIC_INLINE uint32_t LL_DMAMUX_IsEnabledIT_SO(DMAMUX_Channel_TypeDef *DMAMUX
 __STATIC_INLINE void LL_DMAMUX_EnableIT_RGO(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel)
 {
 	UNUSED(DMAMUXx);
-	SET_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 +
-							  (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))
-		    ->RGCR,
-		DMAMUX_RGxCR_OIE);
+	SET_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_OIE);
 }
 
 /**
@@ -2119,10 +2074,7 @@ __STATIC_INLINE void LL_DMAMUX_EnableIT_RGO(DMAMUX_Channel_TypeDef *DMAMUXx, uin
 __STATIC_INLINE void LL_DMAMUX_DisableIT_RGO(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel)
 {
 	UNUSED(DMAMUXx);
-	CLEAR_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 +
-							    (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))
-		      ->RGCR,
-		  DMAMUX_RGxCR_OIE);
+	CLEAR_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_OIE);
 }
 
 /**
@@ -2140,10 +2092,7 @@ __STATIC_INLINE void LL_DMAMUX_DisableIT_RGO(DMAMUX_Channel_TypeDef *DMAMUXx, ui
 __STATIC_INLINE uint32_t LL_DMAMUX_IsEnabledIT_RGO(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel)
 {
 	UNUSED(DMAMUXx);
-	return ((READ_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 +
-								    (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))
-			      ->RGCR,
-			  DMAMUX_RGxCR_OIE) == (DMAMUX_RGxCR_OIE))
+	return ((READ_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_OIE) == (DMAMUX_RGxCR_OIE))
 		    ? 1UL
 		    : 0UL);
 }

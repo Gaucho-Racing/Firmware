@@ -250,21 +250,15 @@ HAL_StatusTypeDef HAL_DCMI_Init(DCMI_HandleTypeDef *hdcmi)
 		hdcmi->Init.ByteSelectMode = DCMI_BSM_ALL;
 	}
 	/* Configures the HS, VS, DE and PC polarity */
-	hdcmi->Instance->CR &= ~(DCMI_CR_PCKPOL | DCMI_CR_HSPOL | DCMI_CR_VSPOL | DCMI_CR_EDM_0 | DCMI_CR_EDM_1 |
-				 DCMI_CR_FCRC_0 | DCMI_CR_FCRC_1 | DCMI_CR_JPEG | DCMI_CR_ESS | DCMI_CR_BSM_0 |
+	hdcmi->Instance->CR &= ~(DCMI_CR_PCKPOL | DCMI_CR_HSPOL | DCMI_CR_VSPOL | DCMI_CR_EDM_0 | DCMI_CR_EDM_1 | DCMI_CR_FCRC_0 | DCMI_CR_FCRC_1 | DCMI_CR_JPEG | DCMI_CR_ESS | DCMI_CR_BSM_0 |
 				 DCMI_CR_BSM_1 | DCMI_CR_OEBS | DCMI_CR_LSM | DCMI_CR_OELS);
 
-	hdcmi->Instance->CR |=
-	    (uint32_t)(hdcmi->Init.SynchroMode | hdcmi->Init.CaptureRate | hdcmi->Init.VSPolarity |
-		       hdcmi->Init.HSPolarity | hdcmi->Init.PCKPolarity | hdcmi->Init.ExtendedDataMode |
-		       hdcmi->Init.JPEGMode | hdcmi->Init.ByteSelectMode | hdcmi->Init.ByteSelectStart |
-		       hdcmi->Init.LineSelectMode | hdcmi->Init.LineSelectStart);
+	hdcmi->Instance->CR |= (uint32_t)(hdcmi->Init.SynchroMode | hdcmi->Init.CaptureRate | hdcmi->Init.VSPolarity | hdcmi->Init.HSPolarity | hdcmi->Init.PCKPolarity | hdcmi->Init.ExtendedDataMode |
+					  hdcmi->Init.JPEGMode | hdcmi->Init.ByteSelectMode | hdcmi->Init.ByteSelectStart | hdcmi->Init.LineSelectMode | hdcmi->Init.LineSelectStart);
 
 	if (hdcmi->Init.SynchroMode == DCMI_SYNCHRO_EMBEDDED) {
-		hdcmi->Instance->ESCR = (((uint32_t)hdcmi->Init.SyncroCode.FrameStartCode) |
-					 ((uint32_t)hdcmi->Init.SyncroCode.LineStartCode << DCMI_ESCR_LSC_Pos) |
-					 ((uint32_t)hdcmi->Init.SyncroCode.LineEndCode << DCMI_ESCR_LEC_Pos) |
-					 ((uint32_t)hdcmi->Init.SyncroCode.FrameEndCode << DCMI_ESCR_FEC_Pos));
+		hdcmi->Instance->ESCR = (((uint32_t)hdcmi->Init.SyncroCode.FrameStartCode) | ((uint32_t)hdcmi->Init.SyncroCode.LineStartCode << DCMI_ESCR_LSC_Pos) |
+					 ((uint32_t)hdcmi->Init.SyncroCode.LineEndCode << DCMI_ESCR_LEC_Pos) | ((uint32_t)hdcmi->Init.SyncroCode.FrameEndCode << DCMI_ESCR_FEC_Pos));
 	}
 
 	/* Enable the Line, Vsync, Error and Overrun interrupts */
@@ -419,20 +413,16 @@ HAL_StatusTypeDef HAL_DCMI_Start_DMA(DCMI_HandleTypeDef *hdcmi, uint32_t DCMI_Mo
 		/* Continuoues Mode */
 		/* Enable the DMA Stream */
 		if ((hdcmi->DMA_Handle->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
-			if ((hdcmi->DMA_Handle->LinkedListQueue != 0U) &&
-			    (hdcmi->DMA_Handle->LinkedListQueue->Head != 0U)) {
+			if ((hdcmi->DMA_Handle->LinkedListQueue != 0U) && (hdcmi->DMA_Handle->LinkedListQueue->Head != 0U)) {
 				/* Set Source , Destination , Length for DMA
 				 * Xfer */
 
 				/* Set DMA data size           */
-				hdcmi->DMA_Handle->LinkedListQueue->Head->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] =
-				    tmp_length;
+				hdcmi->DMA_Handle->LinkedListQueue->Head->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] = tmp_length;
 				/* Set DMA source address      */
-				hdcmi->DMA_Handle->LinkedListQueue->Head->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] =
-				    (uint32_t)&hdcmi->Instance->DR;
+				hdcmi->DMA_Handle->LinkedListQueue->Head->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] = (uint32_t)&hdcmi->Instance->DR;
 				/* Set DMA destination address */
-				hdcmi->DMA_Handle->LinkedListQueue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] =
-				    (uint32_t)pData;
+				hdcmi->DMA_Handle->LinkedListQueue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] = (uint32_t)pData;
 
 				status = HAL_DMAEx_List_Start_IT(hdcmi->DMA_Handle);
 			} else {
@@ -446,8 +436,7 @@ HAL_StatusTypeDef HAL_DCMI_Start_DMA(DCMI_HandleTypeDef *hdcmi, uint32_t DCMI_Mo
 				status = HAL_ERROR;
 			}
 		} else {
-			status = HAL_DMA_Start_IT(hdcmi->DMA_Handle, (uint32_t)&hdcmi->Instance->DR, (uint32_t)pData,
-						  tmp_length);
+			status = HAL_DMA_Start_IT(hdcmi->DMA_Handle, (uint32_t)&hdcmi->Instance->DR, (uint32_t)pData, tmp_length);
 		}
 	} else /* DCMI_DOUBLE_BUFFER Mode */
 	{
@@ -471,25 +460,20 @@ HAL_StatusTypeDef HAL_DCMI_Start_DMA(DCMI_HandleTypeDef *hdcmi, uint32_t DCMI_Mo
 		hdcmi->XferTransferNumber = hdcmi->XferCount;
 
 		if ((hdcmi->DMA_Handle->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
-			if ((hdcmi->DMA_Handle->LinkedListQueue != 0U) &&
-			    (hdcmi->DMA_Handle->LinkedListQueue->Head != 0U)) {
+			if ((hdcmi->DMA_Handle->LinkedListQueue != 0U) && (hdcmi->DMA_Handle->LinkedListQueue->Head != 0U)) {
 				/* Update first node */
 
 				/* Set DMA Data size */
-				hdcmi->DMA_Handle->LinkedListQueue->Head->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] =
-				    hdcmi->XferSize;
+				hdcmi->DMA_Handle->LinkedListQueue->Head->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] = hdcmi->XferSize;
 
 				/* Set DMA Source address */
-				hdcmi->DMA_Handle->LinkedListQueue->Head->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] =
-				    (uint32_t)&hdcmi->Instance->DR;
+				hdcmi->DMA_Handle->LinkedListQueue->Head->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] = (uint32_t)&hdcmi->Instance->DR;
 
 				/* Set DMA Destination address */
-				hdcmi->DMA_Handle->LinkedListQueue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] =
-				    (uint32_t)pData;
+				hdcmi->DMA_Handle->LinkedListQueue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] = (uint32_t)pData;
 
 				/* Get CLLR offset */
-				cllr_offset =
-				    (hdcmi->DMA_Handle->LinkedListQueue->Head->NodeInfo & NODE_CLLR_IDX) >> 8U;
+				cllr_offset = (hdcmi->DMA_Handle->LinkedListQueue->Head->NodeInfo & NODE_CLLR_IDX) >> 8U;
 
 				/* Update second node */
 				if (hdcmi->DMA_Handle->LinkedListQueue->Head->LinkRegisters[cllr_offset] != 0U) {
@@ -498,17 +482,13 @@ HAL_StatusTypeDef HAL_DCMI_Start_DMA(DCMI_HandleTypeDef *hdcmi, uint32_t DCMI_Mo
 					/* Update second node */
 
 					/* Set DMA Data size */
-					((DMA_NodeTypeDef *)((tmp1 & DMA_CLBAR_LBA) + (tmp2 & DMA_CLLR_LA)))
-					    ->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] = hdcmi->XferSize;
+					((DMA_NodeTypeDef *)((tmp1 & DMA_CLBAR_LBA) + (tmp2 & DMA_CLLR_LA)))->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] = hdcmi->XferSize;
 
 					/* Set DMA Source address */
-					((DMA_NodeTypeDef *)((tmp1 & DMA_CLBAR_LBA) + (tmp2 & DMA_CLLR_LA)))
-					    ->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] = (uint32_t)&hdcmi->Instance->DR;
+					((DMA_NodeTypeDef *)((tmp1 & DMA_CLBAR_LBA) + (tmp2 & DMA_CLLR_LA)))->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] = (uint32_t)&hdcmi->Instance->DR;
 
 					/* Set DMA Destination address */
-					((DMA_NodeTypeDef *)((tmp1 & DMA_CLBAR_LBA) + (tmp2 & DMA_CLLR_LA)))
-					    ->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] =
-					    (uint32_t)pData + hdcmi->XferSize;
+					((DMA_NodeTypeDef *)((tmp1 & DMA_CLBAR_LBA) + (tmp2 & DMA_CLLR_LA)))->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] = (uint32_t)pData + hdcmi->XferSize;
 
 					if (HAL_DMAEx_List_Start_IT(hdcmi->DMA_Handle) != HAL_OK) {
 						/* Set Error Code */
@@ -893,8 +873,7 @@ __weak void HAL_DCMI_FrameEventCallback(DCMI_HandleTypeDef *hdcmi)
  * @param  Y0    DCMI window Y offset
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DCMI_ConfigCrop(DCMI_HandleTypeDef *hdcmi, uint32_t X0, uint32_t Y0, uint32_t XSize,
-				      uint32_t YSize)
+HAL_StatusTypeDef HAL_DCMI_ConfigCrop(DCMI_HandleTypeDef *hdcmi, uint32_t X0, uint32_t Y0, uint32_t XSize, uint32_t YSize)
 {
 	/* Process Locked */
 	__HAL_LOCK(hdcmi);
@@ -990,10 +969,8 @@ HAL_StatusTypeDef HAL_DCMI_ConfigSyncUnmask(DCMI_HandleTypeDef *hdcmi, const DCM
 	hdcmi->State = HAL_DCMI_STATE_BUSY;
 
 	/* Write DCMI embedded synchronization unmask register */
-	hdcmi->Instance->ESUR =
-	    (((uint32_t)SyncUnmask->FrameStartUnmask) | ((uint32_t)SyncUnmask->LineStartUnmask << DCMI_ESUR_LSU_Pos) |
-	     ((uint32_t)SyncUnmask->LineEndUnmask << DCMI_ESUR_LEU_Pos) |
-	     ((uint32_t)SyncUnmask->FrameEndUnmask << DCMI_ESUR_FEU_Pos));
+	hdcmi->Instance->ESUR = (((uint32_t)SyncUnmask->FrameStartUnmask) | ((uint32_t)SyncUnmask->LineStartUnmask << DCMI_ESUR_LSU_Pos) | ((uint32_t)SyncUnmask->LineEndUnmask << DCMI_ESUR_LEU_Pos) |
+				 ((uint32_t)SyncUnmask->FrameEndUnmask << DCMI_ESUR_FEU_Pos));
 
 	/* Change the DCMI state*/
 	hdcmi->State = HAL_DCMI_STATE_READY;
@@ -1056,8 +1033,7 @@ uint32_t HAL_DCMI_GetError(const DCMI_HandleTypeDef *hdcmi) { return hdcmi->Erro
  * @param  pCallback pointer to the Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DCMI_RegisterCallback(DCMI_HandleTypeDef *hdcmi, HAL_DCMI_CallbackIDTypeDef CallbackID,
-					    pDCMI_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_DCMI_RegisterCallback(DCMI_HandleTypeDef *hdcmi, HAL_DCMI_CallbackIDTypeDef CallbackID, pDCMI_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -1255,8 +1231,7 @@ static void DCMI_DMAXferCplt(DMA_HandleTypeDef *hdma)
 		pnode = (DMA_NodeTypeDef *)(uint32_t)(tmp1 | tmp2);
 
 		if (hdcmi->XferCount > 1U) {
-			pnode->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] =
-			    pbuff + ((transfernumber - transfercount + 2U) * transfersize);
+			pnode->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] = pbuff + ((transfernumber - transfercount + 2U) * transfersize);
 			hdcmi->XferCount--;
 		}
 

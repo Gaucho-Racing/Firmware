@@ -260,16 +260,16 @@ typedef struct
 	void (*TxMailbox0CompleteCallback)(struct __CAN_HandleTypeDef *hcan); /*!< CAN Tx Mailbox 0 complete callback */
 	void (*TxMailbox1CompleteCallback)(struct __CAN_HandleTypeDef *hcan); /*!< CAN Tx Mailbox 1 complete callback */
 	void (*TxMailbox2CompleteCallback)(struct __CAN_HandleTypeDef *hcan); /*!< CAN Tx Mailbox 2 complete callback */
-	void (*TxMailbox0AbortCallback)(struct __CAN_HandleTypeDef *hcan); /*!< CAN Tx Mailbox 0 abort callback       */
-	void (*TxMailbox1AbortCallback)(struct __CAN_HandleTypeDef *hcan); /*!< CAN Tx Mailbox 1 abort callback       */
-	void (*TxMailbox2AbortCallback)(struct __CAN_HandleTypeDef *hcan); /*!< CAN Tx Mailbox 2 abort callback       */
-	void (*RxFifo0MsgPendingCallback)(struct __CAN_HandleTypeDef *hcan); /*!< CAN Rx FIFO 0 msg pending callback */
-	void (*RxFifo0FullCallback)(struct __CAN_HandleTypeDef *hcan); /*!< CAN Rx FIFO 0 full callback           */
-	void (*RxFifo1MsgPendingCallback)(struct __CAN_HandleTypeDef *hcan); /*!< CAN Rx FIFO 1 msg pending callback */
-	void (*RxFifo1FullCallback)(struct __CAN_HandleTypeDef *hcan);	   /*!< CAN Rx FIFO 1 full callback           */
-	void (*SleepCallback)(struct __CAN_HandleTypeDef *hcan);	   /*!< CAN Sleep callback */
-	void (*WakeUpFromRxMsgCallback)(struct __CAN_HandleTypeDef *hcan); /*!< CAN Wake Up from Rx msg callback      */
-	void (*ErrorCallback)(struct __CAN_HandleTypeDef *hcan);	   /*!< CAN Error callback */
+	void (*TxMailbox0AbortCallback)(struct __CAN_HandleTypeDef *hcan);    /*!< CAN Tx Mailbox 0 abort callback       */
+	void (*TxMailbox1AbortCallback)(struct __CAN_HandleTypeDef *hcan);    /*!< CAN Tx Mailbox 1 abort callback       */
+	void (*TxMailbox2AbortCallback)(struct __CAN_HandleTypeDef *hcan);    /*!< CAN Tx Mailbox 2 abort callback       */
+	void (*RxFifo0MsgPendingCallback)(struct __CAN_HandleTypeDef *hcan);  /*!< CAN Rx FIFO 0 msg pending callback */
+	void (*RxFifo0FullCallback)(struct __CAN_HandleTypeDef *hcan);	      /*!< CAN Rx FIFO 0 full callback           */
+	void (*RxFifo1MsgPendingCallback)(struct __CAN_HandleTypeDef *hcan);  /*!< CAN Rx FIFO 1 msg pending callback */
+	void (*RxFifo1FullCallback)(struct __CAN_HandleTypeDef *hcan);	      /*!< CAN Rx FIFO 1 full callback           */
+	void (*SleepCallback)(struct __CAN_HandleTypeDef *hcan);	      /*!< CAN Sleep callback */
+	void (*WakeUpFromRxMsgCallback)(struct __CAN_HandleTypeDef *hcan);    /*!< CAN Wake Up from Rx msg callback      */
+	void (*ErrorCallback)(struct __CAN_HandleTypeDef *hcan);	      /*!< CAN Error callback */
 
 	void (*MspInitCallback)(struct __CAN_HandleTypeDef *hcan);   /*!< CAN Msp Init callback */
 	void (*MspDeInitCallback)(struct __CAN_HandleTypeDef *hcan); /*!< CAN Msp DeInit callback */
@@ -332,23 +332,23 @@ typedef void (*pCAN_CallbackTypeDef)(CAN_HandleTypeDef *hcan); /*!< pointer to a
 #define HAL_CAN_ERROR_CRC (0x00000100U)	    /*!< CRC error */
 #define HAL_CAN_ERROR_RX_FOV0 (0x00000200U) /*!< Rx FIFO0 overrun error */
 #define HAL_CAN_ERROR_RX_FOV1 (0x00000400U) /*!< Rx FIFO1 overrun error */
-#define HAL_CAN_ERROR_TX_ALST0                                                                                         \
-	(0x00000800U) /*!< TxMailbox 0 transmit failure due to arbitration                                             \
+#define HAL_CAN_ERROR_TX_ALST0                                                                                                                                                                         \
+	(0x00000800U) /*!< TxMailbox 0 transmit failure due to arbitration                                                                                                                             \
 			 lost */
-#define HAL_CAN_ERROR_TX_TERR0                                                                                         \
-	(0x00001000U) /*!< TxMailbox 0 transmit failure due to transmit error                                          \
+#define HAL_CAN_ERROR_TX_TERR0                                                                                                                                                                         \
+	(0x00001000U) /*!< TxMailbox 0 transmit failure due to transmit error                                                                                                                          \
 		       */
-#define HAL_CAN_ERROR_TX_ALST1                                                                                         \
-	(0x00002000U) /*!< TxMailbox 1 transmit failure due to arbitration                                             \
+#define HAL_CAN_ERROR_TX_ALST1                                                                                                                                                                         \
+	(0x00002000U) /*!< TxMailbox 1 transmit failure due to arbitration                                                                                                                             \
 			 lost */
-#define HAL_CAN_ERROR_TX_TERR1                                                                                         \
-	(0x00004000U) /*!< TxMailbox 1 transmit failure due to transmit error                                          \
+#define HAL_CAN_ERROR_TX_TERR1                                                                                                                                                                         \
+	(0x00004000U) /*!< TxMailbox 1 transmit failure due to transmit error                                                                                                                          \
 		       */
-#define HAL_CAN_ERROR_TX_ALST2                                                                                         \
-	(0x00008000U) /*!< TxMailbox 2 transmit failure due to arbitration                                             \
+#define HAL_CAN_ERROR_TX_ALST2                                                                                                                                                                         \
+	(0x00008000U) /*!< TxMailbox 2 transmit failure due to arbitration                                                                                                                             \
 			 lost */
-#define HAL_CAN_ERROR_TX_TERR2                                                                                         \
-	(0x00010000U)				    /*!< TxMailbox 2 transmit failure due to transmit error            \
+#define HAL_CAN_ERROR_TX_TERR2                                                                                                                                                                         \
+	(0x00010000U)				    /*!< TxMailbox 2 transmit failure due to transmit error                                                                                            \
 						     */
 #define HAL_CAN_ERROR_TIMEOUT (0x00020000U)	    /*!< Timeout error */
 #define HAL_CAN_ERROR_NOT_INITIALIZED (0x00040000U) /*!< Peripheral not initialized */
@@ -380,8 +380,8 @@ typedef void (*pCAN_CallbackTypeDef)(CAN_HandleTypeDef *hcan); /*!< pointer to a
 #define CAN_MODE_NORMAL (0x00000000U)		   /*!< Normal mode   */
 #define CAN_MODE_LOOPBACK ((uint32_t)CAN_BTR_LBKM) /*!< Loopback mode */
 #define CAN_MODE_SILENT ((uint32_t)CAN_BTR_SILM)   /*!< Silent mode   */
-#define CAN_MODE_SILENT_LOOPBACK                                                                                       \
-	((uint32_t)(CAN_BTR_LBKM | CAN_BTR_SILM)) /*!< Loopback combined with                                          \
+#define CAN_MODE_SILENT_LOOPBACK                                                                                                                                                                       \
+	((uint32_t)(CAN_BTR_LBKM | CAN_BTR_SILM)) /*!< Loopback combined with                                                                                                                          \
 						       silent mode   */
 /**
  * @}
@@ -597,11 +597,11 @@ typedef void (*pCAN_CallbackTypeDef)(CAN_HandleTypeDef *hcan); /*!< pointer to a
  * @retval None
  */
 #if USE_HAL_CAN_REGISTER_CALLBACKS == 1
-#define __HAL_CAN_RESET_HANDLE_STATE(__HANDLE__)                                                                       \
-	do {                                                                                                           \
-		(__HANDLE__)->State = HAL_CAN_STATE_RESET;                                                             \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define __HAL_CAN_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                       \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_CAN_STATE_RESET;                                                                                                                                             \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0)
 #else
 #define __HAL_CAN_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_CAN_STATE_RESET)
@@ -639,17 +639,12 @@ typedef void (*pCAN_CallbackTypeDef)(CAN_HandleTypeDef *hcan); /*!< pointer to a
  *         This parameter can be one of @arg CAN_flags
  * @retval The state of __FLAG__ (TRUE or FALSE).
  */
-#define __HAL_CAN_GET_FLAG(__HANDLE__, __FLAG__)                                                                       \
-	((((__FLAG__) >> 8U) == 5U)   ? ((((__HANDLE__)->Instance->TSR) & (1U << ((__FLAG__) & CAN_FLAG_MASK))) ==     \
-					 (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                         \
-	 : (((__FLAG__) >> 8U) == 2U) ? ((((__HANDLE__)->Instance->RF0R) & (1U << ((__FLAG__) & CAN_FLAG_MASK))) ==    \
-					 (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                         \
-	 : (((__FLAG__) >> 8U) == 4U) ? ((((__HANDLE__)->Instance->RF1R) & (1U << ((__FLAG__) & CAN_FLAG_MASK))) ==    \
-					 (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                         \
-	 : (((__FLAG__) >> 8U) == 1U) ? ((((__HANDLE__)->Instance->MSR) & (1U << ((__FLAG__) & CAN_FLAG_MASK))) ==     \
-					 (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                         \
-	 : (((__FLAG__) >> 8U) == 3U) ? ((((__HANDLE__)->Instance->ESR) & (1U << ((__FLAG__) & CAN_FLAG_MASK))) ==     \
-					 (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                         \
+#define __HAL_CAN_GET_FLAG(__HANDLE__, __FLAG__)                                                                                                                                                       \
+	((((__FLAG__) >> 8U) == 5U)   ? ((((__HANDLE__)->Instance->TSR) & (1U << ((__FLAG__) & CAN_FLAG_MASK))) == (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                               \
+	 : (((__FLAG__) >> 8U) == 2U) ? ((((__HANDLE__)->Instance->RF0R) & (1U << ((__FLAG__) & CAN_FLAG_MASK))) == (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                              \
+	 : (((__FLAG__) >> 8U) == 4U) ? ((((__HANDLE__)->Instance->RF1R) & (1U << ((__FLAG__) & CAN_FLAG_MASK))) == (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                              \
+	 : (((__FLAG__) >> 8U) == 1U) ? ((((__HANDLE__)->Instance->MSR) & (1U << ((__FLAG__) & CAN_FLAG_MASK))) == (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                               \
+	 : (((__FLAG__) >> 8U) == 3U) ? ((((__HANDLE__)->Instance->ESR) & (1U << ((__FLAG__) & CAN_FLAG_MASK))) == (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                               \
 				      : 0U)
 
 /** @brief  Clear the specified CAN pending flag.
@@ -676,11 +671,11 @@ typedef void (*pCAN_CallbackTypeDef)(CAN_HandleTypeDef *hcan); /*!< pointer to a
  *            @arg CAN_FLAG_SLAKI: Sleep acknowledge Interrupt Flag
  * @retval None
  */
-#define __HAL_CAN_CLEAR_FLAG(__HANDLE__, __FLAG__)                                                                     \
-	((((__FLAG__) >> 8U) == 5U)   ? (((__HANDLE__)->Instance->TSR) = (1U << ((__FLAG__) & CAN_FLAG_MASK)))         \
-	 : (((__FLAG__) >> 8U) == 2U) ? (((__HANDLE__)->Instance->RF0R) = (1U << ((__FLAG__) & CAN_FLAG_MASK)))        \
-	 : (((__FLAG__) >> 8U) == 4U) ? (((__HANDLE__)->Instance->RF1R) = (1U << ((__FLAG__) & CAN_FLAG_MASK)))        \
-	 : (((__FLAG__) >> 8U) == 1U) ? (((__HANDLE__)->Instance->MSR) = (1U << ((__FLAG__) & CAN_FLAG_MASK)))         \
+#define __HAL_CAN_CLEAR_FLAG(__HANDLE__, __FLAG__)                                                                                                                                                     \
+	((((__FLAG__) >> 8U) == 5U)   ? (((__HANDLE__)->Instance->TSR) = (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                                                                         \
+	 : (((__FLAG__) >> 8U) == 2U) ? (((__HANDLE__)->Instance->RF0R) = (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                                                                        \
+	 : (((__FLAG__) >> 8U) == 4U) ? (((__HANDLE__)->Instance->RF1R) = (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                                                                        \
+	 : (((__FLAG__) >> 8U) == 1U) ? (((__HANDLE__)->Instance->MSR) = (1U << ((__FLAG__) & CAN_FLAG_MASK)))                                                                                         \
 				      : 0U)
 
 /**
@@ -706,8 +701,7 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef *hcan);
 
 #if USE_HAL_CAN_REGISTER_CALLBACKS == 1
 /* Callbacks Register/UnRegister functions  ***********************************/
-HAL_StatusTypeDef HAL_CAN_RegisterCallback(CAN_HandleTypeDef *hcan, HAL_CAN_CallbackIDTypeDef CallbackID,
-					   void (*pCallback)(CAN_HandleTypeDef *_hcan));
+HAL_StatusTypeDef HAL_CAN_RegisterCallback(CAN_HandleTypeDef *hcan, HAL_CAN_CallbackIDTypeDef CallbackID, void (*pCallback)(CAN_HandleTypeDef *_hcan));
 HAL_StatusTypeDef HAL_CAN_UnRegisterCallback(CAN_HandleTypeDef *hcan, HAL_CAN_CallbackIDTypeDef CallbackID);
 
 #endif /* (USE_HAL_CAN_REGISTER_CALLBACKS) */
@@ -738,14 +732,12 @@ HAL_StatusTypeDef HAL_CAN_Stop(CAN_HandleTypeDef *hcan);
 HAL_StatusTypeDef HAL_CAN_RequestSleep(CAN_HandleTypeDef *hcan);
 HAL_StatusTypeDef HAL_CAN_WakeUp(CAN_HandleTypeDef *hcan);
 uint32_t HAL_CAN_IsSleepActive(const CAN_HandleTypeDef *hcan);
-HAL_StatusTypeDef HAL_CAN_AddTxMessage(CAN_HandleTypeDef *hcan, const CAN_TxHeaderTypeDef *pHeader,
-				       const uint8_t aData[], uint32_t *pTxMailbox);
+HAL_StatusTypeDef HAL_CAN_AddTxMessage(CAN_HandleTypeDef *hcan, const CAN_TxHeaderTypeDef *pHeader, const uint8_t aData[], uint32_t *pTxMailbox);
 HAL_StatusTypeDef HAL_CAN_AbortTxRequest(CAN_HandleTypeDef *hcan, uint32_t TxMailboxes);
 uint32_t HAL_CAN_GetTxMailboxesFreeLevel(const CAN_HandleTypeDef *hcan);
 uint32_t HAL_CAN_IsTxMessagePending(const CAN_HandleTypeDef *hcan, uint32_t TxMailboxes);
 uint32_t HAL_CAN_GetTxTimestamp(const CAN_HandleTypeDef *hcan, uint32_t TxMailbox);
-HAL_StatusTypeDef HAL_CAN_GetRxMessage(CAN_HandleTypeDef *hcan, uint32_t RxFifo, CAN_RxHeaderTypeDef *pHeader,
-				       uint8_t aData[]);
+HAL_StatusTypeDef HAL_CAN_GetRxMessage(CAN_HandleTypeDef *hcan, uint32_t RxFifo, CAN_RxHeaderTypeDef *pHeader, uint8_t aData[]);
 uint32_t HAL_CAN_GetRxFifoFillLevel(const CAN_HandleTypeDef *hcan, uint32_t RxFifo);
 
 /**
@@ -839,19 +831,15 @@ HAL_StatusTypeDef HAL_CAN_ResetError(CAN_HandleTypeDef *hcan);
  * @{
  */
 
-#define IS_CAN_MODE(MODE)                                                                                              \
-	(((MODE) == CAN_MODE_NORMAL) || ((MODE) == CAN_MODE_LOOPBACK) || ((MODE) == CAN_MODE_SILENT) ||                \
-	 ((MODE) == CAN_MODE_SILENT_LOOPBACK))
-#define IS_CAN_SJW(SJW)                                                                                                \
-	(((SJW) == CAN_SJW_1TQ) || ((SJW) == CAN_SJW_2TQ) || ((SJW) == CAN_SJW_3TQ) || ((SJW) == CAN_SJW_4TQ))
-#define IS_CAN_BS1(BS1)                                                                                                \
-	(((BS1) == CAN_BS1_1TQ) || ((BS1) == CAN_BS1_2TQ) || ((BS1) == CAN_BS1_3TQ) || ((BS1) == CAN_BS1_4TQ) ||       \
-	 ((BS1) == CAN_BS1_5TQ) || ((BS1) == CAN_BS1_6TQ) || ((BS1) == CAN_BS1_7TQ) || ((BS1) == CAN_BS1_8TQ) ||       \
-	 ((BS1) == CAN_BS1_9TQ) || ((BS1) == CAN_BS1_10TQ) || ((BS1) == CAN_BS1_11TQ) || ((BS1) == CAN_BS1_12TQ) ||    \
-	 ((BS1) == CAN_BS1_13TQ) || ((BS1) == CAN_BS1_14TQ) || ((BS1) == CAN_BS1_15TQ) || ((BS1) == CAN_BS1_16TQ))
-#define IS_CAN_BS2(BS2)                                                                                                \
-	(((BS2) == CAN_BS2_1TQ) || ((BS2) == CAN_BS2_2TQ) || ((BS2) == CAN_BS2_3TQ) || ((BS2) == CAN_BS2_4TQ) ||       \
-	 ((BS2) == CAN_BS2_5TQ) || ((BS2) == CAN_BS2_6TQ) || ((BS2) == CAN_BS2_7TQ) || ((BS2) == CAN_BS2_8TQ))
+#define IS_CAN_MODE(MODE) (((MODE) == CAN_MODE_NORMAL) || ((MODE) == CAN_MODE_LOOPBACK) || ((MODE) == CAN_MODE_SILENT) || ((MODE) == CAN_MODE_SILENT_LOOPBACK))
+#define IS_CAN_SJW(SJW) (((SJW) == CAN_SJW_1TQ) || ((SJW) == CAN_SJW_2TQ) || ((SJW) == CAN_SJW_3TQ) || ((SJW) == CAN_SJW_4TQ))
+#define IS_CAN_BS1(BS1)                                                                                                                                                                                \
+	(((BS1) == CAN_BS1_1TQ) || ((BS1) == CAN_BS1_2TQ) || ((BS1) == CAN_BS1_3TQ) || ((BS1) == CAN_BS1_4TQ) || ((BS1) == CAN_BS1_5TQ) || ((BS1) == CAN_BS1_6TQ) || ((BS1) == CAN_BS1_7TQ) ||         \
+	 ((BS1) == CAN_BS1_8TQ) || ((BS1) == CAN_BS1_9TQ) || ((BS1) == CAN_BS1_10TQ) || ((BS1) == CAN_BS1_11TQ) || ((BS1) == CAN_BS1_12TQ) || ((BS1) == CAN_BS1_13TQ) || ((BS1) == CAN_BS1_14TQ) ||    \
+	 ((BS1) == CAN_BS1_15TQ) || ((BS1) == CAN_BS1_16TQ))
+#define IS_CAN_BS2(BS2)                                                                                                                                                                                \
+	(((BS2) == CAN_BS2_1TQ) || ((BS2) == CAN_BS2_2TQ) || ((BS2) == CAN_BS2_3TQ) || ((BS2) == CAN_BS2_4TQ) || ((BS2) == CAN_BS2_5TQ) || ((BS2) == CAN_BS2_6TQ) || ((BS2) == CAN_BS2_7TQ) ||         \
+	 ((BS2) == CAN_BS2_8TQ))
 #define IS_CAN_PRESCALER(PRESCALER) (((PRESCALER) >= 1U) && ((PRESCALER) <= 1024U))
 #define IS_CAN_FILTER_ID_HALFWORD(HALFWORD) ((HALFWORD) <= 0xFFFFU)
 #if defined(CAN2)
@@ -860,25 +848,19 @@ HAL_StatusTypeDef HAL_CAN_ResetError(CAN_HandleTypeDef *hcan);
 #define IS_CAN_FILTER_BANK_SINGLE(BANK) ((BANK) <= 13U)
 #define IS_CAN_FILTER_MODE(MODE) (((MODE) == CAN_FILTERMODE_IDMASK) || ((MODE) == CAN_FILTERMODE_IDLIST))
 #define IS_CAN_FILTER_SCALE(SCALE) (((SCALE) == CAN_FILTERSCALE_16BIT) || ((SCALE) == CAN_FILTERSCALE_32BIT))
-#define IS_CAN_FILTER_ACTIVATION(ACTIVATION)                                                                           \
-	(((ACTIVATION) == CAN_FILTER_DISABLE) || ((ACTIVATION) == CAN_FILTER_ENABLE))
+#define IS_CAN_FILTER_ACTIVATION(ACTIVATION) (((ACTIVATION) == CAN_FILTER_DISABLE) || ((ACTIVATION) == CAN_FILTER_ENABLE))
 #define IS_CAN_FILTER_FIFO(FIFO) (((FIFO) == CAN_FILTER_FIFO0) || ((FIFO) == CAN_FILTER_FIFO1))
-#define IS_CAN_TX_MAILBOX(TRANSMITMAILBOX)                                                                             \
-	(((TRANSMITMAILBOX) == CAN_TX_MAILBOX0) || ((TRANSMITMAILBOX) == CAN_TX_MAILBOX1) ||                           \
-	 ((TRANSMITMAILBOX) == CAN_TX_MAILBOX2))
-#define IS_CAN_TX_MAILBOX_LIST(TRANSMITMAILBOX)                                                                        \
-	((TRANSMITMAILBOX) <= (CAN_TX_MAILBOX0 | CAN_TX_MAILBOX1 | CAN_TX_MAILBOX2))
+#define IS_CAN_TX_MAILBOX(TRANSMITMAILBOX) (((TRANSMITMAILBOX) == CAN_TX_MAILBOX0) || ((TRANSMITMAILBOX) == CAN_TX_MAILBOX1) || ((TRANSMITMAILBOX) == CAN_TX_MAILBOX2))
+#define IS_CAN_TX_MAILBOX_LIST(TRANSMITMAILBOX) ((TRANSMITMAILBOX) <= (CAN_TX_MAILBOX0 | CAN_TX_MAILBOX1 | CAN_TX_MAILBOX2))
 #define IS_CAN_STDID(STDID) ((STDID) <= 0x7FFU)
 #define IS_CAN_EXTID(EXTID) ((EXTID) <= 0x1FFFFFFFU)
 #define IS_CAN_DLC(DLC) ((DLC) <= 8U)
 #define IS_CAN_IDTYPE(IDTYPE) (((IDTYPE) == CAN_ID_STD) || ((IDTYPE) == CAN_ID_EXT))
 #define IS_CAN_RTR(RTR) (((RTR) == CAN_RTR_DATA) || ((RTR) == CAN_RTR_REMOTE))
 #define IS_CAN_RX_FIFO(FIFO) (((FIFO) == CAN_RX_FIFO0) || ((FIFO) == CAN_RX_FIFO1))
-#define IS_CAN_IT(IT)                                                                                                  \
-	((IT) <= (CAN_IT_TX_MAILBOX_EMPTY | CAN_IT_RX_FIFO0_MSG_PENDING | CAN_IT_RX_FIFO0_FULL |                       \
-		  CAN_IT_RX_FIFO0_OVERRUN | CAN_IT_RX_FIFO1_MSG_PENDING | CAN_IT_RX_FIFO1_FULL |                       \
-		  CAN_IT_RX_FIFO1_OVERRUN | CAN_IT_WAKEUP | CAN_IT_SLEEP_ACK | CAN_IT_ERROR_WARNING |                  \
-		  CAN_IT_ERROR_PASSIVE | CAN_IT_BUSOFF | CAN_IT_LAST_ERROR_CODE | CAN_IT_ERROR))
+#define IS_CAN_IT(IT)                                                                                                                                                                                  \
+	((IT) <= (CAN_IT_TX_MAILBOX_EMPTY | CAN_IT_RX_FIFO0_MSG_PENDING | CAN_IT_RX_FIFO0_FULL | CAN_IT_RX_FIFO0_OVERRUN | CAN_IT_RX_FIFO1_MSG_PENDING | CAN_IT_RX_FIFO1_FULL |                        \
+		  CAN_IT_RX_FIFO1_OVERRUN | CAN_IT_WAKEUP | CAN_IT_SLEEP_ACK | CAN_IT_ERROR_WARNING | CAN_IT_ERROR_PASSIVE | CAN_IT_BUSOFF | CAN_IT_LAST_ERROR_CODE | CAN_IT_ERROR))
 
 /**
  * @}

@@ -75,11 +75,11 @@ extern "C" {
 /** @defgroup CORTEX_LL_EC_CLKSOURCE_HCLK SYSTICK Clock Source
  * @{
  */
-#define LL_SYSTICK_CLKSOURCE_EXTERNAL                                                                                  \
-	0x00000000U /*!< External clock source selected as SysTick                                                     \
+#define LL_SYSTICK_CLKSOURCE_EXTERNAL                                                                                                                                                                  \
+	0x00000000U /*!< External clock source selected as SysTick                                                                                                                                     \
 			 clock source */
-#define LL_SYSTICK_CLKSOURCE_HCLK                                                                                      \
-	SysTick_CTRL_CLKSOURCE_Msk /*!< AHB clock selected as SysTick                                                  \
+#define LL_SYSTICK_CLKSOURCE_HCLK                                                                                                                                                                      \
+	SysTick_CTRL_CLKSOURCE_Msk /*!< AHB clock selected as SysTick                                                                                                                                  \
 					clock source */
 /** Legacy definitions for backward compatibility purpose
  */
@@ -105,17 +105,17 @@ extern "C" {
  * PRIVILEGED Access control
  * @{
  */
-#define LL_MPU_CTRL_HFNMI_PRIVDEF_NONE                                                                                 \
-	0U /*!< Background region access not allowed, MPU disabled for                                                 \
+#define LL_MPU_CTRL_HFNMI_PRIVDEF_NONE                                                                                                                                                                 \
+	0U /*!< Background region access not allowed, MPU disabled for                                                                                                                                 \
 	      Hardfaults, NMIs, and exception handlers when FAULTMASK=1 */
-#define LL_MPU_CTRL_HARDFAULT_NMI                                                                                      \
-	2U /*!< Background region access not allowed, MPU enabled for                                                  \
+#define LL_MPU_CTRL_HARDFAULT_NMI                                                                                                                                                                      \
+	2U /*!< Background region access not allowed, MPU enabled for                                                                                                                                  \
 	      Hardfaults, NMIs, and exception handlers when FAULTMASK=1 */
-#define LL_MPU_CTRL_PRIVILEGED_DEFAULT                                                                                 \
-	4U /*!< Background region privileged-only access allowed, MPU disabled                                         \
+#define LL_MPU_CTRL_PRIVILEGED_DEFAULT                                                                                                                                                                 \
+	4U /*!< Background region privileged-only access allowed, MPU disabled                                                                                                                         \
 	      for Hardfaults, NMIs, and exception handlers when FAULTMASK=1 */
-#define LL_MPU_CTRL_HFNMI_PRIVDEF                                                                                      \
-	6U /*!< Background region privileged-only access allowed, MPU enabled                                          \
+#define LL_MPU_CTRL_HFNMI_PRIVDEF                                                                                                                                                                      \
+	6U /*!< Background region privileged-only access allowed, MPU enabled                                                                                                                          \
 	      for Hardfaults, NMIs, and exception handlers when FAULTMASK=1 */
 /**
  * @}
@@ -125,14 +125,14 @@ extern "C" {
  * @{
  */
 /* Device memory attributes */
-#define LL_MPU_DEVICE_NGNRNE                                                                                           \
-	0x0U /*!< Device non-Gathering, non-Reordering, no Early write                                                 \
+#define LL_MPU_DEVICE_NGNRNE                                                                                                                                                                           \
+	0x0U /*!< Device non-Gathering, non-Reordering, no Early write                                                                                                                                 \
 		acknowledgement */
-#define LL_MPU_DEVICE_NGNRE                                                                                            \
-	0x4U /*!< Device non-Gathering, non-Reordering, Early write                                                    \
+#define LL_MPU_DEVICE_NGNRE                                                                                                                                                                            \
+	0x4U /*!< Device non-Gathering, non-Reordering, Early write                                                                                                                                    \
 		acknowledgement */
-#define LL_MPU_DEVICE_NGRE                                                                                             \
-	0x8U		       /*!< Device non-Gathering, Reordering, Early write                                      \
+#define LL_MPU_DEVICE_NGRE                                                                                                                                                                             \
+	0x8U		       /*!< Device non-Gathering, Reordering, Early write                                                                                                                      \
 				  acknowledgement */
 #define LL_MPU_DEVICE_GRE 0xCU /*!< Device Gathering, Reordering, Early write acknowledgement */
 
@@ -191,12 +191,12 @@ extern "C" {
  * @{
  */
 #define LL_MPU_REGION_PRIV_RW (0U << MPU_RBAR_AP_Pos) /*!< Read/write privileged-only attribute */
-#define LL_MPU_REGION_ALL_RW                                                                                           \
-	(1U << MPU_RBAR_AP_Pos)			      /*!< Read/write privileged/unprivileged                          \
+#define LL_MPU_REGION_ALL_RW                                                                                                                                                                           \
+	(1U << MPU_RBAR_AP_Pos)			      /*!< Read/write privileged/unprivileged                                                                                                          \
 							 attribute */
 #define LL_MPU_REGION_PRIV_RO (2U << MPU_RBAR_AP_Pos) /*!< Read-only privileged-only attribute */
-#define LL_MPU_REGION_ALL_RO                                                                                           \
-	(3U << MPU_RBAR_AP_Pos) /*!< Read-only privileged/unprivileged                                                 \
+#define LL_MPU_REGION_ALL_RO                                                                                                                                                                           \
+	(3U << MPU_RBAR_AP_Pos) /*!< Read-only privileged/unprivileged                                                                                                                                 \
 				   attribute */
 /**
  * @}
@@ -255,10 +255,7 @@ extern "C" {
  * @rmtoll STK_CTRL     COUNTFLAG     LL_SYSTICK_IsActiveCounterFlag
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSTICK_IsActiveCounterFlag(void)
-{
-	return (((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) == (SysTick_CTRL_COUNTFLAG_Msk)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_SYSTICK_IsActiveCounterFlag(void) { return (((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) == (SysTick_CTRL_COUNTFLAG_Msk)) ? 1UL : 0UL); }
 
 /**
  * @brief  Configures the SysTick clock source
@@ -305,10 +302,7 @@ __STATIC_INLINE void LL_SYSTICK_DisableIT(void) { CLEAR_BIT(SysTick->CTRL, SysTi
  * @rmtoll STK_CTRL     TICKINT       LL_SYSTICK_IsEnabledIT
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_SYSTICK_IsEnabledIT(void)
-{
-	return ((READ_BIT(SysTick->CTRL, SysTick_CTRL_TICKINT_Msk) == (SysTick_CTRL_TICKINT_Msk)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_SYSTICK_IsEnabledIT(void) { return ((READ_BIT(SysTick->CTRL, SysTick_CTRL_TICKINT_Msk) == (SysTick_CTRL_TICKINT_Msk)) ? 1UL : 0UL); }
 
 /**
  * @}
@@ -454,10 +448,7 @@ __STATIC_INLINE void LL_HANDLER_DisableFault(uint32_t Fault)
  * @rmtoll SCB_CPUID    IMPLEMENTER   LL_CPUID_GetImplementer
  * @retval Value should be equal to 0x41 for ARM
  */
-__STATIC_INLINE uint32_t LL_CPUID_GetImplementer(void)
-{
-	return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_IMPLEMENTER_Msk) >> SCB_CPUID_IMPLEMENTER_Pos);
-}
+__STATIC_INLINE uint32_t LL_CPUID_GetImplementer(void) { return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_IMPLEMENTER_Msk) >> SCB_CPUID_IMPLEMENTER_Pos); }
 
 /**
  * @brief  Get Variant number (The r value in the rnpn product revision
@@ -465,10 +456,7 @@ __STATIC_INLINE uint32_t LL_CPUID_GetImplementer(void)
  * @rmtoll SCB_CPUID    VARIANT       LL_CPUID_GetVariant
  * @retval Value between 0 and 255 (0x0: revision 0)
  */
-__STATIC_INLINE uint32_t LL_CPUID_GetVariant(void)
-{
-	return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_VARIANT_Msk) >> SCB_CPUID_VARIANT_Pos);
-}
+__STATIC_INLINE uint32_t LL_CPUID_GetVariant(void) { return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_VARIANT_Msk) >> SCB_CPUID_VARIANT_Pos); }
 
 /**
  * @brief  Get Architecture version
@@ -476,20 +464,14 @@ __STATIC_INLINE uint32_t LL_CPUID_GetVariant(void)
  * @retval Value should be equal to 0xF for Cortex-M33 ("ARMv8-M with Main
  * Extension")
  */
-__STATIC_INLINE uint32_t LL_CPUID_GetArchitecture(void)
-{
-	return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_ARCHITECTURE_Msk) >> SCB_CPUID_ARCHITECTURE_Pos);
-}
+__STATIC_INLINE uint32_t LL_CPUID_GetArchitecture(void) { return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_ARCHITECTURE_Msk) >> SCB_CPUID_ARCHITECTURE_Pos); }
 
 /**
  * @brief  Get Part number
  * @rmtoll SCB_CPUID    PARTNO        LL_CPUID_GetParNo
  * @retval Value should be equal to 0xD21 for Cortex-M33
  */
-__STATIC_INLINE uint32_t LL_CPUID_GetParNo(void)
-{
-	return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_PARTNO_Msk) >> SCB_CPUID_PARTNO_Pos);
-}
+__STATIC_INLINE uint32_t LL_CPUID_GetParNo(void) { return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_PARTNO_Msk) >> SCB_CPUID_PARTNO_Pos); }
 
 /**
  * @brief  Get Revision number (The p value in the rnpn product revision
@@ -497,10 +479,7 @@ __STATIC_INLINE uint32_t LL_CPUID_GetParNo(void)
  * @rmtoll SCB_CPUID    REVISION      LL_CPUID_GetRevision
  * @retval Value between 0 and 255 (0x1: patch 1)
  */
-__STATIC_INLINE uint32_t LL_CPUID_GetRevision(void)
-{
-	return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_REVISION_Msk) >> SCB_CPUID_REVISION_Pos);
-}
+__STATIC_INLINE uint32_t LL_CPUID_GetRevision(void) { return (uint32_t)(READ_BIT(SCB->CPUID, SCB_CPUID_REVISION_Msk) >> SCB_CPUID_REVISION_Pos); }
 
 /**
  * @}
@@ -617,10 +596,7 @@ __STATIC_INLINE void LL_MPU_Disable_NS(void)
  * @rmtoll MPU_CTRL     ENABLE        LL_MPU_IsEnabled
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_MPU_IsEnabled(void)
-{
-	return ((READ_BIT(MPU->CTRL, MPU_CTRL_ENABLE_Msk) == (MPU_CTRL_ENABLE_Msk)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_MPU_IsEnabled(void) { return ((READ_BIT(MPU->CTRL, MPU_CTRL_ENABLE_Msk) == (MPU_CTRL_ENABLE_Msk)) ? 1UL : 0UL); }
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /**
@@ -628,10 +604,7 @@ __STATIC_INLINE uint32_t LL_MPU_IsEnabled(void)
  * @rmtoll MPU_CTRL     ENABLE        LL_MPU_IsEnabled_NS
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_MPU_IsEnabled_NS(void)
-{
-	return ((READ_BIT(MPU_NS->CTRL, MPU_CTRL_ENABLE_Msk) == (MPU_CTRL_ENABLE_Msk)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_MPU_IsEnabled_NS(void) { return ((READ_BIT(MPU_NS->CTRL, MPU_CTRL_ENABLE_Msk) == (MPU_CTRL_ENABLE_Msk)) ? 1UL : 0UL); }
 #endif /* __ARM_FEATURE_CMSE */
 
 /**
@@ -825,8 +798,7 @@ __STATIC_INLINE void LL_MPU_DisableRegion_NS(uint32_t Region)
  * @note   cortex-M33 supports 8 secure and 8 non secure regions.
  * @retval None
  */
-__STATIC_INLINE void LL_MPU_ConfigRegion(uint32_t Region, uint32_t Attributes, uint32_t AttrIndx, uint32_t BaseAddress,
-					 uint32_t LimitAddress)
+__STATIC_INLINE void LL_MPU_ConfigRegion(uint32_t Region, uint32_t Attributes, uint32_t AttrIndx, uint32_t BaseAddress, uint32_t LimitAddress)
 {
 	/* Set region index */
 	WRITE_REG(MPU->RNR, Region);
@@ -881,8 +853,7 @@ __STATIC_INLINE void LL_MPU_ConfigRegion(uint32_t Region, uint32_t Attributes, u
  * @note   cortex-M33 supports 8 secure and 8 non secure regions.
  * @retval None
  */
-__STATIC_INLINE void LL_MPU_ConfigRegion_NS(uint32_t Region, uint32_t Attributes, uint32_t AttrIndx,
-					    uint32_t BaseAddress, uint32_t LimitAddress)
+__STATIC_INLINE void LL_MPU_ConfigRegion_NS(uint32_t Region, uint32_t Attributes, uint32_t AttrIndx, uint32_t BaseAddress, uint32_t LimitAddress)
 {
 	/* Set Region number */
 	WRITE_REG(MPU_NS->RNR, Region);

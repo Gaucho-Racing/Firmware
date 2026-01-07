@@ -136,20 +136,18 @@ typedef struct
 	__IO HAL_MDF_StateTypeDef State; /*!< MDF state */
 	__IO uint32_t ErrorCode;	 /*!< MDF error code */
 #if (USE_HAL_MDF_REGISTER_CALLBACKS == 1)
-	void (*OldCallback)(struct __MDF_HandleTypeDef *hmdf,
-			    uint32_t Threshold);		       /*!< MDF out-off limit detector callback.
-									    @note Not used for ADF instance */
-	void (*AcqCpltCallback)(struct __MDF_HandleTypeDef *hmdf);     /*!< MDF acquisition complete callback */
-	void (*AcqHalfCpltCallback)(struct __MDF_HandleTypeDef *hmdf); /*!< MDF acquisition half complete callback */
-	void (*SndLvCallback)(struct __MDF_HandleTypeDef *hmdf, uint32_t SoundLevel,
-			      uint32_t AmbientNoise);		     /*!< MDF sound level callback.
-									  @note Not used for MDF instance */
-	void (*SadCallback)(struct __MDF_HandleTypeDef *hmdf);	     /*!< MDF sound activity detector callback.
-									  @note Not used for MDF instance */
-	void (*ErrorCallback)(struct __MDF_HandleTypeDef *hmdf);     /*!< MDF error callback */
-	void (*MspInitCallback)(struct __MDF_HandleTypeDef *hmdf);   /*!< MDF MSP init callback */
-	void (*MspDeInitCallback)(struct __MDF_HandleTypeDef *hmdf); /*!< MDF MSP de-init callback */
-#endif								     /* USE_HAL_MDF_REGISTER_CALLBACKS */
+	void (*OldCallback)(struct __MDF_HandleTypeDef *hmdf, uint32_t Threshold);			     /*!< MDF out-off limit detector callback.
+														  @note Not used for ADF instance */
+	void (*AcqCpltCallback)(struct __MDF_HandleTypeDef *hmdf);					     /*!< MDF acquisition complete callback */
+	void (*AcqHalfCpltCallback)(struct __MDF_HandleTypeDef *hmdf);					     /*!< MDF acquisition half complete callback */
+	void (*SndLvCallback)(struct __MDF_HandleTypeDef *hmdf, uint32_t SoundLevel, uint32_t AmbientNoise); /*!< MDF sound level callback.
+														  @note Not used for MDF instance */
+	void (*SadCallback)(struct __MDF_HandleTypeDef *hmdf);						     /*!< MDF sound activity detector callback.
+														  @note Not used for MDF instance */
+	void (*ErrorCallback)(struct __MDF_HandleTypeDef *hmdf);					     /*!< MDF error callback */
+	void (*MspInitCallback)(struct __MDF_HandleTypeDef *hmdf);					     /*!< MDF MSP init callback */
+	void (*MspDeInitCallback)(struct __MDF_HandleTypeDef *hmdf);					     /*!< MDF MSP de-init callback */
+#endif													     /* USE_HAL_MDF_REGISTER_CALLBACKS */
 } MDF_HandleTypeDef;
 
 #if (USE_HAL_MDF_REGISTER_CALLBACKS == 1)
@@ -390,12 +388,12 @@ typedef struct {
 #define MDF_ERROR_ACQUISITION_OVERFLOW 0x00000001U /*!< Overflow occurs during acquisition */
 #define MDF_ERROR_RSF_OVERRUN 0x00000002U	   /*!< Overrun occurs on reshape filter */
 #define MDF_ERROR_CLOCK_ABSENCE 0x00000004U	   /*!< Clock absence detection occurs */
-#define MDF_ERROR_SHORT_CIRCUIT                                                                                        \
-	0x00000008U			 /*!< Short circuit detection occurs.                                          \
+#define MDF_ERROR_SHORT_CIRCUIT                                                                                                                                                                        \
+	0x00000008U			 /*!< Short circuit detection occurs.                                                                                                                          \
 					      @note Not used for ADF instance */
 #define MDF_ERROR_SATURATION 0x00000010U /*!< Saturation detection occurs */
-#define MDF_ERROR_OUT_OFF_LIMIT                                                                                        \
-	0x00000020U		  /*!< Out-off limit detection occurs.                                                 \
+#define MDF_ERROR_OUT_OFF_LIMIT                                                                                                                                                                        \
+	0x00000020U		  /*!< Out-off limit detection occurs.                                                                                                                                 \
 				       @note Not used for ADF instance */
 #define MDF_ERROR_DMA 0x00000040U /*!< DMA error occurs */
 #if (USE_HAL_MDF_REGISTER_CALLBACKS == 1)
@@ -410,32 +408,29 @@ typedef struct {
  */
 #define MDF_CLOCK_TRIG_TRGO 0x00000000U
 #define MDF_CLOCK_TRIG_TIM1_TRGO MDF_CKGCR_TRGSRC_1 /*!< @note Not available for ADF instance */
-#define MDF_CLOCK_TRIG_TIM1_TRGO2                                                                                      \
-	(MDF_CKGCR_TRGSRC_0 | MDF_CKGCR_TRGSRC_1)   /*!< @note Not available for ADF instance                          \
+#define MDF_CLOCK_TRIG_TIM1_TRGO2                                                                                                                                                                      \
+	(MDF_CKGCR_TRGSRC_0 | MDF_CKGCR_TRGSRC_1)   /*!< @note Not available for ADF instance                                                                                                          \
 						     */
 #define MDF_CLOCK_TRIG_TIM8_TRGO MDF_CKGCR_TRGSRC_2 /*!< @note Not available for ADF instance */
-#define MDF_CLOCK_TRIG_TIM8_TRGO2                                                                                      \
-	(MDF_CKGCR_TRGSRC_0 | MDF_CKGCR_TRGSRC_2) /*!< @note Not available for ADF instance                            \
+#define MDF_CLOCK_TRIG_TIM8_TRGO2                                                                                                                                                                      \
+	(MDF_CKGCR_TRGSRC_0 | MDF_CKGCR_TRGSRC_2) /*!< @note Not available for ADF instance                                                                                                            \
 						   */
-#define MDF_CLOCK_TRIG_TIM3_TRGO                                                                                       \
-	(MDF_CKGCR_TRGSRC_1 | MDF_CKGCR_TRGSRC_2) /*!< @note Not available for ADF instance                            \
+#define MDF_CLOCK_TRIG_TIM3_TRGO                                                                                                                                                                       \
+	(MDF_CKGCR_TRGSRC_1 | MDF_CKGCR_TRGSRC_2)						/*!< @note Not available for ADF instance                                                              \
+												 */
+#define MDF_CLOCK_TRIG_TIM4_TRGO (MDF_CKGCR_TRGSRC_0 | MDF_CKGCR_TRGSRC_1 | MDF_CKGCR_TRGSRC_2) /*!< @note Not available for ADF instance */
+#define MDF_CLOCK_TRIG_TIM16_OC1 MDF_CKGCR_TRGSRC_3						/*!< @note Not available for ADF instance */
+#define MDF_CLOCK_TRIG_TIM6_TRGO                                                                                                                                                                       \
+	(MDF_CKGCR_TRGSRC_0 | MDF_CKGCR_TRGSRC_3) /*!< @note Not available for ADF instance                                                                                                            \
 						   */
-#define MDF_CLOCK_TRIG_TIM4_TRGO                                                                                       \
-	(MDF_CKGCR_TRGSRC_0 | MDF_CKGCR_TRGSRC_1 | MDF_CKGCR_TRGSRC_2) /*!< @note Not available for ADF instance */
-#define MDF_CLOCK_TRIG_TIM16_OC1 MDF_CKGCR_TRGSRC_3		       /*!< @note Not available for ADF instance */
-#define MDF_CLOCK_TRIG_TIM6_TRGO                                                                                       \
-	(MDF_CKGCR_TRGSRC_0 | MDF_CKGCR_TRGSRC_3) /*!< @note Not available for ADF instance                            \
-						   */
-#define MDF_CLOCK_TRIG_TIM7_TRGO                                                                                       \
-	(MDF_CKGCR_TRGSRC_1 | MDF_CKGCR_TRGSRC_3) /*!< @note Not available for ADF instance                            \
-						   */
-#define MDF_CLOCK_TRIG_SAD_DET                                                                                         \
-	(MDF_CKGCR_TRGSRC_0 | MDF_CKGCR_TRGSRC_1 | MDF_CKGCR_TRGSRC_3)	/*!< @note Not available for ADF instance */
-#define MDF_CLOCK_TRIG_EXTI11 (MDF_CKGCR_TRGSRC_2 | MDF_CKGCR_TRGSRC_3) /*!< @note Not available for ADF instance */
+#define MDF_CLOCK_TRIG_TIM7_TRGO                                                                                                                                                                       \
+	(MDF_CKGCR_TRGSRC_1 | MDF_CKGCR_TRGSRC_3)					      /*!< @note Not available for ADF instance                                                                \
+											       */
+#define MDF_CLOCK_TRIG_SAD_DET (MDF_CKGCR_TRGSRC_0 | MDF_CKGCR_TRGSRC_1 | MDF_CKGCR_TRGSRC_3) /*!< @note Not available for ADF instance */
+#define MDF_CLOCK_TRIG_EXTI11 (MDF_CKGCR_TRGSRC_2 | MDF_CKGCR_TRGSRC_3)			      /*!< @note Not available for ADF instance */
 #define MDF_CLOCK_TRIG_EXTI15 (MDF_CKGCR_TRGSRC_0 | MDF_CKGCR_TRGSRC_2 | MDF_CKGCR_TRGSRC_3)
-#define MDF_CLOCK_TRIG_LPTIM1_OUT                                                                                      \
-	(MDF_CKGCR_TRGSRC_1 | MDF_CKGCR_TRGSRC_2 | MDF_CKGCR_TRGSRC_3) /*!< @note Not available for ADF instance */
-#define MDF_CLOCK_TRIG_SAD_TRGO MDF_CKGCR_TRGSRC		       /*!< @note Not available for ADF instance */
+#define MDF_CLOCK_TRIG_LPTIM1_OUT (MDF_CKGCR_TRGSRC_1 | MDF_CKGCR_TRGSRC_2 | MDF_CKGCR_TRGSRC_3) /*!< @note Not available for ADF instance */
+#define MDF_CLOCK_TRIG_SAD_TRGO MDF_CKGCR_TRGSRC						 /*!< @note Not available for ADF instance */
 /**
  * @}
  */
@@ -454,8 +449,8 @@ typedef struct {
  */
 #define MDF_OUTPUT_CLOCK_0 MDF_CKGCR_CCK0DIR /*!< MDF_CCK0 is used as output clock */
 #define MDF_OUTPUT_CLOCK_1 MDF_CKGCR_CCK1DIR /*!< MDF_CCK1 is used as output clock */
-#define MDF_OUTPUT_CLOCK_ALL                                                                                           \
-	(MDF_CKGCR_CCK0DIR | MDF_CKGCR_CCK1DIR) /*!< MDF_CCK0 and MDF_CCK1 are                                         \
+#define MDF_OUTPUT_CLOCK_ALL                                                                                                                                                                           \
+	(MDF_CKGCR_CCK0DIR | MDF_CKGCR_CCK1DIR) /*!< MDF_CCK0 and MDF_CCK1 are                                                                                                                         \
 						   used as output clock */
 /**
  * @}
@@ -466,11 +461,11 @@ typedef struct {
  */
 #define MDF_SITF_LF_MASTER_SPI_MODE 0x00000000U	      /*!< Low frequency master SPI mode */
 #define MDF_SITF_NORMAL_SPI_MODE MDF_SITFCR_SITFMOD_0 /*!< Normal SPI mode */
-#define MDF_SITF_MANCHESTER_FALLING_MODE                                                                               \
-	MDF_SITFCR_SITFMOD_1 /*!< Manchester mode rising edge logic 0                                                  \
+#define MDF_SITF_MANCHESTER_FALLING_MODE                                                                                                                                                               \
+	MDF_SITFCR_SITFMOD_1 /*!< Manchester mode rising edge logic 0                                                                                                                                  \
 				  and falling edge logic 1 */
-#define MDF_SITF_MANCHESTER_RISING_MODE                                                                                \
-	MDF_SITFCR_SITFMOD /*!< Manchester mode rising edge logic 1                                                    \
+#define MDF_SITF_MANCHESTER_RISING_MODE                                                                                                                                                                \
+	MDF_SITFCR_SITFMOD /*!< Manchester mode rising edge logic 1                                                                                                                                    \
 				and falling edge logic 0 */
 /**
  * @}
@@ -481,8 +476,8 @@ typedef struct {
  */
 #define MDF_SITF_CCK0_SOURCE 0x00000000U	 /*!< Common clock 0 source */
 #define MDF_SITF_CCK1_SOURCE MDF_SITFCR_SCKSRC_0 /*!< Common clock 1 source */
-#define MDF_SITF_CKI_SOURCE                                                                                            \
-	MDF_SITFCR_SCKSRC_1 /*!< Dedicated input clock source.                                                         \
+#define MDF_SITF_CKI_SOURCE                                                                                                                                                                            \
+	MDF_SITFCR_SCKSRC_1 /*!< Dedicated input clock source.                                                                                                                                         \
 				 @note Not available for ADF instance */
 /**
  * @}
@@ -496,17 +491,15 @@ typedef struct {
 #define MDF_BITSTREAM1_RISING MDF_BSMXCR_BSSEL_1			 /*!< @note Not available for ADF instance */
 #define MDF_BITSTREAM1_FALLING (MDF_BSMXCR_BSSEL_0 | MDF_BSMXCR_BSSEL_1) /*!< @note Not available for ADF instance */
 #if !defined(STM32U535xx) && !defined(STM32U545xx)
-#define MDF_BITSTREAM2_RISING MDF_BSMXCR_BSSEL_2			 /*!< @note Not available for ADF instance */
-#define MDF_BITSTREAM2_FALLING (MDF_BSMXCR_BSSEL_0 | MDF_BSMXCR_BSSEL_2) /*!< @note Not available for ADF instance */
-#define MDF_BITSTREAM3_RISING (MDF_BSMXCR_BSSEL_1 | MDF_BSMXCR_BSSEL_2)	 /*!< @note Not available for ADF instance */
-#define MDF_BITSTREAM3_FALLING                                                                                         \
-	(MDF_BSMXCR_BSSEL_0 | MDF_BSMXCR_BSSEL_1 | MDF_BSMXCR_BSSEL_2)	 /*!< @note Not available for ADF instance */
-#define MDF_BITSTREAM4_RISING MDF_BSMXCR_BSSEL_3			 /*!< @note Not available for ADF instance */
-#define MDF_BITSTREAM4_FALLING (MDF_BSMXCR_BSSEL_0 | MDF_BSMXCR_BSSEL_3) /*!< @note Not available for ADF instance */
-#define MDF_BITSTREAM5_RISING (MDF_BSMXCR_BSSEL_1 | MDF_BSMXCR_BSSEL_3)	 /*!< @note Not available for ADF instance */
-#define MDF_BITSTREAM5_FALLING                                                                                         \
-	(MDF_BSMXCR_BSSEL_0 | MDF_BSMXCR_BSSEL_1 | MDF_BSMXCR_BSSEL_3) /*!< @note Not available for ADF instance */
-#endif /* !defined(STM32U535xx) && !defined(STM32U545xx) */
+#define MDF_BITSTREAM2_RISING MDF_BSMXCR_BSSEL_2					      /*!< @note Not available for ADF instance */
+#define MDF_BITSTREAM2_FALLING (MDF_BSMXCR_BSSEL_0 | MDF_BSMXCR_BSSEL_2)		      /*!< @note Not available for ADF instance */
+#define MDF_BITSTREAM3_RISING (MDF_BSMXCR_BSSEL_1 | MDF_BSMXCR_BSSEL_2)			      /*!< @note Not available for ADF instance */
+#define MDF_BITSTREAM3_FALLING (MDF_BSMXCR_BSSEL_0 | MDF_BSMXCR_BSSEL_1 | MDF_BSMXCR_BSSEL_2) /*!< @note Not available for ADF instance */
+#define MDF_BITSTREAM4_RISING MDF_BSMXCR_BSSEL_3					      /*!< @note Not available for ADF instance */
+#define MDF_BITSTREAM4_FALLING (MDF_BSMXCR_BSSEL_0 | MDF_BSMXCR_BSSEL_3)		      /*!< @note Not available for ADF instance */
+#define MDF_BITSTREAM5_RISING (MDF_BSMXCR_BSSEL_1 | MDF_BSMXCR_BSSEL_3)			      /*!< @note Not available for ADF instance */
+#define MDF_BITSTREAM5_FALLING (MDF_BSMXCR_BSSEL_0 | MDF_BSMXCR_BSSEL_1 | MDF_BSMXCR_BSSEL_3) /*!< @note Not available for ADF instance */
+#endif											      /* !defined(STM32U535xx) && !defined(STM32U545xx) */
 /**
  * @}
  */
@@ -570,8 +563,8 @@ typedef struct {
  * @{
  */
 #define MDF_SAD_ENTER_DETECT 0x00000000U /*!< Event when SAD enters in detect state */
-#define MDF_SAD_ENTER_EXIT_DETECT                                                                                      \
-	MDF_SADCR_DETCFG /*!< Event when SAD enters or exits from detect state                                         \
+#define MDF_SAD_ENTER_EXIT_DETECT                                                                                                                                                                      \
+	MDF_SADCR_DETCFG /*!< Event when SAD enters or exits from detect state                                                                                                                         \
 			  */
 /**
  * @}
@@ -592,15 +585,14 @@ typedef struct {
  * time window
  * @{
  */
-#define MDF_SAD_HANGOVER_4_FRAMES 0x00000000U					/*!< Hangover window of 4 frames */
-#define MDF_SAD_HANGOVER_8_FRAMES MDF_SADCFGR_HGOVR_0				/*!< Hangover window of 8 frames */
-#define MDF_SAD_HANGOVER_16_FRAMES MDF_SADCFGR_HGOVR_1				/*!< Hangover window of 16 frames */
-#define MDF_SAD_HANGOVER_32_FRAMES (MDF_SADCFGR_HGOVR_0 | MDF_SADCFGR_HGOVR_1)	/*!< Hangover window of 32 frames */
-#define MDF_SAD_HANGOVER_64_FRAMES MDF_SADCFGR_HGOVR_2				/*!< Hangover window of 64 frames */
-#define MDF_SAD_HANGOVER_128_FRAMES (MDF_SADCFGR_HGOVR_0 | MDF_SADCFGR_HGOVR_2) /*!< Hangover window of 128 frames */
-#define MDF_SAD_HANGOVER_256_FRAMES (MDF_SADCFGR_HGOVR_1 | MDF_SADCFGR_HGOVR_2) /*!< Hangover window of 256 frames */
-#define MDF_SAD_HANGOVER_512_FRAMES                                                                                    \
-	(MDF_SADCFGR_HGOVR_0 | MDF_SADCFGR_HGOVR_1 | MDF_SADCFGR_HGOVR_2) /*!< Hangover window of 512 frames */
+#define MDF_SAD_HANGOVER_4_FRAMES 0x00000000U							      /*!< Hangover window of 4 frames */
+#define MDF_SAD_HANGOVER_8_FRAMES MDF_SADCFGR_HGOVR_0						      /*!< Hangover window of 8 frames */
+#define MDF_SAD_HANGOVER_16_FRAMES MDF_SADCFGR_HGOVR_1						      /*!< Hangover window of 16 frames */
+#define MDF_SAD_HANGOVER_32_FRAMES (MDF_SADCFGR_HGOVR_0 | MDF_SADCFGR_HGOVR_1)			      /*!< Hangover window of 32 frames */
+#define MDF_SAD_HANGOVER_64_FRAMES MDF_SADCFGR_HGOVR_2						      /*!< Hangover window of 64 frames */
+#define MDF_SAD_HANGOVER_128_FRAMES (MDF_SADCFGR_HGOVR_0 | MDF_SADCFGR_HGOVR_2)			      /*!< Hangover window of 128 frames */
+#define MDF_SAD_HANGOVER_256_FRAMES (MDF_SADCFGR_HGOVR_1 | MDF_SADCFGR_HGOVR_2)			      /*!< Hangover window of 256 frames */
+#define MDF_SAD_HANGOVER_512_FRAMES (MDF_SADCFGR_HGOVR_0 | MDF_SADCFGR_HGOVR_1 | MDF_SADCFGR_HGOVR_2) /*!< Hangover window of 512 frames */
 /**
  * @}
  */
@@ -610,15 +602,15 @@ typedef struct {
  * @{
  */
 #define MDF_SAD_LEARNING_2_FRAMES 0x00000000U /*!< 2 learning frames */
-#define MDF_SAD_LEARNING_4_FRAMES                                                                                      \
-	MDF_SADCFGR_LFRNB_0 /*!< 4 learning frames                                                                     \
+#define MDF_SAD_LEARNING_4_FRAMES                                                                                                                                                                      \
+	MDF_SADCFGR_LFRNB_0 /*!< 4 learning frames                                                                                                                                                     \
 			     */
-#define MDF_SAD_LEARNING_8_FRAMES                                                                                      \
-	MDF_SADCFGR_LFRNB_1						       /*!< 8 learning frames                  \
+#define MDF_SAD_LEARNING_8_FRAMES                                                                                                                                                                      \
+	MDF_SADCFGR_LFRNB_1						       /*!< 8 learning frames                                                                                                  \
 										*/
 #define MDF_SAD_LEARNING_16_FRAMES (MDF_SADCFGR_LFRNB_0 | MDF_SADCFGR_LFRNB_1) /*!< 16 learning frames */
-#define MDF_SAD_LEARNING_32_FRAMES                                                                                     \
-	MDF_SADCFGR_LFRNB /*!< 32 learning frames                                                                      \
+#define MDF_SAD_LEARNING_32_FRAMES                                                                                                                                                                     \
+	MDF_SADCFGR_LFRNB /*!< 32 learning frames                                                                                                                                                      \
 			   */
 /**
  * @}
@@ -631,20 +623,17 @@ typedef struct {
 #define MDF_SAD_SIGNAL_NOISE_3_5DB 0x00000000U	       /*!< Signal to noise threshold is 3.5dB */
 #define MDF_SAD_SIGNAL_NOISE_6DB MDF_SADCFGR_SNTHR_0   /*!< Signal to noise threshold is 6dB */
 #define MDF_SAD_SIGNAL_NOISE_9_5DB MDF_SADCFGR_SNTHR_1 /*!< Signal to noise threshold is 9.5dB */
-#define MDF_SAD_SIGNAL_NOISE_12DB                                                                                      \
-	(MDF_SADCFGR_SNTHR_0 | MDF_SADCFGR_SNTHR_1)	/*!< Signal to noise threshold is 12dB                         \
+#define MDF_SAD_SIGNAL_NOISE_12DB                                                                                                                                                                      \
+	(MDF_SADCFGR_SNTHR_0 | MDF_SADCFGR_SNTHR_1)	/*!< Signal to noise threshold is 12dB                                                                                                         \
 							 */
 #define MDF_SAD_SIGNAL_NOISE_15_6DB MDF_SADCFGR_SNTHR_2 /*!< Signal to noise threshold is 15.6dB */
-#define MDF_SAD_SIGNAL_NOISE_18DB                                                                                      \
-	(MDF_SADCFGR_SNTHR_0 | MDF_SADCFGR_SNTHR_2) /*!< Signal to noise threshold is 18dB                             \
-						     */
-#define MDF_SAD_SIGNAL_NOISE_21_6DB                                                                                    \
-	(MDF_SADCFGR_SNTHR_1 | MDF_SADCFGR_SNTHR_2) /*!< Signal to noise threshold is 21.6dB */
-#define MDF_SAD_SIGNAL_NOISE_24_1DB                                                                                    \
-	(MDF_SADCFGR_SNTHR_0 | MDF_SADCFGR_SNTHR_1 | MDF_SADCFGR_SNTHR_2) /*!< Signal to noise threshold is 24.1dB */
-#define MDF_SAD_SIGNAL_NOISE_27_6DB MDF_SADCFGR_SNTHR_3			  /*!< Signal to noise threshold is 27.6dB */
-#define MDF_SAD_SIGNAL_NOISE_30_1DB                                                                                    \
-	(MDF_SADCFGR_SNTHR_0 | MDF_SADCFGR_SNTHR_3) /*!< Signal to noise threshold is 30.1dB */
+#define MDF_SAD_SIGNAL_NOISE_18DB                                                                                                                                                                      \
+	(MDF_SADCFGR_SNTHR_0 | MDF_SADCFGR_SNTHR_2)						      /*!< Signal to noise threshold is 18dB                                                           \
+												       */
+#define MDF_SAD_SIGNAL_NOISE_21_6DB (MDF_SADCFGR_SNTHR_1 | MDF_SADCFGR_SNTHR_2)			      /*!< Signal to noise threshold is 21.6dB */
+#define MDF_SAD_SIGNAL_NOISE_24_1DB (MDF_SADCFGR_SNTHR_0 | MDF_SADCFGR_SNTHR_1 | MDF_SADCFGR_SNTHR_2) /*!< Signal to noise threshold is 24.1dB */
+#define MDF_SAD_SIGNAL_NOISE_27_6DB MDF_SADCFGR_SNTHR_3						      /*!< Signal to noise threshold is 27.6dB */
+#define MDF_SAD_SIGNAL_NOISE_30_1DB (MDF_SADCFGR_SNTHR_0 | MDF_SADCFGR_SNTHR_3)			      /*!< Signal to noise threshold is 30.1dB */
 /**
  * @}
  */
@@ -653,31 +642,23 @@ typedef struct {
  * @{
  */
 #define MDF_FILTER_TRIG_TRGO 0x00000000U
-#define MDF_FILTER_TRIG_OLD_EVENT MDF_DFLTCR_TRGSRC_0 /*!< @note Not available for ADF instance */
-#define MDF_FILTER_TRIG_TIM1_TRGO MDF_DFLTCR_TRGSRC_1 /*!< @note Not available for ADF instance */
-#define MDF_FILTER_TRIG_TIM1_TRGO2                                                                                     \
-	(MDF_DFLTCR_TRGSRC_0 | MDF_DFLTCR_TRGSRC_1)   /*!< @note Not available for ADF instance */
-#define MDF_FILTER_TRIG_TIM8_TRGO MDF_DFLTCR_TRGSRC_2 /*!< @note Not available for ADF instance */
-#define MDF_FILTER_TRIG_TIM8_TRGO2                                                                                     \
-	(MDF_DFLTCR_TRGSRC_0 | MDF_DFLTCR_TRGSRC_2) /*!< @note Not available for ADF instance */
-#define MDF_FILTER_TRIG_TIM3_TRGO                                                                                      \
-	(MDF_DFLTCR_TRGSRC_1 | MDF_DFLTCR_TRGSRC_2) /*!< @note Not available for ADF instance */
-#define MDF_FILTER_TRIG_TIM4_TRGO                                                                                      \
-	(MDF_DFLTCR_TRGSRC_0 | MDF_DFLTCR_TRGSRC_1 | MDF_DFLTCR_TRGSRC_2) /*!< @note Not available for ADF instance */
-#define MDF_FILTER_TRIG_TIM16_OC1 MDF_DFLTCR_TRGSRC_3			  /*!< @note Not available for ADF instance */
-#define MDF_FILTER_TRIG_TIM6_TRGO                                                                                      \
-	(MDF_DFLTCR_TRGSRC_0 | MDF_DFLTCR_TRGSRC_3) /*!< @note Not available for ADF instance */
-#define MDF_FILTER_TRIG_TIM7_TRGO                                                                                      \
-	(MDF_DFLTCR_TRGSRC_1 | MDF_DFLTCR_TRGSRC_3) /*!< @note Not available for ADF instance */
-#define MDF_FILTER_TRIG_ADF_SAD_DET                                                                                    \
-	(MDF_DFLTCR_TRGSRC_0 | MDF_DFLTCR_TRGSRC_1 | MDF_DFLTCR_TRGSRC_3) /*!< @note Not available for ADF instance */
-#define MDF_FILTER_TRIG_EXTI11                                                                                         \
-	(MDF_DFLTCR_TRGSRC_2 | MDF_DFLTCR_TRGSRC_3) /*!< @note Not available for ADF instance                          \
+#define MDF_FILTER_TRIG_OLD_EVENT MDF_DFLTCR_TRGSRC_0						      /*!< @note Not available for ADF instance */
+#define MDF_FILTER_TRIG_TIM1_TRGO MDF_DFLTCR_TRGSRC_1						      /*!< @note Not available for ADF instance */
+#define MDF_FILTER_TRIG_TIM1_TRGO2 (MDF_DFLTCR_TRGSRC_0 | MDF_DFLTCR_TRGSRC_1)			      /*!< @note Not available for ADF instance */
+#define MDF_FILTER_TRIG_TIM8_TRGO MDF_DFLTCR_TRGSRC_2						      /*!< @note Not available for ADF instance */
+#define MDF_FILTER_TRIG_TIM8_TRGO2 (MDF_DFLTCR_TRGSRC_0 | MDF_DFLTCR_TRGSRC_2)			      /*!< @note Not available for ADF instance */
+#define MDF_FILTER_TRIG_TIM3_TRGO (MDF_DFLTCR_TRGSRC_1 | MDF_DFLTCR_TRGSRC_2)			      /*!< @note Not available for ADF instance */
+#define MDF_FILTER_TRIG_TIM4_TRGO (MDF_DFLTCR_TRGSRC_0 | MDF_DFLTCR_TRGSRC_1 | MDF_DFLTCR_TRGSRC_2)   /*!< @note Not available for ADF instance */
+#define MDF_FILTER_TRIG_TIM16_OC1 MDF_DFLTCR_TRGSRC_3						      /*!< @note Not available for ADF instance */
+#define MDF_FILTER_TRIG_TIM6_TRGO (MDF_DFLTCR_TRGSRC_0 | MDF_DFLTCR_TRGSRC_3)			      /*!< @note Not available for ADF instance */
+#define MDF_FILTER_TRIG_TIM7_TRGO (MDF_DFLTCR_TRGSRC_1 | MDF_DFLTCR_TRGSRC_3)			      /*!< @note Not available for ADF instance */
+#define MDF_FILTER_TRIG_ADF_SAD_DET (MDF_DFLTCR_TRGSRC_0 | MDF_DFLTCR_TRGSRC_1 | MDF_DFLTCR_TRGSRC_3) /*!< @note Not available for ADF instance */
+#define MDF_FILTER_TRIG_EXTI11                                                                                                                                                                         \
+	(MDF_DFLTCR_TRGSRC_2 | MDF_DFLTCR_TRGSRC_3) /*!< @note Not available for ADF instance                                                                                                          \
 						     */
 #define MDF_FILTER_TRIG_EXTI15 (MDF_DFLTCR_TRGSRC_0 | MDF_DFLTCR_TRGSRC_2 | MDF_DFLTCR_TRGSRC_3)
-#define MDF_FILTER_TRIG_LPTIM1_OUT                                                                                     \
-	(MDF_DFLTCR_TRGSRC_1 | MDF_DFLTCR_TRGSRC_2 | MDF_DFLTCR_TRGSRC_3) /*!< @note Not available for ADF instance */
-#define MDF_FILTER_TRIG_ADF_TRGO MDF_DFLTCR_TRGSRC			  /*!< @note Not available for ADF instance */
+#define MDF_FILTER_TRIG_LPTIM1_OUT (MDF_DFLTCR_TRGSRC_1 | MDF_DFLTCR_TRGSRC_2 | MDF_DFLTCR_TRGSRC_3) /*!< @note Not available for ADF instance */
+#define MDF_FILTER_TRIG_ADF_TRGO MDF_DFLTCR_TRGSRC						     /*!< @note Not available for ADF instance */
 /**
  * @}
  */
@@ -695,12 +676,12 @@ typedef struct {
  * @{
  */
 #define MDF_DATA_SOURCE_BSMX 0x00000000U /*!< Data from bitstream matrix */
-#define MDF_DATA_SOURCE_ADCITF1                                                                                        \
-	MDF_DFLTCICR_DATSRC_1 /*!< Data from ADC interface 1.                                                          \
+#define MDF_DATA_SOURCE_ADCITF1                                                                                                                                                                        \
+	MDF_DFLTCICR_DATSRC_1 /*!< Data from ADC interface 1.                                                                                                                                          \
 				   @note Not available for ADF instance */
 #if defined(ADC2)
-#define MDF_DATA_SOURCE_ADCITF2                                                                                        \
-	MDF_DFLTCICR_DATSRC /*!< Data from ADC interface 2.                                                            \
+#define MDF_DATA_SOURCE_ADCITF2                                                                                                                                                                        \
+	MDF_DFLTCICR_DATSRC /*!< Data from ADC interface 2.                                                                                                                                            \
 				 @note Not available for ADF instance */
 #endif			    /* ADC2 */
 /**
@@ -710,19 +691,19 @@ typedef struct {
 /** @defgroup MDF_CicMode MDF CIC mode
  * @{
  */
-#define MDF_TWO_FILTERS_MCIC_FASTSINC                                                                                  \
-	0x00000000U /*!< Two filters, main filter in FastSinc order.                                                   \
+#define MDF_TWO_FILTERS_MCIC_FASTSINC                                                                                                                                                                  \
+	0x00000000U /*!< Two filters, main filter in FastSinc order.                                                                                                                                   \
 			 @note Not available for ADF instance */
-#define MDF_TWO_FILTERS_MCIC_SINC1                                                                                     \
-	MDF_DFLTCICR_CICMOD_0 /*!< Two filters, main filter in Sinc1 order.                                            \
+#define MDF_TWO_FILTERS_MCIC_SINC1                                                                                                                                                                     \
+	MDF_DFLTCICR_CICMOD_0 /*!< Two filters, main filter in Sinc1 order.                                                                                                                            \
 				   @note Not available for ADF instance */
-#define MDF_TWO_FILTERS_MCIC_SINC2                                                                                     \
-	MDF_DFLTCICR_CICMOD_1 /*!< Two filters, main filter in Sinc2 order.                                            \
+#define MDF_TWO_FILTERS_MCIC_SINC2                                                                                                                                                                     \
+	MDF_DFLTCICR_CICMOD_1 /*!< Two filters, main filter in Sinc2 order.                                                                                                                            \
 				   @note Not available for ADF instance */
-#define MDF_TWO_FILTERS_MCIC_SINC3                                                                                     \
-	(MDF_DFLTCICR_CICMOD_0 | MDF_DFLTCICR_CICMOD_1) /*!< Two filters, main filter in Sinc3 order.                  \
-							     @note Not available for ADF instance */
-#define MDF_ONE_FILTER_SINC4 MDF_DFLTCICR_CICMOD_2	/*!< One filter in Sinc4 order */
+#define MDF_TWO_FILTERS_MCIC_SINC3                                                                                                                                                                     \
+	(MDF_DFLTCICR_CICMOD_0 | MDF_DFLTCICR_CICMOD_1)			     /*!< Two filters, main filter in Sinc3 order.                                                                             \
+										  @note Not available for ADF instance */
+#define MDF_ONE_FILTER_SINC4 MDF_DFLTCICR_CICMOD_2			     /*!< One filter in Sinc4 order */
 #define MDF_ONE_FILTER_SINC5 (MDF_DFLTCICR_CICMOD_0 | MDF_DFLTCICR_CICMOD_2) /*!< One filter in Sinc5 order */
 /**
  * @}
@@ -732,21 +713,21 @@ typedef struct {
  * @{
  */
 #define MDF_MODE_ASYNC_CONT 0x00000000U /*!< Asynchronous, continuous acquisition mode */
-#define MDF_MODE_ASYNC_SINGLE                                                                                          \
-	MDF_DFLTCR_ACQMOD_0		       /*!< Asynchronous, single-shot acquisition mode.                        \
-						    @note Not available for ADF instance with SAD                      \
+#define MDF_MODE_ASYNC_SINGLE                                                                                                                                                                          \
+	MDF_DFLTCR_ACQMOD_0		       /*!< Asynchronous, single-shot acquisition mode.                                                                                                        \
+						    @note Not available for ADF instance with SAD                                                                                                      \
 						  usage */
 #define MDF_MODE_SYNC_CONT MDF_DFLTCR_ACQMOD_1 /*!< Synchronous, continuous acquisition mode */
-#define MDF_MODE_SYNC_SINGLE                                                                                           \
-	(MDF_DFLTCR_ACQMOD_0 | MDF_DFLTCR_ACQMOD_1) /*!< Synchronous, single-shot acquisition mode.                    \
-							 @note Not available for ADF instance with                     \
+#define MDF_MODE_SYNC_SINGLE                                                                                                                                                                           \
+	(MDF_DFLTCR_ACQMOD_0 | MDF_DFLTCR_ACQMOD_1) /*!< Synchronous, single-shot acquisition mode.                                                                                                    \
+							 @note Not available for ADF instance with                                                                                                     \
 						       SAD usage*/
-#define MDF_MODE_WINDOW_CONT                                                                                           \
-	MDF_DFLTCR_ACQMOD_2 /*!< Window, continuous acquisition mode.                                                  \
-				 @note Not available for ADF instance with SAD                                         \
+#define MDF_MODE_WINDOW_CONT                                                                                                                                                                           \
+	MDF_DFLTCR_ACQMOD_2 /*!< Window, continuous acquisition mode.                                                                                                                                  \
+				 @note Not available for ADF instance with SAD                                                                                                                         \
 			       usage*/
-#define MDF_MODE_SYNC_SNAPSHOT                                                                                         \
-	(MDF_DFLTCR_ACQMOD_0 | MDF_DFLTCR_ACQMOD_2) /*!< Synchronous, snapshot acquisition mode.                       \
+#define MDF_MODE_SYNC_SNAPSHOT                                                                                                                                                                         \
+	(MDF_DFLTCR_ACQMOD_0 | MDF_DFLTCR_ACQMOD_2) /*!< Synchronous, snapshot acquisition mode.                                                                                                       \
 							 @note Not available for ADF instance */
 /**
  * @}
@@ -796,11 +777,11 @@ typedef struct {
 /** @defgroup MDF_OldEventConfig MDF out-off limit detector event configuration
  * @{
  */
-#define MDF_OLD_SIGNAL_OUTSIDE_THRESHOLDS                                                                              \
-	0x00000000U /*!< Out-off limit detector event is generated                                                     \
+#define MDF_OLD_SIGNAL_OUTSIDE_THRESHOLDS                                                                                                                                                              \
+	0x00000000U /*!< Out-off limit detector event is generated                                                                                                                                     \
 			 if signal is outside thresholds */
-#define MDF_OLD_SIGNAL_IN_THRESHOLDS                                                                                   \
-	MDF_OLDCR_THINB /*!< Out-off limit detector event is generated                                                 \
+#define MDF_OLD_SIGNAL_IN_THRESHOLDS                                                                                                                                                                   \
+	MDF_OLDCR_THINB /*!< Out-off limit detector event is generated                                                                                                                                 \
 			     if signal is in thresholds */
 /**
  * @}
@@ -810,14 +791,14 @@ typedef struct {
  * information
  * @{
  */
-#define MDF_OLD_IN_THRESHOLDS                                                                                          \
-	0x00000000U /*!< The signal was in thresholds when out-off limit                                               \
+#define MDF_OLD_IN_THRESHOLDS                                                                                                                                                                          \
+	0x00000000U /*!< The signal was in thresholds when out-off limit                                                                                                                               \
 		       detection occurs */
-#define MDF_OLD_HIGH_THRESHOLD                                                                                         \
-	0x00000001U /*!< The signal was higher than high threshold                                                     \
+#define MDF_OLD_HIGH_THRESHOLD                                                                                                                                                                         \
+	0x00000001U /*!< The signal was higher than high threshold                                                                                                                                     \
 			 when out-off limit detection occurs */
-#define MDF_OLD_LOW_THRESHOLD                                                                                          \
-	0x00000002U /*!< The signal was lower than low threshold                                                       \
+#define MDF_OLD_LOW_THRESHOLD                                                                                                                                                                          \
+	0x00000002U /*!< The signal was lower than low threshold                                                                                                                                       \
 			 when out-off limit detection occurs */
 /**
  * @}
@@ -837,11 +818,11 @@ typedef struct {
  * @retval None
  */
 #if (USE_HAL_MDF_REGISTER_CALLBACKS == 1)
-#define __HAL_MDF_RESET_HANDLE_STATE(__HANDLE__)                                                                       \
-	do {                                                                                                           \
-		(__HANDLE__)->State = HAL_MDF_STATE_RESET;                                                             \
-		(__HANDLE__)->MspInitCallback = NULL;                                                                  \
-		(__HANDLE__)->MspDeInitCallback = NULL;                                                                \
+#define __HAL_MDF_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                       \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_MDF_STATE_RESET;                                                                                                                                             \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0)
 #else /* USE_HAL_MDF_REGISTER_CALLBACKS */
 #define __HAL_MDF_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_MDF_STATE_RESET)
@@ -865,8 +846,7 @@ HAL_StatusTypeDef HAL_MDF_DeInit(MDF_HandleTypeDef *hmdf);
 void HAL_MDF_MspInit(MDF_HandleTypeDef *hmdf);
 void HAL_MDF_MspDeInit(MDF_HandleTypeDef *hmdf);
 #if (USE_HAL_MDF_REGISTER_CALLBACKS == 1)
-HAL_StatusTypeDef HAL_MDF_RegisterCallback(MDF_HandleTypeDef *hmdf, HAL_MDF_CallbackIDTypeDef CallbackID,
-					   pMDF_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_MDF_RegisterCallback(MDF_HandleTypeDef *hmdf, HAL_MDF_CallbackIDTypeDef CallbackID, pMDF_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_MDF_UnRegisterCallback(MDF_HandleTypeDef *hmdf, HAL_MDF_CallbackIDTypeDef CallbackID);
 HAL_StatusTypeDef HAL_MDF_RegisterOldCallback(MDF_HandleTypeDef *hmdf, pMDF_OldCallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_MDF_UnRegisterOldCallback(MDF_HandleTypeDef *hmdf);
@@ -889,8 +869,7 @@ HAL_StatusTypeDef HAL_MDF_GetSnapshotAcqValue(MDF_HandleTypeDef *hmdf, MDF_Snaps
 HAL_StatusTypeDef HAL_MDF_AcqStop(MDF_HandleTypeDef *hmdf);
 HAL_StatusTypeDef HAL_MDF_AcqStart_IT(MDF_HandleTypeDef *hmdf, const MDF_FilterConfigTypeDef *pFilterConfig);
 HAL_StatusTypeDef HAL_MDF_AcqStop_IT(MDF_HandleTypeDef *hmdf);
-HAL_StatusTypeDef HAL_MDF_AcqStart_DMA(MDF_HandleTypeDef *hmdf, const MDF_FilterConfigTypeDef *pFilterConfig,
-				       const MDF_DmaConfigTypeDef *pDmaConfig);
+HAL_StatusTypeDef HAL_MDF_AcqStart_DMA(MDF_HandleTypeDef *hmdf, const MDF_FilterConfigTypeDef *pFilterConfig, const MDF_DmaConfigTypeDef *pDmaConfig);
 HAL_StatusTypeDef HAL_MDF_AcqStop_DMA(MDF_HandleTypeDef *hmdf);
 HAL_StatusTypeDef HAL_MDF_GenerateTrgo(const MDF_HandleTypeDef *hmdf);
 HAL_StatusTypeDef HAL_MDF_SetDelay(MDF_HandleTypeDef *hmdf, uint32_t Delay);
@@ -899,8 +878,7 @@ HAL_StatusTypeDef HAL_MDF_SetGain(MDF_HandleTypeDef *hmdf, int32_t Gain);
 HAL_StatusTypeDef HAL_MDF_GetGain(const MDF_HandleTypeDef *hmdf, int32_t *pGain);
 HAL_StatusTypeDef HAL_MDF_SetOffset(MDF_HandleTypeDef *hmdf, int32_t Offset);
 HAL_StatusTypeDef HAL_MDF_GetOffset(const MDF_HandleTypeDef *hmdf, int32_t *pOffset);
-HAL_StatusTypeDef HAL_MDF_PollForSndLvl(MDF_HandleTypeDef *hmdf, uint32_t Timeout, uint32_t *pSoundLevel,
-					uint32_t *pAmbientNoise);
+HAL_StatusTypeDef HAL_MDF_PollForSndLvl(MDF_HandleTypeDef *hmdf, uint32_t Timeout, uint32_t *pSoundLevel, uint32_t *pAmbientNoise);
 HAL_StatusTypeDef HAL_MDF_PollForSad(MDF_HandleTypeDef *hmdf, uint32_t Timeout);
 void HAL_MDF_AcqCpltCallback(MDF_HandleTypeDef *hmdf);
 void HAL_MDF_AcqHalfCpltCallback(MDF_HandleTypeDef *hmdf);
@@ -971,25 +949,19 @@ uint32_t HAL_MDF_GetError(const MDF_HandleTypeDef *hmdf);
 #if defined(STM32U535xx) || defined(STM32U545xx)
 #define IS_MDF_INSTANCE(PARAM) (((PARAM) == MDF1_Filter0) || ((PARAM) == MDF1_Filter1))
 #else /* defined(STM32U535xx) || defined(STM32U545xx) */
-#define IS_MDF_INSTANCE(PARAM)                                                                                         \
-	(((PARAM) == MDF1_Filter0) || ((PARAM) == MDF1_Filter1) || ((PARAM) == MDF1_Filter2) ||                        \
-	 ((PARAM) == MDF1_Filter3) || ((PARAM) == MDF1_Filter4) || ((PARAM) == MDF1_Filter5))
+#define IS_MDF_INSTANCE(PARAM)                                                                                                                                                                         \
+	(((PARAM) == MDF1_Filter0) || ((PARAM) == MDF1_Filter1) || ((PARAM) == MDF1_Filter2) || ((PARAM) == MDF1_Filter3) || ((PARAM) == MDF1_Filter4) || ((PARAM) == MDF1_Filter5))
 #endif /* defined(STM32U535xx) || defined(STM32U545xx) */
 
 #define IS_ADF_INSTANCE(PARAM) ((PARAM) == ADF1_Filter0)
 
 #if defined(STM32U535xx) || defined(STM32U545xx)
-#define IS_MDF_FILTER_BITSTREAM(PARAM)                                                                                 \
-	(((PARAM) == MDF_BITSTREAM0_RISING) || ((PARAM) == MDF_BITSTREAM0_FALLING) ||                                  \
-	 ((PARAM) == MDF_BITSTREAM1_RISING) || ((PARAM) == MDF_BITSTREAM1_FALLING))
+#define IS_MDF_FILTER_BITSTREAM(PARAM) (((PARAM) == MDF_BITSTREAM0_RISING) || ((PARAM) == MDF_BITSTREAM0_FALLING) || ((PARAM) == MDF_BITSTREAM1_RISING) || ((PARAM) == MDF_BITSTREAM1_FALLING))
 #else /* defined(STM32U535xx) || defined(STM32U545xx) */
-#define IS_MDF_FILTER_BITSTREAM(PARAM)                                                                                 \
-	(((PARAM) == MDF_BITSTREAM0_RISING) || ((PARAM) == MDF_BITSTREAM0_FALLING) ||                                  \
-	 ((PARAM) == MDF_BITSTREAM1_RISING) || ((PARAM) == MDF_BITSTREAM1_FALLING) ||                                  \
-	 ((PARAM) == MDF_BITSTREAM2_RISING) || ((PARAM) == MDF_BITSTREAM2_FALLING) ||                                  \
-	 ((PARAM) == MDF_BITSTREAM3_RISING) || ((PARAM) == MDF_BITSTREAM3_FALLING) ||                                  \
-	 ((PARAM) == MDF_BITSTREAM4_RISING) || ((PARAM) == MDF_BITSTREAM4_FALLING) ||                                  \
-	 ((PARAM) == MDF_BITSTREAM5_RISING) || ((PARAM) == MDF_BITSTREAM5_FALLING))
+#define IS_MDF_FILTER_BITSTREAM(PARAM)                                                                                                                                                                 \
+	(((PARAM) == MDF_BITSTREAM0_RISING) || ((PARAM) == MDF_BITSTREAM0_FALLING) || ((PARAM) == MDF_BITSTREAM1_RISING) || ((PARAM) == MDF_BITSTREAM1_FALLING) ||                                     \
+	 ((PARAM) == MDF_BITSTREAM2_RISING) || ((PARAM) == MDF_BITSTREAM2_FALLING) || ((PARAM) == MDF_BITSTREAM3_RISING) || ((PARAM) == MDF_BITSTREAM3_FALLING) ||                                     \
+	 ((PARAM) == MDF_BITSTREAM4_RISING) || ((PARAM) == MDF_BITSTREAM4_FALLING) || ((PARAM) == MDF_BITSTREAM5_RISING) || ((PARAM) == MDF_BITSTREAM5_FALLING))
 #endif /* defined(STM32U535xx) || defined(STM32U545xx) */
 
 #if defined(STM32U535xx) || defined(STM32U545xx)
@@ -1000,78 +972,58 @@ uint32_t HAL_MDF_GetError(const MDF_HandleTypeDef *hmdf);
 
 #define IS_MDF_PROC_CLOCK_DIVIDER(PARAM) ((1U <= (PARAM)) && ((PARAM) <= 128U))
 
-#define IS_MDF_OUTPUT_CLOCK_PINS(PARAM)                                                                                \
-	(((PARAM) == MDF_OUTPUT_CLOCK_0) || ((PARAM) == MDF_OUTPUT_CLOCK_1) || ((PARAM) == MDF_OUTPUT_CLOCK_ALL))
+#define IS_MDF_OUTPUT_CLOCK_PINS(PARAM) (((PARAM) == MDF_OUTPUT_CLOCK_0) || ((PARAM) == MDF_OUTPUT_CLOCK_1) || ((PARAM) == MDF_OUTPUT_CLOCK_ALL))
 
 #define IS_MDF_OUTPUT_CLOCK_DIVIDER(PARAM) ((1U <= (PARAM)) && ((PARAM) <= 16U))
 
-#define IS_MDF_OUTPUT_CLOCK_TRIGGER_SOURCE(PARAM)                                                                      \
-	(((PARAM) == MDF_CLOCK_TRIG_TRGO) || ((PARAM) == MDF_CLOCK_TRIG_TIM1_TRGO) ||                                  \
-	 ((PARAM) == MDF_CLOCK_TRIG_TIM1_TRGO2) || ((PARAM) == MDF_CLOCK_TRIG_TIM8_TRGO) ||                            \
-	 ((PARAM) == MDF_CLOCK_TRIG_TIM8_TRGO2) || ((PARAM) == MDF_CLOCK_TRIG_TIM3_TRGO) ||                            \
-	 ((PARAM) == MDF_CLOCK_TRIG_TIM4_TRGO) || ((PARAM) == MDF_CLOCK_TRIG_TIM16_OC1) ||                             \
-	 ((PARAM) == MDF_CLOCK_TRIG_TIM6_TRGO) || ((PARAM) == MDF_CLOCK_TRIG_TIM7_TRGO) ||                             \
-	 ((PARAM) == MDF_CLOCK_TRIG_SAD_DET) || ((PARAM) == MDF_CLOCK_TRIG_EXTI11) ||                                  \
-	 ((PARAM) == MDF_CLOCK_TRIG_EXTI15) || ((PARAM) == MDF_CLOCK_TRIG_LPTIM1_OUT) ||                               \
-	 ((PARAM) == MDF_CLOCK_TRIG_SAD_TRGO))
+#define IS_MDF_OUTPUT_CLOCK_TRIGGER_SOURCE(PARAM)                                                                                                                                                      \
+	(((PARAM) == MDF_CLOCK_TRIG_TRGO) || ((PARAM) == MDF_CLOCK_TRIG_TIM1_TRGO) || ((PARAM) == MDF_CLOCK_TRIG_TIM1_TRGO2) || ((PARAM) == MDF_CLOCK_TRIG_TIM8_TRGO) ||                               \
+	 ((PARAM) == MDF_CLOCK_TRIG_TIM8_TRGO2) || ((PARAM) == MDF_CLOCK_TRIG_TIM3_TRGO) || ((PARAM) == MDF_CLOCK_TRIG_TIM4_TRGO) || ((PARAM) == MDF_CLOCK_TRIG_TIM16_OC1) ||                          \
+	 ((PARAM) == MDF_CLOCK_TRIG_TIM6_TRGO) || ((PARAM) == MDF_CLOCK_TRIG_TIM7_TRGO) || ((PARAM) == MDF_CLOCK_TRIG_SAD_DET) || ((PARAM) == MDF_CLOCK_TRIG_EXTI11) ||                                \
+	 ((PARAM) == MDF_CLOCK_TRIG_EXTI15) || ((PARAM) == MDF_CLOCK_TRIG_LPTIM1_OUT) || ((PARAM) == MDF_CLOCK_TRIG_SAD_TRGO))
 
-#define IS_ADF_OUTPUT_CLOCK_TRIGGER_SOURCE(PARAM)                                                                      \
-	(((PARAM) == MDF_CLOCK_TRIG_TRGO) || ((PARAM) == MDF_CLOCK_TRIG_EXTI15))
+#define IS_ADF_OUTPUT_CLOCK_TRIGGER_SOURCE(PARAM) (((PARAM) == MDF_CLOCK_TRIG_TRGO) || ((PARAM) == MDF_CLOCK_TRIG_EXTI15))
 
-#define IS_MDF_OUTPUT_CLOCK_TRIGGER_EDGE(PARAM)                                                                        \
-	(((PARAM) == MDF_CLOCK_TRIG_RISING_EDGE) || ((PARAM) == MDF_CLOCK_TRIG_FALLING_EDGE))
+#define IS_MDF_OUTPUT_CLOCK_TRIGGER_EDGE(PARAM) (((PARAM) == MDF_CLOCK_TRIG_RISING_EDGE) || ((PARAM) == MDF_CLOCK_TRIG_FALLING_EDGE))
 
-#define IS_MDF_SITF_MODE(PARAM)                                                                                        \
-	(((PARAM) == MDF_SITF_LF_MASTER_SPI_MODE) || ((PARAM) == MDF_SITF_NORMAL_SPI_MODE) ||                          \
-	 ((PARAM) == MDF_SITF_MANCHESTER_FALLING_MODE) || ((PARAM) == MDF_SITF_MANCHESTER_RISING_MODE))
+#define IS_MDF_SITF_MODE(PARAM)                                                                                                                                                                        \
+	(((PARAM) == MDF_SITF_LF_MASTER_SPI_MODE) || ((PARAM) == MDF_SITF_NORMAL_SPI_MODE) || ((PARAM) == MDF_SITF_MANCHESTER_FALLING_MODE) || ((PARAM) == MDF_SITF_MANCHESTER_RISING_MODE))
 
-#define IS_MDF_SITF_CLOCK_SOURCE(PARAM)                                                                                \
-	(((PARAM) == MDF_SITF_CCK0_SOURCE) || ((PARAM) == MDF_SITF_CCK1_SOURCE) || ((PARAM) == MDF_SITF_CKI_SOURCE))
+#define IS_MDF_SITF_CLOCK_SOURCE(PARAM) (((PARAM) == MDF_SITF_CCK0_SOURCE) || ((PARAM) == MDF_SITF_CCK1_SOURCE) || ((PARAM) == MDF_SITF_CKI_SOURCE))
 
 #define IS_MDF_SITF_THRESHOLD(PARAM) ((4U <= (PARAM)) && ((PARAM) <= 31U))
 
-#define IS_MDF_CIC_MODE(PARAM)                                                                                         \
-	(((PARAM) == MDF_TWO_FILTERS_MCIC_FASTSINC) || ((PARAM) == MDF_TWO_FILTERS_MCIC_SINC1) ||                      \
-	 ((PARAM) == MDF_TWO_FILTERS_MCIC_SINC2) || ((PARAM) == MDF_TWO_FILTERS_MCIC_SINC3) ||                         \
+#define IS_MDF_CIC_MODE(PARAM)                                                                                                                                                                         \
+	(((PARAM) == MDF_TWO_FILTERS_MCIC_FASTSINC) || ((PARAM) == MDF_TWO_FILTERS_MCIC_SINC1) || ((PARAM) == MDF_TWO_FILTERS_MCIC_SINC2) || ((PARAM) == MDF_TWO_FILTERS_MCIC_SINC3) ||                \
 	 ((PARAM) == MDF_ONE_FILTER_SINC4) || ((PARAM) == MDF_ONE_FILTER_SINC5))
 
 #define IS_ADF_CIC_MODE(PARAM) (((PARAM) == MDF_ONE_FILTER_SINC4) || ((PARAM) == MDF_ONE_FILTER_SINC5))
 
-#define IS_MDF_ACQUISITION_MODE(PARAM)                                                                                 \
-	(((PARAM) == MDF_MODE_ASYNC_CONT) || ((PARAM) == MDF_MODE_ASYNC_SINGLE) || ((PARAM) == MDF_MODE_SYNC_CONT) ||  \
-	 ((PARAM) == MDF_MODE_SYNC_SINGLE) || ((PARAM) == MDF_MODE_WINDOW_CONT) ||                                     \
+#define IS_MDF_ACQUISITION_MODE(PARAM)                                                                                                                                                                 \
+	(((PARAM) == MDF_MODE_ASYNC_CONT) || ((PARAM) == MDF_MODE_ASYNC_SINGLE) || ((PARAM) == MDF_MODE_SYNC_CONT) || ((PARAM) == MDF_MODE_SYNC_SINGLE) || ((PARAM) == MDF_MODE_WINDOW_CONT) ||        \
 	 ((PARAM) == MDF_MODE_SYNC_SNAPSHOT))
 
-#define IS_ADF_ACQUISITION_MODE(PARAM)                                                                                 \
-	(((PARAM) == MDF_MODE_ASYNC_CONT) || ((PARAM) == MDF_MODE_ASYNC_SINGLE) || ((PARAM) == MDF_MODE_SYNC_CONT) ||  \
-	 ((PARAM) == MDF_MODE_SYNC_SINGLE) || ((PARAM) == MDF_MODE_WINDOW_CONT))
+#define IS_ADF_ACQUISITION_MODE(PARAM)                                                                                                                                                                 \
+	(((PARAM) == MDF_MODE_ASYNC_CONT) || ((PARAM) == MDF_MODE_ASYNC_SINGLE) || ((PARAM) == MDF_MODE_SYNC_CONT) || ((PARAM) == MDF_MODE_SYNC_SINGLE) || ((PARAM) == MDF_MODE_WINDOW_CONT))
 
 #define IS_MDF_DISCARD_SAMPLES(PARAM) ((PARAM) <= 255U)
 
-#define IS_MDF_FIFO_THRESHOLD(PARAM)                                                                                   \
-	(((PARAM) == MDF_FIFO_THRESHOLD_NOT_EMPTY) || ((PARAM) == MDF_FIFO_THRESHOLD_HALF_FULL))
+#define IS_MDF_FIFO_THRESHOLD(PARAM) (((PARAM) == MDF_FIFO_THRESHOLD_NOT_EMPTY) || ((PARAM) == MDF_FIFO_THRESHOLD_HALF_FULL))
 
-#define IS_MDF_TRIGGER_SOURCE(PARAM)                                                                                   \
-	(((PARAM) == MDF_FILTER_TRIG_TRGO) || ((PARAM) == MDF_FILTER_TRIG_OLD_EVENT) ||                                \
-	 ((PARAM) == MDF_FILTER_TRIG_TIM1_TRGO) || ((PARAM) == MDF_FILTER_TRIG_TIM1_TRGO2) ||                          \
-	 ((PARAM) == MDF_FILTER_TRIG_TIM8_TRGO) || ((PARAM) == MDF_FILTER_TRIG_TIM8_TRGO2) ||                          \
-	 ((PARAM) == MDF_FILTER_TRIG_TIM3_TRGO) || ((PARAM) == MDF_FILTER_TRIG_TIM4_TRGO) ||                           \
-	 ((PARAM) == MDF_FILTER_TRIG_TIM16_OC1) || ((PARAM) == MDF_FILTER_TRIG_TIM6_TRGO) ||                           \
-	 ((PARAM) == MDF_FILTER_TRIG_TIM7_TRGO) || ((PARAM) == MDF_FILTER_TRIG_ADF_SAD_DET) ||                         \
-	 ((PARAM) == MDF_FILTER_TRIG_EXTI11) || ((PARAM) == MDF_FILTER_TRIG_EXTI15) ||                                 \
-	 ((PARAM) == MDF_FILTER_TRIG_LPTIM1_OUT) || ((PARAM) == MDF_FILTER_TRIG_ADF_TRGO))
+#define IS_MDF_TRIGGER_SOURCE(PARAM)                                                                                                                                                                   \
+	(((PARAM) == MDF_FILTER_TRIG_TRGO) || ((PARAM) == MDF_FILTER_TRIG_OLD_EVENT) || ((PARAM) == MDF_FILTER_TRIG_TIM1_TRGO) || ((PARAM) == MDF_FILTER_TRIG_TIM1_TRGO2) ||                           \
+	 ((PARAM) == MDF_FILTER_TRIG_TIM8_TRGO) || ((PARAM) == MDF_FILTER_TRIG_TIM8_TRGO2) || ((PARAM) == MDF_FILTER_TRIG_TIM3_TRGO) || ((PARAM) == MDF_FILTER_TRIG_TIM4_TRGO) ||                      \
+	 ((PARAM) == MDF_FILTER_TRIG_TIM16_OC1) || ((PARAM) == MDF_FILTER_TRIG_TIM6_TRGO) || ((PARAM) == MDF_FILTER_TRIG_TIM7_TRGO) || ((PARAM) == MDF_FILTER_TRIG_ADF_SAD_DET) ||                     \
+	 ((PARAM) == MDF_FILTER_TRIG_EXTI11) || ((PARAM) == MDF_FILTER_TRIG_EXTI15) || ((PARAM) == MDF_FILTER_TRIG_LPTIM1_OUT) || ((PARAM) == MDF_FILTER_TRIG_ADF_TRGO))
 
 #define IS_ADF_TRIGGER_SOURCE(PARAM) (((PARAM) == MDF_FILTER_TRIG_TRGO) || ((PARAM) == MDF_FILTER_TRIG_EXTI15))
 
-#define IS_MDF_TRIGGER_EDGE(PARAM)                                                                                     \
-	(((PARAM) == MDF_FILTER_TRIG_RISING_EDGE) || ((PARAM) == MDF_FILTER_TRIG_FALLING_EDGE))
+#define IS_MDF_TRIGGER_EDGE(PARAM) (((PARAM) == MDF_FILTER_TRIG_RISING_EDGE) || ((PARAM) == MDF_FILTER_TRIG_FALLING_EDGE))
 
 #define IS_MDF_SNAPSHOT_FORMAT(PARAM) (((PARAM) == MDF_SNAPSHOT_23BITS) || ((PARAM) == MDF_SNAPSHOT_16BITS))
 
 #if defined(ADC2)
-#define IS_MDF_DATA_SOURCE(PARAM)                                                                                      \
-	(((PARAM) == MDF_DATA_SOURCE_BSMX) || ((PARAM) == MDF_DATA_SOURCE_ADCITF1) ||                                  \
-	 ((PARAM) == MDF_DATA_SOURCE_ADCITF2))
+#define IS_MDF_DATA_SOURCE(PARAM) (((PARAM) == MDF_DATA_SOURCE_BSMX) || ((PARAM) == MDF_DATA_SOURCE_ADCITF1) || ((PARAM) == MDF_DATA_SOURCE_ADCITF2))
 #else /* ADC2 */
 #define IS_MDF_DATA_SOURCE(PARAM) (((PARAM) == MDF_DATA_SOURCE_BSMX) || ((PARAM) == MDF_DATA_SOURCE_ADCITF1))
 #endif /* ADC2 */
@@ -1086,71 +1038,54 @@ uint32_t HAL_MDF_GetError(const MDF_HandleTypeDef *hmdf);
 
 #define IS_MDF_OFFSET(PARAM) ((-33554432 <= (PARAM)) && ((PARAM) <= 33554431))
 
-#define IS_MDF_RSF_DECIMATION_RATIO(PARAM)                                                                             \
-	(((PARAM) == MDF_RSF_DECIMATION_RATIO_4) || ((PARAM) == MDF_RSF_DECIMATION_RATIO_1))
+#define IS_MDF_RSF_DECIMATION_RATIO(PARAM) (((PARAM) == MDF_RSF_DECIMATION_RATIO_4) || ((PARAM) == MDF_RSF_DECIMATION_RATIO_1))
 
-#define IS_MDF_HPF_CUTOFF_FREQ(PARAM)                                                                                  \
-	(((PARAM) == MDF_HPF_CUTOFF_0_000625FPCM) || ((PARAM) == MDF_HPF_CUTOFF_0_00125FPCM) ||                        \
-	 ((PARAM) == MDF_HPF_CUTOFF_0_0025FPCM) || ((PARAM) == MDF_HPF_CUTOFF_0_0095FPCM))
+#define IS_MDF_HPF_CUTOFF_FREQ(PARAM)                                                                                                                                                                  \
+	(((PARAM) == MDF_HPF_CUTOFF_0_000625FPCM) || ((PARAM) == MDF_HPF_CUTOFF_0_00125FPCM) || ((PARAM) == MDF_HPF_CUTOFF_0_0025FPCM) || ((PARAM) == MDF_HPF_CUTOFF_0_0095FPCM))
 
 #define IS_MDF_INTEGRATOR_VALUE(PARAM) ((2U <= (PARAM)) && ((PARAM) <= 128U))
 
-#define IS_MDF_INTEGRATOR_OUTPUT_DIV(PARAM)                                                                            \
-	(((PARAM) == MDF_INTEGRATOR_OUTPUT_DIV_128) || ((PARAM) == MDF_INTEGRATOR_OUTPUT_DIV_32) ||                    \
-	 ((PARAM) == MDF_INTEGRATOR_OUTPUT_DIV_4) || ((PARAM) == MDF_INTEGRATOR_OUTPUT_NO_DIV))
+#define IS_MDF_INTEGRATOR_OUTPUT_DIV(PARAM)                                                                                                                                                            \
+	(((PARAM) == MDF_INTEGRATOR_OUTPUT_DIV_128) || ((PARAM) == MDF_INTEGRATOR_OUTPUT_DIV_32) || ((PARAM) == MDF_INTEGRATOR_OUTPUT_DIV_4) || ((PARAM) == MDF_INTEGRATOR_OUTPUT_NO_DIV))
 
-#define IS_MDF_SAD_MODE(PARAM)                                                                                         \
-	(((PARAM) == MDF_SAD_VOICE_ACTIVITY_DETECTOR) || ((PARAM) == MDF_SAD_SOUND_DETECTOR) ||                        \
-	 ((PARAM) == MDF_SAD_AMBIENT_NOISE_DETECTOR))
+#define IS_MDF_SAD_MODE(PARAM) (((PARAM) == MDF_SAD_VOICE_ACTIVITY_DETECTOR) || ((PARAM) == MDF_SAD_SOUND_DETECTOR) || ((PARAM) == MDF_SAD_AMBIENT_NOISE_DETECTOR))
 
-#define IS_MDF_SAD_FRAME_SIZE(PARAM)                                                                                   \
-	(((PARAM) == MDF_SAD_8_PCM_SAMPLES) || ((PARAM) == MDF_SAD_16_PCM_SAMPLES) ||                                  \
-	 ((PARAM) == MDF_SAD_32_PCM_SAMPLES) || ((PARAM) == MDF_SAD_64_PCM_SAMPLES) ||                                 \
-	 ((PARAM) == MDF_SAD_128_PCM_SAMPLES) || ((PARAM) == MDF_SAD_256_PCM_SAMPLES) ||                               \
-	 ((PARAM) == MDF_SAD_512_PCM_SAMPLES))
+#define IS_MDF_SAD_FRAME_SIZE(PARAM)                                                                                                                                                                   \
+	(((PARAM) == MDF_SAD_8_PCM_SAMPLES) || ((PARAM) == MDF_SAD_16_PCM_SAMPLES) || ((PARAM) == MDF_SAD_32_PCM_SAMPLES) || ((PARAM) == MDF_SAD_64_PCM_SAMPLES) ||                                    \
+	 ((PARAM) == MDF_SAD_128_PCM_SAMPLES) || ((PARAM) == MDF_SAD_256_PCM_SAMPLES) || ((PARAM) == MDF_SAD_512_PCM_SAMPLES))
 
 #define IS_MDF_SAD_SOUND_TRIGGER(PARAM) (((PARAM) == MDF_SAD_ENTER_DETECT) || ((PARAM) == MDF_SAD_ENTER_EXIT_DETECT))
 
-#define IS_MDF_SAD_DATA_MEMORY_TRANSFER(PARAM)                                                                         \
-	(((PARAM) == MDF_SAD_NO_MEMORY_TRANSFER) || ((PARAM) == MDF_SAD_MEMORY_TRANSFER_IN_DETECT) ||                  \
-	 ((PARAM) == MDF_SAD_MEMORY_TRANSFER_ALWAYS))
+#define IS_MDF_SAD_DATA_MEMORY_TRANSFER(PARAM) (((PARAM) == MDF_SAD_NO_MEMORY_TRANSFER) || ((PARAM) == MDF_SAD_MEMORY_TRANSFER_IN_DETECT) || ((PARAM) == MDF_SAD_MEMORY_TRANSFER_ALWAYS))
 
 #define IS_MDF_SAD_MIN_NOISE_LEVEL(PARAM) ((PARAM) <= 8191U)
 
-#define IS_MDF_SAD_HANGOVER_WINDOW(PARAM)                                                                              \
-	(((PARAM) == MDF_SAD_HANGOVER_4_FRAMES) || ((PARAM) == MDF_SAD_HANGOVER_8_FRAMES) ||                           \
-	 ((PARAM) == MDF_SAD_HANGOVER_16_FRAMES) || ((PARAM) == MDF_SAD_HANGOVER_32_FRAMES) ||                         \
-	 ((PARAM) == MDF_SAD_HANGOVER_64_FRAMES) || ((PARAM) == MDF_SAD_HANGOVER_128_FRAMES) ||                        \
-	 ((PARAM) == MDF_SAD_HANGOVER_256_FRAMES) || ((PARAM) == MDF_SAD_HANGOVER_512_FRAMES))
+#define IS_MDF_SAD_HANGOVER_WINDOW(PARAM)                                                                                                                                                              \
+	(((PARAM) == MDF_SAD_HANGOVER_4_FRAMES) || ((PARAM) == MDF_SAD_HANGOVER_8_FRAMES) || ((PARAM) == MDF_SAD_HANGOVER_16_FRAMES) || ((PARAM) == MDF_SAD_HANGOVER_32_FRAMES) ||                     \
+	 ((PARAM) == MDF_SAD_HANGOVER_64_FRAMES) || ((PARAM) == MDF_SAD_HANGOVER_128_FRAMES) || ((PARAM) == MDF_SAD_HANGOVER_256_FRAMES) || ((PARAM) == MDF_SAD_HANGOVER_512_FRAMES))
 
-#define IS_MDF_SAD_LEARNING_FRAMES(PARAM)                                                                              \
-	(((PARAM) == MDF_SAD_LEARNING_2_FRAMES) || ((PARAM) == MDF_SAD_LEARNING_4_FRAMES) ||                           \
-	 ((PARAM) == MDF_SAD_LEARNING_8_FRAMES) || ((PARAM) == MDF_SAD_LEARNING_16_FRAMES) ||                          \
+#define IS_MDF_SAD_LEARNING_FRAMES(PARAM)                                                                                                                                                              \
+	(((PARAM) == MDF_SAD_LEARNING_2_FRAMES) || ((PARAM) == MDF_SAD_LEARNING_4_FRAMES) || ((PARAM) == MDF_SAD_LEARNING_8_FRAMES) || ((PARAM) == MDF_SAD_LEARNING_16_FRAMES) ||                      \
 	 ((PARAM) == MDF_SAD_LEARNING_32_FRAMES))
 
 #define IS_MDF_SAD_AMBIENT_NOISE_SLOPE(PARAM) ((PARAM) <= 7U)
 
-#define IS_MDF_SAD_SIGNAL_NOISE_THRESHOLD(PARAM)                                                                       \
-	(((PARAM) == MDF_SAD_SIGNAL_NOISE_3_5DB) || ((PARAM) == MDF_SAD_SIGNAL_NOISE_6DB) ||                           \
-	 ((PARAM) == MDF_SAD_SIGNAL_NOISE_9_5DB) || ((PARAM) == MDF_SAD_SIGNAL_NOISE_12DB) ||                          \
-	 ((PARAM) == MDF_SAD_SIGNAL_NOISE_15_6DB) || ((PARAM) == MDF_SAD_SIGNAL_NOISE_18DB) ||                         \
-	 ((PARAM) == MDF_SAD_SIGNAL_NOISE_21_6DB) || ((PARAM) == MDF_SAD_SIGNAL_NOISE_24_1DB) ||                       \
+#define IS_MDF_SAD_SIGNAL_NOISE_THRESHOLD(PARAM)                                                                                                                                                       \
+	(((PARAM) == MDF_SAD_SIGNAL_NOISE_3_5DB) || ((PARAM) == MDF_SAD_SIGNAL_NOISE_6DB) || ((PARAM) == MDF_SAD_SIGNAL_NOISE_9_5DB) || ((PARAM) == MDF_SAD_SIGNAL_NOISE_12DB) ||                      \
+	 ((PARAM) == MDF_SAD_SIGNAL_NOISE_15_6DB) || ((PARAM) == MDF_SAD_SIGNAL_NOISE_18DB) || ((PARAM) == MDF_SAD_SIGNAL_NOISE_21_6DB) || ((PARAM) == MDF_SAD_SIGNAL_NOISE_24_1DB) ||                 \
 	 ((PARAM) == MDF_SAD_SIGNAL_NOISE_27_6DB) || ((PARAM) == MDF_SAD_SIGNAL_NOISE_30_1DB))
 
 #define IS_MDF_SCD_THRESHOLD(PARAM) ((2U <= (PARAM)) && ((PARAM) <= 256U))
 
 #define IS_MDF_BREAK_SIGNAL(PARAM) ((PARAM) <= 15U)
 
-#define IS_MDF_OLD_CIC_MODE(PARAM)                                                                                     \
-	(((PARAM) == MDF_OLD_FILTER_FASTSINC) || ((PARAM) == MDF_OLD_FILTER_SINC1) ||                                  \
-	 ((PARAM) == MDF_OLD_FILTER_SINC2) || ((PARAM) == MDF_OLD_FILTER_SINC3))
+#define IS_MDF_OLD_CIC_MODE(PARAM) (((PARAM) == MDF_OLD_FILTER_FASTSINC) || ((PARAM) == MDF_OLD_FILTER_SINC1) || ((PARAM) == MDF_OLD_FILTER_SINC2) || ((PARAM) == MDF_OLD_FILTER_SINC3))
 
 #define IS_MDF_OLD_DECIMATION_RATIO(PARAM) ((1U <= (PARAM)) && ((PARAM) <= 32U))
 
 #define IS_MDF_OLD_THRESHOLD(PARAM) ((-33554432 <= (PARAM)) && ((PARAM) <= 33554431))
 
-#define IS_MDF_OLD_EVENT_CONFIG(PARAM)                                                                                 \
-	(((PARAM) == MDF_OLD_SIGNAL_OUTSIDE_THRESHOLDS) || ((PARAM) == MDF_OLD_SIGNAL_IN_THRESHOLDS))
+#define IS_MDF_OLD_EVENT_CONFIG(PARAM) (((PARAM) == MDF_OLD_SIGNAL_OUTSIDE_THRESHOLDS) || ((PARAM) == MDF_OLD_SIGNAL_IN_THRESHOLDS))
 /**
  * @}
  */
