@@ -1,19 +1,21 @@
 #include "CCU.h"
+
 #include <string.h>
 
-//defines will go here for stuff that idk what
+// defines will go here for stuff that idk what
 
+// Set ccu state
+static void ccu_set_state(ccu_t *ccu, ccu_state_t s)
+{
 
-//Set ccu state
-static void ccu_set_state(ccu_t *ccu, ccu_state_t s){
-
-    ccu->state = s;
-    ccu->ms_in_state = 0;
+	ccu->state = s;
+	ccu->ms_in_state = 0;
 }
 
-//Change ccu state if fault detected
-static void ccu_fault_detected(ccu_t *ccu, ccu_fault_t f){\
+// Change ccu state if fault detected
+static void ccu_fault_detected(ccu_t *ccu, ccu_fault_t f)
+{
 
-    ccu->fault = f;
-    ccu_set_state(ccu, CCU_STATE_FAULT);
+	ccu->fault = f;
+	ccu_set_state(ccu, CCU_STATE_FAULT);
 }
