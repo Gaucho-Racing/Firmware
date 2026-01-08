@@ -7,6 +7,7 @@
 #include "stm32g474xx.h"
 
 
+
 #ifdef STM32L476xx
 
 #elif defined(STM32G474xx)

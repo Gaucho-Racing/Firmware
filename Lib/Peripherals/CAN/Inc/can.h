@@ -1,7 +1,10 @@
 #include "can_platform_deps.h"
 #include "circularBuffer.h"
 
-typedef void (*CAN_RXCallback) (void*, uint32_t size);
+
+//Must perform a deep copy of the data
+typedef void (*CAN_RXCallback) (void* data, uint32_t size);
+
 typedef struct {
     //can baud rate is set by fdcan prescaler and RCC clock configurations
 
@@ -10,6 +13,7 @@ typedef struct {
     FDCAN_InitTypeDef hal_fdcan_init; 
     CAN_RXCallback rx_callback; 
     uint32_t rx_interrupt_priority;
+    uint32_t tx_interrupt_priority; 
 
     //Circular Buffer
     uint32_t tx_buffer_length; 
@@ -19,8 +23,7 @@ typedef struct {
     GPIO_TypeDef *tx_gpio; 
     GPIO_InitTypeDef init_tx_gpio;
 
-    //additional parameters????
-
+    //additional parameters
 } CANConfig;
 
 
@@ -38,31 +41,36 @@ typedef struct {
     GPIO_TypeDef * tx_gpio; 
 
     //Stopped state, will HAL throw an error if trying to user tries to add to queue when FDCAN is stopped?
+    bool init; 
+    bool started; 
 
     //NVIC exceptions
-} CANHandle
+} CANHandle;
 
-/*
-FDCAN_FilterTypeDef
-FDCAN_FilterTypeDef is defined in the stm32g4xx_hal_fdcan.h
-Data Fields
-• uint32_t IdType
-• uint32_t FilterIndex
-• uint32_t FilterType
-• uint32_t FilterConfig
-• uint32_t FilterID1
-• uint32_t FilterID2
-*/
+#define FDCAN_MAX_DATA_BYTES 64
+typedef struct {
+    FDCAN_TxHeaderTypeDef tx_header;
+    uint8_t               data[FDCAN_MAX_DATA_BYTES]; 
+} FDCANMessage; 
+
 
 CANHandle* can_init(CANConfig *config); //user must supply an rx callback function
+
+int can_start(CANHandle*handle);
+int can_stop(CANandle*handle);
+int can_send(char* buffer, size_t send);  
+int can_release(CANHandle* canHandle); //deinit circular buffer and turn off can peripheral and gpios
+int can_add_filter(CANHandle* canHandle, HAL_FDCAN_FilterTypeDef * filter);
+//alternatively use 
+//HAL_FDCAN_ConfigGlobalFilter()
+//HAL_FDCAN_ConfigFilter()
+
+
 
 //tx callback should free memory of sending buffer
 //block until enqueued on circular buffer
 //void can_();  //enqueue onto circular 
-void can_enqueue(CANHandle* canHandle, char * message,);     //engueue onto circular buffer
 //remember to free all data in the circular buffer
-void can_release(CANHandle* canHandle); //deinit circular buffer and turn off can peripheral and gpios
 
-void can_add_filter(HAL_FDCAN_FilterTypeDef * filter);
 
 
