@@ -33,6 +33,7 @@ include("${lib_path}/cmake/gr-lib.cmake")
 
 # Peripherals
 include("${lib_path}/Peripherals/USART/common.cmake")
+include("${lib_path}/Peripherals/CAN/common.cmake")
 
 message(
 	STATUS
@@ -55,6 +56,7 @@ add_gr_project(STM32L476xG BLINKY L4BLINKY)
 # Onboarding Workshops
 add_gr_project(STM32G474xE Onboarding W3_G4SPI_Receive)
 add_gr_project(STM32G474xE Onboarding W3_G4SPI_Transmit)
+
 
 # Onboarding Projects
 # TODO Add onboarding projects here as needed

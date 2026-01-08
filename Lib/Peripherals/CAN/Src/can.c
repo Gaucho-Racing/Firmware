@@ -250,7 +250,6 @@ static CANHandle* can_get_buffer_handle(FDCAN_HandleTypeDef * hfdcan) {
     }
 }
 
-
 static int can_tx_buffer_helper(CANHandle* handle) {
     while (HAL_FDCAN_GetTxFifoFreeLevel(handle->hal_fdcanP) && !GR_CircularBuffer_IsEmpty(handle->tx_buffer)) {
         FDCANMessage* msg = GR_CircularBuffer_Pop(handle->tx_buffer); 
@@ -330,7 +329,6 @@ void can_read_rx_buffer(CANHandle* canHandle) {
 /*void HAL_FDCAN_RxFifo1Callback(FDCAN_HandleTypeDef * hfdcan, uint32_t RxFifo0ITs) {
 
 }*/
-
 
 //Just alternatively just use the HAL_FDCAN_ConfigFilter directly with the canHandle->hal_fdcan
 int can_add_filters(CANHandle* canHandle, FDCAN_FilterTypeDef *filter , size_t num){

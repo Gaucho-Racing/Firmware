@@ -1,6 +1,6 @@
 add_library(PERIPHERAL_CAN_LIB INTERFACE)
 
-target_sources(PERIPHERAL_CAN_LIB INTERFACE ${CMAKE_CURRENT_LIST_DIR}/can.c)
+target_sources(PERIPHERAL_CAN_LIB INTERFACE ${CMAKE_CURRENT_LIST_DIR}/Src/can.c)
 
 target_link_libraries(
 	PERIPHERAL_CAN_LIB INTERFACE CircularBuffer_Lib 
@@ -10,7 +10,7 @@ target_link_libraries(
 target_include_directories(
 	PERIPHERAL_CAN_LIB
 	INTERFACE
-		${CMAKE_CURRENT_LIST_DIR}/../..
+		${CMAKE_CURRENT_LIST_DIR}/Inc/
 )
 
 # link test to this library
@@ -25,8 +25,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
 		PERIPHERAL_CAN_LIB
 	)
 	add_test(
-		CircularBuffer_Lib_Initialization
-		CircularBuffer_Lib_Initialization_test
+		PERIPHERAL_CAN_LIB_init
+		PERIPHERAL_CAN_LIB_init_test
 	)
-
 endif()
