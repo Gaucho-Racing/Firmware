@@ -3399,6 +3399,57 @@ Message ID:
       # W
       data type: i16
       map equation: "x/100"
+
+Custom CAN ID:
+  DTI Control 1:
+    CAN ID: 116
+    Length: 2
+    Bit Start: 0
+    Data Name: Target AC current
+    #This command sets the target motor AC current (peak, not RMS). 
+    #When the controller receives this message, it automatically switches to current control mode.
+    #This value must not be above the limits of the inverter and mustbe multiplied by 10 before sending. 
+    #This is a signed parameter, and the sign represents the direction of the torque which correlates with the motor AC current. 
+    #(For the correlation, please refer to the motor parameters)
+    
+  DTI Control 7:
+    CAN ID: 716
+    Length: 1
+    #Bit Start 0
+    Data Name: Digital Output 1 #Sets the digital output 1 to HIGH (1) or LOW (0) state 
+    #Bit Start 1
+    Data Name: Digital Output 2 #Sets the digital output 1 to HIGH (1) or LOW (0) state 
+    #Bit Start 2
+    Data Name: Digital Output 3 #Sets the digital output 1 to HIGH (1) or LOW (0) state 
+    #Bit Start 3
+    Data Name: Digital Output 4 #Sets the digital output 1 to HIGH (1) or LOW (0) state 
+    
+  DTI Data 5:
+    CAN ID: 2416
+    Length: 8 
+    Byte 0:
+      #Bit Start 0
+      Data Name: Throttle #Throttle signal derived from analog inputs or CAN2 
+    Byte 1:
+      #Bit Start 8
+      Data Name: Brake #Brake signal derived from analog inputs or CAN2 
+    Byte 2:
+      #Bit Start 16
+      Data Name: Digital Input 1 
+      #Bit Start 17
+      Data Name: Digital Input 2
+      #Bit Start 18
+      Data Name: Digital Input 3
+      #Bit Start 19
+      Data Name: Digital Input 4
+      #Bit Start 20
+      Data Name: Digital Output 1
+      #Bit Start 21
+      Data Name: Digital Output 2
+      #Bit Start 22
+      Data Name: Digital Output 3
+      #Bit Start 23
+      Data Name: Digital Output 4
     
 
 GR ID:
