@@ -53,8 +53,9 @@ void ADC_Init(unsigned long ADC, Resolution res, Alignment align)
 	ADC_InitStruct.LowPowerMode = LL_ADC_LP_MODE_NONE;
 	LL_ADC_Init(GetADC(ADC), &ADC_InitStruct);
 }
-//FIXME: ADC_TYPEDEF* is here for now. We may need to fix later. Originally was an unsigned long
-void ADC_Regular_Group_Init(ADC_TypeDef* ADC, unsigned long Sequence_Length)
+// FIXME: ADC_TYPEDEF* is here for now. We may need to fix later. Originally was
+// an unsigned long
+void ADC_Regular_Group_Init(ADC_TypeDef *ADC, unsigned long Sequence_Length)
 {
 	LL_ADC_REG_InitTypeDef ADC_REG_InitStruct = {0};
 	ADC_REG_InitStruct.TriggerSource =
