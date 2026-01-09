@@ -265,8 +265,7 @@ HAL_StatusTypeDef HAL_TSC_Init(TSC_HandleTypeDef *htsc)
 	assert_param(IS_TSC_SSD(htsc->Init.SpreadSpectrumDeviation));
 	assert_param(IS_TSC_SS_PRESC(htsc->Init.SpreadSpectrumPrescaler));
 	assert_param(IS_TSC_PG_PRESC(htsc->Init.PulseGeneratorPrescaler));
-	assert_param(IS_TSC_PG_PRESC_VS_CTPL(htsc->Init.PulseGeneratorPrescaler,
-					     htsc->Init.CTPulseLowLength));
+	assert_param(IS_TSC_PG_PRESC_VS_CTPL(htsc->Init.PulseGeneratorPrescaler, htsc->Init.CTPulseLowLength));
 	assert_param(IS_TSC_MCV(htsc->Init.MaxCountValue));
 	assert_param(IS_TSC_IODEF(htsc->Init.IODefaultMode));
 	assert_param(IS_TSC_SYNC_POL(htsc->Init.SynchroPinPolarity));
@@ -282,14 +281,11 @@ HAL_StatusTypeDef HAL_TSC_Init(TSC_HandleTypeDef *htsc)
 
 #if (USE_HAL_TSC_REGISTER_CALLBACKS == 1)
 		/* Init the TSC Callback settings */
-		htsc->ConvCpltCallback =
-		    HAL_TSC_ConvCpltCallback; /* Legacy weak ConvCpltCallback */
-		htsc->ErrorCallback =
-		    HAL_TSC_ErrorCallback; /* Legacy weak ErrorCallback */
+		htsc->ConvCpltCallback = HAL_TSC_ConvCpltCallback; /* Legacy weak ConvCpltCallback */
+		htsc->ErrorCallback = HAL_TSC_ErrorCallback;	   /* Legacy weak ErrorCallback */
 
 		if (htsc->MspInitCallback == NULL) {
-			htsc->MspInitCallback =
-			    HAL_TSC_MspInit; /* Legacy weak MspInit  */
+			htsc->MspInitCallback = HAL_TSC_MspInit; /* Legacy weak MspInit  */
 		}
 
 		/* Init the low level hardware : GPIO, CLOCK, CORTEX...etc */
@@ -310,12 +306,8 @@ HAL_StatusTypeDef HAL_TSC_Init(TSC_HandleTypeDef *htsc)
 	htsc->Instance->CR = TSC_CR_TSCE;
 
 	/* Set all functions */
-	htsc->Instance->CR |=
-	    (htsc->Init.CTPulseHighLength | htsc->Init.CTPulseLowLength |
-	     (htsc->Init.SpreadSpectrumDeviation << TSC_CR_SSD_Pos) |
-	     htsc->Init.SpreadSpectrumPrescaler |
-	     htsc->Init.PulseGeneratorPrescaler | htsc->Init.MaxCountValue |
-	     htsc->Init.SynchroPinPolarity | htsc->Init.AcquisitionMode);
+	htsc->Instance->CR |= (htsc->Init.CTPulseHighLength | htsc->Init.CTPulseLowLength | (htsc->Init.SpreadSpectrumDeviation << TSC_CR_SSD_Pos) | htsc->Init.SpreadSpectrumPrescaler |
+			       htsc->Init.PulseGeneratorPrescaler | htsc->Init.MaxCountValue | htsc->Init.SynchroPinPolarity | htsc->Init.AcquisitionMode);
 
 	/* Spread spectrum */
 	if (htsc->Init.SpreadSpectrum == ENABLE) {
@@ -323,9 +315,7 @@ HAL_StatusTypeDef HAL_TSC_Init(TSC_HandleTypeDef *htsc)
 	}
 
 	/* Disable Schmitt trigger hysteresis on all used TSC IOs */
-	htsc->Instance->IOHCR =
-	    (~(htsc->Init.ChannelIOs | htsc->Init.ShieldIOs |
-	       htsc->Init.SamplingIOs));
+	htsc->Instance->IOHCR = (~(htsc->Init.ChannelIOs | htsc->Init.ShieldIOs | htsc->Init.SamplingIOs));
 
 	/* Set channel and shield IOs */
 	htsc->Instance->IOCCR = (htsc->Init.ChannelIOs | htsc->Init.ShieldIOs);
@@ -372,8 +362,7 @@ HAL_StatusTypeDef HAL_TSC_DeInit(TSC_HandleTypeDef *htsc)
 
 #if (USE_HAL_TSC_REGISTER_CALLBACKS == 1)
 	if (htsc->MspDeInitCallback == NULL) {
-		htsc->MspDeInitCallback =
-		    HAL_TSC_MspDeInit; /* Legacy weak MspDeInit  */
+		htsc->MspDeInitCallback = HAL_TSC_MspDeInit; /* Legacy weak MspDeInit  */
 	}
 
 	/* DeInit the low level hardware: GPIO, CLOCK, NVIC */
@@ -441,9 +430,7 @@ __weak void HAL_TSC_MspDeInit(TSC_HandleTypeDef *htsc)
  * @param  pCallback pointer to the Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_TSC_RegisterCallback(TSC_HandleTypeDef *htsc,
-					   HAL_TSC_CallbackIDTypeDef CallbackID,
-					   pTSC_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_TSC_RegisterCallback(TSC_HandleTypeDef *htsc, HAL_TSC_CallbackIDTypeDef CallbackID, pTSC_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -476,8 +463,7 @@ HAL_StatusTypeDef HAL_TSC_RegisterCallback(TSC_HandleTypeDef *htsc,
 
 			default:
 				/* Update the error code */
-				htsc->ErrorCode |=
-				    HAL_TSC_ERROR_INVALID_CALLBACK;
+				htsc->ErrorCode |= HAL_TSC_ERROR_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -495,8 +481,7 @@ HAL_StatusTypeDef HAL_TSC_RegisterCallback(TSC_HandleTypeDef *htsc,
 
 			default:
 				/* Update the error code */
-				htsc->ErrorCode |=
-				    HAL_TSC_ERROR_INVALID_CALLBACK;
+				htsc->ErrorCode |= HAL_TSC_ERROR_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -530,9 +515,7 @@ HAL_StatusTypeDef HAL_TSC_RegisterCallback(TSC_HandleTypeDef *htsc,
  *          @arg @ref HAL_TSC_MSPDEINIT_CB_ID MspDeInit callback ID
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_TSC_UnRegisterCallback(TSC_HandleTypeDef *htsc,
-			   HAL_TSC_CallbackIDTypeDef CallbackID)
+HAL_StatusTypeDef HAL_TSC_UnRegisterCallback(TSC_HandleTypeDef *htsc, HAL_TSC_CallbackIDTypeDef CallbackID)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -542,34 +525,29 @@ HAL_TSC_UnRegisterCallback(TSC_HandleTypeDef *htsc,
 	if (HAL_TSC_STATE_READY == htsc->State) {
 		switch (CallbackID) {
 			case HAL_TSC_CONV_COMPLETE_CB_ID:
-				htsc->ConvCpltCallback =
-				    HAL_TSC_ConvCpltCallback; /* Legacy weak
-								 ConvCpltCallback
-							       */
+				htsc->ConvCpltCallback = HAL_TSC_ConvCpltCallback; /* Legacy weak
+										      ConvCpltCallback
+										    */
 				break;
 
 			case HAL_TSC_ERROR_CB_ID:
-				htsc->ErrorCallback =
-				    HAL_TSC_ErrorCallback; /* Legacy weak
-							    * ErrorCallback
-							    */
+				htsc->ErrorCallback = HAL_TSC_ErrorCallback; /* Legacy weak
+									      * ErrorCallback
+									      */
 				break;
 
 			case HAL_TSC_MSPINIT_CB_ID:
-				htsc->MspInitCallback =
-				    HAL_TSC_MspInit; /* Legacy weak MspInit */
+				htsc->MspInitCallback = HAL_TSC_MspInit; /* Legacy weak MspInit */
 				break;
 
 			case HAL_TSC_MSPDEINIT_CB_ID:
-				htsc->MspDeInitCallback =
-				    HAL_TSC_MspDeInit; /* Legacy weak MspDeInit
-							*/
+				htsc->MspDeInitCallback = HAL_TSC_MspDeInit; /* Legacy weak MspDeInit
+									      */
 				break;
 
 			default:
 				/* Update the error code */
-				htsc->ErrorCode |=
-				    HAL_TSC_ERROR_INVALID_CALLBACK;
+				htsc->ErrorCode |= HAL_TSC_ERROR_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -578,20 +556,17 @@ HAL_TSC_UnRegisterCallback(TSC_HandleTypeDef *htsc,
 	} else if (HAL_TSC_STATE_RESET == htsc->State) {
 		switch (CallbackID) {
 			case HAL_TSC_MSPINIT_CB_ID:
-				htsc->MspInitCallback =
-				    HAL_TSC_MspInit; /* Legacy weak MspInit */
+				htsc->MspInitCallback = HAL_TSC_MspInit; /* Legacy weak MspInit */
 				break;
 
 			case HAL_TSC_MSPDEINIT_CB_ID:
-				htsc->MspDeInitCallback =
-				    HAL_TSC_MspDeInit; /* Legacy weak MspDeInit
-							*/
+				htsc->MspDeInitCallback = HAL_TSC_MspDeInit; /* Legacy weak MspDeInit
+									      */
 				break;
 
 			default:
 				/* Update the error code */
-				htsc->ErrorCode |=
-				    HAL_TSC_ERROR_INVALID_CALLBACK;
+				htsc->ErrorCode |= HAL_TSC_ERROR_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -827,8 +802,7 @@ HAL_StatusTypeDef HAL_TSC_PollForAcquisition(TSC_HandleTypeDef *htsc)
  * @param  gx_index Index of the group
  * @retval Group status
  */
-TSC_GroupStatusTypeDef HAL_TSC_GroupGetStatus(const TSC_HandleTypeDef *htsc,
-					      uint32_t gx_index)
+TSC_GroupStatusTypeDef HAL_TSC_GroupGetStatus(const TSC_HandleTypeDef *htsc, uint32_t gx_index)
 {
 	/* Check the parameters */
 	assert_param(IS_TSC_ALL_INSTANCE(htsc->Instance));
@@ -880,8 +854,7 @@ uint32_t HAL_TSC_GroupGetValue(const TSC_HandleTypeDef *htsc, uint32_t gx_index)
  * @param  config Pointer to the configuration structure.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_TSC_IOConfig(TSC_HandleTypeDef *htsc,
-				   const TSC_IOConfigTypeDef *config)
+HAL_StatusTypeDef HAL_TSC_IOConfig(TSC_HandleTypeDef *htsc, const TSC_IOConfigTypeDef *config)
 {
 	/* Check the parameters */
 	assert_param(IS_TSC_ALL_INSTANCE(htsc->Instance));
@@ -896,8 +869,7 @@ HAL_StatusTypeDef HAL_TSC_IOConfig(TSC_HandleTypeDef *htsc,
 	__HAL_TSC_STOP_ACQ(htsc);
 
 	/* Disable Schmitt trigger hysteresis on all used TSC IOs */
-	htsc->Instance->IOHCR =
-	    (~(config->ChannelIOs | config->ShieldIOs | config->SamplingIOs));
+	htsc->Instance->IOHCR = (~(config->ChannelIOs | config->ShieldIOs | config->SamplingIOs));
 
 	/* Set channel and shield IOs */
 	htsc->Instance->IOCCR = (config->ChannelIOs | config->ShieldIOs);
@@ -922,8 +894,7 @@ HAL_StatusTypeDef HAL_TSC_IOConfig(TSC_HandleTypeDef *htsc,
  * @param  choice This parameter can be set to ENABLE or DISABLE.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_TSC_IODischarge(TSC_HandleTypeDef *htsc,
-				      FunctionalState choice)
+HAL_StatusTypeDef HAL_TSC_IODischarge(TSC_HandleTypeDef *htsc, FunctionalState choice)
 {
 	/* Check the parameters */
 	assert_param(IS_TSC_ALL_INSTANCE(htsc->Instance));

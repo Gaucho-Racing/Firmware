@@ -49,7 +49,7 @@ extern "C" {
 typedef enum {
 	HAL_PKA_STATE_RESET = 0x00U, /*!< PKA not yet initialized or disabled */
 	HAL_PKA_STATE_READY = 0x01U, /*!< PKA initialized and ready for use */
-	HAL_PKA_STATE_BUSY = 0x02U, /*!< PKA internal processing is ongoing   */
+	HAL_PKA_STATE_BUSY = 0x02U,  /*!< PKA internal processing is ongoing   */
 	HAL_PKA_STATE_ERROR = 0x03U, /*!< PKA error state */
 } HAL_PKA_StateTypeDef;
 
@@ -62,11 +62,10 @@ typedef enum {
  * @{
  */
 typedef enum {
-	HAL_PKA_OPERATION_COMPLETE_CB_ID =
-	    0x00U,		       /*!< PKA End of operation callback ID  */
-	HAL_PKA_ERROR_CB_ID = 0x01U,   /*!< PKA Error callback ID             */
-	HAL_PKA_MSPINIT_CB_ID = 0x02U, /*!< PKA Msp Init callback ID          */
-	HAL_PKA_MSPDEINIT_CB_ID = 0x03U /*!< PKA Msp DeInit callback ID */
+	HAL_PKA_OPERATION_COMPLETE_CB_ID = 0x00U, /*!< PKA End of operation callback ID  */
+	HAL_PKA_ERROR_CB_ID = 0x01U,		  /*!< PKA Error callback ID             */
+	HAL_PKA_MSPINIT_CB_ID = 0x02U,		  /*!< PKA Msp Init callback ID          */
+	HAL_PKA_MSPDEINIT_CB_ID = 0x03U		  /*!< PKA Msp DeInit callback ID */
 } HAL_PKA_CallbackIDTypeDef;
 
 /**
@@ -85,9 +84,8 @@ typedef enum {
 #define HAL_PKA_ERROR_TIMEOUT (0x00000004U)
 #define HAL_PKA_ERROR_OPERATION (0x00000008U)
 #if (USE_HAL_PKA_REGISTER_CALLBACKS == 1)
-#define HAL_PKA_ERROR_INVALID_CALLBACK                                         \
-	(0x00000010U) /*!< Invalid Callback error */
-#endif		      /* USE_HAL_PKA_REGISTER_CALLBACKS */
+#define HAL_PKA_ERROR_INVALID_CALLBACK (0x00000010U) /*!< Invalid Callback error */
+#endif						     /* USE_HAL_PKA_REGISTER_CALLBACKS */
 
 /**
  * @}
@@ -106,20 +104,15 @@ typedef struct
 	PKA_TypeDef *Instance;		 /*!< Register base address */
 	__IO HAL_PKA_StateTypeDef State; /*!< PKA state */
 	__IO uint32_t ErrorCode;	 /*!< PKA Error code */
-	__IO uint32_t primeordersize; /*!< Elliptic curve prime order length */
-	__IO uint32_t opsize;	   /*!< Modular exponentiation operand length */
-	__IO uint32_t modulussize; /*!< Elliptic curve modulus length */
+	__IO uint32_t primeordersize;	 /*!< Elliptic curve prime order length */
+	__IO uint32_t opsize;		 /*!< Modular exponentiation operand length */
+	__IO uint32_t modulussize;	 /*!< Elliptic curve modulus length */
 #if (USE_HAL_PKA_REGISTER_CALLBACKS == 1)
-	void (*OperationCpltCallback)(
-	    struct __PKA_HandleTypeDef
-		*hpka); /*!< PKA End of operation callback */
-	void (*ErrorCallback)(
-	    struct __PKA_HandleTypeDef *hpka); /*!< PKA Error callback */
-	void (*MspInitCallback)(
-	    struct __PKA_HandleTypeDef *hpka); /*!< PKA Msp Init callback */
-	void (*MspDeInitCallback)(
-	    struct __PKA_HandleTypeDef *hpka); /*!< PKA Msp DeInit callback */
-#endif /* USE_HAL_PKA_REGISTER_CALLBACKS */
+	void (*OperationCpltCallback)(struct __PKA_HandleTypeDef *hpka); /*!< PKA End of operation callback */
+	void (*ErrorCallback)(struct __PKA_HandleTypeDef *hpka);	 /*!< PKA Error callback */
+	void (*MspInitCallback)(struct __PKA_HandleTypeDef *hpka);	 /*!< PKA Msp Init callback */
+	void (*MspDeInitCallback)(struct __PKA_HandleTypeDef *hpka);	 /*!< PKA Msp DeInit callback */
+#endif									 /* USE_HAL_PKA_REGISTER_CALLBACKS */
 } PKA_HandleTypeDef;
 /**
  * @}
@@ -130,8 +123,7 @@ typedef struct
  * @brief  PKA Callback pointer definition
  * @{
  */
-typedef void (*pPKA_CallbackTypeDef)(
-    PKA_HandleTypeDef *hpka); /*!< Pointer to a PKA callback function */
+typedef void (*pPKA_CallbackTypeDef)(PKA_HandleTypeDef *hpka); /*!< Pointer to a PKA callback function */
 /**
  * @}
  */
@@ -142,122 +134,115 @@ typedef void (*pPKA_CallbackTypeDef)(
  */
 
 typedef struct {
-	uint32_t scalarMulSize; /*!< Number of element in scalarMul array */
-	uint32_t modulusSize;	/*!< Number of element in modulus, coefA, pointX
-				   and pointY arrays */
-	uint32_t coefSign;	/*!< Curve coefficient a sign */
-	const uint8_t *coefA;	/*!< Pointer to curve coefficient |a| (Array of
-				   modulusSize elements) */
-	const uint8_t *coefB;	/*!< pointer to curve coefficient b */
-	const uint8_t *modulus; /*!< Pointer to curve modulus value p (Array of
-				   modulusSize elements) */
-	const uint8_t *pointX;	/*!< Pointer to point P coordinate xP (Array of
-				   modulusSize elements) */
-	const uint8_t *pointY;	/*!< Pointer to point P coordinate yP (Array of
-				   modulusSize elements) */
+	uint32_t scalarMulSize;	   /*!< Number of element in scalarMul array */
+	uint32_t modulusSize;	   /*!< Number of element in modulus, coefA, pointX
+				      and pointY arrays */
+	uint32_t coefSign;	   /*!< Curve coefficient a sign */
+	const uint8_t *coefA;	   /*!< Pointer to curve coefficient |a| (Array of
+				      modulusSize elements) */
+	const uint8_t *coefB;	   /*!< pointer to curve coefficient b */
+	const uint8_t *modulus;	   /*!< Pointer to curve modulus value p (Array of
+				      modulusSize elements) */
+	const uint8_t *pointX;	   /*!< Pointer to point P coordinate xP (Array of
+				      modulusSize elements) */
+	const uint8_t *pointY;	   /*!< Pointer to point P coordinate yP (Array of
+				      modulusSize elements) */
 	const uint8_t *scalarMul;  /*!< Pointer to scalar multiplier k   (Array
 				      of scalarMulSize elements) */
 	const uint8_t *primeOrder; /*!< pointer to order of the curve */
 } PKA_ECCMulInTypeDef;
 
 typedef struct {
-	uint32_t primeOrderSize; /*!< Number of element in primeOrder array */
-	uint32_t scalarMulSize;	 /*!< Number of element in scalarMul array */
-	uint32_t modulusSize;	/*!< Number of element in modulus, coefA, pointX
-				   and pointY arrays */
-	uint32_t coefSign;	/*!< Curve coefficient a sign */
-	const uint8_t *coefA;	/*!< Pointer to curve coefficient |a| (Array of
-				   modulusSize elements) */
-	const uint8_t *coefB;	/*!< pointer to curve coefficient b */
-	const uint8_t *modulus; /*!< Pointer to curve modulus value p (Array of
-				   modulusSize elements) */
-	const uint8_t *pointX;	/*!< Pointer to point P coordinate xP (Array of
-				   modulusSize elements) */
-	const uint8_t *pointY;	/*!< Pointer to point P coordinate yP (Array of
-				   modulusSize elements) */
+	uint32_t primeOrderSize;   /*!< Number of element in primeOrder array */
+	uint32_t scalarMulSize;	   /*!< Number of element in scalarMul array */
+	uint32_t modulusSize;	   /*!< Number of element in modulus, coefA, pointX
+				      and pointY arrays */
+	uint32_t coefSign;	   /*!< Curve coefficient a sign */
+	const uint8_t *coefA;	   /*!< Pointer to curve coefficient |a| (Array of
+				      modulusSize elements) */
+	const uint8_t *coefB;	   /*!< pointer to curve coefficient b */
+	const uint8_t *modulus;	   /*!< Pointer to curve modulus value p (Array of
+				      modulusSize elements) */
+	const uint8_t *pointX;	   /*!< Pointer to point P coordinate xP (Array of
+				      modulusSize elements) */
+	const uint8_t *pointY;	   /*!< Pointer to point P coordinate yP (Array of
+				      modulusSize elements) */
 	const uint8_t *scalarMul;  /*!< Pointer to scalar multiplier k   (Array
 				      of scalarMulSize elements) */
 	const uint8_t *primeOrder; /*!< pointer to order of the curve */
 } PKA_ECCMulExInTypeDef;
 
 typedef struct {
-	uint32_t modulusSize;	/*!< Number of element in coefA, coefB, modulus,
-				   pointX and pointY arrays */
-	uint32_t coefSign;	/*!< Curve coefficient a sign */
-	const uint8_t *coefA;	/*!< Pointer to curve coefficient |a| (Array of
-				   modulusSize elements) */
-	const uint8_t *coefB;	/*!< Pointer to curve coefficient b   (Array of
-				   modulusSize elements) */
-	const uint8_t *modulus; /*!< Pointer to curve modulus value p (Array of
-				   modulusSize elements) */
-	const uint8_t *pointX;	/*!< Pointer to point P coordinate xP (Array of
-				   modulusSize elements) */
-	const uint8_t *pointY;	/*!< Pointer to point P coordinate yP (Array of
-				   modulusSize elements) */
-	const uint32_t *
-	    pMontgomeryParam; /*!< pointer to montgomery param R2 (modulus N) */
+	uint32_t modulusSize;		  /*!< Number of element in coefA, coefB, modulus,
+					     pointX and pointY arrays */
+	uint32_t coefSign;		  /*!< Curve coefficient a sign */
+	const uint8_t *coefA;		  /*!< Pointer to curve coefficient |a| (Array of
+					     modulusSize elements) */
+	const uint8_t *coefB;		  /*!< Pointer to curve coefficient b   (Array of
+					     modulusSize elements) */
+	const uint8_t *modulus;		  /*!< Pointer to curve modulus value p (Array of
+					     modulusSize elements) */
+	const uint8_t *pointX;		  /*!< Pointer to point P coordinate xP (Array of
+					     modulusSize elements) */
+	const uint8_t *pointY;		  /*!< Pointer to point P coordinate yP (Array of
+					     modulusSize elements) */
+	const uint32_t *pMontgomeryParam; /*!< pointer to montgomery param R2 (modulus N) */
 } PKA_PointCheckInTypeDef;
 
 typedef struct {
-	uint32_t size; /*!< Number of element in popA array */
-	const uint8_t
-	    *pOpDp; /*!< Pointer to operand dP   (Array of size/2 elements) */
-	const uint8_t
-	    *pOpDq; /*!< Pointer to operand dQ   (Array of size/2 elements) */
-	const uint8_t
-	    *pOpQinv; /*!< Pointer to operand qinv (Array of size/2 elements) */
-	const uint8_t
-	    *pPrimeP; /*!< Pointer to prime p      (Array of size/2 elements) */
-	const uint8_t
-	    *pPrimeQ; /*!< Pointer to prime Q      (Array of size/2 elements) */
-	const uint8_t
-	    *popA; /*!< Pointer to operand A    (Array of size elements) */
+	uint32_t size;		/*!< Number of element in popA array */
+	const uint8_t *pOpDp;	/*!< Pointer to operand dP   (Array of size/2 elements) */
+	const uint8_t *pOpDq;	/*!< Pointer to operand dQ   (Array of size/2 elements) */
+	const uint8_t *pOpQinv; /*!< Pointer to operand qinv (Array of size/2 elements) */
+	const uint8_t *pPrimeP; /*!< Pointer to prime p      (Array of size/2 elements) */
+	const uint8_t *pPrimeQ; /*!< Pointer to prime Q      (Array of size/2 elements) */
+	const uint8_t *popA;	/*!< Pointer to operand A    (Array of size elements) */
 } PKA_RSACRTExpInTypeDef;
 
 typedef struct {
-	uint32_t primeOrderSize; /*!< Number of element in primeOrder array */
-	uint32_t modulusSize;	 /*!< Number of element in modulus array */
-	uint32_t coefSign;	 /*!< Curve coefficient a sign */
-	const uint8_t *coef; /*!< Pointer to curve coefficient |a|     (Array of
-				modulusSize elements) */
-	const uint8_t *modulus; /*!< Pointer to curve modulus value p     (Array
-				   of modulusSize elements) */
-	const uint8_t *basePointX; /*!< Pointer to curve base point xG (Array of
-				      modulusSize elements) */
-	const uint8_t *basePointY; /*!< Pointer to curve base point yG (Array of
-				      modulusSize elements) */
+	uint32_t primeOrderSize;	/*!< Number of element in primeOrder array */
+	uint32_t modulusSize;		/*!< Number of element in modulus array */
+	uint32_t coefSign;		/*!< Curve coefficient a sign */
+	const uint8_t *coef;		/*!< Pointer to curve coefficient |a|     (Array of
+					   modulusSize elements) */
+	const uint8_t *modulus;		/*!< Pointer to curve modulus value p     (Array
+					   of modulusSize elements) */
+	const uint8_t *basePointX;	/*!< Pointer to curve base point xG (Array of
+					   modulusSize elements) */
+	const uint8_t *basePointY;	/*!< Pointer to curve base point yG (Array of
+					   modulusSize elements) */
 	const uint8_t *pPubKeyCurvePtX; /*!< Pointer to public-key curve point
 					   xQ (Array of modulusSize elements) */
 	const uint8_t *pPubKeyCurvePtY; /*!< Pointer to public-key curve point
 					   yQ (Array of modulusSize elements) */
-	const uint8_t *RSign; /*!< Pointer to signature part r          (Array
-				 of primeOrderSize elements) */
-	const uint8_t *SSign; /*!< Pointer to signature part s          (Array
-				 of primeOrderSize elements) */
-	const uint8_t *hash; /*!< Pointer to hash of the message e     (Array of
-				primeOrderSize elements) */
-	const uint8_t *primeOrder; /*!< Pointer to order of the curve n (Array
-				      of primeOrderSize elements) */
+	const uint8_t *RSign;		/*!< Pointer to signature part r          (Array
+					   of primeOrderSize elements) */
+	const uint8_t *SSign;		/*!< Pointer to signature part s          (Array
+					   of primeOrderSize elements) */
+	const uint8_t *hash;		/*!< Pointer to hash of the message e     (Array of
+					   primeOrderSize elements) */
+	const uint8_t *primeOrder;	/*!< Pointer to order of the curve n (Array
+					   of primeOrderSize elements) */
 } PKA_ECDSAVerifInTypeDef;
 
 typedef struct {
-	uint32_t primeOrderSize; /*!< Number of element in primeOrder array */
-	uint32_t modulusSize;	 /*!< Number of element in modulus array */
-	uint32_t coefSign;	 /*!< Curve coefficient a sign */
-	const uint8_t *coef; /*!< Pointer to curve coefficient |a|     (Array of
-				modulusSize elements) */
-	const uint8_t *coefB;	/*!< Pointer to B coefficient             (Array
-				   of modulusSize elements) */
-	const uint8_t *modulus; /*!< Pointer to curve modulus value p     (Array
-				   of modulusSize elements) */
-	const uint8_t *integer; /*!< Pointer to random integer k          (Array
-				   of primeOrderSize elements) */
+	uint32_t primeOrderSize;   /*!< Number of element in primeOrder array */
+	uint32_t modulusSize;	   /*!< Number of element in modulus array */
+	uint32_t coefSign;	   /*!< Curve coefficient a sign */
+	const uint8_t *coef;	   /*!< Pointer to curve coefficient |a|     (Array of
+				      modulusSize elements) */
+	const uint8_t *coefB;	   /*!< Pointer to B coefficient             (Array
+				      of modulusSize elements) */
+	const uint8_t *modulus;	   /*!< Pointer to curve modulus value p     (Array
+				      of modulusSize elements) */
+	const uint8_t *integer;	   /*!< Pointer to random integer k          (Array
+				      of primeOrderSize elements) */
 	const uint8_t *basePointX; /*!< Pointer to curve base point xG (Array of
 				      modulusSize elements) */
 	const uint8_t *basePointY; /*!< Pointer to curve base point yG (Array of
 				      modulusSize elements) */
-	const uint8_t *hash; /*!< Pointer to hash of the message       (Array of
-				primeOrderSize elements) */
+	const uint8_t *hash;	   /*!< Pointer to hash of the message       (Array of
+				      primeOrderSize elements) */
 	const uint8_t *privateKey; /*!< Pointer to private key d (Array of
 				      primeOrderSize elements) */
 	const uint8_t *primeOrder; /*!< Pointer to order of the curve n (Array
@@ -276,8 +261,7 @@ typedef struct {
 			 modulusSize elements) */
 	uint8_t *ptY; /*!< Pointer to point P coordinate yP     (Array of
 			 modulusSize elements) */
-} PKA_ECDSASignOutExtParamTypeDef, PKA_ECCMulOutTypeDef,
-    PKA_ECCProjective2AffineOutTypeDef, PKA_ECCDoubleBaseLadderOutTypeDef;
+} PKA_ECDSASignOutExtParamTypeDef, PKA_ECCMulOutTypeDef, PKA_ECCProjective2AffineOutTypeDef, PKA_ECCDoubleBaseLadderOutTypeDef;
 
 typedef struct {
 	uint8_t *ptX; /*!< pointer to point P coordinate xP */
@@ -306,15 +290,15 @@ typedef struct {
 } PKA_ModExpProtectModeInTypeDef;
 
 typedef struct {
-	uint32_t expSize;    /*!< Number of element in pExp and pMontgomeryParam
-				arrays */
-	uint32_t OpSize;     /*!< Number of element in pOp1 and pMod arrays */
-	const uint8_t *pExp; /*!< Pointer to Exponent             (Array of
-				expSize elements) */
-	const uint8_t *pOp1; /*!< Pointer to Operand              (Array of
-				OpSize elements) */
-	const uint8_t *pMod; /*!< Pointer to modulus              (Array of
-				OpSize elements) */
+	uint32_t expSize;		  /*!< Number of element in pExp and pMontgomeryParam
+					     arrays */
+	uint32_t OpSize;		  /*!< Number of element in pOp1 and pMod arrays */
+	const uint8_t *pExp;		  /*!< Pointer to Exponent             (Array of
+					     expSize elements) */
+	const uint8_t *pOp1;		  /*!< Pointer to Operand              (Array of
+					     OpSize elements) */
+	const uint8_t *pMod;		  /*!< Pointer to modulus              (Array of
+					     OpSize elements) */
 	const uint32_t *pMontgomeryParam; /*!< Pointer to Montgomery parameter
 					     (Array of expSize/4 elements) */
 } PKA_ModExpFastModeInTypeDef;
@@ -325,94 +309,70 @@ typedef struct {
 } PKA_MontgomeryParamInTypeDef;
 
 typedef struct {
-	uint32_t size; /*!< Number of element in pOp1 and pOp2 arrays */
-	const uint32_t
-	    *pOp1; /*!< Pointer to Operand 1 (Array of size elements) */
-	const uint32_t
-	    *pOp2; /*!< Pointer to Operand 2 (Array of size elements) */
+	uint32_t size;	      /*!< Number of element in pOp1 and pOp2 arrays */
+	const uint32_t *pOp1; /*!< Pointer to Operand 1 (Array of size elements) */
+	const uint32_t *pOp2; /*!< Pointer to Operand 2 (Array of size elements) */
 } PKA_AddInTypeDef, PKA_SubInTypeDef, PKA_MulInTypeDef, PKA_CmpInTypeDef;
 
 typedef struct {
-	uint32_t size; /*!< Number of element in pOp1 array */
-	const uint32_t
-	    *pOp1; /*!< Pointer to Operand 1       (Array of size elements) */
-	const uint8_t
-	    *pMod; /*!< Pointer to modulus value n (Array of size*4 elements) */
+	uint32_t size;	      /*!< Number of element in pOp1 array */
+	const uint32_t *pOp1; /*!< Pointer to Operand 1       (Array of size elements) */
+	const uint8_t *pMod;  /*!< Pointer to modulus value n (Array of size*4 elements) */
 } PKA_ModInvInTypeDef;
 
 typedef struct {
-	uint32_t OpSize;  /*!< Number of element in pOp1 array */
-	uint32_t modSize; /*!< Number of element in pMod array */
-	const uint32_t
-	    *pOp1; /*!< Pointer to Operand 1       (Array of OpSize elements) */
-	const uint8_t *
-	    pMod; /*!< Pointer to modulus value n (Array of modSize elements) */
+	uint32_t OpSize;      /*!< Number of element in pOp1 array */
+	uint32_t modSize;     /*!< Number of element in pMod array */
+	const uint32_t *pOp1; /*!< Pointer to Operand 1       (Array of OpSize elements) */
+	const uint8_t *pMod;  /*!< Pointer to modulus value n (Array of modSize elements) */
 } PKA_ModRedInTypeDef;
 
 typedef struct {
-	uint32_t size; /*!< Number of element in pOp1 and pOp2 arrays */
-	const uint32_t
-	    *pOp1; /*!< Pointer to Operand 1 (Array of size elements) */
-	const uint32_t
-	    *pOp2; /*!< Pointer to Operand 2 (Array of size elements) */
-	const uint8_t
-	    *pOp3; /*!< Pointer to Operand 3 (Array of size*4 elements) */
+	uint32_t size;	      /*!< Number of element in pOp1 and pOp2 arrays */
+	const uint32_t *pOp1; /*!< Pointer to Operand 1 (Array of size elements) */
+	const uint32_t *pOp2; /*!< Pointer to Operand 2 (Array of size elements) */
+	const uint8_t *pOp3;  /*!< Pointer to Operand 3 (Array of size*4 elements) */
 } PKA_ModAddInTypeDef, PKA_ModSubInTypeDef, PKA_MontgomeryMulInTypeDef;
 
 typedef struct {
-	uint32_t primeOrderSize; /*!< curve prime order n length */
-	uint32_t modulusSize;	 /*!< curve modulus p length */
-	uint32_t coefSign;	 /*!< curve coefficient a sign */
-	const uint8_t *coefA;	 /*!< pointer to curve coefficient |a| */
-	const uint8_t *modulus;	 /*!< pointer to curve modulus value p */
-	const uint8_t *integerK; /*!< pointer to cryptographically secure random
-				    integer k */
-	const uint8_t *integerM; /*!< pointer to cryptographically secure random
-				    integer m */
-	const uint8_t
-	    *basePointX1; /*!< pointer to curve base first point coordinate x */
-	const uint8_t
-	    *basePointY1; /*!< pointer to curve base first point coordinate y */
-	const uint8_t
-	    *basePointZ1; /*!< pointer to curve base first point coordinate z */
-	const uint8_t *
-	    basePointX2; /*!< pointer to curve base second point coordinate x */
-	const uint8_t *
-	    basePointY2; /*!< pointer to curve base second point coordinate y */
-	const uint8_t *
-	    basePointZ2; /*!< pointer to curve base second point coordinate z */
+	uint32_t primeOrderSize;    /*!< curve prime order n length */
+	uint32_t modulusSize;	    /*!< curve modulus p length */
+	uint32_t coefSign;	    /*!< curve coefficient a sign */
+	const uint8_t *coefA;	    /*!< pointer to curve coefficient |a| */
+	const uint8_t *modulus;	    /*!< pointer to curve modulus value p */
+	const uint8_t *integerK;    /*!< pointer to cryptographically secure random
+				       integer k */
+	const uint8_t *integerM;    /*!< pointer to cryptographically secure random
+				       integer m */
+	const uint8_t *basePointX1; /*!< pointer to curve base first point coordinate x */
+	const uint8_t *basePointY1; /*!< pointer to curve base first point coordinate y */
+	const uint8_t *basePointZ1; /*!< pointer to curve base first point coordinate z */
+	const uint8_t *basePointX2; /*!< pointer to curve base second point coordinate x */
+	const uint8_t *basePointY2; /*!< pointer to curve base second point coordinate y */
+	const uint8_t *basePointZ2; /*!< pointer to curve base second point coordinate z */
 } PKA_ECCDoubleBaseLadderInTypeDef;
 
 typedef struct {
-	uint32_t modulusSize;	/*!< curve modulus p length */
-	const uint8_t *modulus; /*!< pointer to curve modulus value p */
-	const uint8_t
-	    *basePointX; /*!< pointer to curve base point coordinate x */
-	const uint8_t
-	    *basePointY; /*!< pointer to curve base point coordinate y */
-	const uint8_t
-	    *basePointZ; /*!< pointer to curve base point coordinate z */
+	uint32_t modulusSize;		  /*!< curve modulus p length */
+	const uint8_t *modulus;		  /*!< pointer to curve modulus value p */
+	const uint8_t *basePointX;	  /*!< pointer to curve base point coordinate x */
+	const uint8_t *basePointY;	  /*!< pointer to curve base point coordinate y */
+	const uint8_t *basePointZ;	  /*!< pointer to curve base point coordinate z */
 	const uint32_t *pMontgomeryParam; /*!< pointer to montgomery parameter
 					     R2 modulus n*/
 } PKA_ECCProjective2AffineInTypeDef;
 
 typedef struct {
-	uint32_t modulusSize;	/*!< curve modulus p length */
-	uint32_t coefSign;	/*!< curve coefficient a sign */
-	const uint8_t *modulus; /*!< pointer to curve modulus value p */
-	const uint8_t *coefA;	/*!< pointer to curve coefficient |a| */
-	const uint8_t
-	    *basePointX1; /*!< pointer to curve base first point coordinate x */
-	const uint8_t
-	    *basePointY1; /*!< pointer to curve base first point coordinate y */
-	const uint8_t
-	    *basePointZ1; /*!< pointer to curve base first point coordinate z */
-	const uint8_t *
-	    basePointX2; /*!< pointer to curve base second point coordinate x */
-	const uint8_t *
-	    basePointY2; /*!< pointer to curve base second point coordinate y */
-	const uint8_t *
-	    basePointZ2; /*!< pointer to curve base second point coordinate z */
+	uint32_t modulusSize;	    /*!< curve modulus p length */
+	uint32_t coefSign;	    /*!< curve coefficient a sign */
+	const uint8_t *modulus;	    /*!< pointer to curve modulus value p */
+	const uint8_t *coefA;	    /*!< pointer to curve coefficient |a| */
+	const uint8_t *basePointX1; /*!< pointer to curve base first point coordinate x */
+	const uint8_t *basePointY1; /*!< pointer to curve base first point coordinate y */
+	const uint8_t *basePointZ1; /*!< pointer to curve base first point coordinate z */
+	const uint8_t *basePointX2; /*!< pointer to curve base second point coordinate x */
+	const uint8_t *basePointY2; /*!< pointer to curve base second point coordinate y */
+	const uint8_t *basePointZ2; /*!< pointer to curve base second point coordinate z */
 } PKA_ECCCompleteAdditionInTypeDef;
 /**
  * @}
@@ -508,15 +468,14 @@ typedef struct {
  * @retval None
  */
 #if (USE_HAL_PKA_REGISTER_CALLBACKS == 1)
-#define __HAL_PKA_RESET_HANDLE_STATE(__HANDLE__)                               \
-	do {                                                                   \
-		(__HANDLE__)->State = HAL_PKA_STATE_RESET;                     \
-		(__HANDLE__)->MspInitCallback = NULL;                          \
-		(__HANDLE__)->MspDeInitCallback = NULL;                        \
+#define __HAL_PKA_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                       \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_PKA_STATE_RESET;                                                                                                                                             \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0)
 #else
-#define __HAL_PKA_RESET_HANDLE_STATE(__HANDLE__)                               \
-	((__HANDLE__)->State = HAL_PKA_STATE_RESET)
+#define __HAL_PKA_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_PKA_STATE_RESET)
 #endif /* USE_HAL_PKA_REGISTER_CALLBACKS */
 
 /** @brief  Enable the specified PKA interrupt.
@@ -529,8 +488,7 @@ typedef struct {
  *            @arg @ref PKA_IT_OPERR Operation error interrupt enable
  * @retval None
  */
-#define __HAL_PKA_ENABLE_IT(__HANDLE__, __INTERRUPT__)                         \
-	((__HANDLE__)->Instance->CR |= (__INTERRUPT__))
+#define __HAL_PKA_ENABLE_IT(__HANDLE__, __INTERRUPT__) ((__HANDLE__)->Instance->CR |= (__INTERRUPT__))
 
 /** @brief  Disable the specified PKA interrupt.
  * @param  __HANDLE__ specifies the PKA Handle
@@ -542,8 +500,7 @@ typedef struct {
  *            @arg @ref PKA_IT_OPERR Operation error interrupt enable
  * @retval None
  */
-#define __HAL_PKA_DISABLE_IT(__HANDLE__, __INTERRUPT__)                        \
-	((__HANDLE__)->Instance->CR &= (~(__INTERRUPT__)))
+#define __HAL_PKA_DISABLE_IT(__HANDLE__, __INTERRUPT__) ((__HANDLE__)->Instance->CR &= (~(__INTERRUPT__)))
 
 /** @brief  Check whether the specified PKA interrupt source is enabled or not.
  * @param  __HANDLE__ specifies the PKA Handle
@@ -555,10 +512,7 @@ typedef struct {
  *            @arg @ref PKA_IT_OPERR Operation error interrupt enable
  * @retval The new state of __INTERRUPT__ (SET or RESET)
  */
-#define __HAL_PKA_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)                     \
-	((((__HANDLE__)->Instance->CR & (__INTERRUPT__)) == (__INTERRUPT__))   \
-	     ? SET                                                             \
-	     : RESET)
+#define __HAL_PKA_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__) ((((__HANDLE__)->Instance->CR & (__INTERRUPT__)) == (__INTERRUPT__)) ? SET : RESET)
 
 /** @brief  Check whether the specified PKA flag is set or not.
  * @param  __HANDLE__ specifies the PKA Handle
@@ -570,9 +524,7 @@ typedef struct {
  *            @arg @ref PKA_FLAG_OPERR Operation error
  * @retval The new state of __FLAG__ (SET or RESET)
  */
-#define __HAL_PKA_GET_FLAG(__HANDLE__, __FLAG__)                               \
-	(((((__HANDLE__)->Instance->SR) & (__FLAG__)) == (__FLAG__)) ? SET     \
-								     : RESET)
+#define __HAL_PKA_GET_FLAG(__HANDLE__, __FLAG__) (((((__HANDLE__)->Instance->SR) & (__FLAG__)) == (__FLAG__)) ? SET : RESET)
 
 /** @brief  Clear the PKA pending flags which are cleared by writing 1 in a
  * specific bit.
@@ -585,29 +537,25 @@ typedef struct {
  *            @arg @ref PKA_FLAG_OPERR Operation error
  * @retval None
  */
-#define __HAL_PKA_CLEAR_FLAG(__HANDLE__, __FLAG__)                             \
-	((__HANDLE__)->Instance->CLRFR = (__FLAG__))
+#define __HAL_PKA_CLEAR_FLAG(__HANDLE__, __FLAG__) ((__HANDLE__)->Instance->CLRFR = (__FLAG__))
 
 /** @brief  Enable the specified PKA peripheral.
  * @param  __HANDLE__ specifies the PKA Handle
  * @retval None
  */
-#define __HAL_PKA_ENABLE(__HANDLE__)                                           \
-	(SET_BIT((__HANDLE__)->Instance->CR, PKA_CR_EN))
+#define __HAL_PKA_ENABLE(__HANDLE__) (SET_BIT((__HANDLE__)->Instance->CR, PKA_CR_EN))
 
 /** @brief  Disable the specified PKA peripheral.
  * @param  __HANDLE__ specifies the PKA Handle
  * @retval None
  */
-#define __HAL_PKA_DISABLE(__HANDLE__)                                          \
-	(CLEAR_BIT((__HANDLE__)->Instance->CR, PKA_CR_EN))
+#define __HAL_PKA_DISABLE(__HANDLE__) (CLEAR_BIT((__HANDLE__)->Instance->CR, PKA_CR_EN))
 
 /** @brief  Start a PKA operation.
  * @param  __HANDLE__ specifies the PKA Handle
  * @retval None
  */
-#define __HAL_PKA_START(__HANDLE__)                                            \
-	(SET_BIT((__HANDLE__)->Instance->CR, PKA_CR_START))
+#define __HAL_PKA_START(__HANDLE__) (SET_BIT((__HANDLE__)->Instance->CR, PKA_CR_START))
 /**
  * @}
  */
@@ -629,12 +577,8 @@ void HAL_PKA_MspDeInit(PKA_HandleTypeDef *hpka);
 
 #if (USE_HAL_PKA_REGISTER_CALLBACKS == 1)
 /* Callbacks Register/UnRegister functions  ***********************************/
-HAL_StatusTypeDef HAL_PKA_RegisterCallback(PKA_HandleTypeDef *hpka,
-					   HAL_PKA_CallbackIDTypeDef CallbackID,
-					   pPKA_CallbackTypeDef pCallback);
-HAL_StatusTypeDef
-HAL_PKA_UnRegisterCallback(PKA_HandleTypeDef *hpka,
-			   HAL_PKA_CallbackIDTypeDef CallbackID);
+HAL_StatusTypeDef HAL_PKA_RegisterCallback(PKA_HandleTypeDef *hpka, HAL_PKA_CallbackIDTypeDef CallbackID, pPKA_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_PKA_UnRegisterCallback(PKA_HandleTypeDef *hpka, HAL_PKA_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_PKA_REGISTER_CALLBACKS */
 
 /**
@@ -646,136 +590,71 @@ HAL_PKA_UnRegisterCallback(PKA_HandleTypeDef *hpka,
  */
 /* IO operation functions *****************************************************/
 /* High Level Functions *******************************************************/
-HAL_StatusTypeDef HAL_PKA_ModExp(PKA_HandleTypeDef *hpka,
-				 PKA_ModExpInTypeDef *in, uint32_t Timeout);
-HAL_StatusTypeDef HAL_PKA_ModExp_IT(PKA_HandleTypeDef *hpka,
-				    PKA_ModExpInTypeDef *in);
-HAL_StatusTypeDef HAL_PKA_ModExpFastMode(PKA_HandleTypeDef *hpka,
-					 PKA_ModExpFastModeInTypeDef *in,
-					 uint32_t Timeout);
-HAL_StatusTypeDef HAL_PKA_ModExpFastMode_IT(PKA_HandleTypeDef *hpka,
-					    PKA_ModExpFastModeInTypeDef *in);
-HAL_StatusTypeDef HAL_PKA_ModExpProtectMode(PKA_HandleTypeDef *hpka,
-					    PKA_ModExpProtectModeInTypeDef *in,
-					    uint32_t Timeout);
-HAL_StatusTypeDef
-HAL_PKA_ModExpProtectMode_IT(PKA_HandleTypeDef *hpka,
-			     PKA_ModExpProtectModeInTypeDef *in);
+HAL_StatusTypeDef HAL_PKA_ModExp(PKA_HandleTypeDef *hpka, PKA_ModExpInTypeDef *in, uint32_t Timeout);
+HAL_StatusTypeDef HAL_PKA_ModExp_IT(PKA_HandleTypeDef *hpka, PKA_ModExpInTypeDef *in);
+HAL_StatusTypeDef HAL_PKA_ModExpFastMode(PKA_HandleTypeDef *hpka, PKA_ModExpFastModeInTypeDef *in, uint32_t Timeout);
+HAL_StatusTypeDef HAL_PKA_ModExpFastMode_IT(PKA_HandleTypeDef *hpka, PKA_ModExpFastModeInTypeDef *in);
+HAL_StatusTypeDef HAL_PKA_ModExpProtectMode(PKA_HandleTypeDef *hpka, PKA_ModExpProtectModeInTypeDef *in, uint32_t Timeout);
+HAL_StatusTypeDef HAL_PKA_ModExpProtectMode_IT(PKA_HandleTypeDef *hpka, PKA_ModExpProtectModeInTypeDef *in);
 void HAL_PKA_ModExp_GetResult(PKA_HandleTypeDef *hpka, uint8_t *pRes);
 
-HAL_StatusTypeDef HAL_PKA_ECDSASign(PKA_HandleTypeDef *hpka,
-				    PKA_ECDSASignInTypeDef *in,
-				    uint32_t Timeout);
-HAL_StatusTypeDef HAL_PKA_ECDSASign_IT(PKA_HandleTypeDef *hpka,
-				       PKA_ECDSASignInTypeDef *in);
-void HAL_PKA_ECDSASign_GetResult(PKA_HandleTypeDef *hpka,
-				 PKA_ECDSASignOutTypeDef *out,
-				 PKA_ECDSASignOutExtParamTypeDef *outExt);
+HAL_StatusTypeDef HAL_PKA_ECDSASign(PKA_HandleTypeDef *hpka, PKA_ECDSASignInTypeDef *in, uint32_t Timeout);
+HAL_StatusTypeDef HAL_PKA_ECDSASign_IT(PKA_HandleTypeDef *hpka, PKA_ECDSASignInTypeDef *in);
+void HAL_PKA_ECDSASign_GetResult(PKA_HandleTypeDef *hpka, PKA_ECDSASignOutTypeDef *out, PKA_ECDSASignOutExtParamTypeDef *outExt);
 
-HAL_StatusTypeDef HAL_PKA_ECDSAVerif(PKA_HandleTypeDef *hpka,
-				     PKA_ECDSAVerifInTypeDef *in,
-				     uint32_t Timeout);
-HAL_StatusTypeDef HAL_PKA_ECDSAVerif_IT(PKA_HandleTypeDef *hpka,
-					PKA_ECDSAVerifInTypeDef *in);
-uint32_t
-HAL_PKA_ECDSAVerif_IsValidSignature(PKA_HandleTypeDef const *const hpka);
+HAL_StatusTypeDef HAL_PKA_ECDSAVerif(PKA_HandleTypeDef *hpka, PKA_ECDSAVerifInTypeDef *in, uint32_t Timeout);
+HAL_StatusTypeDef HAL_PKA_ECDSAVerif_IT(PKA_HandleTypeDef *hpka, PKA_ECDSAVerifInTypeDef *in);
+uint32_t HAL_PKA_ECDSAVerif_IsValidSignature(PKA_HandleTypeDef const *const hpka);
 
-HAL_StatusTypeDef HAL_PKA_RSACRTExp(PKA_HandleTypeDef *hpka,
-				    PKA_RSACRTExpInTypeDef *in,
-				    uint32_t Timeout);
-HAL_StatusTypeDef HAL_PKA_RSACRTExp_IT(PKA_HandleTypeDef *hpka,
-				       PKA_RSACRTExpInTypeDef *in);
+HAL_StatusTypeDef HAL_PKA_RSACRTExp(PKA_HandleTypeDef *hpka, PKA_RSACRTExpInTypeDef *in, uint32_t Timeout);
+HAL_StatusTypeDef HAL_PKA_RSACRTExp_IT(PKA_HandleTypeDef *hpka, PKA_RSACRTExpInTypeDef *in);
 void HAL_PKA_RSACRTExp_GetResult(PKA_HandleTypeDef *hpka, uint8_t *pRes);
 
-HAL_StatusTypeDef HAL_PKA_PointCheck(PKA_HandleTypeDef *hpka,
-				     PKA_PointCheckInTypeDef *in,
-				     uint32_t Timeout);
-HAL_StatusTypeDef HAL_PKA_PointCheck_IT(PKA_HandleTypeDef *hpka,
-					PKA_PointCheckInTypeDef *in);
+HAL_StatusTypeDef HAL_PKA_PointCheck(PKA_HandleTypeDef *hpka, PKA_PointCheckInTypeDef *in, uint32_t Timeout);
+HAL_StatusTypeDef HAL_PKA_PointCheck_IT(PKA_HandleTypeDef *hpka, PKA_PointCheckInTypeDef *in);
 uint32_t HAL_PKA_PointCheck_IsOnCurve(PKA_HandleTypeDef const *const hpka);
 
-HAL_StatusTypeDef HAL_PKA_ECCMul(PKA_HandleTypeDef *hpka,
-				 PKA_ECCMulInTypeDef *in, uint32_t Timeout);
-HAL_StatusTypeDef HAL_PKA_ECCMul_IT(PKA_HandleTypeDef *hpka,
-				    PKA_ECCMulInTypeDef *in);
-HAL_StatusTypeDef HAL_PKA_ECCMulEx(PKA_HandleTypeDef *hpka,
-				   PKA_ECCMulExInTypeDef *in, uint32_t Timeout);
-HAL_StatusTypeDef HAL_PKA_ECCMulEx_IT(PKA_HandleTypeDef *hpka,
-				      PKA_ECCMulExInTypeDef *in);
-void HAL_PKA_ECCMul_GetResult(PKA_HandleTypeDef *hpka,
-			      PKA_ECCMulOutTypeDef *out);
+HAL_StatusTypeDef HAL_PKA_ECCMul(PKA_HandleTypeDef *hpka, PKA_ECCMulInTypeDef *in, uint32_t Timeout);
+HAL_StatusTypeDef HAL_PKA_ECCMul_IT(PKA_HandleTypeDef *hpka, PKA_ECCMulInTypeDef *in);
+HAL_StatusTypeDef HAL_PKA_ECCMulEx(PKA_HandleTypeDef *hpka, PKA_ECCMulExInTypeDef *in, uint32_t Timeout);
+HAL_StatusTypeDef HAL_PKA_ECCMulEx_IT(PKA_HandleTypeDef *hpka, PKA_ECCMulExInTypeDef *in);
+void HAL_PKA_ECCMul_GetResult(PKA_HandleTypeDef *hpka, PKA_ECCMulOutTypeDef *out);
 
-HAL_StatusTypeDef HAL_PKA_Add(PKA_HandleTypeDef *hpka, PKA_AddInTypeDef *in,
-			      uint32_t Timeout);
+HAL_StatusTypeDef HAL_PKA_Add(PKA_HandleTypeDef *hpka, PKA_AddInTypeDef *in, uint32_t Timeout);
 HAL_StatusTypeDef HAL_PKA_Add_IT(PKA_HandleTypeDef *hpka, PKA_AddInTypeDef *in);
-HAL_StatusTypeDef HAL_PKA_Sub(PKA_HandleTypeDef *hpka, PKA_SubInTypeDef *in,
-			      uint32_t Timeout);
+HAL_StatusTypeDef HAL_PKA_Sub(PKA_HandleTypeDef *hpka, PKA_SubInTypeDef *in, uint32_t Timeout);
 HAL_StatusTypeDef HAL_PKA_Sub_IT(PKA_HandleTypeDef *hpka, PKA_SubInTypeDef *in);
-HAL_StatusTypeDef HAL_PKA_Cmp(PKA_HandleTypeDef *hpka, PKA_CmpInTypeDef *in,
-			      uint32_t Timeout);
+HAL_StatusTypeDef HAL_PKA_Cmp(PKA_HandleTypeDef *hpka, PKA_CmpInTypeDef *in, uint32_t Timeout);
 HAL_StatusTypeDef HAL_PKA_Cmp_IT(PKA_HandleTypeDef *hpka, PKA_CmpInTypeDef *in);
-HAL_StatusTypeDef HAL_PKA_Mul(PKA_HandleTypeDef *hpka, PKA_MulInTypeDef *in,
-			      uint32_t Timeout);
+HAL_StatusTypeDef HAL_PKA_Mul(PKA_HandleTypeDef *hpka, PKA_MulInTypeDef *in, uint32_t Timeout);
 HAL_StatusTypeDef HAL_PKA_Mul_IT(PKA_HandleTypeDef *hpka, PKA_MulInTypeDef *in);
-HAL_StatusTypeDef HAL_PKA_ModAdd(PKA_HandleTypeDef *hpka,
-				 PKA_ModAddInTypeDef *in, uint32_t Timeout);
-HAL_StatusTypeDef HAL_PKA_ModAdd_IT(PKA_HandleTypeDef *hpka,
-				    PKA_ModAddInTypeDef *in);
-HAL_StatusTypeDef HAL_PKA_ModSub(PKA_HandleTypeDef *hpka,
-				 PKA_ModSubInTypeDef *in, uint32_t Timeout);
-HAL_StatusTypeDef HAL_PKA_ModSub_IT(PKA_HandleTypeDef *hpka,
-				    PKA_ModSubInTypeDef *in);
-HAL_StatusTypeDef HAL_PKA_ModInv(PKA_HandleTypeDef *hpka,
-				 PKA_ModInvInTypeDef *in, uint32_t Timeout);
-HAL_StatusTypeDef HAL_PKA_ModInv_IT(PKA_HandleTypeDef *hpka,
-				    PKA_ModInvInTypeDef *in);
-HAL_StatusTypeDef HAL_PKA_ModRed(PKA_HandleTypeDef *hpka,
-				 PKA_ModRedInTypeDef *in, uint32_t Timeout);
-HAL_StatusTypeDef HAL_PKA_ModRed_IT(PKA_HandleTypeDef *hpka,
-				    PKA_ModRedInTypeDef *in);
-HAL_StatusTypeDef HAL_PKA_MontgomeryMul(PKA_HandleTypeDef *hpka,
-					PKA_MontgomeryMulInTypeDef *in,
-					uint32_t Timeout);
-HAL_StatusTypeDef HAL_PKA_MontgomeryMul_IT(PKA_HandleTypeDef *hpka,
-					   PKA_MontgomeryMulInTypeDef *in);
+HAL_StatusTypeDef HAL_PKA_ModAdd(PKA_HandleTypeDef *hpka, PKA_ModAddInTypeDef *in, uint32_t Timeout);
+HAL_StatusTypeDef HAL_PKA_ModAdd_IT(PKA_HandleTypeDef *hpka, PKA_ModAddInTypeDef *in);
+HAL_StatusTypeDef HAL_PKA_ModSub(PKA_HandleTypeDef *hpka, PKA_ModSubInTypeDef *in, uint32_t Timeout);
+HAL_StatusTypeDef HAL_PKA_ModSub_IT(PKA_HandleTypeDef *hpka, PKA_ModSubInTypeDef *in);
+HAL_StatusTypeDef HAL_PKA_ModInv(PKA_HandleTypeDef *hpka, PKA_ModInvInTypeDef *in, uint32_t Timeout);
+HAL_StatusTypeDef HAL_PKA_ModInv_IT(PKA_HandleTypeDef *hpka, PKA_ModInvInTypeDef *in);
+HAL_StatusTypeDef HAL_PKA_ModRed(PKA_HandleTypeDef *hpka, PKA_ModRedInTypeDef *in, uint32_t Timeout);
+HAL_StatusTypeDef HAL_PKA_ModRed_IT(PKA_HandleTypeDef *hpka, PKA_ModRedInTypeDef *in);
+HAL_StatusTypeDef HAL_PKA_MontgomeryMul(PKA_HandleTypeDef *hpka, PKA_MontgomeryMulInTypeDef *in, uint32_t Timeout);
+HAL_StatusTypeDef HAL_PKA_MontgomeryMul_IT(PKA_HandleTypeDef *hpka, PKA_MontgomeryMulInTypeDef *in);
 void HAL_PKA_Arithmetic_GetResult(PKA_HandleTypeDef *hpka, uint32_t *pRes);
 
-HAL_StatusTypeDef HAL_PKA_MontgomeryParam(PKA_HandleTypeDef *hpka,
-					  PKA_MontgomeryParamInTypeDef *in,
-					  uint32_t Timeout);
-HAL_StatusTypeDef HAL_PKA_MontgomeryParam_IT(PKA_HandleTypeDef *hpka,
-					     PKA_MontgomeryParamInTypeDef *in);
+HAL_StatusTypeDef HAL_PKA_MontgomeryParam(PKA_HandleTypeDef *hpka, PKA_MontgomeryParamInTypeDef *in, uint32_t Timeout);
+HAL_StatusTypeDef HAL_PKA_MontgomeryParam_IT(PKA_HandleTypeDef *hpka, PKA_MontgomeryParamInTypeDef *in);
 void HAL_PKA_MontgomeryParam_GetResult(PKA_HandleTypeDef *hpka, uint32_t *pRes);
 
-HAL_StatusTypeDef
-HAL_PKA_ECCDoubleBaseLadder(PKA_HandleTypeDef *hpka,
-			    PKA_ECCDoubleBaseLadderInTypeDef *in,
-			    uint32_t Timeout);
-HAL_StatusTypeDef
-HAL_PKA_ECCDoubleBaseLadder_IT(PKA_HandleTypeDef *hpka,
-			       PKA_ECCDoubleBaseLadderInTypeDef *in);
-void HAL_PKA_ECCDoubleBaseLadder_GetResult(
-    PKA_HandleTypeDef *hpka, PKA_ECCDoubleBaseLadderOutTypeDef *out);
+HAL_StatusTypeDef HAL_PKA_ECCDoubleBaseLadder(PKA_HandleTypeDef *hpka, PKA_ECCDoubleBaseLadderInTypeDef *in, uint32_t Timeout);
+HAL_StatusTypeDef HAL_PKA_ECCDoubleBaseLadder_IT(PKA_HandleTypeDef *hpka, PKA_ECCDoubleBaseLadderInTypeDef *in);
+void HAL_PKA_ECCDoubleBaseLadder_GetResult(PKA_HandleTypeDef *hpka, PKA_ECCDoubleBaseLadderOutTypeDef *out);
 
-HAL_StatusTypeDef
-HAL_PKA_ECCProjective2Affine(PKA_HandleTypeDef *hpka,
-			     PKA_ECCProjective2AffineInTypeDef *in,
-			     uint32_t Timeout);
-HAL_StatusTypeDef
-HAL_PKA_ECCProjective2Affine_IT(PKA_HandleTypeDef *hpka,
-				PKA_ECCProjective2AffineInTypeDef *in);
-void HAL_PKA_ECCProjective2Affine_GetResult(
-    PKA_HandleTypeDef *hpka, PKA_ECCProjective2AffineOutTypeDef *out);
+HAL_StatusTypeDef HAL_PKA_ECCProjective2Affine(PKA_HandleTypeDef *hpka, PKA_ECCProjective2AffineInTypeDef *in, uint32_t Timeout);
+HAL_StatusTypeDef HAL_PKA_ECCProjective2Affine_IT(PKA_HandleTypeDef *hpka, PKA_ECCProjective2AffineInTypeDef *in);
+void HAL_PKA_ECCProjective2Affine_GetResult(PKA_HandleTypeDef *hpka, PKA_ECCProjective2AffineOutTypeDef *out);
 
-HAL_StatusTypeDef
-HAL_PKA_ECCCompleteAddition(PKA_HandleTypeDef *hpka,
-			    PKA_ECCCompleteAdditionInTypeDef *in,
-			    uint32_t Timeout);
-HAL_StatusTypeDef
-HAL_PKA_ECCCompleteAddition_IT(PKA_HandleTypeDef *hpka,
-			       PKA_ECCCompleteAdditionInTypeDef *in);
-void HAL_PKA_ECCCompleteAddition_GetResult(
-    PKA_HandleTypeDef *hpka, PKA_ECCCompleteAdditionOutTypeDef *out);
+HAL_StatusTypeDef HAL_PKA_ECCCompleteAddition(PKA_HandleTypeDef *hpka, PKA_ECCCompleteAdditionInTypeDef *in, uint32_t Timeout);
+HAL_StatusTypeDef HAL_PKA_ECCCompleteAddition_IT(PKA_HandleTypeDef *hpka, PKA_ECCCompleteAdditionInTypeDef *in);
+void HAL_PKA_ECCCompleteAddition_GetResult(PKA_HandleTypeDef *hpka, PKA_ECCCompleteAdditionOutTypeDef *out);
 
 HAL_StatusTypeDef HAL_PKA_Abort(PKA_HandleTypeDef *hpka);
 void HAL_PKA_RAMReset(PKA_HandleTypeDef *hpka);

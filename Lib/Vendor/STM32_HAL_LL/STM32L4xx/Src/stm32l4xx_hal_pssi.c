@@ -206,10 +206,7 @@ static void PSSI_Error(PSSI_HandleTypeDef *hpssi, uint32_t ErrorCode);
 /* Private functions for PSSI transfer IRQ handler */
 
 /* Private functions to handle flags during polling transfer */
-static HAL_StatusTypeDef
-PSSI_WaitOnStatusUntilTimeout(PSSI_HandleTypeDef *hpssi, uint32_t Flag,
-			      FlagStatus Status, uint32_t Timeout,
-			      uint32_t Tickstart);
+static HAL_StatusTypeDef PSSI_WaitOnStatusUntilTimeout(PSSI_HandleTypeDef *hpssi, uint32_t Flag, FlagStatus Status, uint32_t Timeout, uint32_t Tickstart);
 
 /* Private functions to centralize the enable/disable of Interrupts */
 
@@ -279,19 +276,14 @@ HAL_StatusTypeDef HAL_PSSI_Init(PSSI_HandleTypeDef *hpssi)
 
 #if (USE_HAL_PSSI_REGISTER_CALLBACKS == 1)
 		/* Init the PSSI Callback settings */
-		hpssi->TxCpltCallback =
-		    HAL_PSSI_TxCpltCallback; /* Legacy weak TxCpltCallback */
-		hpssi->RxCpltCallback =
-		    HAL_PSSI_RxCpltCallback; /* Legacy weak RxCpltCallback */
-		hpssi->ErrorCallback =
-		    HAL_PSSI_ErrorCallback; /* Legacy weak ErrorCallback */
-		hpssi->AbortCpltCallback =
-		    HAL_PSSI_AbortCpltCallback; /* Legacy weak AbortCpltCallback
-						 */
+		hpssi->TxCpltCallback = HAL_PSSI_TxCpltCallback;       /* Legacy weak TxCpltCallback */
+		hpssi->RxCpltCallback = HAL_PSSI_RxCpltCallback;       /* Legacy weak RxCpltCallback */
+		hpssi->ErrorCallback = HAL_PSSI_ErrorCallback;	       /* Legacy weak ErrorCallback */
+		hpssi->AbortCpltCallback = HAL_PSSI_AbortCpltCallback; /* Legacy weak AbortCpltCallback
+									*/
 
 		if (hpssi->MspInitCallback == NULL) {
-			hpssi->MspInitCallback =
-			    HAL_PSSI_MspInit; /* Legacy weak MspInit  */
+			hpssi->MspInitCallback = HAL_PSSI_MspInit; /* Legacy weak MspInit  */
 		}
 
 		/* Init the low level hardware : GPIO, CLOCK, CORTEX...etc */
@@ -311,11 +303,8 @@ HAL_StatusTypeDef HAL_PSSI_Init(PSSI_HandleTypeDef *hpssi)
 	 * ----------------------*/
 	/* Configure PSSIx: Control Signal and Bus Width*/
 
-	MODIFY_REG(hpssi->Instance->CR,
-		   PSSI_CR_DERDYCFG | PSSI_CR_EDM | PSSI_CR_DEPOL |
-		       PSSI_CR_RDYPOL,
-		   hpssi->Init.ControlSignal | hpssi->Init.DataEnablePolarity |
-		       hpssi->Init.ReadyPolarity | hpssi->Init.BusWidth);
+	MODIFY_REG(hpssi->Instance->CR, PSSI_CR_DERDYCFG | PSSI_CR_EDM | PSSI_CR_DEPOL | PSSI_CR_RDYPOL,
+		   hpssi->Init.ControlSignal | hpssi->Init.DataEnablePolarity | hpssi->Init.ReadyPolarity | hpssi->Init.BusWidth);
 
 	hpssi->ErrorCode = HAL_PSSI_ERROR_NONE;
 	hpssi->State = HAL_PSSI_STATE_READY;
@@ -346,8 +335,7 @@ HAL_StatusTypeDef HAL_PSSI_DeInit(PSSI_HandleTypeDef *hpssi)
 
 #if (USE_HAL_PSSI_REGISTER_CALLBACKS == 1)
 	if (hpssi->MspDeInitCallback == NULL) {
-		hpssi->MspDeInitCallback =
-		    HAL_PSSI_MspDeInit; /* Legacy weak MspDeInit  */
+		hpssi->MspDeInitCallback = HAL_PSSI_MspDeInit; /* Legacy weak MspDeInit  */
 	}
 
 	/* DeInit the low level hardware: GPIO, CLOCK, NVIC */
@@ -420,10 +408,7 @@ __weak void HAL_PSSI_MspDeInit(PSSI_HandleTypeDef *hpssi)
  * @param  pCallback pointer to the Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_PSSI_RegisterCallback(PSSI_HandleTypeDef *hpssi,
-			  HAL_PSSI_CallbackIDTypeDef CallbackID,
-			  pPSSI_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_PSSI_RegisterCallback(PSSI_HandleTypeDef *hpssi, HAL_PSSI_CallbackIDTypeDef CallbackID, pPSSI_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -462,8 +447,7 @@ HAL_PSSI_RegisterCallback(PSSI_HandleTypeDef *hpssi,
 
 			default:
 				/* Update the error code */
-				hpssi->ErrorCode |=
-				    HAL_PSSI_ERROR_INVALID_CALLBACK;
+				hpssi->ErrorCode |= HAL_PSSI_ERROR_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -481,8 +465,7 @@ HAL_PSSI_RegisterCallback(PSSI_HandleTypeDef *hpssi,
 
 			default:
 				/* Update the error code */
-				hpssi->ErrorCode |=
-				    HAL_PSSI_ERROR_INVALID_CALLBACK;
+				hpssi->ErrorCode |= HAL_PSSI_ERROR_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -519,57 +502,48 @@ HAL_PSSI_RegisterCallback(PSSI_HandleTypeDef *hpssi,
  *          @arg @ref HAL_PSSI_MSPDEINIT_CB_ID MspDeInit callback ID
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_PSSI_UnRegisterCallback(PSSI_HandleTypeDef *hpssi,
-			    HAL_PSSI_CallbackIDTypeDef CallbackID)
+HAL_StatusTypeDef HAL_PSSI_UnRegisterCallback(PSSI_HandleTypeDef *hpssi, HAL_PSSI_CallbackIDTypeDef CallbackID)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
 	if (HAL_PSSI_STATE_READY == hpssi->State) {
 		switch (CallbackID) {
 			case HAL_PSSI_TX_COMPLETE_CB_ID:
-				hpssi->TxCpltCallback =
-				    HAL_PSSI_TxCpltCallback; /* Legacy weak
-								TxCpltCallback
-							      */
+				hpssi->TxCpltCallback = HAL_PSSI_TxCpltCallback; /* Legacy weak
+										    TxCpltCallback
+										  */
 				break;
 
 			case HAL_PSSI_RX_COMPLETE_CB_ID:
-				hpssi->RxCpltCallback =
-				    HAL_PSSI_RxCpltCallback; /* Legacy weak
-								RxCpltCallback
-							      */
+				hpssi->RxCpltCallback = HAL_PSSI_RxCpltCallback; /* Legacy weak
+										    RxCpltCallback
+										  */
 				break;
 
 			case HAL_PSSI_ERROR_CB_ID:
-				hpssi->ErrorCallback =
-				    HAL_PSSI_ErrorCallback; /* Legacy weak
-							     * ErrorCallback
-							     */
+				hpssi->ErrorCallback = HAL_PSSI_ErrorCallback; /* Legacy weak
+										* ErrorCallback
+										*/
 				break;
 
 			case HAL_PSSI_ABORT_CB_ID:
-				hpssi->AbortCpltCallback =
-				    HAL_PSSI_AbortCpltCallback; /* Legacy weak
-								   AbortCpltCallback
-								 */
+				hpssi->AbortCpltCallback = HAL_PSSI_AbortCpltCallback; /* Legacy weak
+											  AbortCpltCallback
+											*/
 				break;
 
 			case HAL_PSSI_MSPINIT_CB_ID:
-				hpssi->MspInitCallback =
-				    HAL_PSSI_MspInit; /* Legacy weak MspInit */
+				hpssi->MspInitCallback = HAL_PSSI_MspInit; /* Legacy weak MspInit */
 				break;
 
 			case HAL_PSSI_MSPDEINIT_CB_ID:
-				hpssi->MspDeInitCallback =
-				    HAL_PSSI_MspDeInit; /* Legacy weak MspDeInit
-							 */
+				hpssi->MspDeInitCallback = HAL_PSSI_MspDeInit; /* Legacy weak MspDeInit
+										*/
 				break;
 
 			default:
 				/* Update the error code */
-				hpssi->ErrorCode |=
-				    HAL_PSSI_ERROR_INVALID_CALLBACK;
+				hpssi->ErrorCode |= HAL_PSSI_ERROR_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -578,20 +552,17 @@ HAL_PSSI_UnRegisterCallback(PSSI_HandleTypeDef *hpssi,
 	} else if (HAL_PSSI_STATE_RESET == hpssi->State) {
 		switch (CallbackID) {
 			case HAL_PSSI_MSPINIT_CB_ID:
-				hpssi->MspInitCallback =
-				    HAL_PSSI_MspInit; /* Legacy weak MspInit */
+				hpssi->MspInitCallback = HAL_PSSI_MspInit; /* Legacy weak MspInit */
 				break;
 
 			case HAL_PSSI_MSPDEINIT_CB_ID:
-				hpssi->MspDeInitCallback =
-				    HAL_PSSI_MspDeInit; /* Legacy weak MspDeInit
-							 */
+				hpssi->MspDeInitCallback = HAL_PSSI_MspDeInit; /* Legacy weak MspDeInit
+										*/
 				break;
 
 			default:
 				/* Update the error code */
-				hpssi->ErrorCode |=
-				    HAL_PSSI_ERROR_INVALID_CALLBACK;
+				hpssi->ErrorCode |= HAL_PSSI_ERROR_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -662,18 +633,13 @@ functions
  * @param  Timeout Timeout duration
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_PSSI_Transmit(PSSI_HandleTypeDef *hpssi, uint8_t *pData,
-				    uint32_t Size, uint32_t Timeout)
+HAL_StatusTypeDef HAL_PSSI_Transmit(PSSI_HandleTypeDef *hpssi, uint8_t *pData, uint32_t Size, uint32_t Timeout)
 {
 	uint32_t tickstart;
 	uint32_t transfer_size = Size;
 
-	if (((hpssi->Init.DataWidth == HAL_PSSI_8BITS) &&
-	     (hpssi->Init.BusWidth != HAL_PSSI_8LINES)) ||
-	    ((hpssi->Init.DataWidth == HAL_PSSI_16BITS) &&
-	     ((Size % 2U) != 0U)) ||
-	    ((hpssi->Init.DataWidth == HAL_PSSI_32BITS) &&
-	     ((Size % 4U) != 0U))) {
+	if (((hpssi->Init.DataWidth == HAL_PSSI_8BITS) && (hpssi->Init.BusWidth != HAL_PSSI_8LINES)) || ((hpssi->Init.DataWidth == HAL_PSSI_16BITS) && ((Size % 2U) != 0U)) ||
+	    ((hpssi->Init.DataWidth == HAL_PSSI_32BITS) && ((Size % 4U) != 0U))) {
 		hpssi->ErrorCode = HAL_PSSI_ERROR_NOT_SUPPORTED;
 		return HAL_ERROR;
 	}
@@ -688,11 +654,7 @@ HAL_StatusTypeDef HAL_PSSI_Transmit(PSSI_HandleTypeDef *hpssi, uint8_t *pData,
 		HAL_PSSI_DISABLE(hpssi);
 
 		/* Configure transfer parameters */
-		MODIFY_REG(hpssi->Instance->CR, (PSSI_CR_OUTEN | PSSI_CR_CKPOL),
-			   (PSSI_CR_OUTEN_OUTPUT |
-			    ((hpssi->Init.ClockPolarity == HAL_PSSI_RISING_EDGE)
-				 ? 0U
-				 : PSSI_CR_CKPOL)));
+		MODIFY_REG(hpssi->Instance->CR, (PSSI_CR_OUTEN | PSSI_CR_CKPOL), (PSSI_CR_OUTEN_OUTPUT | ((hpssi->Init.ClockPolarity == HAL_PSSI_RISING_EDGE) ? 0U : PSSI_CR_CKPOL)));
 
 #if defined(HAL_DMA_MODULE_ENABLED)
 		/* DMA Disable */
@@ -709,19 +671,15 @@ HAL_StatusTypeDef HAL_PSSI_Transmit(PSSI_HandleTypeDef *hpssi, uint8_t *pData,
 				tickstart = HAL_GetTick();
 				/* Wait until Fifo is ready to transfer one byte
 				 * flag is set */
-				if (PSSI_WaitOnStatusUntilTimeout(
-					hpssi, PSSI_FLAG_RTT1B, RESET, Timeout,
-					tickstart) != HAL_OK) {
-					hpssi->ErrorCode =
-					    HAL_PSSI_ERROR_TIMEOUT;
+				if (PSSI_WaitOnStatusUntilTimeout(hpssi, PSSI_FLAG_RTT1B, RESET, Timeout, tickstart) != HAL_OK) {
+					hpssi->ErrorCode = HAL_PSSI_ERROR_TIMEOUT;
 					hpssi->State = HAL_PSSI_STATE_READY;
 					/* Process Unlocked */
 					__HAL_UNLOCK(hpssi);
 					return HAL_ERROR;
 				}
 				/* Write data to DR */
-				*(__IO uint8_t *)(&hpssi->Instance->DR) =
-				    *(uint8_t *)pbuffer;
+				*(__IO uint8_t *)(&hpssi->Instance->DR) = *(uint8_t *)pbuffer;
 
 				/* Increment Buffer pointer */
 				pbuffer++;
@@ -730,19 +688,15 @@ HAL_StatusTypeDef HAL_PSSI_Transmit(PSSI_HandleTypeDef *hpssi, uint8_t *pData,
 			}
 		} else if (hpssi->Init.DataWidth == HAL_PSSI_16BITS) {
 			uint16_t *pbuffer = (uint16_t *)pData;
-			__IO uint16_t *dr =
-			    (__IO uint16_t *)(&hpssi->Instance->DR);
+			__IO uint16_t *dr = (__IO uint16_t *)(&hpssi->Instance->DR);
 
 			while (transfer_size > 0U) {
 				/* Init tickstart for timeout management*/
 				tickstart = HAL_GetTick();
 				/* Wait until Fifo is ready to transfer four
 				 * bytes flag is set */
-				if (PSSI_WaitOnStatusUntilTimeout(
-					hpssi, PSSI_FLAG_RTT4B, RESET, Timeout,
-					tickstart) != HAL_OK) {
-					hpssi->ErrorCode =
-					    HAL_PSSI_ERROR_TIMEOUT;
+				if (PSSI_WaitOnStatusUntilTimeout(hpssi, PSSI_FLAG_RTT4B, RESET, Timeout, tickstart) != HAL_OK) {
+					hpssi->ErrorCode = HAL_PSSI_ERROR_TIMEOUT;
 					hpssi->State = HAL_PSSI_STATE_READY;
 					/* Process Unlocked */
 					__HAL_UNLOCK(hpssi);
@@ -762,19 +716,15 @@ HAL_StatusTypeDef HAL_PSSI_Transmit(PSSI_HandleTypeDef *hpssi, uint8_t *pData,
 				tickstart = HAL_GetTick();
 				/* Wait until Fifo is ready to transfer four
 				 * bytes flag is set */
-				if (PSSI_WaitOnStatusUntilTimeout(
-					hpssi, PSSI_FLAG_RTT4B, RESET, Timeout,
-					tickstart) != HAL_OK) {
-					hpssi->ErrorCode =
-					    HAL_PSSI_ERROR_TIMEOUT;
+				if (PSSI_WaitOnStatusUntilTimeout(hpssi, PSSI_FLAG_RTT4B, RESET, Timeout, tickstart) != HAL_OK) {
+					hpssi->ErrorCode = HAL_PSSI_ERROR_TIMEOUT;
 					hpssi->State = HAL_PSSI_STATE_READY;
 					/* Process Unlocked */
 					__HAL_UNLOCK(hpssi);
 					return HAL_ERROR;
 				}
 				/* Write data to DR */
-				*(__IO uint32_t *)(&hpssi->Instance->DR) =
-				    *pbuffer;
+				*(__IO uint32_t *)(&hpssi->Instance->DR) = *pbuffer;
 
 				/* Increment Buffer pointer */
 				pbuffer++;
@@ -819,18 +769,13 @@ HAL_StatusTypeDef HAL_PSSI_Transmit(PSSI_HandleTypeDef *hpssi, uint8_t *pData,
  * @param  Timeout Timeout duration
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_PSSI_Receive(PSSI_HandleTypeDef *hpssi, uint8_t *pData,
-				   uint32_t Size, uint32_t Timeout)
+HAL_StatusTypeDef HAL_PSSI_Receive(PSSI_HandleTypeDef *hpssi, uint8_t *pData, uint32_t Size, uint32_t Timeout)
 {
 	uint32_t tickstart;
 	uint32_t transfer_size = Size;
 
-	if (((hpssi->Init.DataWidth == HAL_PSSI_8BITS) &&
-	     (hpssi->Init.BusWidth != HAL_PSSI_8LINES)) ||
-	    ((hpssi->Init.DataWidth == HAL_PSSI_16BITS) &&
-	     ((Size % 2U) != 0U)) ||
-	    ((hpssi->Init.DataWidth == HAL_PSSI_32BITS) &&
-	     ((Size % 4U) != 0U))) {
+	if (((hpssi->Init.DataWidth == HAL_PSSI_8BITS) && (hpssi->Init.BusWidth != HAL_PSSI_8LINES)) || ((hpssi->Init.DataWidth == HAL_PSSI_16BITS) && ((Size % 2U) != 0U)) ||
+	    ((hpssi->Init.DataWidth == HAL_PSSI_32BITS) && ((Size % 4U) != 0U))) {
 		hpssi->ErrorCode = HAL_PSSI_ERROR_NOT_SUPPORTED;
 		return HAL_ERROR;
 	}
@@ -845,11 +790,7 @@ HAL_StatusTypeDef HAL_PSSI_Receive(PSSI_HandleTypeDef *hpssi, uint8_t *pData,
 		/* Disable the selected PSSI peripheral */
 		HAL_PSSI_DISABLE(hpssi);
 		/* Configure transfer parameters */
-		MODIFY_REG(hpssi->Instance->CR, (PSSI_CR_OUTEN | PSSI_CR_CKPOL),
-			   (PSSI_CR_OUTEN_INPUT | ((hpssi->Init.ClockPolarity ==
-						    HAL_PSSI_FALLING_EDGE)
-						       ? 0U
-						       : PSSI_CR_CKPOL)));
+		MODIFY_REG(hpssi->Instance->CR, (PSSI_CR_OUTEN | PSSI_CR_CKPOL), (PSSI_CR_OUTEN_INPUT | ((hpssi->Init.ClockPolarity == HAL_PSSI_FALLING_EDGE) ? 0U : PSSI_CR_CKPOL)));
 
 #if defined(HAL_DMA_MODULE_ENABLED)
 		/* DMA Disable */
@@ -866,37 +807,29 @@ HAL_StatusTypeDef HAL_PSSI_Receive(PSSI_HandleTypeDef *hpssi, uint8_t *pData,
 				tickstart = HAL_GetTick();
 				/* Wait until Fifo is ready to receive one byte
 				 * flag is set */
-				if (PSSI_WaitOnStatusUntilTimeout(
-					hpssi, PSSI_FLAG_RTT1B, RESET, Timeout,
-					tickstart) != HAL_OK) {
-					hpssi->ErrorCode =
-					    HAL_PSSI_ERROR_TIMEOUT;
+				if (PSSI_WaitOnStatusUntilTimeout(hpssi, PSSI_FLAG_RTT1B, RESET, Timeout, tickstart) != HAL_OK) {
+					hpssi->ErrorCode = HAL_PSSI_ERROR_TIMEOUT;
 					hpssi->State = HAL_PSSI_STATE_READY;
 					/* Process Unlocked */
 					__HAL_UNLOCK(hpssi);
 					return HAL_ERROR;
 				}
 				/* Read data from DR */
-				*pbuffer =
-				    *(__IO uint8_t *)(&hpssi->Instance->DR);
+				*pbuffer = *(__IO uint8_t *)(&hpssi->Instance->DR);
 				pbuffer++;
 				transfer_size--;
 			}
 		} else if (hpssi->Init.DataWidth == HAL_PSSI_16BITS) {
 			uint16_t *pbuffer = (uint16_t *)pData;
-			__IO uint16_t *dr =
-			    (__IO uint16_t *)(&hpssi->Instance->DR);
+			__IO uint16_t *dr = (__IO uint16_t *)(&hpssi->Instance->DR);
 
 			while (transfer_size > 0U) {
 				/* Init tickstart for timeout management*/
 				tickstart = HAL_GetTick();
 				/* Wait until Fifo is ready to receive four
 				 * bytes flag is set */
-				if (PSSI_WaitOnStatusUntilTimeout(
-					hpssi, PSSI_FLAG_RTT4B, RESET, Timeout,
-					tickstart) != HAL_OK) {
-					hpssi->ErrorCode =
-					    HAL_PSSI_ERROR_TIMEOUT;
+				if (PSSI_WaitOnStatusUntilTimeout(hpssi, PSSI_FLAG_RTT4B, RESET, Timeout, tickstart) != HAL_OK) {
+					hpssi->ErrorCode = HAL_PSSI_ERROR_TIMEOUT;
 					hpssi->State = HAL_PSSI_STATE_READY;
 					/* Process Unlocked */
 					__HAL_UNLOCK(hpssi);
@@ -916,11 +849,8 @@ HAL_StatusTypeDef HAL_PSSI_Receive(PSSI_HandleTypeDef *hpssi, uint8_t *pData,
 				tickstart = HAL_GetTick();
 				/* Wait until Fifo is ready to receive four
 				 * bytes flag is set */
-				if (PSSI_WaitOnStatusUntilTimeout(
-					hpssi, PSSI_FLAG_RTT4B, RESET, Timeout,
-					tickstart) != HAL_OK) {
-					hpssi->ErrorCode =
-					    HAL_PSSI_ERROR_TIMEOUT;
+				if (PSSI_WaitOnStatusUntilTimeout(hpssi, PSSI_FLAG_RTT4B, RESET, Timeout, tickstart) != HAL_OK) {
+					hpssi->ErrorCode = HAL_PSSI_ERROR_TIMEOUT;
 					hpssi->State = HAL_PSSI_STATE_READY;
 					/* Process Unlocked */
 					__HAL_UNLOCK(hpssi);
@@ -928,8 +858,7 @@ HAL_StatusTypeDef HAL_PSSI_Receive(PSSI_HandleTypeDef *hpssi, uint8_t *pData,
 				}
 
 				/* Read data from DR */
-				*pbuffer =
-				    *(__IO uint32_t *)(&hpssi->Instance->DR);
+				*pbuffer = *(__IO uint32_t *)(&hpssi->Instance->DR);
 				pbuffer++;
 				transfer_size -= 4U;
 			}
@@ -969,8 +898,7 @@ HAL_StatusTypeDef HAL_PSSI_Receive(PSSI_HandleTypeDef *hpssi, uint8_t *pData,
  * @param  Size Amount of data to be sent (in bytes)
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_PSSI_Transmit_DMA(PSSI_HandleTypeDef *hpssi,
-					uint32_t *pData, uint32_t Size)
+HAL_StatusTypeDef HAL_PSSI_Transmit_DMA(PSSI_HandleTypeDef *hpssi, uint32_t *pData, uint32_t Size)
 {
 	HAL_StatusTypeDef dmaxferstatus;
 
@@ -999,50 +927,27 @@ HAL_StatusTypeDef HAL_PSSI_Transmit_DMA(PSSI_HandleTypeDef *hpssi,
 			if (hpssi->hdmatx != NULL) {
 
 				/* Configure BusWidth */
-				if (hpssi->hdmatx->Init.PeriphDataAlignment ==
-				    DMA_PDATAALIGN_BYTE) {
-					MODIFY_REG(
-					    hpssi->Instance->CR,
-					    PSSI_CR_DMAEN | PSSI_CR_OUTEN |
-						PSSI_CR_CKPOL,
-					    PSSI_CR_DMA_ENABLE |
-						PSSI_CR_OUTEN_OUTPUT |
-						((hpssi->Init.ClockPolarity ==
-						  HAL_PSSI_RISING_EDGE)
-						     ? 0U
-						     : PSSI_CR_CKPOL));
+				if (hpssi->hdmatx->Init.PeriphDataAlignment == DMA_PDATAALIGN_BYTE) {
+					MODIFY_REG(hpssi->Instance->CR, PSSI_CR_DMAEN | PSSI_CR_OUTEN | PSSI_CR_CKPOL,
+						   PSSI_CR_DMA_ENABLE | PSSI_CR_OUTEN_OUTPUT | ((hpssi->Init.ClockPolarity == HAL_PSSI_RISING_EDGE) ? 0U : PSSI_CR_CKPOL));
 				} else {
-					MODIFY_REG(
-					    hpssi->Instance->CR,
-					    PSSI_CR_DMAEN | PSSI_CR_OUTEN |
-						PSSI_CR_CKPOL,
-					    PSSI_CR_DMA_ENABLE |
-						hpssi->Init.BusWidth |
-						PSSI_CR_OUTEN_OUTPUT |
-						((hpssi->Init.ClockPolarity ==
-						  HAL_PSSI_RISING_EDGE)
-						     ? 0U
-						     : PSSI_CR_CKPOL));
+					MODIFY_REG(hpssi->Instance->CR, PSSI_CR_DMAEN | PSSI_CR_OUTEN | PSSI_CR_CKPOL,
+						   PSSI_CR_DMA_ENABLE | hpssi->Init.BusWidth | PSSI_CR_OUTEN_OUTPUT | ((hpssi->Init.ClockPolarity == HAL_PSSI_RISING_EDGE) ? 0U : PSSI_CR_CKPOL));
 				}
 
 				/* Set the PSSI DMA transfer complete callback
 				 */
-				hpssi->hdmatx->XferCpltCallback =
-				    PSSI_DMATransmitCplt;
+				hpssi->hdmatx->XferCpltCallback = PSSI_DMATransmitCplt;
 
 				/* Set the DMA error callback */
-				hpssi->hdmatx->XferErrorCallback =
-				    PSSI_DMAError;
+				hpssi->hdmatx->XferErrorCallback = PSSI_DMAError;
 
 				/* Set the unused DMA callbacks to NULL */
 				hpssi->hdmatx->XferHalfCpltCallback = NULL;
 				hpssi->hdmatx->XferAbortCallback = NULL;
 
 				/* Enable the DMA  */
-				dmaxferstatus = HAL_DMA_Start_IT(
-				    hpssi->hdmatx, (uint32_t)pData,
-				    (uint32_t)&hpssi->Instance->DR,
-				    hpssi->XferSize);
+				dmaxferstatus = HAL_DMA_Start_IT(hpssi->hdmatx, (uint32_t)pData, (uint32_t)&hpssi->Instance->DR, hpssi->XferSize);
 			} else {
 				/* Update PSSI state */
 				hpssi->State = HAL_PSSI_STATE_READY;
@@ -1113,8 +1018,7 @@ HAL_StatusTypeDef HAL_PSSI_Transmit_DMA(PSSI_HandleTypeDef *hpssi,
  * @param  Size Amount of data to be received (in bytes)
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_PSSI_Receive_DMA(PSSI_HandleTypeDef *hpssi,
-				       uint32_t *pData, uint32_t Size)
+HAL_StatusTypeDef HAL_PSSI_Receive_DMA(PSSI_HandleTypeDef *hpssi, uint32_t *pData, uint32_t Size)
 {
 
 	HAL_StatusTypeDef dmaxferstatus;
@@ -1142,48 +1046,27 @@ HAL_StatusTypeDef HAL_PSSI_Receive_DMA(PSSI_HandleTypeDef *hpssi,
 		if (hpssi->XferSize > 0U) {
 			if (hpssi->hdmarx != NULL) {
 				/* Configure BusWidth */
-				if (hpssi->hdmarx->Init.PeriphDataAlignment ==
-				    DMA_PDATAALIGN_BYTE) {
-					MODIFY_REG(
-					    hpssi->Instance->CR,
-					    PSSI_CR_DMAEN | PSSI_CR_OUTEN |
-						PSSI_CR_CKPOL,
-					    PSSI_CR_DMA_ENABLE |
-						((hpssi->Init.ClockPolarity ==
-						  HAL_PSSI_RISING_EDGE)
-						     ? PSSI_CR_CKPOL
-						     : 0U));
+				if (hpssi->hdmarx->Init.PeriphDataAlignment == DMA_PDATAALIGN_BYTE) {
+					MODIFY_REG(hpssi->Instance->CR, PSSI_CR_DMAEN | PSSI_CR_OUTEN | PSSI_CR_CKPOL,
+						   PSSI_CR_DMA_ENABLE | ((hpssi->Init.ClockPolarity == HAL_PSSI_RISING_EDGE) ? PSSI_CR_CKPOL : 0U));
 				} else {
-					MODIFY_REG(
-					    hpssi->Instance->CR,
-					    PSSI_CR_DMAEN | PSSI_CR_OUTEN |
-						PSSI_CR_CKPOL,
-					    PSSI_CR_DMA_ENABLE |
-						hpssi->Init.BusWidth |
-						((hpssi->Init.ClockPolarity ==
-						  HAL_PSSI_RISING_EDGE)
-						     ? PSSI_CR_CKPOL
-						     : 0U));
+					MODIFY_REG(hpssi->Instance->CR, PSSI_CR_DMAEN | PSSI_CR_OUTEN | PSSI_CR_CKPOL,
+						   PSSI_CR_DMA_ENABLE | hpssi->Init.BusWidth | ((hpssi->Init.ClockPolarity == HAL_PSSI_RISING_EDGE) ? PSSI_CR_CKPOL : 0U));
 				}
 
 				/* Set the PSSI DMA transfer complete callback
 				 */
-				hpssi->hdmarx->XferCpltCallback =
-				    PSSI_DMAReceiveCplt;
+				hpssi->hdmarx->XferCpltCallback = PSSI_DMAReceiveCplt;
 
 				/* Set the DMA error callback */
-				hpssi->hdmarx->XferErrorCallback =
-				    PSSI_DMAError;
+				hpssi->hdmarx->XferErrorCallback = PSSI_DMAError;
 
 				/* Set the unused DMA callbacks to NULL */
 				hpssi->hdmarx->XferHalfCpltCallback = NULL;
 				hpssi->hdmarx->XferAbortCallback = NULL;
 
 				/* Enable the DMA  */
-				dmaxferstatus = HAL_DMA_Start_IT(
-				    hpssi->hdmarx,
-				    (uint32_t)&hpssi->Instance->DR,
-				    (uint32_t)pData, hpssi->XferSize);
+				dmaxferstatus = HAL_DMA_Start_IT(hpssi->hdmarx, (uint32_t)&hpssi->Instance->DR, (uint32_t)pData, hpssi->XferSize);
 			} else {
 				/* Update PSSI state */
 				hpssi->State = HAL_PSSI_STATE_READY;
@@ -1267,15 +1150,13 @@ HAL_StatusTypeDef HAL_PSSI_Abort_DMA(PSSI_HandleTypeDef *hpssi)
 				/* Set the PSSI DMA Abort callback :
 				will lead to call HAL_PSSI_ErrorCallback() at
 				end of DMA abort procedure */
-				hpssi->hdmatx->XferAbortCallback =
-				    PSSI_DMAAbort;
+				hpssi->hdmatx->XferAbortCallback = PSSI_DMAAbort;
 
 				/* Abort DMA TX */
 				if (HAL_DMA_Abort_IT(hpssi->hdmatx) != HAL_OK) {
 					/* Call Directly XferAbortCallback
 					 * function in case of error */
-					hpssi->hdmatx->XferAbortCallback(
-					    hpssi->hdmatx);
+					hpssi->hdmatx->XferAbortCallback(hpssi->hdmatx);
 				}
 			}
 		}
@@ -1287,16 +1168,14 @@ HAL_StatusTypeDef HAL_PSSI_Abort_DMA(PSSI_HandleTypeDef *hpssi)
 				/* Set the PSSI DMA Abort callback :
 				will lead to call HAL_PSSI_ErrorCallback() at
 				end of DMA abort procedure */
-				hpssi->hdmarx->XferAbortCallback =
-				    PSSI_DMAAbort;
+				hpssi->hdmarx->XferAbortCallback = PSSI_DMAAbort;
 
 				/* Abort DMA RX */
 				if (HAL_DMA_Abort_IT(hpssi->hdmarx) != HAL_OK) {
 					/* Call Directly
 					 * hpssi->hdma->XferAbortCallback
 					 * function in case of error */
-					hpssi->hdmarx->XferAbortCallback(
-					    hpssi->hdmarx);
+					hpssi->hdmarx->XferAbortCallback(hpssi->hdmarx);
 				}
 			}
 		} else {
@@ -1360,21 +1239,17 @@ void HAL_PSSI_IRQHandler(PSSI_HandleTypeDef *hpssi)
 					will lead to call
 					HAL_PSSI_ErrorCallback() at end of DMA
 					abort procedure */
-					hpssi->hdmatx->XferAbortCallback =
-					    PSSI_DMAAbort;
+					hpssi->hdmatx->XferAbortCallback = PSSI_DMAAbort;
 
 					/* Process Unlocked */
 					__HAL_UNLOCK(hpssi);
 
 					/* Abort DMA TX */
-					if (HAL_DMA_Abort_IT(hpssi->hdmatx) !=
-					    HAL_OK) {
+					if (HAL_DMA_Abort_IT(hpssi->hdmatx) != HAL_OK) {
 						/* Call Directly
 						 * XferAbortCallback function in
 						 * case of error */
-						hpssi->hdmatx
-						    ->XferAbortCallback(
-							hpssi->hdmatx);
+						hpssi->hdmatx->XferAbortCallback(hpssi->hdmatx);
 					}
 				}
 			}
@@ -1390,21 +1265,17 @@ void HAL_PSSI_IRQHandler(PSSI_HandleTypeDef *hpssi)
 					will lead to call
 					HAL_PSSI_ErrorCallback() at end of DMA
 					abort procedure */
-					hpssi->hdmarx->XferAbortCallback =
-					    PSSI_DMAAbort;
+					hpssi->hdmarx->XferAbortCallback = PSSI_DMAAbort;
 
 					/* Process Unlocked */
 					__HAL_UNLOCK(hpssi);
 
 					/* Abort DMA RX */
-					if (HAL_DMA_Abort_IT(hpssi->hdmarx) !=
-					    HAL_OK) {
+					if (HAL_DMA_Abort_IT(hpssi->hdmarx) != HAL_OK) {
 						/* Call Directly
 						 * hpssi->hdma->XferAbortCallback
 						 * function in case of error */
-						hpssi->hdmarx
-						    ->XferAbortCallback(
-							hpssi->hdmarx);
+						hpssi->hdmarx->XferAbortCallback(hpssi->hdmarx);
 					}
 				}
 			} else {
@@ -1557,10 +1428,7 @@ HAL_PSSI_StateTypeDef HAL_PSSI_GetState(const PSSI_HandleTypeDef *hpssi)
  *              the configuration information for the specified PSSI.
  * @retval PSSI Error Code
  */
-uint32_t HAL_PSSI_GetError(const PSSI_HandleTypeDef *hpssi)
-{
-	return hpssi->ErrorCode;
-}
+uint32_t HAL_PSSI_GetError(const PSSI_HandleTypeDef *hpssi) { return hpssi->ErrorCode; }
 
 /**
  * @}
@@ -1601,8 +1469,7 @@ static void PSSI_Error(PSSI_HandleTypeDef *hpssi, uint32_t ErrorCode)
 				/* Set the PSSI DMA Abort callback :
 				will lead to call HAL_PSSI_ErrorCallback() at
 				end of DMA abort procedure */
-				hpssi->hdmatx->XferAbortCallback =
-				    PSSI_DMAAbort;
+				hpssi->hdmatx->XferAbortCallback = PSSI_DMAAbort;
 
 				/* Process Unlocked */
 				__HAL_UNLOCK(hpssi);
@@ -1611,8 +1478,7 @@ static void PSSI_Error(PSSI_HandleTypeDef *hpssi, uint32_t ErrorCode)
 				if (HAL_DMA_Abort_IT(hpssi->hdmatx) != HAL_OK) {
 					/* Call Directly XferAbortCallback
 					 * function in case of error */
-					hpssi->hdmatx->XferAbortCallback(
-					    hpssi->hdmatx);
+					hpssi->hdmatx->XferAbortCallback(hpssi->hdmatx);
 				}
 			}
 		}
@@ -1624,8 +1490,7 @@ static void PSSI_Error(PSSI_HandleTypeDef *hpssi, uint32_t ErrorCode)
 				/* Set the PSSI DMA Abort callback :
 				will lead to call HAL_PSSI_ErrorCallback() at
 				end of DMA abort procedure */
-				hpssi->hdmarx->XferAbortCallback =
-				    PSSI_DMAAbort;
+				hpssi->hdmarx->XferAbortCallback = PSSI_DMAAbort;
 
 				/* Process Unlocked */
 				__HAL_UNLOCK(hpssi);
@@ -1635,8 +1500,7 @@ static void PSSI_Error(PSSI_HandleTypeDef *hpssi, uint32_t ErrorCode)
 					/* Call Directly
 					 * hpssi->hdma->XferAbortCallback
 					 * function in case of error */
-					hpssi->hdmarx->XferAbortCallback(
-					    hpssi->hdmarx);
+					hpssi->hdmarx->XferAbortCallback(hpssi->hdmarx);
 				}
 			}
 		} else {
@@ -1685,8 +1549,7 @@ static void PSSI_Error(PSSI_HandleTypeDef *hpssi, uint32_t ErrorCode)
 void PSSI_DMATransmitCplt(DMA_HandleTypeDef *hdma)
 {
 	/* Derogation MISRAC2012-Rule-11.5 */
-	PSSI_HandleTypeDef *hpssi =
-	    (PSSI_HandleTypeDef *)(((DMA_HandleTypeDef *)hdma)->Parent);
+	PSSI_HandleTypeDef *hpssi = (PSSI_HandleTypeDef *)(((DMA_HandleTypeDef *)hdma)->Parent);
 
 	uint32_t tmperror;
 
@@ -1698,8 +1561,7 @@ void PSSI_DMATransmitCplt(DMA_HandleTypeDef *hdma)
 
 	/* Call the corresponding callback to inform upper layer of End of
 	 * Transfer */
-	if ((hpssi->State == HAL_PSSI_STATE_ABORT) ||
-	    (tmperror != HAL_PSSI_ERROR_NONE)) {
+	if ((hpssi->State == HAL_PSSI_STATE_ABORT) || (tmperror != HAL_PSSI_ERROR_NONE)) {
 		/* Call the corresponding callback to inform upper layer of End
 		 * of Transfer */
 		PSSI_Error(hpssi, hpssi->ErrorCode);
@@ -1729,8 +1591,7 @@ void PSSI_DMATransmitCplt(DMA_HandleTypeDef *hdma)
 void PSSI_DMAReceiveCplt(DMA_HandleTypeDef *hdma)
 {
 	/* Derogation MISRAC2012-Rule-11.5 */
-	PSSI_HandleTypeDef *hpssi =
-	    (PSSI_HandleTypeDef *)(((DMA_HandleTypeDef *)hdma)->Parent);
+	PSSI_HandleTypeDef *hpssi = (PSSI_HandleTypeDef *)(((DMA_HandleTypeDef *)hdma)->Parent);
 
 	uint32_t tmperror;
 
@@ -1742,8 +1603,7 @@ void PSSI_DMAReceiveCplt(DMA_HandleTypeDef *hdma)
 
 	/* Call the corresponding callback to inform upper layer of End of
 	 * Transfer */
-	if ((hpssi->State == HAL_PSSI_STATE_ABORT) ||
-	    (tmperror != HAL_PSSI_ERROR_NONE)) {
+	if ((hpssi->State == HAL_PSSI_STATE_ABORT) || (tmperror != HAL_PSSI_ERROR_NONE)) {
 		/* Call the corresponding callback to inform upper layer of End
 		 * of Transfer */
 		PSSI_Error(hpssi, hpssi->ErrorCode);
@@ -1774,8 +1634,7 @@ void PSSI_DMAReceiveCplt(DMA_HandleTypeDef *hdma)
 void PSSI_DMAAbort(DMA_HandleTypeDef *hdma)
 {
 	/* Derogation MISRAC2012-Rule-11.5 */
-	PSSI_HandleTypeDef *hpssi =
-	    (PSSI_HandleTypeDef *)(((DMA_HandleTypeDef *)hdma)->Parent);
+	PSSI_HandleTypeDef *hpssi = (PSSI_HandleTypeDef *)(((DMA_HandleTypeDef *)hdma)->Parent);
 
 	/* Reset AbortCpltCallback */
 	hpssi->hdmatx->XferAbortCallback = NULL;
@@ -1814,16 +1673,12 @@ void PSSI_DMAAbort(DMA_HandleTypeDef *hdma)
  * @param  Tickstart Tick start value
  * @retval HAL status
  */
-static HAL_StatusTypeDef
-PSSI_WaitOnStatusUntilTimeout(PSSI_HandleTypeDef *hpssi, uint32_t Flag,
-			      FlagStatus Status, uint32_t Timeout,
-			      uint32_t Tickstart)
+static HAL_StatusTypeDef PSSI_WaitOnStatusUntilTimeout(PSSI_HandleTypeDef *hpssi, uint32_t Flag, FlagStatus Status, uint32_t Timeout, uint32_t Tickstart)
 {
 	while ((HAL_PSSI_GET_STATUS(hpssi, Flag) & Flag) == (uint32_t)Status) {
 		/* Check for the Timeout */
 		if (Timeout != HAL_MAX_DELAY) {
-			if (((HAL_GetTick() - Tickstart) > Timeout) ||
-			    (Timeout == 0U)) {
+			if (((HAL_GetTick() - Tickstart) > Timeout) || (Timeout == 0U)) {
 				hpssi->ErrorCode |= HAL_PSSI_ERROR_TIMEOUT;
 				hpssi->State = HAL_PSSI_STATE_READY;
 
@@ -1841,8 +1696,7 @@ PSSI_WaitOnStatusUntilTimeout(PSSI_HandleTypeDef *hpssi, uint32_t Flag,
 void PSSI_DMAError(DMA_HandleTypeDef *hdma)
 {
 	/* Derogation MISRAC2012-Rule-11.5 */
-	PSSI_HandleTypeDef *hpssi =
-	    (PSSI_HandleTypeDef *)(((DMA_HandleTypeDef *)hdma)->Parent);
+	PSSI_HandleTypeDef *hpssi = (PSSI_HandleTypeDef *)(((DMA_HandleTypeDef *)hdma)->Parent);
 
 	uint32_t tmperror;
 
@@ -1857,8 +1711,7 @@ void PSSI_DMAError(DMA_HandleTypeDef *hdma)
 
 	/* Call the corresponding callback to inform upper layer of End of
 	 * Transfer */
-	if ((hpssi->State == HAL_PSSI_STATE_ABORT) ||
-	    (tmperror != HAL_PSSI_ERROR_NONE)) {
+	if ((hpssi->State == HAL_PSSI_STATE_ABORT) || (tmperror != HAL_PSSI_ERROR_NONE)) {
 		/* Call the corresponding callback to inform upper layer of End
 		 * of Transfer */
 		PSSI_Error(hpssi, hpssi->ErrorCode);

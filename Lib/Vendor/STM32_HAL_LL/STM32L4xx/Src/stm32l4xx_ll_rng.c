@@ -46,16 +46,12 @@
 /** @defgroup RNG_LL_Private_Macros RNG Private Macros
  * @{
  */
-#define IS_LL_RNG_CED(__MODE__)                                                \
-	(((__MODE__) == LL_RNG_CED_ENABLE) ||                                  \
-	 ((__MODE__) == LL_RNG_CED_DISABLE))
+#define IS_LL_RNG_CED(__MODE__) (((__MODE__) == LL_RNG_CED_ENABLE) || ((__MODE__) == LL_RNG_CED_DISABLE))
 
 #if defined(RNG_CR_CONDRST)
 #define IS_LL_RNG_CLOCK_DIVIDER(__CLOCK_DIV__) ((__CLOCK_DIV__) <= 0x0Fu)
 
-#define IS_LL_RNG_NIST_COMPLIANCE(__NIST_COMPLIANCE__)                         \
-	(((__NIST_COMPLIANCE__) == LL_RNG_NIST_COMPLIANT) ||                   \
-	 ((__NIST_COMPLIANCE__) == LL_RNG_NOTNIST_COMPLIANT))
+#define IS_LL_RNG_NIST_COMPLIANCE(__NIST_COMPLIANCE__) (((__NIST_COMPLIANCE__) == LL_RNG_NIST_COMPLIANT) || ((__NIST_COMPLIANCE__) == LL_RNG_NOTNIST_COMPLIANT))
 
 #define IS_LL_RNG_CONFIG1 (__CONFIG1__)((__CONFIG1__) <= 0x3FUL)
 
@@ -118,8 +114,7 @@ ErrorStatus LL_RNG_DeInit(const RNG_TypeDef *RNGx)
  * content
  *          - ERROR: not applicable
  */
-ErrorStatus LL_RNG_Init(RNG_TypeDef *RNGx,
-			const LL_RNG_InitTypeDef *RNG_InitStruct)
+ErrorStatus LL_RNG_Init(RNG_TypeDef *RNGx, const LL_RNG_InitTypeDef *RNG_InitStruct)
 {
 	/* Check the parameters */
 	assert_param(IS_RNG_ALL_INSTANCE(RNGx));
@@ -127,8 +122,7 @@ ErrorStatus LL_RNG_Init(RNG_TypeDef *RNGx,
 
 #if defined(RNG_CR_CONDRST)
 	/* Clock Error Detection Configuration when CONDRT bit is set to 1 */
-	MODIFY_REG(RNGx->CR, RNG_CR_CED | RNG_CR_CONDRST,
-		   RNG_InitStruct->ClockErrorDetection | RNG_CR_CONDRST);
+	MODIFY_REG(RNGx->CR, RNG_CR_CED | RNG_CR_CONDRST, RNG_InitStruct->ClockErrorDetection | RNG_CR_CONDRST);
 	/* Writing bits CONDRST=0*/
 	CLEAR_BIT(RNGx->CR, RNG_CR_CONDRST);
 #else

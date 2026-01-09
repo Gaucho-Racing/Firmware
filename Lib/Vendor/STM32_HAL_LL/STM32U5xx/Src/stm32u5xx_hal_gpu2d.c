@@ -149,8 +149,7 @@
  * @param  __VALUE__ Value to be written in the register
  * @retval None
  */
-#define GPU2D_WriteReg(__INSTANCE__, __REG__, __VALUE__)                       \
-	WRITE_REG(*(__IO uint32_t *)(__INSTANCE__ + __REG__), __VALUE__)
+#define GPU2D_WriteReg(__INSTANCE__, __REG__, __VALUE__) WRITE_REG(*(__IO uint32_t *)(__INSTANCE__ + __REG__), __VALUE__)
 
 /**
  * @brief  Read a value in GPU2D register
@@ -158,8 +157,7 @@
  * @param  __REG__ Register to be read
  * @retval Register value
  */
-#define GPU2D_ReadReg(__INSTANCE__, __REG__)                                   \
-	READ_REG(*(__IO uint32_t *)(__INSTANCE__ + __REG__))
+#define GPU2D_ReadReg(__INSTANCE__, __REG__) READ_REG(*(__IO uint32_t *)(__INSTANCE__ + __REG__))
 /**
  * @}
  */
@@ -211,8 +209,7 @@ HAL_StatusTypeDef HAL_GPU2D_Init(GPU2D_HandleTypeDef *hgpu2d)
 	if (hgpu2d->State == HAL_GPU2D_STATE_RESET) {
 #if (USE_HAL_GPU2D_REGISTER_CALLBACKS == 1)
 		/* Reset Callback pointers in HAL_GPU2D_STATE_RESET only */
-		hgpu2d->CommandListCpltCallback =
-		    HAL_GPU2D_CommandListCpltCallback;
+		hgpu2d->CommandListCpltCallback = HAL_GPU2D_CommandListCpltCallback;
 		if (hgpu2d->MspInitCallback == NULL) {
 			hgpu2d->MspInitCallback = HAL_GPU2D_MspInit;
 		}
@@ -345,10 +342,7 @@ __weak void HAL_GPU2D_MspDeInit(GPU2D_HandleTypeDef *hgpu2d)
  * HAL_GPU2D_MSPDEINIT_CB_ID
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_GPU2D_RegisterCallback(GPU2D_HandleTypeDef *hgpu2d,
-			   HAL_GPU2D_CallbackIDTypeDef CallbackID,
-			   pGPU2D_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_GPU2D_RegisterCallback(GPU2D_HandleTypeDef *hgpu2d, HAL_GPU2D_CallbackIDTypeDef CallbackID, pGPU2D_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -366,8 +360,7 @@ HAL_GPU2D_RegisterCallback(GPU2D_HandleTypeDef *hgpu2d,
 		hgpu2d->ErrorCode |= HAL_GPU2D_ERROR_INVALID_CALLBACK;
 		status = HAL_ERROR;
 	} else {
-		if ((hgpu2d->State == HAL_GPU2D_STATE_READY) ||
-		    (hgpu2d->State == HAL_GPU2D_STATE_RESET)) {
+		if ((hgpu2d->State == HAL_GPU2D_STATE_READY) || (hgpu2d->State == HAL_GPU2D_STATE_RESET)) {
 			switch (CallbackID) {
 				case HAL_GPU2D_MSPINIT_CB_ID:
 					hgpu2d->MspInitCallback = pCallback;
@@ -379,8 +372,7 @@ HAL_GPU2D_RegisterCallback(GPU2D_HandleTypeDef *hgpu2d,
 
 				default:
 					/* Update the error code */
-					hgpu2d->ErrorCode |=
-					    HAL_GPU2D_ERROR_INVALID_CALLBACK;
+					hgpu2d->ErrorCode |= HAL_GPU2D_ERROR_INVALID_CALLBACK;
 					status = HAL_ERROR;
 					break;
 			}
@@ -408,9 +400,7 @@ HAL_GPU2D_RegisterCallback(GPU2D_HandleTypeDef *hgpu2d,
  * HAL_GPU2D_MSPINIT_CB_ID and HAL_GPU2D_MSPDEINIT_CB_ID
  * @retval status
  */
-HAL_StatusTypeDef
-HAL_GPU2D_UnRegisterCallback(GPU2D_HandleTypeDef *hgpu2d,
-			     HAL_GPU2D_CallbackIDTypeDef CallbackID)
+HAL_StatusTypeDef HAL_GPU2D_UnRegisterCallback(GPU2D_HandleTypeDef *hgpu2d, HAL_GPU2D_CallbackIDTypeDef CallbackID)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -422,25 +412,21 @@ HAL_GPU2D_UnRegisterCallback(GPU2D_HandleTypeDef *hgpu2d,
 	/* Process locked */
 	__HAL_LOCK(hgpu2d);
 
-	if ((HAL_GPU2D_STATE_READY == hgpu2d->State) ||
-	    (HAL_GPU2D_STATE_RESET == hgpu2d->State)) {
+	if ((HAL_GPU2D_STATE_READY == hgpu2d->State) || (HAL_GPU2D_STATE_RESET == hgpu2d->State)) {
 		switch (CallbackID) {
 			case HAL_GPU2D_MSPINIT_CB_ID:
-				hgpu2d->MspInitCallback =
-				    HAL_GPU2D_MspInit; /* Legacy weak Msp Init
-							*/
+				hgpu2d->MspInitCallback = HAL_GPU2D_MspInit; /* Legacy weak Msp Init
+									      */
 				break;
 
 			case HAL_GPU2D_MSPDEINIT_CB_ID:
-				hgpu2d->MspDeInitCallback =
-				    HAL_GPU2D_MspDeInit; /* Legacy weak Msp
-							    DeInit */
+				hgpu2d->MspDeInitCallback = HAL_GPU2D_MspDeInit; /* Legacy weak Msp
+										    DeInit */
 				break;
 
 			default:
 				/* Update the error code */
-				hgpu2d->ErrorCode |=
-				    HAL_GPU2D_ERROR_INVALID_CALLBACK;
+				hgpu2d->ErrorCode |= HAL_GPU2D_ERROR_INVALID_CALLBACK;
 				status = HAL_ERROR;
 				break;
 		}
@@ -462,9 +448,7 @@ HAL_GPU2D_UnRegisterCallback(GPU2D_HandleTypeDef *hgpu2d,
  * @note Weak predefined callback is defined for Command List Complete
  * @retval status
  */
-HAL_StatusTypeDef HAL_GPU2D_RegisterCommandListCpltCallback(
-    GPU2D_HandleTypeDef *hgpu2d,
-    pGPU2D_CommandListCpltCallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_GPU2D_RegisterCommandListCpltCallback(GPU2D_HandleTypeDef *hgpu2d, pGPU2D_CommandListCpltCallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -482,8 +466,7 @@ HAL_StatusTypeDef HAL_GPU2D_RegisterCommandListCpltCallback(
 		hgpu2d->ErrorCode |= HAL_GPU2D_ERROR_INVALID_CALLBACK;
 		status = HAL_ERROR;
 	} else {
-		if ((HAL_GPU2D_STATE_READY == hgpu2d->State) ||
-		    (HAL_GPU2D_STATE_RESET == hgpu2d->State)) {
+		if ((HAL_GPU2D_STATE_READY == hgpu2d->State) || (HAL_GPU2D_STATE_RESET == hgpu2d->State)) {
 			hgpu2d->CommandListCpltCallback = pCallback;
 		} else {
 			status = HAL_ERROR;
@@ -504,8 +487,7 @@ HAL_StatusTypeDef HAL_GPU2D_RegisterCommandListCpltCallback(
  * @note Callback pointer will be invalidate (NULL value)
  * @retval status
  */
-HAL_StatusTypeDef
-HAL_GPU2D_UnRegisterCommandListCpltCallback(GPU2D_HandleTypeDef *hgpu2d)
+HAL_StatusTypeDef HAL_GPU2D_UnRegisterCommandListCpltCallback(GPU2D_HandleTypeDef *hgpu2d)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -517,10 +499,8 @@ HAL_GPU2D_UnRegisterCommandListCpltCallback(GPU2D_HandleTypeDef *hgpu2d)
 	/* Process locked */
 	__HAL_LOCK(hgpu2d);
 
-	if ((hgpu2d->State == HAL_GPU2D_STATE_READY) ||
-	    (hgpu2d->State == HAL_GPU2D_STATE_RESET)) {
-		hgpu2d->CommandListCpltCallback =
-		    NULL; /* Invalidate the Callback pointer */
+	if ((hgpu2d->State == HAL_GPU2D_STATE_READY) || (hgpu2d->State == HAL_GPU2D_STATE_RESET)) {
+		hgpu2d->CommandListCpltCallback = NULL; /* Invalidate the Callback pointer */
 	} else {
 		status = HAL_ERROR;
 	}
@@ -588,8 +568,7 @@ uint32_t HAL_GPU2D_ReadRegister(GPU2D_HandleTypeDef *hgpu2d, uint32_t offset)
  * @param  value     The value to be written to provided register.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_GPU2D_WriteRegister(GPU2D_HandleTypeDef *hgpu2d,
-					  uint32_t offset, uint32_t value)
+HAL_StatusTypeDef HAL_GPU2D_WriteRegister(GPU2D_HandleTypeDef *hgpu2d, uint32_t offset, uint32_t value)
 {
 	/* Check the GPU2D handle validity */
 	assert_param(hgpu2d != NULL);
@@ -641,10 +620,7 @@ void HAL_GPU2D_IRQHandler(GPU2D_HandleTypeDef *hgpu2d)
  *                the configuration information for the GPU2D.
  * @retval None
  */
-void HAL_GPU2D_ER_IRQHandler(GPU2D_HandleTypeDef *hgpu2d)
-{
-	HAL_GPU2D_ErrorCallback(hgpu2d);
-}
+void HAL_GPU2D_ER_IRQHandler(GPU2D_HandleTypeDef *hgpu2d) { HAL_GPU2D_ErrorCallback(hgpu2d); }
 
 /**
  * @brief  Command List Complete callback.
@@ -653,8 +629,7 @@ void HAL_GPU2D_ER_IRQHandler(GPU2D_HandleTypeDef *hgpu2d)
  * @param  CmdListID Command list ID that got completed.
  * @retval None
  */
-__weak void HAL_GPU2D_CommandListCpltCallback(GPU2D_HandleTypeDef *hgpu2d,
-					      uint32_t CmdListID)
+__weak void HAL_GPU2D_CommandListCpltCallback(GPU2D_HandleTypeDef *hgpu2d, uint32_t CmdListID)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hgpu2d);
@@ -715,11 +690,7 @@ functions
  *                the configuration information for the GPU2D.
  * @retval GPU2D state
  */
-HAL_GPU2D_StateTypeDef
-HAL_GPU2D_GetState(GPU2D_HandleTypeDef const *const hgpu2d)
-{
-	return hgpu2d->State;
-}
+HAL_GPU2D_StateTypeDef HAL_GPU2D_GetState(GPU2D_HandleTypeDef const *const hgpu2d) { return hgpu2d->State; }
 
 /**
  * @brief  Return the GPU2D error code
@@ -727,10 +698,7 @@ HAL_GPU2D_GetState(GPU2D_HandleTypeDef const *const hgpu2d)
  *                 the configuration information for GPU2D.
  * @retval GPU2D Error Code
  */
-uint32_t HAL_GPU2D_GetError(GPU2D_HandleTypeDef const *const hgpu2d)
-{
-	return hgpu2d->ErrorCode;
-}
+uint32_t HAL_GPU2D_GetError(GPU2D_HandleTypeDef const *const hgpu2d) { return hgpu2d->ErrorCode; }
 
 /**
  * @}

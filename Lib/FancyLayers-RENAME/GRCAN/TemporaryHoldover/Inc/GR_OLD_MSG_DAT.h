@@ -26,8 +26,8 @@ typedef struct {
 
 /** ECU Status 1 */
 typedef struct {
-	uint8_t ecu_status;    /** ECU state (see diagram) */
-	uint8_t ping_block[3]; /** Node timeout status bits (1=OK, 0=Timeout) */
+	uint8_t ecu_status;	      /** ECU state (see diagram) */
+	uint8_t ping_block[3];	      /** Node timeout status bits (1=OK, 0=Timeout) */
 	uint8_t powerlevel_torquemap; /** Power lvl (4b) & torque map (4b) */
 	uint8_t max_cell_temp;	      /** Hottest cell temp, 0.25°C/bit */
 	uint8_t tractivebattery_soc;  /** Accumulator SoC, 20x/51=% */
@@ -53,8 +53,8 @@ typedef struct {
 	uint16_t tractivebattery_voltage; /** All cells sum, 0.01V */
 	uint16_t ts_voltage;		  /** TS output voltage, 0.01V */
 	uint16_t tractivebattery_current; /** Current out (i16), 0.01A */
-	uint8_t tractivebattery_soc; /** Accum SoC (lowest cell), 20x/51=% */
-	uint8_t glv_soc;	     /** GLV SoC, 20x/51=% */
+	uint8_t tractivebattery_soc;	  /** Accum SoC (lowest cell), 20x/51=% */
+	uint8_t glv_soc;		  /** GLV SoC, 20x/51=% */
 } GR_OLD_BCU_STATUS_1_MSG;
 
 /** ACU Status 2 */
@@ -193,10 +193,9 @@ typedef struct {
 
 /** Dashboard Status */
 typedef struct {
-	uint8_t led_bits;  /** BMS/IMD/BSPD LED states */
-	uint8_t ts_button; /** TS button state & time (MSB=pressed, 7b=0.1s) */
-	uint8_t
-	    rtd_button; /** RTD button state & time (MSB=pressed, 7b=0.1s) */
+	uint8_t led_bits;   /** BMS/IMD/BSPD LED states */
+	uint8_t ts_button;  /** TS button state & time (MSB=pressed, 7b=0.1s) */
+	uint8_t rtd_button; /** RTD button state & time (MSB=pressed, 7b=0.1s) */
 } GR_OLD_DASH_STATUS_MSG;
 
 /** Dashboard Config */
@@ -212,8 +211,7 @@ typedef struct {
 
 /** Steering Wheel Status */
 typedef struct {
-	uint8_t
-	    encoder_bits; /** Current encoder pos (1-16) & torque map (1-16) */
+	uint8_t encoder_bits;	       /** Current encoder pos (1-16) & torque map (1-16) */
 	uint8_t regen_and_button_bits; /** Regen pos (1-16) & 4 button states */
 } GR_OLD_STEERING_STATUS_MSG;
 
