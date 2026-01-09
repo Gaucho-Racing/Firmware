@@ -6,8 +6,7 @@
 
 typedef enum { /*Basic states that I could come up with*/
 
-	       CCU_STATE_IDLE =
-		   0, // Transition: Told to charge AND checks passed
+	       CCU_STATE_IDLE = 0, // Transition: Told to charge AND checks passed
 	       CCU_STATE_CHARGING, // Transition: Told to stop OR fault
 
 } ccu_state_t;
@@ -80,6 +79,5 @@ typedef struct {
 
 void ccu_init(ccu_t *ccu);
 void ccu_set_inputs(ccu_t *ccu, const ccu_charger_control_t *in);
-void ccu_tick(
-    ccu_t *ccu, uint32_t now_ms,
-    uint32_t delta_ms); // now_ms = curr time, delta_ms = time since last
+void ccu_tick(ccu_t *ccu, uint32_t now_ms,
+	      uint32_t delta_ms); // now_ms = curr time, delta_ms = time since last

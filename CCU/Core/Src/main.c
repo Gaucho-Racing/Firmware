@@ -142,9 +142,7 @@ int main(void)
 		}
 
 		LL_RCC_HSI_SetCalibTrimming(64);
-		LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI,
-					    LL_RCC_PLLM_DIV_4, 85,
-					    LL_RCC_PLLR_DIV_2);
+		LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 85, LL_RCC_PLLR_DIV_2);
 		LL_RCC_PLL_EnableDomain_SYS();
 		LL_RCC_PLL_Enable();
 		/* Wait till PLL is ready */
@@ -154,8 +152,7 @@ int main(void)
 		LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
 		LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_2);
 		/* Wait till System clock is ready */
-		while (LL_RCC_GetSysClkSource() !=
-		       LL_RCC_SYS_CLKSOURCE_STATUS_PLL) {
+		while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL) {
 		}
 
 		/* Insure 1us transition state at intermediate medium speed

@@ -69,6 +69,5 @@ typedef struct {
 
 void ccu_init(ccu_t *ccu);
 void ccu_set_inputs(ccu_t *ccu, const ccu_inputs_t *in);
-void ccu_tick(
-    ccu_t *ccu, uint32_t now_ms,
-    uint32_t delta_ms); // now_ms = curr time, delta_ms = time since last
+void ccu_tick(ccu_t *ccu, uint32_t now_ms,
+	      uint32_t delta_ms); // now_ms = curr time, delta_ms = time since last
