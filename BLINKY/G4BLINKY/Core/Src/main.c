@@ -19,8 +19,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-#include "gr_adc.h"
 #include "Logomatic.h"
+#include "gr_adc.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -93,8 +93,8 @@ void ADC_Configure(void)
 	// Initialize DMA
 	DMA_Init(DMA1, LL_DMA_CHANNEL_1,
 		 LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA),
-		 (uint32_t)&buffer, LL_DMA_PDATAALIGN_BYTE, LL_DMA_MDATAALIGN_BYTE, 1,
-		 ADC1, LOW);
+		 (uint32_t)&buffer, LL_DMA_PDATAALIGN_BYTE,
+		 LL_DMA_MDATAALIGN_BYTE, 1, ADC1, LOW);
 
 	// Start DMA and ADC
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
