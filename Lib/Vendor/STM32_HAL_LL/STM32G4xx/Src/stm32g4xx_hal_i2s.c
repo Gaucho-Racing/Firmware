@@ -235,10 +235,7 @@ static void I2S_DMARxHalfCplt(DMA_HandleTypeDef *hdma);
 static void I2S_DMAError(DMA_HandleTypeDef *hdma);
 static void I2S_Transmit_IT(I2S_HandleTypeDef *hi2s);
 static void I2S_Receive_IT(I2S_HandleTypeDef *hi2s);
-static HAL_StatusTypeDef I2S_WaitFlagStateUntilTimeout(I2S_HandleTypeDef *hi2s,
-						       uint32_t Flag,
-						       FlagStatus State,
-						       uint32_t Timeout);
+static HAL_StatusTypeDef I2S_WaitFlagStateUntilTimeout(I2S_HandleTypeDef *hi2s, uint32_t Flag, FlagStatus State, uint32_t Timeout);
 /**
  * @}
  */
@@ -314,22 +311,16 @@ HAL_StatusTypeDef HAL_I2S_Init(I2S_HandleTypeDef *hi2s)
 
 #if (USE_HAL_I2S_REGISTER_CALLBACKS == 1U)
 		/* Init the I2S Callback settings */
-		hi2s->TxCpltCallback =
-		    HAL_I2S_TxCpltCallback; /* Legacy weak TxCpltCallback */
-		hi2s->RxCpltCallback =
-		    HAL_I2S_RxCpltCallback; /* Legacy weak RxCpltCallback */
-		hi2s->TxHalfCpltCallback =
-		    HAL_I2S_TxHalfCpltCallback; /* Legacy weak
-						   TxHalfCpltCallback   */
-		hi2s->RxHalfCpltCallback =
-		    HAL_I2S_RxHalfCpltCallback; /* Legacy weak
-						   RxHalfCpltCallback   */
-		hi2s->ErrorCallback =
-		    HAL_I2S_ErrorCallback; /* Legacy weak ErrorCallback */
+		hi2s->TxCpltCallback = HAL_I2S_TxCpltCallback;	       /* Legacy weak TxCpltCallback */
+		hi2s->RxCpltCallback = HAL_I2S_RxCpltCallback;	       /* Legacy weak RxCpltCallback */
+		hi2s->TxHalfCpltCallback = HAL_I2S_TxHalfCpltCallback; /* Legacy weak
+									  TxHalfCpltCallback   */
+		hi2s->RxHalfCpltCallback = HAL_I2S_RxHalfCpltCallback; /* Legacy weak
+									  RxHalfCpltCallback   */
+		hi2s->ErrorCallback = HAL_I2S_ErrorCallback;	       /* Legacy weak ErrorCallback */
 
 		if (hi2s->MspInitCallback == NULL) {
-			hi2s->MspInitCallback =
-			    HAL_I2S_MspInit; /* Legacy weak MspInit  */
+			hi2s->MspInitCallback = HAL_I2S_MspInit; /* Legacy weak MspInit  */
 		}
 
 		/* Init the low level hardware : GPIO, CLOCK, NVIC... */
@@ -347,9 +338,7 @@ HAL_StatusTypeDef HAL_I2S_Init(I2S_HandleTypeDef *hi2s)
 	/* Clear I2SMOD, I2SE, I2SCFG, PCMSYNC, I2SSTD, CKPOL, DATLEN and CHLEN
 	 * bits */
 	CLEAR_BIT(hi2s->Instance->I2SCFGR,
-		  (SPI_I2SCFGR_CHLEN | SPI_I2SCFGR_DATLEN | SPI_I2SCFGR_CKPOL |
-		   SPI_I2SCFGR_I2SSTD | SPI_I2SCFGR_PCMSYNC |
-		   SPI_I2SCFGR_I2SCFG | SPI_I2SCFGR_I2SE | SPI_I2SCFGR_I2SMOD));
+		  (SPI_I2SCFGR_CHLEN | SPI_I2SCFGR_DATLEN | SPI_I2SCFGR_CKPOL | SPI_I2SCFGR_I2SSTD | SPI_I2SCFGR_PCMSYNC | SPI_I2SCFGR_I2SCFG | SPI_I2SCFGR_I2SE | SPI_I2SCFGR_I2SMOD));
 	hi2s->Instance->I2SPR = 0x0002U;
 
 	/*----------------------- I2SPR: I2SDIV and ODD Calculation
@@ -381,23 +370,13 @@ HAL_StatusTypeDef HAL_I2S_Init(I2S_HandleTypeDef *hi2s)
 		if (hi2s->Init.MCLKOutput == I2S_MCLKOUTPUT_ENABLE) {
 			/* MCLK output is enabled */
 			if (hi2s->Init.DataFormat != I2S_DATAFORMAT_16B) {
-				tmp = (uint32_t)(((((i2sclk /
-						     (packetlength * 4U)) *
-						    10U) /
-						   hi2s->Init.AudioFreq)) +
-						 5U);
+				tmp = (uint32_t)(((((i2sclk / (packetlength * 4U)) * 10U) / hi2s->Init.AudioFreq)) + 5U);
 			} else {
-				tmp = (uint32_t)(((((i2sclk /
-						     (packetlength * 8U)) *
-						    10U) /
-						   hi2s->Init.AudioFreq)) +
-						 5U);
+				tmp = (uint32_t)(((((i2sclk / (packetlength * 8U)) * 10U) / hi2s->Init.AudioFreq)) + 5U);
 			}
 		} else {
 			/* MCLK output is disabled */
-			tmp = (uint32_t)(((((i2sclk / packetlength) * 10U) /
-					   hi2s->Init.AudioFreq)) +
-					 5U);
+			tmp = (uint32_t)(((((i2sclk / packetlength) * 10U) / hi2s->Init.AudioFreq)) + 5U);
 		}
 
 		/* Remove the flatting point */
@@ -428,23 +407,17 @@ HAL_StatusTypeDef HAL_I2S_Init(I2S_HandleTypeDef *hi2s)
 	 * ----------------*/
 
 	/* Write to SPIx I2SPR register the computed value */
-	hi2s->Instance->I2SPR =
-	    (uint32_t)((uint32_t)i2sdiv |
-		       (uint32_t)(i2sodd | (uint32_t)hi2s->Init.MCLKOutput));
+	hi2s->Instance->I2SPR = (uint32_t)((uint32_t)i2sdiv | (uint32_t)(i2sodd | (uint32_t)hi2s->Init.MCLKOutput));
 
 	/* Clear I2SMOD, I2SE, I2SCFG, PCMSYNC, I2SSTD, CKPOL, DATLEN and CHLEN
 	 * bits */
 	/* And configure the I2S with the I2S_InitStruct values */
 	MODIFY_REG(hi2s->Instance->I2SCFGR,
-		   (SPI_I2SCFGR_CHLEN | SPI_I2SCFGR_DATLEN | SPI_I2SCFGR_CKPOL |
-		    SPI_I2SCFGR_I2SSTD | SPI_I2SCFGR_PCMSYNC |
-		    SPI_I2SCFGR_I2SCFG | SPI_I2SCFGR_I2SE | SPI_I2SCFGR_I2SMOD),
-		   (SPI_I2SCFGR_I2SMOD | hi2s->Init.Mode | hi2s->Init.Standard |
-		    hi2s->Init.DataFormat | hi2s->Init.CPOL));
+		   (SPI_I2SCFGR_CHLEN | SPI_I2SCFGR_DATLEN | SPI_I2SCFGR_CKPOL | SPI_I2SCFGR_I2SSTD | SPI_I2SCFGR_PCMSYNC | SPI_I2SCFGR_I2SCFG | SPI_I2SCFGR_I2SE | SPI_I2SCFGR_I2SMOD),
+		   (SPI_I2SCFGR_I2SMOD | hi2s->Init.Mode | hi2s->Init.Standard | hi2s->Init.DataFormat | hi2s->Init.CPOL));
 
 #if defined(SPI_I2SCFGR_ASTRTEN)
-	if ((hi2s->Init.Standard == I2S_STANDARD_PCM_SHORT) ||
-	    ((hi2s->Init.Standard == I2S_STANDARD_PCM_LONG))) {
+	if ((hi2s->Init.Standard == I2S_STANDARD_PCM_SHORT) || ((hi2s->Init.Standard == I2S_STANDARD_PCM_LONG))) {
 		/* Write to SPIx I2SCFGR */
 		SET_BIT(hi2s->Instance->I2SCFGR, SPI_I2SCFGR_ASTRTEN);
 	}
@@ -479,8 +452,7 @@ HAL_StatusTypeDef HAL_I2S_DeInit(I2S_HandleTypeDef *hi2s)
 
 #if (USE_HAL_I2S_REGISTER_CALLBACKS == 1U)
 	if (hi2s->MspDeInitCallback == NULL) {
-		hi2s->MspDeInitCallback =
-		    HAL_I2S_MspDeInit; /* Legacy weak MspDeInit  */
+		hi2s->MspDeInitCallback = HAL_I2S_MspDeInit; /* Legacy weak MspDeInit  */
 	}
 
 	/* DeInit the low level hardware: GPIO, CLOCK, NVIC... */
@@ -541,9 +513,7 @@ __weak void HAL_I2S_MspDeInit(I2S_HandleTypeDef *hi2s)
  * @param  pCallback pointer to the Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_I2S_RegisterCallback(I2S_HandleTypeDef *hi2s,
-					   HAL_I2S_CallbackIDTypeDef CallbackID,
-					   pI2S_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_I2S_RegisterCallback(I2S_HandleTypeDef *hi2s, HAL_I2S_CallbackIDTypeDef CallbackID, pI2S_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -588,8 +558,7 @@ HAL_StatusTypeDef HAL_I2S_RegisterCallback(I2S_HandleTypeDef *hi2s,
 
 			default:
 				/* Update the error code */
-				SET_BIT(hi2s->ErrorCode,
-					HAL_I2S_ERROR_INVALID_CALLBACK);
+				SET_BIT(hi2s->ErrorCode, HAL_I2S_ERROR_INVALID_CALLBACK);
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -607,8 +576,7 @@ HAL_StatusTypeDef HAL_I2S_RegisterCallback(I2S_HandleTypeDef *hi2s,
 
 			default:
 				/* Update the error code */
-				SET_BIT(hi2s->ErrorCode,
-					HAL_I2S_ERROR_INVALID_CALLBACK);
+				SET_BIT(hi2s->ErrorCode, HAL_I2S_ERROR_INVALID_CALLBACK);
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -635,9 +603,7 @@ HAL_StatusTypeDef HAL_I2S_RegisterCallback(I2S_HandleTypeDef *hi2s,
  * @param  CallbackID ID of the callback to be unregistered
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_I2S_UnRegisterCallback(I2S_HandleTypeDef *hi2s,
-			   HAL_I2S_CallbackIDTypeDef CallbackID)
+HAL_StatusTypeDef HAL_I2S_UnRegisterCallback(I2S_HandleTypeDef *hi2s, HAL_I2S_CallbackIDTypeDef CallbackID)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -647,53 +613,45 @@ HAL_I2S_UnRegisterCallback(I2S_HandleTypeDef *hi2s,
 	if (HAL_I2S_STATE_READY == hi2s->State) {
 		switch (CallbackID) {
 			case HAL_I2S_TX_COMPLETE_CB_ID:
-				hi2s->TxCpltCallback =
-				    HAL_I2S_TxCpltCallback; /* Legacy weak
-							       TxCpltCallback */
+				hi2s->TxCpltCallback = HAL_I2S_TxCpltCallback; /* Legacy weak
+										  TxCpltCallback */
 				break;
 
 			case HAL_I2S_RX_COMPLETE_CB_ID:
-				hi2s->RxCpltCallback =
-				    HAL_I2S_RxCpltCallback; /* Legacy weak
-							       RxCpltCallback */
+				hi2s->RxCpltCallback = HAL_I2S_RxCpltCallback; /* Legacy weak
+										  RxCpltCallback */
 				break;
 
 			case HAL_I2S_TX_HALF_COMPLETE_CB_ID:
-				hi2s->TxHalfCpltCallback =
-				    HAL_I2S_TxHalfCpltCallback; /* Legacy weak
-								   TxHalfCpltCallback
-								 */
+				hi2s->TxHalfCpltCallback = HAL_I2S_TxHalfCpltCallback; /* Legacy weak
+											  TxHalfCpltCallback
+											*/
 				break;
 
 			case HAL_I2S_RX_HALF_COMPLETE_CB_ID:
-				hi2s->RxHalfCpltCallback =
-				    HAL_I2S_RxHalfCpltCallback; /* Legacy weak
-								   RxHalfCpltCallback
-								 */
+				hi2s->RxHalfCpltCallback = HAL_I2S_RxHalfCpltCallback; /* Legacy weak
+											  RxHalfCpltCallback
+											*/
 				break;
 
 			case HAL_I2S_ERROR_CB_ID:
-				hi2s->ErrorCallback =
-				    HAL_I2S_ErrorCallback; /* Legacy weak
-							    * ErrorCallback
-							    */
+				hi2s->ErrorCallback = HAL_I2S_ErrorCallback; /* Legacy weak
+									      * ErrorCallback
+									      */
 				break;
 
 			case HAL_I2S_MSPINIT_CB_ID:
-				hi2s->MspInitCallback =
-				    HAL_I2S_MspInit; /* Legacy weak MspInit */
+				hi2s->MspInitCallback = HAL_I2S_MspInit; /* Legacy weak MspInit */
 				break;
 
 			case HAL_I2S_MSPDEINIT_CB_ID:
-				hi2s->MspDeInitCallback =
-				    HAL_I2S_MspDeInit; /* Legacy weak MspDeInit
-							*/
+				hi2s->MspDeInitCallback = HAL_I2S_MspDeInit; /* Legacy weak MspDeInit
+									      */
 				break;
 
 			default:
 				/* Update the error code */
-				SET_BIT(hi2s->ErrorCode,
-					HAL_I2S_ERROR_INVALID_CALLBACK);
+				SET_BIT(hi2s->ErrorCode, HAL_I2S_ERROR_INVALID_CALLBACK);
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -702,20 +660,17 @@ HAL_I2S_UnRegisterCallback(I2S_HandleTypeDef *hi2s,
 	} else if (HAL_I2S_STATE_RESET == hi2s->State) {
 		switch (CallbackID) {
 			case HAL_I2S_MSPINIT_CB_ID:
-				hi2s->MspInitCallback =
-				    HAL_I2S_MspInit; /* Legacy weak MspInit */
+				hi2s->MspInitCallback = HAL_I2S_MspInit; /* Legacy weak MspInit */
 				break;
 
 			case HAL_I2S_MSPDEINIT_CB_ID:
-				hi2s->MspDeInitCallback =
-				    HAL_I2S_MspDeInit; /* Legacy weak MspDeInit
-							*/
+				hi2s->MspDeInitCallback = HAL_I2S_MspDeInit; /* Legacy weak MspDeInit
+									      */
 				break;
 
 			default:
 				/* Update the error code */
-				SET_BIT(hi2s->ErrorCode,
-					HAL_I2S_ERROR_INVALID_CALLBACK);
+				SET_BIT(hi2s->ErrorCode, HAL_I2S_ERROR_INVALID_CALLBACK);
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -796,8 +751,7 @@ HAL_I2S_UnRegisterCallback(I2S_HandleTypeDef *hi2s,
  * de-synchronization between Master and Slave(example: audio streaming).
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_I2S_Transmit(I2S_HandleTypeDef *hi2s, uint16_t *pData,
-				   uint16_t Size, uint32_t Timeout)
+HAL_StatusTypeDef HAL_I2S_Transmit(I2S_HandleTypeDef *hi2s, uint16_t *pData, uint16_t Size, uint32_t Timeout)
 {
 	uint32_t tmpreg_cfgr;
 
@@ -817,11 +771,9 @@ HAL_StatusTypeDef HAL_I2S_Transmit(I2S_HandleTypeDef *hi2s, uint16_t *pData,
 	hi2s->ErrorCode = HAL_I2S_ERROR_NONE;
 	hi2s->pTxBuffPtr = pData;
 
-	tmpreg_cfgr =
-	    hi2s->Instance->I2SCFGR & (SPI_I2SCFGR_DATLEN | SPI_I2SCFGR_CHLEN);
+	tmpreg_cfgr = hi2s->Instance->I2SCFGR & (SPI_I2SCFGR_DATLEN | SPI_I2SCFGR_CHLEN);
 
-	if ((tmpreg_cfgr == I2S_DATAFORMAT_24B) ||
-	    (tmpreg_cfgr == I2S_DATAFORMAT_32B)) {
+	if ((tmpreg_cfgr == I2S_DATAFORMAT_24B) || (tmpreg_cfgr == I2S_DATAFORMAT_32B)) {
 		hi2s->TxXferSize = (Size << 1U);
 		hi2s->TxXferCount = (Size << 1U);
 	} else {
@@ -838,8 +790,7 @@ HAL_StatusTypeDef HAL_I2S_Transmit(I2S_HandleTypeDef *hi2s, uint16_t *pData,
 	}
 
 	/* Wait until TXE flag is set */
-	if (I2S_WaitFlagStateUntilTimeout(hi2s, I2S_FLAG_TXE, SET, Timeout) !=
-	    HAL_OK) {
+	if (I2S_WaitFlagStateUntilTimeout(hi2s, I2S_FLAG_TXE, SET, Timeout) != HAL_OK) {
 		/* Set the error code */
 		SET_BIT(hi2s->ErrorCode, HAL_I2S_ERROR_TIMEOUT);
 		hi2s->State = HAL_I2S_STATE_READY;
@@ -853,8 +804,7 @@ HAL_StatusTypeDef HAL_I2S_Transmit(I2S_HandleTypeDef *hi2s, uint16_t *pData,
 		hi2s->TxXferCount--;
 
 		/* Wait until TXE flag is set */
-		if (I2S_WaitFlagStateUntilTimeout(hi2s, I2S_FLAG_TXE, SET,
-						  Timeout) != HAL_OK) {
+		if (I2S_WaitFlagStateUntilTimeout(hi2s, I2S_FLAG_TXE, SET, Timeout) != HAL_OK) {
 			/* Set the error code */
 			SET_BIT(hi2s->ErrorCode, HAL_I2S_ERROR_TIMEOUT);
 			hi2s->State = HAL_I2S_STATE_READY;
@@ -873,11 +823,9 @@ HAL_StatusTypeDef HAL_I2S_Transmit(I2S_HandleTypeDef *hi2s, uint16_t *pData,
 	}
 
 	/* Check if Slave mode is selected */
-	if (((tmpreg_cfgr & SPI_I2SCFGR_I2SCFG) == I2S_MODE_SLAVE_TX) ||
-	    ((tmpreg_cfgr & SPI_I2SCFGR_I2SCFG) == I2S_MODE_SLAVE_RX)) {
+	if (((tmpreg_cfgr & SPI_I2SCFGR_I2SCFG) == I2S_MODE_SLAVE_TX) || ((tmpreg_cfgr & SPI_I2SCFGR_I2SCFG) == I2S_MODE_SLAVE_RX)) {
 		/* Wait until Busy flag is reset */
-		if (I2S_WaitFlagStateUntilTimeout(hi2s, I2S_FLAG_BSY, RESET,
-						  Timeout) != HAL_OK) {
+		if (I2S_WaitFlagStateUntilTimeout(hi2s, I2S_FLAG_BSY, RESET, Timeout) != HAL_OK) {
 			/* Set the error code */
 			SET_BIT(hi2s->ErrorCode, HAL_I2S_ERROR_TIMEOUT);
 			hi2s->State = HAL_I2S_STATE_READY;
@@ -910,8 +858,7 @@ HAL_StatusTypeDef HAL_I2S_Transmit(I2S_HandleTypeDef *hi2s, uint16_t *pData,
  * the end of the I2S transaction.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_I2S_Receive(I2S_HandleTypeDef *hi2s, uint16_t *pData,
-				  uint16_t Size, uint32_t Timeout)
+HAL_StatusTypeDef HAL_I2S_Receive(I2S_HandleTypeDef *hi2s, uint16_t *pData, uint16_t Size, uint32_t Timeout)
 {
 	uint32_t tmpreg_cfgr;
 
@@ -931,11 +878,9 @@ HAL_StatusTypeDef HAL_I2S_Receive(I2S_HandleTypeDef *hi2s, uint16_t *pData,
 	hi2s->ErrorCode = HAL_I2S_ERROR_NONE;
 	hi2s->pRxBuffPtr = pData;
 
-	tmpreg_cfgr =
-	    hi2s->Instance->I2SCFGR & (SPI_I2SCFGR_DATLEN | SPI_I2SCFGR_CHLEN);
+	tmpreg_cfgr = hi2s->Instance->I2SCFGR & (SPI_I2SCFGR_DATLEN | SPI_I2SCFGR_CHLEN);
 
-	if ((tmpreg_cfgr == I2S_DATAFORMAT_24B) ||
-	    (tmpreg_cfgr == I2S_DATAFORMAT_32B)) {
+	if ((tmpreg_cfgr == I2S_DATAFORMAT_24B) || (tmpreg_cfgr == I2S_DATAFORMAT_32B)) {
 		hi2s->RxXferSize = (Size << 1U);
 		hi2s->RxXferCount = (Size << 1U);
 	} else {
@@ -950,8 +895,7 @@ HAL_StatusTypeDef HAL_I2S_Receive(I2S_HandleTypeDef *hi2s, uint16_t *pData,
 	}
 
 	/* Check if Master Receiver mode is selected */
-	if ((hi2s->Instance->I2SCFGR & SPI_I2SCFGR_I2SCFG) ==
-	    I2S_MODE_MASTER_RX) {
+	if ((hi2s->Instance->I2SCFGR & SPI_I2SCFGR_I2SCFG) == I2S_MODE_MASTER_RX) {
 		/* Clear the Overrun Flag by a read operation on the SPI_DR
 		register followed by a read access to the SPI_SR register. */
 		__HAL_I2S_CLEAR_OVRFLAG(hi2s);
@@ -960,8 +904,7 @@ HAL_StatusTypeDef HAL_I2S_Receive(I2S_HandleTypeDef *hi2s, uint16_t *pData,
 	/* Receive data */
 	while (hi2s->RxXferCount > 0U) {
 		/* Wait until RXNE flag is set */
-		if (I2S_WaitFlagStateUntilTimeout(hi2s, I2S_FLAG_RXNE, SET,
-						  Timeout) != HAL_OK) {
+		if (I2S_WaitFlagStateUntilTimeout(hi2s, I2S_FLAG_RXNE, SET, Timeout) != HAL_OK) {
 			/* Set the error code */
 			SET_BIT(hi2s->ErrorCode, HAL_I2S_ERROR_TIMEOUT);
 			hi2s->State = HAL_I2S_STATE_READY;
@@ -1003,8 +946,7 @@ HAL_StatusTypeDef HAL_I2S_Receive(I2S_HandleTypeDef *hi2s, uint16_t *pData,
  * de-synchronization between Master and Slave(example: audio streaming).
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_I2S_Transmit_IT(I2S_HandleTypeDef *hi2s, uint16_t *pData,
-				      uint16_t Size)
+HAL_StatusTypeDef HAL_I2S_Transmit_IT(I2S_HandleTypeDef *hi2s, uint16_t *pData, uint16_t Size)
 {
 	uint32_t tmpreg_cfgr;
 
@@ -1024,11 +966,9 @@ HAL_StatusTypeDef HAL_I2S_Transmit_IT(I2S_HandleTypeDef *hi2s, uint16_t *pData,
 	hi2s->ErrorCode = HAL_I2S_ERROR_NONE;
 	hi2s->pTxBuffPtr = pData;
 
-	tmpreg_cfgr =
-	    hi2s->Instance->I2SCFGR & (SPI_I2SCFGR_DATLEN | SPI_I2SCFGR_CHLEN);
+	tmpreg_cfgr = hi2s->Instance->I2SCFGR & (SPI_I2SCFGR_DATLEN | SPI_I2SCFGR_CHLEN);
 
-	if ((tmpreg_cfgr == I2S_DATAFORMAT_24B) ||
-	    (tmpreg_cfgr == I2S_DATAFORMAT_32B)) {
+	if ((tmpreg_cfgr == I2S_DATAFORMAT_24B) || (tmpreg_cfgr == I2S_DATAFORMAT_32B)) {
 		hi2s->TxXferSize = (Size << 1U);
 		hi2s->TxXferCount = (Size << 1U);
 	} else {
@@ -1068,8 +1008,7 @@ HAL_StatusTypeDef HAL_I2S_Transmit_IT(I2S_HandleTypeDef *hi2s, uint16_t *pData,
  * should be optimized.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_I2S_Receive_IT(I2S_HandleTypeDef *hi2s, uint16_t *pData,
-				     uint16_t Size)
+HAL_StatusTypeDef HAL_I2S_Receive_IT(I2S_HandleTypeDef *hi2s, uint16_t *pData, uint16_t Size)
 {
 	uint32_t tmpreg_cfgr;
 
@@ -1089,11 +1028,9 @@ HAL_StatusTypeDef HAL_I2S_Receive_IT(I2S_HandleTypeDef *hi2s, uint16_t *pData,
 	hi2s->ErrorCode = HAL_I2S_ERROR_NONE;
 	hi2s->pRxBuffPtr = pData;
 
-	tmpreg_cfgr =
-	    hi2s->Instance->I2SCFGR & (SPI_I2SCFGR_DATLEN | SPI_I2SCFGR_CHLEN);
+	tmpreg_cfgr = hi2s->Instance->I2SCFGR & (SPI_I2SCFGR_DATLEN | SPI_I2SCFGR_CHLEN);
 
-	if ((tmpreg_cfgr == I2S_DATAFORMAT_24B) ||
-	    (tmpreg_cfgr == I2S_DATAFORMAT_32B)) {
+	if ((tmpreg_cfgr == I2S_DATAFORMAT_24B) || (tmpreg_cfgr == I2S_DATAFORMAT_32B)) {
 		hi2s->RxXferSize = (Size << 1U);
 		hi2s->RxXferCount = (Size << 1U);
 	} else {
@@ -1130,8 +1067,7 @@ HAL_StatusTypeDef HAL_I2S_Receive_IT(I2S_HandleTypeDef *hi2s, uint16_t *pData,
  * de-synchronization between Master and Slave(example: audio streaming).
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_I2S_Transmit_DMA(I2S_HandleTypeDef *hi2s, uint16_t *pData,
-				       uint16_t Size)
+HAL_StatusTypeDef HAL_I2S_Transmit_DMA(I2S_HandleTypeDef *hi2s, uint16_t *pData, uint16_t Size)
 {
 	uint32_t tmpreg_cfgr;
 
@@ -1151,11 +1087,9 @@ HAL_StatusTypeDef HAL_I2S_Transmit_DMA(I2S_HandleTypeDef *hi2s, uint16_t *pData,
 	hi2s->ErrorCode = HAL_I2S_ERROR_NONE;
 	hi2s->pTxBuffPtr = pData;
 
-	tmpreg_cfgr =
-	    hi2s->Instance->I2SCFGR & (SPI_I2SCFGR_DATLEN | SPI_I2SCFGR_CHLEN);
+	tmpreg_cfgr = hi2s->Instance->I2SCFGR & (SPI_I2SCFGR_DATLEN | SPI_I2SCFGR_CHLEN);
 
-	if ((tmpreg_cfgr == I2S_DATAFORMAT_24B) ||
-	    (tmpreg_cfgr == I2S_DATAFORMAT_32B)) {
+	if ((tmpreg_cfgr == I2S_DATAFORMAT_24B) || (tmpreg_cfgr == I2S_DATAFORMAT_32B)) {
 		hi2s->TxXferSize = (Size << 1U);
 		hi2s->TxXferCount = (Size << 1U);
 	} else {
@@ -1173,9 +1107,7 @@ HAL_StatusTypeDef HAL_I2S_Transmit_DMA(I2S_HandleTypeDef *hi2s, uint16_t *pData,
 	hi2s->hdmatx->XferErrorCallback = I2S_DMAError;
 
 	/* Enable the Tx DMA Stream/Channel */
-	if (HAL_OK != HAL_DMA_Start_IT(hi2s->hdmatx, (uint32_t)hi2s->pTxBuffPtr,
-				       (uint32_t)&hi2s->Instance->DR,
-				       hi2s->TxXferSize)) {
+	if (HAL_OK != HAL_DMA_Start_IT(hi2s->hdmatx, (uint32_t)hi2s->pTxBuffPtr, (uint32_t)&hi2s->Instance->DR, hi2s->TxXferSize)) {
 		/* Update SPI error code */
 		SET_BIT(hi2s->ErrorCode, HAL_I2S_ERROR_DMA);
 		hi2s->State = HAL_I2S_STATE_READY;
@@ -1216,8 +1148,7 @@ HAL_StatusTypeDef HAL_I2S_Transmit_DMA(I2S_HandleTypeDef *hi2s, uint16_t *pData,
  * de-synchronization between Master and Slave(example: audio streaming).
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_I2S_Receive_DMA(I2S_HandleTypeDef *hi2s, uint16_t *pData,
-				      uint16_t Size)
+HAL_StatusTypeDef HAL_I2S_Receive_DMA(I2S_HandleTypeDef *hi2s, uint16_t *pData, uint16_t Size)
 {
 	uint32_t tmpreg_cfgr;
 
@@ -1237,11 +1168,9 @@ HAL_StatusTypeDef HAL_I2S_Receive_DMA(I2S_HandleTypeDef *hi2s, uint16_t *pData,
 	hi2s->ErrorCode = HAL_I2S_ERROR_NONE;
 	hi2s->pRxBuffPtr = pData;
 
-	tmpreg_cfgr =
-	    hi2s->Instance->I2SCFGR & (SPI_I2SCFGR_DATLEN | SPI_I2SCFGR_CHLEN);
+	tmpreg_cfgr = hi2s->Instance->I2SCFGR & (SPI_I2SCFGR_DATLEN | SPI_I2SCFGR_CHLEN);
 
-	if ((tmpreg_cfgr == I2S_DATAFORMAT_24B) ||
-	    (tmpreg_cfgr == I2S_DATAFORMAT_32B)) {
+	if ((tmpreg_cfgr == I2S_DATAFORMAT_24B) || (tmpreg_cfgr == I2S_DATAFORMAT_32B)) {
 		hi2s->RxXferSize = (Size << 1U);
 		hi2s->RxXferCount = (Size << 1U);
 	} else {
@@ -1259,17 +1188,14 @@ HAL_StatusTypeDef HAL_I2S_Receive_DMA(I2S_HandleTypeDef *hi2s, uint16_t *pData,
 	hi2s->hdmarx->XferErrorCallback = I2S_DMAError;
 
 	/* Check if Master Receiver mode is selected */
-	if ((hi2s->Instance->I2SCFGR & SPI_I2SCFGR_I2SCFG) ==
-	    I2S_MODE_MASTER_RX) {
+	if ((hi2s->Instance->I2SCFGR & SPI_I2SCFGR_I2SCFG) == I2S_MODE_MASTER_RX) {
 		/* Clear the Overrun Flag by a read operation to the SPI_DR
 		register followed by a read access to the SPI_SR register. */
 		__HAL_I2S_CLEAR_OVRFLAG(hi2s);
 	}
 
 	/* Enable the Rx DMA Stream/Channel */
-	if (HAL_OK !=
-	    HAL_DMA_Start_IT(hi2s->hdmarx, (uint32_t)&hi2s->Instance->DR,
-			     (uint32_t)hi2s->pRxBuffPtr, hi2s->RxXferSize)) {
+	if (HAL_OK != HAL_DMA_Start_IT(hi2s->hdmarx, (uint32_t)&hi2s->Instance->DR, (uint32_t)hi2s->pRxBuffPtr, hi2s->RxXferSize)) {
 		/* Update SPI error code */
 		SET_BIT(hi2s->ErrorCode, HAL_I2S_ERROR_DMA);
 		hi2s->State = HAL_I2S_STATE_READY;
@@ -1372,8 +1298,7 @@ HAL_StatusTypeDef HAL_I2S_DMAStop(I2S_HandleTypeDef *hi2s)
 	   HAL_I2S_RxCpltCallback()
 	   */
 
-	if ((hi2s->Init.Mode == I2S_MODE_MASTER_TX) ||
-	    (hi2s->Init.Mode == I2S_MODE_SLAVE_TX)) {
+	if ((hi2s->Init.Mode == I2S_MODE_MASTER_TX) || (hi2s->Init.Mode == I2S_MODE_SLAVE_TX)) {
 		/* Abort the I2S DMA tx Stream/Channel */
 		if (hi2s->hdmatx != NULL) {
 			/* Disable the I2S DMA tx Stream/Channel */
@@ -1384,8 +1309,7 @@ HAL_StatusTypeDef HAL_I2S_DMAStop(I2S_HandleTypeDef *hi2s)
 		}
 
 		/* Wait until TXE flag is set */
-		if (I2S_WaitFlagStateUntilTimeout(hi2s, I2S_FLAG_TXE, SET,
-						  I2S_TIMEOUT_FLAG) != HAL_OK) {
+		if (I2S_WaitFlagStateUntilTimeout(hi2s, I2S_FLAG_TXE, SET, I2S_TIMEOUT_FLAG) != HAL_OK) {
 			/* Set the error code */
 			SET_BIT(hi2s->ErrorCode, HAL_I2S_ERROR_TIMEOUT);
 			hi2s->State = HAL_I2S_STATE_READY;
@@ -1393,8 +1317,7 @@ HAL_StatusTypeDef HAL_I2S_DMAStop(I2S_HandleTypeDef *hi2s)
 		}
 
 		/* Wait until BSY flag is Reset */
-		if (I2S_WaitFlagStateUntilTimeout(hi2s, I2S_FLAG_BSY, RESET,
-						  I2S_TIMEOUT_FLAG) != HAL_OK) {
+		if (I2S_WaitFlagStateUntilTimeout(hi2s, I2S_FLAG_BSY, RESET, I2S_TIMEOUT_FLAG) != HAL_OK) {
 			/* Set the error code */
 			SET_BIT(hi2s->ErrorCode, HAL_I2S_ERROR_TIMEOUT);
 			hi2s->State = HAL_I2S_STATE_READY;
@@ -1412,8 +1335,7 @@ HAL_StatusTypeDef HAL_I2S_DMAStop(I2S_HandleTypeDef *hi2s)
 
 	}
 
-	else if ((hi2s->Init.Mode == I2S_MODE_MASTER_RX) ||
-		 (hi2s->Init.Mode == I2S_MODE_SLAVE_RX)) {
+	else if ((hi2s->Init.Mode == I2S_MODE_MASTER_RX) || (hi2s->Init.Mode == I2S_MODE_SLAVE_RX)) {
 		/* Abort the I2S DMA rx Stream/Channel */
 		if (hi2s->hdmarx != NULL) {
 			/* Disable the I2S DMA rx Stream/Channel */
@@ -1463,17 +1385,14 @@ void HAL_I2S_IRQHandler(I2S_HandleTypeDef *hi2s)
 
 	/* I2S in mode Receiver
 	 * ------------------------------------------------*/
-	if ((I2S_CHECK_FLAG(itflag, I2S_FLAG_OVR) == RESET) &&
-	    (I2S_CHECK_FLAG(itflag, I2S_FLAG_RXNE) != RESET) &&
-	    (I2S_CHECK_IT_SOURCE(itsource, I2S_IT_RXNE) != RESET)) {
+	if ((I2S_CHECK_FLAG(itflag, I2S_FLAG_OVR) == RESET) && (I2S_CHECK_FLAG(itflag, I2S_FLAG_RXNE) != RESET) && (I2S_CHECK_IT_SOURCE(itsource, I2S_IT_RXNE) != RESET)) {
 		I2S_Receive_IT(hi2s);
 		return;
 	}
 
 	/* I2S in mode Tramitter
 	 * -----------------------------------------------*/
-	if ((I2S_CHECK_FLAG(itflag, I2S_FLAG_TXE) != RESET) &&
-	    (I2S_CHECK_IT_SOURCE(itsource, I2S_IT_TXE) != RESET)) {
+	if ((I2S_CHECK_FLAG(itflag, I2S_FLAG_TXE) != RESET) && (I2S_CHECK_IT_SOURCE(itsource, I2S_IT_TXE) != RESET)) {
 		I2S_Transmit_IT(hi2s);
 		return;
 	}
@@ -1624,10 +1543,7 @@ functions
  *         the configuration information for I2S module
  * @retval HAL state
  */
-HAL_I2S_StateTypeDef HAL_I2S_GetState(I2S_HandleTypeDef *hi2s)
-{
-	return hi2s->State;
-}
+HAL_I2S_StateTypeDef HAL_I2S_GetState(I2S_HandleTypeDef *hi2s) { return hi2s->State; }
 
 /**
  * @brief  Return the I2S error code
@@ -1655,9 +1571,7 @@ uint32_t HAL_I2S_GetError(I2S_HandleTypeDef *hi2s) { return hi2s->ErrorCode; }
  */
 static void I2S_DMATxCplt(DMA_HandleTypeDef *hdma)
 {
-	I2S_HandleTypeDef *hi2s =
-	    (I2S_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)
-		->Parent; /* Derogation MISRAC2012-Rule-11.5 */
+	I2S_HandleTypeDef *hi2s = (I2S_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent; /* Derogation MISRAC2012-Rule-11.5 */
 
 	/* if DMA is configured in DMA_NORMAL Mode */
 	if (hdma->Init.Mode == DMA_NORMAL) {
@@ -1683,9 +1597,7 @@ static void I2S_DMATxCplt(DMA_HandleTypeDef *hdma)
  */
 static void I2S_DMATxHalfCplt(DMA_HandleTypeDef *hdma)
 {
-	I2S_HandleTypeDef *hi2s =
-	    (I2S_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)
-		->Parent; /* Derogation MISRAC2012-Rule-11.5 */
+	I2S_HandleTypeDef *hi2s = (I2S_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent; /* Derogation MISRAC2012-Rule-11.5 */
 
 	/* Call user Tx half complete callback */
 #if (USE_HAL_I2S_REGISTER_CALLBACKS == 1U)
@@ -1703,9 +1615,7 @@ static void I2S_DMATxHalfCplt(DMA_HandleTypeDef *hdma)
  */
 static void I2S_DMARxCplt(DMA_HandleTypeDef *hdma)
 {
-	I2S_HandleTypeDef *hi2s =
-	    (I2S_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)
-		->Parent; /* Derogation MISRAC2012-Rule-11.5 */
+	I2S_HandleTypeDef *hi2s = (I2S_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent; /* Derogation MISRAC2012-Rule-11.5 */
 
 	/* if DMA is configured in DMA_NORMAL Mode */
 	if (hdma->Init.Mode == DMA_NORMAL) {
@@ -1730,9 +1640,7 @@ static void I2S_DMARxCplt(DMA_HandleTypeDef *hdma)
  */
 static void I2S_DMARxHalfCplt(DMA_HandleTypeDef *hdma)
 {
-	I2S_HandleTypeDef *hi2s =
-	    (I2S_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)
-		->Parent; /* Derogation MISRAC2012-Rule-11.5 */
+	I2S_HandleTypeDef *hi2s = (I2S_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent; /* Derogation MISRAC2012-Rule-11.5 */
 
 	/* Call user Rx half complete callback */
 #if (USE_HAL_I2S_REGISTER_CALLBACKS == 1U)
@@ -1750,9 +1658,7 @@ static void I2S_DMARxHalfCplt(DMA_HandleTypeDef *hdma)
  */
 static void I2S_DMAError(DMA_HandleTypeDef *hdma)
 {
-	I2S_HandleTypeDef *hi2s =
-	    (I2S_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)
-		->Parent; /* Derogation MISRAC2012-Rule-11.5 */
+	I2S_HandleTypeDef *hi2s = (I2S_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent; /* Derogation MISRAC2012-Rule-11.5 */
 
 	/* Disable Rx and Tx DMA Request */
 	CLEAR_BIT(hi2s->Instance->CR2, (SPI_CR2_RXDMAEN | SPI_CR2_TXDMAEN));
@@ -1834,10 +1740,7 @@ static void I2S_Receive_IT(I2S_HandleTypeDef *hi2s)
  * @param  Timeout Duration of the timeout
  * @retval HAL status
  */
-static HAL_StatusTypeDef I2S_WaitFlagStateUntilTimeout(I2S_HandleTypeDef *hi2s,
-						       uint32_t Flag,
-						       FlagStatus State,
-						       uint32_t Timeout)
+static HAL_StatusTypeDef I2S_WaitFlagStateUntilTimeout(I2S_HandleTypeDef *hi2s, uint32_t Flag, FlagStatus State, uint32_t Timeout)
 {
 	uint32_t tickstart;
 
@@ -1847,8 +1750,7 @@ static HAL_StatusTypeDef I2S_WaitFlagStateUntilTimeout(I2S_HandleTypeDef *hi2s,
 	/* Wait until flag is set to status*/
 	while (((__HAL_I2S_GET_FLAG(hi2s, Flag)) ? SET : RESET) != State) {
 		if (Timeout != HAL_MAX_DELAY) {
-			if (((HAL_GetTick() - tickstart) >= Timeout) ||
-			    (Timeout == 0U)) {
+			if (((HAL_GetTick() - tickstart) >= Timeout) || (Timeout == 0U)) {
 				/* Set the I2S State ready */
 				hi2s->State = HAL_I2S_STATE_READY;
 

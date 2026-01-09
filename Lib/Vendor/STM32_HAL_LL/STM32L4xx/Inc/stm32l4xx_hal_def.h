@@ -36,12 +36,7 @@ extern "C" {
 /**
  * @brief  HAL Status structures definition
  */
-typedef enum {
-	HAL_OK = 0x00,
-	HAL_ERROR = 0x01,
-	HAL_BUSY = 0x02,
-	HAL_TIMEOUT = 0x03
-} HAL_StatusTypeDef;
+typedef enum { HAL_OK = 0x00, HAL_ERROR = 0x01, HAL_BUSY = 0x02, HAL_TIMEOUT = 0x03 } HAL_StatusTypeDef;
 
 /**
  * @brief  HAL Lock structures definition
@@ -59,10 +54,10 @@ typedef enum { HAL_UNLOCKED = 0x00, HAL_LOCKED = 0x01 } HAL_LockTypeDef;
 #define HAL_IS_BIT_SET(REG, BIT) (((REG) & (BIT)) == (BIT))
 #define HAL_IS_BIT_CLR(REG, BIT) (((REG) & (BIT)) == 0U)
 
-#define __HAL_LINKDMA(__HANDLE__, __PPP_DMA_FIELD__, __DMA_HANDLE__)           \
-	do {                                                                   \
-		(__HANDLE__)->__PPP_DMA_FIELD__ = &(__DMA_HANDLE__);           \
-		(__DMA_HANDLE__).Parent = (__HANDLE__);                        \
+#define __HAL_LINKDMA(__HANDLE__, __PPP_DMA_FIELD__, __DMA_HANDLE__)                                                                                                                                   \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->__PPP_DMA_FIELD__ = &(__DMA_HANDLE__);                                                                                                                                   \
+		(__DMA_HANDLE__).Parent = (__HANDLE__);                                                                                                                                                \
 	} while (0)
 
 /** @brief Reset the Handle's State field.
@@ -87,23 +82,22 @@ typedef enum { HAL_UNLOCKED = 0x00, HAL_LOCKED = 0x01 } HAL_LockTypeDef;
 /* Reserved for future use */
 #error " USE_RTOS should be 0 in the current HAL release "
 #else
-#define __HAL_LOCK(__HANDLE__)                                                 \
-	do {                                                                   \
-		if ((__HANDLE__)->Lock == HAL_LOCKED) {                        \
-			return HAL_BUSY;                                       \
-		} else {                                                       \
-			(__HANDLE__)->Lock = HAL_LOCKED;                       \
-		}                                                              \
+#define __HAL_LOCK(__HANDLE__)                                                                                                                                                                         \
+	do {                                                                                                                                                                                           \
+		if ((__HANDLE__)->Lock == HAL_LOCKED) {                                                                                                                                                \
+			return HAL_BUSY;                                                                                                                                                               \
+		} else {                                                                                                                                                                               \
+			(__HANDLE__)->Lock = HAL_LOCKED;                                                                                                                                               \
+		}                                                                                                                                                                                      \
 	} while (0)
 
-#define __HAL_UNLOCK(__HANDLE__)                                               \
-	do {                                                                   \
-		(__HANDLE__)->Lock = HAL_UNLOCKED;                             \
+#define __HAL_UNLOCK(__HANDLE__)                                                                                                                                                                       \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->Lock = HAL_UNLOCKED;                                                                                                                                                     \
 	} while (0)
 #endif /* USE_RTOS */
 
-#if defined(__ARMCC_VERSION) &&                                                \
-    (__ARMCC_VERSION >= 6010050) /* ARM Compiler V6 */
+#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050) /* ARM Compiler V6 */
 #ifndef __weak
 #define __weak __attribute__((weak))
 #endif
@@ -121,8 +115,7 @@ typedef enum { HAL_UNLOCKED = 0x00, HAL_LOCKED = 0x01 } HAL_LockTypeDef;
 
 /* Macro to get variable aligned on 4-bytes, for __ICCARM__ the directive
  * "#pragma data_alignment=4" must be used instead */
-#if defined(__ARMCC_VERSION) &&                                                \
-    (__ARMCC_VERSION >= 6010050) /* ARM Compiler V6 */
+#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050) /* ARM Compiler V6 */
 #ifndef __ALIGN_BEGIN
 #define __ALIGN_BEGIN
 #endif
@@ -152,8 +145,7 @@ typedef enum { HAL_UNLOCKED = 0x00, HAL_LOCKED = 0x01 } HAL_LockTypeDef;
 /**
  * @brief  __RAM_FUNC definition
  */
-#if defined(__CC_ARM) ||                                                       \
-    (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
 /* ARM Compiler V4/V5 and V6
    --------------------------
    RAM functions are defined using the toolchain options.
@@ -185,9 +177,7 @@ typedef enum { HAL_UNLOCKED = 0x00, HAL_LOCKED = 0x01 } HAL_LockTypeDef;
 /**
  * @brief  __NOINLINE definition
  */
-#if defined(__CC_ARM) ||                                                       \
-    (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)) ||              \
-    defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)) || defined(__GNUC__)
 /* ARM V4/V5 and V6 & GNU Compiler
    -------------------------------
 */

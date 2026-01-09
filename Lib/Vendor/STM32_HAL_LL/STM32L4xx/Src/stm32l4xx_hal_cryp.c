@@ -281,17 +281,11 @@ HAL_StatusTypeDef HAL_CRYP_Init(CRYP_HandleTypeDef *hcryp)
 	/* Check the proper chaining when the operating mode is key derivation
 	 * and decryption */
 #if defined(AES_CR_NPBLB)
-	if ((hcryp->Init.OperatingMode ==
-	     CRYP_ALGOMODE_KEYDERIVATION_DECRYPT) &&
-	    ((hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CTR) ||
-	     (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC) ||
-	     (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CCM)))
+	if ((hcryp->Init.OperatingMode == CRYP_ALGOMODE_KEYDERIVATION_DECRYPT) &&
+	    ((hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CTR) || (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC) || (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CCM)))
 #else
-	if ((hcryp->Init.OperatingMode ==
-	     CRYP_ALGOMODE_KEYDERIVATION_DECRYPT) &&
-	    ((hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CTR) ||
-	     (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC) ||
-	     (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC)))
+	if ((hcryp->Init.OperatingMode == CRYP_ALGOMODE_KEYDERIVATION_DECRYPT) &&
+	    ((hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CTR) || (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC) || (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC)))
 #endif
 	{
 		return HAL_ERROR;
@@ -299,11 +293,9 @@ HAL_StatusTypeDef HAL_CRYP_Init(CRYP_HandleTypeDef *hcryp)
 	/* Check that key derivation is not set in CMAC mode or CCM mode when
 	 * applicable */
 #if defined(AES_CR_NPBLB)
-	if ((hcryp->Init.OperatingMode == CRYP_ALGOMODE_KEYDERIVATION) &&
-	    (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CCM))
+	if ((hcryp->Init.OperatingMode == CRYP_ALGOMODE_KEYDERIVATION) && (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CCM))
 #else
-	if ((hcryp->Init.OperatingMode == CRYP_ALGOMODE_KEYDERIVATION) &&
-	    (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC))
+	if ((hcryp->Init.OperatingMode == CRYP_ALGOMODE_KEYDERIVATION) && (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC))
 #endif
 	{
 		return HAL_ERROR;
@@ -319,23 +311,19 @@ HAL_StatusTypeDef HAL_CRYP_Init(CRYP_HandleTypeDef *hcryp)
 		hcryp->Lock = HAL_UNLOCKED;
 
 		/* Reset Callback pointers in HAL_CRYP_STATE_RESET only */
-		hcryp->InCpltCallback =
-		    HAL_CRYP_InCpltCallback; /* Legacy weak (surcharged) input
-						DMA transfer completion callback
-					      */
-		hcryp->OutCpltCallback =
-		    HAL_CRYP_OutCpltCallback; /* Legacy weak (surcharged) output
-						 DMA transfer completion
-						 callback */
-		hcryp->CompCpltCallback =
-		    HAL_CRYPEx_ComputationCpltCallback; /* Legacy weak
-							   (surcharged)
-							   computation
-							   completion callback
-							 */
-		hcryp->ErrorCallback =
-		    HAL_CRYP_ErrorCallback; /* Legacy weak (surcharged) error
-					       callback */
+		hcryp->InCpltCallback = HAL_CRYP_InCpltCallback;	      /* Legacy weak (surcharged) input
+										 DMA transfer completion callback
+									       */
+		hcryp->OutCpltCallback = HAL_CRYP_OutCpltCallback;	      /* Legacy weak (surcharged) output
+										 DMA transfer completion
+										 callback */
+		hcryp->CompCpltCallback = HAL_CRYPEx_ComputationCpltCallback; /* Legacy weak
+										 (surcharged)
+										 computation
+										 completion callback
+									       */
+		hcryp->ErrorCallback = HAL_CRYP_ErrorCallback;		      /* Legacy weak (surcharged) error
+										 callback */
 		if (hcryp->MspInitCallback == NULL) {
 			hcryp->MspInitCallback = HAL_CRYP_MspInit;
 		}
@@ -374,8 +362,7 @@ HAL_StatusTypeDef HAL_CRYP_Init(CRYP_HandleTypeDef *hcryp)
 	/*=============================================================*/
 	/* Key derivation */
 	if (hcryp->Init.OperatingMode == CRYP_ALGOMODE_KEYDERIVATION) {
-		MODIFY_REG(hcryp->Instance->CR, AES_CR_MODE,
-			   CRYP_ALGOMODE_KEYDERIVATION);
+		MODIFY_REG(hcryp->Instance->CR, AES_CR_MODE, CRYP_ALGOMODE_KEYDERIVATION);
 
 		/* Configure the Key registers */
 		if (CRYP_SetKey(hcryp) != HAL_OK) {
@@ -389,18 +376,11 @@ HAL_StatusTypeDef HAL_CRYP_Init(CRYP_HandleTypeDef *hcryp)
 		/* Set data type, operating and chaining modes.
 		   In case of GCM or GMAC, data type is forced to 0b00 */
 		if (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC) {
-			MODIFY_REG(hcryp->Instance->CR,
-				   AES_CR_DATATYPE | AES_CR_MODE | AES_CR_CHMOD,
-				   hcryp->Init.OperatingMode |
-				       hcryp->Init.ChainingMode);
+			MODIFY_REG(hcryp->Instance->CR, AES_CR_DATATYPE | AES_CR_MODE | AES_CR_CHMOD, hcryp->Init.OperatingMode | hcryp->Init.ChainingMode);
 		} else
 #endif
 		{
-			MODIFY_REG(hcryp->Instance->CR,
-				   AES_CR_DATATYPE | AES_CR_MODE | AES_CR_CHMOD,
-				   hcryp->Init.DataType |
-				       hcryp->Init.OperatingMode |
-				       hcryp->Init.ChainingMode);
+			MODIFY_REG(hcryp->Instance->CR, AES_CR_DATATYPE | AES_CR_MODE | AES_CR_CHMOD, hcryp->Init.DataType | hcryp->Init.OperatingMode | hcryp->Init.ChainingMode);
 		}
 
 		/* Specify the encryption/decryption phase in case of Galois
@@ -409,15 +389,12 @@ HAL_StatusTypeDef HAL_CRYP_Init(CRYP_HandleTypeDef *hcryp)
 		   applicable or Counter with Cipher Mode (CCM) when applicable
 		 */
 #if defined(AES_CR_NPBLB)
-		if ((hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC) ||
-		    (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CCM))
+		if ((hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC) || (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CCM))
 #else
-		if ((hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC) ||
-		    (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC))
+		if ((hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC) || (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC))
 #endif
 		{
-			MODIFY_REG(hcryp->Instance->CR, AES_CR_GCMPH,
-				   hcryp->Init.GCMCMACPhase);
+			MODIFY_REG(hcryp->Instance->CR, AES_CR_GCMPH, hcryp->Init.GCMCMACPhase);
 			hcryp->Phase = HAL_CRYP_PHASE_START;
 		}
 
@@ -579,10 +556,7 @@ __weak void HAL_CRYP_MspDeInit(CRYP_HandleTypeDef *hcryp)
  * instead (usage recommended).
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYP_AESECB_Encrypt(CRYP_HandleTypeDef *hcryp,
-					  uint8_t *pPlainData, uint16_t Size,
-					  uint8_t *pCypherData,
-					  uint32_t Timeout)
+HAL_StatusTypeDef HAL_CRYP_AESECB_Encrypt(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size, uint8_t *pCypherData, uint32_t Timeout)
 {
 	/* Re-initialize AES IP with proper parameters */
 	if (HAL_CRYP_DeInit(hcryp) != HAL_OK) {
@@ -613,10 +587,7 @@ HAL_StatusTypeDef HAL_CRYP_AESECB_Encrypt(CRYP_HandleTypeDef *hcryp,
  * instead (usage recommended).
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYP_AESCBC_Encrypt(CRYP_HandleTypeDef *hcryp,
-					  uint8_t *pPlainData, uint16_t Size,
-					  uint8_t *pCypherData,
-					  uint32_t Timeout)
+HAL_StatusTypeDef HAL_CRYP_AESCBC_Encrypt(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size, uint8_t *pCypherData, uint32_t Timeout)
 {
 	/* Re-initialize AES IP with proper parameters */
 	if (HAL_CRYP_DeInit(hcryp) != HAL_OK) {
@@ -647,10 +618,7 @@ HAL_StatusTypeDef HAL_CRYP_AESCBC_Encrypt(CRYP_HandleTypeDef *hcryp,
  * instead (usage recommended).
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYP_AESCTR_Encrypt(CRYP_HandleTypeDef *hcryp,
-					  uint8_t *pPlainData, uint16_t Size,
-					  uint8_t *pCypherData,
-					  uint32_t Timeout)
+HAL_StatusTypeDef HAL_CRYP_AESCTR_Encrypt(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size, uint8_t *pCypherData, uint32_t Timeout)
 {
 	/* Re-initialize AES IP with proper parameters */
 	if (HAL_CRYP_DeInit(hcryp) != HAL_OK) {
@@ -681,9 +649,7 @@ HAL_StatusTypeDef HAL_CRYP_AESCTR_Encrypt(CRYP_HandleTypeDef *hcryp,
  * instead (usage recommended).
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYP_AESECB_Decrypt(CRYP_HandleTypeDef *hcryp,
-					  uint8_t *pCypherData, uint16_t Size,
-					  uint8_t *pPlainData, uint32_t Timeout)
+HAL_StatusTypeDef HAL_CRYP_AESECB_Decrypt(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size, uint8_t *pPlainData, uint32_t Timeout)
 {
 	/* Re-initialize AES IP with proper parameters */
 	if (HAL_CRYP_DeInit(hcryp) != HAL_OK) {
@@ -714,9 +680,7 @@ HAL_StatusTypeDef HAL_CRYP_AESECB_Decrypt(CRYP_HandleTypeDef *hcryp,
  * instead (usage recommended).
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYP_AESCBC_Decrypt(CRYP_HandleTypeDef *hcryp,
-					  uint8_t *pCypherData, uint16_t Size,
-					  uint8_t *pPlainData, uint32_t Timeout)
+HAL_StatusTypeDef HAL_CRYP_AESCBC_Decrypt(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size, uint8_t *pPlainData, uint32_t Timeout)
 {
 	/* Re-initialize AES IP with proper parameters */
 	if (HAL_CRYP_DeInit(hcryp) != HAL_OK) {
@@ -747,9 +711,7 @@ HAL_StatusTypeDef HAL_CRYP_AESCBC_Decrypt(CRYP_HandleTypeDef *hcryp,
  * instead (usage recommended).
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYP_AESCTR_Decrypt(CRYP_HandleTypeDef *hcryp,
-					  uint8_t *pCypherData, uint16_t Size,
-					  uint8_t *pPlainData, uint32_t Timeout)
+HAL_StatusTypeDef HAL_CRYP_AESCTR_Decrypt(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size, uint8_t *pPlainData, uint32_t Timeout)
 {
 	/* Re-initialize AES IP with proper parameters */
 	if (HAL_CRYP_DeInit(hcryp) != HAL_OK) {
@@ -779,9 +741,7 @@ HAL_StatusTypeDef HAL_CRYP_AESCTR_Decrypt(CRYP_HandleTypeDef *hcryp,
  * instead (usage recommended).
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYP_AESECB_Encrypt_IT(CRYP_HandleTypeDef *hcryp,
-					     uint8_t *pPlainData, uint16_t Size,
-					     uint8_t *pCypherData)
+HAL_StatusTypeDef HAL_CRYP_AESECB_Encrypt_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size, uint8_t *pCypherData)
 {
 	/* Re-initialize AES IP with proper parameters */
 	if (HAL_CRYP_DeInit(hcryp) != HAL_OK) {
@@ -811,9 +771,7 @@ HAL_StatusTypeDef HAL_CRYP_AESECB_Encrypt_IT(CRYP_HandleTypeDef *hcryp,
  * instead (usage recommended).
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYP_AESCBC_Encrypt_IT(CRYP_HandleTypeDef *hcryp,
-					     uint8_t *pPlainData, uint16_t Size,
-					     uint8_t *pCypherData)
+HAL_StatusTypeDef HAL_CRYP_AESCBC_Encrypt_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size, uint8_t *pCypherData)
 {
 	/* Re-initialize AES IP with proper parameters */
 	if (HAL_CRYP_DeInit(hcryp) != HAL_OK) {
@@ -843,9 +801,7 @@ HAL_StatusTypeDef HAL_CRYP_AESCBC_Encrypt_IT(CRYP_HandleTypeDef *hcryp,
  * instead (usage recommended).
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYP_AESCTR_Encrypt_IT(CRYP_HandleTypeDef *hcryp,
-					     uint8_t *pPlainData, uint16_t Size,
-					     uint8_t *pCypherData)
+HAL_StatusTypeDef HAL_CRYP_AESCTR_Encrypt_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size, uint8_t *pCypherData)
 {
 	/* Re-initialize AES IP with proper parameters */
 	if (HAL_CRYP_DeInit(hcryp) != HAL_OK) {
@@ -875,9 +831,7 @@ HAL_StatusTypeDef HAL_CRYP_AESCTR_Encrypt_IT(CRYP_HandleTypeDef *hcryp,
  * instead (usage recommended).
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYP_AESECB_Decrypt_IT(CRYP_HandleTypeDef *hcryp,
-					     uint8_t *pCypherData,
-					     uint16_t Size, uint8_t *pPlainData)
+HAL_StatusTypeDef HAL_CRYP_AESECB_Decrypt_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size, uint8_t *pPlainData)
 {
 	/* Re-initialize AES IP with proper parameters */
 	if (HAL_CRYP_DeInit(hcryp) != HAL_OK) {
@@ -907,9 +861,7 @@ HAL_StatusTypeDef HAL_CRYP_AESECB_Decrypt_IT(CRYP_HandleTypeDef *hcryp,
  * instead (usage recommended).
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYP_AESCBC_Decrypt_IT(CRYP_HandleTypeDef *hcryp,
-					     uint8_t *pCypherData,
-					     uint16_t Size, uint8_t *pPlainData)
+HAL_StatusTypeDef HAL_CRYP_AESCBC_Decrypt_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size, uint8_t *pPlainData)
 {
 	/* Re-initialize AES IP with proper parameters */
 	if (HAL_CRYP_DeInit(hcryp) != HAL_OK) {
@@ -939,9 +891,7 @@ HAL_StatusTypeDef HAL_CRYP_AESCBC_Decrypt_IT(CRYP_HandleTypeDef *hcryp,
  * instead (usage recommended).
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYP_AESCTR_Decrypt_IT(CRYP_HandleTypeDef *hcryp,
-					     uint8_t *pCypherData,
-					     uint16_t Size, uint8_t *pPlainData)
+HAL_StatusTypeDef HAL_CRYP_AESCTR_Decrypt_IT(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size, uint8_t *pPlainData)
 {
 	/* Re-initialize AES IP with proper parameters */
 	if (HAL_CRYP_DeInit(hcryp) != HAL_OK) {
@@ -973,10 +923,7 @@ HAL_StatusTypeDef HAL_CRYP_AESCTR_Decrypt_IT(CRYP_HandleTypeDef *hcryp,
  * correct DMA transfer to and from the IP.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYP_AESECB_Encrypt_DMA(CRYP_HandleTypeDef *hcryp,
-					      uint8_t *pPlainData,
-					      uint16_t Size,
-					      uint8_t *pCypherData)
+HAL_StatusTypeDef HAL_CRYP_AESECB_Encrypt_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size, uint8_t *pCypherData)
 {
 	/* Re-initialize AES IP with proper parameters */
 	if (HAL_CRYP_DeInit(hcryp) != HAL_OK) {
@@ -1007,10 +954,7 @@ HAL_StatusTypeDef HAL_CRYP_AESECB_Encrypt_DMA(CRYP_HandleTypeDef *hcryp,
  * correct DMA transfer to and from the IP.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYP_AESCBC_Encrypt_DMA(CRYP_HandleTypeDef *hcryp,
-					      uint8_t *pPlainData,
-					      uint16_t Size,
-					      uint8_t *pCypherData)
+HAL_StatusTypeDef HAL_CRYP_AESCBC_Encrypt_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size, uint8_t *pCypherData)
 {
 	/* Re-initialize AES IP with proper parameters */
 	if (HAL_CRYP_DeInit(hcryp) != HAL_OK) {
@@ -1042,10 +986,7 @@ HAL_StatusTypeDef HAL_CRYP_AESCBC_Encrypt_DMA(CRYP_HandleTypeDef *hcryp,
  * correct DMA transfer to and from the IP.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYP_AESCTR_Encrypt_DMA(CRYP_HandleTypeDef *hcryp,
-					      uint8_t *pPlainData,
-					      uint16_t Size,
-					      uint8_t *pCypherData)
+HAL_StatusTypeDef HAL_CRYP_AESCTR_Encrypt_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pPlainData, uint16_t Size, uint8_t *pCypherData)
 {
 	/* Re-initialize AES IP with proper parameters */
 	if (HAL_CRYP_DeInit(hcryp) != HAL_OK) {
@@ -1077,10 +1018,7 @@ HAL_StatusTypeDef HAL_CRYP_AESCTR_Encrypt_DMA(CRYP_HandleTypeDef *hcryp,
  * correct DMA transfer to and from the IP.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYP_AESECB_Decrypt_DMA(CRYP_HandleTypeDef *hcryp,
-					      uint8_t *pCypherData,
-					      uint16_t Size,
-					      uint8_t *pPlainData)
+HAL_StatusTypeDef HAL_CRYP_AESECB_Decrypt_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size, uint8_t *pPlainData)
 {
 	/* Re-initialize AES IP with proper parameters */
 	if (HAL_CRYP_DeInit(hcryp) != HAL_OK) {
@@ -1112,10 +1050,7 @@ HAL_StatusTypeDef HAL_CRYP_AESECB_Decrypt_DMA(CRYP_HandleTypeDef *hcryp,
  * correct DMA transfer to and from the IP.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYP_AESCBC_Decrypt_DMA(CRYP_HandleTypeDef *hcryp,
-					      uint8_t *pCypherData,
-					      uint16_t Size,
-					      uint8_t *pPlainData)
+HAL_StatusTypeDef HAL_CRYP_AESCBC_Decrypt_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size, uint8_t *pPlainData)
 {
 	/* Re-initialize AES IP with proper parameters */
 	if (HAL_CRYP_DeInit(hcryp) != HAL_OK) {
@@ -1147,10 +1082,7 @@ HAL_StatusTypeDef HAL_CRYP_AESCBC_Decrypt_DMA(CRYP_HandleTypeDef *hcryp,
  * correct DMA transfer to and from the IP.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYP_AESCTR_Decrypt_DMA(CRYP_HandleTypeDef *hcryp,
-					      uint8_t *pCypherData,
-					      uint16_t Size,
-					      uint8_t *pPlainData)
+HAL_StatusTypeDef HAL_CRYP_AESCTR_Decrypt_DMA(CRYP_HandleTypeDef *hcryp, uint8_t *pCypherData, uint16_t Size, uint8_t *pPlainData)
 {
 	/* Re-initialize AES IP with proper parameters */
 	if (HAL_CRYP_DeInit(hcryp) != HAL_OK) {
@@ -1256,10 +1188,7 @@ __weak void HAL_CRYP_OutCpltCallback(CRYP_HandleTypeDef *hcryp)
  * @param pCallback pointer to the Callback function
  * @retval status
  */
-HAL_StatusTypeDef
-HAL_CRYP_RegisterCallback(CRYP_HandleTypeDef *hcryp,
-			  HAL_CRYP_CallbackIDTypeDef CallbackID,
-			  pCRYP_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_CRYP_RegisterCallback(CRYP_HandleTypeDef *hcryp, HAL_CRYP_CallbackIDTypeDef CallbackID, pCRYP_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -1299,8 +1228,7 @@ HAL_CRYP_RegisterCallback(CRYP_HandleTypeDef *hcryp,
 
 			default:
 				/* Update the error code */
-				hcryp->ErrorCode |=
-				    HAL_CRYP_ERROR_INVALID_CALLBACK;
+				hcryp->ErrorCode |= HAL_CRYP_ERROR_INVALID_CALLBACK;
 				/* update return status */
 				status = HAL_ERROR;
 				break;
@@ -1317,8 +1245,7 @@ HAL_CRYP_RegisterCallback(CRYP_HandleTypeDef *hcryp,
 
 			default:
 				/* Update the error code */
-				hcryp->ErrorCode |=
-				    HAL_CRYP_ERROR_INVALID_CALLBACK;
+				hcryp->ErrorCode |= HAL_CRYP_ERROR_INVALID_CALLBACK;
 				/* update return status */
 				status = HAL_ERROR;
 				break;
@@ -1353,9 +1280,7 @@ HAL_CRYP_RegisterCallback(CRYP_HandleTypeDef *hcryp,
  *          @arg @ref HAL_CRYP_MSPDEINIT_CB_ID CRYP MspDeInit callback ID
  * @retval status
  */
-HAL_StatusTypeDef
-HAL_CRYP_UnRegisterCallback(CRYP_HandleTypeDef *hcryp,
-			    HAL_CRYP_CallbackIDTypeDef CallbackID)
+HAL_StatusTypeDef HAL_CRYP_UnRegisterCallback(CRYP_HandleTypeDef *hcryp, HAL_CRYP_CallbackIDTypeDef CallbackID)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -1365,61 +1290,54 @@ HAL_CRYP_UnRegisterCallback(CRYP_HandleTypeDef *hcryp,
 	if (HAL_CRYP_STATE_READY == hcryp->State) {
 		switch (CallbackID) {
 			case HAL_CRYP_INPUTCPLT_CB_ID:
-				hcryp->InCpltCallback =
-				    HAL_CRYP_InCpltCallback; /* Legacy weak
-								(surcharged)
-								input DMA
-								transfer
-								completion
-								callback */
+				hcryp->InCpltCallback = HAL_CRYP_InCpltCallback; /* Legacy weak
+										    (surcharged)
+										    input DMA
+										    transfer
+										    completion
+										    callback */
 				break;
 
 			case HAL_CRYP_OUTPUTCPLT_CB_ID:
-				hcryp->OutCpltCallback =
-				    HAL_CRYP_OutCpltCallback; /* Legacy weak
-								 (surcharged)
-								 output DMA
-								 transfer
-								 completion
-								 callback */
+				hcryp->OutCpltCallback = HAL_CRYP_OutCpltCallback; /* Legacy weak
+										      (surcharged)
+										      output DMA
+										      transfer
+										      completion
+										      callback */
 				break;
 
 			case HAL_CRYP_COMPCPLT_CB_ID:
-				hcryp->CompCpltCallback =
-				    HAL_CRYPEx_ComputationCpltCallback; /* Legacy
-									   weak
-									   (surcharged)
-									   computation
-									   completion
-									   callback
-									 */
+				hcryp->CompCpltCallback = HAL_CRYPEx_ComputationCpltCallback; /* Legacy
+												 weak
+												 (surcharged)
+												 computation
+												 completion
+												 callback
+											       */
 				break;
 
 			case HAL_CRYP_ERROR_CB_ID:
-				hcryp->ErrorCallback =
-				    HAL_CRYP_ErrorCallback; /* Legacy weak
-							       (surcharged)
-							       error callback */
+				hcryp->ErrorCallback = HAL_CRYP_ErrorCallback; /* Legacy weak
+										  (surcharged)
+										  error callback */
 				break;
 
 			case HAL_CRYP_MSPINIT_CB_ID:
-				hcryp->MspInitCallback =
-				    HAL_CRYP_MspInit; /* Legacy weak
-							 (surcharged) Msp DeInit
-						       */
+				hcryp->MspInitCallback = HAL_CRYP_MspInit; /* Legacy weak
+									      (surcharged) Msp DeInit
+									    */
 				break;
 
 			case HAL_CRYP_MSPDEINIT_CB_ID:
-				hcryp->MspDeInitCallback =
-				    HAL_CRYP_MspDeInit; /* Legacy weak
-							   (surcharged) Msp
-							   DeInit */
+				hcryp->MspDeInitCallback = HAL_CRYP_MspDeInit; /* Legacy weak
+										  (surcharged) Msp
+										  DeInit */
 				break;
 
 			default:
 				/* Update the error code */
-				hcryp->ErrorCode |=
-				    HAL_CRYP_ERROR_INVALID_CALLBACK;
+				hcryp->ErrorCode |= HAL_CRYP_ERROR_INVALID_CALLBACK;
 				/* update return status */
 				status = HAL_ERROR;
 				break;
@@ -1427,23 +1345,20 @@ HAL_CRYP_UnRegisterCallback(CRYP_HandleTypeDef *hcryp,
 	} else if (HAL_CRYP_STATE_RESET == hcryp->State) {
 		switch (CallbackID) {
 			case HAL_CRYP_MSPINIT_CB_ID:
-				hcryp->MspInitCallback =
-				    HAL_CRYP_MspInit; /* Legacy weak
-							 (surcharged) Msp Init
-						       */
+				hcryp->MspInitCallback = HAL_CRYP_MspInit; /* Legacy weak
+									      (surcharged) Msp Init
+									    */
 				break;
 
 			case HAL_CRYP_MSPDEINIT_CB_ID:
-				hcryp->MspDeInitCallback =
-				    HAL_CRYP_MspDeInit; /* Legacy weak
-							   (surcharged) Msp
-							   DeInit */
+				hcryp->MspDeInitCallback = HAL_CRYP_MspDeInit; /* Legacy weak
+										  (surcharged) Msp
+										  DeInit */
 				break;
 
 			default:
 				/* Update the error code */
-				hcryp->ErrorCode |=
-				    HAL_CRYP_ERROR_INVALID_CALLBACK;
+				hcryp->ErrorCode |= HAL_CRYP_ERROR_INVALID_CALLBACK;
 				/* update return status */
 				status = HAL_ERROR;
 				break;
@@ -1502,11 +1417,9 @@ void HAL_CRYP_IRQHandler(CRYP_HandleTypeDef *hcryp)
 		/* If an error has been reported */
 		if (hcryp->State == HAL_CRYP_STATE_ERROR) {
 			/* Disable Error and Computation Complete Interrupts */
-			__HAL_CRYP_DISABLE_IT(hcryp,
-					      CRYP_IT_CCFIE | CRYP_IT_ERRIE);
+			__HAL_CRYP_DISABLE_IT(hcryp, CRYP_IT_CCFIE | CRYP_IT_ERRIE);
 			/* Clear all Interrupt flags */
-			__HAL_CRYP_CLEAR_FLAG(hcryp,
-					      CRYP_ERR_CLEAR | CRYP_CCF_CLEAR);
+			__HAL_CRYP_CLEAR_FLAG(hcryp, CRYP_ERR_CLEAR | CRYP_CCF_CLEAR);
 
 			/* Process Unlocked */
 			__HAL_UNLOCK(hcryp);
@@ -1526,15 +1439,9 @@ void HAL_CRYP_IRQHandler(CRYP_HandleTypeDef *hcryp)
 	if (__HAL_CRYP_GET_FLAG(hcryp, CRYP_IT_CCF) != RESET) {
 		if (__HAL_CRYP_GET_IT_SOURCE(hcryp, CRYP_IT_CCFIE) != RESET) {
 #if defined(AES_CR_NPBLB)
-			if ((hcryp->Init.ChainingMode ==
-			     CRYP_CHAINMODE_AES_GCM_GMAC) ||
-			    (hcryp->Init.ChainingMode ==
-			     CRYP_CHAINMODE_AES_CCM))
+			if ((hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC) || (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CCM))
 #else
-			if ((hcryp->Init.ChainingMode ==
-			     CRYP_CHAINMODE_AES_GCM_GMAC) ||
-			    (hcryp->Init.ChainingMode ==
-			     CRYP_CHAINMODE_AES_CMAC))
+			if ((hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_GCM_GMAC) || (hcryp->Init.ChainingMode == CRYP_CHAINMODE_AES_CMAC))
 #endif
 			{
 				/* To ensure proper suspension requests
@@ -1600,10 +1507,7 @@ HAL_CRYP_STATETypeDef HAL_CRYP_GetState(CRYP_HandleTypeDef *hcryp)
  * @note   The returned error is a bit-map combination of possible errors
  * @retval Error bit-map
  */
-uint32_t HAL_CRYP_GetError(CRYP_HandleTypeDef *hcryp)
-{
-	return hcryp->ErrorCode;
-}
+uint32_t HAL_CRYP_GetError(CRYP_HandleTypeDef *hcryp) { return hcryp->ErrorCode; }
 
 /**
  * @}
@@ -1721,43 +1625,32 @@ static HAL_StatusTypeDef CRYP_AES_IT(CRYP_HandleTypeDef *hcryp)
 		} else {
 			/* Read the derived key from the Key registers */
 			if (hcryp->Init.KeySize == CRYP_KEYSIZE_256B) {
-				*(uint32_t *)(outputaddr) =
-				    __REV(hcryp->Instance->KEYR7);
+				*(uint32_t *)(outputaddr) = __REV(hcryp->Instance->KEYR7);
 				outputaddr += 4U;
-				*(uint32_t *)(outputaddr) =
-				    __REV(hcryp->Instance->KEYR6);
+				*(uint32_t *)(outputaddr) = __REV(hcryp->Instance->KEYR6);
 				outputaddr += 4U;
-				*(uint32_t *)(outputaddr) =
-				    __REV(hcryp->Instance->KEYR5);
+				*(uint32_t *)(outputaddr) = __REV(hcryp->Instance->KEYR5);
 				outputaddr += 4U;
-				*(uint32_t *)(outputaddr) =
-				    __REV(hcryp->Instance->KEYR4);
+				*(uint32_t *)(outputaddr) = __REV(hcryp->Instance->KEYR4);
 				outputaddr += 4U;
 			}
 
-			*(uint32_t *)(outputaddr) =
-			    __REV(hcryp->Instance->KEYR3);
+			*(uint32_t *)(outputaddr) = __REV(hcryp->Instance->KEYR3);
 			outputaddr += 4U;
-			*(uint32_t *)(outputaddr) =
-			    __REV(hcryp->Instance->KEYR2);
+			*(uint32_t *)(outputaddr) = __REV(hcryp->Instance->KEYR2);
 			outputaddr += 4U;
-			*(uint32_t *)(outputaddr) =
-			    __REV(hcryp->Instance->KEYR1);
+			*(uint32_t *)(outputaddr) = __REV(hcryp->Instance->KEYR1);
 			outputaddr += 4U;
-			*(uint32_t *)(outputaddr) =
-			    __REV(hcryp->Instance->KEYR0);
+			*(uint32_t *)(outputaddr) = __REV(hcryp->Instance->KEYR0);
 		}
 
 		/* In case of ciphering or deciphering, check if all output text
 		   has been retrieved; In case of key derivation, stop right
 		   there */
-		if ((hcryp->CrypOutCount == 0U) ||
-		    (hcryp->Init.OperatingMode ==
-		     CRYP_ALGOMODE_KEYDERIVATION)) {
+		if ((hcryp->CrypOutCount == 0U) || (hcryp->Init.OperatingMode == CRYP_ALGOMODE_KEYDERIVATION)) {
 			/* Disable Computation Complete Flag and Errors
 			 * Interrupts */
-			__HAL_CRYP_DISABLE_IT(hcryp,
-					      CRYP_IT_CCFIE | CRYP_IT_ERRIE);
+			__HAL_CRYP_DISABLE_IT(hcryp, CRYP_IT_CCFIE | CRYP_IT_ERRIE);
 			/* Change the CRYP state */
 			hcryp->State = HAL_CRYP_STATE_READY;
 
@@ -1780,8 +1673,7 @@ static HAL_StatusTypeDef CRYP_AES_IT(CRYP_HandleTypeDef *hcryp)
 
 			/* Disable Computation Complete Flag and Errors
 			 * Interrupts */
-			__HAL_CRYP_DISABLE_IT(hcryp,
-					      CRYP_IT_CCFIE | CRYP_IT_ERRIE);
+			__HAL_CRYP_DISABLE_IT(hcryp, CRYP_IT_CCFIE | CRYP_IT_ERRIE);
 			/* Change the CRYP state */
 			hcryp->State = HAL_CRYP_STATE_SUSPENDED;
 

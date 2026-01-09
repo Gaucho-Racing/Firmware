@@ -264,8 +264,7 @@ HAL_StatusTypeDef HAL_RTC_Init(RTC_HandleTypeDef *hrtc)
 		assert_param(IS_RTC_OUTPUT_REMAP(hrtc->Init.OutPutRemap));
 		assert_param(IS_RTC_OUTPUT_POL(hrtc->Init.OutPutPolarity));
 		assert_param(IS_RTC_OUTPUT_TYPE(hrtc->Init.OutPutType));
-#if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) ||    \
-    defined(STM32L4Q5xx)
+#if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx)
 		assert_param(IS_RTC_OUTPUT_PULLUP(hrtc->Init.OutPutPullUp));
 #endif
 
@@ -278,44 +277,36 @@ HAL_StatusTypeDef HAL_RTC_Init(RTC_HandleTypeDef *hrtc)
 		if (hrtc->State == HAL_RTC_STATE_RESET) {
 			/* Allocate lock resource and initialize it */
 			hrtc->Lock = HAL_UNLOCKED;
-			hrtc->AlarmAEventCallback =
-			    HAL_RTC_AlarmAEventCallback; /* Legacy weak
-							    AlarmAEventCallback
-							  */
-			hrtc->AlarmBEventCallback =
-			    HAL_RTCEx_AlarmBEventCallback; /* Legacy weak
-							      AlarmBEventCallback
-							    */
-			hrtc->TimeStampEventCallback =
-			    HAL_RTCEx_TimeStampEventCallback; /* Legacy weak
-								 TimeStampEventCallback
-							       */
-			hrtc->WakeUpTimerEventCallback =
-			    HAL_RTCEx_WakeUpTimerEventCallback; /* Legacy weak
-								   WakeUpTimerEventCallback
-								 */
+			hrtc->AlarmAEventCallback = HAL_RTC_AlarmAEventCallback;	     /* Legacy weak
+												AlarmAEventCallback
+											      */
+			hrtc->AlarmBEventCallback = HAL_RTCEx_AlarmBEventCallback;	     /* Legacy weak
+												AlarmBEventCallback
+											      */
+			hrtc->TimeStampEventCallback = HAL_RTCEx_TimeStampEventCallback;     /* Legacy weak
+												TimeStampEventCallback
+											      */
+			hrtc->WakeUpTimerEventCallback = HAL_RTCEx_WakeUpTimerEventCallback; /* Legacy weak
+												WakeUpTimerEventCallback
+											      */
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx)
-			hrtc->SSRUEventCallback =
-			    HAL_RTCEx_SSRUEventCallback; /* Legacy weak
-							    SSRUEventCallback */
+			hrtc->SSRUEventCallback = HAL_RTCEx_SSRUEventCallback; /* Legacy weak
+										  SSRUEventCallback */
 #endif
 
 #if defined(RTC_TAMPER1_SUPPORT)
-			hrtc->Tamper1EventCallback =
-			    HAL_RTCEx_Tamper1EventCallback; /* Legacy weak
-							       Tamper1EventCallback
-							     */
-#endif /* RTC_TAMPER1_SUPPORT */
-			hrtc->Tamper2EventCallback =
-			    HAL_RTCEx_Tamper2EventCallback; /* Legacy weak
-							       Tamper2EventCallback
-							     */
+			hrtc->Tamper1EventCallback = HAL_RTCEx_Tamper1EventCallback; /* Legacy weak
+											Tamper1EventCallback
+										      */
+#endif										     /* RTC_TAMPER1_SUPPORT */
+			hrtc->Tamper2EventCallback = HAL_RTCEx_Tamper2EventCallback; /* Legacy weak
+											Tamper2EventCallback
+										      */
 #if defined(RTC_TAMPER3_SUPPORT)
-			hrtc->Tamper3EventCallback =
-			    HAL_RTCEx_Tamper3EventCallback; /* Legacy weak
-							       Tamper3EventCallback
-							     */
-#endif /* RTC_TAMPER3_SUPPORT */
+			hrtc->Tamper3EventCallback = HAL_RTCEx_Tamper3EventCallback; /* Legacy weak
+											Tamper3EventCallback
+										      */
+#endif										     /* RTC_TAMPER3_SUPPORT */
 
 			if (hrtc->MspInitCallback == NULL) {
 				hrtc->MspInitCallback = HAL_RTC_MspInit;
@@ -337,8 +328,7 @@ HAL_StatusTypeDef HAL_RTC_Init(RTC_HandleTypeDef *hrtc)
 		}
 #endif /* #if (USE_HAL_RTC_REGISTER_CALLBACKS == 1) */
 
-#if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) ||    \
-    defined(STM32L4Q5xx)
+#if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx)
 		/* Process TAMP ip offset from RTC one */
 		hrtc->TampOffset = (TAMP_BASE - RTC_BASE);
 #endif
@@ -354,34 +344,24 @@ HAL_StatusTypeDef HAL_RTC_Init(RTC_HandleTypeDef *hrtc)
 			status = RTC_EnterInitMode(hrtc);
 
 			if (status == HAL_OK) {
-#if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) ||    \
-    defined(STM32L4Q5xx)
+#if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx)
 				/* Clear RTC_CR FMT, OSEL, POL and TAMPOE Bits
 				 */
-				hrtc->Instance->CR &=
-				    ~(RTC_CR_FMT | RTC_CR_POL | RTC_CR_OSEL |
-				      RTC_CR_TAMPOE);
+				hrtc->Instance->CR &= ~(RTC_CR_FMT | RTC_CR_POL | RTC_CR_OSEL | RTC_CR_TAMPOE);
 #else
 				/* Clear RTC_CR FMT, OSEL and POL Bits */
-				hrtc->Instance->CR &=
-				    ~(RTC_CR_FMT | RTC_CR_OSEL | RTC_CR_POL);
+				hrtc->Instance->CR &= ~(RTC_CR_FMT | RTC_CR_OSEL | RTC_CR_POL);
 #endif
 				/* Set RTC_CR register */
-				hrtc->Instance->CR |=
-				    (hrtc->Init.HourFormat | hrtc->Init.OutPut |
-				     hrtc->Init.OutPutPolarity);
+				hrtc->Instance->CR |= (hrtc->Init.HourFormat | hrtc->Init.OutPut | hrtc->Init.OutPutPolarity);
 
 				/* Configure the RTC PRER */
 				hrtc->Instance->PRER = (hrtc->Init.SynchPrediv);
-				hrtc->Instance->PRER |=
-				    (hrtc->Init.AsynchPrediv
-				     << RTC_PRER_PREDIV_A_Pos);
+				hrtc->Instance->PRER |= (hrtc->Init.AsynchPrediv << RTC_PRER_PREDIV_A_Pos);
 
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx)
 				/* Configure the Binary mode */
-				MODIFY_REG(
-				    RTC->ICSR, RTC_ICSR_BIN | RTC_ICSR_BCDU,
-				    hrtc->Init.BinMode | hrtc->Init.BinMixBcdU);
+				MODIFY_REG(RTC->ICSR, RTC_ICSR_BIN | RTC_ICSR_BCDU, hrtc->Init.BinMode | hrtc->Init.BinMixBcdU);
 #endif
 			}
 
@@ -389,19 +369,12 @@ HAL_StatusTypeDef HAL_RTC_Init(RTC_HandleTypeDef *hrtc)
 			status = RTC_ExitInitMode(hrtc);
 
 			if (status == HAL_OK) {
-#if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) ||    \
-    defined(STM32L4Q5xx)
-				hrtc->Instance->CR &=
-				    ~(RTC_CR_TAMPALRM_PU |
-				      RTC_CR_TAMPALRM_TYPE | RTC_CR_OUT2EN);
-				hrtc->Instance->CR |= (hrtc->Init.OutPutPullUp |
-						       hrtc->Init.OutPutType |
-						       hrtc->Init.OutPutRemap);
+#if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx)
+				hrtc->Instance->CR &= ~(RTC_CR_TAMPALRM_PU | RTC_CR_TAMPALRM_TYPE | RTC_CR_OUT2EN);
+				hrtc->Instance->CR |= (hrtc->Init.OutPutPullUp | hrtc->Init.OutPutType | hrtc->Init.OutPutRemap);
 #else
-				hrtc->Instance->OR &=
-				    ~(RTC_OR_ALARMOUTTYPE | RTC_OR_OUT_RMP);
-				hrtc->Instance->OR |= (hrtc->Init.OutPutType |
-						       hrtc->Init.OutPutRemap);
+				hrtc->Instance->OR &= ~(RTC_OR_ALARMOUTTYPE | RTC_OR_OUT_RMP);
+				hrtc->Instance->OR |= (hrtc->Init.OutPutType | hrtc->Init.OutPutRemap);
 #endif
 			}
 
@@ -447,14 +420,11 @@ HAL_StatusTypeDef HAL_RTC_DeInit(RTC_HandleTypeDef *hrtc)
 		if (status == HAL_OK) {
 			/* Reset all RTC CR register bits */
 			hrtc->Instance->TR = 0x00000000U;
-			hrtc->Instance->DR =
-			    ((uint32_t)(RTC_DR_WDU_0 | RTC_DR_MU_0 |
-					RTC_DR_DU_0));
+			hrtc->Instance->DR = ((uint32_t)(RTC_DR_WDU_0 | RTC_DR_MU_0 | RTC_DR_DU_0));
 			hrtc->Instance->CR &= 0x00000000U;
 
 			hrtc->Instance->WUTR = RTC_WUTR_WUT;
-			hrtc->Instance->PRER =
-			    ((uint32_t)(RTC_PRER_PREDIV_A | 0x000000FFU));
+			hrtc->Instance->PRER = ((uint32_t)(RTC_PRER_PREDIV_A | 0x000000FFU));
 			hrtc->Instance->ALRMAR = 0x00000000U;
 			hrtc->Instance->ALRMBR = 0x00000000U;
 			hrtc->Instance->SHIFTR = 0x00000000U;
@@ -466,15 +436,10 @@ HAL_StatusTypeDef HAL_RTC_DeInit(RTC_HandleTypeDef *hrtc)
 			status = RTC_ExitInitMode(hrtc);
 
 			if (status == HAL_OK) {
-#if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) ||    \
-    defined(STM32L4Q5xx)
+#if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx)
 				/* Reset TAMP registers */
-				((TAMP_TypeDef *)((uint32_t)hrtc->Instance +
-						  hrtc->TampOffset))
-				    ->CR1 = 0xFFFF0000U;
-				((TAMP_TypeDef *)((uint32_t)hrtc->Instance +
-						  hrtc->TampOffset))
-				    ->CR2 = 0x00000000U;
+				((TAMP_TypeDef *)((uint32_t)hrtc->Instance + hrtc->TampOffset))->CR1 = 0xFFFF0000U;
+				((TAMP_TypeDef *)((uint32_t)hrtc->Instance + hrtc->TampOffset))->CR2 = 0x00000000U;
 #else
 				/* Reset Tamper configuration register */
 				hrtc->Instance->TAMPCR = 0x00000000U;
@@ -489,8 +454,7 @@ HAL_StatusTypeDef HAL_RTC_DeInit(RTC_HandleTypeDef *hrtc)
 
 #if (USE_HAL_RTC_REGISTER_CALLBACKS == 1)
 				if (hrtc->MspDeInitCallback == NULL) {
-					hrtc->MspDeInitCallback =
-					    HAL_RTC_MspDeInit;
+					hrtc->MspDeInitCallback = HAL_RTC_MspDeInit;
 				}
 
 				/* DeInit the low level hardware: CLOCK, NVIC.*/
@@ -535,9 +499,7 @@ HAL_StatusTypeDef HAL_RTC_DeInit(RTC_HandleTypeDef *hrtc)
  * @param  pCallback pointer to the Callback function
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTC_RegisterCallback(RTC_HandleTypeDef *hrtc,
-					   HAL_RTC_CallbackIDTypeDef CallbackID,
-					   pRTC_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_RTC_RegisterCallback(RTC_HandleTypeDef *hrtc, HAL_RTC_CallbackIDTypeDef CallbackID, pRTC_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -650,9 +612,7 @@ Callback ID
   *          @arg @ref HAL_RTC_MSPDEINIT_CB_ID Msp DeInit callback ID
   * @retval HAL status
   */
-HAL_StatusTypeDef
-HAL_RTC_UnRegisterCallback(RTC_HandleTypeDef *hrtc,
-			   HAL_RTC_CallbackIDTypeDef CallbackID)
+HAL_StatusTypeDef HAL_RTC_UnRegisterCallback(RTC_HandleTypeDef *hrtc, HAL_RTC_CallbackIDTypeDef CallbackID)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -662,70 +622,62 @@ HAL_RTC_UnRegisterCallback(RTC_HandleTypeDef *hrtc,
 	if (HAL_RTC_STATE_READY == hrtc->State) {
 		switch (CallbackID) {
 			case HAL_RTC_ALARM_A_EVENT_CB_ID:
-				hrtc->AlarmAEventCallback =
-				    HAL_RTC_AlarmAEventCallback; /* Legacy weak
-								    AlarmAEventCallback
-								  */
+				hrtc->AlarmAEventCallback = HAL_RTC_AlarmAEventCallback; /* Legacy weak
+											    AlarmAEventCallback
+											  */
 				break;
 
 			case HAL_RTC_ALARM_B_EVENT_CB_ID:
-				hrtc->AlarmBEventCallback =
-				    HAL_RTCEx_AlarmBEventCallback; /* Legacy
-								      weak
-								      AlarmBEventCallback
-								    */
+				hrtc->AlarmBEventCallback = HAL_RTCEx_AlarmBEventCallback; /* Legacy
+											      weak
+											      AlarmBEventCallback
+											    */
 				break;
 
 			case HAL_RTC_TIMESTAMP_EVENT_CB_ID:
-				hrtc->TimeStampEventCallback =
-				    HAL_RTCEx_TimeStampEventCallback; /* Legacy
-									 weak
-									 TimeStampEventCallback
-								       */
+				hrtc->TimeStampEventCallback = HAL_RTCEx_TimeStampEventCallback; /* Legacy
+												    weak
+												    TimeStampEventCallback
+												  */
 				break;
 
 			case HAL_RTC_WAKEUPTIMER_EVENT_CB_ID:
-				hrtc->WakeUpTimerEventCallback =
-				    HAL_RTCEx_WakeUpTimerEventCallback; /* Legacy
-									   weak
-									   WakeUpTimerEventCallback
-									 */
+				hrtc->WakeUpTimerEventCallback = HAL_RTCEx_WakeUpTimerEventCallback; /* Legacy
+													weak
+													WakeUpTimerEventCallback
+												      */
 				break;
 
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx)
 			case HAL_RTC_SSRU_EVENT_CB_ID:
-				hrtc->SSRUEventCallback =
-				    HAL_RTCEx_SSRUEventCallback; /* Legacy weak
-								    SSRUEventCallback
-								  */
+				hrtc->SSRUEventCallback = HAL_RTCEx_SSRUEventCallback; /* Legacy weak
+											  SSRUEventCallback
+											*/
 				break;
 #endif
 
 #if defined(RTC_TAMPER1_SUPPORT)
 			case HAL_RTC_TAMPER1_EVENT_CB_ID:
-				hrtc->Tamper1EventCallback =
-				    HAL_RTCEx_Tamper1EventCallback; /* Legacy
-								       weak
-								       Tamper1EventCallback
-								     */
+				hrtc->Tamper1EventCallback = HAL_RTCEx_Tamper1EventCallback; /* Legacy
+												weak
+												Tamper1EventCallback
+											      */
 				break;
 #endif /* RTC_TAMPER1_SUPPORT */
 
 			case HAL_RTC_TAMPER2_EVENT_CB_ID:
-				hrtc->Tamper2EventCallback =
-				    HAL_RTCEx_Tamper2EventCallback; /* Legacy
-								       weak
-								       Tamper2EventCallback
-								     */
+				hrtc->Tamper2EventCallback = HAL_RTCEx_Tamper2EventCallback; /* Legacy
+												weak
+												Tamper2EventCallback
+											      */
 				break;
 
 #if defined(RTC_TAMPER3_SUPPORT)
 			case HAL_RTC_TAMPER3_EVENT_CB_ID:
-				hrtc->Tamper3EventCallback =
-				    HAL_RTCEx_Tamper3EventCallback; /* Legacy
-								       weak
-								       Tamper3EventCallback
-								     */
+				hrtc->Tamper3EventCallback = HAL_RTCEx_Tamper3EventCallback; /* Legacy
+												weak
+												Tamper3EventCallback
+											      */
 				break;
 #endif /* RTC_TAMPER3_SUPPORT */
 
@@ -834,8 +786,7 @@ features
   *             @arg RTC_FORMAT_BCD: BCD format
   * @retval HAL status
   */
-HAL_StatusTypeDef HAL_RTC_SetTime(RTC_HandleTypeDef *hrtc,
-				  RTC_TimeTypeDef *sTime, uint32_t Format)
+HAL_StatusTypeDef HAL_RTC_SetTime(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTime, uint32_t Format)
 {
 	uint32_t tmpreg;
 	HAL_StatusTypeDef status;
@@ -866,54 +817,30 @@ HAL_StatusTypeDef HAL_RTC_SetTime(RTC_HandleTypeDef *hrtc,
 		if (READ_BIT(RTC->ICSR, RTC_ICSR_BIN) != RTC_BINARY_ONLY) {
 			if (Format == RTC_FORMAT_BIN) {
 				if (READ_BIT(RTC->CR, RTC_CR_FMT) != 0U) {
-					assert_param(
-					    IS_RTC_HOUR12(sTime->Hours));
-					assert_param(IS_RTC_HOURFORMAT12(
-					    sTime->TimeFormat));
+					assert_param(IS_RTC_HOUR12(sTime->Hours));
+					assert_param(IS_RTC_HOURFORMAT12(sTime->TimeFormat));
 				} else {
 					sTime->TimeFormat = 0x00U;
-					assert_param(
-					    IS_RTC_HOUR24(sTime->Hours));
+					assert_param(IS_RTC_HOUR24(sTime->Hours));
 				}
 				assert_param(IS_RTC_MINUTES(sTime->Minutes));
 				assert_param(IS_RTC_SECONDS(sTime->Seconds));
 
-				tmpreg =
-				    (uint32_t)(((uint32_t)RTC_ByteToBcd2(
-						    sTime->Hours)
-						<< RTC_TR_HU_Pos) |
-					       ((uint32_t)RTC_ByteToBcd2(
-						    sTime->Minutes)
-						<< RTC_TR_MNU_Pos) |
-					       ((uint32_t)RTC_ByteToBcd2(
-						    sTime->Seconds)
-						<< RTC_TR_SU_Pos) |
-					       (((uint32_t)sTime->TimeFormat)
-						<< RTC_TR_PM_Pos));
+				tmpreg = (uint32_t)(((uint32_t)RTC_ByteToBcd2(sTime->Hours) << RTC_TR_HU_Pos) | ((uint32_t)RTC_ByteToBcd2(sTime->Minutes) << RTC_TR_MNU_Pos) |
+						    ((uint32_t)RTC_ByteToBcd2(sTime->Seconds) << RTC_TR_SU_Pos) | (((uint32_t)sTime->TimeFormat) << RTC_TR_PM_Pos));
 
 			} else {
 				if (READ_BIT(RTC->CR, RTC_CR_FMT) != 0U) {
-					assert_param(IS_RTC_HOUR12(
-					    RTC_Bcd2ToByte(sTime->Hours)));
-					assert_param(IS_RTC_HOURFORMAT12(
-					    sTime->TimeFormat));
+					assert_param(IS_RTC_HOUR12(RTC_Bcd2ToByte(sTime->Hours)));
+					assert_param(IS_RTC_HOURFORMAT12(sTime->TimeFormat));
 				} else {
 					sTime->TimeFormat = 0x00U;
-					assert_param(IS_RTC_HOUR24(
-					    RTC_Bcd2ToByte(sTime->Hours)));
+					assert_param(IS_RTC_HOUR24(RTC_Bcd2ToByte(sTime->Hours)));
 				}
-				assert_param(IS_RTC_MINUTES(
-				    RTC_Bcd2ToByte(sTime->Minutes)));
-				assert_param(IS_RTC_SECONDS(
-				    RTC_Bcd2ToByte(sTime->Seconds)));
-				tmpreg = (((uint32_t)(sTime->Hours)
-					   << RTC_TR_HU_Pos) |
-					  ((uint32_t)(sTime->Minutes)
-					   << RTC_TR_MNU_Pos) |
-					  ((uint32_t)(sTime->Seconds)
-					   << RTC_TR_SU_Pos) |
-					  ((uint32_t)(sTime->TimeFormat)
-					   << RTC_TR_PM_Pos));
+				assert_param(IS_RTC_MINUTES(RTC_Bcd2ToByte(sTime->Minutes)));
+				assert_param(IS_RTC_SECONDS(RTC_Bcd2ToByte(sTime->Seconds)));
+				tmpreg = (((uint32_t)(sTime->Hours) << RTC_TR_HU_Pos) | ((uint32_t)(sTime->Minutes) << RTC_TR_MNU_Pos) | ((uint32_t)(sTime->Seconds) << RTC_TR_SU_Pos) |
+					  ((uint32_t)(sTime->TimeFormat) << RTC_TR_PM_Pos));
 			}
 
 			/* Set the RTC_TR register */
@@ -925,8 +852,7 @@ HAL_StatusTypeDef HAL_RTC_SetTime(RTC_HandleTypeDef *hrtc,
 
 			/* This interface is deprecated. To manage Daylight
 			 * Saving Time, please use HAL_RTC_DST_xxx functions */
-			SET_BIT(RTC->CR, (sTime->DayLightSaving |
-					  sTime->StoreOperation));
+			SET_BIT(RTC->CR, (sTime->DayLightSaving | sTime->StoreOperation));
 		}
 	}
 
@@ -975,8 +901,7 @@ HAL_StatusTypeDef HAL_RTC_SetTime(RTC_HandleTypeDef *hrtc,
  *            @arg RTC_FORMAT_BCD: BCD format
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTC_GetTime(RTC_HandleTypeDef *hrtc,
-				  RTC_TimeTypeDef *sTime, uint32_t Format)
+HAL_StatusTypeDef HAL_RTC_GetTime(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTime, uint32_t Format)
 {
 	uint32_t tmpreg;
 
@@ -990,32 +915,24 @@ HAL_StatusTypeDef HAL_RTC_GetTime(RTC_HandleTypeDef *hrtc,
 
 		/* Get SecondFraction structure field from the corresponding
 		 * register field*/
-		sTime->SecondFraction =
-		    (uint32_t)(READ_REG(RTC->PRER) & RTC_PRER_PREDIV_S);
+		sTime->SecondFraction = (uint32_t)(READ_REG(RTC->PRER) & RTC_PRER_PREDIV_S);
 
 		/* Get the TR register */
 		tmpreg = (uint32_t)(READ_REG(RTC->TR) & RTC_TR_RESERVED_MASK);
 
 		/* Fill the structure fields with the read parameters */
-		sTime->Hours = (uint8_t)((tmpreg & (RTC_TR_HT | RTC_TR_HU)) >>
-					 RTC_TR_HU_Pos);
-		sTime->Minutes =
-		    (uint8_t)((tmpreg & (RTC_TR_MNT | RTC_TR_MNU)) >>
-			      RTC_TR_MNU_Pos);
-		sTime->Seconds = (uint8_t)((tmpreg & (RTC_TR_ST | RTC_TR_SU)) >>
-					   RTC_TR_SU_Pos);
-		sTime->TimeFormat =
-		    (uint8_t)((tmpreg & (RTC_TR_PM)) >> RTC_TR_PM_Pos);
+		sTime->Hours = (uint8_t)((tmpreg & (RTC_TR_HT | RTC_TR_HU)) >> RTC_TR_HU_Pos);
+		sTime->Minutes = (uint8_t)((tmpreg & (RTC_TR_MNT | RTC_TR_MNU)) >> RTC_TR_MNU_Pos);
+		sTime->Seconds = (uint8_t)((tmpreg & (RTC_TR_ST | RTC_TR_SU)) >> RTC_TR_SU_Pos);
+		sTime->TimeFormat = (uint8_t)((tmpreg & (RTC_TR_PM)) >> RTC_TR_PM_Pos);
 
 		/* Check the input parameters format */
 		if (Format == RTC_FORMAT_BIN) {
 			/* Convert the time structure parameters to Binary
 			 * format */
 			sTime->Hours = (uint8_t)RTC_Bcd2ToByte(sTime->Hours);
-			sTime->Minutes =
-			    (uint8_t)RTC_Bcd2ToByte(sTime->Minutes);
-			sTime->Seconds =
-			    (uint8_t)RTC_Bcd2ToByte(sTime->Seconds);
+			sTime->Minutes = (uint8_t)RTC_Bcd2ToByte(sTime->Minutes);
+			sTime->Seconds = (uint8_t)RTC_Bcd2ToByte(sTime->Seconds);
 		}
 	}
 
@@ -1032,8 +949,7 @@ HAL_StatusTypeDef HAL_RTC_GetTime(RTC_HandleTypeDef *hrtc,
  *            @arg RTC_FORMAT_BCD: BCD format
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTC_SetDate(RTC_HandleTypeDef *hrtc,
-				  RTC_DateTypeDef *sDate, uint32_t Format)
+HAL_StatusTypeDef HAL_RTC_SetDate(RTC_HandleTypeDef *hrtc, RTC_DateTypeDef *sDate, uint32_t Format)
 {
 	uint32_t datetmpreg;
 	HAL_StatusTypeDef status;
@@ -1047,8 +963,7 @@ HAL_StatusTypeDef HAL_RTC_SetDate(RTC_HandleTypeDef *hrtc,
 	hrtc->State = HAL_RTC_STATE_BUSY;
 
 	if ((Format == RTC_FORMAT_BIN) && ((sDate->Month & 0x10U) == 0x10U)) {
-		sDate->Month = (uint8_t)((sDate->Month & (uint8_t) ~(0x10U)) +
-					 (uint8_t)0x0AU);
+		sDate->Month = (uint8_t)((sDate->Month & (uint8_t) ~(0x10U)) + (uint8_t)0x0AU);
 	}
 
 	assert_param(IS_RTC_WEEKDAY(sDate->WeekDay));
@@ -1058,19 +973,14 @@ HAL_StatusTypeDef HAL_RTC_SetDate(RTC_HandleTypeDef *hrtc,
 		assert_param(IS_RTC_MONTH(sDate->Month));
 		assert_param(IS_RTC_DATE(sDate->Date));
 
-		datetmpreg =
-		    (((uint32_t)RTC_ByteToBcd2(sDate->Year) << RTC_DR_YU_Pos) |
-		     ((uint32_t)RTC_ByteToBcd2(sDate->Month) << RTC_DR_MU_Pos) |
-		     ((uint32_t)RTC_ByteToBcd2(sDate->Date) << RTC_DR_DU_Pos) |
-		     ((uint32_t)sDate->WeekDay << RTC_DR_WDU_Pos));
+		datetmpreg = (((uint32_t)RTC_ByteToBcd2(sDate->Year) << RTC_DR_YU_Pos) | ((uint32_t)RTC_ByteToBcd2(sDate->Month) << RTC_DR_MU_Pos) |
+			      ((uint32_t)RTC_ByteToBcd2(sDate->Date) << RTC_DR_DU_Pos) | ((uint32_t)sDate->WeekDay << RTC_DR_WDU_Pos));
 	} else {
 		assert_param(IS_RTC_YEAR(RTC_Bcd2ToByte(sDate->Year)));
 		assert_param(IS_RTC_MONTH(RTC_Bcd2ToByte(sDate->Month)));
 		assert_param(IS_RTC_DATE(RTC_Bcd2ToByte(sDate->Date)));
 
-		datetmpreg = ((((uint32_t)sDate->Year) << RTC_DR_YU_Pos) |
-			      (((uint32_t)sDate->Month) << RTC_DR_MU_Pos) |
-			      (((uint32_t)sDate->Date) << RTC_DR_DU_Pos) |
+		datetmpreg = ((((uint32_t)sDate->Year) << RTC_DR_YU_Pos) | (((uint32_t)sDate->Month) << RTC_DR_MU_Pos) | (((uint32_t)sDate->Date) << RTC_DR_DU_Pos) |
 			      (((uint32_t)sDate->WeekDay) << RTC_DR_WDU_Pos));
 	}
 
@@ -1081,8 +991,7 @@ HAL_StatusTypeDef HAL_RTC_SetDate(RTC_HandleTypeDef *hrtc,
 	status = RTC_EnterInitMode(hrtc);
 	if (status == HAL_OK) {
 		/* Set the RTC_DR register */
-		WRITE_REG(RTC->DR,
-			  (uint32_t)(datetmpreg & RTC_DR_RESERVED_MASK));
+		WRITE_REG(RTC->DR, (uint32_t)(datetmpreg & RTC_DR_RESERVED_MASK));
 
 		/* Exit Initialization mode */
 		status = RTC_ExitInitMode(hrtc);
@@ -1115,8 +1024,7 @@ HAL_StatusTypeDef HAL_RTC_SetDate(RTC_HandleTypeDef *hrtc,
  *            @arg RTC_FORMAT_BCD: BCD format
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTC_GetDate(RTC_HandleTypeDef *hrtc,
-				  RTC_DateTypeDef *sDate, uint32_t Format)
+HAL_StatusTypeDef HAL_RTC_GetDate(RTC_HandleTypeDef *hrtc, RTC_DateTypeDef *sDate, uint32_t Format)
 {
 	uint32_t datetmpreg;
 
@@ -1128,14 +1036,10 @@ HAL_StatusTypeDef HAL_RTC_GetDate(RTC_HandleTypeDef *hrtc,
 	datetmpreg = (uint32_t)(READ_REG(RTC->DR) & RTC_DR_RESERVED_MASK);
 
 	/* Fill the structure fields with the read parameters */
-	sDate->Year =
-	    (uint8_t)((datetmpreg & (RTC_DR_YT | RTC_DR_YU)) >> RTC_DR_YU_Pos);
-	sDate->Month =
-	    (uint8_t)((datetmpreg & (RTC_DR_MT | RTC_DR_MU)) >> RTC_DR_MU_Pos);
-	sDate->Date =
-	    (uint8_t)((datetmpreg & (RTC_DR_DT | RTC_DR_DU)) >> RTC_DR_DU_Pos);
-	sDate->WeekDay =
-	    (uint8_t)((datetmpreg & (RTC_DR_WDU)) >> RTC_DR_WDU_Pos);
+	sDate->Year = (uint8_t)((datetmpreg & (RTC_DR_YT | RTC_DR_YU)) >> RTC_DR_YU_Pos);
+	sDate->Month = (uint8_t)((datetmpreg & (RTC_DR_MT | RTC_DR_MU)) >> RTC_DR_MU_Pos);
+	sDate->Date = (uint8_t)((datetmpreg & (RTC_DR_DT | RTC_DR_DU)) >> RTC_DR_DU_Pos);
+	sDate->WeekDay = (uint8_t)((datetmpreg & (RTC_DR_WDU)) >> RTC_DR_WDU_Pos);
 
 	/* Check the input parameters format */
 	if (Format == RTC_FORMAT_BIN) {
@@ -1179,8 +1083,7 @@ HAL_StatusTypeDef HAL_RTC_GetDate(RTC_HandleTypeDef *hrtc,
  *             @arg RTC_FORMAT_BCD: BCD format
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTC_SetAlarm(RTC_HandleTypeDef *hrtc,
-				   RTC_AlarmTypeDef *sAlarm, uint32_t Format)
+HAL_StatusTypeDef HAL_RTC_SetAlarm(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef *sAlarm, uint32_t Format)
 {
 	uint32_t tmpreg = 0, binaryMode;
 
@@ -1194,30 +1097,21 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm(RTC_HandleTypeDef *hrtc,
 		assert_param(IS_RTC_FORMAT(Format));
 		assert_param(IS_RTC_ALARM(sAlarm->Alarm));
 		assert_param(IS_RTC_ALARM_MASK(sAlarm->AlarmMask));
-		assert_param(
-		    IS_RTC_ALARM_DATE_WEEKDAY_SEL(sAlarm->AlarmDateWeekDaySel));
-		assert_param(IS_RTC_ALARM_SUB_SECOND_VALUE(
-		    sAlarm->AlarmTime.SubSeconds));
-		assert_param(
-		    IS_RTC_ALARM_SUB_SECOND_MASK(sAlarm->AlarmSubSecondMask));
+		assert_param(IS_RTC_ALARM_DATE_WEEKDAY_SEL(sAlarm->AlarmDateWeekDaySel));
+		assert_param(IS_RTC_ALARM_SUB_SECOND_VALUE(sAlarm->AlarmTime.SubSeconds));
+		assert_param(IS_RTC_ALARM_SUB_SECOND_MASK(sAlarm->AlarmSubSecondMask));
 	} else if (READ_BIT(RTC->ICSR, RTC_ICSR_BIN) == RTC_BINARY_ONLY) {
-		assert_param(IS_RTC_ALARM_SUB_SECOND_BINARY_MASK(
-		    sAlarm->AlarmSubSecondMask));
-		assert_param(
-		    IS_RTC_ALARMSUBSECONDBIN_AUTOCLR(sAlarm->BinaryAutoClr));
+		assert_param(IS_RTC_ALARM_SUB_SECOND_BINARY_MASK(sAlarm->AlarmSubSecondMask));
+		assert_param(IS_RTC_ALARMSUBSECONDBIN_AUTOCLR(sAlarm->BinaryAutoClr));
 	} else /* RTC_BINARY_MIX */
 	{
 		assert_param(IS_RTC_FORMAT(Format));
 		assert_param(IS_RTC_ALARM(sAlarm->Alarm));
 		assert_param(IS_RTC_ALARM_MASK(sAlarm->AlarmMask));
-		assert_param(
-		    IS_RTC_ALARM_DATE_WEEKDAY_SEL(sAlarm->AlarmDateWeekDaySel));
+		assert_param(IS_RTC_ALARM_DATE_WEEKDAY_SEL(sAlarm->AlarmDateWeekDaySel));
 		/* In Binary Mix Mode, the RTC can not generate an alarm on a
 		 * match involving all calendar items + the upper SSR bits */
-		assert_param(
-		    (sAlarm->AlarmSubSecondMask >> RTC_ALRMASSR_MASKSS_Pos) <=
-		    (8U + (READ_BIT(RTC->ICSR, RTC_ICSR_BCDU) >>
-			   RTC_ICSR_BCDU_Pos)));
+		assert_param((sAlarm->AlarmSubSecondMask >> RTC_ALRMASSR_MASKSS_Pos) <= (8U + (READ_BIT(RTC->ICSR, RTC_ICSR_BCDU) >> RTC_ICSR_BCDU_Pos)));
 	}
 #endif
 
@@ -1227,82 +1121,47 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm(RTC_HandleTypeDef *hrtc,
 	if (binaryMode != RTC_BINARY_ONLY) {
 		if (Format == RTC_FORMAT_BIN) {
 			if (READ_BIT(RTC->CR, RTC_CR_FMT) != 0U) {
-				assert_param(
-				    IS_RTC_HOUR12(sAlarm->AlarmTime.Hours));
-				assert_param(IS_RTC_HOURFORMAT12(
-				    sAlarm->AlarmTime.TimeFormat));
+				assert_param(IS_RTC_HOUR12(sAlarm->AlarmTime.Hours));
+				assert_param(IS_RTC_HOURFORMAT12(sAlarm->AlarmTime.TimeFormat));
 			} else {
 				sAlarm->AlarmTime.TimeFormat = 0x00U;
-				assert_param(
-				    IS_RTC_HOUR24(sAlarm->AlarmTime.Hours));
+				assert_param(IS_RTC_HOUR24(sAlarm->AlarmTime.Hours));
 			}
 			assert_param(IS_RTC_MINUTES(sAlarm->AlarmTime.Minutes));
 			assert_param(IS_RTC_SECONDS(sAlarm->AlarmTime.Seconds));
 
-			if (sAlarm->AlarmDateWeekDaySel ==
-			    RTC_ALARMDATEWEEKDAYSEL_DATE) {
-				assert_param(IS_RTC_ALARM_DATE_WEEKDAY_DATE(
-				    sAlarm->AlarmDateWeekDay));
+			if (sAlarm->AlarmDateWeekDaySel == RTC_ALARMDATEWEEKDAYSEL_DATE) {
+				assert_param(IS_RTC_ALARM_DATE_WEEKDAY_DATE(sAlarm->AlarmDateWeekDay));
 			} else {
-				assert_param(IS_RTC_ALARM_DATE_WEEKDAY_WEEKDAY(
-				    sAlarm->AlarmDateWeekDay));
+				assert_param(IS_RTC_ALARM_DATE_WEEKDAY_WEEKDAY(sAlarm->AlarmDateWeekDay));
 			}
-			tmpreg =
-			    (((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Hours)
-			      << RTC_ALRMAR_HU_Pos) |
-			     ((uint32_t)RTC_ByteToBcd2(
-				  sAlarm->AlarmTime.Minutes)
-			      << RTC_ALRMAR_MNU_Pos) |
-			     ((uint32_t)RTC_ByteToBcd2(
-				  sAlarm->AlarmTime.Seconds)
-			      << RTC_ALRMAR_SU_Pos) |
-			     ((uint32_t)(sAlarm->AlarmTime.TimeFormat)
-			      << RTC_ALRMAR_PM_Pos) |
-			     ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmDateWeekDay)
-			      << RTC_ALRMAR_DU_Pos) |
-			     ((uint32_t)sAlarm->AlarmDateWeekDaySel) |
-			     ((uint32_t)sAlarm->AlarmMask));
+			tmpreg = (((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Hours) << RTC_ALRMAR_HU_Pos) | ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Minutes) << RTC_ALRMAR_MNU_Pos) |
+				  ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Seconds) << RTC_ALRMAR_SU_Pos) | ((uint32_t)(sAlarm->AlarmTime.TimeFormat) << RTC_ALRMAR_PM_Pos) |
+				  ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmDateWeekDay) << RTC_ALRMAR_DU_Pos) | ((uint32_t)sAlarm->AlarmDateWeekDaySel) | ((uint32_t)sAlarm->AlarmMask));
 		} else /* format BCD */
 		{
 			if (READ_BIT(RTC->CR, RTC_CR_FMT) != 0U) {
-				assert_param(IS_RTC_HOUR12(
-				    RTC_Bcd2ToByte(sAlarm->AlarmTime.Hours)));
-				assert_param(IS_RTC_HOURFORMAT12(
-				    sAlarm->AlarmTime.TimeFormat));
+				assert_param(IS_RTC_HOUR12(RTC_Bcd2ToByte(sAlarm->AlarmTime.Hours)));
+				assert_param(IS_RTC_HOURFORMAT12(sAlarm->AlarmTime.TimeFormat));
 			} else {
 				sAlarm->AlarmTime.TimeFormat = 0x00U;
-				assert_param(IS_RTC_HOUR24(
-				    RTC_Bcd2ToByte(sAlarm->AlarmTime.Hours)));
+				assert_param(IS_RTC_HOUR24(RTC_Bcd2ToByte(sAlarm->AlarmTime.Hours)));
 			}
 
-			assert_param(IS_RTC_MINUTES(
-			    RTC_Bcd2ToByte(sAlarm->AlarmTime.Minutes)));
-			assert_param(IS_RTC_SECONDS(
-			    RTC_Bcd2ToByte(sAlarm->AlarmTime.Seconds)));
+			assert_param(IS_RTC_MINUTES(RTC_Bcd2ToByte(sAlarm->AlarmTime.Minutes)));
+			assert_param(IS_RTC_SECONDS(RTC_Bcd2ToByte(sAlarm->AlarmTime.Seconds)));
 
 #ifdef USE_FULL_ASSERT
-			if (sAlarm->AlarmDateWeekDaySel ==
-			    RTC_ALARMDATEWEEKDAYSEL_DATE) {
-				assert_param(IS_RTC_ALARM_DATE_WEEKDAY_DATE(
-				    RTC_Bcd2ToByte(sAlarm->AlarmDateWeekDay)));
+			if (sAlarm->AlarmDateWeekDaySel == RTC_ALARMDATEWEEKDAYSEL_DATE) {
+				assert_param(IS_RTC_ALARM_DATE_WEEKDAY_DATE(RTC_Bcd2ToByte(sAlarm->AlarmDateWeekDay)));
 			} else {
-				assert_param(IS_RTC_ALARM_DATE_WEEKDAY_WEEKDAY(
-				    RTC_Bcd2ToByte(sAlarm->AlarmDateWeekDay)));
+				assert_param(IS_RTC_ALARM_DATE_WEEKDAY_WEEKDAY(RTC_Bcd2ToByte(sAlarm->AlarmDateWeekDay)));
 			}
 
 #endif /* USE_FULL_ASSERT */
-			tmpreg = (((uint32_t)(sAlarm->AlarmTime.Hours)
-				   << RTC_ALRMAR_HU_Pos) |
-				  ((uint32_t)(sAlarm->AlarmTime.Minutes)
-				   << RTC_ALRMAR_MNU_Pos) |
-				  ((uint32_t)(sAlarm->AlarmTime.Seconds)
-				   << RTC_ALRMAR_SU_Pos) |
-				  ((uint32_t)(sAlarm->AlarmTime.TimeFormat)
-				   << RTC_ALRMAR_PM_Pos) |
-				  ((uint32_t)(sAlarm->AlarmDateWeekDay)
-				   << RTC_ALRMAR_DU_Pos) |
-				  ((uint32_t)sAlarm->AlarmDateWeekDaySel) |
-				  ((uint32_t)sAlarm->AlarmMask));
+			tmpreg = (((uint32_t)(sAlarm->AlarmTime.Hours) << RTC_ALRMAR_HU_Pos) | ((uint32_t)(sAlarm->AlarmTime.Minutes) << RTC_ALRMAR_MNU_Pos) |
+				  ((uint32_t)(sAlarm->AlarmTime.Seconds) << RTC_ALRMAR_SU_Pos) | ((uint32_t)(sAlarm->AlarmTime.TimeFormat) << RTC_ALRMAR_PM_Pos) |
+				  ((uint32_t)(sAlarm->AlarmDateWeekDay) << RTC_ALRMAR_DU_Pos) | ((uint32_t)sAlarm->AlarmDateWeekDaySel) | ((uint32_t)sAlarm->AlarmMask));
 		}
 	}
 
@@ -1320,8 +1179,7 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm(RTC_HandleTypeDef *hrtc,
 		WRITE_REG(RTC->SCR, RTC_SCR_CALRAF);
 
 		if (binaryMode == RTC_BINARY_ONLY) {
-			WRITE_REG(RTC->ALRMASSR, sAlarm->AlarmSubSecondMask |
-						     sAlarm->BinaryAutoClr);
+			WRITE_REG(RTC->ALRMASSR, sAlarm->AlarmSubSecondMask | sAlarm->BinaryAutoClr);
 		} else {
 			WRITE_REG(RTC->ALRMAR, tmpreg);
 			WRITE_REG(RTC->ALRMASSR, sAlarm->AlarmSubSecondMask);
@@ -1341,8 +1199,7 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm(RTC_HandleTypeDef *hrtc,
 		WRITE_REG(RTC->SCR, RTC_SCR_CALRBF);
 
 		if (binaryMode == RTC_BINARY_ONLY) {
-			WRITE_REG(RTC->ALRMBSSR, sAlarm->AlarmSubSecondMask |
-						     sAlarm->BinaryAutoClr);
+			WRITE_REG(RTC->ALRMBSSR, sAlarm->AlarmSubSecondMask | sAlarm->BinaryAutoClr);
 		} else {
 			WRITE_REG(RTC->ALRMBR, tmpreg);
 			WRITE_REG(RTC->ALRMBSSR, sAlarm->AlarmSubSecondMask);
@@ -1381,8 +1238,7 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm(RTC_HandleTypeDef *hrtc,
  *             @arg RTC_FORMAT_BCD: BCD format
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTC_SetAlarm_IT(RTC_HandleTypeDef *hrtc,
-				      RTC_AlarmTypeDef *sAlarm, uint32_t Format)
+HAL_StatusTypeDef HAL_RTC_SetAlarm_IT(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef *sAlarm, uint32_t Format)
 {
 	uint32_t tmpreg = 0, binaryMode;
 
@@ -1397,30 +1253,21 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm_IT(RTC_HandleTypeDef *hrtc,
 		assert_param(IS_RTC_FORMAT(Format));
 		assert_param(IS_RTC_ALARM(sAlarm->Alarm));
 		assert_param(IS_RTC_ALARM_MASK(sAlarm->AlarmMask));
-		assert_param(
-		    IS_RTC_ALARM_DATE_WEEKDAY_SEL(sAlarm->AlarmDateWeekDaySel));
-		assert_param(IS_RTC_ALARM_SUB_SECOND_VALUE(
-		    sAlarm->AlarmTime.SubSeconds));
-		assert_param(
-		    IS_RTC_ALARM_SUB_SECOND_MASK(sAlarm->AlarmSubSecondMask));
+		assert_param(IS_RTC_ALARM_DATE_WEEKDAY_SEL(sAlarm->AlarmDateWeekDaySel));
+		assert_param(IS_RTC_ALARM_SUB_SECOND_VALUE(sAlarm->AlarmTime.SubSeconds));
+		assert_param(IS_RTC_ALARM_SUB_SECOND_MASK(sAlarm->AlarmSubSecondMask));
 	} else if (READ_BIT(RTC->ICSR, RTC_ICSR_BIN) == RTC_BINARY_ONLY) {
-		assert_param(IS_RTC_ALARM_SUB_SECOND_BINARY_MASK(
-		    sAlarm->AlarmSubSecondMask));
-		assert_param(
-		    IS_RTC_ALARMSUBSECONDBIN_AUTOCLR(sAlarm->BinaryAutoClr));
+		assert_param(IS_RTC_ALARM_SUB_SECOND_BINARY_MASK(sAlarm->AlarmSubSecondMask));
+		assert_param(IS_RTC_ALARMSUBSECONDBIN_AUTOCLR(sAlarm->BinaryAutoClr));
 	} else /* RTC_BINARY_MIX */
 	{
 		assert_param(IS_RTC_FORMAT(Format));
 		assert_param(IS_RTC_ALARM(sAlarm->Alarm));
 		assert_param(IS_RTC_ALARM_MASK(sAlarm->AlarmMask));
-		assert_param(
-		    IS_RTC_ALARM_DATE_WEEKDAY_SEL(sAlarm->AlarmDateWeekDaySel));
+		assert_param(IS_RTC_ALARM_DATE_WEEKDAY_SEL(sAlarm->AlarmDateWeekDaySel));
 		/* In Binary Mix Mode, the RTC can not generate an alarm on a
 		 * match involving all calendar items + the upper SSR bits */
-		assert_param(
-		    (sAlarm->AlarmSubSecondMask >> RTC_ALRMASSR_MASKSS_Pos) <=
-		    (8U + (READ_BIT(RTC->ICSR, RTC_ICSR_BCDU) >>
-			   RTC_ICSR_BCDU_Pos)));
+		assert_param((sAlarm->AlarmSubSecondMask >> RTC_ALRMASSR_MASKSS_Pos) <= (8U + (READ_BIT(RTC->ICSR, RTC_ICSR_BCDU) >> RTC_ICSR_BCDU_Pos)));
 	}
 #endif
 
@@ -1430,82 +1277,47 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm_IT(RTC_HandleTypeDef *hrtc,
 	if (binaryMode != RTC_BINARY_ONLY) {
 		if (Format == RTC_FORMAT_BIN) {
 			if (READ_BIT(RTC->CR, RTC_CR_FMT) != 0U) {
-				assert_param(
-				    IS_RTC_HOUR12(sAlarm->AlarmTime.Hours));
-				assert_param(IS_RTC_HOURFORMAT12(
-				    sAlarm->AlarmTime.TimeFormat));
+				assert_param(IS_RTC_HOUR12(sAlarm->AlarmTime.Hours));
+				assert_param(IS_RTC_HOURFORMAT12(sAlarm->AlarmTime.TimeFormat));
 			} else {
 				sAlarm->AlarmTime.TimeFormat = 0x00U;
-				assert_param(
-				    IS_RTC_HOUR24(sAlarm->AlarmTime.Hours));
+				assert_param(IS_RTC_HOUR24(sAlarm->AlarmTime.Hours));
 			}
 			assert_param(IS_RTC_MINUTES(sAlarm->AlarmTime.Minutes));
 			assert_param(IS_RTC_SECONDS(sAlarm->AlarmTime.Seconds));
 
-			if (sAlarm->AlarmDateWeekDaySel ==
-			    RTC_ALARMDATEWEEKDAYSEL_DATE) {
-				assert_param(IS_RTC_ALARM_DATE_WEEKDAY_DATE(
-				    sAlarm->AlarmDateWeekDay));
+			if (sAlarm->AlarmDateWeekDaySel == RTC_ALARMDATEWEEKDAYSEL_DATE) {
+				assert_param(IS_RTC_ALARM_DATE_WEEKDAY_DATE(sAlarm->AlarmDateWeekDay));
 			} else {
-				assert_param(IS_RTC_ALARM_DATE_WEEKDAY_WEEKDAY(
-				    sAlarm->AlarmDateWeekDay));
+				assert_param(IS_RTC_ALARM_DATE_WEEKDAY_WEEKDAY(sAlarm->AlarmDateWeekDay));
 			}
-			tmpreg =
-			    (((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Hours)
-			      << RTC_ALRMAR_HU_Pos) |
-			     ((uint32_t)RTC_ByteToBcd2(
-				  sAlarm->AlarmTime.Minutes)
-			      << RTC_ALRMAR_MNU_Pos) |
-			     ((uint32_t)RTC_ByteToBcd2(
-				  sAlarm->AlarmTime.Seconds)
-			      << RTC_ALRMAR_SU_Pos) |
-			     ((uint32_t)(sAlarm->AlarmTime.TimeFormat)
-			      << RTC_ALRMAR_PM_Pos) |
-			     ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmDateWeekDay)
-			      << RTC_ALRMAR_DU_Pos) |
-			     ((uint32_t)sAlarm->AlarmDateWeekDaySel) |
-			     ((uint32_t)sAlarm->AlarmMask));
+			tmpreg = (((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Hours) << RTC_ALRMAR_HU_Pos) | ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Minutes) << RTC_ALRMAR_MNU_Pos) |
+				  ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Seconds) << RTC_ALRMAR_SU_Pos) | ((uint32_t)(sAlarm->AlarmTime.TimeFormat) << RTC_ALRMAR_PM_Pos) |
+				  ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmDateWeekDay) << RTC_ALRMAR_DU_Pos) | ((uint32_t)sAlarm->AlarmDateWeekDaySel) | ((uint32_t)sAlarm->AlarmMask));
 		} else /* Format BCD */
 		{
 			if (READ_BIT(RTC->CR, RTC_CR_FMT) != 0U) {
-				assert_param(IS_RTC_HOUR12(
-				    RTC_Bcd2ToByte(sAlarm->AlarmTime.Hours)));
-				assert_param(IS_RTC_HOURFORMAT12(
-				    sAlarm->AlarmTime.TimeFormat));
+				assert_param(IS_RTC_HOUR12(RTC_Bcd2ToByte(sAlarm->AlarmTime.Hours)));
+				assert_param(IS_RTC_HOURFORMAT12(sAlarm->AlarmTime.TimeFormat));
 			} else {
 				sAlarm->AlarmTime.TimeFormat = 0x00U;
-				assert_param(IS_RTC_HOUR24(
-				    RTC_Bcd2ToByte(sAlarm->AlarmTime.Hours)));
+				assert_param(IS_RTC_HOUR24(RTC_Bcd2ToByte(sAlarm->AlarmTime.Hours)));
 			}
 
-			assert_param(IS_RTC_MINUTES(
-			    RTC_Bcd2ToByte(sAlarm->AlarmTime.Minutes)));
-			assert_param(IS_RTC_SECONDS(
-			    RTC_Bcd2ToByte(sAlarm->AlarmTime.Seconds)));
+			assert_param(IS_RTC_MINUTES(RTC_Bcd2ToByte(sAlarm->AlarmTime.Minutes)));
+			assert_param(IS_RTC_SECONDS(RTC_Bcd2ToByte(sAlarm->AlarmTime.Seconds)));
 
 #ifdef USE_FULL_ASSERT
-			if (sAlarm->AlarmDateWeekDaySel ==
-			    RTC_ALARMDATEWEEKDAYSEL_DATE) {
-				assert_param(IS_RTC_ALARM_DATE_WEEKDAY_DATE(
-				    RTC_Bcd2ToByte(sAlarm->AlarmDateWeekDay)));
+			if (sAlarm->AlarmDateWeekDaySel == RTC_ALARMDATEWEEKDAYSEL_DATE) {
+				assert_param(IS_RTC_ALARM_DATE_WEEKDAY_DATE(RTC_Bcd2ToByte(sAlarm->AlarmDateWeekDay)));
 			} else {
-				assert_param(IS_RTC_ALARM_DATE_WEEKDAY_WEEKDAY(
-				    RTC_Bcd2ToByte(sAlarm->AlarmDateWeekDay)));
+				assert_param(IS_RTC_ALARM_DATE_WEEKDAY_WEEKDAY(RTC_Bcd2ToByte(sAlarm->AlarmDateWeekDay)));
 			}
 
 #endif /* USE_FULL_ASSERT */
-			tmpreg = (((uint32_t)(sAlarm->AlarmTime.Hours)
-				   << RTC_ALRMAR_HU_Pos) |
-				  ((uint32_t)(sAlarm->AlarmTime.Minutes)
-				   << RTC_ALRMAR_MNU_Pos) |
-				  ((uint32_t)(sAlarm->AlarmTime.Seconds)
-				   << RTC_ALRMAR_SU_Pos) |
-				  ((uint32_t)(sAlarm->AlarmTime.TimeFormat)
-				   << RTC_ALRMAR_PM_Pos) |
-				  ((uint32_t)(sAlarm->AlarmDateWeekDay)
-				   << RTC_ALRMAR_DU_Pos) |
-				  ((uint32_t)sAlarm->AlarmDateWeekDaySel) |
-				  ((uint32_t)sAlarm->AlarmMask));
+			tmpreg = (((uint32_t)(sAlarm->AlarmTime.Hours) << RTC_ALRMAR_HU_Pos) | ((uint32_t)(sAlarm->AlarmTime.Minutes) << RTC_ALRMAR_MNU_Pos) |
+				  ((uint32_t)(sAlarm->AlarmTime.Seconds) << RTC_ALRMAR_SU_Pos) | ((uint32_t)(sAlarm->AlarmTime.TimeFormat) << RTC_ALRMAR_PM_Pos) |
+				  ((uint32_t)(sAlarm->AlarmDateWeekDay) << RTC_ALRMAR_DU_Pos) | ((uint32_t)sAlarm->AlarmDateWeekDaySel) | ((uint32_t)sAlarm->AlarmMask));
 		}
 	}
 
@@ -1520,8 +1332,7 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm_IT(RTC_HandleTypeDef *hrtc,
 		WRITE_REG(RTC->SCR, RTC_SCR_CALRAF);
 
 		if (binaryMode == RTC_BINARY_ONLY) {
-			RTC->ALRMASSR =
-			    sAlarm->AlarmSubSecondMask | sAlarm->BinaryAutoClr;
+			RTC->ALRMASSR = sAlarm->AlarmSubSecondMask | sAlarm->BinaryAutoClr;
 		} else {
 			WRITE_REG(RTC->ALRMAR, tmpreg);
 			WRITE_REG(RTC->ALRMASSR, sAlarm->AlarmSubSecondMask);
@@ -1538,8 +1349,7 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm_IT(RTC_HandleTypeDef *hrtc,
 		WRITE_REG(RTC->SCR, RTC_SCR_CALRBF);
 
 		if (binaryMode == RTC_BINARY_ONLY) {
-			WRITE_REG(RTC->ALRMBSSR, sAlarm->AlarmSubSecondMask |
-						     sAlarm->BinaryAutoClr);
+			WRITE_REG(RTC->ALRMBSSR, sAlarm->AlarmSubSecondMask | sAlarm->BinaryAutoClr);
 		} else {
 			WRITE_REG(RTC->ALRMBR, tmpreg);
 			WRITE_REG(RTC->ALRMBSSR, sAlarm->AlarmSubSecondMask);
@@ -1578,8 +1388,7 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm_IT(RTC_HandleTypeDef *hrtc,
  *            @arg RTC_FORMAT_BCD: BCD data format
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTC_SetTime(RTC_HandleTypeDef *hrtc,
-				  RTC_TimeTypeDef *sTime, uint32_t Format)
+HAL_StatusTypeDef HAL_RTC_SetTime(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTime, uint32_t Format)
 {
 	uint32_t tmpreg;
 	HAL_StatusTypeDef status;
@@ -1603,8 +1412,7 @@ HAL_StatusTypeDef HAL_RTC_SetTime(RTC_HandleTypeDef *hrtc,
 		if (Format == RTC_FORMAT_BIN) {
 			if ((hrtc->Instance->CR & RTC_CR_FMT) != 0U) {
 				assert_param(IS_RTC_HOUR12(sTime->Hours));
-				assert_param(
-				    IS_RTC_HOURFORMAT12(sTime->TimeFormat));
+				assert_param(IS_RTC_HOURFORMAT12(sTime->TimeFormat));
 			} else {
 				sTime->TimeFormat = 0x00U;
 				assert_param(IS_RTC_HOUR24(sTime->Hours));
@@ -1612,35 +1420,20 @@ HAL_StatusTypeDef HAL_RTC_SetTime(RTC_HandleTypeDef *hrtc,
 			assert_param(IS_RTC_MINUTES(sTime->Minutes));
 			assert_param(IS_RTC_SECONDS(sTime->Seconds));
 
-			tmpreg =
-			    (uint32_t)(((uint32_t)RTC_ByteToBcd2(sTime->Hours)
-					<< RTC_TR_HU_Pos) |
-				       ((uint32_t)RTC_ByteToBcd2(sTime->Minutes)
-					<< RTC_TR_MNU_Pos) |
-				       ((uint32_t)RTC_ByteToBcd2(sTime->Seconds)
-					<< RTC_TR_SU_Pos) |
-				       (((uint32_t)sTime->TimeFormat)
-					<< RTC_TR_PM_Pos));
+			tmpreg = (uint32_t)(((uint32_t)RTC_ByteToBcd2(sTime->Hours) << RTC_TR_HU_Pos) | ((uint32_t)RTC_ByteToBcd2(sTime->Minutes) << RTC_TR_MNU_Pos) |
+					    ((uint32_t)RTC_ByteToBcd2(sTime->Seconds) << RTC_TR_SU_Pos) | (((uint32_t)sTime->TimeFormat) << RTC_TR_PM_Pos));
 		} else {
 			if ((hrtc->Instance->CR & RTC_CR_FMT) != 0U) {
-				assert_param(IS_RTC_HOUR12(
-				    RTC_Bcd2ToByte(sTime->Hours)));
-				assert_param(
-				    IS_RTC_HOURFORMAT12(sTime->TimeFormat));
+				assert_param(IS_RTC_HOUR12(RTC_Bcd2ToByte(sTime->Hours)));
+				assert_param(IS_RTC_HOURFORMAT12(sTime->TimeFormat));
 			} else {
 				sTime->TimeFormat = 0x00U;
-				assert_param(IS_RTC_HOUR24(
-				    RTC_Bcd2ToByte(sTime->Hours)));
+				assert_param(IS_RTC_HOUR24(RTC_Bcd2ToByte(sTime->Hours)));
 			}
-			assert_param(
-			    IS_RTC_MINUTES(RTC_Bcd2ToByte(sTime->Minutes)));
-			assert_param(
-			    IS_RTC_SECONDS(RTC_Bcd2ToByte(sTime->Seconds)));
-			tmpreg =
-			    (((uint32_t)(sTime->Hours) << RTC_TR_HU_Pos) |
-			     ((uint32_t)(sTime->Minutes) << RTC_TR_MNU_Pos) |
-			     ((uint32_t)(sTime->Seconds) << RTC_TR_SU_Pos) |
-			     ((uint32_t)(sTime->TimeFormat) << RTC_TR_PM_Pos));
+			assert_param(IS_RTC_MINUTES(RTC_Bcd2ToByte(sTime->Minutes)));
+			assert_param(IS_RTC_SECONDS(RTC_Bcd2ToByte(sTime->Seconds)));
+			tmpreg = (((uint32_t)(sTime->Hours) << RTC_TR_HU_Pos) | ((uint32_t)(sTime->Minutes) << RTC_TR_MNU_Pos) | ((uint32_t)(sTime->Seconds) << RTC_TR_SU_Pos) |
+				  ((uint32_t)(sTime->TimeFormat) << RTC_TR_PM_Pos));
 		}
 
 		/* Set the RTC_TR register */
@@ -1650,8 +1443,7 @@ HAL_StatusTypeDef HAL_RTC_SetTime(RTC_HandleTypeDef *hrtc,
 		hrtc->Instance->CR &= ((uint32_t)~RTC_CR_BKP);
 
 		/* Configure the RTC_CR register */
-		hrtc->Instance->CR |=
-		    (uint32_t)(sTime->DayLightSaving | sTime->StoreOperation);
+		hrtc->Instance->CR |= (uint32_t)(sTime->DayLightSaving | sTime->StoreOperation);
 
 		/* Exit Initialization mode */
 		status = RTC_ExitInitMode(hrtc);
@@ -1695,8 +1487,7 @@ HAL_StatusTypeDef HAL_RTC_SetTime(RTC_HandleTypeDef *hrtc,
  *            @arg RTC_FORMAT_BCD: BCD data format
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTC_GetTime(RTC_HandleTypeDef *hrtc,
-				  RTC_TimeTypeDef *sTime, uint32_t Format)
+HAL_StatusTypeDef HAL_RTC_GetTime(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTime, uint32_t Format)
 {
 	uint32_t tmpreg;
 
@@ -1708,19 +1499,15 @@ HAL_StatusTypeDef HAL_RTC_GetTime(RTC_HandleTypeDef *hrtc,
 
 	/* Get SecondFraction structure field from the corresponding register
 	 * field*/
-	sTime->SecondFraction =
-	    (uint32_t)(hrtc->Instance->PRER & RTC_PRER_PREDIV_S);
+	sTime->SecondFraction = (uint32_t)(hrtc->Instance->PRER & RTC_PRER_PREDIV_S);
 
 	/* Get the TR register */
 	tmpreg = (uint32_t)(hrtc->Instance->TR & RTC_TR_RESERVED_MASK);
 
 	/* Fill the structure fields with the read parameters */
-	sTime->Hours =
-	    (uint8_t)((tmpreg & (RTC_TR_HT | RTC_TR_HU)) >> RTC_TR_HU_Pos);
-	sTime->Minutes =
-	    (uint8_t)((tmpreg & (RTC_TR_MNT | RTC_TR_MNU)) >> RTC_TR_MNU_Pos);
-	sTime->Seconds =
-	    (uint8_t)((tmpreg & (RTC_TR_ST | RTC_TR_SU)) >> RTC_TR_SU_Pos);
+	sTime->Hours = (uint8_t)((tmpreg & (RTC_TR_HT | RTC_TR_HU)) >> RTC_TR_HU_Pos);
+	sTime->Minutes = (uint8_t)((tmpreg & (RTC_TR_MNT | RTC_TR_MNU)) >> RTC_TR_MNU_Pos);
+	sTime->Seconds = (uint8_t)((tmpreg & (RTC_TR_ST | RTC_TR_SU)) >> RTC_TR_SU_Pos);
 	sTime->TimeFormat = (uint8_t)((tmpreg & (RTC_TR_PM)) >> RTC_TR_PM_Pos);
 
 	/* Check the input parameters format */
@@ -1744,8 +1531,7 @@ HAL_StatusTypeDef HAL_RTC_GetTime(RTC_HandleTypeDef *hrtc,
  *            @arg RTC_FORMAT_BCD: BCD data format
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTC_SetDate(RTC_HandleTypeDef *hrtc,
-				  RTC_DateTypeDef *sDate, uint32_t Format)
+HAL_StatusTypeDef HAL_RTC_SetDate(RTC_HandleTypeDef *hrtc, RTC_DateTypeDef *sDate, uint32_t Format)
 {
 	uint32_t datetmpreg;
 	HAL_StatusTypeDef status;
@@ -1759,8 +1545,7 @@ HAL_StatusTypeDef HAL_RTC_SetDate(RTC_HandleTypeDef *hrtc,
 	hrtc->State = HAL_RTC_STATE_BUSY;
 
 	if ((Format == RTC_FORMAT_BIN) && ((sDate->Month & 0x10U) == 0x10U)) {
-		sDate->Month = (uint8_t)((sDate->Month & (uint8_t) ~(0x10U)) +
-					 (uint8_t)0x0AU);
+		sDate->Month = (uint8_t)((sDate->Month & (uint8_t) ~(0x10U)) + (uint8_t)0x0AU);
 	}
 
 	assert_param(IS_RTC_WEEKDAY(sDate->WeekDay));
@@ -1770,19 +1555,14 @@ HAL_StatusTypeDef HAL_RTC_SetDate(RTC_HandleTypeDef *hrtc,
 		assert_param(IS_RTC_MONTH(sDate->Month));
 		assert_param(IS_RTC_DATE(sDate->Date));
 
-		datetmpreg =
-		    (((uint32_t)RTC_ByteToBcd2(sDate->Year) << RTC_DR_YU_Pos) |
-		     ((uint32_t)RTC_ByteToBcd2(sDate->Month) << RTC_DR_MU_Pos) |
-		     ((uint32_t)RTC_ByteToBcd2(sDate->Date) << RTC_DR_DU_Pos) |
-		     ((uint32_t)sDate->WeekDay << RTC_DR_WDU_Pos));
+		datetmpreg = (((uint32_t)RTC_ByteToBcd2(sDate->Year) << RTC_DR_YU_Pos) | ((uint32_t)RTC_ByteToBcd2(sDate->Month) << RTC_DR_MU_Pos) |
+			      ((uint32_t)RTC_ByteToBcd2(sDate->Date) << RTC_DR_DU_Pos) | ((uint32_t)sDate->WeekDay << RTC_DR_WDU_Pos));
 	} else {
 		assert_param(IS_RTC_YEAR(RTC_Bcd2ToByte(sDate->Year)));
 		assert_param(IS_RTC_MONTH(RTC_Bcd2ToByte(sDate->Month)));
 		assert_param(IS_RTC_DATE(RTC_Bcd2ToByte(sDate->Date)));
 
-		datetmpreg = ((((uint32_t)sDate->Year) << RTC_DR_YU_Pos) |
-			      (((uint32_t)sDate->Month) << RTC_DR_MU_Pos) |
-			      (((uint32_t)sDate->Date) << RTC_DR_DU_Pos) |
+		datetmpreg = ((((uint32_t)sDate->Year) << RTC_DR_YU_Pos) | (((uint32_t)sDate->Month) << RTC_DR_MU_Pos) | (((uint32_t)sDate->Date) << RTC_DR_DU_Pos) |
 			      (((uint32_t)sDate->WeekDay) << RTC_DR_WDU_Pos));
 	}
 
@@ -1793,8 +1573,7 @@ HAL_StatusTypeDef HAL_RTC_SetDate(RTC_HandleTypeDef *hrtc,
 	status = RTC_EnterInitMode(hrtc);
 	if (status == HAL_OK) {
 		/* Set the RTC_DR register */
-		hrtc->Instance->DR =
-		    (uint32_t)(datetmpreg & RTC_DR_RESERVED_MASK);
+		hrtc->Instance->DR = (uint32_t)(datetmpreg & RTC_DR_RESERVED_MASK);
 
 		/* Exit Initialization mode */
 		status = RTC_ExitInitMode(hrtc);
@@ -1827,8 +1606,7 @@ HAL_StatusTypeDef HAL_RTC_SetDate(RTC_HandleTypeDef *hrtc,
  *            @arg RTC_FORMAT_BCD:  BCD data format
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTC_GetDate(RTC_HandleTypeDef *hrtc,
-				  RTC_DateTypeDef *sDate, uint32_t Format)
+HAL_StatusTypeDef HAL_RTC_GetDate(RTC_HandleTypeDef *hrtc, RTC_DateTypeDef *sDate, uint32_t Format)
 {
 	uint32_t datetmpreg;
 
@@ -1839,14 +1617,10 @@ HAL_StatusTypeDef HAL_RTC_GetDate(RTC_HandleTypeDef *hrtc,
 	datetmpreg = (uint32_t)(hrtc->Instance->DR & RTC_DR_RESERVED_MASK);
 
 	/* Fill the structure fields with the read parameters */
-	sDate->Year =
-	    (uint8_t)((datetmpreg & (RTC_DR_YT | RTC_DR_YU)) >> RTC_DR_YU_Pos);
-	sDate->Month =
-	    (uint8_t)((datetmpreg & (RTC_DR_MT | RTC_DR_MU)) >> RTC_DR_MU_Pos);
-	sDate->Date =
-	    (uint8_t)((datetmpreg & (RTC_DR_DT | RTC_DR_DU)) >> RTC_DR_DU_Pos);
-	sDate->WeekDay =
-	    (uint8_t)((datetmpreg & (RTC_DR_WDU)) >> RTC_DR_WDU_Pos);
+	sDate->Year = (uint8_t)((datetmpreg & (RTC_DR_YT | RTC_DR_YU)) >> RTC_DR_YU_Pos);
+	sDate->Month = (uint8_t)((datetmpreg & (RTC_DR_MT | RTC_DR_MU)) >> RTC_DR_MU_Pos);
+	sDate->Date = (uint8_t)((datetmpreg & (RTC_DR_DT | RTC_DR_DU)) >> RTC_DR_DU_Pos);
+	sDate->WeekDay = (uint8_t)((datetmpreg & (RTC_DR_WDU)) >> RTC_DR_WDU_Pos);
 
 	/* Check the input parameters format */
 	if (Format == RTC_FORMAT_BIN) {
@@ -1885,8 +1659,7 @@ HAL_StatusTypeDef HAL_RTC_GetDate(RTC_HandleTypeDef *hrtc,
  *             @arg RTC_FORMAT_BCD: BCD data format
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTC_SetAlarm(RTC_HandleTypeDef *hrtc,
-				   RTC_AlarmTypeDef *sAlarm, uint32_t Format)
+HAL_StatusTypeDef HAL_RTC_SetAlarm(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef *sAlarm, uint32_t Format)
 {
 	uint32_t tmpreg, subsecondtmpreg;
 
@@ -1894,10 +1667,8 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm(RTC_HandleTypeDef *hrtc,
 	assert_param(IS_RTC_FORMAT(Format));
 	assert_param(IS_RTC_ALARM(sAlarm->Alarm));
 	assert_param(IS_RTC_ALARM_MASK(sAlarm->AlarmMask));
-	assert_param(
-	    IS_RTC_ALARM_DATE_WEEKDAY_SEL(sAlarm->AlarmDateWeekDaySel));
-	assert_param(
-	    IS_RTC_ALARM_SUB_SECOND_VALUE(sAlarm->AlarmTime.SubSeconds));
+	assert_param(IS_RTC_ALARM_DATE_WEEKDAY_SEL(sAlarm->AlarmDateWeekDaySel));
+	assert_param(IS_RTC_ALARM_SUB_SECOND_VALUE(sAlarm->AlarmTime.SubSeconds));
 	assert_param(IS_RTC_ALARM_SUB_SECOND_MASK(sAlarm->AlarmSubSecondMask));
 
 	/* Process Locked */
@@ -1908,8 +1679,7 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm(RTC_HandleTypeDef *hrtc,
 	if (Format == RTC_FORMAT_BIN) {
 		if ((hrtc->Instance->CR & RTC_CR_FMT) != 0U) {
 			assert_param(IS_RTC_HOUR12(sAlarm->AlarmTime.Hours));
-			assert_param(
-			    IS_RTC_HOURFORMAT12(sAlarm->AlarmTime.TimeFormat));
+			assert_param(IS_RTC_HOURFORMAT12(sAlarm->AlarmTime.TimeFormat));
 		} else {
 			sAlarm->AlarmTime.TimeFormat = 0x00U;
 			assert_param(IS_RTC_HOUR24(sAlarm->AlarmTime.Hours));
@@ -1917,71 +1687,41 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm(RTC_HandleTypeDef *hrtc,
 		assert_param(IS_RTC_MINUTES(sAlarm->AlarmTime.Minutes));
 		assert_param(IS_RTC_SECONDS(sAlarm->AlarmTime.Seconds));
 
-		if (sAlarm->AlarmDateWeekDaySel ==
-		    RTC_ALARMDATEWEEKDAYSEL_DATE) {
-			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_DATE(
-			    sAlarm->AlarmDateWeekDay));
+		if (sAlarm->AlarmDateWeekDaySel == RTC_ALARMDATEWEEKDAYSEL_DATE) {
+			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_DATE(sAlarm->AlarmDateWeekDay));
 		} else {
-			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_WEEKDAY(
-			    sAlarm->AlarmDateWeekDay));
+			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_WEEKDAY(sAlarm->AlarmDateWeekDay));
 		}
-		tmpreg = (((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Hours)
-			   << RTC_ALRMAR_HU_Pos) |
-			  ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Minutes)
-			   << RTC_ALRMAR_MNU_Pos) |
-			  ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Seconds)
-			   << RTC_ALRMAR_SU_Pos) |
-			  ((uint32_t)(sAlarm->AlarmTime.TimeFormat)
-			   << RTC_ALRMAR_PM_Pos) |
-			  ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmDateWeekDay)
-			   << RTC_ALRMAR_DU_Pos) |
-			  ((uint32_t)sAlarm->AlarmDateWeekDaySel) |
-			  ((uint32_t)sAlarm->AlarmMask));
+		tmpreg = (((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Hours) << RTC_ALRMAR_HU_Pos) | ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Minutes) << RTC_ALRMAR_MNU_Pos) |
+			  ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Seconds) << RTC_ALRMAR_SU_Pos) | ((uint32_t)(sAlarm->AlarmTime.TimeFormat) << RTC_ALRMAR_PM_Pos) |
+			  ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmDateWeekDay) << RTC_ALRMAR_DU_Pos) | ((uint32_t)sAlarm->AlarmDateWeekDaySel) | ((uint32_t)sAlarm->AlarmMask));
 	} else {
 		if ((hrtc->Instance->CR & RTC_CR_FMT) != 0U) {
-			assert_param(IS_RTC_HOUR12(
-			    RTC_Bcd2ToByte(sAlarm->AlarmTime.Hours)));
-			assert_param(
-			    IS_RTC_HOURFORMAT12(sAlarm->AlarmTime.TimeFormat));
+			assert_param(IS_RTC_HOUR12(RTC_Bcd2ToByte(sAlarm->AlarmTime.Hours)));
+			assert_param(IS_RTC_HOURFORMAT12(sAlarm->AlarmTime.TimeFormat));
 		} else {
 			sAlarm->AlarmTime.TimeFormat = 0x00U;
-			assert_param(IS_RTC_HOUR24(
-			    RTC_Bcd2ToByte(sAlarm->AlarmTime.Hours)));
+			assert_param(IS_RTC_HOUR24(RTC_Bcd2ToByte(sAlarm->AlarmTime.Hours)));
 		}
 
-		assert_param(
-		    IS_RTC_MINUTES(RTC_Bcd2ToByte(sAlarm->AlarmTime.Minutes)));
-		assert_param(
-		    IS_RTC_SECONDS(RTC_Bcd2ToByte(sAlarm->AlarmTime.Seconds)));
+		assert_param(IS_RTC_MINUTES(RTC_Bcd2ToByte(sAlarm->AlarmTime.Minutes)));
+		assert_param(IS_RTC_SECONDS(RTC_Bcd2ToByte(sAlarm->AlarmTime.Seconds)));
 
 #ifdef USE_FULL_ASSERT
-		if (sAlarm->AlarmDateWeekDaySel ==
-		    RTC_ALARMDATEWEEKDAYSEL_DATE) {
-			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_DATE(
-			    RTC_Bcd2ToByte(sAlarm->AlarmDateWeekDay)));
+		if (sAlarm->AlarmDateWeekDaySel == RTC_ALARMDATEWEEKDAYSEL_DATE) {
+			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_DATE(RTC_Bcd2ToByte(sAlarm->AlarmDateWeekDay)));
 		} else {
-			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_WEEKDAY(
-			    RTC_Bcd2ToByte(sAlarm->AlarmDateWeekDay)));
+			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_WEEKDAY(RTC_Bcd2ToByte(sAlarm->AlarmDateWeekDay)));
 		}
 
 #endif /* USE_FULL_ASSERT */
-		tmpreg = (((uint32_t)(sAlarm->AlarmTime.Hours)
-			   << RTC_ALRMAR_HU_Pos) |
-			  ((uint32_t)(sAlarm->AlarmTime.Minutes)
-			   << RTC_ALRMAR_MNU_Pos) |
-			  ((uint32_t)(sAlarm->AlarmTime.Seconds)
-			   << RTC_ALRMAR_SU_Pos) |
-			  ((uint32_t)(sAlarm->AlarmTime.TimeFormat)
-			   << RTC_ALRMAR_PM_Pos) |
-			  ((uint32_t)(sAlarm->AlarmDateWeekDay)
-			   << RTC_ALRMAR_DU_Pos) |
-			  ((uint32_t)sAlarm->AlarmDateWeekDaySel) |
-			  ((uint32_t)sAlarm->AlarmMask));
+		tmpreg = (((uint32_t)(sAlarm->AlarmTime.Hours) << RTC_ALRMAR_HU_Pos) | ((uint32_t)(sAlarm->AlarmTime.Minutes) << RTC_ALRMAR_MNU_Pos) |
+			  ((uint32_t)(sAlarm->AlarmTime.Seconds) << RTC_ALRMAR_SU_Pos) | ((uint32_t)(sAlarm->AlarmTime.TimeFormat) << RTC_ALRMAR_PM_Pos) |
+			  ((uint32_t)(sAlarm->AlarmDateWeekDay) << RTC_ALRMAR_DU_Pos) | ((uint32_t)sAlarm->AlarmDateWeekDaySel) | ((uint32_t)sAlarm->AlarmMask));
 	}
 
 	/* Configure the Alarm A or Alarm B Sub Second registers */
-	subsecondtmpreg = (uint32_t)((uint32_t)(sAlarm->AlarmTime.SubSeconds) |
-				     (uint32_t)(sAlarm->AlarmSubSecondMask));
+	subsecondtmpreg = (uint32_t)((uint32_t)(sAlarm->AlarmTime.SubSeconds) | (uint32_t)(sAlarm->AlarmSubSecondMask));
 
 	/* Disable the write protection for RTC registers */
 	__HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
@@ -2083,8 +1823,7 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm(RTC_HandleTypeDef *hrtc,
  *             @arg RTC_FORMAT_BCD: BCD data format
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTC_SetAlarm_IT(RTC_HandleTypeDef *hrtc,
-				      RTC_AlarmTypeDef *sAlarm, uint32_t Format)
+HAL_StatusTypeDef HAL_RTC_SetAlarm_IT(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef *sAlarm, uint32_t Format)
 {
 	uint32_t tmpreg, subsecondtmpreg;
 
@@ -2092,10 +1831,8 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm_IT(RTC_HandleTypeDef *hrtc,
 	assert_param(IS_RTC_FORMAT(Format));
 	assert_param(IS_RTC_ALARM(sAlarm->Alarm));
 	assert_param(IS_RTC_ALARM_MASK(sAlarm->AlarmMask));
-	assert_param(
-	    IS_RTC_ALARM_DATE_WEEKDAY_SEL(sAlarm->AlarmDateWeekDaySel));
-	assert_param(
-	    IS_RTC_ALARM_SUB_SECOND_VALUE(sAlarm->AlarmTime.SubSeconds));
+	assert_param(IS_RTC_ALARM_DATE_WEEKDAY_SEL(sAlarm->AlarmDateWeekDaySel));
+	assert_param(IS_RTC_ALARM_SUB_SECOND_VALUE(sAlarm->AlarmTime.SubSeconds));
 	assert_param(IS_RTC_ALARM_SUB_SECOND_MASK(sAlarm->AlarmSubSecondMask));
 
 	/* Process Locked */
@@ -2106,8 +1843,7 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm_IT(RTC_HandleTypeDef *hrtc,
 	if (Format == RTC_FORMAT_BIN) {
 		if ((hrtc->Instance->CR & RTC_CR_FMT) != 0U) {
 			assert_param(IS_RTC_HOUR12(sAlarm->AlarmTime.Hours));
-			assert_param(
-			    IS_RTC_HOURFORMAT12(sAlarm->AlarmTime.TimeFormat));
+			assert_param(IS_RTC_HOURFORMAT12(sAlarm->AlarmTime.TimeFormat));
 		} else {
 			sAlarm->AlarmTime.TimeFormat = 0x00U;
 			assert_param(IS_RTC_HOUR24(sAlarm->AlarmTime.Hours));
@@ -2115,71 +1851,41 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm_IT(RTC_HandleTypeDef *hrtc,
 		assert_param(IS_RTC_MINUTES(sAlarm->AlarmTime.Minutes));
 		assert_param(IS_RTC_SECONDS(sAlarm->AlarmTime.Seconds));
 
-		if (sAlarm->AlarmDateWeekDaySel ==
-		    RTC_ALARMDATEWEEKDAYSEL_DATE) {
-			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_DATE(
-			    sAlarm->AlarmDateWeekDay));
+		if (sAlarm->AlarmDateWeekDaySel == RTC_ALARMDATEWEEKDAYSEL_DATE) {
+			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_DATE(sAlarm->AlarmDateWeekDay));
 		} else {
-			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_WEEKDAY(
-			    sAlarm->AlarmDateWeekDay));
+			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_WEEKDAY(sAlarm->AlarmDateWeekDay));
 		}
 
-		tmpreg = (((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Hours)
-			   << RTC_ALRMAR_HU_Pos) |
-			  ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Minutes)
-			   << RTC_ALRMAR_MNU_Pos) |
-			  ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Seconds)
-			   << RTC_ALRMAR_SU_Pos) |
-			  ((uint32_t)(sAlarm->AlarmTime.TimeFormat)
-			   << RTC_ALRMAR_PM_Pos) |
-			  ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmDateWeekDay)
-			   << RTC_ALRMAR_DU_Pos) |
-			  ((uint32_t)sAlarm->AlarmDateWeekDaySel) |
-			  ((uint32_t)sAlarm->AlarmMask));
+		tmpreg = (((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Hours) << RTC_ALRMAR_HU_Pos) | ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Minutes) << RTC_ALRMAR_MNU_Pos) |
+			  ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmTime.Seconds) << RTC_ALRMAR_SU_Pos) | ((uint32_t)(sAlarm->AlarmTime.TimeFormat) << RTC_ALRMAR_PM_Pos) |
+			  ((uint32_t)RTC_ByteToBcd2(sAlarm->AlarmDateWeekDay) << RTC_ALRMAR_DU_Pos) | ((uint32_t)sAlarm->AlarmDateWeekDaySel) | ((uint32_t)sAlarm->AlarmMask));
 	} else {
 		if ((hrtc->Instance->CR & RTC_CR_FMT) != 0U) {
-			assert_param(IS_RTC_HOUR12(
-			    RTC_Bcd2ToByte(sAlarm->AlarmTime.Hours)));
-			assert_param(
-			    IS_RTC_HOURFORMAT12(sAlarm->AlarmTime.TimeFormat));
+			assert_param(IS_RTC_HOUR12(RTC_Bcd2ToByte(sAlarm->AlarmTime.Hours)));
+			assert_param(IS_RTC_HOURFORMAT12(sAlarm->AlarmTime.TimeFormat));
 		} else {
 			sAlarm->AlarmTime.TimeFormat = 0x00U;
-			assert_param(IS_RTC_HOUR24(
-			    RTC_Bcd2ToByte(sAlarm->AlarmTime.Hours)));
+			assert_param(IS_RTC_HOUR24(RTC_Bcd2ToByte(sAlarm->AlarmTime.Hours)));
 		}
 
-		assert_param(
-		    IS_RTC_MINUTES(RTC_Bcd2ToByte(sAlarm->AlarmTime.Minutes)));
-		assert_param(
-		    IS_RTC_SECONDS(RTC_Bcd2ToByte(sAlarm->AlarmTime.Seconds)));
+		assert_param(IS_RTC_MINUTES(RTC_Bcd2ToByte(sAlarm->AlarmTime.Minutes)));
+		assert_param(IS_RTC_SECONDS(RTC_Bcd2ToByte(sAlarm->AlarmTime.Seconds)));
 
 #ifdef USE_FULL_ASSERT
-		if (sAlarm->AlarmDateWeekDaySel ==
-		    RTC_ALARMDATEWEEKDAYSEL_DATE) {
-			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_DATE(
-			    RTC_Bcd2ToByte(sAlarm->AlarmDateWeekDay)));
+		if (sAlarm->AlarmDateWeekDaySel == RTC_ALARMDATEWEEKDAYSEL_DATE) {
+			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_DATE(RTC_Bcd2ToByte(sAlarm->AlarmDateWeekDay)));
 		} else {
-			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_WEEKDAY(
-			    RTC_Bcd2ToByte(sAlarm->AlarmDateWeekDay)));
+			assert_param(IS_RTC_ALARM_DATE_WEEKDAY_WEEKDAY(RTC_Bcd2ToByte(sAlarm->AlarmDateWeekDay)));
 		}
 
 #endif /* USE_FULL_ASSERT */
-		tmpreg = (((uint32_t)(sAlarm->AlarmTime.Hours)
-			   << RTC_ALRMAR_HU_Pos) |
-			  ((uint32_t)(sAlarm->AlarmTime.Minutes)
-			   << RTC_ALRMAR_MNU_Pos) |
-			  ((uint32_t)(sAlarm->AlarmTime.Seconds)
-			   << RTC_ALRMAR_SU_Pos) |
-			  ((uint32_t)(sAlarm->AlarmTime.TimeFormat)
-			   << RTC_ALRMAR_PM_Pos) |
-			  ((uint32_t)(sAlarm->AlarmDateWeekDay)
-			   << RTC_ALRMAR_DU_Pos) |
-			  ((uint32_t)sAlarm->AlarmDateWeekDaySel) |
-			  ((uint32_t)sAlarm->AlarmMask));
+		tmpreg = (((uint32_t)(sAlarm->AlarmTime.Hours) << RTC_ALRMAR_HU_Pos) | ((uint32_t)(sAlarm->AlarmTime.Minutes) << RTC_ALRMAR_MNU_Pos) |
+			  ((uint32_t)(sAlarm->AlarmTime.Seconds) << RTC_ALRMAR_SU_Pos) | ((uint32_t)(sAlarm->AlarmTime.TimeFormat) << RTC_ALRMAR_PM_Pos) |
+			  ((uint32_t)(sAlarm->AlarmDateWeekDay) << RTC_ALRMAR_DU_Pos) | ((uint32_t)sAlarm->AlarmDateWeekDaySel) | ((uint32_t)sAlarm->AlarmMask));
 	}
 	/* Configure the Alarm A or Alarm B Sub Second registers */
-	subsecondtmpreg = (uint32_t)((uint32_t)(sAlarm->AlarmTime.SubSeconds) |
-				     (uint32_t)(sAlarm->AlarmSubSecondMask));
+	subsecondtmpreg = (uint32_t)((uint32_t)(sAlarm->AlarmTime.SubSeconds) | (uint32_t)(sAlarm->AlarmSubSecondMask));
 
 	/* Disable the write protection for RTC registers */
 	__HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
@@ -2281,8 +1987,7 @@ HAL_StatusTypeDef HAL_RTC_SetAlarm_IT(RTC_HandleTypeDef *hrtc,
  *            @arg RTC_ALARM_B:  AlarmB
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTC_DeactivateAlarm(RTC_HandleTypeDef *hrtc,
-					  uint32_t Alarm)
+HAL_StatusTypeDef HAL_RTC_DeactivateAlarm(RTC_HandleTypeDef *hrtc, uint32_t Alarm)
 {
 	/* Check the parameters */
 	assert_param(IS_RTC_ALARM(Alarm));
@@ -2383,9 +2088,7 @@ HAL_StatusTypeDef HAL_RTC_DeactivateAlarm(RTC_HandleTypeDef *hrtc,
  *             @arg RTC_FORMAT_BCD: BCD data format
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTC_GetAlarm(RTC_HandleTypeDef *hrtc,
-				   RTC_AlarmTypeDef *sAlarm, uint32_t Alarm,
-				   uint32_t Format)
+HAL_StatusTypeDef HAL_RTC_GetAlarm(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef *sAlarm, uint32_t Alarm, uint32_t Format)
 {
 	uint32_t tmpreg, subsecondtmpreg;
 
@@ -2398,65 +2101,39 @@ HAL_StatusTypeDef HAL_RTC_GetAlarm(RTC_HandleTypeDef *hrtc,
 		sAlarm->Alarm = RTC_ALARM_A;
 
 		tmpreg = (uint32_t)(hrtc->Instance->ALRMAR);
-		subsecondtmpreg =
-		    (uint32_t)((hrtc->Instance->ALRMASSR) & RTC_ALRMASSR_SS);
+		subsecondtmpreg = (uint32_t)((hrtc->Instance->ALRMASSR) & RTC_ALRMASSR_SS);
 
 		/* Fill the structure with the read parameters */
-		sAlarm->AlarmTime.Hours =
-		    (uint8_t)((tmpreg & (RTC_ALRMAR_HT | RTC_ALRMAR_HU)) >>
-			      RTC_ALRMAR_HU_Pos);
-		sAlarm->AlarmTime.Minutes =
-		    (uint8_t)((tmpreg & (RTC_ALRMAR_MNT | RTC_ALRMAR_MNU)) >>
-			      RTC_ALRMAR_MNU_Pos);
-		sAlarm->AlarmTime.Seconds =
-		    (uint8_t)((tmpreg & (RTC_ALRMAR_ST | RTC_ALRMAR_SU)) >>
-			      RTC_ALRMAR_SU_Pos);
-		sAlarm->AlarmTime.TimeFormat =
-		    (uint8_t)((tmpreg & RTC_ALRMAR_PM) >> RTC_ALRMAR_PM_Pos);
+		sAlarm->AlarmTime.Hours = (uint8_t)((tmpreg & (RTC_ALRMAR_HT | RTC_ALRMAR_HU)) >> RTC_ALRMAR_HU_Pos);
+		sAlarm->AlarmTime.Minutes = (uint8_t)((tmpreg & (RTC_ALRMAR_MNT | RTC_ALRMAR_MNU)) >> RTC_ALRMAR_MNU_Pos);
+		sAlarm->AlarmTime.Seconds = (uint8_t)((tmpreg & (RTC_ALRMAR_ST | RTC_ALRMAR_SU)) >> RTC_ALRMAR_SU_Pos);
+		sAlarm->AlarmTime.TimeFormat = (uint8_t)((tmpreg & RTC_ALRMAR_PM) >> RTC_ALRMAR_PM_Pos);
 		sAlarm->AlarmTime.SubSeconds = (uint32_t)subsecondtmpreg;
-		sAlarm->AlarmDateWeekDay =
-		    (uint8_t)((tmpreg & (RTC_ALRMAR_DT | RTC_ALRMAR_DU)) >>
-			      RTC_ALRMAR_DU_Pos);
-		sAlarm->AlarmDateWeekDaySel =
-		    (uint32_t)(tmpreg & RTC_ALRMAR_WDSEL);
+		sAlarm->AlarmDateWeekDay = (uint8_t)((tmpreg & (RTC_ALRMAR_DT | RTC_ALRMAR_DU)) >> RTC_ALRMAR_DU_Pos);
+		sAlarm->AlarmDateWeekDaySel = (uint32_t)(tmpreg & RTC_ALRMAR_WDSEL);
 		sAlarm->AlarmMask = (uint32_t)(tmpreg & RTC_ALARMMASK_ALL);
 	} else {
 		sAlarm->Alarm = RTC_ALARM_B;
 
 		tmpreg = (uint32_t)(hrtc->Instance->ALRMBR);
-		subsecondtmpreg =
-		    (uint32_t)((hrtc->Instance->ALRMBSSR) & RTC_ALRMBSSR_SS);
+		subsecondtmpreg = (uint32_t)((hrtc->Instance->ALRMBSSR) & RTC_ALRMBSSR_SS);
 
 		/* Fill the structure with the read parameters */
-		sAlarm->AlarmTime.Hours =
-		    (uint8_t)((tmpreg & (RTC_ALRMBR_HT | RTC_ALRMBR_HU)) >>
-			      RTC_ALRMBR_HU_Pos);
-		sAlarm->AlarmTime.Minutes =
-		    (uint8_t)((tmpreg & (RTC_ALRMBR_MNT | RTC_ALRMBR_MNU)) >>
-			      RTC_ALRMBR_MNU_Pos);
-		sAlarm->AlarmTime.Seconds =
-		    (uint8_t)((tmpreg & (RTC_ALRMBR_ST | RTC_ALRMBR_SU)) >>
-			      RTC_ALRMBR_SU_Pos);
-		sAlarm->AlarmTime.TimeFormat =
-		    (uint8_t)((tmpreg & RTC_ALRMBR_PM) >> RTC_ALRMBR_PM_Pos);
+		sAlarm->AlarmTime.Hours = (uint8_t)((tmpreg & (RTC_ALRMBR_HT | RTC_ALRMBR_HU)) >> RTC_ALRMBR_HU_Pos);
+		sAlarm->AlarmTime.Minutes = (uint8_t)((tmpreg & (RTC_ALRMBR_MNT | RTC_ALRMBR_MNU)) >> RTC_ALRMBR_MNU_Pos);
+		sAlarm->AlarmTime.Seconds = (uint8_t)((tmpreg & (RTC_ALRMBR_ST | RTC_ALRMBR_SU)) >> RTC_ALRMBR_SU_Pos);
+		sAlarm->AlarmTime.TimeFormat = (uint8_t)((tmpreg & RTC_ALRMBR_PM) >> RTC_ALRMBR_PM_Pos);
 		sAlarm->AlarmTime.SubSeconds = (uint32_t)subsecondtmpreg;
-		sAlarm->AlarmDateWeekDay =
-		    (uint8_t)((tmpreg & (RTC_ALRMBR_DT | RTC_ALRMBR_DU)) >>
-			      RTC_ALRMBR_DU_Pos);
-		sAlarm->AlarmDateWeekDaySel =
-		    (uint32_t)(tmpreg & RTC_ALRMBR_WDSEL);
+		sAlarm->AlarmDateWeekDay = (uint8_t)((tmpreg & (RTC_ALRMBR_DT | RTC_ALRMBR_DU)) >> RTC_ALRMBR_DU_Pos);
+		sAlarm->AlarmDateWeekDaySel = (uint32_t)(tmpreg & RTC_ALRMBR_WDSEL);
 		sAlarm->AlarmMask = (uint32_t)(tmpreg & RTC_ALARMMASK_ALL);
 	}
 
 	if (Format == RTC_FORMAT_BIN) {
-		sAlarm->AlarmTime.Hours =
-		    RTC_Bcd2ToByte(sAlarm->AlarmTime.Hours);
-		sAlarm->AlarmTime.Minutes =
-		    RTC_Bcd2ToByte(sAlarm->AlarmTime.Minutes);
-		sAlarm->AlarmTime.Seconds =
-		    RTC_Bcd2ToByte(sAlarm->AlarmTime.Seconds);
-		sAlarm->AlarmDateWeekDay =
-		    RTC_Bcd2ToByte(sAlarm->AlarmDateWeekDay);
+		sAlarm->AlarmTime.Hours = RTC_Bcd2ToByte(sAlarm->AlarmTime.Hours);
+		sAlarm->AlarmTime.Minutes = RTC_Bcd2ToByte(sAlarm->AlarmTime.Minutes);
+		sAlarm->AlarmTime.Seconds = RTC_Bcd2ToByte(sAlarm->AlarmTime.Seconds);
+		sAlarm->AlarmDateWeekDay = RTC_Bcd2ToByte(sAlarm->AlarmDateWeekDay);
 	}
 
 	return HAL_OK;
@@ -2518,10 +2195,7 @@ void HAL_RTC_DST_ClearStoreOperation(RTC_HandleTypeDef *hrtc)
  * @param  hrtc RTC handle
  * @retval operation see RTC_StoreOperation_Definitions
  */
-uint32_t HAL_RTC_DST_ReadStoreOperation(RTC_HandleTypeDef *hrtc)
-{
-	return READ_BIT(hrtc->Instance->CR, RTC_CR_BKP);
-}
+uint32_t HAL_RTC_DST_ReadStoreOperation(RTC_HandleTypeDef *hrtc) { return READ_BIT(hrtc->Instance->CR, RTC_CR_BKP); }
 
 /**
  * @brief  Handle Alarm interrupt request.
@@ -2533,8 +2207,7 @@ void HAL_RTC_AlarmIRQHandler(RTC_HandleTypeDef *hrtc)
 	/* Clear the EXTI's line Flag for RTC Alarm */
 	__HAL_RTC_ALARM_EXTI_CLEAR_FLAG();
 
-#if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) ||    \
-    defined(STM32L4Q5xx)
+#if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx)
 	/* Get interrupt status */
 	uint32_t tmp = hrtc->Instance->MISR;
 
@@ -2562,7 +2235,7 @@ void HAL_RTC_AlarmIRQHandler(RTC_HandleTypeDef *hrtc)
 #endif
 	}
 
-#else /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined           \
+#else /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                                                                                                   \
 	 (STM32L4P5xx) || defined (STM32L4Q5xx) */
 
 	/* Get the AlarmA interrupt source enable status */
@@ -2594,7 +2267,7 @@ void HAL_RTC_AlarmIRQHandler(RTC_HandleTypeDef *hrtc)
 #endif
 		}
 	}
-#endif /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined          \
+#endif /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                                                                                                  \
 	  (STM32L4P5xx) || defined (STM32L4Q5xx) */
 
 	/* Change RTC state */
@@ -2623,16 +2296,14 @@ __weak void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc)
  * @param  Timeout Timeout duration
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_RTC_PollForAlarmAEvent(RTC_HandleTypeDef *hrtc,
-					     uint32_t Timeout)
+HAL_StatusTypeDef HAL_RTC_PollForAlarmAEvent(RTC_HandleTypeDef *hrtc, uint32_t Timeout)
 {
 
 	uint32_t tickstart = HAL_GetTick();
 
 	while (__HAL_RTC_ALARM_GET_FLAG(hrtc, RTC_FLAG_ALRAF) == 0U) {
 		if (Timeout != HAL_MAX_DELAY) {
-			if (((HAL_GetTick() - tickstart) > Timeout) ||
-			    (Timeout == 0U)) {
+			if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
 				hrtc->State = HAL_RTC_STATE_TIMEOUT;
 				return HAL_TIMEOUT;
 			}
@@ -2688,8 +2359,7 @@ HAL_StatusTypeDef HAL_RTC_WaitForSynchro(RTC_HandleTypeDef *hrtc)
 #if defined(STM32L412xx) || defined(STM32L422xx)
 	/* Clear RSF flag, keep reserved bits at reset values (setting other
 	 * flags has no effect) */
-	hrtc->Instance->ICSR =
-	    ((uint32_t)(RTC_RSF_MASK & RTC_ICSR_RESERVED_MASK));
+	hrtc->Instance->ICSR = ((uint32_t)(RTC_RSF_MASK & RTC_ICSR_RESERVED_MASK));
 #elif defined(STM32L4P5xx) || defined(STM32L4Q5xx)
 	/* Clear RSF flag (use a read-modify-write sequence to preserve the
 	 * other read-write bits) */
@@ -2697,15 +2367,13 @@ HAL_StatusTypeDef HAL_RTC_WaitForSynchro(RTC_HandleTypeDef *hrtc)
 #else
 	/* Clear RSF flag, keep reserved bits at reset values (setting other
 	 * flags has no effect) */
-	hrtc->Instance->ISR =
-	    ((uint32_t)(RTC_RSF_MASK & RTC_ISR_RESERVED_MASK));
+	hrtc->Instance->ISR = ((uint32_t)(RTC_RSF_MASK & RTC_ISR_RESERVED_MASK));
 #endif
 
 	tickstart = HAL_GetTick();
 
 	/* Wait the registers to be synchronised */
-#if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) ||    \
-    defined(STM32L4Q5xx)
+#if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx)
 	while ((hrtc->Instance->ICSR & RTC_ICSR_RSF) == 0U)
 #else
 	while ((hrtc->Instance->ISR & RTC_ISR_RSF) == 0U)
@@ -2772,8 +2440,7 @@ HAL_StatusTypeDef RTC_EnterInitMode(RTC_HandleTypeDef *hrtc)
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check if the Initialization mode is set */
-#if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) ||    \
-    defined(STM32L4Q5xx)
+#if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx)
 	if ((hrtc->Instance->ICSR & RTC_ICSR_INITF) == 0U) {
 		/* Set the Initialization mode */
 		SET_BIT(hrtc->Instance->ICSR, RTC_ICSR_INIT);
@@ -2781,15 +2448,14 @@ HAL_StatusTypeDef RTC_EnterInitMode(RTC_HandleTypeDef *hrtc)
 		tickstart = HAL_GetTick();
 		/* Wait till RTC is in INIT state and if Time out is reached
 		 * exit */
-		while ((READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_INITF) == 0U) &&
-		       (status != HAL_TIMEOUT)) {
+		while ((READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_INITF) == 0U) && (status != HAL_TIMEOUT)) {
 			if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE) {
 				status = HAL_TIMEOUT;
 				hrtc->State = HAL_RTC_STATE_TIMEOUT;
 			}
 		}
 	}
-#else  /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined          \
+#else  /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                                                                                                  \
 	  (STM32L4P5xx) || defined (STM32L4Q5xx) */
 	if ((hrtc->Instance->ISR & RTC_ISR_INITF) == 0U) {
 		/* Set the Initialization mode */
@@ -2798,15 +2464,14 @@ HAL_StatusTypeDef RTC_EnterInitMode(RTC_HandleTypeDef *hrtc)
 		tickstart = HAL_GetTick();
 		/* Wait till RTC is in INIT state and if Time out is reached
 		 * exit */
-		while ((READ_BIT(hrtc->Instance->ISR, RTC_ISR_INITF) == 0U) &&
-		       (status != HAL_TIMEOUT)) {
+		while ((READ_BIT(hrtc->Instance->ISR, RTC_ISR_INITF) == 0U) && (status != HAL_TIMEOUT)) {
 			if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE) {
 				status = HAL_TIMEOUT;
 				hrtc->State = HAL_RTC_STATE_TIMEOUT;
 			}
 		}
 	}
-#endif /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined          \
+#endif /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                                                                                                  \
 	  (STM32L4P5xx) || defined (STM32L4Q5xx) */
 
 	return status;
@@ -2822,8 +2487,7 @@ HAL_StatusTypeDef RTC_ExitInitMode(RTC_HandleTypeDef *hrtc)
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Exit Initialization mode */
-#if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) ||    \
-    defined(STM32L4Q5xx)
+#if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx)
 	CLEAR_BIT(RTC->ICSR, RTC_ICSR_INIT);
 #else
 	/* Exit Initialization mode */

@@ -100,13 +100,9 @@ typedef struct {
 #define LL_LPGPIO_PIN_13 LPGPIO_BSRR_BS13 /*!< Select pin 13 */
 #define LL_LPGPIO_PIN_14 LPGPIO_BSRR_BS14 /*!< Select pin 14 */
 #define LL_LPGPIO_PIN_15 LPGPIO_BSRR_BS15 /*!< Select pin 15 */
-#define LL_LPGPIO_PIN_ALL                                                      \
-	(LPGPIO_BSRR_BS0 | LPGPIO_BSRR_BS1 | LPGPIO_BSRR_BS2 |                 \
-	 LPGPIO_BSRR_BS3 | LPGPIO_BSRR_BS4 | LPGPIO_BSRR_BS5 |                 \
-	 LPGPIO_BSRR_BS6 | LPGPIO_BSRR_BS7 | LPGPIO_BSRR_BS8 |                 \
-	 LPGPIO_BSRR_BS9 | LPGPIO_BSRR_BS10 | LPGPIO_BSRR_BS11 |               \
-	 LPGPIO_BSRR_BS12 | LPGPIO_BSRR_BS13 | LPGPIO_BSRR_BS14 |              \
-	 LPGPIO_BSRR_BS15) /*!< Select all pins */
+#define LL_LPGPIO_PIN_ALL                                                                                                                                                                              \
+	(LPGPIO_BSRR_BS0 | LPGPIO_BSRR_BS1 | LPGPIO_BSRR_BS2 | LPGPIO_BSRR_BS3 | LPGPIO_BSRR_BS4 | LPGPIO_BSRR_BS5 | LPGPIO_BSRR_BS6 | LPGPIO_BSRR_BS7 | LPGPIO_BSRR_BS8 | LPGPIO_BSRR_BS9 |           \
+	 LPGPIO_BSRR_BS10 | LPGPIO_BSRR_BS11 | LPGPIO_BSRR_BS12 | LPGPIO_BSRR_BS13 | LPGPIO_BSRR_BS14 | LPGPIO_BSRR_BS15) /*!< Select all pins */
 /**
  * @}
  */
@@ -140,8 +136,7 @@ typedef struct {
  * @param  __VALUE__ Value to be written in the register
  * @retval None
  */
-#define LL_LPGPIO_WriteReg(__INSTANCE__, __REG__, __VALUE__)                   \
-	WRITE_REG(__INSTANCE__->__REG__, (__VALUE__))
+#define LL_LPGPIO_WriteReg(__INSTANCE__, __REG__, __VALUE__) WRITE_REG(__INSTANCE__->__REG__, (__VALUE__))
 
 /**
  * @brief  Read a value in LPGPIO register
@@ -196,12 +191,7 @@ typedef struct {
  *         @arg @ref LL_LPGPIO_MODE_OUTPUT
  * @retval None
  */
-__STATIC_INLINE void LL_LPGPIO_SetPinMode(GPIO_TypeDef *LPGPIOx, uint32_t Pin,
-					  uint32_t Mode)
-{
-	MODIFY_REG(LPGPIOx->MODER, (LPGPIO_MODER_MOD0 << (POSITION_VAL(Pin))),
-		   (Mode << (POSITION_VAL(Pin))));
-}
+__STATIC_INLINE void LL_LPGPIO_SetPinMode(GPIO_TypeDef *LPGPIOx, uint32_t Pin, uint32_t Mode) { MODIFY_REG(LPGPIOx->MODER, (LPGPIO_MODER_MOD0 << (POSITION_VAL(Pin))), (Mode << (POSITION_VAL(Pin)))); }
 
 /**
  * @brief  Return lpgpio mode for a dedicated pin on dedicated port.
@@ -231,12 +221,9 @@ __STATIC_INLINE void LL_LPGPIO_SetPinMode(GPIO_TypeDef *LPGPIOx, uint32_t Pin,
  *         @arg @ref LL_LPGPIO_MODE_INPUT
  *         @arg @ref LL_LPGPIO_MODE_OUTPUT
  */
-__STATIC_INLINE uint32_t LL_LPGPIO_GetPinMode(const GPIO_TypeDef *LPGPIOx,
-					      uint32_t Pin)
+__STATIC_INLINE uint32_t LL_LPGPIO_GetPinMode(const GPIO_TypeDef *LPGPIOx, uint32_t Pin)
 {
-	return (uint32_t)(READ_BIT(LPGPIOx->MODER, (LPGPIO_MODER_MOD0
-						    << (POSITION_VAL(Pin)))) >>
-			  (POSITION_VAL(Pin)));
+	return (uint32_t)(READ_BIT(LPGPIOx->MODER, (LPGPIO_MODER_MOD0 << (POSITION_VAL(Pin)))) >> (POSITION_VAL(Pin)));
 }
 
 /**
@@ -253,10 +240,7 @@ __STATIC_INLINE uint32_t LL_LPGPIO_GetPinMode(const GPIO_TypeDef *LPGPIOx,
  * @param  LPGPIOx LPGPIO Port
  * @retval Input data register value of port
  */
-__STATIC_INLINE uint32_t LL_LPGPIO_ReadInputPort(const GPIO_TypeDef *LPGPIOx)
-{
-	return (uint32_t)(READ_REG(LPGPIOx->IDR));
-}
+__STATIC_INLINE uint32_t LL_LPGPIO_ReadInputPort(const GPIO_TypeDef *LPGPIOx) { return (uint32_t)(READ_REG(LPGPIOx->IDR)); }
 
 /**
  * @brief  Return if input data level for several pins of dedicated port is high
@@ -283,11 +267,7 @@ __STATIC_INLINE uint32_t LL_LPGPIO_ReadInputPort(const GPIO_TypeDef *LPGPIOx)
  *         @arg @ref LL_LPGPIO_PIN_ALL
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_LPGPIO_IsInputPinSet(const GPIO_TypeDef *LPGPIOx,
-						 uint32_t PinMask)
-{
-	return ((READ_BIT(LPGPIOx->IDR, PinMask) == (PinMask)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_LPGPIO_IsInputPinSet(const GPIO_TypeDef *LPGPIOx, uint32_t PinMask) { return ((READ_BIT(LPGPIOx->IDR, PinMask) == (PinMask)) ? 1UL : 0UL); }
 
 /**
   * @brief  Write output data register for the port.
@@ -297,11 +277,7 @@ __STATIC_INLINE uint32_t LL_LPGPIO_IsInputPinSet(const GPIO_TypeDef *LPGPIOx,
 	    Value between 0 and 0xFFFF
   * @retval None
   */
-__STATIC_INLINE void LL_LPGPIO_WriteOutputPort(GPIO_TypeDef *LPGPIOx,
-					       uint32_t PortValue)
-{
-	WRITE_REG(LPGPIOx->ODR, PortValue);
-}
+__STATIC_INLINE void LL_LPGPIO_WriteOutputPort(GPIO_TypeDef *LPGPIOx, uint32_t PortValue) { WRITE_REG(LPGPIOx->ODR, PortValue); }
 
 /**
  * @brief  Return full output data register value for a dedicated port.
@@ -309,10 +285,7 @@ __STATIC_INLINE void LL_LPGPIO_WriteOutputPort(GPIO_TypeDef *LPGPIOx,
  * @param  LPGPIOx LPGPIO Port
  * @retval Output data register value of port
  */
-__STATIC_INLINE uint32_t LL_LPGPIO_ReadOutputPort(const GPIO_TypeDef *LPGPIOx)
-{
-	return (uint32_t)(READ_REG(LPGPIOx->ODR));
-}
+__STATIC_INLINE uint32_t LL_LPGPIO_ReadOutputPort(const GPIO_TypeDef *LPGPIOx) { return (uint32_t)(READ_REG(LPGPIOx->ODR)); }
 
 /**
  * @brief  Return if input data level for several pins of dedicated port is high
@@ -339,11 +312,7 @@ __STATIC_INLINE uint32_t LL_LPGPIO_ReadOutputPort(const GPIO_TypeDef *LPGPIOx)
  *         @arg @ref LL_LPGPIO_PIN_ALL
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_LPGPIO_IsOutputPinSet(const GPIO_TypeDef *LPGPIOx,
-						  uint32_t PinMask)
-{
-	return ((READ_BIT(LPGPIOx->ODR, PinMask) == (PinMask)) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_LPGPIO_IsOutputPinSet(const GPIO_TypeDef *LPGPIOx, uint32_t PinMask) { return ((READ_BIT(LPGPIOx->ODR, PinMask) == (PinMask)) ? 1UL : 0UL); }
 
 /**
  * @brief  Set several pins to high level on dedicated gpio port.
@@ -369,11 +338,7 @@ __STATIC_INLINE uint32_t LL_LPGPIO_IsOutputPinSet(const GPIO_TypeDef *LPGPIOx,
  *         @arg @ref LL_LPGPIO_PIN_ALL
  * @retval None
  */
-__STATIC_INLINE void LL_LPGPIO_SetOutputPin(GPIO_TypeDef *LPGPIOx,
-					    uint32_t PinMask)
-{
-	WRITE_REG(LPGPIOx->BSRR, PinMask);
-}
+__STATIC_INLINE void LL_LPGPIO_SetOutputPin(GPIO_TypeDef *LPGPIOx, uint32_t PinMask) { WRITE_REG(LPGPIOx->BSRR, PinMask); }
 
 /**
  * @brief  Set several pins to low level on dedicated gpio port.
@@ -399,11 +364,7 @@ __STATIC_INLINE void LL_LPGPIO_SetOutputPin(GPIO_TypeDef *LPGPIOx,
  *         @arg @ref LL_LPGPIO_PIN_ALL
  * @retval None
  */
-__STATIC_INLINE void LL_LPGPIO_ResetOutputPin(GPIO_TypeDef *LPGPIOx,
-					      uint32_t PinMask)
-{
-	WRITE_REG(LPGPIOx->BRR, PinMask);
-}
+__STATIC_INLINE void LL_LPGPIO_ResetOutputPin(GPIO_TypeDef *LPGPIOx, uint32_t PinMask) { WRITE_REG(LPGPIOx->BRR, PinMask); }
 
 /**
  * @brief  Toggle data value for several pin of dedicated port.
@@ -429,11 +390,7 @@ __STATIC_INLINE void LL_LPGPIO_ResetOutputPin(GPIO_TypeDef *LPGPIOx,
  *         @arg @ref LL_LPGPIO_PIN_ALL
  * @retval None
  */
-__STATIC_INLINE void LL_LPGPIO_TogglePin(GPIO_TypeDef *LPGPIOx,
-					 uint32_t PinMask)
-{
-	WRITE_REG(LPGPIOx->ODR, READ_REG(LPGPIOx->ODR) ^ PinMask);
-}
+__STATIC_INLINE void LL_LPGPIO_TogglePin(GPIO_TypeDef *LPGPIOx, uint32_t PinMask) { WRITE_REG(LPGPIOx->ODR, READ_REG(LPGPIOx->ODR) ^ PinMask); }
 
 /**
  * @}
@@ -449,9 +406,7 @@ __STATIC_INLINE void LL_LPGPIO_TogglePin(GPIO_TypeDef *LPGPIOx,
  */
 
 ErrorStatus LL_LPGPIO_DeInit(const GPIO_TypeDef *LPGPIOx);
-ErrorStatus
-LL_LPGPIO_Init(GPIO_TypeDef *LPGPIOx,
-	       const LL_LPGPIO_InitTypeDef *const LPGPIO_InitStruct);
+ErrorStatus LL_LPGPIO_Init(GPIO_TypeDef *LPGPIOx, const LL_LPGPIO_InitTypeDef *const LPGPIO_InitStruct);
 void LL_LPGPIO_StructInit(LL_LPGPIO_InitTypeDef *LPGPIO_InitStruct);
 
 /**

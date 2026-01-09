@@ -99,8 +99,7 @@
  * @param  AnalogFilter New state of the Analog filter.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_I2CEx_ConfigAnalogFilter(I2C_HandleTypeDef *hi2c,
-					       uint32_t AnalogFilter)
+HAL_StatusTypeDef HAL_I2CEx_ConfigAnalogFilter(I2C_HandleTypeDef *hi2c, uint32_t AnalogFilter)
 {
 	/* Check the parameters */
 	assert_param(IS_I2C_ALL_INSTANCE(hi2c->Instance));
@@ -143,8 +142,7 @@ HAL_StatusTypeDef HAL_I2CEx_ConfigAnalogFilter(I2C_HandleTypeDef *hi2c,
  * Min_Data=0x00 and Max_Data=0x0F.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_I2CEx_ConfigDigitalFilter(I2C_HandleTypeDef *hi2c,
-						uint32_t DigitalFilter)
+HAL_StatusTypeDef HAL_I2CEx_ConfigDigitalFilter(I2C_HandleTypeDef *hi2c, uint32_t DigitalFilter)
 {
 	uint32_t tmpreg;
 

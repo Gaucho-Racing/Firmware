@@ -171,9 +171,7 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 		Status = HAL_RTC_Init(&hRTC_Handle);
 
 #if (USE_HAL_RTC_REGISTER_CALLBACKS == 1U)
-		HAL_RTC_RegisterCallback(&hRTC_Handle,
-					 HAL_RTC_ALARM_A_EVENT_CB_ID,
-					 TimeBase_RTC_AlarmAEventCallback);
+		HAL_RTC_RegisterCallback(&hRTC_Handle, HAL_RTC_ALARM_A_EVENT_CB_ID, TimeBase_RTC_AlarmAEventCallback);
 #endif /* USE_HAL_RTC_REGISTER_CALLBACKS */
 	}
 
@@ -184,13 +182,11 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 		/* RTC Alarm Generation */
 		RTC_AlarmStructure.Alarm = RTC_ALARM_A;
 		RTC_AlarmStructure.AlarmDateWeekDay = RTC_WEEKDAY_MONDAY;
-		RTC_AlarmStructure.AlarmDateWeekDaySel =
-		    RTC_ALARMDATEWEEKDAYSEL_DATE;
+		RTC_AlarmStructure.AlarmDateWeekDaySel = RTC_ALARMDATEWEEKDAYSEL_DATE;
 		/* Mask all and keep only subsecond, to have one match in each
 		 * time base 1ms(uwTickFreq) */
 		RTC_AlarmStructure.AlarmMask = RTC_ALARMMASK_ALL;
-		RTC_AlarmStructure.AlarmSubSecondMask =
-		    RTC_ALARMSUBSECONDMASK_NONE;
+		RTC_AlarmStructure.AlarmSubSecondMask = RTC_ALARMSUBSECONDMASK_NONE;
 		RTC_AlarmStructure.AlarmTime.TimeFormat = RTC_HOURFORMAT_24;
 		RTC_AlarmStructure.AlarmTime.Hours = 0;
 		RTC_AlarmStructure.AlarmTime.Minutes = 0;
@@ -198,8 +194,7 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 		RTC_AlarmStructure.AlarmTime.SubSeconds = 0;
 
 		/* Set the specified RTC Alarm with Interrupt */
-		Status = HAL_RTC_SetAlarm_IT(&hRTC_Handle, &RTC_AlarmStructure,
-					     RTC_FORMAT_BCD);
+		Status = HAL_RTC_SetAlarm_IT(&hRTC_Handle, &RTC_AlarmStructure, RTC_FORMAT_BCD);
 	}
 
 	if (TickPriority < (1UL << __NVIC_PRIO_BITS)) {

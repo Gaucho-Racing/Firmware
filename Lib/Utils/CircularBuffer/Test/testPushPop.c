@@ -97,8 +97,7 @@ int main(void)
 		GR_CircularBuffer_Push(buffer_ptr, &arr3[i], sizeof(arr3[i]));
 	}
 
-	tmp = GR_CircularBuffer_Pop(
-	    buffer_ptr); // Should contain the last pushed element, 1
+	tmp = GR_CircularBuffer_Pop(buffer_ptr); // Should contain the last pushed element, 1
 	if (*tmp != 2) {
 		free(tmp);
 		return 7;
@@ -206,14 +205,12 @@ int main(void)
 		}
 		{
 			A_Struct *tmp = GR_CircularBuffer_Pop(buffer_ptr);
-			success_cases +=
-			    (tmp->data1 == 114514 && tmp->data2 == 810);
+			success_cases += (tmp->data1 == 114514 && tmp->data2 == 810);
 			free(tmp);
 		}
 		{
 			Another_Struct *tmp = GR_CircularBuffer_Pop(buffer_ptr);
-			success_cases +=
-			    (tmp->f == 1024.0f && tmp->d == 2048.0);
+			success_cases += (tmp->f == 1024.0f && tmp->d == 2048.0);
 			free(tmp);
 		}
 		GR_CircularBuffer_Free(&buffer_ptr);

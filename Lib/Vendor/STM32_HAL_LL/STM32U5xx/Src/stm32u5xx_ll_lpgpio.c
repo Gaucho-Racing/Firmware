@@ -44,12 +44,9 @@
 /** @addtogroup LPGPIO_LL_Private_Macros
  * @{
  */
-#define IS_LL_LPGPIO_PIN(__VALUE__)                                            \
-	(((0x00000000U) < (__VALUE__)) && ((__VALUE__) <= (LL_LPGPIO_PIN_ALL)))
+#define IS_LL_LPGPIO_PIN(__VALUE__) (((0x00000000U) < (__VALUE__)) && ((__VALUE__) <= (LL_LPGPIO_PIN_ALL)))
 
-#define IS_LL_LPGPIO_MODE(__VALUE__)                                           \
-	(((__VALUE__) == LL_LPGPIO_MODE_INPUT) ||                              \
-	 ((__VALUE__) == LL_LPGPIO_MODE_OUTPUT))
+#define IS_LL_LPGPIO_MODE(__VALUE__) (((__VALUE__) == LL_LPGPIO_MODE_INPUT) || ((__VALUE__) == LL_LPGPIO_MODE_OUTPUT))
 
 /**
  * @}
@@ -104,8 +101,7 @@ ErrorStatus LL_LPGPIO_DeInit(const GPIO_TypeDef *LPGPIOx)
  * LPGPIO_InitStruct content
  *          - ERROR:   Not applicable
  */
-ErrorStatus LL_LPGPIO_Init(GPIO_TypeDef *LPGPIOx,
-			   const LL_LPGPIO_InitTypeDef *const LPGPIO_InitStruct)
+ErrorStatus LL_LPGPIO_Init(GPIO_TypeDef *LPGPIOx, const LL_LPGPIO_InitTypeDef *const LPGPIO_InitStruct)
 {
 	uint32_t pinpos;
 	uint32_t currentpin;
@@ -126,8 +122,7 @@ ErrorStatus LL_LPGPIO_Init(GPIO_TypeDef *LPGPIOx,
 
 		if (currentpin != 0U) {
 			/* Pin Mode configuration */
-			LL_LPGPIO_SetPinMode(LPGPIOx, currentpin,
-					     LPGPIO_InitStruct->Mode);
+			LL_LPGPIO_SetPinMode(LPGPIOx, currentpin, LPGPIO_InitStruct->Mode);
 		}
 		pinpos++;
 	}
