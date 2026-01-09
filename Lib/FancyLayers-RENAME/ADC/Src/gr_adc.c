@@ -31,27 +31,22 @@ ADC_TypeDef *GetADC(unsigned long adc)
 	// return 1;
 }
 
-void ADC_Group_Init(unsigned long ADC, Pre_Scaler_Values PS_Val)
+void ADC_Group_Init(ADC_TypeDef* ADC, Pre_Scaler_Values PS_Val)
 {
 	LL_ADC_CommonInitTypeDef ADC_CommonInitStruct = {0};
 	ADC_CommonInitStruct.CommonClock = PS_Val;
 	ADC_CommonInitStruct.Multimode = LL_ADC_MULTI_INDEPENDENT;
-	if (ADC > ADC2) {
-		LL_ADC_CommonInit(__LL_ADC_COMMON_INSTANCE(ADC3),
+	LL_ADC_CommonInit(__LL_ADC_COMMON_INSTANCE(ADC),
 				  &ADC_CommonInitStruct);
-	} else {
-		LL_ADC_CommonInit(__LL_ADC_COMMON_INSTANCE(ADC1),
-				  &ADC_CommonInitStruct);
-	}
 }
 
-void ADC_Init(unsigned long ADC, Resolution res, Alignment align)
+void ADC_Init(ADC_TypeDef* ADC, Resolution res, Alignment align)
 {
 	LL_ADC_InitTypeDef ADC_InitStruct = {0};
 	ADC_InitStruct.Resolution = res;
 	ADC_InitStruct.DataAlignment = align;
 	ADC_InitStruct.LowPowerMode = LL_ADC_LP_MODE_NONE;
-	LL_ADC_Init(GetADC(ADC), &ADC_InitStruct);
+	LL_ADC_Init(ADC, &ADC_InitStruct);
 }
 // FIXME: ADC_TYPEDEF* is here for now. We may need to fix later. Originally was
 // an unsigned long
@@ -81,12 +76,12 @@ void ADC_Init_Pins(Pin_Ports *input)
 	LL_GPIO_Init(input->port, &GPIO_InitStruct);
 }
 
-void ADC_Channel_Init(unsigned long adc, Rank rank, Channel channel,
+void ADC_Channel_Init(ADC_TypeDef *ADC, Rank rank, Channel channel,
 		      ChannelSingleDiff diff, SamplingTime time)
 {
-	LL_ADC_REG_SetSequencerRanks(GetADC(adc), rank, channel);
-	LL_ADC_SetChannelSamplingTime(GetADC(adc), channel, time);
-	LL_ADC_SetChannelSingleDiff(GetADC(adc), channel, diff);
+	LL_ADC_REG_SetSequencerRanks(ADC, rank, channel);
+	LL_ADC_SetChannelSamplingTime(ADC, channel, time);
+	LL_ADC_SetChannelSingleDiff(ADC, channel, diff);
 }
 
 void ADC_Set_Common_Clock(ADC_Common_TypeDef *ADC_Common,
@@ -103,7 +98,7 @@ CommonClock ADC_Get_Common_Clock(ADC_Common_TypeDef *ADC_Common)
 // compile
 void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, uint32_t src_address,
 	      uint32_t dest_address, uint32_t p_data_size, uint32_t m_data_size,
-	      uint32_t num_data, uint32_t ADC, DMA_Priority priority)
+	      uint32_t num_data, ADC_TypeDef* ADC, DMA_Priority priority)
 {
 	LL_DMA_InitTypeDef config = {0};
 	config.PeriphOrM2MSrcAddress = src_address;

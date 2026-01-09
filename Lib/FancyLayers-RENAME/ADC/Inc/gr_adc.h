@@ -40,10 +40,10 @@ typedef struct {
 } Pin_Ports;
 
 // Initializes an ADC group
-void ADC_Group_Init(unsigned long ADC, Pre_Scaler_Values PS_Val);
+void ADC_Group_Init(ADC_TypeDef* ADC, Pre_Scaler_Values PS_Val);
 
 // Initializes each individual ADC
-void ADC_Init(unsigned long ADC, Resolution res, Alignment align);
+void ADC_Init(ADC_TypeDef* ADC, Resolution res, Alignment align);
 
 // Initialize a single port and all the pins used on that port
 void ADC_Init_Pins(Pin_Ports *input);
@@ -141,7 +141,7 @@ typedef enum {
 
 // Initialize each channel TODO: combine pin initialization with channel
 // initialization
-void ADC_Channel_Init(unsigned long adc, Rank rank, Channel channel,
+void ADC_Channel_Init(ADC_TypeDef *adc, Rank rank, Channel channel,
 		      ChannelSingleDiff diff, SamplingTime time);
 
 /* 3 Init Function
@@ -194,7 +194,7 @@ typedef enum {
 
 void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, uint32_t src_address,
 	      uint32_t dest_address, uint32_t p_data_size, uint32_t m_data_size,
-	      uint32_t num_data, uint32_t ADC, DMA_Priority priority);
+	      uint32_t num_data, ADC_TypeDef* ADC, DMA_Priority priority);
 
 // TODO:
 void ADC_UpdateSmooth();
