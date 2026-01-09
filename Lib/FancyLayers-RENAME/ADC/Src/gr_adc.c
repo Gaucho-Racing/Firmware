@@ -81,6 +81,23 @@ void ADC_Channel_Init(ADC_TypeDef *ADC, Rank rank, Channel channel,
 	LL_ADC_SetChannelSingleDiff(ADC, channel, diff);
 }
 
+// Enable ADC with proper calibration and voltage regulator handling
+void ADC_Enable_And_Calibrate(ADC_TypeDef *ADC)
+{
+	LL_ADC_StartCalibration(ADC, LL_ADC_SINGLE_ENDED);
+	while (LL_ADC_IsCalibrationOnGoing(ADC));
+
+	LL_ADC_Enable(ADC);
+	while (!LL_ADC_IsEnabled(ADC));
+
+	// Enable voltage regulator after ADC enable
+	ADC->CR |= ADC_CR_ADVREGEN;
+	ADC->CR &= ~ADC_CR_DEEPPWD;
+	LL_mDelay(1);
+
+	LL_ADC_REG_StartConversion(ADC);
+}
+
 void ADC_Set_Common_Clock(ADC_Common_TypeDef *ADC_Common,
 			  CommonClock commonClock)
 {

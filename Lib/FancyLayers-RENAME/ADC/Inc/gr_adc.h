@@ -3,6 +3,8 @@
 #ifndef GR_PERIPHERALS_ADC
 #define GR_PERIPHERALS_ADC
 
+void ADC_Enable_And_Calibrate(ADC_TypeDef *ADC);
+
 // What the prescaler value
 typedef enum {
 	PS_1 = LL_ADC_CLOCK_ASYNC_DIV1,

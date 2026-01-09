@@ -104,13 +104,8 @@ void ADC_Configure(void)
 		 (uint32_t)&buffer, LL_DMA_PDATAALIGN_HALFWORD,
 		 LL_DMA_MDATAALIGN_HALFWORD, 1, ADC1, HIGH);
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
-	LL_ADC_Enable(ADC1);
-	while (!LL_ADC_IsEnabled(ADC1)) {
-		// Wait
-	}
 
-	// Start ADC Conversions
-	LL_ADC_REG_StartConversion(ADC1);
+	ADC_Enable_And_Calibrate(ADC1);
 }
 /* USER CODE END 0 */
 
