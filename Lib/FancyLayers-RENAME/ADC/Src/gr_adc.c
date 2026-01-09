@@ -9,7 +9,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 
-#include "adc.h"
+#include "gr_adc.h"
 
 #include "main.h"
 
@@ -101,3 +101,28 @@ void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, LL_DMA_InitTypeDef *config)
 {
 	LL_DMA_Init(DMA, channel, config);
 }
+
+const int WINDOW_SIZE = 100;
+struct {
+    uint16_t adc1buf[6];
+    uint16_t adc2buf[5];
+} adcBuffers;
+
+// float adcSumValues[11];
+// uint16_t adcDataValues[11][WINDOW_SIZE] = {0};
+// uint8_t readIndex = 0;
+
+// void ADC_UpdateSmooth() {
+//     float newValue;
+
+//     for (uint8_t sig = AUX_SIGNAL; sig <= STEERING_ANGLE; sig++)
+//     {
+//         newValue = (float)analogRead(sig);
+//         adcSumValues[sig] -= adcDataValues[sig][readIndex];
+//         adcDataValues[sig][readIndex] = newValue;
+//         adcSumValues[sig] += newValue;
+//         ((float*)&globalAnalog)[sig] = adcSumValues[sig] / WINDOW_SIZE;
+//     }
+
+//     readIndex = (readIndex + 1) % WINDOW_SIZE;
+// }
