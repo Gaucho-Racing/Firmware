@@ -37,6 +37,7 @@ include("${platform_path}/STM32L476xG/chip.cmake")
 include("${lib_path}/GlobalShare/common.cmake")
 include("${lib_path}/Utils/CircularBuffer/circular-buffer-lib.cmake")
 include("${lib_path}/cmake/gr-lib.cmake")
+include("${lib_path}/FancyLayers-RENAME/SPI/spi.cmake")
 include("${lib_path}/Utils/BitManipulations/bit-utils.cmake")
 
 # Peripherals

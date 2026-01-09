@@ -1,20 +1,28 @@
-#include "circularBuffer.h"
-
 #ifndef SPI_H
 #define SPI_H
+
+#include "circularBuffer.h"
+#include "stm32g4xx_ll_spi.h"
+#include "stm32g4xx_ll_gpio.h"
+#include "stm32g4xx_ll_rcc.h"
+#include "stm32g4xx_ll_bus.h"
 
 #define GR_SPI_UNKNOWN_IRQN -64
 #define GR_SPI_BUFFER_MESSAGE_CAPACITY 16
 
-static GR_SPI_Handler* GR_SPI_HANDLER_LUT[3]; //Stores pointer to the handler structs for SPI1 (0), SPI2 (1), & SPI3 (2)
+// Generic type
+typedef struct {
+    uint8_t* data; //byte array
+    uint16_t size;
+} GR_SPI_Message;
 
 typedef struct {
     SPI_TypeDef* SPIx; // Pointer to SPI register wrapper (e.g. SPI1, SPI2, SPI3 macro defines)
     //COPI, CIPO, SCLK, CS
-    GPIO_TypeDef* GPIOx[4]; // Pointer to GPIO port register wrapper (e.g. GPIOA, GPIOB, GPIOC, etc. macro defines)
+    GPIO_TypeDef** GPIOx; // Pointer to GPIO port register wrapper (e.g. GPIOA, GPIOB, GPIOC, etc. macro defines)
     //COPI, CIPO, SCLK, CS
-    uint32_t pin_nums[4]; // SPI pin numbers (e.g. LL_GPIO_PIN_0, LL_GPIO_PIN_1, LL_GPIO_PIN_2 macro defines)
-    uint32_t num_pins = 4;
+    uint32_t* pin_nums; // SPI pin numbers (e.g. LL_GPIO_PIN_0, LL_GPIO_PIN_1, LL_GPIO_PIN_2 macro defines)
+    uint32_t num_pins;
     uint32_t alternate_function_number;
 } GR_SPI_Pins;
 
@@ -29,16 +37,12 @@ typedef struct {
     //Tx-Rx parameters
     uint8_t transfer_size;
     //Tx-Rx current messages
-    SPI_Message* current_msg;
+    GR_SPI_Message* current_msg;
     volatile uint16_t current_tx_msg_index, current_rx_msg_index;
     volatile uint8_t msg_status;
 } GR_SPI_Handler;
 
-// Generic type
-typedef struct {
-    uint8_t* data; //byte array
-    uint16_t size;
-} GR_SPI_Message;
+static GR_SPI_Handler* GR_SPI_HANDLER_LUT[3]; //Stores pointer to the handler structs for SPI1 (0), SPI2 (1), & SPI3 (2)
 
 // ============================= Handler Functions =============================
 
@@ -68,9 +72,9 @@ void GR_SPI_Close(GR_SPI_Handler* handler);
 void GR_SPI_Interrupt_Handler(GR_SPI_Handler* handle);
 
 //Map SPI1-3 IRQHandlers to custom interrupt handler
-void SPI1_IRQHandler(void) { GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[0]); }
-void SPI2_IRQHandler(void) { GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[1]); }
-void SPI3_IRQHandler(void) { GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[2]); }
+inline void SPI1_IRQHandler(void) { GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[0]); }
+inline void SPI2_IRQHandler(void) { GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[1]); }
+inline void SPI3_IRQHandler(void) { GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[2]); }
 
 // ============================= Tx/Rx =============================
 
@@ -96,7 +100,7 @@ GR_SPI_Message* GR_SPI_Receive(GR_SPI_Handler* handle);
  * 
  * @param handle
  */
-bool GR_SPI_Is_RXE(GR_SPI_Handler* handle) { return GR_CircularBuffer_IsEmpty(handle->rx_buffer); }
+inline bool GR_SPI_Is_RXE(GR_SPI_Handler* handle) { return GR_CircularBuffer_IsEmpty(handle->rx_buffer); }
 
 // ============================= Helper Functions =============================
 
@@ -130,4 +134,4 @@ void GR_SPI_Configure_Pins(GR_SPI_Handler* handle, LL_GPIO_InitTypeDef* pin_conf
  */
 void GR_SPI_Transfer_Tx_Bytes(GR_SPI_Handler* handle);
 
-#endif
+#endif //SPI_H

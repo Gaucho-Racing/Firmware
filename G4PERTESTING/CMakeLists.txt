@@ -36,7 +36,6 @@ target_sources(
 		Core/Src/gpio.c
 		Core/Src/i2c.c
 		Core/Src/main.c
-		Core/Src/spi.c
 		Core/Src/stm32g4xx_hal_msp.c
 		Core/Src/stm32g4xx_it.c
 		Core/Src/syscalls.c
@@ -46,6 +45,6 @@ target_sources(
 		Core/Src/usart.c
 )
 
-target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE)
+target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE SPI_Lib)
 
 target_include_directories(${PROJECT_NAME}_USER_CODE INTERFACE Core/Inc)
