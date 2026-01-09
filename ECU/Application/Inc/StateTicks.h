@@ -1,8 +1,8 @@
 #include "StateData.h"
 #include "StateMachine.h"
 
-#ifndef _STATEMACHINE_H_
-#define _STATEMACHINE_H_
+#ifndef _STATE_TICKS_H_
+#define _STATE_TICKS_H_
 
 /**
  * @brief Tick function for the ECU state machine.
