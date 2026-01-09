@@ -19,11 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-#include "adc.h"
-#include "crc.h"
-#include "fdcan.h"
-#include "gpio.h"
-#include "spi.h"
+#include "Lib/FancyLayers-RENAME/ADC/Inc/adc.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -42,7 +38,7 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
+uint32_t buffer;
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -58,7 +54,44 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void ADC_Configure(void)
+{
+	// Initialize which clock source to use
+	LL_RCC_SetADCClockSource(LL_RCC_ADC12_CLKSOURCE_SYSCLK);
+	/* Peripheral clock enable */
+	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_ADC12);
+	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
 
+	// Initialize the ADC
+	ADC_Group_Init(ADC1, PS_8);
+	ADC_Init(ADC1, RESOLUTION_8, RIGHT);
+	ADC_Regular_Group_Init(ADC1, NO_RANKS);
+
+	// Initialize the channels
+	Pin_Ports p = {0};
+	p.port = GPIOA;
+	p.pin = LL_GPIO_PIN_0;
+
+	ADC_Init_Pins(p); // Initialize pin
+	ADC_Channel_Init(ADC1, NO_RANKS, CHANNEL_1, SINGLE_ENDED,
+			 SAMPLINGTIME_12CYCLES_5); // Initialize the channel
+
+	// Initialize DMA
+	DMA_Init(DMA1, LL_DMA_CHANNEL_1,
+		 LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA),
+		 &buffer, LL_DMA_PDATAALIGN_BYTE, LL_DMA_MDATAALIGN_BYTE, 1,
+		 ADC1, LOW);
+
+	// Start DMA and ADC
+	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
+	LL_ADC_Enable(ADC1);
+	while (!LL_ADC_IsEnabled(ADC1)) {
+		// Wait
+	}
+
+	// Start ADC Conversions
+	LL_ADC_REG_StartConversion(ADC1);
+}
 /* USER CODE END 0 */
 
 /**
@@ -92,7 +125,6 @@ int main(void)
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
-	MX_ADC1_Init();
 	MX_CRC_Init();
 	MX_FDCAN1_Init();
 	MX_FDCAN2_Init();
@@ -120,6 +152,7 @@ int main(void)
 		HAL_Delay(1000);
 
 		/* USER CODE BEGIN 3 */
+		printf(buffer);
 	}
 	/* USER CODE END 3 */
 }

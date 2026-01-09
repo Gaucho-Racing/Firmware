@@ -133,7 +133,8 @@ typedef enum {
 	SAMPLINGTIME_640CYCLES_5 = LL_ADC_SAMPLINGTIME_640CYCLES_5,
 } SamplingTime;
 
-// Initialize each channel
+// Initialize each channel TODO: combine pin initialization with channel
+// initialization
 void ADC_Channel_Init(unsigned long adc, Rank rank, Channel channel,
 		      ChannelSingleDiff diff, SamplingTime time);
 
@@ -180,8 +181,19 @@ typedef enum {
 	VERYHIGH = LL_DMA_PRIORITY_VERYHIGH
 } DMA_Priority;
 
+typedef enum {
+	CHANNEL 1 = LL_DMA_CHANNEL_1,
+	CHANNEL 2 = LL_DMA_CHANNEL_2,
+	CHANNEL 3 = LL_DMA_CHANNEL_3,
+	CHANNEL 4 = LL_DMA_CHANNEL_4,
+	CHANNEL 5 = LL_DMA_CHANNEL_5,
+	CHANNEL 6 = LL_DMA_CHANNEL_6,
+	CHANNEL 7 = LL_DMA_CHANNEL_7,
+	CHANNEL 8 = LL_DMA_CHANNEL_8
+}
+
 void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, uint32_t src_address,
-	      uint32_t dest_address, uint32_t data_size, uint32_t num_data,
+	      uint32_t dest_address, uint32_t p_data_size, uint32_t m_data_size, uint32_t num_data,
 	      uint32_t ADC, DMA_Priority priority);
 
 // TODO:
