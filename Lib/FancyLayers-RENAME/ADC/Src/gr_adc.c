@@ -27,8 +27,9 @@ ADC_TypeDef *GetADC(unsigned long adc)
 		case 5:
 			return ADC5;
 	}
-	// ERROR CASE - to fix warning
-	// return 1;
+
+	Error_Handler();
+	return NULL;
 }
 
 void ADC_Group_Init(ADC_TypeDef *ADC, Pre_Scaler_Values PS_Val)
