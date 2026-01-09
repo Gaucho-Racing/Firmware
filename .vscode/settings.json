@@ -9,6 +9,5 @@
 		"*.s": "asm"
 	},
 	"C_Cpp.default.cStandard": "gnu11",
-	"markdown.validate.enabled": true,
-	"cmake.sourceDirectory": "${workspaceFolder}/home/thomas/Desktop/Resume/3D-Space-Shooter"
+	"markdown.validate.enabled": true
 }
