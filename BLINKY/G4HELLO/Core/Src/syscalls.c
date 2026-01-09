@@ -200,8 +200,7 @@ static int starm_getc(FILE *file)
 // FDEV_SETUP_STREAM connects the starm_putc and starm_getc helper functions to
 // a FILE structure. _FDEV_SETUP_RW indicates the stream is for reading and
 // writing.
-static FILE __stdio =
-    FDEV_SETUP_STREAM(starm_putc, starm_getc, NULL, _FDEV_SETUP_RW);
+static FILE __stdio = FDEV_SETUP_STREAM(starm_putc, starm_getc, NULL, _FDEV_SETUP_RW);
 
 // Assign the standard stream pointers (stdin, stdout, stderr) to the
 // initialized stream. Picolibc uses these pointers for standard I/O operations

@@ -88,25 +88,19 @@ void MX_ADC1_Init(void)
 	/* ADC1 Init */
 	LL_DMA_SetPeriphRequest(DMA1, LL_DMA_CHANNEL_1, LL_DMAMUX_REQ_ADC1);
 
-	LL_DMA_SetDataTransferDirection(DMA1, LL_DMA_CHANNEL_1,
-					LL_DMA_DIRECTION_PERIPH_TO_MEMORY);
+	LL_DMA_SetDataTransferDirection(DMA1, LL_DMA_CHANNEL_1, LL_DMA_DIRECTION_PERIPH_TO_MEMORY);
 
-	LL_DMA_SetChannelPriorityLevel(DMA1, LL_DMA_CHANNEL_1,
-				       LL_DMA_PRIORITY_LOW);
+	LL_DMA_SetChannelPriorityLevel(DMA1, LL_DMA_CHANNEL_1, LL_DMA_PRIORITY_LOW);
 
 	LL_DMA_SetMode(DMA1, LL_DMA_CHANNEL_1, LL_DMA_MODE_CIRCULAR);
 
-	LL_DMA_SetPeriphIncMode(DMA1, LL_DMA_CHANNEL_1,
-				LL_DMA_PERIPH_NOINCREMENT);
+	LL_DMA_SetPeriphIncMode(DMA1, LL_DMA_CHANNEL_1, LL_DMA_PERIPH_NOINCREMENT);
 
-	LL_DMA_SetMemoryIncMode(DMA1, LL_DMA_CHANNEL_1,
-				LL_DMA_MEMORY_INCREMENT);
+	LL_DMA_SetMemoryIncMode(DMA1, LL_DMA_CHANNEL_1, LL_DMA_MEMORY_INCREMENT);
 
-	LL_DMA_SetPeriphSize(DMA1, LL_DMA_CHANNEL_1,
-			     LL_DMA_PDATAALIGN_HALFWORD);
+	LL_DMA_SetPeriphSize(DMA1, LL_DMA_CHANNEL_1, LL_DMA_PDATAALIGN_HALFWORD);
 
-	LL_DMA_SetMemorySize(DMA1, LL_DMA_CHANNEL_1,
-			     LL_DMA_MDATAALIGN_HALFWORD);
+	LL_DMA_SetMemorySize(DMA1, LL_DMA_CHANNEL_1, LL_DMA_MDATAALIGN_HALFWORD);
 
 	/* USER CODE BEGIN ADC1_Init 1 */
 
@@ -129,8 +123,7 @@ void MX_ADC1_Init(void)
 	LL_ADC_SetOverSamplingScope(ADC1, LL_ADC_OVS_DISABLE);
 	ADC_CommonInitStruct.CommonClock = LL_ADC_CLOCK_ASYNC_DIV256;
 	ADC_CommonInitStruct.Multimode = LL_ADC_MULTI_INDEPENDENT;
-	LL_ADC_CommonInit(__LL_ADC_COMMON_INSTANCE(ADC1),
-			  &ADC_CommonInitStruct);
+	LL_ADC_CommonInit(__LL_ADC_COMMON_INSTANCE(ADC1), &ADC_CommonInitStruct);
 
 	/* Disable ADC deep power down (enabled by default after reset state) */
 	LL_ADC_DisableDeepPowerDown(ADC1);
@@ -143,9 +136,7 @@ void MX_ADC1_Init(void)
 	/* Note: If system core clock frequency is below 200kHz, wait time */
 	/* is only a few CPU processing cycles. */
 	uint32_t wait_loop_index;
-	wait_loop_index = ((LL_ADC_DELAY_INTERNAL_REGUL_STAB_US *
-			    (SystemCoreClock / (100000 * 2))) /
-			   10);
+	wait_loop_index = ((LL_ADC_DELAY_INTERNAL_REGUL_STAB_US * (SystemCoreClock / (100000 * 2))) / 10);
 	while (wait_loop_index != 0) {
 		wait_loop_index--;
 	}
@@ -153,52 +144,38 @@ void MX_ADC1_Init(void)
 	/** Configure Regular Channel
 	 */
 	LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_1, LL_ADC_CHANNEL_5);
-	LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_5,
-				      LL_ADC_SAMPLINGTIME_92CYCLES_5);
-	LL_ADC_SetChannelSingleDiff(ADC1, LL_ADC_CHANNEL_5,
-				    LL_ADC_SINGLE_ENDED);
+	LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_5, LL_ADC_SAMPLINGTIME_92CYCLES_5);
+	LL_ADC_SetChannelSingleDiff(ADC1, LL_ADC_CHANNEL_5, LL_ADC_SINGLE_ENDED);
 
 	/** Configure Regular Channel
 	 */
 	LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_2, LL_ADC_CHANNEL_7);
-	LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_7,
-				      LL_ADC_SAMPLINGTIME_92CYCLES_5);
-	LL_ADC_SetChannelSingleDiff(ADC1, LL_ADC_CHANNEL_7,
-				    LL_ADC_SINGLE_ENDED);
+	LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_7, LL_ADC_SAMPLINGTIME_92CYCLES_5);
+	LL_ADC_SetChannelSingleDiff(ADC1, LL_ADC_CHANNEL_7, LL_ADC_SINGLE_ENDED);
 
 	/** Configure Regular Channel
 	 */
 	LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_3, LL_ADC_CHANNEL_8);
-	LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_8,
-				      LL_ADC_SAMPLINGTIME_92CYCLES_5);
-	LL_ADC_SetChannelSingleDiff(ADC1, LL_ADC_CHANNEL_8,
-				    LL_ADC_SINGLE_ENDED);
+	LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_8, LL_ADC_SAMPLINGTIME_92CYCLES_5);
+	LL_ADC_SetChannelSingleDiff(ADC1, LL_ADC_CHANNEL_8, LL_ADC_SINGLE_ENDED);
 
 	/** Configure Regular Channel
 	 */
 	LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_4, LL_ADC_CHANNEL_9);
-	LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_9,
-				      LL_ADC_SAMPLINGTIME_92CYCLES_5);
-	LL_ADC_SetChannelSingleDiff(ADC1, LL_ADC_CHANNEL_9,
-				    LL_ADC_SINGLE_ENDED);
+	LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_9, LL_ADC_SAMPLINGTIME_92CYCLES_5);
+	LL_ADC_SetChannelSingleDiff(ADC1, LL_ADC_CHANNEL_9, LL_ADC_SINGLE_ENDED);
 
 	/** Configure Regular Channel
 	 */
-	LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_5,
-				     LL_ADC_CHANNEL_12);
-	LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_12,
-				      LL_ADC_SAMPLINGTIME_92CYCLES_5);
-	LL_ADC_SetChannelSingleDiff(ADC1, LL_ADC_CHANNEL_12,
-				    LL_ADC_SINGLE_ENDED);
+	LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_5, LL_ADC_CHANNEL_12);
+	LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_12, LL_ADC_SAMPLINGTIME_92CYCLES_5);
+	LL_ADC_SetChannelSingleDiff(ADC1, LL_ADC_CHANNEL_12, LL_ADC_SINGLE_ENDED);
 
 	/** Configure Regular Channel
 	 */
-	LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_6,
-				     LL_ADC_CHANNEL_15);
-	LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_15,
-				      LL_ADC_SAMPLINGTIME_92CYCLES_5);
-	LL_ADC_SetChannelSingleDiff(ADC1, LL_ADC_CHANNEL_15,
-				    LL_ADC_SINGLE_ENDED);
+	LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_6, LL_ADC_CHANNEL_15);
+	LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_15, LL_ADC_SAMPLINGTIME_92CYCLES_5);
+	LL_ADC_SetChannelSingleDiff(ADC1, LL_ADC_CHANNEL_15, LL_ADC_SINGLE_ENDED);
 	/* USER CODE BEGIN ADC1_Init 2 */
 
 	/* USER CODE END ADC1_Init 2 */

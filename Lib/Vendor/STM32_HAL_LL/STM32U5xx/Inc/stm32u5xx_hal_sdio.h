@@ -50,8 +50,7 @@ extern "C" {
 
   */
 typedef enum {
-	HAL_SDIO_STATE_RESET =
-	    0x00U, /*!< SDIO not yet initialized or disabled */
+	HAL_SDIO_STATE_RESET = 0x00U, /*!< SDIO not yet initialized or disabled */
 	HAL_SDIO_STATE_READY = 0x01U, /*!< SDIO initialized and ready for us */
 	HAL_SDIO_STATE_BUSY = 0x02U,  /*!< SDIO process ongoing  */
 } HAL_SDIO_StateTypeDef;
@@ -79,21 +78,19 @@ typedef struct {
  * @brief sdio card FBR register(Function Basic Register)
  */
 typedef struct {
-	uint8_t flags; /*!< SDIO current IO flags                  */
-	uint8_t
-	    ioStdFunctionCode; /*!< SDIO current IO standard function code */
-	uint8_t
-	    ioExtFunctionCode;	 /*!< SDIO current IO extended function code */
-	uint32_t ioPointerToCIS; /*!< SDIO current IO pointer to CIS         */
-	uint32_t ioPointerToCSA; /*!< SDIO current IO pointer to CSA         */
+	uint8_t flags;		   /*!< SDIO current IO flags                  */
+	uint8_t ioStdFunctionCode; /*!< SDIO current IO standard function code */
+	uint8_t ioExtFunctionCode; /*!< SDIO current IO extended function code */
+	uint32_t ioPointerToCIS;   /*!< SDIO current IO pointer to CIS         */
+	uint32_t ioPointerToCSA;   /*!< SDIO current IO pointer to CSA         */
 } HAL_SDIO_FBR_t;
 
 /**
  * @brief  SDIO CMD52 Structure definition
  */
 typedef struct {
-	uint32_t Reg_Addr; /*!< This is the address of the byte of data inside
-			      of the selected function to read or write */
+	uint32_t Reg_Addr;	/*!< This is the address of the byte of data inside
+				   of the selected function to read or write */
 	uint8_t ReadAfterWrite; /*!< This is the read after write flag, it is
 				   used for write access only. */
 	uint8_t IOFunctionNbr;	/*!< The number of the function within the IO
@@ -104,10 +101,10 @@ typedef struct {
  * @brief  SDIO CMD53 Structure definition
  */
 typedef struct {
-	uint32_t Reg_Addr;   /*!< This is the address of the byte of data inside
-				of the selected function to read or write */
-	uint32_t OpCode;     /*!< Read/Write operation mode     */
-	uint32_t Block_Mode; /*!< Bytes or Blocks mode */
+	uint32_t Reg_Addr;	/*!< This is the address of the byte of data inside
+				   of the selected function to read or write */
+	uint32_t OpCode;	/*!< Read/Write operation mode     */
+	uint32_t Block_Mode;	/*!< Bytes or Blocks mode */
 	uint32_t IOFunctionNbr; /*!< The number of the function within the IO
 				   card you wish to read or write */
 } HAL_SDIO_ExtendedCmd_TypeDef;
@@ -153,11 +150,9 @@ typedef struct __SDIO_HandleTypeDef {
 	volatile uint8_t IOInterruptNbr; /*!< SDIO used to record total enabled
 					    io interrupt numbers */
 
-	void (*SDIO_IOFunction_Callback[SDIO_MAX_IO_NUMBER])(
-	    struct __SDIO_HandleTypeDef *hsdio, uint32_t func);
+	void (*SDIO_IOFunction_Callback[SDIO_MAX_IO_NUMBER])(struct __SDIO_HandleTypeDef *hsdio, uint32_t func);
 
-#if defined(USE_HAL_SDIO_REGISTER_CALLBACKS) &&                                \
-    (USE_HAL_SDIO_REGISTER_CALLBACKS == 1U)
+#if defined(USE_HAL_SDIO_REGISTER_CALLBACKS) && (USE_HAL_SDIO_REGISTER_CALLBACKS == 1U)
 	void (*TxCpltCallback)(struct __SDIO_HandleTypeDef *hsdio);
 	void (*RxCpltCallback)(struct __SDIO_HandleTypeDef *hsdio);
 	void (*ErrorCallback)(struct __SDIO_HandleTypeDef *hsdio);
@@ -166,20 +161,17 @@ typedef struct __SDIO_HandleTypeDef {
 #endif /* USE_HAL_SDIO_REGISTER_CALLBACKS */
 
 #if (USE_SDIO_TRANSCEIVER != 0U)
-	void (*DriveTransceiver_1_8V_Callback)(
-	    struct __SDIO_HandleTypeDef *hsdio, FlagStatus status);
+	void (*DriveTransceiver_1_8V_Callback)(struct __SDIO_HandleTypeDef *hsdio, FlagStatus status);
 #endif /* USE_SDIO_TRANSCEIVER */
 
-	HAL_StatusTypeDef (*SDIO_IdentifyCard)(
-	    struct __SDIO_HandleTypeDef *hsdio);
+	HAL_StatusTypeDef (*SDIO_IdentifyCard)(struct __SDIO_HandleTypeDef *hsdio);
 
 } SDIO_HandleTypeDef;
 
 /**
  * @}
  */
-#if defined(USE_HAL_SDIO_REGISTER_CALLBACKS) &&                                \
-    (USE_HAL_SDIO_REGISTER_CALLBACKS == 1U)
+#if defined(USE_HAL_SDIO_REGISTER_CALLBACKS) && (USE_HAL_SDIO_REGISTER_CALLBACKS == 1U)
 /** @defgroup SDIO_Exported_Types_Group3 SDIO Callback ID enumeration definition
  * @{
  */
@@ -204,14 +196,11 @@ typedef void (*pSDIO_CallbackTypeDef)(SDIO_HandleTypeDef *hsdio);
 #endif /* USE_HAL_SDIO_REGISTER_CALLBACKS */
 
 #if (USE_SDIO_TRANSCEIVER != 0U)
-typedef void (*pSDIO_TransceiverCallbackTypeDef)(SDIO_HandleTypeDef *hsdio,
-						 FlagStatus status);
+typedef void (*pSDIO_TransceiverCallbackTypeDef)(SDIO_HandleTypeDef *hsdio, FlagStatus status);
 #endif /* USE_SDIO_TRANSCEIVER */
 
-typedef HAL_StatusTypeDef (*pSDIO_IdentifyCardCallbackTypeDef)(
-    SDIO_HandleTypeDef *hsdio);
-typedef void (*HAL_SDIO_IOFunction_CallbackTypeDef)(SDIO_HandleTypeDef *hsdio,
-						    uint32_t func);
+typedef HAL_StatusTypeDef (*pSDIO_IdentifyCardCallbackTypeDef)(SDIO_HandleTypeDef *hsdio);
+typedef void (*HAL_SDIO_IOFunction_CallbackTypeDef)(SDIO_HandleTypeDef *hsdio, uint32_t func);
 /**
  * @}
  */
@@ -226,20 +215,15 @@ typedef void (*HAL_SDIO_IOFunction_CallbackTypeDef)(SDIO_HandleTypeDef *hsdio,
  * definition
  * @{
  */
-#define HAL_SDIO_ERROR_NONE                                                    \
-	SDMMC_ERROR_NONE /*!< No error                                    */
-#define HAL_SDIO_ERROR_DATA_CRC_FAIL                                           \
-	SDMMC_ERROR_DATA_CRC_FAIL /*!< Data block sent/received (CRC check     \
-				     failed) */
-#define HAL_SDIO_ERROR_DATA_TIMEOUT                                            \
-	SDMMC_ERROR_DATA_TIMEOUT /*!< Data timeout */
-#define HAL_SDIO_ERROR_TX_UNDERRUN                                             \
-	SDMMC_ERROR_TX_UNDERRUN /*!< Transmit FIFO underrun */
-#define HAL_SDIO_ERROR_RX_OVERRUN                                              \
-	SDMMC_ERROR_RX_OVERRUN			   /*!< Receive FIFO overrun */
-#define HAL_SDIO_ERROR_TIMEOUT SDMMC_ERROR_TIMEOUT /*!< Timeout error */
-#define HAL_SDIO_ERROR_INVALID_CALLBACK                                        \
-	SDMMC_ERROR_INVALID_PARAMETER /*!< Invalid callback error */
+#define HAL_SDIO_ERROR_NONE SDMMC_ERROR_NONE /*!< No error                                    */
+#define HAL_SDIO_ERROR_DATA_CRC_FAIL                                                                                                                                                                   \
+	SDMMC_ERROR_DATA_CRC_FAIL				      /*!< Data block sent/received (CRC check                                                                                         \
+									 failed) */
+#define HAL_SDIO_ERROR_DATA_TIMEOUT SDMMC_ERROR_DATA_TIMEOUT	      /*!< Data timeout */
+#define HAL_SDIO_ERROR_TX_UNDERRUN SDMMC_ERROR_TX_UNDERRUN	      /*!< Transmit FIFO underrun */
+#define HAL_SDIO_ERROR_RX_OVERRUN SDMMC_ERROR_RX_OVERRUN	      /*!< Receive FIFO overrun */
+#define HAL_SDIO_ERROR_TIMEOUT SDMMC_ERROR_TIMEOUT		      /*!< Timeout error */
+#define HAL_SDIO_ERROR_INVALID_CALLBACK SDMMC_ERROR_INVALID_PARAMETER /*!< Invalid callback error */
 /**
  * @}
  */
@@ -247,17 +231,13 @@ typedef void (*HAL_SDIO_IOFunction_CallbackTypeDef)(SDIO_HandleTypeDef *hsdio,
 /** @defgroup SDIO_Exported_Constansts_Group2 SDIO context enumeration
  * @{
  */
-#define SDIO_CONTEXT_NONE 0x00U /*!< None                             */
-#define SDIO_CONTEXT_READ_SINGLE_BLOCK                                         \
-	0x01U /*!< Read single block operation      */
-#define SDIO_CONTEXT_READ_MULTIPLE_BLOCK                                       \
-	0x02U /*!< Read multiple blocks operation   */
-#define SDIO_CONTEXT_WRITE_SINGLE_BLOCK                                        \
-	0x10U /*!< Write single block operation     */
-#define SDIO_CONTEXT_WRITE_MULTIPLE_BLOCK                                      \
-	0x20U		       /*!< Write multiple blocks operation  */
-#define SDIO_CONTEXT_IT 0x08U  /*!< Process in Interrupt mode        */
-#define SDIO_CONTEXT_DMA 0x80U /*!< Process in DMA mode              */
+#define SDIO_CONTEXT_NONE 0x00U			/*!< None                             */
+#define SDIO_CONTEXT_READ_SINGLE_BLOCK 0x01U	/*!< Read single block operation      */
+#define SDIO_CONTEXT_READ_MULTIPLE_BLOCK 0x02U	/*!< Read multiple blocks operation   */
+#define SDIO_CONTEXT_WRITE_SINGLE_BLOCK 0x10U	/*!< Write single block operation     */
+#define SDIO_CONTEXT_WRITE_MULTIPLE_BLOCK 0x20U /*!< Write multiple blocks operation  */
+#define SDIO_CONTEXT_IT 0x08U			/*!< Process in Interrupt mode        */
+#define SDIO_CONTEXT_DMA 0x80U			/*!< Process in DMA mode              */
 /**
  * @}
  */
@@ -302,26 +282,18 @@ typedef void (*HAL_SDIO_IOFunction_CallbackTypeDef)(SDIO_HandleTypeDef *hsdio,
 /** @defgroup SDIO_Exported_Constansts_Group7 SDIO Data block size enumeration
  * @{
  */
-#define HAL_SDIO_DATA_BLOCK_SIZE_1BYTE 1U /*!< SDIO data block size 1 byte */
-#define HAL_SDIO_DATA_BLOCK_SIZE_2BYTE 2U /*!< SDIO data block size 2 byte */
-#define HAL_SDIO_DATA_BLOCK_SIZE_4BYTE 4U /*!< SDIO data block size 4 byte */
-#define HAL_SDIO_DATA_BLOCK_SIZE_8BYTE 8U /*!< SDIO data block size 8 byte */
-#define HAL_SDIO_DATA_BLOCK_SIZE_16BYTE                                        \
-	16U /*!< SDIO data block size 16 byte   */
-#define HAL_SDIO_DATA_BLOCK_SIZE_32BYTE                                        \
-	32U /*!< SDIO data block size 32 byte   */
-#define HAL_SDIO_DATA_BLOCK_SIZE_64BYTE                                        \
-	64U /*!< SDIO data block size 64 byte   */
-#define HAL_SDIO_DATA_BLOCK_SIZE_128BYTE                                       \
-	128U /*!< SDIO data block size 128 byte  */
-#define HAL_SDIO_DATA_BLOCK_SIZE_256BYTE                                       \
-	256U /*!< SDIO data block size 256 byte  */
-#define HAL_SDIO_DATA_BLOCK_SIZE_512BYTE                                       \
-	512U /*!< SDIO data block size 512 byte  */
-#define HAL_SDIO_DATA_BLOCK_SIZE_1024BYTE                                      \
-	1024U /*!< SDIO data block size 1024 byte */
-#define HAL_SDIO_DATA_BLOCK_SIZE_2048BYTE                                      \
-	2048U /*!< SDIO data block size 2048 byte */
+#define HAL_SDIO_DATA_BLOCK_SIZE_1BYTE 1U	/*!< SDIO data block size 1 byte */
+#define HAL_SDIO_DATA_BLOCK_SIZE_2BYTE 2U	/*!< SDIO data block size 2 byte */
+#define HAL_SDIO_DATA_BLOCK_SIZE_4BYTE 4U	/*!< SDIO data block size 4 byte */
+#define HAL_SDIO_DATA_BLOCK_SIZE_8BYTE 8U	/*!< SDIO data block size 8 byte */
+#define HAL_SDIO_DATA_BLOCK_SIZE_16BYTE 16U	/*!< SDIO data block size 16 byte   */
+#define HAL_SDIO_DATA_BLOCK_SIZE_32BYTE 32U	/*!< SDIO data block size 32 byte   */
+#define HAL_SDIO_DATA_BLOCK_SIZE_64BYTE 64U	/*!< SDIO data block size 64 byte   */
+#define HAL_SDIO_DATA_BLOCK_SIZE_128BYTE 128U	/*!< SDIO data block size 128 byte  */
+#define HAL_SDIO_DATA_BLOCK_SIZE_256BYTE 256U	/*!< SDIO data block size 256 byte  */
+#define HAL_SDIO_DATA_BLOCK_SIZE_512BYTE 512U	/*!< SDIO data block size 512 byte  */
+#define HAL_SDIO_DATA_BLOCK_SIZE_1024BYTE 1024U /*!< SDIO data block size 1024 byte */
+#define HAL_SDIO_DATA_BLOCK_SIZE_2048BYTE 2048U /*!< SDIO data block size 2048 byte */
 /**
  * @}
  */
@@ -329,10 +301,8 @@ typedef void (*HAL_SDIO_IOFunction_CallbackTypeDef)(SDIO_HandleTypeDef *hsdio,
 /** @defgroup SDIO_Exported_Constansts_Group8 SDIO Bus Width enumeration
  * @{
  */
-#define HAL_SDIO_BUS_WIDTH_8BIT_NOT_SUPPORTED                                  \
-	0U /*!< SDIO bus width 8 bit is not supported */
-#define HAL_SDIO_BUS_WIDTH_8BIT_SUPPORTED                                      \
-	1U /*!< SDIO bus width 8 bit is supported     */
+#define HAL_SDIO_BUS_WIDTH_8BIT_NOT_SUPPORTED 0U /*!< SDIO bus width 8 bit is not supported */
+#define HAL_SDIO_BUS_WIDTH_8BIT_SUPPORTED 1U	 /*!< SDIO bus width 8 bit is supported     */
 /**
  * @}
  */
@@ -366,10 +336,8 @@ typedef void (*HAL_SDIO_IOFunction_CallbackTypeDef)(SDIO_HandleTypeDef *hsdio,
 /** @defgroup SDIO_Exported_Constansts_Group11 SDIO FBR definitions
  * @{
  */
-#define HAL_SDIO_FBR_SUPPORT_CSA                                               \
-	1U /*!< SDIO function support CSA             */
-#define HAL_SDIO_FBR_SUPPORT_POWER_SELECTION                                   \
-	1U /*!< SDIO function support power selection */
+#define HAL_SDIO_FBR_SUPPORT_CSA 1U		/*!< SDIO function support CSA             */
+#define HAL_SDIO_FBR_SUPPORT_POWER_SELECTION 1U /*!< SDIO function support power selection */
 /**
  * @}
  */
@@ -389,8 +357,7 @@ typedef void (*HAL_SDIO_IOFunction_CallbackTypeDef)(SDIO_HandleTypeDef *hsdio,
  * @param  __INTERRUPT__ specifies the SDMMC interrupt sources to be enabled.
  * @retval None
  */
-#define __HAL_SDIO_ENABLE_IT(__HANDLE__, __INTERRUPT__)                        \
-	__SDMMC_ENABLE_IT((__HANDLE__)->Instance, (__INTERRUPT__))
+#define __HAL_SDIO_ENABLE_IT(__HANDLE__, __INTERRUPT__) __SDMMC_ENABLE_IT((__HANDLE__)->Instance, (__INTERRUPT__))
 
 /**
  * @brief  Disable the SDIO device interrupt.
@@ -398,8 +365,7 @@ typedef void (*HAL_SDIO_IOFunction_CallbackTypeDef)(SDIO_HandleTypeDef *hsdio,
  * @param  __INTERRUPT__ specifies the SDMMC interrupt sources to be disabled.
  * @retval None
  */
-#define __HAL_SDIO_DISABLE_IT(__HANDLE__, __INTERRUPT__)                       \
-	__SDMMC_DISABLE_IT((__HANDLE__)->Instance, (__INTERRUPT__))
+#define __HAL_SDIO_DISABLE_IT(__HANDLE__, __INTERRUPT__) __SDMMC_DISABLE_IT((__HANDLE__)->Instance, (__INTERRUPT__))
 
 /**
  * @brief  Check whether the specified SDIO flag is set or not.
@@ -407,8 +373,7 @@ typedef void (*HAL_SDIO_IOFunction_CallbackTypeDef)(SDIO_HandleTypeDef *hsdio,
  * @param  __FLAG__ specifies the flag to check.
  * @retval The new state of SDIO FLAG (SET or RESET).
  */
-#define __HAL_SDIO_GET_FLAG(__HANDLE__, __FLAG__)                              \
-	__SDMMC_GET_FLAG((__HANDLE__)->Instance, (__FLAG__))
+#define __HAL_SDIO_GET_FLAG(__HANDLE__, __FLAG__) __SDMMC_GET_FLAG((__HANDLE__)->Instance, (__FLAG__))
 
 /**
  * @brief  Clear the SDIO's pending flags.
@@ -416,8 +381,7 @@ typedef void (*HAL_SDIO_IOFunction_CallbackTypeDef)(SDIO_HandleTypeDef *hsdio,
  * @param  __FLAG__ specifies the flag to clear.
  * @retval None
  */
-#define __HAL_SDIO_CLEAR_FLAG(__HANDLE__, __FLAG__)                            \
-	__SDMMC_CLEAR_FLAG((__HANDLE__)->Instance, (__FLAG__))
+#define __HAL_SDIO_CLEAR_FLAG(__HANDLE__, __FLAG__) __SDMMC_CLEAR_FLAG((__HANDLE__)->Instance, (__FLAG__))
 
 /**
  * @brief  Check whether the specified SDIO interrupt has occurred or not.
@@ -425,8 +389,7 @@ typedef void (*HAL_SDIO_IOFunction_CallbackTypeDef)(SDIO_HandleTypeDef *hsdio,
  * @param  __INTERRUPT__ specifies the SDMMC interrupt source to check.
  * @retval The new state of SDIO IT (SET or RESET).
  */
-#define __HAL_SDIO_GET_IT(__HANDLE__, __INTERRUPT__)                           \
-	__SDMMC_GET_IT((__HANDLE__)->Instance, (__INTERRUPT__))
+#define __HAL_SDIO_GET_IT(__HANDLE__, __INTERRUPT__) __SDMMC_GET_IT((__HANDLE__)->Instance, (__INTERRUPT__))
 
 /**
  * @brief  Checks whether the specified SDIO interrupt is enabled or not.
@@ -434,8 +397,7 @@ typedef void (*HAL_SDIO_IOFunction_CallbackTypeDef)(SDIO_HandleTypeDef *hsdio,
  * @param  __INTERRUPT__ : specifies the SDMMC interrupt source to check.
  * @retval The state of SDIO IT (SET or RESET).
  */
-#define __HAL_SDIO_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)                    \
-	__SDMMC_GET_IT_SOURCE((__HANDLE__)->Instance, (__INTERRUPT__))
+#define __HAL_SDIO_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__) __SDMMC_GET_IT_SOURCE((__HANDLE__)->Instance, (__INTERRUPT__))
 /**
  * @}
  */
@@ -461,23 +423,15 @@ void HAL_SDIO_MspDeInit(SDIO_HandleTypeDef *hsdio);
 /** @defgroup SDIO_Exported_Functions_Group2 Peripheral Control functions
  * @{
  */
-HAL_StatusTypeDef HAL_SDIO_SetDataBusWidth(SDIO_HandleTypeDef *hsdio,
-					   uint32_t BusWide);
-HAL_StatusTypeDef HAL_SDIO_ConfigFrequency(SDIO_HandleTypeDef *hsdio,
-					   uint32_t ClockSpeed);
+HAL_StatusTypeDef HAL_SDIO_SetDataBusWidth(SDIO_HandleTypeDef *hsdio, uint32_t BusWide);
+HAL_StatusTypeDef HAL_SDIO_ConfigFrequency(SDIO_HandleTypeDef *hsdio, uint32_t ClockSpeed);
 
-HAL_StatusTypeDef HAL_SDIO_SetBlockSize(SDIO_HandleTypeDef *hsdio,
-					uint8_t function_nbr,
-					uint16_t BlockSize);
-HAL_StatusTypeDef HAL_SDIO_SetSpeedMode(SDIO_HandleTypeDef *hsdio,
-					uint32_t DataRate);
+HAL_StatusTypeDef HAL_SDIO_SetBlockSize(SDIO_HandleTypeDef *hsdio, uint8_t function_nbr, uint16_t BlockSize);
+HAL_StatusTypeDef HAL_SDIO_SetSpeedMode(SDIO_HandleTypeDef *hsdio, uint32_t DataRate);
 
 HAL_StatusTypeDef HAL_SDIO_CardReset(SDIO_HandleTypeDef *hsdio);
-HAL_StatusTypeDef
-HAL_SDIO_GetCardCommonControlRegister(SDIO_HandleTypeDef *hsdio,
-				      HAL_SDIO_CCCR_TypeDef *pCccr);
-HAL_StatusTypeDef HAL_SDIO_GetCardFBRRegister(SDIO_HandleTypeDef *hsdio,
-					      HAL_SDIO_FBR_t *pFbr);
+HAL_StatusTypeDef HAL_SDIO_GetCardCommonControlRegister(SDIO_HandleTypeDef *hsdio, HAL_SDIO_CCCR_TypeDef *pCccr);
+HAL_StatusTypeDef HAL_SDIO_GetCardFBRRegister(SDIO_HandleTypeDef *hsdio, HAL_SDIO_FBR_t *pFbr);
 /**
  * @}
  */
@@ -485,32 +439,16 @@ HAL_StatusTypeDef HAL_SDIO_GetCardFBRRegister(SDIO_HandleTypeDef *hsdio,
 /** @defgroup SDIO_Exported_Functions_Group3 Process functions
  * @{
  */
-HAL_StatusTypeDef
-HAL_SDIO_ReadDirect(SDIO_HandleTypeDef *hsdio,
-		    const HAL_SDIO_DirectCmd_TypeDef *Argument, uint8_t *pData);
-HAL_StatusTypeDef
-HAL_SDIO_WriteDirect(SDIO_HandleTypeDef *hsdio,
-		     const HAL_SDIO_DirectCmd_TypeDef *Argument, uint8_t Data);
+HAL_StatusTypeDef HAL_SDIO_ReadDirect(SDIO_HandleTypeDef *hsdio, const HAL_SDIO_DirectCmd_TypeDef *Argument, uint8_t *pData);
+HAL_StatusTypeDef HAL_SDIO_WriteDirect(SDIO_HandleTypeDef *hsdio, const HAL_SDIO_DirectCmd_TypeDef *Argument, uint8_t Data);
 
-HAL_StatusTypeDef
-HAL_SDIO_ReadExtended(SDIO_HandleTypeDef *hsdio,
-		      const HAL_SDIO_ExtendedCmd_TypeDef *Argument,
-		      uint8_t *pData, uint32_t Size_byte, uint32_t Timeout_Ms);
+HAL_StatusTypeDef HAL_SDIO_ReadExtended(SDIO_HandleTypeDef *hsdio, const HAL_SDIO_ExtendedCmd_TypeDef *Argument, uint8_t *pData, uint32_t Size_byte, uint32_t Timeout_Ms);
 
-HAL_StatusTypeDef
-HAL_SDIO_WriteExtended(SDIO_HandleTypeDef *hsdio,
-		       const HAL_SDIO_ExtendedCmd_TypeDef *Argument,
-		       uint8_t *pData, uint32_t Size_byte, uint32_t Timeout_Ms);
+HAL_StatusTypeDef HAL_SDIO_WriteExtended(SDIO_HandleTypeDef *hsdio, const HAL_SDIO_ExtendedCmd_TypeDef *Argument, uint8_t *pData, uint32_t Size_byte, uint32_t Timeout_Ms);
 
-HAL_StatusTypeDef
-HAL_SDIO_ReadExtended_DMA(SDIO_HandleTypeDef *hsdio,
-			  const HAL_SDIO_ExtendedCmd_TypeDef *Argument,
-			  uint8_t *pData, uint32_t Size_byte);
+HAL_StatusTypeDef HAL_SDIO_ReadExtended_DMA(SDIO_HandleTypeDef *hsdio, const HAL_SDIO_ExtendedCmd_TypeDef *Argument, uint8_t *pData, uint32_t Size_byte);
 
-HAL_StatusTypeDef
-HAL_SDIO_WriteExtended_DMA(SDIO_HandleTypeDef *hsdio,
-			   const HAL_SDIO_ExtendedCmd_TypeDef *Argument,
-			   uint8_t *pData, uint32_t Size_byte);
+HAL_StatusTypeDef HAL_SDIO_WriteExtended_DMA(SDIO_HandleTypeDef *hsdio, const HAL_SDIO_ExtendedCmd_TypeDef *Argument, uint8_t *pData, uint32_t Size_byte);
 /**
  * @}
  */
@@ -526,35 +464,23 @@ void HAL_SDIO_ErrorCallback(SDIO_HandleTypeDef *hsdio);
 void HAL_SDIO_IOFunctionCallback(SDIO_HandleTypeDef *hsdio, uint32_t func);
 #if (USE_SDIO_TRANSCEIVER != 0U)
 /* Callback to switch in 1.8V mode */
-void HAL_SDIO_DriveTransceiver_1_8V_Callback(SDIO_HandleTypeDef *hsdio,
-					     FlagStatus status);
+void HAL_SDIO_DriveTransceiver_1_8V_Callback(SDIO_HandleTypeDef *hsdio, FlagStatus status);
 #endif /* USE_SDIO_TRANSCEIVER */
 
-#if defined(USE_HAL_SDIO_REGISTER_CALLBACKS) &&                                \
-    (USE_HAL_SDIO_REGISTER_CALLBACKS == 1U)
-HAL_StatusTypeDef
-HAL_SDIO_RegisterCallback(SDIO_HandleTypeDef *hsdio,
-			  HAL_SDIO_CallbackIDTypeDef CallbackID,
-			  pSDIO_CallbackTypeDef pCallback);
+#if defined(USE_HAL_SDIO_REGISTER_CALLBACKS) && (USE_HAL_SDIO_REGISTER_CALLBACKS == 1U)
+HAL_StatusTypeDef HAL_SDIO_RegisterCallback(SDIO_HandleTypeDef *hsdio, HAL_SDIO_CallbackIDTypeDef CallbackID, pSDIO_CallbackTypeDef pCallback);
 
-HAL_StatusTypeDef
-HAL_SDIO_UnRegisterCallback(SDIO_HandleTypeDef *hsdio,
-			    HAL_SDIO_CallbackIDTypeDef CallbackID);
+HAL_StatusTypeDef HAL_SDIO_UnRegisterCallback(SDIO_HandleTypeDef *hsdio, HAL_SDIO_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_SDIO_REGISTER_CALLBACKS */
 
 #if (USE_SDIO_TRANSCEIVER != 0U)
-HAL_StatusTypeDef HAL_SDIO_RegisterTransceiverCallback(
-    SDIO_HandleTypeDef *hsdio, pSDIO_TransceiverCallbackTypeDef pCallback);
-HAL_StatusTypeDef
-HAL_SDIO_UnRegisterTransceiverCallback(SDIO_HandleTypeDef *hsdio);
+HAL_StatusTypeDef HAL_SDIO_RegisterTransceiverCallback(SDIO_HandleTypeDef *hsdio, pSDIO_TransceiverCallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_SDIO_UnRegisterTransceiverCallback(SDIO_HandleTypeDef *hsdio);
 #endif /* USE_SDIO_TRANSCEIVER */
 
-HAL_StatusTypeDef HAL_SDIO_RegisterIOFunctionCallback(
-    SDIO_HandleTypeDef *hsdio, uint32_t IOFunction,
-    HAL_SDIO_IOFunction_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_SDIO_RegisterIOFunctionCallback(SDIO_HandleTypeDef *hsdio, uint32_t IOFunction, HAL_SDIO_IOFunction_CallbackTypeDef pCallback);
 
-HAL_StatusTypeDef HAL_SDIO_RegisterIdentifyCardCallback(
-    SDIO_HandleTypeDef *hsdio, pSDIO_IdentifyCardCallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_SDIO_RegisterIdentifyCardCallback(SDIO_HandleTypeDef *hsdio, pSDIO_IdentifyCardCallbackTypeDef pCallback);
 /**
  * @}
  */
@@ -572,20 +498,14 @@ uint32_t HAL_SDIO_GetError(const SDIO_HandleTypeDef *hsdio);
 /** @defgroup SDIO_Exported_Functions_Group6 Peripheral IO interrupt
  * @{
  */
-HAL_StatusTypeDef HAL_SDIO_EnableIOFunctionInterrupt(SDIO_HandleTypeDef *hsdio,
-						     uint32_t IOFunction);
-HAL_StatusTypeDef HAL_SDIO_DisableIOFunctionInterrupt(SDIO_HandleTypeDef *hsdio,
-						      uint32_t IOFunction);
+HAL_StatusTypeDef HAL_SDIO_EnableIOFunctionInterrupt(SDIO_HandleTypeDef *hsdio, uint32_t IOFunction);
+HAL_StatusTypeDef HAL_SDIO_DisableIOFunctionInterrupt(SDIO_HandleTypeDef *hsdio, uint32_t IOFunction);
 
-HAL_StatusTypeDef HAL_SDIO_EnableIOFunction(SDIO_HandleTypeDef *hsdio,
-					    uint32_t IOFunction);
-HAL_StatusTypeDef HAL_SDIO_DisableIOFunction(SDIO_HandleTypeDef *hsdio,
-					     uint32_t IOFunction);
+HAL_StatusTypeDef HAL_SDIO_EnableIOFunction(SDIO_HandleTypeDef *hsdio, uint32_t IOFunction);
+HAL_StatusTypeDef HAL_SDIO_DisableIOFunction(SDIO_HandleTypeDef *hsdio, uint32_t IOFunction);
 
-HAL_StatusTypeDef HAL_SDIO_SelectIOFunction(SDIO_HandleTypeDef *hsdio,
-					    uint32_t IOFunction);
-HAL_StatusTypeDef HAL_SDIO_AbortIOFunction(SDIO_HandleTypeDef *hsdio,
-					   uint32_t IOFunction);
+HAL_StatusTypeDef HAL_SDIO_SelectIOFunction(SDIO_HandleTypeDef *hsdio, uint32_t IOFunction);
+HAL_StatusTypeDef HAL_SDIO_AbortIOFunction(SDIO_HandleTypeDef *hsdio, uint32_t IOFunction);
 
 HAL_StatusTypeDef HAL_SDIO_EnableIOAsynInterrupt(SDIO_HandleTypeDef *hsdio);
 HAL_StatusTypeDef HAL_SDIO_DisableIOAsynInterrupt(SDIO_HandleTypeDef *hsdio);

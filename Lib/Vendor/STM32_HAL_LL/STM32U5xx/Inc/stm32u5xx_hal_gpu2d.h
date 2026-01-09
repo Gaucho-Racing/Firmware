@@ -46,11 +46,9 @@ extern "C" {
  * @brief  HAL GPU2D State enumeration definition
  */
 typedef enum {
-	HAL_GPU2D_STATE_RESET =
-	    0x00U, /*!< GPU2D not yet initialized or disabled      */
-	HAL_GPU2D_STATE_READY =
-	    0x01U, /*!< Peripheral Initialized and ready for use   */
-	HAL_GPU2D_STATE_BUSY = 0x02U, /*!< An internal process is ongoing    */
+	HAL_GPU2D_STATE_RESET = 0x00U,	 /*!< GPU2D not yet initialized or disabled      */
+	HAL_GPU2D_STATE_READY = 0x01U,	 /*!< Peripheral Initialized and ready for use   */
+	HAL_GPU2D_STATE_BUSY = 0x02U,	 /*!< An internal process is ongoing    */
 	HAL_GPU2D_STATE_TIMEOUT = 0x03U, /*!< Timeout state */
 	HAL_GPU2D_STATE_ERROR = 0x04U
 } HAL_GPU2D_StateTypeDef;
@@ -78,16 +76,12 @@ typedef struct
 	uint32_t ErrorCode; /*!< GPU2D error code.                          */
 
 #if (USE_HAL_GPU2D_REGISTER_CALLBACKS == 1)
-	void (*CommandListCpltCallback)(
-	    struct __GPU2D_HandleTypeDef *hgpu2d,
-	    uint32_t CmdListID); /*!< GPU2D Command Complete Callback */
+	void (*CommandListCpltCallback)(struct __GPU2D_HandleTypeDef *hgpu2d, uint32_t CmdListID); /*!< GPU2D Command Complete Callback */
 
-	void (*MspInitCallback)(struct __GPU2D_HandleTypeDef
-				    *hgpu2d); /*!< GPU2D Msp Init callback */
+	void (*MspInitCallback)(struct __GPU2D_HandleTypeDef *hgpu2d); /*!< GPU2D Msp Init callback */
 
-	void (*MspDeInitCallback)(struct __GPU2D_HandleTypeDef *
-				      hgpu2d); /*!< GPU2D Msp DeInit callback */
-#endif /* USE_HAL_GPU2D_REGISTER_CALLBACKS = 1 */
+	void (*MspDeInitCallback)(struct __GPU2D_HandleTypeDef *hgpu2d); /*!< GPU2D Msp DeInit callback */
+#endif									 /* USE_HAL_GPU2D_REGISTER_CALLBACKS = 1 */
 } GPU2D_HandleTypeDef;
 
 #if (USE_HAL_GPU2D_REGISTER_CALLBACKS == 1)
@@ -104,13 +98,10 @@ typedef enum {
  * @brief  HAL GPU2D Callback pointer definition
  * @{
  */
-typedef void (*pGPU2D_CallbackTypeDef)(
-    GPU2D_HandleTypeDef *hgpu2d); /*!< pointer to an GPU2D Callback function */
-typedef void (*pGPU2D_CommandListCpltCallbackTypeDef)(
-    GPU2D_HandleTypeDef *hgpu2d,
-    uint32_t CmdID); /*!< pointer to an GPU2D Command List Complete Callback
-			function */
-#endif		     /* USE_HAL_GPU2D_REGISTER_CALLBACKS = 1 */
+typedef void (*pGPU2D_CallbackTypeDef)(GPU2D_HandleTypeDef *hgpu2d);				    /*!< pointer to an GPU2D Callback function */
+typedef void (*pGPU2D_CommandListCpltCallbackTypeDef)(GPU2D_HandleTypeDef *hgpu2d, uint32_t CmdID); /*!< pointer to an GPU2D Command List Complete
+												       Callback function */
+#endif												    /* USE_HAL_GPU2D_REGISTER_CALLBACKS = 1 */
 /**
  * @}
  */
@@ -127,9 +118,8 @@ typedef void (*pGPU2D_CommandListCpltCallbackTypeDef)(
 #define HAL_GPU2D_ERROR_NONE (0x00000000U)    /*!< No error                */
 #define HAL_GPU2D_ERROR_TIMEOUT (0x00000001U) /*!< Timeout error           */
 #if (USE_HAL_GPU2D_REGISTER_CALLBACKS == 1)
-#define HAL_GPU2D_ERROR_INVALID_CALLBACK                                       \
-	(0x00000002U) /*!< Invalid callback error  */
-#endif		      /* USE_HAL_GPU2D_REGISTER_CALLBACKS = 1 */
+#define HAL_GPU2D_ERROR_INVALID_CALLBACK (0x00000002U) /*!< Invalid callback error  */
+#endif						       /* USE_HAL_GPU2D_REGISTER_CALLBACKS = 1 */
 /**
  * @}
  */
@@ -148,8 +138,8 @@ typedef void (*pGPU2D_CommandListCpltCallbackTypeDef)(
  * @brief GPU2D Flags definition
  * @{
  */
-#define GPU2D_FLAG_CLC                                                         \
-	0x00000001U /*!< Command List Complete Interrupt Flag                  \
+#define GPU2D_FLAG_CLC                                                                                                                                                                                 \
+	0x00000001U /*!< Command List Complete Interrupt Flag                                                                                                                                          \
 		     */
 /**
  * @}
@@ -170,16 +160,15 @@ typedef void (*pGPU2D_CommandListCpltCallbackTypeDef)(
  * @retval None
  */
 #if (USE_HAL_GPU2D_REGISTER_CALLBACKS == 1)
-#define __HAL_GPU2D_RESET_HANDLE_STATE(__HANDLE__)                             \
-	do {                                                                   \
-		(__HANDLE__)->State = HAL_GPU2D_STATE_RESET;                   \
-		(__HANDLE__)->MspInitCallback = NULL;                          \
-		(__HANDLE__)->MspDeInitCallback = NULL;                        \
-		(__HANDLE__)->CommandListCpltCallback = NULL;                  \
+#define __HAL_GPU2D_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                     \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_GPU2D_STATE_RESET;                                                                                                                                           \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
+		(__HANDLE__)->CommandListCpltCallback = NULL;                                                                                                                                          \
 	} while (0)
 #else /* USE_HAL_GPU2D_REGISTER_CALLBACKS = 0 */
-#define __HAL_GPU2D_RESET_HANDLE_STATE(__HANDLE__)                             \
-	((__HANDLE__)->State = HAL_GPU2D_STATE_RESET)
+#define __HAL_GPU2D_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_GPU2D_STATE_RESET)
 #endif /* USE_HAL_GPU2D_REGISTER_CALLBACKS = 1 */
 
 /* Interrupt & Flag management */
@@ -191,10 +180,7 @@ typedef void (*pGPU2D_CommandListCpltCallbackTypeDef)(
  *            @arg GPU2D_FLAG_CLC:   Command List Complete interrupt mask
  * @retval The state of FLAG.
  */
-#define __HAL_GPU2D_GET_FLAG(__HANDLE__, __FLAG__)                             \
-	(READ_REG(*(__IO uint32_t *)((uint32_t)(__HANDLE__)->Instance +        \
-				     GPU2D_ITCTRL)) &                          \
-	 (__FLAG__))
+#define __HAL_GPU2D_GET_FLAG(__HANDLE__, __FLAG__) (READ_REG(*(__IO uint32_t *)((uint32_t)(__HANDLE__)->Instance + GPU2D_ITCTRL)) & (__FLAG__))
 
 /**
  * @brief  Clear the GPU2D pending flags.
@@ -204,12 +190,10 @@ typedef void (*pGPU2D_CommandListCpltCallbackTypeDef)(
  *            @arg GPU2D_FLAG_CLC:   Command List Complete interrupt mask
  * @retval None
  */
-#define __HAL_GPU2D_CLEAR_FLAG(__HANDLE__, __FLAG__)                           \
-	do {                                                                   \
-		__IO uint32_t *tmpreg =                                        \
-		    (__IO uint32_t *)((uint32_t)(__HANDLE__)->Instance +       \
-				      GPU2D_ITCTRL);                           \
-		CLEAR_BIT(*tmpreg, __FLAG__);                                  \
+#define __HAL_GPU2D_CLEAR_FLAG(__HANDLE__, __FLAG__)                                                                                                                                                   \
+	do {                                                                                                                                                                                           \
+		__IO uint32_t *tmpreg = (__IO uint32_t *)((uint32_t)(__HANDLE__)->Instance + GPU2D_ITCTRL);                                                                                            \
+		CLEAR_BIT(*tmpreg, __FLAG__);                                                                                                                                                          \
 	} while (0U)
 
 /**
@@ -220,10 +204,7 @@ typedef void (*pGPU2D_CommandListCpltCallbackTypeDef)(
  *            @arg GPU2D_IT_CLC:   Command List Complete interrupt mask
  * @retval The state of INTERRUPT source.
  */
-#define __HAL_GPU2D_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)                   \
-	(READ_REG(*(__IO uint32_t *)((uint32_t)(__HANDLE__)->Instance +        \
-				     GPU2D_ITCTRL)) &                          \
-	 (__INTERRUPT__))
+#define __HAL_GPU2D_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__) (READ_REG(*(__IO uint32_t *)((uint32_t)(__HANDLE__)->Instance + GPU2D_ITCTRL)) & (__INTERRUPT__))
 
 /**
  * @}
@@ -247,18 +228,10 @@ void HAL_GPU2D_MspInit(GPU2D_HandleTypeDef *hgpu2d);
 void HAL_GPU2D_MspDeInit(GPU2D_HandleTypeDef *hgpu2d);
 /* Callbacks Register/UnRegister functions  ***********************************/
 #if (USE_HAL_GPU2D_REGISTER_CALLBACKS == 1)
-HAL_StatusTypeDef
-HAL_GPU2D_RegisterCallback(GPU2D_HandleTypeDef *hgpu2d,
-			   HAL_GPU2D_CallbackIDTypeDef CallbackID,
-			   pGPU2D_CallbackTypeDef pCallback);
-HAL_StatusTypeDef
-HAL_GPU2D_UnRegisterCallback(GPU2D_HandleTypeDef *hgpu2d,
-			     HAL_GPU2D_CallbackIDTypeDef CallbackID);
-HAL_StatusTypeDef HAL_GPU2D_RegisterCommandListCpltCallback(
-    GPU2D_HandleTypeDef *hgpu2d,
-    pGPU2D_CommandListCpltCallbackTypeDef pCallback);
-HAL_StatusTypeDef
-HAL_GPU2D_UnRegisterCommandListCpltCallback(GPU2D_HandleTypeDef *hgpu2d);
+HAL_StatusTypeDef HAL_GPU2D_RegisterCallback(GPU2D_HandleTypeDef *hgpu2d, HAL_GPU2D_CallbackIDTypeDef CallbackID, pGPU2D_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_GPU2D_UnRegisterCallback(GPU2D_HandleTypeDef *hgpu2d, HAL_GPU2D_CallbackIDTypeDef CallbackID);
+HAL_StatusTypeDef HAL_GPU2D_RegisterCommandListCpltCallback(GPU2D_HandleTypeDef *hgpu2d, pGPU2D_CommandListCpltCallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_GPU2D_UnRegisterCommandListCpltCallback(GPU2D_HandleTypeDef *hgpu2d);
 #endif /* USE_HAL_GPU2D_REGISTER_CALLBACKS = 1 */
 
 /**
@@ -272,12 +245,10 @@ HAL_GPU2D_UnRegisterCommandListCpltCallback(GPU2D_HandleTypeDef *hgpu2d);
 /* IO operation functions
  * *******************************************************/
 uint32_t HAL_GPU2D_ReadRegister(GPU2D_HandleTypeDef *hgpu2d, uint32_t offset);
-HAL_StatusTypeDef HAL_GPU2D_WriteRegister(GPU2D_HandleTypeDef *hgpu2d,
-					  uint32_t offset, uint32_t value);
+HAL_StatusTypeDef HAL_GPU2D_WriteRegister(GPU2D_HandleTypeDef *hgpu2d, uint32_t offset, uint32_t value);
 void HAL_GPU2D_IRQHandler(GPU2D_HandleTypeDef *hgpu2d);
 void HAL_GPU2D_ER_IRQHandler(GPU2D_HandleTypeDef *hgpu2d);
-void HAL_GPU2D_CommandListCpltCallback(GPU2D_HandleTypeDef *hgpu2d,
-				       uint32_t CmdListID);
+void HAL_GPU2D_CommandListCpltCallback(GPU2D_HandleTypeDef *hgpu2d, uint32_t CmdListID);
 void HAL_GPU2D_ErrorCallback(GPU2D_HandleTypeDef *hgpu2d);
 
 /**
@@ -291,8 +262,7 @@ void HAL_GPU2D_ErrorCallback(GPU2D_HandleTypeDef *hgpu2d);
 
 /* Peripheral State functions
  * ***************************************************/
-HAL_GPU2D_StateTypeDef
-HAL_GPU2D_GetState(GPU2D_HandleTypeDef const *const hgpu2d);
+HAL_GPU2D_StateTypeDef HAL_GPU2D_GetState(GPU2D_HandleTypeDef const *const hgpu2d);
 uint32_t HAL_GPU2D_GetError(GPU2D_HandleTypeDef const *const hgpu2d);
 
 /**
@@ -305,14 +275,10 @@ uint32_t HAL_GPU2D_GetError(GPU2D_HandleTypeDef const *const hgpu2d);
  * @{
  */
 
-#define GPU2D_ITCTRL                                                           \
-	(0x0F8U) /*!< GPU2D Interrupt Control Register Offset            */
-#define GPU2D_CLID                                                             \
-	(0x148U) /*!< GPU2D Last Command List Identifier Register Offset */
-#define GPU2D_BREAKPOINT                                                       \
-	(0x080U) /*!< GPU2D Breakpoint Register Offset                   */
-#define GPU2D_SYS_INTERRUPT                                                    \
-	(0xff8U) /*!< GPU2D System Interrupt Register Offset             */
+#define GPU2D_ITCTRL (0x0F8U)	     /*!< GPU2D Interrupt Control Register Offset            */
+#define GPU2D_CLID (0x148U)	     /*!< GPU2D Last Command List Identifier Register Offset */
+#define GPU2D_BREAKPOINT (0x080U)    /*!< GPU2D Breakpoint Register Offset                   */
+#define GPU2D_SYS_INTERRUPT (0xff8U) /*!< GPU2D System Interrupt Register Offset             */
 
 /** @defgroup GPU2D_Offset GPU2D Last Register Offset
  * @{

@@ -48,31 +48,23 @@
 /* Check of parameters for configuration of OPAMP hierarchical scope:         */
 /* OPAMP instance.                                                            */
 
-#define IS_LL_OPAMP_POWER_MODE(__POWER_MODE__)                                 \
-	(((__POWER_MODE__) == LL_OPAMP_POWERMODE_NORMALPOWER) ||               \
-	 ((__POWER_MODE__) == LL_OPAMP_POWERMODE_LOWPOWER))
+#define IS_LL_OPAMP_POWER_MODE(__POWER_MODE__) (((__POWER_MODE__) == LL_OPAMP_POWERMODE_NORMALPOWER) || ((__POWER_MODE__) == LL_OPAMP_POWERMODE_LOWPOWER))
 
-#define IS_LL_OPAMP_FUNCTIONAL_MODE(__FUNCTIONAL_MODE__)                       \
-	(((__FUNCTIONAL_MODE__) == LL_OPAMP_MODE_STANDALONE) ||                \
-	 ((__FUNCTIONAL_MODE__) == LL_OPAMP_MODE_FOLLOWER) ||                  \
-	 ((__FUNCTIONAL_MODE__) == LL_OPAMP_MODE_PGA))
+#define IS_LL_OPAMP_FUNCTIONAL_MODE(__FUNCTIONAL_MODE__)                                                                                                                                               \
+	(((__FUNCTIONAL_MODE__) == LL_OPAMP_MODE_STANDALONE) || ((__FUNCTIONAL_MODE__) == LL_OPAMP_MODE_FOLLOWER) || ((__FUNCTIONAL_MODE__) == LL_OPAMP_MODE_PGA))
 
 /* Note: Comparator non-inverting inputs parameters are the same on all       */
 /*       OPAMP instances.                                                     */
 /*       However, comparator instance kept as macro parameter for             */
 /*       compatibility with other STM32 families.                             */
-#define IS_LL_OPAMP_INPUT_NONINVERTING(__OPAMPX__, __INPUT_NONINVERTING__)     \
-	(((__INPUT_NONINVERTING__) == LL_OPAMP_INPUT_NONINVERT_IO0) ||         \
-	 ((__INPUT_NONINVERTING__) == LL_OPAMP_INPUT_NONINV_DAC1_CH1))
+#define IS_LL_OPAMP_INPUT_NONINVERTING(__OPAMPX__, __INPUT_NONINVERTING__) (((__INPUT_NONINVERTING__) == LL_OPAMP_INPUT_NONINVERT_IO0) || ((__INPUT_NONINVERTING__) == LL_OPAMP_INPUT_NONINV_DAC1_CH1))
 
 /* Note: Comparator non-inverting inputs parameters are the same on all       */
 /*       OPAMP instances.                                                     */
 /*       However, comparator instance kept as macro parameter for             */
 /*       compatibility with other STM32 families.                             */
-#define IS_LL_OPAMP_INPUT_INVERTING(__OPAMPX__, __INPUT_INVERTING__)           \
-	(((__INPUT_INVERTING__) == LL_OPAMP_INPUT_INVERT_IO0) ||               \
-	 ((__INPUT_INVERTING__) == LL_OPAMP_INPUT_INVERT_IO1) ||               \
-	 ((__INPUT_INVERTING__) == LL_OPAMP_INPUT_INVERT_CONNECT_NO))
+#define IS_LL_OPAMP_INPUT_INVERTING(__OPAMPX__, __INPUT_INVERTING__)                                                                                                                                   \
+	(((__INPUT_INVERTING__) == LL_OPAMP_INPUT_INVERT_IO0) || ((__INPUT_INVERTING__) == LL_OPAMP_INPUT_INVERT_IO1) || ((__INPUT_INVERTING__) == LL_OPAMP_INPUT_INVERT_CONNECT_NO))
 
 /**
  * @}
@@ -125,16 +117,13 @@ ErrorStatus LL_OPAMP_DeInit(OPAMP_TypeDef *OPAMPx)
  *          - SUCCESS: OPAMP registers are initialized
  *          - ERROR: OPAMP registers are not initialized
  */
-ErrorStatus LL_OPAMP_Init(OPAMP_TypeDef *OPAMPx,
-			  LL_OPAMP_InitTypeDef *OPAMP_InitStruct)
+ErrorStatus LL_OPAMP_Init(OPAMP_TypeDef *OPAMPx, LL_OPAMP_InitTypeDef *OPAMP_InitStruct)
 {
 	/* Check the parameters */
 	assert_param(IS_OPAMP_ALL_INSTANCE(OPAMPx));
 	assert_param(IS_LL_OPAMP_POWER_MODE(OPAMP_InitStruct->PowerMode));
-	assert_param(
-	    IS_LL_OPAMP_FUNCTIONAL_MODE(OPAMP_InitStruct->FunctionalMode));
-	assert_param(IS_LL_OPAMP_INPUT_NONINVERTING(
-	    OPAMPx, OPAMP_InitStruct->InputNonInverting));
+	assert_param(IS_LL_OPAMP_FUNCTIONAL_MODE(OPAMP_InitStruct->FunctionalMode));
+	assert_param(IS_LL_OPAMP_INPUT_NONINVERTING(OPAMPx, OPAMP_InitStruct->InputNonInverting));
 
 	/* Note: OPAMP inverting input can be used with OPAMP in mode standalone
 	 */
@@ -142,8 +131,7 @@ ErrorStatus LL_OPAMP_Init(OPAMP_TypeDef *OPAMPx,
 	/*       Otherwise (OPAMP in mode follower), OPAMP inverting input is */
 	/*       not used (not connected to GPIO pin). */
 	if (OPAMP_InitStruct->FunctionalMode != LL_OPAMP_MODE_FOLLOWER) {
-		assert_param(IS_LL_OPAMP_INPUT_INVERTING(
-		    OPAMPx, OPAMP_InitStruct->InputInverting));
+		assert_param(IS_LL_OPAMP_INPUT_INVERTING(OPAMPx, OPAMP_InitStruct->InputInverting));
 	}
 
 	/* Configuration of OPAMP instance : */
@@ -154,25 +142,11 @@ ErrorStatus LL_OPAMP_Init(OPAMP_TypeDef *OPAMPx,
 	/* Note: Bit OPAMP_CSR_CALON reset to ensure to be in functional mode.
 	 */
 	if (OPAMP_InitStruct->FunctionalMode != LL_OPAMP_MODE_FOLLOWER) {
-		MODIFY_REG(OPAMPx->CSR,
-			   OPAMP_CSR_OPALPM | OPAMP_CSR_OPAMODE |
-			       OPAMP_CSR_CALON | OPAMP_CSR_VMSEL |
-			       OPAMP_CSR_VPSEL,
-			   (OPAMP_InitStruct->PowerMode &
-			    OPAMP_POWERMODE_CSR_BIT_MASK) |
-			       OPAMP_InitStruct->FunctionalMode |
-			       OPAMP_InitStruct->InputNonInverting |
-			       OPAMP_InitStruct->InputInverting);
+		MODIFY_REG(OPAMPx->CSR, OPAMP_CSR_OPALPM | OPAMP_CSR_OPAMODE | OPAMP_CSR_CALON | OPAMP_CSR_VMSEL | OPAMP_CSR_VPSEL,
+			   (OPAMP_InitStruct->PowerMode & OPAMP_POWERMODE_CSR_BIT_MASK) | OPAMP_InitStruct->FunctionalMode | OPAMP_InitStruct->InputNonInverting | OPAMP_InitStruct->InputInverting);
 	} else {
-		MODIFY_REG(OPAMPx->CSR,
-			   OPAMP_CSR_OPALPM | OPAMP_CSR_OPAMODE |
-			       OPAMP_CSR_CALON | OPAMP_CSR_VMSEL |
-			       OPAMP_CSR_VPSEL,
-			   (OPAMP_InitStruct->PowerMode &
-			    OPAMP_POWERMODE_CSR_BIT_MASK) |
-			       LL_OPAMP_MODE_FOLLOWER |
-			       OPAMP_InitStruct->InputNonInverting |
-			       LL_OPAMP_INPUT_INVERT_CONNECT_NO);
+		MODIFY_REG(OPAMPx->CSR, OPAMP_CSR_OPALPM | OPAMP_CSR_OPAMODE | OPAMP_CSR_CALON | OPAMP_CSR_VMSEL | OPAMP_CSR_VPSEL,
+			   (OPAMP_InitStruct->PowerMode & OPAMP_POWERMODE_CSR_BIT_MASK) | LL_OPAMP_MODE_FOLLOWER | OPAMP_InitStruct->InputNonInverting | LL_OPAMP_INPUT_INVERT_CONNECT_NO);
 	}
 
 	return SUCCESS;

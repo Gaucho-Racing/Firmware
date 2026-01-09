@@ -237,9 +237,7 @@
  * -------------------------------------------------------------------------------------------------*/
 /* Private function prototypes
  * ---------------------------------------------------------------------------------------*/
-static void DMA_SetConfig(DMA_HandleTypeDef const *const hdma,
-			  uint32_t SrcAddress, uint32_t DstAddress,
-			  uint32_t SrcDataSize);
+static void DMA_SetConfig(DMA_HandleTypeDef const *const hdma, uint32_t SrcAddress, uint32_t DstAddress, uint32_t SrcDataSize);
 static void DMA_Init(DMA_HandleTypeDef const *const hdma);
 
 /* Exported functions
@@ -304,8 +302,7 @@ HAL_StatusTypeDef HAL_DMA_Init(DMA_HandleTypeDef *const hdma)
 	if (IS_GPDMA_INSTANCE(hdma->Instance) != 0U) {
 		assert_param(IS_DMA_BURST_LENGTH(hdma->Init.SrcBurstLength));
 		assert_param(IS_DMA_BURST_LENGTH(hdma->Init.DestBurstLength));
-		assert_param(IS_DMA_TRANSFER_ALLOCATED_PORT(
-		    hdma->Init.TransferAllocatedPort));
+		assert_param(IS_DMA_TRANSFER_ALLOCATED_PORT(hdma->Init.TransferAllocatedPort));
 	}
 
 	/* Allocate lock resource */
@@ -414,19 +411,15 @@ HAL_StatusTypeDef HAL_DMA_DeInit(DMA_HandleTypeDef *const hdma)
 	}
 
 	/* Clear privilege attribute */
-	CLEAR_BIT(p_dma_instance->PRIVCFGR,
-		  (1UL << (GET_DMA_CHANNEL(hdma) & 0x1FU)));
+	CLEAR_BIT(p_dma_instance->PRIVCFGR, (1UL << (GET_DMA_CHANNEL(hdma) & 0x1FU)));
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 	/* Clear secure attribute */
-	CLEAR_BIT(p_dma_instance->SECCFGR,
-		  (1UL << (GET_DMA_CHANNEL(hdma) & 0x1FU)));
+	CLEAR_BIT(p_dma_instance->SECCFGR, (1UL << (GET_DMA_CHANNEL(hdma) & 0x1FU)));
 #endif /* (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
 	/* Clear all flags */
-	__HAL_DMA_CLEAR_FLAG(hdma, (DMA_FLAG_TC | DMA_FLAG_HT | DMA_FLAG_DTE |
-				    DMA_FLAG_ULE | DMA_FLAG_USE |
-				    DMA_FLAG_SUSP | DMA_FLAG_TO));
+	__HAL_DMA_CLEAR_FLAG(hdma, (DMA_FLAG_TC | DMA_FLAG_HT | DMA_FLAG_DTE | DMA_FLAG_ULE | DMA_FLAG_USE | DMA_FLAG_SUSP | DMA_FLAG_TO));
 
 	/* Clean all callbacks */
 	hdma->XferCpltCallback = NULL;
@@ -508,9 +501,7 @@ callbacks. User callbacks are called under HAL_DMA_IRQHandler().
  * destination in bytes.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_DMA_Start(DMA_HandleTypeDef *const hdma,
-				uint32_t SrcAddress, uint32_t DstAddress,
-				uint32_t SrcDataSize)
+HAL_StatusTypeDef HAL_DMA_Start(DMA_HandleTypeDef *const hdma, uint32_t SrcAddress, uint32_t DstAddress, uint32_t SrcDataSize)
 {
 	/* Check the DMA peripheral handle parameter */
 	if (hdma == NULL) {
@@ -561,9 +552,7 @@ HAL_StatusTypeDef HAL_DMA_Start(DMA_HandleTypeDef *const hdma,
  * destination in bytes.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_DMA_Start_IT(DMA_HandleTypeDef *const hdma,
-				   uint32_t SrcAddress, uint32_t DstAddress,
-				   uint32_t SrcDataSize)
+HAL_StatusTypeDef HAL_DMA_Start_IT(DMA_HandleTypeDef *const hdma, uint32_t SrcAddress, uint32_t DstAddress, uint32_t SrcDataSize)
 {
 	/* Check the DMA peripheral handle parameter */
 	if (hdma == NULL) {
@@ -590,8 +579,7 @@ HAL_StatusTypeDef HAL_DMA_Start_IT(DMA_HandleTypeDef *const hdma,
 
 		/* Enable common interrupts: Transfer Complete and Transfer
 		 * Errors ITs */
-		__HAL_DMA_ENABLE_IT(hdma, (DMA_IT_TC | DMA_IT_DTE | DMA_IT_ULE |
-					   DMA_IT_USE | DMA_IT_TO));
+		__HAL_DMA_ENABLE_IT(hdma, (DMA_IT_TC | DMA_IT_DTE | DMA_IT_ULE | DMA_IT_USE | DMA_IT_TO));
 
 		/* Check half transfer complete callback */
 		if (hdma->XferHalfCpltCallback != NULL) {
@@ -662,8 +650,7 @@ HAL_StatusTypeDef HAL_DMA_Abort(DMA_HandleTypeDef *const hdma)
 		/* Check if the DMA Channel is suspended */
 		while ((hdma->Instance->CSR & DMA_CSR_SUSPF) == 0U) {
 			/* Check for the Timeout */
-			if ((HAL_GetTick() - tickstart) >
-			    HAL_TIMEOUT_DMA_ABORT) {
+			if ((HAL_GetTick() - tickstart) > HAL_TIMEOUT_DMA_ABORT) {
 				/* Update the DMA channel error code */
 				hdma->ErrorCode |= HAL_DMA_ERROR_TIMEOUT;
 
@@ -671,11 +658,9 @@ HAL_StatusTypeDef HAL_DMA_Abort(DMA_HandleTypeDef *const hdma)
 				hdma->State = HAL_DMA_STATE_ERROR;
 
 				/* Check DMA channel transfer mode */
-				if ((hdma->Mode & DMA_LINKEDLIST) ==
-				    DMA_LINKEDLIST) {
+				if ((hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
 					/* Update the linked-list queue state */
-					hdma->LinkedListQueue->State =
-					    HAL_DMA_QUEUE_STATE_READY;
+					hdma->LinkedListQueue->State = HAL_DMA_QUEUE_STATE_READY;
 				}
 
 				/* Process Unlocked */
@@ -692,10 +677,7 @@ HAL_StatusTypeDef HAL_DMA_Abort(DMA_HandleTypeDef *const hdma)
 		hdma->State = HAL_DMA_STATE_ABORT;
 
 		/* Clear all status flags */
-		__HAL_DMA_CLEAR_FLAG(hdma,
-				     (DMA_FLAG_TC | DMA_FLAG_HT | DMA_FLAG_DTE |
-				      DMA_FLAG_ULE | DMA_FLAG_USE |
-				      DMA_FLAG_SUSP | DMA_FLAG_TO));
+		__HAL_DMA_CLEAR_FLAG(hdma, (DMA_FLAG_TC | DMA_FLAG_HT | DMA_FLAG_DTE | DMA_FLAG_ULE | DMA_FLAG_USE | DMA_FLAG_SUSP | DMA_FLAG_TO));
 
 		/* Update the DMA channel state */
 		hdma->State = HAL_DMA_STATE_READY;
@@ -703,8 +685,7 @@ HAL_StatusTypeDef HAL_DMA_Abort(DMA_HandleTypeDef *const hdma)
 		/* Check DMA channel transfer mode */
 		if ((hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
 			/* Update the linked-list queue state */
-			hdma->LinkedListQueue->State =
-			    HAL_DMA_QUEUE_STATE_READY;
+			hdma->LinkedListQueue->State = HAL_DMA_QUEUE_STATE_READY;
 
 			/* Clear remaining data size to ensure loading
 			 * linked-list from memory next start */
@@ -757,10 +738,7 @@ HAL_StatusTypeDef HAL_DMA_Abort_IT(DMA_HandleTypeDef *const hdma)
  * @param  Timeout       : Timeout duration.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_DMA_PollForTransfer(DMA_HandleTypeDef *const hdma,
-			HAL_DMA_LevelCompleteTypeDef CompleteLevel,
-			uint32_t Timeout)
+HAL_StatusTypeDef HAL_DMA_PollForTransfer(DMA_HandleTypeDef *const hdma, HAL_DMA_LevelCompleteTypeDef CompleteLevel, uint32_t Timeout)
 {
 	/* Get tick number */
 	uint32_t tickstart = HAL_GetTick();
@@ -795,8 +773,7 @@ HAL_DMA_PollForTransfer(DMA_HandleTypeDef *const hdma,
 	}
 
 	/* Get the level transfer complete flag */
-	level_flag = ((CompleteLevel == HAL_DMA_FULL_TRANSFER) ? DMA_FLAG_IDLE
-							       : DMA_FLAG_HT);
+	level_flag = ((CompleteLevel == HAL_DMA_FULL_TRANSFER) ? DMA_FLAG_IDLE : DMA_FLAG_HT);
 
 	/* Get DMA channel status */
 	tmp_csr = hdma->Instance->CSR;
@@ -804,8 +781,7 @@ HAL_DMA_PollForTransfer(DMA_HandleTypeDef *const hdma,
 	while ((tmp_csr & level_flag) == 0U) {
 		/* Check for the timeout */
 		if (Timeout != HAL_MAX_DELAY) {
-			if (((HAL_GetTick() - tickstart) > Timeout) ||
-			    (Timeout == 0U)) {
+			if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
 				/* Update the DMA channel error code */
 				hdma->ErrorCode |= HAL_DMA_ERROR_TIMEOUT;
 
@@ -873,8 +849,7 @@ HAL_DMA_PollForTransfer(DMA_HandleTypeDef *const hdma,
 		/* Check DMA channel transfer mode */
 		if ((hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
 			/* Update the linked-list queue state */
-			hdma->LinkedListQueue->State =
-			    HAL_DMA_QUEUE_STATE_READY;
+			hdma->LinkedListQueue->State = HAL_DMA_QUEUE_STATE_READY;
 		}
 
 		/* Process Unlocked */
@@ -897,8 +872,7 @@ HAL_DMA_PollForTransfer(DMA_HandleTypeDef *const hdma,
 		/* Check DMA channel transfer mode */
 		if ((hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
 			/* Update the linked-list queue state */
-			hdma->LinkedListQueue->State =
-			    HAL_DMA_QUEUE_STATE_READY;
+			hdma->LinkedListQueue->State = HAL_DMA_QUEUE_STATE_READY;
 		}
 
 		/* Process unlocked */
@@ -920,11 +894,9 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *const hdma)
 {
 	const DMA_TypeDef *p_dma_instance = GET_DMA_INSTANCE(hdma);
 	uint32_t global_it_flag = 1UL << (GET_DMA_CHANNEL(hdma) & 0x1FU);
-	uint32_t global_active_flag_ns =
-	    IS_DMA_GLOBAL_ACTIVE_FLAG_NS(p_dma_instance, global_it_flag);
+	uint32_t global_active_flag_ns = IS_DMA_GLOBAL_ACTIVE_FLAG_NS(p_dma_instance, global_it_flag);
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-	uint32_t global_active_flag_s =
-	    IS_DMA_GLOBAL_ACTIVE_FLAG_S(p_dma_instance, global_it_flag);
+	uint32_t global_active_flag_s = IS_DMA_GLOBAL_ACTIVE_FLAG_S(p_dma_instance, global_it_flag);
 #endif /* (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
 	/* Global Interrupt Flag management
@@ -1028,11 +1000,9 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *const hdma)
 				hdma->State = HAL_DMA_STATE_READY;
 
 				/* Check DMA channel transfer mode */
-				if ((hdma->Mode & DMA_LINKEDLIST) ==
-				    DMA_LINKEDLIST) {
+				if ((hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
 					/* Update the linked-list queue state */
-					hdma->LinkedListQueue->State =
-					    HAL_DMA_QUEUE_STATE_READY;
+					hdma->LinkedListQueue->State = HAL_DMA_QUEUE_STATE_READY;
 
 					/* Clear remaining data size to ensure
 					 * loading linked-list from memory next
@@ -1075,13 +1045,11 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *const hdma)
 					if (hdma->Instance->CBR1 == 0U) {
 						/* Update the DMA channel state
 						 */
-						hdma->State =
-						    HAL_DMA_STATE_READY;
+						hdma->State = HAL_DMA_STATE_READY;
 
 						/* Update the linked-list queue
 						 * state */
-						hdma->LinkedListQueue->State =
-						    HAL_DMA_QUEUE_STATE_READY;
+						hdma->LinkedListQueue->State = HAL_DMA_QUEUE_STATE_READY;
 					}
 				}
 			} else {
@@ -1118,8 +1086,7 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *const hdma)
 		/* Check DMA channel transfer mode */
 		if ((hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
 			/* Update the linked-list queue state */
-			hdma->LinkedListQueue->State =
-			    HAL_DMA_QUEUE_STATE_READY;
+			hdma->LinkedListQueue->State = HAL_DMA_QUEUE_STATE_READY;
 		}
 
 		/* Process Unlocked */
@@ -1145,9 +1112,7 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *const hdma)
  * @param  pCallback  : Pointer to private callback function.
  * @retval HAL status.
  */
-HAL_StatusTypeDef HAL_DMA_RegisterCallback(
-    DMA_HandleTypeDef *const hdma, HAL_DMA_CallbackIDTypeDef CallbackID,
-    void (*const pCallback)(DMA_HandleTypeDef *const _hdma))
+HAL_StatusTypeDef HAL_DMA_RegisterCallback(DMA_HandleTypeDef *const hdma, HAL_DMA_CallbackIDTypeDef CallbackID, void (*const pCallback)(DMA_HandleTypeDef *const _hdma))
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -1215,9 +1180,7 @@ HAL_StatusTypeDef HAL_DMA_RegisterCallback(
  * HAL_DMA_CallbackIDTypeDef enum.
  * @retval HAL status.
  */
-HAL_StatusTypeDef
-HAL_DMA_UnRegisterCallback(DMA_HandleTypeDef *const hdma,
-			   HAL_DMA_CallbackIDTypeDef CallbackID)
+HAL_StatusTypeDef HAL_DMA_UnRegisterCallback(DMA_HandleTypeDef *const hdma, HAL_DMA_CallbackIDTypeDef CallbackID)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -1373,8 +1336,7 @@ channel security and privilege attributes lock status.
  * DMA_Channel_Attributes.
  * @retval HAL Status.
  */
-HAL_StatusTypeDef HAL_DMA_ConfigChannelAttributes(DMA_HandleTypeDef *const hdma,
-						  uint32_t ChannelAttributes)
+HAL_StatusTypeDef HAL_DMA_ConfigChannelAttributes(DMA_HandleTypeDef *const hdma, uint32_t ChannelAttributes)
 {
 	DMA_TypeDef *p_dma_instance;
 	uint32_t channel_idx;
@@ -1394,11 +1356,9 @@ HAL_StatusTypeDef HAL_DMA_ConfigChannelAttributes(DMA_HandleTypeDef *const hdma,
 	channel_idx = 1UL << (GET_DMA_CHANNEL(hdma) & 0x1FU);
 
 	/* Check DMA channel privilege attribute management */
-	if ((ChannelAttributes & DMA_CHANNEL_ATTR_PRIV_MASK) ==
-	    DMA_CHANNEL_ATTR_PRIV_MASK) {
+	if ((ChannelAttributes & DMA_CHANNEL_ATTR_PRIV_MASK) == DMA_CHANNEL_ATTR_PRIV_MASK) {
 		/* Configure DMA channel privilege attribute */
-		if ((ChannelAttributes & DMA_CHANNEL_PRIV) ==
-		    DMA_CHANNEL_PRIV) {
+		if ((ChannelAttributes & DMA_CHANNEL_PRIV) == DMA_CHANNEL_PRIV) {
 			p_dma_instance->PRIVCFGR |= channel_idx;
 		} else {
 			p_dma_instance->PRIVCFGR &= (~channel_idx);
@@ -1407,8 +1367,7 @@ HAL_StatusTypeDef HAL_DMA_ConfigChannelAttributes(DMA_HandleTypeDef *const hdma,
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 	/* Check DMA channel security attribute management */
-	if ((ChannelAttributes & DMA_CHANNEL_ATTR_SEC_MASK) ==
-	    DMA_CHANNEL_ATTR_SEC_MASK) {
+	if ((ChannelAttributes & DMA_CHANNEL_ATTR_SEC_MASK) == DMA_CHANNEL_ATTR_SEC_MASK) {
 		/* Configure DMA channel security attribute */
 		if ((ChannelAttributes & DMA_CHANNEL_SEC) == DMA_CHANNEL_SEC) {
 			p_dma_instance->SECCFGR |= channel_idx;
@@ -1418,11 +1377,9 @@ HAL_StatusTypeDef HAL_DMA_ConfigChannelAttributes(DMA_HandleTypeDef *const hdma,
 	}
 
 	/* Channel source security attribute management */
-	if ((ChannelAttributes & DMA_CHANNEL_ATTR_SEC_SRC_MASK) ==
-	    DMA_CHANNEL_ATTR_SEC_SRC_MASK) {
+	if ((ChannelAttributes & DMA_CHANNEL_ATTR_SEC_SRC_MASK) == DMA_CHANNEL_ATTR_SEC_SRC_MASK) {
 		/* Configure DMA channel source security attribute */
-		if ((ChannelAttributes & DMA_CHANNEL_SRC_SEC) ==
-		    DMA_CHANNEL_SRC_SEC) {
+		if ((ChannelAttributes & DMA_CHANNEL_SRC_SEC) == DMA_CHANNEL_SRC_SEC) {
 			hdma->Instance->CTR1 |= DMA_CTR1_SSEC;
 		} else {
 			hdma->Instance->CTR1 &= (~DMA_CTR1_SSEC);
@@ -1430,11 +1387,9 @@ HAL_StatusTypeDef HAL_DMA_ConfigChannelAttributes(DMA_HandleTypeDef *const hdma,
 	}
 
 	/* Channel destination security attribute management */
-	if ((ChannelAttributes & DMA_CHANNEL_ATTR_SEC_DEST_MASK) ==
-	    DMA_CHANNEL_ATTR_SEC_DEST_MASK) {
+	if ((ChannelAttributes & DMA_CHANNEL_ATTR_SEC_DEST_MASK) == DMA_CHANNEL_ATTR_SEC_DEST_MASK) {
 		/* Configure DMA channel destination security attribute */
-		if ((ChannelAttributes & DMA_CHANNEL_DEST_SEC) ==
-		    DMA_CHANNEL_DEST_SEC) {
+		if ((ChannelAttributes & DMA_CHANNEL_DEST_SEC) == DMA_CHANNEL_DEST_SEC) {
 			hdma->Instance->CTR1 |= DMA_CTR1_DSEC;
 		} else {
 			hdma->Instance->CTR1 &= (~DMA_CTR1_DSEC);
@@ -1452,9 +1407,7 @@ HAL_StatusTypeDef HAL_DMA_ConfigChannelAttributes(DMA_HandleTypeDef *const hdma,
  * @param  pChannelAttributes : Pointer to the returned attributes.
  * @retval HAL Status.
  */
-HAL_StatusTypeDef
-HAL_DMA_GetConfigChannelAttributes(DMA_HandleTypeDef const *const hdma,
-				   uint32_t *const pChannelAttributes)
+HAL_StatusTypeDef HAL_DMA_GetConfigChannelAttributes(DMA_HandleTypeDef const *const hdma, uint32_t *const pChannelAttributes)
 {
 	const DMA_TypeDef *p_dma_instance;
 	uint32_t attributes;
@@ -1472,24 +1425,16 @@ HAL_DMA_GetConfigChannelAttributes(DMA_HandleTypeDef const *const hdma,
 	channel_idx = 1UL << (GET_DMA_CHANNEL(hdma) & 0x1FU);
 
 	/* Get DMA channel privilege attribute */
-	attributes = ((p_dma_instance->PRIVCFGR & channel_idx) == 0U)
-			 ? DMA_CHANNEL_NPRIV
-			 : DMA_CHANNEL_PRIV;
+	attributes = ((p_dma_instance->PRIVCFGR & channel_idx) == 0U) ? DMA_CHANNEL_NPRIV : DMA_CHANNEL_PRIV;
 
 	/* Get DMA channel security attribute */
-	attributes |= ((p_dma_instance->SECCFGR & channel_idx) == 0U)
-			  ? DMA_CHANNEL_NSEC
-			  : DMA_CHANNEL_SEC;
+	attributes |= ((p_dma_instance->SECCFGR & channel_idx) == 0U) ? DMA_CHANNEL_NSEC : DMA_CHANNEL_SEC;
 
 	/* Get DMA channel source security attribute */
-	attributes |= ((hdma->Instance->CTR1 & DMA_CTR1_SSEC) == 0U)
-			  ? DMA_CHANNEL_SRC_NSEC
-			  : DMA_CHANNEL_SRC_SEC;
+	attributes |= ((hdma->Instance->CTR1 & DMA_CTR1_SSEC) == 0U) ? DMA_CHANNEL_SRC_NSEC : DMA_CHANNEL_SRC_SEC;
 
 	/* Get DMA channel destination security attribute */
-	attributes |= ((hdma->Instance->CTR1 & DMA_CTR1_DSEC) == 0U)
-			  ? DMA_CHANNEL_DEST_NSEC
-			  : DMA_CHANNEL_DEST_SEC;
+	attributes |= ((hdma->Instance->CTR1 & DMA_CTR1_DSEC) == 0U) ? DMA_CHANNEL_DEST_NSEC : DMA_CHANNEL_DEST_SEC;
 
 	/* return value */
 	*pChannelAttributes = attributes;
@@ -1504,8 +1449,7 @@ HAL_DMA_GetConfigChannelAttributes(DMA_HandleTypeDef const *const hdma,
  * configuration information for the specified DMA Channel.
  * @retval HAL Status.
  */
-HAL_StatusTypeDef
-HAL_DMA_LockChannelAttributes(DMA_HandleTypeDef const *const hdma)
+HAL_StatusTypeDef HAL_DMA_LockChannelAttributes(DMA_HandleTypeDef const *const hdma)
 {
 	DMA_TypeDef *p_dma_instance;
 	uint32_t channel_idx;
@@ -1536,9 +1480,7 @@ HAL_DMA_LockChannelAttributes(DMA_HandleTypeDef const *const hdma)
  * DMA_CHANNEL_ATTRIBUTE_UNLOCKED or DMA_CHANNEL_ATTRIBUTE_LOCKED).
  * @retval HAL status.
  */
-HAL_StatusTypeDef
-HAL_DMA_GetLockChannelAttributes(DMA_HandleTypeDef const *const hdma,
-				 uint32_t *const pLockState)
+HAL_StatusTypeDef HAL_DMA_GetLockChannelAttributes(DMA_HandleTypeDef const *const hdma, uint32_t *const pLockState)
 {
 	const DMA_TypeDef *p_dma_instance;
 	uint32_t channel_idx;
@@ -1555,9 +1497,7 @@ HAL_DMA_GetLockChannelAttributes(DMA_HandleTypeDef const *const hdma,
 	channel_idx = 1UL << (GET_DMA_CHANNEL(hdma) & 0x1FU);
 
 	/* Get channel lock attribute state */
-	*pLockState = ((p_dma_instance->RCFGLOCKR & channel_idx) == 0U)
-			  ? DMA_CHANNEL_ATTRIBUTE_UNLOCKED
-			  : DMA_CHANNEL_ATTRIBUTE_LOCKED;
+	*pLockState = ((p_dma_instance->RCFGLOCKR & channel_idx) == 0U) ? DMA_CHANNEL_ATTRIBUTE_UNLOCKED : DMA_CHANNEL_ATTRIBUTE_LOCKED;
 
 	return HAL_OK;
 }
@@ -1586,18 +1526,13 @@ HAL_DMA_GetLockChannelAttributes(DMA_HandleTypeDef const *const hdma,
  * destination in bytes.
  * @retval None.
  */
-static void DMA_SetConfig(DMA_HandleTypeDef const *const hdma,
-			  uint32_t SrcAddress, uint32_t DstAddress,
-			  uint32_t SrcDataSize)
+static void DMA_SetConfig(DMA_HandleTypeDef const *const hdma, uint32_t SrcAddress, uint32_t DstAddress, uint32_t SrcDataSize)
 {
 	/* Configure the DMA channel data size */
-	MODIFY_REG(hdma->Instance->CBR1, DMA_CBR1_BNDT,
-		   (SrcDataSize & DMA_CBR1_BNDT));
+	MODIFY_REG(hdma->Instance->CBR1, DMA_CBR1_BNDT, (SrcDataSize & DMA_CBR1_BNDT));
 
 	/* Clear all interrupt flags */
-	__HAL_DMA_CLEAR_FLAG(hdma, DMA_FLAG_TC | DMA_FLAG_HT | DMA_FLAG_DTE |
-				       DMA_FLAG_ULE | DMA_FLAG_USE |
-				       DMA_FLAG_SUSP | DMA_FLAG_TO);
+	__HAL_DMA_CLEAR_FLAG(hdma, DMA_FLAG_TC | DMA_FLAG_HT | DMA_FLAG_DTE | DMA_FLAG_ULE | DMA_FLAG_USE | DMA_FLAG_SUSP | DMA_FLAG_TO);
 
 	/* Configure DMA channel source address */
 	hdma->Instance->CSAR = SrcAddress;
@@ -1622,34 +1557,24 @@ static void DMA_Init(DMA_HandleTypeDef const *const hdma)
 	tmpreg = hdma->Init.Priority;
 
 	/* Write DMA Channel Control Register (CCR) */
-	MODIFY_REG(hdma->Instance->CCR,
-		   DMA_CCR_PRIO | DMA_CCR_LAP | DMA_CCR_LSM, tmpreg);
+	MODIFY_REG(hdma->Instance->CCR, DMA_CCR_PRIO | DMA_CCR_LAP | DMA_CCR_LSM, tmpreg);
 
 	/* Prepare DMA Channel Transfer Register (CTR1) value
 	 * ***************************************************************/
-	tmpreg = hdma->Init.DestInc | hdma->Init.DestDataWidth |
-		 hdma->Init.SrcInc | hdma->Init.SrcDataWidth;
+	tmpreg = hdma->Init.DestInc | hdma->Init.DestDataWidth | hdma->Init.SrcInc | hdma->Init.SrcDataWidth;
 
 	/* Add parameters specific to GPDMA */
 	if (IS_GPDMA_INSTANCE(hdma->Instance) != 0U) {
-		tmpreg |=
-		    (hdma->Init.TransferAllocatedPort |
-		     (((hdma->Init.DestBurstLength - 1U)
-		       << DMA_CTR1_DBL_1_Pos) &
-		      DMA_CTR1_DBL_1) |
-		     (((hdma->Init.SrcBurstLength - 1U) << DMA_CTR1_SBL_1_Pos) &
-		      DMA_CTR1_SBL_1));
+		tmpreg |= (hdma->Init.TransferAllocatedPort | (((hdma->Init.DestBurstLength - 1U) << DMA_CTR1_DBL_1_Pos) & DMA_CTR1_DBL_1) |
+			   (((hdma->Init.SrcBurstLength - 1U) << DMA_CTR1_SBL_1_Pos) & DMA_CTR1_SBL_1));
 	}
 
 	/* Write DMA Channel Transfer Register 1 (CTR1) */
-	MODIFY_REG(hdma->Instance->CTR1, ~(DMA_CTR1_SSEC | DMA_CTR1_DSEC),
-		   tmpreg);
+	MODIFY_REG(hdma->Instance->CTR1, ~(DMA_CTR1_SSEC | DMA_CTR1_DSEC), tmpreg);
 
 	/* Prepare DMA Channel Transfer Register 2 (CTR2) value
 	 * *************************************************************/
-	tmpreg = hdma->Init.BlkHWRequest |
-		 (hdma->Init.Request & DMA_CTR2_REQSEL) |
-		 hdma->Init.TransferEventMode;
+	tmpreg = hdma->Init.BlkHWRequest | (hdma->Init.Request & DMA_CTR2_REQSEL) | hdma->Init.TransferEventMode;
 
 	/* Memory to Peripheral Transfer */
 	if ((hdma->Init.Direction) == DMA_MEMORY_TO_PERIPH) {
@@ -1665,11 +1590,7 @@ static void DMA_Init(DMA_HandleTypeDef const *const hdma)
 	}
 
 	/* Write DMA Channel Transfer Register 2 (CTR2) */
-	MODIFY_REG(hdma->Instance->CTR2,
-		   (DMA_CTR2_TCEM | DMA_CTR2_TRIGPOL | DMA_CTR2_TRIGSEL |
-		    DMA_CTR2_TRIGM | DMA_CTR2_BREQ | DMA_CTR2_DREQ |
-		    DMA_CTR2_SWREQ | DMA_CTR2_REQSEL),
-		   tmpreg);
+	MODIFY_REG(hdma->Instance->CTR2, (DMA_CTR2_TCEM | DMA_CTR2_TRIGPOL | DMA_CTR2_TRIGSEL | DMA_CTR2_TRIGM | DMA_CTR2_BREQ | DMA_CTR2_DREQ | DMA_CTR2_SWREQ | DMA_CTR2_REQSEL), tmpreg);
 
 	/* Write DMA Channel Block Register 1 (CBR1)
 	 * ************************************************************************/

@@ -425,23 +425,15 @@ Init/DeInit. Then, the user first registers the MspInit/MspDeInit user callbacks
 /** @defgroup HRTIM_Private_Defines HRTIM Private Define
  * @{
  */
-#define HRTIM_FLTR_FLTxEN                                                      \
-	(HRTIM_FLTR_FLT1EN | HRTIM_FLTR_FLT2EN | HRTIM_FLTR_FLT3EN |           \
-	 HRTIM_FLTR_FLT4EN | HRTIM_FLTR_FLT5EN | HRTIM_FLTR_FLT6EN)
+#define HRTIM_FLTR_FLTxEN (HRTIM_FLTR_FLT1EN | HRTIM_FLTR_FLT2EN | HRTIM_FLTR_FLT3EN | HRTIM_FLTR_FLT4EN | HRTIM_FLTR_FLT5EN | HRTIM_FLTR_FLT6EN)
 
-#define HRTIM_TIMCR_TIMUPDATETRIGGER                                           \
-	(HRTIM_TIMUPDATETRIGGER_MASTER | HRTIM_TIMUPDATETRIGGER_TIMER_A |      \
-	 HRTIM_TIMUPDATETRIGGER_TIMER_B | HRTIM_TIMUPDATETRIGGER_TIMER_C |     \
-	 HRTIM_TIMUPDATETRIGGER_TIMER_D | HRTIM_TIMUPDATETRIGGER_TIMER_E |     \
-	 HRTIM_TIMUPDATETRIGGER_TIMER_F)
+#define HRTIM_TIMCR_TIMUPDATETRIGGER                                                                                                                                                                   \
+	(HRTIM_TIMUPDATETRIGGER_MASTER | HRTIM_TIMUPDATETRIGGER_TIMER_A | HRTIM_TIMUPDATETRIGGER_TIMER_B | HRTIM_TIMUPDATETRIGGER_TIMER_C | HRTIM_TIMUPDATETRIGGER_TIMER_D |                           \
+	 HRTIM_TIMUPDATETRIGGER_TIMER_E | HRTIM_TIMUPDATETRIGGER_TIMER_F)
 
-#define HRTIM_FLTINR1_FLTxLCK                                                  \
-	((HRTIM_FAULTLOCK_READONLY) | (HRTIM_FAULTLOCK_READONLY << 8U) |       \
-	 (HRTIM_FAULTLOCK_READONLY << 16U) |                                   \
-	 (HRTIM_FAULTLOCK_READONLY << 24U))
+#define HRTIM_FLTINR1_FLTxLCK ((HRTIM_FAULTLOCK_READONLY) | (HRTIM_FAULTLOCK_READONLY << 8U) | (HRTIM_FAULTLOCK_READONLY << 16U) | (HRTIM_FAULTLOCK_READONLY << 24U))
 
-#define HRTIM_FLTINR2_FLTxLCK                                                  \
-	((HRTIM_FAULTLOCK_READONLY) | (HRTIM_FAULTLOCK_READONLY << 8U))
+#define HRTIM_FLTINR2_FLTxLCK ((HRTIM_FAULTLOCK_READONLY) | (HRTIM_FAULTLOCK_READONLY << 8U))
 /**
  * @}
  */
@@ -452,9 +444,7 @@ Init/DeInit. Then, the user first registers the MspInit/MspDeInit user callbacks
  * @{
  */
 static uint32_t TimerIdxToTimerId[] = {
-    HRTIM_TIMERID_TIMER_A, HRTIM_TIMERID_TIMER_B, HRTIM_TIMERID_TIMER_C,
-    HRTIM_TIMERID_TIMER_D, HRTIM_TIMERID_TIMER_E, HRTIM_TIMERID_TIMER_F,
-    HRTIM_TIMERID_MASTER,
+    HRTIM_TIMERID_TIMER_A, HRTIM_TIMERID_TIMER_B, HRTIM_TIMERID_TIMER_C, HRTIM_TIMERID_TIMER_D, HRTIM_TIMERID_TIMER_E, HRTIM_TIMERID_TIMER_F, HRTIM_TIMERID_MASTER,
 };
 /**
  * @}
@@ -464,58 +454,35 @@ static uint32_t TimerIdxToTimerId[] = {
 /** @defgroup HRTIM_Private_Functions HRTIM Private Functions
  * @{
  */
-static void
-HRTIM_MasterBase_Config(HRTIM_HandleTypeDef *hhrtim,
-			const HRTIM_TimeBaseCfgTypeDef *pTimeBaseCfg);
+static void HRTIM_MasterBase_Config(HRTIM_HandleTypeDef *hhrtim, const HRTIM_TimeBaseCfgTypeDef *pTimeBaseCfg);
 
-static void
-HRTIM_TimingUnitBase_Config(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
-			    const HRTIM_TimeBaseCfgTypeDef *pTimeBaseCfg);
+static void HRTIM_TimingUnitBase_Config(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_TimeBaseCfgTypeDef *pTimeBaseCfg);
 
-static void HRTIM_MasterWaveform_Config(HRTIM_HandleTypeDef *hhrtim,
-					const HRTIM_TimerCfgTypeDef *pTimerCfg);
+static void HRTIM_MasterWaveform_Config(HRTIM_HandleTypeDef *hhrtim, const HRTIM_TimerCfgTypeDef *pTimerCfg);
 
-static void
-HRTIM_TimingUnitWaveform_Config(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
-				const HRTIM_TimerCfgTypeDef *pTimerCfg);
+static void HRTIM_TimingUnitWaveform_Config(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_TimerCfgTypeDef *pTimerCfg);
 
-static void
-HRTIM_TimingUnitWaveform_Control(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
-				 const HRTIM_TimerCtlTypeDef *pTimerCtl);
+static void HRTIM_TimingUnitWaveform_Control(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_TimerCtlTypeDef *pTimerCtl);
 
-static void HRTIM_TimingUnitRollOver_Config(HRTIM_HandleTypeDef *hhrtim,
-					    uint32_t TimerIdx,
-					    uint32_t pRollOverMode);
+static void HRTIM_TimingUnitRollOver_Config(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t pRollOverMode);
 
-static void HRTIM_CaptureUnitConfig(HRTIM_HandleTypeDef *hhrtim,
-				    uint32_t TimerIdx, uint32_t CaptureUnit,
-				    uint32_t Event);
+static void HRTIM_CaptureUnitConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureUnit, uint32_t Event);
 
-static void HRTIM_OutputConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
-			       uint32_t Output,
-			       const HRTIM_OutputCfgTypeDef *pOutputCfg);
+static void HRTIM_OutputConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t Output, const HRTIM_OutputCfgTypeDef *pOutputCfg);
 
-static void HRTIM_EventConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Event,
-			      const HRTIM_EventCfgTypeDef *pEventCfg);
+static void HRTIM_EventConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Event, const HRTIM_EventCfgTypeDef *pEventCfg);
 
-static void HRTIM_TIM_ResetConfig(HRTIM_HandleTypeDef *hhrtim,
-				  uint32_t TimerIdx, uint32_t Event);
+static void HRTIM_TIM_ResetConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t Event);
 
-static uint32_t HRTIM_GetITFromOCMode(const HRTIM_HandleTypeDef *hhrtim,
-				      uint32_t TimerIdx, uint32_t OCChannel);
+static uint32_t HRTIM_GetITFromOCMode(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel);
 
-static uint32_t HRTIM_GetDMAFromOCMode(const HRTIM_HandleTypeDef *hhrtim,
-				       uint32_t TimerIdx, uint32_t OCChannel);
+static uint32_t HRTIM_GetDMAFromOCMode(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel);
 
-static DMA_HandleTypeDef *
-HRTIM_GetDMAHandleFromTimerIdx(const HRTIM_HandleTypeDef *hhrtim,
-			       uint32_t TimerIdx);
+static DMA_HandleTypeDef *HRTIM_GetDMAHandleFromTimerIdx(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
 
-static uint32_t GetTimerIdxFromDMAHandle(const HRTIM_HandleTypeDef *hhrtim,
-					 const DMA_HandleTypeDef *hdma);
+static uint32_t GetTimerIdxFromDMAHandle(const HRTIM_HandleTypeDef *hhrtim, const DMA_HandleTypeDef *hdma);
 
-static void HRTIM_ForceRegistersUpdate(HRTIM_HandleTypeDef *hhrtim,
-				       uint32_t TimerIdx);
+static void HRTIM_ForceRegistersUpdate(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
 
 static void HRTIM_HRTIM_ISR(HRTIM_HandleTypeDef *hhrtim);
 
@@ -590,32 +557,25 @@ HAL_StatusTypeDef HAL_HRTIM_Init(HRTIM_HandleTypeDef *hhrtim)
 		hhrtim->Fault5Callback = HAL_HRTIM_Fault5Callback;
 		hhrtim->Fault6Callback = HAL_HRTIM_Fault6Callback;
 		hhrtim->SystemFaultCallback = HAL_HRTIM_SystemFaultCallback;
-		hhrtim->DLLCalibrationReadyCallback =
-		    HAL_HRTIM_DLLCalibrationReadyCallback;
-		hhrtim->BurstModePeriodCallback =
-		    HAL_HRTIM_BurstModePeriodCallback;
-		hhrtim->SynchronizationEventCallback =
-		    HAL_HRTIM_SynchronizationEventCallback;
+		hhrtim->DLLCalibrationReadyCallback = HAL_HRTIM_DLLCalibrationReadyCallback;
+		hhrtim->BurstModePeriodCallback = HAL_HRTIM_BurstModePeriodCallback;
+		hhrtim->SynchronizationEventCallback = HAL_HRTIM_SynchronizationEventCallback;
 		hhrtim->ErrorCallback = HAL_HRTIM_ErrorCallback;
-		hhrtim->RegistersUpdateCallback =
-		    HAL_HRTIM_RegistersUpdateCallback;
-		hhrtim->RepetitionEventCallback =
-		    HAL_HRTIM_RepetitionEventCallback;
+		hhrtim->RegistersUpdateCallback = HAL_HRTIM_RegistersUpdateCallback;
+		hhrtim->RepetitionEventCallback = HAL_HRTIM_RepetitionEventCallback;
 		hhrtim->Compare1EventCallback = HAL_HRTIM_Compare1EventCallback;
 		hhrtim->Compare2EventCallback = HAL_HRTIM_Compare2EventCallback;
 		hhrtim->Compare3EventCallback = HAL_HRTIM_Compare3EventCallback;
 		hhrtim->Compare4EventCallback = HAL_HRTIM_Compare4EventCallback;
 		hhrtim->Capture1EventCallback = HAL_HRTIM_Capture1EventCallback;
 		hhrtim->Capture2EventCallback = HAL_HRTIM_Capture2EventCallback;
-		hhrtim->DelayedProtectionCallback =
-		    HAL_HRTIM_DelayedProtectionCallback;
+		hhrtim->DelayedProtectionCallback = HAL_HRTIM_DelayedProtectionCallback;
 		hhrtim->CounterResetCallback = HAL_HRTIM_CounterResetCallback;
 		hhrtim->Output1SetCallback = HAL_HRTIM_Output1SetCallback;
 		hhrtim->Output1ResetCallback = HAL_HRTIM_Output1ResetCallback;
 		hhrtim->Output2SetCallback = HAL_HRTIM_Output2SetCallback;
 		hhrtim->Output2ResetCallback = HAL_HRTIM_Output2ResetCallback;
-		hhrtim->BurstDMATransferCallback =
-		    HAL_HRTIM_BurstDMATransferCallback;
+		hhrtim->BurstDMATransferCallback = HAL_HRTIM_BurstDMATransferCallback;
 
 		if (hhrtim->MspInitCallback == NULL) {
 			hhrtim->MspInitCallback = HAL_HRTIM_MspInit;
@@ -636,13 +596,10 @@ HAL_StatusTypeDef HAL_HRTIM_Init(HRTIM_HandleTypeDef *hhrtim)
 	hhrtim->hdmaTimerF = (DMA_HandleTypeDef *)NULL;
 
 	/* HRTIM output synchronization configuration (if required) */
-	if ((hhrtim->Init.SyncOptions & HRTIM_SYNCOPTION_MASTER) !=
-	    (uint32_t)RESET) {
+	if ((hhrtim->Init.SyncOptions & HRTIM_SYNCOPTION_MASTER) != (uint32_t)RESET) {
 		/* Check parameters */
-		assert_param(
-		    IS_HRTIM_SYNCOUTPUTSOURCE(hhrtim->Init.SyncOutputSource));
-		assert_param(IS_HRTIM_SYNCOUTPUTPOLARITY(
-		    hhrtim->Init.SyncOutputPolarity));
+		assert_param(IS_HRTIM_SYNCOUTPUTSOURCE(hhrtim->Init.SyncOutputSource));
+		assert_param(IS_HRTIM_SYNCOUTPUTPOLARITY(hhrtim->Init.SyncOutputPolarity));
 
 		/* The synchronization output initialization procedure must be
 		   done prior to the configuration of the MCU outputs (done
@@ -657,13 +614,11 @@ HAL_StatusTypeDef HAL_HRTIM_Init(HRTIM_HandleTypeDef *hhrtim)
 
 		/* Set the event to be sent on the synchronization output */
 		hrtim_mcr &= ~(HRTIM_MCR_SYNC_SRC);
-		hrtim_mcr |=
-		    (hhrtim->Init.SyncOutputSource & HRTIM_MCR_SYNC_SRC);
+		hrtim_mcr |= (hhrtim->Init.SyncOutputSource & HRTIM_MCR_SYNC_SRC);
 
 		/* Set the polarity of the synchronization output */
 		hrtim_mcr &= ~(HRTIM_MCR_SYNC_OUT);
-		hrtim_mcr |=
-		    (hhrtim->Init.SyncOutputPolarity & HRTIM_MCR_SYNC_OUT);
+		hrtim_mcr |= (hhrtim->Init.SyncOutputPolarity & HRTIM_MCR_SYNC_OUT);
 
 		/* Update the HRTIM registers */
 		hhrtim->Instance->sMasterRegs.MCR = hrtim_mcr;
@@ -677,11 +632,9 @@ HAL_StatusTypeDef HAL_HRTIM_Init(HRTIM_HandleTypeDef *hhrtim)
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
 
 	/* HRTIM input synchronization configuration (if required) */
-	if ((hhrtim->Init.SyncOptions & HRTIM_SYNCOPTION_SLAVE) !=
-	    (uint32_t)RESET) {
+	if ((hhrtim->Init.SyncOptions & HRTIM_SYNCOPTION_SLAVE) != (uint32_t)RESET) {
 		/* Check parameters */
-		assert_param(
-		    IS_HRTIM_SYNCINPUTSOURCE(hhrtim->Init.SyncInputSource));
+		assert_param(IS_HRTIM_SYNCINPUTSOURCE(hhrtim->Init.SyncInputSource));
 
 		hrtim_mcr = hhrtim->Instance->sMasterRegs.MCR;
 
@@ -700,12 +653,9 @@ HAL_StatusTypeDef HAL_HRTIM_Init(HRTIM_HandleTypeDef *hhrtim)
 	__HAL_UNLOCK(hhrtim);
 
 	/* Initialize timer related parameters */
-	for (timer_idx = HRTIM_TIMERINDEX_TIMER_A;
-	     timer_idx <= HRTIM_TIMERINDEX_MASTER; timer_idx++) {
-		hhrtim->TimerParam[timer_idx].CaptureTrigger1 =
-		    HRTIM_CAPTURETRIGGER_NONE;
-		hhrtim->TimerParam[timer_idx].CaptureTrigger2 =
-		    HRTIM_CAPTURETRIGGER_NONE;
+	for (timer_idx = HRTIM_TIMERINDEX_TIMER_A; timer_idx <= HRTIM_TIMERINDEX_MASTER; timer_idx++) {
+		hhrtim->TimerParam[timer_idx].CaptureTrigger1 = HRTIM_CAPTURETRIGGER_NONE;
+		hhrtim->TimerParam[timer_idx].CaptureTrigger2 = HRTIM_CAPTURETRIGGER_NONE;
 		hhrtim->TimerParam[timer_idx].InterruptRequests = HRTIM_IT_NONE;
 		hhrtim->TimerParam[timer_idx].DMARequests = HRTIM_IT_NONE;
 		hhrtim->TimerParam[timer_idx].DMASrcAddress = 0U;
@@ -798,8 +748,7 @@ __weak void HAL_HRTIM_MspDeInit(HRTIM_HandleTypeDef *hhrtim)
  *       within the HAL_HRTIM_PollForDLLCalibration function, just before
  *       exiting the function.
  */
-HAL_StatusTypeDef HAL_HRTIM_DLLCalibrationStart(HRTIM_HandleTypeDef *hhrtim,
-						uint32_t CalibrationRate)
+HAL_StatusTypeDef HAL_HRTIM_DLLCalibrationStart(HRTIM_HandleTypeDef *hhrtim, uint32_t CalibrationRate)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_CALIBRATIONRATE(CalibrationRate));
@@ -811,14 +760,12 @@ HAL_StatusTypeDef HAL_HRTIM_DLLCalibrationStart(HRTIM_HandleTypeDef *hhrtim,
 
 	if (CalibrationRate == HRTIM_SINGLE_CALIBRATION) {
 		/* One shot DLL calibration */
-		CLEAR_BIT(hhrtim->Instance->sCommonRegs.DLLCR,
-			  HRTIM_DLLCR_CALEN);
+		CLEAR_BIT(hhrtim->Instance->sCommonRegs.DLLCR, HRTIM_DLLCR_CALEN);
 		SET_BIT(hhrtim->Instance->sCommonRegs.DLLCR, HRTIM_DLLCR_CAL);
 	} else {
 		/* Periodic DLL calibration */
 		SET_BIT(hhrtim->Instance->sCommonRegs.DLLCR, HRTIM_DLLCR_CALEN);
-		MODIFY_REG(hhrtim->Instance->sCommonRegs.DLLCR,
-			   HRTIM_DLLCR_CALRTE, CalibrationRate);
+		MODIFY_REG(hhrtim->Instance->sCommonRegs.DLLCR, HRTIM_DLLCR_CALRTE, CalibrationRate);
 		SET_BIT(hhrtim->Instance->sCommonRegs.DLLCR, HRTIM_DLLCR_CAL);
 	}
 
@@ -851,8 +798,7 @@ HAL_StatusTypeDef HAL_HRTIM_DLLCalibrationStart(HRTIM_HandleTypeDef *hhrtim,
  *       interrupt is generated every time the calibration completes which
  *       will significantly increases the overall interrupt rate.
  */
-HAL_StatusTypeDef HAL_HRTIM_DLLCalibrationStart_IT(HRTIM_HandleTypeDef *hhrtim,
-						   uint32_t CalibrationRate)
+HAL_StatusTypeDef HAL_HRTIM_DLLCalibrationStart_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t CalibrationRate)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_CALIBRATIONRATE(CalibrationRate));
@@ -867,14 +813,12 @@ HAL_StatusTypeDef HAL_HRTIM_DLLCalibrationStart_IT(HRTIM_HandleTypeDef *hhrtim,
 
 	if (CalibrationRate == HRTIM_SINGLE_CALIBRATION) {
 		/* One shot DLL calibration */
-		CLEAR_BIT(hhrtim->Instance->sCommonRegs.DLLCR,
-			  HRTIM_DLLCR_CALEN);
+		CLEAR_BIT(hhrtim->Instance->sCommonRegs.DLLCR, HRTIM_DLLCR_CALEN);
 		SET_BIT(hhrtim->Instance->sCommonRegs.DLLCR, HRTIM_DLLCR_CAL);
 	} else {
 		/* Periodic DLL calibration */
 		SET_BIT(hhrtim->Instance->sCommonRegs.DLLCR, HRTIM_DLLCR_CALEN);
-		MODIFY_REG(hhrtim->Instance->sCommonRegs.DLLCR,
-			   HRTIM_DLLCR_CALRTE, CalibrationRate);
+		MODIFY_REG(hhrtim->Instance->sCommonRegs.DLLCR, HRTIM_DLLCR_CALRTE, CalibrationRate);
 		SET_BIT(hhrtim->Instance->sCommonRegs.DLLCR, HRTIM_DLLCR_CAL);
 	}
 
@@ -891,19 +835,16 @@ HAL_StatusTypeDef HAL_HRTIM_DLLCalibrationStart_IT(HRTIM_HandleTypeDef *hhrtim,
  * @param  Timeout Timeout duration in millisecond
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_PollForDLLCalibration(HRTIM_HandleTypeDef *hhrtim,
-						  uint32_t Timeout)
+HAL_StatusTypeDef HAL_HRTIM_PollForDLLCalibration(HRTIM_HandleTypeDef *hhrtim, uint32_t Timeout)
 {
 	uint32_t tickstart;
 
 	tickstart = HAL_GetTick();
 
 	/* Check End of conversion flag */
-	while (__HAL_HRTIM_GET_FLAG(hhrtim, HRTIM_IT_DLLRDY) ==
-	       (uint32_t)RESET) {
+	while (__HAL_HRTIM_GET_FLAG(hhrtim, HRTIM_IT_DLLRDY) == (uint32_t)RESET) {
 		if (Timeout != HAL_MAX_DELAY) {
-			if (((HAL_GetTick() - tickstart) > Timeout) ||
-			    (Timeout == 0U)) {
+			if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
 				hhrtim->State = HAL_HRTIM_STATE_ERROR;
 				return HAL_TIMEOUT;
 			}
@@ -940,9 +881,7 @@ HAL_StatusTypeDef HAL_HRTIM_PollForDLLCalibration(HRTIM_HandleTypeDef *hhrtim,
  *           The timer repetition counter.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_HRTIM_TimeBaseConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
-			 const HRTIM_TimeBaseCfgTypeDef *pTimeBaseCfg)
+HAL_StatusTypeDef HAL_HRTIM_TimeBaseConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_TimeBaseCfgTypeDef *pTimeBaseCfg)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_TIMERINDEX(TimerIdx));
@@ -1008,8 +947,7 @@ HAL_HRTIM_TimeBaseConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStart(HRTIM_HandleTypeDef *hhrtim,
-					    uint32_t TimerIdx)
+HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStart(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_TIMERINDEX(TimerIdx));
@@ -1044,8 +982,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStart(HRTIM_HandleTypeDef *hhrtim,
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStop(HRTIM_HandleTypeDef *hhrtim,
-					   uint32_t TimerIdx)
+HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStop(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_TIMERINDEX(TimerIdx));
@@ -1081,8 +1018,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStop(HRTIM_HandleTypeDef *hhrtim,
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStart_IT(HRTIM_HandleTypeDef *hhrtim,
-					       uint32_t TimerIdx)
+HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStart_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_TIMERINDEX(TimerIdx));
@@ -1125,8 +1061,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStart_IT(HRTIM_HandleTypeDef *hhrtim,
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStop_IT(HRTIM_HandleTypeDef *hhrtim,
-					      uint32_t TimerIdx)
+HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStop_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_TIMERINDEX(TimerIdx));
@@ -1140,8 +1075,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStop_IT(HRTIM_HandleTypeDef *hhrtim,
 	if (TimerIdx == HRTIM_TIMERINDEX_MASTER) {
 		__HAL_HRTIM_MASTER_DISABLE_IT(hhrtim, HRTIM_MASTER_IT_MREP);
 	} else {
-		__HAL_HRTIM_TIMER_DISABLE_IT(hhrtim, TimerIdx,
-					     HRTIM_TIM_IT_REP);
+		__HAL_HRTIM_TIMER_DISABLE_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_REP);
 	}
 
 	/* Disable the timer counter */
@@ -1173,11 +1107,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStop_IT(HRTIM_HandleTypeDef *hhrtim,
  * @param  Length The length of data items (data size) to be transferred
  *                     from source to destination
  */
-HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStart_DMA(HRTIM_HandleTypeDef *hhrtim,
-						uint32_t TimerIdx,
-						uint32_t SrcAddr,
-						uint32_t DestAddr,
-						uint32_t Length)
+HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t SrcAddr, uint32_t DestAddr, uint32_t Length)
 {
 	DMA_HandleTypeDef *hdma;
 
@@ -1234,8 +1164,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStart_DMA(HRTIM_HandleTypeDef *hhrtim,
 	if (TimerIdx == HRTIM_TIMERINDEX_MASTER) {
 		__HAL_HRTIM_MASTER_ENABLE_DMA(hhrtim, HRTIM_MASTER_DMA_MREP);
 	} else {
-		__HAL_HRTIM_TIMER_ENABLE_DMA(hhrtim, TimerIdx,
-					     HRTIM_TIM_DMA_REP);
+		__HAL_HRTIM_TIMER_ENABLE_DMA(hhrtim, TimerIdx, HRTIM_TIM_DMA_REP);
 	}
 
 	/* Enable the timer counter */
@@ -1264,8 +1193,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStart_DMA(HRTIM_HandleTypeDef *hhrtim,
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStop_DMA(HRTIM_HandleTypeDef *hhrtim,
-					       uint32_t TimerIdx)
+HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStop_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	DMA_HandleTypeDef *hdma;
 
@@ -1299,8 +1227,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStop_DMA(HRTIM_HandleTypeDef *hhrtim,
 			}
 
 			/* Disable the timer repetition DMA request */
-			__HAL_HRTIM_TIMER_DISABLE_DMA(hhrtim, TimerIdx,
-						      HRTIM_TIM_DMA_REP);
+			__HAL_HRTIM_TIMER_DISABLE_DMA(hhrtim, TimerIdx, HRTIM_TIM_DMA_REP);
 		}
 	}
 
@@ -1380,9 +1307,7 @@ functions
  * 0 Inactive: SETxy =0, RSTxy = CMPy
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimpleOCChannelConfig(
-    HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel,
-    const HRTIM_SimpleOCChannelCfgTypeDef *pSimpleOCChannelCfg)
+HAL_StatusTypeDef HAL_HRTIM_SimpleOCChannelConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel, const HRTIM_SimpleOCChannelCfgTypeDef *pSimpleOCChannelCfg)
 {
 	uint32_t CompareUnit = (uint32_t)RESET;
 	HRTIM_OutputCfgTypeDef OutputCfg;
@@ -1413,8 +1338,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOCChannelConfig(
 		case HRTIM_OUTPUT_TE1:
 		case HRTIM_OUTPUT_TF1: {
 			CompareUnit = HRTIM_COMPAREUNIT_1;
-			hhrtim->Instance->sTimerxRegs[TimerIdx].CMP1xR =
-			    pSimpleOCChannelCfg->Pulse;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].CMP1xR = pSimpleOCChannelCfg->Pulse;
 			break;
 		}
 		case HRTIM_OUTPUT_TA2:
@@ -1424,8 +1348,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOCChannelConfig(
 		case HRTIM_OUTPUT_TE2:
 		case HRTIM_OUTPUT_TF2: {
 			CompareUnit = HRTIM_COMPAREUNIT_2;
-			hhrtim->Instance->sTimerxRegs[TimerIdx].CMP2xR =
-			    pSimpleOCChannelCfg->Pulse;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].CMP2xR = pSimpleOCChannelCfg->Pulse;
 			break;
 		}
 		default: {
@@ -1444,8 +1367,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOCChannelConfig(
 
 	/* Configure timer output */
 	OutputCfg.Polarity = (pSimpleOCChannelCfg->Polarity & HRTIM_OUTR_POL1);
-	OutputCfg.IdleLevel =
-	    (pSimpleOCChannelCfg->IdleLevel & HRTIM_OUTR_IDLES1);
+	OutputCfg.IdleLevel = (pSimpleOCChannelCfg->IdleLevel & HRTIM_OUTR_IDLES1);
 	OutputCfg.FaultLevel = HRTIM_OUTPUTFAULTLEVEL_NONE;
 	OutputCfg.IdleMode = HRTIM_OUTPUTIDLEMODE_NONE;
 	OutputCfg.ChopperModeEnable = HRTIM_OUTPUTCHOPPERMODE_DISABLED;
@@ -1474,11 +1396,9 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOCChannelConfig(
 
 		case HRTIM_BASICOCMODE_INACTIVE: {
 			if (CompareUnit == HRTIM_COMPAREUNIT_1) {
-				OutputCfg.ResetSource =
-				    HRTIM_OUTPUTRESET_TIMCMP1;
+				OutputCfg.ResetSource = HRTIM_OUTPUTRESET_TIMCMP1;
 			} else {
-				OutputCfg.ResetSource =
-				    HRTIM_OUTPUTRESET_TIMCMP2;
+				OutputCfg.ResetSource = HRTIM_OUTPUTRESET_TIMCMP2;
 			}
 			OutputCfg.SetSource = HRTIM_OUTPUTSET_NONE;
 			break;
@@ -1540,8 +1460,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOCChannelConfig(
  *                    @arg HRTIM_OUTPUT_TF2: Timer F - Output 2
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimpleOCStart(HRTIM_HandleTypeDef *hhrtim,
-					  uint32_t TimerIdx, uint32_t OCChannel)
+HAL_StatusTypeDef HAL_HRTIM_SimpleOCStart(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_TIMER_OUTPUT(TimerIdx, OCChannel));
@@ -1593,8 +1512,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOCStart(HRTIM_HandleTypeDef *hhrtim,
  *                    @arg HRTIM_OUTPUT_TF2: Timer F - Output 2
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimpleOCStop(HRTIM_HandleTypeDef *hhrtim,
-					 uint32_t TimerIdx, uint32_t OCChannel)
+HAL_StatusTypeDef HAL_HRTIM_SimpleOCStop(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_TIMER_OUTPUT(TimerIdx, OCChannel));
@@ -1650,9 +1568,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOCStop(HRTIM_HandleTypeDef *hhrtim,
  *          Output set inactive:  output reset interrupt is enabled
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimpleOCStart_IT(HRTIM_HandleTypeDef *hhrtim,
-					     uint32_t TimerIdx,
-					     uint32_t OCChannel)
+HAL_StatusTypeDef HAL_HRTIM_SimpleOCStart_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel)
 {
 	uint32_t interrupt;
 
@@ -1712,9 +1628,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOCStart_IT(HRTIM_HandleTypeDef *hhrtim,
  *                    @arg HRTIM_OUTPUT_TF2: Timer F - Output 2
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimpleOCStop_IT(HRTIM_HandleTypeDef *hhrtim,
-					    uint32_t TimerIdx,
-					    uint32_t OCChannel)
+HAL_StatusTypeDef HAL_HRTIM_SimpleOCStop_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel)
 {
 	uint32_t interrupt;
 
@@ -1782,10 +1696,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOCStop_IT(HRTIM_HandleTypeDef *hhrtim,
  *          Output set inactive:  output reset DMA request is enabled
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_HRTIM_SimpleOCStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
-			    uint32_t OCChannel, uint32_t SrcAddr,
-			    uint32_t DestAddr, uint32_t Length)
+HAL_StatusTypeDef HAL_HRTIM_SimpleOCStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel, uint32_t SrcAddr, uint32_t DestAddr, uint32_t Length)
 {
 	DMA_HandleTypeDef *hdma;
 	uint32_t dma_request;
@@ -1883,9 +1794,7 @@ HAL_HRTIM_SimpleOCStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
  *                    @arg HRTIM_OUTPUT_TF2: Timer F - Output 2
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimpleOCStop_DMA(HRTIM_HandleTypeDef *hhrtim,
-					     uint32_t TimerIdx,
-					     uint32_t OCChannel)
+HAL_StatusTypeDef HAL_HRTIM_SimpleOCStop_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel)
 {
 	uint32_t dma_request;
 
@@ -1902,8 +1811,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOCStop_DMA(HRTIM_HandleTypeDef *hhrtim,
 
 	/* Get the timer DMA handler */
 	/* Disable the DMA */
-	if (HAL_DMA_Abort(HRTIM_GetDMAHandleFromTimerIdx(hhrtim, TimerIdx)) !=
-	    HAL_OK) {
+	if (HAL_DMA_Abort(HRTIM_GetDMAHandleFromTimerIdx(hhrtim, TimerIdx)) != HAL_OK) {
 		hhrtim->State = HAL_HRTIM_STATE_ERROR;
 
 		/* Process Unlocked */
@@ -1995,9 +1903,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOCStop_DMA(HRTIM_HandleTypeDef *hhrtim,
  *       enabled (otherwise the behavior is not guaranteed).
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimplePWMChannelConfig(
-    HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t PWMChannel,
-    const HRTIM_SimplePWMChannelCfgTypeDef *pSimplePWMChannelCfg)
+HAL_StatusTypeDef HAL_HRTIM_SimplePWMChannelConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t PWMChannel, const HRTIM_SimplePWMChannelCfgTypeDef *pSimplePWMChannelCfg)
 {
 	HRTIM_OutputCfgTypeDef OutputCfg;
 	uint32_t hrtim_timcr;
@@ -2025,8 +1931,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimplePWMChannelConfig(
 		case HRTIM_OUTPUT_TD1:
 		case HRTIM_OUTPUT_TE1:
 		case HRTIM_OUTPUT_TF1: {
-			hhrtim->Instance->sTimerxRegs[TimerIdx].CMP1xR =
-			    pSimplePWMChannelCfg->Pulse;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].CMP1xR = pSimplePWMChannelCfg->Pulse;
 			OutputCfg.SetSource = HRTIM_OUTPUTSET_TIMCMP1;
 			break;
 		}
@@ -2037,8 +1942,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimplePWMChannelConfig(
 		case HRTIM_OUTPUT_TD2:
 		case HRTIM_OUTPUT_TE2:
 		case HRTIM_OUTPUT_TF2: {
-			hhrtim->Instance->sTimerxRegs[TimerIdx].CMP2xR =
-			    pSimplePWMChannelCfg->Pulse;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].CMP2xR = pSimplePWMChannelCfg->Pulse;
 			OutputCfg.SetSource = HRTIM_OUTPUTSET_TIMCMP2;
 			break;
 		}
@@ -2061,8 +1965,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimplePWMChannelConfig(
 
 	/* Configure timer output */
 	OutputCfg.Polarity = (pSimplePWMChannelCfg->Polarity & HRTIM_OUTR_POL1);
-	OutputCfg.IdleLevel =
-	    (pSimplePWMChannelCfg->IdleLevel & HRTIM_OUTR_IDLES1);
+	OutputCfg.IdleLevel = (pSimplePWMChannelCfg->IdleLevel & HRTIM_OUTR_IDLES1);
 	OutputCfg.FaultLevel = HRTIM_OUTPUTFAULTLEVEL_NONE;
 	OutputCfg.IdleMode = HRTIM_OUTPUTIDLEMODE_NONE;
 	OutputCfg.ChopperModeEnable = HRTIM_OUTPUTCHOPPERMODE_DISABLED;
@@ -2111,9 +2014,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimplePWMChannelConfig(
  *                    @arg HRTIM_OUTPUT_TF2: Timer F - Output 2
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimplePWMStart(HRTIM_HandleTypeDef *hhrtim,
-					   uint32_t TimerIdx,
-					   uint32_t PWMChannel)
+HAL_StatusTypeDef HAL_HRTIM_SimplePWMStart(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t PWMChannel)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_TIMER_OUTPUT(TimerIdx, PWMChannel));
@@ -2164,9 +2065,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimplePWMStart(HRTIM_HandleTypeDef *hhrtim,
  *                    @arg HRTIM_OUTPUT_TF2: Timer F - Output 2
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop(HRTIM_HandleTypeDef *hhrtim,
-					  uint32_t TimerIdx,
-					  uint32_t PWMChannel)
+HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t PWMChannel)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_TIMER_OUTPUT(TimerIdx, PWMChannel));
@@ -2218,9 +2117,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop(HRTIM_HandleTypeDef *hhrtim,
  *                    @arg HRTIM_OUTPUT_TF2: Timer F - Output 2
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimplePWMStart_IT(HRTIM_HandleTypeDef *hhrtim,
-					      uint32_t TimerIdx,
-					      uint32_t PWMChannel)
+HAL_StatusTypeDef HAL_HRTIM_SimplePWMStart_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t PWMChannel)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_TIMER_OUTPUT(TimerIdx, PWMChannel));
@@ -2241,8 +2138,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimplePWMStart_IT(HRTIM_HandleTypeDef *hhrtim,
 		case HRTIM_OUTPUT_TD1:
 		case HRTIM_OUTPUT_TE1:
 		case HRTIM_OUTPUT_TF1: {
-			__HAL_HRTIM_TIMER_ENABLE_IT(hhrtim, TimerIdx,
-						    HRTIM_TIM_IT_CMP1);
+			__HAL_HRTIM_TIMER_ENABLE_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_CMP1);
 			break;
 		}
 
@@ -2252,8 +2148,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimplePWMStart_IT(HRTIM_HandleTypeDef *hhrtim,
 		case HRTIM_OUTPUT_TD2:
 		case HRTIM_OUTPUT_TE2:
 		case HRTIM_OUTPUT_TF2: {
-			__HAL_HRTIM_TIMER_ENABLE_IT(hhrtim, TimerIdx,
-						    HRTIM_TIM_IT_CMP2);
+			__HAL_HRTIM_TIMER_ENABLE_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_CMP2);
 			break;
 		}
 
@@ -2310,9 +2205,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimplePWMStart_IT(HRTIM_HandleTypeDef *hhrtim,
  *                    @arg HRTIM_OUTPUT_TF2: Timer F - Output 2
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop_IT(HRTIM_HandleTypeDef *hhrtim,
-					     uint32_t TimerIdx,
-					     uint32_t PWMChannel)
+HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t PWMChannel)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_TIMER_OUTPUT(TimerIdx, PWMChannel));
@@ -2333,8 +2226,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop_IT(HRTIM_HandleTypeDef *hhrtim,
 		case HRTIM_OUTPUT_TD1:
 		case HRTIM_OUTPUT_TE1:
 		case HRTIM_OUTPUT_TF1: {
-			__HAL_HRTIM_TIMER_DISABLE_IT(hhrtim, TimerIdx,
-						     HRTIM_TIM_IT_CMP1);
+			__HAL_HRTIM_TIMER_DISABLE_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_CMP1);
 			break;
 		}
 
@@ -2344,8 +2236,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop_IT(HRTIM_HandleTypeDef *hhrtim,
 		case HRTIM_OUTPUT_TD2:
 		case HRTIM_OUTPUT_TE2:
 		case HRTIM_OUTPUT_TF2: {
-			__HAL_HRTIM_TIMER_DISABLE_IT(hhrtim, TimerIdx,
-						     HRTIM_TIM_IT_CMP2);
+			__HAL_HRTIM_TIMER_DISABLE_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_CMP2);
 			break;
 		}
 
@@ -2406,10 +2297,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop_IT(HRTIM_HandleTypeDef *hhrtim,
  *                     from source to destination
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_HRTIM_SimplePWMStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
-			     uint32_t PWMChannel, uint32_t SrcAddr,
-			     uint32_t DestAddr, uint32_t Length)
+HAL_StatusTypeDef HAL_HRTIM_SimplePWMStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t PWMChannel, uint32_t SrcAddr, uint32_t DestAddr, uint32_t Length)
 {
 	DMA_HandleTypeDef *hdma;
 
@@ -2469,8 +2357,7 @@ HAL_HRTIM_SimplePWMStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
 		case HRTIM_OUTPUT_TD1:
 		case HRTIM_OUTPUT_TE1:
 		case HRTIM_OUTPUT_TF1: {
-			__HAL_HRTIM_TIMER_ENABLE_DMA(hhrtim, TimerIdx,
-						     HRTIM_TIM_DMA_CMP1);
+			__HAL_HRTIM_TIMER_ENABLE_DMA(hhrtim, TimerIdx, HRTIM_TIM_DMA_CMP1);
 			break;
 		}
 
@@ -2480,8 +2367,7 @@ HAL_HRTIM_SimplePWMStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
 		case HRTIM_OUTPUT_TD2:
 		case HRTIM_OUTPUT_TE2:
 		case HRTIM_OUTPUT_TF2: {
-			__HAL_HRTIM_TIMER_ENABLE_DMA(hhrtim, TimerIdx,
-						     HRTIM_TIM_DMA_CMP2);
+			__HAL_HRTIM_TIMER_ENABLE_DMA(hhrtim, TimerIdx, HRTIM_TIM_DMA_CMP2);
 			break;
 		}
 
@@ -2538,9 +2424,7 @@ HAL_HRTIM_SimplePWMStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
  *                    @arg HRTIM_OUTPUT_TF2: Timer F - Output 2
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop_DMA(HRTIM_HandleTypeDef *hhrtim,
-					      uint32_t TimerIdx,
-					      uint32_t PWMChannel)
+HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t PWMChannel)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_TIMER_OUTPUT(TimerIdx, PWMChannel));
@@ -2555,8 +2439,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop_DMA(HRTIM_HandleTypeDef *hhrtim,
 
 	/* Get the timer DMA handler */
 	/* Disable the DMA */
-	if (HAL_DMA_Abort(HRTIM_GetDMAHandleFromTimerIdx(hhrtim, TimerIdx)) !=
-	    HAL_OK) {
+	if (HAL_DMA_Abort(HRTIM_GetDMAHandleFromTimerIdx(hhrtim, TimerIdx)) != HAL_OK) {
 		hhrtim->State = HAL_HRTIM_STATE_ERROR;
 
 		/* Process Unlocked */
@@ -2573,8 +2456,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop_DMA(HRTIM_HandleTypeDef *hhrtim,
 		case HRTIM_OUTPUT_TD1:
 		case HRTIM_OUTPUT_TE1:
 		case HRTIM_OUTPUT_TF1: {
-			__HAL_HRTIM_TIMER_DISABLE_DMA(hhrtim, TimerIdx,
-						      HRTIM_TIM_DMA_CMP1);
+			__HAL_HRTIM_TIMER_DISABLE_DMA(hhrtim, TimerIdx, HRTIM_TIM_DMA_CMP1);
 			break;
 		}
 
@@ -2584,8 +2466,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop_DMA(HRTIM_HandleTypeDef *hhrtim,
 		case HRTIM_OUTPUT_TD2:
 		case HRTIM_OUTPUT_TE2:
 		case HRTIM_OUTPUT_TF2: {
-			__HAL_HRTIM_TIMER_DISABLE_DMA(hhrtim, TimerIdx,
-						      HRTIM_TIM_DMA_CMP2);
+			__HAL_HRTIM_TIMER_DISABLE_DMA(hhrtim, TimerIdx, HRTIM_TIM_DMA_CMP2);
 			break;
 		}
 
@@ -2663,9 +2544,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop_DMA(HRTIM_HandleTypeDef *hhrtim,
  * both edges on event channel.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureChannelConfig(
-    HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureChannel,
-    const HRTIM_SimpleCaptureChannelCfgTypeDef *pSimpleCaptureChannelCfg)
+HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureChannelConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureChannel, const HRTIM_SimpleCaptureChannelCfgTypeDef *pSimpleCaptureChannelCfg)
 {
 	HRTIM_EventCfgTypeDef EventCfg;
 
@@ -2673,14 +2552,9 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureChannelConfig(
 	assert_param(IS_HRTIM_TIMING_UNIT(TimerIdx));
 	assert_param(IS_HRTIM_CAPTUREUNIT(CaptureChannel));
 	assert_param(IS_HRTIM_EVENT(pSimpleCaptureChannelCfg->Event));
-	assert_param(
-	    IS_HRTIM_EVENTPOLARITY(pSimpleCaptureChannelCfg->EventSensitivity,
-				   pSimpleCaptureChannelCfg->EventPolarity));
-	assert_param(IS_HRTIM_EVENTSENSITIVITY(
-	    pSimpleCaptureChannelCfg->EventSensitivity));
-	assert_param(
-	    IS_HRTIM_EVENTFILTER(pSimpleCaptureChannelCfg->Event,
-				 pSimpleCaptureChannelCfg->EventFilter));
+	assert_param(IS_HRTIM_EVENTPOLARITY(pSimpleCaptureChannelCfg->EventSensitivity, pSimpleCaptureChannelCfg->EventPolarity));
+	assert_param(IS_HRTIM_EVENTSENSITIVITY(pSimpleCaptureChannelCfg->EventSensitivity));
+	assert_param(IS_HRTIM_EVENTFILTER(pSimpleCaptureChannelCfg->Event, pSimpleCaptureChannelCfg->EventFilter));
 
 	if (hhrtim->State == HAL_HRTIM_STATE_BUSY) {
 		return HAL_BUSY;
@@ -2693,20 +2567,16 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureChannelConfig(
 
 	/* Configure external event channel */
 	EventCfg.FastMode = HRTIM_EVENTFASTMODE_DISABLE;
-	EventCfg.Filter =
-	    (pSimpleCaptureChannelCfg->EventFilter & HRTIM_EECR3_EE6F);
-	EventCfg.Polarity =
-	    (pSimpleCaptureChannelCfg->EventPolarity & HRTIM_EECR1_EE1POL);
-	EventCfg.Sensitivity =
-	    (pSimpleCaptureChannelCfg->EventSensitivity & HRTIM_EECR1_EE1SNS);
+	EventCfg.Filter = (pSimpleCaptureChannelCfg->EventFilter & HRTIM_EECR3_EE6F);
+	EventCfg.Polarity = (pSimpleCaptureChannelCfg->EventPolarity & HRTIM_EECR1_EE1POL);
+	EventCfg.Sensitivity = (pSimpleCaptureChannelCfg->EventSensitivity & HRTIM_EECR1_EE1SNS);
 	EventCfg.Source = HRTIM_EEV1SRC_GPIO; /* source 1 for External Event */
 
 	HRTIM_EventConfig(hhrtim, pSimpleCaptureChannelCfg->Event, &EventCfg);
 
 	/* Memorize capture trigger (will be configured when the capture is
 	 * started */
-	HRTIM_CaptureUnitConfig(hhrtim, TimerIdx, CaptureChannel,
-				pSimpleCaptureChannelCfg->Event);
+	HRTIM_CaptureUnitConfig(hhrtim, TimerIdx, CaptureChannel, pSimpleCaptureChannelCfg->Event);
 
 	hhrtim->State = HAL_HRTIM_STATE_READY;
 
@@ -2736,9 +2606,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureChannelConfig(
  *        units. It can be used directly and is active as soon as the timing
  *        unit counter is enabled.
  */
-HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStart(HRTIM_HandleTypeDef *hhrtim,
-					       uint32_t TimerIdx,
-					       uint32_t CaptureChannel)
+HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStart(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureChannel)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_TIMING_UNIT(TimerIdx));
@@ -2752,14 +2620,12 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStart(HRTIM_HandleTypeDef *hhrtim,
 	/* Set the capture unit trigger */
 	switch (CaptureChannel) {
 		case HRTIM_CAPTUREUNIT_1: {
-			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT1xCR =
-			    hhrtim->TimerParam[TimerIdx].CaptureTrigger1;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT1xCR = hhrtim->TimerParam[TimerIdx].CaptureTrigger1;
 			break;
 		}
 
 		case HRTIM_CAPTUREUNIT_2: {
-			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xCR =
-			    hhrtim->TimerParam[TimerIdx].CaptureTrigger2;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xCR = hhrtim->TimerParam[TimerIdx].CaptureTrigger2;
 			break;
 		}
 
@@ -2805,9 +2671,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStart(HRTIM_HandleTypeDef *hhrtim,
  *                    @arg HRTIM_CAPTUREUNIT_2: Capture unit 2
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop(HRTIM_HandleTypeDef *hhrtim,
-					      uint32_t TimerIdx,
-					      uint32_t CaptureChannel)
+HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureChannel)
 {
 	uint32_t hrtim_cpt1cr;
 	uint32_t hrtim_cpt2cr;
@@ -2824,14 +2688,12 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop(HRTIM_HandleTypeDef *hhrtim,
 	/* Set the capture unit trigger */
 	switch (CaptureChannel) {
 		case HRTIM_CAPTUREUNIT_1: {
-			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT1xCR =
-			    HRTIM_CAPTURETRIGGER_NONE;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT1xCR = HRTIM_CAPTURETRIGGER_NONE;
 			break;
 		}
 
 		case HRTIM_CAPTUREUNIT_2: {
-			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xCR =
-			    HRTIM_CAPTURETRIGGER_NONE;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xCR = HRTIM_CAPTURETRIGGER_NONE;
 			break;
 		}
 
@@ -2853,8 +2715,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop(HRTIM_HandleTypeDef *hhrtim,
 	hrtim_cpt2cr = hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xCR;
 
 	/* Disable the timer counter */
-	if ((hrtim_cpt1cr == HRTIM_CAPTURETRIGGER_NONE) &&
-	    (hrtim_cpt2cr == HRTIM_CAPTURETRIGGER_NONE)) {
+	if ((hrtim_cpt1cr == HRTIM_CAPTURETRIGGER_NONE) && (hrtim_cpt2cr == HRTIM_CAPTURETRIGGER_NONE)) {
 		__HAL_HRTIM_DISABLE(hhrtim, TimerIdxToTimerId[TimerIdx]);
 	}
 
@@ -2884,9 +2745,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop(HRTIM_HandleTypeDef *hhrtim,
  *                    @arg HRTIM_CAPTUREUNIT_2: Capture unit 2
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStart_IT(HRTIM_HandleTypeDef *hhrtim,
-						  uint32_t TimerIdx,
-						  uint32_t CaptureChannel)
+HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStart_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureChannel)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_TIMING_UNIT(TimerIdx));
@@ -2900,22 +2759,18 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStart_IT(HRTIM_HandleTypeDef *hhrtim,
 	/* Set the capture unit trigger */
 	switch (CaptureChannel) {
 		case HRTIM_CAPTUREUNIT_1: {
-			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT1xCR =
-			    hhrtim->TimerParam[TimerIdx].CaptureTrigger1;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT1xCR = hhrtim->TimerParam[TimerIdx].CaptureTrigger1;
 
 			/* Enable the capture unit 1 interrupt */
-			__HAL_HRTIM_TIMER_ENABLE_IT(hhrtim, TimerIdx,
-						    HRTIM_TIM_IT_CPT1);
+			__HAL_HRTIM_TIMER_ENABLE_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_CPT1);
 			break;
 		}
 
 		case HRTIM_CAPTUREUNIT_2: {
-			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xCR =
-			    hhrtim->TimerParam[TimerIdx].CaptureTrigger2;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xCR = hhrtim->TimerParam[TimerIdx].CaptureTrigger2;
 
 			/* Enable the capture unit 2 interrupt */
-			__HAL_HRTIM_TIMER_ENABLE_IT(hhrtim, TimerIdx,
-						    HRTIM_TIM_IT_CPT2);
+			__HAL_HRTIM_TIMER_ENABLE_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_CPT2);
 			break;
 		}
 
@@ -2962,9 +2817,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStart_IT(HRTIM_HandleTypeDef *hhrtim,
  *                    @arg HRTIM_CAPTUREUNIT_2: Capture unit 2
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop_IT(HRTIM_HandleTypeDef *hhrtim,
-						 uint32_t TimerIdx,
-						 uint32_t CaptureChannel)
+HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureChannel)
 {
 
 	uint32_t hrtim_cpt1cr;
@@ -2982,22 +2835,18 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop_IT(HRTIM_HandleTypeDef *hhrtim,
 	/* Set the capture unit trigger */
 	switch (CaptureChannel) {
 		case HRTIM_CAPTUREUNIT_1: {
-			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT1xCR =
-			    HRTIM_CAPTURETRIGGER_NONE;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT1xCR = HRTIM_CAPTURETRIGGER_NONE;
 
 			/* Disable the capture unit 1 interrupt */
-			__HAL_HRTIM_TIMER_DISABLE_IT(hhrtim, TimerIdx,
-						     HRTIM_TIM_IT_CPT1);
+			__HAL_HRTIM_TIMER_DISABLE_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_CPT1);
 			break;
 		}
 
 		case HRTIM_CAPTUREUNIT_2: {
-			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xCR =
-			    HRTIM_CAPTURETRIGGER_NONE;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xCR = HRTIM_CAPTURETRIGGER_NONE;
 
 			/* Disable the capture unit 2 interrupt */
-			__HAL_HRTIM_TIMER_DISABLE_IT(hhrtim, TimerIdx,
-						     HRTIM_TIM_IT_CPT2);
+			__HAL_HRTIM_TIMER_DISABLE_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_CPT2);
 			break;
 		}
 
@@ -3019,8 +2868,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop_IT(HRTIM_HandleTypeDef *hhrtim,
 	hrtim_cpt2cr = hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xCR;
 
 	/* Disable the timer counter */
-	if ((hrtim_cpt1cr == HRTIM_CAPTURETRIGGER_NONE) &&
-	    (hrtim_cpt2cr == HRTIM_CAPTURETRIGGER_NONE)) {
+	if ((hrtim_cpt1cr == HRTIM_CAPTURETRIGGER_NONE) && (hrtim_cpt2cr == HRTIM_CAPTURETRIGGER_NONE)) {
 		__HAL_HRTIM_DISABLE(hhrtim, TimerIdxToTimerId[TimerIdx]);
 	}
 
@@ -3054,10 +2902,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop_IT(HRTIM_HandleTypeDef *hhrtim,
  *                     from source to destination
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_HRTIM_SimpleCaptureStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
-				 uint32_t CaptureChannel, uint32_t SrcAddr,
-				 uint32_t DestAddr, uint32_t Length)
+HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureChannel, uint32_t SrcAddr, uint32_t DestAddr, uint32_t Length)
 {
 	DMA_HandleTypeDef *hdma;
 
@@ -3101,22 +2946,18 @@ HAL_HRTIM_SimpleCaptureStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
 	switch (CaptureChannel) {
 		case HRTIM_CAPTUREUNIT_1: {
 			/* Set the capture unit trigger */
-			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT1xCR =
-			    hhrtim->TimerParam[TimerIdx].CaptureTrigger1;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT1xCR = hhrtim->TimerParam[TimerIdx].CaptureTrigger1;
 
-			__HAL_HRTIM_TIMER_ENABLE_DMA(hhrtim, TimerIdx,
-						     HRTIM_TIM_DMA_CPT1);
+			__HAL_HRTIM_TIMER_ENABLE_DMA(hhrtim, TimerIdx, HRTIM_TIM_DMA_CPT1);
 			break;
 		}
 
 		case HRTIM_CAPTUREUNIT_2: {
 			/* Set the capture unit trigger */
-			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xCR =
-			    hhrtim->TimerParam[TimerIdx].CaptureTrigger2;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xCR = hhrtim->TimerParam[TimerIdx].CaptureTrigger2;
 
 			/* Enable the timer DMA request */
-			__HAL_HRTIM_TIMER_ENABLE_DMA(hhrtim, TimerIdx,
-						     HRTIM_TIM_DMA_CPT2);
+			__HAL_HRTIM_TIMER_ENABLE_DMA(hhrtim, TimerIdx, HRTIM_TIM_DMA_CPT2);
 			break;
 		}
 
@@ -3163,9 +3004,7 @@ HAL_HRTIM_SimpleCaptureStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
  *                    @arg HRTIM_CAPTUREUNIT_2: Capture unit 2
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop_DMA(HRTIM_HandleTypeDef *hhrtim,
-						  uint32_t TimerIdx,
-						  uint32_t CaptureChannel)
+HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureChannel)
 {
 
 	uint32_t hrtim_cpt1cr;
@@ -3182,8 +3021,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop_DMA(HRTIM_HandleTypeDef *hhrtim,
 
 	/* Get the timer DMA handler */
 	/* Disable the DMA */
-	if (HAL_DMA_Abort(HRTIM_GetDMAHandleFromTimerIdx(hhrtim, TimerIdx)) !=
-	    HAL_OK) {
+	if (HAL_DMA_Abort(HRTIM_GetDMAHandleFromTimerIdx(hhrtim, TimerIdx)) != HAL_OK) {
 		hhrtim->State = HAL_HRTIM_STATE_ERROR;
 
 		/* Process Unlocked */
@@ -3195,23 +3033,19 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop_DMA(HRTIM_HandleTypeDef *hhrtim,
 	switch (CaptureChannel) {
 		case HRTIM_CAPTUREUNIT_1: {
 			/* Reset the capture unit trigger */
-			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT1xCR =
-			    HRTIM_CAPTURETRIGGER_NONE;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT1xCR = HRTIM_CAPTURETRIGGER_NONE;
 
 			/* Disable the capture unit 1 DMA request */
-			__HAL_HRTIM_TIMER_DISABLE_DMA(hhrtim, TimerIdx,
-						      HRTIM_TIM_DMA_CPT1);
+			__HAL_HRTIM_TIMER_DISABLE_DMA(hhrtim, TimerIdx, HRTIM_TIM_DMA_CPT1);
 			break;
 		}
 
 		case HRTIM_CAPTUREUNIT_2: {
 			/* Reset the capture unit trigger */
-			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xCR =
-			    HRTIM_CAPTURETRIGGER_NONE;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xCR = HRTIM_CAPTURETRIGGER_NONE;
 
 			/* Disable the capture unit 2 DMA request */
-			__HAL_HRTIM_TIMER_DISABLE_DMA(hhrtim, TimerIdx,
-						      HRTIM_TIM_DMA_CPT2);
+			__HAL_HRTIM_TIMER_DISABLE_DMA(hhrtim, TimerIdx, HRTIM_TIM_DMA_CPT2);
 			break;
 		}
 
@@ -3233,8 +3067,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop_DMA(HRTIM_HandleTypeDef *hhrtim,
 	hrtim_cpt2cr = hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xCR;
 
 	/* Disable the timer counter */
-	if ((hrtim_cpt1cr == HRTIM_CAPTURETRIGGER_NONE) &&
-	    (hrtim_cpt2cr == HRTIM_CAPTURETRIGGER_NONE)) {
+	if ((hrtim_cpt1cr == HRTIM_CAPTURETRIGGER_NONE) && (hrtim_cpt2cr == HRTIM_CAPTURETRIGGER_NONE)) {
 		__HAL_HRTIM_DISABLE(hhrtim, TimerIdxToTimerId[TimerIdx]);
 	}
 
@@ -3311,9 +3144,8 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop_DMA(HRTIM_HandleTypeDef *hhrtim,
  *       second call will override the reset event related configuration data
  *       provided in the first call.
  */
-HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseChannelConfig(
-    HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OnePulseChannel,
-    const HRTIM_SimpleOnePulseChannelCfgTypeDef *pSimpleOnePulseChannelCfg)
+HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseChannelConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OnePulseChannel,
+							const HRTIM_SimpleOnePulseChannelCfgTypeDef *pSimpleOnePulseChannelCfg)
 {
 	HRTIM_OutputCfgTypeDef OutputCfg;
 	HRTIM_EventCfgTypeDef EventCfg;
@@ -3321,19 +3153,12 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseChannelConfig(
 	/* Check parameters */
 	assert_param(IS_HRTIM_TIMER_OUTPUT(TimerIdx, OnePulseChannel));
 	assert_param(IS_HRTIM_OUTPUTPULSE(pSimpleOnePulseChannelCfg->Pulse));
-	assert_param(
-	    IS_HRTIM_OUTPUTPOLARITY(pSimpleOnePulseChannelCfg->OutputPolarity));
-	assert_param(IS_HRTIM_OUTPUTIDLELEVEL(
-	    pSimpleOnePulseChannelCfg->OutputIdleLevel));
+	assert_param(IS_HRTIM_OUTPUTPOLARITY(pSimpleOnePulseChannelCfg->OutputPolarity));
+	assert_param(IS_HRTIM_OUTPUTIDLELEVEL(pSimpleOnePulseChannelCfg->OutputIdleLevel));
 	assert_param(IS_HRTIM_EVENT(pSimpleOnePulseChannelCfg->Event));
-	assert_param(
-	    IS_HRTIM_EVENTPOLARITY(pSimpleOnePulseChannelCfg->EventSensitivity,
-				   pSimpleOnePulseChannelCfg->EventPolarity));
-	assert_param(IS_HRTIM_EVENTSENSITIVITY(
-	    pSimpleOnePulseChannelCfg->EventSensitivity));
-	assert_param(
-	    IS_HRTIM_EVENTFILTER(pSimpleOnePulseChannelCfg->Event,
-				 pSimpleOnePulseChannelCfg->EventFilter));
+	assert_param(IS_HRTIM_EVENTPOLARITY(pSimpleOnePulseChannelCfg->EventSensitivity, pSimpleOnePulseChannelCfg->EventPolarity));
+	assert_param(IS_HRTIM_EVENTSENSITIVITY(pSimpleOnePulseChannelCfg->EventSensitivity));
+	assert_param(IS_HRTIM_EVENTFILTER(pSimpleOnePulseChannelCfg->Event, pSimpleOnePulseChannelCfg->EventFilter));
 
 	if (hhrtim->State == HAL_HRTIM_STATE_BUSY) {
 		return HAL_BUSY;
@@ -3352,8 +3177,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseChannelConfig(
 		case HRTIM_OUTPUT_TD1:
 		case HRTIM_OUTPUT_TE1:
 		case HRTIM_OUTPUT_TF1: {
-			hhrtim->Instance->sTimerxRegs[TimerIdx].CMP1xR =
-			    pSimpleOnePulseChannelCfg->Pulse;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].CMP1xR = pSimpleOnePulseChannelCfg->Pulse;
 			OutputCfg.SetSource = HRTIM_OUTPUTSET_TIMCMP1;
 			break;
 		}
@@ -3364,8 +3188,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseChannelConfig(
 		case HRTIM_OUTPUT_TD2:
 		case HRTIM_OUTPUT_TE2:
 		case HRTIM_OUTPUT_TF2: {
-			hhrtim->Instance->sTimerxRegs[TimerIdx].CMP2xR =
-			    pSimpleOnePulseChannelCfg->Pulse;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].CMP2xR = pSimpleOnePulseChannelCfg->Pulse;
 			OutputCfg.SetSource = HRTIM_OUTPUTSET_TIMCMP2;
 			break;
 		}
@@ -3388,10 +3211,8 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseChannelConfig(
 	}
 
 	/* Configure timer output */
-	OutputCfg.Polarity =
-	    (pSimpleOnePulseChannelCfg->OutputPolarity & HRTIM_OUTR_POL1);
-	OutputCfg.IdleLevel =
-	    (pSimpleOnePulseChannelCfg->OutputIdleLevel & HRTIM_OUTR_IDLES1);
+	OutputCfg.Polarity = (pSimpleOnePulseChannelCfg->OutputPolarity & HRTIM_OUTR_POL1);
+	OutputCfg.IdleLevel = (pSimpleOnePulseChannelCfg->OutputIdleLevel & HRTIM_OUTR_IDLES1);
 	OutputCfg.FaultLevel = HRTIM_OUTPUTFAULTLEVEL_NONE;
 	OutputCfg.IdleMode = HRTIM_OUTPUTIDLEMODE_NONE;
 	OutputCfg.ChopperModeEnable = HRTIM_OUTPUTCHOPPERMODE_DISABLED;
@@ -3402,19 +3223,15 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseChannelConfig(
 
 	/* Configure external event channel */
 	EventCfg.FastMode = HRTIM_EVENTFASTMODE_DISABLE;
-	EventCfg.Filter =
-	    (pSimpleOnePulseChannelCfg->EventFilter & HRTIM_EECR3_EE6F);
-	EventCfg.Polarity =
-	    (pSimpleOnePulseChannelCfg->EventPolarity & HRTIM_OUTR_POL1);
-	EventCfg.Sensitivity =
-	    (pSimpleOnePulseChannelCfg->EventSensitivity & HRTIM_EECR1_EE1SNS);
+	EventCfg.Filter = (pSimpleOnePulseChannelCfg->EventFilter & HRTIM_EECR3_EE6F);
+	EventCfg.Polarity = (pSimpleOnePulseChannelCfg->EventPolarity & HRTIM_OUTR_POL1);
+	EventCfg.Sensitivity = (pSimpleOnePulseChannelCfg->EventSensitivity & HRTIM_EECR1_EE1SNS);
 	EventCfg.Source = HRTIM_EEV1SRC_GPIO; /* source 1 for External Event */
 
 	HRTIM_EventConfig(hhrtim, pSimpleOnePulseChannelCfg->Event, &EventCfg);
 
 	/* Configure the timer reset register */
-	HRTIM_TIM_ResetConfig(hhrtim, TimerIdx,
-			      pSimpleOnePulseChannelCfg->Event);
+	HRTIM_TIM_ResetConfig(hhrtim, TimerIdx, pSimpleOnePulseChannelCfg->Event);
 
 	hhrtim->State = HAL_HRTIM_STATE_READY;
 
@@ -3451,9 +3268,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseChannelConfig(
  *                    @arg HRTIM_OUTPUT_TF2: Timer F - Output 2
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStart(HRTIM_HandleTypeDef *hhrtim,
-						uint32_t TimerIdx,
-						uint32_t OnePulseChannel)
+HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStart(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OnePulseChannel)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_TIMER_OUTPUT(TimerIdx, OnePulseChannel));
@@ -3504,9 +3319,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStart(HRTIM_HandleTypeDef *hhrtim,
  *                    @arg HRTIM_OUTPUT_TF2: Timer F - Output 2
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStop(HRTIM_HandleTypeDef *hhrtim,
-					       uint32_t TimerIdx,
-					       uint32_t OnePulseChannel)
+HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStop(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OnePulseChannel)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_TIMER_OUTPUT(TimerIdx, OnePulseChannel));
@@ -3558,9 +3371,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStop(HRTIM_HandleTypeDef *hhrtim,
  *                    @arg HRTIM_OUTPUT_TF2: Timer F - Output 2
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStart_IT(HRTIM_HandleTypeDef *hhrtim,
-						   uint32_t TimerIdx,
-						   uint32_t OnePulseChannel)
+HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStart_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OnePulseChannel)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_TIMER_OUTPUT(TimerIdx, OnePulseChannel));
@@ -3581,8 +3392,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStart_IT(HRTIM_HandleTypeDef *hhrtim,
 		case HRTIM_OUTPUT_TD1:
 		case HRTIM_OUTPUT_TE1:
 		case HRTIM_OUTPUT_TF1: {
-			__HAL_HRTIM_TIMER_ENABLE_IT(hhrtim, TimerIdx,
-						    HRTIM_TIM_IT_CMP1);
+			__HAL_HRTIM_TIMER_ENABLE_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_CMP1);
 			break;
 		}
 
@@ -3592,8 +3402,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStart_IT(HRTIM_HandleTypeDef *hhrtim,
 		case HRTIM_OUTPUT_TD2:
 		case HRTIM_OUTPUT_TE2:
 		case HRTIM_OUTPUT_TF2: {
-			__HAL_HRTIM_TIMER_ENABLE_IT(hhrtim, TimerIdx,
-						    HRTIM_TIM_IT_CMP2);
+			__HAL_HRTIM_TIMER_ENABLE_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_CMP2);
 			break;
 		}
 
@@ -3650,9 +3459,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStart_IT(HRTIM_HandleTypeDef *hhrtim,
  *                    @arg HRTIM_OUTPUT_TF2: Timer F - Output 2
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStop_IT(HRTIM_HandleTypeDef *hhrtim,
-						  uint32_t TimerIdx,
-						  uint32_t OnePulseChannel)
+HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStop_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OnePulseChannel)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_TIMER_OUTPUT(TimerIdx, OnePulseChannel));
@@ -3673,8 +3480,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStop_IT(HRTIM_HandleTypeDef *hhrtim,
 		case HRTIM_OUTPUT_TD1:
 		case HRTIM_OUTPUT_TE1:
 		case HRTIM_OUTPUT_TF1: {
-			__HAL_HRTIM_TIMER_DISABLE_IT(hhrtim, TimerIdx,
-						     HRTIM_TIM_IT_CMP1);
+			__HAL_HRTIM_TIMER_DISABLE_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_CMP1);
 			break;
 		}
 
@@ -3684,8 +3490,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStop_IT(HRTIM_HandleTypeDef *hhrtim,
 		case HRTIM_OUTPUT_TD2:
 		case HRTIM_OUTPUT_TE2:
 		case HRTIM_OUTPUT_TF2: {
-			__HAL_HRTIM_TIMER_DISABLE_IT(hhrtim, TimerIdx,
-						     HRTIM_TIM_IT_CMP2);
+			__HAL_HRTIM_TIMER_DISABLE_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_CMP2);
 			break;
 		}
 
@@ -3746,17 +3551,14 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStop_IT(HRTIM_HandleTypeDef *hhrtim,
  * @note This function must be called before starting the burst mode
  *       controller
  */
-HAL_StatusTypeDef
-HAL_HRTIM_BurstModeConfig(HRTIM_HandleTypeDef *hhrtim,
-			  const HRTIM_BurstModeCfgTypeDef *pBurstModeCfg)
+HAL_StatusTypeDef HAL_HRTIM_BurstModeConfig(HRTIM_HandleTypeDef *hhrtim, const HRTIM_BurstModeCfgTypeDef *pBurstModeCfg)
 {
 	uint32_t hrtim_bmcr;
 
 	/* Check parameters */
 	assert_param(IS_HRTIM_BURSTMODE(pBurstModeCfg->Mode));
 	assert_param(IS_HRTIM_BURSTMODECLOCKSOURCE(pBurstModeCfg->ClockSource));
-	assert_param(
-	    IS_HRTIM_HRTIM_BURSTMODEPRESCALER(pBurstModeCfg->Prescaler));
+	assert_param(IS_HRTIM_HRTIM_BURSTMODEPRESCALER(pBurstModeCfg->Prescaler));
 	assert_param(IS_HRTIM_BURSTMODEPRELOAD(pBurstModeCfg->PreloadEnable));
 	assert_param(IS_HRTIM_BURSTMODETRIGGER(pBurstModeCfg->Trigger));
 
@@ -3827,15 +3629,12 @@ HAL_HRTIM_BurstModeConfig(HRTIM_HandleTypeDef *hhrtim,
  * @note This function must be called before starting the timer
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_EventConfig(HRTIM_HandleTypeDef *hhrtim,
-					uint32_t Event,
-					const HRTIM_EventCfgTypeDef *pEventCfg)
+HAL_StatusTypeDef HAL_HRTIM_EventConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Event, const HRTIM_EventCfgTypeDef *pEventCfg)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_EVENT(Event));
 	assert_param(IS_HRTIM_EVENTSRC(Event, pEventCfg->Source));
-	assert_param(IS_HRTIM_EVENTPOLARITY(pEventCfg->Sensitivity,
-					    pEventCfg->Polarity));
+	assert_param(IS_HRTIM_EVENTPOLARITY(pEventCfg->Sensitivity, pEventCfg->Polarity));
 	assert_param(IS_HRTIM_EVENTSENSITIVITY(pEventCfg->Sensitivity));
 	assert_param(IS_HRTIM_EVENTFASTMODE(Event, pEventCfg->FastMode));
 	assert_param(IS_HRTIM_EVENTFILTER(Event, pEventCfg->Filter));
@@ -3872,8 +3671,7 @@ HAL_StatusTypeDef HAL_HRTIM_EventConfig(HRTIM_HandleTypeDef *hhrtim,
  * @note This function must be called before starting the timer
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_EventPrescalerConfig(HRTIM_HandleTypeDef *hhrtim,
-						 uint32_t Prescaler)
+HAL_StatusTypeDef HAL_HRTIM_EventPrescalerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Prescaler)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_EVENTPRESCALER(Prescaler));
@@ -3888,8 +3686,7 @@ HAL_StatusTypeDef HAL_HRTIM_EventPrescalerConfig(HRTIM_HandleTypeDef *hhrtim,
 	hhrtim->State = HAL_HRTIM_STATE_BUSY;
 
 	/* Set the external event prescaler */
-	MODIFY_REG(hhrtim->Instance->sCommonRegs.EECR3, HRTIM_EECR3_EEVSD,
-		   (Prescaler & HRTIM_EECR3_EEVSD));
+	MODIFY_REG(hhrtim->Instance->sCommonRegs.EECR3, HRTIM_EECR3_EEVSD, (Prescaler & HRTIM_EECR3_EEVSD));
 
 	hhrtim->State = HAL_HRTIM_STATE_READY;
 
@@ -3915,9 +3712,7 @@ HAL_StatusTypeDef HAL_HRTIM_EventPrescalerConfig(HRTIM_HandleTypeDef *hhrtim,
  *       enabling faults inputs
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_FaultConfig(HRTIM_HandleTypeDef *hhrtim,
-					uint32_t Fault,
-					const HRTIM_FaultCfgTypeDef *pFaultCfg)
+HAL_StatusTypeDef HAL_HRTIM_FaultConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Fault, const HRTIM_FaultCfgTypeDef *pFaultCfg)
 {
 	uint32_t hrtim_fltinr1;
 	uint32_t hrtim_fltinr2;
@@ -3948,110 +3743,68 @@ HAL_StatusTypeDef HAL_HRTIM_FaultConfig(HRTIM_HandleTypeDef *hhrtim,
 
 	switch (Fault) {
 		case HRTIM_FAULT_1: {
-			hrtim_fltinr1 &=
-			    ~(HRTIM_FLTINR1_FLT1P | HRTIM_FLTINR1_FLT1SRC_0 |
-			      HRTIM_FLTINR1_FLT1F | HRTIM_FLTINR1_FLT1LCK);
-			hrtim_fltinr1 |=
-			    (pFaultCfg->Polarity & HRTIM_FLTINR1_FLT1P);
-			hrtim_fltinr1 |=
-			    (source0 << HRTIM_FLTINR1_FLT1SRC_0_Pos);
+			hrtim_fltinr1 &= ~(HRTIM_FLTINR1_FLT1P | HRTIM_FLTINR1_FLT1SRC_0 | HRTIM_FLTINR1_FLT1F | HRTIM_FLTINR1_FLT1LCK);
+			hrtim_fltinr1 |= (pFaultCfg->Polarity & HRTIM_FLTINR1_FLT1P);
+			hrtim_fltinr1 |= (source0 << HRTIM_FLTINR1_FLT1SRC_0_Pos);
 			hrtim_fltinr2 &= ~(HRTIM_FLTINR2_FLT1SRC_1);
-			hrtim_fltinr2 |=
-			    (source1 << HRTIM_FLTINR2_FLT1SRC_1_Pos);
-			hrtim_fltinr1 |=
-			    (pFaultCfg->Filter & HRTIM_FLTINR1_FLT1F);
-			hrtim_fltinr1 |=
-			    (pFaultCfg->Lock & HRTIM_FLTINR1_FLT1LCK);
+			hrtim_fltinr2 |= (source1 << HRTIM_FLTINR2_FLT1SRC_1_Pos);
+			hrtim_fltinr1 |= (pFaultCfg->Filter & HRTIM_FLTINR1_FLT1F);
+			hrtim_fltinr1 |= (pFaultCfg->Lock & HRTIM_FLTINR1_FLT1LCK);
 			break;
 		}
 
 		case HRTIM_FAULT_2: {
-			hrtim_fltinr1 &=
-			    ~(HRTIM_FLTINR1_FLT2P | HRTIM_FLTINR1_FLT2SRC_0 |
-			      HRTIM_FLTINR1_FLT2F | HRTIM_FLTINR1_FLT2LCK);
-			hrtim_fltinr1 |=
-			    ((pFaultCfg->Polarity << 8U) & HRTIM_FLTINR1_FLT2P);
-			hrtim_fltinr1 |=
-			    (source0 << HRTIM_FLTINR1_FLT2SRC_0_Pos);
+			hrtim_fltinr1 &= ~(HRTIM_FLTINR1_FLT2P | HRTIM_FLTINR1_FLT2SRC_0 | HRTIM_FLTINR1_FLT2F | HRTIM_FLTINR1_FLT2LCK);
+			hrtim_fltinr1 |= ((pFaultCfg->Polarity << 8U) & HRTIM_FLTINR1_FLT2P);
+			hrtim_fltinr1 |= (source0 << HRTIM_FLTINR1_FLT2SRC_0_Pos);
 			hrtim_fltinr2 &= ~(HRTIM_FLTINR2_FLT2SRC_1);
-			hrtim_fltinr2 |=
-			    (source1 << HRTIM_FLTINR2_FLT2SRC_1_Pos);
-			hrtim_fltinr1 |=
-			    ((pFaultCfg->Filter << 8U) & HRTIM_FLTINR1_FLT2F);
-			hrtim_fltinr1 |=
-			    ((pFaultCfg->Lock << 8U) & HRTIM_FLTINR1_FLT2LCK);
+			hrtim_fltinr2 |= (source1 << HRTIM_FLTINR2_FLT2SRC_1_Pos);
+			hrtim_fltinr1 |= ((pFaultCfg->Filter << 8U) & HRTIM_FLTINR1_FLT2F);
+			hrtim_fltinr1 |= ((pFaultCfg->Lock << 8U) & HRTIM_FLTINR1_FLT2LCK);
 			break;
 		}
 
 		case HRTIM_FAULT_3: {
-			hrtim_fltinr1 &=
-			    ~(HRTIM_FLTINR1_FLT3P | HRTIM_FLTINR1_FLT3SRC_0 |
-			      HRTIM_FLTINR1_FLT3F | HRTIM_FLTINR1_FLT3LCK);
-			hrtim_fltinr1 |= ((pFaultCfg->Polarity << 16U) &
-					  HRTIM_FLTINR1_FLT3P);
-			hrtim_fltinr1 |=
-			    (source0 << HRTIM_FLTINR1_FLT3SRC_0_Pos);
+			hrtim_fltinr1 &= ~(HRTIM_FLTINR1_FLT3P | HRTIM_FLTINR1_FLT3SRC_0 | HRTIM_FLTINR1_FLT3F | HRTIM_FLTINR1_FLT3LCK);
+			hrtim_fltinr1 |= ((pFaultCfg->Polarity << 16U) & HRTIM_FLTINR1_FLT3P);
+			hrtim_fltinr1 |= (source0 << HRTIM_FLTINR1_FLT3SRC_0_Pos);
 			hrtim_fltinr2 &= ~(HRTIM_FLTINR2_FLT3SRC_1);
-			hrtim_fltinr2 |=
-			    (source1 << HRTIM_FLTINR2_FLT3SRC_1_Pos);
-			hrtim_fltinr1 |=
-			    ((pFaultCfg->Filter << 16U) & HRTIM_FLTINR1_FLT3F);
-			hrtim_fltinr1 |=
-			    ((pFaultCfg->Lock << 16U) & HRTIM_FLTINR1_FLT3LCK);
+			hrtim_fltinr2 |= (source1 << HRTIM_FLTINR2_FLT3SRC_1_Pos);
+			hrtim_fltinr1 |= ((pFaultCfg->Filter << 16U) & HRTIM_FLTINR1_FLT3F);
+			hrtim_fltinr1 |= ((pFaultCfg->Lock << 16U) & HRTIM_FLTINR1_FLT3LCK);
 			break;
 		}
 
 		case HRTIM_FAULT_4: {
-			hrtim_fltinr1 &=
-			    ~(HRTIM_FLTINR1_FLT4P | HRTIM_FLTINR1_FLT4SRC_0 |
-			      HRTIM_FLTINR1_FLT4F | HRTIM_FLTINR1_FLT4LCK);
-			hrtim_fltinr1 |= ((pFaultCfg->Polarity << 24U) &
-					  HRTIM_FLTINR1_FLT4P);
-			hrtim_fltinr1 |=
-			    (source0 << HRTIM_FLTINR1_FLT4SRC_0_Pos);
+			hrtim_fltinr1 &= ~(HRTIM_FLTINR1_FLT4P | HRTIM_FLTINR1_FLT4SRC_0 | HRTIM_FLTINR1_FLT4F | HRTIM_FLTINR1_FLT4LCK);
+			hrtim_fltinr1 |= ((pFaultCfg->Polarity << 24U) & HRTIM_FLTINR1_FLT4P);
+			hrtim_fltinr1 |= (source0 << HRTIM_FLTINR1_FLT4SRC_0_Pos);
 			hrtim_fltinr2 &= ~(HRTIM_FLTINR2_FLT4SRC_1);
-			hrtim_fltinr2 |=
-			    (source1 << HRTIM_FLTINR2_FLT4SRC_1_Pos);
-			hrtim_fltinr1 |=
-			    ((pFaultCfg->Filter << 24U) & HRTIM_FLTINR1_FLT4F);
-			hrtim_fltinr1 |=
-			    ((pFaultCfg->Lock << 24U) & HRTIM_FLTINR1_FLT4LCK);
+			hrtim_fltinr2 |= (source1 << HRTIM_FLTINR2_FLT4SRC_1_Pos);
+			hrtim_fltinr1 |= ((pFaultCfg->Filter << 24U) & HRTIM_FLTINR1_FLT4F);
+			hrtim_fltinr1 |= ((pFaultCfg->Lock << 24U) & HRTIM_FLTINR1_FLT4LCK);
 			break;
 		}
 
 		case HRTIM_FAULT_5: {
-			hrtim_fltinr2 &=
-			    ~(HRTIM_FLTINR2_FLT5P | HRTIM_FLTINR2_FLT5SRC_0 |
-			      HRTIM_FLTINR2_FLT5F | HRTIM_FLTINR2_FLT5LCK);
-			hrtim_fltinr2 |=
-			    (pFaultCfg->Polarity & HRTIM_FLTINR2_FLT5P);
-			hrtim_fltinr2 |=
-			    (source0 << HRTIM_FLTINR2_FLT5SRC_0_Pos);
+			hrtim_fltinr2 &= ~(HRTIM_FLTINR2_FLT5P | HRTIM_FLTINR2_FLT5SRC_0 | HRTIM_FLTINR2_FLT5F | HRTIM_FLTINR2_FLT5LCK);
+			hrtim_fltinr2 |= (pFaultCfg->Polarity & HRTIM_FLTINR2_FLT5P);
+			hrtim_fltinr2 |= (source0 << HRTIM_FLTINR2_FLT5SRC_0_Pos);
 			hrtim_fltinr2 &= ~(HRTIM_FLTINR2_FLT5SRC_1);
-			hrtim_fltinr2 |=
-			    (source1 << HRTIM_FLTINR2_FLT5SRC_1_Pos);
-			hrtim_fltinr2 |=
-			    (pFaultCfg->Filter & HRTIM_FLTINR2_FLT5F);
-			hrtim_fltinr2 |=
-			    (pFaultCfg->Lock & HRTIM_FLTINR2_FLT5LCK);
+			hrtim_fltinr2 |= (source1 << HRTIM_FLTINR2_FLT5SRC_1_Pos);
+			hrtim_fltinr2 |= (pFaultCfg->Filter & HRTIM_FLTINR2_FLT5F);
+			hrtim_fltinr2 |= (pFaultCfg->Lock & HRTIM_FLTINR2_FLT5LCK);
 			break;
 		}
 
 		case HRTIM_FAULT_6: {
-			hrtim_fltinr2 &=
-			    ~(HRTIM_FLTINR2_FLT6P | HRTIM_FLTINR2_FLT6SRC_0 |
-			      HRTIM_FLTINR2_FLT6F | HRTIM_FLTINR2_FLT6LCK);
-			hrtim_fltinr2 |=
-			    ((pFaultCfg->Polarity << 8U) & HRTIM_FLTINR2_FLT6P);
-			hrtim_fltinr2 |=
-			    (source0 << HRTIM_FLTINR2_FLT6SRC_0_Pos);
+			hrtim_fltinr2 &= ~(HRTIM_FLTINR2_FLT6P | HRTIM_FLTINR2_FLT6SRC_0 | HRTIM_FLTINR2_FLT6F | HRTIM_FLTINR2_FLT6LCK);
+			hrtim_fltinr2 |= ((pFaultCfg->Polarity << 8U) & HRTIM_FLTINR2_FLT6P);
+			hrtim_fltinr2 |= (source0 << HRTIM_FLTINR2_FLT6SRC_0_Pos);
 			hrtim_fltinr2 &= ~(HRTIM_FLTINR2_FLT6SRC_1);
-			hrtim_fltinr2 |=
-			    (source1 << HRTIM_FLTINR2_FLT6SRC_1_Pos);
-			hrtim_fltinr2 |=
-			    ((pFaultCfg->Filter << 8U) & HRTIM_FLTINR2_FLT6F);
-			hrtim_fltinr2 |=
-			    ((pFaultCfg->Lock << 8U) & HRTIM_FLTINR2_FLT6LCK);
+			hrtim_fltinr2 |= (source1 << HRTIM_FLTINR2_FLT6SRC_1_Pos);
+			hrtim_fltinr2 |= ((pFaultCfg->Filter << 8U) & HRTIM_FLTINR2_FLT6F);
+			hrtim_fltinr2 |= ((pFaultCfg->Lock << 8U) & HRTIM_FLTINR2_FLT6LCK);
 			break;
 		}
 
@@ -4070,16 +3823,12 @@ HAL_StatusTypeDef HAL_HRTIM_FaultConfig(HRTIM_HandleTypeDef *hhrtim,
 	}
 
 	/* Update the HRTIM registers except LOCK bit */
-	hhrtim->Instance->sCommonRegs.FLTINR1 =
-	    (hrtim_fltinr1 & (~(HRTIM_FLTINR1_FLTxLCK)));
-	hhrtim->Instance->sCommonRegs.FLTINR2 =
-	    (hrtim_fltinr2 & (~(HRTIM_FLTINR2_FLTxLCK)));
+	hhrtim->Instance->sCommonRegs.FLTINR1 = (hrtim_fltinr1 & (~(HRTIM_FLTINR1_FLTxLCK)));
+	hhrtim->Instance->sCommonRegs.FLTINR2 = (hrtim_fltinr2 & (~(HRTIM_FLTINR2_FLTxLCK)));
 
 	/* Update the HRTIM registers LOCK bit */
-	SET_BIT(hhrtim->Instance->sCommonRegs.FLTINR1,
-		(hrtim_fltinr1 & HRTIM_FLTINR1_FLTxLCK));
-	SET_BIT(hhrtim->Instance->sCommonRegs.FLTINR2,
-		(hrtim_fltinr2 & HRTIM_FLTINR2_FLTxLCK));
+	SET_BIT(hhrtim->Instance->sCommonRegs.FLTINR1, (hrtim_fltinr1 & HRTIM_FLTINR1_FLTxLCK));
+	SET_BIT(hhrtim->Instance->sCommonRegs.FLTINR2, (hrtim_fltinr2 & HRTIM_FLTINR2_FLTxLCK));
 
 	hhrtim->State = HAL_HRTIM_STATE_READY;
 
@@ -4102,8 +3851,7 @@ HAL_StatusTypeDef HAL_HRTIM_FaultConfig(HRTIM_HandleTypeDef *hhrtim,
  * @note This function must be called before starting the timer and before
  *       enabling faults inputs
  */
-HAL_StatusTypeDef HAL_HRTIM_FaultPrescalerConfig(HRTIM_HandleTypeDef *hhrtim,
-						 uint32_t Prescaler)
+HAL_StatusTypeDef HAL_HRTIM_FaultPrescalerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Prescaler)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_FAULTPRESCALER(Prescaler));
@@ -4118,8 +3866,7 @@ HAL_StatusTypeDef HAL_HRTIM_FaultPrescalerConfig(HRTIM_HandleTypeDef *hhrtim,
 	hhrtim->State = HAL_HRTIM_STATE_BUSY;
 
 	/* Set the external event prescaler */
-	MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR2, HRTIM_FLTINR2_FLTSD,
-		   (Prescaler & HRTIM_FLTINR2_FLTSD));
+	MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR2, HRTIM_FLTINR2_FLTSD, (Prescaler & HRTIM_FLTINR2_FLTSD));
 
 	hhrtim->State = HAL_HRTIM_STATE_READY;
 
@@ -4146,9 +3893,7 @@ HAL_StatusTypeDef HAL_HRTIM_FaultPrescalerConfig(HRTIM_HandleTypeDef *hhrtim,
  * @note This function must be called when fault is not enabled
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_FaultBlankingConfigAndEnable(
-    HRTIM_HandleTypeDef *hhrtim, uint32_t Fault,
-    const HRTIM_FaultBlankingCfgTypeDef *pFaultBlkCfg)
+HAL_StatusTypeDef HAL_HRTIM_FaultBlankingConfigAndEnable(HRTIM_HandleTypeDef *hhrtim, uint32_t Fault, const HRTIM_FaultBlankingCfgTypeDef *pFaultBlkCfg)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_FAULT(Fault));
@@ -4165,57 +3910,33 @@ HAL_StatusTypeDef HAL_HRTIM_FaultBlankingConfigAndEnable(
 
 	switch (Fault) {
 		case HRTIM_FAULT_1: {
-			MODIFY_REG(
-			    hhrtim->Instance->sCommonRegs.FLTINR3,
-			    (HRTIM_FLTINR3_FLT1BLKS | HRTIM_FLTINR3_FLT1BLKE),
-			    ((pFaultBlkCfg->BlankingSource
-			      << HRTIM_FLTINR3_FLT1BLKS_Pos) |
-			     HRTIM_FLTINR3_FLT1BLKE));
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR3, (HRTIM_FLTINR3_FLT1BLKS | HRTIM_FLTINR3_FLT1BLKE),
+				   ((pFaultBlkCfg->BlankingSource << HRTIM_FLTINR3_FLT1BLKS_Pos) | HRTIM_FLTINR3_FLT1BLKE));
 			break;
 		}
 		case HRTIM_FAULT_2: {
-			MODIFY_REG(
-			    hhrtim->Instance->sCommonRegs.FLTINR3,
-			    (HRTIM_FLTINR3_FLT2BLKS | HRTIM_FLTINR3_FLT2BLKE),
-			    ((pFaultBlkCfg->BlankingSource
-			      << HRTIM_FLTINR3_FLT2BLKS_Pos) |
-			     HRTIM_FLTINR3_FLT2BLKE));
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR3, (HRTIM_FLTINR3_FLT2BLKS | HRTIM_FLTINR3_FLT2BLKE),
+				   ((pFaultBlkCfg->BlankingSource << HRTIM_FLTINR3_FLT2BLKS_Pos) | HRTIM_FLTINR3_FLT2BLKE));
 			break;
 		}
 		case HRTIM_FAULT_3: {
-			MODIFY_REG(
-			    hhrtim->Instance->sCommonRegs.FLTINR3,
-			    (HRTIM_FLTINR3_FLT3BLKS | HRTIM_FLTINR3_FLT3BLKE),
-			    ((pFaultBlkCfg->BlankingSource
-			      << HRTIM_FLTINR3_FLT3BLKS_Pos) |
-			     HRTIM_FLTINR3_FLT3BLKE));
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR3, (HRTIM_FLTINR3_FLT3BLKS | HRTIM_FLTINR3_FLT3BLKE),
+				   ((pFaultBlkCfg->BlankingSource << HRTIM_FLTINR3_FLT3BLKS_Pos) | HRTIM_FLTINR3_FLT3BLKE));
 			break;
 		}
 		case HRTIM_FAULT_4: {
-			MODIFY_REG(
-			    hhrtim->Instance->sCommonRegs.FLTINR3,
-			    (HRTIM_FLTINR3_FLT4BLKS | HRTIM_FLTINR3_FLT4BLKE),
-			    ((pFaultBlkCfg->BlankingSource
-			      << HRTIM_FLTINR3_FLT4BLKS_Pos) |
-			     HRTIM_FLTINR3_FLT4BLKE));
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR3, (HRTIM_FLTINR3_FLT4BLKS | HRTIM_FLTINR3_FLT4BLKE),
+				   ((pFaultBlkCfg->BlankingSource << HRTIM_FLTINR3_FLT4BLKS_Pos) | HRTIM_FLTINR3_FLT4BLKE));
 			break;
 		}
 		case HRTIM_FAULT_5: {
-			MODIFY_REG(
-			    hhrtim->Instance->sCommonRegs.FLTINR4,
-			    (HRTIM_FLTINR4_FLT5BLKS | HRTIM_FLTINR4_FLT5BLKE),
-			    ((pFaultBlkCfg->BlankingSource
-			      << HRTIM_FLTINR4_FLT5BLKS_Pos) |
-			     HRTIM_FLTINR4_FLT5BLKE));
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR4, (HRTIM_FLTINR4_FLT5BLKS | HRTIM_FLTINR4_FLT5BLKE),
+				   ((pFaultBlkCfg->BlankingSource << HRTIM_FLTINR4_FLT5BLKS_Pos) | HRTIM_FLTINR4_FLT5BLKE));
 			break;
 		}
 		case HRTIM_FAULT_6: {
-			MODIFY_REG(
-			    hhrtim->Instance->sCommonRegs.FLTINR4,
-			    (HRTIM_FLTINR4_FLT6BLKS | HRTIM_FLTINR4_FLT6BLKE),
-			    ((pFaultBlkCfg->BlankingSource
-			      << HRTIM_FLTINR4_FLT6BLKS_Pos) |
-			     HRTIM_FLTINR4_FLT6BLKE));
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR4, (HRTIM_FLTINR4_FLT6BLKS | HRTIM_FLTINR4_FLT6BLKE),
+				   ((pFaultBlkCfg->BlankingSource << HRTIM_FLTINR4_FLT6BLKS_Pos) | HRTIM_FLTINR4_FLT6BLKE));
 			break;
 		}
 
@@ -4260,9 +3981,7 @@ HAL_StatusTypeDef HAL_HRTIM_FaultBlankingConfigAndEnable(
  *
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_HRTIM_FaultCounterConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Fault,
-			     const HRTIM_FaultBlankingCfgTypeDef *pFaultBlkCfg)
+HAL_StatusTypeDef HAL_HRTIM_FaultCounterConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Fault, const HRTIM_FaultBlankingCfgTypeDef *pFaultBlkCfg)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_FAULT(Fault));
@@ -4280,63 +3999,33 @@ HAL_HRTIM_FaultCounterConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Fault,
 
 	switch (Fault) {
 		case HRTIM_FAULT_1: {
-			MODIFY_REG(
-			    hhrtim->Instance->sCommonRegs.FLTINR3,
-			    (HRTIM_FLTINR3_FLT1RSTM | HRTIM_FLTINR3_FLT1CNT),
-			    (pFaultBlkCfg->Threshold
-			     << HRTIM_FLTINR3_FLT1CNT_Pos) |
-				(pFaultBlkCfg->ResetMode
-				 << HRTIM_FLTINR3_FLT1RSTM_Pos));
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR3, (HRTIM_FLTINR3_FLT1RSTM | HRTIM_FLTINR3_FLT1CNT),
+				   (pFaultBlkCfg->Threshold << HRTIM_FLTINR3_FLT1CNT_Pos) | (pFaultBlkCfg->ResetMode << HRTIM_FLTINR3_FLT1RSTM_Pos));
 			break;
 		}
 		case HRTIM_FAULT_2: {
-			MODIFY_REG(
-			    hhrtim->Instance->sCommonRegs.FLTINR3,
-			    (HRTIM_FLTINR3_FLT2RSTM | HRTIM_FLTINR3_FLT2CNT),
-			    (pFaultBlkCfg->Threshold
-			     << HRTIM_FLTINR3_FLT2CNT_Pos) |
-				(pFaultBlkCfg->ResetMode
-				 << HRTIM_FLTINR3_FLT2RSTM_Pos));
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR3, (HRTIM_FLTINR3_FLT2RSTM | HRTIM_FLTINR3_FLT2CNT),
+				   (pFaultBlkCfg->Threshold << HRTIM_FLTINR3_FLT2CNT_Pos) | (pFaultBlkCfg->ResetMode << HRTIM_FLTINR3_FLT2RSTM_Pos));
 			break;
 		}
 		case HRTIM_FAULT_3: {
-			MODIFY_REG(
-			    hhrtim->Instance->sCommonRegs.FLTINR3,
-			    (HRTIM_FLTINR3_FLT3RSTM | HRTIM_FLTINR3_FLT3CNT),
-			    (pFaultBlkCfg->Threshold
-			     << HRTIM_FLTINR3_FLT3CNT_Pos) |
-				(pFaultBlkCfg->ResetMode
-				 << HRTIM_FLTINR3_FLT3RSTM_Pos));
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR3, (HRTIM_FLTINR3_FLT3RSTM | HRTIM_FLTINR3_FLT3CNT),
+				   (pFaultBlkCfg->Threshold << HRTIM_FLTINR3_FLT3CNT_Pos) | (pFaultBlkCfg->ResetMode << HRTIM_FLTINR3_FLT3RSTM_Pos));
 			break;
 		}
 		case HRTIM_FAULT_4: {
-			MODIFY_REG(
-			    hhrtim->Instance->sCommonRegs.FLTINR3,
-			    (HRTIM_FLTINR3_FLT4RSTM | HRTIM_FLTINR3_FLT4CNT),
-			    (pFaultBlkCfg->Threshold
-			     << HRTIM_FLTINR3_FLT4CNT_Pos) |
-				(pFaultBlkCfg->ResetMode
-				 << HRTIM_FLTINR3_FLT4RSTM_Pos));
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR3, (HRTIM_FLTINR3_FLT4RSTM | HRTIM_FLTINR3_FLT4CNT),
+				   (pFaultBlkCfg->Threshold << HRTIM_FLTINR3_FLT4CNT_Pos) | (pFaultBlkCfg->ResetMode << HRTIM_FLTINR3_FLT4RSTM_Pos));
 			break;
 		}
 		case HRTIM_FAULT_5: {
-			MODIFY_REG(
-			    hhrtim->Instance->sCommonRegs.FLTINR4,
-			    (HRTIM_FLTINR4_FLT5RSTM | HRTIM_FLTINR4_FLT5CNT),
-			    (pFaultBlkCfg->Threshold
-			     << HRTIM_FLTINR4_FLT5CNT_Pos) |
-				(pFaultBlkCfg->ResetMode
-				 << HRTIM_FLTINR4_FLT5RSTM_Pos));
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR4, (HRTIM_FLTINR4_FLT5RSTM | HRTIM_FLTINR4_FLT5CNT),
+				   (pFaultBlkCfg->Threshold << HRTIM_FLTINR4_FLT5CNT_Pos) | (pFaultBlkCfg->ResetMode << HRTIM_FLTINR4_FLT5RSTM_Pos));
 			break;
 		}
 		case HRTIM_FAULT_6: {
-			MODIFY_REG(
-			    hhrtim->Instance->sCommonRegs.FLTINR4,
-			    (HRTIM_FLTINR4_FLT6RSTM | HRTIM_FLTINR4_FLT6CNT),
-			    (pFaultBlkCfg->Threshold
-			     << HRTIM_FLTINR4_FLT6CNT_Pos) |
-				(pFaultBlkCfg->ResetMode
-				 << HRTIM_FLTINR4_FLT6RSTM_Pos));
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR4, (HRTIM_FLTINR4_FLT6RSTM | HRTIM_FLTINR4_FLT6CNT),
+				   (pFaultBlkCfg->Threshold << HRTIM_FLTINR4_FLT6CNT_Pos) | (pFaultBlkCfg->ResetMode << HRTIM_FLTINR4_FLT6RSTM_Pos));
 			break;
 		}
 
@@ -4375,8 +4064,7 @@ HAL_HRTIM_FaultCounterConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Fault,
  *                    @arg HRTIM_FAULT_6: Fault input 6
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_FaultCounterReset(HRTIM_HandleTypeDef *hhrtim,
-					      uint32_t Fault)
+HAL_StatusTypeDef HAL_HRTIM_FaultCounterReset(HRTIM_HandleTypeDef *hhrtim, uint32_t Fault)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_FAULT(Fault));
@@ -4392,39 +4080,27 @@ HAL_StatusTypeDef HAL_HRTIM_FaultCounterReset(HRTIM_HandleTypeDef *hhrtim,
 
 	switch (Fault) {
 		case HRTIM_FAULT_1: {
-			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR3,
-				   HRTIM_FLTINR3_FLT1CRES,
-				   HRTIM_FLTINR3_FLT1CRES);
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR3, HRTIM_FLTINR3_FLT1CRES, HRTIM_FLTINR3_FLT1CRES);
 			break;
 		}
 		case HRTIM_FAULT_2: {
-			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR3,
-				   HRTIM_FLTINR3_FLT2CRES,
-				   HRTIM_FLTINR3_FLT2CRES);
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR3, HRTIM_FLTINR3_FLT2CRES, HRTIM_FLTINR3_FLT2CRES);
 			break;
 		}
 		case HRTIM_FAULT_3: {
-			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR3,
-				   HRTIM_FLTINR3_FLT3CRES,
-				   HRTIM_FLTINR3_FLT3CRES);
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR3, HRTIM_FLTINR3_FLT3CRES, HRTIM_FLTINR3_FLT3CRES);
 			break;
 		}
 		case HRTIM_FAULT_4: {
-			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR3,
-				   HRTIM_FLTINR3_FLT4CRES,
-				   HRTIM_FLTINR3_FLT4CRES);
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR3, HRTIM_FLTINR3_FLT4CRES, HRTIM_FLTINR3_FLT4CRES);
 			break;
 		}
 		case HRTIM_FAULT_5: {
-			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR4,
-				   HRTIM_FLTINR4_FLT5CRES,
-				   HRTIM_FLTINR4_FLT5CRES);
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR4, HRTIM_FLTINR4_FLT5CRES, HRTIM_FLTINR4_FLT5CRES);
 			break;
 		}
 		case HRTIM_FAULT_6: {
-			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR4,
-				   HRTIM_FLTINR4_FLT6CRES,
-				   HRTIM_FLTINR4_FLT6CRES);
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR4, HRTIM_FLTINR4_FLT6CRES, HRTIM_FLTINR4_FLT6CRES);
 			break;
 		}
 
@@ -4468,40 +4144,29 @@ HAL_StatusTypeDef HAL_HRTIM_FaultCounterReset(HRTIM_HandleTypeDef *hhrtim,
  *                    @arg HRTIM_FAULTMODECTL_DISABLED: Fault(s) disabled
  * @retval None
  */
-void HAL_HRTIM_FaultModeCtl(HRTIM_HandleTypeDef *hhrtim, uint32_t Faults,
-			    uint32_t Enable)
+void HAL_HRTIM_FaultModeCtl(HRTIM_HandleTypeDef *hhrtim, uint32_t Faults, uint32_t Enable)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_FAULT(Faults));
 	assert_param(IS_HRTIM_FAULTMODECTL(Enable));
 
 	if ((Faults & HRTIM_FAULT_1) != (uint32_t)RESET) {
-		MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR1,
-			   HRTIM_FLTINR1_FLT1E, (Enable & HRTIM_FLTINR1_FLT1E));
+		MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR1, HRTIM_FLTINR1_FLT1E, (Enable & HRTIM_FLTINR1_FLT1E));
 	}
 	if ((Faults & HRTIM_FAULT_2) != (uint32_t)RESET) {
-		MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR1,
-			   HRTIM_FLTINR1_FLT2E,
-			   ((Enable << 8U) & HRTIM_FLTINR1_FLT2E));
+		MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR1, HRTIM_FLTINR1_FLT2E, ((Enable << 8U) & HRTIM_FLTINR1_FLT2E));
 	}
 	if ((Faults & HRTIM_FAULT_3) != (uint32_t)RESET) {
-		MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR1,
-			   HRTIM_FLTINR1_FLT3E,
-			   ((Enable << 16U) & HRTIM_FLTINR1_FLT3E));
+		MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR1, HRTIM_FLTINR1_FLT3E, ((Enable << 16U) & HRTIM_FLTINR1_FLT3E));
 	}
 	if ((Faults & HRTIM_FAULT_4) != (uint32_t)RESET) {
-		MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR1,
-			   HRTIM_FLTINR1_FLT4E,
-			   ((Enable << 24U) & HRTIM_FLTINR1_FLT4E));
+		MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR1, HRTIM_FLTINR1_FLT4E, ((Enable << 24U) & HRTIM_FLTINR1_FLT4E));
 	}
 	if ((Faults & HRTIM_FAULT_5) != (uint32_t)RESET) {
-		MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR2,
-			   HRTIM_FLTINR2_FLT5E, ((Enable)&HRTIM_FLTINR2_FLT5E));
+		MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR2, HRTIM_FLTINR2_FLT5E, ((Enable)&HRTIM_FLTINR2_FLT5E));
 	}
 	if ((Faults & HRTIM_FAULT_6) != (uint32_t)RESET) {
-		MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR2,
-			   HRTIM_FLTINR2_FLT6E,
-			   ((Enable << 8U) & HRTIM_FLTINR2_FLT6E));
+		MODIFY_REG(hhrtim->Instance->sCommonRegs.FLTINR2, HRTIM_FLTINR2_FLT6E, ((Enable << 8U) & HRTIM_FLTINR2_FLT6E));
 	}
 }
 
@@ -4533,9 +4198,7 @@ void HAL_HRTIM_FaultModeCtl(HRTIM_HandleTypeDef *hhrtim, uint32_t Faults,
  * @retval HAL status
  * @note This function must be called before starting the timer
  */
-HAL_StatusTypeDef
-HAL_HRTIM_ADCTriggerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t ADCTrigger,
-			   const HRTIM_ADCTriggerCfgTypeDef *pADCTriggerCfg)
+HAL_StatusTypeDef HAL_HRTIM_ADCTriggerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t ADCTrigger, const HRTIM_ADCTriggerCfgTypeDef *pADCTriggerCfg)
 {
 	uint32_t hrtim_cr1;
 	uint32_t hrtim_adcur;
@@ -4560,135 +4223,97 @@ HAL_HRTIM_ADCTriggerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t ADCTrigger,
 	switch (ADCTrigger) {
 		case HRTIM_ADCTRIGGER_1: {
 			hrtim_cr1 &= ~(HRTIM_CR1_ADC1USRC);
-			hrtim_cr1 |=
-			    (pADCTriggerCfg->UpdateSource & HRTIM_CR1_ADC1USRC);
+			hrtim_cr1 |= (pADCTriggerCfg->UpdateSource & HRTIM_CR1_ADC1USRC);
 
 			/* Set the ADC trigger 1 source */
-			hhrtim->Instance->sCommonRegs.ADC1R =
-			    pADCTriggerCfg->Trigger;
+			hhrtim->Instance->sCommonRegs.ADC1R = pADCTriggerCfg->Trigger;
 			break;
 		}
 
 		case HRTIM_ADCTRIGGER_2: {
 			hrtim_cr1 &= ~(HRTIM_CR1_ADC2USRC);
-			hrtim_cr1 |= ((pADCTriggerCfg->UpdateSource << 3U) &
-				      HRTIM_CR1_ADC2USRC);
+			hrtim_cr1 |= ((pADCTriggerCfg->UpdateSource << 3U) & HRTIM_CR1_ADC2USRC);
 
 			/* Set the ADC trigger 2 source */
-			hhrtim->Instance->sCommonRegs.ADC2R =
-			    pADCTriggerCfg->Trigger;
+			hhrtim->Instance->sCommonRegs.ADC2R = pADCTriggerCfg->Trigger;
 			break;
 		}
 
 		case HRTIM_ADCTRIGGER_3: {
 			hrtim_cr1 &= ~(HRTIM_CR1_ADC3USRC);
-			hrtim_cr1 |= ((pADCTriggerCfg->UpdateSource << 6U) &
-				      HRTIM_CR1_ADC3USRC);
+			hrtim_cr1 |= ((pADCTriggerCfg->UpdateSource << 6U) & HRTIM_CR1_ADC3USRC);
 
 			/* Set the ADC trigger 3 source */
-			hhrtim->Instance->sCommonRegs.ADC3R =
-			    pADCTriggerCfg->Trigger;
+			hhrtim->Instance->sCommonRegs.ADC3R = pADCTriggerCfg->Trigger;
 			break;
 		}
 
 		case HRTIM_ADCTRIGGER_4: {
 			hrtim_cr1 &= ~(HRTIM_CR1_ADC4USRC);
-			hrtim_cr1 |= ((pADCTriggerCfg->UpdateSource << 9U) &
-				      HRTIM_CR1_ADC4USRC);
+			hrtim_cr1 |= ((pADCTriggerCfg->UpdateSource << 9U) & HRTIM_CR1_ADC4USRC);
 
 			/* Set the ADC trigger 4 source */
-			hhrtim->Instance->sCommonRegs.ADC4R =
-			    pADCTriggerCfg->Trigger;
+			hhrtim->Instance->sCommonRegs.ADC4R = pADCTriggerCfg->Trigger;
 			break;
 		}
 
 		case HRTIM_ADCTRIGGER_5: {
 			hrtim_adcur &= ~(HRTIM_ADCUR_AD5USRC);
-			hrtim_adcur |= ((pADCTriggerCfg->UpdateSource >> 16U) &
-					HRTIM_ADCUR_AD5USRC);
+			hrtim_adcur |= ((pADCTriggerCfg->UpdateSource >> 16U) & HRTIM_ADCUR_AD5USRC);
 
 			/* Set the ADC trigger 5 source */
-			hhrtim->Instance->sCommonRegs.ADCER &=
-			    ~(HRTIM_ADCER_AD5TRG);
-			hhrtim->Instance->sCommonRegs.ADCER |=
-			    ((pADCTriggerCfg->Trigger
-			      << HRTIM_ADCER_AD5TRG_Pos) &
-			     HRTIM_ADCER_AD5TRG);
+			hhrtim->Instance->sCommonRegs.ADCER &= ~(HRTIM_ADCER_AD5TRG);
+			hhrtim->Instance->sCommonRegs.ADCER |= ((pADCTriggerCfg->Trigger << HRTIM_ADCER_AD5TRG_Pos) & HRTIM_ADCER_AD5TRG);
 			break;
 		}
 
 		case HRTIM_ADCTRIGGER_6: {
 			hrtim_adcur &= ~(HRTIM_ADCUR_AD6USRC);
-			hrtim_adcur |= ((pADCTriggerCfg->UpdateSource >> 12U) &
-					HRTIM_ADCUR_AD6USRC);
+			hrtim_adcur |= ((pADCTriggerCfg->UpdateSource >> 12U) & HRTIM_ADCUR_AD6USRC);
 
 			/* Set the ADC trigger 6 source */
-			hhrtim->Instance->sCommonRegs.ADCER &=
-			    ~(HRTIM_ADCER_AD6TRG);
-			hhrtim->Instance->sCommonRegs.ADCER |=
-			    ((pADCTriggerCfg->Trigger
-			      << HRTIM_ADCER_AD6TRG_Pos) &
-			     HRTIM_ADCER_AD6TRG);
+			hhrtim->Instance->sCommonRegs.ADCER &= ~(HRTIM_ADCER_AD6TRG);
+			hhrtim->Instance->sCommonRegs.ADCER |= ((pADCTriggerCfg->Trigger << HRTIM_ADCER_AD6TRG_Pos) & HRTIM_ADCER_AD6TRG);
 			break;
 		}
 
 		case HRTIM_ADCTRIGGER_7: {
 			hrtim_adcur &= ~(HRTIM_ADCUR_AD7USRC);
-			hrtim_adcur |= ((pADCTriggerCfg->UpdateSource >> 8U) &
-					HRTIM_ADCUR_AD7USRC);
+			hrtim_adcur |= ((pADCTriggerCfg->UpdateSource >> 8U) & HRTIM_ADCUR_AD7USRC);
 
 			/* Set the ADC trigger 7 source */
-			hhrtim->Instance->sCommonRegs.ADCER &=
-			    ~(HRTIM_ADCER_AD7TRG);
-			hhrtim->Instance->sCommonRegs.ADCER |=
-			    ((pADCTriggerCfg->Trigger
-			      << HRTIM_ADCER_AD7TRG_Pos) &
-			     HRTIM_ADCER_AD7TRG);
+			hhrtim->Instance->sCommonRegs.ADCER &= ~(HRTIM_ADCER_AD7TRG);
+			hhrtim->Instance->sCommonRegs.ADCER |= ((pADCTriggerCfg->Trigger << HRTIM_ADCER_AD7TRG_Pos) & HRTIM_ADCER_AD7TRG);
 			break;
 		}
 
 		case HRTIM_ADCTRIGGER_8: {
 			hrtim_adcur &= ~(HRTIM_ADCUR_AD8USRC);
-			hrtim_adcur |= ((pADCTriggerCfg->UpdateSource >> 4U) &
-					HRTIM_ADCUR_AD8USRC);
+			hrtim_adcur |= ((pADCTriggerCfg->UpdateSource >> 4U) & HRTIM_ADCUR_AD8USRC);
 
 			/* Set the ADC trigger 8 source */
-			hhrtim->Instance->sCommonRegs.ADCER &=
-			    ~(HRTIM_ADCER_AD8TRG);
-			hhrtim->Instance->sCommonRegs.ADCER |=
-			    ((pADCTriggerCfg->Trigger
-			      << HRTIM_ADCER_AD8TRG_Pos) &
-			     HRTIM_ADCER_AD8TRG);
+			hhrtim->Instance->sCommonRegs.ADCER &= ~(HRTIM_ADCER_AD8TRG);
+			hhrtim->Instance->sCommonRegs.ADCER |= ((pADCTriggerCfg->Trigger << HRTIM_ADCER_AD8TRG_Pos) & HRTIM_ADCER_AD8TRG);
 			break;
 		}
 
 		case HRTIM_ADCTRIGGER_9: {
 			hrtim_adcur &= ~(HRTIM_ADCUR_AD9USRC);
-			hrtim_adcur |= ((pADCTriggerCfg->UpdateSource) &
-					HRTIM_ADCUR_AD9USRC);
+			hrtim_adcur |= ((pADCTriggerCfg->UpdateSource) & HRTIM_ADCUR_AD9USRC);
 
 			/* Set the ADC trigger 9 source */
-			hhrtim->Instance->sCommonRegs.ADCER &=
-			    ~(HRTIM_ADCER_AD9TRG);
-			hhrtim->Instance->sCommonRegs.ADCER |=
-			    ((pADCTriggerCfg->Trigger
-			      << HRTIM_ADCER_AD9TRG_Pos) &
-			     HRTIM_ADCER_AD9TRG);
+			hhrtim->Instance->sCommonRegs.ADCER &= ~(HRTIM_ADCER_AD9TRG);
+			hhrtim->Instance->sCommonRegs.ADCER |= ((pADCTriggerCfg->Trigger << HRTIM_ADCER_AD9TRG_Pos) & HRTIM_ADCER_AD9TRG);
 			break;
 		}
 
 		case HRTIM_ADCTRIGGER_10: {
 			hrtim_adcur &= ~(HRTIM_ADCUR_AD10USRC);
-			hrtim_adcur |= ((pADCTriggerCfg->UpdateSource << 4U) &
-					HRTIM_ADCUR_AD10USRC);
+			hrtim_adcur |= ((pADCTriggerCfg->UpdateSource << 4U) & HRTIM_ADCUR_AD10USRC);
 
 			/* Set the ADC trigger 10 source */
-			hhrtim->Instance->sCommonRegs.ADCER &=
-			    ~(HRTIM_ADCER_AD10TRG);
-			hhrtim->Instance->sCommonRegs.ADCER |=
-			    ((pADCTriggerCfg->Trigger
-			      << HRTIM_ADCER_AD10TRG_Pos) &
-			     HRTIM_ADCER_AD10TRG);
+			hhrtim->Instance->sCommonRegs.ADCER &= ~(HRTIM_ADCER_AD10TRG);
+			hhrtim->Instance->sCommonRegs.ADCER |= ((pADCTriggerCfg->Trigger << HRTIM_ADCER_AD10TRG_Pos) & HRTIM_ADCER_AD10TRG);
 			break;
 		}
 
@@ -4741,9 +4366,7 @@ HAL_HRTIM_ADCTriggerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t ADCTrigger,
  * @retval HAL status
  * @note This function must be called before starting the timer
  */
-HAL_StatusTypeDef HAL_HRTIM_ADCPostScalerConfig(HRTIM_HandleTypeDef *hhrtim,
-						uint32_t ADCTrigger,
-						uint32_t Postscaler)
+HAL_StatusTypeDef HAL_HRTIM_ADCPostScalerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t ADCTrigger, uint32_t Postscaler)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_ADCTRIGGER(ADCTrigger));
@@ -4759,81 +4382,52 @@ HAL_StatusTypeDef HAL_HRTIM_ADCPostScalerConfig(HRTIM_HandleTypeDef *hhrtim,
 
 	switch (ADCTrigger) {
 		case HRTIM_ADCTRIGGER_1: {
-			MODIFY_REG(hhrtim->Instance->sCommonRegs.ADCPS1,
-				   HRTIM_ADCPS1_AD1PSC,
-				   (Postscaler & HRTIM_ADCPS1_AD1PSC));
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.ADCPS1, HRTIM_ADCPS1_AD1PSC, (Postscaler & HRTIM_ADCPS1_AD1PSC));
 			break;
 		}
 
 		case HRTIM_ADCTRIGGER_2: {
-			MODIFY_REG(hhrtim->Instance->sCommonRegs.ADCPS1,
-				   HRTIM_ADCPS1_AD2PSC,
-				   ((Postscaler << HRTIM_ADCPS1_AD2PSC_Pos) &
-				    HRTIM_ADCPS1_AD2PSC));
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.ADCPS1, HRTIM_ADCPS1_AD2PSC, ((Postscaler << HRTIM_ADCPS1_AD2PSC_Pos) & HRTIM_ADCPS1_AD2PSC));
 			break;
 		}
 
 		case HRTIM_ADCTRIGGER_3: {
-			MODIFY_REG(hhrtim->Instance->sCommonRegs.ADCPS1,
-				   HRTIM_ADCPS1_AD3PSC,
-				   ((Postscaler << HRTIM_ADCPS1_AD3PSC_Pos) &
-				    HRTIM_ADCPS1_AD3PSC));
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.ADCPS1, HRTIM_ADCPS1_AD3PSC, ((Postscaler << HRTIM_ADCPS1_AD3PSC_Pos) & HRTIM_ADCPS1_AD3PSC));
 			break;
 		}
 
 		case HRTIM_ADCTRIGGER_4: {
-			MODIFY_REG(hhrtim->Instance->sCommonRegs.ADCPS1,
-				   HRTIM_ADCPS1_AD4PSC,
-				   ((Postscaler << HRTIM_ADCPS1_AD4PSC_Pos) &
-				    HRTIM_ADCPS1_AD4PSC));
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.ADCPS1, HRTIM_ADCPS1_AD4PSC, ((Postscaler << HRTIM_ADCPS1_AD4PSC_Pos) & HRTIM_ADCPS1_AD4PSC));
 			break;
 		}
 
 		case HRTIM_ADCTRIGGER_5: {
-			MODIFY_REG(hhrtim->Instance->sCommonRegs.ADCPS1,
-				   HRTIM_ADCPS1_AD5PSC,
-				   ((Postscaler << HRTIM_ADCPS1_AD5PSC_Pos) &
-				    HRTIM_ADCPS1_AD5PSC));
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.ADCPS1, HRTIM_ADCPS1_AD5PSC, ((Postscaler << HRTIM_ADCPS1_AD5PSC_Pos) & HRTIM_ADCPS1_AD5PSC));
 			break;
 		}
 
 		case HRTIM_ADCTRIGGER_6: {
-			MODIFY_REG(hhrtim->Instance->sCommonRegs.ADCPS2,
-				   HRTIM_ADCPS2_AD6PSC,
-				   ((Postscaler << HRTIM_ADCPS2_AD6PSC_Pos) &
-				    HRTIM_ADCPS2_AD6PSC));
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.ADCPS2, HRTIM_ADCPS2_AD6PSC, ((Postscaler << HRTIM_ADCPS2_AD6PSC_Pos) & HRTIM_ADCPS2_AD6PSC));
 			break;
 		}
 
 		case HRTIM_ADCTRIGGER_7: {
-			MODIFY_REG(hhrtim->Instance->sCommonRegs.ADCPS2,
-				   HRTIM_ADCPS2_AD7PSC,
-				   ((Postscaler << HRTIM_ADCPS2_AD7PSC_Pos) &
-				    HRTIM_ADCPS2_AD7PSC));
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.ADCPS2, HRTIM_ADCPS2_AD7PSC, ((Postscaler << HRTIM_ADCPS2_AD7PSC_Pos) & HRTIM_ADCPS2_AD7PSC));
 			break;
 		}
 
 		case HRTIM_ADCTRIGGER_8: {
-			MODIFY_REG(hhrtim->Instance->sCommonRegs.ADCPS2,
-				   HRTIM_ADCPS2_AD8PSC,
-				   ((Postscaler << HRTIM_ADCPS2_AD8PSC_Pos) &
-				    HRTIM_ADCPS2_AD8PSC));
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.ADCPS2, HRTIM_ADCPS2_AD8PSC, ((Postscaler << HRTIM_ADCPS2_AD8PSC_Pos) & HRTIM_ADCPS2_AD8PSC));
 			break;
 		}
 
 		case HRTIM_ADCTRIGGER_9: {
-			MODIFY_REG(hhrtim->Instance->sCommonRegs.ADCPS2,
-				   HRTIM_ADCPS2_AD9PSC,
-				   ((Postscaler << HRTIM_ADCPS2_AD9PSC_Pos) &
-				    HRTIM_ADCPS2_AD9PSC));
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.ADCPS2, HRTIM_ADCPS2_AD9PSC, ((Postscaler << HRTIM_ADCPS2_AD9PSC_Pos) & HRTIM_ADCPS2_AD9PSC));
 			break;
 		}
 
 		case HRTIM_ADCTRIGGER_10: {
-			MODIFY_REG(hhrtim->Instance->sCommonRegs.ADCPS2,
-				   HRTIM_ADCPS2_AD10PSC,
-				   ((Postscaler << HRTIM_ADCPS2_AD10PSC_Pos) &
-				    HRTIM_ADCPS2_AD10PSC));
+			MODIFY_REG(hhrtim->Instance->sCommonRegs.ADCPS2, HRTIM_ADCPS2_AD10PSC, ((Postscaler << HRTIM_ADCPS2_AD10PSC_Pos) & HRTIM_ADCPS2_AD10PSC));
 			break;
 		}
 
@@ -4885,9 +4479,7 @@ HAL_StatusTypeDef HAL_HRTIM_ADCPostScalerConfig(HRTIM_HandleTypeDef *hhrtim,
  * HRTIM_TIM_ROM_VALLEY
  * @note This function must be called before starting the timer
  */
-HAL_StatusTypeDef HAL_HRTIM_RollOverModeConfig(HRTIM_HandleTypeDef *hhrtim,
-					       uint32_t TimerIdx,
-					       uint32_t RollOverCfg)
+HAL_StatusTypeDef HAL_HRTIM_RollOverModeConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t RollOverCfg)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_TIMING_UNIT(TimerIdx));
@@ -4973,9 +4565,7 @@ functions
  * @retval HAL status
  * @note This function must be called before starting the timer
  */
-HAL_StatusTypeDef
-HAL_HRTIM_WaveformTimerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
-			      const HRTIM_TimerCfgTypeDef *pTimerCfg)
+HAL_StatusTypeDef HAL_HRTIM_WaveformTimerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_TimerCfgTypeDef *pTimerCfg)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_TIMERINDEX(TimerIdx));
@@ -5001,8 +4591,7 @@ HAL_HRTIM_WaveformTimerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
 
 	if (TimerIdx == HRTIM_TIMERINDEX_MASTER) {
 		/* Check parameters */
-		assert_param(
-		    IS_HRTIM_UPDATEGATING_MASTER(pTimerCfg->UpdateGating));
+		assert_param(IS_HRTIM_UPDATEGATING_MASTER(pTimerCfg->UpdateGating));
 		assert_param(IS_HRTIM_MASTER_IT(pTimerCfg->InterruptRequests));
 		assert_param(IS_HRTIM_MASTER_DMA(pTimerCfg->DMARequests));
 
@@ -5010,21 +4599,16 @@ HAL_HRTIM_WaveformTimerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
 		HRTIM_MasterWaveform_Config(hhrtim, pTimerCfg);
 	} else {
 		/* Check parameters */
-		assert_param(
-		    IS_HRTIM_UPDATEGATING_TIM(pTimerCfg->UpdateGating));
+		assert_param(IS_HRTIM_UPDATEGATING_TIM(pTimerCfg->UpdateGating));
 		assert_param(IS_HRTIM_TIM_IT(pTimerCfg->InterruptRequests));
 		assert_param(IS_HRTIM_TIM_DMA(pTimerCfg->DMARequests));
 		assert_param(IS_HRTIM_TIMPUSHPULLMODE(pTimerCfg->PushPull));
 		assert_param(IS_HRTIM_TIMFAULTENABLE(pTimerCfg->FaultEnable));
 		assert_param(IS_HRTIM_TIMFAULTLOCK(pTimerCfg->FaultLock));
-		assert_param(IS_HRTIM_TIMDEADTIMEINSERTION(
-		    pTimerCfg->PushPull, pTimerCfg->DeadTimeInsertion));
-		assert_param(IS_HRTIM_TIMDELAYEDPROTECTION(
-		    pTimerCfg->PushPull, pTimerCfg->DelayedProtectionMode));
-		assert_param(IS_HRTIM_OUTPUTBALANCEDIDLE(
-		    pTimerCfg->BalancedIdleAutomaticResume));
-		assert_param(
-		    IS_HRTIM_TIMUPDATETRIGGER(pTimerCfg->UpdateTrigger));
+		assert_param(IS_HRTIM_TIMDEADTIMEINSERTION(pTimerCfg->PushPull, pTimerCfg->DeadTimeInsertion));
+		assert_param(IS_HRTIM_TIMDELAYEDPROTECTION(pTimerCfg->PushPull, pTimerCfg->DelayedProtectionMode));
+		assert_param(IS_HRTIM_OUTPUTBALANCEDIDLE(pTimerCfg->BalancedIdleAutomaticResume));
+		assert_param(IS_HRTIM_TIMUPDATETRIGGER(pTimerCfg->UpdateTrigger));
 		assert_param(IS_HRTIM_TIMRESETTRIGGER(pTimerCfg->ResetTrigger));
 		assert_param(IS_HRTIM_TIMUPDATEONRESET(pTimerCfg->ResetUpdate));
 		assert_param(IS_HRTIM_TIMSYNCUPDATE(pTimerCfg->ReSyncUpdate));
@@ -5034,8 +4618,7 @@ HAL_HRTIM_WaveformTimerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
 	}
 
 	/* Update timer parameters */
-	hhrtim->TimerParam[TimerIdx].InterruptRequests =
-	    pTimerCfg->InterruptRequests;
+	hhrtim->TimerParam[TimerIdx].InterruptRequests = pTimerCfg->InterruptRequests;
 	hhrtim->TimerParam[TimerIdx].DMARequests = pTimerCfg->DMARequests;
 	hhrtim->TimerParam[TimerIdx].DMASrcAddress = pTimerCfg->DMASrcAddress;
 	hhrtim->TimerParam[TimerIdx].DMADstAddress = pTimerCfg->DMADstAddress;
@@ -5045,11 +4628,8 @@ HAL_HRTIM_WaveformTimerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
 	HRTIM_ForceRegistersUpdate(hhrtim, TimerIdx);
 
 	/* Configure slave timer update re-synchronization */
-	if ((TimerIdx != HRTIM_TIMERINDEX_MASTER) &&
-	    (pTimerCfg->UpdateGating == HRTIM_UPDATEGATING_INDEPENDENT)) {
-		MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxCR,
-			   HRTIM_TIMCR_RSYNCU_Msk,
-			   pTimerCfg->ReSyncUpdate << HRTIM_TIMCR_RSYNCU_Pos);
+	if ((TimerIdx != HRTIM_TIMERINDEX_MASTER) && (pTimerCfg->UpdateGating == HRTIM_UPDATEGATING_INDEPENDENT)) {
+		MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxCR, HRTIM_TIMCR_RSYNCU_Msk, pTimerCfg->ReSyncUpdate << HRTIM_TIMCR_RSYNCU_Pos);
 	}
 
 	hhrtim->State = HAL_HRTIM_STATE_READY;
@@ -5077,9 +4657,7 @@ HAL_HRTIM_WaveformTimerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
  * @retval HAL status
  * @note This function must be called before starting the timer
  */
-HAL_StatusTypeDef
-HAL_HRTIM_WaveformTimerControl(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
-			       const HRTIM_TimerCtlTypeDef *pTimerCtl)
+HAL_StatusTypeDef HAL_HRTIM_WaveformTimerControl(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_TimerCtlTypeDef *pTimerCtl)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_TIMERINDEX(TimerIdx));
@@ -5134,10 +4712,7 @@ HAL_HRTIM_WaveformTimerControl(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
  * @retval HAL status
  * @note This function must be called before starting the timer
  */
-HAL_StatusTypeDef
-HAL_HRTIM_TimerDualChannelDacConfig(HRTIM_HandleTypeDef *hhrtim,
-				    uint32_t TimerIdx,
-				    const HRTIM_TimerCtlTypeDef *pTimerCtl)
+HAL_StatusTypeDef HAL_HRTIM_TimerDualChannelDacConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_TimerCtlTypeDef *pTimerCtl)
 {
 	assert_param(IS_HRTIM_DUALDAC_RESET(pTimerCtl->DualChannelDacReset));
 	assert_param(IS_HRTIM_DUALDAC_STEP(pTimerCtl->DualChannelDacStep));
@@ -5152,16 +4727,10 @@ HAL_HRTIM_TimerDualChannelDacConfig(HRTIM_HandleTypeDef *hhrtim,
 
 	hhrtim->State = HAL_HRTIM_STATE_BUSY;
 	/* clear DCDS,DCDR,DCDE bits */
-	CLEAR_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxCR2,
-		  (HRTIM_TIMER_DCDE_ENABLED | HRTIM_TIMER_DCDS_OUT1RST |
-		   HRTIM_TIMER_DCDR_OUT1SET));
+	CLEAR_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxCR2, (HRTIM_TIMER_DCDE_ENABLED | HRTIM_TIMER_DCDS_OUT1RST | HRTIM_TIMER_DCDR_OUT1SET));
 
-	MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxCR2,
-		   (HRTIM_TIMER_DCDE_ENABLED | HRTIM_TIMER_DCDS_OUT1RST |
-		    HRTIM_TIMER_DCDR_OUT1SET),
-		   (pTimerCtl->DualChannelDacReset |
-		    pTimerCtl->DualChannelDacStep |
-		    pTimerCtl->DualChannelDacEnable));
+	MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxCR2, (HRTIM_TIMER_DCDE_ENABLED | HRTIM_TIMER_DCDS_OUT1RST | HRTIM_TIMER_DCDR_OUT1SET),
+		   (pTimerCtl->DualChannelDacReset | pTimerCtl->DualChannelDacStep | pTimerCtl->DualChannelDacEnable));
 
 	hhrtim->State = HAL_HRTIM_STATE_READY;
 
@@ -5200,15 +4769,12 @@ HAL_HRTIM_TimerDualChannelDacConfig(HRTIM_HandleTypeDef *hhrtim,
  * @note This function must be called before starting the timer
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_TimerEventFilteringConfig(
-    HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t Event,
-    const HRTIM_TimerEventFilteringCfgTypeDef *pTimerEventFilteringCfg)
+HAL_StatusTypeDef HAL_HRTIM_TimerEventFilteringConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t Event, const HRTIM_TimerEventFilteringCfgTypeDef *pTimerEventFilteringCfg)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_TIMING_UNIT(TimerIdx));
 	assert_param(IS_HRTIM_EVENT(Event));
-	assert_param(
-	    IS_HRTIM_TIMEVENTFILTER(TimerIdx, pTimerEventFilteringCfg->Filter));
+	assert_param(IS_HRTIM_TIMEVENTFILTER(TimerIdx, pTimerEventFilteringCfg->Filter));
 
 	assert_param(IS_HRTIM_TIMEVENTLATCH(pTimerEventFilteringCfg->Latch));
 
@@ -5224,108 +4790,66 @@ HAL_StatusTypeDef HAL_HRTIM_TimerEventFilteringConfig(
 	/* Configure timer event filtering capabilities */
 	switch (Event) {
 		case HRTIM_EVENT_NONE: {
-			CLEAR_REG(
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR1);
-			CLEAR_REG(
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR2);
+			CLEAR_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR1);
+			CLEAR_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR2);
 			break;
 		}
 
 		case HRTIM_EVENT_1: {
-			MODIFY_REG(
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR1,
-			    (HRTIM_EEFR1_EE1FLTR | HRTIM_EEFR1_EE1LTCH),
-			    (pTimerEventFilteringCfg->Filter |
-			     pTimerEventFilteringCfg->Latch));
+			MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR1, (HRTIM_EEFR1_EE1FLTR | HRTIM_EEFR1_EE1LTCH), (pTimerEventFilteringCfg->Filter | pTimerEventFilteringCfg->Latch));
 			break;
 		}
 
 		case HRTIM_EVENT_2: {
-			MODIFY_REG(
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR1,
-			    (HRTIM_EEFR1_EE2FLTR | HRTIM_EEFR1_EE2LTCH),
-			    ((pTimerEventFilteringCfg->Filter |
-			      pTimerEventFilteringCfg->Latch)
-			     << 6U));
+			MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR1, (HRTIM_EEFR1_EE2FLTR | HRTIM_EEFR1_EE2LTCH),
+				   ((pTimerEventFilteringCfg->Filter | pTimerEventFilteringCfg->Latch) << 6U));
 			break;
 		}
 
 		case HRTIM_EVENT_3: {
-			MODIFY_REG(
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR1,
-			    (HRTIM_EEFR1_EE3FLTR | HRTIM_EEFR1_EE3LTCH),
-			    ((pTimerEventFilteringCfg->Filter |
-			      pTimerEventFilteringCfg->Latch)
-			     << 12U));
+			MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR1, (HRTIM_EEFR1_EE3FLTR | HRTIM_EEFR1_EE3LTCH),
+				   ((pTimerEventFilteringCfg->Filter | pTimerEventFilteringCfg->Latch) << 12U));
 			break;
 		}
 
 		case HRTIM_EVENT_4: {
-			MODIFY_REG(
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR1,
-			    (HRTIM_EEFR1_EE4FLTR | HRTIM_EEFR1_EE4LTCH),
-			    ((pTimerEventFilteringCfg->Filter |
-			      pTimerEventFilteringCfg->Latch)
-			     << 18U));
+			MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR1, (HRTIM_EEFR1_EE4FLTR | HRTIM_EEFR1_EE4LTCH),
+				   ((pTimerEventFilteringCfg->Filter | pTimerEventFilteringCfg->Latch) << 18U));
 			break;
 		}
 
 		case HRTIM_EVENT_5: {
-			MODIFY_REG(
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR1,
-			    (HRTIM_EEFR1_EE5FLTR | HRTIM_EEFR1_EE5LTCH),
-			    ((pTimerEventFilteringCfg->Filter |
-			      pTimerEventFilteringCfg->Latch)
-			     << 24U));
+			MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR1, (HRTIM_EEFR1_EE5FLTR | HRTIM_EEFR1_EE5LTCH),
+				   ((pTimerEventFilteringCfg->Filter | pTimerEventFilteringCfg->Latch) << 24U));
 			break;
 		}
 
 		case HRTIM_EVENT_6: {
-			MODIFY_REG(
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR2,
-			    (HRTIM_EEFR2_EE6FLTR | HRTIM_EEFR2_EE6LTCH),
-			    (pTimerEventFilteringCfg->Filter |
-			     pTimerEventFilteringCfg->Latch));
+			MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR2, (HRTIM_EEFR2_EE6FLTR | HRTIM_EEFR2_EE6LTCH), (pTimerEventFilteringCfg->Filter | pTimerEventFilteringCfg->Latch));
 			break;
 		}
 
 		case HRTIM_EVENT_7: {
-			MODIFY_REG(
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR2,
-			    (HRTIM_EEFR2_EE7FLTR | HRTIM_EEFR2_EE7LTCH),
-			    ((pTimerEventFilteringCfg->Filter |
-			      pTimerEventFilteringCfg->Latch)
-			     << 6U));
+			MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR2, (HRTIM_EEFR2_EE7FLTR | HRTIM_EEFR2_EE7LTCH),
+				   ((pTimerEventFilteringCfg->Filter | pTimerEventFilteringCfg->Latch) << 6U));
 			break;
 		}
 
 		case HRTIM_EVENT_8: {
-			MODIFY_REG(
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR2,
-			    (HRTIM_EEFR2_EE8FLTR | HRTIM_EEFR2_EE8LTCH),
-			    ((pTimerEventFilteringCfg->Filter |
-			      pTimerEventFilteringCfg->Latch)
-			     << 12U));
+			MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR2, (HRTIM_EEFR2_EE8FLTR | HRTIM_EEFR2_EE8LTCH),
+				   ((pTimerEventFilteringCfg->Filter | pTimerEventFilteringCfg->Latch) << 12U));
 			break;
 		}
 
 		case HRTIM_EVENT_9: {
-			MODIFY_REG(
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR2,
-			    (HRTIM_EEFR2_EE9FLTR | HRTIM_EEFR2_EE9LTCH),
-			    ((pTimerEventFilteringCfg->Filter |
-			      pTimerEventFilteringCfg->Latch)
-			     << 18U));
+			MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR2, (HRTIM_EEFR2_EE9FLTR | HRTIM_EEFR2_EE9LTCH),
+				   ((pTimerEventFilteringCfg->Filter | pTimerEventFilteringCfg->Latch) << 18U));
 			break;
 		}
 
 		case HRTIM_EVENT_10: {
-			MODIFY_REG(
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR2,
-			    (HRTIM_EEFR2_EE10FLTR | HRTIM_EEFR2_EE10LTCH),
-			    ((pTimerEventFilteringCfg->Filter |
-			      pTimerEventFilteringCfg->Latch)
-			     << 24U));
+			MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR2, (HRTIM_EEFR2_EE10FLTR | HRTIM_EEFR2_EE10LTCH),
+				   ((pTimerEventFilteringCfg->Filter | pTimerEventFilteringCfg->Latch) << 24U));
 			break;
 		}
 
@@ -5373,19 +4897,15 @@ HAL_StatusTypeDef HAL_HRTIM_TimerEventFilteringConfig(
  * @note This function must be called before starting the timer
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterConfig(
-    HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t EventCounter,
-    const HRTIM_ExternalEventCfgTypeDef *pTimerExternalEventCfg)
+HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t EventCounter, const HRTIM_ExternalEventCfgTypeDef *pTimerExternalEventCfg)
 {
 	uint32_t hrtim_eefr3;
 
 	/* Check parameters */
 	assert_param(IS_HRTIM_TIMING_UNIT(TimerIdx));
 	assert_param(IS_HRTIM_TIMEEVENT(EventCounter));
-	assert_param(
-	    IS_HRTIM_TIMEEVENT_RESETMODE(pTimerExternalEventCfg->ResetMode));
-	assert_param(
-	    IS_HRTIM_TIMEEVENT_COUNTER(pTimerExternalEventCfg->Counter));
+	assert_param(IS_HRTIM_TIMEEVENT_RESETMODE(pTimerExternalEventCfg->ResetMode));
+	assert_param(IS_HRTIM_TIMEEVENT_COUNTER(pTimerExternalEventCfg->Counter));
 	assert_param(IS_HRTIM_EVENT(pTimerExternalEventCfg->Source));
 
 	if (hhrtim->State == HAL_HRTIM_STATE_BUSY) {
@@ -5400,50 +4920,32 @@ HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterConfig(
 	if ((EventCounter & HRTIM_EVENTCOUNTER_A) != 0U) {
 		if (pTimerExternalEventCfg->Source == HRTIM_EVENT_NONE) {
 			/* reset External EventCounter A */
-			WRITE_REG(
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR3,
-			    0xFFFF0000U);
+			WRITE_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR3, 0xFFFF0000U);
 		} else {
 			/* Set timer External EventCounter A configuration */
-			hrtim_eefr3 = (pTimerExternalEventCfg->ResetMode)
-				      << HRTIM_EEFR3_EEVARSTM_Pos;
-			hrtim_eefr3 |= ((pTimerExternalEventCfg->Source - 1U))
-				       << HRTIM_EEFR3_EEVASEL_Pos;
-			hrtim_eefr3 |= (pTimerExternalEventCfg->Counter)
-				       << HRTIM_EEFR3_EEVACNT_Pos;
+			hrtim_eefr3 = (pTimerExternalEventCfg->ResetMode) << HRTIM_EEFR3_EEVARSTM_Pos;
+			hrtim_eefr3 |= ((pTimerExternalEventCfg->Source - 1U)) << HRTIM_EEFR3_EEVASEL_Pos;
+			hrtim_eefr3 |= (pTimerExternalEventCfg->Counter) << HRTIM_EEFR3_EEVACNT_Pos;
 			/* do not enable, use HAL_HRTIM_TimerExternalEventEnable
 			 * function */
 
-			MODIFY_REG(
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR3,
-			    (HRTIM_EEFR3_EEVARSTM | HRTIM_EEFR3_EEVASEL |
-			     HRTIM_EEFR3_EEVACNT),
-			    hrtim_eefr3);
+			MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR3, (HRTIM_EEFR3_EEVARSTM | HRTIM_EEFR3_EEVASEL | HRTIM_EEFR3_EEVACNT), hrtim_eefr3);
 		}
 	}
 
 	if ((EventCounter & HRTIM_EVENTCOUNTER_B) != 0U) {
 		if (pTimerExternalEventCfg->Source == HRTIM_EVENT_NONE) {
 			/* reset External EventCounter B */
-			WRITE_REG(
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR3,
-			    0x0000FFFFU);
+			WRITE_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR3, 0x0000FFFFU);
 		} else {
 			/* Set timer External EventCounter B configuration */
-			hrtim_eefr3 = (pTimerExternalEventCfg->ResetMode)
-				      << HRTIM_EEFR3_EEVBRSTM_Pos;
-			hrtim_eefr3 |= ((pTimerExternalEventCfg->Source - 1U))
-				       << HRTIM_EEFR3_EEVBSEL_Pos;
-			hrtim_eefr3 |= (pTimerExternalEventCfg->Counter)
-				       << HRTIM_EEFR3_EEVBCNT_Pos;
+			hrtim_eefr3 = (pTimerExternalEventCfg->ResetMode) << HRTIM_EEFR3_EEVBRSTM_Pos;
+			hrtim_eefr3 |= ((pTimerExternalEventCfg->Source - 1U)) << HRTIM_EEFR3_EEVBSEL_Pos;
+			hrtim_eefr3 |= (pTimerExternalEventCfg->Counter) << HRTIM_EEFR3_EEVBCNT_Pos;
 			/* do not enable, use HAL_HRTIM_TimerExternalEventEnable
 			 * function */
 
-			MODIFY_REG(
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR3,
-			    (HRTIM_EEFR3_EEVBRSTM | HRTIM_EEFR3_EEVBSEL |
-			     HRTIM_EEFR3_EEVBCNT),
-			    hrtim_eefr3);
+			MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR3, (HRTIM_EEFR3_EEVBRSTM | HRTIM_EEFR3_EEVBSEL | HRTIM_EEFR3_EEVBCNT), hrtim_eefr3);
 		}
 	}
 	hhrtim->State = HAL_HRTIM_STATE_READY;
@@ -5472,9 +4974,7 @@ HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterConfig(
  * @note This function must be called before starting the timer
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterEnable(HRTIM_HandleTypeDef *hhrtim,
-						  uint32_t TimerIdx,
-						  uint32_t EventCounter)
+HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterEnable(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t EventCounter)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_TIMING_UNIT(TimerIdx));
@@ -5490,12 +4990,10 @@ HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterEnable(HRTIM_HandleTypeDef *hhrtim,
 	hhrtim->State = HAL_HRTIM_STATE_BUSY;
 
 	if ((EventCounter & HRTIM_EVENTCOUNTER_A) != 0U) {
-		SET_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR3,
-			HRTIM_EEFR3_EEVACE);
+		SET_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR3, HRTIM_EEFR3_EEVACE);
 	}
 	if ((EventCounter & HRTIM_EVENTCOUNTER_B) != 0U) {
-		SET_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR3,
-			HRTIM_EEFR3_EEVBCE);
+		SET_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR3, HRTIM_EEFR3_EEVBCE);
 	}
 
 	hhrtim->State = HAL_HRTIM_STATE_READY;
@@ -5523,9 +5021,7 @@ HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterEnable(HRTIM_HandleTypeDef *hhrtim,
  *                    @arg HRTIM_EVENTCOUNTER_B
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterDisable(HRTIM_HandleTypeDef *hhrtim,
-						   uint32_t TimerIdx,
-						   uint32_t EventCounter)
+HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterDisable(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t EventCounter)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_TIMING_UNIT(TimerIdx));
@@ -5541,13 +5037,11 @@ HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterDisable(HRTIM_HandleTypeDef *hhrtim,
 	hhrtim->State = HAL_HRTIM_STATE_BUSY;
 
 	if ((EventCounter & HRTIM_EVENTCOUNTER_A) != 0U) {
-		CLEAR_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR3,
-			  HRTIM_EEFR3_EEVACE);
+		CLEAR_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR3, HRTIM_EEFR3_EEVACE);
 	}
 
 	if ((EventCounter & HRTIM_EVENTCOUNTER_B) != 0U) {
-		CLEAR_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR3,
-			  HRTIM_EEFR3_EEVBCE);
+		CLEAR_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR3, HRTIM_EEFR3_EEVBCE);
 	}
 
 	hhrtim->State = HAL_HRTIM_STATE_READY;
@@ -5576,9 +5070,7 @@ HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterDisable(HRTIM_HandleTypeDef *hhrtim,
  * @note This function must be called before starting the timer
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterReset(HRTIM_HandleTypeDef *hhrtim,
-						 uint32_t TimerIdx,
-						 uint32_t EventCounter)
+HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterReset(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t EventCounter)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_TIMING_UNIT(TimerIdx));
@@ -5594,12 +5086,10 @@ HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterReset(HRTIM_HandleTypeDef *hhrtim,
 	hhrtim->State = HAL_HRTIM_STATE_BUSY;
 
 	if ((EventCounter & HRTIM_EVENTCOUNTER_A) != 0U) {
-		SET_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR3,
-			HRTIM_EEFR3_EEVACRES);
+		SET_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR3, HRTIM_EEFR3_EEVACRES);
 	}
 	if ((EventCounter & HRTIM_EVENTCOUNTER_B) != 0U) {
-		SET_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR3,
-			HRTIM_EEFR3_EEVBCRES);
+		SET_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx].EEFxR3, HRTIM_EEFR3_EEVBCRES);
 	}
 
 	hhrtim->State = HAL_HRTIM_STATE_READY;
@@ -5626,26 +5116,19 @@ HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterReset(HRTIM_HandleTypeDef *hhrtim,
  * @retval HAL status
  * @note This function must be called before starting the timer
  */
-HAL_StatusTypeDef
-HAL_HRTIM_DeadTimeConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
-			 const HRTIM_DeadTimeCfgTypeDef *pDeadTimeCfg)
+HAL_StatusTypeDef HAL_HRTIM_DeadTimeConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_DeadTimeCfgTypeDef *pDeadTimeCfg)
 {
 	uint32_t hrtim_dtr;
 
 	/* Check parameters */
 	assert_param(IS_HRTIM_TIMING_UNIT(TimerIdx));
-	assert_param(
-	    IS_HRTIM_TIMDEADTIME_PRESCALERRATIO(pDeadTimeCfg->Prescaler));
+	assert_param(IS_HRTIM_TIMDEADTIME_PRESCALERRATIO(pDeadTimeCfg->Prescaler));
 	assert_param(IS_HRTIM_TIMDEADTIME_RISINGSIGN(pDeadTimeCfg->RisingSign));
 	assert_param(IS_HRTIM_TIMDEADTIME_RISINGLOCK(pDeadTimeCfg->RisingLock));
-	assert_param(
-	    IS_HRTIM_TIMDEADTIME_RISINGSIGNLOCK(pDeadTimeCfg->RisingSignLock));
-	assert_param(
-	    IS_HRTIM_TIMDEADTIME_FALLINGSIGN(pDeadTimeCfg->FallingSign));
-	assert_param(
-	    IS_HRTIM_TIMDEADTIME_FALLINGLOCK(pDeadTimeCfg->FallingLock));
-	assert_param(IS_HRTIM_TIMDEADTIME_FALLINGSIGNLOCK(
-	    pDeadTimeCfg->FallingSignLock));
+	assert_param(IS_HRTIM_TIMDEADTIME_RISINGSIGNLOCK(pDeadTimeCfg->RisingSignLock));
+	assert_param(IS_HRTIM_TIMDEADTIME_FALLINGSIGN(pDeadTimeCfg->FallingSign));
+	assert_param(IS_HRTIM_TIMDEADTIME_FALLINGLOCK(pDeadTimeCfg->FallingLock));
+	assert_param(IS_HRTIM_TIMDEADTIME_FALLINGSIGNLOCK(pDeadTimeCfg->FallingSignLock));
 
 	if (hhrtim->State == HAL_HRTIM_STATE_BUSY) {
 		return HAL_BUSY;
@@ -5669,10 +5152,7 @@ HAL_HRTIM_DeadTimeConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
 
 	/* Update the HRTIM registers */
 	MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].DTxR,
-		   (HRTIM_DTR_DTR | HRTIM_DTR_SDTR | HRTIM_DTR_DTPRSC |
-		    HRTIM_DTR_DTRSLK | HRTIM_DTR_DTRLK | HRTIM_DTR_DTF |
-		    HRTIM_DTR_SDTF | HRTIM_DTR_DTFSLK | HRTIM_DTR_DTFLK),
-		   hrtim_dtr);
+		   (HRTIM_DTR_DTR | HRTIM_DTR_SDTR | HRTIM_DTR_DTPRSC | HRTIM_DTR_DTRSLK | HRTIM_DTR_DTRLK | HRTIM_DTR_DTF | HRTIM_DTR_SDTF | HRTIM_DTR_DTFSLK | HRTIM_DTR_DTFLK), hrtim_dtr);
 
 	hhrtim->State = HAL_HRTIM_STATE_READY;
 
@@ -5697,16 +5177,13 @@ HAL_HRTIM_DeadTimeConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
  * @retval HAL status
  * @note This function must be called before configuring the timer output(s)
  */
-HAL_StatusTypeDef
-HAL_HRTIM_ChopperModeConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
-			    const HRTIM_ChopperModeCfgTypeDef *pChopperModeCfg)
+HAL_StatusTypeDef HAL_HRTIM_ChopperModeConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_ChopperModeCfgTypeDef *pChopperModeCfg)
 {
 	uint32_t hrtim_chpr;
 
 	/* Check parameters */
 	assert_param(IS_HRTIM_TIMING_UNIT(TimerIdx));
-	assert_param(
-	    IS_HRTIM_CHOPPER_PRESCALERRATIO(pChopperModeCfg->CarrierFreq));
+	assert_param(IS_HRTIM_CHOPPER_PRESCALERRATIO(pChopperModeCfg->CarrierFreq));
 	assert_param(IS_HRTIM_CHOPPER_DUTYCYCLE(pChopperModeCfg->DutyCycle));
 	assert_param(IS_HRTIM_CHOPPER_PULSEWIDTH(pChopperModeCfg->StartPulse));
 
@@ -5725,9 +5202,7 @@ HAL_HRTIM_ChopperModeConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
 	hrtim_chpr |= (pChopperModeCfg->StartPulse & HRTIM_CHPR_STRPW);
 
 	/* Update the HRTIM registers */
-	MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].CHPxR,
-		   (HRTIM_CHPR_CARFRQ | HRTIM_CHPR_CARDTY | HRTIM_CHPR_STRPW),
-		   hrtim_chpr);
+	MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].CHPxR, (HRTIM_CHPR_CARFRQ | HRTIM_CHPR_CARDTY | HRTIM_CHPR_STRPW), hrtim_chpr);
 
 	hhrtim->State = HAL_HRTIM_STATE_READY;
 
@@ -5776,9 +5251,7 @@ HAL_HRTIM_ChopperModeConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
  * @retval HAL status
  * @note This function must be called before starting the timer
  */
-HAL_StatusTypeDef HAL_HRTIM_BurstDMAConfig(HRTIM_HandleTypeDef *hhrtim,
-					   uint32_t TimerIdx,
-					   uint32_t RegistersToUpdate)
+HAL_StatusTypeDef HAL_HRTIM_BurstDMAConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t RegistersToUpdate)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_TIMER_BURSTDMA(TimerIdx, RegistersToUpdate));
@@ -5795,44 +5268,37 @@ HAL_StatusTypeDef HAL_HRTIM_BurstDMAConfig(HRTIM_HandleTypeDef *hhrtim,
 	/* Set the burst DMA timer update register */
 	switch (TimerIdx) {
 		case HRTIM_TIMERINDEX_TIMER_A: {
-			hhrtim->Instance->sCommonRegs.BDTAUPR =
-			    RegistersToUpdate;
+			hhrtim->Instance->sCommonRegs.BDTAUPR = RegistersToUpdate;
 			break;
 		}
 
 		case HRTIM_TIMERINDEX_TIMER_B: {
-			hhrtim->Instance->sCommonRegs.BDTBUPR =
-			    RegistersToUpdate;
+			hhrtim->Instance->sCommonRegs.BDTBUPR = RegistersToUpdate;
 			break;
 		}
 
 		case HRTIM_TIMERINDEX_TIMER_C: {
-			hhrtim->Instance->sCommonRegs.BDTCUPR =
-			    RegistersToUpdate;
+			hhrtim->Instance->sCommonRegs.BDTCUPR = RegistersToUpdate;
 			break;
 		}
 
 		case HRTIM_TIMERINDEX_TIMER_D: {
-			hhrtim->Instance->sCommonRegs.BDTDUPR =
-			    RegistersToUpdate;
+			hhrtim->Instance->sCommonRegs.BDTDUPR = RegistersToUpdate;
 			break;
 		}
 
 		case HRTIM_TIMERINDEX_TIMER_E: {
-			hhrtim->Instance->sCommonRegs.BDTEUPR =
-			    RegistersToUpdate;
+			hhrtim->Instance->sCommonRegs.BDTEUPR = RegistersToUpdate;
 			break;
 		}
 
 		case HRTIM_TIMERINDEX_TIMER_F: {
-			hhrtim->Instance->sCommonRegs.BDTFUPR =
-			    RegistersToUpdate;
+			hhrtim->Instance->sCommonRegs.BDTFUPR = RegistersToUpdate;
 			break;
 		}
 
 		case HRTIM_TIMERINDEX_MASTER: {
-			hhrtim->Instance->sCommonRegs.BDMUPR =
-			    RegistersToUpdate;
+			hhrtim->Instance->sCommonRegs.BDMUPR = RegistersToUpdate;
 			break;
 		}
 
@@ -5886,10 +5352,7 @@ HAL_StatusTypeDef HAL_HRTIM_BurstDMAConfig(HRTIM_HandleTypeDef *hhrtim,
  * @retval HAL status
  * @note This function must be called before starting the timer
  */
-HAL_StatusTypeDef
-HAL_HRTIM_WaveformCompareConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
-				uint32_t CompareUnit,
-				const HRTIM_CompareCfgTypeDef *pCompareCfg)
+HAL_StatusTypeDef HAL_HRTIM_WaveformCompareConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CompareUnit, const HRTIM_CompareCfgTypeDef *pCompareCfg)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_TIMERINDEX(TimerIdx));
@@ -5907,26 +5370,22 @@ HAL_HRTIM_WaveformCompareConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
 	if (TimerIdx == HRTIM_TIMERINDEX_MASTER) {
 		switch (CompareUnit) {
 			case HRTIM_COMPAREUNIT_1: {
-				hhrtim->Instance->sMasterRegs.MCMP1R =
-				    pCompareCfg->CompareValue;
+				hhrtim->Instance->sMasterRegs.MCMP1R = pCompareCfg->CompareValue;
 				break;
 			}
 
 			case HRTIM_COMPAREUNIT_2: {
-				hhrtim->Instance->sMasterRegs.MCMP2R =
-				    pCompareCfg->CompareValue;
+				hhrtim->Instance->sMasterRegs.MCMP2R = pCompareCfg->CompareValue;
 				break;
 			}
 
 			case HRTIM_COMPAREUNIT_3: {
-				hhrtim->Instance->sMasterRegs.MCMP3R =
-				    pCompareCfg->CompareValue;
+				hhrtim->Instance->sMasterRegs.MCMP3R = pCompareCfg->CompareValue;
 				break;
 			}
 
 			case HRTIM_COMPAREUNIT_4: {
-				hhrtim->Instance->sMasterRegs.MCMP4R =
-				    pCompareCfg->CompareValue;
+				hhrtim->Instance->sMasterRegs.MCMP4R = pCompareCfg->CompareValue;
 				break;
 			}
 
@@ -5948,125 +5407,78 @@ HAL_HRTIM_WaveformCompareConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
 		switch (CompareUnit) {
 			case HRTIM_COMPAREUNIT_1: {
 				/* Set the compare value */
-				hhrtim->Instance->sTimerxRegs[TimerIdx].CMP1xR =
-				    pCompareCfg->CompareValue;
+				hhrtim->Instance->sTimerxRegs[TimerIdx].CMP1xR = pCompareCfg->CompareValue;
 				break;
 			}
 
 			case HRTIM_COMPAREUNIT_2: {
 				/* Check parameters */
-				assert_param(
-				    IS_HRTIM_COMPAREUNIT_AUTODELAYEDMODE(
-					CompareUnit,
-					pCompareCfg->AutoDelayedMode));
+				assert_param(IS_HRTIM_COMPAREUNIT_AUTODELAYEDMODE(CompareUnit, pCompareCfg->AutoDelayedMode));
 
 				/* Set the compare value */
-				hhrtim->Instance->sTimerxRegs[TimerIdx].CMP2xR =
-				    pCompareCfg->CompareValue;
+				hhrtim->Instance->sTimerxRegs[TimerIdx].CMP2xR = pCompareCfg->CompareValue;
 
-				if (pCompareCfg->AutoDelayedMode !=
-				    HRTIM_AUTODELAYEDMODE_REGULAR) {
+				if (pCompareCfg->AutoDelayedMode != HRTIM_AUTODELAYEDMODE_REGULAR) {
 					/* Configure auto-delayed mode */
 					/* DELCMP2 bitfield must be reset when
 					 * reprogrammed from one value */
 					/* to the other to reinitialize properly
 					 * the auto-delayed mechanism */
-					hhrtim->Instance->sTimerxRegs[TimerIdx]
-					    .TIMxCR &= ~HRTIM_TIMCR_DELCMP2;
-					hhrtim->Instance->sTimerxRegs[TimerIdx]
-					    .TIMxCR |=
-					    pCompareCfg->AutoDelayedMode;
+					hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxCR &= ~HRTIM_TIMCR_DELCMP2;
+					hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxCR |= pCompareCfg->AutoDelayedMode;
 
 					/* Set the compare value for timeout
 					 * compare unit (if any) */
-					if (pCompareCfg->AutoDelayedMode ==
-					    HRTIM_AUTODELAYEDMODE_AUTODELAYED_TIMEOUTCMP1) {
-						hhrtim->Instance
-						    ->sTimerxRegs[TimerIdx]
-						    .CMP1xR =
-						    pCompareCfg
-							->AutoDelayedTimeout;
-					} else if (
-					    pCompareCfg->AutoDelayedMode ==
-					    HRTIM_AUTODELAYEDMODE_AUTODELAYED_TIMEOUTCMP3) {
-						hhrtim->Instance
-						    ->sTimerxRegs[TimerIdx]
-						    .CMP3xR =
-						    pCompareCfg
-							->AutoDelayedTimeout;
+					if (pCompareCfg->AutoDelayedMode == HRTIM_AUTODELAYEDMODE_AUTODELAYED_TIMEOUTCMP1) {
+						hhrtim->Instance->sTimerxRegs[TimerIdx].CMP1xR = pCompareCfg->AutoDelayedTimeout;
+					} else if (pCompareCfg->AutoDelayedMode == HRTIM_AUTODELAYEDMODE_AUTODELAYED_TIMEOUTCMP3) {
+						hhrtim->Instance->sTimerxRegs[TimerIdx].CMP3xR = pCompareCfg->AutoDelayedTimeout;
 					} else {
 						/* nothing to do */
 					}
 				} else {
 					/* Clear HRTIM_TIMxCR.DELCMP2 bitfield
 					 */
-					MODIFY_REG(hhrtim->Instance
-						       ->sTimerxRegs[TimerIdx]
-						       .TIMxCR,
-						   HRTIM_TIMCR_DELCMP2, 0U);
+					MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxCR, HRTIM_TIMCR_DELCMP2, 0U);
 				}
 				break;
 			}
 
 			case HRTIM_COMPAREUNIT_3: {
 				/* Set the compare value */
-				hhrtim->Instance->sTimerxRegs[TimerIdx].CMP3xR =
-				    pCompareCfg->CompareValue;
+				hhrtim->Instance->sTimerxRegs[TimerIdx].CMP3xR = pCompareCfg->CompareValue;
 				break;
 			}
 
 			case HRTIM_COMPAREUNIT_4: {
 				/* Check parameters */
-				assert_param(
-				    IS_HRTIM_COMPAREUNIT_AUTODELAYEDMODE(
-					CompareUnit,
-					pCompareCfg->AutoDelayedMode));
+				assert_param(IS_HRTIM_COMPAREUNIT_AUTODELAYEDMODE(CompareUnit, pCompareCfg->AutoDelayedMode));
 
 				/* Set the compare value */
-				hhrtim->Instance->sTimerxRegs[TimerIdx].CMP4xR =
-				    pCompareCfg->CompareValue;
+				hhrtim->Instance->sTimerxRegs[TimerIdx].CMP4xR = pCompareCfg->CompareValue;
 
-				if (pCompareCfg->AutoDelayedMode !=
-				    HRTIM_AUTODELAYEDMODE_REGULAR) {
+				if (pCompareCfg->AutoDelayedMode != HRTIM_AUTODELAYEDMODE_REGULAR) {
 					/* Configure auto-delayed mode */
 					/* DELCMP4 bitfield must be reset when
 					 * reprogrammed from one value */
 					/* to the other to reinitialize properly
 					 * the auto-delayed mechanism */
-					hhrtim->Instance->sTimerxRegs[TimerIdx]
-					    .TIMxCR &= ~HRTIM_TIMCR_DELCMP4;
-					hhrtim->Instance->sTimerxRegs[TimerIdx]
-					    .TIMxCR |=
-					    (pCompareCfg->AutoDelayedMode
-					     << 2U);
+					hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxCR &= ~HRTIM_TIMCR_DELCMP4;
+					hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxCR |= (pCompareCfg->AutoDelayedMode << 2U);
 
 					/* Set the compare value for timeout
 					 * compare unit (if any) */
-					if (pCompareCfg->AutoDelayedMode ==
-					    HRTIM_AUTODELAYEDMODE_AUTODELAYED_TIMEOUTCMP1) {
-						hhrtim->Instance
-						    ->sTimerxRegs[TimerIdx]
-						    .CMP1xR =
-						    pCompareCfg
-							->AutoDelayedTimeout;
-					} else if (
-					    pCompareCfg->AutoDelayedMode ==
-					    HRTIM_AUTODELAYEDMODE_AUTODELAYED_TIMEOUTCMP3) {
-						hhrtim->Instance
-						    ->sTimerxRegs[TimerIdx]
-						    .CMP3xR =
-						    pCompareCfg
-							->AutoDelayedTimeout;
+					if (pCompareCfg->AutoDelayedMode == HRTIM_AUTODELAYEDMODE_AUTODELAYED_TIMEOUTCMP1) {
+						hhrtim->Instance->sTimerxRegs[TimerIdx].CMP1xR = pCompareCfg->AutoDelayedTimeout;
+					} else if (pCompareCfg->AutoDelayedMode == HRTIM_AUTODELAYEDMODE_AUTODELAYED_TIMEOUTCMP3) {
+						hhrtim->Instance->sTimerxRegs[TimerIdx].CMP3xR = pCompareCfg->AutoDelayedTimeout;
 					} else {
 						/* nothing to do */
 					}
 				} else {
 					/* Clear HRTIM_TIMxCR.DELCMP4 bitfield
 					 */
-					MODIFY_REG(hhrtim->Instance
-						       ->sTimerxRegs[TimerIdx]
-						       .TIMxCR,
-						   HRTIM_TIMCR_DELCMP4, 0U);
+					MODIFY_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxCR, HRTIM_TIMCR_DELCMP4, 0U);
 				}
 				break;
 			}
@@ -6112,17 +5524,13 @@ HAL_HRTIM_WaveformCompareConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
  * @retval HAL status
  * @note This function must be called before starting the timer
  */
-HAL_StatusTypeDef
-HAL_HRTIM_WaveformCaptureConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
-				uint32_t CaptureUnit,
-				const HRTIM_CaptureCfgTypeDef *pCaptureCfg)
+HAL_StatusTypeDef HAL_HRTIM_WaveformCaptureConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureUnit, const HRTIM_CaptureCfgTypeDef *pCaptureCfg)
 {
 	uint32_t Trigger;
 	uint32_t TimerF_Trigger = (uint32_t)(pCaptureCfg->Trigger >> 32);
 
 	/* Check parameters */
-	assert_param(IS_HRTIM_TIMER_CAPTURETRIGGER(
-	    TimerIdx, (uint32_t)(pCaptureCfg->Trigger)));
+	assert_param(IS_HRTIM_TIMER_CAPTURETRIGGER(TimerIdx, (uint32_t)(pCaptureCfg->Trigger)));
 	assert_param(IS_HRTIM_TIMER_CAPTUREFTRIGGER(TimerIdx, TimerF_Trigger));
 	assert_param(IS_HRTIM_TIMING_UNIT(TimerIdx));
 
@@ -6137,20 +5545,15 @@ HAL_HRTIM_WaveformCaptureConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
 
 	/* TimerF_Trigger is valid for setting other Timers than Timer F */
 	if (TimerIdx == HRTIM_TIMERINDEX_TIMER_A) {
-		Trigger = ((uint32_t)(pCaptureCfg->Trigger) & 0xFFFF0FFFU) |
-			  ((TimerF_Trigger) << HRTIM_CPT1CR_TA1SET_Pos);
+		Trigger = ((uint32_t)(pCaptureCfg->Trigger) & 0xFFFF0FFFU) | ((TimerF_Trigger) << HRTIM_CPT1CR_TA1SET_Pos);
 	} else if (TimerIdx == HRTIM_TIMERINDEX_TIMER_B) {
-		Trigger = ((uint32_t)(pCaptureCfg->Trigger) & 0xFFF0FFFFU) |
-			  ((TimerF_Trigger) << HRTIM_CPT1CR_TB1SET_Pos);
+		Trigger = ((uint32_t)(pCaptureCfg->Trigger) & 0xFFF0FFFFU) | ((TimerF_Trigger) << HRTIM_CPT1CR_TB1SET_Pos);
 	} else if (TimerIdx == HRTIM_TIMERINDEX_TIMER_C) {
-		Trigger = ((uint32_t)(pCaptureCfg->Trigger) & 0xFF0FFFFFU) |
-			  ((TimerF_Trigger) << HRTIM_CPT1CR_TC1SET_Pos);
+		Trigger = ((uint32_t)(pCaptureCfg->Trigger) & 0xFF0FFFFFU) | ((TimerF_Trigger) << HRTIM_CPT1CR_TC1SET_Pos);
 	} else if (TimerIdx == HRTIM_TIMERINDEX_TIMER_D) {
-		Trigger = ((uint32_t)(pCaptureCfg->Trigger) & 0xF0FFFFFFU) |
-			  ((TimerF_Trigger) << HRTIM_CPT1CR_TD1SET_Pos);
+		Trigger = ((uint32_t)(pCaptureCfg->Trigger) & 0xF0FFFFFFU) | ((TimerF_Trigger) << HRTIM_CPT1CR_TD1SET_Pos);
 	} else if (TimerIdx == HRTIM_TIMERINDEX_TIMER_E) {
-		Trigger = ((uint32_t)(pCaptureCfg->Trigger) & 0x0FFFFFFFU) |
-			  ((TimerF_Trigger) << HRTIM_CPT1CR_TE1SET_Pos);
+		Trigger = ((uint32_t)(pCaptureCfg->Trigger) & 0x0FFFFFFFU) | ((TimerF_Trigger) << HRTIM_CPT1CR_TE1SET_Pos);
 	} else {
 		Trigger = ((uint32_t)(pCaptureCfg->Trigger) & 0xFFFFFFFFU);
 	}
@@ -6161,16 +5564,12 @@ HAL_HRTIM_WaveformCaptureConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
 
 	switch (CaptureUnit) {
 		case HRTIM_CAPTUREUNIT_1: {
-			WRITE_REG(
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].CPT1xCR,
-			    Trigger);
+			WRITE_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].CPT1xCR, Trigger);
 			break;
 		}
 
 		case HRTIM_CAPTUREUNIT_2: {
-			WRITE_REG(
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xCR,
-			    Trigger);
+			WRITE_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xCR, Trigger);
 			break;
 		}
 
@@ -6226,10 +5625,7 @@ HAL_HRTIM_WaveformCaptureConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
  * @note This function must be called before configuring the timer and after
  *       configuring the deadtime insertion feature (if required).
  */
-HAL_StatusTypeDef
-HAL_HRTIM_WaveformOutputConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
-			       uint32_t Output,
-			       const HRTIM_OutputCfgTypeDef *pOutputCfg)
+HAL_StatusTypeDef HAL_HRTIM_WaveformOutputConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t Output, const HRTIM_OutputCfgTypeDef *pOutputCfg)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_TIMER_OUTPUT(TimerIdx, Output));
@@ -6238,8 +5634,7 @@ HAL_HRTIM_WaveformOutputConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
 	assert_param(IS_HRTIM_OUTPUTIDLEMODE(pOutputCfg->IdleMode));
 	assert_param(IS_HRTIM_OUTPUTFAULTLEVEL(pOutputCfg->FaultLevel));
 	assert_param(IS_HRTIM_OUTPUTCHOPPERMODE(pOutputCfg->ChopperModeEnable));
-	assert_param(
-	    IS_HRTIM_OUTPUTBURSTMODEENTRY(pOutputCfg->BurstModeEntryDelayed));
+	assert_param(IS_HRTIM_OUTPUTBURSTMODEENTRY(pOutputCfg->BurstModeEntryDelayed));
 
 	if (hhrtim->State == HAL_HRTIM_STATE_BUSY) {
 		return HAL_BUSY;
@@ -6296,10 +5691,7 @@ HAL_HRTIM_WaveformOutputConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
  * @note The 'software set/reset trigger' bit in the output set/reset registers
  *       is automatically reset by hardware
  */
-HAL_StatusTypeDef HAL_HRTIM_WaveformSetOutputLevel(HRTIM_HandleTypeDef *hhrtim,
-						   uint32_t TimerIdx,
-						   uint32_t Output,
-						   uint32_t OutputLevel)
+HAL_StatusTypeDef HAL_HRTIM_WaveformSetOutputLevel(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t Output, uint32_t OutputLevel)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_TIMER_OUTPUT(TimerIdx, Output));
@@ -6324,14 +5716,10 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformSetOutputLevel(HRTIM_HandleTypeDef *hhrtim,
 		case HRTIM_OUTPUT_TF1: {
 			if (OutputLevel == HRTIM_OUTPUTLEVEL_ACTIVE) {
 				/* Force output to its active state */
-				SET_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx]
-					    .SETx1R,
-					HRTIM_SET1R_SST);
+				SET_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx].SETx1R, HRTIM_SET1R_SST);
 			} else {
 				/* Force output to its inactive state */
-				SET_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx]
-					    .RSTx1R,
-					HRTIM_RST1R_SRT);
+				SET_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx].RSTx1R, HRTIM_RST1R_SRT);
 			}
 			break;
 		}
@@ -6344,14 +5732,10 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformSetOutputLevel(HRTIM_HandleTypeDef *hhrtim,
 		case HRTIM_OUTPUT_TF2: {
 			if (OutputLevel == HRTIM_OUTPUTLEVEL_ACTIVE) {
 				/* Force output to its active state */
-				SET_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx]
-					    .SETx2R,
-					HRTIM_SET2R_SST);
+				SET_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx].SETx2R, HRTIM_SET2R_SST);
 			} else {
 				/* Force output to its inactive state */
-				SET_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx]
-					    .RSTx2R,
-					HRTIM_RST2R_SRT);
+				SET_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx].RSTx2R, HRTIM_RST2R_SRT);
 			}
 			break;
 		}
@@ -6400,8 +5784,7 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformSetOutputLevel(HRTIM_HandleTypeDef *hhrtim,
  *                    @arg HRTIM_OUTPUT_TF2: Timer F - Output 2
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_WaveformOutputStart(HRTIM_HandleTypeDef *hhrtim,
-						uint32_t OutputsToStart)
+HAL_StatusTypeDef HAL_HRTIM_WaveformOutputStart(HRTIM_HandleTypeDef *hhrtim, uint32_t OutputsToStart)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_OUTPUT(OutputsToStart));
@@ -6444,8 +5827,7 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformOutputStart(HRTIM_HandleTypeDef *hhrtim,
  *                    @arg HRTIM_OUTPUT_TF2: Timer F - Output 2
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_WaveformOutputStop(HRTIM_HandleTypeDef *hhrtim,
-					       uint32_t OutputsToStop)
+HAL_StatusTypeDef HAL_HRTIM_WaveformOutputStop(HRTIM_HandleTypeDef *hhrtim, uint32_t OutputsToStop)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_OUTPUT(OutputsToStop));
@@ -6482,8 +5864,7 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformOutputStop(HRTIM_HandleTypeDef *hhrtim,
  *                   @arg HRTIM_TIMERID_TIMER_F
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart(HRTIM_HandleTypeDef *hhrtim,
-					       uint32_t Timers)
+HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_TIMERID(Timers));
@@ -6522,8 +5903,7 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart(HRTIM_HandleTypeDef *hhrtim,
  * @note The counter of a timer is stopped only if all timer outputs are
  * disabled
  */
-HAL_StatusTypeDef HAL_HRTIM_WaveformCountStop(HRTIM_HandleTypeDef *hhrtim,
-					      uint32_t Timers)
+HAL_StatusTypeDef HAL_HRTIM_WaveformCountStop(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_TIMERID(Timers));
@@ -6564,8 +5944,7 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCountStop(HRTIM_HandleTypeDef *hhrtim,
  *       function.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart_IT(HRTIM_HandleTypeDef *hhrtim,
-						  uint32_t Timers)
+HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers)
 {
 	uint8_t timer_idx;
 
@@ -6582,18 +5961,13 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart_IT(HRTIM_HandleTypeDef *hhrtim,
 
 	/* Enable master timer related interrupts (if required) */
 	if ((Timers & HRTIM_TIMERID_MASTER) != 0U) {
-		__HAL_HRTIM_MASTER_ENABLE_IT(
-		    hhrtim, hhrtim->TimerParam[HRTIM_TIMERINDEX_MASTER]
-				.InterruptRequests);
+		__HAL_HRTIM_MASTER_ENABLE_IT(hhrtim, hhrtim->TimerParam[HRTIM_TIMERINDEX_MASTER].InterruptRequests);
 	}
 
 	/* Enable timing unit related interrupts (if required) */
-	for (timer_idx = HRTIM_TIMERINDEX_TIMER_A;
-	     timer_idx < HRTIM_TIMERINDEX_MASTER; timer_idx++) {
+	for (timer_idx = HRTIM_TIMERINDEX_TIMER_A; timer_idx < HRTIM_TIMERINDEX_MASTER; timer_idx++) {
 		if ((Timers & TimerIdxToTimerId[timer_idx]) != 0U) {
-			__HAL_HRTIM_TIMER_ENABLE_IT(
-			    hhrtim, timer_idx,
-			    hhrtim->TimerParam[timer_idx].InterruptRequests);
+			__HAL_HRTIM_TIMER_ENABLE_IT(hhrtim, timer_idx, hhrtim->TimerParam[timer_idx].InterruptRequests);
 		}
 	}
 
@@ -6627,8 +6001,7 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart_IT(HRTIM_HandleTypeDef *hhrtim,
  * disabled
  * @note All enabled timer related interrupts are disabled.
  */
-HAL_StatusTypeDef HAL_HRTIM_WaveformCountStop_IT(HRTIM_HandleTypeDef *hhrtim,
-						 uint32_t Timers)
+HAL_StatusTypeDef HAL_HRTIM_WaveformCountStop_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers)
 {
 	/* ++ WA */
 	__IO uint32_t delai = (uint32_t)(0x17FU);
@@ -6650,18 +6023,13 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCountStop_IT(HRTIM_HandleTypeDef *hhrtim,
 	/* Disable master timer related interrupts (if required) */
 	if ((Timers & HRTIM_TIMERID_MASTER) != 0U) {
 		/* Interrupts enable flag must be cleared one by one */
-		__HAL_HRTIM_MASTER_DISABLE_IT(
-		    hhrtim, hhrtim->TimerParam[HRTIM_TIMERINDEX_MASTER]
-				.InterruptRequests);
+		__HAL_HRTIM_MASTER_DISABLE_IT(hhrtim, hhrtim->TimerParam[HRTIM_TIMERINDEX_MASTER].InterruptRequests);
 	}
 
 	/* Disable timing unit related interrupts (if required) */
-	for (timer_idx = HRTIM_TIMERINDEX_TIMER_A;
-	     timer_idx < HRTIM_TIMERINDEX_MASTER; timer_idx++) {
+	for (timer_idx = HRTIM_TIMERINDEX_TIMER_A; timer_idx < HRTIM_TIMERINDEX_MASTER; timer_idx++) {
 		if ((Timers & TimerIdxToTimerId[timer_idx]) != 0U) {
-			__HAL_HRTIM_TIMER_DISABLE_IT(
-			    hhrtim, timer_idx,
-			    hhrtim->TimerParam[timer_idx].InterruptRequests);
+			__HAL_HRTIM_TIMER_DISABLE_IT(hhrtim, timer_idx, hhrtim->TimerParam[timer_idx].InterruptRequests);
 		}
 	}
 
@@ -6703,8 +6071,7 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCountStop_IT(HRTIM_HandleTypeDef *hhrtim,
  *       size of each DMA transfer are specified at timer configuration time
  *       (see HAL_HRTIM_WaveformTimerConfig)
  */
-HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart_DMA(HRTIM_HandleTypeDef *hhrtim,
-						   uint32_t Timers)
+HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers)
 {
 	uint8_t timer_idx;
 	DMA_HandleTypeDef *hdma;
@@ -6721,8 +6088,7 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart_DMA(HRTIM_HandleTypeDef *hhrtim,
 	/* Process Locked */
 	__HAL_LOCK(hhrtim);
 
-	if (((Timers & HRTIM_TIMERID_MASTER) != (uint32_t)RESET) &&
-	    (hhrtim->TimerParam[HRTIM_TIMERINDEX_MASTER].DMARequests != 0U)) {
+	if (((Timers & HRTIM_TIMERID_MASTER) != (uint32_t)RESET) && (hhrtim->TimerParam[HRTIM_TIMERINDEX_MASTER].DMARequests != 0U)) {
 		/* Set the DMA error callback */
 		hhrtim->hdmaMaster->XferErrorCallback = HRTIM_DMAError;
 
@@ -6730,14 +6096,8 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart_DMA(HRTIM_HandleTypeDef *hhrtim,
 		hhrtim->hdmaMaster->XferCpltCallback = HRTIM_DMAMasterCplt;
 
 		/* Enable the DMA channel */
-		if (HAL_DMA_Start_IT(
-			hhrtim->hdmaMaster,
-			hhrtim->TimerParam[HRTIM_TIMERINDEX_MASTER]
-			    .DMASrcAddress,
-			hhrtim->TimerParam[HRTIM_TIMERINDEX_MASTER]
-			    .DMADstAddress,
-			hhrtim->TimerParam[HRTIM_TIMERINDEX_MASTER].DMASize) !=
-		    HAL_OK) {
+		if (HAL_DMA_Start_IT(hhrtim->hdmaMaster, hhrtim->TimerParam[HRTIM_TIMERINDEX_MASTER].DMASrcAddress, hhrtim->TimerParam[HRTIM_TIMERINDEX_MASTER].DMADstAddress,
+				     hhrtim->TimerParam[HRTIM_TIMERINDEX_MASTER].DMASize) != HAL_OK) {
 			hhrtim->State = HAL_HRTIM_STATE_ERROR;
 
 			/* Process Unlocked */
@@ -6747,19 +6107,13 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart_DMA(HRTIM_HandleTypeDef *hhrtim,
 		}
 
 		/* Enable the timer DMA request */
-		__HAL_HRTIM_MASTER_ENABLE_DMA(
-		    hhrtim,
-		    hhrtim->TimerParam[HRTIM_TIMERINDEX_MASTER].DMARequests);
+		__HAL_HRTIM_MASTER_ENABLE_DMA(hhrtim, hhrtim->TimerParam[HRTIM_TIMERINDEX_MASTER].DMARequests);
 	}
 
-	for (timer_idx = HRTIM_TIMERINDEX_TIMER_A;
-	     timer_idx < HRTIM_TIMERINDEX_MASTER; timer_idx++) {
-		if (((Timers & TimerIdxToTimerId[timer_idx]) !=
-		     (uint32_t)RESET) &&
-		    (hhrtim->TimerParam[timer_idx].DMARequests != 0U)) {
+	for (timer_idx = HRTIM_TIMERINDEX_TIMER_A; timer_idx < HRTIM_TIMERINDEX_MASTER; timer_idx++) {
+		if (((Timers & TimerIdxToTimerId[timer_idx]) != (uint32_t)RESET) && (hhrtim->TimerParam[timer_idx].DMARequests != 0U)) {
 			/* Get the timer DMA handler */
-			hdma =
-			    HRTIM_GetDMAHandleFromTimerIdx(hhrtim, timer_idx);
+			hdma = HRTIM_GetDMAHandleFromTimerIdx(hhrtim, timer_idx);
 
 			if (hdma == NULL) {
 				hhrtim->State = HAL_HRTIM_STATE_ERROR;
@@ -6777,12 +6131,7 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart_DMA(HRTIM_HandleTypeDef *hhrtim,
 			hdma->XferCpltCallback = HRTIM_DMATimerxCplt;
 
 			/* Enable the DMA channel */
-			if (HAL_DMA_Start_IT(
-				hdma,
-				hhrtim->TimerParam[timer_idx].DMASrcAddress,
-				hhrtim->TimerParam[timer_idx].DMADstAddress,
-				hhrtim->TimerParam[timer_idx].DMASize) !=
-			    HAL_OK) {
+			if (HAL_DMA_Start_IT(hdma, hhrtim->TimerParam[timer_idx].DMASrcAddress, hhrtim->TimerParam[timer_idx].DMADstAddress, hhrtim->TimerParam[timer_idx].DMASize) != HAL_OK) {
 				hhrtim->State = HAL_HRTIM_STATE_ERROR;
 
 				/* Process Unlocked */
@@ -6792,9 +6141,7 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart_DMA(HRTIM_HandleTypeDef *hhrtim,
 			}
 
 			/* Enable the timer DMA request */
-			__HAL_HRTIM_TIMER_ENABLE_DMA(
-			    hhrtim, timer_idx,
-			    hhrtim->TimerParam[timer_idx].DMARequests);
+			__HAL_HRTIM_TIMER_ENABLE_DMA(hhrtim, timer_idx, hhrtim->TimerParam[timer_idx].DMARequests);
 		}
 	}
 
@@ -6828,8 +6175,7 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart_DMA(HRTIM_HandleTypeDef *hhrtim,
  * disabled
  * @note  All enabled timer related DMA requests are disabled.
  */
-HAL_StatusTypeDef HAL_HRTIM_WaveformCountStop_DMA(HRTIM_HandleTypeDef *hhrtim,
-						  uint32_t Timers)
+HAL_StatusTypeDef HAL_HRTIM_WaveformCountStop_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers)
 {
 	uint8_t timer_idx;
 
@@ -6838,36 +6184,28 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCountStop_DMA(HRTIM_HandleTypeDef *hhrtim,
 
 	hhrtim->State = HAL_HRTIM_STATE_BUSY;
 
-	if (((Timers & HRTIM_TIMERID_MASTER) != 0U) &&
-	    (hhrtim->TimerParam[HRTIM_TIMERINDEX_MASTER].DMARequests != 0U)) {
+	if (((Timers & HRTIM_TIMERID_MASTER) != 0U) && (hhrtim->TimerParam[HRTIM_TIMERINDEX_MASTER].DMARequests != 0U)) {
 		/* Disable the DMA */
 		if (HAL_DMA_Abort(hhrtim->hdmaMaster) != HAL_OK) {
 			hhrtim->State = HAL_HRTIM_STATE_ERROR;
 		} else {
 			hhrtim->State = HAL_HRTIM_STATE_READY;
 			/* Disable the DMA request(s) */
-			__HAL_HRTIM_MASTER_DISABLE_DMA(
-			    hhrtim, hhrtim->TimerParam[HRTIM_TIMERINDEX_MASTER]
-					.DMARequests);
+			__HAL_HRTIM_MASTER_DISABLE_DMA(hhrtim, hhrtim->TimerParam[HRTIM_TIMERINDEX_MASTER].DMARequests);
 		}
 	}
 
-	for (timer_idx = HRTIM_TIMERINDEX_TIMER_A;
-	     timer_idx < HRTIM_TIMERINDEX_MASTER; timer_idx++) {
-		if (((Timers & TimerIdxToTimerId[timer_idx]) != 0U) &&
-		    (hhrtim->TimerParam[timer_idx].DMARequests != 0U)) {
+	for (timer_idx = HRTIM_TIMERINDEX_TIMER_A; timer_idx < HRTIM_TIMERINDEX_MASTER; timer_idx++) {
+		if (((Timers & TimerIdxToTimerId[timer_idx]) != 0U) && (hhrtim->TimerParam[timer_idx].DMARequests != 0U)) {
 			/* Get the timer DMA handler */
 			/* Disable the DMA */
-			if (HAL_DMA_Abort(HRTIM_GetDMAHandleFromTimerIdx(
-				hhrtim, timer_idx)) != HAL_OK) {
+			if (HAL_DMA_Abort(HRTIM_GetDMAHandleFromTimerIdx(hhrtim, timer_idx)) != HAL_OK) {
 				hhrtim->State = HAL_HRTIM_STATE_ERROR;
 			} else {
 				hhrtim->State = HAL_HRTIM_STATE_READY;
 
 				/* Disable the DMA request(s) */
-				__HAL_HRTIM_TIMER_DISABLE_DMA(
-				    hhrtim, timer_idx,
-				    hhrtim->TimerParam[timer_idx].DMARequests);
+				__HAL_HRTIM_TIMER_DISABLE_DMA(hhrtim, timer_idx, hhrtim->TimerParam[timer_idx].DMARequests);
 			}
 		}
 	}
@@ -6892,8 +6230,7 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCountStop_DMA(HRTIM_HandleTypeDef *hhrtim,
  * @retval HAL status
  * @note This function must be called after starting the timer(s)
  */
-HAL_StatusTypeDef HAL_HRTIM_BurstModeCtl(HRTIM_HandleTypeDef *hhrtim,
-					 uint32_t Enable)
+HAL_StatusTypeDef HAL_HRTIM_BurstModeCtl(HRTIM_HandleTypeDef *hhrtim, uint32_t Enable)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_BURSTMODECTL(Enable));
@@ -6923,8 +6260,7 @@ HAL_StatusTypeDef HAL_HRTIM_BurstModeCtl(HRTIM_HandleTypeDef *hhrtim,
  * @param  hhrtim pointer to HAL HRTIM handle
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_HRTIM_BurstModeSoftwareTrigger(HRTIM_HandleTypeDef *hhrtim)
+HAL_StatusTypeDef HAL_HRTIM_BurstModeSoftwareTrigger(HRTIM_HandleTypeDef *hhrtim)
 {
 	if (hhrtim->State == HAL_HRTIM_STATE_BUSY) {
 		return HAL_BUSY;
@@ -6965,9 +6301,7 @@ HAL_HRTIM_BurstModeSoftwareTrigger(HRTIM_HandleTypeDef *hhrtim)
  * @note The 'software capture' bit in the capure configuration register is
  *       automatically reset by hardware
  */
-HAL_StatusTypeDef HAL_HRTIM_SoftwareCapture(HRTIM_HandleTypeDef *hhrtim,
-					    uint32_t TimerIdx,
-					    uint32_t CaptureUnit)
+HAL_StatusTypeDef HAL_HRTIM_SoftwareCapture(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureUnit)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_TIMING_UNIT(TimerIdx));
@@ -6985,14 +6319,12 @@ HAL_StatusTypeDef HAL_HRTIM_SoftwareCapture(HRTIM_HandleTypeDef *hhrtim,
 	/* Force a software capture on concerned capture unit */
 	switch (CaptureUnit) {
 		case HRTIM_CAPTUREUNIT_1: {
-			SET_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx].CPT1xCR,
-				HRTIM_CPT1CR_SWCPT);
+			SET_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx].CPT1xCR, HRTIM_CPT1CR_SWCPT);
 			break;
 		}
 
 		case HRTIM_CAPTUREUNIT_2: {
-			SET_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xCR,
-				HRTIM_CPT2CR_SWCPT);
+			SET_BIT(hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xCR, HRTIM_CPT2CR_SWCPT);
 			break;
 		}
 
@@ -7035,8 +6367,7 @@ HAL_StatusTypeDef HAL_HRTIM_SoftwareCapture(HRTIM_HandleTypeDef *hhrtim,
  * @note The 'software update' bits in the HRTIM control register 2 register are
  *       automatically reset by hardware
  */
-HAL_StatusTypeDef HAL_HRTIM_SoftwareUpdate(HRTIM_HandleTypeDef *hhrtim,
-					   uint32_t Timers)
+HAL_StatusTypeDef HAL_HRTIM_SoftwareUpdate(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_TIMERUPDATE(Timers));
@@ -7077,8 +6408,7 @@ HAL_StatusTypeDef HAL_HRTIM_SoftwareUpdate(HRTIM_HandleTypeDef *hhrtim,
  * @note The function is not significant when the Push-pull mode is enabled
  * (PSHPLL = 1)
  */
-HAL_StatusTypeDef HAL_HRTIM_SwapTimerOutput(HRTIM_HandleTypeDef *hhrtim,
-					    uint32_t Timers)
+HAL_StatusTypeDef HAL_HRTIM_SwapTimerOutput(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_TIMERSWAP(Timers));
@@ -7120,8 +6450,7 @@ HAL_StatusTypeDef HAL_HRTIM_SwapTimerOutput(HRTIM_HandleTypeDef *hhrtim,
  * @note The 'software reset' bits in the HRTIM control register 2  are
  *       automatically reset by hardware
  */
-HAL_StatusTypeDef HAL_HRTIM_SoftwareReset(HRTIM_HandleTypeDef *hhrtim,
-					  uint32_t Timers)
+HAL_StatusTypeDef HAL_HRTIM_SoftwareReset(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_TIMERRESET(Timers));
@@ -7159,8 +6488,7 @@ HAL_StatusTypeDef HAL_HRTIM_SoftwareReset(HRTIM_HandleTypeDef *hhrtim,
  * @arg HRTIM_TIMERSWAP_F
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_OutputSwapEnable(HRTIM_HandleTypeDef *hhrtim,
-					     uint32_t Timers)
+HAL_StatusTypeDef HAL_HRTIM_OutputSwapEnable(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_TIMERSWAP(Timers));
@@ -7198,8 +6526,7 @@ HAL_StatusTypeDef HAL_HRTIM_OutputSwapEnable(HRTIM_HandleTypeDef *hhrtim,
  * @arg HRTIM_TIMERSWAP_F
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_OutputSwapDisable(HRTIM_HandleTypeDef *hhrtim,
-					      uint32_t Timers)
+HAL_StatusTypeDef HAL_HRTIM_OutputSwapDisable(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers)
 {
 	/* Check parameters */
 	assert_param(IS_HRTIM_TIMERSWAP(Timers));
@@ -7251,10 +6578,7 @@ HAL_StatusTypeDef HAL_HRTIM_OutputSwapDisable(HRTIM_HandleTypeDef *hhrtim,
  * controller HRTIM_TIMERINDEX_TIMER_F: DMA channel 8 is used by the DMA burst
  * controller
  */
-HAL_StatusTypeDef HAL_HRTIM_BurstDMATransfer(HRTIM_HandleTypeDef *hhrtim,
-					     uint32_t TimerIdx,
-					     uint32_t BurstBufferAddress,
-					     uint32_t BurstBufferLength)
+HAL_StatusTypeDef HAL_HRTIM_BurstDMATransfer(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t BurstBufferAddress, uint32_t BurstBufferLength)
 {
 	DMA_HandleTypeDef *hdma;
 
@@ -7294,10 +6618,7 @@ HAL_StatusTypeDef HAL_HRTIM_BurstDMATransfer(HRTIM_HandleTypeDef *hhrtim,
 	hdma->XferErrorCallback = HRTIM_DMAError;
 
 	/* Enable the DMA channel */
-	if (HAL_DMA_Start_IT(hdma, BurstBufferAddress,
-			     (uint32_t) &
-				 (hhrtim->Instance->sCommonRegs.BDMADR),
-			     BurstBufferLength) != HAL_OK) {
+	if (HAL_DMA_Start_IT(hdma, BurstBufferAddress, (uint32_t) & (hhrtim->Instance->sCommonRegs.BDMADR), BurstBufferLength) != HAL_OK) {
 		hhrtim->State = HAL_HRTIM_STATE_ERROR;
 
 		/* Process Unlocked */
@@ -7330,8 +6651,7 @@ HAL_StatusTypeDef HAL_HRTIM_BurstDMATransfer(HRTIM_HandleTypeDef *hhrtim,
  *                   @arg HRTIM_TIMERUPDATE_E
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_UpdateEnable(HRTIM_HandleTypeDef *hhrtim,
-					 uint32_t Timers)
+HAL_StatusTypeDef HAL_HRTIM_UpdateEnable(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_TIMERUPDATE(Timers));
@@ -7368,8 +6688,7 @@ HAL_StatusTypeDef HAL_HRTIM_UpdateEnable(HRTIM_HandleTypeDef *hhrtim,
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_HRTIM_UpdateDisable(HRTIM_HandleTypeDef *hhrtim,
-					  uint32_t Timers)
+HAL_StatusTypeDef HAL_HRTIM_UpdateDisable(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers)
 {
 	/* Check the parameters */
 	assert_param(IS_HRTIM_TIMERUPDATE(Timers));
@@ -7444,8 +6763,7 @@ HAL_HRTIM_StateTypeDef HAL_HRTIM_GetState(const HRTIM_HandleTypeDef *hhrtim)
  *                    @arg HRTIM_CAPTUREUNIT_2: Capture unit 2
  * @retval Captured value
  */
-uint32_t HAL_HRTIM_GetCapturedValue(const HRTIM_HandleTypeDef *hhrtim,
-				    uint32_t TimerIdx, uint32_t CaptureUnit)
+uint32_t HAL_HRTIM_GetCapturedValue(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureUnit)
 {
 	uint32_t captured_value;
 
@@ -7456,16 +6774,12 @@ uint32_t HAL_HRTIM_GetCapturedValue(const HRTIM_HandleTypeDef *hhrtim,
 	/* Read captured value */
 	switch (CaptureUnit) {
 		case HRTIM_CAPTUREUNIT_1: {
-			captured_value =
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].CPT1xR &
-			    0x0000FFFFU;
+			captured_value = hhrtim->Instance->sTimerxRegs[TimerIdx].CPT1xR & 0x0000FFFFU;
 			break;
 		}
 
 		case HRTIM_CAPTUREUNIT_2: {
-			captured_value =
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xR &
-			    0x0000FFFFU;
+			captured_value = hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xR & 0x0000FFFFU;
 			break;
 		}
 
@@ -7496,9 +6810,7 @@ uint32_t HAL_HRTIM_GetCapturedValue(const HRTIM_HandleTypeDef *hhrtim,
  *                    @arg HRTIM_CAPTUREUNIT_2: Capture unit 2
  * @retval captured value and direction structure
  */
-HRTIM_CaptureValueTypeDef
-HAL_HRTIM_GetCaptured(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
-		      uint32_t CaptureUnit)
+HRTIM_CaptureValueTypeDef HAL_HRTIM_GetCaptured(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureUnit)
 {
 	uint32_t tmp;
 	HRTIM_CaptureValueTypeDef captured;
@@ -7512,16 +6824,12 @@ HAL_HRTIM_GetCaptured(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
 		case HRTIM_CAPTUREUNIT_1:
 			tmp = hhrtim->Instance->sTimerxRegs[TimerIdx].CPT1xR;
 			captured.Value = tmp & HRTIM_CPT1R_CPT1R & 0x0000FFFFU;
-			captured.Dir =
-			    (((tmp & HRTIM_CPT1R_DIR) == HRTIM_CPT1R_DIR) ? 1U
-									  : 0U);
+			captured.Dir = (((tmp & HRTIM_CPT1R_DIR) == HRTIM_CPT1R_DIR) ? 1U : 0U);
 			break;
 		case HRTIM_CAPTUREUNIT_2:
 			tmp = hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xR;
 			captured.Value = tmp & HRTIM_CPT2R_CPT2R & 0x0000FFFFU;
-			captured.Dir =
-			    (((tmp & HRTIM_CPT2R_DIR) == HRTIM_CPT2R_DIR) ? 1U
-									  : 0U);
+			captured.Dir = (((tmp & HRTIM_CPT2R_DIR) == HRTIM_CPT2R_DIR) ? 1U : 0U);
 			break;
 		default:
 			captured.Value = 0xFFFFFFFFUL;
@@ -7553,8 +6861,7 @@ HAL_HRTIM_GetCaptured(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
  *                    @arg HRTIM_TIMERUPDOWNMODE_UP
  *                    @arg HRTIM_TIMERUPDOWNMODE_UPDOWN
  */
-uint32_t HAL_HRTIM_GetCapturedDir(const HRTIM_HandleTypeDef *hhrtim,
-				  uint32_t TimerIdx, uint32_t CaptureUnit)
+uint32_t HAL_HRTIM_GetCapturedDir(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureUnit)
 {
 	uint32_t tmp;
 
@@ -7565,14 +6872,10 @@ uint32_t HAL_HRTIM_GetCapturedDir(const HRTIM_HandleTypeDef *hhrtim,
 	/* Read captured value */
 	switch (CaptureUnit) {
 		case HRTIM_CAPTUREUNIT_1:
-			tmp = ((hhrtim->Instance->sTimerxRegs[TimerIdx].CPT1xR &
-				HRTIM_CPT1R_DIR) >>
-			       HRTIM_CPT1R_DIR_Pos);
+			tmp = ((hhrtim->Instance->sTimerxRegs[TimerIdx].CPT1xR & HRTIM_CPT1R_DIR) >> HRTIM_CPT1R_DIR_Pos);
 			break;
 		case HRTIM_CAPTUREUNIT_2:
-			tmp = ((hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xR &
-				HRTIM_CPT2R_DIR) >>
-			       HRTIM_CPT2R_DIR_Pos);
+			tmp = ((hhrtim->Instance->sTimerxRegs[TimerIdx].CPT2xR & HRTIM_CPT2R_DIR) >> HRTIM_CPT2R_DIR_Pos);
 			break;
 		default:
 			tmp = 0xFFFFFFFFU;
@@ -7611,8 +6914,7 @@ uint32_t HAL_HRTIM_GetCapturedDir(const HRTIM_HandleTypeDef *hhrtim,
  * @note Returned output level is taken before the output stage (chopper,
  *        polarity).
  */
-uint32_t HAL_HRTIM_WaveformGetOutputLevel(const HRTIM_HandleTypeDef *hhrtim,
-					  uint32_t TimerIdx, uint32_t Output)
+uint32_t HAL_HRTIM_WaveformGetOutputLevel(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t Output)
 {
 	uint32_t output_level;
 
@@ -7627,8 +6929,7 @@ uint32_t HAL_HRTIM_WaveformGetOutputLevel(const HRTIM_HandleTypeDef *hhrtim,
 		case HRTIM_OUTPUT_TD1:
 		case HRTIM_OUTPUT_TE1:
 		case HRTIM_OUTPUT_TF1: {
-			if ((hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxISR &
-			     HRTIM_TIMISR_O1CPY) != (uint32_t)RESET) {
+			if ((hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxISR & HRTIM_TIMISR_O1CPY) != (uint32_t)RESET) {
 				output_level = HRTIM_OUTPUTLEVEL_ACTIVE;
 			} else {
 				output_level = HRTIM_OUTPUTLEVEL_INACTIVE;
@@ -7642,8 +6943,7 @@ uint32_t HAL_HRTIM_WaveformGetOutputLevel(const HRTIM_HandleTypeDef *hhrtim,
 		case HRTIM_OUTPUT_TD2:
 		case HRTIM_OUTPUT_TE2:
 		case HRTIM_OUTPUT_TF2: {
-			if ((hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxISR &
-			     HRTIM_TIMISR_O2CPY) != (uint32_t)RESET) {
+			if ((hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxISR & HRTIM_TIMISR_O2CPY) != (uint32_t)RESET) {
 				output_level = HRTIM_OUTPUTLEVEL_ACTIVE;
 			} else {
 				output_level = HRTIM_OUTPUTLEVEL_INACTIVE;
@@ -7687,8 +6987,7 @@ uint32_t HAL_HRTIM_WaveformGetOutputLevel(const HRTIM_HandleTypeDef *hhrtim,
  *                    @arg HRTIM_OUTPUT_TF2: Timer F - Output 2
  * @retval Output state
  */
-uint32_t HAL_HRTIM_WaveformGetOutputState(const HRTIM_HandleTypeDef *hhrtim,
-					  uint32_t TimerIdx, uint32_t Output)
+uint32_t HAL_HRTIM_WaveformGetOutputState(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t Output)
 {
 	uint32_t output_bit;
 	uint32_t output_state;
@@ -7768,14 +7067,12 @@ uint32_t HAL_HRTIM_WaveformGetOutputState(const HRTIM_HandleTypeDef *hhrtim,
 		}
 	}
 
-	if ((hhrtim->Instance->sCommonRegs.OENR & output_bit) !=
-	    (uint32_t)RESET) {
+	if ((hhrtim->Instance->sCommonRegs.OENR & output_bit) != (uint32_t)RESET) {
 		/* Output is enabled: output in RUN state (whatever output
 		 * disable status is)*/
 		output_state = HRTIM_OUTPUTSTATE_RUN;
 	} else {
-		if ((hhrtim->Instance->sCommonRegs.ODSR & output_bit) !=
-		    (uint32_t)RESET) {
+		if ((hhrtim->Instance->sCommonRegs.ODSR & output_bit) != (uint32_t)RESET) {
 			/* Output is disabled: output in FAULT state */
 			output_state = HRTIM_OUTPUTSTATE_FAULT;
 		} else {
@@ -7815,9 +7112,7 @@ uint32_t HAL_HRTIM_WaveformGetOutputState(const HRTIM_HandleTypeDef *hhrtim,
  *                    @arg HRTIM_OUTPUT_TF2: Timer F - Output 2
  * @retval Delayed protection status
  */
-uint32_t HAL_HRTIM_GetDelayedProtectionStatus(const HRTIM_HandleTypeDef *hhrtim,
-					      uint32_t TimerIdx,
-					      uint32_t Output)
+uint32_t HAL_HRTIM_GetDelayedProtectionStatus(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t Output)
 {
 	uint32_t delayed_protection_status;
 
@@ -7832,17 +7127,14 @@ uint32_t HAL_HRTIM_GetDelayedProtectionStatus(const HRTIM_HandleTypeDef *hhrtim,
 		case HRTIM_OUTPUT_TD1:
 		case HRTIM_OUTPUT_TE1:
 		case HRTIM_OUTPUT_TF1: {
-			if ((hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxISR &
-			     HRTIM_TIMISR_O1STAT) != (uint32_t)RESET) {
+			if ((hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxISR & HRTIM_TIMISR_O1STAT) != (uint32_t)RESET) {
 				/* Output 1 was active when the delayed idle
 				 * protection was triggered */
-				delayed_protection_status =
-				    HRTIM_OUTPUTLEVEL_ACTIVE;
+				delayed_protection_status = HRTIM_OUTPUTLEVEL_ACTIVE;
 			} else {
 				/* Output 1 was inactive when the delayed idle
 				 * protection was triggered */
-				delayed_protection_status =
-				    HRTIM_OUTPUTLEVEL_INACTIVE;
+				delayed_protection_status = HRTIM_OUTPUTLEVEL_INACTIVE;
 			}
 			break;
 		}
@@ -7853,17 +7145,14 @@ uint32_t HAL_HRTIM_GetDelayedProtectionStatus(const HRTIM_HandleTypeDef *hhrtim,
 		case HRTIM_OUTPUT_TD2:
 		case HRTIM_OUTPUT_TE2:
 		case HRTIM_OUTPUT_TF2: {
-			if ((hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxISR &
-			     HRTIM_TIMISR_O2STAT) != (uint32_t)RESET) {
+			if ((hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxISR & HRTIM_TIMISR_O2STAT) != (uint32_t)RESET) {
 				/* Output 2 was active when the delayed idle
 				 * protection was triggered */
-				delayed_protection_status =
-				    HRTIM_OUTPUTLEVEL_ACTIVE;
+				delayed_protection_status = HRTIM_OUTPUTLEVEL_ACTIVE;
 			} else {
 				/* Output 2 was inactive when the delayed idle
 				 * protection was triggered */
-				delayed_protection_status =
-				    HRTIM_OUTPUTLEVEL_INACTIVE;
+				delayed_protection_status = HRTIM_OUTPUTLEVEL_INACTIVE;
 			}
 			break;
 		}
@@ -7888,8 +7177,7 @@ uint32_t HAL_HRTIM_GetBurstStatus(const HRTIM_HandleTypeDef *hhrtim)
 	uint32_t burst_mode_status;
 
 	/* Read burst mode status */
-	burst_mode_status =
-	    (hhrtim->Instance->sCommonRegs.BMCR & HRTIM_BMCR_BMSTAT);
+	burst_mode_status = (hhrtim->Instance->sCommonRegs.BMCR & HRTIM_BMCR_BMSTAT);
 
 	return burst_mode_status;
 }
@@ -7908,8 +7196,7 @@ uint32_t HAL_HRTIM_GetBurstStatus(const HRTIM_HandleTypeDef *hhrtim)
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
  * @retval Burst mode controller status
  */
-uint32_t HAL_HRTIM_GetCurrentPushPullStatus(const HRTIM_HandleTypeDef *hhrtim,
-					    uint32_t TimerIdx)
+uint32_t HAL_HRTIM_GetCurrentPushPullStatus(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	uint32_t current_pushpull_status;
 
@@ -7917,9 +7204,7 @@ uint32_t HAL_HRTIM_GetCurrentPushPullStatus(const HRTIM_HandleTypeDef *hhrtim,
 	assert_param(IS_HRTIM_TIMING_UNIT(TimerIdx));
 
 	/* Read current push pull status */
-	current_pushpull_status =
-	    (hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxISR &
-	     HRTIM_TIMISR_CPPSTAT);
+	current_pushpull_status = (hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxISR & HRTIM_TIMISR_CPPSTAT);
 
 	return current_pushpull_status;
 }
@@ -7939,8 +7224,7 @@ uint32_t HAL_HRTIM_GetCurrentPushPullStatus(const HRTIM_HandleTypeDef *hhrtim,
   *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
   * @retval Idle Push Pull Status
   */
-uint32_t HAL_HRTIM_GetIdlePushPullStatus(const HRTIM_HandleTypeDef *hhrtim,
-					 uint32_t TimerIdx)
+uint32_t HAL_HRTIM_GetIdlePushPullStatus(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	uint32_t idle_pushpull_status;
 
@@ -7948,9 +7232,7 @@ uint32_t HAL_HRTIM_GetIdlePushPullStatus(const HRTIM_HandleTypeDef *hhrtim,
 	assert_param(IS_HRTIM_TIMING_UNIT(TimerIdx));
 
 	/* Read current push pull status */
-	idle_pushpull_status =
-	    (hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxISR &
-	     HRTIM_TIMISR_IPPSTAT);
+	idle_pushpull_status = (hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxISR & HRTIM_TIMISR_IPPSTAT);
 
 	return idle_pushpull_status;
 }
@@ -8221,8 +7503,7 @@ __weak void HAL_HRTIM_SynchronizationEventCallback(HRTIM_HandleTypeDef *hhrtim)
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
  * @retval None
  */
-__weak void HAL_HRTIM_RegistersUpdateCallback(HRTIM_HandleTypeDef *hhrtim,
-					      uint32_t TimerIdx)
+__weak void HAL_HRTIM_RegistersUpdateCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
@@ -8248,8 +7529,7 @@ __weak void HAL_HRTIM_RegistersUpdateCallback(HRTIM_HandleTypeDef *hhrtim,
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
  * @retval None
  */
-__weak void HAL_HRTIM_RepetitionEventCallback(HRTIM_HandleTypeDef *hhrtim,
-					      uint32_t TimerIdx)
+__weak void HAL_HRTIM_RepetitionEventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
@@ -8276,8 +7556,7 @@ __weak void HAL_HRTIM_RepetitionEventCallback(HRTIM_HandleTypeDef *hhrtim,
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
  * @retval None
  */
-__weak void HAL_HRTIM_Compare1EventCallback(HRTIM_HandleTypeDef *hhrtim,
-					    uint32_t TimerIdx)
+__weak void HAL_HRTIM_Compare1EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
@@ -8304,8 +7583,7 @@ __weak void HAL_HRTIM_Compare1EventCallback(HRTIM_HandleTypeDef *hhrtim,
  *                   @arg HRTIM_TIMERINDEX_TIMER_E for timer E
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
  */
-__weak void HAL_HRTIM_Compare2EventCallback(HRTIM_HandleTypeDef *hhrtim,
-					    uint32_t TimerIdx)
+__weak void HAL_HRTIM_Compare2EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
@@ -8332,8 +7610,7 @@ __weak void HAL_HRTIM_Compare2EventCallback(HRTIM_HandleTypeDef *hhrtim,
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
  * @retval None
  */
-__weak void HAL_HRTIM_Compare3EventCallback(HRTIM_HandleTypeDef *hhrtim,
-					    uint32_t TimerIdx)
+__weak void HAL_HRTIM_Compare3EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
@@ -8360,8 +7637,7 @@ __weak void HAL_HRTIM_Compare3EventCallback(HRTIM_HandleTypeDef *hhrtim,
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
  * @retval None
  */
-__weak void HAL_HRTIM_Compare4EventCallback(HRTIM_HandleTypeDef *hhrtim,
-					    uint32_t TimerIdx)
+__weak void HAL_HRTIM_Compare4EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
@@ -8386,8 +7662,7 @@ __weak void HAL_HRTIM_Compare4EventCallback(HRTIM_HandleTypeDef *hhrtim,
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
  * @retval None
  */
-__weak void HAL_HRTIM_Capture1EventCallback(HRTIM_HandleTypeDef *hhrtim,
-					    uint32_t TimerIdx)
+__weak void HAL_HRTIM_Capture1EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
@@ -8412,8 +7687,7 @@ __weak void HAL_HRTIM_Capture1EventCallback(HRTIM_HandleTypeDef *hhrtim,
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
  * @retval None
  */
-__weak void HAL_HRTIM_Capture2EventCallback(HRTIM_HandleTypeDef *hhrtim,
-					    uint32_t TimerIdx)
+__weak void HAL_HRTIM_Capture2EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
@@ -8439,8 +7713,7 @@ __weak void HAL_HRTIM_Capture2EventCallback(HRTIM_HandleTypeDef *hhrtim,
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
  * @retval None
  */
-__weak void HAL_HRTIM_DelayedProtectionCallback(HRTIM_HandleTypeDef *hhrtim,
-						uint32_t TimerIdx)
+__weak void HAL_HRTIM_DelayedProtectionCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
@@ -8466,8 +7739,7 @@ __weak void HAL_HRTIM_DelayedProtectionCallback(HRTIM_HandleTypeDef *hhrtim,
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
  * @retval None
  */
-__weak void HAL_HRTIM_CounterResetCallback(HRTIM_HandleTypeDef *hhrtim,
-					   uint32_t TimerIdx)
+__weak void HAL_HRTIM_CounterResetCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
@@ -8492,8 +7764,7 @@ __weak void HAL_HRTIM_CounterResetCallback(HRTIM_HandleTypeDef *hhrtim,
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
  * @retval None
  */
-__weak void HAL_HRTIM_Output1SetCallback(HRTIM_HandleTypeDef *hhrtim,
-					 uint32_t TimerIdx)
+__weak void HAL_HRTIM_Output1SetCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
@@ -8518,8 +7789,7 @@ __weak void HAL_HRTIM_Output1SetCallback(HRTIM_HandleTypeDef *hhrtim,
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
  * @retval None
  */
-__weak void HAL_HRTIM_Output1ResetCallback(HRTIM_HandleTypeDef *hhrtim,
-					   uint32_t TimerIdx)
+__weak void HAL_HRTIM_Output1ResetCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
@@ -8544,8 +7814,7 @@ __weak void HAL_HRTIM_Output1ResetCallback(HRTIM_HandleTypeDef *hhrtim,
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
  * @retval None
  */
-__weak void HAL_HRTIM_Output2SetCallback(HRTIM_HandleTypeDef *hhrtim,
-					 uint32_t TimerIdx)
+__weak void HAL_HRTIM_Output2SetCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
@@ -8570,8 +7839,7 @@ __weak void HAL_HRTIM_Output2SetCallback(HRTIM_HandleTypeDef *hhrtim,
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
  * @retval None
  */
-__weak void HAL_HRTIM_Output2ResetCallback(HRTIM_HandleTypeDef *hhrtim,
-					   uint32_t TimerIdx)
+__weak void HAL_HRTIM_Output2ResetCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
@@ -8597,8 +7865,7 @@ __weak void HAL_HRTIM_Output2ResetCallback(HRTIM_HandleTypeDef *hhrtim,
  *                   @arg HRTIM_TIMERINDEX_TIMER_F for timer F
  * @retval None
  */
-__weak void HAL_HRTIM_BurstDMATransferCallback(HRTIM_HandleTypeDef *hhrtim,
-					       uint32_t TimerIdx)
+__weak void HAL_HRTIM_BurstDMATransferCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hhrtim);
@@ -8648,10 +7915,7 @@ __weak void HAL_HRTIM_ErrorCallback(HRTIM_HandleTypeDef *hhrtim)
  * @param  pCallback Callback function pointer
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_HRTIM_RegisterCallback(HRTIM_HandleTypeDef *hhrtim,
-			   HAL_HRTIM_CallbackIDTypeDef CallbackID,
-			   pHRTIM_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_HRTIM_RegisterCallback(HRTIM_HandleTypeDef *hhrtim, HAL_HRTIM_CallbackIDTypeDef CallbackID, pHRTIM_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -8704,8 +7968,7 @@ HAL_HRTIM_RegisterCallback(HRTIM_HandleTypeDef *hhrtim,
 				break;
 
 			case HAL_HRTIM_SYNCHRONIZATIONEVENTCALLBACK_CB_ID:
-				hhrtim->SynchronizationEventCallback =
-				    pCallback;
+				hhrtim->SynchronizationEventCallback = pCallback;
 				break;
 
 			case HAL_HRTIM_ERRORCALLBACK_CB_ID:
@@ -8722,8 +7985,7 @@ HAL_HRTIM_RegisterCallback(HRTIM_HandleTypeDef *hhrtim,
 
 			default:
 				/* Update the state */
-				hhrtim->State =
-				    HAL_HRTIM_STATE_INVALID_CALLBACK;
+				hhrtim->State = HAL_HRTIM_STATE_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -8741,8 +8003,7 @@ HAL_HRTIM_RegisterCallback(HRTIM_HandleTypeDef *hhrtim,
 
 			default:
 				/* Update the state */
-				hhrtim->State =
-				    HAL_HRTIM_STATE_INVALID_CALLBACK;
+				hhrtim->State = HAL_HRTIM_STATE_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -8782,9 +8043,7 @@ HAL_HRTIM_RegisterCallback(HRTIM_HandleTypeDef *hhrtim,
  *                   @arg HAL_HRTIM_MSPDEINIT_CB_ID
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_HRTIM_UnRegisterCallback(HRTIM_HandleTypeDef *hhrtim,
-			     HAL_HRTIM_CallbackIDTypeDef CallbackID)
+HAL_StatusTypeDef HAL_HRTIM_UnRegisterCallback(HRTIM_HandleTypeDef *hhrtim, HAL_HRTIM_CallbackIDTypeDef CallbackID)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -8794,53 +8053,43 @@ HAL_HRTIM_UnRegisterCallback(HRTIM_HandleTypeDef *hhrtim,
 	if (HAL_HRTIM_STATE_READY == hhrtim->State) {
 		switch (CallbackID) {
 			case HAL_HRTIM_FAULT1CALLBACK_CB_ID:
-				hhrtim->Fault1Callback =
-				    HAL_HRTIM_Fault1Callback;
+				hhrtim->Fault1Callback = HAL_HRTIM_Fault1Callback;
 				break;
 
 			case HAL_HRTIM_FAULT2CALLBACK_CB_ID:
-				hhrtim->Fault2Callback =
-				    HAL_HRTIM_Fault2Callback;
+				hhrtim->Fault2Callback = HAL_HRTIM_Fault2Callback;
 				break;
 
 			case HAL_HRTIM_FAULT3CALLBACK_CB_ID:
-				hhrtim->Fault3Callback =
-				    HAL_HRTIM_Fault3Callback;
+				hhrtim->Fault3Callback = HAL_HRTIM_Fault3Callback;
 				break;
 
 			case HAL_HRTIM_FAULT4CALLBACK_CB_ID:
-				hhrtim->Fault4Callback =
-				    HAL_HRTIM_Fault4Callback;
+				hhrtim->Fault4Callback = HAL_HRTIM_Fault4Callback;
 				break;
 
 			case HAL_HRTIM_FAULT5CALLBACK_CB_ID:
-				hhrtim->Fault5Callback =
-				    HAL_HRTIM_Fault5Callback;
+				hhrtim->Fault5Callback = HAL_HRTIM_Fault5Callback;
 				break;
 
 			case HAL_HRTIM_FAULT6CALLBACK_CB_ID:
-				hhrtim->Fault6Callback =
-				    HAL_HRTIM_Fault6Callback;
+				hhrtim->Fault6Callback = HAL_HRTIM_Fault6Callback;
 				break;
 
 			case HAL_HRTIM_SYSTEMFAULTCALLBACK_CB_ID:
-				hhrtim->SystemFaultCallback =
-				    HAL_HRTIM_SystemFaultCallback;
+				hhrtim->SystemFaultCallback = HAL_HRTIM_SystemFaultCallback;
 				break;
 
 			case HAL_HRTIM_DLLCALBRATIONREADYCALLBACK_CB_ID:
-				hhrtim->DLLCalibrationReadyCallback =
-				    HAL_HRTIM_DLLCalibrationReadyCallback;
+				hhrtim->DLLCalibrationReadyCallback = HAL_HRTIM_DLLCalibrationReadyCallback;
 				break;
 
 			case HAL_HRTIM_BURSTMODEPERIODCALLBACK_CB_ID:
-				hhrtim->BurstModePeriodCallback =
-				    HAL_HRTIM_BurstModePeriodCallback;
+				hhrtim->BurstModePeriodCallback = HAL_HRTIM_BurstModePeriodCallback;
 				break;
 
 			case HAL_HRTIM_SYNCHRONIZATIONEVENTCALLBACK_CB_ID:
-				hhrtim->SynchronizationEventCallback =
-				    HAL_HRTIM_SynchronizationEventCallback;
+				hhrtim->SynchronizationEventCallback = HAL_HRTIM_SynchronizationEventCallback;
 				break;
 
 			case HAL_HRTIM_ERRORCALLBACK_CB_ID:
@@ -8857,8 +8106,7 @@ HAL_HRTIM_UnRegisterCallback(HRTIM_HandleTypeDef *hhrtim,
 
 			default:
 				/* Update the state */
-				hhrtim->State =
-				    HAL_HRTIM_STATE_INVALID_CALLBACK;
+				hhrtim->State = HAL_HRTIM_STATE_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -8876,8 +8124,7 @@ HAL_HRTIM_UnRegisterCallback(HRTIM_HandleTypeDef *hhrtim,
 
 			default:
 				/* Update the state */
-				hhrtim->State =
-				    HAL_HRTIM_STATE_INVALID_CALLBACK;
+				hhrtim->State = HAL_HRTIM_STATE_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -8920,10 +8167,7 @@ HAL_HRTIM_UnRegisterCallback(HRTIM_HandleTypeDef *hhrtim,
  * @param  pCallback Callback function pointer
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_HRTIM_TIMxRegisterCallback(HRTIM_HandleTypeDef *hhrtim,
-			       HAL_HRTIM_CallbackIDTypeDef CallbackID,
-			       pHRTIM_TIMxCallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_HRTIM_TIMxRegisterCallback(HRTIM_HandleTypeDef *hhrtim, HAL_HRTIM_CallbackIDTypeDef CallbackID, pHRTIM_TIMxCallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -9001,8 +8245,7 @@ HAL_HRTIM_TIMxRegisterCallback(HRTIM_HandleTypeDef *hhrtim,
 
 			default:
 				/* Update the state */
-				hhrtim->State =
-				    HAL_HRTIM_STATE_INVALID_CALLBACK;
+				hhrtim->State = HAL_HRTIM_STATE_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -9044,9 +8287,7 @@ HAL_HRTIM_TIMxRegisterCallback(HRTIM_HandleTypeDef *hhrtim,
  *                   @arg HAL_HRTIM_BURSTDMATRANSFERCALLBACK_CB_ID
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_HRTIM_TIMxUnRegisterCallback(HRTIM_HandleTypeDef *hhrtim,
-				 HAL_HRTIM_CallbackIDTypeDef CallbackID)
+HAL_StatusTypeDef HAL_HRTIM_TIMxUnRegisterCallback(HRTIM_HandleTypeDef *hhrtim, HAL_HRTIM_CallbackIDTypeDef CallbackID)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -9056,84 +8297,68 @@ HAL_HRTIM_TIMxUnRegisterCallback(HRTIM_HandleTypeDef *hhrtim,
 	if (HAL_HRTIM_STATE_READY == hhrtim->State) {
 		switch (CallbackID) {
 			case HAL_HRTIM_REGISTERSUPDATECALLBACK_CB_ID:
-				hhrtim->RegistersUpdateCallback =
-				    HAL_HRTIM_RegistersUpdateCallback;
+				hhrtim->RegistersUpdateCallback = HAL_HRTIM_RegistersUpdateCallback;
 				break;
 
 			case HAL_HRTIM_REPETITIONEVENTCALLBACK_CB_ID:
-				hhrtim->RepetitionEventCallback =
-				    HAL_HRTIM_RepetitionEventCallback;
+				hhrtim->RepetitionEventCallback = HAL_HRTIM_RepetitionEventCallback;
 				break;
 
 			case HAL_HRTIM_COMPARE1EVENTCALLBACK_CB_ID:
-				hhrtim->Compare1EventCallback =
-				    HAL_HRTIM_Compare1EventCallback;
+				hhrtim->Compare1EventCallback = HAL_HRTIM_Compare1EventCallback;
 				break;
 
 			case HAL_HRTIM_COMPARE2EVENTCALLBACK_CB_ID:
-				hhrtim->Compare2EventCallback =
-				    HAL_HRTIM_Compare2EventCallback;
+				hhrtim->Compare2EventCallback = HAL_HRTIM_Compare2EventCallback;
 				break;
 
 			case HAL_HRTIM_COMPARE3EVENTCALLBACK_CB_ID:
-				hhrtim->Compare3EventCallback =
-				    HAL_HRTIM_Compare3EventCallback;
+				hhrtim->Compare3EventCallback = HAL_HRTIM_Compare3EventCallback;
 				break;
 
 			case HAL_HRTIM_COMPARE4EVENTCALLBACK_CB_ID:
-				hhrtim->Compare4EventCallback =
-				    HAL_HRTIM_Compare4EventCallback;
+				hhrtim->Compare4EventCallback = HAL_HRTIM_Compare4EventCallback;
 				break;
 
 			case HAL_HRTIM_CAPTURE1EVENTCALLBACK_CB_ID:
-				hhrtim->Capture1EventCallback =
-				    HAL_HRTIM_Capture1EventCallback;
+				hhrtim->Capture1EventCallback = HAL_HRTIM_Capture1EventCallback;
 				break;
 
 			case HAL_HRTIM_CAPTURE2EVENTCALLBACK_CB_ID:
-				hhrtim->Capture2EventCallback =
-				    HAL_HRTIM_Capture2EventCallback;
+				hhrtim->Capture2EventCallback = HAL_HRTIM_Capture2EventCallback;
 				break;
 
 			case HAL_HRTIM_DELAYEDPROTECTIONCALLBACK_CB_ID:
-				hhrtim->DelayedProtectionCallback =
-				    HAL_HRTIM_DelayedProtectionCallback;
+				hhrtim->DelayedProtectionCallback = HAL_HRTIM_DelayedProtectionCallback;
 				break;
 
 			case HAL_HRTIM_COUNTERRESETCALLBACK_CB_ID:
-				hhrtim->CounterResetCallback =
-				    HAL_HRTIM_CounterResetCallback;
+				hhrtim->CounterResetCallback = HAL_HRTIM_CounterResetCallback;
 				break;
 
 			case HAL_HRTIM_OUTPUT1SETCALLBACK_CB_ID:
-				hhrtim->Output1SetCallback =
-				    HAL_HRTIM_Output1SetCallback;
+				hhrtim->Output1SetCallback = HAL_HRTIM_Output1SetCallback;
 				break;
 
 			case HAL_HRTIM_OUTPUT1RESETCALLBACK_CB_ID:
-				hhrtim->Output1ResetCallback =
-				    HAL_HRTIM_Output1ResetCallback;
+				hhrtim->Output1ResetCallback = HAL_HRTIM_Output1ResetCallback;
 				break;
 
 			case HAL_HRTIM_OUTPUT2SETCALLBACK_CB_ID:
-				hhrtim->Output2SetCallback =
-				    HAL_HRTIM_Output2SetCallback;
+				hhrtim->Output2SetCallback = HAL_HRTIM_Output2SetCallback;
 				break;
 
 			case HAL_HRTIM_OUTPUT2RESETCALLBACK_CB_ID:
-				hhrtim->Output2ResetCallback =
-				    HAL_HRTIM_Output2ResetCallback;
+				hhrtim->Output2ResetCallback = HAL_HRTIM_Output2ResetCallback;
 				break;
 
 			case HAL_HRTIM_BURSTDMATRANSFERCALLBACK_CB_ID:
-				hhrtim->BurstDMATransferCallback =
-				    HAL_HRTIM_BurstDMATransferCallback;
+				hhrtim->BurstDMATransferCallback = HAL_HRTIM_BurstDMATransferCallback;
 				break;
 
 			default:
 				/* Update the state */
-				hhrtim->State =
-				    HAL_HRTIM_STATE_INVALID_CALLBACK;
+				hhrtim->State = HAL_HRTIM_STATE_INVALID_CALLBACK;
 
 				/* Return error status */
 				status = HAL_ERROR;
@@ -9171,9 +8396,7 @@ HAL_HRTIM_TIMxUnRegisterCallback(HRTIM_HandleTypeDef *hhrtim,
  * @param  pTimeBaseCfg pointer to the time base configuration structure
  * @retval None
  */
-static void
-HRTIM_MasterBase_Config(HRTIM_HandleTypeDef *hhrtim,
-			const HRTIM_TimeBaseCfgTypeDef *pTimeBaseCfg)
+static void HRTIM_MasterBase_Config(HRTIM_HandleTypeDef *hhrtim, const HRTIM_TimeBaseCfgTypeDef *pTimeBaseCfg)
 {
 	uint32_t hrtim_mcr;
 
@@ -9201,9 +8424,7 @@ HRTIM_MasterBase_Config(HRTIM_HandleTypeDef *hhrtim,
  * @param  pTimeBaseCfg pointer to the time base configuration structure
  * @retval None
  */
-static void
-HRTIM_TimingUnitBase_Config(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
-			    const HRTIM_TimeBaseCfgTypeDef *pTimeBaseCfg)
+static void HRTIM_TimingUnitBase_Config(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_TimeBaseCfgTypeDef *pTimeBaseCfg)
 {
 	uint32_t hrtim_timcr;
 
@@ -9221,8 +8442,7 @@ HRTIM_TimingUnitBase_Config(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
 	/* Update the HRTIM registers */
 	hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxCR = hrtim_timcr;
 	hhrtim->Instance->sTimerxRegs[TimerIdx].PERxR = pTimeBaseCfg->Period;
-	hhrtim->Instance->sTimerxRegs[TimerIdx].REPxR =
-	    pTimeBaseCfg->RepetitionCounter;
+	hhrtim->Instance->sTimerxRegs[TimerIdx].REPxR = pTimeBaseCfg->RepetitionCounter;
 }
 
 /**
@@ -9231,8 +8451,7 @@ HRTIM_TimingUnitBase_Config(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
  * @param  pTimerCfg pointer to the timer configuration data structure
  * @retval None
  */
-static void HRTIM_MasterWaveform_Config(HRTIM_HandleTypeDef *hhrtim,
-					const HRTIM_TimerCfgTypeDef *pTimerCfg)
+static void HRTIM_MasterWaveform_Config(HRTIM_HandleTypeDef *hhrtim, const HRTIM_TimerCfgTypeDef *pTimerCfg)
 {
 	uint32_t hrtim_mcr;
 	uint32_t hrtim_bmcr;
@@ -9247,13 +8466,11 @@ static void HRTIM_MasterWaveform_Config(HRTIM_HandleTypeDef *hhrtim,
 
 	/* INTLVD bits are set to 00 */
 	hrtim_mcr &= ~(HRTIM_MCR_INTLVD);
-	if ((pTimerCfg->HalfModeEnable == HRTIM_HALFMODE_ENABLED) ||
-	    (pTimerCfg->InterleavedMode == HRTIM_INTERLEAVED_MODE_DUAL)) {
+	if ((pTimerCfg->HalfModeEnable == HRTIM_HALFMODE_ENABLED) || (pTimerCfg->InterleavedMode == HRTIM_INTERLEAVED_MODE_DUAL)) {
 		/* INTLVD bits set to 00 */
 		hrtim_mcr &= ~(HRTIM_MCR_INTLVD);
 		hrtim_mcr |= (HRTIM_MCR_HALF);
-	} else if (pTimerCfg->InterleavedMode ==
-		   HRTIM_INTERLEAVED_MODE_TRIPLE) {
+	} else if (pTimerCfg->InterleavedMode == HRTIM_INTERLEAVED_MODE_TRIPLE) {
 		hrtim_mcr |= (HRTIM_MCR_INTLVD_0);
 		hrtim_mcr &= ~(HRTIM_MCR_INTLVD_1);
 	} else if (pTimerCfg->InterleavedMode == HRTIM_INTERLEAVED_MODE_QUAD) {
@@ -9306,9 +8523,7 @@ static void HRTIM_MasterWaveform_Config(HRTIM_HandleTypeDef *hhrtim,
  * @param  pTimerCfg pointer to the timer configuration data structure
  * @retval None
  */
-static void
-HRTIM_TimingUnitWaveform_Config(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
-				const HRTIM_TimerCfgTypeDef *pTimerCfg)
+static void HRTIM_TimingUnitWaveform_Config(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_TimerCfgTypeDef *pTimerCfg)
 {
 	uint32_t hrtim_timcr;
 	uint32_t hrtim_timfltr;
@@ -9329,13 +8544,11 @@ HRTIM_TimingUnitWaveform_Config(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
 	hrtim_timcr &= ~(HRTIM_TIMCR_HALF);
 	hrtim_timcr |= pTimerCfg->HalfModeEnable;
 
-	if ((pTimerCfg->HalfModeEnable == HRTIM_HALFMODE_ENABLED) ||
-	    (pTimerCfg->InterleavedMode == HRTIM_INTERLEAVED_MODE_DUAL)) {
+	if ((pTimerCfg->HalfModeEnable == HRTIM_HALFMODE_ENABLED) || (pTimerCfg->InterleavedMode == HRTIM_INTERLEAVED_MODE_DUAL)) {
 		/* INTLVD bits set to 00 */
 		hrtim_timcr &= ~(HRTIM_TIMCR_INTLVD);
 		hrtim_timcr |= (HRTIM_TIMCR_HALF);
-	} else if (pTimerCfg->InterleavedMode ==
-		   HRTIM_INTERLEAVED_MODE_TRIPLE) {
+	} else if (pTimerCfg->InterleavedMode == HRTIM_INTERLEAVED_MODE_TRIPLE) {
 		hrtim_timcr |= (HRTIM_TIMCR_INTLVD_0);
 		hrtim_timcr &= ~(HRTIM_TIMCR_INTLVD_1);
 	} else if (pTimerCfg->InterleavedMode == HRTIM_INTERLEAVED_MODE_QUAD) {
@@ -9402,10 +8615,7 @@ HRTIM_TimingUnitWaveform_Config(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
 	   Delayed Idle is available whatever the timer operating mode (regular,
 	   push-pull) Balanced Idle is only available in push-pull mode
 	*/
-	if (((pTimerCfg->DelayedProtectionMode !=
-	      HRTIM_TIMER_A_B_C_DELAYEDPROTECTION_BALANCED_EEV6) &&
-	     (pTimerCfg->DelayedProtectionMode !=
-	      HRTIM_TIMER_A_B_C_DELAYEDPROTECTION_BALANCED_EEV7)) ||
+	if (((pTimerCfg->DelayedProtectionMode != HRTIM_TIMER_A_B_C_DELAYEDPROTECTION_BALANCED_EEV6) && (pTimerCfg->DelayedProtectionMode != HRTIM_TIMER_A_B_C_DELAYEDPROTECTION_BALANCED_EEV7)) ||
 	    (pTimerCfg->PushPull == HRTIM_TIMPUSHPULLMODE_ENABLED)) {
 		hrtim_timoutr &= ~(HRTIM_OUTR_DLYPRT | HRTIM_OUTR_DLYPRTEN);
 		hrtim_timoutr |= pTimerCfg->DelayedProtectionMode;
@@ -9475,9 +8685,7 @@ HRTIM_TimingUnitWaveform_Config(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
  * @param  pTimerCtl pointer to the timer configuration data structure
  * @retval None
  */
-static void
-HRTIM_TimingUnitWaveform_Control(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
-				 const HRTIM_TimerCtlTypeDef *pTimerCtl)
+static void HRTIM_TimingUnitWaveform_Control(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_TimerCtlTypeDef *pTimerCtl)
 {
 	uint32_t hrtim_timcr2;
 
@@ -9526,9 +8734,7 @@ HRTIM_TimingUnitWaveform_Control(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
  * @param  pRollOverMode: a combination of the timer RollOver Mode configuration
  * @retval None
  */
-static void HRTIM_TimingUnitRollOver_Config(HRTIM_HandleTypeDef *hhrtim,
-					    uint32_t TimerIdx,
-					    uint32_t pRollOverMode)
+static void HRTIM_TimingUnitRollOver_Config(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t pRollOverMode)
 {
 	uint32_t hrtim_timcr2;
 
@@ -9538,15 +8744,10 @@ static void HRTIM_TimingUnitRollOver_Config(HRTIM_HandleTypeDef *hhrtim,
 	if ((hrtim_timcr2 & HRTIM_TIMCR2_UDM) != 0U) {
 		/* xxROM bitfield must be reset before programming a new value
 		 */
-		hrtim_timcr2 &= ~(HRTIM_TIMCR2_ROM | HRTIM_TIMCR2_OUTROM |
-				  HRTIM_TIMCR2_ADROM | HRTIM_TIMCR2_BMROM |
-				  HRTIM_TIMCR2_FEROM);
+		hrtim_timcr2 &= ~(HRTIM_TIMCR2_ROM | HRTIM_TIMCR2_OUTROM | HRTIM_TIMCR2_ADROM | HRTIM_TIMCR2_BMROM | HRTIM_TIMCR2_FEROM);
 
 		/* Update the HRTIM TIMxCR2 register */
-		hrtim_timcr2 |=
-		    pRollOverMode & (HRTIM_TIMCR2_ROM | HRTIM_TIMCR2_OUTROM |
-				     HRTIM_TIMCR2_ADROM | HRTIM_TIMCR2_BMROM |
-				     HRTIM_TIMCR2_FEROM);
+		hrtim_timcr2 |= pRollOverMode & (HRTIM_TIMCR2_ROM | HRTIM_TIMCR2_OUTROM | HRTIM_TIMCR2_ADROM | HRTIM_TIMCR2_BMROM | HRTIM_TIMCR2_FEROM);
 
 		hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxCR2 = hrtim_timcr2;
 	}
@@ -9560,9 +8761,7 @@ static void HRTIM_TimingUnitRollOver_Config(HRTIM_HandleTypeDef *hhrtim,
  * @param  Event Event reference
  * @retval None
  */
-static void HRTIM_CaptureUnitConfig(HRTIM_HandleTypeDef *hhrtim,
-				    uint32_t TimerIdx, uint32_t CaptureUnit,
-				    uint32_t Event)
+static void HRTIM_CaptureUnitConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureUnit, uint32_t Event)
 {
 	uint32_t CaptureTrigger = 0xFFFFFFFFU;
 
@@ -9623,14 +8822,12 @@ static void HRTIM_CaptureUnitConfig(HRTIM_HandleTypeDef *hhrtim,
 
 	switch (CaptureUnit) {
 		case HRTIM_CAPTUREUNIT_1: {
-			hhrtim->TimerParam[TimerIdx].CaptureTrigger1 =
-			    CaptureTrigger;
+			hhrtim->TimerParam[TimerIdx].CaptureTrigger1 = CaptureTrigger;
 			break;
 		}
 
 		case HRTIM_CAPTUREUNIT_2: {
-			hhrtim->TimerParam[TimerIdx].CaptureTrigger2 =
-			    CaptureTrigger;
+			hhrtim->TimerParam[TimerIdx].CaptureTrigger2 = CaptureTrigger;
 			break;
 		}
 
@@ -9647,9 +8844,7 @@ static void HRTIM_CaptureUnitConfig(HRTIM_HandleTypeDef *hhrtim,
  * @param  pOutputCfg pointer to the output configuration data structure
  * @retval None
  */
-static void HRTIM_OutputConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
-			       uint32_t Output,
-			       const HRTIM_OutputCfgTypeDef *pOutputCfg)
+static void HRTIM_OutputConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t Output, const HRTIM_OutputCfgTypeDef *pOutputCfg)
 {
 	uint32_t hrtim_outr;
 	uint32_t hrtim_dtr;
@@ -9667,10 +8862,8 @@ static void HRTIM_OutputConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
 		case HRTIM_OUTPUT_TE1:
 		case HRTIM_OUTPUT_TF1: {
 			/* Set the output set/reset crossbar */
-			hhrtim->Instance->sTimerxRegs[TimerIdx].SETx1R =
-			    pOutputCfg->SetSource;
-			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTx1R =
-			    pOutputCfg->ResetSource;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].SETx1R = pOutputCfg->SetSource;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTx1R = pOutputCfg->ResetSource;
 			break;
 		}
 
@@ -9681,10 +8874,8 @@ static void HRTIM_OutputConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
 		case HRTIM_OUTPUT_TE2:
 		case HRTIM_OUTPUT_TF2: {
 			/* Set the output set/reset crossbar */
-			hhrtim->Instance->sTimerxRegs[TimerIdx].SETx2R =
-			    pOutputCfg->SetSource;
-			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTx2R =
-			    pOutputCfg->ResetSource;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].SETx2R = pOutputCfg->SetSource;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTx2R = pOutputCfg->ResetSource;
 			shift = 16U;
 			break;
 		}
@@ -9694,10 +8885,7 @@ static void HRTIM_OutputConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
 	}
 
 	/* Clear output config */
-	hrtim_outr &=
-	    ~((HRTIM_OUTR_POL1 | HRTIM_OUTR_IDLM1 | HRTIM_OUTR_IDLES1 |
-	       HRTIM_OUTR_FAULT1 | HRTIM_OUTR_CHP1 | HRTIM_OUTR_DIDL1)
-	      << shift);
+	hrtim_outr &= ~((HRTIM_OUTR_POL1 | HRTIM_OUTR_IDLM1 | HRTIM_OUTR_IDLES1 | HRTIM_OUTR_FAULT1 | HRTIM_OUTR_CHP1 | HRTIM_OUTR_DIDL1) << shift);
 
 	/* Set the polarity */
 	hrtim_outr |= (pOutputCfg->Polarity << shift);
@@ -9720,9 +8908,7 @@ static void HRTIM_OutputConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
 	   - the outputs is active during the burst mode (IDLES=1U)
 	   - positive deadtimes (SDTR/SDTF set to 0U)
 	*/
-	if ((pOutputCfg->IdleLevel == HRTIM_OUTPUTIDLELEVEL_ACTIVE) &&
-	    ((hrtim_dtr & HRTIM_DTR_SDTR) == (uint32_t)RESET) &&
-	    ((hrtim_dtr & HRTIM_DTR_SDTF) == (uint32_t)RESET)) {
+	if ((pOutputCfg->IdleLevel == HRTIM_OUTPUTIDLELEVEL_ACTIVE) && ((hrtim_dtr & HRTIM_DTR_SDTR) == (uint32_t)RESET) && ((hrtim_dtr & HRTIM_DTR_SDTF) == (uint32_t)RESET)) {
 		hrtim_outr |= (pOutputCfg->BurstModeEntryDelayed << shift);
 	}
 
@@ -9737,8 +8923,7 @@ static void HRTIM_OutputConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx,
  * @param  pEventCfg pointer to the event channel configuration data structure
  * @retval None
  */
-static void HRTIM_EventConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Event,
-			      const HRTIM_EventCfgTypeDef *pEventCfg)
+static void HRTIM_EventConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Event, const HRTIM_EventCfgTypeDef *pEventCfg)
 {
 	uint32_t hrtim_eecr1;
 	uint32_t hrtim_eecr2;
@@ -9759,113 +8944,80 @@ static void HRTIM_EventConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Event,
 		}
 
 		case HRTIM_EVENT_1: {
-			hrtim_eecr1 &=
-			    ~(HRTIM_EECR1_EE1SRC | HRTIM_EECR1_EE1POL |
-			      HRTIM_EECR1_EE1SNS | HRTIM_EECR1_EE1FAST);
+			hrtim_eecr1 &= ~(HRTIM_EECR1_EE1SRC | HRTIM_EECR1_EE1POL | HRTIM_EECR1_EE1SNS | HRTIM_EECR1_EE1FAST);
 			hrtim_eecr1 |= (pEventCfg->Source & HRTIM_EECR1_EE1SRC);
-			hrtim_eecr1 |=
-			    (pEventCfg->Polarity & HRTIM_EECR1_EE1POL);
-			hrtim_eecr1 |=
-			    (pEventCfg->Sensitivity & HRTIM_EECR1_EE1SNS);
+			hrtim_eecr1 |= (pEventCfg->Polarity & HRTIM_EECR1_EE1POL);
+			hrtim_eecr1 |= (pEventCfg->Sensitivity & HRTIM_EECR1_EE1SNS);
 			/* Update the HRTIM registers (all bitfields but EE1FAST
 			 * bit) */
 			hhrtim->Instance->sCommonRegs.EECR1 = hrtim_eecr1;
 			/* Update the HRTIM registers (EE1FAST bit) */
-			hrtim_eecr1 |=
-			    (pEventCfg->FastMode & HRTIM_EECR1_EE1FAST);
+			hrtim_eecr1 |= (pEventCfg->FastMode & HRTIM_EECR1_EE1FAST);
 			hhrtim->Instance->sCommonRegs.EECR1 = hrtim_eecr1;
 			break;
 		}
 
 		case HRTIM_EVENT_2: {
-			hrtim_eecr1 &=
-			    ~(HRTIM_EECR1_EE2SRC | HRTIM_EECR1_EE2POL |
-			      HRTIM_EECR1_EE2SNS | HRTIM_EECR1_EE2FAST);
-			hrtim_eecr1 |=
-			    ((pEventCfg->Source << 6U) & HRTIM_EECR1_EE2SRC);
-			hrtim_eecr1 |=
-			    ((pEventCfg->Polarity << 6U) & HRTIM_EECR1_EE2POL);
-			hrtim_eecr1 |= ((pEventCfg->Sensitivity << 6U) &
-					HRTIM_EECR1_EE2SNS);
+			hrtim_eecr1 &= ~(HRTIM_EECR1_EE2SRC | HRTIM_EECR1_EE2POL | HRTIM_EECR1_EE2SNS | HRTIM_EECR1_EE2FAST);
+			hrtim_eecr1 |= ((pEventCfg->Source << 6U) & HRTIM_EECR1_EE2SRC);
+			hrtim_eecr1 |= ((pEventCfg->Polarity << 6U) & HRTIM_EECR1_EE2POL);
+			hrtim_eecr1 |= ((pEventCfg->Sensitivity << 6U) & HRTIM_EECR1_EE2SNS);
 			/* Update the HRTIM registers (all bitfields but EE2FAST
 			 * bit) */
 			hhrtim->Instance->sCommonRegs.EECR1 = hrtim_eecr1;
 			/* Update the HRTIM registers (EE2FAST bit) */
-			hrtim_eecr1 |=
-			    ((pEventCfg->FastMode << 6U) & HRTIM_EECR1_EE2FAST);
+			hrtim_eecr1 |= ((pEventCfg->FastMode << 6U) & HRTIM_EECR1_EE2FAST);
 			hhrtim->Instance->sCommonRegs.EECR1 = hrtim_eecr1;
 			break;
 		}
 
 		case HRTIM_EVENT_3: {
-			hrtim_eecr1 &=
-			    ~(HRTIM_EECR1_EE3SRC | HRTIM_EECR1_EE3POL |
-			      HRTIM_EECR1_EE3SNS | HRTIM_EECR1_EE3FAST);
-			hrtim_eecr1 |=
-			    ((pEventCfg->Source << 12U) & HRTIM_EECR1_EE3SRC);
-			hrtim_eecr1 |=
-			    ((pEventCfg->Polarity << 12U) & HRTIM_EECR1_EE3POL);
-			hrtim_eecr1 |= ((pEventCfg->Sensitivity << 12U) &
-					HRTIM_EECR1_EE3SNS);
+			hrtim_eecr1 &= ~(HRTIM_EECR1_EE3SRC | HRTIM_EECR1_EE3POL | HRTIM_EECR1_EE3SNS | HRTIM_EECR1_EE3FAST);
+			hrtim_eecr1 |= ((pEventCfg->Source << 12U) & HRTIM_EECR1_EE3SRC);
+			hrtim_eecr1 |= ((pEventCfg->Polarity << 12U) & HRTIM_EECR1_EE3POL);
+			hrtim_eecr1 |= ((pEventCfg->Sensitivity << 12U) & HRTIM_EECR1_EE3SNS);
 			/* Update the HRTIM registers (all bitfields but EE3FAST
 			 * bit) */
 			hhrtim->Instance->sCommonRegs.EECR1 = hrtim_eecr1;
 			/* Update the HRTIM registers (EE3FAST bit) */
-			hrtim_eecr1 |= ((pEventCfg->FastMode << 12U) &
-					HRTIM_EECR1_EE3FAST);
+			hrtim_eecr1 |= ((pEventCfg->FastMode << 12U) & HRTIM_EECR1_EE3FAST);
 			hhrtim->Instance->sCommonRegs.EECR1 = hrtim_eecr1;
 			break;
 		}
 
 		case HRTIM_EVENT_4: {
-			hrtim_eecr1 &=
-			    ~(HRTIM_EECR1_EE4SRC | HRTIM_EECR1_EE4POL |
-			      HRTIM_EECR1_EE4SNS | HRTIM_EECR1_EE4FAST);
-			hrtim_eecr1 |=
-			    ((pEventCfg->Source << 18U) & HRTIM_EECR1_EE4SRC);
-			hrtim_eecr1 |=
-			    ((pEventCfg->Polarity << 18U) & HRTIM_EECR1_EE4POL);
-			hrtim_eecr1 |= ((pEventCfg->Sensitivity << 18U) &
-					HRTIM_EECR1_EE4SNS);
+			hrtim_eecr1 &= ~(HRTIM_EECR1_EE4SRC | HRTIM_EECR1_EE4POL | HRTIM_EECR1_EE4SNS | HRTIM_EECR1_EE4FAST);
+			hrtim_eecr1 |= ((pEventCfg->Source << 18U) & HRTIM_EECR1_EE4SRC);
+			hrtim_eecr1 |= ((pEventCfg->Polarity << 18U) & HRTIM_EECR1_EE4POL);
+			hrtim_eecr1 |= ((pEventCfg->Sensitivity << 18U) & HRTIM_EECR1_EE4SNS);
 			/* Update the HRTIM registers (all bitfields but EE4FAST
 			 * bit) */
 			hhrtim->Instance->sCommonRegs.EECR1 = hrtim_eecr1;
 			/* Update the HRTIM registers (EE4FAST bit) */
-			hrtim_eecr1 |= ((pEventCfg->FastMode << 18U) &
-					HRTIM_EECR1_EE4FAST);
+			hrtim_eecr1 |= ((pEventCfg->FastMode << 18U) & HRTIM_EECR1_EE4FAST);
 			hhrtim->Instance->sCommonRegs.EECR1 = hrtim_eecr1;
 			break;
 		}
 
 		case HRTIM_EVENT_5: {
-			hrtim_eecr1 &=
-			    ~(HRTIM_EECR1_EE5SRC | HRTIM_EECR1_EE5POL |
-			      HRTIM_EECR1_EE5SNS | HRTIM_EECR1_EE5FAST);
-			hrtim_eecr1 |=
-			    ((pEventCfg->Source << 24U) & HRTIM_EECR1_EE5SRC);
-			hrtim_eecr1 |=
-			    ((pEventCfg->Polarity << 24U) & HRTIM_EECR1_EE5POL);
-			hrtim_eecr1 |= ((pEventCfg->Sensitivity << 24U) &
-					HRTIM_EECR1_EE5SNS);
+			hrtim_eecr1 &= ~(HRTIM_EECR1_EE5SRC | HRTIM_EECR1_EE5POL | HRTIM_EECR1_EE5SNS | HRTIM_EECR1_EE5FAST);
+			hrtim_eecr1 |= ((pEventCfg->Source << 24U) & HRTIM_EECR1_EE5SRC);
+			hrtim_eecr1 |= ((pEventCfg->Polarity << 24U) & HRTIM_EECR1_EE5POL);
+			hrtim_eecr1 |= ((pEventCfg->Sensitivity << 24U) & HRTIM_EECR1_EE5SNS);
 			/* Update the HRTIM registers (all bitfields but EE5FAST
 			 * bit) */
 			hhrtim->Instance->sCommonRegs.EECR1 = hrtim_eecr1;
 			/* Update the HRTIM registers (EE5FAST bit) */
-			hrtim_eecr1 |= ((pEventCfg->FastMode << 24U) &
-					HRTIM_EECR1_EE5FAST);
+			hrtim_eecr1 |= ((pEventCfg->FastMode << 24U) & HRTIM_EECR1_EE5FAST);
 			hhrtim->Instance->sCommonRegs.EECR1 = hrtim_eecr1;
 			break;
 		}
 
 		case HRTIM_EVENT_6: {
-			hrtim_eecr2 &=
-			    ~(HRTIM_EECR2_EE6SRC | HRTIM_EECR2_EE6POL |
-			      HRTIM_EECR2_EE6SNS);
+			hrtim_eecr2 &= ~(HRTIM_EECR2_EE6SRC | HRTIM_EECR2_EE6POL | HRTIM_EECR2_EE6SNS);
 			hrtim_eecr2 |= (pEventCfg->Source & HRTIM_EECR2_EE6SRC);
-			hrtim_eecr2 |=
-			    (pEventCfg->Polarity & HRTIM_EECR2_EE6POL);
-			hrtim_eecr2 |=
-			    (pEventCfg->Sensitivity & HRTIM_EECR2_EE6SNS);
+			hrtim_eecr2 |= (pEventCfg->Polarity & HRTIM_EECR2_EE6POL);
+			hrtim_eecr2 |= (pEventCfg->Sensitivity & HRTIM_EECR2_EE6SNS);
 			hrtim_eecr3 &= ~(HRTIM_EECR3_EE6F);
 			hrtim_eecr3 |= (pEventCfg->Filter & HRTIM_EECR3_EE6F);
 			/* Update the HRTIM registers */
@@ -9875,18 +9027,12 @@ static void HRTIM_EventConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Event,
 		}
 
 		case HRTIM_EVENT_7: {
-			hrtim_eecr2 &=
-			    ~(HRTIM_EECR2_EE7SRC | HRTIM_EECR2_EE7POL |
-			      HRTIM_EECR2_EE7SNS);
-			hrtim_eecr2 |=
-			    ((pEventCfg->Source << 6U) & HRTIM_EECR2_EE7SRC);
-			hrtim_eecr2 |=
-			    ((pEventCfg->Polarity << 6U) & HRTIM_EECR2_EE7POL);
-			hrtim_eecr2 |= ((pEventCfg->Sensitivity << 6U) &
-					HRTIM_EECR2_EE7SNS);
+			hrtim_eecr2 &= ~(HRTIM_EECR2_EE7SRC | HRTIM_EECR2_EE7POL | HRTIM_EECR2_EE7SNS);
+			hrtim_eecr2 |= ((pEventCfg->Source << 6U) & HRTIM_EECR2_EE7SRC);
+			hrtim_eecr2 |= ((pEventCfg->Polarity << 6U) & HRTIM_EECR2_EE7POL);
+			hrtim_eecr2 |= ((pEventCfg->Sensitivity << 6U) & HRTIM_EECR2_EE7SNS);
 			hrtim_eecr3 &= ~(HRTIM_EECR3_EE7F);
-			hrtim_eecr3 |=
-			    ((pEventCfg->Filter << 6U) & HRTIM_EECR3_EE7F);
+			hrtim_eecr3 |= ((pEventCfg->Filter << 6U) & HRTIM_EECR3_EE7F);
 			/* Update the HRTIM registers */
 			hhrtim->Instance->sCommonRegs.EECR2 = hrtim_eecr2;
 			hhrtim->Instance->sCommonRegs.EECR3 = hrtim_eecr3;
@@ -9894,18 +9040,12 @@ static void HRTIM_EventConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Event,
 		}
 
 		case HRTIM_EVENT_8: {
-			hrtim_eecr2 &=
-			    ~(HRTIM_EECR2_EE8SRC | HRTIM_EECR2_EE8POL |
-			      HRTIM_EECR2_EE8SNS);
-			hrtim_eecr2 |=
-			    ((pEventCfg->Source << 12U) & HRTIM_EECR2_EE8SRC);
-			hrtim_eecr2 |=
-			    ((pEventCfg->Polarity << 12U) & HRTIM_EECR2_EE8POL);
-			hrtim_eecr2 |= ((pEventCfg->Sensitivity << 12U) &
-					HRTIM_EECR2_EE8SNS);
+			hrtim_eecr2 &= ~(HRTIM_EECR2_EE8SRC | HRTIM_EECR2_EE8POL | HRTIM_EECR2_EE8SNS);
+			hrtim_eecr2 |= ((pEventCfg->Source << 12U) & HRTIM_EECR2_EE8SRC);
+			hrtim_eecr2 |= ((pEventCfg->Polarity << 12U) & HRTIM_EECR2_EE8POL);
+			hrtim_eecr2 |= ((pEventCfg->Sensitivity << 12U) & HRTIM_EECR2_EE8SNS);
 			hrtim_eecr3 &= ~(HRTIM_EECR3_EE8F);
-			hrtim_eecr3 |=
-			    ((pEventCfg->Filter << 12U) & HRTIM_EECR3_EE8F);
+			hrtim_eecr3 |= ((pEventCfg->Filter << 12U) & HRTIM_EECR3_EE8F);
 			/* Update the HRTIM registers */
 			hhrtim->Instance->sCommonRegs.EECR2 = hrtim_eecr2;
 			hhrtim->Instance->sCommonRegs.EECR3 = hrtim_eecr3;
@@ -9913,18 +9053,12 @@ static void HRTIM_EventConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Event,
 		}
 
 		case HRTIM_EVENT_9: {
-			hrtim_eecr2 &=
-			    ~(HRTIM_EECR2_EE9SRC | HRTIM_EECR2_EE9POL |
-			      HRTIM_EECR2_EE9SNS);
-			hrtim_eecr2 |=
-			    ((pEventCfg->Source << 18U) & HRTIM_EECR2_EE9SRC);
-			hrtim_eecr2 |=
-			    ((pEventCfg->Polarity << 18U) & HRTIM_EECR2_EE9POL);
-			hrtim_eecr2 |= ((pEventCfg->Sensitivity << 18U) &
-					HRTIM_EECR2_EE9SNS);
+			hrtim_eecr2 &= ~(HRTIM_EECR2_EE9SRC | HRTIM_EECR2_EE9POL | HRTIM_EECR2_EE9SNS);
+			hrtim_eecr2 |= ((pEventCfg->Source << 18U) & HRTIM_EECR2_EE9SRC);
+			hrtim_eecr2 |= ((pEventCfg->Polarity << 18U) & HRTIM_EECR2_EE9POL);
+			hrtim_eecr2 |= ((pEventCfg->Sensitivity << 18U) & HRTIM_EECR2_EE9SNS);
 			hrtim_eecr3 &= ~(HRTIM_EECR3_EE9F);
-			hrtim_eecr3 |=
-			    ((pEventCfg->Filter << 18U) & HRTIM_EECR3_EE9F);
+			hrtim_eecr3 |= ((pEventCfg->Filter << 18U) & HRTIM_EECR3_EE9F);
 			/* Update the HRTIM registers */
 			hhrtim->Instance->sCommonRegs.EECR2 = hrtim_eecr2;
 			hhrtim->Instance->sCommonRegs.EECR3 = hrtim_eecr3;
@@ -9932,18 +9066,12 @@ static void HRTIM_EventConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Event,
 		}
 
 		case HRTIM_EVENT_10: {
-			hrtim_eecr2 &=
-			    ~(HRTIM_EECR2_EE10SRC | HRTIM_EECR2_EE10POL |
-			      HRTIM_EECR2_EE10SNS);
-			hrtim_eecr2 |=
-			    ((pEventCfg->Source << 24U) & HRTIM_EECR2_EE10SRC);
-			hrtim_eecr2 |= ((pEventCfg->Polarity << 24U) &
-					HRTIM_EECR2_EE10POL);
-			hrtim_eecr2 |= ((pEventCfg->Sensitivity << 24U) &
-					HRTIM_EECR2_EE10SNS);
+			hrtim_eecr2 &= ~(HRTIM_EECR2_EE10SRC | HRTIM_EECR2_EE10POL | HRTIM_EECR2_EE10SNS);
+			hrtim_eecr2 |= ((pEventCfg->Source << 24U) & HRTIM_EECR2_EE10SRC);
+			hrtim_eecr2 |= ((pEventCfg->Polarity << 24U) & HRTIM_EECR2_EE10POL);
+			hrtim_eecr2 |= ((pEventCfg->Sensitivity << 24U) & HRTIM_EECR2_EE10SNS);
 			hrtim_eecr3 &= ~(HRTIM_EECR3_EE10F);
-			hrtim_eecr3 |=
-			    ((pEventCfg->Filter << 24U) & HRTIM_EECR3_EE10F);
+			hrtim_eecr3 |= ((pEventCfg->Filter << 24U) & HRTIM_EECR3_EE10F);
 			/* Update the HRTIM registers */
 			hhrtim->Instance->sCommonRegs.EECR2 = hrtim_eecr2;
 			hhrtim->Instance->sCommonRegs.EECR3 = hrtim_eecr3;
@@ -9962,67 +9090,56 @@ static void HRTIM_EventConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Event,
  * @param  Event Event channel identifier
  * @retval None
  */
-static void HRTIM_TIM_ResetConfig(HRTIM_HandleTypeDef *hhrtim,
-				  uint32_t TimerIdx, uint32_t Event)
+static void HRTIM_TIM_ResetConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t Event)
 {
 	switch (Event) {
 		case HRTIM_EVENT_1: {
-			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTxR =
-			    HRTIM_TIMRESETTRIGGER_EEV_1;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTxR = HRTIM_TIMRESETTRIGGER_EEV_1;
 			break;
 		}
 
 		case HRTIM_EVENT_2: {
-			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTxR =
-			    HRTIM_TIMRESETTRIGGER_EEV_2;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTxR = HRTIM_TIMRESETTRIGGER_EEV_2;
 			break;
 		}
 
 		case HRTIM_EVENT_3: {
-			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTxR =
-			    HRTIM_TIMRESETTRIGGER_EEV_3;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTxR = HRTIM_TIMRESETTRIGGER_EEV_3;
 			break;
 		}
 
 		case HRTIM_EVENT_4: {
-			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTxR =
-			    HRTIM_TIMRESETTRIGGER_EEV_4;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTxR = HRTIM_TIMRESETTRIGGER_EEV_4;
 			break;
 		}
 
 		case HRTIM_EVENT_5: {
-			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTxR =
-			    HRTIM_TIMRESETTRIGGER_EEV_5;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTxR = HRTIM_TIMRESETTRIGGER_EEV_5;
 			break;
 		}
 
 		case HRTIM_EVENT_6: {
-			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTxR =
-			    HRTIM_TIMRESETTRIGGER_EEV_6;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTxR = HRTIM_TIMRESETTRIGGER_EEV_6;
 			break;
 		}
 
 		case HRTIM_EVENT_7: {
-			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTxR =
-			    HRTIM_TIMRESETTRIGGER_EEV_7;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTxR = HRTIM_TIMRESETTRIGGER_EEV_7;
 			break;
 		}
 
 		case HRTIM_EVENT_8: {
-			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTxR =
-			    HRTIM_TIMRESETTRIGGER_EEV_8;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTxR = HRTIM_TIMRESETTRIGGER_EEV_8;
 			break;
 		}
 
 		case HRTIM_EVENT_9: {
-			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTxR =
-			    HRTIM_TIMRESETTRIGGER_EEV_9;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTxR = HRTIM_TIMRESETTRIGGER_EEV_9;
 			break;
 		}
 
 		case HRTIM_EVENT_10: {
-			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTxR =
-			    HRTIM_TIMRESETTRIGGER_EEV_10;
+			hhrtim->Instance->sTimerxRegs[TimerIdx].RSTxR = HRTIM_TIMRESETTRIGGER_EEV_10;
 			break;
 		}
 
@@ -10052,8 +9169,7 @@ static void HRTIM_TIM_ResetConfig(HRTIM_HandleTypeDef *hhrtim,
  *                    @arg HRTIM_OUTPUT_TF2: Timer F - Output 2
  * @retval Interrupt to enable or disable
  */
-static uint32_t HRTIM_GetITFromOCMode(const HRTIM_HandleTypeDef *hhrtim,
-				      uint32_t TimerIdx, uint32_t OCChannel)
+static uint32_t HRTIM_GetITFromOCMode(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel)
 {
 	uint32_t hrtim_set;
 	uint32_t hrtim_reset;
@@ -10068,25 +9184,16 @@ static uint32_t HRTIM_GetITFromOCMode(const HRTIM_HandleTypeDef *hhrtim,
 		case HRTIM_OUTPUT_TF1: {
 			/* Retrieves actual OC mode and set interrupt
 			 * accordingly */
-			hrtim_set =
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].SETx1R;
-			hrtim_reset =
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].RSTx1R;
+			hrtim_set = hhrtim->Instance->sTimerxRegs[TimerIdx].SETx1R;
+			hrtim_reset = hhrtim->Instance->sTimerxRegs[TimerIdx].RSTx1R;
 
-			if (((hrtim_set & HRTIM_OUTPUTSET_TIMCMP1) ==
-			     HRTIM_OUTPUTSET_TIMCMP1) &&
-			    ((hrtim_reset & HRTIM_OUTPUTRESET_TIMCMP1) ==
-			     HRTIM_OUTPUTRESET_TIMCMP1)) {
+			if (((hrtim_set & HRTIM_OUTPUTSET_TIMCMP1) == HRTIM_OUTPUTSET_TIMCMP1) && ((hrtim_reset & HRTIM_OUTPUTRESET_TIMCMP1) == HRTIM_OUTPUTRESET_TIMCMP1)) {
 				/* OC mode: HRTIM_BASICOCMODE_TOGGLE */
 				interrupt = HRTIM_TIM_IT_CMP1;
-			} else if (((hrtim_set & HRTIM_OUTPUTSET_TIMCMP1) ==
-				    HRTIM_OUTPUTSET_TIMCMP1) &&
-				   (hrtim_reset == 0U)) {
+			} else if (((hrtim_set & HRTIM_OUTPUTSET_TIMCMP1) == HRTIM_OUTPUTSET_TIMCMP1) && (hrtim_reset == 0U)) {
 				/* OC mode: HRTIM_BASICOCMODE_ACTIVE */
 				interrupt = HRTIM_TIM_IT_SET1;
-			} else if ((hrtim_set == 0U) &&
-				   ((hrtim_reset & HRTIM_OUTPUTRESET_TIMCMP1) ==
-				    HRTIM_OUTPUTRESET_TIMCMP1)) {
+			} else if ((hrtim_set == 0U) && ((hrtim_reset & HRTIM_OUTPUTRESET_TIMCMP1) == HRTIM_OUTPUTRESET_TIMCMP1)) {
 				/* OC mode: HRTIM_BASICOCMODE_INACTIVE */
 				interrupt = HRTIM_TIM_IT_RST1;
 			} else {
@@ -10103,25 +9210,16 @@ static uint32_t HRTIM_GetITFromOCMode(const HRTIM_HandleTypeDef *hhrtim,
 		case HRTIM_OUTPUT_TF2: {
 			/* Retrieves actual OC mode and set interrupt
 			 * accordingly */
-			hrtim_set =
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].SETx2R;
-			hrtim_reset =
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].RSTx2R;
+			hrtim_set = hhrtim->Instance->sTimerxRegs[TimerIdx].SETx2R;
+			hrtim_reset = hhrtim->Instance->sTimerxRegs[TimerIdx].RSTx2R;
 
-			if (((hrtim_set & HRTIM_OUTPUTSET_TIMCMP2) ==
-			     HRTIM_OUTPUTSET_TIMCMP2) &&
-			    ((hrtim_reset & HRTIM_OUTPUTRESET_TIMCMP2) ==
-			     HRTIM_OUTPUTRESET_TIMCMP2)) {
+			if (((hrtim_set & HRTIM_OUTPUTSET_TIMCMP2) == HRTIM_OUTPUTSET_TIMCMP2) && ((hrtim_reset & HRTIM_OUTPUTRESET_TIMCMP2) == HRTIM_OUTPUTRESET_TIMCMP2)) {
 				/* OC mode: HRTIM_BASICOCMODE_TOGGLE */
 				interrupt = HRTIM_TIM_IT_CMP2;
-			} else if (((hrtim_set & HRTIM_OUTPUTSET_TIMCMP2) ==
-				    HRTIM_OUTPUTSET_TIMCMP2) &&
-				   (hrtim_reset == 0U)) {
+			} else if (((hrtim_set & HRTIM_OUTPUTSET_TIMCMP2) == HRTIM_OUTPUTSET_TIMCMP2) && (hrtim_reset == 0U)) {
 				/* OC mode: HRTIM_BASICOCMODE_ACTIVE */
 				interrupt = HRTIM_TIM_IT_SET2;
-			} else if ((hrtim_set == 0U) &&
-				   ((hrtim_reset & HRTIM_OUTPUTRESET_TIMCMP2) ==
-				    HRTIM_OUTPUTRESET_TIMCMP2)) {
+			} else if ((hrtim_set == 0U) && ((hrtim_reset & HRTIM_OUTPUTRESET_TIMCMP2) == HRTIM_OUTPUTRESET_TIMCMP2)) {
 				/* OC mode: HRTIM_BASICOCMODE_INACTIVE */
 				interrupt = HRTIM_TIM_IT_RST2;
 			} else {
@@ -10158,8 +9256,7 @@ static uint32_t HRTIM_GetITFromOCMode(const HRTIM_HandleTypeDef *hhrtim,
  *                    @arg HRTIM_OUTPUT_TF2: Timer F - Output 2
  * @retval DMA request to enable or disable
  */
-static uint32_t HRTIM_GetDMAFromOCMode(const HRTIM_HandleTypeDef *hhrtim,
-				       uint32_t TimerIdx, uint32_t OCChannel)
+static uint32_t HRTIM_GetDMAFromOCMode(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel)
 {
 	uint32_t hrtim_set;
 	uint32_t hrtim_reset;
@@ -10174,25 +9271,16 @@ static uint32_t HRTIM_GetDMAFromOCMode(const HRTIM_HandleTypeDef *hhrtim,
 		case HRTIM_OUTPUT_TF1: {
 			/* Retrieves actual OC mode and set dma_request
 			 * accordingly */
-			hrtim_set =
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].SETx1R;
-			hrtim_reset =
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].RSTx1R;
+			hrtim_set = hhrtim->Instance->sTimerxRegs[TimerIdx].SETx1R;
+			hrtim_reset = hhrtim->Instance->sTimerxRegs[TimerIdx].RSTx1R;
 
-			if (((hrtim_set & HRTIM_OUTPUTSET_TIMCMP1) ==
-			     HRTIM_OUTPUTSET_TIMCMP1) &&
-			    ((hrtim_reset & HRTIM_OUTPUTRESET_TIMCMP1) ==
-			     HRTIM_OUTPUTRESET_TIMCMP1)) {
+			if (((hrtim_set & HRTIM_OUTPUTSET_TIMCMP1) == HRTIM_OUTPUTSET_TIMCMP1) && ((hrtim_reset & HRTIM_OUTPUTRESET_TIMCMP1) == HRTIM_OUTPUTRESET_TIMCMP1)) {
 				/* OC mode: HRTIM_BASICOCMODE_TOGGLE */
 				dma_request = HRTIM_TIM_DMA_CMP1;
-			} else if (((hrtim_set & HRTIM_OUTPUTSET_TIMCMP1) ==
-				    HRTIM_OUTPUTSET_TIMCMP1) &&
-				   (hrtim_reset == 0U)) {
+			} else if (((hrtim_set & HRTIM_OUTPUTSET_TIMCMP1) == HRTIM_OUTPUTSET_TIMCMP1) && (hrtim_reset == 0U)) {
 				/* OC mode: HRTIM_BASICOCMODE_ACTIVE */
 				dma_request = HRTIM_TIM_DMA_SET1;
-			} else if ((hrtim_set == 0U) &&
-				   ((hrtim_reset & HRTIM_OUTPUTRESET_TIMCMP1) ==
-				    HRTIM_OUTPUTRESET_TIMCMP1)) {
+			} else if ((hrtim_set == 0U) && ((hrtim_reset & HRTIM_OUTPUTRESET_TIMCMP1) == HRTIM_OUTPUTRESET_TIMCMP1)) {
 				/* OC mode: HRTIM_BASICOCMODE_INACTIVE */
 				dma_request = HRTIM_TIM_DMA_RST1;
 			} else {
@@ -10209,25 +9297,16 @@ static uint32_t HRTIM_GetDMAFromOCMode(const HRTIM_HandleTypeDef *hhrtim,
 		case HRTIM_OUTPUT_TF2: {
 			/* Retrieves actual OC mode and set dma_request
 			 * accordingly */
-			hrtim_set =
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].SETx2R;
-			hrtim_reset =
-			    hhrtim->Instance->sTimerxRegs[TimerIdx].RSTx2R;
+			hrtim_set = hhrtim->Instance->sTimerxRegs[TimerIdx].SETx2R;
+			hrtim_reset = hhrtim->Instance->sTimerxRegs[TimerIdx].RSTx2R;
 
-			if (((hrtim_set & HRTIM_OUTPUTSET_TIMCMP2) ==
-			     HRTIM_OUTPUTSET_TIMCMP2) &&
-			    ((hrtim_reset & HRTIM_OUTPUTRESET_TIMCMP2) ==
-			     HRTIM_OUTPUTRESET_TIMCMP2)) {
+			if (((hrtim_set & HRTIM_OUTPUTSET_TIMCMP2) == HRTIM_OUTPUTSET_TIMCMP2) && ((hrtim_reset & HRTIM_OUTPUTRESET_TIMCMP2) == HRTIM_OUTPUTRESET_TIMCMP2)) {
 				/* OC mode: HRTIM_BASICOCMODE_TOGGLE */
 				dma_request = HRTIM_TIM_DMA_CMP2;
-			} else if (((hrtim_set & HRTIM_OUTPUTSET_TIMCMP2) ==
-				    HRTIM_OUTPUTSET_TIMCMP2) &&
-				   (hrtim_reset == 0U)) {
+			} else if (((hrtim_set & HRTIM_OUTPUTSET_TIMCMP2) == HRTIM_OUTPUTSET_TIMCMP2) && (hrtim_reset == 0U)) {
 				/* OC mode: HRTIM_BASICOCMODE_ACTIVE */
 				dma_request = HRTIM_TIM_DMA_SET2;
-			} else if ((hrtim_set == 0U) &&
-				   ((hrtim_reset & HRTIM_OUTPUTRESET_TIMCMP2) ==
-				    HRTIM_OUTPUTRESET_TIMCMP2)) {
+			} else if ((hrtim_set == 0U) && ((hrtim_reset & HRTIM_OUTPUTRESET_TIMCMP2) == HRTIM_OUTPUTRESET_TIMCMP2)) {
 				/* OC mode: HRTIM_BASICOCMODE_INACTIVE */
 				dma_request = HRTIM_TIM_DMA_RST2;
 			} else {
@@ -10243,9 +9322,7 @@ static uint32_t HRTIM_GetDMAFromOCMode(const HRTIM_HandleTypeDef *hhrtim,
 	return dma_request;
 }
 
-static DMA_HandleTypeDef *
-HRTIM_GetDMAHandleFromTimerIdx(const HRTIM_HandleTypeDef *hhrtim,
-			       uint32_t TimerIdx)
+static DMA_HandleTypeDef *HRTIM_GetDMAHandleFromTimerIdx(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	DMA_HandleTypeDef *hdma = (DMA_HandleTypeDef *)NULL;
 
@@ -10292,8 +9369,7 @@ HRTIM_GetDMAHandleFromTimerIdx(const HRTIM_HandleTypeDef *hhrtim,
 	return hdma;
 }
 
-static uint32_t GetTimerIdxFromDMAHandle(const HRTIM_HandleTypeDef *hhrtim,
-					 const DMA_HandleTypeDef *hdma)
+static uint32_t GetTimerIdxFromDMAHandle(const HRTIM_HandleTypeDef *hhrtim, const DMA_HandleTypeDef *hdma)
 {
 	uint32_t timed_idx = 0xFFFFFFFFU;
 
@@ -10324,8 +9400,7 @@ static uint32_t GetTimerIdxFromDMAHandle(const HRTIM_HandleTypeDef *hhrtim,
  * @param  TimerIdx Timer index
  * @retval None
  */
-static void HRTIM_ForceRegistersUpdate(HRTIM_HandleTypeDef *hhrtim,
-				       uint32_t TimerIdx)
+static void HRTIM_ForceRegistersUpdate(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
 	switch (TimerIdx) {
 		case HRTIM_TIMERINDEX_MASTER: {
@@ -10524,105 +9599,79 @@ static void HRTIM_Master_ISR(HRTIM_HandleTypeDef *hhrtim)
 	}
 
 	/* Master timer compare 1 event */
-	if ((uint32_t)(misrflags & HRTIM_MASTER_FLAG_MCMP1) !=
-	    (uint32_t)RESET) {
-		if ((uint32_t)(mdierits & HRTIM_MASTER_IT_MCMP1) !=
-		    (uint32_t)RESET) {
-			__HAL_HRTIM_MASTER_CLEAR_IT(hhrtim,
-						    HRTIM_MASTER_IT_MCMP1);
+	if ((uint32_t)(misrflags & HRTIM_MASTER_FLAG_MCMP1) != (uint32_t)RESET) {
+		if ((uint32_t)(mdierits & HRTIM_MASTER_IT_MCMP1) != (uint32_t)RESET) {
+			__HAL_HRTIM_MASTER_CLEAR_IT(hhrtim, HRTIM_MASTER_IT_MCMP1);
 
 			/* Invoke compare 1 event callback */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
-			hhrtim->Compare1EventCallback(hhrtim,
-						      HRTIM_TIMERINDEX_MASTER);
+			hhrtim->Compare1EventCallback(hhrtim, HRTIM_TIMERINDEX_MASTER);
 #else
-			HAL_HRTIM_Compare1EventCallback(
-			    hhrtim, HRTIM_TIMERINDEX_MASTER);
+			HAL_HRTIM_Compare1EventCallback(hhrtim, HRTIM_TIMERINDEX_MASTER);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
 		}
 	}
 
 	/* Master timer compare 2 event */
-	if ((uint32_t)(misrflags & HRTIM_MASTER_FLAG_MCMP2) !=
-	    (uint32_t)RESET) {
-		if ((uint32_t)(mdierits & HRTIM_MASTER_IT_MCMP2) !=
-		    (uint32_t)RESET) {
-			__HAL_HRTIM_MASTER_CLEAR_IT(hhrtim,
-						    HRTIM_MASTER_IT_MCMP2);
+	if ((uint32_t)(misrflags & HRTIM_MASTER_FLAG_MCMP2) != (uint32_t)RESET) {
+		if ((uint32_t)(mdierits & HRTIM_MASTER_IT_MCMP2) != (uint32_t)RESET) {
+			__HAL_HRTIM_MASTER_CLEAR_IT(hhrtim, HRTIM_MASTER_IT_MCMP2);
 
 			/* Invoke compare 2 event callback */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
-			hhrtim->Compare2EventCallback(hhrtim,
-						      HRTIM_TIMERINDEX_MASTER);
+			hhrtim->Compare2EventCallback(hhrtim, HRTIM_TIMERINDEX_MASTER);
 #else
-			HAL_HRTIM_Compare2EventCallback(
-			    hhrtim, HRTIM_TIMERINDEX_MASTER);
+			HAL_HRTIM_Compare2EventCallback(hhrtim, HRTIM_TIMERINDEX_MASTER);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
 		}
 	}
 
 	/* Master timer compare 3 event */
-	if ((uint32_t)(misrflags & HRTIM_MASTER_FLAG_MCMP3) !=
-	    (uint32_t)RESET) {
-		if ((uint32_t)(mdierits & HRTIM_MASTER_IT_MCMP3) !=
-		    (uint32_t)RESET) {
-			__HAL_HRTIM_MASTER_CLEAR_IT(hhrtim,
-						    HRTIM_MASTER_IT_MCMP3);
+	if ((uint32_t)(misrflags & HRTIM_MASTER_FLAG_MCMP3) != (uint32_t)RESET) {
+		if ((uint32_t)(mdierits & HRTIM_MASTER_IT_MCMP3) != (uint32_t)RESET) {
+			__HAL_HRTIM_MASTER_CLEAR_IT(hhrtim, HRTIM_MASTER_IT_MCMP3);
 
 			/* Invoke compare 3 event callback */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
-			hhrtim->Compare3EventCallback(hhrtim,
-						      HRTIM_TIMERINDEX_MASTER);
+			hhrtim->Compare3EventCallback(hhrtim, HRTIM_TIMERINDEX_MASTER);
 #else
-			HAL_HRTIM_Compare3EventCallback(
-			    hhrtim, HRTIM_TIMERINDEX_MASTER);
+			HAL_HRTIM_Compare3EventCallback(hhrtim, HRTIM_TIMERINDEX_MASTER);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
 		}
 	}
 
 	/* Master timer compare 4 event */
-	if ((uint32_t)(misrflags & HRTIM_MASTER_FLAG_MCMP4) !=
-	    (uint32_t)RESET) {
-		if ((uint32_t)(mdierits & HRTIM_MASTER_IT_MCMP4) !=
-		    (uint32_t)RESET) {
-			__HAL_HRTIM_MASTER_CLEAR_IT(hhrtim,
-						    HRTIM_MASTER_IT_MCMP4);
+	if ((uint32_t)(misrflags & HRTIM_MASTER_FLAG_MCMP4) != (uint32_t)RESET) {
+		if ((uint32_t)(mdierits & HRTIM_MASTER_IT_MCMP4) != (uint32_t)RESET) {
+			__HAL_HRTIM_MASTER_CLEAR_IT(hhrtim, HRTIM_MASTER_IT_MCMP4);
 
 			/* Invoke compare 4 event callback */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
-			hhrtim->Compare4EventCallback(hhrtim,
-						      HRTIM_TIMERINDEX_MASTER);
+			hhrtim->Compare4EventCallback(hhrtim, HRTIM_TIMERINDEX_MASTER);
 #else
-			HAL_HRTIM_Compare4EventCallback(
-			    hhrtim, HRTIM_TIMERINDEX_MASTER);
+			HAL_HRTIM_Compare4EventCallback(hhrtim, HRTIM_TIMERINDEX_MASTER);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
 		}
 	}
 
 	/* Master timer repetition event */
 	if ((uint32_t)(misrflags & HRTIM_MASTER_FLAG_MREP) != (uint32_t)RESET) {
-		if ((uint32_t)(mdierits & HRTIM_MASTER_IT_MREP) !=
-		    (uint32_t)RESET) {
-			__HAL_HRTIM_MASTER_CLEAR_IT(hhrtim,
-						    HRTIM_MASTER_IT_MREP);
+		if ((uint32_t)(mdierits & HRTIM_MASTER_IT_MREP) != (uint32_t)RESET) {
+			__HAL_HRTIM_MASTER_CLEAR_IT(hhrtim, HRTIM_MASTER_IT_MREP);
 
 			/* Invoke repetition event callback */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
-			hhrtim->RepetitionEventCallback(
-			    hhrtim, HRTIM_TIMERINDEX_MASTER);
+			hhrtim->RepetitionEventCallback(hhrtim, HRTIM_TIMERINDEX_MASTER);
 #else
-			HAL_HRTIM_RepetitionEventCallback(
-			    hhrtim, HRTIM_TIMERINDEX_MASTER);
+			HAL_HRTIM_RepetitionEventCallback(hhrtim, HRTIM_TIMERINDEX_MASTER);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
 		}
 	}
 
 	/* Synchronization input event */
 	if ((uint32_t)(misrflags & HRTIM_MASTER_FLAG_SYNC) != (uint32_t)RESET) {
-		if ((uint32_t)(mdierits & HRTIM_MASTER_IT_SYNC) !=
-		    (uint32_t)RESET) {
-			__HAL_HRTIM_MASTER_CLEAR_IT(hhrtim,
-						    HRTIM_MASTER_IT_SYNC);
+		if ((uint32_t)(mdierits & HRTIM_MASTER_IT_SYNC) != (uint32_t)RESET) {
+			__HAL_HRTIM_MASTER_CLEAR_IT(hhrtim, HRTIM_MASTER_IT_SYNC);
 
 			/* Invoke synchronization event callback */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
@@ -10635,18 +9684,14 @@ static void HRTIM_Master_ISR(HRTIM_HandleTypeDef *hhrtim)
 
 	/* Master timer registers update event */
 	if ((uint32_t)(misrflags & HRTIM_MASTER_FLAG_MUPD) != (uint32_t)RESET) {
-		if ((uint32_t)(mdierits & HRTIM_MASTER_IT_MUPD) !=
-		    (uint32_t)RESET) {
-			__HAL_HRTIM_MASTER_CLEAR_IT(hhrtim,
-						    HRTIM_MASTER_IT_MUPD);
+		if ((uint32_t)(mdierits & HRTIM_MASTER_IT_MUPD) != (uint32_t)RESET) {
+			__HAL_HRTIM_MASTER_CLEAR_IT(hhrtim, HRTIM_MASTER_IT_MUPD);
 
 			/* Invoke registers update event callback */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
-			hhrtim->RegistersUpdateCallback(
-			    hhrtim, HRTIM_TIMERINDEX_MASTER);
+			hhrtim->RegistersUpdateCallback(hhrtim, HRTIM_TIMERINDEX_MASTER);
 #else
-			HAL_HRTIM_RegistersUpdateCallback(
-			    hhrtim, HRTIM_TIMERINDEX_MASTER);
+			HAL_HRTIM_RegistersUpdateCallback(hhrtim, HRTIM_TIMERINDEX_MASTER);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
 		}
 	}
@@ -10667,17 +9712,13 @@ static void HRTIM_Master_ISR(HRTIM_HandleTypeDef *hhrtim)
  */
 static void HRTIM_Timer_ISR(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 {
-	uint32_t tisrflags =
-	    READ_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxISR);
-	uint32_t tdierits =
-	    READ_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxDIER);
+	uint32_t tisrflags = READ_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxISR);
+	uint32_t tdierits = READ_REG(hhrtim->Instance->sTimerxRegs[TimerIdx].TIMxDIER);
 
 	/* Timer compare 1 event */
 	if ((uint32_t)(tisrflags & HRTIM_TIM_FLAG_CMP1) != (uint32_t)RESET) {
-		if ((uint32_t)(tdierits & HRTIM_TIM_IT_CMP1) !=
-		    (uint32_t)RESET) {
-			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx,
-						   HRTIM_TIM_IT_CMP1);
+		if ((uint32_t)(tdierits & HRTIM_TIM_IT_CMP1) != (uint32_t)RESET) {
+			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_CMP1);
 
 			/* Invoke compare 1 event callback */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
@@ -10690,10 +9731,8 @@ static void HRTIM_Timer_ISR(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 
 	/* Timer compare 2 event */
 	if ((uint32_t)(tisrflags & HRTIM_TIM_FLAG_CMP2) != (uint32_t)RESET) {
-		if ((uint32_t)(tdierits & HRTIM_TIM_IT_CMP2) !=
-		    (uint32_t)RESET) {
-			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx,
-						   HRTIM_TIM_IT_CMP2);
+		if ((uint32_t)(tdierits & HRTIM_TIM_IT_CMP2) != (uint32_t)RESET) {
+			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_CMP2);
 
 			/* Invoke compare 2 event callback */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
@@ -10706,10 +9745,8 @@ static void HRTIM_Timer_ISR(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 
 	/* Timer compare 3 event */
 	if ((uint32_t)(tisrflags & HRTIM_TIM_FLAG_CMP3) != (uint32_t)RESET) {
-		if ((uint32_t)(tdierits & HRTIM_TIM_IT_CMP3) !=
-		    (uint32_t)RESET) {
-			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx,
-						   HRTIM_TIM_IT_CMP3);
+		if ((uint32_t)(tdierits & HRTIM_TIM_IT_CMP3) != (uint32_t)RESET) {
+			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_CMP3);
 
 			/* Invoke compare 3 event callback */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
@@ -10722,10 +9759,8 @@ static void HRTIM_Timer_ISR(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 
 	/* Timer compare 4 event */
 	if ((uint32_t)(tisrflags & HRTIM_TIM_FLAG_CMP4) != (uint32_t)RESET) {
-		if ((uint32_t)(tdierits & HRTIM_TIM_IT_CMP4) !=
-		    (uint32_t)RESET) {
-			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx,
-						   HRTIM_TIM_IT_CMP4);
+		if ((uint32_t)(tdierits & HRTIM_TIM_IT_CMP4) != (uint32_t)RESET) {
+			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_CMP4);
 
 			/* Invoke compare 4 event callback */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
@@ -10738,10 +9773,8 @@ static void HRTIM_Timer_ISR(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 
 	/* Timer repetition event */
 	if ((uint32_t)(tisrflags & HRTIM_TIM_FLAG_REP) != (uint32_t)RESET) {
-		if ((uint32_t)(tdierits & HRTIM_TIM_IT_REP) !=
-		    (uint32_t)RESET) {
-			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx,
-						   HRTIM_TIM_IT_REP);
+		if ((uint32_t)(tdierits & HRTIM_TIM_IT_REP) != (uint32_t)RESET) {
+			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_REP);
 
 			/* Invoke repetition event callback */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
@@ -10754,10 +9787,8 @@ static void HRTIM_Timer_ISR(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 
 	/* Timer registers update event */
 	if ((uint32_t)(tisrflags & HRTIM_TIM_FLAG_UPD) != (uint32_t)RESET) {
-		if ((uint32_t)(tdierits & HRTIM_TIM_IT_UPD) !=
-		    (uint32_t)RESET) {
-			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx,
-						   HRTIM_TIM_IT_UPD);
+		if ((uint32_t)(tdierits & HRTIM_TIM_IT_UPD) != (uint32_t)RESET) {
+			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_UPD);
 
 			/* Invoke registers update event callback */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
@@ -10770,10 +9801,8 @@ static void HRTIM_Timer_ISR(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 
 	/* Timer capture 1 event */
 	if ((uint32_t)(tisrflags & HRTIM_TIM_FLAG_CPT1) != (uint32_t)RESET) {
-		if ((uint32_t)(tdierits & HRTIM_TIM_IT_CPT1) !=
-		    (uint32_t)RESET) {
-			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx,
-						   HRTIM_TIM_IT_CPT1);
+		if ((uint32_t)(tdierits & HRTIM_TIM_IT_CPT1) != (uint32_t)RESET) {
+			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_CPT1);
 
 			/* Invoke capture 1 event callback */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
@@ -10786,10 +9815,8 @@ static void HRTIM_Timer_ISR(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 
 	/* Timer capture 2 event */
 	if ((uint32_t)(tisrflags & HRTIM_TIM_FLAG_CPT2) != (uint32_t)RESET) {
-		if ((uint32_t)(tdierits & HRTIM_TIM_IT_CPT2) !=
-		    (uint32_t)RESET) {
-			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx,
-						   HRTIM_TIM_IT_CPT2);
+		if ((uint32_t)(tdierits & HRTIM_TIM_IT_CPT2) != (uint32_t)RESET) {
+			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_CPT2);
 
 			/* Invoke capture 2 event callback */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
@@ -10802,10 +9829,8 @@ static void HRTIM_Timer_ISR(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 
 	/* Timer output 1 set event */
 	if ((uint32_t)(tisrflags & HRTIM_TIM_FLAG_SET1) != (uint32_t)RESET) {
-		if ((uint32_t)(tdierits & HRTIM_TIM_IT_SET1) !=
-		    (uint32_t)RESET) {
-			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx,
-						   HRTIM_TIM_IT_SET1);
+		if ((uint32_t)(tdierits & HRTIM_TIM_IT_SET1) != (uint32_t)RESET) {
+			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_SET1);
 
 			/* Invoke output 1 set event callback */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
@@ -10818,10 +9843,8 @@ static void HRTIM_Timer_ISR(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 
 	/* Timer output 1 reset event */
 	if ((uint32_t)(tisrflags & HRTIM_TIM_FLAG_RST1) != (uint32_t)RESET) {
-		if ((uint32_t)(tdierits & HRTIM_TIM_IT_RST1) !=
-		    (uint32_t)RESET) {
-			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx,
-						   HRTIM_TIM_IT_RST1);
+		if ((uint32_t)(tdierits & HRTIM_TIM_IT_RST1) != (uint32_t)RESET) {
+			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_RST1);
 
 			/* Invoke output 1 reset event callback */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
@@ -10834,10 +9857,8 @@ static void HRTIM_Timer_ISR(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 
 	/* Timer output 2 set event */
 	if ((uint32_t)(tisrflags & HRTIM_TIM_FLAG_SET2) != (uint32_t)RESET) {
-		if ((uint32_t)(tdierits & HRTIM_TIM_IT_SET2) !=
-		    (uint32_t)RESET) {
-			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx,
-						   HRTIM_TIM_IT_SET2);
+		if ((uint32_t)(tdierits & HRTIM_TIM_IT_SET2) != (uint32_t)RESET) {
+			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_SET2);
 
 			/* Invoke output 2 set event callback */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
@@ -10850,10 +9871,8 @@ static void HRTIM_Timer_ISR(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 
 	/* Timer output 2 reset event */
 	if ((uint32_t)(tisrflags & HRTIM_TIM_FLAG_RST2) != (uint32_t)RESET) {
-		if ((uint32_t)(tdierits & HRTIM_TIM_IT_RST2) !=
-		    (uint32_t)RESET) {
-			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx,
-						   HRTIM_TIM_IT_RST2);
+		if ((uint32_t)(tdierits & HRTIM_TIM_IT_RST2) != (uint32_t)RESET) {
+			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_RST2);
 
 			/* Invoke output 2 reset event callback */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
@@ -10866,10 +9885,8 @@ static void HRTIM_Timer_ISR(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 
 	/* Timer reset event */
 	if ((uint32_t)(tisrflags & HRTIM_TIM_FLAG_RST) != (uint32_t)RESET) {
-		if ((uint32_t)(tdierits & HRTIM_TIM_IT_RST) !=
-		    (uint32_t)RESET) {
-			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx,
-						   HRTIM_TIM_IT_RST);
+		if ((uint32_t)(tdierits & HRTIM_TIM_IT_RST) != (uint32_t)RESET) {
+			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_RST);
 
 			/* Invoke timer reset callback */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
@@ -10882,10 +9899,8 @@ static void HRTIM_Timer_ISR(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
 
 	/* Delayed protection event */
 	if ((uint32_t)(tisrflags & HRTIM_TIM_FLAG_DLYPRT) != (uint32_t)RESET) {
-		if ((uint32_t)(tdierits & HRTIM_TIM_IT_DLYPRT) !=
-		    (uint32_t)RESET) {
-			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx,
-						   HRTIM_TIM_IT_DLYPRT);
+		if ((uint32_t)(tdierits & HRTIM_TIM_IT_DLYPRT) != (uint32_t)RESET) {
+			__HAL_HRTIM_TIMER_CLEAR_IT(hhrtim, TimerIdx, HRTIM_TIM_IT_DLYPRT);
 
 			/* Invoke delayed protection callback */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
@@ -10904,59 +9919,49 @@ static void HRTIM_Timer_ISR(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx)
  */
 static void HRTIM_DMAMasterCplt(DMA_HandleTypeDef *hdma)
 {
-	HRTIM_HandleTypeDef *hrtim =
-	    (HRTIM_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
+	HRTIM_HandleTypeDef *hrtim = (HRTIM_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
 
-	if ((hrtim->Instance->sMasterRegs.MDIER & HRTIM_MASTER_DMA_MCMP1) !=
-	    (uint32_t)RESET) {
+	if ((hrtim->Instance->sMasterRegs.MDIER & HRTIM_MASTER_DMA_MCMP1) != (uint32_t)RESET) {
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 		hrtim->Compare1EventCallback(hrtim, HRTIM_TIMERINDEX_MASTER);
 #else
 		HAL_HRTIM_Compare1EventCallback(hrtim, HRTIM_TIMERINDEX_MASTER);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
-	} else if ((hrtim->Instance->sMasterRegs.MDIER &
-		    HRTIM_MASTER_DMA_MCMP2) != (uint32_t)RESET) {
+	} else if ((hrtim->Instance->sMasterRegs.MDIER & HRTIM_MASTER_DMA_MCMP2) != (uint32_t)RESET) {
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 		hrtim->Compare2EventCallback(hrtim, HRTIM_TIMERINDEX_MASTER);
 #else
 		HAL_HRTIM_Compare2EventCallback(hrtim, HRTIM_TIMERINDEX_MASTER);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
-	} else if ((hrtim->Instance->sMasterRegs.MDIER &
-		    HRTIM_MASTER_DMA_MCMP3) != (uint32_t)RESET) {
+	} else if ((hrtim->Instance->sMasterRegs.MDIER & HRTIM_MASTER_DMA_MCMP3) != (uint32_t)RESET) {
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 		hrtim->Compare3EventCallback(hrtim, HRTIM_TIMERINDEX_MASTER);
 #else
 		HAL_HRTIM_Compare3EventCallback(hrtim, HRTIM_TIMERINDEX_MASTER);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
-	} else if ((hrtim->Instance->sMasterRegs.MDIER &
-		    HRTIM_MASTER_DMA_MCMP4) != (uint32_t)RESET) {
+	} else if ((hrtim->Instance->sMasterRegs.MDIER & HRTIM_MASTER_DMA_MCMP4) != (uint32_t)RESET) {
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 		hrtim->Compare4EventCallback(hrtim, HRTIM_TIMERINDEX_MASTER);
 #else
 		HAL_HRTIM_Compare4EventCallback(hrtim, HRTIM_TIMERINDEX_MASTER);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
-	} else if ((hrtim->Instance->sMasterRegs.MDIER &
-		    HRTIM_MASTER_DMA_SYNC) != (uint32_t)RESET) {
+	} else if ((hrtim->Instance->sMasterRegs.MDIER & HRTIM_MASTER_DMA_SYNC) != (uint32_t)RESET) {
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 		hrtim->SynchronizationEventCallback(hrtim);
 #else
 		HAL_HRTIM_SynchronizationEventCallback(hrtim);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
-	} else if ((hrtim->Instance->sMasterRegs.MDIER &
-		    HRTIM_MASTER_DMA_MUPD) != (uint32_t)RESET) {
+	} else if ((hrtim->Instance->sMasterRegs.MDIER & HRTIM_MASTER_DMA_MUPD) != (uint32_t)RESET) {
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 		hrtim->RegistersUpdateCallback(hrtim, HRTIM_TIMERINDEX_MASTER);
 #else
-		HAL_HRTIM_RegistersUpdateCallback(hrtim,
-						  HRTIM_TIMERINDEX_MASTER);
+		HAL_HRTIM_RegistersUpdateCallback(hrtim, HRTIM_TIMERINDEX_MASTER);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
-	} else if ((hrtim->Instance->sMasterRegs.MDIER &
-		    HRTIM_MASTER_DMA_MREP) != (uint32_t)RESET) {
+	} else if ((hrtim->Instance->sMasterRegs.MDIER & HRTIM_MASTER_DMA_MREP) != (uint32_t)RESET) {
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 		hrtim->RepetitionEventCallback(hrtim, HRTIM_TIMERINDEX_MASTER);
 #else
-		HAL_HRTIM_RepetitionEventCallback(hrtim,
-						  HRTIM_TIMERINDEX_MASTER);
+		HAL_HRTIM_RepetitionEventCallback(hrtim, HRTIM_TIMERINDEX_MASTER);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
 	} else {
 		/* nothing to do */
@@ -10972,8 +9977,7 @@ static void HRTIM_DMATimerxCplt(DMA_HandleTypeDef *hdma)
 {
 	uint8_t timer_idx;
 
-	HRTIM_HandleTypeDef *hrtim =
-	    (HRTIM_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
+	HRTIM_HandleTypeDef *hrtim = (HRTIM_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
 
 	timer_idx = (uint8_t)GetTimerIdxFromDMAHandle(hrtim, hdma);
 
@@ -10981,99 +9985,85 @@ static void HRTIM_DMATimerxCplt(DMA_HandleTypeDef *hdma)
 		return;
 	}
 
-	if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER &
-	     HRTIM_TIM_DMA_CMP1) != (uint32_t)RESET) {
+	if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER & HRTIM_TIM_DMA_CMP1) != (uint32_t)RESET) {
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 		hrtim->Compare1EventCallback(hrtim, timer_idx);
 #else
 		HAL_HRTIM_Compare1EventCallback(hrtim, timer_idx);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
-	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER &
-		    HRTIM_TIM_DMA_CMP2) != (uint32_t)RESET) {
+	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER & HRTIM_TIM_DMA_CMP2) != (uint32_t)RESET) {
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 		hrtim->Compare2EventCallback(hrtim, timer_idx);
 #else
 		HAL_HRTIM_Compare2EventCallback(hrtim, timer_idx);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
-	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER &
-		    HRTIM_TIM_DMA_CMP3) != (uint32_t)RESET) {
+	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER & HRTIM_TIM_DMA_CMP3) != (uint32_t)RESET) {
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 		hrtim->Compare3EventCallback(hrtim, timer_idx);
 #else
 		HAL_HRTIM_Compare3EventCallback(hrtim, timer_idx);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
-	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER &
-		    HRTIM_TIM_DMA_CMP4) != (uint32_t)RESET) {
+	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER & HRTIM_TIM_DMA_CMP4) != (uint32_t)RESET) {
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 		hrtim->Compare4EventCallback(hrtim, timer_idx);
 #else
 		HAL_HRTIM_Compare4EventCallback(hrtim, timer_idx);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
-	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER &
-		    HRTIM_TIM_DMA_UPD) != (uint32_t)RESET) {
+	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER & HRTIM_TIM_DMA_UPD) != (uint32_t)RESET) {
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 		hrtim->RegistersUpdateCallback(hrtim, timer_idx);
 #else
 		HAL_HRTIM_RegistersUpdateCallback(hrtim, timer_idx);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
-	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER &
-		    HRTIM_TIM_DMA_CPT1) != (uint32_t)RESET) {
+	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER & HRTIM_TIM_DMA_CPT1) != (uint32_t)RESET) {
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 		hrtim->Capture1EventCallback(hrtim, timer_idx);
 #else
 		HAL_HRTIM_Capture1EventCallback(hrtim, timer_idx);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
-	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER &
-		    HRTIM_TIM_DMA_CPT2) != (uint32_t)RESET) {
+	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER & HRTIM_TIM_DMA_CPT2) != (uint32_t)RESET) {
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 		hrtim->Capture2EventCallback(hrtim, timer_idx);
 #else
 		HAL_HRTIM_Capture2EventCallback(hrtim, timer_idx);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
-	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER &
-		    HRTIM_TIM_DMA_SET1) != (uint32_t)RESET) {
+	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER & HRTIM_TIM_DMA_SET1) != (uint32_t)RESET) {
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 		hrtim->Output1SetCallback(hrtim, timer_idx);
 #else
 		HAL_HRTIM_Output1SetCallback(hrtim, timer_idx);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
-	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER &
-		    HRTIM_TIM_DMA_RST1) != (uint32_t)RESET) {
+	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER & HRTIM_TIM_DMA_RST1) != (uint32_t)RESET) {
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 		hrtim->Output1ResetCallback(hrtim, timer_idx);
 #else
 		HAL_HRTIM_Output1ResetCallback(hrtim, timer_idx);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
-	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER &
-		    HRTIM_TIM_DMA_SET2) != (uint32_t)RESET) {
+	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER & HRTIM_TIM_DMA_SET2) != (uint32_t)RESET) {
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 		hrtim->Output2SetCallback(hrtim, timer_idx);
 #else
 		HAL_HRTIM_Output2SetCallback(hrtim, timer_idx);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
-	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER &
-		    HRTIM_TIM_DMA_RST2) != (uint32_t)RESET) {
+	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER & HRTIM_TIM_DMA_RST2) != (uint32_t)RESET) {
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 		hrtim->Output2ResetCallback(hrtim, timer_idx);
 #else
 		HAL_HRTIM_Output2ResetCallback(hrtim, timer_idx);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
-	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER &
-		    HRTIM_TIM_DMA_RST) != (uint32_t)RESET) {
+	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER & HRTIM_TIM_DMA_RST) != (uint32_t)RESET) {
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 		hrtim->CounterResetCallback(hrtim, timer_idx);
 #else
 		HAL_HRTIM_CounterResetCallback(hrtim, timer_idx);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
-	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER &
-		    HRTIM_TIM_DMA_DLYPRT) != (uint32_t)RESET) {
+	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER & HRTIM_TIM_DMA_DLYPRT) != (uint32_t)RESET) {
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 		hrtim->DelayedProtectionCallback(hrtim, timer_idx);
 #else
 		HAL_HRTIM_DelayedProtectionCallback(hrtim, timer_idx);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
-	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER &
-		    HRTIM_TIM_DMA_REP) != (uint32_t)RESET) {
+	} else if ((hrtim->Instance->sTimerxRegs[timer_idx].TIMxDIER & HRTIM_TIM_DMA_REP) != (uint32_t)RESET) {
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 		hrtim->RepetitionEventCallback(hrtim, timer_idx);
 #else
@@ -11091,8 +10081,7 @@ static void HRTIM_DMATimerxCplt(DMA_HandleTypeDef *hdma)
  */
 static void HRTIM_DMAError(DMA_HandleTypeDef *hdma)
 {
-	HRTIM_HandleTypeDef *hrtim =
-	    (HRTIM_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
+	HRTIM_HandleTypeDef *hrtim = (HRTIM_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
 
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 	hrtim->ErrorCallback(hrtim);
@@ -11108,15 +10097,12 @@ static void HRTIM_DMAError(DMA_HandleTypeDef *hdma)
  */
 static void HRTIM_BurstDMACplt(DMA_HandleTypeDef *hdma)
 {
-	HRTIM_HandleTypeDef *hrtim =
-	    (HRTIM_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
+	HRTIM_HandleTypeDef *hrtim = (HRTIM_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
 
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
-	hrtim->BurstDMATransferCallback(hrtim,
-					GetTimerIdxFromDMAHandle(hrtim, hdma));
+	hrtim->BurstDMATransferCallback(hrtim, GetTimerIdxFromDMAHandle(hrtim, hdma));
 #else
-	HAL_HRTIM_BurstDMATransferCallback(
-	    hrtim, GetTimerIdxFromDMAHandle(hrtim, hdma));
+	HAL_HRTIM_BurstDMATransferCallback(hrtim, GetTimerIdxFromDMAHandle(hrtim, hdma));
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
 }
 

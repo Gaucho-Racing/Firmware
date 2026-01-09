@@ -144,9 +144,9 @@ extern "C" {
  * variations.
  */
 #if !defined(HSI48_VALUE)
-#define HSI48_VALUE                                                            \
-	(48000000UL) /*!< Value of the Internal High Speed oscillator for USB  \
-			FS/RNG in Hz. The real value my vary depending on      \
+#define HSI48_VALUE                                                                                                                                                                                    \
+	(48000000UL) /*!< Value of the Internal High Speed oscillator for USB                                                                                                                          \
+			FS/RNG in Hz. The real value my vary depending on                                                                                                                              \
 			manufacturing process variations.*/
 #endif		     /* HSI48_VALUE */
 
@@ -165,9 +165,8 @@ temperature.*/
  * frequency
  */
 #if !defined(LSE_VALUE)
-#define LSE_VALUE                                                              \
-	(32768UL) /*!< Value of the External Low Speed oscillator in Hz */
-#endif		  /* LSE_VALUE */
+#define LSE_VALUE (32768UL) /*!< Value of the External Low Speed oscillator in Hz */
+#endif			    /* LSE_VALUE */
 
 #if !defined(LSE_STARTUP_TIMEOUT)
 #define LSE_STARTUP_TIMEOUT (5000UL) /*!< Time out for LSE start up, in ms */
@@ -180,9 +179,8 @@ temperature.*/
  * I2S_CKIN pad.
  */
 #if !defined(EXTERNAL_CLOCK_VALUE)
-#define EXTERNAL_CLOCK_VALUE                                                   \
-	(12288000UL) /*!< Value of the External oscillator in Hz*/
-#endif		     /* EXTERNAL_CLOCK_VALUE */
+#define EXTERNAL_CLOCK_VALUE (12288000UL) /*!< Value of the External oscillator in Hz*/
+#endif					  /* EXTERNAL_CLOCK_VALUE */
 
 /* Tip: To avoid modifying this file each time you need to use different HSE,
    ===  you can define the HSE value in your toolchain compiler preprocessor. */
@@ -192,9 +190,8 @@ temperature.*/
  * @brief This is the HAL system configuration section
  */
 
-#define VDD_VALUE (3300UL) /*!< Value of VDD in mv */
-#define TICK_INT_PRIORITY                                                      \
-	(0UL) /*!< tick interrupt priority (lowest by default)  */
+#define VDD_VALUE (3300UL)	/*!< Value of VDD in mv */
+#define TICK_INT_PRIORITY (0UL) /*!< tick interrupt priority (lowest by default)  */
 #define USE_RTOS 0U
 #define PREFETCH_ENABLE 0U
 #define INSTRUCTION_CACHE_ENABLE 1U
@@ -379,8 +376,7 @@ temperature.*/
  *         If expr is true, it returns no value.
  * @retval None
  */
-#define assert_param(expr)                                                     \
-	((expr) ? (void)0U : assert_failed((uint8_t *)__FILE__, __LINE__))
+#define assert_param(expr) ((expr) ? (void)0U : assert_failed((uint8_t *)__FILE__, __LINE__))
 /* Exported functions ------------------------------------------------------- */
 void assert_failed(uint8_t *file, uint32_t line);
 #else
