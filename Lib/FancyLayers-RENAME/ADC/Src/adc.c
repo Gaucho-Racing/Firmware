@@ -101,7 +101,7 @@ void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, uint32_t src_address,
 	      uint32_t dest_address, uint32_t data_size, uint32_t num_data,
 	      uint32_t ADC, DMA_Priority priority)
 {
-	LL_DMA_InitTypeDef *config = 0;
+	LL_DMA_InitTypeDef config = {0};
 	config.PeriphOrM2MSrcAddress = src_address;
 	config.MemoryOrM2MDstAddress = dest_address;
 	config.Direction =
@@ -135,5 +135,5 @@ void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, uint32_t src_address,
 			config.PeriphRequest = LL_DMAMUX_REQ_ADC5;
 	}
 	config.Priority = priority;
-	LL_DMA_Init(DMA, channel, config);
+	LL_DMA_Init(DMA, channel, &config);
 }
