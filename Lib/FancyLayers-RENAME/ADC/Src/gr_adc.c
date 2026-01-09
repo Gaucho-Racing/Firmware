@@ -129,8 +129,8 @@ void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, uint32_t src_address,
 
 const int WINDOW_SIZE = 100;
 struct {
-    uint16_t adc1buf[6];
-    uint16_t adc2buf[5];
+	uint16_t adc1buf[6];
+	uint16_t adc2buf[5];
 } adcBuffers;
 
 // float adcSumValues[11];
