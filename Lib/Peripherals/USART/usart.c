@@ -59,8 +59,7 @@ USARTHandle *usart_init_peripheral(USARTConfig *config)
 USARTHandle *usart_init_handle(USARTConfig *config)
 {
 	// map the instance to the global handle pointer
-	USARTHandle **handle_pptr =
-	    usart_get_global_handle_pptr(config->instance);
+	USARTHandle **handle_pptr = usart_get_global_handle_pptr(config->instance);
 	if (!handle_pptr) {
 		LOGOMATIC("usart_allocate_handle: invalid USART instance");
 		return NULL;
@@ -81,8 +80,7 @@ USARTHandle *usart_init_handle(USARTConfig *config)
 	}
 
 	handle_ptr->instance = config->instance;
-	handle_ptr->tx_buffer =
-	    GR_CircularBuffer_Create(config->tx_queue_length);
+	handle_ptr->tx_buffer = GR_CircularBuffer_Create(config->tx_queue_length);
 	handle_ptr->current_tx_message = NULL;
 	handle_ptr->current_tx_index = 0;
 	handle_ptr->on_rx_byte = config->on_rx_byte;
@@ -100,18 +98,14 @@ void usart_init_hardware(USARTConfig *config, USARTHandle *handle)
 
 	if (handle->instance == LPUART1) {
 		LL_LPUART_Init(handle->instance, config->ll_lpuart);
-		LL_LPUART_SetTXFIFOThreshold(handle->instance,
-					     LL_LPUART_FIFOTHRESHOLD_1_8);
-		LL_LPUART_SetRXFIFOThreshold(handle->instance,
-					     LL_LPUART_FIFOTHRESHOLD_1_8);
+		LL_LPUART_SetTXFIFOThreshold(handle->instance, LL_LPUART_FIFOTHRESHOLD_1_8);
+		LL_LPUART_SetRXFIFOThreshold(handle->instance, LL_LPUART_FIFOTHRESHOLD_1_8);
 		LL_LPUART_DisableFIFO(handle->instance);
-		LL_LPUART_SetWakeUpMethod(handle->instance,
-					  LL_LPUART_WAKEUP_IDLELINE);
+		LL_LPUART_SetWakeUpMethod(handle->instance, LL_LPUART_WAKEUP_IDLELINE);
 
 		LL_LPUART_Enable(handle->instance);
 
-		while ((!(LL_LPUART_IsActiveFlag_TEACK(handle->instance))) ||
-		       (!(LL_LPUART_IsActiveFlag_REACK(handle->instance)))) {
+		while ((!(LL_LPUART_IsActiveFlag_TEACK(handle->instance))) || (!(LL_LPUART_IsActiveFlag_REACK(handle->instance)))) {
 		}
 	} else {
 		LL_USART_Init(handle->instance, config->ll_usart);
@@ -122,8 +116,7 @@ void usart_init_hardware(USARTConfig *config, USARTHandle *handle)
 		LL_USART_EnableDirectionRx(handle->instance);
 		LL_USART_Enable(handle->instance);
 
-		while (!LL_USART_IsActiveFlag_TEACK(handle->instance) ||
-		       !LL_USART_IsActiveFlag_REACK(handle->instance)) {
+		while (!LL_USART_IsActiveFlag_TEACK(handle->instance) || !LL_USART_IsActiveFlag_REACK(handle->instance)) {
 		}
 	}
 
@@ -151,8 +144,7 @@ USARTHandle **usart_get_global_handle_pptr(USART_TypeDef *instance)
 	} else if (instance == LPUART1) {
 		return &LPUART1Handle;
 	} else {
-		LOGOMATIC(
-		    "usart_get_global_handle_pptr: unknown USART instance");
+		LOGOMATIC("usart_get_global_handle_pptr: unknown USART instance");
 		return NULL;
 	}
 }
@@ -240,14 +232,12 @@ void usart_send(USARTHandle *handle, void *object_ptr, uint32_t object_size)
 void usart_irq(USARTHandle *handle)
 {
 	// if ((want to transmit) && (ready to transmit))
-	if (LL_USART_IsEnabledIT_TXE(handle->instance) &&
-	    LL_USART_IsActiveFlag_TXE(handle->instance)) {
+	if (LL_USART_IsEnabledIT_TXE(handle->instance) && LL_USART_IsActiveFlag_TXE(handle->instance)) {
 		usart_tx_ready_callback(handle);
 	}
 
 	// if ((want to receive) && (data received))
-	if (LL_USART_IsEnabledIT_RXNE(handle->instance) &&
-	    LL_USART_IsActiveFlag_RXNE(handle->instance)) {
+	if (LL_USART_IsEnabledIT_RXNE(handle->instance) && LL_USART_IsActiveFlag_RXNE(handle->instance)) {
 		usart_rx_ready_callback(handle);
 	}
 }
@@ -262,8 +252,7 @@ void usart_tx_ready_callback(USARTHandle *handle)
 			return;
 		}
 
-		handle->current_tx_message =
-		    GR_CircularBuffer_Pop(handle->tx_buffer);
+		handle->current_tx_message = GR_CircularBuffer_Pop(handle->tx_buffer);
 		handle->current_tx_index = 0;
 	}
 
@@ -274,8 +263,7 @@ void usart_tx_ready_callback(USARTHandle *handle)
 		free(handle->current_tx_message);
 
 		// advance to next message
-		handle->current_tx_message =
-		    GR_CircularBuffer_Pop(handle->tx_buffer);
+		handle->current_tx_message = GR_CircularBuffer_Pop(handle->tx_buffer);
 		handle->current_tx_index = 0;
 
 		// recurse just in case the next message is also complete or
@@ -284,8 +272,7 @@ void usart_tx_ready_callback(USARTHandle *handle)
 		return;
 	}
 
-	char byte =
-	    handle->current_tx_message->data[handle->current_tx_index++];
+	char byte = handle->current_tx_message->data[handle->current_tx_index++];
 	LL_USART_TransmitData8(handle->instance, byte);
 }
 
@@ -352,7 +339,6 @@ void usart_release_hardware(USARTHandle **handle)
 	LL_USART_Disable(instance);
 
 	// wait for hardware to acknowledge that usart is disabled
-	while (LL_USART_IsActiveFlag_TEACK(instance) ||
-	       LL_USART_IsActiveFlag_REACK(instance)) {
+	while (LL_USART_IsActiveFlag_TEACK(instance) || LL_USART_IsActiveFlag_REACK(instance)) {
 	}
 }

@@ -57,8 +57,7 @@ static void MX_GPIO_Init(void);
 /* USER CODE BEGIN 0 */
 void received_byte_callback(uint8_t byte)
 {
-	LOGOMATIC("Received byte: 0x%02X ('%c')\n", byte,
-		  (byte >= 32 && byte <= 126) ? byte : '.');
+	LOGOMATIC("Received byte: 0x%02X ('%c')\n", byte, (byte >= 32 && byte <= 126) ? byte : '.');
 
 #ifndef LOGOMATIC_ENABLED
 	byte = byte; // suppress unused variable warning
