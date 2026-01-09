@@ -12,6 +12,7 @@
 #include "gr_adc.h"
 
 #include "main.h"
+#include "Logomatic.h"
 
 ADC_TypeDef *GetADC(unsigned long adc)
 {
@@ -110,7 +111,7 @@ CommonClock ADC_Get_Common_Clock(ADC_Common_TypeDef *ADC_Common)
 }
 // note to self: these are not valid errors; they appear in vscode but not on
 // compile	<-- To be clear I do not have any errors anywhere at all...
-void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, uint32_t src_address,
+void DMA_Init(DMA_TypeDef *DMA, DMA_Channel channel, uint32_t src_address,
 	      uint32_t dest_address, uint32_t p_data_size, uint32_t m_data_size,
 	      uint32_t num_data, ADC_TypeDef *ADC, DMA_Priority priority)
 {

@@ -192,9 +192,9 @@ typedef enum {
 	DMA_CHANNEL_6 = LL_DMA_CHANNEL_6,
 	DMA_CHANNEL_7 = LL_DMA_CHANNEL_7,
 	DMA_CHANNEL_8 = LL_DMA_CHANNEL_8
-};
+} DMA_Channel;
 
-void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, uint32_t src_address,
+void DMA_Init(DMA_TypeDef *DMA, DMA_Channel channel, uint32_t src_address,
 	      uint32_t dest_address, uint32_t p_data_size, uint32_t m_data_size,
 	      uint32_t num_data, ADC_TypeDef *ADC, DMA_Priority priority);
 
