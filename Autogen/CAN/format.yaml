@@ -4468,11 +4468,11 @@ Message ID:
   SAM GPS 1:
     MSG ID: 0x021
     MSG LENGTH: 8
-    Lat: # bit start 0
+    Latitude: # bit start 0
       # Latitude in decimal degrees
       data type: u32
       units: Degrees
-    Long: # bit start 32
+    Longitude: # bit start 32
       # Longitude in decimal degrees
       data type: u32
       units: Degrees
