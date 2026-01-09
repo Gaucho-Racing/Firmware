@@ -45,9 +45,8 @@ typedef struct {
 	volatile uint8_t msg_status;
 } GR_SPI_Handler;
 
-static GR_SPI_Handler
-    *GR_SPI_HANDLER_LUT[3]; // Stores pointer to the handler structs for SPI1
-			    // (0), SPI2 (1), & SPI3 (2)
+static GR_SPI_Handler *GR_SPI_HANDLER_LUT[3]; // Stores pointer to the handler structs for SPI1
+					      // (0), SPI2 (1), & SPI3 (2)
 
 // ============================= Handler Functions =============================
 
@@ -60,8 +59,7 @@ static GR_SPI_Handler
  * @param alternate_function_num
  * @return
  */
-void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config,
-		       GR_SPI_Pins *pin_config);
+void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SPI_Pins *pin_config);
 
 /**
  * @brief Tear down the SPI handler
@@ -79,18 +77,9 @@ void GR_SPI_Close(GR_SPI_Handler *handler);
 void GR_SPI_Interrupt_Handler(GR_SPI_Handler *handle);
 
 // Map SPI1-3 IRQHandlers to custom interrupt handler
-inline void SPI1_IRQHandler(void)
-{
-	GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[0]);
-}
-inline void SPI2_IRQHandler(void)
-{
-	GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[1]);
-}
-inline void SPI3_IRQHandler(void)
-{
-	GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[2]);
-}
+inline void SPI1_IRQHandler(void) { GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[0]); }
+inline void SPI2_IRQHandler(void) { GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[1]); }
+inline void SPI3_IRQHandler(void) { GR_SPI_Interrupt_Handler(GR_SPI_HANDLER_LUT[2]); }
 
 // ============================= Tx/Rx =============================
 
@@ -117,10 +106,7 @@ GR_SPI_Message *GR_SPI_Receive(GR_SPI_Handler *handle);
  *
  * @param handle
  */
-inline bool GR_SPI_Is_RXE(GR_SPI_Handler *handle)
-{
-	return GR_CircularBuffer_IsEmpty(handle->rx_buffer);
-}
+inline bool GR_SPI_Is_RXE(GR_SPI_Handler *handle) { return GR_CircularBuffer_IsEmpty(handle->rx_buffer); }
 
 // ============================= Helper Functions =============================
 
@@ -144,8 +130,7 @@ void GR_SPI_Enable_Clocks(GR_SPI_Handler *handle);
  * @param config
  * @param pins
  */
-void GR_SPI_Configure_Pins(GR_SPI_Handler *handle,
-			   LL_GPIO_InitTypeDef *pin_config);
+void GR_SPI_Configure_Pins(GR_SPI_Handler *handle, LL_GPIO_InitTypeDef *pin_config);
 
 /**
  * @brief Continues sending the next byte(s) within an SPI message
