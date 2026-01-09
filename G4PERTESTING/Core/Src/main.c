@@ -91,14 +91,12 @@ void ADC_Configure(void)
 	ADC_Init(ADC1, RESOLUTION_12, RIGHT);
 	ADC_Regular_Group_Init(ADC1, NO_RANKS);
 
-	// Initialize the channels
+	// Initialize the pins and channels
 	Pin_Ports p = {0};
 	p.port = GPIOA;
 	p.pin = LL_GPIO_PIN_0;
-
-	ADC_Init_Pins(&p); // Initialize pin
-	ADC_Channel_Init(ADC1, NO_RANKS, ADC_CHANNEL_1, SINGLE_ENDED,
-			 SAMPLINGTIME_12CYCLES_5); // Initialize the channel
+	ADC_Init_Pins(&p);
+	ADC_Channel_Init(ADC1, RANK_1, ADC_CHANNEL_1, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
 
 	// Initialize DMA
 	DMA_Init(DMA1, LL_DMA_CHANNEL_1,
