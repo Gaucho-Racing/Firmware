@@ -62,7 +62,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint32_t buffer;
+volatile uint16_t buffer;
 
 /* Enable ITM for SWO output */
 static void ITM_Enable(void)
@@ -88,7 +88,7 @@ void ADC_Configure(void)
 
 	// Initialize the ADC
 	ADC_Group_Init(ADC1, PS_8);
-	ADC_Init(ADC1, RESOLUTION_8, RIGHT);
+	ADC_Init(ADC1, RESOLUTION_12, RIGHT);
 	ADC_Regular_Group_Init(ADC1, NO_RANKS);
 
 	// Initialize the channels
@@ -103,10 +103,8 @@ void ADC_Configure(void)
 	// Initialize DMA
 	DMA_Init(DMA1, LL_DMA_CHANNEL_1,
 		 LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA),
-		 (uint32_t)&buffer, LL_DMA_PDATAALIGN_BYTE,
-		 LL_DMA_MDATAALIGN_BYTE, 1, ADC1, LOW);
-
-	// Start DMA and ADC
+		 (uint32_t)&buffer, LL_DMA_PDATAALIGN_HALFWORD,
+		 LL_DMA_MDATAALIGN_HALFWORD, 1, ADC1, HIGH);
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
 	LL_ADC_Enable(ADC1);
 	while (!LL_ADC_IsEnabled(ADC1)) {
