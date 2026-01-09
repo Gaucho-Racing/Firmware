@@ -63,7 +63,7 @@ typedef enum {
 } NumRanks;
 
 // Initialize the channel configurations of the ADC
-void ADC_Regular_Group_Init(unsigned long ADC, unsigned long Sequence_Length);
+void ADC_Regular_Group_Init(ADC_TypeDef* ADC, unsigned long Sequence_Length);
 
 // How many ranks to enable
 typedef enum {
