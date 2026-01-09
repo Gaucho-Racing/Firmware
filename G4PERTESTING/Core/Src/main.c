@@ -158,7 +158,7 @@ int main(void)
 	MX_SPI3_Init();
 	MX_TIM2_Init();
 	/* USER CODE BEGIN 2 */
-
+	ADC_Configure();
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
