@@ -28,6 +28,7 @@ ADC_TypeDef *GetADC(unsigned long adc)
 			return ADC5;
 	}
 
+	LOGOMATIC("Invalid ADC number: %lu\n", adc);
 	Error_Handler();
 	return NULL;
 }
@@ -48,22 +49,18 @@ void ADC_Init(ADC_TypeDef *ADC, Resolution res, Alignment align)
 	ADC_InitStruct.LowPowerMode = LL_ADC_LP_MODE_NONE;
 	LL_ADC_Init(ADC, &ADC_InitStruct);
 }
+
 // FIXME: ADC_TYPEDEF* is here for now. We may need to fix later. Originally was
 // an unsigned long
 void ADC_Regular_Group_Init(ADC_TypeDef *ADC, unsigned long Sequence_Length)
 {
 	LL_ADC_REG_InitTypeDef ADC_REG_InitStruct = {0};
-	ADC_REG_InitStruct.TriggerSource =
-	    LL_ADC_REG_TRIG_SOFTWARE; // Default value
+	ADC_REG_InitStruct.TriggerSource = LL_ADC_REG_TRIG_SOFTWARE;
 	ADC_REG_InitStruct.SequencerLength = Sequence_Length;
-	ADC_REG_InitStruct.SequencerDiscont =
-	    LL_ADC_REG_SEQ_DISCONT_DISABLE; // Default isn't discontinuous
-	ADC_REG_InitStruct.ContinuousMode =
-	    LL_ADC_REG_CONV_CONTINUOUS; // Default continuous
-	ADC_REG_InitStruct.DMATransfer =
-	    LL_ADC_REG_DMA_TRANSFER_UNLIMITED; // Default unlimited transfer of
-					       // DMA
-	ADC_REG_InitStruct.Overrun = LL_ADC_REG_OVR_DATA_PRESERVED; //
+	ADC_REG_InitStruct.SequencerDiscont = LL_ADC_REG_SEQ_DISCONT_DISABLE;
+	ADC_REG_InitStruct.ContinuousMode = LL_ADC_REG_CONV_CONTINUOUS;
+	ADC_REG_InitStruct.DMATransfer = LL_ADC_REG_DMA_TRANSFER_UNLIMITED;
+	ADC_REG_InitStruct.Overrun = LL_ADC_REG_OVR_DATA_OVERWRITTEN;
 	LL_ADC_REG_Init(ADC, &ADC_REG_InitStruct);
 }
 

@@ -169,7 +169,7 @@ int main(void)
 		HAL_Delay(50);
 
 		/* USER CODE BEGIN 3 */
-		LOGOMATIC("C: %ld\n", buffer);
+		LOGOMATIC("C: %u\n", buffer);
 	}
 }
 
