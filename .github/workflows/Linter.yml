@@ -23,7 +23,8 @@ jobs:
     - uses: ZedThree/clang-tidy-review@v0.22.0
       id: review
       with:
-          build_dir: build
+        build_dir: build
+        use_docker: false
 
     - uses: ZedThree/clang-tidy-review/upload@v0.22.0
 
