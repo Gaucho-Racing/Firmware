@@ -91,7 +91,7 @@ typedef enum {
 	RANK_16 = LL_ADC_REG_RANK_16
 } Rank;
 
-typedef enum {
+__extension__ typedef enum {
 	ADC_CHANNEL_1 = LL_ADC_CHANNEL_1,
 	ADC_CHANNEL_2 = LL_ADC_CHANNEL_2,
 	ADC_CHANNEL_3 = LL_ADC_CHANNEL_3,
@@ -197,7 +197,7 @@ void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, uint32_t src_address,
 	      uint32_t num_data, ADC_TypeDef *ADC, DMA_Priority priority);
 
 // TODO:
-void ADC_UpdateSmooth();
+// void ADC_UpdateSmooth();
 
 /*
  */
