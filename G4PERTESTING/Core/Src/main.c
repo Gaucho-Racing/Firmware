@@ -102,10 +102,9 @@ int main(void)
 	MX_LPUART1_UART_Init();
 	MX_I2C2_Init();
 	MX_USART1_UART_Init();
-	//MX_SPI3_Init();
+	// MX_SPI3_Init();
 	MX_TIM2_Init();
 	/* USER CODE BEGIN 2 */
-	
 
 	GR_SPI_Initialize(&ex_handler, &ex_config, &ex_pins);
 	GR_SPI_Close(&ex_handler);
@@ -126,8 +125,8 @@ int main(void)
 	}
 }
 
-/* void test_spi_initialize(GR_SPI_Handler* handle, LL_SPI_InitTypeDef* config, GR_SPI_Pins* pin_config){
-	if(GR_SPI_Initialize(&handle, &config, &pin_config)
+/* void test_spi_initialize(GR_SPI_Handler* handle, LL_SPI_InitTypeDef* config,
+GR_SPI_Pins* pin_config){ if(GR_SPI_Initialize(&handle, &config, &pin_config)
 } */
 
 /**
