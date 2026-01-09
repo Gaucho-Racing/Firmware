@@ -19,7 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-#include "Lib/FancyLayers-RENAME/ADC/Inc/adc.h"
+#include "gr_adc.h"
 #include "Logomatic.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -93,7 +93,7 @@ void ADC_Configure(void)
 	// Initialize DMA
 	DMA_Init(DMA1, LL_DMA_CHANNEL_1,
 		 LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA),
-		 &buffer, LL_DMA_PDATAALIGN_BYTE, LL_DMA_MDATAALIGN_BYTE, 1,
+		 (uint32_t)&buffer, LL_DMA_PDATAALIGN_BYTE, LL_DMA_MDATAALIGN_BYTE, 1,
 		 ADC1, LOW);
 
 	// Start DMA and ADC
