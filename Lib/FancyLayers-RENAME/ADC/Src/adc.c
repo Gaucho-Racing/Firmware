@@ -97,20 +97,24 @@ CommonClock ADC_Get_Common_Clock(ADC_Common_TypeDef *ADC_Common)
 	return LL_ADC_GetCommonClock(ADC_Common);
 }
 
-void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, uint32_t src_address, uint32_t dest_address, 
-			  uint32_t data_size, uint32_t num_data, uint32_t ADC, DMA_Priority priority)
+void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, uint32_t src_address,
+	      uint32_t dest_address, uint32_t data_size, uint32_t num_data,
+	      uint32_t ADC, DMA_Priority priority)
 {
 	LL_DMA_InitTypeDef *config = 0;
 	config.PeriphOrM2MSrcAddress = src_address;
 	config.MemoryOrM2MDstAddress = dest_address;
-	config.Direction = LL_DMA_DIRECTION_PERIPH_TO_MEMORY; // Memory from ADC to CPU memory
-	config.Mode = LL_DMA_MODE_CIRCULAR; // Continuously transfer data
-	config.PeriphOrM2MSrcIncMode = LL_DMA_PERIPH_NOINCREMENT; // Do not increment source address
-	config.MemoryOrM2MDstIncMode = LL_DMA_MEMORY_INCREMENT; // Increment destination address
+	config.Direction =
+	    LL_DMA_DIRECTION_PERIPH_TO_MEMORY; // Memory from ADC to CPU memory
+	config.Mode = LL_DMA_MODE_CIRCULAR;    // Continuously transfer data
+	config.PeriphOrM2MSrcIncMode =
+	    LL_DMA_PERIPH_NOINCREMENT; // Do not increment source address
+	config.MemoryOrM2MDstIncMode =
+	    LL_DMA_MEMORY_INCREMENT; // Increment destination address
 	config.PeriphOrM2MSrcDataSize = data_size; // Size of the data
 	config.MemoryOrM2MDstDataSize = data_size;
 	config.NbData = num_data; // Number of data units to transfer
-	switch(ADC){ // Which ADC to connect DMA to
+	switch (ADC) {		  // Which ADC to connect DMA to
 		case ADC1:
 			config.PeriphRequest = LL_DMAMUX_REQ_ADC1;
 			break;
@@ -122,7 +126,7 @@ void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, uint32_t src_address, uint32_t
 		case ADC3:
 			config.PeriphRequest = LL_DMAMUX_REQ_ADC3;
 			break;
-			
+
 		case ADC4:
 			config.PeriphRequest = LL_DMAMUX_REQ_ADC4;
 			break;
