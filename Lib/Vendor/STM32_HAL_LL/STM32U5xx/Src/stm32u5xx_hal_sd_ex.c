@@ -81,9 +81,7 @@ functions.
  * @param  pNodeConf: Pointer to configuration parameters for new node to add.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_SDEx_DMALinkedList_BuildNode(SD_DMALinkNodeTypeDef *pNode,
-				 SD_DMALinkNodeConfTypeDef *pNodeConf)
+HAL_StatusTypeDef HAL_SDEx_DMALinkedList_BuildNode(SD_DMALinkNodeTypeDef *pNode, SD_DMALinkNodeConfTypeDef *pNodeConf)
 {
 
 	(void)SDMMC_DMALinkedList_BuildNode(pNode, pNodeConf);
@@ -98,10 +96,7 @@ HAL_SDEx_DMALinkedList_BuildNode(SD_DMALinkNodeTypeDef *pNode,
  * @param  pNewNode: Pointer to new node to insert.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_SDEx_DMALinkedList_InsertNode(SD_DMALinkedListTypeDef *pLinkedList,
-				  SD_DMALinkNodeTypeDef *pPrevNode,
-				  SD_DMALinkNodeTypeDef *pNewNode)
+HAL_StatusTypeDef HAL_SDEx_DMALinkedList_InsertNode(SD_DMALinkedListTypeDef *pLinkedList, SD_DMALinkNodeTypeDef *pPrevNode, SD_DMALinkNodeTypeDef *pNewNode)
 {
 
 	(void)SDMMC_DMALinkedList_InsertNode(pLinkedList, pPrevNode, pNewNode);
@@ -114,13 +109,10 @@ HAL_SDEx_DMALinkedList_InsertNode(SD_DMALinkedListTypeDef *pLinkedList,
  * @param  pNode: Pointer to node to remove.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_SDEx_DMALinkedList_RemoveNode(SD_DMALinkedListTypeDef *pLinkedList,
-				  SD_DMALinkNodeTypeDef *pNode)
+HAL_StatusTypeDef HAL_SDEx_DMALinkedList_RemoveNode(SD_DMALinkedListTypeDef *pLinkedList, SD_DMALinkNodeTypeDef *pNode)
 {
 
-	if (SDMMC_DMALinkedList_RemoveNode(pLinkedList, pNode) !=
-	    SDMMC_ERROR_NONE) {
+	if (SDMMC_DMALinkedList_RemoveNode(pLinkedList, pNode) != SDMMC_ERROR_NONE) {
 		return HAL_ERROR;
 	} else {
 		return HAL_OK;
@@ -147,8 +139,7 @@ HAL_StatusTypeDef HAL_SDEx_DMALinkedList_LockNode(SD_DMALinkNodeTypeDef *pNode)
  * @param  pNode: Pointer to node to remove.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_SDEx_DMALinkedList_UnlockNode(SD_DMALinkNodeTypeDef *pNode)
+HAL_StatusTypeDef HAL_SDEx_DMALinkedList_UnlockNode(SD_DMALinkNodeTypeDef *pNode)
 {
 
 	if (SDMMC_DMALinkedList_UnlockNode(pNode) != SDMMC_ERROR_NONE) {
@@ -163,8 +154,7 @@ HAL_SDEx_DMALinkedList_UnlockNode(SD_DMALinkNodeTypeDef *pNode)
  * @param  pLinkedList: Pointer to the linkedlist that contains transfer nodes
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_SDEx_DMALinkedList_EnableCircularMode(SD_DMALinkedListTypeDef *pLinkedList)
+HAL_StatusTypeDef HAL_SDEx_DMALinkedList_EnableCircularMode(SD_DMALinkedListTypeDef *pLinkedList)
 {
 
 	(void)SDMMC_DMALinkedList_EnableCircularMode(pLinkedList);
@@ -176,8 +166,7 @@ HAL_SDEx_DMALinkedList_EnableCircularMode(SD_DMALinkedListTypeDef *pLinkedList)
  * @param  pLinkedList: Pointer to the linkedlist that contains transfer nodes
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_SDEx_DMALinkedList_DisableCircularMode(SD_DMALinkedListTypeDef *pLinkedList)
+HAL_StatusTypeDef HAL_SDEx_DMALinkedList_DisableCircularMode(SD_DMALinkedListTypeDef *pLinkedList)
 {
 
 	(void)SDMMC_DMALinkedList_DisableCircularMode(pLinkedList);
@@ -195,10 +184,7 @@ HAL_SDEx_DMALinkedList_DisableCircularMode(SD_DMALinkedListTypeDef *pLinkedList)
  * @param  NumberOfBlocks: Total number of blocks to read
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_SDEx_DMALinkedList_ReadBlocks(SD_HandleTypeDef *hsd,
-				  const SDMMC_DMALinkedListTypeDef *pLinkedList,
-				  uint32_t BlockAdd, uint32_t NumberOfBlocks)
+HAL_StatusTypeDef HAL_SDEx_DMALinkedList_ReadBlocks(SD_HandleTypeDef *hsd, const SDMMC_DMALinkedListTypeDef *pLinkedList, uint32_t BlockAdd, uint32_t NumberOfBlocks)
 {
 	SDMMC_DataInitTypeDef config;
 	uint32_t errorstate;
@@ -212,23 +198,16 @@ HAL_SDEx_DMALinkedList_ReadBlocks(SD_HandleTypeDef *hsd,
 			return HAL_ERROR;
 		}
 
-		hsd->Instance->IDMABASER =
-		    (uint32_t)pLinkedList->pHeadNode->IDMABASER;
-		hsd->Instance->IDMABSIZE =
-		    (uint32_t)pLinkedList->pHeadNode->IDMABSIZE;
+		hsd->Instance->IDMABASER = (uint32_t)pLinkedList->pHeadNode->IDMABASER;
+		hsd->Instance->IDMABSIZE = (uint32_t)pLinkedList->pHeadNode->IDMABSIZE;
 
 		hsd->Instance->IDMABAR = (uint32_t)pLinkedList->pHeadNode;
-		hsd->Instance->IDMALAR =
-		    (uint32_t)SDMMC_IDMALAR_ABR | SDMMC_IDMALAR_ULS |
-		    SDMMC_IDMALAR_ULA |
-		    sizeof(
-			SDMMC_DMALinkNodeTypeDef); /* Initial configuration */
+		hsd->Instance->IDMALAR = (uint32_t)SDMMC_IDMALAR_ABR | SDMMC_IDMALAR_ULS | SDMMC_IDMALAR_ULA | sizeof(SDMMC_DMALinkNodeTypeDef); /* Initial configuration */
 
 		DmaBase0_reg = hsd->Instance->IDMABASER;
 		DmaBase1_reg = hsd->Instance->IDMABAR;
 
-		if ((hsd->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) ||
-		    (DmaBase1_reg == 0U)) {
+		if ((hsd->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) || (DmaBase1_reg == 0U)) {
 			hsd->ErrorCode = HAL_SD_ERROR_ADDR_OUT_OF_RANGE;
 			return HAL_ERROR;
 		}
@@ -261,8 +240,7 @@ HAL_SDEx_DMALinkedList_ReadBlocks(SD_HandleTypeDef *hsd,
 		hsd->Instance->IDMACTRL = SDMMC_ENABLE_IDMA_DOUBLE_BUFF0;
 
 		/* Read Blocks in DMA mode */
-		hsd->Context =
-		    (SD_CONTEXT_READ_MULTIPLE_BLOCK | SD_CONTEXT_DMA);
+		hsd->Context = (SD_CONTEXT_READ_MULTIPLE_BLOCK | SD_CONTEXT_DMA);
 
 		/* Read Multi Block command */
 		errorstate = SDMMC_CmdReadMultiBlock(hsd->Instance, add);
@@ -272,9 +250,7 @@ HAL_SDEx_DMALinkedList_ReadBlocks(SD_HandleTypeDef *hsd,
 			return HAL_ERROR;
 		}
 
-		__HAL_SD_ENABLE_IT(hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT |
-					 SDMMC_IT_RXOVERR | SDMMC_IT_DATAEND |
-					 SDMMC_IT_IDMABTC));
+		__HAL_SD_ENABLE_IT(hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_RXOVERR | SDMMC_IT_DATAEND | SDMMC_IT_IDMABTC));
 
 		return HAL_OK;
 	} else {
@@ -292,9 +268,7 @@ HAL_SDEx_DMALinkedList_ReadBlocks(SD_HandleTypeDef *hsd,
  * @param  NumberOfBlocks: Total number of blocks to read
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SDEx_DMALinkedList_WriteBlocks(
-    SD_HandleTypeDef *hsd, const SDMMC_DMALinkedListTypeDef *pLinkedList,
-    uint32_t BlockAdd, uint32_t NumberOfBlocks)
+HAL_StatusTypeDef HAL_SDEx_DMALinkedList_WriteBlocks(SD_HandleTypeDef *hsd, const SDMMC_DMALinkedListTypeDef *pLinkedList, uint32_t BlockAdd, uint32_t NumberOfBlocks)
 
 {
 	SDMMC_DataInitTypeDef config;
@@ -309,23 +283,16 @@ HAL_StatusTypeDef HAL_SDEx_DMALinkedList_WriteBlocks(
 			return HAL_ERROR;
 		}
 
-		hsd->Instance->IDMABASER =
-		    (uint32_t)pLinkedList->pHeadNode->IDMABASER;
-		hsd->Instance->IDMABSIZE =
-		    (uint32_t)pLinkedList->pHeadNode->IDMABSIZE;
+		hsd->Instance->IDMABASER = (uint32_t)pLinkedList->pHeadNode->IDMABASER;
+		hsd->Instance->IDMABSIZE = (uint32_t)pLinkedList->pHeadNode->IDMABSIZE;
 
 		hsd->Instance->IDMABAR = (uint32_t)pLinkedList->pHeadNode;
-		hsd->Instance->IDMALAR =
-		    (uint32_t)SDMMC_IDMALAR_ABR | SDMMC_IDMALAR_ULS |
-		    SDMMC_IDMALAR_ULA |
-		    sizeof(
-			SDMMC_DMALinkNodeTypeDef); /* Initial configuration */
+		hsd->Instance->IDMALAR = (uint32_t)SDMMC_IDMALAR_ABR | SDMMC_IDMALAR_ULS | SDMMC_IDMALAR_ULA | sizeof(SDMMC_DMALinkNodeTypeDef); /* Initial configuration */
 
 		DmaBase0_reg = hsd->Instance->IDMABASER;
 		DmaBase1_reg = hsd->Instance->IDMABAR;
 
-		if ((hsd->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) ||
-		    (DmaBase1_reg == 0U)) {
+		if ((hsd->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) || (DmaBase1_reg == 0U)) {
 			hsd->ErrorCode = HAL_SD_ERROR_ADDR_OUT_OF_RANGE;
 			return HAL_ERROR;
 		}
@@ -355,8 +322,7 @@ HAL_StatusTypeDef HAL_SDEx_DMALinkedList_WriteBlocks(
 		hsd->Instance->IDMACTRL = SDMMC_ENABLE_IDMA_DOUBLE_BUFF0;
 
 		/* Write Blocks in DMA mode */
-		hsd->Context =
-		    (SD_CONTEXT_WRITE_MULTIPLE_BLOCK | SD_CONTEXT_DMA);
+		hsd->Context = (SD_CONTEXT_WRITE_MULTIPLE_BLOCK | SD_CONTEXT_DMA);
 
 		/* Write Multi Block command */
 		errorstate = SDMMC_CmdWriteMultiBlock(hsd->Instance, add);
@@ -366,9 +332,7 @@ HAL_StatusTypeDef HAL_SDEx_DMALinkedList_WriteBlocks(
 			return HAL_ERROR;
 		}
 
-		__HAL_SD_ENABLE_IT(hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT |
-					 SDMMC_IT_TXUNDERR | SDMMC_IT_DATAEND |
-					 SDMMC_IT_IDMABTC));
+		__HAL_SD_ENABLE_IT(hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_TXUNDERR | SDMMC_IT_DATAEND | SDMMC_IT_IDMABTC));
 
 		return HAL_OK;
 	} else {

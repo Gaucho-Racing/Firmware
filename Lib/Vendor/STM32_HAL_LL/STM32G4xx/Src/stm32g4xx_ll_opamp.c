@@ -30,8 +30,7 @@
  * @{
  */
 
-#if defined(OPAMP1) || defined(OPAMP2) || defined(OPAMP3) ||                   \
-    defined(OPAMP4) || defined(OPAMP5) || defined(OPAMP6)
+#if defined(OPAMP1) || defined(OPAMP2) || defined(OPAMP3) || defined(OPAMP4) || defined(OPAMP5) || defined(OPAMP6)
 
 /** @addtogroup OPAMP_LL OPAMP
  * @{
@@ -49,29 +48,18 @@
 /* Check of parameters for configuration of OPAMP hierarchical scope:         */
 /* OPAMP instance.                                                            */
 
-#define IS_LL_OPAMP_POWER_MODE(__POWER_MODE__)                                 \
-	(((__POWER_MODE__) == LL_OPAMP_POWERMODE_NORMALSPEED) ||               \
-	 ((__POWER_MODE__) == LL_OPAMP_POWERMODE_HIGHSPEED))
+#define IS_LL_OPAMP_POWER_MODE(__POWER_MODE__) (((__POWER_MODE__) == LL_OPAMP_POWERMODE_NORMALSPEED) || ((__POWER_MODE__) == LL_OPAMP_POWERMODE_HIGHSPEED))
 
-#define IS_LL_OPAMP_FUNCTIONAL_MODE(__FUNCTIONAL_MODE__)                       \
-	(((__FUNCTIONAL_MODE__) == LL_OPAMP_MODE_STANDALONE) ||                \
-	 ((__FUNCTIONAL_MODE__) == LL_OPAMP_MODE_FOLLOWER) ||                  \
-	 ((__FUNCTIONAL_MODE__) == LL_OPAMP_MODE_PGA) ||                       \
-	 ((__FUNCTIONAL_MODE__) == LL_OPAMP_MODE_PGA_IO0) ||                   \
-	 ((__FUNCTIONAL_MODE__) == LL_OPAMP_MODE_PGA_IO0_BIAS) ||              \
-	 ((__FUNCTIONAL_MODE__) == LL_OPAMP_MODE_PGA_IO0_IO1_BIAS))
+#define IS_LL_OPAMP_FUNCTIONAL_MODE(__FUNCTIONAL_MODE__)                                                                                                                                               \
+	(((__FUNCTIONAL_MODE__) == LL_OPAMP_MODE_STANDALONE) || ((__FUNCTIONAL_MODE__) == LL_OPAMP_MODE_FOLLOWER) || ((__FUNCTIONAL_MODE__) == LL_OPAMP_MODE_PGA) ||                                   \
+	 ((__FUNCTIONAL_MODE__) == LL_OPAMP_MODE_PGA_IO0) || ((__FUNCTIONAL_MODE__) == LL_OPAMP_MODE_PGA_IO0_BIAS) || ((__FUNCTIONAL_MODE__) == LL_OPAMP_MODE_PGA_IO0_IO1_BIAS))
 
-#define IS_LL_OPAMP_INPUT_NONINVERTING(__INPUT_NONINVERTING__)                 \
-	(((__INPUT_NONINVERTING__) == LL_OPAMP_INPUT_NONINVERT_IO0) ||         \
-	 ((__INPUT_NONINVERTING__) == LL_OPAMP_INPUT_NONINVERT_IO1) ||         \
-	 ((__INPUT_NONINVERTING__) == LL_OPAMP_INPUT_NONINVERT_IO2) ||         \
-	 ((__INPUT_NONINVERTING__) == LL_OPAMP_INPUT_NONINVERT_IO3) ||         \
-	 ((__INPUT_NONINVERTING__) == LL_OPAMP_INPUT_NONINVERT_DAC))
+#define IS_LL_OPAMP_INPUT_NONINVERTING(__INPUT_NONINVERTING__)                                                                                                                                         \
+	(((__INPUT_NONINVERTING__) == LL_OPAMP_INPUT_NONINVERT_IO0) || ((__INPUT_NONINVERTING__) == LL_OPAMP_INPUT_NONINVERT_IO1) || ((__INPUT_NONINVERTING__) == LL_OPAMP_INPUT_NONINVERT_IO2) ||     \
+	 ((__INPUT_NONINVERTING__) == LL_OPAMP_INPUT_NONINVERT_IO3) || ((__INPUT_NONINVERTING__) == LL_OPAMP_INPUT_NONINVERT_DAC))
 
-#define IS_LL_OPAMP_INPUT_INVERTING(__INPUT_INVERTING__)                       \
-	(((__INPUT_INVERTING__) == LL_OPAMP_INPUT_INVERT_IO0) ||               \
-	 ((__INPUT_INVERTING__) == LL_OPAMP_INPUT_INVERT_IO1) ||               \
-	 ((__INPUT_INVERTING__) == LL_OPAMP_INPUT_INVERT_CONNECT_NO))
+#define IS_LL_OPAMP_INPUT_INVERTING(__INPUT_INVERTING__)                                                                                                                                               \
+	(((__INPUT_INVERTING__) == LL_OPAMP_INPUT_INVERT_IO0) || ((__INPUT_INVERTING__) == LL_OPAMP_INPUT_INVERT_IO1) || ((__INPUT_INVERTING__) == LL_OPAMP_INPUT_INVERT_CONNECT_NO))
 
 /**
  * @}
@@ -147,18 +135,15 @@ ErrorStatus LL_OPAMP_DeInit(OPAMP_TypeDef *OPAMPx)
  *          - SUCCESS: OPAMP registers are initialized
  *          - ERROR: OPAMP registers are not initialized
  */
-ErrorStatus LL_OPAMP_Init(OPAMP_TypeDef *OPAMPx,
-			  LL_OPAMP_InitTypeDef *OPAMP_InitStruct)
+ErrorStatus LL_OPAMP_Init(OPAMP_TypeDef *OPAMPx, LL_OPAMP_InitTypeDef *OPAMP_InitStruct)
 {
 	ErrorStatus status = SUCCESS;
 
 	/* Check the parameters */
 	assert_param(IS_OPAMP_ALL_INSTANCE(OPAMPx));
 	assert_param(IS_LL_OPAMP_POWER_MODE(OPAMP_InitStruct->PowerMode));
-	assert_param(
-	    IS_LL_OPAMP_FUNCTIONAL_MODE(OPAMP_InitStruct->FunctionalMode));
-	assert_param(IS_LL_OPAMP_INPUT_NONINVERTING(
-	    OPAMP_InitStruct->InputNonInverting));
+	assert_param(IS_LL_OPAMP_FUNCTIONAL_MODE(OPAMP_InitStruct->FunctionalMode));
+	assert_param(IS_LL_OPAMP_INPUT_NONINVERTING(OPAMP_InitStruct->InputNonInverting));
 
 	/* Note: OPAMP inverting input can be used with OPAMP in mode standalone
 	 */
@@ -166,8 +151,7 @@ ErrorStatus LL_OPAMP_Init(OPAMP_TypeDef *OPAMPx,
 	/*       Otherwise (OPAMP in mode follower), OPAMP inverting input is */
 	/*       not used (not connected to GPIO pin). */
 	if (OPAMP_InitStruct->FunctionalMode != LL_OPAMP_MODE_FOLLOWER) {
-		assert_param(IS_LL_OPAMP_INPUT_INVERTING(
-		    OPAMP_InitStruct->InputInverting));
+		assert_param(IS_LL_OPAMP_INPUT_INVERTING(OPAMP_InitStruct->InputInverting));
 	}
 
 	/* Note: Hardware constraint (refer to description of this function): */
@@ -180,24 +164,12 @@ ErrorStatus LL_OPAMP_Init(OPAMP_TypeDef *OPAMPx,
 		/*  - Input inverting */
 		/* Note: Bit OPAMP_CSR_CALON reset to ensure to be in functional
 		 * mode.    */
-		if (OPAMP_InitStruct->FunctionalMode !=
-		    LL_OPAMP_MODE_FOLLOWER) {
-			MODIFY_REG(OPAMPx->CSR,
-				   OPAMP_CSR_HIGHSPEEDEN | OPAMP_CSR_CALON |
-				       OPAMP_CSR_VMSEL | OPAMP_CSR_VPSEL |
-				       OPAMP_CSR_PGGAIN_4 | OPAMP_CSR_PGGAIN_3,
-				   OPAMP_InitStruct->PowerMode |
-				       OPAMP_InitStruct->FunctionalMode |
-				       OPAMP_InitStruct->InputNonInverting |
-				       OPAMP_InitStruct->InputInverting);
+		if (OPAMP_InitStruct->FunctionalMode != LL_OPAMP_MODE_FOLLOWER) {
+			MODIFY_REG(OPAMPx->CSR, OPAMP_CSR_HIGHSPEEDEN | OPAMP_CSR_CALON | OPAMP_CSR_VMSEL | OPAMP_CSR_VPSEL | OPAMP_CSR_PGGAIN_4 | OPAMP_CSR_PGGAIN_3,
+				   OPAMP_InitStruct->PowerMode | OPAMP_InitStruct->FunctionalMode | OPAMP_InitStruct->InputNonInverting | OPAMP_InitStruct->InputInverting);
 		} else {
-			MODIFY_REG(OPAMPx->CSR,
-				   OPAMP_CSR_HIGHSPEEDEN | OPAMP_CSR_CALON |
-				       OPAMP_CSR_VMSEL | OPAMP_CSR_VPSEL |
-				       OPAMP_CSR_PGGAIN_4 | OPAMP_CSR_PGGAIN_3,
-				   OPAMP_InitStruct->PowerMode |
-				       LL_OPAMP_MODE_FOLLOWER |
-				       OPAMP_InitStruct->InputNonInverting);
+			MODIFY_REG(OPAMPx->CSR, OPAMP_CSR_HIGHSPEEDEN | OPAMP_CSR_CALON | OPAMP_CSR_VMSEL | OPAMP_CSR_VPSEL | OPAMP_CSR_PGGAIN_4 | OPAMP_CSR_PGGAIN_3,
+				   OPAMP_InitStruct->PowerMode | LL_OPAMP_MODE_FOLLOWER | OPAMP_InitStruct->InputNonInverting);
 		}
 	} else {
 		/* Initialization error: OPAMP instance is locked. */

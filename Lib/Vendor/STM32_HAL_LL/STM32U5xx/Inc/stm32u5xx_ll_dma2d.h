@@ -98,28 +98,27 @@ typedef struct {
 				LL_DMA2D_SetOutputColor() or configuration
 				  function @ref LL_DMA2D_ConfigOutputColor(). */
 
-	uint32_t
-	    OutputGreen; /*!< Specifies the Green value of the output image.
-			      - This parameter must be a number between:
-				Min_Data = 0x00 and Max_Data = 0xFF if ARGB8888
-			    color mode is selected.
-			      - This parameter must be a number between:
-				Min_Data = 0x00 and Max_Data = 0xFF if RGB888
-			    color mode is selected.
-			      - This parameter must be a number between:
-				Min_Data = 0x00 and Max_Data = 0x3F if RGB565
-			    color mode is selected.
-			      - This parameter must be a number between:
-				Min_Data = 0x00 and Max_Data = 0x1F if ARGB1555
-			    color mode is selected.
-			      - This parameter must be a number between:
-				Min_Data = 0x00 and Max_Data = 0x0F if ARGB4444
-			    color mode is selected.
+	uint32_t OutputGreen; /*!< Specifies the Green value of the output image.
+				   - This parameter must be a number between:
+				     Min_Data = 0x00 and Max_Data = 0xFF if ARGB8888
+				 color mode is selected.
+				   - This parameter must be a number between:
+				     Min_Data = 0x00 and Max_Data = 0xFF if RGB888
+				 color mode is selected.
+				   - This parameter must be a number between:
+				     Min_Data = 0x00 and Max_Data = 0x3F if RGB565
+				 color mode is selected.
+				   - This parameter must be a number between:
+				     Min_Data = 0x00 and Max_Data = 0x1F if ARGB1555
+				 color mode is selected.
+				   - This parameter must be a number between:
+				     Min_Data = 0x00 and Max_Data = 0x0F if ARGB4444
+				 color mode is selected.
 
-			      This parameter can be modified afterwards
-			      using unitary function @ref
-			    LL_DMA2D_SetOutputColor() or configuration function
-			    @ref LL_DMA2D_ConfigOutputColor(). */
+				   This parameter can be modified afterwards
+				   using unitary function @ref
+				 LL_DMA2D_SetOutputColor() or configuration function
+				 @ref LL_DMA2D_ConfigOutputColor(). */
 
 	uint32_t OutputRed; /*!< Specifies the Red value of the output image.
 				 - This parameter must be a number between:
@@ -143,24 +142,23 @@ typedef struct {
 			       LL_DMA2D_SetOutputColor() or configuration
 				 function @ref LL_DMA2D_ConfigOutputColor(). */
 
-	uint32_t
-	    OutputAlpha; /*!< Specifies the Alpha channel of the output image.
-			      - This parameter must be a number between:
-				Min_Data = 0x00 and Max_Data = 0xFF if ARGB8888
-			    color mode is selected.
-			      - This parameter must be a number between:
-				Min_Data = 0x00 and Max_Data = 0x01 if ARGB1555
-			    color mode is selected.
-			      - This parameter must be a number between:
-				Min_Data = 0x00 and Max_Data = 0x0F if ARGB4444
-			    color mode is selected.
-			      - This parameter is not considered if RGB888 or
-			    RGB565 color mode is selected.
+	uint32_t OutputAlpha; /*!< Specifies the Alpha channel of the output image.
+				   - This parameter must be a number between:
+				     Min_Data = 0x00 and Max_Data = 0xFF if ARGB8888
+				 color mode is selected.
+				   - This parameter must be a number between:
+				     Min_Data = 0x00 and Max_Data = 0x01 if ARGB1555
+				 color mode is selected.
+				   - This parameter must be a number between:
+				     Min_Data = 0x00 and Max_Data = 0x0F if ARGB4444
+				 color mode is selected.
+				   - This parameter is not considered if RGB888 or
+				 RGB565 color mode is selected.
 
-			      This parameter can be modified afterwards using,
-			      unitary function @ref LL_DMA2D_SetOutputColor() or
-			    configuration function @ref
-			    LL_DMA2D_ConfigOutputColor(). */
+				   This parameter can be modified afterwards using,
+				   unitary function @ref LL_DMA2D_SetOutputColor() or
+				 configuration function @ref
+				 LL_DMA2D_ConfigOutputColor(). */
 
 	uint32_t OutputMemoryAddress; /*!< Specifies the memory address.
 					   - This parameter must be a number
@@ -205,24 +203,22 @@ typedef struct {
 				  using unitary function @ref
 				LL_DMA2D_SetNbrOfLines(). */
 
-	uint32_t
-	    NbrOfPixelsPerLines; /*!< Specifies the number of pixels per lines
-				    of the area to be transferred.
-				      - This parameter must be a number between
-				    Min_Data = 0x0000 and Max_Data = 0x3FFF.
+	uint32_t NbrOfPixelsPerLines; /*!< Specifies the number of pixels per lines
+					 of the area to be transferred.
+					   - This parameter must be a number between
+					 Min_Data = 0x0000 and Max_Data = 0x3FFF.
 
-				      This parameter can be modified afterwards
-				    using, unitary function @ref
-				    LL_DMA2D_SetNbrOfPixelsPerLines(). */
+					   This parameter can be modified afterwards
+					 using, unitary function @ref
+					 LL_DMA2D_SetNbrOfPixelsPerLines(). */
 
-	uint32_t
-	    AlphaInversionMode; /*!< Specifies the output alpha inversion mode.
-				     - This parameter can be one value of @ref
-				   DMA2D_LL_EC_ALPHA_INVERSION.
+	uint32_t AlphaInversionMode; /*!< Specifies the output alpha inversion mode.
+					  - This parameter can be one value of @ref
+					DMA2D_LL_EC_ALPHA_INVERSION.
 
-				     This parameter can be modified afterwards,
-				     using unitary function @ref
-				   LL_DMA2D_SetOutputAlphaInvMode(). */
+					  This parameter can be modified afterwards,
+					  using unitary function @ref
+					LL_DMA2D_SetOutputAlphaInvMode(). */
 
 	uint32_t RBSwapMode; /*!< Specifies the output Red Blue swap mode.
 				  - This parameter can be one value of @ref
@@ -238,18 +234,17 @@ typedef struct {
  * @brief LL DMA2D Layer Configuration Structure Definition
  */
 typedef struct {
-	uint32_t
-	    MemoryAddress; /*!< Specifies the foreground or background memory
-			      address.
-				- This parameter must be a number between:
-				  Min_Data = 0x0000 and Max_Data = 0xFFFFFFFF.
+	uint32_t MemoryAddress; /*!< Specifies the foreground or background memory
+				   address.
+				     - This parameter must be a number between:
+				       Min_Data = 0x0000 and Max_Data = 0xFFFFFFFF.
 
-				This parameter can be modified afterwards using
-			      unitary functions
-				- @ref LL_DMA2D_FGND_SetMemAddr() for foreground
-			      layer,
-				- @ref LL_DMA2D_BGND_SetMemAddr() for background
-			      layer. */
+				     This parameter can be modified afterwards using
+				   unitary functions
+				     - @ref LL_DMA2D_FGND_SetMemAddr() for foreground
+				   layer,
+				     - @ref LL_DMA2D_BGND_SetMemAddr() for background
+				   layer. */
 
 	uint32_t LineOffset; /*!< Specifies the foreground or background line
 				offset value.
@@ -263,17 +258,16 @@ typedef struct {
 				  - @ref LL_DMA2D_BGND_SetLineOffset() for
 				background layer. */
 
-	uint32_t
-	    ColorMode; /*!< Specifies the foreground or background color mode.
-			    - This parameter can be one value of @ref
-			  DMA2D_LL_EC_INPUT_COLOR_MODE.
+	uint32_t ColorMode; /*!< Specifies the foreground or background color mode.
+				 - This parameter can be one value of @ref
+			       DMA2D_LL_EC_INPUT_COLOR_MODE.
 
-			    This parameter can be modified afterwards using
-			  unitary functions
-			    - @ref LL_DMA2D_FGND_SetColorMode() for foreground
-			  layer,
-			    - @ref LL_DMA2D_BGND_SetColorMode() for background
-			  layer. */
+				 This parameter can be modified afterwards using
+			       unitary functions
+				 - @ref LL_DMA2D_FGND_SetColorMode() for foreground
+			       layer,
+				 - @ref LL_DMA2D_BGND_SetColorMode() for background
+			       layer. */
 
 	uint32_t CLUTColorMode; /*!< Specifies the foreground or background CLUT
 				   color mode.
@@ -287,50 +281,46 @@ typedef struct {
 				     - @ref LL_DMA2D_BGND_SetCLUTColorMode() for
 				   background layer. */
 
-	uint32_t
-	    CLUTSize; /*!< Specifies the foreground or background CLUT size.
-			   - This parameter must be a number between Min_Data =
-			 0x00 and Max_Data = 0xFF.
+	uint32_t CLUTSize; /*!< Specifies the foreground or background CLUT size.
+				- This parameter must be a number between Min_Data =
+			      0x00 and Max_Data = 0xFF.
 
-			   This parameter can be modified afterwards using
-			 unitary functions
-			   - @ref LL_DMA2D_FGND_SetCLUTSize() for foreground
-			 layer,
-			   - @ref LL_DMA2D_BGND_SetCLUTSize() for background
-			 layer. */
+				This parameter can be modified afterwards using
+			      unitary functions
+				- @ref LL_DMA2D_FGND_SetCLUTSize() for foreground
+			      layer,
+				- @ref LL_DMA2D_BGND_SetCLUTSize() for background
+			      layer. */
 
-	uint32_t
-	    AlphaMode; /*!< Specifies the foreground or background alpha mode.
-			     - This parameter can be one value of @ref
-			  DMA2D_LL_EC_ALPHA_MODE.
+	uint32_t AlphaMode; /*!< Specifies the foreground or background alpha mode.
+				  - This parameter can be one value of @ref
+			       DMA2D_LL_EC_ALPHA_MODE.
 
-			    This parameter can be modified afterwards using
-			  unitary functions
-			    - @ref LL_DMA2D_FGND_SetAlphaMode() for foreground
-			  layer,
-			    - @ref LL_DMA2D_BGND_SetAlphaMode() for background
-			  layer. */
+				 This parameter can be modified afterwards using
+			       unitary functions
+				 - @ref LL_DMA2D_FGND_SetAlphaMode() for foreground
+			       layer,
+				 - @ref LL_DMA2D_BGND_SetAlphaMode() for background
+			       layer. */
 
-	uint32_t
-	    Alpha; /*!< Specifies the foreground or background Alpha value.
-			- This parameter must be a number between Min_Data =
-		      0x00 and Max_Data = 0xFF.
+	uint32_t Alpha; /*!< Specifies the foreground or background Alpha value.
+			     - This parameter must be a number between Min_Data =
+			   0x00 and Max_Data = 0xFF.
 
-			This parameter can be modified afterwards using unitary
-		      functions
-			- @ref LL_DMA2D_FGND_SetAlpha() for foreground layer,
-			- @ref LL_DMA2D_BGND_SetAlpha() for background layer. */
+			     This parameter can be modified afterwards using unitary
+			   functions
+			     - @ref LL_DMA2D_FGND_SetAlpha() for foreground layer,
+			     - @ref LL_DMA2D_BGND_SetAlpha() for background layer. */
 
-	uint32_t
-	    Blue; /*!< Specifies the foreground or background Blue color value.
-		       - This parameter must be a number between Min_Data = 0x00
-		     and Max_Data = 0xFF.
+	uint32_t Blue; /*!< Specifies the foreground or background Blue color value.
+			    - This parameter must be a number between Min_Data = 0x00
+			  and Max_Data = 0xFF.
 
-		       This parameter can be modified afterwards using unitary
-		     functions
-		       - @ref LL_DMA2D_FGND_SetBlueColor() for foreground layer,
-		       - @ref LL_DMA2D_BGND_SetBlueColor() for background layer.
-		   */
+			    This parameter can be modified afterwards using unitary
+			  functions
+			    - @ref LL_DMA2D_FGND_SetBlueColor() for foreground layer,
+			    - @ref LL_DMA2D_BGND_SetBlueColor() for background layer.
+			*/
 
 	uint32_t Green; /*!< Specifies the foreground or background Green color
 			   value.
@@ -344,16 +334,15 @@ typedef struct {
 			     - @ref LL_DMA2D_BGND_SetGreenColor() for background
 			   layer. */
 
-	uint32_t
-	    Red; /*!< Specifies the foreground or background Red color value.
-		      - This parameter must be a number between Min_Data = 0x00
-		    and Max_Data = 0xFF.
+	uint32_t Red; /*!< Specifies the foreground or background Red color value.
+			   - This parameter must be a number between Min_Data = 0x00
+			 and Max_Data = 0xFF.
 
-		      This parameter can be modified afterwards using unitary
-		    functions
-		      - @ref LL_DMA2D_FGND_SetRedColor() for foreground layer,
-		      - @ref LL_DMA2D_BGND_SetRedColor() for background layer.
-		  */
+			   This parameter can be modified afterwards using unitary
+			 functions
+			   - @ref LL_DMA2D_FGND_SetRedColor() for foreground layer,
+			   - @ref LL_DMA2D_BGND_SetRedColor() for background layer.
+		       */
 
 	uint32_t CLUTMemoryAddress; /*!< Specifies the foreground or background
 				       CLUT memory address.
@@ -392,18 +381,17 @@ typedef struct {
 				background layer. */
 
 #if defined(DMA2D_FGPFCCR_CSS)
-	uint32_t
-	    ChromaSubSampling; /*!< Configure the chroma sub-sampling mode for
-				  the YCbCr color mode This parameter is
-				  applicable for foreground layer only. This
-				  parameter can be one value of @ref
-				  DMA2D_LL_CHROMA_SUB_SAMPLING
+	uint32_t ChromaSubSampling; /*!< Configure the chroma sub-sampling mode for
+				       the YCbCr color mode This parameter is
+				       applicable for foreground layer only. This
+				       parameter can be one value of @ref
+				       DMA2D_LL_CHROMA_SUB_SAMPLING
 
-				    This parameter can be modified afterwards
-				  using unitary functions
-				    - @ref LL_DMA2D_FGND_SetChrSubSampling() for
-				  foreground layer. */
-#endif			       /* DMA2D_FGPFCCR_CSS  */
+					 This parameter can be modified afterwards
+				       using unitary functions
+					 - @ref LL_DMA2D_FGND_SetChrSubSampling() for
+				       foreground layer. */
+#endif				    /* DMA2D_FGPFCCR_CSS  */
 
 } LL_DMA2D_LayerCfgTypeDef;
 
@@ -440,28 +428,27 @@ typedef struct {
 				LL_DMA2D_SetOutputColor() or configuration
 				  function @ref LL_DMA2D_ConfigOutputColor(). */
 
-	uint32_t
-	    OutputGreen; /*!< Specifies the Green value of the output image.
-			      - This parameter must be a number between:
-				Min_Data = 0x00 and Max_Data = 0xFF if ARGB8888
-			    color mode is selected.
-			      - This parameter must be a number between
-				Min_Data = 0x00 and Max_Data = 0xFF if RGB888
-			    color mode is selected.
-			      - This parameter must be a number between:
-				Min_Data = 0x00 and Max_Data = 0x3F if RGB565
-			    color mode is selected.
-			      - This parameter must be a number between:
-				Min_Data = 0x00 and Max_Data = 0x1F if ARGB1555
-			    color mode is selected.
-			      - This parameter must be a number between:
-				Min_Data = 0x00 and Max_Data = 0x0F if ARGB4444
-			    color mode is selected.
+	uint32_t OutputGreen; /*!< Specifies the Green value of the output image.
+				   - This parameter must be a number between:
+				     Min_Data = 0x00 and Max_Data = 0xFF if ARGB8888
+				 color mode is selected.
+				   - This parameter must be a number between
+				     Min_Data = 0x00 and Max_Data = 0xFF if RGB888
+				 color mode is selected.
+				   - This parameter must be a number between:
+				     Min_Data = 0x00 and Max_Data = 0x3F if RGB565
+				 color mode is selected.
+				   - This parameter must be a number between:
+				     Min_Data = 0x00 and Max_Data = 0x1F if ARGB1555
+				 color mode is selected.
+				   - This parameter must be a number between:
+				     Min_Data = 0x00 and Max_Data = 0x0F if ARGB4444
+				 color mode is selected.
 
-			      This parameter can be modified afterwards,
-			      using unitary function @ref
-			    LL_DMA2D_SetOutputColor() or configuration function
-			    @ref LL_DMA2D_ConfigOutputColor(). */
+				   This parameter can be modified afterwards,
+				   using unitary function @ref
+				 LL_DMA2D_SetOutputColor() or configuration function
+				 @ref LL_DMA2D_ConfigOutputColor(). */
 
 	uint32_t OutputRed; /*!< Specifies the Red value of the output image.
 				 - This parameter must be a number between:
@@ -485,24 +472,23 @@ typedef struct {
 			       LL_DMA2D_SetOutputColor() or configuration
 				 function @ref LL_DMA2D_ConfigOutputColor(). */
 
-	uint32_t
-	    OutputAlpha; /*!< Specifies the Alpha channel of the output image.
-			      - This parameter must be a number between:
-				Min_Data = 0x00 and Max_Data = 0xFF if ARGB8888
-			    color mode is selected.
-			      - This parameter must be a number between:
-				Min_Data = 0x00 and Max_Data = 0x01 if ARGB1555
-			    color mode is selected.
-			      - This parameter must be a number between:
-				Min_Data = 0x00 and Max_Data = 0x0F if ARGB4444
-			    color mode is selected.
-			      - This parameter is not considered if RGB888 or
-			    RGB565 color mode is selected.
+	uint32_t OutputAlpha; /*!< Specifies the Alpha channel of the output image.
+				   - This parameter must be a number between:
+				     Min_Data = 0x00 and Max_Data = 0xFF if ARGB8888
+				 color mode is selected.
+				   - This parameter must be a number between:
+				     Min_Data = 0x00 and Max_Data = 0x01 if ARGB1555
+				 color mode is selected.
+				   - This parameter must be a number between:
+				     Min_Data = 0x00 and Max_Data = 0x0F if ARGB4444
+				 color mode is selected.
+				   - This parameter is not considered if RGB888 or
+				 RGB565 color mode is selected.
 
-			      This parameter can be modified afterwards,
-			      using unitary function @ref
-			    LL_DMA2D_SetOutputColor() or configuration function
-			    @ref LL_DMA2D_ConfigOutputColor(). */
+				   This parameter can be modified afterwards,
+				   using unitary function @ref
+				 LL_DMA2D_SetOutputColor() or configuration function
+				 @ref LL_DMA2D_ConfigOutputColor(). */
 
 } LL_DMA2D_ColorTypeDef;
 
@@ -520,18 +506,13 @@ typedef struct {
  * @brief    Flags defines which can be used with LL_DMA2D_ReadReg function
  * @{
  */
-#define LL_DMA2D_FLAG_CEIF                                                     \
-	DMA2D_ISR_CEIF /*!< Configuration Error Interrupt Flag */
-#define LL_DMA2D_FLAG_CTCIF                                                    \
-	DMA2D_ISR_CTCIF /*!< CLUT Transfer Complete Interrupt Flag */
-#define LL_DMA2D_FLAG_CAEIF                                                    \
-	DMA2D_ISR_CAEIF /*!< CLUT Access Error Interrupt Flag */
-#define LL_DMA2D_FLAG_TWIF                                                     \
-	DMA2D_ISR_TWIF /*!< Transfer Watermark Interrupt Flag */
-#define LL_DMA2D_FLAG_TCIF                                                     \
-	DMA2D_ISR_TCIF /*!< Transfer Complete Interrupt Flag */
-#define LL_DMA2D_FLAG_TEIF                                                     \
-	DMA2D_ISR_TEIF /*!< Transfer Error Interrupt Flag                      \
+#define LL_DMA2D_FLAG_CEIF DMA2D_ISR_CEIF   /*!< Configuration Error Interrupt Flag */
+#define LL_DMA2D_FLAG_CTCIF DMA2D_ISR_CTCIF /*!< CLUT Transfer Complete Interrupt Flag */
+#define LL_DMA2D_FLAG_CAEIF DMA2D_ISR_CAEIF /*!< CLUT Access Error Interrupt Flag */
+#define LL_DMA2D_FLAG_TWIF DMA2D_ISR_TWIF   /*!< Transfer Watermark Interrupt Flag */
+#define LL_DMA2D_FLAG_TCIF DMA2D_ISR_TCIF   /*!< Transfer Complete Interrupt Flag */
+#define LL_DMA2D_FLAG_TEIF                                                                                                                                                                             \
+	DMA2D_ISR_TEIF /*!< Transfer Error Interrupt Flag                                                                                                                                              \
 			*/
 /**
  * @}
@@ -542,9 +523,8 @@ typedef struct {
  * LL_DMA2D_WriteReg functions
  * @{
  */
-#define LL_DMA2D_IT_CEIE DMA2D_CR_CEIE /*!< Configuration Error Interrupt */
-#define LL_DMA2D_IT_CTCIE                                                      \
-	DMA2D_CR_CTCIE /*!< CLUT Transfer Complete Interrupt */
+#define LL_DMA2D_IT_CEIE DMA2D_CR_CEIE	 /*!< Configuration Error Interrupt */
+#define LL_DMA2D_IT_CTCIE DMA2D_CR_CTCIE /*!< CLUT Transfer Complete Interrupt */
 #define LL_DMA2D_IT_CAEIE DMA2D_CR_CAEIE /*!< CLUT Access Error Interrupt */
 #define LL_DMA2D_IT_TWIE DMA2D_CR_TWIE	 /*!< Transfer Watermark Interrupt */
 #define LL_DMA2D_IT_TCIE DMA2D_CR_TCIE	 /*!< Transfer Complete Interrupt */
@@ -556,24 +536,20 @@ typedef struct {
 /** @defgroup DMA2D_LL_EC_MODE Mode
  * @{
  */
-#define LL_DMA2D_MODE_M2M                                                      \
-	0x00000000U /*!< DMA2D memory to memory transfer mode */
-#define LL_DMA2D_MODE_M2M_PFC                                                  \
-	DMA2D_CR_MODE_0 /*!< DMA2D memory to memory with pixel format          \
+#define LL_DMA2D_MODE_M2M 0x00000000U /*!< DMA2D memory to memory transfer mode */
+#define LL_DMA2D_MODE_M2M_PFC                                                                                                                                                                          \
+	DMA2D_CR_MODE_0 /*!< DMA2D memory to memory with pixel format                                                                                                                                  \
 			   conversion transfer mode */
-#define LL_DMA2D_MODE_M2M_BLEND                                                \
-	DMA2D_CR_MODE_1 /*!< DMA2D memory to memory with blending transfer     \
-			   mode */
-#define LL_DMA2D_MODE_R2M                                                      \
-	(DMA2D_CR_MODE_0 |                                                     \
-	 DMA2D_CR_MODE_1) /*!< DMA2D register to memory transfer mode */
-#define LL_DMA2D_MODE_M2M_BLEND_FIXED_COLOR_FG                                 \
-	DMA2D_CR_MODE_2 /*!< DMA2D memory to memory with blending transfer     \
+#define LL_DMA2D_MODE_M2M_BLEND                                                                                                                                                                        \
+	DMA2D_CR_MODE_1					      /*!< DMA2D memory to memory with blending transfer                                                                                       \
+								 mode */
+#define LL_DMA2D_MODE_R2M (DMA2D_CR_MODE_0 | DMA2D_CR_MODE_1) /*!< DMA2D register to memory transfer mode */
+#define LL_DMA2D_MODE_M2M_BLEND_FIXED_COLOR_FG                                                                                                                                                         \
+	DMA2D_CR_MODE_2 /*!< DMA2D memory to memory with blending transfer                                                                                                                             \
 			   mode and fixed color foreground */
-#define LL_DMA2D_MODE_M2M_BLEND_FIXED_COLOR_BG                                 \
-	(DMA2D_CR_MODE_0 |                                                     \
-	 DMA2D_CR_MODE_2) /*!< DMA2D memory to memory with blending transfer   \
-			     mode and fixed color background */
+#define LL_DMA2D_MODE_M2M_BLEND_FIXED_COLOR_BG                                                                                                                                                         \
+	(DMA2D_CR_MODE_0 | DMA2D_CR_MODE_2) /*!< DMA2D memory to memory with blending transfer                                                                                                         \
+					       mode and fixed color background */
 /**
  * @}
  */
@@ -581,12 +557,11 @@ typedef struct {
 /** @defgroup DMA2D_LL_EC_OUTPUT_COLOR_MODE Output Color Mode
  * @{
  */
-#define LL_DMA2D_OUTPUT_MODE_ARGB8888 0x00000000U     /*!< ARGB8888 */
-#define LL_DMA2D_OUTPUT_MODE_RGB888 DMA2D_OPFCCR_CM_0 /*!< RGB888   */
-#define LL_DMA2D_OUTPUT_MODE_RGB565 DMA2D_OPFCCR_CM_1 /*!< RGB565   */
-#define LL_DMA2D_OUTPUT_MODE_ARGB1555                                          \
-	(DMA2D_OPFCCR_CM_0 | DMA2D_OPFCCR_CM_1)		/*!< ARGB1555 */
-#define LL_DMA2D_OUTPUT_MODE_ARGB4444 DMA2D_OPFCCR_CM_2 /*!< ARGB4444 */
+#define LL_DMA2D_OUTPUT_MODE_ARGB8888 0x00000000U			      /*!< ARGB8888 */
+#define LL_DMA2D_OUTPUT_MODE_RGB888 DMA2D_OPFCCR_CM_0			      /*!< RGB888   */
+#define LL_DMA2D_OUTPUT_MODE_RGB565 DMA2D_OPFCCR_CM_1			      /*!< RGB565   */
+#define LL_DMA2D_OUTPUT_MODE_ARGB1555 (DMA2D_OPFCCR_CM_0 | DMA2D_OPFCCR_CM_1) /*!< ARGB1555 */
+#define LL_DMA2D_OUTPUT_MODE_ARGB4444 DMA2D_OPFCCR_CM_2			      /*!< ARGB4444 */
 /**
  * @}
  */
@@ -594,29 +569,20 @@ typedef struct {
 /** @defgroup DMA2D_LL_EC_INPUT_COLOR_MODE Input Color Mode
  * @{
  */
-#define LL_DMA2D_INPUT_MODE_ARGB8888 0x00000000U      /*!< ARGB8888 */
-#define LL_DMA2D_INPUT_MODE_RGB888 DMA2D_FGPFCCR_CM_0 /*!< RGB888   */
-#define LL_DMA2D_INPUT_MODE_RGB565 DMA2D_FGPFCCR_CM_1 /*!< RGB565   */
-#define LL_DMA2D_INPUT_MODE_ARGB1555                                           \
-	(DMA2D_FGPFCCR_CM_0 | DMA2D_FGPFCCR_CM_1)	/*!< ARGB1555 */
-#define LL_DMA2D_INPUT_MODE_ARGB4444 DMA2D_FGPFCCR_CM_2 /*!< ARGB4444 */
-#define LL_DMA2D_INPUT_MODE_L8                                                 \
-	(DMA2D_FGPFCCR_CM_0 | DMA2D_FGPFCCR_CM_2) /*!< L8       */
-#define LL_DMA2D_INPUT_MODE_AL44                                               \
-	(DMA2D_FGPFCCR_CM_1 | DMA2D_FGPFCCR_CM_2) /*!< AL44     */
-#define LL_DMA2D_INPUT_MODE_AL88                                               \
-	(DMA2D_FGPFCCR_CM_0 | DMA2D_FGPFCCR_CM_1 |                             \
-	 DMA2D_FGPFCCR_CM_2)			  /*!< AL88     */
-#define LL_DMA2D_INPUT_MODE_L4 DMA2D_FGPFCCR_CM_3 /*!< L4       */
-#define LL_DMA2D_INPUT_MODE_A8                                                 \
-	(DMA2D_FGPFCCR_CM_0 | DMA2D_FGPFCCR_CM_3) /*!< A8       */
-#define LL_DMA2D_INPUT_MODE_A4                                                 \
-	(DMA2D_FGPFCCR_CM_1 | DMA2D_FGPFCCR_CM_3) /*!< A4       */
+#define LL_DMA2D_INPUT_MODE_ARGB8888 0x00000000U						/*!< ARGB8888 */
+#define LL_DMA2D_INPUT_MODE_RGB888 DMA2D_FGPFCCR_CM_0						/*!< RGB888   */
+#define LL_DMA2D_INPUT_MODE_RGB565 DMA2D_FGPFCCR_CM_1						/*!< RGB565   */
+#define LL_DMA2D_INPUT_MODE_ARGB1555 (DMA2D_FGPFCCR_CM_0 | DMA2D_FGPFCCR_CM_1)			/*!< ARGB1555 */
+#define LL_DMA2D_INPUT_MODE_ARGB4444 DMA2D_FGPFCCR_CM_2						/*!< ARGB4444 */
+#define LL_DMA2D_INPUT_MODE_L8 (DMA2D_FGPFCCR_CM_0 | DMA2D_FGPFCCR_CM_2)			/*!< L8       */
+#define LL_DMA2D_INPUT_MODE_AL44 (DMA2D_FGPFCCR_CM_1 | DMA2D_FGPFCCR_CM_2)			/*!< AL44     */
+#define LL_DMA2D_INPUT_MODE_AL88 (DMA2D_FGPFCCR_CM_0 | DMA2D_FGPFCCR_CM_1 | DMA2D_FGPFCCR_CM_2) /*!< AL88     */
+#define LL_DMA2D_INPUT_MODE_L4 DMA2D_FGPFCCR_CM_3						/*!< L4       */
+#define LL_DMA2D_INPUT_MODE_A8 (DMA2D_FGPFCCR_CM_0 | DMA2D_FGPFCCR_CM_3)			/*!< A8       */
+#define LL_DMA2D_INPUT_MODE_A4 (DMA2D_FGPFCCR_CM_1 | DMA2D_FGPFCCR_CM_3)			/*!< A4       */
 #if defined(DMA2D_FGPFCCR_CSS)
-#define LL_DMA2D_INPUT_MODE_YCBCR                                              \
-	(DMA2D_FGPFCCR_CM_0 | DMA2D_FGPFCCR_CM_1 |                             \
-	 DMA2D_FGPFCCR_CM_3) /*!< YCbCr    */
-#endif			     /* DMA2D_FGPFCCR_CSS */
+#define LL_DMA2D_INPUT_MODE_YCBCR (DMA2D_FGPFCCR_CM_0 | DMA2D_FGPFCCR_CM_1 | DMA2D_FGPFCCR_CM_3) /*!< YCbCr    */
+#endif												 /* DMA2D_FGPFCCR_CSS */
 /**
  * @}
  */
@@ -624,14 +590,13 @@ typedef struct {
 /** @defgroup DMA2D_LL_EC_ALPHA_MODE Alpha Mode
  * @{
  */
-#define LL_DMA2D_ALPHA_MODE_NO_MODIF                                           \
-	0x00000000U /*!< No modification of the alpha channel value */
-#define LL_DMA2D_ALPHA_MODE_REPLACE                                            \
-	DMA2D_FGPFCCR_AM_0 /*!< Replace original alpha channel value by        \
+#define LL_DMA2D_ALPHA_MODE_NO_MODIF 0x00000000U /*!< No modification of the alpha channel value */
+#define LL_DMA2D_ALPHA_MODE_REPLACE                                                                                                                                                                    \
+	DMA2D_FGPFCCR_AM_0 /*!< Replace original alpha channel value by                                                                                                                                \
 				programmed alpha value                     */
-#define LL_DMA2D_ALPHA_MODE_COMBINE                                            \
-	DMA2D_FGPFCCR_AM_1 /*!< Replace original alpha channel value by        \
-				programmed alpha value with,                   \
+#define LL_DMA2D_ALPHA_MODE_COMBINE                                                                                                                                                                    \
+	DMA2D_FGPFCCR_AM_1 /*!< Replace original alpha channel value by                                                                                                                                \
+				programmed alpha value with,                                                                                                                                           \
 				original alpha channel value               */
 /**
  * @}
@@ -640,9 +605,8 @@ typedef struct {
 /** @defgroup DMA2D_LL_EC_OUTPUT_SWAP_MODE Swap Mode
  * @{
  */
-#define LL_DMA2D_SWAP_MODE_REGULAR 0x00000000U /*!< Regular order */
-#define LL_DMA2D_SWAP_MODE_TWO_BY_TWO                                          \
-	DMA2D_OPFCCR_SB /*!< Bytes swapped two by two */
+#define LL_DMA2D_SWAP_MODE_REGULAR 0x00000000U	      /*!< Regular order */
+#define LL_DMA2D_SWAP_MODE_TWO_BY_TWO DMA2D_OPFCCR_SB /*!< Bytes swapped two by two */
 /**
  * @}
  */
@@ -668,10 +632,8 @@ typedef struct {
 /** @defgroup DMA2D_LL_EC_LINE_OFFSET_MODE Line Offset Mode
  * @{
  */
-#define LL_DMA2D_LINE_OFFSET_PIXELS                                            \
-	0x00000000U /*!< Line offsets are expressed in pixels  */
-#define LL_DMA2D_LINE_OFFSET_BYTES                                             \
-	DMA2D_CR_LOM /*!< Line offsets are expressed in bytes   */
+#define LL_DMA2D_LINE_OFFSET_PIXELS 0x00000000U /*!< Line offsets are expressed in pixels  */
+#define LL_DMA2D_LINE_OFFSET_BYTES DMA2D_CR_LOM /*!< Line offsets are expressed in bytes   */
 /**
  * @}
  */
@@ -689,7 +651,7 @@ typedef struct {
 /** @defgroup DMA2D_LL_CHROMA_SUB_SAMPLING Chroma Sub Sampling
  * @{
  */
-#define LL_DMA2D_CSS_444 0x00000000U /*!< No chroma sub-sampling 4:4:4 */
+#define LL_DMA2D_CSS_444 0x00000000U	     /*!< No chroma sub-sampling 4:4:4 */
 #define LL_DMA2D_CSS_422 DMA2D_FGPFCCR_CSS_0 /*!< chroma sub-sampling 4:2:2 */
 #define LL_DMA2D_CSS_420 DMA2D_FGPFCCR_CSS_1 /*!< chroma sub-sampling 4:2:0 */
 /**
@@ -717,8 +679,7 @@ typedef struct {
  * @param  __VALUE__ Value to be written in the register
  * @retval None
  */
-#define LL_DMA2D_WriteReg(__INSTANCE__, __REG__, __VALUE__)                    \
-	WRITE_REG((__INSTANCE__)->__REG__, (__VALUE__))
+#define LL_DMA2D_WriteReg(__INSTANCE__, __REG__, __VALUE__) WRITE_REG((__INSTANCE__)->__REG__, (__VALUE__))
 
 /**
  * @brief  Read a value in DMA2D register.
@@ -726,8 +687,7 @@ typedef struct {
  * @param  __REG__ Register to be read
  * @retval Register value
  */
-#define LL_DMA2D_ReadReg(__INSTANCE__, __REG__)                                \
-	READ_REG((__INSTANCE__)->__REG__)
+#define LL_DMA2D_ReadReg(__INSTANCE__, __REG__) READ_REG((__INSTANCE__)->__REG__)
 /**
  * @}
  */
@@ -751,10 +711,7 @@ typedef struct {
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_Start(DMA2D_TypeDef *DMA2Dx)
-{
-	SET_BIT(DMA2Dx->CR, DMA2D_CR_START);
-}
+__STATIC_INLINE void LL_DMA2D_Start(DMA2D_TypeDef *DMA2Dx) { SET_BIT(DMA2Dx->CR, DMA2D_CR_START); }
 
 /**
  * @brief  Indicate if a DMA2D transfer is ongoing.
@@ -762,12 +719,7 @@ __STATIC_INLINE void LL_DMA2D_Start(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA2D_IsTransferOngoing(const DMA2D_TypeDef *DMA2Dx)
-{
-	return ((READ_BIT(DMA2Dx->CR, DMA2D_CR_START) == (DMA2D_CR_START))
-		    ? 1UL
-		    : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_IsTransferOngoing(const DMA2D_TypeDef *DMA2Dx) { return ((READ_BIT(DMA2Dx->CR, DMA2D_CR_START) == (DMA2D_CR_START)) ? 1UL : 0UL); }
 
 /**
  * @brief  Suspend DMA2D transfer.
@@ -777,10 +729,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsTransferOngoing(const DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_Suspend(DMA2D_TypeDef *DMA2Dx)
-{
-	MODIFY_REG(DMA2Dx->CR, DMA2D_CR_SUSP | DMA2D_CR_START, DMA2D_CR_SUSP);
-}
+__STATIC_INLINE void LL_DMA2D_Suspend(DMA2D_TypeDef *DMA2Dx) { MODIFY_REG(DMA2Dx->CR, DMA2D_CR_SUSP | DMA2D_CR_START, DMA2D_CR_SUSP); }
 
 /**
  * @brief  Resume DMA2D transfer.
@@ -790,10 +739,7 @@ __STATIC_INLINE void LL_DMA2D_Suspend(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_Resume(DMA2D_TypeDef *DMA2Dx)
-{
-	CLEAR_BIT(DMA2Dx->CR, DMA2D_CR_SUSP | DMA2D_CR_START);
-}
+__STATIC_INLINE void LL_DMA2D_Resume(DMA2D_TypeDef *DMA2Dx) { CLEAR_BIT(DMA2Dx->CR, DMA2D_CR_SUSP | DMA2D_CR_START); }
 
 /**
  * @brief  Indicate if DMA2D transfer is suspended.
@@ -803,11 +749,7 @@ __STATIC_INLINE void LL_DMA2D_Resume(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA2D_IsSuspended(const DMA2D_TypeDef *DMA2Dx)
-{
-	return ((READ_BIT(DMA2Dx->CR, DMA2D_CR_SUSP) == (DMA2D_CR_SUSP)) ? 1UL
-									 : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_IsSuspended(const DMA2D_TypeDef *DMA2Dx) { return ((READ_BIT(DMA2Dx->CR, DMA2D_CR_SUSP) == (DMA2D_CR_SUSP)) ? 1UL : 0UL); }
 
 /**
  * @brief  Abort DMA2D transfer.
@@ -817,10 +759,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsSuspended(const DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_Abort(DMA2D_TypeDef *DMA2Dx)
-{
-	MODIFY_REG(DMA2Dx->CR, DMA2D_CR_ABORT | DMA2D_CR_START, DMA2D_CR_ABORT);
-}
+__STATIC_INLINE void LL_DMA2D_Abort(DMA2D_TypeDef *DMA2Dx) { MODIFY_REG(DMA2Dx->CR, DMA2D_CR_ABORT | DMA2D_CR_START, DMA2D_CR_ABORT); }
 
 /**
  * @brief  Indicate if DMA2D transfer is aborted.
@@ -830,12 +769,7 @@ __STATIC_INLINE void LL_DMA2D_Abort(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA2D_IsAborted(const DMA2D_TypeDef *DMA2Dx)
-{
-	return ((READ_BIT(DMA2Dx->CR, DMA2D_CR_ABORT) == (DMA2D_CR_ABORT))
-		    ? 1UL
-		    : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_IsAborted(const DMA2D_TypeDef *DMA2Dx) { return ((READ_BIT(DMA2Dx->CR, DMA2D_CR_ABORT) == (DMA2D_CR_ABORT)) ? 1UL : 0UL); }
 
 /**
  * @brief  Set DMA2D mode.
@@ -850,10 +784,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsAborted(const DMA2D_TypeDef *DMA2Dx)
  *         @arg @ref LL_DMA2D_MODE_M2M_BLEND_FIXED_COLOR_BG
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_SetMode(DMA2D_TypeDef *DMA2Dx, uint32_t Mode)
-{
-	MODIFY_REG(DMA2Dx->CR, DMA2D_CR_MODE, Mode);
-}
+__STATIC_INLINE void LL_DMA2D_SetMode(DMA2D_TypeDef *DMA2Dx, uint32_t Mode) { MODIFY_REG(DMA2Dx->CR, DMA2D_CR_MODE, Mode); }
 
 /**
  * @brief  Return DMA2D mode
@@ -867,10 +798,7 @@ __STATIC_INLINE void LL_DMA2D_SetMode(DMA2D_TypeDef *DMA2Dx, uint32_t Mode)
  *         @arg @ref LL_DMA2D_MODE_M2M_BLEND_FIXED_COLOR_FG
  *         @arg @ref LL_DMA2D_MODE_M2M_BLEND_FIXED_COLOR_BG
  */
-__STATIC_INLINE uint32_t LL_DMA2D_GetMode(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->CR, DMA2D_CR_MODE));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_GetMode(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->CR, DMA2D_CR_MODE)); }
 
 /**
  * @brief  Set DMA2D output color mode.
@@ -884,11 +812,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_GetMode(const DMA2D_TypeDef *DMA2Dx)
  *         @arg @ref LL_DMA2D_OUTPUT_MODE_ARGB4444
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_SetOutputColorMode(DMA2D_TypeDef *DMA2Dx,
-						 uint32_t ColorMode)
-{
-	MODIFY_REG(DMA2Dx->OPFCCR, DMA2D_OPFCCR_CM, ColorMode);
-}
+__STATIC_INLINE void LL_DMA2D_SetOutputColorMode(DMA2D_TypeDef *DMA2Dx, uint32_t ColorMode) { MODIFY_REG(DMA2Dx->OPFCCR, DMA2D_OPFCCR_CM, ColorMode); }
 
 /**
  * @brief  Return DMA2D output color mode.
@@ -901,11 +825,7 @@ __STATIC_INLINE void LL_DMA2D_SetOutputColorMode(DMA2D_TypeDef *DMA2Dx,
  *         @arg @ref LL_DMA2D_OUTPUT_MODE_ARGB1555
  *         @arg @ref LL_DMA2D_OUTPUT_MODE_ARGB4444
  */
-__STATIC_INLINE uint32_t
-LL_DMA2D_GetOutputColorMode(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->OPFCCR, DMA2D_OPFCCR_CM));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_GetOutputColorMode(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->OPFCCR, DMA2D_OPFCCR_CM)); }
 
 /**
  * @brief  Set DMA2D output Red Blue swap mode.
@@ -916,11 +836,7 @@ LL_DMA2D_GetOutputColorMode(const DMA2D_TypeDef *DMA2Dx)
  *         @arg @ref LL_DMA2D_RB_MODE_SWAP
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_SetOutputRBSwapMode(DMA2D_TypeDef *DMA2Dx,
-						  uint32_t RBSwapMode)
-{
-	MODIFY_REG(DMA2Dx->OPFCCR, DMA2D_OPFCCR_RBS, RBSwapMode);
-}
+__STATIC_INLINE void LL_DMA2D_SetOutputRBSwapMode(DMA2D_TypeDef *DMA2Dx, uint32_t RBSwapMode) { MODIFY_REG(DMA2Dx->OPFCCR, DMA2D_OPFCCR_RBS, RBSwapMode); }
 
 /**
  * @brief  Return DMA2D output Red Blue swap mode.
@@ -930,11 +846,7 @@ __STATIC_INLINE void LL_DMA2D_SetOutputRBSwapMode(DMA2D_TypeDef *DMA2Dx,
  *         @arg @ref LL_DMA2D_RB_MODE_REGULAR
  *         @arg @ref LL_DMA2D_RB_MODE_SWAP
  */
-__STATIC_INLINE uint32_t
-LL_DMA2D_GetOutputRBSwapMode(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->OPFCCR, DMA2D_OPFCCR_RBS));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_GetOutputRBSwapMode(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->OPFCCR, DMA2D_OPFCCR_RBS)); }
 
 /**
  * @brief  Set DMA2D output alpha inversion mode.
@@ -945,11 +857,7 @@ LL_DMA2D_GetOutputRBSwapMode(const DMA2D_TypeDef *DMA2Dx)
  *         @arg @ref LL_DMA2D_ALPHA_INVERTED
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_SetOutputAlphaInvMode(DMA2D_TypeDef *DMA2Dx,
-						    uint32_t AlphaInversionMode)
-{
-	MODIFY_REG(DMA2Dx->OPFCCR, DMA2D_OPFCCR_AI, AlphaInversionMode);
-}
+__STATIC_INLINE void LL_DMA2D_SetOutputAlphaInvMode(DMA2D_TypeDef *DMA2Dx, uint32_t AlphaInversionMode) { MODIFY_REG(DMA2Dx->OPFCCR, DMA2D_OPFCCR_AI, AlphaInversionMode); }
 
 /**
  * @brief  Return DMA2D output alpha inversion mode.
@@ -959,11 +867,7 @@ __STATIC_INLINE void LL_DMA2D_SetOutputAlphaInvMode(DMA2D_TypeDef *DMA2Dx,
  *         @arg @ref LL_DMA2D_ALPHA_REGULAR
  *         @arg @ref LL_DMA2D_ALPHA_INVERTED
  */
-__STATIC_INLINE uint32_t
-LL_DMA2D_GetOutputAlphaInvMode(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->OPFCCR, DMA2D_OPFCCR_AI));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_GetOutputAlphaInvMode(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->OPFCCR, DMA2D_OPFCCR_AI)); }
 
 /**
  * @brief  Set DMA2D output swap mode.
@@ -974,11 +878,7 @@ LL_DMA2D_GetOutputAlphaInvMode(const DMA2D_TypeDef *DMA2Dx)
  *         @arg @ref LL_DMA2D_SWAP_MODE_TWO_BY_TWO
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_SetOutputSwapMode(DMA2D_TypeDef *DMA2Dx,
-						uint32_t OutputSwapMode)
-{
-	MODIFY_REG(DMA2Dx->OPFCCR, DMA2D_OPFCCR_SB, OutputSwapMode);
-}
+__STATIC_INLINE void LL_DMA2D_SetOutputSwapMode(DMA2D_TypeDef *DMA2Dx, uint32_t OutputSwapMode) { MODIFY_REG(DMA2Dx->OPFCCR, DMA2D_OPFCCR_SB, OutputSwapMode); }
 
 /**
  * @brief  Return DMA2D output swap mode.
@@ -988,10 +888,7 @@ __STATIC_INLINE void LL_DMA2D_SetOutputSwapMode(DMA2D_TypeDef *DMA2Dx,
  *         @arg @ref LL_DMA2D_SWAP_MODE_REGULAR
  *         @arg @ref LL_DMA2D_SWAP_MODE_TWO_BY_TWO
  */
-__STATIC_INLINE uint32_t LL_DMA2D_GetOutputSwapMode(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->OPFCCR, DMA2D_OPFCCR_SB));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_GetOutputSwapMode(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->OPFCCR, DMA2D_OPFCCR_SB)); }
 
 /**
  * @brief  Set DMA2D line offset mode.
@@ -1002,11 +899,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_GetOutputSwapMode(const DMA2D_TypeDef *DMA2Dx)
  *         @arg @ref LL_DMA2D_LINE_OFFSET_BYTES
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_SetLineOffsetMode(DMA2D_TypeDef *DMA2Dx,
-						uint32_t LineOffsetMode)
-{
-	MODIFY_REG(DMA2Dx->CR, DMA2D_CR_LOM, LineOffsetMode);
-}
+__STATIC_INLINE void LL_DMA2D_SetLineOffsetMode(DMA2D_TypeDef *DMA2Dx, uint32_t LineOffsetMode) { MODIFY_REG(DMA2Dx->CR, DMA2D_CR_LOM, LineOffsetMode); }
 
 /**
  * @brief  Return DMA2D line offset mode.
@@ -1016,10 +909,7 @@ __STATIC_INLINE void LL_DMA2D_SetLineOffsetMode(DMA2D_TypeDef *DMA2Dx,
  *         @arg @ref LL_DMA2D_LINE_OFFSET_PIXELS
  *         @arg @ref LL_DMA2D_LINE_OFFSET_BYTES
  */
-__STATIC_INLINE uint32_t LL_DMA2D_GetLineOffsetMode(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->CR, DMA2D_CR_LOM));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_GetLineOffsetMode(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->CR, DMA2D_CR_LOM)); }
 
 /**
  * @brief  Set DMA2D line offset, expressed on 14 bits ([13:0] bits).
@@ -1028,11 +918,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_GetLineOffsetMode(const DMA2D_TypeDef *DMA2Dx)
  * @param  LineOffset Value between Min_Data=0 and Max_Data=0xFFFF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_SetLineOffset(DMA2D_TypeDef *DMA2Dx,
-					    uint32_t LineOffset)
-{
-	MODIFY_REG(DMA2Dx->OOR, DMA2D_OOR_LO, LineOffset);
-}
+__STATIC_INLINE void LL_DMA2D_SetLineOffset(DMA2D_TypeDef *DMA2Dx, uint32_t LineOffset) { MODIFY_REG(DMA2Dx->OOR, DMA2D_OOR_LO, LineOffset); }
 
 /**
  * @brief  Return DMA2D line offset, expressed on 14 bits ([13:0] bits).
@@ -1040,10 +926,7 @@ __STATIC_INLINE void LL_DMA2D_SetLineOffset(DMA2D_TypeDef *DMA2Dx,
  * @param  DMA2Dx DMA2D Instance
  * @retval Line offset value between Min_Data=0 and Max_Data=0xFFFF
  */
-__STATIC_INLINE uint32_t LL_DMA2D_GetLineOffset(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->OOR, DMA2D_OOR_LO));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_GetLineOffset(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->OOR, DMA2D_OOR_LO)); }
 
 /**
  * @brief  Set DMA2D number of pixels per lines, expressed on 14 bits ([13:0]
@@ -1053,13 +936,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_GetLineOffset(const DMA2D_TypeDef *DMA2Dx)
  * @param  NbrOfPixelsPerLines Value between Min_Data=0 and Max_Data=0x3FFF
  * @retval None
  */
-__STATIC_INLINE void
-LL_DMA2D_SetNbrOfPixelsPerLines(DMA2D_TypeDef *DMA2Dx,
-				uint32_t NbrOfPixelsPerLines)
-{
-	MODIFY_REG(DMA2Dx->NLR, DMA2D_NLR_PL,
-		   (NbrOfPixelsPerLines << DMA2D_NLR_PL_Pos));
-}
+__STATIC_INLINE void LL_DMA2D_SetNbrOfPixelsPerLines(DMA2D_TypeDef *DMA2Dx, uint32_t NbrOfPixelsPerLines) { MODIFY_REG(DMA2Dx->NLR, DMA2D_NLR_PL, (NbrOfPixelsPerLines << DMA2D_NLR_PL_Pos)); }
 
 /**
  * @brief  Return DMA2D number of pixels per lines, expressed on 14 bits ([13:0]
@@ -1069,12 +946,7 @@ LL_DMA2D_SetNbrOfPixelsPerLines(DMA2D_TypeDef *DMA2Dx,
  * @retval Number of pixels per lines value between Min_Data=0 and
  * Max_Data=0x3FFF
  */
-__STATIC_INLINE uint32_t
-LL_DMA2D_GetNbrOfPixelsPerLines(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->NLR, DMA2D_NLR_PL) >>
-			  DMA2D_NLR_PL_Pos);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_GetNbrOfPixelsPerLines(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->NLR, DMA2D_NLR_PL) >> DMA2D_NLR_PL_Pos); }
 
 /**
  * @brief  Set DMA2D number of lines, expressed on 16 bits ([15:0] bits).
@@ -1083,11 +955,7 @@ LL_DMA2D_GetNbrOfPixelsPerLines(const DMA2D_TypeDef *DMA2Dx)
  * @param  NbrOfLines Value between Min_Data=0 and Max_Data=0xFFFF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_SetNbrOfLines(DMA2D_TypeDef *DMA2Dx,
-					    uint32_t NbrOfLines)
-{
-	MODIFY_REG(DMA2Dx->NLR, DMA2D_NLR_NL, NbrOfLines);
-}
+__STATIC_INLINE void LL_DMA2D_SetNbrOfLines(DMA2D_TypeDef *DMA2Dx, uint32_t NbrOfLines) { MODIFY_REG(DMA2Dx->NLR, DMA2D_NLR_NL, NbrOfLines); }
 
 /**
  * @brief  Return DMA2D number of lines, expressed on 16 bits ([15:0] bits).
@@ -1095,10 +963,7 @@ __STATIC_INLINE void LL_DMA2D_SetNbrOfLines(DMA2D_TypeDef *DMA2Dx,
  * @param  DMA2Dx DMA2D Instance
  * @retval Number of lines value between Min_Data=0 and Max_Data=0xFFFF
  */
-__STATIC_INLINE uint32_t LL_DMA2D_GetNbrOfLines(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->NLR, DMA2D_NLR_NL));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_GetNbrOfLines(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->NLR, DMA2D_NLR_NL)); }
 
 /**
  * @brief  Set DMA2D output memory address, expressed on 32 bits ([31:0] bits).
@@ -1107,11 +972,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_GetNbrOfLines(const DMA2D_TypeDef *DMA2Dx)
  * @param  OutputMemoryAddress Value between Min_Data=0 and Max_Data=0xFFFFFFFF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_SetOutputMemAddr(DMA2D_TypeDef *DMA2Dx,
-					       uint32_t OutputMemoryAddress)
-{
-	LL_DMA2D_WriteReg(DMA2Dx, OMAR, OutputMemoryAddress);
-}
+__STATIC_INLINE void LL_DMA2D_SetOutputMemAddr(DMA2D_TypeDef *DMA2Dx, uint32_t OutputMemoryAddress) { LL_DMA2D_WriteReg(DMA2Dx, OMAR, OutputMemoryAddress); }
 
 /**
  * @brief  Get DMA2D output memory address, expressed on 32 bits ([31:0] bits).
@@ -1120,10 +981,7 @@ __STATIC_INLINE void LL_DMA2D_SetOutputMemAddr(DMA2D_TypeDef *DMA2Dx,
  * @retval Output memory address value between Min_Data=0 and
  * Max_Data=0xFFFFFFFF
  */
-__STATIC_INLINE uint32_t LL_DMA2D_GetOutputMemAddr(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(LL_DMA2D_ReadReg(DMA2Dx, OMAR));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_GetOutputMemAddr(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(LL_DMA2D_ReadReg(DMA2Dx, OMAR)); }
 
 /**
  * @brief  Set DMA2D output color, expressed on 32 bits ([31:0] bits).
@@ -1139,11 +997,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_GetOutputMemAddr(const DMA2D_TypeDef *DMA2Dx)
  * @param  OutputColor Value between Min_Data=0 and Max_Data=0xFFFFFFFF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_SetOutputColor(DMA2D_TypeDef *DMA2Dx,
-					     uint32_t OutputColor)
-{
-	WRITE_REG(DMA2Dx->OCOLR, OutputColor);
-}
+__STATIC_INLINE void LL_DMA2D_SetOutputColor(DMA2D_TypeDef *DMA2Dx, uint32_t OutputColor) { WRITE_REG(DMA2Dx->OCOLR, OutputColor); }
 
 /**
  * @brief  Get DMA2D output color, expressed on 32 bits ([31:0] bits).
@@ -1159,9 +1013,7 @@ __STATIC_INLINE void LL_DMA2D_SetOutputColor(DMA2D_TypeDef *DMA2Dx,
  */
 __STATIC_INLINE uint32_t LL_DMA2D_GetOutputColor(const DMA2D_TypeDef *DMA2Dx)
 {
-	return (uint32_t)(READ_BIT(DMA2Dx->OCOLR,
-				   (DMA2D_OCOLR_BLUE_1 | DMA2D_OCOLR_GREEN_1 |
-				    DMA2D_OCOLR_RED_1 | DMA2D_OCOLR_ALPHA_1)));
+	return (uint32_t)(READ_BIT(DMA2Dx->OCOLR, (DMA2D_OCOLR_BLUE_1 | DMA2D_OCOLR_GREEN_1 | DMA2D_OCOLR_RED_1 | DMA2D_OCOLR_ALPHA_1)));
 }
 
 /**
@@ -1171,11 +1023,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_GetOutputColor(const DMA2D_TypeDef *DMA2Dx)
  * @param  LineWatermark Value between Min_Data=0 and Max_Data=0xFFFF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_SetLineWatermark(DMA2D_TypeDef *DMA2Dx,
-					       uint32_t LineWatermark)
-{
-	MODIFY_REG(DMA2Dx->LWR, DMA2D_LWR_LW, LineWatermark);
-}
+__STATIC_INLINE void LL_DMA2D_SetLineWatermark(DMA2D_TypeDef *DMA2Dx, uint32_t LineWatermark) { MODIFY_REG(DMA2Dx->LWR, DMA2D_LWR_LW, LineWatermark); }
 
 /**
  * @brief  Return DMA2D line watermark, expressed on 16 bits ([15:0] bits).
@@ -1183,10 +1031,7 @@ __STATIC_INLINE void LL_DMA2D_SetLineWatermark(DMA2D_TypeDef *DMA2Dx,
  * @param  DMA2Dx DMA2D Instance
  * @retval Line watermark value between Min_Data=0 and Max_Data=0xFFFF
  */
-__STATIC_INLINE uint32_t LL_DMA2D_GetLineWatermark(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->LWR, DMA2D_LWR_LW));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_GetLineWatermark(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->LWR, DMA2D_LWR_LW)); }
 
 /**
  * @brief  Set DMA2D dead time, expressed on 8 bits ([7:0] bits).
@@ -1195,12 +1040,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_GetLineWatermark(const DMA2D_TypeDef *DMA2Dx)
  * @param  DeadTime Value between Min_Data=0 and Max_Data=0xFF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_SetDeadTime(DMA2D_TypeDef *DMA2Dx,
-					  uint32_t DeadTime)
-{
-	MODIFY_REG(DMA2Dx->AMTCR, DMA2D_AMTCR_DT,
-		   (DeadTime << DMA2D_AMTCR_DT_Pos));
-}
+__STATIC_INLINE void LL_DMA2D_SetDeadTime(DMA2D_TypeDef *DMA2Dx, uint32_t DeadTime) { MODIFY_REG(DMA2Dx->AMTCR, DMA2D_AMTCR_DT, (DeadTime << DMA2D_AMTCR_DT_Pos)); }
 
 /**
  * @brief  Return DMA2D dead time, expressed on 8 bits ([7:0] bits).
@@ -1208,11 +1048,7 @@ __STATIC_INLINE void LL_DMA2D_SetDeadTime(DMA2D_TypeDef *DMA2Dx,
  * @param  DMA2Dx DMA2D Instance
  * @retval Dead time value between Min_Data=0 and Max_Data=0xFF
  */
-__STATIC_INLINE uint32_t LL_DMA2D_GetDeadTime(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->AMTCR, DMA2D_AMTCR_DT) >>
-			  DMA2D_AMTCR_DT_Pos);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_GetDeadTime(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->AMTCR, DMA2D_AMTCR_DT) >> DMA2D_AMTCR_DT_Pos); }
 
 /**
  * @brief  Enable DMA2D dead time functionality.
@@ -1220,10 +1056,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_GetDeadTime(const DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_EnableDeadTime(DMA2D_TypeDef *DMA2Dx)
-{
-	SET_BIT(DMA2Dx->AMTCR, DMA2D_AMTCR_EN);
-}
+__STATIC_INLINE void LL_DMA2D_EnableDeadTime(DMA2D_TypeDef *DMA2Dx) { SET_BIT(DMA2Dx->AMTCR, DMA2D_AMTCR_EN); }
 
 /**
  * @brief  Disable DMA2D dead time functionality.
@@ -1231,10 +1064,7 @@ __STATIC_INLINE void LL_DMA2D_EnableDeadTime(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_DisableDeadTime(DMA2D_TypeDef *DMA2Dx)
-{
-	CLEAR_BIT(DMA2Dx->AMTCR, DMA2D_AMTCR_EN);
-}
+__STATIC_INLINE void LL_DMA2D_DisableDeadTime(DMA2D_TypeDef *DMA2Dx) { CLEAR_BIT(DMA2Dx->AMTCR, DMA2D_AMTCR_EN); }
 
 /**
  * @brief  Indicate if DMA2D dead time functionality is enabled.
@@ -1242,12 +1072,7 @@ __STATIC_INLINE void LL_DMA2D_DisableDeadTime(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA2D_IsEnabledDeadTime(const DMA2D_TypeDef *DMA2Dx)
-{
-	return ((READ_BIT(DMA2Dx->AMTCR, DMA2D_AMTCR_EN) == (DMA2D_AMTCR_EN))
-		    ? 1UL
-		    : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_IsEnabledDeadTime(const DMA2D_TypeDef *DMA2Dx) { return ((READ_BIT(DMA2Dx->AMTCR, DMA2D_AMTCR_EN) == (DMA2D_AMTCR_EN)) ? 1UL : 0UL); }
 
 /** @defgroup DMA2D_LL_EF_FGND_Configuration Foreground Configuration Functions
  * @{
@@ -1261,11 +1086,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsEnabledDeadTime(const DMA2D_TypeDef *DMA2Dx)
  * @param  MemoryAddress Value between Min_Data=0 and Max_Data=0xFFFFFFFF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_FGND_SetMemAddr(DMA2D_TypeDef *DMA2Dx,
-					      uint32_t MemoryAddress)
-{
-	LL_DMA2D_WriteReg(DMA2Dx, FGMAR, MemoryAddress);
-}
+__STATIC_INLINE void LL_DMA2D_FGND_SetMemAddr(DMA2D_TypeDef *DMA2Dx, uint32_t MemoryAddress) { LL_DMA2D_WriteReg(DMA2Dx, FGMAR, MemoryAddress); }
 
 /**
  * @brief  Get DMA2D foreground memory address, expressed on 32 bits ([31:0]
@@ -1275,10 +1096,7 @@ __STATIC_INLINE void LL_DMA2D_FGND_SetMemAddr(DMA2D_TypeDef *DMA2Dx,
  * @retval Foreground memory address value between Min_Data=0 and
  * Max_Data=0xFFFFFFFF
  */
-__STATIC_INLINE uint32_t LL_DMA2D_FGND_GetMemAddr(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(LL_DMA2D_ReadReg(DMA2Dx, FGMAR));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_FGND_GetMemAddr(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(LL_DMA2D_ReadReg(DMA2Dx, FGMAR)); }
 
 /**
  * @brief  Enable DMA2D foreground CLUT loading.
@@ -1286,10 +1104,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_FGND_GetMemAddr(const DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_FGND_EnableCLUTLoad(DMA2D_TypeDef *DMA2Dx)
-{
-	SET_BIT(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_START);
-}
+__STATIC_INLINE void LL_DMA2D_FGND_EnableCLUTLoad(DMA2D_TypeDef *DMA2Dx) { SET_BIT(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_START); }
 
 /**
  * @brief  Indicate if DMA2D foreground CLUT loading is enabled.
@@ -1297,14 +1112,7 @@ __STATIC_INLINE void LL_DMA2D_FGND_EnableCLUTLoad(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t
-LL_DMA2D_FGND_IsEnabledCLUTLoad(const DMA2D_TypeDef *DMA2Dx)
-{
-	return ((READ_BIT(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_START) ==
-		 (DMA2D_FGPFCCR_START))
-		    ? 1UL
-		    : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_FGND_IsEnabledCLUTLoad(const DMA2D_TypeDef *DMA2Dx) { return ((READ_BIT(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_START) == (DMA2D_FGPFCCR_START)) ? 1UL : 0UL); }
 
 /**
  * @brief  Set DMA2D foreground color mode.
@@ -1324,11 +1132,7 @@ LL_DMA2D_FGND_IsEnabledCLUTLoad(const DMA2D_TypeDef *DMA2Dx)
  *         @arg @ref LL_DMA2D_INPUT_MODE_A4
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_FGND_SetColorMode(DMA2D_TypeDef *DMA2Dx,
-						uint32_t ColorMode)
-{
-	MODIFY_REG(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_CM, ColorMode);
-}
+__STATIC_INLINE void LL_DMA2D_FGND_SetColorMode(DMA2D_TypeDef *DMA2Dx, uint32_t ColorMode) { MODIFY_REG(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_CM, ColorMode); }
 
 /**
  * @brief  Return DMA2D foreground color mode.
@@ -1347,10 +1151,7 @@ __STATIC_INLINE void LL_DMA2D_FGND_SetColorMode(DMA2D_TypeDef *DMA2Dx,
  *         @arg @ref LL_DMA2D_INPUT_MODE_A8
  *         @arg @ref LL_DMA2D_INPUT_MODE_A4
  */
-__STATIC_INLINE uint32_t LL_DMA2D_FGND_GetColorMode(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_CM));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_FGND_GetColorMode(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_CM)); }
 
 /**
  * @brief  Set DMA2D foreground alpha mode.
@@ -1362,11 +1163,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_FGND_GetColorMode(const DMA2D_TypeDef *DMA2Dx)
  *         @arg @ref LL_DMA2D_ALPHA_MODE_COMBINE
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_FGND_SetAlphaMode(DMA2D_TypeDef *DMA2Dx,
-						uint32_t AphaMode)
-{
-	MODIFY_REG(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_AM, AphaMode);
-}
+__STATIC_INLINE void LL_DMA2D_FGND_SetAlphaMode(DMA2D_TypeDef *DMA2Dx, uint32_t AphaMode) { MODIFY_REG(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_AM, AphaMode); }
 
 /**
  * @brief  Return DMA2D foreground alpha mode.
@@ -1377,10 +1174,7 @@ __STATIC_INLINE void LL_DMA2D_FGND_SetAlphaMode(DMA2D_TypeDef *DMA2Dx,
  *         @arg @ref LL_DMA2D_ALPHA_MODE_REPLACE
  *         @arg @ref LL_DMA2D_ALPHA_MODE_COMBINE
  */
-__STATIC_INLINE uint32_t LL_DMA2D_FGND_GetAlphaMode(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_AM));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_FGND_GetAlphaMode(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_AM)); }
 
 /**
  * @brief  Set DMA2D foreground alpha value, expressed on 8 bits ([7:0] bits).
@@ -1389,12 +1183,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_FGND_GetAlphaMode(const DMA2D_TypeDef *DMA2Dx)
  * @param  Alpha Value between Min_Data=0 and Max_Data=0xFF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_FGND_SetAlpha(DMA2D_TypeDef *DMA2Dx,
-					    uint32_t Alpha)
-{
-	MODIFY_REG(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_ALPHA,
-		   (Alpha << DMA2D_FGPFCCR_ALPHA_Pos));
-}
+__STATIC_INLINE void LL_DMA2D_FGND_SetAlpha(DMA2D_TypeDef *DMA2Dx, uint32_t Alpha) { MODIFY_REG(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_ALPHA, (Alpha << DMA2D_FGPFCCR_ALPHA_Pos)); }
 
 /**
  * @brief  Return DMA2D foreground alpha value, expressed on 8 bits ([7:0]
@@ -1403,11 +1192,7 @@ __STATIC_INLINE void LL_DMA2D_FGND_SetAlpha(DMA2D_TypeDef *DMA2Dx,
  * @param  DMA2Dx DMA2D Instance
  * @retval Alpha value between Min_Data=0 and Max_Data=0xFF
  */
-__STATIC_INLINE uint32_t LL_DMA2D_FGND_GetAlpha(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_ALPHA) >>
-			  DMA2D_FGPFCCR_ALPHA_Pos);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_FGND_GetAlpha(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_ALPHA) >> DMA2D_FGPFCCR_ALPHA_Pos); }
 
 /**
  * @brief  Set DMA2D foreground Red Blue swap mode.
@@ -1418,11 +1203,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_FGND_GetAlpha(const DMA2D_TypeDef *DMA2Dx)
  *         @arg @ref LL_DMA2D_RB_MODE_SWAP
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_FGND_SetRBSwapMode(DMA2D_TypeDef *DMA2Dx,
-						 uint32_t RBSwapMode)
-{
-	MODIFY_REG(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_RBS, RBSwapMode);
-}
+__STATIC_INLINE void LL_DMA2D_FGND_SetRBSwapMode(DMA2D_TypeDef *DMA2Dx, uint32_t RBSwapMode) { MODIFY_REG(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_RBS, RBSwapMode); }
 
 /**
  * @brief  Return DMA2D foreground Red Blue swap mode.
@@ -1432,11 +1213,7 @@ __STATIC_INLINE void LL_DMA2D_FGND_SetRBSwapMode(DMA2D_TypeDef *DMA2Dx,
  *         @arg @ref LL_DMA2D_RB_MODE_REGULAR
  *         @arg @ref LL_DMA2D_RB_MODE_SWAP
  */
-__STATIC_INLINE uint32_t
-LL_DMA2D_FGND_GetRBSwapMode(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_RBS));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_FGND_GetRBSwapMode(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_RBS)); }
 
 /**
  * @brief  Set DMA2D foreground alpha inversion mode.
@@ -1447,11 +1224,7 @@ LL_DMA2D_FGND_GetRBSwapMode(const DMA2D_TypeDef *DMA2Dx)
  *         @arg @ref LL_DMA2D_ALPHA_INVERTED
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_FGND_SetAlphaInvMode(DMA2D_TypeDef *DMA2Dx,
-						   uint32_t AlphaInversionMode)
-{
-	MODIFY_REG(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_AI, AlphaInversionMode);
-}
+__STATIC_INLINE void LL_DMA2D_FGND_SetAlphaInvMode(DMA2D_TypeDef *DMA2Dx, uint32_t AlphaInversionMode) { MODIFY_REG(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_AI, AlphaInversionMode); }
 
 /**
  * @brief  Return DMA2D foreground alpha inversion mode.
@@ -1461,11 +1234,7 @@ __STATIC_INLINE void LL_DMA2D_FGND_SetAlphaInvMode(DMA2D_TypeDef *DMA2Dx,
  *         @arg @ref LL_DMA2D_ALPHA_REGULAR
  *         @arg @ref LL_DMA2D_ALPHA_INVERTED
  */
-__STATIC_INLINE uint32_t
-LL_DMA2D_FGND_GetAlphaInvMode(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_AI));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_FGND_GetAlphaInvMode(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_AI)); }
 
 /**
  * @brief  Set DMA2D foreground line offset, expressed on 14 bits ([13:0] bits).
@@ -1474,11 +1243,7 @@ LL_DMA2D_FGND_GetAlphaInvMode(const DMA2D_TypeDef *DMA2Dx)
  * @param  LineOffset Value between Min_Data=0 and Max_Data=0x3FF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_FGND_SetLineOffset(DMA2D_TypeDef *DMA2Dx,
-						 uint32_t LineOffset)
-{
-	MODIFY_REG(DMA2Dx->FGOR, DMA2D_FGOR_LO, LineOffset);
-}
+__STATIC_INLINE void LL_DMA2D_FGND_SetLineOffset(DMA2D_TypeDef *DMA2Dx, uint32_t LineOffset) { MODIFY_REG(DMA2Dx->FGOR, DMA2D_FGOR_LO, LineOffset); }
 
 /**
  * @brief  Return DMA2D foreground line offset, expressed on 14 bits ([13:0]
@@ -1487,11 +1252,7 @@ __STATIC_INLINE void LL_DMA2D_FGND_SetLineOffset(DMA2D_TypeDef *DMA2Dx,
  * @param  DMA2Dx DMA2D Instance
  * @retval Foreground line offset value between Min_Data=0 and Max_Data=0x3FF
  */
-__STATIC_INLINE uint32_t
-LL_DMA2D_FGND_GetLineOffset(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->FGOR, DMA2D_FGOR_LO));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_FGND_GetLineOffset(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->FGOR, DMA2D_FGOR_LO)); }
 
 /**
  * @brief  Set DMA2D foreground color values, expressed on 24 bits ([23:0]
@@ -1505,13 +1266,9 @@ LL_DMA2D_FGND_GetLineOffset(const DMA2D_TypeDef *DMA2Dx)
  * @param  Blue  Value between Min_Data=0 and Max_Data=0xFF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_FGND_SetColor(DMA2D_TypeDef *DMA2Dx, uint32_t Red,
-					    uint32_t Green, uint32_t Blue)
+__STATIC_INLINE void LL_DMA2D_FGND_SetColor(DMA2D_TypeDef *DMA2Dx, uint32_t Red, uint32_t Green, uint32_t Blue)
 {
-	MODIFY_REG(DMA2Dx->FGCOLR,
-		   (DMA2D_FGCOLR_RED | DMA2D_FGCOLR_GREEN | DMA2D_FGCOLR_BLUE),
-		   ((Red << DMA2D_FGCOLR_RED_Pos) |
-		    (Green << DMA2D_FGCOLR_GREEN_Pos) | Blue));
+	MODIFY_REG(DMA2Dx->FGCOLR, (DMA2D_FGCOLR_RED | DMA2D_FGCOLR_GREEN | DMA2D_FGCOLR_BLUE), ((Red << DMA2D_FGCOLR_RED_Pos) | (Green << DMA2D_FGCOLR_GREEN_Pos) | Blue));
 }
 
 /**
@@ -1522,12 +1279,7 @@ __STATIC_INLINE void LL_DMA2D_FGND_SetColor(DMA2D_TypeDef *DMA2Dx, uint32_t Red,
  * @param  Red Value between Min_Data=0 and Max_Data=0xFF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_FGND_SetRedColor(DMA2D_TypeDef *DMA2Dx,
-					       uint32_t Red)
-{
-	MODIFY_REG(DMA2Dx->FGCOLR, DMA2D_FGCOLR_RED,
-		   (Red << DMA2D_FGCOLR_RED_Pos));
-}
+__STATIC_INLINE void LL_DMA2D_FGND_SetRedColor(DMA2D_TypeDef *DMA2Dx, uint32_t Red) { MODIFY_REG(DMA2Dx->FGCOLR, DMA2D_FGCOLR_RED, (Red << DMA2D_FGCOLR_RED_Pos)); }
 
 /**
  * @brief  Return DMA2D foreground red color value, expressed on 8 bits ([7:0]
@@ -1536,11 +1288,7 @@ __STATIC_INLINE void LL_DMA2D_FGND_SetRedColor(DMA2D_TypeDef *DMA2Dx,
  * @param  DMA2Dx DMA2D Instance
  * @retval Red color value between Min_Data=0 and Max_Data=0xFF
  */
-__STATIC_INLINE uint32_t LL_DMA2D_FGND_GetRedColor(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->FGCOLR, DMA2D_FGCOLR_RED) >>
-			  DMA2D_FGCOLR_RED_Pos);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_FGND_GetRedColor(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->FGCOLR, DMA2D_FGCOLR_RED) >> DMA2D_FGCOLR_RED_Pos); }
 
 /**
  * @brief  Set DMA2D foreground green color value, expressed on 8 bits ([7:0]
@@ -1550,12 +1298,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_FGND_GetRedColor(const DMA2D_TypeDef *DMA2Dx)
  * @param  Green Value between Min_Data=0 and Max_Data=0xFF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_FGND_SetGreenColor(DMA2D_TypeDef *DMA2Dx,
-						 uint32_t Green)
-{
-	MODIFY_REG(DMA2Dx->FGCOLR, DMA2D_FGCOLR_GREEN,
-		   (Green << DMA2D_FGCOLR_GREEN_Pos));
-}
+__STATIC_INLINE void LL_DMA2D_FGND_SetGreenColor(DMA2D_TypeDef *DMA2Dx, uint32_t Green) { MODIFY_REG(DMA2Dx->FGCOLR, DMA2D_FGCOLR_GREEN, (Green << DMA2D_FGCOLR_GREEN_Pos)); }
 
 /**
  * @brief  Return DMA2D foreground green color value, expressed on 8 bits ([7:0]
@@ -1564,12 +1307,7 @@ __STATIC_INLINE void LL_DMA2D_FGND_SetGreenColor(DMA2D_TypeDef *DMA2Dx,
  * @param  DMA2Dx DMA2D Instance
  * @retval Green color value between Min_Data=0 and Max_Data=0xFF
  */
-__STATIC_INLINE uint32_t
-LL_DMA2D_FGND_GetGreenColor(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->FGCOLR, DMA2D_FGCOLR_GREEN) >>
-			  DMA2D_FGCOLR_GREEN_Pos);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_FGND_GetGreenColor(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->FGCOLR, DMA2D_FGCOLR_GREEN) >> DMA2D_FGCOLR_GREEN_Pos); }
 
 /**
  * @brief  Set DMA2D foreground blue color value, expressed on 8 bits ([7:0]
@@ -1579,11 +1317,7 @@ LL_DMA2D_FGND_GetGreenColor(const DMA2D_TypeDef *DMA2Dx)
  * @param  Blue Value between Min_Data=0 and Max_Data=0xFF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_FGND_SetBlueColor(DMA2D_TypeDef *DMA2Dx,
-						uint32_t Blue)
-{
-	MODIFY_REG(DMA2Dx->FGCOLR, DMA2D_FGCOLR_BLUE, Blue);
-}
+__STATIC_INLINE void LL_DMA2D_FGND_SetBlueColor(DMA2D_TypeDef *DMA2Dx, uint32_t Blue) { MODIFY_REG(DMA2Dx->FGCOLR, DMA2D_FGCOLR_BLUE, Blue); }
 
 /**
  * @brief  Return DMA2D foreground blue color value, expressed on 8 bits ([7:0]
@@ -1592,10 +1326,7 @@ __STATIC_INLINE void LL_DMA2D_FGND_SetBlueColor(DMA2D_TypeDef *DMA2Dx,
  * @param  DMA2Dx DMA2D Instance
  * @retval Blue color value between Min_Data=0 and Max_Data=0xFF
  */
-__STATIC_INLINE uint32_t LL_DMA2D_FGND_GetBlueColor(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->FGCOLR, DMA2D_FGCOLR_BLUE));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_FGND_GetBlueColor(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->FGCOLR, DMA2D_FGCOLR_BLUE)); }
 
 /**
  * @brief  Set DMA2D foreground CLUT memory address, expressed on 32 bits
@@ -1605,11 +1336,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_FGND_GetBlueColor(const DMA2D_TypeDef *DMA2Dx)
  * @param  CLUTMemoryAddress Value between Min_Data=0 and Max_Data=0xFFFFFFFF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_FGND_SetCLUTMemAddr(DMA2D_TypeDef *DMA2Dx,
-						  uint32_t CLUTMemoryAddress)
-{
-	LL_DMA2D_WriteReg(DMA2Dx, FGCMAR, CLUTMemoryAddress);
-}
+__STATIC_INLINE void LL_DMA2D_FGND_SetCLUTMemAddr(DMA2D_TypeDef *DMA2Dx, uint32_t CLUTMemoryAddress) { LL_DMA2D_WriteReg(DMA2Dx, FGCMAR, CLUTMemoryAddress); }
 
 /**
  * @brief  Get DMA2D foreground CLUT memory address, expressed on 32 bits
@@ -1619,11 +1346,7 @@ __STATIC_INLINE void LL_DMA2D_FGND_SetCLUTMemAddr(DMA2D_TypeDef *DMA2Dx,
  * @retval Foreground CLUT memory address value between Min_Data=0 and
  * Max_Data=0xFFFFFFFF
  */
-__STATIC_INLINE uint32_t
-LL_DMA2D_FGND_GetCLUTMemAddr(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(LL_DMA2D_ReadReg(DMA2Dx, FGCMAR));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_FGND_GetCLUTMemAddr(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(LL_DMA2D_ReadReg(DMA2Dx, FGCMAR)); }
 
 /**
  * @brief  Set DMA2D foreground CLUT size, expressed on 8 bits ([7:0] bits).
@@ -1632,12 +1355,7 @@ LL_DMA2D_FGND_GetCLUTMemAddr(const DMA2D_TypeDef *DMA2Dx)
  * @param  CLUTSize Value between Min_Data=0 and Max_Data=0xFF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_FGND_SetCLUTSize(DMA2D_TypeDef *DMA2Dx,
-					       uint32_t CLUTSize)
-{
-	MODIFY_REG(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_CS,
-		   (CLUTSize << DMA2D_FGPFCCR_CS_Pos));
-}
+__STATIC_INLINE void LL_DMA2D_FGND_SetCLUTSize(DMA2D_TypeDef *DMA2Dx, uint32_t CLUTSize) { MODIFY_REG(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_CS, (CLUTSize << DMA2D_FGPFCCR_CS_Pos)); }
 
 /**
  * @brief  Get DMA2D foreground CLUT size, expressed on 8 bits ([7:0] bits).
@@ -1645,11 +1363,7 @@ __STATIC_INLINE void LL_DMA2D_FGND_SetCLUTSize(DMA2D_TypeDef *DMA2Dx,
  * @param  DMA2Dx DMA2D Instance
  * @retval Foreground CLUT size value between Min_Data=0 and Max_Data=0xFF
  */
-__STATIC_INLINE uint32_t LL_DMA2D_FGND_GetCLUTSize(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_CS) >>
-			  DMA2D_FGPFCCR_CS_Pos);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_FGND_GetCLUTSize(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_CS) >> DMA2D_FGPFCCR_CS_Pos); }
 
 /**
  * @brief  Set DMA2D foreground CLUT color mode.
@@ -1660,11 +1374,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_FGND_GetCLUTSize(const DMA2D_TypeDef *DMA2Dx)
  *         @arg @ref LL_DMA2D_CLUT_COLOR_MODE_RGB888
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_FGND_SetCLUTColorMode(DMA2D_TypeDef *DMA2Dx,
-						    uint32_t CLUTColorMode)
-{
-	MODIFY_REG(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_CCM, CLUTColorMode);
-}
+__STATIC_INLINE void LL_DMA2D_FGND_SetCLUTColorMode(DMA2D_TypeDef *DMA2Dx, uint32_t CLUTColorMode) { MODIFY_REG(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_CCM, CLUTColorMode); }
 
 /**
  * @brief  Return DMA2D foreground CLUT color mode.
@@ -1674,11 +1384,7 @@ __STATIC_INLINE void LL_DMA2D_FGND_SetCLUTColorMode(DMA2D_TypeDef *DMA2Dx,
  *         @arg @ref LL_DMA2D_CLUT_COLOR_MODE_ARGB8888
  *         @arg @ref LL_DMA2D_CLUT_COLOR_MODE_RGB888
  */
-__STATIC_INLINE uint32_t
-LL_DMA2D_FGND_GetCLUTColorMode(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_CCM));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_FGND_GetCLUTColorMode(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_CCM)); }
 
 #if defined(DMA2D_FGPFCCR_CSS)
 /**
@@ -1692,11 +1398,7 @@ LL_DMA2D_FGND_GetCLUTColorMode(const DMA2D_TypeDef *DMA2Dx)
  *         @arg @ref LL_DMA2D_CSS_420
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_FGND_SetChrSubSampling(DMA2D_TypeDef *DMA2Dx,
-						     uint32_t ChromaSubSampling)
-{
-	MODIFY_REG(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_CSS, ChromaSubSampling);
-}
+__STATIC_INLINE void LL_DMA2D_FGND_SetChrSubSampling(DMA2D_TypeDef *DMA2Dx, uint32_t ChromaSubSampling) { MODIFY_REG(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_CSS, ChromaSubSampling); }
 
 /**
  * @brief  Return DMA2D foreground Chroma Sub Sampling (for YCbCr input color
@@ -1708,11 +1410,7 @@ __STATIC_INLINE void LL_DMA2D_FGND_SetChrSubSampling(DMA2D_TypeDef *DMA2Dx,
  *         @arg @ref LL_DMA2D_CSS_422
  *         @arg @ref LL_DMA2D_CSS_420
  */
-__STATIC_INLINE uint32_t
-LL_DMA2D_FGND_GetChrSubSampling(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_CSS));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_FGND_GetChrSubSampling(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->FGPFCCR, DMA2D_FGPFCCR_CSS)); }
 #endif /* DMA2D_FGPFCCR_CSS */
 /**
  * @}
@@ -1730,11 +1428,7 @@ LL_DMA2D_FGND_GetChrSubSampling(const DMA2D_TypeDef *DMA2Dx)
  * @param  MemoryAddress Value between Min_Data=0 and Max_Data=0xFFFFFFFF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_BGND_SetMemAddr(DMA2D_TypeDef *DMA2Dx,
-					      uint32_t MemoryAddress)
-{
-	LL_DMA2D_WriteReg(DMA2Dx, BGMAR, MemoryAddress);
-}
+__STATIC_INLINE void LL_DMA2D_BGND_SetMemAddr(DMA2D_TypeDef *DMA2Dx, uint32_t MemoryAddress) { LL_DMA2D_WriteReg(DMA2Dx, BGMAR, MemoryAddress); }
 
 /**
  * @brief  Get DMA2D background memory address, expressed on 32 bits ([31:0]
@@ -1744,10 +1438,7 @@ __STATIC_INLINE void LL_DMA2D_BGND_SetMemAddr(DMA2D_TypeDef *DMA2Dx,
  * @retval Background memory address value between Min_Data=0 and
  * Max_Data=0xFFFFFFFF
  */
-__STATIC_INLINE uint32_t LL_DMA2D_BGND_GetMemAddr(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(LL_DMA2D_ReadReg(DMA2Dx, BGMAR));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_BGND_GetMemAddr(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(LL_DMA2D_ReadReg(DMA2Dx, BGMAR)); }
 
 /**
  * @brief  Enable DMA2D background CLUT loading.
@@ -1755,10 +1446,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_BGND_GetMemAddr(const DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_BGND_EnableCLUTLoad(DMA2D_TypeDef *DMA2Dx)
-{
-	SET_BIT(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_START);
-}
+__STATIC_INLINE void LL_DMA2D_BGND_EnableCLUTLoad(DMA2D_TypeDef *DMA2Dx) { SET_BIT(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_START); }
 
 /**
  * @brief  Indicate if DMA2D background CLUT loading is enabled.
@@ -1766,14 +1454,7 @@ __STATIC_INLINE void LL_DMA2D_BGND_EnableCLUTLoad(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t
-LL_DMA2D_BGND_IsEnabledCLUTLoad(const DMA2D_TypeDef *DMA2Dx)
-{
-	return ((READ_BIT(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_START) ==
-		 (DMA2D_BGPFCCR_START))
-		    ? 1UL
-		    : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_BGND_IsEnabledCLUTLoad(const DMA2D_TypeDef *DMA2Dx) { return ((READ_BIT(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_START) == (DMA2D_BGPFCCR_START)) ? 1UL : 0UL); }
 
 /**
  * @brief  Set DMA2D background color mode.
@@ -1793,11 +1474,7 @@ LL_DMA2D_BGND_IsEnabledCLUTLoad(const DMA2D_TypeDef *DMA2Dx)
  *         @arg @ref LL_DMA2D_INPUT_MODE_A4
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_BGND_SetColorMode(DMA2D_TypeDef *DMA2Dx,
-						uint32_t ColorMode)
-{
-	MODIFY_REG(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_CM, ColorMode);
-}
+__STATIC_INLINE void LL_DMA2D_BGND_SetColorMode(DMA2D_TypeDef *DMA2Dx, uint32_t ColorMode) { MODIFY_REG(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_CM, ColorMode); }
 
 /**
  * @brief  Return DMA2D background color mode.
@@ -1816,10 +1493,7 @@ __STATIC_INLINE void LL_DMA2D_BGND_SetColorMode(DMA2D_TypeDef *DMA2Dx,
  *         @arg @ref LL_DMA2D_INPUT_MODE_A8
  *         @arg @ref LL_DMA2D_INPUT_MODE_A4
  */
-__STATIC_INLINE uint32_t LL_DMA2D_BGND_GetColorMode(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_CM));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_BGND_GetColorMode(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_CM)); }
 
 /**
  * @brief  Set DMA2D background alpha mode.
@@ -1831,11 +1505,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_BGND_GetColorMode(const DMA2D_TypeDef *DMA2Dx)
  *         @arg @ref LL_DMA2D_ALPHA_MODE_COMBINE
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_BGND_SetAlphaMode(DMA2D_TypeDef *DMA2Dx,
-						uint32_t AphaMode)
-{
-	MODIFY_REG(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_AM, AphaMode);
-}
+__STATIC_INLINE void LL_DMA2D_BGND_SetAlphaMode(DMA2D_TypeDef *DMA2Dx, uint32_t AphaMode) { MODIFY_REG(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_AM, AphaMode); }
 
 /**
  * @brief  Return DMA2D background alpha mode.
@@ -1846,10 +1516,7 @@ __STATIC_INLINE void LL_DMA2D_BGND_SetAlphaMode(DMA2D_TypeDef *DMA2Dx,
  *         @arg @ref LL_DMA2D_ALPHA_MODE_REPLACE
  *         @arg @ref LL_DMA2D_ALPHA_MODE_COMBINE
  */
-__STATIC_INLINE uint32_t LL_DMA2D_BGND_GetAlphaMode(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_AM));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_BGND_GetAlphaMode(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_AM)); }
 
 /**
  * @brief  Set DMA2D background alpha value, expressed on 8 bits ([7:0] bits).
@@ -1858,12 +1525,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_BGND_GetAlphaMode(const DMA2D_TypeDef *DMA2Dx)
  * @param  Alpha Value between Min_Data=0 and Max_Data=0xFF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_BGND_SetAlpha(DMA2D_TypeDef *DMA2Dx,
-					    uint32_t Alpha)
-{
-	MODIFY_REG(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_ALPHA,
-		   (Alpha << DMA2D_BGPFCCR_ALPHA_Pos));
-}
+__STATIC_INLINE void LL_DMA2D_BGND_SetAlpha(DMA2D_TypeDef *DMA2Dx, uint32_t Alpha) { MODIFY_REG(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_ALPHA, (Alpha << DMA2D_BGPFCCR_ALPHA_Pos)); }
 
 /**
  * @brief  Return DMA2D background alpha value, expressed on 8 bits ([7:0]
@@ -1872,11 +1534,7 @@ __STATIC_INLINE void LL_DMA2D_BGND_SetAlpha(DMA2D_TypeDef *DMA2Dx,
  * @param  DMA2Dx DMA2D Instance
  * @retval Alpha value between Min_Data=0 and Max_Data=0xFF
  */
-__STATIC_INLINE uint32_t LL_DMA2D_BGND_GetAlpha(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_ALPHA) >>
-			  DMA2D_BGPFCCR_ALPHA_Pos);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_BGND_GetAlpha(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_ALPHA) >> DMA2D_BGPFCCR_ALPHA_Pos); }
 
 /**
  * @brief  Set DMA2D background Red Blue swap mode.
@@ -1887,11 +1545,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_BGND_GetAlpha(const DMA2D_TypeDef *DMA2Dx)
  *         @arg @ref LL_DMA2D_RB_MODE_SWAP
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_BGND_SetRBSwapMode(DMA2D_TypeDef *DMA2Dx,
-						 uint32_t RBSwapMode)
-{
-	MODIFY_REG(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_RBS, RBSwapMode);
-}
+__STATIC_INLINE void LL_DMA2D_BGND_SetRBSwapMode(DMA2D_TypeDef *DMA2Dx, uint32_t RBSwapMode) { MODIFY_REG(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_RBS, RBSwapMode); }
 
 /**
  * @brief  Return DMA2D background Red Blue swap mode.
@@ -1901,11 +1555,7 @@ __STATIC_INLINE void LL_DMA2D_BGND_SetRBSwapMode(DMA2D_TypeDef *DMA2Dx,
  *         @arg @ref LL_DMA2D_RB_MODE_REGULAR
  *         @arg @ref LL_DMA2D_RB_MODE_SWAP
  */
-__STATIC_INLINE uint32_t
-LL_DMA2D_BGND_GetRBSwapMode(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_RBS));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_BGND_GetRBSwapMode(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_RBS)); }
 
 /**
  * @brief  Set DMA2D background alpha inversion mode.
@@ -1916,11 +1566,7 @@ LL_DMA2D_BGND_GetRBSwapMode(const DMA2D_TypeDef *DMA2Dx)
  *         @arg @ref LL_DMA2D_ALPHA_INVERTED
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_BGND_SetAlphaInvMode(DMA2D_TypeDef *DMA2Dx,
-						   uint32_t AlphaInversionMode)
-{
-	MODIFY_REG(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_AI, AlphaInversionMode);
-}
+__STATIC_INLINE void LL_DMA2D_BGND_SetAlphaInvMode(DMA2D_TypeDef *DMA2Dx, uint32_t AlphaInversionMode) { MODIFY_REG(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_AI, AlphaInversionMode); }
 
 /**
  * @brief  Return DMA2D background alpha inversion mode.
@@ -1930,11 +1576,7 @@ __STATIC_INLINE void LL_DMA2D_BGND_SetAlphaInvMode(DMA2D_TypeDef *DMA2Dx,
  *         @arg @ref LL_DMA2D_ALPHA_REGULAR
  *         @arg @ref LL_DMA2D_ALPHA_INVERTED
  */
-__STATIC_INLINE uint32_t
-LL_DMA2D_BGND_GetAlphaInvMode(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_AI));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_BGND_GetAlphaInvMode(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_AI)); }
 
 /**
  * @brief  Set DMA2D background line offset, expressed on 14 bits ([13:0] bits).
@@ -1943,11 +1585,7 @@ LL_DMA2D_BGND_GetAlphaInvMode(const DMA2D_TypeDef *DMA2Dx)
  * @param  LineOffset Value between Min_Data=0 and Max_Data=0x3FF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_BGND_SetLineOffset(DMA2D_TypeDef *DMA2Dx,
-						 uint32_t LineOffset)
-{
-	MODIFY_REG(DMA2Dx->BGOR, DMA2D_BGOR_LO, LineOffset);
-}
+__STATIC_INLINE void LL_DMA2D_BGND_SetLineOffset(DMA2D_TypeDef *DMA2Dx, uint32_t LineOffset) { MODIFY_REG(DMA2Dx->BGOR, DMA2D_BGOR_LO, LineOffset); }
 
 /**
  * @brief  Return DMA2D background line offset, expressed on 14 bits ([13:0]
@@ -1956,11 +1594,7 @@ __STATIC_INLINE void LL_DMA2D_BGND_SetLineOffset(DMA2D_TypeDef *DMA2Dx,
  * @param  DMA2Dx DMA2D Instance
  * @retval Background line offset value between Min_Data=0 and Max_Data=0x3FF
  */
-__STATIC_INLINE uint32_t
-LL_DMA2D_BGND_GetLineOffset(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->BGOR, DMA2D_BGOR_LO));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_BGND_GetLineOffset(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->BGOR, DMA2D_BGOR_LO)); }
 
 /**
  * @brief  Set DMA2D background color values, expressed on 24 bits ([23:0]
@@ -1974,13 +1608,9 @@ LL_DMA2D_BGND_GetLineOffset(const DMA2D_TypeDef *DMA2Dx)
  * @param  Blue  Value between Min_Data=0 and Max_Data=0xFF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_BGND_SetColor(DMA2D_TypeDef *DMA2Dx, uint32_t Red,
-					    uint32_t Green, uint32_t Blue)
+__STATIC_INLINE void LL_DMA2D_BGND_SetColor(DMA2D_TypeDef *DMA2Dx, uint32_t Red, uint32_t Green, uint32_t Blue)
 {
-	MODIFY_REG(DMA2Dx->BGCOLR,
-		   (DMA2D_BGCOLR_RED | DMA2D_BGCOLR_GREEN | DMA2D_BGCOLR_BLUE),
-		   ((Red << DMA2D_BGCOLR_RED_Pos) |
-		    (Green << DMA2D_BGCOLR_GREEN_Pos) | Blue));
+	MODIFY_REG(DMA2Dx->BGCOLR, (DMA2D_BGCOLR_RED | DMA2D_BGCOLR_GREEN | DMA2D_BGCOLR_BLUE), ((Red << DMA2D_BGCOLR_RED_Pos) | (Green << DMA2D_BGCOLR_GREEN_Pos) | Blue));
 }
 
 /**
@@ -1991,12 +1621,7 @@ __STATIC_INLINE void LL_DMA2D_BGND_SetColor(DMA2D_TypeDef *DMA2Dx, uint32_t Red,
  * @param  Red Value between Min_Data=0 and Max_Data=0xFF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_BGND_SetRedColor(DMA2D_TypeDef *DMA2Dx,
-					       uint32_t Red)
-{
-	MODIFY_REG(DMA2Dx->BGCOLR, DMA2D_BGCOLR_RED,
-		   (Red << DMA2D_BGCOLR_RED_Pos));
-}
+__STATIC_INLINE void LL_DMA2D_BGND_SetRedColor(DMA2D_TypeDef *DMA2Dx, uint32_t Red) { MODIFY_REG(DMA2Dx->BGCOLR, DMA2D_BGCOLR_RED, (Red << DMA2D_BGCOLR_RED_Pos)); }
 
 /**
  * @brief  Return DMA2D background red color value, expressed on 8 bits ([7:0]
@@ -2005,11 +1630,7 @@ __STATIC_INLINE void LL_DMA2D_BGND_SetRedColor(DMA2D_TypeDef *DMA2Dx,
  * @param  DMA2Dx DMA2D Instance
  * @retval Red color value between Min_Data=0 and Max_Data=0xFF
  */
-__STATIC_INLINE uint32_t LL_DMA2D_BGND_GetRedColor(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->BGCOLR, DMA2D_BGCOLR_RED) >>
-			  DMA2D_BGCOLR_RED_Pos);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_BGND_GetRedColor(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->BGCOLR, DMA2D_BGCOLR_RED) >> DMA2D_BGCOLR_RED_Pos); }
 
 /**
  * @brief  Set DMA2D background green color value, expressed on 8 bits ([7:0]
@@ -2019,12 +1640,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_BGND_GetRedColor(const DMA2D_TypeDef *DMA2Dx)
  * @param  Green Value between Min_Data=0 and Max_Data=0xFF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_BGND_SetGreenColor(DMA2D_TypeDef *DMA2Dx,
-						 uint32_t Green)
-{
-	MODIFY_REG(DMA2Dx->BGCOLR, DMA2D_BGCOLR_GREEN,
-		   (Green << DMA2D_BGCOLR_GREEN_Pos));
-}
+__STATIC_INLINE void LL_DMA2D_BGND_SetGreenColor(DMA2D_TypeDef *DMA2Dx, uint32_t Green) { MODIFY_REG(DMA2Dx->BGCOLR, DMA2D_BGCOLR_GREEN, (Green << DMA2D_BGCOLR_GREEN_Pos)); }
 
 /**
  * @brief  Return DMA2D background green color value, expressed on 8 bits ([7:0]
@@ -2033,12 +1649,7 @@ __STATIC_INLINE void LL_DMA2D_BGND_SetGreenColor(DMA2D_TypeDef *DMA2Dx,
  * @param  DMA2Dx DMA2D Instance
  * @retval Green color value between Min_Data=0 and Max_Data=0xFF
  */
-__STATIC_INLINE uint32_t
-LL_DMA2D_BGND_GetGreenColor(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->BGCOLR, DMA2D_BGCOLR_GREEN) >>
-			  DMA2D_BGCOLR_GREEN_Pos);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_BGND_GetGreenColor(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->BGCOLR, DMA2D_BGCOLR_GREEN) >> DMA2D_BGCOLR_GREEN_Pos); }
 
 /**
  * @brief  Set DMA2D background blue color value, expressed on 8 bits ([7:0]
@@ -2048,11 +1659,7 @@ LL_DMA2D_BGND_GetGreenColor(const DMA2D_TypeDef *DMA2Dx)
  * @param  Blue Value between Min_Data=0 and Max_Data=0xFF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_BGND_SetBlueColor(DMA2D_TypeDef *DMA2Dx,
-						uint32_t Blue)
-{
-	MODIFY_REG(DMA2Dx->BGCOLR, DMA2D_BGCOLR_BLUE, Blue);
-}
+__STATIC_INLINE void LL_DMA2D_BGND_SetBlueColor(DMA2D_TypeDef *DMA2Dx, uint32_t Blue) { MODIFY_REG(DMA2Dx->BGCOLR, DMA2D_BGCOLR_BLUE, Blue); }
 
 /**
  * @brief  Return DMA2D background blue color value, expressed on 8 bits ([7:0]
@@ -2061,10 +1668,7 @@ __STATIC_INLINE void LL_DMA2D_BGND_SetBlueColor(DMA2D_TypeDef *DMA2Dx,
  * @param  DMA2Dx DMA2D Instance
  * @retval Blue color value between Min_Data=0 and Max_Data=0xFF
  */
-__STATIC_INLINE uint32_t LL_DMA2D_BGND_GetBlueColor(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->BGCOLR, DMA2D_BGCOLR_BLUE));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_BGND_GetBlueColor(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->BGCOLR, DMA2D_BGCOLR_BLUE)); }
 
 /**
  * @brief  Set DMA2D background CLUT memory address, expressed on 32 bits
@@ -2074,11 +1678,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_BGND_GetBlueColor(const DMA2D_TypeDef *DMA2Dx)
  * @param  CLUTMemoryAddress Value between Min_Data=0 and Max_Data=0xFFFFFFFF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_BGND_SetCLUTMemAddr(DMA2D_TypeDef *DMA2Dx,
-						  uint32_t CLUTMemoryAddress)
-{
-	LL_DMA2D_WriteReg(DMA2Dx, BGCMAR, CLUTMemoryAddress);
-}
+__STATIC_INLINE void LL_DMA2D_BGND_SetCLUTMemAddr(DMA2D_TypeDef *DMA2Dx, uint32_t CLUTMemoryAddress) { LL_DMA2D_WriteReg(DMA2Dx, BGCMAR, CLUTMemoryAddress); }
 
 /**
  * @brief  Get DMA2D background CLUT memory address, expressed on 32 bits
@@ -2088,11 +1688,7 @@ __STATIC_INLINE void LL_DMA2D_BGND_SetCLUTMemAddr(DMA2D_TypeDef *DMA2Dx,
  * @retval Background CLUT memory address value between Min_Data=0 and
  * Max_Data=0xFFFFFFFF
  */
-__STATIC_INLINE uint32_t
-LL_DMA2D_BGND_GetCLUTMemAddr(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(LL_DMA2D_ReadReg(DMA2Dx, BGCMAR));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_BGND_GetCLUTMemAddr(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(LL_DMA2D_ReadReg(DMA2Dx, BGCMAR)); }
 
 /**
  * @brief  Set DMA2D background CLUT size, expressed on 8 bits ([7:0] bits).
@@ -2101,12 +1697,7 @@ LL_DMA2D_BGND_GetCLUTMemAddr(const DMA2D_TypeDef *DMA2Dx)
  * @param  CLUTSize Value between Min_Data=0 and Max_Data=0xFF
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_BGND_SetCLUTSize(DMA2D_TypeDef *DMA2Dx,
-					       uint32_t CLUTSize)
-{
-	MODIFY_REG(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_CS,
-		   (CLUTSize << DMA2D_BGPFCCR_CS_Pos));
-}
+__STATIC_INLINE void LL_DMA2D_BGND_SetCLUTSize(DMA2D_TypeDef *DMA2Dx, uint32_t CLUTSize) { MODIFY_REG(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_CS, (CLUTSize << DMA2D_BGPFCCR_CS_Pos)); }
 
 /**
  * @brief  Get DMA2D background CLUT size, expressed on 8 bits ([7:0] bits).
@@ -2114,11 +1705,7 @@ __STATIC_INLINE void LL_DMA2D_BGND_SetCLUTSize(DMA2D_TypeDef *DMA2Dx,
  * @param  DMA2Dx DMA2D Instance
  * @retval Background CLUT size value between Min_Data=0 and Max_Data=0xFF
  */
-__STATIC_INLINE uint32_t LL_DMA2D_BGND_GetCLUTSize(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_CS) >>
-			  DMA2D_BGPFCCR_CS_Pos);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_BGND_GetCLUTSize(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_CS) >> DMA2D_BGPFCCR_CS_Pos); }
 
 /**
  * @brief  Set DMA2D background CLUT color mode.
@@ -2129,11 +1716,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_BGND_GetCLUTSize(const DMA2D_TypeDef *DMA2Dx)
  *         @arg @ref LL_DMA2D_CLUT_COLOR_MODE_RGB888
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_BGND_SetCLUTColorMode(DMA2D_TypeDef *DMA2Dx,
-						    uint32_t CLUTColorMode)
-{
-	MODIFY_REG(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_CCM, CLUTColorMode);
-}
+__STATIC_INLINE void LL_DMA2D_BGND_SetCLUTColorMode(DMA2D_TypeDef *DMA2Dx, uint32_t CLUTColorMode) { MODIFY_REG(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_CCM, CLUTColorMode); }
 
 /**
  * @brief  Return DMA2D background CLUT color mode.
@@ -2143,11 +1726,7 @@ __STATIC_INLINE void LL_DMA2D_BGND_SetCLUTColorMode(DMA2D_TypeDef *DMA2Dx,
  *         @arg @ref LL_DMA2D_CLUT_COLOR_MODE_ARGB8888
  *         @arg @ref LL_DMA2D_CLUT_COLOR_MODE_RGB888
  */
-__STATIC_INLINE uint32_t
-LL_DMA2D_BGND_GetCLUTColorMode(const DMA2D_TypeDef *DMA2Dx)
-{
-	return (uint32_t)(READ_BIT(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_CCM));
-}
+__STATIC_INLINE uint32_t LL_DMA2D_BGND_GetCLUTColorMode(const DMA2D_TypeDef *DMA2Dx) { return (uint32_t)(READ_BIT(DMA2Dx->BGPFCCR, DMA2D_BGPFCCR_CCM)); }
 
 /**
  * @}
@@ -2167,12 +1746,7 @@ LL_DMA2D_BGND_GetCLUTColorMode(const DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA2D_IsActiveFlag_CE(const DMA2D_TypeDef *DMA2Dx)
-{
-	return ((READ_BIT(DMA2Dx->ISR, DMA2D_ISR_CEIF) == (DMA2D_ISR_CEIF))
-		    ? 1UL
-		    : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_IsActiveFlag_CE(const DMA2D_TypeDef *DMA2Dx) { return ((READ_BIT(DMA2Dx->ISR, DMA2D_ISR_CEIF) == (DMA2D_ISR_CEIF)) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if the DMA2D CLUT Transfer Complete Interrupt Flag is set or
@@ -2181,12 +1755,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsActiveFlag_CE(const DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA2D_IsActiveFlag_CTC(const DMA2D_TypeDef *DMA2Dx)
-{
-	return ((READ_BIT(DMA2Dx->ISR, DMA2D_ISR_CTCIF) == (DMA2D_ISR_CTCIF))
-		    ? 1UL
-		    : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_IsActiveFlag_CTC(const DMA2D_TypeDef *DMA2Dx) { return ((READ_BIT(DMA2Dx->ISR, DMA2D_ISR_CTCIF) == (DMA2D_ISR_CTCIF)) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if the DMA2D CLUT Access Error Interrupt Flag is set or not
@@ -2194,12 +1763,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsActiveFlag_CTC(const DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA2D_IsActiveFlag_CAE(const DMA2D_TypeDef *DMA2Dx)
-{
-	return ((READ_BIT(DMA2Dx->ISR, DMA2D_ISR_CAEIF) == (DMA2D_ISR_CAEIF))
-		    ? 1UL
-		    : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_IsActiveFlag_CAE(const DMA2D_TypeDef *DMA2Dx) { return ((READ_BIT(DMA2Dx->ISR, DMA2D_ISR_CAEIF) == (DMA2D_ISR_CAEIF)) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if the DMA2D Transfer Watermark Interrupt Flag is set or not
@@ -2207,12 +1771,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsActiveFlag_CAE(const DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA2D_IsActiveFlag_TW(const DMA2D_TypeDef *DMA2Dx)
-{
-	return ((READ_BIT(DMA2Dx->ISR, DMA2D_ISR_TWIF) == (DMA2D_ISR_TWIF))
-		    ? 1UL
-		    : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_IsActiveFlag_TW(const DMA2D_TypeDef *DMA2Dx) { return ((READ_BIT(DMA2Dx->ISR, DMA2D_ISR_TWIF) == (DMA2D_ISR_TWIF)) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if the DMA2D Transfer Complete Interrupt Flag is set or not
@@ -2220,12 +1779,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsActiveFlag_TW(const DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA2D_IsActiveFlag_TC(const DMA2D_TypeDef *DMA2Dx)
-{
-	return ((READ_BIT(DMA2Dx->ISR, DMA2D_ISR_TCIF) == (DMA2D_ISR_TCIF))
-		    ? 1UL
-		    : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_IsActiveFlag_TC(const DMA2D_TypeDef *DMA2Dx) { return ((READ_BIT(DMA2Dx->ISR, DMA2D_ISR_TCIF) == (DMA2D_ISR_TCIF)) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if the DMA2D Transfer Error Interrupt Flag is set or not
@@ -2233,12 +1787,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsActiveFlag_TC(const DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA2D_IsActiveFlag_TE(const DMA2D_TypeDef *DMA2Dx)
-{
-	return ((READ_BIT(DMA2Dx->ISR, DMA2D_ISR_TEIF) == (DMA2D_ISR_TEIF))
-		    ? 1UL
-		    : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_IsActiveFlag_TE(const DMA2D_TypeDef *DMA2Dx) { return ((READ_BIT(DMA2Dx->ISR, DMA2D_ISR_TEIF) == (DMA2D_ISR_TEIF)) ? 1UL : 0UL); }
 
 /**
  * @brief  Clear DMA2D Configuration Error Interrupt Flag
@@ -2246,10 +1795,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsActiveFlag_TE(const DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_ClearFlag_CE(DMA2D_TypeDef *DMA2Dx)
-{
-	WRITE_REG(DMA2Dx->IFCR, DMA2D_IFCR_CCEIF);
-}
+__STATIC_INLINE void LL_DMA2D_ClearFlag_CE(DMA2D_TypeDef *DMA2Dx) { WRITE_REG(DMA2Dx->IFCR, DMA2D_IFCR_CCEIF); }
 
 /**
  * @brief  Clear DMA2D CLUT Transfer Complete Interrupt Flag
@@ -2257,10 +1803,7 @@ __STATIC_INLINE void LL_DMA2D_ClearFlag_CE(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_ClearFlag_CTC(DMA2D_TypeDef *DMA2Dx)
-{
-	WRITE_REG(DMA2Dx->IFCR, DMA2D_IFCR_CCTCIF);
-}
+__STATIC_INLINE void LL_DMA2D_ClearFlag_CTC(DMA2D_TypeDef *DMA2Dx) { WRITE_REG(DMA2Dx->IFCR, DMA2D_IFCR_CCTCIF); }
 
 /**
  * @brief  Clear DMA2D CLUT Access Error Interrupt Flag
@@ -2268,10 +1811,7 @@ __STATIC_INLINE void LL_DMA2D_ClearFlag_CTC(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_ClearFlag_CAE(DMA2D_TypeDef *DMA2Dx)
-{
-	WRITE_REG(DMA2Dx->IFCR, DMA2D_IFCR_CAECIF);
-}
+__STATIC_INLINE void LL_DMA2D_ClearFlag_CAE(DMA2D_TypeDef *DMA2Dx) { WRITE_REG(DMA2Dx->IFCR, DMA2D_IFCR_CAECIF); }
 
 /**
  * @brief  Clear DMA2D Transfer Watermark Interrupt Flag
@@ -2279,10 +1819,7 @@ __STATIC_INLINE void LL_DMA2D_ClearFlag_CAE(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_ClearFlag_TW(DMA2D_TypeDef *DMA2Dx)
-{
-	WRITE_REG(DMA2Dx->IFCR, DMA2D_IFCR_CTWIF);
-}
+__STATIC_INLINE void LL_DMA2D_ClearFlag_TW(DMA2D_TypeDef *DMA2Dx) { WRITE_REG(DMA2Dx->IFCR, DMA2D_IFCR_CTWIF); }
 
 /**
  * @brief  Clear DMA2D Transfer Complete Interrupt Flag
@@ -2290,10 +1827,7 @@ __STATIC_INLINE void LL_DMA2D_ClearFlag_TW(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_ClearFlag_TC(DMA2D_TypeDef *DMA2Dx)
-{
-	WRITE_REG(DMA2Dx->IFCR, DMA2D_IFCR_CTCIF);
-}
+__STATIC_INLINE void LL_DMA2D_ClearFlag_TC(DMA2D_TypeDef *DMA2Dx) { WRITE_REG(DMA2Dx->IFCR, DMA2D_IFCR_CTCIF); }
 
 /**
  * @brief  Clear DMA2D Transfer Error Interrupt Flag
@@ -2301,10 +1835,7 @@ __STATIC_INLINE void LL_DMA2D_ClearFlag_TC(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_ClearFlag_TE(DMA2D_TypeDef *DMA2Dx)
-{
-	WRITE_REG(DMA2Dx->IFCR, DMA2D_IFCR_CTEIF);
-}
+__STATIC_INLINE void LL_DMA2D_ClearFlag_TE(DMA2D_TypeDef *DMA2Dx) { WRITE_REG(DMA2Dx->IFCR, DMA2D_IFCR_CTEIF); }
 
 /**
  * @}
@@ -2320,10 +1851,7 @@ __STATIC_INLINE void LL_DMA2D_ClearFlag_TE(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_EnableIT_CE(DMA2D_TypeDef *DMA2Dx)
-{
-	SET_BIT(DMA2Dx->CR, DMA2D_CR_CEIE);
-}
+__STATIC_INLINE void LL_DMA2D_EnableIT_CE(DMA2D_TypeDef *DMA2Dx) { SET_BIT(DMA2Dx->CR, DMA2D_CR_CEIE); }
 
 /**
  * @brief  Enable CLUT Transfer Complete Interrupt
@@ -2331,10 +1859,7 @@ __STATIC_INLINE void LL_DMA2D_EnableIT_CE(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_EnableIT_CTC(DMA2D_TypeDef *DMA2Dx)
-{
-	SET_BIT(DMA2Dx->CR, DMA2D_CR_CTCIE);
-}
+__STATIC_INLINE void LL_DMA2D_EnableIT_CTC(DMA2D_TypeDef *DMA2Dx) { SET_BIT(DMA2Dx->CR, DMA2D_CR_CTCIE); }
 
 /**
  * @brief  Enable CLUT Access Error Interrupt
@@ -2342,10 +1867,7 @@ __STATIC_INLINE void LL_DMA2D_EnableIT_CTC(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_EnableIT_CAE(DMA2D_TypeDef *DMA2Dx)
-{
-	SET_BIT(DMA2Dx->CR, DMA2D_CR_CAEIE);
-}
+__STATIC_INLINE void LL_DMA2D_EnableIT_CAE(DMA2D_TypeDef *DMA2Dx) { SET_BIT(DMA2Dx->CR, DMA2D_CR_CAEIE); }
 
 /**
  * @brief  Enable Transfer Watermark Interrupt
@@ -2353,10 +1875,7 @@ __STATIC_INLINE void LL_DMA2D_EnableIT_CAE(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_EnableIT_TW(DMA2D_TypeDef *DMA2Dx)
-{
-	SET_BIT(DMA2Dx->CR, DMA2D_CR_TWIE);
-}
+__STATIC_INLINE void LL_DMA2D_EnableIT_TW(DMA2D_TypeDef *DMA2Dx) { SET_BIT(DMA2Dx->CR, DMA2D_CR_TWIE); }
 
 /**
  * @brief  Enable Transfer Complete Interrupt
@@ -2364,10 +1883,7 @@ __STATIC_INLINE void LL_DMA2D_EnableIT_TW(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_EnableIT_TC(DMA2D_TypeDef *DMA2Dx)
-{
-	SET_BIT(DMA2Dx->CR, DMA2D_CR_TCIE);
-}
+__STATIC_INLINE void LL_DMA2D_EnableIT_TC(DMA2D_TypeDef *DMA2Dx) { SET_BIT(DMA2Dx->CR, DMA2D_CR_TCIE); }
 
 /**
  * @brief  Enable Transfer Error Interrupt
@@ -2375,10 +1891,7 @@ __STATIC_INLINE void LL_DMA2D_EnableIT_TC(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_EnableIT_TE(DMA2D_TypeDef *DMA2Dx)
-{
-	SET_BIT(DMA2Dx->CR, DMA2D_CR_TEIE);
-}
+__STATIC_INLINE void LL_DMA2D_EnableIT_TE(DMA2D_TypeDef *DMA2Dx) { SET_BIT(DMA2Dx->CR, DMA2D_CR_TEIE); }
 
 /**
  * @brief  Disable Configuration Error Interrupt
@@ -2386,10 +1899,7 @@ __STATIC_INLINE void LL_DMA2D_EnableIT_TE(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_DisableIT_CE(DMA2D_TypeDef *DMA2Dx)
-{
-	CLEAR_BIT(DMA2Dx->CR, DMA2D_CR_CEIE);
-}
+__STATIC_INLINE void LL_DMA2D_DisableIT_CE(DMA2D_TypeDef *DMA2Dx) { CLEAR_BIT(DMA2Dx->CR, DMA2D_CR_CEIE); }
 
 /**
  * @brief  Disable CLUT Transfer Complete Interrupt
@@ -2397,10 +1907,7 @@ __STATIC_INLINE void LL_DMA2D_DisableIT_CE(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_DisableIT_CTC(DMA2D_TypeDef *DMA2Dx)
-{
-	CLEAR_BIT(DMA2Dx->CR, DMA2D_CR_CTCIE);
-}
+__STATIC_INLINE void LL_DMA2D_DisableIT_CTC(DMA2D_TypeDef *DMA2Dx) { CLEAR_BIT(DMA2Dx->CR, DMA2D_CR_CTCIE); }
 
 /**
  * @brief  Disable CLUT Access Error Interrupt
@@ -2408,10 +1915,7 @@ __STATIC_INLINE void LL_DMA2D_DisableIT_CTC(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_DisableIT_CAE(DMA2D_TypeDef *DMA2Dx)
-{
-	CLEAR_BIT(DMA2Dx->CR, DMA2D_CR_CAEIE);
-}
+__STATIC_INLINE void LL_DMA2D_DisableIT_CAE(DMA2D_TypeDef *DMA2Dx) { CLEAR_BIT(DMA2Dx->CR, DMA2D_CR_CAEIE); }
 
 /**
  * @brief  Disable Transfer Watermark Interrupt
@@ -2419,10 +1923,7 @@ __STATIC_INLINE void LL_DMA2D_DisableIT_CAE(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_DisableIT_TW(DMA2D_TypeDef *DMA2Dx)
-{
-	CLEAR_BIT(DMA2Dx->CR, DMA2D_CR_TWIE);
-}
+__STATIC_INLINE void LL_DMA2D_DisableIT_TW(DMA2D_TypeDef *DMA2Dx) { CLEAR_BIT(DMA2Dx->CR, DMA2D_CR_TWIE); }
 
 /**
  * @brief  Disable Transfer Complete Interrupt
@@ -2430,10 +1931,7 @@ __STATIC_INLINE void LL_DMA2D_DisableIT_TW(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_DisableIT_TC(DMA2D_TypeDef *DMA2Dx)
-{
-	CLEAR_BIT(DMA2Dx->CR, DMA2D_CR_TCIE);
-}
+__STATIC_INLINE void LL_DMA2D_DisableIT_TC(DMA2D_TypeDef *DMA2Dx) { CLEAR_BIT(DMA2Dx->CR, DMA2D_CR_TCIE); }
 
 /**
  * @brief  Disable Transfer Error Interrupt
@@ -2441,10 +1939,7 @@ __STATIC_INLINE void LL_DMA2D_DisableIT_TC(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval None
  */
-__STATIC_INLINE void LL_DMA2D_DisableIT_TE(DMA2D_TypeDef *DMA2Dx)
-{
-	CLEAR_BIT(DMA2Dx->CR, DMA2D_CR_TEIE);
-}
+__STATIC_INLINE void LL_DMA2D_DisableIT_TE(DMA2D_TypeDef *DMA2Dx) { CLEAR_BIT(DMA2Dx->CR, DMA2D_CR_TEIE); }
 
 /**
  * @brief  Check if the DMA2D Configuration Error interrupt source is enabled or
@@ -2453,11 +1948,7 @@ __STATIC_INLINE void LL_DMA2D_DisableIT_TE(DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_CE(const DMA2D_TypeDef *DMA2Dx)
-{
-	return ((READ_BIT(DMA2Dx->CR, DMA2D_CR_CEIE) == (DMA2D_CR_CEIE)) ? 1UL
-									 : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_CE(const DMA2D_TypeDef *DMA2Dx) { return ((READ_BIT(DMA2Dx->CR, DMA2D_CR_CEIE) == (DMA2D_CR_CEIE)) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if the DMA2D CLUT Transfer Complete interrupt source is enabled
@@ -2466,12 +1957,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_CE(const DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_CTC(const DMA2D_TypeDef *DMA2Dx)
-{
-	return ((READ_BIT(DMA2Dx->CR, DMA2D_CR_CTCIE) == (DMA2D_CR_CTCIE))
-		    ? 1UL
-		    : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_CTC(const DMA2D_TypeDef *DMA2Dx) { return ((READ_BIT(DMA2Dx->CR, DMA2D_CR_CTCIE) == (DMA2D_CR_CTCIE)) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if the DMA2D CLUT Access Error interrupt source is enabled or
@@ -2480,12 +1966,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_CTC(const DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_CAE(const DMA2D_TypeDef *DMA2Dx)
-{
-	return ((READ_BIT(DMA2Dx->CR, DMA2D_CR_CAEIE) == (DMA2D_CR_CAEIE))
-		    ? 1UL
-		    : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_CAE(const DMA2D_TypeDef *DMA2Dx) { return ((READ_BIT(DMA2Dx->CR, DMA2D_CR_CAEIE) == (DMA2D_CR_CAEIE)) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if the DMA2D Transfer Watermark interrupt source is enabled or
@@ -2494,11 +1975,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_CAE(const DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_TW(const DMA2D_TypeDef *DMA2Dx)
-{
-	return ((READ_BIT(DMA2Dx->CR, DMA2D_CR_TWIE) == (DMA2D_CR_TWIE)) ? 1UL
-									 : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_TW(const DMA2D_TypeDef *DMA2Dx) { return ((READ_BIT(DMA2Dx->CR, DMA2D_CR_TWIE) == (DMA2D_CR_TWIE)) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if the DMA2D Transfer Complete interrupt source is enabled or
@@ -2507,11 +1984,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_TW(const DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_TC(const DMA2D_TypeDef *DMA2Dx)
-{
-	return ((READ_BIT(DMA2Dx->CR, DMA2D_CR_TCIE) == (DMA2D_CR_TCIE)) ? 1UL
-									 : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_TC(const DMA2D_TypeDef *DMA2Dx) { return ((READ_BIT(DMA2Dx->CR, DMA2D_CR_TCIE) == (DMA2D_CR_TCIE)) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if the DMA2D Transfer Error interrupt source is enabled or
@@ -2520,11 +1993,7 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_TC(const DMA2D_TypeDef *DMA2Dx)
  * @param  DMA2Dx DMA2D Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_TE(const DMA2D_TypeDef *DMA2Dx)
-{
-	return ((READ_BIT(DMA2Dx->CR, DMA2D_CR_TEIE) == (DMA2D_CR_TEIE)) ? 1UL
-									 : 0UL);
-}
+__STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_TE(const DMA2D_TypeDef *DMA2Dx) { return ((READ_BIT(DMA2Dx->CR, DMA2D_CR_TEIE) == (DMA2D_CR_TEIE)) ? 1UL : 0UL); }
 
 /**
  * @}
@@ -2537,25 +2006,16 @@ __STATIC_INLINE uint32_t LL_DMA2D_IsEnabledIT_TE(const DMA2D_TypeDef *DMA2Dx)
  */
 
 ErrorStatus LL_DMA2D_DeInit(const DMA2D_TypeDef *DMA2Dx);
-ErrorStatus LL_DMA2D_Init(DMA2D_TypeDef *DMA2Dx,
-			  LL_DMA2D_InitTypeDef *DMA2D_InitStruct);
+ErrorStatus LL_DMA2D_Init(DMA2D_TypeDef *DMA2Dx, LL_DMA2D_InitTypeDef *DMA2D_InitStruct);
 void LL_DMA2D_StructInit(LL_DMA2D_InitTypeDef *DMA2D_InitStruct);
-void LL_DMA2D_ConfigLayer(DMA2D_TypeDef *DMA2Dx,
-			  LL_DMA2D_LayerCfgTypeDef *DMA2D_LayerCfg,
-			  uint32_t LayerIdx);
+void LL_DMA2D_ConfigLayer(DMA2D_TypeDef *DMA2Dx, LL_DMA2D_LayerCfgTypeDef *DMA2D_LayerCfg, uint32_t LayerIdx);
 void LL_DMA2D_LayerCfgStructInit(LL_DMA2D_LayerCfgTypeDef *DMA2D_LayerCfg);
-void LL_DMA2D_ConfigOutputColor(DMA2D_TypeDef *DMA2Dx,
-				LL_DMA2D_ColorTypeDef *DMA2D_ColorStruct);
-uint32_t LL_DMA2D_GetOutputBlueColor(const DMA2D_TypeDef *DMA2Dx,
-				     uint32_t ColorMode);
-uint32_t LL_DMA2D_GetOutputGreenColor(const DMA2D_TypeDef *DMA2Dx,
-				      uint32_t ColorMode);
-uint32_t LL_DMA2D_GetOutputRedColor(const DMA2D_TypeDef *DMA2Dx,
-				    uint32_t ColorMode);
-uint32_t LL_DMA2D_GetOutputAlphaColor(const DMA2D_TypeDef *DMA2Dx,
-				      uint32_t ColorMode);
-void LL_DMA2D_ConfigSize(DMA2D_TypeDef *DMA2Dx, uint32_t NbrOfLines,
-			 uint32_t NbrOfPixelsPerLines);
+void LL_DMA2D_ConfigOutputColor(DMA2D_TypeDef *DMA2Dx, LL_DMA2D_ColorTypeDef *DMA2D_ColorStruct);
+uint32_t LL_DMA2D_GetOutputBlueColor(const DMA2D_TypeDef *DMA2Dx, uint32_t ColorMode);
+uint32_t LL_DMA2D_GetOutputGreenColor(const DMA2D_TypeDef *DMA2Dx, uint32_t ColorMode);
+uint32_t LL_DMA2D_GetOutputRedColor(const DMA2D_TypeDef *DMA2Dx, uint32_t ColorMode);
+uint32_t LL_DMA2D_GetOutputAlphaColor(const DMA2D_TypeDef *DMA2Dx, uint32_t ColorMode);
+void LL_DMA2D_ConfigSize(DMA2D_TypeDef *DMA2Dx, uint32_t NbrOfLines, uint32_t NbrOfPixelsPerLines);
 
 /**
  * @}

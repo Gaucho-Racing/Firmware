@@ -121,9 +121,7 @@
  * 4095
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DACEx_TriangleWaveGenerate(DAC_HandleTypeDef *hdac,
-						 uint32_t Channel,
-						 uint32_t Amplitude)
+HAL_StatusTypeDef HAL_DACEx_TriangleWaveGenerate(DAC_HandleTypeDef *hdac, uint32_t Channel, uint32_t Amplitude)
 {
 	/* Check the parameters */
 	assert_param(IS_DAC_CHANNEL(Channel));
@@ -136,9 +134,7 @@ HAL_StatusTypeDef HAL_DACEx_TriangleWaveGenerate(DAC_HandleTypeDef *hdac,
 	hdac->State = HAL_DAC_STATE_BUSY;
 
 	/* Enable the triangle wave generation for the selected DAC channel */
-	MODIFY_REG(hdac->Instance->CR,
-		   ((DAC_CR_WAVE1) | (DAC_CR_MAMP1)) << (Channel & 0x10UL),
-		   (DAC_CR_WAVE1_1 | Amplitude) << (Channel & 0x10UL));
+	MODIFY_REG(hdac->Instance->CR, ((DAC_CR_WAVE1) | (DAC_CR_MAMP1)) << (Channel & 0x10UL), (DAC_CR_WAVE1_1 | Amplitude) << (Channel & 0x10UL));
 
 	/* Change DAC state */
 	hdac->State = HAL_DAC_STATE_READY;
@@ -186,9 +182,7 @@ HAL_StatusTypeDef HAL_DACEx_TriangleWaveGenerate(DAC_HandleTypeDef *hdac,
  * for noise wave generation
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DACEx_NoiseWaveGenerate(DAC_HandleTypeDef *hdac,
-					      uint32_t Channel,
-					      uint32_t Amplitude)
+HAL_StatusTypeDef HAL_DACEx_NoiseWaveGenerate(DAC_HandleTypeDef *hdac, uint32_t Channel, uint32_t Amplitude)
 {
 	/* Check the parameters */
 	assert_param(IS_DAC_CHANNEL(Channel));
@@ -201,9 +195,7 @@ HAL_StatusTypeDef HAL_DACEx_NoiseWaveGenerate(DAC_HandleTypeDef *hdac,
 	hdac->State = HAL_DAC_STATE_BUSY;
 
 	/* Enable the noise wave generation for the selected DAC channel */
-	MODIFY_REG(hdac->Instance->CR,
-		   ((DAC_CR_WAVE1) | (DAC_CR_MAMP1)) << (Channel & 0x10UL),
-		   (DAC_CR_WAVE1_0 | Amplitude) << (Channel & 0x10UL));
+	MODIFY_REG(hdac->Instance->CR, ((DAC_CR_WAVE1) | (DAC_CR_MAMP1)) << (Channel & 0x10UL), (DAC_CR_WAVE1_0 | Amplitude) << (Channel & 0x10UL));
 
 	/* Change DAC state */
 	hdac->State = HAL_DAC_STATE_READY;
@@ -215,13 +207,9 @@ HAL_StatusTypeDef HAL_DACEx_NoiseWaveGenerate(DAC_HandleTypeDef *hdac,
 	return HAL_OK;
 }
 
-#if defined(STM32L431xx) || defined(STM32L432xx) || defined(STM32L433xx) ||    \
-    defined(STM32L442xx) || defined(STM32L443xx) || defined(STM32L471xx) ||    \
-    defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) ||    \
-    defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx) ||    \
-    defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L431xx) || defined(STM32L432xx) || defined(STM32L433xx) || defined(STM32L442xx) || defined(STM32L443xx) || defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) ||    \
+    defined(STM32L485xx) || defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 
 /**
  * @brief  Set the specified data holding register value for dual DAC channel.
@@ -240,9 +228,7 @@ HAL_StatusTypeDef HAL_DACEx_NoiseWaveGenerate(DAC_HandleTypeDef *hdac,
  *          DAC channels at the same time.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DACEx_DualSetValue(DAC_HandleTypeDef *hdac,
-					 uint32_t Alignment, uint32_t Data1,
-					 uint32_t Data2)
+HAL_StatusTypeDef HAL_DACEx_DualSetValue(DAC_HandleTypeDef *hdac, uint32_t Alignment, uint32_t Data1, uint32_t Data2)
 {
 	uint32_t data;
 	uint32_t tmp;
@@ -357,9 +343,7 @@ __weak void HAL_DACEx_DMAUnderrunCallbackCh2(DAC_HandleTypeDef *hdac)
  * @note   Calibration runs about 7 ms.
  */
 
-HAL_StatusTypeDef HAL_DACEx_SelfCalibrate(DAC_HandleTypeDef *hdac,
-					  DAC_ChannelConfTypeDef *sConfig,
-					  uint32_t Channel)
+HAL_StatusTypeDef HAL_DACEx_SelfCalibrate(DAC_HandleTypeDef *hdac, DAC_ChannelConfTypeDef *sConfig, uint32_t Channel)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -384,33 +368,26 @@ HAL_StatusTypeDef HAL_DACEx_SelfCalibrate(DAC_HandleTypeDef *hdac,
 		__HAL_LOCK(hdac);
 
 		/* Store configuration */
-		oldmodeconfiguration = (hdac->Instance->MCR &
-					(DAC_MCR_MODE1 << (Channel & 0x10UL)));
+		oldmodeconfiguration = (hdac->Instance->MCR & (DAC_MCR_MODE1 << (Channel & 0x10UL)));
 
 		/* Disable the selected DAC channel */
-		CLEAR_BIT((hdac->Instance->CR),
-			  (DAC_CR_EN1 << (Channel & 0x10UL)));
+		CLEAR_BIT((hdac->Instance->CR), (DAC_CR_EN1 << (Channel & 0x10UL)));
 
 		/* Set mode in MCR  for calibration */
-		MODIFY_REG(hdac->Instance->MCR,
-			   (DAC_MCR_MODE1 << (Channel & 0x10UL)), 0U);
+		MODIFY_REG(hdac->Instance->MCR, (DAC_MCR_MODE1 << (Channel & 0x10UL)), 0U);
 
 		/* Set DAC Channel1 DHR register to the middle value */
 		tmp = (uint32_t)hdac->Instance;
 
-#if defined(STM32L431xx) || defined(STM32L432xx) || defined(STM32L433xx) ||    \
-    defined(STM32L442xx) || defined(STM32L443xx) || defined(STM32L471xx) ||    \
-    defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) ||    \
-    defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx) ||    \
-    defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L431xx) || defined(STM32L432xx) || defined(STM32L433xx) || defined(STM32L442xx) || defined(STM32L443xx) || defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) ||    \
+    defined(STM32L485xx) || defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 		if (Channel == DAC_CHANNEL_1) {
 			tmp += DAC_DHR12R1_ALIGNMENT(DAC_ALIGN_12B_R);
 		} else {
 			tmp += DAC_DHR12R2_ALIGNMENT(DAC_ALIGN_12B_R);
 		}
-#endif /* STM32L431xx STM32L432xx STM32L433xx STM32L442xx STM32L443xx */
+#endif		/* STM32L431xx STM32L432xx STM32L433xx STM32L442xx STM32L443xx */
 		/* STM32L471xx STM32L475xx STM32L476xx STM32L485xx STM32L486xx
 		 * STM32L496xx STM32L4A6xx */
 		/* STM32L4P5xx STM32L4Q5xx */
@@ -423,8 +400,7 @@ HAL_StatusTypeDef HAL_DACEx_SelfCalibrate(DAC_HandleTypeDef *hdac,
 
 		/* Enable the selected DAC channel calibration */
 		/* i.e. set DAC_CR_CENx bit */
-		SET_BIT((hdac->Instance->CR),
-			(DAC_CR_CEN1 << (Channel & 0x10UL)));
+		SET_BIT((hdac->Instance->CR), (DAC_CR_CEN1 << (Channel & 0x10UL)));
 
 		/* Init trimming counter */
 		/* Medium value */
@@ -432,9 +408,7 @@ HAL_StatusTypeDef HAL_DACEx_SelfCalibrate(DAC_HandleTypeDef *hdac,
 		delta = 8U;
 		while (delta != 0U) {
 			/* Set candidate trimming */
-			MODIFY_REG(hdac->Instance->CCR,
-				   (DAC_CCR_OTRIM1 << (Channel & 0x10UL)),
-				   (trimmingvalue << (Channel & 0x10UL)));
+			MODIFY_REG(hdac->Instance->CCR, (DAC_CCR_OTRIM1 << (Channel & 0x10UL)), (trimmingvalue << (Channel & 0x10UL)));
 
 			/* tOFFTRIMmax delay x ms as per datasheet (electrical
 			 * characteristics */
@@ -442,9 +416,7 @@ HAL_StatusTypeDef HAL_DACEx_SelfCalibrate(DAC_HandleTypeDef *hdac,
 			 * steps */
 			HAL_Delay(1);
 
-			if ((hdac->Instance->SR &
-			     (DAC_SR_CAL_FLAG1 << (Channel & 0x10UL))) ==
-			    (DAC_SR_CAL_FLAG1 << (Channel & 0x10UL))) {
+			if ((hdac->Instance->SR & (DAC_SR_CAL_FLAG1 << (Channel & 0x10UL))) == (DAC_SR_CAL_FLAG1 << (Channel & 0x10UL))) {
 				/* DAC_SR_CAL_FLAGx is HIGH try higher trimming
 				 */
 				trimmingvalue -= delta;
@@ -460,42 +432,33 @@ HAL_StatusTypeDef HAL_DACEx_SelfCalibrate(DAC_HandleTypeDef *hdac,
 		/* Indeed the first value that causes the DAC_SR_CAL_FLAGx bit
 		 * to change from 0 to 1  */
 		/* Set candidate trimming */
-		MODIFY_REG(hdac->Instance->CCR,
-			   (DAC_CCR_OTRIM1 << (Channel & 0x10UL)),
-			   (trimmingvalue << (Channel & 0x10UL)));
+		MODIFY_REG(hdac->Instance->CCR, (DAC_CCR_OTRIM1 << (Channel & 0x10UL)), (trimmingvalue << (Channel & 0x10UL)));
 
 		/* tOFFTRIMmax delay x ms as per datasheet (electrical
 		 * characteristics */
 		/* i.e. minimum time needed between two calibration steps */
 		HAL_Delay(1U);
 
-		if ((hdac->Instance->SR &
-		     (DAC_SR_CAL_FLAG1 << (Channel & 0x10UL))) == 0UL) {
+		if ((hdac->Instance->SR & (DAC_SR_CAL_FLAG1 << (Channel & 0x10UL))) == 0UL) {
 			/* Check trimming value below maximum */
 			if (trimmingvalue < 0x1FU) {
 				/* Trimming is actually one value more */
 				trimmingvalue++;
 
 				/* Set right trimming */
-				MODIFY_REG(
-				    hdac->Instance->CCR,
-				    (DAC_CCR_OTRIM1 << (Channel & 0x10UL)),
-				    (trimmingvalue << (Channel & 0x10UL)));
+				MODIFY_REG(hdac->Instance->CCR, (DAC_CCR_OTRIM1 << (Channel & 0x10UL)), (trimmingvalue << (Channel & 0x10UL)));
 			}
 		}
 
 		/* Disable the selected DAC channel calibration */
 		/* i.e. clear DAC_CR_CENx bit */
-		CLEAR_BIT((hdac->Instance->CR),
-			  (DAC_CR_CEN1 << (Channel & 0x10UL)));
+		CLEAR_BIT((hdac->Instance->CR), (DAC_CR_CEN1 << (Channel & 0x10UL)));
 
 		sConfig->DAC_TrimmingValue = trimmingvalue;
 		sConfig->DAC_UserTrimming = DAC_TRIMMING_USER;
 
 		/* Restore configuration */
-		MODIFY_REG(hdac->Instance->MCR,
-			   (DAC_MCR_MODE1 << (Channel & 0x10UL)),
-			   oldmodeconfiguration);
+		MODIFY_REG(hdac->Instance->MCR, (DAC_MCR_MODE1 << (Channel & 0x10UL)), oldmodeconfiguration);
 
 		/* Process unlocked */
 		__HAL_UNLOCK(hdac);
@@ -519,10 +482,7 @@ HAL_StatusTypeDef HAL_DACEx_SelfCalibrate(DAC_HandleTypeDef *hdac,
  * @retval HAL status
  */
 
-HAL_StatusTypeDef HAL_DACEx_SetUserTrimming(DAC_HandleTypeDef *hdac,
-					    DAC_ChannelConfTypeDef *sConfig,
-					    uint32_t Channel,
-					    uint32_t NewTrimmingValue)
+HAL_StatusTypeDef HAL_DACEx_SetUserTrimming(DAC_HandleTypeDef *hdac, DAC_ChannelConfTypeDef *sConfig, uint32_t Channel, uint32_t NewTrimmingValue)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -538,9 +498,7 @@ HAL_StatusTypeDef HAL_DACEx_SetUserTrimming(DAC_HandleTypeDef *hdac,
 		__HAL_LOCK(hdac);
 
 		/* Set new trimming */
-		MODIFY_REG(hdac->Instance->CCR,
-			   (DAC_CCR_OTRIM1 << (Channel & 0x10UL)),
-			   (NewTrimmingValue << (Channel & 0x10UL)));
+		MODIFY_REG(hdac->Instance->CCR, (DAC_CCR_OTRIM1 << (Channel & 0x10UL)), (NewTrimmingValue << (Channel & 0x10UL)));
 
 		/* Update trimming mode */
 		sConfig->DAC_UserTrimming = DAC_TRIMMING_USER;
@@ -569,22 +527,16 @@ uint32_t HAL_DACEx_GetTrimOffset(DAC_HandleTypeDef *hdac, uint32_t Channel)
 	assert_param(IS_DAC_CHANNEL(Channel));
 
 	/* Retrieve trimming  */
-	return (
-	    (hdac->Instance->CCR & (DAC_CCR_OTRIM1 << (Channel & 0x10UL))) >>
-	    (Channel & 0x10UL));
+	return ((hdac->Instance->CCR & (DAC_CCR_OTRIM1 << (Channel & 0x10UL))) >> (Channel & 0x10UL));
 }
 
 /**
  * @}
  */
 
-#if defined(STM32L431xx) || defined(STM32L432xx) || defined(STM32L433xx) ||    \
-    defined(STM32L442xx) || defined(STM32L443xx) || defined(STM32L471xx) ||    \
-    defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) ||    \
-    defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx) ||    \
-    defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L431xx) || defined(STM32L432xx) || defined(STM32L433xx) || defined(STM32L442xx) || defined(STM32L443xx) || defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) ||    \
+    defined(STM32L485xx) || defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 
 /** @defgroup DACEx_Exported_Functions_Group3 Peripheral Control functions
  *  @brief    Extended Peripheral Control functions
@@ -632,13 +584,9 @@ uint32_t HAL_DACEx_DualGetValue(DAC_HandleTypeDef *hdac)
  * @}
  */
 
-#if defined(STM32L431xx) || defined(STM32L432xx) || defined(STM32L433xx) ||    \
-    defined(STM32L442xx) || defined(STM32L443xx) || defined(STM32L471xx) ||    \
-    defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) ||    \
-    defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx) ||    \
-    defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) ||    \
-    defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) ||    \
-    defined(STM32L4S7xx) || defined(STM32L4S9xx)
+#if defined(STM32L431xx) || defined(STM32L432xx) || defined(STM32L433xx) || defined(STM32L442xx) || defined(STM32L443xx) || defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) ||    \
+    defined(STM32L485xx) || defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||    \
+    defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 
 /* Private functions ---------------------------------------------------------*/
 /** @defgroup DACEx_Private_Functions DACEx private functions
@@ -654,8 +602,7 @@ uint32_t HAL_DACEx_DualGetValue(DAC_HandleTypeDef *hdac)
  */
 void DAC_DMAConvCpltCh2(DMA_HandleTypeDef *hdma)
 {
-	DAC_HandleTypeDef *hdac =
-	    (DAC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
+	DAC_HandleTypeDef *hdac = (DAC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
 
 #if (USE_HAL_DAC_REGISTER_CALLBACKS == 1)
 	hdac->ConvCpltCallbackCh2(hdac);
@@ -674,8 +621,7 @@ void DAC_DMAConvCpltCh2(DMA_HandleTypeDef *hdma)
  */
 void DAC_DMAHalfConvCpltCh2(DMA_HandleTypeDef *hdma)
 {
-	DAC_HandleTypeDef *hdac =
-	    (DAC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
+	DAC_HandleTypeDef *hdac = (DAC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
 	/* Conversion complete callback */
 #if (USE_HAL_DAC_REGISTER_CALLBACKS == 1)
 	hdac->ConvHalfCpltCallbackCh2(hdac);
@@ -692,8 +638,7 @@ void DAC_DMAHalfConvCpltCh2(DMA_HandleTypeDef *hdma)
  */
 void DAC_DMAErrorCh2(DMA_HandleTypeDef *hdma)
 {
-	DAC_HandleTypeDef *hdac =
-	    (DAC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
+	DAC_HandleTypeDef *hdac = (DAC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
 
 	/* Set DAC error code to DMA error */
 	hdac->ErrorCode |= HAL_DAC_ERROR_DMA;

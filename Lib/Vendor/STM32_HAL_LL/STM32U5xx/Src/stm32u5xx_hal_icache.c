@@ -109,32 +109,19 @@
  * @{
  */
 
-#define IS_ICACHE_ASSOCIATIVITY_MODE(__MODE__)                                 \
-	(((__MODE__) == ICACHE_1WAY) || ((__MODE__) == ICACHE_2WAYS))
+#define IS_ICACHE_ASSOCIATIVITY_MODE(__MODE__) (((__MODE__) == ICACHE_1WAY) || ((__MODE__) == ICACHE_2WAYS))
 
-#define IS_ICACHE_MONITOR_TYPE(__TYPE__)                                       \
-	(((__TYPE__) == ICACHE_MONITOR_HIT_MISS) ||                            \
-	 ((__TYPE__) == ICACHE_MONITOR_HIT) ||                                 \
-	 ((__TYPE__) == ICACHE_MONITOR_MISS))
+#define IS_ICACHE_MONITOR_TYPE(__TYPE__) (((__TYPE__) == ICACHE_MONITOR_HIT_MISS) || ((__TYPE__) == ICACHE_MONITOR_HIT) || ((__TYPE__) == ICACHE_MONITOR_MISS))
 
 #define IS_ICACHE_REGION_NUMBER(__NUMBER__) ((__NUMBER__) < 4U)
 
-#define IS_ICACHE_REGION_SIZE(__SIZE__)                                        \
-	(((__SIZE__) == ICACHE_REGIONSIZE_2MB) ||                              \
-	 ((__SIZE__) == ICACHE_REGIONSIZE_4MB) ||                              \
-	 ((__SIZE__) == ICACHE_REGIONSIZE_8MB) ||                              \
-	 ((__SIZE__) == ICACHE_REGIONSIZE_16MB) ||                             \
-	 ((__SIZE__) == ICACHE_REGIONSIZE_32MB) ||                             \
-	 ((__SIZE__) == ICACHE_REGIONSIZE_64MB) ||                             \
-	 ((__SIZE__) == ICACHE_REGIONSIZE_128MB))
+#define IS_ICACHE_REGION_SIZE(__SIZE__)                                                                                                                                                                \
+	(((__SIZE__) == ICACHE_REGIONSIZE_2MB) || ((__SIZE__) == ICACHE_REGIONSIZE_4MB) || ((__SIZE__) == ICACHE_REGIONSIZE_8MB) || ((__SIZE__) == ICACHE_REGIONSIZE_16MB) ||                          \
+	 ((__SIZE__) == ICACHE_REGIONSIZE_32MB) || ((__SIZE__) == ICACHE_REGIONSIZE_64MB) || ((__SIZE__) == ICACHE_REGIONSIZE_128MB))
 
-#define IS_ICACHE_REGION_TRAFFIC_ROUTE(__TRAFFICROUTE__)                       \
-	(((__TRAFFICROUTE__) == ICACHE_MASTER1_PORT) ||                        \
-	 ((__TRAFFICROUTE__) == ICACHE_MASTER2_PORT))
+#define IS_ICACHE_REGION_TRAFFIC_ROUTE(__TRAFFICROUTE__) (((__TRAFFICROUTE__) == ICACHE_MASTER1_PORT) || ((__TRAFFICROUTE__) == ICACHE_MASTER2_PORT))
 
-#define IS_ICACHE_REGION_OUTPUT_BURST_TYPE(__OUTPUTBURSTTYPE_)                 \
-	(((__OUTPUTBURSTTYPE_) == ICACHE_OUTPUT_BURST_WRAP) ||                 \
-	 ((__OUTPUTBURSTTYPE_) == ICACHE_OUTPUT_BURST_INCR))
+#define IS_ICACHE_REGION_OUTPUT_BURST_TYPE(__OUTPUTBURSTTYPE_) (((__OUTPUTBURSTTYPE_) == ICACHE_OUTPUT_BURST_WRAP) || ((__OUTPUTBURSTTYPE_) == ICACHE_OUTPUT_BURST_INCR))
 
 /**
  * @}
@@ -255,8 +242,7 @@ HAL_StatusTypeDef HAL_ICACHE_Disable(void)
 
 	/* Wait for instruction cache being disabled */
 	while (READ_BIT(ICACHE->CR, ICACHE_CR_EN) != 0U) {
-		if ((HAL_GetTick() - tickstart) >
-		    ICACHE_DISABLE_TIMEOUT_VALUE) {
+		if ((HAL_GetTick() - tickstart) > ICACHE_DISABLE_TIMEOUT_VALUE) {
 			/* New check to avoid false timeout detection in case of
 			 * preemption */
 			if (READ_BIT(ICACHE->CR, ICACHE_CR_EN) != 0U) {
@@ -273,10 +259,7 @@ HAL_StatusTypeDef HAL_ICACHE_Disable(void)
  * @brief  Check whether the Instruction Cache is enabled or not.
  * @retval Status (0: disabled, 1: enabled)
  */
-uint32_t HAL_ICACHE_IsEnabled(void)
-{
-	return ((READ_BIT(ICACHE->CR, ICACHE_CR_EN) != 0U) ? 1UL : 0UL);
-}
+uint32_t HAL_ICACHE_IsEnabled(void) { return ((READ_BIT(ICACHE->CR, ICACHE_CR_EN) != 0U) ? 1UL : 0UL); }
 
 /**
  * @brief  Invalidate the Instruction Cache.
@@ -346,12 +329,10 @@ HAL_StatusTypeDef HAL_ICACHE_WaitForInvalidateComplete(void)
 
 		/* Wait for end of cache invalidation */
 		while (READ_BIT(ICACHE->SR, ICACHE_SR_BSYENDF) == 0U) {
-			if ((HAL_GetTick() - tickstart) >
-			    ICACHE_INVALIDATE_TIMEOUT_VALUE) {
+			if ((HAL_GetTick() - tickstart) > ICACHE_INVALIDATE_TIMEOUT_VALUE) {
 				/* New check to avoid false timeout detection in
 				 * case of preemption */
-				if (READ_BIT(ICACHE->SR, ICACHE_SR_BSYENDF) ==
-				    0U) {
+				if (READ_BIT(ICACHE->SR, ICACHE_SR_BSYENDF) == 0U) {
 					status = HAL_TIMEOUT;
 					break;
 				}
@@ -544,8 +525,7 @@ __weak void HAL_ICACHE_ErrorCallback(void)
   parameters
   * @retval HAL status (HAL_OK/HAL_ERROR)
   */
-HAL_StatusTypeDef HAL_ICACHE_EnableRemapRegion(
-    uint32_t Region, const ICACHE_RegionConfigTypeDef *const pRegionConfig)
+HAL_StatusTypeDef HAL_ICACHE_EnableRemapRegion(uint32_t Region, const ICACHE_RegionConfigTypeDef *const pRegionConfig)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 	__IO uint32_t *p_reg;
@@ -554,10 +534,8 @@ HAL_StatusTypeDef HAL_ICACHE_EnableRemapRegion(
 	/* Check the parameters */
 	assert_param(IS_ICACHE_REGION_NUMBER(Region));
 	assert_param(IS_ICACHE_REGION_SIZE(pRegionConfig->Size));
-	assert_param(
-	    IS_ICACHE_REGION_TRAFFIC_ROUTE(pRegionConfig->TrafficRoute));
-	assert_param(
-	    IS_ICACHE_REGION_OUTPUT_BURST_TYPE(pRegionConfig->OutputBurstType));
+	assert_param(IS_ICACHE_REGION_TRAFFIC_ROUTE(pRegionConfig->TrafficRoute));
+	assert_param(IS_ICACHE_REGION_OUTPUT_BURST_TYPE(pRegionConfig->OutputBurstType));
 
 	/* Check cache is not enabled */
 	if (READ_BIT(ICACHE->CR, ICACHE_CR_EN) != 0U) {
@@ -584,17 +562,9 @@ HAL_StatusTypeDef HAL_ICACHE_EnableRemapRegion(
 			 * size 6 bits  */
 			/* Region 128MB: BaseAddress size 2 bits, RemapAddress
 			 * size 5 bits  */
-			value = ((pRegionConfig->BaseAddress & 0x1FFFFFFFU) >>
-				 21U) &
-				(0xFFU & ~(pRegionConfig->Size - 1U));
-			value |=
-			    ((pRegionConfig->RemapAddress >> 5U) &
-			     ((uint32_t)(0x7FFU & ~(pRegionConfig->Size - 1U))
-			      << ICACHE_CRRx_REMAPADDR_Pos));
-			value |=
-			    (pRegionConfig->Size << ICACHE_CRRx_RSIZE_Pos) |
-			    pRegionConfig->TrafficRoute |
-			    pRegionConfig->OutputBurstType;
+			value = ((pRegionConfig->BaseAddress & 0x1FFFFFFFU) >> 21U) & (0xFFU & ~(pRegionConfig->Size - 1U));
+			value |= ((pRegionConfig->RemapAddress >> 5U) & ((uint32_t)(0x7FFU & ~(pRegionConfig->Size - 1U)) << ICACHE_CRRx_REMAPADDR_Pos));
+			value |= (pRegionConfig->Size << ICACHE_CRRx_RSIZE_Pos) | pRegionConfig->TrafficRoute | pRegionConfig->OutputBurstType;
 			*p_reg = (value | ICACHE_CRRx_REN);
 		}
 	}

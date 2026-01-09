@@ -268,17 +268,13 @@ HAL_StatusTypeDef HAL_DCMI_Init(DCMI_HandleTypeDef *hdcmi)
 
 		/* Init the DCMI Callback settings */
 #if (USE_HAL_DCMI_REGISTER_CALLBACKS == 1)
-		hdcmi->FrameEventCallback =
-		    HAL_DCMI_FrameEventCallback; /* Legacy weak
-						    FrameEventCallback  */
-		hdcmi->VsyncEventCallback =
-		    HAL_DCMI_VsyncEventCallback; /* Legacy weak
-						    VsyncEventCallback  */
-		hdcmi->LineEventCallback =
-		    HAL_DCMI_LineEventCallback; /* Legacy weak LineEventCallback
-						 */
-		hdcmi->ErrorCallback =
-		    HAL_DCMI_ErrorCallback; /* Legacy weak ErrorCallback */
+		hdcmi->FrameEventCallback = HAL_DCMI_FrameEventCallback; /* Legacy weak
+									    FrameEventCallback  */
+		hdcmi->VsyncEventCallback = HAL_DCMI_VsyncEventCallback; /* Legacy weak
+									    VsyncEventCallback  */
+		hdcmi->LineEventCallback = HAL_DCMI_LineEventCallback;	 /* Legacy weak LineEventCallback
+									  */
+		hdcmi->ErrorCallback = HAL_DCMI_ErrorCallback;		 /* Legacy weak ErrorCallback */
 
 		if (hdcmi->MspInitCallback == NULL) {
 			/* Legacy weak MspInit Callback        */
@@ -306,30 +302,15 @@ HAL_StatusTypeDef HAL_DCMI_Init(DCMI_HandleTypeDef *hdcmi)
 	}
 
 	/* Set DCMI parameters */
-	hdcmi->Instance->CR &=
-	    ~(DCMI_CR_PCKPOL | DCMI_CR_HSPOL | DCMI_CR_VSPOL | DCMI_CR_EDM_0 |
-	      DCMI_CR_EDM_1 | DCMI_CR_FCRC_0 | DCMI_CR_FCRC_1 | DCMI_CR_JPEG |
-	      DCMI_CR_ESS | DCMI_CR_BSM_0 | DCMI_CR_BSM_1 | DCMI_CR_OEBS |
-	      DCMI_CR_LSM | DCMI_CR_OELS);
+	hdcmi->Instance->CR &= ~(DCMI_CR_PCKPOL | DCMI_CR_HSPOL | DCMI_CR_VSPOL | DCMI_CR_EDM_0 | DCMI_CR_EDM_1 | DCMI_CR_FCRC_0 | DCMI_CR_FCRC_1 | DCMI_CR_JPEG | DCMI_CR_ESS | DCMI_CR_BSM_0 |
+				 DCMI_CR_BSM_1 | DCMI_CR_OEBS | DCMI_CR_LSM | DCMI_CR_OELS);
 
-	hdcmi->Instance->CR |=
-	    (uint32_t)(hdcmi->Init.SynchroMode | hdcmi->Init.CaptureRate |
-		       hdcmi->Init.VSPolarity | hdcmi->Init.HSPolarity |
-		       hdcmi->Init.PCKPolarity | hdcmi->Init.ExtendedDataMode |
-		       hdcmi->Init.JPEGMode | hdcmi->Init.ByteSelectMode |
-		       hdcmi->Init.ByteSelectStart |
-		       hdcmi->Init.LineSelectMode |
-		       hdcmi->Init.LineSelectStart);
+	hdcmi->Instance->CR |= (uint32_t)(hdcmi->Init.SynchroMode | hdcmi->Init.CaptureRate | hdcmi->Init.VSPolarity | hdcmi->Init.HSPolarity | hdcmi->Init.PCKPolarity | hdcmi->Init.ExtendedDataMode |
+					  hdcmi->Init.JPEGMode | hdcmi->Init.ByteSelectMode | hdcmi->Init.ByteSelectStart | hdcmi->Init.LineSelectMode | hdcmi->Init.LineSelectStart);
 
 	if (hdcmi->Init.SynchroMode == DCMI_SYNCHRO_EMBEDDED) {
-		hdcmi->Instance->ESCR =
-		    (((uint32_t)hdcmi->Init.SynchroCode.FrameStartCode) |
-		     ((uint32_t)hdcmi->Init.SynchroCode.LineStartCode
-		      << DCMI_ESCR_LSC_Pos) |
-		     ((uint32_t)hdcmi->Init.SynchroCode.LineEndCode
-		      << DCMI_ESCR_LEC_Pos) |
-		     ((uint32_t)hdcmi->Init.SynchroCode.FrameEndCode
-		      << DCMI_ESCR_FEC_Pos));
+		hdcmi->Instance->ESCR = (((uint32_t)hdcmi->Init.SynchroCode.FrameStartCode) | ((uint32_t)hdcmi->Init.SynchroCode.LineStartCode << DCMI_ESCR_LSC_Pos) |
+					 ((uint32_t)hdcmi->Init.SynchroCode.LineEndCode << DCMI_ESCR_LEC_Pos) | ((uint32_t)hdcmi->Init.SynchroCode.FrameEndCode << DCMI_ESCR_FEC_Pos));
 	}
 
 	/* By default, enable all interrupts. The user may disable the unwanted
@@ -340,8 +321,7 @@ HAL_StatusTypeDef HAL_DCMI_Init(DCMI_HandleTypeDef *hdcmi)
 	   - data reception overrun
 	   - frame synchronization signal VSYNC
 	   - synchronization error */
-	__HAL_DCMI_ENABLE_IT(hdcmi, DCMI_IT_FRAME | DCMI_IT_OVR | DCMI_IT_ERR |
-					DCMI_IT_VSYNC | DCMI_IT_LINE);
+	__HAL_DCMI_ENABLE_IT(hdcmi, DCMI_IT_FRAME | DCMI_IT_OVR | DCMI_IT_ERR | DCMI_IT_VSYNC | DCMI_IT_LINE);
 
 	/* Update error code */
 	hdcmi->ErrorCode = HAL_DCMI_ERROR_NONE;
@@ -481,9 +461,7 @@ __weak void HAL_DCMI_MspDeInit(DCMI_HandleTypeDef *hdcmi)
  * If flag is set, HAL_DCMI_FrameEventCallback() API is called.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DCMI_Start_DMA(DCMI_HandleTypeDef *hdcmi,
-				     uint32_t DCMI_Mode, uint32_t pData,
-				     uint32_t Length)
+HAL_StatusTypeDef HAL_DCMI_Start_DMA(DCMI_HandleTypeDef *hdcmi, uint32_t DCMI_Mode, uint32_t pData, uint32_t Length)
 {
 	uint32_t circular_copy_length;
 
@@ -497,8 +475,7 @@ HAL_StatusTypeDef HAL_DCMI_Start_DMA(DCMI_HandleTypeDef *hdcmi,
 	hdcmi->State = HAL_DCMI_STATE_BUSY;
 
 	/* Configure the DCMI Mode and enable the DCMI IP at the same time */
-	MODIFY_REG(hdcmi->Instance->CR, (DCMI_CR_CM | DCMI_CR_ENABLE),
-		   (DCMI_Mode | DCMI_CR_ENABLE));
+	MODIFY_REG(hdcmi->Instance->CR, (DCMI_CR_CM | DCMI_CR_ENABLE), (DCMI_Mode | DCMI_CR_ENABLE));
 
 	/* Set the DMA conversion complete callback */
 	hdcmi->DMA_Handle->XferCpltCallback = DCMI_DMAXferCplt;
@@ -514,9 +491,7 @@ HAL_StatusTypeDef HAL_DCMI_Start_DMA(DCMI_HandleTypeDef *hdcmi,
 					 register to final destination buffer */
 
 		/* Enable the DMA channel */
-		if (HAL_DMA_Start_IT(hdcmi->DMA_Handle,
-				     (uint32_t)&hdcmi->Instance->DR,
-				     (uint32_t)pData, Length) != HAL_OK) {
+		if (HAL_DMA_Start_IT(hdcmi->DMA_Handle, (uint32_t)&hdcmi->Instance->DR, (uint32_t)pData, Length) != HAL_OK) {
 			/* Update error code */
 			hdcmi->ErrorCode |= HAL_DCMI_ERROR_DMA;
 
@@ -573,16 +548,11 @@ HAL_StatusTypeDef HAL_DCMI_Start_DMA(DCMI_HandleTypeDef *hdcmi,
 		/* Update pCircularBuffer in "moving" at the end of the final
 		   buffer, don't forger to convert in bytes to compute exact
 		   address */
-		hdcmi->pCircularBuffer +=
-		    4U * (((Length / circular_copy_length) - 1U) *
-			  circular_copy_length);
+		hdcmi->pCircularBuffer += 4U * (((Length / circular_copy_length) - 1U) * circular_copy_length);
 
 		/* Initiate the circular DMA transfer from DCMI IP to final
 		 * buffer end */
-		if (HAL_DMA_Start_IT(hdcmi->DMA_Handle,
-				     (uint32_t)&hdcmi->Instance->DR,
-				     (uint32_t)hdcmi->pCircularBuffer,
-				     circular_copy_length) != HAL_OK) {
+		if (HAL_DMA_Start_IT(hdcmi->DMA_Handle, (uint32_t)&hdcmi->Instance->DR, (uint32_t)hdcmi->pCircularBuffer, circular_copy_length) != HAL_OK) {
 			/* Update error code */
 			hdcmi->ErrorCode |= HAL_DCMI_ERROR_DMA;
 
@@ -808,9 +778,7 @@ void HAL_DCMI_IRQHandler(DCMI_HandleTypeDef *hdcmi)
 	if ((misflags & DCMI_MIS_FRAME_MIS) != 0x0U) {
 		/* Disable the Line interrupt when using snapshot mode */
 		if ((hdcmi->Instance->CR & DCMI_CR_CM) == DCMI_MODE_SNAPSHOT) {
-			__HAL_DCMI_DISABLE_IT(hdcmi,
-					      DCMI_IT_LINE | DCMI_IT_VSYNC |
-						  DCMI_IT_ERR | DCMI_IT_OVR);
+			__HAL_DCMI_DISABLE_IT(hdcmi, DCMI_IT_LINE | DCMI_IT_VSYNC | DCMI_IT_ERR | DCMI_IT_OVR);
 			/* Change the DCMI state */
 			hdcmi->State = HAL_DCMI_STATE_READY;
 		}
@@ -931,9 +899,7 @@ __weak void HAL_DCMI_FrameEventCallback(DCMI_HandleTypeDef *hdcmi)
  * YSize = 0x0 means 1 line, YSize = 0x1 means 2 lines, ...)
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DCMI_ConfigCrop(DCMI_HandleTypeDef *hdcmi, uint32_t X0,
-				      uint32_t Y0, uint32_t XSize,
-				      uint32_t YSize)
+HAL_StatusTypeDef HAL_DCMI_ConfigCrop(DCMI_HandleTypeDef *hdcmi, uint32_t X0, uint32_t Y0, uint32_t XSize, uint32_t YSize)
 {
 	/* Check the parameters */
 	assert_param(IS_DCMI_WINDOW_COORDINATE(X0));
@@ -948,12 +914,8 @@ HAL_StatusTypeDef HAL_DCMI_ConfigCrop(DCMI_HandleTypeDef *hdcmi, uint32_t X0,
 	hdcmi->State = HAL_DCMI_STATE_BUSY;
 
 	/* Configure CROP */
-	MODIFY_REG(hdcmi->Instance->CWSIZER,
-		   (DCMI_CWSIZE_VLINE | DCMI_CWSIZE_CAPCNT),
-		   (XSize | (YSize << DCMI_CWSIZE_VLINE_Pos)));
-	MODIFY_REG(hdcmi->Instance->CWSTRTR,
-		   (DCMI_CWSTRT_VST | DCMI_CWSTRT_HOFFCNT),
-		   (X0 | (Y0 << DCMI_CWSTRT_VST_Pos)));
+	MODIFY_REG(hdcmi->Instance->CWSIZER, (DCMI_CWSIZE_VLINE | DCMI_CWSIZE_CAPCNT), (XSize | (YSize << DCMI_CWSIZE_VLINE_Pos)));
+	MODIFY_REG(hdcmi->Instance->CWSTRTR, (DCMI_CWSTRT_VST | DCMI_CWSTRT_HOFFCNT), (X0 | (Y0 << DCMI_CWSTRT_VST_Pos)));
 
 	/* Initialize the DCMI state*/
 	hdcmi->State = HAL_DCMI_STATE_READY;
@@ -1024,8 +986,7 @@ HAL_StatusTypeDef HAL_DCMI_EnableCrop(DCMI_HandleTypeDef *hdcmi)
  * contains the embedded synchronization delimiters unmasks.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_DCMI_ConfigSyncUnmask(DCMI_HandleTypeDef *hdcmi,
-					    DCMI_SyncUnmaskTypeDef *SyncUnmask)
+HAL_StatusTypeDef HAL_DCMI_ConfigSyncUnmask(DCMI_HandleTypeDef *hdcmi, DCMI_SyncUnmaskTypeDef *SyncUnmask)
 {
 	/* Process Locked */
 	__HAL_LOCK(hdcmi);
@@ -1034,11 +995,8 @@ HAL_StatusTypeDef HAL_DCMI_ConfigSyncUnmask(DCMI_HandleTypeDef *hdcmi,
 	hdcmi->State = HAL_DCMI_STATE_BUSY;
 
 	/* Write DCMI embedded synchronization unmask register */
-	hdcmi->Instance->ESUR =
-	    (((uint32_t)SyncUnmask->FrameStartUnmask) |
-	     ((uint32_t)SyncUnmask->LineStartUnmask << DCMI_ESUR_LSU_Pos) |
-	     ((uint32_t)SyncUnmask->LineEndUnmask << DCMI_ESUR_LEU_Pos) |
-	     ((uint32_t)SyncUnmask->FrameEndUnmask << DCMI_ESUR_FEU_Pos));
+	hdcmi->Instance->ESUR = (((uint32_t)SyncUnmask->FrameStartUnmask) | ((uint32_t)SyncUnmask->LineStartUnmask << DCMI_ESUR_LSU_Pos) | ((uint32_t)SyncUnmask->LineEndUnmask << DCMI_ESUR_LEU_Pos) |
+				 ((uint32_t)SyncUnmask->FrameEndUnmask << DCMI_ESUR_FEU_Pos));
 
 	/* Change the DCMI state*/
 	hdcmi->State = HAL_DCMI_STATE_READY;
@@ -1075,10 +1033,7 @@ HAL_StatusTypeDef HAL_DCMI_ConfigSyncUnmask(DCMI_HandleTypeDef *hdcmi,
  *               the configuration information for DCMI.
  * @retval HAL state
  */
-HAL_DCMI_StateTypeDef HAL_DCMI_GetState(DCMI_HandleTypeDef *hdcmi)
-{
-	return hdcmi->State;
-}
+HAL_DCMI_StateTypeDef HAL_DCMI_GetState(DCMI_HandleTypeDef *hdcmi) { return hdcmi->State; }
 
 /**
  * @brief  Return the DCMI error code.
@@ -1086,10 +1041,7 @@ HAL_DCMI_StateTypeDef HAL_DCMI_GetState(DCMI_HandleTypeDef *hdcmi)
  *               the configuration information for DCMI.
  * @retval DCMI Error Code
  */
-uint32_t HAL_DCMI_GetError(DCMI_HandleTypeDef *hdcmi)
-{
-	return hdcmi->ErrorCode;
-}
+uint32_t HAL_DCMI_GetError(DCMI_HandleTypeDef *hdcmi) { return hdcmi->ErrorCode; }
 
 /**
  * @}
@@ -1103,10 +1055,7 @@ uint32_t HAL_DCMI_GetError(DCMI_HandleTypeDef *hdcmi)
  * @param pCallback    pointer to dcmi Callback function
  * @retval status
  */
-HAL_StatusTypeDef
-HAL_DCMI_RegisterCallback(DCMI_HandleTypeDef *hdcmi,
-			  HAL_DCMI_CallbackIDTypeDef CallbackID,
-			  pDCMI_CallbackTypeDef pCallback)
+HAL_StatusTypeDef HAL_DCMI_RegisterCallback(DCMI_HandleTypeDef *hdcmi, HAL_DCMI_CallbackIDTypeDef CallbackID, pDCMI_CallbackTypeDef pCallback)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
@@ -1159,8 +1108,7 @@ HAL_DCMI_RegisterCallback(DCMI_HandleTypeDef *hdcmi,
 
 				default:
 					/* update the error code */
-					hdcmi->ErrorCode |=
-					    HAL_DCMI_ERROR_INVALID_CALLBACK;
+					hdcmi->ErrorCode |= HAL_DCMI_ERROR_INVALID_CALLBACK;
 					/* update return status */
 					status = HAL_ERROR;
 					break;
@@ -1182,40 +1130,34 @@ HAL_DCMI_RegisterCallback(DCMI_HandleTypeDef *hdcmi,
  * @param CallbackID  dcmi Callback ID
  * @retval status
  */
-HAL_StatusTypeDef
-HAL_DCMI_UnRegisterCallback(DCMI_HandleTypeDef *hdcmi,
-			    HAL_DCMI_CallbackIDTypeDef CallbackID)
+HAL_StatusTypeDef HAL_DCMI_UnRegisterCallback(DCMI_HandleTypeDef *hdcmi, HAL_DCMI_CallbackIDTypeDef CallbackID)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
 	if (hdcmi->State == HAL_DCMI_STATE_READY) {
 		switch (CallbackID) {
 			case HAL_DCMI_FRAME_EVENT_CB_ID:
-				hdcmi->FrameEventCallback =
-				    HAL_DCMI_FrameEventCallback; /* Legacy weak
-								    FrameEventCallback
-								  */
+				hdcmi->FrameEventCallback = HAL_DCMI_FrameEventCallback; /* Legacy weak
+											    FrameEventCallback
+											  */
 				break;
 
 			case HAL_DCMI_VSYNC_EVENT_CB_ID:
-				hdcmi->VsyncEventCallback =
-				    HAL_DCMI_VsyncEventCallback; /* Legacy weak
-								    VsyncEventCallback
-								  */
+				hdcmi->VsyncEventCallback = HAL_DCMI_VsyncEventCallback; /* Legacy weak
+											    VsyncEventCallback
+											  */
 				break;
 
 			case HAL_DCMI_LINE_EVENT_CB_ID:
-				hdcmi->LineEventCallback =
-				    HAL_DCMI_LineEventCallback; /* Legacy weak
-								   LineEventCallback
-								 */
+				hdcmi->LineEventCallback = HAL_DCMI_LineEventCallback; /* Legacy weak
+											  LineEventCallback
+											*/
 				break;
 
 			case HAL_DCMI_ERROR_CB_ID:
-				hdcmi->ErrorCallback =
-				    HAL_DCMI_ErrorCallback; /* Legacy weak
-							     * ErrorCallback
-							     */
+				hdcmi->ErrorCallback = HAL_DCMI_ErrorCallback; /* Legacy weak
+										* ErrorCallback
+										*/
 				break;
 
 			case HAL_DCMI_MSPINIT_CB_ID:
@@ -1228,8 +1170,7 @@ HAL_DCMI_UnRegisterCallback(DCMI_HandleTypeDef *hdcmi,
 
 			default:
 				/* update the error code */
-				hdcmi->ErrorCode |=
-				    HAL_DCMI_ERROR_INVALID_CALLBACK;
+				hdcmi->ErrorCode |= HAL_DCMI_ERROR_INVALID_CALLBACK;
 				/* update return status */
 				status = HAL_ERROR;
 				break;
@@ -1246,8 +1187,7 @@ HAL_DCMI_UnRegisterCallback(DCMI_HandleTypeDef *hdcmi,
 
 			default:
 				/* update the error code */
-				hdcmi->ErrorCode |=
-				    HAL_DCMI_ERROR_INVALID_CALLBACK;
+				hdcmi->ErrorCode |= HAL_DCMI_ERROR_INVALID_CALLBACK;
 				/* update return status */
 				status = HAL_ERROR;
 				break;
@@ -1289,8 +1229,7 @@ static void DCMI_DMAXferCplt(DMA_HandleTypeDef *hdma)
 	uint32_t *tmpBuffer_Orig;
 	uint32_t temp;
 
-	DCMI_HandleTypeDef *hdcmi =
-	    (DCMI_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
+	DCMI_HandleTypeDef *hdcmi = (DCMI_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
 
 	if (hdcmi->XferCount != 0U) {
 		if (hdcmi->XferCount == 0xBEBE) {
@@ -1328,10 +1267,7 @@ static void DCMI_DMAXferCplt(DMA_HandleTypeDef *hdma)
 			/* Data copy from work buffer to final destination
 			 * buffer */
 			/* Enable the DMA Channel */
-			if (HAL_DMA_Start_IT(hdcmi->DMAM2M_Handle,
-					     (uint32_t)tmpBuffer_Orig,
-					     (uint32_t)tmpBuffer_Dest,
-					     loop_length) != HAL_OK) {
+			if (HAL_DMA_Start_IT(hdcmi->DMAM2M_Handle, (uint32_t)tmpBuffer_Orig, (uint32_t)tmpBuffer_Dest, loop_length) != HAL_OK) {
 				/* Update error code */
 				hdcmi->ErrorCode |= HAL_DCMI_ERROR_DMA;
 
@@ -1354,21 +1290,16 @@ static void DCMI_DMAXferCplt(DMA_HandleTypeDef *hdma)
 		/* if End of frame IT is disabled */
 		if ((hdcmi->Instance->IER & DCMI_IT_FRAME) == 0x0U) {
 			/* If End of Frame flag is set */
-			if (__HAL_DCMI_GET_FLAG(
-				hdcmi, (uint32_t)DCMI_FLAG_FRAMERI) != 0x0UL) {
+			if (__HAL_DCMI_GET_FLAG(hdcmi, (uint32_t)DCMI_FLAG_FRAMERI) != 0x0UL) {
 				/* Clear the End of Frame flag */
 				__HAL_DCMI_CLEAR_FLAG(hdcmi, DCMI_FLAG_FRAMERI);
 
 				/* When snapshot mode, disable Vsync, Error and
 				 * Overrun interrupts */
-				if ((hdcmi->Instance->CR & DCMI_CR_CM) ==
-				    DCMI_MODE_SNAPSHOT) {
+				if ((hdcmi->Instance->CR & DCMI_CR_CM) == DCMI_MODE_SNAPSHOT) {
 					/* Disable the Vsync, Error and Overrun
 					 * interrupts */
-					__HAL_DCMI_DISABLE_IT(
-					    hdcmi,
-					    DCMI_IT_LINE | DCMI_IT_VSYNC |
-						DCMI_IT_ERR | DCMI_IT_OVR);
+					__HAL_DCMI_DISABLE_IT(hdcmi, DCMI_IT_LINE | DCMI_IT_VSYNC | DCMI_IT_ERR | DCMI_IT_OVR);
 
 					hdcmi->State = HAL_DCMI_STATE_READY;
 
@@ -1404,8 +1335,7 @@ static void DCMI_DMAHalfXferCplt(DMA_HandleTypeDef *hdma)
 	uint32_t *tmpBuffer_Dest;
 	uint32_t *tmpBuffer_Orig;
 
-	DCMI_HandleTypeDef *hdcmi =
-	    (DCMI_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
+	DCMI_HandleTypeDef *hdcmi = (DCMI_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
 
 	if (hdcmi->XferCount != 0U) {
 		if (hdcmi->XferCount != 0xBEBE) {
@@ -1432,10 +1362,7 @@ static void DCMI_DMAHalfXferCplt(DMA_HandleTypeDef *hdma)
 			/* Data copy from work buffer to final destination
 			 * buffer */
 			/* Enable the DMA Channel */
-			if (HAL_DMA_Start_IT(hdcmi->DMAM2M_Handle,
-					     (uint32_t)tmpBuffer_Orig,
-					     (uint32_t)tmpBuffer_Dest,
-					     loop_length) != HAL_OK) {
+			if (HAL_DMA_Start_IT(hdcmi->DMAM2M_Handle, (uint32_t)tmpBuffer_Orig, (uint32_t)tmpBuffer_Dest, loop_length) != HAL_OK) {
 				/* Update error code */
 				hdcmi->ErrorCode |= HAL_DCMI_ERROR_DMA;
 
@@ -1465,8 +1392,7 @@ static void DCMI_DMAHalfXferCplt(DMA_HandleTypeDef *hdma)
  */
 static void DCMI_DMAError(DMA_HandleTypeDef *hdma)
 {
-	DCMI_HandleTypeDef *hdcmi =
-	    (DCMI_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
+	DCMI_HandleTypeDef *hdcmi = (DCMI_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
 
 	/* Update error code */
 	hdcmi->ErrorCode |= HAL_DCMI_ERROR_DMA;
@@ -1502,9 +1428,7 @@ static uint32_t DCMI_TransferSize(uint32_t InputSize)
 	uint32_t temp = InputSize;
 	uint32_t aPrime[NPRIME] = {0};
 	uint32_t output = 2; /* Want a result which is an even number */
-	static const uint32_t PrimeArray[NPRIME] = {
-	    1UL,  2UL,	3UL,  5UL,  7UL,  11UL, 13UL, 17UL,
-	    19UL, 23UL, 29UL, 31UL, 37UL, 41UL, 43UL, 47UL};
+	static const uint32_t PrimeArray[NPRIME] = {1UL, 2UL, 3UL, 5UL, 7UL, 11UL, 13UL, 17UL, 19UL, 23UL, 29UL, 31UL, 37UL, 41UL, 43UL, 47UL};
 
 	/* Develop InputSize in product of prime numbers */
 
@@ -1521,8 +1445,7 @@ static uint32_t DCMI_TransferSize(uint32_t InputSize)
 
 	/*  Search for the biggest even divisor less or equal to 0xFFFE = 65534
 	 */
-	aPrime[1] -=
-	    1U; /* output is initialized to 2, so don't count divider 2 twice */
+	aPrime[1] -= 1U; /* output is initialized to 2, so don't count divider 2 twice */
 
 	/*  The algorithm below yields a sub-optimal solution
 	    but in an acceptable time.  */

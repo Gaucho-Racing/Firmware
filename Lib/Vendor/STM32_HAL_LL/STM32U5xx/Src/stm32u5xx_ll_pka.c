@@ -45,28 +45,13 @@
 /** @defgroup PKA_LL_Private_Macros PKA Private Constants
  * @{
  */
-#define IS_LL_PKA_MODE(__VALUE__)                                              \
-	(((__VALUE__) == LL_PKA_MODE_MODULAR_EXP) ||                           \
-	 ((__VALUE__) == LL_PKA_MODE_MONTGOMERY_PARAM) ||                      \
-	 ((__VALUE__) == LL_PKA_MODE_MODULAR_EXP_FAST) ||                      \
-	 ((__VALUE__) == LL_PKA_MODE_MODULAR_EXP_PROTECT) ||                   \
-	 ((__VALUE__) == LL_PKA_MODE_ECC_MUL) ||                               \
-	 ((__VALUE__) == LL_PKA_MODE_ECC_COMPLETE_ADD) ||                      \
-	 ((__VALUE__) == LL_PKA_MODE_ECDSA_SIGNATURE) ||                       \
-	 ((__VALUE__) == LL_PKA_MODE_ECDSA_VERIFICATION) ||                    \
-	 ((__VALUE__) == LL_PKA_MODE_POINT_CHECK) ||                           \
-	 ((__VALUE__) == LL_PKA_MODE_RSA_CRT_EXP) ||                           \
-	 ((__VALUE__) == LL_PKA_MODE_MODULAR_INV) ||                           \
-	 ((__VALUE__) == LL_PKA_MODE_ARITHMETIC_ADD) ||                        \
-	 ((__VALUE__) == LL_PKA_MODE_ARITHMETIC_SUB) ||                        \
-	 ((__VALUE__) == LL_PKA_MODE_ARITHMETIC_MUL) ||                        \
-	 ((__VALUE__) == LL_PKA_MODE_COMPARISON) ||                            \
-	 ((__VALUE__) == LL_PKA_MODE_MODULAR_REDUC) ||                         \
-	 ((__VALUE__) == LL_PKA_MODE_MODULAR_ADD) ||                           \
-	 ((__VALUE__) == LL_PKA_MODE_MODULAR_SUB) ||                           \
-	 ((__VALUE__) == LL_PKA_MODE_MONTGOMERY_MUL) ||                        \
-	 ((__VALUE__) == LL_PKA_MODE_DOUBLE_BASE_LADDER) ||                    \
-	 ((__VALUE__) == LL_PKA_MODE_ECC_PROJECTIVE_AFF))
+#define IS_LL_PKA_MODE(__VALUE__)                                                                                                                                                                      \
+	(((__VALUE__) == LL_PKA_MODE_MODULAR_EXP) || ((__VALUE__) == LL_PKA_MODE_MONTGOMERY_PARAM) || ((__VALUE__) == LL_PKA_MODE_MODULAR_EXP_FAST) ||                                                 \
+	 ((__VALUE__) == LL_PKA_MODE_MODULAR_EXP_PROTECT) || ((__VALUE__) == LL_PKA_MODE_ECC_MUL) || ((__VALUE__) == LL_PKA_MODE_ECC_COMPLETE_ADD) || ((__VALUE__) == LL_PKA_MODE_ECDSA_SIGNATURE) ||  \
+	 ((__VALUE__) == LL_PKA_MODE_ECDSA_VERIFICATION) || ((__VALUE__) == LL_PKA_MODE_POINT_CHECK) || ((__VALUE__) == LL_PKA_MODE_RSA_CRT_EXP) || ((__VALUE__) == LL_PKA_MODE_MODULAR_INV) ||        \
+	 ((__VALUE__) == LL_PKA_MODE_ARITHMETIC_ADD) || ((__VALUE__) == LL_PKA_MODE_ARITHMETIC_SUB) || ((__VALUE__) == LL_PKA_MODE_ARITHMETIC_MUL) || ((__VALUE__) == LL_PKA_MODE_COMPARISON) ||       \
+	 ((__VALUE__) == LL_PKA_MODE_MODULAR_REDUC) || ((__VALUE__) == LL_PKA_MODE_MODULAR_ADD) || ((__VALUE__) == LL_PKA_MODE_MODULAR_SUB) || ((__VALUE__) == LL_PKA_MODE_MONTGOMERY_MUL) ||          \
+	 ((__VALUE__) == LL_PKA_MODE_DOUBLE_BASE_LADDER) || ((__VALUE__) == LL_PKA_MODE_ECC_PROJECTIVE_AFF))
 /**
  * @}
  */
