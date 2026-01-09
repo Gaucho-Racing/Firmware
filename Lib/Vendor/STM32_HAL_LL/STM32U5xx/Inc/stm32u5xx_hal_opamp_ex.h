@@ -49,8 +49,7 @@ extern "C" {
  * operation functions
  * @{
  */
-HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1,
-					       OPAMP_HandleTypeDef *hopamp2);
+HAL_StatusTypeDef HAL_OPAMPEx_SelfCalibrateAll(OPAMP_HandleTypeDef *hopamp1, OPAMP_HandleTypeDef *hopamp2);
 
 /**
  * @}

@@ -118,11 +118,8 @@ HAL_StatusTypeDef HAL_FIREWALL_Config(FIREWALL_InitTypeDef *fw_init)
 	 * protected */
 	/* Code segment */
 	if (fw_init->CodeSegmentLength != 0U) {
-		assert_param(IS_FIREWALL_CODE_SEGMENT_ADDRESS(
-		    fw_init->CodeSegmentStartAddress));
-		assert_param(IS_FIREWALL_CODE_SEGMENT_LENGTH(
-		    fw_init->CodeSegmentStartAddress,
-		    fw_init->CodeSegmentLength));
+		assert_param(IS_FIREWALL_CODE_SEGMENT_ADDRESS(fw_init->CodeSegmentStartAddress));
+		assert_param(IS_FIREWALL_CODE_SEGMENT_LENGTH(fw_init->CodeSegmentStartAddress, fw_init->CodeSegmentLength));
 		/* Make sure that NonVDataSegmentLength is properly set to
 		 * prevent code segment access */
 		if (fw_init->NonVDataSegmentLength < 0x100U) {
@@ -131,53 +128,39 @@ HAL_StatusTypeDef HAL_FIREWALL_Config(FIREWALL_InitTypeDef *fw_init)
 	}
 	/* Non volatile data segment */
 	if (fw_init->NonVDataSegmentLength != 0U) {
-		assert_param(IS_FIREWALL_NONVOLATILEDATA_SEGMENT_ADDRESS(
-		    fw_init->NonVDataSegmentStartAddress));
-		assert_param(IS_FIREWALL_NONVOLATILEDATA_SEGMENT_LENGTH(
-		    fw_init->NonVDataSegmentStartAddress,
-		    fw_init->NonVDataSegmentLength));
+		assert_param(IS_FIREWALL_NONVOLATILEDATA_SEGMENT_ADDRESS(fw_init->NonVDataSegmentStartAddress));
+		assert_param(IS_FIREWALL_NONVOLATILEDATA_SEGMENT_LENGTH(fw_init->NonVDataSegmentStartAddress, fw_init->NonVDataSegmentLength));
 	}
 	/* Volatile data segment */
 	if (fw_init->VDataSegmentLength != 0U) {
-		assert_param(IS_FIREWALL_VOLATILEDATA_SEGMENT_ADDRESS(
-		    fw_init->VDataSegmentStartAddress));
-		assert_param(IS_FIREWALL_VOLATILEDATA_SEGMENT_LENGTH(
-		    fw_init->VDataSegmentStartAddress,
-		    fw_init->VDataSegmentLength));
+		assert_param(IS_FIREWALL_VOLATILEDATA_SEGMENT_ADDRESS(fw_init->VDataSegmentStartAddress));
+		assert_param(IS_FIREWALL_VOLATILEDATA_SEGMENT_LENGTH(fw_init->VDataSegmentStartAddress, fw_init->VDataSegmentLength));
 	}
 
 	/* Check Firewall Configuration Register parameters */
-	assert_param(
-	    IS_FIREWALL_VOLATILEDATA_EXECUTE(fw_init->VolatileDataExecution));
-	assert_param(
-	    IS_FIREWALL_VOLATILEDATA_SHARE(fw_init->VolatileDataShared));
+	assert_param(IS_FIREWALL_VOLATILEDATA_EXECUTE(fw_init->VolatileDataExecution));
+	assert_param(IS_FIREWALL_VOLATILEDATA_SHARE(fw_init->VolatileDataShared));
 
 	/* Configuration */
 
 	/* Protected code segment start address configuration */
-	WRITE_REG(FIREWALL->CSSA,
-		  (FW_CSSA_ADD & fw_init->CodeSegmentStartAddress));
+	WRITE_REG(FIREWALL->CSSA, (FW_CSSA_ADD & fw_init->CodeSegmentStartAddress));
 	/* Protected code segment length configuration */
 	WRITE_REG(FIREWALL->CSL, (FW_CSL_LENG & fw_init->CodeSegmentLength));
 
 	/* Protected non volatile data segment start address configuration */
-	WRITE_REG(FIREWALL->NVDSSA,
-		  (FW_NVDSSA_ADD & fw_init->NonVDataSegmentStartAddress));
+	WRITE_REG(FIREWALL->NVDSSA, (FW_NVDSSA_ADD & fw_init->NonVDataSegmentStartAddress));
 	/* Protected non volatile data segment length configuration */
-	WRITE_REG(FIREWALL->NVDSL,
-		  (FW_NVDSL_LENG & fw_init->NonVDataSegmentLength));
+	WRITE_REG(FIREWALL->NVDSL, (FW_NVDSL_LENG & fw_init->NonVDataSegmentLength));
 
 	/* Protected volatile data segment start address configuration */
-	WRITE_REG(FIREWALL->VDSSA,
-		  (FW_VDSSA_ADD & fw_init->VDataSegmentStartAddress));
+	WRITE_REG(FIREWALL->VDSSA, (FW_VDSSA_ADD & fw_init->VDataSegmentStartAddress));
 	/* Protected volatile data segment length configuration */
 	WRITE_REG(FIREWALL->VDSL, (FW_VDSL_LENG & fw_init->VDataSegmentLength));
 
 	/* Set Firewall Configuration Register VDE and VDS bits
 	   (volatile data execution and shared configuration) */
-	MODIFY_REG(FIREWALL->CR, FW_CR_VDS | FW_CR_VDE,
-		   fw_init->VolatileDataExecution |
-		       fw_init->VolatileDataShared);
+	MODIFY_REG(FIREWALL->CR, FW_CR_VDS | FW_CR_VDE, fw_init->VolatileDataExecution | fw_init->VolatileDataShared);
 
 	return HAL_OK;
 }
@@ -203,21 +186,16 @@ void HAL_FIREWALL_GetConfig(FIREWALL_InitTypeDef *fw_config)
 	__HAL_RCC_FIREWALL_CLK_ENABLE();
 
 	/* Retrieve code segment protection setting */
-	fw_config->CodeSegmentStartAddress =
-	    (READ_REG(FIREWALL->CSSA) & FW_CSSA_ADD);
+	fw_config->CodeSegmentStartAddress = (READ_REG(FIREWALL->CSSA) & FW_CSSA_ADD);
 	fw_config->CodeSegmentLength = (READ_REG(FIREWALL->CSL) & FW_CSL_LENG);
 
 	/* Retrieve non volatile data segment protection setting */
-	fw_config->NonVDataSegmentStartAddress =
-	    (READ_REG(FIREWALL->NVDSSA) & FW_NVDSSA_ADD);
-	fw_config->NonVDataSegmentLength =
-	    (READ_REG(FIREWALL->NVDSL) & FW_NVDSL_LENG);
+	fw_config->NonVDataSegmentStartAddress = (READ_REG(FIREWALL->NVDSSA) & FW_NVDSSA_ADD);
+	fw_config->NonVDataSegmentLength = (READ_REG(FIREWALL->NVDSL) & FW_NVDSL_LENG);
 
 	/* Retrieve volatile data segment protection setting */
-	fw_config->VDataSegmentStartAddress =
-	    (READ_REG(FIREWALL->VDSSA) & FW_VDSSA_ADD);
-	fw_config->VDataSegmentLength =
-	    (READ_REG(FIREWALL->VDSL) & FW_VDSL_LENG);
+	fw_config->VDataSegmentStartAddress = (READ_REG(FIREWALL->VDSSA) & FW_VDSSA_ADD);
+	fw_config->VDataSegmentLength = (READ_REG(FIREWALL->VDSL) & FW_VDSL_LENG);
 
 	/* Retrieve volatile data execution setting */
 	fw_config->VolatileDataExecution = (READ_REG(FIREWALL->CR) & FW_CR_VDE);

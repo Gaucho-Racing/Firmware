@@ -356,10 +356,7 @@ __STATIC_INLINE void LL_AHB1_GRP1_EnableClock(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval State of Periphs (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_AHB1_GRP1_IsEnabledClock(uint32_t Periphs)
-{
-	return ((READ_BIT(RCC->AHB1ENR, Periphs) == Periphs) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_AHB1_GRP1_IsEnabledClock(uint32_t Periphs) { return ((READ_BIT(RCC->AHB1ENR, Periphs) == Periphs) ? 1UL : 0UL); }
 
 /**
  * @brief  Disable AHB1 peripherals clock.
@@ -384,10 +381,7 @@ __STATIC_INLINE uint32_t LL_AHB1_GRP1_IsEnabledClock(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_AHB1_GRP1_DisableClock(uint32_t Periphs)
-{
-	CLEAR_BIT(RCC->AHB1ENR, Periphs);
-}
+__STATIC_INLINE void LL_AHB1_GRP1_DisableClock(uint32_t Periphs) { CLEAR_BIT(RCC->AHB1ENR, Periphs); }
 
 /**
  * @brief  Force AHB1 peripherals reset.
@@ -413,10 +407,7 @@ __STATIC_INLINE void LL_AHB1_GRP1_DisableClock(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_AHB1_GRP1_ForceReset(uint32_t Periphs)
-{
-	SET_BIT(RCC->AHB1RSTR, Periphs);
-}
+__STATIC_INLINE void LL_AHB1_GRP1_ForceReset(uint32_t Periphs) { SET_BIT(RCC->AHB1RSTR, Periphs); }
 
 /**
  * @brief  Release AHB1 peripherals reset.
@@ -442,10 +433,7 @@ __STATIC_INLINE void LL_AHB1_GRP1_ForceReset(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_AHB1_GRP1_ReleaseReset(uint32_t Periphs)
-{
-	CLEAR_BIT(RCC->AHB1RSTR, Periphs);
-}
+__STATIC_INLINE void LL_AHB1_GRP1_ReleaseReset(uint32_t Periphs) { CLEAR_BIT(RCC->AHB1RSTR, Periphs); }
 
 /**
  * @brief  Enable AHB1 peripheral clocks in Sleep and Stop modes
@@ -506,10 +494,7 @@ __STATIC_INLINE void LL_AHB1_GRP1_EnableClockStopSleep(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_AHB1_GRP1_DisableClockStopSleep(uint32_t Periphs)
-{
-	CLEAR_BIT(RCC->AHB1SMENR, Periphs);
-}
+__STATIC_INLINE void LL_AHB1_GRP1_DisableClockStopSleep(uint32_t Periphs) { CLEAR_BIT(RCC->AHB1SMENR, Periphs); }
 
 /**
  * @}
@@ -610,10 +595,7 @@ __STATIC_INLINE void LL_AHB2_GRP1_EnableClock(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval State of Periphs (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_AHB2_GRP1_IsEnabledClock(uint32_t Periphs)
-{
-	return ((READ_BIT(RCC->AHB2ENR, Periphs) == Periphs) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_AHB2_GRP1_IsEnabledClock(uint32_t Periphs) { return ((READ_BIT(RCC->AHB2ENR, Periphs) == Periphs) ? 1UL : 0UL); }
 
 /**
  * @brief  Disable AHB2 peripherals clock.
@@ -656,10 +638,7 @@ __STATIC_INLINE uint32_t LL_AHB2_GRP1_IsEnabledClock(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_AHB2_GRP1_DisableClock(uint32_t Periphs)
-{
-	CLEAR_BIT(RCC->AHB2ENR, Periphs);
-}
+__STATIC_INLINE void LL_AHB2_GRP1_DisableClock(uint32_t Periphs) { CLEAR_BIT(RCC->AHB2ENR, Periphs); }
 
 /**
  * @brief  Force AHB2 peripherals reset.
@@ -703,10 +682,7 @@ __STATIC_INLINE void LL_AHB2_GRP1_DisableClock(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_AHB2_GRP1_ForceReset(uint32_t Periphs)
-{
-	SET_BIT(RCC->AHB2RSTR, Periphs);
-}
+__STATIC_INLINE void LL_AHB2_GRP1_ForceReset(uint32_t Periphs) { SET_BIT(RCC->AHB2RSTR, Periphs); }
 
 /**
  * @brief  Release AHB2 peripherals reset.
@@ -750,10 +726,7 @@ __STATIC_INLINE void LL_AHB2_GRP1_ForceReset(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_AHB2_GRP1_ReleaseReset(uint32_t Periphs)
-{
-	CLEAR_BIT(RCC->AHB2RSTR, Periphs);
-}
+__STATIC_INLINE void LL_AHB2_GRP1_ReleaseReset(uint32_t Periphs) { CLEAR_BIT(RCC->AHB2RSTR, Periphs); }
 
 /**
  * @brief  Enable AHB2 peripheral clocks in Sleep and Stop modes
@@ -854,10 +827,7 @@ __STATIC_INLINE void LL_AHB2_GRP1_EnableClockStopSleep(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_AHB2_GRP1_DisableClockStopSleep(uint32_t Periphs)
-{
-	CLEAR_BIT(RCC->AHB2SMENR, Periphs);
-}
+__STATIC_INLINE void LL_AHB2_GRP1_DisableClockStopSleep(uint32_t Periphs) { CLEAR_BIT(RCC->AHB2SMENR, Periphs); }
 
 /**
  * @}
@@ -906,10 +876,7 @@ __STATIC_INLINE void LL_AHB3_GRP1_EnableClock(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval State of Periphs (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_AHB3_GRP1_IsEnabledClock(uint32_t Periphs)
-{
-	return ((READ_BIT(RCC->AHB3ENR, Periphs) == Periphs) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_AHB3_GRP1_IsEnabledClock(uint32_t Periphs) { return ((READ_BIT(RCC->AHB3ENR, Periphs) == Periphs) ? 1UL : 0UL); }
 
 /**
  * @brief  Disable AHB3 peripherals clock.
@@ -926,10 +893,7 @@ __STATIC_INLINE uint32_t LL_AHB3_GRP1_IsEnabledClock(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_AHB3_GRP1_DisableClock(uint32_t Periphs)
-{
-	CLEAR_BIT(RCC->AHB3ENR, Periphs);
-}
+__STATIC_INLINE void LL_AHB3_GRP1_DisableClock(uint32_t Periphs) { CLEAR_BIT(RCC->AHB3ENR, Periphs); }
 
 /**
  * @brief  Force AHB3 peripherals reset.
@@ -947,10 +911,7 @@ __STATIC_INLINE void LL_AHB3_GRP1_DisableClock(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_AHB3_GRP1_ForceReset(uint32_t Periphs)
-{
-	SET_BIT(RCC->AHB3RSTR, Periphs);
-}
+__STATIC_INLINE void LL_AHB3_GRP1_ForceReset(uint32_t Periphs) { SET_BIT(RCC->AHB3RSTR, Periphs); }
 
 /**
  * @brief  Release AHB3 peripherals reset.
@@ -968,10 +929,7 @@ __STATIC_INLINE void LL_AHB3_GRP1_ForceReset(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_AHB3_GRP1_ReleaseReset(uint32_t Periphs)
-{
-	CLEAR_BIT(RCC->AHB3RSTR, Periphs);
-}
+__STATIC_INLINE void LL_AHB3_GRP1_ReleaseReset(uint32_t Periphs) { CLEAR_BIT(RCC->AHB3RSTR, Periphs); }
 
 /**
  * @brief  Enable AHB3 peripheral clocks in Sleep and Stop modes
@@ -1012,10 +970,7 @@ __STATIC_INLINE void LL_AHB3_GRP1_EnableClockStopSleep(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_AHB3_GRP1_DisableClockStopSleep(uint32_t Periphs)
-{
-	CLEAR_BIT(RCC->AHB3SMENR, Periphs);
-}
+__STATIC_INLINE void LL_AHB3_GRP1_DisableClockStopSleep(uint32_t Periphs) { CLEAR_BIT(RCC->AHB3SMENR, Periphs); }
 
 /**
  * @}
@@ -1176,10 +1131,7 @@ __STATIC_INLINE void LL_APB1_GRP2_EnableClock(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval State of Periphs (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_APB1_GRP1_IsEnabledClock(uint32_t Periphs)
-{
-	return ((READ_BIT(RCC->APB1ENR1, Periphs) == Periphs) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_APB1_GRP1_IsEnabledClock(uint32_t Periphs) { return ((READ_BIT(RCC->APB1ENR1, Periphs) == Periphs) ? 1UL : 0UL); }
 
 /**
  * @brief  Check if APB1 peripheral clock is enabled or not
@@ -1196,10 +1148,7 @@ __STATIC_INLINE uint32_t LL_APB1_GRP1_IsEnabledClock(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval State of Periphs (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_APB1_GRP2_IsEnabledClock(uint32_t Periphs)
-{
-	return ((READ_BIT(RCC->APB1ENR2, Periphs) == Periphs) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_APB1_GRP2_IsEnabledClock(uint32_t Periphs) { return ((READ_BIT(RCC->APB1ENR2, Periphs) == Periphs) ? 1UL : 0UL); }
 
 /**
  * @brief  Disable APB1 peripherals clock.
@@ -1260,10 +1209,7 @@ __STATIC_INLINE uint32_t LL_APB1_GRP2_IsEnabledClock(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_APB1_GRP1_DisableClock(uint32_t Periphs)
-{
-	CLEAR_BIT(RCC->APB1ENR1, Periphs);
-}
+__STATIC_INLINE void LL_APB1_GRP1_DisableClock(uint32_t Periphs) { CLEAR_BIT(RCC->APB1ENR1, Periphs); }
 
 /**
  * @brief  Disable APB1 peripherals clock.
@@ -1280,10 +1226,7 @@ __STATIC_INLINE void LL_APB1_GRP1_DisableClock(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_APB1_GRP2_DisableClock(uint32_t Periphs)
-{
-	CLEAR_BIT(RCC->APB1ENR2, Periphs);
-}
+__STATIC_INLINE void LL_APB1_GRP2_DisableClock(uint32_t Periphs) { CLEAR_BIT(RCC->APB1ENR2, Periphs); }
 
 /**
  * @brief  Force APB1 peripherals reset.
@@ -1341,10 +1284,7 @@ __STATIC_INLINE void LL_APB1_GRP2_DisableClock(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_APB1_GRP1_ForceReset(uint32_t Periphs)
-{
-	SET_BIT(RCC->APB1RSTR1, Periphs);
-}
+__STATIC_INLINE void LL_APB1_GRP1_ForceReset(uint32_t Periphs) { SET_BIT(RCC->APB1RSTR1, Periphs); }
 
 /**
  * @brief  Force APB1 peripherals reset.
@@ -1362,10 +1302,7 @@ __STATIC_INLINE void LL_APB1_GRP1_ForceReset(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_APB1_GRP2_ForceReset(uint32_t Periphs)
-{
-	SET_BIT(RCC->APB1RSTR2, Periphs);
-}
+__STATIC_INLINE void LL_APB1_GRP2_ForceReset(uint32_t Periphs) { SET_BIT(RCC->APB1RSTR2, Periphs); }
 
 /**
  * @brief  Release APB1 peripherals reset.
@@ -1423,10 +1360,7 @@ __STATIC_INLINE void LL_APB1_GRP2_ForceReset(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_APB1_GRP1_ReleaseReset(uint32_t Periphs)
-{
-	CLEAR_BIT(RCC->APB1RSTR1, Periphs);
-}
+__STATIC_INLINE void LL_APB1_GRP1_ReleaseReset(uint32_t Periphs) { CLEAR_BIT(RCC->APB1RSTR1, Periphs); }
 
 /**
  * @brief  Release APB1 peripherals reset.
@@ -1444,10 +1378,7 @@ __STATIC_INLINE void LL_APB1_GRP1_ReleaseReset(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_APB1_GRP2_ReleaseReset(uint32_t Periphs)
-{
-	CLEAR_BIT(RCC->APB1RSTR2, Periphs);
-}
+__STATIC_INLINE void LL_APB1_GRP2_ReleaseReset(uint32_t Periphs) { CLEAR_BIT(RCC->APB1RSTR2, Periphs); }
 
 /**
  * @brief  Enable APB1 peripheral clocks in Sleep and Stop modes
@@ -1600,10 +1531,7 @@ __STATIC_INLINE void LL_APB1_GRP2_EnableClockStopSleep(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_APB1_GRP1_DisableClockStopSleep(uint32_t Periphs)
-{
-	CLEAR_BIT(RCC->APB1SMENR1, Periphs);
-}
+__STATIC_INLINE void LL_APB1_GRP1_DisableClockStopSleep(uint32_t Periphs) { CLEAR_BIT(RCC->APB1SMENR1, Periphs); }
 
 /**
  * @brief  Disable APB1 peripheral clocks in Sleep and Stop modes
@@ -1620,10 +1548,7 @@ __STATIC_INLINE void LL_APB1_GRP1_DisableClockStopSleep(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_APB1_GRP2_DisableClockStopSleep(uint32_t Periphs)
-{
-	CLEAR_BIT(RCC->APB1SMENR2, Periphs);
-}
+__STATIC_INLINE void LL_APB1_GRP2_DisableClockStopSleep(uint32_t Periphs) { CLEAR_BIT(RCC->APB1SMENR2, Periphs); }
 
 /**
  * @}
@@ -1716,10 +1641,7 @@ __STATIC_INLINE void LL_APB2_GRP1_EnableClock(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval State of Periphs (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_APB2_GRP1_IsEnabledClock(uint32_t Periphs)
-{
-	return ((READ_BIT(RCC->APB2ENR, Periphs) == Periphs) ? 1UL : 0UL);
-}
+__STATIC_INLINE uint32_t LL_APB2_GRP1_IsEnabledClock(uint32_t Periphs) { return ((READ_BIT(RCC->APB2ENR, Periphs) == Periphs) ? 1UL : 0UL); }
 
 /**
  * @brief  Disable APB2 peripherals clock.
@@ -1756,10 +1678,7 @@ __STATIC_INLINE uint32_t LL_APB2_GRP1_IsEnabledClock(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_APB2_GRP1_DisableClock(uint32_t Periphs)
-{
-	CLEAR_BIT(RCC->APB2ENR, Periphs);
-}
+__STATIC_INLINE void LL_APB2_GRP1_DisableClock(uint32_t Periphs) { CLEAR_BIT(RCC->APB2ENR, Periphs); }
 
 /**
  * @brief  Force APB2 peripherals reset.
@@ -1797,10 +1716,7 @@ __STATIC_INLINE void LL_APB2_GRP1_DisableClock(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_APB2_GRP1_ForceReset(uint32_t Periphs)
-{
-	SET_BIT(RCC->APB2RSTR, Periphs);
-}
+__STATIC_INLINE void LL_APB2_GRP1_ForceReset(uint32_t Periphs) { SET_BIT(RCC->APB2RSTR, Periphs); }
 
 /**
  * @brief  Release APB2 peripherals reset.
@@ -1838,10 +1754,7 @@ __STATIC_INLINE void LL_APB2_GRP1_ForceReset(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_APB2_GRP1_ReleaseReset(uint32_t Periphs)
-{
-	CLEAR_BIT(RCC->APB2RSTR, Periphs);
-}
+__STATIC_INLINE void LL_APB2_GRP1_ReleaseReset(uint32_t Periphs) { CLEAR_BIT(RCC->APB2RSTR, Periphs); }
 
 /**
  * @brief  Enable APB2 peripheral clocks in Sleep and Stop modes
@@ -1922,10 +1835,7 @@ __STATIC_INLINE void LL_APB2_GRP1_EnableClockStopSleep(uint32_t Periphs)
  *         (*) value not defined in all devices.
  * @retval None
  */
-__STATIC_INLINE void LL_APB2_GRP1_DisableClockStopSleep(uint32_t Periphs)
-{
-	CLEAR_BIT(RCC->APB2SMENR, Periphs);
-}
+__STATIC_INLINE void LL_APB2_GRP1_DisableClockStopSleep(uint32_t Periphs) { CLEAR_BIT(RCC->APB2SMENR, Periphs); }
 
 /**
  * @}

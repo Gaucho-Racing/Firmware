@@ -66,11 +66,10 @@ typedef struct {
 				 dual addressing mode is selected This parameter
 				 can be a 7-bit address. */
 
-	uint32_t
-	    OwnAddress2Masks; /*!< Specifies the acknowledge mask address second
-				 device own address if dual addressing mode is
-				 selected. This parameter can be a value of @ref
-				 I2C_OWN_ADDRESS2_MASKS */
+	uint32_t OwnAddress2Masks; /*!< Specifies the acknowledge mask address second
+				      device own address if dual addressing mode is
+				      selected. This parameter can be a value of @ref
+				      I2C_OWN_ADDRESS2_MASKS */
 
 	uint32_t GeneralCallMode; /*!< Specifies if general call mode is
 				     selected. This parameter can be a value of
@@ -107,20 +106,17 @@ typedef struct {
  * @{
  */
 typedef enum {
-	HAL_I2C_STATE_RESET = 0x00U, /*!< Peripheral is not yet Initialized */
-	HAL_I2C_STATE_READY =
-	    0x20U, /*!< Peripheral Initialized and ready for use  */
-	HAL_I2C_STATE_BUSY = 0x24U, /*!< An internal process is ongoing */
-	HAL_I2C_STATE_BUSY_TX =
-	    0x21U, /*!< Data Transmission process is ongoing      */
-	HAL_I2C_STATE_BUSY_RX = 0x22U, /*!< Data Reception process is ongoing */
-	HAL_I2C_STATE_LISTEN = 0x28U,  /*!< Address Listen Mode is ongoing  */
-	HAL_I2C_STATE_BUSY_TX_LISTEN =
-	    0x29U, /*!< Address Listen Mode and Data Transmission
-		       process is ongoing                         */
+	HAL_I2C_STATE_RESET = 0x00U,	      /*!< Peripheral is not yet Initialized */
+	HAL_I2C_STATE_READY = 0x20U,	      /*!< Peripheral Initialized and ready for use  */
+	HAL_I2C_STATE_BUSY = 0x24U,	      /*!< An internal process is ongoing */
+	HAL_I2C_STATE_BUSY_TX = 0x21U,	      /*!< Data Transmission process is ongoing      */
+	HAL_I2C_STATE_BUSY_RX = 0x22U,	      /*!< Data Reception process is ongoing */
+	HAL_I2C_STATE_LISTEN = 0x28U,	      /*!< Address Listen Mode is ongoing  */
+	HAL_I2C_STATE_BUSY_TX_LISTEN = 0x29U, /*!< Address Listen Mode and Data Transmission
+						  process is ongoing                         */
 	HAL_I2C_STATE_BUSY_RX_LISTEN = 0x2AU, /*!< Address Listen Mode and Data
 						 Reception process is ongoing */
-	HAL_I2C_STATE_ABORT = 0x60U, /*!< Abort user request ongoing	  */
+	HAL_I2C_STATE_ABORT = 0x60U,	      /*!< Abort user request ongoing	  */
 
 } HAL_I2C_StateTypeDef;
 
@@ -150,7 +146,7 @@ typedef enum {
 	HAL_I2C_MODE_NONE = 0x00U,   /*!< No I2C communication on going   */
 	HAL_I2C_MODE_MASTER = 0x10U, /*!< I2C communication is in Master Mode */
 	HAL_I2C_MODE_SLAVE = 0x20U,  /*!< I2C communication is in Slave Mode  */
-	HAL_I2C_MODE_MEM = 0x40U /*!< I2C communication is in Memory Mode     */
+	HAL_I2C_MODE_MEM = 0x40U     /*!< I2C communication is in Memory Mode     */
 
 } HAL_I2C_ModeTypeDef;
 
@@ -172,11 +168,9 @@ typedef enum {
 #define HAL_I2C_ERROR_SIZE (0x00000040U)      /*!< Size Management error */
 #define HAL_I2C_ERROR_DMA_PARAM (0x00000080U) /*!< DMA Parameter Error   */
 #if (USE_HAL_I2C_REGISTER_CALLBACKS == 1)
-#define HAL_I2C_ERROR_INVALID_CALLBACK                                         \
-	(0x00000100U) /*!< Invalid Callback error */
-#endif		      /* USE_HAL_I2C_REGISTER_CALLBACKS */
-#define HAL_I2C_ERROR_INVALID_PARAM                                            \
-	(0x00000200U) /*!< Invalid Parameters error  */
+#define HAL_I2C_ERROR_INVALID_CALLBACK (0x00000100U) /*!< Invalid Callback error */
+#endif						     /* USE_HAL_I2C_REGISTER_CALLBACKS */
+#define HAL_I2C_ERROR_INVALID_PARAM (0x00000200U)    /*!< Invalid Parameters error  */
 /**
  * @}
  */
@@ -196,14 +190,12 @@ typedef struct __I2C_HandleTypeDef {
 
 	__IO uint16_t XferCount; /*!< I2C transfer counter */
 
-	__IO uint32_t
-	    XferOptions; /*!< I2C sequantial transfer options, this parameter
-			    can be a value of @ref I2C_XFEROPTIONS */
+	__IO uint32_t XferOptions; /*!< I2C sequantial transfer options, this parameter
+				      can be a value of @ref I2C_XFEROPTIONS */
 
 	__IO uint32_t PreviousState; /*!< I2C communication Previous state */
 
-	HAL_StatusTypeDef (*XferISR)(struct __I2C_HandleTypeDef *hi2c,
-				     uint32_t ITFlags, uint32_t ITSources);
+	HAL_StatusTypeDef (*XferISR)(struct __I2C_HandleTypeDef *hi2c, uint32_t ITFlags, uint32_t ITSources);
 	/*!< I2C transfer IRQ handler function pointer */
 
 #if defined(HAL_DMA_MODULE_ENABLED)
@@ -247,8 +239,7 @@ typedef struct __I2C_HandleTypeDef {
 	void (*AbortCpltCallback)(struct __I2C_HandleTypeDef *hi2c);
 	/*!< I2C Abort callback                        */
 
-	void (*AddrCallback)(struct __I2C_HandleTypeDef *hi2c,
-			     uint8_t TransferDirection, uint16_t AddrMatchCode);
+	void (*AddrCallback)(struct __I2C_HandleTypeDef *hi2c, uint8_t TransferDirection, uint16_t AddrMatchCode);
 	/*!< I2C Slave Address Match callback */
 
 	void (*MspInitCallback)(struct __I2C_HandleTypeDef *hi2c);
@@ -264,22 +255,15 @@ typedef struct __I2C_HandleTypeDef {
  * @brief  HAL I2C Callback ID enumeration definition
  */
 typedef enum {
-	HAL_I2C_MASTER_TX_COMPLETE_CB_ID =
-	    0x00U, /*!< I2C Master Tx Transfer completed callback ID  */
-	HAL_I2C_MASTER_RX_COMPLETE_CB_ID =
-	    0x01U, /*!< I2C Master Rx Transfer completed callback ID  */
-	HAL_I2C_SLAVE_TX_COMPLETE_CB_ID =
-	    0x02U, /*!< I2C Slave Tx Transfer completed callback ID   */
-	HAL_I2C_SLAVE_RX_COMPLETE_CB_ID =
-	    0x03U, /*!< I2C Slave Rx Transfer completed callback ID   */
-	HAL_I2C_LISTEN_COMPLETE_CB_ID =
-	    0x04U, /*!< I2C Listen Complete callback ID               */
-	HAL_I2C_MEM_TX_COMPLETE_CB_ID =
-	    0x05U, /*!< I2C Memory Tx Transfer callback ID            */
-	HAL_I2C_MEM_RX_COMPLETE_CB_ID =
-	    0x06U, /*!< I2C Memory Rx Transfer completed callback ID  */
-	HAL_I2C_ERROR_CB_ID = 0x07U, /*!< I2C Error callback ID */
-	HAL_I2C_ABORT_CB_ID = 0x08U, /*!< I2C Abort callback ID */
+	HAL_I2C_MASTER_TX_COMPLETE_CB_ID = 0x00U, /*!< I2C Master Tx Transfer completed callback ID  */
+	HAL_I2C_MASTER_RX_COMPLETE_CB_ID = 0x01U, /*!< I2C Master Rx Transfer completed callback ID  */
+	HAL_I2C_SLAVE_TX_COMPLETE_CB_ID = 0x02U,  /*!< I2C Slave Tx Transfer completed callback ID   */
+	HAL_I2C_SLAVE_RX_COMPLETE_CB_ID = 0x03U,  /*!< I2C Slave Rx Transfer completed callback ID   */
+	HAL_I2C_LISTEN_COMPLETE_CB_ID = 0x04U,	  /*!< I2C Listen Complete callback ID               */
+	HAL_I2C_MEM_TX_COMPLETE_CB_ID = 0x05U,	  /*!< I2C Memory Tx Transfer callback ID            */
+	HAL_I2C_MEM_RX_COMPLETE_CB_ID = 0x06U,	  /*!< I2C Memory Rx Transfer completed callback ID  */
+	HAL_I2C_ERROR_CB_ID = 0x07U,		  /*!< I2C Error callback ID */
+	HAL_I2C_ABORT_CB_ID = 0x08U,		  /*!< I2C Abort callback ID */
 
 	HAL_I2C_MSPINIT_CB_ID = 0x09U,	/*!< I2C Msp Init callback ID  */
 	HAL_I2C_MSPDEINIT_CB_ID = 0x0AU /*!< I2C Msp DeInit callback ID */
@@ -291,9 +275,7 @@ typedef enum {
  */
 typedef void (*pI2C_CallbackTypeDef)(I2C_HandleTypeDef *hi2c);
 /*!< pointer to an I2C callback function */
-typedef void (*pI2C_AddrCallbackTypeDef)(I2C_HandleTypeDef *hi2c,
-					 uint8_t TransferDirection,
-					 uint16_t AddrMatchCode);
+typedef void (*pI2C_AddrCallbackTypeDef)(I2C_HandleTypeDef *hi2c, uint8_t TransferDirection, uint16_t AddrMatchCode);
 /*!< pointer to an I2C Address Match callback function */
 
 #endif /* USE_HAL_I2C_REGISTER_CALLBACKS */
@@ -314,8 +296,7 @@ typedef void (*pI2C_AddrCallbackTypeDef)(I2C_HandleTypeDef *hi2c,
  * @{
  */
 #define I2C_FIRST_FRAME ((uint32_t)I2C_SOFTEND_MODE)
-#define I2C_FIRST_AND_NEXT_FRAME                                               \
-	((uint32_t)(I2C_RELOAD_MODE | I2C_SOFTEND_MODE))
+#define I2C_FIRST_AND_NEXT_FRAME ((uint32_t)(I2C_RELOAD_MODE | I2C_SOFTEND_MODE))
 #define I2C_NEXT_FRAME ((uint32_t)(I2C_RELOAD_MODE | I2C_SOFTEND_MODE))
 #define I2C_FIRST_AND_LAST_FRAME ((uint32_t)I2C_AUTOEND_MODE)
 #define I2C_LAST_FRAME ((uint32_t)I2C_AUTOEND_MODE)
@@ -416,8 +397,7 @@ typedef void (*pI2C_AddrCallbackTypeDef)(I2C_HandleTypeDef *hi2c,
 #define I2C_GENERATE_NO_START_READ (uint32_t)(0x80000000U | I2C_CR2_RD_WRN)
 #define I2C_GENERATE_NO_START_WRITE (uint32_t)(0x80000000U)
 #define I2C_GENERATE_STOP (uint32_t)(0x80000000U | I2C_CR2_STOP)
-#define I2C_GENERATE_START_READ                                                \
-	(uint32_t)(0x80000000U | I2C_CR2_START | I2C_CR2_RD_WRN)
+#define I2C_GENERATE_START_READ (uint32_t)(0x80000000U | I2C_CR2_START | I2C_CR2_RD_WRN)
 #define I2C_GENERATE_START_WRITE (uint32_t)(0x80000000U | I2C_CR2_START)
 /**
  * @}
@@ -479,15 +459,14 @@ typedef void (*pI2C_AddrCallbackTypeDef)(I2C_HandleTypeDef *hi2c,
  * @retval None
  */
 #if (USE_HAL_I2C_REGISTER_CALLBACKS == 1)
-#define __HAL_I2C_RESET_HANDLE_STATE(__HANDLE__)                               \
-	do {                                                                   \
-		(__HANDLE__)->State = HAL_I2C_STATE_RESET;                     \
-		(__HANDLE__)->MspInitCallback = NULL;                          \
-		(__HANDLE__)->MspDeInitCallback = NULL;                        \
+#define __HAL_I2C_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                       \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_I2C_STATE_RESET;                                                                                                                                             \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0)
 #else
-#define __HAL_I2C_RESET_HANDLE_STATE(__HANDLE__)                               \
-	((__HANDLE__)->State = HAL_I2C_STATE_RESET)
+#define __HAL_I2C_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_I2C_STATE_RESET)
 #endif /* USE_HAL_I2C_REGISTER_CALLBACKS */
 
 /** @brief  Enable the specified I2C interrupt.
@@ -504,8 +483,7 @@ typedef void (*pI2C_AddrCallbackTypeDef)(I2C_HandleTypeDef *hi2c,
  *
  * @retval None
  */
-#define __HAL_I2C_ENABLE_IT(__HANDLE__, __INTERRUPT__)                         \
-	((__HANDLE__)->Instance->CR1 |= (__INTERRUPT__))
+#define __HAL_I2C_ENABLE_IT(__HANDLE__, __INTERRUPT__) ((__HANDLE__)->Instance->CR1 |= (__INTERRUPT__))
 
 /** @brief  Disable the specified I2C interrupt.
  * @param  __HANDLE__ specifies the I2C Handle.
@@ -521,8 +499,7 @@ typedef void (*pI2C_AddrCallbackTypeDef)(I2C_HandleTypeDef *hi2c,
  *
  * @retval None
  */
-#define __HAL_I2C_DISABLE_IT(__HANDLE__, __INTERRUPT__)                        \
-	((__HANDLE__)->Instance->CR1 &= (~(__INTERRUPT__)))
+#define __HAL_I2C_DISABLE_IT(__HANDLE__, __INTERRUPT__) ((__HANDLE__)->Instance->CR1 &= (~(__INTERRUPT__)))
 
 /** @brief  Check whether the specified I2C interrupt source is enabled or not.
  * @param  __HANDLE__ specifies the I2C Handle.
@@ -538,10 +515,7 @@ typedef void (*pI2C_AddrCallbackTypeDef)(I2C_HandleTypeDef *hi2c,
  *
  * @retval The new state of __INTERRUPT__ (SET or RESET).
  */
-#define __HAL_I2C_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)                     \
-	((((__HANDLE__)->Instance->CR1 & (__INTERRUPT__)) == (__INTERRUPT__))  \
-	     ? SET                                                             \
-	     : RESET)
+#define __HAL_I2C_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__) ((((__HANDLE__)->Instance->CR1 & (__INTERRUPT__)) == (__INTERRUPT__)) ? SET : RESET)
 
 /** @brief  Check whether the specified I2C flag is set or not.
  * @param  __HANDLE__ specifies the I2C Handle.
@@ -567,9 +541,7 @@ typedef void (*pI2C_AddrCallbackTypeDef)(I2C_HandleTypeDef *hi2c,
  * @retval The new state of __FLAG__ (SET or RESET).
  */
 #define I2C_FLAG_MASK (0x0001FFFFU)
-#define __HAL_I2C_GET_FLAG(__HANDLE__, __FLAG__)                               \
-	(((((__HANDLE__)->Instance->ISR) & (__FLAG__)) == (__FLAG__)) ? SET    \
-								      : RESET)
+#define __HAL_I2C_GET_FLAG(__HANDLE__, __FLAG__) (((((__HANDLE__)->Instance->ISR) & (__FLAG__)) == (__FLAG__)) ? SET : RESET)
 
 /** @brief  Clear the I2C pending flags which are cleared by writing 1 in a
  * specific bit.
@@ -589,31 +561,25 @@ typedef void (*pI2C_AddrCallbackTypeDef)(I2C_HandleTypeDef *hi2c,
  *
  * @retval None
  */
-#define __HAL_I2C_CLEAR_FLAG(__HANDLE__, __FLAG__)                             \
-	(((__FLAG__) == I2C_FLAG_TXE)                                          \
-	     ? ((__HANDLE__)->Instance->ISR |= (__FLAG__))                     \
-	     : ((__HANDLE__)->Instance->ICR = (__FLAG__)))
+#define __HAL_I2C_CLEAR_FLAG(__HANDLE__, __FLAG__) (((__FLAG__) == I2C_FLAG_TXE) ? ((__HANDLE__)->Instance->ISR |= (__FLAG__)) : ((__HANDLE__)->Instance->ICR = (__FLAG__)))
 
 /** @brief  Enable the specified I2C peripheral.
  * @param  __HANDLE__ specifies the I2C Handle.
  * @retval None
  */
-#define __HAL_I2C_ENABLE(__HANDLE__)                                           \
-	(SET_BIT((__HANDLE__)->Instance->CR1, I2C_CR1_PE))
+#define __HAL_I2C_ENABLE(__HANDLE__) (SET_BIT((__HANDLE__)->Instance->CR1, I2C_CR1_PE))
 
 /** @brief  Disable the specified I2C peripheral.
  * @param  __HANDLE__ specifies the I2C Handle.
  * @retval None
  */
-#define __HAL_I2C_DISABLE(__HANDLE__)                                          \
-	(CLEAR_BIT((__HANDLE__)->Instance->CR1, I2C_CR1_PE))
+#define __HAL_I2C_DISABLE(__HANDLE__) (CLEAR_BIT((__HANDLE__)->Instance->CR1, I2C_CR1_PE))
 
 /** @brief  Generate a Non-Acknowledge I2C peripheral in Slave mode.
  * @param  __HANDLE__ specifies the I2C Handle.
  * @retval None
  */
-#define __HAL_I2C_GENERATE_NACK(__HANDLE__)                                    \
-	(SET_BIT((__HANDLE__)->Instance->CR2, I2C_CR2_NACK))
+#define __HAL_I2C_GENERATE_NACK(__HANDLE__) (SET_BIT((__HANDLE__)->Instance->CR2, I2C_CR2_NACK))
 /**
  * @}
  */
@@ -638,16 +604,10 @@ void HAL_I2C_MspDeInit(I2C_HandleTypeDef *hi2c);
 
 /* Callbacks Register/UnRegister functions  ***********************************/
 #if (USE_HAL_I2C_REGISTER_CALLBACKS == 1)
-HAL_StatusTypeDef HAL_I2C_RegisterCallback(I2C_HandleTypeDef *hi2c,
-					   HAL_I2C_CallbackIDTypeDef CallbackID,
-					   pI2C_CallbackTypeDef pCallback);
-HAL_StatusTypeDef
-HAL_I2C_UnRegisterCallback(I2C_HandleTypeDef *hi2c,
-			   HAL_I2C_CallbackIDTypeDef CallbackID);
+HAL_StatusTypeDef HAL_I2C_RegisterCallback(I2C_HandleTypeDef *hi2c, HAL_I2C_CallbackIDTypeDef CallbackID, pI2C_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_I2C_UnRegisterCallback(I2C_HandleTypeDef *hi2c, HAL_I2C_CallbackIDTypeDef CallbackID);
 
-HAL_StatusTypeDef
-HAL_I2C_RegisterAddrCallback(I2C_HandleTypeDef *hi2c,
-			     pI2C_AddrCallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_I2C_RegisterAddrCallback(I2C_HandleTypeDef *hi2c, pI2C_AddrCallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_I2C_UnRegisterAddrCallback(I2C_HandleTypeDef *hi2c);
 #endif /* USE_HAL_I2C_REGISTER_CALLBACKS */
 /**
@@ -660,104 +620,43 @@ HAL_StatusTypeDef HAL_I2C_UnRegisterAddrCallback(I2C_HandleTypeDef *hi2c);
  */
 /* IO operation functions  ****************************************************/
 /******* Blocking mode: Polling */
-HAL_StatusTypeDef HAL_I2C_Master_Transmit(I2C_HandleTypeDef *hi2c,
-					  uint16_t DevAddress, uint8_t *pData,
-					  uint16_t Size, uint32_t Timeout);
-HAL_StatusTypeDef HAL_I2C_Master_Receive(I2C_HandleTypeDef *hi2c,
-					 uint16_t DevAddress, uint8_t *pData,
-					 uint16_t Size, uint32_t Timeout);
-HAL_StatusTypeDef HAL_I2C_Slave_Transmit(I2C_HandleTypeDef *hi2c,
-					 uint8_t *pData, uint16_t Size,
-					 uint32_t Timeout);
-HAL_StatusTypeDef HAL_I2C_Slave_Receive(I2C_HandleTypeDef *hi2c, uint8_t *pData,
-					uint16_t Size, uint32_t Timeout);
-HAL_StatusTypeDef HAL_I2C_Mem_Write(I2C_HandleTypeDef *hi2c,
-				    uint16_t DevAddress, uint16_t MemAddress,
-				    uint16_t MemAddSize, uint8_t *pData,
-				    uint16_t Size, uint32_t Timeout);
-HAL_StatusTypeDef HAL_I2C_Mem_Read(I2C_HandleTypeDef *hi2c, uint16_t DevAddress,
-				   uint16_t MemAddress, uint16_t MemAddSize,
-				   uint8_t *pData, uint16_t Size,
-				   uint32_t Timeout);
-HAL_StatusTypeDef HAL_I2C_IsDeviceReady(I2C_HandleTypeDef *hi2c,
-					uint16_t DevAddress, uint32_t Trials,
-					uint32_t Timeout);
+HAL_StatusTypeDef HAL_I2C_Master_Transmit(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData, uint16_t Size, uint32_t Timeout);
+HAL_StatusTypeDef HAL_I2C_Master_Receive(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData, uint16_t Size, uint32_t Timeout);
+HAL_StatusTypeDef HAL_I2C_Slave_Transmit(I2C_HandleTypeDef *hi2c, uint8_t *pData, uint16_t Size, uint32_t Timeout);
+HAL_StatusTypeDef HAL_I2C_Slave_Receive(I2C_HandleTypeDef *hi2c, uint8_t *pData, uint16_t Size, uint32_t Timeout);
+HAL_StatusTypeDef HAL_I2C_Mem_Write(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint16_t MemAddress, uint16_t MemAddSize, uint8_t *pData, uint16_t Size, uint32_t Timeout);
+HAL_StatusTypeDef HAL_I2C_Mem_Read(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint16_t MemAddress, uint16_t MemAddSize, uint8_t *pData, uint16_t Size, uint32_t Timeout);
+HAL_StatusTypeDef HAL_I2C_IsDeviceReady(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint32_t Trials, uint32_t Timeout);
 
 /******* Non-Blocking mode: Interrupt */
-HAL_StatusTypeDef HAL_I2C_Master_Transmit_IT(I2C_HandleTypeDef *hi2c,
-					     uint16_t DevAddress,
-					     uint8_t *pData, uint16_t Size);
-HAL_StatusTypeDef HAL_I2C_Master_Receive_IT(I2C_HandleTypeDef *hi2c,
-					    uint16_t DevAddress, uint8_t *pData,
-					    uint16_t Size);
-HAL_StatusTypeDef HAL_I2C_Slave_Transmit_IT(I2C_HandleTypeDef *hi2c,
-					    uint8_t *pData, uint16_t Size);
-HAL_StatusTypeDef HAL_I2C_Slave_Receive_IT(I2C_HandleTypeDef *hi2c,
-					   uint8_t *pData, uint16_t Size);
-HAL_StatusTypeDef HAL_I2C_Mem_Write_IT(I2C_HandleTypeDef *hi2c,
-				       uint16_t DevAddress, uint16_t MemAddress,
-				       uint16_t MemAddSize, uint8_t *pData,
-				       uint16_t Size);
-HAL_StatusTypeDef HAL_I2C_Mem_Read_IT(I2C_HandleTypeDef *hi2c,
-				      uint16_t DevAddress, uint16_t MemAddress,
-				      uint16_t MemAddSize, uint8_t *pData,
-				      uint16_t Size);
+HAL_StatusTypeDef HAL_I2C_Master_Transmit_IT(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData, uint16_t Size);
+HAL_StatusTypeDef HAL_I2C_Master_Receive_IT(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData, uint16_t Size);
+HAL_StatusTypeDef HAL_I2C_Slave_Transmit_IT(I2C_HandleTypeDef *hi2c, uint8_t *pData, uint16_t Size);
+HAL_StatusTypeDef HAL_I2C_Slave_Receive_IT(I2C_HandleTypeDef *hi2c, uint8_t *pData, uint16_t Size);
+HAL_StatusTypeDef HAL_I2C_Mem_Write_IT(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint16_t MemAddress, uint16_t MemAddSize, uint8_t *pData, uint16_t Size);
+HAL_StatusTypeDef HAL_I2C_Mem_Read_IT(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint16_t MemAddress, uint16_t MemAddSize, uint8_t *pData, uint16_t Size);
 
-HAL_StatusTypeDef HAL_I2C_Master_Seq_Transmit_IT(I2C_HandleTypeDef *hi2c,
-						 uint16_t DevAddress,
-						 uint8_t *pData, uint16_t Size,
-						 uint32_t XferOptions);
-HAL_StatusTypeDef HAL_I2C_Master_Seq_Receive_IT(I2C_HandleTypeDef *hi2c,
-						uint16_t DevAddress,
-						uint8_t *pData, uint16_t Size,
-						uint32_t XferOptions);
-HAL_StatusTypeDef HAL_I2C_Slave_Seq_Transmit_IT(I2C_HandleTypeDef *hi2c,
-						uint8_t *pData, uint16_t Size,
-						uint32_t XferOptions);
-HAL_StatusTypeDef HAL_I2C_Slave_Seq_Receive_IT(I2C_HandleTypeDef *hi2c,
-					       uint8_t *pData, uint16_t Size,
-					       uint32_t XferOptions);
+HAL_StatusTypeDef HAL_I2C_Master_Seq_Transmit_IT(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData, uint16_t Size, uint32_t XferOptions);
+HAL_StatusTypeDef HAL_I2C_Master_Seq_Receive_IT(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData, uint16_t Size, uint32_t XferOptions);
+HAL_StatusTypeDef HAL_I2C_Slave_Seq_Transmit_IT(I2C_HandleTypeDef *hi2c, uint8_t *pData, uint16_t Size, uint32_t XferOptions);
+HAL_StatusTypeDef HAL_I2C_Slave_Seq_Receive_IT(I2C_HandleTypeDef *hi2c, uint8_t *pData, uint16_t Size, uint32_t XferOptions);
 HAL_StatusTypeDef HAL_I2C_EnableListen_IT(I2C_HandleTypeDef *hi2c);
 HAL_StatusTypeDef HAL_I2C_DisableListen_IT(I2C_HandleTypeDef *hi2c);
-HAL_StatusTypeDef HAL_I2C_Master_Abort_IT(I2C_HandleTypeDef *hi2c,
-					  uint16_t DevAddress);
+HAL_StatusTypeDef HAL_I2C_Master_Abort_IT(I2C_HandleTypeDef *hi2c, uint16_t DevAddress);
 
 #if defined(HAL_DMA_MODULE_ENABLED)
 /******* Non-Blocking mode: DMA */
-HAL_StatusTypeDef HAL_I2C_Master_Transmit_DMA(I2C_HandleTypeDef *hi2c,
-					      uint16_t DevAddress,
-					      uint8_t *pData, uint16_t Size);
-HAL_StatusTypeDef HAL_I2C_Master_Receive_DMA(I2C_HandleTypeDef *hi2c,
-					     uint16_t DevAddress,
-					     uint8_t *pData, uint16_t Size);
-HAL_StatusTypeDef HAL_I2C_Slave_Transmit_DMA(I2C_HandleTypeDef *hi2c,
-					     uint8_t *pData, uint16_t Size);
-HAL_StatusTypeDef HAL_I2C_Slave_Receive_DMA(I2C_HandleTypeDef *hi2c,
-					    uint8_t *pData, uint16_t Size);
-HAL_StatusTypeDef HAL_I2C_Mem_Write_DMA(I2C_HandleTypeDef *hi2c,
-					uint16_t DevAddress,
-					uint16_t MemAddress,
-					uint16_t MemAddSize, uint8_t *pData,
-					uint16_t Size);
-HAL_StatusTypeDef HAL_I2C_Mem_Read_DMA(I2C_HandleTypeDef *hi2c,
-				       uint16_t DevAddress, uint16_t MemAddress,
-				       uint16_t MemAddSize, uint8_t *pData,
-				       uint16_t Size);
+HAL_StatusTypeDef HAL_I2C_Master_Transmit_DMA(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData, uint16_t Size);
+HAL_StatusTypeDef HAL_I2C_Master_Receive_DMA(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData, uint16_t Size);
+HAL_StatusTypeDef HAL_I2C_Slave_Transmit_DMA(I2C_HandleTypeDef *hi2c, uint8_t *pData, uint16_t Size);
+HAL_StatusTypeDef HAL_I2C_Slave_Receive_DMA(I2C_HandleTypeDef *hi2c, uint8_t *pData, uint16_t Size);
+HAL_StatusTypeDef HAL_I2C_Mem_Write_DMA(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint16_t MemAddress, uint16_t MemAddSize, uint8_t *pData, uint16_t Size);
+HAL_StatusTypeDef HAL_I2C_Mem_Read_DMA(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint16_t MemAddress, uint16_t MemAddSize, uint8_t *pData, uint16_t Size);
 
-HAL_StatusTypeDef HAL_I2C_Master_Seq_Transmit_DMA(I2C_HandleTypeDef *hi2c,
-						  uint16_t DevAddress,
-						  uint8_t *pData, uint16_t Size,
-						  uint32_t XferOptions);
-HAL_StatusTypeDef HAL_I2C_Master_Seq_Receive_DMA(I2C_HandleTypeDef *hi2c,
-						 uint16_t DevAddress,
-						 uint8_t *pData, uint16_t Size,
-						 uint32_t XferOptions);
-HAL_StatusTypeDef HAL_I2C_Slave_Seq_Transmit_DMA(I2C_HandleTypeDef *hi2c,
-						 uint8_t *pData, uint16_t Size,
-						 uint32_t XferOptions);
-HAL_StatusTypeDef HAL_I2C_Slave_Seq_Receive_DMA(I2C_HandleTypeDef *hi2c,
-						uint8_t *pData, uint16_t Size,
-						uint32_t XferOptions);
+HAL_StatusTypeDef HAL_I2C_Master_Seq_Transmit_DMA(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData, uint16_t Size, uint32_t XferOptions);
+HAL_StatusTypeDef HAL_I2C_Master_Seq_Receive_DMA(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData, uint16_t Size, uint32_t XferOptions);
+HAL_StatusTypeDef HAL_I2C_Slave_Seq_Transmit_DMA(I2C_HandleTypeDef *hi2c, uint8_t *pData, uint16_t Size, uint32_t XferOptions);
+HAL_StatusTypeDef HAL_I2C_Slave_Seq_Receive_DMA(I2C_HandleTypeDef *hi2c, uint8_t *pData, uint16_t Size, uint32_t XferOptions);
 #endif /*HAL_DMA_MODULE_ENABLED*/
 /**
  * @}
@@ -774,8 +673,7 @@ void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c);
 void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c);
 void HAL_I2C_SlaveTxCpltCallback(I2C_HandleTypeDef *hi2c);
 void HAL_I2C_SlaveRxCpltCallback(I2C_HandleTypeDef *hi2c);
-void HAL_I2C_AddrCallback(I2C_HandleTypeDef *hi2c, uint8_t TransferDirection,
-			  uint16_t AddrMatchCode);
+void HAL_I2C_AddrCallback(I2C_HandleTypeDef *hi2c, uint8_t TransferDirection, uint16_t AddrMatchCode);
 void HAL_I2C_ListenCpltCallback(I2C_HandleTypeDef *hi2c);
 void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c);
 void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c);
@@ -816,99 +714,52 @@ uint32_t HAL_I2C_GetError(const I2C_HandleTypeDef *hi2c);
  * @{
  */
 
-#define IS_I2C_ADDRESSING_MODE(MODE)                                           \
-	(((MODE) == I2C_ADDRESSINGMODE_7BIT) ||                                \
-	 ((MODE) == I2C_ADDRESSINGMODE_10BIT))
+#define IS_I2C_ADDRESSING_MODE(MODE) (((MODE) == I2C_ADDRESSINGMODE_7BIT) || ((MODE) == I2C_ADDRESSINGMODE_10BIT))
 
-#define IS_I2C_DUAL_ADDRESS(ADDRESS)                                           \
-	(((ADDRESS) == I2C_DUALADDRESS_DISABLE) ||                             \
-	 ((ADDRESS) == I2C_DUALADDRESS_ENABLE))
+#define IS_I2C_DUAL_ADDRESS(ADDRESS) (((ADDRESS) == I2C_DUALADDRESS_DISABLE) || ((ADDRESS) == I2C_DUALADDRESS_ENABLE))
 
-#define IS_I2C_OWN_ADDRESS2_MASK(MASK)                                         \
-	(((MASK) == I2C_OA2_NOMASK) || ((MASK) == I2C_OA2_MASK01) ||           \
-	 ((MASK) == I2C_OA2_MASK02) || ((MASK) == I2C_OA2_MASK03) ||           \
-	 ((MASK) == I2C_OA2_MASK04) || ((MASK) == I2C_OA2_MASK05) ||           \
+#define IS_I2C_OWN_ADDRESS2_MASK(MASK)                                                                                                                                                                 \
+	(((MASK) == I2C_OA2_NOMASK) || ((MASK) == I2C_OA2_MASK01) || ((MASK) == I2C_OA2_MASK02) || ((MASK) == I2C_OA2_MASK03) || ((MASK) == I2C_OA2_MASK04) || ((MASK) == I2C_OA2_MASK05) ||           \
 	 ((MASK) == I2C_OA2_MASK06) || ((MASK) == I2C_OA2_MASK07))
 
-#define IS_I2C_GENERAL_CALL(CALL)                                              \
-	(((CALL) == I2C_GENERALCALL_DISABLE) ||                                \
-	 ((CALL) == I2C_GENERALCALL_ENABLE))
+#define IS_I2C_GENERAL_CALL(CALL) (((CALL) == I2C_GENERALCALL_DISABLE) || ((CALL) == I2C_GENERALCALL_ENABLE))
 
-#define IS_I2C_NO_STRETCH(STRETCH)                                             \
-	(((STRETCH) == I2C_NOSTRETCH_DISABLE) ||                               \
-	 ((STRETCH) == I2C_NOSTRETCH_ENABLE))
+#define IS_I2C_NO_STRETCH(STRETCH) (((STRETCH) == I2C_NOSTRETCH_DISABLE) || ((STRETCH) == I2C_NOSTRETCH_ENABLE))
 
-#define IS_I2C_MEMADD_SIZE(SIZE)                                               \
-	(((SIZE) == I2C_MEMADD_SIZE_8BIT) || ((SIZE) == I2C_MEMADD_SIZE_16BIT))
+#define IS_I2C_MEMADD_SIZE(SIZE) (((SIZE) == I2C_MEMADD_SIZE_8BIT) || ((SIZE) == I2C_MEMADD_SIZE_16BIT))
 
-#define IS_TRANSFER_MODE(MODE)                                                 \
-	(((MODE) == I2C_RELOAD_MODE) || ((MODE) == I2C_AUTOEND_MODE) ||        \
-	 ((MODE) == I2C_SOFTEND_MODE))
+#define IS_TRANSFER_MODE(MODE) (((MODE) == I2C_RELOAD_MODE) || ((MODE) == I2C_AUTOEND_MODE) || ((MODE) == I2C_SOFTEND_MODE))
 
-#define IS_TRANSFER_REQUEST(REQUEST)                                           \
-	(((REQUEST) == I2C_GENERATE_STOP) ||                                   \
-	 ((REQUEST) == I2C_GENERATE_START_READ) ||                             \
-	 ((REQUEST) == I2C_GENERATE_START_WRITE) ||                            \
-	 ((REQUEST) == I2C_GENERATE_NO_START_READ) ||                          \
-	 ((REQUEST) == I2C_GENERATE_NO_START_WRITE) ||                         \
-	 ((REQUEST) == I2C_NO_STARTSTOP))
+#define IS_TRANSFER_REQUEST(REQUEST)                                                                                                                                                                   \
+	(((REQUEST) == I2C_GENERATE_STOP) || ((REQUEST) == I2C_GENERATE_START_READ) || ((REQUEST) == I2C_GENERATE_START_WRITE) || ((REQUEST) == I2C_GENERATE_NO_START_READ) ||                         \
+	 ((REQUEST) == I2C_GENERATE_NO_START_WRITE) || ((REQUEST) == I2C_NO_STARTSTOP))
 
-#define IS_I2C_TRANSFER_OPTIONS_REQUEST(REQUEST)                               \
-	(((REQUEST) == I2C_FIRST_FRAME) ||                                     \
-	 ((REQUEST) == I2C_FIRST_AND_NEXT_FRAME) ||                            \
-	 ((REQUEST) == I2C_NEXT_FRAME) ||                                      \
-	 ((REQUEST) == I2C_FIRST_AND_LAST_FRAME) ||                            \
-	 ((REQUEST) == I2C_LAST_FRAME) ||                                      \
-	 ((REQUEST) == I2C_LAST_FRAME_NO_STOP) ||                              \
-	 IS_I2C_TRANSFER_OTHER_OPTIONS_REQUEST(REQUEST))
+#define IS_I2C_TRANSFER_OPTIONS_REQUEST(REQUEST)                                                                                                                                                       \
+	(((REQUEST) == I2C_FIRST_FRAME) || ((REQUEST) == I2C_FIRST_AND_NEXT_FRAME) || ((REQUEST) == I2C_NEXT_FRAME) || ((REQUEST) == I2C_FIRST_AND_LAST_FRAME) || ((REQUEST) == I2C_LAST_FRAME) ||     \
+	 ((REQUEST) == I2C_LAST_FRAME_NO_STOP) || IS_I2C_TRANSFER_OTHER_OPTIONS_REQUEST(REQUEST))
 
-#define IS_I2C_TRANSFER_OTHER_OPTIONS_REQUEST(REQUEST)                         \
-	(((REQUEST) == I2C_OTHER_FRAME) ||                                     \
-	 ((REQUEST) == I2C_OTHER_AND_LAST_FRAME))
+#define IS_I2C_TRANSFER_OTHER_OPTIONS_REQUEST(REQUEST) (((REQUEST) == I2C_OTHER_FRAME) || ((REQUEST) == I2C_OTHER_AND_LAST_FRAME))
 
-#define I2C_RESET_CR2(__HANDLE__)                                              \
-	((__HANDLE__)->Instance->CR2 &= (uint32_t) ~(                          \
-	     (uint32_t)(I2C_CR2_SADD | I2C_CR2_HEAD10R | I2C_CR2_NBYTES |      \
-			I2C_CR2_RELOAD | I2C_CR2_RD_WRN)))
+#define I2C_RESET_CR2(__HANDLE__) ((__HANDLE__)->Instance->CR2 &= (uint32_t) ~((uint32_t)(I2C_CR2_SADD | I2C_CR2_HEAD10R | I2C_CR2_NBYTES | I2C_CR2_RELOAD | I2C_CR2_RD_WRN)))
 
-#define I2C_GET_ADDR_MATCH(__HANDLE__)                                         \
-	((uint16_t)(((__HANDLE__)->Instance->ISR & I2C_ISR_ADDCODE) >> 16U))
-#define I2C_GET_DIR(__HANDLE__)                                                \
-	((uint8_t)(((__HANDLE__)->Instance->ISR & I2C_ISR_DIR) >> 16U))
-#define I2C_GET_STOP_MODE(__HANDLE__)                                          \
-	((__HANDLE__)->Instance->CR2 & I2C_CR2_AUTOEND)
-#define I2C_GET_OWN_ADDRESS1(__HANDLE__)                                       \
-	((uint16_t)((__HANDLE__)->Instance->OAR1 & I2C_OAR1_OA1))
-#define I2C_GET_OWN_ADDRESS2(__HANDLE__)                                       \
-	((uint16_t)((__HANDLE__)->Instance->OAR2 & I2C_OAR2_OA2))
+#define I2C_GET_ADDR_MATCH(__HANDLE__) ((uint16_t)(((__HANDLE__)->Instance->ISR & I2C_ISR_ADDCODE) >> 16U))
+#define I2C_GET_DIR(__HANDLE__) ((uint8_t)(((__HANDLE__)->Instance->ISR & I2C_ISR_DIR) >> 16U))
+#define I2C_GET_STOP_MODE(__HANDLE__) ((__HANDLE__)->Instance->CR2 & I2C_CR2_AUTOEND)
+#define I2C_GET_OWN_ADDRESS1(__HANDLE__) ((uint16_t)((__HANDLE__)->Instance->OAR1 & I2C_OAR1_OA1))
+#define I2C_GET_OWN_ADDRESS2(__HANDLE__) ((uint16_t)((__HANDLE__)->Instance->OAR2 & I2C_OAR2_OA2))
 
 #define IS_I2C_OWN_ADDRESS1(ADDRESS1) ((ADDRESS1) <= 0x000003FFU)
 #define IS_I2C_OWN_ADDRESS2(ADDRESS2) ((ADDRESS2) <= (uint16_t)0x00FFU)
 
-#define I2C_MEM_ADD_MSB(__ADDRESS__)                                           \
-	((uint8_t)((                                                           \
-	    uint16_t)(((uint16_t)((__ADDRESS__) & (uint16_t)(0xFF00U))) >>     \
-		      8U)))
-#define I2C_MEM_ADD_LSB(__ADDRESS__)                                           \
-	((uint8_t)((uint16_t)((__ADDRESS__) & (uint16_t)(0x00FFU))))
+#define I2C_MEM_ADD_MSB(__ADDRESS__) ((uint8_t)((uint16_t)(((uint16_t)((__ADDRESS__) & (uint16_t)(0xFF00U))) >> 8U)))
+#define I2C_MEM_ADD_LSB(__ADDRESS__) ((uint8_t)((uint16_t)((__ADDRESS__) & (uint16_t)(0x00FFU))))
 
-#define I2C_GENERATE_START(__ADDMODE__, __ADDRESS__)                           \
-	(((__ADDMODE__) == I2C_ADDRESSINGMODE_7BIT)                            \
-	     ? (uint32_t)((((uint32_t)(__ADDRESS__) & (I2C_CR2_SADD)) |        \
-			   (I2C_CR2_START) | (I2C_CR2_AUTOEND)) &              \
-			  (~I2C_CR2_RD_WRN))                                   \
-	     : (uint32_t)((((uint32_t)(__ADDRESS__) & (I2C_CR2_SADD)) |        \
-			   (I2C_CR2_ADD10) | (I2C_CR2_START) |                 \
-			   (I2C_CR2_AUTOEND)) &                                \
-			  (~I2C_CR2_RD_WRN)))
+#define I2C_GENERATE_START(__ADDMODE__, __ADDRESS__)                                                                                                                                                   \
+	(((__ADDMODE__) == I2C_ADDRESSINGMODE_7BIT) ? (uint32_t)((((uint32_t)(__ADDRESS__) & (I2C_CR2_SADD)) | (I2C_CR2_START) | (I2C_CR2_AUTOEND)) & (~I2C_CR2_RD_WRN))                               \
+						    : (uint32_t)((((uint32_t)(__ADDRESS__) & (I2C_CR2_SADD)) | (I2C_CR2_ADD10) | (I2C_CR2_START) | (I2C_CR2_AUTOEND)) & (~I2C_CR2_RD_WRN)))
 
-#define I2C_CHECK_FLAG(__ISR__, __FLAG__)                                      \
-	((((__ISR__) & ((__FLAG__) & I2C_FLAG_MASK)) ==                        \
-	  ((__FLAG__) & I2C_FLAG_MASK))                                        \
-	     ? SET                                                             \
-	     : RESET)
-#define I2C_CHECK_IT_SOURCE(__CR1__, __IT__)                                   \
-	((((__CR1__) & (__IT__)) == (__IT__)) ? SET : RESET)
+#define I2C_CHECK_FLAG(__ISR__, __FLAG__) ((((__ISR__) & ((__FLAG__) & I2C_FLAG_MASK)) == ((__FLAG__) & I2C_FLAG_MASK)) ? SET : RESET)
+#define I2C_CHECK_IT_SOURCE(__CR1__, __IT__) ((((__CR1__) & (__IT__)) == (__IT__)) ? SET : RESET)
 /**
  * @}
  */

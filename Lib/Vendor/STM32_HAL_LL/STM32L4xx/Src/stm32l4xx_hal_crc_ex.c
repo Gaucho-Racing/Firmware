@@ -93,8 +93,7 @@ Initialization/de-initialization functions
  * of degree 32)
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRCEx_Polynomial_Set(CRC_HandleTypeDef *hcrc,
-					   uint32_t Pol, uint32_t PolyLength)
+HAL_StatusTypeDef HAL_CRCEx_Polynomial_Set(CRC_HandleTypeDef *hcrc, uint32_t Pol, uint32_t PolyLength)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 	uint32_t msb = 31U; /* polynomial degree is 32 at most, so msb is
@@ -114,8 +113,7 @@ HAL_StatusTypeDef HAL_CRCEx_Polynomial_Set(CRC_HandleTypeDef *hcrc,
 		 * Look for MSB position: msb will contain the degree of
 		 *  the second to the largest polynomial member. E.g., for
 		 *  X^7 + X^6 + X^5 + X^2 + 1, msb = 6. */
-		while ((msb-- > 0U) &&
-		       ((Pol & ((uint32_t)(0x1U) << (msb & 0x1FU))) == 0U)) {
+		while ((msb-- > 0U) && ((Pol & ((uint32_t)(0x1U) << (msb & 0x1FU))) == 0U)) {
 		}
 
 		switch (PolyLength) {
@@ -169,8 +167,7 @@ HAL_StatusTypeDef HAL_CRCEx_Polynomial_Set(CRC_HandleTypeDef *hcrc,
  *          @arg @ref CRC_INPUTDATA_INVERSION_WORD     Word-wise bit reversal
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRCEx_Input_Data_Reverse(CRC_HandleTypeDef *hcrc,
-					       uint32_t InputReverseMode)
+HAL_StatusTypeDef HAL_CRCEx_Input_Data_Reverse(CRC_HandleTypeDef *hcrc, uint32_t InputReverseMode)
 {
 	/* Check the parameters */
 	assert_param(IS_CRC_INPUTDATA_INVERSION_MODE(InputReverseMode));
@@ -198,8 +195,7 @@ HAL_StatusTypeDef HAL_CRCEx_Input_Data_Reverse(CRC_HandleTypeDef *hcrc,
  * for a 8-bit CRC: 0xB5 becomes 0xAD)
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRCEx_Output_Data_Reverse(CRC_HandleTypeDef *hcrc,
-						uint32_t OutputReverseMode)
+HAL_StatusTypeDef HAL_CRCEx_Output_Data_Reverse(CRC_HandleTypeDef *hcrc, uint32_t OutputReverseMode)
 {
 	/* Check the parameters */
 	assert_param(IS_CRC_OUTPUTDATA_INVERSION_MODE(OutputReverseMode));

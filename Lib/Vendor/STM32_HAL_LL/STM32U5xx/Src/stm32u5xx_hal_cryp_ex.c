@@ -46,18 +46,17 @@
 #define CRYP_PHASE_FINAL AES_CR_GCMPH	  /*!< GCM/GMAC or CCM  final phase  */
 
 #define CRYP_OPERATINGMODE_ENCRYPT 0x00000000U /*!< Encryption mode   */
-#define CRYP_OPERATINGMODE_KEYDERIVATION                                       \
-	AES_CR_MODE_0 /*!< Key derivation mode  only used when performing ECB  \
-			 and CBC decryptions  */
+#define CRYP_OPERATINGMODE_KEYDERIVATION                                                                                                                                                               \
+	AES_CR_MODE_0				 /*!< Key derivation mode  only used when performing ECB                                                                                               \
+						    and CBC decryptions  */
 #define CRYP_OPERATINGMODE_DECRYPT AES_CR_MODE_1 /*!< Decryption       */
-#define CRYP_OPERATINGMODE_KEYDERIVATION_DECRYPT                               \
-	AES_CR_MODE /*!< Key derivation and decryption only used when          \
+#define CRYP_OPERATINGMODE_KEYDERIVATION_DECRYPT                                                                                                                                                       \
+	AES_CR_MODE /*!< Key derivation and decryption only used when                                                                                                                                  \
 		       performing ECB and CBC decryptions  */
 
-#define CRYPEx_PHASE_PROCESS                                                   \
-	0x02U /*!< CRYP peripheral is in processing phase */
-#define CRYPEx_PHASE_FINAL                                                     \
-	0x03U /*!< CRYP peripheral is in final phase this is relevant only     \
+#define CRYPEx_PHASE_PROCESS 0x02U /*!< CRYP peripheral is in processing phase */
+#define CRYPEx_PHASE_FINAL                                                                                                                                                                             \
+	0x03U /*!< CRYP peripheral is in final phase this is relevant only                                                                                                                             \
 		 with CCM and GCM modes */
 
 /*  CTR0 information to use in CCM algorithm */
@@ -71,13 +70,9 @@
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
-static HAL_StatusTypeDef CRYPEx_KeyDecrypt(CRYP_HandleTypeDef *hcryp,
-					   uint32_t Timeout);
-static HAL_StatusTypeDef CRYPEx_KeyEncrypt(CRYP_HandleTypeDef *hcryp,
-					   uint32_t Timeout);
-static HAL_StatusTypeDef CRYPEx_WaitFLAG(CRYP_HandleTypeDef *hcryp,
-					 uint32_t flag, FlagStatus Status,
-					 uint32_t Timeout);
+static HAL_StatusTypeDef CRYPEx_KeyDecrypt(CRYP_HandleTypeDef *hcryp, uint32_t Timeout);
+static HAL_StatusTypeDef CRYPEx_KeyEncrypt(CRYP_HandleTypeDef *hcryp, uint32_t Timeout);
+static HAL_StatusTypeDef CRYPEx_WaitFLAG(CRYP_HandleTypeDef *hcryp, uint32_t flag, FlagStatus Status, uint32_t Timeout);
 /* Exported functions---------------------------------------------------------*/
 /** @addtogroup CRYPEx_Exported_Functions
  * @{
@@ -111,15 +106,11 @@ authentication TAG in Polling mode
  * @param  Timeout Timeout duration
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYPEx_AESGCM_GenerateAuthTAG(CRYP_HandleTypeDef *hcryp,
-						    const uint32_t *pAuthTag,
-						    uint32_t Timeout)
+HAL_StatusTypeDef HAL_CRYPEx_AESGCM_GenerateAuthTAG(CRYP_HandleTypeDef *hcryp, const uint32_t *pAuthTag, uint32_t Timeout)
 {
 	/* Assume first Init.HeaderSize is in words */
-	uint64_t headerlength =
-	    (uint64_t)hcryp->Init.HeaderSize * 32U; /* Header length in bits */
-	uint64_t inputlength =
-	    (uint64_t)hcryp->SizesSum * 8U; /* Input length in bits */
+	uint64_t headerlength = (uint64_t)hcryp->Init.HeaderSize * 32U; /* Header length in bits */
+	uint64_t inputlength = (uint64_t)hcryp->SizesSum * 8U;		/* Input length in bits */
 	uint32_t tagaddr = (uint32_t)pAuthTag;
 	uint32_t i;
 	uint32_t tickstart;
@@ -138,8 +129,7 @@ HAL_StatusTypeDef HAL_CRYPEx_AESGCM_GenerateAuthTAG(CRYP_HandleTypeDef *hcryp,
 		/* Check if initialization phase has already been performed */
 		if (hcryp->Phase == CRYPEx_PHASE_PROCESS) {
 			/* Check the busy flag before writing CR register */
-			if (CRYPEx_WaitFLAG(hcryp, AES_SR_BUSY, SET,
-					    CRYPEx_GENERAL_TIMEOUT) != HAL_OK) {
+			if (CRYPEx_WaitFLAG(hcryp, AES_SR_BUSY, SET, CRYPEx_GENERAL_TIMEOUT) != HAL_OK) {
 				hcryp->State = HAL_CRYP_STATE_READY;
 				__HAL_UNLOCK(hcryp);
 				return HAL_ERROR;
@@ -148,8 +138,7 @@ HAL_StatusTypeDef HAL_CRYPEx_AESGCM_GenerateAuthTAG(CRYP_HandleTypeDef *hcryp,
 			hcryp->Phase = CRYPEx_PHASE_FINAL;
 
 			/* Select final phase */
-			MODIFY_REG(hcryp->Instance->CR, AES_CR_GCMPH,
-				   CRYP_PHASE_FINAL);
+			MODIFY_REG(hcryp->Instance->CR, AES_CR_GCMPH, CRYP_PHASE_FINAL);
 
 			/* Write into the AES_DINR register the number of bits
 			in header (64 bits) followed by the number of bits in
@@ -161,17 +150,14 @@ HAL_StatusTypeDef HAL_CRYPEx_AESGCM_GenerateAuthTAG(CRYP_HandleTypeDef *hcryp,
 
 			/* Wait for CCF flag to be raised */
 			tickstart = HAL_GetTick();
-			while (
-			    HAL_IS_BIT_CLR(hcryp->Instance->ISR, AES_ISR_CCF)) {
+			while (HAL_IS_BIT_CLR(hcryp->Instance->ISR, AES_ISR_CCF)) {
 				/* Check for the Timeout */
-				if (((HAL_GetTick() - tickstart) > Timeout) ||
-				    (Timeout == 0U)) {
+				if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
 					/* Disable the CRYP peripheral clock */
 					__HAL_CRYP_DISABLE(hcryp);
 
 					/* Change state */
-					hcryp->ErrorCode |=
-					    HAL_CRYP_ERROR_TIMEOUT;
+					hcryp->ErrorCode |= HAL_CRYP_ERROR_TIMEOUT;
 					hcryp->State = HAL_CRYP_STATE_READY;
 					__HAL_UNLOCK(hcryp);
 					return HAL_ERROR;
@@ -226,9 +212,7 @@ HAL_StatusTypeDef HAL_CRYPEx_AESGCM_GenerateAuthTAG(CRYP_HandleTypeDef *hcryp,
  * @param  Timeout Timeout duration
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYPEx_AESCCM_GenerateAuthTAG(CRYP_HandleTypeDef *hcryp,
-						    const uint32_t *pAuthTag,
-						    uint32_t Timeout)
+HAL_StatusTypeDef HAL_CRYPEx_AESCCM_GenerateAuthTAG(CRYP_HandleTypeDef *hcryp, const uint32_t *pAuthTag, uint32_t Timeout)
 {
 	uint32_t tagaddr = (uint32_t)pAuthTag;
 	uint32_t i;
@@ -239,8 +223,7 @@ HAL_StatusTypeDef HAL_CRYPEx_AESCCM_GenerateAuthTAG(CRYP_HandleTypeDef *hcryp,
 
 		/* Disable interrupts in case they were kept enabled to proceed
 		   a single message in several iterations */
-		__HAL_CRYP_DISABLE_IT(hcryp, CRYP_IT_CCFIE | CRYP_IT_RWEIE |
-						 CRYP_IT_KEIE);
+		__HAL_CRYP_DISABLE_IT(hcryp, CRYP_IT_CCFIE | CRYP_IT_RWEIE | CRYP_IT_KEIE);
 
 		/* Change the CRYP peripheral state */
 		hcryp->State = HAL_CRYP_STATE_BUSY;
@@ -250,27 +233,21 @@ HAL_StatusTypeDef HAL_CRYPEx_AESCCM_GenerateAuthTAG(CRYP_HandleTypeDef *hcryp,
 			/* Change the CRYP phase */
 			hcryp->Phase = CRYPEx_PHASE_FINAL;
 			/* Select final phase */
-			MODIFY_REG(hcryp->Instance->CR, AES_CR_GCMPH,
-				   CRYP_PHASE_FINAL);
+			MODIFY_REG(hcryp->Instance->CR, AES_CR_GCMPH, CRYP_PHASE_FINAL);
 
 			/* Wait for CCF flag to be raised */
 			tickstart = HAL_GetTick();
-			while (
-			    HAL_IS_BIT_CLR(hcryp->Instance->ISR, AES_ISR_CCF)) {
+			while (HAL_IS_BIT_CLR(hcryp->Instance->ISR, AES_ISR_CCF)) {
 				/* Check for the Timeout */
 				if (Timeout != HAL_MAX_DELAY) {
-					if (((HAL_GetTick() - tickstart) >
-					     Timeout) ||
-					    (Timeout == 0U)) {
+					if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
 						/* Disable the CRYP peripheral
 						 * Clock */
 						__HAL_CRYP_DISABLE(hcryp);
 
 						/* Change state */
-						hcryp->ErrorCode |=
-						    HAL_CRYP_ERROR_TIMEOUT;
-						hcryp->State =
-						    HAL_CRYP_STATE_READY;
+						hcryp->ErrorCode |= HAL_CRYP_ERROR_TIMEOUT;
+						hcryp->State = HAL_CRYP_STATE_READY;
 						__HAL_UNLOCK(hcryp);
 						return HAL_ERROR;
 					}
@@ -345,9 +322,7 @@ HAL_StatusTypeDef HAL_CRYPEx_AESCCM_GenerateAuthTAG(CRYP_HandleTypeDef *hcryp,
  * @param  Timeout Specify Timeout value
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYPEx_WrapKey(CRYP_HandleTypeDef *hcryp,
-				     uint32_t *pInput, uint32_t *pOutput,
-				     uint32_t Timeout)
+HAL_StatusTypeDef HAL_CRYPEx_WrapKey(CRYP_HandleTypeDef *hcryp, uint32_t *pInput, uint32_t *pOutput, uint32_t Timeout)
 {
 	HAL_StatusTypeDef status;
 
@@ -367,12 +342,10 @@ HAL_StatusTypeDef HAL_CRYPEx_WrapKey(CRYP_HandleTypeDef *hcryp,
 		__HAL_CRYP_DISABLE(hcryp);
 
 		/* Set the operating mode*/
-		MODIFY_REG(hcryp->Instance->CR, AES_CR_KMOD,
-			   CRYP_KEYMODE_WRAPPED);
+		MODIFY_REG(hcryp->Instance->CR, AES_CR_KMOD, CRYP_KEYMODE_WRAPPED);
 
 		/* Encryption operating mode(Mode 0)*/
-		MODIFY_REG(hcryp->Instance->CR, AES_CR_MODE,
-			   CRYP_OPERATINGMODE_ENCRYPT);
+		MODIFY_REG(hcryp->Instance->CR, AES_CR_MODE, CRYP_OPERATINGMODE_ENCRYPT);
 
 		status = CRYPEx_KeyEncrypt(hcryp, Timeout);
 	} else {
@@ -392,8 +365,7 @@ HAL_StatusTypeDef HAL_CRYPEx_WrapKey(CRYP_HandleTypeDef *hcryp,
  * @param  Timeout Specify Timeout value
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYPEx_UnwrapKey(CRYP_HandleTypeDef *hcryp,
-				       uint32_t *pInput, uint32_t Timeout)
+HAL_StatusTypeDef HAL_CRYPEx_UnwrapKey(CRYP_HandleTypeDef *hcryp, uint32_t *pInput, uint32_t Timeout)
 {
 	HAL_StatusTypeDef status;
 
@@ -413,8 +385,7 @@ HAL_StatusTypeDef HAL_CRYPEx_UnwrapKey(CRYP_HandleTypeDef *hcryp,
 		__HAL_CRYP_DISABLE(hcryp);
 
 		/* Set the operating mode*/
-		MODIFY_REG(hcryp->Instance->CR, AES_CR_KMOD,
-			   CRYP_KEYMODE_WRAPPED);
+		MODIFY_REG(hcryp->Instance->CR, AES_CR_KMOD, CRYP_KEYMODE_WRAPPED);
 
 		status = CRYPEx_KeyDecrypt(hcryp, Timeout);
 	} else {
@@ -454,9 +425,7 @@ functions
  * @param  Timeout Specify Timeout value
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYPEx_EncryptSharedKey(CRYP_HandleTypeDef *hcryp,
-					      uint32_t *pKey, uint32_t *pOutput,
-					      uint32_t ID, uint32_t Timeout)
+HAL_StatusTypeDef HAL_CRYPEx_EncryptSharedKey(CRYP_HandleTypeDef *hcryp, uint32_t *pKey, uint32_t *pOutput, uint32_t ID, uint32_t Timeout)
 {
 	HAL_StatusTypeDef status;
 
@@ -476,18 +445,15 @@ HAL_StatusTypeDef HAL_CRYPEx_EncryptSharedKey(CRYP_HandleTypeDef *hcryp,
 		__HAL_CRYP_DISABLE(hcryp);
 
 		/* Set the operating mode */
-		MODIFY_REG(hcryp->Instance->CR, AES_CR_KMOD | AES_CR_KSHAREID,
-			   CRYP_KEYMODE_SHARED | ID);
+		MODIFY_REG(hcryp->Instance->CR, AES_CR_KMOD | AES_CR_KSHAREID, CRYP_KEYMODE_SHARED | ID);
 		/* Check the busy flag before writing CR register */
-		if (CRYPEx_WaitFLAG(hcryp, AES_SR_BUSY, SET,
-				    CRYPEx_GENERAL_TIMEOUT) != HAL_OK) {
+		if (CRYPEx_WaitFLAG(hcryp, AES_SR_BUSY, SET, CRYPEx_GENERAL_TIMEOUT) != HAL_OK) {
 			hcryp->State = HAL_CRYP_STATE_READY;
 			__HAL_UNLOCK(hcryp);
 			return HAL_ERROR;
 		}
 		/* Encryption operating mode(Mode 0)*/
-		MODIFY_REG(hcryp->Instance->CR, AES_CR_MODE,
-			   CRYP_OPERATINGMODE_ENCRYPT);
+		MODIFY_REG(hcryp->Instance->CR, AES_CR_MODE, CRYP_OPERATINGMODE_ENCRYPT);
 
 		status = CRYPEx_KeyEncrypt(hcryp, Timeout);
 	} else {
@@ -508,9 +474,7 @@ HAL_StatusTypeDef HAL_CRYPEx_EncryptSharedKey(CRYP_HandleTypeDef *hcryp,
  * @param  Timeout Specify Timeout value
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_CRYPEx_DecryptSharedKey(CRYP_HandleTypeDef *hcryp,
-					      uint32_t *pKey, uint32_t ID,
-					      uint32_t Timeout)
+HAL_StatusTypeDef HAL_CRYPEx_DecryptSharedKey(CRYP_HandleTypeDef *hcryp, uint32_t *pKey, uint32_t ID, uint32_t Timeout)
 {
 	HAL_StatusTypeDef status;
 
@@ -529,11 +493,9 @@ HAL_StatusTypeDef HAL_CRYPEx_DecryptSharedKey(CRYP_HandleTypeDef *hcryp,
 		__HAL_CRYP_DISABLE(hcryp);
 
 		/* Set the operating mode */
-		MODIFY_REG(hcryp->Instance->CR, AES_CR_KMOD | AES_CR_KSHAREID,
-			   CRYP_KEYMODE_SHARED | ID);
+		MODIFY_REG(hcryp->Instance->CR, AES_CR_KMOD | AES_CR_KSHAREID, CRYP_KEYMODE_SHARED | ID);
 		/* Check the busy flag before writing CR register */
-		if (CRYPEx_WaitFLAG(hcryp, AES_SR_BUSY, SET,
-				    CRYPEx_GENERAL_TIMEOUT) != HAL_OK) {
+		if (CRYPEx_WaitFLAG(hcryp, AES_SR_BUSY, SET, CRYPEx_GENERAL_TIMEOUT) != HAL_OK) {
 			hcryp->State = HAL_CRYP_STATE_READY;
 			__HAL_UNLOCK(hcryp);
 			return HAL_ERROR;
@@ -567,16 +529,14 @@ HAL_StatusTypeDef HAL_CRYPEx_DecryptSharedKey(CRYP_HandleTypeDef *hcryp,
  * @note   It is strongly recommended to select hardware secret keys
  * @retval HAL status
  */
-static HAL_StatusTypeDef CRYPEx_KeyDecrypt(CRYP_HandleTypeDef *hcryp,
-					   uint32_t Timeout)
+static HAL_StatusTypeDef CRYPEx_KeyDecrypt(CRYP_HandleTypeDef *hcryp, uint32_t Timeout)
 {
 	uint32_t incount; /* Temporary CrypInCount Value */
 	uint32_t i;
 	uint32_t tickstart;
 
 	/* key preparation for decryption, operating mode 2*/
-	MODIFY_REG(hcryp->Instance->CR, AES_CR_MODE,
-		   CRYP_OPERATINGMODE_KEYDERIVATION);
+	MODIFY_REG(hcryp->Instance->CR, AES_CR_MODE, CRYP_OPERATINGMODE_KEYDERIVATION);
 
 	/* Enable CRYP */
 	__HAL_CRYP_ENABLE(hcryp);
@@ -586,8 +546,7 @@ static HAL_StatusTypeDef CRYPEx_KeyDecrypt(CRYP_HandleTypeDef *hcryp,
 	while (HAL_IS_BIT_CLR(hcryp->Instance->ISR, AES_ISR_CCF)) {
 		/* Check for the Timeout */
 		if (Timeout != HAL_MAX_DELAY) {
-			if (((HAL_GetTick() - tickstart) > Timeout) ||
-			    (Timeout == 0U)) {
+			if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
 				/* Disable the CRYP peripheral clock */
 				__HAL_CRYP_DISABLE(hcryp);
 
@@ -604,18 +563,14 @@ static HAL_StatusTypeDef CRYPEx_KeyDecrypt(CRYP_HandleTypeDef *hcryp,
 
 	/*  End of Key preparation for ECB/CBC */
 	/* Return to decryption operating mode(Mode 3)*/
-	MODIFY_REG(hcryp->Instance->CR, AES_CR_MODE,
-		   CRYP_OPERATINGMODE_DECRYPT);
+	MODIFY_REG(hcryp->Instance->CR, AES_CR_MODE, CRYP_OPERATINGMODE_DECRYPT);
 
 	if (hcryp->Init.Algorithm != CRYP_AES_ECB) {
 		/* Set the Initialization Vector */
 		hcryp->Instance->IVR3 = *(uint32_t *)(hcryp->Init.pInitVect);
-		hcryp->Instance->IVR2 =
-		    *(uint32_t *)(hcryp->Init.pInitVect + 1U);
-		hcryp->Instance->IVR1 =
-		    *(uint32_t *)(hcryp->Init.pInitVect + 2U);
-		hcryp->Instance->IVR0 =
-		    *(uint32_t *)(hcryp->Init.pInitVect + 3U);
+		hcryp->Instance->IVR2 = *(uint32_t *)(hcryp->Init.pInitVect + 1U);
+		hcryp->Instance->IVR1 = *(uint32_t *)(hcryp->Init.pInitVect + 2U);
+		hcryp->Instance->IVR0 = *(uint32_t *)(hcryp->Init.pInitVect + 3U);
 	}
 	/* Enable CRYP */
 	__HAL_CRYP_ENABLE(hcryp);
@@ -631,9 +586,7 @@ static HAL_StatusTypeDef CRYPEx_KeyDecrypt(CRYP_HandleTypeDef *hcryp,
 	while (hcryp->CrypInCount < incount) {
 		/* Write four times to input the key to encrypt */
 		for (i = 0U; i < 4U; i++) {
-			hcryp->Instance->DINR =
-			    *(uint32_t *)(hcryp->pCrypInBuffPtr +
-					  hcryp->CrypInCount);
+			hcryp->Instance->DINR = *(uint32_t *)(hcryp->pCrypInBuffPtr + hcryp->CrypInCount);
 			hcryp->CrypInCount++;
 		}
 		/* Wait for CCF flag to be raised */
@@ -641,14 +594,12 @@ static HAL_StatusTypeDef CRYPEx_KeyDecrypt(CRYP_HandleTypeDef *hcryp,
 		while (HAL_IS_BIT_CLR(hcryp->Instance->ISR, AES_ISR_CCF)) {
 			/* Check for the Timeout */
 			if (Timeout != HAL_MAX_DELAY) {
-				if (((HAL_GetTick() - tickstart) > Timeout) ||
-				    (Timeout == 0U)) {
+				if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
 					/* Disable the CRYP peripheral clock */
 					__HAL_CRYP_DISABLE(hcryp);
 
 					/* Change state */
-					hcryp->ErrorCode |=
-					    HAL_CRYP_ERROR_TIMEOUT;
+					hcryp->ErrorCode |= HAL_CRYP_ERROR_TIMEOUT;
 					hcryp->State = HAL_CRYP_STATE_READY;
 					__HAL_UNLOCK(hcryp);
 					return HAL_ERROR;
@@ -675,8 +626,7 @@ static HAL_StatusTypeDef CRYPEx_KeyDecrypt(CRYP_HandleTypeDef *hcryp,
  * @param  Timeout specify Timeout value
  * @retval HAL status
  */
-static HAL_StatusTypeDef CRYPEx_KeyEncrypt(CRYP_HandleTypeDef *hcryp,
-					   uint32_t Timeout)
+static HAL_StatusTypeDef CRYPEx_KeyEncrypt(CRYP_HandleTypeDef *hcryp, uint32_t Timeout)
 {
 	uint32_t incount; /* Temporary CrypInCount Value */
 	uint32_t i;
@@ -686,12 +636,9 @@ static HAL_StatusTypeDef CRYPEx_KeyEncrypt(CRYP_HandleTypeDef *hcryp,
 	if (hcryp->Init.Algorithm != CRYP_AES_ECB) {
 		/* Set the Initialization Vector */
 		hcryp->Instance->IVR3 = *(uint32_t *)(hcryp->Init.pInitVect);
-		hcryp->Instance->IVR2 =
-		    *(uint32_t *)(hcryp->Init.pInitVect + 1U);
-		hcryp->Instance->IVR1 =
-		    *(uint32_t *)(hcryp->Init.pInitVect + 2U);
-		hcryp->Instance->IVR0 =
-		    *(uint32_t *)(hcryp->Init.pInitVect + 3U);
+		hcryp->Instance->IVR2 = *(uint32_t *)(hcryp->Init.pInitVect + 1U);
+		hcryp->Instance->IVR1 = *(uint32_t *)(hcryp->Init.pInitVect + 2U);
+		hcryp->Instance->IVR0 = *(uint32_t *)(hcryp->Init.pInitVect + 3U);
 	}
 
 	/* Enable CRYP */
@@ -707,9 +654,7 @@ static HAL_StatusTypeDef CRYPEx_KeyEncrypt(CRYP_HandleTypeDef *hcryp,
 	}
 	while (hcryp->CrypInCount < incount) {
 		for (i = 0U; i < 4U; i++) {
-			hcryp->Instance->DINR =
-			    *(uint32_t *)(hcryp->pCrypInBuffPtr +
-					  hcryp->CrypInCount);
+			hcryp->Instance->DINR = *(uint32_t *)(hcryp->pCrypInBuffPtr + hcryp->CrypInCount);
 			hcryp->CrypInCount++;
 		}
 		/* Wait for CCF flag to be raised */
@@ -717,14 +662,12 @@ static HAL_StatusTypeDef CRYPEx_KeyEncrypt(CRYP_HandleTypeDef *hcryp,
 		while (HAL_IS_BIT_CLR(hcryp->Instance->ISR, AES_ISR_CCF)) {
 			/* Check for the Timeout */
 			if (Timeout != HAL_MAX_DELAY) {
-				if (((HAL_GetTick() - tickstart) > Timeout) ||
-				    (Timeout == 0U)) {
+				if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
 					/* Disable the CRYP peripheral clock */
 					__HAL_CRYP_DISABLE(hcryp);
 
 					/* Change state */
-					hcryp->ErrorCode |=
-					    HAL_CRYP_ERROR_TIMEOUT;
+					hcryp->ErrorCode |= HAL_CRYP_ERROR_TIMEOUT;
 					hcryp->State = HAL_CRYP_STATE_READY;
 					__HAL_UNLOCK(hcryp);
 					return HAL_ERROR;
@@ -740,8 +683,7 @@ static HAL_StatusTypeDef CRYPEx_KeyEncrypt(CRYP_HandleTypeDef *hcryp,
 		 */
 		for (i = 0U; i < 4U; i++) {
 			temp = hcryp->Instance->DOUTR;
-			*(uint32_t *)(hcryp->pCrypOutBuffPtr +
-				      hcryp->CrypOutCount) = temp;
+			*(uint32_t *)(hcryp->pCrypOutBuffPtr + hcryp->CrypOutCount) = temp;
 			hcryp->CrypOutCount++;
 		}
 	}
@@ -763,14 +705,11 @@ static HAL_StatusTypeDef CRYPEx_KeyEncrypt(CRYP_HandleTypeDef *hcryp,
  * @retval HAL status.
  */
 
-static HAL_StatusTypeDef CRYPEx_WaitFLAG(CRYP_HandleTypeDef *hcryp,
-					 uint32_t flag, FlagStatus Status,
-					 uint32_t Timeout)
+static HAL_StatusTypeDef CRYPEx_WaitFLAG(CRYP_HandleTypeDef *hcryp, uint32_t flag, FlagStatus Status, uint32_t Timeout)
 {
 	uint32_t tickstart = HAL_GetTick();
 	while (__HAL_CRYP_GET_FLAG(hcryp, flag) == Status) {
-		if (((HAL_GetTick() - tickstart) > Timeout) ||
-		    (Timeout == 0U)) {
+		if (((HAL_GetTick() - tickstart) > Timeout) || (Timeout == 0U)) {
 			CLEAR_BIT(hcryp->Instance->CR, AES_CR_EN);
 			/* Change state */
 			hcryp->ErrorCode |= HAL_CRYP_ERROR_TIMEOUT;

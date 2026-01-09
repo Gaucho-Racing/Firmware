@@ -77,8 +77,7 @@
  * @retval HAL status
  */
 
-HAL_StatusTypeDef HAL_PCDEx_PMAConfig(PCD_HandleTypeDef *hpcd, uint16_t ep_addr,
-				      uint16_t ep_kind, uint32_t pmaadress)
+HAL_StatusTypeDef HAL_PCDEx_PMAConfig(PCD_HandleTypeDef *hpcd, uint16_t ep_addr, uint16_t ep_kind, uint32_t pmaadress)
 {
 	PCD_EPTypeDef *ep;
 
@@ -188,20 +187,16 @@ void HAL_PCDEx_BCD_VBUSDetect(PCD_HandleTypeDef *hpcd)
 		if ((USBx->BCDR & USB_BCDR_SDET) == USB_BCDR_SDET) {
 			/* Dedicated Downstream Port DCP */
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
-			hpcd->BCDCallback(hpcd,
-					  PCD_BCD_DEDICATED_CHARGING_PORT);
+			hpcd->BCDCallback(hpcd, PCD_BCD_DEDICATED_CHARGING_PORT);
 #else
-			HAL_PCDEx_BCD_Callback(hpcd,
-					       PCD_BCD_DEDICATED_CHARGING_PORT);
+			HAL_PCDEx_BCD_Callback(hpcd, PCD_BCD_DEDICATED_CHARGING_PORT);
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 		} else {
 			/* Charging Downstream Port CDP */
 #if (USE_HAL_PCD_REGISTER_CALLBACKS == 1U)
-			hpcd->BCDCallback(hpcd,
-					  PCD_BCD_CHARGING_DOWNSTREAM_PORT);
+			hpcd->BCDCallback(hpcd, PCD_BCD_CHARGING_DOWNSTREAM_PORT);
 #else
-			HAL_PCDEx_BCD_Callback(
-			    hpcd, PCD_BCD_CHARGING_DOWNSTREAM_PORT);
+			HAL_PCDEx_BCD_Callback(hpcd, PCD_BCD_CHARGING_DOWNSTREAM_PORT);
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 		}
 	} else /* NO */
@@ -274,8 +269,7 @@ HAL_StatusTypeDef HAL_PCDEx_DeActivateLPM(PCD_HandleTypeDef *hpcd)
  * @param  msg LPM message
  * @retval HAL status
  */
-__weak void HAL_PCDEx_LPM_Callback(PCD_HandleTypeDef *hpcd,
-				   PCD_LPM_MsgTypeDef msg)
+__weak void HAL_PCDEx_LPM_Callback(PCD_HandleTypeDef *hpcd, PCD_LPM_MsgTypeDef msg)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hpcd);
@@ -293,8 +287,7 @@ __weak void HAL_PCDEx_LPM_Callback(PCD_HandleTypeDef *hpcd,
  * @param  msg LPM message
  * @retval HAL status
  */
-__weak void HAL_PCDEx_BCD_Callback(PCD_HandleTypeDef *hpcd,
-				   PCD_BCD_MsgTypeDef msg)
+__weak void HAL_PCDEx_BCD_Callback(PCD_HandleTypeDef *hpcd, PCD_BCD_MsgTypeDef msg)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hpcd);

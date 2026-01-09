@@ -116,8 +116,7 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 		TimHandle.Init.Prescaler = uwPrescalerValue;
 		TimHandle.Init.ClockDivision = 0;
 		TimHandle.Init.CounterMode = TIM_COUNTERMODE_UP;
-		TimHandle.Init.AutoReloadPreload =
-		    TIM_AUTORELOAD_PRELOAD_DISABLE;
+		TimHandle.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 		if (HAL_TIM_Base_Init(&TimHandle) == HAL_OK) {
 			/* Start the TIM time Base generation in interrupt mode
 			 */
@@ -128,8 +127,7 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 				/* Configure the SysTick IRQ priority */
 				if (TickPriority < (1UL << __NVIC_PRIO_BITS)) {
 					/*Configure the TIM6_DAC IRQ priority */
-					HAL_NVIC_SetPriority(TIM6_DAC_IRQn,
-							     TickPriority, 0U);
+					HAL_NVIC_SetPriority(TIM6_DAC_IRQn, TickPriority, 0U);
 					uwTickPrio = TickPriority;
 				} else {
 					status = HAL_ERROR;

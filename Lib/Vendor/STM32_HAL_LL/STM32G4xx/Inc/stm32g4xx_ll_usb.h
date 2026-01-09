@@ -63,15 +63,13 @@ typedef struct {
 				 This parameter can be any value of @ref
 			       PCD_PHY_Module/HCD_PHY_Module  */
 
-	uint8_t
-	    Sof_enable; /*!< Enable or disable the output of the SOF signal. */
+	uint8_t Sof_enable; /*!< Enable or disable the output of the SOF signal. */
 
 	uint8_t low_power_enable; /*!< Enable or disable the low Power Mode. */
 
 	uint8_t lpm_enable; /*!< Enable or disable Link Power Management. */
 
-	uint8_t
-	    battery_charging_enable; /*!< Enable or disable Battery charging. */
+	uint8_t battery_charging_enable; /*!< Enable or disable Battery charging. */
 } USB_CfgTypeDef;
 
 typedef struct {
@@ -87,9 +85,8 @@ typedef struct {
 			       This parameter must be a number between Min_Data
 			     = 0 and Max_Data = 1    */
 
-	uint8_t
-	    type; /*!< Endpoint type
-		       This parameter can be any value of @ref USB_LL_EP_Type */
+	uint8_t type; /*!< Endpoint type
+			   This parameter can be any value of @ref USB_LL_EP_Type */
 
 	uint8_t data_pid_start; /*!< Initial data PID
 				     This parameter must be a number between
@@ -217,11 +214,9 @@ uint32_t USB_ReadInterrupts(USB_TypeDef const *USBx);
 HAL_StatusTypeDef USB_ActivateRemoteWakeup(USB_TypeDef *USBx);
 HAL_StatusTypeDef USB_DeActivateRemoteWakeup(USB_TypeDef *USBx);
 
-void USB_WritePMA(USB_TypeDef const *USBx, uint8_t *pbUsrBuf,
-		  uint16_t wPMABufAddr, uint16_t wNBytes);
+void USB_WritePMA(USB_TypeDef const *USBx, uint8_t *pbUsrBuf, uint16_t wPMABufAddr, uint16_t wNBytes);
 
-void USB_ReadPMA(USB_TypeDef const *USBx, uint8_t *pbUsrBuf,
-		 uint16_t wPMABufAddr, uint16_t wNBytes);
+void USB_ReadPMA(USB_TypeDef const *USBx, uint8_t *pbUsrBuf, uint16_t wPMABufAddr, uint16_t wNBytes);
 
 /**
  * @}

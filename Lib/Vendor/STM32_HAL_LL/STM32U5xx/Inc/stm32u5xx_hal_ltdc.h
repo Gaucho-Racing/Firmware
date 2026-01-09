@@ -88,10 +88,9 @@ typedef struct {
 				    be a number between Min_Data = 0x000 and
 				    Max_Data = 0xFFF. */
 
-	uint32_t
-	    VerticalSync; /*!< configures the number of Vertical synchronization
-			     height. This parameter must be a number between
-			       Min_Data = 0x000 and Max_Data = 0x7FF. */
+	uint32_t VerticalSync; /*!< configures the number of Vertical synchronization
+				  height. This parameter must be a number between
+				    Min_Data = 0x000 and Max_Data = 0x7FF. */
 
 	uint32_t AccumulatedHBP; /*!< configures the accumulated horizontal back
 				    porch width. This parameter must be a number
@@ -166,8 +165,7 @@ typedef struct {
 				       This parameter can be one of value of
 				     @ref LTDC_BlendingFactor2 */
 
-	uint32_t
-	    FBStartAdress; /*!< Configures the color frame buffer address */
+	uint32_t FBStartAdress; /*!< Configures the color frame buffer address */
 
 	uint32_t ImageWidth; /*!< Configures the color frame buffer line length.
 				  This parameter must be a number between
@@ -177,18 +175,16 @@ typedef struct {
 				   This parameter must be a number between
 				   Min_Data = 0x000 and Max_Data = 0x7FF. */
 
-	LTDC_ColorTypeDef
-	    Backcolor; /*!< Configures the layer background color. */
+	LTDC_ColorTypeDef Backcolor; /*!< Configures the layer background color. */
 } LTDC_LayerCfgTypeDef;
 
 /**
  * @brief  HAL LTDC State structures definition
  */
 typedef enum {
-	HAL_LTDC_STATE_RESET =
-	    0x00U, /*!< LTDC not yet initialized or disabled */
-	HAL_LTDC_STATE_READY = 0x01U, /*!< LTDC initialized and ready for use */
-	HAL_LTDC_STATE_BUSY = 0x02U,  /*!< LTDC internal process is ongoing  */
+	HAL_LTDC_STATE_RESET = 0x00U,	/*!< LTDC not yet initialized or disabled */
+	HAL_LTDC_STATE_READY = 0x01U,	/*!< LTDC initialized and ready for use */
+	HAL_LTDC_STATE_BUSY = 0x02U,	/*!< LTDC internal process is ongoing  */
 	HAL_LTDC_STATE_TIMEOUT = 0x03U, /*!< LTDC Timeout state */
 	HAL_LTDC_STATE_ERROR = 0x04U	/*!< LTDC state error    */
 } HAL_LTDC_StateTypeDef;
@@ -215,18 +211,12 @@ typedef struct
 	__IO uint32_t ErrorCode; /*!< LTDC Error code */
 
 #if (USE_HAL_LTDC_REGISTER_CALLBACKS == 1)
-	void (*LineEventCallback)(struct __LTDC_HandleTypeDef
-				      *hltdc); /*!< LTDC Line Event Callback */
-	void (*ReloadEventCallback)(
-	    struct __LTDC_HandleTypeDef
-		*hltdc); /*!< LTDC Reload Event Callback  */
-	void (*ErrorCallback)(
-	    struct __LTDC_HandleTypeDef *hltdc); /*!< LTDC Error Callback */
+	void (*LineEventCallback)(struct __LTDC_HandleTypeDef *hltdc);	 /*!< LTDC Line Event Callback */
+	void (*ReloadEventCallback)(struct __LTDC_HandleTypeDef *hltdc); /*!< LTDC Reload Event Callback  */
+	void (*ErrorCallback)(struct __LTDC_HandleTypeDef *hltdc);	 /*!< LTDC Error Callback */
 
-	void (*MspInitCallback)(
-	    struct __LTDC_HandleTypeDef *hltdc); /*!< LTDC Msp Init callback */
-	void (*MspDeInitCallback)(struct __LTDC_HandleTypeDef
-				      *hltdc); /*!< LTDC Msp DeInit callback */
+	void (*MspInitCallback)(struct __LTDC_HandleTypeDef *hltdc);   /*!< LTDC Msp Init callback */
+	void (*MspDeInitCallback)(struct __LTDC_HandleTypeDef *hltdc); /*!< LTDC Msp DeInit callback */
 
 #endif /* USE_HAL_LTDC_REGISTER_CALLBACKS */
 
@@ -240,17 +230,16 @@ typedef enum {
 	HAL_LTDC_MSPINIT_CB_ID = 0x00U,	  /*!< LTDC MspInit callback ID       */
 	HAL_LTDC_MSPDEINIT_CB_ID = 0x01U, /*!< LTDC MspDeInit callback ID     */
 
-	HAL_LTDC_LINE_EVENT_CB_ID = 0x02U, /*!< LTDC Line Event Callback ID   */
+	HAL_LTDC_LINE_EVENT_CB_ID = 0x02U,   /*!< LTDC Line Event Callback ID   */
 	HAL_LTDC_RELOAD_EVENT_CB_ID = 0x03U, /*!< LTDC Reload Callback ID */
-	HAL_LTDC_ERROR_CB_ID = 0x04U /*!< LTDC Error Callback ID         */
+	HAL_LTDC_ERROR_CB_ID = 0x04U	     /*!< LTDC Error Callback ID         */
 
 } HAL_LTDC_CallbackIDTypeDef;
 
 /**
  * @brief  HAL LTDC Callback pointer definition
  */
-typedef void (*pLTDC_CallbackTypeDef)(
-    LTDC_HandleTypeDef *hltdc); /*!< pointer to an LTDC callback function */
+typedef void (*pLTDC_CallbackTypeDef)(LTDC_HandleTypeDef *hltdc); /*!< pointer to an LTDC callback function */
 
 #endif /* USE_HAL_LTDC_REGISTER_CALLBACKS */
 
@@ -271,9 +260,8 @@ typedef void (*pLTDC_CallbackTypeDef)(
 #define HAL_LTDC_ERROR_FU 0x00000002U	   /*!< LTDC FIFO Underrun        */
 #define HAL_LTDC_ERROR_TIMEOUT 0x00000020U /*!< LTDC Timeout error        */
 #if (USE_HAL_LTDC_REGISTER_CALLBACKS == 1)
-#define HAL_LTDC_ERROR_INVALID_CALLBACK                                        \
-	0x00000040U /*!< LTDC Invalid Callback error  */
-#endif		    /* USE_HAL_LTDC_REGISTER_CALLBACKS */
+#define HAL_LTDC_ERROR_INVALID_CALLBACK 0x00000040U /*!< LTDC Invalid Callback error  */
+#endif						    /* USE_HAL_LTDC_REGISTER_CALLBACKS */
 /**
  * @}
  */
@@ -290,10 +278,8 @@ typedef void (*pLTDC_CallbackTypeDef)(
 /** @defgroup LTDC_HS_POLARITY LTDC HS POLARITY
  * @{
  */
-#define LTDC_HSPOLARITY_AL                                                     \
-	0x00000000U /*!< Horizontal Synchronization is active low. */
-#define LTDC_HSPOLARITY_AH                                                     \
-	LTDC_GCR_HSPOL /*!< Horizontal Synchronization is active high. */
+#define LTDC_HSPOLARITY_AL 0x00000000U	  /*!< Horizontal Synchronization is active low. */
+#define LTDC_HSPOLARITY_AH LTDC_GCR_HSPOL /*!< Horizontal Synchronization is active high. */
 /**
  * @}
  */
@@ -301,10 +287,8 @@ typedef void (*pLTDC_CallbackTypeDef)(
 /** @defgroup LTDC_VS_POLARITY LTDC VS POLARITY
  * @{
  */
-#define LTDC_VSPOLARITY_AL                                                     \
-	0x00000000U /*!< Vertical Synchronization is active low. */
-#define LTDC_VSPOLARITY_AH                                                     \
-	LTDC_GCR_VSPOL /*!< Vertical Synchronization is active high. */
+#define LTDC_VSPOLARITY_AL 0x00000000U	  /*!< Vertical Synchronization is active low. */
+#define LTDC_VSPOLARITY_AH LTDC_GCR_VSPOL /*!< Vertical Synchronization is active high. */
 /**
  * @}
  */
@@ -322,8 +306,8 @@ typedef void (*pLTDC_CallbackTypeDef)(
  * @{
  */
 #define LTDC_PCPOLARITY_IPC 0x00000000U /*!< input pixel clock. */
-#define LTDC_PCPOLARITY_IIPC                                                   \
-	LTDC_GCR_PCPOL /*!< inverted input pixel clock.                        \
+#define LTDC_PCPOLARITY_IIPC                                                                                                                                                                           \
+	LTDC_GCR_PCPOL /*!< inverted input pixel clock.                                                                                                                                                \
 			*/
 /**
  * @}
@@ -332,10 +316,9 @@ typedef void (*pLTDC_CallbackTypeDef)(
 /** @defgroup LTDC_SYNC LTDC SYNC
  * @{
  */
-#define LTDC_HORIZONTALSYNC                                                    \
-	(LTDC_SSCR_HSW >> 16U) /*!< Horizontal synchronization width. */
-#define LTDC_VERTICALSYNC                                                      \
-	LTDC_SSCR_VSH /*!< Vertical synchronization height.                    \
+#define LTDC_HORIZONTALSYNC (LTDC_SSCR_HSW >> 16U) /*!< Horizontal synchronization width. */
+#define LTDC_VERTICALSYNC                                                                                                                                                                              \
+	LTDC_SSCR_VSH /*!< Vertical synchronization height.                                                                                                                                            \
 		       */
 /**
  * @}
@@ -352,11 +335,10 @@ typedef void (*pLTDC_CallbackTypeDef)(
 /** @defgroup LTDC_BlendingFactor1 LTDC Blending Factor1
  * @{
  */
-#define LTDC_BLENDING_FACTOR1_CA                                               \
-	0x00000400U /*!< Blending factor : Cte Alpha                           \
-		     */
-#define LTDC_BLENDING_FACTOR1_PAxCA                                            \
-	0x00000600U /*!< Blending factor : Cte Alpha x Pixel Alpha*/
+#define LTDC_BLENDING_FACTOR1_CA                                                                                                                                                                       \
+	0x00000400U				/*!< Blending factor : Cte Alpha                                                                                                                       \
+						 */
+#define LTDC_BLENDING_FACTOR1_PAxCA 0x00000600U /*!< Blending factor : Cte Alpha x Pixel Alpha*/
 /**
  * @}
  */
@@ -364,11 +346,10 @@ typedef void (*pLTDC_CallbackTypeDef)(
 /** @defgroup LTDC_BlendingFactor2 LTDC Blending Factor2
  * @{
  */
-#define LTDC_BLENDING_FACTOR2_CA                                               \
-	0x00000005U /*!< Blending factor : Cte Alpha                           \
-		     */
-#define LTDC_BLENDING_FACTOR2_PAxCA                                            \
-	0x00000007U /*!< Blending factor : Cte Alpha x Pixel Alpha*/
+#define LTDC_BLENDING_FACTOR2_CA                                                                                                                                                                       \
+	0x00000005U				/*!< Blending factor : Cte Alpha                                                                                                                       \
+						 */
+#define LTDC_BLENDING_FACTOR2_PAxCA 0x00000007U /*!< Blending factor : Cte Alpha x Pixel Alpha*/
 /**
  * @}
  */
@@ -376,22 +357,14 @@ typedef void (*pLTDC_CallbackTypeDef)(
 /** @defgroup LTDC_Pixelformat LTDC Pixel format
  * @{
  */
-#define LTDC_PIXEL_FORMAT_ARGB8888                                             \
-	0x00000000U /*!< ARGB8888 LTDC pixel format             */
-#define LTDC_PIXEL_FORMAT_RGB888                                               \
-	0x00000001U /*!< RGB888 LTDC pixel format               */
-#define LTDC_PIXEL_FORMAT_RGB565                                               \
-	0x00000002U /*!< RGB565 LTDC pixel format               */
-#define LTDC_PIXEL_FORMAT_ARGB1555                                             \
-	0x00000003U /*!< ARGB1555 LTDC pixel format             */
-#define LTDC_PIXEL_FORMAT_ARGB4444                                             \
-	0x00000004U /*!< ARGB4444 LTDC pixel format             */
-#define LTDC_PIXEL_FORMAT_L8                                                   \
-	0x00000005U /*!< L8 LTDC pixel format                   */
-#define LTDC_PIXEL_FORMAT_AL44                                                 \
-	0x00000006U /*!< AL44 LTDC pixel format                 */
-#define LTDC_PIXEL_FORMAT_AL88                                                 \
-	0x00000007U /*!< AL88 LTDC pixel format                 */
+#define LTDC_PIXEL_FORMAT_ARGB8888 0x00000000U /*!< ARGB8888 LTDC pixel format             */
+#define LTDC_PIXEL_FORMAT_RGB888 0x00000001U   /*!< RGB888 LTDC pixel format               */
+#define LTDC_PIXEL_FORMAT_RGB565 0x00000002U   /*!< RGB565 LTDC pixel format               */
+#define LTDC_PIXEL_FORMAT_ARGB1555 0x00000003U /*!< ARGB1555 LTDC pixel format             */
+#define LTDC_PIXEL_FORMAT_ARGB4444 0x00000004U /*!< ARGB4444 LTDC pixel format             */
+#define LTDC_PIXEL_FORMAT_L8 0x00000005U       /*!< L8 LTDC pixel format                   */
+#define LTDC_PIXEL_FORMAT_AL44 0x00000006U     /*!< AL44 LTDC pixel format                 */
+#define LTDC_PIXEL_FORMAT_AL88 0x00000007U     /*!< AL88 LTDC pixel format                 */
 /**
  * @}
  */
@@ -407,14 +380,11 @@ typedef void (*pLTDC_CallbackTypeDef)(
 /** @defgroup LTDC_LAYER_Config LTDC LAYER Config
  * @{
  */
-#define LTDC_STOPPOSITION                                                      \
-	(LTDC_LxWHPCR_WHSPPOS >> 16U) /*!< LTDC Layer stop position  */
-#define LTDC_STARTPOSITION                                                     \
-	LTDC_LxWHPCR_WHSTPOS /*!< LTDC Layer start position */
+#define LTDC_STOPPOSITION (LTDC_LxWHPCR_WHSPPOS >> 16U) /*!< LTDC Layer stop position  */
+#define LTDC_STARTPOSITION LTDC_LxWHPCR_WHSTPOS		/*!< LTDC Layer start position */
 
-#define LTDC_COLOR_FRAME_BUFFER                                                \
-	LTDC_LxCFBLR_CFBLL		       /*!< LTDC Layer Line length    */
-#define LTDC_LINE_NUMBER LTDC_LxCFBLNR_CFBLNBR /*!< LTDC Layer Line number */
+#define LTDC_COLOR_FRAME_BUFFER LTDC_LxCFBLR_CFBLL /*!< LTDC Layer Line length    */
+#define LTDC_LINE_NUMBER LTDC_LxCFBLNR_CFBLNBR	   /*!< LTDC Layer Line number */
 /**
  * @}
  */
@@ -435,8 +405,8 @@ typedef void (*pLTDC_CallbackTypeDef)(
  */
 #define LTDC_FLAG_LI LTDC_ISR_LIF  /*!< LTDC Line Interrupt Flag            */
 #define LTDC_FLAG_FU LTDC_ISR_FUIF /*!< LTDC FIFO Underrun interrupt Flag   */
-#define LTDC_FLAG_TE                                                           \
-	LTDC_ISR_TERRIF		   /*!< LTDC Transfer Error interrupt Flag     \
+#define LTDC_FLAG_TE                                                                                                                                                                                   \
+	LTDC_ISR_TERRIF		   /*!< LTDC Transfer Error interrupt Flag                                                                                                                             \
 				    */
 #define LTDC_FLAG_RR LTDC_ISR_RRIF /*!< LTDC Register Reload interrupt Flag */
 /**
@@ -446,9 +416,8 @@ typedef void (*pLTDC_CallbackTypeDef)(
 /** @defgroup LTDC_Reload_Type LTDC Reload Type
  * @{
  */
-#define LTDC_RELOAD_IMMEDIATE LTDC_SRCR_IMR /*!< Immediate Reload */
-#define LTDC_RELOAD_VERTICAL_BLANKING                                          \
-	LTDC_SRCR_VBR /*!< Vertical Blanking Reload */
+#define LTDC_RELOAD_IMMEDIATE LTDC_SRCR_IMR	    /*!< Immediate Reload */
+#define LTDC_RELOAD_VERTICAL_BLANKING LTDC_SRCR_VBR /*!< Vertical Blanking Reload */
 /**
  * @}
  */
@@ -467,15 +436,14 @@ typedef void (*pLTDC_CallbackTypeDef)(
  * @retval None
  */
 #if (USE_HAL_LTDC_REGISTER_CALLBACKS == 1)
-#define __HAL_LTDC_RESET_HANDLE_STATE(__HANDLE__)                              \
-	do {                                                                   \
-		(__HANDLE__)->State = HAL_LTDC_STATE_RESET;                    \
-		(__HANDLE__)->MspInitCallback = NULL;                          \
-		(__HANDLE__)->MspDeInitCallback = NULL;                        \
+#define __HAL_LTDC_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_LTDC_STATE_RESET;                                                                                                                                            \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0)
 #else
-#define __HAL_LTDC_RESET_HANDLE_STATE(__HANDLE__)                              \
-	((__HANDLE__)->State = HAL_LTDC_STATE_RESET)
+#define __HAL_LTDC_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_LTDC_STATE_RESET)
 #endif /*USE_HAL_LTDC_REGISTER_CALLBACKS */
 
 /**
@@ -483,16 +451,14 @@ typedef void (*pLTDC_CallbackTypeDef)(
  * @param  __HANDLE__  LTDC handle
  * @retval None.
  */
-#define __HAL_LTDC_ENABLE(__HANDLE__)                                          \
-	((__HANDLE__)->Instance->GCR |= LTDC_GCR_LTDCEN)
+#define __HAL_LTDC_ENABLE(__HANDLE__) ((__HANDLE__)->Instance->GCR |= LTDC_GCR_LTDCEN)
 
 /**
  * @brief  Disable the LTDC.
  * @param  __HANDLE__  LTDC handle
  * @retval None.
  */
-#define __HAL_LTDC_DISABLE(__HANDLE__)                                         \
-	((__HANDLE__)->Instance->GCR &= ~(LTDC_GCR_LTDCEN))
+#define __HAL_LTDC_DISABLE(__HANDLE__) ((__HANDLE__)->Instance->GCR &= ~(LTDC_GCR_LTDCEN))
 
 /**
  * @brief  Enable the LTDC Layer.
@@ -502,8 +468,7 @@ typedef void (*pLTDC_CallbackTypeDef)(
  * (1).
  * @retval None.
  */
-#define __HAL_LTDC_LAYER_ENABLE(__HANDLE__, __LAYER__)                         \
-	((LTDC_LAYER((__HANDLE__), (__LAYER__)))->CR |= (uint32_t)LTDC_LxCR_LEN)
+#define __HAL_LTDC_LAYER_ENABLE(__HANDLE__, __LAYER__) ((LTDC_LAYER((__HANDLE__), (__LAYER__)))->CR |= (uint32_t)LTDC_LxCR_LEN)
 
 /**
  * @brief  Disable the LTDC Layer.
@@ -513,25 +478,21 @@ typedef void (*pLTDC_CallbackTypeDef)(
  * (1).
  * @retval None.
  */
-#define __HAL_LTDC_LAYER_DISABLE(__HANDLE__, __LAYER__)                        \
-	((LTDC_LAYER((__HANDLE__), (__LAYER__)))->CR &=                        \
-	 ~(uint32_t)LTDC_LxCR_LEN)
+#define __HAL_LTDC_LAYER_DISABLE(__HANDLE__, __LAYER__) ((LTDC_LAYER((__HANDLE__), (__LAYER__)))->CR &= ~(uint32_t)LTDC_LxCR_LEN)
 
 /**
  * @brief  Reload immediately all LTDC Layers.
  * @param  __HANDLE__  LTDC handle
  * @retval None.
  */
-#define __HAL_LTDC_RELOAD_IMMEDIATE_CONFIG(__HANDLE__)                         \
-	((__HANDLE__)->Instance->SRCR |= LTDC_SRCR_IMR)
+#define __HAL_LTDC_RELOAD_IMMEDIATE_CONFIG(__HANDLE__) ((__HANDLE__)->Instance->SRCR |= LTDC_SRCR_IMR)
 
 /**
  * @brief  Reload during vertical blanking period all LTDC Layers.
  * @param  __HANDLE__  LTDC handle
  * @retval None.
  */
-#define __HAL_LTDC_VERTICAL_BLANKING_RELOAD_CONFIG(__HANDLE__)                 \
-	((__HANDLE__)->Instance->SRCR |= LTDC_SRCR_VBR)
+#define __HAL_LTDC_VERTICAL_BLANKING_RELOAD_CONFIG(__HANDLE__) ((__HANDLE__)->Instance->SRCR |= LTDC_SRCR_VBR)
 
 /* Interrupt & Flag management */
 /**
@@ -545,8 +506,7 @@ typedef void (*pLTDC_CallbackTypeDef)(
  *            @arg LTDC_FLAG_RR: Register Reload Interrupt Flag
  * @retval The state of FLAG (SET or RESET).
  */
-#define __HAL_LTDC_GET_FLAG(__HANDLE__, __FLAG__)                              \
-	((__HANDLE__)->Instance->ISR & (__FLAG__))
+#define __HAL_LTDC_GET_FLAG(__HANDLE__, __FLAG__) ((__HANDLE__)->Instance->ISR & (__FLAG__))
 
 /**
  * @brief  Clears the LTDC pending flags.
@@ -559,8 +519,7 @@ typedef void (*pLTDC_CallbackTypeDef)(
  *            @arg LTDC_FLAG_RR: Register Reload Interrupt Flag
  * @retval None
  */
-#define __HAL_LTDC_CLEAR_FLAG(__HANDLE__, __FLAG__)                            \
-	((__HANDLE__)->Instance->ICR = (__FLAG__))
+#define __HAL_LTDC_CLEAR_FLAG(__HANDLE__, __FLAG__) ((__HANDLE__)->Instance->ICR = (__FLAG__))
 
 /**
  * @brief  Enables the specified LTDC interrupts.
@@ -573,8 +532,7 @@ typedef void (*pLTDC_CallbackTypeDef)(
  *            @arg LTDC_IT_RR: Register Reload Interrupt Flag
  * @retval None
  */
-#define __HAL_LTDC_ENABLE_IT(__HANDLE__, __INTERRUPT__)                        \
-	((__HANDLE__)->Instance->IER |= (__INTERRUPT__))
+#define __HAL_LTDC_ENABLE_IT(__HANDLE__, __INTERRUPT__) ((__HANDLE__)->Instance->IER |= (__INTERRUPT__))
 
 /**
  * @brief  Disables the specified LTDC interrupts.
@@ -587,8 +545,7 @@ typedef void (*pLTDC_CallbackTypeDef)(
  *            @arg LTDC_IT_RR: Register Reload Interrupt Flag
  * @retval None
  */
-#define __HAL_LTDC_DISABLE_IT(__HANDLE__, __INTERRUPT__)                       \
-	((__HANDLE__)->Instance->IER &= ~(__INTERRUPT__))
+#define __HAL_LTDC_DISABLE_IT(__HANDLE__, __INTERRUPT__) ((__HANDLE__)->Instance->IER &= ~(__INTERRUPT__))
 
 /**
  * @brief  Check whether the specified LTDC interrupt has occurred or not.
@@ -601,8 +558,7 @@ typedef void (*pLTDC_CallbackTypeDef)(
  *            @arg LTDC_IT_RR: Register Reload Interrupt Flag
  * @retval The state of INTERRUPT (SET or RESET).
  */
-#define __HAL_LTDC_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)                    \
-	((__HANDLE__)->Instance->IER & (__INTERRUPT__))
+#define __HAL_LTDC_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__) ((__HANDLE__)->Instance->IER & (__INTERRUPT__))
 /**
  * @}
  */
@@ -628,13 +584,8 @@ void HAL_LTDC_ReloadEventCallback(LTDC_HandleTypeDef *hltdc);
 
 /* Callbacks Register/UnRegister functions  ***********************************/
 #if (USE_HAL_LTDC_REGISTER_CALLBACKS == 1)
-HAL_StatusTypeDef
-HAL_LTDC_RegisterCallback(LTDC_HandleTypeDef *hltdc,
-			  HAL_LTDC_CallbackIDTypeDef CallbackID,
-			  pLTDC_CallbackTypeDef pCallback);
-HAL_StatusTypeDef
-HAL_LTDC_UnRegisterCallback(LTDC_HandleTypeDef *hltdc,
-			    HAL_LTDC_CallbackIDTypeDef CallbackID);
+HAL_StatusTypeDef HAL_LTDC_RegisterCallback(LTDC_HandleTypeDef *hltdc, HAL_LTDC_CallbackIDTypeDef CallbackID, pLTDC_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_LTDC_UnRegisterCallback(LTDC_HandleTypeDef *hltdc, HAL_LTDC_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_LTDC_REGISTER_CALLBACKS */
 
 /**
@@ -654,78 +605,35 @@ void HAL_LTDC_IRQHandler(LTDC_HandleTypeDef *hltdc);
  * @{
  */
 /* Peripheral Control functions ***********************************************/
-HAL_StatusTypeDef HAL_LTDC_ConfigLayer(LTDC_HandleTypeDef *hltdc,
-				       LTDC_LayerCfgTypeDef *pLayerCfg,
-				       uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_LTDC_SetWindowSize(LTDC_HandleTypeDef *hltdc,
-					 uint32_t XSize, uint32_t YSize,
-					 uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_LTDC_SetWindowPosition(LTDC_HandleTypeDef *hltdc,
-					     uint32_t X0, uint32_t Y0,
-					     uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_LTDC_SetPixelFormat(LTDC_HandleTypeDef *hltdc,
-					  uint32_t Pixelformat,
-					  uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_LTDC_SetAlpha(LTDC_HandleTypeDef *hltdc, uint32_t Alpha,
-				    uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_LTDC_SetAddress(LTDC_HandleTypeDef *hltdc,
-				      uint32_t Address, uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_LTDC_SetPitch(LTDC_HandleTypeDef *hltdc,
-				    uint32_t LinePitchInPixels,
-				    uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_LTDC_ConfigColorKeying(LTDC_HandleTypeDef *hltdc,
-					     uint32_t RGBValue,
-					     uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_LTDC_ConfigCLUT(LTDC_HandleTypeDef *hltdc,
-				      const uint32_t *pCLUT, uint32_t CLUTSize,
-				      uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_LTDC_EnableColorKeying(LTDC_HandleTypeDef *hltdc,
-					     uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_LTDC_DisableColorKeying(LTDC_HandleTypeDef *hltdc,
-					      uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_LTDC_EnableCLUT(LTDC_HandleTypeDef *hltdc,
-				      uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_LTDC_DisableCLUT(LTDC_HandleTypeDef *hltdc,
-				       uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_LTDC_ProgramLineEvent(LTDC_HandleTypeDef *hltdc,
-					    uint32_t Line);
+HAL_StatusTypeDef HAL_LTDC_ConfigLayer(LTDC_HandleTypeDef *hltdc, LTDC_LayerCfgTypeDef *pLayerCfg, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_SetWindowSize(LTDC_HandleTypeDef *hltdc, uint32_t XSize, uint32_t YSize, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_SetWindowPosition(LTDC_HandleTypeDef *hltdc, uint32_t X0, uint32_t Y0, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_SetPixelFormat(LTDC_HandleTypeDef *hltdc, uint32_t Pixelformat, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_SetAlpha(LTDC_HandleTypeDef *hltdc, uint32_t Alpha, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_SetAddress(LTDC_HandleTypeDef *hltdc, uint32_t Address, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_SetPitch(LTDC_HandleTypeDef *hltdc, uint32_t LinePitchInPixels, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_ConfigColorKeying(LTDC_HandleTypeDef *hltdc, uint32_t RGBValue, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_ConfigCLUT(LTDC_HandleTypeDef *hltdc, const uint32_t *pCLUT, uint32_t CLUTSize, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_EnableColorKeying(LTDC_HandleTypeDef *hltdc, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_DisableColorKeying(LTDC_HandleTypeDef *hltdc, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_EnableCLUT(LTDC_HandleTypeDef *hltdc, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_DisableCLUT(LTDC_HandleTypeDef *hltdc, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_ProgramLineEvent(LTDC_HandleTypeDef *hltdc, uint32_t Line);
 HAL_StatusTypeDef HAL_LTDC_EnableDither(LTDC_HandleTypeDef *hltdc);
 HAL_StatusTypeDef HAL_LTDC_DisableDither(LTDC_HandleTypeDef *hltdc);
-HAL_StatusTypeDef HAL_LTDC_Reload(LTDC_HandleTypeDef *hltdc,
-				  uint32_t ReloadType);
-HAL_StatusTypeDef HAL_LTDC_ConfigLayer_NoReload(LTDC_HandleTypeDef *hltdc,
-						LTDC_LayerCfgTypeDef *pLayerCfg,
-						uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_LTDC_SetWindowSize_NoReload(LTDC_HandleTypeDef *hltdc,
-						  uint32_t XSize,
-						  uint32_t YSize,
-						  uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_LTDC_SetWindowPosition_NoReload(LTDC_HandleTypeDef *hltdc,
-						      uint32_t X0, uint32_t Y0,
-						      uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_LTDC_SetPixelFormat_NoReload(LTDC_HandleTypeDef *hltdc,
-						   uint32_t Pixelformat,
-						   uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_LTDC_SetAlpha_NoReload(LTDC_HandleTypeDef *hltdc,
-					     uint32_t Alpha, uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_LTDC_SetAddress_NoReload(LTDC_HandleTypeDef *hltdc,
-					       uint32_t Address,
-					       uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_LTDC_SetPitch_NoReload(LTDC_HandleTypeDef *hltdc,
-					     uint32_t LinePitchInPixels,
-					     uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_LTDC_ConfigColorKeying_NoReload(LTDC_HandleTypeDef *hltdc,
-						      uint32_t RGBValue,
-						      uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_LTDC_EnableColorKeying_NoReload(LTDC_HandleTypeDef *hltdc,
-						      uint32_t LayerIdx);
-HAL_StatusTypeDef
-HAL_LTDC_DisableColorKeying_NoReload(LTDC_HandleTypeDef *hltdc,
-				     uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_LTDC_EnableCLUT_NoReload(LTDC_HandleTypeDef *hltdc,
-					       uint32_t LayerIdx);
-HAL_StatusTypeDef HAL_LTDC_DisableCLUT_NoReload(LTDC_HandleTypeDef *hltdc,
-						uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_Reload(LTDC_HandleTypeDef *hltdc, uint32_t ReloadType);
+HAL_StatusTypeDef HAL_LTDC_ConfigLayer_NoReload(LTDC_HandleTypeDef *hltdc, LTDC_LayerCfgTypeDef *pLayerCfg, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_SetWindowSize_NoReload(LTDC_HandleTypeDef *hltdc, uint32_t XSize, uint32_t YSize, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_SetWindowPosition_NoReload(LTDC_HandleTypeDef *hltdc, uint32_t X0, uint32_t Y0, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_SetPixelFormat_NoReload(LTDC_HandleTypeDef *hltdc, uint32_t Pixelformat, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_SetAlpha_NoReload(LTDC_HandleTypeDef *hltdc, uint32_t Alpha, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_SetAddress_NoReload(LTDC_HandleTypeDef *hltdc, uint32_t Address, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_SetPitch_NoReload(LTDC_HandleTypeDef *hltdc, uint32_t LinePitchInPixels, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_ConfigColorKeying_NoReload(LTDC_HandleTypeDef *hltdc, uint32_t RGBValue, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_EnableColorKeying_NoReload(LTDC_HandleTypeDef *hltdc, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_DisableColorKeying_NoReload(LTDC_HandleTypeDef *hltdc, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_EnableCLUT_NoReload(LTDC_HandleTypeDef *hltdc, uint32_t LayerIdx);
+HAL_StatusTypeDef HAL_LTDC_DisableCLUT_NoReload(LTDC_HandleTypeDef *hltdc, uint32_t LayerIdx);
 
 /**
  * @}
@@ -752,23 +660,12 @@ uint32_t HAL_LTDC_GetError(const LTDC_HandleTypeDef *hltdc);
 /** @defgroup LTDC_Private_Macros LTDC Private Macros
  * @{
  */
-#define LTDC_LAYER(__HANDLE__, __LAYER__)                                      \
-	((LTDC_Layer_TypeDef *)((                                              \
-	    uint32_t)(((uint32_t)((__HANDLE__)->Instance)) + 0x84U +           \
-		      (0x80U * (__LAYER__)))))
+#define LTDC_LAYER(__HANDLE__, __LAYER__) ((LTDC_Layer_TypeDef *)((uint32_t)(((uint32_t)((__HANDLE__)->Instance)) + 0x84U + (0x80U * (__LAYER__)))))
 #define IS_LTDC_LAYER(__LAYER__) ((__LAYER__) < MAX_LAYER)
-#define IS_LTDC_HSPOL(__HSPOL__)                                               \
-	(((__HSPOL__) == LTDC_HSPOLARITY_AL) ||                                \
-	 ((__HSPOL__) == LTDC_HSPOLARITY_AH))
-#define IS_LTDC_VSPOL(__VSPOL__)                                               \
-	(((__VSPOL__) == LTDC_VSPOLARITY_AL) ||                                \
-	 ((__VSPOL__) == LTDC_VSPOLARITY_AH))
-#define IS_LTDC_DEPOL(__DEPOL__)                                               \
-	(((__DEPOL__) == LTDC_DEPOLARITY_AL) ||                                \
-	 ((__DEPOL__) == LTDC_DEPOLARITY_AH))
-#define IS_LTDC_PCPOL(__PCPOL__)                                               \
-	(((__PCPOL__) == LTDC_PCPOLARITY_IPC) ||                               \
-	 ((__PCPOL__) == LTDC_PCPOLARITY_IIPC))
+#define IS_LTDC_HSPOL(__HSPOL__) (((__HSPOL__) == LTDC_HSPOLARITY_AL) || ((__HSPOL__) == LTDC_HSPOLARITY_AH))
+#define IS_LTDC_VSPOL(__VSPOL__) (((__VSPOL__) == LTDC_VSPOLARITY_AL) || ((__VSPOL__) == LTDC_VSPOLARITY_AH))
+#define IS_LTDC_DEPOL(__DEPOL__) (((__DEPOL__) == LTDC_DEPOLARITY_AL) || ((__DEPOL__) == LTDC_DEPOLARITY_AH))
+#define IS_LTDC_PCPOL(__PCPOL__) (((__PCPOL__) == LTDC_PCPOLARITY_IPC) || ((__PCPOL__) == LTDC_PCPOLARITY_IIPC))
 #define IS_LTDC_HSYNC(__HSYNC__) ((__HSYNC__) <= LTDC_HORIZONTALSYNC)
 #define IS_LTDC_VSYNC(__VSYNC__) ((__VSYNC__) <= LTDC_VERTICALSYNC)
 #define IS_LTDC_AHBP(__AHBP__) ((__AHBP__) <= LTDC_HORIZONTALSYNC)
@@ -780,21 +677,12 @@ uint32_t HAL_LTDC_GetError(const LTDC_HandleTypeDef *hltdc);
 #define IS_LTDC_BLUEVALUE(__BBLUE__) ((__BBLUE__) <= LTDC_COLOR)
 #define IS_LTDC_GREENVALUE(__BGREEN__) ((__BGREEN__) <= LTDC_COLOR)
 #define IS_LTDC_REDVALUE(__BRED__) ((__BRED__) <= LTDC_COLOR)
-#define IS_LTDC_BLENDING_FACTOR1(__BLENDING_FACTOR1__)                         \
-	(((__BLENDING_FACTOR1__) == LTDC_BLENDING_FACTOR1_CA) ||               \
-	 ((__BLENDING_FACTOR1__) == LTDC_BLENDING_FACTOR1_PAxCA))
-#define IS_LTDC_BLENDING_FACTOR2(__BLENDING_FACTOR1__)                         \
-	(((__BLENDING_FACTOR1__) == LTDC_BLENDING_FACTOR2_CA) ||               \
-	 ((__BLENDING_FACTOR1__) == LTDC_BLENDING_FACTOR2_PAxCA))
-#define IS_LTDC_PIXEL_FORMAT(__PIXEL_FORMAT__)                                 \
-	(((__PIXEL_FORMAT__) == LTDC_PIXEL_FORMAT_ARGB8888) ||                 \
-	 ((__PIXEL_FORMAT__) == LTDC_PIXEL_FORMAT_RGB888) ||                   \
-	 ((__PIXEL_FORMAT__) == LTDC_PIXEL_FORMAT_RGB565) ||                   \
-	 ((__PIXEL_FORMAT__) == LTDC_PIXEL_FORMAT_ARGB1555) ||                 \
-	 ((__PIXEL_FORMAT__) == LTDC_PIXEL_FORMAT_ARGB4444) ||                 \
-	 ((__PIXEL_FORMAT__) == LTDC_PIXEL_FORMAT_L8) ||                       \
-	 ((__PIXEL_FORMAT__) == LTDC_PIXEL_FORMAT_AL44) ||                     \
-	 ((__PIXEL_FORMAT__) == LTDC_PIXEL_FORMAT_AL88))
+#define IS_LTDC_BLENDING_FACTOR1(__BLENDING_FACTOR1__) (((__BLENDING_FACTOR1__) == LTDC_BLENDING_FACTOR1_CA) || ((__BLENDING_FACTOR1__) == LTDC_BLENDING_FACTOR1_PAxCA))
+#define IS_LTDC_BLENDING_FACTOR2(__BLENDING_FACTOR1__) (((__BLENDING_FACTOR1__) == LTDC_BLENDING_FACTOR2_CA) || ((__BLENDING_FACTOR1__) == LTDC_BLENDING_FACTOR2_PAxCA))
+#define IS_LTDC_PIXEL_FORMAT(__PIXEL_FORMAT__)                                                                                                                                                         \
+	(((__PIXEL_FORMAT__) == LTDC_PIXEL_FORMAT_ARGB8888) || ((__PIXEL_FORMAT__) == LTDC_PIXEL_FORMAT_RGB888) || ((__PIXEL_FORMAT__) == LTDC_PIXEL_FORMAT_RGB565) ||                                 \
+	 ((__PIXEL_FORMAT__) == LTDC_PIXEL_FORMAT_ARGB1555) || ((__PIXEL_FORMAT__) == LTDC_PIXEL_FORMAT_ARGB4444) || ((__PIXEL_FORMAT__) == LTDC_PIXEL_FORMAT_L8) ||                                   \
+	 ((__PIXEL_FORMAT__) == LTDC_PIXEL_FORMAT_AL44) || ((__PIXEL_FORMAT__) == LTDC_PIXEL_FORMAT_AL88))
 #define IS_LTDC_ALPHA(__ALPHA__) ((__ALPHA__) <= LTDC_ALPHA)
 #define IS_LTDC_HCONFIGST(__HCONFIGST__) ((__HCONFIGST__) <= LTDC_STARTPOSITION)
 #define IS_LTDC_HCONFIGSP(__HCONFIGSP__) ((__HCONFIGSP__) <= LTDC_STOPPOSITION)
@@ -804,9 +692,7 @@ uint32_t HAL_LTDC_GetError(const LTDC_HandleTypeDef *hltdc);
 #define IS_LTDC_CFBLL(__CFBLL__) ((__CFBLL__) <= LTDC_COLOR_FRAME_BUFFER)
 #define IS_LTDC_CFBLNBR(__CFBLNBR__) ((__CFBLNBR__) <= LTDC_LINE_NUMBER)
 #define IS_LTDC_LIPOS(__LIPOS__) ((__LIPOS__) <= 0x7FFU)
-#define IS_LTDC_RELOAD(__RELOADTYPE__)                                         \
-	(((__RELOADTYPE__) == LTDC_RELOAD_IMMEDIATE) ||                        \
-	 ((__RELOADTYPE__) == LTDC_RELOAD_VERTICAL_BLANKING))
+#define IS_LTDC_RELOAD(__RELOADTYPE__) (((__RELOADTYPE__) == LTDC_RELOAD_IMMEDIATE) || ((__RELOADTYPE__) == LTDC_RELOAD_VERTICAL_BLANKING))
 /**
  * @}
  */

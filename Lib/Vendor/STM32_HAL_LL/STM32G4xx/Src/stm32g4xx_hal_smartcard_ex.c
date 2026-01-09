@@ -110,11 +110,9 @@ timeout feature
  * @param BlockLength SMARTCARD block length (8-bit long at most)
  * @retval None
  */
-void HAL_SMARTCARDEx_BlockLength_Config(SMARTCARD_HandleTypeDef *hsmartcard,
-					uint8_t BlockLength)
+void HAL_SMARTCARDEx_BlockLength_Config(SMARTCARD_HandleTypeDef *hsmartcard, uint8_t BlockLength)
 {
-	MODIFY_REG(hsmartcard->Instance->RTOR, USART_RTOR_BLEN,
-		   ((uint32_t)BlockLength << USART_RTOR_BLEN_Pos));
+	MODIFY_REG(hsmartcard->Instance->RTOR, USART_RTOR_BLEN, ((uint32_t)BlockLength << USART_RTOR_BLEN_Pos));
 }
 
 /** @brief Update on the fly the receiver timeout value in RTOR register.
@@ -124,8 +122,7 @@ void HAL_SMARTCARDEx_BlockLength_Config(SMARTCARD_HandleTypeDef *hsmartcard,
  * timeout value must be less or equal to 0x0FFFFFFFF.
  * @retval None
  */
-void HAL_SMARTCARDEx_TimeOut_Config(SMARTCARD_HandleTypeDef *hsmartcard,
-				    uint32_t TimeOutValue)
+void HAL_SMARTCARDEx_TimeOut_Config(SMARTCARD_HandleTypeDef *hsmartcard, uint32_t TimeOutValue)
 {
 	assert_param(IS_SMARTCARD_TIMEOUT_VALUE(hsmartcard->Init.TimeOutValue));
 	MODIFY_REG(hsmartcard->Instance->RTOR, USART_RTOR_RTO, TimeOutValue);
@@ -136,8 +133,7 @@ void HAL_SMARTCARDEx_TimeOut_Config(SMARTCARD_HandleTypeDef *hsmartcard,
  * contains the configuration information for the specified SMARTCARD module.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_SMARTCARDEx_EnableReceiverTimeOut(SMARTCARD_HandleTypeDef *hsmartcard)
+HAL_StatusTypeDef HAL_SMARTCARDEx_EnableReceiverTimeOut(SMARTCARD_HandleTypeDef *hsmartcard)
 {
 	if (hsmartcard->gState == HAL_SMARTCARD_STATE_READY) {
 		/* Process Locked */
@@ -164,8 +160,7 @@ HAL_SMARTCARDEx_EnableReceiverTimeOut(SMARTCARD_HandleTypeDef *hsmartcard)
  * contains the configuration information for the specified SMARTCARD module.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_SMARTCARDEx_DisableReceiverTimeOut(SMARTCARD_HandleTypeDef *hsmartcard)
+HAL_StatusTypeDef HAL_SMARTCARDEx_DisableReceiverTimeOut(SMARTCARD_HandleTypeDef *hsmartcard)
 {
 	if (hsmartcard->gState == HAL_SMARTCARD_STATE_READY) {
 		/* Process Locked */
@@ -216,8 +211,7 @@ operation functions
  * contains the configuration information for the specified SMARTCARD module.
  * @retval None
  */
-__weak void
-HAL_SMARTCARDEx_RxFifoFullCallback(SMARTCARD_HandleTypeDef *hsmartcard)
+__weak void HAL_SMARTCARDEx_RxFifoFullCallback(SMARTCARD_HandleTypeDef *hsmartcard)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hsmartcard);
@@ -234,8 +228,7 @@ HAL_SMARTCARDEx_RxFifoFullCallback(SMARTCARD_HandleTypeDef *hsmartcard)
  * contains the configuration information for the specified SMARTCARD module.
  * @retval None
  */
-__weak void
-HAL_SMARTCARDEx_TxFifoEmptyCallback(SMARTCARD_HandleTypeDef *hsmartcard)
+__weak void HAL_SMARTCARDEx_TxFifoEmptyCallback(SMARTCARD_HandleTypeDef *hsmartcard)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hsmartcard);
@@ -274,8 +267,7 @@ SMARTCARD FIFO feature.
  * @param hsmartcard SMARTCARD handle.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_SMARTCARDEx_EnableFifoMode(SMARTCARD_HandleTypeDef *hsmartcard)
+HAL_StatusTypeDef HAL_SMARTCARDEx_EnableFifoMode(SMARTCARD_HandleTypeDef *hsmartcard)
 {
 	uint32_t tmpcr1;
 
@@ -316,8 +308,7 @@ HAL_SMARTCARDEx_EnableFifoMode(SMARTCARD_HandleTypeDef *hsmartcard)
  * @param hsmartcard SMARTCARD handle.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_SMARTCARDEx_DisableFifoMode(SMARTCARD_HandleTypeDef *hsmartcard)
+HAL_StatusTypeDef HAL_SMARTCARDEx_DisableFifoMode(SMARTCARD_HandleTypeDef *hsmartcard)
 {
 	uint32_t tmpcr1;
 
@@ -363,9 +354,7 @@ HAL_SMARTCARDEx_DisableFifoMode(SMARTCARD_HandleTypeDef *hsmartcard)
  *            @arg @ref SMARTCARD_TXFIFO_THRESHOLD_8_8
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_SMARTCARDEx_SetTxFifoThreshold(SMARTCARD_HandleTypeDef *hsmartcard,
-				   uint32_t Threshold)
+HAL_StatusTypeDef HAL_SMARTCARDEx_SetTxFifoThreshold(SMARTCARD_HandleTypeDef *hsmartcard, uint32_t Threshold)
 {
 	uint32_t tmpcr1;
 
@@ -414,9 +403,7 @@ HAL_SMARTCARDEx_SetTxFifoThreshold(SMARTCARD_HandleTypeDef *hsmartcard,
  *            @arg @ref SMARTCARD_RXFIFO_THRESHOLD_8_8
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_SMARTCARDEx_SetRxFifoThreshold(SMARTCARD_HandleTypeDef *hsmartcard,
-				   uint32_t Threshold)
+HAL_StatusTypeDef HAL_SMARTCARDEx_SetRxFifoThreshold(SMARTCARD_HandleTypeDef *hsmartcard, uint32_t Threshold)
 {
 	uint32_t tmpcr1;
 
@@ -489,20 +476,10 @@ static void SMARTCARDEx_SetNbDataToProcess(SMARTCARD_HandleTypeDef *hsmartcard)
 	} else {
 		rx_fifo_depth = RX_FIFO_DEPTH;
 		tx_fifo_depth = TX_FIFO_DEPTH;
-		rx_fifo_threshold =
-		    (uint8_t)(READ_BIT(hsmartcard->Instance->CR3,
-				       USART_CR3_RXFTCFG) >>
-			      USART_CR3_RXFTCFG_Pos);
-		tx_fifo_threshold =
-		    (uint8_t)(READ_BIT(hsmartcard->Instance->CR3,
-				       USART_CR3_TXFTCFG) >>
-			      USART_CR3_TXFTCFG_Pos);
-		hsmartcard->NbTxDataToProcess =
-		    ((uint16_t)tx_fifo_depth * numerator[tx_fifo_threshold]) /
-		    (uint16_t)denominator[tx_fifo_threshold];
-		hsmartcard->NbRxDataToProcess =
-		    ((uint16_t)rx_fifo_depth * numerator[rx_fifo_threshold]) /
-		    (uint16_t)denominator[rx_fifo_threshold];
+		rx_fifo_threshold = (uint8_t)(READ_BIT(hsmartcard->Instance->CR3, USART_CR3_RXFTCFG) >> USART_CR3_RXFTCFG_Pos);
+		tx_fifo_threshold = (uint8_t)(READ_BIT(hsmartcard->Instance->CR3, USART_CR3_TXFTCFG) >> USART_CR3_TXFTCFG_Pos);
+		hsmartcard->NbTxDataToProcess = ((uint16_t)tx_fifo_depth * numerator[tx_fifo_threshold]) / (uint16_t)denominator[tx_fifo_threshold];
+		hsmartcard->NbRxDataToProcess = ((uint16_t)rx_fifo_depth * numerator[rx_fifo_threshold]) / (uint16_t)denominator[rx_fifo_threshold];
 	}
 }
 

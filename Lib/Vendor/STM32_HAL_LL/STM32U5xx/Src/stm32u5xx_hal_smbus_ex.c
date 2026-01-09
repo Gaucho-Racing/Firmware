@@ -186,8 +186,7 @@ HAL_StatusTypeDef HAL_SMBUSEx_DisableWakeUp(SMBUS_HandleTypeDef *hsmbus)
  * @param  FastModePlus New state of the Fast Mode Plus.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SMBUSEx_ConfigFastModePlus(SMBUS_HandleTypeDef *hsmbus,
-						 uint32_t FastModePlus)
+HAL_StatusTypeDef HAL_SMBUSEx_ConfigFastModePlus(SMBUS_HandleTypeDef *hsmbus, uint32_t FastModePlus)
 {
 	/* Check the parameters */
 	assert_param(IS_SMBUS_ALL_INSTANCE(hsmbus->Instance));
@@ -255,8 +254,7 @@ HAL_StatusTypeDef HAL_SMBUSEx_ConfigFastModePlus(SMBUS_HandleTypeDef *hsmbus,
  * specified SMBUSx peripheral.
  * @retval HAL status
  */
-HAL_StatusTypeDef HAL_SMBUSEx_SetConfigAutonomousMode(
-    SMBUS_HandleTypeDef *hsmbus, const SMBUS_AutonomousModeConfTypeDef *sConfig)
+HAL_StatusTypeDef HAL_SMBUSEx_SetConfigAutonomousMode(SMBUS_HandleTypeDef *hsmbus, const SMBUS_AutonomousModeConfTypeDef *sConfig)
 {
 	if (hsmbus->State == HAL_SMBUS_STATE_READY) {
 		/* Process Locked */
@@ -266,21 +264,15 @@ HAL_StatusTypeDef HAL_SMBUSEx_SetConfigAutonomousMode(
 
 		/* Check the parameters */
 		assert_param(IS_SMBUS_TRIG_INPUT_INSTANCE(hsmbus->Instance));
-		assert_param(IS_SMBUS_TRIG_SOURCE(hsmbus->Instance,
-						  sConfig->TriggerSelection));
-		assert_param(
-		    IS_SMBUS_AUTO_MODE_TRG_POL(sConfig->TriggerPolarity));
+		assert_param(IS_SMBUS_TRIG_SOURCE(hsmbus->Instance, sConfig->TriggerSelection));
+		assert_param(IS_SMBUS_AUTO_MODE_TRG_POL(sConfig->TriggerPolarity));
 
 		/* Disable the selected SMBUS peripheral to be able to configure
 		 * AUTOCR */
 		__HAL_SMBUS_DISABLE(hsmbus);
 
 		/* SMBUSx AUTOCR Configuration */
-		WRITE_REG(
-		    hsmbus->Instance->AUTOCR,
-		    (sConfig->TriggerState |
-		     ((sConfig->TriggerSelection) & I2C_AUTOCR_TRIGSEL_Msk) |
-		     sConfig->TriggerPolarity));
+		WRITE_REG(hsmbus->Instance->AUTOCR, (sConfig->TriggerState | ((sConfig->TriggerSelection) & I2C_AUTOCR_TRIGSEL_Msk) | sConfig->TriggerPolarity));
 
 		/* Enable the selected SMBUS peripheral */
 		__HAL_SMBUS_ENABLE(hsmbus);
@@ -306,9 +298,7 @@ HAL_StatusTypeDef HAL_SMBUSEx_SetConfigAutonomousMode(
  * specified SMBUSx peripheral.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_SMBUSEx_GetConfigAutonomousMode(const SMBUS_HandleTypeDef *hsmbus,
-				    SMBUS_AutonomousModeConfTypeDef *sConfig)
+HAL_StatusTypeDef HAL_SMBUSEx_GetConfigAutonomousMode(const SMBUS_HandleTypeDef *hsmbus, SMBUS_AutonomousModeConfTypeDef *sConfig)
 {
 	uint32_t autocr_tmp;
 
@@ -319,11 +309,9 @@ HAL_SMBUSEx_GetConfigAutonomousMode(const SMBUS_HandleTypeDef *hsmbus,
 
 	sConfig->TriggerState = (autocr_tmp & I2C_AUTOCR_TRIGEN);
 	if (IS_SMBUS_GRP2_INSTANCE(hsmbus->Instance)) {
-		sConfig->TriggerSelection =
-		    ((autocr_tmp & I2C_AUTOCR_TRIGSEL) | SMBUS_TRIG_GRP2);
+		sConfig->TriggerSelection = ((autocr_tmp & I2C_AUTOCR_TRIGSEL) | SMBUS_TRIG_GRP2);
 	} else {
-		sConfig->TriggerSelection =
-		    ((autocr_tmp & I2C_AUTOCR_TRIGSEL) | SMBUS_TRIG_GRP1);
+		sConfig->TriggerSelection = ((autocr_tmp & I2C_AUTOCR_TRIGSEL) | SMBUS_TRIG_GRP1);
 	}
 	sConfig->TriggerPolarity = (autocr_tmp & I2C_AUTOCR_TRIGPOL);
 
@@ -337,8 +325,7 @@ HAL_SMBUSEx_GetConfigAutonomousMode(const SMBUS_HandleTypeDef *hsmbus,
  * peripheral.
  * @retval HAL status
  */
-HAL_StatusTypeDef
-HAL_SMBUSEx_ClearConfigAutonomousMode(SMBUS_HandleTypeDef *hsmbus)
+HAL_StatusTypeDef HAL_SMBUSEx_ClearConfigAutonomousMode(SMBUS_HandleTypeDef *hsmbus)
 {
 	if (hsmbus->State == HAL_SMBUS_STATE_READY) {
 		/* Process Locked */

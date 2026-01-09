@@ -45,8 +45,7 @@
  *   GETBIT(data, 2);  // 1
  *   GETBIT(data, 7);  // 0
  */
-#define GETBIT(value, bit_position)                                            \
-	(((value) >> (sizeof(value) * 8 - 1 - (bit_position))) & 1u)
+#define GETBIT(value, bit_position) (((value) >> (sizeof(value) * 8 - 1 - (bit_position))) & 1u)
 
 /**
  * @brief Extract a multi-bit field using MSB-first indexing.
@@ -69,9 +68,7 @@
  *   GETBITS(data, 2, 4);  // 0b1101 (bits 2..5 by MSB index)
  *   GETBITS(data, 5, 3);  // 0b100 (bits 5..7 by MSB index)
  */
-#define GETBITS(value, bit_index, length)                                      \
-	(((value) >> ((sizeof(value) * 8) - (bit_index) - (length))) &         \
-	 ((1uLL << (length)) - 1))
+#define GETBITS(value, bit_index, length) (((value) >> ((sizeof(value) * 8) - (bit_index) - (length))) & ((1uLL << (length)) - 1))
 
 /**
  * @brief Set or clear a single bit within a byte (MSB-first indexing).
@@ -138,7 +135,6 @@ uint8_t SetBitInByte(uint8_t number, uint8_t index, bool value);
  *   HW bit:    7   6   5   4   3   2   1   0
  *   Position: MSB                         rightmost
  */
-uint8_t SetBitsInByte(uint8_t number, uint8_t index, uint8_t length,
-		      uint8_t value);
+uint8_t SetBitsInByte(uint8_t number, uint8_t index, uint8_t length, uint8_t value);
 
 #endif

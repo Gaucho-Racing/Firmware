@@ -51,8 +51,7 @@ bool GR_CircularBuffer_IsEmpty(CircularBuffer *buffer_ptr);
 /// CircularBuffer.
 /// @param object_size Size of the item to be pushed in bytes.
 /// @return 0 if the operation finished successfully, non-0 on error.
-uint8_t GR_CircularBuffer_Push(CircularBuffer *buffer_ptr, void *object_ptr,
-			       uint16_t object_size);
+uint8_t GR_CircularBuffer_Push(CircularBuffer *buffer_ptr, void *object_ptr, uint16_t object_size);
 
 /// @brief Removes a CircularBuffer's buffer head and retrives it.
 /// @param buffer_ptr The CircularBuffer in subject.

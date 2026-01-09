@@ -116,13 +116,12 @@ typedef struct {
  * @brief  RTC Time structure definition
  */
 typedef struct {
-	uint32_t
-	    TimeFormat; /*!< Specifies the RTC AM/PM Time.
-			     This parameter can be a value of @ref
-			   RTC_LL_EC_TIME_FORMAT
+	uint32_t TimeFormat; /*!< Specifies the RTC AM/PM Time.
+				  This parameter can be a value of @ref
+				RTC_LL_EC_TIME_FORMAT
 
-			     This feature can be modified afterwards using
-			   unitary function @ref LL_RTC_TIME_SetFormat(). */
+				  This feature can be modified afterwards using
+				unitary function @ref LL_RTC_TIME_SetFormat(). */
 
 	uint8_t Hours; /*!< Specifies the RTC Time Hours.
 			    This parameter must be a number between Min_Data = 0
@@ -160,12 +159,11 @@ typedef struct {
 			      This feature can be modified afterwards using
 			    unitary function @ref LL_RTC_DATE_SetWeekDay(). */
 
-	uint8_t
-	    Month; /*!< Specifies the RTC Date Month.
-			This parameter can be a value of @ref RTC_LL_EC_MONTH
+	uint8_t Month; /*!< Specifies the RTC Date Month.
+			    This parameter can be a value of @ref RTC_LL_EC_MONTH
 
-			This feature can be modified afterwards using unitary
-		      function @ref LL_RTC_DATE_SetMonth(). */
+			    This feature can be modified afterwards using unitary
+			  function @ref LL_RTC_DATE_SetMonth(). */
 
 	uint8_t Day; /*!< Specifies the RTC Date Day.
 			  This parameter must be a number between Min_Data = 1
@@ -186,8 +184,7 @@ typedef struct {
  * @brief  RTC Alarm structure definition
  */
 typedef struct {
-	LL_RTC_TimeTypeDef
-	    AlarmTime; /*!< Specifies the RTC Alarm Time members. */
+	LL_RTC_TimeTypeDef AlarmTime; /*!< Specifies the RTC Alarm Time members. */
 
 	uint32_t AlarmMask; /*!< Specifies the RTC Alarm Masks.
 				 This parameter can be a value of @ref
@@ -199,20 +196,19 @@ typedef struct {
 			       ALARM A or @ref LL_RTC_ALMB_SetMask() for ALARM B
 			    */
 
-	uint32_t
-	    AlarmDateWeekDaySel; /*!< Specifies the RTC Alarm is on day or
-				    WeekDay. This parameter can be a value of
-				    @ref RTC_LL_EC_ALMA_WEEKDAY_SELECTION for
-				    ALARM A or @ref
-				    RTC_LL_EC_ALMB_WEEKDAY_SELECTION for ALARM B
+	uint32_t AlarmDateWeekDaySel; /*!< Specifies the RTC Alarm is on day or
+					 WeekDay. This parameter can be a value of
+					 @ref RTC_LL_EC_ALMA_WEEKDAY_SELECTION for
+					 ALARM A or @ref
+					 RTC_LL_EC_ALMB_WEEKDAY_SELECTION for ALARM B
 
-				      This feature can be modified afterwards
-				    using unitary function @ref
-				    LL_RTC_ALMA_EnableWeekday() or @ref
-				    LL_RTC_ALMA_DisableWeekday() for ALARM A or
-				    @ref LL_RTC_ALMB_EnableWeekday() or @ref
-				    LL_RTC_ALMB_DisableWeekday() for ALARM B
-				 */
+					   This feature can be modified afterwards
+					 using unitary function @ref
+					 LL_RTC_ALMA_EnableWeekday() or @ref
+					 LL_RTC_ALMA_DisableWeekday() for ALARM A or
+					 @ref LL_RTC_ALMB_EnableWeekday() or @ref
+					 LL_RTC_ALMB_DisableWeekday() for ALARM B
+				      */
 
 	uint8_t AlarmDateWeekDay; /*!< Specifies the RTC Alarm Day/WeekDay.
 				       If AlarmDateWeekDaySel set to day, this
@@ -258,10 +254,8 @@ typedef struct {
 /** @defgroup RTC_LL_EC_ALMA_WEEKDAY_SELECTION RTC Alarm A Date WeekDay
  * @{
  */
-#define LL_RTC_ALMA_DATEWEEKDAYSEL_DATE                                        \
-	0x00000000U /*!< Alarm A Date is selected */
-#define LL_RTC_ALMA_DATEWEEKDAYSEL_WEEKDAY                                     \
-	RTC_ALRMAR_WDSEL /*!< Alarm A WeekDay is selected */
+#define LL_RTC_ALMA_DATEWEEKDAYSEL_DATE 0x00000000U	    /*!< Alarm A Date is selected */
+#define LL_RTC_ALMA_DATEWEEKDAYSEL_WEEKDAY RTC_ALRMAR_WDSEL /*!< Alarm A WeekDay is selected */
 /**
  * @}
  */
@@ -269,10 +263,8 @@ typedef struct {
 /** @defgroup RTC_LL_EC_ALMB_WEEKDAY_SELECTION RTC Alarm B Date WeekDay
  * @{
  */
-#define LL_RTC_ALMB_DATEWEEKDAYSEL_DATE                                        \
-	0x00000000U /*!< Alarm B Date is selected */
-#define LL_RTC_ALMB_DATEWEEKDAYSEL_WEEKDAY                                     \
-	RTC_ALRMBR_WDSEL /*!< Alarm B WeekDay is selected */
+#define LL_RTC_ALMB_DATEWEEKDAYSEL_DATE 0x00000000U	    /*!< Alarm B Date is selected */
+#define LL_RTC_ALMB_DATEWEEKDAYSEL_WEEKDAY RTC_ALRMBR_WDSEL /*!< Alarm B WeekDay is selected */
 /**
  * @}
  */
@@ -371,10 +363,8 @@ typedef struct {
 /** @defgroup RTC_LL_EC_ALARM_OUTPUTTYPE  ALARM OUTPUT TYPE
  * @{
  */
-#define LL_RTC_ALARM_OUTPUTTYPE_OPENDRAIN                                      \
-	RTC_CR_TAMPALRM_TYPE /*!< RTC_ALARM is open-drain output */
-#define LL_RTC_ALARM_OUTPUTTYPE_PUSHPULL                                       \
-	0x00000000U /*!< RTC_ALARM is push-pull output */
+#define LL_RTC_ALARM_OUTPUTTYPE_OPENDRAIN RTC_CR_TAMPALRM_TYPE /*!< RTC_ALARM is open-drain output */
+#define LL_RTC_ALARM_OUTPUTTYPE_PUSHPULL 0x00000000U	       /*!< RTC_ALARM is push-pull output */
 /**
  * @}
  */
@@ -382,11 +372,11 @@ typedef struct {
 /** @defgroup RTC_LL_EC_OUTPUTPOLARITY_PIN  OUTPUT POLARITY PIN
  * @{
  */
-#define LL_RTC_OUTPUTPOLARITY_PIN_HIGH                                         \
-	0x00000000U /*!< Pin is high when ALRAF/ALRBF/WUTF is asserted         \
+#define LL_RTC_OUTPUTPOLARITY_PIN_HIGH                                                                                                                                                                 \
+	0x00000000U /*!< Pin is high when ALRAF/ALRBF/WUTF is asserted                                                                                                                                 \
 		       (depending on OSEL)*/
-#define LL_RTC_OUTPUTPOLARITY_PIN_LOW                                          \
-	RTC_CR_POL /*!< Pin is low when ALRAF/ALRBF/WUTF is asserted           \
+#define LL_RTC_OUTPUTPOLARITY_PIN_LOW                                                                                                                                                                  \
+	RTC_CR_POL /*!< Pin is low when ALRAF/ALRBF/WUTF is asserted                                                                                                                                   \
 		      (depending on OSEL) */
 /**
  * @}
@@ -404,10 +394,9 @@ typedef struct {
 /** @defgroup RTC_LL_EC_SHIFT_SECOND  SHIFT SECOND
  * @{
  */
-#define LL_RTC_SHIFT_SECOND_DELAY                                              \
-	0x00000000U /* Delay (seconds) = SUBFS / (PREDIV_S + 1) */
-#define LL_RTC_SHIFT_SECOND_ADVANCE                                            \
-	RTC_SHIFTR_ADD1S /* Advance (seconds) = (1 - (SUBFS / (PREDIV_S + 1))) \
+#define LL_RTC_SHIFT_SECOND_DELAY 0x00000000U /* Delay (seconds) = SUBFS / (PREDIV_S + 1) */
+#define LL_RTC_SHIFT_SECOND_ADVANCE                                                                                                                                                                    \
+	RTC_SHIFTR_ADD1S /* Advance (seconds) = (1 - (SUBFS / (PREDIV_S + 1)))                                                                                                                         \
 			  */
 /**
  * @}
@@ -416,18 +405,12 @@ typedef struct {
 /** @defgroup RTC_LL_EC_ALMA_MASK  ALARMA MASK
  * @{
  */
-#define LL_RTC_ALMA_MASK_NONE 0x00000000U /*!< No masks applied on Alarm A*/
-#define LL_RTC_ALMA_MASK_DATEWEEKDAY                                           \
-	RTC_ALRMAR_MSK4 /*!< Date/day do not care in Alarm A comparison */
-#define LL_RTC_ALMA_MASK_HOURS                                                 \
-	RTC_ALRMAR_MSK3 /*!< Hours do not care in Alarm A comparison */
-#define LL_RTC_ALMA_MASK_MINUTES                                               \
-	RTC_ALRMAR_MSK2 /*!< Minutes do not care in Alarm A comparison */
-#define LL_RTC_ALMA_MASK_SECONDS                                               \
-	RTC_ALRMAR_MSK1 /*!< Seconds do not care in Alarm A comparison */
-#define LL_RTC_ALMA_MASK_ALL                                                   \
-	(RTC_ALRMAR_MSK4 | RTC_ALRMAR_MSK3 | RTC_ALRMAR_MSK2 |                 \
-	 RTC_ALRMAR_MSK1) /*!< Masks all */
+#define LL_RTC_ALMA_MASK_NONE 0x00000000U							     /*!< No masks applied on Alarm A*/
+#define LL_RTC_ALMA_MASK_DATEWEEKDAY RTC_ALRMAR_MSK4						     /*!< Date/day do not care in Alarm A comparison */
+#define LL_RTC_ALMA_MASK_HOURS RTC_ALRMAR_MSK3							     /*!< Hours do not care in Alarm A comparison */
+#define LL_RTC_ALMA_MASK_MINUTES RTC_ALRMAR_MSK2						     /*!< Minutes do not care in Alarm A comparison */
+#define LL_RTC_ALMA_MASK_SECONDS RTC_ALRMAR_MSK1						     /*!< Seconds do not care in Alarm A comparison */
+#define LL_RTC_ALMA_MASK_ALL (RTC_ALRMAR_MSK4 | RTC_ALRMAR_MSK3 | RTC_ALRMAR_MSK2 | RTC_ALRMAR_MSK1) /*!< Masks all */
 /**
  * @}
  */
@@ -444,18 +427,12 @@ typedef struct {
 /** @defgroup RTC_LL_EC_ALMB_MASK  ALARMB MASK
  * @{
  */
-#define LL_RTC_ALMB_MASK_NONE 0x00000000U /*!< No masks applied on Alarm B*/
-#define LL_RTC_ALMB_MASK_DATEWEEKDAY                                           \
-	RTC_ALRMBR_MSK4 /*!< Date/day do not care in Alarm B comparison */
-#define LL_RTC_ALMB_MASK_HOURS                                                 \
-	RTC_ALRMBR_MSK3 /*!< Hours do not care in Alarm B comparison */
-#define LL_RTC_ALMB_MASK_MINUTES                                               \
-	RTC_ALRMBR_MSK2 /*!< Minutes do not care in Alarm B comparison */
-#define LL_RTC_ALMB_MASK_SECONDS                                               \
-	RTC_ALRMBR_MSK1 /*!< Seconds do not care in Alarm B comparison */
-#define LL_RTC_ALMB_MASK_ALL                                                   \
-	(RTC_ALRMBR_MSK4 | RTC_ALRMBR_MSK3 | RTC_ALRMBR_MSK2 |                 \
-	 RTC_ALRMBR_MSK1) /*!< Masks all */
+#define LL_RTC_ALMB_MASK_NONE 0x00000000U							     /*!< No masks applied on Alarm B*/
+#define LL_RTC_ALMB_MASK_DATEWEEKDAY RTC_ALRMBR_MSK4						     /*!< Date/day do not care in Alarm B comparison */
+#define LL_RTC_ALMB_MASK_HOURS RTC_ALRMBR_MSK3							     /*!< Hours do not care in Alarm B comparison */
+#define LL_RTC_ALMB_MASK_MINUTES RTC_ALRMBR_MSK2						     /*!< Minutes do not care in Alarm B comparison */
+#define LL_RTC_ALMB_MASK_SECONDS RTC_ALRMBR_MSK1						     /*!< Seconds do not care in Alarm B comparison */
+#define LL_RTC_ALMB_MASK_ALL (RTC_ALRMBR_MSK4 | RTC_ALRMBR_MSK3 | RTC_ALRMBR_MSK2 | RTC_ALRMBR_MSK1) /*!< Masks all */
 /**
  * @}
  */
@@ -472,11 +449,11 @@ typedef struct {
 /** @defgroup RTC_LL_EC_TIMESTAMP_EDGE  TIMESTAMP EDGE
  * @{
  */
-#define LL_RTC_TIMESTAMP_EDGE_RISING                                           \
-	0x00000000U /*!< RTC_TS input rising edge generates a time-stamp event \
+#define LL_RTC_TIMESTAMP_EDGE_RISING                                                                                                                                                                   \
+	0x00000000U /*!< RTC_TS input rising edge generates a time-stamp event                                                                                                                         \
 		     */
-#define LL_RTC_TIMESTAMP_EDGE_FALLING                                          \
-	RTC_CR_TSEDGE /*!< RTC_TS input falling edge generates a time-stamp    \
+#define LL_RTC_TIMESTAMP_EDGE_FALLING                                                                                                                                                                  \
+	RTC_CR_TSEDGE /*!< RTC_TS input falling edge generates a time-stamp                                                                                                                            \
 			 even */
 /**
  * @}
@@ -516,43 +493,43 @@ typedef struct {
 /** @defgroup RTC_LL_EC_TAMPER_MASK  TAMPER MASK
  * @{
  */
-#define LL_RTC_TAMPER_MASK_TAMPER1                                             \
-	TAMP_CR2_TAMP1MSK /*!< Tamper 1 event generates a trigger event.       \
-			     TAMP1F is masked and internally cleared by        \
+#define LL_RTC_TAMPER_MASK_TAMPER1                                                                                                                                                                     \
+	TAMP_CR2_TAMP1MSK /*!< Tamper 1 event generates a trigger event.                                                                                                                               \
+			     TAMP1F is masked and internally cleared by                                                                                                                                \
 			     hardware.The backup registers are not erased */
-#define LL_RTC_TAMPER_MASK_TAMPER2                                             \
-	TAMP_CR2_TAMP2MSK /*!< Tamper 2 event generates a trigger event.       \
-			     TAMP2F is masked and internally cleared by        \
+#define LL_RTC_TAMPER_MASK_TAMPER2                                                                                                                                                                     \
+	TAMP_CR2_TAMP2MSK /*!< Tamper 2 event generates a trigger event.                                                                                                                               \
+			     TAMP2F is masked and internally cleared by                                                                                                                                \
 			     hardware. The backup registers are not erased. */
 #if (RTC_TAMP_NB == 3)
-#define LL_RTC_TAMPER_MASK_TAMPER3                                             \
-	TAMP_CR2_TAMP3MSK /*!< Tamper 3 event generates a trigger event.       \
-			     TAMP2F is masked and internally cleared by        \
+#define LL_RTC_TAMPER_MASK_TAMPER3                                                                                                                                                                     \
+	TAMP_CR2_TAMP3MSK /*!< Tamper 3 event generates a trigger event.                                                                                                                               \
+			     TAMP2F is masked and internally cleared by                                                                                                                                \
 			     hardware. The backup registers are not erased. */
 #elif (RTC_TAMP_NB == 8)
-#define LL_RTC_TAMPER_MASK_TAMPER3                                             \
-	TAMP_CR2_TAMP3MSK /*!< Tamper 3 event generates a trigger event.       \
-			     TAMP2F is masked and internally cleared by        \
+#define LL_RTC_TAMPER_MASK_TAMPER3                                                                                                                                                                     \
+	TAMP_CR2_TAMP3MSK /*!< Tamper 3 event generates a trigger event.                                                                                                                               \
+			     TAMP2F is masked and internally cleared by                                                                                                                                \
 			     hardware. The backup registers are not erased. */
-#define LL_RTC_TAMPER_MASK_TAMPER4                                             \
-	TAMP_CR2_TAMP4MSK /*!< Tamper 4 event generates a trigger event.       \
-			     TAMP1F is masked and internally cleared by        \
+#define LL_RTC_TAMPER_MASK_TAMPER4                                                                                                                                                                     \
+	TAMP_CR2_TAMP4MSK /*!< Tamper 4 event generates a trigger event.                                                                                                                               \
+			     TAMP1F is masked and internally cleared by                                                                                                                                \
 			     hardware.The backup registers are not erased */
-#define LL_RTC_TAMPER_MASK_TAMPER5                                             \
-	TAMP_CR2_TAMP5MSK /*!< Tamper 5 event generates a trigger event.       \
-			     TAMP2F is masked and internally cleared by        \
+#define LL_RTC_TAMPER_MASK_TAMPER5                                                                                                                                                                     \
+	TAMP_CR2_TAMP5MSK /*!< Tamper 5 event generates a trigger event.                                                                                                                               \
+			     TAMP2F is masked and internally cleared by                                                                                                                                \
 			     hardware. The backup registers are not erased. */
-#define LL_RTC_TAMPER_MASK_TAMPER6                                             \
-	TAMP_CR2_TAMP6MSK /*!< Tamper 6 event generates a trigger event.       \
-			     TAMP1F is masked and internally cleared by        \
+#define LL_RTC_TAMPER_MASK_TAMPER6                                                                                                                                                                     \
+	TAMP_CR2_TAMP6MSK /*!< Tamper 6 event generates a trigger event.                                                                                                                               \
+			     TAMP1F is masked and internally cleared by                                                                                                                                \
 			     hardware.The backup registers are not erased */
-#define LL_RTC_TAMPER_MASK_TAMPER7                                             \
-	TAMP_CR2_TAMP7MSK /*!< Tamper 7 event generates a trigger event.       \
-			     TAMP2F is masked and internally cleared by        \
+#define LL_RTC_TAMPER_MASK_TAMPER7                                                                                                                                                                     \
+	TAMP_CR2_TAMP7MSK /*!< Tamper 7 event generates a trigger event.                                                                                                                               \
+			     TAMP2F is masked and internally cleared by                                                                                                                                \
 			     hardware. The backup registers are not erased. */
-#define LL_RTC_TAMPER_MASK_TAMPER8                                             \
-	TAMP_CR2_TAMP8MSK /*!< Tamper 8 event generates a trigger event.       \
-			     TAMP2F is masked and internally cleared by        \
+#define LL_RTC_TAMPER_MASK_TAMPER8                                                                                                                                                                     \
+	TAMP_CR2_TAMP8MSK /*!< Tamper 8 event generates a trigger event.                                                                                                                               \
+			     TAMP2F is masked and internally cleared by                                                                                                                                \
 			     hardware. The backup registers are not erased. */
 #else
 #warning "RTC_TAMP_NB is not correct"
@@ -564,34 +541,34 @@ typedef struct {
 /** @defgroup RTC_LL_EC_TAMPER_NOERASE  TAMPER NO ERASE
  * @{
  */
-#define LL_RTC_TAMPER_NOERASE_TAMPER1                                          \
-	TAMP_CR2_TAMP1NOERASE /*!< Tamper 1 event does not erase the backup    \
+#define LL_RTC_TAMPER_NOERASE_TAMPER1                                                                                                                                                                  \
+	TAMP_CR2_TAMP1NOERASE /*!< Tamper 1 event does not erase the backup                                                                                                                            \
 				 registers. */
-#define LL_RTC_TAMPER_NOERASE_TAMPER2                                          \
-	TAMP_CR2_TAMP2NOERASE /*!< Tamper 2 event does not erase the backup    \
+#define LL_RTC_TAMPER_NOERASE_TAMPER2                                                                                                                                                                  \
+	TAMP_CR2_TAMP2NOERASE /*!< Tamper 2 event does not erase the backup                                                                                                                            \
 				 registers. */
 #if (RTC_TAMP_NB == 3)
-#define LL_RTC_TAMPER_NOERASE_TAMPER3                                          \
-	TAMP_CR2_TAMP3NOERASE /*!< Tamper 3 event does not erase the backup    \
+#define LL_RTC_TAMPER_NOERASE_TAMPER3                                                                                                                                                                  \
+	TAMP_CR2_TAMP3NOERASE /*!< Tamper 3 event does not erase the backup                                                                                                                            \
 				 registers. */
 #elif (RTC_TAMP_NB == 8)
-#define LL_RTC_TAMPER_NOERASE_TAMPER3                                          \
-	TAMP_CR2_TAMP3NOERASE /*!< Tamper 3 event does not erase the backup    \
+#define LL_RTC_TAMPER_NOERASE_TAMPER3                                                                                                                                                                  \
+	TAMP_CR2_TAMP3NOERASE /*!< Tamper 3 event does not erase the backup                                                                                                                            \
 				 registers. */
-#define LL_RTC_TAMPER_NOERASE_TAMPER4                                          \
-	TAMP_CR2_TAMP4NOERASE /*!< Tamper 4 event does not erase the backup    \
+#define LL_RTC_TAMPER_NOERASE_TAMPER4                                                                                                                                                                  \
+	TAMP_CR2_TAMP4NOERASE /*!< Tamper 4 event does not erase the backup                                                                                                                            \
 				 registers. */
-#define LL_RTC_TAMPER_NOERASE_TAMPER5                                          \
-	TAMP_CR2_TAMP5NOERASE /*!< Tamper 5 event does not erase the backup    \
+#define LL_RTC_TAMPER_NOERASE_TAMPER5                                                                                                                                                                  \
+	TAMP_CR2_TAMP5NOERASE /*!< Tamper 5 event does not erase the backup                                                                                                                            \
 				 registers. */
-#define LL_RTC_TAMPER_NOERASE_TAMPER6                                          \
-	TAMP_CR2_TAMP6NOERASE /*!< Tamper 6 event does not erase the backup    \
+#define LL_RTC_TAMPER_NOERASE_TAMPER6                                                                                                                                                                  \
+	TAMP_CR2_TAMP6NOERASE /*!< Tamper 6 event does not erase the backup                                                                                                                            \
 				 registers. */
-#define LL_RTC_TAMPER_NOERASE_TAMPER7                                          \
-	TAMP_CR2_TAMP7NOERASE /*!< Tamper 7 event does not erase the backup    \
+#define LL_RTC_TAMPER_NOERASE_TAMPER7                                                                                                                                                                  \
+	TAMP_CR2_TAMP7NOERASE /*!< Tamper 7 event does not erase the backup                                                                                                                            \
 				 registers. */
-#define LL_RTC_TAMPER_NOERASE_TAMPER8                                          \
-	TAMP_CR2_TAMP8NOERASE /*!< Tamper 8 event does not erase the backup    \
+#define LL_RTC_TAMPER_NOERASE_TAMPER8                                                                                                                                                                  \
+	TAMP_CR2_TAMP8NOERASE /*!< Tamper 8 event does not erase the backup                                                                                                                            \
 				 registers. */
 #else
 #warning "RTC_TAMP_NB is not correct"
@@ -603,17 +580,17 @@ typedef struct {
 /** @defgroup RTC_LL_EC_TAMPER_DURATION  TAMPER DURATION
  * @{
  */
-#define LL_RTC_TAMPER_DURATION_1RTCCLK                                         \
-	0x00000000U /*!< Tamper pins are pre-charged before sampling during 1  \
+#define LL_RTC_TAMPER_DURATION_1RTCCLK                                                                                                                                                                 \
+	0x00000000U /*!< Tamper pins are pre-charged before sampling during 1                                                                                                                          \
 		       RTCCLK cycle  */
-#define LL_RTC_TAMPER_DURATION_2RTCCLK                                         \
-	TAMP_FLTCR_TAMPPRCH_0 /*!< Tamper pins are pre-charged before sampling \
+#define LL_RTC_TAMPER_DURATION_2RTCCLK                                                                                                                                                                 \
+	TAMP_FLTCR_TAMPPRCH_0 /*!< Tamper pins are pre-charged before sampling                                                                                                                         \
 				 during 2 RTCCLK cycles */
-#define LL_RTC_TAMPER_DURATION_4RTCCLK                                         \
-	TAMP_FLTCR_TAMPPRCH_1 /*!< Tamper pins are pre-charged before sampling \
+#define LL_RTC_TAMPER_DURATION_4RTCCLK                                                                                                                                                                 \
+	TAMP_FLTCR_TAMPPRCH_1 /*!< Tamper pins are pre-charged before sampling                                                                                                                         \
 				 during 4 RTCCLK cycles */
-#define LL_RTC_TAMPER_DURATION_8RTCCLK                                         \
-	TAMP_FLTCR_TAMPPRCH /*!< Tamper pins are pre-charged before sampling   \
+#define LL_RTC_TAMPER_DURATION_8RTCCLK                                                                                                                                                                 \
+	TAMP_FLTCR_TAMPPRCH /*!< Tamper pins are pre-charged before sampling                                                                                                                           \
 			       during 8 RTCCLK cycles */
 /**
  * @}
@@ -622,16 +599,15 @@ typedef struct {
 /** @defgroup RTC_LL_EC_TAMPER_FILTER  TAMPER FILTER
  * @{
  */
-#define LL_RTC_TAMPER_FILTER_DISABLE                                           \
-	0x00000000U /*!< Tamper filter is disabled */
-#define LL_RTC_TAMPER_FILTER_2SAMPLE                                           \
-	TAMP_FLTCR_TAMPFLT_0 /*!< Tamper is activated after 2 consecutive      \
+#define LL_RTC_TAMPER_FILTER_DISABLE 0x00000000U /*!< Tamper filter is disabled */
+#define LL_RTC_TAMPER_FILTER_2SAMPLE                                                                                                                                                                   \
+	TAMP_FLTCR_TAMPFLT_0 /*!< Tamper is activated after 2 consecutive                                                                                                                              \
 				samples at the active level */
-#define LL_RTC_TAMPER_FILTER_4SAMPLE                                           \
-	TAMP_FLTCR_TAMPFLT_1 /*!< Tamper is activated after 4 consecutive      \
+#define LL_RTC_TAMPER_FILTER_4SAMPLE                                                                                                                                                                   \
+	TAMP_FLTCR_TAMPFLT_1 /*!< Tamper is activated after 4 consecutive                                                                                                                              \
 				samples at the active level */
-#define LL_RTC_TAMPER_FILTER_8SAMPLE                                           \
-	TAMP_FLTCR_TAMPFLT /*!< Tamper is activated after 8 consecutive        \
+#define LL_RTC_TAMPER_FILTER_8SAMPLE                                                                                                                                                                   \
+	TAMP_FLTCR_TAMPFLT /*!< Tamper is activated after 8 consecutive                                                                                                                                \
 			      samples at the active level. */
 /**
  * @}
@@ -640,32 +616,29 @@ typedef struct {
 /** @defgroup RTC_LL_EC_TAMPER_SAMPLFREQDIV  TAMPER SAMPLING FREQUENCY DIVIDER
  * @{
  */
-#define LL_RTC_TAMPER_SAMPLFREQDIV_32768                                       \
-	0x00000000U /*!< Each of the tamper inputs are sampled with a          \
+#define LL_RTC_TAMPER_SAMPLFREQDIV_32768                                                                                                                                                               \
+	0x00000000U /*!< Each of the tamper inputs are sampled with a                                                                                                                                  \
 		       frequency =  RTCCLK / 32768 */
-#define LL_RTC_TAMPER_SAMPLFREQDIV_16384                                       \
-	TAMP_FLTCR_TAMPFREQ_0 /*!< Each of the tamper inputs are sampled with  \
+#define LL_RTC_TAMPER_SAMPLFREQDIV_16384                                                                                                                                                               \
+	TAMP_FLTCR_TAMPFREQ_0 /*!< Each of the tamper inputs are sampled with                                                                                                                          \
 				 a frequency =  RTCCLK / 16384 */
-#define LL_RTC_TAMPER_SAMPLFREQDIV_8192                                        \
-	TAMP_FLTCR_TAMPFREQ_1 /*!< Each of the tamper inputs are sampled with  \
+#define LL_RTC_TAMPER_SAMPLFREQDIV_8192                                                                                                                                                                \
+	TAMP_FLTCR_TAMPFREQ_1 /*!< Each of the tamper inputs are sampled with                                                                                                                          \
 				 a frequency =  RTCCLK / 8192 */
-#define LL_RTC_TAMPER_SAMPLFREQDIV_4096                                        \
-	(TAMP_FLTCR_TAMPFREQ_1 |                                               \
-	 TAMP_FLTCR_TAMPFREQ_0) /*!< Each of the tamper inputs are sampled     \
-				   with a frequency =  RTCCLK / 4096 */
-#define LL_RTC_TAMPER_SAMPLFREQDIV_2048                                        \
-	TAMP_FLTCR_TAMPFREQ_2 /*!< Each of the tamper inputs are sampled with  \
+#define LL_RTC_TAMPER_SAMPLFREQDIV_4096                                                                                                                                                                \
+	(TAMP_FLTCR_TAMPFREQ_1 | TAMP_FLTCR_TAMPFREQ_0) /*!< Each of the tamper inputs are sampled                                                                                                     \
+							   with a frequency =  RTCCLK / 4096 */
+#define LL_RTC_TAMPER_SAMPLFREQDIV_2048                                                                                                                                                                \
+	TAMP_FLTCR_TAMPFREQ_2 /*!< Each of the tamper inputs are sampled with                                                                                                                          \
 				 a frequency =  RTCCLK / 2048 */
-#define LL_RTC_TAMPER_SAMPLFREQDIV_1024                                        \
-	(TAMP_FLTCR_TAMPFREQ_2 |                                               \
-	 TAMP_FLTCR_TAMPFREQ_0) /*!< Each of the tamper inputs are sampled     \
-				   with a frequency =  RTCCLK / 1024 */
-#define LL_RTC_TAMPER_SAMPLFREQDIV_512                                         \
-	(TAMP_FLTCR_TAMPFREQ_2 |                                               \
-	 TAMP_FLTCR_TAMPFREQ_1) /*!< Each of the tamper inputs are sampled     \
-				   with a frequency =  RTCCLK / 512 */
-#define LL_RTC_TAMPER_SAMPLFREQDIV_256                                         \
-	TAMP_FLTCR_TAMPFREQ /*!< Each of the tamper inputs are sampled with a  \
+#define LL_RTC_TAMPER_SAMPLFREQDIV_1024                                                                                                                                                                \
+	(TAMP_FLTCR_TAMPFREQ_2 | TAMP_FLTCR_TAMPFREQ_0) /*!< Each of the tamper inputs are sampled                                                                                                     \
+							   with a frequency =  RTCCLK / 1024 */
+#define LL_RTC_TAMPER_SAMPLFREQDIV_512                                                                                                                                                                 \
+	(TAMP_FLTCR_TAMPFREQ_2 | TAMP_FLTCR_TAMPFREQ_1) /*!< Each of the tamper inputs are sampled                                                                                                     \
+							   with a frequency =  RTCCLK / 512 */
+#define LL_RTC_TAMPER_SAMPLFREQDIV_256                                                                                                                                                                 \
+	TAMP_FLTCR_TAMPFREQ /*!< Each of the tamper inputs are sampled with a                                                                                                                          \
 			       frequency =  RTCCLK / 256 */
 /**
  * @}
@@ -674,43 +647,43 @@ typedef struct {
 /** @defgroup RTC_LL_EC_TAMPER_ACTIVELEVEL  TAMPER ACTIVE LEVEL
  * @{
  */
-#define LL_RTC_TAMPER_ACTIVELEVEL_TAMP1                                        \
-	TAMP_CR2_TAMP1TRG /*!< Tamper 1 input falling edge (if TAMPFLT = 00)   \
-			     or staying high (if TAMPFLT != 00) triggers a     \
+#define LL_RTC_TAMPER_ACTIVELEVEL_TAMP1                                                                                                                                                                \
+	TAMP_CR2_TAMP1TRG /*!< Tamper 1 input falling edge (if TAMPFLT = 00)                                                                                                                           \
+			     or staying high (if TAMPFLT != 00) triggers a                                                                                                                             \
 			     tamper detection event */
-#define LL_RTC_TAMPER_ACTIVELEVEL_TAMP2                                        \
-	TAMP_CR2_TAMP2TRG /*!< Tamper 2 input falling edge (if TAMPFLT = 00)   \
-			     or staying high (if TAMPFLT != 00) triggers a     \
+#define LL_RTC_TAMPER_ACTIVELEVEL_TAMP2                                                                                                                                                                \
+	TAMP_CR2_TAMP2TRG /*!< Tamper 2 input falling edge (if TAMPFLT = 00)                                                                                                                           \
+			     or staying high (if TAMPFLT != 00) triggers a                                                                                                                             \
 			     tamper detection event */
 #if (RTC_TAMP_NB == 3)
-#define LL_RTC_TAMPER_ACTIVELEVEL_TAMP3                                        \
-	TAMP_CR2_TAMP3TRG /*!< Tamper 3 input falling edge (if TAMPFLT = 00)   \
-			     or staying high (if TAMPFLT != 00) triggers a     \
+#define LL_RTC_TAMPER_ACTIVELEVEL_TAMP3                                                                                                                                                                \
+	TAMP_CR2_TAMP3TRG /*!< Tamper 3 input falling edge (if TAMPFLT = 00)                                                                                                                           \
+			     or staying high (if TAMPFLT != 00) triggers a                                                                                                                             \
 			     tamper detection event */
 #elif (RTC_TAMP_NB == 8)
-#define LL_RTC_TAMPER_ACTIVELEVEL_TAMP3                                        \
-	TAMP_CR2_TAMP3TRG /*!< Tamper 3 input falling edge (if TAMPFLT = 00)   \
-			     or staying high (if TAMPFLT != 00) triggers a     \
+#define LL_RTC_TAMPER_ACTIVELEVEL_TAMP3                                                                                                                                                                \
+	TAMP_CR2_TAMP3TRG /*!< Tamper 3 input falling edge (if TAMPFLT = 00)                                                                                                                           \
+			     or staying high (if TAMPFLT != 00) triggers a                                                                                                                             \
 			     tamper detection event */
-#define LL_RTC_TAMPER_ACTIVELEVEL_TAMP4                                        \
-	TAMP_CR2_TAMP4TRG /*!< Tamper 4 input falling edge (if TAMPFLT = 00)   \
-			     or staying high (if TAMPFLT != 00) triggers a     \
+#define LL_RTC_TAMPER_ACTIVELEVEL_TAMP4                                                                                                                                                                \
+	TAMP_CR2_TAMP4TRG /*!< Tamper 4 input falling edge (if TAMPFLT = 00)                                                                                                                           \
+			     or staying high (if TAMPFLT != 00) triggers a                                                                                                                             \
 			     tamper detection event */
-#define LL_RTC_TAMPER_ACTIVELEVEL_TAMP5                                        \
-	TAMP_CR2_TAMP5TRG /*!< Tamper 5 input falling edge (if TAMPFLT = 00)   \
-			     or staying high (if TAMPFLT != 00) triggers a     \
+#define LL_RTC_TAMPER_ACTIVELEVEL_TAMP5                                                                                                                                                                \
+	TAMP_CR2_TAMP5TRG /*!< Tamper 5 input falling edge (if TAMPFLT = 00)                                                                                                                           \
+			     or staying high (if TAMPFLT != 00) triggers a                                                                                                                             \
 			     tamper detection event */
-#define LL_RTC_TAMPER_ACTIVELEVEL_TAMP6                                        \
-	TAMP_CR2_TAMP6TRG /*!< Tamper 6 input falling edge (if TAMPFLT = 00)   \
-			     or staying high (if TAMPFLT != 00) triggers a     \
+#define LL_RTC_TAMPER_ACTIVELEVEL_TAMP6                                                                                                                                                                \
+	TAMP_CR2_TAMP6TRG /*!< Tamper 6 input falling edge (if TAMPFLT = 00)                                                                                                                           \
+			     or staying high (if TAMPFLT != 00) triggers a                                                                                                                             \
 			     tamper detection event */
-#define LL_RTC_TAMPER_ACTIVELEVEL_TAMP7                                        \
-	TAMP_CR2_TAMP7TRG /*!< Tamper 7 input falling edge (if TAMPFLT = 00)   \
-			     or staying high (if TAMPFLT != 00) triggers a     \
+#define LL_RTC_TAMPER_ACTIVELEVEL_TAMP7                                                                                                                                                                \
+	TAMP_CR2_TAMP7TRG /*!< Tamper 7 input falling edge (if TAMPFLT = 00)                                                                                                                           \
+			     or staying high (if TAMPFLT != 00) triggers a                                                                                                                             \
 			     tamper detection event */
-#define LL_RTC_TAMPER_ACTIVELEVEL_TAMP8                                        \
-	TAMP_CR2_TAMP8TRG /*!< Tamper 8 input falling edge (if TAMPFLT = 00)   \
-			     or staying high (if TAMPFLT != 00) triggers a     \
+#define LL_RTC_TAMPER_ACTIVELEVEL_TAMP8                                                                                                                                                                \
+	TAMP_CR2_TAMP8TRG /*!< Tamper 8 input falling edge (if TAMPFLT = 00)                                                                                                                           \
+			     or staying high (if TAMPFLT != 00) triggers a                                                                                                                             \
 			     tamper detection event */
 #endif			  /* (RTC_TAMP_NB) */
 /**
@@ -720,32 +693,26 @@ typedef struct {
 /** @defgroup RTC_LL_EC_INTERNAL  INTERNAL TAMPER
  * @{
  */
-#define LL_RTC_TAMPER_ITAMP1                                                   \
-	TAMP_CR1_ITAMP1E /*!< Internal tamper 1: RTC supply voltage monitoring \
+#define LL_RTC_TAMPER_ITAMP1                                                                                                                                                                           \
+	TAMP_CR1_ITAMP1E /*!< Internal tamper 1: RTC supply voltage monitoring                                                                                                                         \
 			  */
 #if defined(RTC_TAMP_INT_2_SUPPORT)
-#define LL_RTC_TAMPER_ITAMP2                                                   \
-	TAMP_CR1_ITAMP2E /*!< Internal tamper 2: temperature monitoring */
-#endif			 /* RTC_TAMP_INT_2_SUPPORT */
-#define LL_RTC_TAMPER_ITAMP3                                                   \
-	TAMP_CR1_ITAMP3E /*!< Internal tamper 3: LSE monitoring */
-#define LL_RTC_TAMPER_ITAMP4                                                   \
-	TAMP_CR1_ITAMP4E /*!< Internal tamper 4: HSE monitoring */
-#define LL_RTC_TAMPER_ITAMP5                                                   \
-	TAMP_CR1_ITAMP5E /*!< Internal tamper 5: RTC calendar overflow */
+#define LL_RTC_TAMPER_ITAMP2 TAMP_CR1_ITAMP2E /*!< Internal tamper 2: temperature monitoring */
+#endif					      /* RTC_TAMP_INT_2_SUPPORT */
+#define LL_RTC_TAMPER_ITAMP3 TAMP_CR1_ITAMP3E /*!< Internal tamper 3: LSE monitoring */
+#define LL_RTC_TAMPER_ITAMP4 TAMP_CR1_ITAMP4E /*!< Internal tamper 4: HSE monitoring */
+#define LL_RTC_TAMPER_ITAMP5 TAMP_CR1_ITAMP5E /*!< Internal tamper 5: RTC calendar overflow */
 #if defined(RTC_TAMP_INT_6_SUPPORT)
-#define LL_RTC_TAMPER_ITAMP6                                                   \
-	TAMP_CR1_ITAMP6E /*!< Internal tamper 6: Test mode entry */
-#endif			 /* RTC_TAMP_INT_6_SUPPORT */
+#define LL_RTC_TAMPER_ITAMP6 TAMP_CR1_ITAMP6E /*!< Internal tamper 6: Test mode entry */
+#endif					      /* RTC_TAMP_INT_6_SUPPORT */
 #if defined(RTC_TAMP_INT_7_SUPPORT)
-#define LL_RTC_TAMPER_ITAMP7                                                   \
-	TAMP_CR1_ITAMP7E /*!< Internal tamper 7: Readout protection level      \
+#define LL_RTC_TAMPER_ITAMP7                                                                                                                                                                           \
+	TAMP_CR1_ITAMP7E /*!< Internal tamper 7: Readout protection level                                                                                                                              \
 			    decrease */
 #endif			 /* RTC_TAMP_INT_7_SUPPORT */
 #if defined(RTC_TAMP_INT_8_SUPPORT)
-#define LL_RTC_TAMPER_ITAMP8                                                   \
-	TAMP_CR1_ITAMP8E /*!< Internal tamper 8: Monotonic counter overflow */
-#endif			 /* RTC_TAMP_INT_8_SUPPORT */
+#define LL_RTC_TAMPER_ITAMP8 TAMP_CR1_ITAMP8E /*!< Internal tamper 8: Monotonic counter overflow */
+#endif					      /* RTC_TAMP_INT_8_SUPPORT */
 
 /**
  * @}
@@ -822,19 +789,14 @@ typedef struct {
 /** @defgroup RTC_LL_EC_WAKEUPCLOCK_DIV  WAKEUP CLOCK DIV
  * @{
  */
-#define LL_RTC_WAKEUPCLOCK_DIV_16 0x00000000U /*!< RTC/16 clock is selected */
-#define LL_RTC_WAKEUPCLOCK_DIV_8                                               \
-	RTC_CR_WUCKSEL_0 /*!< RTC/8 clock is selected */
-#define LL_RTC_WAKEUPCLOCK_DIV_4                                               \
-	RTC_CR_WUCKSEL_1 /*!< RTC/4 clock is selected */
-#define LL_RTC_WAKEUPCLOCK_DIV_2                                               \
-	(RTC_CR_WUCKSEL_1 | RTC_CR_WUCKSEL_0) /*!< RTC/2 clock is selected */
-#define LL_RTC_WAKEUPCLOCK_CKSPRE                                              \
-	RTC_CR_WUCKSEL_2 /*!< ck_spre (usually 1 Hz) clock is selected */
-#define LL_RTC_WAKEUPCLOCK_CKSPRE_WUT                                          \
-	(RTC_CR_WUCKSEL_2 |                                                    \
-	 RTC_CR_WUCKSEL_1) /*!< ck_spre (usually 1 Hz) clock is selected and   \
-			      2exp16 is added to the WUT counter value*/
+#define LL_RTC_WAKEUPCLOCK_DIV_16 0x00000000U			       /*!< RTC/16 clock is selected */
+#define LL_RTC_WAKEUPCLOCK_DIV_8 RTC_CR_WUCKSEL_0		       /*!< RTC/8 clock is selected */
+#define LL_RTC_WAKEUPCLOCK_DIV_4 RTC_CR_WUCKSEL_1		       /*!< RTC/4 clock is selected */
+#define LL_RTC_WAKEUPCLOCK_DIV_2 (RTC_CR_WUCKSEL_1 | RTC_CR_WUCKSEL_0) /*!< RTC/2 clock is selected */
+#define LL_RTC_WAKEUPCLOCK_CKSPRE RTC_CR_WUCKSEL_2		       /*!< ck_spre (usually 1 Hz) clock is selected */
+#define LL_RTC_WAKEUPCLOCK_CKSPRE_WUT                                                                                                                                                                  \
+	(RTC_CR_WUCKSEL_2 | RTC_CR_WUCKSEL_1) /*!< ck_spre (usually 1 Hz) clock is selected and                                                                                                        \
+						 2exp16 is added to the WUT counter value*/
 /**
  * @}
  */
@@ -842,13 +804,11 @@ typedef struct {
 /** @defgroup RTC_LL_EC_CALIB_OUTPUT  Calibration output
  * @{
  */
-#define LL_RTC_CALIB_OUTPUT_NONE                                               \
-	0x00000000U /*!< Calibration output disabled                           \
-		     */
-#define LL_RTC_CALIB_OUTPUT_1HZ                                                \
-	(RTC_CR_COE | RTC_CR_COSEL) /*!< Calibration output is 1 Hz */
-#define LL_RTC_CALIB_OUTPUT_512HZ                                              \
-	RTC_CR_COE /*!< Calibration output is 512 Hz */
+#define LL_RTC_CALIB_OUTPUT_NONE                                                                                                                                                                       \
+	0x00000000U					    /*!< Calibration output disabled                                                                                                           \
+							     */
+#define LL_RTC_CALIB_OUTPUT_1HZ (RTC_CR_COE | RTC_CR_COSEL) /*!< Calibration output is 1 Hz */
+#define LL_RTC_CALIB_OUTPUT_512HZ RTC_CR_COE		    /*!< Calibration output is 512 Hz */
 /**
  * @}
  */
@@ -856,10 +816,9 @@ typedef struct {
 /** @defgroup RTC_LL_EC_CALIB_INSERTPULSE  Calibration pulse insertion
  * @{
  */
-#define LL_RTC_CALIB_INSERTPULSE_NONE                                          \
-	0x00000000U /*!< No RTCCLK pulses are added */
-#define LL_RTC_CALIB_INSERTPULSE_SET                                           \
-	RTC_CALR_CALP /*!< One RTCCLK pulse is effectively inserted every      \
+#define LL_RTC_CALIB_INSERTPULSE_NONE 0x00000000U /*!< No RTCCLK pulses are added */
+#define LL_RTC_CALIB_INSERTPULSE_SET                                                                                                                                                                   \
+	RTC_CALR_CALP /*!< One RTCCLK pulse is effectively inserted every                                                                                                                              \
 			 2exp11 pulses (frequency increased by 488.5 ppm) */
 /**
  * @}
@@ -868,12 +827,9 @@ typedef struct {
 /** @defgroup RTC_LL_EC_CALIB_PERIOD  Calibration period
  * @{
  */
-#define LL_RTC_CALIB_PERIOD_32SEC                                              \
-	0x00000000U /*!< Use a 32-second calibration cycle period */
-#define LL_RTC_CALIB_PERIOD_16SEC                                              \
-	RTC_CALR_CALW16 /*!< Use a 16-second calibration cycle period */
-#define LL_RTC_CALIB_PERIOD_8SEC                                               \
-	RTC_CALR_CALW8 /*!< Use a 8-second calibration cycle period */
+#define LL_RTC_CALIB_PERIOD_32SEC 0x00000000U	  /*!< Use a 32-second calibration cycle period */
+#define LL_RTC_CALIB_PERIOD_16SEC RTC_CALR_CALW16 /*!< Use a 16-second calibration cycle period */
+#define LL_RTC_CALIB_PERIOD_8SEC RTC_CALR_CALW8	  /*!< Use a 8-second calibration cycle period */
 /**
  * @}
  */
@@ -893,8 +849,7 @@ typedef struct {
  * @param  __VALUE__ Byte to be converted
  * @retval Converted byte
  */
-#define __LL_RTC_CONVERT_BIN2BCD(__VALUE__)                                    \
-	(uint8_t)((((__VALUE__) / 10U) << 4U) | ((__VALUE__) % 10U))
+#define __LL_RTC_CONVERT_BIN2BCD(__VALUE__) (uint8_t)((((__VALUE__) / 10U) << 4U) | ((__VALUE__) % 10U))
 
 /**
  * @brief  Helper macro to convert a value from BCD format to 2 digit decimal
@@ -902,11 +857,7 @@ typedef struct {
  * @param  __VALUE__ BCD value to be converted
  * @retval Converted byte
  */
-#define __LL_RTC_CONVERT_BCD2BIN(__VALUE__)                                    \
-	((uint8_t)((((uint8_t)((__VALUE__) & (uint8_t)0xF0U) >>                \
-		     (uint8_t)0x4U) *                                          \
-		    10U) +                                                     \
-		   ((__VALUE__) & (uint8_t)0x0FU)))
+#define __LL_RTC_CONVERT_BCD2BIN(__VALUE__) ((uint8_t)((((uint8_t)((__VALUE__) & (uint8_t)0xF0U) >> (uint8_t)0x4U) * 10U) + ((__VALUE__) & (uint8_t)0x0FU)))
 
 /**
  * @}
@@ -928,8 +879,7 @@ typedef struct {
  *         @arg @ref LL_RTC_WEEKDAY_SATURDAY
  *         @arg @ref LL_RTC_WEEKDAY_SUNDAY
  */
-#define __LL_RTC_GET_WEEKDAY(__RTC_DATE__)                                     \
-	(((__RTC_DATE__) >> RTC_OFFSET_WEEKDAY) & 0x000000FFU)
+#define __LL_RTC_GET_WEEKDAY(__RTC_DATE__) (((__RTC_DATE__) >> RTC_OFFSET_WEEKDAY) & 0x000000FFU)
 
 /**
  * @brief  Helper macro to retrieve Year in BCD format
@@ -955,16 +905,14 @@ typedef struct {
  *         @arg @ref LL_RTC_MONTH_NOVEMBER
  *         @arg @ref LL_RTC_MONTH_DECEMBER
  */
-#define __LL_RTC_GET_MONTH(__RTC_DATE__)                                       \
-	(((__RTC_DATE__) >> RTC_OFFSET_MONTH) & 0x000000FFU)
+#define __LL_RTC_GET_MONTH(__RTC_DATE__) (((__RTC_DATE__) >> RTC_OFFSET_MONTH) & 0x000000FFU)
 
 /**
  * @brief  Helper macro to retrieve Day in BCD format
  * @param  __RTC_DATE__ Value returned by @ref  LL_RTC_DATE_Get
  * @retval Day in BCD format (0x01 . . . 0x31)
  */
-#define __LL_RTC_GET_DAY(__RTC_DATE__)                                         \
-	(((__RTC_DATE__) >> RTC_OFFSET_DAY) & 0x000000FFU)
+#define __LL_RTC_GET_DAY(__RTC_DATE__) (((__RTC_DATE__) >> RTC_OFFSET_DAY) & 0x000000FFU)
 
 /**
  * @}
@@ -980,16 +928,14 @@ typedef struct {
  * @retval Hours in BCD format (0x01. . .0x12 or between Min_Data=0x00 and
  * Max_Data=0x23)
  */
-#define __LL_RTC_GET_HOUR(__RTC_TIME__)                                        \
-	(((__RTC_TIME__) >> RTC_OFFSET_HOUR) & 0x000000FFU)
+#define __LL_RTC_GET_HOUR(__RTC_TIME__) (((__RTC_TIME__) >> RTC_OFFSET_HOUR) & 0x000000FFU)
 
 /**
  * @brief  Helper macro to retrieve minute in BCD format
  * @param  __RTC_TIME__ RTC time returned by @ref LL_RTC_TIME_Get function
  * @retval Minutes in BCD format (0x00. . .0x59)
  */
-#define __LL_RTC_GET_MINUTE(__RTC_TIME__)                                      \
-	(((__RTC_TIME__) >> RTC_OFFSET_MINUTE) & 0x000000FFU)
+#define __LL_RTC_GET_MINUTE(__RTC_TIME__) (((__RTC_TIME__) >> RTC_OFFSET_MINUTE) & 0x000000FFU)
 
 /**
  * @brief  Helper macro to retrieve second in BCD format
@@ -1028,11 +974,7 @@ typedef struct {
  *         @arg @ref LL_RTC_HOURFORMAT_AMPM
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_SetHourFormat(RTC_TypeDef *RTCx,
-					  uint32_t HourFormat)
-{
-	MODIFY_REG(RTCx->CR, RTC_CR_FMT, HourFormat);
-}
+__STATIC_INLINE void LL_RTC_SetHourFormat(RTC_TypeDef *RTCx, uint32_t HourFormat) { MODIFY_REG(RTCx->CR, RTC_CR_FMT, HourFormat); }
 
 /**
  * @brief  Get Hours format (24 hour/day or AM/PM hour format)
@@ -1042,10 +984,7 @@ __STATIC_INLINE void LL_RTC_SetHourFormat(RTC_TypeDef *RTCx,
  *         @arg @ref LL_RTC_HOURFORMAT_24HOUR
  *         @arg @ref LL_RTC_HOURFORMAT_AMPM
  */
-__STATIC_INLINE uint32_t LL_RTC_GetHourFormat(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->CR, RTC_CR_FMT));
-}
+__STATIC_INLINE uint32_t LL_RTC_GetHourFormat(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->CR, RTC_CR_FMT)); }
 
 /**
  * @brief  Select the flag to be routed to RTC_ALARM output
@@ -1060,11 +999,7 @@ __STATIC_INLINE uint32_t LL_RTC_GetHourFormat(RTC_TypeDef *RTCx)
  *         @arg @ref LL_RTC_ALARMOUT_WAKEUP
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_SetAlarmOutEvent(RTC_TypeDef *RTCx,
-					     uint32_t AlarmOutput)
-{
-	MODIFY_REG(RTCx->CR, RTC_CR_OSEL, AlarmOutput);
-}
+__STATIC_INLINE void LL_RTC_SetAlarmOutEvent(RTC_TypeDef *RTCx, uint32_t AlarmOutput) { MODIFY_REG(RTCx->CR, RTC_CR_OSEL, AlarmOutput); }
 
 /**
  * @brief  Get the flag to be routed to RTC_ALARM output
@@ -1076,10 +1011,7 @@ __STATIC_INLINE void LL_RTC_SetAlarmOutEvent(RTC_TypeDef *RTCx,
  *         @arg @ref LL_RTC_ALARMOUT_ALMB
  *         @arg @ref LL_RTC_ALARMOUT_WAKEUP
  */
-__STATIC_INLINE uint32_t LL_RTC_GetAlarmOutEvent(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->CR, RTC_CR_OSEL));
-}
+__STATIC_INLINE uint32_t LL_RTC_GetAlarmOutEvent(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->CR, RTC_CR_OSEL)); }
 
 /**
  * @brief  Set RTC_ALARM output type (ALARM in push-pull or open-drain output)
@@ -1090,11 +1022,7 @@ __STATIC_INLINE uint32_t LL_RTC_GetAlarmOutEvent(RTC_TypeDef *RTCx)
  *         @arg @ref LL_RTC_ALARM_OUTPUTTYPE_PUSHPULL
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_SetAlarmOutputType(RTC_TypeDef *RTCx,
-					       uint32_t Output)
-{
-	MODIFY_REG(RTCx->CR, RTC_CR_TAMPALRM_TYPE, Output);
-}
+__STATIC_INLINE void LL_RTC_SetAlarmOutputType(RTC_TypeDef *RTCx, uint32_t Output) { MODIFY_REG(RTCx->CR, RTC_CR_TAMPALRM_TYPE, Output); }
 
 /**
  * @brief  Get RTC_ALARM output type (ALARM in push-pull or open-drain output)
@@ -1104,10 +1032,7 @@ __STATIC_INLINE void LL_RTC_SetAlarmOutputType(RTC_TypeDef *RTCx,
  *         @arg @ref LL_RTC_ALARM_OUTPUTTYPE_OPENDRAIN
  *         @arg @ref LL_RTC_ALARM_OUTPUTTYPE_PUSHPULL
  */
-__STATIC_INLINE uint32_t LL_RTC_GetAlarmOutputType(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->CR, RTC_CR_TAMPALRM_TYPE));
-}
+__STATIC_INLINE uint32_t LL_RTC_GetAlarmOutputType(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->CR, RTC_CR_TAMPALRM_TYPE)); }
 
 /**
  * @brief  Enable initialization mode
@@ -1147,11 +1072,7 @@ __STATIC_INLINE void LL_RTC_DisableInitMode(RTC_TypeDef *RTCx)
  *         @arg @ref LL_RTC_OUTPUTPOLARITY_PIN_LOW
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_SetOutputPolarity(RTC_TypeDef *RTCx,
-					      uint32_t Polarity)
-{
-	MODIFY_REG(RTCx->CR, RTC_CR_POL, Polarity);
-}
+__STATIC_INLINE void LL_RTC_SetOutputPolarity(RTC_TypeDef *RTCx, uint32_t Polarity) { MODIFY_REG(RTCx->CR, RTC_CR_POL, Polarity); }
 
 /**
  * @brief  Get Output polarity
@@ -1161,10 +1082,7 @@ __STATIC_INLINE void LL_RTC_SetOutputPolarity(RTC_TypeDef *RTCx,
  *         @arg @ref LL_RTC_OUTPUTPOLARITY_PIN_HIGH
  *         @arg @ref LL_RTC_OUTPUTPOLARITY_PIN_LOW
  */
-__STATIC_INLINE uint32_t LL_RTC_GetOutputPolarity(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->CR, RTC_CR_POL));
-}
+__STATIC_INLINE uint32_t LL_RTC_GetOutputPolarity(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->CR, RTC_CR_POL)); }
 
 /**
  * @brief  Enable Bypass the shadow registers
@@ -1174,10 +1092,7 @@ __STATIC_INLINE uint32_t LL_RTC_GetOutputPolarity(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_EnableShadowRegBypass(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->CR, RTC_CR_BYPSHAD);
-}
+__STATIC_INLINE void LL_RTC_EnableShadowRegBypass(RTC_TypeDef *RTCx) { SET_BIT(RTCx->CR, RTC_CR_BYPSHAD); }
 
 /**
  * @brief  Disable Bypass the shadow registers
@@ -1185,10 +1100,7 @@ __STATIC_INLINE void LL_RTC_EnableShadowRegBypass(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_DisableShadowRegBypass(RTC_TypeDef *RTCx)
-{
-	CLEAR_BIT(RTCx->CR, RTC_CR_BYPSHAD);
-}
+__STATIC_INLINE void LL_RTC_DisableShadowRegBypass(RTC_TypeDef *RTCx) { CLEAR_BIT(RTCx->CR, RTC_CR_BYPSHAD); }
 
 /**
  * @brief  Check if Shadow registers bypass is enabled or not.
@@ -1196,11 +1108,7 @@ __STATIC_INLINE void LL_RTC_DisableShadowRegBypass(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsShadowRegBypassEnabled(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->CR, RTC_CR_BYPSHAD) == (RTC_CR_BYPSHAD)) ? 1U
-									 : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsShadowRegBypassEnabled(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->CR, RTC_CR_BYPSHAD) == (RTC_CR_BYPSHAD)) ? 1U : 0U); }
 
 /**
  * @brief  Enable RTC_REFIN reference clock detection (50 or 60 Hz)
@@ -1212,10 +1120,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsShadowRegBypassEnabled(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_EnableRefClock(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->CR, RTC_CR_REFCKON);
-}
+__STATIC_INLINE void LL_RTC_EnableRefClock(RTC_TypeDef *RTCx) { SET_BIT(RTCx->CR, RTC_CR_REFCKON); }
 
 /**
  * @brief  Disable RTC_REFIN reference clock detection (50 or 60 Hz)
@@ -1227,10 +1132,7 @@ __STATIC_INLINE void LL_RTC_EnableRefClock(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_DisableRefClock(RTC_TypeDef *RTCx)
-{
-	CLEAR_BIT(RTCx->CR, RTC_CR_REFCKON);
-}
+__STATIC_INLINE void LL_RTC_DisableRefClock(RTC_TypeDef *RTCx) { CLEAR_BIT(RTCx->CR, RTC_CR_REFCKON); }
 
 /**
  * @brief  Set Asynchronous prescaler factor
@@ -1239,12 +1141,7 @@ __STATIC_INLINE void LL_RTC_DisableRefClock(RTC_TypeDef *RTCx)
  * @param  AsynchPrescaler Value between Min_Data = 0 and Max_Data = 0x7F
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_SetAsynchPrescaler(RTC_TypeDef *RTCx,
-					       uint32_t AsynchPrescaler)
-{
-	MODIFY_REG(RTCx->PRER, RTC_PRER_PREDIV_A,
-		   AsynchPrescaler << RTC_PRER_PREDIV_A_Pos);
-}
+__STATIC_INLINE void LL_RTC_SetAsynchPrescaler(RTC_TypeDef *RTCx, uint32_t AsynchPrescaler) { MODIFY_REG(RTCx->PRER, RTC_PRER_PREDIV_A, AsynchPrescaler << RTC_PRER_PREDIV_A_Pos); }
 
 /**
  * @brief  Set Synchronous prescaler factor
@@ -1253,11 +1150,7 @@ __STATIC_INLINE void LL_RTC_SetAsynchPrescaler(RTC_TypeDef *RTCx,
  * @param  SynchPrescaler Value between Min_Data = 0 and Max_Data = 0x7FFF
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_SetSynchPrescaler(RTC_TypeDef *RTCx,
-					      uint32_t SynchPrescaler)
-{
-	MODIFY_REG(RTCx->PRER, RTC_PRER_PREDIV_S, SynchPrescaler);
-}
+__STATIC_INLINE void LL_RTC_SetSynchPrescaler(RTC_TypeDef *RTCx, uint32_t SynchPrescaler) { MODIFY_REG(RTCx->PRER, RTC_PRER_PREDIV_S, SynchPrescaler); }
 
 /**
  * @brief  Get Asynchronous prescaler factor
@@ -1265,11 +1158,7 @@ __STATIC_INLINE void LL_RTC_SetSynchPrescaler(RTC_TypeDef *RTCx,
  * @param  RTCx RTC Instance
  * @retval Value between Min_Data = 0 and Max_Data = 0x7F
  */
-__STATIC_INLINE uint32_t LL_RTC_GetAsynchPrescaler(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->PRER, RTC_PRER_PREDIV_A) >>
-			  RTC_PRER_PREDIV_A_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_GetAsynchPrescaler(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->PRER, RTC_PRER_PREDIV_A) >> RTC_PRER_PREDIV_A_Pos); }
 
 /**
  * @brief  Get Synchronous prescaler factor
@@ -1277,10 +1166,7 @@ __STATIC_INLINE uint32_t LL_RTC_GetAsynchPrescaler(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval Value between Min_Data = 0 and Max_Data = 0x7FFF
  */
-__STATIC_INLINE uint32_t LL_RTC_GetSynchPrescaler(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->PRER, RTC_PRER_PREDIV_S));
-}
+__STATIC_INLINE uint32_t LL_RTC_GetSynchPrescaler(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->PRER, RTC_PRER_PREDIV_S)); }
 
 /**
  * @brief  Enable the write protection for RTC registers.
@@ -1288,10 +1174,7 @@ __STATIC_INLINE uint32_t LL_RTC_GetSynchPrescaler(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_EnableWriteProtection(RTC_TypeDef *RTCx)
-{
-	WRITE_REG(RTCx->WPR, RTC_WRITE_PROTECTION_DISABLE);
-}
+__STATIC_INLINE void LL_RTC_EnableWriteProtection(RTC_TypeDef *RTCx) { WRITE_REG(RTCx->WPR, RTC_WRITE_PROTECTION_DISABLE); }
 
 /**
  * @brief  Disable the write protection for RTC registers.
@@ -1313,10 +1196,7 @@ __STATIC_INLINE void LL_RTC_DisableWriteProtection(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_EnableTamperOutput(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->CR, RTC_CR_TAMPOE);
-}
+__STATIC_INLINE void LL_RTC_EnableTamperOutput(RTC_TypeDef *RTCx) { SET_BIT(RTCx->CR, RTC_CR_TAMPOE); }
 
 /**
  * @brief  Disable tamper output.
@@ -1324,10 +1204,7 @@ __STATIC_INLINE void LL_RTC_EnableTamperOutput(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_DisableTamperOutput(RTC_TypeDef *RTCx)
-{
-	CLEAR_BIT(RTCx->CR, RTC_CR_TAMPOE);
-}
+__STATIC_INLINE void LL_RTC_DisableTamperOutput(RTC_TypeDef *RTCx) { CLEAR_BIT(RTCx->CR, RTC_CR_TAMPOE); }
 
 /**
  * @brief  Check if tamper output is enabled or not.
@@ -1335,11 +1212,7 @@ __STATIC_INLINE void LL_RTC_DisableTamperOutput(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsTamperOutputEnabled(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->CR, RTC_CR_TAMPOE) == (RTC_CR_TAMPOE)) ? 1U
-								       : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsTamperOutputEnabled(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->CR, RTC_CR_TAMPOE) == (RTC_CR_TAMPOE)) ? 1U : 0U); }
 
 /**
  * @brief  Enable internal pull-up in output mode.
@@ -1347,10 +1220,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsTamperOutputEnabled(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_EnableAlarmPullUp(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->CR, RTC_CR_TAMPALRM_PU);
-}
+__STATIC_INLINE void LL_RTC_EnableAlarmPullUp(RTC_TypeDef *RTCx) { SET_BIT(RTCx->CR, RTC_CR_TAMPALRM_PU); }
 
 /**
  * @brief  Disable internal pull-up in output mode.
@@ -1358,10 +1228,7 @@ __STATIC_INLINE void LL_RTC_EnableAlarmPullUp(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_DisableAlarmPullUp(RTC_TypeDef *RTCx)
-{
-	CLEAR_BIT(RTCx->CR, RTC_CR_TAMPALRM_PU);
-}
+__STATIC_INLINE void LL_RTC_DisableAlarmPullUp(RTC_TypeDef *RTCx) { CLEAR_BIT(RTCx->CR, RTC_CR_TAMPALRM_PU); }
 
 /**
  * @brief  Check if internal pull-up in output mode is enabled or not.
@@ -1369,12 +1236,7 @@ __STATIC_INLINE void LL_RTC_DisableAlarmPullUp(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsAlarmPullUpEnabled(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->CR, RTC_CR_TAMPALRM_PU) == (RTC_CR_TAMPALRM_PU))
-		    ? 1U
-		    : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsAlarmPullUpEnabled(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->CR, RTC_CR_TAMPALRM_PU) == (RTC_CR_TAMPALRM_PU)) ? 1U : 0U); }
 
 /**
  * @brief  Enable RTC_OUT2 output
@@ -1385,10 +1247,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsAlarmPullUpEnabled(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_EnableOutput2(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->CR, RTC_CR_OUT2EN);
-}
+__STATIC_INLINE void LL_RTC_EnableOutput2(RTC_TypeDef *RTCx) { SET_BIT(RTCx->CR, RTC_CR_OUT2EN); }
 
 /**
  * @brief  Disable RTC_OUT2 output
@@ -1396,10 +1255,7 @@ __STATIC_INLINE void LL_RTC_EnableOutput2(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_DisableOutput2(RTC_TypeDef *RTCx)
-{
-	CLEAR_BIT(RTCx->CR, RTC_CR_OUT2EN);
-}
+__STATIC_INLINE void LL_RTC_DisableOutput2(RTC_TypeDef *RTCx) { CLEAR_BIT(RTCx->CR, RTC_CR_OUT2EN); }
 
 /**
  * @brief  Check if RTC_OUT2 output is enabled or not.
@@ -1407,11 +1263,7 @@ __STATIC_INLINE void LL_RTC_DisableOutput2(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsOutput2Enabled(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->CR, RTC_CR_OUT2EN) == (RTC_CR_OUT2EN)) ? 1U
-								       : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsOutput2Enabled(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->CR, RTC_CR_OUT2EN) == (RTC_CR_OUT2EN)) ? 1U : 0U); }
 
 /**
  * @}
@@ -1434,11 +1286,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsOutput2Enabled(RTC_TypeDef *RTCx)
  *         @arg @ref LL_RTC_TIME_FORMAT_PM
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_TIME_SetFormat(RTC_TypeDef *RTCx,
-					   uint32_t TimeFormat)
-{
-	MODIFY_REG(RTCx->TR, RTC_TR_PM, TimeFormat);
-}
+__STATIC_INLINE void LL_RTC_TIME_SetFormat(RTC_TypeDef *RTCx, uint32_t TimeFormat) { MODIFY_REG(RTCx->TR, RTC_TR_PM, TimeFormat); }
 
 /**
  * @brief  Get time format (AM or PM notation)
@@ -1452,10 +1300,7 @@ __STATIC_INLINE void LL_RTC_TIME_SetFormat(RTC_TypeDef *RTCx,
  *         @arg @ref LL_RTC_TIME_FORMAT_AM_OR_24
  *         @arg @ref LL_RTC_TIME_FORMAT_PM
  */
-__STATIC_INLINE uint32_t LL_RTC_TIME_GetFormat(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->TR, RTC_TR_PM));
-}
+__STATIC_INLINE uint32_t LL_RTC_TIME_GetFormat(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->TR, RTC_TR_PM)); }
 
 /**
  * @brief  Set Hours in BCD format
@@ -1474,9 +1319,7 @@ __STATIC_INLINE uint32_t LL_RTC_TIME_GetFormat(RTC_TypeDef *RTCx)
  */
 __STATIC_INLINE void LL_RTC_TIME_SetHour(RTC_TypeDef *RTCx, uint32_t Hours)
 {
-	MODIFY_REG(RTCx->TR, (RTC_TR_HT | RTC_TR_HU),
-		   (((Hours & 0xF0U) << (RTC_TR_HT_Pos - 4U)) |
-		    ((Hours & 0x0FU) << RTC_TR_HU_Pos)));
+	MODIFY_REG(RTCx->TR, (RTC_TR_HT | RTC_TR_HU), (((Hours & 0xF0U) << (RTC_TR_HT_Pos - 4U)) | ((Hours & 0x0FU) << RTC_TR_HU_Pos)));
 }
 
 /**
@@ -1493,11 +1336,7 @@ __STATIC_INLINE void LL_RTC_TIME_SetHour(RTC_TypeDef *RTCx, uint32_t Hours)
  * @retval Value between Min_Data=0x01 and Max_Data=0x12 or between
  * Min_Data=0x00 and Max_Data=0x23
  */
-__STATIC_INLINE uint32_t LL_RTC_TIME_GetHour(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)((READ_BIT(RTCx->TR, (RTC_TR_HT | RTC_TR_HU))) >>
-			  RTC_TR_HU_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_TIME_GetHour(RTC_TypeDef *RTCx) { return (uint32_t)((READ_BIT(RTCx->TR, (RTC_TR_HT | RTC_TR_HU))) >> RTC_TR_HU_Pos); }
 
 /**
  * @brief  Set Minutes in BCD format
@@ -1515,9 +1354,7 @@ __STATIC_INLINE uint32_t LL_RTC_TIME_GetHour(RTC_TypeDef *RTCx)
  */
 __STATIC_INLINE void LL_RTC_TIME_SetMinute(RTC_TypeDef *RTCx, uint32_t Minutes)
 {
-	MODIFY_REG(RTCx->TR, (RTC_TR_MNT | RTC_TR_MNU),
-		   (((Minutes & 0xF0U) << (RTC_TR_MNT_Pos - 4U)) |
-		    ((Minutes & 0x0FU) << RTC_TR_MNU_Pos)));
+	MODIFY_REG(RTCx->TR, (RTC_TR_MNT | RTC_TR_MNU), (((Minutes & 0xF0U) << (RTC_TR_MNT_Pos - 4U)) | ((Minutes & 0x0FU) << RTC_TR_MNU_Pos)));
 }
 
 /**
@@ -1533,11 +1370,7 @@ __STATIC_INLINE void LL_RTC_TIME_SetMinute(RTC_TypeDef *RTCx, uint32_t Minutes)
  * @param  RTCx RTC Instance
  * @retval Value between Min_Data=0x00 and Max_Data=0x59
  */
-__STATIC_INLINE uint32_t LL_RTC_TIME_GetMinute(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->TR, (RTC_TR_MNT | RTC_TR_MNU)) >>
-			  RTC_TR_MNU_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_TIME_GetMinute(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->TR, (RTC_TR_MNT | RTC_TR_MNU)) >> RTC_TR_MNU_Pos); }
 
 /**
  * @brief  Set Seconds in BCD format
@@ -1555,9 +1388,7 @@ __STATIC_INLINE uint32_t LL_RTC_TIME_GetMinute(RTC_TypeDef *RTCx)
  */
 __STATIC_INLINE void LL_RTC_TIME_SetSecond(RTC_TypeDef *RTCx, uint32_t Seconds)
 {
-	MODIFY_REG(RTCx->TR, (RTC_TR_ST | RTC_TR_SU),
-		   (((Seconds & 0xF0U) << (RTC_TR_ST_Pos - 4U)) |
-		    ((Seconds & 0x0FU) << RTC_TR_SU_Pos)));
+	MODIFY_REG(RTCx->TR, (RTC_TR_ST | RTC_TR_SU), (((Seconds & 0xF0U) << (RTC_TR_ST_Pos - 4U)) | ((Seconds & 0x0FU) << RTC_TR_SU_Pos)));
 }
 
 /**
@@ -1573,11 +1404,7 @@ __STATIC_INLINE void LL_RTC_TIME_SetSecond(RTC_TypeDef *RTCx, uint32_t Seconds)
  * @param  RTCx RTC Instance
  * @retval Value between Min_Data=0x00 and Max_Data=0x59
  */
-__STATIC_INLINE uint32_t LL_RTC_TIME_GetSecond(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->TR, (RTC_TR_ST | RTC_TR_SU)) >>
-			  RTC_TR_SU_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_TIME_GetSecond(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->TR, (RTC_TR_ST | RTC_TR_SU)) >> RTC_TR_SU_Pos); }
 
 /**
  * @brief  Set time (hour, minute and second) in BCD format
@@ -1603,23 +1430,13 @@ __STATIC_INLINE uint32_t LL_RTC_TIME_GetSecond(RTC_TypeDef *RTCx)
  * @param  Seconds Value between Min_Data=0x00 and Max_Data=0x59
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_TIME_Config(RTC_TypeDef *RTCx, uint32_t Format12_24,
-					uint32_t Hours, uint32_t Minutes,
-					uint32_t Seconds)
+__STATIC_INLINE void LL_RTC_TIME_Config(RTC_TypeDef *RTCx, uint32_t Format12_24, uint32_t Hours, uint32_t Minutes, uint32_t Seconds)
 {
 	uint32_t temp;
 
-	temp = Format12_24 |
-	       (((Hours & 0xF0U) << (RTC_TR_HT_Pos - 4U)) |
-		((Hours & 0x0FU) << RTC_TR_HU_Pos)) |
-	       (((Minutes & 0xF0U) << (RTC_TR_MNT_Pos - 4U)) |
-		((Minutes & 0x0FU) << RTC_TR_MNU_Pos)) |
-	       (((Seconds & 0xF0U) << (RTC_TR_ST_Pos - 4U)) |
-		((Seconds & 0x0FU) << RTC_TR_SU_Pos));
-	MODIFY_REG(RTCx->TR,
-		   (RTC_TR_PM | RTC_TR_HT | RTC_TR_HU | RTC_TR_MNT |
-		    RTC_TR_MNU | RTC_TR_ST | RTC_TR_SU),
-		   temp);
+	temp = Format12_24 | (((Hours & 0xF0U) << (RTC_TR_HT_Pos - 4U)) | ((Hours & 0x0FU) << RTC_TR_HU_Pos)) | (((Minutes & 0xF0U) << (RTC_TR_MNT_Pos - 4U)) | ((Minutes & 0x0FU) << RTC_TR_MNU_Pos)) |
+	       (((Seconds & 0xF0U) << (RTC_TR_ST_Pos - 4U)) | ((Seconds & 0x0FU) << RTC_TR_SU_Pos));
+	MODIFY_REG(RTCx->TR, (RTC_TR_PM | RTC_TR_HT | RTC_TR_HU | RTC_TR_MNT | RTC_TR_MNU | RTC_TR_ST | RTC_TR_SU), temp);
 }
 
 /**
@@ -1643,16 +1460,10 @@ __STATIC_INLINE uint32_t LL_RTC_TIME_Get(RTC_TypeDef *RTCx)
 {
 	uint32_t temp;
 
-	temp = READ_BIT(RTCx->TR, (RTC_TR_HT | RTC_TR_HU | RTC_TR_MNT |
-				   RTC_TR_MNU | RTC_TR_ST | RTC_TR_SU));
-	return (uint32_t)((((((temp & RTC_TR_HT) >> RTC_TR_HT_Pos) << 4U) |
-			    ((temp & RTC_TR_HU) >> RTC_TR_HU_Pos))
-			   << RTC_OFFSET_HOUR) |
-			  (((((temp & RTC_TR_MNT) >> RTC_TR_MNT_Pos) << 4U) |
-			    ((temp & RTC_TR_MNU) >> RTC_TR_MNU_Pos))
-			   << RTC_OFFSET_MINUTE) |
-			  ((((temp & RTC_TR_ST) >> RTC_TR_ST_Pos) << 4U) |
-			   ((temp & RTC_TR_SU) >> RTC_TR_SU_Pos)));
+	temp = READ_BIT(RTCx->TR, (RTC_TR_HT | RTC_TR_HU | RTC_TR_MNT | RTC_TR_MNU | RTC_TR_ST | RTC_TR_SU));
+	return (uint32_t)((((((temp & RTC_TR_HT) >> RTC_TR_HT_Pos) << 4U) | ((temp & RTC_TR_HU) >> RTC_TR_HU_Pos)) << RTC_OFFSET_HOUR) |
+			  (((((temp & RTC_TR_MNT) >> RTC_TR_MNT_Pos) << 4U) | ((temp & RTC_TR_MNU) >> RTC_TR_MNU_Pos)) << RTC_OFFSET_MINUTE) |
+			  ((((temp & RTC_TR_ST) >> RTC_TR_ST_Pos) << 4U) | ((temp & RTC_TR_SU) >> RTC_TR_SU_Pos)));
 }
 
 /**
@@ -1663,10 +1474,7 @@ __STATIC_INLINE uint32_t LL_RTC_TIME_Get(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_TIME_EnableDayLightStore(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->CR, RTC_CR_BKP);
-}
+__STATIC_INLINE void LL_RTC_TIME_EnableDayLightStore(RTC_TypeDef *RTCx) { SET_BIT(RTCx->CR, RTC_CR_BKP); }
 
 /**
  * @brief  Disable memorization whether the daylight saving time change has been
@@ -1677,10 +1485,7 @@ __STATIC_INLINE void LL_RTC_TIME_EnableDayLightStore(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_TIME_DisableDayLightStore(RTC_TypeDef *RTCx)
-{
-	CLEAR_BIT(RTCx->CR, RTC_CR_BKP);
-}
+__STATIC_INLINE void LL_RTC_TIME_DisableDayLightStore(RTC_TypeDef *RTCx) { CLEAR_BIT(RTCx->CR, RTC_CR_BKP); }
 
 /**
  * @brief  Check if RTC Day Light Saving stored operation has been enabled or
@@ -1689,10 +1494,7 @@ __STATIC_INLINE void LL_RTC_TIME_DisableDayLightStore(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_TIME_IsDayLightStoreEnabled(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->CR, RTC_CR_BKP) == (RTC_CR_BKP)) ? 1U : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_TIME_IsDayLightStoreEnabled(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->CR, RTC_CR_BKP) == (RTC_CR_BKP)) ? 1U : 0U); }
 
 /**
  * @brief  Subtract 1 hour (winter time change)
@@ -1702,10 +1504,7 @@ __STATIC_INLINE uint32_t LL_RTC_TIME_IsDayLightStoreEnabled(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_TIME_DecHour(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->CR, RTC_CR_SUB1H);
-}
+__STATIC_INLINE void LL_RTC_TIME_DecHour(RTC_TypeDef *RTCx) { SET_BIT(RTCx->CR, RTC_CR_SUB1H); }
 
 /**
  * @brief  Add 1 hour (summer time change)
@@ -1715,10 +1514,7 @@ __STATIC_INLINE void LL_RTC_TIME_DecHour(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_TIME_IncHour(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->CR, RTC_CR_ADD1H);
-}
+__STATIC_INLINE void LL_RTC_TIME_IncHour(RTC_TypeDef *RTCx) { SET_BIT(RTCx->CR, RTC_CR_ADD1H); }
 
 /**
  * @brief  Get Sub second value in the synchronous prescaler counter.
@@ -1734,10 +1530,7 @@ __STATIC_INLINE void LL_RTC_TIME_IncHour(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval Sub second value (number between 0 and 65535)
  */
-__STATIC_INLINE uint32_t LL_RTC_TIME_GetSubSecond(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->SSR, RTC_SSR_SS));
-}
+__STATIC_INLINE uint32_t LL_RTC_TIME_GetSubSecond(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->SSR, RTC_SSR_SS)); }
 
 /**
  * @brief  Synchronize to a remote clock with a high degree of precision.
@@ -1756,12 +1549,7 @@ __STATIC_INLINE uint32_t LL_RTC_TIME_GetSubSecond(RTC_TypeDef *RTCx)
  * @param  Fraction Number of Seconds Fractions (any value from 0 to 0x7FFF)
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_TIME_Synchronize(RTC_TypeDef *RTCx,
-					     uint32_t ShiftSecond,
-					     uint32_t Fraction)
-{
-	WRITE_REG(RTCx->SHIFTR, (ShiftSecond | Fraction));
-}
+__STATIC_INLINE void LL_RTC_TIME_Synchronize(RTC_TypeDef *RTCx, uint32_t ShiftSecond, uint32_t Fraction) { WRITE_REG(RTCx->SHIFTR, (ShiftSecond | Fraction)); }
 
 /**
  * @}
@@ -1783,9 +1571,7 @@ __STATIC_INLINE void LL_RTC_TIME_Synchronize(RTC_TypeDef *RTCx,
  */
 __STATIC_INLINE void LL_RTC_DATE_SetYear(RTC_TypeDef *RTCx, uint32_t Year)
 {
-	MODIFY_REG(RTCx->DR, (RTC_DR_YT | RTC_DR_YU),
-		   (((Year & 0xF0U) << (RTC_DR_YT_Pos - 4U)) |
-		    ((Year & 0x0FU) << RTC_DR_YU_Pos)));
+	MODIFY_REG(RTCx->DR, (RTC_DR_YT | RTC_DR_YU), (((Year & 0xF0U) << (RTC_DR_YT_Pos - 4U)) | ((Year & 0x0FU) << RTC_DR_YU_Pos)));
 }
 
 /**
@@ -1799,11 +1585,7 @@ __STATIC_INLINE void LL_RTC_DATE_SetYear(RTC_TypeDef *RTCx, uint32_t Year)
  * @param  RTCx RTC Instance
  * @retval Value between Min_Data=0x00 and Max_Data=0x99
  */
-__STATIC_INLINE uint32_t LL_RTC_DATE_GetYear(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)((READ_BIT(RTCx->DR, (RTC_DR_YT | RTC_DR_YU))) >>
-			  RTC_DR_YU_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_DATE_GetYear(RTC_TypeDef *RTCx) { return (uint32_t)((READ_BIT(RTCx->DR, (RTC_DR_YT | RTC_DR_YU))) >> RTC_DR_YU_Pos); }
 
 /**
  * @brief  Set Week day
@@ -1819,10 +1601,7 @@ __STATIC_INLINE uint32_t LL_RTC_DATE_GetYear(RTC_TypeDef *RTCx)
  *         @arg @ref LL_RTC_WEEKDAY_SUNDAY
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_DATE_SetWeekDay(RTC_TypeDef *RTCx, uint32_t WeekDay)
-{
-	MODIFY_REG(RTCx->DR, RTC_DR_WDU, WeekDay << RTC_DR_WDU_Pos);
-}
+__STATIC_INLINE void LL_RTC_DATE_SetWeekDay(RTC_TypeDef *RTCx, uint32_t WeekDay) { MODIFY_REG(RTCx->DR, RTC_DR_WDU, WeekDay << RTC_DR_WDU_Pos); }
 
 /**
  * @brief  Get Week day
@@ -1839,10 +1618,7 @@ __STATIC_INLINE void LL_RTC_DATE_SetWeekDay(RTC_TypeDef *RTCx, uint32_t WeekDay)
  *         @arg @ref LL_RTC_WEEKDAY_SATURDAY
  *         @arg @ref LL_RTC_WEEKDAY_SUNDAY
  */
-__STATIC_INLINE uint32_t LL_RTC_DATE_GetWeekDay(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->DR, RTC_DR_WDU) >> RTC_DR_WDU_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_DATE_GetWeekDay(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->DR, RTC_DR_WDU) >> RTC_DR_WDU_Pos); }
 
 /**
  * @brief  Set Month in BCD format
@@ -1868,9 +1644,7 @@ __STATIC_INLINE uint32_t LL_RTC_DATE_GetWeekDay(RTC_TypeDef *RTCx)
  */
 __STATIC_INLINE void LL_RTC_DATE_SetMonth(RTC_TypeDef *RTCx, uint32_t Month)
 {
-	MODIFY_REG(RTCx->DR, (RTC_DR_MT | RTC_DR_MU),
-		   (((Month & 0xF0U) << (RTC_DR_MT_Pos - 4U)) |
-		    ((Month & 0x0FU) << RTC_DR_MU_Pos)));
+	MODIFY_REG(RTCx->DR, (RTC_DR_MT | RTC_DR_MU), (((Month & 0xF0U) << (RTC_DR_MT_Pos - 4U)) | ((Month & 0x0FU) << RTC_DR_MU_Pos)));
 }
 
 /**
@@ -1896,11 +1670,7 @@ __STATIC_INLINE void LL_RTC_DATE_SetMonth(RTC_TypeDef *RTCx, uint32_t Month)
  *         @arg @ref LL_RTC_MONTH_NOVEMBER
  *         @arg @ref LL_RTC_MONTH_DECEMBER
  */
-__STATIC_INLINE uint32_t LL_RTC_DATE_GetMonth(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)((READ_BIT(RTCx->DR, (RTC_DR_MT | RTC_DR_MU))) >>
-			  RTC_DR_MU_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_DATE_GetMonth(RTC_TypeDef *RTCx) { return (uint32_t)((READ_BIT(RTCx->DR, (RTC_DR_MT | RTC_DR_MU))) >> RTC_DR_MU_Pos); }
 
 /**
  * @brief  Set Day in BCD format
@@ -1914,9 +1684,7 @@ __STATIC_INLINE uint32_t LL_RTC_DATE_GetMonth(RTC_TypeDef *RTCx)
  */
 __STATIC_INLINE void LL_RTC_DATE_SetDay(RTC_TypeDef *RTCx, uint32_t Day)
 {
-	MODIFY_REG(RTCx->DR, (RTC_DR_DT | RTC_DR_DU),
-		   (((Day & 0xF0U) << (RTC_DR_DT_Pos - 4U)) |
-		    ((Day & 0x0FU) << RTC_DR_DU_Pos)));
+	MODIFY_REG(RTCx->DR, (RTC_DR_DT | RTC_DR_DU), (((Day & 0xF0U) << (RTC_DR_DT_Pos - 4U)) | ((Day & 0x0FU) << RTC_DR_DU_Pos)));
 }
 
 /**
@@ -1930,11 +1698,7 @@ __STATIC_INLINE void LL_RTC_DATE_SetDay(RTC_TypeDef *RTCx, uint32_t Day)
  * @param  RTCx RTC Instance
  * @retval Value between Min_Data=0x01 and Max_Data=0x31
  */
-__STATIC_INLINE uint32_t LL_RTC_DATE_GetDay(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)((READ_BIT(RTCx->DR, (RTC_DR_DT | RTC_DR_DU))) >>
-			  RTC_DR_DU_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_DATE_GetDay(RTC_TypeDef *RTCx) { return (uint32_t)((READ_BIT(RTCx->DR, (RTC_DR_DT | RTC_DR_DU))) >> RTC_DR_DU_Pos); }
 
 /**
  * @brief  Set date (WeekDay, Day, Month and Year) in BCD format
@@ -1971,24 +1735,14 @@ __STATIC_INLINE uint32_t LL_RTC_DATE_GetDay(RTC_TypeDef *RTCx)
  * @param  Year Value between Min_Data=0x00 and Max_Data=0x99
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_DATE_Config(RTC_TypeDef *RTCx, uint32_t WeekDay,
-					uint32_t Day, uint32_t Month,
-					uint32_t Year)
+__STATIC_INLINE void LL_RTC_DATE_Config(RTC_TypeDef *RTCx, uint32_t WeekDay, uint32_t Day, uint32_t Month, uint32_t Year)
 {
 	uint32_t temp;
 
-	temp = (WeekDay << RTC_DR_WDU_Pos) |
-	       (((Year & 0xF0U) << (RTC_DR_YT_Pos - 4U)) |
-		((Year & 0x0FU) << RTC_DR_YU_Pos)) |
-	       (((Month & 0xF0U) << (RTC_DR_MT_Pos - 4U)) |
-		((Month & 0x0FU) << RTC_DR_MU_Pos)) |
-	       (((Day & 0xF0U) << (RTC_DR_DT_Pos - 4U)) |
-		((Day & 0x0FU) << RTC_DR_DU_Pos));
+	temp = (WeekDay << RTC_DR_WDU_Pos) | (((Year & 0xF0U) << (RTC_DR_YT_Pos - 4U)) | ((Year & 0x0FU) << RTC_DR_YU_Pos)) |
+	       (((Month & 0xF0U) << (RTC_DR_MT_Pos - 4U)) | ((Month & 0x0FU) << RTC_DR_MU_Pos)) | (((Day & 0xF0U) << (RTC_DR_DT_Pos - 4U)) | ((Day & 0x0FU) << RTC_DR_DU_Pos));
 
-	MODIFY_REG(RTCx->DR,
-		   (RTC_DR_WDU | RTC_DR_MT | RTC_DR_MU | RTC_DR_DT | RTC_DR_DU |
-		    RTC_DR_YT | RTC_DR_YU),
-		   temp);
+	MODIFY_REG(RTCx->DR, (RTC_DR_WDU | RTC_DR_MT | RTC_DR_MU | RTC_DR_DT | RTC_DR_DU | RTC_DR_YT | RTC_DR_YU), temp);
 }
 
 /**
@@ -2012,19 +1766,11 @@ __STATIC_INLINE uint32_t LL_RTC_DATE_Get(RTC_TypeDef *RTCx)
 {
 	uint32_t temp;
 
-	temp =
-	    READ_BIT(RTCx->DR, (RTC_DR_WDU | RTC_DR_MT | RTC_DR_MU | RTC_DR_DT |
-				RTC_DR_DU | RTC_DR_YT | RTC_DR_YU));
-	return (uint32_t)((((temp & RTC_DR_WDU) >> RTC_DR_WDU_Pos)
-			   << RTC_OFFSET_WEEKDAY) |
-			  (((((temp & RTC_DR_DT) >> RTC_DR_DT_Pos) << 4U) |
-			    ((temp & RTC_DR_DU) >> RTC_DR_DU_Pos))
-			   << RTC_OFFSET_DAY) |
-			  (((((temp & RTC_DR_MT) >> RTC_DR_MT_Pos) << 4U) |
-			    ((temp & RTC_DR_MU) >> RTC_DR_MU_Pos))
-			   << RTC_OFFSET_MONTH) |
-			  ((((temp & RTC_DR_YT) >> RTC_DR_YT_Pos) << 4U) |
-			   ((temp & RTC_DR_YU) >> RTC_DR_YU_Pos)));
+	temp = READ_BIT(RTCx->DR, (RTC_DR_WDU | RTC_DR_MT | RTC_DR_MU | RTC_DR_DT | RTC_DR_DU | RTC_DR_YT | RTC_DR_YU));
+	return (uint32_t)((((temp & RTC_DR_WDU) >> RTC_DR_WDU_Pos) << RTC_OFFSET_WEEKDAY) |
+			  (((((temp & RTC_DR_DT) >> RTC_DR_DT_Pos) << 4U) | ((temp & RTC_DR_DU) >> RTC_DR_DU_Pos)) << RTC_OFFSET_DAY) |
+			  (((((temp & RTC_DR_MT) >> RTC_DR_MT_Pos) << 4U) | ((temp & RTC_DR_MU) >> RTC_DR_MU_Pos)) << RTC_OFFSET_MONTH) |
+			  ((((temp & RTC_DR_YT) >> RTC_DR_YT_Pos) << 4U) | ((temp & RTC_DR_YU) >> RTC_DR_YU_Pos)));
 }
 
 /**
@@ -2043,10 +1789,7 @@ __STATIC_INLINE uint32_t LL_RTC_DATE_Get(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ALMA_Enable(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->CR, RTC_CR_ALRAE);
-}
+__STATIC_INLINE void LL_RTC_ALMA_Enable(RTC_TypeDef *RTCx) { SET_BIT(RTCx->CR, RTC_CR_ALRAE); }
 
 /**
  * @brief  Disable Alarm A
@@ -2056,10 +1799,7 @@ __STATIC_INLINE void LL_RTC_ALMA_Enable(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ALMA_Disable(RTC_TypeDef *RTCx)
-{
-	CLEAR_BIT(RTCx->CR, RTC_CR_ALRAE);
-}
+__STATIC_INLINE void LL_RTC_ALMA_Disable(RTC_TypeDef *RTCx) { CLEAR_BIT(RTCx->CR, RTC_CR_ALRAE); }
 
 /**
  * @brief  Specify the Alarm A masks.
@@ -2077,13 +1817,7 @@ __STATIC_INLINE void LL_RTC_ALMA_Disable(RTC_TypeDef *RTCx)
  *         @arg @ref LL_RTC_ALMA_MASK_ALL
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ALMA_SetMask(RTC_TypeDef *RTCx, uint32_t Mask)
-{
-	MODIFY_REG(RTCx->ALRMAR,
-		   RTC_ALRMAR_MSK4 | RTC_ALRMAR_MSK3 | RTC_ALRMAR_MSK2 |
-		       RTC_ALRMAR_MSK1,
-		   Mask);
-}
+__STATIC_INLINE void LL_RTC_ALMA_SetMask(RTC_TypeDef *RTCx, uint32_t Mask) { MODIFY_REG(RTCx->ALRMAR, RTC_ALRMAR_MSK4 | RTC_ALRMAR_MSK3 | RTC_ALRMAR_MSK2 | RTC_ALRMAR_MSK1, Mask); }
 
 /**
  * @brief  Get the Alarm A masks.
@@ -2100,12 +1834,7 @@ __STATIC_INLINE void LL_RTC_ALMA_SetMask(RTC_TypeDef *RTCx, uint32_t Mask)
  *         @arg @ref LL_RTC_ALMA_MASK_SECONDS
  *         @arg @ref LL_RTC_ALMA_MASK_ALL
  */
-__STATIC_INLINE uint32_t LL_RTC_ALMA_GetMask(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->ALRMAR,
-				   RTC_ALRMAR_MSK4 | RTC_ALRMAR_MSK3 |
-				       RTC_ALRMAR_MSK2 | RTC_ALRMAR_MSK1));
-}
+__STATIC_INLINE uint32_t LL_RTC_ALMA_GetMask(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->ALRMAR, RTC_ALRMAR_MSK4 | RTC_ALRMAR_MSK3 | RTC_ALRMAR_MSK2 | RTC_ALRMAR_MSK1)); }
 
 /**
  * @brief  Enable AlarmA Week day selection (DU[3:0] represents the week day.
@@ -2114,10 +1843,7 @@ __STATIC_INLINE uint32_t LL_RTC_ALMA_GetMask(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ALMA_EnableWeekday(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->ALRMAR, RTC_ALRMAR_WDSEL);
-}
+__STATIC_INLINE void LL_RTC_ALMA_EnableWeekday(RTC_TypeDef *RTCx) { SET_BIT(RTCx->ALRMAR, RTC_ALRMAR_WDSEL); }
 
 /**
  * @brief  Disable AlarmA Week day selection (DU[3:0] represents the date )
@@ -2125,10 +1851,7 @@ __STATIC_INLINE void LL_RTC_ALMA_EnableWeekday(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ALMA_DisableWeekday(RTC_TypeDef *RTCx)
-{
-	CLEAR_BIT(RTCx->ALRMAR, RTC_ALRMAR_WDSEL);
-}
+__STATIC_INLINE void LL_RTC_ALMA_DisableWeekday(RTC_TypeDef *RTCx) { CLEAR_BIT(RTCx->ALRMAR, RTC_ALRMAR_WDSEL); }
 
 /**
  * @brief  Set ALARM A Day in BCD format
@@ -2142,9 +1865,7 @@ __STATIC_INLINE void LL_RTC_ALMA_DisableWeekday(RTC_TypeDef *RTCx)
  */
 __STATIC_INLINE void LL_RTC_ALMA_SetDay(RTC_TypeDef *RTCx, uint32_t Day)
 {
-	MODIFY_REG(RTCx->ALRMAR, (RTC_ALRMAR_DT | RTC_ALRMAR_DU),
-		   (((Day & 0xF0U) << (RTC_ALRMAR_DT_Pos - 4U)) |
-		    ((Day & 0x0FU) << RTC_ALRMAR_DU_Pos)));
+	MODIFY_REG(RTCx->ALRMAR, (RTC_ALRMAR_DT | RTC_ALRMAR_DU), (((Day & 0xF0U) << (RTC_ALRMAR_DT_Pos - 4U)) | ((Day & 0x0FU) << RTC_ALRMAR_DU_Pos)));
 }
 
 /**
@@ -2156,12 +1877,7 @@ __STATIC_INLINE void LL_RTC_ALMA_SetDay(RTC_TypeDef *RTCx, uint32_t Day)
  * @param  RTCx RTC Instance
  * @retval Value between Min_Data=0x01 and Max_Data=0x31
  */
-__STATIC_INLINE uint32_t LL_RTC_ALMA_GetDay(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)((READ_BIT(RTCx->ALRMAR,
-				    (RTC_ALRMAR_DT | RTC_ALRMAR_DU))) >>
-			  RTC_ALRMAR_DU_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_ALMA_GetDay(RTC_TypeDef *RTCx) { return (uint32_t)((READ_BIT(RTCx->ALRMAR, (RTC_ALRMAR_DT | RTC_ALRMAR_DU))) >> RTC_ALRMAR_DU_Pos); }
 
 /**
  * @brief  Set ALARM A Weekday
@@ -2177,10 +1893,7 @@ __STATIC_INLINE uint32_t LL_RTC_ALMA_GetDay(RTC_TypeDef *RTCx)
  *         @arg @ref LL_RTC_WEEKDAY_SUNDAY
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ALMA_SetWeekDay(RTC_TypeDef *RTCx, uint32_t WeekDay)
-{
-	MODIFY_REG(RTCx->ALRMAR, RTC_ALRMAR_DU, WeekDay << RTC_ALRMAR_DU_Pos);
-}
+__STATIC_INLINE void LL_RTC_ALMA_SetWeekDay(RTC_TypeDef *RTCx, uint32_t WeekDay) { MODIFY_REG(RTCx->ALRMAR, RTC_ALRMAR_DU, WeekDay << RTC_ALRMAR_DU_Pos); }
 
 /**
  * @brief  Get ALARM A Weekday
@@ -2195,11 +1908,7 @@ __STATIC_INLINE void LL_RTC_ALMA_SetWeekDay(RTC_TypeDef *RTCx, uint32_t WeekDay)
  *         @arg @ref LL_RTC_WEEKDAY_SATURDAY
  *         @arg @ref LL_RTC_WEEKDAY_SUNDAY
  */
-__STATIC_INLINE uint32_t LL_RTC_ALMA_GetWeekDay(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->ALRMAR, RTC_ALRMAR_DU) >>
-			  RTC_ALRMAR_DU_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_ALMA_GetWeekDay(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->ALRMAR, RTC_ALRMAR_DU) >> RTC_ALRMAR_DU_Pos); }
 
 /**
  * @brief  Set Alarm A time format (AM/24-hour or PM notation)
@@ -2210,11 +1919,7 @@ __STATIC_INLINE uint32_t LL_RTC_ALMA_GetWeekDay(RTC_TypeDef *RTCx)
  *         @arg @ref LL_RTC_ALMA_TIME_FORMAT_PM
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ALMA_SetTimeFormat(RTC_TypeDef *RTCx,
-					       uint32_t TimeFormat)
-{
-	MODIFY_REG(RTCx->ALRMAR, RTC_ALRMAR_PM, TimeFormat);
-}
+__STATIC_INLINE void LL_RTC_ALMA_SetTimeFormat(RTC_TypeDef *RTCx, uint32_t TimeFormat) { MODIFY_REG(RTCx->ALRMAR, RTC_ALRMAR_PM, TimeFormat); }
 
 /**
  * @brief  Get Alarm A time format (AM or PM notation)
@@ -2224,10 +1929,7 @@ __STATIC_INLINE void LL_RTC_ALMA_SetTimeFormat(RTC_TypeDef *RTCx,
  *         @arg @ref LL_RTC_ALMA_TIME_FORMAT_AM
  *         @arg @ref LL_RTC_ALMA_TIME_FORMAT_PM
  */
-__STATIC_INLINE uint32_t LL_RTC_ALMA_GetTimeFormat(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->ALRMAR, RTC_ALRMAR_PM));
-}
+__STATIC_INLINE uint32_t LL_RTC_ALMA_GetTimeFormat(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->ALRMAR, RTC_ALRMAR_PM)); }
 
 /**
  * @brief  Set ALARM A Hours in BCD format
@@ -2242,9 +1944,7 @@ __STATIC_INLINE uint32_t LL_RTC_ALMA_GetTimeFormat(RTC_TypeDef *RTCx)
  */
 __STATIC_INLINE void LL_RTC_ALMA_SetHour(RTC_TypeDef *RTCx, uint32_t Hours)
 {
-	MODIFY_REG(RTCx->ALRMAR, (RTC_ALRMAR_HT | RTC_ALRMAR_HU),
-		   (((Hours & 0xF0U) << (RTC_ALRMAR_HT_Pos - 4U)) |
-		    ((Hours & 0x0FU) << RTC_ALRMAR_HU_Pos)));
+	MODIFY_REG(RTCx->ALRMAR, (RTC_ALRMAR_HT | RTC_ALRMAR_HU), (((Hours & 0xF0U) << (RTC_ALRMAR_HT_Pos - 4U)) | ((Hours & 0x0FU) << RTC_ALRMAR_HU_Pos)));
 }
 
 /**
@@ -2257,12 +1957,7 @@ __STATIC_INLINE void LL_RTC_ALMA_SetHour(RTC_TypeDef *RTCx, uint32_t Hours)
  * @retval Value between Min_Data=0x01 and Max_Data=0x12 or between
  * Min_Data=0x00 and Max_Data=0x23
  */
-__STATIC_INLINE uint32_t LL_RTC_ALMA_GetHour(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)((READ_BIT(RTCx->ALRMAR,
-				    (RTC_ALRMAR_HT | RTC_ALRMAR_HU))) >>
-			  RTC_ALRMAR_HU_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_ALMA_GetHour(RTC_TypeDef *RTCx) { return (uint32_t)((READ_BIT(RTCx->ALRMAR, (RTC_ALRMAR_HT | RTC_ALRMAR_HU))) >> RTC_ALRMAR_HU_Pos); }
 
 /**
  * @brief  Set ALARM A Minutes in BCD format
@@ -2276,9 +1971,7 @@ __STATIC_INLINE uint32_t LL_RTC_ALMA_GetHour(RTC_TypeDef *RTCx)
  */
 __STATIC_INLINE void LL_RTC_ALMA_SetMinute(RTC_TypeDef *RTCx, uint32_t Minutes)
 {
-	MODIFY_REG(RTCx->ALRMAR, (RTC_ALRMAR_MNT | RTC_ALRMAR_MNU),
-		   (((Minutes & 0xF0U) << (RTC_ALRMAR_MNT_Pos - 4U)) |
-		    ((Minutes & 0x0FU) << RTC_ALRMAR_MNU_Pos)));
+	MODIFY_REG(RTCx->ALRMAR, (RTC_ALRMAR_MNT | RTC_ALRMAR_MNU), (((Minutes & 0xF0U) << (RTC_ALRMAR_MNT_Pos - 4U)) | ((Minutes & 0x0FU) << RTC_ALRMAR_MNU_Pos)));
 }
 
 /**
@@ -2290,12 +1983,7 @@ __STATIC_INLINE void LL_RTC_ALMA_SetMinute(RTC_TypeDef *RTCx, uint32_t Minutes)
  * @param  RTCx RTC Instance
  * @retval Value between Min_Data=0x00 and Max_Data=0x59
  */
-__STATIC_INLINE uint32_t LL_RTC_ALMA_GetMinute(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)((READ_BIT(RTCx->ALRMAR,
-				    (RTC_ALRMAR_MNT | RTC_ALRMAR_MNU))) >>
-			  RTC_ALRMAR_MNU_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_ALMA_GetMinute(RTC_TypeDef *RTCx) { return (uint32_t)((READ_BIT(RTCx->ALRMAR, (RTC_ALRMAR_MNT | RTC_ALRMAR_MNU))) >> RTC_ALRMAR_MNU_Pos); }
 
 /**
  * @brief  Set ALARM A Seconds in BCD format
@@ -2309,9 +1997,7 @@ __STATIC_INLINE uint32_t LL_RTC_ALMA_GetMinute(RTC_TypeDef *RTCx)
  */
 __STATIC_INLINE void LL_RTC_ALMA_SetSecond(RTC_TypeDef *RTCx, uint32_t Seconds)
 {
-	MODIFY_REG(RTCx->ALRMAR, (RTC_ALRMAR_ST | RTC_ALRMAR_SU),
-		   (((Seconds & 0xF0U) << (RTC_ALRMAR_ST_Pos - 4U)) |
-		    ((Seconds & 0x0FU) << RTC_ALRMAR_SU_Pos)));
+	MODIFY_REG(RTCx->ALRMAR, (RTC_ALRMAR_ST | RTC_ALRMAR_SU), (((Seconds & 0xF0U) << (RTC_ALRMAR_ST_Pos - 4U)) | ((Seconds & 0x0FU) << RTC_ALRMAR_SU_Pos)));
 }
 
 /**
@@ -2323,12 +2009,7 @@ __STATIC_INLINE void LL_RTC_ALMA_SetSecond(RTC_TypeDef *RTCx, uint32_t Seconds)
  * @param  RTCx RTC Instance
  * @retval Value between Min_Data=0x00 and Max_Data=0x59
  */
-__STATIC_INLINE uint32_t LL_RTC_ALMA_GetSecond(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)((READ_BIT(RTCx->ALRMAR,
-				    (RTC_ALRMAR_ST | RTC_ALRMAR_SU))) >>
-			  RTC_ALRMAR_SU_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_ALMA_GetSecond(RTC_TypeDef *RTCx) { return (uint32_t)((READ_BIT(RTCx->ALRMAR, (RTC_ALRMAR_ST | RTC_ALRMAR_SU))) >> RTC_ALRMAR_SU_Pos); }
 
 /**
  * @brief  Set Alarm A Time (hour, minute and second) in BCD format
@@ -2349,26 +2030,15 @@ __STATIC_INLINE uint32_t LL_RTC_ALMA_GetSecond(RTC_TypeDef *RTCx)
  * @param  Seconds Value between Min_Data=0x00 and Max_Data=0x59
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ALMA_ConfigTime(RTC_TypeDef *RTCx,
-					    uint32_t Format12_24,
-					    uint32_t Hours, uint32_t Minutes,
-					    uint32_t Seconds)
+__STATIC_INLINE void LL_RTC_ALMA_ConfigTime(RTC_TypeDef *RTCx, uint32_t Format12_24, uint32_t Hours, uint32_t Minutes, uint32_t Seconds)
 {
 	uint32_t temp;
 
-	temp = Format12_24 |
-	       (((Hours & 0xF0U) << (RTC_ALRMAR_HT_Pos - 4U)) |
-		((Hours & 0x0FU) << RTC_ALRMAR_HU_Pos)) |
-	       (((Minutes & 0xF0U) << (RTC_ALRMAR_MNT_Pos - 4U)) |
-		((Minutes & 0x0FU) << RTC_ALRMAR_MNU_Pos)) |
-	       (((Seconds & 0xF0U) << (RTC_ALRMAR_ST_Pos - 4U)) |
-		((Seconds & 0x0FU) << RTC_ALRMAR_SU_Pos));
+	temp = Format12_24 | (((Hours & 0xF0U) << (RTC_ALRMAR_HT_Pos - 4U)) | ((Hours & 0x0FU) << RTC_ALRMAR_HU_Pos)) |
+	       (((Minutes & 0xF0U) << (RTC_ALRMAR_MNT_Pos - 4U)) | ((Minutes & 0x0FU) << RTC_ALRMAR_MNU_Pos)) |
+	       (((Seconds & 0xF0U) << (RTC_ALRMAR_ST_Pos - 4U)) | ((Seconds & 0x0FU) << RTC_ALRMAR_SU_Pos));
 
-	MODIFY_REG(RTCx->ALRMAR,
-		   RTC_ALRMAR_PM | RTC_ALRMAR_HT | RTC_ALRMAR_HU |
-		       RTC_ALRMAR_MNT | RTC_ALRMAR_MNU | RTC_ALRMAR_ST |
-		       RTC_ALRMAR_SU,
-		   temp);
+	MODIFY_REG(RTCx->ALRMAR, RTC_ALRMAR_PM | RTC_ALRMAR_HT | RTC_ALRMAR_HU | RTC_ALRMAR_MNT | RTC_ALRMAR_MNU | RTC_ALRMAR_ST | RTC_ALRMAR_SU, temp);
 }
 
 /**
@@ -2386,9 +2056,7 @@ __STATIC_INLINE void LL_RTC_ALMA_ConfigTime(RTC_TypeDef *RTCx,
  */
 __STATIC_INLINE uint32_t LL_RTC_ALMA_GetTime(RTC_TypeDef *RTCx)
 {
-	return (uint32_t)((LL_RTC_ALMA_GetHour(RTCx) << RTC_OFFSET_HOUR) |
-			  (LL_RTC_ALMA_GetMinute(RTCx) << RTC_OFFSET_MINUTE) |
-			  LL_RTC_ALMA_GetSecond(RTCx));
+	return (uint32_t)((LL_RTC_ALMA_GetHour(RTCx) << RTC_OFFSET_HOUR) | (LL_RTC_ALMA_GetMinute(RTCx) << RTC_OFFSET_MINUTE) | LL_RTC_ALMA_GetSecond(RTCx));
 }
 
 /**
@@ -2400,12 +2068,7 @@ __STATIC_INLINE uint32_t LL_RTC_ALMA_GetTime(RTC_TypeDef *RTCx)
  * @param  Mask Value between Min_Data=0x00 and Max_Data=0xF
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ALMA_SetSubSecondMask(RTC_TypeDef *RTCx,
-						  uint32_t Mask)
-{
-	MODIFY_REG(RTCx->ALRMASSR, RTC_ALRMASSR_MASKSS,
-		   Mask << RTC_ALRMASSR_MASKSS_Pos);
-}
+__STATIC_INLINE void LL_RTC_ALMA_SetSubSecondMask(RTC_TypeDef *RTCx, uint32_t Mask) { MODIFY_REG(RTCx->ALRMASSR, RTC_ALRMASSR_MASKSS, Mask << RTC_ALRMASSR_MASKSS_Pos); }
 
 /**
  * @brief  Get Alarm A Mask the most-significant bits starting at this bit
@@ -2413,11 +2076,7 @@ __STATIC_INLINE void LL_RTC_ALMA_SetSubSecondMask(RTC_TypeDef *RTCx,
  * @param  RTCx RTC Instance
  * @retval Value between Min_Data=0x00 and Max_Data=0xF
  */
-__STATIC_INLINE uint32_t LL_RTC_ALMA_GetSubSecondMask(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->ALRMASSR, RTC_ALRMASSR_MASKSS) >>
-			  RTC_ALRMASSR_MASKSS_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_ALMA_GetSubSecondMask(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->ALRMASSR, RTC_ALRMASSR_MASKSS) >> RTC_ALRMASSR_MASKSS_Pos); }
 
 /**
  * @brief  Set Alarm A Sub seconds value
@@ -2426,11 +2085,7 @@ __STATIC_INLINE uint32_t LL_RTC_ALMA_GetSubSecondMask(RTC_TypeDef *RTCx)
  * @param  Subsecond Value between Min_Data=0x00 and Max_Data=0x7FFF
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ALMA_SetSubSecond(RTC_TypeDef *RTCx,
-					      uint32_t Subsecond)
-{
-	MODIFY_REG(RTCx->ALRMASSR, RTC_ALRMASSR_SS, Subsecond);
-}
+__STATIC_INLINE void LL_RTC_ALMA_SetSubSecond(RTC_TypeDef *RTCx, uint32_t Subsecond) { MODIFY_REG(RTCx->ALRMASSR, RTC_ALRMASSR_SS, Subsecond); }
 
 /**
  * @brief  Get Alarm A Sub seconds value
@@ -2438,10 +2093,7 @@ __STATIC_INLINE void LL_RTC_ALMA_SetSubSecond(RTC_TypeDef *RTCx,
  * @param  RTCx RTC Instance
  * @retval Value between Min_Data=0x00 and Max_Data=0x7FFF
  */
-__STATIC_INLINE uint32_t LL_RTC_ALMA_GetSubSecond(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->ALRMASSR, RTC_ALRMASSR_SS));
-}
+__STATIC_INLINE uint32_t LL_RTC_ALMA_GetSubSecond(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->ALRMASSR, RTC_ALRMASSR_SS)); }
 
 /**
  * @}
@@ -2459,10 +2111,7 @@ __STATIC_INLINE uint32_t LL_RTC_ALMA_GetSubSecond(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ALMB_Enable(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->CR, RTC_CR_ALRBE);
-}
+__STATIC_INLINE void LL_RTC_ALMB_Enable(RTC_TypeDef *RTCx) { SET_BIT(RTCx->CR, RTC_CR_ALRBE); }
 
 /**
  * @brief  Disable Alarm B
@@ -2472,10 +2121,7 @@ __STATIC_INLINE void LL_RTC_ALMB_Enable(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ALMB_Disable(RTC_TypeDef *RTCx)
-{
-	CLEAR_BIT(RTCx->CR, RTC_CR_ALRBE);
-}
+__STATIC_INLINE void LL_RTC_ALMB_Disable(RTC_TypeDef *RTCx) { CLEAR_BIT(RTCx->CR, RTC_CR_ALRBE); }
 
 /**
  * @brief  Specify the Alarm B masks.
@@ -2493,13 +2139,7 @@ __STATIC_INLINE void LL_RTC_ALMB_Disable(RTC_TypeDef *RTCx)
  *         @arg @ref LL_RTC_ALMB_MASK_ALL
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ALMB_SetMask(RTC_TypeDef *RTCx, uint32_t Mask)
-{
-	MODIFY_REG(RTCx->ALRMBR,
-		   RTC_ALRMBR_MSK4 | RTC_ALRMBR_MSK3 | RTC_ALRMBR_MSK2 |
-		       RTC_ALRMBR_MSK1,
-		   Mask);
-}
+__STATIC_INLINE void LL_RTC_ALMB_SetMask(RTC_TypeDef *RTCx, uint32_t Mask) { MODIFY_REG(RTCx->ALRMBR, RTC_ALRMBR_MSK4 | RTC_ALRMBR_MSK3 | RTC_ALRMBR_MSK2 | RTC_ALRMBR_MSK1, Mask); }
 
 /**
  * @brief  Get the Alarm B masks.
@@ -2516,12 +2156,7 @@ __STATIC_INLINE void LL_RTC_ALMB_SetMask(RTC_TypeDef *RTCx, uint32_t Mask)
  *         @arg @ref LL_RTC_ALMB_MASK_SECONDS
  *         @arg @ref LL_RTC_ALMB_MASK_ALL
  */
-__STATIC_INLINE uint32_t LL_RTC_ALMB_GetMask(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->ALRMBR,
-				   RTC_ALRMBR_MSK4 | RTC_ALRMBR_MSK3 |
-				       RTC_ALRMBR_MSK2 | RTC_ALRMBR_MSK1));
-}
+__STATIC_INLINE uint32_t LL_RTC_ALMB_GetMask(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->ALRMBR, RTC_ALRMBR_MSK4 | RTC_ALRMBR_MSK3 | RTC_ALRMBR_MSK2 | RTC_ALRMBR_MSK1)); }
 
 /**
  * @brief  Enable AlarmB Week day selection (DU[3:0] represents the week day.
@@ -2530,10 +2165,7 @@ __STATIC_INLINE uint32_t LL_RTC_ALMB_GetMask(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ALMB_EnableWeekday(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->ALRMBR, RTC_ALRMBR_WDSEL);
-}
+__STATIC_INLINE void LL_RTC_ALMB_EnableWeekday(RTC_TypeDef *RTCx) { SET_BIT(RTCx->ALRMBR, RTC_ALRMBR_WDSEL); }
 
 /**
  * @brief  Disable AlarmB Week day selection (DU[3:0] represents the date )
@@ -2541,10 +2173,7 @@ __STATIC_INLINE void LL_RTC_ALMB_EnableWeekday(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ALMB_DisableWeekday(RTC_TypeDef *RTCx)
-{
-	CLEAR_BIT(RTCx->ALRMBR, RTC_ALRMBR_WDSEL);
-}
+__STATIC_INLINE void LL_RTC_ALMB_DisableWeekday(RTC_TypeDef *RTCx) { CLEAR_BIT(RTCx->ALRMBR, RTC_ALRMBR_WDSEL); }
 
 /**
  * @brief  Set ALARM B Day in BCD format
@@ -2558,9 +2187,7 @@ __STATIC_INLINE void LL_RTC_ALMB_DisableWeekday(RTC_TypeDef *RTCx)
  */
 __STATIC_INLINE void LL_RTC_ALMB_SetDay(RTC_TypeDef *RTCx, uint32_t Day)
 {
-	MODIFY_REG(RTCx->ALRMBR, (RTC_ALRMBR_DT | RTC_ALRMBR_DU),
-		   (((Day & 0xF0U) << (RTC_ALRMBR_DT_Pos - 4U)) |
-		    ((Day & 0x0FU) << RTC_ALRMBR_DU_Pos)));
+	MODIFY_REG(RTCx->ALRMBR, (RTC_ALRMBR_DT | RTC_ALRMBR_DU), (((Day & 0xF0U) << (RTC_ALRMBR_DT_Pos - 4U)) | ((Day & 0x0FU) << RTC_ALRMBR_DU_Pos)));
 }
 
 /**
@@ -2572,12 +2199,7 @@ __STATIC_INLINE void LL_RTC_ALMB_SetDay(RTC_TypeDef *RTCx, uint32_t Day)
  * @param  RTCx RTC Instance
  * @retval Value between Min_Data=0x01 and Max_Data=0x31
  */
-__STATIC_INLINE uint32_t LL_RTC_ALMB_GetDay(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)((READ_BIT(RTCx->ALRMBR,
-				    (RTC_ALRMBR_DT | RTC_ALRMBR_DU))) >>
-			  RTC_ALRMBR_DU_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_ALMB_GetDay(RTC_TypeDef *RTCx) { return (uint32_t)((READ_BIT(RTCx->ALRMBR, (RTC_ALRMBR_DT | RTC_ALRMBR_DU))) >> RTC_ALRMBR_DU_Pos); }
 
 /**
  * @brief  Set ALARM B Weekday
@@ -2593,10 +2215,7 @@ __STATIC_INLINE uint32_t LL_RTC_ALMB_GetDay(RTC_TypeDef *RTCx)
  *         @arg @ref LL_RTC_WEEKDAY_SUNDAY
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ALMB_SetWeekDay(RTC_TypeDef *RTCx, uint32_t WeekDay)
-{
-	MODIFY_REG(RTCx->ALRMBR, RTC_ALRMBR_DU, WeekDay << RTC_ALRMBR_DU_Pos);
-}
+__STATIC_INLINE void LL_RTC_ALMB_SetWeekDay(RTC_TypeDef *RTCx, uint32_t WeekDay) { MODIFY_REG(RTCx->ALRMBR, RTC_ALRMBR_DU, WeekDay << RTC_ALRMBR_DU_Pos); }
 
 /**
  * @brief  Get ALARM B Weekday
@@ -2611,11 +2230,7 @@ __STATIC_INLINE void LL_RTC_ALMB_SetWeekDay(RTC_TypeDef *RTCx, uint32_t WeekDay)
  *         @arg @ref LL_RTC_WEEKDAY_SATURDAY
  *         @arg @ref LL_RTC_WEEKDAY_SUNDAY
  */
-__STATIC_INLINE uint32_t LL_RTC_ALMB_GetWeekDay(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->ALRMBR, RTC_ALRMBR_DU) >>
-			  RTC_ALRMBR_DU_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_ALMB_GetWeekDay(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->ALRMBR, RTC_ALRMBR_DU) >> RTC_ALRMBR_DU_Pos); }
 
 /**
  * @brief  Set ALARM B time format (AM/24-hour or PM notation)
@@ -2626,11 +2241,7 @@ __STATIC_INLINE uint32_t LL_RTC_ALMB_GetWeekDay(RTC_TypeDef *RTCx)
  *         @arg @ref LL_RTC_ALMB_TIME_FORMAT_PM
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ALMB_SetTimeFormat(RTC_TypeDef *RTCx,
-					       uint32_t TimeFormat)
-{
-	MODIFY_REG(RTCx->ALRMBR, RTC_ALRMBR_PM, TimeFormat);
-}
+__STATIC_INLINE void LL_RTC_ALMB_SetTimeFormat(RTC_TypeDef *RTCx, uint32_t TimeFormat) { MODIFY_REG(RTCx->ALRMBR, RTC_ALRMBR_PM, TimeFormat); }
 
 /**
  * @brief  Get ALARM B time format (AM or PM notation)
@@ -2640,10 +2251,7 @@ __STATIC_INLINE void LL_RTC_ALMB_SetTimeFormat(RTC_TypeDef *RTCx,
  *         @arg @ref LL_RTC_ALMB_TIME_FORMAT_AM
  *         @arg @ref LL_RTC_ALMB_TIME_FORMAT_PM
  */
-__STATIC_INLINE uint32_t LL_RTC_ALMB_GetTimeFormat(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->ALRMBR, RTC_ALRMBR_PM));
-}
+__STATIC_INLINE uint32_t LL_RTC_ALMB_GetTimeFormat(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->ALRMBR, RTC_ALRMBR_PM)); }
 
 /**
  * @brief  Set ALARM B Hours in BCD format
@@ -2658,9 +2266,7 @@ __STATIC_INLINE uint32_t LL_RTC_ALMB_GetTimeFormat(RTC_TypeDef *RTCx)
  */
 __STATIC_INLINE void LL_RTC_ALMB_SetHour(RTC_TypeDef *RTCx, uint32_t Hours)
 {
-	MODIFY_REG(RTCx->ALRMBR, (RTC_ALRMBR_HT | RTC_ALRMBR_HU),
-		   (((Hours & 0xF0U) << (RTC_ALRMBR_HT_Pos - 4U)) |
-		    ((Hours & 0x0FU) << RTC_ALRMBR_HU_Pos)));
+	MODIFY_REG(RTCx->ALRMBR, (RTC_ALRMBR_HT | RTC_ALRMBR_HU), (((Hours & 0xF0U) << (RTC_ALRMBR_HT_Pos - 4U)) | ((Hours & 0x0FU) << RTC_ALRMBR_HU_Pos)));
 }
 
 /**
@@ -2673,12 +2279,7 @@ __STATIC_INLINE void LL_RTC_ALMB_SetHour(RTC_TypeDef *RTCx, uint32_t Hours)
  * @retval Value between Min_Data=0x01 and Max_Data=0x12 or between
  * Min_Data=0x00 and Max_Data=0x23
  */
-__STATIC_INLINE uint32_t LL_RTC_ALMB_GetHour(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)((READ_BIT(RTCx->ALRMBR,
-				    (RTC_ALRMBR_HT | RTC_ALRMBR_HU))) >>
-			  RTC_ALRMBR_HU_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_ALMB_GetHour(RTC_TypeDef *RTCx) { return (uint32_t)((READ_BIT(RTCx->ALRMBR, (RTC_ALRMBR_HT | RTC_ALRMBR_HU))) >> RTC_ALRMBR_HU_Pos); }
 
 /**
  * @brief  Set ALARM B Minutes in BCD format
@@ -2692,9 +2293,7 @@ __STATIC_INLINE uint32_t LL_RTC_ALMB_GetHour(RTC_TypeDef *RTCx)
  */
 __STATIC_INLINE void LL_RTC_ALMB_SetMinute(RTC_TypeDef *RTCx, uint32_t Minutes)
 {
-	MODIFY_REG(RTCx->ALRMBR, (RTC_ALRMBR_MNT | RTC_ALRMBR_MNU),
-		   (((Minutes & 0xF0U) << (RTC_ALRMBR_MNT_Pos - 4U)) |
-		    ((Minutes & 0x0FU) << RTC_ALRMBR_MNU_Pos)));
+	MODIFY_REG(RTCx->ALRMBR, (RTC_ALRMBR_MNT | RTC_ALRMBR_MNU), (((Minutes & 0xF0U) << (RTC_ALRMBR_MNT_Pos - 4U)) | ((Minutes & 0x0FU) << RTC_ALRMBR_MNU_Pos)));
 }
 
 /**
@@ -2706,12 +2305,7 @@ __STATIC_INLINE void LL_RTC_ALMB_SetMinute(RTC_TypeDef *RTCx, uint32_t Minutes)
  * @param  RTCx RTC Instance
  * @retval Value between Min_Data=0x00 and Max_Data=0x59
  */
-__STATIC_INLINE uint32_t LL_RTC_ALMB_GetMinute(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)((READ_BIT(RTCx->ALRMBR,
-				    (RTC_ALRMBR_MNT | RTC_ALRMBR_MNU))) >>
-			  RTC_ALRMBR_MNU_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_ALMB_GetMinute(RTC_TypeDef *RTCx) { return (uint32_t)((READ_BIT(RTCx->ALRMBR, (RTC_ALRMBR_MNT | RTC_ALRMBR_MNU))) >> RTC_ALRMBR_MNU_Pos); }
 
 /**
  * @brief  Set ALARM B Seconds in BCD format
@@ -2725,9 +2319,7 @@ __STATIC_INLINE uint32_t LL_RTC_ALMB_GetMinute(RTC_TypeDef *RTCx)
  */
 __STATIC_INLINE void LL_RTC_ALMB_SetSecond(RTC_TypeDef *RTCx, uint32_t Seconds)
 {
-	MODIFY_REG(RTCx->ALRMBR, (RTC_ALRMBR_ST | RTC_ALRMBR_SU),
-		   (((Seconds & 0xF0U) << (RTC_ALRMBR_ST_Pos - 4U)) |
-		    ((Seconds & 0x0FU) << RTC_ALRMBR_SU_Pos)));
+	MODIFY_REG(RTCx->ALRMBR, (RTC_ALRMBR_ST | RTC_ALRMBR_SU), (((Seconds & 0xF0U) << (RTC_ALRMBR_ST_Pos - 4U)) | ((Seconds & 0x0FU) << RTC_ALRMBR_SU_Pos)));
 }
 
 /**
@@ -2739,12 +2331,7 @@ __STATIC_INLINE void LL_RTC_ALMB_SetSecond(RTC_TypeDef *RTCx, uint32_t Seconds)
  * @param  RTCx RTC Instance
  * @retval Value between Min_Data=0x00 and Max_Data=0x59
  */
-__STATIC_INLINE uint32_t LL_RTC_ALMB_GetSecond(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)((READ_BIT(RTCx->ALRMBR,
-				    (RTC_ALRMBR_ST | RTC_ALRMBR_SU))) >>
-			  RTC_ALRMBR_SU_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_ALMB_GetSecond(RTC_TypeDef *RTCx) { return (uint32_t)((READ_BIT(RTCx->ALRMBR, (RTC_ALRMBR_ST | RTC_ALRMBR_SU))) >> RTC_ALRMBR_SU_Pos); }
 
 /**
  * @brief  Set Alarm B Time (hour, minute and second) in BCD format
@@ -2765,26 +2352,15 @@ __STATIC_INLINE uint32_t LL_RTC_ALMB_GetSecond(RTC_TypeDef *RTCx)
  * @param  Seconds Value between Min_Data=0x00 and Max_Data=0x59
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ALMB_ConfigTime(RTC_TypeDef *RTCx,
-					    uint32_t Format12_24,
-					    uint32_t Hours, uint32_t Minutes,
-					    uint32_t Seconds)
+__STATIC_INLINE void LL_RTC_ALMB_ConfigTime(RTC_TypeDef *RTCx, uint32_t Format12_24, uint32_t Hours, uint32_t Minutes, uint32_t Seconds)
 {
 	uint32_t temp;
 
-	temp = Format12_24 |
-	       (((Hours & 0xF0U) << (RTC_ALRMBR_HT_Pos - 4U)) |
-		((Hours & 0x0FU) << RTC_ALRMBR_HU_Pos)) |
-	       (((Minutes & 0xF0U) << (RTC_ALRMBR_MNT_Pos - 4U)) |
-		((Minutes & 0x0FU) << RTC_ALRMBR_MNU_Pos)) |
-	       (((Seconds & 0xF0U) << (RTC_ALRMBR_ST_Pos - 4U)) |
-		((Seconds & 0x0FU) << RTC_ALRMBR_SU_Pos));
+	temp = Format12_24 | (((Hours & 0xF0U) << (RTC_ALRMBR_HT_Pos - 4U)) | ((Hours & 0x0FU) << RTC_ALRMBR_HU_Pos)) |
+	       (((Minutes & 0xF0U) << (RTC_ALRMBR_MNT_Pos - 4U)) | ((Minutes & 0x0FU) << RTC_ALRMBR_MNU_Pos)) |
+	       (((Seconds & 0xF0U) << (RTC_ALRMBR_ST_Pos - 4U)) | ((Seconds & 0x0FU) << RTC_ALRMBR_SU_Pos));
 
-	MODIFY_REG(RTCx->ALRMBR,
-		   RTC_ALRMBR_PM | RTC_ALRMBR_HT | RTC_ALRMBR_HU |
-		       RTC_ALRMBR_MNT | RTC_ALRMBR_MNU | RTC_ALRMBR_ST |
-		       RTC_ALRMBR_SU,
-		   temp);
+	MODIFY_REG(RTCx->ALRMBR, RTC_ALRMBR_PM | RTC_ALRMBR_HT | RTC_ALRMBR_HU | RTC_ALRMBR_MNT | RTC_ALRMBR_MNU | RTC_ALRMBR_ST | RTC_ALRMBR_SU, temp);
 }
 
 /**
@@ -2802,9 +2378,7 @@ __STATIC_INLINE void LL_RTC_ALMB_ConfigTime(RTC_TypeDef *RTCx,
  */
 __STATIC_INLINE uint32_t LL_RTC_ALMB_GetTime(RTC_TypeDef *RTCx)
 {
-	return (uint32_t)((LL_RTC_ALMB_GetHour(RTCx) << RTC_OFFSET_HOUR) |
-			  (LL_RTC_ALMB_GetMinute(RTCx) << RTC_OFFSET_MINUTE) |
-			  LL_RTC_ALMB_GetSecond(RTCx));
+	return (uint32_t)((LL_RTC_ALMB_GetHour(RTCx) << RTC_OFFSET_HOUR) | (LL_RTC_ALMB_GetMinute(RTCx) << RTC_OFFSET_MINUTE) | LL_RTC_ALMB_GetSecond(RTCx));
 }
 
 /**
@@ -2816,12 +2390,7 @@ __STATIC_INLINE uint32_t LL_RTC_ALMB_GetTime(RTC_TypeDef *RTCx)
  * @param  Mask Value between Min_Data=0x00 and Max_Data=0xF
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ALMB_SetSubSecondMask(RTC_TypeDef *RTCx,
-						  uint32_t Mask)
-{
-	MODIFY_REG(RTCx->ALRMBSSR, RTC_ALRMBSSR_MASKSS,
-		   Mask << RTC_ALRMBSSR_MASKSS_Pos);
-}
+__STATIC_INLINE void LL_RTC_ALMB_SetSubSecondMask(RTC_TypeDef *RTCx, uint32_t Mask) { MODIFY_REG(RTCx->ALRMBSSR, RTC_ALRMBSSR_MASKSS, Mask << RTC_ALRMBSSR_MASKSS_Pos); }
 
 /**
  * @brief  Get Alarm B Mask the most-significant bits starting at this bit
@@ -2829,11 +2398,7 @@ __STATIC_INLINE void LL_RTC_ALMB_SetSubSecondMask(RTC_TypeDef *RTCx,
  * @param  RTCx RTC Instance
  * @retval Value between Min_Data=0x00 and Max_Data=0xF
  */
-__STATIC_INLINE uint32_t LL_RTC_ALMB_GetSubSecondMask(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->ALRMBSSR, RTC_ALRMBSSR_MASKSS) >>
-			  RTC_ALRMBSSR_MASKSS_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_ALMB_GetSubSecondMask(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->ALRMBSSR, RTC_ALRMBSSR_MASKSS) >> RTC_ALRMBSSR_MASKSS_Pos); }
 
 /**
  * @brief  Set Alarm B Sub seconds value
@@ -2842,11 +2407,7 @@ __STATIC_INLINE uint32_t LL_RTC_ALMB_GetSubSecondMask(RTC_TypeDef *RTCx)
  * @param  Subsecond Value between Min_Data=0x00 and Max_Data=0x7FFF
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ALMB_SetSubSecond(RTC_TypeDef *RTCx,
-					      uint32_t Subsecond)
-{
-	MODIFY_REG(RTCx->ALRMBSSR, RTC_ALRMBSSR_SS, Subsecond);
-}
+__STATIC_INLINE void LL_RTC_ALMB_SetSubSecond(RTC_TypeDef *RTCx, uint32_t Subsecond) { MODIFY_REG(RTCx->ALRMBSSR, RTC_ALRMBSSR_SS, Subsecond); }
 
 /**
  * @brief  Get Alarm B Sub seconds value
@@ -2854,10 +2415,7 @@ __STATIC_INLINE void LL_RTC_ALMB_SetSubSecond(RTC_TypeDef *RTCx,
  * @param  RTCx RTC Instance
  * @retval Value between Min_Data=0x00 and Max_Data=0x7FFF
  */
-__STATIC_INLINE uint32_t LL_RTC_ALMB_GetSubSecond(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->ALRMBSSR, RTC_ALRMBSSR_SS));
-}
+__STATIC_INLINE uint32_t LL_RTC_ALMB_GetSubSecond(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->ALRMBSSR, RTC_ALRMBSSR_SS)); }
 
 /**
  * @}
@@ -2875,10 +2433,7 @@ __STATIC_INLINE uint32_t LL_RTC_ALMB_GetSubSecond(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_TS_EnableInternalEvent(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->CR, RTC_CR_ITSE);
-}
+__STATIC_INLINE void LL_RTC_TS_EnableInternalEvent(RTC_TypeDef *RTCx) { SET_BIT(RTCx->CR, RTC_CR_ITSE); }
 
 /**
  * @brief  Disable internal event timestamp
@@ -2888,10 +2443,7 @@ __STATIC_INLINE void LL_RTC_TS_EnableInternalEvent(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_TS_DisableInternalEvent(RTC_TypeDef *RTCx)
-{
-	CLEAR_BIT(RTCx->CR, RTC_CR_ITSE);
-}
+__STATIC_INLINE void LL_RTC_TS_DisableInternalEvent(RTC_TypeDef *RTCx) { CLEAR_BIT(RTCx->CR, RTC_CR_ITSE); }
 
 /**
  * @brief  Enable Timestamp
@@ -2901,10 +2453,7 @@ __STATIC_INLINE void LL_RTC_TS_DisableInternalEvent(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_TS_Enable(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->CR, RTC_CR_TSE);
-}
+__STATIC_INLINE void LL_RTC_TS_Enable(RTC_TypeDef *RTCx) { SET_BIT(RTCx->CR, RTC_CR_TSE); }
 
 /**
  * @brief  Disable Timestamp
@@ -2914,10 +2463,7 @@ __STATIC_INLINE void LL_RTC_TS_Enable(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_TS_Disable(RTC_TypeDef *RTCx)
-{
-	CLEAR_BIT(RTCx->CR, RTC_CR_TSE);
-}
+__STATIC_INLINE void LL_RTC_TS_Disable(RTC_TypeDef *RTCx) { CLEAR_BIT(RTCx->CR, RTC_CR_TSE); }
 
 /**
  * @brief  Set Time-stamp event active edge
@@ -2931,10 +2477,7 @@ __STATIC_INLINE void LL_RTC_TS_Disable(RTC_TypeDef *RTCx)
  *         @arg @ref LL_RTC_TIMESTAMP_EDGE_FALLING
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_TS_SetActiveEdge(RTC_TypeDef *RTCx, uint32_t Edge)
-{
-	MODIFY_REG(RTCx->CR, RTC_CR_TSEDGE, Edge);
-}
+__STATIC_INLINE void LL_RTC_TS_SetActiveEdge(RTC_TypeDef *RTCx, uint32_t Edge) { MODIFY_REG(RTCx->CR, RTC_CR_TSEDGE, Edge); }
 
 /**
  * @brief  Get Time-stamp event active edge
@@ -2946,10 +2489,7 @@ __STATIC_INLINE void LL_RTC_TS_SetActiveEdge(RTC_TypeDef *RTCx, uint32_t Edge)
  *         @arg @ref LL_RTC_TIMESTAMP_EDGE_RISING
  *         @arg @ref LL_RTC_TIMESTAMP_EDGE_FALLING
  */
-__STATIC_INLINE uint32_t LL_RTC_TS_GetActiveEdge(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->CR, RTC_CR_TSEDGE));
-}
+__STATIC_INLINE uint32_t LL_RTC_TS_GetActiveEdge(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->CR, RTC_CR_TSEDGE)); }
 
 /**
  * @brief  Get Timestamp AM/PM notation (AM or 24-hour format)
@@ -2959,10 +2499,7 @@ __STATIC_INLINE uint32_t LL_RTC_TS_GetActiveEdge(RTC_TypeDef *RTCx)
  *         @arg @ref LL_RTC_TS_TIME_FORMAT_AM
  *         @arg @ref LL_RTC_TS_TIME_FORMAT_PM
  */
-__STATIC_INLINE uint32_t LL_RTC_TS_GetTimeFormat(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->TSTR, RTC_TSTR_PM));
-}
+__STATIC_INLINE uint32_t LL_RTC_TS_GetTimeFormat(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->TSTR, RTC_TSTR_PM)); }
 
 /**
  * @brief  Get Timestamp Hours in BCD format
@@ -2974,11 +2511,7 @@ __STATIC_INLINE uint32_t LL_RTC_TS_GetTimeFormat(RTC_TypeDef *RTCx)
  * @retval Value between Min_Data=0x01 and Max_Data=0x12 or between
  * Min_Data=0x00 and Max_Data=0x23
  */
-__STATIC_INLINE uint32_t LL_RTC_TS_GetHour(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->TSTR, RTC_TSTR_HT | RTC_TSTR_HU) >>
-			  RTC_TSTR_HU_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_TS_GetHour(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->TSTR, RTC_TSTR_HT | RTC_TSTR_HU) >> RTC_TSTR_HU_Pos); }
 
 /**
  * @brief  Get Timestamp Minutes in BCD format
@@ -2989,11 +2522,7 @@ __STATIC_INLINE uint32_t LL_RTC_TS_GetHour(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval Value between Min_Data=0x00 and Max_Data=0x59
  */
-__STATIC_INLINE uint32_t LL_RTC_TS_GetMinute(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->TSTR, RTC_TSTR_MNT | RTC_TSTR_MNU) >>
-			  RTC_TSTR_MNU_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_TS_GetMinute(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->TSTR, RTC_TSTR_MNT | RTC_TSTR_MNU) >> RTC_TSTR_MNU_Pos); }
 
 /**
  * @brief  Get Timestamp Seconds in BCD format
@@ -3004,10 +2533,7 @@ __STATIC_INLINE uint32_t LL_RTC_TS_GetMinute(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval Value between Min_Data=0x00 and Max_Data=0x59
  */
-__STATIC_INLINE uint32_t LL_RTC_TS_GetSecond(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->TSTR, RTC_TSTR_ST | RTC_TSTR_SU));
-}
+__STATIC_INLINE uint32_t LL_RTC_TS_GetSecond(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->TSTR, RTC_TSTR_ST | RTC_TSTR_SU)); }
 
 /**
  * @brief  Get Timestamp time (hour, minute and second) in BCD format
@@ -3022,12 +2548,7 @@ __STATIC_INLINE uint32_t LL_RTC_TS_GetSecond(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval Combination of hours, minutes and seconds.
  */
-__STATIC_INLINE uint32_t LL_RTC_TS_GetTime(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->TSTR, RTC_TSTR_HT | RTC_TSTR_HU |
-						   RTC_TSTR_MNT | RTC_TSTR_MNU |
-						   RTC_TSTR_ST | RTC_TSTR_SU));
-}
+__STATIC_INLINE uint32_t LL_RTC_TS_GetTime(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->TSTR, RTC_TSTR_HT | RTC_TSTR_HU | RTC_TSTR_MNT | RTC_TSTR_MNU | RTC_TSTR_ST | RTC_TSTR_SU)); }
 
 /**
  * @brief  Get Timestamp Week day
@@ -3042,11 +2563,7 @@ __STATIC_INLINE uint32_t LL_RTC_TS_GetTime(RTC_TypeDef *RTCx)
  *         @arg @ref LL_RTC_WEEKDAY_SATURDAY
  *         @arg @ref LL_RTC_WEEKDAY_SUNDAY
  */
-__STATIC_INLINE uint32_t LL_RTC_TS_GetWeekDay(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->TSDR, RTC_TSDR_WDU) >>
-			  RTC_TSDR_WDU_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_TS_GetWeekDay(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->TSDR, RTC_TSDR_WDU) >> RTC_TSDR_WDU_Pos); }
 
 /**
  * @brief  Get Timestamp Month in BCD format
@@ -3069,11 +2586,7 @@ __STATIC_INLINE uint32_t LL_RTC_TS_GetWeekDay(RTC_TypeDef *RTCx)
  *         @arg @ref LL_RTC_MONTH_NOVEMBER
  *         @arg @ref LL_RTC_MONTH_DECEMBER
  */
-__STATIC_INLINE uint32_t LL_RTC_TS_GetMonth(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->TSDR, RTC_TSDR_MT | RTC_TSDR_MU) >>
-			  RTC_TSDR_MU_Pos);
-}
+__STATIC_INLINE uint32_t LL_RTC_TS_GetMonth(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->TSDR, RTC_TSDR_MT | RTC_TSDR_MU) >> RTC_TSDR_MU_Pos); }
 
 /**
  * @brief  Get Timestamp Day in BCD format
@@ -3084,10 +2597,7 @@ __STATIC_INLINE uint32_t LL_RTC_TS_GetMonth(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval Value between Min_Data=0x01 and Max_Data=0x31
  */
-__STATIC_INLINE uint32_t LL_RTC_TS_GetDay(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->TSDR, RTC_TSDR_DT | RTC_TSDR_DU));
-}
+__STATIC_INLINE uint32_t LL_RTC_TS_GetDay(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->TSDR, RTC_TSDR_DT | RTC_TSDR_DU)); }
 
 /**
  * @brief  Get Timestamp date (WeekDay, Day and Month) in BCD format
@@ -3101,12 +2611,7 @@ __STATIC_INLINE uint32_t LL_RTC_TS_GetDay(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval Combination of Weekday, Day and Month
  */
-__STATIC_INLINE uint32_t LL_RTC_TS_GetDate(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->TSDR, RTC_TSDR_WDU | RTC_TSDR_MT |
-						   RTC_TSDR_MU | RTC_TSDR_DT |
-						   RTC_TSDR_DU));
-}
+__STATIC_INLINE uint32_t LL_RTC_TS_GetDate(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->TSDR, RTC_TSDR_WDU | RTC_TSDR_MT | RTC_TSDR_MU | RTC_TSDR_DT | RTC_TSDR_DU)); }
 
 /**
  * @brief  Get time-stamp sub second value
@@ -3114,10 +2619,7 @@ __STATIC_INLINE uint32_t LL_RTC_TS_GetDate(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval Value between Min_Data=0x00 and Max_Data=0xFFFF
  */
-__STATIC_INLINE uint32_t LL_RTC_TS_GetSubSecond(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->TSSSR, RTC_TSSSR_SS));
-}
+__STATIC_INLINE uint32_t LL_RTC_TS_GetSubSecond(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->TSSSR, RTC_TSSSR_SS)); }
 
 /**
  * @brief  Activate timestamp on tamper detection event
@@ -3125,10 +2627,7 @@ __STATIC_INLINE uint32_t LL_RTC_TS_GetSubSecond(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_TS_EnableOnTamper(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->CR, RTC_CR_TAMPTS);
-}
+__STATIC_INLINE void LL_RTC_TS_EnableOnTamper(RTC_TypeDef *RTCx) { SET_BIT(RTCx->CR, RTC_CR_TAMPTS); }
 
 /**
  * @brief  Disable timestamp on tamper detection event
@@ -3136,10 +2635,7 @@ __STATIC_INLINE void LL_RTC_TS_EnableOnTamper(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_TS_DisableOnTamper(RTC_TypeDef *RTCx)
-{
-	CLEAR_BIT(RTCx->CR, RTC_CR_TAMPTS);
-}
+__STATIC_INLINE void LL_RTC_TS_DisableOnTamper(RTC_TypeDef *RTCx) { CLEAR_BIT(RTCx->CR, RTC_CR_TAMPTS); }
 
 /**
  * @}
@@ -3229,8 +2725,7 @@ __STATIC_INLINE void LL_RTC_TAMPER_DisableMask(RTC_TypeDef *RTCx, uint32_t Mask)
  *
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_TAMPER_EnableEraseBKP(RTC_TypeDef *RTCx,
-						  uint32_t Tamper)
+__STATIC_INLINE void LL_RTC_TAMPER_EnableEraseBKP(RTC_TypeDef *RTCx, uint32_t Tamper)
 {
 	UNUSED(RTCx);
 	CLEAR_BIT(TAMP->CR2, Tamper);
@@ -3247,8 +2742,7 @@ __STATIC_INLINE void LL_RTC_TAMPER_EnableEraseBKP(RTC_TypeDef *RTCx,
  *
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_TAMPER_DisableEraseBKP(RTC_TypeDef *RTCx,
-						   uint32_t Tamper)
+__STATIC_INLINE void LL_RTC_TAMPER_DisableEraseBKP(RTC_TypeDef *RTCx, uint32_t Tamper)
 {
 	UNUSED(RTCx);
 	SET_BIT(TAMP->CR2, Tamper);
@@ -3291,8 +2785,7 @@ __STATIC_INLINE void LL_RTC_TAMPER_EnablePullUp(RTC_TypeDef *RTCx)
  *         @arg @ref LL_RTC_TAMPER_DURATION_8RTCCLK
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_TAMPER_SetPrecharge(RTC_TypeDef *RTCx,
-						uint32_t Duration)
+__STATIC_INLINE void LL_RTC_TAMPER_SetPrecharge(RTC_TypeDef *RTCx, uint32_t Duration)
 {
 	UNUSED(RTCx);
 	MODIFY_REG(TAMP->FLTCR, TAMP_FLTCR_TAMPPRCH, Duration);
@@ -3325,8 +2818,7 @@ __STATIC_INLINE uint32_t LL_RTC_TAMPER_GetPrecharge(RTC_TypeDef *RTCx)
  *         @arg @ref LL_RTC_TAMPER_FILTER_8SAMPLE
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_TAMPER_SetFilterCount(RTC_TypeDef *RTCx,
-						  uint32_t FilterCount)
+__STATIC_INLINE void LL_RTC_TAMPER_SetFilterCount(RTC_TypeDef *RTCx, uint32_t FilterCount)
 {
 	UNUSED(RTCx);
 	MODIFY_REG(TAMP->FLTCR, TAMP_FLTCR_TAMPFLT, FilterCount);
@@ -3363,8 +2855,7 @@ __STATIC_INLINE uint32_t LL_RTC_TAMPER_GetFilterCount(RTC_TypeDef *RTCx)
  *         @arg @ref LL_RTC_TAMPER_SAMPLFREQDIV_256
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_TAMPER_SetSamplingFreq(RTC_TypeDef *RTCx,
-						   uint32_t SamplingFreq)
+__STATIC_INLINE void LL_RTC_TAMPER_SetSamplingFreq(RTC_TypeDef *RTCx, uint32_t SamplingFreq)
 {
 	UNUSED(RTCx);
 	MODIFY_REG(TAMP->FLTCR, TAMP_FLTCR_TAMPFREQ, SamplingFreq);
@@ -3401,8 +2892,7 @@ __STATIC_INLINE uint32_t LL_RTC_TAMPER_GetSamplingFreq(RTC_TypeDef *RTCx)
  *
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_TAMPER_EnableActiveLevel(RTC_TypeDef *RTCx,
-						     uint32_t Tamper)
+__STATIC_INLINE void LL_RTC_TAMPER_EnableActiveLevel(RTC_TypeDef *RTCx, uint32_t Tamper)
 {
 	UNUSED(RTCx);
 	SET_BIT(TAMP->CR2, Tamper);
@@ -3419,8 +2909,7 @@ __STATIC_INLINE void LL_RTC_TAMPER_EnableActiveLevel(RTC_TypeDef *RTCx,
  *
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_TAMPER_DisableActiveLevel(RTC_TypeDef *RTCx,
-						      uint32_t Tamper)
+__STATIC_INLINE void LL_RTC_TAMPER_DisableActiveLevel(RTC_TypeDef *RTCx, uint32_t Tamper)
 {
 	UNUSED(RTCx);
 	CLEAR_BIT(TAMP->CR2, Tamper);
@@ -3456,8 +2945,7 @@ __STATIC_INLINE void LL_RTC_TAMPER_DisableActiveLevel(RTC_TypeDef *RTCx,
   *
   * @retval None
   */
-__STATIC_INLINE void LL_RTC_TAMPER_ITAMP_Enable(RTC_TypeDef *RTCx,
-						uint32_t InternalTamper)
+__STATIC_INLINE void LL_RTC_TAMPER_ITAMP_Enable(RTC_TypeDef *RTCx, uint32_t InternalTamper)
 {
 	UNUSED(RTCx);
 	SET_BIT(TAMP->CR1, InternalTamper);
@@ -3485,8 +2973,7 @@ __STATIC_INLINE void LL_RTC_TAMPER_ITAMP_Enable(RTC_TypeDef *RTCx,
   *
   * @retval None
   */
-__STATIC_INLINE void LL_RTC_TAMPER_ITAMP_Disable(RTC_TypeDef *RTCx,
-						 uint32_t InternalTamper)
+__STATIC_INLINE void LL_RTC_TAMPER_ITAMP_Disable(RTC_TypeDef *RTCx, uint32_t InternalTamper)
 {
 	UNUSED(RTCx);
 	CLEAR_BIT(TAMP->CR1, InternalTamper);
@@ -3508,10 +2995,7 @@ __STATIC_INLINE void LL_RTC_TAMPER_ITAMP_Disable(RTC_TypeDef *RTCx,
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_WAKEUP_Enable(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->CR, RTC_CR_WUTE);
-}
+__STATIC_INLINE void LL_RTC_WAKEUP_Enable(RTC_TypeDef *RTCx) { SET_BIT(RTCx->CR, RTC_CR_WUTE); }
 
 /**
  * @brief  Disable Wakeup timer
@@ -3521,10 +3005,7 @@ __STATIC_INLINE void LL_RTC_WAKEUP_Enable(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_WAKEUP_Disable(RTC_TypeDef *RTCx)
-{
-	CLEAR_BIT(RTCx->CR, RTC_CR_WUTE);
-}
+__STATIC_INLINE void LL_RTC_WAKEUP_Disable(RTC_TypeDef *RTCx) { CLEAR_BIT(RTCx->CR, RTC_CR_WUTE); }
 
 /**
  * @brief  Check if Wakeup timer is enabled or not
@@ -3532,10 +3013,7 @@ __STATIC_INLINE void LL_RTC_WAKEUP_Disable(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_WAKEUP_IsEnabled(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->CR, RTC_CR_WUTE) == (RTC_CR_WUTE)) ? 1U : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_WAKEUP_IsEnabled(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->CR, RTC_CR_WUTE) == (RTC_CR_WUTE)) ? 1U : 0U); }
 
 /**
  * @brief  Select Wakeup clock
@@ -3554,11 +3032,7 @@ __STATIC_INLINE uint32_t LL_RTC_WAKEUP_IsEnabled(RTC_TypeDef *RTCx)
  *         @arg @ref LL_RTC_WAKEUPCLOCK_CKSPRE_WUT
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_WAKEUP_SetClock(RTC_TypeDef *RTCx,
-					    uint32_t WakeupClock)
-{
-	MODIFY_REG(RTCx->CR, RTC_CR_WUCKSEL, WakeupClock);
-}
+__STATIC_INLINE void LL_RTC_WAKEUP_SetClock(RTC_TypeDef *RTCx, uint32_t WakeupClock) { MODIFY_REG(RTCx->CR, RTC_CR_WUCKSEL, WakeupClock); }
 
 /**
  * @brief  Get Wakeup clock
@@ -3572,10 +3046,7 @@ __STATIC_INLINE void LL_RTC_WAKEUP_SetClock(RTC_TypeDef *RTCx,
  *         @arg @ref LL_RTC_WAKEUPCLOCK_CKSPRE
  *         @arg @ref LL_RTC_WAKEUPCLOCK_CKSPRE_WUT
  */
-__STATIC_INLINE uint32_t LL_RTC_WAKEUP_GetClock(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->CR, RTC_CR_WUCKSEL));
-}
+__STATIC_INLINE uint32_t LL_RTC_WAKEUP_GetClock(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->CR, RTC_CR_WUCKSEL)); }
 
 /**
  * @brief  Set Wakeup auto-reload value
@@ -3585,11 +3056,7 @@ __STATIC_INLINE uint32_t LL_RTC_WAKEUP_GetClock(RTC_TypeDef *RTCx)
  * @param  Value Value between Min_Data=0x00 and Max_Data=0xFFFF
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_WAKEUP_SetAutoReload(RTC_TypeDef *RTCx,
-						 uint32_t Value)
-{
-	MODIFY_REG(RTCx->WUTR, RTC_WUTR_WUT, Value);
-}
+__STATIC_INLINE void LL_RTC_WAKEUP_SetAutoReload(RTC_TypeDef *RTCx, uint32_t Value) { MODIFY_REG(RTCx->WUTR, RTC_WUTR_WUT, Value); }
 
 /**
  * @brief  Get Wakeup auto-reload value
@@ -3597,10 +3064,7 @@ __STATIC_INLINE void LL_RTC_WAKEUP_SetAutoReload(RTC_TypeDef *RTCx,
  * @param  RTCx RTC Instance
  * @retval Value between Min_Data=0x00 and Max_Data=0xFFFF
  */
-__STATIC_INLINE uint32_t LL_RTC_WAKEUP_GetAutoReload(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->WUTR, RTC_WUTR_WUT));
-}
+__STATIC_INLINE uint32_t LL_RTC_WAKEUP_GetAutoReload(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->WUTR, RTC_WUTR_WUT)); }
 
 /**
  * @}
@@ -3623,9 +3087,7 @@ __STATIC_INLINE uint32_t LL_RTC_WAKEUP_GetAutoReload(RTC_TypeDef *RTCx)
  * @param  Data Value between Min_Data=0x00 and Max_Data=0xFFFFFFFF
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_BKP_SetRegister(RTC_TypeDef *RTCx,
-					    uint32_t BackupRegister,
-					    uint32_t Data)
+__STATIC_INLINE void LL_RTC_BKP_SetRegister(RTC_TypeDef *RTCx, uint32_t BackupRegister, uint32_t Data)
 {
 	__IO uint32_t *tmp;
 
@@ -3649,8 +3111,7 @@ __STATIC_INLINE void LL_RTC_BKP_SetRegister(RTC_TypeDef *RTCx,
  *         ...
  * @retval Value between Min_Data=0x00 and Max_Data=0xFFFFFFFF
  */
-__STATIC_INLINE uint32_t LL_RTC_BKP_GetRegister(RTC_TypeDef *RTCx,
-						uint32_t BackupRegister)
+__STATIC_INLINE uint32_t LL_RTC_BKP_GetRegister(RTC_TypeDef *RTCx, uint32_t BackupRegister)
 {
 	const __IO uint32_t *tmp;
 
@@ -3683,11 +3144,7 @@ __STATIC_INLINE uint32_t LL_RTC_BKP_GetRegister(RTC_TypeDef *RTCx,
  *         @arg @ref LL_RTC_CALIB_OUTPUT_512HZ
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_CAL_SetOutputFreq(RTC_TypeDef *RTCx,
-					      uint32_t Frequency)
-{
-	MODIFY_REG(RTCx->CR, RTC_CR_COE | RTC_CR_COSEL, Frequency);
-}
+__STATIC_INLINE void LL_RTC_CAL_SetOutputFreq(RTC_TypeDef *RTCx, uint32_t Frequency) { MODIFY_REG(RTCx->CR, RTC_CR_COE | RTC_CR_COSEL, Frequency); }
 
 /**
  * @brief  Get Calibration output frequency (1 Hz or 512 Hz)
@@ -3699,10 +3156,7 @@ __STATIC_INLINE void LL_RTC_CAL_SetOutputFreq(RTC_TypeDef *RTCx,
  *         @arg @ref LL_RTC_CALIB_OUTPUT_1HZ
  *         @arg @ref LL_RTC_CALIB_OUTPUT_512HZ
  */
-__STATIC_INLINE uint32_t LL_RTC_CAL_GetOutputFreq(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->CR, RTC_CR_COE | RTC_CR_COSEL));
-}
+__STATIC_INLINE uint32_t LL_RTC_CAL_GetOutputFreq(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->CR, RTC_CR_COE | RTC_CR_COSEL)); }
 
 /**
  * @brief  Insert or not One RTCCLK pulse every 2exp11 pulses (frequency
@@ -3717,10 +3171,7 @@ __STATIC_INLINE uint32_t LL_RTC_CAL_GetOutputFreq(RTC_TypeDef *RTCx)
  *         @arg @ref LL_RTC_CALIB_INSERTPULSE_SET
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_CAL_SetPulse(RTC_TypeDef *RTCx, uint32_t Pulse)
-{
-	MODIFY_REG(RTCx->CALR, RTC_CALR_CALP, Pulse);
-}
+__STATIC_INLINE void LL_RTC_CAL_SetPulse(RTC_TypeDef *RTCx, uint32_t Pulse) { MODIFY_REG(RTCx->CALR, RTC_CALR_CALP, Pulse); }
 
 /**
  * @brief  Check if one RTCCLK has been inserted or not every 2exp11 pulses
@@ -3729,11 +3180,7 @@ __STATIC_INLINE void LL_RTC_CAL_SetPulse(RTC_TypeDef *RTCx, uint32_t Pulse)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_CAL_IsPulseInserted(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->CALR, RTC_CALR_CALP) == (RTC_CALR_CALP)) ? 1U
-									 : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_CAL_IsPulseInserted(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->CALR, RTC_CALR_CALP) == (RTC_CALR_CALP)) ? 1U : 0U); }
 
 /**
  * @brief  Set the calibration cycle period
@@ -3749,10 +3196,7 @@ __STATIC_INLINE uint32_t LL_RTC_CAL_IsPulseInserted(RTC_TypeDef *RTCx)
  *         @arg @ref LL_RTC_CALIB_PERIOD_8SEC
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_CAL_SetPeriod(RTC_TypeDef *RTCx, uint32_t Period)
-{
-	MODIFY_REG(RTCx->CALR, RTC_CALR_CALW8 | RTC_CALR_CALW16, Period);
-}
+__STATIC_INLINE void LL_RTC_CAL_SetPeriod(RTC_TypeDef *RTCx, uint32_t Period) { MODIFY_REG(RTCx->CALR, RTC_CALR_CALW8 | RTC_CALR_CALW16, Period); }
 
 /**
  * @brief  Get the calibration cycle period
@@ -3764,11 +3208,7 @@ __STATIC_INLINE void LL_RTC_CAL_SetPeriod(RTC_TypeDef *RTCx, uint32_t Period)
  *         @arg @ref LL_RTC_CALIB_PERIOD_16SEC
  *         @arg @ref LL_RTC_CALIB_PERIOD_8SEC
  */
-__STATIC_INLINE uint32_t LL_RTC_CAL_GetPeriod(RTC_TypeDef *RTCx)
-{
-	return (
-	    uint32_t)(READ_BIT(RTCx->CALR, RTC_CALR_CALW8 | RTC_CALR_CALW16));
-}
+__STATIC_INLINE uint32_t LL_RTC_CAL_GetPeriod(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->CALR, RTC_CALR_CALW8 | RTC_CALR_CALW16)); }
 
 /**
  * @brief  Set Calibration minus
@@ -3780,10 +3220,7 @@ __STATIC_INLINE uint32_t LL_RTC_CAL_GetPeriod(RTC_TypeDef *RTCx)
  * @param  CalibMinus Value between Min_Data=0x00 and Max_Data=0x1FF
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_CAL_SetMinus(RTC_TypeDef *RTCx, uint32_t CalibMinus)
-{
-	MODIFY_REG(RTCx->CALR, RTC_CALR_CALM, CalibMinus);
-}
+__STATIC_INLINE void LL_RTC_CAL_SetMinus(RTC_TypeDef *RTCx, uint32_t CalibMinus) { MODIFY_REG(RTCx->CALR, RTC_CALR_CALM, CalibMinus); }
 
 /**
  * @brief  Get Calibration minus
@@ -3791,10 +3228,7 @@ __STATIC_INLINE void LL_RTC_CAL_SetMinus(RTC_TypeDef *RTCx, uint32_t CalibMinus)
  * @param  RTCx RTC Instance
  * @retval Value between Min_Data=0x00 and Max_Data= 0x1FF
  */
-__STATIC_INLINE uint32_t LL_RTC_CAL_GetMinus(RTC_TypeDef *RTCx)
-{
-	return (uint32_t)(READ_BIT(RTCx->CALR, RTC_CALR_CALM));
-}
+__STATIC_INLINE uint32_t LL_RTC_CAL_GetMinus(RTC_TypeDef *RTCx) { return (uint32_t)(READ_BIT(RTCx->CALR, RTC_CALR_CALM)); }
 
 /**
  * @}
@@ -3810,10 +3244,7 @@ __STATIC_INLINE uint32_t LL_RTC_CAL_GetMinus(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITS(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->SR, RTC_SR_ITSF) == (RTC_SR_ITSF)) ? 1U : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITS(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->SR, RTC_SR_ITSF) == (RTC_SR_ITSF)) ? 1U : 0U); }
 
 /**
  * @brief  Get Recalibration pending Flag
@@ -3821,12 +3252,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITS(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_RECALP(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->ICSR, RTC_ICSR_RECALPF) == (RTC_ICSR_RECALPF))
-		    ? 1U
-		    : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_RECALP(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->ICSR, RTC_ICSR_RECALPF) == (RTC_ICSR_RECALPF)) ? 1U : 0U); }
 
 /**
  * @brief  Get Time-stamp overflow flag
@@ -3834,10 +3260,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_RECALP(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TSOV(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->SR, RTC_SR_TSOVF) == (RTC_SR_TSOVF)) ? 1U : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TSOV(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->SR, RTC_SR_TSOVF) == (RTC_SR_TSOVF)) ? 1U : 0U); }
 
 /**
  * @brief  Get Time-stamp flag
@@ -3845,10 +3268,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TSOV(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TS(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->SR, RTC_SR_TSF) == (RTC_SR_TSF)) ? 1U : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TS(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->SR, RTC_SR_TSF) == (RTC_SR_TSF)) ? 1U : 0U); }
 
 /**
  * @brief  Get Wakeup timer flag
@@ -3856,10 +3276,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TS(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_WUT(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->SR, RTC_SR_WUTF) == (RTC_SR_WUTF)) ? 1U : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_WUT(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->SR, RTC_SR_WUTF) == (RTC_SR_WUTF)) ? 1U : 0U); }
 
 /**
  * @brief  Get Alarm B flag
@@ -3867,10 +3284,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_WUT(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ALRB(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->SR, RTC_SR_ALRBF) == (RTC_SR_ALRBF)) ? 1U : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ALRB(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->SR, RTC_SR_ALRBF) == (RTC_SR_ALRBF)) ? 1U : 0U); }
 
 /**
  * @brief  Get Alarm A flag
@@ -3878,10 +3292,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ALRB(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ALRA(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->SR, RTC_SR_ALRAF) == (RTC_SR_ALRAF)) ? 1U : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ALRA(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->SR, RTC_SR_ALRAF) == (RTC_SR_ALRAF)) ? 1U : 0U); }
 
 /**
  * @brief  Clear Internal Time-stamp flag
@@ -3889,10 +3300,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ALRA(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ClearFlag_ITS(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->SCR, RTC_SCR_CITSF);
-}
+__STATIC_INLINE void LL_RTC_ClearFlag_ITS(RTC_TypeDef *RTCx) { SET_BIT(RTCx->SCR, RTC_SCR_CITSF); }
 
 /**
  * @brief  Clear Time-stamp overflow flag
@@ -3900,10 +3308,7 @@ __STATIC_INLINE void LL_RTC_ClearFlag_ITS(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ClearFlag_TSOV(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->SCR, RTC_SCR_CTSOVF);
-}
+__STATIC_INLINE void LL_RTC_ClearFlag_TSOV(RTC_TypeDef *RTCx) { SET_BIT(RTCx->SCR, RTC_SCR_CTSOVF); }
 
 /**
  * @brief  Clear Time-stamp flag
@@ -3911,10 +3316,7 @@ __STATIC_INLINE void LL_RTC_ClearFlag_TSOV(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ClearFlag_TS(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->SCR, RTC_SCR_CTSF);
-}
+__STATIC_INLINE void LL_RTC_ClearFlag_TS(RTC_TypeDef *RTCx) { SET_BIT(RTCx->SCR, RTC_SCR_CTSF); }
 
 /**
  * @brief  Clear Wakeup timer flag
@@ -3922,10 +3324,7 @@ __STATIC_INLINE void LL_RTC_ClearFlag_TS(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ClearFlag_WUT(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->SCR, RTC_SCR_CWUTF);
-}
+__STATIC_INLINE void LL_RTC_ClearFlag_WUT(RTC_TypeDef *RTCx) { SET_BIT(RTCx->SCR, RTC_SCR_CWUTF); }
 
 /**
  * @brief  Clear Alarm B flag
@@ -3933,10 +3332,7 @@ __STATIC_INLINE void LL_RTC_ClearFlag_WUT(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ClearFlag_ALRB(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->SCR, RTC_SCR_CALRBF);
-}
+__STATIC_INLINE void LL_RTC_ClearFlag_ALRB(RTC_TypeDef *RTCx) { SET_BIT(RTCx->SCR, RTC_SCR_CALRBF); }
 
 /**
  * @brief  Clear Alarm A flag
@@ -3944,10 +3340,7 @@ __STATIC_INLINE void LL_RTC_ClearFlag_ALRB(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ClearFlag_ALRA(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->SCR, RTC_SCR_CALRAF);
-}
+__STATIC_INLINE void LL_RTC_ClearFlag_ALRA(RTC_TypeDef *RTCx) { SET_BIT(RTCx->SCR, RTC_SCR_CALRAF); }
 
 /**
  * @brief  Get Initialization flag
@@ -3955,12 +3348,7 @@ __STATIC_INLINE void LL_RTC_ClearFlag_ALRA(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_INIT(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->ICSR, RTC_ICSR_INITF) == (RTC_ICSR_INITF))
-		    ? 1U
-		    : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_INIT(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->ICSR, RTC_ICSR_INITF) == (RTC_ICSR_INITF)) ? 1U : 0U); }
 
 /**
  * @brief  Get Registers synchronization flag
@@ -3968,11 +3356,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_INIT(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_RS(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->ICSR, RTC_ICSR_RSF) == (RTC_ICSR_RSF)) ? 1U
-								       : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_RS(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->ICSR, RTC_ICSR_RSF) == (RTC_ICSR_RSF)) ? 1U : 0U); }
 
 /**
  * @brief  Clear Registers synchronization flag
@@ -3980,11 +3364,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_RS(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_ClearFlag_RS(RTC_TypeDef *RTCx)
-{
-	WRITE_REG(RTCx->ICSR, (~((RTC_ICSR_RSF | RTC_ICSR_INIT) & 0x000000FFU) |
-			       (RTCx->ICSR & RTC_ICSR_INIT)));
-}
+__STATIC_INLINE void LL_RTC_ClearFlag_RS(RTC_TypeDef *RTCx) { WRITE_REG(RTCx->ICSR, (~((RTC_ICSR_RSF | RTC_ICSR_INIT) & 0x000000FFU) | (RTCx->ICSR & RTC_ICSR_INIT))); }
 
 /**
  * @brief  Get Initialization status flag
@@ -3992,12 +3372,7 @@ __STATIC_INLINE void LL_RTC_ClearFlag_RS(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_INITS(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->ICSR, RTC_ICSR_INITS) == (RTC_ICSR_INITS))
-		    ? 1U
-		    : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_INITS(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->ICSR, RTC_ICSR_INITS) == (RTC_ICSR_INITS)) ? 1U : 0U); }
 
 /**
  * @brief  Get Shift operation pending flag
@@ -4005,11 +3380,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_INITS(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_SHP(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->ICSR, RTC_ICSR_SHPF) == (RTC_ICSR_SHPF)) ? 1U
-									 : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_SHP(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->ICSR, RTC_ICSR_SHPF) == (RTC_ICSR_SHPF)) ? 1U : 0U); }
 
 /**
  * @brief  Get Wakeup timer write flag
@@ -4017,12 +3388,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_SHP(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_WUTW(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->ICSR, RTC_ICSR_WUTWF) == (RTC_ICSR_WUTWF))
-		    ? 1U
-		    : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_WUTW(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->ICSR, RTC_ICSR_WUTWF) == (RTC_ICSR_WUTWF)) ? 1U : 0U); }
 
 /**
  * @brief  Get Alarm B write flag
@@ -4030,12 +3396,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_WUTW(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ALRBW(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->ICSR, RTC_ICSR_ALRBWF) == (RTC_ICSR_ALRBWF))
-		    ? 1U
-		    : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ALRBW(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->ICSR, RTC_ICSR_ALRBWF) == (RTC_ICSR_ALRBWF)) ? 1U : 0U); }
 
 /**
  * @brief  Get Alarm A write flag
@@ -4043,12 +3404,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ALRBW(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ALRAW(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->ICSR, RTC_ICSR_ALRAWF) == (RTC_ICSR_ALRAWF))
-		    ? 1U
-		    : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ALRAW(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->ICSR, RTC_ICSR_ALRAWF) == (RTC_ICSR_ALRAWF)) ? 1U : 0U); }
 
 /**
  * @brief  Get Alarm A masked flag.
@@ -4056,12 +3412,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ALRAW(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ALRAM(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->MISR, RTC_MISR_ALRAMF) == (RTC_MISR_ALRAMF))
-		    ? 1U
-		    : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ALRAM(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->MISR, RTC_MISR_ALRAMF) == (RTC_MISR_ALRAMF)) ? 1U : 0U); }
 
 /**
  * @brief  Get Alarm B masked flag.
@@ -4069,12 +3420,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ALRAM(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ALRBM(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->MISR, RTC_MISR_ALRBMF) == (RTC_MISR_ALRBMF))
-		    ? 1U
-		    : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ALRBM(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->MISR, RTC_MISR_ALRBMF) == (RTC_MISR_ALRBMF)) ? 1U : 0U); }
 
 /**
  * @brief  Get Wakeup timer masked flag.
@@ -4082,12 +3428,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ALRBM(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_WUTM(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->MISR, RTC_MISR_WUTMF) == (RTC_MISR_WUTMF))
-		    ? 1U
-		    : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_WUTM(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->MISR, RTC_MISR_WUTMF) == (RTC_MISR_WUTMF)) ? 1U : 0U); }
 
 /**
  * @brief  Get Time-stamp masked flag.
@@ -4095,11 +3436,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_WUTM(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TSM(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->MISR, RTC_MISR_TSMF) == (RTC_MISR_TSMF)) ? 1U
-									 : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TSM(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->MISR, RTC_MISR_TSMF) == (RTC_MISR_TSMF)) ? 1U : 0U); }
 
 /**
  * @brief  Get Time-stamp overflow masked flag.
@@ -4107,12 +3444,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TSM(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TSOVM(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->MISR, RTC_MISR_TSOVMF) == (RTC_MISR_TSOVMF))
-		    ? 1U
-		    : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TSOVM(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->MISR, RTC_MISR_TSOVMF) == (RTC_MISR_TSOVMF)) ? 1U : 0U); }
 
 /**
  * @brief  Get Internal Time-stamp masked flag.
@@ -4120,12 +3452,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TSOVM(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITSM(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->MISR, RTC_MISR_ITSMF) == (RTC_MISR_ITSMF))
-		    ? 1U
-		    : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITSM(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->MISR, RTC_MISR_ITSMF) == (RTC_MISR_ITSMF)) ? 1U : 0U); }
 
 /**
  * @brief  Get tamper 1 detection flag.
@@ -4136,8 +3463,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITSM(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP1(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->SR, TAMP_SR_TAMP1F) == (TAMP_SR_TAMP1F)) ? 1U
-									 : 0U);
+	return ((READ_BIT(TAMP->SR, TAMP_SR_TAMP1F) == (TAMP_SR_TAMP1F)) ? 1U : 0U);
 }
 
 /**
@@ -4149,8 +3475,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP1(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP2(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->SR, TAMP_SR_TAMP2F) == (TAMP_SR_TAMP2F)) ? 1U
-									 : 0U);
+	return ((READ_BIT(TAMP->SR, TAMP_SR_TAMP2F) == (TAMP_SR_TAMP2F)) ? 1U : 0U);
 }
 
 #if (RTC_TAMP_NB == 3)
@@ -4163,8 +3488,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP2(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP3(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->SR, TAMP_SR_TAMP3F) == (TAMP_SR_TAMP3F)) ? 1U
-									 : 0U);
+	return ((READ_BIT(TAMP->SR, TAMP_SR_TAMP3F) == (TAMP_SR_TAMP3F)) ? 1U : 0U);
 }
 #elif (RTC_TAMP_NB == 8)
 
@@ -4177,8 +3501,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP3(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP3(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->SR, TAMP_SR_TAMP3F) == (TAMP_SR_TAMP3F)) ? 1U
-									 : 0U);
+	return ((READ_BIT(TAMP->SR, TAMP_SR_TAMP3F) == (TAMP_SR_TAMP3F)) ? 1U : 0U);
 }
 /**
  * @brief  Get tamper 4 detection flag.
@@ -4189,8 +3512,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP3(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP4(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->SR, TAMP_SR_TAMP4F) == (TAMP_SR_TAMP4F)) ? 1U
-									 : 0U);
+	return ((READ_BIT(TAMP->SR, TAMP_SR_TAMP4F) == (TAMP_SR_TAMP4F)) ? 1U : 0U);
 }
 /**
  * @brief  Get tamper 5 detection flag.
@@ -4201,8 +3523,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP4(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP5(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->SR, TAMP_SR_TAMP5F) == (TAMP_SR_TAMP5F)) ? 1U
-									 : 0U);
+	return ((READ_BIT(TAMP->SR, TAMP_SR_TAMP5F) == (TAMP_SR_TAMP5F)) ? 1U : 0U);
 }
 /**
  * @brief  Get tamper 6 detection flag.
@@ -4213,8 +3534,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP5(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP6(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->SR, TAMP_SR_TAMP6F) == (TAMP_SR_TAMP6F)) ? 1U
-									 : 0U);
+	return ((READ_BIT(TAMP->SR, TAMP_SR_TAMP6F) == (TAMP_SR_TAMP6F)) ? 1U : 0U);
 }
 /**
  * @brief  Get tamper 7 detection flag.
@@ -4225,8 +3545,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP6(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP7(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->SR, TAMP_SR_TAMP7F) == (TAMP_SR_TAMP7F)) ? 1U
-									 : 0U);
+	return ((READ_BIT(TAMP->SR, TAMP_SR_TAMP7F) == (TAMP_SR_TAMP7F)) ? 1U : 0U);
 }
 /**
  * @brief  Get tamper 8 detection flag.
@@ -4237,8 +3556,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP7(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP8(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->SR, TAMP_SR_TAMP8F) == (TAMP_SR_TAMP8F)) ? 1U
-									 : 0U);
+	return ((READ_BIT(TAMP->SR, TAMP_SR_TAMP8F) == (TAMP_SR_TAMP8F)) ? 1U : 0U);
 }
 #endif /* RTC_TAMP_NB */
 
@@ -4252,9 +3570,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP8(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP1(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->SR, TAMP_SR_ITAMP1F) == (TAMP_SR_ITAMP1F))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->SR, TAMP_SR_ITAMP1F) == (TAMP_SR_ITAMP1F)) ? 1U : 0U);
 }
 
 #endif /* RTC_TAMP_INT_1_SUPPORT */
@@ -4268,9 +3584,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP1(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP2(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->SR, TAMP_SR_ITAMP2F) == (TAMP_SR_ITAMP2F))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->SR, TAMP_SR_ITAMP2F) == (TAMP_SR_ITAMP2F)) ? 1U : 0U);
 }
 
 #endif /* RTC_TAMP_INT_2_SUPPORT */
@@ -4283,9 +3597,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP2(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP3(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->SR, TAMP_SR_ITAMP3F) == (TAMP_SR_ITAMP3F))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->SR, TAMP_SR_ITAMP3F) == (TAMP_SR_ITAMP3F)) ? 1U : 0U);
 }
 
 /**
@@ -4297,9 +3609,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP3(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP4(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->SR, TAMP_SR_ITAMP4F) == (TAMP_SR_ITAMP4F))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->SR, TAMP_SR_ITAMP4F) == (TAMP_SR_ITAMP4F)) ? 1U : 0U);
 }
 /**
  * @brief  Get internal tamper 5 detection flag.
@@ -4310,9 +3620,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP4(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP5(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->SR, TAMP_SR_ITAMP5F) == (TAMP_SR_ITAMP5F))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->SR, TAMP_SR_ITAMP5F) == (TAMP_SR_ITAMP5F)) ? 1U : 0U);
 }
 
 #if defined(RTC_TAMP_INT_6_SUPPORT)
@@ -4325,9 +3633,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP5(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP6(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->SR, TAMP_SR_ITAMP6F) == (TAMP_SR_ITAMP6F))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->SR, TAMP_SR_ITAMP6F) == (TAMP_SR_ITAMP6F)) ? 1U : 0U);
 }
 #endif /* RTC_TAMP_INT_6_SUPPORT */
 
@@ -4341,9 +3647,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP6(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP7(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->SR, TAMP_SR_ITAMP7F) == (TAMP_SR_ITAMP7F))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->SR, TAMP_SR_ITAMP7F) == (TAMP_SR_ITAMP7F)) ? 1U : 0U);
 }
 #endif /* RTC_TAMP_INT_7_SUPPORT */
 
@@ -4357,9 +3661,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP7(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP8(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->SR, TAMP_SR_ITAMP8F) == (TAMP_SR_ITAMP8F))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->SR, TAMP_SR_ITAMP8F) == (TAMP_SR_ITAMP8F)) ? 1U : 0U);
 }
 #endif /* RTC_TAMP_INT_8_SUPPORT */
 
@@ -4470,9 +3772,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP16(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP1M(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->MISR, TAMP_MISR_TAMP1MF) == (TAMP_MISR_TAMP1MF))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->MISR, TAMP_MISR_TAMP1MF) == (TAMP_MISR_TAMP1MF)) ? 1U : 0U);
 }
 
 /**
@@ -4484,9 +3784,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP1M(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP2M(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->MISR, TAMP_MISR_TAMP2MF) == (TAMP_MISR_TAMP2MF))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->MISR, TAMP_MISR_TAMP2MF) == (TAMP_MISR_TAMP2MF)) ? 1U : 0U);
 }
 
 #if (RTC_TAMP_NB == 3)
@@ -4499,9 +3797,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP2M(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP3M(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->MISR, TAMP_MISR_TAMP3MF) == (TAMP_MISR_TAMP3MF))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->MISR, TAMP_MISR_TAMP3MF) == (TAMP_MISR_TAMP3MF)) ? 1U : 0U);
 }
 #elif (RTC_TAMP_NB == 8)
 /**
@@ -4513,9 +3809,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP3M(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP3M(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->MISR, TAMP_MISR_TAMP3MF) == (TAMP_MISR_TAMP3MF))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->MISR, TAMP_MISR_TAMP3MF) == (TAMP_MISR_TAMP3MF)) ? 1U : 0U);
 }
 /**
  * @brief  Get tamper 4 interrupt masked flag.
@@ -4526,9 +3820,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP3M(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP4M(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->MISR, TAMP_MISR_TAMP4MF) == (TAMP_MISR_TAMP4MF))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->MISR, TAMP_MISR_TAMP4MF) == (TAMP_MISR_TAMP4MF)) ? 1U : 0U);
 }
 /**
  * @brief  Get tamper 5 interrupt masked flag.
@@ -4539,9 +3831,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP4M(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP5M(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->MISR, TAMP_MISR_TAMP5MF) == (TAMP_MISR_TAMP5MF))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->MISR, TAMP_MISR_TAMP5MF) == (TAMP_MISR_TAMP5MF)) ? 1U : 0U);
 }
 /**
  * @brief  Get tamper 6 interrupt masked flag.
@@ -4552,9 +3842,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP5M(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP6M(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->MISR, TAMP_MISR_TAMP6MF) == (TAMP_MISR_TAMP6MF))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->MISR, TAMP_MISR_TAMP6MF) == (TAMP_MISR_TAMP6MF)) ? 1U : 0U);
 }
 /**
  * @brief  Get tamper 7 interrupt masked flag.
@@ -4565,9 +3853,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP6M(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP7M(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->MISR, TAMP_MISR_TAMP7MF) == (TAMP_MISR_TAMP7MF))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->MISR, TAMP_MISR_TAMP7MF) == (TAMP_MISR_TAMP7MF)) ? 1U : 0U);
 }
 /**
  * @brief  Get tamper 8 interrupt masked flag.
@@ -4578,9 +3864,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP7M(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP8M(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->MISR, TAMP_MISR_TAMP8MF) == (TAMP_MISR_TAMP8MF))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->MISR, TAMP_MISR_TAMP8MF) == (TAMP_MISR_TAMP8MF)) ? 1U : 0U);
 }
 #endif /* RTC_TAMP_NB */
 
@@ -4594,10 +3878,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_TAMP8M(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP1M(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return (
-	    (READ_BIT(TAMP->MISR, TAMP_MISR_ITAMP1MF) == (TAMP_MISR_ITAMP1MF))
-		? 1U
-		: 0U);
+	return ((READ_BIT(TAMP->MISR, TAMP_MISR_ITAMP1MF) == (TAMP_MISR_ITAMP1MF)) ? 1U : 0U);
 }
 
 #endif /* RTC_TAMP_INT_1_SUPPORT */
@@ -4611,10 +3892,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP1M(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP2M(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return (
-	    (READ_BIT(TAMP->MISR, TAMP_MISR_ITAMP2MF) == (TAMP_MISR_ITAMP2MF))
-		? 1U
-		: 0U);
+	return ((READ_BIT(TAMP->MISR, TAMP_MISR_ITAMP2MF) == (TAMP_MISR_ITAMP2MF)) ? 1U : 0U);
 }
 
 #endif /* RTC_TAMP_INT_2_SUPPORT */
@@ -4627,10 +3905,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP2M(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP3M(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return (
-	    (READ_BIT(TAMP->MISR, TAMP_MISR_ITAMP3MF) == (TAMP_MISR_ITAMP3MF))
-		? 1U
-		: 0U);
+	return ((READ_BIT(TAMP->MISR, TAMP_MISR_ITAMP3MF) == (TAMP_MISR_ITAMP3MF)) ? 1U : 0U);
 }
 
 /**
@@ -4642,10 +3917,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP3M(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP4M(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return (
-	    (READ_BIT(TAMP->MISR, TAMP_MISR_ITAMP4MF) == (TAMP_MISR_ITAMP4MF))
-		? 1U
-		: 0U);
+	return ((READ_BIT(TAMP->MISR, TAMP_MISR_ITAMP4MF) == (TAMP_MISR_ITAMP4MF)) ? 1U : 0U);
 }
 
 /**
@@ -4657,10 +3929,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP4M(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP5M(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return (
-	    (READ_BIT(TAMP->MISR, TAMP_MISR_ITAMP5MF) == (TAMP_MISR_ITAMP5MF))
-		? 1U
-		: 0U);
+	return ((READ_BIT(TAMP->MISR, TAMP_MISR_ITAMP5MF) == (TAMP_MISR_ITAMP5MF)) ? 1U : 0U);
 }
 
 #if defined(RTC_TAMP_INT_6_SUPPORT)
@@ -4673,10 +3942,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP5M(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP6M(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return (
-	    (READ_BIT(TAMP->MISR, TAMP_MISR_ITAMP6MF) == (TAMP_MISR_ITAMP6MF))
-		? 1U
-		: 0U);
+	return ((READ_BIT(TAMP->MISR, TAMP_MISR_ITAMP6MF) == (TAMP_MISR_ITAMP6MF)) ? 1U : 0U);
 }
 #endif /* RTC_TAMP_INT_6_SUPPORT */
 
@@ -4690,10 +3956,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP6M(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP7M(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return (
-	    (READ_BIT(TAMP->MISR, TAMP_MISR_ITAMP7MF) == (TAMP_MISR_ITAMP7MF))
-		? 1U
-		: 0U);
+	return ((READ_BIT(TAMP->MISR, TAMP_MISR_ITAMP7MF) == (TAMP_MISR_ITAMP7MF)) ? 1U : 0U);
 }
 #endif /* RTC_TAMP_INT_7_SUPPORT */
 
@@ -4707,10 +3970,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP7M(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsActiveFlag_ITAMP8M(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return (
-	    (READ_BIT(TAMP->MISR, TAMP_MISR_ITAMP8MF) == (TAMP_MISR_ITAMP8MF))
-		? 1U
-		: 0U);
+	return ((READ_BIT(TAMP->MISR, TAMP_MISR_ITAMP8MF) == (TAMP_MISR_ITAMP8MF)) ? 1U : 0U);
 }
 #endif /* RTC_TAMP_INT_8_SUPPORT */
 
@@ -4942,10 +4202,7 @@ __STATIC_INLINE void LL_RTC_ClearFlag_ITAMP8(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_EnableIT_TS(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->CR, RTC_CR_TSIE);
-}
+__STATIC_INLINE void LL_RTC_EnableIT_TS(RTC_TypeDef *RTCx) { SET_BIT(RTCx->CR, RTC_CR_TSIE); }
 
 /**
  * @brief  Disable Time-stamp interrupt
@@ -4955,10 +4212,7 @@ __STATIC_INLINE void LL_RTC_EnableIT_TS(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_DisableIT_TS(RTC_TypeDef *RTCx)
-{
-	CLEAR_BIT(RTCx->CR, RTC_CR_TSIE);
-}
+__STATIC_INLINE void LL_RTC_DisableIT_TS(RTC_TypeDef *RTCx) { CLEAR_BIT(RTCx->CR, RTC_CR_TSIE); }
 
 /**
  * @brief  Enable Wakeup timer interrupt
@@ -4968,10 +4222,7 @@ __STATIC_INLINE void LL_RTC_DisableIT_TS(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_EnableIT_WUT(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->CR, RTC_CR_WUTIE);
-}
+__STATIC_INLINE void LL_RTC_EnableIT_WUT(RTC_TypeDef *RTCx) { SET_BIT(RTCx->CR, RTC_CR_WUTIE); }
 
 /**
  * @brief  Disable Wakeup timer interrupt
@@ -4981,10 +4232,7 @@ __STATIC_INLINE void LL_RTC_EnableIT_WUT(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_DisableIT_WUT(RTC_TypeDef *RTCx)
-{
-	CLEAR_BIT(RTCx->CR, RTC_CR_WUTIE);
-}
+__STATIC_INLINE void LL_RTC_DisableIT_WUT(RTC_TypeDef *RTCx) { CLEAR_BIT(RTCx->CR, RTC_CR_WUTIE); }
 
 /**
  * @brief  Enable Alarm B interrupt
@@ -4994,10 +4242,7 @@ __STATIC_INLINE void LL_RTC_DisableIT_WUT(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_EnableIT_ALRB(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->CR, RTC_CR_ALRBIE);
-}
+__STATIC_INLINE void LL_RTC_EnableIT_ALRB(RTC_TypeDef *RTCx) { SET_BIT(RTCx->CR, RTC_CR_ALRBIE); }
 
 /**
  * @brief  Disable Alarm B interrupt
@@ -5007,10 +4252,7 @@ __STATIC_INLINE void LL_RTC_EnableIT_ALRB(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_DisableIT_ALRB(RTC_TypeDef *RTCx)
-{
-	CLEAR_BIT(RTCx->CR, RTC_CR_ALRBIE);
-}
+__STATIC_INLINE void LL_RTC_DisableIT_ALRB(RTC_TypeDef *RTCx) { CLEAR_BIT(RTCx->CR, RTC_CR_ALRBIE); }
 
 /**
  * @brief  Enable Alarm A interrupt
@@ -5020,10 +4262,7 @@ __STATIC_INLINE void LL_RTC_DisableIT_ALRB(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_EnableIT_ALRA(RTC_TypeDef *RTCx)
-{
-	SET_BIT(RTCx->CR, RTC_CR_ALRAIE);
-}
+__STATIC_INLINE void LL_RTC_EnableIT_ALRA(RTC_TypeDef *RTCx) { SET_BIT(RTCx->CR, RTC_CR_ALRAIE); }
 
 /**
  * @brief  Disable Alarm A interrupt
@@ -5033,10 +4272,7 @@ __STATIC_INLINE void LL_RTC_EnableIT_ALRA(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval None
  */
-__STATIC_INLINE void LL_RTC_DisableIT_ALRA(RTC_TypeDef *RTCx)
-{
-	CLEAR_BIT(RTCx->CR, RTC_CR_ALRAIE);
-}
+__STATIC_INLINE void LL_RTC_DisableIT_ALRA(RTC_TypeDef *RTCx) { CLEAR_BIT(RTCx->CR, RTC_CR_ALRAIE); }
 
 /**
  * @brief  Check if Time-stamp interrupt is enabled or not
@@ -5044,10 +4280,7 @@ __STATIC_INLINE void LL_RTC_DisableIT_ALRA(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_TS(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->CR, RTC_CR_TSIE) == (RTC_CR_TSIE)) ? 1U : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_TS(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->CR, RTC_CR_TSIE) == (RTC_CR_TSIE)) ? 1U : 0U); }
 
 /**
  * @brief  Check if Wakeup timer interrupt is enabled or not
@@ -5055,10 +4288,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_TS(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_WUT(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->CR, RTC_CR_WUTIE) == (RTC_CR_WUTIE)) ? 1U : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_WUT(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->CR, RTC_CR_WUTIE) == (RTC_CR_WUTIE)) ? 1U : 0U); }
 
 /**
  * @brief  Check if Alarm B interrupt is enabled or not
@@ -5066,11 +4296,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_WUT(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_ALRB(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->CR, RTC_CR_ALRBIE) == (RTC_CR_ALRBIE)) ? 1U
-								       : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_ALRB(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->CR, RTC_CR_ALRBIE) == (RTC_CR_ALRBIE)) ? 1U : 0U); }
 
 /**
  * @brief  Check if Alarm A interrupt is enabled or not
@@ -5078,11 +4304,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_ALRB(RTC_TypeDef *RTCx)
  * @param  RTCx RTC Instance
  * @retval State of bit (1 or 0).
  */
-__STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_ALRA(RTC_TypeDef *RTCx)
-{
-	return ((READ_BIT(RTCx->CR, RTC_CR_ALRAIE) == (RTC_CR_ALRAIE)) ? 1U
-								       : 0U);
-}
+__STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_ALRA(RTC_TypeDef *RTCx) { return ((READ_BIT(RTCx->CR, RTC_CR_ALRAIE) == (RTC_CR_ALRAIE)) ? 1U : 0U); }
 
 /**
  * @brief  Enable tamper 1 interrupt.
@@ -5872,9 +5094,7 @@ __STATIC_INLINE void LL_RTC_DisableIT_ITAMP16(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_TAMP1(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->IER, TAMP_IER_TAMP1IE) == (TAMP_IER_TAMP1IE))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->IER, TAMP_IER_TAMP1IE) == (TAMP_IER_TAMP1IE)) ? 1U : 0U);
 }
 
 /**
@@ -5886,9 +5106,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_TAMP1(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_TAMP2(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->IER, TAMP_IER_TAMP2IE) == (TAMP_IER_TAMP2IE))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->IER, TAMP_IER_TAMP2IE) == (TAMP_IER_TAMP2IE)) ? 1U : 0U);
 }
 
 #if (RTC_TAMP_NB == 3)
@@ -5902,9 +5120,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_TAMP2(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_TAMP3(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->IER, TAMP_IER_TAMP3IE) == (TAMP_IER_TAMP3IE))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->IER, TAMP_IER_TAMP3IE) == (TAMP_IER_TAMP3IE)) ? 1U : 0U);
 }
 #elif (RTC_TAMP_NB == 8)
 
@@ -5917,9 +5133,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_TAMP3(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_TAMP3(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->IER, TAMP_IER_TAMP3IE) == (TAMP_IER_TAMP3IE))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->IER, TAMP_IER_TAMP3IE) == (TAMP_IER_TAMP3IE)) ? 1U : 0U);
 }
 /**
  * @brief  Check if tamper 4 interrupt is enabled or not.
@@ -5930,9 +5144,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_TAMP3(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_TAMP4(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->IER, TAMP_IER_TAMP4IE) == (TAMP_IER_TAMP4IE))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->IER, TAMP_IER_TAMP4IE) == (TAMP_IER_TAMP4IE)) ? 1U : 0U);
 }
 /**
  * @brief  Check if tamper 5 interrupt is enabled or not.
@@ -5943,9 +5155,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_TAMP4(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_TAMP5(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->IER, TAMP_IER_TAMP5IE) == (TAMP_IER_TAMP5IE))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->IER, TAMP_IER_TAMP5IE) == (TAMP_IER_TAMP5IE)) ? 1U : 0U);
 }
 /**
  * @brief  Check if tamper 6 interrupt is enabled or not.
@@ -5956,9 +5166,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_TAMP5(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_TAMP6(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->IER, TAMP_IER_TAMP6IE) == (TAMP_IER_TAMP6IE))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->IER, TAMP_IER_TAMP6IE) == (TAMP_IER_TAMP6IE)) ? 1U : 0U);
 }
 /**
  * @brief  Check if tamper 7 interrupt is enabled or not.
@@ -5969,9 +5177,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_TAMP6(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_TAMP7(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->IER, TAMP_IER_TAMP7IE) == (TAMP_IER_TAMP7IE))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->IER, TAMP_IER_TAMP7IE) == (TAMP_IER_TAMP7IE)) ? 1U : 0U);
 }
 /**
  * @brief  Check if tamper 8 interrupt is enabled or not.
@@ -5982,9 +5188,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_TAMP7(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_TAMP8(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->IER, TAMP_IER_TAMP8IE) == (TAMP_IER_TAMP8IE))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->IER, TAMP_IER_TAMP8IE) == (TAMP_IER_TAMP8IE)) ? 1U : 0U);
 }
 
 #endif /* RTC_TAMP_NB */
@@ -5999,9 +5203,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_TAMP8(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_ITAMP1(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->IER, TAMP_IER_ITAMP1IE) == (TAMP_IER_ITAMP1IE))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->IER, TAMP_IER_ITAMP1IE) == (TAMP_IER_ITAMP1IE)) ? 1U : 0U);
 }
 #endif /* RTC_TAMP_INT_1_SUPPORT */
 #if defined(RTC_TAMP_INT_2_SUPPORT)
@@ -6015,9 +5217,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_ITAMP1(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_ITAMP2(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->IER, TAMP_IER_ITAMP2IE) == (TAMP_IER_ITAMP2IE))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->IER, TAMP_IER_ITAMP2IE) == (TAMP_IER_ITAMP2IE)) ? 1U : 0U);
 }
 #endif /* RTC_TAMP_INT_2_SUPPORT */
 
@@ -6030,9 +5230,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_ITAMP2(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_ITAMP3(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->IER, TAMP_IER_ITAMP3IE) == (TAMP_IER_ITAMP3IE))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->IER, TAMP_IER_ITAMP3IE) == (TAMP_IER_ITAMP3IE)) ? 1U : 0U);
 }
 /**
  * @brief  Check if internal tamper 4 interrupt is enabled or not.
@@ -6043,9 +5241,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_ITAMP3(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_ITAMP4(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->IER, TAMP_IER_ITAMP4IE) == (TAMP_IER_ITAMP4IE))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->IER, TAMP_IER_ITAMP4IE) == (TAMP_IER_ITAMP4IE)) ? 1U : 0U);
 }
 
 /**
@@ -6057,9 +5253,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_ITAMP4(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_ITAMP5(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->IER, TAMP_IER_ITAMP5IE) == (TAMP_IER_ITAMP5IE))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->IER, TAMP_IER_ITAMP5IE) == (TAMP_IER_ITAMP5IE)) ? 1U : 0U);
 }
 
 #if defined(RTC_TAMP_INT_6_SUPPORT)
@@ -6072,9 +5266,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_ITAMP5(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_ITAMP6(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->IER, TAMP_IER_ITAMP6IE) == (TAMP_IER_ITAMP6IE))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->IER, TAMP_IER_ITAMP6IE) == (TAMP_IER_ITAMP6IE)) ? 1U : 0U);
 }
 #endif /* RTC_TAMP_INT_6_SUPPORT */
 
@@ -6089,9 +5281,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_ITAMP6(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_ITAMP7(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->IER, TAMP_IER_ITAMP7IE) == (TAMP_IER_ITAMP7IE))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->IER, TAMP_IER_ITAMP7IE) == (TAMP_IER_ITAMP7IE)) ? 1U : 0U);
 }
 #endif /* RTC_TAMP_INT_7_SUPPORT */
 
@@ -6106,9 +5296,7 @@ __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_ITAMP7(RTC_TypeDef *RTCx)
 __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_ITAMP7(RTC_TypeDef *RTCx)
 {
 	UNUSED(RTCx);
-	return ((READ_BIT(TAMP->IER, TAMP_IER_ITAMP7IE) == (TAMP_IER_ITAMP7IE))
-		    ? 1U
-		    : 0U);
+	return ((READ_BIT(TAMP->IER, TAMP_IER_ITAMP7IE) == (TAMP_IER_ITAMP7IE)) ? 1U : 0U);
 }
 #endif /* RTC_TAMP_INT_8_SUPPORT */
 
@@ -6124,16 +5312,12 @@ __STATIC_INLINE uint32_t LL_RTC_IsEnabledIT_ITAMP7(RTC_TypeDef *RTCx)
 ErrorStatus LL_RTC_DeInit(RTC_TypeDef *RTCx);
 ErrorStatus LL_RTC_Init(RTC_TypeDef *RTCx, LL_RTC_InitTypeDef *RTC_InitStruct);
 void LL_RTC_StructInit(LL_RTC_InitTypeDef *RTC_InitStruct);
-ErrorStatus LL_RTC_TIME_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format,
-			     LL_RTC_TimeTypeDef *RTC_TimeStruct);
+ErrorStatus LL_RTC_TIME_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_TimeTypeDef *RTC_TimeStruct);
 void LL_RTC_TIME_StructInit(LL_RTC_TimeTypeDef *RTC_TimeStruct);
-ErrorStatus LL_RTC_DATE_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format,
-			     LL_RTC_DateTypeDef *RTC_DateStruct);
+ErrorStatus LL_RTC_DATE_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_DateTypeDef *RTC_DateStruct);
 void LL_RTC_DATE_StructInit(LL_RTC_DateTypeDef *RTC_DateStruct);
-ErrorStatus LL_RTC_ALMA_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format,
-			     LL_RTC_AlarmTypeDef *RTC_AlarmStruct);
-ErrorStatus LL_RTC_ALMB_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format,
-			     LL_RTC_AlarmTypeDef *RTC_AlarmStruct);
+ErrorStatus LL_RTC_ALMA_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_AlarmTypeDef *RTC_AlarmStruct);
+ErrorStatus LL_RTC_ALMB_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_AlarmTypeDef *RTC_AlarmStruct);
 void LL_RTC_ALMA_StructInit(LL_RTC_AlarmTypeDef *RTC_AlarmStruct);
 void LL_RTC_ALMB_StructInit(LL_RTC_AlarmTypeDef *RTC_AlarmStruct);
 ErrorStatus LL_RTC_EnterInitMode(RTC_TypeDef *RTCx);
