@@ -6,4 +6,3 @@ target_include_directories(
 		${CMAKE_CURRENT_LIST_DIR}/Inc
 		${CMAKE_CURRENT_LIST_DIR}/Src
 )
-
