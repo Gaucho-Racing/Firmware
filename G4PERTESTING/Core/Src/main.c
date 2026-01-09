@@ -27,6 +27,8 @@
 #include "tim.h"
 #include "usart.h"
 
+#include "can.h" // Assume this works
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -60,6 +62,12 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+static int toggleze = 0;
+
+void DEBUG_callback (void* data, uint32_t size) {
+	toggleze = (*((char*) data) & 0x80);
+}
+
 
 /* USER CODE END 0 */
 
@@ -95,27 +103,90 @@ int main(void)
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
 	MX_DMA_Init();
-	MX_FDCAN2_Init();
+	// MX_FDCAN2_Init();
 	MX_ADC1_Init();
 	MX_LPUART1_UART_Init();
 	MX_I2C2_Init();
 	MX_USART1_UART_Init();
 	MX_SPI3_Init();
 	MX_TIM2_Init();
+
+
 	/* USER CODE BEGIN 2 */
 
+	CANConfig canCfg;
+
+	canCfg.fdcan_instance = FDCAN2;
+
+	canCfg.hal_fdcan_init.ClockDivider = FDCAN_CLOCK_DIV1;
+	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_CLASSIC;
+	canCfg.hal_fdcan_init.Mode = FDCAN_MODE_INTERNAL_LOOPBACK;
+	canCfg.hal_fdcan_init.AutoRetransmission = ENABLE;
+	canCfg.hal_fdcan_init.TransmitPause = DISABLE;
+	canCfg.hal_fdcan_init.ProtocolException = ENABLE;
+	canCfg.hal_fdcan_init.NominalPrescaler = 1;
+	canCfg.hal_fdcan_init.NominalSyncJumpWidth = 16;
+	canCfg.hal_fdcan_init.NominalTimeSeg1 = 119;
+	canCfg.hal_fdcan_init.NominalTimeSeg2 = 40;
+	canCfg.hal_fdcan_init.DataPrescaler = 8;
+	canCfg.hal_fdcan_init.DataSyncJumpWidth = 16;
+	canCfg.hal_fdcan_init.DataTimeSeg1 = 14;
+	canCfg.hal_fdcan_init.DataTimeSeg2 = 5;
+	canCfg.hal_fdcan_init.StdFiltersNbr = 0;
+	canCfg.hal_fdcan_init.ExtFiltersNbr = 2;
+
+	canCfg.rx_callback = NULL; // PLEASE SET
+	canCfg.rx_interrupt_priority = 0; // PLEASE SET
+	canCfg.tx_interrupt_priority = 0; // PLEASE SET
+	canCfg.tx_buffer_length = 20; // PLEASE SET
+	
+	canCfg.rx_gpio = GPIOB;	
+	
+	canCfg.init_rx_gpio.Pin = GPIO_PIN_12;
+	canCfg.init_rx_gpio.Mode = GPIO_MODE_AF_PP;
+	canCfg.init_rx_gpio.Pull = GPIO_PULLUP;
+	canCfg.init_rx_gpio.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	canCfg.init_rx_gpio.Alternate = GPIO_AF9_FDCAN2;
+
+	canCfg.tx_gpio = GPIOB;
+
+	canCfg.init_tx_gpio.Pin = GPIO_PIN_13;
+	canCfg.init_tx_gpio.Mode = GPIO_MODE_AF_PP;
+	canCfg.init_tx_gpio.Pull = GPIO_NOPULL;
+	canCfg.init_tx_gpio.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN2;
+
+	CANHandle *can2Handle = can_init(&canCfg);
+
+	FDCAN_FilterTypeDef filter;
+	can_add_filter(can2Handle, &filter);
+	can_start(can2Handle);
 	/* USER CODE END 2 */
+
+	FDCAN_TxHeaderTypeDef TxHeader = {
+		.IdType = FDCAN_EXTENDED_ID,
+		.TxFrameType = FDCAN_DATA_FRAME,
+		.ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
+			// FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
+		.BitRateSwitch = FDCAN_BRS_OFF,
+		.TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
+		.MessageMarker = 0 // also change this to a real address if you change fifo control
+	};
+
+	FDCANTxMessage msg;
+	msg.data[0] = 0x80;
+	msg.tx_header = TxHeader;
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
 		/* USER CODE END WHILE */
 
-		// BLINKY
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
+		// INDICTIY
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, toggleze ? GPIO_PIN_SET : GPIO_PIN_RESET);
 		HAL_Delay(1000);
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
-		HAL_Delay(1000);
+		msg.data[0] = toggleze ? 0x00 : 0x80; 
+		can_send(can2Handle, &msg);
 
 		/* USER CODE BEGIN 3 */
 	}

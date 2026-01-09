@@ -10,11 +10,12 @@ after releasing:
 - State of GPIOx ports registers are back to reset.
 - turn off RCC clock if there are no other FDCAN peripherals.
 
-
-
-- State of circular buffer inside
-
 - can_send_helper, free a circular buffer
 
-
 - discuss freeing within ISR, how to avoid. 
+
+- Critical Section when releasing:
+- 
+
+
+- Add MACRO support to detect if FDCAN is a supported peripheral on the defined STM32 family

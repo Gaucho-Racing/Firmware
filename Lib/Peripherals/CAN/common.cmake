@@ -1,16 +1,16 @@
 add_library(PERIPHERAL_CAN_LIB INTERFACE)
 
-target_sources(PERIPHERAL_CAN_LIB INTERFACE ${CMAKE_CURRENT_LIST_DIR}/Src/can.c)
-
 target_link_libraries(
 	PERIPHERAL_CAN_LIB INTERFACE CircularBuffer_Lib 
 )
+
+target_sources(PERIPHERAL_CAN_LIB INTERFACE ${CMAKE_CURRENT_LIST_DIR}/Src/can.c)
 
 # Make headers accessible as #include "Peripherals/CAN/can.h"
 target_include_directories(
 	PERIPHERAL_CAN_LIB
 	INTERFACE
-		${CMAKE_CURRENT_LIST_DIR}/Inc/
+		${CMAKE_CURRENT_LIST_DIR}/Inc
 )
 
 # link test to this library

@@ -19,7 +19,7 @@ typedef struct {
     uint32_t tx_buffer_length; 
 
     GPIO_TypeDef *rx_gpio;  //Instance name, like GPIOA, GPIOB, etc.
-    GPIO_InitTypeDef init_rx_gpio; //GPIO Parameters - set correct Alternate Function, no pullup/pulldown, high frequency
+    GPIO_InitTypeDef init_rx_gpio; //GPIO Parameters - set correct Alternate Function, no pullup/pulldown, high/very_high frequency
     GPIO_TypeDef *tx_gpio; 
     GPIO_InitTypeDef init_tx_gpio;
 
@@ -39,31 +39,40 @@ typedef struct {
     //for release
     GPIO_TypeDef * rx_gpio; 
     GPIO_TypeDef * tx_gpio; 
+    uint32_t Clock_Source;
 
-    //Stopped state, will HAL throw an error if trying to user tries to add to queue when FDCAN is stopped?
+    //state
     bool init; 
     bool started; 
 
-    //NVIC exceptions
+
+    //error states
 } CANHandle;
 
 #define FDCAN_MAX_DATA_BYTES 64
 typedef struct {
     FDCAN_TxHeaderTypeDef tx_header;
     uint8_t               data[FDCAN_MAX_DATA_BYTES]; 
-} FDCANMessage; 
+} FDCANTxMessage; 
+typedef struct {
+    FDCAN_RxHeaderTypeDef rx_header;
+    uint8_t               data[FDCAN_MAX_DATA_BYTES]; 
+} FDCANRxMessage; 
 
 
-CANHandle* can_init(CANConfig *config); //user must supply an rx callback function
-
+CANHandle* can_init(const CANConfig *config); //user must supply an rx callback function
 int can_start(CANHandle*handle);
-int can_stop(CANandle*handle);
-int can_send(char* buffer, size_t send);  
-int can_release(CANHandle* canHandle); //deinit circular buffer and turn off can peripheral and gpios
-int can_add_filter(CANHandle* canHandle, HAL_FDCAN_FilterTypeDef * filter);
+int can_stop(CANHandle*handle);
+int can_send(CANHandle*handle, FDCANTxMessage* buffer);  
+int can_release(CANHandle* handle); //deinit circular buffer and turn off can peripheral and gpios
+int can_add_filter(CANHandle* handle, FDCAN_FilterTypeDef * filter);
 //alternatively use 
 //HAL_FDCAN_ConfigGlobalFilter()
 //HAL_FDCAN_ConfigFilter()
+
+//doesn't need a handle, independent of any CAN instance
+int can_set_clksource(uint32_t clksource); //LL_RCC_FDCAN_CLKSOURCE_PCLK1 for STM32G474RE
+
 
 
 
