@@ -101,7 +101,7 @@ CommonClock ADC_Get_Common_Clock(ADC_Common_TypeDef *ADC_Common)
 // note to self: these are not valid errors; they appear in vscode but not on
 // compile
 void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, uint32_t src_address,
-	      uint32_t dest_address, uint32_t data_size, uint32_t num_data,
+	      uint32_t dest_address, uint32_t p_data_size, uint32_t m_data_size,, uint32_t num_data,
 	      uint32_t ADC, DMA_Priority priority)
 {
 	LL_DMA_InitTypeDef config = {0};
@@ -114,8 +114,8 @@ void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, uint32_t src_address,
 	    LL_DMA_PERIPH_NOINCREMENT; // Do not increment source address
 	config.MemoryOrM2MDstIncMode =
 	    LL_DMA_MEMORY_INCREMENT; // Increment destination address
-	config.PeriphOrM2MSrcDataSize = data_size; // Size of the data
-	config.MemoryOrM2MDstDataSize = data_size;
+	config.PeriphOrM2MSrcDataSize = p_data_size; // Size of the data
+	config.MemoryOrM2MDstDataSize = m_data_size;
 	config.NbData = num_data; // Number of data units to transfer
 	// This if replaces a previous switch case in order to fix type errors
 	if (ADC == ADC1) {
