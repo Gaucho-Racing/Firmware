@@ -2776,8 +2776,8 @@ Message ID:
       # Write 1 inverts direction
       data type: b
       units: Enable
-      scaled min: -
-      scaled max: -
+      scaled min: "-"
+      scaled max: "-"
       map equation: "-"
   Inverter Command:
     MSG ID: 0x017
@@ -2814,8 +2814,8 @@ Message ID:
       # Write this to 1 every 100ms to enable inverter
       data type: b
       units: Enable
-      scaled min: -
-      scaled max: -
+      scaled min: "-"
+      scaled max: "-"
       map equation: "-"
   Fan Status:
     MSG ID: 0x018
@@ -3401,55 +3401,331 @@ Message ID:
       map equation: "x/100"
 
 Custom CAN ID:
-  DTI Control 1:
-    CAN ID: 116
-    Length: 2
-    Bit Start: 0
-    Data Name: Target AC current
-    #This command sets the target motor AC current (peak, not RMS). 
-    #When the controller receives this message, it automatically switches to current control mode.
-    #This value must not be above the limits of the inverter and mustbe multiplied by 10 before sending. 
-    #This is a signed parameter, and the sign represents the direction of the torque which correlates with the motor AC current. 
-    #(For the correlation, please refer to the motor parameters)
-    
-  DTI Control 7:
-    CAN ID: 716
-    Length: 1
-    #Bit Start 0
-    Data Name: Digital Output 1 #Sets the digital output 1 to HIGH (1) or LOW (0) state 
-    #Bit Start 1
-    Data Name: Digital Output 2 #Sets the digital output 1 to HIGH (1) or LOW (0) state 
-    #Bit Start 2
-    Data Name: Digital Output 3 #Sets the digital output 1 to HIGH (1) or LOW (0) state 
-    #Bit Start 3
-    Data Name: Digital Output 4 #Sets the digital output 1 to HIGH (1) or LOW (0) state 
-    
-  DTI Data 5:
-    CAN ID: 2416
-    Length: 8 
-    Byte 0:
-      #Bit Start 0
-      Data Name: Throttle #Throttle signal derived from analog inputs or CAN2 
-    Byte 1:
-      #Bit Start 8
-      Data Name: Brake #Brake signal derived from analog inputs or CAN2 
-    Byte 2:
-      #Bit Start 16
-      Data Name: Digital Input 1 
-      #Bit Start 17
-      Data Name: Digital Input 2
-      #Bit Start 18
-      Data Name: Digital Input 3
-      #Bit Start 19
-      Data Name: Digital Input 4
-      #Bit Start 20
-      Data Name: Digital Output 1
-      #Bit Start 21
-      Data Name: Digital Output 2
-      #Bit Start 22
-      Data Name: Digital Output 3
-      #Bit Start 23
-      Data Name: Digital Output 4
+  "DTI Control 1":
+    'CAN ID': 116
+    'Length': 2
+    'signals':
+      - name: "Target AC Current"
+        bit_start: 0
+
+  "DTI Control 2":
+    'CAN ID': 216
+    'Length': 2
+    'signals':
+      - name: "Target Brake Current"
+        bit_start: 0
+
+  "DTI Control 3":
+    'CAN ID': 316
+    'Length': 4
+    'signals':
+      - name: "Target ERPM"
+        bit_start: 0
+
+  "DTI Control 4":
+    'CAN ID': 416
+    'Length': 2
+    'signals':
+      - name: "Target Position"
+        bit_start: 0
+
+  "DTI Control 5":
+    'CAN ID': 516
+    'Length': 2
+    'signals':
+      - name: "R-AC Current"
+        bit_start: 0
+
+  "DTI Control 6":
+    'CAN ID': 616
+    'Length': 2
+    'signals':
+      - name: "R-AC Brake Current"
+        bit_start: 0
+
+  "DTI Control 7":
+    'CAN ID': 716
+    'Length': 1
+    'signals':
+      - name: "Digital Output 1"
+        bit_start: 0
+      - name: "Digital Output 2"
+        bit_start: 1
+      - name: "Digital Output 3"
+        bit_start: 2
+      - name: "Digital Output 4"
+        bit_start: 3
+
+  "DTI Control 8":
+    'CAN ID': 816
+    'Length': 2
+    'signals':
+      - name: "Max AC Current"
+        bit_start: 0
+
+  "DTI Control 9":
+    'CAN ID': 916
+    'Length': 2
+    'signals':
+      - name: "Max Brake AC Current"
+        bit_start: 0
+
+  "DTI Control 10":
+    'CAN ID': 0xa16
+    'Length': 2
+    'signals':
+      - name: "Max DC Current"
+        bit_start: 0
+
+  "DTI Control 11":
+    'CAN ID': 0xb16
+    'Length': 2
+    'signals':
+      - name: "Max Brake DC Current"
+        bit_start: 0
+
+  "DTI Control 12":
+    'CAN ID': 0xc16
+    'Length': 1
+    'signals':
+      - name: "Drive Enable"
+        bit_start: 0
+
+  "DTI Data 1":
+    'CAN ID': 2016
+    'Length': 8
+    'signals':
+      - name: "ERPM"
+        bit_start: 0
+      - name: "Duty Cycle"
+        bit_start: 32
+      - name: "Input Voltage"
+        bit_start: 48
+
+  "DTI Data 2":
+    'CAN ID': 2116
+    'Length': 8
+    'signals':
+      - name: "AC Current"
+        bit_start: 0
+      - name: "DC Current"
+        bit_start: 16
+      - name: "RESERVED"
+        bit_start: 32
+
+  "DTI Data 3":
+    'CAN ID': 2216
+    'Length': 8
+    'signals':
+      - name: "Controller Temp"
+        bit_start: 0
+      - name: "Motor Temp"
+        bit_start: 16
+      - name: "Fault Codes"
+        bit_start: 32
+      - name: "RESERVED"
+        bit_start: 40
+
+  "DTI Data 4":
+    'CAN ID': 2316
+    'Length': 8
+    'signals':
+      - name: "FOC Id"
+        bit_start: 0
+      - name: "FOC Iq"
+        bit_start: 32
+
+  "DTI Data 5":
+    'CAN ID': 2416
+    'Length': 8
+    'signals':
+      - name: "Throttle"
+        bit_start: 0
+      - name: "Brake"
+        bit_start: 8
+      - name: "Digital input 1"
+        bit_start: 16
+      - name: "Digital input 2"
+        bit_start: 17
+      - name: "Digital input 3"
+        bit_start: 18
+      - name: "Digital input 4"
+        bit_start: 19
+      - name: "Digital output 1"
+        bit_start: 20
+      - name: "Digital output 2"
+        bit_start: 21
+      - name: "Digital output 3"
+        bit_start: 22
+      - name: "Digital output 4"
+        bit_start: 23
+      - name: "Drive Enable"
+        bit_start: 24
+      - name: "Capacitor temp limit"
+        bit_start: 32
+      - name: "DC current limit"
+        bit_start: 33
+      - name: "Drive enable limit"
+        bit_start: 34
+      - name: "IGBT acceleration temperature limit"
+        bit_start: 35
+      - name: "IGBT temperature limit"
+        bit_start: 36
+      - name: "Input voltage limit"
+        bit_start: 37
+      - name: "Motor acceleration temperature limit"
+        bit_start: 38
+      - name: "Motor temperature limit"
+        bit_start: 39
+      - name: "RPM min limit"
+        bit_start: 40
+      - name: "RPM max limit"
+        bit_start: 41
+      - name: "Power limit"
+        bit_start: 42
+      - name: "RESERVED"
+        bit_start: 43
+      - name: "RESERVED"
+        bit_start: 48
+      - name: "CAN Version"
+        bit_start: 56
+
+  "IMD general":
+    'CAN ID': 0x18ff01f4
+    'Length': 8
+    'signals':
+      - name: "R_Iso_Corrected"
+        bit_start: 0
+      - name: "R_Iso_Status"
+        bit_start: 16
+      - name: "Iso_Meas_Count"
+        bit_start: 24
+      - name: "Status"
+        bit_start: 32
+      - name: "Activity"
+        bit_start: 48
+      - name: "RESERVED"
+        bit_start: 56
+
+  "IMD isolation info":
+    'CAN ID': 0x18eff4fe
+    'Length': 0
+    'signals':
+
+  "IMD voltage":
+    'CAN ID': 0x18eff4fe
+    'Length': 0
+    'signals':
+
+  "IMD IT-system":
+    'CAN ID': 0x18eff4fe
+    'Length': 0
+    'signals':
+
+  "IMD request":
+    'CAN ID': 0x18eff4fe
+    'Length': 0
+    'signals':
+
+  "IMD response":
+    'CAN ID': 23
+    'Length': 0
+    'signals':
+
+  "Charger Data":
+    'CAN ID': 0x18ff50e5
+    'Length': 8
+    'signals':
+      - name: "Output Voltage"
+        bit_start: 0
+      - name: "Output Current"
+        bit_start: 16
+      - name: "Hardware Failure"
+        bit_start: 17
+      - name: "OverTemp"
+        bit_start: 18
+      - name: "Input Voltage Error"
+        bit_start: 19
+      - name: "Connection Error"
+        bit_start: 20
+      - name: "Communication State"
+        bit_start: 21
+      - name: "RESERVED"
+        bit_start: 24
+
+  "Charger Control":
+    'CAN ID': 0x1806e5f4
+    'Length': 5
+    'signals':
+      - name: "Set Voltage"
+        bit_start: 0
+      - name: "Set Current"
+        bit_start: 16
+      - name: "Charge Enable"
+        bit_start: 17
+
+  "EM Measurement":
+    'CAN ID': 0x10
+    'Length': 8
+    'signals':
+      - name: "Current"
+        bit_start: 0
+      - name: "Voltage"
+        bit_start: 32
+
+  "EM Status":
+    'CAN ID': 0x40
+    'Length': 8
+    'signals':
+      - name: "Violation"
+        bit_start: 0
+      - name: "Logging"
+        bit_start: 1
+      - name: "Energy"
+        bit_start: 8
+
+  "EM Temperature":
+    'CAN ID': 0x60
+    'Length': 8
+    'signals':
+      - name: "Mux Signal"
+        bit_start: 0-2
+      - name: "Num Sensors"
+        bit_start: 3-7
+      - name: "Min Temp"
+        bit_start: 8
+      - name: "Max Temp"
+        bit_start: 16
+      - name: "Temp 5n"
+        bit_start: 24
+      - name: "Temp 5n+1"
+        bit_start: 32
+      - name: "Temp 5n+2"
+        bit_start: 40
+      - name: "Temp 5n+3"
+        bit_start: 48
+      - name: "Temp 5n+4"
+        bit_start: 56
+
+  "EM Team Data 1":
+    'CAN ID': 0x30
+    'Length': 8
+    'signals':
+      - name: "Team Signal 1"
+        bit_start: 0
+      - name: "Team Signal 2"
+        bit_start: 32
+
+  "EM Team Data 2":
+    'CAN ID': 0x30e
+    'Length': 8
+    'signals':
+      - name: "Team Signal 3"
+        bit_start: 0
+      - name: "Team Signal 4"
+        bit_start: 32
+
+
     
 
 GR ID:
