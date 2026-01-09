@@ -11,8 +11,8 @@
 
 #include "gr_adc.h"
 
-#include "main.h"
 #include "Logomatic.h"
+#include "main.h"
 
 ADC_TypeDef *GetADC(unsigned long adc)
 {
@@ -86,10 +86,12 @@ void ADC_Channel_Init(ADC_TypeDef *ADC, Rank rank, Channel channel,
 void ADC_Enable_And_Calibrate(ADC_TypeDef *ADC)
 {
 	LL_ADC_StartCalibration(ADC, LL_ADC_SINGLE_ENDED);
-	while (LL_ADC_IsCalibrationOnGoing(ADC));
+	while (LL_ADC_IsCalibrationOnGoing(ADC))
+		;
 
 	LL_ADC_Enable(ADC);
-	while (!LL_ADC_IsEnabled(ADC));
+	while (!LL_ADC_IsEnabled(ADC))
+		;
 
 	// Enable voltage regulator after ADC enable
 	ADC->CR |= ADC_CR_ADVREGEN;

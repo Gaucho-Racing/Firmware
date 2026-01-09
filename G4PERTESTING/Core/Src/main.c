@@ -96,7 +96,8 @@ void ADC_Configure(void)
 	p.port = GPIOA;
 	p.pin = LL_GPIO_PIN_0;
 	ADC_Init_Pins(&p);
-	ADC_Channel_Init(ADC1, RANK_1, ADC_CHANNEL_1, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+	ADC_Channel_Init(ADC1, RANK_1, ADC_CHANNEL_1, SINGLE_ENDED,
+			 SAMPLINGTIME_247CYCLES_5);
 
 	// Initialize DMA
 	DMA_Init(DMA1, LL_DMA_CHANNEL_1,
