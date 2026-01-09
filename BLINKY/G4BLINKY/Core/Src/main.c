@@ -18,7 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
+#include "Logomatic.h"
 #include "Lib/FancyLayers-RENAME/ADC/Inc/adc.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -53,6 +53,19 @@ void SystemClock_Config(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
+/* Enable ITM for SWO output */
+static void ITM_Enable(void)
+{
+	/* Enable TRC (Trace) */
+	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+
+	/* Enable stimulus port 0 */
+	ITM->TER |= (1UL << 0);
+
+	/* Set trace control register */
+	ITM->TCR |= ITM_TCR_ITMENA_Msk;
+}
+
 /* USER CODE BEGIN 0 */
 void ADC_Configure(void)
 {
@@ -113,7 +126,7 @@ int main(void)
 	HAL_Init();
 
 	/* USER CODE BEGIN Init */
-
+	ITM_Enable();
 	/* USER CODE END Init */
 
 	/* Configure the system clock */
@@ -152,7 +165,7 @@ int main(void)
 		HAL_Delay(1000);
 
 		/* USER CODE BEGIN 3 */
-		printf(buffer);
+		LOGOMATIC("%d\n", buffer);
 	}
 	/* USER CODE END 3 */
 }
