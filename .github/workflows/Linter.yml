@@ -15,8 +15,8 @@ jobs:
           sudo apt-get install -y clang-tidy cmake ninja-build
 
     - name: Configure
-      run: cmake --preset default
-    
+      run: cmake --preset Debug
+
     - name: Run clang-tidy
       run: |
         clang-tidy -p build $(git diff --name-only origin/${{ github.base_ref }} | grep '\.cpp$') || exit 1
