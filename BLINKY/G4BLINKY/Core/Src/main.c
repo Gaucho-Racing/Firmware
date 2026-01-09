@@ -18,8 +18,9 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "Logomatic.h"
+
 #include "Lib/FancyLayers-RENAME/ADC/Inc/adc.h"
+#include "Logomatic.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */

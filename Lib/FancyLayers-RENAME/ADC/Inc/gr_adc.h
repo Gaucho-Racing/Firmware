@@ -63,7 +63,7 @@ typedef enum {
 } NumRanks;
 
 // Initialize the channel configurations of the ADC
-void ADC_Regular_Group_Init(ADC_TypeDef* ADC, unsigned long Sequence_Length);
+void ADC_Regular_Group_Init(ADC_TypeDef *ADC, unsigned long Sequence_Length);
 
 // How many ranks to enable
 typedef enum {
@@ -193,8 +193,8 @@ typedef enum {
 };
 
 void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, uint32_t src_address,
-	      uint32_t dest_address, uint32_t p_data_size, uint32_t m_data_size, uint32_t num_data,
-	      uint32_t ADC, DMA_Priority priority);
+	      uint32_t dest_address, uint32_t p_data_size, uint32_t m_data_size,
+	      uint32_t num_data, uint32_t ADC, DMA_Priority priority);
 
 // TODO:
 void ADC_UpdateSmooth();
