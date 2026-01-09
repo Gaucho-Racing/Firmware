@@ -1,3 +1,1399 @@
+routing:
+  # ACU messages
+  - sender: ACU
+    msg: Debug 2.0
+    target: Debugger
+    bus: CAN1
+
+  - sender: ACU
+    msg: Ping
+    target: Debugger
+    bus: CAN1
+
+  - sender: ACU
+    msg: Ping
+    target: ECU
+    bus: CAN1
+
+  - sender: ACU
+    msg: ACU Status 1
+    target: ECU
+    bus: CAN1
+
+  - sender: ACU
+    msg: ACU Status 2
+    target: ECU
+    bus: CAN1
+
+  - sender: ACU
+    msg: ACU Status 3
+    target: ECU
+    bus: CAN1
+
+  - sender: ACU
+    msg: DC-DC Status
+    target: ECU
+    bus: CAN1
+
+  - sender: ACU
+    msg: Debug FD
+    target: Debugger
+    bus: CAN2
+
+  - sender: ACU
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  - sender: ACU
+    msg: Ping
+    target: ECU
+    bus: CAN2
+
+  - sender: ACU
+    msg: ACU Cell Data 1
+    target: ALL
+    bus: CAN2
+
+  - sender: ACU
+    msg: ACU Cell Data 2
+    target: ALL
+    bus: CAN2
+
+  - sender: ACU
+    msg: ACU Cell Data 3
+    target: ALL
+    bus: CAN2
+
+  - sender: ACU
+    msg: ACU Cell Data 4
+    target: ALL
+    bus: CAN2
+
+  - sender: ACU
+    msg: ACU Cell Data 5
+    target: ALL
+    bus: CAN2
+
+  - sender: ACU
+    msg: Charger Control
+    target: Charger
+    bus: CAN3
+    can_id_override: 0x1806E5F4
+
+  # Charger messages
+  - sender: Charger
+    msg: Charger Data
+    target: ACU
+    bus: CAN3
+    can_id_override: 0x18FF50E5
+
+  # Dash Panel messages
+  - sender: Dash Panel
+    msg: Debug 2.0
+    target: Debugger
+    bus: CAN1
+
+  - sender: Dash Panel
+    msg: Ping
+    target: Debugger
+    bus: CAN1
+
+  - sender: Dash Panel
+    msg: Ping
+    target: ECU
+    bus: CAN1
+
+  - sender: Dash Panel
+    msg: Dash Status
+    target: ECU
+    bus: CAN1
+
+  # Debugger messages - CAN1
+  - sender: Debugger
+    msg: Debug 2.0
+    target: ECU
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Debug 2.0
+    target: ACU
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Debug 2.0
+    target: TCM
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Debug 2.0
+    target: Dash Panel
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Debug 2.0
+    target: GR Inverter 1
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Debug 2.0
+    target: GR Inverter 2
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Debug 2.0
+    target: GR Inverter 3
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Debug 2.0
+    target: GR Inverter 4
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Debug 2.0
+    target: Fan Controller 1
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Debug 2.0
+    target: Fan Controller 2
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Debug 2.0
+    target: Fan Controller 3
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Debug 2.0
+    target: Fan Controller 4
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Debug 2.0
+    target: Fan Controller 5
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Debug 2.0
+    target: Fan Controller 6
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Debug 2.0
+    target: Fan Controller 7
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Debug 2.0
+    target: Fan Controller 8
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Debug 2.0
+    target: LV DC-DC
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Ping
+    target: ECU
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Ping
+    target: ACU
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Ping
+    target: TCM
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Ping
+    target: Dash Panel
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Ping
+    target: GR Inverter 1
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Ping
+    target: GR Inverter 2
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Ping
+    target: GR Inverter 3
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Ping
+    target: GR Inverter 4
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Ping
+    target: Fan Controller 1
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Ping
+    target: Fan Controller 2
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Ping
+    target: Fan Controller 3
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Ping
+    target: Fan Controller 4
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Ping
+    target: Fan Controller 5
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Ping
+    target: Fan Controller 6
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Ping
+    target: Fan Controller 7
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Ping
+    target: Fan Controller 8
+    bus: CAN1
+
+  - sender: Debugger
+    msg: Ping
+    target: LV DC-DC
+    bus: CAN1
+
+  - sender: Debugger
+    msg: ECU config
+    target: ECU
+    bus: CAN1
+
+  # Debugger messages - CAN2
+  - sender: Debugger
+    msg: Debug FD
+    target: ECU
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Debug FD
+    target: ACU
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Debug FD
+    target: TCM
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Debug FD
+    target: Steering Wheel
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Debug FD
+    target: SAM1
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Debug FD
+    target: SAM2
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Debug FD
+    target: SAM3
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Debug FD
+    target: SAM4
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Debug FD
+    target: SAM5
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Debug FD
+    target: SAM6
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Debug FD
+    target: SAM7
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Debug FD
+    target: SAM8
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Debug FD
+    target: SAM9
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Debug FD
+    target: SAM10
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Debug FD
+    target: SAM11
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Debug FD
+    target: SAM12
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Debug FD
+    target: SAM13
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Debug FD
+    target: SAM14
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Debug FD
+    target: SAM15
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Debug FD
+    target: SAM16
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Debug FD
+    target: SAM17
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Debug FD
+    target: SAM18
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Debug FD
+    target: SAM19
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Debug FD
+    target: SAM20
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: ECU
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: ACU
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: TCM
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: Steering Wheel
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: SAM1
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: SAM2
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: SAM3
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: SAM4
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: SAM5
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: SAM6
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: SAM7
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: SAM8
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: SAM9
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: SAM10
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: SAM11
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: SAM12
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: SAM13
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: SAM14
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: SAM15
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: SAM16
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: SAM17
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: SAM18
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: SAM19
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: SAM20
+    bus: CAN2
+
+  - sender: Debugger
+    msg: Ping
+    target: Charging SDC
+    bus: CAN3
+
+  # DTI Inverter messages (custom CAN IDs)
+  - sender: DTI Inverter
+    msg: DTI Data 1
+    target: ECU
+    bus: CAN1
+    can_id_override: 0x2016
+
+  - sender: DTI Inverter
+    msg: DTI Data 2
+    target: ECU
+    bus: CAN1
+    can_id_override: 0x2116
+
+  - sender: DTI Inverter
+    msg: DTI Data 3
+    target: ECU
+    bus: CAN1
+    can_id_override: 0x2216
+
+  - sender: DTI Inverter
+    msg: DTI Data 4
+    target: ECU
+    bus: CAN1
+    can_id_override: 0x2316
+
+  - sender: DTI Inverter
+    msg: DTI Data 5
+    target: ECU
+    bus: CAN1
+    can_id_override: 0x2416
+
+  # ECU messages - DTI Control (custom CAN IDs)
+  - sender: ECU
+    msg: DTI Control 1
+    target: DTI Inverter
+    bus: CAN1
+    can_id_override: 0x116
+
+  - sender: ECU
+    msg: DTI Control 2
+    target: DTI Inverter
+    bus: CAN1
+    can_id_override: 0x216
+
+  - sender: ECU
+    msg: DTI Control 3
+    target: DTI Inverter
+    bus: CAN1
+    can_id_override: 0x316
+
+  - sender: ECU
+    msg: DTI Control 4
+    target: DTI Inverter
+    bus: CAN1
+    can_id_override: 0x416
+
+  - sender: ECU
+    msg: DTI Control 5
+    target: DTI Inverter
+    bus: CAN1
+    can_id_override: 0x516
+
+  - sender: ECU
+    msg: DTI Control 6
+    target: DTI Inverter
+    bus: CAN1
+    can_id_override: 0x616
+
+  - sender: ECU
+    msg: DTI Control 7
+    target: DTI Inverter
+    bus: CAN1
+    can_id_override: 0x716
+
+  - sender: ECU
+    msg: DTI Control 8
+    target: DTI Inverter
+    bus: CAN1
+    can_id_override: 0x816
+
+  - sender: ECU
+    msg: DTI Control 9
+    target: DTI Inverter
+    bus: CAN1
+    can_id_override: 0x916
+
+  - sender: ECU
+    msg: DTI Control 10
+    target: DTI Inverter
+    bus: CAN1
+    can_id_override: 0xA16
+
+  - sender: ECU
+    msg: DTI Control 11
+    target: DTI Inverter
+    bus: CAN1
+    can_id_override: 0xB16
+
+  - sender: ECU
+    msg: DTI Control 12
+    target: DTI Inverter
+    bus: CAN1
+    can_id_override: 0xC16
+
+  # ECU messages - CAN1
+  - sender: ECU
+    msg: Debug 2.0
+    target: Debugger
+    bus: CAN1
+
+  - sender: ECU
+    msg: Ping
+    target: Debugger
+    bus: CAN1
+
+  - sender: ECU
+    msg: Ping
+    target: ALL
+    bus: CAN1
+
+  - sender: ECU
+    msg: ECU Status 1
+    target: ALL
+    bus: CAN1
+
+  - sender: ECU
+    msg: ECU Status 2
+    target: ALL
+    bus: CAN1
+
+  - sender: ECU
+    msg: ECU Status 3
+    target: ALL
+    bus: CAN1
+
+  - sender: ECU
+    msg: ACU Precharge
+    target: ACU
+    bus: CAN1
+
+  - sender: ECU
+    msg: ACU Config Charge Parameters
+    target: ACU
+    bus: CAN1
+
+  - sender: ECU
+    msg: ACU Config Operational Parameters
+    target: ACU
+    bus: CAN1
+
+  - sender: ECU
+    msg: Inverter Config
+    target: GR Inverter 1
+    bus: CAN1
+
+  - sender: ECU
+    msg: Inverter Config
+    target: GR Inverter 2
+    bus: CAN1
+
+  - sender: ECU
+    msg: Inverter Config
+    target: GR Inverter 3
+    bus: CAN1
+
+  - sender: ECU
+    msg: Inverter Config
+    target: GR Inverter 4
+    bus: CAN1
+
+  - sender: ECU
+    msg: Inverter Command
+    target: GR Inverter 1
+    bus: CAN1
+
+  - sender: ECU
+    msg: Inverter Command
+    target: GR Inverter 2
+    bus: CAN1
+
+  - sender: ECU
+    msg: Inverter Command
+    target: GR Inverter 3
+    bus: CAN1
+
+  - sender: ECU
+    msg: Inverter Command
+    target: GR Inverter 4
+    bus: CAN1
+
+  - sender: ECU
+    msg: Fan Command
+    target: Fan Controller 1
+    bus: CAN1
+
+  - sender: ECU
+    msg: Fan Command
+    target: Fan Controller 2
+    bus: CAN1
+
+  - sender: ECU
+    msg: Fan Command
+    target: Fan Controller 3
+    bus: CAN1
+
+  - sender: ECU
+    msg: Fan Command
+    target: Fan Controller 4
+    bus: CAN1
+
+  - sender: ECU
+    msg: Fan Command
+    target: Fan Controller 5
+    bus: CAN1
+
+  - sender: ECU
+    msg: Fan Command
+    target: Fan Controller 6
+    bus: CAN1
+
+  - sender: ECU
+    msg: Fan Command
+    target: Fan Controller 7
+    bus: CAN1
+
+  - sender: ECU
+    msg: Fan Command
+    target: Fan Controller 8
+    bus: CAN1
+
+  - sender: ECU
+    msg: Dash Config
+    target: Dash Panel
+    bus: CAN1
+
+  - sender: ECU
+    msg: Dash Warning Flags
+    target: Dash Panel
+    bus: CAN1
+
+  - sender: ECU
+    msg: Specific Brake IR
+    target: Dash Panel
+    bus: CAN1
+
+  # ECU messages - CAN2
+  - sender: ECU
+    msg: Debug FD
+    target: Debugger
+    bus: CAN2
+
+  - sender: ECU
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  - sender: ECU
+    msg: Ping
+    target: ALL
+    bus: CAN2
+
+  - sender: ECU
+    msg: Steering Config
+    target: Steering Wheel
+    bus: CAN2
+
+  - sender: ECU
+    msg: ECU Ping Information
+    target: Steering Wheel
+    bus: CAN2
+
+  - sender: ECU
+    msg: ECU Pedals Data
+    target: TCM
+    bus: CAN2
+
+  # Energy Meter messages (custom CAN IDs)
+  - sender: Energy Meter
+    msg: EM Measurement
+    target: ACU
+    bus: CAN3
+    can_id_override: 0x10d
+
+  - sender: Energy Meter
+    msg: EM Team Data 1
+    target: ACU
+    bus: CAN3
+    can_id_override: 0x30d
+
+  - sender: Energy Meter
+    msg: EM Team Data 2
+    target: ACU
+    bus: CAN3
+    can_id_override: 0x30e
+
+  - sender: Energy Meter
+    msg: EM Status
+    target: ACU
+    bus: CAN3
+    can_id_override: 0x40d
+
+  - sender: Energy Meter
+    msg: EM Temperature
+    target: ACU
+    bus: CAN3
+    can_id_override: 0x60d
+
+  # Fan Controller 1 messages
+  - sender: Fan Controller 1
+    msg: Debug 2.0
+    target: Debugger
+    bus: CAN1
+
+  - sender: Fan Controller 1
+    msg: Ping
+    target: Debugger
+    bus: CAN1
+
+  - sender: Fan Controller 1
+    msg: Ping
+    target: ECU
+    bus: CAN1
+
+  - sender: Fan Controller 1
+    msg: Fan Status
+    target: ECU
+    bus: CAN1
+
+  # Fan Controller 2 messages
+  - sender: Fan Controller 2
+    msg: Debug 2.0
+    target: Debugger
+    bus: CAN1
+
+  - sender: Fan Controller 2
+    msg: Ping
+    target: Debugger
+    bus: CAN1
+
+  - sender: Fan Controller 2
+    msg: Ping
+    target: ECU
+    bus: CAN1
+
+  - sender: Fan Controller 2
+    msg: Fan Status
+    target: ECU
+    bus: CAN1
+
+  # Fan Controller 3 messages
+  - sender: Fan Controller 3
+    msg: Debug 2.0
+    target: Debugger
+    bus: CAN1
+
+  - sender: Fan Controller 3
+    msg: Ping
+    target: Debugger
+    bus: CAN1
+
+  - sender: Fan Controller 3
+    msg: Ping
+    target: ECU
+    bus: CAN1
+
+  - sender: Fan Controller 3
+    msg: Fan Status
+    target: ECU
+    bus: CAN1
+
+  # Fan Controller 4 messages
+  - sender: Fan Controller 4
+    msg: Debug 2.0
+    target: Debugger
+    bus: CAN1
+
+  - sender: Fan Controller 4
+    msg: Ping
+    target: Debugger
+    bus: CAN1
+
+  - sender: Fan Controller 4
+    msg: Ping
+    target: ECU
+    bus: CAN1
+
+  - sender: Fan Controller 4
+    msg: Fan Status
+    target: ECU
+    bus: CAN1
+
+  # Fan Controller 5 messages
+  - sender: Fan Controller 5
+    msg: Debug 2.0
+    target: Debugger
+    bus: CAN1
+
+  - sender: Fan Controller 5
+    msg: Ping
+    target: Debugger
+    bus: CAN1
+
+  - sender: Fan Controller 5
+    msg: Ping
+    target: ECU
+    bus: CAN1
+
+  - sender: Fan Controller 5
+    msg: Fan Status
+    target: ECU
+    bus: CAN1
+
+  # Fan Controller 6 messages
+  - sender: Fan Controller 6
+    msg: Debug 2.0
+    target: Debugger
+    bus: CAN1
+
+  - sender: Fan Controller 6
+    msg: Ping
+    target: Debugger
+    bus: CAN1
+
+  - sender: Fan Controller 6
+    msg: Ping
+    target: ECU
+    bus: CAN1
+
+  - sender: Fan Controller 6
+    msg: Fan Status
+    target: ECU
+    bus: CAN1
+
+  # Fan Controller 7 messages
+  - sender: Fan Controller 7
+    msg: Debug 2.0
+    target: Debugger
+    bus: CAN1
+
+  - sender: Fan Controller 7
+    msg: Ping
+    target: Debugger
+    bus: CAN1
+
+  - sender: Fan Controller 7
+    msg: Ping
+    target: ECU
+    bus: CAN1
+
+  - sender: Fan Controller 7
+    msg: Fan Status
+    target: ECU
+    bus: CAN1
+
+  # Fan Controller 8 messages
+  - sender: Fan Controller 8
+    msg: Debug 2.0
+    target: Debugger
+    bus: CAN1
+
+  - sender: Fan Controller 8
+    msg: Ping
+    target: Debugger
+    bus: CAN1
+
+  - sender: Fan Controller 8
+    msg: Ping
+    target: ECU
+    bus: CAN1
+
+  - sender: Fan Controller 8
+    msg: Fan Status
+    target: ECU
+    bus: CAN1
+
+  # GR Inverter 1 messages
+  - sender: GR Inverter 1
+    msg: Debug 2.0
+    target: Debugger
+    bus: CAN1
+
+  - sender: GR Inverter 1
+    msg: Ping
+    target: Debugger
+    bus: CAN1
+
+  - sender: GR Inverter 1
+    msg: Ping
+    target: ECU
+    bus: CAN1
+
+  - sender: GR Inverter 1
+    msg: Inverter Status 1
+    target: ALL
+    bus: CAN1
+
+  - sender: GR Inverter 1
+    msg: Inverter Status 2
+    target: ALL
+    bus: CAN1
+
+  - sender: GR Inverter 1
+    msg: Inverter Status 3
+    target: ALL
+    bus: CAN1
+
+  # GR Inverter 2 messages
+  - sender: GR Inverter 2
+    msg: Debug 2.0
+    target: Debugger
+    bus: CAN1
+
+  - sender: GR Inverter 2
+    msg: Ping
+    target: Debugger
+    bus: CAN1
+
+  - sender: GR Inverter 2
+    msg: Ping
+    target: ECU
+    bus: CAN1
+
+  - sender: GR Inverter 2
+    msg: Inverter Status 1
+    target: ALL
+    bus: CAN1
+
+  - sender: GR Inverter 2
+    msg: Inverter Status 2
+    target: ALL
+    bus: CAN1
+
+  - sender: GR Inverter 2
+    msg: Inverter Status 3
+    target: ALL
+    bus: CAN1
+
+  # GR Inverter 3 messages
+  - sender: GR Inverter 3
+    msg: Debug 2.0
+    target: Debugger
+    bus: CAN1
+
+  - sender: GR Inverter 3
+    msg: Ping
+    target: Debugger
+    bus: CAN1
+
+  - sender: GR Inverter 3
+    msg: Ping
+    target: ECU
+    bus: CAN1
+
+  - sender: GR Inverter 3
+    msg: Inverter Status 1
+    target: ALL
+    bus: CAN1
+
+  - sender: GR Inverter 3
+    msg: Inverter Status 2
+    target: ALL
+    bus: CAN1
+
+  - sender: GR Inverter 3
+    msg: Inverter Status 3
+    target: ALL
+    bus: CAN1
+
+  # GR Inverter 4 messages
+  - sender: GR Inverter 4
+    msg: Debug 2.0
+    target: Debugger
+    bus: CAN1
+
+  - sender: GR Inverter 4
+    msg: Ping
+    target: Debugger
+    bus: CAN1
+
+  - sender: GR Inverter 4
+    msg: Ping
+    target: ECU
+    bus: CAN1
+
+  - sender: GR Inverter 4
+    msg: Inverter Status 1
+    target: ALL
+    bus: CAN1
+
+  - sender: GR Inverter 4
+    msg: Inverter Status 2
+    target: ALL
+    bus: CAN1
+
+  - sender: GR Inverter 4
+    msg: Inverter Status 3
+    target: ALL
+    bus: CAN1
+
+  # IMD messages (custom CAN IDs)
+  - sender: IMD
+    msg: IMD response
+    target: ACU
+    bus: CAN3
+    can_id_override: 0x23
+
+  - sender: IMD
+    msg: IMD isolation info
+    target: ACU
+    bus: CAN3
+    can_id_override: 0x18EFF4FE
+
+  - sender: IMD
+    msg: IMD voltage
+    target: ACU
+    bus: CAN3
+    can_id_override: 0x18EFF4FE
+
+  - sender: IMD
+    msg: IMD IT-system
+    target: ACU
+    bus: CAN3
+    can_id_override: 0x18EFF4FE
+
+  - sender: IMD
+    msg: IMD request
+    target: ACU
+    bus: CAN3
+    can_id_override: 0x18EFF4FE
+
+  - sender: IMD
+    msg: IMD general
+    target: ACU
+    bus: CAN3
+    can_id_override: 0x18FF01F4
+
+  # LV DC-DC messages
+  - sender: LV DC-DC
+    msg: Ping
+    target: Debugger
+    bus: CAN1
+
+  - sender: LV DC-DC
+    msg: Ping
+    target: ECU
+    bus: CAN1
+
+  - sender: LV DC-DC
+    msg: DC-DC Status
+    target: ECU
+    bus: CAN1
+
+  # SAM messages
+  - sender: SAM1
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  - sender: SAM1
+    msg: SAM Brake IR
+    target: ECU
+    bus: CAN2
+
+  - sender: SAM2
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  - sender: SAM2
+    msg: SAM Brake IR
+    target: ECU
+    bus: CAN2
+
+  - sender: SAM3
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  - sender: SAM3
+    msg: SAM Brake IR
+    target: ECU
+    bus: CAN2
+
+  - sender: SAM4
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  - sender: SAM4
+    msg: SAM Brake IR
+    target: ECU
+    bus: CAN2
+
+  - sender: SAM5
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  - sender: SAM5
+    msg: SAM IMU
+    target: ALL
+    bus: CAN2
+
+  - sender: SAM5
+    msg: SAM TOF
+    target: ALL
+    bus: CAN2
+
+  - sender: SAM6
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  - sender: SAM7
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  - sender: SAM8
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  - sender: SAM9
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  - sender: SAM10
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  - sender: SAM11
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  - sender: SAM12
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  - sender: SAM13
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  - sender: SAM14
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  - sender: SAM15
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  - sender: SAM16
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  - sender: SAM17
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  - sender: SAM18
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  - sender: SAM19
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  - sender: SAM20
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  # Steering Wheel messages
+  - sender: Steering Wheel
+    msg: Debug FD
+    target: Debugger
+    bus: CAN2
+
+  - sender: Steering Wheel
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  - sender: Steering Wheel
+    msg: Ping
+    target: ECU
+    bus: CAN2
+
+  - sender: Steering Wheel
+    msg: Steering Status
+    target: ECU
+    bus: CAN2
+
+  # TCM messages
+  - sender: TCM
+    msg: Ping
+    target: Debugger
+    bus: CAN1
+
+  - sender: TCM
+    msg: Ping
+    target: Debugger
+    bus: CAN2
+
+  - sender: TCM
+    msg: TCM Status
+    target: Steering Wheel
+    bus: CAN2
+
+  - sender: TCM
+    msg: TCM Resource Utilization
+    target: Steering Wheel
+    bus: CAN2
+
+  # DGPS messages
+  - sender: DGPS
+    msg: UVW DGPS
+    target: ALL
+    bus: CAN2
+
+  - sender: DGPS
+    msg: GPS LAT
+    target: ALL
+    bus: CAN2
+
+  - sender: DGPS
+    msg: GPS LON
+    target: ALL
+    bus: CAN2
+
+  - sender: DGPS
+    msg: GPS ALT
+    target: ALL
+    bus: CAN2
+
+  - sender: DGPS
+    msg: GPS PX
+    target: ALL
+    bus: CAN2
+
+  - sender: DGPS
+    msg: GPS QY
+    target: ALL
+    bus: CAN2
+
+  - sender: DGPS
+    msg: GPS RZ
+    target: ALL
+    bus: CAN2
+ 
+byte order: little_endian 
+
 Message ID:
   Debug 2.0:
     MSG ID: 0x000

@@ -1,0 +1,1223 @@
+VERSION ""
+
+NS_ :
+
+BS_:
+
+BU_: ACU ALL Charger Charging_SDC DGPS DTI_Inverter Dash_Panel Debugger ECU Energy_Meter Fan_Controller_1 Fan_Controller_2 Fan_Controller_3 Fan_Controller_4 Fan_Controller_5 Fan_Controller_6 Fan_Controller_7 Fan_Controller_8 GR_Inverter_1 GR_Inverter_2 GR_Inverter_3 GR_Inverter_4 IMD LV_DC_DC SAM1 SAM10 SAM11 SAM12 SAM13 SAM14 SAM15 SAM16 SAM17 SAM18 SAM19 SAM2 SAM20 SAM3 SAM4 SAM5 SAM6 SAM7 SAM8 SAM9 Steering_Wheel TCM
+
+BO_ 2147549186 Debugger_Debug_20_to_ECU: 8 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" ECU
+
+BO_ 2147549187 Debugger_Debug_20_to_ACU: 8 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" ACU
+
+BO_ 2147549188 Debugger_Debug_20_to_TCM: 8 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" TCM
+
+BO_ 2147549189 Debugger_Debug_20_to_Dash_Panel: 8 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Dash_Panel
+
+BO_ 2147549192 Debugger_Debug_20_to_GR_Inverter_1: 8 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" GR_Inverter_1
+
+BO_ 2147549193 Debugger_Debug_20_to_GR_Inverter_2: 8 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" GR_Inverter_2
+
+BO_ 2147549194 Debugger_Debug_20_to_GR_Inverter_3: 8 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" GR_Inverter_3
+
+BO_ 2147549195 Debugger_Debug_20_to_GR_Inverter_4: 8 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" GR_Inverter_4
+
+BO_ 2147549197 Debugger_Debug_20_to_Fan_Controller_1: 8 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Fan_Controller_1
+
+BO_ 2147549198 Debugger_Debug_20_to_Fan_Controller_2: 8 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Fan_Controller_2
+
+BO_ 2147549199 Debugger_Debug_20_to_Fan_Controller_3: 8 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Fan_Controller_3
+
+BO_ 2147549200 Debugger_Debug_20_to_Fan_Controller_4: 8 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Fan_Controller_4
+
+BO_ 2147549201 Debugger_Debug_20_to_Fan_Controller_5: 8 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Fan_Controller_5
+
+BO_ 2147549202 Debugger_Debug_20_to_Fan_Controller_6: 8 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Fan_Controller_6
+
+BO_ 2147549203 Debugger_Debug_20_to_Fan_Controller_7: 8 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Fan_Controller_7
+
+BO_ 2147549204 Debugger_Debug_20_to_Fan_Controller_8: 8 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Fan_Controller_8
+
+BO_ 2147549225 Debugger_Debug_20_to_LV_DC_DC: 8 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" LV_DC_DC
+
+BO_ 2147549442 Debugger_Debug_FD_to_ECU: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" ECU
+
+BO_ 2147549443 Debugger_Debug_FD_to_ACU: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" ACU
+
+BO_ 2147549444 Debugger_Debug_FD_to_TCM: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" TCM
+
+BO_ 2147549446 Debugger_Debug_FD_to_Steering_Wheel: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Steering_Wheel
+
+BO_ 2147549461 Debugger_Debug_FD_to_SAM1: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" SAM1
+
+BO_ 2147549462 Debugger_Debug_FD_to_SAM2: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" SAM2
+
+BO_ 2147549463 Debugger_Debug_FD_to_SAM3: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" SAM3
+
+BO_ 2147549464 Debugger_Debug_FD_to_SAM4: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" SAM4
+
+BO_ 2147549465 Debugger_Debug_FD_to_SAM5: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" SAM5
+
+BO_ 2147549466 Debugger_Debug_FD_to_SAM6: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" SAM6
+
+BO_ 2147549467 Debugger_Debug_FD_to_SAM7: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" SAM7
+
+BO_ 2147549468 Debugger_Debug_FD_to_SAM8: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" SAM8
+
+BO_ 2147549469 Debugger_Debug_FD_to_SAM9: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" SAM9
+
+BO_ 2147549470 Debugger_Debug_FD_to_SAM10: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" SAM10
+
+BO_ 2147549471 Debugger_Debug_FD_to_SAM11: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" SAM11
+
+BO_ 2147549472 Debugger_Debug_FD_to_SAM12: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" SAM12
+
+BO_ 2147549473 Debugger_Debug_FD_to_SAM13: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" SAM13
+
+BO_ 2147549474 Debugger_Debug_FD_to_SAM14: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" SAM14
+
+BO_ 2147549475 Debugger_Debug_FD_to_SAM15: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" SAM15
+
+BO_ 2147549476 Debugger_Debug_FD_to_SAM16: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" SAM16
+
+BO_ 2147549477 Debugger_Debug_FD_to_SAM17: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" SAM17
+
+BO_ 2147549478 Debugger_Debug_FD_to_SAM18: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" SAM18
+
+BO_ 2147549479 Debugger_Debug_FD_to_SAM19: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" SAM19
+
+BO_ 2147549480 Debugger_Debug_FD_to_SAM20: 64 Debugger
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" SAM20
+
+BO_ 2147549698 Debugger_Ping_to_ECU: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2147549699 Debugger_Ping_to_ACU: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" ACU
+
+BO_ 2147549700 Debugger_Ping_to_TCM: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" TCM
+
+BO_ 2147549701 Debugger_Ping_to_Dash_Panel: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Dash_Panel
+
+BO_ 2147549702 Debugger_Ping_to_Steering_Wheel: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Steering_Wheel
+
+BO_ 2147549704 Debugger_Ping_to_GR_Inverter_1: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" GR_Inverter_1
+
+BO_ 2147549705 Debugger_Ping_to_GR_Inverter_2: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" GR_Inverter_2
+
+BO_ 2147549706 Debugger_Ping_to_GR_Inverter_3: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" GR_Inverter_3
+
+BO_ 2147549707 Debugger_Ping_to_GR_Inverter_4: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" GR_Inverter_4
+
+BO_ 2147549708 Debugger_Ping_to_Charging_SDC: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Charging_SDC
+
+BO_ 2147549709 Debugger_Ping_to_Fan_Controller_1: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Fan_Controller_1
+
+BO_ 2147549710 Debugger_Ping_to_Fan_Controller_2: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Fan_Controller_2
+
+BO_ 2147549711 Debugger_Ping_to_Fan_Controller_3: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Fan_Controller_3
+
+BO_ 2147549712 Debugger_Ping_to_Fan_Controller_4: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Fan_Controller_4
+
+BO_ 2147549713 Debugger_Ping_to_Fan_Controller_5: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Fan_Controller_5
+
+BO_ 2147549714 Debugger_Ping_to_Fan_Controller_6: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Fan_Controller_6
+
+BO_ 2147549715 Debugger_Ping_to_Fan_Controller_7: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Fan_Controller_7
+
+BO_ 2147549716 Debugger_Ping_to_Fan_Controller_8: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Fan_Controller_8
+
+BO_ 2147549717 Debugger_Ping_to_SAM1: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" SAM1
+
+BO_ 2147549718 Debugger_Ping_to_SAM2: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" SAM2
+
+BO_ 2147549719 Debugger_Ping_to_SAM3: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" SAM3
+
+BO_ 2147549720 Debugger_Ping_to_SAM4: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" SAM4
+
+BO_ 2147549721 Debugger_Ping_to_SAM5: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" SAM5
+
+BO_ 2147549722 Debugger_Ping_to_SAM6: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" SAM6
+
+BO_ 2147549723 Debugger_Ping_to_SAM7: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" SAM7
+
+BO_ 2147549724 Debugger_Ping_to_SAM8: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" SAM8
+
+BO_ 2147549725 Debugger_Ping_to_SAM9: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" SAM9
+
+BO_ 2147549726 Debugger_Ping_to_SAM10: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" SAM10
+
+BO_ 2147549727 Debugger_Ping_to_SAM11: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" SAM11
+
+BO_ 2147549728 Debugger_Ping_to_SAM12: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" SAM12
+
+BO_ 2147549729 Debugger_Ping_to_SAM13: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" SAM13
+
+BO_ 2147549730 Debugger_Ping_to_SAM14: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" SAM14
+
+BO_ 2147549731 Debugger_Ping_to_SAM15: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" SAM15
+
+BO_ 2147549732 Debugger_Ping_to_SAM16: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" SAM16
+
+BO_ 2147549733 Debugger_Ping_to_SAM17: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" SAM17
+
+BO_ 2147549734 Debugger_Ping_to_SAM18: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" SAM18
+
+BO_ 2147549735 Debugger_Ping_to_SAM19: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" SAM19
+
+BO_ 2147549736 Debugger_Ping_to_SAM20: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" SAM20
+
+BO_ 2147549737 Debugger_Ping_to_LV_DC_DC: 4 Debugger
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" LV_DC_DC
+
+BO_ 2147550722 Debugger_ECU_config_to_ECU: 0 Debugger
+
+BO_ 2147614721 ECU_Debug_20_to_Debugger: 8 ECU
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Debugger
+
+BO_ 2147614977 ECU_Debug_FD_to_Debugger: 64 ECU
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Debugger
+
+BO_ 2147615233 ECU_Ping_to_Debugger: 4 ECU
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2147615487 ECU_Ping_to_ALL: 4 ECU
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" ALL
+
+BO_ 2147615743 ECU_ECU_Status_1_to_ALL: 8 ECU
+ SG_ ECU_State : 0|8@0+ (1,0) [0|0] "Enum" ALL
+ SG_ ACU_Node_Status : 8|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ GR_Inv_1_Status : 9|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ GR_Inv_2_Status : 10|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ GR_Inv_3_Status : 11|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ GR_Inv_4_Status : 12|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Fan_Controller_1 : 13|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Fan_Controller_2 : 14|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Fan_Controller_3 : 15|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Fan_Controller_4 : 16|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Fan_Controller_5 : 17|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Fan_Controller_6 : 18|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Fan_Controller_7 : 19|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Fan_Controller_8 : 20|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Dash : 21|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Steering : 22|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Power_Level : 32|4@0+ (1,0) [0|0] "" ALL
+ SG_ Torque_Map : 36|4@0+ (1,0) [0|0] "" ALL
+ SG_ Max_Cell_Temp : 40|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Accumulator_State_of_Charge : 48|8@0+ (0.3921568627,0) [0|100] "%" ALL
+ SG_ GLV_State_of_Charge : 56|8@0+ (0.3921568627,0) [0|100] "%" ALL
+
+BO_ 2147615999 ECU_ECU_Status_2_to_ALL: 8 ECU
+ SG_ Tractive_System_Voltage : 0|16@0+ (0.01,0) [0|655.35] "Volts" ALL
+ SG_ Vehicle_Speed : 16|16@0+ (0.01,0) [0|655.35] "MPH" ALL
+ SG_ FR_Wheel_RPM : 32|16@0+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
+ SG_ FL_Wheel_RPM : 48|16@0+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
+
+BO_ 2147616255 ECU_ECU_Status_3_to_ALL: 4 ECU
+ SG_ RR_Wheel_RPM : 0|16@0+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
+ SG_ RL_Wheel_RPM : 16|16@0+ (0.1,-3276.8) [-3276.8|3276.7] "RPM" ALL
+
+BO_ 2147617283 ECU_ACU_Precharge_to_ACU: 1 ECU
+ SG_ Set_TS_Active : 0|1@0+ (1,0) [0|0] "Bool" ACU
+
+BO_ 2147617539 ECU_ACU_Config_Charge_Parameters_to_ACU: 4 ECU
+ SG_ Charge_Voltage : 0|16@0+ (0.1,0) [0|6553.5] "Volts" ACU
+ SG_ Charge_Current : 16|16@0+ (0.1,0) [0|6553.5] "Amps" ACU
+
+BO_ 2147617795 ECU_ACU_Config_Operational_Parameters_to_ACU: 2 ECU
+ SG_ Minimium_Cell_Voltage : 0|8@0+ (0.01,2) [2|4.55] "Volts" ACU
+ SG_ Max_Cell_Temperature : 8|8@0+ (0.25,0) [0|63.75] "Celsius" ACU
+
+BO_ 2147620360 ECU_Inverter_Config_to_GR_Inverter_1: 7 ECU
+ SG_ Max_AC_Current : 0|16@0+ (0.01,-327.68) [-327.68|327.67] "Amps" GR_Inverter_1
+ SG_ Max_DC_Current : 16|16@0+ (0.01,-327.68) [-327.68|327.67] "Amps" GR_Inverter_1
+ SG_ Absolute_Max_RPM_Limit : 32|16@0+ (1,-32768) [-32768|32767] "RPM" GR_Inverter_1
+ SG_ Motor_direction : 48|1@0+ (1,0) [0|0] "Enable" GR_Inverter_1
+
+BO_ 2147620361 ECU_Inverter_Config_to_GR_Inverter_2: 7 ECU
+ SG_ Max_AC_Current : 0|16@0+ (0.01,-327.68) [-327.68|327.67] "Amps" GR_Inverter_2
+ SG_ Max_DC_Current : 16|16@0+ (0.01,-327.68) [-327.68|327.67] "Amps" GR_Inverter_2
+ SG_ Absolute_Max_RPM_Limit : 32|16@0+ (1,-32768) [-32768|32767] "RPM" GR_Inverter_2
+ SG_ Motor_direction : 48|1@0+ (1,0) [0|0] "Enable" GR_Inverter_2
+
+BO_ 2147620362 ECU_Inverter_Config_to_GR_Inverter_3: 7 ECU
+ SG_ Max_AC_Current : 0|16@0+ (0.01,-327.68) [-327.68|327.67] "Amps" GR_Inverter_3
+ SG_ Max_DC_Current : 16|16@0+ (0.01,-327.68) [-327.68|327.67] "Amps" GR_Inverter_3
+ SG_ Absolute_Max_RPM_Limit : 32|16@0+ (1,-32768) [-32768|32767] "RPM" GR_Inverter_3
+ SG_ Motor_direction : 48|1@0+ (1,0) [0|0] "Enable" GR_Inverter_3
+
+BO_ 2147620363 ECU_Inverter_Config_to_GR_Inverter_4: 7 ECU
+ SG_ Max_AC_Current : 0|16@0+ (0.01,-327.68) [-327.68|327.67] "Amps" GR_Inverter_4
+ SG_ Max_DC_Current : 16|16@0+ (0.01,-327.68) [-327.68|327.67] "Amps" GR_Inverter_4
+ SG_ Absolute_Max_RPM_Limit : 32|16@0+ (1,-32768) [-32768|32767] "RPM" GR_Inverter_4
+ SG_ Motor_direction : 48|1@0+ (1,0) [0|0] "Enable" GR_Inverter_4
+
+BO_ 2147620616 ECU_Inverter_Command_to_GR_Inverter_1: 8 ECU
+ SG_ Set_AC_Current : 0|16@0+ (0.01,-327.68) [-327.68|327.67] "Amps" GR_Inverter_1
+ SG_ Set_DC_Current : 16|16@0+ (0.01,-327.68) [-327.68|327.67] "Amps" GR_Inverter_1
+ SG_ RPM_Limit : 32|16@0+ (1,-32768) [-32768|32767] "RPM" GR_Inverter_1
+ SG_ Field_weakening : 48|8@0+ (0.1,0) [0|25.5] "Amps" GR_Inverter_1
+ SG_ Drive_enable : 56|1@0+ (1,0) [0|0] "Enable" GR_Inverter_1
+
+BO_ 2147620617 ECU_Inverter_Command_to_GR_Inverter_2: 8 ECU
+ SG_ Set_AC_Current : 0|16@0+ (0.01,-327.68) [-327.68|327.67] "Amps" GR_Inverter_2
+ SG_ Set_DC_Current : 16|16@0+ (0.01,-327.68) [-327.68|327.67] "Amps" GR_Inverter_2
+ SG_ RPM_Limit : 32|16@0+ (1,-32768) [-32768|32767] "RPM" GR_Inverter_2
+ SG_ Field_weakening : 48|8@0+ (0.1,0) [0|25.5] "Amps" GR_Inverter_2
+ SG_ Drive_enable : 56|1@0+ (1,0) [0|0] "Enable" GR_Inverter_2
+
+BO_ 2147620618 ECU_Inverter_Command_to_GR_Inverter_3: 8 ECU
+ SG_ Set_AC_Current : 0|16@0+ (0.01,-327.68) [-327.68|327.67] "Amps" GR_Inverter_3
+ SG_ Set_DC_Current : 16|16@0+ (0.01,-327.68) [-327.68|327.67] "Amps" GR_Inverter_3
+ SG_ RPM_Limit : 32|16@0+ (1,-32768) [-32768|32767] "RPM" GR_Inverter_3
+ SG_ Field_weakening : 48|8@0+ (0.1,0) [0|25.5] "Amps" GR_Inverter_3
+ SG_ Drive_enable : 56|1@0+ (1,0) [0|0] "Enable" GR_Inverter_3
+
+BO_ 2147620619 ECU_Inverter_Command_to_GR_Inverter_4: 8 ECU
+ SG_ Set_AC_Current : 0|16@0+ (0.01,-327.68) [-327.68|327.67] "Amps" GR_Inverter_4
+ SG_ Set_DC_Current : 16|16@0+ (0.01,-327.68) [-327.68|327.67] "Amps" GR_Inverter_4
+ SG_ RPM_Limit : 32|16@0+ (1,-32768) [-32768|32767] "RPM" GR_Inverter_4
+ SG_ Field_weakening : 48|8@0+ (0.1,0) [0|25.5] "Amps" GR_Inverter_4
+ SG_ Drive_enable : 56|1@0+ (1,0) [0|0] "Enable" GR_Inverter_4
+
+BO_ 2147621133 ECU_Fan_Command_to_Fan_Controller_1: 1 ECU
+ SG_ Fan_Command : 0|8@0+ (1,0) [0|255] "%" Fan_Controller_1
+
+BO_ 2147621134 ECU_Fan_Command_to_Fan_Controller_2: 1 ECU
+ SG_ Fan_Command : 0|8@0+ (1,0) [0|255] "%" Fan_Controller_2
+
+BO_ 2147621135 ECU_Fan_Command_to_Fan_Controller_3: 1 ECU
+ SG_ Fan_Command : 0|8@0+ (1,0) [0|255] "%" Fan_Controller_3
+
+BO_ 2147621136 ECU_Fan_Command_to_Fan_Controller_4: 1 ECU
+ SG_ Fan_Command : 0|8@0+ (1,0) [0|255] "%" Fan_Controller_4
+
+BO_ 2147621137 ECU_Fan_Command_to_Fan_Controller_5: 1 ECU
+ SG_ Fan_Command : 0|8@0+ (1,0) [0|255] "%" Fan_Controller_5
+
+BO_ 2147621138 ECU_Fan_Command_to_Fan_Controller_6: 1 ECU
+ SG_ Fan_Command : 0|8@0+ (1,0) [0|255] "%" Fan_Controller_6
+
+BO_ 2147621139 ECU_Fan_Command_to_Fan_Controller_7: 1 ECU
+ SG_ Fan_Command : 0|8@0+ (1,0) [0|255] "%" Fan_Controller_7
+
+BO_ 2147621140 ECU_Fan_Command_to_Fan_Controller_8: 1 ECU
+ SG_ Fan_Command : 0|8@0+ (1,0) [0|255] "%" Fan_Controller_8
+
+BO_ 2147621637 ECU_Dash_Config_to_Dash_Panel: 7 ECU
+ SG_ BMS_LED : 0|1@0+ (1,0) [0|0] "Bool" Dash_Panel
+ SG_ IMD_LED : 1|1@0+ (1,0) [0|0] "Bool" Dash_Panel
+ SG_ BSPD_LED : 2|1@0+ (1,0) [0|0] "Bool" Dash_Panel
+ SG_ Button_LED_1_R : 8|8@0+ (1,0) [0|255] "RGB" Dash_Panel
+ SG_ Button_LED_1_G : 16|8@0+ (1,0) [0|255] "RGB" Dash_Panel
+ SG_ Button_LED_1_B : 24|8@0+ (1,0) [0|255] "RGB" Dash_Panel
+ SG_ Button_LED_2_R : 32|8@0+ (1,0) [0|255] "RGB" Dash_Panel
+ SG_ Button_LED_2_G : 40|8@0+ (1,0) [0|255] "RGB" Dash_Panel
+ SG_ Button_LED_2_B : 48|8@0+ (1,0) [0|255] "RGB" Dash_Panel
+
+BO_ 2147622150 ECU_Steering_Config_to_Steering_Wheel: 0 ECU
+
+BO_ 2147625733 ECU_Dash_Warning_Flags_to_Dash_Panel: 1 ECU
+ SG_ BSE_APPS_Violation : 0|1@0+ (1,0) [0|0] "Bool" Dash_Panel
+
+BO_ 2147625989 ECU_Specific_Brake_IR_to_Dash_Panel: 2 ECU
+ SG_ Wheel_identifier : 0|8@0+ (1,0) [0|0] "" Dash_Panel
+ SG_ Temp : 8|8@0+ (1,0) [0|255] "Celsius" Dash_Panel
+
+BO_ 2147626246 ECU_ECU_Ping_Information_to_Steering_Wheel: 3 ECU
+ SG_ Online_pings : 0|24@0+ (1,0) [0|0] "Bool map" Steering_Wheel
+
+BO_ 2147626500 ECU_ECU_Pedals_Data_to_TCM: 10 ECU
+ SG_ APPS1_SIGNAL : 0|16@0+ (0.00152590219,0) [0|100] "%" TCM
+ SG_ APPS2_SIGNAL : 16|16@0+ (0.00152590219,0) [0|100] "%" TCM
+ SG_ BSE_SIGNAL : 32|16@0+ (0.00152590219,0) [0|100] "%" TCM
+ SG_ BRAKE_F_SIGNAL : 48|16@0+ (0.00152590219,0) [0|100] "%" TCM
+ SG_ BRAKE_R_SIGNAL : 48|16@0+ (0.00152590219,0) [0|100] "%" TCM
+
+BO_ 2147680257 ACU_Debug_20_to_Debugger: 8 ACU
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Debugger
+
+BO_ 2147680513 ACU_Debug_FD_to_Debugger: 64 ACU
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Debugger
+
+BO_ 2147680769 ACU_Ping_to_Debugger: 4 ACU
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2147680770 ACU_Ping_to_ECU: 4 ACU
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2147682050 ACU_ACU_Status_1_to_ECU: 8 ACU
+ SG_ Accumulator_Voltage : 0|16@0+ (0.01,0) [0|655.35] "Volts" ECU
+ SG_ TS_Voltage : 16|16@0+ (0.01,0) [0|655.35] "Volts" ECU
+ SG_ Accumulator_Current : 32|16@0- (0.01,0) [-327.68|327.67] "Amps" ECU
+ SG_ Accumulator_SOC : 48|8@0+ (0.3921568627,0) [0|100] "%" ECU
+ SG_ GLV_SOC : 56|8@0+ (0.3921568627,0) [0|100] "%" ECU
+
+BO_ 2147682306 ACU_ACU_Status_2_to_ECU: 7 ACU
+ SG_ 20v_Voltage : 0|8@0+ (0.1,0) [0|25.5] "Volts" ECU
+ SG_ 12v_Voltage : 8|8@0+ (0.1,0) [0|25.5] "Volts" ECU
+ SG_ SDC_Voltage : 16|8@0+ (0.1,0) [0|25.5] "Volts" ECU
+ SG_ Min_Cell_Voltage : 24|8@0+ (0.01,2) [2|4.55] "Volts" ECU
+ SG_ Max_Cell_Temp : 32|8@0+ (0.25,0) [0|63.75] "Celsius" ECU
+ SG_ Over_Temp_Error : 40|1@0+ (1,0) [0|0] "Bool" ECU
+ SG_ Over_Voltage_Error : 41|1@0+ (1,0) [0|0] "Bool" ECU
+ SG_ Under_Voltage_Error : 42|1@0+ (1,0) [0|0] "Bool" ECU
+ SG_ Over_Current_Error : 43|1@0+ (1,0) [0|0] "Bool" ECU
+ SG_ Under_Current_Error : 44|1@0+ (1,0) [0|0] "Bool" ECU
+ SG_ Under_Voltage_20v_Warning : 45|1@0+ (1,0) [0|0] "Bool" ECU
+ SG_ Under_Voltage_12v_Warning : 46|1@0+ (1,0) [0|0] "Bool" ECU
+ SG_ Under_Voltage_SDC_Warning : 47|1@0+ (1,0) [0|0] "Bool" ECU
+ SG_ Precharge_Error : 48|1@0+ (1,0) [0|0] "Bool" ECU
+ SG_ IR___Precharge_State : 49|1@0+ (1,0) [0|0] "Bool" ECU
+ SG_ IR_State : 50|1@0+ (1,0) [0|0] "Bool" ECU
+ SG_ Software_Latch : 51|1@0+ (1,0) [0|0] "Bool" ECU
+
+BO_ 2147682562 ACU_ACU_Status_3_to_ECU: 8 ACU
+ SG_ HV_Input_Voltage : 0|16@0+ (0.01,0) [0|655.35] "Volts" ECU
+ SG_ HV_Output_Voltage : 16|16@0+ (0.01,0) [0|655.35] "Volts" ECU
+ SG_ HV_Input_Current : 32|16@0+ (0.001,0) [0|65.535] "Amps" ECU
+ SG_ HV_Output_Current : 48|16@0+ (0.001,0) [0|65.535] "Amps" ECU
+
+BO_ 2147683839 ACU_ACU_Cell_Data_1_to_ALL: 64 ACU
+ SG_ Cell_0_Voltage : 0|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_0_Temp : 8|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_1_Voltage : 16|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_1_Temp : 24|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_2_Voltage : 32|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_2_Temp : 40|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_3_Voltage : 48|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_3_Temp : 56|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_4_Voltage : 64|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_4_Temp : 72|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_5_Voltage : 80|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_5_Temp : 88|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_6_Voltage : 96|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_6_Temp : 104|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_7_Voltage : 112|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_7_Temp : 120|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_8_Voltage : 128|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_8_Temp : 136|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_9_Voltage : 144|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_9_Temp : 152|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_10_Voltage : 160|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_10_Temp : 168|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_11_Voltage : 176|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_11_Temp : 184|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_12_Voltage : 192|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_12_Temp : 200|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_13_Voltage : 208|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_13_Temp : 216|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_14_Voltage : 224|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_14_Temp : 232|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_15_Voltage : 240|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_15_Temp : 248|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_16_Voltage : 256|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_16_Temp : 264|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_17_Voltage : 272|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_17_Temp : 280|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_18_Voltage : 288|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_18_Temp : 296|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_19_Voltage : 304|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_19_Temp : 312|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_20_Voltage : 320|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_20_Temp : 328|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_21_Voltage : 336|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_21_Temp : 344|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_22_Voltage : 352|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_22_Temp : 360|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_23_Voltage : 368|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_23_Temp : 376|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_24_Voltage : 384|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_24_Temp : 392|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_25_Voltage : 400|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_25_Temp : 408|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_26_Voltage : 416|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_26_Temp : 424|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_27_Voltage : 432|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_27_Temp : 440|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_28_Voltage : 448|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_28_Temp : 456|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_29_Voltage : 464|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_29_Temp : 472|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_30_Voltage : 480|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_30_Temp : 488|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_31_Voltage : 496|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_31_Temp : 504|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+
+BO_ 2147684095 ACU_ACU_Cell_Data_2_to_ALL: 64 ACU
+ SG_ Cell_32_Voltage : 0|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_32_Temp : 8|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_33_Voltage : 16|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_33_Temp : 24|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_34_Voltage : 32|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_34_Temp : 40|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_35_Voltage : 48|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_35_Temp : 56|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_36_Voltage : 64|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_36_Temp : 72|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_37_Voltage : 80|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_37_Temp : 88|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_38_Voltage : 96|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_38_Temp : 104|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_39_Voltage : 112|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_39_Temp : 120|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_40_Voltage : 128|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_40_Temp : 136|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_41_Voltage : 144|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_41_Temp : 152|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_42_Voltage : 160|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_42_Temp : 168|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_43_Voltage : 176|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_43_Temp : 184|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_44_Voltage : 192|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_44_Temp : 200|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_45_Voltage : 208|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_45_Temp : 216|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_46_Voltage : 224|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_46_Temp : 232|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_47_Voltage : 240|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_47_Temp : 248|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_48_Voltage : 256|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_48_Temp : 264|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_49_Voltage : 272|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_49_Temp : 280|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_50_Voltage : 288|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_50_Temp : 296|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_51_Voltage : 304|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_51_Temp : 312|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_52_Voltage : 320|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_52_Temp : 328|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_53_Voltage : 336|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_53_Temp : 344|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_54_Voltage : 352|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_54_Temp : 360|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_55_Voltage : 368|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_55_Temp : 376|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_56_Voltage : 384|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_56_Temp : 392|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_57_Voltage : 400|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_57_Temp : 408|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_58_Voltage : 416|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_58_Temp : 424|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_59_Voltage : 432|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_59_Temp : 440|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_60_Voltage : 448|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_60_Temp : 456|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_61_Voltage : 464|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_61_Temp : 472|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_62_Voltage : 480|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_62_Temp : 488|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_63_Voltage : 496|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_63_Temp : 504|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+
+BO_ 2147684351 ACU_ACU_Cell_Data_3_to_ALL: 64 ACU
+ SG_ Cell_64_Voltage : 0|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_64_Temp : 8|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_65_Voltage : 16|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_65_Temp : 24|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_66_Voltage : 32|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_66_Temp : 40|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_67_Voltage : 48|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_67_Temp : 56|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_68_Voltage : 64|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_68_Temp : 72|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_69_Voltage : 80|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_69_Temp : 88|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_70_Voltage : 96|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_70_Temp : 104|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_71_Voltage : 112|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_71_Temp : 120|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_72_Voltage : 128|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_72_Temp : 136|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_73_Voltage : 144|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_73_Temp : 152|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_74_Voltage : 160|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_74_Temp : 168|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_75_Voltage : 176|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_75_Temp : 184|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_76_Voltage : 192|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_76_Temp : 200|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_77_Voltage : 208|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_77_Temp : 216|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_78_Voltage : 224|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_78_Temp : 232|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_79_Voltage : 240|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_79_Temp : 248|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_80_Voltage : 256|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_80_Temp : 264|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_81_Voltage : 272|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_81_Temp : 280|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_82_Voltage : 288|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_82_Temp : 296|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_83_Voltage : 304|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_83_Temp : 312|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_84_Voltage : 320|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_84_Temp : 328|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_85_Voltage : 336|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_85_Temp : 344|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_86_Voltage : 352|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_86_Temp : 360|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_87_Voltage : 368|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_87_Temp : 376|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_88_Voltage : 384|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_88_Temp : 392|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_89_Voltage : 400|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_89_Temp : 408|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_90_Voltage : 416|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_90_Temp : 424|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_91_Voltage : 432|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_91_Temp : 440|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_92_Voltage : 448|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_92_Temp : 456|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_93_Voltage : 464|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_93_Temp : 472|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_94_Voltage : 480|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_94_Temp : 488|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_95_Voltage : 496|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_95_Temp : 504|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+
+BO_ 2147684607 ACU_ACU_Cell_Data_4_to_ALL: 64 ACU
+ SG_ Cell_96_Voltage : 0|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_96_Temp : 8|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_97_Voltage : 16|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_97_Temp : 24|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_98_Voltage : 32|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_98_Temp : 40|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_99_Voltage : 48|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_99_Temp : 56|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_100_Voltage : 64|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_100_Temp : 72|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_101_Voltage : 80|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_101_Temp : 88|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_102_Voltage : 96|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_102_Temp : 104|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_103_Voltage : 112|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_103_Temp : 120|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_104_Voltage : 128|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_104_Temp : 136|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_105_Voltage : 144|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_105_Temp : 152|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_106_Voltage : 160|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_106_Temp : 168|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_107_Voltage : 176|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_107_Temp : 184|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_108_Voltage : 192|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_108_Temp : 200|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_109_Voltage : 208|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_109_Temp : 216|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_110_Voltage : 224|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_110_Temp : 232|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_111_Voltage : 240|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_111_Temp : 248|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_112_Voltage : 256|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_112_Temp : 264|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_113_Voltage : 272|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_113_Temp : 280|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_114_Voltage : 288|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_114_Temp : 296|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_115_Voltage : 304|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_115_Temp : 312|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_116_Voltage : 320|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_116_Temp : 328|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_117_Voltage : 336|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_117_Temp : 344|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_118_Voltage : 352|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_118_Temp : 360|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_119_Voltage : 368|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_119_Temp : 376|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_120_Voltage : 384|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_120_Temp : 392|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_121_Voltage : 400|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_121_Temp : 408|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_122_Voltage : 416|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_122_Temp : 424|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_123_Voltage : 432|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_123_Temp : 440|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_124_Voltage : 448|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_124_Temp : 456|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_125_Voltage : 464|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_125_Temp : 472|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_126_Voltage : 480|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_126_Temp : 488|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_127_Voltage : 496|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_127_Temp : 504|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+
+BO_ 2147684863 ACU_ACU_Cell_Data_5_to_ALL: 64 ACU
+ SG_ Cell_128_Voltage : 0|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_128_Temp : 8|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_129_Voltage : 16|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_129_Temp : 24|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_130_Voltage : 32|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_130_Temp : 40|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_131_Voltage : 48|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_131_Temp : 56|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_132_Voltage : 64|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_132_Temp : 72|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_133_Voltage : 80|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_133_Temp : 88|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_134_Voltage : 96|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_134_Temp : 104|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_135_Voltage : 112|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_135_Temp : 120|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_136_Voltage : 128|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_136_Temp : 136|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_137_Voltage : 144|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_137_Temp : 152|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_138_Voltage : 160|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_138_Temp : 168|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_139_Voltage : 176|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_139_Temp : 184|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_140_Voltage : 192|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_140_Temp : 200|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_141_Voltage : 208|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_141_Temp : 216|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_142_Voltage : 224|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_142_Temp : 232|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_143_Voltage : 240|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_143_Temp : 248|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_144_Voltage : 256|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_144_Temp : 264|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_145_Voltage : 272|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_145_Temp : 280|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_146_Voltage : 288|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_146_Temp : 296|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_147_Voltage : 304|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_147_Temp : 312|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_148_Voltage : 320|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_148_Temp : 328|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_149_Voltage : 336|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_149_Temp : 344|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_150_Voltage : 352|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_150_Temp : 360|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_151_Voltage : 368|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_151_Temp : 376|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_152_Voltage : 384|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_152_Temp : 392|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_153_Voltage : 400|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_153_Temp : 408|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_154_Voltage : 416|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_154_Temp : 424|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_155_Voltage : 432|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_155_Temp : 440|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_156_Voltage : 448|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_156_Temp : 456|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_157_Voltage : 464|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_157_Temp : 472|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_158_Voltage : 480|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_158_Temp : 488|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+ SG_ Cell_159_Voltage : 496|8@0+ (0.01,2) [2|4.55] "Volts" ALL
+ SG_ Cell_159_Temp : 504|8@0+ (0.25,0) [0|63.75] "Celsius" ALL
+
+BO_ 2147684866 ACU_DC_DC_Status_to_ECU: 7 ACU
+ SG_ Input_Voltage : 0|16@0+ (0.001,0) [0|65.535] "Volts" ECU
+ SG_ Output_Voltage : 16|16@0+ (0.001,0) [0|65.535] "Volts" ECU
+ SG_ Input_Current : 32|8@0+ (0.1,0) [0|25.5] "Amps" ECU
+ SG_ Output_Current : 40|8@0+ (0.1,0) [0|25.5] "Amps" ECU
+ SG_ DC_DC_Temp : 48|8@0+ (1,0) [0|255] "Celsius" ECU
+
+BO_ 2147746305 TCM_Ping_to_Debugger: 4 TCM
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2147756294 TCM_TCM_Status_to_Steering_Wheel: 8 TCM
+ SG_ Connection_Status : 0|1@0+ (1,0) [0|0] "Bool" Steering_Wheel
+ SG_ MQTT_Status : 1|1@0+ (1,0) [0|0] "Bool" Steering_Wheel
+ SG_ Epic_Shelter_Status : 2|1@0+ (1,0) [0|0] "Bool" Steering_Wheel
+ SG_ Camera_Status : 3|1@0+ (1,0) [0|0] "Bool" Steering_Wheel
+ SG_ Ping : 8|16@0+ (1,0) [0|0] "ms" Steering_Wheel
+ SG_ Cache_Size : 24|32@0+ (1,0) [0|0] "HASH(0xc7b141918)" Steering_Wheel
+
+BO_ 2147756550 TCM_TCM_Resource_Utilization_to_Steering_Wheel: 44 TCM
+ SG_ CPU_5_Util : 0|8@0+ (1,0) [0|0] "Watts" Steering_Wheel
+ SG_ RAM_Total : 0|16@0+ (1,0) [0|0] "" Steering_Wheel
+ SG_ GPU_Util : 0|8@0+ (1,0) [0|0] "" Steering_Wheel
+ SG_ CPU_0_Freq : 0|16@0+ (1,0) [0|0] "%" Steering_Wheel
+ SG_ CPU_3_Freq : 0|16@0+ (1,0) [0|0] "" Steering_Wheel
+ SG_ Disk_Util : 0|8@0+ (1,0) [0|0] "Celsius" Steering_Wheel
+ SG_ CPU_Temp : 0|8@0+ (1,0) [0|0] "" Steering_Wheel
+ SG_ Power_Draw : 0|16@0+ (1,0) [0|0] "Celsius" Steering_Wheel
+ SG_ CPU_1_Freq : 0|16@0+ (1,0) [0|0] "%" Steering_Wheel
+ SG_ Disk_Used : 0|32@0+ (1,0) [0|0] "" Steering_Wheel
+ SG_ CPU_2_Util : 0|8@0+ (1,0) [0|0] "" Steering_Wheel
+ SG_ CPU_4_Freq : 0|16@0+ (1,0) [0|0] "" Steering_Wheel
+ SG_ CPU_0_Util : 0|8@0+ (1,0) [0|0] "%" Steering_Wheel
+ SG_ CPU_Total_Util : 0|8@0+ (1,0) [0|0] "" Steering_Wheel
+ SG_ CPU_3_Util : 0|8@0+ (1,0) [0|0] "" Steering_Wheel
+ SG_ RAM_Util : 0|8@0+ (1,0) [0|0] "" Steering_Wheel
+ SG_ CPU_5_Freq : 0|16@0+ (1,0) [0|0] "" Steering_Wheel
+ SG_ CPU_2_Freq : 0|16@0+ (1,0) [0|0] "%" Steering_Wheel
+ SG_ Current_Draw : 0|16@0+ (1,0) [0|0] "" Steering_Wheel
+ SG_ RAM_Used : 0|16@0+ (1,0) [0|0] "" Steering_Wheel
+ SG_ CPU_4_Util : 0|8@0+ (1,0) [0|0] "" Steering_Wheel
+ SG_ GPU_Temp : 0|8@0+ (1,0) [0|0] "" Steering_Wheel
+ SG_ Voltage_Draw : 0|16@0+ (1,0) [0|0] "" Steering_Wheel
+ SG_ Disk_Total : 0|32@0+ (1,0) [0|0] "" Steering_Wheel
+ SG_ GPU_Freq : 0|16@0+ (1,0) [0|0] "" Steering_Wheel
+ SG_ CPU_1_Util : 0|8@0+ (1,0) [0|0] "" Steering_Wheel
+
+BO_ 2147811329 Dash_Panel_Debug_20_to_Debugger: 8 Dash_Panel
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Debugger
+
+BO_ 2147811841 Dash_Panel_Ping_to_Debugger: 4 Dash_Panel
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2147811842 Dash_Panel_Ping_to_ECU: 4 Dash_Panel
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2147817986 Dash_Panel_Dash_Status_to_ECU: 3 Dash_Panel
+ SG_ BMS_LED : 0|1@0+ (1,0) [0|0] "Bool" ECU
+ SG_ IMD_LED : 1|1@0+ (1,0) [0|0] "Bool" ECU
+ SG_ BSPD_LED : 2|1@0+ (1,0) [0|0] "Bool" ECU
+ SG_ TS_Button_Data : 8|8@0- (0.1,0) [0|12.7] "Seconds" ECU
+ SG_ RTD_Button_Data : 16|8@0- (0.1,0) [0|12.7] "Seconds" ECU
+
+BO_ 2147877121 Steering_Wheel_Debug_FD_to_Debugger: 64 Steering_Wheel
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Debugger
+
+BO_ 2147877377 Steering_Wheel_Ping_to_Debugger: 4 Steering_Wheel
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2147877378 Steering_Wheel_Ping_to_ECU: 4 Steering_Wheel
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2147884034 Steering_Wheel_Steering_Status_to_ECU: 2 Steering_Wheel
+ SG_ Current_Encoder : 0|4@0+ (1,0) [1|16] "Position" ECU
+ SG_ Torque_Map_Encoder : 4|4@0+ (1,0) [1|16] "Position" ECU
+ SG_ Regen : 8|4@0+ (1,0) [1|16] "Position" ECU
+ SG_ Button_1 : 12|1@0+ (1,0) [0|0] "Bool" ECU
+ SG_ Button_2 : 13|1@0+ (1,0) [0|0] "Bool" ECU
+ SG_ Button_3 : 14|1@0+ (1,0) [0|0] "Bool" ECU
+ SG_ Button_4 : 15|1@0+ (1,0) [0|0] "Bool" ECU
+
+BO_ 2148007937 GR_Inverter_1_Debug_20_to_Debugger: 8 GR_Inverter_1
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Debugger
+
+BO_ 2148008449 GR_Inverter_1_Ping_to_Debugger: 4 GR_Inverter_1
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2148008450 GR_Inverter_1_Ping_to_ECU: 4 GR_Inverter_1
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2148013055 GR_Inverter_1_Inverter_Status_1_to_ALL: 6 GR_Inverter_1
+ SG_ AC_current : 0|16@0+ (0.01,-327.68) [-327.68|327.67] "Amps" ALL
+ SG_ DC_current : 16|16@0+ (0.01,0) [0|655.35] "Amps" ALL
+ SG_ Motor_RPM : 32|16@0+ (1,-32768) [-32768|32767] "RPM" ALL
+
+BO_ 2148013311 GR_Inverter_1_Inverter_Status_2_to_ALL: 6 GR_Inverter_1
+ SG_ U_MOSFET_temperature : 0|8@0+ (1,-40) [-40|215] "Celsius" ALL
+ SG_ V_MOSFET_temperature : 16|8@0+ (1,-40) [-40|215] "Celsius" ALL
+ SG_ W_MOSFET_temperature : 32|8@0+ (1,-40) [-40|215] "Celsius" ALL
+
+BO_ 2148013567 GR_Inverter_1_Inverter_Status_3_to_ALL: 2 GR_Inverter_1
+ SG_ Motor_temperature : 0|8@0+ (1,-40) [-40|215] "Celsius" ALL
+ SG_ Over_voltage_faults : 16|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Under_voltage_fault : 17|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Inv_overtemp_fault : 18|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Motor_overtemp_fault : 19|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Transistor_fault : 20|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Encoder_fault : 21|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ CAN_fault : 22|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Future_use : 23|1@0+ (1,0) [0|0] "Bool" ALL
+
+BO_ 2148073473 GR_Inverter_2_Debug_20_to_Debugger: 8 GR_Inverter_2
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Debugger
+
+BO_ 2148073985 GR_Inverter_2_Ping_to_Debugger: 4 GR_Inverter_2
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2148073986 GR_Inverter_2_Ping_to_ECU: 4 GR_Inverter_2
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2148078591 GR_Inverter_2_Inverter_Status_1_to_ALL: 6 GR_Inverter_2
+ SG_ AC_current : 0|16@0+ (0.01,-327.68) [-327.68|327.67] "Amps" ALL
+ SG_ DC_current : 16|16@0+ (0.01,0) [0|655.35] "Amps" ALL
+ SG_ Motor_RPM : 32|16@0+ (1,-32768) [-32768|32767] "RPM" ALL
+
+BO_ 2148078847 GR_Inverter_2_Inverter_Status_2_to_ALL: 6 GR_Inverter_2
+ SG_ U_MOSFET_temperature : 0|8@0+ (1,-40) [-40|215] "Celsius" ALL
+ SG_ V_MOSFET_temperature : 16|8@0+ (1,-40) [-40|215] "Celsius" ALL
+ SG_ W_MOSFET_temperature : 32|8@0+ (1,-40) [-40|215] "Celsius" ALL
+
+BO_ 2148079103 GR_Inverter_2_Inverter_Status_3_to_ALL: 2 GR_Inverter_2
+ SG_ Motor_temperature : 0|8@0+ (1,-40) [-40|215] "Celsius" ALL
+ SG_ Over_voltage_faults : 16|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Under_voltage_fault : 17|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Inv_overtemp_fault : 18|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Motor_overtemp_fault : 19|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Transistor_fault : 20|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Encoder_fault : 21|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ CAN_fault : 22|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Future_use : 23|1@0+ (1,0) [0|0] "Bool" ALL
+
+BO_ 2148139009 GR_Inverter_3_Debug_20_to_Debugger: 8 GR_Inverter_3
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Debugger
+
+BO_ 2148139521 GR_Inverter_3_Ping_to_Debugger: 4 GR_Inverter_3
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2148139522 GR_Inverter_3_Ping_to_ECU: 4 GR_Inverter_3
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2148144127 GR_Inverter_3_Inverter_Status_1_to_ALL: 6 GR_Inverter_3
+ SG_ AC_current : 0|16@0+ (0.01,-327.68) [-327.68|327.67] "Amps" ALL
+ SG_ DC_current : 16|16@0+ (0.01,0) [0|655.35] "Amps" ALL
+ SG_ Motor_RPM : 32|16@0+ (1,-32768) [-32768|32767] "RPM" ALL
+
+BO_ 2148144383 GR_Inverter_3_Inverter_Status_2_to_ALL: 6 GR_Inverter_3
+ SG_ U_MOSFET_temperature : 0|8@0+ (1,-40) [-40|215] "Celsius" ALL
+ SG_ V_MOSFET_temperature : 16|8@0+ (1,-40) [-40|215] "Celsius" ALL
+ SG_ W_MOSFET_temperature : 32|8@0+ (1,-40) [-40|215] "Celsius" ALL
+
+BO_ 2148144639 GR_Inverter_3_Inverter_Status_3_to_ALL: 2 GR_Inverter_3
+ SG_ Motor_temperature : 0|8@0+ (1,-40) [-40|215] "Celsius" ALL
+ SG_ Over_voltage_faults : 16|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Under_voltage_fault : 17|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Inv_overtemp_fault : 18|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Motor_overtemp_fault : 19|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Transistor_fault : 20|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Encoder_fault : 21|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ CAN_fault : 22|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Future_use : 23|1@0+ (1,0) [0|0] "Bool" ALL
+
+BO_ 2148204545 GR_Inverter_4_Debug_20_to_Debugger: 8 GR_Inverter_4
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Debugger
+
+BO_ 2148205057 GR_Inverter_4_Ping_to_Debugger: 4 GR_Inverter_4
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2148205058 GR_Inverter_4_Ping_to_ECU: 4 GR_Inverter_4
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2148209663 GR_Inverter_4_Inverter_Status_1_to_ALL: 6 GR_Inverter_4
+ SG_ AC_current : 0|16@0+ (0.01,-327.68) [-327.68|327.67] "Amps" ALL
+ SG_ DC_current : 16|16@0+ (0.01,0) [0|655.35] "Amps" ALL
+ SG_ Motor_RPM : 32|16@0+ (1,-32768) [-32768|32767] "RPM" ALL
+
+BO_ 2148209919 GR_Inverter_4_Inverter_Status_2_to_ALL: 6 GR_Inverter_4
+ SG_ U_MOSFET_temperature : 0|8@0+ (1,-40) [-40|215] "Celsius" ALL
+ SG_ V_MOSFET_temperature : 16|8@0+ (1,-40) [-40|215] "Celsius" ALL
+ SG_ W_MOSFET_temperature : 32|8@0+ (1,-40) [-40|215] "Celsius" ALL
+
+BO_ 2148210175 GR_Inverter_4_Inverter_Status_3_to_ALL: 2 GR_Inverter_4
+ SG_ Motor_temperature : 0|8@0+ (1,-40) [-40|215] "Celsius" ALL
+ SG_ Over_voltage_faults : 16|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Under_voltage_fault : 17|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Inv_overtemp_fault : 18|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Motor_overtemp_fault : 19|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Transistor_fault : 20|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Encoder_fault : 21|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ CAN_fault : 22|1@0+ (1,0) [0|0] "Bool" ALL
+ SG_ Future_use : 23|1@0+ (1,0) [0|0] "Bool" ALL
+
+BO_ 2148335617 Fan_Controller_1_Debug_20_to_Debugger: 8 Fan_Controller_1
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Debugger
+
+BO_ 2148336129 Fan_Controller_1_Ping_to_Debugger: 4 Fan_Controller_1
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2148336130 Fan_Controller_1_Ping_to_ECU: 4 Fan_Controller_1
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2148341762 Fan_Controller_1_Fan_Status_to_ECU: 4 Fan_Controller_1
+ SG_ Fan_Speed : 0|16@0+ (1,0) [0|65535] "RPM" ECU
+ SG_ Input_Voltage : 16|8@0+ (0.1,0) [0|25.5] "Volts" ECU
+ SG_ Input_Current : 24|8@0+ (0.1,0) [0|25.5] "Amps" ECU
+
+BO_ 2148401153 Fan_Controller_2_Debug_20_to_Debugger: 8 Fan_Controller_2
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Debugger
+
+BO_ 2148401665 Fan_Controller_2_Ping_to_Debugger: 4 Fan_Controller_2
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2148401666 Fan_Controller_2_Ping_to_ECU: 4 Fan_Controller_2
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2148407298 Fan_Controller_2_Fan_Status_to_ECU: 4 Fan_Controller_2
+ SG_ Fan_Speed : 0|16@0+ (1,0) [0|65535] "RPM" ECU
+ SG_ Input_Voltage : 16|8@0+ (0.1,0) [0|25.5] "Volts" ECU
+ SG_ Input_Current : 24|8@0+ (0.1,0) [0|25.5] "Amps" ECU
+
+BO_ 2148466689 Fan_Controller_3_Debug_20_to_Debugger: 8 Fan_Controller_3
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Debugger
+
+BO_ 2148467201 Fan_Controller_3_Ping_to_Debugger: 4 Fan_Controller_3
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2148467202 Fan_Controller_3_Ping_to_ECU: 4 Fan_Controller_3
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2148472834 Fan_Controller_3_Fan_Status_to_ECU: 4 Fan_Controller_3
+ SG_ Fan_Speed : 0|16@0+ (1,0) [0|65535] "RPM" ECU
+ SG_ Input_Voltage : 16|8@0+ (0.1,0) [0|25.5] "Volts" ECU
+ SG_ Input_Current : 24|8@0+ (0.1,0) [0|25.5] "Amps" ECU
+
+BO_ 2148532225 Fan_Controller_4_Debug_20_to_Debugger: 8 Fan_Controller_4
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Debugger
+
+BO_ 2148532737 Fan_Controller_4_Ping_to_Debugger: 4 Fan_Controller_4
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2148532738 Fan_Controller_4_Ping_to_ECU: 4 Fan_Controller_4
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2148538370 Fan_Controller_4_Fan_Status_to_ECU: 4 Fan_Controller_4
+ SG_ Fan_Speed : 0|16@0+ (1,0) [0|65535] "RPM" ECU
+ SG_ Input_Voltage : 16|8@0+ (0.1,0) [0|25.5] "Volts" ECU
+ SG_ Input_Current : 24|8@0+ (0.1,0) [0|25.5] "Amps" ECU
+
+BO_ 2148597761 Fan_Controller_5_Debug_20_to_Debugger: 8 Fan_Controller_5
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Debugger
+
+BO_ 2148598273 Fan_Controller_5_Ping_to_Debugger: 4 Fan_Controller_5
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2148598274 Fan_Controller_5_Ping_to_ECU: 4 Fan_Controller_5
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2148603906 Fan_Controller_5_Fan_Status_to_ECU: 4 Fan_Controller_5
+ SG_ Fan_Speed : 0|16@0+ (1,0) [0|65535] "RPM" ECU
+ SG_ Input_Voltage : 16|8@0+ (0.1,0) [0|25.5] "Volts" ECU
+ SG_ Input_Current : 24|8@0+ (0.1,0) [0|25.5] "Amps" ECU
+
+BO_ 2148663297 Fan_Controller_6_Debug_20_to_Debugger: 8 Fan_Controller_6
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Debugger
+
+BO_ 2148663809 Fan_Controller_6_Ping_to_Debugger: 4 Fan_Controller_6
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2148663810 Fan_Controller_6_Ping_to_ECU: 4 Fan_Controller_6
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2148669442 Fan_Controller_6_Fan_Status_to_ECU: 4 Fan_Controller_6
+ SG_ Fan_Speed : 0|16@0+ (1,0) [0|65535] "RPM" ECU
+ SG_ Input_Voltage : 16|8@0+ (0.1,0) [0|25.5] "Volts" ECU
+ SG_ Input_Current : 24|8@0+ (0.1,0) [0|25.5] "Amps" ECU
+
+BO_ 2148728833 Fan_Controller_7_Debug_20_to_Debugger: 8 Fan_Controller_7
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Debugger
+
+BO_ 2148729345 Fan_Controller_7_Ping_to_Debugger: 4 Fan_Controller_7
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2148729346 Fan_Controller_7_Ping_to_ECU: 4 Fan_Controller_7
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2148734978 Fan_Controller_7_Fan_Status_to_ECU: 4 Fan_Controller_7
+ SG_ Fan_Speed : 0|16@0+ (1,0) [0|65535] "RPM" ECU
+ SG_ Input_Voltage : 16|8@0+ (0.1,0) [0|25.5] "Volts" ECU
+ SG_ Input_Current : 24|8@0+ (0.1,0) [0|25.5] "Amps" ECU
+
+BO_ 2148794369 Fan_Controller_8_Debug_20_to_Debugger: 8 Fan_Controller_8
+ SG_ Debug : 0|64@0- (1,0) [0|0] "" Debugger
+
+BO_ 2148794881 Fan_Controller_8_Ping_to_Debugger: 4 Fan_Controller_8
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2148794882 Fan_Controller_8_Ping_to_ECU: 4 Fan_Controller_8
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2148800514 Fan_Controller_8_Fan_Status_to_ECU: 4 Fan_Controller_8
+ SG_ Fan_Speed : 0|16@0+ (1,0) [0|65535] "RPM" ECU
+ SG_ Input_Voltage : 16|8@0+ (0.1,0) [0|25.5] "Volts" ECU
+ SG_ Input_Current : 24|8@0+ (0.1,0) [0|25.5] "Amps" ECU
+
+BO_ 2148860417 SAM1_Ping_to_Debugger: 4 SAM1
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2148867586 SAM1_SAM_Brake_IR_to_ECU: 1 SAM1
+ SG_ Temp : 0|8@0+ (1,0) [0|255] "Celsius" ECU
+
+BO_ 2148925953 SAM2_Ping_to_Debugger: 4 SAM2
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2148933122 SAM2_SAM_Brake_IR_to_ECU: 1 SAM2
+ SG_ Temp : 0|8@0+ (1,0) [0|255] "Celsius" ECU
+
+BO_ 2148991489 SAM3_Ping_to_Debugger: 4 SAM3
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2148998658 SAM3_SAM_Brake_IR_to_ECU: 1 SAM3
+ SG_ Temp : 0|8@0+ (1,0) [0|255] "Celsius" ECU
+
+BO_ 2149057025 SAM4_Ping_to_Debugger: 4 SAM4
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2149064194 SAM4_SAM_Brake_IR_to_ECU: 1 SAM4
+ SG_ Temp : 0|8@0+ (1,0) [0|255] "Celsius" ECU
+
+BO_ 2149122561 SAM5_Ping_to_Debugger: 4 SAM5
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2149130495 SAM5_SAM_IMU_to_ALL: 12 SAM5
+ SG_ Accel_X : 0|16@0+ (0.01,-327.68) [-327.68|327.67] "Meters/s^2" ALL
+ SG_ Accel_Y : 16|16@0+ (0.01,-327.68) [-327.68|327.67] "Meters/s^2" ALL
+ SG_ Accel_Z : 32|16@0+ (0.01,-327.68) [-327.68|327.67] "Meters/s^2" ALL
+ SG_ Gyro_X : 48|16@0+ (0.001,-32.768) [-32.768|32.767] "Meters/s^2" ALL
+ SG_ Gyro_Y : 64|16@0+ (0.001,-32.768) [-32.768|32.767] "Meters/s^2" ALL
+ SG_ Gyro_Z : 80|16@0+ (0.001,-32.768) [-32.768|32.767] "Meters/s^2" ALL
+
+BO_ 2149132031 SAM5_SAM_TOF_to_ALL: 2 SAM5
+ SG_ Height : 0|16@0+ (0.00390625,0) [0|255] "mm" ALL
+
+BO_ 2149188097 SAM6_Ping_to_Debugger: 4 SAM6
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2149253633 SAM7_Ping_to_Debugger: 4 SAM7
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2149319169 SAM8_Ping_to_Debugger: 4 SAM8
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2149384705 SAM9_Ping_to_Debugger: 4 SAM9
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2149450241 SAM10_Ping_to_Debugger: 4 SAM10
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2149515777 SAM11_Ping_to_Debugger: 4 SAM11
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2149581313 SAM12_Ping_to_Debugger: 4 SAM12
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2149646849 SAM13_Ping_to_Debugger: 4 SAM13
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2149712385 SAM14_Ping_to_Debugger: 4 SAM14
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2149777921 SAM15_Ping_to_Debugger: 4 SAM15
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2149843457 SAM16_Ping_to_Debugger: 4 SAM16
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2149908993 SAM17_Ping_to_Debugger: 4 SAM17
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2149974529 SAM18_Ping_to_Debugger: 4 SAM18
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2150040065 SAM19_Ping_to_Debugger: 4 SAM19
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2150105601 SAM20_Ping_to_Debugger: 4 SAM20
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2150171137 LV_DC_DC_Ping_to_Debugger: 4 LV_DC_DC
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" Debugger
+
+BO_ 2150171138 LV_DC_DC_Ping_to_ECU: 4 LV_DC_DC
+ SG_ Timestamp : 0|32@0+ (1,0) [0|4,294,967,296] "ms" ECU
+
+BO_ 2150175234 LV_DC_DC_DC_DC_Status_to_ECU: 7 LV_DC_DC
+ SG_ Input_Voltage : 0|16@0+ (0.001,0) [0|65.535] "Volts" ECU
+ SG_ Output_Voltage : 16|16@0+ (0.001,0) [0|65.535] "Volts" ECU
+ SG_ Input_Current : 32|8@0+ (0.1,0) [0|25.5] "Amps" ECU
+ SG_ Output_Current : 40|8@0+ (0.1,0) [0|25.5] "Amps" ECU
+ SG_ DC_DC_Temp : 48|8@0+ (1,0) [0|255] "Celsius" ECU
+
+BO_ 2150641919 DGPS_UVW_DGPS_to_ALL: 6 DGPS
+ SG_ DGPS_U : 0|16@0- (0.01,0) [0|0] "" ALL
+ SG_ DGPS_V : 16|16@0- (0.01,0) [0|0] "" ALL
+ SG_ DGPS_W : 32|16@0- (0.01,0) [0|0] "" ALL
+
+BO_ 2150642175 DGPS_GPS_LAT_to_ALL: 8 DGPS
+ SG_ LAT : 0|64@0+ (1,0) [0|0] "" ALL
+
+BO_ 2150642431 DGPS_GPS_LON_to_ALL: 8 DGPS
+ SG_ LON : 0|64@0+ (1,0) [0|0] "" ALL
+
+BO_ 2150642687 DGPS_GPS_ALT_to_ALL: 8 DGPS
+ SG_ ALT : 0|64@0+ (1,0) [0|0] "" ALL
+
+BO_ 2150642943 DGPS_GPS_PX_to_ALL: 8 DGPS
+ SG_ Theta : 0|16@0- (0.001,0) [0|0] "" ALL
+ SG_ Acc : 16|16@0- (0.01,0) [0|0] "" ALL
+ SG_ status : 32|32@0+ (1,0) [0|0] "" ALL
+
+BO_ 2150643199 DGPS_GPS_QY_to_ALL: 8 DGPS
+ SG_ Theta : 0|16@0- (0.001,0) [0|0] "" ALL
+ SG_ Acc : 16|16@0- (0.01,0) [0|0] "" ALL
+ SG_ status : 32|32@0+ (1,0) [0|0] "" ALL
+
+BO_ 2150643455 DGPS_GPS_RZ_to_ALL: 8 DGPS
+ SG_ Theta : 0|16@0- (0.001,0) [0|0] "" ALL
+ SG_ Acc : 16|16@0- (0.01,0) [0|0] "" ALL
+ SG_ status : 32|32@0+ (1,0) [0|0] "" ALL
+
