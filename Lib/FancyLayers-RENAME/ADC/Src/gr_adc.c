@@ -27,6 +27,8 @@ ADC_TypeDef *GetADC(unsigned long adc)
 		case 5:
 			return ADC5;
 	}
+	// ERROR CASE - to fix warning
+	//return 1;
 }
 
 void ADC_Group_Init(unsigned long ADC, Pre_Scaler_Values PS_Val)
@@ -34,7 +36,7 @@ void ADC_Group_Init(unsigned long ADC, Pre_Scaler_Values PS_Val)
 	LL_ADC_CommonInitTypeDef ADC_CommonInitStruct = {0};
 	ADC_CommonInitStruct.CommonClock = PS_Val;
 	ADC_CommonInitStruct.Multimode = LL_ADC_MULTI_INDEPENDENT;
-	if (ADC > ADC_2) {
+	if (ADC > ADC2) {
 		LL_ADC_CommonInit(__LL_ADC_COMMON_INSTANCE(ADC3),
 				  &ADC_CommonInitStruct);
 	} else {
@@ -96,7 +98,7 @@ CommonClock ADC_Get_Common_Clock(ADC_Common_TypeDef *ADC_Common)
 {
 	return LL_ADC_GetCommonClock(ADC_Common);
 }
-
+//note to self: these are not valid errors; they appear in vscode but not on compile
 void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, uint32_t src_address,
 	      uint32_t dest_address, uint32_t data_size, uint32_t num_data,
 	      uint32_t ADC, DMA_Priority priority)
@@ -114,26 +116,13 @@ void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, uint32_t src_address,
 	config.PeriphOrM2MSrcDataSize = data_size; // Size of the data
 	config.MemoryOrM2MDstDataSize = data_size;
 	config.NbData = num_data; // Number of data units to transfer
-	switch (ADC) {		  // Which ADC to connect DMA to
-		case ADC1:
-			config.PeriphRequest = LL_DMAMUX_REQ_ADC1;
-			break;
+	// This if replaces a previous switch case in order to fix type errors
+	if(ADC == ADC1) {config.PeriphRequest = LL_DMAMUX_REQ_ADC1;}// This decides which ADC to connect DMA to
+	else if(ADC == ADC2) {config.PeriphRequest = LL_DMAMUX_REQ_ADC2;}
+	else if(ADC == ADC3) {config.PeriphRequest = LL_DMAMUX_REQ_ADC3;}
+	else if(ADC == ADC4) {config.PeriphRequest = LL_DMAMUX_REQ_ADC4;}
+	else if(ADC == ADC5) {config.PeriphRequest = LL_DMAMUX_REQ_ADC5;}
 
-		case ADC2:
-			config.PeriphRequest = LL_DMAMUX_REQ_ADC2;
-			break;
-
-		case ADC3:
-			config.PeriphRequest = LL_DMAMUX_REQ_ADC3;
-			break;
-
-		case ADC4:
-			config.PeriphRequest = LL_DMAMUX_REQ_ADC4;
-			break;
-
-		case ADC5:
-			config.PeriphRequest = LL_DMAMUX_REQ_ADC5;
-	}
 	config.Priority = priority;
 	LL_DMA_Init(DMA, channel, &config);
 }

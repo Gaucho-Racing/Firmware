@@ -63,7 +63,7 @@ typedef enum {
 } NumRanks;
 
 // Initialize the channel configurations of the ADC
-void ADC_Regular_Group_Init(unsigned long ADC, NumRanks ranks);
+void ADC_Regular_Group_Init(unsigned long ADC, unsigned long Sequence_Length);
 
 // How many ranks to enable
 typedef enum {
@@ -137,7 +137,7 @@ typedef enum {
 void ADC_Channel_Init(unsigned long adc, Rank rank, Channel channel,
 		      ChannelSingleDiff diff, SamplingTime time);
 
-// Struct to easily
+// Struct to easily initialize pins(?)
 typedef struct {
 	unsigned long pin;  // Bit mask of pins
 	unsigned long port; // Port
