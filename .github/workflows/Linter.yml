@@ -20,7 +20,7 @@ jobs:
             -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
             -G Ninja
             
-    - uses: ZedThree/clang-tidy-review@v0.22.0
+    - uses: ZedThree/clang-tidy-review@v0.24.0
       id: review
       with:
         build_dir: build
