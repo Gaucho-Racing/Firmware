@@ -173,9 +173,20 @@ void ADC_Set_Common_Clock(ADC_Common_TypeDef *ADC_Common,
 			  CommonClock commonClock);
 CommonClock ADC_Get_Common_Clock(ADC_Common_TypeDef *ADC_Common);
 
-void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, LL_DMA_InitTypeDef *config);
+typedef enum{
+	LOW = LL_DMA_PRIORITY_LOW,
+	MEDIUM = LL_DMA_PRIORITY_MEDIUM,
+	HIGH = LL_DMA_PRIORITY_HIGH,
+	VERYHIGH = LL_DMA_PRIORITY_VERYHIGH
+} DMA_Priority;
+
+void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, uint32_t src_address, uint32_t dest_address, 
+			  uint32_t data_size, uint32_t num_data, uint32_t ADC, DMA_Priority priority);
 
 // TODO:
 void ADC_UpdateSmooth();
+
+/* 
+*/
 
 #endif
