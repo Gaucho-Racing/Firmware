@@ -22,18 +22,10 @@ typedef enum {
 } Pre_Scaler_Values;
 
 // Resolution of the ADC in bits
-typedef enum {
-	RESOLUTION_12 = LL_ADC_RESOLUTION_12B,
-	RESOLUTION_10 = LL_ADC_RESOLUTION_10B,
-	RESOLUTION_8 = LL_ADC_RESOLUTION_8B,
-	RESOLUTION_6 = LL_ADC_RESOLUTION_6B
-} Resolution;
+typedef enum { RESOLUTION_12 = LL_ADC_RESOLUTION_12B, RESOLUTION_10 = LL_ADC_RESOLUTION_10B, RESOLUTION_8 = LL_ADC_RESOLUTION_8B, RESOLUTION_6 = LL_ADC_RESOLUTION_6B } Resolution;
 
 // Data Alignment
-typedef enum {
-	RIGHT = LL_ADC_DATA_ALIGN_RIGHT,
-	LEFT = LL_ADC_DATA_ALIGN_LEFT
-} Alignment;
+typedef enum { RIGHT = LL_ADC_DATA_ALIGN_RIGHT, LEFT = LL_ADC_DATA_ALIGN_LEFT } Alignment;
 
 // Struct to easily initialize pins(?)
 typedef struct {
@@ -125,10 +117,7 @@ __extension__ typedef enum {
 	VOPAMP6 = LL_ADC_CHANNEL_VOPAMP6,
 } Channel;
 
-typedef enum {
-	SINGLE_ENDED = LL_ADC_SINGLE_ENDED,
-	DIFFERENTIAL_ENDED = LL_ADC_DIFFERENTIAL_ENDED
-} ChannelSingleDiff;
+typedef enum { SINGLE_ENDED = LL_ADC_SINGLE_ENDED, DIFFERENTIAL_ENDED = LL_ADC_DIFFERENTIAL_ENDED } ChannelSingleDiff;
 
 typedef enum {
 	SAMPLINGTIME_2CYCLES_5 = LL_ADC_SAMPLINGTIME_2CYCLES_5,
@@ -143,8 +132,7 @@ typedef enum {
 
 // Initialize each channel TODO: combine pin initialization with channel
 // initialization
-void ADC_Channel_Init(ADC_TypeDef *adc, Rank rank, Channel channel,
-		      ChannelSingleDiff diff, SamplingTime time);
+void ADC_Channel_Init(ADC_TypeDef *adc, Rank rank, Channel channel, ChannelSingleDiff diff, SamplingTime time);
 
 /* 3 Init Function
  * 1. Initialize each group: 1&2, 3&4, 5
@@ -172,16 +160,10 @@ typedef enum {
 	ASYNC_DIV256 = LL_ADC_CLOCK_ASYNC_DIV256,
 } CommonClock;
 
-void ADC_Set_Common_Clock(ADC_Common_TypeDef *ADC_Common,
-			  CommonClock commonClock);
+void ADC_Set_Common_Clock(ADC_Common_TypeDef *ADC_Common, CommonClock commonClock);
 CommonClock ADC_Get_Common_Clock(ADC_Common_TypeDef *ADC_Common);
 
-typedef enum {
-	LOW = LL_DMA_PRIORITY_LOW,
-	MEDIUM = LL_DMA_PRIORITY_MEDIUM,
-	HIGH = LL_DMA_PRIORITY_HIGH,
-	VERYHIGH = LL_DMA_PRIORITY_VERYHIGH
-} DMA_Priority;
+typedef enum { LOW = LL_DMA_PRIORITY_LOW, MEDIUM = LL_DMA_PRIORITY_MEDIUM, HIGH = LL_DMA_PRIORITY_HIGH, VERYHIGH = LL_DMA_PRIORITY_VERYHIGH } DMA_Priority;
 
 typedef enum {
 	DMA_CHANNEL_1 = LL_DMA_CHANNEL_1,
@@ -194,9 +176,8 @@ typedef enum {
 	DMA_CHANNEL_8 = LL_DMA_CHANNEL_8
 } DMA_Channel;
 
-void DMA_Init(DMA_TypeDef *DMA, DMA_Channel channel, uint32_t src_address,
-	      uint32_t dest_address, uint32_t p_data_size, uint32_t m_data_size,
-	      uint32_t num_data, ADC_TypeDef *ADC, DMA_Priority priority);
+void DMA_Init(DMA_TypeDef *DMA, DMA_Channel channel, uint32_t src_address, uint32_t dest_address, uint32_t p_data_size, uint32_t m_data_size, uint32_t num_data, ADC_TypeDef *ADC,
+	      DMA_Priority priority);
 
 // TODO:
 // void ADC_UpdateSmooth();
