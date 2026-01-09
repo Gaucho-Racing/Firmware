@@ -33,6 +33,12 @@ typedef enum {
 	LEFT = LL_ADC_DATA_ALIGN_LEFT
 } Alignment;
 
+// Struct to easily initialize pins(?)
+typedef struct {
+	unsigned long pin;  // Bit mask of pins
+	GPIO_TypeDef *port; // Port
+} Pin_Ports;
+
 // Initializes an ADC group
 void ADC_Group_Init(unsigned long ADC, Pre_Scaler_Values PS_Val);
 
@@ -137,12 +143,6 @@ typedef enum {
 // initialization
 void ADC_Channel_Init(unsigned long adc, Rank rank, Channel channel,
 		      ChannelSingleDiff diff, SamplingTime time);
-
-// Struct to easily initialize pins(?)
-typedef struct {
-	unsigned long pin;  // Bit mask of pins
-	unsigned long port; // Port
-} Pin_Ports;
 
 /* 3 Init Function
  * 1. Initialize each group: 1&2, 3&4, 5
