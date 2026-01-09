@@ -92,7 +92,7 @@ CommonClock ADC_Get_Common_Clock(ADC_Common_TypeDef *ADC_Common)
 	return LL_ADC_GetCommonClock(ADC_Common);
 }
 // note to self: these are not valid errors; they appear in vscode but not on
-// compile
+// compile	<-- To be clear I do not have any errors anywhere at all...
 void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, uint32_t src_address,
 	      uint32_t dest_address, uint32_t p_data_size, uint32_t m_data_size,
 	      uint32_t num_data, ADC_TypeDef *ADC, DMA_Priority priority)
@@ -100,21 +100,18 @@ void DMA_Init(DMA_TypeDef *DMA, uint32_t channel, uint32_t src_address,
 	LL_DMA_InitTypeDef config = {0};
 	config.PeriphOrM2MSrcAddress = src_address;
 	config.MemoryOrM2MDstAddress = dest_address;
-	config.Direction =
-	    LL_DMA_DIRECTION_PERIPH_TO_MEMORY; // Memory from ADC to CPU memory
-	config.Mode = LL_DMA_MODE_CIRCULAR;    // Continuously transfer data
-	config.PeriphOrM2MSrcIncMode =
-	    LL_DMA_PERIPH_NOINCREMENT; // Do not increment source address
-	config.MemoryOrM2MDstIncMode =
-	    LL_DMA_MEMORY_INCREMENT; // Increment destination address
-	config.PeriphOrM2MSrcDataSize = p_data_size; // Size of the data
+	config.Direction = LL_DMA_DIRECTION_PERIPH_TO_MEMORY;
+	config.Mode = LL_DMA_MODE_CIRCULAR;
+	config.PeriphOrM2MSrcIncMode = LL_DMA_PERIPH_NOINCREMENT;
+	config.MemoryOrM2MDstIncMode = LL_DMA_MEMORY_NOINCREMENT;
+	config.PeriphOrM2MSrcDataSize = p_data_size;
 	config.MemoryOrM2MDstDataSize = m_data_size;
-	config.NbData = num_data; // Number of data units to transfer
-	// This if replaces a previous switch case in order to fix type errors
+	config.NbData = num_data;
+
+	// Select ADC DMAMUX request
 	if (ADC == ADC1) {
 		config.PeriphRequest = LL_DMAMUX_REQ_ADC1;
-	} // This decides which ADC to connect DMA to
-	else if (ADC == ADC2) {
+	} else if (ADC == ADC2) {
 		config.PeriphRequest = LL_DMAMUX_REQ_ADC2;
 	} else if (ADC == ADC3) {
 		config.PeriphRequest = LL_DMAMUX_REQ_ADC3;
