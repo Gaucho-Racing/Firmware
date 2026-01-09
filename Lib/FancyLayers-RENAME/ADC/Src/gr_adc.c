@@ -29,7 +29,7 @@ ADC_TypeDef *GetADC(unsigned long adc)
 			return ADC5;
 	}
 
-	LOGOMATIC("Invalid ADC number: %lu\n", adc);
+	LOGOMATIC("Invalid ADC number: %lu\n", adc);	// Please put these calls more often to help with debugging in non-performance areas such as during initializations
 	Error_Handler();
 	return NULL;
 }
