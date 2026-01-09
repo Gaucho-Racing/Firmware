@@ -9,7 +9,7 @@ typedef enum {
 	PS_2 = LL_ADC_CLOCK_ASYNC_DIV2,
 	PS_4 = LL_ADC_CLOCK_ASYNC_DIV4,
 	PS_6 = LL_ADC_CLOCK_ASYNC_DIV6,
-	PS_8 = LL_ADC_CLOCK_ASYNC_DIV8, 
+	PS_8 = LL_ADC_CLOCK_ASYNC_DIV8,
 	PS_10 = LL_ADC_CLOCK_ASYNC_DIV10,
 	PS_12 = LL_ADC_CLOCK_ASYNC_DIV12,
 	PS_16 = LL_ADC_CLOCK_ASYNC_DIV16,
@@ -133,7 +133,8 @@ typedef enum {
 	SAMPLINGTIME_640CYCLES_5 = LL_ADC_SAMPLINGTIME_640CYCLES_5,
 } SamplingTime;
 
-// Initialize each channel TODO: combine pin initialization with channel initialization
+// Initialize each channel TODO: combine pin initialization with channel
+// initialization
 void ADC_Channel_Init(unsigned long adc, Rank rank, Channel channel,
 		      ChannelSingleDiff diff, SamplingTime time);
 

@@ -54,7 +54,8 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void ADC_Configure(void) {
+void ADC_Configure(void)
+{
 	// Initialize which clock source to use
 	LL_RCC_SetADCClockSource(LL_RCC_ADC12_CLKSOURCE_SYSCLK);
 	/* Peripheral clock enable */
@@ -72,13 +73,17 @@ void ADC_Configure(void) {
 	p.pin = LL_GPIO_PIN_0;
 
 	ADC_Init_Pins(p); // Initialize pin
-	ADC_Channel_Init(ADC1, NO_RANKS, CHANNEL_1, SINGLE_ENDED, SAMPLINGTIME_12CYCLES_5); // Initialize the channel
-	
+	ADC_Channel_Init(ADC1, NO_RANKS, CHANNEL_1, SINGLE_ENDED,
+			 SAMPLINGTIME_12CYCLES_5); // Initialize the channel
+
 	// Initialize DMA
-	DMA_Init(DMA1, LL_DMA_CHANNEL_1, LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA), &buffer, LL_DMA_PDATAALIGN_BYTE, LL_DMA_MDATAALIGN_BYTE, 1, ADC1, LOW);
+	DMA_Init(DMA1, LL_DMA_CHANNEL_1,
+		 LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA),
+		 &buffer, LL_DMA_PDATAALIGN_BYTE, LL_DMA_MDATAALIGN_BYTE, 1,
+		 ADC1, LOW);
 
 	// Start DMA and ADC
-	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);	
+	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
 	LL_ADC_Enable(ADC1);
 	while (!LL_ADC_IsEnabled(ADC1)) {
 		// Wait
@@ -86,7 +91,6 @@ void ADC_Configure(void) {
 
 	// Start ADC Conversions
 	LL_ADC_REG_StartConversion(ADC1);
-
 }
 /* USER CODE END 0 */
 
