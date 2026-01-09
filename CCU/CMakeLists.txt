@@ -34,6 +34,7 @@ add_library(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
 target_sources(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
+		# Core
 		Core/Src/adc.c
 		Core/Src/dma.c
 		Core/Src/fdcan.c
@@ -45,6 +46,8 @@ target_sources(
 		Core/Src/sysmem.c
 		Core/Src/system_stm32g4xx.c
 		Core/Src/usart.c
+		# Application
+		Application/Src/StateData.c
 )
 
 target_link_libraries(
