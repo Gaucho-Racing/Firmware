@@ -36,6 +36,9 @@ bool CriticalError(const ECU_StateData *stateData)
 	if (stateData->ecuStatus2.ts_voltage > 600) {
 		return true;
 	}
+	if (stateData->bse_apps_violation) {
+		return true;
+	}
 	return false;
 }
 
