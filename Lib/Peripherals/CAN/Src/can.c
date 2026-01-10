@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include <assert.h>
 
-//#ifdef STM32G474xx
-
 //HAL handles
 //#ifdef USECAN1
 static FDCAN_HandleTypeDef hal_fdcan1 = {.Instance = FDCAN1}; 
@@ -210,14 +208,6 @@ CANHandle* can_init(const CANConfig *config) {
 
     return canHandle; 
 }
-void FDCAN1_IT0_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan1); }
-void FDCAN1_IT1_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan1); }
-
-void FDCAN2_IT0_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan2); }
-void FDCAN2_IT1_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan2); }
-
-void FDCAN3_IT0_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan3); }
-void FDCAN3_IT1_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan3); }
 
 inline int can_set_clk_source(uint32_t clksource) { LL_RCC_SetFDCANClockSource(clksource); }
 
@@ -320,6 +310,15 @@ static void can_tx_buffer_helper(CANHandle* handle) {
         free(msg);  // Successfully sent, free the memory
     }
 }
+
+void FDCAN1_IT0_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan1); }
+void FDCAN1_IT1_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan1); }
+
+void FDCAN2_IT0_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan2); }
+void FDCAN2_IT1_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan2); }
+
+void FDCAN3_IT0_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan3); }
+void FDCAN3_IT1_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan3); }
 
 void HAL_FDCAN_TxBufferCompleteCallback( FDCAN_HandleTypeDef * hfdcan, uint32_t BufferIndexes ) {
 
@@ -441,23 +440,14 @@ int can_stop(CANHandle * canHandle) {
 }
 
 //Valid only for STM32G474xE
-int can_msp_deinit(CANHandle* canHandle) {
+/*int can_msp_deinit(CANHandle* canHandle) {
     //MSP DeInit
-    //turn off gpio clocks
-    GPIOx_CLK_DISABLE(canHandle->rx_gpio); 
-    GPIOx_CLK_DISABLE(canHandle->tx_gpio); 
+    //turn off gpio clocks - can only turn off GPIOs if no other instances are using them
     
-    //turn off NVIC resources
-    IRQn_Type rx0it, txit; 
-    can_get_irqs(canHandle->hal_fdcanP->Instance, &rx0it, &txit);
-    HAL_NVIC_DisableIRQ(rx0it);
-    HAL_NVIC_DisableIRQ(txit); 
 
     return 0; 
-}
+}*/
 
-
-//TODO: Make this less confusing to look
 static void FDCAN_InstanceDeInit(FDCAN_HandleTypeDef* hfdcan)
 {
     // Enter INIT mode
@@ -465,6 +455,7 @@ static void FDCAN_InstanceDeInit(FDCAN_HandleTypeDef* hfdcan)
     while (!(hfdcan->Instance->CCCR & FDCAN_CCCR_INIT));
 
     // Clear filters
+    //TODO: fix magic numbers
     memset((void *) hfdcan->msgRam.StandardFilterSA, 0, 0x0070); 
     memset((void *) hfdcan->msgRam.ExtendedFilterSA, 0, 0x0050); 
 
@@ -477,8 +468,6 @@ static void FDCAN_InstanceDeInit(FDCAN_HandleTypeDef* hfdcan)
         FDCAN_IT_LIST_MISC | FDCAN_IT_LIST_BIT_LINE_ERROR | 
         FDCAN_IT_LIST_PROTOCOL_ERROR
     );
-
-    
 
     // Exit INIT mode
     hfdcan->Instance->CCCR &= ~FDCAN_CCCR_INIT;
@@ -501,7 +490,16 @@ int can_release(CANHandle * canHandle) {
     can_stop(canHandle); //try to prevent more interrupts from firing
 
     //must disable NVIC IRQs before freeing circular buffer
-    can_msp_deinit(canHandle);
+    
+    //turn off NVIC resources
+    IRQn_Type rx0it, txit; 
+    can_get_irqs(canHandle->hal_fdcanP->Instance, &rx0it, &txit);
+    HAL_NVIC_DisableIRQ(rx0it);
+    HAL_NVIC_DisableIRQ(txit); 
+
+    //need to check if other pins are using before disabling - do this after mvp
+    //GPIOx_CLK_DISABLE(canHandle->rx_gpio); 
+    //GPIOx_CLK_DISABLE(canHandle->tx_gpio); 
 
     //reset FDCANx instance and message RAM and filters, clear interrupts
     //HAL_FDCAN_DeInit(canHandle->hal_fdcanP); resets a little too hard

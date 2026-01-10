@@ -1,13 +1,24 @@
+#ifndef CAN_H
+#define CAN_H
+
+//Supported STM32 Families
+#ifdef STM32G4
+#elif defined(STM32L4)
+#elif defined(STM32U5)
+#error "Unsupported STM32 Family"
+#endif 
+
+
+
 #include "can_platform_deps.h"
 #include "circularBuffer.h"
 
 
-//Must perform a deep copy of the data
+//RX Callback must perform a deep copy of the data
+//
 typedef void (*CAN_RXCallback) (void* data, uint32_t size);
-
 typedef struct {
     //can baud rate is set by fdcan prescaler and RCC clock configurations
-
     FDCAN_GlobalTypeDef *fdcan_instance; //Base address of FDCAN peripheral in memory (FDCAN1, FDCAN2, FDCAN3 macros)
 
     FDCAN_InitTypeDef hal_fdcan_init; 
@@ -45,7 +56,6 @@ typedef struct {
     bool init; 
     bool started; 
 
-
     //error states
 } CANHandle;
 
@@ -67,19 +77,11 @@ int can_send(CANHandle*handle, FDCANTxMessage* buffer);
 int can_release(CANHandle* handle); //deinit circular buffer and turn off can peripheral and gpios
 int can_add_filter(CANHandle* handle, FDCAN_FilterTypeDef * filter);
 //alternatively use 
-//HAL_FDCAN_ConfigGlobalFilter()
+//HAL_FDCAN_ConfigGlobalFilter() //important to accept nonmatching frames into 
 //HAL_FDCAN_ConfigFilter()
 
-//doesn't need a handle, independent of any CAN instance
-int can_set_clksource(uint32_t clksource); //LL_RCC_FDCAN_CLKSOURCE_PCLK1 for STM32G474RE
+//doesn't need a handle, CAN cores share peripheral clock
+int can_set_clksource(uint32_t clksource); //ex. LL_RCC_FDCAN_CLKSOURCE_PCLK1 for STM32G474RE
 
 
-
-
-//tx callback should free memory of sending buffer
-//block until enqueued on circular buffer
-//void can_();  //enqueue onto circular 
-//remember to free all data in the circular buffer
-
-
-
+#endif //End Header Guard

@@ -11,9 +11,12 @@ int can_release(CANHandle* handle); //deinit circular buffer and turn off can pe
 int can_add_filter(CANHandle* handle, HAL_FDCAN_FilterTypeDef * filter);
 int can_add_global_filter(CANHandle* handle, HAL_FDCAN_FilterTypeDef* filter); 
 
-//alternatively instead use the HAL libraries
-//HAL_FDCAN_ConfigGlobalFilter(canHandle->hal_fdcanP, filterTypeDef)
+//alternatively instead use the HAL filter functions
+//HAL_FDCAN_ConfigGlobalFilter(canHandle->hal_fdcanP, filterTypeDef) 
 //HAL_FDCAN_ConfigFilter(ca)
+
+If no filters are set, the default behaviour is to accept all standard and extended frames into the RXFIFO0
+
 
 
 
@@ -27,7 +30,17 @@ Verify ISR safety, no race conditions, atomic read/writes
     - can_release
 - Freeing within ISRs whenever popping from CircularBuffer (yes its faster, than stack copies, but heap is getting fragmented)
 - ISRS might take too long to resolve because popping and freeing circular buffer. 
-:
+
+- HARDCODE Platform Usage Flag for compiler definitions
+- CAN.H expects #STM32G4 to be defined, 
+
+
+- RX Callback must perform deep copy of data supplied to it - could also malloc, but not safe to do inside ISRs
+-  
+
+
+-Shouldn't disable GPIOs in the MSP layers when releasing, might affect other peripherals
+
 
 IDEAS for other features:
 - abstract to different STM families besides STM32G4
@@ -38,7 +51,33 @@ IDEAS for other features:
 - TX FIFO vs Queue policy (only allow FIFOS)
 - Add support for RXFifo1
 
-lot of work:
+
+TESTING- ----------------------------------------------
+USE LOGOMATIC for return status - 
+either returns through semihosting or debug cores
+LOGOMATIC is defined platform by platform
+
+Testing framework
+- Can operate on API states and behaviours, but API should work across platforms
+- All API tests are defined in can_test.c
+- All tests are run from the top level function in can_test.c
+
+- can_test.c should initialize everything properly.
+- May have to create platform specific asserts when testing state
+- use LOGOMATIC to return errors or throw asserts
+
+- Platform testing, such as in G4PERTESTING just needs include "can_test.h" and call top level function
+in main. 
+
+Two approaches:
+Platform centric
+- In G4PERTesting, include "can_tests.h" and call the top level function in can_test.c
+- This approach is better because we can abstract the logging and debug method
+
+Library Centric Testing:
+- Test the implementation in each library. 
+
+HAL_Rewrite:
 - Alternatively, rewrite without using HAL, just use CMSIS definitions. 
 - PROS: Would look good on your Github. 
 - CONS: Wouldn't help 
