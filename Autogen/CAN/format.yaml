@@ -5121,9 +5121,6 @@ Custom CAN ID:
       - name: "Team Signal 4"
         bit_start: 32
 
-
-    
-
 GR ID:
   DTI Inverter: "0x00"
   Energy Meter: "0x00"
