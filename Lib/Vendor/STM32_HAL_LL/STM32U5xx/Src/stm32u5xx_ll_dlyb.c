@@ -61,10 +61,8 @@
  * @{
  */
 
-#if defined(HAL_SD_MODULE_ENABLED) || defined(HAL_OSPI_MODULE_ENABLED) ||      \
-    defined(HAL_XSPI_MODULE_ENABLED)
-#if defined(DLYB_SDMMC1) || defined(DLYB_SDMMC2) || defined(DLYB_OCTOSPI1) ||  \
-    defined(DLYB_OCTOSPI2)
+#if defined(HAL_SD_MODULE_ENABLED) || defined(HAL_OSPI_MODULE_ENABLED) || defined(HAL_XSPI_MODULE_ENABLED)
+#if defined(DLYB_SDMMC1) || defined(DLYB_SDMMC2) || defined(DLYB_OCTOSPI1) || defined(DLYB_OCTOSPI2)
 
 /**
   @cond 0
@@ -119,8 +117,7 @@ void LL_DLYB_SetDelay(DLYB_TypeDef *DLYBx, const LL_DLYB_CfgTypeDef *pdlyb_cfg)
 	SET_BIT(DLYBx->CR, DLYB_CR_SEN);
 
 	/* Update the UNIT and SEL field */
-	DLYBx->CFGR =
-	    (pdlyb_cfg->PhaseSel) | ((pdlyb_cfg->Units) << DLYB_CFGR_UNIT_Pos);
+	DLYBx->CFGR = (pdlyb_cfg->PhaseSel) | ((pdlyb_cfg->Units) << DLYB_CFGR_UNIT_Pos);
 
 	/* Disable the length sampling */
 	CLEAR_BIT(DLYBx->CR, DLYB_CR_SEN);
@@ -141,8 +138,7 @@ void LL_DLYB_GetDelay(const DLYB_TypeDef *DLYBx, LL_DLYB_CfgTypeDef *pdlyb_cfg)
 
 	/* Fill the DelayBlock configuration structure with SEL and UNIT value
 	 */
-	pdlyb_cfg->Units =
-	    ((DLYBx->CFGR & DLYB_CFGR_UNIT) >> DLYB_CFGR_UNIT_Pos);
+	pdlyb_cfg->Units = ((DLYBx->CFGR & DLYB_CFGR_UNIT) >> DLYB_CFGR_UNIT_Pos);
 	pdlyb_cfg->PhaseSel = (DLYBx->CFGR & DLYB_CFGR_SEL);
 }
 
@@ -154,8 +150,7 @@ void LL_DLYB_GetDelay(const DLYB_TypeDef *DLYBx, LL_DLYB_CfgTypeDef *pdlyb_cfg)
  *          - SUCCESS: there is a valid period detected and stored in pdlyb_cfg.
  *          - ERROR: there is no valid period detected.
  */
-uint32_t LL_DLYB_GetClockPeriod(DLYB_TypeDef *DLYBx,
-				LL_DLYB_CfgTypeDef *pdlyb_cfg)
+uint32_t LL_DLYB_GetClockPeriod(DLYB_TypeDef *DLYBx, LL_DLYB_CfgTypeDef *pdlyb_cfg)
 {
 	uint32_t i = 0U;
 	uint32_t nb;
@@ -186,9 +181,7 @@ uint32_t LL_DLYB_GetClockPeriod(DLYB_TypeDef *DLYBx,
 		}
 
 		if ((DLYBx->CFGR & DLYB_LNG_10_0_MASK) != 0U) {
-			if ((DLYBx->CFGR &
-			     (DLYB_CFGR_LNG_11 | DLYB_CFGR_LNG_10)) !=
-			    DLYB_LNG_11_10_MASK) {
+			if ((DLYBx->CFGR & (DLYB_CFGR_LNG_11 | DLYB_CFGR_LNG_10)) != DLYB_LNG_11_10_MASK) {
 				/* Delay line length is configured to one input
 				 * clock period*/
 				break;
@@ -234,7 +227,7 @@ uint32_t LL_DLYB_GetClockPeriod(DLYB_TypeDef *DLYBx,
  * @}
  */
 #endif /* DLYB_SDMMC1 || DLYB_SDMMC2 || DLYB_OCTOSPI1 || DLYB_OCTOSPI2 */
-#endif /* HAL_SD_MODULE_ENABLED || HAL_OSPI_MODULE_ENABLED ||                  \
+#endif /* HAL_SD_MODULE_ENABLED || HAL_OSPI_MODULE_ENABLED ||                                                                                                                                          \
 	  HAL_XSPI_MODULE_ENABLED */
 
 /**

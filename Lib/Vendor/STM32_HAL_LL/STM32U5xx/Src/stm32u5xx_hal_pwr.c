@@ -147,16 +147,14 @@
 /** @defgroup PWR_PVD_Mode_Mask PWR PVD Mode Mask
  * @{
  */
-#define PVD_RISING_EDGE                                                        \
-	(0x01U) /*!< Mask for rising edge set as PVD trigger                   \
-		 */
-#define PVD_FALLING_EDGE                                                       \
-	(0x02U) /*!< Mask for falling edge set as PVD trigger */
-#define PVD_MODE_IT                                                            \
-	(0x04U) /*!< Mask for interruption yielded by PVD threshold crossing   \
-		 */
-#define PVD_MODE_EVT                                                           \
-	(0x08U) /*!< Mask for event yielded by PVD threshold crossing */
+#define PVD_RISING_EDGE                                                                                                                                                                                \
+	(0x01U)			 /*!< Mask for rising edge set as PVD trigger                                                                                                                          \
+				  */
+#define PVD_FALLING_EDGE (0x02U) /*!< Mask for falling edge set as PVD trigger */
+#define PVD_MODE_IT                                                                                                                                                                                    \
+	(0x04U)		     /*!< Mask for interruption yielded by PVD threshold crossing                                                                                                              \
+			      */
+#define PVD_MODE_EVT (0x08U) /*!< Mask for event yielded by PVD threshold crossing */
 /**
  * @}
  */
@@ -468,13 +466,10 @@ void HAL_PWR_EnableWakeUpPin(uint32_t WakeUpPin)
 
 	/* Specifies the wake up line polarity for the event detection (rising
 	 * or falling edge) */
-	MODIFY_REG(PWR->WUCR2, (PWR_EWUP_MASK & WakeUpPin),
-		   (WakeUpPin >> PWR_WUP_POLARITY_SHIFT));
+	MODIFY_REG(PWR->WUCR2, (PWR_EWUP_MASK & WakeUpPin), (WakeUpPin >> PWR_WUP_POLARITY_SHIFT));
 
 	/* Specifies the wake up line I/O selection */
-	MODIFY_REG(PWR->WUCR3,
-		   (3UL << (POSITION_VAL(PWR_EWUP_MASK & WakeUpPin) * 2U)),
-		   (WakeUpPin >> PWR_WUP_SELECT_SIGNAL_SHIFT));
+	MODIFY_REG(PWR->WUCR3, (3UL << (POSITION_VAL(PWR_EWUP_MASK & WakeUpPin) * 2U)), (WakeUpPin >> PWR_WUP_SELECT_SIGNAL_SHIFT));
 
 	/* Enable wake-up line */
 	SET_BIT(PWR->WUCR1, (PWR_EWUP_MASK & WakeUpPin));
@@ -841,8 +836,7 @@ void HAL_PWR_ConfigAttributes(uint32_t Item, uint32_t Attributes)
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 	/* Secure item management (TZEN = 1) */
-	if ((Attributes & PWR_ITEM_ATTR_SEC_PRIV_MASK) ==
-	    PWR_ITEM_ATTR_SEC_PRIV_MASK) {
+	if ((Attributes & PWR_ITEM_ATTR_SEC_PRIV_MASK) == PWR_ITEM_ATTR_SEC_PRIV_MASK) {
 		/* Privilege item management */
 		if ((Attributes & PWR_SEC_PRIV) == PWR_SEC_PRIV) {
 			SET_BIT(PWR->SECCFGR, Item);
@@ -868,8 +862,7 @@ void HAL_PWR_ConfigAttributes(uint32_t Item, uint32_t Attributes)
 	UNUSED(Item);
 
 	/* NSecure item management (TZEN = 0) */
-	if ((Attributes & PWR_ITEM_ATTR_NSEC_PRIV_MASK) ==
-	    PWR_ITEM_ATTR_NSEC_PRIV_MASK) {
+	if ((Attributes & PWR_ITEM_ATTR_NSEC_PRIV_MASK) == PWR_ITEM_ATTR_NSEC_PRIV_MASK) {
 		/* Privilege item management */
 		if ((Attributes & PWR_NSEC_PRIV) == PWR_NSEC_PRIV) {
 			SET_BIT(PWR->PRIVCFGR, PWR_PRIVCFGR_NSPRIV);
@@ -888,8 +881,7 @@ void HAL_PWR_ConfigAttributes(uint32_t Item, uint32_t Attributes)
  *                       Returned value could be one of @ref PWR_Attributes.
  * @retval HAL Status.
  */
-HAL_StatusTypeDef HAL_PWR_GetConfigAttributes(uint32_t Item,
-					      uint32_t *pAttributes)
+HAL_StatusTypeDef HAL_PWR_GetConfigAttributes(uint32_t Item, uint32_t *pAttributes)
 {
 	uint32_t attributes;
 
@@ -905,22 +897,16 @@ HAL_StatusTypeDef HAL_PWR_GetConfigAttributes(uint32_t Item,
 	/* Check item security */
 	if ((PWR->SECCFGR & Item) == Item) {
 		/* Get Secure privileges attribute */
-		attributes = ((PWR->PRIVCFGR & PWR_PRIVCFGR_SPRIV) == 0U)
-				 ? PWR_SEC_NPRIV
-				 : PWR_SEC_PRIV;
+		attributes = ((PWR->PRIVCFGR & PWR_PRIVCFGR_SPRIV) == 0U) ? PWR_SEC_NPRIV : PWR_SEC_PRIV;
 	} else {
 		/* Get Non-Secure privileges attribute */
-		attributes = ((PWR->PRIVCFGR & PWR_PRIVCFGR_NSPRIV) == 0U)
-				 ? PWR_NSEC_NPRIV
-				 : PWR_NSEC_PRIV;
+		attributes = ((PWR->PRIVCFGR & PWR_PRIVCFGR_NSPRIV) == 0U) ? PWR_NSEC_NPRIV : PWR_NSEC_PRIV;
 	}
 #else
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(Item);
 	/* Get Non-Secure privileges attribute */
-	attributes = ((PWR->PRIVCFGR & PWR_PRIVCFGR_NSPRIV) == 0U)
-			 ? PWR_NSEC_NPRIV
-			 : PWR_NSEC_PRIV;
+	attributes = ((PWR->PRIVCFGR & PWR_PRIVCFGR_NSPRIV) == 0U) ? PWR_NSEC_NPRIV : PWR_NSEC_PRIV;
 #endif /* __ARM_FEATURE_CMSE */
 
 	/* return value */

@@ -107,13 +107,7 @@
 /**
  * @brief  Variable used for Program/Erase sectors under interruption
  */
-FLASH_ProcessTypeDef pFlash = {.Lock = HAL_UNLOCKED,
-			       .ErrorCode = HAL_FLASH_ERROR_NONE,
-			       .ProcedureOnGoing = 0U,
-			       .Address = 0U,
-			       .Bank = FLASH_BANK_1,
-			       .Page = 0U,
-			       .NbPagesToErase = 0U};
+FLASH_ProcessTypeDef pFlash = {.Lock = HAL_UNLOCKED, .ErrorCode = HAL_FLASH_ERROR_NONE, .ProcedureOnGoing = 0U, .Address = 0U, .Bank = FLASH_BANK_1, .Page = 0U, .NbPagesToErase = 0U};
 /**
  * @}
  */
@@ -160,8 +154,7 @@ static void FLASH_Program_Burst(uint32_t Address, uint32_t DataAddress);
  *
  * @retval HAL Status
  */
-HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address,
-				    uint32_t DataAddress)
+HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address, uint32_t DataAddress)
 {
 	HAL_StatusTypeDef status;
 	__IO uint32_t *reg_cr;
@@ -183,11 +176,9 @@ HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address,
 		pFlash.ProcedureOnGoing = TypeProgram;
 
 		/* Access to SECCR or NSCR depends on operation type */
-		reg_cr = IS_FLASH_SECURE_OPERATION() ? &(FLASH->SECCR)
-						     : &(FLASH_NS->NSCR);
+		reg_cr = IS_FLASH_SECURE_OPERATION() ? &(FLASH->SECCR) : &(FLASH_NS->NSCR);
 
-		if ((TypeProgram & (~FLASH_NON_SECURE_MASK)) ==
-		    FLASH_TYPEPROGRAM_QUADWORD) {
+		if ((TypeProgram & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEPROGRAM_QUADWORD) {
 			/* Program a quad-word (128-bit) at a specified address
 			 */
 			FLASH_Program_QuadWord(Address, DataAddress);
@@ -224,8 +215,7 @@ HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address,
  *
  * @retval HAL Status
  */
-HAL_StatusTypeDef HAL_FLASH_Program_IT(uint32_t TypeProgram, uint32_t Address,
-				       uint32_t DataAddress)
+HAL_StatusTypeDef HAL_FLASH_Program_IT(uint32_t TypeProgram, uint32_t Address, uint32_t DataAddress)
 {
 	HAL_StatusTypeDef status;
 	__IO uint32_t *reg_cr;
@@ -251,14 +241,12 @@ HAL_StatusTypeDef HAL_FLASH_Program_IT(uint32_t TypeProgram, uint32_t Address,
 		pFlash.Address = Address;
 
 		/* Access to SECCR or NSCR depends on operation type */
-		reg_cr = IS_FLASH_SECURE_OPERATION() ? &(FLASH->SECCR)
-						     : &(FLASH_NS->NSCR);
+		reg_cr = IS_FLASH_SECURE_OPERATION() ? &(FLASH->SECCR) : &(FLASH_NS->NSCR);
 
 		/* Enable End of Operation and Error interrupts */
 		(*reg_cr) |= (FLASH_IT_EOP | FLASH_IT_OPERR);
 
-		if ((TypeProgram & (~FLASH_NON_SECURE_MASK)) ==
-		    FLASH_TYPEPROGRAM_QUADWORD) {
+		if ((TypeProgram & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEPROGRAM_QUADWORD) {
 			/* Program a quad-word (128-bit) at a specified address
 			 */
 			FLASH_Program_QuadWord(Address, DataAddress);
@@ -284,10 +272,8 @@ void HAL_FLASH_IRQHandler(void)
 	__IO uint32_t *reg_sr;
 
 	/* Access to CR and SR registers depends on operation type */
-	reg_cr =
-	    IS_FLASH_SECURE_OPERATION() ? &(FLASH->SECCR) : &(FLASH_NS->NSCR);
-	reg_sr =
-	    IS_FLASH_SECURE_OPERATION() ? &(FLASH->SECSR) : &(FLASH_NS->NSSR);
+	reg_cr = IS_FLASH_SECURE_OPERATION() ? &(FLASH->SECCR) : &(FLASH_NS->NSCR);
+	reg_sr = IS_FLASH_SECURE_OPERATION() ? &(FLASH->SECSR) : &(FLASH_NS->NSSR);
 
 	/* Save Flash errors */
 	error = (*reg_sr) & FLASH_FLAG_SR_ERRORS;
@@ -296,25 +282,20 @@ void HAL_FLASH_IRQHandler(void)
 #endif /* __ARM_FEATURE_CMSE */
 
 	/* Set parameter of the callback */
-	if ((pFlash.ProcedureOnGoing & (~FLASH_NON_SECURE_MASK)) ==
-	    FLASH_TYPEERASE_PAGES) {
+	if ((pFlash.ProcedureOnGoing & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEERASE_PAGES) {
 		param = pFlash.Page;
-	} else if ((pFlash.ProcedureOnGoing & (~FLASH_NON_SECURE_MASK)) ==
-		   FLASH_TYPEERASE_MASSERASE) {
+	} else if ((pFlash.ProcedureOnGoing & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEERASE_MASSERASE) {
 		param = pFlash.Bank;
-	} else if ((pFlash.ProcedureOnGoing & (~FLASH_NON_SECURE_MASK)) ==
-		   FLASH_TYPEPROGRAM_QUADWORD) {
+	} else if ((pFlash.ProcedureOnGoing & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEPROGRAM_QUADWORD) {
 		param = pFlash.Address;
-	} else if ((pFlash.ProcedureOnGoing & (~FLASH_NON_SECURE_MASK)) ==
-		   FLASH_TYPEPROGRAM_BURST) {
+	} else if ((pFlash.ProcedureOnGoing & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEPROGRAM_BURST) {
 		param = pFlash.Address;
 	} else {
 		/* Empty statement (to be compliant MISRA 15.7) */
 	}
 
 	/* Clear operation bit on the on-going procedure */
-	CLEAR_BIT((*reg_cr),
-		  (pFlash.ProcedureOnGoing & ~(FLASH_NON_SECURE_MASK)));
+	CLEAR_BIT((*reg_cr), (pFlash.ProcedureOnGoing & ~(FLASH_NON_SECURE_MASK)));
 
 	/* Check FLASH operation error flags */
 	if (error != 0U) {
@@ -341,8 +322,7 @@ void HAL_FLASH_IRQHandler(void)
 		/* Clear FLASH End of Operation pending bit */
 		(*reg_sr) = FLASH_FLAG_EOP;
 
-		if ((pFlash.ProcedureOnGoing & (~FLASH_NON_SECURE_MASK)) ==
-		    FLASH_TYPEERASE_PAGES) {
+		if ((pFlash.ProcedureOnGoing & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEERASE_PAGES) {
 			/* Nb of pages to erase can be decreased */
 			pFlash.NbPagesToErase--;
 
@@ -613,13 +593,11 @@ HAL_StatusTypeDef FLASH_WaitForLastOperation(uint32_t Timeout)
 	__IO uint32_t *reg_sr;
 
 	/* Access to SECSR or NSSR registers depends on operation type */
-	reg_sr =
-	    IS_FLASH_SECURE_OPERATION() ? &(FLASH->SECSR) : &(FLASH_NS->NSSR);
+	reg_sr = IS_FLASH_SECURE_OPERATION() ? &(FLASH->SECSR) : &(FLASH_NS->NSSR);
 
 	while (((*reg_sr) & (FLASH_FLAG_BSY | FLASH_FLAG_WDW)) != 0U) {
 		if (Timeout != HAL_MAX_DELAY) {
-			if (((HAL_GetTick() - tickstart) >= Timeout) ||
-			    (Timeout == 0U)) {
+			if (((HAL_GetTick() - tickstart) >= Timeout) || (Timeout == 0U)) {
 				return HAL_TIMEOUT;
 			}
 		}
@@ -674,8 +652,7 @@ static void FLASH_Program_QuadWord(uint32_t Address, uint32_t DataAddress)
 	assert_param(IS_FLASH_PROGRAM_ADDRESS(Address));
 
 	/* Access to SECCR or NSCR registers depends on operation type */
-	reg_cr =
-	    IS_FLASH_SECURE_OPERATION() ? &(FLASH->SECCR) : &(FLASH_NS->NSCR);
+	reg_cr = IS_FLASH_SECURE_OPERATION() ? &(FLASH->SECCR) : &(FLASH_NS->NSCR);
 
 	/* Set PG bit */
 	SET_BIT((*reg_cr), FLASH_NSCR_PG);
@@ -715,8 +692,7 @@ static void FLASH_Program_Burst(uint32_t Address, uint32_t DataAddress)
 	assert_param(IS_FLASH_MAIN_MEM_ADDRESS(Address));
 
 	/* Access to SECCR or NSCR registers depends on operation type */
-	reg_cr =
-	    IS_FLASH_SECURE_OPERATION() ? &(FLASH->SECCR) : &(FLASH_NS->NSCR);
+	reg_cr = IS_FLASH_SECURE_OPERATION() ? &(FLASH->SECCR) : &(FLASH_NS->NSCR);
 
 	/* Set PG and BWR bits */
 	SET_BIT((*reg_cr), (FLASH_NSCR_PG | FLASH_NSCR_BWR));

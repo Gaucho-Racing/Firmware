@@ -44,18 +44,17 @@ extern "C" {
  * @brief USART Init Structure definition
  */
 typedef struct {
-	uint32_t
-	    BaudRate; /*!< This member configures the Usart communication baud
-			 rate. The baud rate is computed using the following
-			 formula: Baud Rate Register[15:4] = ((2 * fclk_pres) /
-			      ((huart->Init.BaudRate)))[15:4]
-			      Baud Rate Register[3]    = 0
-			      Baud Rate Register[2:0]  =  (((2 * fclk_pres) /
-			      ((huart->Init.BaudRate)))[3:0]) >> 1
-			      where fclk_pres is the USART input clock frequency
-			 (fclk) divided by a prescaler.
-			   @note  Oversampling by 8 is systematically applied to
-				  achieve high baud rates. */
+	uint32_t BaudRate; /*!< This member configures the Usart communication baud
+			      rate. The baud rate is computed using the following
+			      formula: Baud Rate Register[15:4] = ((2 * fclk_pres) /
+				   ((huart->Init.BaudRate)))[15:4]
+				   Baud Rate Register[3]    = 0
+				   Baud Rate Register[2:0]  =  (((2 * fclk_pres) /
+				   ((huart->Init.BaudRate)))[3:0]) >> 1
+				   where fclk_pres is the USART input clock frequency
+			      (fclk) divided by a prescaler.
+				@note  Oversampling by 8 is systematically applied to
+				       achieve high baud rates. */
 
 	uint32_t WordLength; /*!< Specifies the number of data bits transmitted
 				or received in a frame. This parameter can be a
@@ -65,13 +64,12 @@ typedef struct {
 				This parameter can be a value of @ref
 			      USART_Stop_Bits. */
 
-	uint32_t
-	    Parity; /*!< Specifies the parity mode.
-			  This parameter can be a value of @ref USART_Parity
-			  @note When parity is enabled, the computed parity is
-		       inserted at the MSB position of the transmitted data (9th
-		       bit when the word length is set to 9 data bits; 8th bit
-		       when the word length is set to 8 data bits). */
+	uint32_t Parity; /*!< Specifies the parity mode.
+			       This parameter can be a value of @ref USART_Parity
+			       @note When parity is enabled, the computed parity is
+			    inserted at the MSB position of the transmitted data (9th
+			    bit when the word length is set to 9 data bits; 8th bit
+			    when the word length is set to 8 data bits). */
 
 	uint32_t Mode; /*!< Specifies whether the Receive or Transmit mode is
 			  enabled or disabled. This parameter can be a value of
@@ -85,34 +83,28 @@ typedef struct {
 			      capture is made. This parameter can be a value of
 			      @ref USART_Clock_Phase. */
 
-	uint32_t
-	    CLKLastBit; /*!< Specifies whether the clock pulse corresponding to
-			   the last transmitted data bit (MSB) has to be output
-			   on the SCLK pin in synchronous mode. This parameter
-			   can be a value of @ref USART_Last_Bit. */
+	uint32_t CLKLastBit; /*!< Specifies whether the clock pulse corresponding to
+				the last transmitted data bit (MSB) has to be output
+				on the SCLK pin in synchronous mode. This parameter
+				can be a value of @ref USART_Last_Bit. */
 
-	uint32_t
-	    ClockPrescaler; /*!< Specifies the prescaler value used to divide
-			       the USART clock source. This parameter can be a
-			       value of @ref USART_ClockPrescaler. */
+	uint32_t ClockPrescaler; /*!< Specifies the prescaler value used to divide
+				    the USART clock source. This parameter can be a
+				    value of @ref USART_ClockPrescaler. */
 } USART_InitTypeDef;
 
 /**
  * @brief HAL USART State structures definition
  */
 typedef enum {
-	HAL_USART_STATE_RESET = 0x00U, /*!< Peripheral is not initialized */
-	HAL_USART_STATE_READY =
-	    0x01U, /*!< Peripheral Initialized and ready for use       */
-	HAL_USART_STATE_BUSY = 0x02U, /*!< an internal process is ongoing */
-	HAL_USART_STATE_BUSY_TX =
-	    0x12U, /*!< Data Transmission process is ongoing           */
-	HAL_USART_STATE_BUSY_RX =
-	    0x22U, /*!< Data Reception process is ongoing              */
-	HAL_USART_STATE_BUSY_TX_RX =
-	    0x32U, /*!< Data Transmission Reception process is ongoing */
-	HAL_USART_STATE_TIMEOUT = 0x03U, /*!< Timeout state */
-	HAL_USART_STATE_ERROR = 0x04U	 /*!< Error    */
+	HAL_USART_STATE_RESET = 0x00U,	    /*!< Peripheral is not initialized */
+	HAL_USART_STATE_READY = 0x01U,	    /*!< Peripheral Initialized and ready for use       */
+	HAL_USART_STATE_BUSY = 0x02U,	    /*!< an internal process is ongoing */
+	HAL_USART_STATE_BUSY_TX = 0x12U,    /*!< Data Transmission process is ongoing           */
+	HAL_USART_STATE_BUSY_RX = 0x22U,    /*!< Data Reception process is ongoing              */
+	HAL_USART_STATE_BUSY_TX_RX = 0x32U, /*!< Data Transmission Reception process is ongoing */
+	HAL_USART_STATE_TIMEOUT = 0x03U,    /*!< Timeout state */
+	HAL_USART_STATE_ERROR = 0x04U	    /*!< Error    */
 } HAL_USART_StateTypeDef;
 
 /**
@@ -155,19 +147,15 @@ typedef struct __USART_HandleTypeDef {
 	uint16_t NbTxDataToProcess; /*!< Number of data to process during TX ISR
 				       execution */
 
-	uint32_t
-	    SlaveMode; /*!< Enable/Disable USART SPI Slave Mode. This parameter
-			  can be a value of @ref USARTEx_Slave_Mode */
+	uint32_t SlaveMode; /*!< Enable/Disable USART SPI Slave Mode. This parameter
+			       can be a value of @ref USARTEx_Slave_Mode */
 
-	uint32_t
-	    FifoMode; /*!< Specifies if the FIFO mode will be used. This
-			 parameter can be a value of @ref USARTEx_FIFO_mode. */
+	uint32_t FifoMode; /*!< Specifies if the FIFO mode will be used. This
+			      parameter can be a value of @ref USARTEx_FIFO_mode. */
 
-	void (*RxISR)(struct __USART_HandleTypeDef
-			  *husart); /*!< Function pointer on Rx IRQ handler  */
+	void (*RxISR)(struct __USART_HandleTypeDef *husart); /*!< Function pointer on Rx IRQ handler  */
 
-	void (*TxISR)(struct __USART_HandleTypeDef
-			  *husart); /*!< Function pointer on Tx IRQ handler  */
+	void (*TxISR)(struct __USART_HandleTypeDef *husart); /*!< Function pointer on Tx IRQ handler  */
 
 #if defined(HAL_DMA_MODULE_ENABLED)
 	DMA_HandleTypeDef *hdmatx; /*!< USART Tx DMA Handle parameters      */
@@ -182,36 +170,19 @@ typedef struct __USART_HandleTypeDef {
 	__IO uint32_t ErrorCode; /*!< USART Error code                    */
 
 #if (USE_HAL_USART_REGISTER_CALLBACKS == 1)
-	void (*TxHalfCpltCallback)(
-	    struct __USART_HandleTypeDef
-		*husart); /*!< USART Tx Half Complete Callback        */
-	void (*TxCpltCallback)(struct __USART_HandleTypeDef
-				   *husart); /*!< USART Tx Complete Callback */
-	void (*RxHalfCpltCallback)(
-	    struct __USART_HandleTypeDef
-		*husart); /*!< USART Rx Half Complete Callback        */
-	void (*RxCpltCallback)(struct __USART_HandleTypeDef
-				   *husart); /*!< USART Rx Complete Callback */
-	void (*TxRxCpltCallback)(
-	    struct __USART_HandleTypeDef
-		*husart); /*!< USART Tx Rx Complete Callback          */
-	void (*ErrorCallback)(
-	    struct __USART_HandleTypeDef *husart); /*!< USART Error Callback */
-	void (*AbortCpltCallback)(
-	    struct __USART_HandleTypeDef
-		*husart); /*!< USART Abort Complete Callback          */
-	void (*RxFifoFullCallback)(
-	    struct __USART_HandleTypeDef
-		*husart); /*!< USART Rx Fifo Full Callback            */
-	void (*TxFifoEmptyCallback)(
-	    struct __USART_HandleTypeDef
-		*husart); /*!< USART Tx Fifo Empty Callback           */
+	void (*TxHalfCpltCallback)(struct __USART_HandleTypeDef *husart);  /*!< USART Tx Half Complete Callback        */
+	void (*TxCpltCallback)(struct __USART_HandleTypeDef *husart);	   /*!< USART Tx Complete Callback */
+	void (*RxHalfCpltCallback)(struct __USART_HandleTypeDef *husart);  /*!< USART Rx Half Complete Callback        */
+	void (*RxCpltCallback)(struct __USART_HandleTypeDef *husart);	   /*!< USART Rx Complete Callback */
+	void (*TxRxCpltCallback)(struct __USART_HandleTypeDef *husart);	   /*!< USART Tx Rx Complete Callback          */
+	void (*ErrorCallback)(struct __USART_HandleTypeDef *husart);	   /*!< USART Error Callback */
+	void (*AbortCpltCallback)(struct __USART_HandleTypeDef *husart);   /*!< USART Abort Complete Callback          */
+	void (*RxFifoFullCallback)(struct __USART_HandleTypeDef *husart);  /*!< USART Rx Fifo Full Callback            */
+	void (*TxFifoEmptyCallback)(struct __USART_HandleTypeDef *husart); /*!< USART Tx Fifo Empty Callback */
 
-	void (*MspInitCallback)(struct __USART_HandleTypeDef
-				    *husart); /*!< USART Msp Init callback */
-	void (*MspDeInitCallback)(struct __USART_HandleTypeDef *
-				      husart); /*!< USART Msp DeInit callback */
-#endif /* USE_HAL_USART_REGISTER_CALLBACKS */
+	void (*MspInitCallback)(struct __USART_HandleTypeDef *husart);	 /*!< USART Msp Init callback */
+	void (*MspDeInitCallback)(struct __USART_HandleTypeDef *husart); /*!< USART Msp DeInit callback */
+#endif									 /* USE_HAL_USART_REGISTER_CALLBACKS */
 
 } USART_HandleTypeDef;
 
@@ -220,23 +191,15 @@ typedef struct __USART_HandleTypeDef {
  * @brief  HAL USART Callback ID enumeration definition
  */
 typedef enum {
-	HAL_USART_TX_HALFCOMPLETE_CB_ID =
-	    0x00U, /*!< USART Tx Half Complete Callback ID        */
-	HAL_USART_TX_COMPLETE_CB_ID =
-	    0x01U, /*!< USART Tx Complete Callback ID             */
-	HAL_USART_RX_HALFCOMPLETE_CB_ID =
-	    0x02U, /*!< USART Rx Half Complete Callback ID        */
-	HAL_USART_RX_COMPLETE_CB_ID =
-	    0x03U, /*!< USART Rx Complete Callback ID             */
-	HAL_USART_TX_RX_COMPLETE_CB_ID =
-	    0x04U, /*!< USART Tx Rx Complete Callback ID          */
-	HAL_USART_ERROR_CB_ID = 0x05U, /*!< USART Error Callback ID */
-	HAL_USART_ABORT_COMPLETE_CB_ID =
-	    0x06U, /*!< USART Abort Complete Callback ID          */
-	HAL_USART_RX_FIFO_FULL_CB_ID =
-	    0x07U, /*!< USART Rx Fifo Full Callback ID            */
-	HAL_USART_TX_FIFO_EMPTY_CB_ID =
-	    0x08U, /*!< USART Tx Fifo Empty Callback ID           */
+	HAL_USART_TX_HALFCOMPLETE_CB_ID = 0x00U, /*!< USART Tx Half Complete Callback ID        */
+	HAL_USART_TX_COMPLETE_CB_ID = 0x01U,	 /*!< USART Tx Complete Callback ID             */
+	HAL_USART_RX_HALFCOMPLETE_CB_ID = 0x02U, /*!< USART Rx Half Complete Callback ID        */
+	HAL_USART_RX_COMPLETE_CB_ID = 0x03U,	 /*!< USART Rx Complete Callback ID             */
+	HAL_USART_TX_RX_COMPLETE_CB_ID = 0x04U,	 /*!< USART Tx Rx Complete Callback ID          */
+	HAL_USART_ERROR_CB_ID = 0x05U,		 /*!< USART Error Callback ID */
+	HAL_USART_ABORT_COMPLETE_CB_ID = 0x06U,	 /*!< USART Abort Complete Callback ID          */
+	HAL_USART_RX_FIFO_FULL_CB_ID = 0x07U,	 /*!< USART Rx Fifo Full Callback ID            */
+	HAL_USART_TX_FIFO_EMPTY_CB_ID = 0x08U,	 /*!< USART Tx Fifo Empty Callback ID           */
 
 	HAL_USART_MSPINIT_CB_ID = 0x09U,  /*!< USART MspInit callback ID  */
 	HAL_USART_MSPDEINIT_CB_ID = 0x0AU /*!< USART MspDeInit callback ID */
@@ -246,8 +209,7 @@ typedef enum {
 /**
  * @brief  HAL USART Callback pointer definition
  */
-typedef void (*pUSART_CallbackTypeDef)(
-    USART_HandleTypeDef *husart); /*!< pointer to an USART callback function */
+typedef void (*pUSART_CallbackTypeDef)(USART_HandleTypeDef *husart); /*!< pointer to an USART callback function */
 
 #endif /* USE_HAL_USART_REGISTER_CALLBACKS */
 
@@ -273,10 +235,9 @@ typedef void (*pUSART_CallbackTypeDef)(
 #endif					  /* HAL_DMA_MODULE_ENABLED */
 #define HAL_USART_ERROR_UDR (0x00000020U) /*!< SPI slave underrun error  */
 #if (USE_HAL_USART_REGISTER_CALLBACKS == 1)
-#define HAL_USART_ERROR_INVALID_CALLBACK                                       \
-	(0x00000040U)			  /*!< Invalid Callback error    */
-#endif					  /* USE_HAL_USART_REGISTER_CALLBACKS */
-#define HAL_USART_ERROR_RTO (0x00000080U) /*!< Receiver Timeout error  */
+#define HAL_USART_ERROR_INVALID_CALLBACK (0x00000040U) /*!< Invalid Callback error    */
+#endif						       /* USE_HAL_USART_REGISTER_CALLBACKS */
+#define HAL_USART_ERROR_RTO (0x00000080U)	       /*!< Receiver Timeout error  */
 /**
  * @}
  */
@@ -284,13 +245,10 @@ typedef void (*pUSART_CallbackTypeDef)(
 /** @defgroup USART_Stop_Bits  USART Number of Stop Bits
  * @{
  */
-#define USART_STOPBITS_0_5                                                     \
-	USART_CR2_STOP_0	     /*!< USART frame with 0.5 stop bit  */
-#define USART_STOPBITS_1 0x00000000U /*!< USART frame with 1 stop bit    */
-#define USART_STOPBITS_1_5                                                     \
-	(USART_CR2_STOP_0 |                                                    \
-	 USART_CR2_STOP_1)		  /*!< USART frame with 1.5 stop bits */
-#define USART_STOPBITS_2 USART_CR2_STOP_1 /*!< USART frame with 2 stop bits */
+#define USART_STOPBITS_0_5 USART_CR2_STOP_0			 /*!< USART frame with 0.5 stop bit  */
+#define USART_STOPBITS_1 0x00000000U				 /*!< USART frame with 1 stop bit    */
+#define USART_STOPBITS_1_5 (USART_CR2_STOP_0 | USART_CR2_STOP_1) /*!< USART frame with 1.5 stop bits */
+#define USART_STOPBITS_2 USART_CR2_STOP_1			 /*!< USART frame with 2 stop bits */
 /**
  * @}
  */
@@ -327,10 +285,8 @@ typedef void (*pUSART_CallbackTypeDef)(
 /** @defgroup USART_Clock_Polarity  USART Clock Polarity
  * @{
  */
-#define USART_POLARITY_LOW                                                     \
-	0x00000000U /*!< Driver enable signal is active high */
-#define USART_POLARITY_HIGH                                                    \
-	USART_CR2_CPOL /*!< Driver enable signal is active low  */
+#define USART_POLARITY_LOW 0x00000000U	   /*!< Driver enable signal is active high */
+#define USART_POLARITY_HIGH USART_CR2_CPOL /*!< Driver enable signal is active low  */
 /**
  * @}
  */
@@ -338,10 +294,8 @@ typedef void (*pUSART_CallbackTypeDef)(
 /** @defgroup USART_Clock_Phase   USART Clock Phase
  * @{
  */
-#define USART_PHASE_1EDGE                                                      \
-	0x00000000U /*!< USART frame phase on first clock transition  */
-#define USART_PHASE_2EDGE                                                      \
-	USART_CR2_CPHA /*!< USART frame phase on second clock transition */
+#define USART_PHASE_1EDGE 0x00000000U	 /*!< USART frame phase on first clock transition  */
+#define USART_PHASE_2EDGE USART_CR2_CPHA /*!< USART frame phase on second clock transition */
 /**
  * @}
  */
@@ -349,11 +303,11 @@ typedef void (*pUSART_CallbackTypeDef)(
 /** @defgroup USART_Last_Bit  USART Last Bit
  * @{
  */
-#define USART_LASTBIT_DISABLE                                                  \
-	0x00000000U /*!< USART frame last data bit clock pulse not output to   \
+#define USART_LASTBIT_DISABLE                                                                                                                                                                          \
+	0x00000000U /*!< USART frame last data bit clock pulse not output to                                                                                                                           \
 		       SCLK pin */
-#define USART_LASTBIT_ENABLE                                                   \
-	USART_CR2_LBCL /*!< USART frame last data bit clock pulse output to    \
+#define USART_LASTBIT_ENABLE                                                                                                                                                                           \
+	USART_CR2_LBCL /*!< USART frame last data bit clock pulse output to                                                                                                                            \
 			  SCLK pin     */
 /**
  * @}
@@ -382,10 +336,8 @@ typedef void (*pUSART_CallbackTypeDef)(
 /** @defgroup USART_Request_Parameters  USART Request Parameters
  * @{
  */
-#define USART_RXDATA_FLUSH_REQUEST                                             \
-	USART_RQR_RXFRQ /*!< Receive Data flush Request  */
-#define USART_TXDATA_FLUSH_REQUEST                                             \
-	USART_RQR_TXFRQ /*!< Transmit data flush Request */
+#define USART_RXDATA_FLUSH_REQUEST USART_RQR_RXFRQ /*!< Receive Data flush Request  */
+#define USART_TXDATA_FLUSH_REQUEST USART_RQR_TXFRQ /*!< Transmit data flush Request */
 /**
  * @}
  */
@@ -395,43 +347,25 @@ typedef void (*pUSART_CallbackTypeDef)(
  *           - 0xXXXX  : Flag mask in the ISR register
  * @{
  */
-#define USART_FLAG_TXFT                                                        \
-	USART_ISR_TXFT /*!< USART TXFIFO threshold flag                */
-#define USART_FLAG_RXFT                                                        \
-	USART_ISR_RXFT /*!< USART RXFIFO threshold flag                */
-#define USART_FLAG_RXFF                                                        \
-	USART_ISR_RXFF /*!< USART RXFIFO Full flag                     */
-#define USART_FLAG_TXFE                                                        \
-	USART_ISR_TXFE /*!< USART TXFIFO Empty flag                    */
-#define USART_FLAG_REACK                                                       \
-	USART_ISR_REACK /*!< USART receive enable acknowledge flag      */
-#define USART_FLAG_TEACK                                                       \
-	USART_ISR_TEACK /*!< USART transmit enable acknowledge flag     */
-#define USART_FLAG_BUSY                                                        \
-	USART_ISR_BUSY /*!< USART busy flag                            */
-#define USART_FLAG_UDR                                                         \
-	USART_ISR_UDR /*!< SPI slave underrun error flag              */
-#define USART_FLAG_TXE                                                         \
-	USART_ISR_TXE_TXFNF /*!< USART transmit data register empty         */
-#define USART_FLAG_TXFNF                                                       \
-	USART_ISR_TXE_TXFNF /*!< USART TXFIFO not full                      */
-#define USART_FLAG_RTOF                                                        \
-	USART_ISR_RTOF /*!< USART receiver timeout flag                */
-#define USART_FLAG_TC                                                          \
-	USART_ISR_TC /*!< USART transmission complete                */
-#define USART_FLAG_RXNE                                                        \
-	USART_ISR_RXNE_RXFNE /*!< USART read data register not empty */
+#define USART_FLAG_TXFT USART_ISR_TXFT	      /*!< USART TXFIFO threshold flag                */
+#define USART_FLAG_RXFT USART_ISR_RXFT	      /*!< USART RXFIFO threshold flag                */
+#define USART_FLAG_RXFF USART_ISR_RXFF	      /*!< USART RXFIFO Full flag                     */
+#define USART_FLAG_TXFE USART_ISR_TXFE	      /*!< USART TXFIFO Empty flag                    */
+#define USART_FLAG_REACK USART_ISR_REACK      /*!< USART receive enable acknowledge flag      */
+#define USART_FLAG_TEACK USART_ISR_TEACK      /*!< USART transmit enable acknowledge flag     */
+#define USART_FLAG_BUSY USART_ISR_BUSY	      /*!< USART busy flag                            */
+#define USART_FLAG_UDR USART_ISR_UDR	      /*!< SPI slave underrun error flag              */
+#define USART_FLAG_TXE USART_ISR_TXE_TXFNF    /*!< USART transmit data register empty         */
+#define USART_FLAG_TXFNF USART_ISR_TXE_TXFNF  /*!< USART TXFIFO not full                      */
+#define USART_FLAG_RTOF USART_ISR_RTOF	      /*!< USART receiver timeout flag                */
+#define USART_FLAG_TC USART_ISR_TC	      /*!< USART transmission complete                */
+#define USART_FLAG_RXNE USART_ISR_RXNE_RXFNE  /*!< USART read data register not empty */
 #define USART_FLAG_RXFNE USART_ISR_RXNE_RXFNE /*!< USART RXFIFO not empty */
-#define USART_FLAG_IDLE                                                        \
-	USART_ISR_IDLE /*!< USART idle flag                            */
-#define USART_FLAG_ORE                                                         \
-	USART_ISR_ORE /*!< USART overrun error                        */
-#define USART_FLAG_NE                                                          \
-	USART_ISR_NE /*!< USART noise error                          */
-#define USART_FLAG_FE                                                          \
-	USART_ISR_FE /*!< USART frame error                          */
-#define USART_FLAG_PE                                                          \
-	USART_ISR_PE /*!< USART parity error                         */
+#define USART_FLAG_IDLE USART_ISR_IDLE	      /*!< USART idle flag                            */
+#define USART_FLAG_ORE USART_ISR_ORE	      /*!< USART overrun error                        */
+#define USART_FLAG_NE USART_ISR_NE	      /*!< USART noise error                          */
+#define USART_FLAG_FE USART_ISR_FE	      /*!< USART frame error                          */
+#define USART_FLAG_PE USART_ISR_PE	      /*!< USART parity error                         */
 /**
  * @}
  */
@@ -447,36 +381,21 @@ typedef void (*pUSART_CallbackTypeDef)(
  * @{
  */
 
-#define USART_IT_PE                                                            \
-	0x0028U /*!< USART parity error interruption                 */
-#define USART_IT_TXE                                                           \
-	0x0727U /*!< USART transmit data register empty interruption */
-#define USART_IT_TXFNF                                                         \
-	0x0727U /*!< USART TX FIFO not full interruption             */
-#define USART_IT_TC                                                            \
-	0x0626U /*!< USART transmission complete interruption        */
-#define USART_IT_RXNE                                                          \
-	0x0525U /*!< USART read data register not empty interruption */
-#define USART_IT_RXFNE                                                         \
-	0x0525U /*!< USART RXFIFO not empty interruption             */
-#define USART_IT_IDLE                                                          \
-	0x0424U /*!< USART idle interruption                         */
-#define USART_IT_ERR                                                           \
-	0x0060U /*!< USART error interruption                        */
-#define USART_IT_ORE                                                           \
-	0x0300U /*!< USART overrun error interruption                */
-#define USART_IT_NE                                                            \
-	0x0200U /*!< USART noise error interruption                  */
-#define USART_IT_FE                                                            \
-	0x0100U /*!< USART frame error interruption                  */
-#define USART_IT_RXFF                                                          \
-	0x183FU /*!< USART RXFIFO full interruption                  */
-#define USART_IT_TXFE                                                          \
-	0x173EU /*!< USART TXFIFO empty interruption                 */
-#define USART_IT_RXFT                                                          \
-	0x1A7CU /*!< USART RXFIFO threshold reached interruption     */
-#define USART_IT_TXFT                                                          \
-	0x1B77U /*!< USART TXFIFO threshold reached interruption     */
+#define USART_IT_PE 0x0028U    /*!< USART parity error interruption                 */
+#define USART_IT_TXE 0x0727U   /*!< USART transmit data register empty interruption */
+#define USART_IT_TXFNF 0x0727U /*!< USART TX FIFO not full interruption             */
+#define USART_IT_TC 0x0626U    /*!< USART transmission complete interruption        */
+#define USART_IT_RXNE 0x0525U  /*!< USART read data register not empty interruption */
+#define USART_IT_RXFNE 0x0525U /*!< USART RXFIFO not empty interruption             */
+#define USART_IT_IDLE 0x0424U  /*!< USART idle interruption                         */
+#define USART_IT_ERR 0x0060U   /*!< USART error interruption                        */
+#define USART_IT_ORE 0x0300U   /*!< USART overrun error interruption                */
+#define USART_IT_NE 0x0200U    /*!< USART noise error interruption                  */
+#define USART_IT_FE 0x0100U    /*!< USART frame error interruption                  */
+#define USART_IT_RXFF 0x183FU  /*!< USART RXFIFO full interruption                  */
+#define USART_IT_TXFE 0x173EU  /*!< USART TXFIFO empty interruption                 */
+#define USART_IT_RXFT 0x1A7CU  /*!< USART RXFIFO threshold reached interruption     */
+#define USART_IT_TXFT 0x1B77U  /*!< USART TXFIFO threshold reached interruption     */
 
 /**
  * @}
@@ -485,24 +404,15 @@ typedef void (*pUSART_CallbackTypeDef)(
 /** @defgroup USART_IT_CLEAR_Flags    USART Interruption Clear Flags
  * @{
  */
-#define USART_CLEAR_PEF                                                        \
-	USART_ICR_PECF /*!< Parity Error Clear Flag             */
-#define USART_CLEAR_FEF                                                        \
-	USART_ICR_FECF /*!< Framing Error Clear Flag            */
-#define USART_CLEAR_NEF                                                        \
-	USART_ICR_NECF /*!< Noise Error detected Clear Flag     */
-#define USART_CLEAR_OREF                                                       \
-	USART_ICR_ORECF /*!< OverRun Error Clear Flag            */
-#define USART_CLEAR_IDLEF                                                      \
-	USART_ICR_IDLECF /*!< IDLE line detected Clear Flag       */
-#define USART_CLEAR_TCF                                                        \
-	USART_ICR_TCCF /*!< Transmission Complete Clear Flag    */
-#define USART_CLEAR_UDRF                                                       \
-	USART_ICR_UDRCF /*!< SPI slave underrun error Clear Flag */
-#define USART_CLEAR_TXFECF                                                     \
-	USART_ICR_TXFECF /*!< TXFIFO Empty Clear Flag             */
-#define USART_CLEAR_RTOF                                                       \
-	USART_ICR_RTOCF /*!< USART receiver timeout clear flag  */
+#define USART_CLEAR_PEF USART_ICR_PECF	    /*!< Parity Error Clear Flag             */
+#define USART_CLEAR_FEF USART_ICR_FECF	    /*!< Framing Error Clear Flag            */
+#define USART_CLEAR_NEF USART_ICR_NECF	    /*!< Noise Error detected Clear Flag     */
+#define USART_CLEAR_OREF USART_ICR_ORECF    /*!< OverRun Error Clear Flag            */
+#define USART_CLEAR_IDLEF USART_ICR_IDLECF  /*!< IDLE line detected Clear Flag       */
+#define USART_CLEAR_TCF USART_ICR_TCCF	    /*!< Transmission Complete Clear Flag    */
+#define USART_CLEAR_UDRF USART_ICR_UDRCF    /*!< SPI slave underrun error Clear Flag */
+#define USART_CLEAR_TXFECF USART_ICR_TXFECF /*!< TXFIFO Empty Clear Flag             */
+#define USART_CLEAR_RTOF USART_ICR_RTOCF    /*!< USART receiver timeout clear flag  */
 /**
  * @}
  */
@@ -533,15 +443,14 @@ typedef void (*pUSART_CallbackTypeDef)(
  * @retval None
  */
 #if (USE_HAL_USART_REGISTER_CALLBACKS == 1)
-#define __HAL_USART_RESET_HANDLE_STATE(__HANDLE__)                             \
-	do {                                                                   \
-		(__HANDLE__)->State = HAL_USART_STATE_RESET;                   \
-		(__HANDLE__)->MspInitCallback = NULL;                          \
-		(__HANDLE__)->MspDeInitCallback = NULL;                        \
+#define __HAL_USART_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                     \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_USART_STATE_RESET;                                                                                                                                           \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0U)
 #else
-#define __HAL_USART_RESET_HANDLE_STATE(__HANDLE__)                             \
-	((__HANDLE__)->State = HAL_USART_STATE_RESET)
+#define __HAL_USART_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_USART_STATE_RESET)
 #endif /* USE_HAL_USART_REGISTER_CALLBACKS */
 
 /** @brief  Check whether the specified USART flag is set or not.
@@ -569,8 +478,7 @@ typedef void (*pUSART_CallbackTypeDef)(
  *            @arg @ref USART_FLAG_PE    Parity Error flag
  * @retval The new state of __FLAG__ (TRUE or FALSE).
  */
-#define __HAL_USART_GET_FLAG(__HANDLE__, __FLAG__)                             \
-	(((__HANDLE__)->Instance->ISR & (__FLAG__)) == (__FLAG__))
+#define __HAL_USART_GET_FLAG(__HANDLE__, __FLAG__) (((__HANDLE__)->Instance->ISR & (__FLAG__)) == (__FLAG__))
 
 /** @brief  Clear the specified USART pending flag.
  * @param  __HANDLE__ specifies the USART Handle.
@@ -587,57 +495,49 @@ typedef void (*pUSART_CallbackTypeDef)(
  *            @arg @ref USART_CLEAR_UDRF     SPI slave underrun error Clear Flag
  * @retval None
  */
-#define __HAL_USART_CLEAR_FLAG(__HANDLE__, __FLAG__)                           \
-	((__HANDLE__)->Instance->ICR = (__FLAG__))
+#define __HAL_USART_CLEAR_FLAG(__HANDLE__, __FLAG__) ((__HANDLE__)->Instance->ICR = (__FLAG__))
 
 /** @brief  Clear the USART PE pending flag.
  * @param  __HANDLE__ specifies the USART Handle.
  * @retval None
  */
-#define __HAL_USART_CLEAR_PEFLAG(__HANDLE__)                                   \
-	__HAL_USART_CLEAR_FLAG((__HANDLE__), USART_CLEAR_PEF)
+#define __HAL_USART_CLEAR_PEFLAG(__HANDLE__) __HAL_USART_CLEAR_FLAG((__HANDLE__), USART_CLEAR_PEF)
 
 /** @brief  Clear the USART FE pending flag.
  * @param  __HANDLE__ specifies the USART Handle.
  * @retval None
  */
-#define __HAL_USART_CLEAR_FEFLAG(__HANDLE__)                                   \
-	__HAL_USART_CLEAR_FLAG((__HANDLE__), USART_CLEAR_FEF)
+#define __HAL_USART_CLEAR_FEFLAG(__HANDLE__) __HAL_USART_CLEAR_FLAG((__HANDLE__), USART_CLEAR_FEF)
 
 /** @brief  Clear the USART NE pending flag.
  * @param  __HANDLE__ specifies the USART Handle.
  * @retval None
  */
-#define __HAL_USART_CLEAR_NEFLAG(__HANDLE__)                                   \
-	__HAL_USART_CLEAR_FLAG((__HANDLE__), USART_CLEAR_NEF)
+#define __HAL_USART_CLEAR_NEFLAG(__HANDLE__) __HAL_USART_CLEAR_FLAG((__HANDLE__), USART_CLEAR_NEF)
 
 /** @brief  Clear the USART ORE pending flag.
  * @param  __HANDLE__ specifies the USART Handle.
  * @retval None
  */
-#define __HAL_USART_CLEAR_OREFLAG(__HANDLE__)                                  \
-	__HAL_USART_CLEAR_FLAG((__HANDLE__), USART_CLEAR_OREF)
+#define __HAL_USART_CLEAR_OREFLAG(__HANDLE__) __HAL_USART_CLEAR_FLAG((__HANDLE__), USART_CLEAR_OREF)
 
 /** @brief  Clear the USART IDLE pending flag.
  * @param  __HANDLE__ specifies the USART Handle.
  * @retval None
  */
-#define __HAL_USART_CLEAR_IDLEFLAG(__HANDLE__)                                 \
-	__HAL_USART_CLEAR_FLAG((__HANDLE__), USART_CLEAR_IDLEF)
+#define __HAL_USART_CLEAR_IDLEFLAG(__HANDLE__) __HAL_USART_CLEAR_FLAG((__HANDLE__), USART_CLEAR_IDLEF)
 
 /** @brief  Clear the USART TX FIFO empty clear flag.
  * @param  __HANDLE__ specifies the USART Handle.
  * @retval None
  */
-#define __HAL_USART_CLEAR_TXFECF(__HANDLE__)                                   \
-	__HAL_USART_CLEAR_FLAG((__HANDLE__), USART_CLEAR_TXFECF)
+#define __HAL_USART_CLEAR_TXFECF(__HANDLE__) __HAL_USART_CLEAR_FLAG((__HANDLE__), USART_CLEAR_TXFECF)
 
 /** @brief  Clear SPI slave underrun error flag.
  * @param  __HANDLE__ specifies the USART Handle.
  * @retval None
  */
-#define __HAL_USART_CLEAR_UDRFLAG(__HANDLE__)                                  \
-	__HAL_USART_CLEAR_FLAG((__HANDLE__), USART_CLEAR_UDRF)
+#define __HAL_USART_CLEAR_UDRFLAG(__HANDLE__) __HAL_USART_CLEAR_FLAG((__HANDLE__), USART_CLEAR_UDRF)
 
 /** @brief  Enable the specified USART interrupt.
  * @param  __HANDLE__ specifies the USART Handle.
@@ -658,15 +558,10 @@ typedef void (*pUSART_CallbackTypeDef)(
  * overrun error)
  * @retval None
  */
-#define __HAL_USART_ENABLE_IT(__HANDLE__, __INTERRUPT__)                       \
-	(((((__INTERRUPT__) & USART_CR_MASK) >> USART_CR_POS) == 1U)           \
-	     ? ((__HANDLE__)->Instance->CR1 |=                                 \
-		(1UL << ((__INTERRUPT__) & USART_IT_MASK)))                    \
-	 : ((((__INTERRUPT__) & USART_CR_MASK) >> USART_CR_POS) == 2U)         \
-	     ? ((__HANDLE__)->Instance->CR2 |=                                 \
-		(1UL << ((__INTERRUPT__) & USART_IT_MASK)))                    \
-	     : ((__HANDLE__)->Instance->CR3 |=                                 \
-		(1UL << ((__INTERRUPT__) & USART_IT_MASK))))
+#define __HAL_USART_ENABLE_IT(__HANDLE__, __INTERRUPT__)                                                                                                                                               \
+	(((((__INTERRUPT__) & USART_CR_MASK) >> USART_CR_POS) == 1U)   ? ((__HANDLE__)->Instance->CR1 |= (1UL << ((__INTERRUPT__) & USART_IT_MASK)))                                                   \
+	 : ((((__INTERRUPT__) & USART_CR_MASK) >> USART_CR_POS) == 2U) ? ((__HANDLE__)->Instance->CR2 |= (1UL << ((__INTERRUPT__) & USART_IT_MASK)))                                                   \
+								       : ((__HANDLE__)->Instance->CR3 |= (1UL << ((__INTERRUPT__) & USART_IT_MASK))))
 
 /** @brief  Disable the specified USART interrupt.
  * @param  __HANDLE__ specifies the USART Handle.
@@ -687,15 +582,10 @@ typedef void (*pUSART_CallbackTypeDef)(
  * overrun error)
  * @retval None
  */
-#define __HAL_USART_DISABLE_IT(__HANDLE__, __INTERRUPT__)                      \
-	(((((__INTERRUPT__) & USART_CR_MASK) >> USART_CR_POS) == 1U)           \
-	     ? ((__HANDLE__)->Instance->CR1 &=                                 \
-		~(1UL << ((__INTERRUPT__) & USART_IT_MASK)))                   \
-	 : ((((__INTERRUPT__) & USART_CR_MASK) >> USART_CR_POS) == 2U)         \
-	     ? ((__HANDLE__)->Instance->CR2 &=                                 \
-		~(1UL << ((__INTERRUPT__) & USART_IT_MASK)))                   \
-	     : ((__HANDLE__)->Instance->CR3 &=                                 \
-		~(1UL << ((__INTERRUPT__) & USART_IT_MASK))))
+#define __HAL_USART_DISABLE_IT(__HANDLE__, __INTERRUPT__)                                                                                                                                              \
+	(((((__INTERRUPT__) & USART_CR_MASK) >> USART_CR_POS) == 1U)   ? ((__HANDLE__)->Instance->CR1 &= ~(1UL << ((__INTERRUPT__) & USART_IT_MASK)))                                                  \
+	 : ((((__INTERRUPT__) & USART_CR_MASK) >> USART_CR_POS) == 2U) ? ((__HANDLE__)->Instance->CR2 &= ~(1UL << ((__INTERRUPT__) & USART_IT_MASK)))                                                  \
+								       : ((__HANDLE__)->Instance->CR3 &= ~(1UL << ((__INTERRUPT__) & USART_IT_MASK))))
 
 /** @brief  Check whether the specified USART interrupt has occurred or not.
  * @param  __HANDLE__ specifies the USART Handle.
@@ -717,12 +607,7 @@ typedef void (*pUSART_CallbackTypeDef)(
  *            @arg @ref USART_IT_PE    Parity Error interrupt
  * @retval The new state of __INTERRUPT__ (SET or RESET).
  */
-#define __HAL_USART_GET_IT(__HANDLE__, __INTERRUPT__)                          \
-	((((__HANDLE__)->Instance->ISR &                                       \
-	   (0x01U << (((__INTERRUPT__) & USART_ISR_MASK) >>                    \
-		      USART_ISR_POS))) != 0U)                                  \
-	     ? SET                                                             \
-	     : RESET)
+#define __HAL_USART_GET_IT(__HANDLE__, __INTERRUPT__) ((((__HANDLE__)->Instance->ISR & (0x01U << (((__INTERRUPT__) & USART_ISR_MASK) >> USART_ISR_POS))) != 0U) ? SET : RESET)
 
 /** @brief  Check whether the specified USART interrupt source is enabled or
  * not.
@@ -745,14 +630,11 @@ typedef void (*pUSART_CallbackTypeDef)(
  *            @arg @ref USART_IT_PE    Parity Error interrupt
  * @retval The new state of __INTERRUPT__ (SET or RESET).
  */
-#define __HAL_USART_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)                   \
-	((((((((uint8_t)(__INTERRUPT__)) >> 0x05U) == 0x01U)                   \
-		? (__HANDLE__)->Instance->CR1                                  \
-		: (((((uint8_t)(__INTERRUPT__)) >> 0x05U) == 0x02U)            \
-		       ? (__HANDLE__)->Instance->CR2                           \
-		       : (__HANDLE__)->Instance->CR3)) &                       \
-	   (0x01U << (((uint16_t)(__INTERRUPT__)) & USART_IT_MASK))) != 0U)    \
-	     ? SET                                                             \
+#define __HAL_USART_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)                                                                                                                                           \
+	((((((((uint8_t)(__INTERRUPT__)) >> 0x05U) == 0x01U) ? (__HANDLE__)->Instance->CR1                                                                                                             \
+							     : (((((uint8_t)(__INTERRUPT__)) >> 0x05U) == 0x02U) ? (__HANDLE__)->Instance->CR2 : (__HANDLE__)->Instance->CR3)) &                       \
+	   (0x01U << (((uint16_t)(__INTERRUPT__)) & USART_IT_MASK))) != 0U)                                                                                                                            \
+	     ? SET                                                                                                                                                                                     \
 	     : RESET)
 
 /** @brief  Clear the specified USART ISR flag, in setting the proper ICR
@@ -771,8 +653,7 @@ typedef void (*pUSART_CallbackTypeDef)(
  *            @arg @ref USART_CLEAR_TCF      Transmission Complete Clear Flag
  * @retval None
  */
-#define __HAL_USART_CLEAR_IT(__HANDLE__, __IT_CLEAR__)                         \
-	((__HANDLE__)->Instance->ICR = (uint32_t)(__IT_CLEAR__))
+#define __HAL_USART_CLEAR_IT(__HANDLE__, __IT_CLEAR__) ((__HANDLE__)->Instance->ICR = (uint32_t)(__IT_CLEAR__))
 
 /** @brief  Set a specific USART request flag.
  * @param  __HANDLE__ specifies the USART Handle.
@@ -783,36 +664,31 @@ typedef void (*pUSART_CallbackTypeDef)(
  *
  * @retval None
  */
-#define __HAL_USART_SEND_REQ(__HANDLE__, __REQ__)                              \
-	((__HANDLE__)->Instance->RQR |= (uint16_t)(__REQ__))
+#define __HAL_USART_SEND_REQ(__HANDLE__, __REQ__) ((__HANDLE__)->Instance->RQR |= (uint16_t)(__REQ__))
 
 /** @brief  Enable the USART one bit sample method.
  * @param  __HANDLE__ specifies the USART Handle.
  * @retval None
  */
-#define __HAL_USART_ONE_BIT_SAMPLE_ENABLE(__HANDLE__)                          \
-	((__HANDLE__)->Instance->CR3 |= USART_CR3_ONEBIT)
+#define __HAL_USART_ONE_BIT_SAMPLE_ENABLE(__HANDLE__) ((__HANDLE__)->Instance->CR3 |= USART_CR3_ONEBIT)
 
 /** @brief  Disable the USART one bit sample method.
  * @param  __HANDLE__ specifies the USART Handle.
  * @retval None
  */
-#define __HAL_USART_ONE_BIT_SAMPLE_DISABLE(__HANDLE__)                         \
-	((__HANDLE__)->Instance->CR3 &= ~USART_CR3_ONEBIT)
+#define __HAL_USART_ONE_BIT_SAMPLE_DISABLE(__HANDLE__) ((__HANDLE__)->Instance->CR3 &= ~USART_CR3_ONEBIT)
 
 /** @brief  Enable USART.
  * @param  __HANDLE__ specifies the USART Handle.
  * @retval None
  */
-#define __HAL_USART_ENABLE(__HANDLE__)                                         \
-	((__HANDLE__)->Instance->CR1 |= USART_CR1_UE)
+#define __HAL_USART_ENABLE(__HANDLE__) ((__HANDLE__)->Instance->CR1 |= USART_CR1_UE)
 
 /** @brief  Disable USART.
  * @param  __HANDLE__ specifies the USART Handle.
  * @retval None
  */
-#define __HAL_USART_DISABLE(__HANDLE__)                                        \
-	((__HANDLE__)->Instance->CR1 &= ~USART_CR1_UE)
+#define __HAL_USART_DISABLE(__HANDLE__) ((__HANDLE__)->Instance->CR1 &= ~USART_CR1_UE)
 
 /**
  * @}
@@ -827,18 +703,18 @@ typedef void (*pUSART_CallbackTypeDef)(
  * @param  __CLOCKPRESCALER__ USART prescaler value.
  * @retval USART clock division factor
  */
-#define USART_GET_DIV_FACTOR(__CLOCKPRESCALER__)                               \
-	(((__CLOCKPRESCALER__) == USART_PRESCALER_DIV1)	    ? 1U               \
-	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV2)   ? 2U               \
-	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV4)   ? 4U               \
-	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV6)   ? 6U               \
-	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV8)   ? 8U               \
-	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV10)  ? 10U              \
-	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV12)  ? 12U              \
-	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV16)  ? 16U              \
-	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV32)  ? 32U              \
-	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV64)  ? 64U              \
-	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV128) ? 128U             \
+#define USART_GET_DIV_FACTOR(__CLOCKPRESCALER__)                                                                                                                                                       \
+	(((__CLOCKPRESCALER__) == USART_PRESCALER_DIV1)	    ? 1U                                                                                                                                       \
+	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV2)   ? 2U                                                                                                                                       \
+	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV4)   ? 4U                                                                                                                                       \
+	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV6)   ? 6U                                                                                                                                       \
+	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV8)   ? 8U                                                                                                                                       \
+	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV10)  ? 10U                                                                                                                                      \
+	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV12)  ? 12U                                                                                                                                      \
+	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV16)  ? 16U                                                                                                                                      \
+	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV32)  ? 32U                                                                                                                                      \
+	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV64)  ? 64U                                                                                                                                      \
+	 : ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV128) ? 128U                                                                                                                                     \
 							    : 256U)
 
 /** @brief  BRR division operation to set BRR register in 8-bit oversampling
@@ -848,10 +724,7 @@ typedef void (*pUSART_CallbackTypeDef)(
  * @param  __CLOCKPRESCALER__ USART prescaler value.
  * @retval Division result
  */
-#define USART_DIV_SAMPLING8(__PCLK__, __BAUD__, __CLOCKPRESCALER__)            \
-	(((((__PCLK__) / USART_GET_DIV_FACTOR(__CLOCKPRESCALER__)) * 2U) +     \
-	  ((__BAUD__) / 2U)) /                                                 \
-	 (__BAUD__))
+#define USART_DIV_SAMPLING8(__PCLK__, __BAUD__, __CLOCKPRESCALER__) (((((__PCLK__) / USART_GET_DIV_FACTOR(__CLOCKPRESCALER__)) * 2U) + ((__BAUD__) / 2U)) / (__BAUD__))
 
 /** @brief  Report the USART clock source.
  * @param  __HANDLE__ specifies the USART Handle.
@@ -859,232 +732,187 @@ typedef void (*pUSART_CallbackTypeDef)(
  * @retval the USART clocking source, written in __CLOCKSOURCE__.
  */
 #if defined(USART6)
-#define USART_GETCLOCKSOURCE(__HANDLE__, __CLOCKSOURCE__)                      \
-	do {                                                                   \
-		if ((__HANDLE__)->Instance == USART1) {                        \
-			switch (__HAL_RCC_GET_USART1_SOURCE()) {               \
-				case RCC_USART1CLKSOURCE_PCLK2:                \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_PCLK2;           \
-					break;                                 \
-				case RCC_USART1CLKSOURCE_SYSCLK:               \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_SYSCLK;          \
-					break;                                 \
-				case RCC_USART1CLKSOURCE_HSI:                  \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_HSI;             \
-					break;                                 \
-				case RCC_USART1CLKSOURCE_LSE:                  \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_LSE;             \
-					break;                                 \
-				default:                                       \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_UNDEFINED;       \
-					break;                                 \
-			}                                                      \
-		} else if ((__HANDLE__)->Instance == USART2) {                 \
-			switch (__HAL_RCC_GET_USART2_SOURCE()) {               \
-				case RCC_USART2CLKSOURCE_PCLK1:                \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_PCLK1;           \
-					break;                                 \
-				case RCC_USART2CLKSOURCE_SYSCLK:               \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_SYSCLK;          \
-					break;                                 \
-				case RCC_USART2CLKSOURCE_HSI:                  \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_HSI;             \
-					break;                                 \
-				case RCC_USART2CLKSOURCE_LSE:                  \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_LSE;             \
-					break;                                 \
-				default:                                       \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_UNDEFINED;       \
-					break;                                 \
-			}                                                      \
-		} else if ((__HANDLE__)->Instance == USART3) {                 \
-			switch (__HAL_RCC_GET_USART3_SOURCE()) {               \
-				case RCC_USART3CLKSOURCE_PCLK1:                \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_PCLK1;           \
-					break;                                 \
-				case RCC_USART3CLKSOURCE_SYSCLK:               \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_SYSCLK;          \
-					break;                                 \
-				case RCC_USART3CLKSOURCE_HSI:                  \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_HSI;             \
-					break;                                 \
-				case RCC_USART3CLKSOURCE_LSE:                  \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_LSE;             \
-					break;                                 \
-				default:                                       \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_UNDEFINED;       \
-					break;                                 \
-			}                                                      \
-		} else if ((__HANDLE__)->Instance == USART6) {                 \
-			switch (__HAL_RCC_GET_USART6_SOURCE()) {               \
-				case RCC_USART6CLKSOURCE_PCLK1:                \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_PCLK1;           \
-					break;                                 \
-				case RCC_USART6CLKSOURCE_SYSCLK:               \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_SYSCLK;          \
-					break;                                 \
-				case RCC_USART6CLKSOURCE_HSI:                  \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_HSI;             \
-					break;                                 \
-				case RCC_USART6CLKSOURCE_LSE:                  \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_LSE;             \
-					break;                                 \
-				default:                                       \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_UNDEFINED;       \
-					break;                                 \
-			}                                                      \
-		} else {                                                       \
-			(__CLOCKSOURCE__) = USART_CLOCKSOURCE_UNDEFINED;       \
-		}                                                              \
+#define USART_GETCLOCKSOURCE(__HANDLE__, __CLOCKSOURCE__)                                                                                                                                              \
+	do {                                                                                                                                                                                           \
+		if ((__HANDLE__)->Instance == USART1) {                                                                                                                                                \
+			switch (__HAL_RCC_GET_USART1_SOURCE()) {                                                                                                                                       \
+				case RCC_USART1CLKSOURCE_PCLK2:                                                                                                                                        \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_PCLK2;                                                                                                                   \
+					break;                                                                                                                                                         \
+				case RCC_USART1CLKSOURCE_SYSCLK:                                                                                                                                       \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_SYSCLK;                                                                                                                  \
+					break;                                                                                                                                                         \
+				case RCC_USART1CLKSOURCE_HSI:                                                                                                                                          \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_HSI;                                                                                                                     \
+					break;                                                                                                                                                         \
+				case RCC_USART1CLKSOURCE_LSE:                                                                                                                                          \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_LSE;                                                                                                                     \
+					break;                                                                                                                                                         \
+				default:                                                                                                                                                               \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_UNDEFINED;                                                                                                               \
+					break;                                                                                                                                                         \
+			}                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == USART2) {                                                                                                                                         \
+			switch (__HAL_RCC_GET_USART2_SOURCE()) {                                                                                                                                       \
+				case RCC_USART2CLKSOURCE_PCLK1:                                                                                                                                        \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_PCLK1;                                                                                                                   \
+					break;                                                                                                                                                         \
+				case RCC_USART2CLKSOURCE_SYSCLK:                                                                                                                                       \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_SYSCLK;                                                                                                                  \
+					break;                                                                                                                                                         \
+				case RCC_USART2CLKSOURCE_HSI:                                                                                                                                          \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_HSI;                                                                                                                     \
+					break;                                                                                                                                                         \
+				case RCC_USART2CLKSOURCE_LSE:                                                                                                                                          \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_LSE;                                                                                                                     \
+					break;                                                                                                                                                         \
+				default:                                                                                                                                                               \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_UNDEFINED;                                                                                                               \
+					break;                                                                                                                                                         \
+			}                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == USART3) {                                                                                                                                         \
+			switch (__HAL_RCC_GET_USART3_SOURCE()) {                                                                                                                                       \
+				case RCC_USART3CLKSOURCE_PCLK1:                                                                                                                                        \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_PCLK1;                                                                                                                   \
+					break;                                                                                                                                                         \
+				case RCC_USART3CLKSOURCE_SYSCLK:                                                                                                                                       \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_SYSCLK;                                                                                                                  \
+					break;                                                                                                                                                         \
+				case RCC_USART3CLKSOURCE_HSI:                                                                                                                                          \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_HSI;                                                                                                                     \
+					break;                                                                                                                                                         \
+				case RCC_USART3CLKSOURCE_LSE:                                                                                                                                          \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_LSE;                                                                                                                     \
+					break;                                                                                                                                                         \
+				default:                                                                                                                                                               \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_UNDEFINED;                                                                                                               \
+					break;                                                                                                                                                         \
+			}                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == USART6) {                                                                                                                                         \
+			switch (__HAL_RCC_GET_USART6_SOURCE()) {                                                                                                                                       \
+				case RCC_USART6CLKSOURCE_PCLK1:                                                                                                                                        \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_PCLK1;                                                                                                                   \
+					break;                                                                                                                                                         \
+				case RCC_USART6CLKSOURCE_SYSCLK:                                                                                                                                       \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_SYSCLK;                                                                                                                  \
+					break;                                                                                                                                                         \
+				case RCC_USART6CLKSOURCE_HSI:                                                                                                                                          \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_HSI;                                                                                                                     \
+					break;                                                                                                                                                         \
+				case RCC_USART6CLKSOURCE_LSE:                                                                                                                                          \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_LSE;                                                                                                                     \
+					break;                                                                                                                                                         \
+				default:                                                                                                                                                               \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_UNDEFINED;                                                                                                               \
+					break;                                                                                                                                                         \
+			}                                                                                                                                                                              \
+		} else {                                                                                                                                                                               \
+			(__CLOCKSOURCE__) = USART_CLOCKSOURCE_UNDEFINED;                                                                                                                               \
+		}                                                                                                                                                                                      \
 	} while (0U)
 #elif defined(USART2)
-#define USART_GETCLOCKSOURCE(__HANDLE__, __CLOCKSOURCE__)                      \
-	do {                                                                   \
-		if ((__HANDLE__)->Instance == USART1) {                        \
-			switch (__HAL_RCC_GET_USART1_SOURCE()) {               \
-				case RCC_USART1CLKSOURCE_PCLK2:                \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_PCLK2;           \
-					break;                                 \
-				case RCC_USART1CLKSOURCE_SYSCLK:               \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_SYSCLK;          \
-					break;                                 \
-				case RCC_USART1CLKSOURCE_HSI:                  \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_HSI;             \
-					break;                                 \
-				case RCC_USART1CLKSOURCE_LSE:                  \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_LSE;             \
-					break;                                 \
-				default:                                       \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_UNDEFINED;       \
-					break;                                 \
-			}                                                      \
-		} else if ((__HANDLE__)->Instance == USART2) {                 \
-			switch (__HAL_RCC_GET_USART2_SOURCE()) {               \
-				case RCC_USART2CLKSOURCE_PCLK1:                \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_PCLK1;           \
-					break;                                 \
-				case RCC_USART2CLKSOURCE_SYSCLK:               \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_SYSCLK;          \
-					break;                                 \
-				case RCC_USART2CLKSOURCE_HSI:                  \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_HSI;             \
-					break;                                 \
-				case RCC_USART2CLKSOURCE_LSE:                  \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_LSE;             \
-					break;                                 \
-				default:                                       \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_UNDEFINED;       \
-					break;                                 \
-			}                                                      \
-		} else if ((__HANDLE__)->Instance == USART3) {                 \
-			switch (__HAL_RCC_GET_USART3_SOURCE()) {               \
-				case RCC_USART3CLKSOURCE_PCLK1:                \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_PCLK1;           \
-					break;                                 \
-				case RCC_USART3CLKSOURCE_SYSCLK:               \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_SYSCLK;          \
-					break;                                 \
-				case RCC_USART3CLKSOURCE_HSI:                  \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_HSI;             \
-					break;                                 \
-				case RCC_USART3CLKSOURCE_LSE:                  \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_LSE;             \
-					break;                                 \
-				default:                                       \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_UNDEFINED;       \
-					break;                                 \
-			}                                                      \
-		} else {                                                       \
-			(__CLOCKSOURCE__) = USART_CLOCKSOURCE_UNDEFINED;       \
-		}                                                              \
+#define USART_GETCLOCKSOURCE(__HANDLE__, __CLOCKSOURCE__)                                                                                                                                              \
+	do {                                                                                                                                                                                           \
+		if ((__HANDLE__)->Instance == USART1) {                                                                                                                                                \
+			switch (__HAL_RCC_GET_USART1_SOURCE()) {                                                                                                                                       \
+				case RCC_USART1CLKSOURCE_PCLK2:                                                                                                                                        \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_PCLK2;                                                                                                                   \
+					break;                                                                                                                                                         \
+				case RCC_USART1CLKSOURCE_SYSCLK:                                                                                                                                       \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_SYSCLK;                                                                                                                  \
+					break;                                                                                                                                                         \
+				case RCC_USART1CLKSOURCE_HSI:                                                                                                                                          \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_HSI;                                                                                                                     \
+					break;                                                                                                                                                         \
+				case RCC_USART1CLKSOURCE_LSE:                                                                                                                                          \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_LSE;                                                                                                                     \
+					break;                                                                                                                                                         \
+				default:                                                                                                                                                               \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_UNDEFINED;                                                                                                               \
+					break;                                                                                                                                                         \
+			}                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == USART2) {                                                                                                                                         \
+			switch (__HAL_RCC_GET_USART2_SOURCE()) {                                                                                                                                       \
+				case RCC_USART2CLKSOURCE_PCLK1:                                                                                                                                        \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_PCLK1;                                                                                                                   \
+					break;                                                                                                                                                         \
+				case RCC_USART2CLKSOURCE_SYSCLK:                                                                                                                                       \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_SYSCLK;                                                                                                                  \
+					break;                                                                                                                                                         \
+				case RCC_USART2CLKSOURCE_HSI:                                                                                                                                          \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_HSI;                                                                                                                     \
+					break;                                                                                                                                                         \
+				case RCC_USART2CLKSOURCE_LSE:                                                                                                                                          \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_LSE;                                                                                                                     \
+					break;                                                                                                                                                         \
+				default:                                                                                                                                                               \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_UNDEFINED;                                                                                                               \
+					break;                                                                                                                                                         \
+			}                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == USART3) {                                                                                                                                         \
+			switch (__HAL_RCC_GET_USART3_SOURCE()) {                                                                                                                                       \
+				case RCC_USART3CLKSOURCE_PCLK1:                                                                                                                                        \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_PCLK1;                                                                                                                   \
+					break;                                                                                                                                                         \
+				case RCC_USART3CLKSOURCE_SYSCLK:                                                                                                                                       \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_SYSCLK;                                                                                                                  \
+					break;                                                                                                                                                         \
+				case RCC_USART3CLKSOURCE_HSI:                                                                                                                                          \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_HSI;                                                                                                                     \
+					break;                                                                                                                                                         \
+				case RCC_USART3CLKSOURCE_LSE:                                                                                                                                          \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_LSE;                                                                                                                     \
+					break;                                                                                                                                                         \
+				default:                                                                                                                                                               \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_UNDEFINED;                                                                                                               \
+					break;                                                                                                                                                         \
+			}                                                                                                                                                                              \
+		} else {                                                                                                                                                                               \
+			(__CLOCKSOURCE__) = USART_CLOCKSOURCE_UNDEFINED;                                                                                                                               \
+		}                                                                                                                                                                                      \
 	} while (0U)
 #else
-#define USART_GETCLOCKSOURCE(__HANDLE__, __CLOCKSOURCE__)                      \
-	do {                                                                   \
-		if ((__HANDLE__)->Instance == USART1) {                        \
-			switch (__HAL_RCC_GET_USART1_SOURCE()) {               \
-				case RCC_USART1CLKSOURCE_PCLK2:                \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_PCLK2;           \
-					break;                                 \
-				case RCC_USART1CLKSOURCE_SYSCLK:               \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_SYSCLK;          \
-					break;                                 \
-				case RCC_USART1CLKSOURCE_HSI:                  \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_HSI;             \
-					break;                                 \
-				case RCC_USART1CLKSOURCE_LSE:                  \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_LSE;             \
-					break;                                 \
-				default:                                       \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_UNDEFINED;       \
-					break;                                 \
-			}                                                      \
-		} else if ((__HANDLE__)->Instance == USART3) {                 \
-			switch (__HAL_RCC_GET_USART3_SOURCE()) {               \
-				case RCC_USART3CLKSOURCE_PCLK1:                \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_PCLK1;           \
-					break;                                 \
-				case RCC_USART3CLKSOURCE_SYSCLK:               \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_SYSCLK;          \
-					break;                                 \
-				case RCC_USART3CLKSOURCE_HSI:                  \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_HSI;             \
-					break;                                 \
-				case RCC_USART3CLKSOURCE_LSE:                  \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_LSE;             \
-					break;                                 \
-				default:                                       \
-					(__CLOCKSOURCE__) =                    \
-					    USART_CLOCKSOURCE_UNDEFINED;       \
-					break;                                 \
-			}                                                      \
-		} else {                                                       \
-			(__CLOCKSOURCE__) = USART_CLOCKSOURCE_UNDEFINED;       \
-		}                                                              \
+#define USART_GETCLOCKSOURCE(__HANDLE__, __CLOCKSOURCE__)                                                                                                                                              \
+	do {                                                                                                                                                                                           \
+		if ((__HANDLE__)->Instance == USART1) {                                                                                                                                                \
+			switch (__HAL_RCC_GET_USART1_SOURCE()) {                                                                                                                                       \
+				case RCC_USART1CLKSOURCE_PCLK2:                                                                                                                                        \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_PCLK2;                                                                                                                   \
+					break;                                                                                                                                                         \
+				case RCC_USART1CLKSOURCE_SYSCLK:                                                                                                                                       \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_SYSCLK;                                                                                                                  \
+					break;                                                                                                                                                         \
+				case RCC_USART1CLKSOURCE_HSI:                                                                                                                                          \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_HSI;                                                                                                                     \
+					break;                                                                                                                                                         \
+				case RCC_USART1CLKSOURCE_LSE:                                                                                                                                          \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_LSE;                                                                                                                     \
+					break;                                                                                                                                                         \
+				default:                                                                                                                                                               \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_UNDEFINED;                                                                                                               \
+					break;                                                                                                                                                         \
+			}                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == USART3) {                                                                                                                                         \
+			switch (__HAL_RCC_GET_USART3_SOURCE()) {                                                                                                                                       \
+				case RCC_USART3CLKSOURCE_PCLK1:                                                                                                                                        \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_PCLK1;                                                                                                                   \
+					break;                                                                                                                                                         \
+				case RCC_USART3CLKSOURCE_SYSCLK:                                                                                                                                       \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_SYSCLK;                                                                                                                  \
+					break;                                                                                                                                                         \
+				case RCC_USART3CLKSOURCE_HSI:                                                                                                                                          \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_HSI;                                                                                                                     \
+					break;                                                                                                                                                         \
+				case RCC_USART3CLKSOURCE_LSE:                                                                                                                                          \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_LSE;                                                                                                                     \
+					break;                                                                                                                                                         \
+				default:                                                                                                                                                               \
+					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_UNDEFINED;                                                                                                               \
+					break;                                                                                                                                                         \
+			}                                                                                                                                                                              \
+		} else {                                                                                                                                                                               \
+			(__CLOCKSOURCE__) = USART_CLOCKSOURCE_UNDEFINED;                                                                                                                               \
+		}                                                                                                                                                                                      \
 	} while (0U)
 #endif /* USART6 */
 
@@ -1100,73 +928,57 @@ typedef void (*pUSART_CallbackTypeDef)(
  * @param __STOPBITS__ USART frame number of stop bits.
  * @retval SET (__STOPBITS__ is valid) or RESET (__STOPBITS__ is invalid)
  */
-#define IS_USART_STOPBITS(__STOPBITS__)                                        \
-	(((__STOPBITS__) == USART_STOPBITS_0_5) ||                             \
-	 ((__STOPBITS__) == USART_STOPBITS_1) ||                               \
-	 ((__STOPBITS__) == USART_STOPBITS_1_5) ||                             \
-	 ((__STOPBITS__) == USART_STOPBITS_2))
+#define IS_USART_STOPBITS(__STOPBITS__)                                                                                                                                                                \
+	(((__STOPBITS__) == USART_STOPBITS_0_5) || ((__STOPBITS__) == USART_STOPBITS_1) || ((__STOPBITS__) == USART_STOPBITS_1_5) || ((__STOPBITS__) == USART_STOPBITS_2))
 
 /**
  * @brief Ensure that USART frame parity is valid.
  * @param __PARITY__ USART frame parity.
  * @retval SET (__PARITY__ is valid) or RESET (__PARITY__ is invalid)
  */
-#define IS_USART_PARITY(__PARITY__)                                            \
-	(((__PARITY__) == USART_PARITY_NONE) ||                                \
-	 ((__PARITY__) == USART_PARITY_EVEN) ||                                \
-	 ((__PARITY__) == USART_PARITY_ODD))
+#define IS_USART_PARITY(__PARITY__) (((__PARITY__) == USART_PARITY_NONE) || ((__PARITY__) == USART_PARITY_EVEN) || ((__PARITY__) == USART_PARITY_ODD))
 
 /**
  * @brief Ensure that USART communication mode is valid.
  * @param __MODE__ USART communication mode.
  * @retval SET (__MODE__ is valid) or RESET (__MODE__ is invalid)
  */
-#define IS_USART_MODE(__MODE__)                                                \
-	((((__MODE__) & 0xFFFFFFF3U) == 0x00U) && ((__MODE__) != 0x00U))
+#define IS_USART_MODE(__MODE__) ((((__MODE__) & 0xFFFFFFF3U) == 0x00U) && ((__MODE__) != 0x00U))
 
 /**
  * @brief Ensure that USART clock state is valid.
  * @param __CLOCK__ USART clock state.
  * @retval SET (__CLOCK__ is valid) or RESET (__CLOCK__ is invalid)
  */
-#define IS_USART_CLOCK(__CLOCK__)                                              \
-	(((__CLOCK__) == USART_CLOCK_DISABLE) ||                               \
-	 ((__CLOCK__) == USART_CLOCK_ENABLE))
+#define IS_USART_CLOCK(__CLOCK__) (((__CLOCK__) == USART_CLOCK_DISABLE) || ((__CLOCK__) == USART_CLOCK_ENABLE))
 
 /**
  * @brief Ensure that USART frame polarity is valid.
  * @param __CPOL__ USART frame polarity.
  * @retval SET (__CPOL__ is valid) or RESET (__CPOL__ is invalid)
  */
-#define IS_USART_POLARITY(__CPOL__)                                            \
-	(((__CPOL__) == USART_POLARITY_LOW) ||                                 \
-	 ((__CPOL__) == USART_POLARITY_HIGH))
+#define IS_USART_POLARITY(__CPOL__) (((__CPOL__) == USART_POLARITY_LOW) || ((__CPOL__) == USART_POLARITY_HIGH))
 
 /**
  * @brief Ensure that USART frame phase is valid.
  * @param __CPHA__ USART frame phase.
  * @retval SET (__CPHA__ is valid) or RESET (__CPHA__ is invalid)
  */
-#define IS_USART_PHASE(__CPHA__)                                               \
-	(((__CPHA__) == USART_PHASE_1EDGE) || ((__CPHA__) == USART_PHASE_2EDGE))
+#define IS_USART_PHASE(__CPHA__) (((__CPHA__) == USART_PHASE_1EDGE) || ((__CPHA__) == USART_PHASE_2EDGE))
 
 /**
  * @brief Ensure that USART frame last bit clock pulse setting is valid.
  * @param __LASTBIT__ USART frame last bit clock pulse setting.
  * @retval SET (__LASTBIT__ is valid) or RESET (__LASTBIT__ is invalid)
  */
-#define IS_USART_LASTBIT(__LASTBIT__)                                          \
-	(((__LASTBIT__) == USART_LASTBIT_DISABLE) ||                           \
-	 ((__LASTBIT__) == USART_LASTBIT_ENABLE))
+#define IS_USART_LASTBIT(__LASTBIT__) (((__LASTBIT__) == USART_LASTBIT_DISABLE) || ((__LASTBIT__) == USART_LASTBIT_ENABLE))
 
 /**
  * @brief Ensure that USART request parameter is valid.
  * @param __PARAM__ USART request parameter.
  * @retval SET (__PARAM__ is valid) or RESET (__PARAM__ is invalid)
  */
-#define IS_USART_REQUEST_PARAMETER(__PARAM__)                                  \
-	(((__PARAM__) == USART_RXDATA_FLUSH_REQUEST) ||                        \
-	 ((__PARAM__) == USART_TXDATA_FLUSH_REQUEST))
+#define IS_USART_REQUEST_PARAMETER(__PARAM__) (((__PARAM__) == USART_RXDATA_FLUSH_REQUEST) || ((__PARAM__) == USART_TXDATA_FLUSH_REQUEST))
 
 /**
  * @brief Ensure that USART Prescaler is valid.
@@ -1174,19 +986,11 @@ typedef void (*pUSART_CallbackTypeDef)(
  * @retval SET (__CLOCKPRESCALER__ is valid) or RESET (__CLOCKPRESCALER__ is
  * invalid)
  */
-#define IS_USART_PRESCALER(__CLOCKPRESCALER__)                                 \
-	(((__CLOCKPRESCALER__) == USART_PRESCALER_DIV1) ||                     \
-	 ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV2) ||                     \
-	 ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV4) ||                     \
-	 ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV6) ||                     \
-	 ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV8) ||                     \
-	 ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV10) ||                    \
-	 ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV12) ||                    \
-	 ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV16) ||                    \
-	 ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV32) ||                    \
-	 ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV64) ||                    \
-	 ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV128) ||                   \
-	 ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV256))
+#define IS_USART_PRESCALER(__CLOCKPRESCALER__)                                                                                                                                                         \
+	(((__CLOCKPRESCALER__) == USART_PRESCALER_DIV1) || ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV2) || ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV4) ||                                         \
+	 ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV6) || ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV8) || ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV10) ||                                        \
+	 ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV12) || ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV16) || ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV32) ||                                      \
+	 ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV64) || ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV128) || ((__CLOCKPRESCALER__) == USART_PRESCALER_DIV256))
 
 /**
  * @}
@@ -1213,13 +1017,8 @@ void HAL_USART_MspDeInit(USART_HandleTypeDef *husart);
 
 /* Callbacks Register/UnRegister functions  ***********************************/
 #if (USE_HAL_USART_REGISTER_CALLBACKS == 1)
-HAL_StatusTypeDef
-HAL_USART_RegisterCallback(USART_HandleTypeDef *husart,
-			   HAL_USART_CallbackIDTypeDef CallbackID,
-			   pUSART_CallbackTypeDef pCallback);
-HAL_StatusTypeDef
-HAL_USART_UnRegisterCallback(USART_HandleTypeDef *husart,
-			     HAL_USART_CallbackIDTypeDef CallbackID);
+HAL_StatusTypeDef HAL_USART_RegisterCallback(USART_HandleTypeDef *husart, HAL_USART_CallbackIDTypeDef CallbackID, pUSART_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_USART_UnRegisterCallback(USART_HandleTypeDef *husart, HAL_USART_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_USART_REGISTER_CALLBACKS */
 
 /**
@@ -1231,32 +1030,16 @@ HAL_USART_UnRegisterCallback(USART_HandleTypeDef *husart,
  */
 
 /* IO operation functions *****************************************************/
-HAL_StatusTypeDef HAL_USART_Transmit(USART_HandleTypeDef *husart,
-				     const uint8_t *pTxData, uint16_t Size,
-				     uint32_t Timeout);
-HAL_StatusTypeDef HAL_USART_Receive(USART_HandleTypeDef *husart,
-				    uint8_t *pRxData, uint16_t Size,
-				    uint32_t Timeout);
-HAL_StatusTypeDef HAL_USART_TransmitReceive(USART_HandleTypeDef *husart,
-					    const uint8_t *pTxData,
-					    uint8_t *pRxData, uint16_t Size,
-					    uint32_t Timeout);
-HAL_StatusTypeDef HAL_USART_Transmit_IT(USART_HandleTypeDef *husart,
-					const uint8_t *pTxData, uint16_t Size);
-HAL_StatusTypeDef HAL_USART_Receive_IT(USART_HandleTypeDef *husart,
-				       uint8_t *pRxData, uint16_t Size);
-HAL_StatusTypeDef HAL_USART_TransmitReceive_IT(USART_HandleTypeDef *husart,
-					       const uint8_t *pTxData,
-					       uint8_t *pRxData, uint16_t Size);
+HAL_StatusTypeDef HAL_USART_Transmit(USART_HandleTypeDef *husart, const uint8_t *pTxData, uint16_t Size, uint32_t Timeout);
+HAL_StatusTypeDef HAL_USART_Receive(USART_HandleTypeDef *husart, uint8_t *pRxData, uint16_t Size, uint32_t Timeout);
+HAL_StatusTypeDef HAL_USART_TransmitReceive(USART_HandleTypeDef *husart, const uint8_t *pTxData, uint8_t *pRxData, uint16_t Size, uint32_t Timeout);
+HAL_StatusTypeDef HAL_USART_Transmit_IT(USART_HandleTypeDef *husart, const uint8_t *pTxData, uint16_t Size);
+HAL_StatusTypeDef HAL_USART_Receive_IT(USART_HandleTypeDef *husart, uint8_t *pRxData, uint16_t Size);
+HAL_StatusTypeDef HAL_USART_TransmitReceive_IT(USART_HandleTypeDef *husart, const uint8_t *pTxData, uint8_t *pRxData, uint16_t Size);
 #if defined(HAL_DMA_MODULE_ENABLED)
-HAL_StatusTypeDef HAL_USART_Transmit_DMA(USART_HandleTypeDef *husart,
-					 const uint8_t *pTxData, uint16_t Size);
-HAL_StatusTypeDef HAL_USART_Receive_DMA(USART_HandleTypeDef *husart,
-					uint8_t *pRxData, uint16_t Size);
-HAL_StatusTypeDef HAL_USART_TransmitReceive_DMA(USART_HandleTypeDef *husart,
-						const uint8_t *pTxData,
-						uint8_t *pRxData,
-						uint16_t Size);
+HAL_StatusTypeDef HAL_USART_Transmit_DMA(USART_HandleTypeDef *husart, const uint8_t *pTxData, uint16_t Size);
+HAL_StatusTypeDef HAL_USART_Receive_DMA(USART_HandleTypeDef *husart, uint8_t *pRxData, uint16_t Size);
+HAL_StatusTypeDef HAL_USART_TransmitReceive_DMA(USART_HandleTypeDef *husart, const uint8_t *pTxData, uint8_t *pRxData, uint16_t Size);
 HAL_StatusTypeDef HAL_USART_DMAPause(USART_HandleTypeDef *husart);
 HAL_StatusTypeDef HAL_USART_DMAResume(USART_HandleTypeDef *husart);
 HAL_StatusTypeDef HAL_USART_DMAStop(USART_HandleTypeDef *husart);
