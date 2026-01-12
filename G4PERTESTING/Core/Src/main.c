@@ -32,7 +32,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "Logomatic.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -63,10 +63,22 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-static int toggleze = 0;
+/* Enable ITM for SWO output */
+static void ITM_Enable(void)
+{
+	/* Enable TRC (Trace) */
+	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
 
-void DEBUG_callback (void* data, uint32_t size) {
-	toggleze = (*((char*) data) & 0x80);
+	/* Enable stimulus port 0 */
+	ITM->TER |= (1UL << 0);
+
+	/* Set trace control register */
+	ITM->TCR |= ITM_TCR_ITMENA_Msk;
+}
+static int toggleze = 0;
+void DEBUG_callback(void *data, uint32_t size)
+{
+	toggleze = (*((char *)data) & 0x80);
 }
 
 /* USER CODE END 0 */
@@ -88,7 +100,7 @@ int main(void)
 	 * Systick. */
 	HAL_Init();
 	/* USER CODE BEGIN Init */
-
+	ITM_Enable();
 	/* USER CODE END Init */
 
 	/* Configure the system clock */
@@ -111,7 +123,7 @@ int main(void)
 
 	/* USER CODE BEGIN 2 */
 
-
+	LOGOMATIC("Booted!\n");
 	can_test();
 
 	/* Infinite loop */
@@ -120,12 +132,11 @@ int main(void)
 		/* USER CODE END WHILE */
 
 		// Receive on GPIOs
-		//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, toggleze ? GPIO_PIN_SET : GPIO_PIN_RESET);
-		//HAL_Delay(1000);
-		//msg.data[0] = toggleze ? 0x00 : 0x80; 
-		//can_send(can2Handle, &msg);
+		// HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, toggleze ? GPIO_PIN_SET
+		// : GPIO_PIN_RESET); HAL_Delay(1000); msg.data[0] = toggleze ?
+		// 0x00 : 0x80; can_send(can2Handle, &msg);
 
-		//RCC->CFGR |= RCC_CFGR_SW;
+		// RCC->CFGR |= RCC_CFGR_SW;
 		/* USER CODE BEGIN 3 */
 	}
 }
@@ -140,13 +151,13 @@ void SystemClock_Config(void)
 	while (LL_FLASH_GetLatency() != LL_FLASH_LATENCY_4) {
 	}
 	LL_PWR_EnableRange1BoostMode();
-	LL_RCC_HSE_Enable();
-	/* Wait till HSE is ready */
-	while (LL_RCC_HSE_IsReady() != 1) {
+	LL_RCC_HSI_Enable();
+	/* Wait till HSI is ready */
+	while (LL_RCC_HSI_IsReady() != 1) {
 	}
 
-	LL_RCC_HSE_EnableCSS();
-	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE, LL_RCC_PLLM_DIV_1, 20,
+	LL_RCC_HSI_SetCalibTrimming(64);
+	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 85,
 				    LL_RCC_PLLR_DIV_2);
 	LL_RCC_PLL_EnableDomain_SYS();
 	LL_RCC_PLL_Enable();
@@ -168,7 +179,7 @@ void SystemClock_Config(void)
 	LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
 	LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
 	LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
-	LL_SetSystemCoreClock(160000000);
+	LL_SetSystemCoreClock(170000000);
 
 	/* Update the time base */
 	if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK) {

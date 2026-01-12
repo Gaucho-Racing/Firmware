@@ -19,6 +19,15 @@
 			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target ECU"
 		},
 		{
+			"label": "CMake: configure and build G4PERTESTING",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"CMake: configure"
+			],
+			"command": "cmake --build build/${command:cmake.activeBuildPresetName} --target G4PERTESTING"
+		},
+		{
 			"label": "CMake: configure and build G4HELLO",
 			"type": "shell",
 			"dependsOrder": "sequence",
