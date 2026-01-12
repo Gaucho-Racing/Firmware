@@ -1,11 +1,10 @@
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
+typedef enum { // State Machine
 
-typedef enum{ //State Machine
-
-    CCU_STATE_IDLE = 0, //Transition: Told to charge AND checks passed
-    CCU_STATE_CHARGING, //Transition: Told to stop OR fault
+	CCU_STATE_IDLE = 0, // Transition: Told to charge AND checks passed
+	CCU_STATE_CHARGING, // Transition: Told to stop OR fault
 
 } ccu_state_t;
 
@@ -37,16 +36,13 @@ typedef struct{
     //bool ACU_S2_STATE;
     //bool ACU_S2_SOFTWARE_LATCH;
 
-    //ACU_STATUS_3
-    uint16_t ACU_S3_HV_INPUTVolt;
-    uint16_t ACU_S3_HV_OUTPUTVolt;
-    uint16_t ACU_S3_HV_INPUTCurr;
-    uint16_t ACU_S3_HV_OUTPUTCurr;
+	// ACU_STATUS_3
+	uint16_t ACU_S3_HV_INPUTVolt;
+	uint16_t ACU_S3_HV_OUTPUTVolt;
+	uint16_t ACU_S3_HV_INPUTCurr;
+	uint16_t ACU_S3_HV_OUTPUTCurr;
 
-    //ACU_PRECHARGE
-    bool ACU_PRECHARGE_SET_TS_ACTIVE;
+	// ACU_PRECHARGE
+	bool ACU_PRECHARGE_SET_TS_ACTIVE;
 
-
-} CCU_StateData; 
-
-
+} CCU_StateData;
