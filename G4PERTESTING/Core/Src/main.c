@@ -24,9 +24,10 @@
 #include "fdcan.h"
 #include "gpio.h"
 #include "i2c.h"
-#include "stm32g4xx_hal_ospi.h"
+// #include "stm32g4xx_hal_ospi.h"
 #include "tim.h"
 #include "usart.h"
+
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -75,8 +76,8 @@ int main(void)
 	static GR_SPI_Handler ex_handler;
 	static LL_SPI_InitTypeDef ex_config;
 	static GR_SPI_Pins ex_pins;
-	HAL_OSPI_HandleTypeDef hospi;
-	HAL_StatusTypeDef status;
+	/*HAL_OSPI_HandleTypeDef hospi;
+	HAL_StatusTypeDef status;*/
 
 	/* USER CODE END 1 */
 
@@ -267,9 +268,10 @@ void Error_Handler(void)
 	 * state */
 	__disable_irq();
 	while (1) {
-		if (HAL_OSPI_GetState(&hospi) == ERROR) {
+		if(HAL_OSPI_GetState(&hospi) == ERROR){
+			
 		}
-	}
+	}*/
 	/* USER CODE END Error_Handler_Debug */
 }
 #ifdef USE_FULL_ASSERT
