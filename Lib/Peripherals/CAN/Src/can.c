@@ -209,7 +209,7 @@ CANHandle* can_init(const CANConfig *config) {
     return canHandle; 
 }
 
-inline int can_set_clk_source(uint32_t clksource) { LL_RCC_SetFDCANClockSource(clksource); }
+inline int can_set_clksource(uint32_t clksource) { LL_RCC_SetFDCANClockSource(clksource); }
 
 
 //only valid for #STM32G474x, must redefine for each family

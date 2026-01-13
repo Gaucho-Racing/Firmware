@@ -11,7 +11,7 @@ int can_test_instance(FDCAN_HandleTypeDef) {
 
 void can_test_rx_callback(void*data, uint32_t size) {
     //Is within an ISR, so needs to exit quickly
-    return;
+    return;//
 }
 
 int can_test(void) {
@@ -21,6 +21,7 @@ int can_test(void) {
 
 	canCfg.hal_fdcan_init.ClockDivider = FDCAN_CLOCK_DIV1;
 	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_FD_NO_BRS;
+	canCfg.hal_fdcan_init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
 	canCfg.hal_fdcan_init.Mode = FDCAN_MODE_INTERNAL_LOOPBACK;
 	canCfg.hal_fdcan_init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
 	canCfg.hal_fdcan_init.AutoRetransmission = ENABLE;
@@ -68,6 +69,7 @@ int can_test(void) {
 		.TxFrameType = FDCAN_DATA_FRAME,
 		.ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
 			// FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
+		.DataLength = 1, 
 		.BitRateSwitch = FDCAN_BRS_OFF,
 		.TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
 		.MessageMarker = 0 // also change this to a real address if you change fifo control
@@ -75,6 +77,7 @@ int can_test(void) {
 
 	FDCANTxMessage msg;
 	msg.data[0] = 0x80;
+	//memset(&(msg.data), 0, ); 
 	msg.tx_header = TxHeader;
 
 
@@ -104,6 +107,7 @@ int can_test(void) {
     //API Testing
     can_init(&canCfg);
 
+	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1); 
     can_start(can2Handle);
 
     can_send(can2Handle, &msg);
