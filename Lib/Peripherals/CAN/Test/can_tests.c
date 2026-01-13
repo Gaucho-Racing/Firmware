@@ -1,5 +1,6 @@
 #include "can_tests.h"
 #include "can.h"
+#include <string.h>
 
 //each family has a constant number of CAN peripherals 
 
@@ -65,6 +66,8 @@ int can_test(void) {
 	/* USER CODE END 2 */
 
 	FDCAN_TxHeaderTypeDef TxHeader = {
+		.Identifier = 1, 
+
 		.IdType = FDCAN_STANDARD_ID,
 		.TxFrameType = FDCAN_DATA_FRAME,
 		.ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
@@ -77,7 +80,7 @@ int can_test(void) {
 
 	FDCANTxMessage msg;
 	msg.data[0] = 0x80;
-	//memset(&(msg.data), 0, ); 
+	memset(&(msg.data), 0, sizeof(msg.data)); 
 	msg.tx_header = TxHeader;
 
 
@@ -96,16 +99,24 @@ int can_test(void) {
     canCfg.init_tx_gpio.Pin = GPIO_PIN_13;
     canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN2;
 
+	FDCAN_FilterTypeDef filter;
+	filter.IdType = FDCAN_STANDARD_ID;
+	filter.FilterIndex = 0;
+	filter.FilterType = FDCAN_FILTER_RANGE,
+	filter.FilterConfig = FDCAN_FILTER_REJECT;
+	filter.FilterID1 = 0x00;
+	filter.FilterID2 = 0x02;
+
     CANHandle *can2Handle = can_init(&canCfg);
 
     //accept unmatched standard and extended frames into RXFIFO0 - default behaviour
-    HAL_FDCAN_ConfigGlobalFilter(can2Handle->hal_fdcanP, FDCAN_ACCEPT_IN_RX_FIFO0, 0, 0,0); 
+    HAL_FDCAN_ConfigGlobalFilter(can2Handle->hal_fdcanP, 0, 0, 0,0); 
 
     //not accepting filters
-    //can_add_filter(can2Handle, &filter);
+    can_add_filter(can2Handle, &filter);
 
     //API Testing
-    can_init(&canCfg);
+    //can_init(&canCfg);
 
 	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1); 
     can_start(can2Handle);

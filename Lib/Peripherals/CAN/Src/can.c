@@ -399,8 +399,8 @@ int can_add_filter(CANHandle* canHandle, FDCAN_FilterTypeDef *filter){
         return -1; 
     }
 
-    if ( !(canHandle->init && canHandle->started) ) {
-        LOGOMATIC("CAN_add_filter: can instance is not started and initialized");
+    if ( !canHandle->init || canHandle->started ) {
+        LOGOMATIC("CAN_add_filter: can instance is not initialized or already started");
         return -1; 
     }
 
@@ -537,7 +537,8 @@ int can_send(CANHandle* canHandle, FDCANTxMessage* message) {
     //IF TX Fifos are not full, send directly to them
     //If TX Fifos are full, append to circular buffer
     //If circular buffer is full, return an error code
-    if (HAL_FDCAN_GetTxFifoFreeLevel(canHandle->hal_fdcanP) > 0) {
+    uint32_t free = HAL_FDCAN_GetTxFifoFreeLevel(canHandle->hal_fdcanP); 
+    if (free > 0) {
         HAL_StatusTypeDef status = HAL_FDCAN_AddMessageToTxFifoQ(
             canHandle->hal_fdcanP, 
             &(message->tx_header), 
