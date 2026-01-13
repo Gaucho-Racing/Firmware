@@ -138,7 +138,7 @@ void DMA_Init(DMA_TypeDef *DMA, DMA_Channel channel, uint32_t src_address, uint3
 	LL_DMA_Init(DMA, channel, &config);
 }
 
-//TODO: Make this a define in .h
+// TODO: Make this a define in .h
 const int WINDOW_SIZE = 100;
 struct {
 	uint16_t adc1buf[6];
