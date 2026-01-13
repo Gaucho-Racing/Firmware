@@ -28,7 +28,6 @@
 #include "tim.h"
 #include "usart.h"
 
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "spi.h"
@@ -268,10 +267,10 @@ void Error_Handler(void)
 	 * state */
 	__disable_irq();
 	while (1) {
-		if(HAL_OSPI_GetState(&hospi) == ERROR){
-			
+		if (HAL_OSPI_GetState(&hospi) == ERROR) {
 		}
-	}*/
+	}
+	* /
 	/* USER CODE END Error_Handler_Debug */
 }
 #ifdef USE_FULL_ASSERT
