@@ -26,10 +26,10 @@
 #include "gpio.h"
 #include "gr_adc.h"
 #include "i2c.h"
+#include "malloc.h"
 #include "spi.h"
 #include "tim.h"
 #include "usart.h"
-#include "malloc.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -153,7 +153,7 @@ int main(void)
 	/* USER CODE BEGIN 2 */
 	ADC_Configure();
 	/* USER CODE END 2 */
-	adcDataValues[0] = malloc(sizeof(uint16_t)*WINDOW_SIZE);
+	adcDataValues[0] = malloc(sizeof(uint16_t) * WINDOW_SIZE);
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
@@ -172,7 +172,7 @@ int main(void)
 		ADC_UpdateAnalogValues(adcDataValues, buffers, NUM_SIGNALS, WINDOW_SIZE, outputs);
 		LOGOMATIC("Moving Average: %u\n", outputs[0]);
 	}
-	
+
 	free(adcDataValues[0]);
 }
 
