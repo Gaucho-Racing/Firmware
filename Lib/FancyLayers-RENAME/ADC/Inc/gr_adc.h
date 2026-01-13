@@ -3,8 +3,6 @@
 #ifndef GR_PERIPHERALS_ADC
 #define GR_PERIPHERALS_ADC
 
-#define WINDOW_SIZE 100
-
 void ADC_Enable_And_Calibrate(ADC_TypeDef *ADC);
 
 // What the prescaler value
