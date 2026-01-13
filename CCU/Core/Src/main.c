@@ -104,11 +104,11 @@ int main(void)
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
-	MX_DMA_Init();
-	MX_FDCAN1_Init();
-	MX_FDCAN2_Init();
-	MX_ADC1_Init();
-	MX_ADC2_Init();
+	// MX_DMA_Init();
+	// MX_FDCAN1_Init();
+	// MX_FDCAN2_Init();
+	// MX_ADC1_Init();
+	// MX_ADC2_Init();
 	MX_LPUART1_UART_Init();
 	/* USER CODE BEGIN 2 */
 
@@ -116,14 +116,24 @@ int main(void)
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
+	LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_13);
+	uint32_t on = 0;
 	while (1) {
-		/* USER CODE END WHILE */
+		/*LL_GPIO_SetOutputPin (GPIOC, LL_GPIO_PIN_13);*/
 
-		/* USER CODE BEGIN 3 */
-		LOGOMATIC("Main Loop Tick Complete. I like Pi %f\n", 3.14159265);
+		if (LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_13)) {
+			if (on == 0) {
+				on = 1;
+				LOGOMATIC("On\n");
+			} else {
+				on = 0;
+				LOGOMATIC("Off\n");
+			}
+		}
 		LL_mDelay(250); // FIXME Reduce or remove delay
+
+		/* USER CODE END 3 */
 	}
-	/* USER CODE END 3 */
 }
 
 /**
