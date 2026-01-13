@@ -14,7 +14,7 @@ void CCU_State_Tick(void)
 
 	// FIXME:
 	switch (state) { // if given an error, switch state to IDLE; warnings will remain placeholders until better understood
-			// General checks for State Transition, if any error detected, transition back to IDLE state
+			 // General checks for State Transition, if any error detected, transition back to IDLE state
 
 		case CCU_STATE_IDLE:
 			// TODO: Create IDLE func elsewhere & Call state IDLE functio
