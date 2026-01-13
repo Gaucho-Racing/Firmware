@@ -1,6 +1,6 @@
-#include "CCUStateData.h"
-
 #include <string.h>
+
+#include "CCUStateData.h"
 
 // FIXME: Currently defining check to switch CCU state from idle to charging and etc.
 
@@ -19,8 +19,8 @@ void CCU_State_Tick(void){
 		// General checks for State Transition, if any error detected, transition back to IDLE state
 
 		case CCU_STATE_IDLE:
-			//TODO: Create IDLE func elsewhere & Call state IDLE functio
-		
+			// TODO: Create IDLE func elsewhere & Call state IDLE functio
+
 		case CCU_STATE_CHARGING:
 			//TODO: Create Charging func elsewhere & Call charging func
 
