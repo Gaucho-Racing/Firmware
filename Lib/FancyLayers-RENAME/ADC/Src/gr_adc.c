@@ -138,14 +138,15 @@ void DMA_Init(DMA_TypeDef *DMA, DMA_Channel channel, uint32_t src_address, uint3
 	LL_DMA_Init(DMA, channel, &config);
 }
 
+//TODO: Make this a define in .h
 const int WINDOW_SIZE = 100;
 struct {
 	uint16_t adc1buf[6];
 	uint16_t adc2buf[5];
 } adcBuffers;
 
-// float adcSumValues[11];
-// uint16_t adcDataValues[11][WINDOW_SIZE] = {0};
+// float adcSumValues[NUM_PINS];
+// uint16_t adcDataValues[NUM_PINS][WINDOW_SIZE] = {0};
 // uint8_t readIndex = 0;
 
 // void ADC_UpdateSmooth() {
