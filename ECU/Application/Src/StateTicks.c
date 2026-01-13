@@ -21,10 +21,10 @@ ECU_StateData stateLump = {0};
 
 void ECU_State_Tick(void)
 {
-	if(stateLump.lastECUStatusMsgTick >= ECU_STATUS_MSG_PERIOD){
+	if (stateLump.lastECUStatusMsgTick >= ECU_STATUS_MSG_PERIOD) {
 		LOGOMATIC("ECU Current State: %d\n", stateLump.ecu_state);
 		stateLump.lastECUStatusMsgTick = 0;
-	} else{
+	} else {
 		stateLump.lastECUStatusMsgTick++;
 	}
 
@@ -71,7 +71,7 @@ void ECU_GLV_Off(ECU_StateData *stateData)
 
 void ECU_GLV_On(ECU_StateData *stateData)
 {
-	if(stateData->ts_voltage >= 60){ // should never happen but has to be accounted for
+	if (stateData->ts_voltage >= 60) { // should never happen but has to be accounted for
 		ECU_Tractive_System_Discharge_Start(stateData);
 		// emit an error
 		return;
@@ -91,7 +91,7 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 		return;
 	}
 	// TODO Implement functionality
-	if(!stateData->ts_active_button_engaged || CommunicationError(stateData)){
+	if (!stateData->ts_active_button_engaged || CommunicationError(stateData)) {
 		ECU_Tractive_System_Discharge_Start(stateData);
 		return;
 	}
@@ -123,13 +123,13 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 	*/
 
 	// Pseudocode
-	if(stateData->ts_active_button_engaged || CriticalError(stateData)){
+	if (stateData->ts_active_button_engaged || CriticalError(stateData)) {
 		ECU_Tractive_System_Discharge_Start(stateData);
 		// emit an error
 		return;
 	}
 
-	if(PressingBrake(stateData) && stateData->rtd_button_engaged){
+	if (PressingBrake(stateData) && stateData->rtd_button_engaged) {
 		stateData->ecu_state = GR_DRIVE_ACTIVE;
 	}
 }
@@ -162,22 +162,23 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		 - make tuna-ble function
 	*/
 
-	if(!stateData->ts_active_button_engaged || CriticalError(stateData)){
+	if (!stateData->ts_active_button_engaged || CriticalError(stateData)) {
 		ECU_Tractive_System_Discharge_Start(stateData);
 		return;
 	}
 
-	if(!stateData->rtd_button_engaged){
+	if (!stateData->rtd_button_engaged) {
 		stateData->ecu_state = GR_PRECHARGE_COMPLETE;
 		// emit a warning if not moving
 		return;
 	}
 }
 
-void ECU_Tractive_System_Discharge_Start(ECU_StateData *stateData) {
-		stateData->ecu_state = GR_TS_DISCHARGE;
-		LOGOMATIC("tell the BCU to discharge TS");
-		stateData->dischargeStartMillis = 0;
+void ECU_Tractive_System_Discharge_Start(ECU_StateData *stateData)
+{
+	stateData->ecu_state = GR_TS_DISCHARGE;
+	LOGOMATIC("tell the BCU to discharge TS");
+	stateData->dischargeStartMillis = 0;
 }
 
 void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
@@ -198,12 +199,12 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 	   see #129
 	*/
 	// TODO: Determine the maximum time to wait for TC to discharge.
-	if(stateData->dischargeStartMillis > TRACTIVE_SYSTEM_MAX_DISCHARGE_TIME){
+	if (stateData->dischargeStartMillis > TRACTIVE_SYSTEM_MAX_DISCHARGE_TIME) {
 		// TODO: Research appropriate ways to buffer warning messages.
 		LOGOMATIC("Tractive System fails to discharge in time.");
 	}
 
-	if(stateData->dischargeStartMillis < INT32_MAX){
+	if (stateData->dischargeStartMillis < INT32_MAX) {
 		stateData->dischargeStartMillis++;
 	}
 }
