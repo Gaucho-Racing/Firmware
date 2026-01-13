@@ -122,8 +122,7 @@ int main(void)
 
 		/* USER CODE BEGIN 3 */
 		ECU_State_Tick();
-		LOGOMATIC("Main Loop Tick Complete. I like Pi %f\n",
-			  3.14159265);
+		LOGOMATIC("Main Loop Tick Complete. I like Pi %f\n", 3.14159265);
 		LL_mDelay(250); // FIXME Reduce or remove delay
 	}
 	/* USER CODE END 3 */
@@ -145,8 +144,7 @@ void SystemClock_Config(void)
 	}
 
 	LL_RCC_HSI_SetCalibTrimming(64);
-	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 85,
-				    LL_RCC_PLLR_DIV_2);
+	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 85, LL_RCC_PLLR_DIV_2);
 	LL_RCC_PLL_EnableDomain_SYS();
 	LL_RCC_PLL_Enable();
 	/* Wait till PLL is ready */

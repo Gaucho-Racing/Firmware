@@ -45,9 +45,7 @@
 /** @defgroup RNG_LL_Private_Macros RNG Private Macros
  * @{
  */
-#define IS_LL_RNG_CED(__MODE__)                                                \
-	(((__MODE__) == LL_RNG_CED_ENABLE) ||                                  \
-	 ((__MODE__) == LL_RNG_CED_DISABLE))
+#define IS_LL_RNG_CED(__MODE__) (((__MODE__) == LL_RNG_CED_ENABLE) || ((__MODE__) == LL_RNG_CED_DISABLE))
 
 /**
  * @}
@@ -102,8 +100,7 @@ ErrorStatus LL_RNG_DeInit(const RNG_TypeDef *RNGx)
  * content
  *          - ERROR: not applicable
  */
-ErrorStatus LL_RNG_Init(RNG_TypeDef *RNGx,
-			const LL_RNG_InitTypeDef *RNG_InitStruct)
+ErrorStatus LL_RNG_Init(RNG_TypeDef *RNGx, const LL_RNG_InitTypeDef *RNG_InitStruct)
 {
 	/* Check the parameters */
 	assert_param(IS_RNG_ALL_INSTANCE(RNGx));

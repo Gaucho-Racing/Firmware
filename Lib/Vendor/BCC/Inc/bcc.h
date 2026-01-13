@@ -99,8 +99,7 @@ extern "C" {
  *
  * @param dev BCC device type.
  */
-#define BCC_MAX_CELLS_DEV(dev)                                                 \
-	((dev == BCC_DEVICE_MC33771C) ? MC33771C_MAX_CELLS : MC33772C_MAX_CELLS)
+#define BCC_MAX_CELLS_DEV(dev) ((dev == BCC_DEVICE_MC33771C) ? MC33771C_MAX_CELLS : MC33772C_MAX_CELLS)
 
 /*! @brief  Number of MC33771C measurement registers.
  *
@@ -145,8 +144,7 @@ extern "C" {
  *
  * @return Non-zero value if cell is connected, zero otherwise.
  */
-#define BCC_IS_CELL_CONN(drvConfig, cid, cellNo)                               \
-	((drvConfig)->drvData.cellMap[(cid) - 1U] & (1U << ((cellNo) - 1U)))
+#define BCC_IS_CELL_CONN(drvConfig, cid, cellNo) ((drvConfig)->drvData.cellMap[(cid) - 1U] & (1U << ((cellNo) - 1U)))
 
 /* Enum types definition. */
 /*!
@@ -155,30 +153,24 @@ extern "C" {
  */
 /*! @brief Error codes. */
 typedef enum {
-	BCC_STATUS_SUCCESS = 0U,     /*!< No error. */
-	BCC_STATUS_PARAM_RANGE = 1U, /*!< Parameter out of range. */
-	BCC_STATUS_SPI_FAIL = 2U,    /*!< Fail in the SPI communication. */
-	BCC_STATUS_COM_TIMEOUT = 3U, /*!< Communication timeout. */
-	BCC_STATUS_COM_ECHO = 4U, /*!< Received "echo" frame from MC33664 does
-				     not correspond to the sent frame. */
-	BCC_STATUS_COM_CRC = 5U,  /*!< Wrong CRC in the received SPI frame. */
-	BCC_STATUS_COM_MSG_CNT =
-	    6U, /*!< Received frame has a valid CRC but the message counter
-		     value does not match to the expected one. */
-	BCC_STATUS_COM_NULL =
-	    7U, /*!< Received frame has a valid CRC but all bit-fields
-		     except CRC and message counter are zero. This occurs only
-		     in SPI communication mode: during the very first message
-		     or as a response to an invalid request from MCU. */
-	BCC_STATUS_DIAG_FAIL =
-	    8U, /*!< It is not allowed to enter diagnostic mode. */
-	BCC_STATUS_EEPROM_ERROR =
-	    9U, /*!< An error occurred during the communication to EEPROM. */
+	BCC_STATUS_SUCCESS = 0U,	 /*!< No error. */
+	BCC_STATUS_PARAM_RANGE = 1U,	 /*!< Parameter out of range. */
+	BCC_STATUS_SPI_FAIL = 2U,	 /*!< Fail in the SPI communication. */
+	BCC_STATUS_COM_TIMEOUT = 3U,	 /*!< Communication timeout. */
+	BCC_STATUS_COM_ECHO = 4U,	 /*!< Received "echo" frame from MC33664 does
+					    not correspond to the sent frame. */
+	BCC_STATUS_COM_CRC = 5U,	 /*!< Wrong CRC in the received SPI frame. */
+	BCC_STATUS_COM_MSG_CNT = 6U,	 /*!< Received frame has a valid CRC but the message counter
+					      value does not match to the expected one. */
+	BCC_STATUS_COM_NULL = 7U,	 /*!< Received frame has a valid CRC but all bit-fields
+					      except CRC and message counter are zero. This occurs only
+					      in SPI communication mode: during the very first message
+					      or as a response to an invalid request from MCU. */
+	BCC_STATUS_DIAG_FAIL = 8U,	 /*!< It is not allowed to enter diagnostic mode. */
+	BCC_STATUS_EEPROM_ERROR = 9U,	 /*!< An error occurred during the communication to EEPROM. */
 	BCC_STATUS_EEPROM_PRESENT = 10U, /*!< No EEPROM detected. */
-	BCC_STATUS_DATA_RDY =
-	    11U, /*!< A new sequence of conversions is currently running. */
-	BCC_STATUS_TIMEOUT_START =
-	    12U /*!< An error reported in BCC_MCU_StartTimeout function. */
+	BCC_STATUS_DATA_RDY = 11U,	 /*!< A new sequence of conversions is currently running. */
+	BCC_STATUS_TIMEOUT_START = 12U	 /*!< An error reported in BCC_MCU_StartTimeout function. */
 } bcc_status_t;
 
 /*! @brief Cluster Identification Address.
@@ -275,134 +267,92 @@ typedef enum {
 typedef enum {
 	BCC_MSR_CC_NB_SAMPLES = 0U, /*!< Number of samples in Coulomb counter
 				       (register CC_NB_SAMPLES). */
-	BCC_MSR_COULOMB_CNT1 =
-	    1U, /*!< Coulomb counting accumulator (register COULOMB_CNT1). */
-	BCC_MSR_COULOMB_CNT2 =
-	    2U, /*!< Coulomb counting accumulator (register COULOMB_CNT2). */
-	BCC_MSR_ISENSE1 =
-	    3U, /*!< ISENSE measurement (register MEAS_ISENSE1). */
-	BCC_MSR_ISENSE2 =
-	    4U, /*!< ISENSE measurement (register MEAS_ISENSE2). */
-	BCC_MSR_STACK_VOLT =
-	    5U, /*!< Stack voltage measurement (register MEAS_STACK). */
-	BCC_MSR_CELL_VOLT14 =
-	    6U, /*!< Cell 14 voltage measurement (register MEAS_CELL14). */
-	BCC_MSR_CELL_VOLT13 =
-	    7U, /*!< Cell 13 voltage measurement (register MEAS_CELL13). */
-	BCC_MSR_CELL_VOLT12 =
-	    8U, /*!< Cell 12 voltage measurement (register MEAS_CELL12). */
-	BCC_MSR_CELL_VOLT11 =
-	    9U, /*!< Cell 11 voltage measurement (register MEAS_CELL11). */
-	BCC_MSR_CELL_VOLT10 =
-	    10U, /*!< Cell 10 voltage measurement (register MEAS_CELL10). */
-	BCC_MSR_CELL_VOLT9 =
-	    11U, /*!< Cell 9 voltage measurement (register MEAS_CELL9). */
-	BCC_MSR_CELL_VOLT8 =
-	    12U, /*!< Cell 8 voltage measurement (register MEAS_CELL8). */
-	BCC_MSR_CELL_VOLT7 =
-	    13U, /*!< Cell 7 voltage measurement (register MEAS_CELL7). */
-	BCC_MSR_CELL_VOLT6 =
-	    14U, /*!< Cell 6 voltage measurement (register MEAS_CELL6). */
-	BCC_MSR_CELL_VOLT5 =
-	    15U, /*!< Cell 5 voltage measurement (register MEAS_CELL5). */
-	BCC_MSR_CELL_VOLT4 =
-	    16U, /*!< Cell 4 voltage measurement (register MEAS_CELL4). */
-	BCC_MSR_CELL_VOLT3 =
-	    17U, /*!< Cell 3 voltage measurement (register MEAS_CELL3). */
-	BCC_MSR_CELL_VOLT2 =
-	    18U, /*!< Cell 2 voltage measurement (register MEAS_CELL2). */
-	BCC_MSR_CELL_VOLT1 =
-	    19U, /*!< Cell 1 voltage measurement (register MEAS_CELL1). */
-	BCC_MSR_AN6 =
-	    20U, /*!< Analog input 6 voltage measurement (register MEAS_AN6). */
-	BCC_MSR_AN5 =
-	    21U, /*!< Analog input 5 voltage measurement (register MEAS_AN5). */
-	BCC_MSR_AN4 =
-	    22U, /*!< Analog input 4 voltage measurement (register MEAS_AN4). */
-	BCC_MSR_AN3 =
-	    23U, /*!< Analog input 3 voltage measurement (register MEAS_AN3). */
-	BCC_MSR_AN2 =
-	    24U, /*!< Analog input 2 voltage measurement (register MEAS_AN2). */
-	BCC_MSR_AN1 =
-	    25U, /*!< Analog input 1 voltage measurement (register MEAS_AN1). */
-	BCC_MSR_AN0 =
-	    26U, /*!< Analog input 0 voltage measurement (register MEAS_AN0). */
-	BCC_MSR_ICTEMP =
-	    27U, /*!< IC temperature measurement (register MEAS_IC_TEMP). */
-	BCC_MSR_VBGADC1A = 28U, /*!< ADCIA Band Gap Reference measurement
-				   (register MEAS_VBG_DIAG_ADC1A). */
-	BCC_MSR_VBGADC1B = 29U	/*!< ADCIB Band Gap Reference measurement
-				   (register MEAS_VBG_DIAG_ADC1B). */
+	BCC_MSR_COULOMB_CNT1 = 1U,  /*!< Coulomb counting accumulator (register COULOMB_CNT1). */
+	BCC_MSR_COULOMB_CNT2 = 2U,  /*!< Coulomb counting accumulator (register COULOMB_CNT2). */
+	BCC_MSR_ISENSE1 = 3U,	    /*!< ISENSE measurement (register MEAS_ISENSE1). */
+	BCC_MSR_ISENSE2 = 4U,	    /*!< ISENSE measurement (register MEAS_ISENSE2). */
+	BCC_MSR_STACK_VOLT = 5U,    /*!< Stack voltage measurement (register MEAS_STACK). */
+	BCC_MSR_CELL_VOLT14 = 6U,   /*!< Cell 14 voltage measurement (register MEAS_CELL14). */
+	BCC_MSR_CELL_VOLT13 = 7U,   /*!< Cell 13 voltage measurement (register MEAS_CELL13). */
+	BCC_MSR_CELL_VOLT12 = 8U,   /*!< Cell 12 voltage measurement (register MEAS_CELL12). */
+	BCC_MSR_CELL_VOLT11 = 9U,   /*!< Cell 11 voltage measurement (register MEAS_CELL11). */
+	BCC_MSR_CELL_VOLT10 = 10U,  /*!< Cell 10 voltage measurement (register MEAS_CELL10). */
+	BCC_MSR_CELL_VOLT9 = 11U,   /*!< Cell 9 voltage measurement (register MEAS_CELL9). */
+	BCC_MSR_CELL_VOLT8 = 12U,   /*!< Cell 8 voltage measurement (register MEAS_CELL8). */
+	BCC_MSR_CELL_VOLT7 = 13U,   /*!< Cell 7 voltage measurement (register MEAS_CELL7). */
+	BCC_MSR_CELL_VOLT6 = 14U,   /*!< Cell 6 voltage measurement (register MEAS_CELL6). */
+	BCC_MSR_CELL_VOLT5 = 15U,   /*!< Cell 5 voltage measurement (register MEAS_CELL5). */
+	BCC_MSR_CELL_VOLT4 = 16U,   /*!< Cell 4 voltage measurement (register MEAS_CELL4). */
+	BCC_MSR_CELL_VOLT3 = 17U,   /*!< Cell 3 voltage measurement (register MEAS_CELL3). */
+	BCC_MSR_CELL_VOLT2 = 18U,   /*!< Cell 2 voltage measurement (register MEAS_CELL2). */
+	BCC_MSR_CELL_VOLT1 = 19U,   /*!< Cell 1 voltage measurement (register MEAS_CELL1). */
+	BCC_MSR_AN6 = 20U,	    /*!< Analog input 6 voltage measurement (register MEAS_AN6). */
+	BCC_MSR_AN5 = 21U,	    /*!< Analog input 5 voltage measurement (register MEAS_AN5). */
+	BCC_MSR_AN4 = 22U,	    /*!< Analog input 4 voltage measurement (register MEAS_AN4). */
+	BCC_MSR_AN3 = 23U,	    /*!< Analog input 3 voltage measurement (register MEAS_AN3). */
+	BCC_MSR_AN2 = 24U,	    /*!< Analog input 2 voltage measurement (register MEAS_AN2). */
+	BCC_MSR_AN1 = 25U,	    /*!< Analog input 1 voltage measurement (register MEAS_AN1). */
+	BCC_MSR_AN0 = 26U,	    /*!< Analog input 0 voltage measurement (register MEAS_AN0). */
+	BCC_MSR_ICTEMP = 27U,	    /*!< IC temperature measurement (register MEAS_IC_TEMP). */
+	BCC_MSR_VBGADC1A = 28U,	    /*!< ADCIA Band Gap Reference measurement
+				       (register MEAS_VBG_DIAG_ADC1A). */
+	BCC_MSR_VBGADC1B = 29U	    /*!< ADCIB Band Gap Reference measurement
+				       (register MEAS_VBG_DIAG_ADC1B). */
 } bcc_measurements_t;
 
 /*! @brief Number of samples to be averaged in the conversion request. */
 typedef enum {
-	BCC_AVG_1 =
-	    MC33771C_ADC_CFG_AVG_NO_AVERAGING_ENUM_VAL, /*!< No averaging, the
-							   result is taken as
-							   is. */
-	BCC_AVG_2 =
-	    MC33771C_ADC_CFG_AVG_2_SAMPLES_ENUM_VAL, /*!< Averaging of 2
-							consecutive samples. */
-	BCC_AVG_4 =
-	    MC33771C_ADC_CFG_AVG_4_SAMPLES_ENUM_VAL, /*!< Averaging of 4
-							consecutive samples. */
-	BCC_AVG_8 =
-	    MC33771C_ADC_CFG_AVG_8_SAMPLES_ENUM_VAL, /*!< Averaging of 8
-							consecutive samples. */
-	BCC_AVG_16 =
-	    MC33771C_ADC_CFG_AVG_16_SAMPLES_ENUM_VAL, /*!< Averaging of 16
-							 consecutive samples. */
-	BCC_AVG_32 =
-	    MC33771C_ADC_CFG_AVG_32_SAMPLES_ENUM_VAL, /*!< Averaging of 32
-							 consecutive samples. */
-	BCC_AVG_64 =
-	    MC33771C_ADC_CFG_AVG_64_SAMPLES_ENUM_VAL, /*!< Averaging of 64
-							 consecutive samples. */
-	BCC_AVG_128 =
-	    MC33771C_ADC_CFG_AVG_128_SAMPLES_ENUM_VAL, /*!< Averaging of 126
-							  consecutive samples.
-							*/
-	BCC_AVG_256 =
-	    MC33771C_ADC_CFG_AVG_256_SAMPLES_ENUM_VAL /*!< Averaging of 256
-							 consecutive samples. */
+	BCC_AVG_1 = MC33771C_ADC_CFG_AVG_NO_AVERAGING_ENUM_VAL,	 /*!< No averaging, the
+								    result is taken as
+								    is. */
+	BCC_AVG_2 = MC33771C_ADC_CFG_AVG_2_SAMPLES_ENUM_VAL,	 /*!< Averaging of 2
+								    consecutive samples. */
+	BCC_AVG_4 = MC33771C_ADC_CFG_AVG_4_SAMPLES_ENUM_VAL,	 /*!< Averaging of 4
+								    consecutive samples. */
+	BCC_AVG_8 = MC33771C_ADC_CFG_AVG_8_SAMPLES_ENUM_VAL,	 /*!< Averaging of 8
+								    consecutive samples. */
+	BCC_AVG_16 = MC33771C_ADC_CFG_AVG_16_SAMPLES_ENUM_VAL,	 /*!< Averaging of 16
+								    consecutive samples. */
+	BCC_AVG_32 = MC33771C_ADC_CFG_AVG_32_SAMPLES_ENUM_VAL,	 /*!< Averaging of 32
+								    consecutive samples. */
+	BCC_AVG_64 = MC33771C_ADC_CFG_AVG_64_SAMPLES_ENUM_VAL,	 /*!< Averaging of 64
+								    consecutive samples. */
+	BCC_AVG_128 = MC33771C_ADC_CFG_AVG_128_SAMPLES_ENUM_VAL, /*!< Averaging of 126
+								    consecutive samples.
+								  */
+	BCC_AVG_256 = MC33771C_ADC_CFG_AVG_256_SAMPLES_ENUM_VAL	 /*!< Averaging of 256
+								    consecutive samples. */
 } bcc_avg_t;
 
 /*! @brief Status provided by battery cell controller. */
 typedef enum {
-	BCC_FS_CELL_OV =
-	    0U, /*!< CT overvoltage fault (register CELL_OV_FLT). */
-	BCC_FS_CELL_UV =
-	    1U, /*!< CT undervoltage fault (register CELL_UV_FLT). */
+	BCC_FS_CELL_OV = 0U,	 /*!< CT overvoltage fault (register CELL_OV_FLT). */
+	BCC_FS_CELL_UV = 1U,	 /*!< CT undervoltage fault (register CELL_UV_FLT). */
 	BCC_FS_CB_OPEN = 2U,	 /*!< Open CB fault (register CB_OPEN_FLT). */
 	BCC_FS_CB_SHORT = 3U,	 /*!< Short CB fault (register CB_SHORT_FLT). */
 	BCC_FS_GPIO_STATUS = 4U, /*!< GPIO status (register GPIO_STS). */
-	BCC_FS_AN_OT_UT =
-	    5U, /*!< AN over and undertemperature (register AN_OT_UT_FLT). */
-	BCC_FS_GPIO_SHORT = 6U, /*!< Short GPIO/open AN diagnostic (register
-				   GPIO_SHORT_ANx_OPEN_STS). */
-	BCC_FS_COMM = 7U, /*!< Number of communication errors detected (register
-			     COM_STATUS). */
-	BCC_FS_FAULT1 = 8U, /*!< Fault status (register FAULT1_STATUS). */
-	BCC_FS_FAULT2 = 9U, /*!< Fault status (register FAULT2_STATUS). */
-	BCC_FS_FAULT3 = 10U /*!< Fault status (register FAULT3_STATUS). */
+	BCC_FS_AN_OT_UT = 5U,	 /*!< AN over and undertemperature (register AN_OT_UT_FLT). */
+	BCC_FS_GPIO_SHORT = 6U,	 /*!< Short GPIO/open AN diagnostic (register
+				    GPIO_SHORT_ANx_OPEN_STS). */
+	BCC_FS_COMM = 7U,	 /*!< Number of communication errors detected (register
+				    COM_STATUS). */
+	BCC_FS_FAULT1 = 8U,	 /*!< Fault status (register FAULT1_STATUS). */
+	BCC_FS_FAULT2 = 9U,	 /*!< Fault status (register FAULT2_STATUS). */
+	BCC_FS_FAULT3 = 10U	 /*!< Fault status (register FAULT3_STATUS). */
 } bcc_fault_status_t;
 
 /*! @brief Mode of a GPIOx/ANx pin. */
 typedef enum {
-	BCC_PIN_ANALOG_IN_RATIO =
-	    0U, /*!< Analog input for ratiometric measurement). */
-	BCC_PIN_ANALOG_IN_ABS =
-	    1U,			  /*!< Analog input for absolute measurement. */
-	BCC_PIN_DIGITAL_IN = 2U,  /*!< Digital input. */
-	BCC_PIN_DIGITAL_OUT = 3U, /*!< Digital output. */
-	BCC_PIN_WAKE_UP_IN = 4U,  /*!< Digital input with a wake-up capability
-				     (only GPIO0).  Wakes-up BCC from sleep to
-				     normal mode on any edge of GPIO0. */
-	BCC_PIN_CONVERT_TR_IN =
-	    5U /*!< Digital input with a convert trigger capability (only
-		  GPIO2). A rising edge on GPIO2 triggers an ADC1-A and ADC1-B
-		    conversion when BCC is in normal mode. */
+	BCC_PIN_ANALOG_IN_RATIO = 0U, /*!< Analog input for ratiometric measurement). */
+	BCC_PIN_ANALOG_IN_ABS = 1U,   /*!< Analog input for absolute measurement. */
+	BCC_PIN_DIGITAL_IN = 2U,      /*!< Digital input. */
+	BCC_PIN_DIGITAL_OUT = 3U,     /*!< Digital output. */
+	BCC_PIN_WAKE_UP_IN = 4U,      /*!< Digital input with a wake-up capability
+					 (only GPIO0).  Wakes-up BCC from sleep to
+					 normal mode on any edge of GPIO0. */
+	BCC_PIN_CONVERT_TR_IN = 5U    /*!< Digital input with a convert trigger capability (only
+					 GPIO2). A rising edge on GPIO2 triggers an ADC1-A and ADC1-B
+					   conversion when BCC is in normal mode. */
 } bcc_pin_mode_t;
 
 /*! @brief Unit of the result from BCC_Meas_GetIcTemperature function. */
@@ -433,14 +383,13 @@ typedef struct {
  * and the user mustn't change it at any time.
  */
 typedef struct {
-	uint16_t cellMap[BCC_DEVICE_CNT_MAX]; /*!< Bit map of used cells of each
-						 BCC device. */
-	uint8_t msgCntr[BCC_DEVICE_CNT_MAX +
-			1]; /*!< Last received value of Message counter (values
-			       0-15). MsgCntr[0] contains Message counter of
-			       CID=0. */
-	uint8_t rxBuf[BCC_RX_BUF_SIZE_TPL]; /*!< Buffer for receiving data in
-					       TPL mode. */
+	uint16_t cellMap[BCC_DEVICE_CNT_MAX];	 /*!< Bit map of used cells of each
+						    BCC device. */
+	uint8_t msgCntr[BCC_DEVICE_CNT_MAX + 1]; /*!< Last received value of Message counter (values
+						    0-15). MsgCntr[0] contains Message counter of
+						    CID=0. */
+	uint8_t rxBuf[BCC_RX_BUF_SIZE_TPL];	 /*!< Buffer for receiving data in
+						    TPL mode. */
 } bcc_drv_data_t;
 
 /*!
@@ -454,19 +403,18 @@ typedef struct {
 	uint8_t drvInstance; /*!< BCC driver instance. Passed to the external
 				functions defined by the user. */
 
-	bcc_mode_t commMode; /*!< BCC communication mode. */
-	uint8_t
-	    devicesCnt; /*!< Number of BCC devices. SPI mode allows one
-			   device only,  TPL mode allows up to 63 devices. */
+	bcc_mode_t commMode;			 /*!< BCC communication mode. */
+	uint8_t devicesCnt;			 /*!< Number of BCC devices. SPI mode allows one
+						    device only,  TPL mode allows up to 63 devices. */
 	bcc_device_t device[BCC_DEVICE_CNT_MAX]; /*!< BCC device type of
 						      [0] BCC with CID=1, [1]
 						    BCC with CID=2, etc. */
-	uint16_t cellCnt[BCC_DEVICE_CNT_MAX]; /*!< Number of connected cells to
-						 each BCC. [0] BCC with CID=1,
-						 [1] BCC with CID=2, etc. */
-	bool loopBack; /*!< Loop back mode. If False, TPL_TX_Term. (RDTX_OUT)
-			  bit is set for the last BCC device in the TPL chain.
-			    This configuration item is ignored in SPI mode. */
+	uint16_t cellCnt[BCC_DEVICE_CNT_MAX];	 /*!< Number of connected cells to
+						    each BCC. [0] BCC with CID=1,
+						    [1] BCC with CID=2, etc. */
+	bool loopBack;				 /*!< Loop back mode. If False, TPL_TX_Term. (RDTX_OUT)
+						    bit is set for the last BCC device in the TPL chain.
+						      This configuration item is ignored in SPI mode. */
 
 	bcc_drv_data_t drvData; /*!< Internal driver data. */
 } bcc_drv_config_t;
@@ -512,8 +460,7 @@ bcc_status_t BCC_Init(bcc_drv_config_t *const drvConfig);
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_SendNop(bcc_drv_config_t *const drvConfig,
-			 const bcc_cid_t cid);
+bcc_status_t BCC_SendNop(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid);
 
 /*!
  * @brief This function sets sleep mode to all battery cell controller devices.
@@ -554,8 +501,7 @@ void BCC_WakeUp(const bcc_drv_config_t *const drvConfig);
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_SoftwareReset(bcc_drv_config_t *const drvConfig,
-			       const bcc_cid_t cid);
+bcc_status_t BCC_SoftwareReset(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid);
 
 /*!
  * @brief This function resets BCC device using RESET pin.
@@ -612,9 +558,7 @@ void BCC_TPL_Disable(const uint8_t drvInstance);
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Reg_Read(bcc_drv_config_t *const drvConfig,
-			  const bcc_cid_t cid, const uint8_t regAddr,
-			  const uint8_t regCnt, uint16_t *regVal);
+bcc_status_t BCC_Reg_Read(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t regAddr, const uint8_t regCnt, uint16_t *regVal);
 
 /*!
  * @brief This function writes a value to addressed register of selected battery
@@ -628,9 +572,7 @@ bcc_status_t BCC_Reg_Read(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Reg_Write(bcc_drv_config_t *const drvConfig,
-			   const bcc_cid_t cid, const uint8_t regAddr,
-			   const uint16_t regVal);
+bcc_status_t BCC_Reg_Write(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t regAddr, const uint16_t regVal);
 
 /*!
  * @brief This function writes a value to addressed register of all configured
@@ -643,8 +585,7 @@ bcc_status_t BCC_Reg_Write(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Reg_WriteGlobal(bcc_drv_config_t *const drvConfig,
-				 const uint8_t regAddr, const uint16_t regVal);
+bcc_status_t BCC_Reg_WriteGlobal(bcc_drv_config_t *const drvConfig, const uint8_t regAddr, const uint16_t regVal);
 
 /*!
  * @brief This function updates content of a selected register; affects bits
@@ -659,9 +600,7 @@ bcc_status_t BCC_Reg_WriteGlobal(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Reg_Update(bcc_drv_config_t *const drvConfig,
-			    const bcc_cid_t cid, const uint8_t regAddr,
-			    const uint16_t regMask, const uint16_t regVal);
+bcc_status_t BCC_Reg_Update(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t regAddr, const uint16_t regMask, const uint16_t regVal);
 
 /*!
  * @brief This function starts ADC conversion in selected BCC device. It sets
@@ -678,8 +617,7 @@ bcc_status_t BCC_Reg_Update(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Meas_StartConversion(bcc_drv_config_t *const drvConfig,
-				      const bcc_cid_t cid, const bcc_avg_t avg);
+bcc_status_t BCC_Meas_StartConversion(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const bcc_avg_t avg);
 
 /*!
  * @brief This function starts ADC conversion for all devices in TPL chain. It
@@ -696,8 +634,7 @@ bcc_status_t BCC_Meas_StartConversion(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Meas_StartConversionGlobal(bcc_drv_config_t *const drvConfig,
-					    uint16_t adcCfgValue);
+bcc_status_t BCC_Meas_StartConversionGlobal(bcc_drv_config_t *const drvConfig, uint16_t adcCfgValue);
 
 /*!
  * @brief This function checks status of conversion defined by End of Conversion
@@ -709,8 +646,7 @@ bcc_status_t BCC_Meas_StartConversionGlobal(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Meas_IsConverting(bcc_drv_config_t *const drvConfig,
-				   const bcc_cid_t cid, bool *const completed);
+bcc_status_t BCC_Meas_IsConverting(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, bool *const completed);
 
 /*!
  * @brief This function starts an on-demand conversion in selected BCC device
@@ -722,8 +658,7 @@ bcc_status_t BCC_Meas_IsConverting(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Meas_StartAndWait(bcc_drv_config_t *const drvConfig,
-				   const bcc_cid_t cid, const bcc_avg_t avg);
+bcc_status_t BCC_Meas_StartAndWait(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const bcc_avg_t avg);
 
 /*!
  * @brief This function reads the measurement registers and returns raw values.
@@ -741,9 +676,7 @@ bcc_status_t BCC_Meas_StartAndWait(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Meas_GetRawValues(bcc_drv_config_t *const drvConfig,
-				   const bcc_cid_t cid,
-				   uint16_t *const measurements);
+bcc_status_t BCC_Meas_GetRawValues(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, uint16_t *const measurements);
 
 /*!
  * @brief This function reads the Coulomb counter registers.
@@ -756,9 +689,7 @@ bcc_status_t BCC_Meas_GetRawValues(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Meas_GetCoulombCounter(bcc_drv_config_t *const drvConfig,
-					const bcc_cid_t cid,
-					bcc_cc_data_t *const cc);
+bcc_status_t BCC_Meas_GetCoulombCounter(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, bcc_cc_data_t *const cc);
 
 /*!
  * @brief This function reads the ISENSE measurement and converts it to [uV].
@@ -770,9 +701,7 @@ bcc_status_t BCC_Meas_GetCoulombCounter(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Meas_GetIsenseVoltage(bcc_drv_config_t *const drvConfig,
-				       const bcc_cid_t cid,
-				       int32_t *const isenseVolt);
+bcc_status_t BCC_Meas_GetIsenseVoltage(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, int32_t *const isenseVolt);
 
 /*!
  * @brief This function reads the stack measurement and converts it to [uV].
@@ -784,9 +713,7 @@ bcc_status_t BCC_Meas_GetIsenseVoltage(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Meas_GetStackVoltage(bcc_drv_config_t *const drvConfig,
-				      const bcc_cid_t cid,
-				      uint32_t *const stackVolt);
+bcc_status_t BCC_Meas_GetStackVoltage(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, uint32_t *const stackVolt);
 
 /*!
  * @brief This function reads the cell measurements and converts them to [uV].
@@ -800,9 +727,7 @@ bcc_status_t BCC_Meas_GetStackVoltage(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Meas_GetCellVoltages(bcc_drv_config_t *const drvConfig,
-				      const bcc_cid_t cid,
-				      uint32_t *const cellVolt);
+bcc_status_t BCC_Meas_GetCellVoltages(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, uint32_t *const cellVolt);
 
 /*!
  * @brief This function reads the voltage measurement of a selected cell and
@@ -816,9 +741,7 @@ bcc_status_t BCC_Meas_GetCellVoltages(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Meas_GetCellVoltage(bcc_drv_config_t *const drvConfig,
-				     const bcc_cid_t cid, uint8_t cellIndex,
-				     uint32_t *const cellVolt);
+bcc_status_t BCC_Meas_GetCellVoltage(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, uint8_t cellIndex, uint32_t *const cellVolt);
 
 /*!
  * @brief This function reads the voltage measurement for all ANx and converts
@@ -833,9 +756,7 @@ bcc_status_t BCC_Meas_GetCellVoltage(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Meas_GetAnVoltages(bcc_drv_config_t *const drvConfig,
-				    const bcc_cid_t cid,
-				    uint32_t *const anVolt);
+bcc_status_t BCC_Meas_GetAnVoltages(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, uint32_t *const anVolt);
 
 /*!
  * @brief This function reads the voltage measurement of a selected ANx and
@@ -850,9 +771,7 @@ bcc_status_t BCC_Meas_GetAnVoltages(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Meas_GetAnVoltage(bcc_drv_config_t *const drvConfig,
-				   const bcc_cid_t cid, uint8_t anIndex,
-				   uint32_t *const anVolt);
+bcc_status_t BCC_Meas_GetAnVoltage(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, uint8_t anIndex, uint32_t *const anVolt);
 
 /*!
  * @brief This function reads the BCC temperature and converts it to the
@@ -866,10 +785,7 @@ bcc_status_t BCC_Meas_GetAnVoltage(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Meas_GetIcTemperature(bcc_drv_config_t *const drvConfig,
-				       const bcc_cid_t cid,
-				       bcc_temp_unit_t unit,
-				       int16_t *const icTemp);
+bcc_status_t BCC_Meas_GetIcTemperature(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, bcc_temp_unit_t unit, int16_t *const icTemp);
 
 /*!
  * @brief This function reads the fault status registers of the BCC device.
@@ -883,9 +799,7 @@ bcc_status_t BCC_Meas_GetIcTemperature(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Fault_GetStatus(bcc_drv_config_t *const drvConfig,
-				 const bcc_cid_t cid,
-				 uint16_t *const fltStatus);
+bcc_status_t BCC_Fault_GetStatus(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, uint16_t *const fltStatus);
 
 /*!
  * @brief This function clears selected fault status register.
@@ -897,9 +811,7 @@ bcc_status_t BCC_Fault_GetStatus(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_Fault_ClearStatus(bcc_drv_config_t *const drvConfig,
-				   const bcc_cid_t cid,
-				   const bcc_fault_status_t statSel);
+bcc_status_t BCC_Fault_ClearStatus(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const bcc_fault_status_t statSel);
 
 /*!
  * @brief This function sets the mode of one BCC GPIOx/ANx pin.
@@ -911,9 +823,7 @@ bcc_status_t BCC_Fault_ClearStatus(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_GPIO_SetMode(bcc_drv_config_t *const drvConfig,
-			      const bcc_cid_t cid, const uint8_t gpioSel,
-			      const bcc_pin_mode_t mode);
+bcc_status_t BCC_GPIO_SetMode(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t gpioSel, const bcc_pin_mode_t mode);
 
 /*!
  * @brief This function reads a value of one BCC GPIO pin.
@@ -929,9 +839,7 @@ bcc_status_t BCC_GPIO_SetMode(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_GPIO_ReadPin(bcc_drv_config_t *const drvConfig,
-			      const bcc_cid_t cid, const uint8_t gpioSel,
-			      bool *const val);
+bcc_status_t BCC_GPIO_ReadPin(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t gpioSel, bool *const val);
 
 /*!
  * @brief This function sets output value of one BCC GPIO pin.
@@ -947,9 +855,7 @@ bcc_status_t BCC_GPIO_ReadPin(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_GPIO_SetOutput(bcc_drv_config_t *const drvConfig,
-				const bcc_cid_t cid, const uint8_t gpioSel,
-				const bool val);
+bcc_status_t BCC_GPIO_SetOutput(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t gpioSel, const bool val);
 
 /*!
  * @brief This function enables or disables the cell balancing via
@@ -965,8 +871,7 @@ bcc_status_t BCC_GPIO_SetOutput(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_CB_Enable(bcc_drv_config_t *const drvConfig,
-			   const bcc_cid_t cid, const bool enable);
+bcc_status_t BCC_CB_Enable(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const bool enable);
 
 /*!
  * @brief This function enables or disables cell balancing for a specified cell
@@ -981,9 +886,7 @@ bcc_status_t BCC_CB_Enable(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_CB_SetIndividual(bcc_drv_config_t *const drvConfig,
-				  const bcc_cid_t cid, const uint8_t cellIndex,
-				  const bool enable, const uint16_t timer);
+bcc_status_t BCC_CB_SetIndividual(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t cellIndex, const bool enable, const uint16_t timer);
 
 /*!
  * @brief This function pauses cell balancing. It can be useful during an on
@@ -997,8 +900,7 @@ bcc_status_t BCC_CB_SetIndividual(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_CB_Pause(bcc_drv_config_t *const drvConfig,
-			  const bcc_cid_t cid, const bool pause);
+bcc_status_t BCC_CB_Pause(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const bool pause);
 
 /*!
  * @brief This function reads a fuse mirror register of selected BCC device.
@@ -1010,9 +912,7 @@ bcc_status_t BCC_CB_Pause(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_FuseMirror_Read(bcc_drv_config_t *const drvConfig,
-				 const bcc_cid_t cid, const uint8_t fuseAddr,
-				 uint16_t *const value);
+bcc_status_t BCC_FuseMirror_Read(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t fuseAddr, uint16_t *const value);
 
 /*!
  * @brief This function writes a fuse mirror register of selected BCC device.
@@ -1024,9 +924,7 @@ bcc_status_t BCC_FuseMirror_Read(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_FuseMirror_Write(bcc_drv_config_t *const drvConfig,
-				  const bcc_cid_t cid, const uint8_t fuseAddr,
-				  const uint16_t value);
+bcc_status_t BCC_FuseMirror_Write(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t fuseAddr, const uint16_t value);
 
 /*!
  * @brief This function reads an unique serial number of the BCC device from the
@@ -1047,8 +945,7 @@ bcc_status_t BCC_FuseMirror_Write(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_GUID_Read(bcc_drv_config_t *const drvConfig,
-			   const bcc_cid_t cid, uint64_t *const guid);
+bcc_status_t BCC_GUID_Read(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, uint64_t *const guid);
 
 /*!
  * @brief This function reads a byte from specified address of EEPROM memory
@@ -1063,9 +960,7 @@ bcc_status_t BCC_GUID_Read(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_EEPROM_Read(bcc_drv_config_t *const drvConfig,
-			     const bcc_cid_t cid, const uint8_t addr,
-			     uint8_t *const data);
+bcc_status_t BCC_EEPROM_Read(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t addr, uint8_t *const data);
 
 /*!
  * @brief This function writes a byte to specified address of EEPROM memory
@@ -1084,9 +979,7 @@ bcc_status_t BCC_EEPROM_Read(bcc_drv_config_t *const drvConfig,
  *
  * @return bcc_status_t Error code.
  */
-bcc_status_t BCC_EEPROM_Write(bcc_drv_config_t *const drvConfig,
-			      const bcc_cid_t cid, const uint8_t addr,
-			      const uint8_t data);
+bcc_status_t BCC_EEPROM_Write(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t addr, const uint8_t data);
 
 /*******************************************************************************
  * Platform specific functions
@@ -1184,8 +1077,7 @@ extern void BCC_MCU_Assert(const bool x);
  *
  * @return bcc_status_t Error code.
  */
-extern bcc_status_t BCC_MCU_TransferSpi(const uint8_t drvInstance,
-					uint8_t txBuf[], uint8_t rxBuf[]);
+extern bcc_status_t BCC_MCU_TransferSpi(const uint8_t drvInstance, uint8_t txBuf[], uint8_t rxBuf[]);
 
 /*!
  * @brief This function sends and receives data to MC33664 via TX and RX SPI
@@ -1204,9 +1096,7 @@ extern bcc_status_t BCC_MCU_TransferSpi(const uint8_t drvInstance,
  *
  * @return bcc_status_t Error code.
  */
-extern bcc_status_t BCC_MCU_TransferTpl(const uint8_t drvInstance,
-					uint8_t txBuf[], uint8_t rxBuf[],
-					const uint16_t recvTrCnt);
+extern bcc_status_t BCC_MCU_TransferTpl(const uint8_t drvInstance, uint8_t txBuf[], uint8_t rxBuf[], const uint16_t recvTrCnt);
 
 /*!
  * @brief Writes logic 0 or 1 to the CSB (SPI mode) or CSB_TX pin (TPL mode).

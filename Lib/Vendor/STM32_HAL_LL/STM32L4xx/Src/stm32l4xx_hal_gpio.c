@@ -191,45 +191,36 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)
 			 * ------------------------*/
 			/* In case of Output or Alternate function mode
 			 * selection */
-			if (((GPIO_Init->Mode & GPIO_MODE) == MODE_OUTPUT) ||
-			    ((GPIO_Init->Mode & GPIO_MODE) == MODE_AF)) {
+			if (((GPIO_Init->Mode & GPIO_MODE) == MODE_OUTPUT) || ((GPIO_Init->Mode & GPIO_MODE) == MODE_AF)) {
 				/* Check the Speed parameter */
 				assert_param(IS_GPIO_SPEED(GPIO_Init->Speed));
 
 				/* Configure the IO Speed */
 				temp = GPIOx->OSPEEDR;
-				temp &=
-				    ~(GPIO_OSPEEDR_OSPEED0 << (position * 2u));
+				temp &= ~(GPIO_OSPEEDR_OSPEED0 << (position * 2u));
 				temp |= (GPIO_Init->Speed << (position * 2u));
 				GPIOx->OSPEEDR = temp;
 
 				/* Configure the IO Output Type */
 				temp = GPIOx->OTYPER;
 				temp &= ~(GPIO_OTYPER_OT0 << position);
-				temp |= (((GPIO_Init->Mode & OUTPUT_TYPE) >>
-					  OUTPUT_TYPE_Pos)
-					 << position);
+				temp |= (((GPIO_Init->Mode & OUTPUT_TYPE) >> OUTPUT_TYPE_Pos) << position);
 				GPIOx->OTYPER = temp;
 			}
 
-#if defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) ||    \
-    defined(STM32L485xx) || defined(STM32L486xx)
+#if defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) || defined(STM32L486xx)
 
 			/* In case of Analog mode, check if ADC control mode is
 			 * selected */
-			if ((GPIO_Init->Mode & GPIO_MODE_ANALOG) ==
-			    GPIO_MODE_ANALOG) {
+			if ((GPIO_Init->Mode & GPIO_MODE_ANALOG) == GPIO_MODE_ANALOG) {
 				/* Configure the IO Output Type */
 				temp = GPIOx->ASCR;
 				temp &= ~(GPIO_ASCR_ASC0 << position);
-				temp |= (((GPIO_Init->Mode &
-					   GPIO_MODE_ANALOG_ADC_CONTROL) >>
-					  3)
-					 << position);
+				temp |= (((GPIO_Init->Mode & GPIO_MODE_ANALOG_ADC_CONTROL) >> 3) << position);
 				GPIOx->ASCR = temp;
 			}
 
-#endif /* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx ||          \
+#endif /* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx ||                                                                                                                                  \
 	  STM32L486xx */
 
 			/* Activate the Pull-up or Pull down resistor for the
@@ -254,8 +245,7 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)
 				 * current IO */
 				temp = GPIOx->AFR[position >> 3u];
 				temp &= ~(0xFu << ((position & 0x07u) * 4u));
-				temp |= ((GPIO_Init->Alternate)
-					 << ((position & 0x07u) * 4u));
+				temp |= ((GPIO_Init->Alternate) << ((position & 0x07u) * 4u));
 				GPIOx->AFR[position >> 3u] = temp;
 			}
 
@@ -263,8 +253,7 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)
 			 * or Analog) */
 			temp = GPIOx->MODER;
 			temp &= ~(GPIO_MODER_MODE0 << (position * 2u));
-			temp |=
-			    ((GPIO_Init->Mode & GPIO_MODE) << (position * 2u));
+			temp |= ((GPIO_Init->Mode & GPIO_MODE) << (position * 2u));
 			GPIOx->MODER = temp;
 
 			/*--------------------- EXTI Mode Configuration
@@ -277,23 +266,20 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)
 
 				temp = SYSCFG->EXTICR[position >> 2u];
 				temp &= ~(0x0FuL << (4u * (position & 0x03u)));
-				temp |= (GPIO_GET_INDEX(GPIOx)
-					 << (4u * (position & 0x03u)));
+				temp |= (GPIO_GET_INDEX(GPIOx) << (4u * (position & 0x03u)));
 				SYSCFG->EXTICR[position >> 2u] = temp;
 
 				/* Clear Rising Falling edge configuration */
 				temp = EXTI->RTSR1;
 				temp &= ~(iocurrent);
-				if ((GPIO_Init->Mode & TRIGGER_RISING) !=
-				    0x00u) {
+				if ((GPIO_Init->Mode & TRIGGER_RISING) != 0x00u) {
 					temp |= iocurrent;
 				}
 				EXTI->RTSR1 = temp;
 
 				temp = EXTI->FTSR1;
 				temp &= ~(iocurrent);
-				if ((GPIO_Init->Mode & TRIGGER_FALLING) !=
-				    0x00u) {
+				if ((GPIO_Init->Mode & TRIGGER_FALLING) != 0x00u) {
 					temp |= iocurrent;
 				}
 				EXTI->FTSR1 = temp;
@@ -352,8 +338,7 @@ void HAL_GPIO_DeInit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
 
 			tmp = SYSCFG->EXTICR[position >> 2u];
 			tmp &= (0x0FuL << (4u * (position & 0x03u)));
-			if (tmp == (GPIO_GET_INDEX(GPIOx)
-				    << (4u * (position & 0x03u)))) {
+			if (tmp == (GPIO_GET_INDEX(GPIOx) << (4u * (position & 0x03u)))) {
 				/* Clear EXTI line configuration */
 				EXTI->IMR1 &= ~(iocurrent);
 				EXTI->EMR1 &= ~(iocurrent);
@@ -373,12 +358,10 @@ void HAL_GPIO_DeInit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
 
 			/* Configure the default Alternate Function in current
 			 * IO */
-			GPIOx->AFR[position >> 3u] &=
-			    ~(0xFu << ((position & 0x07u) * 4u));
+			GPIOx->AFR[position >> 3u] &= ~(0xFu << ((position & 0x07u) * 4u));
 
 			/* Configure the default value for IO Speed */
-			GPIOx->OSPEEDR &=
-			    ~(GPIO_OSPEEDR_OSPEED0 << (position * 2u));
+			GPIOx->OSPEEDR &= ~(GPIO_OSPEEDR_OSPEED0 << (position * 2u));
 
 			/* Configure the default value IO Output Type */
 			GPIOx->OTYPER &= ~(GPIO_OTYPER_OT0 << position);
@@ -387,12 +370,11 @@ void HAL_GPIO_DeInit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
 			 * current IO */
 			GPIOx->PUPDR &= ~(GPIO_PUPDR_PUPD0 << (position * 2u));
 
-#if defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) ||    \
-    defined(STM32L485xx) || defined(STM32L486xx)
+#if defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) || defined(STM32L486xx)
 			/* Deactivate the Control bit of Analog mode for the
 			 * current IO */
 			GPIOx->ASCR &= ~(GPIO_ASCR_ASC0 << position);
-#endif /* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx ||          \
+#endif /* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx ||                                                                                                                                  \
 	  STM32L486xx */
 		}
 
@@ -458,8 +440,7 @@ GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
  *            @arg GPIO_PIN_SET: to set the port pin
  * @retval None
  */
-void HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin,
-		       GPIO_PinState PinState)
+void HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState)
 {
 	/* Check the parameters */
 	assert_param(IS_GPIO_PIN(GPIO_Pin));

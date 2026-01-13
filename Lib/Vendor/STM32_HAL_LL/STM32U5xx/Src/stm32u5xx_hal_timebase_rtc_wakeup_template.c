@@ -172,15 +172,12 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 		Status = HAL_RTC_Init(&hRTC_Handle);
 
 #if (USE_HAL_RTC_REGISTER_CALLBACKS == 1U)
-		HAL_RTC_RegisterCallback(
-		    &hRTC_Handle, HAL_RTC_WAKEUPTIMER_EVENT_CB_ID,
-		    TimeBase_RTCEx_WakeUpTimerEventCallback);
+		HAL_RTC_RegisterCallback(&hRTC_Handle, HAL_RTC_WAKEUPTIMER_EVENT_CB_ID, TimeBase_RTCEx_WakeUpTimerEventCallback);
 #endif /* USE_HAL_RTC_REGISTER_CALLBACKS */
 	}
 
 	if (Status == HAL_OK) {
-		Status = HAL_RTCEx_SetWakeUpTimer_IT(
-		    &hRTC_Handle, 0, RTC_WAKEUPCLOCK_CK_SPRE_16BITS, 0);
+		Status = HAL_RTCEx_SetWakeUpTimer_IT(&hRTC_Handle, 0, RTC_WAKEUPCLOCK_CK_SPRE_16BITS, 0);
 	}
 
 	if (TickPriority < (1UL << __NVIC_PRIO_BITS)) {

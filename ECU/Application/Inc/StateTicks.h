@@ -69,6 +69,18 @@ void ECU_Precharge_Complete(ECU_StateData *stateData);
 void ECU_Drive_Active(ECU_StateData *stateData);
 
 /**
+ * @brief Init function for ECU_Tractive_System_Discharge_Start.
+ *
+ * Resets Tractive System discharge timer and switches on the Tractive System
+ * Discharge state.
+ *
+ * @param stateData Pointer to the ECU state data structure.
+ *
+ * @return void
+ */
+void ECU_Tractive_System_Discharge_Start(ECU_StateData *stateData);
+
+/**
  * @brief State handler for the Tractive System Discharge state.
  *
  * Handles actions and transitions specific to the Tractive System Discharge

@@ -55,10 +55,7 @@
 #define STM32L4XX_HAL_VERSION_SUB1 (0x0DU) /*!< [23:16] sub1 version */
 #define STM32L4XX_HAL_VERSION_SUB2 (0x05U) /*!< [15:8]  sub2 version */
 #define STM32L4XX_HAL_VERSION_RC (0x00U)   /*!< [7:0]  release candidate */
-#define STM32L4XX_HAL_VERSION                                                  \
-	((STM32L4XX_HAL_VERSION_MAIN << 24U) |                                 \
-	 (STM32L4XX_HAL_VERSION_SUB1 << 16U) |                                 \
-	 (STM32L4XX_HAL_VERSION_SUB2 << 8U) | (STM32L4XX_HAL_VERSION_RC))
+#define STM32L4XX_HAL_VERSION ((STM32L4XX_HAL_VERSION_MAIN << 24U) | (STM32L4XX_HAL_VERSION_SUB1 << 16U) | (STM32L4XX_HAL_VERSION_SUB2 << 8U) | (STM32L4XX_HAL_VERSION_RC))
 
 #if defined(VREFBUF)
 #define VREFBUF_TIMEOUT_VALUE 10U /* 10 ms (to be confirmed) */
@@ -70,15 +67,13 @@
 /* Alias word address of FB_MODE bit */
 #define MEMRMP_OFFSET SYSCFG_OFFSET
 #define FB_MODE_BitNumber 8U
-#define FB_MODE_BB                                                             \
-	(PERIPH_BB_BASE + (MEMRMP_OFFSET * 32U) + (FB_MODE_BitNumber * 4U))
+#define FB_MODE_BB (PERIPH_BB_BASE + (MEMRMP_OFFSET * 32U) + (FB_MODE_BitNumber * 4U))
 
 /* --- SCSR Register ---*/
 /* Alias word address of SRAM2ER bit */
 #define SCSR_OFFSET (SYSCFG_OFFSET + 0x18U)
 #define BRER_BitNumber 0U
-#define SCSR_SRAM2ER_BB                                                        \
-	(PERIPH_BB_BASE + (SCSR_OFFSET * 32U) + (BRER_BitNumber * 4U))
+#define SCSR_SRAM2ER_BB (PERIPH_BB_BASE + (SCSR_OFFSET * 32U) + (BRER_BitNumber * 4U))
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
@@ -268,12 +263,10 @@ __weak HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 	 * that doesn't take the value zero)*/
 	if ((uint32_t)uwTickFreq != 0U) {
 		/*Configure the SysTick to have interrupt in 1ms time basis*/
-		if (HAL_SYSTICK_Config(SystemCoreClock /
-				       (1000U / (uint32_t)uwTickFreq)) == 0U) {
+		if (HAL_SYSTICK_Config(SystemCoreClock / (1000U / (uint32_t)uwTickFreq)) == 0U) {
 			/* Configure the SysTick IRQ priority */
 			if (TickPriority < (1UL << __NVIC_PRIO_BITS)) {
-				HAL_NVIC_SetPriority(SysTick_IRQn, TickPriority,
-						     0U);
+				HAL_NVIC_SetPriority(SysTick_IRQn, TickPriority, 0U);
 				uwTickPrio = TickPriority;
 			} else {
 				status = HAL_ERROR;
@@ -440,10 +433,7 @@ uint32_t HAL_GetHalVersion(void) { return STM32L4XX_HAL_VERSION; }
  * @brief  Return the device revision identifier.
  * @retval Device revision identifier
  */
-uint32_t HAL_GetREVID(void)
-{
-	return ((DBGMCU->IDCODE & DBGMCU_IDCODE_REV_ID) >> 16);
-}
+uint32_t HAL_GetREVID(void) { return ((DBGMCU->IDCODE & DBGMCU_IDCODE_REV_ID) >> 16); }
 
 /**
  * @brief  Return the device identifier.
@@ -463,20 +453,14 @@ uint32_t HAL_GetUIDw0(void) { return (READ_REG(*((uint32_t *)UID_BASE))); }
  * 96 bits)
  * @retval Device identifier
  */
-uint32_t HAL_GetUIDw1(void)
-{
-	return (READ_REG(*((uint32_t *)(UID_BASE + 4U))));
-}
+uint32_t HAL_GetUIDw1(void) { return (READ_REG(*((uint32_t *)(UID_BASE + 4U)))); }
 
 /**
  * @brief  Return the third word of the unique device identifier (UID based on
  * 96 bits)
  * @retval Device identifier
  */
-uint32_t HAL_GetUIDw2(void)
-{
-	return (READ_REG(*((uint32_t *)(UID_BASE + 8U))));
-}
+uint32_t HAL_GetUIDw2(void) { return (READ_REG(*((uint32_t *)(UID_BASE + 8U)))); }
 
 /**
  * @}
@@ -502,55 +486,37 @@ uint32_t HAL_GetUIDw2(void)
  * @brief  Enable the Debug Module during SLEEP mode.
  * @retval None
  */
-void HAL_DBGMCU_EnableDBGSleepMode(void)
-{
-	SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_SLEEP);
-}
+void HAL_DBGMCU_EnableDBGSleepMode(void) { SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_SLEEP); }
 
 /**
  * @brief  Disable the Debug Module during SLEEP mode.
  * @retval None
  */
-void HAL_DBGMCU_DisableDBGSleepMode(void)
-{
-	CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_SLEEP);
-}
+void HAL_DBGMCU_DisableDBGSleepMode(void) { CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_SLEEP); }
 
 /**
  * @brief  Enable the Debug Module during STOP0/STOP1/STOP2 modes.
  * @retval None
  */
-void HAL_DBGMCU_EnableDBGStopMode(void)
-{
-	SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP);
-}
+void HAL_DBGMCU_EnableDBGStopMode(void) { SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP); }
 
 /**
  * @brief  Disable the Debug Module during STOP0/STOP1/STOP2 modes.
  * @retval None
  */
-void HAL_DBGMCU_DisableDBGStopMode(void)
-{
-	CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP);
-}
+void HAL_DBGMCU_DisableDBGStopMode(void) { CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STOP); }
 
 /**
  * @brief  Enable the Debug Module during STANDBY mode.
  * @retval None
  */
-void HAL_DBGMCU_EnableDBGStandbyMode(void)
-{
-	SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY);
-}
+void HAL_DBGMCU_EnableDBGStandbyMode(void) { SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY); }
 
 /**
  * @brief  Disable the Debug Module during STANDBY mode.
  * @retval None
  */
-void HAL_DBGMCU_DisableDBGStandbyMode(void)
-{
-	CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY);
-}
+void HAL_DBGMCU_DisableDBGStandbyMode(void) { CLEAR_BIT(DBGMCU->CR, DBGMCU_CR_DBG_STANDBY); }
 
 /**
  * @}
@@ -600,10 +566,7 @@ void HAL_SYSCFG_SRAM2Erase(void)
  *
  * @retval None
  */
-void HAL_SYSCFG_EnableMemorySwappingBank(void)
-{
-	*(__IO uint32_t *)FB_MODE_BB = 0x00000001UL;
-}
+void HAL_SYSCFG_EnableMemorySwappingBank(void) { *(__IO uint32_t *)FB_MODE_BB = 0x00000001UL; }
 
 /**
  * @brief  Disable the Internal FLASH Bank Swapping.
@@ -616,11 +579,7 @@ void HAL_SYSCFG_EnableMemorySwappingBank(void)
  *
  * @retval None
  */
-void HAL_SYSCFG_DisableMemorySwappingBank(void)
-{
-
-	*(__IO uint32_t *)FB_MODE_BB = 0x00000000UL;
-}
+void HAL_SYSCFG_DisableMemorySwappingBank(void) { *(__IO uint32_t *)FB_MODE_BB = 0x00000000UL; }
 
 #if defined(VREFBUF)
 /**
@@ -701,10 +660,7 @@ HAL_StatusTypeDef HAL_SYSCFG_EnableVREFBUF(void)
  *
  * @retval None
  */
-void HAL_SYSCFG_DisableVREFBUF(void)
-{
-	CLEAR_BIT(VREFBUF->CSR, VREFBUF_CSR_ENVR);
-}
+void HAL_SYSCFG_DisableVREFBUF(void) { CLEAR_BIT(VREFBUF->CSR, VREFBUF_CSR_ENVR); }
 #endif /* VREFBUF */
 
 /**
@@ -712,20 +668,14 @@ void HAL_SYSCFG_DisableVREFBUF(void)
  *
  * @retval None
  */
-void HAL_SYSCFG_EnableIOAnalogSwitchBooster(void)
-{
-	SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN);
-}
+void HAL_SYSCFG_EnableIOAnalogSwitchBooster(void) { SET_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN); }
 
 /**
  * @brief  Disable the I/O analog switch voltage booster
  *
  * @retval None
  */
-void HAL_SYSCFG_DisableIOAnalogSwitchBooster(void)
-{
-	CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN);
-}
+void HAL_SYSCFG_DisableIOAnalogSwitchBooster(void) { CLEAR_BIT(SYSCFG->CFGR1, SYSCFG_CFGR1_BOOSTEN); }
 
 /**
  * @}

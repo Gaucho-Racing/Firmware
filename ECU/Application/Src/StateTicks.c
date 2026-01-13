@@ -162,7 +162,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		 - calcPedalTravel func :p
 		 - make tuna-ble function
 	*/
-	
+
 	if(!stateData->ts_active_button_engaged || CriticalError(stateData)){
 		ECU_Tractive_System_Discharge_Start(stateData);
 		return;

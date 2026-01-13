@@ -49,9 +49,8 @@ extern "C" {
  * @brief  LPTIM Clock configuration definition
  */
 typedef struct {
-	uint32_t
-	    Source; /*!< Selects the clock source.
-		    This parameter can be a value of @ref LPTIM_Clock_Source */
+	uint32_t Source; /*!< Selects the clock source.
+			 This parameter can be a value of @ref LPTIM_Clock_Source */
 
 	uint32_t Prescaler; /*!< Specifies the counter clock Prescaler.
 			    This parameter can be a value of @ref
@@ -63,14 +62,13 @@ typedef struct {
  * @brief  LPTIM Clock configuration definition
  */
 typedef struct {
-	uint32_t
-	    Polarity; /*!< Selects the polarity of the active edge for the
-		       counter unit if the ULPTIM input is selected. Note: This
-		       parameter is used only when Ultra low power clock source
-		       is used. Note: If the polarity is configured on 'both
-		       edges', an auxiliary clock (one of the Low power
-		       oscillator) must be active. This parameter can be a value
-		       of @ref LPTIM_Clock_Polarity */
+	uint32_t Polarity; /*!< Selects the polarity of the active edge for the
+			    counter unit if the ULPTIM input is selected. Note: This
+			    parameter is used only when Ultra low power clock source
+			    is used. Note: If the polarity is configured on 'both
+			    edges', an auxiliary clock (one of the Low power
+			    oscillator) must be active. This parameter can be a value
+			    of @ref LPTIM_Clock_Polarity */
 
 	uint32_t SampleTime; /*!< Selects the clock sampling time to configure
 			     the clock glitch filter. Note: This parameter is
@@ -93,11 +91,10 @@ typedef struct {
 			     trigger is used. This parameter can be a value of
 			     @ref LPTIM_External_Trigger_Polarity */
 
-	uint32_t
-	    SampleTime; /*!< Selects the trigger sampling time to configure the
-			clock glitch filter. Note: This parameter is used only
-			when an external trigger is used. This parameter can be
-			a value of @ref LPTIM_Trigger_Sample_Time  */
+	uint32_t SampleTime; /*!< Selects the trigger sampling time to configure the
+			     clock glitch filter. Note: This parameter is used only
+			     when an external trigger is used. This parameter can be
+			     a value of @ref LPTIM_Trigger_Sample_Time  */
 } LPTIM_TriggerConfigTypeDef;
 
 /**
@@ -106,12 +103,10 @@ typedef struct {
 typedef struct {
 	LPTIM_ClockConfigTypeDef Clock; /*!< Specifies the clock parameters */
 
-	LPTIM_ULPClockConfigTypeDef
-	    UltraLowPowerClock; /*!< Specifies the Ultra Low Power clock
-				   parameters */
+	LPTIM_ULPClockConfigTypeDef UltraLowPowerClock; /*!< Specifies the Ultra Low Power clock
+							   parameters */
 
-	LPTIM_TriggerConfigTypeDef
-	    Trigger; /*!< Specifies the Trigger parameters */
+	LPTIM_TriggerConfigTypeDef Trigger; /*!< Specifies the Trigger parameters */
 
 	uint32_t Period; /*!< Specifies the period value to be loaded into the
 			 active Auto-Reload Register at the next update event.
@@ -138,26 +133,24 @@ typedef struct {
 			       LPTIM1 instance. This parameter can be a value of
 			       @ref LPTIM_Input2_Source */
 
-	uint32_t
-	    RepetitionCounter; /*!< Specifies the repetition counter value.
-				Each time the RCR downcounter reaches zero, an
-				update event is generated and counting restarts
-				from the RCR value (N). Note: When using
-				repetition counter the UpdateMode field must be
-				      set to LPTIM_UPDATE_ENDOFPERIOD otherwise
-				unpredictable behavior may occur. This parameter
-				must be a number between Min_Data = 0x00 and
-				Max_Data = 0xFF. */
+	uint32_t RepetitionCounter; /*!< Specifies the repetition counter value.
+				     Each time the RCR downcounter reaches zero, an
+				     update event is generated and counting restarts
+				     from the RCR value (N). Note: When using
+				     repetition counter the UpdateMode field must be
+					   set to LPTIM_UPDATE_ENDOFPERIOD otherwise
+				     unpredictable behavior may occur. This parameter
+				     must be a number between Min_Data = 0x00 and
+				     Max_Data = 0xFF. */
 } LPTIM_InitTypeDef;
 
 /**
  * @brief  LPTIM Output Compare Configuration Structure definition
  */
 typedef struct {
-	uint32_t
-	    Pulse; /*!< Specifies the pulse value to be loaded into the Capture
-		      Compare Register. This parameter can be a number between
-		      Min_Data = 0x0000 and Max_Data = 0xFFFF */
+	uint32_t Pulse;	     /*!< Specifies the pulse value to be loaded into the Capture
+				Compare Register. This parameter can be a number between
+				Min_Data = 0x0000 and Max_Data = 0xFFFF */
 	uint32_t OCPolarity; /*!< Specifies the output polarity.
 				  This parameter can be a value of @ref
 				LPTIM_Output_Compare_Polarity */
@@ -188,11 +181,9 @@ typedef struct {
  * @brief  HAL LPTIM State structure definition
  */
 typedef enum {
-	HAL_LPTIM_STATE_RESET =
-	    0x00U, /*!< Peripheral not yet initialized or disabled  */
-	HAL_LPTIM_STATE_READY =
-	    0x01U, /*!< Peripheral Initialized and ready for use    */
-	HAL_LPTIM_STATE_BUSY = 0x02U, /*!< An internal process is ongoing    */
+	HAL_LPTIM_STATE_RESET = 0x00U,	 /*!< Peripheral not yet initialized or disabled  */
+	HAL_LPTIM_STATE_READY = 0x01U,	 /*!< Peripheral Initialized and ready for use    */
+	HAL_LPTIM_STATE_BUSY = 0x02U,	 /*!< An internal process is ongoing    */
 	HAL_LPTIM_STATE_TIMEOUT = 0x03U, /*!< Timeout state */
 	HAL_LPTIM_STATE_ERROR = 0x04U	 /*!< Internal Process is ongoing    */
 } HAL_LPTIM_StateTypeDef;
@@ -201,22 +192,18 @@ typedef enum {
  * @brief  HAL Active channel structures definition
  */
 typedef enum {
-	HAL_LPTIM_ACTIVE_CHANNEL_1 = 0x01U, /*!< The active channel is 1     */
-	HAL_LPTIM_ACTIVE_CHANNEL_2 = 0x02U, /*!< The active channel is 2     */
-	HAL_LPTIM_ACTIVE_CHANNEL_CLEARED =
-	    0x00U /*!< All active channels cleared */
+	HAL_LPTIM_ACTIVE_CHANNEL_1 = 0x01U,	 /*!< The active channel is 1     */
+	HAL_LPTIM_ACTIVE_CHANNEL_2 = 0x02U,	 /*!< The active channel is 2     */
+	HAL_LPTIM_ACTIVE_CHANNEL_CLEARED = 0x00U /*!< All active channels cleared */
 } HAL_LPTIM_ActiveChannel;
 
 /**
  * @brief  LPTIM Channel States definition
  */
 typedef enum {
-	HAL_LPTIM_CHANNEL_STATE_RESET =
-	    0x00U, /*!< LPTIM Channel initial state                         */
-	HAL_LPTIM_CHANNEL_STATE_READY =
-	    0x01U, /*!< LPTIM Channel ready for use                         */
-	HAL_LPTIM_CHANNEL_STATE_BUSY =
-	    0x02U, /*!< An internal process is ongoing on the LPTIM channel */
+	HAL_LPTIM_CHANNEL_STATE_RESET = 0x00U, /*!< LPTIM Channel initial state                         */
+	HAL_LPTIM_CHANNEL_STATE_READY = 0x01U, /*!< LPTIM Channel ready for use                         */
+	HAL_LPTIM_CHANNEL_STATE_BUSY = 0x02U,  /*!< An internal process is ongoing on the LPTIM channel */
 } HAL_LPTIM_ChannelStateTypeDef;
 
 /**
@@ -234,9 +221,8 @@ typedef struct
 
 	HAL_LPTIM_ActiveChannel Channel; /*!< Active channel            */
 
-	DMA_HandleTypeDef
-	    *hdma[3]; /*!< DMA Handlers array, This array is accessed by a @ref
-			 LPTIM_DMA_Handle_index */
+	DMA_HandleTypeDef *hdma[3]; /*!< DMA Handlers array, This array is accessed by a @ref
+				       LPTIM_DMA_Handle_index */
 
 	HAL_StatusTypeDef Status; /*!< LPTIM peripheral status   */
 
@@ -244,56 +230,27 @@ typedef struct
 
 	__IO HAL_LPTIM_StateTypeDef State; /*!< LPTIM peripheral state    */
 
-	__IO HAL_LPTIM_ChannelStateTypeDef
-	    ChannelState[2]; /*!< LPTIM channel operation state */
+	__IO HAL_LPTIM_ChannelStateTypeDef ChannelState[2]; /*!< LPTIM channel operation state */
 
 #if (USE_HAL_LPTIM_REGISTER_CALLBACKS == 1)
-	void (*MspInitCallback)(
-	    struct __LPTIM_HandleTypeDef
-		*hlptim); /*!< LPTIM Base Msp Init Callback                 */
-	void (*MspDeInitCallback)(
-	    struct __LPTIM_HandleTypeDef
-		*hlptim); /*!< LPTIM Base Msp DeInit Callback               */
-	void (*CompareMatchCallback)(struct __LPTIM_HandleTypeDef *
-					 hlptim); /*!< Compare match Callback */
-	void (*AutoReloadMatchCallback)(
-	    struct __LPTIM_HandleTypeDef
-		*hlptim); /*!< Auto-reload match Callback                   */
-	void (*TriggerCallback)(
-	    struct __LPTIM_HandleTypeDef
-		*hlptim); /*!< External trigger event detection Callback    */
-	void (*CompareWriteCallback)(
-	    struct __LPTIM_HandleTypeDef
-		*hlptim); /*!< Compare register write complete Callback     */
-	void (*AutoReloadWriteCallback)(
-	    struct __LPTIM_HandleTypeDef
-		*hlptim); /*!< Auto-reload register write complete Callback */
-	void (*DirectionUpCallback)(
-	    struct __LPTIM_HandleTypeDef
-		*hlptim); /*!< Up-counting direction change Callback        */
-	void (*DirectionDownCallback)(
-	    struct __LPTIM_HandleTypeDef
-		*hlptim); /*!< Down-counting direction change Callback      */
-	void (*UpdateEventCallback)(
-	    struct __LPTIM_HandleTypeDef
-		*hlptim); /*!< Update event detection Callback              */
-	void (*RepCounterWriteCallback)(
-	    struct __LPTIM_HandleTypeDef
-		*hlptim); /*!< Repetition counter register write complete
-			     Callback */
-	void (*UpdateEventHalfCpltCallback)(
-	    struct __LPTIM_HandleTypeDef
-		*hlptim); /*!< Update event half complete detection Callback */
-	void (*ErrorCallback)(
-	    struct __LPTIM_HandleTypeDef *hlptim); /*!< LPTIM Error Callback */
-	void (*IC_CaptureCallback)(struct __LPTIM_HandleTypeDef
-				       *hlptim); /*!< Input capture Callback */
-	void (*IC_CaptureHalfCpltCallback)(
-	    struct __LPTIM_HandleTypeDef
-		*htim); /*!< Input Capture half complete Callback         */
-	void (*IC_OverCaptureCallback)(
-	    struct __LPTIM_HandleTypeDef *hlptim); /*!< Over capture Callback */
-#endif /* USE_HAL_LPTIM_REGISTER_CALLBACKS */
+	void (*MspInitCallback)(struct __LPTIM_HandleTypeDef *hlptim);		   /*!< LPTIM Base Msp Init Callback	 */
+	void (*MspDeInitCallback)(struct __LPTIM_HandleTypeDef *hlptim);	   /*!< LPTIM Base Msp DeInit Callback       */
+	void (*CompareMatchCallback)(struct __LPTIM_HandleTypeDef *hlptim);	   /*!< Compare match Callback */
+	void (*AutoReloadMatchCallback)(struct __LPTIM_HandleTypeDef *hlptim);	   /*!< Auto-reload match Callback */
+	void (*TriggerCallback)(struct __LPTIM_HandleTypeDef *hlptim);		   /*!< External trigger event detection Callback */
+	void (*CompareWriteCallback)(struct __LPTIM_HandleTypeDef *hlptim);	   /*!< Compare register write complete Callback     */
+	void (*AutoReloadWriteCallback)(struct __LPTIM_HandleTypeDef *hlptim);	   /*!< Auto-reload register write complete Callback */
+	void (*DirectionUpCallback)(struct __LPTIM_HandleTypeDef *hlptim);	   /*!< Up-counting direction change Callback */
+	void (*DirectionDownCallback)(struct __LPTIM_HandleTypeDef *hlptim);	   /*!< Down-counting direction change Callback      */
+	void (*UpdateEventCallback)(struct __LPTIM_HandleTypeDef *hlptim);	   /*!< Update event detection Callback     */
+	void (*RepCounterWriteCallback)(struct __LPTIM_HandleTypeDef *hlptim);	   /*!< Repetition counter register write
+										      complete Callback */
+	void (*UpdateEventHalfCpltCallback)(struct __LPTIM_HandleTypeDef *hlptim); /*!< Update event half complete detection Callback */
+	void (*ErrorCallback)(struct __LPTIM_HandleTypeDef *hlptim);		   /*!< LPTIM Error Callback */
+	void (*IC_CaptureCallback)(struct __LPTIM_HandleTypeDef *hlptim);	   /*!< Input capture Callback */
+	void (*IC_CaptureHalfCpltCallback)(struct __LPTIM_HandleTypeDef *htim);	   /*!< Input Capture half complete Callback         */
+	void (*IC_OverCaptureCallback)(struct __LPTIM_HandleTypeDef *hlptim);	   /*!< Over capture Callback */
+#endif										   /* USE_HAL_LPTIM_REGISTER_CALLBACKS */
 } LPTIM_HandleTypeDef;
 
 #if (USE_HAL_LPTIM_REGISTER_CALLBACKS == 1)
@@ -301,41 +258,29 @@ typedef struct
  * @brief  HAL LPTIM Callback ID enumeration definition
  */
 typedef enum {
-	HAL_LPTIM_MSPINIT_CB_ID = 0x00U, /*!< LPTIM Base Msp Init Callback ID */
-	HAL_LPTIM_MSPDEINIT_CB_ID =
-	    0x01U, /*!< LPTIM Base Msp DeInit Callback ID                */
-	HAL_LPTIM_COMPARE_MATCH_CB_ID = 0x02U, /*!< Compare match Callback ID */
-	HAL_LPTIM_AUTORELOAD_MATCH_CB_ID =
-	    0x03U, /*!< Auto-reload match Callback ID                    */
-	HAL_LPTIM_TRIGGER_CB_ID =
-	    0x04U, /*!< External trigger event detection Callback ID     */
-	HAL_LPTIM_COMPARE_WRITE_CB_ID =
-	    0x05U, /*!< Compare register write complete Callback ID      */
-	HAL_LPTIM_AUTORELOAD_WRITE_CB_ID =
-	    0x06U, /*!< Auto-reload register write complete Callback ID  */
-	HAL_LPTIM_DIRECTION_UP_CB_ID =
-	    0x07U, /*!< Up-counting direction change Callback ID         */
-	HAL_LPTIM_DIRECTION_DOWN_CB_ID =
-	    0x08U, /*!< Down-counting direction change Callback ID       */
-	HAL_LPTIM_UPDATE_EVENT_CB_ID =
-	    0x09U, /*!< Update event detection Callback ID               */
-	HAL_LPTIM_REP_COUNTER_WRITE_CB_ID =
-	    0x0AU, /*!< Repetition counter register write complete Callback ID
-		    */
-	HAL_LPTIM_UPDATE_EVENT_HALF_CB_ID =
-	    0x0BU, /*!< Update event half complete detection Callback ID */
-	HAL_LPTIM_ERROR_CB_ID = 0x0CU,	    /*!< LPTIM Error Callback ID      */
-	HAL_LPTIM_IC_CAPTURE_CB_ID = 0x0DU, /*!< Input capture Callback ID */
-	HAL_LPTIM_IC_CAPTURE_HALF_CB_ID =
-	    0x0EU, /*!< Input capture half complete Callback ID          */
-	HAL_LPTIM_OVER_CAPTURE_CB_ID = 0x0FU, /*!< Over capture Callback ID */
+	HAL_LPTIM_MSPINIT_CB_ID = 0x00U,	   /*!< LPTIM Base Msp Init Callback ID */
+	HAL_LPTIM_MSPDEINIT_CB_ID = 0x01U,	   /*!< LPTIM Base Msp DeInit Callback ID                */
+	HAL_LPTIM_COMPARE_MATCH_CB_ID = 0x02U,	   /*!< Compare match Callback ID */
+	HAL_LPTIM_AUTORELOAD_MATCH_CB_ID = 0x03U,  /*!< Auto-reload match Callback ID                    */
+	HAL_LPTIM_TRIGGER_CB_ID = 0x04U,	   /*!< External trigger event detection Callback ID     */
+	HAL_LPTIM_COMPARE_WRITE_CB_ID = 0x05U,	   /*!< Compare register write complete Callback ID      */
+	HAL_LPTIM_AUTORELOAD_WRITE_CB_ID = 0x06U,  /*!< Auto-reload register write complete Callback ID  */
+	HAL_LPTIM_DIRECTION_UP_CB_ID = 0x07U,	   /*!< Up-counting direction change Callback ID         */
+	HAL_LPTIM_DIRECTION_DOWN_CB_ID = 0x08U,	   /*!< Down-counting direction change Callback ID       */
+	HAL_LPTIM_UPDATE_EVENT_CB_ID = 0x09U,	   /*!< Update event detection Callback ID               */
+	HAL_LPTIM_REP_COUNTER_WRITE_CB_ID = 0x0AU, /*!< Repetition counter register write complete Callback ID
+						    */
+	HAL_LPTIM_UPDATE_EVENT_HALF_CB_ID = 0x0BU, /*!< Update event half complete detection Callback ID */
+	HAL_LPTIM_ERROR_CB_ID = 0x0CU,		   /*!< LPTIM Error Callback ID      */
+	HAL_LPTIM_IC_CAPTURE_CB_ID = 0x0DU,	   /*!< Input capture Callback ID */
+	HAL_LPTIM_IC_CAPTURE_HALF_CB_ID = 0x0EU,   /*!< Input capture half complete Callback ID          */
+	HAL_LPTIM_OVER_CAPTURE_CB_ID = 0x0FU,	   /*!< Over capture Callback ID */
 } HAL_LPTIM_CallbackIDTypeDef;
 
 /**
  * @brief  HAL TIM Callback pointer definition
  */
-typedef void (*pLPTIM_CallbackTypeDef)(
-    LPTIM_HandleTypeDef *hlptim); /*!< pointer to the LPTIM callback function */
+typedef void (*pLPTIM_CallbackTypeDef)(LPTIM_HandleTypeDef *hlptim); /*!< pointer to the LPTIM callback function */
 
 #endif /* USE_HAL_LPTIM_REGISTER_CALLBACKS */
 /**
@@ -453,10 +398,8 @@ typedef void (*pLPTIM_CallbackTypeDef)(
  * @{
  */
 
-#define LPTIM_INPUT1SOURCE_GPIO                                                \
-	0x00000000U /*!< For LPTIM1, LPTIM2, LPTIM3 and LPTIM4 */
-#define LPTIM_INPUT1SOURCE_COMP1                                               \
-	LPTIM_CFGR2_IN1SEL_0 /*!< For LPTIM1, LPTIM2, LPTIM3 and LPTIM4 */
+#define LPTIM_INPUT1SOURCE_GPIO 0x00000000U	      /*!< For LPTIM1, LPTIM2, LPTIM3 and LPTIM4 */
+#define LPTIM_INPUT1SOURCE_COMP1 LPTIM_CFGR2_IN1SEL_0 /*!< For LPTIM1, LPTIM2, LPTIM3 and LPTIM4 */
 /**
  * @}
  */
@@ -467,9 +410,8 @@ typedef void (*pLPTIM_CallbackTypeDef)(
 
 #define LPTIM_INPUT2SOURCE_GPIO 0x00000000U /*!< For LPTIM1 and LPTIM2 */
 #if defined(COMP2)
-#define LPTIM_INPUT2SOURCE_COMP2                                               \
-	LPTIM_CFGR2_IN2SEL_0 /*!< For LPTIM1 and LPTIM2 */
-#endif			     /* COMP2 */
+#define LPTIM_INPUT2SOURCE_COMP2 LPTIM_CFGR2_IN2SEL_0 /*!< For LPTIM1 and LPTIM2 */
+#endif						      /* COMP2 */
 /**
  * @}
  */
@@ -499,13 +441,12 @@ typedef void (*pLPTIM_CallbackTypeDef)(
 /** @defgroup LPTIM_DMA_sources LPTIM DMA Sources
  * @{
  */
-#define LPTIM_DMA_UPDATE                                                       \
-	LPTIM_DIER_UEDE /*!< DMA request is triggered by the update event */
-#define LPTIM_DMA_CC1                                                          \
-	LPTIM_DIER_CC1DE /*!< DMA request is triggered by the capture 1 event  \
+#define LPTIM_DMA_UPDATE LPTIM_DIER_UEDE /*!< DMA request is triggered by the update event */
+#define LPTIM_DMA_CC1                                                                                                                                                                                  \
+	LPTIM_DIER_CC1DE /*!< DMA request is triggered by the capture 1 event                                                                                                                          \
 			  */
-#define LPTIM_DMA_CC2                                                          \
-	LPTIM_DIER_CC2DE /*!< DMA request is triggered by the capture 2 event  \
+#define LPTIM_DMA_CC2                                                                                                                                                                                  \
+	LPTIM_DIER_CC2DE /*!< DMA request is triggered by the capture 2 event                                                                                                                          \
 			  */
 
 /**
@@ -515,14 +456,14 @@ typedef void (*pLPTIM_CallbackTypeDef)(
 /** @defgroup LPTIM_DMA_Handle_index LPTIM DMA Handle Index
  * @{
  */
-#define LPTIM_DMA_ID_UPDATE                                                    \
-	((uint16_t)0x0000) /*!< Index of the DMA handle used for Update DMA    \
+#define LPTIM_DMA_ID_UPDATE                                                                                                                                                                            \
+	((uint16_t)0x0000) /*!< Index of the DMA handle used for Update DMA                                                                                                                            \
 			      requests */
-#define LPTIM_DMA_ID_CC1                                                       \
-	((uint16_t)0x0001) /*!< Index of the DMA handle used for               \
+#define LPTIM_DMA_ID_CC1                                                                                                                                                                               \
+	((uint16_t)0x0001) /*!< Index of the DMA handle used for                                                                                                                                       \
 			      Capture/Update event 1 DMA request */
-#define LPTIM_DMA_ID_CC2                                                       \
-	((uint16_t)0x0002) /*!< Index of the DMA handle used for               \
+#define LPTIM_DMA_ID_CC2                                                                                                                                                                               \
+	((uint16_t)0x0002) /*!< Index of the DMA handle used for                                                                                                                                       \
 			      Capture/Update event 2 DMA request */
 /**
  * @}
@@ -551,10 +492,8 @@ typedef void (*pLPTIM_CallbackTypeDef)(
 /** @defgroup LPTIM_Channel LPTIM Channel
  * @{
  */
-#define LPTIM_CHANNEL_1                                                        \
-	LL_LPTIM_CHANNEL_CH1 /*!< Capture/compare channel 1 identifier      */
-#define LPTIM_CHANNEL_2                                                        \
-	LL_LPTIM_CHANNEL_CH2 /*!< Capture/compare channel 2 identifier      */
+#define LPTIM_CHANNEL_1 LL_LPTIM_CHANNEL_CH1 /*!< Capture/compare channel 1 identifier      */
+#define LPTIM_CHANNEL_2 LL_LPTIM_CHANNEL_CH2 /*!< Capture/compare channel 2 identifier      */
 /**
  * @}
  */
@@ -562,10 +501,9 @@ typedef void (*pLPTIM_CallbackTypeDef)(
 /** @defgroup LPTIM_Output_Compare_Polarity LPTIM Output Compare Polarity
  * @{
  */
-#define LPTIM_OCPOLARITY_HIGH                                                  \
-	0x00000000U /*!< Capture/Compare output polarity */
-#define LPTIM_OCPOLARITY_LOW                                                   \
-	0x00000001U /*!< Capture/Compare output polarity                       \
+#define LPTIM_OCPOLARITY_HIGH 0x00000000U /*!< Capture/Compare output polarity */
+#define LPTIM_OCPOLARITY_LOW                                                                                                                                                                           \
+	0x00000001U /*!< Capture/Compare output polarity                                                                                                                                               \
 		     */
 /**
  * @}
@@ -574,16 +512,12 @@ typedef void (*pLPTIM_CallbackTypeDef)(
 /** @defgroup LPTIM_Input_Capture_Prescaler LPTIM Input Capture Prescaler
  * @{
  */
-#define LPTIM_ICPSC_DIV1                                                       \
-	0x00000000UL /*!< Capture performed each time an edge is detected on   \
-			the capture input */
-#define LPTIM_ICPSC_DIV2                                                       \
-	LPTIM_CCMR1_IC1PSC_0 /*!< Capture performed once every 2 events */
-#define LPTIM_ICPSC_DIV4                                                       \
-	LPTIM_CCMR1_IC1PSC_1 /*!< Capture performed once every 4 events */
-#define LPTIM_ICPSC_DIV8                                                       \
-	(LPTIM_CCMR1_IC1PSC_0 |                                                \
-	 LPTIM_CCMR1_IC1PSC_1) /*!< Capture performed once every 8 events */
+#define LPTIM_ICPSC_DIV1                                                                                                                                                                               \
+	0x00000000UL						       /*!< Capture performed each time an edge is detected on                                                                         \
+									  the capture input */
+#define LPTIM_ICPSC_DIV2 LPTIM_CCMR1_IC1PSC_0			       /*!< Capture performed once every 2 events */
+#define LPTIM_ICPSC_DIV4 LPTIM_CCMR1_IC1PSC_1			       /*!< Capture performed once every 4 events */
+#define LPTIM_ICPSC_DIV8 (LPTIM_CCMR1_IC1PSC_0 | LPTIM_CCMR1_IC1PSC_1) /*!< Capture performed once every 8 events */
 /**
  * @}
  */
@@ -591,14 +525,11 @@ typedef void (*pLPTIM_CallbackTypeDef)(
 /** @defgroup LPTIM_Input_Capture_Polarity LPTIM Input Capture Polarity
  * @{
  */
-#define LPTIM_ICPOLARITY_RISING                                                \
-	0x00000000UL /*!< Capture/Compare input rising polarity */
-#define LPTIM_ICPOLARITY_FALLING                                               \
-	LPTIM_CCMR1_CC1P_0 /*!< Capture/Compare input falling polarity */
-#define LPTIM_ICPOLARITY_RISING_FALLING                                        \
-	(LPTIM_CCMR1_CC1P_0 |                                                  \
-	 LPTIM_CCMR1_CC1P_1) /*!< Capture/Compare input rising and falling     \
-				polarities */
+#define LPTIM_ICPOLARITY_RISING 0x00000000UL	    /*!< Capture/Compare input rising polarity */
+#define LPTIM_ICPOLARITY_FALLING LPTIM_CCMR1_CC1P_0 /*!< Capture/Compare input falling polarity */
+#define LPTIM_ICPOLARITY_RISING_FALLING                                                                                                                                                                \
+	(LPTIM_CCMR1_CC1P_0 | LPTIM_CCMR1_CC1P_1) /*!< Capture/Compare input rising and falling                                                                                                        \
+						     polarities */
 /**
  * @}
  */
@@ -606,22 +537,21 @@ typedef void (*pLPTIM_CallbackTypeDef)(
 /** @defgroup LPTIM_Input_Capture_Filter LPTIM Input Capture Filter
  * @{
  */
-#define LPTIM_ICFLT_CLOCK_DIV1                                                 \
-	0x00000000UL /*!< any external input capture signal level change is    \
+#define LPTIM_ICFLT_CLOCK_DIV1                                                                                                                                                                         \
+	0x00000000UL /*!< any external input capture signal level change is                                                                                                                            \
 			considered as a valid transition */
-#define LPTIM_ICFLT_CLOCK_DIV2                                                 \
-	LPTIM_CCMR1_IC1F_0 /*!< external input capture signal level change     \
-			      must be stable for at least 2 clock periods      \
+#define LPTIM_ICFLT_CLOCK_DIV2                                                                                                                                                                         \
+	LPTIM_CCMR1_IC1F_0 /*!< external input capture signal level change                                                                                                                             \
+			      must be stable for at least 2 clock periods                                                                                                                              \
 			      before it is considered as valid transition */
-#define LPTIM_ICFLT_CLOCK_DIV4                                                 \
-	LPTIM_CCMR1_IC1F_1 /*!< external input capture signal level change     \
-			      must be stable for at least 4 clock periods      \
+#define LPTIM_ICFLT_CLOCK_DIV4                                                                                                                                                                         \
+	LPTIM_CCMR1_IC1F_1 /*!< external input capture signal level change                                                                                                                             \
+			      must be stable for at least 4 clock periods                                                                                                                              \
 			      before it is considered as valid transition */
-#define LPTIM_ICFLT_CLOCK_DIV8                                                 \
-	(LPTIM_CCMR1_IC1F_0 |                                                  \
-	 LPTIM_CCMR1_IC1F_1) /*!< external input capture signal level change   \
-				must be stable for at least 8 clock periods    \
-				before it is considered as valid transition */
+#define LPTIM_ICFLT_CLOCK_DIV8                                                                                                                                                                         \
+	(LPTIM_CCMR1_IC1F_0 | LPTIM_CCMR1_IC1F_1) /*!< external input capture signal level change                                                                                                      \
+						     must be stable for at least 8 clock periods                                                                                                       \
+						     before it is considered as valid transition */
 /**
  * @}
  */
@@ -629,24 +559,21 @@ typedef void (*pLPTIM_CallbackTypeDef)(
 /** @defgroup LPTIM_Input_Capture_Source LPTIM Input Capture Source
  * @{
  */
-#define LPTIM_IC1SOURCE_GPIO                                                   \
-	0x00000000UL /*!< For LPTIM1, LPTIM2 and LPTIM3                        \
-		      */
-#define LPTIM_IC1SOURCE_COMP1                                                  \
-	LPTIM_CFGR2_IC1SEL_0 /*!< For LPTIM1, LPTIM2 and LPTIM3 */
+#define LPTIM_IC1SOURCE_GPIO                                                                                                                                                                           \
+	0x00000000UL				   /*!< For LPTIM1, LPTIM2 and LPTIM3                                                                                                                  \
+						    */
+#define LPTIM_IC1SOURCE_COMP1 LPTIM_CFGR2_IC1SEL_0 /*!< For LPTIM1, LPTIM2 and LPTIM3 */
 #if defined(COMP2)
-#define LPTIM_IC1SOURCE_COMP2                                                  \
-	LPTIM_CFGR2_IC1SEL_1 /*!< For LPTIM1, LPTIM2 and LPTIM3 */
-#endif			     /* COMP2 */
-#define LPTIM_IC2SOURCE_GPIO                                                   \
-	0x00000000UL /*!< For LPTIM1, LPTIM2 and LPTIM3                        \
-		      */
-#define LPTIM_IC2SOURCE_LSI LPTIM_CFGR2_IC2SEL_0       /*!< For LPTIM1 */
-#define LPTIM_IC2SOURCE_LSE LPTIM_CFGR2_IC2SEL_1       /*!< For LPTIM1 */
-#define LPTIM_IC2SOURCE_HSI_256 LPTIM_CFGR2_IC2SEL_0   /*!< For LPTIM2 */
-#define LPTIM_IC2SOURCE_MSIS_1024 LPTIM_CFGR2_IC2SEL_1 /*!< For LPTIM2 */
-#define LPTIM_IC2SOURCE_MSIS_4                                                 \
-	(LPTIM_CFGR2_IC2SEL_0 | LPTIM_CFGR2_IC2SEL_1) /*!< For LPTIM2 */
+#define LPTIM_IC1SOURCE_COMP2 LPTIM_CFGR2_IC1SEL_1 /*!< For LPTIM1, LPTIM2 and LPTIM3 */
+#endif						   /* COMP2 */
+#define LPTIM_IC2SOURCE_GPIO                                                                                                                                                                           \
+	0x00000000UL							     /*!< For LPTIM1, LPTIM2 and LPTIM3                                                                                        \
+									      */
+#define LPTIM_IC2SOURCE_LSI LPTIM_CFGR2_IC2SEL_0			     /*!< For LPTIM1 */
+#define LPTIM_IC2SOURCE_LSE LPTIM_CFGR2_IC2SEL_1			     /*!< For LPTIM1 */
+#define LPTIM_IC2SOURCE_HSI_256 LPTIM_CFGR2_IC2SEL_0			     /*!< For LPTIM2 */
+#define LPTIM_IC2SOURCE_MSIS_1024 LPTIM_CFGR2_IC2SEL_1			     /*!< For LPTIM2 */
+#define LPTIM_IC2SOURCE_MSIS_4 (LPTIM_CFGR2_IC2SEL_0 | LPTIM_CFGR2_IC2SEL_1) /*!< For LPTIM2 */
 /**
  * @}
  */
@@ -664,20 +591,20 @@ typedef void (*pLPTIM_CallbackTypeDef)(
  * @retval None
  */
 #if (USE_HAL_LPTIM_REGISTER_CALLBACKS == 1)
-#define __HAL_LPTIM_RESET_HANDLE_STATE(__HANDLE__)                             \
-	do {                                                                   \
-		(__HANDLE__)->State = HAL_LPTIM_STATE_RESET;                   \
-		(__HANDLE__)->ChannelState[0] = HAL_LPTIM_CHANNEL_STATE_RESET; \
-		(__HANDLE__)->ChannelState[1] = HAL_LPTIM_CHANNEL_STATE_RESET; \
-		(__HANDLE__)->MspInitCallback = NULL;                          \
-		(__HANDLE__)->MspDeInitCallback = NULL;                        \
+#define __HAL_LPTIM_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                     \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_LPTIM_STATE_RESET;                                                                                                                                           \
+		(__HANDLE__)->ChannelState[0] = HAL_LPTIM_CHANNEL_STATE_RESET;                                                                                                                         \
+		(__HANDLE__)->ChannelState[1] = HAL_LPTIM_CHANNEL_STATE_RESET;                                                                                                                         \
+		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
+		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
 	} while (0)
 #else
-#define __HAL_LPTIM_RESET_HANDLE_STATE(__HANDLE__)                             \
-	do {                                                                   \
-		(__HANDLE__)->State = HAL_LPTIM_STATE_RESET;                   \
-		(__HANDLE__)->ChannelState[0] = HAL_LPTIM_CHANNEL_STATE_RESET; \
-		(__HANDLE__)->ChannelState[1] = HAL_LPTIM_CHANNEL_STATE_RESET; \
+#define __HAL_LPTIM_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                     \
+	do {                                                                                                                                                                                           \
+		(__HANDLE__)->State = HAL_LPTIM_STATE_RESET;                                                                                                                                           \
+		(__HANDLE__)->ChannelState[0] = HAL_LPTIM_CHANNEL_STATE_RESET;                                                                                                                         \
+		(__HANDLE__)->ChannelState[1] = HAL_LPTIM_CHANNEL_STATE_RESET;                                                                                                                         \
 	} while (0)
 #endif /* USE_HAL_LPTIM_REGISTER_CALLBACKS */
 
@@ -686,24 +613,20 @@ typedef void (*pLPTIM_CallbackTypeDef)(
  * @param  __HANDLE__ LPTIM handle
  * @retval None
  */
-#define __HAL_LPTIM_ENABLE(__HANDLE__)                                         \
-	((__HANDLE__)->Instance->CR |= (LPTIM_CR_ENABLE))
+#define __HAL_LPTIM_ENABLE(__HANDLE__) ((__HANDLE__)->Instance->CR |= (LPTIM_CR_ENABLE))
 
 /**
  * @brief  Disable the LPTIM peripheral.
  * @param  __HANDLE__ LPTIM handle
  * @retval None
  */
-#define __HAL_LPTIM_DISABLE(__HANDLE__)                                        \
-	do {                                                                   \
-		if (((__HANDLE__)->Instance->CCMR1 & LPTIM_CCMR1_CC1E) ==      \
-		    0UL) {                                                     \
-			if (((__HANDLE__)->Instance->CCMR1 &                   \
-			     LPTIM_CCMR1_CC2E) == 0UL) {                       \
-				(__HANDLE__)->Instance->CR &=                  \
-				    ~(LPTIM_CR_ENABLE);                        \
-			}                                                      \
-		}                                                              \
+#define __HAL_LPTIM_DISABLE(__HANDLE__)                                                                                                                                                                \
+	do {                                                                                                                                                                                           \
+		if (((__HANDLE__)->Instance->CCMR1 & LPTIM_CCMR1_CC1E) == 0UL) {                                                                                                                       \
+			if (((__HANDLE__)->Instance->CCMR1 & LPTIM_CCMR1_CC2E) == 0UL) {                                                                                                               \
+				(__HANDLE__)->Instance->CR &= ~(LPTIM_CR_ENABLE);                                                                                                                      \
+			}                                                                                                                                                                              \
+		}                                                                                                                                                                                      \
 	} while (0)
 
 /**
@@ -711,31 +634,27 @@ typedef void (*pLPTIM_CallbackTypeDef)(
  * @param  __HANDLE__ LPTIM handle
  * @retval None
  */
-#define __HAL_LPTIM_START_CONTINUOUS(__HANDLE__)                               \
-	((__HANDLE__)->Instance->CR |= LPTIM_CR_CNTSTRT)
+#define __HAL_LPTIM_START_CONTINUOUS(__HANDLE__) ((__HANDLE__)->Instance->CR |= LPTIM_CR_CNTSTRT)
 /**
  * @brief  Start the LPTIM peripheral in single mode.
  * @param  __HANDLE__ LPTIM handle
  * @retval None
  */
-#define __HAL_LPTIM_START_SINGLE(__HANDLE__)                                   \
-	((__HANDLE__)->Instance->CR |= LPTIM_CR_SNGSTRT)
+#define __HAL_LPTIM_START_SINGLE(__HANDLE__) ((__HANDLE__)->Instance->CR |= LPTIM_CR_SNGSTRT)
 
 /**
  * @brief  Reset the LPTIM Counter register in synchronous mode.
  * @param  __HANDLE__ LPTIM handle
  * @retval None
  */
-#define __HAL_LPTIM_RESET_COUNTER(__HANDLE__)                                  \
-	((__HANDLE__)->Instance->CR |= LPTIM_CR_COUNTRST)
+#define __HAL_LPTIM_RESET_COUNTER(__HANDLE__) ((__HANDLE__)->Instance->CR |= LPTIM_CR_COUNTRST)
 
 /**
  * @brief  Reset after read of the LPTIM Counter register in asynchronous mode.
  * @param  __HANDLE__ LPTIM handle
  * @retval None
  */
-#define __HAL_LPTIM_RESET_COUNTER_AFTERREAD(__HANDLE__)                        \
-	((__HANDLE__)->Instance->CR |= LPTIM_CR_RSTARE)
+#define __HAL_LPTIM_RESET_COUNTER_AFTERREAD(__HANDLE__) ((__HANDLE__)->Instance->CR |= LPTIM_CR_RSTARE)
 
 /**
  * @brief  Write the passed parameter in the Autoreload register.
@@ -747,8 +666,7 @@ typedef void (*pLPTIM_CallbackTypeDef)(
  * @note   The ARR register can only be modified when the LPTIM instance is
  * enabled.
  */
-#define __HAL_LPTIM_AUTORELOAD_SET(__HANDLE__, __VALUE__)                      \
-	((__HANDLE__)->Instance->ARR = (__VALUE__))
+#define __HAL_LPTIM_AUTORELOAD_SET(__HANDLE__, __VALUE__) ((__HANDLE__)->Instance->ARR = (__VALUE__))
 
 /**
  * @brief  Write the passed parameter in the Compare register.
@@ -759,12 +677,8 @@ typedef void (*pLPTIM_CallbackTypeDef)(
  * @note   The CCRx registers can only be modified when the LPTIM instance is
  * enabled.
  */
-#define __HAL_LPTIM_COMPARE_SET(__HANDLE__, __CHANNEL__, __VALUE__)            \
-	(((__CHANNEL__) == LPTIM_CHANNEL_1)                                    \
-	     ? ((__HANDLE__)->Instance->CCR1 = (__VALUE__))                    \
-	 : ((__CHANNEL__) == LPTIM_CHANNEL_2)                                  \
-	     ? ((__HANDLE__)->Instance->CCR2 = (__VALUE__))                    \
-	     : 0U)
+#define __HAL_LPTIM_COMPARE_SET(__HANDLE__, __CHANNEL__, __VALUE__)                                                                                                                                    \
+	(((__CHANNEL__) == LPTIM_CHANNEL_1) ? ((__HANDLE__)->Instance->CCR1 = (__VALUE__)) : ((__CHANNEL__) == LPTIM_CHANNEL_2) ? ((__HANDLE__)->Instance->CCR2 = (__VALUE__)) : 0U)
 
 /**
  * @brief  Write the passed parameter in the Repetition register.
@@ -772,8 +686,7 @@ typedef void (*pLPTIM_CallbackTypeDef)(
  * @param  __VALUE__ Repetition value
  * @retval None
  */
-#define __HAL_LPTIM_REPETITIONCOUNTER_SET(__HANDLE__, __VALUE__)               \
-	((__HANDLE__)->Instance->RCR = (__VALUE__))
+#define __HAL_LPTIM_REPETITIONCOUNTER_SET(__HANDLE__, __VALUE__) ((__HANDLE__)->Instance->RCR = (__VALUE__))
 
 /**
  * @brief  Return the current Repetition value.
@@ -782,8 +695,7 @@ typedef void (*pLPTIM_CallbackTypeDef)(
  * @note   The RCR register can only be modified when the LPTIM instance is
  * enabled.
  */
-#define __HAL_LPTIM_REPETITIONCOUNTER_GET(__HANDLE__)                          \
-	((__HANDLE__)->Instance->RCR)
+#define __HAL_LPTIM_REPETITIONCOUNTER_GET(__HANDLE__) ((__HANDLE__)->Instance->RCR)
 
 /**
  * @brief  Enable the LPTIM signal input/output on the corresponding pin.
@@ -794,20 +706,18 @@ typedef void (*pLPTIM_CallbackTypeDef)(
  *            @arg LPTIM_CHANNEL_2: LPTIM Channel 2 selected
  * @retval None
  */
-#define __HAL_LPTIM_CAPTURE_COMPARE_ENABLE(__HANDLE__, __CHANNEL__)            \
-	do {                                                                   \
-		switch (__CHANNEL__) {                                         \
-			case LPTIM_CHANNEL_1:                                  \
-				((__HANDLE__)->Instance->CCMR1 |=              \
-				 LPTIM_CCMR1_CC1E);                            \
-				break;                                         \
-			case LPTIM_CHANNEL_2:                                  \
-				((__HANDLE__)->Instance->CCMR1 |=              \
-				 LPTIM_CCMR1_CC2E);                            \
-				break;                                         \
-			default:                                               \
-				break;                                         \
-		}                                                              \
+#define __HAL_LPTIM_CAPTURE_COMPARE_ENABLE(__HANDLE__, __CHANNEL__)                                                                                                                                    \
+	do {                                                                                                                                                                                           \
+		switch (__CHANNEL__) {                                                                                                                                                                 \
+			case LPTIM_CHANNEL_1:                                                                                                                                                          \
+				((__HANDLE__)->Instance->CCMR1 |= LPTIM_CCMR1_CC1E);                                                                                                                   \
+				break;                                                                                                                                                                 \
+			case LPTIM_CHANNEL_2:                                                                                                                                                          \
+				((__HANDLE__)->Instance->CCMR1 |= LPTIM_CCMR1_CC2E);                                                                                                                   \
+				break;                                                                                                                                                                 \
+			default:                                                                                                                                                                       \
+				break;                                                                                                                                                                 \
+		}                                                                                                                                                                                      \
 	} while (0)
 
 /**
@@ -819,20 +729,18 @@ typedef void (*pLPTIM_CallbackTypeDef)(
  *            @arg LPTIM_CHANNEL_2: LPTIM Channel 2 selected
  * @retval None
  */
-#define __HAL_LPTIM_CAPTURE_COMPARE_DISABLE(__HANDLE__, __CHANNEL__)           \
-	do {                                                                   \
-		switch (__CHANNEL__) {                                         \
-			case LPTIM_CHANNEL_1:                                  \
-				((__HANDLE__)->Instance->CCMR1 &=              \
-				 ~LPTIM_CCMR1_CC1E);                           \
-				break;                                         \
-			case LPTIM_CHANNEL_2:                                  \
-				((__HANDLE__)->Instance->CCMR1 &=              \
-				 ~LPTIM_CCMR1_CC2E);                           \
-				break;                                         \
-			default:                                               \
-				break;                                         \
-		}                                                              \
+#define __HAL_LPTIM_CAPTURE_COMPARE_DISABLE(__HANDLE__, __CHANNEL__)                                                                                                                                   \
+	do {                                                                                                                                                                                           \
+		switch (__CHANNEL__) {                                                                                                                                                                 \
+			case LPTIM_CHANNEL_1:                                                                                                                                                          \
+				((__HANDLE__)->Instance->CCMR1 &= ~LPTIM_CCMR1_CC1E);                                                                                                                  \
+				break;                                                                                                                                                                 \
+			case LPTIM_CHANNEL_2:                                                                                                                                                          \
+				((__HANDLE__)->Instance->CCMR1 &= ~LPTIM_CCMR1_CC2E);                                                                                                                  \
+				break;                                                                                                                                                                 \
+			default:                                                                                                                                                                       \
+				break;                                                                                                                                                                 \
+		}                                                                                                                                                                                      \
 	} while (0)
 
 /**
@@ -857,8 +765,7 @@ typedef void (*pLPTIM_CallbackTypeDef)(
  *            @arg LPTIM_FLAG_DIEROK  : DMA & interrupt enable update OK flag.
  * @retval The state of the specified flag (SET or RESET).
  */
-#define __HAL_LPTIM_GET_FLAG(__HANDLE__, __FLAG__)                             \
-	(((__HANDLE__)->Instance->ISR & (__FLAG__)) == (__FLAG__))
+#define __HAL_LPTIM_GET_FLAG(__HANDLE__, __FLAG__) (((__HANDLE__)->Instance->ISR & (__FLAG__)) == (__FLAG__))
 
 /**
  * @brief  Clear the specified LPTIM flag.
@@ -882,8 +789,7 @@ typedef void (*pLPTIM_CallbackTypeDef)(
  *            @arg LPTIM_FLAG_DIEROK  : DMA & interrupt enable update OK flag.
  * @retval None.
  */
-#define __HAL_LPTIM_CLEAR_FLAG(__HANDLE__, __FLAG__)                           \
-	((__HANDLE__)->Instance->ICR = (__FLAG__))
+#define __HAL_LPTIM_CLEAR_FLAG(__HANDLE__, __FLAG__) ((__HANDLE__)->Instance->ICR = (__FLAG__))
 
 /**
  * @brief  Enable the specified LPTIM interrupt.
@@ -908,8 +814,7 @@ typedef void (*pLPTIM_CallbackTypeDef)(
  * @note   The LPTIM interrupts can only be enabled when the LPTIM instance is
  * enabled.
  */
-#define __HAL_LPTIM_ENABLE_IT(__HANDLE__, __INTERRUPT__)                       \
-	((__HANDLE__)->Instance->DIER |= (__INTERRUPT__))
+#define __HAL_LPTIM_ENABLE_IT(__HANDLE__, __INTERRUPT__) ((__HANDLE__)->Instance->DIER |= (__INTERRUPT__))
 
 /**
  * @brief  Disable the specified LPTIM interrupt.
@@ -934,8 +839,7 @@ typedef void (*pLPTIM_CallbackTypeDef)(
  * @note   The LPTIM interrupts can only be disabled when the LPTIM instance is
  * enabled.
  */
-#define __HAL_LPTIM_DISABLE_IT(__HANDLE__, __INTERRUPT__)                      \
-	((__HANDLE__)->Instance->DIER &= (~(__INTERRUPT__)))
+#define __HAL_LPTIM_DISABLE_IT(__HANDLE__, __INTERRUPT__) ((__HANDLE__)->Instance->DIER &= (~(__INTERRUPT__)))
 
 /** @brief  Enable the specified DMA request.
  * @param  __HANDLE__ specifies the TIM Handle.
@@ -946,8 +850,7 @@ typedef void (*pLPTIM_CallbackTypeDef)(
  *            @arg LPTIM_DMA_CC2:  Capture/Compare 2 DMA request
  * @retval None
  */
-#define __HAL_LPTIM_ENABLE_DMA(__HANDLE__, __DMA__)                            \
-	((__HANDLE__)->Instance->DIER |= (__DMA__))
+#define __HAL_LPTIM_ENABLE_DMA(__HANDLE__, __DMA__) ((__HANDLE__)->Instance->DIER |= (__DMA__))
 
 /** @brief  Disable the specified DMA request.
  * @param  __HANDLE__ specifies the LPTIM Handle.
@@ -958,8 +861,7 @@ typedef void (*pLPTIM_CallbackTypeDef)(
  *            @arg LPTIM_DMA_CC2:   Capture/Compare 2 DMA request
  * @retval None
  */
-#define __HAL_LPTIM_DISABLE_DMA(__HANDLE__, __DMA__)                           \
-	((__HANDLE__)->Instance->DIER &= ~(__DMA__))
+#define __HAL_LPTIM_DISABLE_DMA(__HANDLE__, __DMA__) ((__HANDLE__)->Instance->DIER &= ~(__DMA__))
 
 /**
  * @brief  Check whether the specified LPTIM interrupt source is enabled or not.
@@ -983,10 +885,7 @@ typedef void (*pLPTIM_CallbackTypeDef)(
  * @retval Interrupt status.
  */
 
-#define __HAL_LPTIM_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__)                   \
-	((((__HANDLE__)->Instance->DIER & (__INTERRUPT__)) == (__INTERRUPT__)) \
-	     ? SET                                                             \
-	     : RESET)
+#define __HAL_LPTIM_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__) ((((__HANDLE__)->Instance->DIER & (__INTERRUPT__)) == (__INTERRUPT__)) ? SET : RESET)
 
 /**
  * @}
@@ -1017,53 +916,34 @@ void HAL_LPTIM_MspDeInit(LPTIM_HandleTypeDef *hlptim);
  * @{
  */
 /* Config functions  **********************************************************/
-HAL_StatusTypeDef
-HAL_LPTIM_OC_ConfigChannel(LPTIM_HandleTypeDef *hlptim,
-			   const LPTIM_OC_ConfigTypeDef *sConfig,
-			   uint32_t Channel);
+HAL_StatusTypeDef HAL_LPTIM_OC_ConfigChannel(LPTIM_HandleTypeDef *hlptim, const LPTIM_OC_ConfigTypeDef *sConfig, uint32_t Channel);
 
 /* Start/Stop operation functions *********************************************/
 /* ################################# PWM Mode ################################*/
 /* Blocking mode: Polling */
-HAL_StatusTypeDef HAL_LPTIM_PWM_Start(LPTIM_HandleTypeDef *hlptim,
-				      uint32_t Channel);
-HAL_StatusTypeDef HAL_LPTIM_PWM_Stop(LPTIM_HandleTypeDef *hlptim,
-				     uint32_t Channel);
+HAL_StatusTypeDef HAL_LPTIM_PWM_Start(LPTIM_HandleTypeDef *hlptim, uint32_t Channel);
+HAL_StatusTypeDef HAL_LPTIM_PWM_Stop(LPTIM_HandleTypeDef *hlptim, uint32_t Channel);
 /* Non-Blocking mode: Interrupt */
-HAL_StatusTypeDef HAL_LPTIM_PWM_Start_IT(LPTIM_HandleTypeDef *hlptim,
-					 uint32_t Channel);
-HAL_StatusTypeDef HAL_LPTIM_PWM_Stop_IT(LPTIM_HandleTypeDef *hlptim,
-					uint32_t Channel);
-HAL_StatusTypeDef HAL_LPTIM_PWM_Start_DMA(LPTIM_HandleTypeDef *hlptim,
-					  uint32_t Channel,
-					  const uint32_t *pData,
-					  uint32_t Length);
-HAL_StatusTypeDef HAL_LPTIM_PWM_Stop_DMA(LPTIM_HandleTypeDef *hlptim,
-					 uint32_t Channel);
+HAL_StatusTypeDef HAL_LPTIM_PWM_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Channel);
+HAL_StatusTypeDef HAL_LPTIM_PWM_Stop_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Channel);
+HAL_StatusTypeDef HAL_LPTIM_PWM_Start_DMA(LPTIM_HandleTypeDef *hlptim, uint32_t Channel, const uint32_t *pData, uint32_t Length);
+HAL_StatusTypeDef HAL_LPTIM_PWM_Stop_DMA(LPTIM_HandleTypeDef *hlptim, uint32_t Channel);
 
 /* ############################# One Pulse Mode ##############################*/
 /* Blocking mode: Polling */
-HAL_StatusTypeDef HAL_LPTIM_OnePulse_Start(LPTIM_HandleTypeDef *hlptim,
-					   uint32_t Channel);
-HAL_StatusTypeDef HAL_LPTIM_OnePulse_Stop(LPTIM_HandleTypeDef *hlptim,
-					  uint32_t Channel);
+HAL_StatusTypeDef HAL_LPTIM_OnePulse_Start(LPTIM_HandleTypeDef *hlptim, uint32_t Channel);
+HAL_StatusTypeDef HAL_LPTIM_OnePulse_Stop(LPTIM_HandleTypeDef *hlptim, uint32_t Channel);
 /* Non-Blocking mode: Interrupt */
-HAL_StatusTypeDef HAL_LPTIM_OnePulse_Start_IT(LPTIM_HandleTypeDef *hlptim,
-					      uint32_t Channel);
-HAL_StatusTypeDef HAL_LPTIM_OnePulse_Stop_IT(LPTIM_HandleTypeDef *hlptim,
-					     uint32_t Channel);
+HAL_StatusTypeDef HAL_LPTIM_OnePulse_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Channel);
+HAL_StatusTypeDef HAL_LPTIM_OnePulse_Stop_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Channel);
 
 /* ############################## Set once Mode ##############################*/
 /* Blocking mode: Polling */
-HAL_StatusTypeDef HAL_LPTIM_SetOnce_Start(LPTIM_HandleTypeDef *hlptim,
-					  uint32_t Channel);
-HAL_StatusTypeDef HAL_LPTIM_SetOnce_Stop(LPTIM_HandleTypeDef *hlptim,
-					 uint32_t Channel);
+HAL_StatusTypeDef HAL_LPTIM_SetOnce_Start(LPTIM_HandleTypeDef *hlptim, uint32_t Channel);
+HAL_StatusTypeDef HAL_LPTIM_SetOnce_Stop(LPTIM_HandleTypeDef *hlptim, uint32_t Channel);
 /* Non-Blocking mode: Interrupt */
-HAL_StatusTypeDef HAL_LPTIM_SetOnce_Start_IT(LPTIM_HandleTypeDef *hlptim,
-					     uint32_t Channel);
-HAL_StatusTypeDef HAL_LPTIM_SetOnce_Stop_IT(LPTIM_HandleTypeDef *hlptim,
-					    uint32_t Channel);
+HAL_StatusTypeDef HAL_LPTIM_SetOnce_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Channel);
+HAL_StatusTypeDef HAL_LPTIM_SetOnce_Stop_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Channel);
 
 /* ############################### Encoder Mode ##############################*/
 /* Blocking mode: Polling */
@@ -1075,12 +955,10 @@ HAL_StatusTypeDef HAL_LPTIM_Encoder_Stop_IT(LPTIM_HandleTypeDef *hlptim);
 
 /* ############################# Time out  Mode ##############################*/
 /* Blocking mode: Polling */
-HAL_StatusTypeDef HAL_LPTIM_TimeOut_Start(LPTIM_HandleTypeDef *hlptim,
-					  uint32_t Timeout);
+HAL_StatusTypeDef HAL_LPTIM_TimeOut_Start(LPTIM_HandleTypeDef *hlptim, uint32_t Timeout);
 HAL_StatusTypeDef HAL_LPTIM_TimeOut_Stop(LPTIM_HandleTypeDef *hlptim);
 /* Non-Blocking mode: Interrupt */
-HAL_StatusTypeDef HAL_LPTIM_TimeOut_Start_IT(LPTIM_HandleTypeDef *hlptim,
-					     uint32_t Timeout);
+HAL_StatusTypeDef HAL_LPTIM_TimeOut_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Timeout);
 HAL_StatusTypeDef HAL_LPTIM_TimeOut_Stop_IT(LPTIM_HandleTypeDef *hlptim);
 
 /* ############################## Counter Mode ###############################*/
@@ -1094,24 +972,14 @@ HAL_StatusTypeDef HAL_LPTIM_Counter_Stop_IT(LPTIM_HandleTypeDef *hlptim);
 /* ############################## Input Capture Mode
  * ###############################*/
 /* Blocking mode: Polling */
-HAL_StatusTypeDef
-HAL_LPTIM_IC_ConfigChannel(LPTIM_HandleTypeDef *hlptim,
-			   const LPTIM_IC_ConfigTypeDef *sConfig,
-			   uint32_t Channel);
-HAL_StatusTypeDef HAL_LPTIM_IC_Start(LPTIM_HandleTypeDef *hlptim,
-				     uint32_t Channel);
-HAL_StatusTypeDef HAL_LPTIM_IC_Stop(LPTIM_HandleTypeDef *hlptim,
-				    uint32_t Channel);
+HAL_StatusTypeDef HAL_LPTIM_IC_ConfigChannel(LPTIM_HandleTypeDef *hlptim, const LPTIM_IC_ConfigTypeDef *sConfig, uint32_t Channel);
+HAL_StatusTypeDef HAL_LPTIM_IC_Start(LPTIM_HandleTypeDef *hlptim, uint32_t Channel);
+HAL_StatusTypeDef HAL_LPTIM_IC_Stop(LPTIM_HandleTypeDef *hlptim, uint32_t Channel);
 /* Non-Blocking mode: Interrupt */
-HAL_StatusTypeDef HAL_LPTIM_IC_Start_IT(LPTIM_HandleTypeDef *hlptim,
-					uint32_t Channel);
-HAL_StatusTypeDef HAL_LPTIM_IC_Stop_IT(LPTIM_HandleTypeDef *hlptim,
-				       uint32_t Channel);
-HAL_StatusTypeDef HAL_LPTIM_IC_Start_DMA(LPTIM_HandleTypeDef *hlptim,
-					 uint32_t Channel, uint32_t *pData,
-					 uint32_t Length);
-HAL_StatusTypeDef HAL_LPTIM_IC_Stop_DMA(LPTIM_HandleTypeDef *hlptim,
-					uint32_t Channel);
+HAL_StatusTypeDef HAL_LPTIM_IC_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Channel);
+HAL_StatusTypeDef HAL_LPTIM_IC_Stop_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Channel);
+HAL_StatusTypeDef HAL_LPTIM_IC_Start_DMA(LPTIM_HandleTypeDef *hlptim, uint32_t Channel, uint32_t *pData, uint32_t Length);
+HAL_StatusTypeDef HAL_LPTIM_IC_Stop_DMA(LPTIM_HandleTypeDef *hlptim, uint32_t Channel);
 /**
  * @}
  */
@@ -1123,10 +991,8 @@ HAL_StatusTypeDef HAL_LPTIM_IC_Stop_DMA(LPTIM_HandleTypeDef *hlptim,
 /* Reading operation functions ************************************************/
 uint32_t HAL_LPTIM_ReadCounter(const LPTIM_HandleTypeDef *hlptim);
 uint32_t HAL_LPTIM_ReadAutoReload(const LPTIM_HandleTypeDef *hlptim);
-uint32_t HAL_LPTIM_ReadCapturedValue(const LPTIM_HandleTypeDef *hlptim,
-				     uint32_t Channel);
-uint8_t HAL_LPTIM_IC_GetOffset(const LPTIM_HandleTypeDef *hlptim,
-			       uint32_t Channel);
+uint32_t HAL_LPTIM_ReadCapturedValue(const LPTIM_HandleTypeDef *hlptim, uint32_t Channel);
+uint8_t HAL_LPTIM_IC_GetOffset(const LPTIM_HandleTypeDef *hlptim, uint32_t Channel);
 /**
  * @}
  */
@@ -1156,13 +1022,8 @@ void HAL_LPTIM_IC_OverCaptureCallback(LPTIM_HandleTypeDef *hlptim);
 
 /* Callbacks Register/UnRegister functions  ***********************************/
 #if (USE_HAL_LPTIM_REGISTER_CALLBACKS == 1)
-HAL_StatusTypeDef
-HAL_LPTIM_RegisterCallback(LPTIM_HandleTypeDef *lphtim,
-			   HAL_LPTIM_CallbackIDTypeDef CallbackID,
-			   pLPTIM_CallbackTypeDef pCallback);
-HAL_StatusTypeDef
-HAL_LPTIM_UnRegisterCallback(LPTIM_HandleTypeDef *lphtim,
-			     HAL_LPTIM_CallbackIDTypeDef CallbackID);
+HAL_StatusTypeDef HAL_LPTIM_RegisterCallback(LPTIM_HandleTypeDef *lphtim, HAL_LPTIM_CallbackIDTypeDef CallbackID, pLPTIM_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_LPTIM_UnRegisterCallback(LPTIM_HandleTypeDef *lphtim, HAL_LPTIM_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_LPTIM_REGISTER_CALLBACKS */
 /**
  * @}
@@ -1214,164 +1075,93 @@ HAL_LPTIM_StateTypeDef HAL_LPTIM_GetState(const LPTIM_HandleTypeDef *hlptim);
  * @{
  */
 
-#define IS_LPTIM_CLOCK_SOURCE(__SOURCE__)                                      \
-	(((__SOURCE__) == LPTIM_CLOCKSOURCE_ULPTIM) ||                         \
-	 ((__SOURCE__) == LPTIM_CLOCKSOURCE_APBCLOCK_LPOSC))
+#define IS_LPTIM_CLOCK_SOURCE(__SOURCE__) (((__SOURCE__) == LPTIM_CLOCKSOURCE_ULPTIM) || ((__SOURCE__) == LPTIM_CLOCKSOURCE_APBCLOCK_LPOSC))
 
-#define IS_LPTIM_CLOCK_PRESCALER(__PRESCALER__)                                \
-	(((__PRESCALER__) == LPTIM_PRESCALER_DIV1) ||                          \
-	 ((__PRESCALER__) == LPTIM_PRESCALER_DIV2) ||                          \
-	 ((__PRESCALER__) == LPTIM_PRESCALER_DIV4) ||                          \
-	 ((__PRESCALER__) == LPTIM_PRESCALER_DIV8) ||                          \
-	 ((__PRESCALER__) == LPTIM_PRESCALER_DIV16) ||                         \
-	 ((__PRESCALER__) == LPTIM_PRESCALER_DIV32) ||                         \
-	 ((__PRESCALER__) == LPTIM_PRESCALER_DIV64) ||                         \
-	 ((__PRESCALER__) == LPTIM_PRESCALER_DIV128))
+#define IS_LPTIM_CLOCK_PRESCALER(__PRESCALER__)                                                                                                                                                        \
+	(((__PRESCALER__) == LPTIM_PRESCALER_DIV1) || ((__PRESCALER__) == LPTIM_PRESCALER_DIV2) || ((__PRESCALER__) == LPTIM_PRESCALER_DIV4) || ((__PRESCALER__) == LPTIM_PRESCALER_DIV8) ||           \
+	 ((__PRESCALER__) == LPTIM_PRESCALER_DIV16) || ((__PRESCALER__) == LPTIM_PRESCALER_DIV32) || ((__PRESCALER__) == LPTIM_PRESCALER_DIV64) || ((__PRESCALER__) == LPTIM_PRESCALER_DIV128))
 
-#define IS_LPTIM_CLOCK_PRESCALERDIV1(__PRESCALER__)                            \
-	((__PRESCALER__) == LPTIM_PRESCALER_DIV1)
-#define IS_LPTIM_CLOCK_SAMPLE_TIME(__SAMPLETIME__)                             \
-	(((__SAMPLETIME__) == LPTIM_CLOCKSAMPLETIME_DIRECTTRANSITION) ||       \
-	 ((__SAMPLETIME__) == LPTIM_CLOCKSAMPLETIME_2TRANSITIONS) ||           \
-	 ((__SAMPLETIME__) == LPTIM_CLOCKSAMPLETIME_4TRANSITIONS) ||           \
+#define IS_LPTIM_CLOCK_PRESCALERDIV1(__PRESCALER__) ((__PRESCALER__) == LPTIM_PRESCALER_DIV1)
+#define IS_LPTIM_CLOCK_SAMPLE_TIME(__SAMPLETIME__)                                                                                                                                                     \
+	(((__SAMPLETIME__) == LPTIM_CLOCKSAMPLETIME_DIRECTTRANSITION) || ((__SAMPLETIME__) == LPTIM_CLOCKSAMPLETIME_2TRANSITIONS) || ((__SAMPLETIME__) == LPTIM_CLOCKSAMPLETIME_4TRANSITIONS) ||       \
 	 ((__SAMPLETIME__) == LPTIM_CLOCKSAMPLETIME_8TRANSITIONS))
 
-#define IS_LPTIM_CLOCK_POLARITY(__POLARITY__)                                  \
-	(((__POLARITY__) == LPTIM_CLOCKPOLARITY_RISING) ||                     \
-	 ((__POLARITY__) == LPTIM_CLOCKPOLARITY_FALLING) ||                    \
-	 ((__POLARITY__) == LPTIM_CLOCKPOLARITY_RISING_FALLING))
+#define IS_LPTIM_CLOCK_POLARITY(__POLARITY__)                                                                                                                                                          \
+	(((__POLARITY__) == LPTIM_CLOCKPOLARITY_RISING) || ((__POLARITY__) == LPTIM_CLOCKPOLARITY_FALLING) || ((__POLARITY__) == LPTIM_CLOCKPOLARITY_RISING_FALLING))
 
-#define IS_LPTIM_TRG_SOURCE(__TRIG__)                                          \
-	(((__TRIG__) == LPTIM_TRIGSOURCE_SOFTWARE) ||                          \
-	 ((__TRIG__) == LPTIM_TRIGSOURCE_0) ||                                 \
-	 ((__TRIG__) == LPTIM_TRIGSOURCE_1) ||                                 \
-	 ((__TRIG__) == LPTIM_TRIGSOURCE_2) ||                                 \
-	 ((__TRIG__) == LPTIM_TRIGSOURCE_3) ||                                 \
-	 ((__TRIG__) == LPTIM_TRIGSOURCE_4) ||                                 \
-	 ((__TRIG__) == LPTIM_TRIGSOURCE_5) ||                                 \
-	 ((__TRIG__) == LPTIM_TRIGSOURCE_6) ||                                 \
-	 ((__TRIG__) == LPTIM_TRIGSOURCE_7))
+#define IS_LPTIM_TRG_SOURCE(__TRIG__)                                                                                                                                                                  \
+	(((__TRIG__) == LPTIM_TRIGSOURCE_SOFTWARE) || ((__TRIG__) == LPTIM_TRIGSOURCE_0) || ((__TRIG__) == LPTIM_TRIGSOURCE_1) || ((__TRIG__) == LPTIM_TRIGSOURCE_2) ||                                \
+	 ((__TRIG__) == LPTIM_TRIGSOURCE_3) || ((__TRIG__) == LPTIM_TRIGSOURCE_4) || ((__TRIG__) == LPTIM_TRIGSOURCE_5) || ((__TRIG__) == LPTIM_TRIGSOURCE_6) || ((__TRIG__) == LPTIM_TRIGSOURCE_7))
 
-#define IS_LPTIM_EXT_TRG_POLARITY(__POLARITY__)                                \
-	(((__POLARITY__) == LPTIM_ACTIVEEDGE_RISING) ||                        \
-	 ((__POLARITY__) == LPTIM_ACTIVEEDGE_FALLING) ||                       \
-	 ((__POLARITY__) == LPTIM_ACTIVEEDGE_RISING_FALLING))
+#define IS_LPTIM_EXT_TRG_POLARITY(__POLARITY__) (((__POLARITY__) == LPTIM_ACTIVEEDGE_RISING) || ((__POLARITY__) == LPTIM_ACTIVEEDGE_FALLING) || ((__POLARITY__) == LPTIM_ACTIVEEDGE_RISING_FALLING))
 
-#define IS_LPTIM_TRIG_SAMPLE_TIME(__SAMPLETIME__)                              \
-	(((__SAMPLETIME__) == LPTIM_TRIGSAMPLETIME_DIRECTTRANSITION) ||        \
-	 ((__SAMPLETIME__) == LPTIM_TRIGSAMPLETIME_2TRANSITIONS) ||            \
-	 ((__SAMPLETIME__) == LPTIM_TRIGSAMPLETIME_4TRANSITIONS) ||            \
+#define IS_LPTIM_TRIG_SAMPLE_TIME(__SAMPLETIME__)                                                                                                                                                      \
+	(((__SAMPLETIME__) == LPTIM_TRIGSAMPLETIME_DIRECTTRANSITION) || ((__SAMPLETIME__) == LPTIM_TRIGSAMPLETIME_2TRANSITIONS) || ((__SAMPLETIME__) == LPTIM_TRIGSAMPLETIME_4TRANSITIONS) ||          \
 	 ((__SAMPLETIME__) == LPTIM_TRIGSAMPLETIME_8TRANSITIONS))
 
-#define IS_LPTIM_UPDATE_MODE(__MODE__)                                         \
-	(((__MODE__) == LPTIM_UPDATE_IMMEDIATE) ||                             \
-	 ((__MODE__) == LPTIM_UPDATE_ENDOFPERIOD))
+#define IS_LPTIM_UPDATE_MODE(__MODE__) (((__MODE__) == LPTIM_UPDATE_IMMEDIATE) || ((__MODE__) == LPTIM_UPDATE_ENDOFPERIOD))
 
-#define IS_LPTIM_COUNTER_SOURCE(__SOURCE__)                                    \
-	(((__SOURCE__) == LPTIM_COUNTERSOURCE_INTERNAL) ||                     \
-	 ((__SOURCE__) == LPTIM_COUNTERSOURCE_EXTERNAL))
+#define IS_LPTIM_COUNTER_SOURCE(__SOURCE__) (((__SOURCE__) == LPTIM_COUNTERSOURCE_INTERNAL) || ((__SOURCE__) == LPTIM_COUNTERSOURCE_EXTERNAL))
 
 #define IS_LPTIM_COMPARE(__COMPARE__) ((__COMPARE__) <= 0x0000FFFFUL)
 
-#define IS_LPTIM_PERIOD(__PERIOD__)                                            \
-	((0x00000001UL <= (__PERIOD__)) && ((__PERIOD__) <= 0x0000FFFFUL))
+#define IS_LPTIM_PERIOD(__PERIOD__) ((0x00000001UL <= (__PERIOD__)) && ((__PERIOD__) <= 0x0000FFFFUL))
 
 #define IS_LPTIM_PULSE(__PULSE__) ((__PULSE__) <= 0x0000FFFFUL)
 
-#define IS_LPTIM_OC_POLARITY(__OCPOLARITY__)                                   \
-	(((__OCPOLARITY__) == LPTIM_OCPOLARITY_LOW) ||                         \
-	 ((__OCPOLARITY__) == LPTIM_OCPOLARITY_HIGH))
-#define IS_LPTIM_IC_PRESCALER(__PRESCALER__)                                   \
-	(((__PRESCALER__) == LPTIM_ICPSC_DIV1) ||                              \
-	 ((__PRESCALER__) == LPTIM_ICPSC_DIV2) ||                              \
-	 ((__PRESCALER__) == LPTIM_ICPSC_DIV4) ||                              \
-	 ((__PRESCALER__) == LPTIM_ICPSC_DIV8))
+#define IS_LPTIM_OC_POLARITY(__OCPOLARITY__) (((__OCPOLARITY__) == LPTIM_OCPOLARITY_LOW) || ((__OCPOLARITY__) == LPTIM_OCPOLARITY_HIGH))
+#define IS_LPTIM_IC_PRESCALER(__PRESCALER__)                                                                                                                                                           \
+	(((__PRESCALER__) == LPTIM_ICPSC_DIV1) || ((__PRESCALER__) == LPTIM_ICPSC_DIV2) || ((__PRESCALER__) == LPTIM_ICPSC_DIV4) || ((__PRESCALER__) == LPTIM_ICPSC_DIV8))
 
-#define IS_LPTIM_IC_POLARITY(__POLARITY__)                                     \
-	(((__POLARITY__) == LPTIM_ICPOLARITY_RISING) ||                        \
-	 ((__POLARITY__) == LPTIM_ICPOLARITY_FALLING) ||                       \
-	 ((__POLARITY__) == LPTIM_ICPOLARITY_RISING_FALLING))
+#define IS_LPTIM_IC_POLARITY(__POLARITY__) (((__POLARITY__) == LPTIM_ICPOLARITY_RISING) || ((__POLARITY__) == LPTIM_ICPOLARITY_FALLING) || ((__POLARITY__) == LPTIM_ICPOLARITY_RISING_FALLING))
 
-#define IS_LPTIM_IC_FILTER(__FILTER__)                                         \
-	(((__FILTER__) == LPTIM_ICFLT_CLOCK_DIV1) ||                           \
-	 ((__FILTER__) == LPTIM_ICFLT_CLOCK_DIV2) ||                           \
-	 ((__FILTER__) == LPTIM_ICFLT_CLOCK_DIV4) ||                           \
-	 ((__FILTER__) == LPTIM_ICFLT_CLOCK_DIV8))
+#define IS_LPTIM_IC_FILTER(__FILTER__)                                                                                                                                                                 \
+	(((__FILTER__) == LPTIM_ICFLT_CLOCK_DIV1) || ((__FILTER__) == LPTIM_ICFLT_CLOCK_DIV2) || ((__FILTER__) == LPTIM_ICFLT_CLOCK_DIV4) || ((__FILTER__) == LPTIM_ICFLT_CLOCK_DIV8))
 
 #define IS_LPTIM_REPETITION(__REPETITION__) ((__REPETITION__) <= 0x000000FFUL)
 
-#define IS_LPTIM_INPUT1_SOURCE(__INSTANCE__, __SOURCE__)                       \
-	((((__INSTANCE__) == LPTIM1) || ((__INSTANCE__) == LPTIM2) ||          \
-	  ((__INSTANCE__) == LPTIM3) || ((__INSTANCE__) == LPTIM4)) &&         \
-	 (((__SOURCE__) == LPTIM_INPUT1SOURCE_GPIO) ||                         \
-	  ((__SOURCE__) == LPTIM_INPUT1SOURCE_COMP1)))
+#define IS_LPTIM_INPUT1_SOURCE(__INSTANCE__, __SOURCE__)                                                                                                                                               \
+	((((__INSTANCE__) == LPTIM1) || ((__INSTANCE__) == LPTIM2) || ((__INSTANCE__) == LPTIM3) || ((__INSTANCE__) == LPTIM4)) &&                                                                     \
+	 (((__SOURCE__) == LPTIM_INPUT1SOURCE_GPIO) || ((__SOURCE__) == LPTIM_INPUT1SOURCE_COMP1)))
 
 #if defined(COMP2)
-#define IS_LPTIM_INPUT2_SOURCE(__INSTANCE__, __SOURCE__)                       \
-	((((__INSTANCE__) == LPTIM1) || ((__INSTANCE__) == LPTIM2)) &&         \
-	 (((__SOURCE__) == LPTIM_INPUT2SOURCE_GPIO) ||                         \
-	  ((__SOURCE__) == LPTIM_INPUT2SOURCE_COMP2)))
+#define IS_LPTIM_INPUT2_SOURCE(__INSTANCE__, __SOURCE__)                                                                                                                                               \
+	((((__INSTANCE__) == LPTIM1) || ((__INSTANCE__) == LPTIM2)) && (((__SOURCE__) == LPTIM_INPUT2SOURCE_GPIO) || ((__SOURCE__) == LPTIM_INPUT2SOURCE_COMP2)))
 #else
-#define IS_LPTIM_INPUT2_SOURCE(__INSTANCE__, __SOURCE__)                       \
-	((((__INSTANCE__) == LPTIM1) || ((__INSTANCE__) == LPTIM2)) &&         \
-	 (((__SOURCE__) == LPTIM_INPUT2SOURCE_GPIO)))
+#define IS_LPTIM_INPUT2_SOURCE(__INSTANCE__, __SOURCE__) ((((__INSTANCE__) == LPTIM1) || ((__INSTANCE__) == LPTIM2)) && (((__SOURCE__) == LPTIM_INPUT2SOURCE_GPIO)))
 #endif /* COMP2 */
 
 #if defined(COMP2)
-#define IS_LPTIM_IC1_SOURCE(__INSTANCE__, __SOURCE__)                          \
-	((((__INSTANCE__) == LPTIM1) || ((__INSTANCE__) == LPTIM2) ||          \
-	  ((__INSTANCE__) == LPTIM3)) &&                                       \
-	 (((__SOURCE__) == LPTIM_IC1SOURCE_GPIO) ||                            \
-	  ((__SOURCE__) == LPTIM_IC1SOURCE_COMP1) ||                           \
-	  ((__SOURCE__) == LPTIM_IC1SOURCE_COMP2)))
+#define IS_LPTIM_IC1_SOURCE(__INSTANCE__, __SOURCE__)                                                                                                                                                  \
+	((((__INSTANCE__) == LPTIM1) || ((__INSTANCE__) == LPTIM2) || ((__INSTANCE__) == LPTIM3)) &&                                                                                                   \
+	 (((__SOURCE__) == LPTIM_IC1SOURCE_GPIO) || ((__SOURCE__) == LPTIM_IC1SOURCE_COMP1) || ((__SOURCE__) == LPTIM_IC1SOURCE_COMP2)))
 #else
-#define IS_LPTIM_IC1_SOURCE(__INSTANCE__, __SOURCE__)                          \
-	((((__INSTANCE__) == LPTIM1) || ((__INSTANCE__) == LPTIM2) ||          \
-	  ((__INSTANCE__) == LPTIM3)) &&                                       \
-	 (((__SOURCE__) == LPTIM_IC1SOURCE_GPIO) ||                            \
-	  ((__SOURCE__) == LPTIM_IC1SOURCE_COMP1)))
+#define IS_LPTIM_IC1_SOURCE(__INSTANCE__, __SOURCE__)                                                                                                                                                  \
+	((((__INSTANCE__) == LPTIM1) || ((__INSTANCE__) == LPTIM2) || ((__INSTANCE__) == LPTIM3)) && (((__SOURCE__) == LPTIM_IC1SOURCE_GPIO) || ((__SOURCE__) == LPTIM_IC1SOURCE_COMP1)))
 #endif /* COMP2 */
 
-#define IS_LPTIM_IC2_SOURCE(__INSTANCE__, __SOURCE__)                          \
-	((((__INSTANCE__) == LPTIM1) &&                                        \
-	  (((__SOURCE__) == LPTIM_IC2SOURCE_GPIO) ||                           \
-	   ((__SOURCE__) == LPTIM_IC2SOURCE_LSI) ||                            \
-	   ((__SOURCE__) == LPTIM_IC2SOURCE_LSE))) ||                          \
-	 (((__INSTANCE__) == LPTIM2) &&                                        \
-	  (((__SOURCE__) == LPTIM_IC2SOURCE_GPIO) ||                           \
-	   ((__SOURCE__) == LPTIM_IC2SOURCE_HSI_256) ||                        \
-	   ((__SOURCE__) == LPTIM_IC2SOURCE_MSIS_1024) ||                      \
-	   ((__SOURCE__) == LPTIM_IC2SOURCE_MSIS_4))) ||                       \
-	 (((__INSTANCE__) == LPTIM3) &&                                        \
-	  ((__SOURCE__) == LPTIM_IC2SOURCE_GPIO)))
+#define IS_LPTIM_IC2_SOURCE(__INSTANCE__, __SOURCE__)                                                                                                                                                  \
+	((((__INSTANCE__) == LPTIM1) && (((__SOURCE__) == LPTIM_IC2SOURCE_GPIO) || ((__SOURCE__) == LPTIM_IC2SOURCE_LSI) || ((__SOURCE__) == LPTIM_IC2SOURCE_LSE))) ||                                 \
+	 (((__INSTANCE__) == LPTIM2) &&                                                                                                                                                                \
+	  (((__SOURCE__) == LPTIM_IC2SOURCE_GPIO) || ((__SOURCE__) == LPTIM_IC2SOURCE_HSI_256) || ((__SOURCE__) == LPTIM_IC2SOURCE_MSIS_1024) || ((__SOURCE__) == LPTIM_IC2SOURCE_MSIS_4))) ||         \
+	 (((__INSTANCE__) == LPTIM3) && ((__SOURCE__) == LPTIM_IC2SOURCE_GPIO)))
 
-#define LPTIM_CHANNEL_STATE_GET(__INSTANCE__, __CHANNEL__)                     \
-	(((__CHANNEL__) == LPTIM_CHANNEL_1) ? (__INSTANCE__)->ChannelState[0]  \
-					    : (__INSTANCE__)->ChannelState[1])
+#define LPTIM_CHANNEL_STATE_GET(__INSTANCE__, __CHANNEL__) (((__CHANNEL__) == LPTIM_CHANNEL_1) ? (__INSTANCE__)->ChannelState[0] : (__INSTANCE__)->ChannelState[1])
 
-#define LPTIM_CHANNEL_STATE_SET(__INSTANCE__, __CHANNEL__, __CHANNEL_STATE__)  \
-	(((__CHANNEL__) == LPTIM_CHANNEL_1)                                    \
-	     ? ((__INSTANCE__)->ChannelState[0] = (__CHANNEL_STATE__))         \
-	     : ((__INSTANCE__)->ChannelState[1] = (__CHANNEL_STATE__)))
+#define LPTIM_CHANNEL_STATE_SET(__INSTANCE__, __CHANNEL__, __CHANNEL_STATE__)                                                                                                                          \
+	(((__CHANNEL__) == LPTIM_CHANNEL_1) ? ((__INSTANCE__)->ChannelState[0] = (__CHANNEL_STATE__)) : ((__INSTANCE__)->ChannelState[1] = (__CHANNEL_STATE__)))
 
-#define LPTIM_CHANNEL_STATE_SET_ALL(__INSTANCE__, __CHANNEL_STATE__)           \
-	do {                                                                   \
-		(__INSTANCE__)->ChannelState[0] = (__CHANNEL_STATE__);         \
-		(__INSTANCE__)->ChannelState[1] = (__CHANNEL_STATE__);         \
+#define LPTIM_CHANNEL_STATE_SET_ALL(__INSTANCE__, __CHANNEL_STATE__)                                                                                                                                   \
+	do {                                                                                                                                                                                           \
+		(__INSTANCE__)->ChannelState[0] = (__CHANNEL_STATE__);                                                                                                                                 \
+		(__INSTANCE__)->ChannelState[1] = (__CHANNEL_STATE__);                                                                                                                                 \
 	} while (0)
 
-#define IS_LPTIM_CCX_INSTANCE(__INSTANCE__, __CHANNEL__)                       \
-	(((((__INSTANCE__) == LPTIM1_NS) || ((__INSTANCE__) == LPTIM1_S)) &&   \
-	  (((__CHANNEL__) == LPTIM_CHANNEL_1) ||                               \
-	   ((__CHANNEL__) == LPTIM_CHANNEL_2))) ||                             \
-	 ((((__INSTANCE__) == LPTIM2_NS) || ((__INSTANCE__) == LPTIM2_S)) &&   \
-	  (((__CHANNEL__) == LPTIM_CHANNEL_1) ||                               \
-	   ((__CHANNEL__) == LPTIM_CHANNEL_2))) ||                             \
-	 ((((__INSTANCE__) == LPTIM3_NS) || ((__INSTANCE__) == LPTIM3_S)) &&   \
-	  (((__CHANNEL__) == LPTIM_CHANNEL_1) ||                               \
-	   ((__CHANNEL__) == LPTIM_CHANNEL_2))) ||                             \
-	 ((((__INSTANCE__) == LPTIM4_NS) || ((__INSTANCE__) == LPTIM4_S)) &&   \
-	  ((__CHANNEL__) == LPTIM_CHANNEL_1)))
+#define IS_LPTIM_CCX_INSTANCE(__INSTANCE__, __CHANNEL__)                                                                                                                                               \
+	(((((__INSTANCE__) == LPTIM1_NS) || ((__INSTANCE__) == LPTIM1_S)) && (((__CHANNEL__) == LPTIM_CHANNEL_1) || ((__CHANNEL__) == LPTIM_CHANNEL_2))) ||                                            \
+	 ((((__INSTANCE__) == LPTIM2_NS) || ((__INSTANCE__) == LPTIM2_S)) && (((__CHANNEL__) == LPTIM_CHANNEL_1) || ((__CHANNEL__) == LPTIM_CHANNEL_2))) ||                                            \
+	 ((((__INSTANCE__) == LPTIM3_NS) || ((__INSTANCE__) == LPTIM3_S)) && (((__CHANNEL__) == LPTIM_CHANNEL_1) || ((__CHANNEL__) == LPTIM_CHANNEL_2))) ||                                            \
+	 ((((__INSTANCE__) == LPTIM4_NS) || ((__INSTANCE__) == LPTIM4_S)) && ((__CHANNEL__) == LPTIM_CHANNEL_1)))
 /**
  * @}
  */

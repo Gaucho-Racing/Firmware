@@ -84,8 +84,7 @@ reset.
 
   * @retval HAL status
   */
-HAL_StatusTypeDef HAL_RNGEx_SetConfig(RNG_HandleTypeDef *hrng,
-				      const RNG_ConfigTypeDef *pConf)
+HAL_StatusTypeDef HAL_RNGEx_SetConfig(RNG_HandleTypeDef *hrng, const RNG_ConfigTypeDef *pConf)
 {
 	uint32_t tickstart;
 	uint32_t cr_value;
@@ -118,18 +117,10 @@ HAL_StatusTypeDef HAL_RNGEx_SetConfig(RNG_HandleTypeDef *hrng,
 		    - Clock divider value
 		    - Automatic reset to clear SECS bit
 		    - CONFIG 1, CONFIG 2 and CONFIG 3 values */
-		cr_value =
-		    (uint32_t)(pConf->ClockDivider | pConf->NistCompliance |
-			       pConf->AutoReset |
-			       (pConf->Config1 << RNG_CR_RNG_CONFIG1_Pos) |
-			       (pConf->Config2 << RNG_CR_RNG_CONFIG2_Pos) |
-			       (pConf->Config3 << RNG_CR_RNG_CONFIG3_Pos));
+		cr_value = (uint32_t)(pConf->ClockDivider | pConf->NistCompliance | pConf->AutoReset | (pConf->Config1 << RNG_CR_RNG_CONFIG1_Pos) | (pConf->Config2 << RNG_CR_RNG_CONFIG2_Pos) |
+				      (pConf->Config3 << RNG_CR_RNG_CONFIG3_Pos));
 
-		MODIFY_REG(hrng->Instance->CR,
-			   RNG_CR_NISTC | RNG_CR_CLKDIV | RNG_CR_RNG_CONFIG1 |
-			       RNG_CR_RNG_CONFIG2 | RNG_CR_RNG_CONFIG3 |
-			       RNG_CR_ARDIS,
-			   (uint32_t)(RNG_CR_CONDRST | cr_value));
+		MODIFY_REG(hrng->Instance->CR, RNG_CR_NISTC | RNG_CR_CLKDIV | RNG_CR_RNG_CONFIG1 | RNG_CR_RNG_CONFIG2 | RNG_CR_RNG_CONFIG3 | RNG_CR_ARDIS, (uint32_t)(RNG_CR_CONDRST | cr_value));
 
 		/* RNG health test control in accordance with NIST */
 		WRITE_REG(hrng->Instance->HTCR, pConf->HealthTest);
@@ -147,8 +138,7 @@ HAL_StatusTypeDef HAL_RNGEx_SetConfig(RNG_HandleTypeDef *hrng,
 			if ((HAL_GetTick() - tickstart) > RNG_TIMEOUT_VALUE) {
 				/* New check to avoid false timeout detection in
 				 * case of prememption */
-				if (HAL_IS_BIT_SET(hrng->Instance->CR,
-						   RNG_CR_CONDRST)) {
+				if (HAL_IS_BIT_SET(hrng->Instance->CR, RNG_CR_CONDRST)) {
 					hrng->State = HAL_RNG_STATE_READY;
 					hrng->ErrorCode = HAL_RNG_ERROR_TIMEOUT;
 					return HAL_ERROR;
@@ -183,8 +173,7 @@ HAL_StatusTypeDef HAL_RNGEx_SetConfig(RNG_HandleTypeDef *hrng,
 
   * @retval HAL status
   */
-HAL_StatusTypeDef HAL_RNGEx_GetConfig(RNG_HandleTypeDef *hrng,
-				      RNG_ConfigTypeDef *pConf)
+HAL_StatusTypeDef HAL_RNGEx_GetConfig(RNG_HandleTypeDef *hrng, RNG_ConfigTypeDef *pConf)
 {
 
 	HAL_StatusTypeDef status;
@@ -200,15 +189,9 @@ HAL_StatusTypeDef HAL_RNGEx_GetConfig(RNG_HandleTypeDef *hrng,
 		hrng->State = HAL_RNG_STATE_BUSY;
 
 		/* Get  RNG parameters  */
-		pConf->Config1 =
-		    (uint32_t)((hrng->Instance->CR & RNG_CR_RNG_CONFIG1) >>
-			       RNG_CR_RNG_CONFIG1_Pos);
-		pConf->Config2 =
-		    (uint32_t)((hrng->Instance->CR & RNG_CR_RNG_CONFIG2) >>
-			       RNG_CR_RNG_CONFIG2_Pos);
-		pConf->Config3 =
-		    (uint32_t)((hrng->Instance->CR & RNG_CR_RNG_CONFIG3) >>
-			       RNG_CR_RNG_CONFIG3_Pos);
+		pConf->Config1 = (uint32_t)((hrng->Instance->CR & RNG_CR_RNG_CONFIG1) >> RNG_CR_RNG_CONFIG1_Pos);
+		pConf->Config2 = (uint32_t)((hrng->Instance->CR & RNG_CR_RNG_CONFIG2) >> RNG_CR_RNG_CONFIG2_Pos);
+		pConf->Config3 = (uint32_t)((hrng->Instance->CR & RNG_CR_RNG_CONFIG3) >> RNG_CR_RNG_CONFIG3_Pos);
 		pConf->ClockDivider = (hrng->Instance->CR & RNG_CR_CLKDIV);
 		pConf->NistCompliance = (hrng->Instance->CR & RNG_CR_NISTC);
 		pConf->AutoReset = (hrng->Instance->CR & RNG_CR_ARDIS);
@@ -252,8 +235,7 @@ HAL_StatusTypeDef HAL_RNGEx_LockConfig(RNG_HandleTypeDef *hrng)
 		hrng->State = HAL_RNG_STATE_BUSY;
 
 		/* Perform RNG configuration Lock */
-		MODIFY_REG(hrng->Instance->CR, RNG_CR_CONFIGLOCK,
-			   RNG_CR_CONFIGLOCK);
+		MODIFY_REG(hrng->Instance->CR, RNG_CR_CONFIGLOCK, RNG_CR_CONFIGLOCK);
 
 		/* Change RNG peripheral state */
 		hrng->State = HAL_RNG_STATE_READY;
