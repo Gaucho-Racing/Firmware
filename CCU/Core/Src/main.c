@@ -121,7 +121,6 @@ int main(void)
 	while (1) {
 		/*LL_GPIO_SetOutputPin (GPIOC, LL_GPIO_PIN_13);*/
 
-		
 		if (LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_13)) {
 			if (on == 0) {
 				on = 1;

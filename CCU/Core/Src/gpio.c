@@ -77,7 +77,6 @@ void MX_GPIO_Init(void)
 
 	LL_GPIO_SetPinMode(GPIOC, LL_GPIO_PIN_13, LL_GPIO_MODE_INPUT);
 
-
 	/**/
 	// GPIO_InitStruct.Pin = LL_GPIO_PIN_13;
 	// GPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
