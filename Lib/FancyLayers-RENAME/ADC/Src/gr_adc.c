@@ -138,17 +138,36 @@ void DMA_Init(DMA_TypeDef *DMA, DMA_Channel channel, uint32_t src_address, uint3
 	LL_DMA_Init(DMA, channel, &config);
 }
 
-const int WINDOW_SIZE = 100;
-struct {
-	uint16_t adc1buf[6];
-	uint16_t adc2buf[5];
-} adcBuffers;
+// NOTE: DMA init is still using NOINCREMENT
+// TODO: Add int n to consider last n values
+int num = 0;
+uint8_t filled = 0;
+void ADC_UpdateAnalogValues(uint16_t **adcDataValues, volatile uint16_t *new_values, int num_signals, 
+							int window_size, uint16_t* weighted_output) {
+	for(int i = 0; i < num_signals; ++i){
+		weighted_output[i] += (new_values[i] - (filled ? adcDataValues[i][num] : 0)) / window_size; // Update the average
+		adcDataValues[i][num] = new_values[i];
+	}
+	
+	if(++num >= window_size){
+		num = 0;
+		filled = 1;
+	}
+}
 
-// float adcSumValues[11];
-// uint16_t adcDataValues[11][WINDOW_SIZE] = {0};
-// uint8_t readIndex = 0;
 
-// void ADC_UpdateSmooth() {
+/*
+EMA
+out = out + alpha * (new - out)
+void ADC_WeightedOutput(uint16_t *latest, float *weighted_output, int num_signals, float alpha) {
+    for (int i = 0; i < num_signals; ++i){
+		weighted_output[i] += ((float)latest[i] - weighted_output) * alpha;
+	}
+}
+*/
+
+// void updateAnalogInputs(void)
+// {
 //     float newValue;
 
 //     for (uint8_t sig = AUX_SIGNAL; sig <= STEERING_ANGLE; sig++)

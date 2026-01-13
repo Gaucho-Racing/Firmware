@@ -179,10 +179,9 @@ typedef enum {
 void DMA_Init(DMA_TypeDef *DMA, DMA_Channel channel, uint32_t src_address, uint32_t dest_address, uint32_t p_data_size, uint32_t m_data_size, uint32_t num_data, ADC_TypeDef *ADC,
 	      DMA_Priority priority);
 
-// TODO:
-// void ADC_UpdateSmooth();
-
 /*
  */
+void ADC_UpdateAnalogValues(uint16_t **adcDataValues, volatile uint16_t *new_values, int num_signals, int window_size, uint16_t* weighted_output);
+
 
 #endif

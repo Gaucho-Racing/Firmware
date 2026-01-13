@@ -62,7 +62,11 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-volatile uint16_t buffer;
+#define WINDOW_SIZE 2 // weighted average for now can extend to other window functions
+#define NUM_SIGNALS 1
+volatile uint16_t buffers[NUM_SIGNALS] = {0}; // Contains new values
+uint16_t outputs[NUM_SIGNALS] = {0}; // Updated averages
+uint16_t adcDataValues[NUM_SIGNALS][WINDOW_SIZE] = {0};
 
 /* Enable ITM for SWO output */
 static void ITM_Enable(void)
@@ -99,7 +103,7 @@ void ADC_Configure(void)
 	ADC_Channel_Init(ADC1, RANK_1, ADC_CHANNEL_1, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
 
 	// Initialize DMA
-	DMA_Init(DMA1, LL_DMA_CHANNEL_1, LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA), (uint32_t)&buffer, LL_DMA_PDATAALIGN_HALFWORD, LL_DMA_MDATAALIGN_HALFWORD, 1, ADC1, HIGH);
+	DMA_Init(DMA1, LL_DMA_CHANNEL_1, LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA), (uint32_t)&buffers, LL_DMA_PDATAALIGN_HALFWORD, LL_DMA_MDATAALIGN_HALFWORD, NUM_SIGNALS, ADC1, HIGH);
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
 
 	ADC_Enable_And_Calibrate(ADC1);
@@ -161,8 +165,11 @@ int main(void)
 		HAL_Delay(50);
 
 		/* USER CODE BEGIN 3 */
-		LOGOMATIC("C: %u\n", buffer);
-	}
+		LOGOMATIC("Buffer Value: %u\n", buffers[0]);
+		// just test 1 pin for now
+        ADC_UpdateAnalogValues(adcDataValues, buffers, NUM_SIGNALS, WINDOW_SIZE, outputs);
+		LOGOMATIC("Moving Average: %u\n", outputs[0]);
+    }
 }
 
 /**
