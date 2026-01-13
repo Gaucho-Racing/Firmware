@@ -1,10 +1,10 @@
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
+#include "CCUStateData.h"
 #include "GR_OLD_BUS_ID.h"
 #include "GR_OLD_MSG_ID.h"
 #include "GR_OLD_NODE_ID.h"
-#include "CCUStateData.h"
 
 #ifndef CANDLER_H
 #define CANDLER_H

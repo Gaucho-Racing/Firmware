@@ -4,7 +4,7 @@
 typedef enum { // State Machine
 
 	CCU_STATE_IDLE = 0, // Transition: Told to charge AND checks passed
-	CCU_STATE_CHARGING // Transition: Told to stop OR fault
+	CCU_STATE_CHARGING  // Transition: Told to stop OR fault
 
 } ccu_state_t;
 
