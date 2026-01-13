@@ -80,4 +80,4 @@ Library Centric Testing:
 HAL_Rewrite:
 - Alternatively, rewrite without using HAL, just use CMSIS definitions. 
 - PROS: Would look good on your Github. 
-- CONS: Wouldn't help 
+- CONS: takes too long
