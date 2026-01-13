@@ -24,10 +24,9 @@
 #include "fdcan.h"
 #include "gpio.h"
 #include "i2c.h"
+#include "stm32g4xx_hal_ospi.h"
 #include "tim.h"
 #include "usart.h"
-#include "stm32g4xx_hal_ospi.h" 
-
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -123,17 +122,18 @@ int main(void)
 	ex_config.CRCPoly = 0x1D;
 
 	ex_pins.SPIx = SPI1;
-	ex_pins.GPIOx = (GPIO_TypeDef**)(malloc(4 * sizeof(GPIO_TypeDef*)))
-	//All pins are in the A clock port
-	for (int i = 0; i < 4; i++) {
+	ex_pins.GPIOx = (GPIO_TypeDef **)(malloc(4 * sizeof(GPIO_TypeDef *)))
+	    // All pins are in the A clock port
+	    for (int i = 0; i < 4; i++)
+	{
 		*(ex_pins.GPIOx + i) = GPIOA;
 	}
 	ex_pins.num_pins = 4;
-	ex_pins.pin_nums = (uint32_t*)malloc(4 * sizeof(int));
-	ex_pins.pin_nums[0] = LL_GPIO_PIN_7; //COPI
-	ex_pins.pin_nums[1] = LL_GPIO_PIN_6; //CIPO
-	ex_pins.pin_nums[2] = LL_GPIO_PIN_5; //SCK
-	ex_pins.pin_nums[3] = LL_GPIO_PIN_4; //NSS
+	ex_pins.pin_nums = (uint32_t *)malloc(4 * sizeof(int));
+	ex_pins.pin_nums[0] = LL_GPIO_PIN_7; // COPI
+	ex_pins.pin_nums[1] = LL_GPIO_PIN_6; // CIPO
+	ex_pins.pin_nums[2] = LL_GPIO_PIN_5; // SCK
+	ex_pins.pin_nums[3] = LL_GPIO_PIN_4; // NSS
 	ex_pins.alternate_function_number = 5;
 
 	GR_SPI_Initialize(&ex_handler, &ex_config, &ex_pins);
@@ -155,31 +155,32 @@ int main(void)
 	for (int i = 0; i < ex_pins.num_pins; i++) {
 		uint32_t clk_en = 0;
 
-		if      (ex_pins.GPIOx[i] == GPIOA) clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOA);
-		else if (ex_pins.GPIOx[i] == GPIOB) clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOB);
-		else if (ex_pins.GPIOx[i] == GPIOC) clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOC);
-		else if (ex_pins.GPIOx[i] == GPIOD) clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOD);
-		else if (ex_pins.GPIOx[i] == GPIOE) clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOE);
-		else if (ex_pins.GPIOx[i] == GPIOF) clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOF);
-		else if (ex_pins.GPIOx[i] == GPIOG) clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOG);
+		if (ex_pins.GPIOx[i] == GPIOA) {
+			clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOA);
+		} else if (ex_pins.GPIOx[i] == GPIOB) {
+			clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOB);
+		} else if (ex_pins.GPIOx[i] == GPIOC) {
+			clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOC);
+		} else if (ex_pins.GPIOx[i] == GPIOD) {
+			clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOD);
+		} else if (ex_pins.GPIOx[i] == GPIOE) {
+			clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOE);
+		} else if (ex_pins.GPIOx[i] == GPIOF) {
+			clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOF);
+		} else if (ex_pins.GPIOx[i] == GPIOG) {
+			clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOG);
+		}
 
-		printf("GPIO Clock [%p] = %lu | 1\n", (void*)ex_pins.GPIOx[i], clk_en);
+		printf("GPIO Clock [%p] = %lu | 1\n", (void *)ex_pins.GPIOx[i], clk_en);
 	}
 	/* ---------------- GPIO MODE + AF ---------------- */
 	for (int i = 0; i < ex_pins.num_pins; i++) {
 		uint32_t pin = (1U << ex_pins.pin_nums[i]);
 
-		printf("GPIO[%d] Mode     = %lu | %lu\n",
-			ex_pins.pin_nums[i],
-			LL_GPIO_GetPinMode(ex_pins.GPIOx[i], pin),
-			LL_GPIO_MODE_ALTERNATE);
+		printf("GPIO[%d] Mode     = %lu | %lu\n", ex_pins.pin_nums[i], LL_GPIO_GetPinMode(ex_pins.GPIOx[i], pin), LL_GPIO_MODE_ALTERNATE);
 
-		printf("GPIO[%d] AF       = %lu | %lu\n",
-			ex_pins.pin_nums[i],
-			(ex_pins.pin_nums[i] < 8)
-				? LL_GPIO_GetAFPin_0_7(ex_pins.GPIOx[i], pin)
-				: LL_GPIO_GetAFPin_8_15(ex_pins.GPIOx[i], pin),
-			ex_pins.alternate_function_number);
+		printf("GPIO[%d] AF       = %lu | %lu\n", ex_pins.pin_nums[i], (ex_pins.pin_nums[i] < 8) ? LL_GPIO_GetAFPin_0_7(ex_pins.GPIOx[i], pin) : LL_GPIO_GetAFPin_8_15(ex_pins.GPIOx[i], pin),
+		       ex_pins.alternate_function_number);
 	}
 	printf("-= End Verification =-\n");
 
@@ -266,8 +267,7 @@ void Error_Handler(void)
 	 * state */
 	__disable_irq();
 	while (1) {
-		if(HAL_OSPI_GetState(&hospi) == ERROR){
-			
+		if (HAL_OSPI_GetState(&hospi) == ERROR) {
 		}
 	}
 	/* USER CODE END Error_Handler_Debug */

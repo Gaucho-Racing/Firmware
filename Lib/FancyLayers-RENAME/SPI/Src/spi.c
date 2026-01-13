@@ -319,7 +319,6 @@ void GR_SPI_Transfer_Tx_Bytes(GR_SPI_Handler *handle)
 		handle->current_tx_msg_index += 1;
 	} else {
 		// ERROR: Message was already fully transmitted
-		
 	}
 
 	// Mark message send complete
@@ -363,6 +362,6 @@ void GR_SPI_Close(GR_SPI_Handler *handler)
 	GR_CircularBuffer_Free(handler->tx_buffer);
 	free(handler->current_msg->data);
 	free(handler->current_msg);
-	
+
 	return;
 }
