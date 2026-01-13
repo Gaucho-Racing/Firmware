@@ -142,19 +142,18 @@ void DMA_Init(DMA_TypeDef *DMA, DMA_Channel channel, uint32_t src_address, uint3
 // TODO: Add int n to consider last n values
 int num = 0;
 uint8_t filled = 0;
-void ADC_UpdateAnalogValues(uint16_t **adcDataValues, volatile uint16_t *new_values, int num_signals, 
-							int window_size, uint16_t* weighted_output) {
-	for(int i = 0; i < num_signals; ++i){
+void ADC_UpdateAnalogValues(uint16_t **adcDataValues, volatile uint16_t *new_values, int num_signals, int window_size, uint16_t *weighted_output)
+{
+	for (int i = 0; i < num_signals; ++i) {
 		weighted_output[i] += (new_values[i] - (filled ? adcDataValues[i][num] : 0)) / window_size; // Update the average
 		adcDataValues[i][num] = new_values[i];
 	}
-	
-	if(++num >= window_size){
+
+	if (++num >= window_size) {
 		num = 0;
 		filled = 1;
 	}
 }
-
 
 /*
 EMA

@@ -65,7 +65,7 @@ void SystemClock_Config(void);
 #define WINDOW_SIZE 2 // weighted average for now can extend to other window functions
 #define NUM_SIGNALS 1
 volatile uint16_t buffers[NUM_SIGNALS] = {0}; // Contains new values
-uint16_t outputs[NUM_SIGNALS] = {0}; // Updated averages
+uint16_t outputs[NUM_SIGNALS] = {0};	      // Updated averages
 uint16_t adcDataValues[NUM_SIGNALS][WINDOW_SIZE] = {0};
 
 /* Enable ITM for SWO output */
@@ -167,9 +167,9 @@ int main(void)
 		/* USER CODE BEGIN 3 */
 		LOGOMATIC("Buffer Value: %u\n", buffers[0]);
 		// just test 1 pin for now
-        ADC_UpdateAnalogValues(adcDataValues, buffers, NUM_SIGNALS, WINDOW_SIZE, outputs);
+		ADC_UpdateAnalogValues(adcDataValues, buffers, NUM_SIGNALS, WINDOW_SIZE, outputs);
 		LOGOMATIC("Moving Average: %u\n", outputs[0]);
-    }
+	}
 }
 
 /**
