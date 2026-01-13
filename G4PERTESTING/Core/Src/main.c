@@ -66,14 +66,27 @@ void SystemClock_Config(void);
 /* Enable ITM for SWO output */
 static void ITM_Enable(void)
 {
+	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);
+	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
+	GPIO_InitStruct.Pin = LL_GPIO_PIN_3;
+	GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
+	GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_VERY_HIGH;
+	GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+	GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+	GPIO_InitStruct.Alternate = LL_GPIO_AF_0;
+	LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+	DBGMCU->CR |= DBGMCU_CR_TRACE_IOEN;
+
 	/* Enable TRC (Trace) */
 	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
 
-	/* Enable stimulus port 0 */
-	ITM->TER |= (1UL << 0);
+	/* Configure TPI for SWO output (set prescaler for 2MHz SWO clock) */
+	TPI->SPPR = 2U; /* 2 = Manchester/async UART mode */
+	TPI->ACPR = 84U; /* Prescaler: (170 MHz / (84+1) / 2) ≈ 1MHz SWO */
 
-	/* Set trace control register */
-	ITM->TCR |= ITM_TCR_ITMENA_Msk;
+	ITM->TER |= (1UL << 0);
+	ITM->TCR |= (ITM_TCR_ITMENA_Msk | ITM_TCR_SWOENA_Msk);
 }
 static int toggleze = 0;
 void DEBUG_callback(void *data, uint32_t size)
@@ -130,6 +143,8 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 	while (1) {
 		/* USER CODE END WHILE */
+		LOGOMATIC("Main Loop\n");
+		LL_mDelay(1000);
 
 		// Receive on GPIOs
 		// HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, toggleze ? GPIO_PIN_SET
@@ -201,7 +216,7 @@ void SystemClock_Config(void)
 	}
 
 	LL_RCC_HSI_SetCalibTrimming(64);
-	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_1, 10,
+	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 85,
 				    LL_RCC_PLLR_DIV_2);
 	LL_RCC_PLL_EnableDomain_SYS();
 	LL_RCC_PLL_Enable();
@@ -223,7 +238,7 @@ void SystemClock_Config(void)
 	LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
 	LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
 	LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
-	LL_SetSystemCoreClock(160000000);
+	LL_SetSystemCoreClock(170000000);
 
 	/* Update the time base */
 	if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK) {

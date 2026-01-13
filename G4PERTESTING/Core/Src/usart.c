@@ -37,7 +37,7 @@ void MX_LPUART1_UART_Init(void)
 
 	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 
-	LL_RCC_SetLPUARTClockSource(LL_RCC_LPUART1_CLKSOURCE_PCLK1);
+	LL_RCC_SetLPUARTClockSource(LL_RCC_LPUART1_CLKSOURCE_HSI);
 
 	/* Peripheral clock enable */
 	LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_LPUART1);
