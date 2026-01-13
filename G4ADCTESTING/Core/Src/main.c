@@ -19,15 +19,17 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
+#include "Logomatic.h"
 #include "adc.h"
 #include "dma.h"
 #include "fdcan.h"
 #include "gpio.h"
+#include "gr_adc.h"
 #include "i2c.h"
+#include "malloc.h"
 #include "spi.h"
 #include "tim.h"
 #include "usart.h"
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -61,7 +63,52 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+#define WINDOW_SIZE 10 // weighted average for now can extend to other window functions
+#define NUM_SIGNALS 1
+volatile uint16_t buffers[NUM_SIGNALS] = {0}; // Contains new values
+uint16_t outputs[NUM_SIGNALS] = {0};	      // Updated averages
+uint16_t *adcDataValues[NUM_SIGNALS] = {0};
 
+/* Enable ITM for SWO output */
+static void ITM_Enable(void)
+{
+	/* Enable TRC (Trace) */
+	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+
+	/* Enable stimulus port 0 */
+	ITM->TER |= (1UL << 0);
+
+	/* Set trace control register */
+	ITM->TCR |= ITM_TCR_ITMENA_Msk;
+}
+
+/* USER CODE BEGIN 0 */
+void ADC_Configure(void)
+{
+	// Initialize which clock source to use
+	LL_RCC_SetADCClockSource(LL_RCC_ADC12_CLKSOURCE_SYSCLK);
+	/* Peripheral clock enable */
+	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_ADC12);
+	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
+
+	// Initialize the ADC
+	ADC_Group_Init(ADC1, PS_8);
+	ADC_Init(ADC1, RESOLUTION_12, RIGHT);
+	ADC_Regular_Group_Init(ADC1, NO_RANKS);
+
+	// Initialize the pins and channels
+	Pin_Ports p = {0};
+	p.port = GPIOA;
+	p.pin = LL_GPIO_PIN_0;
+	ADC_Init_Pins(&p);
+	ADC_Channel_Init(ADC1, RANK_1, ADC_CHANNEL_1, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+
+	// Initialize DMA
+	DMA_Init(DMA1, LL_DMA_CHANNEL_1, LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA), (uint32_t)&buffers, LL_DMA_PDATAALIGN_HALFWORD, LL_DMA_MDATAALIGN_HALFWORD, NUM_SIGNALS, ADC1, HIGH);
+	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
+
+	ADC_Enable_And_Calibrate(ADC1);
+}
 /* USER CODE END 0 */
 
 /**
@@ -83,7 +130,7 @@ int main(void)
 	HAL_Init();
 
 	/* USER CODE BEGIN Init */
-
+	ITM_Enable();
 	/* USER CODE END Init */
 
 	/* Configure the system clock */
@@ -104,8 +151,9 @@ int main(void)
 	MX_SPI3_Init();
 	MX_TIM2_Init();
 	/* USER CODE BEGIN 2 */
-
+	ADC_Configure();
 	/* USER CODE END 2 */
+	adcDataValues[0] = malloc(sizeof(uint16_t) * WINDOW_SIZE);
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
@@ -114,12 +162,18 @@ int main(void)
 
 		// BLINKY
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
-		HAL_Delay(1000);
+		HAL_Delay(50);
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
-		HAL_Delay(1000);
+		HAL_Delay(50);
 
 		/* USER CODE BEGIN 3 */
+		LOGOMATIC("Buffer Value: %u\n", buffers[0]);
+		// just test 1 pin for now
+		ADC_UpdateAnalogValues(adcDataValues, buffers, NUM_SIGNALS, WINDOW_SIZE, outputs);
+		LOGOMATIC("Moving Average: %u\n", outputs[0]);
 	}
+
+	free(adcDataValues[0]);
 }
 
 /**
@@ -132,14 +186,13 @@ void SystemClock_Config(void)
 	while (LL_FLASH_GetLatency() != LL_FLASH_LATENCY_4) {
 	}
 	LL_PWR_EnableRange1BoostMode();
-	LL_RCC_HSE_Enable();
-	/* Wait till HSE is ready */
-	while (LL_RCC_HSE_IsReady() != 1) {
+	LL_RCC_HSI_Enable();
+	/* Wait till HSI is ready */
+	while (LL_RCC_HSI_IsReady() != 1) {
 	}
 
-	LL_RCC_HSE_EnableCSS();
-	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE, LL_RCC_PLLM_DIV_1, 20,
-				    LL_RCC_PLLR_DIV_2);
+	LL_RCC_HSI_SetCalibTrimming(64);
+	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 85, LL_RCC_PLLR_DIV_2);
 	LL_RCC_PLL_EnableDomain_SYS();
 	LL_RCC_PLL_Enable();
 	/* Wait till PLL is ready */
@@ -160,7 +213,7 @@ void SystemClock_Config(void)
 	LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
 	LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
 	LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
-	LL_SetSystemCoreClock(160000000);
+	LL_SetSystemCoreClock(170000000);
 
 	/* Update the time base */
 	if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK) {
