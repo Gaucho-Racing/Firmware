@@ -46,6 +46,7 @@ add_gr_project(STM32G474xE ECU)
 
 # Development
 add_gr_project(STM32G474xE G4PERTESTING)
+add_gr_project(STM32G474xE G4CANTESTING)
 
 # BLINKY Demos
 add_gr_project(STM32G474xE BLINKY G4HELLO)
@@ -56,7 +57,3 @@ add_gr_project(STM32L476xG BLINKY L4BLINKY)
 # Onboarding Workshops
 add_gr_project(STM32G474xE Onboarding W3_G4SPI_Receive)
 add_gr_project(STM32G474xE Onboarding W3_G4SPI_Transmit)
-
-
-# Onboarding Projects
-# TODO Add onboarding projects here as needed

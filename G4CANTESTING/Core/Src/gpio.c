@@ -75,7 +75,8 @@ void MX_GPIO_Init(void)
 	LL_GPIO_ResetOutputPin(AUX_CONTROL_GPIO_Port, AUX_CONTROL_Pin);
 
 	/**/
-	LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
+	LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port,
+			       SOFTWARE_OK_CONTROL_Pin);
 
 	/**/
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_13;

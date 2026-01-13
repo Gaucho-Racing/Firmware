@@ -26,6 +26,7 @@ project(${CMAKE_PROJECT_NAME})
 get_filename_component(PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 add_library(${PROJECT_NAME}_USER_CODE INTERFACE)
+
 target_sources(
 	${PROJECT_NAME}_USER_CODE
 	INTERFACE
@@ -46,6 +47,8 @@ target_sources(
 		Core/Src/usart.c
 )
 
-target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE)
+target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE PERIPHERAL_CAN_LIB)
+target_link_libraries(${PROJECT_NAME}_USER_CODE INTERFACE PERIPHERAL_CAN_TEST_LIB)
+
 
 target_include_directories(${PROJECT_NAME}_USER_CODE INTERFACE Core/Inc)
