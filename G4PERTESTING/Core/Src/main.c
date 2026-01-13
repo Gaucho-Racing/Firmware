@@ -192,7 +192,8 @@ int main(void)
 
 		// printf("GPIO[%d] Mode     = %lu | %lu\n", ex_pins.pin_nums[i], LL_GPIO_GetPinMode(ex_pins.GPIOx[i], pin), LL_GPIO_MODE_ALTERNATE);
 		//
-		// printf("GPIO[%d] AF       = %lu | %lu\n", ex_pins.pin_nums[i], (ex_pins.pin_nums[i] < 8) ? LL_GPIO_GetAFPin_0_7(ex_pins.GPIOx[i], pin) : LL_GPIO_GetAFPin_8_15(ex_pins.GPIOx[i], pin),
+		// printf("GPIO[%d] AF       = %lu | %lu\n", ex_pins.pin_nums[i], (ex_pins.pin_nums[i] < 8) ? LL_GPIO_GetAFPin_0_7(ex_pins.GPIOx[i], pin) : LL_GPIO_GetAFPin_8_15(ex_pins.GPIOx[i],
+		// pin),
 		//       ex_pins.alternate_function_number);
 	}
 	// printf("-= End Verification =-\n");
