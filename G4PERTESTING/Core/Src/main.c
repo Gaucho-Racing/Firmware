@@ -26,6 +26,8 @@
 #include "i2c.h"
 #include "tim.h"
 #include "usart.h"
+#include "stm32g4xx_hal_ospi.h" 
+
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -71,9 +73,12 @@ int main(void)
 {
 
 	/* USER CODE BEGIN 1 */
-	static GR_SPI_Handler ex_handler = {0};
-	static LL_SPI_InitTypeDef ex_config = {0};
-	static GR_SPI_Pins ex_pins = {0};
+	static GR_SPI_Handler ex_handler;
+	static LL_SPI_InitTypeDef ex_config;
+	static GR_SPI_Pins ex_pins;
+	HAL_OSPI_HandleTypeDef hospi;
+	HAL_StatusTypeDef status;
+
 	/* USER CODE END 1 */
 
 	/* MCU
@@ -106,7 +111,78 @@ int main(void)
 	MX_TIM2_Init();
 	/* USER CODE BEGIN 2 */
 
+	ex_config.TransferDirection = LL_SPI_SIMPLEX_TX;
+	ex_config.Mode = LL_SPI_MODE_MASTER;
+	ex_config.DataWidth = LL_SPI_DATAWIDTH_8BIT;
+	ex_config.ClockPolarity = LL_SPI_POLARITY_LOW;
+	ex_config.ClockPhase = LL_SPI_PHASE_1EDGE;
+	ex_config.NSS = LL_SPI_NSS_HARD_INPUT;
+	ex_config.BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV2;
+	ex_config.BitOrder = LL_SPI_LSB_FIRST;
+	ex_config.CRCCalculation = LL_SPI_CRCCALCULATION_ENABLE;
+	ex_config.CRCPoly = 0x1D;
+
+	ex_pins.SPIx = SPI1;
+	ex_pins.GPIOx = (GPIO_TypeDef**)(malloc(4 * sizeof(GPIO_TypeDef*)))
+	//All pins are in the A clock port
+	for (int i = 0; i < 4; i++) {
+		*(ex_pins.GPIOx + i) = GPIOA;
+	}
+	ex_pins.num_pins = 4;
+	ex_pins.pin_nums = (uint32_t*)malloc(4 * sizeof(int));
+	ex_pins.pin_nums[0] = LL_GPIO_PIN_7; //COPI
+	ex_pins.pin_nums[1] = LL_GPIO_PIN_6; //CIPO
+	ex_pins.pin_nums[2] = LL_GPIO_PIN_5; //SCK
+	ex_pins.pin_nums[3] = LL_GPIO_PIN_4; //NSS
+	ex_pins.alternate_function_number = 5;
+
 	GR_SPI_Initialize(&ex_handler, &ex_config, &ex_pins);
+
+	printf("-= SPI + GPIO Init Verification (Measured | Expected) =-\n");
+	/* ---------------- SPI ---------------- */
+	printf("TransferDirection = %lu | %lu\n", LL_SPI_GetTransferDirection(ex_pins.SPIx), ex_config.TransferDirection);
+	printf("Mode              = %lu | %lu\n", LL_SPI_GetMode(ex_pins.SPIx), ex_config.Mode);
+	printf("DataWidth         = %lu | %lu\n", LL_SPI_GetDataWidth(ex_pins.SPIx), ex_config.DataWidth);
+	printf("ClockPolarity     = %lu | %lu\n", LL_SPI_GetClockPolarity(ex_pins.SPIx), ex_config.ClockPolarity);
+	printf("ClockPhase        = %lu | %lu\n", LL_SPI_GetClockPhase(ex_pins.SPIx), ex_config.ClockPhase);
+	printf("NSS               = %lu | %lu\n", LL_SPI_GetNSSMode(ex_pins.SPIx), ex_config.NSS);
+	printf("BaudRate          = %lu | %lu\n", LL_SPI_GetBaudRatePrescaler(ex_pins.SPIx), ex_config.BaudRate);
+	printf("BitOrder          = %lu | %lu\n", LL_SPI_GetTransferBitOrder(ex_pins.SPIx), ex_config.BitOrder);
+	printf("CRC Enable        = %lu | %lu\n", LL_SPI_IsEnabledCRC(ex_pins.SPIx), ex_config.CRCCalculation);
+	printf("CRC Polynomial    = 0x%lx | 0x%lx\n", ex_pins.SPIx->CRCPR, ex_config.CRCPoly);
+	printf("SPI Enable        = %lu | 1\n", LL_SPI_IsEnabled(ex_pins.SPIx));
+	/* ---------------- GPIO CLOCKS ---------------- */
+	for (int i = 0; i < ex_pins.num_pins; i++) {
+		uint32_t clk_en = 0;
+
+		if      (ex_pins.GPIOx[i] == GPIOA) clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOA);
+		else if (ex_pins.GPIOx[i] == GPIOB) clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOB);
+		else if (ex_pins.GPIOx[i] == GPIOC) clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOC);
+		else if (ex_pins.GPIOx[i] == GPIOD) clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOD);
+		else if (ex_pins.GPIOx[i] == GPIOE) clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOE);
+		else if (ex_pins.GPIOx[i] == GPIOF) clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOF);
+		else if (ex_pins.GPIOx[i] == GPIOG) clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOG);
+
+		printf("GPIO Clock [%p] = %lu | 1\n", (void*)ex_pins.GPIOx[i], clk_en);
+	}
+	/* ---------------- GPIO MODE + AF ---------------- */
+	for (int i = 0; i < ex_pins.num_pins; i++) {
+		uint32_t pin = (1U << ex_pins.pin_nums[i]);
+
+		printf("GPIO[%d] Mode     = %lu | %lu\n",
+			ex_pins.pin_nums[i],
+			LL_GPIO_GetPinMode(ex_pins.GPIOx[i], pin),
+			LL_GPIO_MODE_ALTERNATE);
+
+		printf("GPIO[%d] AF       = %lu | %lu\n",
+			ex_pins.pin_nums[i],
+			(ex_pins.pin_nums[i] < 8)
+				? LL_GPIO_GetAFPin_0_7(ex_pins.GPIOx[i], pin)
+				: LL_GPIO_GetAFPin_8_15(ex_pins.GPIOx[i], pin),
+			ex_pins.alternate_function_number);
+	}
+	printf("-= End Verification =-\n");
+
 	GR_SPI_Close(&ex_handler);
 	/* USER CODE END 2 */
 
@@ -170,6 +246,7 @@ void SystemClock_Config(void)
 
 	/* Update the time base */
 	if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK) {
+		status = ERROR;
 		Error_Handler();
 	}
 }
@@ -189,6 +266,9 @@ void Error_Handler(void)
 	 * state */
 	__disable_irq();
 	while (1) {
+		if(HAL_OSPI_GetState(&hospi) == ERROR){
+			
+		}
 	}
 	/* USER CODE END Error_Handler_Debug */
 }

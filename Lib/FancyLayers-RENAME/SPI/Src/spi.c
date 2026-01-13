@@ -128,6 +128,10 @@ void GR_SPI_Interrupt_Handler(GR_SPI_Handler *handle)
 
 	// No errors detected...
 
+	// Transfer modes for simple send/receive only
+	// #define LL_SPI_SIMPLEX_TX (SPI_CFG2_COMM_0)
+	// #define LL_SPI_SIMPLEX_RX (SPI_CFG2_COMM_1)
+
 	// Check if Rx circular buffer is not empty
 	if (LL_SPI_IsActiveFlag_RXNE(handle->pins->SPIx)) {
 		uint16_t rx_index = handle->current_rx_msg_index, msg_size = handle->current_msg->size;
@@ -150,7 +154,7 @@ void GR_SPI_Interrupt_Handler(GR_SPI_Handler *handle)
 			handle->current_msg = NULL;
 			handle->current_rx_msg_index = 0;
 			// Finish transaction
-			LL_GPIO_SetOutputPin(handle->pins->GPIOx[3], LL_GPIO_PIN_0);
+			LL_GPIO_SetOutputPin(handle->pins->GPIOx[3], handle->pins->pin_nums[3]);
 			// Only go to IDLE when no additional messages are in
 			// pipeline
 			if (!GR_CircularBuffer_Peek(handle->tx_buffer) && !handle->current_msg) {
@@ -163,7 +167,7 @@ void GR_SPI_Interrupt_Handler(GR_SPI_Handler *handle)
 				handle->current_msg = GR_CircularBuffer_Pop(handle->tx_buffer);
 
 				// PIN mask needs to be fixed
-				LL_GPIO_ResetOutputPin(handle->pins->GPIOx[3], LL_GPIO_PIN_0);
+				LL_GPIO_ResetOutputPin(handle->pins->GPIOx[3], handle->pins->pin_nums[3]);
 
 				GR_SPI_Transfer_Tx_Bytes(handle);
 			}
@@ -267,7 +271,7 @@ void GR_SPI_Send(GR_SPI_Handler *handle, GR_SPI_Message *msg)
 		handle->current_rx_msg_index = 0;
 		handle->current_msg = msg;
 
-		LL_GPIO_ResetOutputPin(handle->pins->GPIOx[3], LL_GPIO_PIN_0);
+		LL_GPIO_ResetOutputPin(handle->pins->GPIOx[3], handle->pins->pin_nums[3]);
 
 		GR_SPI_Transfer_Tx_Bytes(handle);
 	}
@@ -315,6 +319,7 @@ void GR_SPI_Transfer_Tx_Bytes(GR_SPI_Handler *handle)
 		handle->current_tx_msg_index += 1;
 	} else {
 		// ERROR: Message was already fully transmitted
+		
 	}
 
 	// Mark message send complete
@@ -332,5 +337,32 @@ void GR_SPI_Transfer_Tx_Bytes(GR_SPI_Handler *handle)
 
 void GR_SPI_Close(GR_SPI_Handler *handler)
 {
-	return; // STUB
+
+	// BTW I asked Gemini for help on this and what it says seems right
+	// but shoot me if it's wrong
+
+	// Safety Checks
+	LL_GPIO_SetOutputPin(handler->pins->GPIOx[3], handler->pins->pin_nums[3]); // Set CS high
+
+	// Set all the pins analog
+	for (int i = 0; i < 3; i++) {
+		LL_GPIO_SetPinMode(handler->pins->GPIOx[i], handler->pins->GPIOx[i], LL_GPIO_MODE_ANALOG);
+	}
+
+	// Disable and De-init
+	LL_SPI_Disable(handler->pins->SPIx);
+	LL_SPI_DeInit(handler->pins->SPIx);
+	// IDK man check the error codes if it doesn't work
+
+	// Deallocate memory
+	free(handler->spi_config);
+	free(handler->pins->GPIOx);
+	free(handler->pins->pin_nums);
+	free(handler->pins);
+	GR_CircularBuffer_Free(handler->rx_buffer);
+	GR_CircularBuffer_Free(handler->tx_buffer);
+	free(handler->current_msg->data);
+	free(handler->current_msg);
+	
+	return;
 }
