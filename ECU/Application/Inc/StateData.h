@@ -28,13 +28,13 @@ typedef struct ECU_StateData {
 
 	float min_amk_heat_cap_throttle_percent;
 	float ts_voltage;
-	float max_cell_temp;	      /** Temperature of hottest cell, celsius */
+	float max_cell_temp; /** Temperature of hottest cell, celsius */
 
 	float vehicle_speed; /** Vehicle speed, MPH */
-	float fr_wheel_rpm;	/** FR wheel, RPM */
-	float fl_wheel_rpm;	/** FL wheel, RPM */
-	float rr_wheel_rpm; /** RRv wheel, RPM */
-	float rl_wheel_rpm; /** RL wheel, RPM */
+	float fr_wheel_rpm;  /** FR wheel, RPM */
+	float fl_wheel_rpm;  /** FL wheel, RPM */
+	float rr_wheel_rpm;  /** RRv wheel, RPM */
+	float rl_wheel_rpm;  /** RL wheel, RPM */
 
 	// 0.5V when things go to shit (X_OK low)
 	// 3V when things almost poggers (X_OK high but SDC not reset)
@@ -50,7 +50,7 @@ typedef struct ECU_StateData {
 	uint16_t APPS2_Signal;
 	uint16_t Brake_R_Signal;
 	uint16_t Brake_F_Signal;
-	int8_t ping_block[3]; /** Node timeout status bits (1=OK, 0=Timeout) */
+	int8_t ping_block[3];	      /** Node timeout status bits (1=OK, 0=Timeout) */
 	uint8_t powerlevel_torquemap; /** Power lvl (4b) & torque map (4b) */
 	uint8_t tractivebattery_soc;  /** Accumulator SoC, 20x/51=% */
 	uint8_t glv_soc;	      /** GLV SoC, 20x/51=% */

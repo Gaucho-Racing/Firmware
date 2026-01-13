@@ -48,8 +48,7 @@ void ECU_State_Tick(void)
 			ECU_Tractive_System_Discharge(&stateLump);
 			break;
 		default:
-			LOGOMATIC("ECU Current State Unknown: %d\n",
-				  stateLump.ecu_state);
+			LOGOMATIC("ECU Current State Unknown: %d\n", stateLump.ecu_state);
 			LOGOMATIC("ECU: Resetting to GLV On\n");
 			stateLump.ecu_state = GR_GLV_ON;
 			break;
@@ -72,7 +71,7 @@ void ECU_GLV_Off(ECU_StateData *stateData)
 
 void ECU_GLV_On(ECU_StateData *stateData)
 {
-	if(stateData->ts_voltage >= 60){ // should never happen but has to be accounted for 
+	if (stateData->ts_voltage >= 60) { // should never happen but has to be accounted for
 		ECU_Tractive_System_Discharge_Start(stateData);
 		// emit an error
 		return;
