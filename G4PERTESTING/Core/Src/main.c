@@ -123,9 +123,8 @@ int main(void)
 
 	ex_pins.SPIx = SPI1;
 	ex_pins.GPIOx = (GPIO_TypeDef **)(malloc(4 * sizeof(GPIO_TypeDef *)));
-	    // All pins are in the A clock port
-	    for (int i = 0; i < 4; i++)
-	{
+	// All pins are in the A clock port
+	for (int i = 0; i < 4; i++) {
 		*(ex_pins.GPIOx + i) = GPIOA;
 	}
 	ex_pins.num_pins = 4;
@@ -266,7 +265,6 @@ void Error_Handler(void)
 	 * state */
 	__disable_irq();
 	while (1) {
-		
 	}
 }
 #ifdef USE_FULL_ASSERT
