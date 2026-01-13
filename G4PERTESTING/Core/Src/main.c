@@ -110,7 +110,7 @@ int main(void)
 	MX_TIM2_Init();
 	/* USER CODE BEGIN 2 */
 
-	ex_config.TransferDirection = LL_SPI_SIMPLEX_TX;
+	ex_config.TransferDirection = LL_SPI_HALF_DUPLEX_TX;
 	ex_config.Mode = LL_SPI_MODE_MASTER;
 	ex_config.DataWidth = LL_SPI_DATAWIDTH_8BIT;
 	ex_config.ClockPolarity = LL_SPI_POLARITY_LOW;
@@ -122,7 +122,7 @@ int main(void)
 	ex_config.CRCPoly = 0x1D;
 
 	ex_pins.SPIx = SPI1;
-	ex_pins.GPIOx = (GPIO_TypeDef **)(malloc(4 * sizeof(GPIO_TypeDef *)))
+	ex_pins.GPIOx = (GPIO_TypeDef **)(malloc(4 * sizeof(GPIO_TypeDef *)));
 	    // All pins are in the A clock port
 	    for (int i = 0; i < 4; i++)
 	{
@@ -247,11 +247,10 @@ void SystemClock_Config(void)
 
 	/* Update the time base */
 	if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK) {
-		status = ERROR;
+		// status = ERROR;
 		Error_Handler();
 	}
 }
-
 /* USER CODE BEGIN 4 */
 
 /* USER CODE END 4 */
@@ -267,11 +266,8 @@ void Error_Handler(void)
 	 * state */
 	__disable_irq();
 	while (1) {
-		if (HAL_OSPI_GetState(&hospi) == ERROR) {
-		}
+		
 	}
-	* /
-	/* USER CODE END Error_Handler_Debug */
 }
 #ifdef USE_FULL_ASSERT
 /**
