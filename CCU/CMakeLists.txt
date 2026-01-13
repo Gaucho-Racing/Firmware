@@ -54,6 +54,7 @@ target_link_libraries(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
 		GR_OLD_CAN_MESSAGES
+		BitManipulations_Lib
 )
 
 target_include_directories(
