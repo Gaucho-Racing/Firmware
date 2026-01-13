@@ -29,6 +29,7 @@
 #include "spi.h"
 #include "tim.h"
 #include "usart.h"
+#include "malloc.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -62,11 +63,11 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-#define WINDOW_SIZE 2 // weighted average for now can extend to other window functions
+#define WINDOW_SIZE 10 // weighted average for now can extend to other window functions
 #define NUM_SIGNALS 1
 volatile uint16_t buffers[NUM_SIGNALS] = {0}; // Contains new values
 uint16_t outputs[NUM_SIGNALS] = {0};	      // Updated averages
-uint16_t adcDataValues[NUM_SIGNALS][WINDOW_SIZE] = {0};
+uint16_t *adcDataValues[NUM_SIGNALS] = {0};
 
 /* Enable ITM for SWO output */
 static void ITM_Enable(void)
@@ -152,6 +153,7 @@ int main(void)
 	/* USER CODE BEGIN 2 */
 	ADC_Configure();
 	/* USER CODE END 2 */
+	adcDataValues[0] = malloc(sizeof(uint16_t)*WINDOW_SIZE);
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
@@ -170,6 +172,8 @@ int main(void)
 		ADC_UpdateAnalogValues(adcDataValues, buffers, NUM_SIGNALS, WINDOW_SIZE, outputs);
 		LOGOMATIC("Moving Average: %u\n", outputs[0]);
 	}
+	
+	free(adcDataValues[0]);
 }
 
 /**
