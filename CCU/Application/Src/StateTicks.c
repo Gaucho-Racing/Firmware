@@ -4,17 +4,18 @@
 
 // FIXME: Currently defining check to switch CCU state from idle to charging and etc.
 
-ccu_state_t state;
 
+CCU_STATE state = CCU_STATE_IDLE;
 CCU_StateData state_data = {0};
 
 
 
-void StateTransition(CCU_StateData* state_data, ccu_state_t* state){
+void CCU_State_Tick(void){
 	
+	LOGOMATIC("CCY Current State: %d\n");
 
 	// FIXME: 
-	switch(*state){ // if given an error, switch state to IDLE; warnings will remain placeholders until better understood
+	switch(state){ // if given an error, switch state to IDLE; warnings will remain placeholders until better understood
 		// General checks for State Transition, if any error detected, transition back to IDLE state
 
 		case CCU_STATE_IDLE:
@@ -25,8 +26,21 @@ void StateTransition(CCU_StateData* state_data, ccu_state_t* state){
 
 
 
-
 	};
+}
 
+//TODO: Implement State functionality
+
+
+void STATE_IDLE(CCU_StateData *state_data){
 
 }
+
+
+void STATE_CHARGING(CCU_StateData *state_data){
+
+	
+}
+
+
+
