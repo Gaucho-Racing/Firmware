@@ -2,14 +2,23 @@
 use strict;
 use warnings;
 
-my $yaml_file = $ARGV[0] || die "Usage: $0 <yaml_file>\n";
-my $output_file = "can_msg_ids.h";
+my $yaml_file   = $ARGV[0] // 'format.CANdo';
+my $output_file = $ARGV[1] // 'can_msg_ids.h';
 
-open(my $fh, '<', $yaml_file) or die "Can't open $yaml_file: $!";
+# Safety check: Verify the YAML source exists before parsing
+if (!-e $yaml_file) {
+    die "CANfigurator Error: Input YAML not found at '$yaml_file'.\n" .
+        "Check your CMake source paths or provide the file as the first argument.\n";
+}
+
+# Open the YAML for reading
+open(my $fh, '<', $yaml_file) or die "CANfigurator Error: Can't open $yaml_file: $!";
 
 my @msg_ids;
 
+# --- Parsing Logic ---
 while (my $line = <$fh>) {
+    # Stop parsing if we hit other sections
     last if $line =~ /^(Custom CAN ID|GR ID):/;
     
     if ($line =~ /^\s{2}(\w[\w\s]+\w):\s*$/) {
@@ -30,10 +39,11 @@ while (my $line = <$fh>) {
         }
     }
 }
-
 close($fh);
 
-open(my $out, '>', $output_file) or die "Can't create $output_file: $!";
+# --- Writing Logic ---
+# Open the header file for writing using the dynamic output path
+open(my $out, '>', $output_file) or die "CANfigurator Error: Can't create $output_file: $!";
 
 print $out "// Auto-generated CAN Message IDs\n";
 print $out "#ifndef CAN_MSG_IDS_H\n";
@@ -49,4 +59,4 @@ print $out "#endif // CAN_MSG_IDS_H\n";
 
 close($out);
 
-print "Generated $output_file with " . scalar(@msg_ids) . " message IDs\n";
+print "CANfigurator: Generated $output_file with " . scalar(@msg_ids) . " message IDs\n";

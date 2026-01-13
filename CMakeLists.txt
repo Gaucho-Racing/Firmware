@@ -41,6 +41,7 @@ include("${lib_path}/Utils/BitManipulations/bit-utils.cmake")
 
 # Peripherals
 include("${lib_path}/Peripherals/USART/common.cmake")
+include("Autogen/CAN/CANfigurator.cmake")
 
 # FIXME Temporary holdover for CAN messages until URCA is ready for merge
 include("${lib_path}/FancyLayers-RENAME/GRCAN/TemporaryHoldover/temp.cmake")

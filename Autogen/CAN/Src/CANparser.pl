@@ -3,13 +3,21 @@ use strict;
 use warnings;
 use YAML::XS 'LoadFile';
 
+my $yaml_path   = $ARGV[0] // 'format.CANdo';
+my $output_path = $ARGV[1] // 'Custom_CAN_ID.h';
+
+# Check if YAML exists to avoid confusing Perl errors
+if (!-e $yaml_path) {
+    die "CANfigurator Error: Could not find YAML file at: $yaml_path\n";
+}
+
 # Load YAML
-my $yaml = LoadFile('format.yaml');
+my $yaml = LoadFile($yaml_path);
 my $can_defs = $yaml->{'Custom CAN ID'};
 
-# Open header file
-open my $fh, '>', 'Custom_CAN_ID.h'
-    or die "Cannot open Custom_CAN_ID.h: $!";
+# Open header file using the dynamic output path
+open my $fh, '>', $output_path
+    or die "CANfigurator Error: Cannot open $output_path: $!";
 
 print $fh "// Auto-generated Custom CAN ID header\n";
 print $fh "#ifndef CUSTOM_CAN_ID_H\n";
@@ -27,13 +35,13 @@ for my $msg_name (sort keys %$can_defs) {
     # Grab the CAN ID
     my $can_id = $entry->{'CAN ID'};
     
-    # SAFETY: Skip if 'CAN ID' is missing or empty for this specific message
+    # SAFETY: Skip if 'CAN ID' is missing
     if (!defined $can_id) {
         warn "Warning: No CAN ID found for message '$msg_name'. Skipping.\n";
         next;
     }
 
-    # Format the name for C (Upper case, replace spaces/special chars with underscores)
+    # Format the name for C
     my $enum_name = uc($msg_name);
     $enum_name =~ s/[^A-Z0-9]/_/g;
 
@@ -46,4 +54,4 @@ print $fh "} Custom_CAN_ID_t;\n\n";
 print $fh "#endif // CUSTOM_CAN_ID_H\n";
 close $fh;
 
-print "Successfully generated Custom_CAN_ID.h with Message IDs only.\n";
+print "CANfigurator: Successfully generated $output_path\n";

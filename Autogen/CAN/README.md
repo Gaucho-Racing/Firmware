@@ -1,6 +1,4 @@
-# Fire_Name_for_Parser_Here
-
-parser description here
+# CANfigurator
 
 **Perl and Yaml are required for compilation, read installation instructions below** 
 ---

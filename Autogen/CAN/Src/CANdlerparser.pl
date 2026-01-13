@@ -3,12 +3,13 @@ use strict;
 use warnings;
 
 # --- Configuration ---
-my $input_file  = 'format.yaml';     
-my $output_file = 'CANdler.h';    
-my $prefix      = "GR_OLD"; 
+my $yaml_path   = $ARGV[0] // 'format.CANdo';    # First argument: Input
+my $output_path = $ARGV[1] // 'CANDler.h';      # Second argument: Output
+my $prefix = "GR_OLD"; 
 
-open(my $in,  '<', $input_file)  or die "Cannot open '$input_file': $!";
-open(my $out, '>', $output_file) or die "Cannot open '$output_file': $!";
+# Now use these variables in your open calls:
+open(my $in,  '<', $yaml_path)   or die "Can't open YAML: $!";
+open(my $out, '>', $output_path) or die "Can't open Output: $!";
 
 my $in_msg_section = 0;
 my $current_msg = "";
