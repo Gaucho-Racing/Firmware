@@ -189,6 +189,7 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 		If TS voltage < 60 --> stateData->GLV_ON
 	*/
 	// TODO: Discharge TC through CAN
+	LOGOMATIC("CAN: please discharge the Tractive System");
 	if (stateData->ts_voltage < 60) {
 		stateData->ecu_state = GR_GLV_ON;
 		stateData->dischargeStartMillis = 0;
