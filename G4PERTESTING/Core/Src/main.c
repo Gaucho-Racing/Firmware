@@ -61,6 +61,18 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+/* Enable ITM for SWO output */
+static void ITM_Enable(void)
+{
+	/* Enable TRC (Trace) */
+	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+
+	/* Enable stimulus port 0 */
+	ITM->TER |= (1UL << 0);
+
+	/* Set trace control register */
+	ITM->TCR |= ITM_TCR_ITMENA_Msk;
+}
 
 /* USER CODE END 0 */
 
@@ -88,6 +100,8 @@ int main(void)
 	HAL_Init();
 
 	/* USER CODE BEGIN Init */
+	ITM_Enable();
+	SystemClock_Config();
 
 	/* USER CODE END Init */
 
@@ -137,19 +151,19 @@ int main(void)
 
 	GR_SPI_Initialize(&ex_handler, &ex_config, &ex_pins);
 
-	printf("-= SPI + GPIO Init Verification (Measured | Expected) =-\n");
-	/* ---------------- SPI ---------------- */
-	printf("TransferDirection = %lu | %lu\n", LL_SPI_GetTransferDirection(ex_pins.SPIx), ex_config.TransferDirection);
-	printf("Mode              = %lu | %lu\n", LL_SPI_GetMode(ex_pins.SPIx), ex_config.Mode);
-	printf("DataWidth         = %lu | %lu\n", LL_SPI_GetDataWidth(ex_pins.SPIx), ex_config.DataWidth);
-	printf("ClockPolarity     = %lu | %lu\n", LL_SPI_GetClockPolarity(ex_pins.SPIx), ex_config.ClockPolarity);
-	printf("ClockPhase        = %lu | %lu\n", LL_SPI_GetClockPhase(ex_pins.SPIx), ex_config.ClockPhase);
-	printf("NSS               = %lu | %lu\n", LL_SPI_GetNSSMode(ex_pins.SPIx), ex_config.NSS);
-	printf("BaudRate          = %lu | %lu\n", LL_SPI_GetBaudRatePrescaler(ex_pins.SPIx), ex_config.BaudRate);
-	printf("BitOrder          = %lu | %lu\n", LL_SPI_GetTransferBitOrder(ex_pins.SPIx), ex_config.BitOrder);
-	printf("CRC Enable        = %lu | %lu\n", LL_SPI_IsEnabledCRC(ex_pins.SPIx), ex_config.CRCCalculation);
-	printf("CRC Polynomial    = 0x%lx | 0x%lx\n", ex_pins.SPIx->CRCPR, ex_config.CRCPoly);
-	printf("SPI Enable        = %lu | 1\n", LL_SPI_IsEnabled(ex_pins.SPIx));
+	// printf("-= SPI + GPIO Init Verification (Measured | Expected) =-\n");
+	// /* ---------------- SPI ---------------- */
+	// printf("TransferDirection = %lu | %lu\n", LL_SPI_GetTransferDirection(ex_pins.SPIx), ex_config.TransferDirection);
+	// printf("Mode              = %lu | %lu\n", LL_SPI_GetMode(ex_pins.SPIx), ex_config.Mode);
+	// printf("DataWidth         = %lu | %lu\n", LL_SPI_GetDataWidth(ex_pins.SPIx), ex_config.DataWidth);
+	// printf("ClockPolarity     = %lu | %lu\n", LL_SPI_GetClockPolarity(ex_pins.SPIx), ex_config.ClockPolarity);
+	// printf("ClockPhase        = %lu | %lu\n", LL_SPI_GetClockPhase(ex_pins.SPIx), ex_config.ClockPhase);
+	// printf("NSS               = %lu | %lu\n", LL_SPI_GetNSSMode(ex_pins.SPIx), ex_config.NSS);
+	// printf("BaudRate          = %lu | %lu\n", LL_SPI_GetBaudRatePrescaler(ex_pins.SPIx), ex_config.BaudRate);
+	// printf("BitOrder          = %lu | %lu\n", LL_SPI_GetTransferBitOrder(ex_pins.SPIx), ex_config.BitOrder);
+	// printf("CRC Enable        = %lu | %lu\n", LL_SPI_IsEnabledCRC(ex_pins.SPIx), ex_config.CRCCalculation);
+	// printf("CRC Polynomial    = 0x%lx | 0x%lx\n", ex_pins.SPIx->CRCPR, ex_config.CRCPoly);
+	// printf("SPI Enable        = %lu | 1\n", LL_SPI_IsEnabled(ex_pins.SPIx));
 	/* ---------------- GPIO CLOCKS ---------------- */
 	for (int i = 0; i < ex_pins.num_pins; i++) {
 		uint32_t clk_en = 0;
@@ -170,18 +184,18 @@ int main(void)
 			clk_en = LL_AHB2_GRP1_IsEnabledClock(LL_AHB2_GRP1_PERIPH_GPIOG);
 		}
 
-		printf("GPIO Clock [%p] = %lu | 1\n", (void *)ex_pins.GPIOx[i], clk_en);
+		// printf("GPIO Clock [%p] = %lu | 1\n", (void *)ex_pins.GPIOx[i], clk_en);
 	}
 	/* ---------------- GPIO MODE + AF ---------------- */
 	for (int i = 0; i < ex_pins.num_pins; i++) {
 		uint32_t pin = (1U << ex_pins.pin_nums[i]);
 
-		printf("GPIO[%d] Mode     = %lu | %lu\n", ex_pins.pin_nums[i], LL_GPIO_GetPinMode(ex_pins.GPIOx[i], pin), LL_GPIO_MODE_ALTERNATE);
-
-		printf("GPIO[%d] AF       = %lu | %lu\n", ex_pins.pin_nums[i], (ex_pins.pin_nums[i] < 8) ? LL_GPIO_GetAFPin_0_7(ex_pins.GPIOx[i], pin) : LL_GPIO_GetAFPin_8_15(ex_pins.GPIOx[i], pin),
-		       ex_pins.alternate_function_number);
+		// printf("GPIO[%d] Mode     = %lu | %lu\n", ex_pins.pin_nums[i], LL_GPIO_GetPinMode(ex_pins.GPIOx[i], pin), LL_GPIO_MODE_ALTERNATE);
+		//
+		// printf("GPIO[%d] AF       = %lu | %lu\n", ex_pins.pin_nums[i], (ex_pins.pin_nums[i] < 8) ? LL_GPIO_GetAFPin_0_7(ex_pins.GPIOx[i], pin) : LL_GPIO_GetAFPin_8_15(ex_pins.GPIOx[i], pin),
+		//       ex_pins.alternate_function_number);
 	}
-	printf("-= End Verification =-\n");
+	// printf("-= End Verification =-\n");
 
 	GR_SPI_Close(&ex_handler);
 	/* USER CODE END 2 */
