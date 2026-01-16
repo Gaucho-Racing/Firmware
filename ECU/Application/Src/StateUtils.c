@@ -80,7 +80,7 @@ bool PressingBrake(volatile const ECU_StateData *stateData)
 }
 
 float CalcBrakePercent(volatile const ECU_StateData *stateData) // THIS IS NOT ACTUALLY BRAKE TRAVEL,
-						       // PRESSURE SENSORS CAPTURE BRAKE TRAVEL
+								// PRESSURE SENSORS CAPTURE BRAKE TRAVEL
 {
 	return (float)(stateData->Brake_F_Signal + stateData->Brake_R_Signal - BRAKE_R_MIN - BRAKE_F_MIN) / (BRAKE_F_MAX - BRAKE_F_MIN + BRAKE_R_MAX - BRAKE_R_MIN);
 }
