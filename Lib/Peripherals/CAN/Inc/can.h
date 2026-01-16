@@ -75,6 +75,6 @@ int can_add_filter(CANHandle *handle, FDCAN_FilterTypeDef *filter);
 // HAL_FDCAN_ConfigFilter()
 
 // doesn't need a handle, CAN cores share peripheral clock
-int can_set_clksource(uint32_t clksource); // ex. LL_RCC_FDCAN_CLKSOURCE_PCLK1 for STM32G474RE
+void can_set_clksource(uint32_t clksource); // ex. LL_RCC_FDCAN_CLKSOURCE_PCLK1 for STM32G474RE
 
 #endif // End Header Guard

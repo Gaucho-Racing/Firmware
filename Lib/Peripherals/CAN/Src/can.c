@@ -49,39 +49,17 @@ static CANHandle CAN3 = {.hal_fdcanP = &hal_fdcan3};
 
 */
 
-#define GPIOx_CLK_ENABLE(GPIOX)                                                                                                                                                                        \
-	do {                                                                                                                                                                                           \
-		switch ((uint32_t)GPIOX) {                                                                                                                                                             \
-			case (uint32_t)GPIOA:                                                                                                                                                          \
-				__HAL_RCC_GPIOA_CLK_ENABLE();                                                                                                                                          \
-				break;                                                                                                                                                                 \
-			case (uint32_t)GPIOB:                                                                                                                                                          \
-				__HAL_RCC_GPIOB_CLK_ENABLE();                                                                                                                                          \
-				break;                                                                                                                                                                 \
-			case (uint32_t)GPIOD:                                                                                                                                                          \
-				__HAL_RCC_GPIOD_CLK_ENABLE();                                                                                                                                          \
-				break;                                                                                                                                                                 \
-			default:                                                                                                                                                                       \
-				LOGOMATIC("BAD FDCAN GPIO Port");                                                                                                                                      \
-		}                                                                                                                                                                                      \
-	} while (0)
+#define GPIOx_CLK_ENABLE(GPIOX)                                                                                   \
+		do { if (GPIOX == GPIOA) __HAL_RCC_GPIOA_CLK_ENABLE();\
+		else if (GPIOX == GPIOB) __HAL_RCC_GPIOB_CLK_ENABLE();                                                                                                 \
+		else if (GPIOX == GPIOD) __HAL_RCC_GPIOD_CLK_ENABLE();       \
+		else LOGOMATIC("BAD FDCAN GPIO Port"); } while (0)
 
-#define GPIOx_CLK_DISABLE(GPIOX)                                                                                                                                                                       \
-	do {                                                                                                                                                                                           \
-		switch ((uint32_t)GPIOX) {                                                                                                                                                             \
-			case (uint32_t)GPIOA:                                                                                                                                                          \
-				__HAL_RCC_GPIOA_CLK_DISABLE();                                                                                                                                         \
-				break;                                                                                                                                                                 \
-			case (uint32_t)GPIOB:                                                                                                                                                          \
-				__HAL_RCC_GPIOB_CLK_DISABLE();                                                                                                                                         \
-				break;                                                                                                                                                                 \
-			case (uint32_t)GPIOD:                                                                                                                                                          \
-				__HAL_RCC_GPIOD_CLK_DISABLE();                                                                                                                                         \
-				break;                                                                                                                                                                 \
-			default:                                                                                                                                                                       \
-				LOGOMATIC("BAD FDCAN GPIO Port");                                                                                                                                      \
-		}                                                                                                                                                                                      \
-	} while (0)
+#define GPIOx_CLK_DISABLE(GPIOX)                                                                                   \
+		do { if (GPIOX == GPIOA) __HAL_RCC_GPIOA_CLK_DISABLE();\
+		else if (GPIOX == GPIOB) __HAL_RCC_GPIOB_CLK_DISABLE();                                                                                                 \
+		else if (GPIOX == GPIOD) __HAL_RCC_GPIOD_CLK_DISABLE();       \
+		else LOGOMATIC("BAD FDCAN GPIO Port"); } while (0)
 
 static int fdcan_shared_clock_ref = 0;
 static inline void fdcan_enable_shared_clock(void)
@@ -135,7 +113,7 @@ static inline void gpio_clk_disable(GPIO_TypeDef *gpio)
 
 static int can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IRQn_Type *it1);
 
-static int can_msp_init(CANHandle *handle, const CANConfig *config);
+static int can_msp_init(CANHandle *handle, CANConfig *config);
 CANHandle *can_init(const CANConfig *config)
 {
 	// config validation?
@@ -199,7 +177,7 @@ CANHandle *can_init(const CANConfig *config)
 	// Then call HAL_FDCAN_Init() and HAL_FDCAN_DeInit()
 
 	// Current idea, redefine HAL_FDCAN_MspInit and MspDeInit do nothing at all, do all the work in can_msp_init()
-	if (can_msp_init(canHandle, config)) {
+	if (can_msp_init(canHandle, (CANConfig*)config)) {
 		LOGOMATIC("CAN_init: could not initialize MSP resources");
 		can_release(canHandle);
 	}
@@ -243,10 +221,10 @@ CANHandle *can_init(const CANConfig *config)
 	return canHandle;
 }
 
-inline int can_set_clksource(uint32_t clksource) { LL_RCC_SetFDCANClockSource(clksource); }
+inline void can_set_clksource(uint32_t clksource) { LL_RCC_SetFDCANClockSource(clksource); }
 
 // only valid for #STM32G474x, must redefine for each family
-static int can_msp_init(CANHandle *canHandle, const CANConfig *config)
+static int can_msp_init(CANHandle *canHandle, CANConfig *config)
 {
 	// MSP Init ------- This could be inside HAL_FDCAN_MspInit() instead
 	// FDCAN Clock Select
@@ -261,7 +239,8 @@ static int can_msp_init(CANHandle *canHandle, const CANConfig *config)
 	HAL_GPIO_Init(config->rx_gpio, &(config->init_rx_gpio));
 	HAL_GPIO_Init(config->tx_gpio, &(config->init_tx_gpio));
 
-	IRQn_Type rxit, txit;
+	IRQn_Type rxit = -1;
+	IRQn_Type txit = -1;
 	can_get_irqs(canHandle->hal_fdcanP->Instance, &rxit, &txit);
 
 	// rxfifo0
@@ -275,12 +254,6 @@ static int can_msp_init(CANHandle *canHandle, const CANConfig *config)
 
 	return 0;
 }
-
-void HAL_FDCAN_MspInit(FDCAN_HandleTypeDef *fdcan) { return; }
-// use can_msp_init() instead to initialize MSP before calling HAL_FDCAN_Init()
-
-void HAL_FDCAN_MspDeInit(FDCAN_HandleTypeDef *fdcan) { return; }
-// use can_msp_deinit() instead
 
 // valid only for STM32G4
 static int can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IRQn_Type *it1)
@@ -305,21 +278,21 @@ static int can_get_irqs(FDCAN_GlobalTypeDef *instance, IRQn_Type *it0, IRQn_Type
 }
 
 // valid only for STM32G4
-static const char *can_get_instance_name(FDCAN_GlobalTypeDef *instance)
-{
-	if (instance == FDCAN1) {
-		return "FDCAN1";
-	} else if (instance == FDCAN2) {
-		return "FDCAN2";
-	} else if (instance == FDCAN3) {
-		return "FDCAN3";
-	}
-}
+// static const char *can_get_instance_name(FDCAN_GlobalTypeDef *instance)
+// {
+// 	if (instance == FDCAN1) {
+// 		return "FDCAN1";
+// 	} else if (instance == FDCAN2) {
+// 		return "FDCAN2";
+// 	} else if (instance == FDCAN3) {
+// 		return "FDCAN3";
+// 	}
+//  return "UNKNOWN";
+// }
 
 // valid only for STM32G4
 static CANHandle *can_get_buffer_handle(FDCAN_HandleTypeDef *hfdcan)
 {
-	CANHandle *handle = 0;
 	// #ifdef STM32G474xx
 	if (hfdcan->Instance == FDCAN1) {
 		return &CAN1;
@@ -365,7 +338,7 @@ void FDCAN3_IT1_IRQHandler(void) { HAL_FDCAN_IRQHandler(&hal_fdcan3); }
 
 void HAL_FDCAN_TxBufferCompleteCallback(FDCAN_HandleTypeDef *hfdcan, uint32_t BufferIndexes)
 {
-
+	UNUSED(BufferIndexes);
 	// If circular buffer has elements, send to queue
 	// Otherwise do nothing
 	// #ifdef USECAN1
@@ -549,7 +522,8 @@ int can_release(CANHandle *canHandle)
 	// must disable NVIC IRQs before freeing circular buffer
 
 	// turn off NVIC resources
-	IRQn_Type rx0it, txit;
+	IRQn_Type rx0it = -1;
+	IRQn_Type txit = -1;
 	can_get_irqs(canHandle->hal_fdcanP->Instance, &rx0it, &txit);
 	HAL_NVIC_DisableIRQ(rx0it);
 	HAL_NVIC_DisableIRQ(txit);

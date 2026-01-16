@@ -2,7 +2,7 @@
 
 CANHandle* can_init(CANConfig *config); //user must supply an rx callback function
 
-int can_set_clksource(uint32_t LL_RCC_FDCAN_CLKSOURCE); //ex LL_RCC_FDCAN_CLKSOURCE_PCLK1 for STM32G474RE
+void can_set_clksource(uint32_t LL_RCC_FDCAN_CLKSOURCE); //ex LL_RCC_FDCAN_CLKSOURCE_PCLK1 for STM32G474RE
 
 int can_start(CANHandle*handle);
 int can_stop(CANHandle*handle);

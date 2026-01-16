@@ -6,18 +6,21 @@
 
 // each family has a constant number of CAN peripherals
 
-int can_test_instance(FDCAN_HandleTypeDef) { return 0; }
+int can_test_instance(FDCAN_HandleTypeDef fdcan_handle) {
+	UNUSED(fdcan_handle);
+	return 0;
+}
 
 void can_test_rx_callback2(void *data, uint32_t size)
 {
-	LOGOMATIC("CAN2 Got data!\n");
+	LOGOMATIC("CAN2 Got data! Size %ld, data[0] = 0x%x\n", size, *(char*) data);
 	// Is within an ISR, so needs to exit quickly
 	return;
 }
 
 void can_test_rx_callback1(void *data, uint32_t size)
 {
-	LOGOMATIC("CAN1 Got data!\n");
+	LOGOMATIC("CAN1 Got data! Size %ld, data[0] = 0x%x\n", size, *(char*) data);
 
 	// Is within an ISR, so needs to exit quickly
 	return;
