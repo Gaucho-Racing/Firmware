@@ -155,15 +155,37 @@ void ADC_UpdateAnalogValues(uint16_t **adcDataValues, volatile uint16_t *new_val
 	}
 }
 
-/*
-EMA
-out = out + alpha * (new - out)
-void ADC_WeightedOutput(uint16_t *latest, float *weighted_output, int num_signals, float alpha) {
-    for (int i = 0; i < num_signals; ++i){
-		weighted_output[i] += ((float)latest[i] - weighted_output) * alpha;
-	}
+static float Clamp_Alpha(float a)
+{
+    if (a <= 0.0f) return 0.0001f;
+    if (a > 1.0f)  return 1.0f;
+    return a;
 }
-*/
+
+void EMA_Init(gr_lpf_ema_t *f, float alpha)
+{
+    if (!f) return;
+    f->alpha = clamp_alpha(alpha);
+    f->y = 0.0f;
+    f->initialized = 0;
+}
+
+float EMA_Update(gr_lpf_ema_t *f, float x)
+{
+    if (!f) return x;
+
+    const float a = clamp_alpha(f->alpha);
+
+    if (!f->initialized) {
+        f->y = x;
+        f->initialized = 1;
+        return f->y;
+    }
+
+    // EMA low-pass filter: y = y + a*(x - y)
+    f->y = f->y + a * (x - f->y);
+    return f->y;
+}
 
 // void updateAnalogInputs(void)
 // {

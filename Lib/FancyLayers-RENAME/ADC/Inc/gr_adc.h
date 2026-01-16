@@ -181,6 +181,17 @@ void DMA_Init(DMA_TypeDef *DMA, DMA_Channel channel, uint32_t src_address, uint3
 
 /*
  */
+
 void ADC_UpdateAnalogValues(uint16_t **adcDataValues, volatile uint16_t *new_values, int num_signals, int window_size, uint16_t *weighted_output);
+
+typedef struct {
+    float y;
+    float alpha;
+    uint8_t initialized;
+} gr_lpf_ema_t;
+
+void EMA_Init(gr_lpf_ema_t *f, float alpha);
+
+float EMA_Update(gr_lpf_ema_t *f, float x);
 
 #endif
