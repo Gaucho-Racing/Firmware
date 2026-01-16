@@ -31,15 +31,17 @@ typedef struct {
 	uint8_t ACU_S2_MAX_CELL_Volt;
 	// Error & Warnings
 	uint8_t ACU_S2_ERROR_BITS;
-	// bool ACU_S2_OVERTEMP_ERROR;
-	// bool ACU_S2_OVERVOLT_ERROR;
-	// bool ACU_S2_UNDERVOLT_ERROR;
-	// bool ACU_S2_OVERCURR_ERROR;
-	// bool ACU_S2_UNDERCURR_ERROR;
+	bool ACU_S2_OVERTEMP_ERROR;
+	bool ACU_S2_OVERVOLT_ERROR;
+	bool ACU_S2_UNDERVOLT_ERROR;
+	bool ACU_S2_OVERCURR_ERROR;
+	bool ACU_S2_UNDERCURR_ERROR;
 	// bool ACU_S2_UNDER20v_WARNING;
 	// bool ACU_S2_UNDER12v_WARNING;
 	// bool ACU_S2_UNDERVOLTSDC_WARNING;
 	// bool ACU_S2_PRECHARGE_ERROR;
+	
+	#define CHECK_BIT(value, bit) (((value) == (bit)) & 1)
 
 	// State
 	uint8_t ACU_S2_PRECHARGE_BITS;
