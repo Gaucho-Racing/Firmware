@@ -18,7 +18,9 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
+#include "gr_adc.h"
+#include "StateTicks.h"
+#include "StateData.h"
 #include "adc.h"
 #include "dma.h"
 #include "fdcan.h"
@@ -52,6 +54,60 @@
 
 /* USER CODE END PV */
 
+
+
+/*
+RELAVANT PORTS AND PINS
+
+-- ANALOG IN --
+ADC 1 (ADC_1 BUFFERS array is IN ORDER from top to bottom of this list)
+BSE_SIGNAL (8): PC0 -> ADC12_IN6 (ADC 1 and ADC 2)
+BSPD_SIGNAL (9): PC1 -> ADC12_IN7
+APPS1_SIGNAL (10): PC2 -> ADC12_IN8
+APPS2_SIGNAL (11): PC3 -> ADC12_IN9
+BRAKE_F_SIGNAL (24): PB0 -> ADC1_IN15
+BRAKE_R_SIGNAL (25): PB1 -> ADC1_IN12
+AUX_SIGNAL (36): PB14 -> ADC1_IN5
+
+	ADC 2
+STEERING_ANGLE_SIGNAL (37): PB15 -> ADC2_IN15
+
+-- DIGITAL IN --
+BSPD_SENSE (19): PA5
+IMD_SENSE (20): PA6
+AMS_SENSE (21): PA7
+TS_ACTIVE_BTN_SENSE (54): PC12
+RTD_BTN_SENSE (53): PC11
+INERTIA_SW_SENSE (52): PC10
+ESTOP_SENSE (51): PA15
+
+-- DIGITAL OUT --
+RTD_CONTROL (60): PB7
+TSSI_R_CONTROL (59): PB6
+TSSI_G_CONTROL (58): PB5
+BRAKE_CONTROL (57): PB4
+TS_ACTIVE_BTN_LED_CONTROL (43): PA9
+RTD_BTN_LED_CONTROL (42): PA8
+*/
+
+// ADC 1/2
+#define WINDOW_SIZE 10 // weighted average for now can extend to other window functions
+#define NUM_SIGNALS_ADC1 7
+#define NUM_SIGNALS_ADC2 1
+#define NUM_SIGNALS_DIGITAL 7
+// TODO: check which data size to use (floats...ints...etc)
+volatile uint16_t ADC1_buffers[NUM_SIGNALS_ADC1] = {0}; // Contains new values
+volatile uint16_t ADC2_buffers[NUM_SIGNALS_ADC2] = {0}; // Contains new values
+uint16_t ADC1_outputs[NUM_SIGNALS_ADC1] = {0};	      // Updated averages
+uint16_t ADC2_outputs[NUM_SIGNALS_ADC2] = {0};	      // Updated averages
+uint16_t *adcDataValues[(NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2)] = {0};		  // 2D Array
+
+// DIGITAL
+uint8_t digital_data[NUM_SIGNALS_DIGITAL] = {0};
+
+// STATE DATA
+extern ECU_StateData stateLump;
+
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
@@ -73,6 +129,112 @@ static void ITM_Enable(void)
 	ITM->TCR |= ITM_TCR_ITMENA_Msk;
 }
 /* USER CODE END 0 */
+
+// TODO: state data stores stuff as either FLOATS or BOOLS...check
+void read_digital(void) {
+	for (int i = 0; i < NUM_SIGNALS_DIGITAL; i++) {
+		GPIO_PinState currRead;
+		switch(i) {
+			case 0:
+				currRead = LL_GPIO_ReadPin(GPIOA, LL_GPIO_PIN_5);
+				break;
+			case 1:
+				currRead = LL_GPIO_ReadPin(GPIOA, LL_GPIO_PIN_6);
+				break;
+			case 2:
+				currRead = LL_GPIO_ReadPin(GPIOA, LL_GPIO_PIN_7);
+				break;
+			case 3:
+				currRead = LL_GPIO_ReadPin(GPIOC, LL_GPIO_PIN_12);
+				break;
+			case 4:
+				currRead = LL_GPIO_ReadPin(GPIOC, LL_GPIO_PIN_11);
+				break;
+			case 5:
+				currRead = LL_GPIO_ReadPin(GPIOC, LL_GPIO_PIN_10);
+				break;
+			case 6:
+				currRead = LL_GPIO_ReadPin(GPIOA, LL_GPIO_PIN_15);
+				break;
+		}
+		digital_data[i] = currRead
+	}
+}
+
+void write_state_data() {
+	// analog
+	// TODO: bse signal idk what to do ADC1_outputs[0]
+	// TODO: bspd signal idk what to do ADC1_outputs[1]
+	stateLump.APPS1_SIGNAL = ADC1_outputs[2];
+	stateLump.APPS2_SIGNAL = ADC1_outputs[3];
+	stateLump.Brake_F_Signal = ADC1_outputs[4];
+	stateLump.Brake_R_Signal = ADC1_outputs[5];
+	// TODO: Aux signal idk what to do with it ADC1_outputs[6]
+	stateLump.STEERING_ANGLE_SIGNAL = ADC2_outputs[0];
+
+	// digital
+	stateLump.bspd_sense = digital_data[0];
+	stateLump.imd_sense = digital_data[1];
+	stateLump.ams_sense = digital_data[2];
+	stateLump.ts_active_button_engaged = digital_data[3];
+	stateLump.rtd_button_engaged = digital_data[4];
+	stateLump.bspd_sense = digital_data[5];
+	// TODO: inertia steering wheel sense? digital_data[6]
+	stateLump.estop_sense = digital_data[7];
+}
+
+void ADC_Configure(void)
+{
+	// Initialize which clock source to use
+	LL_RCC_SetADCClockSource(LL_RCC_ADC12_CLKSOURCE_SYSCLK);
+	/* Peripheral clock enable */
+	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_ADC12);
+	LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
+
+	// Initialize the ADC1
+	ADC_Group_Init(ADC1, PS_8); // TODO: change prescalar l8r
+	ADC_Init(ADC1, RESOLUTION_12, RIGHT);
+	ADC_Regular_Group_Init(ADC1, NO_RANKS);
+
+	// TODO: INITIALIZE PIN_PORTS BETTER!!!
+	// Initialize the pins and channels
+	Pin_Ports p1 = {0};
+	p1.port = GPIOC;
+	p1.pin = LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_3;
+	ADC_Init_Pins(&p1);
+	Pin_Ports p2 = {0};
+	p2.port = GPIOB;
+	p2.pin = LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_14;
+	ADC_Init_Pins(&p2);
+	ADC_Channel_Init(ADC1, RANK_1, ADC_CHANNEL_6, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+	ADC_Channel_Init(ADC1, RANK_2, ADC_CHANNEL_7, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+	ADC_Channel_Init(ADC1, RANK_3, ADC_CHANNEL_8, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+	ADC_Channel_Init(ADC1, RANK_4, ADC_CHANNEL_9, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+	ADC_Channel_Init(ADC1, RANK_5, ADC_CHANNEL_15, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+	ADC_Channel_Init(ADC1, RANK_6, ADC_CHANNEL_12, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+	ADC_Channel_Init(ADC1, RANK_7, ADC_CHANNEL_5, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+
+	// Initialize ADC2
+	ADC_Init(ADC2, RESOLUTION_12, RIGHT);
+	ADC_Regular_Group_Init(ADC2, NO_RANKS);
+
+	// Initialize the pins and channels
+	Pin_Ports p3 = {0};
+	p.port = GPIOA;
+	p.pin = LL_GPIO_PIN_15;
+	ADC_Init_Pins(&p3);
+	ADC_Channel_Init(ADC2, RANK_1, ADC_CHANNEL_15, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
+
+	// Initialize DMA (ADC1 = CHANNEL 1, ADC2 = CHANNEL 2)
+	// DMA reads into buffer
+	DMA_Init(DMA1, LL_DMA_CHANNEL_1, LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA), (uint16_t)&ADC1_buffers, LL_DMA_PDATAALIGN_HALFWORD, LL_DMA_MDATAALIGN_HALFWORD, NUM_SIGNALS_ADC1, ADC1, HIGH);
+	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
+	DMA_Init(DMA1, LL_DMA_CHANNEL_2, LL_ADC_DMA_GetRegAddr(ADC2, LL_ADC_DMA_REG_REGULAR_DATA), (uint16_t)&ADC2_buffers, LL_DMA_PDATAALIGN_HALFWORD, LL_DMA_MDATAALIGN_HALFWORD, NUM_SIGNALS_ADC2, ADC2, HIGH);
+	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_2);
+
+	ADC_Enable_And_Calibrate(ADC1);
+	ADC_Enable_And_Calibrate(ADC2);
+}
 
 /**
  * @brief  The application entry point.
@@ -112,6 +274,10 @@ int main(void)
 	MX_ADC2_Init();
 	MX_LPUART1_UART_Init();
 	/* USER CODE BEGIN 2 */
+	ADC_Configure();
+	for (int i = 0; i < (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2); i++){
+		adcDataValues[i] = malloc(sizeof(uint16_t) * WINDOW_SIZE);
+	}
 
 	/* USER CODE END 2 */
 
@@ -121,6 +287,10 @@ int main(void)
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
+		read_digital();
+		write_state_data();
+		ADC_UpdateAnalogValues(adcDataValues, ADC1_buffers, NUM_SIGNALS_ADC1, WINDOW_SIZE, ADC1_outputs);
+		ADC_UpdateAnalogValues(adcDataValues, ADC2_buffers, NUM_SIGNALS_ADC2, WINDOW_SIZE, ADC2_outputs);
 		ECU_State_Tick();
 		LOGOMATIC("Main Loop Tick Complete. I like Pi %f\n", 3.14159265);
 		LL_mDelay(250); // FIXME Reduce or remove delay

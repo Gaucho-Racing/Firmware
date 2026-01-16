@@ -6,6 +6,7 @@
 #include "StateData.h"
 #include "Unused.h"
 
+// use estop_sense to detect close(?)
 void setSoftwareLatch(bool close)
 {
 	UNUSED(close);
@@ -26,6 +27,19 @@ void setSoftwareLatch(bool close)
 	   SOFTWARE_OK_CONTROL_Pin, GPIO_PIN_RESET);
 	    }
 		*/
+
+		if (close && !LL_GPIO_ReadPin(SOFTWARE_OK_CONTROL_GPIO_Port,
+	   SOFTWARE_OK_CONTROL_Pin)) // Avoid writing pins that are already
+	   written too
+	    {
+		HAL_GPIO_WritePin(SOFTWARE_OK_CONTROL_GPIO_Port,
+	   SOFTWARE_OK_CONTROL_Pin, GPIO_PIN_SET);
+	    }
+	    else if (!close && HAL_GPIO_ReadPin(SOFTWARE_OK_CONTROL_GPIO_Port,
+	   SOFTWARE_OK_CONTROL_Pin))
+	    {
+		HAL_GPIO_WritePin(SOFTWARE_OK_CONTROL_GPIO_Port,
+	   SOFTWARE_OK_CONTROL_Pin, GPIO_PIN_RESET);
 }
 
 bool CriticalError(const ECU_StateData *stateData)

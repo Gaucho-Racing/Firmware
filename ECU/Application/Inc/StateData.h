@@ -50,6 +50,7 @@ typedef struct ECU_StateData {
 	uint16_t APPS2_Signal;
 	uint16_t Brake_R_Signal;
 	uint16_t Brake_F_Signal;
+	uint16_t STEERING_ANGLE_SIGNAL;
 	int8_t ping_block[3];	      /** Node timeout status bits (1=OK, 0=Timeout) */
 	uint8_t powerlevel_torquemap; /** Power lvl (4b) & torque map (4b) */
 	uint8_t tractivebattery_soc;  /** Accumulator SoC, 20x/51=% */
