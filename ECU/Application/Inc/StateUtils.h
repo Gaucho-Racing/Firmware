@@ -20,11 +20,11 @@
 #define APPS_OFFSET 250.0f   // TODO: Need to be experimentally determined
 
 // Checks stateData for critical errors
-bool CriticalError(const ECU_StateData *stateData);
-bool CommunicationError(const ECU_StateData *stateData);
-bool APPS_BSE_Violation(const ECU_StateData *stateData);
-bool PressingBrake(const ECU_StateData *stateData);
-float CalcBrakePercent(const ECU_StateData *stateData);
-float CalcPedalTravel(const ECU_StateData *stateData);
+bool CriticalError(volatile const ECU_StateData *stateData);
+bool CommunicationError(volatile const ECU_StateData *stateData);
+bool APPS_BSE_Violation(volatile const ECU_StateData *stateData);
+bool PressingBrake(volatile const ECU_StateData *stateData);
+float CalcBrakePercent(volatile const ECU_StateData *stateData);
+float CalcPedalTravel(volatile const ECU_StateData *stateData);
 
 #endif

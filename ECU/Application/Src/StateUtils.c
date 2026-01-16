@@ -44,7 +44,7 @@ void setSoftwareLatch(bool close)
 	*/
 }
 
-bool CriticalError(const ECU_StateData *stateData)
+bool CriticalError(volatile const ECU_StateData *stateData)
 {
 	if (stateData->max_cell_temp > 60) {
 		return true;
@@ -58,14 +58,14 @@ bool CriticalError(const ECU_StateData *stateData)
 	return false;
 }
 
-bool CommunicationError(const ECU_StateData *stateData)
+bool CommunicationError(volatile const ECU_StateData *stateData)
 {
 	UNUSED(stateData);
 	// TODO: implement COMMS errors
 	return false;
 }
 
-bool APPS_BSE_Violation(const ECU_StateData *stateData)
+bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)
 {
 	// Checks 2 * APPS_1 is within 10% of APPS_2 and break + throttle at the
 	// same time
@@ -73,19 +73,19 @@ bool APPS_BSE_Violation(const ECU_StateData *stateData)
 	       (PressingBrake(stateData) && CalcPedalTravel(stateData) >= 0.25f);
 }
 
-bool PressingBrake(const ECU_StateData *stateData)
+bool PressingBrake(volatile const ECU_StateData *stateData)
 {
 	return (stateData->Brake_F_Signal - BRAKE_F_MIN > BSE_DEADZONE * (BRAKE_F_MAX - BRAKE_F_MIN)) && (stateData->Brake_R_Signal - BRAKE_R_MIN > BSE_DEADZONE * (BRAKE_R_MAX - BRAKE_R_MIN));
 	// Ideally TCM receives values of 0 after this is no longer called xD.
 }
 
-float CalcBrakePercent(const ECU_StateData *stateData) // THIS IS NOT ACTUALLY BRAKE TRAVEL,
+float CalcBrakePercent(volatile const ECU_StateData *stateData) // THIS IS NOT ACTUALLY BRAKE TRAVEL,
 						       // PRESSURE SENSORS CAPTURE BRAKE TRAVEL
 {
 	return (float)(stateData->Brake_F_Signal + stateData->Brake_R_Signal - BRAKE_R_MIN - BRAKE_F_MIN) / (BRAKE_F_MAX - BRAKE_F_MIN + BRAKE_R_MAX - BRAKE_R_MIN);
 }
 
-float CalcPedalTravel(const ECU_StateData *stateData)
+float CalcPedalTravel(volatile const ECU_StateData *stateData)
 {
 	return (float)(stateData->APPS1_Signal + stateData->APPS2_Signal - THROTTLE_MIN_2 - THROTTLE_MIN_1) / (THROTTLE_MAX_1 + THROTTLE_MAX_2 - THROTTLE_MIN_1 - THROTTLE_MIN_2);
 }
