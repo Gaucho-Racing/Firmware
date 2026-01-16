@@ -14,7 +14,7 @@
  *
  * @remark Intentionally not a globally accessible variable
  */
-ECU_StateData stateLump = {0};
+volatile ECU_StateData stateLump = {0};
 
 #define ECU_STATUS_MSG_PERIOD (100)
 #define TRACTIVE_SYSTEM_MAX_DISCHARGE_TIME (10000) // TODO: determine an appropriate wait time
