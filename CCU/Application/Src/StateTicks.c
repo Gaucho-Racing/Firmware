@@ -52,7 +52,8 @@ void STATE_IDLE(CCU_StateData *state_data)
 	}
 }
 
-void STATE_CHARGING(CCU_StateData *state_data) {
+void STATE_CHARGING(CCU_StateData *state_data)
+{
 
 	state_data->ACU_S2_OVERTEMP_ERROR = CHECK_BIT(state_data->ACU_S2_ERROR_BITS, 40);
 	state_data->ACU_S2_OVERVOLT_ERROR = CHECK_BIT(state_data->ACU_S2_ERROR_BITS, 41);
