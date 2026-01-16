@@ -18,13 +18,14 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "gr_adc.h"
-#include "StateTicks.h"
+
 #include "StateData.h"
+#include "StateTicks.h"
 #include "adc.h"
 #include "dma.h"
 #include "fdcan.h"
 #include "gpio.h"
+#include "gr_adc.h"
 #include "usart.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -53,8 +54,6 @@
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
-
-
 
 /*
 RELAVANT PORTS AND PINS
@@ -96,11 +95,11 @@ RTD_BTN_LED_CONTROL (42): PA8
 #define NUM_SIGNALS_ADC2 1
 #define NUM_SIGNALS_DIGITAL 7
 // TODO: check which data size to use (floats...ints...etc)
-volatile uint16_t ADC1_buffers[NUM_SIGNALS_ADC1] = {0}; // Contains new values
-volatile uint16_t ADC2_buffers[NUM_SIGNALS_ADC2] = {0}; // Contains new values
-uint16_t ADC1_outputs[NUM_SIGNALS_ADC1] = {0};	      // Updated averages
-uint16_t ADC2_outputs[NUM_SIGNALS_ADC2] = {0};	      // Updated averages
-uint16_t *adcDataValues[(NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2)] = {0};		  // 2D Array
+volatile uint16_t ADC1_buffers[NUM_SIGNALS_ADC1] = {0};		      // Contains new values
+volatile uint16_t ADC2_buffers[NUM_SIGNALS_ADC2] = {0};		      // Contains new values
+uint16_t ADC1_outputs[NUM_SIGNALS_ADC1] = {0};			      // Updated averages
+uint16_t ADC2_outputs[NUM_SIGNALS_ADC2] = {0};			      // Updated averages
+uint16_t *adcDataValues[(NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2)] = {0}; // 2D Array
 
 // DIGITAL
 uint8_t digital_data[NUM_SIGNALS_DIGITAL] = {0};
@@ -131,10 +130,11 @@ static void ITM_Enable(void)
 /* USER CODE END 0 */
 
 // TODO: state data stores stuff as either FLOATS or BOOLS...check
-void read_digital(void) {
+void read_digital(void)
+{
 	for (int i = 0; i < NUM_SIGNALS_DIGITAL; i++) {
 		GPIO_PinState currRead;
-		switch(i) {
+		switch (i) {
 			case 0:
 				currRead = LL_GPIO_ReadPin(GPIOA, LL_GPIO_PIN_5);
 				break;
@@ -161,7 +161,8 @@ void read_digital(void) {
 	}
 }
 
-void write_state_data() {
+void write_state_data()
+{
 	// analog
 	// TODO: bse signal idk what to do ADC1_outputs[0]
 	// TODO: bspd signal idk what to do ADC1_outputs[1]
@@ -227,9 +228,11 @@ void ADC_Configure(void)
 
 	// Initialize DMA (ADC1 = CHANNEL 1, ADC2 = CHANNEL 2)
 	// DMA reads into buffer
-	DMA_Init(DMA1, LL_DMA_CHANNEL_1, LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA), (uint16_t)&ADC1_buffers, LL_DMA_PDATAALIGN_HALFWORD, LL_DMA_MDATAALIGN_HALFWORD, NUM_SIGNALS_ADC1, ADC1, HIGH);
+	DMA_Init(DMA1, LL_DMA_CHANNEL_1, LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA), (uint16_t)&ADC1_buffers, LL_DMA_PDATAALIGN_HALFWORD, LL_DMA_MDATAALIGN_HALFWORD, NUM_SIGNALS_ADC1,
+		 ADC1, HIGH);
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
-	DMA_Init(DMA1, LL_DMA_CHANNEL_2, LL_ADC_DMA_GetRegAddr(ADC2, LL_ADC_DMA_REG_REGULAR_DATA), (uint16_t)&ADC2_buffers, LL_DMA_PDATAALIGN_HALFWORD, LL_DMA_MDATAALIGN_HALFWORD, NUM_SIGNALS_ADC2, ADC2, HIGH);
+	DMA_Init(DMA1, LL_DMA_CHANNEL_2, LL_ADC_DMA_GetRegAddr(ADC2, LL_ADC_DMA_REG_REGULAR_DATA), (uint16_t)&ADC2_buffers, LL_DMA_PDATAALIGN_HALFWORD, LL_DMA_MDATAALIGN_HALFWORD, NUM_SIGNALS_ADC2,
+		 ADC2, HIGH);
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_2);
 
 	ADC_Enable_And_Calibrate(ADC1);
@@ -275,7 +278,7 @@ int main(void)
 	MX_LPUART1_UART_Init();
 	/* USER CODE BEGIN 2 */
 	ADC_Configure();
-	for (int i = 0; i < (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2); i++){
+	for (int i = 0; i < (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2); i++) {
 		adcDataValues[i] = malloc(sizeof(uint16_t) * WINDOW_SIZE);
 	}
 
