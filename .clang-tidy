@@ -2,7 +2,6 @@
 Checks: 'clang-diagnostic-*, clang-analyzer-*, cppcoreguidelines-*, modernize-*, -modernize-use-trailing-return-type, readability-*, bug-prone-*, misc-*, performance-*'
 WarningsAsErrors: bugprone-*
 HeaderFilterRegex: '.*'
-AnalyzeTemporaryDtors: false
 FormatStyle: file
 CheckOptions:
   - key: readability-header-guard.HeaderGuardStyle
