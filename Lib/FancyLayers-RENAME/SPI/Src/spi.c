@@ -60,6 +60,9 @@ void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SP
 		}
 	}
 
+	//Disable SPI
+	LL_SPI_Disable(handle->pins->SPIx);
+
 	// Enable GPIO and SPI clocks
 	GR_SPI_Enable_Clocks(handle);
 
@@ -78,9 +81,6 @@ void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SP
 		handle->transfer_size = GR_SPI_TRANSFER_SIZE_16;
 	}
 
-	// Enable SPI peripheral
-	LL_SPI_Enable(handle->pins->SPIx);
-
 	// Enable interrupts in NVIC
 	int SPI_IRQn = GR_SPI_Get_IRQn(handle->pins->SPIx);
 	if (SPI_IRQn != GR_SPI_UNKNOWN_IRQN) {
@@ -91,9 +91,13 @@ void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SP
 	}
 
 	// Enable interrupts at peripheral level
-	LL_SPI_EnableIT_ERR(handle->pins->SPIx);  // Error interrupt
+	/*LL_SPI_EnableIT_ERR(handle->pins->SPIx);  // Error interrupt
 	LL_SPI_EnableIT_RXNE(handle->pins->SPIx); // Not empty Rx buffer
-	LL_SPI_EnableIT_TXE(handle->pins->SPIx);  // Empty Tx buffer
+	LL_SPI_EnableIT_TXE(handle->pins->SPIx);  // Empty Tx buffer*/
+
+	// Enable SPI peripheral after BSY flag clears
+	while(LL_SPI_IsActiveFlag_BSY(handle->pins->SPIx)) {	}
+	LL_SPI_Enable(handle->pins->SPIx);
 }
 
 void GR_SPI_Interrupt_Handler(GR_SPI_Handler *handle)
@@ -354,14 +358,14 @@ void GR_SPI_Close(GR_SPI_Handler *handler)
 	// IDK man check the error codes if it doesn't work
 
 	// Deallocate memory
-	free(handler->spi_config);
-	free(handler->pins->GPIOx);
-	free(handler->pins->pin_nums);
-	free(handler->pins);
+	if(handler->spi_config) free(handler->spi_config);
+	if(handler->pins->GPIOx) free(handler->pins->GPIOx);
+	if(handler->pins->pin_nums) free(handler->pins->pin_nums);
+	if(handler->pins) free(handler->pins);
+	if(handler->current_msg && handler->current_msg->data) free(handler->current_msg->data);
+	if(handler->current_msg) free(handler->current_msg);
 	GR_CircularBuffer_Free(&handler->rx_buffer);
 	GR_CircularBuffer_Free(&handler->tx_buffer);
-	free(handler->current_msg->data);
-	free(handler->current_msg);
 
 	return;
 }

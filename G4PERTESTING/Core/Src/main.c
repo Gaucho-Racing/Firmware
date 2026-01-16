@@ -162,9 +162,19 @@ int main(void)
 	LOGOMATIC("NSS               = %lu | %lu\n", LL_SPI_GetNSSMode(ex_pins.SPIx), ex_config.NSS);
 	LOGOMATIC("BaudRate          = %lu | %lu\n", LL_SPI_GetBaudRatePrescaler(ex_pins.SPIx), ex_config.BaudRate);
 	LOGOMATIC("BitOrder          = %lu | %lu\n", LL_SPI_GetTransferBitOrder(ex_pins.SPIx), ex_config.BitOrder);
-	LOGOMATIC("CRC Enable        = %lu | %lu\n", LL_SPI_IsEnabledCRC(ex_pins.SPIx), ex_config.CRCCalculation);
+	LOGOMATIC("CRC Enable        = %lu | 1\n", LL_SPI_IsEnabledCRC(ex_pins.SPIx));
 	LOGOMATIC("CRC Polynomial    = 0x%lx | 0x%lx\n", ex_pins.SPIx->CRCPR, ex_config.CRCPoly);
 	LOGOMATIC("SPI Enable        = %lu | 1\n", LL_SPI_IsEnabled(ex_pins.SPIx));
+
+	uint32_t spi_clk_en = 0;
+	if (ex_handler.pins->SPIx == SPI1) {
+        spi_clk_en = LL_APB2_GRP1_IsEnabledClock(LL_APB2_GRP1_PERIPH_SPI1);
+    } else if (ex_handler.pins->SPIx == SPI2) {
+        spi_clk_en = LL_APB1_GRP1_IsEnabledClock(LL_APB1_GRP1_PERIPH_SPI2);
+    } else if (ex_handler.pins->SPIx == SPI3) {
+        spi_clk_en = LL_APB1_GRP1_IsEnabledClock(LL_APB1_GRP1_PERIPH_SPI3);
+    }
+	LOGOMATIC("SPI Clock Enable  = %lu | 1\n", spi_clk_en);
 	/* ---------------- GPIO CLOCKS ---------------- */
 	for (int i = 0; i < ex_pins.num_pins; i++) {
 		uint32_t clk_en = 0;
@@ -189,12 +199,13 @@ int main(void)
 	}
 	/* ---------------- GPIO MODE + AF ---------------- */
 	for (int i = 0; i < ex_pins.num_pins; i++) {
-		uint32_t pin = (1U << ex_pins.pin_nums[i]);
+		uint32_t pin = ex_pins.pin_nums[i];
 
-		LOGOMATIC("GPIO[%d] Mode     = %lu | %lu\n", ex_pins.pin_nums[i], LL_GPIO_GetPinMode(ex_pins.GPIOx[i], pin), LL_GPIO_MODE_ALTERNATE);
-
-		LOGOMATIC("GPIO[%d] AF       = %lu | %lu\n", ex_pins.pin_nums[i],
-			  (ex_pins.pin_nums[i] < 8) ? LL_GPIO_GetAFPin_0_7(ex_pins.GPIOx[i], pin) : LL_GPIO_GetAFPin_8_15(ex_pins.GPIOx[i], pin), ex_pins.alternate_function_number);
+		LOGOMATIC("GPIO[%d] Mode     = %lu | %lu\n", pin, LL_GPIO_GetPinMode(ex_pins.GPIOx[i], pin), LL_GPIO_MODE_ALTERNATE);
+		
+		LOGOMATIC("GPIO[%d] AF       = %lu | %lu\n", pin, (ex_pins.pin_nums[i] < LL_GPIO_PIN_8) ? LL_GPIO_GetAFPin_0_7(ex_pins.GPIOx[i], pin) : LL_GPIO_GetAFPin_8_15(ex_pins.GPIOx[i],
+		pin),
+		      ex_pins.alternate_function_number);
 	}
 	LOGOMATIC("-= End Verification =-\n");
 
