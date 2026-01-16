@@ -42,6 +42,7 @@ include("${lib_path}/Utils/BitManipulations/bit-utils.cmake")
 
 # Peripherals
 include("${lib_path}/Peripherals/USART/common.cmake")
+include("${lib_path}/Peripherals/CAN/common.cmake")
 include("${lib_path}/FancyLayers-RENAME/ADC/adc.cmake")
 
 # FIXME Temporary holdover for CAN messages until URCA is ready for merge
@@ -68,6 +69,7 @@ add_gr_project(STM32G474xE CCU)
 # Development
 add_gr_project(STM32G474xE G4ADCTESTING)
 add_gr_project(STM32G474xE G4PERTESTING)
+add_gr_project(STM32G474xE G4CANTESTING)
 
 # BLINKY Demos
 add_gr_project(STM32G474xE BLINKY G4HELLO)
