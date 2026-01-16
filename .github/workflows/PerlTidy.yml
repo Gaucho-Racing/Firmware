@@ -1,0 +1,20 @@
+name: Perl Tidy
+
+on:
+  pull_request:
+
+jobs:
+  perlcritic:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Check Perl formatting
+        run: |
+          files=$(git ls-files '*.pl' '*.pm')
+          for f in $files; do
+            perltidy -pro=.perltidyrc -st "$f" > "$f.tidy"
+            diff -u "$f" "$f.tidy" || exit 1
+            rm "$f.tidy"
+          done
