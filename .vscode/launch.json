@@ -15,7 +15,38 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build ECU",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": 170000000,
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
+		},
+		{
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/CCU.elf",
+			"name": "CCU",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32g4x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build CCU",
+			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
@@ -46,7 +77,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build G4HELLO",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
 			"swoConfig": {
 				"enabled": true,
 				"cpuFrequency": 170000000,
@@ -77,7 +108,22 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build G4BLINKY",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd"
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": 170000000,
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
 		},
 		{
 			"cwd": "${workspaceFolder}",
@@ -85,15 +131,15 @@
 			"name": "U5BLINKY",
 			"request": "launch",
 			"type": "cortex-debug",
-			"servertype": "openocd",
+			"servertype": "stutil",
 			"configFiles": [
 				"interface/stlink.cfg",
-				"target/stm32g4x.cfg"
+				"target/stm32u5x.cfg"
 			],
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build U5BLINKY",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Platform/STM32U5A9xJ/CompileDependencies/STM32U5A9.svd"
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32U5A9.svd"
 		},
 		{
 			"cwd": "${workspaceFolder}",
@@ -109,7 +155,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build L4BLINKY",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Platform/STM32L476xG/CompileDependencies/STM32L476.svd"
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32L476.svd"
 		},
 		{
 			"cwd": "${workspaceFolder}",
@@ -125,7 +171,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build W3_G4SPI_Receive",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd"
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd"
 		},
 		{
 			"cwd": "${workspaceFolder}",
@@ -141,7 +187,7 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build W3_G4SPI_Transmit",
 			"showDevDebugOutput": "raw",
-			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd"
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd"
 		},
 		{
 			"cwd": "${workspaceFolder}",
@@ -157,10 +203,41 @@
 			"searchDir": [],
 			"preLaunchTask": "CMake: configure and build G4PERTESTING",
 			"showDevDebugOutput": "raw",
+			"svdPath": "${workspaceFolder}/Lib/Vendor/CMSIS_5/SVD/STM32G474.svd",
+			"swoConfig": {
+				"enabled": true,
+				"cpuFrequency": 170000000,
+				"swoFrequency": 2000000,
+				"source": "probe",
+				"decoders": [
+					{
+						"type": "console",
+						"label": "ITM",
+						"showOnStartup": true,
+						"port": 0,
+						"encoding": "ascii"
+					}
+				]
+			}
+		},
+    {
+			"cwd": "${workspaceFolder}",
+			"executable": "${command:cmake.buildDirectory}/G4ADCTESTING.elf",
+			"name": "G4CANTESTING",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"configFiles": [
+				"interface/stlink.cfg",
+				"target/stm32g4x.cfg"
+			],
+			"searchDir": [],
+			"preLaunchTask": "CMake: configure and build G4ADCTESTING",
+			"showDevDebugOutput": "raw",
 			"svdPath": "${workspaceFolder}/Lib/Platform/STM32G474xE/CompileDependencies/STM32G474.svd",
 			"swoConfig": {
 				"enabled": true,
-				"cpuFrequency": 160000000,
+				"cpuFrequency": 170000000,
 				"swoFrequency": 2000000,
 				"source": "probe",
 				"decoders": [

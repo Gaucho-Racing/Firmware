@@ -7,11 +7,11 @@ target_include_directories(
 )
 
 if(
-	CMAKE_BUILD_TYPE
+	CMAKE_PRESET_NAME
 		STREQUAL
 		"Debug"
 	OR
-		CMAKE_BUILD_TYPE
+		CMAKE_PRESET_NAME
 			STREQUAL
 			"RelWithDebInfo"
 )
@@ -26,7 +26,7 @@ if(
 	)
 endif()
 
-if(CMAKE_BUILD_TYPE STREQUAL "Test")
+if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 	target_compile_definitions(GLOBALSHARE_LIB INTERFACE LOGOMATIC_ENABLED)
 
 	add_executable(logomatic_simple)
@@ -46,4 +46,18 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
 	)
 	target_link_libraries(logomatic_float PRIVATE GLOBALSHARE_LIB)
 	add_test(logomatic_float_test logomatic_float)
+
+	add_executable(stringification)
+	target_sources(
+		stringification
+		PRIVATE
+			${CMAKE_CURRENT_LIST_DIR}/Test/stringification.c
+	)
+	target_link_libraries(stringification PRIVATE GLOBALSHARE_LIB)
+	add_test(stringification_test stringification)
+
+	add_executable(unused)
+	target_sources(unused PRIVATE ${CMAKE_CURRENT_LIST_DIR}/Test/unused.c)
+	target_link_libraries(unused PRIVATE GLOBALSHARE_LIB)
+	add_test(unused_test unused)
 endif()

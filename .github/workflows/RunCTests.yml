@@ -27,13 +27,13 @@ jobs:
       SCCACHE_LOG: "info"
       SCCACHE_ERROR_LOG: ${{ github.workspace }}/sccache-error.log
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
+      - name: Checkout Repository
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
 
       - name: Setup Shared Compilation Cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ${{ env.SCCACHE_DIR }}
           key: sccache-${{ github.workflow }}-${{ runner.os }}-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-${{ github.event.pull_request.number || github.ref }}

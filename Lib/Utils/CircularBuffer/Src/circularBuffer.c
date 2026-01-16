@@ -1,4 +1,5 @@
 #include "circularBuffer.h"
+
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
@@ -73,8 +74,7 @@ uint16_t GR_CircularBuffer_GetCurrentSize(CircularBuffer *buffer_ptr)
 	}
 	// Account for circular buffer's loopback behaviour
 	if (buffer_ptr->tail <= buffer_ptr->head) {
-		return buffer_ptr->tail + buffer_ptr->capacity -
-		       buffer_ptr->head;
+		return buffer_ptr->tail + buffer_ptr->capacity - buffer_ptr->head;
 	}
 	// Normal case
 	return buffer_ptr->tail - buffer_ptr->head;
@@ -102,8 +102,7 @@ bool GR_CircularBuffer_IsEmpty(CircularBuffer *buffer_ptr)
 	return buffer_ptr->head == buffer_ptr->tail && !buffer_ptr->buffer[0];
 }
 
-uint8_t GR_CircularBuffer_Push(CircularBuffer *buffer_ptr, void *object_ptr,
-			       uint16_t object_size)
+uint8_t GR_CircularBuffer_Push(CircularBuffer *buffer_ptr, void *object_ptr, uint16_t object_size)
 {
 	// Buffer null error
 	if (!buffer_ptr) {

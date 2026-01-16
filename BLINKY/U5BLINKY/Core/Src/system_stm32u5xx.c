@@ -100,8 +100,9 @@
  * @{
  */
 
-#include "stm32u5xx.h"
 #include <math.h>
+
+#include "stm32u5xx.h"
 
 /**
  * @}
@@ -135,8 +136,8 @@
 /*!< Uncomment the following line if you need to relocate your vector Table in
      Internal SRAM. */
 /* #define VECT_TAB_SRAM */
-#define VECT_TAB_OFFSET                                                        \
-	0x00000000UL /*!< Vector Table base offset field.                      \
+#define VECT_TAB_OFFSET                                                                                                                                                                                \
+	0x00000000UL /*!< Vector Table base offset field.                                                                                                                                              \
 		  This value must be a multiple of 0x200. */
 /******************************************************************************/
 
@@ -165,13 +166,9 @@
 */
 uint32_t SystemCoreClock = 4000000U;
 
-const uint8_t AHBPrescTable[16] = {0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U,
-				   1U, 2U, 3U, 4U, 6U, 7U, 8U, 9U};
+const uint8_t AHBPrescTable[16] = {0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 1U, 2U, 3U, 4U, 6U, 7U, 8U, 9U};
 const uint8_t APBPrescTable[8] = {0U, 0U, 0U, 0U, 1U, 2U, 3U, 4U};
-const uint32_t MSIRangeTable[16] = {48000000U, 24000000U, 16000000U, 12000000U,
-				    4000000U,  2000000U,  1330000U,  1000000U,
-				    3072000U,  1536000U,  1024000U,  768000U,
-				    400000U,   200000U,	  133000U,   100000U};
+const uint32_t MSIRangeTable[16] = {48000000U, 24000000U, 16000000U, 12000000U, 4000000U, 2000000U, 1330000U, 1000000U, 3072000U, 1536000U, 1024000U, 768000U, 400000U, 200000U, 133000U, 100000U};
 /**
  * @}
  */
@@ -198,8 +195,7 @@ void SystemInit(void)
 {
 /* FPU settings ------------------------------------------------------------*/
 #if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
-	SCB->CPACR |=
-	    ((3UL << 20U) | (3UL << 22U)); /* set CP10 and CP11 Full Access */
+	SCB->CPACR |= ((3UL << 20U) | (3UL << 22U)); /* set CP10 and CP11 Full Access */
 #endif
 
 	/* Reset the RCC clock configuration to the default reset state
@@ -213,8 +209,7 @@ void SystemInit(void)
 	RCC->CFGR3 = 0U;
 
 	/* Reset HSEON, CSSON , HSION, PLLxON bits */
-	RCC->CR &= ~(RCC_CR_HSEON | RCC_CR_CSSON | RCC_CR_PLL1ON |
-		     RCC_CR_PLL2ON | RCC_CR_PLL3ON);
+	RCC->CR &= ~(RCC_CR_HSEON | RCC_CR_CSSON | RCC_CR_PLL1ON | RCC_CR_PLL2ON | RCC_CR_PLL3ON);
 
 	/* Reset PLLCFGR register */
 	RCC->PLL1CFGR = 0U;
@@ -227,13 +222,9 @@ void SystemInit(void)
 
 /* Configure the Vector Table location add offset address ------------------*/
 #ifdef VECT_TAB_SRAM
-	SCB->VTOR =
-	    SRAM1_BASE |
-	    VECT_TAB_OFFSET; /* Vector Table Relocation in Internal SRAM */
+	SCB->VTOR = SRAM1_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal SRAM */
 #else
-	SCB->VTOR =
-	    FLASH_BASE |
-	    VECT_TAB_OFFSET; /* Vector Table Relocation in Internal FLASH */
+	SCB->VTOR = FLASH_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal FLASH */
 #endif
 }
 
@@ -292,12 +283,10 @@ void SystemCoreClockUpdate(void)
 	 * frequency--------------------------------------------------*/
 	if (READ_BIT(RCC->ICSCR1, RCC_ICSCR1_MSIRGSEL) == 0U) {
 		/* MSISRANGE from RCC_CSR applies */
-		msirange =
-		    (RCC->CSR & RCC_CSR_MSISSRANGE) >> RCC_CSR_MSISSRANGE_Pos;
+		msirange = (RCC->CSR & RCC_CSR_MSISSRANGE) >> RCC_CSR_MSISSRANGE_Pos;
 	} else {
 		/* MSIRANGE from RCC_CR applies */
-		msirange = (RCC->ICSCR1 & RCC_ICSCR1_MSISRANGE) >>
-			   RCC_ICSCR1_MSISRANGE_Pos;
+		msirange = (RCC->ICSCR1 & RCC_ICSCR1_MSISRANGE) >> RCC_ICSCR1_MSISRANGE_Pos;
 	}
 
 	/*MSI frequency range in HZ*/
@@ -323,17 +312,9 @@ void SystemCoreClockUpdate(void)
 			 * PLLN SYSCLK = PLL_VCO / PLLR
 			 */
 			pllsource = (RCC->PLL1CFGR & RCC_PLL1CFGR_PLL1SRC);
-			pllm = ((RCC->PLL1CFGR & RCC_PLL1CFGR_PLL1M) >>
-				RCC_PLL1CFGR_PLL1M_Pos) +
-			       1U;
-			pllfracen =
-			    ((RCC->PLL1CFGR & RCC_PLL1CFGR_PLL1FRACEN) >>
-			     RCC_PLL1CFGR_PLL1FRACEN_Pos);
-			fracn1 =
-			    (float_t)(uint32_t)(pllfracen *
-						((RCC->PLL1FRACR &
-						  RCC_PLL1FRACR_PLL1FRACN) >>
-						 RCC_PLL1FRACR_PLL1FRACN_Pos));
+			pllm = ((RCC->PLL1CFGR & RCC_PLL1CFGR_PLL1M) >> RCC_PLL1CFGR_PLL1M_Pos) + 1U;
+			pllfracen = ((RCC->PLL1CFGR & RCC_PLL1CFGR_PLL1FRACEN) >> RCC_PLL1CFGR_PLL1FRACEN_Pos);
+			fracn1 = (float_t)(uint32_t)(pllfracen * ((RCC->PLL1FRACR & RCC_PLL1FRACR_PLL1FRACN) >> RCC_PLL1FRACR_PLL1FRACN_Pos));
 
 			switch (pllsource) {
 				case 0x00: /* No clock sent to PLL*/
@@ -341,28 +322,20 @@ void SystemCoreClockUpdate(void)
 					break;
 
 				case 0x02: /* HSI used as PLL clock source */
-					pllvco = ((float_t)HSI_VALUE /
-						  (float_t)pllm);
+					pllvco = ((float_t)HSI_VALUE / (float_t)pllm);
 					break;
 
 				case 0x03: /* HSE used as PLL clock source */
-					pllvco = ((float_t)HSE_VALUE /
-						  (float_t)pllm);
+					pllvco = ((float_t)HSE_VALUE / (float_t)pllm);
 					break;
 
 				default: /* MSI used as PLL clock source */
-					pllvco =
-					    ((float_t)msirange / (float_t)pllm);
+					pllvco = ((float_t)msirange / (float_t)pllm);
 					break;
 			}
 
-			pllvco =
-			    pllvco * ((float_t)(uint32_t)(RCC->PLL1DIVR &
-							  RCC_PLL1DIVR_PLL1N) +
-				      (fracn1 / (float_t)0x2000) + (float_t)1U);
-			pllr = (((RCC->PLL1DIVR & RCC_PLL1DIVR_PLL1R) >>
-				 RCC_PLL1DIVR_PLL1R_Pos) +
-				1U);
+			pllvco = pllvco * ((float_t)(uint32_t)(RCC->PLL1DIVR & RCC_PLL1DIVR_PLL1N) + (fracn1 / (float_t)0x2000) + (float_t)1U);
+			pllr = (((RCC->PLL1DIVR & RCC_PLL1DIVR_PLL1R) >> RCC_PLL1DIVR_PLL1R_Pos) + 1U);
 			SystemCoreClock = (uint32_t)((uint32_t)pllvco / pllr);
 			break;
 
@@ -373,8 +346,7 @@ void SystemCoreClockUpdate(void)
 	/* Compute HCLK clock frequency
 	 * --------------------------------------------*/
 	/* Get HCLK prescaler */
-	tmp = AHBPrescTable[((RCC->CFGR2 & RCC_CFGR2_HPRE) >>
-			     RCC_CFGR2_HPRE_Pos)];
+	tmp = AHBPrescTable[((RCC->CFGR2 & RCC_CFGR2_HPRE) >> RCC_CFGR2_HPRE_Pos)];
 	/* HCLK clock frequency */
 	SystemCoreClock >>= tmp;
 }

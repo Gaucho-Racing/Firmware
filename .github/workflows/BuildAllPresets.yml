@@ -28,8 +28,8 @@ jobs:
       SCCACHE_LOG: "info"
       SCCACHE_ERROR_LOG: ${{ github.workspace }}/sccache-error.log
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
+      - name: Checkout Repository
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
 
@@ -39,7 +39,7 @@ jobs:
           release: '12.2.Rel1'
 
       - name: Setup Shared Compilation Cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ${{ env.SCCACHE_DIR }}
           key: sccache-${{ github.workflow }}-${{ runner.os }}-${{ matrix.prefix }}-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-${{ github.event.pull_request.number || github.ref }}
@@ -157,7 +157,7 @@ jobs:
 
       - name: Upload Ubuntu RelWithDebInfo Builds
         if: matrix.prefix == 'RelWithDebInfo' && matrix.operatingSystem == 'ubuntu-latest'
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: firmware-release-with-debug-info
           path: build/${{ matrix.prefix }}/*.elf

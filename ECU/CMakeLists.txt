@@ -13,7 +13,7 @@ endif()
 # what, does in fact not get the filename of somthing but rather the name of the project from the path
 get_filename_component(GR_PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
-if(CMAKE_BUILD_TYPE STREQUAL "Test")
+if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 	add_executable(state_machine_tick_returns)
 	target_include_directories(
 		state_machine_tick_returns
@@ -27,7 +27,12 @@ if(CMAKE_BUILD_TYPE STREQUAL "Test")
 			Test/state_machine_tick_returns.c
 			Application/Src/StateTicks.c
 	)
-	target_link_libraries(state_machine_tick_returns PRIVATE GLOBALSHARE_LIB)
+	target_link_libraries(
+		state_machine_tick_returns
+		PRIVATE
+			GLOBALSHARE_LIB
+			GR_OLD_CAN_MESSAGES
+	)
 	add_test(state_machine_tick_returns state_machine_tick_returns)
 
 	# FIXME Add more HOOTL tests
@@ -50,6 +55,7 @@ add_library(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
 target_sources(
 	${GR_PROJECT_NAME}_USER_CODE
 	INTERFACE
+		# Core
 		Core/Src/adc.c
 		Core/Src/dma.c
 		Core/Src/fdcan.c
@@ -62,10 +68,16 @@ target_sources(
 		Core/Src/system_stm32g4xx.c
 		Core/Src/usart.c
 		# Application
+		Application/Src/CANdler.c
 		Application/Src/StateTicks.c
+		Application/Src/StateUtils.c
 )
 
-target_link_libraries(${GR_PROJECT_NAME}_USER_CODE INTERFACE)
+target_link_libraries(
+	${GR_PROJECT_NAME}_USER_CODE
+	INTERFACE
+		GR_OLD_CAN_MESSAGES
+)
 
 target_include_directories(
 	${GR_PROJECT_NAME}_USER_CODE

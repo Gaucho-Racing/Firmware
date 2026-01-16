@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
 #include <stdio.h>
 
 /* Private includes ----------------------------------------------------------*/
@@ -155,16 +156,13 @@ void SystemClock_Config(void)
 
 	/** Initializes the CPU, AHB and APB buses clocks
 	 */
-	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK |
-				      RCC_CLOCKTYPE_SYSCLK |
-				      RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
 	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
 	RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
 	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
 	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) !=
-	    HAL_OK) {
+	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK) {
 		Error_Handler();
 	}
 }
@@ -234,12 +232,10 @@ static void MX_USART2_Init(void)
 	if (HAL_USART_Init(&husart2) != HAL_OK) {
 		Error_Handler();
 	}
-	if (HAL_USARTEx_SetTxFifoThreshold(
-		&husart2, USART_TXFIFO_THRESHOLD_1_8) != HAL_OK) {
+	if (HAL_USARTEx_SetTxFifoThreshold(&husart2, USART_TXFIFO_THRESHOLD_1_8) != HAL_OK) {
 		Error_Handler();
 	}
-	if (HAL_USARTEx_SetRxFifoThreshold(
-		&husart2, USART_RXFIFO_THRESHOLD_1_8) != HAL_OK) {
+	if (HAL_USARTEx_SetRxFifoThreshold(&husart2, USART_RXFIFO_THRESHOLD_1_8) != HAL_OK) {
 		Error_Handler();
 	}
 	if (HAL_USARTEx_DisableFifoMode(&husart2) != HAL_OK) {

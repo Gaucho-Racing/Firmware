@@ -37,6 +37,6 @@ enum GR_ECU_State {
 	/**
 	 * The HV system is in the process of discharging, TS Voltage >60V.
 	 */
-	GR_TS_DISCHARGE_OFF = 5,
+	GR_TS_DISCHARGE = 5,
 };
 #endif

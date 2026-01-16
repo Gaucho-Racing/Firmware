@@ -1,8 +1,16 @@
 BasedOnStyle: LLVM
 IndentWidth: 8
+ColumnLimit: 200
 UseTab: Always
 BreakBeforeBraces: Linux
 AllowShortIfStatementsOnASingleLine: false
 IndentCaseLabels: true
 InsertBraces: true
 LineEnding: LF
+SortIncludes: CaseSensitive
+IncludeBlocks: Regroup
+IncludeCategories:
+  - Regex:           '<[^>]*>'
+    Priority:        1
+  - Regex:           '"[^"]*"'
+    Priority:        2
