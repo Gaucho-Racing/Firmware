@@ -106,7 +106,7 @@ uint16_t *adcDataValues[(NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2)] = {0}; // 2D Arra
 uint8_t digital_data[NUM_SIGNALS_DIGITAL] = {0};
 
 // STATE DATA
-extern ECU_StateData stateLump;
+extern volatile ECU_StateData stateLump;
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
