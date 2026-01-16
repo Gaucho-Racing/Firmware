@@ -345,7 +345,7 @@ void GR_SPI_Close(GR_SPI_Handler *handler)
 
 	// Set all the pins analog
 	for (int i = 0; i < 3; i++) {
-		LL_GPIO_SetPinMode(handler->pins->GPIOx[i], handler->pins->GPIOx[i], LL_GPIO_MODE_ANALOG);
+		LL_GPIO_SetPinMode(handler->pins->GPIOx[i], handler->pins->pin_nums[i], LL_GPIO_MODE_ANALOG);
 	}
 
 	// Disable and De-init
@@ -358,8 +358,8 @@ void GR_SPI_Close(GR_SPI_Handler *handler)
 	free(handler->pins->GPIOx);
 	free(handler->pins->pin_nums);
 	free(handler->pins);
-	GR_CircularBuffer_Free(handler->rx_buffer);
-	GR_CircularBuffer_Free(handler->tx_buffer);
+	GR_CircularBuffer_Free(&handler->rx_buffer);
+	GR_CircularBuffer_Free(&handler->tx_buffer);
 	free(handler->current_msg->data);
 	free(handler->current_msg);
 
