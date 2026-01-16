@@ -135,28 +135,26 @@ void read_digital(void)
 {
 	for (int i = 0; i < NUM_SIGNALS_DIGITAL; i++) {
 		GPIO_PinState currRead;
-		switch (i) {
-			case 0:
-				currRead = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_5);
-				break;
-			case 1:
-				currRead = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_6);
-				break;
-			case 2:
-				currRead = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_7);
-				break;
-			case 3:
-				currRead = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_12);
-				break;
-			case 4:
-				currRead = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_11);
-				break;
-			case 5:
-				currRead = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_10);
-				break;
-			case 6:
-				currRead = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_15);
-				break;
+		if (i == 0) {
+			currRead = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_5);
+		}
+		else if (i == 1) {
+			currRead = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_6);
+		}
+		else if (i == 2) {
+			currRead = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_7);
+		}
+		else if (i == 3) {
+			currRead = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_12);
+		}
+		else if (i == 4) {
+			currRead = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_11);
+		}
+		else if (i == 5) {
+			currRead = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_10);
+		}
+		else if (i == 6) {
+			currRead = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_15);
 		}
 		digital_data[i] = currRead;
 	}
@@ -292,9 +290,9 @@ int main(void)
 
 		/* USER CODE BEGIN 3 */
 		read_digital();
-		write_state_data();
 		ADC_UpdateAnalogValues(adcDataValues, ADC1_buffers, NUM_SIGNALS_ADC1, WINDOW_SIZE, ADC1_outputs);
 		ADC_UpdateAnalogValues(adcDataValues, ADC2_buffers, NUM_SIGNALS_ADC2, WINDOW_SIZE, ADC2_outputs);
+		write_state_data();
 		ECU_State_Tick();
 		LOGOMATIC("Main Loop Tick Complete. I like Pi %f\n", 3.14159265);
 		LL_mDelay(250); // FIXME Reduce or remove delay
