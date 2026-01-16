@@ -220,7 +220,7 @@
 				]
 			}
 		},
-    {
+		{
 			"cwd": "${workspaceFolder}",
 			"executable": "${command:cmake.buildDirectory}/G4ADCTESTING.elf",
 			"name": "G4CANTESTING",
