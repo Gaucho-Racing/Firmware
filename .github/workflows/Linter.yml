@@ -14,9 +14,6 @@ jobs:
       with:
         release: '12.2.Rel1'
 
-    - name: Configure
-      run: cmake --preset Debug
-
     - name: Run clang-tidy
       run: |
         clang-tidy -p build $(git diff --name-only origin/${{ github.base_ref }} | grep '\.cpp$') || exit 1
