@@ -19,12 +19,12 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
+#include "StateTicks.c"
 #include "adc.h"
 #include "dma.h"
 #include "fdcan.h"
 #include "gpio.h"
 #include "usart.h"
-#include "StateTicks.c"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
