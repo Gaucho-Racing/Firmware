@@ -62,14 +62,14 @@ transitioning state
 
 */
 
-void ECU_GLV_Off(ECU_StateData *stateData)
+void ECU_GLV_Off(volatile ECU_StateData *stateData)
 {
 	UNUSED(stateData);
 	// TODO Implement functionality
 	// ERROR --> GLV_OFF should never be reached
 }
 
-void ECU_GLV_On(ECU_StateData *stateData)
+void ECU_GLV_On(volatile ECU_StateData *stateData)
 {
 	if (stateData->ts_voltage >= 60) { // should never happen but has to be accounted for
 		ECU_Tractive_System_Discharge_Start(stateData);
@@ -83,7 +83,7 @@ void ECU_GLV_On(ECU_StateData *stateData)
 	}
 }
 
-void ECU_Precharge_Engaged(ECU_StateData *stateData)
+void ECU_Precharge_Engaged(volatile ECU_StateData *stateData)
 {
 	if (stateData->ts_voltage >= 60) {
 		ECU_Tractive_System_Discharge_Start(stateData);
@@ -100,7 +100,7 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 	}*/
 }
 
-void ECU_Precharge_Complete(ECU_StateData *stateData)
+void ECU_Precharge_Complete(volatile ECU_StateData *stateData)
 {
 	// TODO Implement functionality
 	/*
@@ -134,7 +134,7 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 	}
 }
 
-void ECU_Drive_Active(ECU_StateData *stateData)
+void ECU_Drive_Active(volatile ECU_StateData *stateData)
 {
 	// TODO Implement functionality
 	/*
@@ -174,14 +174,14 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 	}
 }
 
-void ECU_Tractive_System_Discharge_Start(ECU_StateData *stateData)
+void ECU_Tractive_System_Discharge_Start(volatile ECU_StateData *stateData)
 {
 	stateData->ecu_state = GR_TS_DISCHARGE;
 	LOGOMATIC("tell the BCU to discharge TS");
 	stateData->dischargeStartMillis = 0;
 }
 
-void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
+void ECU_Tractive_System_Discharge(volatile ECU_StateData *stateData)
 {
 	// TODO Implement functionality of state itself
 	/*
