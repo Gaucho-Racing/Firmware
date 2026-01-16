@@ -137,23 +137,17 @@ void read_digital(void)
 		GPIO_PinState currRead;
 		if (i == 0) {
 			currRead = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_5);
-		}
-		else if (i == 1) {
+		} else if (i == 1) {
 			currRead = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_6);
-		}
-		else if (i == 2) {
+		} else if (i == 2) {
 			currRead = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_7);
-		}
-		else if (i == 3) {
+		} else if (i == 3) {
 			currRead = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_12);
-		}
-		else if (i == 4) {
+		} else if (i == 4) {
 			currRead = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_11);
-		}
-		else if (i == 5) {
+		} else if (i == 5) {
 			currRead = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_10);
-		}
-		else if (i == 6) {
+		} else if (i == 6) {
 			currRead = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_15);
 		}
 		digital_data[i] = currRead;
