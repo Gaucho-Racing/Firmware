@@ -88,7 +88,7 @@ static void ITM_Enable(void)
 	ITM->TER |= (1UL << 0);
 	ITM->TCR |= (ITM_TCR_ITMENA_Msk | ITM_TCR_SWOENA_Msk);
 }
-//static int toggleze = 0;
+// static int toggleze = 0;
 /* USER CODE END 0 */
 
 /**

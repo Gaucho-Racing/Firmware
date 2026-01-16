@@ -49,17 +49,29 @@ static CANHandle CAN3 = {.hal_fdcanP = &hal_fdcan3};
 
 */
 
-#define GPIOx_CLK_ENABLE(GPIOX)                                                                                   \
-		do { if (GPIOX == GPIOA) __HAL_RCC_GPIOA_CLK_ENABLE();\
-		else if (GPIOX == GPIOB) __HAL_RCC_GPIOB_CLK_ENABLE();                                                                                                 \
-		else if (GPIOX == GPIOD) __HAL_RCC_GPIOD_CLK_ENABLE();       \
-		else LOGOMATIC("BAD FDCAN GPIO Port"); } while (0)
+#define GPIOx_CLK_ENABLE(GPIOX)                                                                                                                                                                        \
+	do {                                                                                                                                                                                           \
+		if (GPIOX == GPIOA)                                                                                                                                                                    \
+			__HAL_RCC_GPIOA_CLK_ENABLE();                                                                                                                                                  \
+		else if (GPIOX == GPIOB)                                                                                                                                                               \
+			__HAL_RCC_GPIOB_CLK_ENABLE();                                                                                                                                                  \
+		else if (GPIOX == GPIOD)                                                                                                                                                               \
+			__HAL_RCC_GPIOD_CLK_ENABLE();                                                                                                                                                  \
+		else                                                                                                                                                                                   \
+			LOGOMATIC("BAD FDCAN GPIO Port");                                                                                                                                              \
+	} while (0)
 
-#define GPIOx_CLK_DISABLE(GPIOX)                                                                                   \
-		do { if (GPIOX == GPIOA) __HAL_RCC_GPIOA_CLK_DISABLE();\
-		else if (GPIOX == GPIOB) __HAL_RCC_GPIOB_CLK_DISABLE();                                                                                                 \
-		else if (GPIOX == GPIOD) __HAL_RCC_GPIOD_CLK_DISABLE();       \
-		else LOGOMATIC("BAD FDCAN GPIO Port"); } while (0)
+#define GPIOx_CLK_DISABLE(GPIOX)                                                                                                                                                                       \
+	do {                                                                                                                                                                                           \
+		if (GPIOX == GPIOA)                                                                                                                                                                    \
+			__HAL_RCC_GPIOA_CLK_DISABLE();                                                                                                                                                 \
+		else if (GPIOX == GPIOB)                                                                                                                                                               \
+			__HAL_RCC_GPIOB_CLK_DISABLE();                                                                                                                                                 \
+		else if (GPIOX == GPIOD)                                                                                                                                                               \
+			__HAL_RCC_GPIOD_CLK_DISABLE();                                                                                                                                                 \
+		else                                                                                                                                                                                   \
+			LOGOMATIC("BAD FDCAN GPIO Port");                                                                                                                                              \
+	} while (0)
 
 static int fdcan_shared_clock_ref = 0;
 static inline void fdcan_enable_shared_clock(void)
@@ -177,7 +189,7 @@ CANHandle *can_init(const CANConfig *config)
 	// Then call HAL_FDCAN_Init() and HAL_FDCAN_DeInit()
 
 	// Current idea, redefine HAL_FDCAN_MspInit and MspDeInit do nothing at all, do all the work in can_msp_init()
-	if (can_msp_init(canHandle, (CANConfig*)config)) {
+	if (can_msp_init(canHandle, (CANConfig *)config)) {
 		LOGOMATIC("CAN_init: could not initialize MSP resources");
 		can_release(canHandle);
 	}
