@@ -25,6 +25,8 @@
 #include "dma.h"
 #include "fdcan.h"
 #include "gpio.h"
+#include "gr_adc.h"
+#include "malloc.h"
 #include "usart.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -136,28 +138,28 @@ void read_digital(void) {
 		GPIO_PinState currRead;
 		switch(i) {
 			case 0:
-				currRead = LL_GPIO_ReadPin(GPIOA, LL_GPIO_PIN_5);
+				currRead = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_5);
 				break;
 			case 1:
-				currRead = LL_GPIO_ReadPin(GPIOA, LL_GPIO_PIN_6);
+				currRead = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_6);
 				break;
 			case 2:
-				currRead = LL_GPIO_ReadPin(GPIOA, LL_GPIO_PIN_7);
+				currRead = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_7);
 				break;
 			case 3:
-				currRead = LL_GPIO_ReadPin(GPIOC, LL_GPIO_PIN_12);
+				currRead = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_12);
 				break;
 			case 4:
-				currRead = LL_GPIO_ReadPin(GPIOC, LL_GPIO_PIN_11);
+				currRead = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_11);
 				break;
 			case 5:
-				currRead = LL_GPIO_ReadPin(GPIOC, LL_GPIO_PIN_10);
+				currRead = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_10);
 				break;
 			case 6:
-				currRead = LL_GPIO_ReadPin(GPIOA, LL_GPIO_PIN_15);
+				currRead = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_15);
 				break;
 		}
-		digital_data[i] = currRead
+		digital_data[i] = currRead;
 	}
 }
 
@@ -165,8 +167,8 @@ void write_state_data() {
 	// analog
 	// TODO: bse signal idk what to do ADC1_outputs[0]
 	// TODO: bspd signal idk what to do ADC1_outputs[1]
-	stateLump.APPS1_SIGNAL = ADC1_outputs[2];
-	stateLump.APPS2_SIGNAL = ADC1_outputs[3];
+	stateLump.APPS1_Signal = ADC1_outputs[2];
+	stateLump.APPS2_Signal = ADC1_outputs[3];
 	stateLump.Brake_F_Signal = ADC1_outputs[4];
 	stateLump.Brake_R_Signal = ADC1_outputs[5];
 	// TODO: Aux signal idk what to do with it ADC1_outputs[6]
@@ -220,8 +222,8 @@ void ADC_Configure(void)
 
 	// Initialize the pins and channels
 	Pin_Ports p3 = {0};
-	p.port = GPIOA;
-	p.pin = LL_GPIO_PIN_15;
+	p3.port = GPIOA;
+	p3.pin = LL_GPIO_PIN_15;
 	ADC_Init_Pins(&p3);
 	ADC_Channel_Init(ADC2, RANK_1, ADC_CHANNEL_15, SINGLE_ENDED, SAMPLINGTIME_247CYCLES_5);
 
