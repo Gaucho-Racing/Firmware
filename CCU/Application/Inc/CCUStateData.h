@@ -22,6 +22,7 @@ enum CCU_STATE { // State Machine
 
 typedef struct {
 	// name lwk might be too long
+	bool Button_Status;
 
 	// ACU_STATUS_2
 	uint8_t ACU_S2_20Volt;
