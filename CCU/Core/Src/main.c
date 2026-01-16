@@ -24,6 +24,7 @@
 #include "fdcan.h"
 #include "gpio.h"
 #include "usart.h"
+#include "StateTicks.c"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -120,8 +121,9 @@ int main(void)
 	uint32_t on = 0;
 	while (1) {
 		/*LL_GPIO_SetOutputPin (GPIOC, LL_GPIO_PIN_13);*/
-
+		LL_mDelay(100);
 		if (LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_13)) {
+			void CCU_State_Tick(void);
 			if (on == 0) {
 				on = 1;
 				LOGOMATIC("On\n");
@@ -130,7 +132,7 @@ int main(void)
 				LOGOMATIC("Off\n");
 			}
 		}
-		LL_mDelay(250); // FIXME Reduce or remove delay
+		LL_mDelay(200);
 
 		/* USER CODE END 3 */
 	}
