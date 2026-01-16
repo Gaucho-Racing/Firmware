@@ -10,8 +10,15 @@ int can_test_instance(FDCAN_HandleTypeDef) {
     return 0;
 }
 
-void can_test_rx_callback(void*data, uint32_t size) {
-	LOGOMATIC("Got data!\n");
+void can_test_rx_callback2(void*data, uint32_t size) {
+	LOGOMATIC("CAN2 Got data!\n");
+	// Is within an ISR, so needs to exit quickly
+	return;
+}
+
+void can_test_rx_callback1(void*data, uint32_t size) {
+	LOGOMATIC("CAN1 Got data!\n");
+
 	// Is within an ISR, so needs to exit quickly
 	return;
 }
@@ -24,8 +31,7 @@ int can_test(void) {
  	canCfg.hal_fdcan_init.ClockDivider = FDCAN_CLOCK_DIV1;
 	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_FD_NO_BRS;
 	canCfg.hal_fdcan_init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
-	canCfg.hal_fdcan_init.Mode = FDCAN_MODE_INTERNAL_LOOPBACK;
-	canCfg.hal_fdcan_init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
+	canCfg.hal_fdcan_init.Mode = FDCAN_MODE_NORMAL;
 	canCfg.hal_fdcan_init.AutoRetransmission = ENABLE;
 	canCfg.hal_fdcan_init.TransmitPause = DISABLE;
 	canCfg.hal_fdcan_init.ProtocolException = ENABLE;
@@ -40,10 +46,10 @@ int can_test(void) {
 	canCfg.hal_fdcan_init.StdFiltersNbr = 1;
 	canCfg.hal_fdcan_init.ExtFiltersNbr = 0;
 
-	canCfg.rx_callback = can_test_rx_callback; // PLEASE SET
+	canCfg.rx_callback = NULL; // PLEASE SET
 	canCfg.rx_interrupt_priority = 0; // PLEASE SET
 	canCfg.tx_interrupt_priority = 0; // PLEASE SET
-	canCfg.tx_buffer_length = 20; // PLEASE SET
+	canCfg.tx_buffer_length = 3; // PLEASE SET
 
 	//canCfg.rx_gpio = GPIOB;
 	//canCfg.init_rx_gpio.Pin = GPIO_PIN_12;
@@ -85,11 +91,30 @@ int can_test(void) {
 	msg.tx_header = TxHeader;
 
 
+	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
+
     #ifdef FDCAN1
+
+	canCfg.fdcan_instance = FDCAN1;
+    canCfg.rx_gpio = GPIOA;
+    canCfg.init_rx_gpio.Pin = GPIO_PIN_11;
+    canCfg.init_rx_gpio.Alternate = GPIO_AF9_FDCAN1;
+
+    canCfg.tx_gpio = GPIOA;
+    canCfg.init_tx_gpio.Pin = GPIO_PIN_12;
+    canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN1;
+
+	canCfg.rx_callback = can_test_rx_callback1; // PLEASE SET
+
+
+	CANHandle *can1Handle = can_init(&canCfg);
+	HAL_FDCAN_ConfigGlobalFilter(can1Handle->hal_fdcanP, 0, 0, 0,0);
+
+	can_start(can1Handle);
+
 
     #endif
     #ifdef FDCAN2
-
 
     canCfg.fdcan_instance = FDCAN2;
     canCfg.rx_gpio = GPIOB;
@@ -100,13 +125,16 @@ int can_test(void) {
     canCfg.init_tx_gpio.Pin = GPIO_PIN_13;
     canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN2;
 
-	FDCAN_FilterTypeDef filter;
-	filter.IdType = FDCAN_STANDARD_ID;
-	filter.FilterIndex = 0;
-	filter.FilterType = FDCAN_FILTER_RANGE,
-	filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-	filter.FilterID1 = 0x00;
-	filter.FilterID2 = 0x02;
+	canCfg.rx_callback = can_test_rx_callback2; 
+
+
+	// FDCAN_FilterTypeDef filter;
+	// filter.IdType = FDCAN_STANDARD_ID;
+	// filter.FilterIndex = 0;
+	// filter.FilterType = FDCAN_FILTER_RANGE,
+	// filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	// filter.FilterID1 = 0x00;
+	// filter.FilterID2 = 0x02;
 
     CANHandle *can2Handle = can_init(&canCfg);
 
@@ -114,12 +142,11 @@ int can_test(void) {
     HAL_FDCAN_ConfigGlobalFilter(can2Handle->hal_fdcanP, 0, 0, 0,0);
 
     //not accepting filters
-    can_add_filter(can2Handle, &filter);
+    //can_add_filter(can2Handle, &filter);
 
     //API Testing
     //can_init(&canCfg);
 
-	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
     can_start(can2Handle);
 
     can_send(can2Handle, &msg);
@@ -130,6 +157,14 @@ int can_test(void) {
 
     #endif
 
+	while (1) {
+		HAL_Delay(1000);
+		msg.data[0] = 0x2;
+		can_send(can1Handle, &msg); 
+		HAL_Delay(1000);
+		msg.data[0] = 0x10;
+		can_send(can2Handle, &msg); 
+	}
 
     return 0;
 

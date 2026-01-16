@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
+
 //HAL handles
 //#ifdef USECAN1
 static FDCAN_HandleTypeDef hal_fdcan1 = {.Instance = FDCAN1};
@@ -366,6 +367,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef * hfdcan, uint32_t RxFifo0ITs
         //should switch this over to malloc at some point to avoid double copies?
         handle->rx_callback(rx_data, rx_header.DataLength);
     }
+    
 
     /* whoopsie, don't need the rx buffer yet
     while (HAL_FDCAN_GetRxFifoFillLevel(hfdcan, FDCAN_RX_FIFO0) & !GR_CircularBuffer_IsFull(handle->rx_buffer)) {
@@ -538,6 +540,8 @@ int can_send(CANHandle* canHandle, FDCANTxMessage* message) {
     //If TX Fifos are full, append to circular buffer
     //If circular buffer is full, return an error code
     uint32_t free = HAL_FDCAN_GetTxFifoFreeLevel(canHandle->hal_fdcanP);
+
+
     if (free > 0) {
         HAL_StatusTypeDef status = HAL_FDCAN_AddMessageToTxFifoQ(
             canHandle->hal_fdcanP,
