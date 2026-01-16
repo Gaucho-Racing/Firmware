@@ -40,8 +40,8 @@ typedef struct {
 	// bool ACU_S2_UNDER12v_WARNING;
 	// bool ACU_S2_UNDERVOLTSDC_WARNING;
 	// bool ACU_S2_PRECHARGE_ERROR;
-	
-	#define CHECK_BIT(value, bit) (((value) == (bit)) & 1)
+
+#define CHECK_BIT(value, bit) (((value) == (bit)) & 1)
 
 	// State
 	uint8_t ACU_S2_PRECHARGE_BITS;

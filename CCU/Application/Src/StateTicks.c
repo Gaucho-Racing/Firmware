@@ -1,6 +1,7 @@
 #include <string.h>
-#include "bitManipulations.h"
+
 #include "CCUStateData.h"
+#include "bitManipulations.h"
 
 // FIXME: Currently defining check to switch CCU state from idle to charging and etc.
 
@@ -29,25 +30,26 @@ void CCU_State_Tick(void)
 
 		default:
 			state = CCU_STATE_IDLE;
-			break;	
+			break;
 	};
 }
 
 // TODO: Implement State functionality
 
-void STATE_IDLE(CCU_StateData *state_data) {
-	state_data->ACU_S2_OVERTEMP_ERROR = CHECK_BIT(state_data->ACU_S2_ERROR_BITS,40);
-	state_data->ACU_S2_OVERVOLT_ERROR = CHECK_BIT(state_data->ACU_S2_ERROR_BITS,41);
-	state_data->ACU_S2_UNDERVOLT_ERROR = CHECK_BIT(state_data->ACU_S2_ERROR_BITS,42);
-	state_data->ACU_S2_OVERCURR_ERROR = CHECK_BIT(state_data->ACU_S2_ERROR_BITS,43);
-	state_data->ACU_S2_UNDERCURR_ERROR = CHECK_BIT(state_data->ACU_S2_ERROR_BITS,44);
+void STATE_IDLE(CCU_StateData *state_data)
+{
+	state_data->ACU_S2_OVERTEMP_ERROR = CHECK_BIT(state_data->ACU_S2_ERROR_BITS, 40);
+	state_data->ACU_S2_OVERVOLT_ERROR = CHECK_BIT(state_data->ACU_S2_ERROR_BITS, 41);
+	state_data->ACU_S2_UNDERVOLT_ERROR = CHECK_BIT(state_data->ACU_S2_ERROR_BITS, 42);
+	state_data->ACU_S2_OVERCURR_ERROR = CHECK_BIT(state_data->ACU_S2_ERROR_BITS, 43);
+	state_data->ACU_S2_UNDERCURR_ERROR = CHECK_BIT(state_data->ACU_S2_ERROR_BITS, 44);
 
-	bool anyErrors = state_data->ACU_S2_OVERTEMP_ERROR||state_data->ACU_S2_OVERTEMP_ERROR||state_data->ACU_S2_UNDERVOLT_ERROR||state_data->ACU_S2_OVERCURR_ERROR||state_data->ACU_S2_UNDERCURR_ERROR;
+	bool anyErrors =
+	    state_data->ACU_S2_OVERTEMP_ERROR || state_data->ACU_S2_OVERTEMP_ERROR || state_data->ACU_S2_UNDERVOLT_ERROR || state_data->ACU_S2_OVERCURR_ERROR || state_data->ACU_S2_UNDERCURR_ERROR;
 
-	if (!anyErrors){
+	if (!anyErrors) {
 		state = CCU_STATE_CHARGING;
 	}
-
 }
 
 void STATE_CHARGING(CCU_StateData *state_data) {}
