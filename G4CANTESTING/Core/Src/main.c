@@ -18,7 +18,10 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
 #include "adc.h"
+#include "can.h" // Assume this works
+#include "can_tests.h"
 #include "dma.h"
 #include "fdcan.h"
 #include "gpio.h"
@@ -26,9 +29,6 @@
 #include "spi.h"
 #include "tim.h"
 #include "usart.h"
-
-#include "can.h" // Assume this works
-#include "can_tests.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -82,17 +82,14 @@ static void ITM_Enable(void)
 	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
 
 	/* Configure TPI for SWO output (set prescaler for 2MHz SWO clock) */
-	TPI->SPPR = 2U; /* 2 = Manchester/async UART mode */
+	TPI->SPPR = 2U;	 /* 2 = Manchester/async UART mode */
 	TPI->ACPR = 84U; /* Prescaler: (170 MHz / (84+1) / 2) ≈ 1MHz SWO */
 
 	ITM->TER |= (1UL << 0);
 	ITM->TCR |= (ITM_TCR_ITMENA_Msk | ITM_TCR_SWOENA_Msk);
 }
 static int toggleze = 0;
-void DEBUG_callback(void *data, uint32_t size)
-{
-	toggleze = (*((char *)data) & 0x80);
-}
+void DEBUG_callback(void *data, uint32_t size) { toggleze = (*((char *)data) & 0x80); }
 
 /* USER CODE END 0 */
 
@@ -137,7 +134,7 @@ int main(void)
 	/* USER CODE BEGIN 2 */
 
 	LOGOMATIC("Booted!\n");
-	
+
 	can_test();
 
 	/* Infinite loop */
@@ -146,7 +143,6 @@ int main(void)
 		/* USER CODE END WHILE */
 		LOGOMATIC("Main Loop\n");
 		LL_mDelay(1000);
-
 
 		// Receive on GPIOs
 		// HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, toggleze ? GPIO_PIN_SET
@@ -218,8 +214,7 @@ void SystemClock_Config(void)
 	}
 
 	LL_RCC_HSI_SetCalibTrimming(64);
-	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 85,
-				    LL_RCC_PLLR_DIV_2);
+	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 85, LL_RCC_PLLR_DIV_2);
 	LL_RCC_PLL_EnableDomain_SYS();
 	LL_RCC_PLL_Enable();
 	/* Wait till PLL is ready */

@@ -1,19 +1,19 @@
 #ifndef CAN_TESTS_H
 #define CAN_TESTS_H
 
+#include "Logomatic.h"
 #include "can.h"
 #include "can_platform_deps.h"
-#include "Logomatic.h"
 
-//Tested STM32 Families
+// Tested STM32 Families
 #ifdef STM32G4
-//#elif defined(STM32L4)
-//#elif defined(STM32U5)
-#else 
+// #elif defined(STM32L4)
+// #elif defined(STM32U5)
+#else
 #error "Untested STM32 Family"
-#endif 
+#endif
 
-//Assume the LOGOMATIC is setup correctly
-int can_test(void); //top-level function, just call this and check if the return status is correct
+// Assume the LOGOMATIC is setup correctly
+int can_test(void); // top-level function, just call this and check if the return status is correct
 
-#endif 
+#endif
