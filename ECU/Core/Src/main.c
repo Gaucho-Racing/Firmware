@@ -27,6 +27,7 @@
 #include "gpio.h"
 #include "gr_adc.h"
 #include "usart.h"
+#include "malloc.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -299,6 +300,9 @@ int main(void)
 		LL_mDelay(250); // FIXME Reduce or remove delay
 	}
 	/* USER CODE END 3 */
+	for (int i = (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2) - 1; i >= 0; i--) {
+		free(adcDataValues[i]);
+	}
 }
 
 /**
