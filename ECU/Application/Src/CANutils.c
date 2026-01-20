@@ -51,9 +51,8 @@ void ECU_CAN_Send(GR_OLD_BUS_ID bus, GR_OLD_NODE_ID destNode, GR_OLD_MSG_ID mess
 	}
 }
 
-
-//TODO: If you try to send anything but control messages, you are cooked buddy
-//Doesn't actually use Motorola order for multiple fields, just sends the bytes in reverse order
+// TODO: If you try to send anything but control messages, you are cooked buddy
+// Doesn't actually use Motorola order for multiple fields, just sends the bytes in reverse order
 /*void ECU_Write_DTI(uint16_t msgID, uint8_t data[], uint32_t length)
 {
 	if ((MSG_DTI_CONTROL_10 & 0xFF) != 0x16) {
@@ -64,7 +63,7 @@ void ECU_CAN_Send(GR_OLD_BUS_ID bus, GR_OLD_NODE_ID destNode, GR_OLD_MSG_ID mess
     .IdType = FDCAN_EXTENDED_ID,
     .TxFrameType = FDCAN_DATA_FRAME,
     .ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
-        // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
+	// FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
     .BitRateSwitch = FDCAN_BRS_OFF,
     .TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
     .MessageMarker = 0 // also change this to a real address if you change fifo control
@@ -80,14 +79,13 @@ void ECU_CAN_Send(GR_OLD_BUS_ID bus, GR_OLD_NODE_ID destNode, GR_OLD_MSG_ID mess
     uint8_t temp;
     for(uint16_t i = 0; i < length / 2; ++i)
     {
-        temp = data[i];
-        data[i] = data[length - i - 1];
-        data[length - i - 1] = temp;
+	temp = data[i];
+	data[i] = data[length - i - 1];
+	data[length - i - 1] = temp;
     }
 
 	can_send(primary_can, &msg);
 }*/
-
 
 void SendECUStateDataOverCAN(ECU_StateData *stateData)
 {
