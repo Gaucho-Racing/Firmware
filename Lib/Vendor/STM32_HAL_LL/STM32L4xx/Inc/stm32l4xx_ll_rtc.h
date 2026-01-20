@@ -960,9 +960,9 @@ extern "C"
 #define LL_RTC_CALIB_PERIOD_32SEC 0x00000000U	  /*!< Use a 32-second calibration cycle period */
 #define LL_RTC_CALIB_PERIOD_16SEC RTC_CALR_CALW16 /*!< Use a 16-second calibration cycle period */
 #define LL_RTC_CALIB_PERIOD_8SEC RTC_CALR_CALW8	  /*!< Use a 8-second calibration cycle period */
-	/**
-	 * @}
-	 */
+						  /**
+						   * @}
+						   */
 
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx)
 /** @defgroup RTC_LL_EC_CALIB_LOWPOWER  Calibration low power

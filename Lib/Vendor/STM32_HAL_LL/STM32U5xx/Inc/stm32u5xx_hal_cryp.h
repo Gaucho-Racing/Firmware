@@ -293,9 +293,9 @@ extern "C"
 #endif								/* USE_HAL_CRYP_REGISTER_CALLBACKS */
 #define HAL_CRYP_ERROR_KEY 0x00000100U				/*!< Key error        */
 #define HAL_CRYP_ERROR_RNG 0x00000200U				/*!< Rng error        */
-	/**
-	 * @}
-	 */
+								/**
+								 * @}
+								 */
 
 	/** @defgroup CRYP_Data_Width_Unit CRYP Data Width Unit
 	 * @{
