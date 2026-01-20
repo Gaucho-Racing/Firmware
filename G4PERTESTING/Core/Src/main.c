@@ -238,8 +238,7 @@ GR_SPI_Pins* pin_config){ if(GR_SPI_Initialize(&handle, &config, &pin_config)
 void SystemClock_Config(void)
 {
 	LL_FLASH_SetLatency(LL_FLASH_LATENCY_4);
-	while (LL_FLASH_GetLatency() != LL_FLASH_LATENCY_4) {
-	}
+	while (LL_FLASH_GetLatency() != LL_FLASH_LATENCY_4) {}
 	LL_PWR_EnableRange1BoostMode();
 	LL_RCC_HSI_Enable();
 	/* Wait till HSI is ready */
@@ -251,14 +250,12 @@ void SystemClock_Config(void)
 	LL_RCC_PLL_EnableDomain_SYS();
 	LL_RCC_PLL_Enable();
 	/* Wait till PLL is ready */
-	while (LL_RCC_PLL_IsReady() != 1) {
-	}
+	while (LL_RCC_PLL_IsReady() != 1) {}
 
 	LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
 	LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_2);
 	/* Wait till System clock is ready */
-	while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL) {
-	}
+	while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL) {}
 
 	/* Insure 1us transition state at intermediate medium speed clock*/
 	for (__IO uint32_t i = (170 >> 1); i != 0; i--)

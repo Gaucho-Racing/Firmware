@@ -74,10 +74,10 @@ typedef struct {
  */
 #endif /* USE_FULL_LL_DRIVER */
 #endif /* RNG_CR_CED */
-/* Exported constants --------------------------------------------------------*/
-/** @defgroup RNG_LL_Exported_Constants RNG Exported Constants
- * @{
- */
+       /* Exported constants --------------------------------------------------------*/
+       /** @defgroup RNG_LL_Exported_Constants RNG Exported Constants
+	* @{
+	*/
 
 #if defined(RNG_CR_CED)
 /** @defgroup RNG_LL_CED Clock Error Detection

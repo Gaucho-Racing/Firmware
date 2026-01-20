@@ -312,9 +312,9 @@ typedef void (*pSD_TransceiverCallbackTypeDef)(FlagStatus status);
  * @}
  */
 #endif /* USE_HAL_SD_REGISTER_CALLBACKS */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 /* Exported constants --------------------------------------------------------*/
 /** @defgroup SD_Exported_Constants Exported Constants
@@ -952,9 +952,9 @@ HAL_StatusTypeDef HAL_SD_Abort_IT(SD_HandleTypeDef *hsd);
 uint32_t SD_HighSpeed(SD_HandleTypeDef *hsd);
 #endif /* STM32L4P5xx && STM32L4Q5xx && STM32L4R5xx && STM32L4R7xx &&                                                                                                                                  \
 	  STM32L4R9xx && STM32L4S5xx && STM32L4S7xx && STM32L4S9xx */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 /**
  * @}

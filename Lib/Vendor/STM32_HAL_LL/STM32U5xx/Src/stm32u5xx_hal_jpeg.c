@@ -1529,7 +1529,6 @@ HAL_StatusTypeDef HAL_JPEG_Encode(JPEG_HandleTypeDef *hjpeg, uint8_t *pDataInMCU
 
 			/*Change JPEG state*/
 			hjpeg->State = HAL_JPEG_STATE_READY;
-
 		} else {
 			/* Process Unlocked */
 			__HAL_UNLOCK(hjpeg);
@@ -1619,7 +1618,6 @@ HAL_StatusTypeDef HAL_JPEG_Decode(JPEG_HandleTypeDef *hjpeg, uint8_t *pDataIn, u
 
 		/*Change JPEG state*/
 		hjpeg->State = HAL_JPEG_STATE_READY;
-
 	} else {
 		/* Process Unlocked */
 		__HAL_UNLOCK(hjpeg);
@@ -1682,7 +1680,6 @@ HAL_StatusTypeDef HAL_JPEG_Encode_IT(JPEG_HandleTypeDef *hjpeg, uint8_t *pDataIn
 
 			/*Init decoding process*/
 			JPEG_Init_Process(hjpeg);
-
 		} else {
 			/* Process Unlocked */
 			__HAL_UNLOCK(hjpeg);
@@ -1740,7 +1737,6 @@ HAL_StatusTypeDef HAL_JPEG_Decode_IT(JPEG_HandleTypeDef *hjpeg, uint8_t *pDataIn
 
 		/*Init decoding process*/
 		JPEG_Init_Process(hjpeg);
-
 	} else {
 		/* Process Unlocked */
 		__HAL_UNLOCK(hjpeg);
@@ -1811,7 +1807,6 @@ HAL_StatusTypeDef HAL_JPEG_Encode_DMA(JPEG_HandleTypeDef *hjpeg, uint8_t *pDataI
 
 				return HAL_ERROR;
 			}
-
 		} else {
 			/* Process Unlocked */
 			__HAL_UNLOCK(hjpeg);
@@ -1914,7 +1909,6 @@ HAL_StatusTypeDef HAL_JPEG_Pause(JPEG_HandleTypeDef *hjpeg, uint32_t XferSelecti
 			mask |= JPEG_DMA_ODMA;
 		}
 		JPEG_DISABLE_DMA(hjpeg, mask);
-
 	} else if ((hjpeg->Context & JPEG_CONTEXT_METHOD_MASK) == JPEG_CONTEXT_IT) {
 
 		if ((XferSelection & JPEG_PAUSE_RESUME_INPUT) == JPEG_PAUSE_RESUME_INPUT) {
@@ -1926,7 +1920,6 @@ HAL_StatusTypeDef HAL_JPEG_Pause(JPEG_HandleTypeDef *hjpeg, uint32_t XferSelecti
 			mask |= (JPEG_IT_OFT | JPEG_IT_OFNE | JPEG_IT_EOC);
 		}
 		__HAL_JPEG_DISABLE_IT(hjpeg, mask);
-
 	} else {
 		/* Nothing to do */
 	}
@@ -1994,7 +1987,6 @@ HAL_StatusTypeDef HAL_JPEG_Resume(JPEG_HandleTypeDef *hjpeg, uint32_t XferSelect
 			}
 		}
 		JPEG_ENABLE_DMA(hjpeg, mask);
-
 	} else if ((hjpeg->Context & JPEG_CONTEXT_METHOD_MASK) == JPEG_CONTEXT_IT) {
 		if ((XferSelection & JPEG_PAUSE_RESUME_INPUT) == JPEG_PAUSE_RESUME_INPUT) {
 			hjpeg->Context &= (~JPEG_CONTEXT_PAUSE_INPUT);
@@ -2005,7 +1997,6 @@ HAL_StatusTypeDef HAL_JPEG_Resume(JPEG_HandleTypeDef *hjpeg, uint32_t XferSelect
 			mask |= (JPEG_IT_OFT | JPEG_IT_OFNE | JPEG_IT_EOC);
 		}
 		__HAL_JPEG_ENABLE_IT(hjpeg, mask);
-
 	} else {
 		/* Nothing to do */
 	}
@@ -3082,7 +3073,6 @@ static void JPEG_Init_Process(JPEG_HandleTypeDef *hjpeg)
 		/*Enable End Of Conversation, and End Of Header parsing
 		 * interruptions*/
 		__HAL_JPEG_ENABLE_IT(hjpeg, JPEG_IT_EOC | JPEG_IT_HPD);
-
 	} else {
 		/* Nothing to do */
 	}

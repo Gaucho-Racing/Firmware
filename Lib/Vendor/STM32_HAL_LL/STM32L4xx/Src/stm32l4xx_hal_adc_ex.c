@@ -369,7 +369,6 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedStart(ADC_HandleTypeDef *hadc)
 				LL_ADC_INJ_StartConversion(hadc->Instance);
 			}
 #endif /* ADC_MULTIMODE_SUPPORT */
-
 		} else {
 			/* Process unlocked */
 			__HAL_UNLOCK(hadc);
@@ -714,7 +713,6 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedStart_IT(ADC_HandleTypeDef *hadc)
 				LL_ADC_INJ_StartConversion(hadc->Instance);
 			}
 #endif /* ADC_MULTIMODE_SUPPORT */
-
 		} else {
 			/* Process unlocked */
 			__HAL_UNLOCK(hadc);
@@ -1877,7 +1875,6 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc, const
 		if (pConfigInjected->InjectedOffsetNumber != ADC_OFFSET_NONE) {
 			/* Set ADC selected offset number */
 			LL_ADC_SetOffset(hadc->Instance, pConfigInjected->InjectedOffsetNumber, pConfigInjected->InjectedChannel, tmp_offset_shifted);
-
 		} else {
 			/* Scan each offset register to check if the selected
 			 * channel is targeted. */

@@ -328,9 +328,9 @@ typedef void (*pGFXMMU_CallbackTypeDef)(GFXMMU_HandleTypeDef *hgfxmmu);
  */
 #define GFXMMU_CACHE_FORCE_FLUSH GFXMMU_CCR_FF	    /*!< Force cache flush */
 #define GFXMMU_CACHE_FORCE_INVALIDATE GFXMMU_CCR_FI /*!< Force cache invalidate */
-/**
- * @}
- */
+						    /**
+						     * @}
+						     */
 
 #if defined(GFXMMU_CR_ACE)
 /** @defgroup GFXMMU_AddressCacheLockBuffer GFXMMU address cache lock buffer
@@ -340,9 +340,9 @@ typedef void (*pGFXMMU_CallbackTypeDef)(GFXMMU_HandleTypeDef *hgfxmmu);
 #define GFXMMU_ADDRESSCACHE_LOCK_BUFFER1 GFXMMU_CR_ACLB_0 /*!< Address Cache locked to buffer 1 */
 #define GFXMMU_ADDRESSCACHE_LOCK_BUFFER2 GFXMMU_CR_ACLB_1 /*!< Address Cache locked to buffer 2 */
 #define GFXMMU_ADDRESSCACHE_LOCK_BUFFER3 GFXMMU_CR_ACLB	  /*!< Address Cache locked to buffer 3 */
-/**
- * @}
- */
+							  /**
+							   * @}
+							   */
 
 #endif /* GFXMMU_CR_ACE */
 /**

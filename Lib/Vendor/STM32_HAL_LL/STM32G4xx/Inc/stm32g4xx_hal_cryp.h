@@ -653,9 +653,9 @@ uint32_t HAL_CRYP_GetError(CRYP_HandleTypeDef *hcryp);
  */
 
 #endif /* AES */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 #ifdef __cplusplus
 }

@@ -2505,7 +2505,6 @@ HAL_StatusTypeDef CRYP_AES_Auth_IT(CRYP_HandleTypeDef *hcryp)
 					for (index = 0U; index < (4U - ((difflength + 3U) / 4U)); index++) {
 						hcryp->Instance->DINR = 0;
 					}
-
 				} else {
 					hcryp->pCrypInBuffPtr += 16;
 					hcryp->CrypInCount -= 16U;

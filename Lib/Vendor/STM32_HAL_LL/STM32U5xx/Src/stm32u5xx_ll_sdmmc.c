@@ -1754,7 +1754,6 @@ uint32_t SDMMC_DMALinkedList_InsertNode(SDMMC_DMALinkedListTypeDef *pLinkedList,
 		pLinkedList->pHeadNode = pNode;
 		pLinkedList->pTailNode = pNode;
 		pLinkedList->NodesCounter = 1U;
-
 	} else if (pPrevNode == pLinkedList->pTailNode) {
 		if (pNode <= pLinkedList->pHeadNode) {
 			/* Node Address should greater than Head Node Address*/
@@ -1770,7 +1769,6 @@ uint32_t SDMMC_DMALinkedList_InsertNode(SDMMC_DMALinkedListTypeDef *pLinkedList,
 
 		pLinkedList->NodesCounter++;
 		pLinkedList->pTailNode = pNode;
-
 	} else {
 
 		if (pNode <= pLinkedList->pHeadNode) {

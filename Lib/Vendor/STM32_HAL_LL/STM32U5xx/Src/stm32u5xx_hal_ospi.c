@@ -2360,7 +2360,6 @@ HAL_StatusTypeDef HAL_OSPI_SetFifoThreshold(OSPI_HandleTypeDef *hospi, uint32_t 
 
 		/* Configure new fifo threshold */
 		MODIFY_REG(hospi->Instance->CR, OCTOSPI_CR_FTHRES, ((hospi->Init.FifoThreshold - 1U) << OCTOSPI_CR_FTHRES_Pos));
-
 	} else {
 		status = HAL_ERROR;
 		hospi->ErrorCode = HAL_OSPI_ERROR_INVALID_SEQUENCE;
