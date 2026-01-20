@@ -1378,9 +1378,9 @@ trigger falling edge for stop sampling and start conversion */
 		  transferred by DMA, in unlimited mode: DMA transfer requests are unlimited,                                                                                                          \
 		  whatever number of DMA data transferred (number of ADC conversions).                                                                                                                 \
 		  This ADC mode is intended to be used with DMA mode circular. */
-					   /**
-					    * @}
-					    */
+	/**
+	 * @}
+	 */
 
 #if defined(ADC_SMPR1_SMPPLUS)
 /** @defgroup ADC_LL_EC_SAMPLINGTIME_COMMON_CONFIG ADC instance - ADC sampling

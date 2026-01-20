@@ -98,9 +98,9 @@ extern "C"
 #define FLASH_SPRIV_DENIED                                                                                                                                                                             \
 	FLASH_PRIVCFGR_SPRIV /*!< access to secure Flash registers is denied                                                                                                                           \
 				  to non-privilege access */
-			     /**
-			      * @}
-			      */
+	/**
+	 * @}
+	 */
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /** @defgroup SEC_INVERSION_CFG FLASH security inversion configuration
