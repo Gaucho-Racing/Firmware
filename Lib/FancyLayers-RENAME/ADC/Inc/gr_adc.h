@@ -42,7 +42,7 @@ void ADC_Init(ADC_TypeDef *ADC, Resolution res, Alignment align);
 // Initialize a single port and all the pins used on that port
 void ADC_Init_Pins(Pin_Ports *input);
 
-// How many ranks to enable
+// The number of channels to enable
 typedef enum {
 	NO_RANKS = LL_ADC_REG_SEQ_SCAN_DISABLE,
 	RANKS_2 = LL_ADC_REG_SEQ_SCAN_ENABLE_2RANKS,
@@ -60,12 +60,12 @@ typedef enum {
 	RANKS_14 = LL_ADC_REG_SEQ_SCAN_ENABLE_14RANKS,
 	RANKS_15 = LL_ADC_REG_SEQ_SCAN_ENABLE_15RANKS,
 	RANKS_16 = LL_ADC_REG_SEQ_SCAN_ENABLE_16RANKS
-} NumRanks;
+} Number_of_Channels;
 
 // Initialize the channel configurations of the ADC
 void ADC_Regular_Group_Init(ADC_TypeDef *ADC, unsigned long Sequence_Length);
 
-// How many ranks to enable
+// Set rank (ordering) of each channel
 typedef enum {
 	RANK_1 = LL_ADC_REG_RANK_1,
 	RANK_2 = LL_ADC_REG_RANK_2,
