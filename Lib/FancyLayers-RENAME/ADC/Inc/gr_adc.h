@@ -117,8 +117,6 @@ __extension__ typedef enum {
 	VOPAMP6 = LL_ADC_CHANNEL_VOPAMP6,
 } Channel;
 
-typedef enum { SINGLE_ENDED = LL_ADC_SINGLE_ENDED, DIFFERENTIAL_ENDED = LL_ADC_DIFFERENTIAL_ENDED } ChannelSingleDiff;
-
 typedef enum {
 	SAMPLINGTIME_2CYCLES_5 = LL_ADC_SAMPLINGTIME_2CYCLES_5,
 	SAMPLINGTIME_6CYCLES_5 = LL_ADC_SAMPLINGTIME_6CYCLES_5,
@@ -132,7 +130,7 @@ typedef enum {
 
 // Initialize each channel TODO: combine pin initialization with channel
 // initialization
-void ADC_Channel_Init(ADC_TypeDef *adc, Rank rank, Channel channel, ChannelSingleDiff diff, SamplingTime time);
+void ADC_Channel_Init(ADC_TypeDef *adc, Rank rank, Channel channel, SamplingTime time);
 
 /* 3 Init Function
  * 1. Initialize each group: 1&2, 3&4, 5

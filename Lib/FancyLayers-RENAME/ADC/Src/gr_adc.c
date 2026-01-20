@@ -76,11 +76,11 @@ void ADC_Init_Pins(Pin_Ports *input)
 	LL_GPIO_Init(input->port, &GPIO_InitStruct);
 }
 
-void ADC_Channel_Init(ADC_TypeDef *ADC, Rank rank, Channel channel, ChannelSingleDiff diff, SamplingTime time)
+void ADC_Channel_Init(ADC_TypeDef *ADC, Rank rank, Channel channel, SamplingTime time)
 {
 	LL_ADC_REG_SetSequencerRanks(ADC, rank, channel);
 	LL_ADC_SetChannelSamplingTime(ADC, channel, time);
-	LL_ADC_SetChannelSingleDiff(ADC, channel, diff);
+	LL_ADC_SetChannelSingleDiff(ADC, channel, LL_ADC_SINGLE_ENDED);
 }
 
 // Enable ADC with proper calibration and voltage regulator handling
