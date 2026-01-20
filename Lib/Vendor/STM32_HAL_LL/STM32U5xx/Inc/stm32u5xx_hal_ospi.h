@@ -1142,9 +1142,9 @@ HAL_StatusTypeDef HAL_OSPI_DLYB_GetClockPeriod(OSPI_HandleTypeDef *hospi, HAL_OS
 #define IS_OSPIM_REQ2ACKTIME(TIME) (((TIME) >= 1U) && ((TIME) <= 256U))
 #endif /*(OCTOSPIM_CR_MUXEN)*/
 #endif /*(OCTOSPIM)*/
-/**
-  @endcond
-  */
+       /**
+	 @endcond
+	 */
 
 /* End of private macros -----------------------------------------------------*/
 

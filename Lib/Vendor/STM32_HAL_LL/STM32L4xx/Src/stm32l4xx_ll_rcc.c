@@ -185,8 +185,7 @@ ErrorStatus LL_RCC_DeInit(void)
 	LL_RCC_MSI_Enable();
 
 	/* Insure MSIRDY bit is set before writing default MSIRANGE value */
-	while (LL_RCC_MSI_IsReady() == 0U) {
-	}
+	while (LL_RCC_MSI_IsReady() == 0U) {}
 
 	/* Set MSIRANGE default value */
 	LL_RCC_MSI_SetRange(LL_RCC_MSIRANGE_6);
@@ -225,16 +224,13 @@ ErrorStatus LL_RCC_DeInit(void)
 
 #if defined(RCC_PLLSAI2_SUPPORT)
 	/* Wait for PLLRDY, PLLSAI1RDY and PLLSAI2RDY bits to be reset */
-	while (READ_BIT(RCC->CR, RCC_CR_PLLRDY | RCC_CR_PLLSAI1RDY | RCC_CR_PLLSAI2RDY) != 0U) {
-	}
+	while (READ_BIT(RCC->CR, RCC_CR_PLLRDY | RCC_CR_PLLSAI1RDY | RCC_CR_PLLSAI2RDY) != 0U) {}
 #elif defined(RCC_PLLSAI1_SUPPORT)
 	/* Wait for PLLRDY and PLLSAI1RDY to be reset */
-	while (READ_BIT(RCC->CR, RCC_CR_PLLRDY | RCC_CR_PLLSAI1RDY) != 0U) {
-	}
+	while (READ_BIT(RCC->CR, RCC_CR_PLLRDY | RCC_CR_PLLSAI1RDY) != 0U) {}
 #else
 	/* Wait for PLLRDY bit to be reset */
-	while (READ_BIT(RCC->CR, RCC_CR_PLLRDY) != 0U) {
-	}
+	while (READ_BIT(RCC->CR, RCC_CR_PLLRDY) != 0U) {}
 #endif
 
 	/* Reset PLLCFGR register */

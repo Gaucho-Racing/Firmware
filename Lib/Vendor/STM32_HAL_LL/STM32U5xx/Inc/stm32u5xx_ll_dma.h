@@ -749,9 +749,9 @@ typedef struct {
 #if defined(USE_FULL_LL_DRIVER)
 #define LL_DMA_CHANNEL_ALL (0x10U)
 #endif /* USE_FULL_LL_DRIVER */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 #if defined(USE_FULL_LL_DRIVER)
 /** @defgroup DMA_LL_EC_CLLR_OFFSET CLLR offset

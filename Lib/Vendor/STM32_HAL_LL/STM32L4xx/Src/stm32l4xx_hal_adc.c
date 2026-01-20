@@ -1896,7 +1896,6 @@ HAL_StatusTypeDef HAL_ADC_Start_IT(ADC_HandleTypeDef *hadc)
 			/* Process unlocked */
 			__HAL_UNLOCK(hadc);
 		}
-
 	} else {
 		tmp_hal_status = HAL_BUSY;
 	}
@@ -2073,7 +2072,6 @@ HAL_StatusTypeDef HAL_ADC_Start_DMA(ADC_HandleTypeDef *hadc, uint32_t *pData, ui
 				/* Process unlocked */
 				__HAL_UNLOCK(hadc);
 			}
-
 		}
 #if defined(ADC_MULTIMODE_SUPPORT)
 		else {
@@ -2797,7 +2795,6 @@ HAL_StatusTypeDef HAL_ADC_ConfigChannel(ADC_HandleTypeDef *hadc, const ADC_Chann
 			if (pConfig->OffsetNumber != ADC_OFFSET_NONE) {
 				/* Set ADC selected offset number */
 				LL_ADC_SetOffset(hadc->Instance, pConfig->OffsetNumber, pConfig->Channel, tmpOffsetShifted);
-
 			} else {
 				/* Scan each offset register to check if the
 				 * selected channel is targeted. */
@@ -3117,7 +3114,6 @@ HAL_StatusTypeDef HAL_ADC_AnalogWDGConfig(ADC_HandleTypeDef *hadc, const ADC_Ana
 				}
 			}
 		}
-
 	}
 	/* If a conversion is on going on ADC group regular or injected, no
 	   update  */

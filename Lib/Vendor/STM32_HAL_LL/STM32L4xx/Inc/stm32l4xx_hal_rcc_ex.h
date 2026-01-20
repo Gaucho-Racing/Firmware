@@ -724,9 +724,9 @@ typedef struct {
 #else
 #define RCC_ADCCLKSOURCE_SYSCLK 0x30000000U
 #endif /* RCC_CCIPR_ADCSEL */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 #if defined(SWPMI1)
 /** @defgroup RCCEx_SWPMI1_Clock_Source SWPMI1 Clock Source
@@ -750,9 +750,9 @@ typedef struct {
 #define RCC_DFSDM1CLKSOURCE_SYSCLK RCC_CCIPR_DFSDM1SEL
 #endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 /** @defgroup RCCEx_DFSDM1_Audio_Clock_Source DFSDM1 Audio Clock Source
@@ -810,9 +810,9 @@ typedef struct {
 #define RCC_EXTI_LINE_LSECSS                                                                                                                                                                           \
 	EXTI_IMR1_IM19 /*!< External interrupt line 19 connected to the LSE                                                                                                                            \
 			  CSS EXTI Line */
-/**
- * @}
- */
+		       /**
+			* @}
+			*/
 
 #if defined(CRS)
 

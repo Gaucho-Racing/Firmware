@@ -362,9 +362,9 @@ typedef void (*pUSART_CallbackTypeDef)(USART_HandleTypeDef *husart); /*!< pointe
 #define USART_FLAG_NE USART_ISR_NE	      /*!< USART noise error                          */
 #define USART_FLAG_FE USART_ISR_FE	      /*!< USART frame error                          */
 #define USART_FLAG_PE USART_ISR_PE	      /*!< USART parity error                         */
-/**
- * @}
- */
+					      /**
+					       * @}
+					       */
 
 /** @defgroup USART_Interrupt_definition USART Interrupts Definition
  *        Elements values convention: 0000ZZZZ0XXYYYYYb

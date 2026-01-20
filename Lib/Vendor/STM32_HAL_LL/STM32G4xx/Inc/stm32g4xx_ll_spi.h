@@ -1256,9 +1256,9 @@ void LL_SPI_StructInit(LL_SPI_InitTypeDef *SPI_InitStruct);
  * @}
  */
 #endif /* USE_FULL_LL_DRIVER */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 /**
  * @}
@@ -1425,9 +1425,9 @@ typedef struct {
  */
 #define LL_I2S_PRESCALER_PARITY_EVEN 0x00000000U	  /*!< Odd factor: Real divider value is =  I2SDIV * 2    */
 #define LL_I2S_PRESCALER_PARITY_ODD (SPI_I2SPR_ODD >> 8U) /*!< Odd factor: Real divider value is = (I2SDIV * 2)+1 */
-/**
- * @}
- */
+							  /**
+							   * @}
+							   */
 
 #if defined(USE_FULL_LL_DRIVER)
 
@@ -1436,9 +1436,9 @@ typedef struct {
  */
 #define LL_I2S_MCLK_OUTPUT_DISABLE 0x00000000U	    /*!< Master clock output is disabled */
 #define LL_I2S_MCLK_OUTPUT_ENABLE (SPI_I2SPR_MCKOE) /*!< Master clock output is enabled  */
-/**
- * @}
- */
+						    /**
+						     * @}
+						     */
 
 /** @defgroup I2S_LL_EC_AUDIO_FREQ Audio Frequency
  * @{

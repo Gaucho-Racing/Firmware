@@ -1086,9 +1086,9 @@ HAL_StatusTypeDef HAL_OSPIM_Config(OSPI_HandleTypeDef *hospi, OSPIM_CfgTypeDef *
 #if defined(OCTOSPIM_CR_MUXEN)
 #define IS_OSPIM_REQ2ACKTIME(TIME) (((TIME) >= 1U) && ((TIME) <= 256U))
 #endif /*(OCTOSPIM_CR_MUXEN)*/
-/**
-  @endcond
-  */
+       /**
+	 @endcond
+	 */
 
 /* End of private macros -----------------------------------------------------*/
 

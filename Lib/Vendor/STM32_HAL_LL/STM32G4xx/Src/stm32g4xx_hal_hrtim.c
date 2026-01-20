@@ -5402,7 +5402,6 @@ HAL_StatusTypeDef HAL_HRTIM_WaveformCompareConfig(HRTIM_HandleTypeDef *hhrtim, u
 		if (hhrtim->State == HAL_HRTIM_STATE_ERROR) {
 			return HAL_ERROR;
 		}
-
 	} else {
 		switch (CompareUnit) {
 			case HRTIM_COMPAREUNIT_1: {
