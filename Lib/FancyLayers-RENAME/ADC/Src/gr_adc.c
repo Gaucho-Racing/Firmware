@@ -36,6 +36,25 @@ ADC_TypeDef *GetADC(unsigned long adc)
 	return NULL;
 }
 
+void ADC_Init(ADC_Init_Values *Init_Values){
+	// Initialize the ADC Common Group
+	// ADC Group 12 already initialized
+	if(__LL_ADC_COMMON_INSTANCE(Init_Values->ADC) == __LL_ADC_COMMON_INSTANCE(ADC1) && ADC12_Initialized){
+		LOGOMATIC("ADC Group 12 already initialized");
+		return;
+	}
+	// ADC Group 345 already initialized
+	if(__LL_ADC_COMMON_INSTANCE(Init_Values->ADC) == __LL_ADC_COMMON_INSTANCE(ADC3) && ADC345_Initialized) {
+		LOGOMATIC("ADC Group 345 already initialized");
+		return;
+	}
+	ADC_Group_Init(Init_Values->ADC, Init_Values->PS_Values);
+
+	
+	
+	
+}
+
 void ADC_Group_Init(ADC_TypeDef *ADC, Pre_Scaler_Values PS_Val)
 {
 	LL_ADC_CommonInitTypeDef ADC_CommonInitStruct = {0};
@@ -44,11 +63,11 @@ void ADC_Group_Init(ADC_TypeDef *ADC, Pre_Scaler_Values PS_Val)
 	LL_ADC_CommonInit(__LL_ADC_COMMON_INSTANCE(ADC), &ADC_CommonInitStruct);
 }
 
-void ADC_Init(ADC_TypeDef *ADC, Resolution res, Alignment align)
+void ADC_Init_Single(ADC_TypeDef *ADC, Resolution res)
 {
 	LL_ADC_InitTypeDef ADC_InitStruct = {0};
 	ADC_InitStruct.Resolution = res;
-	ADC_InitStruct.DataAlignment = align;
+	ADC_InitStruct.DataAlignment = LL_ADC_DATA_ALIGN_RIGHT; // Right Align: LSB at bit 0, directly translates to numerical value
 	ADC_InitStruct.LowPowerMode = LL_ADC_LP_MODE_NONE;
 	LL_ADC_Init(ADC, &ADC_InitStruct);
 }

@@ -5,7 +5,11 @@
 
 void ADC_Enable_And_Calibrate(ADC_TypeDef *ADC);
 
-// What the prescaler value
+// TODO: Make this private
+// Internal variable to store which ADC groups have been initialized
+uint8_t ADC12_Initialized = 0, ADC345_Initialized = 0;
+
+/// @brief Number of clock cycles to be considered one tick of the ADC
 typedef enum {
 	PS_1 = LL_ADC_CLOCK_ASYNC_DIV1,
 	PS_2 = LL_ADC_CLOCK_ASYNC_DIV2,
@@ -21,23 +25,44 @@ typedef enum {
 	PS_256 = LL_ADC_CLOCK_ASYNC_DIV256
 } Pre_Scaler_Values;
 
-// Resolution of the ADC in bits
-typedef enum { RESOLUTION_12 = LL_ADC_RESOLUTION_12B, RESOLUTION_10 = LL_ADC_RESOLUTION_10B, RESOLUTION_8 = LL_ADC_RESOLUTION_8B, RESOLUTION_6 = LL_ADC_RESOLUTION_6B } Resolution;
+/// @brief Number of bits used to store the converted data, defines range/resolution of data
+typedef enum { 
+	RESOLUTION_12 = LL_ADC_RESOLUTION_12B,
+	RESOLUTION_10 = LL_ADC_RESOLUTION_10B,
+	RESOLUTION_8 = LL_ADC_RESOLUTION_8B,
+	RESOLUTION_6 = LL_ADC_RESOLUTION_6B
+} Resolution;
 
-// Data Alignment
-typedef enum { RIGHT = LL_ADC_DATA_ALIGN_RIGHT, LEFT = LL_ADC_DATA_ALIGN_LEFT } Alignment;
-
-// Struct to easily initialize pins(?)
+/// @brief Struct for pin initialization
 typedef struct {
 	unsigned long pin;  // Bit mask of pins
 	GPIO_TypeDef *port; // Port
 } Pin_Ports;
 
+// Overall ADC initialization
+void ADC_Init(ADC_Init_Values *Init_Values);
+
+///
+/// @brief The struct used to initialize each ADC
+///
+/// @param PS_Values Determines the conversion speed of the ADC
+/// @param res Determines the resolution/range of data
+/// @param 
+/// 
+///
+typedef struct{
+	ADC_TypeDef *ADC;
+	Pre_Scaler_Values PS_Values;
+	Resolution res;
+	Pin_Ports *input;
+} ADC_Init_Values;
+
+// TODO: Make these function private
 // Initializes an ADC group
 void ADC_Group_Init(ADC_TypeDef *ADC, Pre_Scaler_Values PS_Val);
 
 // Initializes each individual ADC
-void ADC_Init(ADC_TypeDef *ADC, Resolution res, Alignment align);
+void ADC_Init_Single(ADC_TypeDef *ADC, Resolution res);
 
 // Initialize a single port and all the pins used on that port
 void ADC_Init_Pins(Pin_Ports *input);
