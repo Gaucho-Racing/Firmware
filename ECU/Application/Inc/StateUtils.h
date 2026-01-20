@@ -23,7 +23,7 @@ uint32_t MillisecondsSinceBoot(void);
 #define APPS_PROPORTION 2.0f // TODO: Need to be experimentally determined
 #define APPS_OFFSET 250.0f   // TODO: Need to be experimentally determined
 
-#define MAX_CURRENT_AMPS 42.0f // TODO: Change as appropriate
+#define MAX_CURRENT_AMPS 42.0f	       // TODO: Change as appropriate
 #define MAX_REVERSE_CURRENT_AMPS 20.0f // TODO: Change as appropriate
 
 void setSoftwareLatch(bool close);

@@ -33,10 +33,10 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "CANdler.h"
+#include "CANutils.h"
 #include "Logomatic.h"
 #include "StateTicks.h"
 #include "StateUtils.h"
-#include "CANutils.h"
 #include "adc.h"
 #include "can.h"
 /* USER CODE END Includes */
