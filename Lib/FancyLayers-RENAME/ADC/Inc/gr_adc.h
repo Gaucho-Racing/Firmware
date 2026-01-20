@@ -8,7 +8,22 @@ void ADC_Enable_And_Calibrate(ADC_TypeDef *ADC);
 // TODO: Make this private
 // Internal variable to store which ADC groups have been initialized
 uint8_t ADC12_Initialized = 0, ADC345_Initialized = 0;
+// Array of the possible ranks a channel can be set to
+uint32_t Rank[] = {LL_ADC_REG_RANK_1, LL_ADC_REG_RANK_2, LL_ADC_REG_RANK_3, LL_ADC_REG_RANK_4, 
+				   LL_ADC_REG_RANK_5, LL_ADC_REG_RANK_6, LL_ADC_REG_RANK_7, LL_ADC_REG_RANK_8, 
+				   LL_ADC_REG_RANK_9, LL_ADC_REG_RANK_10, LL_ADC_REG_RANK_11, LL_ADC_REG_RANK_12, 
+				   LL_ADC_REG_RANK_13, LL_ADC_REG_RANK_14, LL_ADC_REG_RANK_15, LL_ADC_REG_RANK_16};
+// Array of number of channels that can be initialized
+uint32_t Num_Channel_Options[] = {LL_ADC_REG_SEQ_SCAN_DISABLE, LL_ADC_REG_SEQ_SCAN_ENABLE_2RANKS,
+						   LL_ADC_REG_SEQ_SCAN_ENABLE_3RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_4RANKS,
+						   LL_ADC_REG_SEQ_SCAN_ENABLE_5RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_6RANKS,
+						   LL_ADC_REG_SEQ_SCAN_ENABLE_7RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_8RANKS,
+						   LL_ADC_REG_SEQ_SCAN_ENABLE_9RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_10RANKS,
+						   LL_ADC_REG_SEQ_SCAN_ENABLE_11RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_12RANKS,
+						   LL_ADC_REG_SEQ_SCAN_ENABLE_13RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_14RANKS,
+						   LL_ADC_REG_SEQ_SCAN_ENABLE_15RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_16RANKS};
 
+								
 /// @brief Number of clock cycles to be considered one tick of the ADC
 typedef enum {
 	PS_1 = LL_ADC_CLOCK_ASYNC_DIV1,
@@ -48,15 +63,22 @@ void ADC_Init(ADC_Init_Values *Init_Values);
 /// @param ADC The ADC to be initialized (ADC 1 to 5)
 /// @param PS_Values Determines the conversion speed of the ADC
 /// @param res Determines the resolution/range of data
-/// @param Sequence_Length Number of ADC channels
-/// @param input 
-///
+/// @param Pins Array of pins (with their respective ports) to be initialized 
+/// @param Num_Pin_Port_Objs Number of pin port objects to initialize
+/// @param Num_Channels Number of ADC channels, must be a value between 1 and 16
+/// @param Channels Array of channels to be initialized, DMA output will much the order
+/// 					of this array
+/// @param SamplingTimes An array of sampling times for the channels, must match the
+///							the ordering of the channels array
 typedef struct{
 	ADC_TypeDef *ADC;
 	Pre_Scaler_Values PS_Values;
 	Resolution res;
-	unsigned long Sequence_Length;
-	Pin_Ports *input;
+	uint32_t Num_Pin_Port_Objs;
+	Pin_Ports *Pins;
+	uint32_t Num_Channels;
+	Channel *Channels;
+	SamplingTime *SamplingTimes;
 } ADC_Init_Values;
 
 // TODO: Make these function private
@@ -66,51 +88,11 @@ void ADC_Group_Init(ADC_TypeDef *ADC, Pre_Scaler_Values PS_Val);
 // Initializes each individual ADC
 void ADC_Init_Single(ADC_TypeDef *ADC, Resolution res);
 
-// Initialize a single port and all the pins used on that port
-void ADC_Init_Pins(Pin_Ports *input);
-
-// The number of channels to enable
-typedef enum {
-	NO_RANKS = LL_ADC_REG_SEQ_SCAN_DISABLE,
-	RANKS_2 = LL_ADC_REG_SEQ_SCAN_ENABLE_2RANKS,
-	RANKS_3 = LL_ADC_REG_SEQ_SCAN_ENABLE_3RANKS,
-	RANKS_4 = LL_ADC_REG_SEQ_SCAN_ENABLE_4RANKS,
-	RANKS_5 = LL_ADC_REG_SEQ_SCAN_ENABLE_5RANKS,
-	RANKS_6 = LL_ADC_REG_SEQ_SCAN_ENABLE_6RANKS,
-	RANKS_7 = LL_ADC_REG_SEQ_SCAN_ENABLE_7RANKS,
-	RANKS_8 = LL_ADC_REG_SEQ_SCAN_ENABLE_8RANKS,
-	RANKS_9 = LL_ADC_REG_SEQ_SCAN_ENABLE_9RANKS,
-	RANKS_10 = LL_ADC_REG_SEQ_SCAN_ENABLE_10RANKS,
-	RANKS_11 = LL_ADC_REG_SEQ_SCAN_ENABLE_11RANKS,
-	RANKS_12 = LL_ADC_REG_SEQ_SCAN_ENABLE_12RANKS,
-	RANKS_13 = LL_ADC_REG_SEQ_SCAN_ENABLE_13RANKS,
-	RANKS_14 = LL_ADC_REG_SEQ_SCAN_ENABLE_14RANKS,
-	RANKS_15 = LL_ADC_REG_SEQ_SCAN_ENABLE_15RANKS,
-	RANKS_16 = LL_ADC_REG_SEQ_SCAN_ENABLE_16RANKS
-} Number_of_Channels;
-
 // Initialize the channel configurations of the ADC
 void ADC_Regular_Group_Init(ADC_TypeDef *ADC, unsigned long Sequence_Length);
 
-// Set rank (ordering) of each channel
-typedef enum {
-	RANK_1 = LL_ADC_REG_RANK_1,
-	RANK_2 = LL_ADC_REG_RANK_2,
-	RANK_3 = LL_ADC_REG_RANK_3,
-	RANK_4 = LL_ADC_REG_RANK_4,
-	RANK_5 = LL_ADC_REG_RANK_5,
-	RANK_6 = LL_ADC_REG_RANK_6,
-	RANK_7 = LL_ADC_REG_RANK_7,
-	RANK_8 = LL_ADC_REG_RANK_8,
-	RANK_9 = LL_ADC_REG_RANK_9,
-	RANK_10 = LL_ADC_REG_RANK_10,
-	RANK_11 = LL_ADC_REG_RANK_11,
-	RANK_12 = LL_ADC_REG_RANK_12,
-	RANK_13 = LL_ADC_REG_RANK_13,
-	RANK_14 = LL_ADC_REG_RANK_14,
-	RANK_15 = LL_ADC_REG_RANK_15,
-	RANK_16 = LL_ADC_REG_RANK_16
-} Rank;
+// Initialize a single port and all the pins used on that port
+void ADC_Init_Pins(Pin_Ports *input);
 
 __extension__ typedef enum {
 	ADC_CHANNEL_1 = LL_ADC_CHANNEL_1,
@@ -157,7 +139,7 @@ typedef enum {
 
 // Initialize each channel TODO: combine pin initialization with channel
 // initialization
-void ADC_Channel_Init(ADC_TypeDef *adc, Rank rank, Channel channel, SamplingTime time);
+void ADC_Channel_Init(ADC_TypeDef *adc, uint32_t rank, Channel channel, SamplingTime time);
 
 /* 3 Init Function
  * 1. Initialize each group: 1&2, 3&4, 5

@@ -55,8 +55,17 @@ void ADC_Init(ADC_Init_Values *Init_Values){
 	ADC_Init_Single(Init_Values->ADC, Init_Values->res);
 	
 	// Initialize regular channels for individual ADC
-	ADC_Regular_Group_Init(Init_Values->ADC, Init_Values->Sequence_Length);
+	ADC_Regular_Group_Init(Init_Values->ADC, Num_Channel_Options[Init_Values->Num_Channels - 1]);
 
+	// Initialize all pins
+	for (int i = 0; i < Init_Values->Num_Pin_Port_Objs; ++i) {
+		ADC_Init_Pins(&(Init_Values->Pins[i]));
+	}
+	
+	// Initialize Channels
+	for (int i = 0; i < Init_Values->Num_Channels; ++i) {
+		ADC_Channel_Init(Init_Values->ADC, Rank[i], Init_Values->Channels[i], Init_Values->SamplingTimes[i]);
+	}
 	
 }
 
@@ -98,7 +107,7 @@ void ADC_Init_Pins(Pin_Ports *input)
 	LL_GPIO_Init(input->port, &GPIO_InitStruct);
 }
 
-void ADC_Channel_Init(ADC_TypeDef *ADC, Rank rank, Channel channel, SamplingTime time)
+void ADC_Channel_Init(ADC_TypeDef *ADC, uint32_t rank, Channel channel, SamplingTime time)
 {
 	LL_ADC_REG_SetSequencerRanks(ADC, rank, channel);
 	LL_ADC_SetChannelSamplingTime(ADC, channel, time);
