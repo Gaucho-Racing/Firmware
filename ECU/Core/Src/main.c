@@ -155,7 +155,7 @@ void read_digital(void)
 		}
 
 		
-		if(!stateLump.prev_rtd_button_state && rtd_press){
+		if(!stateLump.prev_rtd_button_state && rtd_press && curr_time - prev_ts_press_millis > BUTTON_REFRESH_RATE_MS){
 		stateLump.rtd = !stateLump.rtd;
 		}
 		

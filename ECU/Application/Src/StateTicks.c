@@ -109,7 +109,6 @@ void ECU_Precharge_Start(ECU_StateData *stateData)
 	    .MessageMarker = 0			      // also change this to a real address if you change fifo control
 	};
 	FDCANTxMessage msg;
-	msg.tx
 	can_send(can1Handle, &msg);
 	stateData->ecu_state = GR_PRECHARGE_ENGAGED;
 }
