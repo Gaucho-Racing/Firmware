@@ -23,6 +23,8 @@ uint32_t millis(void);
 #define APPS_PROPORTION 2.0f // TODO: Need to be experimentally determined
 #define APPS_OFFSET 250.0f   // TODO: Need to be experimentally determined
 
+
+
 void setSoftwareLatch(bool close);
 
 // Checks stateData for critical errors

@@ -45,11 +45,8 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 bool CommunicationError(volatile const ECU_StateData *stateData)
 {
 	UNUSED(stateData);
-	// TODO: im
-	LOGOMATIC("Communication Error");
-	plement COMMS errors
-
-	    return false;
+	// TODO: Check for communication errors
+	return false;
 }
 
 bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)

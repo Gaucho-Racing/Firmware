@@ -180,6 +180,9 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		}
 		return;
 	}
+
+	// get
+
 }
 
 void ECU_Tractive_System_Discharge_Start(ECU_StateData *stateData)
