@@ -68,6 +68,8 @@ void SystemClock_Config(void);
 volatile uint16_t buffers[NUM_SIGNALS] = {0}; // Contains new values
 uint16_t outputs[NUM_SIGNALS] = {0};	      // Updated averages
 uint16_t *adcDataValues[NUM_SIGNALS] = {0};
+// Flag raised with DMA finishes transfer
+volatile uint8_t DMA_Transfer_Complete = 0;
 
 /* Enable ITM for SWO output */
 static void ITM_Enable(void)
@@ -167,12 +169,24 @@ int main(void)
 		/* USER CODE BEGIN 3 */
 		LOGOMATIC("Buffer Value: %u\n", buffers[0]);
 		// just test 1 pin for now
-		ADC_UpdateAnalogValues(adcDataValues, buffers, NUM_SIGNALS, WINDOW_SIZE, outputs);
-		LOGOMATIC("Moving Average: %u\n", outputs[0]);
+		if (DMA_Transfer_Complete){
+			ADC_UpdateAnalogValues(adcDataValues, buffers, NUM_SIGNALS, WINDOW_SIZE, outputs);
+			LOGOMATIC("Moving Average: %u\n", outputs[0]);
+			DMA_Transfer_Complete = 0;
+		}
 	}
 
 	free(adcDataValues[0]);
 }
+
+void DMA1_Channel1_IRQHandler(void)
+{
+    if (LL_DMA_IsActiveFlag_TC1(DMA1)) {
+        LL_DMA_ClearFlag_TC1(DMA1);
+        DMA_Transfer_Complete = 1;   // notify main loop
+    }
+}
+
 
 /**
  * @brief System Clock Configuration
