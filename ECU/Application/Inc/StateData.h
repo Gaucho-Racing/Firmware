@@ -19,28 +19,28 @@
  * logic to access and modify the ECU's operational data.
  */
 
- #define SAFE_VOLTAGE_LIMIT 60
- typedef union {
-    struct {
-        uint8_t ECUState;
-        uint8_t StatusBits[3];
-        uint8_t PowerLevelTorqueMap;
-        uint8_t MaxCellTemp;
-        uint8_t AccumulatorStateOfCharge;
-        uint8_t GLVStateOfCharge;
-        uint16_t TractiveSystemVoltage;
-        uint16_t VehicleSpeed;
-        uint16_t FRWheelRPM;
-        uint16_t FLWheelRPM;
-        uint16_t RRWheelRPM;
-		uint16_t RLWheelRPM;
-    };
-	
+#define SAFE_VOLTAGE_LIMIT 60
+typedef union {
 	struct {
-        uint8_t ECUStatusMsgOne[8];
-        uint8_t ECUStatusMsgTwo[8];
-        uint8_t ECUStatusMsgThree[4];
-    };
+		uint8_t ECUState;
+		uint8_t StatusBits[3];
+		uint8_t PowerLevelTorqueMap;
+		uint8_t MaxCellTemp;
+		uint8_t AccumulatorStateOfCharge;
+		uint8_t GLVStateOfCharge;
+		uint16_t TractiveSystemVoltage;
+		uint16_t VehicleSpeed;
+		uint16_t FRWheelRPM;
+		uint16_t FLWheelRPM;
+		uint16_t RRWheelRPM;
+		uint16_t RLWheelRPM;
+	};
+
+	struct {
+		uint8_t ECUStatusMsgOne[8];
+		uint8_t ECUStatusMsgTwo[8];
+		uint8_t ECUStatusMsgThree[4];
+	};
 } ECU_StateDataToSend;
 
 typedef volatile struct ECU_StateData {
@@ -89,10 +89,10 @@ typedef volatile struct ECU_StateData {
 	bool ir_minus;
 	GR_ECU_State ecu_state;
 } ECU_StateData;
-		// FIXME Add comments to each data field with descriptions and
-		 // rules (eg -1 = invalid?, etc)
-		 // Will also need to add information from ADC into this struct
-		 // --- such as the APPS and Brake signals after doing smoothing
-		 // and whatnot to get the values sane
+// FIXME Add comments to each data field with descriptions and
+// rules (eg -1 = invalid?, etc)
+// Will also need to add information from ADC into this struct
+// --- such as the APPS and Brake signals after doing smoothing
+// and whatnot to get the values sane
 
 #endif

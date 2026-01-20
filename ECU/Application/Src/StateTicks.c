@@ -14,6 +14,10 @@
  *
  * @remark Intentionally not a globally accessible variable
  */
+
+extern CANHandle *can1Handle;
+extern CANHandle *can2Handle;
+
 ECU_StateData stateLump = {0};
 
 #define ECU_STATUS_MSG_PERIOD (100)
@@ -67,25 +71,26 @@ void ECU_GLV_Off(ECU_StateData *stateData)
 	UNUSED(stateData);
 	LOGOMATIC("ECU_GLV_Off state reached... this should never happen!");
 
-	//TODO ERROR --> GLV_OFF should never be reached
+	// TODO ERROR --> GLV_OFF should never be reached
 }
 
 void ECU_GLV_On(ECU_StateData *stateData)
 {
 	if (stateData->ts_voltage >= SAFE_VOLTAGE_LIMIT) {
 		ECU_Tractive_System_Discharge_Start(stateData);
-		//TODO emit an error
+		// TODO emit an error
 		LOGOMATIC("TS Voltage >= 60!")
 		return;
 	}
 
 	// TODO: Implement functionality
-	if (stateData->ts_active_button_engaged/* && stateData->ir_plus*/) {	// TOOD Talk to Owen if this is correct for precharge start confirmation
+	if (stateData->ts_active_button_engaged /* && stateData->ir_plus*/) { // TOOD Talk to Owen if this is correct for precharge start confirmation
 		ECU_Precharge_Start(stateData);
 	}
 }
 
-void ECU_Precharge_Start(ECU_StateData *stateData) {
+void ECU_Precharge_Start(ECU_StateData *stateData)
+{
 	/*TODO: send message to BCU to start precharging*/
 	LOGOMATIC("tell the BCU to start precharging");
 	stateData->ecu_state = GR_PRECHARGE_ENGAGED;
@@ -97,7 +102,7 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 		stateData->ecu_state = GR_PRECHARGE_COMPLETE;
 		return;
 	}
-	
+
 	if (!stateData->ts_active_button_engaged || CommunicationError(stateData)) {
 		ECU_Tractive_System_Discharge_Start(stateData);
 		return;

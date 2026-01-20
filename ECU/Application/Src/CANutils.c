@@ -2,6 +2,8 @@
 #include "CANutils.h"
 #include "Logomatic.h"
 
+uint32_t lastTickECUStateDataSent = 0;
+
 ECU_StateDataToSend ParseECUStateDataIntoMessages(ECU_StateData *stateData)
 {
 	ECU_StateDataToSend messages = {
@@ -11,12 +13,12 @@ ECU_StateDataToSend ParseECUStateDataIntoMessages(ECU_StateData *stateData)
 		.MaxCellTemp = (uint8_t)(stateData->max_cell_temp * 4),
 		.AccumulatorStateOfCharge = (uint8_t)(stateData->tractivebattery_soc * 51 / 20),
 		.GLVStateOfCharge = (uint8_t)(stateData->glv_soc * 51 / 20),
-		.TractiveSystemVoltage = (uint16_t)(stateData->ts_voltage * 0.01),
-		.VehicleSpeed = (uint16_t)(stateData->vehicle_speed * 0.01),
-	    .FRWheelRPM = (uint16_t)(10*(stateData->fr_wheel_rpm + 3276.8)),
-		.FLWheelRPM = (uint16_t)(10*(stateData->fl_wheel_rpm * 10 + 3276.8)),
-	    .RRWheelRPM = (uint16_t)(stateData->rr_wheel_rpm * 10 + 3276.8),
-		.RLWheelRPM = (uint16_t)(stateData->rl_wheel_rpm * 10 + 3276.8)
+		.TractiveSystemVoltage = (uint16_t)(stateData->ts_voltage * 100),
+		.VehicleSpeed = (uint16_t)(stateData->vehicle_speed * 100),
+	    .FRWheelRPM = (uint16_t)(stateData->fr_wheel_rpm * 10 + 32768),
+		.FLWheelRPM = (uint16_t)(stateData->fl_wheel_rpm * 10 + 32768),
+	    .RRWheelRPM = (uint16_t)(stateData->rr_wheel_rpm * 10 + 32768),
+		.RLWheelRPM = (uint16_t)(stateData->rl_wheel_rpm * 10 + 32768)
 	};
 
 	return messages;
@@ -24,7 +26,10 @@ ECU_StateDataToSend ParseECUStateDataIntoMessages(ECU_StateData *stateData)
 
 void SendECUStateDataOverCAN(ECU_StateData* stateData)
 {
-	ECU_StateDataToSend messages = ParseECUStateDataIntoMessages(stateData);
-	// TODO Enqueue messages over CAN bus
+	if (lastTickECUStateDataSent <  - ECU_STATE_DATA_SEND_INTERVAL_MS)
+	{
+		lastTickECUStateDataSent = HAL_GetTick();
+		ECU_StateDataToSend messages = ParseECUStateDataIntoMessages(stateData);
+	}
 }
 }
