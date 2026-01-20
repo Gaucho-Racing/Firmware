@@ -96,9 +96,9 @@ extern "C" {
 #define LL_SYSCFG_VDDIO2_REGISTER_CODE                                                                                                                                                                 \
 	SYSCFG_CCCSR_CS2 /*VDDIO2 I/Os code from the SYSCFG compensation                                                                                                                               \
 			  cell code register (SYSCFG_CCCR)*/
-/**
- * @}
- */
+			 /**
+			  * @}
+			  */
 
 #if defined(SYSCFG_CCCSR_CS3)
 /** @defgroup SYSTEM_LL_EC_CS3 SYSCFG VddHSPI compensation cell Code selection
@@ -139,9 +139,9 @@ extern "C" {
 #define LL_SYSCFG_FASTMODEPLUS_PB7 SYSCFG_CFGR1_PB7_FMP /*!< Enable Fast Mode Plus on PB7 */
 #define LL_SYSCFG_FASTMODEPLUS_PB8 SYSCFG_CFGR1_PB8_FMP /*!< Enable Fast Mode Plus on PB8 */
 #define LL_SYSCFG_FASTMODEPLUS_PB9 SYSCFG_CFGR1_PB9_FMP /*!< Enable Fast Mode Plus on PB9 */
-/**
- * @}
- */
+							/**
+							 * @}
+							 */
 
 #if defined(SYSCFG_CFGR1_ENDCAP)
 /** @defgroup SYSTEM_LL_DECOUPLING_CAPACITANCE SYSCFG DECOUPLING CAPACITANCE
@@ -181,9 +181,9 @@ extern "C" {
 #define LL_SYSCFG_TIMBREAK_LOCKUP                                                                                                                                                                      \
 	SYSCFG_CFGR2_CLL /*!< Enables and locks the LOCKUP output of CortexM33                                                                                                                         \
 			      with Break Input of TIM1/15/16/17 */
-/**
- * @}
- */
+			 /**
+			  * @}
+			  */
 
 #if defined(SYSCFG_OTGHSPHYCR_CLKSEL)
 /** @defgroup SYSTEM_LL_OTG_PHY_CLOCK_FREQUENCY SYSCFG OTG High-speed (HS) PHY
@@ -485,9 +485,9 @@ extern "C" {
 #define LL_DBGMCU_AHB3_GRP1_LPDMA3_STOP                                                                                                                                                                \
 	DBGMCU_AHB3FZR_DBG_LPDMA3_STOP /*!< The counter clock of LPDMA3 is                                                                                                                             \
 					  stopped when the core is halted*/
-/**
- * @}
- */
+				       /**
+					* @}
+					*/
 
 #if defined(VREFBUF)
 /** @defgroup SYSTEM_LL_EC_VOLTAGE VREFBUF VOLTAGE

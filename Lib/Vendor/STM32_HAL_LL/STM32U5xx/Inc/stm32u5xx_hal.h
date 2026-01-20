@@ -143,9 +143,9 @@ extern HAL_TickFreqTypeDef uwTickFreq;
 #define SYSCFG_FASTMODEPLUS_PB7 SYSCFG_CFGR1_PB7_FMP /*!< Enable Fast-mode Plus on PB7 */
 #define SYSCFG_FASTMODEPLUS_PB8 SYSCFG_CFGR1_PB8_FMP /*!< Enable Fast-mode Plus on PB8 */
 #define SYSCFG_FASTMODEPLUS_PB9 SYSCFG_CFGR1_PB9_FMP /*!< Enable Fast-mode Plus on PB9 */
-/**
- * @}
- */
+						     /**
+						      * @}
+						      */
 
 #if defined(SYSCFG_CFGR1_ENDCAP)
 /** @defgroup SYSCFG_DECOUPLING_CAPACITANCE SYSCFG DECOUPLING CAPACITANCE
@@ -186,9 +186,9 @@ extern HAL_TickFreqTypeDef uwTickFreq;
 #else
 #define SYSCFG_LOCK_ALL (SYSCFG_MPU_NSEC | SYSCFG_VTOR_NSEC) /*!< All (privileged secure or non-secure only) */
 #endif							     /* __ARM_FEATURE_CMSE */
-/**
- * @}
- */
+							     /**
+							      * @}
+							      */
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 
@@ -210,9 +210,9 @@ extern HAL_TickFreqTypeDef uwTickFreq;
  */
 #define SYSCFG_SEC 0x00000001U	/*!< Secure attribute      */
 #define SYSCFG_NSEC 0x00000000U /*!< Non-secure attribute  */
-/**
- * @}
- */
+				/**
+				 * @}
+				 */
 
 #endif /* __ARM_FEATURE_CMSE */
 
@@ -236,9 +236,9 @@ extern HAL_TickFreqTypeDef uwTickFreq;
 															       */
 #define SYSCFG_OTG_HS_PHY_CLK_SELECT_5 (SYSCFG_OTGHSPHYCR_CLKSEL_1 | SYSCFG_OTGHSPHYCR_CLKSEL_2 | SYSCFG_OTGHSPHYCR_CLKSEL_3) /*!< 26Mhz */
 #define SYSCFG_OTG_HS_PHY_CLK_SELECT_6 (SYSCFG_OTGHSPHYCR_CLKSEL_0 | SYSCFG_OTGHSPHYCR_CLKSEL_1 | SYSCFG_OTGHSPHYCR_CLKSEL_3) /*!< 32Mhz */
-/**
- * @}
- */
+															      /**
+															       * @}
+															       */
 
 /** @defgroup SYSCFG_OTG_PHY_PowerDown  OTG PHY Power Down
  * @{

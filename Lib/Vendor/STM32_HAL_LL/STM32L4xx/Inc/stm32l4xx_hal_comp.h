@@ -160,9 +160,9 @@ typedef void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer t
 	(0x01UL) /*!< Invalid Callback error                                                                                                                                                           \
 		  */
 #endif		 /* USE_HAL_COMP_REGISTER_CALLBACKS */
-/**
- * @}
- */
+		 /**
+		  * @}
+		  */
 
 #if defined(COMP2)
 /** @defgroup COMP_WindowMode COMP Window Mode
@@ -843,9 +843,9 @@ uint32_t HAL_COMP_GetError(const COMP_HandleTypeDef *hcomp);
  * @}
  */
 #endif /* COMP1 || COMP2 */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 #ifdef __cplusplus
 }

@@ -325,9 +325,9 @@ typedef void (*pQSPI_CallbackTypeDef)(QSPI_HandleTypeDef *hqspi);
 #define QSPI_CLOCK_MODE_3                                                                                                                                                                              \
 	((uint32_t)QUADSPI_DCR_CKMODE) /*!<Clk goes high while nCS is                                                                                                                                  \
 					  released*/
-/**
- * @}
- */
+				       /**
+					* @}
+					*/
 
 #if defined(QUADSPI_CR_DFM)
 /** @defgroup QSPI_Flash_Select QSPI Flash Select

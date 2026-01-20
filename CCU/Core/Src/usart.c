@@ -85,8 +85,7 @@ void MX_LPUART1_UART_Init(void)
 	LL_LPUART_Enable(LPUART1);
 
 	/* Polling LPUART1 initialisation */
-	while ((!(LL_LPUART_IsActiveFlag_TEACK(LPUART1))) || (!(LL_LPUART_IsActiveFlag_REACK(LPUART1)))) {
-	}
+	while ((!(LL_LPUART_IsActiveFlag_TEACK(LPUART1))) || (!(LL_LPUART_IsActiveFlag_REACK(LPUART1)))) {}
 	/* USER CODE BEGIN LPUART1_Init 2 */
 
 	/* USER CODE END LPUART1_Init 2 */

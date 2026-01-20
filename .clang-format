@@ -4,6 +4,7 @@ ColumnLimit: 200
 UseTab: Always
 BreakBeforeBraces: Linux
 AllowShortIfStatementsOnASingleLine: false
+AllowShortBlocksOnASingleLine: Empty
 IndentCaseLabels: true
 InsertBraces: true
 LineEnding: LF
