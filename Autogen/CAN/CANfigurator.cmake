@@ -20,7 +20,7 @@ execute_process(
 )
 
 if(NOT YAML_XS_FOUND EQUAL 0)
-  message(FATAL_ERROR "Perl module YAML::XS not found")
+	message(FATAL_ERROR "Perl module YAML::XS not found")
 endif()
 
 # --- 3. Create output directory ---
@@ -29,19 +29,22 @@ message(STATUS "CANfigurator: Generating headers in ${INC_DIR}")
 
 # --- 4. Run Perl parsers ---
 function(run_can_parser script_name output_file)
-  execute_process(
-    COMMAND ${PERL_EXECUTABLE} "${SCRIPT_DIR}/${script_name}" "${YAML_INPUT}" "${INC_DIR}/${output_file}"
-    RESULT_VARIABLE result
-    ERROR_VARIABLE error_output
-  )
+	execute_process(
+		COMMAND
+			${PERL_EXECUTABLE} "${SCRIPT_DIR}/${script_name}" "${YAML_INPUT}"
+			"${INC_DIR}/${output_file}"
+		RESULT_VARIABLE result
+		ERROR_VARIABLE error_output
+	)
 
-  if(NOT result EQUAL 0)
-    message(FATAL_ERROR
-      "\n[CANfigurator] FAILED to run ${script_name}\n"
-      "Exit Code: ${result}\n"
-      "Error Message:\n${error_output}\n"
-    )
-  endif()
+	if(NOT result EQUAL 0)
+		message(
+			FATAL_ERROR
+			"\n[CANfigurator] FAILED to run ${script_name}\n"
+			"Exit Code: ${result}\n"
+			"Error Message:\n${error_output}\n"
+		)
+	endif()
 endfunction()
 
 function(run_perl_files)
