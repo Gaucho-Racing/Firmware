@@ -41,17 +41,22 @@ void ADC_Init(ADC_Init_Values *Init_Values){
 	// ADC Group 12 already initialized
 	if(__LL_ADC_COMMON_INSTANCE(Init_Values->ADC) == __LL_ADC_COMMON_INSTANCE(ADC1) && ADC12_Initialized){
 		LOGOMATIC("ADC Group 12 already initialized");
-		return;
+		goto ADC_Group_Done; // my go-to solution fr
 	}
 	// ADC Group 345 already initialized
 	if(__LL_ADC_COMMON_INSTANCE(Init_Values->ADC) == __LL_ADC_COMMON_INSTANCE(ADC3) && ADC345_Initialized) {
 		LOGOMATIC("ADC Group 345 already initialized");
-		return;
+		goto ADC_Group_Done;
 	}
 	ADC_Group_Init(Init_Values->ADC, Init_Values->PS_Values);
 
+	ADC_Group_Done:
+	// Initialize the individual ADCs
+	ADC_Init_Single(Init_Values->ADC, Init_Values->res);
 	
-	
+	// Initialize regular channels for individual ADC
+	ADC_Regular_Group_Init(Init_Values->ADC, Init_Values->Sequence_Length);
+
 	
 }
 
@@ -59,7 +64,7 @@ void ADC_Group_Init(ADC_TypeDef *ADC, Pre_Scaler_Values PS_Val)
 {
 	LL_ADC_CommonInitTypeDef ADC_CommonInitStruct = {0};
 	ADC_CommonInitStruct.CommonClock = PS_Val;
-	ADC_CommonInitStruct.Multimode = LL_ADC_MULTI_INDEPENDENT;
+	ADC_CommonInitStruct.Multimode = LL_ADC_MULTI_INDEPENDENT; // ADC Dual Mode disabled
 	LL_ADC_CommonInit(__LL_ADC_COMMON_INSTANCE(ADC), &ADC_CommonInitStruct);
 }
 
@@ -68,21 +73,19 @@ void ADC_Init_Single(ADC_TypeDef *ADC, Resolution res)
 	LL_ADC_InitTypeDef ADC_InitStruct = {0};
 	ADC_InitStruct.Resolution = res;
 	ADC_InitStruct.DataAlignment = LL_ADC_DATA_ALIGN_RIGHT; // Right Align: LSB at bit 0, directly translates to numerical value
-	ADC_InitStruct.LowPowerMode = LL_ADC_LP_MODE_NONE;
+	ADC_InitStruct.LowPowerMode = LL_ADC_LP_MODE_NONE; // No ADC low power mode
 	LL_ADC_Init(ADC, &ADC_InitStruct);
 }
 
-// FIXME: ADC_TYPEDEF* is here for now. We may need to fix later. Originally was
-// an unsigned long
 void ADC_Regular_Group_Init(ADC_TypeDef *ADC, unsigned long Sequence_Length)
 {
 	LL_ADC_REG_InitTypeDef ADC_REG_InitStruct = {0};
-	ADC_REG_InitStruct.TriggerSource = LL_ADC_REG_TRIG_SOFTWARE;
+	ADC_REG_InitStruct.TriggerSource = LL_ADC_REG_TRIG_SOFTWARE; // ADC conversion is triggered by software
 	ADC_REG_InitStruct.SequencerLength = Sequence_Length;
-	ADC_REG_InitStruct.SequencerDiscont = LL_ADC_REG_SEQ_DISCONT_DISABLE;
-	ADC_REG_InitStruct.ContinuousMode = LL_ADC_REG_CONV_CONTINUOUS;
-	ADC_REG_InitStruct.DMATransfer = LL_ADC_REG_DMA_TRANSFER_UNLIMITED;
-	ADC_REG_InitStruct.Overrun = LL_ADC_REG_OVR_DATA_OVERWRITTEN;
+	ADC_REG_InitStruct.SequencerDiscont = LL_ADC_REG_SEQ_DISCONT_DISABLE; // No interrupts
+	ADC_REG_InitStruct.ContinuousMode = LL_ADC_REG_CONV_CONTINUOUS; // Continuous conversion
+	ADC_REG_InitStruct.DMATransfer = LL_ADC_REG_DMA_TRANSFER_UNLIMITED; // Allows unlimited DMA transfer of regular group data
+	ADC_REG_InitStruct.Overrun = LL_ADC_REG_OVR_DATA_OVERWRITTEN; // Allows data to be overwritten when the buffer fills
 	LL_ADC_REG_Init(ADC, &ADC_REG_InitStruct);
 }
 

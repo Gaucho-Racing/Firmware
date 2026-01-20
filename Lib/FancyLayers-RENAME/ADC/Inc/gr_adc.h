@@ -45,15 +45,17 @@ void ADC_Init(ADC_Init_Values *Init_Values);
 ///
 /// @brief The struct used to initialize each ADC
 ///
+/// @param ADC The ADC to be initialized (ADC 1 to 5)
 /// @param PS_Values Determines the conversion speed of the ADC
 /// @param res Determines the resolution/range of data
-/// @param 
-/// 
+/// @param Sequence_Length Number of ADC channels
+/// @param input 
 ///
 typedef struct{
 	ADC_TypeDef *ADC;
 	Pre_Scaler_Values PS_Values;
 	Resolution res;
+	unsigned long Sequence_Length;
 	Pin_Ports *input;
 } ADC_Init_Values;
 
