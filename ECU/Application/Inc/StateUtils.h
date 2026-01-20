@@ -6,6 +6,10 @@
 #ifndef _STATE_UTILS_H_
 #define _STATE_UTILS_H_
 
+/// @brief Get the current time in milliseconds since system start
+/// @return Current time in milliseconds
+uint32_t millis(void);
+
 // Constants
 #define BRAKE_F_MIN 0	    // TODO: need to be determined FIXME: Rename better
 #define BRAKE_F_MAX 4095    // TODO: need to be determined FIXME: Rename better

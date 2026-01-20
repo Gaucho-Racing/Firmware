@@ -32,9 +32,11 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "CANdler.h"
 #include "Logomatic.h"
 #include "StateTicks.h"
 #include "adc.h"
+#include "StateUtils.h"
 #include "can.h"
 /* USER CODE END Includes */
 
@@ -142,18 +144,18 @@ void read_digital(void)
 	stateLump.imd_sense = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_6);
 	stateLump.ams_sense = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_7);
 
+	// debouncing/latching for ts/rtd active
 	bool ts_press = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_12);
-
 	bool rtd_press = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_11);
-
 	uint32_t curr_time = millis();
 
-	if (!stateLump.prev_ts_active_button_state && ts_press && curr_time - prev_ts_press_millis > BUTTON_REFRESH_RATE_MS) {
+	if (!stateLump.prev_ts_active_button_state && ts_press && (curr_time - stateLump.prev_ts_press_millis > BUTTON_REFRESH_RATE_MS)) {
 		stateLump.ts_active = !stateLump.ts_active;
+		stateLump.prev_ts_press_millis = curr_time;
 	}
-
-	if (!stateLump.prev_rtd_button_state && rtd_press && curr_time - prev_ts_press_millis > BUTTON_REFRESH_RATE_MS) {
+	if (!stateLump.prev_rtd_button_state && rtd_press && (curr_time - stateLump.prev_ts_press_millis > BUTTON_REFRESH_RATE_MS)) {
 		stateLump.rtd = !stateLump.rtd;
+		stateLump.prev_rtd_press_millis = curr_time;
 	}
 
 	stateLump.prev_ts_active_button_state = ts_press;
@@ -174,18 +176,6 @@ void write_state_data()
 	stateLump.Brake_R_Signal = ADC1_outputs[5];
 	// TODO: Aux signal idk what to do with it ADC1_outputs[6]
 	stateLump.STEERING_ANGLE_SIGNAL = ADC2_outputs[0];
-
-	// digital
-	stateLump.bspd_sense = digital_data[0];
-	stateLump.imd_sense = digital_data[1];
-	stateLump.ams_sense = digital_data[2];
-	// TODO: debounce button
-	stateLump.ts_active = (!stateLump.prev_ts_active_button_state && digital_data[3]) ? !stateLump.ts_active : stateLump.ts_active;
-	stateLump.prev_ts_active_button_state = digital_data[3];
-	stateLump.rtd = (!stateLump.prev_rtd_button_state && digital_data[4]) ? !stateLump.rtd : stateLump.rtd;
-	stateLump.prev_rtd_button_state = digital_data[4] stateLump.bspd_sense = digital_data[5];
-	// TODO: inertia steering wheel sense? digital_data[6]
-	stateLump.estop_sense = digital_data[7];
 }
 
 void ADC_Configure(void)

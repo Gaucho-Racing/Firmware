@@ -4,7 +4,6 @@
 #include "StateData.h"
 #include "StateMachine.h"
 #include "StateUtils.h"
-#include "Unused.h"
 #include "adc.h"
 #include "can.h"
 
@@ -93,21 +92,16 @@ void ECU_GLV_On(ECU_StateData *stateData)
 
 void ECU_Precharge_Start(ECU_StateData *stateData)
 {
-	/*TODO: send message to BCU to start precharging*/
-	LOGOMATIC("tell the BCU to start precharging");
-	FDCAN_TxHeaderTypeDef TxHeader = {
-	    .Identifier = 1,
-
-	    .IdType = FDCAN_STANDARD_ID,
-	    .TxFrameType = FDCAN_DATA_FRAME,
-	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
-						     // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
-	    .DataLength = 1,
-	    .BitRateSwitch = FDCAN_BRS_OFF,
-	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
-	    .MessageMarker = 0			      // also change this to a real address if you change fifo control
-	};
-	FDCANTxMessage msg;
+	/*send message to BCU to start precharging*/
+	FDCANTxMessage msg = {.tx_header = {.Identifier = 0x00A,
+					    .IdType = FDCAN_STANDARD_ID,
+					    .TxFrameType = FDCAN_DATA_FRAME,
+					    .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
+					    .DataLength = 1,
+					    .BitRateSwitch = FDCAN_BRS_OFF,
+					    .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
+					    .MessageMarker = 0}};
+	msg.data[0] = 1; // Go TS Active/Precharge
 	can_send(can1Handle, &msg);
 	stateData->ecu_state = GR_PRECHARGE_ENGAGED;
 }
@@ -119,7 +113,7 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 		return;
 	}
 
-	if (!stateData->ts_active_button_engaged || CommunicationError(stateData)) {
+	if (!stateData->ts_active || CommunicationError(stateData)) {
 		ECU_Tractive_System_Discharge_Start(stateData);
 		return;
 	}
@@ -134,6 +128,8 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 		If Tractive System (TS) active/Critical Error --> Tractive
 	    System Discharge If Brake & RTD (Ready to Drive) --> Drive Active
 	*/
+
+
 	/*
 	if (TS pressed or critical error) {
 		stateData->currentState = GR_TS_DISCHARGE
@@ -187,7 +183,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		 - make tuna-ble function
 	*/
 
-	if (!stateData->ts_active_button_engaged || CriticalError(stateData)) {
+	if (!stateData->ts_active || CriticalError(stateData)) {
 		ECU_Tractive_System_Discharge_Start(stateData);
 		// TODO: emit a error
 		return;
@@ -204,6 +200,16 @@ void ECU_Tractive_System_Discharge_Start(ECU_StateData *stateData)
 {
 	stateData->ecu_state = GR_TS_DISCHARGE;
 	LOGOMATIC("tell the BCU to discharge TS");
+	FDCANTxMessage msg = {.tx_header = {.Identifier = 0x00A,
+					    .IdType = FDCAN_STANDARD_ID,
+					    .TxFrameType = FDCAN_DATA_FRAME,
+					    .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
+					    .DataLength = 1,
+					    .BitRateSwitch = FDCAN_BRS_OFF,
+					    .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
+					    .MessageMarker = 0}};
+	msg.data[0] = 1; // Go TS Active/Precharge
+	can_send(can1Handle, &msg);
 	stateData->dischargeStartMillis = 0;
 }
 

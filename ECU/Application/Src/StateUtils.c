@@ -3,8 +3,15 @@
 #include <math.h>
 #include <stdbool.h>
 
+#include "main.h"
 #include "StateData.h"
-#include "Unused.h"
+
+uint32_t millis(void)
+{
+	// For some reason, GetTickFreq returns period in ms instead of frequency LMAO
+	// See https://community.st.com/t5/stm32-mcus-embedded-software/name-amp-description-of-hal-gettickfreq-misleading/td-p/242457
+	return HAL_GetTick() * HAL_GetTickFreq();
+}
 
 // use estop_sense to detect close(?)
 void setSoftwareLatch(bool close)

@@ -12,17 +12,16 @@ int can_test_instance(FDCAN_HandleTypeDef fdcan_handle)
 	return 0;
 }
 
-void can_test_rx_callback2(void *data, uint32_t size)
+void can_test_rx_callback2(void *data, uint32_t size, uint32_t ID)
 {
-	LOGOMATIC("CAN2 Got data! Size %ld, data[0] = 0x%x\n", size, *(char *)data);
+	LOGOMATIC("CAN2 Got data! Size %ld, ID 0x%lx, data[0] = 0x%x\n", size, ID, *(char *)data);
 	// Is within an ISR, so needs to exit quickly
 	return;
 }
 
-void can_test_rx_callback1(void *data, uint32_t size)
+void can_test_rx_callback1(void *data, uint32_t size, uint32_t ID)
 {
-	LOGOMATIC("CAN1 Got data! Size %ld, data[0] = 0x%x\n", size, *(char *)data);
-
+	LOGOMATIC("CAN1 Got data! Size %ld, ID 0x%lx, data[0] = 0x%x\n", size, ID, *(char *)data);
 	// Is within an ISR, so needs to exit quickly
 	return;
 }
