@@ -76,6 +76,7 @@ void ECU_GLV_Off(ECU_StateData *stateData)
 {
 	UNUSED(stateData);
 	LOGOMATIC("ECU_GLV_Off state reached... this should never happen!");
+	setSoftwareLatch(0); // TODO: need???
 	// TODO ERROR --> GLV_OFF should never be reached
 }
 
@@ -118,7 +119,6 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 	}
 
 	if (!stateData->ts_active || CommunicationError(stateData)) {
-		// todo: CAN for discharge
 		ECU_Tractive_System_Discharge_Start(stateData);
 		return;
 	}
