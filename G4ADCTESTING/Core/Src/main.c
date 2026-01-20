@@ -94,7 +94,15 @@ void ADC_Configure(void)
 	ADC_Init_Values init_vals = {ADC1, PS_8, RESOLUTION_12, 1, {GPIOA, LL_GPIO_PIN_0}, 1, {ADC_CHANNEL_1}, {SAMPLINGTIME_247CYCLES_5}};
 
 	// Initialize DMA
-	DMA_Init(DMA1, LL_DMA_CHANNEL_1, LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA), (uint32_t)&buffers, LL_DMA_PDATAALIGN_HALFWORD, LL_DMA_MDATAALIGN_HALFWORD, NUM_SIGNALS, ADC1, HIGH);
+	DMA_Init_Values DMA_Init_Vals = {0};
+	DMA_Init_Vals.DMA = DMA1;
+	DMA_Init_Vals.ADC = ADC1;
+	DMA_Init_Vals.Channel = DMA_CHANNEL_1;
+	DMA_Init_Vals.Src_Address = LL_ADC_DMA_GetRegAddr(ADC1, LL_ADC_DMA_REG_REGULAR_DATA);
+	DMA_Init_Vals.Dest_Address = &buffers;
+	DMA_Init_Vals.Data_Size = Word;
+	DMA_Init_Vals.Priority = LOW;
+	DMA_Init(&DMA_Init_Vals);
 	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
 
 	ADC_Enable_And_Calibrate(ADC1);
