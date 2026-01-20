@@ -21,148 +21,144 @@
 #define STM32U5xx_HAL_FLASH_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx_hal_def.h"
 
-	/** @addtogroup STM32U5xx_HAL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32U5xx_HAL_Driver
+ * @{
+ */
 
-	/** @addtogroup FLASH
-	 * @{
-	 */
+/** @addtogroup FLASH
+ * @{
+ */
 
-	/* Exported types ------------------------------------------------------------*/
-	/** @defgroup FLASH_Exported_Types FLASH Exported Types
-	 * @{
-	 */
+/* Exported types ------------------------------------------------------------*/
+/** @defgroup FLASH_Exported_Types FLASH Exported Types
+ * @{
+ */
 
-	/**
-	 * @brief  FLASH Erase structure definition
-	 */
-	typedef struct
-	{
-		uint32_t TypeErase; /*!< Mass erase or page erase.
-					 This parameter can be a value of @ref
-				       FLASH_Type_Erase */
-		uint32_t Banks;	    /*!< Select bank to erase.
-					 This parameter must be a value of @ref FLASH_Banks
-					 (FLASH_BANK_BOTH should be used only for mass erase) */
-		uint32_t Page;	    /*!< Initial Flash page to erase when page erase is disabled
-					 This parameter must be a value between 0 and (max number
-				       of pages in the bank - 1) (eg : 127 for 2MB dual bank) */
-		uint32_t NbPages;   /*!< Number of pages to be erased. This parameter must
-				       be a value between 1 and (max number of pages in
-				       the bank - value of initial page)*/
-	} FLASH_EraseInitTypeDef;
+/**
+ * @brief  FLASH Erase structure definition
+ */
+typedef struct {
+	uint32_t TypeErase; /*!< Mass erase or page erase.
+				 This parameter can be a value of @ref
+			       FLASH_Type_Erase */
+	uint32_t Banks;	    /*!< Select bank to erase.
+				 This parameter must be a value of @ref FLASH_Banks
+				 (FLASH_BANK_BOTH should be used only for mass erase) */
+	uint32_t Page;	    /*!< Initial Flash page to erase when page erase is disabled
+				 This parameter must be a value between 0 and (max number
+			       of pages in the bank - 1) (eg : 127 for 2MB dual bank) */
+	uint32_t NbPages;   /*!< Number of pages to be erased. This parameter must
+			       be a value between 1 and (max number of pages in
+			       the bank - value of initial page)*/
+} FLASH_EraseInitTypeDef;
 
-	/**
-	 * @brief  FLASH Option Bytes Program structure definition
-	 */
-	typedef struct
-	{
-		uint32_t OptionType;	 /*!< Option byte to be configured.
-					      This parameter can be a combination of the
-					    values of @ref FLASH_OB_Type */
-		uint32_t WRPArea;	 /*!< Write protection area to be programmed (used for
-					    OPTIONBYTE_WRP). Only one WRP area could be
-					    programmed at the same time. This parameter can be
-					    value of @ref FLASH_OB_WRP_Area */
-		uint32_t WRPStartOffset; /*!< Write protection start offset (used for
-					    OPTIONBYTE_WRP). This parameter must be a
-					    value between 0 and (max number of pages in
-					    the bank - 1) */
-		uint32_t WRPEndOffset;	 /*!< Write protection end offset (used for
-					    OPTIONBYTE_WRP).   This parameter must be a
-					    value between WRPStartOffset   and (max number
-					    of pages in the bank - 1) */
-		FunctionalState WRPLock; /*!< Write protection lock (used for OPTIONBYTE_WRP).
-					      This parameter can be set to ENABLE or DISABLE */
-		uint32_t RDPLevel;	 /*!< Set the read protection level (used for
-					    OPTIONBYTE_RDP). This parameter can be a value of
-					    @ref FLASH_OB_Read_Protection */
-		uint32_t USERType;	 /*!< User option byte(s) to be configured (used for
-					    OPTIONBYTE_USER). This parameter can be a
-					    combination of @ref FLASH_OB_USER_Type */
-		uint32_t USERConfig;	 /*!< Value of the user option byte (used for
-					    OPTIONBYTE_USER). This parameter can be a
-					    combination of @ref FLASH_OB_USER_BOR_LEVEL,
-					      @ref FLASH_OB_USER_nRST_STOP, @ref
-					    FLASH_OB_USER_nRST_STANDBY,
-					      @ref FLASH_OB_USER_nRST_SHUTDOWN, @ref
-					    FLASH_OB_USER_SRAM_RST,
-					      @ref FLASH_OB_USER_IWDG_SW, @ref
-					    FLASH_OB_USER_IWDG_STOP,
-					      @ref FLASH_OB_USER_IWDG_STANDBY, @ref
-					    FLASH_OB_USER_WWDG_SW,
-					      @ref FLASH_OB_USER_SWAP_BANK, @ref
-					    FLASH_OB_USER_DUALBANK,
-					      @ref FLASH_OB_USER_BKPRAM_RST, @ref
-					    FLASH_OB_USER_SRAM3_ECC,
-					      @ref FLASH_OB_USER_SRAM2_ECC, @ref
-					    FLASH_OB_USER_SRAM2_RST,
-					      @ref FLASH_OB_USER_nSWBOOT0, @ref
-					    FLASH_OB_USER_nBOOT0,
-					      @ref FLASH_OB_USER_PA15_PUPEN, @ref
-					    FLASH_OB_USER_IO_VDD_HSLV,
-					      @ref FLASH_OB_USER_IO_VDDIO2_HSLV, @ref
-					    FLASH_OB_USER_TZEN */
+/**
+ * @brief  FLASH Option Bytes Program structure definition
+ */
+typedef struct {
+	uint32_t OptionType;	 /*!< Option byte to be configured.
+				      This parameter can be a combination of the
+				    values of @ref FLASH_OB_Type */
+	uint32_t WRPArea;	 /*!< Write protection area to be programmed (used for
+				    OPTIONBYTE_WRP). Only one WRP area could be
+				    programmed at the same time. This parameter can be
+				    value of @ref FLASH_OB_WRP_Area */
+	uint32_t WRPStartOffset; /*!< Write protection start offset (used for
+				    OPTIONBYTE_WRP). This parameter must be a
+				    value between 0 and (max number of pages in
+				    the bank - 1) */
+	uint32_t WRPEndOffset;	 /*!< Write protection end offset (used for
+				    OPTIONBYTE_WRP).   This parameter must be a
+				    value between WRPStartOffset   and (max number
+				    of pages in the bank - 1) */
+	FunctionalState WRPLock; /*!< Write protection lock (used for OPTIONBYTE_WRP).
+				      This parameter can be set to ENABLE or DISABLE */
+	uint32_t RDPLevel;	 /*!< Set the read protection level (used for
+				    OPTIONBYTE_RDP). This parameter can be a value of
+				    @ref FLASH_OB_Read_Protection */
+	uint32_t USERType;	 /*!< User option byte(s) to be configured (used for
+				    OPTIONBYTE_USER). This parameter can be a
+				    combination of @ref FLASH_OB_USER_Type */
+	uint32_t USERConfig;	 /*!< Value of the user option byte (used for
+				    OPTIONBYTE_USER). This parameter can be a
+				    combination of @ref FLASH_OB_USER_BOR_LEVEL,
+				      @ref FLASH_OB_USER_nRST_STOP, @ref
+				    FLASH_OB_USER_nRST_STANDBY,
+				      @ref FLASH_OB_USER_nRST_SHUTDOWN, @ref
+				    FLASH_OB_USER_SRAM_RST,
+				      @ref FLASH_OB_USER_IWDG_SW, @ref
+				    FLASH_OB_USER_IWDG_STOP,
+				      @ref FLASH_OB_USER_IWDG_STANDBY, @ref
+				    FLASH_OB_USER_WWDG_SW,
+				      @ref FLASH_OB_USER_SWAP_BANK, @ref
+				    FLASH_OB_USER_DUALBANK,
+				      @ref FLASH_OB_USER_BKPRAM_RST, @ref
+				    FLASH_OB_USER_SRAM3_ECC,
+				      @ref FLASH_OB_USER_SRAM2_ECC, @ref
+				    FLASH_OB_USER_SRAM2_RST,
+				      @ref FLASH_OB_USER_nSWBOOT0, @ref
+				    FLASH_OB_USER_nBOOT0,
+				      @ref FLASH_OB_USER_PA15_PUPEN, @ref
+				    FLASH_OB_USER_IO_VDD_HSLV,
+				      @ref FLASH_OB_USER_IO_VDDIO2_HSLV, @ref
+				    FLASH_OB_USER_TZEN */
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-		uint32_t WMSecConfig;	 /*!< Configuration of the Watermark-based Secure Area
-					    (used for OPTIONBYTE_WMSEC). This parameter must be
-					    a value of @ref FLASH_OB_WMSEC */
-		uint32_t WMSecStartPage; /*!< Start page of secure area (used for
-					    OPTIONBYTE_WMSEC). This parameter must be a
-					    value between 0 and (max number of pages in
-					    the bank - 1) */
-		uint32_t WMSecEndPage;	 /*!< End page of secure area (used for
-					    OPTIONBYTE_WMSEC). This parameter must be a
-					    value   between WMSecStartPage and (max number
-					    of pages in the bank - 1) */
-		uint32_t WMHDPEndPage;	 /*!< End page of the secure hide protection (used for
-					    OPTIONBYTE_WMSEC).  This parameter must be a value
-					    between WMSecStartPage and WMSecEndPage */
-		uint32_t BootLock;	 /*!< Configuration of the boot lock (used for
-					    OPTIONBYTE_BOOT_LOCK). This parameter must be a
-					    value of @ref FLASH_OB_BOOT_LOCK */
-#endif					 /* __ARM_FEATURE_CMSE */
-		uint32_t BootAddrConfig; /*!< Configuration of the Boot address (used
-					    for OPTIONBYTE_BOOTADDR). This parameter
-					    must be a value of @ref FLASH_OB_BOOTADDR */
-		uint32_t BootAddr;	 /*!< Boot address (used for OPTIONBYTE_BOOTADDR).
-					      This parameter must be a value between 0x0 and
-					    0xFFFFFF00 */
-		uint32_t RDPKeyType;	 /*!< Configuration of the RDP OEM keys (used for
-					    OPTIONBYTE_RDPKEY). This parameter can be a
-					    value of @ref FLASH_OB_RDP_Key_Type */
-		uint32_t RDPKey1;	 /*!< Value of the RDP OEM key 1 (used for
-					    OPTIONBYTE_RDPKEY) */
-		uint32_t RDPKey2;	 /*!< Value of the RDP OEM key 2 (used for
-					    OPTIONBYTE_RDPKEY) */
-	} FLASH_OBProgramInitTypeDef;
+	uint32_t WMSecConfig;	 /*!< Configuration of the Watermark-based Secure Area
+				    (used for OPTIONBYTE_WMSEC). This parameter must be
+				    a value of @ref FLASH_OB_WMSEC */
+	uint32_t WMSecStartPage; /*!< Start page of secure area (used for
+				    OPTIONBYTE_WMSEC). This parameter must be a
+				    value between 0 and (max number of pages in
+				    the bank - 1) */
+	uint32_t WMSecEndPage;	 /*!< End page of secure area (used for
+				    OPTIONBYTE_WMSEC). This parameter must be a
+				    value   between WMSecStartPage and (max number
+				    of pages in the bank - 1) */
+	uint32_t WMHDPEndPage;	 /*!< End page of the secure hide protection (used for
+				    OPTIONBYTE_WMSEC).  This parameter must be a value
+				    between WMSecStartPage and WMSecEndPage */
+	uint32_t BootLock;	 /*!< Configuration of the boot lock (used for
+				    OPTIONBYTE_BOOT_LOCK). This parameter must be a
+				    value of @ref FLASH_OB_BOOT_LOCK */
+#endif				 /* __ARM_FEATURE_CMSE */
+	uint32_t BootAddrConfig; /*!< Configuration of the Boot address (used
+				    for OPTIONBYTE_BOOTADDR). This parameter
+				    must be a value of @ref FLASH_OB_BOOTADDR */
+	uint32_t BootAddr;	 /*!< Boot address (used for OPTIONBYTE_BOOTADDR).
+				      This parameter must be a value between 0x0 and
+				    0xFFFFFF00 */
+	uint32_t RDPKeyType;	 /*!< Configuration of the RDP OEM keys (used for
+				    OPTIONBYTE_RDPKEY). This parameter can be a
+				    value of @ref FLASH_OB_RDP_Key_Type */
+	uint32_t RDPKey1;	 /*!< Value of the RDP OEM key 1 (used for
+				    OPTIONBYTE_RDPKEY) */
+	uint32_t RDPKey2;	 /*!< Value of the RDP OEM key 2 (used for
+				    OPTIONBYTE_RDPKEY) */
+} FLASH_OBProgramInitTypeDef;
 
-	/**
-	 * @brief  FLASH handle Structure definition
-	 */
-	typedef struct
-	{
-		HAL_LockTypeDef Lock;	   /* FLASH locking object */
-		uint32_t ErrorCode;	   /* FLASH error code */
-		uint32_t ProcedureOnGoing; /* Internal variable to indicate which procedure
-					      is ongoing or not in IT context */
-		uint32_t Address;	   /* Internal variable to save address selected for
-					      program     in IT context */
-		uint32_t Bank;		   /* Internal variable to save current bank selected during
-					      erase in IT context */
-		uint32_t Page;		   /* Internal variable to define the current page which is
-					      being erased in IT context */
-		uint32_t NbPagesToErase;   /* Internal variable to save the remaining
-					      pages to erase in IT context */
-	} FLASH_ProcessTypeDef;
+/**
+ * @brief  FLASH handle Structure definition
+ */
+typedef struct {
+	HAL_LockTypeDef Lock;	   /* FLASH locking object */
+	uint32_t ErrorCode;	   /* FLASH error code */
+	uint32_t ProcedureOnGoing; /* Internal variable to indicate which procedure
+				      is ongoing or not in IT context */
+	uint32_t Address;	   /* Internal variable to save address selected for
+				      program     in IT context */
+	uint32_t Bank;		   /* Internal variable to save current bank selected during
+				      erase in IT context */
+	uint32_t Page;		   /* Internal variable to define the current page which is
+				      being erased in IT context */
+	uint32_t NbPagesToErase;   /* Internal variable to save the remaining
+				      pages to erase in IT context */
+} FLASH_ProcessTypeDef;
 
 /**
  * @}
@@ -844,41 +840,32 @@ a burst (8xquad-word) at a specified non-secure address */
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /* Enable secure FLASH interrupts from the secure world */
 #define __HAL_FLASH_ENABLE_IT(__INTERRUPT__)                                                                                                                                                           \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if (((__INTERRUPT__) & FLASH_IT_ECCC) != 0U)                                                                                                                                           \
-		{                                                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		if (((__INTERRUPT__) & FLASH_IT_ECCC) != 0U) {                                                                                                                                         \
 			SET_BIT(FLASH->ECCR, FLASH_ECCR_ECCIE);                                                                                                                                        \
 		}                                                                                                                                                                                      \
-		if (((__INTERRUPT__) & (~FLASH_IT_ECCC)) != 0U)                                                                                                                                        \
-		{                                                                                                                                                                                      \
+		if (((__INTERRUPT__) & (~FLASH_IT_ECCC)) != 0U) {                                                                                                                                      \
 			SET_BIT(FLASH->SECCR, ((__INTERRUPT__) & (~FLASH_IT_ECCC)));                                                                                                                   \
 		}                                                                                                                                                                                      \
 	} while (0)
 /* Enable non-secure FLASH interrupts from the secure world */
 #define __HAL_FLASH_ENABLE_IT_NS(__INTERRUPT__)                                                                                                                                                        \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if (((__INTERRUPT__) & FLASH_IT_ECCC) != 0U)                                                                                                                                           \
-		{                                                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		if (((__INTERRUPT__) & FLASH_IT_ECCC) != 0U) {                                                                                                                                         \
 			SET_BIT(FLASH->ECCR, FLASH_ECCR_ECCIE);                                                                                                                                        \
 		}                                                                                                                                                                                      \
-		if (((__INTERRUPT__) & (~FLASH_IT_ECCC)) != 0U)                                                                                                                                        \
-		{                                                                                                                                                                                      \
+		if (((__INTERRUPT__) & (~FLASH_IT_ECCC)) != 0U) {                                                                                                                                      \
 			SET_BIT(FLASH->NSCR, ((__INTERRUPT__) & (~FLASH_IT_ECCC)));                                                                                                                    \
 		}                                                                                                                                                                                      \
 	} while (0)
 #else
 /* Enable non-secure FLASH interrupts from the non-secure world */
 #define __HAL_FLASH_ENABLE_IT(__INTERRUPT__)                                                                                                                                                           \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if (((__INTERRUPT__) & FLASH_IT_ECCC) != 0U)                                                                                                                                           \
-		{                                                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		if (((__INTERRUPT__) & FLASH_IT_ECCC) != 0U) {                                                                                                                                         \
 			SET_BIT(FLASH->ECCR, FLASH_ECCR_ECCIE);                                                                                                                                        \
 		}                                                                                                                                                                                      \
-		if (((__INTERRUPT__) & (~FLASH_IT_ECCC)) != 0U)                                                                                                                                        \
-		{                                                                                                                                                                                      \
+		if (((__INTERRUPT__) & (~FLASH_IT_ECCC)) != 0U) {                                                                                                                                      \
 			SET_BIT(FLASH->NSCR, ((__INTERRUPT__) & (~FLASH_IT_ECCC)));                                                                                                                    \
 		}                                                                                                                                                                                      \
 	} while (0)
@@ -896,41 +883,32 @@ a burst (8xquad-word) at a specified non-secure address */
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /* Disable secure FLASH interrupts from the secure world */
 #define __HAL_FLASH_DISABLE_IT(__INTERRUPT__)                                                                                                                                                          \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if (((__INTERRUPT__) & FLASH_IT_ECCC) != 0U)                                                                                                                                           \
-		{                                                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		if (((__INTERRUPT__) & FLASH_IT_ECCC) != 0U) {                                                                                                                                         \
 			CLEAR_BIT(FLASH->ECCR, FLASH_ECCR_ECCIE);                                                                                                                                      \
 		}                                                                                                                                                                                      \
-		if (((__INTERRUPT__) & (~FLASH_IT_ECCC)) != 0U)                                                                                                                                        \
-		{                                                                                                                                                                                      \
+		if (((__INTERRUPT__) & (~FLASH_IT_ECCC)) != 0U) {                                                                                                                                      \
 			CLEAR_BIT(FLASH->SECCR, ((__INTERRUPT__) & (~FLASH_IT_ECCC)));                                                                                                                 \
 		}                                                                                                                                                                                      \
 	} while (0)
 /* Disable non-secure FLASH interrupts from the secure world */
 #define __HAL_FLASH_DISABLE_IT_NS(__INTERRUPT__)                                                                                                                                                       \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if (((__INTERRUPT__) & FLASH_IT_ECCC) != 0U)                                                                                                                                           \
-		{                                                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		if (((__INTERRUPT__) & FLASH_IT_ECCC) != 0U) {                                                                                                                                         \
 			CLEAR_BIT(FLASH->ECCR, FLASH_ECCR_ECCIE);                                                                                                                                      \
 		}                                                                                                                                                                                      \
-		if (((__INTERRUPT__) & (~FLASH_IT_ECCC)) != 0U)                                                                                                                                        \
-		{                                                                                                                                                                                      \
+		if (((__INTERRUPT__) & (~FLASH_IT_ECCC)) != 0U) {                                                                                                                                      \
 			CLEAR_BIT(FLASH->NSCR, ((__INTERRUPT__) & (~FLASH_IT_ECCC)));                                                                                                                  \
 		}                                                                                                                                                                                      \
 	} while (0)
 #else
 /* Disable non-secure FLASH interrupts from the non-secure world */
 #define __HAL_FLASH_DISABLE_IT(__INTERRUPT__)                                                                                                                                                          \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if (((__INTERRUPT__) & FLASH_IT_ECCC) != 0U)                                                                                                                                           \
-		{                                                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		if (((__INTERRUPT__) & FLASH_IT_ECCC) != 0U) {                                                                                                                                         \
 			CLEAR_BIT(FLASH->ECCR, FLASH_ECCR_ECCIE);                                                                                                                                      \
 		}                                                                                                                                                                                      \
-		if (((__INTERRUPT__) & (~FLASH_IT_ECCC)) != 0U)                                                                                                                                        \
-		{                                                                                                                                                                                      \
+		if (((__INTERRUPT__) & (~FLASH_IT_ECCC)) != 0U) {                                                                                                                                      \
 			CLEAR_BIT(FLASH->NSCR, ((__INTERRUPT__) & (~FLASH_IT_ECCC)));                                                                                                                  \
 		}                                                                                                                                                                                      \
 	} while (0)
@@ -990,45 +968,35 @@ a burst (8xquad-word) at a specified non-secure address */
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /* Clear secure FLASH flags from the secure world */
 #define __HAL_FLASH_CLEAR_FLAG(__FLAG__)                                                                                                                                                               \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if (((__FLAG__) & FLASH_FLAG_ECCR_ERRORS) != 0U)                                                                                                                                       \
-		{                                                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		if (((__FLAG__) & FLASH_FLAG_ECCR_ERRORS) != 0U) {                                                                                                                                     \
 			SET_BIT(FLASH->ECCR, ((__FLAG__) & FLASH_FLAG_ECCR_ERRORS));                                                                                                                   \
 		}                                                                                                                                                                                      \
-		if (((__FLAG__) & FLASH_FLAG_OPTWERR) != 0U)                                                                                                                                           \
-		{                                                                                                                                                                                      \
+		if (((__FLAG__) & FLASH_FLAG_OPTWERR) != 0U) {                                                                                                                                         \
 			SET_BIT(FLASH->NSSR, ((__FLAG__) & (FLASH_FLAG_OPTWERR)));                                                                                                                     \
 		}                                                                                                                                                                                      \
-		if (((__FLAG__) & ~(FLASH_FLAG_ECCR_ERRORS | FLASH_FLAG_OPTWERR)) != 0U)                                                                                                               \
-		{                                                                                                                                                                                      \
+		if (((__FLAG__) & ~(FLASH_FLAG_ECCR_ERRORS | FLASH_FLAG_OPTWERR)) != 0U) {                                                                                                             \
 			WRITE_REG(FLASH->SECSR, ((__FLAG__) & ~(FLASH_FLAG_ECCR_ERRORS | FLASH_FLAG_OPTWERR)));                                                                                        \
 		}                                                                                                                                                                                      \
 	} while (0)
 /* Clear non-secure FLASH flags from the secure world */
 #define __HAL_FLASH_CLEAR_FLAG_NS(__FLAG__)                                                                                                                                                            \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if (((__FLAG__) & FLASH_FLAG_ECCR_ERRORS) != 0U)                                                                                                                                       \
-		{                                                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		if (((__FLAG__) & FLASH_FLAG_ECCR_ERRORS) != 0U) {                                                                                                                                     \
 			SET_BIT(FLASH->ECCR, ((__FLAG__) & FLASH_FLAG_ECCR_ERRORS));                                                                                                                   \
 		}                                                                                                                                                                                      \
-		if (((__FLAG__) & ~(FLASH_FLAG_ECCR_ERRORS)) != 0U)                                                                                                                                    \
-		{                                                                                                                                                                                      \
+		if (((__FLAG__) & ~(FLASH_FLAG_ECCR_ERRORS)) != 0U) {                                                                                                                                  \
 			WRITE_REG(FLASH->NSSR, ((__FLAG__) & ~(FLASH_FLAG_ECCR_ERRORS)));                                                                                                              \
 		}                                                                                                                                                                                      \
 	} while (0)
 #else
 /* Clear non-secure FLASH flags from the non-secure world */
 #define __HAL_FLASH_CLEAR_FLAG(__FLAG__)                                                                                                                                                               \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if (((__FLAG__) & FLASH_FLAG_ECCR_ERRORS) != 0U)                                                                                                                                       \
-		{                                                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		if (((__FLAG__) & FLASH_FLAG_ECCR_ERRORS) != 0U) {                                                                                                                                     \
 			SET_BIT(FLASH->ECCR, ((__FLAG__) & FLASH_FLAG_ECCR_ERRORS));                                                                                                                   \
 		}                                                                                                                                                                                      \
-		if (((__FLAG__) & ~(FLASH_FLAG_ECCR_ERRORS)) != 0U)                                                                                                                                    \
-		{                                                                                                                                                                                      \
+		if (((__FLAG__) & ~(FLASH_FLAG_ECCR_ERRORS)) != 0U) {                                                                                                                                  \
 			WRITE_REG(FLASH->NSSR, ((__FLAG__) & ~(FLASH_FLAG_ECCR_ERRORS)));                                                                                                              \
 		}                                                                                                                                                                                      \
 	} while (0)
@@ -1040,66 +1008,66 @@ a burst (8xquad-word) at a specified non-secure address */
 /* Include FLASH HAL Extended module */
 #include "stm32u5xx_hal_flash_ex.h"
 
-	/* Exported functions --------------------------------------------------------*/
-	/** @addtogroup FLASH_Exported_Functions
-	 * @{
-	 */
+/* Exported functions --------------------------------------------------------*/
+/** @addtogroup FLASH_Exported_Functions
+ * @{
+ */
 
-	/* Program operation functions  ***********************************************/
-	/** @addtogroup FLASH_Exported_Functions_Group1
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address, uint32_t DataAddress);
-	HAL_StatusTypeDef HAL_FLASH_Program_IT(uint32_t TypeProgram, uint32_t Address, uint32_t DataAddress);
-	/* FLASH IRQ handler method */
-	void HAL_FLASH_IRQHandler(void);
-	/* Callbacks in non blocking modes */
-	void HAL_FLASH_EndOfOperationCallback(uint32_t ReturnValue);
-	void HAL_FLASH_OperationErrorCallback(uint32_t ReturnValue);
-	/**
-	 * @}
-	 */
+/* Program operation functions  ***********************************************/
+/** @addtogroup FLASH_Exported_Functions_Group1
+ * @{
+ */
+HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address, uint32_t DataAddress);
+HAL_StatusTypeDef HAL_FLASH_Program_IT(uint32_t TypeProgram, uint32_t Address, uint32_t DataAddress);
+/* FLASH IRQ handler method */
+void HAL_FLASH_IRQHandler(void);
+/* Callbacks in non blocking modes */
+void HAL_FLASH_EndOfOperationCallback(uint32_t ReturnValue);
+void HAL_FLASH_OperationErrorCallback(uint32_t ReturnValue);
+/**
+ * @}
+ */
 
-	/* Peripheral Control functions  **********************************************/
-	/** @addtogroup FLASH_Exported_Functions_Group2
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_FLASH_Unlock(void);
-	HAL_StatusTypeDef HAL_FLASH_Lock(void);
-	/* Option bytes control */
-	HAL_StatusTypeDef HAL_FLASH_OB_Unlock(void);
-	HAL_StatusTypeDef HAL_FLASH_OB_Lock(void);
-	HAL_StatusTypeDef HAL_FLASH_OB_Launch(void);
-	/**
-	 * @}
-	 */
+/* Peripheral Control functions  **********************************************/
+/** @addtogroup FLASH_Exported_Functions_Group2
+ * @{
+ */
+HAL_StatusTypeDef HAL_FLASH_Unlock(void);
+HAL_StatusTypeDef HAL_FLASH_Lock(void);
+/* Option bytes control */
+HAL_StatusTypeDef HAL_FLASH_OB_Unlock(void);
+HAL_StatusTypeDef HAL_FLASH_OB_Lock(void);
+HAL_StatusTypeDef HAL_FLASH_OB_Launch(void);
+/**
+ * @}
+ */
 
-	/* Peripheral State functions  ************************************************/
-	/** @addtogroup FLASH_Exported_Functions_Group3
-	 * @{
-	 */
-	uint32_t HAL_FLASH_GetError(void);
-	/**
-	 * @}
-	 */
+/* Peripheral State functions  ************************************************/
+/** @addtogroup FLASH_Exported_Functions_Group3
+ * @{
+ */
+uint32_t HAL_FLASH_GetError(void);
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Private variables ---------------------------------------------------------*/
-	/** @addtogroup FLASH_Private_Variables FLASH Private Variables
-	 * @{
-	 */
-	extern FLASH_ProcessTypeDef pFlash;
-	/**
-	 * @}
-	 */
+/* Private variables ---------------------------------------------------------*/
+/** @addtogroup FLASH_Private_Variables FLASH Private Variables
+ * @{
+ */
+extern FLASH_ProcessTypeDef pFlash;
+/**
+ * @}
+ */
 
-	/* Private constants --------------------------------------------------------*/
-	/** @defgroup FLASH_Private_Constants FLASH Private Constants
-	 * @{
-	 */
+/* Private constants --------------------------------------------------------*/
+/** @defgroup FLASH_Private_Constants FLASH Private Constants
+ * @{
+ */
 
 #define FLASH_TIMEOUT_VALUE 1000U /* 1 s */
 
@@ -1225,26 +1193,26 @@ a burst (8xquad-word) at a specified non-secure address */
 #else
 #define IS_FLASH_SECURE_OPERATION() (0U)
 #endif /* __ARM_FEATURE_CMSE */
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Private functions ---------------------------------------------------------*/
-	/** @addtogroup FLASH_Private_Functions FLASH Private Functions
-	 * @{
-	 */
-	HAL_StatusTypeDef FLASH_WaitForLastOperation(uint32_t Timeout);
-	/**
-	 * @}
-	 */
+/* Private functions ---------------------------------------------------------*/
+/** @addtogroup FLASH_Private_Functions FLASH Private Functions
+ * @{
+ */
+HAL_StatusTypeDef FLASH_WaitForLastOperation(uint32_t Timeout);
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

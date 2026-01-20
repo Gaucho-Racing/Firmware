@@ -178,8 +178,7 @@ functions
 HAL_StatusTypeDef HAL_WWDG_Init(WWDG_HandleTypeDef *hwwdg)
 {
 	/* Check the WWDG handle allocation */
-	if (hwwdg == NULL)
-	{
+	if (hwwdg == NULL) {
 		return HAL_ERROR;
 	}
 
@@ -192,13 +191,11 @@ HAL_StatusTypeDef HAL_WWDG_Init(WWDG_HandleTypeDef *hwwdg)
 
 #if (USE_HAL_WWDG_REGISTER_CALLBACKS == 1)
 	/* Reset Callback pointers */
-	if (hwwdg->EwiCallback == NULL)
-	{
+	if (hwwdg->EwiCallback == NULL) {
 		hwwdg->EwiCallback = HAL_WWDG_EarlyWakeupCallback;
 	}
 
-	if (hwwdg->MspInitCallback == NULL)
-	{
+	if (hwwdg->MspInitCallback == NULL) {
 		hwwdg->MspInitCallback = HAL_WWDG_MspInit;
 	}
 
@@ -254,14 +251,10 @@ HAL_StatusTypeDef HAL_WWDG_RegisterCallback(WWDG_HandleTypeDef *hwwdg, HAL_WWDG_
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
-	if (pCallback == NULL)
-	{
+	if (pCallback == NULL) {
 		status = HAL_ERROR;
-	}
-	else
-	{
-		switch (CallbackID)
-		{
+	} else {
+		switch (CallbackID) {
 			case HAL_WWDG_EWI_CB_ID:
 				hwwdg->EwiCallback = pCallback;
 				break;
@@ -294,8 +287,7 @@ HAL_StatusTypeDef HAL_WWDG_UnRegisterCallback(WWDG_HandleTypeDef *hwwdg, HAL_WWD
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
-	switch (CallbackID)
-	{
+	switch (CallbackID) {
 		case HAL_WWDG_EWI_CB_ID:
 			hwwdg->EwiCallback = HAL_WWDG_EarlyWakeupCallback;
 			break;
@@ -364,11 +356,9 @@ HAL_StatusTypeDef HAL_WWDG_Refresh(WWDG_HandleTypeDef *hwwdg)
 void HAL_WWDG_IRQHandler(WWDG_HandleTypeDef *hwwdg)
 {
 	/* Check if Early Wakeup Interrupt is enable */
-	if (__HAL_WWDG_GET_IT_SOURCE(hwwdg, WWDG_IT_EWI) != RESET)
-	{
+	if (__HAL_WWDG_GET_IT_SOURCE(hwwdg, WWDG_IT_EWI) != RESET) {
 		/* Check if WWDG Early Wakeup Interrupt occurred */
-		if (__HAL_WWDG_GET_FLAG(hwwdg, WWDG_FLAG_EWIF) != RESET)
-		{
+		if (__HAL_WWDG_GET_FLAG(hwwdg, WWDG_FLAG_EWIF) != RESET) {
 			/* Clear the WWDG Early Wakeup flag */
 			__HAL_WWDG_CLEAR_FLAG(hwwdg, WWDG_FLAG_EWIF);
 

@@ -263,12 +263,9 @@ void SystemCoreClockUpdate(void)
 
 	/* Get MSI Range
 	 * frequency--------------------------------------------------*/
-	if ((RCC->CR & RCC_CR_MSIRGSEL) == 0U)
-	{ /* MSISRANGE from RCC_CSR applies */
+	if ((RCC->CR & RCC_CR_MSIRGSEL) == 0U) { /* MSISRANGE from RCC_CSR applies */
 		msirange = (RCC->CSR & RCC_CSR_MSISRANGE) >> 8U;
-	}
-	else
-	{ /* MSIRANGE from RCC_CR applies */
+	} else { /* MSIRANGE from RCC_CR applies */
 		msirange = (RCC->CR & RCC_CR_MSIRANGE) >> 4U;
 	}
 	/*MSI frequency range in HZ*/
@@ -276,8 +273,7 @@ void SystemCoreClockUpdate(void)
 
 	/* Get SYSCLK source
 	 * -------------------------------------------------------*/
-	switch (RCC->CFGR & RCC_CFGR_SWS)
-	{
+	switch (RCC->CFGR & RCC_CFGR_SWS) {
 		case 0x00: /* MSI used as system clock source */
 			SystemCoreClock = msirange;
 			break;
@@ -297,8 +293,7 @@ void SystemCoreClockUpdate(void)
 			pllsource = (RCC->PLLCFGR & RCC_PLLCFGR_PLLSRC);
 			pllm = ((RCC->PLLCFGR & RCC_PLLCFGR_PLLM) >> 4U) + 1U;
 
-			switch (pllsource)
-			{
+			switch (pllsource) {
 				case 0x02: /* HSI used as PLL clock source */
 					pllvco = (HSI_VALUE / pllm);
 					break;

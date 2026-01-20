@@ -23,35 +23,30 @@ void ReportUnhandledMessage(GR_OLD_BUS_ID bus_id, GR_OLD_MSG_ID msg_id, GR_OLD_N
 
 void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id, GR_OLD_MSG_ID msg_id, GR_OLD_NODE_ID sender_id, uint8_t *data, uint32_t data_length)
 {
-	switch (msg_id)
-	{
+	switch (msg_id) {
 		case MSG_DEBUG_2_0:
-			if (data_length > sizeof(GR_OLD_DEBUG_2_MSG))
-			{
+			if (data_length > sizeof(GR_OLD_DEBUG_2_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
 			LOGOMATIC("Received from %02X on bus %d: %.*s\n", sender_id, bus_id, (int)data_length, data);
 			break;
 		case MSG_DEBUG_FD:
-			if (data_length > sizeof(GR_OLD_DEBUG_2_MSG))
-			{
+			if (data_length > sizeof(GR_OLD_DEBUG_2_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
 			LOGOMATIC("Received from %02X on bus %d: %.*s\n", sender_id, bus_id, (int)data_length, data);
 			break;
 		case MSG_PING:
-			if (data_length != sizeof(GR_OLD_PING_MSG))
-			{
+			if (data_length != sizeof(GR_OLD_PING_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
 			// TODO See Issue #143
 			break;
 		case MSG_ACU_STATUS_1:
-			if (data_length != sizeof(GR_OLD_BCU_STATUS_1_MSG))
-			{
+			if (data_length != sizeof(GR_OLD_BCU_STATUS_1_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
@@ -61,8 +56,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id, GR_
 			state_data->ecuStatus2.ts_voltage = bcu_status_1->ts_voltage;
 			break;
 		case MSG_ACU_STATUS_2:
-			if (data_length != sizeof(GR_OLD_BCU_STATUS_2_MSG))
-			{
+			if (data_length != sizeof(GR_OLD_BCU_STATUS_2_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
@@ -71,8 +65,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id, GR_
 			state_data->acu_error_warning_bits = bcu_status_2->error_bits;
 			break;
 		case MSG_INVERTER_STATUS_1:
-			if (data_length != sizeof(GR_OLD_INVERTER_STATUS_1_MSG))
-			{
+			if (data_length != sizeof(GR_OLD_INVERTER_STATUS_1_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
@@ -81,8 +74,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id, GR_
 			state_data->ecuStatus3.rr_wheel_rpm = inverter_status_1->motor_rpm;
 			break;
 		case MSG_INVERTER_STATUS_3:
-			if (data_length != sizeof(GR_OLD_INVERTER_STATUS_3_MSG))
-			{
+			if (data_length != sizeof(GR_OLD_INVERTER_STATUS_3_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
@@ -90,8 +82,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id, GR_
 			state_data->inverter_fault_map = inverter_status_3->fault_bits;
 			break;
 		case MSG_DASH_STATUS:
-			if (data_length != sizeof(GR_OLD_DASH_STATUS_MSG))
-			{
+			if (data_length != sizeof(GR_OLD_DASH_STATUS_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}
@@ -100,8 +91,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id, GR_
 			state_data->rtd_button_engaged = dash_status->rtd_button;
 			break;
 		case MSG_STEERING_STATUS:
-			if (data_length != sizeof(GR_OLD_STEERING_STATUS_MSG))
-			{
+			if (data_length != sizeof(GR_OLD_STEERING_STATUS_MSG)) {
 				ReportBadMessageLength(bus_id, msg_id, sender_id);
 				break;
 			}

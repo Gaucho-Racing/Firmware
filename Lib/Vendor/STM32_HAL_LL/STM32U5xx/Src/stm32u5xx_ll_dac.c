@@ -158,36 +158,29 @@ ErrorStatus LL_DAC_Init(DAC_TypeDef *DACx, uint32_t DAC_Channel, const LL_DAC_In
 	assert_param(IS_LL_DAC_OUTPUT_CONNECTION(DAC_InitStruct->OutputConnection));
 	assert_param(IS_LL_DAC_OUTPUT_MODE(DAC_InitStruct->OutputMode));
 	assert_param(IS_LL_DAC_WAVE_AUTO_GENER_MODE(DAC_InitStruct->WaveAutoGeneration));
-	if (DAC_InitStruct->WaveAutoGeneration != LL_DAC_WAVE_AUTO_GENERATION_NONE)
-	{
+	if (DAC_InitStruct->WaveAutoGeneration != LL_DAC_WAVE_AUTO_GENERATION_NONE) {
 		assert_param(IS_LL_DAC_WAVE_AUTO_GENER_CONFIG(DAC_InitStruct->WaveAutoGeneration, DAC_InitStruct->WaveAutoGenerationConfig));
 	}
 
 	/* Note: Hardware constraint (refer to description of this function) */
 	/*       DAC instance must be disabled. */
-	if (LL_DAC_IsEnabled(DACx, DAC_Channel) == 0UL)
-	{
+	if (LL_DAC_IsEnabled(DACx, DAC_Channel) == 0UL) {
 		/* Configuration of DAC channel: */
 		/*  - TriggerSource */
 		/*  - WaveAutoGeneration */
 		/*  - OutputBuffer */
 		/*  - OutputConnection */
 		/*  - OutputMode */
-		if (DAC_InitStruct->WaveAutoGeneration != LL_DAC_WAVE_AUTO_GENERATION_NONE)
-		{
+		if (DAC_InitStruct->WaveAutoGeneration != LL_DAC_WAVE_AUTO_GENERATION_NONE) {
 			MODIFY_REG(DACx->CR, (DAC_CR_TSEL1 | DAC_CR_WAVE1 | DAC_CR_MAMP1) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK),
 				   (DAC_InitStruct->TriggerSource | DAC_InitStruct->WaveAutoGeneration | DAC_InitStruct->WaveAutoGenerationConfig) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK));
-		}
-		else
-		{
+		} else {
 			MODIFY_REG(DACx->CR, (DAC_CR_TSEL1 | DAC_CR_WAVE1) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK),
 				   (DAC_InitStruct->TriggerSource | LL_DAC_WAVE_AUTO_GENERATION_NONE) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK));
 		}
 		MODIFY_REG(DACx->MCR, (DAC_MCR_MODE1_1 | DAC_MCR_MODE1_0 | DAC_MCR_MODE1_2) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK),
 			   (DAC_InitStruct->OutputBuffer | DAC_InitStruct->OutputConnection | DAC_InitStruct->OutputMode) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK));
-	}
-	else
-	{
+	} else {
 		/* Initialization error: DAC instance is not disabled. */
 		status = ERROR;
 	}

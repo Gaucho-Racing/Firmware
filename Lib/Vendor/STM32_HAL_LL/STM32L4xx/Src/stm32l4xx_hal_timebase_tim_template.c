@@ -81,8 +81,7 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 
 	/* Check uwTickFreq for MisraC 2012 (even if uwTickFreq is a enum type
 	 * that don't take the value zero)*/
-	if ((uint32_t)uwTickFreq != 0U)
-	{
+	if ((uint32_t)uwTickFreq != 0U) {
 		/* Enable TIM6 clock */
 		__HAL_RCC_TIM6_CLK_ENABLE();
 
@@ -93,12 +92,9 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 		uwAPB1Prescaler = clkconfig.APB1CLKDivider;
 
 		/* Compute TIM6 clock */
-		if (uwAPB1Prescaler == RCC_HCLK_DIV1)
-		{
+		if (uwAPB1Prescaler == RCC_HCLK_DIV1) {
 			uwTimclock = HAL_RCC_GetPCLK1Freq();
-		}
-		else
-		{
+		} else {
 			uwTimclock = 2U * HAL_RCC_GetPCLK1Freq();
 		}
 
@@ -121,39 +117,28 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 		TimHandle.Init.ClockDivision = 0;
 		TimHandle.Init.CounterMode = TIM_COUNTERMODE_UP;
 		TimHandle.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-		if (HAL_TIM_Base_Init(&TimHandle) == HAL_OK)
-		{
+		if (HAL_TIM_Base_Init(&TimHandle) == HAL_OK) {
 			/* Start the TIM time Base generation in interrupt mode
 			 */
-			if (HAL_TIM_Base_Start_IT(&TimHandle) == HAL_OK)
-			{
+			if (HAL_TIM_Base_Start_IT(&TimHandle) == HAL_OK) {
 				/* Enable the TIM6_DAC global Interrupt */
 				HAL_NVIC_EnableIRQ(TIM6_DAC_IRQn);
 
 				/* Configure the SysTick IRQ priority */
-				if (TickPriority < (1UL << __NVIC_PRIO_BITS))
-				{
+				if (TickPriority < (1UL << __NVIC_PRIO_BITS)) {
 					/*Configure the TIM6_DAC IRQ priority */
 					HAL_NVIC_SetPriority(TIM6_DAC_IRQn, TickPriority, 0U);
 					uwTickPrio = TickPriority;
-				}
-				else
-				{
+				} else {
 					status = HAL_ERROR;
 				}
-			}
-			else
-			{
+			} else {
 				status = HAL_ERROR;
 			}
-		}
-		else
-		{
+		} else {
 			status = HAL_ERROR;
 		}
-	}
-	else
-	{
+	} else {
 		status = HAL_ERROR;
 	}
 

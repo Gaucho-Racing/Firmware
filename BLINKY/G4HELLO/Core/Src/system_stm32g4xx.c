@@ -238,8 +238,7 @@ void SystemCoreClockUpdate(void)
 
 	/* Get SYSCLK source
 	 * -------------------------------------------------------*/
-	switch (RCC->CFGR & RCC_CFGR_SWS)
-	{
+	switch (RCC->CFGR & RCC_CFGR_SWS) {
 		case 0x04: /* HSI used as system clock source */
 			SystemCoreClock = HSI_VALUE;
 			break;
@@ -257,8 +256,7 @@ void SystemCoreClockUpdate(void)
 			if (pllsource == 0x02UL) /* HSI used as PLL clock source */
 			{
 				pllvco = (HSI_VALUE / pllm);
-			}
-			else /* HSE used as PLL clock source */
+			} else /* HSE used as PLL clock source */
 			{
 				pllvco = (HSE_VALUE / pllm);
 			}

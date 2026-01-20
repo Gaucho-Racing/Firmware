@@ -758,8 +758,7 @@ HAL_StatusTypeDef HAL_HMACEx_MD5_Step1_2_DMA(HASH_HandleTypeDef *hhash, const ui
  */
 HAL_StatusTypeDef HAL_HMACEx_MD5_Step2_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
 {
-	if (hhash->DigestCalculationDisable != SET)
-	{
+	if (hhash->DigestCalculationDisable != SET) {
 		return HAL_ERROR;
 	}
 	return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_MD5);
@@ -833,8 +832,7 @@ HAL_StatusTypeDef HAL_HMACEx_SHA1_Step1_2_DMA(HASH_HandleTypeDef *hhash, const u
  */
 HAL_StatusTypeDef HAL_HMACEx_SHA1_Step2_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
 {
-	if (hhash->DigestCalculationDisable != SET)
-	{
+	if (hhash->DigestCalculationDisable != SET) {
 		return HAL_ERROR;
 	}
 	return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA1);
@@ -908,8 +906,7 @@ HAL_StatusTypeDef HAL_HMACEx_SHA224_Step1_2_DMA(HASH_HandleTypeDef *hhash, const
  */
 HAL_StatusTypeDef HAL_HMACEx_SHA224_Step2_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
 {
-	if (hhash->DigestCalculationDisable != SET)
-	{
+	if (hhash->DigestCalculationDisable != SET) {
 		return HAL_ERROR;
 	}
 	return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA224);
@@ -983,8 +980,7 @@ HAL_StatusTypeDef HAL_HMACEx_SHA256_Step1_2_DMA(HASH_HandleTypeDef *hhash, const
  */
 HAL_StatusTypeDef HAL_HMACEx_SHA256_Step2_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const pInBuffer, uint32_t Size)
 {
-	if (hhash->DigestCalculationDisable != SET)
-	{
+	if (hhash->DigestCalculationDisable != SET) {
 		return HAL_ERROR;
 	}
 	return HMAC_Start_DMA(hhash, pInBuffer, Size, HASH_ALGOSELECTION_SHA256);

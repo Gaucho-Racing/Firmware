@@ -21,93 +21,88 @@
 #define STM32U5xx_HAL_DCACHE_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes -----------------------------------------------------------------*/
 #include "stm32u5xx_hal_def.h"
 
-	/** @addtogroup STM32U5xx_HAL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32U5xx_HAL_Driver
+ * @{
+ */
 
 #if defined(DCACHE1) || defined(DCACHE2)
 
-	/** @addtogroup DCACHE
-	 * @{
-	 */
-	/* Exported types ------------------------------------------------------------*/
+/** @addtogroup DCACHE
+ * @{
+ */
+/* Exported types ------------------------------------------------------------*/
 
-	/** @defgroup DCACHE_Exported_Types DCACHE Exported Types
-	 * @{
-	 */
+/** @defgroup DCACHE_Exported_Types DCACHE Exported Types
+ * @{
+ */
 
-	/**
-	 * @brief DCACHE Init structure definition
-	 */
-	typedef struct
-	{
-		uint32_t ReadBurstType; /*!< Burst type to be applied for Data Cache
-					     This parameter can be a value of @ref
-					   DCACHE_Read_Burst_Type*/
-	} DCACHE_InitTypeDef;
+/**
+ * @brief DCACHE Init structure definition
+ */
+typedef struct {
+	uint32_t ReadBurstType; /*!< Burst type to be applied for Data Cache
+				     This parameter can be a value of @ref
+				   DCACHE_Read_Burst_Type*/
+} DCACHE_InitTypeDef;
 
-	/**
-	 * @brief  HAL State structures definition
-	 */
-	typedef enum
-	{
-		HAL_DCACHE_STATE_RESET = 0x00U,	  /*!< DCACHE not yet initialized or disabled     */
-		HAL_DCACHE_STATE_READY = 0x01U,	  /*!< Peripheral initialized and ready for use   */
-		HAL_DCACHE_STATE_BUSY = 0x02U,	  /*!< An internal process is ongoing    */
-		HAL_DCACHE_STATE_TIMEOUT = 0x05U, /*!< Timeout state */
-		HAL_DCACHE_STATE_ERROR = 0x06U,	  /*!< DCACHE state error   */
-	} HAL_DCACHE_StateTypeDef;
+/**
+ * @brief  HAL State structures definition
+ */
+typedef enum {
+	HAL_DCACHE_STATE_RESET = 0x00U,	  /*!< DCACHE not yet initialized or disabled     */
+	HAL_DCACHE_STATE_READY = 0x01U,	  /*!< Peripheral initialized and ready for use   */
+	HAL_DCACHE_STATE_BUSY = 0x02U,	  /*!< An internal process is ongoing    */
+	HAL_DCACHE_STATE_TIMEOUT = 0x05U, /*!< Timeout state */
+	HAL_DCACHE_STATE_ERROR = 0x06U,	  /*!< DCACHE state error   */
+} HAL_DCACHE_StateTypeDef;
 
-	/** @defgroup DCACHE_Configuration_Structure_definition DCACHE Configuration
-	 * Structure definition
-	 * @brief  DCACHE Configuration Structure definition
-	 * @{
-	 */
-	typedef struct __DCACHE_HandleTypeDef
-	{
-		DCACHE_TypeDef *Instance; /*!< DCACHE register base address.    */
-		DCACHE_InitTypeDef Init;  /*!< DCACHE Initialization Structure. */
+/** @defgroup DCACHE_Configuration_Structure_definition DCACHE Configuration
+ * Structure definition
+ * @brief  DCACHE Configuration Structure definition
+ * @{
+ */
+typedef struct __DCACHE_HandleTypeDef {
+	DCACHE_TypeDef *Instance; /*!< DCACHE register base address.    */
+	DCACHE_InitTypeDef Init;  /*!< DCACHE Initialization Structure. */
 
-		void (*ErrorCallback)(struct __DCACHE_HandleTypeDef *hdcache);
-		void (*CleanByAddrCallback)(struct __DCACHE_HandleTypeDef *hdcache);
-		void (*InvalidateByAddrCallback)(struct __DCACHE_HandleTypeDef *hdcache);
-		void (*InvalidateCompleteCallback)(struct __DCACHE_HandleTypeDef *hdcache);
-		void (*CleanAndInvalidateByAddrCallback)(struct __DCACHE_HandleTypeDef *hdcache);
+	void (*ErrorCallback)(struct __DCACHE_HandleTypeDef *hdcache);
+	void (*CleanByAddrCallback)(struct __DCACHE_HandleTypeDef *hdcache);
+	void (*InvalidateByAddrCallback)(struct __DCACHE_HandleTypeDef *hdcache);
+	void (*InvalidateCompleteCallback)(struct __DCACHE_HandleTypeDef *hdcache);
+	void (*CleanAndInvalidateByAddrCallback)(struct __DCACHE_HandleTypeDef *hdcache);
 
-		void (*MspInitCallback)(struct __DCACHE_HandleTypeDef *hdcache);
-		void (*MspDeInitCallback)(struct __DCACHE_HandleTypeDef *hdcache);
+	void (*MspInitCallback)(struct __DCACHE_HandleTypeDef *hdcache);
+	void (*MspDeInitCallback)(struct __DCACHE_HandleTypeDef *hdcache);
 
-		__IO HAL_DCACHE_StateTypeDef State;
-		__IO uint32_t ErrorCode;
-	} DCACHE_HandleTypeDef;
+	__IO HAL_DCACHE_StateTypeDef State;
+	__IO uint32_t ErrorCode;
+} DCACHE_HandleTypeDef;
 
-	/**
-	 * @brief  HAL DCACHE Callback pointer definition
-	 */
-	/*!< Pointer to a DCACHE common callback function */
-	typedef void (*pDCACHE_CallbackTypeDef)(DCACHE_HandleTypeDef *hdcache);
+/**
+ * @brief  HAL DCACHE Callback pointer definition
+ */
+/*!< Pointer to a DCACHE common callback function */
+typedef void (*pDCACHE_CallbackTypeDef)(DCACHE_HandleTypeDef *hdcache);
 
-	/**
-	 * @brief  HAL DCACHE Callback ID enumeration definition
-	 */
-	typedef enum
-	{
-		HAL_DCACHE_CLEAN_BY_ADDRESS_CB_ID = 0x00U,		  /*!< DCACHE Clean By Address callback ID                */
-		HAL_DCACHE_INVALIDATE_BY_ADDRESS_CB_ID = 0x01U,		  /*!< DCACHE Invalidate By Address callback ID           */
-		HAL_DCACHE_CLEAN_AND_INVALIDATE_BY_ADDRESS_CB_ID = 0x02U, /*!< DCACHE Clean And Invalidate By Address callback ID */
-		HAL_DCACHE_INVALIDATE_COMPLETE_CB_ID = 0x03U,		  /*!< DCACHE Invalidate Complete ID                      */
-		HAL_DCACHE_ERROR_CB_ID = 0x04U,				  /*!< DCACHE Error callback ID */
+/**
+ * @brief  HAL DCACHE Callback ID enumeration definition
+ */
+typedef enum {
+	HAL_DCACHE_CLEAN_BY_ADDRESS_CB_ID = 0x00U,		  /*!< DCACHE Clean By Address callback ID                */
+	HAL_DCACHE_INVALIDATE_BY_ADDRESS_CB_ID = 0x01U,		  /*!< DCACHE Invalidate By Address callback ID           */
+	HAL_DCACHE_CLEAN_AND_INVALIDATE_BY_ADDRESS_CB_ID = 0x02U, /*!< DCACHE Clean And Invalidate By Address callback ID */
+	HAL_DCACHE_INVALIDATE_COMPLETE_CB_ID = 0x03U,		  /*!< DCACHE Invalidate Complete ID                      */
+	HAL_DCACHE_ERROR_CB_ID = 0x04U,				  /*!< DCACHE Error callback ID */
 
-		HAL_DCACHE_MSPINIT_CB_ID = 0x05U,  /*!< DCACHE Msp Init callback ID  */
-		HAL_DCACHE_MSPDEINIT_CB_ID = 0x06U /*!< DCACHE Msp DeInit callback ID */
-	} HAL_DCACHE_CallbackIDTypeDef;
+	HAL_DCACHE_MSPINIT_CB_ID = 0x05U,  /*!< DCACHE Msp Init callback ID  */
+	HAL_DCACHE_MSPDEINIT_CB_ID = 0x06U /*!< DCACHE Msp DeInit callback ID */
+} HAL_DCACHE_CallbackIDTypeDef;
 
 /**
  * @}
@@ -249,104 +244,104 @@ extern "C"
  */
 #define __HAL_DCACHE_CLEAR_FLAG(__HANDLE__, __FLAG__) WRITE_REG((__HANDLE__)->Instance->FCR, (__FLAG__))
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported functions -------------------------------------------------------*/
-	/** @defgroup DCACHE_Exported_Functions DCACHE Exported Functions
-	 * @brief    DCACHE Exported functions
-	 * @{
-	 */
+/* Exported functions -------------------------------------------------------*/
+/** @defgroup DCACHE_Exported_Functions DCACHE Exported Functions
+ * @brief    DCACHE Exported functions
+ * @{
+ */
 
-	/** @defgroup DCACHE_Exported_Functions_Group1 Initialization and
-	 * De-Initialization Functions
-	 * @brief    Initialization and De-Initialization Functions
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_DCACHE_Init(DCACHE_HandleTypeDef *hdcache);
-	HAL_StatusTypeDef HAL_DCACHE_DeInit(DCACHE_HandleTypeDef *hdcache);
-	void HAL_DCACHE_MspInit(DCACHE_HandleTypeDef *hdcache);
-	void HAL_DCACHE_MspDeInit(DCACHE_HandleTypeDef *hdcache);
-	/**
-	 * @}
-	 */
+/** @defgroup DCACHE_Exported_Functions_Group1 Initialization and
+ * De-Initialization Functions
+ * @brief    Initialization and De-Initialization Functions
+ * @{
+ */
+HAL_StatusTypeDef HAL_DCACHE_Init(DCACHE_HandleTypeDef *hdcache);
+HAL_StatusTypeDef HAL_DCACHE_DeInit(DCACHE_HandleTypeDef *hdcache);
+void HAL_DCACHE_MspInit(DCACHE_HandleTypeDef *hdcache);
+void HAL_DCACHE_MspDeInit(DCACHE_HandleTypeDef *hdcache);
+/**
+ * @}
+ */
 
-	/** @defgroup DCACHE_Exported_Functions_Group2 I/O Operation Functions
-	 * @brief    I/O Operation Functions
-	 * @{
-	 */
-	/* Peripheral Control functions ***/
-	HAL_StatusTypeDef HAL_DCACHE_Enable(DCACHE_HandleTypeDef *hdcache);
-	HAL_StatusTypeDef HAL_DCACHE_Disable(DCACHE_HandleTypeDef *hdcache);
-	uint32_t HAL_DCACHE_IsEnabled(const DCACHE_HandleTypeDef *hdcache);
-	HAL_StatusTypeDef HAL_DCACHE_SetReadBurstType(DCACHE_HandleTypeDef *hdcache, uint32_t ReadBurstType);
+/** @defgroup DCACHE_Exported_Functions_Group2 I/O Operation Functions
+ * @brief    I/O Operation Functions
+ * @{
+ */
+/* Peripheral Control functions ***/
+HAL_StatusTypeDef HAL_DCACHE_Enable(DCACHE_HandleTypeDef *hdcache);
+HAL_StatusTypeDef HAL_DCACHE_Disable(DCACHE_HandleTypeDef *hdcache);
+uint32_t HAL_DCACHE_IsEnabled(const DCACHE_HandleTypeDef *hdcache);
+HAL_StatusTypeDef HAL_DCACHE_SetReadBurstType(DCACHE_HandleTypeDef *hdcache, uint32_t ReadBurstType);
 
-	/*** Cache maintenance in blocking mode (Polling) ***/
-	HAL_StatusTypeDef HAL_DCACHE_Invalidate(DCACHE_HandleTypeDef *hdcache);
-	HAL_StatusTypeDef HAL_DCACHE_InvalidateByAddr(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr, uint32_t dSize);
-	HAL_StatusTypeDef HAL_DCACHE_CleanByAddr(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr, uint32_t dSize);
-	HAL_StatusTypeDef HAL_DCACHE_CleanInvalidByAddr(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr, uint32_t dSize);
+/*** Cache maintenance in blocking mode (Polling) ***/
+HAL_StatusTypeDef HAL_DCACHE_Invalidate(DCACHE_HandleTypeDef *hdcache);
+HAL_StatusTypeDef HAL_DCACHE_InvalidateByAddr(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr, uint32_t dSize);
+HAL_StatusTypeDef HAL_DCACHE_CleanByAddr(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr, uint32_t dSize);
+HAL_StatusTypeDef HAL_DCACHE_CleanInvalidByAddr(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr, uint32_t dSize);
 
-	/*** Cache maintenance in non-blocking mode (Interrupt) ***/
-	HAL_StatusTypeDef HAL_DCACHE_Invalidate_IT(DCACHE_HandleTypeDef *hdcache);
-	HAL_StatusTypeDef HAL_DCACHE_InvalidateByAddr_IT(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr, uint32_t dSize);
-	HAL_StatusTypeDef HAL_DCACHE_CleanByAddr_IT(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr, uint32_t dSize);
-	HAL_StatusTypeDef HAL_DCACHE_CleanInvalidByAddr_IT(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr, uint32_t dSize);
+/*** Cache maintenance in non-blocking mode (Interrupt) ***/
+HAL_StatusTypeDef HAL_DCACHE_Invalidate_IT(DCACHE_HandleTypeDef *hdcache);
+HAL_StatusTypeDef HAL_DCACHE_InvalidateByAddr_IT(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr, uint32_t dSize);
+HAL_StatusTypeDef HAL_DCACHE_CleanByAddr_IT(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr, uint32_t dSize);
+HAL_StatusTypeDef HAL_DCACHE_CleanInvalidByAddr_IT(DCACHE_HandleTypeDef *hdcache, const uint32_t *const pAddr, uint32_t dSize);
 
-	/*** IRQHandler and Callbacks ***/
-	void HAL_DCACHE_IRQHandler(DCACHE_HandleTypeDef *hdcache);
-	void HAL_DCACHE_ErrorCallback(DCACHE_HandleTypeDef *hdcache);
-	void HAL_DCACHE_CleanByAddrCallback(DCACHE_HandleTypeDef *hdcache);
-	void HAL_DCACHE_InvalidateByAddrCallback(DCACHE_HandleTypeDef *hdcache);
-	void HAL_DCACHE_InvalidateCompleteCallback(DCACHE_HandleTypeDef *hdcache);
-	void HAL_DCACHE_CleanAndInvalidateByAddrCallback(DCACHE_HandleTypeDef *hdcache);
+/*** IRQHandler and Callbacks ***/
+void HAL_DCACHE_IRQHandler(DCACHE_HandleTypeDef *hdcache);
+void HAL_DCACHE_ErrorCallback(DCACHE_HandleTypeDef *hdcache);
+void HAL_DCACHE_CleanByAddrCallback(DCACHE_HandleTypeDef *hdcache);
+void HAL_DCACHE_InvalidateByAddrCallback(DCACHE_HandleTypeDef *hdcache);
+void HAL_DCACHE_InvalidateCompleteCallback(DCACHE_HandleTypeDef *hdcache);
+void HAL_DCACHE_CleanAndInvalidateByAddrCallback(DCACHE_HandleTypeDef *hdcache);
 
-	/* Callbacks Register/UnRegister functions ***/
-	HAL_StatusTypeDef HAL_DCACHE_RegisterCallback(DCACHE_HandleTypeDef *hdcache, HAL_DCACHE_CallbackIDTypeDef CallbackID, pDCACHE_CallbackTypeDef pCallback);
-	HAL_StatusTypeDef HAL_DCACHE_UnRegisterCallback(DCACHE_HandleTypeDef *hdcache, HAL_DCACHE_CallbackIDTypeDef CallbackID);
+/* Callbacks Register/UnRegister functions ***/
+HAL_StatusTypeDef HAL_DCACHE_RegisterCallback(DCACHE_HandleTypeDef *hdcache, HAL_DCACHE_CallbackIDTypeDef CallbackID, pDCACHE_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_DCACHE_UnRegisterCallback(DCACHE_HandleTypeDef *hdcache, HAL_DCACHE_CallbackIDTypeDef CallbackID);
 
-	/*** Performance instruction cache monitoring functions ***/
-	uint32_t HAL_DCACHE_Monitor_GetReadHitValue(const DCACHE_HandleTypeDef *hdcache);
-	uint32_t HAL_DCACHE_Monitor_GetReadMissValue(const DCACHE_HandleTypeDef *hdcache);
-	uint32_t HAL_DCACHE_Monitor_GetWriteHitValue(const DCACHE_HandleTypeDef *hdcache);
-	uint32_t HAL_DCACHE_Monitor_GetWriteMissValue(const DCACHE_HandleTypeDef *hdcache);
-	HAL_StatusTypeDef HAL_DCACHE_Monitor_Reset(DCACHE_HandleTypeDef *hdcache, uint32_t MonitorType);
-	HAL_StatusTypeDef HAL_DCACHE_Monitor_Start(DCACHE_HandleTypeDef *hdcache, uint32_t MonitorType);
-	HAL_StatusTypeDef HAL_DCACHE_Monitor_Stop(DCACHE_HandleTypeDef *hdcache, uint32_t MonitorType);
-	/**
-	 * @}
-	 */
+/*** Performance instruction cache monitoring functions ***/
+uint32_t HAL_DCACHE_Monitor_GetReadHitValue(const DCACHE_HandleTypeDef *hdcache);
+uint32_t HAL_DCACHE_Monitor_GetReadMissValue(const DCACHE_HandleTypeDef *hdcache);
+uint32_t HAL_DCACHE_Monitor_GetWriteHitValue(const DCACHE_HandleTypeDef *hdcache);
+uint32_t HAL_DCACHE_Monitor_GetWriteMissValue(const DCACHE_HandleTypeDef *hdcache);
+HAL_StatusTypeDef HAL_DCACHE_Monitor_Reset(DCACHE_HandleTypeDef *hdcache, uint32_t MonitorType);
+HAL_StatusTypeDef HAL_DCACHE_Monitor_Start(DCACHE_HandleTypeDef *hdcache, uint32_t MonitorType);
+HAL_StatusTypeDef HAL_DCACHE_Monitor_Stop(DCACHE_HandleTypeDef *hdcache, uint32_t MonitorType);
+/**
+ * @}
+ */
 
-	/** @defgroup DCACHE_Exported_Functions_Group3 State and Error Functions
-	 * @brief    State and Error Functions
-	 * @{
-	 */
-	HAL_DCACHE_StateTypeDef HAL_DCACHE_GetState(const DCACHE_HandleTypeDef *hdcache);
-	uint32_t HAL_DCACHE_GetError(const DCACHE_HandleTypeDef *hdcache);
-	/**
-	 * @}
-	 */
+/** @defgroup DCACHE_Exported_Functions_Group3 State and Error Functions
+ * @brief    State and Error Functions
+ * @{
+ */
+HAL_DCACHE_StateTypeDef HAL_DCACHE_GetState(const DCACHE_HandleTypeDef *hdcache);
+uint32_t HAL_DCACHE_GetError(const DCACHE_HandleTypeDef *hdcache);
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Private types -------------------------------------------------------------*/
-	/* Private variables ---------------------------------------------------------*/
-	/* Private constants ---------------------------------------------------------*/
-	/* Private macros ------------------------------------------------------------*/
-	/* Private functions ---------------------------------------------------------*/
+/* Private types -------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
+/* Private constants ---------------------------------------------------------*/
+/* Private macros ------------------------------------------------------------*/
+/* Private functions ---------------------------------------------------------*/
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #endif /* DCACHE1 || DCACHE2 */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

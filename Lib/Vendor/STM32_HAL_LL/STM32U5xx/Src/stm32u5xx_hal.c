@@ -155,8 +155,7 @@ HAL_StatusTypeDef HAL_Init(void)
 
 	/* Use systick as time base source and configure 1ms tick (default clock
 	 * after Reset is HSI) */
-	if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK)
-	{
+	if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK) {
 		return HAL_ERROR;
 	}
 
@@ -243,22 +242,17 @@ __weak HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 
 	/* Check uwTickFreq for MisraC 2012 (even if uwTickFreq is a enum type
 	 * that don't take the value zero)*/
-	if ((uint32_t)uwTickFreq == 0UL)
-	{
+	if ((uint32_t)uwTickFreq == 0UL) {
 		return HAL_ERROR;
 	}
 
 	/* Check Clock source to calculate the tickNumber */
-	if (READ_BIT(SysTick->CTRL, SysTick_CTRL_CLKSOURCE_Msk) == SysTick_CTRL_CLKSOURCE_Msk)
-	{
+	if (READ_BIT(SysTick->CTRL, SysTick_CTRL_CLKSOURCE_Msk) == SysTick_CTRL_CLKSOURCE_Msk) {
 		/* HCLK selected as SysTick clock source */
 		ticknumber = SystemCoreClock / (1000UL / (uint32_t)uwTickFreq);
-	}
-	else
-	{
+	} else {
 		systicksel = HAL_SYSTICK_GetCLKSourceConfig();
-		switch (systicksel)
-		{
+		switch (systicksel) {
 			/* HCLK_DIV8 selected as SysTick clock source */
 			case SYSTICK_CLKSOURCE_HCLK_DIV8:
 				/* Calculate tick value */
@@ -281,8 +275,7 @@ __weak HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 	}
 
 	/* Configure the SysTick to have interrupt in 1ms time basis*/
-	if (HAL_SYSTICK_Config(ticknumber) > 0U)
-	{
+	if (HAL_SYSTICK_Config(ticknumber) > 0U) {
 		return HAL_ERROR;
 	}
 
@@ -357,8 +350,7 @@ HAL_StatusTypeDef HAL_SetTickFreq(HAL_TickFreqTypeDef Freq)
 
 	assert_param(IS_TICKFREQ(Freq));
 
-	if (uwTickFreq != Freq)
-	{
+	if (uwTickFreq != Freq) {
 
 		/* Back up uwTickFreq frequency */
 		prevTickFreq = uwTickFreq;
@@ -368,8 +360,7 @@ HAL_StatusTypeDef HAL_SetTickFreq(HAL_TickFreqTypeDef Freq)
 
 		/* Apply the new tick Freq  */
 		status = HAL_InitTick(uwTickPrio);
-		if (status != HAL_OK)
-		{
+		if (status != HAL_OK) {
 			/* Restore previous tick frequency */
 			uwTickFreq = prevTickFreq;
 		}
@@ -402,14 +393,11 @@ __weak void HAL_Delay(uint32_t Delay)
 	uint32_t wait = Delay;
 
 	/* Add a freq to guarantee minimum wait */
-	if (wait < HAL_MAX_DELAY)
-	{
+	if (wait < HAL_MAX_DELAY) {
 		wait += (uint32_t)(uwTickFreq);
 	}
 
-	while ((HAL_GetTick() - tickstart) < wait)
-	{
-	}
+	while ((HAL_GetTick() - tickstart) < wait) {}
 }
 
 /**
@@ -616,10 +604,8 @@ HAL_StatusTypeDef HAL_SYSCFG_EnableVREFBUF(void)
 	tickstart = HAL_GetTick();
 
 	/* Wait for VRR bit  */
-	while (READ_BIT(VREFBUF->CSR, VREFBUF_CSR_VRR) == 0UL)
-	{
-		if ((HAL_GetTick() - tickstart) > VREFBUF_TIMEOUT_VALUE)
-		{
+	while (READ_BIT(VREFBUF->CSR, VREFBUF_CSR_VRR) == 0UL) {
+		if ((HAL_GetTick() - tickstart) > VREFBUF_TIMEOUT_VALUE) {
 			return HAL_TIMEOUT;
 		}
 	}
@@ -812,8 +798,7 @@ HAL_StatusTypeDef HAL_SYSCFG_GetLock(uint32_t *pItem)
 	uint32_t tmp_lock;
 
 	/* Check null pointer */
-	if (pItem == NULL)
-	{
+	if (pItem == NULL) {
 		return HAL_ERROR;
 	}
 
@@ -870,12 +855,9 @@ void HAL_SYSCFG_ConfigAttributes(uint32_t Item, uint32_t Attributes)
 	tmp = SYSCFG_S->SECCFGR;
 
 	/* Set or reset Item */
-	if ((Attributes & SYSCFG_SEC) != 0x00U)
-	{
+	if ((Attributes & SYSCFG_SEC) != 0x00U) {
 		tmp |= Item;
-	}
-	else
-	{
+	} else {
 		tmp &= ~Item;
 	}
 
@@ -894,8 +876,7 @@ void HAL_SYSCFG_ConfigAttributes(uint32_t Item, uint32_t Attributes)
 HAL_StatusTypeDef HAL_SYSCFG_GetConfigAttributes(uint32_t Item, uint32_t *pAttributes)
 {
 	/* Check null pointer */
-	if (pAttributes == NULL)
-	{
+	if (pAttributes == NULL) {
 		return HAL_ERROR;
 	}
 
@@ -903,12 +884,9 @@ HAL_StatusTypeDef HAL_SYSCFG_GetConfigAttributes(uint32_t Item, uint32_t *pAttri
 	assert_param(IS_SYSCFG_ITEMS_ATTRIBUTES(Item));
 
 	/* Get the secure attribute state */
-	if ((SYSCFG_S->SECCFGR & Item) != 0U)
-	{
+	if ((SYSCFG_S->SECCFGR & Item) != 0U) {
 		*pAttributes = SYSCFG_SEC;
-	}
-	else
-	{
+	} else {
 		*pAttributes = SYSCFG_NSEC;
 	}
 

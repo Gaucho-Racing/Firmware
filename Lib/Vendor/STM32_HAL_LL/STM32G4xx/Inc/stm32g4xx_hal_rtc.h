@@ -21,254 +21,247 @@
 #define STM32G4xx_HAL_RTC_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g4xx_hal_def.h"
 
-	/** @addtogroup STM32G4xx_HAL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32G4xx_HAL_Driver
+ * @{
+ */
 
-	/** @defgroup RTC RTC
-	 * @{
-	 */
+/** @defgroup RTC RTC
+ * @{
+ */
 
-	/* Exported types ------------------------------------------------------------*/
-	/** @defgroup RTC_Exported_Types RTC Exported Types
-	 * @{
-	 */
+/* Exported types ------------------------------------------------------------*/
+/** @defgroup RTC_Exported_Types RTC Exported Types
+ * @{
+ */
 
-	/**
-	 * @brief  HAL State structures definition
-	 */
-	typedef enum
-	{
-		HAL_RTC_STATE_RESET = 0x00U,   /*!< RTC not yet initialized or disabled */
-		HAL_RTC_STATE_READY = 0x01U,   /*!< RTC initialized and ready for use   */
-		HAL_RTC_STATE_BUSY = 0x02U,    /*!< RTC process is ongoing              */
-		HAL_RTC_STATE_TIMEOUT = 0x03U, /*!< RTC timeout state */
-		HAL_RTC_STATE_ERROR = 0x04U    /*!< RTC error state                     */
+/**
+ * @brief  HAL State structures definition
+ */
+typedef enum {
+	HAL_RTC_STATE_RESET = 0x00U,   /*!< RTC not yet initialized or disabled */
+	HAL_RTC_STATE_READY = 0x01U,   /*!< RTC initialized and ready for use   */
+	HAL_RTC_STATE_BUSY = 0x02U,    /*!< RTC process is ongoing              */
+	HAL_RTC_STATE_TIMEOUT = 0x03U, /*!< RTC timeout state */
+	HAL_RTC_STATE_ERROR = 0x04U    /*!< RTC error state                     */
 
-	} HAL_RTCStateTypeDef;
+} HAL_RTCStateTypeDef;
 
-	/**
-	 * @brief  RTC Configuration Structure definition
-	 */
-	typedef struct
-	{
-		uint32_t HourFormat; /*!< Specifies the RTC Hour Format.
-					This parameter can be a value of @ref
-					RTC_Hour_Formats */
+/**
+ * @brief  RTC Configuration Structure definition
+ */
+typedef struct {
+	uint32_t HourFormat; /*!< Specifies the RTC Hour Format.
+				This parameter can be a value of @ref
+				RTC_Hour_Formats */
 
-		uint32_t AsynchPrediv; /*!< Specifies the RTC Asynchronous Predivider
-					  value. This parameter must be a number between
-					  Min_Data = 0x00 and Max_Data = 0x7F */
+	uint32_t AsynchPrediv; /*!< Specifies the RTC Asynchronous Predivider
+				  value. This parameter must be a number between
+				  Min_Data = 0x00 and Max_Data = 0x7F */
 
-		uint32_t SynchPrediv; /*!< Specifies the RTC Synchronous Predivider
-					 value. This parameter must be a number between
-					 Min_Data = 0x00 and Max_Data = 0x7FFF */
+	uint32_t SynchPrediv; /*!< Specifies the RTC Synchronous Predivider
+				 value. This parameter must be a number between
+				 Min_Data = 0x00 and Max_Data = 0x7FFF */
 
-		uint32_t OutPut; /*!< Specifies which signal will be routed to the RTC
-				    output. This parameter can be a value of @ref
-				    RTCEx_Output_selection_Definitions */
+	uint32_t OutPut; /*!< Specifies which signal will be routed to the RTC
+			    output. This parameter can be a value of @ref
+			    RTCEx_Output_selection_Definitions */
 
-		uint32_t OutPutRemap; /*!< Specifies the remap for RTC output.
-					 This parameter can be a value of @ref
-					 RTC_Output_ALARM_OUT_Remap */
+	uint32_t OutPutRemap; /*!< Specifies the remap for RTC output.
+				 This parameter can be a value of @ref
+				 RTC_Output_ALARM_OUT_Remap */
 
-		uint32_t OutPutPolarity; /*!< Specifies the polarity of the output
-					    signal. This parameter can be a value of
-					    @ref RTC_Output_Polarity_Definitions */
+	uint32_t OutPutPolarity; /*!< Specifies the polarity of the output
+				    signal. This parameter can be a value of
+				    @ref RTC_Output_Polarity_Definitions */
 
-		uint32_t OutPutType; /*!< Specifies the RTC Output Pin mode.
-					This parameter can be a value of @ref
-					RTC_Output_Type_ALARM_OUT */
+	uint32_t OutPutType; /*!< Specifies the RTC Output Pin mode.
+				This parameter can be a value of @ref
+				RTC_Output_Type_ALARM_OUT */
 
-		uint32_t OutPutPullUp; /*!< Specifies the RTC Output Pull-Up mode.
+	uint32_t OutPutPullUp; /*!< Specifies the RTC Output Pull-Up mode.
+				  This parameter can be a value of @ref
+				  RTC_Output_PullUp_ALARM_OUT */
+} RTC_InitTypeDef;
+
+/**
+ * @brief  RTC Time structure definition
+ */
+typedef struct {
+	uint8_t Hours; /*!< Specifies the RTC Time Hour.
+			    This parameter must be a number between Min_Data = 0 and
+			  Max_Data = 12 if the RTC_HourFormat_12 is selected. This
+			  parameter must be a number between Min_Data = 0 and
+			  Max_Data = 23 if the RTC_HourFormat_24 is selected */
+
+	uint8_t Minutes; /*!< Specifies the RTC Time Minutes.
+			      This parameter must be a number between Min_Data =
+			    0 and Max_Data = 59 */
+
+	uint8_t Seconds; /*!< Specifies the RTC Time Seconds.
+			      This parameter must be a number between Min_Data =
+			    0 and Max_Data = 59 */
+
+	uint8_t TimeFormat; /*!< Specifies the RTC AM/PM Time.
+				 This parameter can be a value of @ref
+			       RTC_AM_PM_Definitions */
+
+	uint32_t SubSeconds; /*!< Specifies the RTC_SSR RTC Sub Second register
+				content. This parameter corresponds to a time
+				unit range between [0-1] Second with [1 Sec /
+				SecondFraction +1] granularity */
+
+	uint32_t SecondFraction; /*!< Specifies the range or granularity of Sub
+				    Second register content corresponding to
+				    Synchronous pre-scaler factor value (PREDIV_S)
+				      This parameter corresponds to a time unit range
+				    between [0-1] Second with [1 Sec / SecondFraction
+				    +1] granularity. This field will be used only by
+				    HAL_RTC_GetTime function */
+
+	uint32_t DayLightSaving; /*!< This interface is deprecated. To manage
+				    Daylight Saving Time, please use
+				    HAL_RTC_DST_xxx functions */
+
+	uint32_t StoreOperation; /*!< This interface is deprecated. To manage
+				    Daylight Saving Time, please use
+				    HAL_RTC_DST_xxx functions */
+} RTC_TimeTypeDef;
+
+/**
+ * @brief  RTC Date structure definition
+ */
+typedef struct {
+	uint8_t WeekDay; /*!< Specifies the RTC Date WeekDay.
+			      This parameter can be a value of @ref
+			    RTC_WeekDay_Definitions */
+
+	uint8_t Month; /*!< Specifies the RTC Date Month (in BCD format).
+			    This parameter can be a value of @ref
+			  RTC_Month_Date_Definitions */
+
+	uint8_t Date; /*!< Specifies the RTC Date.
+			   This parameter must be a number between Min_Data = 1
+			 and Max_Data = 31 */
+
+	uint8_t Year; /*!< Specifies the RTC Date Year.
+			   This parameter must be a number between Min_Data = 0
+			 and Max_Data = 99 */
+} RTC_DateTypeDef;
+
+/**
+ * @brief  RTC Alarm structure definition
+ */
+typedef struct {
+	RTC_TimeTypeDef AlarmTime; /*!< Specifies the RTC Alarm Time members */
+
+	uint32_t AlarmMask; /*!< Specifies the RTC Alarm Masks.
+				 This parameter can be a value of @ref
+			       RTC_AlarmMask_Definitions */
+
+	uint32_t AlarmSubSecondMask; /*!< Specifies the RTC Alarm SubSeconds Masks.
 					  This parameter can be a value of @ref
-					  RTC_Output_PullUp_ALARM_OUT */
-	} RTC_InitTypeDef;
+					RTC_Alarm_Sub_Seconds_Masks_Definitions */
 
-	/**
-	 * @brief  RTC Time structure definition
-	 */
-	typedef struct
-	{
-		uint8_t Hours; /*!< Specifies the RTC Time Hour.
-				    This parameter must be a number between Min_Data = 0 and
-				  Max_Data = 12 if the RTC_HourFormat_12 is selected. This
-				  parameter must be a number between Min_Data = 0 and
-				  Max_Data = 23 if the RTC_HourFormat_24 is selected */
+	uint32_t AlarmDateWeekDaySel; /*!< Specifies the RTC Alarm is on Date or
+					 WeekDay. This parameter can be a value of
+					 @ref RTC_AlarmDateWeekDay_Definitions */
 
-		uint8_t Minutes; /*!< Specifies the RTC Time Minutes.
-				      This parameter must be a number between Min_Data =
-				    0 and Max_Data = 59 */
+	uint8_t AlarmDateWeekDay; /*!< Specifies the RTC Alarm Date/WeekDay.
+				       If the Alarm Date is selected, this
+				     parameter must be set to a value in the
+				     1-31 range. If the Alarm WeekDay is
+				     selected, this parameter can be a value of
+				     @ref RTC_WeekDay_Definitions */
 
-		uint8_t Seconds; /*!< Specifies the RTC Time Seconds.
-				      This parameter must be a number between Min_Data =
-				    0 and Max_Data = 59 */
-
-		uint8_t TimeFormat; /*!< Specifies the RTC AM/PM Time.
-					 This parameter can be a value of @ref
-				       RTC_AM_PM_Definitions */
-
-		uint32_t SubSeconds; /*!< Specifies the RTC_SSR RTC Sub Second register
-					content. This parameter corresponds to a time
-					unit range between [0-1] Second with [1 Sec /
-					SecondFraction +1] granularity */
-
-		uint32_t SecondFraction; /*!< Specifies the range or granularity of Sub
-					    Second register content corresponding to
-					    Synchronous pre-scaler factor value (PREDIV_S)
-					      This parameter corresponds to a time unit range
-					    between [0-1] Second with [1 Sec / SecondFraction
-					    +1] granularity. This field will be used only by
-					    HAL_RTC_GetTime function */
-
-		uint32_t DayLightSaving; /*!< This interface is deprecated. To manage
-					    Daylight Saving Time, please use
-					    HAL_RTC_DST_xxx functions */
-
-		uint32_t StoreOperation; /*!< This interface is deprecated. To manage
-					    Daylight Saving Time, please use
-					    HAL_RTC_DST_xxx functions */
-	} RTC_TimeTypeDef;
-
-	/**
-	 * @brief  RTC Date structure definition
-	 */
-	typedef struct
-	{
-		uint8_t WeekDay; /*!< Specifies the RTC Date WeekDay.
-				      This parameter can be a value of @ref
-				    RTC_WeekDay_Definitions */
-
-		uint8_t Month; /*!< Specifies the RTC Date Month (in BCD format).
-				    This parameter can be a value of @ref
-				  RTC_Month_Date_Definitions */
-
-		uint8_t Date; /*!< Specifies the RTC Date.
-				   This parameter must be a number between Min_Data = 1
-				 and Max_Data = 31 */
-
-		uint8_t Year; /*!< Specifies the RTC Date Year.
-				   This parameter must be a number between Min_Data = 0
-				 and Max_Data = 99 */
-	} RTC_DateTypeDef;
-
-	/**
-	 * @brief  RTC Alarm structure definition
-	 */
-	typedef struct
-	{
-		RTC_TimeTypeDef AlarmTime; /*!< Specifies the RTC Alarm Time members */
-
-		uint32_t AlarmMask; /*!< Specifies the RTC Alarm Masks.
-					 This parameter can be a value of @ref
-				       RTC_AlarmMask_Definitions */
-
-		uint32_t AlarmSubSecondMask; /*!< Specifies the RTC Alarm SubSeconds Masks.
-						  This parameter can be a value of @ref
-						RTC_Alarm_Sub_Seconds_Masks_Definitions */
-
-		uint32_t AlarmDateWeekDaySel; /*!< Specifies the RTC Alarm is on Date or
-						 WeekDay. This parameter can be a value of
-						 @ref RTC_AlarmDateWeekDay_Definitions */
-
-		uint8_t AlarmDateWeekDay; /*!< Specifies the RTC Alarm Date/WeekDay.
-					       If the Alarm Date is selected, this
-					     parameter must be set to a value in the
-					     1-31 range. If the Alarm WeekDay is
-					     selected, this parameter can be a value of
-					     @ref RTC_WeekDay_Definitions */
-
-		uint32_t Alarm; /*!< Specifies the alarm .
-				     This parameter can be a value of @ref
-				   RTC_Alarms_Definitions */
-	} RTC_AlarmTypeDef;
+	uint32_t Alarm; /*!< Specifies the alarm .
+			     This parameter can be a value of @ref
+			   RTC_Alarms_Definitions */
+} RTC_AlarmTypeDef;
 
 /**
  * @brief  RTC Handle Structure definition
  */
 #if (USE_HAL_RTC_REGISTER_CALLBACKS == 1)
-	typedef struct __RTC_HandleTypeDef
+typedef struct __RTC_HandleTypeDef
 #else
 typedef struct
 #endif /* (USE_HAL_RTC_REGISTER_CALLBACKS) */
-	{
-		RTC_TypeDef *Instance; /*!< Legacy register base address. Not used anymore,
-					    the driver directly uses cmsis base address */
+{
+	RTC_TypeDef *Instance; /*!< Legacy register base address. Not used anymore,
+				    the driver directly uses cmsis base address */
 
-		RTC_InitTypeDef Init; /*!< RTC required parameters  */
+	RTC_InitTypeDef Init; /*!< RTC required parameters  */
 
-		HAL_LockTypeDef Lock; /*!< RTC locking object       */
+	HAL_LockTypeDef Lock; /*!< RTC locking object       */
 
-		__IO HAL_RTCStateTypeDef State; /*!< Time communication state */
+	__IO HAL_RTCStateTypeDef State; /*!< Time communication state */
 
 #if (USE_HAL_RTC_REGISTER_CALLBACKS == 1)
-		void (*AlarmAEventCallback)(struct __RTC_HandleTypeDef *hrtc);	    /*!< RTC Alarm A Event callback           */
-		void (*AlarmBEventCallback)(struct __RTC_HandleTypeDef *hrtc);	    /*!< RTC Alarm B Event callback           */
-		void (*TimeStampEventCallback)(struct __RTC_HandleTypeDef *hrtc);   /*!< RTC TimeStamp Event callback         */
-		void (*WakeUpTimerEventCallback)(struct __RTC_HandleTypeDef *hrtc); /*!< RTC WakeUpTimer Event callback       */
+	void (*AlarmAEventCallback)(struct __RTC_HandleTypeDef *hrtc);	    /*!< RTC Alarm A Event callback           */
+	void (*AlarmBEventCallback)(struct __RTC_HandleTypeDef *hrtc);	    /*!< RTC Alarm B Event callback           */
+	void (*TimeStampEventCallback)(struct __RTC_HandleTypeDef *hrtc);   /*!< RTC TimeStamp Event callback         */
+	void (*WakeUpTimerEventCallback)(struct __RTC_HandleTypeDef *hrtc); /*!< RTC WakeUpTimer Event callback       */
 
-		void (*Tamper1EventCallback)(struct __RTC_HandleTypeDef *hrtc); /*!< RTC Tamper 1 Event callback          */
-		void (*Tamper2EventCallback)(struct __RTC_HandleTypeDef *hrtc); /*!< RTC Tamper 2 Event callback          */
+	void (*Tamper1EventCallback)(struct __RTC_HandleTypeDef *hrtc); /*!< RTC Tamper 1 Event callback          */
+	void (*Tamper2EventCallback)(struct __RTC_HandleTypeDef *hrtc); /*!< RTC Tamper 2 Event callback          */
 #if (RTC_TAMP_NB == 3)
-		void (*Tamper3EventCallback)(struct __RTC_HandleTypeDef *hrtc);		/*!< RTC Tamper 3 Event callback          */
-#endif											/* RTC_TAMP_NB */
-		void (*InternalTamper1EventCallback)(struct __RTC_HandleTypeDef *hrtc); /*!< RTC Internal Tamper 1 Event callback */
+	void (*Tamper3EventCallback)(struct __RTC_HandleTypeDef *hrtc);		/*!< RTC Tamper 3 Event callback          */
+#endif										/* RTC_TAMP_NB */
+	void (*InternalTamper1EventCallback)(struct __RTC_HandleTypeDef *hrtc); /*!< RTC Internal Tamper 1 Event callback */
 #ifdef RTC_TAMP_INT_2_SUPPORT
-		void (*InternalTamper2EventCallback)(struct __RTC_HandleTypeDef *hrtc); /*!< RTC Internal Tamper 2 Event callback */
-#endif											/* RTC_TAMP_INT_2_SUPPORT */
-		void (*InternalTamper3EventCallback)(struct __RTC_HandleTypeDef *hrtc); /*!< RTC Internal Tamper 3 Event callback */
-		void (*InternalTamper4EventCallback)(struct __RTC_HandleTypeDef *hrtc); /*!< RTC Internal Tamper 4 Event callback */
-		void (*InternalTamper5EventCallback)(struct __RTC_HandleTypeDef *hrtc); /*!< RTC Internal Tamper 5 Event callback */
+	void (*InternalTamper2EventCallback)(struct __RTC_HandleTypeDef *hrtc); /*!< RTC Internal Tamper 2 Event callback */
+#endif										/* RTC_TAMP_INT_2_SUPPORT */
+	void (*InternalTamper3EventCallback)(struct __RTC_HandleTypeDef *hrtc); /*!< RTC Internal Tamper 3 Event callback */
+	void (*InternalTamper4EventCallback)(struct __RTC_HandleTypeDef *hrtc); /*!< RTC Internal Tamper 4 Event callback */
+	void (*InternalTamper5EventCallback)(struct __RTC_HandleTypeDef *hrtc); /*!< RTC Internal Tamper 5 Event callback */
 #ifdef RTC_TAMP_INT_6_SUPPORT
-		void (*InternalTamper6EventCallback)(struct __RTC_HandleTypeDef *hrtc); /*!< RTC Internal Tamper 6 Event callback */
-#endif											/* RTC_TAMP_INT_6_SUPPORT */
+	void (*InternalTamper6EventCallback)(struct __RTC_HandleTypeDef *hrtc); /*!< RTC Internal Tamper 6 Event callback */
+#endif										/* RTC_TAMP_INT_6_SUPPORT */
 #ifdef RTC_TAMP_INT_7_SUPPORT
-		void (*InternalTamper7EventCallback)(struct __RTC_HandleTypeDef *hrtc); /*!< RTC Internal Tamper 7 Event callback */
-#endif											/* RTC_TAMP_INT_7_SUPPORT */
+	void (*InternalTamper7EventCallback)(struct __RTC_HandleTypeDef *hrtc); /*!< RTC Internal Tamper 7 Event callback */
+#endif										/* RTC_TAMP_INT_7_SUPPORT */
 
-		void (*MspInitCallback)(struct __RTC_HandleTypeDef *hrtc);   /*!< RTC Msp Init callback */
-		void (*MspDeInitCallback)(struct __RTC_HandleTypeDef *hrtc); /*!< RTC Msp DeInit callback */
+	void (*MspInitCallback)(struct __RTC_HandleTypeDef *hrtc);   /*!< RTC Msp Init callback */
+	void (*MspDeInitCallback)(struct __RTC_HandleTypeDef *hrtc); /*!< RTC Msp DeInit callback */
 
 #endif /* (USE_HAL_RTC_REGISTER_CALLBACKS) */
 
-	} RTC_HandleTypeDef;
+} RTC_HandleTypeDef;
 
 #if (USE_HAL_RTC_REGISTER_CALLBACKS == 1)
-	/**
-	 * @brief  HAL LPTIM Callback ID enumeration definition
-	 */
-	typedef enum
-	{
-		HAL_RTC_ALARM_A_EVENT_CB_ID = 0x00U,	      /*!< RTC Alarm A Event Callback ID      */
-		HAL_RTC_ALARM_B_EVENT_CB_ID = 0x01U,	      /*!< RTC Alarm B Event Callback ID      */
-		HAL_RTC_TIMESTAMP_EVENT_CB_ID = 0x02U,	      /*!< RTC TimeStamp Event Callback ID    */
-		HAL_RTC_WAKEUPTIMER_EVENT_CB_ID = 0x03U,      /*!< RTC WakeUp Timer Event Callback ID */
-		HAL_RTC_TAMPER1_EVENT_CB_ID = 0x04U,	      /*!< RTC Tamper 1 Callback ID */
-		HAL_RTC_TAMPER2_EVENT_CB_ID = 0x05U,	      /*!< RTC Tamper 2 Callback ID */
-		HAL_RTC_TAMPER3_EVENT_CB_ID = 0x06U,	      /*!< RTC Tamper 3 Callback ID */
-		HAL_RTC_INTERNAL_TAMPER1_EVENT_CB_ID = 0x07U, /*!< RTC Internal Tamper 1 Callback ID  */
-		HAL_RTC_INTERNAL_TAMPER2_EVENT_CB_ID = 0x08U, /*!< RTC Internal Tamper 2 Callback ID  */
-		HAL_RTC_INTERNAL_TAMPER3_EVENT_CB_ID = 0x09U, /*!< RTC Internal Tamper 3 Callback ID  */
-		HAL_RTC_INTERNAL_TAMPER4_EVENT_CB_ID = 0x0AU, /*!< RTC Internal Tamper 4 Callback ID  */
-		HAL_RTC_INTERNAL_TAMPER5_EVENT_CB_ID = 0x0BU, /*!< RTC Internal Tamper 5 Callback ID  */
-		HAL_RTC_INTERNAL_TAMPER6_EVENT_CB_ID = 0x0CU, /*!< RTC Internal Tamper 6 Callback ID  */
-		HAL_RTC_INTERNAL_TAMPER7_EVENT_CB_ID = 0x0DU, /*!< RTC Internal Tamper 7 Callback ID  */
-		HAL_RTC_MSPINIT_CB_ID = 0x0EU,		      /*!< RTC Msp Init callback ID  */
-		HAL_RTC_MSPDEINIT_CB_ID = 0x0FU		      /*!< RTC Msp DeInit callback ID */
-	} HAL_RTC_CallbackIDTypeDef;
+/**
+ * @brief  HAL LPTIM Callback ID enumeration definition
+ */
+typedef enum {
+	HAL_RTC_ALARM_A_EVENT_CB_ID = 0x00U,	      /*!< RTC Alarm A Event Callback ID      */
+	HAL_RTC_ALARM_B_EVENT_CB_ID = 0x01U,	      /*!< RTC Alarm B Event Callback ID      */
+	HAL_RTC_TIMESTAMP_EVENT_CB_ID = 0x02U,	      /*!< RTC TimeStamp Event Callback ID    */
+	HAL_RTC_WAKEUPTIMER_EVENT_CB_ID = 0x03U,      /*!< RTC WakeUp Timer Event Callback ID */
+	HAL_RTC_TAMPER1_EVENT_CB_ID = 0x04U,	      /*!< RTC Tamper 1 Callback ID */
+	HAL_RTC_TAMPER2_EVENT_CB_ID = 0x05U,	      /*!< RTC Tamper 2 Callback ID */
+	HAL_RTC_TAMPER3_EVENT_CB_ID = 0x06U,	      /*!< RTC Tamper 3 Callback ID */
+	HAL_RTC_INTERNAL_TAMPER1_EVENT_CB_ID = 0x07U, /*!< RTC Internal Tamper 1 Callback ID  */
+	HAL_RTC_INTERNAL_TAMPER2_EVENT_CB_ID = 0x08U, /*!< RTC Internal Tamper 2 Callback ID  */
+	HAL_RTC_INTERNAL_TAMPER3_EVENT_CB_ID = 0x09U, /*!< RTC Internal Tamper 3 Callback ID  */
+	HAL_RTC_INTERNAL_TAMPER4_EVENT_CB_ID = 0x0AU, /*!< RTC Internal Tamper 4 Callback ID  */
+	HAL_RTC_INTERNAL_TAMPER5_EVENT_CB_ID = 0x0BU, /*!< RTC Internal Tamper 5 Callback ID  */
+	HAL_RTC_INTERNAL_TAMPER6_EVENT_CB_ID = 0x0CU, /*!< RTC Internal Tamper 6 Callback ID  */
+	HAL_RTC_INTERNAL_TAMPER7_EVENT_CB_ID = 0x0DU, /*!< RTC Internal Tamper 7 Callback ID  */
+	HAL_RTC_MSPINIT_CB_ID = 0x0EU,		      /*!< RTC Msp Init callback ID  */
+	HAL_RTC_MSPDEINIT_CB_ID = 0x0FU		      /*!< RTC Msp DeInit callback ID */
+} HAL_RTC_CallbackIDTypeDef;
 
-	/**
-	 * @brief  HAL RTC Callback pointer definition
-	 */
-	typedef void (*pRTC_CallbackTypeDef)(RTC_HandleTypeDef *hrtc); /*!< pointer to an RTC callback function */
-#endif								       /* USE_HAL_RTC_REGISTER_CALLBACKS */
+/**
+ * @brief  HAL RTC Callback pointer definition
+ */
+typedef void (*pRTC_CallbackTypeDef)(RTC_HandleTypeDef *hrtc); /*!< pointer to an RTC callback function */
+#endif							       /* USE_HAL_RTC_REGISTER_CALLBACKS */
 
 /**
  * @}
@@ -583,8 +576,7 @@ typedef struct
  */
 #if (USE_HAL_RTC_REGISTER_CALLBACKS == 1)
 #define __HAL_RTC_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                       \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		(__HANDLE__)->State = HAL_RTC_STATE_RESET;                                                                                                                                             \
 		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
 		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
@@ -599,8 +591,7 @@ typedef struct
  * @retval None
  */
 #define __HAL_RTC_WRITEPROTECTION_DISABLE(__HANDLE__)                                                                                                                                                  \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		(__HANDLE__)->Instance->WPR = 0xCAU;                                                                                                                                                   \
 		(__HANDLE__)->Instance->WPR = 0x53U;                                                                                                                                                   \
 	} while (0U)
@@ -611,8 +602,7 @@ typedef struct
  * @retval None
  */
 #define __HAL_RTC_WRITEPROTECTION_ENABLE(__HANDLE__)                                                                                                                                                   \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		(__HANDLE__)->Instance->WPR = 0xFFU;                                                                                                                                                   \
 	} while (0U)
 
@@ -635,8 +625,7 @@ typedef struct
  * @retval None
  */
 #define __HAL_RTC_DAYLIGHT_SAVING_TIME_ADD1H(__HANDLE__, __BKP__)                                                                                                                                      \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__HAL_RTC_WRITEPROTECTION_DISABLE(__HANDLE__);                                                                                                                                         \
 		SET_BIT((__HANDLE__)->Instance->CR, RTC_CR_ADD1H);                                                                                                                                     \
 		MODIFY_REG((__HANDLE__)->Instance->CR, RTC_CR_BKP, (__BKP__));                                                                                                                         \
@@ -655,8 +644,7 @@ typedef struct
  * @retval None
  */
 #define __HAL_RTC_DAYLIGHT_SAVING_TIME_SUB1H(__HANDLE__, __BKP__)                                                                                                                                      \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__HAL_RTC_WRITEPROTECTION_DISABLE(__HANDLE__);                                                                                                                                         \
 		SET_BIT((__HANDLE__)->Instance->CR, RTC_CR_SUB1H);                                                                                                                                     \
 		MODIFY_REG((__HANDLE__)->Instance->CR, RTC_CR_BKP, (__BKP__));                                                                                                                         \
@@ -813,8 +801,7 @@ typedef struct
  * @retval None
  */
 #define __HAL_RTC_ALARM_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                              \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__HAL_RTC_ALARM_EXTI_ENABLE_RISING_EDGE();                                                                                                                                             \
 		__HAL_RTC_ALARM_EXTI_ENABLE_FALLING_EDGE();                                                                                                                                            \
 	} while (0)
@@ -825,8 +812,7 @@ typedef struct
  * @retval None
  */
 #define __HAL_RTC_ALARM_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                             \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__HAL_RTC_ALARM_EXTI_DISABLE_RISING_EDGE();                                                                                                                                            \
 		__HAL_RTC_ALARM_EXTI_DISABLE_FALLING_EDGE();                                                                                                                                           \
 	} while (0)
@@ -856,77 +842,77 @@ typedef struct
 /* Include RTC HAL Extended module */
 #include "stm32g4xx_hal_rtc_ex.h"
 
-	/* Exported functions --------------------------------------------------------*/
-	/** @defgroup RTC_Exported_Functions RTC Exported Functions
-	 * @{
-	 */
+/* Exported functions --------------------------------------------------------*/
+/** @defgroup RTC_Exported_Functions RTC Exported Functions
+ * @{
+ */
 
-	/** @defgroup RTC_Exported_Functions_Group1 Initialization and de-initialization
-	 * functions
-	 * @{
-	 */
-	/* Initialization and de-initialization functions  ****************************/
-	HAL_StatusTypeDef HAL_RTC_Init(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTC_DeInit(RTC_HandleTypeDef *hrtc);
+/** @defgroup RTC_Exported_Functions_Group1 Initialization and de-initialization
+ * functions
+ * @{
+ */
+/* Initialization and de-initialization functions  ****************************/
+HAL_StatusTypeDef HAL_RTC_Init(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTC_DeInit(RTC_HandleTypeDef *hrtc);
 
-	void HAL_RTC_MspInit(RTC_HandleTypeDef *hrtc);
-	void HAL_RTC_MspDeInit(RTC_HandleTypeDef *hrtc);
+void HAL_RTC_MspInit(RTC_HandleTypeDef *hrtc);
+void HAL_RTC_MspDeInit(RTC_HandleTypeDef *hrtc);
 #if (USE_HAL_RTC_REGISTER_CALLBACKS == 1)
 
-	/* Callbacks Register/UnRegister functions  ***********************************/
-	HAL_StatusTypeDef HAL_RTC_RegisterCallback(RTC_HandleTypeDef *hrtc, HAL_RTC_CallbackIDTypeDef CallbackID, pRTC_CallbackTypeDef pCallback);
-	HAL_StatusTypeDef HAL_RTC_UnRegisterCallback(RTC_HandleTypeDef *hrtc, HAL_RTC_CallbackIDTypeDef CallbackID);
+/* Callbacks Register/UnRegister functions  ***********************************/
+HAL_StatusTypeDef HAL_RTC_RegisterCallback(RTC_HandleTypeDef *hrtc, HAL_RTC_CallbackIDTypeDef CallbackID, pRTC_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_RTC_UnRegisterCallback(RTC_HandleTypeDef *hrtc, HAL_RTC_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_RTC_REGISTER_CALLBACKS */
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @defgroup RTC_Exported_Functions_Group2 RTC Time and Date functions
-	 * @{
-	 */
-	/* RTC Time and Date functions ************************************************/
-	HAL_StatusTypeDef HAL_RTC_SetTime(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTime, uint32_t Format);
-	HAL_StatusTypeDef HAL_RTC_GetTime(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTime, uint32_t Format);
-	HAL_StatusTypeDef HAL_RTC_SetDate(RTC_HandleTypeDef *hrtc, RTC_DateTypeDef *sDate, uint32_t Format);
-	HAL_StatusTypeDef HAL_RTC_GetDate(RTC_HandleTypeDef *hrtc, RTC_DateTypeDef *sDate, uint32_t Format);
-	void HAL_RTC_DST_Add1Hour(RTC_HandleTypeDef *hrtc);
-	void HAL_RTC_DST_Sub1Hour(RTC_HandleTypeDef *hrtc);
-	void HAL_RTC_DST_SetStoreOperation(RTC_HandleTypeDef *hrtc);
-	void HAL_RTC_DST_ClearStoreOperation(RTC_HandleTypeDef *hrtc);
-	uint32_t HAL_RTC_DST_ReadStoreOperation(RTC_HandleTypeDef *hrtc);
-	/**
-	 * @}
-	 */
+/** @defgroup RTC_Exported_Functions_Group2 RTC Time and Date functions
+ * @{
+ */
+/* RTC Time and Date functions ************************************************/
+HAL_StatusTypeDef HAL_RTC_SetTime(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTime, uint32_t Format);
+HAL_StatusTypeDef HAL_RTC_GetTime(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTime, uint32_t Format);
+HAL_StatusTypeDef HAL_RTC_SetDate(RTC_HandleTypeDef *hrtc, RTC_DateTypeDef *sDate, uint32_t Format);
+HAL_StatusTypeDef HAL_RTC_GetDate(RTC_HandleTypeDef *hrtc, RTC_DateTypeDef *sDate, uint32_t Format);
+void HAL_RTC_DST_Add1Hour(RTC_HandleTypeDef *hrtc);
+void HAL_RTC_DST_Sub1Hour(RTC_HandleTypeDef *hrtc);
+void HAL_RTC_DST_SetStoreOperation(RTC_HandleTypeDef *hrtc);
+void HAL_RTC_DST_ClearStoreOperation(RTC_HandleTypeDef *hrtc);
+uint32_t HAL_RTC_DST_ReadStoreOperation(RTC_HandleTypeDef *hrtc);
+/**
+ * @}
+ */
 
-	/** @defgroup RTC_Exported_Functions_Group3 RTC Alarm functions
-	 * @{
-	 */
-	/* RTC Alarm functions ********************************************************/
-	HAL_StatusTypeDef HAL_RTC_SetAlarm(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef *sAlarm, uint32_t Format);
-	HAL_StatusTypeDef HAL_RTC_SetAlarm_IT(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef *sAlarm, uint32_t Format);
-	HAL_StatusTypeDef HAL_RTC_DeactivateAlarm(RTC_HandleTypeDef *hrtc, uint32_t Alarm);
-	HAL_StatusTypeDef HAL_RTC_GetAlarm(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef *sAlarm, uint32_t Alarm, uint32_t Format);
-	void HAL_RTC_AlarmIRQHandler(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTC_PollForAlarmAEvent(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
-	void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc);
-	/**
-	 * @}
-	 */
+/** @defgroup RTC_Exported_Functions_Group3 RTC Alarm functions
+ * @{
+ */
+/* RTC Alarm functions ********************************************************/
+HAL_StatusTypeDef HAL_RTC_SetAlarm(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef *sAlarm, uint32_t Format);
+HAL_StatusTypeDef HAL_RTC_SetAlarm_IT(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef *sAlarm, uint32_t Format);
+HAL_StatusTypeDef HAL_RTC_DeactivateAlarm(RTC_HandleTypeDef *hrtc, uint32_t Alarm);
+HAL_StatusTypeDef HAL_RTC_GetAlarm(RTC_HandleTypeDef *hrtc, RTC_AlarmTypeDef *sAlarm, uint32_t Alarm, uint32_t Format);
+void HAL_RTC_AlarmIRQHandler(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTC_PollForAlarmAEvent(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
+void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc);
+/**
+ * @}
+ */
 
-	/** @defgroup  RTC_Exported_Functions_Group4 Peripheral Control functions
-	 * @{
-	 */
-	/* Peripheral Control functions ***********************************************/
-	HAL_StatusTypeDef HAL_RTC_WaitForSynchro(RTC_HandleTypeDef *hrtc);
-	/**
-	 * @}
-	 */
+/** @defgroup  RTC_Exported_Functions_Group4 Peripheral Control functions
+ * @{
+ */
+/* Peripheral Control functions ***********************************************/
+HAL_StatusTypeDef HAL_RTC_WaitForSynchro(RTC_HandleTypeDef *hrtc);
+/**
+ * @}
+ */
 
-	/** @defgroup RTC_Exported_Functions_Group5 Peripheral State functions
-	 * @{
-	 */
-	/* Peripheral State functions *************************************************/
-	HAL_RTCStateTypeDef HAL_RTC_GetState(RTC_HandleTypeDef *hrtc);
+/** @defgroup RTC_Exported_Functions_Group5 Peripheral State functions
+ * @{
+ */
+/* Peripheral State functions *************************************************/
+HAL_RTCStateTypeDef HAL_RTC_GetState(RTC_HandleTypeDef *hrtc);
 /**
  * @}
  */
@@ -1022,34 +1008,34 @@ typedef struct
 
 #define IS_RTC_SECONDS(SECONDS) ((SECONDS) <= 59u)
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Private functions
-	 * -------------------------------------------------------------*/
-	/** @defgroup RTC_Private_Functions RTC Private Functions
-	 * @{
-	 */
-	HAL_StatusTypeDef RTC_EnterInitMode(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef RTC_ExitInitMode(RTC_HandleTypeDef *hrtc);
-	uint8_t RTC_ByteToBcd2(uint8_t Value);
-	uint8_t RTC_Bcd2ToByte(uint8_t Value);
-	/**
-	 * @}
-	 */
+/* Private functions
+ * -------------------------------------------------------------*/
+/** @defgroup RTC_Private_Functions RTC Private Functions
+ * @{
+ */
+HAL_StatusTypeDef RTC_EnterInitMode(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef RTC_ExitInitMode(RTC_HandleTypeDef *hrtc);
+uint8_t RTC_ByteToBcd2(uint8_t Value);
+uint8_t RTC_Bcd2ToByte(uint8_t Value);
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

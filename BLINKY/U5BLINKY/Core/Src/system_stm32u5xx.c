@@ -281,13 +281,10 @@ void SystemCoreClockUpdate(void)
 
 	/* Get MSI Range
 	 * frequency--------------------------------------------------*/
-	if (READ_BIT(RCC->ICSCR1, RCC_ICSCR1_MSIRGSEL) == 0U)
-	{
+	if (READ_BIT(RCC->ICSCR1, RCC_ICSCR1_MSIRGSEL) == 0U) {
 		/* MSISRANGE from RCC_CSR applies */
 		msirange = (RCC->CSR & RCC_CSR_MSISSRANGE) >> RCC_CSR_MSISSRANGE_Pos;
-	}
-	else
-	{
+	} else {
 		/* MSIRANGE from RCC_CR applies */
 		msirange = (RCC->ICSCR1 & RCC_ICSCR1_MSISRANGE) >> RCC_ICSCR1_MSISRANGE_Pos;
 	}
@@ -297,8 +294,7 @@ void SystemCoreClockUpdate(void)
 
 	/* Get SYSCLK source
 	 * -------------------------------------------------------*/
-	switch (RCC->CFGR1 & RCC_CFGR1_SWS)
-	{
+	switch (RCC->CFGR1 & RCC_CFGR1_SWS) {
 		case 0x00: /* MSI used as system clock source */
 			SystemCoreClock = msirange;
 			break;
@@ -320,8 +316,7 @@ void SystemCoreClockUpdate(void)
 			pllfracen = ((RCC->PLL1CFGR & RCC_PLL1CFGR_PLL1FRACEN) >> RCC_PLL1CFGR_PLL1FRACEN_Pos);
 			fracn1 = (float_t)(uint32_t)(pllfracen * ((RCC->PLL1FRACR & RCC_PLL1FRACR_PLL1FRACN) >> RCC_PLL1FRACR_PLL1FRACN_Pos));
 
-			switch (pllsource)
-			{
+			switch (pllsource) {
 				case 0x00: /* No clock sent to PLL*/
 					pllvco = (float_t)0U;
 					break;

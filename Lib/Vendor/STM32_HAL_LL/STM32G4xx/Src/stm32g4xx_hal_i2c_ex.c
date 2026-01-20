@@ -105,8 +105,7 @@ HAL_StatusTypeDef HAL_I2CEx_ConfigAnalogFilter(I2C_HandleTypeDef *hi2c, uint32_t
 	assert_param(IS_I2C_ALL_INSTANCE(hi2c->Instance));
 	assert_param(IS_I2C_ANALOG_FILTER(AnalogFilter));
 
-	if (hi2c->State == HAL_I2C_STATE_READY)
-	{
+	if (hi2c->State == HAL_I2C_STATE_READY) {
 		/* Process Locked */
 		__HAL_LOCK(hi2c);
 
@@ -129,9 +128,7 @@ HAL_StatusTypeDef HAL_I2CEx_ConfigAnalogFilter(I2C_HandleTypeDef *hi2c, uint32_t
 		__HAL_UNLOCK(hi2c);
 
 		return HAL_OK;
-	}
-	else
-	{
+	} else {
 		return HAL_BUSY;
 	}
 }
@@ -153,8 +150,7 @@ HAL_StatusTypeDef HAL_I2CEx_ConfigDigitalFilter(I2C_HandleTypeDef *hi2c, uint32_
 	assert_param(IS_I2C_ALL_INSTANCE(hi2c->Instance));
 	assert_param(IS_I2C_DIGITAL_FILTER(DigitalFilter));
 
-	if (hi2c->State == HAL_I2C_STATE_READY)
-	{
+	if (hi2c->State == HAL_I2C_STATE_READY) {
 		/* Process Locked */
 		__HAL_LOCK(hi2c);
 
@@ -183,9 +179,7 @@ HAL_StatusTypeDef HAL_I2CEx_ConfigDigitalFilter(I2C_HandleTypeDef *hi2c, uint32_
 		__HAL_UNLOCK(hi2c);
 
 		return HAL_OK;
-	}
-	else
-	{
+	} else {
 		return HAL_BUSY;
 	}
 }
@@ -219,8 +213,7 @@ HAL_StatusTypeDef HAL_I2CEx_EnableWakeUp(I2C_HandleTypeDef *hi2c)
 	/* Check the parameters */
 	assert_param(IS_I2C_WAKEUP_FROMSTOP_INSTANCE(hi2c->Instance));
 
-	if (hi2c->State == HAL_I2C_STATE_READY)
-	{
+	if (hi2c->State == HAL_I2C_STATE_READY) {
 		/* Process Locked */
 		__HAL_LOCK(hi2c);
 
@@ -240,9 +233,7 @@ HAL_StatusTypeDef HAL_I2CEx_EnableWakeUp(I2C_HandleTypeDef *hi2c)
 		__HAL_UNLOCK(hi2c);
 
 		return HAL_OK;
-	}
-	else
-	{
+	} else {
 		return HAL_BUSY;
 	}
 }
@@ -259,8 +250,7 @@ HAL_StatusTypeDef HAL_I2CEx_DisableWakeUp(I2C_HandleTypeDef *hi2c)
 	/* Check the parameters */
 	assert_param(IS_I2C_WAKEUP_FROMSTOP_INSTANCE(hi2c->Instance));
 
-	if (hi2c->State == HAL_I2C_STATE_READY)
-	{
+	if (hi2c->State == HAL_I2C_STATE_READY) {
 		/* Process Locked */
 		__HAL_LOCK(hi2c);
 
@@ -280,9 +270,7 @@ HAL_StatusTypeDef HAL_I2CEx_DisableWakeUp(I2C_HandleTypeDef *hi2c)
 		__HAL_UNLOCK(hi2c);
 
 		return HAL_OK;
-	}
-	else
-	{
+	} else {
 		return HAL_BUSY;
 	}
 }

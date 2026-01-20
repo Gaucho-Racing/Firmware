@@ -21,8 +21,7 @@
 #define STM32L4xx_HAL_USART_EX_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -48,9 +47,9 @@ extern "C"
 #define USART_WORDLENGTH_7B (USART_CR1_M1) /*!< 7-bit long USART frame */
 #define USART_WORDLENGTH_8B (0x00000000U)  /*!< 8-bit long USART frame */
 #define USART_WORDLENGTH_9B (USART_CR1_M0) /*!< 9-bit long USART frame */
-					   /**
-					    * @}
-					    */
+/**
+ * @}
+ */
 
 #if defined(USART_CR2_SLVEN)
 /** @defgroup USARTEx_Slave_Select_management USARTEx Slave Select Management
@@ -133,12 +132,9 @@ extern "C"
  */
 #if defined(STM32L432xx) || defined(STM32L442xx)
 #define USART_GETCLOCKSOURCE(__HANDLE__, __CLOCKSOURCE__)                                                                                                                                              \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if ((__HANDLE__)->Instance == USART1)                                                                                                                                                  \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_USART1_SOURCE())                                                                                                                                         \
-			{                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
+		if ((__HANDLE__)->Instance == USART1) {                                                                                                                                                \
+			switch (__HAL_RCC_GET_USART1_SOURCE()) {                                                                                                                                       \
 				case RCC_USART1CLKSOURCE_PCLK2:                                                                                                                                        \
 					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_PCLK2;                                                                                                                   \
 					break;                                                                                                                                                         \
@@ -155,11 +151,8 @@ extern "C"
 					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_UNDEFINED;                                                                                                               \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Instance == USART2)                                                                                                                                             \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_USART2_SOURCE())                                                                                                                                         \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == USART2) {                                                                                                                                         \
+			switch (__HAL_RCC_GET_USART2_SOURCE()) {                                                                                                                                       \
 				case RCC_USART2CLKSOURCE_PCLK1:                                                                                                                                        \
 					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_PCLK1;                                                                                                                   \
 					break;                                                                                                                                                         \
@@ -176,20 +169,15 @@ extern "C"
 					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_UNDEFINED;                                                                                                               \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else                                                                                                                                                                                   \
-		{                                                                                                                                                                                      \
+		} else {                                                                                                                                                                               \
 			(__CLOCKSOURCE__) = USART_CLOCKSOURCE_UNDEFINED;                                                                                                                               \
 		}                                                                                                                                                                                      \
 	} while (0)
 #else
 #define USART_GETCLOCKSOURCE(__HANDLE__, __CLOCKSOURCE__)                                                                                                                                              \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if ((__HANDLE__)->Instance == USART1)                                                                                                                                                  \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_USART1_SOURCE())                                                                                                                                         \
-			{                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
+		if ((__HANDLE__)->Instance == USART1) {                                                                                                                                                \
+			switch (__HAL_RCC_GET_USART1_SOURCE()) {                                                                                                                                       \
 				case RCC_USART1CLKSOURCE_PCLK2:                                                                                                                                        \
 					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_PCLK2;                                                                                                                   \
 					break;                                                                                                                                                         \
@@ -206,11 +194,8 @@ extern "C"
 					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_UNDEFINED;                                                                                                               \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Instance == USART2)                                                                                                                                             \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_USART2_SOURCE())                                                                                                                                         \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == USART2) {                                                                                                                                         \
+			switch (__HAL_RCC_GET_USART2_SOURCE()) {                                                                                                                                       \
 				case RCC_USART2CLKSOURCE_PCLK1:                                                                                                                                        \
 					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_PCLK1;                                                                                                                   \
 					break;                                                                                                                                                         \
@@ -227,11 +212,8 @@ extern "C"
 					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_UNDEFINED;                                                                                                               \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Instance == USART3)                                                                                                                                             \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_USART3_SOURCE())                                                                                                                                         \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == USART3) {                                                                                                                                         \
+			switch (__HAL_RCC_GET_USART3_SOURCE()) {                                                                                                                                       \
 				case RCC_USART3CLKSOURCE_PCLK1:                                                                                                                                        \
 					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_PCLK1;                                                                                                                   \
 					break;                                                                                                                                                         \
@@ -248,9 +230,7 @@ extern "C"
 					(__CLOCKSOURCE__) = USART_CLOCKSOURCE_UNDEFINED;                                                                                                               \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else                                                                                                                                                                                   \
-		{                                                                                                                                                                                      \
+		} else {                                                                                                                                                                               \
 			(__CLOCKSOURCE__) = USART_CLOCKSOURCE_UNDEFINED;                                                                                                                               \
 		}                                                                                                                                                                                      \
 	} while (0)
@@ -267,43 +247,26 @@ extern "C"
  * (__HANDLE__)->Mask field.
  */
 #define USART_MASK_COMPUTATION(__HANDLE__)                                                                                                                                                             \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if ((__HANDLE__)->Init.WordLength == USART_WORDLENGTH_9B)                                                                                                                              \
-		{                                                                                                                                                                                      \
-			if ((__HANDLE__)->Init.Parity == USART_PARITY_NONE)                                                                                                                            \
-			{                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
+		if ((__HANDLE__)->Init.WordLength == USART_WORDLENGTH_9B) {                                                                                                                            \
+			if ((__HANDLE__)->Init.Parity == USART_PARITY_NONE) {                                                                                                                          \
 				(__HANDLE__)->Mask = 0x01FFU;                                                                                                                                          \
-			}                                                                                                                                                                              \
-			else                                                                                                                                                                           \
-			{                                                                                                                                                                              \
+			} else {                                                                                                                                                                       \
 				(__HANDLE__)->Mask = 0x00FFU;                                                                                                                                          \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Init.WordLength == USART_WORDLENGTH_8B)                                                                                                                         \
-		{                                                                                                                                                                                      \
-			if ((__HANDLE__)->Init.Parity == USART_PARITY_NONE)                                                                                                                            \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Init.WordLength == USART_WORDLENGTH_8B) {                                                                                                                     \
+			if ((__HANDLE__)->Init.Parity == USART_PARITY_NONE) {                                                                                                                          \
 				(__HANDLE__)->Mask = 0x00FFU;                                                                                                                                          \
-			}                                                                                                                                                                              \
-			else                                                                                                                                                                           \
-			{                                                                                                                                                                              \
+			} else {                                                                                                                                                                       \
 				(__HANDLE__)->Mask = 0x007FU;                                                                                                                                          \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Init.WordLength == USART_WORDLENGTH_7B)                                                                                                                         \
-		{                                                                                                                                                                                      \
-			if ((__HANDLE__)->Init.Parity == USART_PARITY_NONE)                                                                                                                            \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Init.WordLength == USART_WORDLENGTH_7B) {                                                                                                                     \
+			if ((__HANDLE__)->Init.Parity == USART_PARITY_NONE) {                                                                                                                          \
 				(__HANDLE__)->Mask = 0x007FU;                                                                                                                                          \
-			}                                                                                                                                                                              \
-			else                                                                                                                                                                           \
-			{                                                                                                                                                                              \
+			} else {                                                                                                                                                                       \
 				(__HANDLE__)->Mask = 0x003FU;                                                                                                                                          \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else                                                                                                                                                                                   \
-		{                                                                                                                                                                                      \
+		} else {                                                                                                                                                                               \
 			(__HANDLE__)->Mask = 0x0000U;                                                                                                                                                  \
 		}                                                                                                                                                                                      \
 	} while (0U)
@@ -372,8 +335,8 @@ extern "C"
 
 /* IO operation functions *****************************************************/
 #if defined(USART_CR1_FIFOEN)
-	void HAL_USARTEx_RxFifoFullCallback(USART_HandleTypeDef *husart);
-	void HAL_USARTEx_TxFifoEmptyCallback(USART_HandleTypeDef *husart);
+void HAL_USARTEx_RxFifoFullCallback(USART_HandleTypeDef *husart);
+void HAL_USARTEx_TxFifoEmptyCallback(USART_HandleTypeDef *husart);
 #endif /* USART_CR1_FIFOEN */
 
 /**
@@ -386,32 +349,32 @@ extern "C"
 
 /* Peripheral Control functions ***********************************************/
 #if defined(USART_CR2_SLVEN)
-	HAL_StatusTypeDef HAL_USARTEx_EnableSlaveMode(USART_HandleTypeDef *husart);
-	HAL_StatusTypeDef HAL_USARTEx_DisableSlaveMode(USART_HandleTypeDef *husart);
-	HAL_StatusTypeDef HAL_USARTEx_ConfigNSS(USART_HandleTypeDef *husart, uint32_t NSSConfig);
+HAL_StatusTypeDef HAL_USARTEx_EnableSlaveMode(USART_HandleTypeDef *husart);
+HAL_StatusTypeDef HAL_USARTEx_DisableSlaveMode(USART_HandleTypeDef *husart);
+HAL_StatusTypeDef HAL_USARTEx_ConfigNSS(USART_HandleTypeDef *husart, uint32_t NSSConfig);
 #endif /* USART_CR2_SLVEN */
 #if defined(USART_CR1_FIFOEN)
-	HAL_StatusTypeDef HAL_USARTEx_EnableFifoMode(USART_HandleTypeDef *husart);
-	HAL_StatusTypeDef HAL_USARTEx_DisableFifoMode(USART_HandleTypeDef *husart);
-	HAL_StatusTypeDef HAL_USARTEx_SetTxFifoThreshold(USART_HandleTypeDef *husart, uint32_t Threshold);
-	HAL_StatusTypeDef HAL_USARTEx_SetRxFifoThreshold(USART_HandleTypeDef *husart, uint32_t Threshold);
+HAL_StatusTypeDef HAL_USARTEx_EnableFifoMode(USART_HandleTypeDef *husart);
+HAL_StatusTypeDef HAL_USARTEx_DisableFifoMode(USART_HandleTypeDef *husart);
+HAL_StatusTypeDef HAL_USARTEx_SetTxFifoThreshold(USART_HandleTypeDef *husart, uint32_t Threshold);
+HAL_StatusTypeDef HAL_USARTEx_SetRxFifoThreshold(USART_HandleTypeDef *husart, uint32_t Threshold);
 #endif /* USART_CR1_FIFOEN */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

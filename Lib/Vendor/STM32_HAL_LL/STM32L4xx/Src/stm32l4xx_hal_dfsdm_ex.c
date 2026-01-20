@@ -78,13 +78,10 @@ HAL_StatusTypeDef HAL_DFDSMEx_ChannelSetPulsesSkipping(DFSDM_Channel_HandleTypeD
 	assert_param(IS_DFSDM_CHANNEL_SKIPPING_VALUE(PulsesValue));
 
 	/* Check DFSDM channel state */
-	if (hdfsdm_channel->State == HAL_DFSDM_CHANNEL_STATE_READY)
-	{
+	if (hdfsdm_channel->State == HAL_DFSDM_CHANNEL_STATE_READY) {
 		/* Set new value of pulses skipping */
 		hdfsdm_channel->Instance->CHDLYR = (PulsesValue & DFSDM_CHDLYR_PLSSKP);
-	}
-	else
-	{
+	} else {
 		status = HAL_ERROR;
 	}
 	return status;
@@ -101,13 +98,10 @@ HAL_StatusTypeDef HAL_DFDSMEx_ChannelGetPulsesSkipping(const DFSDM_Channel_Handl
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check DFSDM channel state */
-	if (hdfsdm_channel->State == HAL_DFSDM_CHANNEL_STATE_READY)
-	{
+	if (hdfsdm_channel->State == HAL_DFSDM_CHANNEL_STATE_READY) {
 		/* Get value of remaining pulses to be skipped */
 		*PulsesValue = (hdfsdm_channel->Instance->CHDLYR & DFSDM_CHDLYR_PLSSKP);
-	}
-	else
-	{
+	} else {
 		status = HAL_ERROR;
 	}
 	return status;

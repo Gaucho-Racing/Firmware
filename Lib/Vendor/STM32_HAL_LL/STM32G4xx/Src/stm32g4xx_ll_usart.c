@@ -123,16 +123,13 @@ ErrorStatus LL_USART_DeInit(const USART_TypeDef *USARTx)
 	/* Check the parameters */
 	assert_param(IS_UART_INSTANCE(USARTx));
 
-	if (USARTx == USART1)
-	{
+	if (USARTx == USART1) {
 		/* Force reset of USART clock */
 		LL_APB2_GRP1_ForceReset(LL_APB2_GRP1_PERIPH_USART1);
 
 		/* Release reset of USART clock */
 		LL_APB2_GRP1_ReleaseReset(LL_APB2_GRP1_PERIPH_USART1);
-	}
-	else if (USARTx == USART2)
-	{
+	} else if (USARTx == USART2) {
 		/* Force reset of USART clock */
 		LL_APB1_GRP1_ForceReset(LL_APB1_GRP1_PERIPH_USART2);
 
@@ -140,8 +137,7 @@ ErrorStatus LL_USART_DeInit(const USART_TypeDef *USARTx)
 		LL_APB1_GRP1_ReleaseReset(LL_APB1_GRP1_PERIPH_USART2);
 	}
 #if defined(USART3)
-	else if (USARTx == USART3)
-	{
+	else if (USARTx == USART3) {
 		/* Force reset of USART clock */
 		LL_APB1_GRP1_ForceReset(LL_APB1_GRP1_PERIPH_USART3);
 
@@ -150,8 +146,7 @@ ErrorStatus LL_USART_DeInit(const USART_TypeDef *USARTx)
 	}
 #endif /* USART3 */
 #if defined(UART4)
-	else if (USARTx == UART4)
-	{
+	else if (USARTx == UART4) {
 		/* Force reset of UART clock */
 		LL_APB1_GRP1_ForceReset(LL_APB1_GRP1_PERIPH_UART4);
 
@@ -160,8 +155,7 @@ ErrorStatus LL_USART_DeInit(const USART_TypeDef *USARTx)
 	}
 #endif /* UART4 */
 #if defined(UART5)
-	else if (USARTx == UART5)
-	{
+	else if (USARTx == UART5) {
 		/* Force reset of UART clock */
 		LL_APB1_GRP1_ForceReset(LL_APB1_GRP1_PERIPH_UART5);
 
@@ -169,8 +163,7 @@ ErrorStatus LL_USART_DeInit(const USART_TypeDef *USARTx)
 		LL_APB1_GRP1_ReleaseReset(LL_APB1_GRP1_PERIPH_UART5);
 	}
 #endif /* UART5 */
-	else
-	{
+	else {
 		status = ERROR;
 	}
 
@@ -213,8 +206,7 @@ ErrorStatus LL_USART_Init(USART_TypeDef *USARTx, const LL_USART_InitTypeDef *USA
 
 	/* USART needs to be in disabled state, in order to be able to configure
 	   some bits in CRx registers */
-	if (LL_USART_IsEnabled(USARTx) == 0U)
-	{
+	if (LL_USART_IsEnabled(USARTx) == 0U) {
 		/*---------------------------- USART CR1 Configuration
 		 * --------------------- Configure USARTx CR1 (USART Word
 		 * Length, Parity, Mode and Oversampling bits) with parameters:
@@ -252,34 +244,27 @@ ErrorStatus LL_USART_Init(USART_TypeDef *USARTx, const LL_USART_InitTypeDef *USA
 		 * --------------------- Retrieve Clock frequency used for USART
 		 * Peripheral
 		 */
-		if (USARTx == USART1)
-		{
+		if (USARTx == USART1) {
 			periphclk = LL_RCC_GetUSARTClockFreq(LL_RCC_USART1_CLKSOURCE);
-		}
-		else if (USARTx == USART2)
-		{
+		} else if (USARTx == USART2) {
 			periphclk = LL_RCC_GetUSARTClockFreq(LL_RCC_USART2_CLKSOURCE);
 		}
 #if defined(USART3)
-		else if (USARTx == USART3)
-		{
+		else if (USARTx == USART3) {
 			periphclk = LL_RCC_GetUSARTClockFreq(LL_RCC_USART3_CLKSOURCE);
 		}
 #endif /* USART3 */
 #if defined(UART4)
-		else if (USARTx == UART4)
-		{
+		else if (USARTx == UART4) {
 			periphclk = LL_RCC_GetUARTClockFreq(LL_RCC_UART4_CLKSOURCE);
 		}
 #endif /* UART4 */
 #if defined(UART5)
-		else if (USARTx == UART5)
-		{
+		else if (USARTx == UART5) {
 			periphclk = LL_RCC_GetUARTClockFreq(LL_RCC_UART5_CLKSOURCE);
 		}
 #endif /* UART5 */
-		else
-		{
+		else {
 			/* Nothing to do, as error code is already assigned to
 			 * ERROR value */
 		}
@@ -290,8 +275,7 @@ ErrorStatus LL_USART_Init(USART_TypeDef *USARTx, const LL_USART_InitTypeDef *USA
 		   - Peripheral clock as returned by RCC service, should be
 		   valid (different from 0).
 		*/
-		if ((periphclk != LL_RCC_PERIPH_FREQUENCY_NO) && (USART_InitStruct->BaudRate != 0U))
-		{
+		if ((periphclk != LL_RCC_PERIPH_FREQUENCY_NO) && (USART_InitStruct->BaudRate != 0U)) {
 			status = SUCCESS;
 			LL_USART_SetBaudRate(USARTx, periphclk, USART_InitStruct->PrescalerValue, USART_InitStruct->OverSampling, USART_InitStruct->BaudRate);
 
@@ -358,8 +342,7 @@ ErrorStatus LL_USART_ClockInit(USART_TypeDef *USARTx, const LL_USART_ClockInitTy
 
 	/* USART needs to be in disabled state, in order to be able to configure
 	   some bits in CRx registers */
-	if (LL_USART_IsEnabled(USARTx) == 0U)
-	{
+	if (LL_USART_IsEnabled(USARTx) == 0U) {
 		/* Ensure USART instance is USART capable */
 		assert_param(IS_USART_INSTANCE(USARTx));
 
@@ -384,8 +367,7 @@ ErrorStatus LL_USART_ClockInit(USART_TypeDef *USARTx, const LL_USART_ClockInitTy
 			   USART_ClockInitStruct->ClockOutput | USART_ClockInitStruct->ClockPolarity | USART_ClockInitStruct->ClockPhase | USART_ClockInitStruct->LastBitClockPulse);
 	}
 	/* Else (USART not in Disabled state => return ERROR */
-	else
-	{
+	else {
 		status = ERROR;
 	}
 

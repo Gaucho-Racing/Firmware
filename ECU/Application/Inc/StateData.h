@@ -18,8 +18,7 @@
  * @remark It is passed to each state function on tick to allow state-specific
  * logic to access and modify the ECU's operational data.
  */
-typedef struct ECU_StateData
-{
+typedef struct ECU_StateData {
 	// DON'T TOUCH YET
 	GR_OLD_ECU_STATUS_1_MSG ecuStatus1;
 	GR_OLD_ECU_STATUS_2_MSG ecuStatus2;

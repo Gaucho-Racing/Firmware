@@ -22,190 +22,183 @@
 #define STM32U5xx_HAL_DMA_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes
  * ----------------------------------------------------------------------------------------------------------*/
 #include "stm32u5xx_hal_def.h"
 
-	/** @addtogroup STM32U5xx_HAL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32U5xx_HAL_Driver
+ * @{
+ */
 
-	/** @addtogroup DMA
-	 * @{
-	 */
+/** @addtogroup DMA
+ * @{
+ */
 
-	/* Exported types
-	 * ----------------------------------------------------------------------------------------------------*/
+/* Exported types
+ * ----------------------------------------------------------------------------------------------------*/
 
-	/** @defgroup DMA_Exported_Types DMA Exported Types
-	 * @brief    DMA Exported Types
-	 * @{
-	 */
+/** @defgroup DMA_Exported_Types DMA Exported Types
+ * @brief    DMA Exported Types
+ * @{
+ */
 
-	/**
-	 * @brief DMA Transfer Configuration Structure definition.
-	 */
-	typedef struct
-	{
-		uint32_t Request; /*!< Specifies the DMA channel request.
-				       This parameter can be a value of @ref
-				     DMA_Request_Selection                    */
+/**
+ * @brief DMA Transfer Configuration Structure definition.
+ */
+typedef struct {
+	uint32_t Request; /*!< Specifies the DMA channel request.
+			       This parameter can be a value of @ref
+			     DMA_Request_Selection                    */
 
-		uint32_t BlkHWRequest; /*!< Specifies the Block hardware request mode for DMA
-					  channel. Block Hardware request feature can be used
-					  only with dedicated peripherals. This parameter can
-					  be a value of @ref DMA_Block_Request */
+	uint32_t BlkHWRequest; /*!< Specifies the Block hardware request mode for DMA
+				  channel. Block Hardware request feature can be used
+				  only with dedicated peripherals. This parameter can
+				  be a value of @ref DMA_Block_Request */
 
-		uint32_t Direction; /*!< Specifies the transfer direction for DMA
-				       channel. This parameter can be a value of @ref
-				       DMA_Transfer_Direction                   */
+	uint32_t Direction; /*!< Specifies the transfer direction for DMA
+			       channel. This parameter can be a value of @ref
+			       DMA_Transfer_Direction                   */
 
-		uint32_t SrcInc; /*!< Specifies the source increment mode for the DMA
-				    channel. This parameter can be a value of @ref
-				    DMA_Source_Increment_Mode                */
+	uint32_t SrcInc; /*!< Specifies the source increment mode for the DMA
+			    channel. This parameter can be a value of @ref
+			    DMA_Source_Increment_Mode                */
 
-		uint32_t DestInc; /*!< Specifies the destination increment mode for the
-				     DMA channel. This parameter can be a value of @ref
-				     DMA_Destination_Increment_Mode           */
+	uint32_t DestInc; /*!< Specifies the destination increment mode for the
+			     DMA channel. This parameter can be a value of @ref
+			     DMA_Destination_Increment_Mode           */
 
-		uint32_t SrcDataWidth; /*!< Specifies the source data width for the DMA
-					  channel. This parameter can be a value of @ref
-					  DMA_Source_Data_Width                    */
+	uint32_t SrcDataWidth; /*!< Specifies the source data width for the DMA
+				  channel. This parameter can be a value of @ref
+				  DMA_Source_Data_Width                    */
 
-		uint32_t DestDataWidth; /*!< Specifies the destination data width for
-					   the DMA channel. This parameter can be a
-					   value of @ref DMA_Destination_Data_Width */
+	uint32_t DestDataWidth; /*!< Specifies the destination data width for
+				   the DMA channel. This parameter can be a
+				   value of @ref DMA_Destination_Data_Width */
 
-		uint32_t Priority; /*!< Specifies the priority level for the DMA
-				      channel. This parameter can be a value of @ref
-				      DMA_Priority_Level                       */
+	uint32_t Priority; /*!< Specifies the priority level for the DMA
+			      channel. This parameter can be a value of @ref
+			      DMA_Priority_Level                       */
 
-		uint32_t SrcBurstLength; /*!< Specifies the source burst length (number of
-					    beats within a burst) for the DMA channel. This
-					    parameter can be a value between 1 and 64 */
+	uint32_t SrcBurstLength; /*!< Specifies the source burst length (number of
+				    beats within a burst) for the DMA channel. This
+				    parameter can be a value between 1 and 64 */
 
-		uint32_t DestBurstLength; /*!< Specifies the destination burst length (number
-					     of beats within a burst) for the DMA channel.
-					       This parameter can be a value between 1 and 64
-					   */
+	uint32_t DestBurstLength; /*!< Specifies the destination burst length (number
+				     of beats within a burst) for the DMA channel.
+				       This parameter can be a value between 1 and 64
+				   */
 
-		uint32_t TransferAllocatedPort; /*!< Specifies the transfer allocated ports.
-						     This parameter can be a combination of
-						   @ref DMA_Transfer_Allocated_Port        */
+	uint32_t TransferAllocatedPort; /*!< Specifies the transfer allocated ports.
+					     This parameter can be a combination of
+					   @ref DMA_Transfer_Allocated_Port        */
 
-		uint32_t TransferEventMode; /*!< Specifies the transfer event mode for
-					       the DMA channel. This parameter can be a
-					       value of @ref DMA_Transfer_Event_Mode */
+	uint32_t TransferEventMode; /*!< Specifies the transfer event mode for
+				       the DMA channel. This parameter can be a
+				       value of @ref DMA_Transfer_Event_Mode */
 
-		uint32_t Mode; /*!< Specifies the transfer mode for the DMA channel.
-				    This parameter can be a value of @ref
-				  DMA_Transfer_Mode                        */
+	uint32_t Mode; /*!< Specifies the transfer mode for the DMA channel.
+			    This parameter can be a value of @ref
+			  DMA_Transfer_Mode                        */
 
-	} DMA_InitTypeDef;
+} DMA_InitTypeDef;
 
-	/**
-	 * @brief DMA Linked-List Configuration Structure Definition.
-	 */
-	typedef struct
-	{
-		uint32_t Priority; /*!< Specifies the priority level for the DMA
-				      channel. This parameter can be a value of @ref
-				      DMA_Priority_Level        */
+/**
+ * @brief DMA Linked-List Configuration Structure Definition.
+ */
+typedef struct {
+	uint32_t Priority; /*!< Specifies the priority level for the DMA
+			      channel. This parameter can be a value of @ref
+			      DMA_Priority_Level        */
 
-		uint32_t LinkStepMode; /*!< Specifies the link step mode for the DMA
-					  channel. This parameter can be a value of @ref
-					  DMAEx_Link_Step_Mode      */
+	uint32_t LinkStepMode; /*!< Specifies the link step mode for the DMA
+				  channel. This parameter can be a value of @ref
+				  DMAEx_Link_Step_Mode      */
 
-		uint32_t LinkAllocatedPort; /*!< Specifies the linked-list allocated port for
-					       the DMA channel. This parameter can be a value
-					       of @ref DMAEx_Link_Allocated_Port */
+	uint32_t LinkAllocatedPort; /*!< Specifies the linked-list allocated port for
+				       the DMA channel. This parameter can be a value
+				       of @ref DMAEx_Link_Allocated_Port */
 
-		uint32_t TransferEventMode; /*!< Specifies the transfer event mode for
-					       the DMA channel. This parameter can be a
-					       value of @ref DMA_Transfer_Event_Mode */
+	uint32_t TransferEventMode; /*!< Specifies the transfer event mode for
+				       the DMA channel. This parameter can be a
+				       value of @ref DMA_Transfer_Event_Mode */
 
-		uint32_t LinkedListMode; /*!< Specifies linked-list transfer mode for
-					    the DMA channel. This parameter can be a
-					    value of @ref DMAEx_LinkedList_Mode     */
+	uint32_t LinkedListMode; /*!< Specifies linked-list transfer mode for
+				    the DMA channel. This parameter can be a
+				    value of @ref DMAEx_LinkedList_Mode     */
 
-	} DMA_InitLinkedListTypeDef;
+} DMA_InitLinkedListTypeDef;
 
-	/**
-	 * @brief  HAL DMA State Enumeration Definition.
-	 */
-	typedef enum
-	{
-		HAL_DMA_STATE_RESET = 0x00U,   /*!< DMA not yet initialized or disabled */
-		HAL_DMA_STATE_READY = 0x01U,   /*!< DMA initialized and ready for use   */
-		HAL_DMA_STATE_BUSY = 0x02U,    /*!< DMA process is ongoing              */
-		HAL_DMA_STATE_ERROR = 0x03U,   /*!< DMA error state                     */
-		HAL_DMA_STATE_ABORT = 0x04U,   /*!< DMA Abort state                     */
-		HAL_DMA_STATE_SUSPEND = 0x05U, /*!< DMA Suspend state */
+/**
+ * @brief  HAL DMA State Enumeration Definition.
+ */
+typedef enum {
+	HAL_DMA_STATE_RESET = 0x00U,   /*!< DMA not yet initialized or disabled */
+	HAL_DMA_STATE_READY = 0x01U,   /*!< DMA initialized and ready for use   */
+	HAL_DMA_STATE_BUSY = 0x02U,    /*!< DMA process is ongoing              */
+	HAL_DMA_STATE_ERROR = 0x03U,   /*!< DMA error state                     */
+	HAL_DMA_STATE_ABORT = 0x04U,   /*!< DMA Abort state                     */
+	HAL_DMA_STATE_SUSPEND = 0x05U, /*!< DMA Suspend state */
 
-	} HAL_DMA_StateTypeDef;
+} HAL_DMA_StateTypeDef;
 
-	/**
-	 * @brief  HAL DMA Level Complete Enumeration Definition.
-	 */
-	typedef enum
-	{
-		HAL_DMA_FULL_TRANSFER = 0x00U, /*!< Full channel transfer */
-		HAL_DMA_HALF_TRANSFER = 0x01U, /*!< Half channel transfer */
+/**
+ * @brief  HAL DMA Level Complete Enumeration Definition.
+ */
+typedef enum {
+	HAL_DMA_FULL_TRANSFER = 0x00U, /*!< Full channel transfer */
+	HAL_DMA_HALF_TRANSFER = 0x01U, /*!< Half channel transfer */
 
-	} HAL_DMA_LevelCompleteTypeDef;
+} HAL_DMA_LevelCompleteTypeDef;
 
-	/**
-	 * @brief  HAL DMA Callbacks IDs Enumeration Definition.
-	 */
-	typedef enum
-	{
-		HAL_DMA_XFER_CPLT_CB_ID = 0x00U,     /*!< Complete transfer callback ID */
-		HAL_DMA_XFER_HALFCPLT_CB_ID = 0x01U, /*!< Half complete transfer callback ID */
-		HAL_DMA_XFER_ERROR_CB_ID = 0x02U,    /*!< Error transfer callback ID   */
-		HAL_DMA_XFER_ABORT_CB_ID = 0x03U,    /*!< Abort transfer callback ID   */
-		HAL_DMA_XFER_SUSPEND_CB_ID = 0x04U,  /*!< Suspend transfer callback ID */
-		HAL_DMA_XFER_ALL_CB_ID = 0x05U	     /*!< All callback ID      */
+/**
+ * @brief  HAL DMA Callbacks IDs Enumeration Definition.
+ */
+typedef enum {
+	HAL_DMA_XFER_CPLT_CB_ID = 0x00U,     /*!< Complete transfer callback ID */
+	HAL_DMA_XFER_HALFCPLT_CB_ID = 0x01U, /*!< Half complete transfer callback ID */
+	HAL_DMA_XFER_ERROR_CB_ID = 0x02U,    /*!< Error transfer callback ID   */
+	HAL_DMA_XFER_ABORT_CB_ID = 0x03U,    /*!< Abort transfer callback ID   */
+	HAL_DMA_XFER_SUSPEND_CB_ID = 0x04U,  /*!< Suspend transfer callback ID */
+	HAL_DMA_XFER_ALL_CB_ID = 0x05U	     /*!< All callback ID      */
 
-	} HAL_DMA_CallbackIDTypeDef;
+} HAL_DMA_CallbackIDTypeDef;
 
-	/**
-	 * @brief  DMA handle Structure definition
-	 */
-	typedef struct __DMA_HandleTypeDef
-	{
-		DMA_Channel_TypeDef *Instance; /*!< Register the DMA channel base address   */
+/**
+ * @brief  DMA handle Structure definition
+ */
+typedef struct __DMA_HandleTypeDef {
+	DMA_Channel_TypeDef *Instance; /*!< Register the DMA channel base address   */
 
-		DMA_InitTypeDef Init; /*!< DMA channel init parameters             */
+	DMA_InitTypeDef Init; /*!< DMA channel init parameters             */
 
-		DMA_InitLinkedListTypeDef InitLinkedList; /*!< DMA channel linked-list init parameters */
+	DMA_InitLinkedListTypeDef InitLinkedList; /*!< DMA channel linked-list init parameters */
 
-		HAL_LockTypeDef Lock; /*!< DMA locking object                      */
+	HAL_LockTypeDef Lock; /*!< DMA locking object                      */
 
-		uint32_t Mode; /*!< DMA transfer mode                       */
+	uint32_t Mode; /*!< DMA transfer mode                       */
 
-		__IO HAL_DMA_StateTypeDef State; /*!< DMA transfer state */
+	__IO HAL_DMA_StateTypeDef State; /*!< DMA transfer state */
 
-		__IO uint32_t ErrorCode; /*!< DMA error code                          */
+	__IO uint32_t ErrorCode; /*!< DMA error code                          */
 
-		void *Parent; /*!< Parent object state                     */
+	void *Parent; /*!< Parent object state                     */
 
-		void (*XferCpltCallback)(struct __DMA_HandleTypeDef *hdma); /*!< DMA transfer complete callback          */
+	void (*XferCpltCallback)(struct __DMA_HandleTypeDef *hdma); /*!< DMA transfer complete callback          */
 
-		void (*XferHalfCpltCallback)(struct __DMA_HandleTypeDef *hdma); /*!< DMA half transfer complete callback     */
+	void (*XferHalfCpltCallback)(struct __DMA_HandleTypeDef *hdma); /*!< DMA half transfer complete callback     */
 
-		void (*XferErrorCallback)(struct __DMA_HandleTypeDef *hdma); /*!< DMA transfer error callback */
+	void (*XferErrorCallback)(struct __DMA_HandleTypeDef *hdma); /*!< DMA transfer error callback */
 
-		void (*XferAbortCallback)(struct __DMA_HandleTypeDef *hdma); /*!< DMA transfer Abort callback */
+	void (*XferAbortCallback)(struct __DMA_HandleTypeDef *hdma); /*!< DMA transfer Abort callback */
 
-		void (*XferSuspendCallback)(struct __DMA_HandleTypeDef *hdma); /*!< DMA transfer Suspend callback           */
+	void (*XferSuspendCallback)(struct __DMA_HandleTypeDef *hdma); /*!< DMA transfer Suspend callback           */
 
-		struct __DMA_QListTypeDef *LinkedListQueue; /*!< DMA linked-list queue                   */
+	struct __DMA_QListTypeDef *LinkedListQueue; /*!< DMA linked-list queue                   */
 
-	} DMA_HandleTypeDef;
+} DMA_HandleTypeDef;
 /**
  * @}
  */
@@ -729,62 +722,62 @@ extern "C"
 /* Include DMA HAL Extension module */
 #include "stm32u5xx_hal_dma_ex.h"
 
-	/* Exported functions
-	 * ------------------------------------------------------------------------------------------------*/
-	/** @defgroup DMA_Exported_Functions DMA Exported Functions
-	 * @brief    DMA Exported Functions
-	 * @{
-	 */
+/* Exported functions
+ * ------------------------------------------------------------------------------------------------*/
+/** @defgroup DMA_Exported_Functions DMA Exported Functions
+ * @brief    DMA Exported Functions
+ * @{
+ */
 
-	/** @defgroup DMA_Exported_Functions_Group1 Initialization and De-Initialization
-	 * Functions
-	 * @brief    Initialization and De-Initialization Functions
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_DMA_Init(DMA_HandleTypeDef *const hdma);
-	HAL_StatusTypeDef HAL_DMA_DeInit(DMA_HandleTypeDef *const hdma);
-	/**
-	 * @}
-	 */
+/** @defgroup DMA_Exported_Functions_Group1 Initialization and De-Initialization
+ * Functions
+ * @brief    Initialization and De-Initialization Functions
+ * @{
+ */
+HAL_StatusTypeDef HAL_DMA_Init(DMA_HandleTypeDef *const hdma);
+HAL_StatusTypeDef HAL_DMA_DeInit(DMA_HandleTypeDef *const hdma);
+/**
+ * @}
+ */
 
-	/** @defgroup DMA_Exported_Functions_Group2 I/O Operation Functions
-	 * @brief    I/O Operation Functions
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_DMA_Start(DMA_HandleTypeDef *const hdma, uint32_t SrcAddress, uint32_t DstAddress, uint32_t SrcDataSize);
-	HAL_StatusTypeDef HAL_DMA_Start_IT(DMA_HandleTypeDef *const hdma, uint32_t SrcAddress, uint32_t DstAddress, uint32_t SrcDataSize);
-	HAL_StatusTypeDef HAL_DMA_Abort(DMA_HandleTypeDef *const hdma);
-	HAL_StatusTypeDef HAL_DMA_Abort_IT(DMA_HandleTypeDef *const hdma);
-	HAL_StatusTypeDef HAL_DMA_PollForTransfer(DMA_HandleTypeDef *const hdma, HAL_DMA_LevelCompleteTypeDef CompleteLevel, uint32_t Timeout);
-	void HAL_DMA_IRQHandler(DMA_HandleTypeDef *const hdma);
-	HAL_StatusTypeDef HAL_DMA_RegisterCallback(DMA_HandleTypeDef *const hdma, HAL_DMA_CallbackIDTypeDef CallbackID, void (*const pCallback)(DMA_HandleTypeDef *const _hdma));
-	HAL_StatusTypeDef HAL_DMA_UnRegisterCallback(DMA_HandleTypeDef *const hdma, HAL_DMA_CallbackIDTypeDef CallbackID);
-	/**
-	 * @}
-	 */
+/** @defgroup DMA_Exported_Functions_Group2 I/O Operation Functions
+ * @brief    I/O Operation Functions
+ * @{
+ */
+HAL_StatusTypeDef HAL_DMA_Start(DMA_HandleTypeDef *const hdma, uint32_t SrcAddress, uint32_t DstAddress, uint32_t SrcDataSize);
+HAL_StatusTypeDef HAL_DMA_Start_IT(DMA_HandleTypeDef *const hdma, uint32_t SrcAddress, uint32_t DstAddress, uint32_t SrcDataSize);
+HAL_StatusTypeDef HAL_DMA_Abort(DMA_HandleTypeDef *const hdma);
+HAL_StatusTypeDef HAL_DMA_Abort_IT(DMA_HandleTypeDef *const hdma);
+HAL_StatusTypeDef HAL_DMA_PollForTransfer(DMA_HandleTypeDef *const hdma, HAL_DMA_LevelCompleteTypeDef CompleteLevel, uint32_t Timeout);
+void HAL_DMA_IRQHandler(DMA_HandleTypeDef *const hdma);
+HAL_StatusTypeDef HAL_DMA_RegisterCallback(DMA_HandleTypeDef *const hdma, HAL_DMA_CallbackIDTypeDef CallbackID, void (*const pCallback)(DMA_HandleTypeDef *const _hdma));
+HAL_StatusTypeDef HAL_DMA_UnRegisterCallback(DMA_HandleTypeDef *const hdma, HAL_DMA_CallbackIDTypeDef CallbackID);
+/**
+ * @}
+ */
 
-	/** @defgroup DMA_Exported_Functions_Group3 State and Error Functions
-	 * @brief    State and Error Functions
-	 * @{
-	 */
-	HAL_DMA_StateTypeDef HAL_DMA_GetState(DMA_HandleTypeDef const *const hdma);
-	uint32_t HAL_DMA_GetError(DMA_HandleTypeDef const *const hdma);
-	/**
-	 * @}
-	 */
+/** @defgroup DMA_Exported_Functions_Group3 State and Error Functions
+ * @brief    State and Error Functions
+ * @{
+ */
+HAL_DMA_StateTypeDef HAL_DMA_GetState(DMA_HandleTypeDef const *const hdma);
+uint32_t HAL_DMA_GetError(DMA_HandleTypeDef const *const hdma);
+/**
+ * @}
+ */
 
-	/** @defgroup DMA_Exported_Functions_Group4 DMA Attributes Functions
-	 * @brief    DMA Attributes Functions
-	 * @{
-	 */
+/** @defgroup DMA_Exported_Functions_Group4 DMA Attributes Functions
+ * @brief    DMA Attributes Functions
+ * @{
+ */
 
-	HAL_StatusTypeDef HAL_DMA_ConfigChannelAttributes(DMA_HandleTypeDef *const hdma, uint32_t ChannelAttributes);
-	HAL_StatusTypeDef HAL_DMA_GetConfigChannelAttributes(DMA_HandleTypeDef const *const hdma, uint32_t *const pChannelAttributes);
+HAL_StatusTypeDef HAL_DMA_ConfigChannelAttributes(DMA_HandleTypeDef *const hdma, uint32_t ChannelAttributes);
+HAL_StatusTypeDef HAL_DMA_GetConfigChannelAttributes(DMA_HandleTypeDef const *const hdma, uint32_t *const pChannelAttributes);
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-	HAL_StatusTypeDef HAL_DMA_LockChannelAttributes(DMA_HandleTypeDef const *const hdma);
+HAL_StatusTypeDef HAL_DMA_LockChannelAttributes(DMA_HandleTypeDef const *const hdma);
 #endif /* (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
-	HAL_StatusTypeDef HAL_DMA_GetLockChannelAttributes(DMA_HandleTypeDef const *const hdma, uint32_t *const pLockState);
+HAL_StatusTypeDef HAL_DMA_GetLockChannelAttributes(DMA_HandleTypeDef const *const hdma, uint32_t *const pLockState);
 
 /**
  * @}
@@ -875,32 +868,32 @@ extern "C"
 #endif /* (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 #define IS_DMA_GLOBAL_ACTIVE_FLAG_NS(INSTANCE, GLOBAL_FLAG) (((INSTANCE)->MISR & (GLOBAL_FLAG)))
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Private functions
-	 * -------------------------------------------------------------------------------------------------*/
-	/** @defgroup DMA_Private_Functions DMA Private Functions
-	 * @brief    DMA Private Functions
-	 * @{
-	 */
+/* Private functions
+ * -------------------------------------------------------------------------------------------------*/
+/** @defgroup DMA_Private_Functions DMA Private Functions
+ * @brief    DMA Private Functions
+ * @{
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

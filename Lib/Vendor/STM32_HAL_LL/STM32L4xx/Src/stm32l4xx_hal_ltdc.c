@@ -234,8 +234,7 @@ HAL_StatusTypeDef HAL_LTDC_Init(LTDC_HandleTypeDef *hltdc)
 	uint32_t tmp1;
 
 	/* Check the LTDC peripheral state */
-	if (hltdc == NULL)
-	{
+	if (hltdc == NULL) {
 		return HAL_ERROR;
 	}
 
@@ -255,8 +254,7 @@ HAL_StatusTypeDef HAL_LTDC_Init(LTDC_HandleTypeDef *hltdc)
 	assert_param(IS_LTDC_PCPOL(hltdc->Init.PCPolarity));
 
 #if (USE_HAL_LTDC_REGISTER_CALLBACKS == 1)
-	if (hltdc->State == HAL_LTDC_STATE_RESET)
-	{
+	if (hltdc->State == HAL_LTDC_STATE_RESET) {
 		/* Allocate lock resource and initialize it */
 		hltdc->Lock = HAL_UNLOCKED;
 
@@ -267,16 +265,14 @@ HAL_StatusTypeDef HAL_LTDC_Init(LTDC_HandleTypeDef *hltdc)
 									      ReloadEventCallback  */
 		hltdc->ErrorCallback = HAL_LTDC_ErrorCallback;		   /* Legacy weak ErrorCallback */
 
-		if (hltdc->MspInitCallback == NULL)
-		{
+		if (hltdc->MspInitCallback == NULL) {
 			hltdc->MspInitCallback = HAL_LTDC_MspInit;
 		}
 		/* Init the low level hardware */
 		hltdc->MspInitCallback(hltdc);
 	}
 #else
-	if (hltdc->State == HAL_LTDC_STATE_RESET)
-	{
+	if (hltdc->State == HAL_LTDC_STATE_RESET) {
 		/* Allocate lock resource and initialize it */
 		hltdc->Lock = HAL_UNLOCKED;
 		/* Init the low level hardware */
@@ -340,8 +336,7 @@ HAL_StatusTypeDef HAL_LTDC_DeInit(LTDC_HandleTypeDef *hltdc)
 	uint32_t tickstart;
 
 	/* Check the LTDC peripheral state */
-	if (hltdc == NULL)
-	{
+	if (hltdc == NULL) {
 		return HAL_ERROR;
 	}
 
@@ -363,11 +358,9 @@ HAL_StatusTypeDef HAL_LTDC_DeInit(LTDC_HandleTypeDef *hltdc)
 	tickstart = HAL_GetTick();
 
 	/* Wait for VSYNC Interrupt */
-	while (READ_BIT(hltdc->Instance->CDSR, LTDC_CDSR_VSYNCS) == 0U)
-	{
+	while (READ_BIT(hltdc->Instance->CDSR, LTDC_CDSR_VSYNCS) == 0U) {
 		/* Check for the Timeout */
-		if ((HAL_GetTick() - tickstart) > LTDC_TIMEOUT_VALUE)
-		{
+		if ((HAL_GetTick() - tickstart) > LTDC_TIMEOUT_VALUE) {
 			break;
 		}
 	}
@@ -376,8 +369,7 @@ HAL_StatusTypeDef HAL_LTDC_DeInit(LTDC_HandleTypeDef *hltdc)
 	__HAL_LTDC_DISABLE(hltdc);
 
 #if (USE_HAL_LTDC_REGISTER_CALLBACKS == 1)
-	if (hltdc->MspDeInitCallback == NULL)
-	{
+	if (hltdc->MspDeInitCallback == NULL) {
 		hltdc->MspDeInitCallback = HAL_LTDC_MspDeInit;
 	}
 	/* DeInit the low level hardware */
@@ -450,8 +442,7 @@ HAL_StatusTypeDef HAL_LTDC_RegisterCallback(LTDC_HandleTypeDef *hltdc, HAL_LTDC_
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
-	if (pCallback == NULL)
-	{
+	if (pCallback == NULL) {
 		/* Update the error code */
 		hltdc->ErrorCode |= HAL_LTDC_ERROR_INVALID_CALLBACK;
 
@@ -460,10 +451,8 @@ HAL_StatusTypeDef HAL_LTDC_RegisterCallback(LTDC_HandleTypeDef *hltdc, HAL_LTDC_
 	/* Process locked */
 	__HAL_LOCK(hltdc);
 
-	if (hltdc->State == HAL_LTDC_STATE_READY)
-	{
-		switch (CallbackID)
-		{
+	if (hltdc->State == HAL_LTDC_STATE_READY) {
+		switch (CallbackID) {
 			case HAL_LTDC_LINE_EVENT_CB_ID:
 				hltdc->LineEventCallback = pCallback;
 				break;
@@ -491,11 +480,8 @@ HAL_StatusTypeDef HAL_LTDC_RegisterCallback(LTDC_HandleTypeDef *hltdc, HAL_LTDC_
 				status = HAL_ERROR;
 				break;
 		}
-	}
-	else if (hltdc->State == HAL_LTDC_STATE_RESET)
-	{
-		switch (CallbackID)
-		{
+	} else if (hltdc->State == HAL_LTDC_STATE_RESET) {
+		switch (CallbackID) {
 			case HAL_LTDC_MSPINIT_CB_ID:
 				hltdc->MspInitCallback = pCallback;
 				break;
@@ -511,9 +497,7 @@ HAL_StatusTypeDef HAL_LTDC_RegisterCallback(LTDC_HandleTypeDef *hltdc, HAL_LTDC_
 				status = HAL_ERROR;
 				break;
 		}
-	}
-	else
-	{
+	} else {
 		/* Update the error code */
 		hltdc->ErrorCode |= HAL_LTDC_ERROR_INVALID_CALLBACK;
 		/* Return error status */
@@ -546,10 +530,8 @@ HAL_StatusTypeDef HAL_LTDC_UnRegisterCallback(LTDC_HandleTypeDef *hltdc, HAL_LTD
 	/* Process locked */
 	__HAL_LOCK(hltdc);
 
-	if (hltdc->State == HAL_LTDC_STATE_READY)
-	{
-		switch (CallbackID)
-		{
+	if (hltdc->State == HAL_LTDC_STATE_READY) {
+		switch (CallbackID) {
 			case HAL_LTDC_LINE_EVENT_CB_ID:
 				hltdc->LineEventCallback = HAL_LTDC_LineEventCallback; /* Legacy weak
 											  LineEventCallback
@@ -585,11 +567,8 @@ HAL_StatusTypeDef HAL_LTDC_UnRegisterCallback(LTDC_HandleTypeDef *hltdc, HAL_LTD
 				status = HAL_ERROR;
 				break;
 		}
-	}
-	else if (hltdc->State == HAL_LTDC_STATE_RESET)
-	{
-		switch (CallbackID)
-		{
+	} else if (hltdc->State == HAL_LTDC_STATE_RESET) {
+		switch (CallbackID) {
 			case HAL_LTDC_MSPINIT_CB_ID:
 				hltdc->MspInitCallback = HAL_LTDC_MspInit; /* Legcay weak MspInit
 									      Callback */
@@ -607,9 +586,7 @@ HAL_StatusTypeDef HAL_LTDC_UnRegisterCallback(LTDC_HandleTypeDef *hltdc, HAL_LTD
 				status = HAL_ERROR;
 				break;
 		}
-	}
-	else
-	{
+	} else {
 		/* Update the error code */
 		hltdc->ErrorCode |= HAL_LTDC_ERROR_INVALID_CALLBACK;
 		/* Return error status */
@@ -653,8 +630,7 @@ void HAL_LTDC_IRQHandler(LTDC_HandleTypeDef *hltdc)
 
 	/* Transfer Error Interrupt management
 	 * ***************************************/
-	if (((isrflags & LTDC_ISR_TERRIF) != 0U) && ((itsources & LTDC_IER_TERRIE) != 0U))
-	{
+	if (((isrflags & LTDC_ISR_TERRIF) != 0U) && ((itsources & LTDC_IER_TERRIE) != 0U)) {
 		/* Disable the transfer Error interrupt */
 		__HAL_LTDC_DISABLE_IT(hltdc, LTDC_IT_TE);
 
@@ -682,8 +658,7 @@ void HAL_LTDC_IRQHandler(LTDC_HandleTypeDef *hltdc)
 
 	/* FIFO underrun Interrupt management
 	 * ***************************************/
-	if (((isrflags & LTDC_ISR_FUIF) != 0U) && ((itsources & LTDC_IER_FUIE) != 0U))
-	{
+	if (((isrflags & LTDC_ISR_FUIF) != 0U) && ((itsources & LTDC_IER_FUIE) != 0U)) {
 		/* Disable the FIFO underrun interrupt */
 		__HAL_LTDC_DISABLE_IT(hltdc, LTDC_IT_FU);
 
@@ -711,8 +686,7 @@ void HAL_LTDC_IRQHandler(LTDC_HandleTypeDef *hltdc)
 
 	/* Line Interrupt management
 	 * ************************************************/
-	if (((isrflags & LTDC_ISR_LIF) != 0U) && ((itsources & LTDC_IER_LIE) != 0U))
-	{
+	if (((isrflags & LTDC_ISR_LIF) != 0U) && ((itsources & LTDC_IER_LIE) != 0U)) {
 		/* Disable the Line interrupt */
 		__HAL_LTDC_DISABLE_IT(hltdc, LTDC_IT_LI);
 
@@ -737,8 +711,7 @@ void HAL_LTDC_IRQHandler(LTDC_HandleTypeDef *hltdc)
 
 	/* Register reload Interrupt management
 	 * ***************************************/
-	if (((isrflags & LTDC_ISR_RRIF) != 0U) && ((itsources & LTDC_IER_RRIE) != 0U))
-	{
+	if (((isrflags & LTDC_ISR_RRIF) != 0U) && ((itsources & LTDC_IER_RRIE) != 0U)) {
 		/* Disable the register reload interrupt */
 		__HAL_LTDC_DISABLE_IT(hltdc, LTDC_IT_RR);
 
@@ -955,14 +928,10 @@ HAL_StatusTypeDef HAL_LTDC_ConfigCLUT(LTDC_HandleTypeDef *hltdc, const uint32_t 
 	/* Change LTDC peripheral state */
 	hltdc->State = HAL_LTDC_STATE_BUSY;
 
-	for (counter = 0U; (counter < CLUTSize); counter++)
-	{
-		if (hltdc->LayerCfg[LayerIdx].PixelFormat == LTDC_PIXEL_FORMAT_AL44)
-		{
+	for (counter = 0U; (counter < CLUTSize); counter++) {
+		if (hltdc->LayerCfg[LayerIdx].PixelFormat == LTDC_PIXEL_FORMAT_AL44) {
 			tmp = (((counter + (16U * counter)) << 24U) | ((uint32_t)(*pcolorlut) & 0xFFU) | ((uint32_t)(*pcolorlut) & 0xFF00U) | ((uint32_t)(*pcolorlut) & 0xFF0000U));
-		}
-		else
-		{
+		} else {
 			tmp = ((counter << 24U) | ((uint32_t)(*pcolorlut) & 0xFFU) | ((uint32_t)(*pcolorlut) & 0xFF00U) | ((uint32_t)(*pcolorlut) & 0xFF0000U));
 		}
 
@@ -1453,20 +1422,13 @@ HAL_StatusTypeDef HAL_LTDC_SetPitch(LTDC_HandleTypeDef *hltdc, uint32_t LinePitc
 	/* get LayerIdx used pixel format */
 	pixelFormat = hltdc->LayerCfg[LayerIdx].PixelFormat;
 
-	if (pixelFormat == LTDC_PIXEL_FORMAT_ARGB8888)
-	{
+	if (pixelFormat == LTDC_PIXEL_FORMAT_ARGB8888) {
 		tmp = 4U;
-	}
-	else if (pixelFormat == LTDC_PIXEL_FORMAT_RGB888)
-	{
+	} else if (pixelFormat == LTDC_PIXEL_FORMAT_RGB888) {
 		tmp = 3U;
-	}
-	else if ((pixelFormat == LTDC_PIXEL_FORMAT_ARGB4444) || (pixelFormat == LTDC_PIXEL_FORMAT_RGB565) || (pixelFormat == LTDC_PIXEL_FORMAT_ARGB1555) || (pixelFormat == LTDC_PIXEL_FORMAT_AL88))
-	{
+	} else if ((pixelFormat == LTDC_PIXEL_FORMAT_ARGB4444) || (pixelFormat == LTDC_PIXEL_FORMAT_RGB565) || (pixelFormat == LTDC_PIXEL_FORMAT_ARGB1555) || (pixelFormat == LTDC_PIXEL_FORMAT_AL88)) {
 		tmp = 2U;
-	}
-	else
-	{
+	} else {
 		tmp = 1U;
 	}
 
@@ -1895,20 +1857,13 @@ HAL_StatusTypeDef HAL_LTDC_SetPitch_NoReload(LTDC_HandleTypeDef *hltdc, uint32_t
 	/* get LayerIdx used pixel format */
 	pixelFormat = hltdc->LayerCfg[LayerIdx].PixelFormat;
 
-	if (pixelFormat == LTDC_PIXEL_FORMAT_ARGB8888)
-	{
+	if (pixelFormat == LTDC_PIXEL_FORMAT_ARGB8888) {
 		tmp = 4U;
-	}
-	else if (pixelFormat == LTDC_PIXEL_FORMAT_RGB888)
-	{
+	} else if (pixelFormat == LTDC_PIXEL_FORMAT_RGB888) {
 		tmp = 3U;
-	}
-	else if ((pixelFormat == LTDC_PIXEL_FORMAT_ARGB4444) || (pixelFormat == LTDC_PIXEL_FORMAT_RGB565) || (pixelFormat == LTDC_PIXEL_FORMAT_ARGB1555) || (pixelFormat == LTDC_PIXEL_FORMAT_AL88))
-	{
+	} else if ((pixelFormat == LTDC_PIXEL_FORMAT_ARGB4444) || (pixelFormat == LTDC_PIXEL_FORMAT_RGB565) || (pixelFormat == LTDC_PIXEL_FORMAT_ARGB1555) || (pixelFormat == LTDC_PIXEL_FORMAT_AL88)) {
 		tmp = 2U;
-	}
-	else
-	{
+	} else {
 		tmp = 1U;
 	}
 
@@ -2196,21 +2151,14 @@ static void LTDC_SetConfig(LTDC_HandleTypeDef *hltdc, LTDC_LayerCfgTypeDef *pLay
 	/* Configure the color frame buffer start address */
 	WRITE_REG(LTDC_LAYER(hltdc, LayerIdx)->CFBAR, pLayerCfg->FBStartAdress);
 
-	if (pLayerCfg->PixelFormat == LTDC_PIXEL_FORMAT_ARGB8888)
-	{
+	if (pLayerCfg->PixelFormat == LTDC_PIXEL_FORMAT_ARGB8888) {
 		tmp = 4U;
-	}
-	else if (pLayerCfg->PixelFormat == LTDC_PIXEL_FORMAT_RGB888)
-	{
+	} else if (pLayerCfg->PixelFormat == LTDC_PIXEL_FORMAT_RGB888) {
 		tmp = 3U;
-	}
-	else if ((pLayerCfg->PixelFormat == LTDC_PIXEL_FORMAT_ARGB4444) || (pLayerCfg->PixelFormat == LTDC_PIXEL_FORMAT_RGB565) || (pLayerCfg->PixelFormat == LTDC_PIXEL_FORMAT_ARGB1555) ||
-		 (pLayerCfg->PixelFormat == LTDC_PIXEL_FORMAT_AL88))
-	{
+	} else if ((pLayerCfg->PixelFormat == LTDC_PIXEL_FORMAT_ARGB4444) || (pLayerCfg->PixelFormat == LTDC_PIXEL_FORMAT_RGB565) || (pLayerCfg->PixelFormat == LTDC_PIXEL_FORMAT_ARGB1555) ||
+		   (pLayerCfg->PixelFormat == LTDC_PIXEL_FORMAT_AL88)) {
 		tmp = 2U;
-	}
-	else
-	{
+	} else {
 		tmp = 1U;
 	}
 

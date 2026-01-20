@@ -53,9 +53,7 @@ int _kill(int pid, int sig)
 void _exit(int status)
 {
 	_kill(status, -1);
-	while (1)
-	{
-	} /* Make sure we hang here */
+	while (1) {} /* Make sure we hang here */
 }
 
 __attribute__((weak)) int _read(int file, char *ptr, int len)
@@ -63,8 +61,7 @@ __attribute__((weak)) int _read(int file, char *ptr, int len)
 	(void)file;
 	int DataIdx;
 
-	for (DataIdx = 0; DataIdx < len; DataIdx++)
-	{
+	for (DataIdx = 0; DataIdx < len; DataIdx++) {
 		*ptr++ = __io_getchar();
 	}
 
@@ -76,8 +73,7 @@ __attribute__((weak)) int _write(int file, char *ptr, int len)
 	(void)file;
 	int DataIdx;
 
-	for (DataIdx = 0; DataIdx < len; DataIdx++)
-	{
+	for (DataIdx = 0; DataIdx < len; DataIdx++) {
 		__io_putchar(*ptr++);
 	}
 	return len;

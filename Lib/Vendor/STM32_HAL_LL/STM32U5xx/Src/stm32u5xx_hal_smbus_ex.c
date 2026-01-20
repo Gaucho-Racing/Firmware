@@ -99,8 +99,7 @@ HAL_StatusTypeDef HAL_SMBUSEx_EnableWakeUp(SMBUS_HandleTypeDef *hsmbus)
 	/* Check the parameters */
 	assert_param(IS_I2C_WAKEUP_FROMSTOP_INSTANCE(hsmbus->Instance));
 
-	if (hsmbus->State == HAL_SMBUS_STATE_READY)
-	{
+	if (hsmbus->State == HAL_SMBUS_STATE_READY) {
 		/* Process Locked */
 		__HAL_LOCK(hsmbus);
 
@@ -120,9 +119,7 @@ HAL_StatusTypeDef HAL_SMBUSEx_EnableWakeUp(SMBUS_HandleTypeDef *hsmbus)
 		__HAL_UNLOCK(hsmbus);
 
 		return HAL_OK;
-	}
-	else
-	{
+	} else {
 		return HAL_BUSY;
 	}
 }
@@ -139,8 +136,7 @@ HAL_StatusTypeDef HAL_SMBUSEx_DisableWakeUp(SMBUS_HandleTypeDef *hsmbus)
 	/* Check the parameters */
 	assert_param(IS_I2C_WAKEUP_FROMSTOP_INSTANCE(hsmbus->Instance));
 
-	if (hsmbus->State == HAL_SMBUS_STATE_READY)
-	{
+	if (hsmbus->State == HAL_SMBUS_STATE_READY) {
 		/* Process Locked */
 		__HAL_LOCK(hsmbus);
 
@@ -160,9 +156,7 @@ HAL_StatusTypeDef HAL_SMBUSEx_DisableWakeUp(SMBUS_HandleTypeDef *hsmbus)
 		__HAL_UNLOCK(hsmbus);
 
 		return HAL_OK;
-	}
-	else
-	{
+	} else {
 		return HAL_BUSY;
 	}
 }
@@ -198,8 +192,7 @@ HAL_StatusTypeDef HAL_SMBUSEx_ConfigFastModePlus(SMBUS_HandleTypeDef *hsmbus, ui
 	assert_param(IS_SMBUS_ALL_INSTANCE(hsmbus->Instance));
 	assert_param(IS_SMBUS_FASTMODEPLUS(FastModePlus));
 
-	if (hsmbus->State == HAL_SMBUS_STATE_READY)
-	{
+	if (hsmbus->State == HAL_SMBUS_STATE_READY) {
 		/* Process Locked */
 		__HAL_LOCK(hsmbus);
 
@@ -208,13 +201,10 @@ HAL_StatusTypeDef HAL_SMBUSEx_ConfigFastModePlus(SMBUS_HandleTypeDef *hsmbus, ui
 		/* Disable the selected SMBUS peripheral */
 		__HAL_SMBUS_DISABLE(hsmbus);
 
-		if (FastModePlus == SMBUS_FASTMODEPLUS_ENABLE)
-		{
+		if (FastModePlus == SMBUS_FASTMODEPLUS_ENABLE) {
 			/* Set SMBUSx FMP bit */
 			hsmbus->Instance->CR1 |= (I2C_CR1_FMP);
-		}
-		else
-		{
+		} else {
 			/* Reset SMBUSx FMP bit */
 			hsmbus->Instance->CR1 &= ~(I2C_CR1_FMP);
 		}
@@ -227,9 +217,7 @@ HAL_StatusTypeDef HAL_SMBUSEx_ConfigFastModePlus(SMBUS_HandleTypeDef *hsmbus, ui
 		__HAL_UNLOCK(hsmbus);
 
 		return HAL_OK;
-	}
-	else
-	{
+	} else {
 		return HAL_BUSY;
 	}
 }
@@ -268,8 +256,7 @@ HAL_StatusTypeDef HAL_SMBUSEx_ConfigFastModePlus(SMBUS_HandleTypeDef *hsmbus, ui
  */
 HAL_StatusTypeDef HAL_SMBUSEx_SetConfigAutonomousMode(SMBUS_HandleTypeDef *hsmbus, const SMBUS_AutonomousModeConfTypeDef *sConfig)
 {
-	if (hsmbus->State == HAL_SMBUS_STATE_READY)
-	{
+	if (hsmbus->State == HAL_SMBUS_STATE_READY) {
 		/* Process Locked */
 		__HAL_LOCK(hsmbus);
 
@@ -296,9 +283,7 @@ HAL_StatusTypeDef HAL_SMBUSEx_SetConfigAutonomousMode(SMBUS_HandleTypeDef *hsmbu
 		__HAL_UNLOCK(hsmbus);
 
 		return HAL_OK;
-	}
-	else
-	{
+	} else {
 		return HAL_ERROR;
 	}
 }
@@ -323,12 +308,9 @@ HAL_StatusTypeDef HAL_SMBUSEx_GetConfigAutonomousMode(const SMBUS_HandleTypeDef 
 	autocr_tmp = hsmbus->Instance->AUTOCR;
 
 	sConfig->TriggerState = (autocr_tmp & I2C_AUTOCR_TRIGEN);
-	if (IS_SMBUS_GRP2_INSTANCE(hsmbus->Instance))
-	{
+	if (IS_SMBUS_GRP2_INSTANCE(hsmbus->Instance)) {
 		sConfig->TriggerSelection = ((autocr_tmp & I2C_AUTOCR_TRIGSEL) | SMBUS_TRIG_GRP2);
-	}
-	else
-	{
+	} else {
 		sConfig->TriggerSelection = ((autocr_tmp & I2C_AUTOCR_TRIGSEL) | SMBUS_TRIG_GRP1);
 	}
 	sConfig->TriggerPolarity = (autocr_tmp & I2C_AUTOCR_TRIGPOL);
@@ -345,8 +327,7 @@ HAL_StatusTypeDef HAL_SMBUSEx_GetConfigAutonomousMode(const SMBUS_HandleTypeDef 
  */
 HAL_StatusTypeDef HAL_SMBUSEx_ClearConfigAutonomousMode(SMBUS_HandleTypeDef *hsmbus)
 {
-	if (hsmbus->State == HAL_SMBUS_STATE_READY)
-	{
+	if (hsmbus->State == HAL_SMBUS_STATE_READY) {
 		/* Process Locked */
 		__HAL_LOCK(hsmbus);
 
@@ -370,9 +351,7 @@ HAL_StatusTypeDef HAL_SMBUSEx_ClearConfigAutonomousMode(SMBUS_HandleTypeDef *hsm
 		__HAL_UNLOCK(hsmbus);
 
 		return HAL_OK;
-	}
-	else
-	{
+	} else {
 		return HAL_ERROR;
 	}
 }

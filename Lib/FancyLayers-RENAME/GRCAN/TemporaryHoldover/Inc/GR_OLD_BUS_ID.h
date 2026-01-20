@@ -4,8 +4,7 @@
 #define GR_OLD_BUS_ID_H
 
 /** GR CAN Bus IDs */
-typedef enum
-{
+typedef enum {
 	/** Testing Bus */
 	GR_OLD_BUS_TESTING = 0,
 	/** Primary Bus */

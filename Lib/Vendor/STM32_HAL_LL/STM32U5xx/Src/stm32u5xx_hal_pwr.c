@@ -390,8 +390,7 @@ instruction and no clear of pending event before.
 HAL_StatusTypeDef HAL_PWR_ConfigPVD(PWR_PVDTypeDef *pConfigPVD)
 {
 	/* Check the PVD parameter */
-	if (pConfigPVD == NULL)
-	{
+	if (pConfigPVD == NULL) {
 		return HAL_ERROR;
 	}
 
@@ -409,26 +408,22 @@ HAL_StatusTypeDef HAL_PWR_ConfigPVD(PWR_PVDTypeDef *pConfigPVD)
 	__HAL_PWR_PVD_EXTI_DISABLE_FALLING_EDGE();
 
 	/* Configure the PVD in interrupt mode */
-	if ((pConfigPVD->Mode & PVD_MODE_IT) == PVD_MODE_IT)
-	{
+	if ((pConfigPVD->Mode & PVD_MODE_IT) == PVD_MODE_IT) {
 		__HAL_PWR_PVD_EXTI_ENABLE_IT();
 	}
 
 	/* Configure the PVD in event mode */
-	if ((pConfigPVD->Mode & PVD_MODE_EVT) == PVD_MODE_EVT)
-	{
+	if ((pConfigPVD->Mode & PVD_MODE_EVT) == PVD_MODE_EVT) {
 		__HAL_PWR_PVD_EXTI_ENABLE_EVENT();
 	}
 
 	/* Configure the PVD in rising edge */
-	if ((pConfigPVD->Mode & PVD_RISING_EDGE) == PVD_RISING_EDGE)
-	{
+	if ((pConfigPVD->Mode & PVD_RISING_EDGE) == PVD_RISING_EDGE) {
 		__HAL_PWR_PVD_EXTI_ENABLE_RISING_EDGE();
 	}
 
 	/* Configure the PVD in falling edge */
-	if ((pConfigPVD->Mode & PVD_FALLING_EDGE) == PVD_FALLING_EDGE)
-	{
+	if ((pConfigPVD->Mode & PVD_FALLING_EDGE) == PVD_FALLING_EDGE) {
 		__HAL_PWR_PVD_EXTI_ENABLE_FALLING_EDGE();
 	}
 
@@ -538,15 +533,11 @@ void HAL_PWR_EnterSLEEPMode(uint32_t Regulator, uint8_t SleepEntry)
 	CLEAR_BIT(SCB->SCR, ((uint32_t)SCB_SCR_SLEEPDEEP_Msk));
 
 	/* Select Sleep mode entry */
-	if (SleepEntry == PWR_SLEEPENTRY_WFI)
-	{
+	if (SleepEntry == PWR_SLEEPENTRY_WFI) {
 		/* Wait For Interrupt Request */
 		__WFI();
-	}
-	else
-	{
-		if (SleepEntry != PWR_SLEEPENTRY_WFE_NO_EVT_CLEAR)
-		{
+	} else {
+		if (SleepEntry != PWR_SLEEPENTRY_WFE_NO_EVT_CLEAR) {
 			/* Clear all pending event */
 			__SEV();
 			__WFE();
@@ -603,15 +594,11 @@ void HAL_PWR_EnterSTOPMode(uint32_t Regulator, uint8_t StopEntry)
 	SET_BIT(SCB->SCR, ((uint32_t)SCB_SCR_SLEEPDEEP_Msk));
 
 	/* Select Stop mode entry */
-	if (StopEntry == PWR_STOPENTRY_WFI)
-	{
+	if (StopEntry == PWR_STOPENTRY_WFI) {
 		/* Wait For Interrupt Request */
 		__WFI();
-	}
-	else
-	{
-		if (StopEntry != PWR_STOPENTRY_WFE_NO_EVT_CLEAR)
-		{
+	} else {
+		if (StopEntry != PWR_STOPENTRY_WFE_NO_EVT_CLEAR) {
 			/* Clear all pending event */
 			__SEV();
 			__WFE();
@@ -724,8 +711,7 @@ void HAL_PWR_PVD_IRQHandler(void)
 	falling_flag = READ_REG(EXTI->FPR1);
 
 	/* Check PWR EXTI flags for PVD */
-	if (((rising_flag | falling_flag) & PWR_EXTI_LINE_PVD) != 0U)
-	{
+	if (((rising_flag | falling_flag) & PWR_EXTI_LINE_PVD) != 0U) {
 		/* PWR PVD interrupt user callback */
 		HAL_PWR_PVDCallback();
 
@@ -850,31 +836,23 @@ void HAL_PWR_ConfigAttributes(uint32_t Item, uint32_t Attributes)
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 	/* Secure item management (TZEN = 1) */
-	if ((Attributes & PWR_ITEM_ATTR_SEC_PRIV_MASK) == PWR_ITEM_ATTR_SEC_PRIV_MASK)
-	{
+	if ((Attributes & PWR_ITEM_ATTR_SEC_PRIV_MASK) == PWR_ITEM_ATTR_SEC_PRIV_MASK) {
 		/* Privilege item management */
-		if ((Attributes & PWR_SEC_PRIV) == PWR_SEC_PRIV)
-		{
+		if ((Attributes & PWR_SEC_PRIV) == PWR_SEC_PRIV) {
 			SET_BIT(PWR->SECCFGR, Item);
 			SET_BIT(PWR->PRIVCFGR, PWR_PRIVCFGR_SPRIV);
-		}
-		else
-		{
+		} else {
 			SET_BIT(PWR->SECCFGR, Item);
 			CLEAR_BIT(PWR->PRIVCFGR, PWR_PRIVCFGR_SPRIV);
 		}
 	}
 	/* NSecure item management */
-	else
-	{
+	else {
 		/* Privilege item management */
-		if ((Attributes & PWR_NSEC_PRIV) == PWR_NSEC_PRIV)
-		{
+		if ((Attributes & PWR_NSEC_PRIV) == PWR_NSEC_PRIV) {
 			CLEAR_BIT(PWR->SECCFGR, Item);
 			SET_BIT(PWR->PRIVCFGR, PWR_PRIVCFGR_NSPRIV);
-		}
-		else
-		{
+		} else {
 			CLEAR_BIT(PWR->SECCFGR, Item);
 			CLEAR_BIT(PWR->PRIVCFGR, PWR_PRIVCFGR_NSPRIV);
 		}
@@ -884,15 +862,11 @@ void HAL_PWR_ConfigAttributes(uint32_t Item, uint32_t Attributes)
 	UNUSED(Item);
 
 	/* NSecure item management (TZEN = 0) */
-	if ((Attributes & PWR_ITEM_ATTR_NSEC_PRIV_MASK) == PWR_ITEM_ATTR_NSEC_PRIV_MASK)
-	{
+	if ((Attributes & PWR_ITEM_ATTR_NSEC_PRIV_MASK) == PWR_ITEM_ATTR_NSEC_PRIV_MASK) {
 		/* Privilege item management */
-		if ((Attributes & PWR_NSEC_PRIV) == PWR_NSEC_PRIV)
-		{
+		if ((Attributes & PWR_NSEC_PRIV) == PWR_NSEC_PRIV) {
 			SET_BIT(PWR->PRIVCFGR, PWR_PRIVCFGR_NSPRIV);
-		}
-		else
-		{
+		} else {
 			CLEAR_BIT(PWR->PRIVCFGR, PWR_PRIVCFGR_NSPRIV);
 		}
 	}
@@ -912,8 +886,7 @@ HAL_StatusTypeDef HAL_PWR_GetConfigAttributes(uint32_t Item, uint32_t *pAttribut
 	uint32_t attributes;
 
 	/* Check attribute pointer */
-	if (pAttributes == NULL)
-	{
+	if (pAttributes == NULL) {
 		return HAL_ERROR;
 	}
 
@@ -922,13 +895,10 @@ HAL_StatusTypeDef HAL_PWR_GetConfigAttributes(uint32_t Item, uint32_t *pAttribut
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 	/* Check item security */
-	if ((PWR->SECCFGR & Item) == Item)
-	{
+	if ((PWR->SECCFGR & Item) == Item) {
 		/* Get Secure privileges attribute */
 		attributes = ((PWR->PRIVCFGR & PWR_PRIVCFGR_SPRIV) == 0U) ? PWR_SEC_NPRIV : PWR_SEC_PRIV;
-	}
-	else
-	{
+	} else {
 		/* Get Non-Secure privileges attribute */
 		attributes = ((PWR->PRIVCFGR & PWR_PRIVCFGR_NSPRIV) == 0U) ? PWR_NSEC_NPRIV : PWR_NSEC_PRIV;
 	}

@@ -22,196 +22,188 @@
 #define STM32U5xx_HAL_DMA_EX_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes
  * ----------------------------------------------------------------------------------------------------------*/
 #include "stm32u5xx_hal_def.h"
 
-	/** @addtogroup STM32U5xx_HAL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32U5xx_HAL_Driver
+ * @{
+ */
 
-	/** @addtogroup DMAEx
-	 * @{
-	 */
+/** @addtogroup DMAEx
+ * @{
+ */
 
-	/* Exported types
-	 * ----------------------------------------------------------------------------------------------------*/
-	/** @defgroup DMAEx_Exported_Types DMAEx Exported Types
-	 * @brief DMAEx Exported types
-	 * @{
-	 */
+/* Exported types
+ * ----------------------------------------------------------------------------------------------------*/
+/** @defgroup DMAEx_Exported_Types DMAEx Exported Types
+ * @brief DMAEx Exported types
+ * @{
+ */
 
-	/**
-	 * @brief DMAEx Data Handling Configuration Structure Definition.
-	 */
-	typedef struct
-	{
-		uint32_t DataExchange; /*!< Specifies the DMA channel data exchange
-					  mode. This parameter can be a value of @ref
-					  DMAEx_Data_Exchange  */
+/**
+ * @brief DMAEx Data Handling Configuration Structure Definition.
+ */
+typedef struct {
+	uint32_t DataExchange; /*!< Specifies the DMA channel data exchange
+				  mode. This parameter can be a value of @ref
+				  DMAEx_Data_Exchange  */
 
-		uint32_t DataAlignment; /*!< Specifies the DMA channel data padding and
-					   alignment mode This parameter can be a value
-					   of @ref DMAEx_Data_Alignment */
+	uint32_t DataAlignment; /*!< Specifies the DMA channel data padding and
+				   alignment mode This parameter can be a value
+				   of @ref DMAEx_Data_Alignment */
 
-	} DMA_DataHandlingConfTypeDef;
+} DMA_DataHandlingConfTypeDef;
 
-	/**
-	 * @brief DMAEx Trigger Configuration Structure Definition.
-	 */
-	typedef struct
-	{
-		uint32_t TriggerMode; /*!< Specifies the DMA channel trigger mode.
-					   This parameter can be a value of @ref
-					 DMAEx_Trigger_Mode      */
+/**
+ * @brief DMAEx Trigger Configuration Structure Definition.
+ */
+typedef struct {
+	uint32_t TriggerMode; /*!< Specifies the DMA channel trigger mode.
+				   This parameter can be a value of @ref
+				 DMAEx_Trigger_Mode      */
 
-		uint32_t TriggerPolarity; /*!< Specifies the DMA channel trigger event
-					     polarity. This parameter can be a value of
-					     @ref DMAEx_Trigger_Polarity  */
+	uint32_t TriggerPolarity; /*!< Specifies the DMA channel trigger event
+				     polarity. This parameter can be a value of
+				     @ref DMAEx_Trigger_Polarity  */
 
-		uint32_t TriggerSelection; /*!< Specifies the DMA channel trigger event
-					      selection. This parameter can be a value
-					      of @ref DMAEx_Trigger_Selection */
+	uint32_t TriggerSelection; /*!< Specifies the DMA channel trigger event
+				      selection. This parameter can be a value
+				      of @ref DMAEx_Trigger_Selection */
 
-	} DMA_TriggerConfTypeDef;
+} DMA_TriggerConfTypeDef;
 
-	/**
-	 * @brief DMAEx Repeated Block Configuration Structure Definition.
-	 */
-	typedef struct
-	{
-		uint32_t RepeatCount; /*!< Specifies the DMA channel repeat count (the
-					 number of repetitions of block). This parameter
-					 can be a value between 1 and 2048 */
+/**
+ * @brief DMAEx Repeated Block Configuration Structure Definition.
+ */
+typedef struct {
+	uint32_t RepeatCount; /*!< Specifies the DMA channel repeat count (the
+				 number of repetitions of block). This parameter
+				 can be a value between 1 and 2048 */
 
-		int32_t SrcAddrOffset; /*!< Specifies the DMA channel single/burst
-					  source address offset : This parameter can be
-					  a value between -8191 and 8191.
-					    * If source address offset > 0 => Increment
-					  the source address by offset from where the
-					  last single/burst transfer ends.
-					    * If source address offset < 0 => Decrement
-					  the source address by offset from where the
-					  last single/burst transfer ends.
-					    * If source address offset == 0 => The next
-					  single/burst source address starts from where
-					  the last transfer ends */
+	int32_t SrcAddrOffset; /*!< Specifies the DMA channel single/burst
+				  source address offset : This parameter can be
+				  a value between -8191 and 8191.
+				    * If source address offset > 0 => Increment
+				  the source address by offset from where the
+				  last single/burst transfer ends.
+				    * If source address offset < 0 => Decrement
+				  the source address by offset from where the
+				  last single/burst transfer ends.
+				    * If source address offset == 0 => The next
+				  single/burst source address starts from where
+				  the last transfer ends */
 
-		int32_t DestAddrOffset; /*!< Specifies the DMA channel single/burst
-					   destination address offset signed value : This
-					   parameter can be a value between -8191 and 8191.
-					     * If destination address offset > 0 =>
-					   Increment the destination address by offset from
-					   where the last single/burst transfer ends.
-					     * If destination address offset < 0 =>
-					   Decrement the destination address by offset from
-					   where the last single/burst transfer ends.
-					     * If destination address offset == 0 => The
-					   next single/burst destination address starts from
-					   where the last transfer ends. */
+	int32_t DestAddrOffset; /*!< Specifies the DMA channel single/burst
+				   destination address offset signed value : This
+				   parameter can be a value between -8191 and 8191.
+				     * If destination address offset > 0 =>
+				   Increment the destination address by offset from
+				   where the last single/burst transfer ends.
+				     * If destination address offset < 0 =>
+				   Decrement the destination address by offset from
+				   where the last single/burst transfer ends.
+				     * If destination address offset == 0 => The
+				   next single/burst destination address starts from
+				   where the last transfer ends. */
 
-		int32_t BlkSrcAddrOffset; /*!< Specifies the DMA channel block source
-					     address offset signed value : This parameter
-					     can be a value between -65535 and 65535.
-					       * If block source address offset > 0 =>
-					     Increment the block source address by offset
-						 from where the last block ends.
-					       * If block source address offset < 0 =>
-					     Decrement the next block source address by
-						 offset from where the last block ends.
-					       * If block source address offset == 0 =>  the
-					     next block source address starts from where the
-					     last block ends */
+	int32_t BlkSrcAddrOffset; /*!< Specifies the DMA channel block source
+				     address offset signed value : This parameter
+				     can be a value between -65535 and 65535.
+				       * If block source address offset > 0 =>
+				     Increment the block source address by offset
+					 from where the last block ends.
+				       * If block source address offset < 0 =>
+				     Decrement the next block source address by
+					 offset from where the last block ends.
+				       * If block source address offset == 0 =>  the
+				     next block source address starts from where the
+				     last block ends */
 
-		int32_t BlkDestAddrOffset; /*!< Specifies the DMA channel block destination
-					      address offset signed value : This parameter
-					      can be a value between -65535 and 65535.
-						* If block destination address offset > 0 =>
-					      Increment the block destination address by
-					      offset from where the last block ends.
-						* If block destination address offset < 0 =>
-					      Decrement the next block destination address
-					      by offset from where the last block ends.
-						* If block destination address offset == 0
-					      =>  the next block destination address starts
-					      from where the last block ends */
+	int32_t BlkDestAddrOffset; /*!< Specifies the DMA channel block destination
+				      address offset signed value : This parameter
+				      can be a value between -65535 and 65535.
+					* If block destination address offset > 0 =>
+				      Increment the block destination address by
+				      offset from where the last block ends.
+					* If block destination address offset < 0 =>
+				      Decrement the next block destination address
+				      by offset from where the last block ends.
+					* If block destination address offset == 0
+				      =>  the next block destination address starts
+				      from where the last block ends */
 
-	} DMA_RepeatBlockConfTypeDef;
+} DMA_RepeatBlockConfTypeDef;
 
-	/**
-	 * @brief DMAEx Queue State Enumeration Definition.
-	 */
-	typedef enum
-	{
-		HAL_DMA_QUEUE_STATE_RESET = 0x00U, /*!< DMA queue empty              */
-		HAL_DMA_QUEUE_STATE_READY = 0x01U, /*!< DMA queue ready for use      */
-		HAL_DMA_QUEUE_STATE_BUSY = 0x02U   /*!< DMA queue execution on going */
+/**
+ * @brief DMAEx Queue State Enumeration Definition.
+ */
+typedef enum {
+	HAL_DMA_QUEUE_STATE_RESET = 0x00U, /*!< DMA queue empty              */
+	HAL_DMA_QUEUE_STATE_READY = 0x01U, /*!< DMA queue ready for use      */
+	HAL_DMA_QUEUE_STATE_BUSY = 0x02U   /*!< DMA queue execution on going */
 
-	} HAL_DMA_QStateTypeDef;
+} HAL_DMA_QStateTypeDef;
 
-	/**
-	 * @brief  DMAEx Linked-List Node Configuration Structure Definition.
-	 */
-	typedef struct
-	{
-		uint32_t NodeType; /*!< Specifies the DMA channel node type.
-					This parameter can be a value of @ref
-				      DMAEx_Node_Type          */
+/**
+ * @brief  DMAEx Linked-List Node Configuration Structure Definition.
+ */
+typedef struct {
+	uint32_t NodeType; /*!< Specifies the DMA channel node type.
+				This parameter can be a value of @ref
+			      DMAEx_Node_Type          */
 
-		DMA_InitTypeDef Init; /*!< Specifies the DMA channel basic configuration */
+	DMA_InitTypeDef Init; /*!< Specifies the DMA channel basic configuration */
 
-		DMA_DataHandlingConfTypeDef DataHandlingConfig; /*!< Specifies the DMA channel data handling
-								   channel configuration  */
+	DMA_DataHandlingConfTypeDef DataHandlingConfig; /*!< Specifies the DMA channel data handling
+							   channel configuration  */
 
-		DMA_TriggerConfTypeDef TriggerConfig; /*!< Specifies the DMA channel
-							 trigger configuration */
+	DMA_TriggerConfTypeDef TriggerConfig; /*!< Specifies the DMA channel
+						 trigger configuration */
 
-		DMA_RepeatBlockConfTypeDef RepeatBlockConfig; /*!< Specifies the DMA channel repeated block
-								 configuration         */
+	DMA_RepeatBlockConfTypeDef RepeatBlockConfig; /*!< Specifies the DMA channel repeated block
+							 configuration         */
 
-		uint32_t SrcAddress; /*!< Specifies the source memory address */
-		uint32_t DstAddress; /*!< Specifies the destination memory address */
-		uint32_t DataSize;   /*!< Specifies the source data size in bytes   */
+	uint32_t SrcAddress; /*!< Specifies the source memory address */
+	uint32_t DstAddress; /*!< Specifies the destination memory address */
+	uint32_t DataSize;   /*!< Specifies the source data size in bytes   */
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-		uint32_t SrcSecure;  /*!< Specifies the source security attribute */
-		uint32_t DestSecure; /*!< Specifies the destination security attribute */
-#endif				     /* (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
+	uint32_t SrcSecure;  /*!< Specifies the source security attribute */
+	uint32_t DestSecure; /*!< Specifies the destination security attribute */
+#endif			     /* (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
-	} DMA_NodeConfTypeDef;
+} DMA_NodeConfTypeDef;
 
-	/**
-	 * @brief  DMAEx Linked-List Node Structure Definition.
-	 */
-	typedef struct
-	{
-		uint32_t LinkRegisters[8U]; /*!< Physical Node register description */
-		uint32_t NodeInfo;	    /*!< Node information                   */
+/**
+ * @brief  DMAEx Linked-List Node Structure Definition.
+ */
+typedef struct {
+	uint32_t LinkRegisters[8U]; /*!< Physical Node register description */
+	uint32_t NodeInfo;	    /*!< Node information                   */
 
-	} DMA_NodeTypeDef;
+} DMA_NodeTypeDef;
 
-	/**
-	 * @brief DMAEx Linked-List Queue Structure Definition.
-	 */
-	typedef struct __DMA_QListTypeDef
-	{
-		DMA_NodeTypeDef *Head; /*!< Specifies the queue head node */
+/**
+ * @brief DMAEx Linked-List Queue Structure Definition.
+ */
+typedef struct __DMA_QListTypeDef {
+	DMA_NodeTypeDef *Head; /*!< Specifies the queue head node */
 
-		DMA_NodeTypeDef *FirstCircularNode; /*!< Specifies the queue first circular node */
+	DMA_NodeTypeDef *FirstCircularNode; /*!< Specifies the queue first circular node */
 
-		uint32_t NodeNumber; /*!< Specifies the queue node number */
+	uint32_t NodeNumber; /*!< Specifies the queue node number */
 
-		__IO HAL_DMA_QStateTypeDef State; /*!< Specifies the queue state */
+	__IO HAL_DMA_QStateTypeDef State; /*!< Specifies the queue state */
 
-		__IO uint32_t ErrorCode; /*!< Specifies the queue error code */
+	__IO uint32_t ErrorCode; /*!< Specifies the queue error code */
 
-		__IO uint32_t Type; /*!< Specifies whether the queue is static or dynamic */
+	__IO uint32_t Type; /*!< Specifies whether the queue is static or dynamic */
 
-	} DMA_QListTypeDef;
+} DMA_QListTypeDef;
 /**
  * @}
  */
@@ -504,140 +496,139 @@ extern "C"
  */
 #define DMA_LSM_FULL_EXECUTION 0x00000000U  /*!< Channel is executed for the full linked-list */
 #define DMA_LSM_1LINK_EXECUTION DMA_CCR_LSM /*!< Channel is executed once for the current LLI */
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported functions
-	 * ------------------------------------------------------------------------------------------------*/
-	/** @defgroup DMAEx_Exported_Functions DMAEx Exported Functions
-	 * @brief    DMAEx Exported functions
-	 * @{
-	 */
+/* Exported functions
+ * ------------------------------------------------------------------------------------------------*/
+/** @defgroup DMAEx_Exported_Functions DMAEx Exported Functions
+ * @brief    DMAEx Exported functions
+ * @{
+ */
 
-	/** @defgroup DMAEx_Exported_Functions_Group1 Linked-List Initialization and
-	 * De-Initialization Functions
-	 * @brief    Linked-List Initialization and De-Initialization Functions
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_DMAEx_List_Init(DMA_HandleTypeDef *const hdma);
-	HAL_StatusTypeDef HAL_DMAEx_List_DeInit(DMA_HandleTypeDef *const hdma);
-	/**
-	 * @}
-	 */
+/** @defgroup DMAEx_Exported_Functions_Group1 Linked-List Initialization and
+ * De-Initialization Functions
+ * @brief    Linked-List Initialization and De-Initialization Functions
+ * @{
+ */
+HAL_StatusTypeDef HAL_DMAEx_List_Init(DMA_HandleTypeDef *const hdma);
+HAL_StatusTypeDef HAL_DMAEx_List_DeInit(DMA_HandleTypeDef *const hdma);
+/**
+ * @}
+ */
 
-	/** @defgroup DMAEx_Exported_Functions_Group2 Linked-List IO Operation Functions
-	 * @brief    Linked-List IO Operation Functions
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_DMAEx_List_Start(DMA_HandleTypeDef *const hdma);
-	HAL_StatusTypeDef HAL_DMAEx_List_Start_IT(DMA_HandleTypeDef *const hdma);
-	/**
-	 * @}
-	 */
+/** @defgroup DMAEx_Exported_Functions_Group2 Linked-List IO Operation Functions
+ * @brief    Linked-List IO Operation Functions
+ * @{
+ */
+HAL_StatusTypeDef HAL_DMAEx_List_Start(DMA_HandleTypeDef *const hdma);
+HAL_StatusTypeDef HAL_DMAEx_List_Start_IT(DMA_HandleTypeDef *const hdma);
+/**
+ * @}
+ */
 
-	/** @defgroup DMAEx_Exported_Functions_Group3 Linked-List Management Functions
-	 * @brief    Linked-List Management Functions
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_DMAEx_List_BuildNode(DMA_NodeConfTypeDef const *const pNodeConfig, DMA_NodeTypeDef *const pNode);
-	HAL_StatusTypeDef HAL_DMAEx_List_GetNodeConfig(DMA_NodeConfTypeDef *const pNodeConfig, DMA_NodeTypeDef const *const pNode);
+/** @defgroup DMAEx_Exported_Functions_Group3 Linked-List Management Functions
+ * @brief    Linked-List Management Functions
+ * @{
+ */
+HAL_StatusTypeDef HAL_DMAEx_List_BuildNode(DMA_NodeConfTypeDef const *const pNodeConfig, DMA_NodeTypeDef *const pNode);
+HAL_StatusTypeDef HAL_DMAEx_List_GetNodeConfig(DMA_NodeConfTypeDef *const pNodeConfig, DMA_NodeTypeDef const *const pNode);
 
-	HAL_StatusTypeDef HAL_DMAEx_List_InsertNode(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pPrevNode, DMA_NodeTypeDef *const pNewNode);
-	HAL_StatusTypeDef HAL_DMAEx_List_InsertNode_Head(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pNewNode);
-	HAL_StatusTypeDef HAL_DMAEx_List_InsertNode_Tail(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pNewNode);
+HAL_StatusTypeDef HAL_DMAEx_List_InsertNode(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pPrevNode, DMA_NodeTypeDef *const pNewNode);
+HAL_StatusTypeDef HAL_DMAEx_List_InsertNode_Head(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pNewNode);
+HAL_StatusTypeDef HAL_DMAEx_List_InsertNode_Tail(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pNewNode);
 
-	HAL_StatusTypeDef HAL_DMAEx_List_RemoveNode(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pNode);
-	HAL_StatusTypeDef HAL_DMAEx_List_RemoveNode_Head(DMA_QListTypeDef *const pQList);
-	HAL_StatusTypeDef HAL_DMAEx_List_RemoveNode_Tail(DMA_QListTypeDef *const pQList);
+HAL_StatusTypeDef HAL_DMAEx_List_RemoveNode(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pNode);
+HAL_StatusTypeDef HAL_DMAEx_List_RemoveNode_Head(DMA_QListTypeDef *const pQList);
+HAL_StatusTypeDef HAL_DMAEx_List_RemoveNode_Tail(DMA_QListTypeDef *const pQList);
 
-	HAL_StatusTypeDef HAL_DMAEx_List_ReplaceNode(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pOldNode, DMA_NodeTypeDef *const pNewNode);
-	HAL_StatusTypeDef HAL_DMAEx_List_ReplaceNode_Head(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pNewNode);
-	HAL_StatusTypeDef HAL_DMAEx_List_ReplaceNode_Tail(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pNewNode);
+HAL_StatusTypeDef HAL_DMAEx_List_ReplaceNode(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pOldNode, DMA_NodeTypeDef *const pNewNode);
+HAL_StatusTypeDef HAL_DMAEx_List_ReplaceNode_Head(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pNewNode);
+HAL_StatusTypeDef HAL_DMAEx_List_ReplaceNode_Tail(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pNewNode);
 
-	HAL_StatusTypeDef HAL_DMAEx_List_ResetQ(DMA_QListTypeDef *const pQList);
+HAL_StatusTypeDef HAL_DMAEx_List_ResetQ(DMA_QListTypeDef *const pQList);
 
-	HAL_StatusTypeDef HAL_DMAEx_List_InsertQ(DMA_QListTypeDef *const pSrcQList, DMA_NodeTypeDef const *const pPrevNode, DMA_QListTypeDef *const pDestQList);
-	HAL_StatusTypeDef HAL_DMAEx_List_InsertQ_Head(DMA_QListTypeDef *const pSrcQList, DMA_QListTypeDef *const pDestQList);
-	HAL_StatusTypeDef HAL_DMAEx_List_InsertQ_Tail(DMA_QListTypeDef *const pSrcQList, DMA_QListTypeDef *const pDestQList);
+HAL_StatusTypeDef HAL_DMAEx_List_InsertQ(DMA_QListTypeDef *const pSrcQList, DMA_NodeTypeDef const *const pPrevNode, DMA_QListTypeDef *const pDestQList);
+HAL_StatusTypeDef HAL_DMAEx_List_InsertQ_Head(DMA_QListTypeDef *const pSrcQList, DMA_QListTypeDef *const pDestQList);
+HAL_StatusTypeDef HAL_DMAEx_List_InsertQ_Tail(DMA_QListTypeDef *const pSrcQList, DMA_QListTypeDef *const pDestQList);
 
-	HAL_StatusTypeDef HAL_DMAEx_List_SetCircularModeConfig(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pFirstCircularNode);
-	HAL_StatusTypeDef HAL_DMAEx_List_SetCircularMode(DMA_QListTypeDef *const pQList);
-	HAL_StatusTypeDef HAL_DMAEx_List_ClearCircularMode(DMA_QListTypeDef *const pQList);
+HAL_StatusTypeDef HAL_DMAEx_List_SetCircularModeConfig(DMA_QListTypeDef *const pQList, DMA_NodeTypeDef *const pFirstCircularNode);
+HAL_StatusTypeDef HAL_DMAEx_List_SetCircularMode(DMA_QListTypeDef *const pQList);
+HAL_StatusTypeDef HAL_DMAEx_List_ClearCircularMode(DMA_QListTypeDef *const pQList);
 
-	HAL_StatusTypeDef HAL_DMAEx_List_ConvertQToDynamic(DMA_QListTypeDef *const pQList);
-	HAL_StatusTypeDef HAL_DMAEx_List_ConvertQToStatic(DMA_QListTypeDef *const pQList);
+HAL_StatusTypeDef HAL_DMAEx_List_ConvertQToDynamic(DMA_QListTypeDef *const pQList);
+HAL_StatusTypeDef HAL_DMAEx_List_ConvertQToStatic(DMA_QListTypeDef *const pQList);
 
-	HAL_StatusTypeDef HAL_DMAEx_List_LinkQ(DMA_HandleTypeDef *const hdma, DMA_QListTypeDef *const pQList);
-	HAL_StatusTypeDef HAL_DMAEx_List_UnLinkQ(DMA_HandleTypeDef *const hdma);
-	/**
-	 * @}
-	 */
+HAL_StatusTypeDef HAL_DMAEx_List_LinkQ(DMA_HandleTypeDef *const hdma, DMA_QListTypeDef *const pQList);
+HAL_StatusTypeDef HAL_DMAEx_List_UnLinkQ(DMA_HandleTypeDef *const hdma);
+/**
+ * @}
+ */
 
-	/** @defgroup DMAEx_Exported_Functions_Group4 Data Handling, Repeated Block and
-	 * Trigger Configuration Functions
-	 * @brief    Data Handling, Repeated Block and Trigger Configuration Functions
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_DMAEx_ConfigDataHandling(DMA_HandleTypeDef *const hdma, DMA_DataHandlingConfTypeDef const *const pConfigDataHandling);
-	HAL_StatusTypeDef HAL_DMAEx_ConfigTrigger(DMA_HandleTypeDef *const hdma, DMA_TriggerConfTypeDef const *const pConfigTrigger);
-	HAL_StatusTypeDef HAL_DMAEx_ConfigRepeatBlock(DMA_HandleTypeDef *const hdma, DMA_RepeatBlockConfTypeDef const *const pConfigRepeatBlock);
-	/**
-	 * @}
-	 */
+/** @defgroup DMAEx_Exported_Functions_Group4 Data Handling, Repeated Block and
+ * Trigger Configuration Functions
+ * @brief    Data Handling, Repeated Block and Trigger Configuration Functions
+ * @{
+ */
+HAL_StatusTypeDef HAL_DMAEx_ConfigDataHandling(DMA_HandleTypeDef *const hdma, DMA_DataHandlingConfTypeDef const *const pConfigDataHandling);
+HAL_StatusTypeDef HAL_DMAEx_ConfigTrigger(DMA_HandleTypeDef *const hdma, DMA_TriggerConfTypeDef const *const pConfigTrigger);
+HAL_StatusTypeDef HAL_DMAEx_ConfigRepeatBlock(DMA_HandleTypeDef *const hdma, DMA_RepeatBlockConfTypeDef const *const pConfigRepeatBlock);
+/**
+ * @}
+ */
 
-	/** @defgroup DMAEx_Exported_Functions_Group5 Suspend and Resume Operation
-	 * Functions
-	 * @brief    Suspend and Resume Operation Functions
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_DMAEx_Suspend(DMA_HandleTypeDef *const hdma);
-	HAL_StatusTypeDef HAL_DMAEx_Suspend_IT(DMA_HandleTypeDef *const hdma);
-	HAL_StatusTypeDef HAL_DMAEx_Resume(DMA_HandleTypeDef *const hdma);
-	/**
-	 * @}
-	 */
+/** @defgroup DMAEx_Exported_Functions_Group5 Suspend and Resume Operation
+ * Functions
+ * @brief    Suspend and Resume Operation Functions
+ * @{
+ */
+HAL_StatusTypeDef HAL_DMAEx_Suspend(DMA_HandleTypeDef *const hdma);
+HAL_StatusTypeDef HAL_DMAEx_Suspend_IT(DMA_HandleTypeDef *const hdma);
+HAL_StatusTypeDef HAL_DMAEx_Resume(DMA_HandleTypeDef *const hdma);
+/**
+ * @}
+ */
 
-	/** @defgroup DMAEx_Exported_Functions_Group6 FIFO Status Function
-	 * @brief    FIFO Status Function
-	 * @{
-	 */
-	uint32_t HAL_DMAEx_GetFifoLevel(DMA_HandleTypeDef const *const hdma);
-	/**
-	 * @}
-	 */
+/** @defgroup DMAEx_Exported_Functions_Group6 FIFO Status Function
+ * @brief    FIFO Status Function
+ * @{
+ */
+uint32_t HAL_DMAEx_GetFifoLevel(DMA_HandleTypeDef const *const hdma);
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Private types
-	 * -----------------------------------------------------------------------------------------------------*/
-	/** @defgroup DMAEx_Private_Types DMAEx Private Types
-	 * @brief    DMAEx Private Types
-	 * @{
-	 */
+/* Private types
+ * -----------------------------------------------------------------------------------------------------*/
+/** @defgroup DMAEx_Private_Types DMAEx Private Types
+ * @brief    DMAEx Private Types
+ * @{
+ */
 
-	/**
-	 * @brief DMA Node in Queue Information Structure Definition.
-	 */
-	typedef struct
-	{
-		uint32_t cllr_offset; /* CLLR register offset  */
+/**
+ * @brief DMA Node in Queue Information Structure Definition.
+ */
+typedef struct {
+	uint32_t cllr_offset; /* CLLR register offset  */
 
-		uint32_t previousnode_addr; /* Previous node address */
+	uint32_t previousnode_addr; /* Previous node address */
 
-		uint32_t currentnode_pos; /* Current node position */
+	uint32_t currentnode_pos; /* Current node position */
 
-		uint32_t currentnode_addr; /* Current node address  */
+	uint32_t currentnode_addr; /* Current node address  */
 
-		uint32_t nextnode_addr; /* Next node address     */
+	uint32_t nextnode_addr; /* Next node address     */
 
-	} DMA_NodeInQInfoTypeDef;
+} DMA_NodeInQInfoTypeDef;
 /**
  * @}
  */
@@ -730,32 +721,32 @@ extern "C"
 #endif /* GPDMA1_TRIGGER_JPEG_OFT */
 
 #define IS_DMA_NODE_TYPE(TYPE) (((TYPE) == DMA_LPDMA_LINEAR_NODE) || ((TYPE) == DMA_GPDMA_LINEAR_NODE) || ((TYPE) == DMA_GPDMA_2D_NODE))
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Private functions
-	 * -------------------------------------------------------------------------------------------------*/
-	/** @defgroup DMAEx_Private_Functions DMAEx Private Functions
-	 * @brief    DMAEx Private Functions
-	 * @{
-	 */
+/* Private functions
+ * -------------------------------------------------------------------------------------------------*/
+/** @defgroup DMAEx_Private_Functions DMAEx Private Functions
+ * @brief    DMAEx Private Functions
+ * @{
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

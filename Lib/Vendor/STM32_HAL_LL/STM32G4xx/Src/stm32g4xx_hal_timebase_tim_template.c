@@ -95,12 +95,9 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 	uwAPB1Prescaler = clkconfig.APB1CLKDivider;
 
 	/* Compute TIM6 clock */
-	if (uwAPB1Prescaler == RCC_HCLK_DIV1)
-	{
+	if (uwAPB1Prescaler == RCC_HCLK_DIV1) {
 		uwTimclock = HAL_RCC_GetPCLK1Freq();
-	}
-	else
-	{
+	} else {
 		uwTimclock = 2U * HAL_RCC_GetPCLK1Freq();
 	}
 
@@ -122,21 +119,16 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 	TimHandle.Init.ClockDivision = 0;
 	TimHandle.Init.CounterMode = TIM_COUNTERMODE_UP;
 	status = HAL_TIM_Base_Init(&TimHandle);
-	if (status == HAL_OK)
-	{
+	if (status == HAL_OK) {
 		/* Start the TIM time Base generation in interrupt mode */
 		status = HAL_TIM_Base_Start_IT(&TimHandle);
-		if (status == HAL_OK)
-		{
+		if (status == HAL_OK) {
 			/* Configure the SysTick IRQ priority */
-			if (TickPriority < (1UL << __NVIC_PRIO_BITS))
-			{
+			if (TickPriority < (1UL << __NVIC_PRIO_BITS)) {
 				/* Configure the TIM IRQ priority */
 				HAL_NVIC_SetPriority(TIM6_DAC_IRQn, TickPriority, 0U);
 				uwTickPrio = TickPriority;
-			}
-			else
-			{
+			} else {
 				status = HAL_ERROR;
 			}
 		}

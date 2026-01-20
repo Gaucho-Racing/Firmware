@@ -67,16 +67,13 @@ ErrorStatus LL_CORDIC_DeInit(const CORDIC_TypeDef *CORDICx)
 	/* Check the parameters */
 	assert_param(IS_CORDIC_ALL_INSTANCE(CORDICx));
 
-	if (CORDICx == CORDIC)
-	{
+	if (CORDICx == CORDIC) {
 		/* Force CORDIC reset */
 		LL_AHB1_GRP1_ForceReset(LL_AHB1_GRP1_PERIPH_CORDIC);
 
 		/* Release CORDIC reset */
 		LL_AHB1_GRP1_ReleaseReset(LL_AHB1_GRP1_PERIPH_CORDIC);
-	}
-	else
-	{
+	} else {
 		status = ERROR;
 	}
 

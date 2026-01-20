@@ -21,8 +21,7 @@
 #define STM32G4xx_HAL_I2C_EX_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -75,53 +74,53 @@ extern "C"
 	(uint32_t)(0x00000800U | I2C_FMP_NOT_SUPPORTED) /*!< Fast Mode Plus I2C4 not supported                                                                                                         \
 							 */
 #endif							/* SYSCFG_CFGR1_I2C4_FMP */
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported macro ------------------------------------------------------------*/
-	/** @defgroup I2CEx_Exported_Macros I2C Extended Exported Macros
-	 * @{
-	 */
+/* Exported macro ------------------------------------------------------------*/
+/** @defgroup I2CEx_Exported_Macros I2C Extended Exported Macros
+ * @{
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported functions --------------------------------------------------------*/
-	/** @addtogroup I2CEx_Exported_Functions I2C Extended Exported Functions
-	 * @{
-	 */
+/* Exported functions --------------------------------------------------------*/
+/** @addtogroup I2CEx_Exported_Functions I2C Extended Exported Functions
+ * @{
+ */
 
-	/** @addtogroup I2CEx_Exported_Functions_Group1 Filter Mode Functions
-	 * @{
-	 */
-	/* Peripheral Control functions
-	 * ************************************************/
-	HAL_StatusTypeDef HAL_I2CEx_ConfigAnalogFilter(I2C_HandleTypeDef *hi2c, uint32_t AnalogFilter);
-	HAL_StatusTypeDef HAL_I2CEx_ConfigDigitalFilter(I2C_HandleTypeDef *hi2c, uint32_t DigitalFilter);
-	/**
-	 * @}
-	 */
+/** @addtogroup I2CEx_Exported_Functions_Group1 Filter Mode Functions
+ * @{
+ */
+/* Peripheral Control functions
+ * ************************************************/
+HAL_StatusTypeDef HAL_I2CEx_ConfigAnalogFilter(I2C_HandleTypeDef *hi2c, uint32_t AnalogFilter);
+HAL_StatusTypeDef HAL_I2CEx_ConfigDigitalFilter(I2C_HandleTypeDef *hi2c, uint32_t DigitalFilter);
+/**
+ * @}
+ */
 
-	/** @addtogroup I2CEx_Exported_Functions_Group2 WakeUp Mode Functions
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_I2CEx_EnableWakeUp(I2C_HandleTypeDef *hi2c);
-	HAL_StatusTypeDef HAL_I2CEx_DisableWakeUp(I2C_HandleTypeDef *hi2c);
-	/**
-	 * @}
-	 */
+/** @addtogroup I2CEx_Exported_Functions_Group2 WakeUp Mode Functions
+ * @{
+ */
+HAL_StatusTypeDef HAL_I2CEx_EnableWakeUp(I2C_HandleTypeDef *hi2c);
+HAL_StatusTypeDef HAL_I2CEx_DisableWakeUp(I2C_HandleTypeDef *hi2c);
+/**
+ * @}
+ */
 
-	/** @addtogroup I2CEx_Exported_Functions_Group3 Fast Mode Plus Functions
-	 * @{
-	 */
-	void HAL_I2CEx_EnableFastModePlus(uint32_t ConfigFastModePlus);
-	void HAL_I2CEx_DisableFastModePlus(uint32_t ConfigFastModePlus);
+/** @addtogroup I2CEx_Exported_Functions_Group3 Fast Mode Plus Functions
+ * @{
+ */
+void HAL_I2CEx_EnableFastModePlus(uint32_t ConfigFastModePlus);
+void HAL_I2CEx_DisableFastModePlus(uint32_t ConfigFastModePlus);
 /**
  * @}
  */
@@ -161,27 +160,27 @@ extern "C"
 	  (((__CONFIG__) & (I2C_FASTMODEPLUS_PB8)) == I2C_FASTMODEPLUS_PB8) || (((__CONFIG__) & (I2C_FASTMODEPLUS_PB9)) == I2C_FASTMODEPLUS_PB9) ||                                                    \
 	  (((__CONFIG__) & (I2C_FASTMODEPLUS_I2C1)) == I2C_FASTMODEPLUS_I2C1) || (((__CONFIG__) & (I2C_FASTMODEPLUS_I2C2)) == I2C_FASTMODEPLUS_I2C2) ||                                                \
 	  (((__CONFIG__) & (I2C_FASTMODEPLUS_I2C4)) == I2C_FASTMODEPLUS_I2C4)))
-#endif	/* I2C3 */
-	/**
-	 * @}
-	 */
+#endif /* I2C3 */
+       /**
+	* @}
+	*/
 
-	/* Private Functions ---------------------------------------------------------*/
-	/** @defgroup I2CEx_Private_Functions I2C Extended Private Functions
-	 * @{
-	 */
-	/* Private functions are defined in stm32g4xx_hal_i2c_ex.c file */
-	/**
-	 * @}
-	 */
+/* Private Functions ---------------------------------------------------------*/
+/** @defgroup I2CEx_Private_Functions I2C Extended Private Functions
+ * @{
+ */
+/* Private functions are defined in stm32g4xx_hal_i2c_ex.c file */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

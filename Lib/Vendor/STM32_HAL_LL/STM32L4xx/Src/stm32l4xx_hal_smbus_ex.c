@@ -95,8 +95,7 @@ HAL_StatusTypeDef HAL_SMBUSEx_EnableWakeUp(SMBUS_HandleTypeDef *hsmbus)
 	/* Check the parameters */
 	assert_param(IS_I2C_WAKEUP_FROMSTOP_INSTANCE(hsmbus->Instance));
 
-	if (hsmbus->State == HAL_SMBUS_STATE_READY)
-	{
+	if (hsmbus->State == HAL_SMBUS_STATE_READY) {
 		/* Process Locked */
 		__HAL_LOCK(hsmbus);
 
@@ -116,9 +115,7 @@ HAL_StatusTypeDef HAL_SMBUSEx_EnableWakeUp(SMBUS_HandleTypeDef *hsmbus)
 		__HAL_UNLOCK(hsmbus);
 
 		return HAL_OK;
-	}
-	else
-	{
+	} else {
 		return HAL_BUSY;
 	}
 }
@@ -135,8 +132,7 @@ HAL_StatusTypeDef HAL_SMBUSEx_DisableWakeUp(SMBUS_HandleTypeDef *hsmbus)
 	/* Check the parameters */
 	assert_param(IS_I2C_WAKEUP_FROMSTOP_INSTANCE(hsmbus->Instance));
 
-	if (hsmbus->State == HAL_SMBUS_STATE_READY)
-	{
+	if (hsmbus->State == HAL_SMBUS_STATE_READY) {
 		/* Process Locked */
 		__HAL_LOCK(hsmbus);
 
@@ -156,9 +152,7 @@ HAL_StatusTypeDef HAL_SMBUSEx_DisableWakeUp(SMBUS_HandleTypeDef *hsmbus)
 		__HAL_UNLOCK(hsmbus);
 
 		return HAL_OK;
-	}
-	else
-	{
+	} else {
 		return HAL_BUSY;
 	}
 }

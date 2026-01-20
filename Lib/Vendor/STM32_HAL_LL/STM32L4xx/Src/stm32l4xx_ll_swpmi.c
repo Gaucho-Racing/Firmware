@@ -83,13 +83,10 @@ ErrorStatus LL_SWPMI_DeInit(const SWPMI_TypeDef *SWPMIx)
 	/* Check the parameter */
 	assert_param(IS_SWPMI_INSTANCE(SWPMIx));
 
-	if (SWPMIx == SWPMI1)
-	{
+	if (SWPMIx == SWPMI1) {
 		LL_APB1_GRP2_ForceReset(LL_APB1_GRP2_PERIPH_SWPMI1);
 		LL_APB1_GRP2_ReleaseReset(LL_APB1_GRP2_PERIPH_SWPMI1);
-	}
-	else
-	{
+	} else {
 		status = ERROR;
 	}
 
@@ -123,8 +120,7 @@ ErrorStatus LL_SWPMI_Init(SWPMI_TypeDef *SWPMIx, const LL_SWPMI_InitTypeDef *SWP
 
 	/* SWPMI needs to be in deactivated state, in order to be able to
 	 * configure some bits */
-	if (LL_SWPMI_IsActivated(SWPMIx) == 0U)
-	{
+	if (LL_SWPMI_IsActivated(SWPMIx) == 0U) {
 		/* Configure the BRR register (Bitrate) */
 		LL_SWPMI_SetBitRatePrescaler(SWPMIx, SWPMI_InitStruct->BitRatePrescaler);
 
@@ -135,8 +131,7 @@ ErrorStatus LL_SWPMI_Init(SWPMI_TypeDef *SWPMIx, const LL_SWPMI_InitTypeDef *SWP
 		MODIFY_REG(SWPMIx->CR, (SWPMI_CR_RXMODE | SWPMI_CR_TXMODE), (SWPMI_InitStruct->TxBufferingMode | SWPMI_InitStruct->RxBufferingMode));
 	}
 	/* Else (SWPMI not in deactivated state => return ERROR) */
-	else
-	{
+	else {
 		status = ERROR;
 	}
 

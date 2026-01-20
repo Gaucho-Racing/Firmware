@@ -9,16 +9,14 @@ int main(void)
 
 	// Test for Null error when pushing into null buffer
 	int temp = 1;
-	if (GR_CircularBuffer_Push(buffer_ptr, &temp, sizeof(temp)) != 1)
-	{
+	if (GR_CircularBuffer_Push(buffer_ptr, &temp, sizeof(temp)) != 1) {
 		return 1;
 	}
 
 	// Test for Null error when popping from null buffer
 	{
 		int *ptr = GR_CircularBuffer_Pop(buffer_ptr);
-		if (ptr != NULL)
-		{
+		if (ptr != NULL) {
 			free(ptr);
 			return 2;
 		}
@@ -27,16 +25,13 @@ int main(void)
 	buffer_ptr = GR_CircularBuffer_Create(10);
 	int arr1[6] = {1, 2, 3, 4, 5, 6};
 	// pushing without overwriting
-	for (int i = 0; i < 6; i++)
-	{
+	for (int i = 0; i < 6; i++) {
 		GR_CircularBuffer_Push(buffer_ptr, &arr1[i], sizeof(arr1[i]));
 	}
-	for (int i = 0; i < 6; i++)
-	{
+	for (int i = 0; i < 6; i++) {
 		int *tmp;
 		tmp = GR_CircularBuffer_Pop(buffer_ptr);
-		if (*tmp != arr1[i])
-		{
+		if (*tmp != arr1[i]) {
 			free(tmp);
 			GR_CircularBuffer_Free(&buffer_ptr);
 			return 3;
@@ -47,15 +42,12 @@ int main(void)
 
 	buffer_ptr = GR_CircularBuffer_Create(10);
 	// popping empty buffer
-	for (int i = 0; i < 1000; i++)
-	{
+	for (int i = 0; i < 1000; i++) {
 		free(GR_CircularBuffer_Pop(buffer_ptr));
 	}
-	for (int i = 0; i < 1000; i++)
-	{
+	for (int i = 0; i < 1000; i++) {
 		int *ptr = GR_CircularBuffer_Pop(buffer_ptr);
-		if (ptr != NULL)
-		{ // Should do nothing
+		if (ptr != NULL) { // Should do nothing
 			free(ptr);
 			GR_CircularBuffer_Free(&buffer_ptr);
 			return 4;
@@ -66,20 +58,16 @@ int main(void)
 	// pushing past size limit
 	buffer_ptr = GR_CircularBuffer_Create(20);
 	int arr2[1000];
-	for (int i = 0; i < 1000; i++)
-	{
+	for (int i = 0; i < 1000; i++) {
 		arr2[i] = i;
 	}
-	for (int i = 0; i < 1000; i++)
-	{
+	for (int i = 0; i < 1000; i++) {
 		GR_CircularBuffer_Push(buffer_ptr, &arr2[i], sizeof(arr2[i]));
 	}
-	for (int i = 0; i < 20; i++)
-	{
+	for (int i = 0; i < 20; i++) {
 		int *tmp;
 		tmp = GR_CircularBuffer_Pop(buffer_ptr);
-		if (*tmp != arr2[i + 1000 - 20])
-		{
+		if (*tmp != arr2[i + 1000 - 20]) {
 			free(tmp);
 			GR_CircularBuffer_Free(&buffer_ptr);
 			return 5;
@@ -96,8 +84,7 @@ int main(void)
 	GR_CircularBuffer_Push(buffer_ptr, &num, sizeof(num));
 
 	int *tmp = GR_CircularBuffer_Pop(buffer_ptr);
-	if (*tmp != num)
-	{
+	if (*tmp != num) {
 		free(tmp);
 		GR_CircularBuffer_Free(&buffer_ptr);
 		return 6;
@@ -106,14 +93,12 @@ int main(void)
 
 	// Pushing beyond limit (same element should repeatedly get overwritten)
 	int arr3[2] = {1, 2};
-	for (int i = 0; i < 2; i++)
-	{
+	for (int i = 0; i < 2; i++) {
 		GR_CircularBuffer_Push(buffer_ptr, &arr3[i], sizeof(arr3[i]));
 	}
 
 	tmp = GR_CircularBuffer_Pop(buffer_ptr); // Should contain the last pushed element, 1
-	if (*tmp != 2)
-	{
+	if (*tmp != 2) {
 		free(tmp);
 		return 7;
 	}
@@ -127,8 +112,7 @@ int main(void)
 	}
 	{
 		int *ptr = GR_CircularBuffer_Pop(buffer_ptr);
-		if (*ptr != 114514)
-		{
+		if (*ptr != 114514) {
 			free(ptr);
 			return 8;
 		}
@@ -138,10 +122,8 @@ int main(void)
 
 	// Stress Test push and free
 	buffer_ptr = GR_CircularBuffer_Create(100);
-	for (int i = 0; i < 1000; i++)
-	{
-		if (GR_CircularBuffer_Push(buffer_ptr, &i, sizeof(i)))
-		{
+	for (int i = 0; i < 1000; i++) {
+		if (GR_CircularBuffer_Push(buffer_ptr, &i, sizeof(i))) {
 			return 9;
 		}
 	}
@@ -150,13 +132,11 @@ int main(void)
 	// Test pushing and popping different types of objects
 	{
 		buffer_ptr = GR_CircularBuffer_Create(8);
-		typedef struct a_struct_st
-		{
+		typedef struct a_struct_st {
 			int data1;
 			short data2;
 		} A_Struct;
-		typedef struct another_struct_st
-		{
+		typedef struct another_struct_st {
 			float f;
 			double d;
 		} Another_Struct;
@@ -234,8 +214,7 @@ int main(void)
 			free(tmp);
 		}
 		GR_CircularBuffer_Free(&buffer_ptr);
-		if (success_cases != 8)
-		{
+		if (success_cases != 8) {
 			return 10;
 		}
 	}
@@ -244,8 +223,7 @@ int main(void)
 	{
 		buffer_ptr = GR_CircularBuffer_Create(5);
 		GR_CircularBuffer_Pop(buffer_ptr);
-		if (!GR_CircularBuffer_IsEmpty(buffer_ptr))
-		{
+		if (!GR_CircularBuffer_IsEmpty(buffer_ptr)) {
 			GR_CircularBuffer_Free(&buffer_ptr);
 			return 11;
 		}

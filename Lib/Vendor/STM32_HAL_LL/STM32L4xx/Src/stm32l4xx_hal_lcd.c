@@ -150,8 +150,7 @@ HAL_StatusTypeDef HAL_LCD_Init(LCD_HandleTypeDef *hlcd)
 	HAL_StatusTypeDef status;
 
 	/* Check the LCD handle allocation */
-	if (hlcd == NULL)
-	{
+	if (hlcd == NULL) {
 		return HAL_ERROR;
 	}
 
@@ -170,8 +169,7 @@ HAL_StatusTypeDef HAL_LCD_Init(LCD_HandleTypeDef *hlcd)
 	assert_param(IS_LCD_BLINK_MODE(hlcd->Init.BlinkMode));
 	assert_param(IS_LCD_MUX_SEGMENT(hlcd->Init.MuxSegment));
 
-	if (hlcd->State == HAL_LCD_STATE_RESET)
-	{
+	if (hlcd->State == HAL_LCD_STATE_RESET) {
 		/* Allocate lock resource and initialize it */
 		hlcd->Lock = HAL_UNLOCKED;
 
@@ -186,8 +184,7 @@ HAL_StatusTypeDef HAL_LCD_Init(LCD_HandleTypeDef *hlcd)
 
 	/* Clear the LCD_RAM registers and enable the display request by setting
 	   the UDR bit in the LCD_SR register */
-	for (counter = LCD_RAM_REGISTER0; counter <= LCD_RAM_REGISTER15; counter++)
-	{
+	for (counter = LCD_RAM_REGISTER0; counter <= LCD_RAM_REGISTER15; counter++) {
 		hlcd->Instance->RAM[counter] = 0;
 	}
 	/* Enable the display request */
@@ -210,8 +207,7 @@ HAL_StatusTypeDef HAL_LCD_Init(LCD_HandleTypeDef *hlcd)
 	   LCD_FCR register is updated in the LCDCLK domain. It is cleared by
 	   hardware when writing to the LCD_FCR register.*/
 	status = LCD_WaitForSynchro(hlcd);
-	if (status != HAL_OK)
-	{
+	if (status != HAL_OK) {
 		return status;
 	}
 
@@ -229,10 +225,8 @@ HAL_StatusTypeDef HAL_LCD_Init(LCD_HandleTypeDef *hlcd)
 	tickstart = HAL_GetTick();
 
 	/* Wait Until the LCD is enabled */
-	while (__HAL_LCD_GET_FLAG(hlcd, LCD_FLAG_ENS) == RESET)
-	{
-		if ((HAL_GetTick() - tickstart) > LCD_TIMEOUT_VALUE)
-		{
+	while (__HAL_LCD_GET_FLAG(hlcd, LCD_FLAG_ENS) == RESET) {
+		if ((HAL_GetTick() - tickstart) > LCD_TIMEOUT_VALUE) {
 			hlcd->ErrorCode = HAL_LCD_ERROR_ENS;
 			return HAL_TIMEOUT;
 		}
@@ -242,10 +236,8 @@ HAL_StatusTypeDef HAL_LCD_Init(LCD_HandleTypeDef *hlcd)
 	tickstart = HAL_GetTick();
 
 	/*!< Wait Until the LCD Booster is ready */
-	while (__HAL_LCD_GET_FLAG(hlcd, LCD_FLAG_RDY) == RESET)
-	{
-		if ((HAL_GetTick() - tickstart) > LCD_TIMEOUT_VALUE)
-		{
+	while (__HAL_LCD_GET_FLAG(hlcd, LCD_FLAG_RDY) == RESET) {
+		if ((HAL_GetTick() - tickstart) > LCD_TIMEOUT_VALUE) {
 			hlcd->ErrorCode = HAL_LCD_ERROR_RDY;
 			return HAL_TIMEOUT;
 		}
@@ -266,8 +258,7 @@ HAL_StatusTypeDef HAL_LCD_Init(LCD_HandleTypeDef *hlcd)
 HAL_StatusTypeDef HAL_LCD_DeInit(LCD_HandleTypeDef *hlcd)
 {
 	/* Check the LCD handle allocation */
-	if (hlcd == NULL)
-	{
+	if (hlcd == NULL) {
 		return HAL_ERROR;
 	}
 
@@ -379,13 +370,11 @@ HAL_StatusTypeDef HAL_LCD_Write(LCD_HandleTypeDef *hlcd, uint32_t RAMRegisterInd
 	uint32_t tickstart;
 	HAL_LCD_StateTypeDef state = hlcd->State;
 
-	if ((state == HAL_LCD_STATE_READY) || (state == HAL_LCD_STATE_BUSY))
-	{
+	if ((state == HAL_LCD_STATE_READY) || (state == HAL_LCD_STATE_BUSY)) {
 		/* Check the parameters */
 		assert_param(IS_LCD_RAM_REGISTER(RAMRegisterIndex));
 
-		if (hlcd->State == HAL_LCD_STATE_READY)
-		{
+		if (hlcd->State == HAL_LCD_STATE_READY) {
 			/* Process Locked */
 			__HAL_LOCK(hlcd);
 			hlcd->State = HAL_LCD_STATE_BUSY;
@@ -394,10 +383,8 @@ HAL_StatusTypeDef HAL_LCD_Write(LCD_HandleTypeDef *hlcd, uint32_t RAMRegisterInd
 			tickstart = HAL_GetTick();
 
 			/*!< Wait Until the LCD is ready */
-			while (__HAL_LCD_GET_FLAG(hlcd, LCD_FLAG_UDR) != RESET)
-			{
-				if ((HAL_GetTick() - tickstart) > LCD_TIMEOUT_VALUE)
-				{
+			while (__HAL_LCD_GET_FLAG(hlcd, LCD_FLAG_UDR) != RESET) {
+				if ((HAL_GetTick() - tickstart) > LCD_TIMEOUT_VALUE) {
 					hlcd->ErrorCode = HAL_LCD_ERROR_UDR;
 
 					/* Process Unlocked */
@@ -412,9 +399,7 @@ HAL_StatusTypeDef HAL_LCD_Write(LCD_HandleTypeDef *hlcd, uint32_t RAMRegisterInd
 		MODIFY_REG(hlcd->Instance->RAM[RAMRegisterIndex], ~(RAMRegisterMask), Data);
 
 		return HAL_OK;
-	}
-	else
-	{
+	} else {
 		return HAL_ERROR;
 	}
 }
@@ -431,8 +416,7 @@ HAL_StatusTypeDef HAL_LCD_Clear(LCD_HandleTypeDef *hlcd)
 	HAL_StatusTypeDef status = HAL_ERROR;
 	HAL_LCD_StateTypeDef state = hlcd->State;
 
-	if ((state == HAL_LCD_STATE_READY) || (state == HAL_LCD_STATE_BUSY))
-	{
+	if ((state == HAL_LCD_STATE_READY) || (state == HAL_LCD_STATE_BUSY)) {
 		/* Process Locked */
 		__HAL_LOCK(hlcd);
 
@@ -442,10 +426,8 @@ HAL_StatusTypeDef HAL_LCD_Clear(LCD_HandleTypeDef *hlcd)
 		tickstart = HAL_GetTick();
 
 		/*!< Wait Until the LCD is ready */
-		while (__HAL_LCD_GET_FLAG(hlcd, LCD_FLAG_UDR) != RESET)
-		{
-			if ((HAL_GetTick() - tickstart) > LCD_TIMEOUT_VALUE)
-			{
+		while (__HAL_LCD_GET_FLAG(hlcd, LCD_FLAG_UDR) != RESET) {
+			if ((HAL_GetTick() - tickstart) > LCD_TIMEOUT_VALUE) {
 				hlcd->ErrorCode = HAL_LCD_ERROR_UDR;
 
 				/* Process Unlocked */
@@ -455,8 +437,7 @@ HAL_StatusTypeDef HAL_LCD_Clear(LCD_HandleTypeDef *hlcd)
 			}
 		}
 		/* Clear the LCD_RAM registers */
-		for (counter = LCD_RAM_REGISTER0; counter <= LCD_RAM_REGISTER15; counter++)
-		{
+		for (counter = LCD_RAM_REGISTER0; counter <= LCD_RAM_REGISTER15; counter++) {
 			hlcd->Instance->RAM[counter] = 0;
 		}
 
@@ -495,10 +476,8 @@ HAL_StatusTypeDef HAL_LCD_UpdateDisplayRequest(LCD_HandleTypeDef *hlcd)
 	tickstart = HAL_GetTick();
 
 	/*!< Wait Until the LCD display is done */
-	while (__HAL_LCD_GET_FLAG(hlcd, LCD_FLAG_UDD) == RESET)
-	{
-		if ((HAL_GetTick() - tickstart) > LCD_TIMEOUT_VALUE)
-		{
+	while (__HAL_LCD_GET_FLAG(hlcd, LCD_FLAG_UDD) == RESET) {
+		if ((HAL_GetTick() - tickstart) > LCD_TIMEOUT_VALUE) {
 			hlcd->ErrorCode = HAL_LCD_ERROR_UDD;
 
 			/* Process Unlocked */
@@ -579,10 +558,8 @@ HAL_StatusTypeDef LCD_WaitForSynchro(LCD_HandleTypeDef *hlcd)
 	tickstart = HAL_GetTick();
 
 	/* Loop until FCRSF flag is set */
-	while (__HAL_LCD_GET_FLAG(hlcd, LCD_FLAG_FCRSF) == RESET)
-	{
-		if ((HAL_GetTick() - tickstart) > LCD_TIMEOUT_VALUE)
-		{
+	while (__HAL_LCD_GET_FLAG(hlcd, LCD_FLAG_FCRSF) == RESET) {
+		if ((HAL_GetTick() - tickstart) > LCD_TIMEOUT_VALUE) {
 			hlcd->ErrorCode = HAL_LCD_ERROR_FCRSF;
 			return HAL_TIMEOUT;
 		}

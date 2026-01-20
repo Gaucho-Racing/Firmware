@@ -172,12 +172,9 @@ HAL_StatusTypeDef HAL_GFXMMU_Init(GFXMMU_HandleTypeDef *hgfxmmu)
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check GFXMMU handle */
-	if (hgfxmmu == NULL)
-	{
+	if (hgfxmmu == NULL) {
 		status = HAL_ERROR;
-	}
-	else
-	{
+	} else {
 		/* Check parameters */
 		assert_param(IS_GFXMMU_ALL_INSTANCE(hgfxmmu->Instance));
 		assert_param(IS_GFXMMU_BLOCKS_PER_LINE(hgfxmmu->Init.BlocksPerLine));
@@ -192,8 +189,7 @@ HAL_StatusTypeDef HAL_GFXMMU_Init(GFXMMU_HandleTypeDef *hgfxmmu)
 		hgfxmmu->ErrorCallback = HAL_GFXMMU_ErrorCallback;
 
 		/* Call GFXMMU MSP init function */
-		if (hgfxmmu->MspInitCallback == NULL)
-		{
+		if (hgfxmmu->MspInitCallback == NULL) {
 			hgfxmmu->MspInitCallback = HAL_GFXMMU_MspInit;
 		}
 		hgfxmmu->MspInitCallback(hgfxmmu);
@@ -206,8 +202,7 @@ HAL_StatusTypeDef HAL_GFXMMU_Init(GFXMMU_HandleTypeDef *hgfxmmu)
 		 * GFXMMU_CR register */
 		hgfxmmu->Instance->CR &= ~(GFXMMU_CR_B0OIE | GFXMMU_CR_B1OIE | GFXMMU_CR_B2OIE | GFXMMU_CR_B3OIE | GFXMMU_CR_AMEIE | GFXMMU_CR_192BM);
 		hgfxmmu->Instance->CR |= (hgfxmmu->Init.BlocksPerLine);
-		if (hgfxmmu->Init.Interrupts.Activation == ENABLE)
-		{
+		if (hgfxmmu->Init.Interrupts.Activation == ENABLE) {
 			assert_param(IS_GFXMMU_INTERRUPTS(hgfxmmu->Init.Interrupts.UsedInterrupts));
 			hgfxmmu->Instance->CR |= hgfxmmu->Init.Interrupts.UsedInterrupts;
 		}
@@ -242,12 +237,9 @@ HAL_StatusTypeDef HAL_GFXMMU_DeInit(GFXMMU_HandleTypeDef *hgfxmmu)
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check GFXMMU handle */
-	if (hgfxmmu == NULL)
-	{
+	if (hgfxmmu == NULL) {
 		status = HAL_ERROR;
-	}
-	else
-	{
+	} else {
 		/* Check parameters */
 		assert_param(IS_GFXMMU_ALL_INSTANCE(hgfxmmu->Instance));
 
@@ -256,8 +248,7 @@ HAL_StatusTypeDef HAL_GFXMMU_DeInit(GFXMMU_HandleTypeDef *hgfxmmu)
 
 		/* Call GFXMMU MSP de-init function */
 #if (USE_HAL_GFXMMU_REGISTER_CALLBACKS == 1)
-		if (hgfxmmu->MspDeInitCallback == NULL)
-		{
+		if (hgfxmmu->MspDeInitCallback == NULL) {
 			hgfxmmu->MspDeInitCallback = HAL_GFXMMU_MspDeInit;
 		}
 		hgfxmmu->MspDeInitCallback(hgfxmmu);
@@ -320,19 +311,14 @@ HAL_StatusTypeDef HAL_GFXMMU_RegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu, HAL
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
-	if (pCallback == NULL)
-	{
+	if (pCallback == NULL) {
 		/* update the error code */
 		hgfxmmu->ErrorCode |= GFXMMU_ERROR_INVALID_CALLBACK;
 		/* update return status */
 		status = HAL_ERROR;
-	}
-	else
-	{
-		if (HAL_GFXMMU_STATE_READY == hgfxmmu->State)
-		{
-			switch (CallbackID)
-			{
+	} else {
+		if (HAL_GFXMMU_STATE_READY == hgfxmmu->State) {
+			switch (CallbackID) {
 				case HAL_GFXMMU_ERROR_CB_ID:
 					hgfxmmu->ErrorCallback = pCallback;
 					break;
@@ -349,11 +335,8 @@ HAL_StatusTypeDef HAL_GFXMMU_RegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu, HAL
 					status = HAL_ERROR;
 					break;
 			}
-		}
-		else if (HAL_GFXMMU_STATE_RESET == hgfxmmu->State)
-		{
-			switch (CallbackID)
-			{
+		} else if (HAL_GFXMMU_STATE_RESET == hgfxmmu->State) {
+			switch (CallbackID) {
 				case HAL_GFXMMU_MSPINIT_CB_ID:
 					hgfxmmu->MspInitCallback = pCallback;
 					break;
@@ -367,9 +350,7 @@ HAL_StatusTypeDef HAL_GFXMMU_RegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu, HAL
 					status = HAL_ERROR;
 					break;
 			}
-		}
-		else
-		{
+		} else {
 			/* update the error code */
 			hgfxmmu->ErrorCode |= GFXMMU_ERROR_INVALID_CALLBACK;
 			/* update return status */
@@ -394,10 +375,8 @@ HAL_StatusTypeDef HAL_GFXMMU_UnRegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu, H
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
-	if (HAL_GFXMMU_STATE_READY == hgfxmmu->State)
-	{
-		switch (CallbackID)
-		{
+	if (HAL_GFXMMU_STATE_READY == hgfxmmu->State) {
+		switch (CallbackID) {
 			case HAL_GFXMMU_ERROR_CB_ID:
 				hgfxmmu->ErrorCallback = HAL_GFXMMU_ErrorCallback;
 				break;
@@ -414,11 +393,8 @@ HAL_StatusTypeDef HAL_GFXMMU_UnRegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu, H
 				status = HAL_ERROR;
 				break;
 		}
-	}
-	else if (HAL_GFXMMU_STATE_RESET == hgfxmmu->State)
-	{
-		switch (CallbackID)
-		{
+	} else if (HAL_GFXMMU_STATE_RESET == hgfxmmu->State) {
+		switch (CallbackID) {
 			case HAL_GFXMMU_MSPINIT_CB_ID:
 				hgfxmmu->MspInitCallback = HAL_GFXMMU_MspInit;
 				break;
@@ -432,9 +408,7 @@ HAL_StatusTypeDef HAL_GFXMMU_UnRegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu, H
 				status = HAL_ERROR;
 				break;
 		}
-	}
-	else
-	{
+	} else {
 		/* update the error code */
 		hgfxmmu->ErrorCode |= GFXMMU_ERROR_INVALID_CALLBACK;
 		/* update return status */
@@ -485,12 +459,9 @@ HAL_StatusTypeDef HAL_GFXMMU_ConfigLut(GFXMMU_HandleTypeDef *hgfxmmu, uint32_t F
 	assert_param(IS_GFXMMU_LUT_LINES_NUMBER(LinesNumber));
 
 	/* Check GFXMMU state and coherent parameters */
-	if ((hgfxmmu->State != HAL_GFXMMU_STATE_READY) || ((FirstLine + LinesNumber) > 1024U))
-	{
+	if ((hgfxmmu->State != HAL_GFXMMU_STATE_READY) || ((FirstLine + LinesNumber) > 1024U)) {
 		status = HAL_ERROR;
-	}
-	else
-	{
+	} else {
 		uint32_t current_address, current_line, lutxl_address, lutxh_address;
 
 		/* Initialize local variables */
@@ -500,8 +471,7 @@ HAL_StatusTypeDef HAL_GFXMMU_ConfigLut(GFXMMU_HandleTypeDef *hgfxmmu, uint32_t F
 		lutxh_address = (uint32_t) & (hgfxmmu->Instance->LUT[(2U * FirstLine) + 1U]);
 
 		/* Copy LUT from flash to look up RAM */
-		while (current_line < LinesNumber)
-		{
+		while (current_line < LinesNumber) {
 			*((uint32_t *)lutxl_address) = *((uint32_t *)current_address);
 			current_address += 4U;
 			*((uint32_t *)lutxh_address) = *((uint32_t *)current_address);
@@ -536,12 +506,9 @@ HAL_StatusTypeDef HAL_GFXMMU_DisableLutLines(GFXMMU_HandleTypeDef *hgfxmmu, uint
 	assert_param(IS_GFXMMU_LUT_LINES_NUMBER(LinesNumber));
 
 	/* Check GFXMMU state and coherent parameters */
-	if ((hgfxmmu->State != HAL_GFXMMU_STATE_READY) || ((FirstLine + LinesNumber) > 1024U))
-	{
+	if ((hgfxmmu->State != HAL_GFXMMU_STATE_READY) || ((FirstLine + LinesNumber) > 1024U)) {
 		status = HAL_ERROR;
-	}
-	else
-	{
+	} else {
 		uint32_t current_line, lutxl_address, lutxh_address;
 
 		/* Initialize local variables */
@@ -550,8 +517,7 @@ HAL_StatusTypeDef HAL_GFXMMU_DisableLutLines(GFXMMU_HandleTypeDef *hgfxmmu, uint
 		lutxh_address = (uint32_t) & (hgfxmmu->Instance->LUT[(2U * FirstLine) + 1U]);
 
 		/* Disable LUT lines */
-		while (current_line < LinesNumber)
-		{
+		while (current_line < LinesNumber) {
 			*((uint32_t *)lutxl_address) = 0U;
 			*((uint32_t *)lutxh_address) = 0U;
 			lutxl_address += 8U;
@@ -582,12 +548,9 @@ HAL_StatusTypeDef HAL_GFXMMU_ConfigLutLine(GFXMMU_HandleTypeDef *hgfxmmu, GFXMMU
 	assert_param(IS_GFXMMU_LUT_LINE_OFFSET(lutLine->LineOffset));
 
 	/* Check GFXMMU state */
-	if (hgfxmmu->State != HAL_GFXMMU_STATE_READY)
-	{
+	if (hgfxmmu->State != HAL_GFXMMU_STATE_READY) {
 		status = HAL_ERROR;
-	}
-	else
-	{
+	} else {
 		uint32_t lutxl_address, lutxh_address;
 
 		/* Initialize local variables */
@@ -595,14 +558,11 @@ HAL_StatusTypeDef HAL_GFXMMU_ConfigLutLine(GFXMMU_HandleTypeDef *hgfxmmu, GFXMMU
 		lutxh_address = (uint32_t) & (hgfxmmu->Instance->LUT[(2U * lutLine->LineNumber) + 1U]);
 
 		/* Configure LUT line */
-		if (lutLine->LineStatus == GFXMMU_LUT_LINE_ENABLE)
-		{
+		if (lutLine->LineStatus == GFXMMU_LUT_LINE_ENABLE) {
 			/* Enable and configure LUT line */
 			*((uint32_t *)lutxl_address) = (lutLine->LineStatus | (lutLine->FirstVisibleBlock << GFXMMU_LUTXL_FVB_OFFSET) | (lutLine->LastVisibleBlock << GFXMMU_LUTXL_LVB_OFFSET));
 			*((uint32_t *)lutxh_address) = (uint32_t)lutLine->LineOffset;
-		}
-		else
-		{
+		} else {
 			/* Disable LUT line */
 			*((uint32_t *)lutxl_address) = 0U;
 			*((uint32_t *)lutxh_address) = 0U;
@@ -630,12 +590,9 @@ HAL_StatusTypeDef HAL_GFXMMU_ModifyBuffers(GFXMMU_HandleTypeDef *hgfxmmu, GFXMMU
 	assert_param(IS_GFXMMU_BUFFER_ADDRESS(Buffers->Buf3Address));
 
 	/* Check GFXMMU state */
-	if (hgfxmmu->State != HAL_GFXMMU_STATE_READY)
-	{
+	if (hgfxmmu->State != HAL_GFXMMU_STATE_READY) {
 		status = HAL_ERROR;
-	}
-	else
-	{
+	} else {
 		/* Modify physical buffer addresses on GFXMMU_BxCR registers */
 		hgfxmmu->Instance->B0CR = Buffers->Buf0Address;
 		hgfxmmu->Instance->B1CR = Buffers->Buf1Address;
@@ -660,8 +617,7 @@ void HAL_GFXMMU_IRQHandler(GFXMMU_HandleTypeDef *hgfxmmu)
 	interrupts = (hgfxmmu->Instance->CR & GFXMMU_CR_ITS_MASK);
 	error = (flags & interrupts);
 
-	if (error != 0U)
-	{
+	if (error != 0U) {
 		/* Clear flags on GFXMMU_FCR register */
 		hgfxmmu->Instance->FCR = error;
 

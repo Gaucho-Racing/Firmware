@@ -21,16 +21,15 @@
 #define STM32U5xx_LL_CRS_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx.h"
 
-	/** @addtogroup STM32U5xx_LL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32U5xx_LL_Driver
+ * @{
+ */
 
 #if defined(CRS)
 
@@ -220,461 +219,461 @@ extern "C"
  */
 #define __LL_CRS_CALC_CALCULATE_RELOADVALUE(__FTARGET__, __FSYNC__) (((__FTARGET__) / (__FSYNC__)) - 1U)
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported functions --------------------------------------------------------*/
-	/** @defgroup CRS_LL_Exported_Functions CRS Exported Functions
-	 * @{
-	 */
+/* Exported functions --------------------------------------------------------*/
+/** @defgroup CRS_LL_Exported_Functions CRS Exported Functions
+ * @{
+ */
 
-	/** @defgroup CRS_LL_EF_Configuration Configuration
-	 * @{
-	 */
+/** @defgroup CRS_LL_EF_Configuration Configuration
+ * @{
+ */
 
-	/**
-	 * @brief  Enable Frequency error counter
-	 * @note When this bit is set, the CRS_CFGR register is write-protected and
-	 * cannot be modified
-	 * @rmtoll CR           CEN           LL_CRS_EnableFreqErrorCounter
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_EnableFreqErrorCounter(void) { SET_BIT(CRS->CR, CRS_CR_CEN); }
+/**
+ * @brief  Enable Frequency error counter
+ * @note When this bit is set, the CRS_CFGR register is write-protected and
+ * cannot be modified
+ * @rmtoll CR           CEN           LL_CRS_EnableFreqErrorCounter
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_EnableFreqErrorCounter(void) { SET_BIT(CRS->CR, CRS_CR_CEN); }
 
-	/**
-	 * @brief  Disable Frequency error counter
-	 * @rmtoll CR           CEN           LL_CRS_DisableFreqErrorCounter
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_DisableFreqErrorCounter(void) { CLEAR_BIT(CRS->CR, CRS_CR_CEN); }
+/**
+ * @brief  Disable Frequency error counter
+ * @rmtoll CR           CEN           LL_CRS_DisableFreqErrorCounter
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_DisableFreqErrorCounter(void) { CLEAR_BIT(CRS->CR, CRS_CR_CEN); }
 
-	/**
-	 * @brief  Check if Frequency error counter is enabled or not
-	 * @rmtoll CR           CEN           LL_CRS_IsEnabledFreqErrorCounter
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_CRS_IsEnabledFreqErrorCounter(void) { return ((READ_BIT(CRS->CR, CRS_CR_CEN) == (CRS_CR_CEN)) ? 1UL : 0UL); }
+/**
+ * @brief  Check if Frequency error counter is enabled or not
+ * @rmtoll CR           CEN           LL_CRS_IsEnabledFreqErrorCounter
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_CRS_IsEnabledFreqErrorCounter(void) { return ((READ_BIT(CRS->CR, CRS_CR_CEN) == (CRS_CR_CEN)) ? 1UL : 0UL); }
 
-	/**
-	 * @brief  Enable Automatic trimming counter
-	 * @rmtoll CR           AUTOTRIMEN    LL_CRS_EnableAutoTrimming
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_EnableAutoTrimming(void) { SET_BIT(CRS->CR, CRS_CR_AUTOTRIMEN); }
+/**
+ * @brief  Enable Automatic trimming counter
+ * @rmtoll CR           AUTOTRIMEN    LL_CRS_EnableAutoTrimming
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_EnableAutoTrimming(void) { SET_BIT(CRS->CR, CRS_CR_AUTOTRIMEN); }
 
-	/**
-	 * @brief  Disable Automatic trimming counter
-	 * @rmtoll CR           AUTOTRIMEN    LL_CRS_DisableAutoTrimming
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_DisableAutoTrimming(void) { CLEAR_BIT(CRS->CR, CRS_CR_AUTOTRIMEN); }
+/**
+ * @brief  Disable Automatic trimming counter
+ * @rmtoll CR           AUTOTRIMEN    LL_CRS_DisableAutoTrimming
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_DisableAutoTrimming(void) { CLEAR_BIT(CRS->CR, CRS_CR_AUTOTRIMEN); }
 
-	/**
-	 * @brief  Check if Automatic trimming is enabled or not
-	 * @rmtoll CR           AUTOTRIMEN    LL_CRS_IsEnabledAutoTrimming
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_CRS_IsEnabledAutoTrimming(void) { return ((READ_BIT(CRS->CR, CRS_CR_AUTOTRIMEN) == (CRS_CR_AUTOTRIMEN)) ? 1UL : 0UL); }
+/**
+ * @brief  Check if Automatic trimming is enabled or not
+ * @rmtoll CR           AUTOTRIMEN    LL_CRS_IsEnabledAutoTrimming
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_CRS_IsEnabledAutoTrimming(void) { return ((READ_BIT(CRS->CR, CRS_CR_AUTOTRIMEN) == (CRS_CR_AUTOTRIMEN)) ? 1UL : 0UL); }
 
-	/**
-	 * @brief  Set HSI48 oscillator smooth trimming
-	 * @note   When the AUTOTRIMEN bit is set, this field is controlled by hardware
-	 * and is read-only
-	 * @rmtoll CR           TRIM          LL_CRS_SetHSI48SmoothTrimming
-	 * @param  Value a number between Min_Data = 0 and Max_Data = 127
-	 * @note   Default value can be set thanks to @ref
-	 * LL_CRS_HSI48CALIBRATION_DEFAULT
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_SetHSI48SmoothTrimming(uint32_t Value) { MODIFY_REG(CRS->CR, CRS_CR_TRIM, Value << CRS_POSITION_TRIM); }
+/**
+ * @brief  Set HSI48 oscillator smooth trimming
+ * @note   When the AUTOTRIMEN bit is set, this field is controlled by hardware
+ * and is read-only
+ * @rmtoll CR           TRIM          LL_CRS_SetHSI48SmoothTrimming
+ * @param  Value a number between Min_Data = 0 and Max_Data = 127
+ * @note   Default value can be set thanks to @ref
+ * LL_CRS_HSI48CALIBRATION_DEFAULT
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_SetHSI48SmoothTrimming(uint32_t Value) { MODIFY_REG(CRS->CR, CRS_CR_TRIM, Value << CRS_POSITION_TRIM); }
 
-	/**
-	 * @brief  Get HSI48 oscillator smooth trimming
-	 * @rmtoll CR           TRIM          LL_CRS_GetHSI48SmoothTrimming
-	 * @retval a number between Min_Data = 0 and Max_Data = 127
-	 */
-	__STATIC_INLINE uint32_t LL_CRS_GetHSI48SmoothTrimming(void) { return (uint32_t)(READ_BIT(CRS->CR, CRS_CR_TRIM) >> CRS_POSITION_TRIM); }
+/**
+ * @brief  Get HSI48 oscillator smooth trimming
+ * @rmtoll CR           TRIM          LL_CRS_GetHSI48SmoothTrimming
+ * @retval a number between Min_Data = 0 and Max_Data = 127
+ */
+__STATIC_INLINE uint32_t LL_CRS_GetHSI48SmoothTrimming(void) { return (uint32_t)(READ_BIT(CRS->CR, CRS_CR_TRIM) >> CRS_POSITION_TRIM); }
 
-	/**
-	 * @brief  Set counter reload value
-	 * @rmtoll CFGR         RELOAD        LL_CRS_SetReloadCounter
-	 * @param  Value a number between Min_Data = 0 and Max_Data = 0xFFFF
-	 * @note   Default value can be set thanks to @ref LL_CRS_RELOADVALUE_DEFAULT
-	 *         Otherwise it can be calculated in using macro @ref
-	 * __LL_CRS_CALC_CALCULATE_RELOADVALUE (_FTARGET_, _FSYNC_)
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_SetReloadCounter(uint32_t Value) { MODIFY_REG(CRS->CFGR, CRS_CFGR_RELOAD, Value); }
+/**
+ * @brief  Set counter reload value
+ * @rmtoll CFGR         RELOAD        LL_CRS_SetReloadCounter
+ * @param  Value a number between Min_Data = 0 and Max_Data = 0xFFFF
+ * @note   Default value can be set thanks to @ref LL_CRS_RELOADVALUE_DEFAULT
+ *         Otherwise it can be calculated in using macro @ref
+ * __LL_CRS_CALC_CALCULATE_RELOADVALUE (_FTARGET_, _FSYNC_)
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_SetReloadCounter(uint32_t Value) { MODIFY_REG(CRS->CFGR, CRS_CFGR_RELOAD, Value); }
 
-	/**
-	 * @brief  Get counter reload value
-	 * @rmtoll CFGR         RELOAD        LL_CRS_GetReloadCounter
-	 * @retval a number between Min_Data = 0 and Max_Data = 0xFFFF
-	 */
-	__STATIC_INLINE uint32_t LL_CRS_GetReloadCounter(void) { return (uint32_t)(READ_BIT(CRS->CFGR, CRS_CFGR_RELOAD)); }
+/**
+ * @brief  Get counter reload value
+ * @rmtoll CFGR         RELOAD        LL_CRS_GetReloadCounter
+ * @retval a number between Min_Data = 0 and Max_Data = 0xFFFF
+ */
+__STATIC_INLINE uint32_t LL_CRS_GetReloadCounter(void) { return (uint32_t)(READ_BIT(CRS->CFGR, CRS_CFGR_RELOAD)); }
 
-	/**
-	 * @brief  Set frequency error limit
-	 * @rmtoll CFGR         FELIM         LL_CRS_SetFreqErrorLimit
-	 * @param  Value a number between Min_Data = 0 and Max_Data = 255
-	 * @note   Default value can be set thanks to @ref LL_CRS_ERRORLIMIT_DEFAULT
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_SetFreqErrorLimit(uint32_t Value) { MODIFY_REG(CRS->CFGR, CRS_CFGR_FELIM, Value << CRS_POSITION_FELIM); }
+/**
+ * @brief  Set frequency error limit
+ * @rmtoll CFGR         FELIM         LL_CRS_SetFreqErrorLimit
+ * @param  Value a number between Min_Data = 0 and Max_Data = 255
+ * @note   Default value can be set thanks to @ref LL_CRS_ERRORLIMIT_DEFAULT
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_SetFreqErrorLimit(uint32_t Value) { MODIFY_REG(CRS->CFGR, CRS_CFGR_FELIM, Value << CRS_POSITION_FELIM); }
 
-	/**
-	 * @brief  Get frequency error limit
-	 * @rmtoll CFGR         FELIM         LL_CRS_GetFreqErrorLimit
-	 * @retval A number between Min_Data = 0 and Max_Data = 255
-	 */
-	__STATIC_INLINE uint32_t LL_CRS_GetFreqErrorLimit(void) { return (uint32_t)(READ_BIT(CRS->CFGR, CRS_CFGR_FELIM) >> CRS_POSITION_FELIM); }
+/**
+ * @brief  Get frequency error limit
+ * @rmtoll CFGR         FELIM         LL_CRS_GetFreqErrorLimit
+ * @retval A number between Min_Data = 0 and Max_Data = 255
+ */
+__STATIC_INLINE uint32_t LL_CRS_GetFreqErrorLimit(void) { return (uint32_t)(READ_BIT(CRS->CFGR, CRS_CFGR_FELIM) >> CRS_POSITION_FELIM); }
 
-	/**
-	 * @brief  Set division factor for SYNC signal
-	 * @rmtoll CFGR         SYNCDIV       LL_CRS_SetSyncDivider
-	 * @param  Divider This parameter can be one of the following values:
-	 *         @arg @ref LL_CRS_SYNC_DIV_1
-	 *         @arg @ref LL_CRS_SYNC_DIV_2
-	 *         @arg @ref LL_CRS_SYNC_DIV_4
-	 *         @arg @ref LL_CRS_SYNC_DIV_8
-	 *         @arg @ref LL_CRS_SYNC_DIV_16
-	 *         @arg @ref LL_CRS_SYNC_DIV_32
-	 *         @arg @ref LL_CRS_SYNC_DIV_64
-	 *         @arg @ref LL_CRS_SYNC_DIV_128
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_SetSyncDivider(uint32_t Divider) { MODIFY_REG(CRS->CFGR, CRS_CFGR_SYNCDIV, Divider); }
+/**
+ * @brief  Set division factor for SYNC signal
+ * @rmtoll CFGR         SYNCDIV       LL_CRS_SetSyncDivider
+ * @param  Divider This parameter can be one of the following values:
+ *         @arg @ref LL_CRS_SYNC_DIV_1
+ *         @arg @ref LL_CRS_SYNC_DIV_2
+ *         @arg @ref LL_CRS_SYNC_DIV_4
+ *         @arg @ref LL_CRS_SYNC_DIV_8
+ *         @arg @ref LL_CRS_SYNC_DIV_16
+ *         @arg @ref LL_CRS_SYNC_DIV_32
+ *         @arg @ref LL_CRS_SYNC_DIV_64
+ *         @arg @ref LL_CRS_SYNC_DIV_128
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_SetSyncDivider(uint32_t Divider) { MODIFY_REG(CRS->CFGR, CRS_CFGR_SYNCDIV, Divider); }
 
-	/**
-	 * @brief  Get division factor for SYNC signal
-	 * @rmtoll CFGR         SYNCDIV       LL_CRS_GetSyncDivider
-	 * @retval Returned value can be one of the following values:
-	 *         @arg @ref LL_CRS_SYNC_DIV_1
-	 *         @arg @ref LL_CRS_SYNC_DIV_2
-	 *         @arg @ref LL_CRS_SYNC_DIV_4
-	 *         @arg @ref LL_CRS_SYNC_DIV_8
-	 *         @arg @ref LL_CRS_SYNC_DIV_16
-	 *         @arg @ref LL_CRS_SYNC_DIV_32
-	 *         @arg @ref LL_CRS_SYNC_DIV_64
-	 *         @arg @ref LL_CRS_SYNC_DIV_128
-	 */
-	__STATIC_INLINE uint32_t LL_CRS_GetSyncDivider(void) { return (uint32_t)(READ_BIT(CRS->CFGR, CRS_CFGR_SYNCDIV)); }
+/**
+ * @brief  Get division factor for SYNC signal
+ * @rmtoll CFGR         SYNCDIV       LL_CRS_GetSyncDivider
+ * @retval Returned value can be one of the following values:
+ *         @arg @ref LL_CRS_SYNC_DIV_1
+ *         @arg @ref LL_CRS_SYNC_DIV_2
+ *         @arg @ref LL_CRS_SYNC_DIV_4
+ *         @arg @ref LL_CRS_SYNC_DIV_8
+ *         @arg @ref LL_CRS_SYNC_DIV_16
+ *         @arg @ref LL_CRS_SYNC_DIV_32
+ *         @arg @ref LL_CRS_SYNC_DIV_64
+ *         @arg @ref LL_CRS_SYNC_DIV_128
+ */
+__STATIC_INLINE uint32_t LL_CRS_GetSyncDivider(void) { return (uint32_t)(READ_BIT(CRS->CFGR, CRS_CFGR_SYNCDIV)); }
 
-	/**
-	 * @brief  Set SYNC signal source
-	 * @rmtoll CFGR         SYNCSRC       LL_CRS_SetSyncSignalSource
-	 * @param  Source This parameter can be one of the following values:
-	 *         @arg @ref LL_CRS_SYNC_SOURCE_GPIO
-	 *         @arg @ref LL_CRS_SYNC_SOURCE_LSE
-	 *         @arg @ref LL_CRS_SYNC_SOURCE_USB
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_SetSyncSignalSource(uint32_t Source) { MODIFY_REG(CRS->CFGR, CRS_CFGR_SYNCSRC, Source); }
+/**
+ * @brief  Set SYNC signal source
+ * @rmtoll CFGR         SYNCSRC       LL_CRS_SetSyncSignalSource
+ * @param  Source This parameter can be one of the following values:
+ *         @arg @ref LL_CRS_SYNC_SOURCE_GPIO
+ *         @arg @ref LL_CRS_SYNC_SOURCE_LSE
+ *         @arg @ref LL_CRS_SYNC_SOURCE_USB
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_SetSyncSignalSource(uint32_t Source) { MODIFY_REG(CRS->CFGR, CRS_CFGR_SYNCSRC, Source); }
 
-	/**
-	 * @brief  Get SYNC signal source
-	 * @rmtoll CFGR         SYNCSRC       LL_CRS_GetSyncSignalSource
-	 * @retval Returned value can be one of the following values:
-	 *         @arg @ref LL_CRS_SYNC_SOURCE_GPIO
-	 *         @arg @ref LL_CRS_SYNC_SOURCE_LSE
-	 *         @arg @ref LL_CRS_SYNC_SOURCE_USB
-	 */
-	__STATIC_INLINE uint32_t LL_CRS_GetSyncSignalSource(void) { return (uint32_t)(READ_BIT(CRS->CFGR, CRS_CFGR_SYNCSRC)); }
+/**
+ * @brief  Get SYNC signal source
+ * @rmtoll CFGR         SYNCSRC       LL_CRS_GetSyncSignalSource
+ * @retval Returned value can be one of the following values:
+ *         @arg @ref LL_CRS_SYNC_SOURCE_GPIO
+ *         @arg @ref LL_CRS_SYNC_SOURCE_LSE
+ *         @arg @ref LL_CRS_SYNC_SOURCE_USB
+ */
+__STATIC_INLINE uint32_t LL_CRS_GetSyncSignalSource(void) { return (uint32_t)(READ_BIT(CRS->CFGR, CRS_CFGR_SYNCSRC)); }
 
-	/**
-	 * @brief  Set input polarity for the SYNC signal source
-	 * @rmtoll CFGR         SYNCPOL       LL_CRS_SetSyncPolarity
-	 * @param  Polarity This parameter can be one of the following values:
-	 *         @arg @ref LL_CRS_SYNC_POLARITY_RISING
-	 *         @arg @ref LL_CRS_SYNC_POLARITY_FALLING
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_SetSyncPolarity(uint32_t Polarity) { MODIFY_REG(CRS->CFGR, CRS_CFGR_SYNCPOL, Polarity); }
+/**
+ * @brief  Set input polarity for the SYNC signal source
+ * @rmtoll CFGR         SYNCPOL       LL_CRS_SetSyncPolarity
+ * @param  Polarity This parameter can be one of the following values:
+ *         @arg @ref LL_CRS_SYNC_POLARITY_RISING
+ *         @arg @ref LL_CRS_SYNC_POLARITY_FALLING
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_SetSyncPolarity(uint32_t Polarity) { MODIFY_REG(CRS->CFGR, CRS_CFGR_SYNCPOL, Polarity); }
 
-	/**
-	 * @brief  Get input polarity for the SYNC signal source
-	 * @rmtoll CFGR         SYNCPOL       LL_CRS_GetSyncPolarity
-	 * @retval Returned value can be one of the following values:
-	 *         @arg @ref LL_CRS_SYNC_POLARITY_RISING
-	 *         @arg @ref LL_CRS_SYNC_POLARITY_FALLING
-	 */
-	__STATIC_INLINE uint32_t LL_CRS_GetSyncPolarity(void) { return (uint32_t)(READ_BIT(CRS->CFGR, CRS_CFGR_SYNCPOL)); }
+/**
+ * @brief  Get input polarity for the SYNC signal source
+ * @rmtoll CFGR         SYNCPOL       LL_CRS_GetSyncPolarity
+ * @retval Returned value can be one of the following values:
+ *         @arg @ref LL_CRS_SYNC_POLARITY_RISING
+ *         @arg @ref LL_CRS_SYNC_POLARITY_FALLING
+ */
+__STATIC_INLINE uint32_t LL_CRS_GetSyncPolarity(void) { return (uint32_t)(READ_BIT(CRS->CFGR, CRS_CFGR_SYNCPOL)); }
 
-	/**
-	 * @brief  Configure CRS for the synchronization
-	 * @rmtoll CR           TRIM          LL_CRS_ConfigSynchronization\n
-	 *         CFGR         RELOAD        LL_CRS_ConfigSynchronization\n
-	 *         CFGR         FELIM         LL_CRS_ConfigSynchronization\n
-	 *         CFGR         SYNCDIV       LL_CRS_ConfigSynchronization\n
-	 *         CFGR         SYNCSRC       LL_CRS_ConfigSynchronization\n
-	 *         CFGR         SYNCPOL       LL_CRS_ConfigSynchronization
-	 * @param  HSI48CalibrationValue a number between Min_Data = 0 and Max_Data =
-	 * 127
-	 * @param  ErrorLimitValue a number between Min_Data = 0 and Max_Data = 0xFFFF
-	 * @param  ReloadValue a number between Min_Data = 0 and Max_Data = 255
-	 * @param  Settings This parameter can be a combination of the following values:
-	 *         @arg @ref LL_CRS_SYNC_DIV_1 or @ref LL_CRS_SYNC_DIV_2 or @ref
-	 * LL_CRS_SYNC_DIV_4 or @ref LL_CRS_SYNC_DIV_8 or @ref LL_CRS_SYNC_DIV_16 or
-	 * @ref LL_CRS_SYNC_DIV_32 or @ref LL_CRS_SYNC_DIV_64 or @ref
-	 * LL_CRS_SYNC_DIV_128
-	 *         @arg @ref LL_CRS_SYNC_SOURCE_GPIO or @ref LL_CRS_SYNC_SOURCE_LSE or
-	 * @ref LL_CRS_SYNC_SOURCE_USB
-	 *         @arg @ref LL_CRS_SYNC_POLARITY_RISING or @ref
-	 * LL_CRS_SYNC_POLARITY_FALLING
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_ConfigSynchronization(uint32_t HSI48CalibrationValue, uint32_t ErrorLimitValue, uint32_t ReloadValue, uint32_t Settings)
-	{
-		MODIFY_REG(CRS->CR, CRS_CR_TRIM, HSI48CalibrationValue);
-		MODIFY_REG(CRS->CFGR, CRS_CFGR_RELOAD | CRS_CFGR_FELIM | CRS_CFGR_SYNCDIV | CRS_CFGR_SYNCSRC | CRS_CFGR_SYNCPOL, ReloadValue | (ErrorLimitValue << CRS_POSITION_FELIM) | Settings);
-	}
+/**
+ * @brief  Configure CRS for the synchronization
+ * @rmtoll CR           TRIM          LL_CRS_ConfigSynchronization\n
+ *         CFGR         RELOAD        LL_CRS_ConfigSynchronization\n
+ *         CFGR         FELIM         LL_CRS_ConfigSynchronization\n
+ *         CFGR         SYNCDIV       LL_CRS_ConfigSynchronization\n
+ *         CFGR         SYNCSRC       LL_CRS_ConfigSynchronization\n
+ *         CFGR         SYNCPOL       LL_CRS_ConfigSynchronization
+ * @param  HSI48CalibrationValue a number between Min_Data = 0 and Max_Data =
+ * 127
+ * @param  ErrorLimitValue a number between Min_Data = 0 and Max_Data = 0xFFFF
+ * @param  ReloadValue a number between Min_Data = 0 and Max_Data = 255
+ * @param  Settings This parameter can be a combination of the following values:
+ *         @arg @ref LL_CRS_SYNC_DIV_1 or @ref LL_CRS_SYNC_DIV_2 or @ref
+ * LL_CRS_SYNC_DIV_4 or @ref LL_CRS_SYNC_DIV_8 or @ref LL_CRS_SYNC_DIV_16 or
+ * @ref LL_CRS_SYNC_DIV_32 or @ref LL_CRS_SYNC_DIV_64 or @ref
+ * LL_CRS_SYNC_DIV_128
+ *         @arg @ref LL_CRS_SYNC_SOURCE_GPIO or @ref LL_CRS_SYNC_SOURCE_LSE or
+ * @ref LL_CRS_SYNC_SOURCE_USB
+ *         @arg @ref LL_CRS_SYNC_POLARITY_RISING or @ref
+ * LL_CRS_SYNC_POLARITY_FALLING
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_ConfigSynchronization(uint32_t HSI48CalibrationValue, uint32_t ErrorLimitValue, uint32_t ReloadValue, uint32_t Settings)
+{
+	MODIFY_REG(CRS->CR, CRS_CR_TRIM, HSI48CalibrationValue);
+	MODIFY_REG(CRS->CFGR, CRS_CFGR_RELOAD | CRS_CFGR_FELIM | CRS_CFGR_SYNCDIV | CRS_CFGR_SYNCSRC | CRS_CFGR_SYNCPOL, ReloadValue | (ErrorLimitValue << CRS_POSITION_FELIM) | Settings);
+}
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @defgroup CRS_LL_EF_CRS_Management CRS_Management
-	 * @{
-	 */
+/** @defgroup CRS_LL_EF_CRS_Management CRS_Management
+ * @{
+ */
 
-	/**
-	 * @brief  Generate software SYNC event
-	 * @rmtoll CR           SWSYNC        LL_CRS_GenerateEvent_SWSYNC
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_GenerateEvent_SWSYNC(void) { SET_BIT(CRS->CR, CRS_CR_SWSYNC); }
+/**
+ * @brief  Generate software SYNC event
+ * @rmtoll CR           SWSYNC        LL_CRS_GenerateEvent_SWSYNC
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_GenerateEvent_SWSYNC(void) { SET_BIT(CRS->CR, CRS_CR_SWSYNC); }
 
-	/**
-	 * @brief  Get the frequency error direction latched in the time of the last
-	 * SYNC event
-	 * @rmtoll ISR          FEDIR         LL_CRS_GetFreqErrorDirection
-	 * @retval Returned value can be one of the following values:
-	 *         @arg @ref LL_CRS_FREQ_ERROR_DIR_UP
-	 *         @arg @ref LL_CRS_FREQ_ERROR_DIR_DOWN
-	 */
-	__STATIC_INLINE uint32_t LL_CRS_GetFreqErrorDirection(void) { return (uint32_t)(READ_BIT(CRS->ISR, CRS_ISR_FEDIR)); }
+/**
+ * @brief  Get the frequency error direction latched in the time of the last
+ * SYNC event
+ * @rmtoll ISR          FEDIR         LL_CRS_GetFreqErrorDirection
+ * @retval Returned value can be one of the following values:
+ *         @arg @ref LL_CRS_FREQ_ERROR_DIR_UP
+ *         @arg @ref LL_CRS_FREQ_ERROR_DIR_DOWN
+ */
+__STATIC_INLINE uint32_t LL_CRS_GetFreqErrorDirection(void) { return (uint32_t)(READ_BIT(CRS->ISR, CRS_ISR_FEDIR)); }
 
-	/**
-	 * @brief  Get the frequency error counter value latched in the time of the last
-	 * SYNC event
-	 * @rmtoll ISR          FECAP         LL_CRS_GetFreqErrorCapture
-	 * @retval A number between Min_Data = 0x0000 and Max_Data = 0xFFFF
-	 */
-	__STATIC_INLINE uint32_t LL_CRS_GetFreqErrorCapture(void) { return (uint32_t)(READ_BIT(CRS->ISR, CRS_ISR_FECAP) >> CRS_POSITION_FECAP); }
+/**
+ * @brief  Get the frequency error counter value latched in the time of the last
+ * SYNC event
+ * @rmtoll ISR          FECAP         LL_CRS_GetFreqErrorCapture
+ * @retval A number between Min_Data = 0x0000 and Max_Data = 0xFFFF
+ */
+__STATIC_INLINE uint32_t LL_CRS_GetFreqErrorCapture(void) { return (uint32_t)(READ_BIT(CRS->ISR, CRS_ISR_FECAP) >> CRS_POSITION_FECAP); }
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @defgroup CRS_LL_EF_FLAG_Management FLAG_Management
-	 * @{
-	 */
+/** @defgroup CRS_LL_EF_FLAG_Management FLAG_Management
+ * @{
+ */
 
-	/**
-	 * @brief  Check if SYNC event OK signal occurred or not
-	 * @rmtoll ISR          SYNCOKF       LL_CRS_IsActiveFlag_SYNCOK
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_CRS_IsActiveFlag_SYNCOK(void) { return ((READ_BIT(CRS->ISR, CRS_ISR_SYNCOKF) == (CRS_ISR_SYNCOKF)) ? 1UL : 0UL); }
+/**
+ * @brief  Check if SYNC event OK signal occurred or not
+ * @rmtoll ISR          SYNCOKF       LL_CRS_IsActiveFlag_SYNCOK
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_CRS_IsActiveFlag_SYNCOK(void) { return ((READ_BIT(CRS->ISR, CRS_ISR_SYNCOKF) == (CRS_ISR_SYNCOKF)) ? 1UL : 0UL); }
 
-	/**
-	 * @brief  Check if SYNC warning signal occurred or not
-	 * @rmtoll ISR          SYNCWARNF     LL_CRS_IsActiveFlag_SYNCWARN
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_CRS_IsActiveFlag_SYNCWARN(void) { return ((READ_BIT(CRS->ISR, CRS_ISR_SYNCWARNF) == (CRS_ISR_SYNCWARNF)) ? 1UL : 0UL); }
+/**
+ * @brief  Check if SYNC warning signal occurred or not
+ * @rmtoll ISR          SYNCWARNF     LL_CRS_IsActiveFlag_SYNCWARN
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_CRS_IsActiveFlag_SYNCWARN(void) { return ((READ_BIT(CRS->ISR, CRS_ISR_SYNCWARNF) == (CRS_ISR_SYNCWARNF)) ? 1UL : 0UL); }
 
-	/**
-	 * @brief  Check if Synchronization or trimming error signal occurred or not
-	 * @rmtoll ISR          ERRF          LL_CRS_IsActiveFlag_ERR
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_CRS_IsActiveFlag_ERR(void) { return ((READ_BIT(CRS->ISR, CRS_ISR_ERRF) == (CRS_ISR_ERRF)) ? 1UL : 0UL); }
+/**
+ * @brief  Check if Synchronization or trimming error signal occurred or not
+ * @rmtoll ISR          ERRF          LL_CRS_IsActiveFlag_ERR
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_CRS_IsActiveFlag_ERR(void) { return ((READ_BIT(CRS->ISR, CRS_ISR_ERRF) == (CRS_ISR_ERRF)) ? 1UL : 0UL); }
 
-	/**
-	 * @brief  Check if Expected SYNC signal occurred or not
-	 * @rmtoll ISR          ESYNCF        LL_CRS_IsActiveFlag_ESYNC
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_CRS_IsActiveFlag_ESYNC(void) { return ((READ_BIT(CRS->ISR, CRS_ISR_ESYNCF) == (CRS_ISR_ESYNCF)) ? 1UL : 0UL); }
+/**
+ * @brief  Check if Expected SYNC signal occurred or not
+ * @rmtoll ISR          ESYNCF        LL_CRS_IsActiveFlag_ESYNC
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_CRS_IsActiveFlag_ESYNC(void) { return ((READ_BIT(CRS->ISR, CRS_ISR_ESYNCF) == (CRS_ISR_ESYNCF)) ? 1UL : 0UL); }
 
-	/**
-	 * @brief  Check if SYNC error signal occurred or not
-	 * @rmtoll ISR          SYNCERR       LL_CRS_IsActiveFlag_SYNCERR
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_CRS_IsActiveFlag_SYNCERR(void) { return ((READ_BIT(CRS->ISR, CRS_ISR_SYNCERR) == (CRS_ISR_SYNCERR)) ? 1UL : 0UL); }
+/**
+ * @brief  Check if SYNC error signal occurred or not
+ * @rmtoll ISR          SYNCERR       LL_CRS_IsActiveFlag_SYNCERR
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_CRS_IsActiveFlag_SYNCERR(void) { return ((READ_BIT(CRS->ISR, CRS_ISR_SYNCERR) == (CRS_ISR_SYNCERR)) ? 1UL : 0UL); }
 
-	/**
-	 * @brief  Check if SYNC missed error signal occurred or not
-	 * @rmtoll ISR          SYNCMISS      LL_CRS_IsActiveFlag_SYNCMISS
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_CRS_IsActiveFlag_SYNCMISS(void) { return ((READ_BIT(CRS->ISR, CRS_ISR_SYNCMISS) == (CRS_ISR_SYNCMISS)) ? 1UL : 0UL); }
+/**
+ * @brief  Check if SYNC missed error signal occurred or not
+ * @rmtoll ISR          SYNCMISS      LL_CRS_IsActiveFlag_SYNCMISS
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_CRS_IsActiveFlag_SYNCMISS(void) { return ((READ_BIT(CRS->ISR, CRS_ISR_SYNCMISS) == (CRS_ISR_SYNCMISS)) ? 1UL : 0UL); }
 
-	/**
-	 * @brief  Check if Trimming overflow or underflow occurred or not
-	 * @rmtoll ISR          TRIMOVF       LL_CRS_IsActiveFlag_TRIMOVF
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_CRS_IsActiveFlag_TRIMOVF(void) { return ((READ_BIT(CRS->ISR, CRS_ISR_TRIMOVF) == (CRS_ISR_TRIMOVF)) ? 1UL : 0UL); }
+/**
+ * @brief  Check if Trimming overflow or underflow occurred or not
+ * @rmtoll ISR          TRIMOVF       LL_CRS_IsActiveFlag_TRIMOVF
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_CRS_IsActiveFlag_TRIMOVF(void) { return ((READ_BIT(CRS->ISR, CRS_ISR_TRIMOVF) == (CRS_ISR_TRIMOVF)) ? 1UL : 0UL); }
 
-	/**
-	 * @brief  Clear the SYNC event OK flag
-	 * @rmtoll ICR          SYNCOKC       LL_CRS_ClearFlag_SYNCOK
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_ClearFlag_SYNCOK(void) { WRITE_REG(CRS->ICR, CRS_ICR_SYNCOKC); }
+/**
+ * @brief  Clear the SYNC event OK flag
+ * @rmtoll ICR          SYNCOKC       LL_CRS_ClearFlag_SYNCOK
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_ClearFlag_SYNCOK(void) { WRITE_REG(CRS->ICR, CRS_ICR_SYNCOKC); }
 
-	/**
-	 * @brief  Clear the  SYNC warning flag
-	 * @rmtoll ICR          SYNCWARNC     LL_CRS_ClearFlag_SYNCWARN
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_ClearFlag_SYNCWARN(void) { WRITE_REG(CRS->ICR, CRS_ICR_SYNCWARNC); }
+/**
+ * @brief  Clear the  SYNC warning flag
+ * @rmtoll ICR          SYNCWARNC     LL_CRS_ClearFlag_SYNCWARN
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_ClearFlag_SYNCWARN(void) { WRITE_REG(CRS->ICR, CRS_ICR_SYNCWARNC); }
 
-	/**
-	 * @brief  Clear TRIMOVF, SYNCMISS and SYNCERR bits and consequently also
-	 * the ERR flag
-	 * @rmtoll ICR          ERRC          LL_CRS_ClearFlag_ERR
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_ClearFlag_ERR(void) { WRITE_REG(CRS->ICR, CRS_ICR_ERRC); }
+/**
+ * @brief  Clear TRIMOVF, SYNCMISS and SYNCERR bits and consequently also
+ * the ERR flag
+ * @rmtoll ICR          ERRC          LL_CRS_ClearFlag_ERR
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_ClearFlag_ERR(void) { WRITE_REG(CRS->ICR, CRS_ICR_ERRC); }
 
-	/**
-	 * @brief  Clear Expected SYNC flag
-	 * @rmtoll ICR          ESYNCC        LL_CRS_ClearFlag_ESYNC
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_ClearFlag_ESYNC(void) { WRITE_REG(CRS->ICR, CRS_ICR_ESYNCC); }
+/**
+ * @brief  Clear Expected SYNC flag
+ * @rmtoll ICR          ESYNCC        LL_CRS_ClearFlag_ESYNC
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_ClearFlag_ESYNC(void) { WRITE_REG(CRS->ICR, CRS_ICR_ESYNCC); }
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @defgroup CRS_LL_EF_IT_Management IT_Management
-	 * @{
-	 */
+/** @defgroup CRS_LL_EF_IT_Management IT_Management
+ * @{
+ */
 
-	/**
-	 * @brief  Enable SYNC event OK interrupt
-	 * @rmtoll CR           SYNCOKIE      LL_CRS_EnableIT_SYNCOK
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_EnableIT_SYNCOK(void) { SET_BIT(CRS->CR, CRS_CR_SYNCOKIE); }
+/**
+ * @brief  Enable SYNC event OK interrupt
+ * @rmtoll CR           SYNCOKIE      LL_CRS_EnableIT_SYNCOK
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_EnableIT_SYNCOK(void) { SET_BIT(CRS->CR, CRS_CR_SYNCOKIE); }
 
-	/**
-	 * @brief  Disable SYNC event OK interrupt
-	 * @rmtoll CR           SYNCOKIE      LL_CRS_DisableIT_SYNCOK
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_DisableIT_SYNCOK(void) { CLEAR_BIT(CRS->CR, CRS_CR_SYNCOKIE); }
+/**
+ * @brief  Disable SYNC event OK interrupt
+ * @rmtoll CR           SYNCOKIE      LL_CRS_DisableIT_SYNCOK
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_DisableIT_SYNCOK(void) { CLEAR_BIT(CRS->CR, CRS_CR_SYNCOKIE); }
 
-	/**
-	 * @brief  Check if SYNC event OK interrupt is enabled or not
-	 * @rmtoll CR           SYNCOKIE      LL_CRS_IsEnabledIT_SYNCOK
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_CRS_IsEnabledIT_SYNCOK(void) { return ((READ_BIT(CRS->CR, CRS_CR_SYNCOKIE) == (CRS_CR_SYNCOKIE)) ? 1UL : 0UL); }
+/**
+ * @brief  Check if SYNC event OK interrupt is enabled or not
+ * @rmtoll CR           SYNCOKIE      LL_CRS_IsEnabledIT_SYNCOK
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_CRS_IsEnabledIT_SYNCOK(void) { return ((READ_BIT(CRS->CR, CRS_CR_SYNCOKIE) == (CRS_CR_SYNCOKIE)) ? 1UL : 0UL); }
 
-	/**
-	 * @brief  Enable SYNC warning interrupt
-	 * @rmtoll CR           SYNCWARNIE    LL_CRS_EnableIT_SYNCWARN
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_EnableIT_SYNCWARN(void) { SET_BIT(CRS->CR, CRS_CR_SYNCWARNIE); }
+/**
+ * @brief  Enable SYNC warning interrupt
+ * @rmtoll CR           SYNCWARNIE    LL_CRS_EnableIT_SYNCWARN
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_EnableIT_SYNCWARN(void) { SET_BIT(CRS->CR, CRS_CR_SYNCWARNIE); }
 
-	/**
-	 * @brief  Disable SYNC warning interrupt
-	 * @rmtoll CR           SYNCWARNIE    LL_CRS_DisableIT_SYNCWARN
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_DisableIT_SYNCWARN(void) { CLEAR_BIT(CRS->CR, CRS_CR_SYNCWARNIE); }
+/**
+ * @brief  Disable SYNC warning interrupt
+ * @rmtoll CR           SYNCWARNIE    LL_CRS_DisableIT_SYNCWARN
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_DisableIT_SYNCWARN(void) { CLEAR_BIT(CRS->CR, CRS_CR_SYNCWARNIE); }
 
-	/**
-	 * @brief  Check if SYNC warning interrupt is enabled or not
-	 * @rmtoll CR           SYNCWARNIE    LL_CRS_IsEnabledIT_SYNCWARN
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_CRS_IsEnabledIT_SYNCWARN(void) { return ((READ_BIT(CRS->CR, CRS_CR_SYNCWARNIE) == (CRS_CR_SYNCWARNIE)) ? 1UL : 0UL); }
+/**
+ * @brief  Check if SYNC warning interrupt is enabled or not
+ * @rmtoll CR           SYNCWARNIE    LL_CRS_IsEnabledIT_SYNCWARN
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_CRS_IsEnabledIT_SYNCWARN(void) { return ((READ_BIT(CRS->CR, CRS_CR_SYNCWARNIE) == (CRS_CR_SYNCWARNIE)) ? 1UL : 0UL); }
 
-	/**
-	 * @brief  Enable Synchronization or trimming error interrupt
-	 * @rmtoll CR           ERRIE         LL_CRS_EnableIT_ERR
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_EnableIT_ERR(void) { SET_BIT(CRS->CR, CRS_CR_ERRIE); }
+/**
+ * @brief  Enable Synchronization or trimming error interrupt
+ * @rmtoll CR           ERRIE         LL_CRS_EnableIT_ERR
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_EnableIT_ERR(void) { SET_BIT(CRS->CR, CRS_CR_ERRIE); }
 
-	/**
-	 * @brief  Disable Synchronization or trimming error interrupt
-	 * @rmtoll CR           ERRIE         LL_CRS_DisableIT_ERR
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_DisableIT_ERR(void) { CLEAR_BIT(CRS->CR, CRS_CR_ERRIE); }
+/**
+ * @brief  Disable Synchronization or trimming error interrupt
+ * @rmtoll CR           ERRIE         LL_CRS_DisableIT_ERR
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_DisableIT_ERR(void) { CLEAR_BIT(CRS->CR, CRS_CR_ERRIE); }
 
-	/**
-	 * @brief  Check if Synchronization or trimming error interrupt is enabled or
-	 * not
-	 * @rmtoll CR           ERRIE         LL_CRS_IsEnabledIT_ERR
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_CRS_IsEnabledIT_ERR(void) { return ((READ_BIT(CRS->CR, CRS_CR_ERRIE) == (CRS_CR_ERRIE)) ? 1UL : 0UL); }
+/**
+ * @brief  Check if Synchronization or trimming error interrupt is enabled or
+ * not
+ * @rmtoll CR           ERRIE         LL_CRS_IsEnabledIT_ERR
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_CRS_IsEnabledIT_ERR(void) { return ((READ_BIT(CRS->CR, CRS_CR_ERRIE) == (CRS_CR_ERRIE)) ? 1UL : 0UL); }
 
-	/**
-	 * @brief  Enable Expected SYNC interrupt
-	 * @rmtoll CR           ESYNCIE       LL_CRS_EnableIT_ESYNC
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_EnableIT_ESYNC(void) { SET_BIT(CRS->CR, CRS_CR_ESYNCIE); }
+/**
+ * @brief  Enable Expected SYNC interrupt
+ * @rmtoll CR           ESYNCIE       LL_CRS_EnableIT_ESYNC
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_EnableIT_ESYNC(void) { SET_BIT(CRS->CR, CRS_CR_ESYNCIE); }
 
-	/**
-	 * @brief  Disable Expected SYNC interrupt
-	 * @rmtoll CR           ESYNCIE       LL_CRS_DisableIT_ESYNC
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_CRS_DisableIT_ESYNC(void) { CLEAR_BIT(CRS->CR, CRS_CR_ESYNCIE); }
+/**
+ * @brief  Disable Expected SYNC interrupt
+ * @rmtoll CR           ESYNCIE       LL_CRS_DisableIT_ESYNC
+ * @retval None
+ */
+__STATIC_INLINE void LL_CRS_DisableIT_ESYNC(void) { CLEAR_BIT(CRS->CR, CRS_CR_ESYNCIE); }
 
-	/**
-	 * @brief  Check if Expected SYNC interrupt is enabled or not
-	 * @rmtoll CR           ESYNCIE       LL_CRS_IsEnabledIT_ESYNC
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_CRS_IsEnabledIT_ESYNC(void) { return ((READ_BIT(CRS->CR, CRS_CR_ESYNCIE) == (CRS_CR_ESYNCIE)) ? 1UL : 0UL); }
+/**
+ * @brief  Check if Expected SYNC interrupt is enabled or not
+ * @rmtoll CR           ESYNCIE       LL_CRS_IsEnabledIT_ESYNC
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_CRS_IsEnabledIT_ESYNC(void) { return ((READ_BIT(CRS->CR, CRS_CR_ESYNCIE) == (CRS_CR_ESYNCIE)) ? 1UL : 0UL); }
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #if defined(USE_FULL_LL_DRIVER)
-	/** @defgroup CRS_LL_EF_Init Initialization and de-initialization functions
-	 * @{
-	 */
+/** @defgroup CRS_LL_EF_Init Initialization and de-initialization functions
+ * @{
+ */
 
-	ErrorStatus LL_CRS_DeInit(void);
+ErrorStatus LL_CRS_DeInit(void);
 
 /**
  * @}
  */
 #endif /* USE_FULL_LL_DRIVER */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #endif /* defined(CRS) */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

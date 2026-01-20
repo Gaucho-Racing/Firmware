@@ -23,17 +23,16 @@
 #define STM32G4xx_HAL_CONF_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
-	/* Exported types ------------------------------------------------------------*/
-	/* Exported constants --------------------------------------------------------*/
+/* Exported types ------------------------------------------------------------*/
+/* Exported constants --------------------------------------------------------*/
 
-	/* ########################## Module Selection ############################## */
-	/**
-	 * @brief This is the list of modules to be used in the HAL driver
-	 */
+/* ########################## Module Selection ############################## */
+/**
+ * @brief This is the list of modules to be used in the HAL driver
+ */
 
 #define HAL_MODULE_ENABLED
 
@@ -183,13 +182,13 @@ temperature.*/
 #define EXTERNAL_CLOCK_VALUE (12288000UL) /*!< Value of the External oscillator in Hz*/
 #endif					  /* EXTERNAL_CLOCK_VALUE */
 
-	/* Tip: To avoid modifying this file each time you need to use different HSE,
-	   ===  you can define the HSE value in your toolchain compiler preprocessor. */
+/* Tip: To avoid modifying this file each time you need to use different HSE,
+   ===  you can define the HSE value in your toolchain compiler preprocessor. */
 
-	/* ########################### System Configuration ######################### */
-	/**
-	 * @brief This is the HAL system configuration section
-	 */
+/* ########################### System Configuration ######################### */
+/**
+ * @brief This is the HAL system configuration section
+ */
 
 #define VDD_VALUE (3300UL)	/*!< Value of VDD in mv */
 #define TICK_INT_PRIORITY (0UL) /*!< tick interrupt priority (lowest by default)  */
@@ -198,26 +197,26 @@ temperature.*/
 #define INSTRUCTION_CACHE_ENABLE 1U
 #define DATA_CACHE_ENABLE 1U
 
-	/* ########################## Assert Selection ############################## */
-	/**
-	 * @brief Uncomment the line below to expanse the "assert_param" macro in the
-	 *        HAL drivers code
-	 */
-	/* #define USE_FULL_ASSERT    1U */
+/* ########################## Assert Selection ############################## */
+/**
+ * @brief Uncomment the line below to expanse the "assert_param" macro in the
+ *        HAL drivers code
+ */
+/* #define USE_FULL_ASSERT    1U */
 
-	/* ################## SPI peripheral configuration ########################## */
+/* ################## SPI peripheral configuration ########################## */
 
-	/* CRC FEATURE: Use to activate CRC feature inside HAL SPI Driver
-	 * Activated: CRC code is present inside driver
-	 * Deactivated: CRC code cleaned from driver
-	 */
+/* CRC FEATURE: Use to activate CRC feature inside HAL SPI Driver
+ * Activated: CRC code is present inside driver
+ * Deactivated: CRC code cleaned from driver
+ */
 
 #define USE_SPI_CRC 0U
 
-	/* Includes ------------------------------------------------------------------*/
-	/**
-	 * @brief Include module's header file
-	 */
+/* Includes ------------------------------------------------------------------*/
+/**
+ * @brief Include module's header file
+ */
 
 #ifdef HAL_RCC_MODULE_ENABLED
 #include "stm32g4xx_hal_rcc.h"
@@ -378,8 +377,8 @@ temperature.*/
  * @retval None
  */
 #define assert_param(expr) ((expr) ? (void)0U : assert_failed((uint8_t *)__FILE__, __LINE__))
-	/* Exported functions ------------------------------------------------------- */
-	void assert_failed(uint8_t *file, uint32_t line);
+/* Exported functions ------------------------------------------------------- */
+void assert_failed(uint8_t *file, uint32_t line);
 #else
 #define assert_param(expr) ((void)0U)
 #endif /* USE_FULL_ASSERT */

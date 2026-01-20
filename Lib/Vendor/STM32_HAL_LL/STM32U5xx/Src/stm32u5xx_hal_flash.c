@@ -171,22 +171,18 @@ HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address, uint
 	/* Wait for last operation to be completed */
 	status = FLASH_WaitForLastOperation(FLASH_TIMEOUT_VALUE);
 
-	if (status == HAL_OK)
-	{
+	if (status == HAL_OK) {
 		/* Set current operation type */
 		pFlash.ProcedureOnGoing = TypeProgram;
 
 		/* Access to SECCR or NSCR depends on operation type */
 		reg_cr = IS_FLASH_SECURE_OPERATION() ? &(FLASH->SECCR) : &(FLASH_NS->NSCR);
 
-		if ((TypeProgram & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEPROGRAM_QUADWORD)
-		{
+		if ((TypeProgram & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEPROGRAM_QUADWORD) {
 			/* Program a quad-word (128-bit) at a specified address
 			 */
 			FLASH_Program_QuadWord(Address, DataAddress);
-		}
-		else
-		{
+		} else {
 			/* Program a burst of 8 quad-words at a specified
 			 * address */
 			FLASH_Program_Burst(Address, DataAddress);
@@ -236,13 +232,10 @@ HAL_StatusTypeDef HAL_FLASH_Program_IT(uint32_t TypeProgram, uint32_t Address, u
 	/* Wait for last operation to be completed */
 	status = FLASH_WaitForLastOperation(FLASH_TIMEOUT_VALUE);
 
-	if (status != HAL_OK)
-	{
+	if (status != HAL_OK) {
 		/* Process Unlocked */
 		__HAL_UNLOCK(&pFlash);
-	}
-	else
-	{
+	} else {
 		/* Set internal variables used by the IRQ handler */
 		pFlash.ProcedureOnGoing = TypeProgram;
 		pFlash.Address = Address;
@@ -253,14 +246,11 @@ HAL_StatusTypeDef HAL_FLASH_Program_IT(uint32_t TypeProgram, uint32_t Address, u
 		/* Enable End of Operation and Error interrupts */
 		(*reg_cr) |= (FLASH_IT_EOP | FLASH_IT_OPERR);
 
-		if ((TypeProgram & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEPROGRAM_QUADWORD)
-		{
+		if ((TypeProgram & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEPROGRAM_QUADWORD) {
 			/* Program a quad-word (128-bit) at a specified address
 			 */
 			FLASH_Program_QuadWord(Address, DataAddress);
-		}
-		else
-		{
+		} else {
 			/* Program a burst of 8 quad-words at a specified
 			 * address */
 			FLASH_Program_Burst(Address, DataAddress);
@@ -292,24 +282,15 @@ void HAL_FLASH_IRQHandler(void)
 #endif /* __ARM_FEATURE_CMSE */
 
 	/* Set parameter of the callback */
-	if ((pFlash.ProcedureOnGoing & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEERASE_PAGES)
-	{
+	if ((pFlash.ProcedureOnGoing & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEERASE_PAGES) {
 		param = pFlash.Page;
-	}
-	else if ((pFlash.ProcedureOnGoing & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEERASE_MASSERASE)
-	{
+	} else if ((pFlash.ProcedureOnGoing & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEERASE_MASSERASE) {
 		param = pFlash.Bank;
-	}
-	else if ((pFlash.ProcedureOnGoing & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEPROGRAM_QUADWORD)
-	{
+	} else if ((pFlash.ProcedureOnGoing & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEPROGRAM_QUADWORD) {
 		param = pFlash.Address;
-	}
-	else if ((pFlash.ProcedureOnGoing & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEPROGRAM_BURST)
-	{
+	} else if ((pFlash.ProcedureOnGoing & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEPROGRAM_BURST) {
 		param = pFlash.Address;
-	}
-	else
-	{
+	} else {
 		/* Empty statement (to be compliant MISRA 15.7) */
 	}
 
@@ -317,16 +298,14 @@ void HAL_FLASH_IRQHandler(void)
 	CLEAR_BIT((*reg_cr), (pFlash.ProcedureOnGoing & ~(FLASH_NON_SECURE_MASK)));
 
 	/* Check FLASH operation error flags */
-	if (error != 0U)
-	{
+	if (error != 0U) {
 		/* Save the error code */
 		pFlash.ErrorCode |= error;
 
 		/* Clear error programming flags */
 		(*reg_sr) = error;
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-		if ((error & FLASH_FLAG_OPTWERR) != 0U)
-		{
+		if ((error & FLASH_FLAG_OPTWERR) != 0U) {
 			FLASH->NSSR = FLASH_FLAG_OPTWERR;
 		}
 #endif /* __ARM_FEATURE_CMSE */
@@ -339,32 +318,25 @@ void HAL_FLASH_IRQHandler(void)
 	}
 
 	/* Check FLASH End of Operation flag  */
-	if (((*reg_sr) & FLASH_FLAG_EOP) != 0U)
-	{
+	if (((*reg_sr) & FLASH_FLAG_EOP) != 0U) {
 		/* Clear FLASH End of Operation pending bit */
 		(*reg_sr) = FLASH_FLAG_EOP;
 
-		if ((pFlash.ProcedureOnGoing & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEERASE_PAGES)
-		{
+		if ((pFlash.ProcedureOnGoing & (~FLASH_NON_SECURE_MASK)) == FLASH_TYPEERASE_PAGES) {
 			/* Nb of pages to erase can be decreased */
 			pFlash.NbPagesToErase--;
 
 			/* Check if there are still pages to erase */
-			if (pFlash.NbPagesToErase != 0U)
-			{
+			if (pFlash.NbPagesToErase != 0U) {
 				/* Increment page number */
 				pFlash.Page++;
 				FLASH_PageErase(pFlash.Page, pFlash.Bank);
-			}
-			else
-			{
+			} else {
 				/* No more pages to Erase */
 				pFlash.ProcedureOnGoing = 0U;
 				param = 0xFFFFFFFFU;
 			}
-		}
-		else
-		{
+		} else {
 			/*Clear the procedure ongoing*/
 			pFlash.ProcedureOnGoing = 0U;
 		}
@@ -373,8 +345,7 @@ void HAL_FLASH_IRQHandler(void)
 		HAL_FLASH_EndOfOperationCallback(param);
 	}
 
-	if (pFlash.ProcedureOnGoing == 0U)
-	{
+	if (pFlash.ProcedureOnGoing == 0U) {
 		/* Disable End of Operation and Error interrupts */
 		(*reg_cr) &= ~(FLASH_IT_EOP | FLASH_IT_OPERR);
 
@@ -449,31 +420,26 @@ HAL_StatusTypeDef HAL_FLASH_Unlock(void)
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
-	if (READ_BIT(FLASH->NSCR, FLASH_NSCR_LOCK) != 0U)
-	{
+	if (READ_BIT(FLASH->NSCR, FLASH_NSCR_LOCK) != 0U) {
 		/* Authorize the FLASH Registers access */
 		WRITE_REG(FLASH->NSKEYR, FLASH_KEY1);
 		WRITE_REG(FLASH->NSKEYR, FLASH_KEY2);
 
 		/* verify Flash is unlocked */
-		if (READ_BIT(FLASH->NSCR, FLASH_NSCR_LOCK) != 0U)
-		{
+		if (READ_BIT(FLASH->NSCR, FLASH_NSCR_LOCK) != 0U) {
 			status = HAL_ERROR;
 		}
 	}
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-	if (status == HAL_OK)
-	{
-		if (READ_BIT(FLASH->SECCR, FLASH_SECCR_LOCK) != 0U)
-		{
+	if (status == HAL_OK) {
+		if (READ_BIT(FLASH->SECCR, FLASH_SECCR_LOCK) != 0U) {
 			/* Authorize the FLASH Registers access */
 			WRITE_REG(FLASH->SECKEYR, FLASH_KEY1);
 			WRITE_REG(FLASH->SECKEYR, FLASH_KEY2);
 
 			/* verify Flash is unlocked */
-			if (READ_BIT(FLASH->SECCR, FLASH_SECCR_LOCK) != 0U)
-			{
+			if (READ_BIT(FLASH->SECCR, FLASH_SECCR_LOCK) != 0U) {
 				status = HAL_ERROR;
 			}
 		}
@@ -495,19 +461,16 @@ HAL_StatusTypeDef HAL_FLASH_Lock(void)
 	SET_BIT(FLASH->NSCR, FLASH_NSCR_LOCK);
 
 	/* verify Flash is locked */
-	if (READ_BIT(FLASH->NSCR, FLASH_NSCR_LOCK) != 0U)
-	{
+	if (READ_BIT(FLASH->NSCR, FLASH_NSCR_LOCK) != 0U) {
 		status = HAL_OK;
 	}
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-	if (status == HAL_OK)
-	{
+	if (status == HAL_OK) {
 		SET_BIT(FLASH->SECCR, FLASH_SECCR_LOCK);
 
 		/* verify Flash is locked */
-		if (READ_BIT(FLASH->SECCR, FLASH_SECCR_LOCK) != 0U)
-		{
+		if (READ_BIT(FLASH->SECCR, FLASH_SECCR_LOCK) != 0U) {
 			status = HAL_OK;
 		}
 	}
@@ -522,15 +485,13 @@ HAL_StatusTypeDef HAL_FLASH_Lock(void)
  */
 HAL_StatusTypeDef HAL_FLASH_OB_Unlock(void)
 {
-	if (READ_BIT(FLASH->NSCR, FLASH_NSCR_OPTLOCK) != 0U)
-	{
+	if (READ_BIT(FLASH->NSCR, FLASH_NSCR_OPTLOCK) != 0U) {
 		/* Authorizes the Option Byte register programming */
 		WRITE_REG(FLASH->OPTKEYR, FLASH_OPTKEY1);
 		WRITE_REG(FLASH->OPTKEYR, FLASH_OPTKEY2);
 
 		/* Verify that the Option Bytes are unlocked */
-		if (READ_BIT(FLASH->NSCR, FLASH_NSCR_OPTLOCK) != 0U)
-		{
+		if (READ_BIT(FLASH->NSCR, FLASH_NSCR_OPTLOCK) != 0U) {
 			return HAL_ERROR;
 		}
 	}
@@ -548,8 +509,7 @@ HAL_StatusTypeDef HAL_FLASH_OB_Lock(void)
 	SET_BIT(FLASH->NSCR, FLASH_NSCR_OPTLOCK);
 
 	/* Verify that the Option Bytes are locked */
-	if (READ_BIT(FLASH->NSCR, FLASH_NSCR_OPTLOCK) != 0U)
-	{
+	if (READ_BIT(FLASH->NSCR, FLASH_NSCR_OPTLOCK) != 0U) {
 		return HAL_OK;
 	}
 
@@ -635,12 +595,9 @@ HAL_StatusTypeDef FLASH_WaitForLastOperation(uint32_t Timeout)
 	/* Access to SECSR or NSSR registers depends on operation type */
 	reg_sr = IS_FLASH_SECURE_OPERATION() ? &(FLASH->SECSR) : &(FLASH_NS->NSSR);
 
-	while (((*reg_sr) & (FLASH_FLAG_BSY | FLASH_FLAG_WDW)) != 0U)
-	{
-		if (Timeout != HAL_MAX_DELAY)
-		{
-			if (((HAL_GetTick() - tickstart) >= Timeout) || (Timeout == 0U))
-			{
+	while (((*reg_sr) & (FLASH_FLAG_BSY | FLASH_FLAG_WDW)) != 0U) {
+		if (Timeout != HAL_MAX_DELAY) {
+			if (((HAL_GetTick() - tickstart) >= Timeout) || (Timeout == 0U)) {
 				return HAL_TIMEOUT;
 			}
 		}
@@ -652,16 +609,14 @@ HAL_StatusTypeDef FLASH_WaitForLastOperation(uint32_t Timeout)
 	error |= (FLASH->NSSR & FLASH_FLAG_OPTWERR);
 #endif /* __ARM_FEATURE_CMSE */
 
-	if (error != 0U)
-	{
+	if (error != 0U) {
 		/*Save the error code*/
 		pFlash.ErrorCode |= error;
 
 		/* Clear error programming flags */
 		(*reg_sr) = error;
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-		if ((error & FLASH_FLAG_OPTWERR) != 0U)
-		{
+		if ((error & FLASH_FLAG_OPTWERR) != 0U) {
 			FLASH->NSSR = FLASH_FLAG_OPTWERR;
 		}
 #endif /* __ARM_FEATURE_CMSE */
@@ -670,8 +625,7 @@ HAL_StatusTypeDef FLASH_WaitForLastOperation(uint32_t Timeout)
 	}
 
 	/* Check FLASH End of Operation flag  */
-	if (((*reg_sr) & FLASH_FLAG_EOP) != 0U)
-	{
+	if (((*reg_sr) & FLASH_FLAG_EOP) != 0U) {
 		/* Clear FLASH End of Operation pending bit */
 		(*reg_sr) = FLASH_FLAG_EOP;
 	}
@@ -709,8 +663,7 @@ static void FLASH_Program_QuadWord(uint32_t Address, uint32_t DataAddress)
 	__disable_irq();
 
 	/* Program the quad-word */
-	do
-	{
+	do {
 		*dest_addr = *src_addr;
 		dest_addr++;
 		src_addr++;
@@ -750,8 +703,7 @@ static void FLASH_Program_Burst(uint32_t Address, uint32_t DataAddress)
 	__disable_irq();
 
 	/* Program the burst */
-	do
-	{
+	do {
 		*dest_addr = *src_addr;
 		dest_addr++;
 		src_addr++;

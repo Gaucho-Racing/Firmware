@@ -16,8 +16,7 @@
 
 ADC_TypeDef *GetADC(unsigned long adc)
 {
-	switch (adc)
-	{
+	switch (adc) {
 		case 1:
 			return ADC1;
 		case 2:
@@ -123,24 +122,15 @@ void DMA_Init(DMA_TypeDef *DMA, DMA_Channel channel, uint32_t src_address, uint3
 	config.NbData = num_data;
 
 	// Select ADC DMAMUX request
-	if (ADC == ADC1)
-	{
+	if (ADC == ADC1) {
 		config.PeriphRequest = LL_DMAMUX_REQ_ADC1;
-	}
-	else if (ADC == ADC2)
-	{
+	} else if (ADC == ADC2) {
 		config.PeriphRequest = LL_DMAMUX_REQ_ADC2;
-	}
-	else if (ADC == ADC3)
-	{
+	} else if (ADC == ADC3) {
 		config.PeriphRequest = LL_DMAMUX_REQ_ADC3;
-	}
-	else if (ADC == ADC4)
-	{
+	} else if (ADC == ADC4) {
 		config.PeriphRequest = LL_DMAMUX_REQ_ADC4;
-	}
-	else if (ADC == ADC5)
-	{
+	} else if (ADC == ADC5) {
 		config.PeriphRequest = LL_DMAMUX_REQ_ADC5;
 	}
 
@@ -154,14 +144,12 @@ int num = 0;
 uint8_t filled = 0;
 void ADC_UpdateAnalogValues(uint16_t **adcDataValues, volatile uint16_t *new_values, int num_signals, int window_size, uint16_t *weighted_output)
 {
-	for (int i = 0; i < num_signals; ++i)
-	{
+	for (int i = 0; i < num_signals; ++i) {
 		weighted_output[i] += (new_values[i] - (filled ? adcDataValues[i][num] : 0)) / window_size; // Update the average
 		adcDataValues[i][num] = new_values[i];
 	}
 
-	if (++num >= window_size)
-	{
+	if (++num >= window_size) {
 		num = 0;
 		filled = 1;
 	}

@@ -75,16 +75,13 @@ ErrorStatus LL_RNG_DeInit(const RNG_TypeDef *RNGx)
 
 	/* Check the parameters */
 	assert_param(IS_RNG_ALL_INSTANCE(RNGx));
-	if (RNGx == RNG)
-	{
+	if (RNGx == RNG) {
 		/* Enable RNG reset state */
 		LL_AHB2_GRP1_ForceReset(LL_AHB2_GRP1_PERIPH_RNG);
 
 		/* Release RNG from reset state */
 		LL_AHB2_GRP1_ReleaseReset(LL_AHB2_GRP1_PERIPH_RNG);
-	}
-	else
-	{
+	} else {
 		status = ERROR;
 	}
 

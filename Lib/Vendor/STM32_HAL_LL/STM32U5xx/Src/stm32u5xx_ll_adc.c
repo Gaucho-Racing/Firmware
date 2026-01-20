@@ -238,15 +238,13 @@ ErrorStatus LL_ADC_CommonDeInit(ADC_Common_TypeDef *pADCxy_COMMON)
 	/* Check the parameters */
 	assert_param(IS_ADC_COMMON_INSTANCE(pADCxy_COMMON));
 
-	if (pADCxy_COMMON == ADC12_COMMON)
-	{
+	if (pADCxy_COMMON == ADC12_COMMON) {
 		/* Force reset of ADC clock (core clock) */
 		LL_AHB2_GRP1_ForceReset(LL_AHB2_GRP1_PERIPH_ADC12);
 
 		/* Release reset of ADC clock (core clock) */
 		LL_AHB2_GRP1_ReleaseReset(LL_AHB2_GRP1_PERIPH_ADC12);
-	}
-	else /*if ( pADCxy_COMMON == ADC4_COMMON)*/
+	} else /*if ( pADCxy_COMMON == ADC4_COMMON)*/
 	{
 		/* Force reset of ADC clock (core clock) */
 		LL_AHB3_GRP1_ForceReset(LL_AHB3_GRP1_PERIPH_ADC4);
@@ -285,8 +283,7 @@ ErrorStatus LL_ADC_CommonInit(ADC_Common_TypeDef *pADCxy_COMMON, LL_ADC_CommonIn
 
 #if defined(ADC_MULTIMODE_SUPPORT)
 	assert_param(IS_LL_ADC_MULTI_MODE(pADC_CommonInitStruct->Multimode));
-	if (pADC_CommonInitStruct->Multimode != LL_ADC_MULTI_INDEPENDENT)
-	{
+	if (pADC_CommonInitStruct->Multimode != LL_ADC_MULTI_INDEPENDENT) {
 		assert_param(IS_LL_ADC_MULTI_DMA_TRANSFER(pADC_CommonInitStruct->MultiDMATransfer));
 		assert_param(IS_LL_ADC_MULTI_TWOSMP_DELAY(pADC_CommonInitStruct->MultiTwoSamplingDelay));
 	}
@@ -298,8 +295,7 @@ ErrorStatus LL_ADC_CommonInit(ADC_Common_TypeDef *pADCxy_COMMON, LL_ADC_CommonIn
 	 * to   */
 	/*       ADC state: */
 	/*       All ADC instances of the ADC common group must be disabled. */
-	if (__LL_ADC_IS_ENABLED_ALL_COMMON_INSTANCE(pADCxy_COMMON) == 0UL)
-	{
+	if (__LL_ADC_IS_ENABLED_ALL_COMMON_INSTANCE(pADCxy_COMMON) == 0UL) {
 		/* Configuration of ADC hierarchical scope: */
 		/*  - common to several ADC */
 		/*    (all ADC instances belonging to the same ADC common
@@ -311,21 +307,16 @@ ErrorStatus LL_ADC_CommonInit(ADC_Common_TypeDef *pADCxy_COMMON, LL_ADC_CommonIn
 		/*    - Set ADC multimode DMA transfer */
 		/*    - Set ADC multimode: delay between 2 sampling phases */
 #if defined(ADC_MULTIMODE_SUPPORT)
-		if (pADC_CommonInitStruct->Multimode != LL_ADC_MULTI_INDEPENDENT)
-		{
+		if (pADC_CommonInitStruct->Multimode != LL_ADC_MULTI_INDEPENDENT) {
 			MODIFY_REG(pADCxy_COMMON->CCR, ADC_CCR_PRESC | ADC_CCR_DUAL | ADC_CCR_DAMDF | ADC_CCR_DELAY,
 				   pADC_CommonInitStruct->CommonClock | pADC_CommonInitStruct->Multimode | pADC_CommonInitStruct->MultiDMATransfer | pADC_CommonInitStruct->MultiTwoSamplingDelay);
-		}
-		else
-		{
+		} else {
 			MODIFY_REG(pADCxy_COMMON->CCR, ADC_CCR_PRESC | ADC_CCR_DUAL | ADC_CCR_DAMDF | ADC_CCR_DELAY, pADC_CommonInitStruct->CommonClock | LL_ADC_MULTI_INDEPENDENT);
 		}
 #else
 		LL_ADC_SetCommonClock(pADCxy_COMMON, pADC_CommonInitStruct->CommonClock);
 #endif /* ADC_MULTIMODE_SUPPORT */
-	}
-	else
-	{
+	} else {
 		/* Initialization error: One or several ADC instances belonging
 		 * to        */
 		/* the same ADC common instance are not disabled. */
@@ -375,14 +366,11 @@ ErrorStatus LL_ADC_DeInit(ADC_TypeDef *pADCx)
 	assert_param(IS_ADC_ALL_INSTANCE(pADCx));
 
 	/* Disable ADC instance if not already disabled. */
-	if (LL_ADC_IsEnabled(pADCx) == 1UL)
-	{
+	if (LL_ADC_IsEnabled(pADCx) == 1UL) {
 		/* Stop potential ADC conversion on going on ADC group regular.
 		 */
-		if (LL_ADC_REG_IsConversionOngoing(pADCx) != 0UL)
-		{
-			if (LL_ADC_REG_IsStopConversionOngoing(pADCx) == 0UL)
-			{
+		if (LL_ADC_REG_IsConversionOngoing(pADCx) != 0UL) {
+			if (LL_ADC_REG_IsStopConversionOngoing(pADCx) == 0UL) {
 				LL_ADC_REG_StopConversion(pADCx);
 			}
 		}
@@ -391,24 +379,18 @@ ErrorStatus LL_ADC_DeInit(ADC_TypeDef *pADCx)
 		timeout_cpu_cycles = ADC_TIMEOUT_STOP_CONVERSION_CPU_CYCLES;
 		if (pADCx != ADC4) /* ADC1 or ADC2 */
 		{
-			while ((LL_ADC_REG_IsStopConversionOngoing(pADCx) | LL_ADC_INJ_IsStopConversionOngoing(pADCx)) == 1UL)
-			{
+			while ((LL_ADC_REG_IsStopConversionOngoing(pADCx) | LL_ADC_INJ_IsStopConversionOngoing(pADCx)) == 1UL) {
 				timeout_cpu_cycles--;
-				if (timeout_cpu_cycles == 0UL)
-				{
+				if (timeout_cpu_cycles == 0UL) {
 					/* Time-out error */
 					status = ERROR;
 					break;
 				}
 			}
-		}
-		else
-		{
-			while (LL_ADC_REG_IsStopConversionOngoing(pADCx) == 1UL)
-			{
+		} else {
+			while (LL_ADC_REG_IsStopConversionOngoing(pADCx) == 1UL) {
 				timeout_cpu_cycles--;
-				if (timeout_cpu_cycles == 0UL)
-				{
+				if (timeout_cpu_cycles == 0UL) {
 					/* Time-out error */
 					status = ERROR;
 				}
@@ -419,11 +401,9 @@ ErrorStatus LL_ADC_DeInit(ADC_TypeDef *pADCx)
 
 		/* Wait for ADC instance is effectively disabled */
 		timeout_cpu_cycles = ADC_TIMEOUT_DISABLE_CPU_CYCLES;
-		while (LL_ADC_IsDisableOngoing(pADCx) == 1UL)
-		{
+		while (LL_ADC_IsDisableOngoing(pADCx) == 1UL) {
 			timeout_cpu_cycles--;
-			if (timeout_cpu_cycles == 0UL)
-			{
+			if (timeout_cpu_cycles == 0UL) {
 				/* Time-out error */
 				status = ERROR;
 			}
@@ -518,12 +498,9 @@ ErrorStatus LL_ADC_DeInit(ADC_TypeDef *pADCx)
 
 		/* Reset register CALFACT */
 		CLEAR_BIT(pADCx->CALFACT, ADC_CALFACT_CAPTURE_COEF | ADC_CALFACT_LATCH_COEF);
-	}
-	else
-	{
+	} else {
 		/* Check whether ADC state is compliant with expected state */
-		if (READ_BIT(pADCx->CR, (ADC_CR_ADSTP | ADC_CR_ADSTART | ADC_CR_ADDIS | ADC_CR_ADEN)) == 0UL)
-		{
+		if (READ_BIT(pADCx->CR, (ADC_CR_ADSTP | ADC_CR_ADSTART | ADC_CR_ADDIS | ADC_CR_ADEN)) == 0UL) {
 			/* ========== Reset ADC registers ========== */
 			/* Reset register IER */
 			CLEAR_BIT(pADCx->IER, (LL_ADC_IT_ADRDY | LL_ADC_IT_EOC | LL_ADC_IT_EOS | LL_ADC_IT_OVR | LL_ADC_IT_EOSMP | LL_ADC_IT_AWD1 | LL_ADC_IT_AWD2 | LL_ADC_IT_AWD3 | LL_ADC_IT_EOCAL |
@@ -576,9 +553,7 @@ ErrorStatus LL_ADC_DeInit(ADC_TypeDef *pADCx)
 
 			/* Reset register CCR */
 			CLEAR_BIT(ADC4_COMMON->CCR, ADC_CCR_VBATEN | ADC_CCR_VSENSEEN | ADC_CCR_VREFEN | ADC_CCR_PRESC);
-		}
-		else
-		{
+		} else {
 			/* ADC instance is in an unknown state */
 			/* Need to performing a hard reset of ADC instance,
 			 * using high level      */
@@ -641,16 +616,13 @@ ErrorStatus LL_ADC_Init(ADC_TypeDef *pADCx, LL_ADC_InitTypeDef *pADC_InitStruct)
 	if (pADCx != ADC4) /* ADC1 or ADC2 */
 	{
 		assert_param(IS_LL_ADC_LEFT_BIT_SHIFT(pADC_InitStruct->LeftBitShift));
-	}
-	else
-	{
+	} else {
 		assert_param(IS_LL_ADC_DATA_ALIGN(pADC_InitStruct->DataAlignment));
 	}
 
 	/* Note: Hardware constraint (refer to description of this function): */
 	/*       ADC instance must be disabled. */
-	if (LL_ADC_IsEnabled(pADCx) == 0UL)
-	{
+	if (LL_ADC_IsEnabled(pADCx) == 0UL) {
 		/* Configuration of ADC hierarchical scope: */
 		/*  - ADC instance */
 		/*    - Set ADC data resolution */
@@ -660,15 +632,11 @@ ErrorStatus LL_ADC_Init(ADC_TypeDef *pADCx, LL_ADC_InitTypeDef *pADC_InitStruct)
 		{
 			MODIFY_REG(pADCx->CFGR1, ADC_CFGR1_RES | ADC4_CFGR1_WAIT, pADC_InitStruct->Resolution | pADC_InitStruct->LowPowerMode);
 			MODIFY_REG(pADCx->CFGR2, ADC_CFGR2_LSHIFT, pADC_InitStruct->LeftBitShift);
-		}
-		else
-		{
+		} else {
 			MODIFY_REG(pADCx->CFGR1, ADC4_CFGR1_ALIGN | ADC4_CFGR1_WAIT, pADC_InitStruct->DataAlignment | pADC_InitStruct->LowPowerMode);
 			LL_ADC_SetResolution(pADCx, pADC_InitStruct->Resolution);
 		}
-	}
-	else
-	{
+	} else {
 		/* Initialization error: ADC instance is not disabled. */
 		status = ERROR;
 	}
@@ -691,9 +659,7 @@ void LL_ADC_StructInit(const ADC_TypeDef *pADCx, LL_ADC_InitTypeDef *pADC_InitSt
 	{
 		pADC_InitStruct->Resolution = LL_ADC_RESOLUTION_14B;
 		pADC_InitStruct->LeftBitShift = LL_ADC_LEFT_BIT_SHIFT_NONE;
-	}
-	else
-	{
+	} else {
 		pADC_InitStruct->Resolution = LL_ADC_RESOLUTION_12B;
 		pADC_InitStruct->DataAlignment = LL_ADC_DATA_ALIGN_RIGHT;
 	}
@@ -737,13 +703,11 @@ ErrorStatus LL_ADC_REG_Init(ADC_TypeDef *pADCx, LL_ADC_REG_InitTypeDef *pADC_Reg
 
 	/* Check the parameters */
 	assert_param(IS_ADC_ALL_INSTANCE(pADCx));
-	if (pADCx == ADC4)
-	{
+	if (pADCx == ADC4) {
 		assert_param(IS_LL_ADC4_REG_TRIG_SOURCE(pADC_RegInitStruct->TriggerSource));
 		assert_param(IS_LL_ADC4_REG_SEQ_SCAN_LENGTH(pADC_RegInitStruct->SequencerLength));
 		assert_param(IS_LL_ADC_REG_DMA_TRANSFER(pADC_RegInitStruct->DMATransfer));
-		if ((LL_ADC_REG_GetSequencerConfigurable(pADCx) == LL_ADC_REG_SEQ_FIXED) || (pADC_RegInitStruct->SequencerLength != LL_ADC_REG_SEQ_SCAN_DISABLE))
-		{
+		if ((LL_ADC_REG_GetSequencerConfigurable(pADCx) == LL_ADC_REG_SEQ_FIXED) || (pADC_RegInitStruct->SequencerLength != LL_ADC_REG_SEQ_SCAN_DISABLE)) {
 			assert_param(IS_LL_ADC_REG_SEQ_SCAN_DISCONT_MODE(pADC_RegInitStruct->SequencerDiscont));
 
 			/* ADC group regular continuous mode and discontinuous
@@ -751,16 +715,14 @@ ErrorStatus LL_ADC_REG_Init(ADC_TypeDef *pADCx, LL_ADC_REG_InitTypeDef *pADC_Reg
 			/* can not be enabled simultenaeously */
 			assert_param((pADC_RegInitStruct->ContinuousMode == LL_ADC_REG_CONV_SINGLE) || (pADC_RegInitStruct->SequencerDiscont == LL_ADC_REG_SEQ_DISCONT_DISABLE));
 		}
-	}
-	else /* ADC1 or ADC2 */
+	} else /* ADC1 or ADC2 */
 	{
 		assert_param(IS_LL_ADC_REG_TRIG_SOURCE(pADC_RegInitStruct->TriggerSource));
 		assert_param(IS_LL_ADC_REG_SEQ_SCAN_LENGTH(pADC_RegInitStruct->SequencerLength));
 		assert_param(IS_LL_ADC_REG_DATA_TRANSFER_MODE(pADC_RegInitStruct->DataTransferMode));
 	}
 
-	if (pADC_RegInitStruct->SequencerLength != LL_ADC_REG_SEQ_SCAN_DISABLE)
-	{
+	if (pADC_RegInitStruct->SequencerLength != LL_ADC_REG_SEQ_SCAN_DISABLE) {
 		assert_param(IS_LL_ADC_REG_SEQ_SCAN_DISCONT_MODE(pADC_RegInitStruct->SequencerDiscont));
 	}
 	assert_param(IS_LL_ADC_REG_CONTINUOUS_MODE(pADC_RegInitStruct->ContinuousMode));
@@ -768,8 +730,7 @@ ErrorStatus LL_ADC_REG_Init(ADC_TypeDef *pADCx, LL_ADC_REG_InitTypeDef *pADC_Reg
 
 	/* Note: Hardware constraint (refer to description of this function): */
 	/*       ADC instance must be disabled. */
-	if (LL_ADC_IsEnabled(pADCx) == 0UL)
-	{
+	if (LL_ADC_IsEnabled(pADCx) == 0UL) {
 		/* Configuration of ADC hierarchical scope: */
 		/*  - ADC group regular */
 		/*    - Set ADC group regular trigger source */
@@ -787,29 +748,21 @@ ErrorStatus LL_ADC_REG_Init(ADC_TypeDef *pADCx, LL_ADC_REG_InitTypeDef *pADC_Reg
 		 * LL_ADC_REG_StartConversionExtTrig().      */
 		if (pADCx != ADC4) /* ADC1 or ADC2 */
 		{
-			if (pADC_RegInitStruct->SequencerLength != LL_ADC_REG_SEQ_SCAN_DISABLE)
-			{
+			if (pADC_RegInitStruct->SequencerLength != LL_ADC_REG_SEQ_SCAN_DISABLE) {
 				MODIFY_REG(pADCx->CFGR1, ADC_CFGR1_EXTSEL | ADC_CFGR1_EXTEN | ADC_CFGR1_DISCEN | ADC_CFGR1_DISCNUM | ADC_CFGR1_CONT | ADC_CFGR1_DMNGT | ADC_CFGR1_OVRMOD,
 					   pADC_RegInitStruct->TriggerSource | pADC_RegInitStruct->SequencerDiscont | pADC_RegInitStruct->ContinuousMode | pADC_RegInitStruct->DataTransferMode |
 					       pADC_RegInitStruct->Overrun);
-			}
-			else
-			{
+			} else {
 				MODIFY_REG(pADCx->CFGR1, ADC_CFGR1_EXTSEL | ADC_CFGR1_EXTEN | ADC_CFGR1_DISCEN | ADC_CFGR1_DISCNUM | ADC_CFGR1_CONT | ADC_CFGR1_DMNGT | ADC_CFGR1_OVRMOD,
 					   pADC_RegInitStruct->TriggerSource | LL_ADC_REG_SEQ_DISCONT_DISABLE | pADC_RegInitStruct->ContinuousMode | pADC_RegInitStruct->DataTransferMode |
 					       pADC_RegInitStruct->Overrun);
 			}
-		}
-		else
-		{
-			if ((LL_ADC_REG_GetSequencerConfigurable(pADCx) == LL_ADC_REG_SEQ_FIXED) || (pADC_RegInitStruct->SequencerLength != LL_ADC_REG_SEQ_SCAN_DISABLE))
-			{
+		} else {
+			if ((LL_ADC_REG_GetSequencerConfigurable(pADCx) == LL_ADC_REG_SEQ_FIXED) || (pADC_RegInitStruct->SequencerLength != LL_ADC_REG_SEQ_SCAN_DISABLE)) {
 				MODIFY_REG(pADCx->CFGR1, ADC_CFGR1_EXTSEL | ADC_CFGR1_EXTEN | ADC_CFGR1_DISCEN | ADC_CFGR1_CONT | ADC4_CFGR1_DMAEN | ADC4_CFGR1_DMACFG | ADC_CFGR1_OVRMOD,
 					   pADC_RegInitStruct->TriggerSource | pADC_RegInitStruct->SequencerDiscont | pADC_RegInitStruct->ContinuousMode | pADC_RegInitStruct->DMATransfer |
 					       pADC_RegInitStruct->Overrun);
-			}
-			else
-			{
+			} else {
 				MODIFY_REG(pADCx->CFGR1, ADC_CFGR1_EXTSEL | ADC_CFGR1_EXTEN | ADC_CFGR1_DISCEN | ADC_CFGR1_CONT | ADC4_CFGR1_DMAEN | ADC4_CFGR1_DMACFG | ADC_CFGR1_OVRMOD,
 					   pADC_RegInitStruct->TriggerSource | LL_ADC_REG_SEQ_DISCONT_DISABLE | pADC_RegInitStruct->ContinuousMode | pADC_RegInitStruct->DMATransfer |
 					       pADC_RegInitStruct->Overrun);
@@ -817,20 +770,14 @@ ErrorStatus LL_ADC_REG_Init(ADC_TypeDef *pADCx, LL_ADC_REG_InitTypeDef *pADC_Reg
 		}
 
 		/* Set ADC group regular sequencer length and scan direction */
-		if (pADCx == ADC4)
-		{
-			if (LL_ADC_REG_GetSequencerConfigurable(pADCx) != LL_ADC_REG_SEQ_FIXED)
-			{
+		if (pADCx == ADC4) {
+			if (LL_ADC_REG_GetSequencerConfigurable(pADCx) != LL_ADC_REG_SEQ_FIXED) {
 				LL_ADC_REG_SetSequencerLength(pADCx, pADC_RegInitStruct->SequencerLength);
 			}
-		}
-		else
-		{
+		} else {
 			LL_ADC_REG_SetSequencerLength(pADCx, pADC_RegInitStruct->SequencerLength);
 		}
-	}
-	else
-	{
+	} else {
 		/* Initialization error: ADC instance is not disabled. */
 		status = ERROR;
 	}
@@ -859,9 +806,7 @@ void LL_ADC_REG_StructInit(const ADC_TypeDef *pADCx, LL_ADC_REG_InitTypeDef *pAD
 	if (pADCx != ADC4) /* ADC1 or ADC2 */
 	{
 		pADC_RegInitStruct->DataTransferMode = LL_ADC_REG_DR_TRANSFER;
-	}
-	else
-	{
+	} else {
 		pADC_RegInitStruct->DMATransfer = LL_ADC_REG_DMA_TRANSFER_NONE_ADC4;
 	}
 }
@@ -906,16 +851,14 @@ ErrorStatus LL_ADC_INJ_Init(ADC_TypeDef *pADCx, LL_ADC_INJ_InitTypeDef *pADC_Inj
 	assert_param(IS_ADC_ALL_INSTANCE(pADCx));
 	assert_param(IS_LL_ADC_INJ_TRIG_SOURCE(pADC_InjInitStruct->TriggerSource));
 	assert_param(IS_LL_ADC_INJ_SEQ_SCAN_LENGTH(pADC_InjInitStruct->SequencerLength));
-	if (pADC_InjInitStruct->SequencerLength != LL_ADC_INJ_SEQ_SCAN_DISABLE)
-	{
+	if (pADC_InjInitStruct->SequencerLength != LL_ADC_INJ_SEQ_SCAN_DISABLE) {
 		assert_param(IS_LL_ADC_INJ_SEQ_SCAN_DISCONT_MODE(pADC_InjInitStruct->SequencerDiscont));
 	}
 	assert_param(IS_LL_ADC_INJ_TRIG_AUTO(pADC_InjInitStruct->TrigAuto));
 
 	/* Note: Hardware constraint (refer to description of this function): */
 	/*       ADC instance must be disabled. */
-	if (LL_ADC_IsEnabled(pADCx) == 0UL)
-	{
+	if (LL_ADC_IsEnabled(pADCx) == 0UL) {
 		/* Configuration of ADC hierarchical scope: */
 		/*  - ADC group injected */
 		/*    - Set ADC group injected trigger source */
@@ -929,19 +872,14 @@ ErrorStatus LL_ADC_INJ_Init(ADC_TypeDef *pADCx, LL_ADC_INJ_InitTypeDef *pADC_Inj
 		/*       ADC conversion. */
 		/*       Refer to function @ref
 		 * LL_ADC_INJ_StartConversionExtTrig().      */
-		if (pADC_InjInitStruct->SequencerLength != LL_ADC_REG_SEQ_SCAN_DISABLE)
-		{
+		if (pADC_InjInitStruct->SequencerLength != LL_ADC_REG_SEQ_SCAN_DISABLE) {
 			MODIFY_REG(pADCx->CFGR1, ADC_CFGR1_JDISCEN | ADC_CFGR1_JAUTO, pADC_InjInitStruct->SequencerDiscont | pADC_InjInitStruct->TrigAuto);
-		}
-		else
-		{
+		} else {
 			MODIFY_REG(pADCx->CFGR1, ADC_CFGR1_JDISCEN | ADC_CFGR1_JAUTO, LL_ADC_REG_SEQ_DISCONT_DISABLE | pADC_InjInitStruct->TrigAuto);
 		}
 
 		MODIFY_REG(pADCx->JSQR, ADC_JSQR_JEXTSEL | ADC_JSQR_JEXTEN | ADC_JSQR_JL, pADC_InjInitStruct->TriggerSource | pADC_InjInitStruct->SequencerLength);
-	}
-	else
-	{
+	} else {
 		/* Initialization error: ADC instance is not disabled. */
 		status = ERROR;
 	}

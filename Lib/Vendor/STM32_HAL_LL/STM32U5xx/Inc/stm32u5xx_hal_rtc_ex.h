@@ -21,71 +21,69 @@
 #define STM32U5xx_HAL_RTC_EX_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx_hal_def.h"
 
-	/** @addtogroup STM32U5xx_HAL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32U5xx_HAL_Driver
+ * @{
+ */
 
-	/** @defgroup RTCEx RTCEx
-	 * @{
-	 */
+/** @defgroup RTCEx RTCEx
+ * @{
+ */
 
-	/* Exported types ------------------------------------------------------------*/
-	/** @defgroup RTCEx_Exported_Types RTCEx Exported Types
-	 * @{
-	 */
+/* Exported types ------------------------------------------------------------*/
+/** @defgroup RTCEx_Exported_Types RTCEx Exported Types
+ * @{
+ */
 
-	/** @defgroup RTCEx_Tamper_structure_definition RTCEx Tamper structure
-	 * definition
-	 * @{
-	 */
-	typedef struct
-	{
-		uint32_t Tamper; /*!< Specifies the Tamper Pin.
-				      This parameter can be a value of @ref
-				    RTCEx_Tamper_Pins */
+/** @defgroup RTCEx_Tamper_structure_definition RTCEx Tamper structure
+ * definition
+ * @{
+ */
+typedef struct {
+	uint32_t Tamper; /*!< Specifies the Tamper Pin.
+			      This parameter can be a value of @ref
+			    RTCEx_Tamper_Pins */
 
-		uint32_t Trigger; /*!< Specifies the Tamper Trigger.
-				       This parameter can be a value of @ref
-				     RTCEx_Tamper_Trigger */
+	uint32_t Trigger; /*!< Specifies the Tamper Trigger.
+			       This parameter can be a value of @ref
+			     RTCEx_Tamper_Trigger */
 
-		uint32_t NoErase; /*!< Specifies the Tamper no erase mode.
-				       This parameter can be a value of @ref
-				     RTCEx_Tamper_EraseBackUp */
+	uint32_t NoErase; /*!< Specifies the Tamper no erase mode.
+			       This parameter can be a value of @ref
+			     RTCEx_Tamper_EraseBackUp */
 
-		uint32_t MaskFlag; /*!< Specifies the Tamper Flag masking.
-					This parameter can be a value of @ref
-				      RTCEx_Tamper_MaskFlag */
+	uint32_t MaskFlag; /*!< Specifies the Tamper Flag masking.
+				This parameter can be a value of @ref
+			      RTCEx_Tamper_MaskFlag */
 
-		uint32_t Filter; /*!< Specifies the TAMP Filter Tamper.
-				      This parameter can be a value of @ref
-				    RTCEx_Tamper_Filter */
+	uint32_t Filter; /*!< Specifies the TAMP Filter Tamper.
+			      This parameter can be a value of @ref
+			    RTCEx_Tamper_Filter */
 
-		uint32_t SamplingFrequency; /*!< Specifies the sampling frequency.
-						 This parameter can be a value of
-						 @ref RTCEx_Tamper_Sampling_Frequencies */
+	uint32_t SamplingFrequency; /*!< Specifies the sampling frequency.
+					 This parameter can be a value of
+					 @ref RTCEx_Tamper_Sampling_Frequencies */
 
-		uint32_t PrechargeDuration; /*!< Specifies the Precharge Duration .
-						 This parameter can be a value of
-						 @ref RTCEx_Tamper_Pin_Precharge_Duration */
+	uint32_t PrechargeDuration; /*!< Specifies the Precharge Duration .
+					 This parameter can be a value of
+					 @ref RTCEx_Tamper_Pin_Precharge_Duration */
 
-		uint32_t TamperPullUp; /*!< Specifies the Tamper PullUp .
-					    This parameter can be a value of @ref
-					  RTCEx_Tamper_Pull_UP */
+	uint32_t TamperPullUp; /*!< Specifies the Tamper PullUp .
+				    This parameter can be a value of @ref
+				  RTCEx_Tamper_Pull_UP */
 
-		uint32_t TimeStampOnTamperDetection; /*!< Specifies the
-							TimeStampOnTamperDetection. This
-							parameter can be a value of
-							   @ref
-							RTCEx_Tamper_TimeStampOnTamperDetection
-						      */
-	} RTC_TamperTypeDef;
+	uint32_t TimeStampOnTamperDetection; /*!< Specifies the
+						TimeStampOnTamperDetection. This
+						parameter can be a value of
+						   @ref
+						RTCEx_Tamper_TimeStampOnTamperDetection
+					      */
+} RTC_TamperTypeDef;
 /**
  * @}
  */
@@ -94,211 +92,206 @@ extern "C"
  * @{
  */
 #define RTC_ATAMP_SEED_NB_UINT32 4U
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @defgroup RTCEx_ActiveTamper_structures_definition RTCEx Active Tamper
-	 * structures definitions
-	 * @{
-	 */
-	typedef struct
-	{
-		uint32_t Enable; /*!< Specifies the Tamper input is active.
-				      This parameter can be a value of @ref
-				    RTCEx_ActiveTamper_Enable */
+/** @defgroup RTCEx_ActiveTamper_structures_definition RTCEx Active Tamper
+ * structures definitions
+ * @{
+ */
+typedef struct {
+	uint32_t Enable; /*!< Specifies the Tamper input is active.
+			      This parameter can be a value of @ref
+			    RTCEx_ActiveTamper_Enable */
 
-		uint32_t Interrupt; /*!< Specifies the interrupt mode
-					This parameter can be a value of @ref
-				       RTCEx_ActiveTamper_Interrupt */
+	uint32_t Interrupt; /*!< Specifies the interrupt mode
+				This parameter can be a value of @ref
+			       RTCEx_ActiveTamper_Interrupt */
 
-		uint32_t Output; /*!< Specifies the TAMP output to be compared with.
-				      The same output can be used for several tamper
-				    inputs. This parameter can be a value of @ref
-				    RTCEx_ActiveTamper_Sel */
+	uint32_t Output; /*!< Specifies the TAMP output to be compared with.
+			      The same output can be used for several tamper
+			    inputs. This parameter can be a value of @ref
+			    RTCEx_ActiveTamper_Sel */
 
-		uint32_t NoErase; /*!< Specifies the Tamper no erase mode.
-				       This parameter can be a value of @ref
-				     RTCEx_Tamper_EraseBackUp */
+	uint32_t NoErase; /*!< Specifies the Tamper no erase mode.
+			       This parameter can be a value of @ref
+			     RTCEx_Tamper_EraseBackUp */
 
-		uint32_t MaskFlag; /*!< Specifies the Tamper Flag masking.
-					This parameter can be a value of @ref
-				      RTCEx_Tamper_MaskFlag */
+	uint32_t MaskFlag; /*!< Specifies the Tamper Flag masking.
+				This parameter can be a value of @ref
+			      RTCEx_Tamper_MaskFlag */
 
-	} RTC_ATampInputTypeDef;
+} RTC_ATampInputTypeDef;
 
-	typedef struct
-	{
-		uint32_t ActiveFilter; /*!< Specifies the Active tamper filter enable.
-					    This parameter can be a value of @ref
-					  RTCEx_ActiveTamper_Filter */
+typedef struct {
+	uint32_t ActiveFilter; /*!< Specifies the Active tamper filter enable.
+				    This parameter can be a value of @ref
+				  RTCEx_ActiveTamper_Filter */
 
-		uint32_t ActiveAsyncPrescaler; /*!< Specifies the Active Tamper
-						  asynchronous Prescaler clock. This
-						  parameter can be a value of
-						    @ref
-						  RTCEx_ActiveTamper_Async_prescaler */
+	uint32_t ActiveAsyncPrescaler; /*!< Specifies the Active Tamper
+					  asynchronous Prescaler clock. This
+					  parameter can be a value of
+					    @ref
+					  RTCEx_ActiveTamper_Async_prescaler */
 
-		uint32_t TimeStampOnTamperDetection; /*!< Specifies the timeStamp on
-							tamper detection. This parameter
-							can be a value of
-							  @ref
-							RTCEx_Tamper_TimeStampOnTamperDetection
-						      */
+	uint32_t TimeStampOnTamperDetection; /*!< Specifies the timeStamp on
+						tamper detection. This parameter
+						can be a value of
+						  @ref
+						RTCEx_Tamper_TimeStampOnTamperDetection
+					      */
 
-		uint32_t ActiveOutputChangePeriod; /*!< Specifies the Active Tamper output
-						      change period . This parameter can be a
-						      value from 0 to 7. */
+	uint32_t ActiveOutputChangePeriod; /*!< Specifies the Active Tamper output
+					      change period . This parameter can be a
+					      value from 0 to 7. */
 
-		uint32_t Seed[RTC_ATAMP_SEED_NB_UINT32];
-		/*!< Specifies the RNG Seed value.
-		     This parameter is an array of value from 0 to 0xFFFFFFFF */
+	uint32_t Seed[RTC_ATAMP_SEED_NB_UINT32];
+	/*!< Specifies the RNG Seed value.
+	     This parameter is an array of value from 0 to 0xFFFFFFFF */
 
-		RTC_ATampInputTypeDef TampInput[RTC_TAMP_NB];
-		/*!< Specifies configuration of all active tampers.
-		     The index of TampInput[RTC_TAMP_NB] can be a value of
-		   RTCEx_ActiveTamper_Sel */
-	} RTC_ActiveTampersTypeDef;
-	/**
-	 * @}
-	 */
+	RTC_ATampInputTypeDef TampInput[RTC_TAMP_NB];
+	/*!< Specifies configuration of all active tampers.
+	     The index of TampInput[RTC_TAMP_NB] can be a value of
+	   RTCEx_ActiveTamper_Sel */
+} RTC_ActiveTampersTypeDef;
+/**
+ * @}
+ */
 
-	/** @defgroup RTCEx_Internal_Tamper_structure_definition RTCEx Internal Tamper
-	 * structure definition
-	 * @{
-	 */
-	typedef struct
-	{
-		uint32_t IntTamper; /*!< Specifies the Internal Tamper Pin.
-					 This parameter can be a value of @ref
-				       RTCEx_Internal_Tamper_Pins */
+/** @defgroup RTCEx_Internal_Tamper_structure_definition RTCEx Internal Tamper
+ * structure definition
+ * @{
+ */
+typedef struct {
+	uint32_t IntTamper; /*!< Specifies the Internal Tamper Pin.
+				 This parameter can be a value of @ref
+			       RTCEx_Internal_Tamper_Pins */
 
-		uint32_t TimeStampOnTamperDetection; /*!< Specifies the
-							TimeStampOnTamperDetection. This
-							parameter can be a value of
-							  @ref
-							RTCEx_Tamper_TimeStampOnTamperDetection
-						      */
+	uint32_t TimeStampOnTamperDetection; /*!< Specifies the
+						TimeStampOnTamperDetection. This
+						parameter can be a value of
+						  @ref
+						RTCEx_Tamper_TimeStampOnTamperDetection
+					      */
 
-		uint32_t NoErase; /*!< Specifies the internal Tamper no erase mode.
-				       This parameter can be a value of @ref
-				     RTCEx_Tamper_EraseBackUp */
+	uint32_t NoErase; /*!< Specifies the internal Tamper no erase mode.
+			       This parameter can be a value of @ref
+			     RTCEx_Tamper_EraseBackUp */
 
-	} RTC_InternalTamperTypeDef;
-	/**
-	 * @}
-	 */
+} RTC_InternalTamperTypeDef;
+/**
+ * @}
+ */
 
-	/** @defgroup RTCEx_Secure_State_structure_definition RTCEx Secure structure
-	 * definition
-	 * @{
-	 */
-	typedef struct
-	{
-		uint32_t rtcSecureFull; /*!< Specifies If the RTC is fully secure or not
-					     This parameter can be a value of @ref
-					   RTCEx_RTC_Secure_Full */
+/** @defgroup RTCEx_Secure_State_structure_definition RTCEx Secure structure
+ * definition
+ * @{
+ */
+typedef struct {
+	uint32_t rtcSecureFull; /*!< Specifies If the RTC is fully secure or not
+				     This parameter can be a value of @ref
+				   RTCEx_RTC_Secure_Full */
 
-		uint32_t rtcNonSecureFeatures; /*!< Specifies the non-secure features.
-						    This parameter is only relevant if RTC is
-						  not fully secure (rtcSecureFull ==
-						  RTC_SECURE_FULL_NO). This parameter can be
-						  a combination of
-						    @ref RTCEx_RTC_NonSecure_Features. */
+	uint32_t rtcNonSecureFeatures; /*!< Specifies the non-secure features.
+					    This parameter is only relevant if RTC is
+					  not fully secure (rtcSecureFull ==
+					  RTC_SECURE_FULL_NO). This parameter can be
+					  a combination of
+					    @ref RTCEx_RTC_NonSecure_Features. */
 
-		uint32_t tampSecureFull; /*!< Specifies If the TAMP is fully secure or
-					    not execpt monotonic counters and BackUp
-					    registers. This parameter can be a value of
-					    @ref RTCEx_TAMP_Secure_Full */
+	uint32_t tampSecureFull; /*!< Specifies If the TAMP is fully secure or
+				    not execpt monotonic counters and BackUp
+				    registers. This parameter can be a value of
+				    @ref RTCEx_TAMP_Secure_Full */
 
-		uint32_t backupRegisterStartZone2; /*!< Specifies the backup register start
-						      zone 2 Zone 1 : read secure write
-						      secure. Zone 2 : read non-secure  write
-						      secure. This parameter can be
-						      RTC_BKP_DRx where x can be from 0 to 31
-						      to specify the register. Warning : this
-						      parameter is shared with
-						      RTC_PrivilegeStateTypeDef. */
+	uint32_t backupRegisterStartZone2; /*!< Specifies the backup register start
+					      zone 2 Zone 1 : read secure write
+					      secure. Zone 2 : read non-secure  write
+					      secure. This parameter can be
+					      RTC_BKP_DRx where x can be from 0 to 31
+					      to specify the register. Warning : this
+					      parameter is shared with
+					      RTC_PrivilegeStateTypeDef. */
 
-		uint32_t backupRegisterStartZone3; /*!< Specifies the backup register
-						      start zone 3 Zone 3 : read
-						      non-secure  write non-secure This
-						      parameter can be RTC_BKP_DRx where
-						      x can be from 0 to 31 to specify
-						      the register. Warning : this
-						      parameter is shared with
-						      RTC_PrivilegeStateTypeDef. */
+	uint32_t backupRegisterStartZone3; /*!< Specifies the backup register
+					      start zone 3 Zone 3 : read
+					      non-secure  write non-secure This
+					      parameter can be RTC_BKP_DRx where
+					      x can be from 0 to 31 to specify
+					      the register. Warning : this
+					      parameter is shared with
+					      RTC_PrivilegeStateTypeDef. */
 
-		uint32_t MonotonicCounterSecure; /*!< Specifies If the monotonic counter is
-						    secure or not This parameter can be a
-						    value of
-						      @ref
-						    RTCEx_TAMP_Monotonic_Counter_Secure */
-	} RTC_SecureStateTypeDef;
-	/**
-	 * @}
-	 */
+	uint32_t MonotonicCounterSecure; /*!< Specifies If the monotonic counter is
+					    secure or not This parameter can be a
+					    value of
+					      @ref
+					    RTCEx_TAMP_Monotonic_Counter_Secure */
+} RTC_SecureStateTypeDef;
+/**
+ * @}
+ */
 
-	/** @defgroup RTCEx_Privilege_State_structure_definition RTCEx Privilege
-	 * structure definition
-	 * @{
-	 */
-	typedef struct
-	{
-		uint32_t rtcPrivilegeFull; /*!< Specifies If the RTC is fully privileged
-					      or not. This parameter can be a value of
-					      @ref RTCEx_RTC_Privilege_Full. */
+/** @defgroup RTCEx_Privilege_State_structure_definition RTCEx Privilege
+ * structure definition
+ * @{
+ */
+typedef struct {
+	uint32_t rtcPrivilegeFull; /*!< Specifies If the RTC is fully privileged
+				      or not. This parameter can be a value of
+				      @ref RTCEx_RTC_Privilege_Full. */
 
-		uint32_t rtcPrivilegeFeatures; /*!< Specifies the privileged features.
-						    This parameter is only relevant if RTC is
-						  not fully privileged (rtcPrivilegeFull ==
-						  RTC_PRIVILEGE_FULL_NO). This parameter can
-						  be a combination of
-						    @ref RTCEx_RTC_Privilege_Features. */
+	uint32_t rtcPrivilegeFeatures; /*!< Specifies the privileged features.
+					    This parameter is only relevant if RTC is
+					  not fully privileged (rtcPrivilegeFull ==
+					  RTC_PRIVILEGE_FULL_NO). This parameter can
+					  be a combination of
+					    @ref RTCEx_RTC_Privilege_Features. */
 
-		uint32_t tampPrivilegeFull; /*!< Specifies If the TAMP is fully privileged or
-					       not execpt monotonic counters and BackUp
-					       registers. This parameter can be a value of
-					       @ref RTCEx_TAMP_Privilege_Full. */
+	uint32_t tampPrivilegeFull; /*!< Specifies If the TAMP is fully privileged or
+				       not execpt monotonic counters and BackUp
+				       registers. This parameter can be a value of
+				       @ref RTCEx_TAMP_Privilege_Full. */
 
-		uint32_t backupRegisterPrivZone; /*!< Specifies backup register zone to be
-						    privileged. This parameter can be a
-						    combination of
-						      @ref RTCEx_Backup_Reg_Privilege_zone.
-						      Warning : this parameter is writable in
-						    secure mode or if trustzone is disabled.
-						  */
+	uint32_t backupRegisterPrivZone; /*!< Specifies backup register zone to be
+					    privileged. This parameter can be a
+					    combination of
+					      @ref RTCEx_Backup_Reg_Privilege_zone.
+					      Warning : this parameter is writable in
+					    secure mode or if trustzone is disabled.
+					  */
 
-		uint32_t backupRegisterStartZone2; /*!< Specifies the backup register start
-						      zone 2. Zone 1 granted accesses : read
-						      secure, write secure. Zone 2 granted
-						      accesses : read non-secure, write
-						      secure. This parameter can be
-						      RTC_BKP_DRx where x can be from 0 to 31
-						      to specify the register . Warning :
-						      this parameter is writable in secure
-						      mode or if trustzone is disabled.
-							Warning : this parameter is shared
-						      with RTC_SecureStateTypeDef */
+	uint32_t backupRegisterStartZone2; /*!< Specifies the backup register start
+					      zone 2. Zone 1 granted accesses : read
+					      secure, write secure. Zone 2 granted
+					      accesses : read non-secure, write
+					      secure. This parameter can be
+					      RTC_BKP_DRx where x can be from 0 to 31
+					      to specify the register . Warning :
+					      this parameter is writable in secure
+					      mode or if trustzone is disabled.
+						Warning : this parameter is shared
+					      with RTC_SecureStateTypeDef */
 
-		uint32_t backupRegisterStartZone3; /*!< Specifies the backup register start
-						      zone 3. Zone 3 granted accesses : read
-						      non-secure, write non-secure. This
-						      parameter can be RTC_BKP_DRx where x
-						      can be from 0 to 31 to specify the
-						      register. Warning : this parameter is
-						      writable in secure mode or if trustzone
-						      is disabled. Warning : this parameter
-						      is shared with RTC_SecureStateTypeDef.
-						    */
+	uint32_t backupRegisterStartZone3; /*!< Specifies the backup register start
+					      zone 3. Zone 3 granted accesses : read
+					      non-secure, write non-secure. This
+					      parameter can be RTC_BKP_DRx where x
+					      can be from 0 to 31 to specify the
+					      register. Warning : this parameter is
+					      writable in secure mode or if trustzone
+					      is disabled. Warning : this parameter
+					      is shared with RTC_SecureStateTypeDef.
+					    */
 
-		uint32_t MonotonicCounterPrivilege; /*!< Specifies If the monotonic
-						       counter is privileged or not This
-						       parameter can be a value of
-							  @ref
-						       RTCEx_TAMP_Monotonic_Counter_Privilege
-						     */
-	} RTC_PrivilegeStateTypeDef;
+	uint32_t MonotonicCounterPrivilege; /*!< Specifies If the monotonic
+					       counter is privileged or not This
+					       parameter can be a value of
+						  @ref
+					       RTCEx_TAMP_Monotonic_Counter_Privilege
+					     */
+} RTC_PrivilegeStateTypeDef;
 /**
  * @}
  */
@@ -967,9 +960,9 @@ extern "C"
 	    * @}
 	    */
 
-	/** @defgroup RTCEx_RTC_NonSecure_Features  RTCEx Secure Features Definition
-	 * @{
-	 */
+/** @defgroup RTCEx_RTC_NonSecure_Features  RTCEx Secure Features Definition
+ * @{
+ */
 
 #define RTC_NONSECURE_FEATURE_NONE (RTC_SECCFGR_INITSEC | RTC_SECCFGR_CALSEC | RTC_SECCFGR_TSSEC | RTC_SECCFGR_WUTSEC | RTC_SECCFGR_ALRASEC | RTC_SECCFGR_ALRBSEC)
 #define RTC_NONSECURE_FEATURE_INIT ~RTC_SECCFGR_INITSEC /*!< Initialization */
@@ -1686,162 +1679,162 @@ extern "C"
  * @retval None
  */
 #define __HAL_RTC_SSRU_CLEAR_FLAG(__HANDLE__, __FLAG__) (WRITE_REG(RTC->SCR, RTC_SCR_CSSRUF))
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported functions --------------------------------------------------------*/
-	/** @defgroup RTCEx_Exported_Functions RTCEx Exported Functions
-	 * @{
-	 */
+/* Exported functions --------------------------------------------------------*/
+/** @defgroup RTCEx_Exported_Functions RTCEx Exported Functions
+ * @{
+ */
 
-	/* RTC TimeStamp functions *****************************************/
-	/** @defgroup RTCEx_Exported_Functions_Group1 Extended RTC TimeStamp functions
-	 * @{
-	 */
+/* RTC TimeStamp functions *****************************************/
+/** @defgroup RTCEx_Exported_Functions_Group1 Extended RTC TimeStamp functions
+ * @{
+ */
 
-	HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp(RTC_HandleTypeDef *hrtc, uint32_t TimeStampEdge, uint32_t RTC_TimeStampPin);
-	HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp_IT(RTC_HandleTypeDef *hrtc, uint32_t TimeStampEdge, uint32_t RTC_TimeStampPin);
-	HAL_StatusTypeDef HAL_RTCEx_DeactivateTimeStamp(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_SetInternalTimeStamp(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_DeactivateInternalTimeStamp(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_GetTimeStamp(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTimeStamp, RTC_DateTypeDef *sTimeStampDate, uint32_t Format);
-	void HAL_RTCEx_TimeStampIRQHandler(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_PollForTimeStampEvent(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
-	void HAL_RTCEx_TimeStampEventCallback(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp(RTC_HandleTypeDef *hrtc, uint32_t TimeStampEdge, uint32_t RTC_TimeStampPin);
+HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp_IT(RTC_HandleTypeDef *hrtc, uint32_t TimeStampEdge, uint32_t RTC_TimeStampPin);
+HAL_StatusTypeDef HAL_RTCEx_DeactivateTimeStamp(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_SetInternalTimeStamp(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_DeactivateInternalTimeStamp(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_GetTimeStamp(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTimeStamp, RTC_DateTypeDef *sTimeStampDate, uint32_t Format);
+void HAL_RTCEx_TimeStampIRQHandler(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_PollForTimeStampEvent(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
+void HAL_RTCEx_TimeStampEventCallback(RTC_HandleTypeDef *hrtc);
 
-	/**
-	 * @}
-	 */
-	/* RTC Wake-up functions ******************************************************/
-	/** @defgroup RTCEx_Exported_Functions_Group2 Extended RTC Wake-up functions
-	 * @{
-	 */
+/**
+ * @}
+ */
+/* RTC Wake-up functions ******************************************************/
+/** @defgroup RTCEx_Exported_Functions_Group2 Extended RTC Wake-up functions
+ * @{
+ */
 
-	HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer(RTC_HandleTypeDef *hrtc, uint32_t WakeUpCounter, uint32_t WakeUpClock);
-	HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer_IT(RTC_HandleTypeDef *hrtc, uint32_t WakeUpCounter, uint32_t WakeUpClock, uint32_t WakeUpAutoClr);
-	HAL_StatusTypeDef HAL_RTCEx_DeactivateWakeUpTimer(RTC_HandleTypeDef *hrtc);
-	uint32_t HAL_RTCEx_GetWakeUpTimer(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_WakeUpTimerIRQHandler(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_WakeUpTimerEventCallback(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_PollForWakeUpTimerEvent(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
-	/**
-	 * @}
-	 */
+HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer(RTC_HandleTypeDef *hrtc, uint32_t WakeUpCounter, uint32_t WakeUpClock);
+HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer_IT(RTC_HandleTypeDef *hrtc, uint32_t WakeUpCounter, uint32_t WakeUpClock, uint32_t WakeUpAutoClr);
+HAL_StatusTypeDef HAL_RTCEx_DeactivateWakeUpTimer(RTC_HandleTypeDef *hrtc);
+uint32_t HAL_RTCEx_GetWakeUpTimer(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_WakeUpTimerIRQHandler(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_WakeUpTimerEventCallback(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_PollForWakeUpTimerEvent(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
+/**
+ * @}
+ */
 
-	/* Extended Control functions ************************************************/
-	/** @defgroup RTCEx_Exported_Functions_Group3 Extended Peripheral Control
-	 * functions
-	 * @{
-	 */
+/* Extended Control functions ************************************************/
+/** @defgroup RTCEx_Exported_Functions_Group3 Extended Peripheral Control
+ * functions
+ * @{
+ */
 
-	HAL_StatusTypeDef HAL_RTCEx_SetSmoothCalib(RTC_HandleTypeDef *hrtc, uint32_t SmoothCalibPeriod, uint32_t SmoothCalibPlusPulses, uint32_t SmoothCalibMinusPulsesValue);
-	HAL_StatusTypeDef HAL_RTCEx_SetLowPowerCalib(RTC_HandleTypeDef *hrtc, uint32_t LowPowerCalib);
-	HAL_StatusTypeDef HAL_RTCEx_SetSynchroShift(RTC_HandleTypeDef *hrtc, uint32_t ShiftAdd1S, uint32_t ShiftSubFS);
-	HAL_StatusTypeDef HAL_RTCEx_SetCalibrationOutPut(RTC_HandleTypeDef *hrtc, uint32_t CalibOutput);
-	HAL_StatusTypeDef HAL_RTCEx_DeactivateCalibrationOutPut(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_SetRefClock(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_DeactivateRefClock(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_EnableBypassShadow(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_DisableBypassShadow(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_MonotonicCounterIncrement(RTC_HandleTypeDef *hrtc, uint32_t Instance);
-	HAL_StatusTypeDef HAL_RTCEx_MonotonicCounterGet(RTC_HandleTypeDef *hrtc, uint32_t Instance, uint32_t *Value);
-	HAL_StatusTypeDef HAL_RTCEx_SetSSRU_IT(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_DeactivateSSRU(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_SSRUIRQHandler(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_SSRUEventCallback(RTC_HandleTypeDef *hrtc);
-	/**
-	 * @}
-	 */
+HAL_StatusTypeDef HAL_RTCEx_SetSmoothCalib(RTC_HandleTypeDef *hrtc, uint32_t SmoothCalibPeriod, uint32_t SmoothCalibPlusPulses, uint32_t SmoothCalibMinusPulsesValue);
+HAL_StatusTypeDef HAL_RTCEx_SetLowPowerCalib(RTC_HandleTypeDef *hrtc, uint32_t LowPowerCalib);
+HAL_StatusTypeDef HAL_RTCEx_SetSynchroShift(RTC_HandleTypeDef *hrtc, uint32_t ShiftAdd1S, uint32_t ShiftSubFS);
+HAL_StatusTypeDef HAL_RTCEx_SetCalibrationOutPut(RTC_HandleTypeDef *hrtc, uint32_t CalibOutput);
+HAL_StatusTypeDef HAL_RTCEx_DeactivateCalibrationOutPut(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_SetRefClock(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_DeactivateRefClock(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_EnableBypassShadow(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_DisableBypassShadow(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_MonotonicCounterIncrement(RTC_HandleTypeDef *hrtc, uint32_t Instance);
+HAL_StatusTypeDef HAL_RTCEx_MonotonicCounterGet(RTC_HandleTypeDef *hrtc, uint32_t Instance, uint32_t *Value);
+HAL_StatusTypeDef HAL_RTCEx_SetSSRU_IT(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_DeactivateSSRU(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_SSRUIRQHandler(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_SSRUEventCallback(RTC_HandleTypeDef *hrtc);
+/**
+ * @}
+ */
 
-	/* Extended RTC features functions *******************************************/
-	/** @defgroup RTCEx_Exported_Functions_Group4 Extended features functions
-	 * @{
-	 */
+/* Extended RTC features functions *******************************************/
+/** @defgroup RTCEx_Exported_Functions_Group4 Extended features functions
+ * @{
+ */
 
-	void HAL_RTCEx_AlarmBEventCallback(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_PollForAlarmBEvent(const RTC_HandleTypeDef *hrtc, uint32_t Timeout);
-	/**
-	 * @}
-	 */
+void HAL_RTCEx_AlarmBEventCallback(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_PollForAlarmBEvent(const RTC_HandleTypeDef *hrtc, uint32_t Timeout);
+/**
+ * @}
+ */
 
-	/** @defgroup RTCEx_Exported_Functions_Group5 Extended RTC Tamper functions
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_RTCEx_SetTamper(RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef *sTamper);
-	HAL_StatusTypeDef HAL_RTCEx_SetActiveTampers(RTC_HandleTypeDef *hrtc, RTC_ActiveTampersTypeDef *sAllTamper);
-	HAL_StatusTypeDef HAL_RTCEx_SetActiveSeed(RTC_HandleTypeDef *hrtc, uint32_t *pSeed);
-	HAL_StatusTypeDef HAL_RTCEx_SetTamper_IT(RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef *sTamper);
-	HAL_StatusTypeDef HAL_RTCEx_DeactivateTamper(RTC_HandleTypeDef *hrtc, uint32_t Tamper);
-	HAL_StatusTypeDef HAL_RTCEx_DeactivateActiveTampers(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_PollForTamperEvent(RTC_HandleTypeDef *hrtc, uint32_t Tamper, uint32_t Timeout);
-	HAL_StatusTypeDef HAL_RTCEx_SetInternalTamper(RTC_HandleTypeDef *hrtc, RTC_InternalTamperTypeDef *sIntTamper);
-	HAL_StatusTypeDef HAL_RTCEx_SetInternalTamper_IT(RTC_HandleTypeDef *hrtc, RTC_InternalTamperTypeDef *sIntTamper);
-	HAL_StatusTypeDef HAL_RTCEx_DeactivateInternalTamper(RTC_HandleTypeDef *hrtc, uint32_t IntTamper);
-	HAL_StatusTypeDef HAL_RTCEx_PollForInternalTamperEvent(RTC_HandleTypeDef *hrtc, uint32_t IntTamper, uint32_t Timeout);
-	HAL_StatusTypeDef HAL_RTCEx_SetBoothardwareKey(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_GetActiveTampers(RTC_ActiveTampersTypeDef *sAllTamper);
-	void HAL_RTCEx_GetInternalTampers(RTC_InternalTamperTypeDef *sIntTamper);
-	void HAL_RTCEx_TamperIRQHandler(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_Tamper1EventCallback(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_Tamper2EventCallback(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_Tamper3EventCallback(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_Tamper4EventCallback(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_Tamper5EventCallback(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_Tamper6EventCallback(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_Tamper7EventCallback(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_Tamper8EventCallback(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_InternalTamper1EventCallback(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_InternalTamper2EventCallback(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_InternalTamper3EventCallback(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_InternalTamper5EventCallback(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_InternalTamper6EventCallback(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_InternalTamper7EventCallback(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_InternalTamper8EventCallback(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_InternalTamper9EventCallback(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_InternalTamper11EventCallback(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_InternalTamper12EventCallback(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_InternalTamper13EventCallback(RTC_HandleTypeDef *hrtc);
-	/**
-	 * @}
-	 */
+/** @defgroup RTCEx_Exported_Functions_Group5 Extended RTC Tamper functions
+ * @{
+ */
+HAL_StatusTypeDef HAL_RTCEx_SetTamper(RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef *sTamper);
+HAL_StatusTypeDef HAL_RTCEx_SetActiveTampers(RTC_HandleTypeDef *hrtc, RTC_ActiveTampersTypeDef *sAllTamper);
+HAL_StatusTypeDef HAL_RTCEx_SetActiveSeed(RTC_HandleTypeDef *hrtc, uint32_t *pSeed);
+HAL_StatusTypeDef HAL_RTCEx_SetTamper_IT(RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef *sTamper);
+HAL_StatusTypeDef HAL_RTCEx_DeactivateTamper(RTC_HandleTypeDef *hrtc, uint32_t Tamper);
+HAL_StatusTypeDef HAL_RTCEx_DeactivateActiveTampers(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_PollForTamperEvent(RTC_HandleTypeDef *hrtc, uint32_t Tamper, uint32_t Timeout);
+HAL_StatusTypeDef HAL_RTCEx_SetInternalTamper(RTC_HandleTypeDef *hrtc, RTC_InternalTamperTypeDef *sIntTamper);
+HAL_StatusTypeDef HAL_RTCEx_SetInternalTamper_IT(RTC_HandleTypeDef *hrtc, RTC_InternalTamperTypeDef *sIntTamper);
+HAL_StatusTypeDef HAL_RTCEx_DeactivateInternalTamper(RTC_HandleTypeDef *hrtc, uint32_t IntTamper);
+HAL_StatusTypeDef HAL_RTCEx_PollForInternalTamperEvent(RTC_HandleTypeDef *hrtc, uint32_t IntTamper, uint32_t Timeout);
+HAL_StatusTypeDef HAL_RTCEx_SetBoothardwareKey(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_GetActiveTampers(RTC_ActiveTampersTypeDef *sAllTamper);
+void HAL_RTCEx_GetInternalTampers(RTC_InternalTamperTypeDef *sIntTamper);
+void HAL_RTCEx_TamperIRQHandler(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_Tamper1EventCallback(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_Tamper2EventCallback(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_Tamper3EventCallback(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_Tamper4EventCallback(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_Tamper5EventCallback(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_Tamper6EventCallback(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_Tamper7EventCallback(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_Tamper8EventCallback(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_InternalTamper1EventCallback(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_InternalTamper2EventCallback(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_InternalTamper3EventCallback(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_InternalTamper5EventCallback(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_InternalTamper6EventCallback(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_InternalTamper7EventCallback(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_InternalTamper8EventCallback(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_InternalTamper9EventCallback(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_InternalTamper11EventCallback(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_InternalTamper12EventCallback(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_InternalTamper13EventCallback(RTC_HandleTypeDef *hrtc);
+/**
+ * @}
+ */
 
-	/** @defgroup RTCEx_Exported_Functions_Group6 Extended RTC Backup register
-	 * functions
-	 * @{
-	 */
-	void HAL_RTCEx_BKUPWrite(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister, uint32_t Data);
-	uint32_t HAL_RTCEx_BKUPRead(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister);
-	void HAL_RTCEx_BKUPErase(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_BKUPBlock_Enable(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_BKUPBlock_Disable(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_Erase_SecretDev_Conf(RTC_HandleTypeDef *hrtc, uint32_t SecretDeviceConf);
-	uint32_t HAL_RTCEx_Get_Erase_SecretDev_Conf(void);
-	/**
-	 * @}
-	 */
+/** @defgroup RTCEx_Exported_Functions_Group6 Extended RTC Backup register
+ * functions
+ * @{
+ */
+void HAL_RTCEx_BKUPWrite(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister, uint32_t Data);
+uint32_t HAL_RTCEx_BKUPRead(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister);
+void HAL_RTCEx_BKUPErase(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_BKUPBlock_Enable(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_BKUPBlock_Disable(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_Erase_SecretDev_Conf(RTC_HandleTypeDef *hrtc, uint32_t SecretDeviceConf);
+uint32_t HAL_RTCEx_Get_Erase_SecretDev_Conf(void);
+/**
+ * @}
+ */
 
-	/** @defgroup RTCEx_Exported_Functions_Group7 Extended RTC secure functions
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_RTCEx_SecureModeGet(RTC_HandleTypeDef *hrtc, RTC_SecureStateTypeDef *secureState);
+/** @defgroup RTCEx_Exported_Functions_Group7 Extended RTC secure functions
+ * @{
+ */
+HAL_StatusTypeDef HAL_RTCEx_SecureModeGet(RTC_HandleTypeDef *hrtc, RTC_SecureStateTypeDef *secureState);
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-	HAL_StatusTypeDef HAL_RTCEx_SecureModeSet(RTC_HandleTypeDef *hrtc, RTC_SecureStateTypeDef *secureState);
+HAL_StatusTypeDef HAL_RTCEx_SecureModeSet(RTC_HandleTypeDef *hrtc, RTC_SecureStateTypeDef *secureState);
 #endif /* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @defgroup RTCEx_Exported_Functions_Group8 Extended RTC privilege functions
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_RTCEx_PrivilegeModeSet(RTC_HandleTypeDef *hrtc, RTC_PrivilegeStateTypeDef *privilegeState);
-	HAL_StatusTypeDef HAL_RTCEx_PrivilegeModeGet(RTC_HandleTypeDef *hrtc, RTC_PrivilegeStateTypeDef *privilegeState);
+/** @defgroup RTCEx_Exported_Functions_Group8 Extended RTC privilege functions
+ * @{
+ */
+HAL_StatusTypeDef HAL_RTCEx_PrivilegeModeSet(RTC_HandleTypeDef *hrtc, RTC_PrivilegeStateTypeDef *privilegeState);
+HAL_StatusTypeDef HAL_RTCEx_PrivilegeModeGet(RTC_HandleTypeDef *hrtc, RTC_PrivilegeStateTypeDef *privilegeState);
 /**
  * @}
  */
@@ -1946,29 +1939,29 @@ extern "C"
 #define IS_RTC_ALARM_SUB_SECOND_BINARY_MASK(MASK) (((MASK) == 0U) || (((MASK) >= RTC_ALARMSUBSECONDBINMASK_SS31_1) && ((MASK) <= RTC_ALARMSUBSECONDBINMASK_NONE)))
 
 #define IS_RTC_ALARMSUBSECONDBIN_AUTOCLR(SEL) (((SEL) == RTC_ALARMSUBSECONDBIN_AUTOCLR_NO) || ((SEL) == RTC_ALARMSUBSECONDBIN_AUTOCLR_YES))
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

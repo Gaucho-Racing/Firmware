@@ -21,50 +21,49 @@
 #define STM32L4xx_HAL_SPI_EX_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l4xx_hal_def.h"
 
-	/** @addtogroup STM32L4xx_HAL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32L4xx_HAL_Driver
+ * @{
+ */
 
-	/** @addtogroup SPIEx
-	 * @{
-	 */
+/** @addtogroup SPIEx
+ * @{
+ */
 
-	/* Exported types ------------------------------------------------------------*/
-	/* Exported constants --------------------------------------------------------*/
-	/* Exported macros -----------------------------------------------------------*/
-	/* Exported functions --------------------------------------------------------*/
-	/** @addtogroup SPIEx_Exported_Functions
-	 * @{
-	 */
+/* Exported types ------------------------------------------------------------*/
+/* Exported constants --------------------------------------------------------*/
+/* Exported macros -----------------------------------------------------------*/
+/* Exported functions --------------------------------------------------------*/
+/** @addtogroup SPIEx_Exported_Functions
+ * @{
+ */
 
-	/* Initialization and de-initialization functions  ****************************/
-	/* IO operation functions *****************************************************/
-	/** @addtogroup SPIEx_Exported_Functions_Group1
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_SPIEx_FlushRxFifo(const SPI_HandleTypeDef *hspi);
-	/**
-	 * @}
-	 */
+/* Initialization and de-initialization functions  ****************************/
+/* IO operation functions *****************************************************/
+/** @addtogroup SPIEx_Exported_Functions_Group1
+ * @{
+ */
+HAL_StatusTypeDef HAL_SPIEx_FlushRxFifo(const SPI_HandleTypeDef *hspi);
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

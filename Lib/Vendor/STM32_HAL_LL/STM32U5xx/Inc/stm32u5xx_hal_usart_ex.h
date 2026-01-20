@@ -21,50 +21,48 @@
 #define STM32U5xx_HAL_USART_EX_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx_hal_def.h"
 
-	/** @addtogroup STM32U5xx_HAL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32U5xx_HAL_Driver
+ * @{
+ */
 
-	/** @addtogroup USARTEx
-	 * @{
-	 */
+/** @addtogroup USARTEx
+ * @{
+ */
 
-	/* Exported types ------------------------------------------------------------*/
-	/** @defgroup USARTEx_Exported_Types USARTEx Exported Types
-	 * @{
-	 */
-	/**
-	 * @brief  USART Autonomous mode parameters
-	 */
-	typedef struct
-	{
-		uint32_t AutonomousModeState; /*!< Specifies the autonomous mode
-						 state.This parameter can be a value of
-						   @ref USARTEx_Autonomous_mode.*/
+/* Exported types ------------------------------------------------------------*/
+/** @defgroup USARTEx_Exported_Types USARTEx Exported Types
+ * @{
+ */
+/**
+ * @brief  USART Autonomous mode parameters
+ */
+typedef struct {
+	uint32_t AutonomousModeState; /*!< Specifies the autonomous mode
+					 state.This parameter can be a value of
+					   @ref USARTEx_Autonomous_mode.*/
 
-		uint32_t TriggerSelection; /*!< Specifies which trigger will activate
-					      the Transmission automatically. This
-					      parameter can be a value of @ref
-					      USARTEx_Autonomous_Trigger_selection */
+	uint32_t TriggerSelection; /*!< Specifies which trigger will activate
+				      the Transmission automatically. This
+				      parameter can be a value of @ref
+				      USARTEx_Autonomous_Trigger_selection */
 
-		uint32_t TriggerPolarity; /*!< Specifies the autonomous mode trigger signal
-					     polarity. This parameter can be a value of @ref
-					     USARTEx_Autonomous_Trigger_Polarity */
+	uint32_t TriggerPolarity; /*!< Specifies the autonomous mode trigger signal
+				     polarity. This parameter can be a value of @ref
+				     USARTEx_Autonomous_Trigger_Polarity */
 
-		uint32_t DataSize; /*!< Specifies the transmitted data size in byte */
+	uint32_t DataSize; /*!< Specifies the transmitted data size in byte */
 
-		uint32_t IdleFrame; /*!< Specifies whether the IDLE frame transmission
-				       is enabled or disabled. This parameter can be a
-				       value of @ref USARTEx_Autonomous_IDLE_FRAME. */
+	uint32_t IdleFrame; /*!< Specifies whether the IDLE frame transmission
+			       is enabled or disabled. This parameter can be a
+			       value of @ref USARTEx_Autonomous_IDLE_FRAME. */
 
-	} USART_AutonomousModeConfTypeDef;
+} USART_AutonomousModeConfTypeDef;
 /**
  * @}
  */
@@ -219,43 +217,26 @@ extern "C"
  * (__HANDLE__)->Mask field.
  */
 #define USART_MASK_COMPUTATION(__HANDLE__)                                                                                                                                                             \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if ((__HANDLE__)->Init.WordLength == USART_WORDLENGTH_9B)                                                                                                                              \
-		{                                                                                                                                                                                      \
-			if ((__HANDLE__)->Init.Parity == USART_PARITY_NONE)                                                                                                                            \
-			{                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
+		if ((__HANDLE__)->Init.WordLength == USART_WORDLENGTH_9B) {                                                                                                                            \
+			if ((__HANDLE__)->Init.Parity == USART_PARITY_NONE) {                                                                                                                          \
 				(__HANDLE__)->Mask = 0x01FFU;                                                                                                                                          \
-			}                                                                                                                                                                              \
-			else                                                                                                                                                                           \
-			{                                                                                                                                                                              \
+			} else {                                                                                                                                                                       \
 				(__HANDLE__)->Mask = 0x00FFU;                                                                                                                                          \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Init.WordLength == USART_WORDLENGTH_8B)                                                                                                                         \
-		{                                                                                                                                                                                      \
-			if ((__HANDLE__)->Init.Parity == USART_PARITY_NONE)                                                                                                                            \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Init.WordLength == USART_WORDLENGTH_8B) {                                                                                                                     \
+			if ((__HANDLE__)->Init.Parity == USART_PARITY_NONE) {                                                                                                                          \
 				(__HANDLE__)->Mask = 0x00FFU;                                                                                                                                          \
-			}                                                                                                                                                                              \
-			else                                                                                                                                                                           \
-			{                                                                                                                                                                              \
+			} else {                                                                                                                                                                       \
 				(__HANDLE__)->Mask = 0x007FU;                                                                                                                                          \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Init.WordLength == USART_WORDLENGTH_7B)                                                                                                                         \
-		{                                                                                                                                                                                      \
-			if ((__HANDLE__)->Init.Parity == USART_PARITY_NONE)                                                                                                                            \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Init.WordLength == USART_WORDLENGTH_7B) {                                                                                                                     \
+			if ((__HANDLE__)->Init.Parity == USART_PARITY_NONE) {                                                                                                                          \
 				(__HANDLE__)->Mask = 0x007FU;                                                                                                                                          \
-			}                                                                                                                                                                              \
-			else                                                                                                                                                                           \
-			{                                                                                                                                                                              \
+			} else {                                                                                                                                                                       \
 				(__HANDLE__)->Mask = 0x003FU;                                                                                                                                          \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else                                                                                                                                                                                   \
-		{                                                                                                                                                                                      \
+		} else {                                                                                                                                                                               \
 			(__HANDLE__)->Mask = 0x0000U;                                                                                                                                                  \
 		}                                                                                                                                                                                      \
 	} while (0U)
@@ -333,58 +314,58 @@ extern "C"
  */
 #define IS_USART_TX_DATA_SIZE(__SOURCE__) ((__SOURCE__) <= 0xFFFFU)
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported functions --------------------------------------------------------*/
-	/** @addtogroup USARTEx_Exported_Functions
-	 * @{
-	 */
+/* Exported functions --------------------------------------------------------*/
+/** @addtogroup USARTEx_Exported_Functions
+ * @{
+ */
 
-	/** @addtogroup USARTEx_Exported_Functions_Group1
-	 * @{
-	 */
+/** @addtogroup USARTEx_Exported_Functions_Group1
+ * @{
+ */
 
-	/* IO operation functions *****************************************************/
-	void HAL_USARTEx_RxFifoFullCallback(USART_HandleTypeDef *husart);
-	void HAL_USARTEx_TxFifoEmptyCallback(USART_HandleTypeDef *husart);
+/* IO operation functions *****************************************************/
+void HAL_USARTEx_RxFifoFullCallback(USART_HandleTypeDef *husart);
+void HAL_USARTEx_TxFifoEmptyCallback(USART_HandleTypeDef *husart);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @addtogroup USARTEx_Exported_Functions_Group2
-	 * @{
-	 */
+/** @addtogroup USARTEx_Exported_Functions_Group2
+ * @{
+ */
 
-	/* Peripheral Control functions ***********************************************/
-	HAL_StatusTypeDef HAL_USARTEx_EnableSlaveMode(USART_HandleTypeDef *husart);
-	HAL_StatusTypeDef HAL_USARTEx_DisableSlaveMode(USART_HandleTypeDef *husart);
-	HAL_StatusTypeDef HAL_USARTEx_ConfigNSS(USART_HandleTypeDef *husart, uint32_t NSSConfig);
-	HAL_StatusTypeDef HAL_USARTEx_EnableFifoMode(USART_HandleTypeDef *husart);
-	HAL_StatusTypeDef HAL_USARTEx_DisableFifoMode(USART_HandleTypeDef *husart);
-	HAL_StatusTypeDef HAL_USARTEx_SetTxFifoThreshold(USART_HandleTypeDef *husart, uint32_t Threshold);
-	HAL_StatusTypeDef HAL_USARTEx_SetRxFifoThreshold(USART_HandleTypeDef *husart, uint32_t Threshold);
-	HAL_StatusTypeDef HAL_USARTEx_SetConfigAutonomousMode(USART_HandleTypeDef *husart, const USART_AutonomousModeConfTypeDef *sConfig);
-	HAL_StatusTypeDef HAL_USARTEx_GetConfigAutonomousMode(const USART_HandleTypeDef *husart, USART_AutonomousModeConfTypeDef *sConfig);
-	HAL_StatusTypeDef HAL_USARTEx_ClearConfigAutonomousMode(USART_HandleTypeDef *husart);
+/* Peripheral Control functions ***********************************************/
+HAL_StatusTypeDef HAL_USARTEx_EnableSlaveMode(USART_HandleTypeDef *husart);
+HAL_StatusTypeDef HAL_USARTEx_DisableSlaveMode(USART_HandleTypeDef *husart);
+HAL_StatusTypeDef HAL_USARTEx_ConfigNSS(USART_HandleTypeDef *husart, uint32_t NSSConfig);
+HAL_StatusTypeDef HAL_USARTEx_EnableFifoMode(USART_HandleTypeDef *husart);
+HAL_StatusTypeDef HAL_USARTEx_DisableFifoMode(USART_HandleTypeDef *husart);
+HAL_StatusTypeDef HAL_USARTEx_SetTxFifoThreshold(USART_HandleTypeDef *husart, uint32_t Threshold);
+HAL_StatusTypeDef HAL_USARTEx_SetRxFifoThreshold(USART_HandleTypeDef *husart, uint32_t Threshold);
+HAL_StatusTypeDef HAL_USARTEx_SetConfigAutonomousMode(USART_HandleTypeDef *husart, const USART_AutonomousModeConfTypeDef *sConfig);
+HAL_StatusTypeDef HAL_USARTEx_GetConfigAutonomousMode(const USART_HandleTypeDef *husart, USART_AutonomousModeConfTypeDef *sConfig);
+HAL_StatusTypeDef HAL_USARTEx_ClearConfigAutonomousMode(USART_HandleTypeDef *husart);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

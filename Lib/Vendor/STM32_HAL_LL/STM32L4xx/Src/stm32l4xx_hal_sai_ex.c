@@ -80,12 +80,9 @@ HAL_StatusTypeDef HAL_SAIEx_ConfigPdmMicDelay(const SAI_HandleTypeDef *hsai, con
 	uint32_t offset;
 
 	/* Check that SAI sub-block is SAI1 sub-block A */
-	if (hsai->Instance != SAI1_Block_A)
-	{
+	if (hsai->Instance != SAI1_Block_A) {
 		status = HAL_ERROR;
-	}
-	else
-	{
+	} else {
 		/* Check microphone delay parameters */
 		assert_param(IS_SAI_PDM_MIC_PAIRS_NUMBER(pdmMicDelay->MicPair));
 		assert_param(IS_SAI_PDM_MIC_DELAY(pdmMicDelay->LeftDelay));
@@ -96,16 +93,13 @@ HAL_StatusTypeDef HAL_SAIEx_ConfigPdmMicDelay(const SAI_HandleTypeDef *hsai, con
 		offset = SAI_PDM_DELAY_OFFSET * (pdmMicDelay->MicPair - 1U);
 
 		/* Check SAI state and offset */
-		if ((hsai->State != HAL_SAI_STATE_RESET) && (offset <= 24U))
-		{
+		if ((hsai->State != HAL_SAI_STATE_RESET) && (offset <= 24U)) {
 			/* Reset current delays for specified microphone */
 			SAI1->PDMDLY &= ~(SAI_PDM_DELAY_MASK << offset);
 
 			/* Apply new microphone delays */
 			SAI1->PDMDLY |= (((pdmMicDelay->RightDelay << SAI_PDM_RIGHT_DELAY_OFFSET) | pdmMicDelay->LeftDelay) << offset);
-		}
-		else
-		{
+		} else {
 			status = HAL_ERROR;
 		}
 	}

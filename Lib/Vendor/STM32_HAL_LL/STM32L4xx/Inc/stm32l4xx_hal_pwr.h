@@ -21,39 +21,37 @@
 #define STM32L4xx_HAL_PWR_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l4xx_hal_def.h"
 
-	/** @addtogroup STM32L4xx_HAL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32L4xx_HAL_Driver
+ * @{
+ */
 
-	/** @addtogroup PWR
-	 * @{
-	 */
+/** @addtogroup PWR
+ * @{
+ */
 
-	/* Exported types ------------------------------------------------------------*/
+/* Exported types ------------------------------------------------------------*/
 
-	/** @defgroup PWR_Exported_Types PWR Exported Types
-	 * @{
-	 */
+/** @defgroup PWR_Exported_Types PWR Exported Types
+ * @{
+ */
 
-	/**
-	 * @brief  PWR PVD configuration structure definition
-	 */
-	typedef struct
-	{
-		uint32_t PVDLevel; /*!< PVDLevel: Specifies the PVD detection level.
-					This parameter can be a value of @ref
-				      PWR_PVD_detection_level. */
+/**
+ * @brief  PWR PVD configuration structure definition
+ */
+typedef struct {
+	uint32_t PVDLevel; /*!< PVDLevel: Specifies the PVD detection level.
+				This parameter can be a value of @ref
+			      PWR_PVD_detection_level. */
 
-		uint32_t Mode; /*!< Mode: Specifies the operating mode for the selected pins.
-				    This parameter can be a value of @ref PWR_PVD_Mode. */
-	} PWR_PVDTypeDef;
+	uint32_t Mode; /*!< Mode: Specifies the operating mode for the selected pins.
+			    This parameter can be a value of @ref PWR_PVD_Mode. */
+} PWR_PVDTypeDef;
 
 /**
  * @}
@@ -304,8 +302,7 @@ extern "C"
  * @retval None
  */
 #define __HAL_PWR_PVD_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                                \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__HAL_PWR_PVD_EXTI_ENABLE_RISING_EDGE();                                                                                                                                               \
 		__HAL_PWR_PVD_EXTI_ENABLE_FALLING_EDGE();                                                                                                                                              \
 	} while (0)
@@ -315,8 +312,7 @@ extern "C"
  * @retval None
  */
 #define __HAL_PWR_PVD_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                               \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__HAL_PWR_PVD_EXTI_DISABLE_RISING_EDGE();                                                                                                                                              \
 		__HAL_PWR_PVD_EXTI_DISABLE_FALLING_EDGE();                                                                                                                                             \
 	} while (0)
@@ -339,14 +335,14 @@ extern "C"
  */
 #define __HAL_PWR_PVD_EXTI_CLEAR_FLAG() WRITE_REG(EXTI->PR1, PWR_EXTI_LINE_PVD)
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Private macros --------------------------------------------------------*/
-	/** @addtogroup  PWR_Private_Macros   PWR Private Macros
-	 * @{
-	 */
+/* Private macros --------------------------------------------------------*/
+/** @addtogroup  PWR_Private_Macros   PWR Private Macros
+ * @{
+ */
 
 #define IS_PWR_PVD_LEVEL(LEVEL)                                                                                                                                                                        \
 	(((LEVEL) == PWR_PVDLEVEL_0) || ((LEVEL) == PWR_PVDLEVEL_1) || ((LEVEL) == PWR_PVDLEVEL_2) || ((LEVEL) == PWR_PVDLEVEL_3) || ((LEVEL) == PWR_PVDLEVEL_4) || ((LEVEL) == PWR_PVDLEVEL_5) ||     \
@@ -369,68 +365,68 @@ extern "C"
 /* Include PWR HAL Extended module */
 #include "stm32l4xx_hal_pwr_ex.h"
 
-	/* Exported functions --------------------------------------------------------*/
+/* Exported functions --------------------------------------------------------*/
 
-	/** @addtogroup PWR_Exported_Functions PWR Exported Functions
-	 * @{
-	 */
+/** @addtogroup PWR_Exported_Functions PWR Exported Functions
+ * @{
+ */
 
-	/** @addtogroup PWR_Exported_Functions_Group1 Initialization and
-	 * de-initialization functions
-	 * @{
-	 */
+/** @addtogroup PWR_Exported_Functions_Group1 Initialization and
+ * de-initialization functions
+ * @{
+ */
 
-	/* Initialization and de-initialization functions
-	 * *******************************/
-	void HAL_PWR_DeInit(void);
-	void HAL_PWR_EnableBkUpAccess(void);
-	void HAL_PWR_DisableBkUpAccess(void);
+/* Initialization and de-initialization functions
+ * *******************************/
+void HAL_PWR_DeInit(void);
+void HAL_PWR_EnableBkUpAccess(void);
+void HAL_PWR_DisableBkUpAccess(void);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @addtogroup PWR_Exported_Functions_Group2 Peripheral Control functions
-	 * @{
-	 */
+/** @addtogroup PWR_Exported_Functions_Group2 Peripheral Control functions
+ * @{
+ */
 
-	/* Peripheral Control functions
-	 * ************************************************/
-	HAL_StatusTypeDef HAL_PWR_ConfigPVD(PWR_PVDTypeDef *sConfigPVD);
-	void HAL_PWR_EnablePVD(void);
-	void HAL_PWR_DisablePVD(void);
+/* Peripheral Control functions
+ * ************************************************/
+HAL_StatusTypeDef HAL_PWR_ConfigPVD(PWR_PVDTypeDef *sConfigPVD);
+void HAL_PWR_EnablePVD(void);
+void HAL_PWR_DisablePVD(void);
 
-	/* WakeUp pins configuration functions ****************************************/
-	void HAL_PWR_EnableWakeUpPin(uint32_t WakeUpPinPolarity);
-	void HAL_PWR_DisableWakeUpPin(uint32_t WakeUpPinx);
+/* WakeUp pins configuration functions ****************************************/
+void HAL_PWR_EnableWakeUpPin(uint32_t WakeUpPinPolarity);
+void HAL_PWR_DisableWakeUpPin(uint32_t WakeUpPinx);
 
-	/* Low Power modes configuration functions ************************************/
-	void HAL_PWR_EnterSLEEPMode(uint32_t Regulator, uint8_t SLEEPEntry);
-	void HAL_PWR_EnterSTOPMode(uint32_t Regulator, uint8_t STOPEntry);
-	void HAL_PWR_EnterSTANDBYMode(void);
+/* Low Power modes configuration functions ************************************/
+void HAL_PWR_EnterSLEEPMode(uint32_t Regulator, uint8_t SLEEPEntry);
+void HAL_PWR_EnterSTOPMode(uint32_t Regulator, uint8_t STOPEntry);
+void HAL_PWR_EnterSTANDBYMode(void);
 
-	void HAL_PWR_EnableSleepOnExit(void);
-	void HAL_PWR_DisableSleepOnExit(void);
-	void HAL_PWR_EnableSEVOnPend(void);
-	void HAL_PWR_DisableSEVOnPend(void);
+void HAL_PWR_EnableSleepOnExit(void);
+void HAL_PWR_DisableSleepOnExit(void);
+void HAL_PWR_EnableSEVOnPend(void);
+void HAL_PWR_DisableSEVOnPend(void);
 
-	void HAL_PWR_PVDCallback(void);
+void HAL_PWR_PVDCallback(void);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

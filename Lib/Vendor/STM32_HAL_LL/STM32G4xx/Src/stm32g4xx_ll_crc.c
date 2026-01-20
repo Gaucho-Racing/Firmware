@@ -68,16 +68,13 @@ ErrorStatus LL_CRC_DeInit(const CRC_TypeDef *CRCx)
 	/* Check the parameters */
 	assert_param(IS_CRC_ALL_INSTANCE(CRCx));
 
-	if (CRCx == CRC)
-	{
+	if (CRCx == CRC) {
 		/* Force CRC reset */
 		LL_AHB1_GRP1_ForceReset(LL_AHB1_GRP1_PERIPH_CRC);
 
 		/* Release CRC reset */
 		LL_AHB1_GRP1_ReleaseReset(LL_AHB1_GRP1_PERIPH_CRC);
-	}
-	else
-	{
+	} else {
 		status = ERROR;
 	}
 

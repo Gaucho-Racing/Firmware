@@ -21,16 +21,15 @@
 #define STM32U5xx_LL_COMP_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx.h"
 
-	/** @addtogroup STM32U5xx_LL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32U5xx_LL_Driver
+ * @{
+ */
 
 #if defined(COMP1) || defined(COMP2)
 
@@ -92,64 +91,63 @@ extern "C"
 
 /* Exported types ------------------------------------------------------------*/
 #if defined(USE_FULL_LL_DRIVER)
-	/** @defgroup COMP_LL_ES_INIT COMP Exported Init structure
-	 * @{
-	 */
+/** @defgroup COMP_LL_ES_INIT COMP Exported Init structure
+ * @{
+ */
 
-	/**
-	 * @brief  Structure definition of some features of COMP instance.
-	 */
-	typedef struct
-	{
-		uint32_t PowerMode; /*!< Set comparator operating mode to adjust power
-				       and speed. This parameter can be a value of @ref
-				       COMP_LL_EC_POWERMODE This feature can be modified
-				       afterwards using unitary function @ref
-				       LL_COMP_SetPowerMode(). */
+/**
+ * @brief  Structure definition of some features of COMP instance.
+ */
+typedef struct {
+	uint32_t PowerMode; /*!< Set comparator operating mode to adjust power
+			       and speed. This parameter can be a value of @ref
+			       COMP_LL_EC_POWERMODE This feature can be modified
+			       afterwards using unitary function @ref
+			       LL_COMP_SetPowerMode(). */
 
-		uint32_t InputPlus; /*!< Set comparator input plus (non-inverting
-				       input). This parameter can be a value of @ref
-				       COMP_LL_EC_INPUT_PLUS This feature can be
-				       modified afterwards using unitary function
-					 @ref LL_COMP_SetInputPlus(). */
+	uint32_t InputPlus; /*!< Set comparator input plus (non-inverting
+			       input). This parameter can be a value of @ref
+			       COMP_LL_EC_INPUT_PLUS This feature can be
+			       modified afterwards using unitary function
+				 @ref LL_COMP_SetInputPlus(). */
 
-		uint32_t InputMinus; /*!< Set comparator input minus (inverting input).
-					  This parameter can be a value of @ref
-					COMP_LL_EC_INPUT_MINUS This feature can be
-					modified afterwards using unitary function
-					   @ref LL_COMP_SetInputMinus(). */
+	uint32_t InputMinus; /*!< Set comparator input minus (inverting input).
+				  This parameter can be a value of @ref
+				COMP_LL_EC_INPUT_MINUS This feature can be
+				modified afterwards using unitary function
+				   @ref LL_COMP_SetInputMinus(). */
 
-		uint32_t InputHysteresis; /*!< Set comparator hysteresis mode of the input
-					     minus. This parameter can be a value of @ref
-					     COMP_LL_EC_INPUT_HYSTERESIS This feature can be
-					     modified afterwards using unitary function
-					       @ref LL_COMP_SetInputHysteresis(). */
+	uint32_t InputHysteresis; /*!< Set comparator hysteresis mode of the input
+				     minus. This parameter can be a value of @ref
+				     COMP_LL_EC_INPUT_HYSTERESIS This feature can be
+				     modified afterwards using unitary function
+				       @ref LL_COMP_SetInputHysteresis(). */
 
-		uint32_t OutputPolarity; /*!< Set comparator output polarity.
-					      This parameter can be a value of @ref
-					    COMP_LL_EC_OUTPUT_POLARITY This feature can be
-					    modified afterwards using unitary function
-					      @ref LL_COMP_SetOutputPolarity(). */
+	uint32_t OutputPolarity; /*!< Set comparator output polarity.
+				      This parameter can be a value of @ref
+				    COMP_LL_EC_OUTPUT_POLARITY This feature can be
+				    modified afterwards using unitary function
+				      @ref LL_COMP_SetOutputPolarity(). */
 
-		uint32_t OutputBlankingSource; /*!< Set comparator blanking source.
-						    This parameter can be a value of
-						  @ref COMP_LL_EC_OUTPUT_BLANKING_SOURCE
-						    This feature can be modified
-						  afterwards using unitary function
-						    @ref
-						  LL_COMP_SetOutputBlankingSource(). */
+	uint32_t OutputBlankingSource; /*!< Set comparator blanking source.
+					    This parameter can be a value of
+					  @ref COMP_LL_EC_OUTPUT_BLANKING_SOURCE
+					    This feature can be modified
+					  afterwards using unitary function
+					    @ref
+					  LL_COMP_SetOutputBlankingSource(). */
 
-	} LL_COMP_InitTypeDef;
+} LL_COMP_InitTypeDef;
 
 /**
  * @}
  */
 #endif /* USE_FULL_LL_DRIVER */
 
-	/* Exported constants --------------------------------------------------------*/
-	/** @defgroup COMP_LL_Exported_Constants COMP Exported Constants
-	 * @{
-	 */
+/* Exported constants --------------------------------------------------------*/
+/** @defgroup COMP_LL_Exported_Constants COMP Exported Constants
+ * @{
+ */
 
 #if defined(COMP_WINDOW_MODE_SUPPORT)
 /** @defgroup COMP_LL_EC_COMMON_WINDOWMODE Comparator common modes - Window mode
@@ -484,494 +482,494 @@ extern "C"
  */
 #define __LL_COMP_COMMON_INSTANCE(__COMPx__) (COMP12_COMMON)
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported functions --------------------------------------------------------*/
-	/** @defgroup COMP_LL_Exported_Functions COMP Exported Functions
-	 * @{
-	 */
+/* Exported functions --------------------------------------------------------*/
+/** @defgroup COMP_LL_Exported_Functions COMP Exported Functions
+ * @{
+ */
 
 #if defined(COMP2)
-	/** @defgroup COMP_LL_EF_Configuration_comparator_common Configuration of COMP
-	 * hierarchical scope: common to several COMP instances
-	 * @{
+/** @defgroup COMP_LL_EF_Configuration_comparator_common Configuration of COMP
+ * hierarchical scope: common to several COMP instances
+ * @{
+ */
+
+/**
+ * @brief  Set window mode of a pair of comparators instances
+ *         (2 consecutive COMP instances COMP<x> and COMP<x+1>).
+ * @rmtoll CSR      WINMODE        LL_COMP_SetCommonWindowMode
+ * @param  COMPxy_COMMON Comparator common instance
+ *         (can be set directly from CMSIS definition or by using helper macro
+ * @ref __LL_COMP_COMMON_INSTANCE() )
+ * @param  WindowMode This parameter can be one of the following values:
+ *         @arg @ref LL_COMP_WINDOWMODE_DISABLE
+ *         @arg @ref LL_COMP_WINDOWMODE_COMP1_INPUT_PLUS_COMMON
+ *         @arg @ref LL_COMP_WINDOWMODE_COMP2_INPUT_PLUS_COMMON (1)
+ *
+ *         (1) Parameter not available on all STM32U5 devices
+ * @retval None
+ */
+__STATIC_INLINE void LL_COMP_SetCommonWindowMode(COMP_Common_TypeDef *COMPxy_COMMON, uint32_t WindowMode)
+{
+	/* Note: On this STM32 series, window mode can be set from any instance
 	 */
+	/*       of the pair of comparator instances. */
 
-	/**
-	 * @brief  Set window mode of a pair of comparators instances
-	 *         (2 consecutive COMP instances COMP<x> and COMP<x+1>).
-	 * @rmtoll CSR      WINMODE        LL_COMP_SetCommonWindowMode
-	 * @param  COMPxy_COMMON Comparator common instance
-	 *         (can be set directly from CMSIS definition or by using helper macro
-	 * @ref __LL_COMP_COMMON_INSTANCE() )
-	 * @param  WindowMode This parameter can be one of the following values:
-	 *         @arg @ref LL_COMP_WINDOWMODE_DISABLE
-	 *         @arg @ref LL_COMP_WINDOWMODE_COMP1_INPUT_PLUS_COMMON
-	 *         @arg @ref LL_COMP_WINDOWMODE_COMP2_INPUT_PLUS_COMMON (1)
-	 *
-	 *         (1) Parameter not available on all STM32U5 devices
-	 * @retval None
+	__IO uint32_t *preg = __COMP_PTR_REG_OFFSET(COMPxy_COMMON->CSR_ODD, (WindowMode & LL_COMP_WINDOWMODE_COMPX_REGOFFSET_MASK));
+
+	/* Clear the potential previous setting of window mode */
+	__IO uint32_t *preg_clear = __COMP_PTR_REG_OFFSET(COMPxy_COMMON->CSR_ODD, (~(WindowMode & LL_COMP_WINDOWMODE_COMPX_REGOFFSET_MASK) & 0x1UL));
+	CLEAR_BIT(*preg_clear, COMP_CSR_WINMODE);
+
+	/* Set window mode */
+	MODIFY_REG(*preg, COMP_CSR_WINMODE, (WindowMode & LL_COMP_WINDOWMODE_COMPX_SETTING_MASK));
+}
+
+/**
+ * @brief  Get window mode of a pair of comparators instances
+ *         (2 consecutive COMP instances COMP<x> and COMP<x+1>).
+ * @rmtoll CSR      WINMODE        LL_COMP_GetCommonWindowMode
+ * @param  COMPxy_COMMON Comparator common instance
+ *         (can be set directly from CMSIS definition or by using helper macro
+ * @ref __LL_COMP_COMMON_INSTANCE() )
+ * @retval Returned value can be one of the following values:
+ *         @arg @ref LL_COMP_WINDOWMODE_DISABLE
+ *         @arg @ref LL_COMP_WINDOWMODE_COMP1_INPUT_PLUS_COMMON
+ *         @arg @ref LL_COMP_WINDOWMODE_COMP2_INPUT_PLUS_COMMON (1)
+ *
+ *         (1) Parameter not available on all STM32U5 devices
+ */
+__STATIC_INLINE uint32_t LL_COMP_GetCommonWindowMode(const COMP_Common_TypeDef *COMPxy_COMMON)
+{
+	/* Note: On this STM32 series, window mode can be set from any instance
 	 */
-	__STATIC_INLINE void LL_COMP_SetCommonWindowMode(COMP_Common_TypeDef *COMPxy_COMMON, uint32_t WindowMode)
-	{
-		/* Note: On this STM32 series, window mode can be set from any instance
-		 */
-		/*       of the pair of comparator instances. */
+	/*       of the pair of comparator instances. */
 
-		__IO uint32_t *preg = __COMP_PTR_REG_OFFSET(COMPxy_COMMON->CSR_ODD, (WindowMode & LL_COMP_WINDOWMODE_COMPX_REGOFFSET_MASK));
+	const uint32_t window_mode_comp_odd = (uint32_t)READ_BIT(COMPxy_COMMON->CSR_ODD, COMP_CSR_WINMODE);
+	const uint32_t window_mode_comp_even = (uint32_t)READ_BIT(COMPxy_COMMON->CSR_EVEN, COMP_CSR_WINMODE);
 
-		/* Clear the potential previous setting of window mode */
-		__IO uint32_t *preg_clear = __COMP_PTR_REG_OFFSET(COMPxy_COMMON->CSR_ODD, (~(WindowMode & LL_COMP_WINDOWMODE_COMPX_REGOFFSET_MASK) & 0x1UL));
-		CLEAR_BIT(*preg_clear, COMP_CSR_WINMODE);
+	return (uint32_t)(window_mode_comp_odd | window_mode_comp_even | ((window_mode_comp_even >> LL_COMP_WINDOWMODE_BITOFFSET_POS) * LL_COMP_WINDOWMODE_COMP_EVEN_REGOFFSET_MASK));
+}
 
-		/* Set window mode */
-		MODIFY_REG(*preg, COMP_CSR_WINMODE, (WindowMode & LL_COMP_WINDOWMODE_COMPX_SETTING_MASK));
-	}
+/**
+ * @brief  Set window output of a pair of comparators instances
+ *         (2 consecutive COMP instances COMP<x> and COMP<x+1>).
+ * @rmtoll CSR      WINOUT         LL_COMP_SetCommonWindowOutput
+ * @param  COMPxy_COMMON Comparator common instance
+ *         (can be set directly from CMSIS definition or by using helper macro
+ * @ref __LL_COMP_COMMON_INSTANCE() )
+ * @param  WindowOutput This parameter can be one of the following values:
+ *         @arg @ref LL_COMP_WINDOWOUTPUT_EACH_COMP
+ *         @arg @ref LL_COMP_WINDOWOUTPUT_COMP1 (1)
+ *         @arg @ref LL_COMP_WINDOWOUTPUT_COMP2 (1)
+ *         @arg @ref LL_COMP_WINDOWOUTPUT_BOTH
+ *
+ *         (1) Parameter available on all STM32U5 devices, must be used with
+ * comparator common instance COMP12_COMMON
+ * @retval None
+ */
+__STATIC_INLINE void LL_COMP_SetCommonWindowOutput(COMP_Common_TypeDef *COMPxy_COMMON, uint32_t WindowOutput)
+{
+	__IO uint32_t *preg = __COMP_PTR_REG_OFFSET(COMPxy_COMMON->CSR_ODD, (WindowOutput & LL_COMP_WINDOWMODE_COMPX_REGOFFSET_MASK));
 
-	/**
-	 * @brief  Get window mode of a pair of comparators instances
-	 *         (2 consecutive COMP instances COMP<x> and COMP<x+1>).
-	 * @rmtoll CSR      WINMODE        LL_COMP_GetCommonWindowMode
-	 * @param  COMPxy_COMMON Comparator common instance
-	 *         (can be set directly from CMSIS definition or by using helper macro
-	 * @ref __LL_COMP_COMMON_INSTANCE() )
-	 * @retval Returned value can be one of the following values:
-	 *         @arg @ref LL_COMP_WINDOWMODE_DISABLE
-	 *         @arg @ref LL_COMP_WINDOWMODE_COMP1_INPUT_PLUS_COMMON
-	 *         @arg @ref LL_COMP_WINDOWMODE_COMP2_INPUT_PLUS_COMMON (1)
-	 *
-	 *         (1) Parameter not available on all STM32U5 devices
-	 */
-	__STATIC_INLINE uint32_t LL_COMP_GetCommonWindowMode(const COMP_Common_TypeDef *COMPxy_COMMON)
-	{
-		/* Note: On this STM32 series, window mode can be set from any instance
-		 */
-		/*       of the pair of comparator instances. */
+	/* Clear the potential previous setting of window output on the relevant
+	 * comparator instance */
+	/* (clear bit of window output unless specific case of setting of
+	 * comparator both output selected) */
+	__IO uint32_t *preg_clear = __COMP_PTR_REG_OFFSET(COMPxy_COMMON->CSR_ODD, (~(WindowOutput & LL_COMP_WINDOWMODE_COMPX_REGOFFSET_MASK) & 0x1UL));
+	MODIFY_REG(*preg_clear, COMP_CSR_WINOUT, ((WindowOutput & LL_COMP_WINDOWOUTPUT_BOTH_SETTING_MASK) >> LL_COMP_WINDOWOUTPUT_BOTH_POS_VS_WINDOW));
 
-		const uint32_t window_mode_comp_odd = (uint32_t)READ_BIT(COMPxy_COMMON->CSR_ODD, COMP_CSR_WINMODE);
-		const uint32_t window_mode_comp_even = (uint32_t)READ_BIT(COMPxy_COMMON->CSR_EVEN, COMP_CSR_WINMODE);
+	/* Set window output */
+	MODIFY_REG(*preg, COMP_CSR_WINOUT, (WindowOutput & LL_COMP_WINDOWOUTPUT_COMPX_SETTING_MASK));
+}
 
-		return (uint32_t)(window_mode_comp_odd | window_mode_comp_even | ((window_mode_comp_even >> LL_COMP_WINDOWMODE_BITOFFSET_POS) * LL_COMP_WINDOWMODE_COMP_EVEN_REGOFFSET_MASK));
-	}
+/**
+ * @brief  Get window output of a pair of comparators instances
+ *         (2 consecutive COMP instances COMP<x> and COMP<x+1>).
+ * @rmtoll CSR      WINMODE        LL_COMP_GetCommonWindowOutput
+ * @param  COMPxy_COMMON Comparator common instance
+ *         (can be set directly from CMSIS definition or by using helper macro
+ * @ref __LL_COMP_COMMON_INSTANCE() )
+ * @retval Returned value can be one of the following values:
+ *         @arg @ref LL_COMP_WINDOWOUTPUT_EACH_COMP
+ *         @arg @ref LL_COMP_WINDOWOUTPUT_COMP1 (1)
+ *         @arg @ref LL_COMP_WINDOWOUTPUT_COMP2 (1)
+ *         @arg @ref LL_COMP_WINDOWOUTPUT_BOTH
+ *
+ *         (1) Parameter available on all STM32U5 devices, must be used with
+ * comparator common instance COMP12_COMMON
+ */
+__STATIC_INLINE uint32_t LL_COMP_GetCommonWindowOutput(const COMP_Common_TypeDef *COMPxy_COMMON)
+{
+	const uint32_t window_output_comp_odd = (uint32_t)READ_BIT(COMPxy_COMMON->CSR_ODD, COMP_CSR_WINOUT);
+	const uint32_t window_output_comp_even = (uint32_t)READ_BIT(COMPxy_COMMON->CSR_EVEN, COMP_CSR_WINOUT);
 
-	/**
-	 * @brief  Set window output of a pair of comparators instances
-	 *         (2 consecutive COMP instances COMP<x> and COMP<x+1>).
-	 * @rmtoll CSR      WINOUT         LL_COMP_SetCommonWindowOutput
-	 * @param  COMPxy_COMMON Comparator common instance
-	 *         (can be set directly from CMSIS definition or by using helper macro
-	 * @ref __LL_COMP_COMMON_INSTANCE() )
-	 * @param  WindowOutput This parameter can be one of the following values:
-	 *         @arg @ref LL_COMP_WINDOWOUTPUT_EACH_COMP
-	 *         @arg @ref LL_COMP_WINDOWOUTPUT_COMP1 (1)
-	 *         @arg @ref LL_COMP_WINDOWOUTPUT_COMP2 (1)
-	 *         @arg @ref LL_COMP_WINDOWOUTPUT_BOTH
-	 *
-	 *         (1) Parameter available on all STM32U5 devices, must be used with
-	 * comparator common instance COMP12_COMMON
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_COMP_SetCommonWindowOutput(COMP_Common_TypeDef *COMPxy_COMMON, uint32_t WindowOutput)
-	{
-		__IO uint32_t *preg = __COMP_PTR_REG_OFFSET(COMPxy_COMMON->CSR_ODD, (WindowOutput & LL_COMP_WINDOWMODE_COMPX_REGOFFSET_MASK));
-
-		/* Clear the potential previous setting of window output on the relevant
-		 * comparator instance */
-		/* (clear bit of window output unless specific case of setting of
-		 * comparator both output selected) */
-		__IO uint32_t *preg_clear = __COMP_PTR_REG_OFFSET(COMPxy_COMMON->CSR_ODD, (~(WindowOutput & LL_COMP_WINDOWMODE_COMPX_REGOFFSET_MASK) & 0x1UL));
-		MODIFY_REG(*preg_clear, COMP_CSR_WINOUT, ((WindowOutput & LL_COMP_WINDOWOUTPUT_BOTH_SETTING_MASK) >> LL_COMP_WINDOWOUTPUT_BOTH_POS_VS_WINDOW));
-
-		/* Set window output */
-		MODIFY_REG(*preg, COMP_CSR_WINOUT, (WindowOutput & LL_COMP_WINDOWOUTPUT_COMPX_SETTING_MASK));
-	}
-
-	/**
-	 * @brief  Get window output of a pair of comparators instances
-	 *         (2 consecutive COMP instances COMP<x> and COMP<x+1>).
-	 * @rmtoll CSR      WINMODE        LL_COMP_GetCommonWindowOutput
-	 * @param  COMPxy_COMMON Comparator common instance
-	 *         (can be set directly from CMSIS definition or by using helper macro
-	 * @ref __LL_COMP_COMMON_INSTANCE() )
-	 * @retval Returned value can be one of the following values:
-	 *         @arg @ref LL_COMP_WINDOWOUTPUT_EACH_COMP
-	 *         @arg @ref LL_COMP_WINDOWOUTPUT_COMP1 (1)
-	 *         @arg @ref LL_COMP_WINDOWOUTPUT_COMP2 (1)
-	 *         @arg @ref LL_COMP_WINDOWOUTPUT_BOTH
-	 *
-	 *         (1) Parameter available on all STM32U5 devices, must be used with
-	 * comparator common instance COMP12_COMMON
-	 */
-	__STATIC_INLINE uint32_t LL_COMP_GetCommonWindowOutput(const COMP_Common_TypeDef *COMPxy_COMMON)
-	{
-		const uint32_t window_output_comp_odd = (uint32_t)READ_BIT(COMPxy_COMMON->CSR_ODD, COMP_CSR_WINOUT);
-		const uint32_t window_output_comp_even = (uint32_t)READ_BIT(COMPxy_COMMON->CSR_EVEN, COMP_CSR_WINOUT);
-
-		/* Construct value corresponding to LL_COMP_WINDOWOUTPUT_xxx */
-		return (uint32_t)(window_output_comp_odd | window_output_comp_even | ((window_output_comp_even >> COMP_CSR_WINOUT_Pos) * LL_COMP_WINDOWMODE_COMP_EVEN_REGOFFSET_MASK) |
-				  (window_output_comp_odd + window_output_comp_even));
-	}
-	/**
-	 * @}
-	 */
+	/* Construct value corresponding to LL_COMP_WINDOWOUTPUT_xxx */
+	return (uint32_t)(window_output_comp_odd | window_output_comp_even | ((window_output_comp_even >> COMP_CSR_WINOUT_Pos) * LL_COMP_WINDOWMODE_COMP_EVEN_REGOFFSET_MASK) |
+			  (window_output_comp_odd + window_output_comp_even));
+}
+/**
+ * @}
+ */
 
 #endif /* COMP2 */
-	/** @defgroup COMP_LL_EF_Configuration_comparator_modes Configuration of
-	 * comparator modes
-	 * @{
-	 */
+/** @defgroup COMP_LL_EF_Configuration_comparator_modes Configuration of
+ * comparator modes
+ * @{
+ */
 
-	/**
-	 * @brief  Set comparator instance operating mode to adjust power and speed.
-	 * @rmtoll CSR      PWRMODE        LL_COMP_SetPowerMode
-	 * @param  COMPx Comparator instance
-	 * @param  PowerMode This parameter can be one of the following values:
-	 *         @arg @ref LL_COMP_POWERMODE_HIGHSPEED
-	 *         @arg @ref LL_COMP_POWERMODE_MEDIUMSPEED
-	 *         @arg @ref LL_COMP_POWERMODE_ULTRALOWPOWER
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_COMP_SetPowerMode(COMP_TypeDef *COMPx, uint32_t PowerMode) { MODIFY_REG(COMPx->CSR, COMP_CSR_PWRMODE, PowerMode); }
+/**
+ * @brief  Set comparator instance operating mode to adjust power and speed.
+ * @rmtoll CSR      PWRMODE        LL_COMP_SetPowerMode
+ * @param  COMPx Comparator instance
+ * @param  PowerMode This parameter can be one of the following values:
+ *         @arg @ref LL_COMP_POWERMODE_HIGHSPEED
+ *         @arg @ref LL_COMP_POWERMODE_MEDIUMSPEED
+ *         @arg @ref LL_COMP_POWERMODE_ULTRALOWPOWER
+ * @retval None
+ */
+__STATIC_INLINE void LL_COMP_SetPowerMode(COMP_TypeDef *COMPx, uint32_t PowerMode) { MODIFY_REG(COMPx->CSR, COMP_CSR_PWRMODE, PowerMode); }
 
-	/**
-	 * @brief  Get comparator instance operating mode to adjust power and speed.
-	 * @rmtoll CSR      PWRMODE        LL_COMP_GetPowerMode
-	 * @param  COMPx Comparator instance
-	 * @retval Returned value can be one of the following values:
-	 *         @arg @ref LL_COMP_POWERMODE_HIGHSPEED
-	 *         @arg @ref LL_COMP_POWERMODE_MEDIUMSPEED
-	 *         @arg @ref LL_COMP_POWERMODE_ULTRALOWPOWER
-	 */
-	__STATIC_INLINE uint32_t LL_COMP_GetPowerMode(const COMP_TypeDef *COMPx) { return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_PWRMODE)); }
+/**
+ * @brief  Get comparator instance operating mode to adjust power and speed.
+ * @rmtoll CSR      PWRMODE        LL_COMP_GetPowerMode
+ * @param  COMPx Comparator instance
+ * @retval Returned value can be one of the following values:
+ *         @arg @ref LL_COMP_POWERMODE_HIGHSPEED
+ *         @arg @ref LL_COMP_POWERMODE_MEDIUMSPEED
+ *         @arg @ref LL_COMP_POWERMODE_ULTRALOWPOWER
+ */
+__STATIC_INLINE uint32_t LL_COMP_GetPowerMode(const COMP_TypeDef *COMPx) { return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_PWRMODE)); }
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @defgroup COMP_LL_EF_Configuration_comparator_inputs Configuration of
-	 * comparator inputs
-	 * @{
-	 */
+/** @defgroup COMP_LL_EF_Configuration_comparator_inputs Configuration of
+ * comparator inputs
+ * @{
+ */
 
-	/**
-	 * @brief  Set comparator inputs minus (inverting) and plus (non-inverting).
-	 * @note   In case of comparator input selected to be connected to IO:
-	 *         GPIO pins are specific to each comparator instance.
-	 *         Refer to description of parameters or to reference manual.
-	 * @note   On this STM32 series, a voltage scaler is used
-	 *         when COMP input is based on VrefInt (VrefInt or subdivision
-	 *         of VrefInt):
-	 *         Voltage scaler requires a delay for voltage stabilization.
-	 *         Refer to device datasheet, parameter "tSTART_SCALER".
-	 * @rmtoll CSR      INMSEL         LL_COMP_ConfigInputs\n
-	 *         CSR      INPSEL         LL_COMP_ConfigInputs\n
-	 * @param  COMPx Comparator instance
-	 * @param  InputMinus This parameter can be one of the following values:
-	 *         @arg @ref LL_COMP_INPUT_MINUS_1_4VREFINT
-	 *         @arg @ref LL_COMP_INPUT_MINUS_1_2VREFINT
-	 *         @arg @ref LL_COMP_INPUT_MINUS_3_4VREFINT
-	 *         @arg @ref LL_COMP_INPUT_MINUS_VREFINT
-	 *         @arg @ref LL_COMP_INPUT_MINUS_DAC1_CH1
-	 *         @arg @ref LL_COMP_INPUT_MINUS_DAC1_CH2
-	 *         @arg @ref LL_COMP_INPUT_MINUS_IO1
-	 *         @arg @ref LL_COMP_INPUT_MINUS_IO2
-	 * @param  InputPlus This parameter can be one of the following values:
-	 *         @arg @ref LL_COMP_INPUT_PLUS_IO1
-	 *         @arg @ref LL_COMP_INPUT_PLUS_IO2
-	 *         @arg @ref LL_COMP_INPUT_PLUS_IO3
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_COMP_ConfigInputs(COMP_TypeDef *COMPx, uint32_t InputMinus, uint32_t InputPlus) { MODIFY_REG(COMPx->CSR, COMP_CSR_INMSEL | COMP_CSR_INPSEL, InputMinus | InputPlus); }
+/**
+ * @brief  Set comparator inputs minus (inverting) and plus (non-inverting).
+ * @note   In case of comparator input selected to be connected to IO:
+ *         GPIO pins are specific to each comparator instance.
+ *         Refer to description of parameters or to reference manual.
+ * @note   On this STM32 series, a voltage scaler is used
+ *         when COMP input is based on VrefInt (VrefInt or subdivision
+ *         of VrefInt):
+ *         Voltage scaler requires a delay for voltage stabilization.
+ *         Refer to device datasheet, parameter "tSTART_SCALER".
+ * @rmtoll CSR      INMSEL         LL_COMP_ConfigInputs\n
+ *         CSR      INPSEL         LL_COMP_ConfigInputs\n
+ * @param  COMPx Comparator instance
+ * @param  InputMinus This parameter can be one of the following values:
+ *         @arg @ref LL_COMP_INPUT_MINUS_1_4VREFINT
+ *         @arg @ref LL_COMP_INPUT_MINUS_1_2VREFINT
+ *         @arg @ref LL_COMP_INPUT_MINUS_3_4VREFINT
+ *         @arg @ref LL_COMP_INPUT_MINUS_VREFINT
+ *         @arg @ref LL_COMP_INPUT_MINUS_DAC1_CH1
+ *         @arg @ref LL_COMP_INPUT_MINUS_DAC1_CH2
+ *         @arg @ref LL_COMP_INPUT_MINUS_IO1
+ *         @arg @ref LL_COMP_INPUT_MINUS_IO2
+ * @param  InputPlus This parameter can be one of the following values:
+ *         @arg @ref LL_COMP_INPUT_PLUS_IO1
+ *         @arg @ref LL_COMP_INPUT_PLUS_IO2
+ *         @arg @ref LL_COMP_INPUT_PLUS_IO3
+ * @retval None
+ */
+__STATIC_INLINE void LL_COMP_ConfigInputs(COMP_TypeDef *COMPx, uint32_t InputMinus, uint32_t InputPlus) { MODIFY_REG(COMPx->CSR, COMP_CSR_INMSEL | COMP_CSR_INPSEL, InputMinus | InputPlus); }
 
-	/**
-	 * @brief  Set comparator input plus (non-inverting).
-	 * @note   In case of comparator input selected to be connected to IO:
-	 *         GPIO pins are specific to each comparator instance.
-	 *         Refer to description of parameters or to reference manual.
-	 * @rmtoll CSR      INPSEL         LL_COMP_SetInputPlus
-	 * @param  COMPx Comparator instance
-	 * @param  InputPlus This parameter can be one of the following values:
-	 *         @arg @ref LL_COMP_INPUT_PLUS_IO1
-	 *         @arg @ref LL_COMP_INPUT_PLUS_IO2
-	 *         @arg @ref LL_COMP_INPUT_PLUS_IO3
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_COMP_SetInputPlus(COMP_TypeDef *COMPx, uint32_t InputPlus) { MODIFY_REG(COMPx->CSR, COMP_CSR_INPSEL, InputPlus); }
+/**
+ * @brief  Set comparator input plus (non-inverting).
+ * @note   In case of comparator input selected to be connected to IO:
+ *         GPIO pins are specific to each comparator instance.
+ *         Refer to description of parameters or to reference manual.
+ * @rmtoll CSR      INPSEL         LL_COMP_SetInputPlus
+ * @param  COMPx Comparator instance
+ * @param  InputPlus This parameter can be one of the following values:
+ *         @arg @ref LL_COMP_INPUT_PLUS_IO1
+ *         @arg @ref LL_COMP_INPUT_PLUS_IO2
+ *         @arg @ref LL_COMP_INPUT_PLUS_IO3
+ * @retval None
+ */
+__STATIC_INLINE void LL_COMP_SetInputPlus(COMP_TypeDef *COMPx, uint32_t InputPlus) { MODIFY_REG(COMPx->CSR, COMP_CSR_INPSEL, InputPlus); }
 
-	/**
-	 * @brief  Get comparator input plus (non-inverting).
-	 * @note   In case of comparator input selected to be connected to IO:
-	 *         GPIO pins are specific to each comparator instance.
-	 *         Refer to description of parameters or to reference manual.
-	 * @rmtoll CSR      INPSEL         LL_COMP_GetInputPlus
-	 * @param  COMPx Comparator instance
-	 * @retval Returned value can be one of the following values:
-	 *         @arg @ref LL_COMP_INPUT_PLUS_IO1
-	 *         @arg @ref LL_COMP_INPUT_PLUS_IO2
-	 *         @arg @ref LL_COMP_INPUT_PLUS_IO3
-	 */
-	__STATIC_INLINE uint32_t LL_COMP_GetInputPlus(const COMP_TypeDef *COMPx) { return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_INPSEL)); }
+/**
+ * @brief  Get comparator input plus (non-inverting).
+ * @note   In case of comparator input selected to be connected to IO:
+ *         GPIO pins are specific to each comparator instance.
+ *         Refer to description of parameters or to reference manual.
+ * @rmtoll CSR      INPSEL         LL_COMP_GetInputPlus
+ * @param  COMPx Comparator instance
+ * @retval Returned value can be one of the following values:
+ *         @arg @ref LL_COMP_INPUT_PLUS_IO1
+ *         @arg @ref LL_COMP_INPUT_PLUS_IO2
+ *         @arg @ref LL_COMP_INPUT_PLUS_IO3
+ */
+__STATIC_INLINE uint32_t LL_COMP_GetInputPlus(const COMP_TypeDef *COMPx) { return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_INPSEL)); }
 
-	/**
-	 * @brief  Set comparator input minus (inverting).
-	 * @note   In case of comparator input selected to be connected to IO:
-	 *         GPIO pins are specific to each comparator instance.
-	 *         Refer to description of parameters or to reference manual.
-	 * @note   On this STM32 series, a voltage scaler is used
-	 *         when COMP input is based on VrefInt (VrefInt or subdivision
-	 *         of VrefInt):
-	 *         Voltage scaler requires a delay for voltage stabilization.
-	 *         Refer to device datasheet, parameter "tSTART_SCALER".
-	 * @rmtoll CSR      INMSEL         LL_COMP_SetInputMinus
-	 * @param  COMPx Comparator instance
-	 * @param  InputMinus This parameter can be one of the following values:
-	 *         @arg @ref LL_COMP_INPUT_MINUS_1_4VREFINT
-	 *         @arg @ref LL_COMP_INPUT_MINUS_1_2VREFINT
-	 *         @arg @ref LL_COMP_INPUT_MINUS_3_4VREFINT
-	 *         @arg @ref LL_COMP_INPUT_MINUS_VREFINT
-	 *         @arg @ref LL_COMP_INPUT_MINUS_DAC1_CH1
-	 *         @arg @ref LL_COMP_INPUT_MINUS_DAC1_CH2
-	 *         @arg @ref LL_COMP_INPUT_MINUS_IO1
-	 *         @arg @ref LL_COMP_INPUT_MINUS_IO2
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_COMP_SetInputMinus(COMP_TypeDef *COMPx, uint32_t InputMinus) { MODIFY_REG(COMPx->CSR, COMP_CSR_INMSEL, InputMinus); }
+/**
+ * @brief  Set comparator input minus (inverting).
+ * @note   In case of comparator input selected to be connected to IO:
+ *         GPIO pins are specific to each comparator instance.
+ *         Refer to description of parameters or to reference manual.
+ * @note   On this STM32 series, a voltage scaler is used
+ *         when COMP input is based on VrefInt (VrefInt or subdivision
+ *         of VrefInt):
+ *         Voltage scaler requires a delay for voltage stabilization.
+ *         Refer to device datasheet, parameter "tSTART_SCALER".
+ * @rmtoll CSR      INMSEL         LL_COMP_SetInputMinus
+ * @param  COMPx Comparator instance
+ * @param  InputMinus This parameter can be one of the following values:
+ *         @arg @ref LL_COMP_INPUT_MINUS_1_4VREFINT
+ *         @arg @ref LL_COMP_INPUT_MINUS_1_2VREFINT
+ *         @arg @ref LL_COMP_INPUT_MINUS_3_4VREFINT
+ *         @arg @ref LL_COMP_INPUT_MINUS_VREFINT
+ *         @arg @ref LL_COMP_INPUT_MINUS_DAC1_CH1
+ *         @arg @ref LL_COMP_INPUT_MINUS_DAC1_CH2
+ *         @arg @ref LL_COMP_INPUT_MINUS_IO1
+ *         @arg @ref LL_COMP_INPUT_MINUS_IO2
+ * @retval None
+ */
+__STATIC_INLINE void LL_COMP_SetInputMinus(COMP_TypeDef *COMPx, uint32_t InputMinus) { MODIFY_REG(COMPx->CSR, COMP_CSR_INMSEL, InputMinus); }
 
-	/**
-	 * @brief  Get comparator input minus (inverting).
-	 * @note   In case of comparator input selected to be connected to IO:
-	 *         GPIO pins are specific to each comparator instance.
-	 *         Refer to description of parameters or to reference manual.
-	 * @rmtoll CSR      INMSEL         LL_COMP_GetInputMinus
-	 * @param  COMPx Comparator instance
-	 * @retval Returned value can be one of the following values:
-	 *         @arg @ref LL_COMP_INPUT_MINUS_1_4VREFINT
-	 *         @arg @ref LL_COMP_INPUT_MINUS_1_2VREFINT
-	 *         @arg @ref LL_COMP_INPUT_MINUS_3_4VREFINT
-	 *         @arg @ref LL_COMP_INPUT_MINUS_VREFINT
-	 *         @arg @ref LL_COMP_INPUT_MINUS_DAC1_CH1
-	 *         @arg @ref LL_COMP_INPUT_MINUS_DAC1_CH2
-	 *         @arg @ref LL_COMP_INPUT_MINUS_IO1
-	 *         @arg @ref LL_COMP_INPUT_MINUS_IO2
-	 */
-	__STATIC_INLINE uint32_t LL_COMP_GetInputMinus(const COMP_TypeDef *COMPx) { return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_INMSEL)); }
+/**
+ * @brief  Get comparator input minus (inverting).
+ * @note   In case of comparator input selected to be connected to IO:
+ *         GPIO pins are specific to each comparator instance.
+ *         Refer to description of parameters or to reference manual.
+ * @rmtoll CSR      INMSEL         LL_COMP_GetInputMinus
+ * @param  COMPx Comparator instance
+ * @retval Returned value can be one of the following values:
+ *         @arg @ref LL_COMP_INPUT_MINUS_1_4VREFINT
+ *         @arg @ref LL_COMP_INPUT_MINUS_1_2VREFINT
+ *         @arg @ref LL_COMP_INPUT_MINUS_3_4VREFINT
+ *         @arg @ref LL_COMP_INPUT_MINUS_VREFINT
+ *         @arg @ref LL_COMP_INPUT_MINUS_DAC1_CH1
+ *         @arg @ref LL_COMP_INPUT_MINUS_DAC1_CH2
+ *         @arg @ref LL_COMP_INPUT_MINUS_IO1
+ *         @arg @ref LL_COMP_INPUT_MINUS_IO2
+ */
+__STATIC_INLINE uint32_t LL_COMP_GetInputMinus(const COMP_TypeDef *COMPx) { return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_INMSEL)); }
 
-	/**
-	 * @brief  Set comparator instance hysteresis mode of the input minus (inverting
-	 * input).
-	 * @rmtoll CSR      HYST           LL_COMP_SetInputHysteresis
-	 * @param  COMPx Comparator instance
-	 * @param  InputHysteresis This parameter can be one of the following values:
-	 *         @arg @ref LL_COMP_HYSTERESIS_NONE
-	 *         @arg @ref LL_COMP_HYSTERESIS_LOW
-	 *         @arg @ref LL_COMP_HYSTERESIS_MEDIUM
-	 *         @arg @ref LL_COMP_HYSTERESIS_HIGH
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_COMP_SetInputHysteresis(COMP_TypeDef *COMPx, uint32_t InputHysteresis) { MODIFY_REG(COMPx->CSR, COMP_CSR_HYST, InputHysteresis); }
+/**
+ * @brief  Set comparator instance hysteresis mode of the input minus (inverting
+ * input).
+ * @rmtoll CSR      HYST           LL_COMP_SetInputHysteresis
+ * @param  COMPx Comparator instance
+ * @param  InputHysteresis This parameter can be one of the following values:
+ *         @arg @ref LL_COMP_HYSTERESIS_NONE
+ *         @arg @ref LL_COMP_HYSTERESIS_LOW
+ *         @arg @ref LL_COMP_HYSTERESIS_MEDIUM
+ *         @arg @ref LL_COMP_HYSTERESIS_HIGH
+ * @retval None
+ */
+__STATIC_INLINE void LL_COMP_SetInputHysteresis(COMP_TypeDef *COMPx, uint32_t InputHysteresis) { MODIFY_REG(COMPx->CSR, COMP_CSR_HYST, InputHysteresis); }
 
-	/**
-	 * @brief  Get comparator instance hysteresis mode of the minus (inverting)
-	 * input.
-	 * @rmtoll CSR      HYST           LL_COMP_GetInputHysteresis
-	 * @param  COMPx Comparator instance
-	 * @retval Returned value can be one of the following values:
-	 *         @arg @ref LL_COMP_HYSTERESIS_NONE
-	 *         @arg @ref LL_COMP_HYSTERESIS_LOW
-	 *         @arg @ref LL_COMP_HYSTERESIS_MEDIUM
-	 *         @arg @ref LL_COMP_HYSTERESIS_HIGH
-	 */
-	__STATIC_INLINE uint32_t LL_COMP_GetInputHysteresis(const COMP_TypeDef *COMPx) { return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_HYST)); }
+/**
+ * @brief  Get comparator instance hysteresis mode of the minus (inverting)
+ * input.
+ * @rmtoll CSR      HYST           LL_COMP_GetInputHysteresis
+ * @param  COMPx Comparator instance
+ * @retval Returned value can be one of the following values:
+ *         @arg @ref LL_COMP_HYSTERESIS_NONE
+ *         @arg @ref LL_COMP_HYSTERESIS_LOW
+ *         @arg @ref LL_COMP_HYSTERESIS_MEDIUM
+ *         @arg @ref LL_COMP_HYSTERESIS_HIGH
+ */
+__STATIC_INLINE uint32_t LL_COMP_GetInputHysteresis(const COMP_TypeDef *COMPx) { return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_HYST)); }
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @defgroup COMP_LL_EF_Configuration_comparator_output Configuration of
-	 * comparator output
-	 * @{
-	 */
+/** @defgroup COMP_LL_EF_Configuration_comparator_output Configuration of
+ * comparator output
+ * @{
+ */
 
-	/**
-	 * @brief  Set comparator instance output polarity.
-	 * @rmtoll CSR      POLARITY       LL_COMP_SetOutputPolarity
-	 * @param  COMPx Comparator instance
-	 * @param  OutputPolarity This parameter can be one of the following values:
-	 *         @arg @ref LL_COMP_OUTPUTPOL_NONINVERTED
-	 *         @arg @ref LL_COMP_OUTPUTPOL_INVERTED
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_COMP_SetOutputPolarity(COMP_TypeDef *COMPx, uint32_t OutputPolarity) { MODIFY_REG(COMPx->CSR, COMP_CSR_POLARITY, OutputPolarity); }
+/**
+ * @brief  Set comparator instance output polarity.
+ * @rmtoll CSR      POLARITY       LL_COMP_SetOutputPolarity
+ * @param  COMPx Comparator instance
+ * @param  OutputPolarity This parameter can be one of the following values:
+ *         @arg @ref LL_COMP_OUTPUTPOL_NONINVERTED
+ *         @arg @ref LL_COMP_OUTPUTPOL_INVERTED
+ * @retval None
+ */
+__STATIC_INLINE void LL_COMP_SetOutputPolarity(COMP_TypeDef *COMPx, uint32_t OutputPolarity) { MODIFY_REG(COMPx->CSR, COMP_CSR_POLARITY, OutputPolarity); }
 
-	/**
-	 * @brief  Get comparator instance output polarity.
-	 * @rmtoll CSR      POLARITY       LL_COMP_GetOutputPolarity
-	 * @param  COMPx Comparator instance
-	 * @retval Returned value can be one of the following values:
-	 *         @arg @ref LL_COMP_OUTPUTPOL_NONINVERTED
-	 *         @arg @ref LL_COMP_OUTPUTPOL_INVERTED
-	 */
-	__STATIC_INLINE uint32_t LL_COMP_GetOutputPolarity(const COMP_TypeDef *COMPx) { return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_POLARITY)); }
+/**
+ * @brief  Get comparator instance output polarity.
+ * @rmtoll CSR      POLARITY       LL_COMP_GetOutputPolarity
+ * @param  COMPx Comparator instance
+ * @retval Returned value can be one of the following values:
+ *         @arg @ref LL_COMP_OUTPUTPOL_NONINVERTED
+ *         @arg @ref LL_COMP_OUTPUTPOL_INVERTED
+ */
+__STATIC_INLINE uint32_t LL_COMP_GetOutputPolarity(const COMP_TypeDef *COMPx) { return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_POLARITY)); }
 
-	/**
-	 * @brief  Set comparator instance blanking source.
-	 * @note   Blanking source may be specific to each comparator instance.
-	 *         Refer to description of parameters or to reference manual.
-	 * @note   Availability of parameters of blanking source from timer
-	 *         depends on timers availability on the selected device.
-	 * @rmtoll CSR      BLANKSEL       LL_COMP_SetOutputBlankingSource
-	 * @param  COMPx Comparator instance
-	 * @param  BlankingSource This parameter can be one of the following values:
-	 *         @arg @ref LL_COMP_BLANKINGSRC_NONE
-	 *         @arg @ref LL_COMP_BLANKINGSRC_TIM1_OC5
-	 *         @arg @ref LL_COMP_BLANKINGSRC_TIM2_OC3
-	 *         @arg @ref LL_COMP_BLANKINGSRC_TIM3_OC3
-	 *         @arg @ref LL_COMP_BLANKINGSRC_TIM3_OC4
-	 *         @arg @ref LL_COMP_BLANKINGSRC_TIM8_OC5
-	 *         @arg @ref LL_COMP_BLANKINGSRC_TIM15_OC1
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_COMP_SetOutputBlankingSource(COMP_TypeDef *COMPx, uint32_t BlankingSource) { MODIFY_REG(COMPx->CSR, COMP_CSR_BLANKSEL, BlankingSource); }
+/**
+ * @brief  Set comparator instance blanking source.
+ * @note   Blanking source may be specific to each comparator instance.
+ *         Refer to description of parameters or to reference manual.
+ * @note   Availability of parameters of blanking source from timer
+ *         depends on timers availability on the selected device.
+ * @rmtoll CSR      BLANKSEL       LL_COMP_SetOutputBlankingSource
+ * @param  COMPx Comparator instance
+ * @param  BlankingSource This parameter can be one of the following values:
+ *         @arg @ref LL_COMP_BLANKINGSRC_NONE
+ *         @arg @ref LL_COMP_BLANKINGSRC_TIM1_OC5
+ *         @arg @ref LL_COMP_BLANKINGSRC_TIM2_OC3
+ *         @arg @ref LL_COMP_BLANKINGSRC_TIM3_OC3
+ *         @arg @ref LL_COMP_BLANKINGSRC_TIM3_OC4
+ *         @arg @ref LL_COMP_BLANKINGSRC_TIM8_OC5
+ *         @arg @ref LL_COMP_BLANKINGSRC_TIM15_OC1
+ * @retval None
+ */
+__STATIC_INLINE void LL_COMP_SetOutputBlankingSource(COMP_TypeDef *COMPx, uint32_t BlankingSource) { MODIFY_REG(COMPx->CSR, COMP_CSR_BLANKSEL, BlankingSource); }
 
-	/**
-	 * @brief  Get comparator instance blanking source.
-	 * @note   Availability of parameters of blanking source from timer
-	 *         depends on timers availability on the selected device.
-	 * @note   Blanking source may be specific to each comparator instance.
-	 *         Refer to description of parameters or to reference manual.
-	 * @rmtoll CSR      BLANKSEL       LL_COMP_GetOutputBlankingSource
-	 * @param  COMPx Comparator instance
-	 * @retval Returned value can be one of the following values:
-	 *         @arg @ref LL_COMP_BLANKINGSRC_NONE
-	 *         @arg @ref LL_COMP_BLANKINGSRC_TIM1_OC5
-	 *         @arg @ref LL_COMP_BLANKINGSRC_TIM2_OC3
-	 *         @arg @ref LL_COMP_BLANKINGSRC_TIM3_OC3
-	 *         @arg @ref LL_COMP_BLANKINGSRC_TIM3_OC4
-	 *         @arg @ref LL_COMP_BLANKINGSRC_TIM8_OC5
-	 *         @arg @ref LL_COMP_BLANKINGSRC_TIM15_OC1
-	 */
-	__STATIC_INLINE uint32_t LL_COMP_GetOutputBlankingSource(const COMP_TypeDef *COMPx) { return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_BLANKSEL)); }
+/**
+ * @brief  Get comparator instance blanking source.
+ * @note   Availability of parameters of blanking source from timer
+ *         depends on timers availability on the selected device.
+ * @note   Blanking source may be specific to each comparator instance.
+ *         Refer to description of parameters or to reference manual.
+ * @rmtoll CSR      BLANKSEL       LL_COMP_GetOutputBlankingSource
+ * @param  COMPx Comparator instance
+ * @retval Returned value can be one of the following values:
+ *         @arg @ref LL_COMP_BLANKINGSRC_NONE
+ *         @arg @ref LL_COMP_BLANKINGSRC_TIM1_OC5
+ *         @arg @ref LL_COMP_BLANKINGSRC_TIM2_OC3
+ *         @arg @ref LL_COMP_BLANKINGSRC_TIM3_OC3
+ *         @arg @ref LL_COMP_BLANKINGSRC_TIM3_OC4
+ *         @arg @ref LL_COMP_BLANKINGSRC_TIM8_OC5
+ *         @arg @ref LL_COMP_BLANKINGSRC_TIM15_OC1
+ */
+__STATIC_INLINE uint32_t LL_COMP_GetOutputBlankingSource(const COMP_TypeDef *COMPx) { return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_BLANKSEL)); }
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @defgroup COMP_LL_EF_Operation Operation on comparator instance
-	 * @{
-	 */
+/** @defgroup COMP_LL_EF_Operation Operation on comparator instance
+ * @{
+ */
 
-	/**
-	 * @brief  Enable comparator instance.
-	 * @note   After enable from off state, comparator requires a delay
-	 *         to reach reach propagation delay specification.
-	 *         Refer to device datasheet, parameter "tSTART".
-	 * @rmtoll CSR      EN             LL_COMP_Enable
-	 * @param  COMPx Comparator instance
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_COMP_Enable(COMP_TypeDef *COMPx) { SET_BIT(COMPx->CSR, COMP_CSR_EN); }
+/**
+ * @brief  Enable comparator instance.
+ * @note   After enable from off state, comparator requires a delay
+ *         to reach reach propagation delay specification.
+ *         Refer to device datasheet, parameter "tSTART".
+ * @rmtoll CSR      EN             LL_COMP_Enable
+ * @param  COMPx Comparator instance
+ * @retval None
+ */
+__STATIC_INLINE void LL_COMP_Enable(COMP_TypeDef *COMPx) { SET_BIT(COMPx->CSR, COMP_CSR_EN); }
 
-	/**
-	 * @brief  Disable comparator instance.
-	 * @rmtoll CSR      EN             LL_COMP_Disable
-	 * @param  COMPx Comparator instance
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_COMP_Disable(COMP_TypeDef *COMPx) { CLEAR_BIT(COMPx->CSR, COMP_CSR_EN); }
+/**
+ * @brief  Disable comparator instance.
+ * @rmtoll CSR      EN             LL_COMP_Disable
+ * @param  COMPx Comparator instance
+ * @retval None
+ */
+__STATIC_INLINE void LL_COMP_Disable(COMP_TypeDef *COMPx) { CLEAR_BIT(COMPx->CSR, COMP_CSR_EN); }
 
-	/**
-	 * @brief  Get comparator enable state
-	 *         (0: COMP is disabled, 1: COMP is enabled)
-	 * @rmtoll CSR      EN             LL_COMP_IsEnabled
-	 * @param  COMPx Comparator instance
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_COMP_IsEnabled(const COMP_TypeDef *COMPx) { return ((READ_BIT(COMPx->CSR, COMP_CSR_EN) == (COMP_CSR_EN)) ? 1UL : 0UL); }
+/**
+ * @brief  Get comparator enable state
+ *         (0: COMP is disabled, 1: COMP is enabled)
+ * @rmtoll CSR      EN             LL_COMP_IsEnabled
+ * @param  COMPx Comparator instance
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_COMP_IsEnabled(const COMP_TypeDef *COMPx) { return ((READ_BIT(COMPx->CSR, COMP_CSR_EN) == (COMP_CSR_EN)) ? 1UL : 0UL); }
 
-	/**
-	 * @brief  Lock comparator instance.
-	 * @note   Once locked, comparator configuration can be accessed in read-only.
-	 * @note   The only way to unlock the comparator is a device hardware reset.
-	 * @rmtoll CSR      LOCK           LL_COMP_Lock
-	 * @param  COMPx Comparator instance
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_COMP_Lock(COMP_TypeDef *COMPx) { SET_BIT(COMPx->CSR, COMP_CSR_LOCK); }
+/**
+ * @brief  Lock comparator instance.
+ * @note   Once locked, comparator configuration can be accessed in read-only.
+ * @note   The only way to unlock the comparator is a device hardware reset.
+ * @rmtoll CSR      LOCK           LL_COMP_Lock
+ * @param  COMPx Comparator instance
+ * @retval None
+ */
+__STATIC_INLINE void LL_COMP_Lock(COMP_TypeDef *COMPx) { SET_BIT(COMPx->CSR, COMP_CSR_LOCK); }
 
-	/**
-	 * @brief  Get comparator lock state
-	 *         (0: COMP is unlocked, 1: COMP is locked).
-	 * @note   Once locked, comparator configuration can be accessed in read-only.
-	 * @note   The only way to unlock the comparator is a device hardware reset.
-	 * @rmtoll CSR      LOCK           LL_COMP_IsLocked
-	 * @param  COMPx Comparator instance
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_COMP_IsLocked(const COMP_TypeDef *COMPx) { return ((READ_BIT(COMPx->CSR, COMP_CSR_LOCK) == (COMP_CSR_LOCK)) ? 1UL : 0UL); }
+/**
+ * @brief  Get comparator lock state
+ *         (0: COMP is unlocked, 1: COMP is locked).
+ * @note   Once locked, comparator configuration can be accessed in read-only.
+ * @note   The only way to unlock the comparator is a device hardware reset.
+ * @rmtoll CSR      LOCK           LL_COMP_IsLocked
+ * @param  COMPx Comparator instance
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_COMP_IsLocked(const COMP_TypeDef *COMPx) { return ((READ_BIT(COMPx->CSR, COMP_CSR_LOCK) == (COMP_CSR_LOCK)) ? 1UL : 0UL); }
 
-	/**
-	 * @brief  Read comparator instance output level.
-	 * @note   The comparator output level depends on the selected polarity
-	 *         (Refer to function @ref LL_COMP_SetOutputPolarity()).
-	 *         If the comparator polarity is not inverted:
-	 *          - Comparator output is low when the input plus
-	 *            is at a lower voltage than the input minus
-	 *          - Comparator output is high when the input plus
-	 *            is at a higher voltage than the input minus
-	 *         If the comparator polarity is inverted:
-	 *          - Comparator output is high when the input plus
-	 *            is at a lower voltage than the input minus
-	 *          - Comparator output is low when the input plus
-	 *            is at a higher voltage than the input minus
-	 * @rmtoll CSR      VALUE          LL_COMP_ReadOutputLevel
-	 * @param  COMPx Comparator instance
-	 * @retval Returned value can be one of the following values:
-	 *         @arg @ref LL_COMP_OUTPUT_LEVEL_LOW
-	 *         @arg @ref LL_COMP_OUTPUT_LEVEL_HIGH
-	 */
-	__STATIC_INLINE uint32_t LL_COMP_ReadOutputLevel(const COMP_TypeDef *COMPx) { return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_VALUE) >> LL_COMP_OUTPUT_LEVEL_BITOFFSET_POS); }
+/**
+ * @brief  Read comparator instance output level.
+ * @note   The comparator output level depends on the selected polarity
+ *         (Refer to function @ref LL_COMP_SetOutputPolarity()).
+ *         If the comparator polarity is not inverted:
+ *          - Comparator output is low when the input plus
+ *            is at a lower voltage than the input minus
+ *          - Comparator output is high when the input plus
+ *            is at a higher voltage than the input minus
+ *         If the comparator polarity is inverted:
+ *          - Comparator output is high when the input plus
+ *            is at a lower voltage than the input minus
+ *          - Comparator output is low when the input plus
+ *            is at a higher voltage than the input minus
+ * @rmtoll CSR      VALUE          LL_COMP_ReadOutputLevel
+ * @param  COMPx Comparator instance
+ * @retval Returned value can be one of the following values:
+ *         @arg @ref LL_COMP_OUTPUT_LEVEL_LOW
+ *         @arg @ref LL_COMP_OUTPUT_LEVEL_HIGH
+ */
+__STATIC_INLINE uint32_t LL_COMP_ReadOutputLevel(const COMP_TypeDef *COMPx) { return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_VALUE) >> LL_COMP_OUTPUT_LEVEL_BITOFFSET_POS); }
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #if defined(USE_FULL_LL_DRIVER)
-	/** @defgroup COMP_LL_EF_Init Initialization and de-initialization functions
-	 * @{
-	 */
+/** @defgroup COMP_LL_EF_Init Initialization and de-initialization functions
+ * @{
+ */
 
-	ErrorStatus LL_COMP_DeInit(COMP_TypeDef *COMPx);
-	ErrorStatus LL_COMP_Init(COMP_TypeDef *COMPx, const LL_COMP_InitTypeDef *COMP_InitStruct);
-	void LL_COMP_StructInit(LL_COMP_InitTypeDef *COMP_InitStruct);
+ErrorStatus LL_COMP_DeInit(COMP_TypeDef *COMPx);
+ErrorStatus LL_COMP_Init(COMP_TypeDef *COMPx, const LL_COMP_InitTypeDef *COMP_InitStruct);
+void LL_COMP_StructInit(LL_COMP_InitTypeDef *COMP_InitStruct);
 
 /**
  * @}
  */
 #endif /* USE_FULL_LL_DRIVER */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #endif /* COMP1 || COMP2 */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

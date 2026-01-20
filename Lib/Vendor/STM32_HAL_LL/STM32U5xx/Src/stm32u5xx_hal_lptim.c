@@ -245,8 +245,7 @@ HAL_StatusTypeDef HAL_LPTIM_Init(LPTIM_HandleTypeDef *hlptim)
 	uint32_t tmpcfgr;
 
 	/* Check the LPTIM handle allocation */
-	if (hlptim == NULL)
-	{
+	if (hlptim == NULL) {
 		return HAL_ERROR;
 	}
 
@@ -256,14 +255,12 @@ HAL_StatusTypeDef HAL_LPTIM_Init(LPTIM_HandleTypeDef *hlptim)
 
 	assert_param(IS_LPTIM_CLOCK_SOURCE(hlptim->Init.Clock.Source));
 	assert_param(IS_LPTIM_CLOCK_PRESCALER(hlptim->Init.Clock.Prescaler));
-	if ((hlptim->Init.Clock.Source == LPTIM_CLOCKSOURCE_ULPTIM) || (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL))
-	{
+	if ((hlptim->Init.Clock.Source == LPTIM_CLOCKSOURCE_ULPTIM) || (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL)) {
 		assert_param(IS_LPTIM_CLOCK_POLARITY(hlptim->Init.UltraLowPowerClock.Polarity));
 		assert_param(IS_LPTIM_CLOCK_SAMPLE_TIME(hlptim->Init.UltraLowPowerClock.SampleTime));
 	}
 	assert_param(IS_LPTIM_TRG_SOURCE(hlptim->Init.Trigger.Source));
-	if (hlptim->Init.Trigger.Source != LPTIM_TRIGSOURCE_SOFTWARE)
-	{
+	if (hlptim->Init.Trigger.Source != LPTIM_TRIGSOURCE_SOFTWARE) {
 		assert_param(IS_LPTIM_EXT_TRG_POLARITY(hlptim->Init.Trigger.ActiveEdge));
 		assert_param(IS_LPTIM_TRIG_SAMPLE_TIME(hlptim->Init.Trigger.SampleTime));
 	}
@@ -271,8 +268,7 @@ HAL_StatusTypeDef HAL_LPTIM_Init(LPTIM_HandleTypeDef *hlptim)
 	assert_param(IS_LPTIM_COUNTER_SOURCE(hlptim->Init.CounterSource));
 	assert_param(IS_LPTIM_REPETITION(hlptim->Init.RepetitionCounter));
 
-	if (hlptim->State == HAL_LPTIM_STATE_RESET)
-	{
+	if (hlptim->State == HAL_LPTIM_STATE_RESET) {
 		/* Allocate lock resource and initialize it */
 		hlptim->Lock = HAL_UNLOCKED;
 
@@ -280,8 +276,7 @@ HAL_StatusTypeDef HAL_LPTIM_Init(LPTIM_HandleTypeDef *hlptim)
 		/* Reset interrupt callbacks to legacy weak callbacks */
 		LPTIM_ResetCallback(hlptim);
 
-		if (hlptim->MspInitCallback == NULL)
-		{
+		if (hlptim->MspInitCallback == NULL) {
 			hlptim->MspInitCallback = HAL_LPTIM_MspInit;
 		}
 
@@ -307,8 +302,7 @@ HAL_StatusTypeDef HAL_LPTIM_Init(LPTIM_HandleTypeDef *hlptim)
 
 	/* Wait for the completion of the write operation to the LPTIM_RCR
 	 * register */
-	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_REPOK) == HAL_TIMEOUT)
-	{
+	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_REPOK) == HAL_TIMEOUT) {
 		return HAL_TIMEOUT;
 	}
 
@@ -320,8 +314,7 @@ HAL_StatusTypeDef HAL_LPTIM_Init(LPTIM_HandleTypeDef *hlptim)
 
 	/* Wait for the completion of the write operation to the LPTIM_ARR
 	 * register */
-	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_ARROK) == HAL_TIMEOUT)
-	{
+	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_ARROK) == HAL_TIMEOUT) {
 		return HAL_TIMEOUT;
 	}
 
@@ -331,12 +324,10 @@ HAL_StatusTypeDef HAL_LPTIM_Init(LPTIM_HandleTypeDef *hlptim)
 	/* Get the LPTIMx CFGR value */
 	tmpcfgr = hlptim->Instance->CFGR;
 
-	if ((hlptim->Init.Clock.Source == LPTIM_CLOCKSOURCE_ULPTIM) || (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL))
-	{
+	if ((hlptim->Init.Clock.Source == LPTIM_CLOCKSOURCE_ULPTIM) || (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL)) {
 		tmpcfgr &= (uint32_t)(~(LPTIM_CFGR_CKPOL | LPTIM_CFGR_CKFLT));
 	}
-	if (hlptim->Init.Trigger.Source != LPTIM_TRIGSOURCE_SOFTWARE)
-	{
+	if (hlptim->Init.Trigger.Source != LPTIM_TRIGSOURCE_SOFTWARE) {
 		tmpcfgr &= (uint32_t)(~(LPTIM_CFGR_TRGFLT | LPTIM_CFGR_TRIGSEL));
 	}
 
@@ -350,20 +341,17 @@ HAL_StatusTypeDef HAL_LPTIM_Init(LPTIM_HandleTypeDef *hlptim)
 	/* Glitch filters for internal triggers and  external inputs are
 	 * configured only if an internal clock source is provided to the LPTIM
 	 */
-	if (hlptim->Init.Clock.Source == LPTIM_CLOCKSOURCE_APBCLOCK_LPOSC)
-	{
+	if (hlptim->Init.Clock.Source == LPTIM_CLOCKSOURCE_APBCLOCK_LPOSC) {
 		tmpcfgr |= (hlptim->Init.Trigger.SampleTime | hlptim->Init.UltraLowPowerClock.SampleTime);
 	}
 
 	/* Configure LPTIM external clock polarity and digital filter */
-	if ((hlptim->Init.Clock.Source == LPTIM_CLOCKSOURCE_ULPTIM) || (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL))
-	{
+	if ((hlptim->Init.Clock.Source == LPTIM_CLOCKSOURCE_ULPTIM) || (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL)) {
 		tmpcfgr |= (hlptim->Init.UltraLowPowerClock.Polarity | hlptim->Init.UltraLowPowerClock.SampleTime);
 	}
 
 	/* Configure LPTIM external trigger */
-	if (hlptim->Init.Trigger.Source != LPTIM_TRIGSOURCE_SOFTWARE)
-	{
+	if (hlptim->Init.Trigger.Source != LPTIM_TRIGSOURCE_SOFTWARE) {
 		/* Enable External trigger and set the trigger source */
 		tmpcfgr |= (hlptim->Init.Trigger.Source | hlptim->Init.Trigger.ActiveEdge | hlptim->Init.Trigger.SampleTime);
 	}
@@ -372,19 +360,15 @@ HAL_StatusTypeDef HAL_LPTIM_Init(LPTIM_HandleTypeDef *hlptim)
 	hlptim->Instance->CFGR = tmpcfgr;
 
 	/* Configure LPTIM input sources */
-	if ((hlptim->Instance == LPTIM1) || (hlptim->Instance == LPTIM2))
-	{
+	if ((hlptim->Instance == LPTIM1) || (hlptim->Instance == LPTIM2)) {
 		/* Check LPTIM Input1 and Input2 sources */
 		assert_param(IS_LPTIM_INPUT1_SOURCE(hlptim->Instance, hlptim->Init.Input1Source));
 		assert_param(IS_LPTIM_INPUT2_SOURCE(hlptim->Instance, hlptim->Init.Input2Source));
 
 		/* Configure LPTIM Input1 and Input2 sources */
 		hlptim->Instance->CFGR2 = (hlptim->Init.Input1Source | hlptim->Init.Input2Source);
-	}
-	else
-	{
-		if ((hlptim->Instance == LPTIM3) || (hlptim->Instance == LPTIM4))
-		{
+	} else {
+		if ((hlptim->Instance == LPTIM3) || (hlptim->Instance == LPTIM4)) {
 			/* Check LPTIM Input1 source */
 			assert_param(IS_LPTIM_INPUT1_SOURCE(hlptim->Instance, hlptim->Init.Input1Source));
 
@@ -411,8 +395,7 @@ HAL_StatusTypeDef HAL_LPTIM_Init(LPTIM_HandleTypeDef *hlptim)
 HAL_StatusTypeDef HAL_LPTIM_DeInit(LPTIM_HandleTypeDef *hlptim)
 {
 	/* Check the LPTIM handle allocation */
-	if (hlptim == NULL)
-	{
+	if (hlptim == NULL) {
 		return HAL_ERROR;
 	}
 
@@ -420,8 +403,7 @@ HAL_StatusTypeDef HAL_LPTIM_DeInit(LPTIM_HandleTypeDef *hlptim)
 	hlptim->State = HAL_LPTIM_STATE_BUSY;
 
 	__HAL_LPTIM_ENABLE(hlptim);
-	if (IS_LPTIM_CC2_INSTANCE(hlptim->Instance))
-	{
+	if (IS_LPTIM_CC2_INSTANCE(hlptim->Instance)) {
 		hlptim->Instance->CCMR1 = 0;
 	}
 
@@ -431,21 +413,18 @@ HAL_StatusTypeDef HAL_LPTIM_DeInit(LPTIM_HandleTypeDef *hlptim)
 	__HAL_LPTIM_COMPARE_SET(hlptim, LPTIM_CHANNEL_1, 0);
 	/* Wait for the completion of the write operation to the LPTIM_CCR1
 	 * register */
-	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_CMP1OK) == HAL_TIMEOUT)
-	{
+	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_CMP1OK) == HAL_TIMEOUT) {
 		return HAL_TIMEOUT;
 	}
 
-	if (IS_LPTIM_CC2_INSTANCE(hlptim->Instance))
-	{
+	if (IS_LPTIM_CC2_INSTANCE(hlptim->Instance)) {
 		/* Clear flag */
 		__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_CMP2OK);
 
 		__HAL_LPTIM_COMPARE_SET(hlptim, LPTIM_CHANNEL_2, 0);
 		/* Wait for the completion of the write operation to the
 		 * LPTIM_CCR2 register */
-		if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_CMP2OK) == HAL_TIMEOUT)
-		{
+		if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_CMP2OK) == HAL_TIMEOUT) {
 			return HAL_TIMEOUT;
 		}
 	}
@@ -457,8 +436,7 @@ HAL_StatusTypeDef HAL_LPTIM_DeInit(LPTIM_HandleTypeDef *hlptim)
 
 	/* Wait for the completion of the write operation to the LPTIM_ARR
 	 * register */
-	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_ARROK) == HAL_TIMEOUT)
-	{
+	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_ARROK) == HAL_TIMEOUT) {
 		return HAL_TIMEOUT;
 	}
 
@@ -469,8 +447,7 @@ HAL_StatusTypeDef HAL_LPTIM_DeInit(LPTIM_HandleTypeDef *hlptim)
 	hlptim->Instance->CFGR2 = 0;
 
 #if (USE_HAL_LPTIM_REGISTER_CALLBACKS == 1)
-	if (hlptim->MspDeInitCallback == NULL)
-	{
+	if (hlptim->MspDeInitCallback == NULL) {
 		hlptim->MspDeInitCallback = HAL_LPTIM_MspDeInit;
 	}
 
@@ -570,8 +547,7 @@ HAL_StatusTypeDef HAL_LPTIM_PWM_Start(LPTIM_HandleTypeDef *hlptim, uint32_t Chan
 	assert_param(IS_LPTIM_CCX_INSTANCE(hlptim->Instance, Channel));
 
 	/* Check LPTIM channel state */
-	if (LPTIM_CHANNEL_STATE_GET(hlptim, Channel) != HAL_LPTIM_CHANNEL_STATE_READY)
-	{
+	if (LPTIM_CHANNEL_STATE_GET(hlptim, Channel) != HAL_LPTIM_CHANNEL_STATE_READY) {
 		return HAL_ERROR;
 	}
 
@@ -648,8 +624,7 @@ HAL_StatusTypeDef HAL_LPTIM_PWM_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32_t C
 	assert_param(IS_LPTIM_CCX_INSTANCE(hlptim->Instance, Channel));
 
 	/* Check LPTIM channel state */
-	if (LPTIM_CHANNEL_STATE_GET(hlptim, Channel) != HAL_LPTIM_CHANNEL_STATE_READY)
-	{
+	if (LPTIM_CHANNEL_STATE_GET(hlptim, Channel) != HAL_LPTIM_CHANNEL_STATE_READY) {
 		return HAL_ERROR;
 	}
 
@@ -667,8 +642,7 @@ HAL_StatusTypeDef HAL_LPTIM_PWM_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32_t C
 	/* Clear flag */
 	__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_DIEROK);
 
-	switch (Channel)
-	{
+	switch (Channel) {
 		case LPTIM_CHANNEL_1:
 			/* Enable interrupt */
 			__HAL_LPTIM_ENABLE_IT(hlptim, LPTIM_IT_CMP1OK | LPTIM_IT_CC1 | LPTIM_IT_ARROK | LPTIM_IT_ARRM | LPTIM_IT_REPOK | LPTIM_IT_UPDATE);
@@ -683,15 +657,13 @@ HAL_StatusTypeDef HAL_LPTIM_PWM_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32_t C
 
 	/* Wait for the completion of the write operation to the LPTIM_DIER
 	 * register */
-	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT)
-	{
+	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT) {
 		return HAL_TIMEOUT;
 	}
 
 	/* If external trigger source is used, then enable external trigger
 	 * interrupt */
-	if ((hlptim->Init.Trigger.Source) != LPTIM_TRIGSOURCE_SOFTWARE)
-	{
+	if ((hlptim->Init.Trigger.Source) != LPTIM_TRIGSOURCE_SOFTWARE) {
 		/* Clear flag */
 		__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_DIEROK);
 
@@ -700,8 +672,7 @@ HAL_StatusTypeDef HAL_LPTIM_PWM_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32_t C
 
 		/* Wait for the completion of the write operation to the
 		 * LPTIM_DIER register */
-		if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT)
-		{
+		if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT) {
 			return HAL_TIMEOUT;
 		}
 	}
@@ -747,8 +718,7 @@ HAL_StatusTypeDef HAL_LPTIM_PWM_Stop_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Ch
 	/* Clear flag */
 	__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_DIEROK);
 
-	switch (Channel)
-	{
+	switch (Channel) {
 		case LPTIM_CHANNEL_1:
 			/* Disable interrupt */
 			__HAL_LPTIM_DISABLE_IT(hlptim, LPTIM_IT_CMP1OK | LPTIM_IT_CC1 | LPTIM_IT_ARROK | LPTIM_IT_ARRM | LPTIM_IT_REPOK | LPTIM_IT_UPDATE);
@@ -763,15 +733,13 @@ HAL_StatusTypeDef HAL_LPTIM_PWM_Stop_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Ch
 
 	/* Wait for the completion of the write operation to the LPTIM_DIER
 	 * register */
-	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT)
-	{
+	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT) {
 		return HAL_TIMEOUT;
 	}
 
 	/* If external trigger source is used, then enable external trigger
 	 * interrupt */
-	if ((hlptim->Init.Trigger.Source) != LPTIM_TRIGSOURCE_SOFTWARE)
-	{
+	if ((hlptim->Init.Trigger.Source) != LPTIM_TRIGSOURCE_SOFTWARE) {
 		/* Clear flag */
 		__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_DIEROK);
 
@@ -780,8 +748,7 @@ HAL_StatusTypeDef HAL_LPTIM_PWM_Stop_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Ch
 
 		/* Wait for the completion of the write operation to the
 		 * LPTIM_DIER register */
-		if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT)
-		{
+		if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT) {
 			return HAL_TIMEOUT;
 		}
 	}
@@ -819,14 +786,12 @@ HAL_StatusTypeDef HAL_LPTIM_PWM_Start_DMA(LPTIM_HandleTypeDef *hlptim, uint32_t 
 	assert_param(IS_LPTIM_DMA_INSTANCE(hlptim->Instance));
 	assert_param(IS_LPTIM_CCX_INSTANCE(hlptim->Instance, Channel));
 
-	if ((pData == NULL) || (Length == 0U))
-	{
+	if ((pData == NULL) || (Length == 0U)) {
 		return HAL_ERROR;
 	}
 
 	/* Check LPTIM channel state */
-	if (LPTIM_CHANNEL_STATE_GET(hlptim, Channel) != HAL_LPTIM_CHANNEL_STATE_READY)
-	{
+	if (LPTIM_CHANNEL_STATE_GET(hlptim, Channel) != HAL_LPTIM_CHANNEL_STATE_READY) {
 		return HAL_ERROR;
 	}
 
@@ -847,13 +812,11 @@ HAL_StatusTypeDef HAL_LPTIM_PWM_Start_DMA(LPTIM_HandleTypeDef *hlptim, uint32_t 
 
 	/* Wait for the completion of the write operation to the LPTIM_DIER
 	 * register */
-	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT)
-	{
+	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT) {
 		return HAL_TIMEOUT;
 	}
 
-	switch (Channel)
-	{
+	switch (Channel) {
 		case LPTIM_CHANNEL_1:
 			/* Set the DMA update event callbacks */
 			hlptim->hdma[LPTIM_DMA_ID_CC1]->XferCpltCallback = LPTIM_DMAUpdateEventCplt;
@@ -864,8 +827,7 @@ HAL_StatusTypeDef HAL_LPTIM_PWM_Start_DMA(LPTIM_HandleTypeDef *hlptim, uint32_t 
 
 			/* Enable the DMA Channel */
 			hdma = hlptim->hdma[LPTIM_DMA_ID_CC1];
-			if (LPTIM_DMA_Start_IT(hdma, (uint32_t)pData, (uint32_t)&hlptim->Instance->CCR1, Length) != HAL_OK)
-			{
+			if (LPTIM_DMA_Start_IT(hdma, (uint32_t)pData, (uint32_t)&hlptim->Instance->CCR1, Length) != HAL_OK) {
 				/* Return error status */
 				return HAL_ERROR;
 			}
@@ -880,8 +842,7 @@ HAL_StatusTypeDef HAL_LPTIM_PWM_Start_DMA(LPTIM_HandleTypeDef *hlptim, uint32_t 
 
 			/* Enable the DMA Channel */
 			hdma = hlptim->hdma[LPTIM_DMA_ID_CC2];
-			if (LPTIM_DMA_Start_IT(hdma, (uint32_t)pData, (uint32_t)&hlptim->Instance->CCR2, Length) != HAL_OK)
-			{
+			if (LPTIM_DMA_Start_IT(hdma, (uint32_t)pData, (uint32_t)&hlptim->Instance->CCR2, Length) != HAL_OK) {
 				/* Return error status */
 				return HAL_ERROR;
 			}
@@ -924,8 +885,7 @@ HAL_StatusTypeDef HAL_LPTIM_PWM_Stop_DMA(LPTIM_HandleTypeDef *hlptim, uint32_t C
 	/* Disable update event DMA request */
 	__HAL_LPTIM_DISABLE_DMA(hlptim, LPTIM_DMA_UPDATE);
 
-	switch (Channel)
-	{
+	switch (Channel) {
 		case LPTIM_CHANNEL_1:
 			/* Disable update event DMA request */
 			(void)HAL_DMA_Abort_IT(hlptim->hdma[LPTIM_DMA_ID_CC1]);
@@ -969,8 +929,7 @@ HAL_StatusTypeDef HAL_LPTIM_OnePulse_Start(LPTIM_HandleTypeDef *hlptim, uint32_t
 	assert_param(IS_LPTIM_CCX_INSTANCE(hlptim->Instance, Channel));
 
 	/* Check LPTIM channel state */
-	if (LPTIM_CHANNEL_STATE_GET(hlptim, Channel) != HAL_LPTIM_CHANNEL_STATE_READY)
-	{
+	if (LPTIM_CHANNEL_STATE_GET(hlptim, Channel) != HAL_LPTIM_CHANNEL_STATE_READY) {
 		return HAL_ERROR;
 	}
 
@@ -1047,8 +1006,7 @@ HAL_StatusTypeDef HAL_LPTIM_OnePulse_Start_IT(LPTIM_HandleTypeDef *hlptim, uint3
 	assert_param(IS_LPTIM_CCX_INSTANCE(hlptim->Instance, Channel));
 
 	/* Check LPTIM channel state */
-	if (LPTIM_CHANNEL_STATE_GET(hlptim, Channel) != HAL_LPTIM_CHANNEL_STATE_READY)
-	{
+	if (LPTIM_CHANNEL_STATE_GET(hlptim, Channel) != HAL_LPTIM_CHANNEL_STATE_READY) {
 		return HAL_ERROR;
 	}
 
@@ -1067,8 +1025,7 @@ HAL_StatusTypeDef HAL_LPTIM_OnePulse_Start_IT(LPTIM_HandleTypeDef *hlptim, uint3
 	/* Clear flag */
 	__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_DIEROK);
 
-	switch (Channel)
-	{
+	switch (Channel) {
 		case LPTIM_CHANNEL_1:
 			/* Enable  interrupt */
 			__HAL_LPTIM_ENABLE_IT(hlptim, LPTIM_IT_CMP1OK | LPTIM_IT_CC1 | LPTIM_IT_ARROK | LPTIM_IT_ARRM | LPTIM_IT_REPOK | LPTIM_IT_UPDATE);
@@ -1083,23 +1040,20 @@ HAL_StatusTypeDef HAL_LPTIM_OnePulse_Start_IT(LPTIM_HandleTypeDef *hlptim, uint3
 
 	/* Wait for the completion of the write operation to the LPTIM_DIER
 	 * register */
-	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT)
-	{
+	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT) {
 		return HAL_TIMEOUT;
 	}
 
 	/* If external trigger source is used, then enable external trigger
 	 * interrupt */
-	if ((hlptim->Init.Trigger.Source) != LPTIM_TRIGSOURCE_SOFTWARE)
-	{
+	if ((hlptim->Init.Trigger.Source) != LPTIM_TRIGSOURCE_SOFTWARE) {
 		/* Clear flag */
 		__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_DIEROK);
 		/* Enable external trigger interrupt */
 		__HAL_LPTIM_ENABLE_IT(hlptim, LPTIM_IT_EXTTRIG);
 		/* Wait for the completion of the write operation to the
 		 * LPTIM_DIER register */
-		if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT)
-		{
+		if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT) {
 			return HAL_TIMEOUT;
 		}
 	}
@@ -1146,8 +1100,7 @@ HAL_StatusTypeDef HAL_LPTIM_OnePulse_Stop_IT(LPTIM_HandleTypeDef *hlptim, uint32
 	/* Clear flag */
 	__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_DIEROK);
 
-	switch (Channel)
-	{
+	switch (Channel) {
 		case LPTIM_CHANNEL_1:
 			/* Disable interrupt */
 			__HAL_LPTIM_DISABLE_IT(hlptim, LPTIM_IT_CMP1OK | LPTIM_IT_CC1 | LPTIM_IT_ARROK | LPTIM_IT_ARRM | LPTIM_IT_REPOK | LPTIM_IT_UPDATE);
@@ -1162,23 +1115,20 @@ HAL_StatusTypeDef HAL_LPTIM_OnePulse_Stop_IT(LPTIM_HandleTypeDef *hlptim, uint32
 
 	/* Wait for the completion of the write operation to the LPTIM_DIER
 	 * register */
-	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT)
-	{
+	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT) {
 		return HAL_TIMEOUT;
 	}
 
 	/* If external trigger source is used, then enable external trigger
 	 * interrupt */
-	if ((hlptim->Init.Trigger.Source) != LPTIM_TRIGSOURCE_SOFTWARE)
-	{
+	if ((hlptim->Init.Trigger.Source) != LPTIM_TRIGSOURCE_SOFTWARE) {
 		/* Clear flag */
 		__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_DIEROK);
 		/* Enable external trigger interrupt */
 		__HAL_LPTIM_DISABLE_IT(hlptim, LPTIM_IT_EXTTRIG);
 		/* Wait for the completion of the write operation to the
 		 * LPTIM_DIER register */
-		if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT)
-		{
+		if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT) {
 			return HAL_TIMEOUT;
 		}
 	}
@@ -1211,8 +1161,7 @@ HAL_StatusTypeDef HAL_LPTIM_SetOnce_Start(LPTIM_HandleTypeDef *hlptim, uint32_t 
 	assert_param(IS_LPTIM_CCX_INSTANCE(hlptim->Instance, Channel));
 
 	/* Check LPTIM channel state */
-	if (LPTIM_CHANNEL_STATE_GET(hlptim, Channel) != HAL_LPTIM_CHANNEL_STATE_READY)
-	{
+	if (LPTIM_CHANNEL_STATE_GET(hlptim, Channel) != HAL_LPTIM_CHANNEL_STATE_READY) {
 		return HAL_ERROR;
 	}
 
@@ -1289,8 +1238,7 @@ HAL_StatusTypeDef HAL_LPTIM_SetOnce_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32
 	assert_param(IS_LPTIM_CCX_INSTANCE(hlptim->Instance, Channel));
 
 	/* Check LPTIM channel state */
-	if (LPTIM_CHANNEL_STATE_GET(hlptim, Channel) != HAL_LPTIM_CHANNEL_STATE_READY)
-	{
+	if (LPTIM_CHANNEL_STATE_GET(hlptim, Channel) != HAL_LPTIM_CHANNEL_STATE_READY) {
 		return HAL_ERROR;
 	}
 
@@ -1309,8 +1257,7 @@ HAL_StatusTypeDef HAL_LPTIM_SetOnce_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32
 	/* Clear flag */
 	__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_DIEROK);
 
-	switch (Channel)
-	{
+	switch (Channel) {
 		case LPTIM_CHANNEL_1:
 			/* Enable interrupt */
 			__HAL_LPTIM_ENABLE_IT(hlptim, LPTIM_IT_CMP1OK | LPTIM_IT_CC1 | LPTIM_IT_ARROK | LPTIM_IT_ARRM | LPTIM_IT_UPDATE);
@@ -1325,23 +1272,20 @@ HAL_StatusTypeDef HAL_LPTIM_SetOnce_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32
 
 	/* Wait for the completion of the write operation to the LPTIM_DIER
 	 * register */
-	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT)
-	{
+	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT) {
 		return HAL_TIMEOUT;
 	}
 
 	/* If external trigger source is used, then enable external trigger
 	 * interrupt */
-	if ((hlptim->Init.Trigger.Source) != LPTIM_TRIGSOURCE_SOFTWARE)
-	{
+	if ((hlptim->Init.Trigger.Source) != LPTIM_TRIGSOURCE_SOFTWARE) {
 		/* Clear flag */
 		__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_DIEROK);
 		/* Enable external trigger interrupt */
 		__HAL_LPTIM_ENABLE_IT(hlptim, LPTIM_IT_EXTTRIG);
 		/* Wait for the completion of the write operation to the
 		 * LPTIM_DIER register */
-		if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT)
-		{
+		if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT) {
 			return HAL_TIMEOUT;
 		}
 	}
@@ -1388,8 +1332,7 @@ HAL_StatusTypeDef HAL_LPTIM_SetOnce_Stop_IT(LPTIM_HandleTypeDef *hlptim, uint32_
 	/* Clear flag */
 	__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_DIEROK);
 
-	switch (Channel)
-	{
+	switch (Channel) {
 		case LPTIM_CHANNEL_1:
 			/* Disable interrupt */
 			__HAL_LPTIM_DISABLE_IT(hlptim, LPTIM_IT_CMP1OK | LPTIM_IT_CC1 | LPTIM_IT_ARROK | LPTIM_IT_ARRM);
@@ -1404,15 +1347,13 @@ HAL_StatusTypeDef HAL_LPTIM_SetOnce_Stop_IT(LPTIM_HandleTypeDef *hlptim, uint32_
 
 	/* Wait for the completion of the write operation to the LPTIM_DIER
 	 * register */
-	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT)
-	{
+	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT) {
 		return HAL_TIMEOUT;
 	}
 
 	/* If external trigger source is used, then enable external trigger
 	 * interrupt */
-	if ((hlptim->Init.Trigger.Source) != LPTIM_TRIGSOURCE_SOFTWARE)
-	{
+	if ((hlptim->Init.Trigger.Source) != LPTIM_TRIGSOURCE_SOFTWARE) {
 		/* Clear flag */
 		__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_DIEROK);
 		/* Enable external trigger interrupt */
@@ -1420,8 +1361,7 @@ HAL_StatusTypeDef HAL_LPTIM_SetOnce_Stop_IT(LPTIM_HandleTypeDef *hlptim, uint32_
 
 		/* Wait for the completion of the write operation to the
 		 * LPTIM_DIER register */
-		if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT)
-		{
+		if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT) {
 			return HAL_TIMEOUT;
 		}
 	}
@@ -1556,8 +1496,7 @@ HAL_StatusTypeDef HAL_LPTIM_Encoder_Start_IT(LPTIM_HandleTypeDef *hlptim)
 
 	/* Wait for the completion of the write operation to the LPTIM_DIER
 	 * register */
-	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT)
-	{
+	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT) {
 		return HAL_TIMEOUT;
 	}
 
@@ -1600,8 +1539,7 @@ HAL_StatusTypeDef HAL_LPTIM_Encoder_Stop_IT(LPTIM_HandleTypeDef *hlptim)
 
 	/* Wait for the completion of the write operation to the LPTIM_DIER
 	 * register */
-	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT)
-	{
+	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT) {
 		return HAL_TIMEOUT;
 	}
 
@@ -1647,8 +1585,7 @@ HAL_StatusTypeDef HAL_LPTIM_TimeOut_Start(LPTIM_HandleTypeDef *hlptim, uint32_t 
 
 	/* Wait for the completion of the write operation to the LPTIM_CCR1
 	 * register */
-	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_CMP1OK) == HAL_TIMEOUT)
-	{
+	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_CMP1OK) == HAL_TIMEOUT) {
 		return HAL_TIMEOUT;
 	}
 
@@ -1720,8 +1657,7 @@ HAL_StatusTypeDef HAL_LPTIM_TimeOut_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32
 
 	/* Wait for the completion of the write operation to the LPTIM_DIER
 	 * register */
-	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT)
-	{
+	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT) {
 		return HAL_TIMEOUT;
 	}
 
@@ -1733,8 +1669,7 @@ HAL_StatusTypeDef HAL_LPTIM_TimeOut_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32
 
 	/* Wait for the completion of the write operation to the LPTIM_CCR1
 	 * register */
-	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_CMP1OK) == HAL_TIMEOUT)
-	{
+	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_CMP1OK) == HAL_TIMEOUT) {
 		return HAL_TIMEOUT;
 	}
 
@@ -1778,8 +1713,7 @@ HAL_StatusTypeDef HAL_LPTIM_TimeOut_Stop_IT(LPTIM_HandleTypeDef *hlptim)
 
 	/* Wait for the completion of the write operation to the LPTIM_DIER
 	 * register */
-	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT)
-	{
+	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT) {
 		return HAL_TIMEOUT;
 	}
 
@@ -1808,8 +1742,7 @@ HAL_StatusTypeDef HAL_LPTIM_Counter_Start(LPTIM_HandleTypeDef *hlptim)
 
 	/* If clock source is not ULPTIM clock and counter source is external,
 	 * then it must not be prescaled */
-	if ((hlptim->Init.Clock.Source != LPTIM_CLOCKSOURCE_ULPTIM) && (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL))
-	{
+	if ((hlptim->Init.Clock.Source != LPTIM_CLOCKSOURCE_ULPTIM) && (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL)) {
 		/* Check if clock is prescaled */
 		assert_param(IS_LPTIM_CLOCK_PRESCALERDIV1(hlptim->Init.Clock.Prescaler));
 		/* Set clock prescaler to 0 */
@@ -1867,8 +1800,7 @@ HAL_StatusTypeDef HAL_LPTIM_Counter_Start_IT(LPTIM_HandleTypeDef *hlptim)
 
 	/* If clock source is not ULPTIM clock and counter source is external,
 	 * then it must not be prescaled */
-	if ((hlptim->Init.Clock.Source != LPTIM_CLOCKSOURCE_ULPTIM) && (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL))
-	{
+	if ((hlptim->Init.Clock.Source != LPTIM_CLOCKSOURCE_ULPTIM) && (hlptim->Init.CounterSource == LPTIM_COUNTERSOURCE_EXTERNAL)) {
 		/* Check if clock is prescaled */
 		assert_param(IS_LPTIM_CLOCK_PRESCALERDIV1(hlptim->Init.Clock.Prescaler));
 		/* Set clock prescaler to 0 */
@@ -1886,8 +1818,7 @@ HAL_StatusTypeDef HAL_LPTIM_Counter_Start_IT(LPTIM_HandleTypeDef *hlptim)
 
 	/* Wait for the completion of the write operation to the LPTIM_DIER
 	 * register */
-	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT)
-	{
+	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT) {
 		return HAL_TIMEOUT;
 	}
 
@@ -1928,8 +1859,7 @@ HAL_StatusTypeDef HAL_LPTIM_Counter_Stop_IT(LPTIM_HandleTypeDef *hlptim)
 
 	/* Wait for the completion of the write operation to the LPTIM_DIER
 	 * register */
-	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT)
-	{
+	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT) {
 		return HAL_TIMEOUT;
 	}
 
@@ -1959,8 +1889,7 @@ HAL_StatusTypeDef HAL_LPTIM_IC_Start(LPTIM_HandleTypeDef *hlptim, uint32_t Chann
 	assert_param(IS_LPTIM_CCX_INSTANCE(hlptim->Instance, Channel));
 
 	/* Check LPTIM channel state */
-	if (LPTIM_CHANNEL_STATE_GET(hlptim, Channel) != HAL_LPTIM_CHANNEL_STATE_READY)
-	{
+	if (LPTIM_CHANNEL_STATE_GET(hlptim, Channel) != HAL_LPTIM_CHANNEL_STATE_READY) {
 		return HAL_ERROR;
 	}
 
@@ -2036,8 +1965,7 @@ HAL_StatusTypeDef HAL_LPTIM_IC_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Ch
 	assert_param(IS_LPTIM_CCX_INSTANCE(hlptim->Instance, Channel));
 
 	/* Check LPTIM channel state */
-	if (LPTIM_CHANNEL_STATE_GET(hlptim, Channel) != HAL_LPTIM_CHANNEL_STATE_READY)
-	{
+	if (LPTIM_CHANNEL_STATE_GET(hlptim, Channel) != HAL_LPTIM_CHANNEL_STATE_READY) {
 		return HAL_ERROR;
 	}
 
@@ -2050,8 +1978,7 @@ HAL_StatusTypeDef HAL_LPTIM_IC_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Ch
 	/* Enable the Peripheral */
 	__HAL_LPTIM_ENABLE(hlptim);
 
-	switch (Channel)
-	{
+	switch (Channel) {
 		case LPTIM_CHANNEL_1:
 			/* Enable Capture/Compare 1 interrupt */
 			__HAL_LPTIM_ENABLE_IT(hlptim, LPTIM_IT_CC1);
@@ -2066,8 +1993,7 @@ HAL_StatusTypeDef HAL_LPTIM_IC_Start_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Ch
 
 	/* Wait for the completion of the write operation to the LPTIM_DIER
 	 * register */
-	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT)
-	{
+	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT) {
 		return HAL_TIMEOUT;
 	}
 
@@ -2102,8 +2028,7 @@ HAL_StatusTypeDef HAL_LPTIM_IC_Stop_IT(LPTIM_HandleTypeDef *hlptim, uint32_t Cha
 	/* Set the LPTIM state */
 	hlptim->State = HAL_LPTIM_STATE_BUSY;
 
-	switch (Channel)
-	{
+	switch (Channel) {
 		case LPTIM_CHANNEL_1:
 			/* Disable Capture/Compare 1 interrupt */
 			__HAL_LPTIM_DISABLE_IT(hlptim, LPTIM_IT_CC1);
@@ -2152,14 +2077,12 @@ HAL_StatusTypeDef HAL_LPTIM_IC_Start_DMA(LPTIM_HandleTypeDef *hlptim, uint32_t C
 	assert_param(IS_LPTIM_DMA_INSTANCE(hlptim->Instance));
 	assert_param(IS_LPTIM_CCX_INSTANCE(hlptim->Instance, Channel));
 
-	if ((pData == NULL) || (Length == 0U))
-	{
+	if ((pData == NULL) || (Length == 0U)) {
 		return HAL_ERROR;
 	}
 
 	/* Check LPTIM channel state */
-	if (LPTIM_CHANNEL_STATE_GET(hlptim, Channel) != HAL_LPTIM_CHANNEL_STATE_READY)
-	{
+	if (LPTIM_CHANNEL_STATE_GET(hlptim, Channel) != HAL_LPTIM_CHANNEL_STATE_READY) {
 		return HAL_ERROR;
 	}
 
@@ -2172,8 +2095,7 @@ HAL_StatusTypeDef HAL_LPTIM_IC_Start_DMA(LPTIM_HandleTypeDef *hlptim, uint32_t C
 	/* Enable the Peripheral */
 	__HAL_LPTIM_ENABLE(hlptim);
 
-	switch (Channel)
-	{
+	switch (Channel) {
 		case LPTIM_CHANNEL_1:
 			/* Set the DMA capture callbacks */
 			hlptim->hdma[LPTIM_DMA_ID_CC1]->XferCpltCallback = LPTIM_DMACaptureCplt;
@@ -2184,8 +2106,7 @@ HAL_StatusTypeDef HAL_LPTIM_IC_Start_DMA(LPTIM_HandleTypeDef *hlptim, uint32_t C
 
 			/* Enable the DMA Channel */
 			hdma = hlptim->hdma[LPTIM_DMA_ID_CC1];
-			if (LPTIM_DMA_Start_IT(hdma, (uint32_t)&hlptim->Instance->CCR1, (uint32_t)pData, Length) != HAL_OK)
-			{
+			if (LPTIM_DMA_Start_IT(hdma, (uint32_t)&hlptim->Instance->CCR1, (uint32_t)pData, Length) != HAL_OK) {
 				/* Return error status */
 				return HAL_ERROR;
 			}
@@ -2204,8 +2125,7 @@ HAL_StatusTypeDef HAL_LPTIM_IC_Start_DMA(LPTIM_HandleTypeDef *hlptim, uint32_t C
 
 			/* Enable the DMA Channel */
 			hdma = hlptim->hdma[LPTIM_DMA_ID_CC2];
-			if (LPTIM_DMA_Start_IT(hdma, (uint32_t)&hlptim->Instance->CCR2, (uint32_t)pData, Length) != HAL_OK)
-			{
+			if (LPTIM_DMA_Start_IT(hdma, (uint32_t)&hlptim->Instance->CCR2, (uint32_t)pData, Length) != HAL_OK) {
 				/* Return error status */
 				return HAL_ERROR;
 			}
@@ -2220,8 +2140,7 @@ HAL_StatusTypeDef HAL_LPTIM_IC_Start_DMA(LPTIM_HandleTypeDef *hlptim, uint32_t C
 
 	/* Wait for the completion of the write operation to the LPTIM_DIER
 	 * register */
-	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT)
-	{
+	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT) {
 		return HAL_TIMEOUT;
 	}
 
@@ -2256,8 +2175,7 @@ HAL_StatusTypeDef HAL_LPTIM_IC_Stop_DMA(LPTIM_HandleTypeDef *hlptim, uint32_t Ch
 	/* Set the LPTIM state */
 	hlptim->State = HAL_LPTIM_STATE_BUSY;
 
-	switch (Channel)
-	{
+	switch (Channel) {
 		case LPTIM_CHANNEL_1:
 			/* Disable Capture/Compare 1 DMA request */
 			__HAL_LPTIM_DISABLE_DMA(hlptim, LPTIM_DMA_CC1);
@@ -2350,8 +2268,7 @@ uint32_t HAL_LPTIM_ReadCapturedValue(const LPTIM_HandleTypeDef *hlptim, uint32_t
 	/* Check the parameters */
 	assert_param(IS_LPTIM_CCX_INSTANCE(hlptim->Instance, Channel));
 
-	switch (Channel)
-	{
+	switch (Channel) {
 		case LPTIM_CHANNEL_1:
 			tmpccr = hlptim->Instance->CCR1;
 			break;
@@ -2441,30 +2358,25 @@ HAL_StatusTypeDef HAL_LPTIM_OC_ConfigChannel(LPTIM_HandleTypeDef *hlptim, const 
 
 	hlptim->State = HAL_LPTIM_STATE_BUSY;
 
-	switch (Channel)
-	{
-		case LPTIM_CHANNEL_1:
-		{
+	switch (Channel) {
+		case LPTIM_CHANNEL_1: {
 			/* Check the parameters */
 			assert_param(IS_LPTIM_CC1_INSTANCE(hlptim->Instance));
 
 			/* Configure the LPTIM Channel 1 in Output Compare */
 			status = LPTIM_OC1_SetConfig(hlptim, sConfig);
-			if (status != HAL_OK)
-			{
+			if (status != HAL_OK) {
 				return status;
 			}
 			break;
 		}
-		case LPTIM_CHANNEL_2:
-		{
+		case LPTIM_CHANNEL_2: {
 			/* Check the parameters */
 			assert_param(IS_LPTIM_CC2_INSTANCE(hlptim->Instance));
 
 			/* Configure the LPTIM Channel 2 in Output Compare */
 			status = LPTIM_OC2_SetConfig(hlptim, sConfig);
-			if (status != HAL_OK)
-			{
+			if (status != HAL_OK) {
 				return status;
 			}
 			break;
@@ -2505,10 +2417,8 @@ HAL_StatusTypeDef HAL_LPTIM_IC_ConfigChannel(LPTIM_HandleTypeDef *hlptim, const 
 
 	hlptim->State = HAL_LPTIM_STATE_BUSY;
 
-	switch (Channel)
-	{
-		case LPTIM_CHANNEL_1:
-		{
+	switch (Channel) {
+		case LPTIM_CHANNEL_1: {
 			/* Check the parameters */
 			assert_param(IS_LPTIM_CC1_INSTANCE(hlptim->Instance));
 			assert_param(IS_LPTIM_IC1_SOURCE(hlptim->Instance, sConfig->ICInputSource));
@@ -2517,8 +2427,7 @@ HAL_StatusTypeDef HAL_LPTIM_IC_ConfigChannel(LPTIM_HandleTypeDef *hlptim, const 
 			LPTIM_IC1_SetConfig(hlptim, sConfig);
 			break;
 		}
-		case LPTIM_CHANNEL_2:
-		{
+		case LPTIM_CHANNEL_2: {
 			/* Check the parameters */
 			assert_param(IS_LPTIM_CC2_INSTANCE(hlptim->Instance));
 			assert_param(IS_LPTIM_IC2_SOURCE(hlptim->Instance, sConfig->ICInputSource));
@@ -2570,16 +2479,13 @@ within the IRQ handler:
 void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
 {
 	/* Capture Compare 1 interrupt */
-	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_CC1) != RESET)
-	{
-		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_FLAG_CC1) != RESET)
-		{
+	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_CC1) != RESET) {
+		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_FLAG_CC1) != RESET) {
 			__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_CC1);
 			hlptim->Channel = HAL_LPTIM_ACTIVE_CHANNEL_1;
 
 			/* Input capture event */
-			if ((hlptim->Instance->CCMR1 & LPTIM_CCMR1_CC1SEL) != 0x00U)
-			{
+			if ((hlptim->Instance->CCMR1 & LPTIM_CCMR1_CC1SEL) != 0x00U) {
 #if (USE_HAL_LPTIM_REGISTER_CALLBACKS == 1)
 				hlptim->IC_CaptureCallback(hlptim);
 #else
@@ -2587,8 +2493,7 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
 #endif /* USE_HAL_LPTIM_REGISTER_CALLBACKS */
 			}
 			/* Output compare event */
-			else
-			{
+			else {
 #if (USE_HAL_LPTIM_REGISTER_CALLBACKS == 1)
 				hlptim->CompareMatchCallback(hlptim);
 #else
@@ -2600,16 +2505,13 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
 	}
 
 	/* Capture Compare 2 interrupt */
-	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_CC2) != RESET)
-	{
-		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_FLAG_CC2) != RESET)
-		{
+	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_CC2) != RESET) {
+		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_FLAG_CC2) != RESET) {
 			__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_CC2);
 			hlptim->Channel = HAL_LPTIM_ACTIVE_CHANNEL_2;
 
 			/* Input capture event */
-			if ((hlptim->Instance->CCMR1 & LPTIM_CCMR1_CC2SEL) != 0x00U)
-			{
+			if ((hlptim->Instance->CCMR1 & LPTIM_CCMR1_CC2SEL) != 0x00U) {
 #if (USE_HAL_LPTIM_REGISTER_CALLBACKS == 1)
 				hlptim->IC_CaptureCallback(hlptim);
 #else
@@ -2617,8 +2519,7 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
 #endif /* USE_HAL_LPTIM_REGISTER_CALLBACKS */
 			}
 			/* Output compare event */
-			else
-			{
+			else {
 #if (USE_HAL_LPTIM_REGISTER_CALLBACKS == 1)
 				hlptim->CompareMatchCallback(hlptim);
 #else
@@ -2630,10 +2531,8 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
 	}
 
 	/* Over Capture 1 interrupt */
-	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_CC1O) != RESET)
-	{
-		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_FLAG_CC1O) != RESET)
-		{
+	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_CC1O) != RESET) {
+		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_FLAG_CC1O) != RESET) {
 			__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_CC1O);
 			hlptim->Channel = HAL_LPTIM_ACTIVE_CHANNEL_1;
 
@@ -2648,10 +2547,8 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
 	}
 
 	/* Over Capture 2 interrupt */
-	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_CC2O) != RESET)
-	{
-		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_FLAG_CC2O) != RESET)
-		{
+	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_CC2O) != RESET) {
+		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_FLAG_CC2O) != RESET) {
 			__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_CC2O);
 			hlptim->Channel = HAL_LPTIM_ACTIVE_CHANNEL_2;
 
@@ -2666,10 +2563,8 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
 	}
 
 	/* Autoreload match interrupt */
-	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_ARRM) != RESET)
-	{
-		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_ARRM) != RESET)
-		{
+	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_ARRM) != RESET) {
+		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_ARRM) != RESET) {
 			/* Clear Autoreload match flag */
 			__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_ARRM);
 
@@ -2683,10 +2578,8 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
 	}
 
 	/* Trigger detected interrupt */
-	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_EXTTRIG) != RESET)
-	{
-		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_EXTTRIG) != RESET)
-		{
+	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_EXTTRIG) != RESET) {
+		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_EXTTRIG) != RESET) {
 			/* Clear Trigger detected flag */
 			__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_EXTTRIG);
 
@@ -2700,10 +2593,8 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
 	}
 
 	/* Compare write interrupt */
-	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_CMP1OK) != RESET)
-	{
-		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_CMP1OK) != RESET)
-		{
+	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_CMP1OK) != RESET) {
+		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_CMP1OK) != RESET) {
 			/* Clear Compare write flag */
 			__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_CMP1OK);
 			hlptim->Channel = HAL_LPTIM_ACTIVE_CHANNEL_1;
@@ -2717,10 +2608,8 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
 	}
 
 	/* Compare write interrupt */
-	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_CMP2OK) != RESET)
-	{
-		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_CMP2OK) != RESET)
-		{
+	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_CMP2OK) != RESET) {
+		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_CMP2OK) != RESET) {
 			/* Clear Compare write flag */
 			__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_CMP2OK);
 			hlptim->Channel = HAL_LPTIM_ACTIVE_CHANNEL_2;
@@ -2734,10 +2623,8 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
 	}
 
 	/* Autoreload write interrupt */
-	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_ARROK) != RESET)
-	{
-		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_ARROK) != RESET)
-		{
+	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_ARROK) != RESET) {
+		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_ARROK) != RESET) {
 			/* Clear Autoreload write flag */
 			__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_ARROK);
 
@@ -2751,10 +2638,8 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
 	}
 
 	/* Direction counter changed from Down to Up interrupt */
-	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_UP) != RESET)
-	{
-		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_UP) != RESET)
-		{
+	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_UP) != RESET) {
+		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_UP) != RESET) {
 			/* Clear Direction counter changed from Down to Up flag
 			 */
 			__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_UP);
@@ -2769,10 +2654,8 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
 	}
 
 	/* Direction counter changed from Up to Down interrupt */
-	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_DOWN) != RESET)
-	{
-		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_DOWN) != RESET)
-		{
+	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_DOWN) != RESET) {
+		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_DOWN) != RESET) {
 			/* Clear Direction counter changed from Up to Down flag
 			 */
 			__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_DOWN);
@@ -2788,10 +2671,8 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
 
 	/* Repetition counter underflowed (or contains zero) and the LPTIM
 	   counter overflowed */
-	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_UPDATE) != RESET)
-	{
-		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_UPDATE) != RESET)
-		{
+	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_UPDATE) != RESET) {
+		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_UPDATE) != RESET) {
 			/* Clear update event flag */
 			__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_UPDATE);
 
@@ -2805,10 +2686,8 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
 	}
 
 	/* Successful APB bus write to repetition counter register */
-	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_REPOK) != RESET)
-	{
-		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_REPOK) != RESET)
-		{
+	if (__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_REPOK) != RESET) {
+		if (__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_REPOK) != RESET) {
 			/* Clear successful APB bus write to repetition counter
 			 * flag */
 			__HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_REPOK);
@@ -3095,15 +2974,12 @@ HAL_StatusTypeDef HAL_LPTIM_RegisterCallback(LPTIM_HandleTypeDef *hlptim, HAL_LP
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
-	if (pCallback == NULL)
-	{
+	if (pCallback == NULL) {
 		return HAL_ERROR;
 	}
 
-	if (hlptim->State == HAL_LPTIM_STATE_READY)
-	{
-		switch (CallbackID)
-		{
+	if (hlptim->State == HAL_LPTIM_STATE_READY) {
+		switch (CallbackID) {
 			case HAL_LPTIM_MSPINIT_CB_ID:
 				hlptim->MspInitCallback = pCallback;
 				break;
@@ -3173,11 +3049,8 @@ HAL_StatusTypeDef HAL_LPTIM_RegisterCallback(LPTIM_HandleTypeDef *hlptim, HAL_LP
 				status = HAL_ERROR;
 				break;
 		}
-	}
-	else if (hlptim->State == HAL_LPTIM_STATE_RESET)
-	{
-		switch (CallbackID)
-		{
+	} else if (hlptim->State == HAL_LPTIM_STATE_RESET) {
+		switch (CallbackID) {
 			case HAL_LPTIM_MSPINIT_CB_ID:
 				hlptim->MspInitCallback = pCallback;
 				break;
@@ -3191,9 +3064,7 @@ HAL_StatusTypeDef HAL_LPTIM_RegisterCallback(LPTIM_HandleTypeDef *hlptim, HAL_LP
 				status = HAL_ERROR;
 				break;
 		}
-	}
-	else
-	{
+	} else {
 		/* Return error status */
 		status = HAL_ERROR;
 	}
@@ -3242,10 +3113,8 @@ HAL_StatusTypeDef HAL_LPTIM_UnRegisterCallback(LPTIM_HandleTypeDef *hlptim, HAL_
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
-	if (hlptim->State == HAL_LPTIM_STATE_READY)
-	{
-		switch (CallbackID)
-		{
+	if (hlptim->State == HAL_LPTIM_STATE_READY) {
+		switch (CallbackID) {
 			case HAL_LPTIM_MSPINIT_CB_ID:
 				/* Legacy weak MspInit Callback */
 				hlptim->MspInitCallback = HAL_LPTIM_MspInit;
@@ -3343,11 +3212,8 @@ HAL_StatusTypeDef HAL_LPTIM_UnRegisterCallback(LPTIM_HandleTypeDef *hlptim, HAL_
 				status = HAL_ERROR;
 				break;
 		}
-	}
-	else if (hlptim->State == HAL_LPTIM_STATE_RESET)
-	{
-		switch (CallbackID)
-		{
+	} else if (hlptim->State == HAL_LPTIM_STATE_RESET) {
+		switch (CallbackID) {
 			case HAL_LPTIM_MSPINIT_CB_ID:
 				/* Legacy weak MspInit Callback */
 				hlptim->MspInitCallback = HAL_LPTIM_MspInit;
@@ -3363,9 +3229,7 @@ HAL_StatusTypeDef HAL_LPTIM_UnRegisterCallback(LPTIM_HandleTypeDef *hlptim, HAL_
 				status = HAL_ERROR;
 				break;
 		}
-	}
-	else
-	{
+	} else {
 		/* Return error status */
 		status = HAL_ERROR;
 	}
@@ -3454,11 +3318,9 @@ static HAL_StatusTypeDef LPTIM_WaitForFlag(const LPTIM_HandleTypeDef *hlptim, ui
 {
 	HAL_StatusTypeDef result = HAL_OK;
 	uint32_t count = TIMEOUT * (SystemCoreClock / 20UL / 1000UL);
-	do
-	{
+	do {
 		count--;
-		if (count == 0UL)
-		{
+		if (count == 0UL) {
 			result = HAL_TIMEOUT;
 		}
 	} while ((!(__HAL_LPTIM_GET_FLAG((hlptim), (flag)))) && (count != 0UL));
@@ -3495,16 +3357,11 @@ void LPTIM_DMACaptureCplt(DMA_HandleTypeDef *hdma)
 
 	hlptim->State = HAL_LPTIM_STATE_READY;
 
-	if (hdma == hlptim->hdma[LPTIM_DMA_ID_CC1])
-	{
+	if (hdma == hlptim->hdma[LPTIM_DMA_ID_CC1]) {
 		hlptim->Channel = HAL_LPTIM_ACTIVE_CHANNEL_1;
-	}
-	else if (hdma == hlptim->hdma[LPTIM_DMA_ID_CC2])
-	{
+	} else if (hdma == hlptim->hdma[LPTIM_DMA_ID_CC2]) {
 		hlptim->Channel = HAL_LPTIM_ACTIVE_CHANNEL_2;
-	}
-	else
-	{
+	} else {
 		/* nothing to do */
 	}
 
@@ -3528,16 +3385,11 @@ void LPTIM_DMACaptureHalfCplt(DMA_HandleTypeDef *hdma)
 
 	hlptim->State = HAL_LPTIM_STATE_READY;
 
-	if (hdma == hlptim->hdma[LPTIM_DMA_ID_CC1])
-	{
+	if (hdma == hlptim->hdma[LPTIM_DMA_ID_CC1]) {
 		hlptim->Channel = HAL_LPTIM_ACTIVE_CHANNEL_1;
-	}
-	else if (hdma == hlptim->hdma[LPTIM_DMA_ID_CC2])
-	{
+	} else if (hdma == hlptim->hdma[LPTIM_DMA_ID_CC2]) {
 		hlptim->Channel = HAL_LPTIM_ACTIVE_CHANNEL_2;
-	}
-	else
-	{
+	} else {
 		/* nothing to do */
 	}
 
@@ -3561,16 +3413,11 @@ void LPTIM_DMAUpdateEventCplt(DMA_HandleTypeDef *hdma)
 
 	hlptim->State = HAL_LPTIM_STATE_READY;
 
-	if (hdma == hlptim->hdma[LPTIM_DMA_ID_CC1])
-	{
+	if (hdma == hlptim->hdma[LPTIM_DMA_ID_CC1]) {
 		hlptim->Channel = HAL_LPTIM_ACTIVE_CHANNEL_1;
-	}
-	else if (hdma == hlptim->hdma[LPTIM_DMA_ID_CC2])
-	{
+	} else if (hdma == hlptim->hdma[LPTIM_DMA_ID_CC2]) {
 		hlptim->Channel = HAL_LPTIM_ACTIVE_CHANNEL_2;
-	}
-	else
-	{
+	} else {
 		/* nothing to do */
 	}
 
@@ -3594,16 +3441,11 @@ void LPTIM_DMAUpdateEventHalfCplt(DMA_HandleTypeDef *hdma)
 
 	hlptim->State = HAL_LPTIM_STATE_READY;
 
-	if (hdma == hlptim->hdma[LPTIM_DMA_ID_CC1])
-	{
+	if (hdma == hlptim->hdma[LPTIM_DMA_ID_CC1]) {
 		hlptim->Channel = HAL_LPTIM_ACTIVE_CHANNEL_1;
-	}
-	else if (hdma == hlptim->hdma[LPTIM_DMA_ID_CC2])
-	{
+	} else if (hdma == hlptim->hdma[LPTIM_DMA_ID_CC2]) {
 		hlptim->Channel = HAL_LPTIM_ACTIVE_CHANNEL_2;
-	}
-	else
-	{
+	} else {
 		/* nothing to do */
 	}
 
@@ -3630,17 +3472,14 @@ static HAL_StatusTypeDef LPTIM_OC1_SetConfig(LPTIM_HandleTypeDef *hlptim, const 
 	tmpccmr1 = hlptim->Instance->CCMR1;
 	tmpccmr1 &= ~(LPTIM_CCMR1_CC1P_Msk | LPTIM_CCMR1_CC1SEL_Msk);
 
-	if (hlptim->Instance == LPTIM4)
-	{
+	if (hlptim->Instance == LPTIM4) {
 		tmpcfgr = hlptim->Instance->CFGR;
 		tmpcfgr &= ~LPTIM_CFGR_WAVPOL_Msk;
 		tmpcfgr |= sConfig->OCPolarity << LPTIM_CFGR_WAVPOL_Pos;
 
 		/* Write to CFGR register */
 		hlptim->Instance->CFGR = tmpcfgr;
-	}
-	else
-	{
+	} else {
 		tmpccmr1 |= sConfig->OCPolarity << LPTIM_CCMR1_CC1P_Pos;
 	}
 
@@ -3655,8 +3494,7 @@ static HAL_StatusTypeDef LPTIM_OC1_SetConfig(LPTIM_HandleTypeDef *hlptim, const 
 
 	/* Wait for the completion of the write operation to the LPTIM_CCR1
 	 * register */
-	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_CMP1OK) == HAL_TIMEOUT)
-	{
+	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_CMP1OK) == HAL_TIMEOUT) {
 		return HAL_TIMEOUT;
 	}
 
@@ -3695,8 +3533,7 @@ static HAL_StatusTypeDef LPTIM_OC2_SetConfig(LPTIM_HandleTypeDef *hlptim, const 
 
 	/* Wait for the completion of the write operation to the LPTIM_CCR2
 	 * register */
-	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_CMP2OK) != HAL_OK)
-	{
+	if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_CMP2OK) != HAL_OK) {
 		return HAL_TIMEOUT;
 	}
 
@@ -3777,24 +3614,18 @@ HAL_StatusTypeDef LPTIM_DMA_Start_IT(DMA_HandleTypeDef *hdma, uint32_t src, uint
 	HAL_StatusTypeDef status;
 
 	/* Enable the DMA channel */
-	if ((hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST)
-	{
-		if ((hdma->LinkedListQueue != 0U) && (hdma->LinkedListQueue->Head != 0U))
-		{
+	if ((hdma->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
+		if ((hdma->LinkedListQueue != 0U) && (hdma->LinkedListQueue->Head != 0U)) {
 			/* Enable the DMA channel */
 			hdma->LinkedListQueue->Head->LinkRegisters[NODE_CBR1_DEFAULT_OFFSET] = length;
 			hdma->LinkedListQueue->Head->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] = (uint32_t)src;
 			hdma->LinkedListQueue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] = (uint32_t)dst;
 
 			status = HAL_DMAEx_List_Start_IT(hdma);
-		}
-		else
-		{
+		} else {
 			status = HAL_ERROR;
 		}
-	}
-	else
-	{
+	} else {
 		status = HAL_DMA_Start_IT(hdma, src, dst, length);
 	}
 

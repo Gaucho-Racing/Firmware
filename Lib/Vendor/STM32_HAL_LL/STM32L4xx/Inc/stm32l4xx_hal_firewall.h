@@ -21,79 +21,77 @@
 #define STM32L4xx_HAL_FIREWALL_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l4xx_hal_def.h"
 
-	/** @addtogroup STM32L4xx_HAL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32L4xx_HAL_Driver
+ * @{
+ */
 
-	/** @addtogroup FIREWALL  FIREWALL
-	 * @{
-	 */
+/** @addtogroup FIREWALL  FIREWALL
+ * @{
+ */
 
-	/* Exported types ------------------------------------------------------------*/
-	/** @defgroup FIREWALL_Exported_Types FIREWALL Exported Types
-	 * @{
-	 */
+/* Exported types ------------------------------------------------------------*/
+/** @defgroup FIREWALL_Exported_Types FIREWALL Exported Types
+ * @{
+ */
 
-	/**
-	 * @brief FIREWALL Initialization Structure definition
-	 */
-	typedef struct
-	{
-		uint32_t CodeSegmentStartAddress; /*!< Protected code segment start
-						     address. This value is 24-bit long,
-						     the 8 LSB bits are reserved and
-						     forced to 0 in order to allow a
-						     256-byte granularity. */
+/**
+ * @brief FIREWALL Initialization Structure definition
+ */
+typedef struct {
+	uint32_t CodeSegmentStartAddress; /*!< Protected code segment start
+					     address. This value is 24-bit long,
+					     the 8 LSB bits are reserved and
+					     forced to 0 in order to allow a
+					     256-byte granularity. */
 
-		uint32_t CodeSegmentLength; /*!< Protected code segment length in bytes.
-					       This value is 22-bit long, the 8 LSB bits
-					       are reserved and forced to 0 for the
-					       length to be a multiple of 256 bytes. */
+	uint32_t CodeSegmentLength; /*!< Protected code segment length in bytes.
+				       This value is 22-bit long, the 8 LSB bits
+				       are reserved and forced to 0 for the
+				       length to be a multiple of 256 bytes. */
 
-		uint32_t NonVDataSegmentStartAddress; /*!< Protected non-volatile data
-							 segment start address. This value is
-							 24-bit long, the 8 LSB bits are
-							 reserved and forced to 0 in order to
-							 allow a 256-byte granularity. */
+	uint32_t NonVDataSegmentStartAddress; /*!< Protected non-volatile data
+						 segment start address. This value is
+						 24-bit long, the 8 LSB bits are
+						 reserved and forced to 0 in order to
+						 allow a 256-byte granularity. */
 
-		uint32_t NonVDataSegmentLength; /*!< Protected non-volatile data segment
-						   length in bytes. This value is 22-bit
-						   long, the 8 LSB bits are reserved and
-						   forced to 0 for the length to be a
-						   multiple of 256 bytes. */
+	uint32_t NonVDataSegmentLength; /*!< Protected non-volatile data segment
+					   length in bytes. This value is 22-bit
+					   long, the 8 LSB bits are reserved and
+					   forced to 0 for the length to be a
+					   multiple of 256 bytes. */
 
-		uint32_t VDataSegmentStartAddress; /*!< Protected volatile data segment
-						      start address. This value is
-						      17-bit long, the 6 LSB bits are
-						      reserved and forced to 0 in order
-						      to allow a 64-byte granularity. */
+	uint32_t VDataSegmentStartAddress; /*!< Protected volatile data segment
+					      start address. This value is
+					      17-bit long, the 6 LSB bits are
+					      reserved and forced to 0 in order
+					      to allow a 64-byte granularity. */
 
-		uint32_t VDataSegmentLength; /*!< Protected volatile data segment length in
-						bytes. This value is 17-bit long, the 6 LSB
-						  bits are reserved and forced to 0 for the
-						length to be a multiple of 64 bytes. */
+	uint32_t VDataSegmentLength; /*!< Protected volatile data segment length in
+					bytes. This value is 17-bit long, the 6 LSB
+					  bits are reserved and forced to 0 for the
+					length to be a multiple of 64 bytes. */
 
-		uint32_t VolatileDataExecution; /*!< Set VDE bit specifying whether or not
-						   the volatile data segment can be executed.
-						      When VDS = 1 (set by parameter
-						   VolatileDataShared), VDE bit has no
-						   meaning. This parameter can be a value of
-						   @ref FIREWALL_VolatileData_Executable */
+	uint32_t VolatileDataExecution; /*!< Set VDE bit specifying whether or not
+					   the volatile data segment can be executed.
+					      When VDS = 1 (set by parameter
+					   VolatileDataShared), VDE bit has no
+					   meaning. This parameter can be a value of
+					   @ref FIREWALL_VolatileData_Executable */
 
-		uint32_t VolatileDataShared; /*!< Set VDS bit in specifying whether or
-						not the volatile data segment can be
-						shared with a non-protected application
-						code. This parameter can be a value of
-						@ref FIREWALL_VolatileData_Shared */
+	uint32_t VolatileDataShared; /*!< Set VDS bit in specifying whether or
+					not the volatile data segment can be
+					shared with a non-protected application
+					code. This parameter can be a value of
+					@ref FIREWALL_VolatileData_Shared */
 
-	} FIREWALL_InitTypeDef;
+} FIREWALL_InitTypeDef;
 
 /**
  * @}
@@ -179,8 +177,7 @@ extern "C"
  * the macro can be executed only when the Firewall is opened.
  */
 #define __HAL_FIREWALL_PREARM_ENABLE()                                                                                                                                                                 \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(FIREWALL->CR, FW_CR_FPA);                                                                                                                                                      \
 		/* Read bit back to ensure it is taken into account by                                                                                                                                 \
@@ -202,8 +199,7 @@ extern "C"
  * the macro can be executed only when the Firewall is opened.
  */
 #define __HAL_FIREWALL_PREARM_DISABLE()                                                                                                                                                                \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		CLEAR_BIT(FIREWALL->CR, FW_CR_FPA);                                                                                                                                                    \
 		/* Read bit back to ensure it is taken into account by                                                                                                                                 \
@@ -225,8 +221,7 @@ extern "C"
  * the macro can be executed only when the Firewall is opened.
  */
 #define __HAL_FIREWALL_VOLATILEDATA_SHARED_ENABLE()                                                                                                                                                    \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(FIREWALL->CR, FW_CR_VDS);                                                                                                                                                      \
 		/* Read bit back to ensure it is taken into account by                                                                                                                                 \
@@ -249,8 +244,7 @@ extern "C"
  * the macro can be executed only when the Firewall is opened.
  */
 #define __HAL_FIREWALL_VOLATILEDATA_SHARED_DISABLE()                                                                                                                                                   \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		CLEAR_BIT(FIREWALL->CR, FW_CR_VDS);                                                                                                                                                    \
 		/* Read bit back to ensure it is taken into account by                                                                                                                                 \
@@ -274,8 +268,7 @@ extern "C"
  * the macro can be executed only when the Firewall is opened.
  */
 #define __HAL_FIREWALL_VOLATILEDATA_EXECUTION_ENABLE()                                                                                                                                                 \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		SET_BIT(FIREWALL->CR, FW_CR_VDE);                                                                                                                                                      \
 		/* Read bit back to ensure it is taken into account by                                                                                                                                 \
@@ -298,8 +291,7 @@ extern "C"
  * the macro can be executed only when the Firewall is opened.
  */
 #define __HAL_FIREWALL_VOLATILEDATA_EXECUTION_DISABLE()                                                                                                                                                \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		CLEAR_BIT(FIREWALL->CR, FW_CR_VDE);                                                                                                                                                    \
 		/* Read bit back to ensure it is taken into account by                                                                                                                                 \
@@ -343,43 +335,43 @@ extern "C"
  */
 #define __HAL_FIREWALL_GET_PREARM() ((FIREWALL->CR & FW_CR_FPA) == FW_CR_FPA)
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported functions --------------------------------------------------------*/
+/* Exported functions --------------------------------------------------------*/
 
-	/** @addtogroup FIREWALL_Exported_Functions FIREWALL Exported Functions
-	 * @{
-	 */
+/** @addtogroup FIREWALL_Exported_Functions FIREWALL Exported Functions
+ * @{
+ */
 
-	/** @addtogroup FIREWALL_Exported_Functions_Group1 Initialization Functions
-	 * @brief    Initialization and Configuration Functions
-	 * @{
-	 */
+/** @addtogroup FIREWALL_Exported_Functions_Group1 Initialization Functions
+ * @brief    Initialization and Configuration Functions
+ * @{
+ */
 
-	/* Initialization functions  ********************************/
-	HAL_StatusTypeDef HAL_FIREWALL_Config(FIREWALL_InitTypeDef *fw_init);
-	void HAL_FIREWALL_GetConfig(FIREWALL_InitTypeDef *fw_config);
-	void HAL_FIREWALL_EnableFirewall(void);
-	void HAL_FIREWALL_EnablePreArmFlag(void);
-	void HAL_FIREWALL_DisablePreArmFlag(void);
+/* Initialization functions  ********************************/
+HAL_StatusTypeDef HAL_FIREWALL_Config(FIREWALL_InitTypeDef *fw_init);
+void HAL_FIREWALL_GetConfig(FIREWALL_InitTypeDef *fw_config);
+void HAL_FIREWALL_EnableFirewall(void);
+void HAL_FIREWALL_EnablePreArmFlag(void);
+void HAL_FIREWALL_DisablePreArmFlag(void);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

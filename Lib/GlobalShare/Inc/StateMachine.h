@@ -13,8 +13,7 @@
  */
 typedef uint8_t GR_ECU_State;
 
-enum GR_ECU_State
-{
+enum GR_ECU_State {
 	/**
 	 * The GLV is off and not operational (not possible if ECU is running)
 	 */

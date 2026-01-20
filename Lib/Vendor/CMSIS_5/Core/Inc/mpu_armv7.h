@@ -178,8 +178,7 @@
 /**
  * Struct for a single MPU Region
  */
-typedef struct
-{
+typedef struct {
 	uint32_t RBAR; //!< The region base address register value (RBAR)
 	uint32_t RASR; //!< The region attribute and size register value (RASR)
 		       //!< \ref MPU_RASR
@@ -250,8 +249,7 @@ __STATIC_INLINE void ARM_MPU_SetRegionEx(uint32_t rnr, uint32_t rbar, uint32_t r
 __STATIC_INLINE void ARM_MPU_OrderedMemcpy(volatile uint32_t *dst, const uint32_t *__RESTRICT src, uint32_t len)
 {
 	uint32_t i;
-	for (i = 0U; i < len; ++i)
-	{
+	for (i = 0U; i < len; ++i) {
 		dst[i] = src[i];
 	}
 }
@@ -263,8 +261,7 @@ __STATIC_INLINE void ARM_MPU_OrderedMemcpy(volatile uint32_t *dst, const uint32_
 __STATIC_INLINE void ARM_MPU_Load(ARM_MPU_Region_t const *table, uint32_t cnt)
 {
 	const uint32_t rowWordSize = sizeof(ARM_MPU_Region_t) / 4U;
-	while (cnt > MPU_TYPE_RALIASES)
-	{
+	while (cnt > MPU_TYPE_RALIASES) {
 		ARM_MPU_OrderedMemcpy(&(MPU->RBAR), &(table->RBAR), MPU_TYPE_RALIASES * rowWordSize);
 		table += MPU_TYPE_RALIASES;
 		cnt -= MPU_TYPE_RALIASES;

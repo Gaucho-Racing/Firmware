@@ -102,8 +102,7 @@ macro.
 HAL_StatusTypeDef HAL_FIREWALL_Config(FIREWALL_InitTypeDef *fw_init)
 {
 	/* Check the Firewall initialization structure allocation */
-	if (fw_init == NULL)
-	{
+	if (fw_init == NULL) {
 		return HAL_ERROR;
 	}
 
@@ -111,34 +110,29 @@ HAL_StatusTypeDef HAL_FIREWALL_Config(FIREWALL_InitTypeDef *fw_init)
 	__HAL_RCC_FIREWALL_CLK_ENABLE();
 
 	/* Make sure that Firewall is not enabled already */
-	if (__HAL_FIREWALL_IS_ENABLED() != RESET)
-	{
+	if (__HAL_FIREWALL_IS_ENABLED() != RESET) {
 		return HAL_ERROR;
 	}
 
 	/* Check Firewall configuration addresses and lengths when segment is
 	 * protected */
 	/* Code segment */
-	if (fw_init->CodeSegmentLength != 0U)
-	{
+	if (fw_init->CodeSegmentLength != 0U) {
 		assert_param(IS_FIREWALL_CODE_SEGMENT_ADDRESS(fw_init->CodeSegmentStartAddress));
 		assert_param(IS_FIREWALL_CODE_SEGMENT_LENGTH(fw_init->CodeSegmentStartAddress, fw_init->CodeSegmentLength));
 		/* Make sure that NonVDataSegmentLength is properly set to
 		 * prevent code segment access */
-		if (fw_init->NonVDataSegmentLength < 0x100U)
-		{
+		if (fw_init->NonVDataSegmentLength < 0x100U) {
 			return HAL_ERROR;
 		}
 	}
 	/* Non volatile data segment */
-	if (fw_init->NonVDataSegmentLength != 0U)
-	{
+	if (fw_init->NonVDataSegmentLength != 0U) {
 		assert_param(IS_FIREWALL_NONVOLATILEDATA_SEGMENT_ADDRESS(fw_init->NonVDataSegmentStartAddress));
 		assert_param(IS_FIREWALL_NONVOLATILEDATA_SEGMENT_LENGTH(fw_init->NonVDataSegmentStartAddress, fw_init->NonVDataSegmentLength));
 	}
 	/* Volatile data segment */
-	if (fw_init->VDataSegmentLength != 0U)
-	{
+	if (fw_init->VDataSegmentLength != 0U) {
 		assert_param(IS_FIREWALL_VOLATILEDATA_SEGMENT_ADDRESS(fw_init->VDataSegmentStartAddress));
 		assert_param(IS_FIREWALL_VOLATILEDATA_SEGMENT_LENGTH(fw_init->VDataSegmentStartAddress, fw_init->VDataSegmentLength));
 	}

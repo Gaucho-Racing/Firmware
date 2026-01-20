@@ -276,16 +276,11 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check the COMP handle allocation and lock status */
-	if (hcomp == NULL)
-	{
+	if (hcomp == NULL) {
 		status = HAL_ERROR;
-	}
-	else if (__HAL_COMP_IS_LOCKED(hcomp))
-	{
+	} else if (__HAL_COMP_IS_LOCKED(hcomp)) {
 		status = HAL_ERROR;
-	}
-	else
-	{
+	} else {
 		/* Check the parameters */
 		assert_param(IS_COMP_ALL_INSTANCE(hcomp->Instance));
 		assert_param(IS_COMP_INPUT_PLUS(hcomp->Instance, hcomp->Init.NonInvertingInput));
@@ -300,8 +295,7 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 		assert_param(IS_COMP_WINDOWMODE(hcomp->Init.WindowMode));
 #endif /* COMP2 */
 
-		if (hcomp->State == HAL_COMP_STATE_RESET)
-		{
+		if (hcomp->State == HAL_COMP_STATE_RESET) {
 			/* Allocate lock resource and initialize it */
 			hcomp->Lock = HAL_UNLOCKED;
 
@@ -329,8 +323,7 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 			/* Init the COMP Callback settings */
 			hcomp->TriggerCallback = HAL_COMP_TriggerCallback; /* Legacy weak callback */
 
-			if (hcomp->MspInitCallback == NULL)
-			{
+			if (hcomp->MspInitCallback == NULL) {
 				hcomp->MspInitCallback = HAL_COMP_MspInit; /* Legacy weak MspInit  */
 			}
 
@@ -373,12 +366,9 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 		/*       instances. Therefore, this function can update another
 		 * COMP      */
 		/*       instance that the one currently selected. */
-		if (hcomp->Init.WindowMode == COMP_WINDOWMODE_COMP1_INPUT_PLUS_COMMON)
-		{
+		if (hcomp->Init.WindowMode == COMP_WINDOWMODE_COMP1_INPUT_PLUS_COMMON) {
 			SET_BIT(COMP12_COMMON->CSR, COMP_CSR_WINMODE);
-		}
-		else
-		{
+		} else {
 			CLEAR_BIT(COMP12_COMMON->CSR, COMP_CSR_WINMODE);
 		}
 #endif /* COMP2 */
@@ -386,8 +376,7 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 		/* Delay for COMP scaler bridge voltage stabilization */
 		/* Apply the delay if voltage scaler bridge is required and not
 		 * already enabled */
-		if ((READ_BIT(hcomp->Instance->CSR, COMP_CSR_SCALEN) != 0UL) && (comp_voltage_scaler_initialized == 0UL))
-		{
+		if ((READ_BIT(hcomp->Instance->CSR, COMP_CSR_SCALEN) != 0UL) && (comp_voltage_scaler_initialized == 0UL)) {
 			/* Wait loop initialization and execution */
 			/* Note: Variable divided by 2 to compensate partially
 			 */
@@ -396,8 +385,7 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 			/*       exceed 32 bits register capacity and handle low
 			 * frequency. */
 			wait_loop_index = ((COMP_DELAY_VOLTAGE_SCALER_STAB_US / 10UL) * ((SystemCoreClock / (100000UL * 2UL)) + 1UL));
-			while (wait_loop_index != 0UL)
-			{
+			while (wait_loop_index != 0UL) {
 				wait_loop_index--;
 			}
 		}
@@ -407,25 +395,18 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 		exti_line = COMP_GET_EXTI_LINE(hcomp->Instance);
 
 		/* Manage EXTI settings */
-		if ((hcomp->Init.TriggerMode & (COMP_EXTI_IT | COMP_EXTI_EVENT)) != 0UL)
-		{
+		if ((hcomp->Init.TriggerMode & (COMP_EXTI_IT | COMP_EXTI_EVENT)) != 0UL) {
 			/* Configure EXTI rising edge */
-			if ((hcomp->Init.TriggerMode & COMP_EXTI_RISING) != 0UL)
-			{
+			if ((hcomp->Init.TriggerMode & COMP_EXTI_RISING) != 0UL) {
 				LL_EXTI_EnableRisingTrig_0_31(exti_line);
-			}
-			else
-			{
+			} else {
 				LL_EXTI_DisableRisingTrig_0_31(exti_line);
 			}
 
 			/* Configure EXTI falling edge */
-			if ((hcomp->Init.TriggerMode & COMP_EXTI_FALLING) != 0UL)
-			{
+			if ((hcomp->Init.TriggerMode & COMP_EXTI_FALLING) != 0UL) {
 				LL_EXTI_EnableFallingTrig_0_31(exti_line);
-			}
-			else
-			{
+			} else {
 				LL_EXTI_DisableFallingTrig_0_31(exti_line);
 			}
 
@@ -433,27 +414,19 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 			LL_EXTI_ClearFlag_0_31(exti_line);
 
 			/* Configure EXTI event mode */
-			if ((hcomp->Init.TriggerMode & COMP_EXTI_EVENT) != 0UL)
-			{
+			if ((hcomp->Init.TriggerMode & COMP_EXTI_EVENT) != 0UL) {
 				LL_EXTI_EnableEvent_0_31(exti_line);
-			}
-			else
-			{
+			} else {
 				LL_EXTI_DisableEvent_0_31(exti_line);
 			}
 
 			/* Configure EXTI interrupt mode */
-			if ((hcomp->Init.TriggerMode & COMP_EXTI_IT) != 0UL)
-			{
+			if ((hcomp->Init.TriggerMode & COMP_EXTI_IT) != 0UL) {
 				LL_EXTI_EnableIT_0_31(exti_line);
-			}
-			else
-			{
+			} else {
 				LL_EXTI_DisableIT_0_31(exti_line);
 			}
-		}
-		else
-		{
+		} else {
 			/* Disable EXTI event mode */
 			LL_EXTI_DisableEvent_0_31(exti_line);
 
@@ -465,8 +438,7 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 		/* Note: Transition from state reset to state ready, */
 		/*       otherwise (coming from state ready or busy) no state
 		 * update.     */
-		if (hcomp->State == HAL_COMP_STATE_RESET)
-		{
+		if (hcomp->State == HAL_COMP_STATE_RESET) {
 			hcomp->State = HAL_COMP_STATE_READY;
 		}
 	}
@@ -486,16 +458,11 @@ HAL_StatusTypeDef HAL_COMP_DeInit(COMP_HandleTypeDef *hcomp)
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check the COMP handle allocation and lock status */
-	if (hcomp == NULL)
-	{
+	if (hcomp == NULL) {
 		status = HAL_ERROR;
-	}
-	else if (__HAL_COMP_IS_LOCKED(hcomp))
-	{
+	} else if (__HAL_COMP_IS_LOCKED(hcomp)) {
 		status = HAL_ERROR;
-	}
-	else
-	{
+	} else {
 		/* Check the parameter */
 		assert_param(IS_COMP_ALL_INSTANCE(hcomp->Instance));
 
@@ -503,8 +470,7 @@ HAL_StatusTypeDef HAL_COMP_DeInit(COMP_HandleTypeDef *hcomp)
 		WRITE_REG(hcomp->Instance->CSR, 0x00000000UL);
 
 #if (USE_HAL_COMP_REGISTER_CALLBACKS == 1)
-		if (hcomp->MspDeInitCallback == NULL)
-		{
+		if (hcomp->MspDeInitCallback == NULL) {
 			hcomp->MspDeInitCallback = HAL_COMP_MspDeInit; /* Legacy weak MspDeInit  */
 		}
 
@@ -573,18 +539,15 @@ HAL_StatusTypeDef HAL_COMP_RegisterCallback(COMP_HandleTypeDef *hcomp, HAL_COMP_
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
-	if (pCallback == NULL)
-	{
+	if (pCallback == NULL) {
 		/* Update the error code */
 		hcomp->ErrorCode |= HAL_COMP_ERROR_INVALID_CALLBACK;
 
 		return HAL_ERROR;
 	}
 
-	if (HAL_COMP_STATE_READY == hcomp->State)
-	{
-		switch (CallbackID)
-		{
+	if (HAL_COMP_STATE_READY == hcomp->State) {
+		switch (CallbackID) {
 			case HAL_COMP_TRIGGER_CB_ID:
 				hcomp->TriggerCallback = pCallback;
 				break;
@@ -605,11 +568,8 @@ HAL_StatusTypeDef HAL_COMP_RegisterCallback(COMP_HandleTypeDef *hcomp, HAL_COMP_
 				status = HAL_ERROR;
 				break;
 		}
-	}
-	else if (HAL_COMP_STATE_RESET == hcomp->State)
-	{
-		switch (CallbackID)
-		{
+	} else if (HAL_COMP_STATE_RESET == hcomp->State) {
+		switch (CallbackID) {
 			case HAL_COMP_MSPINIT_CB_ID:
 				hcomp->MspInitCallback = pCallback;
 				break;
@@ -626,9 +586,7 @@ HAL_StatusTypeDef HAL_COMP_RegisterCallback(COMP_HandleTypeDef *hcomp, HAL_COMP_
 				status = HAL_ERROR;
 				break;
 		}
-	}
-	else
-	{
+	} else {
 		/* Update the error code */
 		hcomp->ErrorCode |= HAL_COMP_ERROR_INVALID_CALLBACK;
 
@@ -655,10 +613,8 @@ HAL_StatusTypeDef HAL_COMP_UnRegisterCallback(COMP_HandleTypeDef *hcomp, HAL_COM
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
-	if (HAL_COMP_STATE_READY == hcomp->State)
-	{
-		switch (CallbackID)
-		{
+	if (HAL_COMP_STATE_READY == hcomp->State) {
+		switch (CallbackID) {
 			case HAL_COMP_TRIGGER_CB_ID:
 				hcomp->TriggerCallback = HAL_COMP_TriggerCallback; /* Legacy weak
 										      callback */
@@ -681,11 +637,8 @@ HAL_StatusTypeDef HAL_COMP_UnRegisterCallback(COMP_HandleTypeDef *hcomp, HAL_COM
 				status = HAL_ERROR;
 				break;
 		}
-	}
-	else if (HAL_COMP_STATE_RESET == hcomp->State)
-	{
-		switch (CallbackID)
-		{
+	} else if (HAL_COMP_STATE_RESET == hcomp->State) {
+		switch (CallbackID) {
 			case HAL_COMP_MSPINIT_CB_ID:
 				hcomp->MspInitCallback = HAL_COMP_MspInit; /* Legacy weak MspInit */
 				break;
@@ -703,9 +656,7 @@ HAL_StatusTypeDef HAL_COMP_UnRegisterCallback(COMP_HandleTypeDef *hcomp, HAL_COM
 				status = HAL_ERROR;
 				break;
 		}
-	}
-	else
-	{
+	} else {
 		/* Update the error code */
 		hcomp->ErrorCode |= HAL_COMP_ERROR_INVALID_CALLBACK;
 
@@ -748,21 +699,15 @@ HAL_StatusTypeDef HAL_COMP_Start(COMP_HandleTypeDef *hcomp)
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check the COMP handle allocation and lock status */
-	if (hcomp == NULL)
-	{
+	if (hcomp == NULL) {
 		status = HAL_ERROR;
-	}
-	else if (__HAL_COMP_IS_LOCKED(hcomp))
-	{
+	} else if (__HAL_COMP_IS_LOCKED(hcomp)) {
 		status = HAL_ERROR;
-	}
-	else
-	{
+	} else {
 		/* Check the parameter */
 		assert_param(IS_COMP_ALL_INSTANCE(hcomp->Instance));
 
-		if (hcomp->State == HAL_COMP_STATE_READY)
-		{
+		if (hcomp->State == HAL_COMP_STATE_READY) {
 			/* Enable the selected comparator */
 			SET_BIT(hcomp->Instance->CSR, COMP_CSR_EN);
 
@@ -778,13 +723,10 @@ HAL_StatusTypeDef HAL_COMP_Start(COMP_HandleTypeDef *hcomp)
 			/*       exceed 32 bits register capacity and handle low
 			 * frequency. */
 			wait_loop_index = ((COMP_DELAY_STARTUP_US / 10UL) * ((SystemCoreClock / (100000UL * 2UL)) + 1UL));
-			while (wait_loop_index != 0UL)
-			{
+			while (wait_loop_index != 0UL) {
 				wait_loop_index--;
 			}
-		}
-		else
-		{
+		} else {
 			status = HAL_ERROR;
 		}
 	}
@@ -802,16 +744,11 @@ HAL_StatusTypeDef HAL_COMP_Stop(COMP_HandleTypeDef *hcomp)
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check the COMP handle allocation and lock status */
-	if (hcomp == NULL)
-	{
+	if (hcomp == NULL) {
 		status = HAL_ERROR;
-	}
-	else if (__HAL_COMP_IS_LOCKED(hcomp))
-	{
+	} else if (__HAL_COMP_IS_LOCKED(hcomp)) {
 		status = HAL_ERROR;
-	}
-	else
-	{
+	} else {
 		/* Check the parameter */
 		assert_param(IS_COMP_ALL_INSTANCE(hcomp->Instance));
 
@@ -819,16 +756,13 @@ HAL_StatusTypeDef HAL_COMP_Stop(COMP_HandleTypeDef *hcomp)
 		 * HAL_COMP_STATE_BUSY    */
 		/* (all states except HAL_COMP_STATE_RESET and except locked
 		 * status.      */
-		if (hcomp->State != HAL_COMP_STATE_RESET)
-		{
+		if (hcomp->State != HAL_COMP_STATE_RESET) {
 			/* Disable the selected comparator */
 			CLEAR_BIT(hcomp->Instance->CSR, COMP_CSR_EN);
 
 			/* Set HAL COMP handle state */
 			hcomp->State = HAL_COMP_STATE_READY;
-		}
-		else
-		{
+		} else {
 			status = HAL_ERROR;
 		}
 	}
@@ -847,12 +781,10 @@ void HAL_COMP_IRQHandler(COMP_HandleTypeDef *hcomp)
 	uint32_t exti_line = COMP_GET_EXTI_LINE(hcomp->Instance);
 
 	/* Check COMP EXTI flag */
-	if (LL_EXTI_IsActiveFlag_0_31(exti_line) != 0UL)
-	{
+	if (LL_EXTI_IsActiveFlag_0_31(exti_line) != 0UL) {
 #if defined(COMP2)
 		/* Check whether comparator is in independent or window mode */
-		if (READ_BIT(COMP12_COMMON->CSR, COMP_CSR_WINMODE) != 0UL)
-		{
+		if (READ_BIT(COMP12_COMMON->CSR, COMP_CSR_WINMODE) != 0UL) {
 			/* Clear COMP EXTI line pending bit of the pair of
 			 * comparators          */
 			/* in window mode. */
@@ -866,8 +798,7 @@ void HAL_COMP_IRQHandler(COMP_HandleTypeDef *hcomp)
 			 * trigger          */
 			/*       callback is called once. */
 			LL_EXTI_ClearFlag_0_31((COMP_EXTI_LINE_COMP1 | COMP_EXTI_LINE_COMP2));
-		}
-		else
+		} else
 #endif /* COMP2 */
 		{
 			/* Clear COMP EXTI line pending bit */
@@ -915,22 +846,16 @@ HAL_StatusTypeDef HAL_COMP_Lock(COMP_HandleTypeDef *hcomp)
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check the COMP handle allocation and lock status */
-	if (hcomp == NULL)
-	{
+	if (hcomp == NULL) {
 		status = HAL_ERROR;
-	}
-	else if (__HAL_COMP_IS_LOCKED(hcomp))
-	{
+	} else if (__HAL_COMP_IS_LOCKED(hcomp)) {
 		status = HAL_ERROR;
-	}
-	else
-	{
+	} else {
 		/* Check the parameter */
 		assert_param(IS_COMP_ALL_INSTANCE(hcomp->Instance));
 
 		/* Set HAL COMP handle state */
-		switch (hcomp->State)
-		{
+		switch (hcomp->State) {
 			case HAL_COMP_STATE_RESET:
 				hcomp->State = HAL_COMP_STATE_RESET_LOCKED;
 				break;
@@ -1018,8 +943,7 @@ __weak void HAL_COMP_TriggerCallback(COMP_HandleTypeDef *hcomp)
 HAL_COMP_StateTypeDef HAL_COMP_GetState(const COMP_HandleTypeDef *hcomp)
 {
 	/* Check the COMP handle allocation */
-	if (hcomp == NULL)
-	{
+	if (hcomp == NULL) {
 		return HAL_COMP_STATE_RESET;
 	}
 

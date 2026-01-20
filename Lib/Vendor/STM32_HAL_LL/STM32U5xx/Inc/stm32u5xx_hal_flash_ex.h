@@ -21,59 +21,56 @@
 #define STM32U5xx_HAL_FLASH_EX_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx_hal_def.h"
 
-	/** @addtogroup STM32U5xx_HAL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32U5xx_HAL_Driver
+ * @{
+ */
 
-	/** @addtogroup FLASHEx
-	 * @{
-	 */
+/** @addtogroup FLASHEx
+ * @{
+ */
 
-	/* Exported types ------------------------------------------------------------*/
-	/** @addtogroup FLASHEx_Exported_Types FLASHEx Exported Types
-	 * @{
-	 */
+/* Exported types ------------------------------------------------------------*/
+/** @addtogroup FLASHEx_Exported_Types FLASHEx Exported Types
+ * @{
+ */
 
-	/**
-	 * @brief  FLASHEx Block-based attributes structure definition
-	 */
+/**
+ * @brief  FLASHEx Block-based attributes structure definition
+ */
 
-	typedef struct
-	{
-		uint32_t Bank;					      /*!< Selection of the associated bank of Block-based Area.
-									   This parameter must be a value of @ref FLASH_Banks */
-		uint32_t BBAttributesType;			      /*!< Block-Based Attributes type. This parameter
-									 must be a value of @ref FLASH_BB_Attributes */
-		uint32_t BBAttributes_array[FLASH_BLOCKBASED_NB_REG]; /*!< Each bit specifies the block-based
-									 attribute configuration of a page: 0
-									 means page non-protected, 1 means page
-									   protected. Protection (secure or
-									 privilege) depends on BBAttributesType
-									 value */
-	} FLASH_BBAttributesTypeDef;
+typedef struct {
+	uint32_t Bank;					      /*!< Selection of the associated bank of Block-based Area.
+								   This parameter must be a value of @ref FLASH_Banks */
+	uint32_t BBAttributesType;			      /*!< Block-Based Attributes type. This parameter
+								 must be a value of @ref FLASH_BB_Attributes */
+	uint32_t BBAttributes_array[FLASH_BLOCKBASED_NB_REG]; /*!< Each bit specifies the block-based
+								 attribute configuration of a page: 0
+								 means page non-protected, 1 means page
+								   protected. Protection (secure or
+								 privilege) depends on BBAttributesType
+								 value */
+} FLASH_BBAttributesTypeDef;
 
-	/**
-	 * @brief  FLASHEx Operation structure definition
-	 */
-	typedef struct
-	{
-		uint32_t OperationType; /*!< Flash operation Type.
-					     This parameter must be a value of @ref
-					   FLASH_Operation_Type */
-		uint32_t FlashArea;	/*!< Flash operation memory area.
-					     This parameter must be a value of @ref
-					   FLASH_Operation_Area */
-		uint32_t Address;	/*!< Flash operation Address offset.
-					     This parameter is given by bank, and must be a
-					   value between 0x0 and 0xFFFF0 */
-	} FLASH_OperationTypeDef;
+/**
+ * @brief  FLASHEx Operation structure definition
+ */
+typedef struct {
+	uint32_t OperationType; /*!< Flash operation Type.
+				     This parameter must be a value of @ref
+				   FLASH_Operation_Type */
+	uint32_t FlashArea;	/*!< Flash operation memory area.
+				     This parameter must be a value of @ref
+				   FLASH_Operation_Area */
+	uint32_t Address;	/*!< Flash operation Address offset.
+				     This parameter is given by bank, and must be a
+				   value between 0x0 and 0xFFFF0 */
+} FLASH_OperationTypeDef;
 
 /**
  * @}
@@ -98,9 +95,9 @@ extern "C"
 #define FLASH_SPRIV_DENIED                                                                                                                                                                             \
 	FLASH_PRIVCFGR_SPRIV /*!< access to secure Flash registers is denied                                                                                                                           \
 				  to non-privilege access */
-			     /**
-			      * @}
-			      */
+/**
+ * @}
+ */
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /** @defgroup SEC_INVERSION_CFG FLASH security inversion configuration
@@ -153,64 +150,64 @@ extern "C"
 #define FLASH_OPERATION_AREA_BANK_1 00000000U	     /*!< Operation in Bank 1              */
 #define FLASH_OPERATION_AREA_BANK_2 FLASH_OPSR_BK_OP /*!< Operation in Bank 2              */
 #define FLASH_OPERATION_AREA_SYSF FLASH_OPSR_SYSF_OP /*!< Operation in System Flash memory */
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported macro ------------------------------------------------------------*/
+/* Exported macro ------------------------------------------------------------*/
 
-	/* Exported functions --------------------------------------------------------*/
-	/** @addtogroup FLASHEx_Exported_Functions
-	 * @{
-	 */
+/* Exported functions --------------------------------------------------------*/
+/** @addtogroup FLASHEx_Exported_Functions
+ * @{
+ */
 
-	/* Extended Program operation functions  *************************************/
-	/** @addtogroup FLASHEx_Exported_Functions_Group1
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_FLASHEx_Erase(FLASH_EraseInitTypeDef *pEraseInit, uint32_t *PageError);
-	HAL_StatusTypeDef HAL_FLASHEx_Erase_IT(FLASH_EraseInitTypeDef *pEraseInit);
-	HAL_StatusTypeDef HAL_FLASHEx_OBProgram(FLASH_OBProgramInitTypeDef *pOBInit);
-	void HAL_FLASHEx_OBGetConfig(FLASH_OBProgramInitTypeDef *pOBInit);
-	HAL_StatusTypeDef HAL_FLASHEx_ConfigBBAttributes(FLASH_BBAttributesTypeDef *pBBAttributes);
-	void HAL_FLASHEx_GetConfigBBAttributes(FLASH_BBAttributesTypeDef *pBBAttributes);
+/* Extended Program operation functions  *************************************/
+/** @addtogroup FLASHEx_Exported_Functions_Group1
+ * @{
+ */
+HAL_StatusTypeDef HAL_FLASHEx_Erase(FLASH_EraseInitTypeDef *pEraseInit, uint32_t *PageError);
+HAL_StatusTypeDef HAL_FLASHEx_Erase_IT(FLASH_EraseInitTypeDef *pEraseInit);
+HAL_StatusTypeDef HAL_FLASHEx_OBProgram(FLASH_OBProgramInitTypeDef *pOBInit);
+void HAL_FLASHEx_OBGetConfig(FLASH_OBProgramInitTypeDef *pOBInit);
+HAL_StatusTypeDef HAL_FLASHEx_ConfigBBAttributes(FLASH_BBAttributesTypeDef *pBBAttributes);
+void HAL_FLASHEx_GetConfigBBAttributes(FLASH_BBAttributesTypeDef *pBBAttributes);
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-	void HAL_FLASHEx_EnableSecHideProtection(uint32_t Banks);
+void HAL_FLASHEx_EnableSecHideProtection(uint32_t Banks);
 #endif /* __ARM_FEATURE_CMSE */
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @addtogroup FLASHEx_Exported_Functions_Group2
-	 * @{
-	 */
-	void HAL_FLASHEx_ConfigPrivMode(uint32_t PrivMode);
-	uint32_t HAL_FLASHEx_GetPrivMode(void);
+/** @addtogroup FLASHEx_Exported_Functions_Group2
+ * @{
+ */
+void HAL_FLASHEx_ConfigPrivMode(uint32_t PrivMode);
+uint32_t HAL_FLASHEx_GetPrivMode(void);
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-	HAL_StatusTypeDef HAL_FLASHEx_ConfigSecInversion(uint32_t SecInvState);
-	uint32_t HAL_FLASHEx_GetSecInversion(void);
+HAL_StatusTypeDef HAL_FLASHEx_ConfigSecInversion(uint32_t SecInvState);
+uint32_t HAL_FLASHEx_GetSecInversion(void);
 #endif /* __ARM_FEATURE_CMSE */
-	HAL_StatusTypeDef HAL_FLASHEx_EnablePowerDown(uint32_t Banks);
-	HAL_StatusTypeDef HAL_FLASHEx_ConfigLowPowerRead(uint32_t ConfigLPM);
-	uint32_t HAL_FLASHEx_GetLowPowerRead(void);
-	void HAL_FLASHEx_GetOperation(FLASH_OperationTypeDef *pFlashOperation);
-	/**
-	 * @}
-	 */
+HAL_StatusTypeDef HAL_FLASHEx_EnablePowerDown(uint32_t Banks);
+HAL_StatusTypeDef HAL_FLASHEx_ConfigLowPowerRead(uint32_t ConfigLPM);
+uint32_t HAL_FLASHEx_GetLowPowerRead(void);
+void HAL_FLASHEx_GetOperation(FLASH_OperationTypeDef *pFlashOperation);
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Private function ----------------------------------------------------------*/
-	/** @addtogroup FLASHEx_Private_Functions FLASHEx Private Functions
-	 * @{
-	 */
-	void FLASH_PageErase(uint32_t Page, uint32_t Banks);
+/* Private function ----------------------------------------------------------*/
+/** @addtogroup FLASHEx_Private_Functions FLASHEx Private Functions
+ * @{
+ */
+void FLASH_PageErase(uint32_t Page, uint32_t Banks);
 /**
  * @}
  */
@@ -228,17 +225,17 @@ extern "C"
 #endif /* __ARM_FEATURE_CMSE */
 
 #define IS_FLASH_CFGLPM(CFG) (((CFG) == FLASH_LPM_DISABLE) || ((CFG) == FLASH_LPM_ENABLE))
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

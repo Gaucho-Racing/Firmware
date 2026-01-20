@@ -6,25 +6,20 @@
 
 uint8_t SetBitInByte(uint8_t number, uint8_t index, bool value)
 {
-	if (index > 7)
-	{
+	if (index > 7) {
 		return number; // Invalid index, undefined behavior
 	}
 
-	if (value)
-	{
+	if (value) {
 		return number | (1u << ((sizeof(uint8_t) * 8 - 1) - index)); // Set bit to 1 (MSB-first)
-	}
-	else
-	{
+	} else {
 		return number & ~(1u << ((sizeof(uint8_t) * 8 - 1) - index)); // Set bit to 0 (MSB-first)
 	}
 }
 
 uint8_t SetBitsInByte(uint8_t number, uint8_t index, uint8_t length, uint8_t value)
 {
-	if (length == 0 || index + length > 8)
-	{
+	if (length == 0 || index + length > 8) {
 		return number; // Invalid parameters, undefined behavior
 	}
 

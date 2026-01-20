@@ -86,32 +86,25 @@ ErrorStatus LL_I2C_DeInit(const I2C_TypeDef *I2Cx)
 	/* Check the I2C Instance I2Cx */
 	assert_param(IS_I2C_ALL_INSTANCE(I2Cx));
 
-	if (I2Cx == I2C1)
-	{
+	if (I2Cx == I2C1) {
 		/* Force reset of I2C clock */
 		LL_APB1_GRP1_ForceReset(LL_APB1_GRP1_PERIPH_I2C1);
 
 		/* Release reset of I2C clock */
 		LL_APB1_GRP1_ReleaseReset(LL_APB1_GRP1_PERIPH_I2C1);
-	}
-	else if (I2Cx == I2C2)
-	{
+	} else if (I2Cx == I2C2) {
 		/* Force reset of I2C clock */
 		LL_APB1_GRP1_ForceReset(LL_APB1_GRP1_PERIPH_I2C2);
 
 		/* Release reset of I2C clock */
 		LL_APB1_GRP1_ReleaseReset(LL_APB1_GRP1_PERIPH_I2C2);
-	}
-	else if (I2Cx == I2C3)
-	{
+	} else if (I2Cx == I2C3) {
 		/* Force reset of I2C clock */
 		LL_APB3_GRP1_ForceReset(LL_APB3_GRP1_PERIPH_I2C3);
 
 		/* Release reset of I2C clock */
 		LL_APB3_GRP1_ReleaseReset(LL_APB3_GRP1_PERIPH_I2C3);
-	}
-	else if (I2Cx == I2C4)
-	{
+	} else if (I2Cx == I2C4) {
 		/* Force reset of I2C clock */
 		LL_APB1_GRP2_ForceReset(LL_APB1_GRP2_PERIPH_I2C4);
 
@@ -119,8 +112,7 @@ ErrorStatus LL_I2C_DeInit(const I2C_TypeDef *I2Cx)
 		LL_APB1_GRP2_ReleaseReset(LL_APB1_GRP2_PERIPH_I2C4);
 	}
 #if defined(I2C5)
-	else if (I2Cx == I2C5)
-	{
+	else if (I2Cx == I2C5) {
 		/* Force reset of I2C clock */
 		LL_APB1_GRP2_ForceReset(LL_APB1_GRP2_PERIPH_I2C5);
 
@@ -129,8 +121,7 @@ ErrorStatus LL_I2C_DeInit(const I2C_TypeDef *I2Cx)
 	}
 #endif /* I2C5 */
 #if defined(I2C6)
-	else if (I2Cx == I2C6)
-	{
+	else if (I2Cx == I2C6) {
 		/* Force reset of I2C clock */
 		LL_APB1_GRP2_ForceReset(LL_APB1_GRP2_PERIPH_I2C6);
 
@@ -138,8 +129,7 @@ ErrorStatus LL_I2C_DeInit(const I2C_TypeDef *I2Cx)
 		LL_APB1_GRP2_ReleaseReset(LL_APB1_GRP2_PERIPH_I2C6);
 	}
 #endif /* I2C6 */
-	else
-	{
+	else {
 		status = ERROR;
 	}
 
@@ -201,8 +191,7 @@ ErrorStatus LL_I2C_Init(I2C_TypeDef *I2Cx, const LL_I2C_InitTypeDef *I2C_InitStr
 	LL_I2C_SetOwnAddress1(I2Cx, I2C_InitStruct->OwnAddress1, I2C_InitStruct->OwnAddrSize);
 
 	/* OwnAdress1 == 0 is reserved for General Call address */
-	if (I2C_InitStruct->OwnAddress1 != 0U)
-	{
+	if (I2C_InitStruct->OwnAddress1 != 0U) {
 		LL_I2C_EnableOwnAddress1(I2Cx);
 	}
 

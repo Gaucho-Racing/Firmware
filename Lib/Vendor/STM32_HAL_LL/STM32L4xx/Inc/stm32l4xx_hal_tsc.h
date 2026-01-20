@@ -21,166 +21,159 @@
 #define STM32L4xx_HAL_TSC_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l4xx_hal_def.h"
 
-	/** @addtogroup STM32L4xx_HAL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32L4xx_HAL_Driver
+ * @{
+ */
 
-	/** @addtogroup TSC
-	 * @{
-	 */
+/** @addtogroup TSC
+ * @{
+ */
 
-	/* Exported types ------------------------------------------------------------*/
-	/** @defgroup TSC_Exported_Types TSC Exported Types
-	 * @{
-	 */
+/* Exported types ------------------------------------------------------------*/
+/** @defgroup TSC_Exported_Types TSC Exported Types
+ * @{
+ */
 
-	/**
-	 * @brief TSC state structure definition
-	 */
-	typedef enum
-	{
-		HAL_TSC_STATE_RESET = 0x00UL, /*!< TSC registers have their reset value */
-		HAL_TSC_STATE_READY = 0x01UL, /*!< TSC registers are initialized or acquisition is
-						 completed with success */
-		HAL_TSC_STATE_BUSY = 0x02UL,  /*!< TSC initialization or acquisition is on-going */
-		HAL_TSC_STATE_ERROR = 0x03UL  /*!< Acquisition is completed with max count error */
-	} HAL_TSC_StateTypeDef;
+/**
+ * @brief TSC state structure definition
+ */
+typedef enum {
+	HAL_TSC_STATE_RESET = 0x00UL, /*!< TSC registers have their reset value */
+	HAL_TSC_STATE_READY = 0x01UL, /*!< TSC registers are initialized or acquisition is
+					 completed with success */
+	HAL_TSC_STATE_BUSY = 0x02UL,  /*!< TSC initialization or acquisition is on-going */
+	HAL_TSC_STATE_ERROR = 0x03UL  /*!< Acquisition is completed with max count error */
+} HAL_TSC_StateTypeDef;
 
-	/**
-	 * @brief TSC group status structure definition
-	 */
-	typedef enum
-	{
-		TSC_GROUP_ONGOING = 0x00UL,  /*!< Acquisition on group is on-going or not started */
-		TSC_GROUP_COMPLETED = 0x01UL /*!< Acquisition on group is completed with
-						success (no max count error) */
-	} TSC_GroupStatusTypeDef;
+/**
+ * @brief TSC group status structure definition
+ */
+typedef enum {
+	TSC_GROUP_ONGOING = 0x00UL,  /*!< Acquisition on group is on-going or not started */
+	TSC_GROUP_COMPLETED = 0x01UL /*!< Acquisition on group is completed with
+					success (no max count error) */
+} TSC_GroupStatusTypeDef;
 
-	/**
-	 * @brief TSC init structure definition
-	 */
-	typedef struct
-	{
-		uint32_t CTPulseHighLength;	   /*!< Charge-transfer high pulse length
-							This parameter can be a value of @ref
-						      TSC_CTPulseHL_Config  */
-		uint32_t CTPulseLowLength;	   /*!< Charge-transfer low pulse length
-							This parameter can be a value of @ref
-						      TSC_CTPulseLL_Config  */
-		FunctionalState SpreadSpectrum;	   /*!< Spread spectrum activation
-							This parameter can be set to ENABLE
-						      or DISABLE. */
-		uint32_t SpreadSpectrumDeviation;  /*!< Spread spectrum deviation
-							This parameter must be a number
-						      between Min_Data = 0 and Max_Data =
-						      127 */
-		uint32_t SpreadSpectrumPrescaler;  /*!< Spread spectrum prescaler
-							This parameter can be a value of
-						      @ref TSC_SpreadSpec_Prescaler */
-		uint32_t PulseGeneratorPrescaler;  /*!< Pulse generator prescaler
-							This parameter can be a value of @ref
-						      TSC_PulseGenerator_Prescaler */
-		uint32_t MaxCountValue;		   /*!< Max count value
-							This parameter can be a value of @ref
-						      TSC_MaxCount_Value  */
-		uint32_t IODefaultMode;		   /*!< IO default mode
-							This parameter can be a value of @ref
-						      TSC_IO_Default_Mode  */
-		uint32_t SynchroPinPolarity;	   /*!< Synchro pin polarity
-							This parameter can be a value of @ref
-						      TSC_Synchro_Pin_Polarity */
-		uint32_t AcquisitionMode;	   /*!< Acquisition mode
-							This parameter can be a value of @ref
-						      TSC_Acquisition_Mode  */
-		FunctionalState MaxCountInterrupt; /*!< Max count interrupt activation
-							This parameter can be set to
-						      ENABLE or DISABLE. */
-		uint32_t ChannelIOs;		   /*!< Channel IOs mask */
-		uint32_t ShieldIOs;		   /*!< Shield IOs mask */
-		uint32_t SamplingIOs;		   /*!< Sampling IOs mask */
-	} TSC_InitTypeDef;
+/**
+ * @brief TSC init structure definition
+ */
+typedef struct {
+	uint32_t CTPulseHighLength;	   /*!< Charge-transfer high pulse length
+						This parameter can be a value of @ref
+					      TSC_CTPulseHL_Config  */
+	uint32_t CTPulseLowLength;	   /*!< Charge-transfer low pulse length
+						This parameter can be a value of @ref
+					      TSC_CTPulseLL_Config  */
+	FunctionalState SpreadSpectrum;	   /*!< Spread spectrum activation
+						This parameter can be set to ENABLE
+					      or DISABLE. */
+	uint32_t SpreadSpectrumDeviation;  /*!< Spread spectrum deviation
+						This parameter must be a number
+					      between Min_Data = 0 and Max_Data =
+					      127 */
+	uint32_t SpreadSpectrumPrescaler;  /*!< Spread spectrum prescaler
+						This parameter can be a value of
+					      @ref TSC_SpreadSpec_Prescaler */
+	uint32_t PulseGeneratorPrescaler;  /*!< Pulse generator prescaler
+						This parameter can be a value of @ref
+					      TSC_PulseGenerator_Prescaler */
+	uint32_t MaxCountValue;		   /*!< Max count value
+						This parameter can be a value of @ref
+					      TSC_MaxCount_Value  */
+	uint32_t IODefaultMode;		   /*!< IO default mode
+						This parameter can be a value of @ref
+					      TSC_IO_Default_Mode  */
+	uint32_t SynchroPinPolarity;	   /*!< Synchro pin polarity
+						This parameter can be a value of @ref
+					      TSC_Synchro_Pin_Polarity */
+	uint32_t AcquisitionMode;	   /*!< Acquisition mode
+						This parameter can be a value of @ref
+					      TSC_Acquisition_Mode  */
+	FunctionalState MaxCountInterrupt; /*!< Max count interrupt activation
+						This parameter can be set to
+					      ENABLE or DISABLE. */
+	uint32_t ChannelIOs;		   /*!< Channel IOs mask */
+	uint32_t ShieldIOs;		   /*!< Shield IOs mask */
+	uint32_t SamplingIOs;		   /*!< Sampling IOs mask */
+} TSC_InitTypeDef;
 
-	/**
-	 * @brief TSC IOs configuration structure definition
-	 */
-	typedef struct
-	{
-		uint32_t ChannelIOs;  /*!< Channel IOs mask */
-		uint32_t ShieldIOs;   /*!< Shield IOs mask */
-		uint32_t SamplingIOs; /*!< Sampling IOs mask */
-	} TSC_IOConfigTypeDef;
+/**
+ * @brief TSC IOs configuration structure definition
+ */
+typedef struct {
+	uint32_t ChannelIOs;  /*!< Channel IOs mask */
+	uint32_t ShieldIOs;   /*!< Shield IOs mask */
+	uint32_t SamplingIOs; /*!< Sampling IOs mask */
+} TSC_IOConfigTypeDef;
 
 /**
  * @brief  TSC handle Structure definition
  */
 #if (USE_HAL_TSC_REGISTER_CALLBACKS == 1)
-	typedef struct __TSC_HandleTypeDef
+typedef struct __TSC_HandleTypeDef
 #else
 typedef struct
 #endif /* USE_HAL_TSC_REGISTER_CALLBACKS */
-	{
-		TSC_TypeDef *Instance;		 /*!< Register base address      */
-		TSC_InitTypeDef Init;		 /*!< Initialization parameters  */
-		__IO HAL_TSC_StateTypeDef State; /*!< Peripheral state           */
-		HAL_LockTypeDef Lock;		 /*!< Lock feature               */
-		__IO uint32_t ErrorCode;	 /*!< TSC Error code             */
+{
+	TSC_TypeDef *Instance;		 /*!< Register base address      */
+	TSC_InitTypeDef Init;		 /*!< Initialization parameters  */
+	__IO HAL_TSC_StateTypeDef State; /*!< Peripheral state           */
+	HAL_LockTypeDef Lock;		 /*!< Lock feature               */
+	__IO uint32_t ErrorCode;	 /*!< TSC Error code             */
 
 #if (USE_HAL_TSC_REGISTER_CALLBACKS == 1)
-		void (*ConvCpltCallback)(struct __TSC_HandleTypeDef *htsc); /*!< TSC Conversion complete callback  */
-		void (*ErrorCallback)(struct __TSC_HandleTypeDef *htsc);    /*!< TSC Error callback */
+	void (*ConvCpltCallback)(struct __TSC_HandleTypeDef *htsc); /*!< TSC Conversion complete callback  */
+	void (*ErrorCallback)(struct __TSC_HandleTypeDef *htsc);    /*!< TSC Error callback */
 
-		void (*MspInitCallback)(struct __TSC_HandleTypeDef *htsc);   /*!< TSC Msp Init callback */
-		void (*MspDeInitCallback)(struct __TSC_HandleTypeDef *htsc); /*!< TSC Msp DeInit callback */
+	void (*MspInitCallback)(struct __TSC_HandleTypeDef *htsc);   /*!< TSC Msp Init callback */
+	void (*MspDeInitCallback)(struct __TSC_HandleTypeDef *htsc); /*!< TSC Msp DeInit callback */
 
 #endif /* USE_HAL_TSC_REGISTER_CALLBACKS */
-	} TSC_HandleTypeDef;
+} TSC_HandleTypeDef;
 
-	enum
-	{
-		TSC_GROUP1_IDX = 0x00UL,
-		TSC_GROUP2_IDX,
-		TSC_GROUP3_IDX,
-		TSC_GROUP4_IDX,
+enum {
+	TSC_GROUP1_IDX = 0x00UL,
+	TSC_GROUP2_IDX,
+	TSC_GROUP3_IDX,
+	TSC_GROUP4_IDX,
 #if defined(TSC_IOCCR_G5_IO1)
-		TSC_GROUP5_IDX,
+	TSC_GROUP5_IDX,
 #endif /* TSC_IOCCR_G5_IO1 */
 #if defined(TSC_IOCCR_G6_IO1)
-		TSC_GROUP6_IDX,
+	TSC_GROUP6_IDX,
 #endif /* TSC_IOCCR_G6_IO1 */
 #if defined(TSC_IOCCR_G7_IO1)
-		TSC_GROUP7_IDX,
+	TSC_GROUP7_IDX,
 #endif /* TSC_IOCCR_G7_IO1 */
 #if defined(TSC_IOCCR_G8_IO1)
-		TSC_GROUP8_IDX,
+	TSC_GROUP8_IDX,
 #endif /* TSC_IOCCR_G8_IO1 */
-		TSC_NB_OF_GROUPS
-	};
+	TSC_NB_OF_GROUPS
+};
 
 #if (USE_HAL_TSC_REGISTER_CALLBACKS == 1)
-	/**
-	 * @brief  HAL TSC Callback ID enumeration definition
-	 */
-	typedef enum
-	{
-		HAL_TSC_CONV_COMPLETE_CB_ID = 0x00UL, /*!< TSC Conversion completed callback ID  */
-		HAL_TSC_ERROR_CB_ID = 0x01UL,	      /*!< TSC Error callback ID */
+/**
+ * @brief  HAL TSC Callback ID enumeration definition
+ */
+typedef enum {
+	HAL_TSC_CONV_COMPLETE_CB_ID = 0x00UL, /*!< TSC Conversion completed callback ID  */
+	HAL_TSC_ERROR_CB_ID = 0x01UL,	      /*!< TSC Error callback ID */
 
-		HAL_TSC_MSPINIT_CB_ID = 0x02UL,	 /*!< TSC Msp Init callback ID  */
-		HAL_TSC_MSPDEINIT_CB_ID = 0x03UL /*!< TSC Msp DeInit callback ID */
+	HAL_TSC_MSPINIT_CB_ID = 0x02UL,	 /*!< TSC Msp Init callback ID  */
+	HAL_TSC_MSPDEINIT_CB_ID = 0x03UL /*!< TSC Msp DeInit callback ID */
 
-	} HAL_TSC_CallbackIDTypeDef;
+} HAL_TSC_CallbackIDTypeDef;
 
-	/**
-	 * @brief  HAL TSC Callback pointer definition
-	 */
-	typedef void (*pTSC_CallbackTypeDef)(TSC_HandleTypeDef *htsc); /*!< pointer to an TSC callback function */
+/**
+ * @brief  HAL TSC Callback pointer definition
+ */
+typedef void (*pTSC_CallbackTypeDef)(TSC_HandleTypeDef *htsc); /*!< pointer to an TSC callback function */
 
 #endif /* USE_HAL_TSC_REGISTER_CALLBACKS */
 
@@ -482,8 +475,7 @@ when the selected signal is detected on the SYNC input pin) */
  */
 #if (USE_HAL_TSC_REGISTER_CALLBACKS == 1)
 #define __HAL_TSC_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                       \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		(__HANDLE__)->State = HAL_TSC_STATE_RESET;                                                                                                                                             \
 		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
 		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
@@ -675,15 +667,15 @@ when the selected signal is detected on the SYNC input pin) */
 #define __HAL_TSC_GET_GROUP_STATUS(__HANDLE__, __GX_INDEX__)                                                                                                                                           \
 	((((__HANDLE__)->Instance->IOGCSR & (uint32_t)(1UL << (((__GX_INDEX__) & 0xFUL) + 16UL))) == (uint32_t)(1UL << (((__GX_INDEX__) & 0xFUL) + 16UL))) ? TSC_GROUP_COMPLETED : TSC_GROUP_ONGOING)
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Private macros ------------------------------------------------------------*/
+/* Private macros ------------------------------------------------------------*/
 
-	/** @defgroup TSC_Private_Macros TSC Private Macros
-	 * @{
-	 */
+/** @defgroup TSC_Private_Macros TSC Private Macros
+ * @{
+ */
 
 #define IS_TSC_CTPH(__VALUE__)                                                                                                                                                                         \
 	(((__VALUE__) == TSC_CTPH_1CYCLE) || ((__VALUE__) == TSC_CTPH_2CYCLES) || ((__VALUE__) == TSC_CTPH_3CYCLES) || ((__VALUE__) == TSC_CTPH_4CYCLES) || ((__VALUE__) == TSC_CTPH_5CYCLES) ||       \
@@ -739,92 +731,92 @@ when the selected signal is detected on the SYNC input pin) */
 	  (((__VALUE__) & TSC_GROUP7_IO4) == TSC_GROUP7_IO4) || (((__VALUE__) & TSC_GROUP8_IO1) == TSC_GROUP8_IO1) || (((__VALUE__) & TSC_GROUP8_IO2) == TSC_GROUP8_IO2) ||                            \
 	  (((__VALUE__) & TSC_GROUP8_IO3) == TSC_GROUP8_IO3) || (((__VALUE__) & TSC_GROUP8_IO4) == TSC_GROUP8_IO4)))
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported functions --------------------------------------------------------*/
-	/** @addtogroup TSC_Exported_Functions
-	 * @{
-	 */
+/* Exported functions --------------------------------------------------------*/
+/** @addtogroup TSC_Exported_Functions
+ * @{
+ */
 
-	/** @addtogroup TSC_Exported_Functions_Group1 Initialization and
-	 * de-initialization functions
-	 * @{
-	 */
-	/* Initialization and de-initialization functions *****************************/
-	HAL_StatusTypeDef HAL_TSC_Init(TSC_HandleTypeDef *htsc);
-	HAL_StatusTypeDef HAL_TSC_DeInit(TSC_HandleTypeDef *htsc);
-	void HAL_TSC_MspInit(TSC_HandleTypeDef *htsc);
-	void HAL_TSC_MspDeInit(TSC_HandleTypeDef *htsc);
+/** @addtogroup TSC_Exported_Functions_Group1 Initialization and
+ * de-initialization functions
+ * @{
+ */
+/* Initialization and de-initialization functions *****************************/
+HAL_StatusTypeDef HAL_TSC_Init(TSC_HandleTypeDef *htsc);
+HAL_StatusTypeDef HAL_TSC_DeInit(TSC_HandleTypeDef *htsc);
+void HAL_TSC_MspInit(TSC_HandleTypeDef *htsc);
+void HAL_TSC_MspDeInit(TSC_HandleTypeDef *htsc);
 
 /* Callbacks Register/UnRegister functions  ***********************************/
 #if (USE_HAL_TSC_REGISTER_CALLBACKS == 1)
-	HAL_StatusTypeDef HAL_TSC_RegisterCallback(TSC_HandleTypeDef *htsc, HAL_TSC_CallbackIDTypeDef CallbackID, pTSC_CallbackTypeDef pCallback);
-	HAL_StatusTypeDef HAL_TSC_UnRegisterCallback(TSC_HandleTypeDef *htsc, HAL_TSC_CallbackIDTypeDef CallbackID);
+HAL_StatusTypeDef HAL_TSC_RegisterCallback(TSC_HandleTypeDef *htsc, HAL_TSC_CallbackIDTypeDef CallbackID, pTSC_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_TSC_UnRegisterCallback(TSC_HandleTypeDef *htsc, HAL_TSC_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_TSC_REGISTER_CALLBACKS */
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @addtogroup TSC_Exported_Functions_Group2 Input and Output operation
-	 * functions
-	 * @{
-	 */
-	/* IO operation functions *****************************************************/
-	HAL_StatusTypeDef HAL_TSC_Start(TSC_HandleTypeDef *htsc);
-	HAL_StatusTypeDef HAL_TSC_Start_IT(TSC_HandleTypeDef *htsc);
-	HAL_StatusTypeDef HAL_TSC_Stop(TSC_HandleTypeDef *htsc);
-	HAL_StatusTypeDef HAL_TSC_Stop_IT(TSC_HandleTypeDef *htsc);
-	HAL_StatusTypeDef HAL_TSC_PollForAcquisition(TSC_HandleTypeDef *htsc);
-	TSC_GroupStatusTypeDef HAL_TSC_GroupGetStatus(const TSC_HandleTypeDef *htsc, uint32_t gx_index);
-	uint32_t HAL_TSC_GroupGetValue(const TSC_HandleTypeDef *htsc, uint32_t gx_index);
-	/**
-	 * @}
-	 */
+/** @addtogroup TSC_Exported_Functions_Group2 Input and Output operation
+ * functions
+ * @{
+ */
+/* IO operation functions *****************************************************/
+HAL_StatusTypeDef HAL_TSC_Start(TSC_HandleTypeDef *htsc);
+HAL_StatusTypeDef HAL_TSC_Start_IT(TSC_HandleTypeDef *htsc);
+HAL_StatusTypeDef HAL_TSC_Stop(TSC_HandleTypeDef *htsc);
+HAL_StatusTypeDef HAL_TSC_Stop_IT(TSC_HandleTypeDef *htsc);
+HAL_StatusTypeDef HAL_TSC_PollForAcquisition(TSC_HandleTypeDef *htsc);
+TSC_GroupStatusTypeDef HAL_TSC_GroupGetStatus(const TSC_HandleTypeDef *htsc, uint32_t gx_index);
+uint32_t HAL_TSC_GroupGetValue(const TSC_HandleTypeDef *htsc, uint32_t gx_index);
+/**
+ * @}
+ */
 
-	/** @addtogroup TSC_Exported_Functions_Group3 Peripheral Control functions
-	 * @{
-	 */
-	/* Peripheral Control functions ***********************************************/
-	HAL_StatusTypeDef HAL_TSC_IOConfig(TSC_HandleTypeDef *htsc, const TSC_IOConfigTypeDef *config);
-	HAL_StatusTypeDef HAL_TSC_IODischarge(TSC_HandleTypeDef *htsc, FunctionalState choice);
-	/**
-	 * @}
-	 */
+/** @addtogroup TSC_Exported_Functions_Group3 Peripheral Control functions
+ * @{
+ */
+/* Peripheral Control functions ***********************************************/
+HAL_StatusTypeDef HAL_TSC_IOConfig(TSC_HandleTypeDef *htsc, const TSC_IOConfigTypeDef *config);
+HAL_StatusTypeDef HAL_TSC_IODischarge(TSC_HandleTypeDef *htsc, FunctionalState choice);
+/**
+ * @}
+ */
 
-	/** @addtogroup TSC_Exported_Functions_Group4 Peripheral State and Errors
-	 * functions
-	 * @{
-	 */
-	/* Peripheral State and Error functions ***************************************/
-	HAL_TSC_StateTypeDef HAL_TSC_GetState(TSC_HandleTypeDef *htsc);
-	/**
-	 * @}
-	 */
+/** @addtogroup TSC_Exported_Functions_Group4 Peripheral State and Errors
+ * functions
+ * @{
+ */
+/* Peripheral State and Error functions ***************************************/
+HAL_TSC_StateTypeDef HAL_TSC_GetState(TSC_HandleTypeDef *htsc);
+/**
+ * @}
+ */
 
-	/** @addtogroup TSC_IRQ_Handler_and_Callbacks IRQ Handler and Callbacks
-	 * @{
-	 */
-	/******* TSC IRQHandler and Callbacks used in Interrupt mode */
-	void HAL_TSC_IRQHandler(TSC_HandleTypeDef *htsc);
-	void HAL_TSC_ConvCpltCallback(TSC_HandleTypeDef *htsc);
-	void HAL_TSC_ErrorCallback(TSC_HandleTypeDef *htsc);
-	/**
-	 * @}
-	 */
+/** @addtogroup TSC_IRQ_Handler_and_Callbacks IRQ Handler and Callbacks
+ * @{
+ */
+/******* TSC IRQHandler and Callbacks used in Interrupt mode */
+void HAL_TSC_IRQHandler(TSC_HandleTypeDef *htsc);
+void HAL_TSC_ConvCpltCallback(TSC_HandleTypeDef *htsc);
+void HAL_TSC_ErrorCallback(TSC_HandleTypeDef *htsc);
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

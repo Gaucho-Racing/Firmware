@@ -21,8 +21,7 @@
 #define STM32L4xx_HAL_SMBUS_EX_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -67,44 +66,44 @@ extern "C"
 #else
 #define SMBUS_FASTMODEPLUS_I2C4 (uint32_t)(0x00000800U | SMBUS_FMP_NOT_SUPPORTED) /*!< Fast Mode Plus I2C4 not supported */
 #endif										  /* SYSCFG_CFGR1_I2C4_FMP */
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported macro ------------------------------------------------------------*/
-	/** @defgroup SMBUSEx_Exported_Macros SMBUS Extended Exported Macros
-	 * @{
-	 */
+/* Exported macro ------------------------------------------------------------*/
+/** @defgroup SMBUSEx_Exported_Macros SMBUS Extended Exported Macros
+ * @{
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported functions --------------------------------------------------------*/
-	/** @addtogroup SMBUSEx_Exported_Functions SMBUS Extended Exported Functions
-	 * @{
-	 */
+/* Exported functions --------------------------------------------------------*/
+/** @addtogroup SMBUSEx_Exported_Functions SMBUS Extended Exported Functions
+ * @{
+ */
 
-	/** @addtogroup SMBUSEx_Exported_Functions_Group2 WakeUp Mode Functions
-	 * @{
-	 */
-	/* Peripheral Control functions
-	 * ************************************************/
-	HAL_StatusTypeDef HAL_SMBUSEx_EnableWakeUp(SMBUS_HandleTypeDef *hsmbus);
-	HAL_StatusTypeDef HAL_SMBUSEx_DisableWakeUp(SMBUS_HandleTypeDef *hsmbus);
-	/**
-	 * @}
-	 */
+/** @addtogroup SMBUSEx_Exported_Functions_Group2 WakeUp Mode Functions
+ * @{
+ */
+/* Peripheral Control functions
+ * ************************************************/
+HAL_StatusTypeDef HAL_SMBUSEx_EnableWakeUp(SMBUS_HandleTypeDef *hsmbus);
+HAL_StatusTypeDef HAL_SMBUSEx_DisableWakeUp(SMBUS_HandleTypeDef *hsmbus);
+/**
+ * @}
+ */
 
-	/** @addtogroup SMBUSEx_Exported_Functions_Group3 Fast Mode Plus Functions
-	 * @{
-	 */
-	void HAL_SMBUSEx_EnableFastModePlus(uint32_t ConfigFastModePlus);
-	void HAL_SMBUSEx_DisableFastModePlus(uint32_t ConfigFastModePlus);
+/** @addtogroup SMBUSEx_Exported_Functions_Group3 Fast Mode Plus Functions
+ * @{
+ */
+void HAL_SMBUSEx_EnableFastModePlus(uint32_t ConfigFastModePlus);
+void HAL_SMBUSEx_DisableFastModePlus(uint32_t ConfigFastModePlus);
 /**
  * @}
  */
@@ -132,26 +131,26 @@ extern "C"
 	  (((__CONFIG__) & (SMBUS_FASTMODEPLUS_PB8)) == SMBUS_FASTMODEPLUS_PB8) || (((__CONFIG__) & (SMBUS_FASTMODEPLUS_PB9)) == SMBUS_FASTMODEPLUS_PB9) ||                                            \
 	  (((__CONFIG__) & (SMBUS_FASTMODEPLUS_I2C1)) == SMBUS_FASTMODEPLUS_I2C1) || (((__CONFIG__) & (SMBUS_FASTMODEPLUS_I2C2)) == SMBUS_FASTMODEPLUS_I2C2) ||                                        \
 	  (((__CONFIG__) & (SMBUS_FASTMODEPLUS_I2C3)) == SMBUS_FASTMODEPLUS_I2C3) || (((__CONFIG__) & (SMBUS_FASTMODEPLUS_I2C4)) == SMBUS_FASTMODEPLUS_I2C4)))
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Private Functions ---------------------------------------------------------*/
-	/** @defgroup SMBUSEx_Private_Functions SMBUS Extended Private Functions
-	 * @{
-	 */
-	/* Private functions are defined in stm32l4xx_hal_smbus_ex.c file */
-	/**
-	 * @}
-	 */
+/* Private Functions ---------------------------------------------------------*/
+/** @defgroup SMBUSEx_Private_Functions SMBUS Extended Private Functions
+ * @{
+ */
+/* Private functions are defined in stm32l4xx_hal_smbus_ex.c file */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

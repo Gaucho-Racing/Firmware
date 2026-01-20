@@ -396,13 +396,10 @@ HAL_StatusTypeDef HAL_XSPI_Init(XSPI_HandleTypeDef *hxspi)
 	uint32_t tickstart = HAL_GetTick();
 
 	/* Check the XSPI handle allocation */
-	if (hxspi == NULL)
-	{
+	if (hxspi == NULL) {
 		status = HAL_ERROR;
 		/* No error code can be set set as the handler is null */
-	}
-	else
-	{
+	} else {
 		/* Check the parameters of the initialization structure */
 		assert_param(IS_XSPI_MEMORY_MODE(hxspi->Init.MemoryMode));
 		assert_param(IS_XSPI_MEMORY_TYPE(hxspi->Init.MemoryType));
@@ -415,30 +412,25 @@ HAL_StatusTypeDef HAL_XSPI_Init(XSPI_HandleTypeDef *hxspi)
 		assert_param(IS_XSPI_SAMPLE_SHIFTING(hxspi->Init.SampleShifting));
 		assert_param(IS_XSPI_DHQC(hxspi->Init.DelayHoldQuarterCycle));
 		assert_param(IS_XSPI_CS_BOUND(hxspi->Init.ChipSelectBoundary));
-		if (IS_OSPI_ALL_INSTANCE(hxspi->Instance))
-		{
+		if (IS_OSPI_ALL_INSTANCE(hxspi->Instance)) {
 			assert_param(IS_OCTOSPI_FIFO_THRESHOLD_BYTE(hxspi->Init.FifoThresholdByte));
 		}
 #if defined(HSPI1)
-		if (IS_HSPI_ALL_INSTANCE(hxspi->Instance))
-		{
+		if (IS_HSPI_ALL_INSTANCE(hxspi->Instance)) {
 			assert_param(IS_HSPI_FIFO_THRESHOLD_BYTE(hxspi->Init.FifoThresholdByte));
 		}
 #endif /* HSPI1 */
-		if (IS_OSPI_ALL_INSTANCE(hxspi->Instance))
-		{
+		if (IS_OSPI_ALL_INSTANCE(hxspi->Instance)) {
 			assert_param(IS_XSPI_DLYB_BYPASS(hxspi->Init.DelayBlockBypass));
 		}
-		if (IS_OSPI_ALL_INSTANCE(hxspi->Instance))
-		{
+		if (IS_OSPI_ALL_INSTANCE(hxspi->Instance)) {
 			assert_param(IS_XSPI_MAXTRAN(hxspi->Init.MaxTran));
 		}
 		/* Initialize error code */
 		hxspi->ErrorCode = HAL_XSPI_ERROR_NONE;
 
 		/* Check if the state is the reset state */
-		if (hxspi->State == HAL_XSPI_STATE_RESET)
-		{
+		if (hxspi->State == HAL_XSPI_STATE_RESET) {
 #if defined(USE_HAL_XSPI_REGISTER_CALLBACKS) && (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U)
 			/* Reset Callback pointers in HAL_XSPI_STATE_RESET only
 			 */
@@ -453,8 +445,7 @@ HAL_StatusTypeDef HAL_XSPI_Init(XSPI_HandleTypeDef *hxspi)
 			hxspi->StatusMatchCallback = HAL_XSPI_StatusMatchCallback;
 			hxspi->TimeOutCallback = HAL_XSPI_TimeOutCallback;
 
-			if (hxspi->MspInitCallback == NULL)
-			{
+			if (hxspi->MspInitCallback == NULL) {
 				hxspi->MspInitCallback = HAL_XSPI_MspInit;
 			}
 
@@ -477,8 +468,7 @@ HAL_StatusTypeDef HAL_XSPI_Init(XSPI_HandleTypeDef *hxspi)
 				    hxspi->Init.ClockMode));
 
 			/* Configure delay block bypass */
-			if (IS_OSPI_ALL_INSTANCE(hxspi->Instance))
-			{
+			if (IS_OSPI_ALL_INSTANCE(hxspi->Instance)) {
 				MODIFY_REG(hxspi->Instance->DCR1, OCTOSPI_DCR1_DLYBYP, hxspi->Init.DelayBlockBypass);
 			}
 
@@ -489,8 +479,7 @@ HAL_StatusTypeDef HAL_XSPI_Init(XSPI_HandleTypeDef *hxspi)
 			MODIFY_REG(hxspi->Instance->DCR3, XSPI_DCR3_CSBOUND, (hxspi->Init.ChipSelectBoundary << XSPI_DCR3_CSBOUND_Pos));
 
 			/* Configure maximum transfer */
-			if (IS_OSPI_ALL_INSTANCE(hxspi->Instance))
-			{
+			if (IS_OSPI_ALL_INSTANCE(hxspi->Instance)) {
 				MODIFY_REG(hxspi->Instance->DCR3, OCTOSPI_DCR3_MAXTRAN, (hxspi->Init.MaxTran << OCTOSPI_DCR3_MAXTRAN_Pos));
 			}
 
@@ -503,21 +492,18 @@ HAL_StatusTypeDef HAL_XSPI_Init(XSPI_HandleTypeDef *hxspi)
 			/* Wait till busy flag is reset */
 			status = XSPI_WaitFlagStateUntilTimeout(hxspi, HAL_XSPI_FLAG_BUSY, RESET, tickstart, hxspi->Timeout);
 
-			if (status == HAL_OK)
-			{
+			if (status == HAL_OK) {
 				/* Configure clock prescaler */
 				MODIFY_REG(hxspi->Instance->DCR2, XSPI_DCR2_PRESCALER, ((hxspi->Init.ClockPrescaler) << XSPI_DCR2_PRESCALER_Pos));
 
 #if defined(HSPI_CALFCR_FINE)
-				if (IS_HSPI_ALL_INSTANCE(hxspi->Instance))
-				{
+				if (IS_HSPI_ALL_INSTANCE(hxspi->Instance)) {
 					/* The configuration of clock prescaler
 					trigger automatically a calibration
 					process. So it is necessary to wait the
 					calibration is complete */
 					status = XSPI_WaitFlagStateUntilTimeout(hxspi, HAL_XSPI_FLAG_BUSY, RESET, tickstart, hxspi->Timeout);
-					if (status != HAL_OK)
-					{
+					if (status != HAL_OK) {
 						return status;
 					}
 				}
@@ -534,18 +520,14 @@ HAL_StatusTypeDef HAL_XSPI_Init(XSPI_HandleTypeDef *hxspi)
 
 				/* Enable free running clock if needed : must be
 				 * done after XSPI enable */
-				if (hxspi->Init.FreeRunningClock == HAL_XSPI_FREERUNCLK_ENABLE)
-				{
+				if (hxspi->Init.FreeRunningClock == HAL_XSPI_FREERUNCLK_ENABLE) {
 					SET_BIT(hxspi->Instance->DCR1, XSPI_DCR1_FRCK);
 				}
 
 				/* Initialize the XSPI state */
-				if (hxspi->Init.MemoryType == HAL_XSPI_MEMTYPE_HYPERBUS)
-				{
+				if (hxspi->Init.MemoryType == HAL_XSPI_MEMTYPE_HYPERBUS) {
 					hxspi->State = HAL_XSPI_STATE_HYPERBUS_INIT;
-				}
-				else
-				{
+				} else {
 					hxspi->State = HAL_XSPI_STATE_READY;
 				}
 			}
@@ -579,13 +561,10 @@ HAL_StatusTypeDef HAL_XSPI_DeInit(XSPI_HandleTypeDef *hxspi)
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check the XSPI handle allocation */
-	if (hxspi == NULL)
-	{
+	if (hxspi == NULL) {
 		status = HAL_ERROR;
 		/* No error code can be set as the handler is null */
-	}
-	else
-	{
+	} else {
 		/* Disable XSPI */
 		HAL_XSPI_DISABLE(hxspi);
 
@@ -594,8 +573,7 @@ HAL_StatusTypeDef HAL_XSPI_DeInit(XSPI_HandleTypeDef *hxspi)
 		CLEAR_BIT(hxspi->Instance->DCR1, XSPI_DCR1_FRCK);
 
 #if defined(USE_HAL_XSPI_REGISTER_CALLBACKS) && (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U)
-		if (hxspi->MspDeInitCallback == NULL)
-		{
+		if (hxspi->MspDeInitCallback == NULL) {
 			hxspi->MspDeInitCallback = HAL_XSPI_MspDeInit;
 		}
 
@@ -669,29 +647,22 @@ void HAL_XSPI_IRQHandler(XSPI_HandleTypeDef *hxspi)
 
 	/* XSPI fifo threshold interrupt occurred
 	 * -------------------------------*/
-	if (((flag & HAL_XSPI_FLAG_FT) != 0U) && ((itsource & HAL_XSPI_IT_FT) != 0U))
-	{
-		if (currentstate == HAL_XSPI_STATE_BUSY_TX)
-		{
+	if (((flag & HAL_XSPI_FLAG_FT) != 0U) && ((itsource & HAL_XSPI_IT_FT) != 0U)) {
+		if (currentstate == HAL_XSPI_STATE_BUSY_TX) {
 			/* Write a data in the fifo */
 			*((__IO uint8_t *)data_reg) = *hxspi->pBuffPtr;
 			hxspi->pBuffPtr++;
 			hxspi->XferCount--;
-		}
-		else if (currentstate == HAL_XSPI_STATE_BUSY_RX)
-		{
+		} else if (currentstate == HAL_XSPI_STATE_BUSY_RX) {
 			/* Read a data from the fifo */
 			*hxspi->pBuffPtr = *((__IO uint8_t *)data_reg);
 			hxspi->pBuffPtr++;
 			hxspi->XferCount--;
-		}
-		else
-		{
+		} else {
 			/* Nothing to do */
 		}
 
-		if (hxspi->XferCount == 0U)
-		{
+		if (hxspi->XferCount == 0U) {
 			/* All data have been received or transmitted for the
 			 * transfer */
 			/* Disable fifo threshold interrupt */
@@ -708,19 +679,14 @@ void HAL_XSPI_IRQHandler(XSPI_HandleTypeDef *hxspi)
 	}
 	/* XSPI transfer complete interrupt occurred
 	   ----------------------------*/
-	else if (((flag & HAL_XSPI_FLAG_TC) != 0U) && ((itsource & HAL_XSPI_IT_TC) != 0U))
-	{
-		if (currentstate == HAL_XSPI_STATE_BUSY_RX)
-		{
-			if ((hxspi->XferCount > 0U) && ((flag & XSPI_SR_FLEVEL) != 0U))
-			{
+	else if (((flag & HAL_XSPI_FLAG_TC) != 0U) && ((itsource & HAL_XSPI_IT_TC) != 0U)) {
+		if (currentstate == HAL_XSPI_STATE_BUSY_RX) {
+			if ((hxspi->XferCount > 0U) && ((flag & XSPI_SR_FLEVEL) != 0U)) {
 				/* Read the last data received in the fifo */
 				*hxspi->pBuffPtr = *((__IO uint8_t *)data_reg);
 				hxspi->pBuffPtr++;
 				hxspi->XferCount--;
-			}
-			else if (hxspi->XferCount == 0U)
-			{
+			} else if (hxspi->XferCount == 0U) {
 				/* Clear flag */
 				hxspi->Instance->FCR = HAL_XSPI_FLAG_TC;
 
@@ -736,14 +702,10 @@ void HAL_XSPI_IRQHandler(XSPI_HandleTypeDef *hxspi)
 				HAL_XSPI_RxCpltCallback(hxspi);
 #endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
-			}
-			else
-			{
+			} else {
 				/* Nothing to do */
 			}
-		}
-		else
-		{
+		} else {
 			/* Clear flag */
 			hxspi->Instance->FCR = HAL_XSPI_FLAG_TC;
 
@@ -752,8 +714,7 @@ void HAL_XSPI_IRQHandler(XSPI_HandleTypeDef *hxspi)
 
 			hxspi->State = HAL_XSPI_STATE_READY;
 
-			if (currentstate == HAL_XSPI_STATE_BUSY_TX)
-			{
+			if (currentstate == HAL_XSPI_STATE_BUSY_TX) {
 				/* TX complete callback */
 #if defined(USE_HAL_XSPI_REGISTER_CALLBACKS) && (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U)
 				hxspi->TxCpltCallback(hxspi);
@@ -761,9 +722,7 @@ void HAL_XSPI_IRQHandler(XSPI_HandleTypeDef *hxspi)
 				HAL_XSPI_TxCpltCallback(hxspi);
 #endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
-			}
-			else if (currentstate == HAL_XSPI_STATE_BUSY_CMD)
-			{
+			} else if (currentstate == HAL_XSPI_STATE_BUSY_CMD) {
 				/* Command complete callback */
 #if defined(USE_HAL_XSPI_REGISTER_CALLBACKS) && (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U)
 				hxspi->CmdCpltCallback(hxspi);
@@ -771,11 +730,8 @@ void HAL_XSPI_IRQHandler(XSPI_HandleTypeDef *hxspi)
 				HAL_XSPI_CmdCpltCallback(hxspi);
 #endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
-			}
-			else if (currentstate == HAL_XSPI_STATE_ABORT)
-			{
-				if (hxspi->ErrorCode == HAL_XSPI_ERROR_NONE)
-				{
+			} else if (currentstate == HAL_XSPI_STATE_ABORT) {
+				if (hxspi->ErrorCode == HAL_XSPI_ERROR_NONE) {
 					/* Abort called by the user */
 					/* Abort complete callback */
 #if defined(USE_HAL_XSPI_REGISTER_CALLBACKS) && (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U)
@@ -784,9 +740,7 @@ void HAL_XSPI_IRQHandler(XSPI_HandleTypeDef *hxspi)
 					HAL_XSPI_AbortCpltCallback(hxspi);
 #endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
-				}
-				else
-				{
+				} else {
 					/* Abort due to an error (eg : DMA
 					 * error) */
 					/* Error callback */
@@ -797,23 +751,19 @@ void HAL_XSPI_IRQHandler(XSPI_HandleTypeDef *hxspi)
 #endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
 				}
-			}
-			else
-			{
+			} else {
 				/* Nothing to do */
 			}
 		}
 	}
 	/* XSPI status match interrupt occurred
 	   ---------------------------------*/
-	else if (((flag & HAL_XSPI_FLAG_SM) != 0U) && ((itsource & HAL_XSPI_IT_SM) != 0U))
-	{
+	else if (((flag & HAL_XSPI_FLAG_SM) != 0U) && ((itsource & HAL_XSPI_IT_SM) != 0U)) {
 		/* Clear flag */
 		hxspi->Instance->FCR = HAL_XSPI_FLAG_SM;
 
 		/* Check if automatic poll mode stop is activated */
-		if ((hxspi->Instance->CR & XSPI_CR_APMS) != 0U)
-		{
+		if ((hxspi->Instance->CR & XSPI_CR_APMS) != 0U) {
 			/* Disable the interrupts */
 			HAL_XSPI_DISABLE_IT(hxspi, HAL_XSPI_IT_SM | HAL_XSPI_IT_TE);
 
@@ -830,8 +780,7 @@ void HAL_XSPI_IRQHandler(XSPI_HandleTypeDef *hxspi)
 	}
 	/* XSPI transfer error interrupt occurred
 	   -------------------------------*/
-	else if (((flag & HAL_XSPI_FLAG_TE) != 0U) && ((itsource & HAL_XSPI_IT_TE) != 0U))
-	{
+	else if (((flag & HAL_XSPI_FLAG_TE) != 0U) && ((itsource & HAL_XSPI_IT_TE) != 0U)) {
 		/* Clear flag */
 		hxspi->Instance->FCR = HAL_XSPI_FLAG_TE;
 
@@ -842,15 +791,13 @@ void HAL_XSPI_IRQHandler(XSPI_HandleTypeDef *hxspi)
 		hxspi->ErrorCode = HAL_XSPI_ERROR_TRANSFER;
 
 		/* Check if the DMA is enabled */
-		if ((hxspi->Instance->CR & XSPI_CR_DMAEN) != 0U)
-		{
+		if ((hxspi->Instance->CR & XSPI_CR_DMAEN) != 0U) {
 			/* Disable the DMA transfer on the XSPI side */
 			CLEAR_BIT(hxspi->Instance->CR, XSPI_CR_DMAEN);
 
 			/* Disable the DMA transmit on the DMA side */
 			hxspi->hdmatx->XferAbortCallback = XSPI_DMAAbortCplt;
-			if (HAL_DMA_Abort_IT(hxspi->hdmatx) != HAL_OK)
-			{
+			if (HAL_DMA_Abort_IT(hxspi->hdmatx) != HAL_OK) {
 				hxspi->State = HAL_XSPI_STATE_READY;
 
 				/* Error callback */
@@ -864,8 +811,7 @@ void HAL_XSPI_IRQHandler(XSPI_HandleTypeDef *hxspi)
 
 			/* Disable the DMA receive on the DMA side */
 			hxspi->hdmarx->XferAbortCallback = XSPI_DMAAbortCplt;
-			if (HAL_DMA_Abort_IT(hxspi->hdmarx) != HAL_OK)
-			{
+			if (HAL_DMA_Abort_IT(hxspi->hdmarx) != HAL_OK) {
 				hxspi->State = HAL_XSPI_STATE_READY;
 
 				/* Error callback */
@@ -876,9 +822,7 @@ void HAL_XSPI_IRQHandler(XSPI_HandleTypeDef *hxspi)
 #endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
 			}
-		}
-		else
-		{
+		} else {
 			hxspi->State = HAL_XSPI_STATE_READY;
 
 			/* Error callback */
@@ -892,8 +836,7 @@ void HAL_XSPI_IRQHandler(XSPI_HandleTypeDef *hxspi)
 	}
 	/* XSPI timeout interrupt occurred
 	   --------------------------------------*/
-	else if (((flag & HAL_XSPI_FLAG_TO) != 0U) && ((itsource & HAL_XSPI_IT_TO) != 0U))
-	{
+	else if (((flag & HAL_XSPI_FLAG_TO) != 0U) && ((itsource & HAL_XSPI_IT_TO) != 0U)) {
 		/* Clear flag */
 		hxspi->Instance->FCR = HAL_XSPI_FLAG_TO;
 
@@ -904,9 +847,7 @@ void HAL_XSPI_IRQHandler(XSPI_HandleTypeDef *hxspi)
 		HAL_XSPI_TimeOutCallback(hxspi);
 #endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
-	}
-	else
-	{
+	} else {
 		/* Nothing to do */
 	}
 }
@@ -927,66 +868,54 @@ HAL_StatusTypeDef HAL_XSPI_Command(XSPI_HandleTypeDef *hxspi, const XSPI_Regular
 
 	/* Check the parameters of the command structure */
 	assert_param(IS_XSPI_OPERATION_TYPE(pCmd->OperationType));
-	if (hxspi->Init.MemoryMode == HAL_XSPI_SINGLE_MEM)
-	{
-		if (IS_OSPI_ALL_INSTANCE(hxspi->Instance))
-		{
+	if (hxspi->Init.MemoryMode == HAL_XSPI_SINGLE_MEM) {
+		if (IS_OSPI_ALL_INSTANCE(hxspi->Instance)) {
 			assert_param(IS_OCTOSPI_IO_SELECT(pCmd->IOSelect));
 		}
 #if defined(HSPI1)
-		else if (IS_HSPI_ALL_INSTANCE(hxspi->Instance))
-		{
+		else if (IS_HSPI_ALL_INSTANCE(hxspi->Instance)) {
 			assert_param(IS_HSPI_IO_SELECT(pCmd->IOSelect));
 		}
 #endif /* HSPI1 */
-		else
-		{
+		else {
 			hxspi->ErrorCode |= HAL_XSPI_ERROR_INVALID_PARAM;
 			return HAL_ERROR;
 		}
 	}
 
 	assert_param(IS_XSPI_INSTRUCTION_MODE(pCmd->InstructionMode));
-	if (pCmd->InstructionMode != HAL_XSPI_INSTRUCTION_NONE)
-	{
+	if (pCmd->InstructionMode != HAL_XSPI_INSTRUCTION_NONE) {
 		assert_param(IS_XSPI_INSTRUCTION_WIDTH(pCmd->InstructionWidth));
 		assert_param(IS_XSPI_INSTRUCTION_DTR_MODE(pCmd->InstructionDTRMode));
 	}
 
 	assert_param(IS_XSPI_ADDRESS_MODE(pCmd->AddressMode));
-	if (pCmd->AddressMode != HAL_XSPI_ADDRESS_NONE)
-	{
+	if (pCmd->AddressMode != HAL_XSPI_ADDRESS_NONE) {
 		assert_param(IS_XSPI_ADDRESS_WIDTH(pCmd->AddressWidth));
 		assert_param(IS_XSPI_ADDRESS_DTR_MODE(pCmd->AddressDTRMode));
 	}
 
 	assert_param(IS_XSPI_ALT_BYTES_MODE(pCmd->AlternateBytesMode));
-	if (pCmd->AlternateBytesMode != HAL_XSPI_ALT_BYTES_NONE)
-	{
+	if (pCmd->AlternateBytesMode != HAL_XSPI_ALT_BYTES_NONE) {
 		assert_param(IS_XSPI_ALT_BYTES_WIDTH(pCmd->AlternateBytesWidth));
 		assert_param(IS_XSPI_ALT_BYTES_DTR_MODE(pCmd->AlternateBytesDTRMode));
 	}
 
-	if (IS_OSPI_ALL_INSTANCE(hxspi->Instance))
-	{
+	if (IS_OSPI_ALL_INSTANCE(hxspi->Instance)) {
 		assert_param(IS_OCTOSPI_DATA_MODE(pCmd->DataMode));
 	}
 #if defined(HSPI1)
-	else if (IS_HSPI_ALL_INSTANCE(hxspi->Instance))
-	{
+	else if (IS_HSPI_ALL_INSTANCE(hxspi->Instance)) {
 		assert_param(IS_HSPI_DATA_MODE(hxspi->Init.MemoryType, pCmd->DataMode));
 	}
 #endif /* HSPI1 */
-	else
-	{
+	else {
 		hxspi->ErrorCode |= HAL_XSPI_ERROR_INVALID_PARAM;
 		return HAL_ERROR;
 	}
 
-	if (pCmd->DataMode != HAL_XSPI_DATA_NONE)
-	{
-		if (pCmd->OperationType == HAL_XSPI_OPTYPE_COMMON_CFG)
-		{
+	if (pCmd->DataMode != HAL_XSPI_DATA_NONE) {
+		if (pCmd->OperationType == HAL_XSPI_OPTYPE_COMMON_CFG) {
 			assert_param(IS_XSPI_DATA_LENGTH(pCmd->DataLength));
 		}
 		assert_param(IS_XSPI_DATA_DTR_MODE(pCmd->DataDTRMode));
@@ -1000,23 +929,19 @@ HAL_StatusTypeDef HAL_XSPI_Command(XSPI_HandleTypeDef *hxspi, const XSPI_Regular
 	state = hxspi->State;
 	if (((state == HAL_XSPI_STATE_READY) && (hxspi->Init.MemoryType != HAL_XSPI_MEMTYPE_HYPERBUS)) ||
 	    ((state == HAL_XSPI_STATE_READ_CMD_CFG) && ((pCmd->OperationType == HAL_XSPI_OPTYPE_WRITE_CFG) || (pCmd->OperationType == HAL_XSPI_OPTYPE_WRAP_CFG))) ||
-	    ((state == HAL_XSPI_STATE_WRITE_CMD_CFG) && ((pCmd->OperationType == HAL_XSPI_OPTYPE_READ_CFG) || (pCmd->OperationType == HAL_XSPI_OPTYPE_WRAP_CFG))))
-	{
+	    ((state == HAL_XSPI_STATE_WRITE_CMD_CFG) && ((pCmd->OperationType == HAL_XSPI_OPTYPE_READ_CFG) || (pCmd->OperationType == HAL_XSPI_OPTYPE_WRAP_CFG)))) {
 		/* Wait till busy flag is reset */
 		status = XSPI_WaitFlagStateUntilTimeout(hxspi, HAL_XSPI_FLAG_BUSY, RESET, tickstart, Timeout);
 
-		if (status == HAL_OK)
-		{
+		if (status == HAL_OK) {
 			/* Initialize error code */
 			hxspi->ErrorCode = HAL_XSPI_ERROR_NONE;
 
 			/* Configure the registers */
 			status = XSPI_ConfigCmd(hxspi, pCmd);
 
-			if (status == HAL_OK)
-			{
-				if (pCmd->DataMode == HAL_XSPI_DATA_NONE)
-				{
+			if (status == HAL_OK) {
+				if (pCmd->DataMode == HAL_XSPI_DATA_NONE) {
 					/* When there is no data phase, the
 					   transfer start as soon as the
 					   configuration is done so wait until
@@ -1026,51 +951,32 @@ HAL_StatusTypeDef HAL_XSPI_Command(XSPI_HandleTypeDef *hxspi, const XSPI_Regular
 
 					/* Clear TC flag */
 					HAL_XSPI_CLEAR_FLAG(hxspi, HAL_XSPI_FLAG_TC);
-				}
-				else
-				{
+				} else {
 					/* Update the state */
-					if (pCmd->OperationType == HAL_XSPI_OPTYPE_COMMON_CFG)
-					{
+					if (pCmd->OperationType == HAL_XSPI_OPTYPE_COMMON_CFG) {
 						hxspi->State = HAL_XSPI_STATE_CMD_CFG;
-					}
-					else if (pCmd->OperationType == HAL_XSPI_OPTYPE_READ_CFG)
-					{
-						if (hxspi->State == HAL_XSPI_STATE_WRITE_CMD_CFG)
-						{
+					} else if (pCmd->OperationType == HAL_XSPI_OPTYPE_READ_CFG) {
+						if (hxspi->State == HAL_XSPI_STATE_WRITE_CMD_CFG) {
 							hxspi->State = HAL_XSPI_STATE_CMD_CFG;
-						}
-						else
-						{
+						} else {
 							hxspi->State = HAL_XSPI_STATE_READ_CMD_CFG;
 						}
-					}
-					else if (pCmd->OperationType == HAL_XSPI_OPTYPE_WRITE_CFG)
-					{
-						if (hxspi->State == HAL_XSPI_STATE_READ_CMD_CFG)
-						{
+					} else if (pCmd->OperationType == HAL_XSPI_OPTYPE_WRITE_CFG) {
+						if (hxspi->State == HAL_XSPI_STATE_READ_CMD_CFG) {
 							hxspi->State = HAL_XSPI_STATE_CMD_CFG;
-						}
-						else
-						{
+						} else {
 							hxspi->State = HAL_XSPI_STATE_WRITE_CMD_CFG;
 						}
-					}
-					else
-					{
+					} else {
 						/* Wrap configuration, no state
 						 * change */
 					}
 				}
 			}
-		}
-		else
-		{
+		} else {
 			status = HAL_BUSY;
 		}
-	}
-	else
-	{
+	} else {
 		status = HAL_ERROR;
 		hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
 	}
@@ -1094,67 +1000,55 @@ HAL_StatusTypeDef HAL_XSPI_Command_IT(XSPI_HandleTypeDef *hxspi, const XSPI_Regu
 	/* Check the parameters of the command structure */
 	assert_param(IS_XSPI_OPERATION_TYPE(pCmd->OperationType));
 
-	if (IS_OSPI_ALL_INSTANCE(hxspi->Instance))
-	{
-		if (hxspi->Init.MemoryMode == HAL_XSPI_SINGLE_MEM)
-		{
+	if (IS_OSPI_ALL_INSTANCE(hxspi->Instance)) {
+		if (hxspi->Init.MemoryMode == HAL_XSPI_SINGLE_MEM) {
 			assert_param(IS_OCTOSPI_IO_SELECT(pCmd->IOSelect));
 		}
 	}
 #if defined(HSPI1)
-	else if (IS_HSPI_ALL_INSTANCE(hxspi->Instance))
-	{
-		if (hxspi->Init.MemoryMode == HAL_XSPI_SINGLE_MEM)
-		{
+	else if (IS_HSPI_ALL_INSTANCE(hxspi->Instance)) {
+		if (hxspi->Init.MemoryMode == HAL_XSPI_SINGLE_MEM) {
 			assert_param(IS_HSPI_IO_SELECT(pCmd->IOSelect));
 		}
 	}
 #endif /* HSPI */
-	else
-	{
+	else {
 		hxspi->ErrorCode |= HAL_XSPI_ERROR_INVALID_PARAM;
 		return HAL_ERROR;
 	}
 
 	assert_param(IS_XSPI_INSTRUCTION_MODE(pCmd->InstructionMode));
-	if (pCmd->InstructionMode != HAL_XSPI_INSTRUCTION_NONE)
-	{
+	if (pCmd->InstructionMode != HAL_XSPI_INSTRUCTION_NONE) {
 		assert_param(IS_XSPI_INSTRUCTION_WIDTH(pCmd->InstructionWidth));
 		assert_param(IS_XSPI_INSTRUCTION_DTR_MODE(pCmd->InstructionDTRMode));
 	}
 
 	assert_param(IS_XSPI_ADDRESS_MODE(pCmd->AddressMode));
-	if (pCmd->AddressMode != HAL_XSPI_ADDRESS_NONE)
-	{
+	if (pCmd->AddressMode != HAL_XSPI_ADDRESS_NONE) {
 		assert_param(IS_XSPI_ADDRESS_WIDTH(pCmd->AddressWidth));
 		assert_param(IS_XSPI_ADDRESS_DTR_MODE(pCmd->AddressDTRMode));
 	}
 
 	assert_param(IS_XSPI_ALT_BYTES_MODE(pCmd->AlternateBytesMode));
-	if (pCmd->AlternateBytesMode != HAL_XSPI_ALT_BYTES_NONE)
-	{
+	if (pCmd->AlternateBytesMode != HAL_XSPI_ALT_BYTES_NONE) {
 		assert_param(IS_XSPI_ALT_BYTES_WIDTH(pCmd->AlternateBytesWidth));
 		assert_param(IS_XSPI_ALT_BYTES_DTR_MODE(pCmd->AlternateBytesDTRMode));
 	}
 
-	if (IS_OSPI_ALL_INSTANCE(hxspi->Instance))
-	{
+	if (IS_OSPI_ALL_INSTANCE(hxspi->Instance)) {
 		assert_param(IS_OCTOSPI_DATA_MODE(pCmd->DataMode));
 	}
 #if defined(HSPI1)
-	else if (IS_HSPI_ALL_INSTANCE(hxspi->Instance))
-	{
+	else if (IS_HSPI_ALL_INSTANCE(hxspi->Instance)) {
 		assert_param(IS_HSPI_DATA_MODE(hxspi->Init.MemoryType, pCmd->DataMode));
 	}
 #endif /* HSPI1 */
-	else
-	{
+	else {
 		hxspi->ErrorCode |= HAL_XSPI_ERROR_INVALID_PARAM;
 		return HAL_ERROR;
 	}
 
-	if (pCmd->DataMode != HAL_XSPI_DATA_NONE)
-	{
+	if (pCmd->DataMode != HAL_XSPI_DATA_NONE) {
 		assert_param(IS_XSPI_DATA_LENGTH(pCmd->DataLength));
 		assert_param(IS_XSPI_DATA_DTR_MODE(pCmd->DataDTRMode));
 		assert_param(IS_XSPI_DUMMY_CYCLES(pCmd->DummyCycles));
@@ -1165,13 +1059,11 @@ HAL_StatusTypeDef HAL_XSPI_Command_IT(XSPI_HandleTypeDef *hxspi, const XSPI_Regu
 
 	/* Check the state of the driver */
 	if ((hxspi->State == HAL_XSPI_STATE_READY) && (pCmd->OperationType == HAL_XSPI_OPTYPE_COMMON_CFG) && (pCmd->DataMode == HAL_XSPI_DATA_NONE) &&
-	    (hxspi->Init.MemoryType != HAL_XSPI_MEMTYPE_HYPERBUS))
-	{
+	    (hxspi->Init.MemoryType != HAL_XSPI_MEMTYPE_HYPERBUS)) {
 		/* Wait till busy flag is reset */
 		status = XSPI_WaitFlagStateUntilTimeout(hxspi, HAL_XSPI_FLAG_BUSY, RESET, tickstart, hxspi->Timeout);
 
-		if (status == HAL_OK)
-		{
+		if (status == HAL_OK) {
 			/* Initialize error code */
 			hxspi->ErrorCode = HAL_XSPI_ERROR_NONE;
 
@@ -1181,8 +1073,7 @@ HAL_StatusTypeDef HAL_XSPI_Command_IT(XSPI_HandleTypeDef *hxspi, const XSPI_Regu
 			/* Configure the registers */
 			status = XSPI_ConfigCmd(hxspi, pCmd);
 
-			if (status == HAL_OK)
-			{
+			if (status == HAL_OK) {
 				/* Update the state */
 				hxspi->State = HAL_XSPI_STATE_BUSY_CMD;
 
@@ -1191,9 +1082,7 @@ HAL_StatusTypeDef HAL_XSPI_Command_IT(XSPI_HandleTypeDef *hxspi, const XSPI_Regu
 				HAL_XSPI_ENABLE_IT(hxspi, HAL_XSPI_IT_TC | HAL_XSPI_IT_TE);
 			}
 		}
-	}
-	else
-	{
+	} else {
 		status = HAL_ERROR;
 		hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
 	}
@@ -1222,27 +1111,21 @@ HAL_StatusTypeDef HAL_XSPI_HyperbusCfg(XSPI_HandleTypeDef *hxspi, const XSPI_Hyp
 
 	/* Check the state of the driver */
 	state = hxspi->State;
-	if ((state == HAL_XSPI_STATE_HYPERBUS_INIT) || (state == HAL_XSPI_STATE_READY))
-	{
+	if ((state == HAL_XSPI_STATE_HYPERBUS_INIT) || (state == HAL_XSPI_STATE_READY)) {
 		/* Wait till busy flag is reset */
 		status = XSPI_WaitFlagStateUntilTimeout(hxspi, HAL_XSPI_FLAG_BUSY, RESET, tickstart, Timeout);
 
-		if (status == HAL_OK)
-		{
+		if (status == HAL_OK) {
 			/* Configure Hyperbus configuration Latency register */
 			WRITE_REG(hxspi->Instance->HLCR,
 				  ((pCfg->RWRecoveryTimeCycle << XSPI_HLCR_TRWR_Pos) | (pCfg->AccessTimeCycle << XSPI_HLCR_TACC_Pos) | pCfg->WriteZeroLatency | pCfg->LatencyMode));
 
 			/* Update the state */
 			hxspi->State = HAL_XSPI_STATE_READY;
-		}
-		else
-		{
+		} else {
 			status = HAL_BUSY;
 		}
-	}
-	else
-	{
+	} else {
 		status = HAL_ERROR;
 		hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
 	}
@@ -1268,24 +1151,19 @@ HAL_StatusTypeDef HAL_XSPI_HyperbusCmd(XSPI_HandleTypeDef *hxspi, const XSPI_Hyp
 	assert_param(IS_XSPI_DATA_LENGTH(pCmd->DataLength));
 	assert_param(IS_XSPI_DQS_MODE(pCmd->DQSMode));
 #if defined(HSPI1)
-	if (IS_HSPI_ALL_INSTANCE(hxspi->Instance))
-	{
+	if (IS_HSPI_ALL_INSTANCE(hxspi->Instance)) {
 		assert_param(IS_HSPI_DATA_MODE(hxspi->Init.MemoryType, pCmd->DataMode));
-	}
-	else
-	{
+	} else {
 		/* Nothing to do */
 	}
 #endif /* HSPI1 */
 
 	/* Check the state of the driver */
-	if ((hxspi->State == HAL_XSPI_STATE_READY) && (hxspi->Init.MemoryType == HAL_XSPI_MEMTYPE_HYPERBUS))
-	{
+	if ((hxspi->State == HAL_XSPI_STATE_READY) && (hxspi->Init.MemoryType == HAL_XSPI_MEMTYPE_HYPERBUS)) {
 		/* Wait till busy flag is reset */
 		status = XSPI_WaitFlagStateUntilTimeout(hxspi, HAL_XSPI_FLAG_BUSY, RESET, tickstart, Timeout);
 
-		if (status == HAL_OK)
-		{
+		if (status == HAL_OK) {
 			/* Re-initialize the value of the functional mode */
 			MODIFY_REG(hxspi->Instance->CR, XSPI_CR_FMODE, 0U);
 
@@ -1296,22 +1174,19 @@ HAL_StatusTypeDef HAL_XSPI_HyperbusCmd(XSPI_HandleTypeDef *hxspi, const XSPI_Hyp
 			   size and the following configuration :
 			   - DQS signal enabled (used as RWDS)
 			   - DTR mode enabled on address and data */
-			if (IS_OSPI_ALL_INSTANCE(hxspi->Instance))
-			{
+			if (IS_OSPI_ALL_INSTANCE(hxspi->Instance)) {
 				/* - address and data on 8 lines */
 				WRITE_REG(hxspi->Instance->CCR, (pCmd->DQSMode | XSPI_CCR_DDTR | XSPI_CCR_DMODE_2 | pCmd->AddressWidth | XSPI_CCR_ADDTR | XSPI_CCR_ADMODE_2));
 				WRITE_REG(hxspi->Instance->WCCR, (pCmd->DQSMode | XSPI_WCCR_DDTR | XSPI_WCCR_DMODE_2 | pCmd->AddressWidth | XSPI_WCCR_ADDTR | XSPI_WCCR_ADMODE_2));
 			}
 #if defined(HSPI1)
-			else if (IS_HSPI_ALL_INSTANCE(hxspi->Instance))
-			{
+			else if (IS_HSPI_ALL_INSTANCE(hxspi->Instance)) {
 				/* - address and data on 8 or 16 lines */
 				WRITE_REG(hxspi->Instance->CCR, (pCmd->DQSMode | XSPI_CCR_DDTR | pCmd->DataMode | pCmd->AddressWidth | XSPI_CCR_ADDTR | XSPI_CCR_ADMODE_2));
 				WRITE_REG(hxspi->Instance->WCCR, (pCmd->DQSMode | XSPI_WCCR_DDTR | pCmd->DataMode | pCmd->AddressWidth | XSPI_WCCR_ADDTR | XSPI_WCCR_ADMODE_2));
 			}
 #endif /* HSPI1 */
-			else
-			{
+			else {
 				/* Nothing to do */
 			}
 
@@ -1323,14 +1198,10 @@ HAL_StatusTypeDef HAL_XSPI_HyperbusCmd(XSPI_HandleTypeDef *hxspi, const XSPI_Hyp
 
 			/* Update the state */
 			hxspi->State = HAL_XSPI_STATE_CMD_CFG;
-		}
-		else
-		{
+		} else {
 			status = HAL_BUSY;
 		}
-	}
-	else
-	{
+	} else {
 		status = HAL_ERROR;
 		hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
 	}
@@ -1353,16 +1224,12 @@ HAL_StatusTypeDef HAL_XSPI_Transmit(XSPI_HandleTypeDef *hxspi, const uint8_t *pD
 	__IO uint32_t *data_reg = &hxspi->Instance->DR;
 
 	/* Check the data pointer allocation */
-	if (pData == NULL)
-	{
+	if (pData == NULL) {
 		status = HAL_ERROR;
 		hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_PARAM;
-	}
-	else
-	{
+	} else {
 		/* Check the state */
-		if (hxspi->State == HAL_XSPI_STATE_CMD_CFG)
-		{
+		if (hxspi->State == HAL_XSPI_STATE_CMD_CFG) {
 			/* Configure counters and size */
 			hxspi->XferCount = READ_REG(hxspi->Instance->DLR) + 1U;
 			hxspi->XferSize = hxspi->XferCount;
@@ -1372,14 +1239,12 @@ HAL_StatusTypeDef HAL_XSPI_Transmit(XSPI_HandleTypeDef *hxspi, const uint8_t *pD
 			 * indirect write */
 			MODIFY_REG(hxspi->Instance->CR, XSPI_CR_FMODE, XSPI_FUNCTIONAL_MODE_INDIRECT_WRITE);
 
-			do
-			{
+			do {
 				/* Wait till fifo threshold flag is set to send
 				 * data */
 				status = XSPI_WaitFlagStateUntilTimeout(hxspi, HAL_XSPI_FLAG_FT, SET, tickstart, Timeout);
 
-				if (status != HAL_OK)
-				{
+				if (status != HAL_OK) {
 					break;
 				}
 
@@ -1388,23 +1253,19 @@ HAL_StatusTypeDef HAL_XSPI_Transmit(XSPI_HandleTypeDef *hxspi, const uint8_t *pD
 				hxspi->XferCount--;
 			} while (hxspi->XferCount > 0U);
 
-			if (status == HAL_OK)
-			{
+			if (status == HAL_OK) {
 				/* Wait till transfer complete flag is set to go
 				 * back in idle state */
 				status = XSPI_WaitFlagStateUntilTimeout(hxspi, HAL_XSPI_FLAG_TC, SET, tickstart, Timeout);
 
-				if (status == HAL_OK)
-				{
+				if (status == HAL_OK) {
 					/* Clear transfer complete flag */
 					HAL_XSPI_CLEAR_FLAG(hxspi, HAL_XSPI_FLAG_TC);
 
 					hxspi->State = HAL_XSPI_STATE_READY;
 				}
 			}
-		}
-		else
-		{
+		} else {
 			status = HAL_ERROR;
 			hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
 		}
@@ -1430,16 +1291,12 @@ HAL_StatusTypeDef HAL_XSPI_Receive(XSPI_HandleTypeDef *hxspi, uint8_t *pData, ui
 	uint32_t ir_reg = hxspi->Instance->IR;
 
 	/* Check the data pointer allocation */
-	if (pData == NULL)
-	{
+	if (pData == NULL) {
 		status = HAL_ERROR;
 		hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_PARAM;
-	}
-	else
-	{
+	} else {
 		/* Check the state */
-		if (hxspi->State == HAL_XSPI_STATE_CMD_CFG)
-		{
+		if (hxspi->State == HAL_XSPI_STATE_CMD_CFG) {
 			/* Configure counters and size */
 			hxspi->XferCount = READ_REG(hxspi->Instance->DLR) + 1U;
 			hxspi->XferSize = hxspi->XferCount;
@@ -1451,30 +1308,22 @@ HAL_StatusTypeDef HAL_XSPI_Receive(XSPI_HandleTypeDef *hxspi, uint8_t *pData, ui
 
 			/* Trig the transfer by re-writing address or
 			 * instruction register */
-			if (hxspi->Init.MemoryType == HAL_XSPI_MEMTYPE_HYPERBUS)
-			{
+			if (hxspi->Init.MemoryType == HAL_XSPI_MEMTYPE_HYPERBUS) {
 				WRITE_REG(hxspi->Instance->AR, addr_reg);
-			}
-			else
-			{
-				if (READ_BIT(hxspi->Instance->CCR, XSPI_CCR_ADMODE) != HAL_XSPI_ADDRESS_NONE)
-				{
+			} else {
+				if (READ_BIT(hxspi->Instance->CCR, XSPI_CCR_ADMODE) != HAL_XSPI_ADDRESS_NONE) {
 					WRITE_REG(hxspi->Instance->AR, addr_reg);
-				}
-				else
-				{
+				} else {
 					WRITE_REG(hxspi->Instance->IR, ir_reg);
 				}
 			}
 
-			do
-			{
+			do {
 				/* Wait till fifo threshold or transfer complete
 				 * flags are set to read received data */
 				status = XSPI_WaitFlagStateUntilTimeout(hxspi, (HAL_XSPI_FLAG_FT | HAL_XSPI_FLAG_TC), SET, tickstart, Timeout);
 
-				if (status != HAL_OK)
-				{
+				if (status != HAL_OK) {
 					break;
 				}
 
@@ -1483,23 +1332,19 @@ HAL_StatusTypeDef HAL_XSPI_Receive(XSPI_HandleTypeDef *hxspi, uint8_t *pData, ui
 				hxspi->XferCount--;
 			} while (hxspi->XferCount > 0U);
 
-			if (status == HAL_OK)
-			{
+			if (status == HAL_OK) {
 				/* Wait till transfer complete flag is set to go
 				 * back in idle state */
 				status = XSPI_WaitFlagStateUntilTimeout(hxspi, HAL_XSPI_FLAG_TC, SET, tickstart, Timeout);
 
-				if (status == HAL_OK)
-				{
+				if (status == HAL_OK) {
 					/* Clear transfer complete flag */
 					HAL_XSPI_CLEAR_FLAG(hxspi, HAL_XSPI_FLAG_TC);
 
 					hxspi->State = HAL_XSPI_STATE_READY;
 				}
 			}
-		}
-		else
-		{
+		} else {
 			status = HAL_ERROR;
 			hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
 		}
@@ -1520,16 +1365,12 @@ HAL_StatusTypeDef HAL_XSPI_Transmit_IT(XSPI_HandleTypeDef *hxspi, const uint8_t 
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check the data pointer allocation */
-	if (pData == NULL)
-	{
+	if (pData == NULL) {
 		status = HAL_ERROR;
 		hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_PARAM;
-	}
-	else
-	{
+	} else {
 		/* Check the state */
-		if (hxspi->State == HAL_XSPI_STATE_CMD_CFG)
-		{
+		if (hxspi->State == HAL_XSPI_STATE_CMD_CFG) {
 			/* Configure counters and size */
 			hxspi->XferCount = READ_REG(hxspi->Instance->DLR) + 1U;
 			hxspi->XferSize = hxspi->XferCount;
@@ -1548,9 +1389,7 @@ HAL_StatusTypeDef HAL_XSPI_Transmit_IT(XSPI_HandleTypeDef *hxspi, const uint8_t 
 			/* Enable the transfer complete, fifo threshold and
 			 * transfer error interrupts */
 			HAL_XSPI_ENABLE_IT(hxspi, HAL_XSPI_IT_TC | HAL_XSPI_IT_FT | HAL_XSPI_IT_TE);
-		}
-		else
-		{
+		} else {
 			status = HAL_ERROR;
 			hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
 		}
@@ -1573,16 +1412,12 @@ HAL_StatusTypeDef HAL_XSPI_Receive_IT(XSPI_HandleTypeDef *hxspi, uint8_t *pData)
 	uint32_t ir_reg = hxspi->Instance->IR;
 
 	/* Check the data pointer allocation */
-	if (pData == NULL)
-	{
+	if (pData == NULL) {
 		status = HAL_ERROR;
 		hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_PARAM;
-	}
-	else
-	{
+	} else {
 		/* Check the state */
-		if (hxspi->State == HAL_XSPI_STATE_CMD_CFG)
-		{
+		if (hxspi->State == HAL_XSPI_STATE_CMD_CFG) {
 			/* Configure counters and size */
 			hxspi->XferCount = READ_REG(hxspi->Instance->DLR) + 1U;
 			hxspi->XferSize = hxspi->XferCount;
@@ -1604,24 +1439,16 @@ HAL_StatusTypeDef HAL_XSPI_Receive_IT(XSPI_HandleTypeDef *hxspi, uint8_t *pData)
 
 			/* Trig the transfer by re-writing address or
 			 * instruction register */
-			if (hxspi->Init.MemoryType == HAL_XSPI_MEMTYPE_HYPERBUS)
-			{
+			if (hxspi->Init.MemoryType == HAL_XSPI_MEMTYPE_HYPERBUS) {
 				WRITE_REG(hxspi->Instance->AR, addr_reg);
-			}
-			else
-			{
-				if (READ_BIT(hxspi->Instance->CCR, XSPI_CCR_ADMODE) != HAL_XSPI_ADDRESS_NONE)
-				{
+			} else {
+				if (READ_BIT(hxspi->Instance->CCR, XSPI_CCR_ADMODE) != HAL_XSPI_ADDRESS_NONE) {
 					WRITE_REG(hxspi->Instance->AR, addr_reg);
-				}
-				else
-				{
+				} else {
 					WRITE_REG(hxspi->Instance->IR, ir_reg);
 				}
 			}
-		}
-		else
-		{
+		} else {
 			status = HAL_ERROR;
 			hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
 		}
@@ -1649,45 +1476,31 @@ HAL_StatusTypeDef HAL_XSPI_Transmit_DMA(XSPI_HandleTypeDef *hxspi, const uint8_t
 	uint32_t data_width = DMA_DEST_DATAWIDTH_BYTE;
 
 	/* Check the data pointer allocation */
-	if (pData == NULL)
-	{
+	if (pData == NULL) {
 		status = HAL_ERROR;
 		hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_PARAM;
-	}
-	else
-	{
+	} else {
 		/* Check the state */
-		if (hxspi->State == HAL_XSPI_STATE_CMD_CFG)
-		{
-			if ((hxspi->hdmatx->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST)
-			{
+		if (hxspi->State == HAL_XSPI_STATE_CMD_CFG) {
+			if ((hxspi->hdmatx->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
 				p_queue = hxspi->hdmatx->LinkedListQueue;
-				if ((p_queue != NULL) && (p_queue->Head != NULL))
-				{
+				if ((p_queue != NULL) && (p_queue->Head != NULL)) {
 					data_width = p_queue->Head->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET] & DMA_CTR1_DDW_LOG2;
-				}
-				else
-				{
+				} else {
 					/* Set Error Code function status  */
 					hxspi->ErrorCode = HAL_XSPI_ERROR_DMA;
 
 					/* Return function status */
 					status = HAL_ERROR;
 				}
-			}
-			else
-			{
+			} else {
 				data_width = hxspi->hdmatx->Init.DestDataWidth;
 			}
 			/* Configure counters and size */
-			if (data_width == DMA_DEST_DATAWIDTH_BYTE)
-			{
+			if (data_width == DMA_DEST_DATAWIDTH_BYTE) {
 				hxspi->XferCount = data_size;
-			}
-			else if (data_width == DMA_DEST_DATAWIDTH_HALFWORD)
-			{
-				if (((data_size % 2U) != 0U) || ((hxspi->Init.FifoThresholdByte % 2U) != 0U))
-				{
+			} else if (data_width == DMA_DEST_DATAWIDTH_HALFWORD) {
+				if (((data_size % 2U) != 0U) || ((hxspi->Init.FifoThresholdByte % 2U) != 0U)) {
 					/* The number of data or the fifo
 					threshold is not aligned on halfword
 					=> no transfer possible with DMA
@@ -1695,35 +1508,25 @@ HAL_StatusTypeDef HAL_XSPI_Transmit_DMA(XSPI_HandleTypeDef *hxspi, const uint8_t
 				      */
 					hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_PARAM;
 					status = HAL_ERROR;
-				}
-				else
-				{
+				} else {
 					hxspi->XferCount = data_size;
 				}
-			}
-			else if (data_width == DMA_DEST_DATAWIDTH_WORD)
-			{
-				if (((data_size % 4U) != 0U) || ((hxspi->Init.FifoThresholdByte % 4U) != 0U))
-				{
+			} else if (data_width == DMA_DEST_DATAWIDTH_WORD) {
+				if (((data_size % 4U) != 0U) || ((hxspi->Init.FifoThresholdByte % 4U) != 0U)) {
 					/* The number of data or the fifo
 					threshold is not aligned on word
 					=> no transfer possible with DMA
 					peripheral access configured as word */
 					hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_PARAM;
 					status = HAL_ERROR;
-				}
-				else
-				{
+				} else {
 					hxspi->XferCount = data_size;
 				}
-			}
-			else
-			{
+			} else {
 				/* Nothing to do */
 			}
 
-			if (status == HAL_OK)
-			{
+			if (status == HAL_OK) {
 				hxspi->XferSize = hxspi->XferCount;
 				hxspi->pBuffPtr = (uint8_t *)pData;
 
@@ -1751,10 +1554,8 @@ HAL_StatusTypeDef HAL_XSPI_Transmit_DMA(XSPI_HandleTypeDef *hxspi, const uint8_t
 				hxspi->hdmatx->XferAbortCallback = NULL;
 
 				/* Enable the transmit DMA Channel */
-				if ((hxspi->hdmatx->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST)
-				{
-					if (hxspi->hdmatx->LinkedListQueue != NULL)
-					{
+				if ((hxspi->hdmatx->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
+					if (hxspi->hdmatx->LinkedListQueue != NULL) {
 						/* Enable the DMA channel */
 						MODIFY_REG(p_queue->Head->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET], (DMA_CTR1_SINC | DMA_CTR1_DINC), (DMA_SINC_INCREMENTED | DMA_DINC_FIXED));
 						MODIFY_REG(p_queue->Head->LinkRegisters[NODE_CTR2_DEFAULT_OFFSET], DMA_CTR2_DREQ, DMA_MEMORY_TO_PERIPH);
@@ -1767,9 +1568,7 @@ HAL_StatusTypeDef HAL_XSPI_Transmit_DMA(XSPI_HandleTypeDef *hxspi, const uint8_t
 						p_queue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] = (uint32_t)&hxspi->Instance->DR;
 
 						status = HAL_DMAEx_List_Start_IT(hxspi->hdmatx);
-					}
-					else
-					{
+					} else {
 						/* Set Error Code */
 						hxspi->ErrorCode = HAL_XSPI_ERROR_DMA;
 
@@ -1778,16 +1577,11 @@ HAL_StatusTypeDef HAL_XSPI_Transmit_DMA(XSPI_HandleTypeDef *hxspi, const uint8_t
 						/* Return function status */
 						status = HAL_ERROR;
 					}
-				}
-				else
-				{
+				} else {
 					if ((hxspi->hdmatx->Init.Direction == DMA_MEMORY_TO_PERIPH) && (hxspi->hdmatx->Init.SrcInc == DMA_SINC_INCREMENTED) &&
-					    (hxspi->hdmatx->Init.DestInc == DMA_DINC_FIXED))
-					{
+					    (hxspi->hdmatx->Init.DestInc == DMA_DINC_FIXED)) {
 						status = HAL_DMA_Start_IT(hxspi->hdmatx, (uint32_t)pData, (uint32_t)&hxspi->Instance->DR, hxspi->XferSize);
-					}
-					else
-					{
+					} else {
 						/* no transmit possible with DMA
 						 * peripheral, invalid
 						 * configuration */
@@ -1795,8 +1589,7 @@ HAL_StatusTypeDef HAL_XSPI_Transmit_DMA(XSPI_HandleTypeDef *hxspi, const uint8_t
 						status = HAL_ERROR;
 					}
 				}
-				if (status == HAL_OK)
-				{
+				if (status == HAL_OK) {
 					/* Enable the transfer error interrupt
 					 */
 					HAL_XSPI_ENABLE_IT(hxspi, HAL_XSPI_IT_TE);
@@ -1804,17 +1597,13 @@ HAL_StatusTypeDef HAL_XSPI_Transmit_DMA(XSPI_HandleTypeDef *hxspi, const uint8_t
 					/* Enable the DMA transfer by setting
 					 * the DMAEN bit  */
 					SET_BIT(hxspi->Instance->CR, XSPI_CR_DMAEN);
-				}
-				else
-				{
+				} else {
 					status = HAL_ERROR;
 					hxspi->ErrorCode = HAL_XSPI_ERROR_DMA;
 					hxspi->State = HAL_XSPI_STATE_READY;
 				}
 			}
-		}
-		else
-		{
+		} else {
 			status = HAL_ERROR;
 			hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
 		}
@@ -1844,46 +1633,32 @@ HAL_StatusTypeDef HAL_XSPI_Receive_DMA(XSPI_HandleTypeDef *hxspi, uint8_t *pData
 	uint32_t data_width = DMA_DEST_DATAWIDTH_BYTE;
 
 	/* Check the data pointer allocation */
-	if (pData == NULL)
-	{
+	if (pData == NULL) {
 		status = HAL_ERROR;
 		hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_PARAM;
-	}
-	else
-	{
+	} else {
 		/* Check the state */
-		if (hxspi->State == HAL_XSPI_STATE_CMD_CFG)
-		{
-			if ((hxspi->hdmarx->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST)
-			{
+		if (hxspi->State == HAL_XSPI_STATE_CMD_CFG) {
+			if ((hxspi->hdmarx->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
 				p_queue = hxspi->hdmarx->LinkedListQueue;
-				if ((p_queue != NULL) && (p_queue->Head != NULL))
-				{
+				if ((p_queue != NULL) && (p_queue->Head != NULL)) {
 					data_width = p_queue->Head->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET] & DMA_CTR1_DDW_LOG2;
-				}
-				else
-				{
+				} else {
 					/* Set Error Code */
 					hxspi->ErrorCode = HAL_XSPI_ERROR_DMA;
 
 					/* Return function status */
 					status = HAL_ERROR;
 				}
-			}
-			else
-			{
+			} else {
 				data_width = hxspi->hdmarx->Init.DestDataWidth;
 			}
 
 			/* Configure counters and size */
-			if (data_width == DMA_DEST_DATAWIDTH_BYTE)
-			{
+			if (data_width == DMA_DEST_DATAWIDTH_BYTE) {
 				hxspi->XferCount = data_size;
-			}
-			else if (data_width == DMA_DEST_DATAWIDTH_HALFWORD)
-			{
-				if (((data_size % 2U) != 0U) || ((hxspi->Init.FifoThresholdByte % 2U) != 0U))
-				{
+			} else if (data_width == DMA_DEST_DATAWIDTH_HALFWORD) {
+				if (((data_size % 2U) != 0U) || ((hxspi->Init.FifoThresholdByte % 2U) != 0U)) {
 					/* The number of data or the fifo
 					threshold is not aligned on halfword
 					=> no transfer possible with DMA
@@ -1891,35 +1666,25 @@ HAL_StatusTypeDef HAL_XSPI_Receive_DMA(XSPI_HandleTypeDef *hxspi, uint8_t *pData
 				      */
 					hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_PARAM;
 					status = HAL_ERROR;
-				}
-				else
-				{
+				} else {
 					hxspi->XferCount = data_size;
 				}
-			}
-			else if (data_width == DMA_DEST_DATAWIDTH_WORD)
-			{
-				if (((data_size % 4U) != 0U) || ((hxspi->Init.FifoThresholdByte % 4U) != 0U))
-				{
+			} else if (data_width == DMA_DEST_DATAWIDTH_WORD) {
+				if (((data_size % 4U) != 0U) || ((hxspi->Init.FifoThresholdByte % 4U) != 0U)) {
 					/* The number of data or the fifo
 					threshold is not aligned on word
 					=> no transfer possible with DMA
 					peripheral access configured as word */
 					hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_PARAM;
 					status = HAL_ERROR;
-				}
-				else
-				{
+				} else {
 					hxspi->XferCount = data_size;
 				}
-			}
-			else
-			{
+			} else {
 				/* Nothing to do */
 			}
 
-			if (status == HAL_OK)
-			{
+			if (status == HAL_OK) {
 				hxspi->XferSize = hxspi->XferCount;
 				hxspi->pBuffPtr = pData;
 
@@ -1947,10 +1712,8 @@ HAL_StatusTypeDef HAL_XSPI_Receive_DMA(XSPI_HandleTypeDef *hxspi, uint8_t *pData
 				hxspi->hdmarx->XferAbortCallback = NULL;
 
 				/* Enable the receive DMA Channel */
-				if ((hxspi->hdmarx->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST)
-				{
-					if (hxspi->hdmarx->LinkedListQueue != NULL)
-					{
+				if ((hxspi->hdmarx->Mode & DMA_LINKEDLIST) == DMA_LINKEDLIST) {
+					if (hxspi->hdmarx->LinkedListQueue != NULL) {
 						/* Enable the DMA channel */
 						MODIFY_REG(p_queue->Head->LinkRegisters[NODE_CTR1_DEFAULT_OFFSET], (DMA_CTR1_SINC | DMA_CTR1_DINC), (DMA_SINC_FIXED | DMA_DINC_INCREMENTED));
 						MODIFY_REG(p_queue->Head->LinkRegisters[NODE_CTR2_DEFAULT_OFFSET], DMA_CTR2_DREQ, DMA_PERIPH_TO_MEMORY);
@@ -1963,9 +1726,7 @@ HAL_StatusTypeDef HAL_XSPI_Receive_DMA(XSPI_HandleTypeDef *hxspi, uint8_t *pData
 						p_queue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] = (uint32_t)pData;
 
 						status = HAL_DMAEx_List_Start_IT(hxspi->hdmarx);
-					}
-					else
-					{
+					} else {
 						/* Set Error Code */
 						hxspi->ErrorCode = HAL_XSPI_ERROR_DMA;
 
@@ -1974,16 +1735,11 @@ HAL_StatusTypeDef HAL_XSPI_Receive_DMA(XSPI_HandleTypeDef *hxspi, uint8_t *pData
 						/* Return function status */
 						status = HAL_ERROR;
 					}
-				}
-				else
-				{
+				} else {
 					if ((hxspi->hdmarx->Init.Direction == DMA_PERIPH_TO_MEMORY) && (hxspi->hdmarx->Init.SrcInc == DMA_SINC_FIXED) &&
-					    (hxspi->hdmarx->Init.DestInc == DMA_DINC_INCREMENTED))
-					{
+					    (hxspi->hdmarx->Init.DestInc == DMA_DINC_INCREMENTED)) {
 						status = HAL_DMA_Start_IT(hxspi->hdmarx, (uint32_t)&hxspi->Instance->DR, (uint32_t)pData, hxspi->XferSize);
-					}
-					else
-					{
+					} else {
 						/* no receive possible with DMA
 						 * peripheral, invalid
 						 * configuration */
@@ -1991,26 +1747,19 @@ HAL_StatusTypeDef HAL_XSPI_Receive_DMA(XSPI_HandleTypeDef *hxspi, uint8_t *pData
 						status = HAL_ERROR;
 					}
 				}
-				if (status == HAL_OK)
-				{
+				if (status == HAL_OK) {
 					/* Enable the transfer error interrupt
 					 */
 					HAL_XSPI_ENABLE_IT(hxspi, HAL_XSPI_IT_TE);
 
 					/* Trig the transfer by re-writing
 					 * address or instruction register */
-					if (hxspi->Init.MemoryType == HAL_XSPI_MEMTYPE_HYPERBUS)
-					{
+					if (hxspi->Init.MemoryType == HAL_XSPI_MEMTYPE_HYPERBUS) {
 						WRITE_REG(hxspi->Instance->AR, addr_reg);
-					}
-					else
-					{
-						if (READ_BIT(hxspi->Instance->CCR, XSPI_CCR_ADMODE) != HAL_XSPI_ADDRESS_NONE)
-						{
+					} else {
+						if (READ_BIT(hxspi->Instance->CCR, XSPI_CCR_ADMODE) != HAL_XSPI_ADDRESS_NONE) {
 							WRITE_REG(hxspi->Instance->AR, addr_reg);
-						}
-						else
-						{
+						} else {
 							WRITE_REG(hxspi->Instance->IR, ir_reg);
 						}
 					}
@@ -2018,17 +1767,13 @@ HAL_StatusTypeDef HAL_XSPI_Receive_DMA(XSPI_HandleTypeDef *hxspi, uint8_t *pData
 					/* Enable the DMA transfer by setting
 					 * the DMAEN bit  */
 					SET_BIT(hxspi->Instance->CR, XSPI_CR_DMAEN);
-				}
-				else
-				{
+				} else {
 					status = HAL_ERROR;
 					hxspi->ErrorCode = HAL_XSPI_ERROR_DMA;
 					hxspi->State = HAL_XSPI_STATE_READY;
 				}
 			}
-		}
-		else
-		{
+		} else {
 			status = HAL_ERROR;
 			hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
 		}
@@ -2063,13 +1808,11 @@ HAL_StatusTypeDef HAL_XSPI_AutoPolling(XSPI_HandleTypeDef *hxspi, const XSPI_Aut
 	assert_param(IS_XSPI_STATUS_BYTES_SIZE(dlr_reg + 1U));
 
 	/* Check the state */
-	if ((hxspi->State == HAL_XSPI_STATE_CMD_CFG) && (pCfg->AutomaticStop == HAL_XSPI_AUTOMATIC_STOP_ENABLE))
-	{
+	if ((hxspi->State == HAL_XSPI_STATE_CMD_CFG) && (pCfg->AutomaticStop == HAL_XSPI_AUTOMATIC_STOP_ENABLE)) {
 		/* Wait till busy flag is reset */
 		status = XSPI_WaitFlagStateUntilTimeout(hxspi, HAL_XSPI_FLAG_BUSY, RESET, tickstart, Timeout);
 
-		if (status == HAL_OK)
-		{
+		if (status == HAL_OK) {
 			/* Configure registers */
 			WRITE_REG(hxspi->Instance->PSMAR, pCfg->MatchValue);
 			WRITE_REG(hxspi->Instance->PSMKR, pCfg->MatchMask);
@@ -2078,18 +1821,12 @@ HAL_StatusTypeDef HAL_XSPI_AutoPolling(XSPI_HandleTypeDef *hxspi, const XSPI_Aut
 
 			/* Trig the transfer by re-writing address or
 			 * instruction register */
-			if (hxspi->Init.MemoryType == HAL_XSPI_MEMTYPE_HYPERBUS)
-			{
+			if (hxspi->Init.MemoryType == HAL_XSPI_MEMTYPE_HYPERBUS) {
 				WRITE_REG(hxspi->Instance->AR, addr_reg);
-			}
-			else
-			{
-				if (READ_BIT(hxspi->Instance->CCR, XSPI_CCR_ADMODE) != HAL_XSPI_ADDRESS_NONE)
-				{
+			} else {
+				if (READ_BIT(hxspi->Instance->CCR, XSPI_CCR_ADMODE) != HAL_XSPI_ADDRESS_NONE) {
 					WRITE_REG(hxspi->Instance->AR, addr_reg);
-				}
-				else
-				{
+				} else {
 					WRITE_REG(hxspi->Instance->IR, ir_reg);
 				}
 			}
@@ -2098,21 +1835,16 @@ HAL_StatusTypeDef HAL_XSPI_AutoPolling(XSPI_HandleTypeDef *hxspi, const XSPI_Aut
 			 * state */
 			status = XSPI_WaitFlagStateUntilTimeout(hxspi, HAL_XSPI_FLAG_SM, SET, tickstart, Timeout);
 
-			if (status == HAL_OK)
-			{
+			if (status == HAL_OK) {
 				/* Clear status match flag */
 				HAL_XSPI_CLEAR_FLAG(hxspi, HAL_XSPI_FLAG_SM);
 
 				hxspi->State = HAL_XSPI_STATE_READY;
 			}
-		}
-		else
-		{
+		} else {
 			status = HAL_BUSY;
 		}
-	}
-	else
-	{
+	} else {
 		status = HAL_ERROR;
 		hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
 	}
@@ -2145,13 +1877,11 @@ HAL_StatusTypeDef HAL_XSPI_AutoPolling_IT(XSPI_HandleTypeDef *hxspi, const XSPI_
 	assert_param(IS_XSPI_STATUS_BYTES_SIZE(dlr_reg + 1U));
 
 	/* Check the state */
-	if (hxspi->State == HAL_XSPI_STATE_CMD_CFG)
-	{
+	if (hxspi->State == HAL_XSPI_STATE_CMD_CFG) {
 		/* Wait till busy flag is reset */
 		status = XSPI_WaitFlagStateUntilTimeout(hxspi, HAL_XSPI_FLAG_BUSY, RESET, tickstart, hxspi->Timeout);
 
-		if (status == HAL_OK)
-		{
+		if (status == HAL_OK) {
 			/* Configure registers */
 			WRITE_REG(hxspi->Instance->PSMAR, pCfg->MatchValue);
 			WRITE_REG(hxspi->Instance->PSMKR, pCfg->MatchMask);
@@ -2169,25 +1899,17 @@ HAL_StatusTypeDef HAL_XSPI_AutoPolling_IT(XSPI_HandleTypeDef *hxspi, const XSPI_
 
 			/* Trig the transfer by re-writing address or
 			 * instruction register */
-			if (hxspi->Init.MemoryType == HAL_XSPI_MEMTYPE_HYPERBUS)
-			{
+			if (hxspi->Init.MemoryType == HAL_XSPI_MEMTYPE_HYPERBUS) {
 				WRITE_REG(hxspi->Instance->AR, addr_reg);
-			}
-			else
-			{
-				if (READ_BIT(hxspi->Instance->CCR, XSPI_CCR_ADMODE) != HAL_XSPI_ADDRESS_NONE)
-				{
+			} else {
+				if (READ_BIT(hxspi->Instance->CCR, XSPI_CCR_ADMODE) != HAL_XSPI_ADDRESS_NONE) {
 					WRITE_REG(hxspi->Instance->AR, addr_reg);
-				}
-				else
-				{
+				} else {
 					WRITE_REG(hxspi->Instance->IR, ir_reg);
 				}
 			}
 		}
-	}
-	else
-	{
+	} else {
 		status = HAL_ERROR;
 		hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
 	}
@@ -2212,17 +1934,14 @@ HAL_StatusTypeDef HAL_XSPI_MemoryMapped(XSPI_HandleTypeDef *hxspi, const XSPI_Me
 	assert_param(IS_XSPI_TIMEOUT_ACTIVATION(pCfg->TimeOutActivation));
 
 	/* Check the state */
-	if (hxspi->State == HAL_XSPI_STATE_CMD_CFG)
-	{
+	if (hxspi->State == HAL_XSPI_STATE_CMD_CFG) {
 		/* Wait till busy flag is reset */
 		status = XSPI_WaitFlagStateUntilTimeout(hxspi, HAL_XSPI_FLAG_BUSY, RESET, tickstart, hxspi->Timeout);
 
-		if (status == HAL_OK)
-		{
+		if (status == HAL_OK) {
 			hxspi->State = HAL_XSPI_STATE_BUSY_MEM_MAPPED;
 
-			if (pCfg->TimeOutActivation == HAL_XSPI_TIMEOUT_COUNTER_ENABLE)
-			{
+			if (pCfg->TimeOutActivation == HAL_XSPI_TIMEOUT_COUNTER_ENABLE) {
 				assert_param(IS_XSPI_TIMEOUT_PERIOD(pCfg->TimeoutPeriodClock));
 
 				/* Configure register */
@@ -2239,9 +1958,7 @@ HAL_StatusTypeDef HAL_XSPI_MemoryMapped(XSPI_HandleTypeDef *hxspi, const XSPI_Me
 			 * memory-mapped */
 			MODIFY_REG(hxspi->Instance->CR, (XSPI_CR_TCEN | XSPI_CR_FMODE), (pCfg->TimeOutActivation | XSPI_FUNCTIONAL_MODE_MEMORY_MAPPED));
 		}
-	}
-	else
-	{
+	} else {
 		status = HAL_ERROR;
 		hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
 	}
@@ -2258,17 +1975,13 @@ HAL_StatusTypeDef HAL_XSPI_MemoryMapped(XSPI_HandleTypeDef *hxspi, const XSPI_Me
 uint32_t HAL_XSPI_IsMemoryMapped(XSPI_HandleTypeDef *hxspi)
 {
 	/* Check the XSPI handle allocation */
-	if (hxspi == NULL)
-	{
+	if (hxspi == NULL) {
 		return (0UL);
 	}
 	/* Check if driver is in Reset state */
-	else if (hxspi->State == HAL_XSPI_STATE_RESET)
-	{
+	else if (hxspi->State == HAL_XSPI_STATE_RESET) {
 		return (0UL);
-	}
-	else
-	{
+	} else {
 		return ((READ_BIT(hxspi->Instance->CR, OCTOSPI_CR_FMODE) == OCTOSPI_CR_FMODE) ? 1UL : 0UL);
 	}
 }
@@ -2464,17 +2177,14 @@ HAL_StatusTypeDef HAL_XSPI_RegisterCallback(XSPI_HandleTypeDef *hxspi, HAL_XSPI_
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
-	if (pCallback == NULL)
-	{
+	if (pCallback == NULL) {
 		/* Update the error code */
 		hxspi->ErrorCode |= HAL_XSPI_ERROR_INVALID_CALLBACK;
 		return HAL_ERROR;
 	}
 
-	if (hxspi->State == HAL_XSPI_STATE_READY)
-	{
-		switch (CallbackID)
-		{
+	if (hxspi->State == HAL_XSPI_STATE_READY) {
+		switch (CallbackID) {
 			case HAL_XSPI_ERROR_CB_ID:
 				hxspi->ErrorCallback = pCallback;
 				break;
@@ -2518,11 +2228,8 @@ HAL_StatusTypeDef HAL_XSPI_RegisterCallback(XSPI_HandleTypeDef *hxspi, HAL_XSPI_
 				status = HAL_ERROR;
 				break;
 		}
-	}
-	else if (hxspi->State == HAL_XSPI_STATE_RESET)
-	{
-		switch (CallbackID)
-		{
+	} else if (hxspi->State == HAL_XSPI_STATE_RESET) {
+		switch (CallbackID) {
 			case HAL_XSPI_MSP_INIT_CB_ID:
 				hxspi->MspInitCallback = pCallback;
 				break;
@@ -2536,9 +2243,7 @@ HAL_StatusTypeDef HAL_XSPI_RegisterCallback(XSPI_HandleTypeDef *hxspi, HAL_XSPI_
 				status = HAL_ERROR;
 				break;
 		}
-	}
-	else
-	{
+	} else {
 		/* Update the error code */
 		hxspi->ErrorCode |= HAL_XSPI_ERROR_INVALID_CALLBACK;
 		/* update return status */
@@ -2577,10 +2282,8 @@ HAL_StatusTypeDef HAL_XSPI_UnRegisterCallback(XSPI_HandleTypeDef *hxspi, HAL_XSP
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
-	if (hxspi->State == HAL_XSPI_STATE_READY)
-	{
-		switch (CallbackID)
-		{
+	if (hxspi->State == HAL_XSPI_STATE_READY) {
+		switch (CallbackID) {
 			case HAL_XSPI_ERROR_CB_ID:
 				hxspi->ErrorCallback = HAL_XSPI_ErrorCallback;
 				break;
@@ -2624,11 +2327,8 @@ HAL_StatusTypeDef HAL_XSPI_UnRegisterCallback(XSPI_HandleTypeDef *hxspi, HAL_XSP
 				status = HAL_ERROR;
 				break;
 		}
-	}
-	else if (hxspi->State == HAL_XSPI_STATE_RESET)
-	{
-		switch (CallbackID)
-		{
+	} else if (hxspi->State == HAL_XSPI_STATE_RESET) {
+		switch (CallbackID) {
 			case HAL_XSPI_MSP_INIT_CB_ID:
 				hxspi->MspInitCallback = HAL_XSPI_MspInit;
 				break;
@@ -2642,9 +2342,7 @@ HAL_StatusTypeDef HAL_XSPI_UnRegisterCallback(XSPI_HandleTypeDef *hxspi, HAL_XSP
 				status = HAL_ERROR;
 				break;
 		}
-	}
-	else
-	{
+	} else {
 		/* Update the error code */
 		hxspi->ErrorCode |= HAL_XSPI_ERROR_INVALID_CALLBACK;
 		/* update return status */
@@ -2691,31 +2389,26 @@ HAL_StatusTypeDef HAL_XSPI_Abort(XSPI_HandleTypeDef *hxspi)
 	uint32_t tickstart = HAL_GetTick();
 
 	/* Check if the state is not in reset state */
-	if (hxspi->State != HAL_XSPI_STATE_RESET)
-	{
+	if (hxspi->State != HAL_XSPI_STATE_RESET) {
 		/* Check if the DMA is enabled */
-		if ((hxspi->Instance->CR & XSPI_CR_DMAEN) != 0U)
-		{
+		if ((hxspi->Instance->CR & XSPI_CR_DMAEN) != 0U) {
 			/* Disable the DMA transfer on the XSPI side */
 			CLEAR_BIT(hxspi->Instance->CR, XSPI_CR_DMAEN);
 
 			/* Disable the DMA transmit on the DMA side */
 			status = HAL_DMA_Abort(hxspi->hdmatx);
-			if (status != HAL_OK)
-			{
+			if (status != HAL_OK) {
 				hxspi->ErrorCode = HAL_XSPI_ERROR_DMA;
 			}
 
 			/* Disable the DMA receive on the DMA side */
 			status = HAL_DMA_Abort(hxspi->hdmarx);
-			if (status != HAL_OK)
-			{
+			if (status != HAL_OK) {
 				hxspi->ErrorCode = HAL_XSPI_ERROR_DMA;
 			}
 		}
 
-		if (HAL_XSPI_GET_FLAG(hxspi, HAL_XSPI_FLAG_BUSY) != RESET)
-		{
+		if (HAL_XSPI_GET_FLAG(hxspi, HAL_XSPI_FLAG_BUSY) != RESET) {
 			/* Perform an abort of the XSPI */
 			SET_BIT(hxspi->Instance->CR, XSPI_CR_ABORT);
 
@@ -2723,8 +2416,7 @@ HAL_StatusTypeDef HAL_XSPI_Abort(XSPI_HandleTypeDef *hxspi)
 			 * back in idle state */
 			status = XSPI_WaitFlagStateUntilTimeout(hxspi, HAL_XSPI_FLAG_TC, SET, tickstart, hxspi->Timeout);
 
-			if (status == HAL_OK)
-			{
+			if (status == HAL_OK) {
 				/* Clear transfer complete flag */
 				HAL_XSPI_CLEAR_FLAG(hxspi, HAL_XSPI_FLAG_TC);
 
@@ -2732,25 +2424,20 @@ HAL_StatusTypeDef HAL_XSPI_Abort(XSPI_HandleTypeDef *hxspi)
 				 * in idle state */
 				status = XSPI_WaitFlagStateUntilTimeout(hxspi, HAL_XSPI_FLAG_BUSY, RESET, tickstart, hxspi->Timeout);
 
-				if (status == HAL_OK)
-				{
+				if (status == HAL_OK) {
 					/* Return to indirect mode */
 					CLEAR_BIT(hxspi->Instance->CR, XSPI_CR_FMODE);
 
 					hxspi->State = HAL_XSPI_STATE_READY;
 				}
 			}
-		}
-		else
-		{
+		} else {
 			/* Return to indirect mode */
 			CLEAR_BIT(hxspi->Instance->CR, XSPI_CR_FMODE);
 
 			hxspi->State = HAL_XSPI_STATE_READY;
 		}
-	}
-	else
-	{
+	} else {
 		status = HAL_ERROR;
 		hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
 	}
@@ -2769,23 +2456,20 @@ HAL_StatusTypeDef HAL_XSPI_Abort_IT(XSPI_HandleTypeDef *hxspi)
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check if the state is not in reset state */
-	if (hxspi->State != HAL_XSPI_STATE_RESET)
-	{
+	if (hxspi->State != HAL_XSPI_STATE_RESET) {
 		/* Disable all interrupts */
 		HAL_XSPI_DISABLE_IT(hxspi, (HAL_XSPI_IT_TO | HAL_XSPI_IT_SM | HAL_XSPI_IT_FT | HAL_XSPI_IT_TC | HAL_XSPI_IT_TE));
 
 		hxspi->State = HAL_XSPI_STATE_ABORT;
 
 		/* Check if the DMA is enabled */
-		if ((hxspi->Instance->CR & XSPI_CR_DMAEN) != 0U)
-		{
+		if ((hxspi->Instance->CR & XSPI_CR_DMAEN) != 0U) {
 			/* Disable the DMA transfer on the XSPI side */
 			CLEAR_BIT(hxspi->Instance->CR, XSPI_CR_DMAEN);
 
 			/* Disable the DMA transmit on the DMA side */
 			hxspi->hdmatx->XferAbortCallback = XSPI_DMAAbortCplt;
-			if (HAL_DMA_Abort_IT(hxspi->hdmatx) != HAL_OK)
-			{
+			if (HAL_DMA_Abort_IT(hxspi->hdmatx) != HAL_OK) {
 				hxspi->State = HAL_XSPI_STATE_READY;
 
 				/* Abort callback */
@@ -2799,8 +2483,7 @@ HAL_StatusTypeDef HAL_XSPI_Abort_IT(XSPI_HandleTypeDef *hxspi)
 
 			/* Disable the DMA receive on the DMA side */
 			hxspi->hdmarx->XferAbortCallback = XSPI_DMAAbortCplt;
-			if (HAL_DMA_Abort_IT(hxspi->hdmarx) != HAL_OK)
-			{
+			if (HAL_DMA_Abort_IT(hxspi->hdmarx) != HAL_OK) {
 				hxspi->State = HAL_XSPI_STATE_READY;
 
 				/* Abort callback */
@@ -2811,11 +2494,8 @@ HAL_StatusTypeDef HAL_XSPI_Abort_IT(XSPI_HandleTypeDef *hxspi)
 #endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
 			}
-		}
-		else
-		{
-			if (HAL_XSPI_GET_FLAG(hxspi, HAL_XSPI_FLAG_BUSY) != RESET)
-			{
+		} else {
+			if (HAL_XSPI_GET_FLAG(hxspi, HAL_XSPI_FLAG_BUSY) != RESET) {
 				/* Clear transfer complete flag */
 				HAL_XSPI_CLEAR_FLAG(hxspi, HAL_XSPI_FLAG_TC);
 
@@ -2827,9 +2507,7 @@ HAL_StatusTypeDef HAL_XSPI_Abort_IT(XSPI_HandleTypeDef *hxspi)
 
 				/* Return to indirect mode */
 				CLEAR_BIT(hxspi->Instance->CR, XSPI_CR_FMODE);
-			}
-			else
-			{
+			} else {
 				/* Return to indirect mode */
 				CLEAR_BIT(hxspi->Instance->CR, XSPI_CR_FMODE);
 
@@ -2844,9 +2522,7 @@ HAL_StatusTypeDef HAL_XSPI_Abort_IT(XSPI_HandleTypeDef *hxspi)
 	  (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
 			}
 		}
-	}
-	else
-	{
+	} else {
 		status = HAL_ERROR;
 		hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
 	}
@@ -2863,34 +2539,28 @@ HAL_StatusTypeDef HAL_XSPI_SetFifoThreshold(XSPI_HandleTypeDef *hxspi, uint32_t 
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
-	if (IS_OSPI_ALL_INSTANCE(hxspi->Instance))
-	{
+	if (IS_OSPI_ALL_INSTANCE(hxspi->Instance)) {
 		assert_param(IS_OCTOSPI_FIFO_THRESHOLD_BYTE(Threshold));
 	}
 #if defined(HSPI1)
-	else if (IS_HSPI_ALL_INSTANCE(hxspi->Instance))
-	{
+	else if (IS_HSPI_ALL_INSTANCE(hxspi->Instance)) {
 		assert_param(IS_HSPI_FIFO_THRESHOLD_BYTE(Threshold));
 	}
 #endif /* HSPI1 */
-	else
-	{
+	else {
 		hxspi->ErrorCode |= HAL_XSPI_ERROR_INVALID_PARAM;
 		return HAL_ERROR;
 	}
 
 	/* Check the state */
-	if ((hxspi->State & XSPI_BUSY_STATE_MASK) == 0U)
-	{
+	if ((hxspi->State & XSPI_BUSY_STATE_MASK) == 0U) {
 		/* Synchronize initialization structure with the new fifo
 		 * threshold value */
 		hxspi->Init.FifoThresholdByte = Threshold;
 
 		/* Configure new fifo threshold */
 		MODIFY_REG(hxspi->Instance->CR, XSPI_CR_FTHRES, ((hxspi->Init.FifoThresholdByte - 1U) << XSPI_CR_FTHRES_Pos));
-	}
-	else
-	{
+	} else {
 		status = HAL_ERROR;
 		hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
 	}
@@ -2916,17 +2586,14 @@ HAL_StatusTypeDef HAL_XSPI_SetMemoryType(XSPI_HandleTypeDef *hxspi, uint32_t Typ
 	assert_param(IS_XSPI_MEMORY_TYPE(Type));
 
 	/* Check the state */
-	if ((hxspi->State & XSPI_BUSY_STATE_MASK) == 0U)
-	{
+	if ((hxspi->State & XSPI_BUSY_STATE_MASK) == 0U) {
 		/* Synchronize initialization structure with the new memory type
 		 * value */
 		hxspi->Init.MemoryType = Type;
 
 		/* Configure new memory type */
 		MODIFY_REG(hxspi->Instance->DCR1, XSPI_DCR1_MTYP, hxspi->Init.MemoryType);
-	}
-	else
-	{
+	} else {
 		status = HAL_ERROR;
 		hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
 	}
@@ -2946,17 +2613,14 @@ HAL_StatusTypeDef HAL_XSPI_SetDeviceSize(XSPI_HandleTypeDef *hxspi, uint32_t Siz
 	assert_param(IS_XSPI_MEMORY_SIZE(Size));
 
 	/* Check the state */
-	if ((hxspi->State & XSPI_BUSY_STATE_MASK) == 0U)
-	{
+	if ((hxspi->State & XSPI_BUSY_STATE_MASK) == 0U) {
 		/* Synchronize initialization structure with the new device size
 		 * value */
 		hxspi->Init.MemorySize = Size;
 
 		/* Configure new device size */
 		MODIFY_REG(hxspi->Instance->DCR1, XSPI_DCR1_DEVSIZE, (hxspi->Init.MemorySize << XSPI_DCR1_DEVSIZE_Pos));
-	}
-	else
-	{
+	} else {
 		status = HAL_ERROR;
 		hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
 	}
@@ -2975,17 +2639,14 @@ HAL_StatusTypeDef HAL_XSPI_SetClockPrescaler(XSPI_HandleTypeDef *hxspi, uint32_t
 	assert_param(IS_XSPI_CLK_PRESCALER(Prescaler));
 
 	/* Check the state */
-	if ((hxspi->State & XSPI_BUSY_STATE_MASK) == 0U)
-	{
+	if ((hxspi->State & XSPI_BUSY_STATE_MASK) == 0U) {
 		/* Synchronize initialization structure with the new clock
 		 * prescaler value */
 		hxspi->Init.ClockPrescaler = Prescaler;
 
 		/* Configure clock prescaler */
 		MODIFY_REG(hxspi->Instance->DCR2, XSPI_DCR2_PRESCALER, ((hxspi->Init.ClockPrescaler) << XSPI_DCR2_PRESCALER_Pos));
-	}
-	else
-	{
+	} else {
 		status = HAL_ERROR;
 		hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
 	}
@@ -3071,37 +2732,29 @@ HAL_StatusTypeDef HAL_XSPIM_Config(XSPI_HandleTypeDef *hxspi, const XSPIM_CfgTyp
 	assert_param(IS_XSPIM_IO_PORT(pCfg->IOHighPort));
 	assert_param(IS_XSPIM_REQ2ACKTIME(pCfg->Req2AckTime));
 
-	if (hxspi->Instance == OCTOSPI1)
-	{
+	if (hxspi->Instance == OCTOSPI1) {
 		instance = 0U;
 		other_instance = 1U;
-	}
-	else if (hxspi->Instance == OCTOSPI2)
-	{
+	} else if (hxspi->Instance == OCTOSPI2) {
 		instance = 1U;
 		other_instance = 0U;
-	}
-	else
-	{
+	} else {
 		hxspi->ErrorCode |= HAL_XSPI_ERROR_INVALID_PARAM;
 		return HAL_ERROR;
 	}
 
 	/**************** Get current configuration of the instances
 	 * ****************/
-	for (index = 0U; index < OSPI_NB_INSTANCE; index++)
-	{
+	for (index = 0U; index < OSPI_NB_INSTANCE; index++) {
 		XSPIM_GetConfig(index + 1U, &(IOM_cfg[index]));
 	}
 
 	/********** Disable both XSPI to configure XSPI IO Manager **********/
-	if ((OCTOSPI1->CR & XSPI_CR_EN) != 0U)
-	{
+	if ((OCTOSPI1->CR & XSPI_CR_EN) != 0U) {
 		CLEAR_BIT(OCTOSPI1->CR, XSPI_CR_EN);
 		xspi_enabled |= 0x1U;
 	}
-	if ((OCTOSPI2->CR & XSPI_CR_EN) != 0U)
-	{
+	if ((OCTOSPI2->CR & XSPI_CR_EN) != 0U) {
 		CLEAR_BIT(OCTOSPI2->CR, XSPI_CR_EN);
 		xspi_enabled |= 0x2U;
 	}
@@ -3109,43 +2762,32 @@ HAL_StatusTypeDef HAL_XSPIM_Config(XSPI_HandleTypeDef *hxspi, const XSPIM_CfgTyp
 	/***************** Deactivation of previous configuration
 	 * *****************/
 	CLEAR_BIT(OCTOSPIM->PCR[(IOM_cfg[instance].NCSPort - 1U)], OCTOSPIM_PCR_NCSEN);
-	if ((OCTOSPIM->CR & OCTOSPIM_CR_MUXEN) != 0U)
-	{
+	if ((OCTOSPIM->CR & OCTOSPIM_CR_MUXEN) != 0U) {
 		/* De-multiplexing should be performed */
 		CLEAR_BIT(OCTOSPIM->CR, OCTOSPIM_CR_MUXEN);
 
-		if (other_instance == 1U)
-		{
+		if (other_instance == 1U) {
 			SET_BIT(OCTOSPIM->PCR[(IOM_cfg[other_instance].ClkPort - 1U)], OCTOSPIM_PCR_CLKSRC);
-			if (IOM_cfg[other_instance].DQSPort != 0U)
-			{
+			if (IOM_cfg[other_instance].DQSPort != 0U) {
 				SET_BIT(OCTOSPIM->PCR[(IOM_cfg[other_instance].DQSPort - 1U)], OCTOSPIM_PCR_DQSSRC);
 			}
-			if (IOM_cfg[other_instance].IOLowPort != HAL_XSPIM_IOPORT_NONE)
-			{
+			if (IOM_cfg[other_instance].IOLowPort != HAL_XSPIM_IOPORT_NONE) {
 				SET_BIT(OCTOSPIM->PCR[((IOM_cfg[other_instance].IOLowPort - 1U) & OSPI_IOM_PORT_MASK)], OCTOSPIM_PCR_IOLSRC_1);
 			}
-			if (IOM_cfg[other_instance].IOHighPort != HAL_XSPIM_IOPORT_NONE)
-			{
+			if (IOM_cfg[other_instance].IOHighPort != HAL_XSPIM_IOPORT_NONE) {
 				SET_BIT(OCTOSPIM->PCR[((IOM_cfg[other_instance].IOHighPort - 1U) & OSPI_IOM_PORT_MASK)], OCTOSPIM_PCR_IOHSRC_1);
 			}
 		}
-	}
-	else
-	{
-		if (IOM_cfg[instance].ClkPort != 0U)
-		{
+	} else {
+		if (IOM_cfg[instance].ClkPort != 0U) {
 			CLEAR_BIT(OCTOSPIM->PCR[(IOM_cfg[instance].ClkPort - 1U)], OCTOSPIM_PCR_CLKEN);
-			if (IOM_cfg[instance].DQSPort != 0U)
-			{
+			if (IOM_cfg[instance].DQSPort != 0U) {
 				CLEAR_BIT(OCTOSPIM->PCR[(IOM_cfg[instance].DQSPort - 1U)], OCTOSPIM_PCR_DQSEN);
 			}
-			if (IOM_cfg[instance].IOLowPort != HAL_XSPIM_IOPORT_NONE)
-			{
+			if (IOM_cfg[instance].IOLowPort != HAL_XSPIM_IOPORT_NONE) {
 				CLEAR_BIT(OCTOSPIM->PCR[((IOM_cfg[instance].IOLowPort - 1U) & OSPI_IOM_PORT_MASK)], OCTOSPIM_PCR_IOLEN);
 			}
-			if (IOM_cfg[instance].IOHighPort != HAL_XSPIM_IOPORT_NONE)
-			{
+			if (IOM_cfg[instance].IOHighPort != HAL_XSPIM_IOPORT_NONE) {
 				CLEAR_BIT(OCTOSPIM->PCR[((IOM_cfg[instance].IOHighPort - 1U) & OSPI_IOM_PORT_MASK)], OCTOSPIM_PCR_IOHEN);
 			}
 		}
@@ -3154,28 +2796,21 @@ HAL_StatusTypeDef HAL_XSPIM_Config(XSPI_HandleTypeDef *hxspi, const XSPIM_CfgTyp
 	/********************* Deactivation of other instance
 	 * *********************/
 	if ((pCfg->ClkPort == IOM_cfg[other_instance].ClkPort) || (pCfg->DQSPort == IOM_cfg[other_instance].DQSPort) || (pCfg->NCSPort == IOM_cfg[other_instance].NCSPort) ||
-	    (pCfg->IOLowPort == IOM_cfg[other_instance].IOLowPort) || (pCfg->IOHighPort == IOM_cfg[other_instance].IOHighPort))
-	{
+	    (pCfg->IOLowPort == IOM_cfg[other_instance].IOLowPort) || (pCfg->IOHighPort == IOM_cfg[other_instance].IOHighPort)) {
 		if ((pCfg->ClkPort == IOM_cfg[other_instance].ClkPort) && (pCfg->DQSPort == IOM_cfg[other_instance].DQSPort) && (pCfg->IOLowPort == IOM_cfg[other_instance].IOLowPort) &&
-		    (pCfg->IOHighPort == IOM_cfg[other_instance].IOHighPort))
-		{
+		    (pCfg->IOHighPort == IOM_cfg[other_instance].IOHighPort)) {
 			/* Multiplexing should be performed */
 			SET_BIT(OCTOSPIM->CR, OCTOSPIM_CR_MUXEN);
-		}
-		else
-		{
+		} else {
 			CLEAR_BIT(OCTOSPIM->PCR[(IOM_cfg[other_instance].ClkPort - 1U)], OCTOSPIM_PCR_CLKEN);
-			if (IOM_cfg[other_instance].DQSPort != 0U)
-			{
+			if (IOM_cfg[other_instance].DQSPort != 0U) {
 				CLEAR_BIT(OCTOSPIM->PCR[(IOM_cfg[other_instance].DQSPort - 1U)], OCTOSPIM_PCR_DQSEN);
 			}
 			CLEAR_BIT(OCTOSPIM->PCR[(IOM_cfg[other_instance].NCSPort - 1U)], OCTOSPIM_PCR_NCSEN);
-			if (IOM_cfg[other_instance].IOLowPort != HAL_XSPIM_IOPORT_NONE)
-			{
+			if (IOM_cfg[other_instance].IOLowPort != HAL_XSPIM_IOPORT_NONE) {
 				CLEAR_BIT(OCTOSPIM->PCR[((IOM_cfg[other_instance].IOLowPort - 1U) & OSPI_IOM_PORT_MASK)], OCTOSPIM_PCR_IOLEN);
 			}
-			if (IOM_cfg[other_instance].IOHighPort != HAL_XSPIM_IOPORT_NONE)
-			{
+			if (IOM_cfg[other_instance].IOHighPort != HAL_XSPIM_IOPORT_NONE) {
 				CLEAR_BIT(OCTOSPIM->PCR[((IOM_cfg[other_instance].IOHighPort - 1U) & OSPI_IOM_PORT_MASK)], OCTOSPIM_PCR_IOHEN);
 			}
 		}
@@ -3185,91 +2820,63 @@ HAL_StatusTypeDef HAL_XSPIM_Config(XSPI_HandleTypeDef *hxspi, const XSPIM_CfgTyp
 	 * *********************/
 	MODIFY_REG(OCTOSPIM->PCR[(pCfg->NCSPort - 1U)], (OCTOSPIM_PCR_NCSEN | OCTOSPIM_PCR_NCSSRC), (OCTOSPIM_PCR_NCSEN | (instance << OCTOSPIM_PCR_NCSSRC_Pos)));
 
-	if ((pCfg->Req2AckTime - 1U) > ((OCTOSPIM->CR & OCTOSPIM_CR_REQ2ACK_TIME) >> OCTOSPIM_CR_REQ2ACK_TIME_Pos))
-	{
+	if ((pCfg->Req2AckTime - 1U) > ((OCTOSPIM->CR & OCTOSPIM_CR_REQ2ACK_TIME) >> OCTOSPIM_CR_REQ2ACK_TIME_Pos)) {
 		MODIFY_REG(OCTOSPIM->CR, OCTOSPIM_CR_REQ2ACK_TIME, ((pCfg->Req2AckTime - 1U) << OCTOSPIM_CR_REQ2ACK_TIME_Pos));
 	}
 
-	if ((OCTOSPIM->CR & OCTOSPIM_CR_MUXEN) != 0U)
-	{
+	if ((OCTOSPIM->CR & OCTOSPIM_CR_MUXEN) != 0U) {
 		MODIFY_REG(OCTOSPIM->PCR[(pCfg->ClkPort - 1U)], (OCTOSPIM_PCR_CLKEN | OCTOSPIM_PCR_CLKSRC), OCTOSPIM_PCR_CLKEN);
-		if (pCfg->DQSPort != 0U)
-		{
+		if (pCfg->DQSPort != 0U) {
 			MODIFY_REG(OCTOSPIM->PCR[(pCfg->DQSPort - 1U)], (OCTOSPIM_PCR_DQSEN | OCTOSPIM_PCR_DQSSRC), OCTOSPIM_PCR_DQSEN);
 		}
 
-		if ((pCfg->IOLowPort & OCTOSPIM_PCR_IOLEN) != 0U)
-		{
+		if ((pCfg->IOLowPort & OCTOSPIM_PCR_IOLEN) != 0U) {
 			MODIFY_REG(OCTOSPIM->PCR[((pCfg->IOLowPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOLEN | OCTOSPIM_PCR_IOLSRC), OCTOSPIM_PCR_IOLEN);
-		}
-		else if (pCfg->IOLowPort != HAL_XSPIM_IOPORT_NONE)
-		{
+		} else if (pCfg->IOLowPort != HAL_XSPIM_IOPORT_NONE) {
 			MODIFY_REG(OCTOSPIM->PCR[((pCfg->IOLowPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOHEN | OCTOSPIM_PCR_IOHSRC), OCTOSPIM_PCR_IOHEN);
-		}
-		else
-		{
+		} else {
 			/* Nothing to do */
 		}
 
-		if ((pCfg->IOHighPort & OCTOSPIM_PCR_IOLEN) != 0U)
-		{
+		if ((pCfg->IOHighPort & OCTOSPIM_PCR_IOLEN) != 0U) {
 			MODIFY_REG(OCTOSPIM->PCR[((pCfg->IOHighPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOLEN | OCTOSPIM_PCR_IOLSRC), (OCTOSPIM_PCR_IOLEN | OCTOSPIM_PCR_IOLSRC_0));
-		}
-		else if (pCfg->IOHighPort != HAL_XSPIM_IOPORT_NONE)
-		{
+		} else if (pCfg->IOHighPort != HAL_XSPIM_IOPORT_NONE) {
 			MODIFY_REG(OCTOSPIM->PCR[((pCfg->IOHighPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOHEN | OCTOSPIM_PCR_IOHSRC), (OCTOSPIM_PCR_IOHEN | OCTOSPIM_PCR_IOHSRC_0));
-		}
-		else
-		{
+		} else {
 			/* Nothing to do */
 		}
-	}
-	else
-	{
+	} else {
 		MODIFY_REG(OCTOSPIM->PCR[(pCfg->ClkPort - 1U)], (OCTOSPIM_PCR_CLKEN | OCTOSPIM_PCR_CLKSRC), (OCTOSPIM_PCR_CLKEN | (instance << OCTOSPIM_PCR_CLKSRC_Pos)));
-		if (pCfg->DQSPort != 0U)
-		{
+		if (pCfg->DQSPort != 0U) {
 			MODIFY_REG(OCTOSPIM->PCR[(pCfg->DQSPort - 1U)], (OCTOSPIM_PCR_DQSEN | OCTOSPIM_PCR_DQSSRC), (OCTOSPIM_PCR_DQSEN | (instance << OCTOSPIM_PCR_DQSSRC_Pos)));
 		}
 
-		if ((pCfg->IOLowPort & OCTOSPIM_PCR_IOLEN) != 0U)
-		{
+		if ((pCfg->IOLowPort & OCTOSPIM_PCR_IOLEN) != 0U) {
 			MODIFY_REG(OCTOSPIM->PCR[((pCfg->IOLowPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOLEN | OCTOSPIM_PCR_IOLSRC),
 				   (OCTOSPIM_PCR_IOLEN | (instance << (OCTOSPIM_PCR_IOLSRC_Pos + 1U))));
-		}
-		else if (pCfg->IOLowPort != HAL_XSPIM_IOPORT_NONE)
-		{
+		} else if (pCfg->IOLowPort != HAL_XSPIM_IOPORT_NONE) {
 			MODIFY_REG(OCTOSPIM->PCR[((pCfg->IOLowPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOHEN | OCTOSPIM_PCR_IOHSRC),
 				   (OCTOSPIM_PCR_IOHEN | (instance << (OCTOSPIM_PCR_IOHSRC_Pos + 1U))));
-		}
-		else
-		{
+		} else {
 			/* Nothing to do */
 		}
 
-		if ((pCfg->IOHighPort & OCTOSPIM_PCR_IOLEN) != 0U)
-		{
+		if ((pCfg->IOHighPort & OCTOSPIM_PCR_IOLEN) != 0U) {
 			MODIFY_REG(OCTOSPIM->PCR[((pCfg->IOHighPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOLEN | OCTOSPIM_PCR_IOLSRC),
 				   (OCTOSPIM_PCR_IOLEN | OCTOSPIM_PCR_IOLSRC_0 | (instance << (OCTOSPIM_PCR_IOLSRC_Pos + 1U))));
-		}
-		else if (pCfg->IOHighPort != HAL_XSPIM_IOPORT_NONE)
-		{
+		} else if (pCfg->IOHighPort != HAL_XSPIM_IOPORT_NONE) {
 			MODIFY_REG(OCTOSPIM->PCR[((pCfg->IOHighPort - 1U) & OSPI_IOM_PORT_MASK)], (OCTOSPIM_PCR_IOHEN | OCTOSPIM_PCR_IOHSRC),
 				   (OCTOSPIM_PCR_IOHEN | OCTOSPIM_PCR_IOHSRC_0 | (instance << (OCTOSPIM_PCR_IOHSRC_Pos + 1U))));
-		}
-		else
-		{
+		} else {
 			/* Nothing to do */
 		}
 	}
 
 	/******* Re-enable both XSPI after configure XSPI IO Manager ********/
-	if ((xspi_enabled & 0x1U) != 0U)
-	{
+	if ((xspi_enabled & 0x1U) != 0U) {
 		SET_BIT(OCTOSPI1->CR, XSPI_CR_EN);
 	}
-	if ((xspi_enabled & 0x2U) != 0U)
-	{
+	if ((xspi_enabled & 0x2U) != 0U) {
 		SET_BIT(OCTOSPI2->CR, XSPI_CR_EN);
 	}
 
@@ -3312,8 +2919,7 @@ HAL_StatusTypeDef HAL_XSPI_DLYB_SetConfig(XSPI_HandleTypeDef *hxspi, const HAL_X
 	/* Update XSPI state */
 	hxspi->State = HAL_XSPI_STATE_BUSY_CMD;
 
-	if (hxspi->Instance == OCTOSPI1)
-	{
+	if (hxspi->Instance == OCTOSPI1) {
 		/* Enable the DelayBlock */
 		LL_DLYB_Enable(DLYB_OCTOSPI1);
 
@@ -3322,8 +2928,7 @@ HAL_StatusTypeDef HAL_XSPI_DLYB_SetConfig(XSPI_HandleTypeDef *hxspi, const HAL_X
 		status = HAL_OK;
 	}
 #if defined(OCTOSPI2)
-	else if (hxspi->Instance == OCTOSPI2)
-	{
+	else if (hxspi->Instance == OCTOSPI2) {
 		/* Enable the DelayBlock */
 		LL_DLYB_Enable(DLYB_OCTOSPI2);
 
@@ -3332,8 +2937,7 @@ HAL_StatusTypeDef HAL_XSPI_DLYB_SetConfig(XSPI_HandleTypeDef *hxspi, const HAL_X
 		status = HAL_OK;
 	}
 #endif /* OCTOSPI2 */
-	else
-	{
+	else {
 		hxspi->ErrorCode |= HAL_XSPI_ERROR_INVALID_PARAM;
 	}
 
@@ -3356,20 +2960,17 @@ HAL_StatusTypeDef HAL_XSPI_DLYB_GetConfig(XSPI_HandleTypeDef *hxspi, HAL_XSPI_DL
 {
 	HAL_StatusTypeDef status = HAL_ERROR;
 
-	if (hxspi->Instance == OCTOSPI1)
-	{
+	if (hxspi->Instance == OCTOSPI1) {
 		LL_DLYB_GetDelay(DLYB_OCTOSPI1, pdlyb_cfg);
 		status = HAL_OK;
 	}
 #if defined(OCTOSPI2)
-	else if (hxspi->Instance == OCTOSPI2)
-	{
+	else if (hxspi->Instance == OCTOSPI2) {
 		LL_DLYB_GetDelay(DLYB_OCTOSPI2, pdlyb_cfg);
 		status = HAL_OK;
 	}
 #endif /* OCTOSPI2 */
-	else
-	{
+	else {
 		hxspi->ErrorCode |= HAL_XSPI_ERROR_INVALID_PARAM;
 	}
 
@@ -3392,14 +2993,12 @@ HAL_StatusTypeDef HAL_XSPI_DLYB_GetClockPeriod(XSPI_HandleTypeDef *hxspi, HAL_XS
 	/* Update XSPI state */
 	hxspi->State = HAL_XSPI_STATE_BUSY_CMD;
 
-	if (hxspi->Instance == OCTOSPI1)
-	{
+	if (hxspi->Instance == OCTOSPI1) {
 		/* Enable the DelayBlock */
 		LL_DLYB_Enable(DLYB_OCTOSPI1);
 
 		/* try to detect Period */
-		if (LL_DLYB_GetClockPeriod(DLYB_OCTOSPI1, pdlyb_cfg) == (uint32_t)SUCCESS)
-		{
+		if (LL_DLYB_GetClockPeriod(DLYB_OCTOSPI1, pdlyb_cfg) == (uint32_t)SUCCESS) {
 			status = HAL_OK;
 		}
 
@@ -3407,14 +3006,12 @@ HAL_StatusTypeDef HAL_XSPI_DLYB_GetClockPeriod(XSPI_HandleTypeDef *hxspi, HAL_XS
 		LL_DLYB_Disable(DLYB_OCTOSPI1);
 	}
 #if defined(OCTOSPI2)
-	else if (hxspi->Instance == OCTOSPI2)
-	{
+	else if (hxspi->Instance == OCTOSPI2) {
 		/* Enable the DelayBlock */
 		LL_DLYB_Enable(DLYB_OCTOSPI2);
 
 		/* try to detect Period */
-		if (LL_DLYB_GetClockPeriod(DLYB_OCTOSPI2, pdlyb_cfg) == (uint32_t)SUCCESS)
-		{
+		if (LL_DLYB_GetClockPeriod(DLYB_OCTOSPI2, pdlyb_cfg) == (uint32_t)SUCCESS) {
 			status = HAL_OK;
 		}
 
@@ -3422,8 +3019,7 @@ HAL_StatusTypeDef HAL_XSPI_DLYB_GetClockPeriod(XSPI_HandleTypeDef *hxspi, HAL_XS
 		LL_DLYB_Disable(DLYB_OCTOSPI2);
 	}
 #endif /* OCTOSPI2 */
-	else
-	{
+	else {
 		hxspi->ErrorCode |= HAL_XSPI_ERROR_INVALID_PARAM;
 	}
 
@@ -3470,13 +3066,11 @@ HAL_StatusTypeDef HAL_XSPI_GetDelayValue(XSPI_HandleTypeDef *hxspi, XSPI_HSCalTy
 	HAL_StatusTypeDef status = HAL_OK;
 	__IO uint32_t reg = 0;
 
-	if (IS_HSPI_ALL_INSTANCE(hxspi->Instance))
-	{
+	if (IS_HSPI_ALL_INSTANCE(hxspi->Instance)) {
 		/* Check the parameter specified in the structure */
 		assert_param(IS_XSPI_DELAY_TYPE(pCfg->DelayValueType));
 
-		switch (pCfg->DelayValueType)
-		{
+		switch (pCfg->DelayValueType) {
 			case HAL_XSPI_CAL_FULL_CYCLE_DELAY:
 				reg = hxspi->Instance->CALFCR;
 				pCfg->MaxCalibration = (reg & HSPI_CALFCR_CALMAX);
@@ -3496,14 +3090,11 @@ HAL_StatusTypeDef HAL_XSPI_GetDelayValue(XSPI_HandleTypeDef *hxspi, XSPI_HSCalTy
 				break;
 		}
 
-		if (status == HAL_OK)
-		{
+		if (status == HAL_OK) {
 			pCfg->FineCalibrationUnit = (reg & HSPI_CALFCR_FINE);
 			pCfg->CoarseCalibrationUnit = ((reg & HSPI_CALFCR_COARSE) >> HSPI_CALFCR_COARSE_Pos);
 		}
-	}
-	else
-	{
+	} else {
 		status = HAL_ERROR;
 		hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_PARAM;
 	}
@@ -3522,18 +3113,15 @@ HAL_StatusTypeDef HAL_XSPI_SetDelayValue(XSPI_HandleTypeDef *hxspi, const XSPI_H
 {
 	HAL_StatusTypeDef status = HAL_OK;
 
-	if (IS_HSPI_ALL_INSTANCE(hxspi->Instance))
-	{
+	if (IS_HSPI_ALL_INSTANCE(hxspi->Instance)) {
 		/* Check the parameter specified in the structure */
 		assert_param(IS_XSPI_DELAY_TYPE(pCfg->DelayValueType));
 		assert_param(IS_XSPI_FINECAL_VALUE(pCfg->FineCalibrationUnit));
 		assert_param(IS_XSPI_COARSECAL_VALUE(pCfg->CoarseCalibrationUnit));
 
 		/* Check if the state isn't in one of the busy states */
-		if ((hxspi->State & XSPI_BUSY_STATE_MASK) == 0U)
-		{
-			switch (pCfg->DelayValueType)
-			{
+		if ((hxspi->State & XSPI_BUSY_STATE_MASK) == 0U) {
+			switch (pCfg->DelayValueType) {
 				case HAL_XSPI_CAL_FEEDBACK_CLK_DELAY:
 					MODIFY_REG(hxspi->Instance->CALMR, (HSPI_CALMR_COARSE | HSPI_CALMR_FINE), (pCfg->FineCalibrationUnit | (pCfg->CoarseCalibrationUnit << HSPI_CALMR_COARSE_Pos)));
 					break;
@@ -3550,15 +3138,11 @@ HAL_StatusTypeDef HAL_XSPI_SetDelayValue(XSPI_HandleTypeDef *hxspi, const XSPI_H
 					hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_PARAM;
 					break;
 			}
-		}
-		else
-		{
+		} else {
 			status = HAL_ERROR;
 			hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
 		}
-	}
-	else
-	{
+	} else {
 		status = HAL_ERROR;
 		hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_PARAM;
 	}
@@ -3601,17 +3185,14 @@ static void XSPI_DMAHalfCplt(DMA_HandleTypeDef *hdma)
 	XSPI_HandleTypeDef *hxspi = (XSPI_HandleTypeDef *)(hdma->Parent);
 	hxspi->XferCount = (hxspi->XferCount >> 1);
 
-	if (hxspi->State == HAL_XSPI_STATE_BUSY_RX)
-	{
+	if (hxspi->State == HAL_XSPI_STATE_BUSY_RX) {
 #if defined(USE_HAL_XSPI_REGISTER_CALLBACKS) && (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U)
 		hxspi->RxHalfCpltCallback(hxspi);
 #else
 		HAL_XSPI_RxHalfCpltCallback(hxspi);
 #endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
-	}
-	else
-	{
+	} else {
 #if defined(USE_HAL_XSPI_REGISTER_CALLBACKS) && (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U)
 		hxspi->TxHalfCpltCallback(hxspi);
 #else
@@ -3636,8 +3217,7 @@ static void XSPI_DMAError(DMA_HandleTypeDef *hdma)
 	CLEAR_BIT(hxspi->Instance->CR, XSPI_CR_DMAEN);
 
 	/* Abort the XSPI */
-	if (HAL_XSPI_Abort_IT(hxspi) != HAL_OK)
-	{
+	if (HAL_XSPI_Abort_IT(hxspi) != HAL_OK) {
 		/* Disable the interrupts */
 		HAL_XSPI_DISABLE_IT(hxspi, HAL_XSPI_IT_TC | HAL_XSPI_IT_FT | HAL_XSPI_IT_TE);
 
@@ -3664,11 +3244,9 @@ static void XSPI_DMAAbortCplt(DMA_HandleTypeDef *hdma)
 	hxspi->XferCount = 0;
 
 	/* Check the state */
-	if (hxspi->State == HAL_XSPI_STATE_ABORT)
-	{
+	if (hxspi->State == HAL_XSPI_STATE_ABORT) {
 		/* DMA abort called by XSPI abort */
-		if (HAL_XSPI_GET_FLAG(hxspi, HAL_XSPI_FLAG_BUSY) != RESET)
-		{
+		if (HAL_XSPI_GET_FLAG(hxspi, HAL_XSPI_FLAG_BUSY) != RESET) {
 			/* Clear transfer complete flag */
 			HAL_XSPI_CLEAR_FLAG(hxspi, HAL_XSPI_FLAG_TC);
 
@@ -3677,9 +3255,7 @@ static void XSPI_DMAAbortCplt(DMA_HandleTypeDef *hdma)
 
 			/* Perform an abort of the XSPI */
 			SET_BIT(hxspi->Instance->CR, XSPI_CR_ABORT);
-		}
-		else
-		{
+		} else {
 			hxspi->State = HAL_XSPI_STATE_READY;
 
 			/* Abort callback */
@@ -3690,9 +3266,7 @@ static void XSPI_DMAAbortCplt(DMA_HandleTypeDef *hdma)
 #endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) &&                                                                                                                                                         \
 	  (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
 		}
-	}
-	else
-	{
+	} else {
 		/* DMA abort called due to a transfer error interrupt */
 		hxspi->State = HAL_XSPI_STATE_READY;
 
@@ -3718,13 +3292,10 @@ static void XSPI_DMAAbortCplt(DMA_HandleTypeDef *hdma)
 static HAL_StatusTypeDef XSPI_WaitFlagStateUntilTimeout(XSPI_HandleTypeDef *hxspi, uint32_t Flag, FlagStatus State, uint32_t Tickstart, uint32_t Timeout)
 {
 	/* Wait until flag is in expected state */
-	while ((HAL_XSPI_GET_FLAG(hxspi, Flag)) != State)
-	{
+	while ((HAL_XSPI_GET_FLAG(hxspi, Flag)) != State) {
 		/* Check for the Timeout */
-		if (Timeout != HAL_MAX_DELAY)
-		{
-			if (((HAL_GetTick() - Tickstart) > Timeout) || (Timeout == 0U))
-			{
+		if (Timeout != HAL_MAX_DELAY) {
+			if (((HAL_GetTick() - Tickstart) > Timeout) || (Timeout == 0U)) {
 				hxspi->State = HAL_XSPI_STATE_READY;
 				hxspi->ErrorCode |= HAL_XSPI_ERROR_TIMEOUT;
 
@@ -3753,46 +3324,36 @@ static HAL_StatusTypeDef XSPI_ConfigCmd(XSPI_HandleTypeDef *hxspi, const XSPI_Re
 	/* Re-initialize the value of the functional mode */
 	MODIFY_REG(hxspi->Instance->CR, XSPI_CR_FMODE, 0U);
 
-	if (IS_OSPI_ALL_INSTANCE(hxspi->Instance))
-	{
-		if (hxspi->Init.MemoryMode == HAL_XSPI_SINGLE_MEM)
-		{
+	if (IS_OSPI_ALL_INSTANCE(hxspi->Instance)) {
+		if (hxspi->Init.MemoryMode == HAL_XSPI_SINGLE_MEM) {
 			assert_param(IS_OCTOSPI_IO_SELECT(pCmd->IOSelect));
 			MODIFY_REG(hxspi->Instance->CR, OCTOSPI_CR_MSEL, pCmd->IOSelect);
 		}
 	}
 #if defined(HSPI1)
-	else if (IS_HSPI_ALL_INSTANCE(hxspi->Instance))
-	{
-		if (hxspi->Init.MemoryMode == HAL_XSPI_SINGLE_MEM)
-		{
+	else if (IS_HSPI_ALL_INSTANCE(hxspi->Instance)) {
+		if (hxspi->Init.MemoryMode == HAL_XSPI_SINGLE_MEM) {
 			assert_param(IS_HSPI_IO_SELECT(pCmd->IOSelect));
 			MODIFY_REG(hxspi->Instance->CR, HSPI_CR_MSEL, pCmd->IOSelect);
 		}
 	}
 #endif /* HSPI1 */
-	else
-	{
+	else {
 		hxspi->ErrorCode |= HAL_XSPI_ERROR_INVALID_PARAM;
 		return HAL_ERROR;
 	}
 
-	if (pCmd->OperationType == HAL_XSPI_OPTYPE_WRITE_CFG)
-	{
+	if (pCmd->OperationType == HAL_XSPI_OPTYPE_WRITE_CFG) {
 		ccr_reg = &(hxspi->Instance->WCCR);
 		tcr_reg = &(hxspi->Instance->WTCR);
 		ir_reg = &(hxspi->Instance->WIR);
 		abr_reg = &(hxspi->Instance->WABR);
-	}
-	else if (pCmd->OperationType == HAL_XSPI_OPTYPE_WRAP_CFG)
-	{
+	} else if (pCmd->OperationType == HAL_XSPI_OPTYPE_WRAP_CFG) {
 		ccr_reg = &(hxspi->Instance->WPCCR);
 		tcr_reg = &(hxspi->Instance->WPTCR);
 		ir_reg = &(hxspi->Instance->WPIR);
 		abr_reg = &(hxspi->Instance->WPABR);
-	}
-	else
-	{
+	} else {
 		ccr_reg = &(hxspi->Instance->CCR);
 		tcr_reg = &(hxspi->Instance->TCR);
 		ir_reg = &(hxspi->Instance->IR);
@@ -3804,16 +3365,14 @@ static HAL_StatusTypeDef XSPI_ConfigCmd(XSPI_HandleTypeDef *hxspi, const XSPI_Re
 
 	/* Workaround for Erratasheet: Memory-mapped write error response when
 	 * DQS output is disabled */
-	if (pCmd->OperationType == HAL_XSPI_OPTYPE_WRITE_CFG)
-	{
+	if (pCmd->OperationType == HAL_XSPI_OPTYPE_WRITE_CFG) {
 		/* When doing memory-mapped writes, set the DQSE bit of the
 		   OCTOSPI_WCCR register, even for memories that have no DQS
 		   pin. */
 		SET_BIT((*ccr_reg), XSPI_CCR_DQSE);
 	}
 
-	if (pCmd->AlternateBytesMode != HAL_XSPI_ALT_BYTES_NONE)
-	{
+	if (pCmd->AlternateBytesMode != HAL_XSPI_ALT_BYTES_NONE) {
 		/* Configure the ABR register with alternate bytes value */
 		*abr_reg = pCmd->AlternateBytes;
 
@@ -3825,41 +3384,30 @@ static HAL_StatusTypeDef XSPI_ConfigCmd(XSPI_HandleTypeDef *hxspi, const XSPI_Re
 	/* Configure the TCR register with the number of dummy cycles */
 	MODIFY_REG((*tcr_reg), XSPI_TCR_DCYC, pCmd->DummyCycles);
 
-	if (pCmd->DataMode != HAL_XSPI_DATA_NONE)
-	{
-		if (pCmd->OperationType == HAL_XSPI_OPTYPE_COMMON_CFG)
-		{
+	if (pCmd->DataMode != HAL_XSPI_DATA_NONE) {
+		if (pCmd->OperationType == HAL_XSPI_OPTYPE_COMMON_CFG) {
 			/* Configure the DLR register with the number of data */
 			hxspi->Instance->DLR = (pCmd->DataLength - 1U);
 		}
 	}
 
 	/* Configure SSHIFT register to handle SDR/DTR data transfer */
-	if (pCmd->DataMode != HAL_XSPI_DATA_NONE)
-	{
-		if (pCmd->DataDTRMode == HAL_XSPI_DATA_DTR_ENABLE)
-		{
+	if (pCmd->DataMode != HAL_XSPI_DATA_NONE) {
+		if (pCmd->DataDTRMode == HAL_XSPI_DATA_DTR_ENABLE) {
 			/* Deactivate sample shifting when receiving data in DTR
 			 * mode (DDTR=1) */
 			CLEAR_BIT(hxspi->Instance->TCR, XSPI_TCR_SSHIFT);
-		}
-		else if (hxspi->Init.SampleShifting == HAL_XSPI_SAMPLE_SHIFT_HALFCYCLE)
-		{
+		} else if (hxspi->Init.SampleShifting == HAL_XSPI_SAMPLE_SHIFT_HALFCYCLE) {
 			/* Configure sample shifting */
 			SET_BIT(hxspi->Instance->TCR, XSPI_TCR_SSHIFT);
-		}
-		else
-		{
+		} else {
 			/* Do nothing */
 		}
 	}
 
-	if (pCmd->InstructionMode != HAL_XSPI_INSTRUCTION_NONE)
-	{
-		if (pCmd->AddressMode != HAL_XSPI_ADDRESS_NONE)
-		{
-			if (pCmd->DataMode != HAL_XSPI_DATA_NONE)
-			{
+	if (pCmd->InstructionMode != HAL_XSPI_INSTRUCTION_NONE) {
+		if (pCmd->AddressMode != HAL_XSPI_ADDRESS_NONE) {
+			if (pCmd->DataMode != HAL_XSPI_DATA_NONE) {
 				/* ---- Command with instruction, address and
 				 * data ---- */
 
@@ -3868,9 +3416,7 @@ static HAL_StatusTypeDef XSPI_ConfigCmd(XSPI_HandleTypeDef *hxspi, const XSPI_Re
 				MODIFY_REG((*ccr_reg), (XSPI_CCR_IMODE | XSPI_CCR_IDTR | XSPI_CCR_ISIZE | XSPI_CCR_ADMODE | XSPI_CCR_ADDTR | XSPI_CCR_ADSIZE | XSPI_CCR_DMODE | XSPI_CCR_DDTR),
 					   (pCmd->InstructionMode | pCmd->InstructionDTRMode | pCmd->InstructionWidth | pCmd->AddressMode | pCmd->AddressDTRMode | pCmd->AddressWidth | pCmd->DataMode |
 					    pCmd->DataDTRMode));
-			}
-			else
-			{
+			} else {
 				/* ---- Command with instruction and address
 				 * ---- */
 
@@ -3881,8 +3427,7 @@ static HAL_StatusTypeDef XSPI_ConfigCmd(XSPI_HandleTypeDef *hxspi, const XSPI_Re
 
 				/* The DHQC bit is linked with DDTR bit which
 				 * should be activated */
-				if ((hxspi->Init.DelayHoldQuarterCycle == HAL_XSPI_DHQC_ENABLE) && (pCmd->InstructionDTRMode == HAL_XSPI_INSTRUCTION_DTR_ENABLE))
-				{
+				if ((hxspi->Init.DelayHoldQuarterCycle == HAL_XSPI_DHQC_ENABLE) && (pCmd->InstructionDTRMode == HAL_XSPI_INSTRUCTION_DTR_ENABLE)) {
 					MODIFY_REG((*ccr_reg), XSPI_CCR_DDTR, HAL_XSPI_DATA_DTR_ENABLE);
 				}
 			}
@@ -3893,18 +3438,14 @@ static HAL_StatusTypeDef XSPI_ConfigCmd(XSPI_HandleTypeDef *hxspi, const XSPI_Re
 			/* Configure the AR register with the address value */
 			hxspi->Instance->AR = pCmd->Address;
 
-			if (pCmd->OperationType == HAL_XSPI_OPTYPE_COMMON_CFG)
-			{
+			if (pCmd->OperationType == HAL_XSPI_OPTYPE_COMMON_CFG) {
 				/* Verify if programmed address fit with
 				 * requirement of Reference Manual 28.5 chapter
 				 */
 				assert_param(IS_XSPI_PROG_ADDR(hxspi->Instance->AR, pCmd->Address));
 			}
-		}
-		else
-		{
-			if (pCmd->DataMode != HAL_XSPI_DATA_NONE)
-			{
+		} else {
+			if (pCmd->DataMode != HAL_XSPI_DATA_NONE) {
 				/* ---- Command with instruction and data ----
 				 */
 
@@ -3912,9 +3453,7 @@ static HAL_StatusTypeDef XSPI_ConfigCmd(XSPI_HandleTypeDef *hxspi, const XSPI_Re
 				 * communication parameters */
 				MODIFY_REG((*ccr_reg), (XSPI_CCR_IMODE | XSPI_CCR_IDTR | XSPI_CCR_ISIZE | XSPI_CCR_DMODE | XSPI_CCR_DDTR),
 					   (pCmd->InstructionMode | pCmd->InstructionDTRMode | pCmd->InstructionWidth | pCmd->DataMode | pCmd->DataDTRMode));
-			}
-			else
-			{
+			} else {
 				/* ---- Command with only instruction ---- */
 
 				/* Configure the CCR register with all
@@ -3923,8 +3462,7 @@ static HAL_StatusTypeDef XSPI_ConfigCmd(XSPI_HandleTypeDef *hxspi, const XSPI_Re
 
 				/* The DHQC bit is linked with DDTR bit which
 				 * should be activated */
-				if ((hxspi->Init.DelayHoldQuarterCycle == HAL_XSPI_DHQC_ENABLE) && (pCmd->InstructionDTRMode == HAL_XSPI_INSTRUCTION_DTR_ENABLE))
-				{
+				if ((hxspi->Init.DelayHoldQuarterCycle == HAL_XSPI_DHQC_ENABLE) && (pCmd->InstructionDTRMode == HAL_XSPI_INSTRUCTION_DTR_ENABLE)) {
 					MODIFY_REG((*ccr_reg), XSPI_CCR_DDTR, HAL_XSPI_DATA_DTR_ENABLE);
 				}
 			}
@@ -3933,22 +3471,16 @@ static HAL_StatusTypeDef XSPI_ConfigCmd(XSPI_HandleTypeDef *hxspi, const XSPI_Re
 			 */
 			*ir_reg = pCmd->Instruction;
 		}
-	}
-	else
-	{
-		if (pCmd->AddressMode != HAL_XSPI_ADDRESS_NONE)
-		{
-			if (pCmd->DataMode != HAL_XSPI_DATA_NONE)
-			{
+	} else {
+		if (pCmd->AddressMode != HAL_XSPI_ADDRESS_NONE) {
+			if (pCmd->DataMode != HAL_XSPI_DATA_NONE) {
 				/* ---- Command with address and data ---- */
 
 				/* Configure the CCR register with all
 				 * communication parameters */
 				MODIFY_REG((*ccr_reg), (XSPI_CCR_ADMODE | XSPI_CCR_ADDTR | XSPI_CCR_ADSIZE | XSPI_CCR_DMODE | XSPI_CCR_DDTR),
 					   (pCmd->AddressMode | pCmd->AddressDTRMode | pCmd->AddressWidth | pCmd->DataMode | pCmd->DataDTRMode));
-			}
-			else
-			{
+			} else {
 				/* ---- Command with only address ---- */
 
 				/* Configure the CCR register with all
@@ -3960,16 +3492,13 @@ static HAL_StatusTypeDef XSPI_ConfigCmd(XSPI_HandleTypeDef *hxspi, const XSPI_Re
 			 */
 			hxspi->Instance->AR = pCmd->Address;
 
-			if (pCmd->OperationType == HAL_XSPI_OPTYPE_COMMON_CFG)
-			{
+			if (pCmd->OperationType == HAL_XSPI_OPTYPE_COMMON_CFG) {
 				/* Verify if programmed address fit with
 				 * requirement of Reference Manual 28.5 chapter
 				 */
 				assert_param(IS_XSPI_PROG_ADDR(hxspi->Instance->AR, pCmd->Address));
 			}
-		}
-		else
-		{
+		} else {
 			/* ---- Invalid command configuration (no instruction,
 			 * no address) ---- */
 			status = HAL_ERROR;
@@ -3977,10 +3506,8 @@ static HAL_StatusTypeDef XSPI_ConfigCmd(XSPI_HandleTypeDef *hxspi, const XSPI_Re
 		}
 	}
 
-	if (pCmd->DataMode != HAL_XSPI_DATA_NONE)
-	{
-		if (pCmd->OperationType == HAL_XSPI_OPTYPE_COMMON_CFG)
-		{
+	if (pCmd->DataMode != HAL_XSPI_DATA_NONE) {
+		if (pCmd->OperationType == HAL_XSPI_OPTYPE_COMMON_CFG) {
 			/* Configure the DLR register with the number of data */
 			hxspi->Instance->DLR = (pCmd->DataLength - 1U);
 
@@ -4013,87 +3540,66 @@ static void XSPIM_GetConfig(uint8_t instance_nb, XSPIM_CfgTypeDef *pCfg)
 	pCfg->IOLowPort = 0U;
 	pCfg->IOHighPort = 0U;
 
-	if (instance_nb == 2U)
-	{
-		if ((OCTOSPIM->CR & OCTOSPIM_CR_MUXEN) == 0U)
-		{
+	if (instance_nb == 2U) {
+		if ((OCTOSPIM->CR & OCTOSPIM_CR_MUXEN) == 0U) {
 			value = (OCTOSPIM_PCR_CLKSRC | OCTOSPIM_PCR_DQSSRC | OCTOSPIM_PCR_NCSSRC | OCTOSPIM_PCR_IOLSRC_1 | OCTOSPIM_PCR_IOHSRC_1);
-		}
-		else
-		{
+		} else {
 			value = OCTOSPIM_PCR_NCSSRC;
 		}
 	}
 
 	/* Get the information about the instance */
-	for (index = 0U; index < OSPI_IOM_NB_PORTS; index++)
-	{
+	for (index = 0U; index < OSPI_IOM_NB_PORTS; index++) {
 		reg = OCTOSPIM->PCR[index];
 
-		if ((reg & OCTOSPIM_PCR_CLKEN) != 0U)
-		{
+		if ((reg & OCTOSPIM_PCR_CLKEN) != 0U) {
 			/* The clock is enabled on this port */
-			if ((reg & OCTOSPIM_PCR_CLKSRC) == (value & OCTOSPIM_PCR_CLKSRC))
-			{
+			if ((reg & OCTOSPIM_PCR_CLKSRC) == (value & OCTOSPIM_PCR_CLKSRC)) {
 				/* The clock correspond to the instance passed
 				 * as parameter */
 				pCfg->ClkPort = index + 1U;
 			}
 		}
 
-		if ((reg & OCTOSPIM_PCR_DQSEN) != 0U)
-		{
+		if ((reg & OCTOSPIM_PCR_DQSEN) != 0U) {
 			/* The DQS is enabled on this port */
-			if ((reg & OCTOSPIM_PCR_DQSSRC) == (value & OCTOSPIM_PCR_DQSSRC))
-			{
+			if ((reg & OCTOSPIM_PCR_DQSSRC) == (value & OCTOSPIM_PCR_DQSSRC)) {
 				/* The DQS correspond to the instance passed as
 				 * parameter */
 				pCfg->DQSPort = index + 1U;
 			}
 		}
 
-		if ((reg & OCTOSPIM_PCR_NCSEN) != 0U)
-		{
+		if ((reg & OCTOSPIM_PCR_NCSEN) != 0U) {
 			/* The nCS is enabled on this port */
-			if ((reg & OCTOSPIM_PCR_NCSSRC) == (value & OCTOSPIM_PCR_NCSSRC))
-			{
+			if ((reg & OCTOSPIM_PCR_NCSSRC) == (value & OCTOSPIM_PCR_NCSSRC)) {
 				/* The nCS correspond to the instance passed as
 				 * parameter */
 				pCfg->NCSPort = index + 1U;
 			}
 		}
 
-		if ((reg & OCTOSPIM_PCR_IOLEN) != 0U)
-		{
+		if ((reg & OCTOSPIM_PCR_IOLEN) != 0U) {
 			/* The IO Low is enabled on this port */
-			if ((reg & OCTOSPIM_PCR_IOLSRC_1) == (value & OCTOSPIM_PCR_IOLSRC_1))
-			{
+			if ((reg & OCTOSPIM_PCR_IOLSRC_1) == (value & OCTOSPIM_PCR_IOLSRC_1)) {
 				/* The IO Low correspond to the instance passed
 				 * as parameter */
-				if ((reg & OCTOSPIM_PCR_IOLSRC_0) == 0U)
-				{
+				if ((reg & OCTOSPIM_PCR_IOLSRC_0) == 0U) {
 					pCfg->IOLowPort = (OCTOSPIM_PCR_IOLEN | (index + 1U));
-				}
-				else
-				{
+				} else {
 					pCfg->IOLowPort = (OCTOSPIM_PCR_IOHEN | (index + 1U));
 				}
 			}
 		}
 
-		if ((reg & OCTOSPIM_PCR_IOHEN) != 0U)
-		{
+		if ((reg & OCTOSPIM_PCR_IOHEN) != 0U) {
 			/* The IO High is enabled on this port */
-			if ((reg & OCTOSPIM_PCR_IOHSRC_1) == (value & OCTOSPIM_PCR_IOHSRC_1))
-			{
+			if ((reg & OCTOSPIM_PCR_IOHSRC_1) == (value & OCTOSPIM_PCR_IOHSRC_1)) {
 				/* The IO High correspond to the instance passed
 				 * as parameter */
-				if ((reg & OCTOSPIM_PCR_IOHSRC_0) == 0U)
-				{
+				if ((reg & OCTOSPIM_PCR_IOHSRC_0) == 0U) {
 					pCfg->IOHighPort = (OCTOSPIM_PCR_IOLEN | (index + 1U));
-				}
-				else
-				{
+				} else {
 					pCfg->IOHighPort = (OCTOSPIM_PCR_IOHEN | (index + 1U));
 				}
 			}

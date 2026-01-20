@@ -167,12 +167,9 @@ HAL_StatusTypeDef HAL_ICACHE_ConfigAssociativityMode(uint32_t AssociativityMode)
 	assert_param(IS_ICACHE_ASSOCIATIVITY_MODE(AssociativityMode));
 
 	/* Check cache is not enabled */
-	if (READ_BIT(ICACHE->CR, ICACHE_CR_EN) != 0U)
-	{
+	if (READ_BIT(ICACHE->CR, ICACHE_CR_EN) != 0U) {
 		status = HAL_ERROR;
-	}
-	else
-	{
+	} else {
 		MODIFY_REG(ICACHE->CR, ICACHE_CR_WAYSEL, AssociativityMode);
 	}
 
@@ -244,14 +241,11 @@ HAL_StatusTypeDef HAL_ICACHE_Disable(void)
 	tickstart = HAL_GetTick();
 
 	/* Wait for instruction cache being disabled */
-	while (READ_BIT(ICACHE->CR, ICACHE_CR_EN) != 0U)
-	{
-		if ((HAL_GetTick() - tickstart) > ICACHE_DISABLE_TIMEOUT_VALUE)
-		{
+	while (READ_BIT(ICACHE->CR, ICACHE_CR_EN) != 0U) {
+		if ((HAL_GetTick() - tickstart) > ICACHE_DISABLE_TIMEOUT_VALUE) {
 			/* New check to avoid false timeout detection in case of
 			 * preemption */
-			if (READ_BIT(ICACHE->CR, ICACHE_CR_EN) != 0U)
-			{
+			if (READ_BIT(ICACHE->CR, ICACHE_CR_EN) != 0U) {
 				status = HAL_TIMEOUT;
 				break;
 			}
@@ -278,8 +272,7 @@ HAL_StatusTypeDef HAL_ICACHE_Invalidate(void)
 	HAL_StatusTypeDef status;
 
 	/* Check if no ongoing operation */
-	if (READ_BIT(ICACHE->SR, ICACHE_SR_BUSYF) == 0U)
-	{
+	if (READ_BIT(ICACHE->SR, ICACHE_SR_BUSYF) == 0U) {
 		/* Launch cache invalidation */
 		SET_BIT(ICACHE->CR, ICACHE_CR_CACHEINV);
 	}
@@ -302,12 +295,9 @@ HAL_StatusTypeDef HAL_ICACHE_Invalidate_IT(void)
 	HAL_StatusTypeDef status = HAL_OK;
 
 	/* Check no ongoing operation */
-	if (READ_BIT(ICACHE->SR, ICACHE_SR_BUSYF) != 0U)
-	{
+	if (READ_BIT(ICACHE->SR, ICACHE_SR_BUSYF) != 0U) {
 		status = HAL_ERROR;
-	}
-	else
-	{
+	} else {
 		/* Make sure BSYENDF is reset before to start cache invalidation
 		 */
 		WRITE_REG(ICACHE->FCR, ICACHE_FCR_CBSYENDF);
@@ -333,20 +323,16 @@ HAL_StatusTypeDef HAL_ICACHE_WaitForInvalidateComplete(void)
 	uint32_t tickstart;
 
 	/* Check if ongoing invalidation operation */
-	if (READ_BIT(ICACHE->SR, ICACHE_SR_BUSYF) != 0U)
-	{
+	if (READ_BIT(ICACHE->SR, ICACHE_SR_BUSYF) != 0U) {
 		/* Get tick */
 		tickstart = HAL_GetTick();
 
 		/* Wait for end of cache invalidation */
-		while (READ_BIT(ICACHE->SR, ICACHE_SR_BSYENDF) == 0U)
-		{
-			if ((HAL_GetTick() - tickstart) > ICACHE_INVALIDATE_TIMEOUT_VALUE)
-			{
+		while (READ_BIT(ICACHE->SR, ICACHE_SR_BSYENDF) == 0U) {
+			if ((HAL_GetTick() - tickstart) > ICACHE_INVALIDATE_TIMEOUT_VALUE) {
 				/* New check to avoid false timeout detection in
 				 * case of preemption */
-				if (READ_BIT(ICACHE->SR, ICACHE_SR_BSYENDF) == 0U)
-				{
+				if (READ_BIT(ICACHE->SR, ICACHE_SR_BSYENDF) == 0U) {
 					status = HAL_TIMEOUT;
 					break;
 				}
@@ -466,8 +452,7 @@ void HAL_ICACHE_IRQHandler(void)
 	uint32_t itsources = READ_REG(ICACHE->IER);
 
 	/* Check Instruction cache Error interrupt flag */
-	if (((itflags & itsources) & ICACHE_FLAG_ERROR) != 0U)
-	{
+	if (((itflags & itsources) & ICACHE_FLAG_ERROR) != 0U) {
 		/* Disable error interrupt */
 		CLEAR_BIT(ICACHE->IER, ICACHE_IER_ERRIE);
 
@@ -479,8 +464,7 @@ void HAL_ICACHE_IRQHandler(void)
 	}
 
 	/* Check Instruction cache BusyEnd interrupt flag */
-	if (((itflags & itsources) & ICACHE_FLAG_BUSYEND) != 0U)
-	{
+	if (((itflags & itsources) & ICACHE_FLAG_BUSYEND) != 0U) {
 		/* Disable end of cache invalidation interrupt */
 		CLEAR_BIT(ICACHE->IER, ICACHE_IER_BSYENDIE);
 
@@ -554,22 +538,16 @@ HAL_StatusTypeDef HAL_ICACHE_EnableRemapRegion(uint32_t Region, const ICACHE_Reg
 	assert_param(IS_ICACHE_REGION_OUTPUT_BURST_TYPE(pRegionConfig->OutputBurstType));
 
 	/* Check cache is not enabled */
-	if (READ_BIT(ICACHE->CR, ICACHE_CR_EN) != 0U)
-	{
+	if (READ_BIT(ICACHE->CR, ICACHE_CR_EN) != 0U) {
 		status = HAL_ERROR;
-	}
-	else
-	{
+	} else {
 		/* Get region control register address */
 		p_reg = &(ICACHE->CRR0) + (1U * Region);
 
 		/* Check region is not already enabled */
-		if ((*p_reg & ICACHE_CRRx_REN) != 0U)
-		{
+		if ((*p_reg & ICACHE_CRRx_REN) != 0U) {
 			status = HAL_ERROR;
-		}
-		else
-		{
+		} else {
 			/* Region 2MB:   BaseAddress size 8 bits, RemapAddress
 			 * size 11 bits */
 			/* Region 4MB:   BaseAddress size 7 bits, RemapAddress
@@ -609,12 +587,9 @@ HAL_StatusTypeDef HAL_ICACHE_DisableRemapRegion(uint32_t Region)
 	assert_param(IS_ICACHE_REGION_NUMBER(Region));
 
 	/* Check cache is not enabled */
-	if (READ_BIT(ICACHE->CR, ICACHE_CR_EN) != 0U)
-	{
+	if (READ_BIT(ICACHE->CR, ICACHE_CR_EN) != 0U) {
 		status = HAL_ERROR;
-	}
-	else
-	{
+	} else {
 		/* Get region control register address */
 		p_reg = &(ICACHE->CRR0) + (1U * Region);
 

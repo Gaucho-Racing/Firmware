@@ -90,8 +90,7 @@ void HAL_MspInit(void)
 void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi)
 {
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
-	if (hspi->Instance == SPI2)
-	{
+	if (hspi->Instance == SPI2) {
 		/* USER CODE BEGIN SPI2_MspInit 0 */
 
 		/* USER CODE END SPI2_MspInit 0 */
@@ -125,8 +124,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi)
  */
 void HAL_SPI_MspDeInit(SPI_HandleTypeDef *hspi)
 {
-	if (hspi->Instance == SPI2)
-	{
+	if (hspi->Instance == SPI2) {
 		/* USER CODE BEGIN SPI2_MspDeInit 0 */
 
 		/* USER CODE END SPI2_MspDeInit 0 */
@@ -150,8 +148,7 @@ void HAL_USART_MspInit(USART_HandleTypeDef *husart)
 {
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
 	RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
-	if (husart->Instance == USART2)
-	{
+	if (husart->Instance == USART2) {
 		/* USER CODE BEGIN USART2_MspInit 0 */
 
 		/* USER CODE END USART2_MspInit 0 */
@@ -160,8 +157,7 @@ void HAL_USART_MspInit(USART_HandleTypeDef *husart)
 		 */
 		PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART2;
 		PeriphClkInit.Usart2ClockSelection = RCC_USART2CLKSOURCE_PCLK1;
-		if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
-		{
+		if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK) {
 			Error_Handler();
 		}
 
@@ -195,8 +191,7 @@ void HAL_USART_MspInit(USART_HandleTypeDef *husart)
  */
 void HAL_USART_MspDeInit(USART_HandleTypeDef *husart)
 {
-	if (husart->Instance == USART2)
-	{
+	if (husart->Instance == USART2) {
 		/* USER CODE BEGIN USART2_MspDeInit 0 */
 
 		/* USER CODE END USART2_MspDeInit 0 */

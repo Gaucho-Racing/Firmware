@@ -280,8 +280,7 @@ static bcc_status_t BCC_AssignCid(bcc_drv_config_t *const drvConfig, const bcc_c
 	 * filed set to zero except message counter and the correct CRC to the
 	 * very first MCU <-> MC33771C/772C message. */
 	status = BCC_Reg_Read(drvConfig, BCC_CID_UNASSIG, MC33771C_INIT_OFFSET, 1U, &readVal);
-	if ((status != BCC_STATUS_SUCCESS) && (status != BCC_STATUS_COM_NULL))
-	{
+	if ((status != BCC_STATUS_SUCCESS) && (status != BCC_STATUS_COM_NULL)) {
 		return status;
 	}
 
@@ -290,31 +289,23 @@ static bcc_status_t BCC_AssignCid(bcc_drv_config_t *const drvConfig, const bcc_c
 	 * Stop forwarding only for MC33772C in TPL setup with one node and no
 	 * loop-back. RDTX_OUT should not be terminated in this case. */
 	writeVal = MC33771C_INIT_CID(cid) | MC33771C_INIT_RDTX_IN(MC33771C_INIT_RDTX_IN_DISABLED_ENUM_VAL);
-	if ((drvConfig->commMode == BCC_MODE_TPL) && (drvConfig->devicesCnt == 1U) && (!drvConfig->loopBack) && (drvConfig->device[(uint8_t)cid - 1] == BCC_DEVICE_MC33772C))
-	{
+	if ((drvConfig->commMode == BCC_MODE_TPL) && (drvConfig->devicesCnt == 1U) && (!drvConfig->loopBack) && (drvConfig->device[(uint8_t)cid - 1] == BCC_DEVICE_MC33772C)) {
 		writeVal |= MC33772C_INIT_TPL2_TX_TERM(MC33772C_INIT_TPL2_TX_TERM_DISABLED_ENUM_VAL) | MC33772C_INIT_BUS_FW(MC33772C_INIT_BUS_FW_DISABLED_ENUM_VAL);
-	}
-	else if ((drvConfig->commMode == BCC_MODE_TPL) && ((uint8_t)cid == drvConfig->devicesCnt) && (!drvConfig->loopBack))
-	{
+	} else if ((drvConfig->commMode == BCC_MODE_TPL) && ((uint8_t)cid == drvConfig->devicesCnt) && (!drvConfig->loopBack)) {
 		writeVal |= MC33771C_INIT_RDTX_OUT(MC33771C_INIT_RDTX_OUT_ENABLED_ENUM_VAL);
 
-		if (drvConfig->device[(uint8_t)cid - 1] == BCC_DEVICE_MC33772C)
-		{
+		if (drvConfig->device[(uint8_t)cid - 1] == BCC_DEVICE_MC33772C) {
 			writeVal |= MC33772C_INIT_BUS_FW(MC33772C_INIT_BUS_FW_ENABLED_ENUM_VAL);
 		}
-	}
-	else
-	{
+	} else {
 		writeVal |= MC33771C_INIT_RDTX_OUT(MC33771C_INIT_RDTX_OUT_DISABLED_ENUM_VAL);
 
-		if (drvConfig->device[(uint8_t)cid - 1] == BCC_DEVICE_MC33772C)
-		{
+		if (drvConfig->device[(uint8_t)cid - 1] == BCC_DEVICE_MC33772C) {
 			writeVal |= MC33772C_INIT_BUS_FW(MC33772C_INIT_BUS_FW_ENABLED_ENUM_VAL);
 		}
 	}
 	status = BCC_Reg_Write(drvConfig, BCC_CID_UNASSIG, MC33771C_INIT_OFFSET, writeVal);
-	if (status == BCC_STATUS_SUCCESS)
-	{
+	if (status == BCC_STATUS_SUCCESS) {
 		/* Store the last received message counter value from device
 		 * with CID=0 into drvConfig for appropriate (newly assigned)
 		 * CID. Note: In TPL mode, a response is generated only for read
@@ -327,20 +318,17 @@ static bcc_status_t BCC_AssignCid(bcc_drv_config_t *const drvConfig, const bcc_c
 		status = BCC_Reg_Read(drvConfig, cid, MC33771C_INIT_OFFSET, 1U, &readVal);
 
 		/* Check the written data. */
-		if ((status == BCC_STATUS_SUCCESS) && (writeVal != readVal))
-		{
+		if ((status == BCC_STATUS_SUCCESS) && (writeVal != readVal)) {
 			print_lpuart("bcc.c line 341\n");
 			status = BCC_STATUS_SPI_FAIL;
 		}
 	}
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		/* Wait and try to assign CID once again. */
 		BCC_MCU_WaitUs(750U);
 
 		status = BCC_Reg_Write(drvConfig, BCC_CID_UNASSIG, MC33771C_INIT_OFFSET, writeVal);
-		if (status == BCC_STATUS_SUCCESS)
-		{
+		if (status == BCC_STATUS_SUCCESS) {
 			/* Store the last message counter value into drvConfig
 			 * for appropriate CID. Note: In TPL mode, a response is
 			 * generated only for read commands. i.e. message
@@ -352,8 +340,7 @@ static bcc_status_t BCC_AssignCid(bcc_drv_config_t *const drvConfig, const bcc_c
 			status = BCC_Reg_Read(drvConfig, cid, MC33771C_INIT_OFFSET, 1U, &readVal);
 
 			/* Check the written data. */
-			if ((status == BCC_STATUS_SUCCESS) && (writeVal != readVal))
-			{
+			if ((status == BCC_STATUS_SUCCESS) && (writeVal != readVal)) {
 				print_lpuart("bcc.c line 364\n");
 				status = BCC_STATUS_SPI_FAIL;
 			}
@@ -392,14 +379,12 @@ static bcc_status_t BCC_InitDevices(bcc_drv_config_t *const drvConfig)
 	/* Assign CID to the first node and terminate its RDTX_OUT if only one
 	 * device is utilised and if loop-back is not required. */
 	status = BCC_AssignCid(drvConfig, BCC_CID_DEV1);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
 	/* Init the rest of devices. */
-	for (cid = 2U; cid <= drvConfig->devicesCnt; cid++)
-	{
+	for (cid = 2U; cid <= drvConfig->devicesCnt; cid++) {
 		BCC_MCU_WaitMs(2U);
 
 		/* Move the following device from IDLE to NORMAL mode (in case
@@ -410,8 +395,7 @@ static bcc_status_t BCC_InitDevices(bcc_drv_config_t *const drvConfig)
 		BCC_WakeUpPatternTpl(drvConfig);
 
 		status = BCC_AssignCid(drvConfig, (bcc_cid_t)cid);
-		if (status != BCC_STATUS_SUCCESS)
-		{
+		if (status != BCC_STATUS_SUCCESS) {
 			return status;
 		}
 	}
@@ -428,8 +412,7 @@ static bcc_status_t BCC_InitDevices(bcc_drv_config_t *const drvConfig)
  *END**************************************************************************/
 static bcc_status_t BCC_SetGpioCfg(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const uint8_t gpioSel, const bcc_pin_mode_t mode)
 {
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt) || (gpioSel >= BCC_GPIO_INPUT_CNT) || (mode > BCC_PIN_DIGITAL_OUT))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt) || (gpioSel >= BCC_GPIO_INPUT_CNT) || (mode > BCC_PIN_DIGITAL_OUT)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
@@ -456,37 +439,27 @@ bcc_status_t BCC_Init(bcc_drv_config_t *const drvConfig)
 	BCC_MCU_Assert(drvConfig != NULL);
 
 	/* Check the drvConfig structure and initialize driver variables. */
-	if ((drvConfig->commMode != BCC_MODE_SPI) && (drvConfig->commMode != BCC_MODE_TPL))
-	{
+	if ((drvConfig->commMode != BCC_MODE_SPI) && (drvConfig->commMode != BCC_MODE_TPL)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
-	if ((drvConfig->devicesCnt == 0) || (drvConfig->devicesCnt > ((drvConfig->commMode == BCC_MODE_SPI) ? BCC_DEVICE_CNT_MAX_SPI : BCC_DEVICE_CNT_MAX_TPL)))
-	{
+	if ((drvConfig->devicesCnt == 0) || (drvConfig->devicesCnt > ((drvConfig->commMode == BCC_MODE_SPI) ? BCC_DEVICE_CNT_MAX_SPI : BCC_DEVICE_CNT_MAX_TPL))) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
-	for (dev = 0; dev < drvConfig->devicesCnt; dev++)
-	{
+	for (dev = 0; dev < drvConfig->devicesCnt; dev++) {
 		drvConfig->drvData.msgCntr[dev] = 0U;
-		if (drvConfig->device[dev] == BCC_DEVICE_MC33771C)
-		{
-			if (!BCC_IS_IN_RANGE(drvConfig->cellCnt[dev], MC33771C_MIN_CELLS, MC33771C_MAX_CELLS))
-			{
+		if (drvConfig->device[dev] == BCC_DEVICE_MC33771C) {
+			if (!BCC_IS_IN_RANGE(drvConfig->cellCnt[dev], MC33771C_MIN_CELLS, MC33771C_MAX_CELLS)) {
 				return BCC_STATUS_PARAM_RANGE;
 			}
 			drvConfig->drvData.cellMap[dev] = s_cellMap33771c[drvConfig->cellCnt[dev]];
-		}
-		else if (drvConfig->device[dev] == BCC_DEVICE_MC33772C)
-		{
-			if (!BCC_IS_IN_RANGE(drvConfig->cellCnt[dev], MC33772C_MIN_CELLS, MC33772C_MAX_CELLS))
-			{
+		} else if (drvConfig->device[dev] == BCC_DEVICE_MC33772C) {
+			if (!BCC_IS_IN_RANGE(drvConfig->cellCnt[dev], MC33772C_MIN_CELLS, MC33772C_MAX_CELLS)) {
 				return BCC_STATUS_PARAM_RANGE;
 			}
 			drvConfig->drvData.cellMap[dev] = s_cellMap33772c[drvConfig->cellCnt[dev]];
-		}
-		else
-		{
+		} else {
 			return BCC_STATUS_PARAM_RANGE;
 		}
 	}
@@ -496,10 +469,8 @@ bcc_status_t BCC_Init(bcc_drv_config_t *const drvConfig)
 	BCC_MCU_WriteRstPin(drvConfig->drvInstance, 0);
 
 	/* Enable MC33664 device in TPL mode. */
-	if (drvConfig->commMode == BCC_MODE_TPL)
-	{
-		if ((status = BCC_TPL_Enable(drvConfig->drvInstance)) != BCC_STATUS_SUCCESS)
-		{
+	if (drvConfig->commMode == BCC_MODE_TPL) {
+		if ((status = BCC_TPL_Enable(drvConfig->drvInstance)) != BCC_STATUS_SUCCESS) {
 			return status;
 		}
 	}
@@ -519,12 +490,9 @@ bcc_status_t BCC_SendNop(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid)
 {
 	BCC_MCU_Assert(drvConfig != NULL);
 
-	if (drvConfig->commMode == BCC_MODE_SPI)
-	{
+	if (drvConfig->commMode == BCC_MODE_SPI) {
 		return BCC_SendNopSpi(drvConfig, cid);
-	}
-	else
-	{
+	} else {
 		return BCC_SendNopTpl(drvConfig, cid);
 	}
 }
@@ -540,12 +508,9 @@ bcc_status_t BCC_Sleep(bcc_drv_config_t *const drvConfig)
 {
 	BCC_MCU_Assert(drvConfig != NULL);
 
-	if (drvConfig->commMode == BCC_MODE_SPI)
-	{
+	if (drvConfig->commMode == BCC_MODE_SPI) {
 		return BCC_Reg_Write(drvConfig, BCC_CID_DEV1, MC33771C_SYS_CFG_GLOBAL_OFFSET, MC33771C_SYS_CFG_GLOBAL_GO2SLEEP(MC33771C_SYS_CFG_GLOBAL_GO2SLEEP_ENABLED_ENUM_VAL));
-	}
-	else
-	{
+	} else {
 		return BCC_Reg_WriteGlobal(drvConfig, MC33771C_SYS_CFG_GLOBAL_OFFSET, MC33771C_SYS_CFG_GLOBAL_GO2SLEEP(MC33771C_SYS_CFG_GLOBAL_GO2SLEEP_ENABLED_ENUM_VAL));
 	}
 }
@@ -561,12 +526,9 @@ void BCC_WakeUp(const bcc_drv_config_t *const drvConfig)
 {
 	BCC_MCU_Assert(drvConfig != NULL);
 
-	if (drvConfig->commMode == BCC_MODE_SPI)
-	{
+	if (drvConfig->commMode == BCC_MODE_SPI) {
 		BCC_WakeUpPatternSpi(drvConfig);
-	}
-	else
-	{
+	} else {
 		BCC_WakeUpPatternTpl(drvConfig);
 	}
 }
@@ -582,21 +544,17 @@ bcc_status_t BCC_SoftwareReset(bcc_drv_config_t *const drvConfig, const bcc_cid_
 {
 	BCC_MCU_Assert(drvConfig != NULL);
 
-	if ((((uint8_t)cid) > drvConfig->devicesCnt) || ((cid == BCC_CID_UNASSIG) && (drvConfig->commMode == BCC_MODE_SPI)))
-	{
+	if ((((uint8_t)cid) > drvConfig->devicesCnt) || ((cid == BCC_CID_UNASSIG) && (drvConfig->commMode == BCC_MODE_SPI))) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
 	/* Note: it is not necessary to read content of SYS_CFG1 register and to
 	 * change the SOFT_RST bit only, because SYS_CFG1 will be set to POR
 	 * value after the reset anyway. */
-	if (cid == BCC_CID_UNASSIG)
-	{
+	if (cid == BCC_CID_UNASSIG) {
 		/* TPL Global reset command. */
 		return BCC_Reg_WriteGlobal(drvConfig, MC33771C_SYS_CFG1_OFFSET, MC33771C_SYS_CFG1_SOFT_RST(MC33771C_SYS_CFG1_SOFT_RST_ACTIVE_ENUM_VAL));
-	}
-	else
-	{
+	} else {
 		return BCC_Reg_Write(drvConfig, cid, MC33771C_SYS_CFG1_OFFSET, MC33771C_SYS_CFG1_SOFT_RST(MC33771C_SYS_CFG1_SOFT_RST_ACTIVE_ENUM_VAL));
 	}
 }
@@ -638,26 +596,22 @@ bcc_status_t BCC_TPL_Enable(const uint8_t drvInstance)
 	 * take effect. Wait for INTB transition from high to low (max. 100 us).
 	 */
 	timeout = BCC_T_INTB_PULSE_DELAY_US;
-	while ((BCC_MCU_ReadIntbPin(drvInstance) > 0) && (timeout > 0))
-	{
+	while ((BCC_MCU_ReadIntbPin(drvInstance) > 0) && (timeout > 0)) {
 		timeout -= 5;
 		BCC_MCU_WaitUs(5U);
 	}
-	if ((timeout <= 0) && (BCC_MCU_ReadIntbPin(drvInstance) > 0))
-	{
+	if ((timeout <= 0) && (BCC_MCU_ReadIntbPin(drvInstance) > 0)) {
 		return BCC_STATUS_COM_TIMEOUT;
 	}
 
 	/* Wait for INTB transition from low to high (typ. 100 us).
 	 * Wait for at most 200 us. */
 	timeout = BCC_T_INTB_PULSE_US * 2;
-	while ((BCC_MCU_ReadIntbPin(drvInstance) == 0) && (timeout > 0))
-	{
+	while ((BCC_MCU_ReadIntbPin(drvInstance) == 0) && (timeout > 0)) {
 		timeout -= 10;
 		BCC_MCU_WaitUs(10U);
 	}
-	if ((timeout <= 0) && (BCC_MCU_ReadIntbPin(drvInstance) == 0))
-	{
+	if ((timeout <= 0) && (BCC_MCU_ReadIntbPin(drvInstance) == 0)) {
 		return BCC_STATUS_COM_TIMEOUT;
 	}
 
@@ -689,12 +643,9 @@ bcc_status_t BCC_Reg_Read(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid
 {
 	BCC_MCU_Assert(drvConfig != NULL);
 
-	if (drvConfig->commMode == BCC_MODE_SPI)
-	{
+	if (drvConfig->commMode == BCC_MODE_SPI) {
 		return BCC_Reg_ReadSpi(drvConfig, cid, regAddr, regCnt, regVal);
-	}
-	else
-	{
+	} else {
 		return BCC_Reg_ReadTpl(drvConfig, cid, regAddr, regCnt, regVal);
 	}
 }
@@ -710,12 +661,9 @@ bcc_status_t BCC_Reg_Write(bcc_drv_config_t *const drvConfig, const bcc_cid_t ci
 {
 	BCC_MCU_Assert(drvConfig != NULL);
 
-	if (drvConfig->commMode == BCC_MODE_SPI)
-	{
+	if (drvConfig->commMode == BCC_MODE_SPI) {
 		return BCC_Reg_WriteSpi(drvConfig, cid, regAddr, regVal);
-	}
-	else
-	{
+	} else {
 		return BCC_Reg_WriteTpl(drvConfig, cid, regAddr, regVal);
 	}
 }
@@ -748,14 +696,12 @@ bcc_status_t BCC_Reg_Update(bcc_drv_config_t *const drvConfig, const bcc_cid_t c
 
 	BCC_MCU_Assert(drvConfig != NULL);
 
-	if (((uint8_t)cid) > drvConfig->devicesCnt)
-	{
+	if (((uint8_t)cid) > drvConfig->devicesCnt) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
 	status = BCC_Reg_Read(drvConfig, cid, regAddr, 1U, &regValTemp);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		print_lpuart("BCC_Reg_Update: BCC_Reg_Read: Read failed.\n");
 		return status;
 	}
@@ -778,8 +724,7 @@ bcc_status_t BCC_Meas_StartConversion(bcc_drv_config_t *const drvConfig, const b
 {
 	BCC_MCU_Assert(drvConfig != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt) || (avg > BCC_AVG_256))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt) || (avg > BCC_AVG_256)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
@@ -821,8 +766,7 @@ bcc_status_t BCC_Meas_IsConverting(bcc_drv_config_t *const drvConfig, const bcc_
 	BCC_MCU_Assert(drvConfig != NULL);
 	BCC_MCU_Assert(completed != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
@@ -847,14 +791,12 @@ bcc_status_t BCC_Meas_StartAndWait(bcc_drv_config_t *const drvConfig, const bcc_
 
 	BCC_MCU_Assert(drvConfig != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt) || (avg > BCC_AVG_256))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt) || (avg > BCC_AVG_256)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
 	status = BCC_Meas_StartConversion(drvConfig, cid, avg);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
@@ -863,16 +805,13 @@ bcc_status_t BCC_Meas_StartAndWait(bcc_drv_config_t *const drvConfig, const bcc_
 	BCC_MCU_WaitUs(((uint32_t)BCC_T_EOC_TYP_US) << ((uint8_t)avg));
 
 	status = BCC_MCU_StartTimeout((((uint32_t)BCC_T_EOC_TIMEOUT_US) << ((uint8_t)avg)) - (((uint32_t)BCC_T_EOC_TYP_US) << ((uint8_t)avg)));
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
-	do
-	{
+	do {
 		status = BCC_Meas_IsConverting(drvConfig, cid, &complete);
-		if (status != BCC_STATUS_SUCCESS)
-		{
+		if (status != BCC_STATUS_SUCCESS) {
 			return status;
 		}
 	} while ((!complete) && (!BCC_MCU_TimeoutExpired()));
@@ -881,11 +820,9 @@ bcc_status_t BCC_Meas_StartAndWait(bcc_drv_config_t *const drvConfig, const bcc_
 	 * takes several tens/hundreds of microseconds (depends on user code
 	 * efficiency) and the last read command could be done relatively long
 	 * before the timeout expiration. */
-	if (!complete)
-	{
+	if (!complete) {
 		status = BCC_Meas_IsConverting(drvConfig, cid, &complete);
-		if (status != BCC_STATUS_SUCCESS)
-		{
+		if (status != BCC_STATUS_SUCCESS) {
 			return status;
 		}
 	}
@@ -908,8 +845,7 @@ bcc_status_t BCC_Meas_GetRawValues(bcc_drv_config_t *const drvConfig, const bcc_
 	BCC_MCU_Assert(drvConfig != NULL);
 	BCC_MCU_Assert(measurements != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
@@ -917,15 +853,11 @@ bcc_status_t BCC_Meas_GetRawValues(bcc_drv_config_t *const drvConfig, const bcc_
 	 * Note: the order and number of registers conforms to the order of
 	 * measured values in Measurements array, see enumeration
 	 * bcc_measurements_t. */
-	if (drvConfig->device[(uint8_t)cid - 1] == BCC_DEVICE_MC33771C)
-	{
+	if (drvConfig->device[(uint8_t)cid - 1] == BCC_DEVICE_MC33771C) {
 		status = BCC_Reg_Read(drvConfig, cid, MC33771C_CC_NB_SAMPLES_OFFSET, BCC_MEAS_CNT, measurements);
-	}
-	else
-	{
+	} else {
 		status = BCC_Reg_Read(drvConfig, cid, MC33772C_CC_NB_SAMPLES_OFFSET, (MC33772C_MEAS_STACK_OFFSET - MC33772C_CC_NB_SAMPLES_OFFSET) + 1, measurements);
-		if (status != BCC_STATUS_SUCCESS)
-		{
+		if (status != BCC_STATUS_SUCCESS) {
 			return status;
 		}
 
@@ -949,8 +881,7 @@ bcc_status_t BCC_Meas_GetRawValues(bcc_drv_config_t *const drvConfig, const bcc_
 	measurements[BCC_MSR_ISENSE1] &= MC33771C_MEAS_ISENSE1_MEAS_I_MSB_MASK;
 	measurements[BCC_MSR_ISENSE2] &= MC33771C_MEAS_ISENSE2_MEAS_I_LSB_MASK;
 
-	for (i = (uint8_t)BCC_MSR_STACK_VOLT; i < BCC_MEAS_CNT; i++)
-	{
+	for (i = (uint8_t)BCC_MSR_STACK_VOLT; i < BCC_MEAS_CNT; i++) {
 		measurements[i] &= MC33771C_MEAS_STACK_MEAS_STACK_MASK;
 	}
 
@@ -971,14 +902,12 @@ bcc_status_t BCC_Meas_GetCoulombCounter(bcc_drv_config_t *const drvConfig, const
 	BCC_MCU_Assert(drvConfig != NULL);
 	BCC_MCU_Assert(cc != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
 	status = BCC_Reg_Read(drvConfig, cid, MC33771C_CC_NB_SAMPLES_OFFSET, 3U, readVal);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
@@ -1003,19 +932,16 @@ bcc_status_t BCC_Meas_GetIsenseVoltage(bcc_drv_config_t *const drvConfig, const 
 	BCC_MCU_Assert(drvConfig != NULL);
 	BCC_MCU_Assert(isenseVolt != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
 	status = BCC_Reg_Read(drvConfig, cid, MC33771C_MEAS_ISENSE1_OFFSET, 2U, readVal);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
-	if ((readVal[0] & readVal[1] & MC33771C_MEAS_ISENSE1_DATA_RDY_MASK) == 0U)
-	{
+	if ((readVal[0] & readVal[1] & MC33771C_MEAS_ISENSE1_DATA_RDY_MASK) == 0U) {
 		return BCC_STATUS_DATA_RDY;
 	}
 
@@ -1039,19 +965,16 @@ bcc_status_t BCC_Meas_GetStackVoltage(bcc_drv_config_t *const drvConfig, const b
 	BCC_MCU_Assert(drvConfig != NULL);
 	BCC_MCU_Assert(stackVolt != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
 	status = BCC_Reg_Read(drvConfig, cid, MC33771C_MEAS_STACK_OFFSET, 1U, &readVal);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
-	if ((readVal & MC33771C_MEAS_STACK_DATA_RDY_MASK) == 0U)
-	{
+	if ((readVal & MC33771C_MEAS_STACK_DATA_RDY_MASK) == 0U) {
 		return BCC_STATUS_DATA_RDY;
 	}
 
@@ -1076,8 +999,7 @@ bcc_status_t BCC_Meas_GetCellVoltages(bcc_drv_config_t *const drvConfig, const b
 	BCC_MCU_Assert(drvConfig != NULL);
 	BCC_MCU_Assert(cellVolt != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
@@ -1085,21 +1007,18 @@ bcc_status_t BCC_Meas_GetCellVoltages(bcc_drv_config_t *const drvConfig, const b
 
 	/* Read the measurement registers. */
 	status = BCC_Reg_Read(drvConfig, cid, (drvConfig->device[(uint8_t)cid - 1] == BCC_DEVICE_MC33771C) ? MC33771C_MEAS_CELL14_OFFSET : MC33771C_MEAS_CELL6_OFFSET, cellCnt, readVal);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
 	/* Convert measurements to [uV], change the cell order and check the
 	 * data-ready flag. */
-	for (i = 0; i < cellCnt; i++)
-	{
+	for (i = 0; i < cellCnt; i++) {
 		cellVolt[cellCnt - (i + 1)] = BCC_GET_VOLT(readVal[i]);
 		readVal[0] &= readVal[i];
 	}
 
-	if ((readVal[0] & MC33771C_MEAS_CELL1_DATA_RDY_MASK) == 0U)
-	{
+	if ((readVal[0] & MC33771C_MEAS_CELL1_DATA_RDY_MASK) == 0U) {
 		return BCC_STATUS_DATA_RDY;
 	}
 
@@ -1121,19 +1040,16 @@ bcc_status_t BCC_Meas_GetCellVoltage(bcc_drv_config_t *const drvConfig, const bc
 	BCC_MCU_Assert(drvConfig != NULL);
 	BCC_MCU_Assert(cellVolt != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt) || (cellIndex >= BCC_MAX_CELLS_DEV(drvConfig->device[(uint8_t)cid - 1])))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt) || (cellIndex >= BCC_MAX_CELLS_DEV(drvConfig->device[(uint8_t)cid - 1]))) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
 	status = BCC_Reg_Read(drvConfig, cid, MC33771C_MEAS_CELL1_OFFSET - cellIndex, 1U, &readVal);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
-	if ((readVal & MC33771C_MEAS_CELL1_DATA_RDY_MASK) == 0U)
-	{
+	if ((readVal & MC33771C_MEAS_CELL1_DATA_RDY_MASK) == 0U) {
 		return BCC_STATUS_DATA_RDY;
 	}
 
@@ -1159,27 +1075,23 @@ bcc_status_t BCC_Meas_GetAnVoltages(bcc_drv_config_t *const drvConfig, const bcc
 	BCC_MCU_Assert(drvConfig != NULL);
 	BCC_MCU_Assert(anVolt != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
 	/* Read the measurement registers. */
 	status = BCC_Reg_Read(drvConfig, cid, MC33771C_MEAS_AN6_OFFSET, BCC_GPIO_INPUT_CNT, readVal);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
 	/* Convert measurements to [uV] and check the data-ready flag. */
-	for (i = 0; i < BCC_GPIO_INPUT_CNT; i++)
-	{
+	for (i = 0; i < BCC_GPIO_INPUT_CNT; i++) {
 		anVolt[i] = BCC_GET_VOLT(readVal[i]);
 		readVal[0] &= readVal[i];
 	}
 
-	if ((readVal[0] & MC33771C_MEAS_AN0_DATA_RDY_MASK) == 0U)
-	{
+	if ((readVal[0] & MC33771C_MEAS_AN0_DATA_RDY_MASK) == 0U) {
 		return BCC_STATUS_DATA_RDY;
 	}
 
@@ -1202,19 +1114,16 @@ bcc_status_t BCC_Meas_GetAnVoltage(bcc_drv_config_t *const drvConfig, const bcc_
 	BCC_MCU_Assert(drvConfig != NULL);
 	BCC_MCU_Assert(anVolt != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt) || (anIndex >= BCC_GPIO_INPUT_CNT))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt) || (anIndex >= BCC_GPIO_INPUT_CNT)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
 	status = BCC_Reg_Read(drvConfig, cid, MC33771C_MEAS_AN0_OFFSET - anIndex, 1U, &readVal);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
-	if ((readVal & MC33771C_MEAS_AN0_DATA_RDY_MASK) == 0U)
-	{
+	if ((readVal & MC33771C_MEAS_AN0_DATA_RDY_MASK) == 0U) {
 		return BCC_STATUS_DATA_RDY;
 	}
 
@@ -1238,32 +1147,24 @@ bcc_status_t BCC_Meas_GetIcTemperature(bcc_drv_config_t *const drvConfig, const 
 	BCC_MCU_Assert(drvConfig != NULL);
 	BCC_MCU_Assert(icTemp != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt) || (unit > BCC_TEMP_FAHRENHEIT))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt) || (unit > BCC_TEMP_FAHRENHEIT)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
 	status = BCC_Reg_Read(drvConfig, cid, MC33771C_MEAS_IC_TEMP_OFFSET, 1U, &readVal);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
-	if ((readVal & MC33771C_MEAS_IC_TEMP_DATA_RDY_MASK) == 0U)
-	{
+	if ((readVal & MC33771C_MEAS_IC_TEMP_DATA_RDY_MASK) == 0U) {
 		return BCC_STATUS_DATA_RDY;
 	}
 
-	if (unit == BCC_TEMP_CELSIUS)
-	{
+	if (unit == BCC_TEMP_CELSIUS) {
 		*icTemp = BCC_GET_IC_TEMP_C(readVal);
-	}
-	else if (unit == BCC_TEMP_FAHRENHEIT)
-	{
+	} else if (unit == BCC_TEMP_FAHRENHEIT) {
 		*icTemp = BCC_GET_IC_TEMP_F(readVal);
-	}
-	else
-	{
+	} else {
 		*icTemp = BCC_GET_IC_TEMP_K(readVal);
 	}
 
@@ -1284,29 +1185,25 @@ bcc_status_t BCC_Fault_GetStatus(bcc_drv_config_t *const drvConfig, const bcc_ci
 	BCC_MCU_Assert(drvConfig != NULL);
 	BCC_MCU_Assert(fltStatus != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
 	/* Read CELL_OV_FLT and CELL_UV_FLT. */
 	status = BCC_Reg_Read(drvConfig, cid, MC33771C_CELL_OV_FLT_OFFSET, 2U, &fltStatus[BCC_FS_CELL_OV]);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
 	/* Read CB_OPEN_FLT, CB_SHORT_FLT. */
 	status = BCC_Reg_Read(drvConfig, cid, MC33771C_CB_OPEN_FLT_OFFSET, 2U, &fltStatus[BCC_FS_CB_OPEN]);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
 	/* Read GPIO_STS, AN_OT_UT_FLT, GPIO_SHORT_Anx_OPEN_STS. */
 	status = BCC_Reg_Read(drvConfig, cid, MC33771C_GPIO_STS_OFFSET, 3U, &fltStatus[BCC_FS_GPIO_STATUS]);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
@@ -1338,8 +1235,7 @@ bcc_status_t BCC_Fault_ClearStatus(bcc_drv_config_t *const drvConfig, const bcc_
 
 	BCC_MCU_Assert(drvConfig != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt) || ((uint32_t)statSel >= BCC_STAT_CNT))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt) || ((uint32_t)statSel >= BCC_STAT_CNT)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 	return BCC_Reg_Write(drvConfig, cid, regAddrMap[statSel], 0x0000U);
@@ -1357,50 +1253,38 @@ bcc_status_t BCC_GPIO_SetMode(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 
 	BCC_MCU_Assert(drvConfig != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt) || (gpioSel >= BCC_GPIO_INPUT_CNT))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt) || (gpioSel >= BCC_GPIO_INPUT_CNT)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
-	if ((mode == BCC_PIN_WAKE_UP_IN) && (gpioSel == 0U))
-	{
+	if ((mode == BCC_PIN_WAKE_UP_IN) && (gpioSel == 0U)) {
 		/* Set GPIO0 to digital input and enable the wake-up capability.
 		 */
 		status = BCC_SetGpioCfg(drvConfig, cid, 0U, BCC_PIN_DIGITAL_IN);
-		if (status == BCC_STATUS_SUCCESS)
-		{
+		if (status == BCC_STATUS_SUCCESS) {
 			status = BCC_Reg_Update(drvConfig, cid, MC33771C_GPIO_CFG2_OFFSET, MC33771C_GPIO_CFG2_GPIO0_WU_MASK, MC33771C_GPIO_CFG2_GPIO0_WU(MC33771C_GPIO_CFG2_GPIO0_WU_WAKEUP_ENUM_VAL));
 		}
-	}
-	else if ((mode == BCC_PIN_CONVERT_TR_IN) && (gpioSel == 2U))
-	{
+	} else if ((mode == BCC_PIN_CONVERT_TR_IN) && (gpioSel == 2U)) {
 		/* Set GPIO2 to digital input serving as a conversion trigger.
 		 */
 		status = BCC_SetGpioCfg(drvConfig, cid, 2U, BCC_PIN_DIGITAL_IN);
-		if (status == BCC_STATUS_SUCCESS)
-		{
+		if (status == BCC_STATUS_SUCCESS) {
 			status = BCC_Reg_Update(drvConfig, cid, MC33771C_GPIO_CFG2_OFFSET, MC33771C_GPIO_CFG2_GPIO2_SOC_MASK,
 						MC33771C_GPIO_CFG2_GPIO2_SOC(MC33771C_GPIO_CFG2_GPIO2_SOC_ADC_TRG_ENABLED_ENUM_VAL));
 		}
-	}
-	else if (mode <= BCC_PIN_DIGITAL_OUT)
-	{
+	} else if (mode <= BCC_PIN_DIGITAL_OUT) {
 		status = BCC_STATUS_SUCCESS;
-		if (gpioSel == 0U)
-		{
+		if (gpioSel == 0U) {
 			/* Disable the wake-up capability. */
 			status =
 			    BCC_Reg_Update(drvConfig, cid, MC33771C_GPIO_CFG2_OFFSET, MC33771C_GPIO_CFG2_GPIO0_WU_MASK, MC33771C_GPIO_CFG2_GPIO0_WU(MC33771C_GPIO_CFG2_GPIO0_WU_NO_WAKEUP_ENUM_VAL));
-		}
-		else if (gpioSel == 2U)
-		{
+		} else if (gpioSel == 2U) {
 			/* Disable the conversion trigger. */
 			status = BCC_Reg_Update(drvConfig, cid, MC33771C_GPIO_CFG2_OFFSET, MC33771C_GPIO_CFG2_GPIO2_SOC_MASK,
 						MC33771C_GPIO_CFG2_GPIO2_SOC(MC33771C_GPIO_CFG2_GPIO2_SOC_ADC_TRG_DISABLED_ENUM_VAL));
 		}
 
-		if (status == BCC_STATUS_SUCCESS)
-		{
+		if (status == BCC_STATUS_SUCCESS) {
 			status = BCC_SetGpioCfg(drvConfig, cid, gpioSel, mode);
 		}
 	}
@@ -1422,8 +1306,7 @@ bcc_status_t BCC_GPIO_ReadPin(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 	BCC_MCU_Assert(drvConfig != NULL);
 	BCC_MCU_Assert(val != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt) || (gpioSel >= BCC_GPIO_INPUT_CNT))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt) || (gpioSel >= BCC_GPIO_INPUT_CNT)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
@@ -1444,8 +1327,7 @@ bcc_status_t BCC_GPIO_SetOutput(bcc_drv_config_t *const drvConfig, const bcc_cid
 {
 	BCC_MCU_Assert(drvConfig != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt) || (gpioSel >= BCC_GPIO_INPUT_CNT))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt) || (gpioSel >= BCC_GPIO_INPUT_CNT)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
@@ -1464,8 +1346,7 @@ bcc_status_t BCC_CB_Enable(bcc_drv_config_t *const drvConfig, const bcc_cid_t ci
 {
 	BCC_MCU_Assert(drvConfig != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
@@ -1486,18 +1367,15 @@ bcc_status_t BCC_CB_SetIndividual(bcc_drv_config_t *const drvConfig, const bcc_c
 
 	BCC_MCU_Assert(drvConfig != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
-	if (cellIndex >= BCC_MAX_CELLS_DEV(drvConfig->device[(uint8_t)cid - 1]))
-	{
+	if (cellIndex >= BCC_MAX_CELLS_DEV(drvConfig->device[(uint8_t)cid - 1])) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
-	if (timer > MC33771C_CB1_CFG_CB_TIMER_MASK)
-	{
+	if (timer > MC33771C_CB1_CFG_CB_TIMER_MASK) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
@@ -1515,8 +1393,7 @@ bcc_status_t BCC_CB_SetIndividual(bcc_drv_config_t *const drvConfig, const bcc_c
 bcc_status_t BCC_CB_Pause(bcc_drv_config_t *const drvConfig, const bcc_cid_t cid, const bool pause)
 {
 	BCC_MCU_Assert(drvConfig != NULL);
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt)) {
 		// print_lpuart("Invalid CID\n");
 		return BCC_STATUS_PARAM_RANGE;
 	}
@@ -1540,21 +1417,18 @@ bcc_status_t BCC_FuseMirror_Read(bcc_drv_config_t *const drvConfig, const bcc_ci
 	BCC_MCU_Assert(drvConfig != NULL);
 	BCC_MCU_Assert(value != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
-	if (fuseAddr > ((drvConfig->device[(uint8_t)cid - 1U] == BCC_DEVICE_MC33771C) ? MC33771C_MAX_FUSE_READ_ADDR : MC33772C_MAX_FUSE_READ_ADDR))
-	{
+	if (fuseAddr > ((drvConfig->device[(uint8_t)cid - 1U] == BCC_DEVICE_MC33771C) ? MC33771C_MAX_FUSE_READ_ADDR : MC33772C_MAX_FUSE_READ_ADDR)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
 	status = BCC_Reg_Write(drvConfig, cid, MC33771C_FUSE_MIRROR_CNTL_OFFSET,
 			       MC33771C_FUSE_MIRROR_CNTL_FMR_ADDR(fuseAddr) | MC33771C_FUSE_MIRROR_CNTL_FSTM(MC33771C_FUSE_MIRROR_CNTL_FSTM_LOCKED_ENUM_VAL) |
 				   MC33771C_FUSE_MIRROR_CNTL_FST(MC33771C_FUSE_MIRROR_CNTL_FST_SPI_WRITE_ENABLE_ENUM_VAL));
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
@@ -1574,13 +1448,11 @@ bcc_status_t BCC_FuseMirror_Write(bcc_drv_config_t *const drvConfig, const bcc_c
 
 	BCC_MCU_Assert(drvConfig != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
-	if (fuseAddr > ((drvConfig->device[(uint8_t)cid - 1U] == BCC_DEVICE_MC33771C) ? MC33771C_MAX_FUSE_WRITE_ADDR : MC33772C_MAX_FUSE_WRITE_ADDR))
-	{
+	if (fuseAddr > ((drvConfig->device[(uint8_t)cid - 1U] == BCC_DEVICE_MC33771C) ? MC33771C_MAX_FUSE_WRITE_ADDR : MC33772C_MAX_FUSE_WRITE_ADDR)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
@@ -1588,8 +1460,7 @@ bcc_status_t BCC_FuseMirror_Write(bcc_drv_config_t *const drvConfig, const bcc_c
 	status = BCC_Reg_Write(drvConfig, cid, MC33771C_FUSE_MIRROR_CNTL_OFFSET,
 			       MC33771C_FUSE_MIRROR_CNTL_FMR_ADDR(0U) | MC33771C_FUSE_MIRROR_CNTL_FSTM(MC33771C_FUSE_MIRROR_CNTL_FSTM_UNLOCKED_ENUM_VAL) |
 				   MC33771C_FUSE_MIRROR_CNTL_FST(MC33771C_FUSE_MIRROR_CNTL_FST_SPI_WRITE_ENABLE_ENUM_VAL));
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
@@ -1597,14 +1468,12 @@ bcc_status_t BCC_FuseMirror_Write(bcc_drv_config_t *const drvConfig, const bcc_c
 	status = BCC_Reg_Write(drvConfig, cid, MC33771C_FUSE_MIRROR_CNTL_OFFSET,
 			       MC33771C_FUSE_MIRROR_CNTL_FMR_ADDR(fuseAddr) | MC33771C_FUSE_MIRROR_CNTL_FSTM(MC33771C_FUSE_MIRROR_CNTL_FSTM_UNLOCKED_ENUM_VAL) |
 				   MC33771C_FUSE_MIRROR_CNTL_FST(MC33771C_FUSE_MIRROR_CNTL_FST_SPI_WRITE_ENABLE_ENUM_VAL));
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
 	status = BCC_Reg_Write(drvConfig, cid, MC33771C_FUSE_MIRROR_DATA_OFFSET, value);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
@@ -1633,18 +1502,15 @@ bcc_status_t BCC_GUID_Read(bcc_drv_config_t *const drvConfig, const bcc_cid_t ci
 	BCC_MCU_Assert(drvConfig != NULL);
 	BCC_MCU_Assert(guid != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
 	readAddr = (drvConfig->device[(uint8_t)cid - 1] == BCC_DEVICE_MC33771C) ? addr771c : addr772c;
 
-	for (i = 0; i < 3; i++)
-	{
+	for (i = 0; i < 3; i++) {
 		status = BCC_FuseMirror_Read(drvConfig, cid, readAddr[i], &(readData[i]));
-		if (status != BCC_STATUS_SUCCESS)
-		{
+		if (status != BCC_STATUS_SUCCESS) {
 			return status;
 		}
 	}
@@ -1669,36 +1535,30 @@ bcc_status_t BCC_EEPROM_Read(bcc_drv_config_t *const drvConfig, const bcc_cid_t 
 	BCC_MCU_Assert(drvConfig != NULL);
 	BCC_MCU_Assert(data != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
-	if (addr > BCC_MAX_EEPROM_ADDR)
-	{
+	if (addr > BCC_MAX_EEPROM_ADDR) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
 	/* EEPROM Read command. */
 	regVal = MC33771C_EEPROM_CTRL_R_W(MC33771C_EEPROM_CTRL_R_W_READ_ENUM_VAL) | MC33771C_EEPROM_CTRL_EEPROM_ADD(addr);
 	status = BCC_Reg_Write(drvConfig, cid, MC33771C_EEPROM_CTRL_OFFSET, regVal);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
 	/* Wait while data is read from EEPROM. */
 	status = BCC_MCU_StartTimeout(BCC_EEPROM_READ_TIMEOUT_US);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
-	do
-	{
+	do {
 		status = BCC_Reg_Read(drvConfig, cid, MC33771C_EEPROM_CTRL_OFFSET, 1U, &regVal);
-		if (status != BCC_STATUS_SUCCESS)
-		{
+		if (status != BCC_STATUS_SUCCESS) {
 			return status;
 		}
 	} while ((regVal & MC33771C_EEPROM_CTRL_BUSY_MASK) && (!BCC_MCU_TimeoutExpired()));
@@ -1707,27 +1567,22 @@ bcc_status_t BCC_EEPROM_Read(bcc_drv_config_t *const drvConfig, const bcc_cid_t 
 	 * takes several tens/hundreds of microseconds (depends on user code
 	 * efficiency) and the last read command could be done relatively long
 	 * before the timeout expiration. */
-	if (regVal & MC33771C_EEPROM_CTRL_BUSY_MASK)
-	{
+	if (regVal & MC33771C_EEPROM_CTRL_BUSY_MASK) {
 		status = BCC_Reg_Read(drvConfig, cid, MC33771C_EEPROM_CTRL_OFFSET, 1U, &regVal);
-		if (status != BCC_STATUS_SUCCESS)
-		{
+		if (status != BCC_STATUS_SUCCESS) {
 			return status;
 		}
 	}
 
-	if (regVal & MC33771C_EEPROM_CTRL_BUSY_MASK)
-	{
+	if (regVal & MC33771C_EEPROM_CTRL_BUSY_MASK) {
 		return BCC_STATUS_COM_TIMEOUT;
 	}
 
-	if (regVal & MC33771C_EEPROM_CTRL_EE_PRESENT_MASK)
-	{
+	if (regVal & MC33771C_EEPROM_CTRL_EE_PRESENT_MASK) {
 		return BCC_STATUS_EEPROM_PRESENT;
 	}
 
-	if (regVal & MC33771C_EEPROM_CTRL_ERROR_MASK)
-	{
+	if (regVal & MC33771C_EEPROM_CTRL_ERROR_MASK) {
 		return BCC_STATUS_EEPROM_ERROR;
 	}
 
@@ -1751,36 +1606,30 @@ bcc_status_t BCC_EEPROM_Write(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 
 	BCC_MCU_Assert(drvConfig != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt))
-	{
+	if ((cid == BCC_CID_UNASSIG) || (((uint8_t)cid) > drvConfig->devicesCnt)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
-	if (addr > BCC_MAX_EEPROM_ADDR)
-	{
+	if (addr > BCC_MAX_EEPROM_ADDR) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
 	/* EEPROM Write command. */
 	regVal = MC33771C_EEPROM_CTRL_R_W(MC33771C_EEPROM_CTRL_R_W_WRITE_ENUM_VAL) | MC33771C_EEPROM_CTRL_EEPROM_ADD(addr) | MC33771C_EEPROM_CTRL_DATA_TO_WRITE(data);
 	status = BCC_Reg_Write(drvConfig, cid, MC33771C_EEPROM_CTRL_OFFSET, regVal);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
 	/* Wait while BCC sends the write command to EEPROM. */
 	status = BCC_MCU_StartTimeout(BCC_EEPROM_WRITE_TIMEOUT_US);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
-	do
-	{
+	do {
 		status = BCC_Reg_Read(drvConfig, cid, MC33771C_EEPROM_CTRL_OFFSET, 1U, &regVal);
-		if (status != BCC_STATUS_SUCCESS)
-		{
+		if (status != BCC_STATUS_SUCCESS) {
 			return status;
 		}
 	} while ((regVal & MC33771C_EEPROM_CTRL_BUSY_MASK) && (!BCC_MCU_TimeoutExpired()));
@@ -1789,27 +1638,22 @@ bcc_status_t BCC_EEPROM_Write(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 	 * takes several tens/hundreds of microseconds (depends on user code
 	 * efficiency) and the last read command could be done relatively long
 	 * before the timeout expiration. */
-	if (regVal & MC33771C_EEPROM_CTRL_BUSY_MASK)
-	{
+	if (regVal & MC33771C_EEPROM_CTRL_BUSY_MASK) {
 		status = BCC_Reg_Read(drvConfig, cid, MC33771C_EEPROM_CTRL_OFFSET, 1U, &regVal);
-		if (status != BCC_STATUS_SUCCESS)
-		{
+		if (status != BCC_STATUS_SUCCESS) {
 			return status;
 		}
 	}
 
-	if (regVal & MC33771C_EEPROM_CTRL_BUSY_MASK)
-	{
+	if (regVal & MC33771C_EEPROM_CTRL_BUSY_MASK) {
 		return BCC_STATUS_COM_TIMEOUT;
 	}
 
-	if (regVal & MC33771C_EEPROM_CTRL_EE_PRESENT_MASK)
-	{
+	if (regVal & MC33771C_EEPROM_CTRL_EE_PRESENT_MASK) {
 		return BCC_STATUS_EEPROM_PRESENT;
 	}
 
-	if (regVal & MC33771C_EEPROM_CTRL_ERROR_MASK)
-	{
+	if (regVal & MC33771C_EEPROM_CTRL_ERROR_MASK) {
 		return BCC_STATUS_EEPROM_ERROR;
 	}
 

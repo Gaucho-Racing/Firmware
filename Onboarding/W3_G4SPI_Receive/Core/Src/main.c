@@ -121,21 +121,18 @@ int main(void)
 	char RX_Buffer[50] = {0};
 	char message[] = "hello";
 	int count = 0;
-	while (1)
-	{
+	while (1) {
 		/* USER CODE END WHILE */
 		/* USER CODE BEGIN 3 */
 		HAL_SPI_Receive(&hspi2, (uint8_t *)RX_Buffer, sizeof(message), 3000);
 
-		if (strncmp(message, RX_Buffer, sizeof(message)) == 0)
-		{
+		if (strncmp(message, RX_Buffer, sizeof(message)) == 0) {
 			count += 1;
 			RX_Buffer[0] = 0; // Clear message
 		}
 
 		// Loops every
-		for (int i = 0; i < count; i++)
-		{
+		for (int i = 0; i < count; i++) {
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
 			HAL_Delay(100);
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
@@ -167,8 +164,7 @@ void SystemClock_Config(void)
 	RCC_OscInitStruct.HSIState = RCC_HSI_ON;
 	RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
-	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-	{
+	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
 		Error_Handler();
 	}
 
@@ -180,8 +176,7 @@ void SystemClock_Config(void)
 	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
 	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
-	{
+	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK) {
 		Error_Handler();
 	}
 }
@@ -222,8 +217,7 @@ static void MX_SPI2_Init(void)
 	hspi2.Init.CRCPolynomial = 7;
 	hspi2.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
 	hspi2.Init.NSSPMode = SPI_NSS_PULSE_DISABLE;
-	if (HAL_SPI_Init(&hspi2) != HAL_OK)
-	{
+	if (HAL_SPI_Init(&hspi2) != HAL_OK) {
 		Error_Handler();
 	}
 	/* USER CODE BEGIN SPI2_Init 2 */
@@ -252,24 +246,19 @@ static void MX_USART2_Init(void)
 	husart2.Init.CLKLastBit = USART_LASTBIT_DISABLE;
 	husart2.Init.ClockPrescaler = USART_PRESCALER_DIV1;
 	husart2.SlaveMode = USART_SLAVEMODE_ENABLE;
-	if (HAL_USART_Init(&husart2) != HAL_OK)
-	{
+	if (HAL_USART_Init(&husart2) != HAL_OK) {
 		Error_Handler();
 	}
-	if (HAL_USARTEx_SetTxFifoThreshold(&husart2, USART_TXFIFO_THRESHOLD_1_8) != HAL_OK)
-	{
+	if (HAL_USARTEx_SetTxFifoThreshold(&husart2, USART_TXFIFO_THRESHOLD_1_8) != HAL_OK) {
 		Error_Handler();
 	}
-	if (HAL_USARTEx_SetRxFifoThreshold(&husart2, USART_RXFIFO_THRESHOLD_1_8) != HAL_OK)
-	{
+	if (HAL_USARTEx_SetRxFifoThreshold(&husart2, USART_RXFIFO_THRESHOLD_1_8) != HAL_OK) {
 		Error_Handler();
 	}
-	if (HAL_USARTEx_DisableFifoMode(&husart2) != HAL_OK)
-	{
+	if (HAL_USARTEx_DisableFifoMode(&husart2) != HAL_OK) {
 		Error_Handler();
 	}
-	if (HAL_USARTEx_EnableSlaveMode(&husart2) != HAL_OK)
-	{
+	if (HAL_USARTEx_EnableSlaveMode(&husart2) != HAL_OK) {
 		Error_Handler();
 	}
 	/* USER CODE BEGIN USART2_Init 2 */
@@ -322,9 +311,7 @@ void Error_Handler(void)
 	/* User can add his own implementation to report the HAL error return
 	 * state */
 	__disable_irq();
-	while (1)
-	{
-	}
+	while (1) {}
 	/* USER CODE END Error_Handler_Debug */
 }
 

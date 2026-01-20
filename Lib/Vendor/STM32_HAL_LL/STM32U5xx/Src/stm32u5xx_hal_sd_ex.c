@@ -112,12 +112,9 @@ HAL_StatusTypeDef HAL_SDEx_DMALinkedList_InsertNode(SD_DMALinkedListTypeDef *pLi
 HAL_StatusTypeDef HAL_SDEx_DMALinkedList_RemoveNode(SD_DMALinkedListTypeDef *pLinkedList, SD_DMALinkNodeTypeDef *pNode)
 {
 
-	if (SDMMC_DMALinkedList_RemoveNode(pLinkedList, pNode) != SDMMC_ERROR_NONE)
-	{
+	if (SDMMC_DMALinkedList_RemoveNode(pLinkedList, pNode) != SDMMC_ERROR_NONE) {
 		return HAL_ERROR;
-	}
-	else
-	{
+	} else {
 		return HAL_OK;
 	}
 }
@@ -130,12 +127,9 @@ HAL_StatusTypeDef HAL_SDEx_DMALinkedList_RemoveNode(SD_DMALinkedListTypeDef *pLi
 HAL_StatusTypeDef HAL_SDEx_DMALinkedList_LockNode(SD_DMALinkNodeTypeDef *pNode)
 {
 
-	if (SDMMC_DMALinkedList_LockNode(pNode) != SDMMC_ERROR_NONE)
-	{
+	if (SDMMC_DMALinkedList_LockNode(pNode) != SDMMC_ERROR_NONE) {
 		return HAL_ERROR;
-	}
-	else
-	{
+	} else {
 		return HAL_OK;
 	}
 }
@@ -148,12 +142,9 @@ HAL_StatusTypeDef HAL_SDEx_DMALinkedList_LockNode(SD_DMALinkNodeTypeDef *pNode)
 HAL_StatusTypeDef HAL_SDEx_DMALinkedList_UnlockNode(SD_DMALinkNodeTypeDef *pNode)
 {
 
-	if (SDMMC_DMALinkedList_UnlockNode(pNode) != SDMMC_ERROR_NONE)
-	{
+	if (SDMMC_DMALinkedList_UnlockNode(pNode) != SDMMC_ERROR_NONE) {
 		return HAL_ERROR;
-	}
-	else
-	{
+	} else {
 		return HAL_OK;
 	}
 }
@@ -201,10 +192,8 @@ HAL_StatusTypeDef HAL_SDEx_DMALinkedList_ReadBlocks(SD_HandleTypeDef *hsd, const
 	uint32_t DmaBase1_reg;
 	uint32_t add = BlockAdd;
 
-	if (hsd->State == HAL_SD_STATE_READY)
-	{
-		if ((add + NumberOfBlocks) > (hsd->SdCard.LogBlockNbr))
-		{
+	if (hsd->State == HAL_SD_STATE_READY) {
+		if ((add + NumberOfBlocks) > (hsd->SdCard.LogBlockNbr)) {
 			hsd->ErrorCode |= HAL_SD_ERROR_ADDR_OUT_OF_RANGE;
 			return HAL_ERROR;
 		}
@@ -218,8 +207,7 @@ HAL_StatusTypeDef HAL_SDEx_DMALinkedList_ReadBlocks(SD_HandleTypeDef *hsd, const
 		DmaBase0_reg = hsd->Instance->IDMABASER;
 		DmaBase1_reg = hsd->Instance->IDMABAR;
 
-		if ((hsd->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) || (DmaBase1_reg == 0U))
-		{
+		if ((hsd->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) || (DmaBase1_reg == 0U)) {
 			hsd->ErrorCode = HAL_SD_ERROR_ADDR_OUT_OF_RANGE;
 			return HAL_ERROR;
 		}
@@ -232,8 +220,7 @@ HAL_StatusTypeDef HAL_SDEx_DMALinkedList_ReadBlocks(SD_HandleTypeDef *hsd, const
 		hsd->ErrorCode = HAL_SD_ERROR_NONE;
 		hsd->State = HAL_SD_STATE_BUSY;
 
-		if (hsd->SdCard.CardType != CARD_SDHC_SDXC)
-		{
+		if (hsd->SdCard.CardType != CARD_SDHC_SDXC) {
 			add *= 512U;
 		}
 
@@ -257,8 +244,7 @@ HAL_StatusTypeDef HAL_SDEx_DMALinkedList_ReadBlocks(SD_HandleTypeDef *hsd, const
 
 		/* Read Multi Block command */
 		errorstate = SDMMC_CmdReadMultiBlock(hsd->Instance, add);
-		if (errorstate != HAL_SD_ERROR_NONE)
-		{
+		if (errorstate != HAL_SD_ERROR_NONE) {
 			hsd->State = HAL_SD_STATE_READY;
 			hsd->ErrorCode |= errorstate;
 			return HAL_ERROR;
@@ -267,9 +253,7 @@ HAL_StatusTypeDef HAL_SDEx_DMALinkedList_ReadBlocks(SD_HandleTypeDef *hsd, const
 		__HAL_SD_ENABLE_IT(hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_RXOVERR | SDMMC_IT_DATAEND | SDMMC_IT_IDMABTC));
 
 		return HAL_OK;
-	}
-	else
-	{
+	} else {
 		return HAL_BUSY;
 	}
 }
@@ -293,10 +277,8 @@ HAL_StatusTypeDef HAL_SDEx_DMALinkedList_WriteBlocks(SD_HandleTypeDef *hsd, cons
 	uint32_t DmaBase1_reg;
 	uint32_t add = BlockAdd;
 
-	if (hsd->State == HAL_SD_STATE_READY)
-	{
-		if ((add + NumberOfBlocks) > (hsd->SdCard.LogBlockNbr))
-		{
+	if (hsd->State == HAL_SD_STATE_READY) {
+		if ((add + NumberOfBlocks) > (hsd->SdCard.LogBlockNbr)) {
 			hsd->ErrorCode |= HAL_SD_ERROR_ADDR_OUT_OF_RANGE;
 			return HAL_ERROR;
 		}
@@ -310,8 +292,7 @@ HAL_StatusTypeDef HAL_SDEx_DMALinkedList_WriteBlocks(SD_HandleTypeDef *hsd, cons
 		DmaBase0_reg = hsd->Instance->IDMABASER;
 		DmaBase1_reg = hsd->Instance->IDMABAR;
 
-		if ((hsd->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) || (DmaBase1_reg == 0U))
-		{
+		if ((hsd->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) || (DmaBase1_reg == 0U)) {
 			hsd->ErrorCode = HAL_SD_ERROR_ADDR_OUT_OF_RANGE;
 			return HAL_ERROR;
 		}
@@ -323,8 +304,7 @@ HAL_StatusTypeDef HAL_SDEx_DMALinkedList_WriteBlocks(SD_HandleTypeDef *hsd, cons
 
 		hsd->State = HAL_SD_STATE_BUSY;
 
-		if (hsd->SdCard.CardType != CARD_SDHC_SDXC)
-		{
+		if (hsd->SdCard.CardType != CARD_SDHC_SDXC) {
 			add *= 512U;
 		}
 
@@ -346,8 +326,7 @@ HAL_StatusTypeDef HAL_SDEx_DMALinkedList_WriteBlocks(SD_HandleTypeDef *hsd, cons
 
 		/* Write Multi Block command */
 		errorstate = SDMMC_CmdWriteMultiBlock(hsd->Instance, add);
-		if (errorstate != HAL_SD_ERROR_NONE)
-		{
+		if (errorstate != HAL_SD_ERROR_NONE) {
 			hsd->State = HAL_SD_STATE_READY;
 			hsd->ErrorCode |= errorstate;
 			return HAL_ERROR;
@@ -356,9 +335,7 @@ HAL_StatusTypeDef HAL_SDEx_DMALinkedList_WriteBlocks(SD_HandleTypeDef *hsd, cons
 		__HAL_SD_ENABLE_IT(hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_TXUNDERR | SDMMC_IT_DATAEND | SDMMC_IT_IDMABTC));
 
 		return HAL_OK;
-	}
-	else
-	{
+	} else {
 		return HAL_BUSY;
 	}
 }

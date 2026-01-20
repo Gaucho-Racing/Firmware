@@ -115,8 +115,7 @@ ErrorStatus LL_SPI_DeInit(const SPI_TypeDef *SPIx)
 	assert_param(IS_SPI_ALL_INSTANCE(SPIx));
 
 #if defined(SPI1)
-	if (SPIx == SPI1)
-	{
+	if (SPIx == SPI1) {
 		/* Force reset of SPI clock */
 		LL_APB2_GRP1_ForceReset(LL_APB2_GRP1_PERIPH_SPI1);
 
@@ -127,8 +126,7 @@ ErrorStatus LL_SPI_DeInit(const SPI_TypeDef *SPIx)
 	}
 #endif /* SPI1 */
 #if defined(SPI2)
-	if (SPIx == SPI2)
-	{
+	if (SPIx == SPI2) {
 		/* Force reset of SPI clock */
 		LL_APB1_GRP1_ForceReset(LL_APB1_GRP1_PERIPH_SPI2);
 
@@ -139,8 +137,7 @@ ErrorStatus LL_SPI_DeInit(const SPI_TypeDef *SPIx)
 	}
 #endif /* SPI2 */
 #if defined(SPI3)
-	if (SPIx == SPI3)
-	{
+	if (SPIx == SPI3) {
 		/* Force reset of SPI clock */
 		LL_APB1_GRP1_ForceReset(LL_APB1_GRP1_PERIPH_SPI3);
 
@@ -183,8 +180,7 @@ ErrorStatus LL_SPI_Init(SPI_TypeDef *SPIx, LL_SPI_InitTypeDef *SPI_InitStruct)
 	assert_param(IS_LL_SPI_BITORDER(SPI_InitStruct->BitOrder));
 	assert_param(IS_LL_SPI_CRCCALCULATION(SPI_InitStruct->CRCCalculation));
 
-	if (LL_SPI_IsEnabled(SPIx) == 0x00000000U)
-	{
+	if (LL_SPI_IsEnabled(SPIx) == 0x00000000U) {
 		/*---------------------------- SPIx CR1 Configuration
 		 * ------------------------ Configure SPIx CR1 with parameters:
 		 * - TransferDirection:  SPI_CR1_BIDIMODE, SPI_CR1_BIDIOE and
@@ -210,8 +206,7 @@ ErrorStatus LL_SPI_Init(SPI_TypeDef *SPIx, LL_SPI_InitTypeDef *SPI_InitStruct)
 
 		/* Set Rx FIFO to Quarter (1 Byte) in case of 8 Bits mode. No
 		 * DataPacking by default */
-		if (SPI_InitStruct->DataWidth < LL_SPI_DATAWIDTH_9BIT)
-		{
+		if (SPI_InitStruct->DataWidth < LL_SPI_DATAWIDTH_9BIT) {
 			LL_SPI_SetRxFIFOThreshold(SPIx, LL_SPI_RX_FIFO_TH_QUARTER);
 		}
 
@@ -219,8 +214,7 @@ ErrorStatus LL_SPI_Init(SPI_TypeDef *SPIx, LL_SPI_InitTypeDef *SPI_InitStruct)
 		 * ---------------------- Configure SPIx CRCPR with parameters:
 		 * - CRCPoly:            CRCPOLY[15:0] bits
 		 */
-		if (SPI_InitStruct->CRCCalculation == LL_SPI_CRCCALCULATION_ENABLE)
-		{
+		if (SPI_InitStruct->CRCCalculation == LL_SPI_CRCCALCULATION_ENABLE) {
 			assert_param(IS_LL_SPI_CRC_POLYNOMIAL(SPI_InitStruct->CRCPoly));
 			LL_SPI_SetCRCPolynomial(SPIx, SPI_InitStruct->CRCPoly);
 		}

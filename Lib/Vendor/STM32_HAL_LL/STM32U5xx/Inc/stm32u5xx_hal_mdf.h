@@ -21,374 +21,356 @@
 #define STM32U5xx_HAL_MDF_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx_hal_def.h"
 
-	/** @addtogroup STM32U5xx_HAL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32U5xx_HAL_Driver
+ * @{
+ */
 
-	/** @addtogroup MDF
-	 * @{
-	 */
+/** @addtogroup MDF
+ * @{
+ */
 
-	/* Exported types ------------------------------------------------------------*/
-	/** @defgroup MDF_Exported_Types  MDF Exported Types
-	 * @{
-	 */
+/* Exported types ------------------------------------------------------------*/
+/** @defgroup MDF_Exported_Types  MDF Exported Types
+ * @{
+ */
 
-	/**
-	 * @brief  HAL MDF states definition
-	 */
-	typedef enum
-	{
-		HAL_MDF_STATE_RESET = 0x00U,	   /*!< MDF not initialized */
-		HAL_MDF_STATE_READY = 0x01U,	   /*!< MDF initialized and ready for use */
-		HAL_MDF_STATE_ACQUISITION = 0x02U, /*!< MDF acquisition in progress */
-		HAL_MDF_STATE_ERROR = 0xFFU	   /*!< MDF state error */
-	} HAL_MDF_StateTypeDef;
+/**
+ * @brief  HAL MDF states definition
+ */
+typedef enum {
+	HAL_MDF_STATE_RESET = 0x00U,	   /*!< MDF not initialized */
+	HAL_MDF_STATE_READY = 0x01U,	   /*!< MDF initialized and ready for use */
+	HAL_MDF_STATE_ACQUISITION = 0x02U, /*!< MDF acquisition in progress */
+	HAL_MDF_STATE_ERROR = 0xFFU	   /*!< MDF state error */
+} HAL_MDF_StateTypeDef;
 
-	/**
-	 * @brief  MDF clock trigger structure definition
-	 */
-	typedef struct
-	{
-		FunctionalState Activation; /*!< Output clock trigger enable/disable */
-		uint32_t Source;	    /*!< Output clock trigger source.
-						 This parameter can be a value of @ref
-					       MDF_ClockTriggerSource */
-		uint32_t Edge;		    /*!< Output clock trigger edge.
-						 This parameter can be a value of @ref
-					       MDF_ClockTriggerEdge */
-	} MDF_ClockTriggerTypeDef;
+/**
+ * @brief  MDF clock trigger structure definition
+ */
+typedef struct {
+	FunctionalState Activation; /*!< Output clock trigger enable/disable */
+	uint32_t Source;	    /*!< Output clock trigger source.
+					 This parameter can be a value of @ref
+				       MDF_ClockTriggerSource */
+	uint32_t Edge;		    /*!< Output clock trigger edge.
+					 This parameter can be a value of @ref
+				       MDF_ClockTriggerEdge */
+} MDF_ClockTriggerTypeDef;
 
-	/**
-	 * @brief  MDF output clock structure definition
-	 */
-	typedef struct
-	{
-		FunctionalState Activation;	 /*!< Output clock enable/disable */
-		uint32_t Pins;			 /*!< Output clock pins.
-						      This parameter can be a value of @ref
-						    MDF_OuputClockPins */
-		uint32_t Divider;		 /*!< Output clock divider.
-						      This parameter must be a number between Min_Data
-						    = 1 and Max_Data = 16 */
-		MDF_ClockTriggerTypeDef Trigger; /*!< Output clock trigger parameters */
-	} MDF_OutputClockTypeDef;
+/**
+ * @brief  MDF output clock structure definition
+ */
+typedef struct {
+	FunctionalState Activation;	 /*!< Output clock enable/disable */
+	uint32_t Pins;			 /*!< Output clock pins.
+					      This parameter can be a value of @ref
+					    MDF_OuputClockPins */
+	uint32_t Divider;		 /*!< Output clock divider.
+					      This parameter must be a number between Min_Data
+					    = 1 and Max_Data = 16 */
+	MDF_ClockTriggerTypeDef Trigger; /*!< Output clock trigger parameters */
+} MDF_OutputClockTypeDef;
 
-	/**
-	 * @brief  MDF common parameters structure definition
-	 */
-	typedef struct
-	{
-		uint32_t InterleavedFilters;	    /*!< Number of filters in interleaved mode with
-						       filter 0. This parameter must be a number
-						       between Min_Data = 0 and Max_Data = 1 for
-						       STM32U535xx/STM32U545xx devices. This
-						       parameter must be a number between Min_Data =
-						       0 and Max_Data = 5 for other devices.
-							 @note This parameter is not used for ADF
-						       instance */
-		uint32_t ProcClockDivider;	    /*!< Processing clock divider.
-							 This parameter must be a number between
-						       Min_Data = 1	  and Max_Data = 128 */
-		MDF_OutputClockTypeDef OutputClock; /*!< Output clock parameters */
-	} MDF_CommonParamTypeDef;
+/**
+ * @brief  MDF common parameters structure definition
+ */
+typedef struct {
+	uint32_t InterleavedFilters;	    /*!< Number of filters in interleaved mode with
+					       filter 0. This parameter must be a number
+					       between Min_Data = 0 and Max_Data = 1 for
+					       STM32U535xx/STM32U545xx devices. This
+					       parameter must be a number between Min_Data =
+					       0 and Max_Data = 5 for other devices.
+						 @note This parameter is not used for ADF
+					       instance */
+	uint32_t ProcClockDivider;	    /*!< Processing clock divider.
+						 This parameter must be a number between
+					       Min_Data = 1	  and Max_Data = 128 */
+	MDF_OutputClockTypeDef OutputClock; /*!< Output clock parameters */
+} MDF_CommonParamTypeDef;
 
-	/**
-	 * @brief  MDF serial interface structure definition
-	 */
-	typedef struct
-	{
-		FunctionalState Activation; /*!< Serial interface enable/disable */
-		uint32_t Mode;		    /*!< Serial interface mode.
-						 This parameter can be a value of @ref MDF_SitfMode */
-		uint32_t ClockSource;	    /*!< Serial interface clock source.
-						 This parameter can be a value of @ref
-					       MDF_SitfClockSource */
-		uint32_t Threshold;	    /*!< SPI threshold for clock absence detection or
-					       Manchester symbol threshold. This parameter must be a
-					       number between Min_Data = 4 and Max_Data = 31 */
-	} MDF_SerialInterfaceTypeDef;
+/**
+ * @brief  MDF serial interface structure definition
+ */
+typedef struct {
+	FunctionalState Activation; /*!< Serial interface enable/disable */
+	uint32_t Mode;		    /*!< Serial interface mode.
+					 This parameter can be a value of @ref MDF_SitfMode */
+	uint32_t ClockSource;	    /*!< Serial interface clock source.
+					 This parameter can be a value of @ref
+				       MDF_SitfClockSource */
+	uint32_t Threshold;	    /*!< SPI threshold for clock absence detection or
+				       Manchester symbol threshold. This parameter must be a
+				       number between Min_Data = 4 and Max_Data = 31 */
+} MDF_SerialInterfaceTypeDef;
 
-	/**
-	 * @brief  MDF init structure definition
-	 */
-	typedef struct
-	{
-		MDF_CommonParamTypeDef CommonParam;	    /*!< MDF common parameters */
-		MDF_SerialInterfaceTypeDef SerialInterface; /*!< MDF serial interface parameters */
-		uint32_t FilterBistream;		    /*!< MDF filter bitstream selection.
-								 This parameter can be a value of @ref
-							       MDF_FilterBitstream */
-	} MDF_InitTypeDef;
+/**
+ * @brief  MDF init structure definition
+ */
+typedef struct {
+	MDF_CommonParamTypeDef CommonParam;	    /*!< MDF common parameters */
+	MDF_SerialInterfaceTypeDef SerialInterface; /*!< MDF serial interface parameters */
+	uint32_t FilterBistream;		    /*!< MDF filter bitstream selection.
+							 This parameter can be a value of @ref
+						       MDF_FilterBitstream */
+} MDF_InitTypeDef;
 
 /**
  * @brief  MDF handle structure definition
  */
 #if (USE_HAL_MDF_REGISTER_CALLBACKS == 1)
-	typedef struct __MDF_HandleTypeDef
+typedef struct __MDF_HandleTypeDef
 #else
 typedef struct
 #endif /* USE_HAL_MDF_REGISTER_CALLBACKS */
-	{
-		MDF_Filter_TypeDef *Instance;	 /*!< MDF instance */
-		MDF_InitTypeDef Init;		 /*!< MDF init parameters */
-		DMA_HandleTypeDef *hdma;	 /*!< Pointer on DMA handler for acquisitions */
-		__IO HAL_MDF_StateTypeDef State; /*!< MDF state */
-		__IO uint32_t ErrorCode;	 /*!< MDF error code */
+{
+	MDF_Filter_TypeDef *Instance;	 /*!< MDF instance */
+	MDF_InitTypeDef Init;		 /*!< MDF init parameters */
+	DMA_HandleTypeDef *hdma;	 /*!< Pointer on DMA handler for acquisitions */
+	__IO HAL_MDF_StateTypeDef State; /*!< MDF state */
+	__IO uint32_t ErrorCode;	 /*!< MDF error code */
 #if (USE_HAL_MDF_REGISTER_CALLBACKS == 1)
-		void (*OldCallback)(struct __MDF_HandleTypeDef *hmdf, uint32_t Threshold);			     /*!< MDF out-off limit detector callback.
-															  @note Not used for ADF instance */
-		void (*AcqCpltCallback)(struct __MDF_HandleTypeDef *hmdf);					     /*!< MDF acquisition complete callback */
-		void (*AcqHalfCpltCallback)(struct __MDF_HandleTypeDef *hmdf);					     /*!< MDF acquisition half complete callback */
-		void (*SndLvCallback)(struct __MDF_HandleTypeDef *hmdf, uint32_t SoundLevel, uint32_t AmbientNoise); /*!< MDF sound level callback.
-															  @note Not used for MDF instance */
-		void (*SadCallback)(struct __MDF_HandleTypeDef *hmdf);						     /*!< MDF sound activity detector callback.
-															  @note Not used for MDF instance */
-		void (*ErrorCallback)(struct __MDF_HandleTypeDef *hmdf);					     /*!< MDF error callback */
-		void (*MspInitCallback)(struct __MDF_HandleTypeDef *hmdf);					     /*!< MDF MSP init callback */
-		void (*MspDeInitCallback)(struct __MDF_HandleTypeDef *hmdf);					     /*!< MDF MSP de-init callback */
-#endif														     /* USE_HAL_MDF_REGISTER_CALLBACKS */
-	} MDF_HandleTypeDef;
+	void (*OldCallback)(struct __MDF_HandleTypeDef *hmdf, uint32_t Threshold);			     /*!< MDF out-off limit detector callback.
+														  @note Not used for ADF instance */
+	void (*AcqCpltCallback)(struct __MDF_HandleTypeDef *hmdf);					     /*!< MDF acquisition complete callback */
+	void (*AcqHalfCpltCallback)(struct __MDF_HandleTypeDef *hmdf);					     /*!< MDF acquisition half complete callback */
+	void (*SndLvCallback)(struct __MDF_HandleTypeDef *hmdf, uint32_t SoundLevel, uint32_t AmbientNoise); /*!< MDF sound level callback.
+														  @note Not used for MDF instance */
+	void (*SadCallback)(struct __MDF_HandleTypeDef *hmdf);						     /*!< MDF sound activity detector callback.
+														  @note Not used for MDF instance */
+	void (*ErrorCallback)(struct __MDF_HandleTypeDef *hmdf);					     /*!< MDF error callback */
+	void (*MspInitCallback)(struct __MDF_HandleTypeDef *hmdf);					     /*!< MDF MSP init callback */
+	void (*MspDeInitCallback)(struct __MDF_HandleTypeDef *hmdf);					     /*!< MDF MSP de-init callback */
+#endif													     /* USE_HAL_MDF_REGISTER_CALLBACKS */
+} MDF_HandleTypeDef;
 
 #if (USE_HAL_MDF_REGISTER_CALLBACKS == 1)
-	/**
-	 * @brief  MDF callback ID enumeration definition
-	 */
-	typedef enum
-	{
-		HAL_MDF_OLD_CB_ID = 0x00U,		/*!< MDF out-off limit detector callback ID.
-							     @note Not used for ADF instance */
-		HAL_MDF_ACQ_COMPLETE_CB_ID = 0x01U,	/*!< MDF acquisition complete callback ID */
-		HAL_MDF_ACQ_HALFCOMPLETE_CB_ID = 0x02U, /*!< MDF acquisition half complete callback ID */
-		HAL_MDF_SNDLVL_CB_ID = 0x03U,		/*!< MDF sound level callback ID.
-							     @note Not used for MDF instance */
-		HAL_MDF_SAD_CB_ID = 0x04U,		/*!< MDF sound activity detector callback ID.
-							     @note Not used for MDF instance */
-		HAL_MDF_ERROR_CB_ID = 0x05U,		/*!< MDF error callback ID */
-		HAL_MDF_MSPINIT_CB_ID = 0x06U,		/*!< MDF MSP init callback ID */
-		HAL_MDF_MSPDEINIT_CB_ID = 0x07U		/*!< MDF MSP de-init callback ID */
-	} HAL_MDF_CallbackIDTypeDef;
+/**
+ * @brief  MDF callback ID enumeration definition
+ */
+typedef enum {
+	HAL_MDF_OLD_CB_ID = 0x00U,		/*!< MDF out-off limit detector callback ID.
+						     @note Not used for ADF instance */
+	HAL_MDF_ACQ_COMPLETE_CB_ID = 0x01U,	/*!< MDF acquisition complete callback ID */
+	HAL_MDF_ACQ_HALFCOMPLETE_CB_ID = 0x02U, /*!< MDF acquisition half complete callback ID */
+	HAL_MDF_SNDLVL_CB_ID = 0x03U,		/*!< MDF sound level callback ID.
+						     @note Not used for MDF instance */
+	HAL_MDF_SAD_CB_ID = 0x04U,		/*!< MDF sound activity detector callback ID.
+						     @note Not used for MDF instance */
+	HAL_MDF_ERROR_CB_ID = 0x05U,		/*!< MDF error callback ID */
+	HAL_MDF_MSPINIT_CB_ID = 0x06U,		/*!< MDF MSP init callback ID */
+	HAL_MDF_MSPDEINIT_CB_ID = 0x07U		/*!< MDF MSP de-init callback ID */
+} HAL_MDF_CallbackIDTypeDef;
 
-	/**
-	 * @brief  MDF callback pointers definition
-	 */
-	typedef void (*pMDF_CallbackTypeDef)(MDF_HandleTypeDef *hmdf);
-	typedef void (*pMDF_OldCallbackTypeDef)(MDF_HandleTypeDef *hmdf, uint32_t Threshold);
-	typedef void (*pMDF_SndLvlCallbackTypeDef)(MDF_HandleTypeDef *hmdf, uint32_t SoundLevel, uint32_t AmbientNoise);
+/**
+ * @brief  MDF callback pointers definition
+ */
+typedef void (*pMDF_CallbackTypeDef)(MDF_HandleTypeDef *hmdf);
+typedef void (*pMDF_OldCallbackTypeDef)(MDF_HandleTypeDef *hmdf, uint32_t Threshold);
+typedef void (*pMDF_SndLvlCallbackTypeDef)(MDF_HandleTypeDef *hmdf, uint32_t SoundLevel, uint32_t AmbientNoise);
 #endif /* USE_HAL_MDF_REGISTER_CALLBACKS */
 
-	/**
-	 * @brief  MDF reshape filter structure definition
-	 */
-	typedef struct
-	{
-		FunctionalState Activation; /*!< Reshape filter enable/disable */
-		uint32_t DecimationRatio;   /*!< Reshape filter decimation ratio.
-						 This parameter can be a value of @ref
-					       MDF_ReshapeDecimationRatio */
-	} MDF_ReshapeFilterTypeDef;
+/**
+ * @brief  MDF reshape filter structure definition
+ */
+typedef struct {
+	FunctionalState Activation; /*!< Reshape filter enable/disable */
+	uint32_t DecimationRatio;   /*!< Reshape filter decimation ratio.
+					 This parameter can be a value of @ref
+				       MDF_ReshapeDecimationRatio */
+} MDF_ReshapeFilterTypeDef;
 
-	/**
-	 * @brief  MDF high pass filter structure definition
-	 */
-	typedef struct
-	{
-		FunctionalState Activation; /*!< High pass filter enable/disable */
-		uint32_t CutOffFrequency;   /*!< High pass filter cut-off frequency.
-						 This parameter can be a value of @ref
-					       MDF_HighPassCutOffFreq */
-	} MDF_HighPassFilterTypeDef;
+/**
+ * @brief  MDF high pass filter structure definition
+ */
+typedef struct {
+	FunctionalState Activation; /*!< High pass filter enable/disable */
+	uint32_t CutOffFrequency;   /*!< High pass filter cut-off frequency.
+					 This parameter can be a value of @ref
+				       MDF_HighPassCutOffFreq */
+} MDF_HighPassFilterTypeDef;
 
-	/**
-	 * @brief  MDF integrator structure definition
-	 */
-	typedef struct
-	{
-		FunctionalState Activation; /*!< Integrator enable/disable */
-		uint32_t Value;		    /*!< Integrator value.
-						 This parameter must be a number between Min_Data =
-					       2 and Max_Data = 128 */
-		uint32_t OutputDivision;    /*!< Integrator output division.
-						 This parameter can be a value of @ref
-					       MDF_IntegratorOutputDiv */
-	} MDF_IntegratorTypeDef;
+/**
+ * @brief  MDF integrator structure definition
+ */
+typedef struct {
+	FunctionalState Activation; /*!< Integrator enable/disable */
+	uint32_t Value;		    /*!< Integrator value.
+					 This parameter must be a number between Min_Data =
+				       2 and Max_Data = 128 */
+	uint32_t OutputDivision;    /*!< Integrator output division.
+					 This parameter can be a value of @ref
+				       MDF_IntegratorOutputDiv */
+} MDF_IntegratorTypeDef;
 
-	/**
-	 * @brief  MDF sound activity structure definition
-	 */
-	typedef struct
-	{
-		FunctionalState Activation;	     /*!< Sound activity detector enable/disable */
-		uint32_t Mode;			     /*!< Sound activity detector mode.
-							  This parameter can be a value of @ref MDF_SadMode */
-		uint32_t FrameSize;		     /*!< Size of one frame to compute short-term signal
-							level. This parameter can be a value of @ref
-							MDF_SadFrameSize */
-		FunctionalState Hysteresis;	     /*!< Hysteresis enable/disable.
-							  @note This parameter is not used if Mode is set
-								to MDF_SAD_AMBIENT_NOISE_ESTIMATOR */
-		uint32_t SoundTriggerEvent;	     /*!< Sound trigger event configuration.
-							  This parameter can be a value of @ref
-							MDF_SadSoundTriggerEvent */
-		uint32_t DataMemoryTransfer;	     /*!< Data memory transfer mode.
-							  This parameter can be a value of @ref
-							MDF_SadDataMemoryTransfer */
-		uint32_t MinNoiseLevel;		     /*!< Minimum noise level.
-							  This parameter must be a number between
-							Min_Data = 0      and Max_Data = 8191 */
-		uint32_t HangoverWindow;	     /*!< Hangover time window in frames.
-							  This parameter can be a value of @ref
-							MDF_SadHangoverWindow */
-		uint32_t LearningFrames;	     /*!< Number of learning frames for the first
-							estimation of noise level.	 This parameter
-							can be	 a value of @ref
-							MDF_SadLearningFrames */
-		uint32_t AmbientNoiseSlope;	     /*!< Ambient noise slope control.
-							  This parameter must be a number between
-							Min_Data = 0 and Max_Data = 7.
-							  @note This parameter is not used if
-							Mode is set to MDF_SAD_SOUND_DETECTOR */
-		uint32_t SignalNoiseThreshold;	     /*!< Signal to noise threshold.
-							  This parameter can be a value of
-							@ref MDF_SadSignalNoiseThreshold */
-		FunctionalState SoundLevelInterrupt; /*!< Sound level interrupt enable/disable.
-							 @note This interrupt is mainly used for
-							debug purpose*/
-
-	} MDF_SoundActivityTypeDef;
-
-	/**
-	 * @brief  MDF filter trigger structure definition
-	 */
-	typedef struct
-	{
-		uint32_t Source; /*!< Filter trigger source.
-				      This parameter can be a value of @ref
-				    MDF_FilterTriggerSource */
-		uint32_t Edge;	 /*!< Filter trigger edge.
-				      This parameter can be a value of @ref
-				    MDF_FilterTriggerEdge */
-	} MDF_FilterTriggerTypeDef;
-
-	/**
-	 * @brief  MDF filter configuration structure definition
-	 */
-	typedef struct
-	{
-		uint32_t DataSource;			  /*!< Filter data source.
-							       This parameter can be a value of @ref
-							     MDF_DataSource */
-		uint32_t Delay;				  /*!< Delay to apply on data source in number of samples.
-							       This parameter must be a number between Min_Data =
-							     0 and Max_Data = 127 */
-		uint32_t CicMode;			  /*!< CIC filter mode.
-							       This parameter can be a value of @ref MDF_CicMode */
-		uint32_t DecimationRatio;		  /*!< Filter decimation ratio.
-							       This parameter must be a number between
-							     Min_Data = 2 and Max_Data = 512 */
-		int32_t Offset;				  /*!< Filter offset error compensation.
-							       This parameter must be a number between Min_Data =
-							     -33554432   and Max_Data = 33554431.
-							       @note This parameter is not used for ADF instance */
-		int32_t Gain;				  /*!< Filter gain in step of around 3db (from -48db to
-							     72dB). This parameter must be a number between Min_Data
-							     = -16 and Max_Data = 24 */
-		MDF_ReshapeFilterTypeDef ReshapeFilter;	  /*!< Reshape filter configuration */
-		MDF_HighPassFilterTypeDef HighPassFilter; /*!< High pass filter configuration */
-		MDF_IntegratorTypeDef Integrator;	  /*!< Integrator configuration.
-							       @note This parameter is not used
-							     for ADF instance */
-		MDF_SoundActivityTypeDef SoundActivity;	  /*!< Sound activity detector configuration.
-							       @note This parameter is not used for MDF
-							     instance */
-		uint32_t AcquisitionMode;		  /*!< Filter acquisition mode.
-							       This parameter can be a value of @ref
-							     MDF_AcquisitionMode */
-		uint32_t FifoThreshold;			  /*!< Filter RXFIFO threshold.
-							       This parameter can be a value of @ref
-							     MDF_FifoThreshold */
-		uint32_t DiscardSamples;		  /*!< Number of samples to discard after filter
-							     enable.  This parameter must be a number
-							     between Min_Data = 0  and Max_Data = 255 */
-		MDF_FilterTriggerTypeDef Trigger;	  /*!< Filter trigger configuration.
-							       @note This parameter is not used if AcquisitionMode is
-							     set to MDF_MODE_ASYNC_CONT or MDF_MODE_ASYNC_SINGLE */
-		uint32_t SnapshotFormat;		  /*!< Snapshot format.
-							       This parameter can be a value of @ref
-							     MDF_SnapshotFormat.
-							       @note This parameter is used only if
-							     AcquisitionMode is set to MDF_MODE_SYNC_SNAPSHOT
-							     and for MDF instance */
-	} MDF_FilterConfigTypeDef;
-
-	/**
-	 * @brief  MDF snapshot parameters structure definition
-	 */
-	typedef struct
-	{
-		int32_t Value;		    /*!< Snapshot acquisition value on 16 or 23 MSB depending
-					       on snapshot format */
-		uint32_t DecimationCounter; /*!< Decimation counter value when snapshot
-					       trigger occurs */
-		uint32_t IntegratorCounter; /*!< Integrator counter value when snapshot
-					       trigger occurs. This value is available only
-					       if snapshot format is 16 bits resolution */
-	} MDF_SnapshotParamTypeDef;
-
-	/**
-	 * @brief  MDF DMA configuration structure definition
-	 */
-	typedef struct
-	{
-		uint32_t Address;	 /*!< DMA destination address */
-		uint32_t DataLength;	 /*!< Length of data to transfer in bytes */
-		FunctionalState MsbOnly; /*!< Transfer only the 16MSB of the acquistion data */
-	} MDF_DmaConfigTypeDef;
-
-	/**
-	 * @brief  MDF short-circuit detector configuration structure definition
-	 */
-	typedef struct
-	{
-		uint32_t Threshold;   /*!< Short-circuit detector threshold.
-					   This parameter must be a number between
-					 Min_Data = 2 and Max_Data = 256 */
-		uint32_t BreakSignal; /*!< Break signal assignment for short-circuit
-					 detector. This parameter can be a values
-					 combination of @ref MDF_BreakSignals */
-	} MDF_ScdConfigTypeDef;
-
-	/**
-	 * @brief  MDF out-off limit detector configuration structure definition
-	 */
-	typedef struct
-	{
-		uint32_t OldCicMode;	     /*!< Out-off limit detector CIC filter mode.
+/**
+ * @brief  MDF sound activity structure definition
+ */
+typedef struct {
+	FunctionalState Activation;	     /*!< Sound activity detector enable/disable */
+	uint32_t Mode;			     /*!< Sound activity detector mode.
+						  This parameter can be a value of @ref MDF_SadMode */
+	uint32_t FrameSize;		     /*!< Size of one frame to compute short-term signal
+						level. This parameter can be a value of @ref
+						MDF_SadFrameSize */
+	FunctionalState Hysteresis;	     /*!< Hysteresis enable/disable.
+						  @note This parameter is not used if Mode is set
+							to MDF_SAD_AMBIENT_NOISE_ESTIMATOR */
+	uint32_t SoundTriggerEvent;	     /*!< Sound trigger event configuration.
 						  This parameter can be a value of @ref
-						MDF_OldCicMode */
-		uint32_t OldDecimationRatio; /*!< Out-off limit detector decimation ratio.
-						  This parameter must be a number between
-						Min_Data = 1 and Max_Data = 32 */
-		int32_t HighThreshold;	     /*!< Out-off limit detector high threshold.
-						  This parameter must be a number between Min_Data
-						= -33554432       and Max_Data = 33554431 */
-		int32_t LowThreshold;	     /*!< Out-off limit detector low threshold.
-						  This parameter must be a number between
-						Min_Data = -33554432    and Max_Data = 33554431 */
-		uint32_t OldEventConfig;     /*!< Out-off limit event configuration.
+						MDF_SadSoundTriggerEvent */
+	uint32_t DataMemoryTransfer;	     /*!< Data memory transfer mode.
 						  This parameter can be a value of @ref
-						MDF_OldEventConfig */
-		uint32_t BreakSignal;	     /*!< Break signal assignment for out-off limit
-						detector.    This parameter can be a values
-						combination of @ref MDF_BreakSignals */
-	} MDF_OldConfigTypeDef;
+						MDF_SadDataMemoryTransfer */
+	uint32_t MinNoiseLevel;		     /*!< Minimum noise level.
+						  This parameter must be a number between
+						Min_Data = 0      and Max_Data = 8191 */
+	uint32_t HangoverWindow;	     /*!< Hangover time window in frames.
+						  This parameter can be a value of @ref
+						MDF_SadHangoverWindow */
+	uint32_t LearningFrames;	     /*!< Number of learning frames for the first
+						estimation of noise level.	 This parameter
+						can be	 a value of @ref
+						MDF_SadLearningFrames */
+	uint32_t AmbientNoiseSlope;	     /*!< Ambient noise slope control.
+						  This parameter must be a number between
+						Min_Data = 0 and Max_Data = 7.
+						  @note This parameter is not used if
+						Mode is set to MDF_SAD_SOUND_DETECTOR */
+	uint32_t SignalNoiseThreshold;	     /*!< Signal to noise threshold.
+						  This parameter can be a value of
+						@ref MDF_SadSignalNoiseThreshold */
+	FunctionalState SoundLevelInterrupt; /*!< Sound level interrupt enable/disable.
+						 @note This interrupt is mainly used for
+						debug purpose*/
+
+} MDF_SoundActivityTypeDef;
+
+/**
+ * @brief  MDF filter trigger structure definition
+ */
+typedef struct {
+	uint32_t Source; /*!< Filter trigger source.
+			      This parameter can be a value of @ref
+			    MDF_FilterTriggerSource */
+	uint32_t Edge;	 /*!< Filter trigger edge.
+			      This parameter can be a value of @ref
+			    MDF_FilterTriggerEdge */
+} MDF_FilterTriggerTypeDef;
+
+/**
+ * @brief  MDF filter configuration structure definition
+ */
+typedef struct {
+	uint32_t DataSource;			  /*!< Filter data source.
+						       This parameter can be a value of @ref
+						     MDF_DataSource */
+	uint32_t Delay;				  /*!< Delay to apply on data source in number of samples.
+						       This parameter must be a number between Min_Data =
+						     0 and Max_Data = 127 */
+	uint32_t CicMode;			  /*!< CIC filter mode.
+						       This parameter can be a value of @ref MDF_CicMode */
+	uint32_t DecimationRatio;		  /*!< Filter decimation ratio.
+						       This parameter must be a number between
+						     Min_Data = 2 and Max_Data = 512 */
+	int32_t Offset;				  /*!< Filter offset error compensation.
+						       This parameter must be a number between Min_Data =
+						     -33554432   and Max_Data = 33554431.
+						       @note This parameter is not used for ADF instance */
+	int32_t Gain;				  /*!< Filter gain in step of around 3db (from -48db to
+						     72dB). This parameter must be a number between Min_Data
+						     = -16 and Max_Data = 24 */
+	MDF_ReshapeFilterTypeDef ReshapeFilter;	  /*!< Reshape filter configuration */
+	MDF_HighPassFilterTypeDef HighPassFilter; /*!< High pass filter configuration */
+	MDF_IntegratorTypeDef Integrator;	  /*!< Integrator configuration.
+						       @note This parameter is not used
+						     for ADF instance */
+	MDF_SoundActivityTypeDef SoundActivity;	  /*!< Sound activity detector configuration.
+						       @note This parameter is not used for MDF
+						     instance */
+	uint32_t AcquisitionMode;		  /*!< Filter acquisition mode.
+						       This parameter can be a value of @ref
+						     MDF_AcquisitionMode */
+	uint32_t FifoThreshold;			  /*!< Filter RXFIFO threshold.
+						       This parameter can be a value of @ref
+						     MDF_FifoThreshold */
+	uint32_t DiscardSamples;		  /*!< Number of samples to discard after filter
+						     enable.  This parameter must be a number
+						     between Min_Data = 0  and Max_Data = 255 */
+	MDF_FilterTriggerTypeDef Trigger;	  /*!< Filter trigger configuration.
+						       @note This parameter is not used if AcquisitionMode is
+						     set to MDF_MODE_ASYNC_CONT or MDF_MODE_ASYNC_SINGLE */
+	uint32_t SnapshotFormat;		  /*!< Snapshot format.
+						       This parameter can be a value of @ref
+						     MDF_SnapshotFormat.
+						       @note This parameter is used only if
+						     AcquisitionMode is set to MDF_MODE_SYNC_SNAPSHOT
+						     and for MDF instance */
+} MDF_FilterConfigTypeDef;
+
+/**
+ * @brief  MDF snapshot parameters structure definition
+ */
+typedef struct {
+	int32_t Value;		    /*!< Snapshot acquisition value on 16 or 23 MSB depending
+				       on snapshot format */
+	uint32_t DecimationCounter; /*!< Decimation counter value when snapshot
+				       trigger occurs */
+	uint32_t IntegratorCounter; /*!< Integrator counter value when snapshot
+				       trigger occurs. This value is available only
+				       if snapshot format is 16 bits resolution */
+} MDF_SnapshotParamTypeDef;
+
+/**
+ * @brief  MDF DMA configuration structure definition
+ */
+typedef struct {
+	uint32_t Address;	 /*!< DMA destination address */
+	uint32_t DataLength;	 /*!< Length of data to transfer in bytes */
+	FunctionalState MsbOnly; /*!< Transfer only the 16MSB of the acquistion data */
+} MDF_DmaConfigTypeDef;
+
+/**
+ * @brief  MDF short-circuit detector configuration structure definition
+ */
+typedef struct {
+	uint32_t Threshold;   /*!< Short-circuit detector threshold.
+				   This parameter must be a number between
+				 Min_Data = 2 and Max_Data = 256 */
+	uint32_t BreakSignal; /*!< Break signal assignment for short-circuit
+				 detector. This parameter can be a values
+				 combination of @ref MDF_BreakSignals */
+} MDF_ScdConfigTypeDef;
+
+/**
+ * @brief  MDF out-off limit detector configuration structure definition
+ */
+typedef struct {
+	uint32_t OldCicMode;	     /*!< Out-off limit detector CIC filter mode.
+					  This parameter can be a value of @ref
+					MDF_OldCicMode */
+	uint32_t OldDecimationRatio; /*!< Out-off limit detector decimation ratio.
+					  This parameter must be a number between
+					Min_Data = 1 and Max_Data = 32 */
+	int32_t HighThreshold;	     /*!< Out-off limit detector high threshold.
+					  This parameter must be a number between Min_Data
+					= -33554432       and Max_Data = 33554431 */
+	int32_t LowThreshold;	     /*!< Out-off limit detector low threshold.
+					  This parameter must be a number between
+					Min_Data = -33554432    and Max_Data = 33554431 */
+	uint32_t OldEventConfig;     /*!< Out-off limit event configuration.
+					  This parameter can be a value of @ref
+					MDF_OldEventConfig */
+	uint32_t BreakSignal;	     /*!< Break signal assignment for out-off limit
+					detector.    This parameter can be a values
+					combination of @ref MDF_BreakSignals */
+} MDF_OldConfigTypeDef;
 
 /**
  * @}
@@ -837,8 +819,7 @@ typedef struct
  */
 #if (USE_HAL_MDF_REGISTER_CALLBACKS == 1)
 #define __HAL_MDF_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                       \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		(__HANDLE__)->State = HAL_MDF_STATE_RESET;                                                                                                                                             \
 		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
 		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
@@ -847,112 +828,112 @@ typedef struct
 #define __HAL_MDF_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_MDF_STATE_RESET)
 #endif /* USE_HAL_MDF_REGISTER_CALLBACKS */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported functions --------------------------------------------------------*/
-	/** @addtogroup MDF_Exported_Functions
-	 * @{
-	 */
+/* Exported functions --------------------------------------------------------*/
+/** @addtogroup MDF_Exported_Functions
+ * @{
+ */
 
-	/* Initialization and de-initialization functions  ****************************/
-	/** @addtogroup MDF_Exported_Functions_Group1
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_MDF_Init(MDF_HandleTypeDef *hmdf);
-	HAL_StatusTypeDef HAL_MDF_DeInit(MDF_HandleTypeDef *hmdf);
-	void HAL_MDF_MspInit(MDF_HandleTypeDef *hmdf);
-	void HAL_MDF_MspDeInit(MDF_HandleTypeDef *hmdf);
+/* Initialization and de-initialization functions  ****************************/
+/** @addtogroup MDF_Exported_Functions_Group1
+ * @{
+ */
+HAL_StatusTypeDef HAL_MDF_Init(MDF_HandleTypeDef *hmdf);
+HAL_StatusTypeDef HAL_MDF_DeInit(MDF_HandleTypeDef *hmdf);
+void HAL_MDF_MspInit(MDF_HandleTypeDef *hmdf);
+void HAL_MDF_MspDeInit(MDF_HandleTypeDef *hmdf);
 #if (USE_HAL_MDF_REGISTER_CALLBACKS == 1)
-	HAL_StatusTypeDef HAL_MDF_RegisterCallback(MDF_HandleTypeDef *hmdf, HAL_MDF_CallbackIDTypeDef CallbackID, pMDF_CallbackTypeDef pCallback);
-	HAL_StatusTypeDef HAL_MDF_UnRegisterCallback(MDF_HandleTypeDef *hmdf, HAL_MDF_CallbackIDTypeDef CallbackID);
-	HAL_StatusTypeDef HAL_MDF_RegisterOldCallback(MDF_HandleTypeDef *hmdf, pMDF_OldCallbackTypeDef pCallback);
-	HAL_StatusTypeDef HAL_MDF_UnRegisterOldCallback(MDF_HandleTypeDef *hmdf);
-	HAL_StatusTypeDef HAL_MDF_RegisterSndLvlCallback(MDF_HandleTypeDef *hmdf, pMDF_SndLvlCallbackTypeDef pCallback);
-	HAL_StatusTypeDef HAL_MDF_UnRegisterSndLvlCallback(MDF_HandleTypeDef *hmdf);
+HAL_StatusTypeDef HAL_MDF_RegisterCallback(MDF_HandleTypeDef *hmdf, HAL_MDF_CallbackIDTypeDef CallbackID, pMDF_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_MDF_UnRegisterCallback(MDF_HandleTypeDef *hmdf, HAL_MDF_CallbackIDTypeDef CallbackID);
+HAL_StatusTypeDef HAL_MDF_RegisterOldCallback(MDF_HandleTypeDef *hmdf, pMDF_OldCallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_MDF_UnRegisterOldCallback(MDF_HandleTypeDef *hmdf);
+HAL_StatusTypeDef HAL_MDF_RegisterSndLvlCallback(MDF_HandleTypeDef *hmdf, pMDF_SndLvlCallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_MDF_UnRegisterSndLvlCallback(MDF_HandleTypeDef *hmdf);
 #endif /* USE_HAL_MDF_REGISTER_CALLBACKS */
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Acquisition functions  *****************************************************/
-	/** @addtogroup MDF_Exported_Functions_Group2
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_MDF_AcqStart(MDF_HandleTypeDef *hmdf, const MDF_FilterConfigTypeDef *pFilterConfig);
-	HAL_StatusTypeDef HAL_MDF_PollForAcq(MDF_HandleTypeDef *hmdf, uint32_t Timeout);
-	HAL_StatusTypeDef HAL_MDF_PollForSnapshotAcq(MDF_HandleTypeDef *hmdf, uint32_t Timeout);
-	HAL_StatusTypeDef HAL_MDF_GetAcqValue(const MDF_HandleTypeDef *hmdf, int32_t *pValue);
-	HAL_StatusTypeDef HAL_MDF_GetSnapshotAcqValue(MDF_HandleTypeDef *hmdf, MDF_SnapshotParamTypeDef *pSnapshotParam);
-	HAL_StatusTypeDef HAL_MDF_AcqStop(MDF_HandleTypeDef *hmdf);
-	HAL_StatusTypeDef HAL_MDF_AcqStart_IT(MDF_HandleTypeDef *hmdf, const MDF_FilterConfigTypeDef *pFilterConfig);
-	HAL_StatusTypeDef HAL_MDF_AcqStop_IT(MDF_HandleTypeDef *hmdf);
-	HAL_StatusTypeDef HAL_MDF_AcqStart_DMA(MDF_HandleTypeDef *hmdf, const MDF_FilterConfigTypeDef *pFilterConfig, const MDF_DmaConfigTypeDef *pDmaConfig);
-	HAL_StatusTypeDef HAL_MDF_AcqStop_DMA(MDF_HandleTypeDef *hmdf);
-	HAL_StatusTypeDef HAL_MDF_GenerateTrgo(const MDF_HandleTypeDef *hmdf);
-	HAL_StatusTypeDef HAL_MDF_SetDelay(MDF_HandleTypeDef *hmdf, uint32_t Delay);
-	HAL_StatusTypeDef HAL_MDF_GetDelay(const MDF_HandleTypeDef *hmdf, uint32_t *pDelay);
-	HAL_StatusTypeDef HAL_MDF_SetGain(MDF_HandleTypeDef *hmdf, int32_t Gain);
-	HAL_StatusTypeDef HAL_MDF_GetGain(const MDF_HandleTypeDef *hmdf, int32_t *pGain);
-	HAL_StatusTypeDef HAL_MDF_SetOffset(MDF_HandleTypeDef *hmdf, int32_t Offset);
-	HAL_StatusTypeDef HAL_MDF_GetOffset(const MDF_HandleTypeDef *hmdf, int32_t *pOffset);
-	HAL_StatusTypeDef HAL_MDF_PollForSndLvl(MDF_HandleTypeDef *hmdf, uint32_t Timeout, uint32_t *pSoundLevel, uint32_t *pAmbientNoise);
-	HAL_StatusTypeDef HAL_MDF_PollForSad(MDF_HandleTypeDef *hmdf, uint32_t Timeout);
-	void HAL_MDF_AcqCpltCallback(MDF_HandleTypeDef *hmdf);
-	void HAL_MDF_AcqHalfCpltCallback(MDF_HandleTypeDef *hmdf);
-	void HAL_MDF_SndLvlCallback(MDF_HandleTypeDef *hmdf, uint32_t SoundLevel, uint32_t AmbientNoise);
-	void HAL_MDF_SadCallback(MDF_HandleTypeDef *hmdf);
-	/**
-	 * @}
-	 */
+/* Acquisition functions  *****************************************************/
+/** @addtogroup MDF_Exported_Functions_Group2
+ * @{
+ */
+HAL_StatusTypeDef HAL_MDF_AcqStart(MDF_HandleTypeDef *hmdf, const MDF_FilterConfigTypeDef *pFilterConfig);
+HAL_StatusTypeDef HAL_MDF_PollForAcq(MDF_HandleTypeDef *hmdf, uint32_t Timeout);
+HAL_StatusTypeDef HAL_MDF_PollForSnapshotAcq(MDF_HandleTypeDef *hmdf, uint32_t Timeout);
+HAL_StatusTypeDef HAL_MDF_GetAcqValue(const MDF_HandleTypeDef *hmdf, int32_t *pValue);
+HAL_StatusTypeDef HAL_MDF_GetSnapshotAcqValue(MDF_HandleTypeDef *hmdf, MDF_SnapshotParamTypeDef *pSnapshotParam);
+HAL_StatusTypeDef HAL_MDF_AcqStop(MDF_HandleTypeDef *hmdf);
+HAL_StatusTypeDef HAL_MDF_AcqStart_IT(MDF_HandleTypeDef *hmdf, const MDF_FilterConfigTypeDef *pFilterConfig);
+HAL_StatusTypeDef HAL_MDF_AcqStop_IT(MDF_HandleTypeDef *hmdf);
+HAL_StatusTypeDef HAL_MDF_AcqStart_DMA(MDF_HandleTypeDef *hmdf, const MDF_FilterConfigTypeDef *pFilterConfig, const MDF_DmaConfigTypeDef *pDmaConfig);
+HAL_StatusTypeDef HAL_MDF_AcqStop_DMA(MDF_HandleTypeDef *hmdf);
+HAL_StatusTypeDef HAL_MDF_GenerateTrgo(const MDF_HandleTypeDef *hmdf);
+HAL_StatusTypeDef HAL_MDF_SetDelay(MDF_HandleTypeDef *hmdf, uint32_t Delay);
+HAL_StatusTypeDef HAL_MDF_GetDelay(const MDF_HandleTypeDef *hmdf, uint32_t *pDelay);
+HAL_StatusTypeDef HAL_MDF_SetGain(MDF_HandleTypeDef *hmdf, int32_t Gain);
+HAL_StatusTypeDef HAL_MDF_GetGain(const MDF_HandleTypeDef *hmdf, int32_t *pGain);
+HAL_StatusTypeDef HAL_MDF_SetOffset(MDF_HandleTypeDef *hmdf, int32_t Offset);
+HAL_StatusTypeDef HAL_MDF_GetOffset(const MDF_HandleTypeDef *hmdf, int32_t *pOffset);
+HAL_StatusTypeDef HAL_MDF_PollForSndLvl(MDF_HandleTypeDef *hmdf, uint32_t Timeout, uint32_t *pSoundLevel, uint32_t *pAmbientNoise);
+HAL_StatusTypeDef HAL_MDF_PollForSad(MDF_HandleTypeDef *hmdf, uint32_t Timeout);
+void HAL_MDF_AcqCpltCallback(MDF_HandleTypeDef *hmdf);
+void HAL_MDF_AcqHalfCpltCallback(MDF_HandleTypeDef *hmdf);
+void HAL_MDF_SndLvlCallback(MDF_HandleTypeDef *hmdf, uint32_t SoundLevel, uint32_t AmbientNoise);
+void HAL_MDF_SadCallback(MDF_HandleTypeDef *hmdf);
+/**
+ * @}
+ */
 
-	/* Clock absence detection functions  *****************************************/
-	/** @addtogroup MDF_Exported_Functions_Group3
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_MDF_PollForCkab(MDF_HandleTypeDef *hmdf, uint32_t Timeout);
-	HAL_StatusTypeDef HAL_MDF_CkabStart_IT(MDF_HandleTypeDef *hmdf);
-	HAL_StatusTypeDef HAL_MDF_CkabStop_IT(MDF_HandleTypeDef *hmdf);
-	/**
-	 * @}
-	 */
+/* Clock absence detection functions  *****************************************/
+/** @addtogroup MDF_Exported_Functions_Group3
+ * @{
+ */
+HAL_StatusTypeDef HAL_MDF_PollForCkab(MDF_HandleTypeDef *hmdf, uint32_t Timeout);
+HAL_StatusTypeDef HAL_MDF_CkabStart_IT(MDF_HandleTypeDef *hmdf);
+HAL_StatusTypeDef HAL_MDF_CkabStop_IT(MDF_HandleTypeDef *hmdf);
+/**
+ * @}
+ */
 
-	/* Short circuit detection functions  *****************************************/
-	/** @addtogroup MDF_Exported_Functions_Group4
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_MDF_ScdStart(MDF_HandleTypeDef *hmdf, const MDF_ScdConfigTypeDef *pScdConfig);
-	HAL_StatusTypeDef HAL_MDF_PollForScd(MDF_HandleTypeDef *hmdf, uint32_t Timeout);
-	HAL_StatusTypeDef HAL_MDF_ScdStop(MDF_HandleTypeDef *hmdf);
-	HAL_StatusTypeDef HAL_MDF_ScdStart_IT(MDF_HandleTypeDef *hmdf, const MDF_ScdConfigTypeDef *pScdConfig);
-	HAL_StatusTypeDef HAL_MDF_ScdStop_IT(MDF_HandleTypeDef *hmdf);
-	/**
-	 * @}
-	 */
+/* Short circuit detection functions  *****************************************/
+/** @addtogroup MDF_Exported_Functions_Group4
+ * @{
+ */
+HAL_StatusTypeDef HAL_MDF_ScdStart(MDF_HandleTypeDef *hmdf, const MDF_ScdConfigTypeDef *pScdConfig);
+HAL_StatusTypeDef HAL_MDF_PollForScd(MDF_HandleTypeDef *hmdf, uint32_t Timeout);
+HAL_StatusTypeDef HAL_MDF_ScdStop(MDF_HandleTypeDef *hmdf);
+HAL_StatusTypeDef HAL_MDF_ScdStart_IT(MDF_HandleTypeDef *hmdf, const MDF_ScdConfigTypeDef *pScdConfig);
+HAL_StatusTypeDef HAL_MDF_ScdStop_IT(MDF_HandleTypeDef *hmdf);
+/**
+ * @}
+ */
 
-	/* Out-off limit detection functions  *****************************************/
-	/** @addtogroup MDF_Exported_Functions_Group5
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_MDF_OldStart(MDF_HandleTypeDef *hmdf, const MDF_OldConfigTypeDef *pOldConfig);
-	HAL_StatusTypeDef HAL_MDF_PollForOld(MDF_HandleTypeDef *hmdf, uint32_t Timeout, uint32_t *pThresholdInfo);
-	HAL_StatusTypeDef HAL_MDF_OldStop(MDF_HandleTypeDef *hmdf);
-	HAL_StatusTypeDef HAL_MDF_OldStart_IT(MDF_HandleTypeDef *hmdf, const MDF_OldConfigTypeDef *pOldConfig);
-	HAL_StatusTypeDef HAL_MDF_OldStop_IT(MDF_HandleTypeDef *hmdf);
-	void HAL_MDF_OldCallback(MDF_HandleTypeDef *hmdf, uint32_t ThresholdInfo);
-	/**
-	 * @}
-	 */
+/* Out-off limit detection functions  *****************************************/
+/** @addtogroup MDF_Exported_Functions_Group5
+ * @{
+ */
+HAL_StatusTypeDef HAL_MDF_OldStart(MDF_HandleTypeDef *hmdf, const MDF_OldConfigTypeDef *pOldConfig);
+HAL_StatusTypeDef HAL_MDF_PollForOld(MDF_HandleTypeDef *hmdf, uint32_t Timeout, uint32_t *pThresholdInfo);
+HAL_StatusTypeDef HAL_MDF_OldStop(MDF_HandleTypeDef *hmdf);
+HAL_StatusTypeDef HAL_MDF_OldStart_IT(MDF_HandleTypeDef *hmdf, const MDF_OldConfigTypeDef *pOldConfig);
+HAL_StatusTypeDef HAL_MDF_OldStop_IT(MDF_HandleTypeDef *hmdf);
+void HAL_MDF_OldCallback(MDF_HandleTypeDef *hmdf, uint32_t ThresholdInfo);
+/**
+ * @}
+ */
 
-	/* Generic functions  *********************************************************/
-	/** @addtogroup MDF_Exported_Functions_Group6
-	 * @{
-	 */
-	void HAL_MDF_IRQHandler(MDF_HandleTypeDef *hmdf);
-	void HAL_MDF_ErrorCallback(MDF_HandleTypeDef *hmdf);
-	HAL_MDF_StateTypeDef HAL_MDF_GetState(const MDF_HandleTypeDef *hmdf);
-	uint32_t HAL_MDF_GetError(const MDF_HandleTypeDef *hmdf);
+/* Generic functions  *********************************************************/
+/** @addtogroup MDF_Exported_Functions_Group6
+ * @{
+ */
+void HAL_MDF_IRQHandler(MDF_HandleTypeDef *hmdf);
+void HAL_MDF_ErrorCallback(MDF_HandleTypeDef *hmdf);
+HAL_MDF_StateTypeDef HAL_MDF_GetState(const MDF_HandleTypeDef *hmdf);
+uint32_t HAL_MDF_GetError(const MDF_HandleTypeDef *hmdf);
 /**
  * @}
  */
@@ -1105,17 +1086,17 @@ typedef struct
 #define IS_MDF_OLD_THRESHOLD(PARAM) ((-33554432 <= (PARAM)) && ((PARAM) <= 33554431))
 
 #define IS_MDF_OLD_EVENT_CONFIG(PARAM) (((PARAM) == MDF_OLD_SIGNAL_OUTSIDE_THRESHOLDS) || ((PARAM) == MDF_OLD_SIGNAL_IN_THRESHOLDS))
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

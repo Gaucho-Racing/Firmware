@@ -21,58 +21,52 @@
 #define STM32U5xx_HAL_GPIO_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx_hal_def.h"
 
-	/** @addtogroup STM32U5xx_HAL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32U5xx_HAL_Driver
+ * @{
+ */
 
-	/** @defgroup GPIO GPIO
-	 * @brief GPIO HAL module driver
-	 * @{
-	 */
+/** @defgroup GPIO GPIO
+ * @brief GPIO HAL module driver
+ * @{
+ */
 
-	/* Exported types ------------------------------------------------------------*/
+/* Exported types ------------------------------------------------------------*/
 
-	/** @defgroup GPIO_Exported_Types GPIO Exported Types
-	 * @{
-	 */
-	/**
-	 * @brief   GPIO Init structure definition
-	 */
-	typedef struct
-	{
-		uint32_t Pin; /*!< Specifies the GPIO pins to be configured.
-				  This parameter can be a value of @ref GPIO_pins */
+/** @defgroup GPIO_Exported_Types GPIO Exported Types
+ * @{
+ */
+/**
+ * @brief   GPIO Init structure definition
+ */
+typedef struct {
+	uint32_t Pin; /*!< Specifies the GPIO pins to be configured.
+			  This parameter can be a value of @ref GPIO_pins */
 
-		uint32_t Mode; /*!< Specifies the operating mode for the selected pins.
-				   This parameter can be a value of @ref GPIO_mode */
+	uint32_t Mode; /*!< Specifies the operating mode for the selected pins.
+			   This parameter can be a value of @ref GPIO_mode */
 
-		uint32_t Pull; /*!< Specifies the Pull-up or Pull-Down activation for
-				  the selected pins. This parameter can be a value of
-				  @ref GPIO_pull */
+	uint32_t Pull; /*!< Specifies the Pull-up or Pull-Down activation for
+			  the selected pins. This parameter can be a value of
+			  @ref GPIO_pull */
 
-		uint32_t Speed; /*!< Specifies the speed for the selected pins.
-				    This parameter can be a value of @ref GPIO_speed */
+	uint32_t Speed; /*!< Specifies the speed for the selected pins.
+			    This parameter can be a value of @ref GPIO_speed */
 
-		uint32_t Alternate; /*!< Peripheral to be connected to the selected pins
-					 This parameter can be a value of @ref
-				       GPIOEx_Alternate_function_selection */
-	} GPIO_InitTypeDef;
+	uint32_t Alternate; /*!< Peripheral to be connected to the selected pins
+				 This parameter can be a value of @ref
+			       GPIOEx_Alternate_function_selection */
+} GPIO_InitTypeDef;
 
-	/**
-	 * @brief  GPIO Bit SET and Bit RESET enumeration
-	 */
-	typedef enum
-	{
-		GPIO_PIN_RESET = 0U,
-		GPIO_PIN_SET
-	} GPIO_PinState;
+/**
+ * @brief  GPIO Bit SET and Bit RESET enumeration
+ */
+typedef enum { GPIO_PIN_RESET = 0U, GPIO_PIN_SET } GPIO_PinState;
 /**
  * @}
  */
@@ -165,9 +159,9 @@ extern "C"
 #define GPIO_NOPULL (0x00000000U)   /*!< No Pull-up or Pull-down activation  */
 #define GPIO_PULLUP (0x00000001U)   /*!< Pull-up activation                  */
 #define GPIO_PULLDOWN (0x00000002U) /*!< Pull-down activation */
-				    /**
-				     * @}
-				     */
+/**
+ * @}
+ */
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 
@@ -177,9 +171,9 @@ extern "C"
  */
 #define GPIO_PIN_SEC (0x00000001U)  /*!< Secure pin attribute      */
 #define GPIO_PIN_NSEC (0x00000000U) /*!< Non-secure pin attribute  */
-				    /**
-				     * @}
-				     */
+/**
+ * @}
+ */
 
 #endif /* __ARM_FEATURE_CMSE */
 /**
@@ -242,8 +236,7 @@ extern "C"
  * @retval None
  */
 #define __HAL_GPIO_EXTI_CLEAR_IT(__EXTI_LINE__)                                                                                                                                                        \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__HAL_GPIO_EXTI_CLEAR_RISING_IT(__EXTI_LINE__);                                                                                                                                        \
 		__HAL_GPIO_EXTI_CLEAR_FALLING_IT(__EXTI_LINE__);                                                                                                                                       \
 	} while (0)
@@ -316,74 +309,74 @@ extern "C"
 /* Include GPIO HAL Extended module */
 #include "stm32u5xx_hal_gpio_ex.h"
 
-	/* Exported functions --------------------------------------------------------*/
-	/** @defgroup GPIO_Exported_Functions GPIO Exported Functions
-	 *  @brief    GPIO Exported Functions
-	 * @{
-	 */
+/* Exported functions --------------------------------------------------------*/
+/** @defgroup GPIO_Exported_Functions GPIO Exported Functions
+ *  @brief    GPIO Exported Functions
+ * @{
+ */
 
-	/** @defgroup GPIO_Exported_Functions_Group1 Initialization/de-initialization
-	 * functions
-	 *  @brief    Initialization and Configuration functions
-	 * @{
-	 */
+/** @defgroup GPIO_Exported_Functions_Group1 Initialization/de-initialization
+ * functions
+ *  @brief    Initialization and Configuration functions
+ * @{
+ */
 
-	/* Initialization and de-initialization functions *****************************/
-	void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, const GPIO_InitTypeDef *pGPIO_Init);
-	void HAL_GPIO_DeInit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin);
+/* Initialization and de-initialization functions *****************************/
+void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, const GPIO_InitTypeDef *pGPIO_Init);
+void HAL_GPIO_DeInit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @defgroup GPIO_Exported_Functions_Group2 IO operation functions
-	 *  @brief    IO operation functions
-	 * @{
-	 */
+/** @defgroup GPIO_Exported_Functions_Group2 IO operation functions
+ *  @brief    IO operation functions
+ * @{
+ */
 
-	/* IO operation functions *****************************************************/
-	GPIO_PinState HAL_GPIO_ReadPin(const GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
-	void HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState);
-	void HAL_GPIO_WriteMultipleStatePin(GPIO_TypeDef *GPIOx, uint16_t PinReset, uint16_t PinSet);
-	void HAL_GPIO_TogglePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
-	void HAL_GPIO_EnableHighSPeedLowVoltage(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
-	void HAL_GPIO_DisableHighSPeedLowVoltage(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
-	HAL_StatusTypeDef HAL_GPIO_LockPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
-	void HAL_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin);
-	void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin);
-	void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin);
+/* IO operation functions *****************************************************/
+GPIO_PinState HAL_GPIO_ReadPin(const GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
+void HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState);
+void HAL_GPIO_WriteMultipleStatePin(GPIO_TypeDef *GPIOx, uint16_t PinReset, uint16_t PinSet);
+void HAL_GPIO_TogglePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
+void HAL_GPIO_EnableHighSPeedLowVoltage(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
+void HAL_GPIO_DisableHighSPeedLowVoltage(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
+HAL_StatusTypeDef HAL_GPIO_LockPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
+void HAL_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin);
+void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin);
+void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 
-	/** @defgroup GPIO_Exported_Functions_Group3 IO attributes management functions
-	 * @{
-	 */
+/** @defgroup GPIO_Exported_Functions_Group3 IO attributes management functions
+ * @{
+ */
 
-	/* IO attributes management functions *****************************************/
-	void HAL_GPIO_ConfigPinAttributes(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, uint32_t PinAttributes);
-	HAL_StatusTypeDef HAL_GPIO_GetConfigPinAttributes(const GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, uint32_t *pPinAttributes);
+/* IO attributes management functions *****************************************/
+void HAL_GPIO_ConfigPinAttributes(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, uint32_t PinAttributes);
+HAL_StatusTypeDef HAL_GPIO_GetConfigPinAttributes(const GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, uint32_t *pPinAttributes);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #endif /* __ARM_FEATURE_CMSE */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

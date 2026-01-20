@@ -21,16 +21,15 @@
 #define STM32U5xx_LL_PKA_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx.h"
 
-	/** @addtogroup STM32U5xx_LL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32U5xx_LL_Driver
+ * @{
+ */
 
 #if defined(PKA)
 
@@ -42,21 +41,20 @@ extern "C"
 
 /* Exported types ------------------------------------------------------------*/
 #if defined(USE_FULL_LL_DRIVER)
-	/** @defgroup PKA_LL_ES_INIT PKA Exported Init structure
-	 * @{
-	 */
+/** @defgroup PKA_LL_ES_INIT PKA Exported Init structure
+ * @{
+ */
 
-	/**
-	 * @brief  PKA Init structures definition
-	 */
-	typedef struct
-	{
-		uint32_t Mode; /*!< Specifies the PKA operation mode.
-				    This parameter can be a value of @ref PKA_LL_EC_MODE.
+/**
+ * @brief  PKA Init structures definition
+ */
+typedef struct {
+	uint32_t Mode; /*!< Specifies the PKA operation mode.
+			    This parameter can be a value of @ref PKA_LL_EC_MODE.
 
-				    This feature can be modified afterwards using unitary
-				  function @ref LL_PKA_SetMode(). */
-	} LL_PKA_InitTypeDef;
+			    This feature can be modified afterwards using unitary
+			  function @ref LL_PKA_SetMode(). */
+} LL_PKA_InitTypeDef;
 
 /**
  * @}
@@ -160,360 +158,360 @@ extern "C"
  * @retval Register value
  */
 #define LL_PKA_ReadReg(__INSTANCE__, __REG__) READ_REG(__INSTANCE__->__REG__)
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported functions --------------------------------------------------------*/
-	/** @defgroup PKA_LL_Exported_Functions PKA Exported Functions
-	 * @{
-	 */
+/* Exported functions --------------------------------------------------------*/
+/** @defgroup PKA_LL_Exported_Functions PKA Exported Functions
+ * @{
+ */
 
-	/** @defgroup PKA_LL_EF_Configuration Configuration
-	 * @{
-	 */
+/** @defgroup PKA_LL_EF_Configuration Configuration
+ * @{
+ */
 
-	/**
-	 * @brief  Configure PKA peripheral.
-	 * @brief  Set PKA operating mode.
-	 * @rmtoll CR           MODE          LL_PKA_Config
-	 * @param  PKAx PKA Instance.
-	 * @param  Mode This parameter can be one of the following values:
-	 *         @arg @ref LL_PKA_MODE_MONTGOMERY_PARAM
-	 *         @arg @ref LL_PKA_MODE_MODULAR_EXP
-	 *         @arg @ref LL_PKA_MODE_ECDSA_SIGNATURE
-	 *         @arg @ref LL_PKA_MODE_ECDSA_VERIFICATION
-	 *         @arg @ref LL_PKA_MODE_POINT_CHECK
-	 *         @arg @ref LL_PKA_MODE_RSA_CRT_EXP
-	 *         @arg @ref LL_PKA_MODE_MODULAR_INV
-	 *         @arg @ref LL_PKA_MODE_ARITHMETIC_ADD
-	 *         @arg @ref LL_PKA_MODE_ARITHMETIC_SUB
-	 *         @arg @ref LL_PKA_MODE_ARITHMETIC_MUL
-	 *         @arg @ref LL_PKA_MODE_COMPARISON
-	 *         @arg @ref LL_PKA_MODE_MODULAR_REDUC
-	 *         @arg @ref LL_PKA_MODE_MODULAR_ADD
-	 *         @arg @ref LL_PKA_MODE_MODULAR_SUB
-	 *         @arg @ref LL_PKA_MODE_MONTGOMERY_MUL
-	 *         @arg @ref LL_PKA_MODE_MODULAR_EXP_PROTECT
-	 *         @arg @ref LL_PKA_MODE_DOUBLE_BASE_LADDER
-	 *         @arg @ref LL_PKA_MODE_ECC_PROJECTIVE_AFF
-	 *         @arg @ref LL_PKA_MODE_ECC_COMPLETE_ADD
-	 *         @arg @ref LL_PKA_MODE_ECC_MUL
-	 *         @arg @ref LL_PKA_MODE_MODULAR_EXP_FAST
-	 */
-	__STATIC_INLINE void LL_PKA_Config(PKA_TypeDef *PKAx, uint32_t Mode) { MODIFY_REG(PKAx->CR, (PKA_CR_MODE), (Mode << PKA_CR_MODE_Pos)); }
+/**
+ * @brief  Configure PKA peripheral.
+ * @brief  Set PKA operating mode.
+ * @rmtoll CR           MODE          LL_PKA_Config
+ * @param  PKAx PKA Instance.
+ * @param  Mode This parameter can be one of the following values:
+ *         @arg @ref LL_PKA_MODE_MONTGOMERY_PARAM
+ *         @arg @ref LL_PKA_MODE_MODULAR_EXP
+ *         @arg @ref LL_PKA_MODE_ECDSA_SIGNATURE
+ *         @arg @ref LL_PKA_MODE_ECDSA_VERIFICATION
+ *         @arg @ref LL_PKA_MODE_POINT_CHECK
+ *         @arg @ref LL_PKA_MODE_RSA_CRT_EXP
+ *         @arg @ref LL_PKA_MODE_MODULAR_INV
+ *         @arg @ref LL_PKA_MODE_ARITHMETIC_ADD
+ *         @arg @ref LL_PKA_MODE_ARITHMETIC_SUB
+ *         @arg @ref LL_PKA_MODE_ARITHMETIC_MUL
+ *         @arg @ref LL_PKA_MODE_COMPARISON
+ *         @arg @ref LL_PKA_MODE_MODULAR_REDUC
+ *         @arg @ref LL_PKA_MODE_MODULAR_ADD
+ *         @arg @ref LL_PKA_MODE_MODULAR_SUB
+ *         @arg @ref LL_PKA_MODE_MONTGOMERY_MUL
+ *         @arg @ref LL_PKA_MODE_MODULAR_EXP_PROTECT
+ *         @arg @ref LL_PKA_MODE_DOUBLE_BASE_LADDER
+ *         @arg @ref LL_PKA_MODE_ECC_PROJECTIVE_AFF
+ *         @arg @ref LL_PKA_MODE_ECC_COMPLETE_ADD
+ *         @arg @ref LL_PKA_MODE_ECC_MUL
+ *         @arg @ref LL_PKA_MODE_MODULAR_EXP_FAST
+ */
+__STATIC_INLINE void LL_PKA_Config(PKA_TypeDef *PKAx, uint32_t Mode) { MODIFY_REG(PKAx->CR, (PKA_CR_MODE), (Mode << PKA_CR_MODE_Pos)); }
 
-	/**
-	 * @brief  Enable PKA peripheral.
-	 * @rmtoll CR           EN            LL_PKA_Enable
-	 * @param  PKAx PKA Instance.
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_PKA_Enable(PKA_TypeDef *PKAx) { SET_BIT(PKAx->CR, PKA_CR_EN); }
+/**
+ * @brief  Enable PKA peripheral.
+ * @rmtoll CR           EN            LL_PKA_Enable
+ * @param  PKAx PKA Instance.
+ * @retval None
+ */
+__STATIC_INLINE void LL_PKA_Enable(PKA_TypeDef *PKAx) { SET_BIT(PKAx->CR, PKA_CR_EN); }
 
-	/**
-	 * @brief  Disable PKA peripheral.
-	 * @rmtoll CR           EN            LL_PKA_Disable
-	 * @param  PKAx PKA Instance.
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_PKA_Disable(PKA_TypeDef *PKAx) { CLEAR_BIT(PKAx->CR, PKA_CR_EN); }
+/**
+ * @brief  Disable PKA peripheral.
+ * @rmtoll CR           EN            LL_PKA_Disable
+ * @param  PKAx PKA Instance.
+ * @retval None
+ */
+__STATIC_INLINE void LL_PKA_Disable(PKA_TypeDef *PKAx) { CLEAR_BIT(PKAx->CR, PKA_CR_EN); }
 
-	/**
-	 * @brief  Check if the PKA peripheral is enabled or disabled.
-	 * @rmtoll CR           EN            LL_PKA_IsEnabled
-	 * @param  PKAx PKA Instance.
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_PKA_IsEnabled(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->CR, PKA_CR_EN) == (PKA_CR_EN)) ? 1UL : 0UL); }
+/**
+ * @brief  Check if the PKA peripheral is enabled or disabled.
+ * @rmtoll CR           EN            LL_PKA_IsEnabled
+ * @param  PKAx PKA Instance.
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_PKA_IsEnabled(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->CR, PKA_CR_EN) == (PKA_CR_EN)) ? 1UL : 0UL); }
 
-	/**
-	 * @brief  Set PKA operating mode.
-	 * @rmtoll CR           MODE          LL_PKA_SetMode
-	 * @param  PKAx PKA Instance.
-	 * @param  Mode This parameter can be one of the following values:
-	 *         @arg @ref LL_PKA_MODE_MONTGOMERY_PARAM
-	 *         @arg @ref LL_PKA_MODE_MODULAR_EXP
-	 *         @arg @ref LL_PKA_MODE_ECDSA_SIGNATURE
-	 *         @arg @ref LL_PKA_MODE_ECDSA_VERIFICATION
-	 *         @arg @ref LL_PKA_MODE_POINT_CHECK
-	 *         @arg @ref LL_PKA_MODE_RSA_CRT_EXP
-	 *         @arg @ref LL_PKA_MODE_MODULAR_INV
-	 *         @arg @ref LL_PKA_MODE_ARITHMETIC_ADD
-	 *         @arg @ref LL_PKA_MODE_ARITHMETIC_SUB
-	 *         @arg @ref LL_PKA_MODE_ARITHMETIC_MUL
-	 *         @arg @ref LL_PKA_MODE_COMPARISON
-	 *         @arg @ref LL_PKA_MODE_MODULAR_REDUC
-	 *         @arg @ref LL_PKA_MODE_MODULAR_ADD
-	 *         @arg @ref LL_PKA_MODE_MODULAR_SUB
-	 *         @arg @ref LL_PKA_MODE_MONTGOMERY_MUL
-	 *         @arg @ref LL_PKA_MODE_MODULAR_EXP_PROTECT
-	 *         @arg @ref LL_PKA_MODE_DOUBLE_BASE_LADDER
-	 *         @arg @ref LL_PKA_MODE_ECC_PROJECTIVE_AFF
-	 *         @arg @ref LL_PKA_MODE_ECC_COMPLETE_ADD
-	 *         @arg @ref LL_PKA_MODE_ECC_MUL
-	 *         @arg @ref LL_PKA_MODE_MODULAR_EXP_FAST
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_PKA_SetMode(PKA_TypeDef *PKAx, uint32_t Mode) { MODIFY_REG(PKAx->CR, PKA_CR_MODE, Mode << PKA_CR_MODE_Pos); }
+/**
+ * @brief  Set PKA operating mode.
+ * @rmtoll CR           MODE          LL_PKA_SetMode
+ * @param  PKAx PKA Instance.
+ * @param  Mode This parameter can be one of the following values:
+ *         @arg @ref LL_PKA_MODE_MONTGOMERY_PARAM
+ *         @arg @ref LL_PKA_MODE_MODULAR_EXP
+ *         @arg @ref LL_PKA_MODE_ECDSA_SIGNATURE
+ *         @arg @ref LL_PKA_MODE_ECDSA_VERIFICATION
+ *         @arg @ref LL_PKA_MODE_POINT_CHECK
+ *         @arg @ref LL_PKA_MODE_RSA_CRT_EXP
+ *         @arg @ref LL_PKA_MODE_MODULAR_INV
+ *         @arg @ref LL_PKA_MODE_ARITHMETIC_ADD
+ *         @arg @ref LL_PKA_MODE_ARITHMETIC_SUB
+ *         @arg @ref LL_PKA_MODE_ARITHMETIC_MUL
+ *         @arg @ref LL_PKA_MODE_COMPARISON
+ *         @arg @ref LL_PKA_MODE_MODULAR_REDUC
+ *         @arg @ref LL_PKA_MODE_MODULAR_ADD
+ *         @arg @ref LL_PKA_MODE_MODULAR_SUB
+ *         @arg @ref LL_PKA_MODE_MONTGOMERY_MUL
+ *         @arg @ref LL_PKA_MODE_MODULAR_EXP_PROTECT
+ *         @arg @ref LL_PKA_MODE_DOUBLE_BASE_LADDER
+ *         @arg @ref LL_PKA_MODE_ECC_PROJECTIVE_AFF
+ *         @arg @ref LL_PKA_MODE_ECC_COMPLETE_ADD
+ *         @arg @ref LL_PKA_MODE_ECC_MUL
+ *         @arg @ref LL_PKA_MODE_MODULAR_EXP_FAST
+ * @retval None
+ */
+__STATIC_INLINE void LL_PKA_SetMode(PKA_TypeDef *PKAx, uint32_t Mode) { MODIFY_REG(PKAx->CR, PKA_CR_MODE, Mode << PKA_CR_MODE_Pos); }
 
-	/**
-	 * @brief  Get PKA operating mode.
-	 * @rmtoll CR           MODE          LL_PKA_GetMode
-	 * @param  PKAx PKA Instance.
-	 * @retval Returned value can be one of the following values:
-	 *         @arg @ref LL_PKA_MODE_MONTGOMERY_PARAM
-	 *         @arg @ref LL_PKA_MODE_MODULAR_EXP
-	 *         @arg @ref LL_PKA_MODE_ECDSA_SIGNATURE
-	 *         @arg @ref LL_PKA_MODE_ECDSA_VERIFICATION
-	 *         @arg @ref LL_PKA_MODE_POINT_CHECK
-	 *         @arg @ref LL_PKA_MODE_RSA_CRT_EXP
-	 *         @arg @ref LL_PKA_MODE_MODULAR_INV
-	 *         @arg @ref LL_PKA_MODE_ARITHMETIC_ADD
-	 *         @arg @ref LL_PKA_MODE_ARITHMETIC_SUB
-	 *         @arg @ref LL_PKA_MODE_ARITHMETIC_MUL
-	 *         @arg @ref LL_PKA_MODE_COMPARISON
-	 *         @arg @ref LL_PKA_MODE_MODULAR_REDUC
-	 *         @arg @ref LL_PKA_MODE_MODULAR_ADD
-	 *         @arg @ref LL_PKA_MODE_MODULAR_SUB
-	 *         @arg @ref LL_PKA_MODE_MONTGOMERY_MUL
-	 *         @arg @ref LL_PKA_MODE_MODULAR_EXP_PROTECT
-	 *         @arg @ref LL_PKA_MODE_DOUBLE_BASE_LADDER
-	 *         @arg @ref LL_PKA_MODE_ECC_PROJECTIVE_AFF
-	 *         @arg @ref LL_PKA_MODE_ECC_COMPLETE_ADD
-	 *         @arg @ref LL_PKA_MODE_ECC_MUL
-	 *         @arg @ref LL_PKA_MODE_MODULAR_EXP_FAST
-	 */
-	__STATIC_INLINE uint32_t LL_PKA_GetMode(const PKA_TypeDef *PKAx) { return (uint32_t)(READ_BIT(PKAx->CR, PKA_CR_MODE) >> PKA_CR_MODE_Pos); }
+/**
+ * @brief  Get PKA operating mode.
+ * @rmtoll CR           MODE          LL_PKA_GetMode
+ * @param  PKAx PKA Instance.
+ * @retval Returned value can be one of the following values:
+ *         @arg @ref LL_PKA_MODE_MONTGOMERY_PARAM
+ *         @arg @ref LL_PKA_MODE_MODULAR_EXP
+ *         @arg @ref LL_PKA_MODE_ECDSA_SIGNATURE
+ *         @arg @ref LL_PKA_MODE_ECDSA_VERIFICATION
+ *         @arg @ref LL_PKA_MODE_POINT_CHECK
+ *         @arg @ref LL_PKA_MODE_RSA_CRT_EXP
+ *         @arg @ref LL_PKA_MODE_MODULAR_INV
+ *         @arg @ref LL_PKA_MODE_ARITHMETIC_ADD
+ *         @arg @ref LL_PKA_MODE_ARITHMETIC_SUB
+ *         @arg @ref LL_PKA_MODE_ARITHMETIC_MUL
+ *         @arg @ref LL_PKA_MODE_COMPARISON
+ *         @arg @ref LL_PKA_MODE_MODULAR_REDUC
+ *         @arg @ref LL_PKA_MODE_MODULAR_ADD
+ *         @arg @ref LL_PKA_MODE_MODULAR_SUB
+ *         @arg @ref LL_PKA_MODE_MONTGOMERY_MUL
+ *         @arg @ref LL_PKA_MODE_MODULAR_EXP_PROTECT
+ *         @arg @ref LL_PKA_MODE_DOUBLE_BASE_LADDER
+ *         @arg @ref LL_PKA_MODE_ECC_PROJECTIVE_AFF
+ *         @arg @ref LL_PKA_MODE_ECC_COMPLETE_ADD
+ *         @arg @ref LL_PKA_MODE_ECC_MUL
+ *         @arg @ref LL_PKA_MODE_MODULAR_EXP_FAST
+ */
+__STATIC_INLINE uint32_t LL_PKA_GetMode(const PKA_TypeDef *PKAx) { return (uint32_t)(READ_BIT(PKAx->CR, PKA_CR_MODE) >> PKA_CR_MODE_Pos); }
 
-	/**
-	 * @brief  Start the operation selected using LL_PKA_SetMode.
-	 * @rmtoll CR           START         LL_PKA_Start
-	 * @param  PKAx PKA Instance.
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_PKA_Start(PKA_TypeDef *PKAx) { SET_BIT(PKAx->CR, PKA_CR_START); }
+/**
+ * @brief  Start the operation selected using LL_PKA_SetMode.
+ * @rmtoll CR           START         LL_PKA_Start
+ * @param  PKAx PKA Instance.
+ * @retval None
+ */
+__STATIC_INLINE void LL_PKA_Start(PKA_TypeDef *PKAx) { SET_BIT(PKAx->CR, PKA_CR_START); }
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @defgroup PKA_LL_EF_IT_Management IT_Management
-	 * @{
-	 */
+/** @defgroup PKA_LL_EF_IT_Management IT_Management
+ * @{
+ */
 
-	/**
-	 * @brief  Enable address error interrupt.
-	 * @rmtoll CR           ADDRERRIE     LL_PKA_EnableIT_ADDRERR
-	 * @param  PKAx PKA Instance.
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_PKA_EnableIT_ADDRERR(PKA_TypeDef *PKAx) { SET_BIT(PKAx->CR, PKA_CR_ADDRERRIE); }
+/**
+ * @brief  Enable address error interrupt.
+ * @rmtoll CR           ADDRERRIE     LL_PKA_EnableIT_ADDRERR
+ * @param  PKAx PKA Instance.
+ * @retval None
+ */
+__STATIC_INLINE void LL_PKA_EnableIT_ADDRERR(PKA_TypeDef *PKAx) { SET_BIT(PKAx->CR, PKA_CR_ADDRERRIE); }
 
-	/**
-	 * @brief  Enable RAM error interrupt.
-	 * @rmtoll CR           RAMERRIE      LL_PKA_EnableIT_RAMERR
-	 * @param  PKAx PKA Instance.
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_PKA_EnableIT_RAMERR(PKA_TypeDef *PKAx) { SET_BIT(PKAx->CR, PKA_CR_RAMERRIE); }
+/**
+ * @brief  Enable RAM error interrupt.
+ * @rmtoll CR           RAMERRIE      LL_PKA_EnableIT_RAMERR
+ * @param  PKAx PKA Instance.
+ * @retval None
+ */
+__STATIC_INLINE void LL_PKA_EnableIT_RAMERR(PKA_TypeDef *PKAx) { SET_BIT(PKAx->CR, PKA_CR_RAMERRIE); }
 
-	/**
-	 * @brief  Enable OPERATION error interrupt.
-	 * @rmtoll CR           OPERRIE      LL_PKA_EnableIT_OPERR
-	 * @param  PKAx PKA Instance.
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_PKA_EnableIT_OPERR(PKA_TypeDef *PKAx) { SET_BIT(PKAx->CR, PKA_CR_OPERRIE); }
+/**
+ * @brief  Enable OPERATION error interrupt.
+ * @rmtoll CR           OPERRIE      LL_PKA_EnableIT_OPERR
+ * @param  PKAx PKA Instance.
+ * @retval None
+ */
+__STATIC_INLINE void LL_PKA_EnableIT_OPERR(PKA_TypeDef *PKAx) { SET_BIT(PKAx->CR, PKA_CR_OPERRIE); }
 
-	/**
-	 * @brief  Enable end of operation interrupt.
-	 * @rmtoll CR           PROCENDIE     LL_PKA_EnableIT_PROCEND
-	 * @param  PKAx PKA Instance.
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_PKA_EnableIT_PROCEND(PKA_TypeDef *PKAx) { SET_BIT(PKAx->CR, PKA_CR_PROCENDIE); }
+/**
+ * @brief  Enable end of operation interrupt.
+ * @rmtoll CR           PROCENDIE     LL_PKA_EnableIT_PROCEND
+ * @param  PKAx PKA Instance.
+ * @retval None
+ */
+__STATIC_INLINE void LL_PKA_EnableIT_PROCEND(PKA_TypeDef *PKAx) { SET_BIT(PKAx->CR, PKA_CR_PROCENDIE); }
 
-	/**
-	 * @brief  Disable address error interrupt.
-	 * @rmtoll CR           ADDRERRIE     LL_PKA_DisableIT_ADDERR
-	 * @param  PKAx PKA Instance.
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_PKA_DisableIT_ADDERR(PKA_TypeDef *PKAx) { CLEAR_BIT(PKAx->CR, PKA_CR_ADDRERRIE); }
+/**
+ * @brief  Disable address error interrupt.
+ * @rmtoll CR           ADDRERRIE     LL_PKA_DisableIT_ADDERR
+ * @param  PKAx PKA Instance.
+ * @retval None
+ */
+__STATIC_INLINE void LL_PKA_DisableIT_ADDERR(PKA_TypeDef *PKAx) { CLEAR_BIT(PKAx->CR, PKA_CR_ADDRERRIE); }
 
-	/**
-	 * @brief  Disable RAM error interrupt.
-	 * @rmtoll CR           RAMERRIE      LL_PKA_DisableIT_RAMERR
-	 * @param  PKAx PKA Instance.
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_PKA_DisableIT_RAMERR(PKA_TypeDef *PKAx) { CLEAR_BIT(PKAx->CR, PKA_CR_RAMERRIE); }
+/**
+ * @brief  Disable RAM error interrupt.
+ * @rmtoll CR           RAMERRIE      LL_PKA_DisableIT_RAMERR
+ * @param  PKAx PKA Instance.
+ * @retval None
+ */
+__STATIC_INLINE void LL_PKA_DisableIT_RAMERR(PKA_TypeDef *PKAx) { CLEAR_BIT(PKAx->CR, PKA_CR_RAMERRIE); }
 
-	/**
-	 * @brief  Disable End of operation interrupt.
-	 * @rmtoll CR           PROCENDIE     LL_PKA_DisableIT_PROCEND
-	 * @param  PKAx PKA Instance.
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_PKA_DisableIT_PROCEND(PKA_TypeDef *PKAx) { CLEAR_BIT(PKAx->CR, PKA_CR_PROCENDIE); }
+/**
+ * @brief  Disable End of operation interrupt.
+ * @rmtoll CR           PROCENDIE     LL_PKA_DisableIT_PROCEND
+ * @param  PKAx PKA Instance.
+ * @retval None
+ */
+__STATIC_INLINE void LL_PKA_DisableIT_PROCEND(PKA_TypeDef *PKAx) { CLEAR_BIT(PKAx->CR, PKA_CR_PROCENDIE); }
 
-	/**
-	 * @brief  Disable OPERATION error interrupt.
-	 * @rmtoll CR           OPERRIE      LL_PKA_EnableIT_OPERR
-	 * @param  PKAx PKA Instance.
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_PKA_DisableIT_OPERR(PKA_TypeDef *PKAx) { CLEAR_BIT(PKAx->CR, PKA_CR_OPERRIE); }
+/**
+ * @brief  Disable OPERATION error interrupt.
+ * @rmtoll CR           OPERRIE      LL_PKA_EnableIT_OPERR
+ * @param  PKAx PKA Instance.
+ * @retval None
+ */
+__STATIC_INLINE void LL_PKA_DisableIT_OPERR(PKA_TypeDef *PKAx) { CLEAR_BIT(PKAx->CR, PKA_CR_OPERRIE); }
 
-	/**
-	 * @brief  Check if address error interrupt is enabled.
-	 * @rmtoll CR           ADDRERRIE     LL_PKA_IsEnabledIT_ADDRERR
-	 * @param  PKAx PKA Instance.
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_PKA_IsEnabledIT_ADDRERR(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->CR, PKA_CR_ADDRERRIE) == (PKA_CR_ADDRERRIE)) ? 1UL : 0UL); }
+/**
+ * @brief  Check if address error interrupt is enabled.
+ * @rmtoll CR           ADDRERRIE     LL_PKA_IsEnabledIT_ADDRERR
+ * @param  PKAx PKA Instance.
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_PKA_IsEnabledIT_ADDRERR(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->CR, PKA_CR_ADDRERRIE) == (PKA_CR_ADDRERRIE)) ? 1UL : 0UL); }
 
-	/**
-	 * @brief  Check if RAM error interrupt is enabled.
-	 * @rmtoll CR           RAMERRIE      LL_PKA_IsEnabledIT_RAMERR
-	 * @param  PKAx PKA Instance.
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_PKA_IsEnabledIT_RAMERR(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->CR, PKA_CR_RAMERRIE) == (PKA_CR_RAMERRIE)) ? 1UL : 0UL); }
+/**
+ * @brief  Check if RAM error interrupt is enabled.
+ * @rmtoll CR           RAMERRIE      LL_PKA_IsEnabledIT_RAMERR
+ * @param  PKAx PKA Instance.
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_PKA_IsEnabledIT_RAMERR(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->CR, PKA_CR_RAMERRIE) == (PKA_CR_RAMERRIE)) ? 1UL : 0UL); }
 
-	/**
-	 * @brief  Check if OPERATION error interrupt is enabled.
-	 * @rmtoll CR           OPERRIE      LL_PKA_IsEnabledIT_OPERR
-	 * @param  PKAx PKA Instance.
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_PKA_IsEnabledIT_OPERR(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->CR, PKA_CR_OPERRIE) == (PKA_CR_OPERRIE)) ? 1UL : 0UL); }
+/**
+ * @brief  Check if OPERATION error interrupt is enabled.
+ * @rmtoll CR           OPERRIE      LL_PKA_IsEnabledIT_OPERR
+ * @param  PKAx PKA Instance.
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_PKA_IsEnabledIT_OPERR(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->CR, PKA_CR_OPERRIE) == (PKA_CR_OPERRIE)) ? 1UL : 0UL); }
 
-	/**
-	 * @brief  Check if end of operation interrupt is enabled.
-	 * @rmtoll CR           PROCENDIE     LL_PKA_IsEnabledIT_PROCEND
-	 * @param  PKAx PKA Instance.
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_PKA_IsEnabledIT_PROCEND(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->CR, PKA_CR_PROCENDIE) == (PKA_CR_PROCENDIE)) ? 1UL : 0UL); }
+/**
+ * @brief  Check if end of operation interrupt is enabled.
+ * @rmtoll CR           PROCENDIE     LL_PKA_IsEnabledIT_PROCEND
+ * @param  PKAx PKA Instance.
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_PKA_IsEnabledIT_PROCEND(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->CR, PKA_CR_PROCENDIE) == (PKA_CR_PROCENDIE)) ? 1UL : 0UL); }
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @defgroup PKA_LL_EF_FLAG_Management PKA flag management
-	 * @{
-	 */
+/** @defgroup PKA_LL_EF_FLAG_Management PKA flag management
+ * @{
+ */
 
-	/**
-	 * @brief  Get PKA address error flag.
-	 * @rmtoll SR           ADDRERRF      LL_PKA_IsActiveFlag_ADDRERR
-	 * @param  PKAx PKA Instance.
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_ADDRERR(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->SR, PKA_SR_ADDRERRF) == (PKA_SR_ADDRERRF)) ? 1UL : 0UL); }
+/**
+ * @brief  Get PKA address error flag.
+ * @rmtoll SR           ADDRERRF      LL_PKA_IsActiveFlag_ADDRERR
+ * @param  PKAx PKA Instance.
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_ADDRERR(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->SR, PKA_SR_ADDRERRF) == (PKA_SR_ADDRERRF)) ? 1UL : 0UL); }
 
-	/**
-	 * @brief  Get PKA RAM error flag.
-	 * @rmtoll SR           RAMERRF       LL_PKA_IsActiveFlag_RAMERR
-	 * @param  PKAx PKA Instance.
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_RAMERR(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->SR, PKA_SR_RAMERRF) == (PKA_SR_RAMERRF)) ? 1UL : 0UL); }
+/**
+ * @brief  Get PKA RAM error flag.
+ * @rmtoll SR           RAMERRF       LL_PKA_IsActiveFlag_RAMERR
+ * @param  PKAx PKA Instance.
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_RAMERR(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->SR, PKA_SR_RAMERRF) == (PKA_SR_RAMERRF)) ? 1UL : 0UL); }
 
-	/**
-	 * @brief  Get PKA OPERATION error flag.
-	 * @rmtoll SR           OPERRF       LL_PKA_IsActiveFlag_OPERR
-	 * @param  PKAx PKA Instance.
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_OPERR(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->SR, PKA_SR_OPERRF) == (PKA_SR_OPERRF)) ? 1UL : 0UL); }
+/**
+ * @brief  Get PKA OPERATION error flag.
+ * @rmtoll SR           OPERRF       LL_PKA_IsActiveFlag_OPERR
+ * @param  PKAx PKA Instance.
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_OPERR(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->SR, PKA_SR_OPERRF) == (PKA_SR_OPERRF)) ? 1UL : 0UL); }
 
-	/**
-	 * @brief  Get PKA end of operation flag.
-	 * @rmtoll SR           PROCENDF      LL_PKA_IsActiveFlag_PROCEND
-	 * @param  PKAx PKA Instance.
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_PROCEND(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->SR, PKA_SR_PROCENDF) == (PKA_SR_PROCENDF)) ? 1UL : 0UL); }
+/**
+ * @brief  Get PKA end of operation flag.
+ * @rmtoll SR           PROCENDF      LL_PKA_IsActiveFlag_PROCEND
+ * @param  PKAx PKA Instance.
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_PROCEND(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->SR, PKA_SR_PROCENDF) == (PKA_SR_PROCENDF)) ? 1UL : 0UL); }
 
-	/**
-	 * @brief  Get PKA busy flag.
-	 * @rmtoll SR           BUSY          LL_PKA_IsActiveFlag_BUSY
-	 * @param  PKAx PKA Instance.
-	 * @retval State of bit (1 or 0).
-	 */
-	__STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_BUSY(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->SR, PKA_SR_BUSY) == (PKA_SR_BUSY)) ? 1UL : 0UL); }
+/**
+ * @brief  Get PKA busy flag.
+ * @rmtoll SR           BUSY          LL_PKA_IsActiveFlag_BUSY
+ * @param  PKAx PKA Instance.
+ * @retval State of bit (1 or 0).
+ */
+__STATIC_INLINE uint32_t LL_PKA_IsActiveFlag_BUSY(const PKA_TypeDef *PKAx) { return ((READ_BIT(PKAx->SR, PKA_SR_BUSY) == (PKA_SR_BUSY)) ? 1UL : 0UL); }
 
-	/**
-	 * @brief  Clear PKA address error flag.
-	 * @rmtoll CLRFR        ADDRERRFC     LL_PKA_ClearFlag_ADDERR
-	 * @param  PKAx PKA Instance.
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_PKA_ClearFlag_ADDERR(PKA_TypeDef *PKAx) { SET_BIT(PKAx->CLRFR, PKA_CLRFR_ADDRERRFC); }
+/**
+ * @brief  Clear PKA address error flag.
+ * @rmtoll CLRFR        ADDRERRFC     LL_PKA_ClearFlag_ADDERR
+ * @param  PKAx PKA Instance.
+ * @retval None
+ */
+__STATIC_INLINE void LL_PKA_ClearFlag_ADDERR(PKA_TypeDef *PKAx) { SET_BIT(PKAx->CLRFR, PKA_CLRFR_ADDRERRFC); }
 
-	/**
-	 * @brief  Clear PKA RAM error flag.
-	 * @rmtoll CLRFR        RAMERRFC      LL_PKA_ClearFlag_RAMERR
-	 * @param  PKAx PKA Instance.
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_PKA_ClearFlag_RAMERR(PKA_TypeDef *PKAx) { SET_BIT(PKAx->CLRFR, PKA_CLRFR_RAMERRFC); }
+/**
+ * @brief  Clear PKA RAM error flag.
+ * @rmtoll CLRFR        RAMERRFC      LL_PKA_ClearFlag_RAMERR
+ * @param  PKAx PKA Instance.
+ * @retval None
+ */
+__STATIC_INLINE void LL_PKA_ClearFlag_RAMERR(PKA_TypeDef *PKAx) { SET_BIT(PKAx->CLRFR, PKA_CLRFR_RAMERRFC); }
 
-	/**
-	 * @brief  Clear PKA OPERATION error flag.
-	 * @rmtoll CLRFR        OPERRFC      LL_PKA_ClearFlag_OPERR
-	 * @param  PKAx PKA Instance.
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_PKA_ClearFlag_OPERR(PKA_TypeDef *PKAx) { SET_BIT(PKAx->CLRFR, PKA_CLRFR_OPERRFC); }
+/**
+ * @brief  Clear PKA OPERATION error flag.
+ * @rmtoll CLRFR        OPERRFC      LL_PKA_ClearFlag_OPERR
+ * @param  PKAx PKA Instance.
+ * @retval None
+ */
+__STATIC_INLINE void LL_PKA_ClearFlag_OPERR(PKA_TypeDef *PKAx) { SET_BIT(PKAx->CLRFR, PKA_CLRFR_OPERRFC); }
 
-	/**
-	 * @brief  Clear PKA end of operation flag.
-	 * @rmtoll CLRFR        PROCENDFC     LL_PKA_ClearFlag_PROCEND
-	 * @param  PKAx PKA Instance.
-	 * @retval None
-	 */
-	__STATIC_INLINE void LL_PKA_ClearFlag_PROCEND(PKA_TypeDef *PKAx) { SET_BIT(PKAx->CLRFR, PKA_CLRFR_PROCENDFC); }
+/**
+ * @brief  Clear PKA end of operation flag.
+ * @rmtoll CLRFR        PROCENDFC     LL_PKA_ClearFlag_PROCEND
+ * @param  PKAx PKA Instance.
+ * @retval None
+ */
+__STATIC_INLINE void LL_PKA_ClearFlag_PROCEND(PKA_TypeDef *PKAx) { SET_BIT(PKAx->CLRFR, PKA_CLRFR_PROCENDFC); }
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #if defined(USE_FULL_LL_DRIVER)
 
-	/** @defgroup PKA_LL_EF_Init Initialization and de-initialization functions
-	 * @{
-	 */
+/** @defgroup PKA_LL_EF_Init Initialization and de-initialization functions
+ * @{
+ */
 
-	ErrorStatus LL_PKA_DeInit(const PKA_TypeDef *PKAx);
-	ErrorStatus LL_PKA_Init(PKA_TypeDef *PKAx, LL_PKA_InitTypeDef *PKA_InitStruct);
-	void LL_PKA_StructInit(LL_PKA_InitTypeDef *PKA_InitStruct);
+ErrorStatus LL_PKA_DeInit(const PKA_TypeDef *PKAx);
+ErrorStatus LL_PKA_Init(PKA_TypeDef *PKAx, LL_PKA_InitTypeDef *PKA_InitStruct);
+void LL_PKA_StructInit(LL_PKA_InitTypeDef *PKA_InitStruct);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-#endif	/* USE_FULL_LL_DRIVER */
-	/**
-	 * @}
-	 */
+#endif /* USE_FULL_LL_DRIVER */
+       /**
+	* @}
+	*/
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #endif /* defined(PKA) */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

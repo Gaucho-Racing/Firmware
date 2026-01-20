@@ -21,8 +21,7 @@
 #define STM32L4xx_HAL_GFXMMU_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -30,126 +29,120 @@ extern "C"
 
 #if defined(GFXMMU)
 
-	/** @addtogroup STM32L4xx_HAL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32L4xx_HAL_Driver
+ * @{
+ */
 
-	/** @addtogroup GFXMMU
-	 * @{
-	 */
+/** @addtogroup GFXMMU
+ * @{
+ */
 
-	/* Exported types ------------------------------------------------------------*/
-	/** @defgroup GFXMMU_Exported_Types GFXMMU Exported Types
-	 * @{
-	 */
+/* Exported types ------------------------------------------------------------*/
+/** @defgroup GFXMMU_Exported_Types GFXMMU Exported Types
+ * @{
+ */
 
-	/**
-	 * @brief  HAL GFXMMU states definition
-	 */
-	typedef enum
-	{
-		HAL_GFXMMU_STATE_RESET = 0x00U, /*!< GFXMMU not initialized */
-		HAL_GFXMMU_STATE_READY = 0x01U, /*!< GFXMMU initialized and ready for use */
-	} HAL_GFXMMU_StateTypeDef;
+/**
+ * @brief  HAL GFXMMU states definition
+ */
+typedef enum {
+	HAL_GFXMMU_STATE_RESET = 0x00U, /*!< GFXMMU not initialized */
+	HAL_GFXMMU_STATE_READY = 0x01U, /*!< GFXMMU initialized and ready for use */
+} HAL_GFXMMU_StateTypeDef;
 
-	/**
-	 * @brief  GFXMMU buffers structure definition
-	 */
-	typedef struct
-	{
-		uint32_t Buf0Address; /*!< Physical address of buffer 0. */
-		uint32_t Buf1Address; /*!< Physical address of buffer 1. */
-		uint32_t Buf2Address; /*!< Physical address of buffer 2. */
-		uint32_t Buf3Address; /*!< Physical address of buffer 3. */
-	} GFXMMU_BuffersTypeDef;
+/**
+ * @brief  GFXMMU buffers structure definition
+ */
+typedef struct {
+	uint32_t Buf0Address; /*!< Physical address of buffer 0. */
+	uint32_t Buf1Address; /*!< Physical address of buffer 1. */
+	uint32_t Buf2Address; /*!< Physical address of buffer 2. */
+	uint32_t Buf3Address; /*!< Physical address of buffer 3. */
+} GFXMMU_BuffersTypeDef;
 
-	/**
-	 * @brief  GFXMMU interrupts structure definition
-	 */
-	typedef struct
-	{
-		FunctionalState Activation; /*!< Interrupts enable/disable */
-		uint32_t UsedInterrupts;    /*!< Interrupts used.
-						 This parameter can be a values combination
-					       of @ref GFXMMU_Interrupts.
-						 @note: Useful only when interrupts are
-					       enabled. */
-	} GFXMMU_InterruptsTypeDef;
+/**
+ * @brief  GFXMMU interrupts structure definition
+ */
+typedef struct {
+	FunctionalState Activation; /*!< Interrupts enable/disable */
+	uint32_t UsedInterrupts;    /*!< Interrupts used.
+					 This parameter can be a values combination
+				       of @ref GFXMMU_Interrupts.
+					 @note: Useful only when interrupts are
+				       enabled. */
+} GFXMMU_InterruptsTypeDef;
 
-	/**
-	 * @brief  GFXMMU init structure definition
-	 */
-	typedef struct
-	{
-		uint32_t BlocksPerLine;		     /*!< Number of blocks of 16 bytes per line.
-							  This parameter can be a value of @ref
-							GFXMMU_BlocksPerLine. */
-		uint32_t DefaultValue;		     /*!< Value returned when virtual memory location
-							not physically mapped. */
-		GFXMMU_BuffersTypeDef Buffers;	     /*!< Physical buffers addresses. */
-		GFXMMU_InterruptsTypeDef Interrupts; /*!< Interrupts parameters. */
-	} GFXMMU_InitTypeDef;
+/**
+ * @brief  GFXMMU init structure definition
+ */
+typedef struct {
+	uint32_t BlocksPerLine;		     /*!< Number of blocks of 16 bytes per line.
+						  This parameter can be a value of @ref
+						GFXMMU_BlocksPerLine. */
+	uint32_t DefaultValue;		     /*!< Value returned when virtual memory location
+						not physically mapped. */
+	GFXMMU_BuffersTypeDef Buffers;	     /*!< Physical buffers addresses. */
+	GFXMMU_InterruptsTypeDef Interrupts; /*!< Interrupts parameters. */
+} GFXMMU_InitTypeDef;
 
 /**
  * @brief  GFXMMU handle structure definition
  */
 #if (USE_HAL_GFXMMU_REGISTER_CALLBACKS == 1)
-	typedef struct __GFXMMU_HandleTypeDef
+typedef struct __GFXMMU_HandleTypeDef
 #else
-	typedef struct
+typedef struct
 #endif
-	{
-		GFXMMU_TypeDef *Instance;      /*!< GFXMMU instance */
-		GFXMMU_InitTypeDef Init;       /*!< GFXMMU init parameters */
-		HAL_GFXMMU_StateTypeDef State; /*!< GFXMMU state */
-		__IO uint32_t ErrorCode;       /*!< GFXMMU error code */
+{
+	GFXMMU_TypeDef *Instance;      /*!< GFXMMU instance */
+	GFXMMU_InitTypeDef Init;       /*!< GFXMMU init parameters */
+	HAL_GFXMMU_StateTypeDef State; /*!< GFXMMU state */
+	__IO uint32_t ErrorCode;       /*!< GFXMMU error code */
 #if (USE_HAL_GFXMMU_REGISTER_CALLBACKS == 1)
-		void (*ErrorCallback)(struct __GFXMMU_HandleTypeDef *hgfxmmu);	   /*!< GFXMMU error callback */
-		void (*MspInitCallback)(struct __GFXMMU_HandleTypeDef *hgfxmmu);   /*!< GFXMMU MSP init callback */
-		void (*MspDeInitCallback)(struct __GFXMMU_HandleTypeDef *hgfxmmu); /*!< GFXMMU MSP de-init callback */
+	void (*ErrorCallback)(struct __GFXMMU_HandleTypeDef *hgfxmmu);	   /*!< GFXMMU error callback */
+	void (*MspInitCallback)(struct __GFXMMU_HandleTypeDef *hgfxmmu);   /*!< GFXMMU MSP init callback */
+	void (*MspDeInitCallback)(struct __GFXMMU_HandleTypeDef *hgfxmmu); /*!< GFXMMU MSP de-init callback */
 #endif
-	} GFXMMU_HandleTypeDef;
+} GFXMMU_HandleTypeDef;
 
-	/**
-	 * @brief  GFXMMU LUT line structure definition
-	 */
-	typedef struct
-	{
-		uint32_t LineNumber;	    /*!< LUT line number.
-						 This parameter must be a number between
-					       Min_Data = 0 and Max_Data = 1023. */
-		uint32_t LineStatus;	    /*!< LUT line enable/disable.
-						 This parameter can be a value of @ref
-					       GFXMMU_LutLineStatus. */
-		uint32_t FirstVisibleBlock; /*!< First visible block on this line.
-						 This parameter must be a number between
-					       Min_Data = 0 and Max_Data = 255. */
-		uint32_t LastVisibleBlock;  /*!< Last visible block on this line.
-						 This parameter must be a number between
-					       Min_Data = 0 and Max_Data = 255. */
-		int32_t LineOffset;	    /*!< Offset of block 0 of the current line in
-					       physical buffer. This parameter must be a number
-					       between Min_Data = -4080 and Max_Data = 4190208.
-						 @note: Line offset has to be computed with the
-					       following formula: LineOffset = [(Blocks already
-					       used) - (1st visible block)]*BlockSize. */
-	} GFXMMU_LutLineTypeDef;
+/**
+ * @brief  GFXMMU LUT line structure definition
+ */
+typedef struct {
+	uint32_t LineNumber;	    /*!< LUT line number.
+					 This parameter must be a number between
+				       Min_Data = 0 and Max_Data = 1023. */
+	uint32_t LineStatus;	    /*!< LUT line enable/disable.
+					 This parameter can be a value of @ref
+				       GFXMMU_LutLineStatus. */
+	uint32_t FirstVisibleBlock; /*!< First visible block on this line.
+					 This parameter must be a number between
+				       Min_Data = 0 and Max_Data = 255. */
+	uint32_t LastVisibleBlock;  /*!< Last visible block on this line.
+					 This parameter must be a number between
+				       Min_Data = 0 and Max_Data = 255. */
+	int32_t LineOffset;	    /*!< Offset of block 0 of the current line in
+				       physical buffer. This parameter must be a number
+				       between Min_Data = -4080 and Max_Data = 4190208.
+					 @note: Line offset has to be computed with the
+				       following formula: LineOffset = [(Blocks already
+				       used) - (1st visible block)]*BlockSize. */
+} GFXMMU_LutLineTypeDef;
 
 #if (USE_HAL_GFXMMU_REGISTER_CALLBACKS == 1)
-	/**
-	 * @brief  GFXMMU callback ID enumeration definition
-	 */
-	typedef enum
-	{
-		HAL_GFXMMU_ERROR_CB_ID = 0x00U,	   /*!< GFXMMU error callback ID */
-		HAL_GFXMMU_MSPINIT_CB_ID = 0x01U,  /*!< GFXMMU MSP init callback ID */
-		HAL_GFXMMU_MSPDEINIT_CB_ID = 0x02U /*!< GFXMMU MSP de-init callback ID */
-	} HAL_GFXMMU_CallbackIDTypeDef;
+/**
+ * @brief  GFXMMU callback ID enumeration definition
+ */
+typedef enum {
+	HAL_GFXMMU_ERROR_CB_ID = 0x00U,	   /*!< GFXMMU error callback ID */
+	HAL_GFXMMU_MSPINIT_CB_ID = 0x01U,  /*!< GFXMMU MSP init callback ID */
+	HAL_GFXMMU_MSPDEINIT_CB_ID = 0x02U /*!< GFXMMU MSP de-init callback ID */
+} HAL_GFXMMU_CallbackIDTypeDef;
 
-	/**
-	 * @brief  GFXMMU callback pointer definition
-	 */
-	typedef void (*pGFXMMU_CallbackTypeDef)(GFXMMU_HandleTypeDef *hgfxmmu);
+/**
+ * @brief  GFXMMU callback pointer definition
+ */
+typedef void (*pGFXMMU_CallbackTypeDef)(GFXMMU_HandleTypeDef *hgfxmmu);
 #endif
 
 /**
@@ -228,8 +221,7 @@ extern "C"
  */
 #if (USE_HAL_GFXMMU_REGISTER_CALLBACKS == 1)
 #define __HAL_GFXMMU_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                    \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		(__HANDLE__)->State = HAL_GFXMMU_STATE_RESET;                                                                                                                                          \
 		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
 		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
@@ -238,60 +230,60 @@ extern "C"
 #define __HAL_GFXMMU_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_GFXMMU_STATE_RESET)
 #endif
 
-	/**
-	 * @}
-	 */
-	/* End of exported macros ----------------------------------------------------*/
+/**
+ * @}
+ */
+/* End of exported macros ----------------------------------------------------*/
 
-	/* Exported functions --------------------------------------------------------*/
-	/** @addtogroup GFXMMU_Exported_Functions GFXMMU Exported Functions
-	 * @{
-	 */
+/* Exported functions --------------------------------------------------------*/
+/** @addtogroup GFXMMU_Exported_Functions GFXMMU Exported Functions
+ * @{
+ */
 
-	/** @addtogroup GFXMMU_Exported_Functions_Group1 Initialization and
-	 * de-initialization functions
-	 * @{
-	 */
-	/* Initialization and de-initialization functions *****************************/
-	HAL_StatusTypeDef HAL_GFXMMU_Init(GFXMMU_HandleTypeDef *hgfxmmu);
-	HAL_StatusTypeDef HAL_GFXMMU_DeInit(GFXMMU_HandleTypeDef *hgfxmmu);
-	void HAL_GFXMMU_MspInit(GFXMMU_HandleTypeDef *hgfxmmu);
-	void HAL_GFXMMU_MspDeInit(GFXMMU_HandleTypeDef *hgfxmmu);
+/** @addtogroup GFXMMU_Exported_Functions_Group1 Initialization and
+ * de-initialization functions
+ * @{
+ */
+/* Initialization and de-initialization functions *****************************/
+HAL_StatusTypeDef HAL_GFXMMU_Init(GFXMMU_HandleTypeDef *hgfxmmu);
+HAL_StatusTypeDef HAL_GFXMMU_DeInit(GFXMMU_HandleTypeDef *hgfxmmu);
+void HAL_GFXMMU_MspInit(GFXMMU_HandleTypeDef *hgfxmmu);
+void HAL_GFXMMU_MspDeInit(GFXMMU_HandleTypeDef *hgfxmmu);
 #if (USE_HAL_GFXMMU_REGISTER_CALLBACKS == 1)
-	/* GFXMMU callbacks register/unregister functions *****************************/
-	HAL_StatusTypeDef HAL_GFXMMU_RegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu, HAL_GFXMMU_CallbackIDTypeDef CallbackID, pGFXMMU_CallbackTypeDef pCallback);
-	HAL_StatusTypeDef HAL_GFXMMU_UnRegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu, HAL_GFXMMU_CallbackIDTypeDef CallbackID);
+/* GFXMMU callbacks register/unregister functions *****************************/
+HAL_StatusTypeDef HAL_GFXMMU_RegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu, HAL_GFXMMU_CallbackIDTypeDef CallbackID, pGFXMMU_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_GFXMMU_UnRegisterCallback(GFXMMU_HandleTypeDef *hgfxmmu, HAL_GFXMMU_CallbackIDTypeDef CallbackID);
 #endif
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @addtogroup GFXMMU_Exported_Functions_Group2 Operations functions
-	 * @{
-	 */
-	/* Operation functions ********************************************************/
-	HAL_StatusTypeDef HAL_GFXMMU_ConfigLut(GFXMMU_HandleTypeDef *hgfxmmu, uint32_t FirstLine, uint32_t LinesNumber, uint32_t Address);
+/** @addtogroup GFXMMU_Exported_Functions_Group2 Operations functions
+ * @{
+ */
+/* Operation functions ********************************************************/
+HAL_StatusTypeDef HAL_GFXMMU_ConfigLut(GFXMMU_HandleTypeDef *hgfxmmu, uint32_t FirstLine, uint32_t LinesNumber, uint32_t Address);
 
-	HAL_StatusTypeDef HAL_GFXMMU_DisableLutLines(GFXMMU_HandleTypeDef *hgfxmmu, uint32_t FirstLine, uint32_t LinesNumber);
+HAL_StatusTypeDef HAL_GFXMMU_DisableLutLines(GFXMMU_HandleTypeDef *hgfxmmu, uint32_t FirstLine, uint32_t LinesNumber);
 
-	HAL_StatusTypeDef HAL_GFXMMU_ConfigLutLine(GFXMMU_HandleTypeDef *hgfxmmu, GFXMMU_LutLineTypeDef *lutLine);
+HAL_StatusTypeDef HAL_GFXMMU_ConfigLutLine(GFXMMU_HandleTypeDef *hgfxmmu, GFXMMU_LutLineTypeDef *lutLine);
 
-	HAL_StatusTypeDef HAL_GFXMMU_ModifyBuffers(GFXMMU_HandleTypeDef *hgfxmmu, GFXMMU_BuffersTypeDef *Buffers);
+HAL_StatusTypeDef HAL_GFXMMU_ModifyBuffers(GFXMMU_HandleTypeDef *hgfxmmu, GFXMMU_BuffersTypeDef *Buffers);
 
-	void HAL_GFXMMU_IRQHandler(GFXMMU_HandleTypeDef *hgfxmmu);
+void HAL_GFXMMU_IRQHandler(GFXMMU_HandleTypeDef *hgfxmmu);
 
-	void HAL_GFXMMU_ErrorCallback(GFXMMU_HandleTypeDef *hgfxmmu);
-	/**
-	 * @}
-	 */
+void HAL_GFXMMU_ErrorCallback(GFXMMU_HandleTypeDef *hgfxmmu);
+/**
+ * @}
+ */
 
-	/** @defgroup GFXMMU_Exported_Functions_Group3 State functions
-	 * @{
-	 */
-	/* State function *************************************************************/
-	HAL_GFXMMU_StateTypeDef HAL_GFXMMU_GetState(GFXMMU_HandleTypeDef *hgfxmmu);
+/** @defgroup GFXMMU_Exported_Functions_Group3 State functions
+ * @{
+ */
+/* State function *************************************************************/
+HAL_GFXMMU_StateTypeDef HAL_GFXMMU_GetState(GFXMMU_HandleTypeDef *hgfxmmu);
 
-	uint32_t HAL_GFXMMU_GetError(GFXMMU_HandleTypeDef *hgfxmmu);
+uint32_t HAL_GFXMMU_GetError(GFXMMU_HandleTypeDef *hgfxmmu);
 /**
  * @}
  */

@@ -21,39 +21,37 @@
 #define STM32U5xx_HAL_PWR_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif /* __cplusplus */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx_hal_def.h"
 
-	/** @addtogroup STM32U5xx_HAL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32U5xx_HAL_Driver
+ * @{
+ */
 
-	/** @addtogroup PWR
-	 * @{
-	 */
+/** @addtogroup PWR
+ * @{
+ */
 
-	/* Exported types ------------------------------------------------------------*/
+/* Exported types ------------------------------------------------------------*/
 
-	/** @defgroup PWR_Exported_Types PWR Exported Types
-	 * @{
-	 */
+/** @defgroup PWR_Exported_Types PWR Exported Types
+ * @{
+ */
 
-	/**
-	 * @brief  PWR PVD configuration structure definition
-	 */
-	typedef struct
-	{
-		uint32_t PVDLevel; /*!< Specifies the PVD detection level.
-					This parameter can be a value of
-					@ref PWR_PVD_Detection_Level. */
+/**
+ * @brief  PWR PVD configuration structure definition
+ */
+typedef struct {
+	uint32_t PVDLevel; /*!< Specifies the PVD detection level.
+				This parameter can be a value of
+				@ref PWR_PVD_Detection_Level. */
 
-		uint32_t Mode; /*!< Specifies the operating mode for the selected pins.
-				    This parameter can be a value of @ref PWR_PVD_Mode. */
-	} PWR_PVDTypeDef;
+	uint32_t Mode; /*!< Specifies the operating mode for the selected pins.
+			    This parameter can be a value of @ref PWR_PVD_Mode. */
+} PWR_PVDTypeDef;
 /**
  * @}
  */
@@ -654,8 +652,7 @@ extern "C"
  * @retval None.
  */
 #define __HAL_PWR_PVD_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                                \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__HAL_PWR_PVD_EXTI_ENABLE_RISING_EDGE();                                                                                                                                               \
 		__HAL_PWR_PVD_EXTI_ENABLE_FALLING_EDGE();                                                                                                                                              \
 	} while (0)
@@ -665,8 +662,7 @@ extern "C"
  * @retval None.
  */
 #define __HAL_PWR_PVD_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                               \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__HAL_PWR_PVD_EXTI_DISABLE_RISING_EDGE();                                                                                                                                              \
 		__HAL_PWR_PVD_EXTI_DISABLE_FALLING_EDGE();                                                                                                                                             \
 	} while (0)
@@ -688,8 +684,7 @@ extern "C"
  * @retval None.
  */
 #define __HAL_PWR_PVD_EXTI_CLEAR_FLAG()                                                                                                                                                                \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		WRITE_REG(EXTI->RPR1, PWR_EXTI_LINE_PVD);                                                                                                                                              \
 		WRITE_REG(EXTI->FPR1, PWR_EXTI_LINE_PVD);                                                                                                                                              \
 	} while (0)
@@ -911,78 +906,78 @@ extern "C"
 /* Include PWR HAL Extended module */
 #include "stm32u5xx_hal_pwr_ex.h"
 
-	/* Exported functions --------------------------------------------------------*/
+/* Exported functions --------------------------------------------------------*/
 
-	/** @addtogroup PWR_Exported_Functions PWR Exported Functions
-	 * @{
-	 */
+/** @addtogroup PWR_Exported_Functions PWR Exported Functions
+ * @{
+ */
 
-	/** @addtogroup PWR_Exported_Functions_Group1
-	 * @{
-	 */
-	/* Initialization and de-initialization functions *****************************/
-	void HAL_PWR_DeInit(void);
-	void HAL_PWR_EnableBkUpAccess(void);
-	void HAL_PWR_DisableBkUpAccess(void);
-	/**
-	 * @}
-	 */
+/** @addtogroup PWR_Exported_Functions_Group1
+ * @{
+ */
+/* Initialization and de-initialization functions *****************************/
+void HAL_PWR_DeInit(void);
+void HAL_PWR_EnableBkUpAccess(void);
+void HAL_PWR_DisableBkUpAccess(void);
+/**
+ * @}
+ */
 
-	/** @addtogroup PWR_Exported_Functions_Group2
-	 * @{
-	 */
-	/* Programmable voltage detector functions ************************************/
-	HAL_StatusTypeDef HAL_PWR_ConfigPVD(PWR_PVDTypeDef *pConfigPVD);
-	void HAL_PWR_EnablePVD(void);
-	void HAL_PWR_DisablePVD(void);
+/** @addtogroup PWR_Exported_Functions_Group2
+ * @{
+ */
+/* Programmable voltage detector functions ************************************/
+HAL_StatusTypeDef HAL_PWR_ConfigPVD(PWR_PVDTypeDef *pConfigPVD);
+void HAL_PWR_EnablePVD(void);
+void HAL_PWR_DisablePVD(void);
 
-	/* Wake up pins configuration functions ***************************************/
-	void HAL_PWR_EnableWakeUpPin(uint32_t WakeUpPin);
-	void HAL_PWR_DisableWakeUpPin(uint32_t WakeUpPin);
+/* Wake up pins configuration functions ***************************************/
+void HAL_PWR_EnableWakeUpPin(uint32_t WakeUpPin);
+void HAL_PWR_DisableWakeUpPin(uint32_t WakeUpPin);
 
-	/* Low power modes configuration functions ************************************/
-	void HAL_PWR_EnterSLEEPMode(uint32_t Regulator, uint8_t SleepEntry);
-	void HAL_PWR_EnterSTOPMode(uint32_t Regulator, uint8_t StopEntry);
-	void HAL_PWR_EnterSTANDBYMode(void);
+/* Low power modes configuration functions ************************************/
+void HAL_PWR_EnterSLEEPMode(uint32_t Regulator, uint8_t SleepEntry);
+void HAL_PWR_EnterSTOPMode(uint32_t Regulator, uint8_t StopEntry);
+void HAL_PWR_EnterSTANDBYMode(void);
 
-	/* Sleep on exit and sev on pending configuration functions *******************/
-	void HAL_PWR_EnableSleepOnExit(void);
-	void HAL_PWR_DisableSleepOnExit(void);
-	void HAL_PWR_EnableSEVOnPend(void);
-	void HAL_PWR_DisableSEVOnPend(void);
+/* Sleep on exit and sev on pending configuration functions *******************/
+void HAL_PWR_EnableSleepOnExit(void);
+void HAL_PWR_DisableSleepOnExit(void);
+void HAL_PWR_EnableSEVOnPend(void);
+void HAL_PWR_DisableSEVOnPend(void);
 
-	/* Interrupt handler functions ************************************************/
-	void HAL_PWR_PVD_IRQHandler(void);
-	void HAL_PWR_PVDCallback(void);
-	/**
-	 * @}
-	 */
+/* Interrupt handler functions ************************************************/
+void HAL_PWR_PVD_IRQHandler(void);
+void HAL_PWR_PVDCallback(void);
+/**
+ * @}
+ */
 
-	/** @addtogroup PWR_Exported_Functions_Group3
-	 * @{
-	 */
-	/* Privileges and security configuration functions ****************************/
-	void HAL_PWR_ConfigAttributes(uint32_t Item, uint32_t Attributes);
-	HAL_StatusTypeDef HAL_PWR_GetConfigAttributes(uint32_t Item, uint32_t *pAttributes);
-	/**
-	 * @}
-	 */
+/** @addtogroup PWR_Exported_Functions_Group3
+ * @{
+ */
+/* Privileges and security configuration functions ****************************/
+void HAL_PWR_ConfigAttributes(uint32_t Item, uint32_t Attributes);
+HAL_StatusTypeDef HAL_PWR_GetConfigAttributes(uint32_t Item, uint32_t *pAttributes);
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

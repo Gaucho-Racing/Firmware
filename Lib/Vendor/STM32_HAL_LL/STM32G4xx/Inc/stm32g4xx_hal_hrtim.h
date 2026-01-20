@@ -21,8 +21,7 @@
 #define STM32G4xx_HAL_HRTIM_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -45,728 +44,704 @@ extern "C"
  * @{
  */
 #define MAX_HRTIM_TIMER 7U
-	/**
-	 * @}
-	 */
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
+/**
+ * @}
+ */
 
-	/** @defgroup HRTIM_Exported_Types HRTIM Exported Types
-	 * @{
-	 */
+/** @defgroup HRTIM_Exported_Types HRTIM Exported Types
+ * @{
+ */
 
-	/**
-	 * @brief  HRTIM Configuration Structure definition - Time base related
-	 * parameters
-	 */
-	typedef struct
-	{
-		uint32_t HRTIMInterruptRequests; /*!< Specifies which interrupts requests
-						    must enabled for the HRTIM instance. This
-						    parameter can be any combination of  @ref
-						    HRTIM_Common_Interrupt_Enable */
-		uint32_t SyncOptions;		 /*!< Specifies how the HRTIM instance handles the
-						    external synchronization signals. The HRTIM
-						    instance can be configured to act as a slave
-						    (waiting for a trigger to be synchronized) or a
-						    master (generating a synchronization signal) or
-						    both. This parameter can be a combination of
-						    @ref HRTIM_Synchronization_Options.*/
-		uint32_t SyncInputSource;	 /*!< Specifies the external synchronization
-						    input source (significant only when  the
-						    HRTIM instance is configured as a slave).
-						      This parameter can be a value of @ref
-						    HRTIM_Synchronization_Input_Source. */
-		uint32_t SyncOutputSource;	 /*!< Specifies the source and event to be
-						    sent on the external synchronization
-						    outputs (significant only when the HRTIM
-						    instance is configured as a master). This
-						    parameter can be a value of @ref
-						    HRTIM_Synchronization_Output_Source */
-		uint32_t SyncOutputPolarity;	 /*!< Specifies the conditioning of the event to
-						    be sent on the external synchronization
-						      outputs (significant only when the HRTIM
-						    instance is configured as a master). This
-						    parameter can be a value of @ref
-						    HRTIM_Synchronization_Output_Polarity */
-	} HRTIM_InitTypeDef;
+/**
+ * @brief  HRTIM Configuration Structure definition - Time base related
+ * parameters
+ */
+typedef struct {
+	uint32_t HRTIMInterruptRequests; /*!< Specifies which interrupts requests
+					    must enabled for the HRTIM instance. This
+					    parameter can be any combination of  @ref
+					    HRTIM_Common_Interrupt_Enable */
+	uint32_t SyncOptions;		 /*!< Specifies how the HRTIM instance handles the
+					    external synchronization signals. The HRTIM
+					    instance can be configured to act as a slave
+					    (waiting for a trigger to be synchronized) or a
+					    master (generating a synchronization signal) or
+					    both. This parameter can be a combination of
+					    @ref HRTIM_Synchronization_Options.*/
+	uint32_t SyncInputSource;	 /*!< Specifies the external synchronization
+					    input source (significant only when  the
+					    HRTIM instance is configured as a slave).
+					      This parameter can be a value of @ref
+					    HRTIM_Synchronization_Input_Source. */
+	uint32_t SyncOutputSource;	 /*!< Specifies the source and event to be
+					    sent on the external synchronization
+					    outputs (significant only when the HRTIM
+					    instance is configured as a master). This
+					    parameter can be a value of @ref
+					    HRTIM_Synchronization_Output_Source */
+	uint32_t SyncOutputPolarity;	 /*!< Specifies the conditioning of the event to
+					    be sent on the external synchronization
+					      outputs (significant only when the HRTIM
+					    instance is configured as a master). This
+					    parameter can be a value of @ref
+					    HRTIM_Synchronization_Output_Polarity */
+} HRTIM_InitTypeDef;
 
-	/**
-	 * @brief  HAL State structures definition
-	 */
-	typedef enum
-	{
-		HAL_HRTIM_STATE_RESET = 0x00U,	 /*!< Peripheral is not yet Initialized */
-		HAL_HRTIM_STATE_READY = 0x01U,	 /*!< Peripheral Initialized and ready for use           */
-		HAL_HRTIM_STATE_BUSY = 0x02U,	 /*!< an internal process is ongoing    */
-		HAL_HRTIM_STATE_TIMEOUT = 0x06U, /*!< Timeout state */
-		HAL_HRTIM_STATE_ERROR = 0x07U,	 /*!< Error state   */
+/**
+ * @brief  HAL State structures definition
+ */
+typedef enum {
+	HAL_HRTIM_STATE_RESET = 0x00U,	 /*!< Peripheral is not yet Initialized */
+	HAL_HRTIM_STATE_READY = 0x01U,	 /*!< Peripheral Initialized and ready for use           */
+	HAL_HRTIM_STATE_BUSY = 0x02U,	 /*!< an internal process is ongoing    */
+	HAL_HRTIM_STATE_TIMEOUT = 0x06U, /*!< Timeout state */
+	HAL_HRTIM_STATE_ERROR = 0x07U,	 /*!< Error state   */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
-		HAL_HRTIM_STATE_INVALID_CALLBACK = 0x08U /*!< Invalid Callback error */
-#endif							 /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
-	} HAL_HRTIM_StateTypeDef;
+	HAL_HRTIM_STATE_INVALID_CALLBACK = 0x08U /*!< Invalid Callback error */
+#endif						 /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
+} HAL_HRTIM_StateTypeDef;
 
-	/**
-	 * @brief HRTIM Timer Structure definition
-	 */
-	typedef struct
-	{
-		uint32_t CaptureTrigger1;   /*!< Event(s) triggering capture unit 1.
-						 When the timer operates in Simple mode,
-					       this parameter can be a value of @ref
-					       HRTIM_External_Event_Channels.   When the
-					       timer operates in Waveform mode, this
-					       parameter can be a combination of @ref
-					       HRTIM_Capture_Unit_Trigger. */
-		uint32_t CaptureTrigger2;   /*!< Event(s) triggering capture unit 2.
-						 When the timer operates in Simple mode,
-					       this parameter can be a value of @ref
-					       HRTIM_External_Event_Channels.   When the
-					       timer operates in Waveform mode, this
-					       parameter can be a combination of @ref
-					       HRTIM_Capture_Unit_Trigger. */
-		uint32_t InterruptRequests; /*!< Interrupts requests enabled for the
-					       timer. */
-		uint32_t DMARequests;	    /*!< DMA requests enabled for the timer. */
-		uint32_t DMASrcAddress;	    /*!< Address of the source address of the DMA
-					       transfer. */
-		uint32_t DMADstAddress;	    /*!< Address of the destination address of the
-					       DMA transfer. */
-		uint32_t DMASize;	    /*!< Size of the DMA transfer */
-	} HRTIM_TimerParamTypeDef;
+/**
+ * @brief HRTIM Timer Structure definition
+ */
+typedef struct {
+	uint32_t CaptureTrigger1;   /*!< Event(s) triggering capture unit 1.
+					 When the timer operates in Simple mode,
+				       this parameter can be a value of @ref
+				       HRTIM_External_Event_Channels.   When the
+				       timer operates in Waveform mode, this
+				       parameter can be a combination of @ref
+				       HRTIM_Capture_Unit_Trigger. */
+	uint32_t CaptureTrigger2;   /*!< Event(s) triggering capture unit 2.
+					 When the timer operates in Simple mode,
+				       this parameter can be a value of @ref
+				       HRTIM_External_Event_Channels.   When the
+				       timer operates in Waveform mode, this
+				       parameter can be a combination of @ref
+				       HRTIM_Capture_Unit_Trigger. */
+	uint32_t InterruptRequests; /*!< Interrupts requests enabled for the
+				       timer. */
+	uint32_t DMARequests;	    /*!< DMA requests enabled for the timer. */
+	uint32_t DMASrcAddress;	    /*!< Address of the source address of the DMA
+				       transfer. */
+	uint32_t DMADstAddress;	    /*!< Address of the destination address of the
+				       DMA transfer. */
+	uint32_t DMASize;	    /*!< Size of the DMA transfer */
+} HRTIM_TimerParamTypeDef;
 
 /**
  * @brief  HRTIM Handle Structure definition
  */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
-	typedef struct __HRTIM_HandleTypeDef
+typedef struct __HRTIM_HandleTypeDef
 #else
-	typedef struct
+typedef struct
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
-	{
-		HRTIM_TypeDef *Instance; /*!< Register base address */
+{
+	HRTIM_TypeDef *Instance; /*!< Register base address */
 
-		HRTIM_InitTypeDef Init; /*!< HRTIM required parameters */
+	HRTIM_InitTypeDef Init; /*!< HRTIM required parameters */
 
-		HRTIM_TimerParamTypeDef TimerParam[MAX_HRTIM_TIMER]; /*!< HRTIM timers - including the
-									master - parameters */
+	HRTIM_TimerParamTypeDef TimerParam[MAX_HRTIM_TIMER]; /*!< HRTIM timers - including the
+								master - parameters */
 
-		HAL_LockTypeDef Lock; /*!< Locking object          */
+	HAL_LockTypeDef Lock; /*!< Locking object          */
 
-		__IO HAL_HRTIM_StateTypeDef State; /*!< HRTIM communication state */
+	__IO HAL_HRTIM_StateTypeDef State; /*!< HRTIM communication state */
 
-		DMA_HandleTypeDef *hdmaMaster; /*!< Master timer DMA handle parameters */
-		DMA_HandleTypeDef *hdmaTimerA; /*!< Timer A DMA handle parameters */
-		DMA_HandleTypeDef *hdmaTimerB; /*!< Timer B DMA handle parameters */
-		DMA_HandleTypeDef *hdmaTimerC; /*!< Timer C DMA handle parameters */
-		DMA_HandleTypeDef *hdmaTimerD; /*!< Timer D DMA handle parameters */
-		DMA_HandleTypeDef *hdmaTimerE; /*!< Timer E DMA handle parameters */
-		DMA_HandleTypeDef *hdmaTimerF; /*!< Timer F DMA handle parameters */
+	DMA_HandleTypeDef *hdmaMaster; /*!< Master timer DMA handle parameters */
+	DMA_HandleTypeDef *hdmaTimerA; /*!< Timer A DMA handle parameters */
+	DMA_HandleTypeDef *hdmaTimerB; /*!< Timer B DMA handle parameters */
+	DMA_HandleTypeDef *hdmaTimerC; /*!< Timer C DMA handle parameters */
+	DMA_HandleTypeDef *hdmaTimerD; /*!< Timer D DMA handle parameters */
+	DMA_HandleTypeDef *hdmaTimerE; /*!< Timer E DMA handle parameters */
+	DMA_HandleTypeDef *hdmaTimerF; /*!< Timer F DMA handle parameters */
 
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
-		void (*Fault1Callback)(struct __HRTIM_HandleTypeDef *hhrtim);		    /*!< Fault 1 interrupt callback function pointer */
-		void (*Fault2Callback)(struct __HRTIM_HandleTypeDef *hhrtim);		    /*!< Fault 2 interrupt callback function pointer */
-		void (*Fault3Callback)(struct __HRTIM_HandleTypeDef *hhrtim);		    /*!< Fault 3 interrupt callback function pointer */
-		void (*Fault4Callback)(struct __HRTIM_HandleTypeDef *hhrtim);		    /*!< Fault 4 interrupt callback function pointer */
-		void (*Fault5Callback)(struct __HRTIM_HandleTypeDef *hhrtim);		    /*!< Fault 5 interrupt callback function pointer */
-		void (*Fault6Callback)(struct __HRTIM_HandleTypeDef *hhrtim);		    /*!< Fault 6 interrupt callback function pointer */
-		void (*SystemFaultCallback)(struct __HRTIM_HandleTypeDef *hhrtim);	    /*!< System fault interrupt
-											       callback function pointer */
-		void (*DLLCalibrationReadyCallback)(struct __HRTIM_HandleTypeDef *hhrtim);  /*!< DLL Ready interrupt callback function pointer */
-		void (*BurstModePeriodCallback)(struct __HRTIM_HandleTypeDef *hhrtim);	    /*!< Burst mode period interrupt callback
-											       function pointer               */
-		void (*SynchronizationEventCallback)(struct __HRTIM_HandleTypeDef *hhrtim); /*!< Sync Input interrupt callback function pointer */
-		void (*ErrorCallback)(struct __HRTIM_HandleTypeDef *hhrtim);		    /*!< DMA error callback function pointer */
+	void (*Fault1Callback)(struct __HRTIM_HandleTypeDef *hhrtim);		    /*!< Fault 1 interrupt callback function pointer */
+	void (*Fault2Callback)(struct __HRTIM_HandleTypeDef *hhrtim);		    /*!< Fault 2 interrupt callback function pointer */
+	void (*Fault3Callback)(struct __HRTIM_HandleTypeDef *hhrtim);		    /*!< Fault 3 interrupt callback function pointer */
+	void (*Fault4Callback)(struct __HRTIM_HandleTypeDef *hhrtim);		    /*!< Fault 4 interrupt callback function pointer */
+	void (*Fault5Callback)(struct __HRTIM_HandleTypeDef *hhrtim);		    /*!< Fault 5 interrupt callback function pointer */
+	void (*Fault6Callback)(struct __HRTIM_HandleTypeDef *hhrtim);		    /*!< Fault 6 interrupt callback function pointer */
+	void (*SystemFaultCallback)(struct __HRTIM_HandleTypeDef *hhrtim);	    /*!< System fault interrupt
+										       callback function pointer */
+	void (*DLLCalibrationReadyCallback)(struct __HRTIM_HandleTypeDef *hhrtim);  /*!< DLL Ready interrupt callback function pointer */
+	void (*BurstModePeriodCallback)(struct __HRTIM_HandleTypeDef *hhrtim);	    /*!< Burst mode period interrupt callback
+										       function pointer               */
+	void (*SynchronizationEventCallback)(struct __HRTIM_HandleTypeDef *hhrtim); /*!< Sync Input interrupt callback function pointer */
+	void (*ErrorCallback)(struct __HRTIM_HandleTypeDef *hhrtim);		    /*!< DMA error callback function pointer */
 
-		void (*RegistersUpdateCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);   /*!< Timer x Update interrupt callback function
-													       pointer                  */
-		void (*RepetitionEventCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);   /*!< Timer x Repetition interrupt callback
-													       function pointer              */
-		void (*Compare1EventCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);	    /*!< Timer x Compare 1 match interrupt callback
-													       function pointer         */
-		void (*Compare2EventCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);	    /*!< Timer x Compare 2 match interrupt callback
-													       function pointer         */
-		void (*Compare3EventCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);	    /*!< Timer x Compare 3 match interrupt callback
-													       function pointer         */
-		void (*Compare4EventCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);	    /*!< Timer x Compare 4 match interrupt callback
-													       function pointer         */
-		void (*Capture1EventCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);	    /*!< Timer x Capture 1 interrupts callback
-													       function pointer              */
-		void (*Capture2EventCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);	    /*!< Timer x Capture 2 interrupts callback
-													       function pointer              */
-		void (*DelayedProtectionCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx); /*!< Timer x Delayed protection interrupt
-													       callback function pointer      */
-		void (*CounterResetCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);	    /*!< Timer x counter reset/roll-over interrupt
-													       callback function pointer */
-		void (*Output1SetCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);	    /*!< Timer x output 1 set interrupt callback
-													       function pointer            */
-		void (*Output1ResetCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);	    /*!< Timer x output 1 reset interrupt callback
-													       function pointer          */
-		void (*Output2SetCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);	    /*!< Timer x output 2 set interrupt callback
-													       function pointer            */
-		void (*Output2ResetCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);	    /*!< Timer x output 2 reset interrupt callback
-													       function pointer          */
-		void (*BurstDMATransferCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);  /*!< Timer x Burst DMA completed interrupt
-													       callback function pointer     */
+	void (*RegistersUpdateCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);   /*!< Timer x Update interrupt callback function
+												       pointer                  */
+	void (*RepetitionEventCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);   /*!< Timer x Repetition interrupt callback
+												       function pointer              */
+	void (*Compare1EventCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);	    /*!< Timer x Compare 1 match interrupt callback
+												       function pointer         */
+	void (*Compare2EventCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);	    /*!< Timer x Compare 2 match interrupt callback
+												       function pointer         */
+	void (*Compare3EventCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);	    /*!< Timer x Compare 3 match interrupt callback
+												       function pointer         */
+	void (*Compare4EventCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);	    /*!< Timer x Compare 4 match interrupt callback
+												       function pointer         */
+	void (*Capture1EventCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);	    /*!< Timer x Capture 1 interrupts callback
+												       function pointer              */
+	void (*Capture2EventCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);	    /*!< Timer x Capture 2 interrupts callback
+												       function pointer              */
+	void (*DelayedProtectionCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx); /*!< Timer x Delayed protection interrupt
+												       callback function pointer      */
+	void (*CounterResetCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);	    /*!< Timer x counter reset/roll-over interrupt
+												       callback function pointer */
+	void (*Output1SetCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);	    /*!< Timer x output 1 set interrupt callback
+												       function pointer            */
+	void (*Output1ResetCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);	    /*!< Timer x output 1 reset interrupt callback
+												       function pointer          */
+	void (*Output2SetCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);	    /*!< Timer x output 2 set interrupt callback
+												       function pointer            */
+	void (*Output2ResetCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);	    /*!< Timer x output 2 reset interrupt callback
+												       function pointer          */
+	void (*BurstDMATransferCallback)(struct __HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);  /*!< Timer x Burst DMA completed interrupt
+												       callback function pointer     */
 
-		void (*MspInitCallback)(struct __HRTIM_HandleTypeDef *hhrtim);	 /*!< HRTIM MspInit callback function pointer */
-		void (*MspDeInitCallback)(struct __HRTIM_HandleTypeDef *hhrtim); /*!< HRTIM MspInit callback function pointer */
-#endif										 /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
-	} HRTIM_HandleTypeDef;
+	void (*MspInitCallback)(struct __HRTIM_HandleTypeDef *hhrtim);	 /*!< HRTIM MspInit callback function pointer */
+	void (*MspDeInitCallback)(struct __HRTIM_HandleTypeDef *hhrtim); /*!< HRTIM MspInit callback function pointer */
+#endif									 /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
+} HRTIM_HandleTypeDef;
 
-	/**
-	 * @brief  Simple output compare mode configuration definition
-	 */
-	typedef struct
-	{
-		uint32_t Period;	    /*!< Specifies the timer period.
-						 The period value must be above 3 periods of the
-					       fHRTIM clock.	    Maximum value is = 0xFFDFU */
-		uint32_t RepetitionCounter; /*!< Specifies the timer repetition period.
-						 This parameter must be a number between
-					       Min_Data = 0x00 and Max_Data = 0xFF. */
-		uint32_t PrescalerRatio;    /*!< Specifies the timer clock prescaler ratio.
-						 This parameter can be any value of @ref
-					       HRTIM_Prescaler_Ratio   */
-		uint32_t Mode;		    /*!< Specifies the counter operating mode.
-						 This parameter can be any value of @ref
-					       HRTIM_Counter_Operating_Mode   */
-	} HRTIM_TimeBaseCfgTypeDef;
-
-	/**
-	 * @brief  Simple output compare mode configuration definition
-	 */
-	typedef struct
-	{
-		uint32_t Mode;	    /*!< Specifies the output compare mode (toggle, active,
-				       inactive).  This parameter can be any value of of @ref
-				       HRTIM_Simple_OC_Mode */
-		uint32_t Pulse;	    /*!< Specifies the compare value to be loaded into the
-				       Compare Register. The compare value must be above or
-				       equal to 3 periods of the fHRTIM clock */
-		uint32_t Polarity;  /*!< Specifies the output polarity.
+/**
+ * @brief  Simple output compare mode configuration definition
+ */
+typedef struct {
+	uint32_t Period;	    /*!< Specifies the timer period.
+					 The period value must be above 3 periods of the
+				       fHRTIM clock.	    Maximum value is = 0xFFDFU */
+	uint32_t RepetitionCounter; /*!< Specifies the timer repetition period.
+					 This parameter must be a number between
+				       Min_Data = 0x00 and Max_Data = 0xFF. */
+	uint32_t PrescalerRatio;    /*!< Specifies the timer clock prescaler ratio.
 					 This parameter can be any value of @ref
-				       HRTIM_Output_Polarity */
-		uint32_t IdleLevel; /*!< Specifies whether the output level is active or
-				       inactive when in IDLE state. This parameter can
-				       be any value of @ref HRTIM_Output_IDLE_Level */
-	} HRTIM_SimpleOCChannelCfgTypeDef;
-
-	/**
-	 * @brief  Simple PWM output mode configuration definition
-	 */
-	typedef struct
-	{
-		uint32_t Pulse;	    /*!< Specifies the compare value to be loaded into the
-				       Compare Register. The compare value must be above or
-				       equal to 3 periods of the fHRTIM clock */
-		uint32_t Polarity;  /*!< Specifies the output polarity.
+				       HRTIM_Prescaler_Ratio   */
+	uint32_t Mode;		    /*!< Specifies the counter operating mode.
 					 This parameter can be any value of @ref
-				       HRTIM_Output_Polarity */
-		uint32_t IdleLevel; /*!< Specifies whether the output level is active or
-				       inactive when in IDLE state. This parameter can
-				       be any value of @ref HRTIM_Output_IDLE_Level */
-	} HRTIM_SimplePWMChannelCfgTypeDef;
+				       HRTIM_Counter_Operating_Mode   */
+} HRTIM_TimeBaseCfgTypeDef;
 
-	/**
-	 * @brief  Simple capture mode configuration definition
-	 */
-	typedef struct
-	{
-		uint32_t Event;		   /*!< Specifies the external event triggering the
-					      capture. This parameter can be any 'EEVx' value of
-					      @ref HRTIM_External_Event_Channels */
-		uint32_t EventPolarity;	   /*!< Specifies the polarity of the external event (in
-					      case of level sensitivity). This parameter can be
-					      a value of @ref HRTIM_External_Event_Polarity */
-		uint32_t EventSensitivity; /*!< Specifies the sensitivity of the external
-					      event. This parameter can be a value of @ref
-					      HRTIM_External_Event_Sensitivity */
-		uint32_t EventFilter;	   /*!< Defines the frequency used to sample the
-					      External Event and the length of the digital
-					      filter. This parameter can be a value of @ref
-					      HRTIM_External_Event_Filter */
-	} HRTIM_SimpleCaptureChannelCfgTypeDef;
+/**
+ * @brief  Simple output compare mode configuration definition
+ */
+typedef struct {
+	uint32_t Mode;	    /*!< Specifies the output compare mode (toggle, active,
+			       inactive).  This parameter can be any value of of @ref
+			       HRTIM_Simple_OC_Mode */
+	uint32_t Pulse;	    /*!< Specifies the compare value to be loaded into the
+			       Compare Register. The compare value must be above or
+			       equal to 3 periods of the fHRTIM clock */
+	uint32_t Polarity;  /*!< Specifies the output polarity.
+				 This parameter can be any value of @ref
+			       HRTIM_Output_Polarity */
+	uint32_t IdleLevel; /*!< Specifies whether the output level is active or
+			       inactive when in IDLE state. This parameter can
+			       be any value of @ref HRTIM_Output_IDLE_Level */
+} HRTIM_SimpleOCChannelCfgTypeDef;
 
-	/**
-	 * @brief  Simple One Pulse mode configuration definition
-	 */
-	typedef struct
-	{
-		uint32_t Pulse;		   /*!< Specifies the compare value to be loaded into the
-					      Compare Register. The compare value must be above or
-					      equal to 3 periods of the fHRTIM clock */
-		uint32_t OutputPolarity;   /*!< Specifies the output polarity.
-						This parameter can be any value of @ref
-					      HRTIM_Output_Polarity */
-		uint32_t OutputIdleLevel;  /*!< Specifies whether the output level is
-					      active or inactive when in IDLE state. This
-					      parameter can be any value of @ref
-					      HRTIM_Output_IDLE_Level */
-		uint32_t Event;		   /*!< Specifies the external event triggering the pulse
-					      generation. This parameter can be any 'EEVx' value of
-					      @ref HRTIM_External_Event_Channels */
-		uint32_t EventPolarity;	   /*!< Specifies the polarity of the external event (in
-					      case of level sensitivity). This parameter can be
-					      a value of @ref HRTIM_External_Event_Polarity */
-		uint32_t EventSensitivity; /*!< Specifies the sensitivity of the external
-					      event. This parameter can be a value of @ref
-					      HRTIM_External_Event_Sensitivity. */
-		uint32_t EventFilter;	   /*!< Defines the frequency used to sample the
-					      External Event and the length of the digital
-					      filter. This parameter can be a value of @ref
-					      HRTIM_External_Event_Filter */
-	} HRTIM_SimpleOnePulseChannelCfgTypeDef;
+/**
+ * @brief  Simple PWM output mode configuration definition
+ */
+typedef struct {
+	uint32_t Pulse;	    /*!< Specifies the compare value to be loaded into the
+			       Compare Register. The compare value must be above or
+			       equal to 3 periods of the fHRTIM clock */
+	uint32_t Polarity;  /*!< Specifies the output polarity.
+				 This parameter can be any value of @ref
+			       HRTIM_Output_Polarity */
+	uint32_t IdleLevel; /*!< Specifies whether the output level is active or
+			       inactive when in IDLE state. This parameter can
+			       be any value of @ref HRTIM_Output_IDLE_Level */
+} HRTIM_SimplePWMChannelCfgTypeDef;
 
-	/**
-	 * @brief  Timer configuration definition
-	 */
-	typedef struct
-	{
-		uint32_t InterruptRequests;	      /*!< Relevant for all HRTIM timers, including the
-							 master. Specifies which interrupts requests
-							 must enabled for the timer. This parameter can
-							 be any combination of  @ref
-							 HRTIM_Master_Interrupt_Enable or @ref
-							 HRTIM_Timing_Unit_Interrupt_Enable */
-		uint32_t DMARequests;		      /*!< Relevant for all HRTIM timers, including the
-							 master. Specifies which DMA requests must be enabled
-							 for the timer. This parameter can be any combination
-							 of  @ref HRTIM_Master_DMA_Request_Enable or @ref
-							 HRTIM_Timing_Unit_DMA_Request_Enable */
-		uint32_t DMASrcAddress;		      /*!< Relevant for all HRTIM timers, including
-							 the master. Specifies the address of the
-							 source address of the DMA transfer */
-		uint32_t DMADstAddress;		      /*!< Relevant for all HRTIM timers, including
-							 the master. Specifies the address of the
-							 destination address of the DMA transfer */
-		uint32_t DMASize;		      /*!< Relevant for all HRTIM timers, including the
-							 master. Specifies the size of the DMA transfer */
-		uint32_t HalfModeEnable;	      /*!< Relevant for all HRTIM timers, including
-							 the master.  Specifies whether or not half
-							 mode is enabled  This parameter can be any
-							 value of @ref HRTIM_Half_Mode_Enable  */
-		uint32_t InterleavedMode;	      /*!< Relevant for all HRTIM timers, including
-							 the master. Specifies whether or not half
-							 mode is enabled This parameter can be any
-							 value of @ref HRTIM_Interleaved_Mode  */
-		uint32_t StartOnSync;		      /*!< Relevant for all HRTIM timers, including the
-							 master. Specifies whether or not timer is reset
-							 by a rising edge on the synchronization input
-							 (when enabled). This parameter can be any value
-							 of @ref HRTIM_Start_On_Sync_Input_Event  */
-		uint32_t ResetOnSync;		      /*!< Relevant for all HRTIM timers, including the
-							 master. Specifies whether or not timer is reset
-							 by a rising edge on the synchronization input
-							 (when enabled). This parameter can be any value
-							 of @ref HRTIM_Reset_On_Sync_Input_Event  */
-		uint32_t DACSynchro;		      /*!< Relevant for all HRTIM timers, including the
-							 master. Indicates whether or not the a DAC
-							 synchronization event is generated. This parameter
-							 can be any value of @ref HRTIM_DAC_Synchronization */
-		uint32_t PreloadEnable;		      /*!< Relevant for all HRTIM timers, including the
-							 master. Specifies whether or not register preload
-							 is enabled. This parameter can be any value of
-							 @ref HRTIM_Register_Preload_Enable  */
-		uint32_t UpdateGating;		      /*!< Relevant for all HRTIM timers, including the
-							 master.   Specifies how the update occurs with
-							 respect to a burst DMA transaction or   update
-							 enable   inputs (Slave timers only).   This
-							 parameter can be   any value of @ref
-							 HRTIM_Update_Gating   */
-		uint32_t BurstMode;		      /*!< Relevant for all HRTIM timers, including the
-							 master. Specifies how the timer behaves during a
-							 burst mode operation. This parameter can be any
-							 value of @ref HRTIM_Timer_Burst_Mode  */
-		uint32_t RepetitionUpdate;	      /*!< Relevant for all HRTIM timers, including the
-							 master. Specifies whether or not registers
-							 update is triggered by the repetition event.
-							   This parameter can be any value of @ref
-							 HRTIM_Timer_Repetition_Update */
-		uint32_t PushPull;		      /*!< Relevant for Timer A to Timer F.
-							   Specifies whether or not the push-pull mode is
-							 enabled.    This parameter can be any value of
-							 @ref    HRTIM_Timer_Push_Pull_Mode */
-		uint32_t FaultEnable;		      /*!< Relevant for Timer A to Timer F.
-							   Specifies which fault channels are enabled for the
-							 timer.	    This parameter can be a combination
-							 of @ref	    HRTIM_Timer_Fault_Enabling  */
-		uint32_t FaultLock;		      /*!< Relevant for Timer A to Timer F.
-							   Specifies whether or not fault enabling status
-							 is write protected.	 This parameter can be a
-							 value	 of @ref HRTIM_Timer_Fault_Lock */
-		uint32_t DeadTimeInsertion;	      /*!< Relevant for Timer A to Timer F.
-							   Specifies whether or not dead-time
-							 insertion is enabled for the timer. This
-							 parameter can be a value of @ref
-							 HRTIM_Timer_Deadtime_Insertion */
-		uint32_t DelayedProtectionMode;	      /*!< Relevant for Timer A to Timer F.
-							   Specifies the delayed protection mode.
-							   This parameter can be a value of @ref
-							 HRTIM_Timer_Delayed_Protection_Mode */
-		uint32_t BalancedIdleAutomaticResume; /*!< Indicates whether or not outputs
-							 are automatically re-enabled after a
-							 balanced idle event. This parameters
-							 can be any value of @ref
-							 HRTIM_Output_Balanced_Idle_Auto_Resume
-						       */
-		uint32_t UpdateTrigger;		      /*!< Relevant for Timer A to Timer F.
-							   Specifies source(s) triggering the timer
-							 registers update. This parameter can be a
-							 combination of @ref HRTIM_Timer_Update_Trigger */
-		uint32_t ResetTrigger;		      /*!< Relevant for Timer A to Timer F.
-							   Specifies source(s) triggering the timer counter
-							 reset.     This parameter can be a combination of
-							 @ref     HRTIM_Timer_Reset_Trigger */
-		uint32_t ResetUpdate;		      /*!<  Relevant for Timer A to Timer F.
-							    Specifies whether or not registers update is
-							 triggered when the timer counter is reset. This
-							 parameter can be a value of @ref
-							 HRTIM_Timer_Reset_Update */
-		uint32_t ReSyncUpdate;		      /*!<  Relevant for Timer A to Timer F.
-							    Specifies whether update source is coming from
-							 the timing unit @ref HRTIM_Timer_ReSyncUpdate */
+/**
+ * @brief  Simple capture mode configuration definition
+ */
+typedef struct {
+	uint32_t Event;		   /*!< Specifies the external event triggering the
+				      capture. This parameter can be any 'EEVx' value of
+				      @ref HRTIM_External_Event_Channels */
+	uint32_t EventPolarity;	   /*!< Specifies the polarity of the external event (in
+				      case of level sensitivity). This parameter can be
+				      a value of @ref HRTIM_External_Event_Polarity */
+	uint32_t EventSensitivity; /*!< Specifies the sensitivity of the external
+				      event. This parameter can be a value of @ref
+				      HRTIM_External_Event_Sensitivity */
+	uint32_t EventFilter;	   /*!< Defines the frequency used to sample the
+				      External Event and the length of the digital
+				      filter. This parameter can be a value of @ref
+				      HRTIM_External_Event_Filter */
+} HRTIM_SimpleCaptureChannelCfgTypeDef;
 
-	} HRTIM_TimerCfgTypeDef;
+/**
+ * @brief  Simple One Pulse mode configuration definition
+ */
+typedef struct {
+	uint32_t Pulse;		   /*!< Specifies the compare value to be loaded into the
+				      Compare Register. The compare value must be above or
+				      equal to 3 periods of the fHRTIM clock */
+	uint32_t OutputPolarity;   /*!< Specifies the output polarity.
+					This parameter can be any value of @ref
+				      HRTIM_Output_Polarity */
+	uint32_t OutputIdleLevel;  /*!< Specifies whether the output level is
+				      active or inactive when in IDLE state. This
+				      parameter can be any value of @ref
+				      HRTIM_Output_IDLE_Level */
+	uint32_t Event;		   /*!< Specifies the external event triggering the pulse
+				      generation. This parameter can be any 'EEVx' value of
+				      @ref HRTIM_External_Event_Channels */
+	uint32_t EventPolarity;	   /*!< Specifies the polarity of the external event (in
+				      case of level sensitivity). This parameter can be
+				      a value of @ref HRTIM_External_Event_Polarity */
+	uint32_t EventSensitivity; /*!< Specifies the sensitivity of the external
+				      event. This parameter can be a value of @ref
+				      HRTIM_External_Event_Sensitivity. */
+	uint32_t EventFilter;	   /*!< Defines the frequency used to sample the
+				      External Event and the length of the digital
+				      filter. This parameter can be a value of @ref
+				      HRTIM_External_Event_Filter */
+} HRTIM_SimpleOnePulseChannelCfgTypeDef;
 
-	/**
-	 * @brief  Timer control definition
-	 */
-	typedef struct
-	{
-		uint32_t UpDownMode;	       /*!<  Relevant for Timer A to Timer F.
-						     Specifies whether or not counter is operating in
-						  up or up-down counting mode.    This parameter can be
-						  a    value of @ref HRTIM_Timer_UpDown_Mode */
-		uint32_t TrigHalf;	       /*!<  Relevant for Timer A to Timer F.
-						     Specifies whether or not compare 2 is operating
-						  in Trigger half mode. This parameter can be a
-						  value of @ref HRTIM_Timer_TrigHalf_Mode */
-		uint32_t GreaterCMP3;	       /*!<  Relevant for Timer A to Timer F.
-						     Specifies whether or not compare 3 is operating
-						  in compare match or greater mode. This parameter can
-						  be a value of @ref HRTIM_Timer_GreaterCMP3_Mode */
-		uint32_t GreaterCMP1;	       /*!<  Relevant for Timer A to Timer F.
-						     Specifies whether or not compare 1 is operating
-						  in compare match or greater mode. This parameter can
-						  be a value of @ref HRTIM_Timer_GreaterCMP1_Mode */
-		uint32_t DualChannelDacReset;  /*!<  Relevant for Timer A to Timer F.
-						     Specifies how the hrtim_dac_reset_trgx
-						  trigger is generated.       This parameter
-						  can be       a value of @ref
-						  HRTIM_Timer_DualChannelDac_Reset */
-		uint32_t DualChannelDacStep;   /*!<  Relevant for Timer A to Timer F.
-						     Specifies how the hrtim_dac_step_trgx
-						  trigger is generated.   This parameter
-						  can   be a value of @ref
-						  HRTIM_Timer_DualChannelDac_Step */
-		uint32_t DualChannelDacEnable; /*!<  Relevant for Timer A to Timer F.
-						     Enables or not the dual channel DAC
-						  triggering mechanism. This parameter
-						  can be a value of @ref
-						  HRTIM_Timer_DualChannelDac_Enable */
-	} HRTIM_TimerCtlTypeDef;
+/**
+ * @brief  Timer configuration definition
+ */
+typedef struct {
+	uint32_t InterruptRequests;	      /*!< Relevant for all HRTIM timers, including the
+						 master. Specifies which interrupts requests
+						 must enabled for the timer. This parameter can
+						 be any combination of  @ref
+						 HRTIM_Master_Interrupt_Enable or @ref
+						 HRTIM_Timing_Unit_Interrupt_Enable */
+	uint32_t DMARequests;		      /*!< Relevant for all HRTIM timers, including the
+						 master. Specifies which DMA requests must be enabled
+						 for the timer. This parameter can be any combination
+						 of  @ref HRTIM_Master_DMA_Request_Enable or @ref
+						 HRTIM_Timing_Unit_DMA_Request_Enable */
+	uint32_t DMASrcAddress;		      /*!< Relevant for all HRTIM timers, including
+						 the master. Specifies the address of the
+						 source address of the DMA transfer */
+	uint32_t DMADstAddress;		      /*!< Relevant for all HRTIM timers, including
+						 the master. Specifies the address of the
+						 destination address of the DMA transfer */
+	uint32_t DMASize;		      /*!< Relevant for all HRTIM timers, including the
+						 master. Specifies the size of the DMA transfer */
+	uint32_t HalfModeEnable;	      /*!< Relevant for all HRTIM timers, including
+						 the master.  Specifies whether or not half
+						 mode is enabled  This parameter can be any
+						 value of @ref HRTIM_Half_Mode_Enable  */
+	uint32_t InterleavedMode;	      /*!< Relevant for all HRTIM timers, including
+						 the master. Specifies whether or not half
+						 mode is enabled This parameter can be any
+						 value of @ref HRTIM_Interleaved_Mode  */
+	uint32_t StartOnSync;		      /*!< Relevant for all HRTIM timers, including the
+						 master. Specifies whether or not timer is reset
+						 by a rising edge on the synchronization input
+						 (when enabled). This parameter can be any value
+						 of @ref HRTIM_Start_On_Sync_Input_Event  */
+	uint32_t ResetOnSync;		      /*!< Relevant for all HRTIM timers, including the
+						 master. Specifies whether or not timer is reset
+						 by a rising edge on the synchronization input
+						 (when enabled). This parameter can be any value
+						 of @ref HRTIM_Reset_On_Sync_Input_Event  */
+	uint32_t DACSynchro;		      /*!< Relevant for all HRTIM timers, including the
+						 master. Indicates whether or not the a DAC
+						 synchronization event is generated. This parameter
+						 can be any value of @ref HRTIM_DAC_Synchronization */
+	uint32_t PreloadEnable;		      /*!< Relevant for all HRTIM timers, including the
+						 master. Specifies whether or not register preload
+						 is enabled. This parameter can be any value of
+						 @ref HRTIM_Register_Preload_Enable  */
+	uint32_t UpdateGating;		      /*!< Relevant for all HRTIM timers, including the
+						 master.   Specifies how the update occurs with
+						 respect to a burst DMA transaction or   update
+						 enable   inputs (Slave timers only).   This
+						 parameter can be   any value of @ref
+						 HRTIM_Update_Gating   */
+	uint32_t BurstMode;		      /*!< Relevant for all HRTIM timers, including the
+						 master. Specifies how the timer behaves during a
+						 burst mode operation. This parameter can be any
+						 value of @ref HRTIM_Timer_Burst_Mode  */
+	uint32_t RepetitionUpdate;	      /*!< Relevant for all HRTIM timers, including the
+						 master. Specifies whether or not registers
+						 update is triggered by the repetition event.
+						   This parameter can be any value of @ref
+						 HRTIM_Timer_Repetition_Update */
+	uint32_t PushPull;		      /*!< Relevant for Timer A to Timer F.
+						   Specifies whether or not the push-pull mode is
+						 enabled.    This parameter can be any value of
+						 @ref    HRTIM_Timer_Push_Pull_Mode */
+	uint32_t FaultEnable;		      /*!< Relevant for Timer A to Timer F.
+						   Specifies which fault channels are enabled for the
+						 timer.	    This parameter can be a combination
+						 of @ref	    HRTIM_Timer_Fault_Enabling  */
+	uint32_t FaultLock;		      /*!< Relevant for Timer A to Timer F.
+						   Specifies whether or not fault enabling status
+						 is write protected.	 This parameter can be a
+						 value	 of @ref HRTIM_Timer_Fault_Lock */
+	uint32_t DeadTimeInsertion;	      /*!< Relevant for Timer A to Timer F.
+						   Specifies whether or not dead-time
+						 insertion is enabled for the timer. This
+						 parameter can be a value of @ref
+						 HRTIM_Timer_Deadtime_Insertion */
+	uint32_t DelayedProtectionMode;	      /*!< Relevant for Timer A to Timer F.
+						   Specifies the delayed protection mode.
+						   This parameter can be a value of @ref
+						 HRTIM_Timer_Delayed_Protection_Mode */
+	uint32_t BalancedIdleAutomaticResume; /*!< Indicates whether or not outputs
+						 are automatically re-enabled after a
+						 balanced idle event. This parameters
+						 can be any value of @ref
+						 HRTIM_Output_Balanced_Idle_Auto_Resume
+					       */
+	uint32_t UpdateTrigger;		      /*!< Relevant for Timer A to Timer F.
+						   Specifies source(s) triggering the timer
+						 registers update. This parameter can be a
+						 combination of @ref HRTIM_Timer_Update_Trigger */
+	uint32_t ResetTrigger;		      /*!< Relevant for Timer A to Timer F.
+						   Specifies source(s) triggering the timer counter
+						 reset.     This parameter can be a combination of
+						 @ref     HRTIM_Timer_Reset_Trigger */
+	uint32_t ResetUpdate;		      /*!<  Relevant for Timer A to Timer F.
+						    Specifies whether or not registers update is
+						 triggered when the timer counter is reset. This
+						 parameter can be a value of @ref
+						 HRTIM_Timer_Reset_Update */
+	uint32_t ReSyncUpdate;		      /*!<  Relevant for Timer A to Timer F.
+						    Specifies whether update source is coming from
+						 the timing unit @ref HRTIM_Timer_ReSyncUpdate */
 
-	/**
-	 * @brief  Compare unit configuration definition
-	 */
-	typedef struct
-	{
-		uint32_t CompareValue;	     /*!< Specifies the compare value of the timer compare
-						unit. The minimum value must be greater than or
-						equal to 3 periods of the fHRTIM clock. The maximum
-						value must be less than or equal to 0xFFFFU - 1
-						periods of the fHRTIM clock */
-		uint32_t AutoDelayedMode;    /*!< Specifies the auto delayed mode for compare
-						unit 2 or 4. This parameter can be a value of
-						@ref HRTIM_Compare_Unit_Auto_Delayed_Mode */
-		uint32_t AutoDelayedTimeout; /*!< Specifies compare value for timing unit 1
-						or 3 when auto delayed mode with time out is
-						selected. CompareValue +  AutoDelayedTimeout
-						must be less than 0xFFFFU */
-	} HRTIM_CompareCfgTypeDef;
+} HRTIM_TimerCfgTypeDef;
 
-	/**
-	 * @brief  Capture unit content definition
-	 */
-	typedef struct
-	{
-		uint32_t Value; /*!< Holds the counter value when the capture event
-				   occurred. This parameter can be a number between 0x0
-				   and 0xFFFFU */
-		uint32_t Dir;	/*!< Holds the counting direction value  when the capture
-				   event occurred. This parameter can be a value of @ref
-				   HRTIM_Timer_UpDown_Mode  */
-	} HRTIM_CaptureValueTypeDef;
+/**
+ * @brief  Timer control definition
+ */
+typedef struct {
+	uint32_t UpDownMode;	       /*!<  Relevant for Timer A to Timer F.
+					     Specifies whether or not counter is operating in
+					  up or up-down counting mode.    This parameter can be
+					  a    value of @ref HRTIM_Timer_UpDown_Mode */
+	uint32_t TrigHalf;	       /*!<  Relevant for Timer A to Timer F.
+					     Specifies whether or not compare 2 is operating
+					  in Trigger half mode. This parameter can be a
+					  value of @ref HRTIM_Timer_TrigHalf_Mode */
+	uint32_t GreaterCMP3;	       /*!<  Relevant for Timer A to Timer F.
+					     Specifies whether or not compare 3 is operating
+					  in compare match or greater mode. This parameter can
+					  be a value of @ref HRTIM_Timer_GreaterCMP3_Mode */
+	uint32_t GreaterCMP1;	       /*!<  Relevant for Timer A to Timer F.
+					     Specifies whether or not compare 1 is operating
+					  in compare match or greater mode. This parameter can
+					  be a value of @ref HRTIM_Timer_GreaterCMP1_Mode */
+	uint32_t DualChannelDacReset;  /*!<  Relevant for Timer A to Timer F.
+					     Specifies how the hrtim_dac_reset_trgx
+					  trigger is generated.       This parameter
+					  can be       a value of @ref
+					  HRTIM_Timer_DualChannelDac_Reset */
+	uint32_t DualChannelDacStep;   /*!<  Relevant for Timer A to Timer F.
+					     Specifies how the hrtim_dac_step_trgx
+					  trigger is generated.   This parameter
+					  can   be a value of @ref
+					  HRTIM_Timer_DualChannelDac_Step */
+	uint32_t DualChannelDacEnable; /*!<  Relevant for Timer A to Timer F.
+					     Enables or not the dual channel DAC
+					  triggering mechanism. This parameter
+					  can be a value of @ref
+					  HRTIM_Timer_DualChannelDac_Enable */
+} HRTIM_TimerCtlTypeDef;
 
-	/**
-	 * @brief  Capture unit configuration definition
-	 */
-	typedef struct
-	{
-		uint64_t Trigger; /*!< Specifies source(s) triggering the capture.
-				       This parameter can be a combination of @ref
-				     HRTIM_Capture_Unit_Trigger */
-	} HRTIM_CaptureCfgTypeDef;
+/**
+ * @brief  Compare unit configuration definition
+ */
+typedef struct {
+	uint32_t CompareValue;	     /*!< Specifies the compare value of the timer compare
+					unit. The minimum value must be greater than or
+					equal to 3 periods of the fHRTIM clock. The maximum
+					value must be less than or equal to 0xFFFFU - 1
+					periods of the fHRTIM clock */
+	uint32_t AutoDelayedMode;    /*!< Specifies the auto delayed mode for compare
+					unit 2 or 4. This parameter can be a value of
+					@ref HRTIM_Compare_Unit_Auto_Delayed_Mode */
+	uint32_t AutoDelayedTimeout; /*!< Specifies compare value for timing unit 1
+					or 3 when auto delayed mode with time out is
+					selected. CompareValue +  AutoDelayedTimeout
+					must be less than 0xFFFFU */
+} HRTIM_CompareCfgTypeDef;
 
-	/**
-	 * @brief  Output configuration definition
-	 */
-	typedef struct
-	{
-		uint32_t Polarity;		/*!< Specifies the output polarity.
-						     This parameter can be any value of @ref
-						   HRTIM_Output_Polarity */
-		uint32_t SetSource;		/*!< Specifies the event(s) transitioning the output
-						   from its inactive level to its active level. This
-						   parameter can be a combination of @ref
-						   HRTIM_Output_Set_Source */
-		uint32_t ResetSource;		/*!< Specifies the event(s) transitioning the
-						   output from its active level to its inactive
-						   level. This parameter can be a combination of
-						   @ref HRTIM_Output_Reset_Source */
-		uint32_t IdleMode;		/*!< Specifies whether or not the output is affected
-						   by a burst mode operation.  This parameter can be
-						   any value of @ref HRTIM_Output_Idle_Mode */
-		uint32_t IdleLevel;		/*!< Specifies whether the output level is active or
-						   inactive when in IDLE state. This parameter can
-						   be any value of @ref HRTIM_Output_IDLE_Level */
-		uint32_t FaultLevel;		/*!< Specifies whether the output level is active or
-						   inactive when in FAULT state. This parameter can be
-						   any value of @ref HRTIM_Output_FAULT_Level */
-		uint32_t ChopperModeEnable;	/*!< Indicates whether or not the chopper mode is
-						   enabled This parameter can be any value of
-						   @ref HRTIM_Output_Chopper_Mode_Enable */
-		uint32_t BurstModeEntryDelayed; /*!< Indicates whether or not dead-time is
-						   inserted when entering the IDLE state
-						   during a burst mode operation. This
-						   parameters can be any value of @ref
-						   HRTIM_Output_Burst_Mode_Entry_Delayed */
-	} HRTIM_OutputCfgTypeDef;
+/**
+ * @brief  Capture unit content definition
+ */
+typedef struct {
+	uint32_t Value; /*!< Holds the counter value when the capture event
+			   occurred. This parameter can be a number between 0x0
+			   and 0xFFFFU */
+	uint32_t Dir;	/*!< Holds the counting direction value  when the capture
+			   event occurred. This parameter can be a value of @ref
+			   HRTIM_Timer_UpDown_Mode  */
+} HRTIM_CaptureValueTypeDef;
 
-	/**
-	 * @brief  External event filtering in timing units configuration definition
-	 */
-	typedef struct
-	{
-		uint32_t Filter; /*!< Specifies the type of event filtering within the
-				    timing unit. This parameter can be a value of @ref
-				    HRTIM_Timer_External_Event_Filter */
-		uint32_t Latch;	 /*!< Specifies whether or not the signal is latched.
-				      This parameter can be a value of @ref
-				    HRTIM_Timer_External_Event_Latch */
-	} HRTIM_TimerEventFilteringCfgTypeDef;
+/**
+ * @brief  Capture unit configuration definition
+ */
+typedef struct {
+	uint64_t Trigger; /*!< Specifies source(s) triggering the capture.
+			       This parameter can be a combination of @ref
+			     HRTIM_Capture_Unit_Trigger */
+} HRTIM_CaptureCfgTypeDef;
 
-	/**
-	 * @brief  Dead time feature configuration definition
-	 */
-	typedef struct
-	{
-		uint32_t Prescaler;	  /*!< Specifies the dead-time prescaler.
-					       This parameter can be a value of @ref
-					     HRTIM_Deadtime_Prescaler_Ratio */
-		uint32_t RisingValue;	  /*!< Specifies the dead-time following a rising
-					     edge. This parameter can be a number between
-					     0x0 and 0x1FFU */
-		uint32_t RisingSign;	  /*!< Specifies whether the dead-time is positive or
-					     negative on rising edge. This parameter can be a
-					     value of @ref HRTIM_Deadtime_Rising_Sign */
-		uint32_t RisingLock;	  /*!< Specifies whether or not dead-time rising settings
-					     (value and sign) are write protected. This parameter
-					     can be a value of @ref HRTIM_Deadtime_Rising_Lock */
-		uint32_t RisingSignLock;  /*!< Specifies whether or not dead-time rising sign
-					     is write protected. This parameter can be a value
-					     of @ref HRTIM_Deadtime_Rising_Sign_Lock */
-		uint32_t FallingValue;	  /*!< Specifies the dead-time following a falling
-					     edge. This parameter can be a number between
-					     0x0 and 0x1FFU */
-		uint32_t FallingSign;	  /*!< Specifies whether the dead-time is positive or
-					     negative on falling edge. This parameter can be a
-					     value of @ref HRTIM_Deadtime_Falling_Sign */
-		uint32_t FallingLock;	  /*!< Specifies whether or not dead-time falling
-					     settings (value and sign) are write protected.
-					       This parameter can be a value of @ref
-					     HRTIM_Deadtime_Falling_Lock */
-		uint32_t FallingSignLock; /*!< Specifies whether or not dead-time
-					     falling sign is write protected. This
-					     parameter can be a value of @ref
-					     HRTIM_Deadtime_Falling_Sign_Lock */
-	} HRTIM_DeadTimeCfgTypeDef;
-
-	/**
-	 * @brief  Chopper mode configuration definition
-	 */
-	typedef struct
-	{
-		uint32_t CarrierFreq; /*!< Specifies the Timer carrier frequency value.
-					   This parameter can be a value of @ref
-					 HRTIM_Chopper_Frequency */
-		uint32_t DutyCycle;   /*!< Specifies the Timer chopper duty cycle value.
-					   This parameter can be a value of @ref
-					 HRTIM_Chopper_Duty_Cycle */
-		uint32_t StartPulse;  /*!< Specifies the Timer pulse width value.
-					   This parameter can be a value of @ref
-					 HRTIM_Chopper_Start_Pulse_Width */
-	} HRTIM_ChopperModeCfgTypeDef;
-
-	/**
-	 * @brief  External event channel configuration definition
-	 */
-	typedef struct
-	{
-		uint32_t Source;      /*!< Identifies the source of the external event.
-					   This parameter can be a value of @ref
-					 HRTIM_External_Event_Sources */
-		uint32_t Polarity;    /*!< Specifies the polarity of the external event (in
-					 case of level sensitivity). This parameter can be
-					 a value of @ref HRTIM_External_Event_Polarity */
-		uint32_t Sensitivity; /*!< Specifies the sensitivity of the external
-					 event. This parameter can be a value of @ref
-					 HRTIM_External_Event_Sensitivity */
-		uint32_t Filter;      /*!< Defines the frequency used to sample the External Event
-					 and the length of the digital filter. This parameter can
-					 be a value of @ref HRTIM_External_Event_Filter */
-		uint32_t FastMode;    /*!< Indicates whether or not low latency mode is enabled
-					 for the external event. This parameter can be a value
-					 of @ref HRTIM_External_Event_Fast_Mode */
-	} HRTIM_EventCfgTypeDef;
-
-	/**
-	 * @brief  Fault channel configuration definition
-	 */
-	typedef struct
-	{
-		uint32_t Source;   /*!< Identifies the source of the fault.
-					This parameter can be a value of @ref
-				      HRTIM_Fault_Sources */
-		uint32_t Polarity; /*!< Specifies the polarity of the fault event.
-					This parameter can be a value of @ref
-				      HRTIM_Fault_Polarity */
-		uint32_t Filter;   /*!< Defines the frequency used to sample the Fault input
-				      and the length of the digital filter.    This parameter
-				      can    be a value of @ref HRTIM_Fault_Filter */
-		uint32_t Lock;	   /*!< Indicates whether or not fault programming bits are
-				      write protected. This parameter can be a value of @ref
-				      HRTIM_Fault_Lock */
-	} HRTIM_FaultCfgTypeDef;
-
-	typedef struct
-	{
-		uint32_t Threshold;	 /*!< Specifies the Fault counter Threshold.
-					      This parameter can be a number between 0x0 and
-					    0xF  */
-		uint32_t ResetMode;	 /*!< Specifies the reset mode of a fault event
-					    counter.      This parameter can be a value of
-					    @ref      HRTIM_Fault_ResetMode */
-		uint32_t BlankingSource; /*!< Specifies the blanking source of a fault
-					    event. This parameter can be a value of @ref
-					    HRTIM_Fault_Blanking */
-	} HRTIM_FaultBlankingCfgTypeDef;
-
-	/**
-	 * @brief  Burst mode configuration definition
-	 */
-	typedef struct
-	{
-		uint32_t Mode;		/*!< Specifies the burst mode operating mode.
-					     This parameter can be a value of @ref
-					   HRTIM_Burst_Mode_Operating_Mode */
-		uint32_t ClockSource;	/*!< Specifies the burst mode clock source.
-					     This parameter can be a value of @ref
-					   HRTIM_Burst_Mode_Clock_Source */
-		uint32_t Prescaler;	/*!< Specifies the burst mode prescaler.
-					     This parameter can be a value of @ref
-					   HRTIM_Burst_Mode_Prescaler */
-		uint32_t PreloadEnable; /*!< Specifies whether or not preload is enabled
-					   for burst mode related registers
-					   (HRTIM_BMCMPR and HRTIM_BMPER). This
+/**
+ * @brief  Output configuration definition
+ */
+typedef struct {
+	uint32_t Polarity;		/*!< Specifies the output polarity.
+					     This parameter can be any value of @ref
+					   HRTIM_Output_Polarity */
+	uint32_t SetSource;		/*!< Specifies the event(s) transitioning the output
+					   from its inactive level to its active level. This
 					   parameter can be a combination of @ref
-					   HRTIM_Burst_Mode_Register_Preload_Enable  */
-		uint32_t Trigger;	/*!< Specifies the event(s) triggering the burst
-					   operation.       This parameter can be a combination of
-					   @ref HRTIM_Burst_Mode_Trigger  */
-		uint32_t IdleDuration;	/*!< Specifies number of periods during which the
-					   selected timers are in idle state. This parameter
-					   can be a number between 0x0 and 0xFFFF  */
-		uint32_t Period;	/*!< Specifies burst mode repetition period.
-					     This parameter can be a number between 0x1 and
-					   0xFFFF  */
-	} HRTIM_BurstModeCfgTypeDef;
+					   HRTIM_Output_Set_Source */
+	uint32_t ResetSource;		/*!< Specifies the event(s) transitioning the
+					   output from its active level to its inactive
+					   level. This parameter can be a combination of
+					   @ref HRTIM_Output_Reset_Source */
+	uint32_t IdleMode;		/*!< Specifies whether or not the output is affected
+					   by a burst mode operation.  This parameter can be
+					   any value of @ref HRTIM_Output_Idle_Mode */
+	uint32_t IdleLevel;		/*!< Specifies whether the output level is active or
+					   inactive when in IDLE state. This parameter can
+					   be any value of @ref HRTIM_Output_IDLE_Level */
+	uint32_t FaultLevel;		/*!< Specifies whether the output level is active or
+					   inactive when in FAULT state. This parameter can be
+					   any value of @ref HRTIM_Output_FAULT_Level */
+	uint32_t ChopperModeEnable;	/*!< Indicates whether or not the chopper mode is
+					   enabled This parameter can be any value of
+					   @ref HRTIM_Output_Chopper_Mode_Enable */
+	uint32_t BurstModeEntryDelayed; /*!< Indicates whether or not dead-time is
+					   inserted when entering the IDLE state
+					   during a burst mode operation. This
+					   parameters can be any value of @ref
+					   HRTIM_Output_Burst_Mode_Entry_Delayed */
+} HRTIM_OutputCfgTypeDef;
 
-	/**
-	 * @brief  ADC trigger configuration definition
-	 */
-	typedef struct
-	{
-		uint32_t UpdateSource; /*!< Specifies the ADC trigger update source.
-					    This parameter can be a value of @ref
-					  HRTIM_ADC_Trigger_Update_Source  */
-		uint32_t Trigger;      /*!< Specifies the event(s) triggering the ADC
-					  conversion.      This parameter can be a combination of
-					  @ref HRTIM_ADC_Trigger_Event  */
-	} HRTIM_ADCTriggerCfgTypeDef;
+/**
+ * @brief  External event filtering in timing units configuration definition
+ */
+typedef struct {
+	uint32_t Filter; /*!< Specifies the type of event filtering within the
+			    timing unit. This parameter can be a value of @ref
+			    HRTIM_Timer_External_Event_Filter */
+	uint32_t Latch;	 /*!< Specifies whether or not the signal is latched.
+			      This parameter can be a value of @ref
+			    HRTIM_Timer_External_Event_Latch */
+} HRTIM_TimerEventFilteringCfgTypeDef;
 
-	/**
-	 * @brief  External Event Counter A or B configuration definition
-	 */
-	typedef struct
-	{
-		uint32_t ResetMode; /*!< Specifies the External Event Counter A or B
-				       Reset Mode. This parameter can be a value of @ref
-				       HRTIM_Timer_External_Event_ResetMode  */
-		uint32_t Source;    /*!< Specifies the External Event Counter source
-				       selection.    This parameter can be one of @ref
-				       HRTIM_External_Event_Channels  */
-		uint32_t Counter;   /*!< Specifies the External Event Counter Threshold.
-					 This parameter can be a number between 0x0 and 0x3F */
-	} HRTIM_ExternalEventCfgTypeDef;
+/**
+ * @brief  Dead time feature configuration definition
+ */
+typedef struct {
+	uint32_t Prescaler;	  /*!< Specifies the dead-time prescaler.
+				       This parameter can be a value of @ref
+				     HRTIM_Deadtime_Prescaler_Ratio */
+	uint32_t RisingValue;	  /*!< Specifies the dead-time following a rising
+				     edge. This parameter can be a number between
+				     0x0 and 0x1FFU */
+	uint32_t RisingSign;	  /*!< Specifies whether the dead-time is positive or
+				     negative on rising edge. This parameter can be a
+				     value of @ref HRTIM_Deadtime_Rising_Sign */
+	uint32_t RisingLock;	  /*!< Specifies whether or not dead-time rising settings
+				     (value and sign) are write protected. This parameter
+				     can be a value of @ref HRTIM_Deadtime_Rising_Lock */
+	uint32_t RisingSignLock;  /*!< Specifies whether or not dead-time rising sign
+				     is write protected. This parameter can be a value
+				     of @ref HRTIM_Deadtime_Rising_Sign_Lock */
+	uint32_t FallingValue;	  /*!< Specifies the dead-time following a falling
+				     edge. This parameter can be a number between
+				     0x0 and 0x1FFU */
+	uint32_t FallingSign;	  /*!< Specifies whether the dead-time is positive or
+				     negative on falling edge. This parameter can be a
+				     value of @ref HRTIM_Deadtime_Falling_Sign */
+	uint32_t FallingLock;	  /*!< Specifies whether or not dead-time falling
+				     settings (value and sign) are write protected.
+				       This parameter can be a value of @ref
+				     HRTIM_Deadtime_Falling_Lock */
+	uint32_t FallingSignLock; /*!< Specifies whether or not dead-time
+				     falling sign is write protected. This
+				     parameter can be a value of @ref
+				     HRTIM_Deadtime_Falling_Sign_Lock */
+} HRTIM_DeadTimeCfgTypeDef;
+
+/**
+ * @brief  Chopper mode configuration definition
+ */
+typedef struct {
+	uint32_t CarrierFreq; /*!< Specifies the Timer carrier frequency value.
+				   This parameter can be a value of @ref
+				 HRTIM_Chopper_Frequency */
+	uint32_t DutyCycle;   /*!< Specifies the Timer chopper duty cycle value.
+				   This parameter can be a value of @ref
+				 HRTIM_Chopper_Duty_Cycle */
+	uint32_t StartPulse;  /*!< Specifies the Timer pulse width value.
+				   This parameter can be a value of @ref
+				 HRTIM_Chopper_Start_Pulse_Width */
+} HRTIM_ChopperModeCfgTypeDef;
+
+/**
+ * @brief  External event channel configuration definition
+ */
+typedef struct {
+	uint32_t Source;      /*!< Identifies the source of the external event.
+				   This parameter can be a value of @ref
+				 HRTIM_External_Event_Sources */
+	uint32_t Polarity;    /*!< Specifies the polarity of the external event (in
+				 case of level sensitivity). This parameter can be
+				 a value of @ref HRTIM_External_Event_Polarity */
+	uint32_t Sensitivity; /*!< Specifies the sensitivity of the external
+				 event. This parameter can be a value of @ref
+				 HRTIM_External_Event_Sensitivity */
+	uint32_t Filter;      /*!< Defines the frequency used to sample the External Event
+				 and the length of the digital filter. This parameter can
+				 be a value of @ref HRTIM_External_Event_Filter */
+	uint32_t FastMode;    /*!< Indicates whether or not low latency mode is enabled
+				 for the external event. This parameter can be a value
+				 of @ref HRTIM_External_Event_Fast_Mode */
+} HRTIM_EventCfgTypeDef;
+
+/**
+ * @brief  Fault channel configuration definition
+ */
+typedef struct {
+	uint32_t Source;   /*!< Identifies the source of the fault.
+				This parameter can be a value of @ref
+			      HRTIM_Fault_Sources */
+	uint32_t Polarity; /*!< Specifies the polarity of the fault event.
+				This parameter can be a value of @ref
+			      HRTIM_Fault_Polarity */
+	uint32_t Filter;   /*!< Defines the frequency used to sample the Fault input
+			      and the length of the digital filter.    This parameter
+			      can    be a value of @ref HRTIM_Fault_Filter */
+	uint32_t Lock;	   /*!< Indicates whether or not fault programming bits are
+			      write protected. This parameter can be a value of @ref
+			      HRTIM_Fault_Lock */
+} HRTIM_FaultCfgTypeDef;
+
+typedef struct {
+	uint32_t Threshold;	 /*!< Specifies the Fault counter Threshold.
+				      This parameter can be a number between 0x0 and
+				    0xF  */
+	uint32_t ResetMode;	 /*!< Specifies the reset mode of a fault event
+				    counter.      This parameter can be a value of
+				    @ref      HRTIM_Fault_ResetMode */
+	uint32_t BlankingSource; /*!< Specifies the blanking source of a fault
+				    event. This parameter can be a value of @ref
+				    HRTIM_Fault_Blanking */
+} HRTIM_FaultBlankingCfgTypeDef;
+
+/**
+ * @brief  Burst mode configuration definition
+ */
+typedef struct {
+	uint32_t Mode;		/*!< Specifies the burst mode operating mode.
+				     This parameter can be a value of @ref
+				   HRTIM_Burst_Mode_Operating_Mode */
+	uint32_t ClockSource;	/*!< Specifies the burst mode clock source.
+				     This parameter can be a value of @ref
+				   HRTIM_Burst_Mode_Clock_Source */
+	uint32_t Prescaler;	/*!< Specifies the burst mode prescaler.
+				     This parameter can be a value of @ref
+				   HRTIM_Burst_Mode_Prescaler */
+	uint32_t PreloadEnable; /*!< Specifies whether or not preload is enabled
+				   for burst mode related registers
+				   (HRTIM_BMCMPR and HRTIM_BMPER). This
+				   parameter can be a combination of @ref
+				   HRTIM_Burst_Mode_Register_Preload_Enable  */
+	uint32_t Trigger;	/*!< Specifies the event(s) triggering the burst
+				   operation.       This parameter can be a combination of
+				   @ref HRTIM_Burst_Mode_Trigger  */
+	uint32_t IdleDuration;	/*!< Specifies number of periods during which the
+				   selected timers are in idle state. This parameter
+				   can be a number between 0x0 and 0xFFFF  */
+	uint32_t Period;	/*!< Specifies burst mode repetition period.
+				     This parameter can be a number between 0x1 and
+				   0xFFFF  */
+} HRTIM_BurstModeCfgTypeDef;
+
+/**
+ * @brief  ADC trigger configuration definition
+ */
+typedef struct {
+	uint32_t UpdateSource; /*!< Specifies the ADC trigger update source.
+				    This parameter can be a value of @ref
+				  HRTIM_ADC_Trigger_Update_Source  */
+	uint32_t Trigger;      /*!< Specifies the event(s) triggering the ADC
+				  conversion.      This parameter can be a combination of
+				  @ref HRTIM_ADC_Trigger_Event  */
+} HRTIM_ADCTriggerCfgTypeDef;
+
+/**
+ * @brief  External Event Counter A or B configuration definition
+ */
+typedef struct {
+	uint32_t ResetMode; /*!< Specifies the External Event Counter A or B
+			       Reset Mode. This parameter can be a value of @ref
+			       HRTIM_Timer_External_Event_ResetMode  */
+	uint32_t Source;    /*!< Specifies the External Event Counter source
+			       selection.    This parameter can be one of @ref
+			       HRTIM_External_Event_Channels  */
+	uint32_t Counter;   /*!< Specifies the External Event Counter Threshold.
+				 This parameter can be a number between 0x0 and 0x3F */
+} HRTIM_ExternalEventCfgTypeDef;
 
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
-	/**
-	 * @brief  HAL HRTIM Callback ID enumeration definition
-	 */
-	typedef enum
-	{
-		HAL_HRTIM_FAULT1CALLBACK_CB_ID = 0x00U,		      /*!< Fault 1 interrupt callback ID                         */
-		HAL_HRTIM_FAULT2CALLBACK_CB_ID = 0x01U,		      /*!< Fault 2 interrupt callback ID                         */
-		HAL_HRTIM_FAULT3CALLBACK_CB_ID = 0x02U,		      /*!< Fault 3 interrupt callback ID                         */
-		HAL_HRTIM_FAULT4CALLBACK_CB_ID = 0x03U,		      /*!< Fault 4 interrupt callback ID                         */
-		HAL_HRTIM_FAULT5CALLBACK_CB_ID = 0x04U,		      /*!< Fault 5 interrupt callback ID                         */
-		HAL_HRTIM_SYSTEMFAULTCALLBACK_CB_ID = 0x05U,	      /*!< System fault interrupt callback ID                    */
-		HAL_HRTIM_DLLCALBRATIONREADYCALLBACK_CB_ID = 0x06U,   /*!< DLL Ready interrupt callback ID */
-		HAL_HRTIM_BURSTMODEPERIODCALLBACK_CB_ID = 0x07U,      /*!< Burst mode period interrupt callback ID               */
-		HAL_HRTIM_SYNCHRONIZATIONEVENTCALLBACK_CB_ID = 0x08U, /*!< Sync Input interrupt callback ID */
-		HAL_HRTIM_ERRORCALLBACK_CB_ID = 0x09U,		      /*!< DMA error callback ID */
+/**
+ * @brief  HAL HRTIM Callback ID enumeration definition
+ */
+typedef enum {
+	HAL_HRTIM_FAULT1CALLBACK_CB_ID = 0x00U,		      /*!< Fault 1 interrupt callback ID                         */
+	HAL_HRTIM_FAULT2CALLBACK_CB_ID = 0x01U,		      /*!< Fault 2 interrupt callback ID                         */
+	HAL_HRTIM_FAULT3CALLBACK_CB_ID = 0x02U,		      /*!< Fault 3 interrupt callback ID                         */
+	HAL_HRTIM_FAULT4CALLBACK_CB_ID = 0x03U,		      /*!< Fault 4 interrupt callback ID                         */
+	HAL_HRTIM_FAULT5CALLBACK_CB_ID = 0x04U,		      /*!< Fault 5 interrupt callback ID                         */
+	HAL_HRTIM_SYSTEMFAULTCALLBACK_CB_ID = 0x05U,	      /*!< System fault interrupt callback ID                    */
+	HAL_HRTIM_DLLCALBRATIONREADYCALLBACK_CB_ID = 0x06U,   /*!< DLL Ready interrupt callback ID */
+	HAL_HRTIM_BURSTMODEPERIODCALLBACK_CB_ID = 0x07U,      /*!< Burst mode period interrupt callback ID               */
+	HAL_HRTIM_SYNCHRONIZATIONEVENTCALLBACK_CB_ID = 0x08U, /*!< Sync Input interrupt callback ID */
+	HAL_HRTIM_ERRORCALLBACK_CB_ID = 0x09U,		      /*!< DMA error callback ID */
 
-		HAL_HRTIM_REGISTERSUPDATECALLBACK_CB_ID = 0x10U,   /*!< Timer x Update interrupt callback ID                  */
-		HAL_HRTIM_REPETITIONEVENTCALLBACK_CB_ID = 0x11U,   /*!< Timer x Repetition interrupt callback ID              */
-		HAL_HRTIM_COMPARE1EVENTCALLBACK_CB_ID = 0x12U,	   /*!< Timer x Compare 1 match interrupt callback ID         */
-		HAL_HRTIM_COMPARE2EVENTCALLBACK_CB_ID = 0x13U,	   /*!< Timer x Compare 2 match interrupt callback ID         */
-		HAL_HRTIM_COMPARE3EVENTCALLBACK_CB_ID = 0x14U,	   /*!< Timer x Compare 3 match interrupt callback ID         */
-		HAL_HRTIM_COMPARE4EVENTCALLBACK_CB_ID = 0x15U,	   /*!< Timer x Compare 4 match interrupt callback ID         */
-		HAL_HRTIM_CAPTURE1EVENTCALLBACK_CB_ID = 0x16U,	   /*!< Timer x Capture 1 interrupts callback ID              */
-		HAL_HRTIM_CAPTURE2EVENTCALLBACK_CB_ID = 0x17U,	   /*!< Timer x Capture 2 interrupts callback ID              */
-		HAL_HRTIM_DELAYEDPROTECTIONCALLBACK_CB_ID = 0x18U, /*!< Timer x Delayed protection interrupt callback ID      */
-		HAL_HRTIM_COUNTERRESETCALLBACK_CB_ID = 0x19U,	   /*!< Timer x counter reset/roll-over interrupt callback ID */
-		HAL_HRTIM_OUTPUT1SETCALLBACK_CB_ID = 0x1AU,	   /*!< Timer x output 1 set interrupt callback ID            */
-		HAL_HRTIM_OUTPUT1RESETCALLBACK_CB_ID = 0x1BU,	   /*!< Timer x output 1 reset interrupt callback ID          */
-		HAL_HRTIM_OUTPUT2SETCALLBACK_CB_ID = 0x1CU,	   /*!< Timer x output 2 set interrupt callback ID            */
-		HAL_HRTIM_OUTPUT2RESETCALLBACK_CB_ID = 0x1DU,	   /*!< Timer x output 2 reset interrupt callback ID          */
-		HAL_HRTIM_BURSTDMATRANSFERCALLBACK_CB_ID = 0x1EU,  /*!< Timer x Burst DMA completed interrupt callback ID     */
+	HAL_HRTIM_REGISTERSUPDATECALLBACK_CB_ID = 0x10U,   /*!< Timer x Update interrupt callback ID                  */
+	HAL_HRTIM_REPETITIONEVENTCALLBACK_CB_ID = 0x11U,   /*!< Timer x Repetition interrupt callback ID              */
+	HAL_HRTIM_COMPARE1EVENTCALLBACK_CB_ID = 0x12U,	   /*!< Timer x Compare 1 match interrupt callback ID         */
+	HAL_HRTIM_COMPARE2EVENTCALLBACK_CB_ID = 0x13U,	   /*!< Timer x Compare 2 match interrupt callback ID         */
+	HAL_HRTIM_COMPARE3EVENTCALLBACK_CB_ID = 0x14U,	   /*!< Timer x Compare 3 match interrupt callback ID         */
+	HAL_HRTIM_COMPARE4EVENTCALLBACK_CB_ID = 0x15U,	   /*!< Timer x Compare 4 match interrupt callback ID         */
+	HAL_HRTIM_CAPTURE1EVENTCALLBACK_CB_ID = 0x16U,	   /*!< Timer x Capture 1 interrupts callback ID              */
+	HAL_HRTIM_CAPTURE2EVENTCALLBACK_CB_ID = 0x17U,	   /*!< Timer x Capture 2 interrupts callback ID              */
+	HAL_HRTIM_DELAYEDPROTECTIONCALLBACK_CB_ID = 0x18U, /*!< Timer x Delayed protection interrupt callback ID      */
+	HAL_HRTIM_COUNTERRESETCALLBACK_CB_ID = 0x19U,	   /*!< Timer x counter reset/roll-over interrupt callback ID */
+	HAL_HRTIM_OUTPUT1SETCALLBACK_CB_ID = 0x1AU,	   /*!< Timer x output 1 set interrupt callback ID            */
+	HAL_HRTIM_OUTPUT1RESETCALLBACK_CB_ID = 0x1BU,	   /*!< Timer x output 1 reset interrupt callback ID          */
+	HAL_HRTIM_OUTPUT2SETCALLBACK_CB_ID = 0x1CU,	   /*!< Timer x output 2 set interrupt callback ID            */
+	HAL_HRTIM_OUTPUT2RESETCALLBACK_CB_ID = 0x1DU,	   /*!< Timer x output 2 reset interrupt callback ID          */
+	HAL_HRTIM_BURSTDMATRANSFERCALLBACK_CB_ID = 0x1EU,  /*!< Timer x Burst DMA completed interrupt callback ID     */
 
-		HAL_HRTIM_MSPINIT_CB_ID = 0x20U,	/*!< HRTIM MspInit callback ID   */
-		HAL_HRTIM_MSPDEINIT_CB_ID = 0x21U,	/*!< HRTIM MspInit callback ID */
-		HAL_HRTIM_FAULT6CALLBACK_CB_ID = 0x22U, /*!< Fault 6 interrupt callback ID                         */
-	} HAL_HRTIM_CallbackIDTypeDef;
+	HAL_HRTIM_MSPINIT_CB_ID = 0x20U,	/*!< HRTIM MspInit callback ID   */
+	HAL_HRTIM_MSPDEINIT_CB_ID = 0x21U,	/*!< HRTIM MspInit callback ID */
+	HAL_HRTIM_FAULT6CALLBACK_CB_ID = 0x22U, /*!< Fault 6 interrupt callback ID                         */
+} HAL_HRTIM_CallbackIDTypeDef;
 
-	/**
-	 * @brief  HAL HRTIM Callback function pointer definitions
-	 */
-	typedef void (*pHRTIM_CallbackTypeDef)(HRTIM_HandleTypeDef *hhrtim); /*!< HRTIM related callback function pointer */
+/**
+ * @brief  HAL HRTIM Callback function pointer definitions
+ */
+typedef void (*pHRTIM_CallbackTypeDef)(HRTIM_HandleTypeDef *hhrtim); /*!< HRTIM related callback function pointer */
 
-	typedef void (*pHRTIM_TIMxCallbackTypeDef)(HRTIM_HandleTypeDef *hhrtim, /*!< HRTIM Timer x related callback function pointer */
-						   uint32_t TimerIdx);
+typedef void (*pHRTIM_TIMxCallbackTypeDef)(HRTIM_HandleTypeDef *hhrtim, /*!< HRTIM Timer x related callback function pointer */
+					   uint32_t TimerIdx);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
 
 /**
@@ -4328,30 +4303,23 @@ extern "C"
  * @retval none
  */
 #define __HAL_HRTIM_COUNTER_MODE_UP(__HANDLE__, __TIMERS__)                                                                                                                                            \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_A) == HRTIM_TIMERINDEX_TIMER_A)                                                                                                             \
-		{                                                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_A) == HRTIM_TIMERINDEX_TIMER_A) {                                                                                                           \
 			CLEAR_BIT((__HANDLE__)->Instance->sTimerxRegs[(HRTIM_TIMERINDEX_TIMER_A)].TIMxCR2, (HRTIM_TIMCR2_UDM));                                                                        \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_B) == HRTIM_TIMERINDEX_TIMER_B)                                                                                                             \
-		{                                                                                                                                                                                      \
+		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_B) == HRTIM_TIMERINDEX_TIMER_B) {                                                                                                           \
 			CLEAR_BIT((__HANDLE__)->Instance->sTimerxRegs[(HRTIM_TIMERINDEX_TIMER_B)].TIMxCR2, (HRTIM_TIMCR2_UDM));                                                                        \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_C) == HRTIM_TIMERINDEX_TIMER_C)                                                                                                             \
-		{                                                                                                                                                                                      \
+		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_C) == HRTIM_TIMERINDEX_TIMER_C) {                                                                                                           \
 			CLEAR_BIT((__HANDLE__)->Instance->sTimerxRegs[(HRTIM_TIMERINDEX_TIMER_C)].TIMxCR2, (HRTIM_TIMCR2_UDM));                                                                        \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_D) == HRTIM_TIMERINDEX_TIMER_D)                                                                                                             \
-		{                                                                                                                                                                                      \
+		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_D) == HRTIM_TIMERINDEX_TIMER_D) {                                                                                                           \
 			CLEAR_BIT((__HANDLE__)->Instance->sTimerxRegs[(HRTIM_TIMERINDEX_TIMER_D)].TIMxCR2, (HRTIM_TIMCR2_UDM));                                                                        \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_E) == HRTIM_TIMERINDEX_TIMER_E)                                                                                                             \
-		{                                                                                                                                                                                      \
+		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_E) == HRTIM_TIMERINDEX_TIMER_E) {                                                                                                           \
 			CLEAR_BIT((__HANDLE__)->Instance->sTimerxRegs[(HRTIM_TIMERINDEX_TIMER_E)].TIMxCR2, (HRTIM_TIMCR2_UDM));                                                                        \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_F) == HRTIM_TIMERINDEX_TIMER_F)                                                                                                             \
-		{                                                                                                                                                                                      \
+		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_F) == HRTIM_TIMERINDEX_TIMER_F) {                                                                                                           \
 			CLEAR_BIT((__HANDLE__)->Instance->sTimerxRegs[(HRTIM_TIMERINDEX_TIMER_F)].TIMxCR2, (HRTIM_TIMCR2_UDM));                                                                        \
 		}                                                                                                                                                                                      \
 	} while (0U)
@@ -4372,30 +4340,23 @@ extern "C"
  * @retval none
  */
 #define __HAL_HRTIM_COUNTER_MODE_UPDOWN(__HANDLE__, __TIMERS__)                                                                                                                                        \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_A) == HRTIM_TIMERINDEX_TIMER_A)                                                                                                             \
-		{                                                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_A) == HRTIM_TIMERINDEX_TIMER_A) {                                                                                                           \
 			SET_BIT((__HANDLE__)->Instance->sTimerxRegs[(HRTIM_TIMERINDEX_TIMER_A)].TIMxCR2, (HRTIM_TIMCR2_UDM));                                                                          \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_B) == HRTIM_TIMERINDEX_TIMER_B)                                                                                                             \
-		{                                                                                                                                                                                      \
+		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_B) == HRTIM_TIMERINDEX_TIMER_B) {                                                                                                           \
 			SET_BIT((__HANDLE__)->Instance->sTimerxRegs[(HRTIM_TIMERINDEX_TIMER_B)].TIMxCR2, (HRTIM_TIMCR2_UDM));                                                                          \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_C) == HRTIM_TIMERINDEX_TIMER_C)                                                                                                             \
-		{                                                                                                                                                                                      \
+		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_C) == HRTIM_TIMERINDEX_TIMER_C) {                                                                                                           \
 			SET_BIT((__HANDLE__)->Instance->sTimerxRegs[(HRTIM_TIMERINDEX_TIMER_C)].TIMxCR2, (HRTIM_TIMCR2_UDM));                                                                          \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_D) == HRTIM_TIMERINDEX_TIMER_D)                                                                                                             \
-		{                                                                                                                                                                                      \
+		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_D) == HRTIM_TIMERINDEX_TIMER_D) {                                                                                                           \
 			SET_BIT((__HANDLE__)->Instance->sTimerxRegs[(HRTIM_TIMERINDEX_TIMER_D)].TIMxCR2, (HRTIM_TIMCR2_UDM));                                                                          \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_E) == HRTIM_TIMERINDEX_TIMER_E)                                                                                                             \
-		{                                                                                                                                                                                      \
+		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_E) == HRTIM_TIMERINDEX_TIMER_E) {                                                                                                           \
 			SET_BIT((__HANDLE__)->Instance->sTimerxRegs[(HRTIM_TIMERINDEX_TIMER_E)].TIMxCR2, (HRTIM_TIMCR2_UDM));                                                                          \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_F) == HRTIM_TIMERINDEX_TIMER_F)                                                                                                             \
-		{                                                                                                                                                                                      \
+		if (((__TIMERS__) & HRTIM_TIMERINDEX_TIMER_F) == HRTIM_TIMERINDEX_TIMER_F) {                                                                                                           \
 			SET_BIT((__HANDLE__)->Instance->sTimerxRegs[(HRTIM_TIMERINDEX_TIMER_F)].TIMxCR2, (HRTIM_TIMCR2_UDM));                                                                          \
 		}                                                                                                                                                                                      \
 	} while (0U)
@@ -4417,30 +4378,23 @@ extern "C"
  * @retval none
  */
 #define __HAL_HRTIM_TIMER_OUTPUT_SWAP(__HANDLE__, __TIMERS__)                                                                                                                                          \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_A) == HRTIM_TIMERID_TIMER_A)                                                                                                                   \
-		{                                                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_A) == HRTIM_TIMERID_TIMER_A) {                                                                                                                 \
 			SET_BIT((__HANDLE__)->Instance->sCommonRegs.CR2, (HRTIM_CR2_SWPA));                                                                                                            \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_B) == HRTIM_TIMERID_TIMER_B)                                                                                                                   \
-		{                                                                                                                                                                                      \
+		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_B) == HRTIM_TIMERID_TIMER_B) {                                                                                                                 \
 			SET_BIT((__HANDLE__)->Instance->sCommonRegs.CR2, (HRTIM_CR2_SWPB));                                                                                                            \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_C) == HRTIM_TIMERID_TIMER_C)                                                                                                                   \
-		{                                                                                                                                                                                      \
+		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_C) == HRTIM_TIMERID_TIMER_C) {                                                                                                                 \
 			SET_BIT((__HANDLE__)->Instance->sCommonRegs.CR2, (HRTIM_CR2_SWPC));                                                                                                            \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_D) == HRTIM_TIMERID_TIMER_D)                                                                                                                   \
-		{                                                                                                                                                                                      \
+		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_D) == HRTIM_TIMERID_TIMER_D) {                                                                                                                 \
 			SET_BIT((__HANDLE__)->Instance->sCommonRegs.CR2, (HRTIM_CR2_SWPD));                                                                                                            \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_E) == HRTIM_TIMERID_TIMER_E)                                                                                                                   \
-		{                                                                                                                                                                                      \
+		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_E) == HRTIM_TIMERID_TIMER_E) {                                                                                                                 \
 			SET_BIT((__HANDLE__)->Instance->sCommonRegs.CR2, (HRTIM_CR2_SWPE));                                                                                                            \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_F) == HRTIM_TIMERID_TIMER_F)                                                                                                                   \
-		{                                                                                                                                                                                      \
+		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_F) == HRTIM_TIMERID_TIMER_F) {                                                                                                                 \
 			SET_BIT((__HANDLE__)->Instance->sCommonRegs.CR2, (HRTIM_CR2_SWPF));                                                                                                            \
 		}                                                                                                                                                                                      \
 	} while (0U)
@@ -4463,30 +4417,23 @@ extern "C"
 
   */
 #define __HAL_HRTIM_TIMER_OUTPUT_NOSWAP(__HANDLE__, __TIMERS__)                                                                                                                                        \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_A) == HRTIM_TIMERID_TIMER_A)                                                                                                                   \
-		{                                                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_A) == HRTIM_TIMERID_TIMER_A) {                                                                                                                 \
 			CLEAR_BIT((__HANDLE__)->Instance->sCommonRegs.CR2, (HRTIM_CR2_SWPA));                                                                                                          \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_B) == HRTIM_TIMERID_TIMER_B)                                                                                                                   \
-		{                                                                                                                                                                                      \
+		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_B) == HRTIM_TIMERID_TIMER_B) {                                                                                                                 \
 			CLEAR_BIT((__HANDLE__)->Instance->sCommonRegs.CR2, (HRTIM_CR2_SWPB));                                                                                                          \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_C) == HRTIM_TIMERID_TIMER_C)                                                                                                                   \
-		{                                                                                                                                                                                      \
+		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_C) == HRTIM_TIMERID_TIMER_C) {                                                                                                                 \
 			CLEAR_BIT((__HANDLE__)->Instance->sCommonRegs.CR2, (HRTIM_CR2_SWPC));                                                                                                          \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_D) == HRTIM_TIMERID_TIMER_D)                                                                                                                   \
-		{                                                                                                                                                                                      \
+		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_D) == HRTIM_TIMERID_TIMER_D) {                                                                                                                 \
 			CLEAR_BIT((__HANDLE__)->Instance->sCommonRegs.CR2, (HRTIM_CR2_SWPD));                                                                                                          \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_E) == HRTIM_TIMERID_TIMER_E)                                                                                                                   \
-		{                                                                                                                                                                                      \
+		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_E) == HRTIM_TIMERID_TIMER_E) {                                                                                                                 \
 			CLEAR_BIT((__HANDLE__)->Instance->sCommonRegs.CR2, (HRTIM_CR2_SWPE));                                                                                                          \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_F) == HRTIM_TIMERID_TIMER_F)                                                                                                                   \
-		{                                                                                                                                                                                      \
+		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_F) == HRTIM_TIMERID_TIMER_F) {                                                                                                                 \
 			CLEAR_BIT((__HANDLE__)->Instance->sCommonRegs.CR2, (HRTIM_CR2_SWPF));                                                                                                          \
 		}                                                                                                                                                                                      \
 	} while (0U)
@@ -4497,8 +4444,7 @@ extern "C"
  */
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
 #define __HAL_HRTIM_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                     \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		(__HANDLE__)->State = HAL_HRTIM_STATE_RESET;                                                                                                                                           \
 		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
 		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
@@ -4531,51 +4477,37 @@ extern "C"
 #define HRTIM_TEOEN_MASK (HRTIM_OENR_TE2OEN | HRTIM_OENR_TE1OEN)
 #define HRTIM_TFOEN_MASK (HRTIM_OENR_TF2OEN | HRTIM_OENR_TF1OEN)
 #define __HAL_HRTIM_DISABLE(__HANDLE__, __TIMERS__)                                                                                                                                                    \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if (((__TIMERS__) & HRTIM_TIMERID_MASTER) == HRTIM_TIMERID_MASTER)                                                                                                                     \
-		{                                                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		if (((__TIMERS__) & HRTIM_TIMERID_MASTER) == HRTIM_TIMERID_MASTER) {                                                                                                                   \
 			((__HANDLE__)->Instance->sMasterRegs.MCR &= ~HRTIM_TIMERID_MASTER);                                                                                                            \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_A) == HRTIM_TIMERID_TIMER_A)                                                                                                                   \
-		{                                                                                                                                                                                      \
-			if (((__HANDLE__)->Instance->sCommonRegs.OENR & HRTIM_TAOEN_MASK) == (uint32_t)RESET)                                                                                          \
-			{                                                                                                                                                                              \
+		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_A) == HRTIM_TIMERID_TIMER_A) {                                                                                                                 \
+			if (((__HANDLE__)->Instance->sCommonRegs.OENR & HRTIM_TAOEN_MASK) == (uint32_t)RESET) {                                                                                        \
 				((__HANDLE__)->Instance->sMasterRegs.MCR &= ~HRTIM_TIMERID_TIMER_A);                                                                                                   \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_B) == HRTIM_TIMERID_TIMER_B)                                                                                                                   \
-		{                                                                                                                                                                                      \
-			if (((__HANDLE__)->Instance->sCommonRegs.OENR & HRTIM_TBOEN_MASK) == (uint32_t)RESET)                                                                                          \
-			{                                                                                                                                                                              \
+		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_B) == HRTIM_TIMERID_TIMER_B) {                                                                                                                 \
+			if (((__HANDLE__)->Instance->sCommonRegs.OENR & HRTIM_TBOEN_MASK) == (uint32_t)RESET) {                                                                                        \
 				((__HANDLE__)->Instance->sMasterRegs.MCR &= ~HRTIM_TIMERID_TIMER_B);                                                                                                   \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_C) == HRTIM_TIMERID_TIMER_C)                                                                                                                   \
-		{                                                                                                                                                                                      \
-			if (((__HANDLE__)->Instance->sCommonRegs.OENR & HRTIM_TCOEN_MASK) == (uint32_t)RESET)                                                                                          \
-			{                                                                                                                                                                              \
+		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_C) == HRTIM_TIMERID_TIMER_C) {                                                                                                                 \
+			if (((__HANDLE__)->Instance->sCommonRegs.OENR & HRTIM_TCOEN_MASK) == (uint32_t)RESET) {                                                                                        \
 				((__HANDLE__)->Instance->sMasterRegs.MCR &= ~HRTIM_TIMERID_TIMER_C);                                                                                                   \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_D) == HRTIM_TIMERID_TIMER_D)                                                                                                                   \
-		{                                                                                                                                                                                      \
-			if (((__HANDLE__)->Instance->sCommonRegs.OENR & HRTIM_TDOEN_MASK) == (uint32_t)RESET)                                                                                          \
-			{                                                                                                                                                                              \
+		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_D) == HRTIM_TIMERID_TIMER_D) {                                                                                                                 \
+			if (((__HANDLE__)->Instance->sCommonRegs.OENR & HRTIM_TDOEN_MASK) == (uint32_t)RESET) {                                                                                        \
 				((__HANDLE__)->Instance->sMasterRegs.MCR &= ~HRTIM_TIMERID_TIMER_D);                                                                                                   \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_E) == HRTIM_TIMERID_TIMER_E)                                                                                                                   \
-		{                                                                                                                                                                                      \
-			if (((__HANDLE__)->Instance->sCommonRegs.OENR & HRTIM_TEOEN_MASK) == (uint32_t)RESET)                                                                                          \
-			{                                                                                                                                                                              \
+		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_E) == HRTIM_TIMERID_TIMER_E) {                                                                                                                 \
+			if (((__HANDLE__)->Instance->sCommonRegs.OENR & HRTIM_TEOEN_MASK) == (uint32_t)RESET) {                                                                                        \
 				((__HANDLE__)->Instance->sMasterRegs.MCR &= ~HRTIM_TIMERID_TIMER_E);                                                                                                   \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
-		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_F) == HRTIM_TIMERID_TIMER_F)                                                                                                                   \
-		{                                                                                                                                                                                      \
-			if (((__HANDLE__)->Instance->sCommonRegs.OENR & HRTIM_TFOEN_MASK) == (uint32_t)RESET)                                                                                          \
-			{                                                                                                                                                                              \
+		if (((__TIMERS__) & HRTIM_TIMERID_TIMER_F) == HRTIM_TIMERID_TIMER_F) {                                                                                                                 \
+			if (((__HANDLE__)->Instance->sCommonRegs.OENR & HRTIM_TFOEN_MASK) == (uint32_t)RESET) {                                                                                        \
 				((__HANDLE__)->Instance->sMasterRegs.MCR &= ~HRTIM_TIMERID_TIMER_F);                                                                                                   \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
@@ -4598,71 +4530,52 @@ extern "C"
  * @retval None
  */
 #define __HAL_HRTIM_EXTERNAL_EVENT_COUNTER_ENABLE(__HANDLE__, __TIMER__, __EVENT__)                                                                                                                    \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_A) == HRTIM_TIMERINDEX_TIMER_A)                                                                                                              \
-		{                                                                                                                                                                                      \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A)                                                                                                              \
-			{                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
+		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_A) == HRTIM_TIMERINDEX_TIMER_A) {                                                                                                            \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_A].EEFxR3) |= HRTIM_EEFR3_EEVACE;                                                                          \
 			}                                                                                                                                                                              \
-			if (((__EVENT__) & HRTIM_TIMERINDEX_TIMER_B) == HRTIM_TIMERINDEX_TIMER_B)                                                                                                      \
-			{                                                                                                                                                                              \
+			if (((__EVENT__) & HRTIM_TIMERINDEX_TIMER_B) == HRTIM_TIMERINDEX_TIMER_B) {                                                                                                    \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_A].EEFxR3) |= HRTIM_EEFR3_EEVBCE;                                                                          \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
-		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_B) == HRTIM_TIMERINDEX_TIMER_B)                                                                                                              \
-		{                                                                                                                                                                                      \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A)                                                                                                              \
-			{                                                                                                                                                                              \
+		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_B) == HRTIM_TIMERINDEX_TIMER_B) {                                                                                                            \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_B].EEFxR3) |= HRTIM_EEFR3_EEVACE;                                                                          \
 			}                                                                                                                                                                              \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B)                                                                                                              \
-			{                                                                                                                                                                              \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_B].EEFxR3) |= HRTIM_EEFR3_EEVBCE;                                                                          \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
-		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_C) == HRTIM_TIMERINDEX_TIMER_C)                                                                                                              \
-		{                                                                                                                                                                                      \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A)                                                                                                              \
-			{                                                                                                                                                                              \
+		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_C) == HRTIM_TIMERINDEX_TIMER_C) {                                                                                                            \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_C].EEFxR3) |= HRTIM_EEFR3_EEVACE;                                                                          \
 			}                                                                                                                                                                              \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B)                                                                                                              \
-			{                                                                                                                                                                              \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_C].EEFxR3) |= HRTIM_EEFR3_EEVBCE;                                                                          \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
-		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_D) == HRTIM_TIMERINDEX_TIMER_D)                                                                                                              \
-		{                                                                                                                                                                                      \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A)                                                                                                              \
-			{                                                                                                                                                                              \
+		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_D) == HRTIM_TIMERINDEX_TIMER_D) {                                                                                                            \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_D].EEFxR3) |= HRTIM_EEFR3_EEVACE;                                                                          \
 			}                                                                                                                                                                              \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B)                                                                                                              \
-			{                                                                                                                                                                              \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_D].EEFxR3) |= HRTIM_EEFR3_EEVBCE;                                                                          \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
-		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_E) == HRTIM_TIMERINDEX_TIMER_E)                                                                                                              \
-		{                                                                                                                                                                                      \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A)                                                                                                              \
-			{                                                                                                                                                                              \
+		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_E) == HRTIM_TIMERINDEX_TIMER_E) {                                                                                                            \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_E].EEFxR3) |= HRTIM_EEFR3_EEVACE;                                                                          \
 			}                                                                                                                                                                              \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B)                                                                                                              \
-			{                                                                                                                                                                              \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_E].EEFxR3) |= HRTIM_EEFR3_EEVBCE;                                                                          \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
-		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_F) == HRTIM_TIMERINDEX_TIMER_F)                                                                                                              \
-		{                                                                                                                                                                                      \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A)                                                                                                              \
-			{                                                                                                                                                                              \
+		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_F) == HRTIM_TIMERINDEX_TIMER_F) {                                                                                                            \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_F].EEFxR3) |= HRTIM_EEFR3_EEVACE;                                                                          \
 			}                                                                                                                                                                              \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B)                                                                                                              \
-			{                                                                                                                                                                              \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_F].EEFxR3) |= HRTIM_EEFR3_EEVBCE;                                                                          \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
@@ -4685,71 +4598,52 @@ extern "C"
  * @retval None
  */
 #define __HAL_HRTIM_EXTERNAL_EVENT_COUNTER_DISABLE(__HANDLE__, __TIMER__, __EVENT__)                                                                                                                   \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_A) == HRTIM_TIMERINDEX_TIMER_A)                                                                                                              \
-		{                                                                                                                                                                                      \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A)                                                                                                              \
-			{                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
+		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_A) == HRTIM_TIMERINDEX_TIMER_A) {                                                                                                            \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_A].EEFxR3) &= ~HRTIM_EEFR3_EEVACE;                                                                         \
 			}                                                                                                                                                                              \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B)                                                                                                              \
-			{                                                                                                                                                                              \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_A].EEFxR3) &= ~HRTIM_EEFR3_EEVBCE;                                                                         \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
-		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_B) == HRTIM_TIMERINDEX_TIMER_B)                                                                                                              \
-		{                                                                                                                                                                                      \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A)                                                                                                              \
-			{                                                                                                                                                                              \
+		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_B) == HRTIM_TIMERINDEX_TIMER_B) {                                                                                                            \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_B].EEFxR3) &= ~HRTIM_EEFR3_EEVACE;                                                                         \
 			}                                                                                                                                                                              \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B)                                                                                                              \
-			{                                                                                                                                                                              \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_B].EEFxR3) &= ~HRTIM_EEFR3_EEVBCE;                                                                         \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
-		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_C) == HRTIM_TIMERINDEX_TIMER_C)                                                                                                              \
-		{                                                                                                                                                                                      \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A)                                                                                                              \
-			{                                                                                                                                                                              \
+		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_C) == HRTIM_TIMERINDEX_TIMER_C) {                                                                                                            \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_C].EEFxR3) &= ~HRTIM_EEFR3_EEVACE;                                                                         \
 			}                                                                                                                                                                              \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B)                                                                                                              \
-			{                                                                                                                                                                              \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_C].EEFxR3) &= ~HRTIM_EEFR3_EEVBCE;                                                                         \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
-		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_D) == HRTIM_TIMERINDEX_TIMER_D)                                                                                                              \
-		{                                                                                                                                                                                      \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A)                                                                                                              \
-			{                                                                                                                                                                              \
+		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_D) == HRTIM_TIMERINDEX_TIMER_D) {                                                                                                            \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_D].EEFxR3) &= ~HRTIM_EEFR3_EEVACE;                                                                         \
 			}                                                                                                                                                                              \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B)                                                                                                              \
-			{                                                                                                                                                                              \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_D].EEFxR3) &= ~HRTIM_EEFR3_EEVBCE;                                                                         \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
-		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_E) == HRTIM_TIMERINDEX_TIMER_E)                                                                                                              \
-		{                                                                                                                                                                                      \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A)                                                                                                              \
-			{                                                                                                                                                                              \
+		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_E) == HRTIM_TIMERINDEX_TIMER_E) {                                                                                                            \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_E].EEFxR3) &= ~HRTIM_EEFR3_EEVACE;                                                                         \
 			}                                                                                                                                                                              \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B)                                                                                                              \
-			{                                                                                                                                                                              \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_E].EEFxR3) &= ~HRTIM_EEFR3_EEVBCE;                                                                         \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
-		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_F) == HRTIM_TIMERINDEX_TIMER_F)                                                                                                              \
-		{                                                                                                                                                                                      \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A)                                                                                                              \
-			{                                                                                                                                                                              \
+		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_F) == HRTIM_TIMERINDEX_TIMER_F) {                                                                                                            \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_F].EEFxR3) &= ~HRTIM_EEFR3_EEVACE;                                                                         \
 			}                                                                                                                                                                              \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B)                                                                                                              \
-			{                                                                                                                                                                              \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_F].EEFxR3) &= ~HRTIM_EEFR3_EEVBCE;                                                                         \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
@@ -4772,71 +4666,52 @@ extern "C"
  * @retval None
  */
 #define __HAL_HRTIM_EXTERNAL_EVENT_COUNTER_RESET(__HANDLE__, __TIMER__, __EVENT__)                                                                                                                     \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_A) == HRTIM_TIMERINDEX_TIMER_A)                                                                                                              \
-		{                                                                                                                                                                                      \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A)                                                                                                              \
-			{                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
+		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_A) == HRTIM_TIMERINDEX_TIMER_A) {                                                                                                            \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_A].EEFxR3) |= HRTIM_EEFR3_EEVACRES;                                                                        \
 			}                                                                                                                                                                              \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B)                                                                                                              \
-			{                                                                                                                                                                              \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_A].EEFxR3) |= HRTIM_EEFR3_EEVBCRES;                                                                        \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
-		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_B) == HRTIM_TIMERINDEX_TIMER_B)                                                                                                              \
-		{                                                                                                                                                                                      \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A)                                                                                                              \
-			{                                                                                                                                                                              \
+		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_B) == HRTIM_TIMERINDEX_TIMER_B) {                                                                                                            \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_B].EEFxR3) |= HRTIM_EEFR3_EEVACRES;                                                                        \
 			}                                                                                                                                                                              \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B)                                                                                                              \
-			{                                                                                                                                                                              \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_B].EEFxR3) |= HRTIM_EEFR3_EEVBCRES;                                                                        \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
-		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_C) == HRTIM_TIMERINDEX_TIMER_C)                                                                                                              \
-		{                                                                                                                                                                                      \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A)                                                                                                              \
-			{                                                                                                                                                                              \
+		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_C) == HRTIM_TIMERINDEX_TIMER_C) {                                                                                                            \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_C].EEFxR3) |= HRTIM_EEFR3_EEVACRES;                                                                        \
 			}                                                                                                                                                                              \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B)                                                                                                              \
-			{                                                                                                                                                                              \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_C].EEFxR3) |= HRTIM_EEFR3_EEVBCRES;                                                                        \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
-		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_D) == HRTIM_TIMERINDEX_TIMER_D)                                                                                                              \
-		{                                                                                                                                                                                      \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A)                                                                                                              \
-			{                                                                                                                                                                              \
+		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_D) == HRTIM_TIMERINDEX_TIMER_D) {                                                                                                            \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_D].EEFxR3) |= HRTIM_EEFR3_EEVACRES;                                                                        \
 			}                                                                                                                                                                              \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B)                                                                                                              \
-			{                                                                                                                                                                              \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_D].EEFxR3) |= HRTIM_EEFR3_EEVBCRES;                                                                        \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
-		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_E) == HRTIM_TIMERINDEX_TIMER_E)                                                                                                              \
-		{                                                                                                                                                                                      \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A)                                                                                                              \
-			{                                                                                                                                                                              \
+		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_E) == HRTIM_TIMERINDEX_TIMER_E) {                                                                                                            \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_E].EEFxR3) |= HRTIM_EEFR3_EEVACRES;                                                                        \
 			}                                                                                                                                                                              \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B)                                                                                                              \
-			{                                                                                                                                                                              \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_E].EEFxR3) |= HRTIM_EEFR3_EEVBCRES;                                                                        \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
-		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_F) == HRTIM_TIMERINDEX_TIMER_F)                                                                                                              \
-		{                                                                                                                                                                                      \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A)                                                                                                              \
-			{                                                                                                                                                                              \
+		if (((__TIMER__) & HRTIM_TIMERINDEX_TIMER_F) == HRTIM_TIMERINDEX_TIMER_F) {                                                                                                            \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_A) == HRTIM_EVENTCOUNTER_A) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_F].EEFxR3) |= HRTIM_EEFR3_EEVACRES;                                                                        \
 			}                                                                                                                                                                              \
-			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B)                                                                                                              \
-			{                                                                                                                                                                              \
+			if (((__EVENT__) & HRTIM_EVENTCOUNTER_B) == HRTIM_EVENTCOUNTER_B) {                                                                                                            \
 				((__HANDLE__)->Instance->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_F].EEFxR3) |= HRTIM_EEFR3_EEVBCRES;                                                                        \
 			}                                                                                                                                                                              \
 		}                                                                                                                                                                                      \
@@ -5222,30 +5097,23 @@ extern "C"
  * @retval HAL status
  */
 #define __HAL_HRTIM_FAULT_BLANKING_ENABLE(__HANDLE__, __FAULT__)                                                                                                                                       \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if (((__FAULT__) & HRTIM_FAULT_1) == HRTIM_FAULT_1)                                                                                                                                    \
-		{                                                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		if (((__FAULT__) & HRTIM_FAULT_1) == HRTIM_FAULT_1) {                                                                                                                                  \
 			((__HANDLE__)->Instance->sCommonRegs.FLTINR3) |= HRTIM_FLTINR3_FLT1BLKE;                                                                                                       \
 		}                                                                                                                                                                                      \
-		if (((__FAULT__) & HRTIM_FAULT_2) == HRTIM_FAULT_2)                                                                                                                                    \
-		{                                                                                                                                                                                      \
+		if (((__FAULT__) & HRTIM_FAULT_2) == HRTIM_FAULT_2) {                                                                                                                                  \
 			((__HANDLE__)->Instance->sCommonRegs.FLTINR3) |= HRTIM_FLTINR3_FLT2BLKE;                                                                                                       \
 		}                                                                                                                                                                                      \
-		if (((__FAULT__) & HRTIM_FAULT_3) == HRTIM_FAULT_3)                                                                                                                                    \
-		{                                                                                                                                                                                      \
+		if (((__FAULT__) & HRTIM_FAULT_3) == HRTIM_FAULT_3) {                                                                                                                                  \
 			((__HANDLE__)->Instance->sCommonRegs.FLTINR3) |= HRTIM_FLTINR3_FLT3BLKE;                                                                                                       \
 		}                                                                                                                                                                                      \
-		if (((__FAULT__) & HRTIM_FAULT_4) == HRTIM_FAULT_4)                                                                                                                                    \
-		{                                                                                                                                                                                      \
+		if (((__FAULT__) & HRTIM_FAULT_4) == HRTIM_FAULT_4) {                                                                                                                                  \
 			((__HANDLE__)->Instance->sCommonRegs.FLTINR3) |= HRTIM_FLTINR3_FLT4BLKE;                                                                                                       \
 		}                                                                                                                                                                                      \
-		if (((__FAULT__) & HRTIM_FAULT_5) == HRTIM_FAULT_5)                                                                                                                                    \
-		{                                                                                                                                                                                      \
+		if (((__FAULT__) & HRTIM_FAULT_5) == HRTIM_FAULT_5) {                                                                                                                                  \
 			((__HANDLE__)->Instance->sCommonRegs.FLTINR4) |= HRTIM_FLTINR4_FLT5BLKE;                                                                                                       \
 		}                                                                                                                                                                                      \
-		if (((__FAULT__) & HRTIM_FAULT_6) == HRTIM_FAULT_6)                                                                                                                                    \
-		{                                                                                                                                                                                      \
+		if (((__FAULT__) & HRTIM_FAULT_6) == HRTIM_FAULT_6) {                                                                                                                                  \
 			((__HANDLE__)->Instance->sCommonRegs.FLTINR4) |= HRTIM_FLTINR4_FLT6BLKE;                                                                                                       \
 		}                                                                                                                                                                                      \
 	} while (0U)
@@ -5264,369 +5132,361 @@ extern "C"
  * @retval HAL status
  */
 #define __HAL_HRTIM_FAULT_BLANKING_DISABLE(__HANDLE__, __FAULT__)                                                                                                                                      \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if (((__FAULT__) & HRTIM_FAULT_1) == HRTIM_FAULT_1)                                                                                                                                    \
-		{                                                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		if (((__FAULT__) & HRTIM_FAULT_1) == HRTIM_FAULT_1) {                                                                                                                                  \
 			((__HANDLE__)->Instance->sCommonRegs.FLTINR3) &= ~HRTIM_FLTINR3_FLT1BLKE;                                                                                                      \
 		}                                                                                                                                                                                      \
-		if (((__FAULT__) & HRTIM_FAULT_2) == HRTIM_FAULT_2)                                                                                                                                    \
-		{                                                                                                                                                                                      \
+		if (((__FAULT__) & HRTIM_FAULT_2) == HRTIM_FAULT_2) {                                                                                                                                  \
 			((__HANDLE__)->Instance->sCommonRegs.FLTINR3) &= ~HRTIM_FLTINR3_FLT2BLKE;                                                                                                      \
 		}                                                                                                                                                                                      \
-		if (((__FAULT__) & HRTIM_FAULT_3) == HRTIM_FAULT_3)                                                                                                                                    \
-		{                                                                                                                                                                                      \
+		if (((__FAULT__) & HRTIM_FAULT_3) == HRTIM_FAULT_3) {                                                                                                                                  \
 			((__HANDLE__)->Instance->sCommonRegs.FLTINR3) &= ~HRTIM_FLTINR3_FLT3BLKE;                                                                                                      \
 		}                                                                                                                                                                                      \
-		if (((__FAULT__) & HRTIM_FAULT_4) == HRTIM_FAULT_4)                                                                                                                                    \
-		{                                                                                                                                                                                      \
+		if (((__FAULT__) & HRTIM_FAULT_4) == HRTIM_FAULT_4) {                                                                                                                                  \
 			((__HANDLE__)->Instance->sCommonRegs.FLTINR3) &= ~HRTIM_FLTINR3_FLT4BLKE;                                                                                                      \
 		}                                                                                                                                                                                      \
-		if (((__FAULT__) & HRTIM_FAULT_5) == HRTIM_FAULT_5)                                                                                                                                    \
-		{                                                                                                                                                                                      \
+		if (((__FAULT__) & HRTIM_FAULT_5) == HRTIM_FAULT_5) {                                                                                                                                  \
 			((__HANDLE__)->Instance->sCommonRegs.FLTINR4) &= ~HRTIM_FLTINR4_FLT5BLKE;                                                                                                      \
 		}                                                                                                                                                                                      \
-		if (((__FAULT__) & HRTIM_FAULT_6) == HRTIM_FAULT_6)                                                                                                                                    \
-		{                                                                                                                                                                                      \
+		if (((__FAULT__) & HRTIM_FAULT_6) == HRTIM_FAULT_6) {                                                                                                                                  \
 			((__HANDLE__)->Instance->sCommonRegs.FLTINR4) &= ~HRTIM_FLTINR4_FLT6BLKE;                                                                                                      \
 		}                                                                                                                                                                                      \
 	} while (0U)
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported functions --------------------------------------------------------*/
-	/** @addtogroup HRTIM_Exported_Functions
-	 * @{
-	 */
+/* Exported functions --------------------------------------------------------*/
+/** @addtogroup HRTIM_Exported_Functions
+ * @{
+ */
 
-	/** @addtogroup HRTIM_Exported_Functions_Group1
-	 * @{
-	 */
+/** @addtogroup HRTIM_Exported_Functions_Group1
+ * @{
+ */
 
-	/* Initialization and Configuration functions  ********************************/
-	HAL_StatusTypeDef HAL_HRTIM_Init(HRTIM_HandleTypeDef *hhrtim);
+/* Initialization and Configuration functions  ********************************/
+HAL_StatusTypeDef HAL_HRTIM_Init(HRTIM_HandleTypeDef *hhrtim);
 
-	HAL_StatusTypeDef HAL_HRTIM_DeInit(HRTIM_HandleTypeDef *hhrtim);
+HAL_StatusTypeDef HAL_HRTIM_DeInit(HRTIM_HandleTypeDef *hhrtim);
 
-	void HAL_HRTIM_MspInit(HRTIM_HandleTypeDef *hhrtim);
+void HAL_HRTIM_MspInit(HRTIM_HandleTypeDef *hhrtim);
 
-	void HAL_HRTIM_MspDeInit(HRTIM_HandleTypeDef *hhrtim);
+void HAL_HRTIM_MspDeInit(HRTIM_HandleTypeDef *hhrtim);
 
-	HAL_StatusTypeDef HAL_HRTIM_TimeBaseConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_TimeBaseCfgTypeDef *pTimeBaseCfg);
+HAL_StatusTypeDef HAL_HRTIM_TimeBaseConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_TimeBaseCfgTypeDef *pTimeBaseCfg);
 
-	HAL_StatusTypeDef HAL_HRTIM_DLLCalibrationStart(HRTIM_HandleTypeDef *hhrtim, uint32_t CalibrationRate);
+HAL_StatusTypeDef HAL_HRTIM_DLLCalibrationStart(HRTIM_HandleTypeDef *hhrtim, uint32_t CalibrationRate);
 
-	HAL_StatusTypeDef HAL_HRTIM_DLLCalibrationStart_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t CalibrationRate);
+HAL_StatusTypeDef HAL_HRTIM_DLLCalibrationStart_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t CalibrationRate);
 
-	HAL_StatusTypeDef HAL_HRTIM_PollForDLLCalibration(HRTIM_HandleTypeDef *hhrtim, uint32_t Timeout);
+HAL_StatusTypeDef HAL_HRTIM_PollForDLLCalibration(HRTIM_HandleTypeDef *hhrtim, uint32_t Timeout);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @addtogroup HRTIM_Exported_Functions_Group2
-	 * @{
-	 */
+/** @addtogroup HRTIM_Exported_Functions_Group2
+ * @{
+ */
 
-	/* Simple time base related functions *****************************************/
-	HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStart(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
+/* Simple time base related functions *****************************************/
+HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStart(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStop(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
+HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStop(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStart_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
+HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStart_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStop_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
+HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStop_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t SrcAddr, uint32_t DestAddr, uint32_t Length);
+HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t SrcAddr, uint32_t DestAddr, uint32_t Length);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStop_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
+HAL_StatusTypeDef HAL_HRTIM_SimpleBaseStop_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @addtogroup HRTIM_Exported_Functions_Group3
-	 * @{
-	 */
-	/* Simple output compare related functions ************************************/
-	HAL_StatusTypeDef HAL_HRTIM_SimpleOCChannelConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel, const HRTIM_SimpleOCChannelCfgTypeDef *pSimpleOCChannelCfg);
+/** @addtogroup HRTIM_Exported_Functions_Group3
+ * @{
+ */
+/* Simple output compare related functions ************************************/
+HAL_StatusTypeDef HAL_HRTIM_SimpleOCChannelConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel, const HRTIM_SimpleOCChannelCfgTypeDef *pSimpleOCChannelCfg);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimpleOCStart(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel);
+HAL_StatusTypeDef HAL_HRTIM_SimpleOCStart(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimpleOCStop(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel);
+HAL_StatusTypeDef HAL_HRTIM_SimpleOCStop(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimpleOCStart_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel);
+HAL_StatusTypeDef HAL_HRTIM_SimpleOCStart_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimpleOCStop_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel);
+HAL_StatusTypeDef HAL_HRTIM_SimpleOCStop_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimpleOCStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel, uint32_t SrcAddr, uint32_t DestAddr, uint32_t Length);
+HAL_StatusTypeDef HAL_HRTIM_SimpleOCStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel, uint32_t SrcAddr, uint32_t DestAddr, uint32_t Length);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimpleOCStop_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel);
+HAL_StatusTypeDef HAL_HRTIM_SimpleOCStop_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OCChannel);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @addtogroup HRTIM_Exported_Functions_Group4
-	 * @{
-	 */
-	/* Simple PWM output related functions ****************************************/
-	HAL_StatusTypeDef HAL_HRTIM_SimplePWMChannelConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t PWMChannel, const HRTIM_SimplePWMChannelCfgTypeDef *pSimplePWMChannelCfg);
+/** @addtogroup HRTIM_Exported_Functions_Group4
+ * @{
+ */
+/* Simple PWM output related functions ****************************************/
+HAL_StatusTypeDef HAL_HRTIM_SimplePWMChannelConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t PWMChannel, const HRTIM_SimplePWMChannelCfgTypeDef *pSimplePWMChannelCfg);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimplePWMStart(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t PWMChannel);
+HAL_StatusTypeDef HAL_HRTIM_SimplePWMStart(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t PWMChannel);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t PWMChannel);
+HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t PWMChannel);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimplePWMStart_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t PWMChannel);
+HAL_StatusTypeDef HAL_HRTIM_SimplePWMStart_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t PWMChannel);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t PWMChannel);
+HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t PWMChannel);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimplePWMStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t PWMChannel, uint32_t SrcAddr, uint32_t DestAddr, uint32_t Length);
+HAL_StatusTypeDef HAL_HRTIM_SimplePWMStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t PWMChannel, uint32_t SrcAddr, uint32_t DestAddr, uint32_t Length);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t PWMChannel);
+HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t PWMChannel);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @addtogroup HRTIM_Exported_Functions_Group5
-	 * @{
-	 */
-	/* Simple capture related functions *******************************************/
-	HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureChannelConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureChannel,
-							       const HRTIM_SimpleCaptureChannelCfgTypeDef *pSimpleCaptureChannelCfg);
+/** @addtogroup HRTIM_Exported_Functions_Group5
+ * @{
+ */
+/* Simple capture related functions *******************************************/
+HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureChannelConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureChannel, const HRTIM_SimpleCaptureChannelCfgTypeDef *pSimpleCaptureChannelCfg);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStart(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureChannel);
+HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStart(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureChannel);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureChannel);
+HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureChannel);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStart_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureChannel);
+HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStart_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureChannel);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureChannel);
+HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureChannel);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureChannel, uint32_t SrcAddr, uint32_t DestAddr, uint32_t Length);
+HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureChannel, uint32_t SrcAddr, uint32_t DestAddr, uint32_t Length);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureChannel);
+HAL_StatusTypeDef HAL_HRTIM_SimpleCaptureStop_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureChannel);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @addtogroup HRTIM_Exported_Functions_Group6
-	 * @{
-	 */
-	/* Simple one pulse related functions *****************************************/
-	HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseChannelConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OnePulseChannel,
-								const HRTIM_SimpleOnePulseChannelCfgTypeDef *pSimpleOnePulseChannelCfg);
+/** @addtogroup HRTIM_Exported_Functions_Group6
+ * @{
+ */
+/* Simple one pulse related functions *****************************************/
+HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseChannelConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OnePulseChannel,
+							const HRTIM_SimpleOnePulseChannelCfgTypeDef *pSimpleOnePulseChannelCfg);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStart(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OnePulseChannel);
+HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStart(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OnePulseChannel);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStop(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OnePulseChannel);
+HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStop(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OnePulseChannel);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStart_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OnePulseChannel);
+HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStart_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OnePulseChannel);
 
-	HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStop_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OnePulseChannel);
+HAL_StatusTypeDef HAL_HRTIM_SimpleOnePulseStop_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t OnePulseChannel);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @addtogroup HRTIM_Exported_Functions_Group7
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_HRTIM_BurstModeConfig(HRTIM_HandleTypeDef *hhrtim, const HRTIM_BurstModeCfgTypeDef *pBurstModeCfg);
+/** @addtogroup HRTIM_Exported_Functions_Group7
+ * @{
+ */
+HAL_StatusTypeDef HAL_HRTIM_BurstModeConfig(HRTIM_HandleTypeDef *hhrtim, const HRTIM_BurstModeCfgTypeDef *pBurstModeCfg);
 
-	HAL_StatusTypeDef HAL_HRTIM_EventConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Event, const HRTIM_EventCfgTypeDef *pEventCfg);
+HAL_StatusTypeDef HAL_HRTIM_EventConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Event, const HRTIM_EventCfgTypeDef *pEventCfg);
 
-	HAL_StatusTypeDef HAL_HRTIM_EventPrescalerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Prescaler);
+HAL_StatusTypeDef HAL_HRTIM_EventPrescalerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Prescaler);
 
-	HAL_StatusTypeDef HAL_HRTIM_FaultConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Fault, const HRTIM_FaultCfgTypeDef *pFaultCfg);
+HAL_StatusTypeDef HAL_HRTIM_FaultConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Fault, const HRTIM_FaultCfgTypeDef *pFaultCfg);
 
-	HAL_StatusTypeDef HAL_HRTIM_FaultPrescalerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Prescaler);
+HAL_StatusTypeDef HAL_HRTIM_FaultPrescalerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Prescaler);
 
-	HAL_StatusTypeDef HAL_HRTIM_FaultBlankingConfigAndEnable(HRTIM_HandleTypeDef *hhrtim, uint32_t Fault, const HRTIM_FaultBlankingCfgTypeDef *pFaultBlkCfg);
+HAL_StatusTypeDef HAL_HRTIM_FaultBlankingConfigAndEnable(HRTIM_HandleTypeDef *hhrtim, uint32_t Fault, const HRTIM_FaultBlankingCfgTypeDef *pFaultBlkCfg);
 
-	HAL_StatusTypeDef HAL_HRTIM_FaultCounterConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Fault, const HRTIM_FaultBlankingCfgTypeDef *pFaultBlkCfg);
+HAL_StatusTypeDef HAL_HRTIM_FaultCounterConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t Fault, const HRTIM_FaultBlankingCfgTypeDef *pFaultBlkCfg);
 
-	HAL_StatusTypeDef HAL_HRTIM_FaultCounterReset(HRTIM_HandleTypeDef *hhrtim, uint32_t Fault);
+HAL_StatusTypeDef HAL_HRTIM_FaultCounterReset(HRTIM_HandleTypeDef *hhrtim, uint32_t Fault);
 
-	HAL_StatusTypeDef HAL_HRTIM_SwapTimerOutput(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
-	void HAL_HRTIM_FaultModeCtl(HRTIM_HandleTypeDef *hhrtim, uint32_t Faults, uint32_t Enable);
+HAL_StatusTypeDef HAL_HRTIM_SwapTimerOutput(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
+void HAL_HRTIM_FaultModeCtl(HRTIM_HandleTypeDef *hhrtim, uint32_t Faults, uint32_t Enable);
 
-	HAL_StatusTypeDef HAL_HRTIM_ADCTriggerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t ADCTrigger, const HRTIM_ADCTriggerCfgTypeDef *pADCTriggerCfg);
+HAL_StatusTypeDef HAL_HRTIM_ADCTriggerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t ADCTrigger, const HRTIM_ADCTriggerCfgTypeDef *pADCTriggerCfg);
 
-	HAL_StatusTypeDef HAL_HRTIM_ADCPostScalerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t ADCTrigger, uint32_t Postscaler);
+HAL_StatusTypeDef HAL_HRTIM_ADCPostScalerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t ADCTrigger, uint32_t Postscaler);
 
-	HAL_StatusTypeDef HAL_HRTIM_RollOverModeConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t RollOverCfg);
+HAL_StatusTypeDef HAL_HRTIM_RollOverModeConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t RollOverCfg);
 
-	HAL_StatusTypeDef HAL_HRTIM_OutputSwapEnable(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
+HAL_StatusTypeDef HAL_HRTIM_OutputSwapEnable(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
 
-	HAL_StatusTypeDef HAL_HRTIM_OutputSwapDisable(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
-	/**
-	 * @}
-	 */
+HAL_StatusTypeDef HAL_HRTIM_OutputSwapDisable(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
+/**
+ * @}
+ */
 
-	/** @addtogroup HRTIM_Exported_Functions_Group8
-	 * @{
-	 */
-	/* Waveform related functions *************************************************/
-	HAL_StatusTypeDef HAL_HRTIM_WaveformTimerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_TimerCfgTypeDef *pTimerCfg);
+/** @addtogroup HRTIM_Exported_Functions_Group8
+ * @{
+ */
+/* Waveform related functions *************************************************/
+HAL_StatusTypeDef HAL_HRTIM_WaveformTimerConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_TimerCfgTypeDef *pTimerCfg);
 
-	HAL_StatusTypeDef HAL_HRTIM_WaveformTimerControl(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_TimerCtlTypeDef *pTimerCtl);
+HAL_StatusTypeDef HAL_HRTIM_WaveformTimerControl(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_TimerCtlTypeDef *pTimerCtl);
 
-	HAL_StatusTypeDef HAL_HRTIM_TimerDualChannelDacConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_TimerCtlTypeDef *pTimerCtl);
+HAL_StatusTypeDef HAL_HRTIM_TimerDualChannelDacConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_TimerCtlTypeDef *pTimerCtl);
 
-	HAL_StatusTypeDef HAL_HRTIM_WaveformCompareConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CompareUnit, const HRTIM_CompareCfgTypeDef *pCompareCfg);
+HAL_StatusTypeDef HAL_HRTIM_WaveformCompareConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CompareUnit, const HRTIM_CompareCfgTypeDef *pCompareCfg);
 
-	HAL_StatusTypeDef HAL_HRTIM_WaveformCaptureConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureUnit, const HRTIM_CaptureCfgTypeDef *pCaptureCfg);
+HAL_StatusTypeDef HAL_HRTIM_WaveformCaptureConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureUnit, const HRTIM_CaptureCfgTypeDef *pCaptureCfg);
 
-	HAL_StatusTypeDef HAL_HRTIM_WaveformOutputConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t Output, const HRTIM_OutputCfgTypeDef *pOutputCfg);
+HAL_StatusTypeDef HAL_HRTIM_WaveformOutputConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t Output, const HRTIM_OutputCfgTypeDef *pOutputCfg);
 
-	HAL_StatusTypeDef HAL_HRTIM_WaveformSetOutputLevel(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t Output, uint32_t OutputLevel);
+HAL_StatusTypeDef HAL_HRTIM_WaveformSetOutputLevel(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t Output, uint32_t OutputLevel);
 
-	HAL_StatusTypeDef HAL_HRTIM_TimerEventFilteringConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t Event, const HRTIM_TimerEventFilteringCfgTypeDef *pTimerEventFilteringCfg);
+HAL_StatusTypeDef HAL_HRTIM_TimerEventFilteringConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t Event, const HRTIM_TimerEventFilteringCfgTypeDef *pTimerEventFilteringCfg);
 
-	HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t EventCounter, const HRTIM_ExternalEventCfgTypeDef *pTimerExternalEventCfg);
+HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t EventCounter, const HRTIM_ExternalEventCfgTypeDef *pTimerExternalEventCfg);
 
-	HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterEnable(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t EventCounter);
+HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterEnable(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t EventCounter);
 
-	HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterDisable(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t EventCounter);
+HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterDisable(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t EventCounter);
 
-	HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterReset(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t EventCounter);
+HAL_StatusTypeDef HAL_HRTIM_ExtEventCounterReset(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t EventCounter);
 
-	HAL_StatusTypeDef HAL_HRTIM_DeadTimeConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_DeadTimeCfgTypeDef *pDeadTimeCfg);
+HAL_StatusTypeDef HAL_HRTIM_DeadTimeConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_DeadTimeCfgTypeDef *pDeadTimeCfg);
 
-	HAL_StatusTypeDef HAL_HRTIM_ChopperModeConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_ChopperModeCfgTypeDef *pChopperModeCfg);
+HAL_StatusTypeDef HAL_HRTIM_ChopperModeConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, const HRTIM_ChopperModeCfgTypeDef *pChopperModeCfg);
 
-	HAL_StatusTypeDef HAL_HRTIM_BurstDMAConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t RegistersToUpdate);
+HAL_StatusTypeDef HAL_HRTIM_BurstDMAConfig(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t RegistersToUpdate);
 
-	HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
+HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
 
-	HAL_StatusTypeDef HAL_HRTIM_WaveformCountStop(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
+HAL_StatusTypeDef HAL_HRTIM_WaveformCountStop(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
 
-	HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
+HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
 
-	HAL_StatusTypeDef HAL_HRTIM_WaveformCountStop_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
+HAL_StatusTypeDef HAL_HRTIM_WaveformCountStop_IT(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
 
-	HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
+HAL_StatusTypeDef HAL_HRTIM_WaveformCountStart_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
 
-	HAL_StatusTypeDef HAL_HRTIM_WaveformCountStop_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
+HAL_StatusTypeDef HAL_HRTIM_WaveformCountStop_DMA(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
 
-	HAL_StatusTypeDef HAL_HRTIM_WaveformOutputStart(HRTIM_HandleTypeDef *hhrtim, uint32_t OutputsToStart);
+HAL_StatusTypeDef HAL_HRTIM_WaveformOutputStart(HRTIM_HandleTypeDef *hhrtim, uint32_t OutputsToStart);
 
-	HAL_StatusTypeDef HAL_HRTIM_WaveformOutputStop(HRTIM_HandleTypeDef *hhrtim, uint32_t OutputsToStop);
+HAL_StatusTypeDef HAL_HRTIM_WaveformOutputStop(HRTIM_HandleTypeDef *hhrtim, uint32_t OutputsToStop);
 
-	HAL_StatusTypeDef HAL_HRTIM_BurstModeCtl(HRTIM_HandleTypeDef *hhrtim, uint32_t Enable);
+HAL_StatusTypeDef HAL_HRTIM_BurstModeCtl(HRTIM_HandleTypeDef *hhrtim, uint32_t Enable);
 
-	HAL_StatusTypeDef HAL_HRTIM_BurstModeSoftwareTrigger(HRTIM_HandleTypeDef *hhrtim);
+HAL_StatusTypeDef HAL_HRTIM_BurstModeSoftwareTrigger(HRTIM_HandleTypeDef *hhrtim);
 
-	HAL_StatusTypeDef HAL_HRTIM_SoftwareCapture(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureUnit);
+HAL_StatusTypeDef HAL_HRTIM_SoftwareCapture(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureUnit);
 
-	HAL_StatusTypeDef HAL_HRTIM_SoftwareUpdate(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
+HAL_StatusTypeDef HAL_HRTIM_SoftwareUpdate(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
 
-	HAL_StatusTypeDef HAL_HRTIM_SoftwareReset(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
+HAL_StatusTypeDef HAL_HRTIM_SoftwareReset(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
 
-	HAL_StatusTypeDef HAL_HRTIM_BurstDMATransfer(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t BurstBufferAddress, uint32_t BurstBufferLength);
+HAL_StatusTypeDef HAL_HRTIM_BurstDMATransfer(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t BurstBufferAddress, uint32_t BurstBufferLength);
 
-	HAL_StatusTypeDef HAL_HRTIM_UpdateEnable(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
+HAL_StatusTypeDef HAL_HRTIM_UpdateEnable(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
 
-	HAL_StatusTypeDef HAL_HRTIM_UpdateDisable(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
+HAL_StatusTypeDef HAL_HRTIM_UpdateDisable(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @addtogroup HRTIM_Exported_Functions_Group9
-	 * @{
-	 */
-	/* HRTIM peripheral state functions */
-	HAL_HRTIM_StateTypeDef HAL_HRTIM_GetState(const HRTIM_HandleTypeDef *hhrtim);
+/** @addtogroup HRTIM_Exported_Functions_Group9
+ * @{
+ */
+/* HRTIM peripheral state functions */
+HAL_HRTIM_StateTypeDef HAL_HRTIM_GetState(const HRTIM_HandleTypeDef *hhrtim);
 
-	uint32_t HAL_HRTIM_GetCapturedValue(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureUnit);
+uint32_t HAL_HRTIM_GetCapturedValue(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureUnit);
 
-	uint32_t HAL_HRTIM_GetCapturedDir(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureUnit);
+uint32_t HAL_HRTIM_GetCapturedDir(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureUnit);
 
-	HRTIM_CaptureValueTypeDef HAL_HRTIM_GetCaptured(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureUnit);
+HRTIM_CaptureValueTypeDef HAL_HRTIM_GetCaptured(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t CaptureUnit);
 
-	uint32_t HAL_HRTIM_WaveformGetOutputLevel(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t Output);
+uint32_t HAL_HRTIM_WaveformGetOutputLevel(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t Output);
 
-	uint32_t HAL_HRTIM_WaveformGetOutputState(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t Output);
+uint32_t HAL_HRTIM_WaveformGetOutputState(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t Output);
 
-	uint32_t HAL_HRTIM_GetDelayedProtectionStatus(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t Output);
+uint32_t HAL_HRTIM_GetDelayedProtectionStatus(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx, uint32_t Output);
 
-	uint32_t HAL_HRTIM_GetBurstStatus(const HRTIM_HandleTypeDef *hhrtim);
+uint32_t HAL_HRTIM_GetBurstStatus(const HRTIM_HandleTypeDef *hhrtim);
 
-	uint32_t HAL_HRTIM_GetCurrentPushPullStatus(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
+uint32_t HAL_HRTIM_GetCurrentPushPullStatus(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
 
-	uint32_t HAL_HRTIM_GetIdlePushPullStatus(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
+uint32_t HAL_HRTIM_GetIdlePushPullStatus(const HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @addtogroup HRTIM_Exported_Functions_Group10
-	 * @{
-	 */
-	/* IRQ handler */
-	void HAL_HRTIM_IRQHandler(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
+/** @addtogroup HRTIM_Exported_Functions_Group10
+ * @{
+ */
+/* IRQ handler */
+void HAL_HRTIM_IRQHandler(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
 
-	/* HRTIM events related callback functions */
-	void HAL_HRTIM_Fault1Callback(HRTIM_HandleTypeDef *hhrtim);
-	void HAL_HRTIM_Fault2Callback(HRTIM_HandleTypeDef *hhrtim);
-	void HAL_HRTIM_Fault3Callback(HRTIM_HandleTypeDef *hhrtim);
-	void HAL_HRTIM_Fault4Callback(HRTIM_HandleTypeDef *hhrtim);
-	void HAL_HRTIM_Fault5Callback(HRTIM_HandleTypeDef *hhrtim);
-	void HAL_HRTIM_Fault6Callback(HRTIM_HandleTypeDef *hhrtim);
-	void HAL_HRTIM_SystemFaultCallback(HRTIM_HandleTypeDef *hhrtim);
-	void HAL_HRTIM_DLLCalibrationReadyCallback(HRTIM_HandleTypeDef *hhrtim);
-	void HAL_HRTIM_BurstModePeriodCallback(HRTIM_HandleTypeDef *hhrtim);
-	void HAL_HRTIM_SynchronizationEventCallback(HRTIM_HandleTypeDef *hhrtim);
+/* HRTIM events related callback functions */
+void HAL_HRTIM_Fault1Callback(HRTIM_HandleTypeDef *hhrtim);
+void HAL_HRTIM_Fault2Callback(HRTIM_HandleTypeDef *hhrtim);
+void HAL_HRTIM_Fault3Callback(HRTIM_HandleTypeDef *hhrtim);
+void HAL_HRTIM_Fault4Callback(HRTIM_HandleTypeDef *hhrtim);
+void HAL_HRTIM_Fault5Callback(HRTIM_HandleTypeDef *hhrtim);
+void HAL_HRTIM_Fault6Callback(HRTIM_HandleTypeDef *hhrtim);
+void HAL_HRTIM_SystemFaultCallback(HRTIM_HandleTypeDef *hhrtim);
+void HAL_HRTIM_DLLCalibrationReadyCallback(HRTIM_HandleTypeDef *hhrtim);
+void HAL_HRTIM_BurstModePeriodCallback(HRTIM_HandleTypeDef *hhrtim);
+void HAL_HRTIM_SynchronizationEventCallback(HRTIM_HandleTypeDef *hhrtim);
 
-	/* Timer events related callback functions */
-	void HAL_HRTIM_RegistersUpdateCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
-	void HAL_HRTIM_RepetitionEventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
-	void HAL_HRTIM_Compare1EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
-	void HAL_HRTIM_Compare2EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
-	void HAL_HRTIM_Compare3EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
-	void HAL_HRTIM_Compare4EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
-	void HAL_HRTIM_Capture1EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
-	void HAL_HRTIM_Capture2EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
-	void HAL_HRTIM_DelayedProtectionCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
-	void HAL_HRTIM_CounterResetCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
-	void HAL_HRTIM_Output1SetCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
-	void HAL_HRTIM_Output1ResetCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
-	void HAL_HRTIM_Output2SetCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
-	void HAL_HRTIM_Output2ResetCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
-	void HAL_HRTIM_BurstDMATransferCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
-	void HAL_HRTIM_ErrorCallback(HRTIM_HandleTypeDef *hhrtim);
+/* Timer events related callback functions */
+void HAL_HRTIM_RegistersUpdateCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
+void HAL_HRTIM_RepetitionEventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
+void HAL_HRTIM_Compare1EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
+void HAL_HRTIM_Compare2EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
+void HAL_HRTIM_Compare3EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
+void HAL_HRTIM_Compare4EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
+void HAL_HRTIM_Capture1EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
+void HAL_HRTIM_Capture2EventCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
+void HAL_HRTIM_DelayedProtectionCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
+void HAL_HRTIM_CounterResetCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
+void HAL_HRTIM_Output1SetCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
+void HAL_HRTIM_Output1ResetCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
+void HAL_HRTIM_Output2SetCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
+void HAL_HRTIM_Output2ResetCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
+void HAL_HRTIM_BurstDMATransferCallback(HRTIM_HandleTypeDef *hhrtim, uint32_t TimerIdx);
+void HAL_HRTIM_ErrorCallback(HRTIM_HandleTypeDef *hhrtim);
 
 #if (USE_HAL_HRTIM_REGISTER_CALLBACKS == 1)
-	HAL_StatusTypeDef HAL_HRTIM_RegisterCallback(HRTIM_HandleTypeDef *hhrtim, HAL_HRTIM_CallbackIDTypeDef CallbackID, pHRTIM_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_HRTIM_RegisterCallback(HRTIM_HandleTypeDef *hhrtim, HAL_HRTIM_CallbackIDTypeDef CallbackID, pHRTIM_CallbackTypeDef pCallback);
 
-	HAL_StatusTypeDef HAL_HRTIM_UnRegisterCallback(HRTIM_HandleTypeDef *hhrtim, HAL_HRTIM_CallbackIDTypeDef CallbackID);
+HAL_StatusTypeDef HAL_HRTIM_UnRegisterCallback(HRTIM_HandleTypeDef *hhrtim, HAL_HRTIM_CallbackIDTypeDef CallbackID);
 
-	HAL_StatusTypeDef HAL_HRTIM_TIMxRegisterCallback(HRTIM_HandleTypeDef *hhrtim, HAL_HRTIM_CallbackIDTypeDef CallbackID, pHRTIM_TIMxCallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_HRTIM_TIMxRegisterCallback(HRTIM_HandleTypeDef *hhrtim, HAL_HRTIM_CallbackIDTypeDef CallbackID, pHRTIM_TIMxCallbackTypeDef pCallback);
 
-	HAL_StatusTypeDef HAL_HRTIM_TIMxUnRegisterCallback(HRTIM_HandleTypeDef *hhrtim, HAL_HRTIM_CallbackIDTypeDef CallbackID);
+HAL_StatusTypeDef HAL_HRTIM_TIMxUnRegisterCallback(HRTIM_HandleTypeDef *hhrtim, HAL_HRTIM_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_HRTIM_REGISTER_CALLBACKS */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #endif /* HRTIM1 */
 

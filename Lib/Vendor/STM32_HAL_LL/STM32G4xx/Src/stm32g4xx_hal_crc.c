@@ -106,16 +106,14 @@ functions
 HAL_StatusTypeDef HAL_CRC_Init(CRC_HandleTypeDef *hcrc)
 {
 	/* Check the CRC handle allocation */
-	if (hcrc == NULL)
-	{
+	if (hcrc == NULL) {
 		return HAL_ERROR;
 	}
 
 	/* Check the parameters */
 	assert_param(IS_CRC_ALL_INSTANCE(hcrc->Instance));
 
-	if (hcrc->State == HAL_CRC_STATE_RESET)
-	{
+	if (hcrc->State == HAL_CRC_STATE_RESET) {
 		/* Allocate lock resource and initialize it */
 		hcrc->Lock = HAL_UNLOCKED;
 		/* Init the low level hardware */
@@ -127,18 +125,14 @@ HAL_StatusTypeDef HAL_CRC_Init(CRC_HandleTypeDef *hcrc)
 	/* check whether or not non-default generating polynomial has been
 	 * picked up by user */
 	assert_param(IS_DEFAULT_POLYNOMIAL(hcrc->Init.DefaultPolynomialUse));
-	if (hcrc->Init.DefaultPolynomialUse == DEFAULT_POLYNOMIAL_ENABLE)
-	{
+	if (hcrc->Init.DefaultPolynomialUse == DEFAULT_POLYNOMIAL_ENABLE) {
 		/* initialize peripheral with default generating polynomial */
 		WRITE_REG(hcrc->Instance->POL, DEFAULT_CRC32_POLY);
 		MODIFY_REG(hcrc->Instance->CR, CRC_CR_POLYSIZE, CRC_POLYLENGTH_32B);
-	}
-	else
-	{
+	} else {
 		/* initialize CRC peripheral with generating polynomial defined
 		 * by user */
-		if (HAL_CRCEx_Polynomial_Set(hcrc, hcrc->Init.GeneratingPolynomial, hcrc->Init.CRCLength) != HAL_OK)
-		{
+		if (HAL_CRCEx_Polynomial_Set(hcrc, hcrc->Init.GeneratingPolynomial, hcrc->Init.CRCLength) != HAL_OK) {
 			return HAL_ERROR;
 		}
 	}
@@ -146,12 +140,9 @@ HAL_StatusTypeDef HAL_CRC_Init(CRC_HandleTypeDef *hcrc)
 	/* check whether or not non-default CRC initial value has been
 	 * picked up by user */
 	assert_param(IS_DEFAULT_INIT_VALUE(hcrc->Init.DefaultInitValueUse));
-	if (hcrc->Init.DefaultInitValueUse == DEFAULT_INIT_VALUE_ENABLE)
-	{
+	if (hcrc->Init.DefaultInitValueUse == DEFAULT_INIT_VALUE_ENABLE) {
 		WRITE_REG(hcrc->Instance->INIT, DEFAULT_CRC_INITVALUE);
-	}
-	else
-	{
+	} else {
 		WRITE_REG(hcrc->Instance->INIT, hcrc->Init.InitValue);
 	}
 
@@ -182,8 +173,7 @@ HAL_StatusTypeDef HAL_CRC_Init(CRC_HandleTypeDef *hcrc)
 HAL_StatusTypeDef HAL_CRC_DeInit(CRC_HandleTypeDef *hcrc)
 {
 	/* Check the CRC handle allocation */
-	if (hcrc == NULL)
-	{
+	if (hcrc == NULL) {
 		return HAL_ERROR;
 	}
 
@@ -191,8 +181,7 @@ HAL_StatusTypeDef HAL_CRC_DeInit(CRC_HandleTypeDef *hcrc)
 	assert_param(IS_CRC_ALL_INSTANCE(hcrc->Instance));
 
 	/* Check the CRC peripheral state */
-	if (hcrc->State == HAL_CRC_STATE_BUSY)
-	{
+	if (hcrc->State == HAL_CRC_STATE_BUSY) {
 		return HAL_BUSY;
 	}
 
@@ -295,12 +284,10 @@ uint32_t HAL_CRC_Accumulate(CRC_HandleTypeDef *hcrc, uint32_t pBuffer[], uint32_
 	/* Change CRC peripheral state */
 	hcrc->State = HAL_CRC_STATE_BUSY;
 
-	switch (hcrc->InputDataFormat)
-	{
+	switch (hcrc->InputDataFormat) {
 		case CRC_INPUTDATA_FORMAT_WORDS:
 			/* Enter Data to the CRC calculator */
-			for (index = 0U; index < BufferLength; index++)
-			{
+			for (index = 0U; index < BufferLength; index++) {
 				hcrc->Instance->DR = pBuffer[index];
 			}
 			temp = hcrc->Instance->DR;
@@ -351,12 +338,10 @@ uint32_t HAL_CRC_Calculate(CRC_HandleTypeDef *hcrc, uint32_t pBuffer[], uint32_t
 	 *  written in hcrc->Instance->DR) */
 	__HAL_CRC_DR_RESET(hcrc);
 
-	switch (hcrc->InputDataFormat)
-	{
+	switch (hcrc->InputDataFormat) {
 		case CRC_INPUTDATA_FORMAT_WORDS:
 			/* Enter 32-bit input data to the CRC calculator */
-			for (index = 0U; index < BufferLength; index++)
-			{
+			for (index = 0U; index < BufferLength; index++) {
 				hcrc->Instance->DR = pBuffer[index];
 			}
 			temp = hcrc->Instance->DR;
@@ -441,26 +426,21 @@ static uint32_t CRC_Handle_8(CRC_HandleTypeDef *hcrc, uint8_t pBuffer[], uint32_
 	/* Processing time optimization: 4 bytes are entered in a row with a
 	 * single word write, last bytes must be carefully fed to the CRC
 	 * calculator to ensure a correct type handling by the peripheral */
-	for (i = 0U; i < (BufferLength / 4U); i++)
-	{
+	for (i = 0U; i < (BufferLength / 4U); i++) {
 		hcrc->Instance->DR = ((uint32_t)pBuffer[4U * i] << 24U) | ((uint32_t)pBuffer[(4U * i) + 1U] << 16U) | ((uint32_t)pBuffer[(4U * i) + 2U] << 8U) | (uint32_t)pBuffer[(4U * i) + 3U];
 	}
 	/* last bytes specific handling */
-	if ((BufferLength % 4U) != 0U)
-	{
-		if ((BufferLength % 4U) == 1U)
-		{
+	if ((BufferLength % 4U) != 0U) {
+		if ((BufferLength % 4U) == 1U) {
 			*(__IO uint8_t *)(__IO void *)(&hcrc->Instance->DR) = pBuffer[4U * i]; /* Derogation MisraC2012 R.11.5 */
 		}
-		if ((BufferLength % 4U) == 2U)
-		{
+		if ((BufferLength % 4U) == 2U) {
 			data = ((uint16_t)(pBuffer[4U * i]) << 8U) | (uint16_t)pBuffer[(4U * i) + 1U];
 			pReg = (__IO uint16_t *)(__IO void *)(&hcrc->Instance->DR); /* Derogation MisraC2012
 										       R.11.5 */
 			*pReg = data;
 		}
-		if ((BufferLength % 4U) == 3U)
-		{
+		if ((BufferLength % 4U) == 3U) {
 			data = ((uint16_t)(pBuffer[4U * i]) << 8U) | (uint16_t)pBuffer[(4U * i) + 1U];
 			pReg = (__IO uint16_t *)(__IO void *)(&hcrc->Instance->DR); /* Derogation MisraC2012
 										       R.11.5 */
@@ -491,12 +471,10 @@ static uint32_t CRC_Handle_16(CRC_HandleTypeDef *hcrc, uint16_t pBuffer[], uint3
 	 * single word write, in case of odd length, last HalfWord must be
 	 * carefully fed to the CRC calculator to ensure a correct type handling
 	 * by the peripheral */
-	for (i = 0U; i < (BufferLength / 2U); i++)
-	{
+	for (i = 0U; i < (BufferLength / 2U); i++) {
 		hcrc->Instance->DR = ((uint32_t)pBuffer[2U * i] << 16U) | (uint32_t)pBuffer[(2U * i) + 1U];
 	}
-	if ((BufferLength % 2U) != 0U)
-	{
+	if ((BufferLength % 2U) != 0U) {
 		pReg = (__IO uint16_t *)(__IO void *)(&hcrc->Instance->DR); /* Derogation MisraC2012
 									       R.11.5 */
 		*pReg = pBuffer[2U * i];

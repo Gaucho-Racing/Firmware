@@ -20,8 +20,7 @@
 #define STM32U5xx_HAL_GTZC_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -50,53 +49,50 @@ extern "C"
 #define GTZC_MPCBB_NB_LCK_VCTR_REG_MAX (1U) /* One 32-bit needed           */
 #endif					    /* SRAM5_BASE */
 
-	typedef struct
-	{
-		uint32_t MPCBB_SecConfig_array[GTZC_MPCBB_NB_VCTR_REG_MAX];	 /*!< Each element specifies secure
-										    access mode for a super-block. Each
-										    bit corresponds to a block inside
-										    the super-block. 0 means
-										    non-secure, 1 means secure */
-		uint32_t MPCBB_PrivConfig_array[GTZC_MPCBB_NB_VCTR_REG_MAX];	 /*!< Each element specifies privilege
-										    access mode for a super-block. Each
-										    bit corresponds to a block inside
-										    the super-block. 0 means
-										    non-privilege, 1 means privilege */
-		uint32_t MPCBB_LockConfig_array[GTZC_MPCBB_NB_LCK_VCTR_REG_MAX]; /*!< Each bit specifies the lock
-										    configuration of a super-block
-										    (32 blocks). 0 means unlocked,
-										      1 means locked */
-	} MPCBB_Attribute_ConfigTypeDef;
+typedef struct {
+	uint32_t MPCBB_SecConfig_array[GTZC_MPCBB_NB_VCTR_REG_MAX];	 /*!< Each element specifies secure
+									    access mode for a super-block. Each
+									    bit corresponds to a block inside
+									    the super-block. 0 means
+									    non-secure, 1 means secure */
+	uint32_t MPCBB_PrivConfig_array[GTZC_MPCBB_NB_VCTR_REG_MAX];	 /*!< Each element specifies privilege
+									    access mode for a super-block. Each
+									    bit corresponds to a block inside
+									    the super-block. 0 means
+									    non-privilege, 1 means privilege */
+	uint32_t MPCBB_LockConfig_array[GTZC_MPCBB_NB_LCK_VCTR_REG_MAX]; /*!< Each bit specifies the lock
+									    configuration of a super-block
+									    (32 blocks). 0 means unlocked,
+									      1 means locked */
+} MPCBB_Attribute_ConfigTypeDef;
 
-	typedef struct
-	{
-		uint32_t SecureRWIllegalMode;		       /*!< Secure read/write illegal access
-								    field. It can be a value of @ref
-								  GTZC_MPCBB_SecureRWIllegalMode */
-		uint32_t InvertSecureState;		       /*!< Default security state field (can be
-								  inverted or not).   It can be a value of
-								  @ref GTZC_MPCBB_InvertSecureState */
-		MPCBB_Attribute_ConfigTypeDef AttributeConfig; /*!< MPCBB attribute configuration sub-structure */
-	} MPCBB_ConfigTypeDef;
+typedef struct {
+	uint32_t SecureRWIllegalMode;		       /*!< Secure read/write illegal access
+							    field. It can be a value of @ref
+							  GTZC_MPCBB_SecureRWIllegalMode */
+	uint32_t InvertSecureState;		       /*!< Default security state field (can be
+							  inverted or not).   It can be a value of
+							  @ref GTZC_MPCBB_InvertSecureState */
+	MPCBB_Attribute_ConfigTypeDef AttributeConfig; /*!< MPCBB attribute configuration sub-structure */
+} MPCBB_ConfigTypeDef;
 
-	typedef struct
-	{
-		uint32_t AreaId;     /*!< Area identifier field. It can be a value of @ref
-					  GTZC_MPCWM_AreaId */
-		uint32_t Offset;     /*!< Offset of the watermark area, starting from the
-					selected memory base address. It must aligned on
-					128KB for FMC and OCTOSPI memories, and on 32-byte
-					for BKPSRAM */
-		uint32_t Length;     /*!< Length of the watermark area, starting from the
-					selected Offset. It must aligned on 128KB for FMC
-					and OCTOSPI memories, and on 32-byte for BKPSRAM */
-		uint32_t Attribute;  /*!< Attributes of the watermark area. It can be a
-					value  of @ref GTZC_MPCWM_Attribute */
-		uint32_t Lock;	     /*!< Lock of the watermark area. It can be a value
-					  of @ref GTZC_MPCWM_Lock */
-		uint32_t AreaStatus; /*!< Status of the watermark area. It can be set to
-					  ENABLE or DISABLE */
-	} MPCWM_ConfigTypeDef;
+typedef struct {
+	uint32_t AreaId;     /*!< Area identifier field. It can be a value of @ref
+				  GTZC_MPCWM_AreaId */
+	uint32_t Offset;     /*!< Offset of the watermark area, starting from the
+				selected memory base address. It must aligned on
+				128KB for FMC and OCTOSPI memories, and on 32-byte
+				for BKPSRAM */
+	uint32_t Length;     /*!< Length of the watermark area, starting from the
+				selected Offset. It must aligned on 128KB for FMC
+				and OCTOSPI memories, and on 32-byte for BKPSRAM */
+	uint32_t Attribute;  /*!< Attributes of the watermark area. It can be a
+				value  of @ref GTZC_MPCWM_Attribute */
+	uint32_t Lock;	     /*!< Lock of the watermark area. It can be a value
+				  of @ref GTZC_MPCWM_Lock */
+	uint32_t AreaStatus; /*!< Status of the watermark area. It can be set to
+				  ENABLE or DISABLE */
+} MPCWM_ConfigTypeDef;
 
 /**
  * @}
@@ -143,45 +139,45 @@ extern "C"
 #define GTZC_ATTR_SEC_MASK 0x100U
 #define GTZC_ATTR_PRIV_MASK 0x200U
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported constants --------------------------------------------------------*/
+/* Exported constants --------------------------------------------------------*/
 
-	/** @defgroup GTZC_Exported_Constants GTZC Exported Constants
-	 * @{
-	 */
+/** @defgroup GTZC_Exported_Constants GTZC Exported Constants
+ * @{
+ */
 
-	/** @defgroup GTZC_MPCBB_SecureRWIllegalMode GTZC MPCBB SRWILADIS values
-	 * @{
-	 */
+/** @defgroup GTZC_MPCBB_SecureRWIllegalMode GTZC MPCBB SRWILADIS values
+ * @{
+ */
 
 #define GTZC_MPCBB_SRWILADIS_ENABLE (0U)
 #define GTZC_MPCBB_SRWILADIS_DISABLE (GTZC_MPCBB_CR_SRWILADIS_Msk)
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @defgroup GTZC_MPCBB_InvertSecureState GTZC MPCBB INVSECSTATE values
-	 * @{
-	 */
+/** @defgroup GTZC_MPCBB_InvertSecureState GTZC MPCBB INVSECSTATE values
+ * @{
+ */
 
 #define GTZC_MPCBB_INVSECSTATE_NOT_INVERTED (0U)
 #define GTZC_MPCBB_INVSECSTATE_INVERTED (GTZC_MPCBB_CR_INVSECSTATE_Msk)
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @defgroup GTZC_MPCWM_AreaId GTZC MPCWM area identifier values
-	 * @{
-	 */
+/** @defgroup GTZC_MPCWM_AreaId GTZC MPCWM area identifier values
+ * @{
+ */
 
 #define GTZC_TZSC_MPCWM_ID1 (0U)
 #define GTZC_TZSC_MPCWM_ID2 (1U)
@@ -539,115 +535,115 @@ extern "C"
 /* user-oriented macro to get TZIC instance of a specific PeriphId */
 #define HAL_GTZC_TZIC_GET_INSTANCE(periph_id) ((GTZC_GET_REG_INDEX(periph_id) <= (GTZC1_PERIPH_REG4 >> GTZC_PERIPH_REG_SHIFT)) ? GTZC_TZIC1 : GTZC_TZIC2)
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported functions --------------------------------------------------------*/
+/* Exported functions --------------------------------------------------------*/
 
-	/** @addtogroup GTZC_Exported_Functions
-	 * @{
-	 */
+/** @addtogroup GTZC_Exported_Functions
+ * @{
+ */
 
-	/** @addtogroup GTZC_Exported_Functions_Group1
-	 * @brief    TZSC Initialization and Configuration functions
-	 * @{
-	 */
+/** @addtogroup GTZC_Exported_Functions_Group1
+ * @brief    TZSC Initialization and Configuration functions
+ * @{
+ */
 
-	HAL_StatusTypeDef HAL_GTZC_TZSC_ConfigPeriphAttributes(uint32_t PeriphId, uint32_t PeriphAttributes);
-	HAL_StatusTypeDef HAL_GTZC_TZSC_GetConfigPeriphAttributes(uint32_t PeriphId, uint32_t *PeriphAttributes);
+HAL_StatusTypeDef HAL_GTZC_TZSC_ConfigPeriphAttributes(uint32_t PeriphId, uint32_t PeriphAttributes);
+HAL_StatusTypeDef HAL_GTZC_TZSC_GetConfigPeriphAttributes(uint32_t PeriphId, uint32_t *PeriphAttributes);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 
-	/** @addtogroup GTZC_Exported_Functions_Group2
-	 * @brief    MPCWM Initialization and Configuration functions
-	 * @{
-	 */
+/** @addtogroup GTZC_Exported_Functions_Group2
+ * @brief    MPCWM Initialization and Configuration functions
+ * @{
+ */
 
-	HAL_StatusTypeDef HAL_GTZC_TZSC_MPCWM_ConfigMemAttributes(uint32_t MemBaseAddress, const MPCWM_ConfigTypeDef *pMPCWM_Desc);
-	HAL_StatusTypeDef HAL_GTZC_TZSC_MPCWM_GetConfigMemAttributes(uint32_t MemBaseAddress, MPCWM_ConfigTypeDef *pMPCWM_Desc);
-	/**
-	 * @}
-	 */
+HAL_StatusTypeDef HAL_GTZC_TZSC_MPCWM_ConfigMemAttributes(uint32_t MemBaseAddress, const MPCWM_ConfigTypeDef *pMPCWM_Desc);
+HAL_StatusTypeDef HAL_GTZC_TZSC_MPCWM_GetConfigMemAttributes(uint32_t MemBaseAddress, MPCWM_ConfigTypeDef *pMPCWM_Desc);
+/**
+ * @}
+ */
 
-	/** @addtogroup GTZC_Exported_Functions_Group3
-	 * @brief    TZSC and TZSC-MPCWM Lock functions
-	 * @{
-	 */
+/** @addtogroup GTZC_Exported_Functions_Group3
+ * @brief    TZSC and TZSC-MPCWM Lock functions
+ * @{
+ */
 
-	void HAL_GTZC_TZSC_Lock(GTZC_TZSC_TypeDef *TZSC_Instance);
-	uint32_t HAL_GTZC_TZSC_GetLock(const GTZC_TZSC_TypeDef *TZSC_Instance);
+void HAL_GTZC_TZSC_Lock(GTZC_TZSC_TypeDef *TZSC_Instance);
+uint32_t HAL_GTZC_TZSC_GetLock(const GTZC_TZSC_TypeDef *TZSC_Instance);
 
 /**
  * @}
  */
 #endif /* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
-	/** @addtogroup GTZC_Exported_Functions_Group4
-	 * @brief    MPCBB Initialization and Configuration functions
-	 * @{
-	 */
+/** @addtogroup GTZC_Exported_Functions_Group4
+ * @brief    MPCBB Initialization and Configuration functions
+ * @{
+ */
 
-	HAL_StatusTypeDef HAL_GTZC_MPCBB_ConfigMem(uint32_t MemBaseAddress, const MPCBB_ConfigTypeDef *pMPCBB_desc);
-	HAL_StatusTypeDef HAL_GTZC_MPCBB_GetConfigMem(uint32_t MemBaseAddress, MPCBB_ConfigTypeDef *pMPCBB_desc);
-	HAL_StatusTypeDef HAL_GTZC_MPCBB_ConfigMemAttributes(uint32_t MemAddress, uint32_t NbBlocks, const uint32_t *pMemAttributes);
-	HAL_StatusTypeDef HAL_GTZC_MPCBB_GetConfigMemAttributes(uint32_t MemAddress, uint32_t NbBlocks, uint32_t *pMemAttributes);
-
-#if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-	HAL_StatusTypeDef HAL_GTZC_MPCBB_LockConfig(uint32_t MemAddress, uint32_t NbSuperBlocks, const uint32_t *pLockAttributes);
-	HAL_StatusTypeDef HAL_GTZC_MPCBB_GetLockConfig(uint32_t MemAddress, uint32_t NbSuperBlocks, uint32_t *pLockAttributes);
-	HAL_StatusTypeDef HAL_GTZC_MPCBB_Lock(uint32_t MemBaseAddress);
-	HAL_StatusTypeDef HAL_GTZC_MPCBB_GetLock(uint32_t MemBaseAddress, uint32_t *pLockState);
-#endif /* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
-
-	/**
-	 * @}
-	 */
+HAL_StatusTypeDef HAL_GTZC_MPCBB_ConfigMem(uint32_t MemBaseAddress, const MPCBB_ConfigTypeDef *pMPCBB_desc);
+HAL_StatusTypeDef HAL_GTZC_MPCBB_GetConfigMem(uint32_t MemBaseAddress, MPCBB_ConfigTypeDef *pMPCBB_desc);
+HAL_StatusTypeDef HAL_GTZC_MPCBB_ConfigMemAttributes(uint32_t MemAddress, uint32_t NbBlocks, const uint32_t *pMemAttributes);
+HAL_StatusTypeDef HAL_GTZC_MPCBB_GetConfigMemAttributes(uint32_t MemAddress, uint32_t NbBlocks, uint32_t *pMemAttributes);
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+HAL_StatusTypeDef HAL_GTZC_MPCBB_LockConfig(uint32_t MemAddress, uint32_t NbSuperBlocks, const uint32_t *pLockAttributes);
+HAL_StatusTypeDef HAL_GTZC_MPCBB_GetLockConfig(uint32_t MemAddress, uint32_t NbSuperBlocks, uint32_t *pLockAttributes);
+HAL_StatusTypeDef HAL_GTZC_MPCBB_Lock(uint32_t MemBaseAddress);
+HAL_StatusTypeDef HAL_GTZC_MPCBB_GetLock(uint32_t MemBaseAddress, uint32_t *pLockState);
+#endif /* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
-	/** @addtogroup GTZC_Exported_Functions_Group5
-	 * @brief    TZIC functions
-	 * @{
-	 */
+/**
+ * @}
+ */
 
-	HAL_StatusTypeDef HAL_GTZC_TZIC_DisableIT(uint32_t PeriphId);
-	HAL_StatusTypeDef HAL_GTZC_TZIC_EnableIT(uint32_t PeriphId);
-	HAL_StatusTypeDef HAL_GTZC_TZIC_GetFlag(uint32_t PeriphId, uint32_t *pFlag);
-	HAL_StatusTypeDef HAL_GTZC_TZIC_ClearFlag(uint32_t PeriphId);
+#if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 
-	/**
-	 * @}
-	 */
+/** @addtogroup GTZC_Exported_Functions_Group5
+ * @brief    TZIC functions
+ * @{
+ */
 
-	/** @addtogroup GTZC_Exported_Functions_Group6
-	 * @brief    IRQ related Functions
-	 * @{
-	 */
+HAL_StatusTypeDef HAL_GTZC_TZIC_DisableIT(uint32_t PeriphId);
+HAL_StatusTypeDef HAL_GTZC_TZIC_EnableIT(uint32_t PeriphId);
+HAL_StatusTypeDef HAL_GTZC_TZIC_GetFlag(uint32_t PeriphId, uint32_t *pFlag);
+HAL_StatusTypeDef HAL_GTZC_TZIC_ClearFlag(uint32_t PeriphId);
 
-	void HAL_GTZC_IRQHandler(void);
-	void HAL_GTZC_TZIC_Callback(uint32_t PeriphId);
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/** @addtogroup GTZC_Exported_Functions_Group6
+ * @brief    IRQ related Functions
+ * @{
+ */
+
+void HAL_GTZC_IRQHandler(void);
+void HAL_GTZC_TZIC_Callback(uint32_t PeriphId);
+
+/**
+ * @}
+ */
 
 #endif /* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

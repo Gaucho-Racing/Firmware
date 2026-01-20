@@ -120,18 +120,13 @@ functions #####
 uint32_t HAL_PWREx_GetVoltageRange(void)
 {
 #if defined(PWR_CR5_R1MODE)
-	if (READ_BIT(PWR->CR1, PWR_CR1_VOS) == PWR_REGULATOR_VOLTAGE_SCALE2)
-	{
+	if (READ_BIT(PWR->CR1, PWR_CR1_VOS) == PWR_REGULATOR_VOLTAGE_SCALE2) {
 		return PWR_REGULATOR_VOLTAGE_SCALE2;
-	}
-	else if (READ_BIT(PWR->CR5, PWR_CR5_R1MODE) == PWR_CR5_R1MODE)
-	{
+	} else if (READ_BIT(PWR->CR5, PWR_CR5_R1MODE) == PWR_CR5_R1MODE) {
 		/* PWR_CR5_R1MODE bit set means that Range 1 Boost is disabled
 		 */
 		return PWR_REGULATOR_VOLTAGE_SCALE1;
-	}
-	else
-	{
+	} else {
 		return PWR_REGULATOR_VOLTAGE_SCALE1_BOOST;
 	}
 #else
@@ -187,11 +182,9 @@ HAL_StatusTypeDef HAL_PWREx_ControlVoltageScaling(uint32_t VoltageScaling)
 	assert_param(IS_PWR_VOLTAGE_SCALING_RANGE(VoltageScaling));
 
 #if defined(PWR_CR5_R1MODE)
-	if (VoltageScaling == PWR_REGULATOR_VOLTAGE_SCALE1_BOOST)
-	{
+	if (VoltageScaling == PWR_REGULATOR_VOLTAGE_SCALE1_BOOST) {
 		/* If current range is range 2 */
-		if (READ_BIT(PWR->CR1, PWR_CR1_VOS) == PWR_REGULATOR_VOLTAGE_SCALE2)
-		{
+		if (READ_BIT(PWR->CR1, PWR_CR1_VOS) == PWR_REGULATOR_VOLTAGE_SCALE2) {
 			/* Make sure Range 1 Boost is enabled */
 			CLEAR_BIT(PWR->CR5, PWR_CR5_R1MODE);
 
@@ -200,28 +193,22 @@ HAL_StatusTypeDef HAL_PWREx_ControlVoltageScaling(uint32_t VoltageScaling)
 
 			/* Wait until VOSF is cleared */
 			wait_loop_index = ((PWR_FLAG_SETTING_DELAY_US * SystemCoreClock) / 1000000U) + 1;
-			while ((HAL_IS_BIT_SET(PWR->SR2, PWR_SR2_VOSF)) && (wait_loop_index != 0U))
-			{
+			while ((HAL_IS_BIT_SET(PWR->SR2, PWR_SR2_VOSF)) && (wait_loop_index != 0U)) {
 				wait_loop_index--;
 			}
-			if (HAL_IS_BIT_SET(PWR->SR2, PWR_SR2_VOSF))
-			{
+			if (HAL_IS_BIT_SET(PWR->SR2, PWR_SR2_VOSF)) {
 				return HAL_TIMEOUT;
 			}
 		}
 		/* If current range is range 1 normal or boost mode */
-		else
-		{
+		else {
 			/* Enable Range 1 Boost (no issue if bit already reset)
 			 */
 			CLEAR_BIT(PWR->CR5, PWR_CR5_R1MODE);
 		}
-	}
-	else if (VoltageScaling == PWR_REGULATOR_VOLTAGE_SCALE1)
-	{
+	} else if (VoltageScaling == PWR_REGULATOR_VOLTAGE_SCALE1) {
 		/* If current range is range 2 */
-		if (READ_BIT(PWR->CR1, PWR_CR1_VOS) == PWR_REGULATOR_VOLTAGE_SCALE2)
-		{
+		if (READ_BIT(PWR->CR1, PWR_CR1_VOS) == PWR_REGULATOR_VOLTAGE_SCALE2) {
 			/* Make sure Range 1 Boost is disabled */
 			SET_BIT(PWR->CR5, PWR_CR5_R1MODE);
 
@@ -230,25 +217,20 @@ HAL_StatusTypeDef HAL_PWREx_ControlVoltageScaling(uint32_t VoltageScaling)
 
 			/* Wait until VOSF is cleared */
 			wait_loop_index = ((PWR_FLAG_SETTING_DELAY_US * SystemCoreClock) / 1000000U) + 1;
-			while ((HAL_IS_BIT_SET(PWR->SR2, PWR_SR2_VOSF)) && (wait_loop_index != 0U))
-			{
+			while ((HAL_IS_BIT_SET(PWR->SR2, PWR_SR2_VOSF)) && (wait_loop_index != 0U)) {
 				wait_loop_index--;
 			}
-			if (HAL_IS_BIT_SET(PWR->SR2, PWR_SR2_VOSF))
-			{
+			if (HAL_IS_BIT_SET(PWR->SR2, PWR_SR2_VOSF)) {
 				return HAL_TIMEOUT;
 			}
 		}
 		/* If current range is range 1 normal or boost mode */
-		else
-		{
+		else {
 			/* Disable Range 1 Boost (no issue if bit already set)
 			 */
 			SET_BIT(PWR->CR5, PWR_CR5_R1MODE);
 		}
-	}
-	else
-	{
+	} else {
 		/* Set Range 2 */
 		MODIFY_REG(PWR->CR1, PWR_CR1_VOS, PWR_REGULATOR_VOLTAGE_SCALE2);
 		/* No need to wait for VOSF to be cleared for this transition */
@@ -258,29 +240,22 @@ HAL_StatusTypeDef HAL_PWREx_ControlVoltageScaling(uint32_t VoltageScaling)
 #else
 
 	/* If Set Range 1 */
-	if (VoltageScaling == PWR_REGULATOR_VOLTAGE_SCALE1)
-	{
-		if (READ_BIT(PWR->CR1, PWR_CR1_VOS) != PWR_REGULATOR_VOLTAGE_SCALE1)
-		{
+	if (VoltageScaling == PWR_REGULATOR_VOLTAGE_SCALE1) {
+		if (READ_BIT(PWR->CR1, PWR_CR1_VOS) != PWR_REGULATOR_VOLTAGE_SCALE1) {
 			/* Set Range 1 */
 			MODIFY_REG(PWR->CR1, PWR_CR1_VOS, PWR_REGULATOR_VOLTAGE_SCALE1);
 
 			/* Wait until VOSF is cleared */
 			wait_loop_index = ((PWR_FLAG_SETTING_DELAY_US * SystemCoreClock) / 1000000U) + 1U;
-			while ((HAL_IS_BIT_SET(PWR->SR2, PWR_SR2_VOSF)) && (wait_loop_index != 0U))
-			{
+			while ((HAL_IS_BIT_SET(PWR->SR2, PWR_SR2_VOSF)) && (wait_loop_index != 0U)) {
 				wait_loop_index--;
 			}
-			if (HAL_IS_BIT_SET(PWR->SR2, PWR_SR2_VOSF))
-			{
+			if (HAL_IS_BIT_SET(PWR->SR2, PWR_SR2_VOSF)) {
 				return HAL_TIMEOUT;
 			}
 		}
-	}
-	else
-	{
-		if (READ_BIT(PWR->CR1, PWR_CR1_VOS) != PWR_REGULATOR_VOLTAGE_SCALE2)
-		{
+	} else {
+		if (READ_BIT(PWR->CR1, PWR_CR1_VOS) != PWR_REGULATOR_VOLTAGE_SCALE2) {
 			/* Set Range 2 */
 			MODIFY_REG(PWR->CR1, PWR_CR1_VOS, PWR_REGULATOR_VOLTAGE_SCALE2);
 			/* No need to wait for VOSF to be cleared for this
@@ -392,8 +367,7 @@ HAL_StatusTypeDef HAL_PWREx_EnableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber)
 	assert_param(IS_PWR_GPIO(GPIO));
 	assert_param(IS_PWR_GPIO_BIT_NUMBER(GPIONumber));
 
-	switch (GPIO)
-	{
+	switch (GPIO) {
 		case PWR_GPIO_A:
 			SET_BIT(PWR->PUCRA, (GPIONumber & (~(PWR_GPIO_BIT_14))));
 			CLEAR_BIT(PWR->PDCRA, (GPIONumber & (~(PWR_GPIO_BIT_13 | PWR_GPIO_BIT_15))));
@@ -475,8 +449,7 @@ HAL_StatusTypeDef HAL_PWREx_DisableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber
 	assert_param(IS_PWR_GPIO(GPIO));
 	assert_param(IS_PWR_GPIO_BIT_NUMBER(GPIONumber));
 
-	switch (GPIO)
-	{
+	switch (GPIO) {
 		case PWR_GPIO_A:
 			CLEAR_BIT(PWR->PUCRA, (GPIONumber & (~(PWR_GPIO_BIT_14))));
 			break;
@@ -551,8 +524,7 @@ HAL_StatusTypeDef HAL_PWREx_EnableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumbe
 	assert_param(IS_PWR_GPIO(GPIO));
 	assert_param(IS_PWR_GPIO_BIT_NUMBER(GPIONumber));
 
-	switch (GPIO)
-	{
+	switch (GPIO) {
 		case PWR_GPIO_A:
 			SET_BIT(PWR->PDCRA, (GPIONumber & (~(PWR_GPIO_BIT_13 | PWR_GPIO_BIT_15))));
 			CLEAR_BIT(PWR->PUCRA, (GPIONumber & (~(PWR_GPIO_BIT_14))));
@@ -634,8 +606,7 @@ HAL_StatusTypeDef HAL_PWREx_DisableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumb
 	assert_param(IS_PWR_GPIO(GPIO));
 	assert_param(IS_PWR_GPIO_BIT_NUMBER(GPIONumber));
 
-	switch (GPIO)
-	{
+	switch (GPIO) {
 		case PWR_GPIO_A:
 			CLEAR_BIT(PWR->PDCRA, (GPIONumber & (~(PWR_GPIO_BIT_13 | PWR_GPIO_BIT_15))));
 			break;
@@ -737,22 +708,17 @@ HAL_StatusTypeDef HAL_PWREx_SetSRAM2ContentRetention(uint32_t SRAM2Size)
 {
 	assert_param(IS_PWR_SRAM2_RETENTION(SRAM2Size));
 
-	if (SRAM2Size == PWR_NO_SRAM2_RETENTION)
-	{
+	if (SRAM2Size == PWR_NO_SRAM2_RETENTION) {
 		CLEAR_BIT(PWR->CR3, PWR_CR3_RRS);
-	}
-	else if (SRAM2Size == PWR_FULL_SRAM2_RETENTION)
-	{
+	} else if (SRAM2Size == PWR_FULL_SRAM2_RETENTION) {
 		MODIFY_REG(PWR->CR3, PWR_CR3_RRS, PWR_FULL_SRAM2_RETENTION);
 	}
 #if defined(PWR_CR3_RRS_1)
-	else if (SRAM2Size == PWR_4KBYTES_SRAM2_RETENTION)
-	{
+	else if (SRAM2Size == PWR_4KBYTES_SRAM2_RETENTION) {
 		MODIFY_REG(PWR->CR3, PWR_CR3_RRS, PWR_4KBYTES_SRAM2_RETENTION);
 	}
 #endif /* PWR_CR3_RRS_1 */
-	else
-	{
+	else {
 		return HAL_ERROR;
 	}
 
@@ -902,8 +868,7 @@ HAL_StatusTypeDef HAL_PWREx_ConfigPVM(PWR_PVMTypeDef *sConfigPVM)
 	/* Configure EXTI 35 to 38 interrupts if so required:
 	   scan through PVMType to detect which PVMx is set and
 	   configure the corresponding EXTI line accordingly. */
-	switch (sConfigPVM->PVMType)
-	{
+	switch (sConfigPVM->PVMType) {
 #if defined(PWR_CR2_PVME1)
 		case PWR_PVM_1:
 			/* Clear any previous config. Keep it clear if no event
@@ -914,25 +879,21 @@ HAL_StatusTypeDef HAL_PWREx_ConfigPVM(PWR_PVMTypeDef *sConfigPVM)
 			__HAL_PWR_PVM1_EXTI_DISABLE_RISING_EDGE();
 
 			/* Configure interrupt mode */
-			if ((sConfigPVM->Mode & PVM_MODE_IT) == PVM_MODE_IT)
-			{
+			if ((sConfigPVM->Mode & PVM_MODE_IT) == PVM_MODE_IT) {
 				__HAL_PWR_PVM1_EXTI_ENABLE_IT();
 			}
 
 			/* Configure event mode */
-			if ((sConfigPVM->Mode & PVM_MODE_EVT) == PVM_MODE_EVT)
-			{
+			if ((sConfigPVM->Mode & PVM_MODE_EVT) == PVM_MODE_EVT) {
 				__HAL_PWR_PVM1_EXTI_ENABLE_EVENT();
 			}
 
 			/* Configure the edge */
-			if ((sConfigPVM->Mode & PVM_RISING_EDGE) == PVM_RISING_EDGE)
-			{
+			if ((sConfigPVM->Mode & PVM_RISING_EDGE) == PVM_RISING_EDGE) {
 				__HAL_PWR_PVM1_EXTI_ENABLE_RISING_EDGE();
 			}
 
-			if ((sConfigPVM->Mode & PVM_FALLING_EDGE) == PVM_FALLING_EDGE)
-			{
+			if ((sConfigPVM->Mode & PVM_FALLING_EDGE) == PVM_FALLING_EDGE) {
 				__HAL_PWR_PVM1_EXTI_ENABLE_FALLING_EDGE();
 			}
 			break;
@@ -948,25 +909,21 @@ HAL_StatusTypeDef HAL_PWREx_ConfigPVM(PWR_PVMTypeDef *sConfigPVM)
 			__HAL_PWR_PVM2_EXTI_DISABLE_RISING_EDGE();
 
 			/* Configure interrupt mode */
-			if ((sConfigPVM->Mode & PVM_MODE_IT) == PVM_MODE_IT)
-			{
+			if ((sConfigPVM->Mode & PVM_MODE_IT) == PVM_MODE_IT) {
 				__HAL_PWR_PVM2_EXTI_ENABLE_IT();
 			}
 
 			/* Configure event mode */
-			if ((sConfigPVM->Mode & PVM_MODE_EVT) == PVM_MODE_EVT)
-			{
+			if ((sConfigPVM->Mode & PVM_MODE_EVT) == PVM_MODE_EVT) {
 				__HAL_PWR_PVM2_EXTI_ENABLE_EVENT();
 			}
 
 			/* Configure the edge */
-			if ((sConfigPVM->Mode & PVM_RISING_EDGE) == PVM_RISING_EDGE)
-			{
+			if ((sConfigPVM->Mode & PVM_RISING_EDGE) == PVM_RISING_EDGE) {
 				__HAL_PWR_PVM2_EXTI_ENABLE_RISING_EDGE();
 			}
 
-			if ((sConfigPVM->Mode & PVM_FALLING_EDGE) == PVM_FALLING_EDGE)
-			{
+			if ((sConfigPVM->Mode & PVM_FALLING_EDGE) == PVM_FALLING_EDGE) {
 				__HAL_PWR_PVM2_EXTI_ENABLE_FALLING_EDGE();
 			}
 			break;
@@ -981,25 +938,21 @@ HAL_StatusTypeDef HAL_PWREx_ConfigPVM(PWR_PVMTypeDef *sConfigPVM)
 			__HAL_PWR_PVM3_EXTI_DISABLE_RISING_EDGE();
 
 			/* Configure interrupt mode */
-			if ((sConfigPVM->Mode & PVM_MODE_IT) == PVM_MODE_IT)
-			{
+			if ((sConfigPVM->Mode & PVM_MODE_IT) == PVM_MODE_IT) {
 				__HAL_PWR_PVM3_EXTI_ENABLE_IT();
 			}
 
 			/* Configure event mode */
-			if ((sConfigPVM->Mode & PVM_MODE_EVT) == PVM_MODE_EVT)
-			{
+			if ((sConfigPVM->Mode & PVM_MODE_EVT) == PVM_MODE_EVT) {
 				__HAL_PWR_PVM3_EXTI_ENABLE_EVENT();
 			}
 
 			/* Configure the edge */
-			if ((sConfigPVM->Mode & PVM_RISING_EDGE) == PVM_RISING_EDGE)
-			{
+			if ((sConfigPVM->Mode & PVM_RISING_EDGE) == PVM_RISING_EDGE) {
 				__HAL_PWR_PVM3_EXTI_ENABLE_RISING_EDGE();
 			}
 
-			if ((sConfigPVM->Mode & PVM_FALLING_EDGE) == PVM_FALLING_EDGE)
-			{
+			if ((sConfigPVM->Mode & PVM_FALLING_EDGE) == PVM_FALLING_EDGE) {
 				__HAL_PWR_PVM3_EXTI_ENABLE_FALLING_EDGE();
 			}
 			break;
@@ -1013,25 +966,21 @@ HAL_StatusTypeDef HAL_PWREx_ConfigPVM(PWR_PVMTypeDef *sConfigPVM)
 			__HAL_PWR_PVM4_EXTI_DISABLE_RISING_EDGE();
 
 			/* Configure interrupt mode */
-			if ((sConfigPVM->Mode & PVM_MODE_IT) == PVM_MODE_IT)
-			{
+			if ((sConfigPVM->Mode & PVM_MODE_IT) == PVM_MODE_IT) {
 				__HAL_PWR_PVM4_EXTI_ENABLE_IT();
 			}
 
 			/* Configure event mode */
-			if ((sConfigPVM->Mode & PVM_MODE_EVT) == PVM_MODE_EVT)
-			{
+			if ((sConfigPVM->Mode & PVM_MODE_EVT) == PVM_MODE_EVT) {
 				__HAL_PWR_PVM4_EXTI_ENABLE_EVENT();
 			}
 
 			/* Configure the edge */
-			if ((sConfigPVM->Mode & PVM_RISING_EDGE) == PVM_RISING_EDGE)
-			{
+			if ((sConfigPVM->Mode & PVM_RISING_EDGE) == PVM_RISING_EDGE) {
 				__HAL_PWR_PVM4_EXTI_ENABLE_RISING_EDGE();
 			}
 
-			if ((sConfigPVM->Mode & PVM_FALLING_EDGE) == PVM_FALLING_EDGE)
-			{
+			if ((sConfigPVM->Mode & PVM_FALLING_EDGE) == PVM_FALLING_EDGE) {
 				__HAL_PWR_PVM4_EXTI_ENABLE_FALLING_EDGE();
 			}
 			break;
@@ -1079,12 +1028,10 @@ HAL_StatusTypeDef HAL_PWREx_DisableLowPowerRunMode(void)
 
 	/* Wait until REGLPF is reset */
 	wait_loop_index = ((PWR_FLAG_SETTING_DELAY_US * SystemCoreClock) / 1000000U) + 1U;
-	while ((HAL_IS_BIT_SET(PWR->SR2, PWR_SR2_REGLPF)) && (wait_loop_index != 0U))
-	{
+	while ((HAL_IS_BIT_SET(PWR->SR2, PWR_SR2_REGLPF)) && (wait_loop_index != 0U)) {
 		wait_loop_index--;
 	}
-	if (HAL_IS_BIT_SET(PWR->SR2, PWR_SR2_REGLPF))
-	{
+	if (HAL_IS_BIT_SET(PWR->SR2, PWR_SR2_REGLPF)) {
 		return HAL_TIMEOUT;
 	}
 
@@ -1127,13 +1074,10 @@ void HAL_PWREx_EnterSTOP0Mode(uint8_t STOPEntry)
 
 	/* Select Stop mode entry
 	 * --------------------------------------------------*/
-	if (STOPEntry == PWR_STOPENTRY_WFI)
-	{
+	if (STOPEntry == PWR_STOPENTRY_WFI) {
 		/* Request Wait For Interrupt */
 		__WFI();
-	}
-	else
-	{
+	} else {
 		/* Request Wait For Event */
 		__SEV();
 		__WFE();
@@ -1180,13 +1124,10 @@ void HAL_PWREx_EnterSTOP1Mode(uint8_t STOPEntry)
 
 	/* Select Stop mode entry
 	 * --------------------------------------------------*/
-	if (STOPEntry == PWR_STOPENTRY_WFI)
-	{
+	if (STOPEntry == PWR_STOPENTRY_WFI) {
 		/* Request Wait For Interrupt */
 		__WFI();
-	}
-	else
-	{
+	} else {
 		/* Request Wait For Event */
 		__SEV();
 		__WFE();
@@ -1234,13 +1175,10 @@ void HAL_PWREx_EnterSTOP2Mode(uint8_t STOPEntry)
 
 	/* Select Stop mode entry
 	 * --------------------------------------------------*/
-	if (STOPEntry == PWR_STOPENTRY_WFI)
-	{
+	if (STOPEntry == PWR_STOPENTRY_WFI) {
 		/* Request Wait For Interrupt */
 		__WFI();
-	}
-	else
-	{
+	} else {
 		/* Request Wait For Event */
 		__SEV();
 		__WFE();
@@ -1286,8 +1224,7 @@ void HAL_PWREx_EnterSHUTDOWNMode(void)
 void HAL_PWREx_PVD_PVM_IRQHandler(void)
 {
 	/* Check PWR exti flag */
-	if (__HAL_PWR_PVD_EXTI_GET_FLAG() != 0x0U)
-	{
+	if (__HAL_PWR_PVD_EXTI_GET_FLAG() != 0x0U) {
 		/* PWR PVD interrupt user callback */
 		HAL_PWR_PVDCallback();
 
@@ -1296,8 +1233,7 @@ void HAL_PWREx_PVD_PVM_IRQHandler(void)
 	}
 	/* Next, successively check PVMx exti flags */
 #if defined(PWR_CR2_PVME1)
-	if (__HAL_PWR_PVM1_EXTI_GET_FLAG() != 0x0U)
-	{
+	if (__HAL_PWR_PVM1_EXTI_GET_FLAG() != 0x0U) {
 		/* PWR PVM1 interrupt user callback */
 		HAL_PWREx_PVM1Callback();
 
@@ -1306,8 +1242,7 @@ void HAL_PWREx_PVD_PVM_IRQHandler(void)
 	}
 #endif /* PWR_CR2_PVME1 */
 #if defined(PWR_CR2_PVME2)
-	if (__HAL_PWR_PVM2_EXTI_GET_FLAG() != 0x0U)
-	{
+	if (__HAL_PWR_PVM2_EXTI_GET_FLAG() != 0x0U) {
 		/* PWR PVM2 interrupt user callback */
 		HAL_PWREx_PVM2Callback();
 
@@ -1315,16 +1250,14 @@ void HAL_PWREx_PVD_PVM_IRQHandler(void)
 		__HAL_PWR_PVM2_EXTI_CLEAR_FLAG();
 	}
 #endif /* PWR_CR2_PVME2 */
-	if (__HAL_PWR_PVM3_EXTI_GET_FLAG() != 0x0U)
-	{
+	if (__HAL_PWR_PVM3_EXTI_GET_FLAG() != 0x0U) {
 		/* PWR PVM3 interrupt user callback */
 		HAL_PWREx_PVM3Callback();
 
 		/* Clear PVM3 exti pending bit */
 		__HAL_PWR_PVM3_EXTI_CLEAR_FLAG();
 	}
-	if (__HAL_PWR_PVM4_EXTI_GET_FLAG() != 0x0U)
-	{
+	if (__HAL_PWR_PVM4_EXTI_GET_FLAG() != 0x0U) {
 		/* PWR PVM4 interrupt user callback */
 		HAL_PWREx_PVM4Callback();
 

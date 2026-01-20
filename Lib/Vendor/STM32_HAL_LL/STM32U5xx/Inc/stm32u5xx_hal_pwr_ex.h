@@ -21,40 +21,38 @@
 #define STM32U5xx_HAL_PWR_EX_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif /* __cplusplus */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx_hal_def.h"
 
-	/** @addtogroup STM32U5xx_HAL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32U5xx_HAL_Driver
+ * @{
+ */
 
-	/** @addtogroup PWREx
-	 * @{
-	 */
+/** @addtogroup PWREx
+ * @{
+ */
 
-	/* Exported types ------------------------------------------------------------*/
+/* Exported types ------------------------------------------------------------*/
 
-	/** @defgroup PWREx_Exported_Types PWR Extended Exported Types
-	 * @{
-	 */
+/** @defgroup PWREx_Exported_Types PWR Extended Exported Types
+ * @{
+ */
 
-	/**
-	 * @brief  PWR PVM configuration structure definition
-	 */
-	typedef struct
-	{
-		uint32_t PVMType; /*!< Specifies which voltage is monitored.
-				       This parameter can be a value of
-				       @ref PWREx_PVM_Type. */
+/**
+ * @brief  PWR PVM configuration structure definition
+ */
+typedef struct {
+	uint32_t PVMType; /*!< Specifies which voltage is monitored.
+			       This parameter can be a value of
+			       @ref PWREx_PVM_Type. */
 
-		uint32_t Mode; /*!< Specifies the operating mode for the selected pins.
-				    This parameter can be a value of
-				    @ref PWREx_PVM_Mode. */
-	} PWR_PVMTypeDef;
+	uint32_t Mode; /*!< Specifies the operating mode for the selected pins.
+			    This parameter can be a value of
+			    @ref PWREx_PVM_Mode. */
+} PWR_PVMTypeDef;
 /**
  * @}
  */
@@ -538,8 +536,7 @@ extern "C"
  * @retval None.
  */
 #define __HAL_PWR_UVM_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                                \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__HAL_PWR_UVM_EXTI_ENABLE_RISING_EDGE();                                                                                                                                               \
 		__HAL_PWR_UVM_EXTI_ENABLE_FALLING_EDGE();                                                                                                                                              \
 	} while (0)
@@ -549,8 +546,7 @@ extern "C"
  * @retval None.
  */
 #define __HAL_PWR_UVM_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                               \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__HAL_PWR_UVM_EXTI_DISABLE_RISING_EDGE();                                                                                                                                              \
 		__HAL_PWR_UVM_EXTI_DISABLE_FALLING_EDGE();                                                                                                                                             \
 	} while (0)
@@ -572,8 +568,7 @@ extern "C"
  * @retval None.
  */
 #define __HAL_PWR_UVM_EXTI_CLEAR_FLAG()                                                                                                                                                                \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		WRITE_REG(EXTI->RPR1, PWR_EXTI_LINE_UVM);                                                                                                                                              \
 		WRITE_REG(EXTI->FPR1, PWR_EXTI_LINE_UVM);                                                                                                                                              \
 	} while (0)
@@ -631,8 +626,7 @@ extern "C"
  * @retval None.
  */
 #define __HAL_PWR_IO2VM_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                              \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__HAL_PWR_IO2VM_EXTI_ENABLE_RISING_EDGE();                                                                                                                                             \
 		__HAL_PWR_IO2VM_EXTI_ENABLE_FALLING_EDGE();                                                                                                                                            \
 	} while (0)
@@ -642,8 +636,7 @@ extern "C"
  * @retval None.
  */
 #define __HAL_PWR_IO2VM_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                             \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__HAL_PWR_IO2VM_EXTI_DISABLE_RISING_EDGE();                                                                                                                                            \
 		__HAL_PWR_IO2VM_EXTI_DISABLE_FALLING_EDGE();                                                                                                                                           \
 	} while (0)
@@ -665,8 +658,7 @@ extern "C"
  * @retval None.
  */
 #define __HAL_PWR_IO2VM_EXTI_CLEAR_FLAG()                                                                                                                                                              \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		WRITE_REG(EXTI->RPR1, PWR_EXTI_LINE_IO2VM);                                                                                                                                            \
 		WRITE_REG(EXTI->FPR1, PWR_EXTI_LINE_IO2VM);                                                                                                                                            \
 	} while (0)
@@ -724,8 +716,7 @@ extern "C"
  * @retval None.
  */
 #define __HAL_PWR_AVM1_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                               \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__HAL_PWR_AVM1_EXTI_ENABLE_RISING_EDGE();                                                                                                                                              \
 		__HAL_PWR_AVM1_EXTI_ENABLE_FALLING_EDGE();                                                                                                                                             \
 	} while (0)
@@ -735,8 +726,7 @@ extern "C"
  * @retval None.
  */
 #define __HAL_PWR_AVM1_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                              \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__HAL_PWR_AVM1_EXTI_DISABLE_RISING_EDGE();                                                                                                                                             \
 		__HAL_PWR_AVM1_EXTI_DISABLE_FALLING_EDGE();                                                                                                                                            \
 	} while (0)
@@ -758,8 +748,7 @@ extern "C"
  * @retval None.
  */
 #define __HAL_PWR_AVM1_EXTI_CLEAR_FLAG()                                                                                                                                                               \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		WRITE_REG(EXTI->RPR1, PWR_EXTI_LINE_AVM1);                                                                                                                                             \
 		WRITE_REG(EXTI->FPR1, PWR_EXTI_LINE_AVM1);                                                                                                                                             \
 	} while (0)
@@ -817,8 +806,7 @@ extern "C"
  * @retval None.
  */
 #define __HAL_PWR_AVM2_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                               \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__HAL_PWR_AVM2_EXTI_ENABLE_RISING_EDGE();                                                                                                                                              \
 		__HAL_PWR_AVM2_EXTI_ENABLE_FALLING_EDGE();                                                                                                                                             \
 	} while (0)
@@ -828,8 +816,7 @@ extern "C"
  * @retval None.
  */
 #define __HAL_PWR_AVM2_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                              \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__HAL_PWR_AVM2_EXTI_DISABLE_RISING_EDGE();                                                                                                                                             \
 		__HAL_PWR_AVM2_EXTI_DISABLE_FALLING_EDGE();                                                                                                                                            \
 	} while (0)
@@ -851,8 +838,7 @@ extern "C"
  * @retval None.
  */
 #define __HAL_PWR_AVM2_EXTI_CLEAR_FLAG()                                                                                                                                                               \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		WRITE_REG(EXTI->RPR1, PWR_EXTI_LINE_AVM2);                                                                                                                                             \
 		WRITE_REG(EXTI->FPR1, PWR_EXTI_LINE_AVM2);                                                                                                                                             \
 	} while (0)
@@ -880,8 +866,7 @@ extern "C"
  * @retval None.
  */
 #define __HAL_PWR_VOLTAGESCALING_CONFIG(__REGULATOR__)                                                                                                                                                 \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__IO uint32_t tmpreg;                                                                                                                                                                  \
 		MODIFY_REG(PWR->VOSR, PWR_VOSR_VOS, (__REGULATOR__));                                                                                                                                  \
 		tmpreg = READ_BIT(PWR->VOSR, PWR_VOSR_VOS);                                                                                                                                            \
@@ -1061,134 +1046,134 @@ extern "C"
 
 /* RAMs retention in Run mode check macro */
 #define IS_PWR_RAM_RUN_RETENTION(RAMCONTENT) ((((RAMCONTENT) & (~PWR_ALL_RAM_RUN_MASK)) == 0U) && ((RAMCONTENT) != 0U))
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @addtogroup PWREx_Exported_Functions PWR Extended Exported Functions
-	 * @{
-	 */
+/** @addtogroup PWREx_Exported_Functions PWR Extended Exported Functions
+ * @{
+ */
 
-	/** @addtogroup PWREx_Exported_Functions_Group1 Power Supply Control Functions
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_PWREx_ControlVoltageScaling(uint32_t VoltageScaling);
-	uint32_t HAL_PWREx_GetVoltageRange(void);
-	HAL_StatusTypeDef HAL_PWREx_ConfigSupply(uint32_t SupplySource);
-	uint32_t HAL_PWREx_GetSupplyConfig(void);
-	void HAL_PWREx_EnableFastSoftStart(void);
-	void HAL_PWREx_DisableFastSoftStart(void);
-	/**
-	 * @}
-	 */
+/** @addtogroup PWREx_Exported_Functions_Group1 Power Supply Control Functions
+ * @{
+ */
+HAL_StatusTypeDef HAL_PWREx_ControlVoltageScaling(uint32_t VoltageScaling);
+uint32_t HAL_PWREx_GetVoltageRange(void);
+HAL_StatusTypeDef HAL_PWREx_ConfigSupply(uint32_t SupplySource);
+uint32_t HAL_PWREx_GetSupplyConfig(void);
+void HAL_PWREx_EnableFastSoftStart(void);
+void HAL_PWREx_DisableFastSoftStart(void);
+/**
+ * @}
+ */
 
-	/** @addtogroup PWREx_Exported_Functions_Group2 Low Power Control Functions
-	 * @{
-	 */
-	void HAL_PWREx_EnterSTOP1Mode(uint8_t STOPEntry);
-	void HAL_PWREx_EnterSTOP2Mode(uint8_t STOPEntry);
-	void HAL_PWREx_EnterSTOP3Mode(uint8_t STOPEntry);
-	void HAL_PWREx_EnterSHUTDOWNMode(void);
-	void HAL_PWREx_ConfigSRDDomain(uint32_t SRDState);
-	void HAL_PWREx_EnableUltraLowPowerMode(void);
-	void HAL_PWREx_DisableUltraLowPowerMode(void);
-	void HAL_PWREx_S3WU_IRQHandler(uint32_t WakeUpPin);
-	void HAL_PWREx_S3WUCallback(uint32_t WakeUpPin);
-	/**
-	 * @}
-	 */
+/** @addtogroup PWREx_Exported_Functions_Group2 Low Power Control Functions
+ * @{
+ */
+void HAL_PWREx_EnterSTOP1Mode(uint8_t STOPEntry);
+void HAL_PWREx_EnterSTOP2Mode(uint8_t STOPEntry);
+void HAL_PWREx_EnterSTOP3Mode(uint8_t STOPEntry);
+void HAL_PWREx_EnterSHUTDOWNMode(void);
+void HAL_PWREx_ConfigSRDDomain(uint32_t SRDState);
+void HAL_PWREx_EnableUltraLowPowerMode(void);
+void HAL_PWREx_DisableUltraLowPowerMode(void);
+void HAL_PWREx_S3WU_IRQHandler(uint32_t WakeUpPin);
+void HAL_PWREx_S3WUCallback(uint32_t WakeUpPin);
+/**
+ * @}
+ */
 
-	/** @addtogroup PWREx_Exported_Functions_Group3 Voltage Monitoring Functions
-	 * @{
-	 */
-	void HAL_PWREx_EnableBatteryCharging(uint32_t ResistorValue);
-	void HAL_PWREx_DisableBatteryCharging(void);
-	void HAL_PWREx_EnableVddUSB(void);
-	void HAL_PWREx_DisableVddUSB(void);
-	void HAL_PWREx_EnableVddIO2(void);
-	void HAL_PWREx_DisableVddIO2(void);
-	void HAL_PWREx_EnableVddA(void);
-	void HAL_PWREx_DisableVddA(void);
-	void HAL_PWREx_EnableUVM(void);
-	void HAL_PWREx_DisableUVM(void);
-	void HAL_PWREx_EnableIO2VM(void);
-	void HAL_PWREx_DisableIO2VM(void);
-	void HAL_PWREx_EnableAVM1(void);
-	void HAL_PWREx_DisableAVM1(void);
-	void HAL_PWREx_EnableAVM2(void);
-	void HAL_PWREx_DisableAVM2(void);
+/** @addtogroup PWREx_Exported_Functions_Group3 Voltage Monitoring Functions
+ * @{
+ */
+void HAL_PWREx_EnableBatteryCharging(uint32_t ResistorValue);
+void HAL_PWREx_DisableBatteryCharging(void);
+void HAL_PWREx_EnableVddUSB(void);
+void HAL_PWREx_DisableVddUSB(void);
+void HAL_PWREx_EnableVddIO2(void);
+void HAL_PWREx_DisableVddIO2(void);
+void HAL_PWREx_EnableVddA(void);
+void HAL_PWREx_DisableVddA(void);
+void HAL_PWREx_EnableUVM(void);
+void HAL_PWREx_DisableUVM(void);
+void HAL_PWREx_EnableIO2VM(void);
+void HAL_PWREx_DisableIO2VM(void);
+void HAL_PWREx_EnableAVM1(void);
+void HAL_PWREx_DisableAVM1(void);
+void HAL_PWREx_EnableAVM2(void);
+void HAL_PWREx_DisableAVM2(void);
 #if defined(PWR_VOSR_USBPWREN)
-	HAL_StatusTypeDef HAL_PWREx_EnableUSBHSTranceiverSupply(void);
-	void HAL_PWREx_DisableUSBHSTranceiverSupply(void);
+HAL_StatusTypeDef HAL_PWREx_EnableUSBHSTranceiverSupply(void);
+void HAL_PWREx_DisableUSBHSTranceiverSupply(void);
 #endif /* defined (PWR_VOSR_USBPWREN) */
 #if defined(PWR_CR1_FORCE_USBPWR)
-	void HAL_PWREx_EnableOTGHSPHYLowPowerRetention(void);
-	void HAL_PWREx_DisableOTGHSPHYLowPowerRetention(void);
+void HAL_PWREx_EnableOTGHSPHYLowPowerRetention(void);
+void HAL_PWREx_DisableOTGHSPHYLowPowerRetention(void);
 #endif /* defined (PWR_CR1_FORCE_USBPWR) */
 #if defined(PWR_VOSR_VDD11USBDIS)
-	void HAL_PWREx_EnableVDD11USB(void);
-	void HAL_PWREx_DisableVDD11USB(void);
+void HAL_PWREx_EnableVDD11USB(void);
+void HAL_PWREx_DisableVDD11USB(void);
 #endif /* defined (PWR_VOSR_VDD11USBDIS) */
-	HAL_StatusTypeDef HAL_PWREx_ConfigPVM(PWR_PVMTypeDef *pConfigPVM);
-	void HAL_PWREx_EnableMonitoring(void);
-	void HAL_PWREx_DisableMonitoring(void);
-	void HAL_PWREx_EnableUCPDStandbyMode(void);
-	void HAL_PWREx_DisableUCPDStandbyMode(void);
-	void HAL_PWREx_EnableUCPDDeadBattery(void);
-	void HAL_PWREx_DisableUCPDDeadBattery(void);
-	void HAL_PWREx_PVD_PVM_IRQHandler(void);
-	void HAL_PWREx_UVMCallback(void);
-	void HAL_PWREx_IO2VMCallback(void);
-	void HAL_PWREx_AVM1Callback(void);
-	void HAL_PWREx_AVM2Callback(void);
-	/**
-	 * @}
-	 */
+HAL_StatusTypeDef HAL_PWREx_ConfigPVM(PWR_PVMTypeDef *pConfigPVM);
+void HAL_PWREx_EnableMonitoring(void);
+void HAL_PWREx_DisableMonitoring(void);
+void HAL_PWREx_EnableUCPDStandbyMode(void);
+void HAL_PWREx_DisableUCPDStandbyMode(void);
+void HAL_PWREx_EnableUCPDDeadBattery(void);
+void HAL_PWREx_DisableUCPDDeadBattery(void);
+void HAL_PWREx_PVD_PVM_IRQHandler(void);
+void HAL_PWREx_UVMCallback(void);
+void HAL_PWREx_IO2VMCallback(void);
+void HAL_PWREx_AVM1Callback(void);
+void HAL_PWREx_AVM2Callback(void);
+/**
+ * @}
+ */
 
-	/** @addtogroup PWREx_Exported_Functions_Group4 Memories Retention Functions
-	 * @{
-	 */
-	void HAL_PWREx_EnableSRAM2ContentStandbyRetention(uint32_t SRAM2Pages);
-	void HAL_PWREx_DisableSRAM2ContentStandbyRetention(uint32_t SRAM2Pages);
-	void HAL_PWREx_EnableRAMsContentStopRetention(uint32_t RAMSelection);
-	void HAL_PWREx_DisableRAMsContentStopRetention(uint32_t RAMSelection);
-	void HAL_PWREx_EnableRAMsContentRunRetention(uint32_t RAMSelection);
-	void HAL_PWREx_DisableRAMsContentRunRetention(uint32_t RAMSelection);
-	void HAL_PWREx_EnableFlashFastWakeUp(void);
-	void HAL_PWREx_DisableFlashFastWakeUp(void);
-	void HAL_PWREx_EnableSRAM4FastWakeUp(void);
-	void HAL_PWREx_DisableSRAM4FastWakeUp(void);
-	HAL_StatusTypeDef HAL_PWREx_EnableBkupRAMRetention(void);
-	void HAL_PWREx_DisableBkupRAMRetention(void);
-	/**
-	 * @}
-	 */
+/** @addtogroup PWREx_Exported_Functions_Group4 Memories Retention Functions
+ * @{
+ */
+void HAL_PWREx_EnableSRAM2ContentStandbyRetention(uint32_t SRAM2Pages);
+void HAL_PWREx_DisableSRAM2ContentStandbyRetention(uint32_t SRAM2Pages);
+void HAL_PWREx_EnableRAMsContentStopRetention(uint32_t RAMSelection);
+void HAL_PWREx_DisableRAMsContentStopRetention(uint32_t RAMSelection);
+void HAL_PWREx_EnableRAMsContentRunRetention(uint32_t RAMSelection);
+void HAL_PWREx_DisableRAMsContentRunRetention(uint32_t RAMSelection);
+void HAL_PWREx_EnableFlashFastWakeUp(void);
+void HAL_PWREx_DisableFlashFastWakeUp(void);
+void HAL_PWREx_EnableSRAM4FastWakeUp(void);
+void HAL_PWREx_DisableSRAM4FastWakeUp(void);
+HAL_StatusTypeDef HAL_PWREx_EnableBkupRAMRetention(void);
+void HAL_PWREx_DisableBkupRAMRetention(void);
+/**
+ * @}
+ */
 
-	/** @addtogroup PWREx_Exported_Functions_Group5 I/O Pull-Up Pull-Down
-	 * Configuration Functions
-	 * @{
-	 */
-	void HAL_PWREx_EnablePullUpPullDownConfig(void);
-	void HAL_PWREx_DisablePullUpPullDownConfig(void);
-	HAL_StatusTypeDef HAL_PWREx_EnableGPIOPullUp(uint32_t GPIO_Port, uint32_t GPIO_Pin);
-	HAL_StatusTypeDef HAL_PWREx_DisableGPIOPullUp(uint32_t GPIO_Port, uint32_t GPIO_Pin);
-	HAL_StatusTypeDef HAL_PWREx_EnableGPIOPullDown(uint32_t GPIO_Port, uint32_t GPIO_Pin);
-	HAL_StatusTypeDef HAL_PWREx_DisableGPIOPullDown(uint32_t GPIO_Port, uint32_t GPIO_Pin);
-	/**
-	 * @}
-	 */
+/** @addtogroup PWREx_Exported_Functions_Group5 I/O Pull-Up Pull-Down
+ * Configuration Functions
+ * @{
+ */
+void HAL_PWREx_EnablePullUpPullDownConfig(void);
+void HAL_PWREx_DisablePullUpPullDownConfig(void);
+HAL_StatusTypeDef HAL_PWREx_EnableGPIOPullUp(uint32_t GPIO_Port, uint32_t GPIO_Pin);
+HAL_StatusTypeDef HAL_PWREx_DisableGPIOPullUp(uint32_t GPIO_Port, uint32_t GPIO_Pin);
+HAL_StatusTypeDef HAL_PWREx_EnableGPIOPullDown(uint32_t GPIO_Port, uint32_t GPIO_Pin);
+HAL_StatusTypeDef HAL_PWREx_DisableGPIOPullDown(uint32_t GPIO_Port, uint32_t GPIO_Pin);
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

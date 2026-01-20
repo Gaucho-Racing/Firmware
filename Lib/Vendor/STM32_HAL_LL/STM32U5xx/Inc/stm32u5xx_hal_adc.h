@@ -21,8 +21,7 @@
 #define STM32U5xx_HAL_ADC_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -31,701 +30,696 @@ extern "C"
 /* Include low level driver */
 #include "stm32u5xx_ll_adc.h"
 
-	/** @addtogroup STM32U5xx_HAL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32U5xx_HAL_Driver
+ * @{
+ */
 
-	/** @addtogroup ADC
-	 * @{
-	 */
+/** @addtogroup ADC
+ * @{
+ */
 
-	/* Exported types ------------------------------------------------------------*/
-	/** @defgroup ADC_Exported_Types ADC Exported Types
-	 * @{
-	 */
+/* Exported types ------------------------------------------------------------*/
+/** @defgroup ADC_Exported_Types ADC Exported Types
+ * @{
+ */
 
-	/**
-	 * @brief  ADC group regular oversampling structure definition
-	 */
-	typedef struct
-	{
-		uint32_t Ratio; /*!< Configures the oversampling ratio.
-				     In case of ADC1 or ADC2 (if available), this
-				   parameter can be in the range from 0 to 1023 In case
-				   of ADC4, this parameter can be a value of
-				     @ref ADC_HAL_EC_OVS_RATIO */
+/**
+ * @brief  ADC group regular oversampling structure definition
+ */
+typedef struct {
+	uint32_t Ratio; /*!< Configures the oversampling ratio.
+			     In case of ADC1 or ADC2 (if available), this
+			   parameter can be in the range from 0 to 1023 In case
+			   of ADC4, this parameter can be a value of
+			     @ref ADC_HAL_EC_OVS_RATIO */
 
-		uint32_t RightBitShift; /*!< Configures the division coefficient for the
-					   Oversampler. This parameter can be a value of
-					   @ref ADC_HAL_EC_OVS_SHIFT */
+	uint32_t RightBitShift; /*!< Configures the division coefficient for the
+				   Oversampler. This parameter can be a value of
+				   @ref ADC_HAL_EC_OVS_SHIFT */
 
-		uint32_t TriggeredMode; /*!< Selects the regular triggered oversampling
-					   mode. This parameter can be a value of @ref
-					   ADC_HAL_EC_OVS_DISCONT_MODE */
+	uint32_t TriggeredMode; /*!< Selects the regular triggered oversampling
+				   mode. This parameter can be a value of @ref
+				   ADC_HAL_EC_OVS_DISCONT_MODE */
 
-		uint32_t OversamplingStopReset; /*!< Selects the regular oversampling mode.
-						     The oversampling is either temporary
-						   stopped or reset upon an injected sequence
-						   interruption. If oversampling is enabled
-						   on both regular and injected groups, this
-						   parameter is discarded and forced to
-						   setting "ADC_REGOVERSAMPLING_RESUMED_MODE"
-						     (the oversampling buffer is zeroed
-						   during injection sequence). This parameter
-						   can be a value of @ref
-						   ADC_HAL_EC_OVS_SCOPE_REG Note: This
-						   parameter is not applicable for ADC4 */
+	uint32_t OversamplingStopReset; /*!< Selects the regular oversampling mode.
+					     The oversampling is either temporary
+					   stopped or reset upon an injected sequence
+					   interruption. If oversampling is enabled
+					   on both regular and injected groups, this
+					   parameter is discarded and forced to
+					   setting "ADC_REGOVERSAMPLING_RESUMED_MODE"
+					     (the oversampling buffer is zeroed
+					   during injection sequence). This parameter
+					   can be a value of @ref
+					   ADC_HAL_EC_OVS_SCOPE_REG Note: This
+					   parameter is not applicable for ADC4 */
 
-	} ADC_OversamplingTypeDef;
+} ADC_OversamplingTypeDef;
 
-	/**
-	 * @brief  Structure definition of ADC instance and ADC group regular.
-	 * @note   Parameters of this structure are shared within 2 scopes:
-	 *          - Scope entire ADC (affects ADC groups regular and injected):
-	 * ClockPrescaler, Resolution, DataAlign, ScanConvMode, EOCSelection,
-	 * LowPowerAutoWait, LowPowerAutoPowerOff.
-	 *          - Scope ADC group regular: ContinuousConvMode, NbrOfConversion,
-	 * DiscontinuousConvMode, NbrOfDiscConversion, ExternalTrigConv,
-	 * ExternalTrigConvEdge, DMAContinuousRequests, Overrun, OversamplingMode,
-	 * Oversampling, ConversionDataManagement.
-	 * @note   The setting of these parameters by function HAL_ADC_Init() is
-	 * conditioned to ADC state. ADC state can be either:
-	 *          - For all parameters: ADC disabled
-	 *          - For all parameters except 'LowPowerAutoWait',
-	 * 'DMAContinuousRequests' and 'Oversampling': ADC enabled without conversion on
-	 * going on group regular.
-	 *          - For parameters 'LowPowerAutoWait' and 'DMAContinuousRequests': ADC
-	 * enabled without conversion on going on groups regular and injected. If ADC is
-	 * not in the appropriate state to modify some parameters, these parameters
-	 * setting is bypassed without error reporting (as it can be the expected
-	 * behavior in case of intended action to update another parameter (which
-	 * fulfills the ADC state condition) on the fly).
-	 */
-	typedef struct
-	{
-		uint32_t ClockPrescaler; /*!< Select ADC clock source (synchronous clock
-					    derived from APB clock or asynchronous clock
-					    derived from system clock or PLL (Refer to
-					    reference manual for list of clocks available))
-					    and clock prescaler. This parameter can be a
-					    value of @ref ADC_HAL_EC_COMMON_CLOCK_SOURCE.
-					      Note: The ADC clock configuration is common to
-					    all ADC instances. Note: In case of usage of
-					    channels on injected group, ADC frequency should
-					    be lower than AHB clock frequency /4 for
-					    resolution 12 or 10 bits, AHB clock frequency /3
-					    for resolution 8 bits, AHB clock frequency /2 for
-						    resolution 6 bits.
-					      Note: In case of synchronous clock mode based
-					    on HCLK/1, the configuration must be enabled only
-					    if the system clock has a 50% duty clock cycle
-						    (APB prescaler configured inside RCC must
-					    be bypassed and PCLK clock must have 50% duty
-					    cycle). Refer to reference manual for details.
-					      Note: In case of usage of asynchronous clock,
-					    the selected clock must be preliminarily enabled
-					    at RCC top level. Note: This parameter can be
-					    modified only if all ADC instances are disabled.
-					  */
-
-		uint32_t Resolution; /*!< Configure the ADC resolution.
-					  This parameter can be a value of @ref
-					ADC_HAL_EC_RESOLUTION */
-
-		uint32_t GainCompensation; /*!< Specify the ADC gain compensation coefficient
-					      to be applied to ADC raw conversion data, based
-					      on following formula: DATA = DATA(raw) * (gain
-					      compensation coef) / 4095 14 bit format,
-					      unsigned: 2 bits exponents / 14 bits mantissa
-						 Gain step is 1/4095 = 0.000244
-						 Gain range is 0.0000 to 3.999756
-						This parameter value can be
-						 0           Gain compensation will be
-					      disabled and coefficient set to 0 1 -> 0x3FFF
-					      Gain compensation will be enabled and
-					      coefficient set to specified value */
-
-		uint32_t ScanConvMode; /*!< Configure the sequencer of ADC groups regular and
-					  injected. This parameter can be associated to
-					  parameter 'DiscontinuousConvMode' to have main
-					  sequence subdivided in successive parts. For ADC1
-					  or ADC2 instances, this parameter could be enabled
-					  or disabled. If disabled: Conversion is performed
-					  in single mode (one channel converted, the one
-					  defined in rank 1). Parameters 'NbrOfConversion'
-					  and 'InjectedNbrOfConversion' are discarded
-					  (equivalent to set to 1). If enabled:  Conversions
-					  are performed in sequence mode (multiple ranks
-					  defined by 'NbrOfConversion' or
-					  'InjectedNbrOfConversion' and rank of each channel
-					  in sequencer). Scan direction is upward: from rank
-					  1 to rank 'n'. For ADC4 instance, this parameter
-					  could be "fully configurable" or "not fully
-					  configurable":
-					     - sequencer configured to fully configurable:
-					       sequencer length and each rank affectation to
-					  a channel are configurable.
-						- Sequence length: Set number of ranks in the
-					  scan sequence.
-						- Sequence direction: Unless specified in
-					  parameters, sequencer scan direction is forward
-					  (from rank 1 to rank n).
-					     - sequencer configured to not fully
-					  configurable: sequencer length and each rank
-					  affectation to a channel are fixed by channel HW
-					  number.
-						- Sequence length: Number of ranks in the
-					  scan sequence is defined by number of channels set
-					  in the sequence, rank of each channel is fixed by
-					  channel HW number. (channel 0 fixed on rank 0,
-					  channel 1 fixed on rank1, ...).
-						- Sequence direction: Unless specified in
-					  parameters, sequencer scan direction is forward
-					  (from lowest channel number to highest channel
-					  number). This parameter can be a value of @ref
-					  ADC_Scan_mode */
-
-		uint32_t DataAlign; /*!< Specify ADC data alignment in conversion data
-				       register (right or left). Refer to reference
-				       manual for alignments formats versus resolutions.
-					 This parameter can be a value of @ref
-				       ADC_HAL_EC_DATA_ALIGN */
-
-		uint32_t EOCSelection; /*!< Specify which EOC (End Of Conversion) flag
-					  is used for conversion by polling and
-					    interruption: end of unitary conversion or
-					  end of sequence conversions. This parameter
-					  can be a value of @ref ADC_EOCSelection. */
-
-		FunctionalState LowPowerAutoWait; /*!< Select the dynamic low power Auto Delay: new
-						     conversion start only when the previous
-						     conversion (for ADC group regular) or previous
-						     sequence (for ADC group injected) has been
-						     retrieved by user software, using function
-						     HAL_ADC_GetValue() or
-						     HAL_ADCEx_InjectedGetValue(). This feature
-						     automatically adapts the frequency of ADC
-						     conversions triggers to the speed of the system
-						     that reads the data. Moreover, this avoids risk
-						     of overrun for low frequency applications.
-						     This parameter can be set to ENABLE or DISABLE.
-						     Note: It is not recommended to use with
-						     interruption or DMA (HAL_ADC_Start_IT(),
-							   HAL_ADC_Start_DMA()) since these modes
-						     have to clear immediately the EOC flag (by CPU
-						     to free the IRQ pending event or by DMA). Auto
-						     wait will work but fort a very short time,
-						     discarding its intended benefit (except
-						     specific case of high load of CPU or DMA
-						     transfers which can justify usage of auto
-						     wait). Do use with polling: 1. Start conversion
-						     with HAL_ADC_Start(),
-										2. Later on, when
-						     ADC conversion data is needed: use
-						     HAL_ADC_GetValue() to retrieve conversion
-						     result and trig another conversion start. (in
-						     case of usage of ADC group injected, use the
-						     equivalent functions HAL_ADCExInjected_Start(),
-						     HAL_ADCEx_InjectedGetValue(), ...). */
-
-		uint32_t LowPowerAutoPowerOff; /*!< Select the auto-off low power mode: the
-						  ADC automatically powers-off after a
-						  conversion and automatically wakes-up when
-						  a new conversion is triggered. This feature
-						  can be combined with automatic wait mode
-						  ('LowPowerAutoWait'). This parameter can be
-						  value of @ref ADC_HAL_LowPower_DPD. Note:
-						  If activated, this feature also turns off
-						  the ADC dedicated 16 MHz RC oscillator
-						  (HSI16). Note: This parameter can be used
-						  for ADC4 only. */
-
-		FunctionalState ContinuousConvMode; /*!< Specify whether the conversion is performed
-						     in single mode (one conversion) or continuous
-						     mode for ADC group regular, after the first ADC
-						     conversion start trigger occurred (software
-						     start or external trigger). This parameter can
-						     be set to ENABLE or DISABLE. */
-
-		uint32_t NbrOfConversion; /*!< Specify the number of ranks that will be
-					     converted within the regular group sequencer.
-					       This parameter is dependent on ADC instance.
-					       If ADC1 or ADC2 instances:
-					       To use the regular group sequencer and convert
-					     several ranks, parameter 'ScanConvMode' must be
-					     enabled. This parameter must be a number between
-					     Min_Data = 1 and Max_Data = 16. If ADC4
-					     instance: This parameter is dependent on
-					     ScanConvMode:
-						- sequencer configured to fully configurable:
-						  Number of ranks in the scan sequence is
-					     configurable using this parameter. Note: After
-					     the first call of 'HAL_ADC_Init()', each rank
-					     corresponding to parameter "NbrOfConversion"
-					     must be set using 'HAL_ADC_ConfigChannel()'.
-							Afterwards, when all needed sequencer
-					     ranks are set, parameter 'NbrOfConversion' can
-					     be updated without modifying configuration of
-							sequencer ranks (sequencer ranks
-					     above 'NbrOfConversion' are discarded).
-						- sequencer configured to not fully
-					     configurable: Number of ranks in the scan
-					     sequence is defined by number of channels set in
-						  the sequence. This parameter is discarded.
-					       This parameter must be a number between
-					     Min_Data = 1 and Max_Data = 8. Note: This
-					     parameter must be modified when no conversion is
-					     on going on regular group (ADC disabled, or ADC
-					     enabled without continuous mode or external
-					     trigger that could launch a conversion). */
-
-		FunctionalState DiscontinuousConvMode; /*!< Specify whether the conversions sequence
-						     of ADC group regular is performed in
-						     Complete-sequence/Discontinuous-sequence (main
-						     sequence subdivided in successive parts).
-						     Discontinuous mode is used only if sequencer is
-						     enabled (parameter 'ScanConvMode'). If
-						     sequencer is disabled, this parameter is
-						     discarded. Discontinuous mode can be enabled
-						     only if continuous mode is disabled. If
-						     continuous mode is enabled, this parameter
-						     setting is discarded. This parameter can be set
-						     to ENABLE or DISABLE. */
-
-		uint32_t NbrOfDiscConversion; /*!< Specifies the number of discontinuous
-						 conversions in which the main sequence
-						 of ADC group regular (parameter
-						 NbrOfConversion) will be subdivided. If
-						 parameter 'DiscontinuousConvMode' is
-						 disabled, this parameter is discarded.
-						 This parameter must be a number between
-						 Min_Data = 1 and Max_Data = 8. */
-
-		uint32_t ExternalTrigConv; /*!< Select the external event source used to
-					      trigger ADC group regular conversion start. If
-					      set to ADC_SOFTWARE_START, external triggers
-					      are disabled and software trigger is used
-					      instead. This parameter can be a value of @ref
-					      ADC_regular_external_trigger_source. Caution:
-					      external trigger source is common to all ADC
-					      instances. */
-
-		uint32_t ExternalTrigConvEdge; /*!< Select the external event edge used to
-						  trigger ADC group regular conversion start.
-						    If trigger source is set to
-						  ADC_SOFTWARE_START, this parameter is
-						  discarded. This parameter can be a value of
-						  @ref ADC_regular_external_trigger_edge */
-
-		uint32_t ConversionDataManagement; /*!< Specifies whether the Data conversion
-						     data is managed: using the DMA (oneshot
-						     or circular), or stored in the DR
-						     register or transferred to MDF register.
-						     Note: In continuous mode, DMA must be
-						     configured in circular mode. Otherwise
-						     an overrun will be triggered when DMA
-						     buffer maximum pointer is reached. This
-						     parameter can be a value of @ref
-						     ADC_ConversionDataManagement. Note: This
-						     parameter must be modified when no
-						     conversion is on going on both regular
-						     and injected groups (ADC disabled, or
-						     ADC enabled without continuous mode or
-						     external trigger that could launch a
-						     conversion). */
-
-		FunctionalState DMAContinuousRequests; /*!< Specify whether the DMA requests are
-							  performed in one shot mode (DMA transfer
-							  stops when number of conversions is
-							  reached) or in continuous mode (DMA
-							  transfer unlimited, whatever number of
-							  conversions). This parameter can be set to
-							  ENABLE or DISABLE. Note: In continuous
-							  mode, DMA must be configured in circular
-							  mode. Otherwise an overrun will be
-							  triggered when DMA buffer maximum pointer
-							  is reached. */
-
-		uint32_t Overrun; /*!< Select the behavior in case of overrun: data
-				     overwritten or preserved (default). This parameter
-				     applies to ADC group regular only. This parameter can be
-				     a value of @ref ADC_HAL_EC_REG_OVR_DATA_BEHAVIOR. Note:
-				     In case of overrun set to data preserved and usage with
-				     programming model with interruption (HAL_Start_IT()):
-				     ADC IRQ handler has to clear end of conversion flags,
-				     this induces the release of the preserved data. If
-				     needed, this data can be saved in function
-				     HAL_ADC_ConvCpltCallback(), placed in user program code
-				     (called before end of conversion flags clear). Note:
-				     Error reporting with respect to the conversion mode:
-					     - Usage with ADC conversion by polling for event
-				     or interruption: Error is reported only if overrun is
-				     set to data preserved. If overrun is set to data
-				     overwritten, user can willingly not read all the
-				     converted data, this is not considered as an erroneous
-				     case.
-					     - Usage with ADC conversion by DMA: Error is
-				     reported whatever overrun setting (DMA is expected to
-				     process all data from data register). */
-
-		uint32_t SamplingTimeCommon1; /*!< Set sampling time common to a group of
-						 channels. Unit: ADC clock cycles. This
-						 parameter is applied for ADC4. Conversion
-						 time is the addition of sampling time and
-						 processing time (12.5 ADC clock cycles at
-						 ADC resolution 12 bits, 10.5 cycles at 10
-						 bits, 8.5 cycles at 8 bits). Note: On this
-						 STM32 family, two different sampling time
-						 settings are available, each channel can use
-						 one of these two settings. On some other
-						 STM32 devices, this parameter in channel
-						 wise and is located into ADC channel
-						 initialization structure. This parameter can
-						 be a value of @ref
-						 ADC_HAL_EC_CHANNEL_SAMPLINGTIME Note: In
-						 case of usage of internal measurement
-						 channels (VrefInt/Vbat/TempSensor), sampling
-						 time constraints must be respected (sampling
-						 time can be adjusted in function of ADC
-						 clock frequency and sampling time setting).
-							 Refer to device datasheet for
-						 timings values, parameters TS_vrefint,
-							 TS_vbat, TS_temp (values rough
-						 order: few tens of microseconds). */
-
-		uint32_t SamplingTimeCommon2; /*!< Set sampling time common to a group of
-						 channels, second common setting possible.
-						   Unit: ADC clock cycles
-						   This parameter is applied for ADC4.
-						   Conversion time is the addition of
-						 sampling time and processing time (12.5 ADC
-						   clock cycles at ADC resolution 12
-						 bits, 10.5 cycles at 10 bits, 8.5 cycles at
-						 8 bits). Note: On this STM32 family, two
-						 different sampling time settings are
-						 available, each channel can use one of these
-						 two settings. On some other STM32 devices,
-						 this parameter in channel wise and is
-						 located into ADC channel initialization
-						 structure. This parameter can be a value of
-						 @ref ADC_HAL_EC_CHANNEL_SAMPLINGTIME Note:
-						 In case of usage of internal measurement
-						 channels (VrefInt/Vbat/TempSensor), sampling
-						 time constraints must be respected (sampling
-						 time can be adjusted in function of ADC
-						 clock frequency and sampling time setting)
-							 Refer to device datasheet for
-						 timings values, parameters TS_vrefint,
-							 TS_vbat, TS_temp (values rough
-						 order: few tens of microseconds). */
-
-		uint32_t LeftBitShift; /*!< Configures the left shifting applied to the
-					  final result with or without oversampling.
-					    This parameter can be a value of @ref
-					  ADCEx_Left_Bit_Shift */
-
-		FunctionalState OversamplingMode; /*!< Specify whether the oversampling feature is
-						     enabled or disabled. This parameter can be set
-						     to ENABLE or DISABLE. Note: This parameter can
-						     be modified only if there is no conversion is
-						     ongoing on ADC groups regular and injected */
-
-		ADC_OversamplingTypeDef Oversampling; /*!< Specify the Oversampling parameters.
-							   Caution: this setting overwrites the previous
-							 oversampling configuration if oversampling is
-							 already enabled. */
-
-		uint32_t TriggerFrequencyMode; /*!< Set ADC trigger frequency mode.
-						    This parameter can be a value of @ref
-						  ADC_HAL_EC_REG_TRIGGER_FREQ. Note: ADC
-						  trigger frequency mode must be set to low
-						  frequency when a duration is exceeded
-						  before ADC conversion start trigger event
-							  (between ADC enable and ADC
-						  conversion start trigger event or between
-						  two ADC conversion start trigger event).
-							  Duration value: Refer to device
-						  datasheet, parameter "tIdle". Note: When
-						  ADC trigger frequency mode is set to low
-						  frequency, some rearm cycles are inserted
-						  before performing ADC conversion start,
-						  inducing a delay of 2 ADC clock cycles. */
-
-		uint32_t VrefProtection; /*!< Select the Vref protection mode: specify
-					    VREF+ protection mode when multiple ADCs are
-					    working simultaneously. This parameter can
-					    be value of @ref ADC_HAL_VrefProt. Note:
-					    This parameter can be used for ADC4 only. */
-
-	} ADC_InitTypeDef;
-
-	/**
-	 * @brief  Structure definition of ADC channel for regular group
-	 * @note   The setting of these parameters by function HAL_ADC_ConfigChannel()
-	 * is conditioned to ADC state. ADC state can be either:
-	 *          - For all parameters: ADC disabled (this is the only possible ADC
-	 * state to modify parameter 'SingleDiff')
-	 *          - For all except parameters 'SamplingTime', 'Offset',
-	 * 'OffsetNumber': ADC enabled without conversion on going on regular group.
-	 *          - For parameters 'SamplingTime', 'Offset', 'OffsetNumber': ADC
-	 * enabled without conversion on going on regular and injected groups. If ADC is
-	 * not in the appropriate state to modify some parameters, these parameters
-	 * setting is bypassed without error reporting (as it can be the expected
-	 * behavior in case of intended action to update another parameter (which
-	 * fulfills the ADC state condition) on the fly.
-	 */
-	typedef struct
-	{
-		uint32_t Channel; /*!< Specify the channel to configure into ADC regular
-				     group. This parameter can be a value of @ref
-				     ADC_HAL_EC_CHANNEL Note: Depending on devices and
-				     ADC instances, some channels may not be available
-				     on device package pins. Refer to device datasheet
-				     for channels availability. */
-
-		uint32_t Rank; /*!< Specify the rank in the regular group sequencer.
-				    This parameter is depending on ADC instances.
-				    If ADC1 or ADC2 instances, this parameter specify the
-				  rank in the sequencer. Note: to disable a channel or change
-				  order of conversion sequencer, rank containing a previous
-				  channel setting can be overwritten by the new channel
-				  setting (or parameter number of conversions adjusted) If
-				  ADC4 instance, this parameter allows to add or remove the
-				  channel from the ADC regular group sequencer and specify
-				  its conversion rank. This parameter is depending on
-				  ScanConvMode:
-				    - sequencer configured to fully configurable:
-				      Channels ordering into each rank of scan sequence:
-				      whatever channel can be placed into whatever rank.
-				    - sequencer configured to not fully configurable:
-				      rank of each channel is fixed by channel HW number.
-				      (channel 0 fixed on rank 0, channel 1 fixed on rank1,
-				  ...). Despite the channel rank is fixed, this parameter
-				  allow an additional possibility: to remove the selected
-				  rank (selected channel) from sequencer. This parameter can
-				  be a value of @ref ADC_HAL_EC_REG_SEQ_RANKS */
-
-		uint32_t SamplingTime; /*!< Sampling time value to be set for the selected
-					  channel. Unit: ADC clock cycles Conversion time is
-					  the addition of sampling time and processing time
-					    (14.5 ADC clock cycles at ADC resolution 14
-					  bits, 12.5 cycles at 12 bits, 10.5 cycles at 10
-					  bits, 8.5 cycles at 8 bits, 6.5 cycles at 6 bits).
-					    For ADC1 and 2 (if available): This parameter can
-					  be a value of
-					    @ref ADC_HAL_EC_CHANNEL_SAMPLINGTIME.
-					    Caution: This parameter applies to a channel that
-					  can be used into regular and/or injected group. It
-					  overwrites the last setting. For ADC4: This
-					  parameter can be a value of @ref
-					  ADC_HAL_EC_SAMPLINGTIME_COMMON. Note: On this STM32
-					  family, two different sampling time settings are
-					  available (refer to parameters
-					  "SamplingTimeCommon1" and "SamplingTimeCommon2"),
-						  each channel can use one of these two
-					  settings. Note: In case of usage of internal
-					  measurement channels (VrefInt/Vbat/TempSensor),
-					  sampling time constraints must be respected
-						  (sampling time can be adjusted in function
-					  of ADC clock frequency and sampling time setting)
-						  Refer to device datasheet for timings
-					  values. */
-
-		uint32_t SingleDiff; /*!< Select single-ended or differential input.
-					  In differential mode: Differential measurement is
-					carried out between the selected channel 'i'
-					(positive input) and channel 'i+1' (negative input).
-								Only channel 'i' has to be
-					configured, channel 'i+1' is configured
-					automatically. This parameter must be a value of @ref
-					ADC_HAL_EC_CHANNEL_SINGLE_DIFF_ENDING Caution: This
-					parameter applies to a channel that can be used in a
-					regular and/or injected group. It overwrites the last
-					setting. Note: Refer to Reference Manual to ensure
-					the selected channel is available in differential
-					mode. Note: When configuring a channel 'i' in
-					differential mode, the channel 'i+1' is not usable
-					separately. Note: This parameter must be modified
-					when ADC is disabled (before ADC start conversion or
-					after ADC stop conversion). If ADC is enabled, this
-					parameter setting is bypassed without error reporting
-					(as it can be the expected behavior in case of
-					another parameter update on the fly) */
-
-		uint32_t OffsetNumber; /*!< Select the offset number
-					    This parameter can be a value of @ref
-					  ADC_HAL_EC_OFFSET_NB Caution: Only one offset
-					  is allowed per channel. This parameter
-					  overwrites the last setting. */
-
-		uint32_t Offset; /*!< Define the offset to be subtracted from the raw
-				    converted data. Offset value must be a positive number.
-				      Depending of ADC resolution selected (14, 12, 10, 8 or
-				    6 bits), this parameter must be a number between Min_Data
-				    = 0x000 and Max_Data = 0x3FFF, 0xFFF, 0x3FF, 0xFF or 0x3F
-				    respectively. Note: This parameter must be modified when
-				    no conversion is on going on without both regular and
-				    injected groups (ADC disabled, or ADC enabled continuous
-				    mode or external trigger that could launch a conversion).
+/**
+ * @brief  Structure definition of ADC instance and ADC group regular.
+ * @note   Parameters of this structure are shared within 2 scopes:
+ *          - Scope entire ADC (affects ADC groups regular and injected):
+ * ClockPrescaler, Resolution, DataAlign, ScanConvMode, EOCSelection,
+ * LowPowerAutoWait, LowPowerAutoPowerOff.
+ *          - Scope ADC group regular: ContinuousConvMode, NbrOfConversion,
+ * DiscontinuousConvMode, NbrOfDiscConversion, ExternalTrigConv,
+ * ExternalTrigConvEdge, DMAContinuousRequests, Overrun, OversamplingMode,
+ * Oversampling, ConversionDataManagement.
+ * @note   The setting of these parameters by function HAL_ADC_Init() is
+ * conditioned to ADC state. ADC state can be either:
+ *          - For all parameters: ADC disabled
+ *          - For all parameters except 'LowPowerAutoWait',
+ * 'DMAContinuousRequests' and 'Oversampling': ADC enabled without conversion on
+ * going on group regular.
+ *          - For parameters 'LowPowerAutoWait' and 'DMAContinuousRequests': ADC
+ * enabled without conversion on going on groups regular and injected. If ADC is
+ * not in the appropriate state to modify some parameters, these parameters
+ * setting is bypassed without error reporting (as it can be the expected
+ * behavior in case of intended action to update another parameter (which
+ * fulfills the ADC state condition) on the fly).
+ */
+typedef struct {
+	uint32_t ClockPrescaler; /*!< Select ADC clock source (synchronous clock
+				    derived from APB clock or asynchronous clock
+				    derived from system clock or PLL (Refer to
+				    reference manual for list of clocks available))
+				    and clock prescaler. This parameter can be a
+				    value of @ref ADC_HAL_EC_COMMON_CLOCK_SOURCE.
+				      Note: The ADC clock configuration is common to
+				    all ADC instances. Note: In case of usage of
+				    channels on injected group, ADC frequency should
+				    be lower than AHB clock frequency /4 for
+				    resolution 12 or 10 bits, AHB clock frequency /3
+				    for resolution 8 bits, AHB clock frequency /2 for
+					    resolution 6 bits.
+				      Note: In case of synchronous clock mode based
+				    on HCLK/1, the configuration must be enabled only
+				    if the system clock has a 50% duty clock cycle
+					    (APB prescaler configured inside RCC must
+				    be bypassed and PCLK clock must have 50% duty
+				    cycle). Refer to reference manual for details.
+				      Note: In case of usage of asynchronous clock,
+				    the selected clock must be preliminarily enabled
+				    at RCC top level. Note: This parameter can be
+				    modified only if all ADC instances are disabled.
 				  */
 
-		FunctionalState OffsetRightShift; /*!< Define the Right-shift data after Offset
-						    correction. This parameter is applied only for
-						    14-bit or 8-bit resolution. This parameter can
-						    be set to ENABLE or DISABLE.*/
+	uint32_t Resolution; /*!< Configure the ADC resolution.
+				  This parameter can be a value of @ref
+				ADC_HAL_EC_RESOLUTION */
 
-		FunctionalState OffsetSignedSaturation; /*!< Specify whether the Signed saturation
-							   feature is used or not. This parameter is
-							   only applied when OffsetSaturation is
-							   ENABLE. This parameter is applied only
-							   for 14-bit or 8-bit resolution. This
-							   parameter can be set to ENABLE or
-							   DISABLE. Note:
-								  - If OffsetSignedSaturation is set
-							   to DISABLE the unsigned saturation
-							   feature is used */
+	uint32_t GainCompensation; /*!< Specify the ADC gain compensation coefficient
+				      to be applied to ADC raw conversion data, based
+				      on following formula: DATA = DATA(raw) * (gain
+				      compensation coef) / 4095 14 bit format,
+				      unsigned: 2 bits exponents / 14 bits mantissa
+					 Gain step is 1/4095 = 0.000244
+					 Gain range is 0.0000 to 3.999756
+					This parameter value can be
+					 0           Gain compensation will be
+				      disabled and coefficient set to 0 1 -> 0x3FFF
+				      Gain compensation will be enabled and
+				      coefficient set to specified value */
 
-		FunctionalState OffsetSaturation; /*!< Define if the offset should be saturated upon
-						    under or over flow. This parameter value can be
-						    ENABLE or DISABLE. Note:
-							  - This parameter must be modified when no
-						    conversion is on going on both regular and
-						    injected groups (ADC disabled, or ADC enabled
-						    without continuous mode or external trigger that
-						    could launch a conversion).
-							  - Applicable for ADC1 */
+	uint32_t ScanConvMode; /*!< Configure the sequencer of ADC groups regular and
+				  injected. This parameter can be associated to
+				  parameter 'DiscontinuousConvMode' to have main
+				  sequence subdivided in successive parts. For ADC1
+				  or ADC2 instances, this parameter could be enabled
+				  or disabled. If disabled: Conversion is performed
+				  in single mode (one channel converted, the one
+				  defined in rank 1). Parameters 'NbrOfConversion'
+				  and 'InjectedNbrOfConversion' are discarded
+				  (equivalent to set to 1). If enabled:  Conversions
+				  are performed in sequence mode (multiple ranks
+				  defined by 'NbrOfConversion' or
+				  'InjectedNbrOfConversion' and rank of each channel
+				  in sequencer). Scan direction is upward: from rank
+				  1 to rank 'n'. For ADC4 instance, this parameter
+				  could be "fully configurable" or "not fully
+				  configurable":
+				     - sequencer configured to fully configurable:
+				       sequencer length and each rank affectation to
+				  a channel are configurable.
+					- Sequence length: Set number of ranks in the
+				  scan sequence.
+					- Sequence direction: Unless specified in
+				  parameters, sequencer scan direction is forward
+				  (from rank 1 to rank n).
+				     - sequencer configured to not fully
+				  configurable: sequencer length and each rank
+				  affectation to a channel are fixed by channel HW
+				  number.
+					- Sequence length: Number of ranks in the
+				  scan sequence is defined by number of channels set
+				  in the sequence, rank of each channel is fixed by
+				  channel HW number. (channel 0 fixed on rank 0,
+				  channel 1 fixed on rank1, ...).
+					- Sequence direction: Unless specified in
+				  parameters, sequencer scan direction is forward
+				  (from lowest channel number to highest channel
+				  number). This parameter can be a value of @ref
+				  ADC_Scan_mode */
 
-		uint32_t OffsetSign; /*!< Define if the offset should be subtracted
-					(negative sign) or added (positive sign) from or
-					to the raw converted data. This parameter can be
-					a value of @ref ADCEx_OffsetSign. Note:
-					     - This parameter must be modified when no
-					conversion is on going on both regular and
-					injected groups (ADC disabled, or ADC enabled
-					without continuous mode or external trigger that
-					could launch a conversion).
-					     - Applicable for ADC1 */
+	uint32_t DataAlign; /*!< Specify ADC data alignment in conversion data
+			       register (right or left). Refer to reference
+			       manual for alignments formats versus resolutions.
+				 This parameter can be a value of @ref
+			       ADC_HAL_EC_DATA_ALIGN */
 
-	} ADC_ChannelConfTypeDef;
+	uint32_t EOCSelection; /*!< Specify which EOC (End Of Conversion) flag
+				  is used for conversion by polling and
+				    interruption: end of unitary conversion or
+				  end of sequence conversions. This parameter
+				  can be a value of @ref ADC_EOCSelection. */
 
-	/**
-	 * @brief  Structure definition of ADC analog watchdog
-	 * @note   The setting of these parameters by function HAL_ADC_AnalogWDGConfig()
-	 * is conditioned to ADC state. ADC state can be either:
-	 *          - For all parameters: ADC disabled or ADC enabled without conversion
-	 * on going on ADC groups regular and injected.
-	 */
-	typedef struct
-	{
-		uint32_t WatchdogNumber; /*!< Select which ADC analog watchdog is monitoring
-					    the selected channel. For Analog Watchdog 1: Only
-					    1 channel can be monitored (or overall group of
-					      channels by setting parameter 'WatchdogMode').
-					      For Analog Watchdog 2 and 3: Several channels
-					    can be monitored (by successive calls of
-					    'HAL_ADC_AnalogWDGConfig()' for each channel)
-					      This parameter can be a value of @ref
-					    ADC_HAL_EC_AWD_NUMBER. */
+	FunctionalState LowPowerAutoWait; /*!< Select the dynamic low power Auto Delay: new
+					     conversion start only when the previous
+					     conversion (for ADC group regular) or previous
+					     sequence (for ADC group injected) has been
+					     retrieved by user software, using function
+					     HAL_ADC_GetValue() or
+					     HAL_ADCEx_InjectedGetValue(). This feature
+					     automatically adapts the frequency of ADC
+					     conversions triggers to the speed of the system
+					     that reads the data. Moreover, this avoids risk
+					     of overrun for low frequency applications.
+					     This parameter can be set to ENABLE or DISABLE.
+					     Note: It is not recommended to use with
+					     interruption or DMA (HAL_ADC_Start_IT(),
+						   HAL_ADC_Start_DMA()) since these modes
+					     have to clear immediately the EOC flag (by CPU
+					     to free the IRQ pending event or by DMA). Auto
+					     wait will work but fort a very short time,
+					     discarding its intended benefit (except
+					     specific case of high load of CPU or DMA
+					     transfers which can justify usage of auto
+					     wait). Do use with polling: 1. Start conversion
+					     with HAL_ADC_Start(),
+									2. Later on, when
+					     ADC conversion data is needed: use
+					     HAL_ADC_GetValue() to retrieve conversion
+					     result and trig another conversion start. (in
+					     case of usage of ADC group injected, use the
+					     equivalent functions HAL_ADCExInjected_Start(),
+					     HAL_ADCEx_InjectedGetValue(), ...). */
 
-		uint32_t WatchdogMode; /*!< Configure the ADC analog watchdog mode:
-					  single/all/none channels. For Analog Watchdog
-					  1: Configure the ADC analog watchdog mode:
-					  single channel or all channels, ADC groups
-					  regular and-or injected. For Analog Watchdog 2
-					  and 3: Several channels can be monitored by
-					  applying successively the AWD init structure.
-					    For ADC1/ADC2, channels on ADC group regular
-					  and injected are not differentiated: Set value
-					  'ADC_ANALOGWATCHDOG_SINGLE_xxx' to monitor 1
-					  channel, value 'ADC_ANALOGWATCHDOG_ALL_xxx' to
-					  monitor all channels, value
-					      'ADC_ANALOGWATCHDOG_NONE' to monitor no
-					  channel. This parameter can be a value of @ref
-					  ADC_analog_watchdog_mode. */
+	uint32_t LowPowerAutoPowerOff; /*!< Select the auto-off low power mode: the
+					  ADC automatically powers-off after a
+					  conversion and automatically wakes-up when
+					  a new conversion is triggered. This feature
+					  can be combined with automatic wait mode
+					  ('LowPowerAutoWait'). This parameter can be
+					  value of @ref ADC_HAL_LowPower_DPD. Note:
+					  If activated, this feature also turns off
+					  the ADC dedicated 16 MHz RC oscillator
+					  (HSI16). Note: This parameter can be used
+					  for ADC4 only. */
 
-		uint32_t Channel; /*!< Select which ADC channel to monitor by analog
-				     watchdog. For Analog Watchdog 1: this parameter has an
-				     effect only if parameter 'WatchdogMode' is configured on
-				     single channel (only 1 channel can be monitored). For
-				     Analog Watchdog 2 and 3: Several channels can be
-				     monitored. To use this feature, call successively the
-				     function HAL_ADC_AnalogWDGConfig() for each channel to
-				       be added (or removed with value
-				     'ADC_ANALOGWATCHDOG_NONE'). Note: 'ORING' channels is
-				     not supported. For Analog watchdog 2 and 3 and for
-					     multiple channels monitoring it's mandatory to
-				     recall successively the function
-				     HAL_ADC_AnalogWDGConfig() to add monitored channel for
-				     each call. This parameter can be a value of @ref
-				     ADC_HAL_EC_CHANNEL. */
+	FunctionalState ContinuousConvMode; /*!< Specify whether the conversion is performed
+					     in single mode (one conversion) or continuous
+					     mode for ADC group regular, after the first ADC
+					     conversion start trigger occurred (software
+					     start or external trigger). This parameter can
+					     be set to ENABLE or DISABLE. */
 
-		FunctionalState ITMode; /*!< Specify whether the analog watchdog is
-					   configured in interrupt or polling mode. This
-					   parameter can be set to ENABLE or DISABLE */
+	uint32_t NbrOfConversion; /*!< Specify the number of ranks that will be
+				     converted within the regular group sequencer.
+				       This parameter is dependent on ADC instance.
+				       If ADC1 or ADC2 instances:
+				       To use the regular group sequencer and convert
+				     several ranks, parameter 'ScanConvMode' must be
+				     enabled. This parameter must be a number between
+				     Min_Data = 1 and Max_Data = 16. If ADC4
+				     instance: This parameter is dependent on
+				     ScanConvMode:
+					- sequencer configured to fully configurable:
+					  Number of ranks in the scan sequence is
+				     configurable using this parameter. Note: After
+				     the first call of 'HAL_ADC_Init()', each rank
+				     corresponding to parameter "NbrOfConversion"
+				     must be set using 'HAL_ADC_ConfigChannel()'.
+						Afterwards, when all needed sequencer
+				     ranks are set, parameter 'NbrOfConversion' can
+				     be updated without modifying configuration of
+						sequencer ranks (sequencer ranks
+				     above 'NbrOfConversion' are discarded).
+					- sequencer configured to not fully
+				     configurable: Number of ranks in the scan
+				     sequence is defined by number of channels set in
+					  the sequence. This parameter is discarded.
+				       This parameter must be a number between
+				     Min_Data = 1 and Max_Data = 8. Note: This
+				     parameter must be modified when no conversion is
+				     on going on regular group (ADC disabled, or ADC
+				     enabled without continuous mode or external
+				     trigger that could launch a conversion). */
 
-		uint32_t HighThreshold; /*!< Configure the ADC analog watchdog High threshold
-					   value. Depending of ADC resolution selected (14,
-					   12, 10, 8 or 6 bits), this parameter must be a
-					   number between Min_Data = 0x000 and Max_Data =
-					   0x3FFF, 0xFFF, 0x3FF, 0xFF or 0x3F respectively.
-					     Note: Analog watchdog 2 and 3 are limited to a
-					   resolution of 8 bits:
-						    - if ADC resolution is 12 bits the 4 LSB
-					   are ignored,
-						    - if ADC resolution is 10 bits the 2 LSB
-					   are ignored. Note: If ADC oversampling is enabled,
-					   ADC analog watchdog thresholds are impacted: the
-					   comparison of analog watchdog thresholds is done
-					   on oversampling intermediate computation (after
-					   ratio, before shift application): intermediate
-					   register bitfield [32:7] (26 most significant
-					   bits). */
+	FunctionalState DiscontinuousConvMode; /*!< Specify whether the conversions sequence
+					     of ADC group regular is performed in
+					     Complete-sequence/Discontinuous-sequence (main
+					     sequence subdivided in successive parts).
+					     Discontinuous mode is used only if sequencer is
+					     enabled (parameter 'ScanConvMode'). If
+					     sequencer is disabled, this parameter is
+					     discarded. Discontinuous mode can be enabled
+					     only if continuous mode is disabled. If
+					     continuous mode is enabled, this parameter
+					     setting is discarded. This parameter can be set
+					     to ENABLE or DISABLE. */
 
-		uint32_t LowThreshold; /*!< Configures the ADC analog watchdog Low threshold
-					  value. Depending of ADC resolution selected (14,
-					  12, 10, 8 or 6 bits), this parameter must be a
-					  number between Min_Data = 0x000 and Max_Data =
-					  0x3FFF, 0xFFF, 0x3FF, 0xFF or 0x3F respectively.
-					    Note: Analog watchdog 2 and 3 are limited to a
-					  resolution of 8 bits:
-						    - if ADC resolution is 12 bits the 4 LSB
-					  are ignored,
-						    - if ADC resolution is 10 bits the 2 LSB
-					  are ignored. Note: If ADC oversampling is enabled,
-					  ADC analog watchdog thresholds are impacted: the
-					  comparison of analog watchdog thresholds is done on
-					  oversampling intermediate computation (after ratio,
-					  before shift application): intermediate register
-					  bitfield [32:7] (26 most significant bits). */
+	uint32_t NbrOfDiscConversion; /*!< Specifies the number of discontinuous
+					 conversions in which the main sequence
+					 of ADC group regular (parameter
+					 NbrOfConversion) will be subdivided. If
+					 parameter 'DiscontinuousConvMode' is
+					 disabled, this parameter is discarded.
+					 This parameter must be a number between
+					 Min_Data = 1 and Max_Data = 8. */
 
-		uint32_t FilteringConfig; /*!< Specify whether filtering should be use and
-					     the number of samples to consider. Before
-					     setting flag or raising interrupt, analog
-					     watchdog can wait to have several consecutive
-					     out-of-window samples. This parameter allows to
-					     configure this number. This parameter only
-					     applies to Analog watchdog 1. For others, use
-					     value ADC_AWD_FILTERING_NONE. Note: This
-					     parameter is applicable for ADC1/ADC2 on this
-					     device. This parameter can be a value of @ref
-					     ADC_analog_watchdog_filtering_config. */
+	uint32_t ExternalTrigConv; /*!< Select the external event source used to
+				      trigger ADC group regular conversion start. If
+				      set to ADC_SOFTWARE_START, external triggers
+				      are disabled and software trigger is used
+				      instead. This parameter can be a value of @ref
+				      ADC_regular_external_trigger_source. Caution:
+				      external trigger source is common to all ADC
+				      instances. */
 
-	} ADC_AnalogWDGConfTypeDef;
+	uint32_t ExternalTrigConvEdge; /*!< Select the external event edge used to
+					  trigger ADC group regular conversion start.
+					    If trigger source is set to
+					  ADC_SOFTWARE_START, this parameter is
+					  discarded. This parameter can be a value of
+					  @ref ADC_regular_external_trigger_edge */
 
-	/**
-	 * @brief  ADC group injected contexts queue configuration
-	 * @note   Structure intended to be used only through structure
-	 * "ADC_HandleTypeDef"
-	 */
-	typedef struct
-	{
-		uint32_t ContextQueue; /*!< Injected channel configuration context: build-up
-					  over each HAL_ADCEx_InjectedConfigChannel() call to
-					  finally initialize JSQR register at
-					  HAL_ADCEx_InjectedConfigChannel() last call */
+	uint32_t ConversionDataManagement; /*!< Specifies whether the Data conversion
+					     data is managed: using the DMA (oneshot
+					     or circular), or stored in the DR
+					     register or transferred to MDF register.
+					     Note: In continuous mode, DMA must be
+					     configured in circular mode. Otherwise
+					     an overrun will be triggered when DMA
+					     buffer maximum pointer is reached. This
+					     parameter can be a value of @ref
+					     ADC_ConversionDataManagement. Note: This
+					     parameter must be modified when no
+					     conversion is on going on both regular
+					     and injected groups (ADC disabled, or
+					     ADC enabled without continuous mode or
+					     external trigger that could launch a
+					     conversion). */
 
-		uint32_t ChannelCount; /*!< Number of channels in the injected sequence */
-	} ADC_InjectionConfigTypeDef;
+	FunctionalState DMAContinuousRequests; /*!< Specify whether the DMA requests are
+						  performed in one shot mode (DMA transfer
+						  stops when number of conversions is
+						  reached) or in continuous mode (DMA
+						  transfer unlimited, whatever number of
+						  conversions). This parameter can be set to
+						  ENABLE or DISABLE. Note: In continuous
+						  mode, DMA must be configured in circular
+						  mode. Otherwise an overrun will be
+						  triggered when DMA buffer maximum pointer
+						  is reached. */
+
+	uint32_t Overrun; /*!< Select the behavior in case of overrun: data
+			     overwritten or preserved (default). This parameter
+			     applies to ADC group regular only. This parameter can be
+			     a value of @ref ADC_HAL_EC_REG_OVR_DATA_BEHAVIOR. Note:
+			     In case of overrun set to data preserved and usage with
+			     programming model with interruption (HAL_Start_IT()):
+			     ADC IRQ handler has to clear end of conversion flags,
+			     this induces the release of the preserved data. If
+			     needed, this data can be saved in function
+			     HAL_ADC_ConvCpltCallback(), placed in user program code
+			     (called before end of conversion flags clear). Note:
+			     Error reporting with respect to the conversion mode:
+				     - Usage with ADC conversion by polling for event
+			     or interruption: Error is reported only if overrun is
+			     set to data preserved. If overrun is set to data
+			     overwritten, user can willingly not read all the
+			     converted data, this is not considered as an erroneous
+			     case.
+				     - Usage with ADC conversion by DMA: Error is
+			     reported whatever overrun setting (DMA is expected to
+			     process all data from data register). */
+
+	uint32_t SamplingTimeCommon1; /*!< Set sampling time common to a group of
+					 channels. Unit: ADC clock cycles. This
+					 parameter is applied for ADC4. Conversion
+					 time is the addition of sampling time and
+					 processing time (12.5 ADC clock cycles at
+					 ADC resolution 12 bits, 10.5 cycles at 10
+					 bits, 8.5 cycles at 8 bits). Note: On this
+					 STM32 family, two different sampling time
+					 settings are available, each channel can use
+					 one of these two settings. On some other
+					 STM32 devices, this parameter in channel
+					 wise and is located into ADC channel
+					 initialization structure. This parameter can
+					 be a value of @ref
+					 ADC_HAL_EC_CHANNEL_SAMPLINGTIME Note: In
+					 case of usage of internal measurement
+					 channels (VrefInt/Vbat/TempSensor), sampling
+					 time constraints must be respected (sampling
+					 time can be adjusted in function of ADC
+					 clock frequency and sampling time setting).
+						 Refer to device datasheet for
+					 timings values, parameters TS_vrefint,
+						 TS_vbat, TS_temp (values rough
+					 order: few tens of microseconds). */
+
+	uint32_t SamplingTimeCommon2; /*!< Set sampling time common to a group of
+					 channels, second common setting possible.
+					   Unit: ADC clock cycles
+					   This parameter is applied for ADC4.
+					   Conversion time is the addition of
+					 sampling time and processing time (12.5 ADC
+					   clock cycles at ADC resolution 12
+					 bits, 10.5 cycles at 10 bits, 8.5 cycles at
+					 8 bits). Note: On this STM32 family, two
+					 different sampling time settings are
+					 available, each channel can use one of these
+					 two settings. On some other STM32 devices,
+					 this parameter in channel wise and is
+					 located into ADC channel initialization
+					 structure. This parameter can be a value of
+					 @ref ADC_HAL_EC_CHANNEL_SAMPLINGTIME Note:
+					 In case of usage of internal measurement
+					 channels (VrefInt/Vbat/TempSensor), sampling
+					 time constraints must be respected (sampling
+					 time can be adjusted in function of ADC
+					 clock frequency and sampling time setting)
+						 Refer to device datasheet for
+					 timings values, parameters TS_vrefint,
+						 TS_vbat, TS_temp (values rough
+					 order: few tens of microseconds). */
+
+	uint32_t LeftBitShift; /*!< Configures the left shifting applied to the
+				  final result with or without oversampling.
+				    This parameter can be a value of @ref
+				  ADCEx_Left_Bit_Shift */
+
+	FunctionalState OversamplingMode; /*!< Specify whether the oversampling feature is
+					     enabled or disabled. This parameter can be set
+					     to ENABLE or DISABLE. Note: This parameter can
+					     be modified only if there is no conversion is
+					     ongoing on ADC groups regular and injected */
+
+	ADC_OversamplingTypeDef Oversampling; /*!< Specify the Oversampling parameters.
+						   Caution: this setting overwrites the previous
+						 oversampling configuration if oversampling is
+						 already enabled. */
+
+	uint32_t TriggerFrequencyMode; /*!< Set ADC trigger frequency mode.
+					    This parameter can be a value of @ref
+					  ADC_HAL_EC_REG_TRIGGER_FREQ. Note: ADC
+					  trigger frequency mode must be set to low
+					  frequency when a duration is exceeded
+					  before ADC conversion start trigger event
+						  (between ADC enable and ADC
+					  conversion start trigger event or between
+					  two ADC conversion start trigger event).
+						  Duration value: Refer to device
+					  datasheet, parameter "tIdle". Note: When
+					  ADC trigger frequency mode is set to low
+					  frequency, some rearm cycles are inserted
+					  before performing ADC conversion start,
+					  inducing a delay of 2 ADC clock cycles. */
+
+	uint32_t VrefProtection; /*!< Select the Vref protection mode: specify
+				    VREF+ protection mode when multiple ADCs are
+				    working simultaneously. This parameter can
+				    be value of @ref ADC_HAL_VrefProt. Note:
+				    This parameter can be used for ADC4 only. */
+
+} ADC_InitTypeDef;
+
+/**
+ * @brief  Structure definition of ADC channel for regular group
+ * @note   The setting of these parameters by function HAL_ADC_ConfigChannel()
+ * is conditioned to ADC state. ADC state can be either:
+ *          - For all parameters: ADC disabled (this is the only possible ADC
+ * state to modify parameter 'SingleDiff')
+ *          - For all except parameters 'SamplingTime', 'Offset',
+ * 'OffsetNumber': ADC enabled without conversion on going on regular group.
+ *          - For parameters 'SamplingTime', 'Offset', 'OffsetNumber': ADC
+ * enabled without conversion on going on regular and injected groups. If ADC is
+ * not in the appropriate state to modify some parameters, these parameters
+ * setting is bypassed without error reporting (as it can be the expected
+ * behavior in case of intended action to update another parameter (which
+ * fulfills the ADC state condition) on the fly.
+ */
+typedef struct {
+	uint32_t Channel; /*!< Specify the channel to configure into ADC regular
+			     group. This parameter can be a value of @ref
+			     ADC_HAL_EC_CHANNEL Note: Depending on devices and
+			     ADC instances, some channels may not be available
+			     on device package pins. Refer to device datasheet
+			     for channels availability. */
+
+	uint32_t Rank; /*!< Specify the rank in the regular group sequencer.
+			    This parameter is depending on ADC instances.
+			    If ADC1 or ADC2 instances, this parameter specify the
+			  rank in the sequencer. Note: to disable a channel or change
+			  order of conversion sequencer, rank containing a previous
+			  channel setting can be overwritten by the new channel
+			  setting (or parameter number of conversions adjusted) If
+			  ADC4 instance, this parameter allows to add or remove the
+			  channel from the ADC regular group sequencer and specify
+			  its conversion rank. This parameter is depending on
+			  ScanConvMode:
+			    - sequencer configured to fully configurable:
+			      Channels ordering into each rank of scan sequence:
+			      whatever channel can be placed into whatever rank.
+			    - sequencer configured to not fully configurable:
+			      rank of each channel is fixed by channel HW number.
+			      (channel 0 fixed on rank 0, channel 1 fixed on rank1,
+			  ...). Despite the channel rank is fixed, this parameter
+			  allow an additional possibility: to remove the selected
+			  rank (selected channel) from sequencer. This parameter can
+			  be a value of @ref ADC_HAL_EC_REG_SEQ_RANKS */
+
+	uint32_t SamplingTime; /*!< Sampling time value to be set for the selected
+				  channel. Unit: ADC clock cycles Conversion time is
+				  the addition of sampling time and processing time
+				    (14.5 ADC clock cycles at ADC resolution 14
+				  bits, 12.5 cycles at 12 bits, 10.5 cycles at 10
+				  bits, 8.5 cycles at 8 bits, 6.5 cycles at 6 bits).
+				    For ADC1 and 2 (if available): This parameter can
+				  be a value of
+				    @ref ADC_HAL_EC_CHANNEL_SAMPLINGTIME.
+				    Caution: This parameter applies to a channel that
+				  can be used into regular and/or injected group. It
+				  overwrites the last setting. For ADC4: This
+				  parameter can be a value of @ref
+				  ADC_HAL_EC_SAMPLINGTIME_COMMON. Note: On this STM32
+				  family, two different sampling time settings are
+				  available (refer to parameters
+				  "SamplingTimeCommon1" and "SamplingTimeCommon2"),
+					  each channel can use one of these two
+				  settings. Note: In case of usage of internal
+				  measurement channels (VrefInt/Vbat/TempSensor),
+				  sampling time constraints must be respected
+					  (sampling time can be adjusted in function
+				  of ADC clock frequency and sampling time setting)
+					  Refer to device datasheet for timings
+				  values. */
+
+	uint32_t SingleDiff; /*!< Select single-ended or differential input.
+				  In differential mode: Differential measurement is
+				carried out between the selected channel 'i'
+				(positive input) and channel 'i+1' (negative input).
+							Only channel 'i' has to be
+				configured, channel 'i+1' is configured
+				automatically. This parameter must be a value of @ref
+				ADC_HAL_EC_CHANNEL_SINGLE_DIFF_ENDING Caution: This
+				parameter applies to a channel that can be used in a
+				regular and/or injected group. It overwrites the last
+				setting. Note: Refer to Reference Manual to ensure
+				the selected channel is available in differential
+				mode. Note: When configuring a channel 'i' in
+				differential mode, the channel 'i+1' is not usable
+				separately. Note: This parameter must be modified
+				when ADC is disabled (before ADC start conversion or
+				after ADC stop conversion). If ADC is enabled, this
+				parameter setting is bypassed without error reporting
+				(as it can be the expected behavior in case of
+				another parameter update on the fly) */
+
+	uint32_t OffsetNumber; /*!< Select the offset number
+				    This parameter can be a value of @ref
+				  ADC_HAL_EC_OFFSET_NB Caution: Only one offset
+				  is allowed per channel. This parameter
+				  overwrites the last setting. */
+
+	uint32_t Offset; /*!< Define the offset to be subtracted from the raw
+			    converted data. Offset value must be a positive number.
+			      Depending of ADC resolution selected (14, 12, 10, 8 or
+			    6 bits), this parameter must be a number between Min_Data
+			    = 0x000 and Max_Data = 0x3FFF, 0xFFF, 0x3FF, 0xFF or 0x3F
+			    respectively. Note: This parameter must be modified when
+			    no conversion is on going on without both regular and
+			    injected groups (ADC disabled, or ADC enabled continuous
+			    mode or external trigger that could launch a conversion).
+			  */
+
+	FunctionalState OffsetRightShift; /*!< Define the Right-shift data after Offset
+					    correction. This parameter is applied only for
+					    14-bit or 8-bit resolution. This parameter can
+					    be set to ENABLE or DISABLE.*/
+
+	FunctionalState OffsetSignedSaturation; /*!< Specify whether the Signed saturation
+						   feature is used or not. This parameter is
+						   only applied when OffsetSaturation is
+						   ENABLE. This parameter is applied only
+						   for 14-bit or 8-bit resolution. This
+						   parameter can be set to ENABLE or
+						   DISABLE. Note:
+							  - If OffsetSignedSaturation is set
+						   to DISABLE the unsigned saturation
+						   feature is used */
+
+	FunctionalState OffsetSaturation; /*!< Define if the offset should be saturated upon
+					    under or over flow. This parameter value can be
+					    ENABLE or DISABLE. Note:
+						  - This parameter must be modified when no
+					    conversion is on going on both regular and
+					    injected groups (ADC disabled, or ADC enabled
+					    without continuous mode or external trigger that
+					    could launch a conversion).
+						  - Applicable for ADC1 */
+
+	uint32_t OffsetSign; /*!< Define if the offset should be subtracted
+				(negative sign) or added (positive sign) from or
+				to the raw converted data. This parameter can be
+				a value of @ref ADCEx_OffsetSign. Note:
+				     - This parameter must be modified when no
+				conversion is on going on both regular and
+				injected groups (ADC disabled, or ADC enabled
+				without continuous mode or external trigger that
+				could launch a conversion).
+				     - Applicable for ADC1 */
+
+} ADC_ChannelConfTypeDef;
+
+/**
+ * @brief  Structure definition of ADC analog watchdog
+ * @note   The setting of these parameters by function HAL_ADC_AnalogWDGConfig()
+ * is conditioned to ADC state. ADC state can be either:
+ *          - For all parameters: ADC disabled or ADC enabled without conversion
+ * on going on ADC groups regular and injected.
+ */
+typedef struct {
+	uint32_t WatchdogNumber; /*!< Select which ADC analog watchdog is monitoring
+				    the selected channel. For Analog Watchdog 1: Only
+				    1 channel can be monitored (or overall group of
+				      channels by setting parameter 'WatchdogMode').
+				      For Analog Watchdog 2 and 3: Several channels
+				    can be monitored (by successive calls of
+				    'HAL_ADC_AnalogWDGConfig()' for each channel)
+				      This parameter can be a value of @ref
+				    ADC_HAL_EC_AWD_NUMBER. */
+
+	uint32_t WatchdogMode; /*!< Configure the ADC analog watchdog mode:
+				  single/all/none channels. For Analog Watchdog
+				  1: Configure the ADC analog watchdog mode:
+				  single channel or all channels, ADC groups
+				  regular and-or injected. For Analog Watchdog 2
+				  and 3: Several channels can be monitored by
+				  applying successively the AWD init structure.
+				    For ADC1/ADC2, channels on ADC group regular
+				  and injected are not differentiated: Set value
+				  'ADC_ANALOGWATCHDOG_SINGLE_xxx' to monitor 1
+				  channel, value 'ADC_ANALOGWATCHDOG_ALL_xxx' to
+				  monitor all channels, value
+				      'ADC_ANALOGWATCHDOG_NONE' to monitor no
+				  channel. This parameter can be a value of @ref
+				  ADC_analog_watchdog_mode. */
+
+	uint32_t Channel; /*!< Select which ADC channel to monitor by analog
+			     watchdog. For Analog Watchdog 1: this parameter has an
+			     effect only if parameter 'WatchdogMode' is configured on
+			     single channel (only 1 channel can be monitored). For
+			     Analog Watchdog 2 and 3: Several channels can be
+			     monitored. To use this feature, call successively the
+			     function HAL_ADC_AnalogWDGConfig() for each channel to
+			       be added (or removed with value
+			     'ADC_ANALOGWATCHDOG_NONE'). Note: 'ORING' channels is
+			     not supported. For Analog watchdog 2 and 3 and for
+				     multiple channels monitoring it's mandatory to
+			     recall successively the function
+			     HAL_ADC_AnalogWDGConfig() to add monitored channel for
+			     each call. This parameter can be a value of @ref
+			     ADC_HAL_EC_CHANNEL. */
+
+	FunctionalState ITMode; /*!< Specify whether the analog watchdog is
+				   configured in interrupt or polling mode. This
+				   parameter can be set to ENABLE or DISABLE */
+
+	uint32_t HighThreshold; /*!< Configure the ADC analog watchdog High threshold
+				   value. Depending of ADC resolution selected (14,
+				   12, 10, 8 or 6 bits), this parameter must be a
+				   number between Min_Data = 0x000 and Max_Data =
+				   0x3FFF, 0xFFF, 0x3FF, 0xFF or 0x3F respectively.
+				     Note: Analog watchdog 2 and 3 are limited to a
+				   resolution of 8 bits:
+					    - if ADC resolution is 12 bits the 4 LSB
+				   are ignored,
+					    - if ADC resolution is 10 bits the 2 LSB
+				   are ignored. Note: If ADC oversampling is enabled,
+				   ADC analog watchdog thresholds are impacted: the
+				   comparison of analog watchdog thresholds is done
+				   on oversampling intermediate computation (after
+				   ratio, before shift application): intermediate
+				   register bitfield [32:7] (26 most significant
+				   bits). */
+
+	uint32_t LowThreshold; /*!< Configures the ADC analog watchdog Low threshold
+				  value. Depending of ADC resolution selected (14,
+				  12, 10, 8 or 6 bits), this parameter must be a
+				  number between Min_Data = 0x000 and Max_Data =
+				  0x3FFF, 0xFFF, 0x3FF, 0xFF or 0x3F respectively.
+				    Note: Analog watchdog 2 and 3 are limited to a
+				  resolution of 8 bits:
+					    - if ADC resolution is 12 bits the 4 LSB
+				  are ignored,
+					    - if ADC resolution is 10 bits the 2 LSB
+				  are ignored. Note: If ADC oversampling is enabled,
+				  ADC analog watchdog thresholds are impacted: the
+				  comparison of analog watchdog thresholds is done on
+				  oversampling intermediate computation (after ratio,
+				  before shift application): intermediate register
+				  bitfield [32:7] (26 most significant bits). */
+
+	uint32_t FilteringConfig; /*!< Specify whether filtering should be use and
+				     the number of samples to consider. Before
+				     setting flag or raising interrupt, analog
+				     watchdog can wait to have several consecutive
+				     out-of-window samples. This parameter allows to
+				     configure this number. This parameter only
+				     applies to Analog watchdog 1. For others, use
+				     value ADC_AWD_FILTERING_NONE. Note: This
+				     parameter is applicable for ADC1/ADC2 on this
+				     device. This parameter can be a value of @ref
+				     ADC_analog_watchdog_filtering_config. */
+
+} ADC_AnalogWDGConfTypeDef;
+
+/**
+ * @brief  ADC group injected contexts queue configuration
+ * @note   Structure intended to be used only through structure
+ * "ADC_HandleTypeDef"
+ */
+typedef struct {
+	uint32_t ContextQueue; /*!< Injected channel configuration context: build-up
+				  over each HAL_ADCEx_InjectedConfigChannel() call to
+				  finally initialize JSQR register at
+				  HAL_ADCEx_InjectedConfigChannel() last call */
+
+	uint32_t ChannelCount; /*!< Number of channels in the injected sequence */
+} ADC_InjectionConfigTypeDef;
 
 /** @defgroup ADC_States ADC States
  * @{
@@ -800,70 +794,69 @@ extern "C"
  * @brief  ADC handle Structure definition
  */
 #if (USE_HAL_ADC_REGISTER_CALLBACKS == 1)
-	typedef struct __ADC_HandleTypeDef
+typedef struct __ADC_HandleTypeDef
 #else
 typedef struct
 #endif /* USE_HAL_ADC_REGISTER_CALLBACKS */
-	{
-		ADC_TypeDef *Instance;			    /*!< Register base address */
-		ADC_InitTypeDef Init;			    /*!< ADC initialization parameters and regular
-							       conversions setting */
-		DMA_HandleTypeDef *DMA_Handle;		    /*!< Pointer DMA Handler */
-		HAL_LockTypeDef Lock;			    /*!< ADC locking object */
-		__IO uint32_t State;			    /*!< ADC communication state (bitmap of ADC states) */
-		__IO uint32_t ErrorCode;		    /*!< ADC Error code */
-		ADC_InjectionConfigTypeDef InjectionConfig; /*!< ADC injected channel configuration build-up
-							       structure */
-		uint32_t ADCGroupRegularSequencerRanks;	    /*!< ADC group regular sequencer
-							       memorization of ranks
-							       setting, used in mode "fully
-							       configurable" (refer to
-							       parameter 'ScanConvMode') */
+{
+	ADC_TypeDef *Instance;			    /*!< Register base address */
+	ADC_InitTypeDef Init;			    /*!< ADC initialization parameters and regular
+						       conversions setting */
+	DMA_HandleTypeDef *DMA_Handle;		    /*!< Pointer DMA Handler */
+	HAL_LockTypeDef Lock;			    /*!< ADC locking object */
+	__IO uint32_t State;			    /*!< ADC communication state (bitmap of ADC states) */
+	__IO uint32_t ErrorCode;		    /*!< ADC Error code */
+	ADC_InjectionConfigTypeDef InjectionConfig; /*!< ADC injected channel configuration build-up
+						       structure */
+	uint32_t ADCGroupRegularSequencerRanks;	    /*!< ADC group regular sequencer
+						       memorization of ranks
+						       setting, used in mode "fully
+						       configurable" (refer to
+						       parameter 'ScanConvMode') */
 #if (USE_HAL_ADC_REGISTER_CALLBACKS == 1)
-		void (*ConvCpltCallback)(struct __ADC_HandleTypeDef *hadc);		 /*!< ADC conversion complete callback */
-		void (*ConvHalfCpltCallback)(struct __ADC_HandleTypeDef *hadc);		 /*!< ADC conversion DMA half-transfer callback */
-		void (*LevelOutOfWindowCallback)(struct __ADC_HandleTypeDef *hadc);	 /*!< ADC analog watchdog 1 callback */
-		void (*ErrorCallback)(struct __ADC_HandleTypeDef *hadc);		 /*!< ADC error callback */
-		void (*InjectedConvCpltCallback)(struct __ADC_HandleTypeDef *hadc);	 /*!< ADC group injected conversion complete callback */
-		void (*InjectedQueueOverflowCallback)(struct __ADC_HandleTypeDef *hadc); /*!< ADC group injected context
-											    queue overflow callback */
-		void (*LevelOutOfWindow2Callback)(struct __ADC_HandleTypeDef *hadc);	 /*!< ADC analog watchdog 2 callback */
-		void (*LevelOutOfWindow3Callback)(struct __ADC_HandleTypeDef *hadc);	 /*!< ADC analog watchdog 3 callback */
-		void (*EndOfSamplingCallback)(struct __ADC_HandleTypeDef *hadc);	 /*!< ADC end of sampling callback */
-		void (*CalibrationCpltCallback)(struct __ADC_HandleTypeDef *hadc);	 /*!< ADC end of calibration callback */
-		void (*VoltageRegulatorCallback)(struct __ADC_HandleTypeDef *hadc);	 /*!< ADC voltage regulator (LDO) Ready callback */
-		void (*ADCReadyCallback)(struct __ADC_HandleTypeDef *hadc);		 /*!< ADC Ready callback */
-		void (*MspInitCallback)(struct __ADC_HandleTypeDef *hadc);		 /*!< ADC Msp Init callback */
-		void (*MspDeInitCallback)(struct __ADC_HandleTypeDef *hadc);		 /*!< ADC Msp DeInit callback */
-#endif											 /* USE_HAL_ADC_REGISTER_CALLBACKS */
-	} ADC_HandleTypeDef;
+	void (*ConvCpltCallback)(struct __ADC_HandleTypeDef *hadc);		 /*!< ADC conversion complete callback */
+	void (*ConvHalfCpltCallback)(struct __ADC_HandleTypeDef *hadc);		 /*!< ADC conversion DMA half-transfer callback */
+	void (*LevelOutOfWindowCallback)(struct __ADC_HandleTypeDef *hadc);	 /*!< ADC analog watchdog 1 callback */
+	void (*ErrorCallback)(struct __ADC_HandleTypeDef *hadc);		 /*!< ADC error callback */
+	void (*InjectedConvCpltCallback)(struct __ADC_HandleTypeDef *hadc);	 /*!< ADC group injected conversion complete callback */
+	void (*InjectedQueueOverflowCallback)(struct __ADC_HandleTypeDef *hadc); /*!< ADC group injected context
+										    queue overflow callback */
+	void (*LevelOutOfWindow2Callback)(struct __ADC_HandleTypeDef *hadc);	 /*!< ADC analog watchdog 2 callback */
+	void (*LevelOutOfWindow3Callback)(struct __ADC_HandleTypeDef *hadc);	 /*!< ADC analog watchdog 3 callback */
+	void (*EndOfSamplingCallback)(struct __ADC_HandleTypeDef *hadc);	 /*!< ADC end of sampling callback */
+	void (*CalibrationCpltCallback)(struct __ADC_HandleTypeDef *hadc);	 /*!< ADC end of calibration callback */
+	void (*VoltageRegulatorCallback)(struct __ADC_HandleTypeDef *hadc);	 /*!< ADC voltage regulator (LDO) Ready callback */
+	void (*ADCReadyCallback)(struct __ADC_HandleTypeDef *hadc);		 /*!< ADC Ready callback */
+	void (*MspInitCallback)(struct __ADC_HandleTypeDef *hadc);		 /*!< ADC Msp Init callback */
+	void (*MspDeInitCallback)(struct __ADC_HandleTypeDef *hadc);		 /*!< ADC Msp DeInit callback */
+#endif										 /* USE_HAL_ADC_REGISTER_CALLBACKS */
+} ADC_HandleTypeDef;
 
 #if (USE_HAL_ADC_REGISTER_CALLBACKS == 1)
-	/**
-	 * @brief  HAL ADC Callback ID enumeration definition
-	 */
-	typedef enum
-	{
-		HAL_ADC_CONVERSION_COMPLETE_CB_ID = 0x00U,     /*!< ADC conversion complete callback ID */
-		HAL_ADC_CONVERSION_HALF_CB_ID = 0x01U,	       /*!< ADC conversion DMA half-transfer callback ID */
-		HAL_ADC_LEVEL_OUT_OF_WINDOW_1_CB_ID = 0x02U,   /*!< ADC analog watchdog 1 callback ID */
-		HAL_ADC_ERROR_CB_ID = 0x03U,		       /*!< ADC error callback ID */
-		HAL_ADC_INJ_CONVERSION_COMPLETE_CB_ID = 0x04U, /*!< ADC group injected conversion complete callback ID */
-		HAL_ADC_INJ_QUEUE_OVEFLOW_CB_ID = 0x05U,       /*!< ADC group injected context queue overflow callback ID */
-		HAL_ADC_LEVEL_OUT_OF_WINDOW_2_CB_ID = 0x06U,   /*!< ADC analog watchdog 2 callback ID */
-		HAL_ADC_LEVEL_OUT_OF_WINDOW_3_CB_ID = 0x07U,   /*!< ADC analog watchdog 3 callback ID */
-		HAL_ADC_END_OF_SAMPLING_CB_ID = 0x08U,	       /*!< ADC end of sampling callback ID */
-		HAL_ADC_END_OF_CALIBRATION_CB_ID = 0x09U,      /*!< ADC end of calibration callback ID */
-		HAL_ADC_VOLTAGE_REGULATOR_CB_ID = 0x0AU,       /*!< ADC voltage regulator (LDO) Ready callback ID */
-		HAL_ADC_ADC_READY_CB_ID = 0x0BU,	       /*!< ADC Ready callback ID */
-		HAL_ADC_MSPINIT_CB_ID = 0x0CU,		       /*!< ADC Msp Init callback ID          */
-		HAL_ADC_MSPDEINIT_CB_ID = 0x0DU		       /*!< ADC Msp DeInit callback ID */
-	} HAL_ADC_CallbackIDTypeDef;
+/**
+ * @brief  HAL ADC Callback ID enumeration definition
+ */
+typedef enum {
+	HAL_ADC_CONVERSION_COMPLETE_CB_ID = 0x00U,     /*!< ADC conversion complete callback ID */
+	HAL_ADC_CONVERSION_HALF_CB_ID = 0x01U,	       /*!< ADC conversion DMA half-transfer callback ID */
+	HAL_ADC_LEVEL_OUT_OF_WINDOW_1_CB_ID = 0x02U,   /*!< ADC analog watchdog 1 callback ID */
+	HAL_ADC_ERROR_CB_ID = 0x03U,		       /*!< ADC error callback ID */
+	HAL_ADC_INJ_CONVERSION_COMPLETE_CB_ID = 0x04U, /*!< ADC group injected conversion complete callback ID */
+	HAL_ADC_INJ_QUEUE_OVEFLOW_CB_ID = 0x05U,       /*!< ADC group injected context queue overflow callback ID */
+	HAL_ADC_LEVEL_OUT_OF_WINDOW_2_CB_ID = 0x06U,   /*!< ADC analog watchdog 2 callback ID */
+	HAL_ADC_LEVEL_OUT_OF_WINDOW_3_CB_ID = 0x07U,   /*!< ADC analog watchdog 3 callback ID */
+	HAL_ADC_END_OF_SAMPLING_CB_ID = 0x08U,	       /*!< ADC end of sampling callback ID */
+	HAL_ADC_END_OF_CALIBRATION_CB_ID = 0x09U,      /*!< ADC end of calibration callback ID */
+	HAL_ADC_VOLTAGE_REGULATOR_CB_ID = 0x0AU,       /*!< ADC voltage regulator (LDO) Ready callback ID */
+	HAL_ADC_ADC_READY_CB_ID = 0x0BU,	       /*!< ADC Ready callback ID */
+	HAL_ADC_MSPINIT_CB_ID = 0x0CU,		       /*!< ADC Msp Init callback ID          */
+	HAL_ADC_MSPDEINIT_CB_ID = 0x0DU		       /*!< ADC Msp DeInit callback ID */
+} HAL_ADC_CallbackIDTypeDef;
 
-	/**
-	 * @brief  HAL ADC Callback pointer definition
-	 */
-	typedef void (*pADC_CallbackTypeDef)(ADC_HandleTypeDef *hadc); /*!< pointer to a ADC callback function */
+/**
+ * @brief  HAL ADC Callback pointer definition
+ */
+typedef void (*pADC_CallbackTypeDef)(ADC_HandleTypeDef *hadc); /*!< pointer to a ADC callback function */
 
 #endif /* USE_HAL_ADC_REGISTER_CALLBACKS */
 
@@ -2238,8 +2231,7 @@ typedef struct
  */
 #if (USE_HAL_ADC_REGISTER_CALLBACKS == 1)
 #define __HAL_ADC_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                       \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		(__HANDLE__)->State = HAL_ADC_STATE_RESET;                                                                                                                                             \
 		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
 		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
@@ -2959,117 +2951,117 @@ typedef struct
 /* Include ADC HAL Extended module */
 #include "stm32u5xx_hal_adc_ex.h"
 
-	/* Exported functions --------------------------------------------------------*/
-	/** @addtogroup ADC_Exported_Functions
-	 * @{
-	 */
+/* Exported functions --------------------------------------------------------*/
+/** @addtogroup ADC_Exported_Functions
+ * @{
+ */
 
-	/** @addtogroup ADC_Exported_Functions_Group1
-	 * @brief    Initialization and Configuration functions
-	 * @{
-	 */
-	/* Initialization and de-initialization functions  ****************************/
-	HAL_StatusTypeDef HAL_ADC_Init(ADC_HandleTypeDef *hadc);
-	HAL_StatusTypeDef HAL_ADC_DeInit(ADC_HandleTypeDef *hadc);
-	void HAL_ADC_MspInit(ADC_HandleTypeDef *hadc);
-	void HAL_ADC_MspDeInit(ADC_HandleTypeDef *hadc);
+/** @addtogroup ADC_Exported_Functions_Group1
+ * @brief    Initialization and Configuration functions
+ * @{
+ */
+/* Initialization and de-initialization functions  ****************************/
+HAL_StatusTypeDef HAL_ADC_Init(ADC_HandleTypeDef *hadc);
+HAL_StatusTypeDef HAL_ADC_DeInit(ADC_HandleTypeDef *hadc);
+void HAL_ADC_MspInit(ADC_HandleTypeDef *hadc);
+void HAL_ADC_MspDeInit(ADC_HandleTypeDef *hadc);
 
 #if (USE_HAL_ADC_REGISTER_CALLBACKS == 1)
-	/* Callbacks Register/UnRegister functions  ***********************************/
-	HAL_StatusTypeDef HAL_ADC_RegisterCallback(ADC_HandleTypeDef *hadc, HAL_ADC_CallbackIDTypeDef CallbackID, pADC_CallbackTypeDef pCallback);
-	HAL_StatusTypeDef HAL_ADC_UnRegisterCallback(ADC_HandleTypeDef *hadc, HAL_ADC_CallbackIDTypeDef CallbackID);
+/* Callbacks Register/UnRegister functions  ***********************************/
+HAL_StatusTypeDef HAL_ADC_RegisterCallback(ADC_HandleTypeDef *hadc, HAL_ADC_CallbackIDTypeDef CallbackID, pADC_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_ADC_UnRegisterCallback(ADC_HandleTypeDef *hadc, HAL_ADC_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_ADC_REGISTER_CALLBACKS */
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @addtogroup ADC_Exported_Functions_Group2
-	 * @brief    IO operation functions
-	 * @{
-	 */
-	/* IO operation functions *****************************************************/
+/** @addtogroup ADC_Exported_Functions_Group2
+ * @brief    IO operation functions
+ * @{
+ */
+/* IO operation functions *****************************************************/
 
-	/* Blocking mode: Polling */
-	HAL_StatusTypeDef HAL_ADC_Start(ADC_HandleTypeDef *hadc);
-	HAL_StatusTypeDef HAL_ADC_Stop(ADC_HandleTypeDef *hadc);
-	HAL_StatusTypeDef HAL_ADC_PollForConversion(ADC_HandleTypeDef *hadc, uint32_t Timeout);
-	HAL_StatusTypeDef HAL_ADC_PollForEvent(ADC_HandleTypeDef *hadc, uint32_t EventType, uint32_t Timeout);
+/* Blocking mode: Polling */
+HAL_StatusTypeDef HAL_ADC_Start(ADC_HandleTypeDef *hadc);
+HAL_StatusTypeDef HAL_ADC_Stop(ADC_HandleTypeDef *hadc);
+HAL_StatusTypeDef HAL_ADC_PollForConversion(ADC_HandleTypeDef *hadc, uint32_t Timeout);
+HAL_StatusTypeDef HAL_ADC_PollForEvent(ADC_HandleTypeDef *hadc, uint32_t EventType, uint32_t Timeout);
 
-	/* Non-blocking mode: Interruption */
-	HAL_StatusTypeDef HAL_ADC_Start_IT(ADC_HandleTypeDef *hadc);
-	HAL_StatusTypeDef HAL_ADC_Stop_IT(ADC_HandleTypeDef *hadc);
+/* Non-blocking mode: Interruption */
+HAL_StatusTypeDef HAL_ADC_Start_IT(ADC_HandleTypeDef *hadc);
+HAL_StatusTypeDef HAL_ADC_Stop_IT(ADC_HandleTypeDef *hadc);
 
-	/* Non-blocking mode: DMA */
-	HAL_StatusTypeDef HAL_ADC_Start_DMA(ADC_HandleTypeDef *hadc, const uint32_t *pData, uint32_t Length);
-	HAL_StatusTypeDef HAL_ADC_Stop_DMA(ADC_HandleTypeDef *hadc);
+/* Non-blocking mode: DMA */
+HAL_StatusTypeDef HAL_ADC_Start_DMA(ADC_HandleTypeDef *hadc, const uint32_t *pData, uint32_t Length);
+HAL_StatusTypeDef HAL_ADC_Stop_DMA(ADC_HandleTypeDef *hadc);
 
-	/* ADC retrieve conversion value intended to be used with polling or
-	 * interruption */
-	uint32_t HAL_ADC_GetValue(const ADC_HandleTypeDef *hadc);
+/* ADC retrieve conversion value intended to be used with polling or
+ * interruption */
+uint32_t HAL_ADC_GetValue(const ADC_HandleTypeDef *hadc);
 
-	/* ADC IRQHandler and Callbacks used in non-blocking modes (Interruption and
-	 * DMA) */
-	void HAL_ADC_IRQHandler(ADC_HandleTypeDef *hadc);
-	void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc);
-	void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef *hadc);
-	void HAL_ADC_LevelOutOfWindowCallback(ADC_HandleTypeDef *hadc);
-	void HAL_ADC_ErrorCallback(ADC_HandleTypeDef *hadc);
-	void HAL_ADC_CalibrationCpltCallback(ADC_HandleTypeDef *hadc);
-	void HAL_ADC_VoltageRegulatorCallback(ADC_HandleTypeDef *hadc);
-	void HAL_ADC_ADCReadyCallback(ADC_HandleTypeDef *hadc);
-	/**
-	 * @}
-	 */
+/* ADC IRQHandler and Callbacks used in non-blocking modes (Interruption and
+ * DMA) */
+void HAL_ADC_IRQHandler(ADC_HandleTypeDef *hadc);
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc);
+void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef *hadc);
+void HAL_ADC_LevelOutOfWindowCallback(ADC_HandleTypeDef *hadc);
+void HAL_ADC_ErrorCallback(ADC_HandleTypeDef *hadc);
+void HAL_ADC_CalibrationCpltCallback(ADC_HandleTypeDef *hadc);
+void HAL_ADC_VoltageRegulatorCallback(ADC_HandleTypeDef *hadc);
+void HAL_ADC_ADCReadyCallback(ADC_HandleTypeDef *hadc);
+/**
+ * @}
+ */
 
-	/** @addtogroup ADC_Exported_Functions_Group3 Peripheral Control functions
-	 *  @brief    Peripheral Control functions
-	 * @{
-	 */
-	/* Peripheral Control functions ***********************************************/
-	HAL_StatusTypeDef HAL_ADC_ConfigChannel(ADC_HandleTypeDef *hadc, ADC_ChannelConfTypeDef *pConfig);
-	HAL_StatusTypeDef HAL_ADC_AnalogWDGConfig(ADC_HandleTypeDef *hadc, ADC_AnalogWDGConfTypeDef *pAnalogWDGConfig);
+/** @addtogroup ADC_Exported_Functions_Group3 Peripheral Control functions
+ *  @brief    Peripheral Control functions
+ * @{
+ */
+/* Peripheral Control functions ***********************************************/
+HAL_StatusTypeDef HAL_ADC_ConfigChannel(ADC_HandleTypeDef *hadc, ADC_ChannelConfTypeDef *pConfig);
+HAL_StatusTypeDef HAL_ADC_AnalogWDGConfig(ADC_HandleTypeDef *hadc, ADC_AnalogWDGConfTypeDef *pAnalogWDGConfig);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Peripheral State functions *************************************************/
-	/** @addtogroup ADC_Exported_Functions_Group4
-	 * @{
-	 */
-	uint32_t HAL_ADC_GetState(const ADC_HandleTypeDef *hadc);
-	uint32_t HAL_ADC_GetError(const ADC_HandleTypeDef *hadc);
+/* Peripheral State functions *************************************************/
+/** @addtogroup ADC_Exported_Functions_Group4
+ * @{
+ */
+uint32_t HAL_ADC_GetState(const ADC_HandleTypeDef *hadc);
+uint32_t HAL_ADC_GetError(const ADC_HandleTypeDef *hadc);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Private functions
-	 * -----------------------------------------------------------*/
-	/** @addtogroup ADC_Private_Functions ADC Private Functions
-	 * @{
-	 */
-	HAL_StatusTypeDef ADC_ConversionStop(ADC_HandleTypeDef *hadc, uint32_t ConversionGroup);
-	HAL_StatusTypeDef ADC_Enable(ADC_HandleTypeDef *hadc);
-	HAL_StatusTypeDef ADC_Disable(ADC_HandleTypeDef *hadc);
-	void ADC_DMAConvCplt(DMA_HandleTypeDef *hdma);
-	void ADC_DMAHalfConvCplt(DMA_HandleTypeDef *hdma);
-	void ADC_DMAError(DMA_HandleTypeDef *hdma);
-	void ADC_ConfigureBoostMode(ADC_HandleTypeDef *hadc);
+/* Private functions
+ * -----------------------------------------------------------*/
+/** @addtogroup ADC_Private_Functions ADC Private Functions
+ * @{
+ */
+HAL_StatusTypeDef ADC_ConversionStop(ADC_HandleTypeDef *hadc, uint32_t ConversionGroup);
+HAL_StatusTypeDef ADC_Enable(ADC_HandleTypeDef *hadc);
+HAL_StatusTypeDef ADC_Disable(ADC_HandleTypeDef *hadc);
+void ADC_DMAConvCplt(DMA_HandleTypeDef *hdma);
+void ADC_DMAHalfConvCplt(DMA_HandleTypeDef *hdma);
+void ADC_DMAError(DMA_HandleTypeDef *hdma);
+void ADC_ConfigureBoostMode(ADC_HandleTypeDef *hadc);
 
-	/**
-	 * @}
-	 */
-	/**
-	 * @}
-	 */
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
+/**
+ * @}
+ */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

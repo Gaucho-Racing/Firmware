@@ -21,47 +21,45 @@
 #define STM32U5xx_HAL_I2C_EX_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx_hal_def.h"
 
-	/** @addtogroup STM32U5xx_HAL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32U5xx_HAL_Driver
+ * @{
+ */
 
-	/** @addtogroup I2CEx
-	 * @{
-	 */
+/** @addtogroup I2CEx
+ * @{
+ */
 
-	/* Exported types ------------------------------------------------------------*/
-	/** @defgroup I2C_Exported_Types I2C Exported Types
-	 * @{
-	 */
+/* Exported types ------------------------------------------------------------*/
+/** @defgroup I2C_Exported_Types I2C Exported Types
+ * @{
+ */
 
-	/** @defgroup I2C_Autonomous_Mode_Configuration_Structure_definition Autonomous
-	 * Mode Configuration Structure definition
-	 * @brief  I2C Autonomous Mode Configuration structure definition
-	 * @{
-	 */
-	typedef struct
-	{
-		uint32_t TriggerState; /*!< Specifies the trigger state. This parameter
-					  can be a value of @ref
-					  I2CEx_AutonomousMode_FunctionalState */
+/** @defgroup I2C_Autonomous_Mode_Configuration_Structure_definition Autonomous
+ * Mode Configuration Structure definition
+ * @brief  I2C Autonomous Mode Configuration structure definition
+ * @{
+ */
+typedef struct {
+	uint32_t TriggerState; /*!< Specifies the trigger state. This parameter
+				  can be a value of @ref
+				  I2CEx_AutonomousMode_FunctionalState */
 
-		uint32_t TriggerSelection; /*!< Specifies the autonomous mode trigger signal
-					      selection. This parameter can be a value of
-					      @ref I2CEx_AutonomousMode_TriggerSelection */
+	uint32_t TriggerSelection; /*!< Specifies the autonomous mode trigger signal
+				      selection. This parameter can be a value of
+				      @ref I2CEx_AutonomousMode_TriggerSelection */
 
-		uint32_t TriggerPolarity; /*!< Specifies the autonomous mode trigger
-					     signal polarity sensitivity. This parameter
-					       can be a value of @ref
-					     I2CEx_AutonomousMode_TriggerPolarity */
+	uint32_t TriggerPolarity; /*!< Specifies the autonomous mode trigger
+				     signal polarity sensitivity. This parameter
+				       can be a value of @ref
+				     I2CEx_AutonomousMode_TriggerPolarity */
 
-	} I2C_AutonomousModeConfTypeDef;
+} I2C_AutonomousModeConfTypeDef;
 /**
  * @}
  */
@@ -135,7 +133,7 @@ extern "C"
 #define I2C_GRP1_RTC_ALRA_TRG (uint32_t)(I2C_TRIG_GRP1 | (0xAUL << I2C_AUTOCR_TRIGSEL_Pos))
 /*!< HW Trigger signal is RTC_ALRA_TRG      */
 #define I2C_GRP1_RTC_WUT_TRG (uint32_t)(I2C_TRIG_GRP1 | (0xBUL << I2C_AUTOCR_TRIGSEL_Pos))
-	/*!< HW Trigger signal is RTC_WUT_TRG       */
+/*!< HW Trigger signal is RTC_WUT_TRG       */
 
 #define I2C_GRP2_LPDMA_CH0_TCF_TRG (uint32_t)(I2C_TRIG_GRP2 | (0x00000000UL))
 /*!< HW Trigger signal is LPDMA_CH0_TRG     */
@@ -171,62 +169,62 @@ extern "C"
  */
 #define I2C_TRIG_POLARITY_RISING (0x00000000U)	     /*!< I2C HW Trigger signal on rising edge  */
 #define I2C_TRIG_POLARITY_FALLING I2C_AUTOCR_TRIGPOL /*!< I2C HW Trigger signal on falling edge */
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported macro ------------------------------------------------------------*/
-	/** @defgroup I2CEx_Exported_Macros I2C Extended Exported Macros
-	 * @{
-	 */
+/* Exported macro ------------------------------------------------------------*/
+/** @defgroup I2CEx_Exported_Macros I2C Extended Exported Macros
+ * @{
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported functions --------------------------------------------------------*/
-	/** @addtogroup I2CEx_Exported_Functions I2C Extended Exported Functions
-	 * @{
-	 */
+/* Exported functions --------------------------------------------------------*/
+/** @addtogroup I2CEx_Exported_Functions I2C Extended Exported Functions
+ * @{
+ */
 
-	/** @addtogroup I2CEx_Exported_Functions_Group1 Filter Mode Functions
-	 * @{
-	 */
-	/* Peripheral Control functions
-	 * ************************************************/
-	HAL_StatusTypeDef HAL_I2CEx_ConfigAnalogFilter(I2C_HandleTypeDef *hi2c, uint32_t AnalogFilter);
-	HAL_StatusTypeDef HAL_I2CEx_ConfigDigitalFilter(I2C_HandleTypeDef *hi2c, uint32_t DigitalFilter);
-	/**
-	 * @}
-	 */
+/** @addtogroup I2CEx_Exported_Functions_Group1 Filter Mode Functions
+ * @{
+ */
+/* Peripheral Control functions
+ * ************************************************/
+HAL_StatusTypeDef HAL_I2CEx_ConfigAnalogFilter(I2C_HandleTypeDef *hi2c, uint32_t AnalogFilter);
+HAL_StatusTypeDef HAL_I2CEx_ConfigDigitalFilter(I2C_HandleTypeDef *hi2c, uint32_t DigitalFilter);
+/**
+ * @}
+ */
 
-	/** @addtogroup I2CEx_Exported_Functions_Group2 WakeUp Mode Functions
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_I2CEx_EnableWakeUp(I2C_HandleTypeDef *hi2c);
-	HAL_StatusTypeDef HAL_I2CEx_DisableWakeUp(I2C_HandleTypeDef *hi2c);
-	/**
-	 * @}
-	 */
+/** @addtogroup I2CEx_Exported_Functions_Group2 WakeUp Mode Functions
+ * @{
+ */
+HAL_StatusTypeDef HAL_I2CEx_EnableWakeUp(I2C_HandleTypeDef *hi2c);
+HAL_StatusTypeDef HAL_I2CEx_DisableWakeUp(I2C_HandleTypeDef *hi2c);
+/**
+ * @}
+ */
 
-	/** @addtogroup I2CEx_Exported_Functions_Group3 Fast Mode Plus Functions
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_I2CEx_ConfigFastModePlus(I2C_HandleTypeDef *hi2c, uint32_t FastModePlus);
-	/**
-	 * @}
-	 */
+/** @addtogroup I2CEx_Exported_Functions_Group3 Fast Mode Plus Functions
+ * @{
+ */
+HAL_StatusTypeDef HAL_I2CEx_ConfigFastModePlus(I2C_HandleTypeDef *hi2c, uint32_t FastModePlus);
+/**
+ * @}
+ */
 
-	/** @addtogroup I2CEx_Exported_Functions_Group4 Autonomous Mode Functions
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_I2CEx_SetConfigAutonomousMode(I2C_HandleTypeDef *hi2c, const I2C_AutonomousModeConfTypeDef *sConfig);
-	HAL_StatusTypeDef HAL_I2CEx_GetConfigAutonomousMode(const I2C_HandleTypeDef *hi2c, I2C_AutonomousModeConfTypeDef *sConfig);
-	HAL_StatusTypeDef HAL_I2CEx_ClearConfigAutonomousMode(I2C_HandleTypeDef *hi2c);
+/** @addtogroup I2CEx_Exported_Functions_Group4 Autonomous Mode Functions
+ * @{
+ */
+HAL_StatusTypeDef HAL_I2CEx_SetConfigAutonomousMode(I2C_HandleTypeDef *hi2c, const I2C_AutonomousModeConfTypeDef *sConfig);
+HAL_StatusTypeDef HAL_I2CEx_GetConfigAutonomousMode(const I2C_HandleTypeDef *hi2c, I2C_AutonomousModeConfTypeDef *sConfig);
+HAL_StatusTypeDef HAL_I2CEx_ClearConfigAutonomousMode(I2C_HandleTypeDef *hi2c);
 /**
  * @}
  */
@@ -273,26 +271,26 @@ extern "C"
 #define IS_I2C_TRIG_INPUT_INSTANCE(__INSTANCE__) (IS_I2C_GRP1_INSTANCE(__INSTANCE__) || IS_I2C_GRP2_INSTANCE(__INSTANCE__))
 
 #define IS_I2C_AUTO_MODE_TRG_POL(__POLARITY__) (((__POLARITY__) == I2C_TRIG_POLARITY_RISING) || ((__POLARITY__) == I2C_TRIG_POLARITY_FALLING))
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Private Functions ---------------------------------------------------------*/
-	/** @defgroup I2CEx_Private_Functions I2C Extended Private Functions
-	 * @{
-	 */
-	/* Private functions are defined in stm32u5xx_hal_i2c_ex.c file */
-	/**
-	 * @}
-	 */
+/* Private Functions ---------------------------------------------------------*/
+/** @defgroup I2CEx_Private_Functions I2C Extended Private Functions
+ * @{
+ */
+/* Private functions are defined in stm32u5xx_hal_i2c_ex.c file */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

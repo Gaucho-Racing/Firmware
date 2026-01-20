@@ -21,83 +21,80 @@
 #define STM32U5xx_HAL_IWDG_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32u5xx_hal_def.h"
 
-	/** @addtogroup STM32U5xx_HAL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32U5xx_HAL_Driver
+ * @{
+ */
 
-	/** @defgroup IWDG IWDG
-	 * @{
-	 */
+/** @defgroup IWDG IWDG
+ * @{
+ */
 
-	/* Exported types ------------------------------------------------------------*/
-	/** @defgroup IWDG_Exported_Types IWDG Exported Types
-	 * @{
-	 */
+/* Exported types ------------------------------------------------------------*/
+/** @defgroup IWDG_Exported_Types IWDG Exported Types
+ * @{
+ */
 
-	/**
-	 * @brief  IWDG Init structure definition
-	 */
-	typedef struct
-	{
-		uint32_t Prescaler; /*!< Select the prescaler of the IWDG.
-					 This parameter can be a value of @ref
-				       IWDG_Prescaler */
+/**
+ * @brief  IWDG Init structure definition
+ */
+typedef struct {
+	uint32_t Prescaler; /*!< Select the prescaler of the IWDG.
+				 This parameter can be a value of @ref
+			       IWDG_Prescaler */
 
-		uint32_t Reload; /*!< Specifies the IWDG down-counter reload value.
-				      This parameter must be a number between Min_Data =
-				    0 and Max_Data = 0x0FFF */
+	uint32_t Reload; /*!< Specifies the IWDG down-counter reload value.
+			      This parameter must be a number between Min_Data =
+			    0 and Max_Data = 0x0FFF */
 
-		uint32_t Window; /*!< Specifies the window value to be compared to the
-				    down-counter. This parameter must be a number
-				    between Min_Data = 0 and Max_Data = 0x0FFF */
+	uint32_t Window; /*!< Specifies the window value to be compared to the
+			    down-counter. This parameter must be a number
+			    between Min_Data = 0 and Max_Data = 0x0FFF */
 
-		uint32_t EWI; /*!< Specifies if IWDG Early Wakeup Interrupt is enable or
-				 not and the comparator value. This parameter must be a
-				 number between Min_Data = 0 and Max_Data = 0x0FFF value
-				 0 means that EWI is disabled */
-	} IWDG_InitTypeDef;
+	uint32_t EWI; /*!< Specifies if IWDG Early Wakeup Interrupt is enable or
+			 not and the comparator value. This parameter must be a
+			 number between Min_Data = 0 and Max_Data = 0x0FFF value
+			 0 means that EWI is disabled */
+} IWDG_InitTypeDef;
 
 /**
  * @brief  IWDG Handle Structure definition
  */
 #if (USE_HAL_IWDG_REGISTER_CALLBACKS == 1)
-	typedef struct __IWDG_HandleTypeDef
+typedef struct __IWDG_HandleTypeDef
 #else
 typedef struct
 #endif /* USE_HAL_IWDG_REGISTER_CALLBACKS */
-	{
-		IWDG_TypeDef *Instance; /*!< Register base address    */
+{
+	IWDG_TypeDef *Instance; /*!< Register base address    */
 
-		IWDG_InitTypeDef Init; /*!< IWDG required parameters */
-
-#if (USE_HAL_IWDG_REGISTER_CALLBACKS == 1)
-		void (*EwiCallback)(struct __IWDG_HandleTypeDef *hiwdg);     /*!< IWDG Early WakeUp Interrupt callback */
-		void (*MspInitCallback)(struct __IWDG_HandleTypeDef *hiwdg); /*!< IWDG Msp Init callback */
-#endif									     /* USE_HAL_IWDG_REGISTER_CALLBACKS */
-	} IWDG_HandleTypeDef;
+	IWDG_InitTypeDef Init; /*!< IWDG required parameters */
 
 #if (USE_HAL_IWDG_REGISTER_CALLBACKS == 1)
-	/**
-	 * @brief  HAL IWDG common Callback ID enumeration definition
-	 */
-	typedef enum
-	{
-		HAL_IWDG_EWI_CB_ID = 0x00U,	/*!< IWDG EWI callback ID */
-		HAL_IWDG_MSPINIT_CB_ID = 0x01U, /*!< IWDG MspInit callback ID */
-	} HAL_IWDG_CallbackIDTypeDef;
+	void (*EwiCallback)(struct __IWDG_HandleTypeDef *hiwdg);     /*!< IWDG Early WakeUp Interrupt callback */
+	void (*MspInitCallback)(struct __IWDG_HandleTypeDef *hiwdg); /*!< IWDG Msp Init callback */
+#endif								     /* USE_HAL_IWDG_REGISTER_CALLBACKS */
+} IWDG_HandleTypeDef;
 
-	/**
-	 * @brief  HAL IWDG Callback pointer definition
-	 */
-	typedef void (*pIWDG_CallbackTypeDef)(IWDG_HandleTypeDef *hppp); /*!< pointer to a IWDG common callback functions */
-#endif									 /* USE_HAL_IWDG_REGISTER_CALLBACKS */
+#if (USE_HAL_IWDG_REGISTER_CALLBACKS == 1)
+/**
+ * @brief  HAL IWDG common Callback ID enumeration definition
+ */
+typedef enum {
+	HAL_IWDG_EWI_CB_ID = 0x00U,	/*!< IWDG EWI callback ID */
+	HAL_IWDG_MSPINIT_CB_ID = 0x01U, /*!< IWDG MspInit callback ID */
+} HAL_IWDG_CallbackIDTypeDef;
+
+/**
+ * @brief  HAL IWDG Callback pointer definition
+ */
+typedef void (*pIWDG_CallbackTypeDef)(IWDG_HandleTypeDef *hppp); /*!< pointer to a IWDG common callback functions */
+#endif								 /* USE_HAL_IWDG_REGISTER_CALLBACKS */
 
 /**
  * @}
@@ -165,37 +162,37 @@ typedef struct
  */
 #define __HAL_IWDG_RELOAD_COUNTER(__HANDLE__) WRITE_REG((__HANDLE__)->Instance->KR, IWDG_KEY_RELOAD)
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported functions --------------------------------------------------------*/
-	/** @defgroup IWDG_Exported_Functions  IWDG Exported Functions
-	 * @{
-	 */
+/* Exported functions --------------------------------------------------------*/
+/** @defgroup IWDG_Exported_Functions  IWDG Exported Functions
+ * @{
+ */
 
-	/** @defgroup IWDG_Exported_Functions_Group1 Initialization and Start functions
-	 * @{
-	 */
-	/* Initialization/Start functions  ********************************************/
-	HAL_StatusTypeDef HAL_IWDG_Init(IWDG_HandleTypeDef *hiwdg);
-	void HAL_IWDG_MspInit(IWDG_HandleTypeDef *hiwdg);
+/** @defgroup IWDG_Exported_Functions_Group1 Initialization and Start functions
+ * @{
+ */
+/* Initialization/Start functions  ********************************************/
+HAL_StatusTypeDef HAL_IWDG_Init(IWDG_HandleTypeDef *hiwdg);
+void HAL_IWDG_MspInit(IWDG_HandleTypeDef *hiwdg);
 /* Callbacks Register/UnRegister functions  ***********************************/
 #if (USE_HAL_IWDG_REGISTER_CALLBACKS == 1)
-	HAL_StatusTypeDef HAL_IWDG_RegisterCallback(IWDG_HandleTypeDef *hiwdg, HAL_IWDG_CallbackIDTypeDef CallbackID, pIWDG_CallbackTypeDef pCallback);
-	HAL_StatusTypeDef HAL_IWDG_UnRegisterCallback(IWDG_HandleTypeDef *hiwdg, HAL_IWDG_CallbackIDTypeDef CallbackID);
+HAL_StatusTypeDef HAL_IWDG_RegisterCallback(IWDG_HandleTypeDef *hiwdg, HAL_IWDG_CallbackIDTypeDef CallbackID, pIWDG_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_IWDG_UnRegisterCallback(IWDG_HandleTypeDef *hiwdg, HAL_IWDG_CallbackIDTypeDef CallbackID);
 #endif /* USE_HAL_IWDG_REGISTER_CALLBACKS */
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @defgroup IWDG_Exported_Functions_Group2 IO operation functions
-	 * @{
-	 */
-	/* I/O operation functions ****************************************************/
-	HAL_StatusTypeDef HAL_IWDG_Refresh(IWDG_HandleTypeDef *hiwdg);
-	void HAL_IWDG_IRQHandler(IWDG_HandleTypeDef *hiwdg);
-	void HAL_IWDG_EarlyWakeupCallback(IWDG_HandleTypeDef *hiwdg);
+/** @defgroup IWDG_Exported_Functions_Group2 IO operation functions
+ * @{
+ */
+/* I/O operation functions ****************************************************/
+HAL_StatusTypeDef HAL_IWDG_Refresh(IWDG_HandleTypeDef *hiwdg);
+void HAL_IWDG_IRQHandler(IWDG_HandleTypeDef *hiwdg);
+void HAL_IWDG_EarlyWakeupCallback(IWDG_HandleTypeDef *hiwdg);
 /**
  * @}
  */
@@ -273,17 +270,17 @@ typedef struct
  */
 #define IS_IWDG_EWI(__EWI__) ((__EWI__) <= IWDG_EWCR_EWIT)
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

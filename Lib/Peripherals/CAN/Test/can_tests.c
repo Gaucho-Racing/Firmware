@@ -157,8 +157,7 @@ int can_test(void)
 
 #endif
 
-	while (1)
-	{
+	while (1) {
 		HAL_Delay(1000);
 		msg.data[0] = 0x2;
 		can_send(can1Handle, &msg);

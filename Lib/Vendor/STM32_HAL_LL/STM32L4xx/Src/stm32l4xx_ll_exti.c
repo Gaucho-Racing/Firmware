@@ -125,15 +125,12 @@ uint32_t LL_EXTI_Init(LL_EXTI_InitTypeDef *EXTI_InitStruct)
 	assert_param(IS_LL_EXTI_MODE(EXTI_InitStruct->Mode));
 
 	/* ENABLE LineCommand */
-	if (EXTI_InitStruct->LineCommand != DISABLE)
-	{
+	if (EXTI_InitStruct->LineCommand != DISABLE) {
 		assert_param(IS_LL_EXTI_TRIGGER(EXTI_InitStruct->Trigger));
 
 		/* Configure EXTI Lines in range from 0 to 31 */
-		if (EXTI_InitStruct->Line_0_31 != LL_EXTI_LINE_NONE)
-		{
-			switch (EXTI_InitStruct->Mode)
-			{
+		if (EXTI_InitStruct->Line_0_31 != LL_EXTI_LINE_NONE) {
+			switch (EXTI_InitStruct->Mode) {
 				case LL_EXTI_MODE_IT:
 					/* First Disable Event on provided Lines
 					 */
@@ -159,10 +156,8 @@ uint32_t LL_EXTI_Init(LL_EXTI_InitTypeDef *EXTI_InitStruct)
 					status = 0x01u;
 					break;
 			}
-			if (EXTI_InitStruct->Trigger != LL_EXTI_TRIGGER_NONE)
-			{
-				switch (EXTI_InitStruct->Trigger)
-				{
+			if (EXTI_InitStruct->Trigger != LL_EXTI_TRIGGER_NONE) {
+				switch (EXTI_InitStruct->Trigger) {
 					case LL_EXTI_TRIGGER_RISING:
 						/* First Disable Falling Trigger
 						 * on provided Lines */
@@ -190,10 +185,8 @@ uint32_t LL_EXTI_Init(LL_EXTI_InitTypeDef *EXTI_InitStruct)
 			}
 		}
 		/* Configure EXTI Lines in range from 32 to 63 */
-		if (EXTI_InitStruct->Line_32_63 != LL_EXTI_LINE_NONE)
-		{
-			switch (EXTI_InitStruct->Mode)
-			{
+		if (EXTI_InitStruct->Line_32_63 != LL_EXTI_LINE_NONE) {
+			switch (EXTI_InitStruct->Mode) {
 				case LL_EXTI_MODE_IT:
 					/* First Disable Event on provided Lines
 					 */
@@ -219,10 +212,8 @@ uint32_t LL_EXTI_Init(LL_EXTI_InitTypeDef *EXTI_InitStruct)
 					status |= 0x04u;
 					break;
 			}
-			if (EXTI_InitStruct->Trigger != LL_EXTI_TRIGGER_NONE)
-			{
-				switch (EXTI_InitStruct->Trigger)
-				{
+			if (EXTI_InitStruct->Trigger != LL_EXTI_TRIGGER_NONE) {
+				switch (EXTI_InitStruct->Trigger) {
 					case LL_EXTI_TRIGGER_RISING:
 						/* First Disable Falling Trigger
 						 * on provided Lines */
@@ -251,8 +242,7 @@ uint32_t LL_EXTI_Init(LL_EXTI_InitTypeDef *EXTI_InitStruct)
 		}
 	}
 	/* DISABLE LineCommand */
-	else
-	{
+	else {
 		/* De-configure EXTI Lines in range from 0 to 31 */
 		LL_EXTI_DisableIT_0_31(EXTI_InitStruct->Line_0_31);
 		LL_EXTI_DisableEvent_0_31(EXTI_InitStruct->Line_0_31);

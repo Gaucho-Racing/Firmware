@@ -409,12 +409,9 @@ void HAL_SYSTICK_CLKSourceConfig(uint32_t CLKSource)
 {
 	/* Check the parameters */
 	assert_param(IS_SYSTICK_CLK_SOURCE(CLKSource));
-	if (CLKSource == SYSTICK_CLKSOURCE_HCLK)
-	{
+	if (CLKSource == SYSTICK_CLKSOURCE_HCLK) {
 		SysTick->CTRL |= SYSTICK_CLKSOURCE_HCLK;
-	}
-	else
-	{
+	} else {
 		SysTick->CTRL &= ~SYSTICK_CLKSOURCE_HCLK;
 	}
 }

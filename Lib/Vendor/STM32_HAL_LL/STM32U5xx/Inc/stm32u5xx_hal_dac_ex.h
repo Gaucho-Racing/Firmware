@@ -21,8 +21,7 @@
 #define STM32U5xx_HAL_DAC_EX_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /** @addtogroup STM32U5xx_HAL_Driver
@@ -34,22 +33,21 @@ extern "C"
 
 #if defined(DAC1)
 
-	/** @addtogroup DACEx
-	 * @{
-	 */
+/** @addtogroup DACEx
+ * @{
+ */
 
-	/* Exported types ------------------------------------------------------------*/
+/* Exported types ------------------------------------------------------------*/
 
-	/**
-	 * @brief  DAC Autonomous Mode Configuration structure definition
-	 */
-	typedef struct
-	{
-		uint32_t AutonomousModeState; /*!< Specifies the autonomous mode state.
-						   This parameter can be a value of @ref
-						 DAC_AutonomousMode */
+/**
+ * @brief  DAC Autonomous Mode Configuration structure definition
+ */
+typedef struct {
+	uint32_t AutonomousModeState; /*!< Specifies the autonomous mode state.
+					   This parameter can be a value of @ref
+					 DAC_AutonomousMode */
 
-	} DAC_AutonomousModeConfTypeDef;
+} DAC_AutonomousModeConfTypeDef;
 
 /**
  * @brief  HAL State structures definition
@@ -162,87 +160,87 @@ extern "C"
 	 ((VALUE) == DAC_TRIANGLEAMPLITUDE_511) || ((VALUE) == DAC_TRIANGLEAMPLITUDE_1023) || ((VALUE) == DAC_TRIANGLEAMPLITUDE_2047) || ((VALUE) == DAC_TRIANGLEAMPLITUDE_4095))
 
 #define IS_DAC_AUTONOMOUS(AUTONOMOUS) (((AUTONOMOUS) == DAC_AUTONOMOUS_MODE_DISABLE) || ((AUTONOMOUS) == DAC_AUTONOMOUS_MODE_ENABLE))
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported functions --------------------------------------------------------*/
-	/* Extended features functions ***********************************************/
+/* Exported functions --------------------------------------------------------*/
+/* Extended features functions ***********************************************/
 
-	/** @addtogroup DACEx_Exported_Functions
-	 * @{
-	 */
+/** @addtogroup DACEx_Exported_Functions
+ * @{
+ */
 
-	/** @addtogroup DACEx_Exported_Functions_Group2
-	 * @{
-	 */
-	/* IO operation functions *****************************************************/
+/** @addtogroup DACEx_Exported_Functions_Group2
+ * @{
+ */
+/* IO operation functions *****************************************************/
 
-	HAL_StatusTypeDef HAL_DACEx_TriangleWaveGenerate(DAC_HandleTypeDef *hdac, uint32_t Channel, uint32_t Amplitude);
-	HAL_StatusTypeDef HAL_DACEx_NoiseWaveGenerate(DAC_HandleTypeDef *hdac, uint32_t Channel, uint32_t Amplitude);
+HAL_StatusTypeDef HAL_DACEx_TriangleWaveGenerate(DAC_HandleTypeDef *hdac, uint32_t Channel, uint32_t Amplitude);
+HAL_StatusTypeDef HAL_DACEx_NoiseWaveGenerate(DAC_HandleTypeDef *hdac, uint32_t Channel, uint32_t Amplitude);
 
-	HAL_StatusTypeDef HAL_DACEx_DualStart(DAC_HandleTypeDef *hdac);
-	HAL_StatusTypeDef HAL_DACEx_DualStop(DAC_HandleTypeDef *hdac);
-	HAL_StatusTypeDef HAL_DACEx_DualStart_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel, const uint32_t *pData, uint32_t Length, uint32_t Alignment);
-	HAL_StatusTypeDef HAL_DACEx_DualStop_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel);
-	HAL_StatusTypeDef HAL_DACEx_DualSetValue(DAC_HandleTypeDef *hdac, uint32_t Alignment, uint32_t Data1, uint32_t Data2);
-	uint32_t HAL_DACEx_DualGetValue(const DAC_HandleTypeDef *hdac);
+HAL_StatusTypeDef HAL_DACEx_DualStart(DAC_HandleTypeDef *hdac);
+HAL_StatusTypeDef HAL_DACEx_DualStop(DAC_HandleTypeDef *hdac);
+HAL_StatusTypeDef HAL_DACEx_DualStart_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel, const uint32_t *pData, uint32_t Length, uint32_t Alignment);
+HAL_StatusTypeDef HAL_DACEx_DualStop_DMA(DAC_HandleTypeDef *hdac, uint32_t Channel);
+HAL_StatusTypeDef HAL_DACEx_DualSetValue(DAC_HandleTypeDef *hdac, uint32_t Alignment, uint32_t Data1, uint32_t Data2);
+uint32_t HAL_DACEx_DualGetValue(const DAC_HandleTypeDef *hdac);
 
-	void HAL_DACEx_ConvCpltCallbackCh2(DAC_HandleTypeDef *hdac);
-	void HAL_DACEx_ConvHalfCpltCallbackCh2(DAC_HandleTypeDef *hdac);
-	void HAL_DACEx_ErrorCallbackCh2(DAC_HandleTypeDef *hdac);
-	void HAL_DACEx_DMAUnderrunCallbackCh2(DAC_HandleTypeDef *hdac);
+void HAL_DACEx_ConvCpltCallbackCh2(DAC_HandleTypeDef *hdac);
+void HAL_DACEx_ConvHalfCpltCallbackCh2(DAC_HandleTypeDef *hdac);
+void HAL_DACEx_ErrorCallbackCh2(DAC_HandleTypeDef *hdac);
+void HAL_DACEx_DMAUnderrunCallbackCh2(DAC_HandleTypeDef *hdac);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @addtogroup DACEx_Exported_Functions_Group3
-	 * @{
-	 */
-	/* Peripheral Control functions ***********************************************/
+/** @addtogroup DACEx_Exported_Functions_Group3
+ * @{
+ */
+/* Peripheral Control functions ***********************************************/
 
-	HAL_StatusTypeDef HAL_DACEx_SelfCalibrate(DAC_HandleTypeDef *hdac, DAC_ChannelConfTypeDef *sConfig, uint32_t Channel);
-	HAL_StatusTypeDef HAL_DACEx_SetUserTrimming(DAC_HandleTypeDef *hdac, DAC_ChannelConfTypeDef *sConfig, uint32_t Channel, uint32_t NewTrimmingValue);
-	uint32_t HAL_DACEx_GetTrimOffset(const DAC_HandleTypeDef *hdac, uint32_t Channel);
+HAL_StatusTypeDef HAL_DACEx_SelfCalibrate(DAC_HandleTypeDef *hdac, DAC_ChannelConfTypeDef *sConfig, uint32_t Channel);
+HAL_StatusTypeDef HAL_DACEx_SetUserTrimming(DAC_HandleTypeDef *hdac, DAC_ChannelConfTypeDef *sConfig, uint32_t Channel, uint32_t NewTrimmingValue);
+uint32_t HAL_DACEx_GetTrimOffset(const DAC_HandleTypeDef *hdac, uint32_t Channel);
 
-	/* Autonomous Mode Control functions
-	 * **********************************************/
-	HAL_StatusTypeDef HAL_DACEx_SetConfigAutonomousMode(DAC_HandleTypeDef *hdac, const DAC_AutonomousModeConfTypeDef *sConfig);
-	HAL_StatusTypeDef HAL_DACEx_GetConfigAutonomousMode(const DAC_HandleTypeDef *hdac, DAC_AutonomousModeConfTypeDef *sConfig);
-	HAL_StatusTypeDef HAL_DACEx_ClearConfigAutonomousMode(DAC_HandleTypeDef *hdac);
+/* Autonomous Mode Control functions
+ * **********************************************/
+HAL_StatusTypeDef HAL_DACEx_SetConfigAutonomousMode(DAC_HandleTypeDef *hdac, const DAC_AutonomousModeConfTypeDef *sConfig);
+HAL_StatusTypeDef HAL_DACEx_GetConfigAutonomousMode(const DAC_HandleTypeDef *hdac, DAC_AutonomousModeConfTypeDef *sConfig);
+HAL_StatusTypeDef HAL_DACEx_ClearConfigAutonomousMode(DAC_HandleTypeDef *hdac);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @addtogroup DACEx_Private_Functions
-	 * @{
-	 */
+/** @addtogroup DACEx_Private_Functions
+ * @{
+ */
 
-	/* DAC_DMAConvCpltCh2 / DAC_DMAErrorCh2 / DAC_DMAHalfConvCpltCh2 */
-	/* are called by HAL_DAC_Start_DMA */
-	void DAC_DMAConvCpltCh2(DMA_HandleTypeDef *hdma);
-	void DAC_DMAErrorCh2(DMA_HandleTypeDef *hdma);
-	void DAC_DMAHalfConvCpltCh2(DMA_HandleTypeDef *hdma);
+/* DAC_DMAConvCpltCh2 / DAC_DMAErrorCh2 / DAC_DMAHalfConvCpltCh2 */
+/* are called by HAL_DAC_Start_DMA */
+void DAC_DMAConvCpltCh2(DMA_HandleTypeDef *hdma);
+void DAC_DMAErrorCh2(DMA_HandleTypeDef *hdma);
+void DAC_DMAHalfConvCpltCh2(DMA_HandleTypeDef *hdma);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #endif /* DAC1 */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

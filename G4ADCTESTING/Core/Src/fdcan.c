@@ -55,8 +55,7 @@ void MX_FDCAN2_Init(void)
 	hfdcan2.Init.StdFiltersNbr = 0;
 	hfdcan2.Init.ExtFiltersNbr = 2;
 	hfdcan2.Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
-	if (HAL_FDCAN_Init(&hfdcan2) != HAL_OK)
-	{
+	if (HAL_FDCAN_Init(&hfdcan2) != HAL_OK) {
 		Error_Handler();
 	}
 	/* USER CODE BEGIN FDCAN2_Init 2 */
@@ -68,8 +67,7 @@ void HAL_FDCAN_MspInit(FDCAN_HandleTypeDef *fdcanHandle)
 {
 
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
-	if (fdcanHandle->Instance == FDCAN2)
-	{
+	if (fdcanHandle->Instance == FDCAN2) {
 		/* USER CODE BEGIN FDCAN2_MspInit 0 */
 
 		/* USER CODE END FDCAN2_MspInit 0 */
@@ -109,8 +107,7 @@ void HAL_FDCAN_MspInit(FDCAN_HandleTypeDef *fdcanHandle)
 void HAL_FDCAN_MspDeInit(FDCAN_HandleTypeDef *fdcanHandle)
 {
 
-	if (fdcanHandle->Instance == FDCAN2)
-	{
+	if (fdcanHandle->Instance == FDCAN2) {
 		/* USER CODE BEGIN FDCAN2_MspDeInit 0 */
 
 		/* USER CODE END FDCAN2_MspDeInit 0 */

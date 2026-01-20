@@ -20,266 +20,262 @@
 #define STM32L4xx_HAL_RCC_EX_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l4xx_hal_def.h"
 
-	/** @addtogroup STM32L4xx_HAL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32L4xx_HAL_Driver
+ * @{
+ */
 
-	/** @addtogroup RCCEx
-	 * @{
-	 */
+/** @addtogroup RCCEx
+ * @{
+ */
 
-	/* Exported types ------------------------------------------------------------*/
+/* Exported types ------------------------------------------------------------*/
 
-	/** @defgroup RCCEx_Exported_Types RCCEx Exported Types
-	 * @{
-	 */
+/** @defgroup RCCEx_Exported_Types RCCEx Exported Types
+ * @{
+ */
 
 #if defined(RCC_PLLSAI1_SUPPORT)
-	/**
-	 * @brief  PLLSAI1 Clock structure definition
-	 */
-	typedef struct
-	{
+/**
+ * @brief  PLLSAI1 Clock structure definition
+ */
+typedef struct {
 
-		uint32_t PLLSAI1Source; /*!< PLLSAI1Source: PLLSAI1 entry clock source.
-					     This parameter must be a value of @ref
-					   RCC_PLL_Clock_Source */
+	uint32_t PLLSAI1Source; /*!< PLLSAI1Source: PLLSAI1 entry clock source.
+				     This parameter must be a value of @ref
+				   RCC_PLL_Clock_Source */
 
 #if defined(RCC_PLLSAI1M_DIV_1_16_SUPPORT)
-		uint32_t PLLSAI1M; /*!< PLLSAI1M: specifies the division factor for
-				      PLLSAI1 input clock. This parameter must be a
-				      number between Min_Data = 1 and Max_Data = 16 */
+	uint32_t PLLSAI1M; /*!< PLLSAI1M: specifies the division factor for
+			      PLLSAI1 input clock. This parameter must be a
+			      number between Min_Data = 1 and Max_Data = 16 */
 #else
-		uint32_t PLLSAI1M; /*!< PLLSAI1M: specifies the division factor for
-				      PLLSAI1 input clock. This parameter must be a
-				      number between Min_Data = 1 and Max_Data = 8 */
+	uint32_t PLLSAI1M; /*!< PLLSAI1M: specifies the division factor for
+			      PLLSAI1 input clock. This parameter must be a
+			      number between Min_Data = 1 and Max_Data = 8 */
 #endif
 
-		uint32_t PLLSAI1N; /*!< PLLSAI1N: specifies the multiplication factor for
-				      PLLSAI1 VCO output clock. This parameter must be a
-				      number between 8 and 86 or 127 depending on devices. */
+	uint32_t PLLSAI1N; /*!< PLLSAI1N: specifies the multiplication factor for
+			      PLLSAI1 VCO output clock. This parameter must be a
+			      number between 8 and 86 or 127 depending on devices. */
 
-		uint32_t PLLSAI1P; /*!< PLLSAI1P: specifies the division factor for SAI
-				      clock. This parameter must be a value of @ref
-				      RCC_PLLP_Clock_Divider */
+	uint32_t PLLSAI1P; /*!< PLLSAI1P: specifies the division factor for SAI
+			      clock. This parameter must be a value of @ref
+			      RCC_PLLP_Clock_Divider */
 
-		uint32_t PLLSAI1Q; /*!< PLLSAI1Q: specifies the division factor for
-				      USB/RNG/SDMMC1 clock. This parameter must be a
-				      value of @ref RCC_PLLQ_Clock_Divider */
+	uint32_t PLLSAI1Q; /*!< PLLSAI1Q: specifies the division factor for
+			      USB/RNG/SDMMC1 clock. This parameter must be a
+			      value of @ref RCC_PLLQ_Clock_Divider */
 
-		uint32_t PLLSAI1R; /*!< PLLSAI1R: specifies the division factor for ADC
-				      clock. This parameter must be a value of @ref
-				      RCC_PLLR_Clock_Divider */
+	uint32_t PLLSAI1R; /*!< PLLSAI1R: specifies the division factor for ADC
+			      clock. This parameter must be a value of @ref
+			      RCC_PLLR_Clock_Divider */
 
-		uint32_t PLLSAI1ClockOut; /*!< PLLSAIClockOut: specifies PLLSAI1 output
-					     clock to be enabled. This parameter must be
-					     a value of @ref RCC_PLLSAI1_Clock_Output */
-	} RCC_PLLSAI1InitTypeDef;
+	uint32_t PLLSAI1ClockOut; /*!< PLLSAIClockOut: specifies PLLSAI1 output
+				     clock to be enabled. This parameter must be
+				     a value of @ref RCC_PLLSAI1_Clock_Output */
+} RCC_PLLSAI1InitTypeDef;
 #endif /* RCC_PLLSAI1_SUPPORT */
 
 #if defined(RCC_PLLSAI2_SUPPORT)
-	/**
-	 * @brief  PLLSAI2 Clock structure definition
-	 */
-	typedef struct
-	{
+/**
+ * @brief  PLLSAI2 Clock structure definition
+ */
+typedef struct {
 
-		uint32_t PLLSAI2Source; /*!< PLLSAI2Source: PLLSAI2 entry clock source.
-					     This parameter must be a value of @ref
-					   RCC_PLL_Clock_Source */
+	uint32_t PLLSAI2Source; /*!< PLLSAI2Source: PLLSAI2 entry clock source.
+				     This parameter must be a value of @ref
+				   RCC_PLL_Clock_Source */
 
 #if defined(RCC_PLLSAI2M_DIV_1_16_SUPPORT)
-		uint32_t PLLSAI2M; /*!< PLLSAI2M: specifies the division factor for
-				      PLLSAI2 input clock. This parameter must be a
-				      number between Min_Data = 1 and Max_Data = 16 */
+	uint32_t PLLSAI2M; /*!< PLLSAI2M: specifies the division factor for
+			      PLLSAI2 input clock. This parameter must be a
+			      number between Min_Data = 1 and Max_Data = 16 */
 #else
-		uint32_t PLLSAI2M; /*!< PLLSAI2M: specifies the division factor for
-				      PLLSAI2 input clock. This parameter must be a
-				      number between Min_Data = 1 and Max_Data = 8 */
+	uint32_t PLLSAI2M; /*!< PLLSAI2M: specifies the division factor for
+			      PLLSAI2 input clock. This parameter must be a
+			      number between Min_Data = 1 and Max_Data = 8 */
 #endif
 
-		uint32_t PLLSAI2N; /*!< PLLSAI2N: specifies the multiplication factor for
-				      PLLSAI2 VCO output clock. This parameter must be a
-				      number between 8 and 86 or 127 depending on devices. */
+	uint32_t PLLSAI2N; /*!< PLLSAI2N: specifies the multiplication factor for
+			      PLLSAI2 VCO output clock. This parameter must be a
+			      number between 8 and 86 or 127 depending on devices. */
 
-		uint32_t PLLSAI2P; /*!< PLLSAI2P: specifies the division factor for SAI
-				      clock. This parameter must be a value of @ref
-				      RCC_PLLP_Clock_Divider */
+	uint32_t PLLSAI2P; /*!< PLLSAI2P: specifies the division factor for SAI
+			      clock. This parameter must be a value of @ref
+			      RCC_PLLP_Clock_Divider */
 
 #if defined(RCC_PLLSAI2Q_DIV_SUPPORT)
-		uint32_t PLLSAI2Q; /*!< PLLSAI2Q: specifies the division factor for DSI
-				      clock. This parameter must be a value of @ref
-				      RCC_PLLQ_Clock_Divider */
+	uint32_t PLLSAI2Q; /*!< PLLSAI2Q: specifies the division factor for DSI
+			      clock. This parameter must be a value of @ref
+			      RCC_PLLQ_Clock_Divider */
 #endif
 
-		uint32_t PLLSAI2R; /*!< PLLSAI2R: specifies the division factor for ADC
-				      clock. This parameter must be a value of @ref
-				      RCC_PLLR_Clock_Divider */
+	uint32_t PLLSAI2R; /*!< PLLSAI2R: specifies the division factor for ADC
+			      clock. This parameter must be a value of @ref
+			      RCC_PLLR_Clock_Divider */
 
-		uint32_t PLLSAI2ClockOut; /*!< PLLSAIClockOut: specifies PLLSAI2 output
-					     clock to be enabled. This parameter must be
-					     a value of @ref RCC_PLLSAI2_Clock_Output */
-	} RCC_PLLSAI2InitTypeDef;
+	uint32_t PLLSAI2ClockOut; /*!< PLLSAIClockOut: specifies PLLSAI2 output
+				     clock to be enabled. This parameter must be
+				     a value of @ref RCC_PLLSAI2_Clock_Output */
+} RCC_PLLSAI2InitTypeDef;
 
 #endif /* RCC_PLLSAI2_SUPPORT */
 
-	/**
-	 * @brief  RCC extended clocks structure definition
-	 */
-	typedef struct
-	{
-		uint32_t PeriphClockSelection; /*!< The Extended Clock to be configured.
-						    This parameter can be a value of
-						  @ref RCCEx_Periph_Clock_Selection */
+/**
+ * @brief  RCC extended clocks structure definition
+ */
+typedef struct {
+	uint32_t PeriphClockSelection; /*!< The Extended Clock to be configured.
+					    This parameter can be a value of
+					  @ref RCCEx_Periph_Clock_Selection */
 #if defined(RCC_PLLSAI1_SUPPORT)
 
-		RCC_PLLSAI1InitTypeDef PLLSAI1; /*!< PLLSAI1 structure parameters.
-						     This parameter will be used only when PLLSAI1 is
-						   selected as Clock Source for SAI1, USB/RNG/SDMMC1 or ADC
-						 */
-#endif						/* RCC_PLLSAI1_SUPPORT */
+	RCC_PLLSAI1InitTypeDef PLLSAI1; /*!< PLLSAI1 structure parameters.
+					     This parameter will be used only when PLLSAI1 is
+					   selected as Clock Source for SAI1, USB/RNG/SDMMC1 or ADC
+					 */
+#endif					/* RCC_PLLSAI1_SUPPORT */
 #if defined(RCC_PLLSAI2_SUPPORT)
 
-		RCC_PLLSAI2InitTypeDef PLLSAI2; /*!< PLLSAI2 structure parameters.
-						     This parameter will be used only when PLLSAI2 is
-						   selected as Clock Source for SAI2 or ADC */
+	RCC_PLLSAI2InitTypeDef PLLSAI2; /*!< PLLSAI2 structure parameters.
+					     This parameter will be used only when PLLSAI2 is
+					   selected as Clock Source for SAI2 or ADC */
 
 #endif /* RCC_PLLSAI2_SUPPORT */
 
-		uint32_t Usart1ClockSelection; /*!< Specifies USART1 clock source.
-						    This parameter can be a value of
-						  @ref RCCEx_USART1_Clock_Source */
+	uint32_t Usart1ClockSelection; /*!< Specifies USART1 clock source.
+					    This parameter can be a value of
+					  @ref RCCEx_USART1_Clock_Source */
 
-		uint32_t Usart2ClockSelection; /*!< Specifies USART2 clock source.
-						    This parameter can be a value of
-						  @ref RCCEx_USART2_Clock_Source */
+	uint32_t Usart2ClockSelection; /*!< Specifies USART2 clock source.
+					    This parameter can be a value of
+					  @ref RCCEx_USART2_Clock_Source */
 
 #if defined(USART3)
 
-		uint32_t Usart3ClockSelection; /*!< Specifies USART3 clock source.
-						    This parameter can be a value of
-						  @ref RCCEx_USART3_Clock_Source */
+	uint32_t Usart3ClockSelection; /*!< Specifies USART3 clock source.
+					    This parameter can be a value of
+					  @ref RCCEx_USART3_Clock_Source */
 
 #endif /* USART3 */
 
 #if defined(UART4)
 
-		uint32_t Uart4ClockSelection; /*!< Specifies UART4 clock source.
-						   This parameter can be a value of @ref
-						 RCCEx_UART4_Clock_Source */
+	uint32_t Uart4ClockSelection; /*!< Specifies UART4 clock source.
+					   This parameter can be a value of @ref
+					 RCCEx_UART4_Clock_Source */
 
 #endif /* UART4 */
 
 #if defined(UART5)
 
-		uint32_t Uart5ClockSelection; /*!< Specifies UART5 clock source.
-						   This parameter can be a value of @ref
-						 RCCEx_UART5_Clock_Source */
+	uint32_t Uart5ClockSelection; /*!< Specifies UART5 clock source.
+					   This parameter can be a value of @ref
+					 RCCEx_UART5_Clock_Source */
 
 #endif /* UART5 */
 
-		uint32_t Lpuart1ClockSelection; /*!< Specifies LPUART1 clock source.
-						     This parameter can be a value of
-						   @ref RCCEx_LPUART1_Clock_Source */
+	uint32_t Lpuart1ClockSelection; /*!< Specifies LPUART1 clock source.
+					     This parameter can be a value of
+					   @ref RCCEx_LPUART1_Clock_Source */
 
-		uint32_t I2c1ClockSelection; /*!< Specifies I2C1 clock source.
-						  This parameter can be a value of @ref
-						RCCEx_I2C1_Clock_Source */
+	uint32_t I2c1ClockSelection; /*!< Specifies I2C1 clock source.
+					  This parameter can be a value of @ref
+					RCCEx_I2C1_Clock_Source */
 
 #if defined(I2C2)
 
-		uint32_t I2c2ClockSelection; /*!< Specifies I2C2 clock source.
-						  This parameter can be a value of @ref
-						RCCEx_I2C2_Clock_Source */
+	uint32_t I2c2ClockSelection; /*!< Specifies I2C2 clock source.
+					  This parameter can be a value of @ref
+					RCCEx_I2C2_Clock_Source */
 
 #endif /* I2C2 */
 
-		uint32_t I2c3ClockSelection; /*!< Specifies I2C3 clock source.
-						  This parameter can be a value of @ref
-						RCCEx_I2C3_Clock_Source */
+	uint32_t I2c3ClockSelection; /*!< Specifies I2C3 clock source.
+					  This parameter can be a value of @ref
+					RCCEx_I2C3_Clock_Source */
 
 #if defined(I2C4)
 
-		uint32_t I2c4ClockSelection; /*!< Specifies I2C4 clock source.
-						  This parameter can be a value of @ref
-						RCCEx_I2C4_Clock_Source */
+	uint32_t I2c4ClockSelection; /*!< Specifies I2C4 clock source.
+					  This parameter can be a value of @ref
+					RCCEx_I2C4_Clock_Source */
 
 #endif /* I2C4 */
 
-		uint32_t Lptim1ClockSelection; /*!< Specifies LPTIM1 clock source.
-						    This parameter can be a value of
-						  @ref RCCEx_LPTIM1_Clock_Source */
+	uint32_t Lptim1ClockSelection; /*!< Specifies LPTIM1 clock source.
+					    This parameter can be a value of
+					  @ref RCCEx_LPTIM1_Clock_Source */
 
-		uint32_t Lptim2ClockSelection; /*!< Specifies LPTIM2 clock source.
-						    This parameter can be a value of
-						  @ref RCCEx_LPTIM2_Clock_Source */
+	uint32_t Lptim2ClockSelection; /*!< Specifies LPTIM2 clock source.
+					    This parameter can be a value of
+					  @ref RCCEx_LPTIM2_Clock_Source */
 #if defined(SAI1)
 
-		uint32_t Sai1ClockSelection; /*!< Specifies SAI1 clock source.
-						  This parameter can be a value of @ref
-						RCCEx_SAI1_Clock_Source */
-#endif					     /* SAI1 */
+	uint32_t Sai1ClockSelection; /*!< Specifies SAI1 clock source.
+					  This parameter can be a value of @ref
+					RCCEx_SAI1_Clock_Source */
+#endif				     /* SAI1 */
 
 #if defined(SAI2)
 
-		uint32_t Sai2ClockSelection; /*!< Specifies SAI2 clock source.
-						  This parameter can be a value of @ref
-						RCCEx_SAI2_Clock_Source */
+	uint32_t Sai2ClockSelection; /*!< Specifies SAI2 clock source.
+					  This parameter can be a value of @ref
+					RCCEx_SAI2_Clock_Source */
 
 #endif /* SAI2 */
 
 #if defined(USB_OTG_FS) || defined(USB)
 
-		uint32_t UsbClockSelection; /*!< Specifies USB clock source (warning: same
-					       source for SDMMC1 and RNG). This parameter can
-					       be a value of @ref RCCEx_USB_Clock_Source */
+	uint32_t UsbClockSelection; /*!< Specifies USB clock source (warning: same
+				       source for SDMMC1 and RNG). This parameter can
+				       be a value of @ref RCCEx_USB_Clock_Source */
 
 #endif /* USB_OTG_FS || USB */
 
 #if defined(SDMMC1)
 
-		uint32_t Sdmmc1ClockSelection; /*!< Specifies SDMMC1 clock source
-						  (warning: same source for USB and
-						  RNG). This parameter can be a value of
-						  @ref RCCEx_SDMMC1_Clock_Source */
+	uint32_t Sdmmc1ClockSelection; /*!< Specifies SDMMC1 clock source
+					  (warning: same source for USB and
+					  RNG). This parameter can be a value of
+					  @ref RCCEx_SDMMC1_Clock_Source */
 
 #endif /* SDMMC1 */
 
-		uint32_t RngClockSelection; /*!< Specifies RNG clock source (warning: same
-					       source for USB and SDMMC1). This parameter can
-					       be a value of @ref RCCEx_RNG_Clock_Source */
+	uint32_t RngClockSelection; /*!< Specifies RNG clock source (warning: same
+				       source for USB and SDMMC1). This parameter can
+				       be a value of @ref RCCEx_RNG_Clock_Source */
 
 #if !defined(STM32L412xx) && !defined(STM32L422xx)
-		uint32_t AdcClockSelection; /*!< Specifies ADC interface clock source.
-						 This parameter can be a value of @ref
-					       RCCEx_ADC_Clock_Source */
-#endif					    /* !STM32L412xx && !STM32L422xx */
+	uint32_t AdcClockSelection; /*!< Specifies ADC interface clock source.
+					 This parameter can be a value of @ref
+				       RCCEx_ADC_Clock_Source */
+#endif				    /* !STM32L412xx && !STM32L422xx */
 
 #if defined(SWPMI1)
 
-		uint32_t Swpmi1ClockSelection; /*!< Specifies SWPMI1 clock source.
-						    This parameter can be a value of
-						  @ref RCCEx_SWPMI1_Clock_Source */
+	uint32_t Swpmi1ClockSelection; /*!< Specifies SWPMI1 clock source.
+					    This parameter can be a value of
+					  @ref RCCEx_SWPMI1_Clock_Source */
 
 #endif /* SWPMI1 */
 
 #if defined(DFSDM1_Filter0)
 
-		uint32_t Dfsdm1ClockSelection; /*!< Specifies DFSDM1 clock source.
-						    This parameter can be a value of
-						  @ref RCCEx_DFSDM1_Clock_Source */
+	uint32_t Dfsdm1ClockSelection; /*!< Specifies DFSDM1 clock source.
+					    This parameter can be a value of
+					  @ref RCCEx_DFSDM1_Clock_Source */
 
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
-		uint32_t Dfsdm1AudioClockSelection; /*!< Specifies DFSDM1 audio clock source.
-						      This parameter can be a value of @ref
-						      RCCEx_DFSDM1_Audio_Clock_Source */
+	uint32_t Dfsdm1AudioClockSelection; /*!< Specifies DFSDM1 audio clock source.
+					      This parameter can be a value of @ref
+					      RCCEx_DFSDM1_Audio_Clock_Source */
 
 #endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
 	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
@@ -288,103 +284,101 @@ extern "C"
 
 #if defined(LTDC)
 
-		uint32_t LtdcClockSelection; /*!< Specifies LTDC clock source.
-						  This parameter can be a value of @ref
-						RCCEx_LTDC_Clock_Source */
+	uint32_t LtdcClockSelection; /*!< Specifies LTDC clock source.
+					  This parameter can be a value of @ref
+					RCCEx_LTDC_Clock_Source */
 
 #endif /* LTDC */
 
 #if defined(DSI)
 
-		uint32_t DsiClockSelection; /*!< Specifies DSI clock source.
-						 This parameter can be a value of @ref
-					       RCCEx_DSI_Clock_Source */
+	uint32_t DsiClockSelection; /*!< Specifies DSI clock source.
+					 This parameter can be a value of @ref
+				       RCCEx_DSI_Clock_Source */
 
 #endif /* DSI */
 
 #if defined(OCTOSPI1) || defined(OCTOSPI2)
 
-		uint32_t OspiClockSelection; /*!< Specifies OctoSPI clock source.
-						  This parameter can be a value of @ref
-						RCCEx_OSPI_Clock_Source */
+	uint32_t OspiClockSelection; /*!< Specifies OctoSPI clock source.
+					  This parameter can be a value of @ref
+					RCCEx_OSPI_Clock_Source */
 
 #endif
 
-		uint32_t RTCClockSelection; /*!< Specifies RTC clock source.
-						 This parameter can be a value of @ref
-					       RCC_RTC_Clock_Source */
-	} RCC_PeriphCLKInitTypeDef;
+	uint32_t RTCClockSelection; /*!< Specifies RTC clock source.
+					 This parameter can be a value of @ref
+				       RCC_RTC_Clock_Source */
+} RCC_PeriphCLKInitTypeDef;
 
 #if defined(CRS)
 
-	/**
-	 * @brief RCC_CRS Init structure definition
-	 */
-	typedef struct
-	{
-		uint32_t Prescaler; /*!< Specifies the division factor of the SYNC
-				       signal. This parameter can be a value of @ref
-				       RCCEx_CRS_SynchroDivider */
+/**
+ * @brief RCC_CRS Init structure definition
+ */
+typedef struct {
+	uint32_t Prescaler; /*!< Specifies the division factor of the SYNC
+			       signal. This parameter can be a value of @ref
+			       RCCEx_CRS_SynchroDivider */
 
-		uint32_t Source; /*!< Specifies the SYNC signal source.
-				    This parameter can be a value of @ref
-				    RCCEx_CRS_SynchroSource */
+	uint32_t Source; /*!< Specifies the SYNC signal source.
+			    This parameter can be a value of @ref
+			    RCCEx_CRS_SynchroSource */
 
-		uint32_t Polarity; /*!< Specifies the input polarity for the SYNC signal
-				      source. This parameter can be a value of @ref
-				      RCCEx_CRS_SynchroPolarity */
+	uint32_t Polarity; /*!< Specifies the input polarity for the SYNC signal
+			      source. This parameter can be a value of @ref
+			      RCCEx_CRS_SynchroPolarity */
 
-		uint32_t ReloadValue; /*!< Specifies the value to be loaded in the
-					 frequency error counter with each SYNC event.
-					  It can be calculated in using macro
-					 __HAL_RCC_CRS_RELOADVALUE_CALCULATE(__FTARGET__,
-					 __FSYNC__) This parameter must be a number
-					 between 0 and 0xFFFF or a value of @ref
-					 RCCEx_CRS_ReloadValueDefault .*/
+	uint32_t ReloadValue; /*!< Specifies the value to be loaded in the
+				 frequency error counter with each SYNC event.
+				  It can be calculated in using macro
+				 __HAL_RCC_CRS_RELOADVALUE_CALCULATE(__FTARGET__,
+				 __FSYNC__) This parameter must be a number
+				 between 0 and 0xFFFF or a value of @ref
+				 RCCEx_CRS_ReloadValueDefault .*/
 
-		uint32_t ErrorLimitValue; /*!< Specifies the value to be used to evaluate the
-					     captured frequency error value. This parameter
-					     must be a number between 0 and 0xFF or a value
-					     of @ref RCCEx_CRS_ErrorLimitDefault */
+	uint32_t ErrorLimitValue; /*!< Specifies the value to be used to evaluate the
+				     captured frequency error value. This parameter
+				     must be a number between 0 and 0xFF or a value
+				     of @ref RCCEx_CRS_ErrorLimitDefault */
 
-		uint32_t HSI48CalibrationValue; /*!< Specifies a user-programmable trimming
-						   value to the HSI48 oscillator. This
-						   parameter must be a number between 0 and
-						   0x7F for STM32L412xx/L422xx, between 0 and
-						   0x3F otherwise, or a value of @ref
-						   RCCEx_CRS_HSI48CalibrationDefault */
+	uint32_t HSI48CalibrationValue; /*!< Specifies a user-programmable trimming
+					   value to the HSI48 oscillator. This
+					   parameter must be a number between 0 and
+					   0x7F for STM32L412xx/L422xx, between 0 and
+					   0x3F otherwise, or a value of @ref
+					   RCCEx_CRS_HSI48CalibrationDefault */
 
-	} RCC_CRSInitTypeDef;
+} RCC_CRSInitTypeDef;
 
-	/**
-	 * @brief RCC_CRS Synchronization structure definition
-	 */
-	typedef struct
-	{
-		uint32_t ReloadValue; /*!< Specifies the value loaded in the Counter
-					 reload value. This parameter must be a number
-					 between 0 and 0xFFFF */
+/**
+ * @brief RCC_CRS Synchronization structure definition
+ */
+typedef struct {
+	uint32_t ReloadValue; /*!< Specifies the value loaded in the Counter
+				 reload value. This parameter must be a number
+				 between 0 and 0xFFFF */
 
-		uint32_t HSI48CalibrationValue; /*!< Specifies value loaded in HSI48
-						   oscillator smooth trimming. This
-						   parameter must be a number between 0
-						   and 0x7F for STM32L412xx/L422xx,
-						   between 0 and 0x3F otherwise */
+	uint32_t HSI48CalibrationValue; /*!< Specifies value loaded in HSI48
+					   oscillator smooth trimming. This
+					   parameter must be a number between 0
+					   and 0x7F for STM32L412xx/L422xx,
+					   between 0 and 0x3F otherwise */
 
-		uint32_t FreqErrorCapture; /*!< Specifies the value loaded in the .FECAP, the
-					     frequency error counter value latched in the
-					     time of the last SYNC event. This parameter must
-					     be a number between 0 and 0xFFFF */
+	uint32_t FreqErrorCapture; /*!< Specifies the value loaded in the .FECAP, the
+				     frequency error counter value latched in the
+				     time of the last SYNC event. This parameter must
+				     be a number between 0 and 0xFFFF */
 
-		uint32_t FreqErrorDirection; /*!< Specifies the value loaded in the .FEDIR,
-					       the counting direction of the frequency error
-					       counter latched in the time of the last SYNC
-					       event. It shows whether the actual frequency
-					       is below or above the target. This parameter
-					       must be a value of @ref
-					       RCCEx_CRS_FreqErrorDirection*/
+	uint32_t FreqErrorDirection; /*!< Specifies the value loaded in the .FEDIR,
+				       the counting direction of the frequency error
+				       counter latched in the time of the last SYNC
+				       event. It shows whether the actual frequency
+				       is below or above the target. This parameter
+				       must be a value of @ref
+				       RCCEx_CRS_FreqErrorDirection*/
 
-	} RCC_CRSSynchroInfoTypeDef;
+} RCC_CRSSynchroInfoTypeDef;
 
 #endif /* CRS */
 /**
@@ -486,9 +480,9 @@ extern "C"
 #define RCC_USART2CLKSOURCE_SYSCLK RCC_CCIPR_USART2SEL_0
 #define RCC_USART2CLKSOURCE_HSI RCC_CCIPR_USART2SEL_1
 #define RCC_USART2CLKSOURCE_LSE (RCC_CCIPR_USART2SEL_0 | RCC_CCIPR_USART2SEL_1)
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #if defined(USART3)
 /** @defgroup RCCEx_USART3_Clock_Source USART3 Clock Source
@@ -546,9 +540,9 @@ extern "C"
 #define RCC_I2C1CLKSOURCE_PCLK1 0x00000000U
 #define RCC_I2C1CLKSOURCE_SYSCLK RCC_CCIPR_I2C1SEL_0
 #define RCC_I2C1CLKSOURCE_HSI RCC_CCIPR_I2C1SEL_1
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #if defined(I2C2)
 /** @defgroup RCCEx_I2C2_Clock_Source I2C2 Clock Source
@@ -568,9 +562,9 @@ extern "C"
 #define RCC_I2C3CLKSOURCE_PCLK1 0x00000000U
 #define RCC_I2C3CLKSOURCE_SYSCLK RCC_CCIPR_I2C3SEL_0
 #define RCC_I2C3CLKSOURCE_HSI RCC_CCIPR_I2C3SEL_1
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #if defined(I2C4)
 /** @defgroup RCCEx_I2C4_Clock_Source I2C4 Clock Source
@@ -650,9 +644,9 @@ extern "C"
 #define RCC_LPTIM2CLKSOURCE_LSI RCC_CCIPR_LPTIM2SEL_0
 #define RCC_LPTIM2CLKSOURCE_HSI RCC_CCIPR_LPTIM2SEL_1
 #define RCC_LPTIM2CLKSOURCE_LSE RCC_CCIPR_LPTIM2SEL
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #if defined(SDMMC1)
 /** @defgroup RCCEx_SDMMC1_Clock_Source SDMMC1 Clock Source
@@ -691,9 +685,9 @@ extern "C"
 #endif /* RCC_PLLSAI1_SUPPORT */
 #define RCC_RNGCLKSOURCE_PLL RCC_CCIPR_CLK48SEL_1
 #define RCC_RNGCLKSOURCE_MSI RCC_CCIPR_CLK48SEL
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #if defined(USB_OTG_FS) || defined(USB)
 /** @defgroup RCCEx_USB_Clock_Source USB Clock Source
@@ -729,10 +723,10 @@ extern "C"
 #define RCC_ADCCLKSOURCE_SYSCLK RCC_CCIPR_ADCSEL
 #else
 #define RCC_ADCCLKSOURCE_SYSCLK 0x30000000U
-#endif	/* RCC_CCIPR_ADCSEL */
-	/**
-	 * @}
-	 */
+#endif /* RCC_CCIPR_ADCSEL */
+       /**
+	* @}
+	*/
 
 #if defined(SWPMI1)
 /** @defgroup RCCEx_SWPMI1_Clock_Source SWPMI1 Clock Source
@@ -754,11 +748,11 @@ extern "C"
 #define RCC_DFSDM1CLKSOURCE_SYSCLK RCC_CCIPR2_DFSDM1SEL
 #else
 #define RCC_DFSDM1CLKSOURCE_SYSCLK RCC_CCIPR_DFSDM1SEL
-#endif	/* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                 \
-	   STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
-	/**
-	 * @}
-	 */
+#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
+	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+       /**
+	* @}
+	*/
 
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 /** @defgroup RCCEx_DFSDM1_Audio_Clock_Source DFSDM1 Audio Clock Source
@@ -955,20 +949,20 @@ extern "C"
 #define RCC_CRS_FLAG_SYNCMISS CRS_ISR_SYNCMISS	/*!< SYNC missed*/
 #define RCC_CRS_FLAG_TRIMOVF CRS_ISR_TRIMOVF	/*!< Trimming overflow or underflow */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #endif /* CRS */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported macros -----------------------------------------------------------*/
-	/** @defgroup RCCEx_Exported_Macros RCCEx Exported Macros
-	 * @{
-	 */
+/* Exported macros -----------------------------------------------------------*/
+/** @defgroup RCCEx_Exported_Macros RCCEx Exported Macros
+ * @{
+ */
 
 #if defined(RCC_PLLSAI1_SUPPORT)
 
@@ -1070,18 +1064,18 @@ extern "C"
 
 #if defined(RCC_PLLSAI1M_DIV_1_16_SUPPORT)
 
-	/** @brief  Macro to configure the PLLSAI1 input clock division factor M.
-	 *
-	 * @note   This function must be used only when the PLLSAI1 is disabled.
-	 * @note   PLLSAI1 clock source is common with the main PLL (configured through
-	 *         __HAL_RCC_PLL_CONFIG() macro)
-	 *
-	 * @param  __PLLSAI1M__ specifies the division factor for PLLSAI1 clock.
-	 *         This parameter must be a number between Min_Data = 1 and Max_Data
-	 * = 16.
-	 *
-	 * @retval None
-	 */
+/** @brief  Macro to configure the PLLSAI1 input clock division factor M.
+ *
+ * @note   This function must be used only when the PLLSAI1 is disabled.
+ * @note   PLLSAI1 clock source is common with the main PLL (configured through
+ *         __HAL_RCC_PLL_CONFIG() macro)
+ *
+ * @param  __PLLSAI1M__ specifies the division factor for PLLSAI1 clock.
+ *         This parameter must be a number between Min_Data = 1 and Max_Data
+ * = 16.
+ *
+ * @retval None
+ */
 
 #define __HAL_RCC_PLLSAI1_DIVM_CONFIG(__PLLSAI1M__) MODIFY_REG(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1M, ((__PLLSAI1M__) - 1U) << RCC_PLLSAI1CFGR_PLLSAI1M_Pos)
 
@@ -1138,33 +1132,33 @@ extern "C"
  */
 #define __HAL_RCC_PLLSAI1_DIVR_CONFIG(__PLLSAI1R__) MODIFY_REG(RCC->PLLSAI1CFGR, RCC_PLLSAI1CFGR_PLLSAI1R, (((__PLLSAI1R__) >> 1U) - 1U) << RCC_PLLSAI1CFGR_PLLSAI1R_Pos)
 
-	/**
-	 * @brief  Macros to enable or disable the PLLSAI1.
-	 * @note   The PLLSAI1 is disabled by hardware when entering STOP and STANDBY
-	 * modes.
-	 * @retval None
-	 */
+/**
+ * @brief  Macros to enable or disable the PLLSAI1.
+ * @note   The PLLSAI1 is disabled by hardware when entering STOP and STANDBY
+ * modes.
+ * @retval None
+ */
 
 #define __HAL_RCC_PLLSAI1_ENABLE() SET_BIT(RCC->CR, RCC_CR_PLLSAI1ON)
 
 #define __HAL_RCC_PLLSAI1_DISABLE() CLEAR_BIT(RCC->CR, RCC_CR_PLLSAI1ON)
 
-	/**
-	 * @brief  Macros to enable or disable each clock output (PLLSAI1_SAI1,
-	 * PLLSAI1_USB2 and PLLSAI1_ADC1).
-	 * @note   Enabling and disabling those clocks can be done without the need to
-	 * stop the PLL. This is mainly used to save Power.
-	 * @param  __PLLSAI1_CLOCKOUT__ specifies the PLLSAI1 clock to be output.
-	 *         This parameter can be one or a combination of the following values:
-	 *            @arg @ref RCC_PLLSAI1_SAI1CLK  This clock is used to generate an
-	 * accurate clock to achieve high-quality audio performance on SAI interface in
-	 * case.
-	 *            @arg @ref RCC_PLLSAI1_48M2CLK  This clock is used to generate the
-	 * clock for the USB OTG FS (48 MHz), the random number generator (<=48 MHz) and
-	 * the SDIO (<= 48 MHz).
-	 *            @arg @ref RCC_PLLSAI1_ADC1CLK  Clock used to clock ADC peripheral.
-	 * @retval None
-	 */
+/**
+ * @brief  Macros to enable or disable each clock output (PLLSAI1_SAI1,
+ * PLLSAI1_USB2 and PLLSAI1_ADC1).
+ * @note   Enabling and disabling those clocks can be done without the need to
+ * stop the PLL. This is mainly used to save Power.
+ * @param  __PLLSAI1_CLOCKOUT__ specifies the PLLSAI1 clock to be output.
+ *         This parameter can be one or a combination of the following values:
+ *            @arg @ref RCC_PLLSAI1_SAI1CLK  This clock is used to generate an
+ * accurate clock to achieve high-quality audio performance on SAI interface in
+ * case.
+ *            @arg @ref RCC_PLLSAI1_48M2CLK  This clock is used to generate the
+ * clock for the USB OTG FS (48 MHz), the random number generator (<=48 MHz) and
+ * the SDIO (<= 48 MHz).
+ *            @arg @ref RCC_PLLSAI1_ADC1CLK  Clock used to clock ADC peripheral.
+ * @retval None
+ */
 
 #define __HAL_RCC_PLLSAI1CLKOUT_ENABLE(__PLLSAI1_CLOCKOUT__) SET_BIT(RCC->PLLSAI1CFGR, (__PLLSAI1_CLOCKOUT__))
 
@@ -1190,44 +1184,44 @@ extern "C"
 
 #if defined(RCC_PLLSAI2_SUPPORT)
 
-	/**
-	  * @brief  Macro to configure the PLLSAI2 clock multiplication and division
-	  factors.
-	  *
-	  * @note   This function must be used only when the PLLSAI2 is disabled.
-	  * @note   PLLSAI2 clock source is common with the main PLL (configured through
-	  *         __HAL_RCC_PLL_CONFIG() macro)
-	  *
-	  @if STM32L4S9xx
-	  * @param  __PLLSAI2M__ specifies the division factor of PLLSAI2 input clock.
-	  *         This parameter must be a number between Min_Data = 1 and Max_Data
-	  = 16.
-	  *
-	  @endif
-	  * @param  __PLLSAI2N__ specifies the multiplication factor for PLLSAI2 VCO
-	  output clock.
-	  *          This parameter must be a number between 8 and 86.
-	  * @note   You have to set the PLLSAI2N parameter correctly to ensure that the
-	  VCO
-	  *         output frequency is between 64 and 344 MHz.
-	  *
-	  * @param  __PLLSAI2P__ specifies the division factor for SAI clock.
-	  *         This parameter must be a number in the range (7 or 17) for
-	  STM32L47xxx/L48xxx
-	  *         else (2 to 31).
-	  *         SAI2 clock frequency = f(PLLSAI2) / PLLSAI2P
-	  *
-	  @if STM32L4S9xx
-	  * @param  __PLLSAI2Q__ specifies the division factor for DSI clock.
-	  *         This parameter must be in the range (2, 4, 6 or 8).
-	  *         DSI clock frequency = f(PLLSAI2) / PLLSAI2Q
-	  *
-	  @endif
-	  * @param  __PLLSAI2R__ specifies the division factor for SAR ADC clock.
-	  *         This parameter must be in the range (2, 4, 6 or 8).
-	  *
-	  * @retval None
-	  */
+/**
+  * @brief  Macro to configure the PLLSAI2 clock multiplication and division
+  factors.
+  *
+  * @note   This function must be used only when the PLLSAI2 is disabled.
+  * @note   PLLSAI2 clock source is common with the main PLL (configured through
+  *         __HAL_RCC_PLL_CONFIG() macro)
+  *
+  @if STM32L4S9xx
+  * @param  __PLLSAI2M__ specifies the division factor of PLLSAI2 input clock.
+  *         This parameter must be a number between Min_Data = 1 and Max_Data
+  = 16.
+  *
+  @endif
+  * @param  __PLLSAI2N__ specifies the multiplication factor for PLLSAI2 VCO
+  output clock.
+  *          This parameter must be a number between 8 and 86.
+  * @note   You have to set the PLLSAI2N parameter correctly to ensure that the
+  VCO
+  *         output frequency is between 64 and 344 MHz.
+  *
+  * @param  __PLLSAI2P__ specifies the division factor for SAI clock.
+  *         This parameter must be a number in the range (7 or 17) for
+  STM32L47xxx/L48xxx
+  *         else (2 to 31).
+  *         SAI2 clock frequency = f(PLLSAI2) / PLLSAI2P
+  *
+  @if STM32L4S9xx
+  * @param  __PLLSAI2Q__ specifies the division factor for DSI clock.
+  *         This parameter must be in the range (2, 4, 6 or 8).
+  *         DSI clock frequency = f(PLLSAI2) / PLLSAI2Q
+  *
+  @endif
+  * @param  __PLLSAI2R__ specifies the division factor for SAR ADC clock.
+  *         This parameter must be in the range (2, 4, 6 or 8).
+  *
+  * @retval None
+  */
 
 #if defined(RCC_PLLSAI2M_DIV_1_16_SUPPORT)
 
@@ -1300,18 +1294,18 @@ extern "C"
 
 #if defined(RCC_PLLSAI2M_DIV_1_16_SUPPORT)
 
-	/** @brief  Macro to configure the PLLSAI2 input clock division factor M.
-	 *
-	 * @note   This function must be used only when the PLLSAI2 is disabled.
-	 * @note   PLLSAI2 clock source is common with the main PLL (configured through
-	 *         __HAL_RCC_PLL_CONFIG() macro)
-	 *
-	 * @param  __PLLSAI2M__ specifies the division factor for PLLSAI2 clock.
-	 *         This parameter must be a number between Min_Data = 1 and Max_Data
-	 * = 16.
-	 *
-	 * @retval None
-	 */
+/** @brief  Macro to configure the PLLSAI2 input clock division factor M.
+ *
+ * @note   This function must be used only when the PLLSAI2 is disabled.
+ * @note   PLLSAI2 clock source is common with the main PLL (configured through
+ *         __HAL_RCC_PLL_CONFIG() macro)
+ *
+ * @param  __PLLSAI2M__ specifies the division factor for PLLSAI2 clock.
+ *         This parameter must be a number between Min_Data = 1 and Max_Data
+ * = 16.
+ *
+ * @retval None
+ */
 
 #define __HAL_RCC_PLLSAI2_DIVM_CONFIG(__PLLSAI2M__) MODIFY_REG(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2M, ((__PLLSAI2M__) - 1U) << RCC_PLLSAI2CFGR_PLLSAI2M_Pos)
 
@@ -1363,51 +1357,51 @@ extern "C"
  */
 #define __HAL_RCC_PLLSAI2_DIVR_CONFIG(__PLLSAI2R__) MODIFY_REG(RCC->PLLSAI2CFGR, RCC_PLLSAI2CFGR_PLLSAI2R, (((__PLLSAI2R__) >> 1U) - 1U) << RCC_PLLSAI2CFGR_PLLSAI2R_Pos)
 
-	/**
-	 * @brief  Macros to enable or disable the PLLSAI2.
-	 * @note   The PLLSAI2 is disabled by hardware when entering STOP and STANDBY
-	 * modes.
-	 * @retval None
-	 */
+/**
+ * @brief  Macros to enable or disable the PLLSAI2.
+ * @note   The PLLSAI2 is disabled by hardware when entering STOP and STANDBY
+ * modes.
+ * @retval None
+ */
 
 #define __HAL_RCC_PLLSAI2_ENABLE() SET_BIT(RCC->CR, RCC_CR_PLLSAI2ON)
 
 #define __HAL_RCC_PLLSAI2_DISABLE() CLEAR_BIT(RCC->CR, RCC_CR_PLLSAI2ON)
 
-	/**
-	  * @brief  Macros to enable or disable each clock output (PLLSAI2_SAI2,
-	  PLLSAI2_ADC2 and RCC_PLLSAI2_DSICLK).
-	  * @note   Enabling and disabling those clocks can be done without the need to
-	  stop the PLL.
-	  *         This is mainly used to save Power.
-	  * @param  __PLLSAI2_CLOCKOUT__ specifies the PLLSAI2 clock to be output.
-	  *         This parameter can be one or a combination of the following values:
-	  @if STM32L486xx
-	  *            @arg @ref RCC_PLLSAI2_SAI2CLK  This clock is used to generate an
-	  accurate clock to achieve
-	  *                                           high-quality audio performance on
-	  SAI interface in case.
-	  *            @arg @ref RCC_PLLSAI2_ADC2CLK  Clock used to clock ADC
-	  peripheral.
-	  @endif
-	  @if STM32L4A6xx
-	  *            @arg @ref RCC_PLLSAI2_SAI2CLK  This clock is used to generate an
-	  accurate clock to achieve
-	  *                                           high-quality audio performance on
-	  SAI interface in case.
-	  *            @arg @ref RCC_PLLSAI2_ADC2CLK  Clock used to clock ADC
-	  peripheral.
-	  @endif
-	  @if STM32L4S9xx
-	  *            @arg @ref RCC_PLLSAI2_SAI2CLK  This clock is used to generate an
-	  accurate clock to achieve
-	  *                                           high-quality audio performance on
-	  SAI interface in case.
-	  *            @arg @ref RCC_PLLSAI2_DSICLK   Clock used to clock DSI
-	  peripheral.
-	  @endif
-	  * @retval None
-	  */
+/**
+  * @brief  Macros to enable or disable each clock output (PLLSAI2_SAI2,
+  PLLSAI2_ADC2 and RCC_PLLSAI2_DSICLK).
+  * @note   Enabling and disabling those clocks can be done without the need to
+  stop the PLL.
+  *         This is mainly used to save Power.
+  * @param  __PLLSAI2_CLOCKOUT__ specifies the PLLSAI2 clock to be output.
+  *         This parameter can be one or a combination of the following values:
+  @if STM32L486xx
+  *            @arg @ref RCC_PLLSAI2_SAI2CLK  This clock is used to generate an
+  accurate clock to achieve
+  *                                           high-quality audio performance on
+  SAI interface in case.
+  *            @arg @ref RCC_PLLSAI2_ADC2CLK  Clock used to clock ADC
+  peripheral.
+  @endif
+  @if STM32L4A6xx
+  *            @arg @ref RCC_PLLSAI2_SAI2CLK  This clock is used to generate an
+  accurate clock to achieve
+  *                                           high-quality audio performance on
+  SAI interface in case.
+  *            @arg @ref RCC_PLLSAI2_ADC2CLK  Clock used to clock ADC
+  peripheral.
+  @endif
+  @if STM32L4S9xx
+  *            @arg @ref RCC_PLLSAI2_SAI2CLK  This clock is used to generate an
+  accurate clock to achieve
+  *                                           high-quality audio performance on
+  SAI interface in case.
+  *            @arg @ref RCC_PLLSAI2_DSICLK   Clock used to clock DSI
+  peripheral.
+  @endif
+  * @retval None
+  */
 
 #define __HAL_RCC_PLLSAI2CLKOUT_ENABLE(__PLLSAI2_CLOCKOUT__) SET_BIT(RCC->PLLSAI2CFGR, (__PLLSAI2_CLOCKOUT__))
 
@@ -1903,14 +1897,10 @@ extern "C"
   */
 #if defined(RCC_CCIPR2_SDMMCSEL)
 #define __HAL_RCC_SDMMC1_CONFIG(__SDMMC1_CLKSOURCE__)                                                                                                                                                  \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if ((__SDMMC1_CLKSOURCE__) == RCC_SDMMC1CLKSOURCE_PLLP)                                                                                                                                \
-		{                                                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		if ((__SDMMC1_CLKSOURCE__) == RCC_SDMMC1CLKSOURCE_PLLP) {                                                                                                                              \
 			SET_BIT(RCC->CCIPR2, RCC_CCIPR2_SDMMCSEL);                                                                                                                                     \
-		}                                                                                                                                                                                      \
-		else                                                                                                                                                                                   \
-		{                                                                                                                                                                                      \
+		} else {                                                                                                                                                                               \
 			CLEAR_BIT(RCC->CCIPR2, RCC_CCIPR2_SDMMCSEL);                                                                                                                                   \
 			MODIFY_REG(RCC->CCIPR, RCC_CCIPR_CLK48SEL, (__SDMMC1_CLKSOURCE__));                                                                                                            \
 		}                                                                                                                                                                                      \
@@ -2368,8 +2358,7 @@ extern "C"
  * @retval None.
  */
 #define __HAL_RCC_LSECSS_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                             \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__HAL_RCC_LSECSS_EXTI_ENABLE_RISING_EDGE();                                                                                                                                            \
 		__HAL_RCC_LSECSS_EXTI_ENABLE_FALLING_EDGE();                                                                                                                                           \
 	} while (0)
@@ -2379,8 +2368,7 @@ extern "C"
  * @retval None.
  */
 #define __HAL_RCC_LSECSS_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                            \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__HAL_RCC_LSECSS_EXTI_DISABLE_RISING_EDGE();                                                                                                                                           \
 		__HAL_RCC_LSECSS_EXTI_DISABLE_FALLING_EDGE();                                                                                                                                          \
 	} while (0)
@@ -2461,14 +2449,10 @@ extern "C"
 #define RCC_CRS_IT_ERROR_MASK (RCC_CRS_IT_TRIMOVF | RCC_CRS_IT_SYNCERR | RCC_CRS_IT_SYNCMISS)
 
 #define __HAL_RCC_CRS_CLEAR_IT(__INTERRUPT__)                                                                                                                                                          \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if (((__INTERRUPT__) & RCC_CRS_IT_ERROR_MASK) != 0U)                                                                                                                                   \
-		{                                                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		if (((__INTERRUPT__) & RCC_CRS_IT_ERROR_MASK) != 0U) {                                                                                                                                 \
 			WRITE_REG(CRS->ICR, CRS_ICR_ERRC | ((__INTERRUPT__) & ~RCC_CRS_IT_ERROR_MASK));                                                                                                \
-		}                                                                                                                                                                                      \
-		else                                                                                                                                                                                   \
-		{                                                                                                                                                                                      \
+		} else {                                                                                                                                                                               \
 			WRITE_REG(CRS->ICR, (__INTERRUPT__));                                                                                                                                          \
 		}                                                                                                                                                                                      \
 	} while (0)
@@ -2508,23 +2492,19 @@ extern "C"
 #define RCC_CRS_FLAG_ERROR_MASK (RCC_CRS_FLAG_TRIMOVF | RCC_CRS_FLAG_SYNCERR | RCC_CRS_FLAG_SYNCMISS)
 
 #define __HAL_RCC_CRS_CLEAR_FLAG(__FLAG__)                                                                                                                                                             \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if (((__FLAG__) & RCC_CRS_FLAG_ERROR_MASK) != 0U)                                                                                                                                      \
-		{                                                                                                                                                                                      \
+	do {                                                                                                                                                                                           \
+		if (((__FLAG__) & RCC_CRS_FLAG_ERROR_MASK) != 0U) {                                                                                                                                    \
 			WRITE_REG(CRS->ICR, CRS_ICR_ERRC | ((__FLAG__) & ~RCC_CRS_FLAG_ERROR_MASK));                                                                                                   \
-		}                                                                                                                                                                                      \
-		else                                                                                                                                                                                   \
-		{                                                                                                                                                                                      \
+		} else {                                                                                                                                                                               \
 			WRITE_REG(CRS->ICR, (__FLAG__));                                                                                                                                               \
 		}                                                                                                                                                                                      \
 	} while (0)
 
 #endif /* CRS */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #if defined(CRS)
 
@@ -2573,17 +2553,17 @@ extern "C"
  */
 #define __HAL_RCC_CRS_RELOADVALUE_CALCULATE(__FTARGET__, __FSYNC__) (((__FTARGET__) / (__FSYNC__)) - 1U)
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #endif /* CRS */
 
 #if defined(PSSI)
 
-	/** @defgroup RCCEx_PSSI_Macros_Aliases RCCEx PSSI Macros Aliases
-	 * @{
-	 */
+/** @defgroup RCCEx_PSSI_Macros_Aliases RCCEx PSSI Macros Aliases
+ * @{
+ */
 
 #define __HAL_RCC_PSSI_CLK_ENABLE() __HAL_RCC_DCMI_CLK_ENABLE()
 
@@ -2605,28 +2585,28 @@ extern "C"
 
 #define __HAL_RCC_PSSI_IS_CLK_SLEEP_DISABLED() __HAL_RCC_DCMI_IS_CLK_SLEEP_DISABLED()
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #endif /* PSSI */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported functions --------------------------------------------------------*/
-	/** @addtogroup RCCEx_Exported_Functions
-	 * @{
-	 */
+/* Exported functions --------------------------------------------------------*/
+/** @addtogroup RCCEx_Exported_Functions
+ * @{
+ */
 
-	/** @addtogroup RCCEx_Exported_Functions_Group1
-	 * @{
-	 */
+/** @addtogroup RCCEx_Exported_Functions_Group1
+ * @{
+ */
 
-	HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef *PeriphClkInit);
-	void HAL_RCCEx_GetPeriphCLKConfig(RCC_PeriphCLKInitTypeDef *PeriphClkInit);
-	uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk);
+HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef *PeriphClkInit);
+void HAL_RCCEx_GetPeriphCLKConfig(RCC_PeriphCLKInitTypeDef *PeriphClkInit);
+uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk);
 
 /**
  * @}
@@ -2637,56 +2617,56 @@ extern "C"
  */
 #if defined(RCC_PLLSAI1_SUPPORT)
 
-	HAL_StatusTypeDef HAL_RCCEx_EnablePLLSAI1(RCC_PLLSAI1InitTypeDef *PLLSAI1Init);
-	HAL_StatusTypeDef HAL_RCCEx_DisablePLLSAI1(void);
+HAL_StatusTypeDef HAL_RCCEx_EnablePLLSAI1(RCC_PLLSAI1InitTypeDef *PLLSAI1Init);
+HAL_StatusTypeDef HAL_RCCEx_DisablePLLSAI1(void);
 
 #endif /* RCC_PLLSAI1_SUPPORT */
 
 #if defined(RCC_PLLSAI2_SUPPORT)
 
-	HAL_StatusTypeDef HAL_RCCEx_EnablePLLSAI2(RCC_PLLSAI2InitTypeDef *PLLSAI2Init);
-	HAL_StatusTypeDef HAL_RCCEx_DisablePLLSAI2(void);
+HAL_StatusTypeDef HAL_RCCEx_EnablePLLSAI2(RCC_PLLSAI2InitTypeDef *PLLSAI2Init);
+HAL_StatusTypeDef HAL_RCCEx_DisablePLLSAI2(void);
 
 #endif /* RCC_PLLSAI2_SUPPORT */
 
-	void HAL_RCCEx_WakeUpStopCLKConfig(uint32_t WakeUpClk);
-	void HAL_RCCEx_StandbyMSIRangeConfig(uint32_t MSIRange);
-	void HAL_RCCEx_EnableLSECSS(void);
-	void HAL_RCCEx_DisableLSECSS(void);
-	void HAL_RCCEx_EnableLSECSS_IT(void);
-	void HAL_RCCEx_LSECSS_IRQHandler(void);
-	void HAL_RCCEx_LSECSS_Callback(void);
-	void HAL_RCCEx_EnableLSCO(uint32_t LSCOSource);
-	void HAL_RCCEx_DisableLSCO(void);
-	void HAL_RCCEx_EnableMSIPLLMode(void);
-	void HAL_RCCEx_DisableMSIPLLMode(void);
+void HAL_RCCEx_WakeUpStopCLKConfig(uint32_t WakeUpClk);
+void HAL_RCCEx_StandbyMSIRangeConfig(uint32_t MSIRange);
+void HAL_RCCEx_EnableLSECSS(void);
+void HAL_RCCEx_DisableLSECSS(void);
+void HAL_RCCEx_EnableLSECSS_IT(void);
+void HAL_RCCEx_LSECSS_IRQHandler(void);
+void HAL_RCCEx_LSECSS_Callback(void);
+void HAL_RCCEx_EnableLSCO(uint32_t LSCOSource);
+void HAL_RCCEx_DisableLSCO(void);
+void HAL_RCCEx_EnableMSIPLLMode(void);
+void HAL_RCCEx_DisableMSIPLLMode(void);
 #if defined(OCTOSPI1) && defined(OCTOSPI2)
-	void HAL_RCCEx_OCTOSPIDelayConfig(uint32_t Delay1, uint32_t Delay2);
+void HAL_RCCEx_OCTOSPIDelayConfig(uint32_t Delay1, uint32_t Delay2);
 #endif /* OCTOSPI1 && OCTOSPI2 */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #if defined(CRS)
 
-	/** @addtogroup RCCEx_Exported_Functions_Group3
-	 * @{
-	 */
+/** @addtogroup RCCEx_Exported_Functions_Group3
+ * @{
+ */
 
-	void HAL_RCCEx_CRSConfig(RCC_CRSInitTypeDef *pInit);
-	void HAL_RCCEx_CRSSoftwareSynchronizationGenerate(void);
-	void HAL_RCCEx_CRSGetSynchronizationInfo(RCC_CRSSynchroInfoTypeDef *pSynchroInfo);
-	uint32_t HAL_RCCEx_CRSWaitSynchronization(uint32_t Timeout);
-	void HAL_RCCEx_CRS_IRQHandler(void);
-	void HAL_RCCEx_CRS_SyncOkCallback(void);
-	void HAL_RCCEx_CRS_SyncWarnCallback(void);
-	void HAL_RCCEx_CRS_ExpectedSyncCallback(void);
-	void HAL_RCCEx_CRS_ErrorCallback(uint32_t Error);
+void HAL_RCCEx_CRSConfig(RCC_CRSInitTypeDef *pInit);
+void HAL_RCCEx_CRSSoftwareSynchronizationGenerate(void);
+void HAL_RCCEx_CRSGetSynchronizationInfo(RCC_CRSSynchroInfoTypeDef *pSynchroInfo);
+uint32_t HAL_RCCEx_CRSWaitSynchronization(uint32_t Timeout);
+void HAL_RCCEx_CRS_IRQHandler(void);
+void HAL_RCCEx_CRS_SyncOkCallback(void);
+void HAL_RCCEx_CRS_SyncWarnCallback(void);
+void HAL_RCCEx_CRS_ExpectedSyncCallback(void);
+void HAL_RCCEx_CRS_ErrorCallback(uint32_t Error);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #endif /* CRS */
 
@@ -2762,14 +2742,14 @@ extern "C"
 	 RCC_PERIPHCLK_DFSDM1 | RCC_PERIPHCLK_RTC | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_SDMMC1)
 #endif /* STM32L412xx || STM32L422xx */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Private macros ------------------------------------------------------------*/
-	/** @addtogroup RCCEx_Private_Macros
-	 * @{
-	 */
+/* Private macros ------------------------------------------------------------*/
+/** @addtogroup RCCEx_Private_Macros
+ * @{
+ */
 
 #define IS_RCC_LSCOSOURCE(__SOURCE__) (((__SOURCE__) == RCC_LSCOSOURCE_LSI) || ((__SOURCE__) == RCC_LSCOSOURCE_LSE))
 
@@ -3053,17 +3033,17 @@ extern "C"
 
 #endif /* CRS */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

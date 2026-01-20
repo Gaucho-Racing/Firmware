@@ -231,8 +231,7 @@ static bcc_status_t BCC_CheckMsgCntr(bcc_drv_config_t *const drvConfig, const bc
 
 	/* Check the Message counter value.
 	 * Note: Do not perform a check for CID=0. */
-	if ((cid != BCC_CID_UNASSIG) && (msgCntRcv != BCC_INC_MSG_CNTR(msgCntPrev)))
-	{
+	if ((cid != BCC_CID_UNASSIG) && (msgCntRcv != BCC_INC_MSG_CNTR(msgCntPrev))) {
 		return BCC_STATUS_COM_MSG_CNT;
 	}
 
@@ -251,12 +250,9 @@ static bcc_status_t BCC_CheckEchoFrame(const uint8_t *const txBuf, const uint8_t
 	BCC_MCU_Assert(txBuf != NULL);
 
 	if ((txBuf[BCC_MSG_IDX_DATA_H] == resp[BCC_MSG_IDX_DATA_H]) && (txBuf[BCC_MSG_IDX_DATA_L] == resp[BCC_MSG_IDX_DATA_L]) && (txBuf[BCC_MSG_IDX_ADDR] == resp[BCC_MSG_IDX_ADDR]) &&
-	    (txBuf[BCC_MSG_IDX_CID] == resp[BCC_MSG_IDX_CID]) && (txBuf[BCC_MSG_IDX_CNT_CMD] == resp[BCC_MSG_IDX_CNT_CMD]) && (txBuf[BCC_MSG_IDX_CRC] == resp[BCC_MSG_IDX_CRC]))
-	{
+	    (txBuf[BCC_MSG_IDX_CID] == resp[BCC_MSG_IDX_CID]) && (txBuf[BCC_MSG_IDX_CNT_CMD] == resp[BCC_MSG_IDX_CNT_CMD]) && (txBuf[BCC_MSG_IDX_CRC] == resp[BCC_MSG_IDX_CRC])) {
 		return BCC_STATUS_SUCCESS;
-	}
-	else
-	{
+	} else {
 		return BCC_STATUS_COM_ECHO;
 	}
 }
@@ -312,8 +308,7 @@ bcc_status_t BCC_Reg_ReadTpl(bcc_drv_config_t *const drvConfig, const bcc_cid_t 
 	BCC_MCU_Assert(drvConfig != NULL);
 	BCC_MCU_Assert(regVal != NULL);
 
-	if (((uint8_t)cid > drvConfig->devicesCnt) || (regAddr > BCC_MAX_REG_ADDR) || (regCnt == 0U) || ((regAddr + regCnt - 1U) > BCC_MAX_REG_ADDR))
-	{
+	if (((uint8_t)cid > drvConfig->devicesCnt) || (regAddr > BCC_MAX_REG_ADDR) || (regCnt == 0U) || ((regAddr + regCnt - 1U) > BCC_MAX_REG_ADDR)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 	/* Create frame for request. */
@@ -322,32 +317,27 @@ bcc_status_t BCC_Reg_ReadTpl(bcc_drv_config_t *const drvConfig, const bcc_cid_t 
 	rxBuf = (uint8_t *)(drvConfig->drvData.rxBuf);
 
 	status = BCC_MCU_TransferTpl(drvConfig->drvInstance, txBuf, rxBuf, regCnt + 1);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
 	/* Check the echo frame. */
 	status = BCC_CheckEchoFrame(txBuf, rxBuf);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
 	/* Check and store responses. */
-	for (regIdx = 0U; regIdx < regCnt; regIdx++)
-	{
+	for (regIdx = 0U; regIdx < regCnt; regIdx++) {
 		rxBuf += BCC_MSG_SIZE;
 
 		/* Check CRC. */
-		if ((status = BCC_CheckCRC(rxBuf)) != BCC_STATUS_SUCCESS)
-		{
+		if ((status = BCC_CheckCRC(rxBuf)) != BCC_STATUS_SUCCESS) {
 			return status;
 		}
 
 		/* Check the Message counter value. */
-		if ((status = BCC_CheckMsgCntr(drvConfig, cid, rxBuf)) != BCC_STATUS_SUCCESS)
-		{
+		if ((status = BCC_CheckMsgCntr(drvConfig, cid, rxBuf)) != BCC_STATUS_SUCCESS) {
 			return status;
 		}
 
@@ -374,8 +364,7 @@ bcc_status_t BCC_Reg_ReadSpi(bcc_drv_config_t *const drvConfig, const bcc_cid_t 
 	BCC_MCU_Assert(drvConfig != NULL);
 	BCC_MCU_Assert(regVal != NULL);
 
-	if (((uint8_t)cid > drvConfig->devicesCnt) || (regAddr > BCC_MAX_REG_ADDR) || (regCnt == 0U) || ((regAddr + regCnt - 1U) > BCC_MAX_REG_ADDR))
-	{
+	if (((uint8_t)cid > drvConfig->devicesCnt) || (regAddr > BCC_MAX_REG_ADDR) || (regCnt == 0U) || ((regAddr + regCnt - 1U) > BCC_MAX_REG_ADDR)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
@@ -385,35 +374,29 @@ bcc_status_t BCC_Reg_ReadSpi(bcc_drv_config_t *const drvConfig, const bcc_cid_t 
 	/* Send request for data. Required data are returned with the following
 	 * transfer. */
 	status = BCC_MCU_TransferSpi(drvConfig->drvInstance, txBuf, rxBuf);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
 	/* Check CRC, message counter, a null response (all field except CRC and
 	 * message counter are zero) and discard the response. */
-	if ((status = BCC_CheckCRC(rxBuf)) != BCC_STATUS_SUCCESS)
-	{
+	if ((status = BCC_CheckCRC(rxBuf)) != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
-	if ((status = BCC_CheckMsgCntr(drvConfig, cid, rxBuf)) != BCC_STATUS_SUCCESS)
-	{
+	if ((status = BCC_CheckMsgCntr(drvConfig, cid, rxBuf)) != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
-	if (BCC_IS_NULL_RESP(rxBuf))
-	{
+	if (BCC_IS_NULL_RESP(rxBuf)) {
 		return BCC_STATUS_COM_NULL;
 	}
 
 	/* Read required data. */
-	for (regIdx = 0U; regIdx < regCnt; regIdx++)
-	{
+	for (regIdx = 0U; regIdx < regCnt; regIdx++) {
 		/* Increment address of the register to be read. */
 		regAddr++;
-		if (regAddr > 0x7FU)
-		{
+		if (regAddr > 0x7FU) {
 			regAddr = 0x00U;
 		}
 
@@ -422,25 +405,21 @@ bcc_status_t BCC_Reg_ReadSpi(bcc_drv_config_t *const drvConfig, const bcc_cid_t 
 		/* Send request for data. Required data are returned with the
 		 * following transfer. */
 		status = BCC_MCU_TransferSpi(drvConfig->drvInstance, txBuf, rxBuf);
-		if (status != BCC_STATUS_SUCCESS)
-		{
+		if (status != BCC_STATUS_SUCCESS) {
 			return status;
 		}
 
 		/* Check CRC. */
-		if ((status = BCC_CheckCRC(rxBuf)) != BCC_STATUS_SUCCESS)
-		{
+		if ((status = BCC_CheckCRC(rxBuf)) != BCC_STATUS_SUCCESS) {
 			return status;
 		}
 
 		/* Check the Message counter value. */
-		if ((status = BCC_CheckMsgCntr(drvConfig, cid, rxBuf)) != BCC_STATUS_SUCCESS)
-		{
+		if ((status = BCC_CheckMsgCntr(drvConfig, cid, rxBuf)) != BCC_STATUS_SUCCESS) {
 			return status;
 		}
 
-		if (BCC_IS_NULL_RESP(rxBuf))
-		{
+		if (BCC_IS_NULL_RESP(rxBuf)) {
 			return BCC_STATUS_COM_NULL;
 		}
 
@@ -465,8 +444,7 @@ bcc_status_t BCC_Reg_WriteTpl(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 
 	BCC_MCU_Assert(drvConfig != NULL);
 
-	if (((uint8_t)cid > drvConfig->devicesCnt) || (regAddr > BCC_MAX_REG_ADDR))
-	{
+	if (((uint8_t)cid > drvConfig->devicesCnt) || (regAddr > BCC_MAX_REG_ADDR)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
@@ -474,8 +452,7 @@ bcc_status_t BCC_Reg_WriteTpl(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 	BCC_PackFrame(regVal, regAddr, cid, BCC_CMD_WRITE, txBuf);
 
 	status = BCC_MCU_TransferTpl(drvConfig->drvInstance, txBuf, drvConfig->drvData.rxBuf, 1);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
@@ -498,8 +475,7 @@ bcc_status_t BCC_Reg_WriteSpi(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 
 	BCC_MCU_Assert(drvConfig != NULL);
 
-	if (((uint8_t)cid > drvConfig->devicesCnt) || (regAddr > BCC_MAX_REG_ADDR))
-	{
+	if (((uint8_t)cid > drvConfig->devicesCnt) || (regAddr > BCC_MAX_REG_ADDR)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
@@ -507,26 +483,22 @@ bcc_status_t BCC_Reg_WriteSpi(bcc_drv_config_t *const drvConfig, const bcc_cid_t
 	BCC_PackFrame(regVal, regAddr, cid, BCC_CMD_WRITE, txBuf);
 
 	status = BCC_MCU_TransferSpi(drvConfig->drvInstance, txBuf, rxBuf);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
 	/* Check CRC. */
-	if ((status = BCC_CheckCRC(rxBuf)) != BCC_STATUS_SUCCESS)
-	{
+	if ((status = BCC_CheckCRC(rxBuf)) != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
 	/* Check message counter. */
-	if ((status = BCC_CheckMsgCntr(drvConfig, cid, rxBuf)) != BCC_STATUS_SUCCESS)
-	{
+	if ((status = BCC_CheckMsgCntr(drvConfig, cid, rxBuf)) != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
 	/* Check whether all field except CRC and message counter are zero. */
-	if (BCC_IS_NULL_RESP(rxBuf))
-	{
+	if (BCC_IS_NULL_RESP(rxBuf)) {
 		return BCC_STATUS_COM_NULL;
 	}
 
@@ -549,8 +521,7 @@ bcc_status_t BCC_Reg_WriteGlobalTpl(bcc_drv_config_t *const drvConfig, const uin
 	BCC_MCU_Assert(drvConfig != NULL);
 
 	/* Check input parameters. */
-	if (regAddr > BCC_MAX_REG_ADDR)
-	{
+	if (regAddr > BCC_MAX_REG_ADDR) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
@@ -558,8 +529,7 @@ bcc_status_t BCC_Reg_WriteGlobalTpl(bcc_drv_config_t *const drvConfig, const uin
 	BCC_PackFrame(regVal, regAddr, BCC_CID_UNASSIG, BCC_CMD_GLOB_WRITE, txBuf);
 
 	status = BCC_MCU_TransferTpl(drvConfig->drvInstance, txBuf, drvConfig->drvData.rxBuf, 1);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
@@ -582,8 +552,7 @@ bcc_status_t BCC_SendNopTpl(bcc_drv_config_t *const drvConfig, const bcc_cid_t c
 
 	BCC_MCU_Assert(drvConfig != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || ((uint8_t)cid > drvConfig->devicesCnt))
-	{
+	if ((cid == BCC_CID_UNASSIG) || ((uint8_t)cid > drvConfig->devicesCnt)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
@@ -593,8 +562,7 @@ bcc_status_t BCC_SendNopTpl(bcc_drv_config_t *const drvConfig, const bcc_cid_t c
 	BCC_PackFrame(0x0000U, 0x00U, cid, BCC_CMD_NOOP, txBuf);
 
 	status = BCC_MCU_TransferTpl(drvConfig->drvInstance, txBuf, drvConfig->drvData.rxBuf, 1);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
@@ -617,8 +585,7 @@ bcc_status_t BCC_SendNopSpi(bcc_drv_config_t *const drvConfig, const bcc_cid_t c
 
 	BCC_MCU_Assert(drvConfig != NULL);
 
-	if ((cid == BCC_CID_UNASSIG) || ((uint8_t)cid > drvConfig->devicesCnt))
-	{
+	if ((cid == BCC_CID_UNASSIG) || ((uint8_t)cid > drvConfig->devicesCnt)) {
 		return BCC_STATUS_PARAM_RANGE;
 	}
 
@@ -628,26 +595,22 @@ bcc_status_t BCC_SendNopSpi(bcc_drv_config_t *const drvConfig, const bcc_cid_t c
 	BCC_PackFrame(0x0000U, 0x00U, cid, BCC_CMD_NOOP, txBuf);
 
 	status = BCC_MCU_TransferSpi(drvConfig->drvInstance, txBuf, rxBuf);
-	if (status != BCC_STATUS_SUCCESS)
-	{
+	if (status != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
 	/* Check CRC. */
-	if ((status = BCC_CheckCRC(rxBuf)) != BCC_STATUS_SUCCESS)
-	{
+	if ((status = BCC_CheckCRC(rxBuf)) != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
 	/* Check message counter. */
-	if ((status = BCC_CheckMsgCntr(drvConfig, cid, rxBuf)) != BCC_STATUS_SUCCESS)
-	{
+	if ((status = BCC_CheckMsgCntr(drvConfig, cid, rxBuf)) != BCC_STATUS_SUCCESS) {
 		return status;
 	}
 
 	/* Check whether all field except CRC and message counter are zero. */
-	if (BCC_IS_NULL_RESP(rxBuf))
-	{
+	if (BCC_IS_NULL_RESP(rxBuf)) {
 		return BCC_STATUS_COM_NULL;
 	}
 

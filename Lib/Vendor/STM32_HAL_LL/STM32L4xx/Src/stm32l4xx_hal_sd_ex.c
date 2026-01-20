@@ -136,16 +136,13 @@ and start read and write multibuffer mode for SD HAL driver.
  */
 HAL_StatusTypeDef HAL_SDEx_ConfigDMAMultiBuffer(SD_HandleTypeDef *hsd, uint32_t *pDataBuffer0, uint32_t *pDataBuffer1, uint32_t BufferSize)
 {
-	if (hsd->State == HAL_SD_STATE_READY)
-	{
+	if (hsd->State == HAL_SD_STATE_READY) {
 		hsd->Instance->IDMABASE0 = (uint32_t)pDataBuffer0;
 		hsd->Instance->IDMABASE1 = (uint32_t)pDataBuffer1;
 		hsd->Instance->IDMABSIZE = (uint32_t)(BLOCKSIZE * BufferSize);
 
 		return HAL_OK;
-	}
-	else
-	{
+	} else {
 		return HAL_BUSY;
 	}
 }
@@ -167,18 +164,15 @@ HAL_StatusTypeDef HAL_SDEx_ReadBlocksDMAMultiBuffer(SD_HandleTypeDef *hsd, uint3
 	uint32_t DmaBase0_reg, DmaBase1_reg;
 	uint32_t add = BlockAdd;
 
-	if (hsd->State == HAL_SD_STATE_READY)
-	{
-		if ((add + NumberOfBlocks) > (hsd->SdCard.LogBlockNbr))
-		{
+	if (hsd->State == HAL_SD_STATE_READY) {
+		if ((add + NumberOfBlocks) > (hsd->SdCard.LogBlockNbr)) {
 			hsd->ErrorCode |= HAL_SD_ERROR_ADDR_OUT_OF_RANGE;
 			return HAL_ERROR;
 		}
 
 		DmaBase0_reg = hsd->Instance->IDMABASE0;
 		DmaBase1_reg = hsd->Instance->IDMABASE1;
-		if ((hsd->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) || (DmaBase1_reg == 0U))
-		{
+		if ((hsd->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) || (DmaBase1_reg == 0U)) {
 			hsd->ErrorCode = HAL_SD_ERROR_ADDR_OUT_OF_RANGE;
 			return HAL_ERROR;
 		}
@@ -191,8 +185,7 @@ HAL_StatusTypeDef HAL_SDEx_ReadBlocksDMAMultiBuffer(SD_HandleTypeDef *hsd, uint3
 		hsd->ErrorCode = HAL_SD_ERROR_NONE;
 		hsd->State = HAL_SD_STATE_BUSY;
 
-		if (hsd->SdCard.CardType != CARD_SDHC_SDXC)
-		{
+		if (hsd->SdCard.CardType != CARD_SDHC_SDXC) {
 			add *= 512U;
 		}
 
@@ -216,8 +209,7 @@ HAL_StatusTypeDef HAL_SDEx_ReadBlocksDMAMultiBuffer(SD_HandleTypeDef *hsd, uint3
 
 		/* Read Multi Block command */
 		errorstate = SDMMC_CmdReadMultiBlock(hsd->Instance, add);
-		if (errorstate != HAL_SD_ERROR_NONE)
-		{
+		if (errorstate != HAL_SD_ERROR_NONE) {
 			hsd->State = HAL_SD_STATE_READY;
 			hsd->ErrorCode |= errorstate;
 			return HAL_ERROR;
@@ -226,9 +218,7 @@ HAL_StatusTypeDef HAL_SDEx_ReadBlocksDMAMultiBuffer(SD_HandleTypeDef *hsd, uint3
 		__HAL_SD_ENABLE_IT(hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_RXOVERR | SDMMC_IT_DATAEND | SDMMC_IT_IDMABTC));
 
 		return HAL_OK;
-	}
-	else
-	{
+	} else {
 		return HAL_BUSY;
 	}
 }
@@ -250,18 +240,15 @@ HAL_StatusTypeDef HAL_SDEx_WriteBlocksDMAMultiBuffer(SD_HandleTypeDef *hsd, uint
 	uint32_t DmaBase0_reg, DmaBase1_reg;
 	uint32_t add = BlockAdd;
 
-	if (hsd->State == HAL_SD_STATE_READY)
-	{
-		if ((add + NumberOfBlocks) > (hsd->SdCard.LogBlockNbr))
-		{
+	if (hsd->State == HAL_SD_STATE_READY) {
+		if ((add + NumberOfBlocks) > (hsd->SdCard.LogBlockNbr)) {
 			hsd->ErrorCode |= HAL_SD_ERROR_ADDR_OUT_OF_RANGE;
 			return HAL_ERROR;
 		}
 
 		DmaBase0_reg = hsd->Instance->IDMABASE0;
 		DmaBase1_reg = hsd->Instance->IDMABASE1;
-		if ((hsd->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) || (DmaBase1_reg == 0U))
-		{
+		if ((hsd->Instance->IDMABSIZE == 0U) || (DmaBase0_reg == 0U) || (DmaBase1_reg == 0U)) {
 			hsd->ErrorCode = HAL_SD_ERROR_ADDR_OUT_OF_RANGE;
 			return HAL_ERROR;
 		}
@@ -273,8 +260,7 @@ HAL_StatusTypeDef HAL_SDEx_WriteBlocksDMAMultiBuffer(SD_HandleTypeDef *hsd, uint
 
 		hsd->State = HAL_SD_STATE_BUSY;
 
-		if (hsd->SdCard.CardType != CARD_SDHC_SDXC)
-		{
+		if (hsd->SdCard.CardType != CARD_SDHC_SDXC) {
 			add *= 512U;
 		}
 
@@ -296,8 +282,7 @@ HAL_StatusTypeDef HAL_SDEx_WriteBlocksDMAMultiBuffer(SD_HandleTypeDef *hsd, uint
 
 		/* Write Multi Block command */
 		errorstate = SDMMC_CmdWriteMultiBlock(hsd->Instance, add);
-		if (errorstate != HAL_SD_ERROR_NONE)
-		{
+		if (errorstate != HAL_SD_ERROR_NONE) {
 			hsd->State = HAL_SD_STATE_READY;
 			hsd->ErrorCode |= errorstate;
 			return HAL_ERROR;
@@ -306,9 +291,7 @@ HAL_StatusTypeDef HAL_SDEx_WriteBlocksDMAMultiBuffer(SD_HandleTypeDef *hsd, uint
 		__HAL_SD_ENABLE_IT(hsd, (SDMMC_IT_DCRCFAIL | SDMMC_IT_DTIMEOUT | SDMMC_IT_TXUNDERR | SDMMC_IT_DATAEND | SDMMC_IT_IDMABTC));
 
 		return HAL_OK;
-	}
-	else
-	{
+	} else {
 		return HAL_BUSY;
 	}
 }
@@ -326,13 +309,10 @@ HAL_StatusTypeDef HAL_SDEx_WriteBlocksDMAMultiBuffer(SD_HandleTypeDef *hsd, uint
  */
 HAL_StatusTypeDef HAL_SDEx_ChangeDMABuffer(SD_HandleTypeDef *hsd, HAL_SDEx_DMABuffer_MemoryTypeDef Buffer, uint32_t *pDataBuffer)
 {
-	if (Buffer == SD_DMA_BUFFER0)
-	{
+	if (Buffer == SD_DMA_BUFFER0) {
 		/* change the buffer0 address */
 		hsd->Instance->IDMABASE0 = (uint32_t)pDataBuffer;
-	}
-	else
-	{
+	} else {
 		/* change the memory1 address */
 		hsd->Instance->IDMABASE1 = (uint32_t)pDataBuffer;
 	}

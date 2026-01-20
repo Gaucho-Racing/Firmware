@@ -21,54 +21,51 @@
 #define STM32L4xx_HAL_IWDG_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l4xx_hal_def.h"
 
-	/** @addtogroup STM32L4xx_HAL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32L4xx_HAL_Driver
+ * @{
+ */
 
-	/** @defgroup IWDG IWDG
-	 * @{
-	 */
+/** @defgroup IWDG IWDG
+ * @{
+ */
 
-	/* Exported types ------------------------------------------------------------*/
-	/** @defgroup IWDG_Exported_Types IWDG Exported Types
-	 * @{
-	 */
+/* Exported types ------------------------------------------------------------*/
+/** @defgroup IWDG_Exported_Types IWDG Exported Types
+ * @{
+ */
 
-	/**
-	 * @brief  IWDG Init structure definition
-	 */
-	typedef struct
-	{
-		uint32_t Prescaler; /*!< Select the prescaler of the IWDG.
-					 This parameter can be a value of @ref
-				       IWDG_Prescaler */
+/**
+ * @brief  IWDG Init structure definition
+ */
+typedef struct {
+	uint32_t Prescaler; /*!< Select the prescaler of the IWDG.
+				 This parameter can be a value of @ref
+			       IWDG_Prescaler */
 
-		uint32_t Reload; /*!< Specifies the IWDG down-counter reload value.
-				      This parameter must be a number between Min_Data =
-				    0 and Max_Data = 0x0FFF */
+	uint32_t Reload; /*!< Specifies the IWDG down-counter reload value.
+			      This parameter must be a number between Min_Data =
+			    0 and Max_Data = 0x0FFF */
 
-		uint32_t Window; /*!< Specifies the window value to be compared to the
-				    down-counter. This parameter must be a number
-				    between Min_Data = 0 and Max_Data = 0x0FFF */
+	uint32_t Window; /*!< Specifies the window value to be compared to the
+			    down-counter. This parameter must be a number
+			    between Min_Data = 0 and Max_Data = 0x0FFF */
 
-	} IWDG_InitTypeDef;
+} IWDG_InitTypeDef;
 
-	/**
-	 * @brief  IWDG Handle Structure definition
-	 */
-	typedef struct
-	{
-		IWDG_TypeDef *Instance; /*!< Register base address    */
+/**
+ * @brief  IWDG Handle Structure definition
+ */
+typedef struct {
+	IWDG_TypeDef *Instance; /*!< Register base address    */
 
-		IWDG_InitTypeDef Init; /*!< IWDG required parameters */
-	} IWDG_HandleTypeDef;
+	IWDG_InitTypeDef Init; /*!< IWDG required parameters */
+} IWDG_HandleTypeDef;
 
 /**
  * @}
@@ -125,29 +122,29 @@ extern "C"
  */
 #define __HAL_IWDG_RELOAD_COUNTER(__HANDLE__) WRITE_REG((__HANDLE__)->Instance->KR, IWDG_KEY_RELOAD)
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported functions --------------------------------------------------------*/
-	/** @defgroup IWDG_Exported_Functions  IWDG Exported Functions
-	 * @{
-	 */
+/* Exported functions --------------------------------------------------------*/
+/** @defgroup IWDG_Exported_Functions  IWDG Exported Functions
+ * @{
+ */
 
-	/** @defgroup IWDG_Exported_Functions_Group1 Initialization and Start functions
-	 * @{
-	 */
-	/* Initialization/Start functions  ********************************************/
-	HAL_StatusTypeDef HAL_IWDG_Init(IWDG_HandleTypeDef *hiwdg);
-	/**
-	 * @}
-	 */
+/** @defgroup IWDG_Exported_Functions_Group1 Initialization and Start functions
+ * @{
+ */
+/* Initialization/Start functions  ********************************************/
+HAL_StatusTypeDef HAL_IWDG_Init(IWDG_HandleTypeDef *hiwdg);
+/**
+ * @}
+ */
 
-	/** @defgroup IWDG_Exported_Functions_Group2 IO operation functions
-	 * @{
-	 */
-	/* I/O operation functions ****************************************************/
-	HAL_StatusTypeDef HAL_IWDG_Refresh(IWDG_HandleTypeDef *hiwdg);
+/** @defgroup IWDG_Exported_Functions_Group2 IO operation functions
+ * @{
+ */
+/* I/O operation functions ****************************************************/
+HAL_StatusTypeDef HAL_IWDG_Refresh(IWDG_HandleTypeDef *hiwdg);
 /**
  * @}
  */
@@ -215,17 +212,17 @@ extern "C"
  */
 #define IS_IWDG_WINDOW(__WINDOW__) ((__WINDOW__) <= IWDG_WINR_WIN)
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

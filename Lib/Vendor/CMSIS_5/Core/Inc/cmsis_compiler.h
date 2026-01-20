@@ -95,8 +95,7 @@
 #define __PACKED_UNION union __attribute__((packed))
 #endif
 #ifndef __UNALIGNED_UINT32 /* deprecated */
-struct __attribute__((packed)) T_UINT32
-{
+struct __attribute__((packed)) T_UINT32 {
 	uint32_t v;
 };
 #define __UNALIGNED_UINT32(x) (((struct T_UINT32 *)(x))->v)
@@ -169,8 +168,7 @@ __PACKED_STRUCT T_UINT32_READ { uint32_t v; };
 #define __PACKED_UNION union __packed__
 #endif
 #ifndef __UNALIGNED_UINT32 /* deprecated */
-struct __packed__ T_UINT32
-{
+struct __packed__ T_UINT32 {
 	uint32_t v;
 };
 #define __UNALIGNED_UINT32(x) (((struct T_UINT32 *)(x))->v)
@@ -242,8 +240,7 @@ __PACKED_STRUCT T_UINT32_READ { uint32_t v; };
 #define __PACKED_UNION @packed union
 #endif
 #ifndef __UNALIGNED_UINT32 /* deprecated */
-@packed struct T_UINT32
-{
+@packed struct T_UINT32 {
 	uint32_t v;
 };
 #define __UNALIGNED_UINT32(x) (((struct T_UINT32 *)(x))->v)

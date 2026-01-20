@@ -25,8 +25,7 @@
 #define STM32L4xx_HAL_CONF_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Exported types ------------------------------------------------------------*/
@@ -181,13 +180,13 @@ extern "C"
 #define EXTERNAL_SAI2_CLOCK_VALUE 2097000U /*!< Value of the SAI2 External clock source in Hz*/
 #endif					   /* EXTERNAL_SAI2_CLOCK_VALUE */
 
-	/* Tip: To avoid modifying this file each time you need to use different HSE,
-	   ===  you can define the HSE value in your toolchain compiler preprocessor. */
+/* Tip: To avoid modifying this file each time you need to use different HSE,
+   ===  you can define the HSE value in your toolchain compiler preprocessor. */
 
-	/* ########################### System Configuration ######################### */
-	/**
-	 * @brief This is the HAL system configuration section
-	 */
+/* ########################### System Configuration ######################### */
+/**
+ * @brief This is the HAL system configuration section
+ */
 
 #define VDD_VALUE 3300U	     /*!< Value of VDD in mv */
 #define TICK_INT_PRIORITY 0U /*!< tick interrupt priority */
@@ -248,19 +247,19 @@ extern "C"
 #define USE_HAL_USART_REGISTER_CALLBACKS 0U
 #define USE_HAL_WWDG_REGISTER_CALLBACKS 0U
 
-	/* ################## SPI peripheral configuration ########################## */
+/* ################## SPI peripheral configuration ########################## */
 
-	/* CRC FEATURE: Use to activate CRC feature inside HAL SPI Driver
-	 * Activated: CRC code is present inside driver
-	 * Deactivated: CRC code cleaned from driver
-	 */
+/* CRC FEATURE: Use to activate CRC feature inside HAL SPI Driver
+ * Activated: CRC code is present inside driver
+ * Deactivated: CRC code cleaned from driver
+ */
 
 #define USE_SPI_CRC 0U
 
-	/* Includes ------------------------------------------------------------------*/
-	/**
-	 * @brief Include module's header file
-	 */
+/* Includes ------------------------------------------------------------------*/
+/**
+ * @brief Include module's header file
+ */
 
 #ifdef HAL_RCC_MODULE_ENABLED
 #include "stm32l4xx_hal_rcc.h"
@@ -477,8 +476,8 @@ extern "C"
  * @retval None
  */
 #define assert_param(expr) ((expr) ? (void)0U : assert_failed((uint8_t *)__FILE__, __LINE__))
-	/* Exported functions ------------------------------------------------------- */
-	void assert_failed(uint8_t *file, uint32_t line);
+/* Exported functions ------------------------------------------------------- */
+void assert_failed(uint8_t *file, uint32_t line);
 #else
 #define assert_param(expr) ((void)0U)
 #endif /* USE_FULL_ASSERT */

@@ -21,8 +21,7 @@
 #define STM32G4xx_HAL_IRDA_EX_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -73,12 +72,9 @@ extern "C"
  */
 #if defined(UART5) && !defined(USART3)
 #define IRDA_GETCLOCKSOURCE(__HANDLE__, __CLOCKSOURCE__)                                                                                                                                               \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if ((__HANDLE__)->Instance == USART1)                                                                                                                                                  \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_USART1_SOURCE())                                                                                                                                         \
-			{                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
+		if ((__HANDLE__)->Instance == USART1) {                                                                                                                                                \
+			switch (__HAL_RCC_GET_USART1_SOURCE()) {                                                                                                                                       \
 				case RCC_USART1CLKSOURCE_PCLK2:                                                                                                                                        \
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_PCLK2;                                                                                                                    \
 					break;                                                                                                                                                         \
@@ -95,11 +91,8 @@ extern "C"
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Instance == USART2)                                                                                                                                             \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_USART2_SOURCE())                                                                                                                                         \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == USART2) {                                                                                                                                         \
+			switch (__HAL_RCC_GET_USART2_SOURCE()) {                                                                                                                                       \
 				case RCC_USART2CLKSOURCE_PCLK1:                                                                                                                                        \
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_PCLK1;                                                                                                                    \
 					break;                                                                                                                                                         \
@@ -116,11 +109,8 @@ extern "C"
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Instance == UART4)                                                                                                                                              \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_UART4_SOURCE())                                                                                                                                          \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == UART4) {                                                                                                                                          \
+			switch (__HAL_RCC_GET_UART4_SOURCE()) {                                                                                                                                        \
 				case RCC_UART4CLKSOURCE_PCLK1:                                                                                                                                         \
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_PCLK1;                                                                                                                    \
 					break;                                                                                                                                                         \
@@ -137,11 +127,8 @@ extern "C"
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Instance == UART5)                                                                                                                                              \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_UART5_SOURCE())                                                                                                                                          \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == UART5) {                                                                                                                                          \
+			switch (__HAL_RCC_GET_UART5_SOURCE()) {                                                                                                                                        \
 				case RCC_UART5CLKSOURCE_PCLK1:                                                                                                                                         \
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_PCLK1;                                                                                                                    \
 					break;                                                                                                                                                         \
@@ -158,20 +145,15 @@ extern "C"
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else                                                                                                                                                                                   \
-		{                                                                                                                                                                                      \
+		} else {                                                                                                                                                                               \
 			(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                                \
 		}                                                                                                                                                                                      \
 	} while (0U)
 #elif defined(UART5) && defined(USART3)
 #define IRDA_GETCLOCKSOURCE(__HANDLE__, __CLOCKSOURCE__)                                                                                                                                               \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if ((__HANDLE__)->Instance == USART1)                                                                                                                                                  \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_USART1_SOURCE())                                                                                                                                         \
-			{                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
+		if ((__HANDLE__)->Instance == USART1) {                                                                                                                                                \
+			switch (__HAL_RCC_GET_USART1_SOURCE()) {                                                                                                                                       \
 				case RCC_USART1CLKSOURCE_PCLK2:                                                                                                                                        \
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_PCLK2;                                                                                                                    \
 					break;                                                                                                                                                         \
@@ -188,11 +170,8 @@ extern "C"
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Instance == USART2)                                                                                                                                             \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_USART2_SOURCE())                                                                                                                                         \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == USART2) {                                                                                                                                         \
+			switch (__HAL_RCC_GET_USART2_SOURCE()) {                                                                                                                                       \
 				case RCC_USART2CLKSOURCE_PCLK1:                                                                                                                                        \
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_PCLK1;                                                                                                                    \
 					break;                                                                                                                                                         \
@@ -209,11 +188,8 @@ extern "C"
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Instance == USART3)                                                                                                                                             \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_USART3_SOURCE())                                                                                                                                         \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == USART3) {                                                                                                                                         \
+			switch (__HAL_RCC_GET_USART3_SOURCE()) {                                                                                                                                       \
 				case RCC_USART3CLKSOURCE_PCLK1:                                                                                                                                        \
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_PCLK1;                                                                                                                    \
 					break;                                                                                                                                                         \
@@ -230,11 +206,8 @@ extern "C"
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Instance == UART4)                                                                                                                                              \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_UART4_SOURCE())                                                                                                                                          \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == UART4) {                                                                                                                                          \
+			switch (__HAL_RCC_GET_UART4_SOURCE()) {                                                                                                                                        \
 				case RCC_UART4CLKSOURCE_PCLK1:                                                                                                                                         \
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_PCLK1;                                                                                                                    \
 					break;                                                                                                                                                         \
@@ -251,11 +224,8 @@ extern "C"
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Instance == UART5)                                                                                                                                              \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_UART5_SOURCE())                                                                                                                                          \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == UART5) {                                                                                                                                          \
+			switch (__HAL_RCC_GET_UART5_SOURCE()) {                                                                                                                                        \
 				case RCC_UART5CLKSOURCE_PCLK1:                                                                                                                                         \
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_PCLK1;                                                                                                                    \
 					break;                                                                                                                                                         \
@@ -272,20 +242,15 @@ extern "C"
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else                                                                                                                                                                                   \
-		{                                                                                                                                                                                      \
+		} else {                                                                                                                                                                               \
 			(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                                \
 		}                                                                                                                                                                                      \
 	} while (0U)
 #elif defined(UART4) && !defined(USART3)
 #define IRDA_GETCLOCKSOURCE(__HANDLE__, __CLOCKSOURCE__)                                                                                                                                               \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if ((__HANDLE__)->Instance == USART1)                                                                                                                                                  \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_USART1_SOURCE())                                                                                                                                         \
-			{                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
+		if ((__HANDLE__)->Instance == USART1) {                                                                                                                                                \
+			switch (__HAL_RCC_GET_USART1_SOURCE()) {                                                                                                                                       \
 				case RCC_USART1CLKSOURCE_PCLK2:                                                                                                                                        \
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_PCLK2;                                                                                                                    \
 					break;                                                                                                                                                         \
@@ -302,11 +267,8 @@ extern "C"
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Instance == USART2)                                                                                                                                             \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_USART2_SOURCE())                                                                                                                                         \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == USART2) {                                                                                                                                         \
+			switch (__HAL_RCC_GET_USART2_SOURCE()) {                                                                                                                                       \
 				case RCC_USART2CLKSOURCE_PCLK1:                                                                                                                                        \
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_PCLK1;                                                                                                                    \
 					break;                                                                                                                                                         \
@@ -323,11 +285,8 @@ extern "C"
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Instance == UART4)                                                                                                                                              \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_UART4_SOURCE())                                                                                                                                          \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == UART4) {                                                                                                                                          \
+			switch (__HAL_RCC_GET_UART4_SOURCE()) {                                                                                                                                        \
 				case RCC_UART4CLKSOURCE_PCLK1:                                                                                                                                         \
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_PCLK1;                                                                                                                    \
 					break;                                                                                                                                                         \
@@ -344,20 +303,15 @@ extern "C"
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else                                                                                                                                                                                   \
-		{                                                                                                                                                                                      \
+		} else {                                                                                                                                                                               \
 			(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                                \
 		}                                                                                                                                                                                      \
 	} while (0U)
 #elif defined(UART4) && defined(USART3)
 #define IRDA_GETCLOCKSOURCE(__HANDLE__, __CLOCKSOURCE__)                                                                                                                                               \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if ((__HANDLE__)->Instance == USART1)                                                                                                                                                  \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_USART1_SOURCE())                                                                                                                                         \
-			{                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
+		if ((__HANDLE__)->Instance == USART1) {                                                                                                                                                \
+			switch (__HAL_RCC_GET_USART1_SOURCE()) {                                                                                                                                       \
 				case RCC_USART1CLKSOURCE_PCLK2:                                                                                                                                        \
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_PCLK2;                                                                                                                    \
 					break;                                                                                                                                                         \
@@ -374,11 +328,8 @@ extern "C"
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Instance == USART2)                                                                                                                                             \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_USART2_SOURCE())                                                                                                                                         \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == USART2) {                                                                                                                                         \
+			switch (__HAL_RCC_GET_USART2_SOURCE()) {                                                                                                                                       \
 				case RCC_USART2CLKSOURCE_PCLK1:                                                                                                                                        \
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_PCLK1;                                                                                                                    \
 					break;                                                                                                                                                         \
@@ -395,11 +346,8 @@ extern "C"
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Instance == USART3)                                                                                                                                             \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_USART3_SOURCE())                                                                                                                                         \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == USART3) {                                                                                                                                         \
+			switch (__HAL_RCC_GET_USART3_SOURCE()) {                                                                                                                                       \
 				case RCC_USART3CLKSOURCE_PCLK1:                                                                                                                                        \
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_PCLK1;                                                                                                                    \
 					break;                                                                                                                                                         \
@@ -416,11 +364,8 @@ extern "C"
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Instance == UART4)                                                                                                                                              \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_UART4_SOURCE())                                                                                                                                          \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == UART4) {                                                                                                                                          \
+			switch (__HAL_RCC_GET_UART4_SOURCE()) {                                                                                                                                        \
 				case RCC_UART4CLKSOURCE_PCLK1:                                                                                                                                         \
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_PCLK1;                                                                                                                    \
 					break;                                                                                                                                                         \
@@ -437,20 +382,15 @@ extern "C"
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else                                                                                                                                                                                   \
-		{                                                                                                                                                                                      \
+		} else {                                                                                                                                                                               \
 			(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                                \
 		}                                                                                                                                                                                      \
 	} while (0U)
 #elif defined(USART3)
 #define IRDA_GETCLOCKSOURCE(__HANDLE__, __CLOCKSOURCE__)                                                                                                                                               \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if ((__HANDLE__)->Instance == USART1)                                                                                                                                                  \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_USART1_SOURCE())                                                                                                                                         \
-			{                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
+		if ((__HANDLE__)->Instance == USART1) {                                                                                                                                                \
+			switch (__HAL_RCC_GET_USART1_SOURCE()) {                                                                                                                                       \
 				case RCC_USART1CLKSOURCE_PCLK2:                                                                                                                                        \
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_PCLK2;                                                                                                                    \
 					break;                                                                                                                                                         \
@@ -467,11 +407,8 @@ extern "C"
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Instance == USART2)                                                                                                                                             \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_USART2_SOURCE())                                                                                                                                         \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == USART2) {                                                                                                                                         \
+			switch (__HAL_RCC_GET_USART2_SOURCE()) {                                                                                                                                       \
 				case RCC_USART2CLKSOURCE_PCLK1:                                                                                                                                        \
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_PCLK1;                                                                                                                    \
 					break;                                                                                                                                                         \
@@ -488,11 +425,8 @@ extern "C"
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Instance == USART3)                                                                                                                                             \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_USART3_SOURCE())                                                                                                                                         \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == USART3) {                                                                                                                                         \
+			switch (__HAL_RCC_GET_USART3_SOURCE()) {                                                                                                                                       \
 				case RCC_USART3CLKSOURCE_PCLK1:                                                                                                                                        \
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_PCLK1;                                                                                                                    \
 					break;                                                                                                                                                         \
@@ -509,20 +443,15 @@ extern "C"
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else                                                                                                                                                                                   \
-		{                                                                                                                                                                                      \
+		} else {                                                                                                                                                                               \
 			(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                                \
 		}                                                                                                                                                                                      \
 	} while (0U)
 #else
 #define IRDA_GETCLOCKSOURCE(__HANDLE__, __CLOCKSOURCE__)                                                                                                                                               \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if ((__HANDLE__)->Instance == USART1)                                                                                                                                                  \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_USART1_SOURCE())                                                                                                                                         \
-			{                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
+		if ((__HANDLE__)->Instance == USART1) {                                                                                                                                                \
+			switch (__HAL_RCC_GET_USART1_SOURCE()) {                                                                                                                                       \
 				case RCC_USART1CLKSOURCE_PCLK2:                                                                                                                                        \
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_PCLK2;                                                                                                                    \
 					break;                                                                                                                                                         \
@@ -539,11 +468,8 @@ extern "C"
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Instance == USART2)                                                                                                                                             \
-		{                                                                                                                                                                                      \
-			switch (__HAL_RCC_GET_USART2_SOURCE())                                                                                                                                         \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Instance == USART2) {                                                                                                                                         \
+			switch (__HAL_RCC_GET_USART2_SOURCE()) {                                                                                                                                       \
 				case RCC_USART2CLKSOURCE_PCLK1:                                                                                                                                        \
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_PCLK1;                                                                                                                    \
 					break;                                                                                                                                                         \
@@ -560,9 +486,7 @@ extern "C"
 					(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                \
 					break;                                                                                                                                                         \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else                                                                                                                                                                                   \
-		{                                                                                                                                                                                      \
+		} else {                                                                                                                                                                               \
 			(__CLOCKSOURCE__) = IRDA_CLOCKSOURCE_UNDEFINED;                                                                                                                                \
 		}                                                                                                                                                                                      \
 	} while (0U)
@@ -575,43 +499,26 @@ extern "C"
  * in (__HANDLE__)->Mask field.
  */
 #define IRDA_MASK_COMPUTATION(__HANDLE__)                                                                                                                                                              \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
-		if ((__HANDLE__)->Init.WordLength == IRDA_WORDLENGTH_9B)                                                                                                                               \
-		{                                                                                                                                                                                      \
-			if ((__HANDLE__)->Init.Parity == IRDA_PARITY_NONE)                                                                                                                             \
-			{                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
+		if ((__HANDLE__)->Init.WordLength == IRDA_WORDLENGTH_9B) {                                                                                                                             \
+			if ((__HANDLE__)->Init.Parity == IRDA_PARITY_NONE) {                                                                                                                           \
 				(__HANDLE__)->Mask = 0x01FFU;                                                                                                                                          \
-			}                                                                                                                                                                              \
-			else                                                                                                                                                                           \
-			{                                                                                                                                                                              \
+			} else {                                                                                                                                                                       \
 				(__HANDLE__)->Mask = 0x00FFU;                                                                                                                                          \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Init.WordLength == IRDA_WORDLENGTH_8B)                                                                                                                          \
-		{                                                                                                                                                                                      \
-			if ((__HANDLE__)->Init.Parity == IRDA_PARITY_NONE)                                                                                                                             \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Init.WordLength == IRDA_WORDLENGTH_8B) {                                                                                                                      \
+			if ((__HANDLE__)->Init.Parity == IRDA_PARITY_NONE) {                                                                                                                           \
 				(__HANDLE__)->Mask = 0x00FFU;                                                                                                                                          \
-			}                                                                                                                                                                              \
-			else                                                                                                                                                                           \
-			{                                                                                                                                                                              \
+			} else {                                                                                                                                                                       \
 				(__HANDLE__)->Mask = 0x007FU;                                                                                                                                          \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else if ((__HANDLE__)->Init.WordLength == IRDA_WORDLENGTH_7B)                                                                                                                          \
-		{                                                                                                                                                                                      \
-			if ((__HANDLE__)->Init.Parity == IRDA_PARITY_NONE)                                                                                                                             \
-			{                                                                                                                                                                              \
+		} else if ((__HANDLE__)->Init.WordLength == IRDA_WORDLENGTH_7B) {                                                                                                                      \
+			if ((__HANDLE__)->Init.Parity == IRDA_PARITY_NONE) {                                                                                                                           \
 				(__HANDLE__)->Mask = 0x007FU;                                                                                                                                          \
-			}                                                                                                                                                                              \
-			else                                                                                                                                                                           \
-			{                                                                                                                                                                              \
+			} else {                                                                                                                                                                       \
 				(__HANDLE__)->Mask = 0x003FU;                                                                                                                                          \
 			}                                                                                                                                                                              \
-		}                                                                                                                                                                                      \
-		else                                                                                                                                                                                   \
-		{                                                                                                                                                                                      \
+		} else {                                                                                                                                                                               \
 			(__HANDLE__)->Mask = 0x0000U;                                                                                                                                                  \
 		}                                                                                                                                                                                      \
 	} while (0U)
@@ -621,19 +528,19 @@ extern "C"
  * @retval SET (__LENGTH__ is valid) or RESET (__LENGTH__ is invalid)
  */
 #define IS_IRDA_WORD_LENGTH(__LENGTH__) (((__LENGTH__) == IRDA_WORDLENGTH_7B) || ((__LENGTH__) == IRDA_WORDLENGTH_8B) || ((__LENGTH__) == IRDA_WORDLENGTH_9B))
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported functions --------------------------------------------------------*/
+/* Exported functions --------------------------------------------------------*/
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

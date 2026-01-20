@@ -61,16 +61,13 @@ ErrorStatus LL_HRTIM_DeInit(HRTIM_TypeDef *HRTIMx)
 	/* Check the parameters */
 	assert_param(IS_HRTIM_ALL_INSTANCE(HRTIMx));
 
-	if (HRTIMx == HRTIM1)
-	{
+	if (HRTIMx == HRTIM1) {
 		/* Force HRTIM reset */
 		LL_APB2_GRP1_ForceReset(LL_APB2_GRP1_PERIPH_HRTIM1);
 
 		/* Release HRTIM reset */
 		LL_APB2_GRP1_ReleaseReset(LL_APB2_GRP1_PERIPH_HRTIM1);
-	}
-	else
-	{
+	} else {
 		status = ERROR;
 	}
 

@@ -164,30 +164,24 @@ uint32_t LL_DLYB_GetClockPeriod(DLYB_TypeDef *DLYBx, LL_DLYB_CfgTypeDef *pdlyb_c
 	SET_BIT(DLYBx->CR, DLYB_CR_SEN);
 
 	/* Delay line length detection */
-	while (i < DLYB_MAX_UNIT)
-	{
+	while (i < DLYB_MAX_UNIT) {
 		/* Set the Delay of the UNIT(s)*/
 		DLYBx->CFGR = DLYB_MAX_SELECT | (i << DLYB_CFGR_UNIT_Pos);
 
 		/* Waiting for a LNG valid value */
 		tickstart = HAL_GetTick();
-		while ((DLYBx->CFGR & DLYB_CFGR_LNGF) == 0U)
-		{
-			if ((HAL_GetTick() - tickstart) >= DLYB_TIMEOUT)
-			{
+		while ((DLYBx->CFGR & DLYB_CFGR_LNGF) == 0U) {
+			if ((HAL_GetTick() - tickstart) >= DLYB_TIMEOUT) {
 				/* New check to avoid false timeout detection in
 				 * case of preemption */
-				if ((DLYBx->CFGR & DLYB_CFGR_LNGF) == 0U)
-				{
+				if ((DLYBx->CFGR & DLYB_CFGR_LNGF) == 0U) {
 					return (uint32_t)HAL_TIMEOUT;
 				}
 			}
 		}
 
-		if ((DLYBx->CFGR & DLYB_LNG_10_0_MASK) != 0U)
-		{
-			if ((DLYBx->CFGR & (DLYB_CFGR_LNG_11 | DLYB_CFGR_LNG_10)) != DLYB_LNG_11_10_MASK)
-			{
+		if ((DLYBx->CFGR & DLYB_LNG_10_0_MASK) != 0U) {
+			if ((DLYBx->CFGR & (DLYB_CFGR_LNG_11 | DLYB_CFGR_LNG_10)) != DLYB_LNG_11_10_MASK) {
 				/* Delay line length is configured to one input
 				 * clock period*/
 				break;
@@ -196,18 +190,15 @@ uint32_t LL_DLYB_GetClockPeriod(DLYB_TypeDef *DLYBx, LL_DLYB_CfgTypeDef *pdlyb_c
 		i++;
 	}
 
-	if (DLYB_MAX_UNIT != i)
-	{
+	if (DLYB_MAX_UNIT != i) {
 		/* Determine how many unit delays (nb) span one input clock
 		 * period */
 		lng = (DLYBx->CFGR & DLYB_CFGR_LNG) >> 16U;
 		nb = 10U;
-		while ((nb > 0U) && ((lng >> nb) == 0U))
-		{
+		while ((nb > 0U) && ((lng >> nb) == 0U)) {
 			nb--;
 		}
-		if (nb != 0U)
-		{
+		if (nb != 0U) {
 			pdlyb_cfg->PhaseSel = nb;
 			pdlyb_cfg->Units = i;
 

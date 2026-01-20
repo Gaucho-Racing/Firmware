@@ -21,76 +21,74 @@
 #define STM32L4xx_HAL_RTC_EX_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l4xx_hal_def.h"
 
-	/** @addtogroup STM32L4xx_HAL_Driver
-	 * @{
-	 */
+/** @addtogroup STM32L4xx_HAL_Driver
+ * @{
+ */
 
-	/** @defgroup RTCEx RTCEx
-	 * @{
-	 */
+/** @defgroup RTCEx RTCEx
+ * @{
+ */
 
-	/* Exported types ------------------------------------------------------------*/
-	/** @defgroup RTCEx_Exported_Types RTCEx Exported Types
-	 * @{
-	 */
+/* Exported types ------------------------------------------------------------*/
+/** @defgroup RTCEx_Exported_Types RTCEx Exported Types
+ * @{
+ */
 
-	/** @defgroup RTCEx_Tamper_structure_definition RTCEx Tamper structure
-	 * definition
-	 * @{
-	 */
-	typedef struct
-	{
-		uint32_t Tamper; /*!< Specifies the Tamper Pin.
-				      This parameter can be a value of @ref
-				    RTCEx_Tamper_Pins_Definitions */
+/** @defgroup RTCEx_Tamper_structure_definition RTCEx Tamper structure
+ * definition
+ * @{
+ */
+typedef struct {
+	uint32_t Tamper; /*!< Specifies the Tamper Pin.
+			      This parameter can be a value of @ref
+			    RTCEx_Tamper_Pins_Definitions */
 
-		uint32_t Interrupt; /*!< Specifies the Tamper Interrupt.
+	uint32_t Interrupt; /*!< Specifies the Tamper Interrupt.
+				 This parameter can be a value of @ref
+			       RTCEx_Tamper_Interrupt_Definitions */
+
+	uint32_t Trigger; /*!< Specifies the Tamper Trigger.
+			       This parameter can be a value of @ref
+			     RTCEx_Tamper_Trigger_Definitions */
+
+	uint32_t NoErase; /*!< Specifies the Tamper no erase mode.
+			       This parameter can be a value of @ref
+			     RTCEx_Tamper_EraseBackUp_Definitions */
+
+	uint32_t MaskFlag; /*!< Specifies the Tamper Flag masking.
+				This parameter can be a value of @ref
+			      RTCEx_Tamper_MaskFlag_Definitions   */
+
+	uint32_t Filter; /*!< Specifies the TAMP Filter Tamper.
+			      This parameter can be a value of @ref
+			    RTCEx_Tamper_Filter_Definitions */
+
+	uint32_t SamplingFrequency; /*!< Specifies the sampling frequency.
 					 This parameter can be a value of @ref
-				       RTCEx_Tamper_Interrupt_Definitions */
+				       RTCEx_Tamper_Sampling_Frequencies_Definitions
+				     */
 
-		uint32_t Trigger; /*!< Specifies the Tamper Trigger.
-				       This parameter can be a value of @ref
-				     RTCEx_Tamper_Trigger_Definitions */
+	uint32_t PrechargeDuration; /*!< Specifies the Precharge Duration .
+					 This parameter can be a value of @ref
+				       RTCEx_Tamper_Pin_Precharge_Duration_Definitions
+				     */
 
-		uint32_t NoErase; /*!< Specifies the Tamper no erase mode.
-				       This parameter can be a value of @ref
-				     RTCEx_Tamper_EraseBackUp_Definitions */
+	uint32_t TamperPullUp; /*!< Specifies the Tamper PullUp .
+				    This parameter can be a value of @ref
+				  RTCEx_Tamper_Pull_UP_Definitions */
 
-		uint32_t MaskFlag; /*!< Specifies the Tamper Flag masking.
-					This parameter can be a value of @ref
-				      RTCEx_Tamper_MaskFlag_Definitions   */
-
-		uint32_t Filter; /*!< Specifies the TAMP Filter Tamper.
-				      This parameter can be a value of @ref
-				    RTCEx_Tamper_Filter_Definitions */
-
-		uint32_t SamplingFrequency; /*!< Specifies the sampling frequency.
-						 This parameter can be a value of @ref
-					       RTCEx_Tamper_Sampling_Frequencies_Definitions
-					     */
-
-		uint32_t PrechargeDuration; /*!< Specifies the Precharge Duration .
-						 This parameter can be a value of @ref
-					       RTCEx_Tamper_Pin_Precharge_Duration_Definitions
-					     */
-
-		uint32_t TamperPullUp; /*!< Specifies the Tamper PullUp .
-					    This parameter can be a value of @ref
-					  RTCEx_Tamper_Pull_UP_Definitions */
-
-		uint32_t TimeStampOnTamperDetection; /*!< Specifies the
-							TimeStampOnTamperDetection. This
-							parameter can be a value of @ref
-							RTCEx_Tamper_TimeStampOnTamperDetection_Definitions
-						      */
-	} RTC_TamperTypeDef;
+	uint32_t TimeStampOnTamperDetection; /*!< Specifies the
+						TimeStampOnTamperDetection. This
+						parameter can be a value of @ref
+						RTCEx_Tamper_TimeStampOnTamperDetection_Definitions
+					      */
+} RTC_TamperTypeDef;
 /**
  * @}
  */
@@ -476,14 +474,14 @@ extern "C"
 #define RTC_TIMESTAMPONTAMPERDETECTION_DISABLE 0x00000000u	/*!< TimeStamp on Tamper Detection event is not saved */
 #define RTC_TIMESTAMPONTAMPERDETECTION_ENABLE RTC_TAMPCR_TAMPTS /*!< TimeStamp on Tamper Detection event saved */
 #endif
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @defgroup RTCEx_Tamper_Interrupt_Definitions RTC Tamper Interrupts
-	 * Definitions
-	 * @{
-	 */
+/** @defgroup RTCEx_Tamper_Interrupt_Definitions RTC Tamper Interrupts
+ * Definitions
+ * @{
+ */
 
 #if defined(STM32L412xx) || defined(STM32L422xx)
 #define RTC_IT_TAMP1 TAMP_IER_TAMP1IE			  /*!< Tamper 1 Interrupt */
@@ -810,14 +808,14 @@ extern "C"
  */
 #endif /* #if defined (STM32L4P5xx) || defined (STM32L4Q5xx) */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported macros -----------------------------------------------------------*/
-	/** @defgroup RTCEx_Exported_Macros RTCEx Exported Macros
-	 * @{
-	 */
+/* Exported macros -----------------------------------------------------------*/
+/** @defgroup RTCEx_Exported_Macros RTCEx Exported Macros
+ * @{
+ */
 
 #if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx)
 /** @brief  Clear the specified RTC pending flag.
@@ -1017,8 +1015,7 @@ extern "C"
  * @retval None
  */
 #define __HAL_RTC_WAKEUPTIMER_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                        \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__HAL_RTC_WAKEUPTIMER_EXTI_ENABLE_RISING_EDGE();                                                                                                                                       \
 		__HAL_RTC_WAKEUPTIMER_EXTI_ENABLE_FALLING_EDGE();                                                                                                                                      \
 	} while (0)
@@ -1029,8 +1026,7 @@ extern "C"
  * @retval None
  */
 #define __HAL_RTC_WAKEUPTIMER_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                       \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__HAL_RTC_WAKEUPTIMER_EXTI_DISABLE_RISING_EDGE();                                                                                                                                      \
 		__HAL_RTC_WAKEUPTIMER_EXTI_DISABLE_FALLING_EDGE();                                                                                                                                     \
 	} while (0)
@@ -1508,8 +1504,7 @@ extern "C"
  * @retval None
  */
 #define __HAL_RTC_TAMPER_TIMESTAMP_EXTI_ENABLE_RISING_FALLING_EDGE()                                                                                                                                   \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__HAL_RTC_TAMPER_TIMESTAMP_EXTI_ENABLE_RISING_EDGE();                                                                                                                                  \
 		__HAL_RTC_TAMPER_TIMESTAMP_EXTI_ENABLE_FALLING_EDGE();                                                                                                                                 \
 	} while (0)
@@ -1520,8 +1515,7 @@ extern "C"
  * @retval None
  */
 #define __HAL_RTC_TAMPER_TIMESTAMP_EXTI_DISABLE_RISING_FALLING_EDGE()                                                                                                                                  \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		__HAL_RTC_TAMPER_TIMESTAMP_EXTI_DISABLE_RISING_EDGE();                                                                                                                                 \
 		__HAL_RTC_TAMPER_TIMESTAMP_EXTI_DISABLE_FALLING_EDGE();                                                                                                                                \
 	} while (0)
@@ -1546,9 +1540,9 @@ extern "C"
  */
 #define __HAL_RTC_TAMPER_TIMESTAMP_EXTI_GENERATE_SWIT() (EXTI->SWIER1 |= RTC_EXTI_LINE_TAMPER_TIMESTAMP_EVENT)
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx)
 /* --------------------------------- SSR Underflow
@@ -1644,143 +1638,143 @@ extern "C"
  */
 #define __HAL_RTC_SSRU_EXTI_DISABLE_EVENT() (EXTI->EMR1 &= ~(RTC_EXTI_LINE_SSRU_EVENT))
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #endif /* #if defined (STM32L4P5xx) || defined (STM32L4Q5xx) */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported functions --------------------------------------------------------*/
+/* Exported functions --------------------------------------------------------*/
 
-	/** @defgroup RTCEx_Exported_Functions RTCEx Exported Functions
-	 * @{
-	 */
+/** @defgroup RTCEx_Exported_Functions RTCEx Exported Functions
+ * @{
+ */
 
-	/* ========================================================================== */
-	/*                  ##### RTC TimeStamp exported functions #####              */
-	/* ========================================================================== */
+/* ========================================================================== */
+/*                  ##### RTC TimeStamp exported functions #####              */
+/* ========================================================================== */
 
-	/* RTC TimeStamp functions ****************************************************/
+/* RTC TimeStamp functions ****************************************************/
 
-	/** @defgroup RTCEx_Exported_Functions_Group1 Extended RTC TimeStamp functions
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp(RTC_HandleTypeDef *hrtc, uint32_t TimeStampEdge, uint32_t RTC_TimeStampPin);
-	HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp_IT(RTC_HandleTypeDef *hrtc, uint32_t TimeStampEdge, uint32_t RTC_TimeStampPin);
-	HAL_StatusTypeDef HAL_RTCEx_DeactivateTimeStamp(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_SetInternalTimeStamp(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_DeactivateInternalTimeStamp(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_GetTimeStamp(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTimeStamp, RTC_DateTypeDef *sTimeStampDate, uint32_t Format);
-	void HAL_RTCEx_TamperTimeStampIRQHandler(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_TimeStampEventCallback(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_PollForTimeStampEvent(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
-	/**
-	 * @}
-	 */
+/** @defgroup RTCEx_Exported_Functions_Group1 Extended RTC TimeStamp functions
+ * @{
+ */
+HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp(RTC_HandleTypeDef *hrtc, uint32_t TimeStampEdge, uint32_t RTC_TimeStampPin);
+HAL_StatusTypeDef HAL_RTCEx_SetTimeStamp_IT(RTC_HandleTypeDef *hrtc, uint32_t TimeStampEdge, uint32_t RTC_TimeStampPin);
+HAL_StatusTypeDef HAL_RTCEx_DeactivateTimeStamp(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_SetInternalTimeStamp(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_DeactivateInternalTimeStamp(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_GetTimeStamp(RTC_HandleTypeDef *hrtc, RTC_TimeTypeDef *sTimeStamp, RTC_DateTypeDef *sTimeStampDate, uint32_t Format);
+void HAL_RTCEx_TamperTimeStampIRQHandler(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_TimeStampEventCallback(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_PollForTimeStampEvent(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
+/**
+ * @}
+ */
 
-	/* ========================================================================== */
-	/*                   ##### RTC Wake-up exported functions #####               */
-	/* ========================================================================== */
+/* ========================================================================== */
+/*                   ##### RTC Wake-up exported functions #####               */
+/* ========================================================================== */
 
-	/* RTC Wake-up functions ******************************************************/
+/* RTC Wake-up functions ******************************************************/
 
-	/** @defgroup RTCEx_Exported_Functions_Group2 Extended RTC Wake-up functions
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer(RTC_HandleTypeDef *hrtc, uint32_t WakeUpCounter, uint32_t WakeUpClock);
+/** @defgroup RTCEx_Exported_Functions_Group2 Extended RTC Wake-up functions
+ * @{
+ */
+HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer(RTC_HandleTypeDef *hrtc, uint32_t WakeUpCounter, uint32_t WakeUpClock);
 #if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx)
-	HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer_IT(RTC_HandleTypeDef *hrtc, uint32_t WakeUpCounter, uint32_t WakeUpClock, uint32_t WakeUpAutoClr);
+HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer_IT(RTC_HandleTypeDef *hrtc, uint32_t WakeUpCounter, uint32_t WakeUpClock, uint32_t WakeUpAutoClr);
 #else
 HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer_IT(RTC_HandleTypeDef *hrtc, uint32_t WakeUpCounter, uint32_t WakeUpClock);
 #endif
-	HAL_StatusTypeDef HAL_RTCEx_DeactivateWakeUpTimer(RTC_HandleTypeDef *hrtc);
-	uint32_t HAL_RTCEx_GetWakeUpTimer(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_WakeUpTimerIRQHandler(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_WakeUpTimerEventCallback(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_PollForWakeUpTimerEvent(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
-	/**
-	 * @}
-	 */
+HAL_StatusTypeDef HAL_RTCEx_DeactivateWakeUpTimer(RTC_HandleTypeDef *hrtc);
+uint32_t HAL_RTCEx_GetWakeUpTimer(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_WakeUpTimerIRQHandler(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_WakeUpTimerEventCallback(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_PollForWakeUpTimerEvent(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
+/**
+ * @}
+ */
 
-	/* ========================================================================== */
-	/*        ##### Extended RTC Peripheral Control exported functions #####      */
-	/* ========================================================================== */
+/* ========================================================================== */
+/*        ##### Extended RTC Peripheral Control exported functions #####      */
+/* ========================================================================== */
 
-	/* Extended RTC Peripheral Control functions **********************************/
+/* Extended RTC Peripheral Control functions **********************************/
 
-	/** @defgroup RTCEx_Exported_Functions_Group3 Extended Peripheral Control
-	 * functions
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_RTCEx_SetSmoothCalib(RTC_HandleTypeDef *hrtc, uint32_t SmoothCalibPeriod, uint32_t SmoothCalibPlusPulses, uint32_t SmoothCalibMinusPulsesValue);
+/** @defgroup RTCEx_Exported_Functions_Group3 Extended Peripheral Control
+ * functions
+ * @{
+ */
+HAL_StatusTypeDef HAL_RTCEx_SetSmoothCalib(RTC_HandleTypeDef *hrtc, uint32_t SmoothCalibPeriod, uint32_t SmoothCalibPlusPulses, uint32_t SmoothCalibMinusPulsesValue);
 #if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx)
-	HAL_StatusTypeDef HAL_RTCEx_SetLowPowerCalib(RTC_HandleTypeDef *hrtc, uint32_t LowPowerCalib);
+HAL_StatusTypeDef HAL_RTCEx_SetLowPowerCalib(RTC_HandleTypeDef *hrtc, uint32_t LowPowerCalib);
 #endif
-	HAL_StatusTypeDef HAL_RTCEx_SetSynchroShift(RTC_HandleTypeDef *hrtc, uint32_t ShiftAdd1S, uint32_t ShiftSubFS);
-	HAL_StatusTypeDef HAL_RTCEx_SetCalibrationOutPut(RTC_HandleTypeDef *hrtc, uint32_t CalibOutput);
-	HAL_StatusTypeDef HAL_RTCEx_DeactivateCalibrationOutPut(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_SetRefClock(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_DeactivateRefClock(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_EnableBypassShadow(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_DisableBypassShadow(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_SetSynchroShift(RTC_HandleTypeDef *hrtc, uint32_t ShiftAdd1S, uint32_t ShiftSubFS);
+HAL_StatusTypeDef HAL_RTCEx_SetCalibrationOutPut(RTC_HandleTypeDef *hrtc, uint32_t CalibOutput);
+HAL_StatusTypeDef HAL_RTCEx_DeactivateCalibrationOutPut(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_SetRefClock(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_DeactivateRefClock(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_EnableBypassShadow(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_DisableBypassShadow(RTC_HandleTypeDef *hrtc);
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx)
-	HAL_StatusTypeDef HAL_RTCEx_SetSSRU_IT(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_DeactivateSSRU(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_SSRUIRQHandler(RTC_HandleTypeDef *hrtc);
-	void HAL_RTCEx_SSRUEventCallback(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_SetSSRU_IT(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_DeactivateSSRU(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_SSRUIRQHandler(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_SSRUEventCallback(RTC_HandleTypeDef *hrtc);
 #endif
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Extended RTC features functions *******************************************/
-	/** @defgroup RTCEx_Exported_Functions_Group4 Extended features functions
-	 * @{
-	 */
+/* Extended RTC features functions *******************************************/
+/** @defgroup RTCEx_Exported_Functions_Group4 Extended features functions
+ * @{
+ */
 
-	void HAL_RTCEx_AlarmBEventCallback(RTC_HandleTypeDef *hrtc);
-	HAL_StatusTypeDef HAL_RTCEx_PollForAlarmBEvent(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
-	/**
-	 * @}
-	 */
+void HAL_RTCEx_AlarmBEventCallback(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef HAL_RTCEx_PollForAlarmBEvent(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
+/**
+ * @}
+ */
 
-	/** @defgroup RTCEx_Exported_Functions_Group5 Extended RTC Tamper functions
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_RTCEx_SetTamper(RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef *sTamper);
-	HAL_StatusTypeDef HAL_RTCEx_SetTamper_IT(RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef *sTamper);
-	HAL_StatusTypeDef HAL_RTCEx_DeactivateTamper(RTC_HandleTypeDef *hrtc, uint32_t Tamper);
+/** @defgroup RTCEx_Exported_Functions_Group5 Extended RTC Tamper functions
+ * @{
+ */
+HAL_StatusTypeDef HAL_RTCEx_SetTamper(RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef *sTamper);
+HAL_StatusTypeDef HAL_RTCEx_SetTamper_IT(RTC_HandleTypeDef *hrtc, RTC_TamperTypeDef *sTamper);
+HAL_StatusTypeDef HAL_RTCEx_DeactivateTamper(RTC_HandleTypeDef *hrtc, uint32_t Tamper);
 
 #if defined(RTC_TAMPER1_SUPPORT)
-	HAL_StatusTypeDef HAL_RTCEx_PollForTamper1Event(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
+HAL_StatusTypeDef HAL_RTCEx_PollForTamper1Event(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
 #endif /* RTC_TAMPER1_SUPPORT */
-	HAL_StatusTypeDef HAL_RTCEx_PollForTamper2Event(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
+HAL_StatusTypeDef HAL_RTCEx_PollForTamper2Event(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
 #if defined(RTC_TAMPER3_SUPPORT)
-	HAL_StatusTypeDef HAL_RTCEx_PollForTamper3Event(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
+HAL_StatusTypeDef HAL_RTCEx_PollForTamper3Event(RTC_HandleTypeDef *hrtc, uint32_t Timeout);
 #endif /* RTC_TAMPER3_SUPPORT */
 
 #if defined(RTC_TAMPER1_SUPPORT)
-	void HAL_RTCEx_Tamper1EventCallback(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_Tamper1EventCallback(RTC_HandleTypeDef *hrtc);
 #endif /* RTC_TAMPER1_SUPPORT */
-	void HAL_RTCEx_Tamper2EventCallback(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_Tamper2EventCallback(RTC_HandleTypeDef *hrtc);
 #if defined(RTC_TAMPER3_SUPPORT)
-	void HAL_RTCEx_Tamper3EventCallback(RTC_HandleTypeDef *hrtc);
+void HAL_RTCEx_Tamper3EventCallback(RTC_HandleTypeDef *hrtc);
 #endif /* RTC_TAMPER3_SUPPORT */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @defgroup RTCEx_Exported_Functions_Group6 Extended RTC Backup register
-	 * functions
-	 * @{
-	 */
-	void HAL_RTCEx_BKUPWrite(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister, uint32_t Data);
-	uint32_t HAL_RTCEx_BKUPRead(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister);
+/** @defgroup RTCEx_Exported_Functions_Group6 Extended RTC Backup register
+ * functions
+ * @{
+ */
+void HAL_RTCEx_BKUPWrite(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister, uint32_t Data);
+uint32_t HAL_RTCEx_BKUPRead(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister);
 /**
  * @}
  */
@@ -1891,22 +1885,22 @@ HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer_IT(RTC_HandleTypeDef *hrtc, uint32_t 
 #define IS_RTC_ALARM_SUB_SECOND_BINARY_MASK(MASK) (((MASK) == 0U) || (((MASK) >= RTC_ALARMSUBSECONDBINMASK_SS31_1) && ((MASK) <= RTC_ALARMSUBSECONDBINMASK_NONE)))
 
 #define IS_RTC_ALARMSUBSECONDBIN_AUTOCLR(SEL) (((SEL) == RTC_ALARMSUBSECONDBIN_AUTOCLR_NO) || ((SEL) == RTC_ALARMSUBSECONDBIN_AUTOCLR_YES))
-#endif	/* #if defined (STM32L4P5xx) || defined (STM32L4Q5xx) */
-	/**
-	 * @}
-	 */
+#endif /* #if defined (STM32L4P5xx) || defined (STM32L4Q5xx) */
+       /**
+	* @}
+	*/
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

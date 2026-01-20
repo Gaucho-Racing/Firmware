@@ -22,8 +22,7 @@
 #define STM32G4xx_HAL_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -136,9 +135,9 @@ extern "C"
 #define SYSCFG_CCMSRAMWRP_PAGE30 SYSCFG_SWPR_PAGE30 /*!< CCMSRAM Write protection page 30 */
 #define SYSCFG_CCMSRAMWRP_PAGE31 SYSCFG_SWPR_PAGE31 /*!< CCMSRAM Write protection page 31 */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #if defined(VREFBUF)
 /** @defgroup SYSCFG_VREFBUF_VoltageScale VREFBUF Voltage Scale
@@ -169,9 +168,9 @@ extern "C"
  */
 #endif /* VREFBUF */
 
-	/** @defgroup SYSCFG_flags_definition Flags
-	 * @{
-	 */
+/** @defgroup SYSCFG_flags_definition Flags
+ * @{
+ */
 
 #define SYSCFG_FLAG_SRAM_PE                                                                                                                                                                            \
 	SYSCFG_CFGR2_SPF			    /*!< SRAM parity error (first 32kB of SRAM1 + CCM                                                                                                  \
@@ -376,8 +375,7 @@ extern "C"
 /* Legacy define */
 #define __HAL_SYSCFG_CCMSRAM_WRP_1_31_ENABLE __HAL_SYSCFG_CCMSRAM_WRP_0_31_ENABLE
 #define __HAL_SYSCFG_CCMSRAM_WRP_0_31_ENABLE(__CCMSRAMWRP__)                                                                                                                                           \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		assert_param(IS_SYSCFG_CCMSRAMWRP_PAGE((__CCMSRAMWRP__)));                                                                                                                             \
 		SET_BIT(SYSCFG->SWPR, (__CCMSRAMWRP__));                                                                                                                                               \
 	} while (0)
@@ -386,8 +384,7 @@ extern "C"
  * @note   Writing a wrong key reactivates the write protection
  */
 #define __HAL_SYSCFG_CCMSRAM_WRP_UNLOCK()                                                                                                                                                              \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		SYSCFG->SKR = 0xCA;                                                                                                                                                                    \
 		SYSCFG->SKR = 0x53;                                                                                                                                                                    \
 	} while (0)
@@ -403,15 +400,13 @@ extern "C"
  * SYSCFG_FPU_Interrupts
  */
 #define __HAL_SYSCFG_FPU_INTERRUPT_ENABLE(__INTERRUPT__)                                                                                                                                               \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		assert_param(IS_SYSCFG_FPU_INTERRUPT((__INTERRUPT__)));                                                                                                                                \
 		SET_BIT(SYSCFG->CFGR1, (__INTERRUPT__));                                                                                                                                               \
 	} while (0)
 
 #define __HAL_SYSCFG_FPU_INTERRUPT_DISABLE(__INTERRUPT__)                                                                                                                                              \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		assert_param(IS_SYSCFG_FPU_INTERRUPT((__INTERRUPT__)));                                                                                                                                \
 		CLEAR_BIT(SYSCFG->CFGR1, (__INTERRUPT__));                                                                                                                                             \
 	} while (0)
@@ -473,27 +468,25 @@ extern "C"
  * activation on PB9
  */
 #define __HAL_SYSCFG_FASTMODEPLUS_ENABLE(__FASTMODEPLUS__)                                                                                                                                             \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		assert_param(IS_SYSCFG_FASTMODEPLUS((__FASTMODEPLUS__)));                                                                                                                              \
 		SET_BIT(SYSCFG->CFGR1, (__FASTMODEPLUS__));                                                                                                                                            \
 	} while (0)
 
 #define __HAL_SYSCFG_FASTMODEPLUS_DISABLE(__FASTMODEPLUS__)                                                                                                                                            \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		assert_param(IS_SYSCFG_FASTMODEPLUS((__FASTMODEPLUS__)));                                                                                                                              \
 		CLEAR_BIT(SYSCFG->CFGR1, (__FASTMODEPLUS__));                                                                                                                                          \
 	} while (0)
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Private macros ------------------------------------------------------------*/
-	/** @defgroup SYSCFG_Private_Macros SYSCFG Private Macros
-	 * @{
-	 */
+/* Private macros ------------------------------------------------------------*/
+/** @defgroup SYSCFG_Private_Macros SYSCFG Private Macros
+ * @{
+ */
 
 #define IS_SYSCFG_FPU_INTERRUPT(__INTERRUPT__)                                                                                                                                                         \
 	((((__INTERRUPT__) & SYSCFG_IT_FPU_IOC) == SYSCFG_IT_FPU_IOC) || (((__INTERRUPT__) & SYSCFG_IT_FPU_DZC) == SYSCFG_IT_FPU_DZC) ||                                                               \
@@ -544,123 +537,123 @@ extern "C"
  * @{
  */
 #define IS_TICKFREQ(FREQ) (((FREQ) == HAL_TICK_FREQ_10HZ) || ((FREQ) == HAL_TICK_FREQ_100HZ) || ((FREQ) == HAL_TICK_FREQ_1KHZ))
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported functions --------------------------------------------------------*/
+/* Exported functions --------------------------------------------------------*/
 
-	/** @addtogroup HAL_Exported_Functions
-	 * @{
-	 */
+/** @addtogroup HAL_Exported_Functions
+ * @{
+ */
 
-	/** @addtogroup HAL_Exported_Functions_Group1
-	 * @{
-	 */
-	/* Initialization and Configuration functions  ******************************/
-	HAL_StatusTypeDef HAL_Init(void);
-	HAL_StatusTypeDef HAL_DeInit(void);
-	void HAL_MspInit(void);
-	void HAL_MspDeInit(void);
-	HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority);
+/** @addtogroup HAL_Exported_Functions_Group1
+ * @{
+ */
+/* Initialization and Configuration functions  ******************************/
+HAL_StatusTypeDef HAL_Init(void);
+HAL_StatusTypeDef HAL_DeInit(void);
+void HAL_MspInit(void);
+void HAL_MspDeInit(void);
+HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @addtogroup HAL_Exported_Functions_Group2 HAL Control functions
-	 * @{
-	 */
+/** @addtogroup HAL_Exported_Functions_Group2 HAL Control functions
+ * @{
+ */
 
-	/* Peripheral Control functions
-	 * ************************************************/
-	void HAL_IncTick(void);
-	void HAL_Delay(uint32_t Delay);
-	uint32_t HAL_GetTick(void);
-	uint32_t HAL_GetTickPrio(void);
-	HAL_StatusTypeDef HAL_SetTickFreq(uint32_t Freq);
-	uint32_t HAL_GetTickFreq(void);
-	void HAL_SuspendTick(void);
-	void HAL_ResumeTick(void);
-	uint32_t HAL_GetHalVersion(void);
-	uint32_t HAL_GetREVID(void);
-	uint32_t HAL_GetDEVID(void);
-	uint32_t HAL_GetUIDw0(void);
-	uint32_t HAL_GetUIDw1(void);
-	uint32_t HAL_GetUIDw2(void);
+/* Peripheral Control functions
+ * ************************************************/
+void HAL_IncTick(void);
+void HAL_Delay(uint32_t Delay);
+uint32_t HAL_GetTick(void);
+uint32_t HAL_GetTickPrio(void);
+HAL_StatusTypeDef HAL_SetTickFreq(uint32_t Freq);
+uint32_t HAL_GetTickFreq(void);
+void HAL_SuspendTick(void);
+void HAL_ResumeTick(void);
+uint32_t HAL_GetHalVersion(void);
+uint32_t HAL_GetREVID(void);
+uint32_t HAL_GetDEVID(void);
+uint32_t HAL_GetUIDw0(void);
+uint32_t HAL_GetUIDw1(void);
+uint32_t HAL_GetUIDw2(void);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @addtogroup HAL_Exported_Functions_Group3
-	 * @{
-	 */
+/** @addtogroup HAL_Exported_Functions_Group3
+ * @{
+ */
 
-	/* DBGMCU Peripheral Control functions
-	 * *****************************************/
-	void HAL_DBGMCU_EnableDBGSleepMode(void);
-	void HAL_DBGMCU_DisableDBGSleepMode(void);
-	void HAL_DBGMCU_EnableDBGStopMode(void);
-	void HAL_DBGMCU_DisableDBGStopMode(void);
-	void HAL_DBGMCU_EnableDBGStandbyMode(void);
-	void HAL_DBGMCU_DisableDBGStandbyMode(void);
+/* DBGMCU Peripheral Control functions
+ * *****************************************/
+void HAL_DBGMCU_EnableDBGSleepMode(void);
+void HAL_DBGMCU_DisableDBGSleepMode(void);
+void HAL_DBGMCU_EnableDBGStopMode(void);
+void HAL_DBGMCU_DisableDBGStopMode(void);
+void HAL_DBGMCU_EnableDBGStandbyMode(void);
+void HAL_DBGMCU_DisableDBGStandbyMode(void);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/* Exported variables
-	 * ---------------------------------------------------------*/
-	/** @addtogroup HAL_Exported_Variables
-	 * @{
-	 */
-	extern __IO uint32_t uwTick;
-	extern uint32_t uwTickPrio;
-	extern uint32_t uwTickFreq;
-	/**
-	 * @}
-	 */
+/* Exported variables
+ * ---------------------------------------------------------*/
+/** @addtogroup HAL_Exported_Variables
+ * @{
+ */
+extern __IO uint32_t uwTick;
+extern uint32_t uwTickPrio;
+extern uint32_t uwTickFreq;
+/**
+ * @}
+ */
 
-	/** @addtogroup HAL_Exported_Functions_Group4
-	 * @{
-	 */
+/** @addtogroup HAL_Exported_Functions_Group4
+ * @{
+ */
 
-	/* SYSCFG Control functions
-	 * ****************************************************/
-	void HAL_SYSCFG_CCMSRAMErase(void);
-	void HAL_SYSCFG_EnableMemorySwappingBank(void);
-	void HAL_SYSCFG_DisableMemorySwappingBank(void);
+/* SYSCFG Control functions
+ * ****************************************************/
+void HAL_SYSCFG_CCMSRAMErase(void);
+void HAL_SYSCFG_EnableMemorySwappingBank(void);
+void HAL_SYSCFG_DisableMemorySwappingBank(void);
 
 #if defined(VREFBUF)
-	void HAL_SYSCFG_VREFBUF_VoltageScalingConfig(uint32_t VoltageScaling);
-	void HAL_SYSCFG_VREFBUF_HighImpedanceConfig(uint32_t Mode);
-	void HAL_SYSCFG_VREFBUF_TrimmingConfig(uint32_t TrimmingValue);
-	HAL_StatusTypeDef HAL_SYSCFG_EnableVREFBUF(void);
-	void HAL_SYSCFG_DisableVREFBUF(void);
+void HAL_SYSCFG_VREFBUF_VoltageScalingConfig(uint32_t VoltageScaling);
+void HAL_SYSCFG_VREFBUF_HighImpedanceConfig(uint32_t Mode);
+void HAL_SYSCFG_VREFBUF_TrimmingConfig(uint32_t TrimmingValue);
+HAL_StatusTypeDef HAL_SYSCFG_EnableVREFBUF(void);
+void HAL_SYSCFG_DisableVREFBUF(void);
 #endif /* VREFBUF */
 
-	void HAL_SYSCFG_EnableIOSwitchBooster(void);
-	void HAL_SYSCFG_DisableIOSwitchBooster(void);
-	void HAL_SYSCFG_EnableIOSwitchVDD(void);
-	void HAL_SYSCFG_DisableIOSwitchVDD(void);
-	void HAL_SYSCFG_CCMSRAM_WriteProtectionEnable(uint32_t Page);
+void HAL_SYSCFG_EnableIOSwitchBooster(void);
+void HAL_SYSCFG_DisableIOSwitchBooster(void);
+void HAL_SYSCFG_EnableIOSwitchVDD(void);
+void HAL_SYSCFG_DisableIOSwitchVDD(void);
+void HAL_SYSCFG_CCMSRAM_WriteProtectionEnable(uint32_t Page);
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

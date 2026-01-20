@@ -21,8 +21,7 @@
 #define STM32U5xx_HAL_SD_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -36,38 +35,37 @@ extern "C"
  */
 #if defined(SDMMC1) || defined(SDMMC2)
 
-	/** @defgroup SD SD
-	 * @brief SD HAL module driver
-	 * @{
-	 */
+/** @defgroup SD SD
+ * @brief SD HAL module driver
+ * @{
+ */
 
-	/* Exported types ------------------------------------------------------------*/
-	/** @defgroup SD_Exported_Types SD Exported Types
-	 * @{
-	 */
+/* Exported types ------------------------------------------------------------*/
+/** @defgroup SD_Exported_Types SD Exported Types
+ * @{
+ */
 
-	/** @defgroup SD_Exported_Types_Group1 SD State enumeration structure
-	 * @{
-	 */
-	typedef enum
-	{
-		HAL_SD_STATE_RESET = ((uint32_t)0x00000000U),	    /*!< SD not yet initialized or disabled  */
-		HAL_SD_STATE_READY = ((uint32_t)0x00000001U),	    /*!< SD initialized and ready for use    */
-		HAL_SD_STATE_TIMEOUT = ((uint32_t)0x00000002U),	    /*!< SD Timeout state */
-		HAL_SD_STATE_BUSY = ((uint32_t)0x00000003U),	    /*!< SD process ongoing */
-		HAL_SD_STATE_PROGRAMMING = ((uint32_t)0x00000004U), /*!< SD Programming State                */
-		HAL_SD_STATE_RECEIVING = ((uint32_t)0x00000005U),   /*!< SD Receiving State                  */
-		HAL_SD_STATE_TRANSFER = ((uint32_t)0x00000006U),    /*!< SD Transfer State                   */
-		HAL_SD_STATE_ERROR = ((uint32_t)0x0000000FU)	    /*!< SD is in error state                */
-	} HAL_SD_StateTypeDef;
-	/**
-	 * @}
-	 */
+/** @defgroup SD_Exported_Types_Group1 SD State enumeration structure
+ * @{
+ */
+typedef enum {
+	HAL_SD_STATE_RESET = ((uint32_t)0x00000000U),	    /*!< SD not yet initialized or disabled  */
+	HAL_SD_STATE_READY = ((uint32_t)0x00000001U),	    /*!< SD initialized and ready for use    */
+	HAL_SD_STATE_TIMEOUT = ((uint32_t)0x00000002U),	    /*!< SD Timeout state */
+	HAL_SD_STATE_BUSY = ((uint32_t)0x00000003U),	    /*!< SD process ongoing */
+	HAL_SD_STATE_PROGRAMMING = ((uint32_t)0x00000004U), /*!< SD Programming State                */
+	HAL_SD_STATE_RECEIVING = ((uint32_t)0x00000005U),   /*!< SD Receiving State                  */
+	HAL_SD_STATE_TRANSFER = ((uint32_t)0x00000006U),    /*!< SD Transfer State                   */
+	HAL_SD_STATE_ERROR = ((uint32_t)0x0000000FU)	    /*!< SD is in error state                */
+} HAL_SD_StateTypeDef;
+/**
+ * @}
+ */
 
-	/** @defgroup SD_Exported_Types_Group2 SD Card State enumeration structure
-	 * @{
-	 */
-	typedef uint32_t HAL_SD_CardStateTypeDef;
+/** @defgroup SD_Exported_Types_Group2 SD Card State enumeration structure
+ * @{
+ */
+typedef uint32_t HAL_SD_CardStateTypeDef;
 
 #define HAL_SD_CARD_READY 0x00000001U	       /*!< Card state is ready                     */
 #define HAL_SD_CARD_IDENTIFICATION 0x00000002U /*!< Card is in identification state         */
@@ -88,225 +86,220 @@ extern "C"
 #define SD_InitTypeDef SDMMC_InitTypeDef
 #define SD_TypeDef SDMMC_TypeDef
 
-	/**
-	 * @brief  SD Card Information Structure definition
-	 */
-	typedef struct
-	{
-		uint32_t CardType; /*!< Specifies the card Type */
+/**
+ * @brief  SD Card Information Structure definition
+ */
+typedef struct {
+	uint32_t CardType; /*!< Specifies the card Type */
 
-		uint32_t CardVersion; /*!< Specifies the card version */
+	uint32_t CardVersion; /*!< Specifies the card version */
 
-		uint32_t Class; /*!< Specifies the class of the card class           */
+	uint32_t Class; /*!< Specifies the class of the card class           */
 
-		uint32_t RelCardAdd; /*!< Specifies the Relative Card Address */
+	uint32_t RelCardAdd; /*!< Specifies the Relative Card Address */
 
-		uint32_t BlockNbr; /*!< Specifies the Card Capacity in blocks */
+	uint32_t BlockNbr; /*!< Specifies the Card Capacity in blocks */
 
-		uint32_t BlockSize; /*!< Specifies one block size in bytes */
+	uint32_t BlockSize; /*!< Specifies one block size in bytes */
 
-		uint32_t LogBlockNbr; /*!< Specifies the Card logical Capacity in blocks   */
+	uint32_t LogBlockNbr; /*!< Specifies the Card logical Capacity in blocks   */
 
-		uint32_t LogBlockSize; /*!< Specifies logical block size in bytes */
+	uint32_t LogBlockSize; /*!< Specifies logical block size in bytes */
 
-		uint32_t CardSpeed; /*!< Specifies the card Speed */
+	uint32_t CardSpeed; /*!< Specifies the card Speed */
 
-	} HAL_SD_CardInfoTypeDef;
+} HAL_SD_CardInfoTypeDef;
 
 /**
  * @brief  SD handle Structure definition
  */
 #if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
-	typedef struct __SD_HandleTypeDef
+typedef struct __SD_HandleTypeDef
 #else
-	typedef struct
+typedef struct
 #endif /* USE_HAL_SD_REGISTER_CALLBACKS */
-	{
-		SD_TypeDef *Instance; /*!< SD registers base address           */
+{
+	SD_TypeDef *Instance; /*!< SD registers base address           */
 
-		SD_InitTypeDef Init; /*!< SD required parameters              */
+	SD_InitTypeDef Init; /*!< SD required parameters              */
 
-		HAL_LockTypeDef Lock; /*!< SD locking object                   */
+	HAL_LockTypeDef Lock; /*!< SD locking object                   */
 
-		const uint8_t *pTxBuffPtr; /*!< Pointer to SD Tx transfer Buffer    */
+	const uint8_t *pTxBuffPtr; /*!< Pointer to SD Tx transfer Buffer    */
 
-		uint32_t TxXferSize; /*!< SD Tx Transfer size                 */
+	uint32_t TxXferSize; /*!< SD Tx Transfer size                 */
 
-		uint8_t *pRxBuffPtr; /*!< Pointer to SD Rx transfer Buffer    */
+	uint8_t *pRxBuffPtr; /*!< Pointer to SD Rx transfer Buffer    */
 
-		uint32_t RxXferSize; /*!< SD Rx Transfer size                 */
+	uint32_t RxXferSize; /*!< SD Rx Transfer size                 */
 
-		__IO uint32_t Context; /*!< SD transfer context                 */
+	__IO uint32_t Context; /*!< SD transfer context                 */
 
-		__IO HAL_SD_StateTypeDef State; /*!< SD card State */
+	__IO HAL_SD_StateTypeDef State; /*!< SD card State */
 
-		__IO uint32_t ErrorCode; /*!< SD Card Error codes                 */
+	__IO uint32_t ErrorCode; /*!< SD Card Error codes                 */
 
-		HAL_SD_CardInfoTypeDef SdCard; /*!< SD Card information */
+	HAL_SD_CardInfoTypeDef SdCard; /*!< SD Card information */
 
-		uint32_t CSD[4]; /*!< SD card specific data table         */
+	uint32_t CSD[4]; /*!< SD card specific data table         */
 
-		uint32_t CID[4]; /*!< SD card identification number table */
+	uint32_t CID[4]; /*!< SD card identification number table */
 
 #if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
-		void (*TxCpltCallback)(struct __SD_HandleTypeDef *hsd);
-		void (*RxCpltCallback)(struct __SD_HandleTypeDef *hsd);
-		void (*ErrorCallback)(struct __SD_HandleTypeDef *hsd);
-		void (*AbortCpltCallback)(struct __SD_HandleTypeDef *hsd);
-		void (*Read_DMALnkLstBufCpltCallback)(struct __SD_HandleTypeDef *hsd);
-		void (*Write_DMALnkLstBufCpltCallback)(struct __SD_HandleTypeDef *hsd);
+	void (*TxCpltCallback)(struct __SD_HandleTypeDef *hsd);
+	void (*RxCpltCallback)(struct __SD_HandleTypeDef *hsd);
+	void (*ErrorCallback)(struct __SD_HandleTypeDef *hsd);
+	void (*AbortCpltCallback)(struct __SD_HandleTypeDef *hsd);
+	void (*Read_DMALnkLstBufCpltCallback)(struct __SD_HandleTypeDef *hsd);
+	void (*Write_DMALnkLstBufCpltCallback)(struct __SD_HandleTypeDef *hsd);
 #if (USE_SD_TRANSCEIVER != 0U)
-		void (*DriveTransceiver_1_8V_Callback)(FlagStatus status);
+	void (*DriveTransceiver_1_8V_Callback)(FlagStatus status);
 #endif /* USE_SD_TRANSCEIVER */
 
-		void (*MspInitCallback)(struct __SD_HandleTypeDef *hsd);
-		void (*MspDeInitCallback)(struct __SD_HandleTypeDef *hsd);
+	void (*MspInitCallback)(struct __SD_HandleTypeDef *hsd);
+	void (*MspDeInitCallback)(struct __SD_HandleTypeDef *hsd);
 #endif /* USE_HAL_SD_REGISTER_CALLBACKS */
-	} SD_HandleTypeDef;
+} SD_HandleTypeDef;
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @defgroup SD_Exported_Types_Group4 Card Specific Data: CSD Register
-	 * @{
-	 */
-	typedef struct
-	{
-		__IO uint8_t CSDStruct;		  /*!< CSD structure                         */
-		__IO uint8_t SysSpecVersion;	  /*!< System specification version */
-		__IO uint8_t Reserved1;		  /*!< Reserved                              */
-		__IO uint8_t TAAC;		  /*!< Data read access time 1               */
-		__IO uint8_t NSAC;		  /*!< Data read access time 2 in CLK cycles */
-		__IO uint8_t MaxBusClkFrec;	  /*!< Max. bus clock frequency    */
-		__IO uint16_t CardComdClasses;	  /*!< Card command classes */
-		__IO uint8_t RdBlockLen;	  /*!< Max. read data block length           */
-		__IO uint8_t PartBlockRead;	  /*!< Partial blocks for read allowed   */
-		__IO uint8_t WrBlockMisalign;	  /*!< Write block misalignment */
-		__IO uint8_t RdBlockMisalign;	  /*!< Read block misalignment */
-		__IO uint8_t DSRImpl;		  /*!< DSR implemented                       */
-		__IO uint8_t Reserved2;		  /*!< Reserved                              */
-		__IO uint32_t DeviceSize;	  /*!< Device Size                           */
-		__IO uint8_t MaxRdCurrentVDDMin;  /*!< Max. read current @ VDD min */
-		__IO uint8_t MaxRdCurrentVDDMax;  /*!< Max. read current @ VDD max */
-		__IO uint8_t MaxWrCurrentVDDMin;  /*!< Max. write current @ VDD min */
-		__IO uint8_t MaxWrCurrentVDDMax;  /*!< Max. write current @ VDD max */
-		__IO uint8_t DeviceSizeMul;	  /*!< Device size multiplier      */
-		__IO uint8_t EraseGrSize;	  /*!< Erase group size                      */
-		__IO uint8_t EraseGrMul;	  /*!< Erase group size multiplier           */
-		__IO uint8_t WrProtectGrSize;	  /*!< Write protect group size   */
-		__IO uint8_t WrProtectGrEnable;	  /*!< Write protect group enable */
-		__IO uint8_t ManDeflECC;	  /*!< Manufacturer default ECC              */
-		__IO uint8_t WrSpeedFact;	  /*!< Write speed factor                    */
-		__IO uint8_t MaxWrBlockLen;	  /*!< Max. write data block length */
-		__IO uint8_t WriteBlockPaPartial; /*!< Partial blocks for write allowed      */
-		__IO uint8_t Reserved3;		  /*!< Reserved                              */
-		__IO uint8_t ContentProtectAppli; /*!< Content protection application */
-		__IO uint8_t FileFormatGroup;	  /*!< File format group     */
-		__IO uint8_t CopyFlag;		  /*!< Copy flag (OTP)                       */
-		__IO uint8_t PermWrProtect;	  /*!< Permanent write protection */
-		__IO uint8_t TempWrProtect;	  /*!< Temporary write protection */
-		__IO uint8_t FileFormat;	  /*!< File format                           */
-		__IO uint8_t ECC;		  /*!< ECC code                              */
-		__IO uint8_t CSD_CRC;		  /*!< CSD CRC                               */
-		__IO uint8_t Reserved4;		  /*!< Always 1                              */
-	} HAL_SD_CardCSDTypeDef;
-	/**
-	 * @}
-	 */
+/** @defgroup SD_Exported_Types_Group4 Card Specific Data: CSD Register
+ * @{
+ */
+typedef struct {
+	__IO uint8_t CSDStruct;		  /*!< CSD structure                         */
+	__IO uint8_t SysSpecVersion;	  /*!< System specification version */
+	__IO uint8_t Reserved1;		  /*!< Reserved                              */
+	__IO uint8_t TAAC;		  /*!< Data read access time 1               */
+	__IO uint8_t NSAC;		  /*!< Data read access time 2 in CLK cycles */
+	__IO uint8_t MaxBusClkFrec;	  /*!< Max. bus clock frequency    */
+	__IO uint16_t CardComdClasses;	  /*!< Card command classes */
+	__IO uint8_t RdBlockLen;	  /*!< Max. read data block length           */
+	__IO uint8_t PartBlockRead;	  /*!< Partial blocks for read allowed   */
+	__IO uint8_t WrBlockMisalign;	  /*!< Write block misalignment */
+	__IO uint8_t RdBlockMisalign;	  /*!< Read block misalignment */
+	__IO uint8_t DSRImpl;		  /*!< DSR implemented                       */
+	__IO uint8_t Reserved2;		  /*!< Reserved                              */
+	__IO uint32_t DeviceSize;	  /*!< Device Size                           */
+	__IO uint8_t MaxRdCurrentVDDMin;  /*!< Max. read current @ VDD min */
+	__IO uint8_t MaxRdCurrentVDDMax;  /*!< Max. read current @ VDD max */
+	__IO uint8_t MaxWrCurrentVDDMin;  /*!< Max. write current @ VDD min */
+	__IO uint8_t MaxWrCurrentVDDMax;  /*!< Max. write current @ VDD max */
+	__IO uint8_t DeviceSizeMul;	  /*!< Device size multiplier      */
+	__IO uint8_t EraseGrSize;	  /*!< Erase group size                      */
+	__IO uint8_t EraseGrMul;	  /*!< Erase group size multiplier           */
+	__IO uint8_t WrProtectGrSize;	  /*!< Write protect group size   */
+	__IO uint8_t WrProtectGrEnable;	  /*!< Write protect group enable */
+	__IO uint8_t ManDeflECC;	  /*!< Manufacturer default ECC              */
+	__IO uint8_t WrSpeedFact;	  /*!< Write speed factor                    */
+	__IO uint8_t MaxWrBlockLen;	  /*!< Max. write data block length */
+	__IO uint8_t WriteBlockPaPartial; /*!< Partial blocks for write allowed      */
+	__IO uint8_t Reserved3;		  /*!< Reserved                              */
+	__IO uint8_t ContentProtectAppli; /*!< Content protection application */
+	__IO uint8_t FileFormatGroup;	  /*!< File format group     */
+	__IO uint8_t CopyFlag;		  /*!< Copy flag (OTP)                       */
+	__IO uint8_t PermWrProtect;	  /*!< Permanent write protection */
+	__IO uint8_t TempWrProtect;	  /*!< Temporary write protection */
+	__IO uint8_t FileFormat;	  /*!< File format                           */
+	__IO uint8_t ECC;		  /*!< ECC code                              */
+	__IO uint8_t CSD_CRC;		  /*!< CSD CRC                               */
+	__IO uint8_t Reserved4;		  /*!< Always 1                              */
+} HAL_SD_CardCSDTypeDef;
+/**
+ * @}
+ */
 
-	/** @defgroup SD_Exported_Types_Group5 Card Identification Data: CID Register
-	 * @{
-	 */
-	typedef struct
-	{
-		__IO uint8_t ManufacturerID; /*!< Manufacturer ID       */
-		__IO uint16_t OEM_AppliID;   /*!< OEM/Application ID    */
-		__IO uint32_t ProdName1;     /*!< Product Name part1    */
-		__IO uint8_t ProdName2;	     /*!< Product Name part2    */
-		__IO uint8_t ProdRev;	     /*!< Product Revision      */
-		__IO uint32_t ProdSN;	     /*!< Product Serial Number */
-		__IO uint8_t Reserved1;	     /*!< Reserved1             */
-		__IO uint16_t ManufactDate;  /*!< Manufacturing Date    */
-		__IO uint8_t CID_CRC;	     /*!< CID CRC               */
-		__IO uint8_t Reserved2;	     /*!< Always 1              */
+/** @defgroup SD_Exported_Types_Group5 Card Identification Data: CID Register
+ * @{
+ */
+typedef struct {
+	__IO uint8_t ManufacturerID; /*!< Manufacturer ID       */
+	__IO uint16_t OEM_AppliID;   /*!< OEM/Application ID    */
+	__IO uint32_t ProdName1;     /*!< Product Name part1    */
+	__IO uint8_t ProdName2;	     /*!< Product Name part2    */
+	__IO uint8_t ProdRev;	     /*!< Product Revision      */
+	__IO uint32_t ProdSN;	     /*!< Product Serial Number */
+	__IO uint8_t Reserved1;	     /*!< Reserved1             */
+	__IO uint16_t ManufactDate;  /*!< Manufacturing Date    */
+	__IO uint8_t CID_CRC;	     /*!< CID CRC               */
+	__IO uint8_t Reserved2;	     /*!< Always 1              */
 
-	} HAL_SD_CardCIDTypeDef;
-	/**
-	 * @}
-	 */
+} HAL_SD_CardCIDTypeDef;
+/**
+ * @}
+ */
 
-	/** @defgroup SD_Exported_Types_Group6 SD Card Status returned by ACMD13
-	 * @{
-	 */
-	typedef struct
-	{
-		__IO uint8_t DataBusWidth;	    /*!< Shows the currently defined data bus width */
-		__IO uint8_t SecuredMode;	    /*!< Card is in secured mode of operation */
-		__IO uint16_t CardType;		    /*!< Carries information about card type   */
-		__IO uint32_t ProtectedAreaSize;    /*!< Carries information about the
-						       capacity of protected area   */
-		__IO uint8_t SpeedClass;	    /*!< Carries information about the speed class
-						       of the card      */
-		__IO uint8_t PerformanceMove;	    /*!< Carries information about the card's
-						       performance move      */
-		__IO uint8_t AllocationUnitSize;    /*!< Carries information about the
-						       card's allocation unit size  */
-		__IO uint16_t EraseSize;	    /*!< Determines the number of AUs to be erased
-						       in one operation */
-		__IO uint8_t EraseTimeout;	    /*!< Determines the timeout for any number of
-						       AU erase          */
-		__IO uint8_t EraseOffset;	    /*!< Carries information about the erase offset */
-		__IO uint8_t UhsSpeedGrade;	    /*!< Carries information about the speed
-						       grade of UHS card      */
-		__IO uint8_t UhsAllocationUnitSize; /*!< Carries information about the UHS card's
-						       allocation unit size  */
-		__IO uint8_t VideoSpeedClass;	    /*!< Carries information about the Video
-						       Speed Class of UHS card    */
-	} HAL_SD_CardStatusTypeDef;
-	/**
-	 * @}
-	 */
+/** @defgroup SD_Exported_Types_Group6 SD Card Status returned by ACMD13
+ * @{
+ */
+typedef struct {
+	__IO uint8_t DataBusWidth;	    /*!< Shows the currently defined data bus width */
+	__IO uint8_t SecuredMode;	    /*!< Card is in secured mode of operation */
+	__IO uint16_t CardType;		    /*!< Carries information about card type   */
+	__IO uint32_t ProtectedAreaSize;    /*!< Carries information about the
+					       capacity of protected area   */
+	__IO uint8_t SpeedClass;	    /*!< Carries information about the speed class
+					       of the card      */
+	__IO uint8_t PerformanceMove;	    /*!< Carries information about the card's
+					       performance move      */
+	__IO uint8_t AllocationUnitSize;    /*!< Carries information about the
+					       card's allocation unit size  */
+	__IO uint16_t EraseSize;	    /*!< Determines the number of AUs to be erased
+					       in one operation */
+	__IO uint8_t EraseTimeout;	    /*!< Determines the timeout for any number of
+					       AU erase          */
+	__IO uint8_t EraseOffset;	    /*!< Carries information about the erase offset */
+	__IO uint8_t UhsSpeedGrade;	    /*!< Carries information about the speed
+					       grade of UHS card      */
+	__IO uint8_t UhsAllocationUnitSize; /*!< Carries information about the UHS card's
+					       allocation unit size  */
+	__IO uint8_t VideoSpeedClass;	    /*!< Carries information about the Video
+					       Speed Class of UHS card    */
+} HAL_SD_CardStatusTypeDef;
+/**
+ * @}
+ */
 
 #if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
-	/** @defgroup SD_Exported_Types_Group7 SD Callback ID enumeration definition
-	 * @{
-	 */
-	typedef enum
-	{
-		HAL_SD_TX_CPLT_CB_ID = 0x00U,			/*!< SD Tx Complete Callback ID */
-		HAL_SD_RX_CPLT_CB_ID = 0x01U,			/*!< SD Rx Complete Callback ID */
-		HAL_SD_ERROR_CB_ID = 0x02U,			/*!< SD Error Callback ID   */
-		HAL_SD_ABORT_CB_ID = 0x03U,			/*!< SD Abort Callback ID   */
-		HAL_SD_READ_DMA_LNKLST_BUF_CPLT_CB_ID = 0x04U,	/*!< SD DMA Rx Linked List Node buffer Callback ID */
-		HAL_SD_WRITE_DMA_LNKLST_BUF_CPLT_CB_ID = 0x05U, /*!< SD DMA Tx Linked List Node buffer Callback ID */
+/** @defgroup SD_Exported_Types_Group7 SD Callback ID enumeration definition
+ * @{
+ */
+typedef enum {
+	HAL_SD_TX_CPLT_CB_ID = 0x00U,			/*!< SD Tx Complete Callback ID */
+	HAL_SD_RX_CPLT_CB_ID = 0x01U,			/*!< SD Rx Complete Callback ID */
+	HAL_SD_ERROR_CB_ID = 0x02U,			/*!< SD Error Callback ID   */
+	HAL_SD_ABORT_CB_ID = 0x03U,			/*!< SD Abort Callback ID   */
+	HAL_SD_READ_DMA_LNKLST_BUF_CPLT_CB_ID = 0x04U,	/*!< SD DMA Rx Linked List Node buffer Callback ID */
+	HAL_SD_WRITE_DMA_LNKLST_BUF_CPLT_CB_ID = 0x05U, /*!< SD DMA Tx Linked List Node buffer Callback ID */
 
-		HAL_SD_MSP_INIT_CB_ID = 0x10U,	/*!< SD MspInit Callback ID  */
-		HAL_SD_MSP_DEINIT_CB_ID = 0x11U /*!< SD MspDeInit Callback ID */
-	} HAL_SD_CallbackIDTypeDef;
-	/**
-	 * @}
-	 */
+	HAL_SD_MSP_INIT_CB_ID = 0x10U,	/*!< SD MspInit Callback ID  */
+	HAL_SD_MSP_DEINIT_CB_ID = 0x11U /*!< SD MspDeInit Callback ID */
+} HAL_SD_CallbackIDTypeDef;
+/**
+ * @}
+ */
 
-	/** @defgroup SD_Exported_Types_Group8 SD Callback pointer definition
-	 * @{
-	 */
-	typedef void (*pSD_CallbackTypeDef)(SD_HandleTypeDef *hsd);
+/** @defgroup SD_Exported_Types_Group8 SD Callback pointer definition
+ * @{
+ */
+typedef void (*pSD_CallbackTypeDef)(SD_HandleTypeDef *hsd);
 #if (USE_SD_TRANSCEIVER != 0U)
-	typedef void (*pSD_TransceiverCallbackTypeDef)(FlagStatus status);
+typedef void (*pSD_TransceiverCallbackTypeDef)(FlagStatus status);
 #endif /* USE_SD_TRANSCEIVER */
 /**
  * @}
  */
-#endif	/* USE_HAL_SD_REGISTER_CALLBACKS */
-	/**
-	 * @}
-	 */
+#endif /* USE_HAL_SD_REGISTER_CALLBACKS */
+       /**
+	* @}
+	*/
 
-	/* Exported constants --------------------------------------------------------*/
-	/** @defgroup SD_Exported_Constants SD Exported Constants
-	 * @{
-	 */
+/* Exported constants --------------------------------------------------------*/
+/** @defgroup SD_Exported_Constants SD Exported Constants
+ * @{
+ */
 
 #define BLOCKSIZE ((uint32_t)512U) /*!< Block size is 512 bytes */
 
@@ -461,8 +454,7 @@ extern "C"
  */
 #if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
 #define __HAL_SD_RESET_HANDLE_STATE(__HANDLE__)                                                                                                                                                        \
-	do                                                                                                                                                                                             \
-	{                                                                                                                                                                                              \
+	do {                                                                                                                                                                                           \
 		(__HANDLE__)->State = HAL_SD_STATE_RESET;                                                                                                                                              \
 		(__HANDLE__)->MspInitCallback = NULL;                                                                                                                                                  \
 		(__HANDLE__)->MspDeInitCallback = NULL;                                                                                                                                                \
@@ -721,101 +713,101 @@ extern "C"
 /* Include SD HAL Extension module */
 #include "stm32u5xx_hal_sd_ex.h"
 
-	/* Exported functions --------------------------------------------------------*/
-	/** @defgroup SD_Exported_Functions SD Exported Functions
-	 * @{
-	 */
+/* Exported functions --------------------------------------------------------*/
+/** @defgroup SD_Exported_Functions SD Exported Functions
+ * @{
+ */
 
-	/** @defgroup SD_Exported_Functions_Group1 Initialization and de-initialization
-	 * functions
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_SD_Init(SD_HandleTypeDef *hsd);
-	HAL_StatusTypeDef HAL_SD_InitCard(SD_HandleTypeDef *hsd);
-	HAL_StatusTypeDef HAL_SD_DeInit(SD_HandleTypeDef *hsd);
-	void HAL_SD_MspInit(SD_HandleTypeDef *hsd);
-	void HAL_SD_MspDeInit(SD_HandleTypeDef *hsd);
-	/**
-	 * @}
-	 */
+/** @defgroup SD_Exported_Functions_Group1 Initialization and de-initialization
+ * functions
+ * @{
+ */
+HAL_StatusTypeDef HAL_SD_Init(SD_HandleTypeDef *hsd);
+HAL_StatusTypeDef HAL_SD_InitCard(SD_HandleTypeDef *hsd);
+HAL_StatusTypeDef HAL_SD_DeInit(SD_HandleTypeDef *hsd);
+void HAL_SD_MspInit(SD_HandleTypeDef *hsd);
+void HAL_SD_MspDeInit(SD_HandleTypeDef *hsd);
+/**
+ * @}
+ */
 
-	/** @defgroup SD_Exported_Functions_Group2 Input and Output operation functions
-	 * @{
-	 */
-	/* Blocking mode: Polling */
-	HAL_StatusTypeDef HAL_SD_ReadBlocks(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks, uint32_t Timeout);
-	HAL_StatusTypeDef HAL_SD_WriteBlocks(SD_HandleTypeDef *hsd, const uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks, uint32_t Timeout);
-	HAL_StatusTypeDef HAL_SD_Erase(SD_HandleTypeDef *hsd, uint32_t BlockStartAdd, uint32_t BlockEndAdd);
-	/* Non-Blocking mode: IT */
-	HAL_StatusTypeDef HAL_SD_ReadBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks);
-	HAL_StatusTypeDef HAL_SD_WriteBlocks_IT(SD_HandleTypeDef *hsd, const uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks);
-	/* Non-Blocking mode: DMA */
-	HAL_StatusTypeDef HAL_SD_ReadBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks);
-	HAL_StatusTypeDef HAL_SD_WriteBlocks_DMA(SD_HandleTypeDef *hsd, const uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks);
+/** @defgroup SD_Exported_Functions_Group2 Input and Output operation functions
+ * @{
+ */
+/* Blocking mode: Polling */
+HAL_StatusTypeDef HAL_SD_ReadBlocks(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks, uint32_t Timeout);
+HAL_StatusTypeDef HAL_SD_WriteBlocks(SD_HandleTypeDef *hsd, const uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks, uint32_t Timeout);
+HAL_StatusTypeDef HAL_SD_Erase(SD_HandleTypeDef *hsd, uint32_t BlockStartAdd, uint32_t BlockEndAdd);
+/* Non-Blocking mode: IT */
+HAL_StatusTypeDef HAL_SD_ReadBlocks_IT(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks);
+HAL_StatusTypeDef HAL_SD_WriteBlocks_IT(SD_HandleTypeDef *hsd, const uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks);
+/* Non-Blocking mode: DMA */
+HAL_StatusTypeDef HAL_SD_ReadBlocks_DMA(SD_HandleTypeDef *hsd, uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks);
+HAL_StatusTypeDef HAL_SD_WriteBlocks_DMA(SD_HandleTypeDef *hsd, const uint8_t *pData, uint32_t BlockAdd, uint32_t NumberOfBlocks);
 
-	void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd);
+void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd);
 
-	/* Callback in non blocking modes (DMA) */
-	void HAL_SD_TxCpltCallback(SD_HandleTypeDef *hsd);
-	void HAL_SD_RxCpltCallback(SD_HandleTypeDef *hsd);
-	void HAL_SD_ErrorCallback(SD_HandleTypeDef *hsd);
-	void HAL_SD_AbortCallback(SD_HandleTypeDef *hsd);
+/* Callback in non blocking modes (DMA) */
+void HAL_SD_TxCpltCallback(SD_HandleTypeDef *hsd);
+void HAL_SD_RxCpltCallback(SD_HandleTypeDef *hsd);
+void HAL_SD_ErrorCallback(SD_HandleTypeDef *hsd);
+void HAL_SD_AbortCallback(SD_HandleTypeDef *hsd);
 
 #if (USE_SD_TRANSCEIVER != 0U)
-	/* Callback to switch in 1.8V mode */
-	void HAL_SD_DriveTransceiver_1_8V_Callback(FlagStatus status);
+/* Callback to switch in 1.8V mode */
+void HAL_SD_DriveTransceiver_1_8V_Callback(FlagStatus status);
 #endif /* USE_SD_TRANSCEIVER */
 
 #if defined(USE_HAL_SD_REGISTER_CALLBACKS) && (USE_HAL_SD_REGISTER_CALLBACKS == 1U)
-	/* SD callback registering/unregistering */
-	HAL_StatusTypeDef HAL_SD_RegisterCallback(SD_HandleTypeDef *hsd, HAL_SD_CallbackIDTypeDef CallbackID, pSD_CallbackTypeDef pCallback);
-	HAL_StatusTypeDef HAL_SD_UnRegisterCallback(SD_HandleTypeDef *hsd, HAL_SD_CallbackIDTypeDef CallbackID);
+/* SD callback registering/unregistering */
+HAL_StatusTypeDef HAL_SD_RegisterCallback(SD_HandleTypeDef *hsd, HAL_SD_CallbackIDTypeDef CallbackID, pSD_CallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_SD_UnRegisterCallback(SD_HandleTypeDef *hsd, HAL_SD_CallbackIDTypeDef CallbackID);
 
 #if (USE_SD_TRANSCEIVER != 0U)
-	HAL_StatusTypeDef HAL_SD_RegisterTransceiverCallback(SD_HandleTypeDef *hsd, pSD_TransceiverCallbackTypeDef pCallback);
-	HAL_StatusTypeDef HAL_SD_UnRegisterTransceiverCallback(SD_HandleTypeDef *hsd);
+HAL_StatusTypeDef HAL_SD_RegisterTransceiverCallback(SD_HandleTypeDef *hsd, pSD_TransceiverCallbackTypeDef pCallback);
+HAL_StatusTypeDef HAL_SD_UnRegisterTransceiverCallback(SD_HandleTypeDef *hsd);
 #endif /* USE_SD_TRANSCEIVER */
 #endif /* USE_HAL_SD_REGISTER_CALLBACKS */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
-	/** @defgroup SD_Exported_Functions_Group3 Peripheral Control functions
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_SD_ConfigWideBusOperation(SD_HandleTypeDef *hsd, uint32_t WideMode);
-	HAL_StatusTypeDef HAL_SD_ConfigSpeedBusOperation(SD_HandleTypeDef *hsd, uint32_t SpeedMode);
-	/**
-	 * @}
-	 */
+/** @defgroup SD_Exported_Functions_Group3 Peripheral Control functions
+ * @{
+ */
+HAL_StatusTypeDef HAL_SD_ConfigWideBusOperation(SD_HandleTypeDef *hsd, uint32_t WideMode);
+HAL_StatusTypeDef HAL_SD_ConfigSpeedBusOperation(SD_HandleTypeDef *hsd, uint32_t SpeedMode);
+/**
+ * @}
+ */
 
-	/** @defgroup SD_Exported_Functions_Group4 SD card related functions
-	 * @{
-	 */
-	HAL_SD_CardStateTypeDef HAL_SD_GetCardState(SD_HandleTypeDef *hsd);
-	HAL_StatusTypeDef HAL_SD_GetCardCID(const SD_HandleTypeDef *hsd, HAL_SD_CardCIDTypeDef *pCID);
-	HAL_StatusTypeDef HAL_SD_GetCardCSD(SD_HandleTypeDef *hsd, HAL_SD_CardCSDTypeDef *pCSD);
-	HAL_StatusTypeDef HAL_SD_GetCardStatus(SD_HandleTypeDef *hsd, HAL_SD_CardStatusTypeDef *pStatus);
-	HAL_StatusTypeDef HAL_SD_GetCardInfo(const SD_HandleTypeDef *hsd, HAL_SD_CardInfoTypeDef *pCardInfo);
-	/**
-	 * @}
-	 */
+/** @defgroup SD_Exported_Functions_Group4 SD card related functions
+ * @{
+ */
+HAL_SD_CardStateTypeDef HAL_SD_GetCardState(SD_HandleTypeDef *hsd);
+HAL_StatusTypeDef HAL_SD_GetCardCID(const SD_HandleTypeDef *hsd, HAL_SD_CardCIDTypeDef *pCID);
+HAL_StatusTypeDef HAL_SD_GetCardCSD(SD_HandleTypeDef *hsd, HAL_SD_CardCSDTypeDef *pCSD);
+HAL_StatusTypeDef HAL_SD_GetCardStatus(SD_HandleTypeDef *hsd, HAL_SD_CardStatusTypeDef *pStatus);
+HAL_StatusTypeDef HAL_SD_GetCardInfo(const SD_HandleTypeDef *hsd, HAL_SD_CardInfoTypeDef *pCardInfo);
+/**
+ * @}
+ */
 
-	/** @defgroup SD_Exported_Functions_Group5 Peripheral State and Errors functions
-	 * @{
-	 */
-	HAL_SD_StateTypeDef HAL_SD_GetState(const SD_HandleTypeDef *hsd);
-	uint32_t HAL_SD_GetError(const SD_HandleTypeDef *hsd);
-	/**
-	 * @}
-	 */
+/** @defgroup SD_Exported_Functions_Group5 Peripheral State and Errors functions
+ * @{
+ */
+HAL_SD_StateTypeDef HAL_SD_GetState(const SD_HandleTypeDef *hsd);
+uint32_t HAL_SD_GetError(const SD_HandleTypeDef *hsd);
+/**
+ * @}
+ */
 
-	/** @defgroup SD_Exported_Functions_Group6 Perioheral Abort management
-	 * @{
-	 */
-	HAL_StatusTypeDef HAL_SD_Abort(SD_HandleTypeDef *hsd);
-	HAL_StatusTypeDef HAL_SD_Abort_IT(SD_HandleTypeDef *hsd);
+/** @defgroup SD_Exported_Functions_Group6 Perioheral Abort management
+ * @{
+ */
+HAL_StatusTypeDef HAL_SD_Abort(SD_HandleTypeDef *hsd);
+HAL_StatusTypeDef HAL_SD_Abort_IT(SD_HandleTypeDef *hsd);
 /**
  * @}
  */
@@ -892,9 +884,9 @@ extern "C"
  */
 #endif /* SDMMC1 || SDMMC2 */
 
-	/**
-	 * @}
-	 */
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

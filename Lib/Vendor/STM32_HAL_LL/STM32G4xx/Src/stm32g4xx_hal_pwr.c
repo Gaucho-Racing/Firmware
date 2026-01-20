@@ -343,25 +343,21 @@ HAL_StatusTypeDef HAL_PWR_ConfigPVD(PWR_PVDTypeDef *sConfigPVD)
 	__HAL_PWR_PVD_EXTI_DISABLE_RISING_EDGE();
 
 	/* Configure interrupt mode */
-	if ((sConfigPVD->Mode & PVD_MODE_IT) == PVD_MODE_IT)
-	{
+	if ((sConfigPVD->Mode & PVD_MODE_IT) == PVD_MODE_IT) {
 		__HAL_PWR_PVD_EXTI_ENABLE_IT();
 	}
 
 	/* Configure event mode */
-	if ((sConfigPVD->Mode & PVD_MODE_EVT) == PVD_MODE_EVT)
-	{
+	if ((sConfigPVD->Mode & PVD_MODE_EVT) == PVD_MODE_EVT) {
 		__HAL_PWR_PVD_EXTI_ENABLE_EVENT();
 	}
 
 	/* Configure the edge */
-	if ((sConfigPVD->Mode & PVD_RISING_EDGE) == PVD_RISING_EDGE)
-	{
+	if ((sConfigPVD->Mode & PVD_RISING_EDGE) == PVD_RISING_EDGE) {
 		__HAL_PWR_PVD_EXTI_ENABLE_RISING_EDGE();
 	}
 
-	if ((sConfigPVD->Mode & PVD_FALLING_EDGE) == PVD_FALLING_EDGE)
-	{
+	if ((sConfigPVD->Mode & PVD_FALLING_EDGE) == PVD_FALLING_EDGE) {
 		__HAL_PWR_PVD_EXTI_ENABLE_FALLING_EDGE();
 	}
 
@@ -461,22 +457,17 @@ void HAL_PWR_EnterSLEEPMode(uint32_t Regulator, uint8_t SLEEPEntry)
 	assert_param(IS_PWR_SLEEP_ENTRY(SLEEPEntry));
 
 	/* Set Regulator parameter */
-	if (Regulator == PWR_MAINREGULATOR_ON)
-	{
+	if (Regulator == PWR_MAINREGULATOR_ON) {
 		/* If in low-power run mode at this point, exit it */
-		if (HAL_IS_BIT_SET(PWR->SR2, PWR_SR2_REGLPF))
-		{
+		if (HAL_IS_BIT_SET(PWR->SR2, PWR_SR2_REGLPF)) {
 			(void)HAL_PWREx_DisableLowPowerRunMode();
 		}
 		/* Regulator now in main mode. */
-	}
-	else
-	{
+	} else {
 		/* If in run mode, first move to low-power run mode.
 		   The system clock frequency must be below 2 MHz at this point.
 		 */
-		if (HAL_IS_BIT_SET(PWR->SR2, PWR_SR2_REGLPF) == 0U)
-		{
+		if (HAL_IS_BIT_SET(PWR->SR2, PWR_SR2_REGLPF) == 0U) {
 			HAL_PWREx_EnableLowPowerRunMode();
 		}
 	}
@@ -486,13 +477,10 @@ void HAL_PWR_EnterSLEEPMode(uint32_t Regulator, uint8_t SLEEPEntry)
 
 	/* Select SLEEP mode entry
 	 * -------------------------------------------------*/
-	if (SLEEPEntry == PWR_SLEEPENTRY_WFI)
-	{
+	if (SLEEPEntry == PWR_SLEEPENTRY_WFI) {
 		/* Request Wait For Interrupt */
 		__WFI();
-	}
-	else
-	{
+	} else {
 		/* Request Wait For Event */
 		__SEV();
 		__WFE();
@@ -539,12 +527,9 @@ void HAL_PWR_EnterSTOPMode(uint32_t Regulator, uint8_t STOPEntry)
 	/* Check the parameters */
 	assert_param(IS_PWR_REGULATOR(Regulator));
 
-	if (Regulator == PWR_LOWPOWERREGULATOR_ON)
-	{
+	if (Regulator == PWR_LOWPOWERREGULATOR_ON) {
 		HAL_PWREx_EnterSTOP1Mode(STOPEntry);
-	}
-	else
-	{
+	} else {
 		HAL_PWREx_EnterSTOP0Mode(STOPEntry);
 	}
 }
