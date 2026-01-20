@@ -1621,7 +1621,6 @@ static HAL_StatusTypeDef CRYP_AES_IT(CRYP_HandleTypeDef *hcryp)
 			*(uint32_t *)(outputaddr) = hcryp->Instance->DOUTR;
 			hcryp->pCrypOutBuffPtr += 16;
 			hcryp->CrypOutCount -= 16U;
-
 		} else {
 			/* Read the derived key from the Key registers */
 			if (hcryp->Init.KeySize == CRYP_KEYSIZE_256B) {

@@ -1909,7 +1909,6 @@ HAL_StatusTypeDef HAL_ADC_Start_IT(ADC_HandleTypeDef *hadc)
 			/* Process unlocked */
 			__HAL_UNLOCK(hadc);
 		}
-
 	} else {
 		tmp_hal_status = HAL_BUSY;
 	}
@@ -2086,7 +2085,6 @@ HAL_StatusTypeDef HAL_ADC_Start_DMA(ADC_HandleTypeDef *hadc, uint32_t *pData, ui
 				/* Process unlocked */
 				__HAL_UNLOCK(hadc);
 			}
-
 		}
 #if defined(ADC_MULTIMODE_SUPPORT)
 		else {

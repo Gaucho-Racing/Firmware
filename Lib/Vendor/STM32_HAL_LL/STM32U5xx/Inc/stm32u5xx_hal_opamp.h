@@ -214,9 +214,9 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
 #define OPAMP_INVERTINGINPUT_CONNECT_NO                                                                                                                                                                \
 	OPAMP_CSR_VM_SEL_1 /*!< OPAMP inverting input not connected externally                                                                                                                         \
 			      (PGA mode only)                          */
-/**
- * @}
- */
+			   /**
+			    * @}
+			    */
 
 /** @defgroup OPAMP_PgaGain OPAMP Pga Gain
  * @{

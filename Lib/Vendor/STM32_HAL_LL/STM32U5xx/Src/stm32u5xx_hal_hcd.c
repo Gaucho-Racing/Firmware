@@ -1739,7 +1739,6 @@ static void HCD_Port_IRQHandler(HCD_HandleTypeDef *hhcd)
 #else
 			HAL_HCD_PortEnabled_Callback(hhcd);
 #endif /* USE_HAL_HCD_REGISTER_CALLBACKS */
-
 		} else {
 #if (USE_HAL_HCD_REGISTER_CALLBACKS == 1U)
 			hhcd->PortDisabledCallback(hhcd);
@@ -1984,7 +1983,6 @@ HAL_StatusTypeDef HAL_HCD_HC_Init(HCD_HandleTypeDef *hhcd, uint8_t ch_num, uint8
 
 			/* Clear Channel DTOG RX */
 			HCD_CLEAR_RX_DTOG(hhcd->Instance, hhcd->hc[ch_num & 0xFU].phy_ch_num);
-
 		} else {
 			if (hhcd->hc[ch_num & 0xFU].ep_num != 0U) {
 				status = HAL_HCD_PMAlloc(hhcd, ch_num, HCD_SNG_BUF, mps);
@@ -3580,8 +3578,7 @@ static void HCD_HC_OUT_IRQHandler(HCD_HandleTypeDef *hhcd, uint8_t chnum)
 			hhcd->HC_NotifyURBChangeCallback(hhcd, (uint8_t)ch_num, hhcd->hc[ch_num & 0xFU].urb_state);
 #else
 			HAL_HCD_HC_NotifyURBChange_Callback(hhcd, (uint8_t)ch_num, hhcd->hc[ch_num & 0xFU].urb_state);
-#endif /* USE_HAL_HCD_REGISTER_CALLBACKS */
-
+#endif		       /* USE_HAL_HCD_REGISTER_CALLBACKS */
 		} else /* Manage all Non Isochronous Transaction */
 		{
 			/* Check ACK response */

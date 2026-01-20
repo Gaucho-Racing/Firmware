@@ -830,7 +830,6 @@ HAL_StatusTypeDef HAL_ADC_Init(ADC_HandleTypeDef *hadc)
 			/* Clear HAL_ADC_STATE_BUSY_INTERNAL bit, set
 			 * HAL_ADC_STATE_READY bit */
 			ADC_STATE_CLR_SET(hadc->State, HAL_ADC_STATE_BUSY_INTERNAL, HAL_ADC_STATE_READY);
-
 		} else {
 			if (hadc->Init.OversamplingMode == ENABLE) {
 				assert_param(IS_ADC4_OVERSAMPLING_RATIO(hadc->Init.Oversampling.Ratio));
@@ -875,7 +874,6 @@ HAL_StatusTypeDef HAL_ADC_Init(ADC_HandleTypeDef *hadc)
 				 * above rank 1             */
 				/* and do not modify rank 1 value. */
 				SET_BIT(hadc->Instance->CHSELR, ADC_CHSELR_SQ2_TO_SQ8);
-
 			} else if (hadc->Init.ScanConvMode == ADC4_SCAN_ENABLE) {
 				/* Set ADC group regular sequencer: */
 				/*  - Set ADC group regular sequencer to value
@@ -2269,7 +2267,6 @@ HAL_StatusTypeDef HAL_ADC_Start_IT(ADC_HandleTypeDef *hadc)
 		} else {
 			__HAL_UNLOCK(hadc);
 		}
-
 	} else {
 		tmp_hal_status = HAL_BUSY;
 	}
@@ -3978,7 +3975,6 @@ HAL_StatusTypeDef HAL_ADC_AnalogWDGConfig(ADC_HandleTypeDef *hadc, ADC_AnalogWDG
 				}
 			}
 		}
-
 	}
 	/* If a conversion is on going on ADC group regular or injected, no
 	   update  */

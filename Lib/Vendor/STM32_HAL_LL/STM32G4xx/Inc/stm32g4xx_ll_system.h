@@ -96,9 +96,9 @@ extern "C" {
 											 0x00000000 */
 #endif										      /* FMC_Bank1_R */
 #define LL_SYSCFG_REMAP_QUADSPI (SYSCFG_MEMRMP_MEM_MODE_2 | SYSCFG_MEMRMP_MEM_MODE_1) /*!< QUADSPI memory mapped at 0x00000000 */
-/**
- * @}
- */
+										      /**
+										       * @}
+										       */
 
 #if defined(SYSCFG_MEMRMP_FB_MODE)
 /** @defgroup SYSTEM_LL_EC_BANKMODE SYSCFG BANK MODE
@@ -112,9 +112,9 @@ extern "C" {
 	SYSCFG_MEMRMP_FB_MODE /*!< Flash Bank2 mapped at 0x08000000 (and                                                                                                                               \
 			       aliased @0x00000000) and Flash Bank1 mapped at                                                                                                                          \
 			       0x08040000 (and aliased at 0x00080000) */
-/**
- * @}
- */
+			      /**
+			       * @}
+			       */
 
 #endif /* SYSCFG_MEMRMP_FB_MODE */
 /** @defgroup SYSTEM_LL_EC_I2C_FASTMODEPLUS SYSCFG I2C FASTMODEPLUS
@@ -388,9 +388,9 @@ extern "C" {
 	DBGMCU_APB2FZ_DBG_HRTIM1_STOP /*!< The counter clock of HRTIM1 is                                                                                                                              \
 					 stopped when the core is halted*/
 #endif				      /* HRTIM1 */
-/**
- * @}
- */
+				      /**
+				       * @}
+				       */
 
 #if defined(VREFBUF)
 /** @defgroup SYSTEM_LL_EC_VOLTAGE VREFBUF VOLTAGE

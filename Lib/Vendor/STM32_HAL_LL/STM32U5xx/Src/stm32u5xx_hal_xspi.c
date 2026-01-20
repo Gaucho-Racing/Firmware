@@ -2560,7 +2560,6 @@ HAL_StatusTypeDef HAL_XSPI_SetFifoThreshold(XSPI_HandleTypeDef *hxspi, uint32_t 
 
 		/* Configure new fifo threshold */
 		MODIFY_REG(hxspi->Instance->CR, XSPI_CR_FTHRES, ((hxspi->Init.FifoThresholdByte - 1U) << XSPI_CR_FTHRES_Pos));
-
 	} else {
 		status = HAL_ERROR;
 		hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;

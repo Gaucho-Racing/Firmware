@@ -643,9 +643,9 @@ typedef struct {
  */
 #define LL_DMA2D_CLUT_COLOR_MODE_ARGB8888 0x00000000U	  /*!< ARGB8888 */
 #define LL_DMA2D_CLUT_COLOR_MODE_RGB888 DMA2D_FGPFCCR_CCM /*!< RGB888   */
-/**
- * @}
- */
+							  /**
+							   * @}
+							   */
 
 #if defined(DMA2D_FGPFCCR_CSS)
 /** @defgroup DMA2D_LL_CHROMA_SUB_SAMPLING Chroma Sub Sampling
