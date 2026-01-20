@@ -71,6 +71,7 @@ target_sources(
 		Application/Src/CANdler.c
 		Application/Src/StateTicks.c
 		Application/Src/StateUtils.c
+		Application/Src/CANutils.c
 )
 
 target_link_libraries(
@@ -78,6 +79,7 @@ target_link_libraries(
 	INTERFACE
 		GR_OLD_CAN_MESSAGES
 		ADC
+		PERIPHERAL_CAN_LIB
 )
 
 target_include_directories(

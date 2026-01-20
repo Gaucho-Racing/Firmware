@@ -11,7 +11,7 @@
  *
  * @return void
  */
-void ECU_State_Tick(void);
+void ECU_State_Tick();
 
 /**
  * @brief State handler for the GLV Off state.
@@ -22,7 +22,7 @@ void ECU_State_Tick(void);
  *
  * @return void
  */
-void ECU_GLV_Off(volatile ECU_StateData *stateData);
+void ECU_GLV_Off(ECU_StateData *stateData);
 
 /**
  * @brief State handler for the GLV On state.
@@ -33,7 +33,7 @@ void ECU_GLV_Off(volatile ECU_StateData *stateData);
  *
  * @return void
  */
-void ECU_GLV_On(volatile ECU_StateData *stateData);
+void ECU_GLV_On(ECU_StateData *stateData);
 
 /**
  * @brief State handler for the Precharge Engaged state.
@@ -44,7 +44,7 @@ void ECU_GLV_On(volatile ECU_StateData *stateData);
  *
  * @return void
  */
-void ECU_Precharge_Engaged(volatile ECU_StateData *stateData);
+void ECU_Precharge_Engaged(ECU_StateData *stateData);
 
 /**
  * @brief State handler for the Precharge Complete state.
@@ -55,7 +55,7 @@ void ECU_Precharge_Engaged(volatile ECU_StateData *stateData);
  *
  * @return void
  */
-void ECU_Precharge_Complete(volatile ECU_StateData *stateData);
+void ECU_Precharge_Complete(ECU_StateData *stateData);
 
 /**
  * @brief State handler for the Precharge Fault state.
@@ -66,7 +66,7 @@ void ECU_Precharge_Complete(volatile ECU_StateData *stateData);
  *
  * @return void
  */
-void ECU_Drive_Active(volatile ECU_StateData *stateData);
+void ECU_Drive_Active(ECU_StateData *stateData);
 
 /**
  * @brief Init function for ECU_Tractive_System_Discharge_Start.
@@ -78,7 +78,7 @@ void ECU_Drive_Active(volatile ECU_StateData *stateData);
  *
  * @return void
  */
-void ECU_Tractive_System_Discharge_Start(volatile ECU_StateData *stateData);
+void ECU_Tractive_System_Discharge_Start(ECU_StateData *stateData);
 
 /**
  * @brief State handler for the Tractive System Discharge state.
@@ -90,6 +90,6 @@ void ECU_Tractive_System_Discharge_Start(volatile ECU_StateData *stateData);
  *
  * @return void
  */
-void ECU_Tractive_System_Discharge(volatile ECU_StateData *stateData);
+void ECU_Tractive_System_Discharge(ECU_StateData *stateData);
 
 #endif

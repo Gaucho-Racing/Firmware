@@ -52,7 +52,7 @@ bool CriticalError(volatile const ECU_StateData *stateData)
 	if (stateData->ts_voltage > 600) {
 		return true;
 	}
-	if (stateData->bse_apps_violation) {
+	if (APPS_BSE_Violation(stateData)) {
 		return true;
 	}
 	return false;

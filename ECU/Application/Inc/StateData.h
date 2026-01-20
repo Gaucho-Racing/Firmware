@@ -18,7 +18,32 @@
  * @remark It is passed to each state function on tick to allow state-specific
  * logic to access and modify the ECU's operational data.
  */
-typedef struct ECU_StateData {
+
+ #define SAFE_VOLTAGE_LIMIT 60
+ typedef union {
+    struct {
+        uint8_t ECUState;
+        uint8_t StatusBits[3];
+        uint8_t PowerLevelTorqueMap;
+        uint8_t MaxCellTemp;
+        uint8_t AccumulatorStateOfCharge;
+        uint8_t GLVStateOfCharge;
+        uint16_t TractiveSystemVoltage;
+        uint16_t VehicleSpeed;
+        uint16_t FRWheelRPM;
+        uint16_t FLWheelRPM;
+        uint16_t RRWheelRPM;
+		uint16_t RLWheelRPM;
+    };
+	
+	struct {
+        uint8_t ECUStatusMsgOne[8];
+        uint8_t ECUStatusMsgTwo[8];
+        uint8_t ECUStatusMsgThree[4];
+    };
+} ECU_StateDataToSend;
+
+typedef volatile struct ECU_StateData {
 
 	// TODO: Remove unneeded states
 	int32_t dischargeStartMillis;
@@ -51,17 +76,20 @@ typedef struct ECU_StateData {
 	uint16_t Brake_R_Signal;
 	uint16_t Brake_F_Signal;
 	uint16_t STEERING_ANGLE_SIGNAL;
+	uint8_t status_bits[3];
 	int8_t ping_block[3];	      /** Node timeout status bits (1=OK, 0=Timeout) */
 	uint8_t powerlevel_torquemap; /** Power lvl (4b) & torque map (4b) */
 	uint8_t tractivebattery_soc;  /** Accumulator SoC, 20x/51=% */
 	uint8_t glv_soc;	      /** GLV SoC, 20x/51=% */
 	uint8_t acu_error_warning_bits;
 	uint8_t inverter_fault_map;
-	bool bse_apps_violation;
-	bool ts_active_button_engaged;
-	bool rtd_button_engaged;
+	bool ts_active;
+	bool rtd;
+	bool ir_plus;
+	bool ir_minus;
 	GR_ECU_State ecu_state;
-} ECU_StateData; // FIXME Add comments to each data field with descriptions and
+} ECU_StateData;
+		// FIXME Add comments to each data field with descriptions and
 		 // rules (eg -1 = invalid?, etc)
 		 // Will also need to add information from ADC into this struct
 		 // --- such as the APPS and Brake signals after doing smoothing

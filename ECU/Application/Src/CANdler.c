@@ -8,6 +8,8 @@
 #include "Logomatic.h"
 #include "StateData.h"
 
+extern ECU_StateData stateLump;
+
 void ReportBadMessageLength(GR_OLD_BUS_ID bus_id, GR_OLD_MSG_ID msg_id, GR_OLD_NODE_ID sender_id)
 {
 	// TODO Ideally change some state data to note a bad message, ie if BCU
@@ -63,6 +65,8 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id, GR_
 			GR_OLD_BCU_STATUS_2_MSG *bcu_status_2 = (GR_OLD_BCU_STATUS_2_MSG *)data;
 			state_data->max_cell_temp = bcu_status_2->max_cell_temp;
 			state_data->acu_error_warning_bits = bcu_status_2->error_bits;
+			state_data->ir_minus = getBit(bcu_state_2->precharge_bits, 1); 
+			state_data->ir_plus = getBit(bcu_state_2->precharge_bits, 2); 
 			break;
 		case MSG_INVERTER_STATUS_1:
 			if (data_length != sizeof(GR_OLD_INVERTER_STATUS_1_MSG)) {
