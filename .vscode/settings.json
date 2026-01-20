@@ -9,5 +9,5 @@
 		"*.s": "asm"
 	},
 	"C_Cpp.default.cStandard": "gnu11",
-	"markdown.validate.enabled": true,
+	"markdown.validate.enabled": true
 }
