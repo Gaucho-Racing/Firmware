@@ -21,16 +21,8 @@ if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
 			Application/Inc
 			Core/Inc
 	)
-	target_sources(
-		dummy_test
-		PRIVATE
-			Test/dummy_test.c
-	)
-	target_link_libraries(
-		dummy_test
-		PRIVATE
-			GLOBALSHARE_LIB
-	)
+	target_sources(dummy_test PRIVATE Test/dummy_test.c)
+	target_link_libraries(dummy_test PRIVATE GLOBALSHARE_LIB)
 	add_test(dummy_test dummy_test)
 
 	# FIXME Add more HOOTL tests
