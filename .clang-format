@@ -5,6 +5,7 @@ UseTab: Always
 BreakBeforeBraces: Linux
 AllowShortIfStatementsOnASingleLine: false
 IndentCaseLabels: true
+BreakBeforeBraces: Allman
 InsertBraces: true
 LineEnding: LF
 SortIncludes: CaseSensitive
