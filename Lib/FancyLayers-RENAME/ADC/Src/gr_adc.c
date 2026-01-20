@@ -107,12 +107,12 @@ void ADC_Set_Common_Clock(ADC_Common_TypeDef *ADC_Common, CommonClock commonCloc
 CommonClock ADC_Get_Common_Clock(ADC_Common_TypeDef *ADC_Common) { return LL_ADC_GetCommonClock(ADC_Common); }
 // note to self: these are not valid errors; they appear in vscode but not on
 // compile	<-- To be clear I do not have any errors anywhere at all...
-void DMA_Init(DMA_TypeDef *DMA, DMA_Channel channel, uint32_t src_address, uint32_t dest_address, uint32_t p_data_size, uint32_t m_data_size, uint32_t num_data, ADC_TypeDef *ADC,
+void DMA_Init(DMA_TypeDef *DMA, DMA_Channel channel, uint32_t src_address, volatile void* dest_address, uint32_t p_data_size, uint32_t m_data_size, uint32_t num_data, ADC_TypeDef *ADC,
 	      DMA_Priority priority)
 {
 	LL_DMA_InitTypeDef config = {0};
 	config.PeriphOrM2MSrcAddress = src_address;
-	config.MemoryOrM2MDstAddress = dest_address;
+	config.MemoryOrM2MDstAddress = (uint32_t)dest_address;
 	config.Direction = LL_DMA_DIRECTION_PERIPH_TO_MEMORY;
 	config.Mode = LL_DMA_MODE_CIRCULAR;
 	config.PeriphOrM2MSrcIncMode = LL_DMA_PERIPH_NOINCREMENT;
