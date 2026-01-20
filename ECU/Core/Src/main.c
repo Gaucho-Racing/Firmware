@@ -33,10 +33,10 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "CANdler.h"
+#include "CANutils.h"
 #include "Logomatic.h"
 #include "StateTicks.h"
 #include "StateUtils.h"
-#include "CANutils.h"
 #include "adc.h"
 #include "can.h"
 /* USER CODE END Includes */
@@ -410,7 +410,6 @@ int main(void)
 	for (int i = 0; i < (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2); i++) {
 		adcDataValues[i] = malloc(sizeof(uint16_t) * WINDOW_SIZE);
 	}
-
 
 	/* USER CODE END 2 */
 
