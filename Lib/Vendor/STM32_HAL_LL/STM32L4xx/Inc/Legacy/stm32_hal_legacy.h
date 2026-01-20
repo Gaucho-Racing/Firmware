@@ -1727,9 +1727,9 @@ extern "C"
 	HAL_DMA2D_CLUTLoading_Abort /*!< Aliased to                                                                                                                                                    \
 				       HAL_DMA2D_CLUTLoading_Abort for                                                                                                                                 \
 				       compatibility with legacy code */
-				    /**
-				     * @}
-				     */
+	/**
+	 * @}
+	 */
 
 #endif /* STM32L4 ||  STM32F7 ||  STM32F4 ||  STM32H7 || STM32U5 */
 
