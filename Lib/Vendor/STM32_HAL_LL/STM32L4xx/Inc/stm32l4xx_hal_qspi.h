@@ -351,9 +351,9 @@ extern "C"
  */
 #define QSPI_DUALFLASH_ENABLE ((uint32_t)QUADSPI_CR_DFM) /*!<Dual-flash mode enabled*/
 #define QSPI_DUALFLASH_DISABLE 0x00000000U		 /*!<Dual-flash mode disabled*/
-	/**
-	 * @}
-	 */
+							 /**
+							  * @}
+							  */
 
 #endif
 /** @defgroup QSPI_AddressSize QSPI Address Size

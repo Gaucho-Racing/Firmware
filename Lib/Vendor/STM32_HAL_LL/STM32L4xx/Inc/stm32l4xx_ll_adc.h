@@ -1231,9 +1231,9 @@ trigger polarity set to falling edge */
 		  transferred by DMA, in unlimited mode: DMA transfer requests are unlimited,                                                                                                          \
 		  whatever number of DMA data transferred (number of ADC conversions).                                                                                                                 \
 		  This ADC mode is intended to be used with DMA mode circular. */
-	/**
-	 * @}
-	 */
+					   /**
+					    * @}
+					    */
 
 #if defined(ADC_CFGR_DFSDMCFG) && defined(DFSDM1_Channel0)
 /** @defgroup ADC_LL_EC_REG_DFSDM_TRANSFER ADC group regular - DFSDM transfer of

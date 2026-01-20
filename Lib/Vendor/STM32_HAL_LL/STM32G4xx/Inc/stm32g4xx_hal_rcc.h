@@ -527,9 +527,9 @@ extern "C"
 #define RCC_LSEDRIVE_MEDIUMLOW RCC_BDCR_LSEDRV_0  /*!< LSE medium low drive capability */
 #define RCC_LSEDRIVE_MEDIUMHIGH RCC_BDCR_LSEDRV_1 /*!< LSE medium high drive capability */
 #define RCC_LSEDRIVE_HIGH RCC_BDCR_LSEDRV	  /*!< LSE high drive capability */
-	/**
-	 * @}
-	 */
+						  /**
+						   * @}
+						   */
 
 	/**
 	 * @}
