@@ -105,8 +105,7 @@ void usart_init_hardware(USARTConfig *config, USARTHandle *handle)
 
 		LL_LPUART_Enable(handle->instance);
 
-		while ((!(LL_LPUART_IsActiveFlag_TEACK(handle->instance))) || (!(LL_LPUART_IsActiveFlag_REACK(handle->instance)))) {
-		}
+		while ((!(LL_LPUART_IsActiveFlag_TEACK(handle->instance))) || (!(LL_LPUART_IsActiveFlag_REACK(handle->instance)))) {}
 	} else {
 		LL_USART_Init(handle->instance, config->ll_usart);
 
@@ -116,8 +115,7 @@ void usart_init_hardware(USARTConfig *config, USARTHandle *handle)
 		LL_USART_EnableDirectionRx(handle->instance);
 		LL_USART_Enable(handle->instance);
 
-		while (!LL_USART_IsActiveFlag_TEACK(handle->instance) || !LL_USART_IsActiveFlag_REACK(handle->instance)) {
-		}
+		while (!LL_USART_IsActiveFlag_TEACK(handle->instance) || !LL_USART_IsActiveFlag_REACK(handle->instance)) {}
 	}
 
 	// configure interrupt callback
@@ -339,6 +337,5 @@ void usart_release_hardware(USARTHandle **handle)
 	LL_USART_Disable(instance);
 
 	// wait for hardware to acknowledge that usart is disabled
-	while (LL_USART_IsActiveFlag_TEACK(instance) || LL_USART_IsActiveFlag_REACK(instance)) {
-	}
+	while (LL_USART_IsActiveFlag_TEACK(instance) || LL_USART_IsActiveFlag_REACK(instance)) {}
 }
