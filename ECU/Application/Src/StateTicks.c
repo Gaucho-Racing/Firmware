@@ -72,7 +72,7 @@ void ECU_GLV_Off(ECU_StateData *stateData)
 
 void ECU_GLV_On(ECU_StateData *stateData)
 {
-	if (stateData->ts_voltage >= 60) {
+	if (stateData->ts_voltage >= SAFE_VOLTAGE_LIMIT) {
 		ECU_Tractive_System_Discharge_Start(stateData);
 		//TODO emit an error
 		LOGOMATIC("TS Voltage >= 60!")
@@ -129,7 +129,7 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 	// Pseudocode
 	if (!stateData->ts_active || CriticalError(stateData)) {
 		ECU_Tractive_System_Discharge_Start(stateData);
-		// emit an error
+		// TODO: emit an error
 		return;
 	}
 
@@ -193,7 +193,7 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 		Discharge the tractive system to below 60 volts
 		If TS voltage < 60 --> stateData->GLV_ON
 	*/
-	if (stateData->ts_voltage < 60) {
+	if (stateData->ts_voltage < SAFE_VOLTAGE_LIMIT) {
 		stateData->ecu_state = GR_GLV_ON;
 		stateData->dischargeStartMillis = 0;
 		return;

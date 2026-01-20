@@ -235,8 +235,19 @@ void ADC_Configure(void)
 	ADC_Enable_And_Calibrate(ADC2);
 }
 
-CANHandle *can1Handle;
-CANHandle *can2Handle;
+//CANHandle *can1Handle;
+//CANHandle *can2Handle;
+
+void CAN1_rx_callback(void* data, uint32_t size) {
+
+	ECU_CAN_MessageHandler(); 
+}
+
+void CAN0_rx_callback(void* data, uint32_t size) {
+
+	ECU_CAN_MessageHandler();
+}
+
 void CAN_Configure()
 {
 	CANConfig canCfg;
@@ -397,7 +408,6 @@ int main(void)
 	MX_LPUART1_UART_Init();
 	/* USER CODE BEGIN 2 */
 
-	// Initialize CAN
 	CAN_Configure();	
 	
 	ADC_Configure();

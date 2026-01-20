@@ -13,10 +13,10 @@ ECU_StateDataToSend ParseECUStateDataIntoMessages(ECU_StateData *stateData)
 		.GLVStateOfCharge = (uint8_t)(stateData->glv_soc * 51 / 20),
 		.TractiveSystemVoltage = (uint16_t)(stateData->ts_voltage * 0.01),
 		.VehicleSpeed = (uint16_t)(stateData->vehicle_speed * 0.01),
-	    .FRWheelRPM = (uint16_t)(stateData->fr_wheel_rpm * 0.1 - 3276.8),
-		.FLWheelRPM = (uint16_t)(stateData->fl_wheel_rpm * 0.1 - 3276.8),
-	    .RRWheelRPM = (uint16_t)(stateData->rr_wheel_rpm * 0.1 - 3276.8),
-		.RLWheelRPM = (uint16_t)(stateData->rl_wheel_rpm * 0.1 - 3276.8)
+	    .FRWheelRPM = (uint16_t)(10*(stateData->fr_wheel_rpm + 3276.8)),
+		.FLWheelRPM = (uint16_t)(10*(stateData->fl_wheel_rpm * 10 + 3276.8)),
+	    .RRWheelRPM = (uint16_t)(stateData->rr_wheel_rpm * 10 + 3276.8),
+		.RLWheelRPM = (uint16_t)(stateData->rl_wheel_rpm * 10 + 3276.8)
 	};
 
 	return messages;
