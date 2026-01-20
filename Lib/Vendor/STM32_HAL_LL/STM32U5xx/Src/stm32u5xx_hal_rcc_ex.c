@@ -2581,7 +2581,6 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint64_t PeriphClk)
 		else {
 			frequency = 0U;
 		}
-
 	} else if (PeriphClk == RCC_PERIPHCLK_RNG) {
 		/* Get the current RNG kernel source */
 		srcclk = __HAL_RCC_GET_RNG_SOURCE();

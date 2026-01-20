@@ -517,9 +517,9 @@ typedef void (*pUART_RxEventCallbackTypeDef)(struct __UART_HandleTypeDef *huart,
  */
 #define UART_LINBREAKDETECTLENGTH_10B 0x00000000U    /*!< LIN 10-bit break detection length */
 #define UART_LINBREAKDETECTLENGTH_11B USART_CR2_LBDL /*!< LIN 11-bit break detection length  */
-/**
- * @}
- */
+						     /**
+						      * @}
+						      */
 
 #if defined(HAL_DMA_MODULE_ENABLED)
 /** @defgroup UART_DMA_Tx    UART DMA Tx
@@ -643,9 +643,9 @@ typedef void (*pUART_RxEventCallbackTypeDef)(struct __UART_HandleTypeDef *huart,
  */
 #define UART_ADVFEATURE_AUTOBAUDRATE_DISABLE 0x00000000U    /*!< RX Auto Baud rate detection enable  */
 #define UART_ADVFEATURE_AUTOBAUDRATE_ENABLE USART_CR2_ABREN /*!< RX Auto Baud rate detection disable */
-/**
- * @}
- */
+							    /**
+							     * @}
+							     */
 
 #if defined(HAL_DMA_MODULE_ENABLED)
 /** @defgroup UART_DMA_Disable_on_Rx_Error   UART Advanced Feature DMA Disable

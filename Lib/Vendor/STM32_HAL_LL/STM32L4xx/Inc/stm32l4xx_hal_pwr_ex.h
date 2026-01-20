@@ -341,9 +341,9 @@ typedef struct {
 	PWR_CR3_RRS /*!< Full SRAM2 is powered by the low-power regulator in                                                                                                                           \
 		       Standby mode */
 #endif		    /* PWR_CR3_RRS_1 */
-/**
- * @}
- */
+		    /**
+		     * @}
+		     */
 
 /**
  * @}

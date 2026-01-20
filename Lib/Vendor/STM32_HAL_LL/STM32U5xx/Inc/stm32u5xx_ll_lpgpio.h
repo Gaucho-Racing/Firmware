@@ -419,9 +419,9 @@ void LL_LPGPIO_StructInit(LL_LPGPIO_InitTypeDef *LPGPIO_InitStruct);
  */
 
 #endif /* defined (LPGPIO1) */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 #ifdef __cplusplus
 }

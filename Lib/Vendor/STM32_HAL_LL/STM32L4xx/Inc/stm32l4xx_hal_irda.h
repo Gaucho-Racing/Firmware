@@ -303,9 +303,9 @@ typedef void (*pIRDA_CallbackTypeDef)(IRDA_HandleTypeDef *hirda); /*!< pointer t
  */
 #define IRDA_POWERMODE_NORMAL 0x00000000U      /*!< IRDA normal power mode */
 #define IRDA_POWERMODE_LOWPOWER USART_CR3_IRLP /*!< IRDA low power mode    */
-/**
- * @}
- */
+					       /**
+						* @}
+						*/
 
 #if defined(USART_PRESC_PRESCALER)
 /** @defgroup IRDA_ClockPrescaler IRDA Clock Prescaler
@@ -323,9 +323,9 @@ typedef void (*pIRDA_CallbackTypeDef)(IRDA_HandleTypeDef *hirda); /*!< pointer t
 #define IRDA_PRESCALER_DIV64 0x00000009U  /*!< fclk_pres = fclk/64  */
 #define IRDA_PRESCALER_DIV128 0x0000000AU /*!< fclk_pres = fclk/128 */
 #define IRDA_PRESCALER_DIV256 0x0000000BU /*!< fclk_pres = fclk/256 */
-/**
- * @}
- */
+					  /**
+					   * @}
+					   */
 
 #endif /* USART_PRESC_PRESCALER */
 /** @defgroup IRDA_State IRDA State

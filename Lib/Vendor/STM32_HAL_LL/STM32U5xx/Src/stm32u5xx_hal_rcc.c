@@ -609,7 +609,6 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(const RCC_OscInitTypeDef *pRCC_OscInitStruct
 				/* Adjusts the Multiple Speed oscillator (MSI)
 				 * calibration value */
 				__HAL_RCC_MSI_CALIBRATIONVALUE_ADJUST((pRCC_OscInitStruct->MSICalibrationValue), (pRCC_OscInitStruct->MSIClockRange));
-
 			} else {
 				/* Disable the Internal High Speed oscillator
 				 * (MSI) */
@@ -1128,7 +1127,6 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(const RCC_OscInitTypeDef *pRCC_OscInitStruct
 
 				/* Enable PLL System Clock output */
 				__HAL_RCC_PLLCLKOUT_ENABLE(RCC_PLL1_DIVR);
-
 			} else {
 				/* Disable the main PLL */
 				__HAL_RCC_PLL_DISABLE();
@@ -1174,8 +1172,7 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(const RCC_OscInitTypeDef *pRCC_OscInitStruct
 				/* Wait at least 2 CK_REF (PLL1 input source
 				   divided by M) period to make sure next
 				   latched value will be taken into account. */
-				while ((HAL_GetTick() - tickstart) < PLL_FRAC_WAIT_VALUE) {
-				}
+				while ((HAL_GetTick() - tickstart) < PLL_FRAC_WAIT_VALUE) {}
 
 				/* Configure PLL PLL1FRACN */
 				__HAL_RCC_PLL_FRACN_CONFIG(pRCC_OscInitStruct->PLL.PLLFRACN);

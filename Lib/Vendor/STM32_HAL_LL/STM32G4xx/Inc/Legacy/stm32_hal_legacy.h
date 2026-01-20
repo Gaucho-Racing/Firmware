@@ -114,9 +114,9 @@ extern "C" {
 #if defined(STM32H5)
 #define ADC_CHANNEL_VCORE ADC_CHANNEL_VDDCORE
 #endif /* STM32H5 */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 /** @defgroup HAL_CEC_Aliased_Defines HAL CEC Aliased Defines maintained for
  * legacy purpose
@@ -453,9 +453,9 @@ extern "C" {
 #if defined(STM32U5)
 #define GPDMA1_REQUEST_DCMI GPDMA1_REQUEST_DCMI_PSSI
 #endif /* STM32U5 */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 /** @defgroup HAL_FLASH_Aliased_Defines HAL FLASH Aliased Defines maintained for
  * legacy purpose
@@ -1930,9 +1930,9 @@ extern "C" {
 #define HAL_FMPI2C_Slave_Sequential_Transmit_DMA HAL_FMPI2C_Slave_Seq_Transmit_DMA
 #define HAL_FMPI2C_Slave_Sequential_Receive_DMA HAL_FMPI2C_Slave_Seq_Receive_DMA
 #endif /* STM32F4 */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 /** @defgroup HAL_PWR_Aliased HAL PWR Aliased maintained for legacy purpose
  * @{
@@ -2776,9 +2776,9 @@ extern "C" {
 #define __HAL_PVD_EXTI_GENERATE_SWIT __HAL_PWR_PVD_EXTI_GENERATE_SWIT
 #define __HAL_PVD_EXTI_GET_FLAG __HAL_PWR_PVD_EXTI_GET_FLAG
 #endif /* STM32F4 */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 /** @defgroup HAL_RCC_Aliased HAL RCC Aliased maintained for legacy purpose
  * @{
@@ -4457,9 +4457,9 @@ extern "C" {
 #if defined(STM32F7)
 #define ART_ACCLERATOR_ENABLE ART_ACCELERATOR_ENABLE
 #endif /* STM32F7 */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 /** @defgroup HAL_PPP_Aliased_Macros HAL PPP Aliased Macros maintained for
  * legacy purpose

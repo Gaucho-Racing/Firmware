@@ -156,9 +156,9 @@ typedef void (*pRNG_ReadyDataCallbackTypeDef)(RNG_HandleTypeDef *hrng, uint32_t 
 #define RNG_FLAG_DRDY RNG_SR_DRDY /*!< Data ready                 */
 #define RNG_FLAG_CECS RNG_SR_CECS /*!< Clock error current status */
 #define RNG_FLAG_SECS RNG_SR_SECS /*!< Seed error current status  */
-/**
- * @}
- */
+				  /**
+				   * @}
+				   */
 
 #if defined(RNG_CR_CED)
 /** @defgroup RNG_Exported_Constants_Group3 RNG Clock Error Detection
@@ -166,9 +166,9 @@ typedef void (*pRNG_ReadyDataCallbackTypeDef)(RNG_HandleTypeDef *hrng, uint32_t 
  */
 #define RNG_CED_ENABLE 0x00000000U /*!< Clock error detection Enabled  */
 #define RNG_CED_DISABLE RNG_CR_CED /*!< Clock error detection Disabled */
-/**
- * @}
- */
+				   /**
+				    * @}
+				    */
 
 #endif /* RNG_CR_CED */
 /** @defgroup RNG_Error_Definition   RNG Error Definition
@@ -366,9 +366,9 @@ uint32_t HAL_RNG_GetError(const RNG_HandleTypeDef *hrng);
  */
 #define IS_RNG_CED(__MODE__) (((__MODE__) == RNG_CED_ENABLE) || ((__MODE__) == RNG_CED_DISABLE))
 #endif /* RNG_CR_CED */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 #if defined(RNG_CR_CONDRST)
 /* Private functions ---------------------------------------------------------*/
@@ -380,9 +380,9 @@ HAL_StatusTypeDef RNG_RecoverSeedError(RNG_HandleTypeDef *hrng);
  * @}
  */
 #endif /* RNG_CR_CONDRST */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 #endif /* RNG */
 

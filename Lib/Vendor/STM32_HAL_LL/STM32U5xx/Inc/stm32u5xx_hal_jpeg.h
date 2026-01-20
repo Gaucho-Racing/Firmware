@@ -184,9 +184,9 @@ typedef void (*pJPEG_CallbackTypeDef)(JPEG_HandleTypeDef *hjpeg);						      /*!
 typedef void (*pJPEG_InfoReadyCallbackTypeDef)(JPEG_HandleTypeDef *hjpeg, JPEG_ConfTypeDef *pInfo);		      /*!< pointer to an Info ready JPEG callback function */
 typedef void (*pJPEG_GetDataCallbackTypeDef)(JPEG_HandleTypeDef *hjpeg, uint32_t NbDecodedData);		      /*!< pointer to a Get data JPEG callback function */
 typedef void (*pJPEG_DataReadyCallbackTypeDef)(JPEG_HandleTypeDef *hjpeg, uint8_t *pDataOut, uint32_t OutDataLength); /*!< pointer to a Data ready JPEG callback function */
-/**
- * @}
- */
+														      /**
+														       * @}
+														       */
 
 #endif /* USE_HAL_JPEG_REGISTER_CALLBACKS */
 
