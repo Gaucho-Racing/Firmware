@@ -2,10 +2,9 @@ BasedOnStyle: LLVM
 IndentWidth: 8
 ColumnLimit: 200
 UseTab: Always
-BreakBeforeBraces: Linux
+BreakBeforeBraces: Allman
 AllowShortIfStatementsOnASingleLine: false
 IndentCaseLabels: true
-BreakBeforeBraces: Allman
 InsertBraces: true
 LineEnding: LF
 SortIncludes: CaseSensitive
