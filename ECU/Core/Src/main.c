@@ -91,10 +91,9 @@ TS_ACTIVE_BTN_LED_CONTROL (43): PA9
 RTD_BTN_LED_CONTROL (42): PA8
 */
 
+// CAN
 
-//CAN 
-
-#define CAN_TX_BUFFER_LENGTH 10 
+#define CAN_TX_BUFFER_LENGTH 10
 // ADC 1
 #define WINDOW_SIZE 10 // weighted average for now can extend to other window functions
 #define NUM_SIGNALS_ADC1 7
@@ -241,7 +240,7 @@ void CAN_Configure()
 {
 	CANConfig canCfg;
 
-	//SHARED config data for CAN1 and CAN2
+	// SHARED config data for CAN1 and CAN2
 	canCfg.hal_fdcan_init.ClockDivider = FDCAN_CLOCK_DIV1;
 	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_FD_NO_BRS;
 	canCfg.hal_fdcan_init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
@@ -261,16 +260,16 @@ void CAN_Configure()
 	canCfg.hal_fdcan_init.ExtFiltersNbr = 0;
 
 	canCfg.rx_callback = NULL;
-	canCfg.rx_interrupt_priority = 15; //TODO: Maybe make these not hardcoded
-	canCfg.tx_interrupt_priority = 15; 
-	canCfg.tx_buffer_length = CAN_TX_BUFFER_LENGTH;	
+	canCfg.rx_interrupt_priority = 15; // TODO: Maybe make these not hardcoded
+	canCfg.tx_interrupt_priority = 15;
+	canCfg.tx_buffer_length = CAN_TX_BUFFER_LENGTH;
 
-	//RX shared settings
+	// RX shared settings
 	canCfg.init_rx_gpio.Mode = GPIO_MODE_AF_PP;
 	canCfg.init_rx_gpio.Pull = GPIO_PULLUP;
 	canCfg.init_rx_gpio.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 
-	//TX Shared settings
+	// TX Shared settings
 	canCfg.init_tx_gpio.Mode = GPIO_MODE_AF_PP;
 	canCfg.init_tx_gpio.Pull = GPIO_NOPULL;
 	canCfg.init_tx_gpio.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -291,10 +290,10 @@ void CAN_Configure()
 	FDCANTxMessage msg = {.data = {0x80}, .tx_header = TxHeader};
 	*/
 
-	//PCLK1 from SYSCLK
+	// PCLK1 from SYSCLK
 	can_set_clksource(LL_RCC_FDCAN_CLKSOURCE_PCLK1);
 
-	//CAN1 =====================================================================
+	// CAN1 =====================================================================
 	canCfg.fdcan_instance = FDCAN1;
 	canCfg.rx_gpio = GPIOA;
 	canCfg.init_rx_gpio.Pin = GPIO_PIN_11;
@@ -304,26 +303,26 @@ void CAN_Configure()
 	canCfg.init_tx_gpio.Pin = GPIO_PIN_12;
 	canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN1;
 
-	//RX Callback CAN1
-	canCfg.rx_callback = ECU_CAN_MessageHandler; //TODO: Make sure the wrapper for this is defined correctly
+	// RX Callback CAN1
+	canCfg.rx_callback = ECU_CAN_MessageHandler; // TODO: Make sure the wrapper for this is defined correctly
 
 	can1Handle = can_init(&canCfg);
-	
-	//Filter 1 Definitions
+
+	// Filter 1 Definitions
 	FDCAN_FilterTypeDef fdcan1_filter;
 
 	fdcan1_filter.IdType = FDCAN_EXTENDED_ID;
 	fdcan1_filter.FilterIndex = 0;
 	fdcan1_filter.FilterType = FDCAN_FILTER_MASK;
 	fdcan1_filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-	fdcan1_filter.FilterID1 = LOCAL_GR_ID; //filter messages with ECU destination
+	fdcan1_filter.FilterID1 = LOCAL_GR_ID; // filter messages with ECU destination
 	fdcan1_filter.FilterID2 = 0x00000FF;
 
 	fdcan1_filter.FilterIndex = 1;
 	fdcan1_filter.FilterID1 = 0xFF; // filter messages for all targets
 	HAL_FDCAN_ConfigFilter(can1Handle->hal_fdcanP, &fdcan1_filter);
 
-	//CAN2 ======================================================
+	// CAN2 ======================================================
 	canCfg.fdcan_instance = FDCAN2;
 	canCfg.rx_gpio = GPIOB;
 	canCfg.init_rx_gpio.Pin = GPIO_PIN_12;
@@ -333,10 +332,10 @@ void CAN_Configure()
 	canCfg.init_tx_gpio.Pin = GPIO_PIN_13;
 	canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN2;
 
-	//RX Callback CAN2
-	canCfg.rx_callback = ECU_CAN_MessageHandler; //TODO: Make sure the wrapper for this is defined correctly
+	// RX Callback CAN2
+	canCfg.rx_callback = ECU_CAN_MessageHandler; // TODO: Make sure the wrapper for this is defined correctly
 
-	//Filter definitions
+	// Filter definitions
 	FDCAN_FilterTypeDef fdcan2_filter;
 
 	fdcan2_filter.IdType = FDCAN_EXTENDED_ID;
@@ -353,7 +352,7 @@ void CAN_Configure()
 
 	// accept unmatched standard and extended frames into RXFIFO0 - default behaviour
 	HAL_FDCAN_ConfigFilter(can2Handle->hal_fdcanP, &fdcan2_filter);
-	//HAL_FDCAN_ConfigGlobalFilter(can2Handle->hal_fdcanP, 0, 0, 0, 0); 
+	// HAL_FDCAN_ConfigGlobalFilter(can2Handle->hal_fdcanP, 0, 0, 0, 0);
 
 	can_start(can1Handle);
 	can_start(can2Handle);
@@ -398,8 +397,8 @@ int main(void)
 	/* USER CODE BEGIN 2 */
 
 	// Initialize CAN
-	CAN_Configure();	
-	
+	CAN_Configure();
+
 	ADC_Configure();
 	for (int i = 0; i < (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2); i++) {
 		adcDataValues[i] = malloc(sizeof(uint16_t) * WINDOW_SIZE);
