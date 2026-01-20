@@ -45,10 +45,9 @@ typedef struct {
 /// @param Pins Array of pins (with their respective ports) to be initialized 
 /// @param Num_Pin_Port_Objs Number of pin port objects to initialize
 /// @param Num_Channels Number of ADC channels, must be a value between 1 and 16
-/// @param Channels Array of channels to be initialized, DMA output will much the order
+/// @param Channels Array of channels to be initialized, DMA output will match the order
 /// 					of this array
-/// @param SamplingTimes An array of sampling times for the channels, must match the
-///							the ordering of the channels array
+/// @param SamplingTimes Array of channel sampling times, should align with channels array
 typedef struct{
 	ADC_TypeDef *ADC;
 	Pre_Scaler_Values PS_Values;
@@ -60,7 +59,7 @@ typedef struct{
 	SamplingTime *SamplingTimes;
 } ADC_Init_Values;
 
-// Overall ADC initialization
+// Main ADC initialization function
 void ADC_Init(ADC_Init_Values *Init_Values);
 
 __extension__ typedef enum {
@@ -108,12 +107,15 @@ typedef enum {
 } SamplingTime;
 
 //--------------------------------------DMA Initialization-------------------------------------
-typedef enum { LOW = LL_DMA_PRIORITY_LOW, 
-			   MEDIUM = LL_DMA_PRIORITY_MEDIUM,
-			   HIGH = LL_DMA_PRIORITY_HIGH,
-			   VERYHIGH = LL_DMA_PRIORITY_VERYHIGH
+/// @brief Priority of DMA transfer
+typedef enum { 
+	LOW = LL_DMA_PRIORITY_LOW, 
+	MEDIUM = LL_DMA_PRIORITY_MEDIUM,
+	HIGH = LL_DMA_PRIORITY_HIGH,
+	VERYHIGH = LL_DMA_PRIORITY_VERYHIGH
 } DMA_Priority;
 
+/// @brief DMA channels
 typedef enum {
 	DMA_CHANNEL_1 = LL_DMA_CHANNEL_1,
 	DMA_CHANNEL_2 = LL_DMA_CHANNEL_2,
@@ -125,9 +127,33 @@ typedef enum {
 	DMA_CHANNEL_8 = LL_DMA_CHANNEL_8
 } DMA_Channel;
 
+/// @brief The data size of the data to be transfered by DMA
+typedef enum {
+	Byte,
+	Half_Word,
+	Word
+} DMA_Data_Size;
 
-void DMA_Init(DMA_TypeDef *DMA, DMA_Channel channel, uint32_t src_address, void* dest_address, uint32_t p_data_size, uint32_t m_data_size, uint32_t num_data, ADC_TypeDef *ADC,
-	      DMA_Priority priority);
+/// @brief The struct used to initialize each DMA
+///
+/// @param DMA The DMA to be initialized
+/// @param ADC The ADC instance this DMA channel handles
+/// @param Channels DMA channel to initialize - each channel handles a single instance of ADC
+/// @param Src_Address Source address, use LL_ADC_DMA_GetRegAddr() to get the address
+/// @param Dest_Addresses Pointers to destination buffer
+/// @param Data_Size Array of data sizes, can be options of DMA_Data_Size
+/// @param Priority Array of priorities to set the priorities of each DMA channel
+typedef struct{
+	DMA_TypeDef *DMA;
+	ADC_TypeDef *ADC;
+	DMA_Channel Channel;
+	uint32_t Src_Address;
+	void *Dest_Address;
+	DMA_Data_Size Data_Size;
+	DMA_Priority Priority;
+} DMA_Init_Values;
+
+void DMA_Init(DMA_Init_Values *Init_Values);
 
 /*
  */

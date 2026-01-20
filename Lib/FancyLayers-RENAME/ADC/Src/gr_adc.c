@@ -29,9 +29,9 @@ void ADC_Init_Pins(Pin_Ports *input);
 // Initialize each channel
 void ADC_Channel_Init(ADC_TypeDef *adc, uint32_t rank, Channel channel, SamplingTime time);
 
-// Internal variable to store which ADC groups have been initialized
+// Internal variables
+// Store ADC groups have been initialized
 uint8_t ADC12_Initialized = 0, ADC345_Initialized = 0;
-
 // Array of the possible ranks a channel can be set to
 uint32_t Rank[] = {LL_ADC_REG_RANK_1, LL_ADC_REG_RANK_2, LL_ADC_REG_RANK_3, LL_ADC_REG_RANK_4, 
 				   LL_ADC_REG_RANK_5, LL_ADC_REG_RANK_6, LL_ADC_REG_RANK_7, LL_ADC_REG_RANK_8, 
@@ -47,41 +47,23 @@ uint32_t Num_Channel_Options[] = {LL_ADC_REG_SEQ_SCAN_DISABLE, LL_ADC_REG_SEQ_SC
 						   LL_ADC_REG_SEQ_SCAN_ENABLE_13RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_14RANKS,
 						   LL_ADC_REG_SEQ_SCAN_ENABLE_15RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_16RANKS};
 
-ADC_TypeDef *GetADC(unsigned long adc)
-{
-	switch (adc) {
-		case 1:
-			return ADC1;
-		case 2:
-			return ADC2;
-		case 3:
-			return ADC3;
-		case 4:
-			return ADC4;
-		case 5:
-			return ADC5;
-	}
-
-	LOGOMATIC("Invalid ADC number: %lu\n",
-		  adc); // Please put these calls more often to help with debugging in
-			// non-performance areas such as during initializations
-	Error_Handler();
-	return NULL;
-}
-
 void ADC_Init(ADC_Init_Values *Init_Values){
 	// Initialize the ADC Common Group
+	uint8_t group_initialized = 0; // For checking if the group is already initialized
+
 	// ADC Group 12 already initialized
 	if(__LL_ADC_COMMON_INSTANCE(Init_Values->ADC) == __LL_ADC_COMMON_INSTANCE(ADC1) && ADC12_Initialized){
 		LOGOMATIC("ADC Group 12 already initialized");
-		goto ADC_Group_Done; // my go-to solution fr
+		group_initialized = 1;
 	}
 	// ADC Group 345 already initialized
 	if(__LL_ADC_COMMON_INSTANCE(Init_Values->ADC) == __LL_ADC_COMMON_INSTANCE(ADC3) && ADC345_Initialized) {
 		LOGOMATIC("ADC Group 345 already initialized");
-		goto ADC_Group_Done;
+		group_initialized = 1;
 	}
-	ADC_Group_Init(Init_Values->ADC, Init_Values->PS_Values);
+	if (!group_initialized) {
+		ADC_Group_Init(Init_Values->ADC, Init_Values->PS_Values);
+	}
 
 	ADC_Group_Done:
 	// Initialize the individual ADCs
@@ -165,35 +147,45 @@ void ADC_Enable_And_Calibrate(ADC_TypeDef *ADC)
 	LL_ADC_REG_StartConversion(ADC);
 }
 
-void DMA_Init(DMA_TypeDef *DMA, DMA_Channel channel, uint32_t src_address, void* dest_address, uint32_t p_data_size, uint32_t m_data_size, uint32_t num_data, ADC_TypeDef *ADC,
-	      DMA_Priority priority)
+void DMA_Init(DMA_Init_Values *Init_Values)
 {
 	LL_DMA_InitTypeDef config = {0};
-	config.PeriphOrM2MSrcAddress = src_address;
-	config.MemoryOrM2MDstAddress = (uint32_t) dest_address;
-	config.Direction = LL_DMA_DIRECTION_PERIPH_TO_MEMORY;
-	config.Mode = LL_DMA_MODE_CIRCULAR;
-	config.PeriphOrM2MSrcIncMode = LL_DMA_PERIPH_NOINCREMENT;
-	config.MemoryOrM2MDstIncMode = LL_DMA_MEMORY_NOINCREMENT;
-	config.PeriphOrM2MSrcDataSize = p_data_size;
-	config.MemoryOrM2MDstDataSize = m_data_size;
-	config.NbData = num_data;
+	config.PeriphOrM2MSrcAddress = Init_Values->Src_Address;
+	config.MemoryOrM2MDstAddress = (uint32_t) Init_Values->Dest_Address;
+	config.Direction = LL_DMA_DIRECTION_PERIPH_TO_MEMORY; // Direction of data transfer: from peripheral to memory
+	config.Mode = LL_DMA_MODE_CIRCULAR; // Circular mode: continuously transfers after the last cycle finishes
+	config.PeriphOrM2MSrcIncMode = LL_DMA_PERIPH_NOINCREMENT; // Peripheral memory address doesn't increments - all results written to the ADCx->DR register
+	config.MemoryOrM2MDstIncMode = LL_DMA_MEMORY_INCREMENT; // Memory address increments after every transfer
+	config.NbData = 1; // Transfers one data unit at a time
+	switch(Init_Values->Data_Size){
+		case(Byte):
+			config.PeriphOrM2MSrcDataSize = LL_DMA_PDATAALIGN_BYTE;
+			config.MemoryOrM2MDstDataSize = LL_DMA_MDATAALIGN_BYTE;
+			break;
+		case(Half_Word):
+			config.PeriphOrM2MSrcDataSize = LL_DMA_PDATAALIGN_HALFWORD;
+			config.MemoryOrM2MDstDataSize = LL_DMA_MDATAALIGN_HALFWORD;
+			break;
+		case(Word):
+			config.PeriphOrM2MSrcDataSize = LL_DMA_PDATAALIGN_WORD;
+			config.MemoryOrM2MDstDataSize = LL_DMA_MDATAALIGN_WORD;
+	}
 
 	// Select ADC DMAMUX request
-	if (ADC == ADC1) {
+	if (Init_Values->ADC == ADC1) {
 		config.PeriphRequest = LL_DMAMUX_REQ_ADC1;
-	} else if (ADC == ADC2) {
+	} else if (Init_Values->ADC == ADC2) {
 		config.PeriphRequest = LL_DMAMUX_REQ_ADC2;
-	} else if (ADC == ADC3) {
+	} else if (Init_Values->ADC == ADC3) {
 		config.PeriphRequest = LL_DMAMUX_REQ_ADC3;
-	} else if (ADC == ADC4) {
+	} else if (Init_Values->ADC == ADC4) {
 		config.PeriphRequest = LL_DMAMUX_REQ_ADC4;
-	} else if (ADC == ADC5) {
+	} else if (Init_Values->ADC == ADC5) {
 		config.PeriphRequest = LL_DMAMUX_REQ_ADC5;
 	}
 
-	config.Priority = priority;
-	LL_DMA_Init(DMA, channel, &config);
+	config.Priority = Init_Values->Priority;
+	LL_DMA_Init(Init_Values->DMA, Init_Values->Channel, &config);
 }
 
 // NOTE: DMA init is still using NOINCREMENT
