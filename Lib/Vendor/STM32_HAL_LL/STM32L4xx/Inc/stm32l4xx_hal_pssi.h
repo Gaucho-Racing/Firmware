@@ -183,9 +183,9 @@ extern "C"
 #define HAL_PSSI_8BITS 0x00000000U  /*!<  8 Bits  */
 #define HAL_PSSI_16BITS 0x00000001U /*!< 16 Bits  */
 #define HAL_PSSI_32BITS 0x00000002U /*!< 32 Bits  */
-	/**
-	 * @}
-	 */
+				    /**
+				     * @}
+				     */
 
 	/** @defgroup PSSI_BUS_WIDTH PSSI Bus Width
 	 * @{

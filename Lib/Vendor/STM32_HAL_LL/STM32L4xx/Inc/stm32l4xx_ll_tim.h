@@ -838,9 +838,9 @@ extern "C"
 #define LL_TIM_CHANNEL_CH4 TIM_CCER_CC4E   /*!< Timer input/output channel 4 */
 #define LL_TIM_CHANNEL_CH5 TIM_CCER_CC5E   /*!< Timer output channel 5 */
 #define LL_TIM_CHANNEL_CH6 TIM_CCER_CC6E   /*!< Timer output channel 6 */
-	/**
-	 * @}
-	 */
+					   /**
+					    * @}
+					    */
 
 #if defined(USE_FULL_LL_DRIVER)
 /** @defgroup TIM_LL_EC_OCSTATE Output Configuration State

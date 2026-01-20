@@ -780,9 +780,9 @@ extern "C"
  * @{
  */
 #define HAL_OSPI_TIMEOUT_DEFAULT_VALUE ((uint32_t)5000U) /* 5 s */
-	/**
-	 * @}
-	 */
+							 /**
+							  * @}
+							  */
 
 #if defined(OCTOSPIM)
 /** @defgroup OSPIM_IOPort OSPI IO Manager IO Port
