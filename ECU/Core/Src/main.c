@@ -94,7 +94,7 @@ RTD_BTN_LED_CONTROL (42): PA8
 #define WINDOW_SIZE 10 // weighted average for now can extend to other window functions
 #define NUM_SIGNALS_ADC1 7
 #define NUM_SIGNALS_ADC2 1
-#define NUM_SIGNALS_DIGITAL 7
+#define NUM_SIGNALS_DIGITAL 8
 // TODO: check which data size to use (floats...ints...etc)
 volatile uint16_t ADC1_buffers[NUM_SIGNALS_ADC1] = {0};		      // Contains new values
 volatile uint16_t ADC2_buffers[NUM_SIGNALS_ADC2] = {0};		      // Contains new values
