@@ -3,26 +3,9 @@
 #ifndef GR_PERIPHERALS_ADC
 #define GR_PERIPHERALS_ADC
 
+//--------------------------------------ADC Initialization-------------------------------------
+
 void ADC_Enable_And_Calibrate(ADC_TypeDef *ADC);
-
-// TODO: Make this private
-// Internal variable to store which ADC groups have been initialized
-uint8_t ADC12_Initialized = 0, ADC345_Initialized = 0;
-// Array of the possible ranks a channel can be set to
-uint32_t Rank[] = {LL_ADC_REG_RANK_1, LL_ADC_REG_RANK_2, LL_ADC_REG_RANK_3, LL_ADC_REG_RANK_4, 
-				   LL_ADC_REG_RANK_5, LL_ADC_REG_RANK_6, LL_ADC_REG_RANK_7, LL_ADC_REG_RANK_8, 
-				   LL_ADC_REG_RANK_9, LL_ADC_REG_RANK_10, LL_ADC_REG_RANK_11, LL_ADC_REG_RANK_12, 
-				   LL_ADC_REG_RANK_13, LL_ADC_REG_RANK_14, LL_ADC_REG_RANK_15, LL_ADC_REG_RANK_16};
-// Array of number of channels that can be initialized
-uint32_t Num_Channel_Options[] = {LL_ADC_REG_SEQ_SCAN_DISABLE, LL_ADC_REG_SEQ_SCAN_ENABLE_2RANKS,
-						   LL_ADC_REG_SEQ_SCAN_ENABLE_3RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_4RANKS,
-						   LL_ADC_REG_SEQ_SCAN_ENABLE_5RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_6RANKS,
-						   LL_ADC_REG_SEQ_SCAN_ENABLE_7RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_8RANKS,
-						   LL_ADC_REG_SEQ_SCAN_ENABLE_9RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_10RANKS,
-						   LL_ADC_REG_SEQ_SCAN_ENABLE_11RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_12RANKS,
-						   LL_ADC_REG_SEQ_SCAN_ENABLE_13RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_14RANKS,
-						   LL_ADC_REG_SEQ_SCAN_ENABLE_15RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_16RANKS};
-
 								
 /// @brief Number of clock cycles to be considered one tick of the ADC
 typedef enum {
@@ -54,10 +37,6 @@ typedef struct {
 	GPIO_TypeDef *port; // Port
 } Pin_Ports;
 
-// Overall ADC initialization
-void ADC_Init(ADC_Init_Values *Init_Values);
-
-///
 /// @brief The struct used to initialize each ADC
 ///
 /// @param ADC The ADC to be initialized (ADC 1 to 5)
@@ -81,18 +60,8 @@ typedef struct{
 	SamplingTime *SamplingTimes;
 } ADC_Init_Values;
 
-// TODO: Make these function private
-// Initializes an ADC group
-void ADC_Group_Init(ADC_TypeDef *ADC, Pre_Scaler_Values PS_Val);
-
-// Initializes each individual ADC
-void ADC_Init_Single(ADC_TypeDef *ADC, Resolution res);
-
-// Initialize the channel configurations of the ADC
-void ADC_Regular_Group_Init(ADC_TypeDef *ADC, unsigned long Sequence_Length);
-
-// Initialize a single port and all the pins used on that port
-void ADC_Init_Pins(Pin_Ports *input);
+// Overall ADC initialization
+void ADC_Init(ADC_Init_Values *Init_Values);
 
 __extension__ typedef enum {
 	ADC_CHANNEL_1 = LL_ADC_CHANNEL_1,
@@ -138,31 +107,12 @@ typedef enum {
 	SAMPLINGTIME_640CYCLES_5 = LL_ADC_SAMPLINGTIME_640CYCLES_5,
 } SamplingTime;
 
-// Initialize each channel
-void ADC_Channel_Init(ADC_TypeDef *adc, uint32_t rank, Channel channel, SamplingTime time);
-
-typedef enum {
-	SYNC_PCLK_DIV1 = LL_ADC_CLOCK_SYNC_PCLK_DIV1,
-	SYNC_PCLK_DIV2 = LL_ADC_CLOCK_SYNC_PCLK_DIV2,
-	SYNC_PCLK_DIV4 = LL_ADC_CLOCK_SYNC_PCLK_DIV4,
-	ASYNC_DIV1 = LL_ADC_CLOCK_ASYNC_DIV1,
-	ASYNC_DIV2 = LL_ADC_CLOCK_ASYNC_DIV2,
-	ASYNC_DIV4 = LL_ADC_CLOCK_ASYNC_DIV4,
-	ASYNC_DIV6 = LL_ADC_CLOCK_ASYNC_DIV6,
-	ASYNC_DIV8 = LL_ADC_CLOCK_ASYNC_DIV8,
-	ASYNC_DIV10 = LL_ADC_CLOCK_ASYNC_DIV10,
-	ASYNC_DIV12 = LL_ADC_CLOCK_ASYNC_DIV12,
-	ASYNC_DIV16 = LL_ADC_CLOCK_ASYNC_DIV16,
-	ASYNC_DIV32 = LL_ADC_CLOCK_ASYNC_DIV32,
-	ASYNC_DIV64 = LL_ADC_CLOCK_ASYNC_DIV64,
-	ASYNC_DIV128 = LL_ADC_CLOCK_ASYNC_DIV128,
-	ASYNC_DIV256 = LL_ADC_CLOCK_ASYNC_DIV256,
-} CommonClock;
-
-void ADC_Set_Common_Clock(ADC_Common_TypeDef *ADC_Common, CommonClock commonClock);
-CommonClock ADC_Get_Common_Clock(ADC_Common_TypeDef *ADC_Common);
-
-typedef enum { LOW = LL_DMA_PRIORITY_LOW, MEDIUM = LL_DMA_PRIORITY_MEDIUM, HIGH = LL_DMA_PRIORITY_HIGH, VERYHIGH = LL_DMA_PRIORITY_VERYHIGH } DMA_Priority;
+//--------------------------------------DMA Initialization-------------------------------------
+typedef enum { LOW = LL_DMA_PRIORITY_LOW, 
+			   MEDIUM = LL_DMA_PRIORITY_MEDIUM,
+			   HIGH = LL_DMA_PRIORITY_HIGH,
+			   VERYHIGH = LL_DMA_PRIORITY_VERYHIGH
+} DMA_Priority;
 
 typedef enum {
 	DMA_CHANNEL_1 = LL_DMA_CHANNEL_1,
@@ -174,6 +124,7 @@ typedef enum {
 	DMA_CHANNEL_7 = LL_DMA_CHANNEL_7,
 	DMA_CHANNEL_8 = LL_DMA_CHANNEL_8
 } DMA_Channel;
+
 
 void DMA_Init(DMA_TypeDef *DMA, DMA_Channel channel, uint32_t src_address, void* dest_address, uint32_t p_data_size, uint32_t m_data_size, uint32_t num_data, ADC_TypeDef *ADC,
 	      DMA_Priority priority);

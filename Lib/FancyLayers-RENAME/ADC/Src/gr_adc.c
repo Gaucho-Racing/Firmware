@@ -14,6 +14,39 @@
 #include "Logomatic.h"
 #include "main.h"
 
+// Initializes an ADC group
+void ADC_Group_Init(ADC_TypeDef *ADC, Pre_Scaler_Values PS_Val);
+
+// Initializes each individual ADC
+void ADC_Init_Single(ADC_TypeDef *ADC, Resolution res);
+
+// Initialize the channel configurations of the ADC
+void ADC_Regular_Group_Init(ADC_TypeDef *ADC, unsigned long Sequence_Length);
+
+// Initialize a single port and all the pins used on that port
+void ADC_Init_Pins(Pin_Ports *input);
+
+// Initialize each channel
+void ADC_Channel_Init(ADC_TypeDef *adc, uint32_t rank, Channel channel, SamplingTime time);
+
+// Internal variable to store which ADC groups have been initialized
+uint8_t ADC12_Initialized = 0, ADC345_Initialized = 0;
+
+// Array of the possible ranks a channel can be set to
+uint32_t Rank[] = {LL_ADC_REG_RANK_1, LL_ADC_REG_RANK_2, LL_ADC_REG_RANK_3, LL_ADC_REG_RANK_4, 
+				   LL_ADC_REG_RANK_5, LL_ADC_REG_RANK_6, LL_ADC_REG_RANK_7, LL_ADC_REG_RANK_8, 
+				   LL_ADC_REG_RANK_9, LL_ADC_REG_RANK_10, LL_ADC_REG_RANK_11, LL_ADC_REG_RANK_12, 
+				   LL_ADC_REG_RANK_13, LL_ADC_REG_RANK_14, LL_ADC_REG_RANK_15, LL_ADC_REG_RANK_16};
+// Array of number of channels that can be initialized
+uint32_t Num_Channel_Options[] = {LL_ADC_REG_SEQ_SCAN_DISABLE, LL_ADC_REG_SEQ_SCAN_ENABLE_2RANKS,
+						   LL_ADC_REG_SEQ_SCAN_ENABLE_3RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_4RANKS,
+						   LL_ADC_REG_SEQ_SCAN_ENABLE_5RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_6RANKS,
+						   LL_ADC_REG_SEQ_SCAN_ENABLE_7RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_8RANKS,
+						   LL_ADC_REG_SEQ_SCAN_ENABLE_9RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_10RANKS,
+						   LL_ADC_REG_SEQ_SCAN_ENABLE_11RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_12RANKS,
+						   LL_ADC_REG_SEQ_SCAN_ENABLE_13RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_14RANKS,
+						   LL_ADC_REG_SEQ_SCAN_ENABLE_15RANKS, LL_ADC_REG_SEQ_SCAN_ENABLE_16RANKS};
+
 ADC_TypeDef *GetADC(unsigned long adc)
 {
 	switch (adc) {
@@ -65,8 +98,7 @@ void ADC_Init(ADC_Init_Values *Init_Values){
 	// Initialize Channels
 	for (int i = 0; i < Init_Values->Num_Channels; ++i) {
 		ADC_Channel_Init(Init_Values->ADC, Rank[i], Init_Values->Channels[i], Init_Values->SamplingTimes[i]);
-	}
-	
+	}	
 }
 
 void ADC_Group_Init(ADC_TypeDef *ADC, Pre_Scaler_Values PS_Val)
@@ -133,11 +165,6 @@ void ADC_Enable_And_Calibrate(ADC_TypeDef *ADC)
 	LL_ADC_REG_StartConversion(ADC);
 }
 
-void ADC_Set_Common_Clock(ADC_Common_TypeDef *ADC_Common, CommonClock commonClock) { LL_ADC_SetCommonClock(ADC_Common, commonClock); }
-
-CommonClock ADC_Get_Common_Clock(ADC_Common_TypeDef *ADC_Common) { return LL_ADC_GetCommonClock(ADC_Common); }
-// note to self: these are not valid errors; they appear in vscode but not on
-// compile	<-- To be clear I do not have any errors anywhere at all...
 void DMA_Init(DMA_TypeDef *DMA, DMA_Channel channel, uint32_t src_address, void* dest_address, uint32_t p_data_size, uint32_t m_data_size, uint32_t num_data, ADC_TypeDef *ADC,
 	      DMA_Priority priority)
 {
