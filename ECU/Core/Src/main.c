@@ -190,7 +190,7 @@ void ADC_Configure(void)
 	// Initialize the ADC1
 	ADC_Group_Init(ADC1, PS_8); // TODO: change prescalar l8r
 	ADC_Init(ADC1, RESOLUTION_12, RIGHT);
-	ADC_Regular_Group_Init(ADC1, NO_RANKS);
+	ADC_Regular_Group_Init(ADC1, RANKS_7);
 
 	// TODO: INITIALIZE PIN_PORTS BETTER!!!
 	// Initialize the pins and channels

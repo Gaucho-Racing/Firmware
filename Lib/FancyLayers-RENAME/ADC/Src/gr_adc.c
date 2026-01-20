@@ -116,7 +116,7 @@ void DMA_Init(DMA_TypeDef *DMA, DMA_Channel channel, uint32_t src_address, volat
 	config.Direction = LL_DMA_DIRECTION_PERIPH_TO_MEMORY;
 	config.Mode = LL_DMA_MODE_CIRCULAR;
 	config.PeriphOrM2MSrcIncMode = LL_DMA_PERIPH_NOINCREMENT;
-	config.MemoryOrM2MDstIncMode = LL_DMA_MEMORY_NOINCREMENT;
+	config.MemoryOrM2MDstIncMode = LL_DMA_MEMORY_INCREMENT;
 	config.PeriphOrM2MSrcDataSize = p_data_size;
 	config.MemoryOrM2MDstDataSize = m_data_size;
 	config.NbData = num_data;
