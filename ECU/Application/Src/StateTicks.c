@@ -21,8 +21,8 @@
  * @remark Intentionally not a globally accessible variable
  */
 
-CANHandle *can1Handle;
-CANHandle *can2Handle;
+CANHandle *primary_can;
+CANHandle *data_can;
 
 ECU_StateData stateLump = {0};
 
@@ -76,7 +76,6 @@ void ECU_GLV_Off(ECU_StateData *stateData)
 {
 	UNUSED(stateData);
 	LOGOMATIC("ECU_GLV_Off state reached... this should never happen!");
-
 	// TODO ERROR --> GLV_OFF should never be reached
 }
 
@@ -84,12 +83,10 @@ void ECU_GLV_On(ECU_StateData *stateData)
 {
 	if (stateData->ts_voltage >= SAFE_VOLTAGE_LIMIT) {
 		ECU_Tractive_System_Discharge_Start(stateData);
-		// TODO emit an error
-		LOGOMATIC("TS Voltage >= 60!");
+		LOGOMATIC("Error: TS Voltage >= 60!");
 		return;
 	}
 
-	// TODO: Implement functionality
 	if (stateData->ts_active /* && stateData->ir_plus*/) { // TOOD Talk to Owen if this is correct for precharge start confirmation
 		ECU_Precharge_Start(stateData);
 	}
@@ -107,7 +104,7 @@ void ECU_Precharge_Start(ECU_StateData *stateData)
 					    .TxEventFifoControl = FDCAN_NO_TX_EVENTS,
 					    .MessageMarker = 0}};
 	msg.data[0] = 1; // Go TS Active/Precharge
-	can_send(can1Handle, &msg);
+	can_send(primary_can, &msg);
 	stateData->ecu_state = GR_PRECHARGE_ENGAGED;
 }
 
@@ -126,31 +123,10 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 
 void ECU_Precharge_Complete(ECU_StateData *stateData)
 {
-	// TODO Implement functionality
-	/*
-		On but idle
-
-		If Tractive System (TS) active/Critical Error --> Tractive
-	    System Discharge If Brake & RTD (Ready to Drive) --> Drive Active
-	*/
-
-	/*
-	if (TS pressed or critical error) {
-		stateData->currentState = GR_TS_DISCHARGE
-		emit error
-		return;
-	}
-	*/
-	/*
-	if(PressingBrake(stateData) && stateData->RTD){
-		stateData->currentState = GR_DRIVE_ACTIVE;
-	}
-	*/
-
-	// Pseudocode
 	if (!stateData->ts_active || CriticalError(stateData)) {
 		ECU_Tractive_System_Discharge_Start(stateData);
-		// TODO: emit an error
+		LOGOMATIC("Error: Critical Error Occurred. Discharging Tractive System.");
+		setSoftwareLatch(0);
 		return;
 	}
 
@@ -189,18 +165,16 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 
 	if (!stateData->ts_active || CriticalError(stateData)) {
 		ECU_Tractive_System_Discharge_Start(stateData);
-		// TODO: emit a error
-		LOGOMATIC("Error: Critical Error Occured. Discharging Tractive System");
+		LOGOMATIC("Error: Critical Error Occured. Discharging Tractive System.");
+		setSoftwareLatch(0);
 		return;
 	}
 
 	if (!stateData->rtd) {
 		stateData->ecu_state = GR_PRECHARGE_COMPLETE;
-		// TODO: emit a warning if moving
 		if (vehicle_is_moving(stateData)) {
-			LOGOMATIC("Warning: Vehicle is moving during state trasition.");
+			LOGOMATIC("Warning: Vehicle is moving during state transition.");
 		}
-
 		return;
 	}
 }
@@ -208,7 +182,7 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 void ECU_Tractive_System_Discharge_Start(ECU_StateData *stateData)
 {
 	stateData->ecu_state = GR_TS_DISCHARGE;
-	LOGOMATIC("tell the BCU to discharge TS");
+	LOGOMATIC("ECU: BCU discharge Tractive System");
 	GR_OLD_BCU_PRECHARGE_MSG message = {.precharge = 0};
 	ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_BCU, MSG_BCU_PRECHARGE, &message, sizeof(message));
 	stateData->dischargeStartMillis = 0;
@@ -230,9 +204,7 @@ void ECU_Tractive_System_Discharge(ECU_StateData *stateData)
 		If TS fails to discharge over time then stay and emit a warning,
 	   see #129
 	*/
-	// TODO: Determine the maximum time to wait for TC to discharge.
 	if (stateData->dischargeStartMillis > TRACTIVE_SYSTEM_MAX_DISCHARGE_TIME) {
-		// TODO: Research appropriate ways to buffer warning messages.
 		LOGOMATIC("Tractive System fails to discharge in time.");
 	}
 

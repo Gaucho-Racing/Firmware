@@ -1,8 +1,8 @@
 #include "CANutils.h"
 
 #include "GR_OLD_BUS_ID.h"
-#include "GR_OLD_MSG_ID.h"
 #include "GR_OLD_MSG_DAT.h"
+#include "GR_OLD_MSG_ID.h"
 #include "Logomatic.h"
 #include "StateData.h"
 #include "StateTicks.h"
@@ -20,7 +20,7 @@ void ECU_CAN_Send(GR_OLD_BUS_ID bus, GR_OLD_NODE_ID destNode, GR_OLD_MSG_ID mess
 		LOGOMATIC("Tried to send more than 64 bytes over CAN");
 	}
 
-	uint32_t ID = ((0xFF & LOCAL_GR_ID) << 20) & ( (0xFFF & messageID) << 8) & (0xFF & destNode);
+	uint32_t ID = ((0xFF & LOCAL_GR_ID) << 20) & ((0xFFF & messageID) << 8) & (0xFF & destNode);
 
 	FDCAN_TxHeaderTypeDef header = {
 	    .Identifier = ID,
@@ -39,9 +39,9 @@ void ECU_CAN_Send(GR_OLD_BUS_ID bus, GR_OLD_NODE_ID destNode, GR_OLD_MSG_ID mess
 	memcpy(&(msg.data), data, size);
 
 	if (bus == GR_OLD_BUS_PRIMARY) {
-		can_send(can1Handle, &msg);
+		can_send(primary_can, &msg);
 	} else if (bus == GR_OLD_BUS_DATA) {
-		can_send(can2Handle, &msg);
+		can_send(data_can, &msg);
 	} else {
 		LOGOMATIC("CAN: Invalid bus ID %d\n", bus);
 	}
@@ -72,7 +72,7 @@ void SendECUStateDataOverCAN(ECU_StateData *stateData)
 
 	LOGOMATIC("Sending ECU State Data over CAN");
 
-	ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_ALL, MSG_ECU_STATUS_1, (void*)&messages.ECUStatusMsgOne, sizeof(messages.ECUStatusMsgOne));
-	ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_ALL, MSG_ECU_STATUS_2, (void*)&messages.ECUStatusMsgTwo, sizeof(messages.ECUStatusMsgTwo));
-	ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_ALL, MSG_ECU_STATUS_3, (void*)&messages.ECUStatusMsgThree, sizeof(messages.ECUStatusMsgThree));
+	ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_ALL, MSG_ECU_STATUS_1, (void *)&messages.ECUStatusMsgOne, sizeof(messages.ECUStatusMsgOne));
+	ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_ALL, MSG_ECU_STATUS_2, (void *)&messages.ECUStatusMsgTwo, sizeof(messages.ECUStatusMsgTwo));
+	ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_ALL, MSG_ECU_STATUS_3, (void *)&messages.ECUStatusMsgThree, sizeof(messages.ECUStatusMsgThree));
 }

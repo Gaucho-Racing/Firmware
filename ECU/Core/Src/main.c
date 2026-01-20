@@ -36,6 +36,7 @@
 #include "Logomatic.h"
 #include "StateTicks.h"
 #include "StateUtils.h"
+#include "CANutils.h"
 #include "adc.h"
 #include "can.h"
 /* USER CODE END Includes */
@@ -310,7 +311,7 @@ void CAN_Configure()
 	// RX Callback CAN1
 	canCfg.rx_callback = CAN1_rx_callback; // TODO: Make sure the wrapper for this is defined correctly
 
-	can1Handle = can_init(&canCfg);
+	primary_can = can_init(&canCfg);
 
 	// Filter 1 Definitions
 	FDCAN_FilterTypeDef fdcan1_filter;
@@ -324,7 +325,7 @@ void CAN_Configure()
 
 	fdcan1_filter.FilterIndex = 1;
 	fdcan1_filter.FilterID1 = 0xFF; // filter messages for all targets
-	HAL_FDCAN_ConfigFilter(can1Handle->hal_fdcanP, &fdcan1_filter);
+	HAL_FDCAN_ConfigFilter(primary_can->hal_fdcanP, &fdcan1_filter);
 
 	// CAN2 ======================================================
 	canCfg.fdcan_instance = FDCAN2;
@@ -351,14 +352,13 @@ void CAN_Configure()
 	fdcan2_filter.FilterIndex = 1;
 	fdcan2_filter.FilterID1 = 0xFF; // filter messages for all targets
 
-	can2Handle = can_init(&canCfg);
+	data_can = can_init(&canCfg);
 
 	// accept unmatched standard and extended frames into RXFIFO0 - default behaviour
-	HAL_FDCAN_ConfigFilter(can2Handle->hal_fdcanP, &fdcan2_filter);
-	// HAL_FDCAN_ConfigGlobalFilter(can2Handle->hal_fdcanP, 0, 0, 0, 0);
+	HAL_FDCAN_ConfigFilter(data_can->hal_fdcanP, &fdcan2_filter);
 
-	can_start(can1Handle);
-	can_start(can2Handle);
+	can_start(primary_can);
+	can_start(data_can);
 }
 /**
  * @brief  The application entry point.
@@ -397,7 +397,11 @@ int main(void)
 	MX_ADC1_Init();
 	MX_ADC2_Init();
 	MX_LPUART1_UART_Init();
+
 	/* USER CODE BEGIN 2 */
+
+	// Set Software Latch to closed
+	setSoftwareLatch(1);
 
 	// Initialize CAN
 	CAN_Configure();
@@ -406,6 +410,7 @@ int main(void)
 	for (int i = 0; i < (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2); i++) {
 		adcDataValues[i] = malloc(sizeof(uint16_t) * WINDOW_SIZE);
 	}
+
 
 	/* USER CODE END 2 */
 

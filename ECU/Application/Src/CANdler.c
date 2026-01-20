@@ -72,6 +72,7 @@ void ECU_CAN_MessageHandler(ECU_StateData *state_data, GR_OLD_BUS_ID bus_id, GR_
 			state_data->bcu_error_warning_bits = bcu_status_2->error_bits;
 			state_data->ir_minus = GETBIT(bcu_status_2->precharge_bits, 1);
 			state_data->ir_plus = GETBIT(bcu_status_2->precharge_bits, 2);
+			state_data->bcu_software_latch = GETBIT(bcu_status_2->precharge_bits, 3);
 			break;
 
 		case MSG_INVERTER_STATUS_1:
