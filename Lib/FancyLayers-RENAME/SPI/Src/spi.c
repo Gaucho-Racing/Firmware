@@ -96,8 +96,7 @@ void GR_SPI_Initialize(GR_SPI_Handler *handle, LL_SPI_InitTypeDef *config, GR_SP
 	LL_SPI_EnableIT_TXE(handle->pins->SPIx);  // Empty Tx buffer*/
 
 	// Enable SPI peripheral after BSY flag clears
-	while (LL_SPI_IsActiveFlag_BSY(handle->pins->SPIx)) {
-	}
+	while (LL_SPI_IsActiveFlag_BSY(handle->pins->SPIx)) {}
 	LL_SPI_Enable(handle->pins->SPIx);
 }
 

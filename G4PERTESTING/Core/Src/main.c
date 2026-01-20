@@ -242,8 +242,7 @@ void SystemClock_Config(void)
 	LL_PWR_EnableRange1BoostMode();
 	LL_RCC_HSI_Enable();
 	/* Wait till HSI is ready */
-	while (LL_RCC_HSI_IsReady() != 1) {
-	}
+	while (LL_RCC_HSI_IsReady() != 1) {}
 
 	LL_RCC_HSI_SetCalibTrimming(64);
 	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 85, LL_RCC_PLLR_DIV_2);
@@ -287,8 +286,7 @@ void Error_Handler(void)
 	/* User can add his own implementation to report the HAL error return
 	 * state */
 	__disable_irq();
-	while (1) {
-	}
+	while (1) {}
 }
 #ifdef USE_FULL_ASSERT
 /**
