@@ -8,7 +8,7 @@
 
 /// @brief Get the current time in milliseconds since system start
 /// @return Current time in milliseconds
-uint32_t millis(void);
+uint32_t MillisecondsSinceBoot(void);
 
 // Constants
 #define BRAKE_F_MIN 0	    // TODO: need to be determined FIXME: Rename better
@@ -23,7 +23,8 @@ uint32_t millis(void);
 #define APPS_PROPORTION 2.0f // TODO: Need to be experimentally determined
 #define APPS_OFFSET 250.0f   // TODO: Need to be experimentally determined
 
-
+#define MAX_CURRENT_AMPS 42.0f // TODO: Change as appropriate
+#define MAX_REVERSE_CURRENT_AMPS 20.0f // TODO: Change as appropriate
 
 void setSoftwareLatch(bool close);
 

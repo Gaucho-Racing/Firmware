@@ -7,9 +7,9 @@
 #include "StateData.h"
 #include "main.h"
 
-uint32_t millis(void)
+uint32_t MillisecondsSinceBoot(void)
 {
-	// For some reason, GetTickFreq returns period in ms instead of frequency LMAO
+	// For some reason, GetTickFreq returns period in millisecon instead of frequency
 	// See https://community.st.com/t5/stm32-mcus-embedded-software/name-amp-description-of-hal-gettickfreq-misleading/td-p/242457
 	return HAL_GetTick() * HAL_GetTickFreq();
 }
@@ -52,8 +52,7 @@ bool CommunicationError(volatile const ECU_StateData *stateData)
 bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)
 {
 	// Checks 2 * APPS_1 is within 10% of APPS_2 and break + throttle at the same time
-	return fabs(stateData->APPS2_Signal - stateData->APPS1_Signal * APPS_PROPORTION - APPS_OFFSET) > stateData->APPS2_Signal * 0.1f ||
-	       (PressingBrake(stateData) && CalcPedalTravel(stateData) >= 0.25f);
+	return PressingBrake(stateData) && CalcPedalTravel(stateData) >= 0.25f;
 }
 
 bool PressingBrake(volatile const ECU_StateData *stateData)
@@ -78,7 +77,8 @@ float CalcPedalTravel(volatile const ECU_StateData *stateData)
 {
 	float total_signal_range = THROTTLE_MAX_1 + THROTTLE_MAX_2 - THROTTLE_MIN_1 - THROTTLE_MIN_2;
 	float total_signal_value = stateData->APPS1_Signal + stateData->APPS2_Signal - THROTTLE_MIN_2 - THROTTLE_MIN_1;
-	return total_signal_value / total_signal_range;
+	float travel = total_signal_value / total_signal_range;
+	return travel > 0.05 ? (travel - 0.05f) / 0.95f : 0;
 }
 
 bool vehicle_is_moving(volatile const ECU_StateData *stateData)

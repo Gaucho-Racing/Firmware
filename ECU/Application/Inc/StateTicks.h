@@ -16,7 +16,7 @@ extern CANHandle *data_can;
  *
  * @return void
  */
-void ECU_State_Tick();
+void ECU_State_Tick(void);
 
 /**
  * @brief State handler for the GLV Off state.

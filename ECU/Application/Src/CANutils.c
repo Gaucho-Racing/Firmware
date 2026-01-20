@@ -38,18 +38,22 @@ void ECU_CAN_Send(GR_OLD_BUS_ID bus, GR_OLD_NODE_ID destNode, GR_OLD_MSG_ID mess
 
 	memcpy(&(msg.data), data, size);
 
-	if (bus == GR_OLD_BUS_PRIMARY) {
-		can_send(primary_can, &msg);
-	} else if (bus == GR_OLD_BUS_DATA) {
-		can_send(data_can, &msg);
-	} else {
-		LOGOMATIC("CAN: Invalid bus ID %d\n", bus);
+	switch (bus) {
+		case GR_OLD_BUS_PRIMARY:
+			can_send(primary_can, &msg);
+			break;
+		case GR_OLD_BUS_DATA:
+			can_send(data_can, &msg);
+			break;
+		default:
+			LOGOMATIC("CAN: Invalid bus ID %d\n", bus);
+			break;
 	}
 }
 
 void SendECUStateDataOverCAN(ECU_StateData *stateData)
 {
-	uint32_t currentTime = millis();
+	uint32_t currentTime = MillisecondsSinceBoot();
 
 	if (lastTickECUStateDataSent > currentTime - ECU_STATE_DATA_SEND_INTERVAL_MS) {
 		return;

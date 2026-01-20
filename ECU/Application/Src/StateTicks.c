@@ -118,6 +118,7 @@ void ECU_Precharge_Engaged(ECU_StateData *stateData)
 	}
 
 	if (!stateData->ts_active || CommunicationError(stateData)) {
+		// todo: CAN for discharge
 		ECU_Tractive_System_Discharge_Start(stateData);
 		return;
 	}
@@ -134,6 +135,13 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 
 	if (PressingBrake(stateData) && stateData->rtd) {
 		stateData->ecu_state = GR_DRIVE_ACTIVE;
+		GR_OLD_INVERTER_CONFIG_MSG message = {
+		.max_ac_current = 0xFFFF,
+		.max_dc_current = 0xFFFF,
+		.abs_max_motor_rpm = 0xFFFF,
+		.motor_direction = 0
+		};
+		ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_GR_INVERTER_1, MSG_INVERTER_CONFIG, &message, sizeof(message));
 		return;
 	}
 }
@@ -181,7 +189,18 @@ void ECU_Drive_Active(ECU_StateData *stateData)
 		return;
 	}
 
-	// get
+	float torque_request = CalcPedalTravel(stateData) * MAX_CURRENT_AMPS;
+	// If you are pressing the brake, then you have the negativetorque request calculated
+	torque_request -= PressingBrake(stateData) * CalcBrakePercent(stateData) * MAX_REVERSE_CURRENT_AMPS; //This is negative current
+
+	GR_OLD_INVERTER_COMMAND_MSG message = {
+		.ac_current = torque_request * 100 + 32768,
+		.dc_current = torque_request * 100 + 32768,
+		.drive_enable = 1,
+		.rpm_limit = 0
+	};
+
+	ECU_CAN_Send(GR_OLD_BUS_PRIMARY, GR_GR_INVERTER_1, MSG_INVERTER_COMMAND, &message, sizeof(message));
 
 }
 

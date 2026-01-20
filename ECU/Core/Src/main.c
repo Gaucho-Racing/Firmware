@@ -33,10 +33,10 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "CANdler.h"
-#include "CANutils.h"
 #include "Logomatic.h"
 #include "StateTicks.h"
 #include "StateUtils.h"
+#include "CANutils.h"
 #include "adc.h"
 #include "can.h"
 /* USER CODE END Includes */
@@ -148,7 +148,7 @@ void read_digital(void)
 	// debouncing/latching for ts/rtd active
 	bool ts_press = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_12);
 	bool rtd_press = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_11);
-	uint32_t curr_time = millis();
+	uint32_t curr_time = MillisecondsSinceBoot();
 
 	if (!stateLump.prev_ts_active_button_state && ts_press && (curr_time - stateLump.prev_ts_press_millis > BUTTON_REFRESH_RATE_MS)) {
 		stateLump.ts_active = !stateLump.ts_active;
@@ -411,6 +411,8 @@ int main(void)
 		adcDataValues[i] = malloc(sizeof(uint16_t) * WINDOW_SIZE);
 	}
 
+	LOGOMATIC("Boot completed at %lu ms\n", MillisecondsSinceBoot());
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -455,6 +457,8 @@ void SystemClock_Config(void)
 	while (LL_RCC_PLL_IsReady() != 1) {}
 
 	LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
+
+	// LL_RCC_SetADCClockSource(LL_RCC_ADC);
 	LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_2);
 	/* Wait till System clock is ready */
 	while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL) {}

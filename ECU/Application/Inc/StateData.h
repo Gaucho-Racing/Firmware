@@ -81,8 +81,8 @@ typedef volatile struct ECU_StateData {
 	uint8_t status_bits[3];
 	int8_t ping_block[3];	      /** Node timeout status bits (1=OK, 0=Timeout) */
 	uint8_t powerlevel_torquemap; /** Power lvl (4b) & torque map (4b) */
-	uint8_t tractivebattery_soc;  /** Accumulator SoC, 20x/51=% */
-	uint8_t glv_soc;	      /** GLV SoC, 20x/51=% */
+	uint8_t tractivebattery_soc;
+	uint8_t glv_soc;
 	uint8_t bcu_error_warning_bits;
 	uint8_t inverter_fault_map;
 	bool ts_active;
@@ -96,10 +96,5 @@ typedef volatile struct ECU_StateData {
 	bool bcu_software_latch;
 	GR_ECU_State ecu_state;
 } ECU_StateData;
-// FIXME Add comments to each data field with descriptions and
-// rules (eg -1 = invalid?, etc)
-// Will also need to add information from ADC into this struct
-// --- such as the APPS and Brake signals after doing smoothing
-// and whatnot to get the values sane
 
 #endif
