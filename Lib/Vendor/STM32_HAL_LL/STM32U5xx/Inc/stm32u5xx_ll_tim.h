@@ -688,9 +688,9 @@ typedef struct {
 #define LL_TIM_SR_DIRF TIM_SR_DIRF   /*!< Direction Change interrupt flag  */
 #define LL_TIM_SR_IERRF TIM_SR_IERRF /*!< Index Error flag  */
 #define LL_TIM_SR_TERRF TIM_SR_TERRF /*!< Transition Error flag  */
-/**
- * @}
- */
+				     /**
+				      * @}
+				      */
 
 #if defined(USE_FULL_LL_DRIVER)
 /** @defgroup TIM_LL_EC_BREAK_ENABLE Break Enable

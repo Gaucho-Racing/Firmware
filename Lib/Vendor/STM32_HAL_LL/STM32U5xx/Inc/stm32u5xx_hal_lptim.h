@@ -400,9 +400,9 @@ typedef void (*pLPTIM_CallbackTypeDef)(LPTIM_HandleTypeDef *hlptim); /*!< pointe
 
 #define LPTIM_INPUT1SOURCE_GPIO 0x00000000U	      /*!< For LPTIM1, LPTIM2, LPTIM3 and LPTIM4 */
 #define LPTIM_INPUT1SOURCE_COMP1 LPTIM_CFGR2_IN1SEL_0 /*!< For LPTIM1, LPTIM2, LPTIM3 and LPTIM4 */
-/**
- * @}
- */
+						      /**
+						       * @}
+						       */
 
 /** @defgroup LPTIM_Input2_Source LPTIM Input2 Source
  * @{
@@ -412,9 +412,9 @@ typedef void (*pLPTIM_CallbackTypeDef)(LPTIM_HandleTypeDef *hlptim); /*!< pointe
 #if defined(COMP2)
 #define LPTIM_INPUT2SOURCE_COMP2 LPTIM_CFGR2_IN2SEL_0 /*!< For LPTIM1 and LPTIM2 */
 #endif						      /* COMP2 */
-/**
- * @}
- */
+						      /**
+						       * @}
+						       */
 
 /** @defgroup LPTIM_Flag_Definition LPTIM Flags Definition
  * @{
@@ -1179,9 +1179,9 @@ HAL_LPTIM_StateTypeDef HAL_LPTIM_GetState(const LPTIM_HandleTypeDef *hlptim);
  */
 
 #endif /* LPTIM1 || LPTIM2 ||  LPTIM3 || LPTIM4 */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 #ifdef __cplusplus
 }

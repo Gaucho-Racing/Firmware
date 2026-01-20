@@ -612,9 +612,9 @@ HAL_StatusTypeDef HMAC_Start_DMA(HASH_HandleTypeDef *hhash, uint8_t *pInBuffer, 
  * @}
  */
 #endif /*  HASH*/
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 #ifdef __cplusplus
 }

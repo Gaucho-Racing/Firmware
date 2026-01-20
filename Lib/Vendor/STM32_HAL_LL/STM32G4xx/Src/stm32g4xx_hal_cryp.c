@@ -3588,7 +3588,6 @@ static HAL_StatusTypeDef CRYP_AESGCM_Process_DMA(CRYP_HandleTypeDef *hcryp)
 		if (CRYP_GCMCCM_SetHeaderPhase_DMA(hcryp) != HAL_OK) {
 			return HAL_ERROR;
 		}
-
 	} else {
 		/* Initialization and header phases already done, only do
 		 * payload phase */
@@ -4205,7 +4204,6 @@ static HAL_StatusTypeDef CRYP_AESCCM_Process_DMA(CRYP_HandleTypeDef *hcryp)
 		if (CRYP_GCMCCM_SetHeaderPhase_DMA(hcryp) != HAL_OK) {
 			return HAL_ERROR;
 		}
-
 	} else {
 		/* Initialization and header phases already done, only do
 		 * payload phase */

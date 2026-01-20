@@ -315,9 +315,9 @@ typedef struct {
 #define LCD_RAM_REGISTER13 (0x0000000DU) /*!< LCD RAM Register 13 */
 #define LCD_RAM_REGISTER14 (0x0000000EU) /*!< LCD RAM Register 14 */
 #define LCD_RAM_REGISTER15 (0x0000000FU) /*!< LCD RAM Register 15 */
-/**
- * @}
- */
+					 /**
+					  * @}
+					  */
 
 /** @defgroup LCD_HighDrive LCD High Drive
  * @{
@@ -327,9 +327,9 @@ typedef struct {
 	((uint32_t)0x00000000)		  /*!< High drive disabled                                                                                                                                     \
 					   */
 #define LCD_HIGHDRIVE_ENABLE (LCD_FCR_HD) /*!< High drive enabled  */
-/**
- * @}
- */
+					  /**
+					   * @}
+					   */
 
 /** @defgroup LCD_MuxSegment LCD Mux Segment
  * @{

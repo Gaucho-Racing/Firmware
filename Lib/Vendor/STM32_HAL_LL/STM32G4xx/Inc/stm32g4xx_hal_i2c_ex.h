@@ -161,9 +161,9 @@ void HAL_I2CEx_DisableFastModePlus(uint32_t ConfigFastModePlus);
 	  (((__CONFIG__) & (I2C_FASTMODEPLUS_I2C1)) == I2C_FASTMODEPLUS_I2C1) || (((__CONFIG__) & (I2C_FASTMODEPLUS_I2C2)) == I2C_FASTMODEPLUS_I2C2) ||                                                \
 	  (((__CONFIG__) & (I2C_FASTMODEPLUS_I2C4)) == I2C_FASTMODEPLUS_I2C4)))
 #endif /* I2C3 */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 /* Private Functions ---------------------------------------------------------*/
 /** @defgroup I2CEx_Private_Functions I2C Extended Private Functions

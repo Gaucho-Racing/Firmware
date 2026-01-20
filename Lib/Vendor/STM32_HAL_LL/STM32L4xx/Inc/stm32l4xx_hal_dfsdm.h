@@ -863,11 +863,11 @@ uint32_t HAL_DFSDM_FilterGetError(const DFSDM_Filter_HandleTypeDef *hdfsdm_filte
  * @}
  */
 #endif /* STM32L451xx || STM32L452xx || STM32L462xx || */
-/* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx || STM32L486xx || */
-/* STM32L496xx || STM32L4A6xx || */
-/* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx ||
- * STM32L4S9xx || */
-/* STM32L4P5xx || STM32L4Q5xx */
+       /* STM32L471xx || STM32L475xx || STM32L476xx || STM32L485xx || STM32L486xx || */
+       /* STM32L496xx || STM32L4A6xx || */
+       /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx || STM32L4S7xx ||
+	* STM32L4S9xx || */
+       /* STM32L4P5xx || STM32L4Q5xx */
 
 #ifdef __cplusplus
 }

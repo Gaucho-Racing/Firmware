@@ -257,9 +257,9 @@ typedef void (*pMMC_CallbackTypeDef)(MMC_HandleTypeDef *hmmc);
  * @}
  */
 #endif /* USE_HAL_MMC_REGISTER_CALLBACKS */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 /* Exported constants --------------------------------------------------------*/
 /** @defgroup MMC_Exported_Constants Exported Constants

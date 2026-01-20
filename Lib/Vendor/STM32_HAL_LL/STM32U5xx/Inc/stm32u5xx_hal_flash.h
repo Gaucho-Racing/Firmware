@@ -643,9 +643,9 @@ a burst (8xquad-word) at a specified non-secure address */
 #define OB_TZEN_ENABLE                                                                                                                                                                                 \
 	FLASH_OPTR_TZEN /*!< Global TrustZone security enabled                                                                                                                                         \
 			 */
-/**
- * @}
- */
+			/**
+			 * @}
+			 */
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /** @defgroup FLASH_OB_BOOT_LOCK FLASH Option Bytes Boot Lock

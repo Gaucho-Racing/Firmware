@@ -397,9 +397,9 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
 #define CRYP_KEYPROT_DISABLE                                                                                                                                                                           \
 	0x00000000U /*!< Only for SAES, Key not protected between 2                                                                                                                                    \
 		       applications with different security contexts */
-/**
- * @}
- */
+		    /**
+		     * @}
+		     */
 
 /** @defgroup CRYP_Data_Type CRYP Data Type
  * @{
@@ -732,9 +732,9 @@ uint32_t HAL_CRYP_GetError(const CRYP_HandleTypeDef *hcryp);
  */
 
 #endif /* AES */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 #ifdef __cplusplus
 }

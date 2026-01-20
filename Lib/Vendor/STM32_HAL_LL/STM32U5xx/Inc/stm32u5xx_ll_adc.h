@@ -3160,9 +3160,9 @@ typedef struct {
 	(ADC_CFGR2_OVSS_3 | ADC_CFGR2_OVSS_1 | ADC_CFGR2_OVSS_0) /*!< ADC oversampling shift of 11 (sum of the ADC                                                                                     \
 								    conversions data is divided by 2048 to result as                                                                                   \
 								    the ADC oversampling conversion data) */
-/**
- * @}
- */
+								 /**
+								  * @}
+								  */
 
 #if defined(ADC_MULTIMODE_SUPPORT)
 /** @defgroup ADC_LL_EC_MULTI_MODE  Multimode - Mode
@@ -3293,9 +3293,9 @@ typedef struct {
 #define LL_ADC_MULTI_MASTER_SLAVE                                                                                                                                                                      \
 	(ADC_CDR_RDATA_SLV | ADC_CDR_RDATA_MST) /*!< In multimode, selection among several ADC                                                                                                         \
 						   instances: both ADC master and ADC slave */
-/**
- * @}
- */
+						/**
+						 * @}
+						 */
 
 #endif /* ADC_MULTIMODE_SUPPORT */
 
@@ -7526,7 +7526,6 @@ __STATIC_INLINE void LL_ADC_SetChannelSamplingTime(ADC_TypeDef *ADCx, uint32_t C
 		__IO uint32_t *preg = __ADC_PTR_REG_OFFSET(ADCx->SMPR1, ((Channel & ADC_CHANNEL_SMPRX_REGOFFSET_MASK) >> ADC_SMPRX_REGOFFSET_POS));
 
 		MODIFY_REG(*preg, ADC_SMPR1_SMP0 << shift_value, SamplingTime << shift_value);
-
 	} else {
 		/* Parameter "Channel" is used with masks because containing */
 		/* other bits reserved for other purpose. It needs to be
@@ -8233,7 +8232,6 @@ __STATIC_INLINE uint32_t LL_ADC_GetAnalogWDThresholds(const ADC_TypeDef *ADCx, u
 	{
 		if (AWDy == LL_ADC_AWD1) {
 			preg = __ADC_PTR_REG_OFFSET(ADCx->AWD1TR, 0UL);
-
 		} else {
 			preg = __ADC_PTR_REG_OFFSET(ADCx->AWD1TR,
 						    (((AWDy & ADC_AWD_TRX_REGOFFSET_MASK)) >> (ADC_AWD_TRX_REGOFFSET_POS)) + ((ADC_AWD_CR3_REGOFFSET & AWDy) >> (ADC_AWD_CRX_REGOFFSET_POS + 1UL)));

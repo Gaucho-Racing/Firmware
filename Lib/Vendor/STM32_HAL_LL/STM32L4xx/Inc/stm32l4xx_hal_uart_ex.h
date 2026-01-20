@@ -81,9 +81,9 @@ typedef struct {
  */
 #define UART_ADDRESS_DETECT_4B 0x00000000U     /*!< 4-bit long wake-up address */
 #define UART_ADDRESS_DETECT_7B USART_CR2_ADDM7 /*!< 7-bit long wake-up address */
-/**
- * @}
- */
+					       /**
+						* @}
+						*/
 
 #if defined(USART_CR1_FIFOEN)
 /** @defgroup UARTEx_FIFO_mode UARTEx FIFO mode
@@ -120,9 +120,9 @@ typedef struct {
 #define UART_RXFIFO_THRESHOLD_3_4 (USART_CR3_RXFTCFG_0 | USART_CR3_RXFTCFG_1) /*!< RX FIFO reaches 3/4 of its depth */
 #define UART_RXFIFO_THRESHOLD_7_8 USART_CR3_RXFTCFG_2			      /*!< RX FIFO reaches 7/8 of its depth */
 #define UART_RXFIFO_THRESHOLD_8_8 (USART_CR3_RXFTCFG_2 | USART_CR3_RXFTCFG_0) /*!< RX FIFO becomes full             */
-/**
- * @}
- */
+									      /**
+									       * @}
+									       */
 
 #endif /* USART_CR1_FIFOEN */
 /**
@@ -636,9 +636,9 @@ HAL_UART_RxEventTypeTypeDef HAL_UARTEx_GetRxEventType(const UART_HandleTypeDef *
 	 ((__THRESHOLD__) == UART_RXFIFO_THRESHOLD_3_4) || ((__THRESHOLD__) == UART_RXFIFO_THRESHOLD_7_8) || ((__THRESHOLD__) == UART_RXFIFO_THRESHOLD_8_8))
 
 #endif /* USART_CR1_FIFOEN */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 /* Private functions ---------------------------------------------------------*/
 

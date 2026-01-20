@@ -489,9 +489,9 @@ typedef struct {
 #define OB_SRAM2_RST_NOT_ERASE                                                                                                                                                                         \
 	((uint32_t)FLASH_OPTR_SRAM2_RST) /*!< SRAM2 is not erased when a                                                                                                                               \
 					    system reset occurs */
-/**
- * @}
- */
+					 /**
+					  * @}
+					  */
 
 #if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L431xx) || defined(STM32L432xx) || defined(STM32L433xx) || defined(STM32L442xx) || defined(STM32L443xx) || defined(STM32L451xx) ||    \
     defined(STM32L452xx) || defined(STM32L462xx) || defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||    \
@@ -959,9 +959,9 @@ HAL_StatusTypeDef FLASH_WaitForLastOperation(uint32_t Timeout);
 #endif
 
 #define FLASH_TIMEOUT_VALUE ((uint32_t)50000) /* 50 s */
-/**
- * @}
- */
+					      /**
+					       * @}
+					       */
 
 /* Private macros ------------------------------------------------------------*/
 /** @defgroup FLASH_Private_Macros FLASH Private Macros

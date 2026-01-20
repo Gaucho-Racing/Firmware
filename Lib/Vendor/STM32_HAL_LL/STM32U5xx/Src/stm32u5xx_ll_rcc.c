@@ -166,8 +166,7 @@ ErrorStatus LL_RCC_DeInit(void)
 	LL_RCC_MSIS_Enable();
 
 	/* Insure MSIRDY bit is set before writing default MSIRANGE value */
-	while (LL_RCC_MSIS_IsReady() == 0U) {
-	}
+	while (LL_RCC_MSIS_IsReady() == 0U) {}
 
 	/* Set MSIRANGE default value */
 	LL_RCC_MSIS_SetRange(LL_RCC_MSISRANGE_4);
@@ -193,8 +192,7 @@ ErrorStatus LL_RCC_DeInit(void)
 	LL_RCC_WriteReg(CR, vl_mask);
 
 	/* Wait for PLL1RDY, PLL2RDY and PLL3RDY bits to be reset */
-	while (READ_BIT(RCC->CR, RCC_CR_PLL1RDY | RCC_CR_PLL2RDY | RCC_CR_PLL3RDY) != 0U) {
-	}
+	while (READ_BIT(RCC->CR, RCC_CR_PLL1RDY | RCC_CR_PLL2RDY | RCC_CR_PLL3RDY) != 0U) {}
 
 	/* Reset PLL1DIVR register */
 	LL_RCC_WriteReg(PLL1DIVR, 0x01010280U);
