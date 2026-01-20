@@ -5,7 +5,6 @@
 #include "StateMachine.h"
 #include "StateUtils.h"
 #include "Unused.h"
-
 #include "adc.h"
 #include "can.h"
 

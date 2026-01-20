@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
+#include "GR_OLD_BUS_ID.h"
 #include "StateData.h"
 #include "StateTicks.h"
 #include "adc.h"
@@ -27,15 +28,14 @@
 #include "gpio.h"
 #include "gr_adc.h"
 #include "malloc.h"
-#include "GR_OLD_BUS_ID.h"
 #include "usart.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Logomatic.h"
 #include "StateTicks.h"
-#include "can.h"
 #include "adc.h"
+#include "can.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -138,33 +138,29 @@ static void ITM_Enable(void)
 // TODO: state data stores stuff as either FLOATS or BOOLS...check
 void read_digital(void)
 {
-		stateLump.bspd_sense = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_5);
-		stateLump.imd_sense = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_6);
-		stateLump.ams_sense = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_7);
-		
-		
-		bool ts_press = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_12);
+	stateLump.bspd_sense = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_5);
+	stateLump.imd_sense = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_6);
+	stateLump.ams_sense = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_7);
 
-		bool rtd_press = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_11);
+	bool ts_press = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_12);
 
-		uint32_t curr_time = millis();
-		
+	bool rtd_press = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_11);
 
- 		if(!stateLump.prev_ts_active_button_state && ts_press && curr_time - prev_ts_press_millis > BUTTON_REFRESH_RATE_MS){
-			stateLump.ts_active = !stateLump.ts_active;
-		}
+	uint32_t curr_time = millis();
 
-		
-		if(!stateLump.prev_rtd_button_state && rtd_press && curr_time - prev_ts_press_millis > BUTTON_REFRESH_RATE_MS){
+	if (!stateLump.prev_ts_active_button_state && ts_press && curr_time - prev_ts_press_millis > BUTTON_REFRESH_RATE_MS) {
+		stateLump.ts_active = !stateLump.ts_active;
+	}
+
+	if (!stateLump.prev_rtd_button_state && rtd_press && curr_time - prev_ts_press_millis > BUTTON_REFRESH_RATE_MS) {
 		stateLump.rtd = !stateLump.rtd;
-		}
-		
-		stateLump.prev_ts_active_button_state = ts_press;
-		stateLump.prev_rtd_button_state = rtd_press;
-		
-		
-		// TODO: inertia sense? LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_10);
-		stateLump.estop_sense= LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_15);
+	}
+
+	stateLump.prev_ts_active_button_state = ts_press;
+	stateLump.prev_rtd_button_state = rtd_press;
+
+	// TODO: inertia sense? LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_10);
+	stateLump.estop_sense = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_15);
 }
 
 void write_state_data()
@@ -183,12 +179,11 @@ void write_state_data()
 	stateLump.bspd_sense = digital_data[0];
 	stateLump.imd_sense = digital_data[1];
 	stateLump.ams_sense = digital_data[2];
-	//TODO: debounce button
+	// TODO: debounce button
 	stateLump.ts_active = (!stateLump.prev_ts_active_button_state && digital_data[3]) ? !stateLump.ts_active : stateLump.ts_active;
 	stateLump.prev_ts_active_button_state = digital_data[3];
 	stateLump.rtd = (!stateLump.prev_rtd_button_state && digital_data[4]) ? !stateLump.rtd : stateLump.rtd;
-	stateLump.prev_rtd_button_state = digital_data[4]
-	stateLump.bspd_sense = digital_data[5];
+	stateLump.prev_rtd_button_state = digital_data[4] stateLump.bspd_sense = digital_data[5];
 	// TODO: inertia steering wheel sense? digital_data[6]
 	stateLump.estop_sense = digital_data[7];
 }
@@ -246,21 +241,14 @@ void ADC_Configure(void)
 	ADC_Enable_And_Calibrate(ADC2);
 }
 
-void CAN1_rx_callback(void* data, uint32_t size, uint32_t ID) {
+void CAN1_rx_callback(void *data, uint32_t size, uint32_t ID)
+{
 	ECU_CAN_MessageHandler(&stateLump, GR_OLD_BUS_PRIMARY,
-						(0x000FFF00 & ID) >> 8, //TODO: Double check 
-						(0xFF00000 & ID) >> 20,
-						data,
-						size);
+			       (0x000FFF00 & ID) >> 8, // TODO: Double check
+			       (0xFF00000 & ID) >> 20, data, size);
 }
 
-void CAN2_rx_callback(void* data, uint32_t size, uint32_t ID) {	
-	ECU_CAN_MessageHandler(&stateLump, GR_OLD_BUS_DATA,
-						(0x000FFF00 & ID) >> 8,
-						(0xFF00000 & ID) >> 20,
-						data,
-						size);
-}
+void CAN2_rx_callback(void *data, uint32_t size, uint32_t ID) { ECU_CAN_MessageHandler(&stateLump, GR_OLD_BUS_DATA, (0x000FFF00 & ID) >> 8, (0xFF00000 & ID) >> 20, data, size); }
 
 void CAN_Configure()
 {
@@ -367,7 +355,7 @@ void CAN_Configure()
 	fdcan2_filter.IdType = FDCAN_EXTENDED_ID;
 	fdcan2_filter.FilterIndex = 0;
 	fdcan2_filter.FilterType = FDCAN_FILTER_MASK;
-	fdcan2_filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0; //TODO: check if this works during test, RXFifos may not be indpeendent (but it sur)
+	fdcan2_filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0; // TODO: check if this works during test, RXFifos may not be indpeendent (but it sur)
 	fdcan2_filter.FilterID2 = 0x00000FF;
 
 	fdcan2_filter.FilterIndex = 1;
