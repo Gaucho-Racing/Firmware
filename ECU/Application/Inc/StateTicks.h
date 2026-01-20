@@ -1,8 +1,13 @@
 #include "StateData.h"
 #include "StateMachine.h"
+#include "adc.h"
+#include "can.h"
 
 #ifndef _STATE_TICKS_H_
 #define _STATE_TICKS_H_
+
+extern CANHandle *can1Handle;
+extern CANHandle *can2Handle;
 
 /**
  * @brief Tick function for the ECU state machine.
@@ -34,6 +39,17 @@ void ECU_GLV_Off(ECU_StateData *stateData);
  * @return void
  */
 void ECU_GLV_On(ECU_StateData *stateData);
+
+/**
+ * @brief Handles the transition from GLV On to Precharge Engaged state.
+ *
+ * Initiates the precharge process by switching to the Precharge Engaged state.
+ *
+ * @param stateData Pointer to the ECU state data structure.
+ *
+ * @return void
+ */
+void ECU_Precharge_Start(ECU_StateData *stateData);
 
 /**
  * @brief State handler for the Precharge Engaged state.

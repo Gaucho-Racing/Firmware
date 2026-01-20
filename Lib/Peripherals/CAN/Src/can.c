@@ -398,7 +398,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 
 		// stack allocation should be fine? Callback needs to terminate first before stack is popped
 		// should switch this over to malloc at some point to avoid double copies?
-		handle->rx_callback(rx_data, rx_header.DataLength);
+		handle->rx_callback(rx_data, rx_header.DataLength, rx_header.Identifier);
 	}
 
 	/* whoopsie, don't need the rx buffer yet

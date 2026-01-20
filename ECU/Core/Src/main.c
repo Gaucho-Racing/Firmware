@@ -27,6 +27,7 @@
 #include "gpio.h"
 #include "gr_adc.h"
 #include "malloc.h"
+#include "GR_OLD_BUS_ID.h"
 #include "usart.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -34,6 +35,7 @@
 #include "Logomatic.h"
 #include "StateTicks.h"
 #include "can.h"
+#include "adc.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -107,7 +109,6 @@ uint16_t ADC2_outputs[NUM_SIGNALS_ADC2] = {0};			      // Updated averages
 uint16_t *adcDataValues[(NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2)] = {0}; // 2D Array
 
 // DIGITAL
-uint8_t digital_data[NUM_SIGNALS_DIGITAL] = {0};
 
 // STATE DATA
 extern ECU_StateData stateLump;
@@ -137,25 +138,33 @@ static void ITM_Enable(void)
 // TODO: state data stores stuff as either FLOATS or BOOLS...check
 void read_digital(void)
 {
-	for (int i = 0; i < NUM_SIGNALS_DIGITAL; i++) {
-		GPIO_PinState currRead;
-		if (i == 0) {
-			currRead = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_5);
-		} else if (i == 1) {
-			currRead = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_6);
-		} else if (i == 2) {
-			currRead = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_7);
-		} else if (i == 3) {
-			currRead = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_12);
-		} else if (i == 4) {
-			currRead = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_11);
-		} else if (i == 5) {
-			currRead = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_10);
-		} else if (i == 6) {
-			currRead = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_15);
+		stateLump.bspd_sense = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_5);
+		stateLump.imd_sense = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_6);
+		stateLump.ams_sense = LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_7);
+		
+		
+		bool ts_press = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_12);
+
+		bool rtd_press = LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_11);
+
+		uint32_t curr_time = millis();
+		
+
+ 		if(!stateLump.prev_ts_active_button_state && ts_press && curr_time - prev_ts_press_millis > BUTTON_REFRESH_RATE_MS){
+			stateLump.ts_active = !stateLump.ts_active;
 		}
-		digital_data[i] = currRead;
-	}
+
+		
+		if(!stateLump.prev_rtd_button_state && rtd_press){
+		stateLump.rtd = !stateLump.rtd;
+		}
+		
+		stateLump.prev_ts_active_button_state = ts_press;
+		stateLump.prev_rtd_button_state = rtd_press;
+		
+		
+		// TODO: inertia sense? LL_GPIO_IsInputPinSet(GPIOC, LL_GPIO_PIN_10);
+		stateLump.estop_sense= LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_15);
 }
 
 void write_state_data()
@@ -174,8 +183,11 @@ void write_state_data()
 	stateLump.bspd_sense = digital_data[0];
 	stateLump.imd_sense = digital_data[1];
 	stateLump.ams_sense = digital_data[2];
-	stateLump.ts_active_button_engaged = digital_data[3];
-	stateLump.rtd_button_engaged = digital_data[4];
+	//TODO: debounce button
+	stateLump.ts_active = (!stateLump.prev_ts_active_button_state && digital_data[3]) ? !stateLump.ts_active : stateLump.ts_active;
+	stateLump.prev_ts_active_button_state = digital_data[3];
+	stateLump.rtd = (!stateLump.prev_rtd_button_state && digital_data[4]) ? !stateLump.rtd : stateLump.rtd;
+	stateLump.prev_rtd_button_state = digital_data[4]
 	stateLump.bspd_sense = digital_data[5];
 	// TODO: inertia steering wheel sense? digital_data[6]
 	stateLump.estop_sense = digital_data[7];
@@ -234,24 +246,27 @@ void ADC_Configure(void)
 	ADC_Enable_And_Calibrate(ADC2);
 }
 
-//CANHandle *can1Handle;
-//CANHandle *can2Handle;
-
-void CAN1_rx_callback(void* data, uint32_t size) {
-
-	ECU_CAN_MessageHandler(); 
+void CAN1_rx_callback(void* data, uint32_t size, uint32_t ID) {
+	ECU_CAN_MessageHandler(&stateLump, GR_OLD_BUS_PRIMARY,
+						(0x000FFF00 & ID) >> 8, //TODO: Double check 
+						(0xFF00000 & ID) >> 20,
+						data,
+						size);
 }
 
-void CAN0_rx_callback(void* data, uint32_t size) {
-
-	ECU_CAN_MessageHandler();
+void CAN2_rx_callback(void* data, uint32_t size, uint32_t ID) {	
+	ECU_CAN_MessageHandler(&stateLump, GR_OLD_BUS_DATA,
+						(0x000FFF00 & ID) >> 8,
+						(0xFF00000 & ID) >> 20,
+						data,
+						size);
 }
 
 void CAN_Configure()
 {
 	CANConfig canCfg;
 
-	// SHARED config data for CAN1 and CAN2
+	// SHARED config ddata for CAN1 and CAN2
 	canCfg.hal_fdcan_init.ClockDivider = FDCAN_CLOCK_DIV1;
 	canCfg.hal_fdcan_init.FrameFormat = FDCAN_FRAME_FD_NO_BRS;
 	canCfg.hal_fdcan_init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
@@ -315,7 +330,7 @@ void CAN_Configure()
 	canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN1;
 
 	// RX Callback CAN1
-	canCfg.rx_callback = ECU_CAN_MessageHandler; // TODO: Make sure the wrapper for this is defined correctly
+	canCfg.rx_callback = CAN1_rx_callback; // TODO: Make sure the wrapper for this is defined correctly
 
 	can1Handle = can_init(&canCfg);
 
@@ -344,7 +359,7 @@ void CAN_Configure()
 	canCfg.init_tx_gpio.Alternate = GPIO_AF9_FDCAN2;
 
 	// RX Callback CAN2
-	canCfg.rx_callback = ECU_CAN_MessageHandler; // TODO: Make sure the wrapper for this is defined correctly
+	canCfg.rx_callback = CAN2_rx_callback; // TODO: Make sure the wrapper for this is defined correctly
 
 	// Filter definitions
 	FDCAN_FilterTypeDef fdcan2_filter;
@@ -352,8 +367,7 @@ void CAN_Configure()
 	fdcan2_filter.IdType = FDCAN_EXTENDED_ID;
 	fdcan2_filter.FilterIndex = 0;
 	fdcan2_filter.FilterType = FDCAN_FILTER_MASK;
-	fdcan2_filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-	fdcan2_filter.FilterID1 = LOCAL_GR_ID; // filter messages with ECU destination
+	fdcan2_filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0; //TODO: check if this works during test, RXFifos may not be indpeendent (but it sur)
 	fdcan2_filter.FilterID2 = 0x00000FF;
 
 	fdcan2_filter.FilterIndex = 1;
@@ -429,7 +443,7 @@ int main(void)
 		write_state_data();
 		ECU_State_Tick();
 		LOGOMATIC("Main Loop Tick Complete. I like Pi %f\n", 3.14159265);
-		LL_mDelay(250); // FIXME Reduce or remove delay
+		LL_mDelay(250); // FIXME Reduce or remove de
 	}
 	/* USER CODE END 3 */
 	for (int i = (NUM_SIGNALS_ADC1 + NUM_SIGNALS_ADC2) - 1; i >= 0; i--) {

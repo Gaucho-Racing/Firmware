@@ -6,6 +6,9 @@
 #include "StateUtils.h"
 #include "Unused.h"
 
+#include "adc.h"
+#include "can.h"
+
 /**
  * @brief The ECU state data lump.
  *
@@ -15,8 +18,8 @@
  * @remark Intentionally not a globally accessible variable
  */
 
-extern CANHandle *can1Handle;
-extern CANHandle *can2Handle;
+CANHandle *can1Handle;
+CANHandle *can2Handle;
 
 ECU_StateData stateLump = {0};
 
@@ -79,12 +82,12 @@ void ECU_GLV_On(ECU_StateData *stateData)
 	if (stateData->ts_voltage >= SAFE_VOLTAGE_LIMIT) {
 		ECU_Tractive_System_Discharge_Start(stateData);
 		// TODO emit an error
-		LOGOMATIC("TS Voltage >= 60!")
+		LOGOMATIC("TS Voltage >= 60!");
 		return;
 	}
 
 	// TODO: Implement functionality
-	if (stateData->ts_active_button_engaged /* && stateData->ir_plus*/) { // TOOD Talk to Owen if this is correct for precharge start confirmation
+	if (stateData->ts_active /* && stateData->ir_plus*/) { // TOOD Talk to Owen if this is correct for precharge start confirmation
 		ECU_Precharge_Start(stateData);
 	}
 }
@@ -93,6 +96,21 @@ void ECU_Precharge_Start(ECU_StateData *stateData)
 {
 	/*TODO: send message to BCU to start precharging*/
 	LOGOMATIC("tell the BCU to start precharging");
+	FDCAN_TxHeaderTypeDef TxHeader = {
+	    .Identifier = 1,
+
+	    .IdType = FDCAN_STANDARD_ID,
+	    .TxFrameType = FDCAN_DATA_FRAME,
+	    .ErrorStateIndicator = FDCAN_ESI_ACTIVE, // honestly this might be a value you have to read from a node
+						     // FDCAN_ESI_ACTIVE is just a state that assumes there are minimal errors
+	    .DataLength = 1,
+	    .BitRateSwitch = FDCAN_BRS_OFF,
+	    .TxEventFifoControl = FDCAN_NO_TX_EVENTS, // change to FDCAN_STORE_TX_EVENTS if you need to store info regarding transmitted messages
+	    .MessageMarker = 0			      // also change this to a real address if you change fifo control
+	};
+	FDCANTxMessage msg;
+	msg.tx
+	can_send(can1Handle, &msg);
 	stateData->ecu_state = GR_PRECHARGE_ENGAGED;
 }
 

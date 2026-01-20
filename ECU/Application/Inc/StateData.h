@@ -20,6 +20,8 @@
  */
 
 #define SAFE_VOLTAGE_LIMIT 60
+#define BUTTON_REFRESH_RATE_MS 100
+
 typedef union {
 	struct {
 		uint8_t ECUState;
@@ -85,6 +87,10 @@ typedef volatile struct ECU_StateData {
 	uint8_t inverter_fault_map;
 	bool ts_active;
 	bool rtd;
+	bool prev_ts_active_button_state;
+	bool prev_rtd_button_state;
+	uint32_t prev_ts_press_millis;
+	uint32_t prev_rtd_press_millis;
 	bool ir_plus;
 	bool ir_minus;
 	GR_ECU_State ecu_state;

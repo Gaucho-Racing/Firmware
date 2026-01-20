@@ -14,16 +14,26 @@ endif()
 get_filename_component(GR_PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 if(CMAKE_PRESET_NAME STREQUAL "HOOTLTest")
-	add_executable(dummy_test)
+	add_executable(state_machine_tick_returns)
 	target_include_directories(
-		dummy_test
+		state_machine_tick_returns
 		PRIVATE
 			Application/Inc
 			Core/Inc
 	)
-	target_sources(dummy_test PRIVATE Test/dummy_test.c)
-	target_link_libraries(dummy_test PRIVATE GLOBALSHARE_LIB)
-	add_test(dummy_test dummy_test)
+	target_sources(
+		state_machine_tick_returns
+		PRIVATE
+			Test/state_machine_tick_returns.c
+			Application/Src/StateTicks.c
+	)
+	target_link_libraries(
+		state_machine_tick_returns
+		PRIVATE
+			GLOBALSHARE_LIB
+			GR_OLD_CAN_MESSAGES
+	)
+	add_test(state_machine_tick_returns state_machine_tick_returns)
 
 	# FIXME Add more HOOTL tests
 endif()
@@ -70,6 +80,7 @@ target_link_libraries(
 		GR_OLD_CAN_MESSAGES
 		ADC
 		PERIPHERAL_CAN_LIB
+		BitManipulations_Lib
 )
 
 target_include_directories(
