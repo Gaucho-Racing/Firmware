@@ -2751,7 +2751,7 @@ typedef struct {
   @{
  */
 #define ID_ADR (ID_AFR) /*!< SCB Auxiliary Feature Register */
-/*@} */
+			/*@} */
 
 /*******************************************************************************
  *                Hardware Abstraction Layer

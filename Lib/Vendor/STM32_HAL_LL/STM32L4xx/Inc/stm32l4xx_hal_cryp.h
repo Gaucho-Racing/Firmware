@@ -322,9 +322,9 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
 #define CRYP_HEADER_PHASE AES_CR_GCMPH_0       /*!< Header phase  */
 #define CRYP_PAYLOAD_PHASE AES_CR_GCMPH_1      /*!< Payload phase */
 #define CRYP_FINAL_PHASE AES_CR_GCMPH	       /*!< Final phase   */
-/**
- * @}
- */
+					       /**
+						* @}
+						*/
 
 /** @defgroup CRYP_Flags   AES status flags
  * @{
@@ -334,9 +334,9 @@ typedef void (*pCRYP_CallbackTypeDef)(CRYP_HandleTypeDef *hcryp); /*!< pointer t
 #define CRYP_FLAG_WRERR AES_SR_WRERR /*!< Write Error                      */
 #define CRYP_FLAG_RDERR AES_SR_RDERR /*!< Read error                       */
 #define CRYP_FLAG_CCF AES_SR_CCF     /*!< Computation completed            */
-/**
- * @}
- */
+				     /**
+				      * @}
+				      */
 
 /** @defgroup CRYP_Clear_Flags   AES clearing flags
  * @{

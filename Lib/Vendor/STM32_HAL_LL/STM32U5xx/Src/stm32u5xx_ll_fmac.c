@@ -71,8 +71,7 @@ ErrorStatus LL_FMAC_Init(FMAC_TypeDef *FMACx)
 		LL_FMAC_EnableReset(FMACx);
 
 		/* Wait until flag is reset */
-		while (LL_FMAC_IsEnabledReset(FMACx) != 0UL) {
-		}
+		while (LL_FMAC_IsEnabledReset(FMACx) != 0UL) {}
 	} else {
 		status = ERROR;
 	}

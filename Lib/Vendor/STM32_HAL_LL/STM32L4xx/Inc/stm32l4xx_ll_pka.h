@@ -451,9 +451,9 @@ void LL_PKA_StructInit(LL_PKA_InitTypeDef *PKA_InitStruct);
  */
 
 #endif /* USE_FULL_LL_DRIVER */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 /**
  * @}

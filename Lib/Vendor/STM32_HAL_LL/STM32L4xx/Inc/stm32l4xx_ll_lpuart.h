@@ -2429,9 +2429,9 @@ __STATIC_INLINE void LL_LPUART_RequestRxDataFlush(USART_TypeDef *LPUARTx) { SET_
 __STATIC_INLINE void LL_LPUART_RequestTxDataFlush(USART_TypeDef *LPUARTx) { SET_BIT(LPUARTx->RQR, (uint16_t)USART_RQR_TXFRQ); }
 
 #endif /* USART_CR1_FIFOEN */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 #if defined(USE_FULL_LL_DRIVER)
 /** @defgroup LPUART_LL_EF_Init Initialization and de-initialization functions

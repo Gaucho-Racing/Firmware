@@ -278,9 +278,9 @@ typedef struct {
 #endif			       /* PWR_CR2_PVME2 */
 #define PWR_FLAG_PVMO3 0x004EU /*!< Power Voltage Monitoring 3 output flag */
 #define PWR_FLAG_PVMO4 0x004FU /*!< Power Voltage Monitoring 4 output flag */
-/**
- * @}
- */
+			       /**
+				* @}
+				*/
 
 /**
  * @}

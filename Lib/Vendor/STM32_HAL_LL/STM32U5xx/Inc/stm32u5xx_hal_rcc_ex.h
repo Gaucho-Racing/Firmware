@@ -949,9 +949,9 @@ typedef struct {
 #define RCC_TIMIC_MSIK_1024                                                                                                                                                                            \
 	(RCC_CCIPR1_TIMICSEL_2 | RCC_CCIPR1_TIMICSEL_1 | RCC_CCIPR1_TIMICSEL_0) /*!<MSIK/4 selected for Timer16/17 and                                                                                 \
 										   LPTimer2*/
-/**
- * @}
- */
+										/**
+										 * @}
+										 */
 
 #if defined(LTDC)
 /** @defgroup RCCEx_LTDC_Clock_Source LTDC Clock Source

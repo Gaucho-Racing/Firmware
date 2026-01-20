@@ -122,7 +122,6 @@ ErrorStatus LL_COMP_DeInit(COMP_TypeDef *COMPx)
 	/*       COMP instance must not be locked. */
 	if (LL_COMP_IsLocked(COMPx) == 0UL) {
 		LL_COMP_WriteReg(COMPx, CSR, 0x00000000UL);
-
 	} else {
 		/* Comparator instance is locked: de-initialization by software
 		 * is         */
@@ -173,7 +172,6 @@ ErrorStatus LL_COMP_Init(COMP_TypeDef *COMPx, const LL_COMP_InitTypeDef *COMP_In
 		MODIFY_REG(COMPx->CSR, COMP_CSR_PWRMODE | COMP_CSR_INPSEL | COMP_CSR_INMSEL | COMP_CSR_HYST | COMP_CSR_POLARITY | COMP_CSR_BLANKSEL,
 			   COMP_InitStruct->PowerMode | COMP_InitStruct->InputPlus | COMP_InitStruct->InputMinus | COMP_InitStruct->InputHysteresis | COMP_InitStruct->OutputPolarity |
 			       COMP_InitStruct->OutputBlankingSource);
-
 	} else {
 		/* Initialization error: COMP instance is locked. */
 		status = ERROR;
