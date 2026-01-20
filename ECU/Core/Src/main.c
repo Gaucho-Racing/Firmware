@@ -35,8 +35,8 @@
 #include "CANdler.h"
 #include "Logomatic.h"
 #include "StateTicks.h"
-#include "adc.h"
 #include "StateUtils.h"
+#include "adc.h"
 #include "can.h"
 /* USER CODE END Includes */
 

@@ -3,8 +3,8 @@
 #include <math.h>
 #include <stdbool.h>
 
-#include "main.h"
 #include "StateData.h"
+#include "main.h"
 
 uint32_t millis(void)
 {

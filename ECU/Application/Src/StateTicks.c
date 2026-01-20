@@ -129,7 +129,6 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 	    System Discharge If Brake & RTD (Ready to Drive) --> Drive Active
 	*/
 
-
 	/*
 	if (TS pressed or critical error) {
 		stateData->currentState = GR_TS_DISCHARGE

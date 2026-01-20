@@ -1,6 +1,7 @@
-#include "StateData.h"
-#include "GR_OLD_BUS_ID.h"
 #include <stdint.h>
+
+#include "GR_OLD_BUS_ID.h"
+#include "StateData.h"
 
 #ifndef CANUTILS_H
 #define CANUTILS_H
