@@ -148,9 +148,9 @@ extern "C"
  */
 #define SPI_TRIG_POLARITY_RISING (0x00000000UL)	     /* SPI HW Trigger signal on rising edge  */
 #define SPI_TRIG_POLARITY_FALLING SPI_AUTOCR_TRIGPOL /* SPI HW Trigger signal on falling edge */
-	/**
-	 * @}
-	 */
+						     /**
+						      * @}
+						      */
 
 	/**
 	 * @}

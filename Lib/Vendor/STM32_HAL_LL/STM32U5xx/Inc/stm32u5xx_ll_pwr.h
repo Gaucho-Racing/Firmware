@@ -207,9 +207,9 @@ extern "C"
 #define LL_PWR_SRAM2_STOP_FULL_RETENTION                                                                                                                                                               \
 	(PWR_CR2_SRAM2PDS1 | PWR_CR2_SRAM2PDS2) /*!< SRAM2 all pages retention in Stop mode (Stop                                                                                                      \
 						   0, 1, 2) */
-	/**
-	 * @}
-	 */
+						/**
+						 * @}
+						 */
 
 #if defined(PWR_CR2_SRAM3PDS1)
 /** @defgroup PWR_LL_EC_SRAM3_STOP_CONTENTS_RETENTION PWR SRAM3 Content
@@ -278,9 +278,9 @@ extern "C"
  */
 #define LL_PWR_SRAM4_STOP_NO_RETENTION 0U		  /*!< SRAM4 no retention in Stop mode (Stop 0, 1, 2) */
 #define LL_PWR_SRAM4_STOP_FULL_RETENTION PWR_CR2_SRAM4PDS /*!< SRAM4 retention in Stop mode (Stop 0, 1, 2) */
-	/**
-	 * @}
-	 */
+							  /**
+							   * @}
+							   */
 
 #if defined(PWR_CR4_SRAM5PDS1)
 /** @defgroup PWR_LL_EC_SRAM5_STOP_CONTENTS_RETENTION PWR SRAM5 Content
@@ -395,9 +395,9 @@ extern "C"
 #define LL_PWR_DCACHE1RAM_STOP_FULL_RETENTION                                                                                                                                                          \
 	PWR_CR2_DC1RAMPDS /*!< DCACHE1 SRAM retention in Stop mode (Stop 0, 1,                                                                                                                         \
 			     2)    */
-	/**
-	 * @}
-	 */
+			  /**
+			   * @}
+			   */
 
 #if defined(PWR_CR2_DC2RAMPDS)
 /** @defgroup PWR_LL_EC_DCACHE2RAM_STOP_CONTENTS_RETENTION PWR DCACHE2 Content
@@ -449,9 +449,9 @@ extern "C"
 #define LL_PWR_PKARAM_STOP_FULL_RETENTION                                                                                                                                                              \
 	PWR_CR2_PKARAMPDS /*!< PKA32 SRAM retention in Stop mode (Stop 0, 1,                                                                                                                           \
 			     2)    */
-	/**
-	 * @}
-	 */
+			  /**
+			   * @}
+			   */
 
 #if defined(PWR_CR2_GPRAMPDS)
 /** @defgroup PWR_LL_EC_GPRAM_STOP_CONTENTS_RETENTION PWR GPRAM Content
@@ -517,9 +517,9 @@ extern "C"
 	0U						/*!< SRAM2 no retention in Run mode                                                                                                            \
 							 */
 #define LL_PWR_SRAM2_RUN_FULL_RETENTION PWR_CR1_SRAM2PD /*!< SRAM2 retention in Run mode    */
-	/**
-	 * @}
-	 */
+							/**
+							 * @}
+							 */
 
 #if defined(PWR_CR1_SRAM3PD)
 /** @defgroup PWR_LL_EC_SRAM3_RUN_CONTENTS_RETENTION PWR SRAM3 Content Retention
@@ -543,9 +543,9 @@ extern "C"
 	0U						/*!< SRAM4 no retention in Run mode                                                                                                            \
 							 */
 #define LL_PWR_SRAM4_RUN_FULL_RETENTION PWR_CR1_SRAM4PD /*!< SRAM4 retention in Run mode    */
-	/**
-	 * @}
-	 */
+							/**
+							 * @}
+							 */
 
 #if defined(PWR_CR1_SRAM5PD)
 /** @defgroup PWR_LL_EC_SRAM5_RUN_CONTENTS_RETENTION PWR SRAM5 Content Retention
@@ -3055,7 +3055,7 @@ extern "C"
 	 *         @arg @ref LL_PWR_APC_NSEC         or LL_PWR_APC_SEC
 	 */
 	__STATIC_INLINE uint32_t LL_PWR_GetConfigSecure(void) { return (READ_REG(PWR->SECCFGR)); }
-#endif /* defined (__ARM_FEATURE_CMSE) &&  (__ARM_FEATURE_CMSE == 3U) */
+#endif	/* defined (__ARM_FEATURE_CMSE) &&  (__ARM_FEATURE_CMSE == 3U) */
 	/**
 	 * @}
 	 */

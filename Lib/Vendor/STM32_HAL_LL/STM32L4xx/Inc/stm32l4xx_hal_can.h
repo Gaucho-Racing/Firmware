@@ -879,7 +879,7 @@ extern "C"
 	 * @}
 	 */
 
-#endif /* CAN1 */
+#endif	/* CAN1 */
 	/**
 	 * @}
 	 */

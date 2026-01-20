@@ -341,7 +341,7 @@ typedef struct
 #endif /* COMP5 */
 #if defined(COMP7)
 #define LPTIM_INPUT1SOURCE_COMP7 (LPTIM_OR_IN1_2 | LPTIM_OR_IN1_1 | LPTIM_OR_IN1_0)
-#endif /* COMP7 */
+#endif	/* COMP7 */
 	/**
 	 * @}
 	 */
@@ -355,7 +355,7 @@ typedef struct
 #define LPTIM_INPUT2SOURCE_COMP4 (LPTIM_OR_IN2_1 | LPTIM_OR_IN2_0)
 #if defined(COMP6)
 #define LPTIM_INPUT2SOURCE_COMP6 (LPTIM_OR_IN2_2 | LPTIM_OR_IN2_0)
-#endif /* COMP6 */
+#endif	/* COMP6 */
 	/**
 	 * @}
 	 */

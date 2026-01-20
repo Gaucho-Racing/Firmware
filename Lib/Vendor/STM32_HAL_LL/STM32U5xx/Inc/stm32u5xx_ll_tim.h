@@ -695,9 +695,9 @@ extern "C"
 #define LL_TIM_SR_DIRF TIM_SR_DIRF   /*!< Direction Change interrupt flag  */
 #define LL_TIM_SR_IERRF TIM_SR_IERRF /*!< Index Error flag  */
 #define LL_TIM_SR_TERRF TIM_SR_TERRF /*!< Transition Error flag  */
-	/**
-	 * @}
-	 */
+				     /**
+				      * @}
+				      */
 
 #if defined(USE_FULL_LL_DRIVER)
 /** @defgroup TIM_LL_EC_BREAK_ENABLE Break Enable
@@ -865,9 +865,9 @@ extern "C"
 #define LL_TIM_CHANNEL_CH4N TIM_CCER_CC4NE /*!< Timer complementary output channel 4 */
 #define LL_TIM_CHANNEL_CH5 TIM_CCER_CC5E   /*!< Timer output channel 5 */
 #define LL_TIM_CHANNEL_CH6 TIM_CCER_CC6E   /*!< Timer output channel 6 */
-	/**
-	 * @}
-	 */
+					   /**
+					    * @}
+					    */
 
 #if defined(USE_FULL_LL_DRIVER)
 /** @defgroup TIM_LL_EC_OCSTATE Output Configuration State

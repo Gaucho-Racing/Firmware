@@ -266,9 +266,9 @@ extern "C"
  */
 #define LL_RTC_ALMB_DATEWEEKDAYSEL_DATE 0x00000000U	    /*!< Alarm B Date is selected */
 #define LL_RTC_ALMB_DATEWEEKDAYSEL_WEEKDAY RTC_ALRMBR_WDSEL /*!< Alarm B WeekDay is selected */
-	/**
-	 * @}
-	 */
+							    /**
+							     * @}
+							     */
 
 #endif /* USE_FULL_LL_DRIVER */
 
@@ -459,9 +459,9 @@ extern "C"
  */
 #define LL_RTC_ALMA_TIME_FORMAT_AM 0x00000000U	 /*!< AM or 24-hour format */
 #define LL_RTC_ALMA_TIME_FORMAT_PM RTC_ALRMAR_PM /*!< PM */
-	/**
-	 * @}
-	 */
+						 /**
+						  * @}
+						  */
 
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx)
 /** @defgroup RTC_ALMA_SUBSECONDBIN_AUTOCLR
@@ -501,9 +501,9 @@ extern "C"
  */
 #define LL_RTC_ALMB_TIME_FORMAT_AM 0x00000000U	 /*!< AM or 24-hour format */
 #define LL_RTC_ALMB_TIME_FORMAT_PM RTC_ALRMBR_PM /*!< PM */
-	/**
-	 * @}
-	 */
+						 /**
+						  * @}
+						  */
 
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx)
 /** @defgroup RTC_ALMB_SUBSECONDBIN_AUTOCLR
@@ -555,9 +555,9 @@ extern "C"
  */
 #define LL_RTC_TS_TIME_FORMAT_AM 0x00000000U /*!< AM or 24-hour format */
 #define LL_RTC_TS_TIME_FORMAT_PM RTC_TSTR_PM /*!< PM */
-	/**
-	 * @}
-	 */
+					     /**
+					      * @}
+					      */
 
 #if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx)
 /** @defgroup RTC_LL_EC_TAMPER  TAMPER
@@ -878,9 +878,9 @@ extern "C"
 #define LL_RTC_WAKEUPCLOCK_CKSPRE_WUT                                                                                                                                                                  \
 	(RTC_CR_WUCKSEL_2 | RTC_CR_WUCKSEL_1) /*!< ck_spre (usually 1 Hz) clock is selected and                                                                                                        \
 						 2exp16 is added to the WUT counter value*/
-	/**
-	 * @}
-	 */
+					      /**
+					       * @}
+					       */
 
 #if defined(RTC_BACKUP_SUPPORT)
 /** @defgroup RTC_LL_EC_BKP  BACKUP
@@ -960,9 +960,9 @@ extern "C"
 #define LL_RTC_CALIB_PERIOD_32SEC 0x00000000U	  /*!< Use a 32-second calibration cycle period */
 #define LL_RTC_CALIB_PERIOD_16SEC RTC_CALR_CALW16 /*!< Use a 16-second calibration cycle period */
 #define LL_RTC_CALIB_PERIOD_8SEC RTC_CALR_CALW8	  /*!< Use a 8-second calibration cycle period */
-	/**
-	 * @}
-	 */
+						  /**
+						   * @}
+						   */
 
 #if defined(STM32L4P5xx) || defined(STM32L4Q5xx)
 /** @defgroup RTC_LL_EC_CALIB_LOWPOWER  Calibration low power
@@ -3325,8 +3325,8 @@ extern "C"
 	 * @retval State of bit (1 or 0).
 	 */
 	__STATIC_INLINE uint32_t LL_RTC_CAL_LowPower_IsEnabled(RTC_TypeDef *RTCx) { return (READ_BIT(RTCx->CALR, RTC_CALR_LPCAL) == (RTC_CALR_LPCAL)); }
-#endif /* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                                                                                                  \
-	  (STM32L4P5xx) || defined (STM32L4Q5xx) */
+#endif	/* #if defined(STM32L412xx) || defined(STM32L422xx) || defined                                                                                                                                 \
+	   (STM32L4P5xx) || defined (STM32L4Q5xx) */
 	/**
 	 * @}
 	 */

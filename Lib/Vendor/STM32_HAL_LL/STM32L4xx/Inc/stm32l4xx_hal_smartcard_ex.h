@@ -77,9 +77,9 @@ extern "C"
 	0x00000100U /*!< TX completion indication before of after guard time                                                                                                                           \
 		     */
 #endif		    /* USART_TCBGT_SUPPORT */
-	/**
-	 * @}
-	 */
+		    /**
+		     * @}
+		     */
 
 #if defined(USART_CR1_FIFOEN)
 /** @defgroup SMARTCARDEx_FIFO_mode SMARTCARD FIFO mode
@@ -118,9 +118,9 @@ extern "C"
 #define SMARTCARD_RXFIFO_THRESHOLD_3_4 (USART_CR3_RXFTCFG_0 | USART_CR3_RXFTCFG_1) /*!< RXFIFO FIFO reaches 3/4 of its depth */
 #define SMARTCARD_RXFIFO_THRESHOLD_7_8 USART_CR3_RXFTCFG_2			   /*!< RXFIFO FIFO reaches 7/8 of its depth */
 #define SMARTCARD_RXFIFO_THRESHOLD_8_8 (USART_CR3_RXFTCFG_2 | USART_CR3_RXFTCFG_0) /*!< RXFIFO FIFO becomes full             */
-	/**
-	 * @}
-	 */
+										   /**
+										    * @}
+										    */
 
 #endif /* USART_CR1_FIFOEN */
 /** @defgroup SMARTCARDEx_Flags SMARTCARD Flags

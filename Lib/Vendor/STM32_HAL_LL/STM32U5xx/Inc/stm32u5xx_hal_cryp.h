@@ -293,9 +293,9 @@ extern "C"
 #endif								/* USE_HAL_CRYP_REGISTER_CALLBACKS */
 #define HAL_CRYP_ERROR_KEY 0x00000100U				/*!< Key error        */
 #define HAL_CRYP_ERROR_RNG 0x00000200U				/*!< Rng error        */
-	/**
-	 * @}
-	 */
+								/**
+								 * @}
+								 */
 
 	/** @defgroup CRYP_Data_Width_Unit CRYP Data Width Unit
 	 * @{
@@ -403,9 +403,9 @@ extern "C"
 #define CRYP_KEYPROT_DISABLE                                                                                                                                                                           \
 	0x00000000U /*!< Only for SAES, Key not protected between 2                                                                                                                                    \
 		       applications with different security contexts */
-	/**
-	 * @}
-	 */
+		    /**
+		     * @}
+		     */
 
 	/** @defgroup CRYP_Data_Type CRYP Data Type
 	 * @{
@@ -738,7 +738,7 @@ extern "C"
 	 * @}
 	 */
 
-#endif /* AES */
+#endif	/* AES */
 	/**
 	 * @}
 	 */

@@ -298,7 +298,7 @@ extern "C"
 /**
  * @}
  */
-#endif /* USE_HAL_SD_REGISTER_CALLBACKS */
+#endif	/* USE_HAL_SD_REGISTER_CALLBACKS */
 	/**
 	 * @}
 	 */

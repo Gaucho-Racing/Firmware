@@ -675,9 +675,9 @@ extern "C"
 	TIM_SR_CC4OF		   /*!< Capture/Compare 4 overcapture flag                                                                                                                             \
 				    */
 #define LL_TIM_SR_SBIF TIM_SR_SBIF /*!< System Break interrupt flag  */
-	/**
-	 * @}
-	 */
+				   /**
+				    * @}
+				    */
 
 #if defined(USE_FULL_LL_DRIVER)
 /** @defgroup TIM_LL_EC_BREAK_ENABLE Break Enable
@@ -838,9 +838,9 @@ extern "C"
 #define LL_TIM_CHANNEL_CH4 TIM_CCER_CC4E   /*!< Timer input/output channel 4 */
 #define LL_TIM_CHANNEL_CH5 TIM_CCER_CC5E   /*!< Timer output channel 5 */
 #define LL_TIM_CHANNEL_CH6 TIM_CCER_CC6E   /*!< Timer output channel 6 */
-	/**
-	 * @}
-	 */
+					   /**
+					    * @}
+					    */
 
 #if defined(USE_FULL_LL_DRIVER)
 /** @defgroup TIM_LL_EC_OCSTATE Output Configuration State
@@ -1527,9 +1527,9 @@ extern "C"
 #define LL_TIM_TIM1_ETR_ADC1_RMP_AWD3                                                                                                                                                                  \
 	(TIM1_OR1_ETR_ADC1_RMP | TIM1_OR1_RMP_MASK) /*!< TIM1_ETR is connected to ADC1 analog watchdog                                                                                                 \
 						       3 */
-	/**
-	 * @}
-	 */
+						    /**
+						     * @}
+						     */
 
 #if defined(ADC3)
 /** @defgroup TIM_LL_EC_TIM1_ETR_ADC3_RMP  TIM1 External Trigger ADC3 Remap

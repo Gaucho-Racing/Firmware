@@ -1125,9 +1125,9 @@ extern "C"
 	 * @}
 	 */
 
-#endif /* defined (GPIOA) || defined (GPIOB) || defined (GPIOC) || defined                                                                                                                             \
-	  (GPIOD) || defined (GPIOE) || defined (GPIOF) || defined (GPIOG) ||                                                                                                                          \
-	  defined (GPIOH) || defined (GPIOI) || defined (GPIOJ)*/
+#endif	/* defined (GPIOA) || defined (GPIOB) || defined (GPIOC) || defined                                                                                                                            \
+	   (GPIOD) || defined (GPIOE) || defined (GPIOF) || defined (GPIOG) ||                                                                                                                         \
+	   defined (GPIOH) || defined (GPIOI) || defined (GPIOJ)*/
 	/**
 	 * @}
 	 */

@@ -321,9 +321,9 @@ extern "C"
  */
 #define DMA2D_BYTES_REGULAR 0x00000000U	 /*!< Bytes in regular order in output FIFO */
 #define DMA2D_BYTES_SWAP DMA2D_OPFCCR_SB /*!< Bytes are swapped two by two in output FIFO */
-	/**
-	 * @}
-	 */
+					 /**
+					  * @}
+					  */
 
 #if defined(DMA2D_FGPFCCR_CSS)
 /** @defgroup DMA2D_Chroma_Sub_Sampling DMA2D Chroma Sub Sampling
@@ -372,9 +372,9 @@ extern "C"
 #define DMA2D_FLAG_TW DMA2D_ISR_TWIF /*!< Transfer Watermark Interrupt Flag */
 #define DMA2D_FLAG_TC DMA2D_ISR_TCIF /*!< Transfer Complete Interrupt Flag */
 #define DMA2D_FLAG_TE DMA2D_ISR_TEIF /*!< Transfer Error Interrupt Flag */
-	/**
-	 * @}
-	 */
+				     /**
+				      * @}
+				      */
 
 #if (USE_HAL_DMA2D_REGISTER_CALLBACKS == 1)
 	/**

@@ -167,9 +167,9 @@ extern "C"
 	(0x01UL) /*!< Invalid Callback error                                                                                                                                                           \
 		  */
 #endif		 /* USE_HAL_COMP_REGISTER_CALLBACKS */
-	/**
-	 * @}
-	 */
+		 /**
+		  * @}
+		  */
 
 #if defined(COMP_WINDOW_MODE_SUPPORT)
 #if defined(COMP2)
@@ -893,7 +893,7 @@ extern "C"
 /**
  * @}
  */
-#endif /* COMP1 || COMP2 */
+#endif	/* COMP1 || COMP2 */
 	/**
 	 * @}
 	 */

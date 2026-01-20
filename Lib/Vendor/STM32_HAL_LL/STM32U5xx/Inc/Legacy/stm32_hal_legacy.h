@@ -114,7 +114,7 @@ extern "C"
 
 #if defined(STM32H5)
 #define ADC_CHANNEL_VCORE ADC_CHANNEL_VDDCORE
-#endif /* STM32H5 */
+#endif	/* STM32H5 */
 	/**
 	 * @}
 	 */
@@ -452,7 +452,7 @@ extern "C"
 
 #if defined(STM32U5)
 #define GPDMA1_REQUEST_DCMI GPDMA1_REQUEST_DCMI_PSSI
-#endif /* STM32U5 */
+#endif	/* STM32U5 */
 	/**
 	 * @}
 	 */
@@ -1749,9 +1749,9 @@ extern "C"
 	HAL_DMA2D_CLUTLoading_Abort /*!< Aliased to                                                                                                                                                    \
 				       HAL_DMA2D_CLUTLoading_Abort for                                                                                                                                 \
 				       compatibility with legacy code */
-	/**
-	 * @}
-	 */
+				    /**
+				     * @}
+				     */
 
 #endif /* STM32L4 ||  STM32F7 ||  STM32F4 ||  STM32H7 || STM32U5 */
 
@@ -1936,7 +1936,7 @@ extern "C"
 #define HAL_FMPI2C_Master_Sequential_Receive_DMA HAL_FMPI2C_Master_Seq_Receive_DMA
 #define HAL_FMPI2C_Slave_Sequential_Transmit_DMA HAL_FMPI2C_Slave_Seq_Transmit_DMA
 #define HAL_FMPI2C_Slave_Sequential_Receive_DMA HAL_FMPI2C_Slave_Seq_Receive_DMA
-#endif /* STM32F4 */
+#endif	/* STM32F4 */
 	/**
 	 * @}
 	 */
@@ -2785,7 +2785,7 @@ extern "C"
 #define __HAL_PVD_EXTI_ENABLE_IT __HAL_PWR_PVD_EXTI_ENABLE_IT
 #define __HAL_PVD_EXTI_GENERATE_SWIT __HAL_PWR_PVD_EXTI_GENERATE_SWIT
 #define __HAL_PVD_EXTI_GET_FLAG __HAL_PWR_PVD_EXTI_GET_FLAG
-#endif /* STM32F4 */
+#endif	/* STM32F4 */
 	/**
 	 * @}
 	 */
@@ -4496,7 +4496,7 @@ extern "C"
  */
 #if defined(STM32F7)
 #define ART_ACCLERATOR_ENABLE ART_ACCELERATOR_ENABLE
-#endif /* STM32F7 */
+#endif	/* STM32F7 */
 	/**
 	 * @}
 	 */

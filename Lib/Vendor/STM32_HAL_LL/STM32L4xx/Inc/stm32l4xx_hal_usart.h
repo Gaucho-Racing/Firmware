@@ -325,9 +325,9 @@ extern "C"
 #define USART_LASTBIT_ENABLE                                                                                                                                                                           \
 	USART_CR2_LBCL /*!< USART frame last data bit clock pulse output to                                                                                                                            \
 			  SCLK pin     */
-	/**
-	 * @}
-	 */
+		       /**
+			* @}
+			*/
 
 #if defined(USART_PRESC_PRESCALER)
 /** @defgroup USART_ClockPrescaler  USART Clock Prescaler
@@ -396,9 +396,9 @@ extern "C"
 #define USART_FLAG_NE USART_ISR_NE     /*!< USART noise error                          */
 #define USART_FLAG_FE USART_ISR_FE     /*!< USART frame error                          */
 #define USART_FLAG_PE USART_ISR_PE     /*!< USART parity error                         */
-	/**
-	 * @}
-	 */
+				       /**
+					* @}
+					*/
 
 	/** @defgroup USART_Interrupt_definition USART Interrupts Definition
 	 *        Elements values convention: 0000ZZZZ0XXYYYYYb

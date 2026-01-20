@@ -423,7 +423,7 @@ extern "C"
 	 * @}
 	 */
 
-#endif /* defined (LPGPIO1) */
+#endif	/* defined (LPGPIO1) */
 	/**
 	 * @}
 	 */

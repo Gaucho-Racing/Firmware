@@ -1590,7 +1590,7 @@ extern "C"
 				     address space) */
 #endif
 
-#endif /* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
+#endif	/* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 	/*@} */
 
 	/*******************************************************************************

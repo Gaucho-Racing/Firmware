@@ -887,9 +887,9 @@ extern "C"
  * @{
  */
 #define HAL_XSPI_TIMEOUT_DEFAULT_VALUE (5000U) /* 5 s */
-	/**
-	 * @}
-	 */
+					       /**
+						* @}
+						*/
 
 #if defined(OCTOSPIM)
 /** @defgroup XSPI_IO_Manger_IOPort XSPI IO Port
@@ -912,9 +912,9 @@ extern "C"
 #define HAL_XSPIM_IOPORT_7_HIGH ((uint32_t)(OCTOSPIM_PCR_IOHEN | 0x7U)) /*!< Port 7 - IO[7:4] */
 #define HAL_XSPIM_IOPORT_8_LOW ((uint32_t)(OCTOSPIM_PCR_IOLEN | 0x8U))	/*!< Port 8 - IO[3:0] */
 #define HAL_XSPIM_IOPORT_8_HIGH ((uint32_t)(OCTOSPIM_PCR_IOHEN | 0x8U)) /*!< Port 8 - IO[7:4] */
-	/**
-	 * @}
-	 */
+									/**
+									 * @}
+									 */
 
 #endif /* OCTOSPIM */
 #if defined(HSPI_CALFCR_FINE)
@@ -947,9 +947,9 @@ extern "C"
 #define HAL_XSPI_MAXCAL_REACHED                                                                                                                                                                        \
 	((uint32_t)HSPI_CALFCR_CALMAX) /*!< Memory-clock period outside the range of                                                                                                                   \
 					  DLL master (max delay values used) */
-	/**
-	 * @}
-	 */
+				       /**
+					* @}
+					*/
 
 #endif /* HSPI_CALFCR_FINE */
 /**

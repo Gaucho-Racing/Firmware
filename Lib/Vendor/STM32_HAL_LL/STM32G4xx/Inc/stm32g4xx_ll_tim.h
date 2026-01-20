@@ -695,9 +695,9 @@ extern "C"
 #define LL_TIM_SR_DIRF TIM_SR_DIRF   /*!< Direction Change interrupt flag  */
 #define LL_TIM_SR_IERRF TIM_SR_IERRF /*!< Index Error flag  */
 #define LL_TIM_SR_TERRF TIM_SR_TERRF /*!< Transition Error flag  */
-	/**
-	 * @}
-	 */
+				     /**
+				      * @}
+				      */
 
 #if defined(USE_FULL_LL_DRIVER)
 /** @defgroup TIM_LL_EC_BREAK_ENABLE Break Enable
@@ -865,9 +865,9 @@ extern "C"
 #define LL_TIM_CHANNEL_CH4N TIM_CCER_CC4NE /*!< Timer complementary output channel 4 */
 #define LL_TIM_CHANNEL_CH5 TIM_CCER_CC5E   /*!< Timer output channel 5 */
 #define LL_TIM_CHANNEL_CH6 TIM_CCER_CC6E   /*!< Timer output channel 6 */
-	/**
-	 * @}
-	 */
+					   /**
+					    * @}
+					    */
 
 #if defined(USE_FULL_LL_DRIVER)
 /** @defgroup TIM_LL_EC_OCSTATE Output Configuration State
@@ -1425,9 +1425,9 @@ extern "C"
 #if defined(TIM5)
 #define LL_TIM_TIM4_ETRSOURCE_TIM5_ETR (TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_0) /*!< ETR input is connected to TIM5 ETR */
 #endif									       /* TIM5 */
-	/**
-	 * @}
-	 */
+									       /**
+										* @}
+										*/
 
 #if defined(TIM5)
 /** @defgroup TIM_LL_EC_TIM5_ETRSOURCE External Trigger Source TIM5
@@ -1491,9 +1491,9 @@ extern "C"
 #define LL_TIM_TIM8_ETRSOURCE_ADC3_AWD2 (TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_2)			    /*!< ADC3 analog watchdog 2 */
 #define LL_TIM_TIM8_ETRSOURCE_ADC3_AWD3 (TIM1_AF1_ETRSEL_3 | TIM1_AF1_ETRSEL_2 | TIM1_AF1_ETRSEL_0) /*!< ADC3 analog watchdog 3 */
 #endif												    /* ADC3 */
-	/**
-	 * @}
-	 */
+												    /**
+												     * @}
+												     */
 
 #if defined(TIM20)
 /** @defgroup TIM_LL_EC_TIM20_ETRSOURCE External Trigger Source TIM20
@@ -2068,9 +2068,9 @@ extern "C"
 #if defined(COMP6)
 #define LL_TIM_TIM4_TI4_RMP_COMP6 TIM_TISEL_TI4SEL_0 /*!< TIM4 input 4 is connected to COMP6_OUT */
 #endif						     /* COMP6 */
-	/**
-	 * @}
-	 */
+						     /**
+						      * @}
+						      */
 
 #if defined(TIM5)
 /** @defgroup TIM_LL_EC_TIM5_TI1_RMP  TIM5 Timer Input Ch1 Remap
@@ -2192,9 +2192,9 @@ extern "C"
 #define LL_TIM_TIM17_TI1_RMP_RTC_WK TIM_TISEL_TI1SEL_2			      /*!< TIM17 input 1 is connected to RTC_WAKEUP */
 #define LL_TIM_TIM17_TI1_RMP_LSE (TIM_TISEL_TI1SEL_2 | TIM_TISEL_TI1SEL_0)    /*!< TIM17 input 1 is connected to LSE */
 #define LL_TIM_TIM17_TI1_RMP_LSI (TIM_TISEL_TI1SEL_2 | TIM_TISEL_TI1SEL_1)    /*!< TIM17 input 1 is connected to LSI */
-	/**
-	 * @}
-	 */
+									      /**
+									       * @}
+									       */
 
 #if defined(TIM20)
 /** @defgroup TIM_LL_EC_TIM20_TI1_RMP  TIM20 Timer Input Ch1 Remap

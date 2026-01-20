@@ -300,9 +300,9 @@ extern "C"
  */
 #define DMA2D_RB_REGULAR 0x00000000U /*!< Select regular mode (RGB or ARGB) */
 #define DMA2D_RB_SWAP 0x00000001U    /*!< Select swap mode (BGR or ABGR) */
-	/**
-	 * @}
-	 */
+				     /**
+				      * @}
+				      */
 
 #if defined(DMA2D_LINE_OFFSET_MODE_SUPPORT)
 /** @defgroup DMA2D_Line_Offset_Mode DMA2D Line Offset Mode
@@ -361,9 +361,9 @@ extern "C"
 #define DMA2D_FLAG_TW DMA2D_ISR_TWIF /*!< Transfer Watermark Interrupt Flag */
 #define DMA2D_FLAG_TC DMA2D_ISR_TCIF /*!< Transfer Complete Interrupt Flag */
 #define DMA2D_FLAG_TE DMA2D_ISR_TEIF /*!< Transfer Error Interrupt Flag */
-	/**
-	 * @}
-	 */
+				     /**
+				      * @}
+				      */
 
 #if (USE_HAL_DMA2D_REGISTER_CALLBACKS == 1)
 	/**

@@ -1231,9 +1231,9 @@ trigger polarity set to falling edge */
 		  transferred by DMA, in unlimited mode: DMA transfer requests are unlimited,                                                                                                          \
 		  whatever number of DMA data transferred (number of ADC conversions).                                                                                                                 \
 		  This ADC mode is intended to be used with DMA mode circular. */
-	/**
-	 * @}
-	 */
+					   /**
+					    * @}
+					    */
 
 #if defined(ADC_CFGR_DFSDMCFG) && defined(DFSDM1_Channel0)
 /** @defgroup ADC_LL_EC_REG_DFSDM_TRANSFER ADC group regular - DFSDM transfer of
@@ -2094,9 +2094,9 @@ to result as oversampling conversion data) */
 	(ADC_CFGR2_OVSS_3) /*!< ADC oversampling right shift of 8                                                                                                                                      \
 (sum of the ADC conversions data (after OVS ratio) is divided by 256                                                                                                                                   \
 to result as oversampling conversion data) */
-	/**
-	 * @}
-	 */
+			   /**
+			    * @}
+			    */
 
 #if defined(ADC_MULTIMODE_SUPPORT)
 /** @defgroup ADC_LL_EC_MULTI_MODE  Multimode - Mode
@@ -2225,9 +2225,9 @@ sampling phases: 9 ADC clock cycles */
 #define LL_ADC_MULTI_MASTER_SLAVE                                                                                                                                                                      \
 	(ADC_CDR_RDATA_SLV | ADC_CDR_RDATA_MST) /*!< In multimode, selection among several ADC                                                                                                         \
 			  instances: both ADC master and ADC slave */
-	/**
-	 * @}
-	 */
+						/**
+						 * @}
+						 */
 
 #endif /* ADC_MULTIMODE_SUPPORT */
 

@@ -729,7 +729,7 @@ extern "C"
 #define RCC_ADCCLKSOURCE_SYSCLK RCC_CCIPR_ADCSEL
 #else
 #define RCC_ADCCLKSOURCE_SYSCLK 0x30000000U
-#endif /* RCC_CCIPR_ADCSEL */
+#endif	/* RCC_CCIPR_ADCSEL */
 	/**
 	 * @}
 	 */
@@ -754,8 +754,8 @@ extern "C"
 #define RCC_DFSDM1CLKSOURCE_SYSCLK RCC_CCIPR2_DFSDM1SEL
 #else
 #define RCC_DFSDM1CLKSOURCE_SYSCLK RCC_CCIPR_DFSDM1SEL
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif	/* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                 \
+	   STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 	/**
 	 * @}
 	 */
@@ -816,9 +816,9 @@ extern "C"
 #define RCC_EXTI_LINE_LSECSS                                                                                                                                                                           \
 	EXTI_IMR1_IM19 /*!< External interrupt line 19 connected to the LSE                                                                                                                            \
 			  CSS EXTI Line */
-	/**
-	 * @}
-	 */
+		       /**
+			* @}
+			*/
 
 #if defined(CRS)
 

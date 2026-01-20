@@ -160,9 +160,9 @@ extern "C"
 #define RNG_FLAG_DRDY RNG_SR_DRDY /*!< Data ready                 */
 #define RNG_FLAG_CECS RNG_SR_CECS /*!< Clock error current status */
 #define RNG_FLAG_SECS RNG_SR_SECS /*!< Seed error current status  */
-	/**
-	 * @}
-	 */
+				  /**
+				   * @}
+				   */
 
 #if defined(RNG_CR_CED)
 /** @defgroup RNG_Exported_Constants_Group3 RNG Clock Error Detection
@@ -170,9 +170,9 @@ extern "C"
  */
 #define RNG_CED_ENABLE 0x00000000U /*!< Clock error detection Enabled  */
 #define RNG_CED_DISABLE RNG_CR_CED /*!< Clock error detection Disabled */
-	/**
-	 * @}
-	 */
+				   /**
+				    * @}
+				    */
 
 #endif /* RNG_CR_CED */
 /** @defgroup RNG_Error_Definition   RNG Error Definition
@@ -370,7 +370,7 @@ extern "C"
  * @retval SET (__MODE__ is valid) or RESET (__MODE__ is invalid)
  */
 #define IS_RNG_CED(__MODE__) (((__MODE__) == RNG_CED_ENABLE) || ((__MODE__) == RNG_CED_DISABLE))
-#endif /* RNG_CR_CED */
+#endif	/* RNG_CR_CED */
 	/**
 	 * @}
 	 */
@@ -384,7 +384,7 @@ extern "C"
 /**
  * @}
  */
-#endif /* RNG_CR_CONDRST */
+#endif	/* RNG_CR_CONDRST */
 	/**
 	 * @}
 	 */

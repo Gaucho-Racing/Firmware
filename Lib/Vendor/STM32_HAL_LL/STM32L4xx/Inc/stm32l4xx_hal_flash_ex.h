@@ -107,7 +107,7 @@ extern "C"
   */
 #if defined(FLASH_CFGR_LVEN)
 #define IS_FLASH_LVE_PIN(CFG) (((CFG) == FLASH_LVE_PIN_CTRL) || ((CFG) == FLASH_LVE_PIN_FORCED))
-#endif /* FLASH_CFGR_LVEN */
+#endif	/* FLASH_CFGR_LVEN */
 	/**
 	  @endcond
 	  */

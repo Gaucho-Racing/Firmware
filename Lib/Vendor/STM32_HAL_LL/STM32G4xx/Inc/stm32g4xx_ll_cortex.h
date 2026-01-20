@@ -83,9 +83,9 @@ extern "C"
 #define LL_HANDLER_FAULT_USG SCB_SHCSR_USGFAULTENA_Msk /*!< Usage fault */
 #define LL_HANDLER_FAULT_BUS SCB_SHCSR_BUSFAULTENA_Msk /*!< Bus fault */
 #define LL_HANDLER_FAULT_MEM SCB_SHCSR_MEMFAULTENA_Msk /*!< Memory management fault */
-	/**
-	 * @}
-	 */
+						       /**
+							* @}
+							*/
 
 #if __MPU_PRESENT
 
@@ -625,7 +625,7 @@ extern "C"
 	 * @}
 	 */
 
-#endif /* __MPU_PRESENT */
+#endif	/* __MPU_PRESENT */
 	/**
 	 * @}
 	 */

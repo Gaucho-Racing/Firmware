@@ -3165,9 +3165,9 @@ extern "C"
 	(ADC_CFGR2_OVSS_3 | ADC_CFGR2_OVSS_1 | ADC_CFGR2_OVSS_0) /*!< ADC oversampling shift of 11 (sum of the ADC                                                                                     \
 								    conversions data is divided by 2048 to result as                                                                                   \
 								    the ADC oversampling conversion data) */
-	/**
-	 * @}
-	 */
+								 /**
+								  * @}
+								  */
 
 #if defined(ADC_MULTIMODE_SUPPORT)
 /** @defgroup ADC_LL_EC_MULTI_MODE  Multimode - Mode
@@ -3298,9 +3298,9 @@ extern "C"
 #define LL_ADC_MULTI_MASTER_SLAVE                                                                                                                                                                      \
 	(ADC_CDR_RDATA_SLV | ADC_CDR_RDATA_MST) /*!< In multimode, selection among several ADC                                                                                                         \
 						   instances: both ADC master and ADC slave */
-	/**
-	 * @}
-	 */
+						/**
+						 * @}
+						 */
 
 #endif /* ADC_MULTIMODE_SUPPORT */
 

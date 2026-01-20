@@ -472,9 +472,9 @@ extern "C"
 	0x00000000U				    /*!< One-bit sampling disable                                                                                                                      \
 						     */
 #define UART_ONE_BIT_SAMPLE_ENABLE USART_CR3_ONEBIT /*!< One-bit sampling enable  */
-	/**
-	 * @}
-	 */
+						    /**
+						     * @}
+						     */
 
 #if defined(USART_PRESC_PRESCALER)
 /** @defgroup UART_ClockPrescaler  UART Clock Prescaler
@@ -492,9 +492,9 @@ extern "C"
 #define UART_PRESCALER_DIV64 0x00000009U  /*!< fclk_pres = fclk/64  */
 #define UART_PRESCALER_DIV128 0x0000000AU /*!< fclk_pres = fclk/128 */
 #define UART_PRESCALER_DIV256 0x0000000BU /*!< fclk_pres = fclk/256 */
-	/**
-	 * @}
-	 */
+					  /**
+					   * @}
+					   */
 
 #endif /* USART_PRESC_PRESCALER */
 /** @defgroup UART_AutoBaud_Rate_Mode    UART Advanced Feature AutoBaud Rate
@@ -1815,7 +1815,7 @@ extern "C"
 	 * @}
 	 */
 
-#endif /* USART_PRESC_PRESCALER */
+#endif	/* USART_PRESC_PRESCALER */
 	/**
 	 * @}
 	 */

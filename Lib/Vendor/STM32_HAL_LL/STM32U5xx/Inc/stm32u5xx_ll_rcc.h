@@ -367,9 +367,9 @@ extern "C"
 #define LL_RCC_APB3_DIV_4 (RCC_CFGR3_PPRE3_2 | RCC_CFGR3_PPRE3_0)		       /*!< HCLK divided by 4 */
 #define LL_RCC_APB3_DIV_8 (RCC_CFGR3_PPRE3_2 | RCC_CFGR3_PPRE3_1)		       /*!< HCLK divided by 8 */
 #define LL_RCC_APB3_DIV_16 (RCC_CFGR3_PPRE3_2 | RCC_CFGR3_PPRE3_1 | RCC_CFGR3_PPRE3_0) /*!< HCLK divided by 16 */
-	/**
-	 * @}
-	 */
+										       /**
+											* @}
+											*/
 
 #if defined(RCC_CFGR2_PPRE_DPHY)
 /** @defgroup RCC_LL_EC_DPHY_DIV  DSI PHY clock prescaler (DCLK)
@@ -434,9 +434,9 @@ extern "C"
 #define LL_RCC_MCO1_DIV_4 RCC_CFGR1_MCOPRE_1			    /*!< MCO divided by 4 */
 #define LL_RCC_MCO1_DIV_8 (RCC_CFGR1_MCOPRE_1 | RCC_CFGR1_MCOPRE_0) /*!< MCO divided by 8 */
 #define LL_RCC_MCO1_DIV_16 RCC_CFGR1_MCOPRE_2			    /*!< MCO divided by 16 */
-	/**
-	 * @}
-	 */
+								    /**
+								     * @}
+								     */
 
 #if defined(USE_FULL_LL_DRIVER)
 /** @defgroup RCC_LL_EC_PERIPH_FREQUENCY Peripheral clock frequency
@@ -864,9 +864,9 @@ extern "C"
 #define LL_RCC_OCTOSPI_CLKSOURCE_PLL2                                                                                                                                                                  \
 	(RCC_CCIPR2_OCTOSPISEL_1 | RCC_CCIPR2_OCTOSPISEL_0) /*!< PLL2 "Q" clock used as OctoSPI kernel                                                                                                 \
 							       clock source */
-	/**
-	 * @}
-	 */
+							    /**
+							     * @}
+							     */
 
 #if defined(HSPI1)
 /** @defgroup RCC_LL_EC_HSPI1_CLKSOURCE  Peripheral HSPI1 kernel clock source
@@ -904,9 +904,9 @@ extern "C"
 #define LL_RCC_TIMIC_CLKSOURCE_MSIK_DIV1024                                                                                                                                                            \
 	(RCC_CCIPR1_TIMICSEL_2 | RCC_CCIPR1_TIMICSEL_1 | RCC_CCIPR1_TIMICSEL_0) /*!< MSIK/1024 selected for TIM16/TIM17 and                                                                            \
 										   LPTIM2 input capture */
-	/**
-	 * @}
-	 */
+										/**
+										 * @}
+										 */
 
 #if defined(SAES)
 /** @defgroup RCC_LL_EC_SAES_CLKSOURCE  Peripheral SAES clock source selection
@@ -957,9 +957,9 @@ extern "C"
  * @{
  */
 #define LL_RCC_LPUART1_CLKSOURCE RCC_CCIPR3_LPUART1SEL /*!< LPUART1 Clock source selection */
-	/**
-	 * @}
-	 */
+						       /**
+							* @}
+							*/
 
 #if defined(DSI)
 /** @defgroup RCC_LL_EC_DSI_CLKSOURCE  Peripheral DSI clock source selection
@@ -3462,7 +3462,7 @@ extern "C"
 	 *         @arg @ref LL_RCC_HSPI_CLKSOURCE_PLL3
 	 */
 	__STATIC_INLINE uint32_t LL_RCC_GetHSPIClockSource(uint32_t HSPIx) { return (uint32_t)(READ_BIT(RCC->CCIPR2, HSPIx)); }
-#endif /* HSPI1 */
+#endif	/* HSPI1 */
 	/**
 	 * @}
 	 */
@@ -5355,7 +5355,7 @@ extern "C"
 #endif /* HSPI1 */
 #if defined(LTDC)
 	uint32_t LL_RCC_GetLTDCClockFreq(uint32_t LTDCxSource);
-#endif /* defined(LTDC) */
+#endif	/* defined(LTDC) */
 	/**
 	 * @}
 	 */

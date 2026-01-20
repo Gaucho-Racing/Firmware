@@ -780,9 +780,9 @@ extern "C"
  * @{
  */
 #define HAL_OSPI_TIMEOUT_DEFAULT_VALUE ((uint32_t)5000U) /* 5 s */
-	/**
-	 * @}
-	 */
+							 /**
+							  * @}
+							  */
 
 #if defined(OCTOSPIM)
 /** @defgroup OSPIM_IOPort OSPI IO Manager IO Port
@@ -1150,8 +1150,8 @@ extern "C"
 
 #if defined(OCTOSPIM_CR_MUXEN)
 #define IS_OSPIM_REQ2ACKTIME(TIME) (((TIME) >= 1U) && ((TIME) <= 256U))
-#endif /*(OCTOSPIM_CR_MUXEN)*/
-#endif /*(OCTOSPIM)*/
+#endif	/*(OCTOSPIM_CR_MUXEN)*/
+#endif	/*(OCTOSPIM)*/
 	/**
 	  @endcond
 	  */

@@ -753,7 +753,7 @@ extern "C"
 #define LL_DMA_CHANNEL_15 (0x0FU)
 #if defined(USE_FULL_LL_DRIVER)
 #define LL_DMA_CHANNEL_ALL (0x10U)
-#endif /* USE_FULL_LL_DRIVER */
+#endif	/* USE_FULL_LL_DRIVER */
 	/**
 	 * @}
 	 */
@@ -1063,9 +1063,9 @@ extern "C"
 #define LL_DMA_BURST_DEST_ADDR_DECREMENT                                                                                                                                                               \
 	DMA_CBR1_DDEC /*!< Destination address pointer is decremented after                                                                                                                            \
 			 each burst transfer by destination update value */
-	/**
-	 * @}
-	 */
+		      /**
+		       * @}
+		       */
 
 #if defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /** @defgroup DMA_LL_EC_SOURCE_SECURITY_ATTRIBUTE Source Security Attribute

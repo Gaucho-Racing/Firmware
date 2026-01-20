@@ -434,7 +434,7 @@ extern "C"
 /**
  * @}
  */
-#endif /* defined (USB) */
+#endif	/* defined (USB) */
 	/**
 	 * @}
 	 */

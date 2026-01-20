@@ -377,9 +377,9 @@ extern "C"
 #define LL_RCC_MCO1_DIV_4 RCC_CFGR_MCOPRE_DIV4	 /*!< MCO divided by 4 */
 #define LL_RCC_MCO1_DIV_8 RCC_CFGR_MCOPRE_DIV8	 /*!< MCO divided by 8 */
 #define LL_RCC_MCO1_DIV_16 RCC_CFGR_MCOPRE_DIV16 /*!< MCO divided by 16 */
-	/**
-	 * @}
-	 */
+						 /**
+						  * @}
+						  */
 
 #if defined(USE_FULL_LL_DRIVER)
 /** @defgroup RCC_LL_EC_PERIPH_FREQUENCY Peripheral clock frequency
@@ -416,9 +416,9 @@ extern "C"
 #define LL_RCC_USART3_CLKSOURCE_HSI ((RCC_CCIPR_USART3SEL << 16U) | RCC_CCIPR_USART3SEL_1) /*!< HSI clock used as USART3 clock source */
 #define LL_RCC_USART3_CLKSOURCE_LSE ((RCC_CCIPR_USART3SEL << 16U) | RCC_CCIPR_USART3SEL)   /*!< LSE clock used as USART3 clock source */
 #endif											   /* RCC_CCIPR_USART3SEL */
-	/**
-	 * @}
-	 */
+											   /**
+											    * @}
+											    */
 
 #if defined(RCC_CCIPR_UART4SEL) || defined(RCC_CCIPR_UART5SEL)
 /** @defgroup RCC_LL_EC_UART4_CLKSOURCE  Peripheral UART clock source selection
@@ -550,9 +550,9 @@ extern "C"
 #define LL_RCC_SAI2_CLKSOURCE_PLL (RCC_CCIPR_SAI2SEL | (RCC_CCIPR_SAI2SEL_1 >> 16U))	 /*!< PLL clock used as SAI2 clock source */
 #define LL_RCC_SAI2_CLKSOURCE_PIN (RCC_CCIPR_SAI2SEL | (RCC_CCIPR_SAI2SEL >> 16U))	 /*!< External input clock used as SAI2 clock source */
 #endif											 /* RCC_CCIPR2_SAI2SEL */
-	/**
-	 * @}
-	 */
+											 /**
+											  * @}
+											  */
 
 #if defined(RCC_CCIPR2_SDMMCSEL)
 /** @defgroup RCC_LL_EC_SDMMC1_KERNELCLKSOURCE  Peripheral SDMMC kernel clock
@@ -603,9 +603,9 @@ extern "C"
 #endif							  /* RCC_PLLSAI1_SUPPORT */
 #define LL_RCC_RNG_CLKSOURCE_PLL RCC_CCIPR_CLK48SEL_1	  /*!< PLL clock used as RNG clock source */
 #define LL_RCC_RNG_CLKSOURCE_MSI RCC_CCIPR_CLK48SEL	  /*!< MSI clock used as RNG clock source */
-	/**
-	 * @}
-	 */
+							  /**
+							   * @}
+							   */
 
 #if defined(USB_OTG_FS) || defined(USB)
 /** @defgroup RCC_LL_EC_USB_CLKSOURCE  Peripheral USB clock source selection
@@ -621,9 +621,9 @@ extern "C"
 #endif							  /* RCC_PLLSAI1_SUPPORT */
 #define LL_RCC_USB_CLKSOURCE_PLL RCC_CCIPR_CLK48SEL_1	  /*!< PLL clock used as USB clock source */
 #define LL_RCC_USB_CLKSOURCE_MSI RCC_CCIPR_CLK48SEL	  /*!< MSI clock used as USB clock source */
-	/**
-	 * @}
-	 */
+							  /**
+							   * @}
+							   */
 
 #endif /* USB_OTG_FS || USB */
 
@@ -738,9 +738,9 @@ extern "C"
 #if defined(RCC_CCIPR_USART3SEL)
 #define LL_RCC_USART3_CLKSOURCE RCC_CCIPR_USART3SEL /*!< USART3 Clock source selection */
 #endif						    /* RCC_CCIPR_USART3SEL */
-	/**
-	 * @}
-	 */
+						    /**
+						     * @}
+						     */
 
 #if defined(RCC_CCIPR_UART4SEL) || defined(RCC_CCIPR_UART5SEL)
 /** @defgroup RCC_LL_EC_UART4 Peripheral UART get clock source
@@ -785,9 +785,9 @@ extern "C"
  */
 #define LL_RCC_LPTIM1_CLKSOURCE RCC_CCIPR_LPTIM1SEL /*!< LPTIM1 Clock source selection */
 #define LL_RCC_LPTIM2_CLKSOURCE RCC_CCIPR_LPTIM2SEL /*!< LPTIM2 Clock source selection */
-	/**
-	 * @}
-	 */
+						    /**
+						     * @}
+						     */
 
 #if defined(RCC_CCIPR_SAI1SEL) || defined(RCC_CCIPR2_SAI1SEL)
 /** @defgroup RCC_LL_EC_SAI1  Peripheral SAI get clock source
@@ -832,9 +832,9 @@ extern "C"
  * @{
  */
 #define LL_RCC_RNG_CLKSOURCE RCC_CCIPR_CLK48SEL /*!< RNG Clock source selection */
-	/**
-	 * @}
-	 */
+						/**
+						 * @}
+						 */
 
 #if defined(USB_OTG_FS) || defined(USB)
 /** @defgroup RCC_LL_EC_USB  Peripheral USB get clock source
@@ -876,9 +876,9 @@ extern "C"
  * @{
  */
 #define LL_RCC_DFSDM1_AUDIO_CLKSOURCE RCC_CCIPR2_ADFSDM1SEL /* DFSDM1 Audio Clock source selection */
-	/**
-	 * @}
-	 */
+							    /**
+							     * @}
+							     */
 
 #endif /* RCC_CCIPR2_ADFSDM1SEL */
 /** @defgroup RCC_LL_EC_DFSDM1  Peripheral DFSDM1 get clock source
@@ -1026,9 +1026,9 @@ extern "C"
 #define LL_RCC_PLLR_DIV_8                                                                                                                                                                              \
 	(RCC_PLLCFGR_PLLR) /*!< Main PLL division factor for PLLCLK (system                                                                                                                            \
 			      clock) by 8 */
-	/**
-	 * @}
-	 */
+			   /**
+			    * @}
+			    */
 
 #if defined(RCC_PLLP_SUPPORT)
 /** @defgroup RCC_LL_EC_PLLP_DIV  PLL division factor (PLLP)
@@ -1149,9 +1149,9 @@ extern "C"
 #define LL_RCC_PLLQ_DIV_8                                                                                                                                                                              \
 	(RCC_PLLCFGR_PLLQ) /*!< Main PLL division factor for PLLQ output by 8                                                                                                                          \
 			    */
-	/**
-	 * @}
-	 */
+			   /**
+			    * @}
+			    */
 
 #if defined(RCC_PLLSAI1M_DIV_1_16_SUPPORT)
 /** @defgroup RCC_LL_EC_PLLSAI1M  PLLSAI1 division factor (PLLSAI1M)
@@ -1542,9 +1542,9 @@ extern "C"
 #define LL_RCC_PLLSAI2R_DIV_8                                                                                                                                                                          \
 	(RCC_PLLSAI2CFGR_PLLSAI2R) /*!< PLLSAI2 division factor for PLLSAI2R                                                                                                                           \
 				      output by 8 */
-	/**
-	 * @}
-	 */
+				   /**
+				    * @}
+				    */
 
 #if defined(RCC_CCIPR2_PLLSAI2DIVR)
 /** @defgroup RCC_LL_EC_PLLSAI2DIVR  PLLSAI2DIVR division factor (PLLSAI2DIVR)
@@ -1575,9 +1575,9 @@ extern "C"
 	0U			  /*!< MSI Range is provided by MSISRANGE                                                                                                                              \
 				   */
 #define LL_RCC_MSIRANGESEL_RUN 1U /*!< MSI Range is provided by MSIRANGE */
-	/**
-	 * @}
-	 */
+				  /**
+				   * @}
+				   */
 
 #if defined(RCC_CSR_LSIPREDIV)
 /** @defgroup RCC_LL_EC_LSIPREDIV  LSI division factor

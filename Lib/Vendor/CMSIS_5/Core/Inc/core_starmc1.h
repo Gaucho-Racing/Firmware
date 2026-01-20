@@ -2599,7 +2599,7 @@ extern "C"
 	((FPU_Type *)FPU_BASE_NS) /*!< Floating Point Unit (non-secure address                                                                                                                         \
 				     space) */
 
-#endif /* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
+#endif	/* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 	/*@} */
 
 	/*******************************************************************************

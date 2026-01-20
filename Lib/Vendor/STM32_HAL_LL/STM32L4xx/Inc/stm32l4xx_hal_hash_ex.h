@@ -155,7 +155,7 @@ extern "C"
 /**
  * @}
  */
-#endif /*  HASH*/
+#endif	/*  HASH*/
 	/**
 	 * @}
 	 */

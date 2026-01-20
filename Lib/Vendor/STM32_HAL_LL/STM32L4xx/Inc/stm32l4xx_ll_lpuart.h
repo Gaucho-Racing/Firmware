@@ -2441,7 +2441,7 @@ extern "C"
 	 */
 	__STATIC_INLINE void LL_LPUART_RequestTxDataFlush(USART_TypeDef *LPUARTx) { SET_BIT(LPUARTx->RQR, (uint16_t)USART_RQR_TXFRQ); }
 
-#endif /* USART_CR1_FIFOEN */
+#endif	/* USART_CR1_FIFOEN */
 	/**
 	 * @}
 	 */

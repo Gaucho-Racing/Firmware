@@ -48,9 +48,9 @@ extern "C"
 #define USART_WORDLENGTH_7B (USART_CR1_M1) /*!< 7-bit long USART frame */
 #define USART_WORDLENGTH_8B (0x00000000U)  /*!< 8-bit long USART frame */
 #define USART_WORDLENGTH_9B (USART_CR1_M0) /*!< 9-bit long USART frame */
-	/**
-	 * @}
-	 */
+					   /**
+					    * @}
+					    */
 
 #if defined(USART_CR2_SLVEN)
 /** @defgroup USARTEx_Slave_Select_management USARTEx Slave Select Management
@@ -112,9 +112,9 @@ extern "C"
 #define USART_RXFIFO_THRESHOLD_3_4 (USART_CR3_RXFTCFG_0 | USART_CR3_RXFTCFG_1) /*!< RXFIFO FIFO reaches 3/4 of its depth */
 #define USART_RXFIFO_THRESHOLD_7_8 USART_CR3_RXFTCFG_2			       /*!< RXFIFO FIFO reaches 7/8 of its depth */
 #define USART_RXFIFO_THRESHOLD_8_8 (USART_CR3_RXFTCFG_2 | USART_CR3_RXFTCFG_0) /*!< RXFIFO FIFO becomes full             */
-	/**
-	 * @}
-	 */
+									       /**
+										* @}
+										*/
 
 #endif /* USART_CR1_FIFOEN */
 /**

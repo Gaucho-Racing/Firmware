@@ -658,7 +658,7 @@ extern "C"
 	 * @}
 	 */
 
-#endif /* AES */
+#endif	/* AES */
 	/**
 	 * @}
 	 */

@@ -562,7 +562,7 @@ extern "C"
     defined(STM32L485xx) || defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) ||    \
     defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
 #define IS_DAC_CHANNEL(CHANNEL) (((CHANNEL) == DAC_CHANNEL_1) || ((CHANNEL) == DAC_CHANNEL_2))
-#endif /* STM32L431xx STM32L432xx STM32L433xx STM32L442xx STM32L443xx */
+#endif	/* STM32L431xx STM32L432xx STM32L433xx STM32L442xx STM32L443xx */
 	/* STM32L471xx STM32L475xx STM32L476xx STM32L485xx STM32L486xx STM32L496xx
 	 * STM32L4A6xx */
 	/* STM32L4P5xx STM32L4Q5xx */

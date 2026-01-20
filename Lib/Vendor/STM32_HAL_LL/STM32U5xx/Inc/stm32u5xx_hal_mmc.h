@@ -262,7 +262,7 @@ extern "C"
 /**
  * @}
  */
-#endif /* USE_HAL_MMC_REGISTER_CALLBACKS */
+#endif	/* USE_HAL_MMC_REGISTER_CALLBACKS */
 	/**
 	 * @}
 	 */

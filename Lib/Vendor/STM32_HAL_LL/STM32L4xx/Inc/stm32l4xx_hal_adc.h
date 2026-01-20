@@ -662,9 +662,9 @@ typedef struct
 #if (USE_HAL_ADC_REGISTER_CALLBACKS == 1)
 #define HAL_ADC_ERROR_INVALID_CALLBACK (0x10U) /*!< Invalid Callback error */
 #endif					       /* USE_HAL_ADC_REGISTER_CALLBACKS */
-	/**
-	 * @}
-	 */
+					       /**
+						* @}
+						*/
 
 	/** @defgroup ADC_HAL_EC_COMMON_CLOCK_SOURCE  ADC common - Clock source
 	 * @{

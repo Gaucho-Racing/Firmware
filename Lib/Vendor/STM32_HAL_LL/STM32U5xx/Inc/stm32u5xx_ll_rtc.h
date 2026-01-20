@@ -262,9 +262,9 @@ extern "C"
  */
 #define LL_RTC_ALMB_DATEWEEKDAYSEL_DATE 0U		    /*!< Alarm B Date is selected    */
 #define LL_RTC_ALMB_DATEWEEKDAYSEL_WEEKDAY RTC_ALRMBR_WDSEL /*!< Alarm B WeekDay is selected */
-	/**
-	 * @}
-	 */
+							    /**
+							     * @}
+							     */
 
 #endif /* USE_FULL_LL_DRIVER */
 

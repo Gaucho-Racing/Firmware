@@ -549,8 +549,8 @@ extern "C"
 #define IS_SDMMC_CLKDIV(DIV) ((DIV) < 0x400U)
 #else
 #define IS_SDMMC_CLKDIV(DIV) ((DIV) <= 0xFFU)
-#endif /* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                  \
-	  STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
+#endif	/* STM32L4P5xx || STM32L4Q5xx || STM32L4R5xx || STM32L4R7xx ||                                                                                                                                 \
+	   STM32L4R9xx || STM32L4S5xx || STM32L4S7xx || STM32L4S9xx */
 	/**
 	 * @}
 	 */

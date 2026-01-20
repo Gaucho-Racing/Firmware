@@ -1260,7 +1260,7 @@ extern "C"
 /**
  * @}
  */
-#endif /* USE_FULL_LL_DRIVER */
+#endif	/* USE_FULL_LL_DRIVER */
 	/**
 	 * @}
 	 */

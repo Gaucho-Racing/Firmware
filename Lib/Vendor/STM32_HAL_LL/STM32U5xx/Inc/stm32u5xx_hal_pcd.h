@@ -417,7 +417,7 @@ extern "C"
 /**
  * @}
  */
-#endif /* defined (USB_DRD_FS) */
+#endif	/* defined (USB_DRD_FS) */
 	/**
 	 * @}
 	 */

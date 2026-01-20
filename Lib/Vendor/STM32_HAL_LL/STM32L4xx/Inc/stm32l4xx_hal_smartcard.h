@@ -495,9 +495,9 @@ extern "C"
  */
 #define SMARTCARD_TIMEOUT_DISABLE 0x00000000U	 /*!< SMARTCARD receiver timeout disabled */
 #define SMARTCARD_TIMEOUT_ENABLE USART_CR2_RTOEN /*!< SMARTCARD receiver timeout enabled  */
-	/**
-	 * @}
-	 */
+						 /**
+						  * @}
+						  */
 
 #if defined(USART_PRESC_PRESCALER)
 /** @defgroup SMARTCARD_ClockPrescaler  SMARTCARD Clock Prescaler
@@ -515,9 +515,9 @@ extern "C"
 #define SMARTCARD_PRESCALER_DIV64 0x00000009U  /*!< fclk_pres = fclk/64  */
 #define SMARTCARD_PRESCALER_DIV128 0x0000000AU /*!< fclk_pres = fclk/128 */
 #define SMARTCARD_PRESCALER_DIV256 0x0000000BU /*!< fclk_pres = fclk/256 */
-	/**
-	 * @}
-	 */
+					       /**
+						* @}
+						*/
 
 #endif /* USART_PRESC_PRESCALER */
 /** @defgroup SMARTCARD_Tx_Inv SMARTCARD advanced feature TX pin active level

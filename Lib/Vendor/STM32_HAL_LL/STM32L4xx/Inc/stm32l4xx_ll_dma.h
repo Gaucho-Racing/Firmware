@@ -407,9 +407,9 @@ extern "C"
 #define LL_DMA_PRIORITY_MEDIUM DMA_CCR_PL_0 /*!< Priority level : Medium    */
 #define LL_DMA_PRIORITY_HIGH DMA_CCR_PL_1   /*!< Priority level : High      */
 #define LL_DMA_PRIORITY_VERYHIGH DMA_CCR_PL /*!< Priority level : Very_High */
-	/**
-	 * @}
-	 */
+					    /**
+					     * @}
+					     */
 
 #if !defined(DMAMUX1)
 /** @defgroup DMA_LL_EC_REQUEST Transfer peripheral request

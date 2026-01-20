@@ -411,9 +411,9 @@ extern "C"
 #define RCC_RTCCLKSOURCE_HSE_DIV32                                                                                                                                                                     \
 	RCC_BDCR_RTCSEL /*!< HSE oscillator clock divided by 32 used as RTC                                                                                                                            \
 			   clock */
-	/**
-	 * @}
-	 */
+			/**
+			 * @}
+			 */
 
 	/** @defgroup RCC_MCO_Index MCO Index
 	 * @{
@@ -527,9 +527,9 @@ extern "C"
 #define RCC_LSEDRIVE_MEDIUMLOW RCC_BDCR_LSEDRV_0  /*!< LSE medium low drive capability */
 #define RCC_LSEDRIVE_MEDIUMHIGH RCC_BDCR_LSEDRV_1 /*!< LSE medium high drive capability */
 #define RCC_LSEDRIVE_HIGH RCC_BDCR_LSEDRV	  /*!< LSE high drive capability */
-	/**
-	 * @}
-	 */
+						  /**
+						   * @}
+						   */
 
 	/**
 	 * @}

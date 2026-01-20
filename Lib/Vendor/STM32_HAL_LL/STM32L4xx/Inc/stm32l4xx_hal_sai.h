@@ -912,8 +912,8 @@ extern "C"
 #define IS_SAI_PDM_MIC_PAIRS_NUMBER(VALUE) ((1U <= (VALUE)) && ((VALUE) <= 3U))
 
 #define IS_SAI_PDM_CLOCK_ENABLE(CLOCK) (((CLOCK) != 0U) && (((CLOCK) & ~(SAI_PDM_CLOCK1_ENABLE | SAI_PDM_CLOCK2_ENABLE)) == 0U))
-#endif /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||                                                                                                                                  \
-	  STM32L4S7xx || STM32L4S9xx || */
+#endif	/* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||                                                                                                                                 \
+	   STM32L4S7xx || STM32L4S9xx || */
 	/* STM32L4P5xx || STM32L4Q5xx */
 
 #define IS_SAI_BLOCK_MODE(MODE) (((MODE) == SAI_MODEMASTER_TX) || ((MODE) == SAI_MODEMASTER_RX) || ((MODE) == SAI_MODESLAVE_TX) || ((MODE) == SAI_MODESLAVE_RX))
@@ -967,8 +967,8 @@ extern "C"
 #define IS_SAI_BLOCK_MASTER_DIVIDER(DIVIDER) ((DIVIDER) <= 63U)
 #else
 #define IS_SAI_BLOCK_MASTER_DIVIDER(DIVIDER) ((DIVIDER) <= 15U)
-#endif /* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||                                                                                                                                  \
-	  STM32L4S7xx || STM32L4S9xx || */
+#endif	/* STM32L4R5xx || STM32L4R7xx || STM32L4R9xx || STM32L4S5xx ||                                                                                                                                 \
+	   STM32L4S7xx || STM32L4S9xx || */
 	/* STM32L4P5xx || STM32L4Q5xx */
 
 #define IS_SAI_BLOCK_FRAME_LENGTH(LENGTH) ((8U <= (LENGTH)) && ((LENGTH) <= 256U))

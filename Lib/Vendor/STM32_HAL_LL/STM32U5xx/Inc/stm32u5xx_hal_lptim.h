@@ -411,9 +411,9 @@ extern "C"
 
 #define LPTIM_INPUT1SOURCE_GPIO 0x00000000U	      /*!< For LPTIM1, LPTIM2, LPTIM3 and LPTIM4 */
 #define LPTIM_INPUT1SOURCE_COMP1 LPTIM_CFGR2_IN1SEL_0 /*!< For LPTIM1, LPTIM2, LPTIM3 and LPTIM4 */
-	/**
-	 * @}
-	 */
+						      /**
+						       * @}
+						       */
 
 	/** @defgroup LPTIM_Input2_Source LPTIM Input2 Source
 	 * @{
@@ -423,9 +423,9 @@ extern "C"
 #if defined(COMP2)
 #define LPTIM_INPUT2SOURCE_COMP2 LPTIM_CFGR2_IN2SEL_0 /*!< For LPTIM1 and LPTIM2 */
 #endif						      /* COMP2 */
-	/**
-	 * @}
-	 */
+						      /**
+						       * @}
+						       */
 
 	/** @defgroup LPTIM_Flag_Definition LPTIM Flags Definition
 	 * @{
@@ -1199,7 +1199,7 @@ extern "C"
 	 * @}
 	 */
 
-#endif /* LPTIM1 || LPTIM2 ||  LPTIM3 || LPTIM4 */
+#endif	/* LPTIM1 || LPTIM2 ||  LPTIM3 || LPTIM4 */
 	/**
 	 * @}
 	 */
