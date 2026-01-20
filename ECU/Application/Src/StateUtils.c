@@ -21,16 +21,12 @@ void setSoftwareLatch(bool close)
 	// TODO Implement functionality
 	LOGOMATIC("Setting software latch to %d\n", close);
 
-
 	if (close && !LL_GPIO_IsInputPinSet(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin)) // Avoid writing pins that are already written to
-	    {
+	{
 		LL_GPIO_SetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
-	    }
-	    else if (!close && LL_GPIO_IsInputPinSet(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin))
-	    {
+	} else if (!close && LL_GPIO_IsInputPinSet(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin)) {
 		LL_GPIO_ResetOutputPin(SOFTWARE_OK_CONTROL_GPIO_Port, SOFTWARE_OK_CONTROL_Pin);
-		}
-
+	}
 }
 
 bool CriticalError(volatile const ECU_StateData *stateData)
@@ -50,9 +46,10 @@ bool CommunicationError(volatile const ECU_StateData *stateData)
 {
 	UNUSED(stateData);
 	// TODO: im
-	LOGOMATIC("Communication Error"); plement COMMS errors
+	LOGOMATIC("Communication Error");
+	plement COMMS errors
 
-	return false;
+	    return false;
 }
 
 bool APPS_BSE_Violation(volatile const ECU_StateData *stateData)
@@ -87,7 +84,8 @@ float CalcPedalTravel(volatile const ECU_StateData *stateData)
 	return total_signal_value / total_signal_range;
 }
 
-bool vehicle_is_moving(volatile const ECU_StateData *stateData){
+bool vehicle_is_moving(volatile const ECU_StateData *stateData)
+{
 	const float tolerance = 0.1; // In MPH
 	return stateData->vehicle_speed > tolerance;
 }

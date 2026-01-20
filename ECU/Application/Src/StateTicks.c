@@ -89,6 +89,7 @@ void ECU_GLV_On(ECU_StateData *stateData)
 
 	if (stateData->ts_active /* && stateData->ir_plus*/) { // TOOD Talk to Owen if this is correct for precharge start confirmation
 		ECU_Precharge_Start(stateData);
+		return;
 	}
 }
 
@@ -106,6 +107,7 @@ void ECU_Precharge_Start(ECU_StateData *stateData)
 	msg.data[0] = 1; // Go TS Active/Precharge
 	can_send(primary_can, &msg);
 	stateData->ecu_state = GR_PRECHARGE_ENGAGED;
+	return;
 }
 
 void ECU_Precharge_Engaged(ECU_StateData *stateData)
@@ -132,6 +134,7 @@ void ECU_Precharge_Complete(ECU_StateData *stateData)
 
 	if (PressingBrake(stateData) && stateData->rtd) {
 		stateData->ecu_state = GR_DRIVE_ACTIVE;
+		return;
 	}
 }
 
