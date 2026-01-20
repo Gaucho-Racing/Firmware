@@ -1627,7 +1627,6 @@ static void HASH_DMAXferCplt(DMA_HandleTypeDef *hdma)
 #else
 			HAL_HASH_InCpltCallback(hhash);
 #endif /* USE_HAL_HASH_REGISTER_CALLBACKS */
-
 		} else {
 			/* HMAC processing: depending on the current HMAC step
 			and whether or not multi-buffer processing is on-going,
@@ -1896,7 +1895,6 @@ static HAL_StatusTypeDef HASH_WriteData(HASH_HandleTypeDef *hhash, const uint8_t
 			if ((Size % 4U) == 3U) {
 				HASH->DIN = *(uint32_t *)inputaddr;
 			}
-
 		} else if ((hhash->Init.DataType == HASH_DATATYPE_8B) || (hhash->Init.DataType == HASH_DATATYPE_1B)) /* byte swap or bit swap or */
 		{
 			/* Write remaining input data */
@@ -2579,7 +2577,6 @@ HAL_StatusTypeDef HASH_Start(HASH_HandleTypeDef *hhash, const uint8_t *const pIn
 
 		/* Return function status */
 		return HAL_OK;
-
 	} else {
 		return HAL_BUSY;
 	}
@@ -2635,7 +2632,6 @@ HAL_StatusTypeDef HASH_Accumulate(HASH_HandleTypeDef *hhash, const uint8_t *cons
 										   input data address */
 			Size_tmp = hhash->HashInCount;				/* Size_tmp contains the input
 										   data size in bytes */
-
 		} else {
 			/* Change the HASH state */
 			hhash->State = HAL_HASH_STATE_BUSY;
@@ -2678,7 +2674,6 @@ HAL_StatusTypeDef HASH_Accumulate(HASH_HandleTypeDef *hhash, const uint8_t *cons
 
 		/* Return function status */
 		return HAL_OK;
-
 	} else {
 		return HAL_BUSY;
 	}
@@ -2793,7 +2788,6 @@ HAL_StatusTypeDef HASH_Accumulate_IT(HASH_HandleTypeDef *hhash, const uint8_t *c
 
 		/* Return function status */
 		return HAL_OK;
-
 	} else {
 		return HAL_BUSY;
 	}
@@ -3029,7 +3023,6 @@ HAL_StatusTypeDef HASH_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const
 			 * parameters */
 			hhash->pHashInBuffPtr = pInBuffer; /* DMA transfer start address   */
 			hhash->HashInCount = Size;	   /* DMA transfer size (in bytes) */
-
 		}
 		/* If resumption case */
 		else {
@@ -3138,7 +3131,6 @@ HAL_StatusTypeDef HASH_Finish(HASH_HandleTypeDef *hhash, uint8_t *pOutBuffer, ui
 
 		/* Return function status */
 		return HAL_OK;
-
 	} else {
 		return HAL_BUSY;
 	}
@@ -3208,7 +3200,6 @@ HAL_StatusTypeDef HMAC_Start(HASH_HandleTypeDef *hhash, const uint8_t *const pIn
 
 		/* Carry out HMAC processing */
 		return HMAC_Processing(hhash, Timeout);
-
 	} else {
 		return HAL_BUSY;
 	}
@@ -3284,11 +3275,9 @@ HAL_StatusTypeDef HMAC_Start_IT(HASH_HandleTypeDef *hhash, const uint8_t *const 
 		} else if ((hhash->Phase == HAL_HASH_PHASE_HMAC_STEP_1) || (hhash->Phase == HAL_HASH_PHASE_HMAC_STEP_3)) {
 			/* Restart IT-based HASH processing after Step 1 or Step
 			 * 3 suspension */
-
 		} else if (hhash->Phase == HAL_HASH_PHASE_HMAC_STEP_2) {
 			/* Restart IT-based HASH processing after Step 2
 			 * suspension */
-
 		} else {
 			/* Error report as phase incorrect */
 			/* Process Unlock */
@@ -3396,7 +3385,6 @@ HAL_StatusTypeDef HMAC_Start_DMA(HASH_HandleTypeDef *hhash, const uint8_t *const
 
 				/* Set the phase to Step 1 */
 				hhash->Phase = HAL_HASH_PHASE_HMAC_STEP_1;
-
 			} else if (hhash->Phase == HAL_HASH_PHASE_HMAC_STEP_2) {
 				/* Process a new input data message in case of
 				  multi-buffer HMAC processing (this is not a

@@ -349,7 +349,7 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
 #endif /* STM32L471xx STM32L475xx STM32L476xx STM32L485xx STM32L486xx  */
        /* STM32L496xx STM32L4A6xx                                      */
        /* STM32L4P5xx STM32L4Q5xx                                      */
-/* STM32L4R5xx STM32L4R7xx STM32L4R9xx STM32L4S5xx  STM32L4S7xx STM32L4S9xx */
+       /* STM32L4R5xx STM32L4R7xx STM32L4R9xx STM32L4S5xx  STM32L4S7xx STM32L4S9xx */
 
 #if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L431xx) || defined(STM32L432xx) || defined(STM32L433xx) || defined(STM32L442xx) || defined(STM32L443xx) || defined(STM32L451xx) ||    \
     defined(STM32L452xx) || defined(STM32L462xx)
@@ -371,7 +371,7 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
        /* STM32L471xx STM32L475xx STM32L476xx STM32L485xx STM32L486xx  */
        /* STM32L496xx STM32L4A6xx                                      */
        /* STM32L4P5xx STM32L4Q5xx                                      */
-/* STM32L4R5xx STM32L4R7xx STM32L4R9xx STM32L4S5xx  STM32L4S7xx STM32L4S9xx */
+       /* STM32L4R5xx STM32L4R7xx STM32L4R9xx STM32L4S5xx  STM32L4S7xx STM32L4S9xx */
 
 #if defined(STM32L471xx) || defined(STM32L475xx) || defined(STM32L476xx) || defined(STM32L485xx) || defined(STM32L486xx) || defined(STM32L496xx) || defined(STM32L4A6xx) || defined(STM32L4P5xx) ||    \
     defined(STM32L4Q5xx) || defined(STM32L4R5xx) || defined(STM32L4R7xx) || defined(STM32L4R9xx) || defined(STM32L4S5xx) || defined(STM32L4S7xx) || defined(STM32L4S9xx)
@@ -379,7 +379,7 @@ typedef void (*pOPAMP_CallbackTypeDef)(OPAMP_HandleTypeDef *hopamp);
 #endif /* STM32L471xx STM32L475xx STM32L476xx STM32L485xx STM32L486xx  */
        /* STM32L496xx STM32L4A6xx                                      */
        /* STM32L4P5xx STM32L4Q5xx                                      */
-/* STM32L4R5xx STM32L4R7xx STM32L4R9xx STM32L4S5xx  STM32L4S7xx STM32L4S9xx */
+       /* STM32L4R5xx STM32L4R7xx STM32L4R9xx STM32L4S5xx  STM32L4S7xx STM32L4S9xx */
 
 #if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L431xx) || defined(STM32L432xx) || defined(STM32L433xx) || defined(STM32L442xx) || defined(STM32L443xx) || defined(STM32L451xx) ||    \
     defined(STM32L452xx) || defined(STM32L462xx)

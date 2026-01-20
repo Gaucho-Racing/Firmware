@@ -455,7 +455,6 @@ HAL_StatusTypeDef HAL_RAMCFG_EnableNotification(RAMCFG_HandleTypeDef *hramcfg, u
 
 		/* Update the RAMCFG state */
 		hramcfg->State = HAL_RAMCFG_STATE_READY;
-
 	} else {
 		/* Update the RAMCFG error code and return error */
 		hramcfg->ErrorCode = HAL_RAMCFG_ERROR_BUSY;

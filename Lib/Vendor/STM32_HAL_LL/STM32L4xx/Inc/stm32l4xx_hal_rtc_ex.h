@@ -175,9 +175,9 @@ typedef struct {
 #define RTC_SMOOTHCALIB_PLUSPULSES_RESET                                                                                                                                                               \
 	0x00000000u /*!< The number of RTCCLK pulses subbstited                                                                                                                                        \
 			 during a 32-second window = CALM[8:0] */
-/**
- * @}
- */
+		    /**
+		     * @}
+		     */
 
 #if defined(STM32L412xx) || defined(STM32L422xx) || defined(STM32L4P5xx) || defined(STM32L4Q5xx)
 /** @defgroup RTCEx_Smooth_Calib_Low_Power_Definitions RTCEx Smooth Calib Low
@@ -1886,9 +1886,9 @@ uint32_t HAL_RTCEx_BKUPRead(RTC_HandleTypeDef *hrtc, uint32_t BackupRegister);
 
 #define IS_RTC_ALARMSUBSECONDBIN_AUTOCLR(SEL) (((SEL) == RTC_ALARMSUBSECONDBIN_AUTOCLR_NO) || ((SEL) == RTC_ALARMSUBSECONDBIN_AUTOCLR_YES))
 #endif /* #if defined (STM32L4P5xx) || defined (STM32L4Q5xx) */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 /**
  * @}

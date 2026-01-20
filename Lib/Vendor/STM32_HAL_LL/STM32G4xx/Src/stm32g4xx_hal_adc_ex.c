@@ -376,7 +376,6 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedStart(ADC_HandleTypeDef *hadc)
 				LL_ADC_INJ_StartConversion(hadc->Instance);
 			}
 #endif /* ADC_MULTIMODE_SUPPORT */
-
 		} else {
 			/* Process unlocked */
 			__HAL_UNLOCK(hadc);
@@ -721,7 +720,6 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedStart_IT(ADC_HandleTypeDef *hadc)
 				LL_ADC_INJ_StartConversion(hadc->Instance);
 			}
 #endif /* ADC_MULTIMODE_SUPPORT */
-
 		} else {
 			/* Process unlocked */
 			__HAL_UNLOCK(hadc);

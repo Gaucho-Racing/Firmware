@@ -1686,7 +1686,6 @@ HAL_StatusTypeDef HAL_QSPI_AutoPolling_IT(QSPI_HandleTypeDef *hqspi, QSPI_Comman
 			/* Enable the QSPI Transfer Error and status match
 			 * Interrupt */
 			__HAL_QSPI_ENABLE_IT(hqspi, (QSPI_IT_SM | QSPI_IT_TE));
-
 		} else {
 			/* Process unlocked */
 			__HAL_UNLOCK(hqspi);

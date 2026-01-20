@@ -872,9 +872,9 @@ HAL_StatusTypeDef HAL_CAN_ResetError(CAN_HandleTypeDef *hcan);
  */
 
 #endif /* CAN1 */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
 
 #ifdef __cplusplus
 }

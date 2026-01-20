@@ -2308,12 +2308,12 @@ void LL_SPI_StructInit(LL_SPI_InitTypeDef *SPI_InitStruct);
  * @}
  */
 #endif /* USE_FULL_LL_DRIVER */
-/**
- * @}
- */
-/**
- * @}
- */
+       /**
+	* @}
+	*/
+       /**
+	* @}
+	*/
 
 #endif /* defined(SPI1) || defined(SPI2) || defined(SPI3) */
 
